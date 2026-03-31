@@ -79,10 +79,10 @@ python3 scripts/viz-ontology-table.py   # generate table
 open catalog/exports/viz/index.html     # open combined viewer
 ```
 
-**Views:**
-- [**Graph view**](catalog/exports/viz/ontology-graph.html) — force-directed graph with type filters, attribute panel, Drive/GitHub links, neighbor highlighting
-- [**Table view**](catalog/exports/viz/ontology-table.html) — sortable table with search, connected objects, clickable links
-- [**Combined viewer**](catalog/exports/viz/index.html) — tabbed interface with both views
+**Live views (GitHub Pages):**
+- [**Combined viewer**](https://tellina-study.github.io/AI-usage-lessons/catalog/exports/viz/index.html) — tabbed interface with graph + table
+- [**Graph view**](https://tellina-study.github.io/AI-usage-lessons/catalog/exports/viz/ontology-graph.html) — force-directed graph with type filters, attribute panel, Drive/GitHub links
+- [**Table view**](https://tellina-study.github.io/AI-usage-lessons/catalog/exports/viz/ontology-table.html) — sortable table with search, connected objects, clickable links
 
 **Auto-regeneration:** a pre-commit hook runs the scripts automatically when ontology data or viz scripts change.
 

@@ -1,2 +1,21 @@
 # Slide deck catalog manifest
-decks: []
+# Updated: 2026-03-31
+decks:
+  - id: 1j-7csuSNLQimTNz1gkV5aupormpqfPEL
+    title: "ИИ и мир.pptx (old presentation)"
+    type: pptx-uploaded
+    source_url: "https://docs.google.com/presentation/d/1j-7csuSNLQimTNz1gkV5aupormpqfPEL/edit"
+    local_path: "catalog/exports/slides/ii-i-mir.pptx"
+    format: pptx
+    folder: "старые презы"
+    exported_at: "2026-03-31"
+  - id: 1BviVqnn7vtHGg09h22UzfUTyQswTHfvSXqol_JaRTyM
+    title: "Лекция 1: Введение — что такое AI и почему это важно"
+    type: google-slides
+    source_url: "https://docs.google.com/presentation/d/1BviVqnn7vtHGg09h22UzfUTyQswTHfvSXqol_JaRTyM/edit"
+    format: slides
+    lecture: 1
+    folder: "1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am"
+    status: draft
+    created_at: "2026-03-31"
+    slides_count: 10

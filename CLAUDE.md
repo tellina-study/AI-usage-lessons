@@ -18,15 +18,22 @@ Claude Code is the only runtime. No separate backend, no custom UI. All automati
 
 | Layer | Server | Purpose |
 |-------|--------|---------|
-| Google (primary) | `workspace-mcp` | Read/write Google Docs, Sheets, Slides, Drive |
-| Google (fallback) | `gws` (googleworkspace/cli) | Low-level API access, export, edge cases |
-| Doc Loader | `awslabs.document-loader-mcp-server` | Read PDF, DOCX, XLSX, PPTX, images — full office format support |
+| Google | `workspace-mcp` | Read/write Google Docs, Sheets, Slides, Drive |
+| Doc Loader | `document-loader` | Read PDF, DOCX, XLSX, PPTX, images — full office format support |
 | Local RAG | `mcp-local-rag` | Semantic search over ingested documents (PDF, DOCX, TXT, MD) |
-| Diagrams | `drawio-mcp` + `draw-mcp` | Generate/read `.drawio`, Mermaid, export diagrams |
-| GitHub | `github/github-mcp-server` | Issues, PRs, repo operations |
+| Diagrams | `drawio` (@drawio/mcp) | Generate/preview `.drawio` and Mermaid diagrams |
+| GitHub | `github` (github-mcp-server) | Issues, PRs, repo operations |
 | Ontology | `open-ontologies` | RDF/SPARQL + OWL reasoning + SHACL validation (Oxigraph-based) |
 
-**Tool selection rule:** prefer `workspace-mcp` for Google operations. Use `gws` only when `workspace-mcp` lacks the needed capability.
+**Tool selection rule:** `workspace-mcp` is the only Google integration server. Use it for all Google Workspace operations.
+
+### MCP Configuration
+
+- MCP servers are registered via `claude mcp add` or `.mcp.json` (NOT `.claude/settings.json`)
+- Secrets (OAuth credentials, PATs) go in `.mcp.json` only — this file is gitignored
+- `.claude/settings.json` is for non-secret server configs and permissions only
+- After any MCP config change, restart Claude Code for changes to take effect
+- Always verify registration with `claude mcp list` after adding a server
 
 ### Google Drive Work Folder
 
@@ -61,7 +68,21 @@ Claude Code acts as **planner and orchestrator only**. It MUST NOT make implemen
 - Edit source content files directly — subagents do this
 - Create/modify documents, lectures, diagrams without delegation
 
-**Exception:** CLAUDE.md, design docs, GitHub issue descriptions, and repo scaffolding may be edited directly since they are planning artifacts, not implementation.
+**Exception:** CLAUDE.md, design docs, GitHub issue descriptions, repo scaffolding, and system setup (MCP installation, git operations, `.gitignore`, settings files) may be done directly — these are infrastructure/planning artifacts, not implementation content.
+
+---
+
+## Subagent Rules
+
+**Delegate to subagents:** MCP operations, web research, document editing, diagram creation, content writing, analysis.
+
+**When spawning subagents, always include:**
+- Specific MCP tool names the subagent should use
+- User email: `kzlevko@gmail.com` (for Google operations)
+- Specific file paths (not just directory names)
+- Error handling instructions ("if auth fails, stop and report")
+
+**If a subagent fails, do the work directly** — do not retry the same delegation.
 
 ---
 
@@ -138,6 +159,8 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 
 Eight core skills: `sync-library`, `catalog-docs`, `extract-links`, `update-lecture`, `build-deck`, `diagram-refresh`, `issue-from-change`, `impact-check`.
 
+Skills are invoked via `/skill-name` (e.g., `/sync-library`). Each SKILL.md must be an executable recipe with concrete MCP tool names and parameters, not just a description of steps. If a skill cannot be executed as-is, it needs implementation work.
+
 ### Repository Layout
 
 ```
@@ -163,6 +186,14 @@ notes/           — decisions, limitations, experiments log
 
 Keep ontology minimal — store structural facts and references only, never duplicate document text in RDF.
 
+## File Conventions
+
+- Always save raw document exports to `catalog/exports/docs/` before any processing or ingestion
+- Always save `.drawio` diagrams to `diagrams/` — never just open in browser without saving the XML file
+- Update `catalog/manifests/*.yaml` after every export or ingestion operation
+- Use `ingest_file` (from saved local path), not `ingest_data` (from strings) — file-based ingestion creates traceable provenance
+- **Creating Google Docs:** use `import_to_google_doc` with `source_format="md"`, NOT `create_doc`. The import tool converts markdown headings, bold, lists, tables to native Google Docs formatting. `create_doc` inserts raw text with no formatting.
+
 ## Security Rules
 
 - `catalog/exports/` must NEVER be committed to a public repository (contains exported Google docs).
@@ -182,3 +213,11 @@ Keep ontology minimal — store structural facts and references only, never dupl
 - `impact-check` — what changed and what it affects
 - Issue triage via `issue-manager`
 - Update `notes/decisions.md`
+
+## Reflection Process
+
+After each working session:
+1. Create `notes/reflections/{date}-{topic}/` folder (or `notes/reflections/{topic}.md` for single-file reflections)
+2. Write separate reflection files per area: tools, workflow, content, user-feedback
+3. Update `notes/decisions.md` with key findings from reflections
+4. Reflections feed into next session's improvements — always check `notes/reflections/` before starting work

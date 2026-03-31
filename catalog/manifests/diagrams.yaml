@@ -1,2 +1,11 @@
 # Diagram catalog manifest
-diagrams: []
+diagrams:
+  - slug: "semester-roadmap"
+    title: "Semester Roadmap — 14 lessons across 3 blocks"
+    local_path: "diagrams/lecture-flows/semester-roadmap.drawio"
+    illustrates:
+      - entity: "doc_v2_course_plan"
+        type: Document
+    format: drawio
+    status: active
+    updated_at: "2026-03-31"

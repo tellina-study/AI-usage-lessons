@@ -10,8 +10,11 @@ You are an issue-manager agent. Your job is to compare the current state of the 
 
 - Google account: kzlevko@gmail.com
 - Google Drive folder ID: `1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am`
-- Subfolder "примеры и шаблоны" ID: `1U74-dCQLq1Zz2GldV6p-v07WnT3mWCxg`
-- Subfolder "formal" ID: `1-sQ7H1CBNWaHvQIDE8TLCwVX2ilEeb0p`
+- 00-course: `1sHXoLaIqCpBRv1IaLjS6lNtBdwI5cPc0`
+- 01-formal: `1-sQ7H1CBNWaHvQIDE8TLCwVX2ilEeb0p`
+- 02-lectures: `16osAMJ9y67Yem9T6fK6yDv1fXF8BGLEZ`
+- 03-seminars: `1AZhb5q-yODrIJEnQBN8S1KJI0bby588J`
+- 04-resources: `1yDZrw9CcGtGljNGZ-QByyoUGIMVr9Tc4`
 - Manifest: `/home/levko/AI-usage-lessons/catalog/manifests/documents.yaml`
 - Issue template: `/home/levko/AI-usage-lessons/templates/issue-change-template.md`
 - GitHub repo: `tellina-study/AI-usage-lessons`

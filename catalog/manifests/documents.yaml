@@ -1,80 +1,295 @@
 # Document catalog manifest
 # Updated: 2026-03-31
+# Synced from Google Drive folder: 1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am
+
+# =============================================================================
+# ROOT — Documents at Drive root level
+# =============================================================================
 documents:
+
+  # --- Root ---
+  - id: 1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8
+    title: "Лекция 1: Введение — что такое AI и почему это важно"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8/edit"
+    folder: "/"
+    synced_at: "2026-03-31"
+
+  - id: 1BviVqnn7vtHGg09h22UzfUTyQswTHfvSXqol_JaRTyM
+    title: "Лекция 1: Введение — что такое AI и почему это важно (slides)"
+    type: google-slides
+    source_url: "https://docs.google.com/presentation/d/1BviVqnn7vtHGg09h22UzfUTyQswTHfvSXqol_JaRTyM/edit"
+    folder: "/"
+    synced_at: "2026-03-31"
+
+  # =============================================================================
+  # 00-course — Course-level planning and meta documents
+  # =============================================================================
+
+  - id: 1djdHRpBFFK_4rvH7nl3L4V5hM1glN1G04_HPem9JDes
+    title: "course-structure"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1djdHRpBFFK_4rvH7nl3L4V5hM1glN1G04_HPem9JDes/edit"
+    folder: "00-course"
+    export_path: "catalog/exports/docs/course-structure.md"
+    synced_at: "2026-03-31"
+
+  - id: 1ii8GbnjYGSoyadnBO_S5SKXVptq1QYz4QcDOGQ3DknI
+    title: "course-narrative"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1ii8GbnjYGSoyadnBO_S5SKXVptq1QYz4QcDOGQ3DknI/edit"
+    folder: "00-course"
+    export_path: "catalog/exports/docs/course-narrative.md"
+    synced_at: "2026-03-31"
+
+  - id: 1RODql_LKx_MSH7C6TINpvH9HxXJoDowHhgyBHhSM5qU
+    title: "ai-cheatsheet"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1RODql_LKx_MSH7C6TINpvH9HxXJoDowHhgyBHhSM5qU/edit"
+    folder: "00-course"
+    export_path: "catalog/exports/docs/ai-cheatsheet.md"
+    synced_at: "2026-03-31"
+
+  # =============================================================================
+  # 01-formal — Normative / formal program documents
+  # =============================================================================
+
+  - id: 1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU
+    title: "Copy of prog - Отрасл. применение систем ИИ (1)"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit"
+    folder: "01-formal"
+    export_path: "catalog/exports/docs/prog-otraslevoe-updated-formal.md"
+    synced_at: "2026-03-31"
+
+  # =============================================================================
+  # 02-lectures — Lecture plans and materials
+  # =============================================================================
+
+  # --- lec-01-введение ---
+  - id: 1UX671dOrhfQ8OgnadD_8ce4dhVJ9wDVrFqPq6p9S9uo
+    title: "Лекция 1 — план"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1UX671dOrhfQ8OgnadD_8ce4dhVJ9wDVrFqPq6p9S9uo/edit"
+    folder: "02-lectures/lec-01-введение"
+    export_path: "catalog/exports/docs/lec-01-plan.md"
+    synced_at: "2026-03-31"
+
+  # =============================================================================
+  # 03-seminars — Seminar tasks, teacher guides, exam templates
+  # =============================================================================
+
+  # --- sem-01-практикум ---
+  - id: 1KyTg-h3S8v_NOK1SL6SMN-wDvCo0lsebBKHLpwrVJWU
+    title: "Семинар 1 — задание"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1KyTg-h3S8v_NOK1SL6SMN-wDvCo0lsebBKHLpwrVJWU/edit"
+    folder: "03-seminars/sem-01-практикум"
+    export_path: "catalog/exports/docs/sem-01-task.md"
+    synced_at: "2026-03-31"
+
+  - id: 1n3aW30ZANDQITh0c-BuHnWfB82wUKiuqIvh1xVg9BV4
+    title: "Семинар 1 — руководство преподавателя"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1n3aW30ZANDQITh0c-BuHnWfB82wUKiuqIvh1xVg9BV4/edit"
+    folder: "03-seminars/sem-01-практикум"
+    export_path: "catalog/exports/docs/sem-01-teacher-guide.md"
+    synced_at: "2026-03-31"
+
+  # --- sem-05-промежуточный-контроль-1 ---
+  - id: 1AMnpH0C05cGMbIfAUqT166JhBSXFk2bztuiCDTtzOpc
+    title: "Промежуточный контроль 1"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1AMnpH0C05cGMbIfAUqT166JhBSXFk2bztuiCDTtzOpc/edit"
+    folder: "03-seminars/sem-05-промежуточный-контроль-1"
+    export_path: "catalog/exports/docs/sem-05-midterm-1.md"
+    synced_at: "2026-03-31"
+
+  # --- sem-17-итоговый-экзамен ---
+  - id: 1Rr6niV4SHQr1IwH14Pzn-8ziTxZlFj4gbmfWc0AT8B4
+    title: "Итоговый экзамен"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1Rr6niV4SHQr1IwH14Pzn-8ziTxZlFj4gbmfWc0AT8B4/edit"
+    folder: "03-seminars/sem-17-итоговый-экзамен"
+    export_path: "catalog/exports/docs/sem-17-final-exam.md"
+    synced_at: "2026-03-31"
+
+  # =============================================================================
+  # 04-resources — Reference materials, stats, prompts, bibliography
+  # =============================================================================
+
+  - id: 1o1ctSpLqtTMRyaIyjPcMRItFMMohKWQbkl9KlrEMcFY
+    title: "Библиотека промптов"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1o1ctSpLqtTMRyaIyjPcMRItFMMohKWQbkl9KlrEMcFY/edit"
+    folder: "04-resources"
+    export_path: "catalog/exports/docs/prompt-library.md"
+    synced_at: "2026-03-31"
+
+  - id: 1i5T6naIAt-K4cFPJixN5i4w7WzHgumCsTu_v3G9ufTM
+    title: "Статистика AI по индустриям — Общий обзор"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1i5T6naIAt-K4cFPJixN5i4w7WzHgumCsTu_v3G9ufTM/edit"
+    folder: "04-resources"
+    export_path: "catalog/exports/docs/stats-overview.md"
+    synced_at: "2026-03-31"
+
+  - id: 1hY0mSFGrR5Gn3CR3Ah8SHQyJUL4oLeFchYlue7Sd4Nc
+    title: "AI в финансах и ритейле — Детальная статистика"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1hY0mSFGrR5Gn3CR3Ah8SHQyJUL4oLeFchYlue7Sd4Nc/edit"
+    folder: "04-resources"
+    export_path: "catalog/exports/docs/stats-finance-retail.md"
+    synced_at: "2026-03-31"
+
+  - id: 1F-oGrRFeoNN7xPamxnVAQHgn61mSjl0TcYwm8HTOsvc
+    title: "Список литературы и источников (spreadsheet)"
+    type: google-sheet
+    source_url: "https://docs.google.com/spreadsheets/d/1F-oGrRFeoNN7xPamxnVAQHgn61mSjl0TcYwm8HTOsvc/edit"
+    folder: "04-resources"
+    note: "Spreadsheet — not exported to markdown"
+    synced_at: "2026-03-31"
+
+  # =============================================================================
+  # ARCHIVE — Old files moved from root (not exported, status: archived)
+  # =============================================================================
+
   - id: 1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY
     title: "AI в разных индустриях (V2 course plan)"
     type: google-doc
     source_url: "https://docs.google.com/document/d/1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY/edit"
-    local_path: "catalog/exports/docs/ai-v-raznyh-industriyah.md"
-    format: markdown
-    exported_at: "2026-03-31"
+    folder: "archive"
+    status: archived
+    synced_at: "2026-03-31"
 
   - id: 1UliavdtqqZAyHu-JYDOGPFCbJZ44Enhju5TwmqV99Xg
     title: "AI в цикле создания ПО (V1 course plan)"
     type: google-doc
     source_url: "https://docs.google.com/document/d/1UliavdtqqZAyHu-JYDOGPFCbJZ44Enhju5TwmqV99Xg/edit"
-    local_path: "catalog/exports/docs/ai-v-tsikle-sozdaniya-po.md"
-    format: markdown
-    folder: "старые презы"
-    note: "Moved from root to 'старые презы' folder"
-    exported_at: "2026-03-31"
-
-  - id: 18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE
-    title: "Рабочая программа - Отраслевое применение систем ИИ (old formal)"
-    type: google-doc
-    source_url: "https://docs.google.com/document/d/18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE/edit"
-    local_path: "catalog/exports/docs/prog-otraslevoe-primenenie-AI.md"
-    format: markdown
-    exported_at: "2026-03-31"
-
-  - id: 1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay
-    title: "ФОС - Отраслевое применение систем ИИ"
-    type: docx-uploaded
-    source_url: "https://docs.google.com/document/d/1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay/edit"
-    local_path: "catalog/exports/docs/fos_otraslevoe_primenenie_AI.docx"
-    format: docx
-    exported_at: "2026-03-31"
-
-  - id: 1XKTGBSWGoLfTPlcBBmnH4ewdIfukO3-o
-    title: "Рабочая программа - Отраслевое применение систем ИИ (DOCX copy)"
-    type: docx-uploaded
-    source_url: "https://docs.google.com/document/d/1XKTGBSWGoLfTPlcBBmnH4ewdIfukO3-o/edit"
-    local_path: null
-    note: "Duplicate of Google Doc version, not exported separately"
-
-  - id: 1oqtfAwZqVscMKPkr7yXH4nzJKjGNW3nH
-    title: "Снимок экрана (74) (1).png"
-    type: image
-    source_url: "https://drive.google.com/file/d/1oqtfAwZqVscMKPkr7yXH4nzJKjGNW3nH/view"
-    local_path: null
-    note: "Screenshot, not exported"
-
-  - id: 1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU
-    title: "Рабочая программа (updated formal copy)"
-    type: google-doc
-    source_url: "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit"
-    local_path: "catalog/exports/docs/prog-otraslevoe-updated-formal.md"
-    format: markdown
-    folder: formal
-    exported_at: "2026-03-31"
+    folder: "archive/старые презы"
+    status: archived
+    synced_at: "2026-03-31"
 
   - id: 1j-7csuSNLQimTNz1gkV5aupormpqfPEL
     title: "ИИ и мир.pptx (old presentation)"
     type: pptx-uploaded
     source_url: "https://docs.google.com/presentation/d/1j-7csuSNLQimTNz1gkV5aupormpqfPEL/edit"
-    local_path: "catalog/exports/slides/ii-i-mir.pptx"
-    format: pptx
-    folder: "старые презы"
-    exported_at: "2026-03-31"
+    folder: "archive/старые презы"
+    status: archived
+    synced_at: "2026-03-31"
 
-# Folder references
+  - id: 18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE
+    title: "Рабочая программа - Отраслевое применение систем ИИ (old formal)"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE/edit"
+    folder: "archive/примеры и шаблоны"
+    status: archived
+    synced_at: "2026-03-31"
+
+  - id: 1XKTGBSWGoLfTPlcBBmnH4ewdIfukO3-o
+    title: "prog - Отрасл. применение систем ИИ (1).docx"
+    type: docx-uploaded
+    source_url: "https://docs.google.com/document/d/1XKTGBSWGoLfTPlcBBmnH4ewdIfukO3-o/edit"
+    folder: "archive/примеры и шаблоны"
+    status: archived
+    synced_at: "2026-03-31"
+
+  - id: 1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay
+    title: "fos_Отрасл. применение систем ИИ.docx"
+    type: docx-uploaded
+    source_url: "https://docs.google.com/document/d/1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay/edit"
+    folder: "archive/примеры и шаблоны"
+    status: archived
+    synced_at: "2026-03-31"
+
+  - id: 1oqtfAwZqVscMKPkr7yXH4nzJKjGNW3nH
+    title: "Снимок экрана (74) (1).png"
+    type: image
+    source_url: "https://drive.google.com/file/d/1oqtfAwZqVscMKPkr7yXH4nzJKjGNW3nH/view"
+    folder: "archive/примеры и шаблоны"
+    status: archived
+    synced_at: "2026-03-31"
+
+# =============================================================================
+# REMOVED FROM DRIVE (previously tracked, no longer found in any folder)
+# =============================================================================
+
+  - id: 1A6aRpopKGzticxwWtHam38mtiBZ7NvabOCp1xGWyx6g
+    title: "Список литературы и источников"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1A6aRpopKGzticxwWtHam38mtiBZ7NvabOCp1xGWyx6g/edit"
+    folder: "04-resources"
+    status: removed
+    note: "Not found in 04-resources folder scan on 2026-03-31; may have been deleted or moved"
+    synced_at: "2026-03-31"
+
+# =============================================================================
+# FOLDER STRUCTURE
+# =============================================================================
 folders:
-  - name: "старые презы"
-    note: "Old presentations and archived course materials"
-    contents:
-      - "AI в цикле создания ПО (V1 course plan)"
-      - "ИИ и мир.pptx (old presentation)"
-  - name: "formal"
-    note: "Formal/normative documents"
-    contents:
-      - "Рабочая программа (updated formal copy)"
+  - id: 1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am
+    name: "/" # root
+    link: "https://drive.google.com/drive/folders/1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am"
+
+  - id: 1sHXoLaIqCpBRv1IaLjS6lNtBdwI5cPc0
+    name: "00-course"
+    note: "Course-level planning: structure, narrative, cheatsheet"
+
+  - id: 1-sQ7H1CBNWaHvQIDE8TLCwVX2ilEeb0p
+    name: "01-formal"
+    note: "Normative program documents"
+
+  - id: 16osAMJ9y67Yem9T6fK6yDv1fXF8BGLEZ
+    name: "02-lectures"
+    note: "17 lecture folders (lec-01 through lec-17)"
+    subfolders:
+      - { id: 1WSM-_0nsBpO1crAQGY4vLsy25QP0zECO, name: "lec-01-введение" }
+      - { id: 1eMnkgTRhA3FO-cMtd-PsZCYSaP4iPgXq, name: "lec-02-ai-в-разработке-по" }
+      - { id: 1gxvuR0TtJSWkkgK1t6hD-E0uVBBFSlkR, name: "lec-03-финансы-и-ритейл" }
+      - { id: 1UA5V35IKo62tEg9Hzl1F7gCCO_JSolMs, name: "lec-04-медицина" }
+      - { id: 16BD8JdUgSjhGaWngiUTP21z3z0cMSeLq, name: "lec-05-производство-и-сх" }
+      - { id: 1m_-FyAFQifg_OkAbg00WrpQ3j4JchnVC, name: "lec-06-госуправление" }
+      - { id: 1jtuETEPEHH5NR-kh2HnIPjp-hsrktZvy, name: "lec-07-этика-и-регулирование" }
+      - { id: 18aiL1eaVRME9oJ0-kRU-ZC4sQRQu4eoz, name: "lec-08-креативные-индустрии" }
+      - { id: 17MBy-VZhBuVlOwXPBFPoTfSv57SUR--Z, name: "lec-09" }
+      - { id: 1mcKaU7V2FmAATQ221LnZbEPluNCBcTv3, name: "lec-10" }
+      - { id: 1zE3dcuyLNNxTCXJaRRHr_4eRvBK5sdWL, name: "lec-11" }
+      - { id: 1c7fl1DbCA8OhYckV1FVmf5aso9Zshpwm, name: "lec-12" }
+      - { id: 1QmF5PurZ4WpSoRqsThpP_5nt5t9vQUGg, name: "lec-13" }
+      - { id: 1xWCJ8_jycoWkGm4SSHX_BtrG9mxh-Hm1, name: "lec-14" }
+      - { id: 14QPN2II77kQBNCIrpZBaTb2gNC22RIiz, name: "lec-15" }
+      - { id: 1ymWGLoiNX7IiY9QgSjt4OJD_L5dCPgnd, name: "lec-16" }
+      - { id: 13OgosH4ytUy8u4w6-jD8CxMu77IKG5de, name: "lec-17" }
+
+  - id: 1AZhb5q-yODrIJEnQBN8S1KJI0bby588J
+    name: "03-seminars"
+    note: "17 seminar folders (sem-01 through sem-17)"
+    subfolders:
+      - { id: 1D2cAJiqAyRIlYwcciIVLFDwpAuz1o9vt, name: "sem-01-практикум" }
+      - { id: 1MtUvo2vWGGbpQv89GaR68PBgDCT3W_Bv, name: "sem-02-практикум" }
+      - { id: 1c3W-NkXzm-GmWz06ZMkRnh94okW0Xo_Z, name: "sem-03-практикум" }
+      - { id: 1B1pTwDCCQ8Cy1KKg0QIwM6Sx09KirPg0, name: "sem-04-практикум" }
+      - { id: 1nlgKRKDI__cnjONoL0UiQGk-y3oYMF5Q, name: "sem-05-промежуточный-контроль-1" }
+      - { id: 1Z5BQ1wSg59zroV2Fr_SW92ZjelIwdClh, name: "sem-06-практикум" }
+      - { id: 1U8l01W_SNIRN8Mjt7vRcrEcR7k5RFr-W, name: "sem-07-практикум" }
+      - { id: 15pqRn5ghZ3XyRMz8Zx6NUSoV9EBEmR1R, name: "sem-08-практикум" }
+      - { id: 1U4Z1OdUxbsnSE0-dPXUsxhcKRkkfP69Q, name: "sem-09-практикум" }
+      - { id: 10pnCJ_a-LGdXOSw06WUd6AlyUx-9mZAJ, name: "sem-10-промежуточный-контроль-2" }
+      - { id: 1fRLe05uHnWSY99ueGiScatY4nOi_sWNg, name: "sem-11-практикум" }
+      - { id: 1LswjSgrlJc7R-SOUJ1Pj8XZzQ5vA6ai0, name: "sem-12-практикум" }
+      - { id: 18I0Vb4Sq21aCXHSMq4HSnLjDDf9KXIe5, name: "sem-13-практикум" }
+      - { id: 1jjQ662RH7xoQ_5GvIg_tnBGw92kud-Xd, name: "sem-14-практикум" }
+      - { id: 1F7C5i3xNTzGMqZvAf0jcBnXg9W711GSu, name: "sem-15-практикум" }
+      - { id: 1BUDdpZ15h2lHXSTuAOk3tpS_zURNscQ9, name: "sem-16-практикум" }
+      - { id: 1dltlZaxNq1WgpWNvjiJMCUWLvzSaQjq0, name: "sem-17-итоговый-экзамен" }
+
+  - id: 1yDZrw9CcGtGljNGZ-QByyoUGIMVr9Tc4
+    name: "04-resources"
+    note: "Reference materials, statistics, prompts, bibliography"
+
+  - id: 1rZkywX5DufGJaf1htCa1Oa_zCKmUgKMT
+    name: "archive"
+    note: "Old files moved from root; contains sub-folders: старые презы, примеры и шаблоны"
+    subfolders:
+      - { id: 10MSXZ8HUstzCXW4IaSra_kR2ZBoY9yy4, name: "старые презы" }
+      - { id: 1U74-dCQLq1Zz2GldV6p-v07WnT3mWCxg, name: "примеры и шаблоны" }

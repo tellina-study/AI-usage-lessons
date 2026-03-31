@@ -39,6 +39,23 @@ Claude Code is the only runtime. No separate backend, no custom UI. All automati
 
 Primary working folder: `https://drive.google.com/drive/folders/1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am`
 
+### Google Drive Folder Structure
+
+| Path | ID | Contents |
+|------|-----|----------|
+| `00-course/` | `1sHXoLaIqCpBRv1IaLjS6lNtBdwI5cPc0` | Структура курса, нарратив, каталог тем (sheet), чит-шит |
+| `01-formal/` | `1-sQ7H1CBNWaHvQIDE8TLCwVX2ilEeb0p` | РПД, ФОС, матрица компетенций |
+| `02-lectures/` | `16osAMJ9y67Yem9T6fK6yDv1fXF8BGLEZ` | 17 папок лекций (lec-01 — lec-17), каждая: plan + slides + assets/ |
+| `03-seminars/` | `1AZhb5q-yODrIJEnQBN8S1KJI0bby588J` | 17 папок семинаров (sem-01 — sem-17), каждая: task-brief + rubric |
+| `04-resources/` | `1yDZrw9CcGtGljNGZ-QByyoUGIMVr9Tc4` | Библиотека промптов, статистика, список литературы |
+| `archive/` | `1rZkywX5DufGJaf1htCa1Oa_zCKmUgKMT` | Старые версии |
+
+**Правила размещения:**
+- Ресурсы для одной лекции → `lec-NN/assets/` (не в 04-resources)
+- Ресурсы для нескольких лекций → `04-resources/`
+- Табличные данные → Google Sheets (не Docs с markdown-таблицами)
+- Старые версии → `archive/` (перемещать, не удалять)
+
 ### GitHub Project Board
 
 Issues and tasks are tracked at: `https://github.com/orgs/tellina-study/projects/1/views/1`

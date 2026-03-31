@@ -35,3 +35,5 @@ oxigraph-data/
 # Local RAG data (LanceDB + models)
 lancedb/
 models/
+scripts/__pycache__/
+lib/

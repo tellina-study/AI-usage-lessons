@@ -20,7 +20,8 @@ Claude Code is the only runtime. No separate backend, no custom UI. All automati
 |-------|--------|---------|
 | Google (primary) | `workspace-mcp` | Read/write Google Docs, Sheets, Slides, Drive |
 | Google (fallback) | `gws` (googleworkspace/cli) | Low-level API access, export, edge cases |
-| Local RAG | `mcp-local-rag` | Index and search exported documents (PDF, DOCX, TXT, MD) |
+| Doc Loader | `awslabs.document-loader-mcp-server` | Read PDF, DOCX, XLSX, PPTX, images — full office format support |
+| Local RAG | `mcp-local-rag` | Semantic search over ingested documents (PDF, DOCX, TXT, MD) |
 | Diagrams | `drawio-mcp` + `draw-mcp` | Generate/read `.drawio`, Mermaid, export diagrams |
 | GitHub | `github/github-mcp-server` | Issues, PRs, repo operations |
 | Ontology | `open-ontologies` | RDF/SPARQL + OWL reasoning + SHACL validation (Oxigraph-based) |

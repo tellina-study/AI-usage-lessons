@@ -8,6 +8,13 @@
         "GITHUB_TOOLSETS": "repos,issues,pull_requests"
       }
     },
+    "document-loader": {
+      "command": "uvx",
+      "args": ["awslabs.document-loader-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      }
+    },
     "local-rag": {
       "command": "npx",
       "args": ["-y", "mcp-local-rag"],

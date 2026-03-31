@@ -26,3 +26,7 @@ Thumbs.db
 
 # Oxigraph data
 oxigraph-data/
+
+# Local RAG data (LanceDB + models)
+lancedb/
+models/

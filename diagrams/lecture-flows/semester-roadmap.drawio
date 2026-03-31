@@ -1,0 +1,183 @@
+<mxfile host="app.diagrams.net" modified="2026-03-31T12:00:00.000Z" agent="Claude Code" version="24.0.0" type="device">
+  <diagram id="semester-roadmap" name="Semester Roadmap">
+    <mxGraphModel dx="1422" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Block 1 Swimlane -->
+        <mxCell id="block1" value="Блок 1 — Индустрии I (занятия 1-5)" style="shape=swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=14;horizontal=1;swimlaneLine=1;rounded=1;arcSize=8;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="500" height="720" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 1 - Lecture (blue) -->
+        <mxCell id="L1" value="1. Введение: типы AI&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block1">
+          <mxGeometry x="60" y="50" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="L1skill" value="Промптинг:&#xa;&quot;Роль+Задача+Контекст&quot;" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="block1">
+          <mxGeometry x="340" y="55" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 2 - Lecture (blue) -->
+        <mxCell id="L2" value="2. AI в разработке ПО&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block1">
+          <mxGeometry x="60" y="170" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="L2skill" value="Генерация кода +&#xa;оценка результатов" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="block1">
+          <mxGeometry x="340" y="175" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 3 - Lecture (blue) -->
+        <mxCell id="L3" value="3. AI в финансах и ритейле&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block1">
+          <mxGeometry x="60" y="290" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="L3skill" value="Fact-checking" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="block1">
+          <mxGeometry x="340" y="295" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 4 - Lecture (blue) -->
+        <mxCell id="L4" value="4. AI в медицине и фармацевтике&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block1">
+          <mxGeometry x="60" y="410" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="L4skill" value="Объяснение тех. понятий" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="block1">
+          <mxGeometry x="340" y="415" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 5 - Colloquium (orange) -->
+        <mxCell id="L5" value="5. КОЛЛОКВИУМ 1&#xa;Тест + мини-кейс" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block1">
+          <mxGeometry x="60" y="530" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows Block 1 -->
+        <mxCell id="e1_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="L1" target="L2" parent="block1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="L2" target="L3" parent="block1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3_4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="L3" target="L4" parent="block1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4_5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d6b656;strokeWidth=2;" edge="1" source="L4" target="L5" parent="block1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Skill progression arrow Block 1 -->
+        <mxCell id="skillArrow1" value="Прогрессия навыков" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;fontSize=10;fontColor=#7f8c8d;fontStyle=2;size=0.5;strokeColor=#bdc3c7;" vertex="1" parent="block1">
+          <mxGeometry x="440" y="50" width="20" height="540" as="geometry" />
+        </mxCell>
+
+        <!-- Block 2 Swimlane -->
+        <mxCell id="block2" value="Блок 2 — Индустрии II + Этика (занятия 6-10)" style="shape=swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=14;horizontal=1;swimlaneLine=1;rounded=1;arcSize=8;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="600" y="40" width="500" height="720" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 6 - Lecture (blue) -->
+        <mxCell id="L6" value="6. AI в производстве и с/х&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block2">
+          <mxGeometry x="60" y="50" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="L6skill" value="Критический анализ" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="block2">
+          <mxGeometry x="340" y="55" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 7 - Practicum (green) -->
+        <mxCell id="L7" value="7. Практикум 1: Кейс-анализ с AI&#xa;Полный цикл (парная работа)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block2">
+          <mxGeometry x="60" y="170" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 8 - Lecture (blue) -->
+        <mxCell id="L8" value="8. AI в госуправлении и образовании&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block2">
+          <mxGeometry x="60" y="290" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="L8skill" value="Проверка гос. данных" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="block2">
+          <mxGeometry x="340" y="295" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 9 - Lecture (blue) -->
+        <mxCell id="L9" value="9. AI, этика и регулирование&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block2">
+          <mxGeometry x="60" y="410" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 10 - Colloquium (orange) -->
+        <mxCell id="L10" value="10. КОЛЛОКВИУМ 2&#xa;Расширенный тест + кейс&#xa;(гибрид: без AI + с AI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block2">
+          <mxGeometry x="60" y="530" width="260" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows Block 2 -->
+        <mxCell id="e6_7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#82b366;strokeWidth=2;" edge="1" source="L6" target="L7" parent="block2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7_8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="L7" target="L8" parent="block2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8_9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="L8" target="L9" parent="block2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9_10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d6b656;strokeWidth=2;" edge="1" source="L9" target="L10" parent="block2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Block 3 Swimlane -->
+        <mxCell id="block3" value="Блок 3 — Практика + Будущее (занятия 11-14)" style="shape=swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=14;horizontal=1;swimlaneLine=1;rounded=1;arcSize=8;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="40" width="500" height="720" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 11 - Lecture (blue) -->
+        <mxCell id="L11" value="11. AI в креативных индустриях&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block3">
+          <mxGeometry x="60" y="50" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 12 - Practicum (green) -->
+        <mxCell id="L12" value="12. Практикум 2: Prompt Engineering&#xa;PARTS framework, chain-of-thought" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block3">
+          <mxGeometry x="60" y="170" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 13 - Practicum (green) -->
+        <mxCell id="L13" value="13. Практикум 3: Мини-проект&#xa;AI-отчёт по индустрии" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block3">
+          <mxGeometry x="60" y="290" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Lesson 14 - Lecture (blue) -->
+        <mxCell id="L14" value="14. Будущее AI: тренды и карьера&#xa;(Лекция)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=0;arcSize=20;spacingTop=4;spacingBottom=4;" vertex="1" parent="block3">
+          <mxGeometry x="60" y="410" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows Block 3 -->
+        <mxCell id="e11_12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#82b366;strokeWidth=2;" edge="1" source="L11" target="L12" parent="block3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12_13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#82b366;strokeWidth=2;" edge="1" source="L12" target="L13" parent="block3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13_14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="L13" target="L14" parent="block3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Cross-block arrows -->
+        <mxCell id="cross1_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="L5" target="L6" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cross2_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="L10" target="L11" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend" value="Легенда" style="shape=swimlane;startSize=24;fillColor=#f5f5f5;strokeColor=#999999;fontStyle=1;fontSize=12;rounded=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="790" width="500" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="legLecture" value="Лекция" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;arcSize=20;" vertex="1" parent="legend">
+          <mxGeometry x="20" y="35" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legPracticum" value="Практикум" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;arcSize=20;" vertex="1" parent="legend">
+          <mxGeometry x="140" y="35" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legColloquium" value="Коллоквиум" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;arcSize=20;" vertex="1" parent="legend">
+          <mxGeometry x="260" y="35" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legSkill" value="AI-навык" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="legend">
+          <mxGeometry x="380" y="35" width="100" height="30" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

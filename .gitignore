@@ -1,5 +1,10 @@
 # Exported Google artifacts (may contain sensitive content)
-catalog/exports/
+catalog/exports/docs/
+catalog/exports/sheets/
+catalog/exports/slides/
+catalog/exports/pdf/
+# Viz outputs ARE committed (needed for viewing)
+!catalog/exports/viz/
 
 # RAG index data
 catalog/index/

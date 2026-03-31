@@ -35,3 +35,12 @@
 - No automated Google Drive → local export → RAG ingest flow yet
 - This is the #1 blocker for daily operations
 - Needs: sync-library skill implementation
+
+## 2026-03-31 — Ontology visualization
+
+- Primary tool: pyvis (Python) → standalone interactive HTML
+- OntoSpy broken on Python 3.12
+- WebVOWL for one-off schema views
+- draw.io for presentation-quality static diagrams
+- Pyvis script at scripts/viz-ontology.py (to be created)
+- Output to catalog/exports/viz/ontology-graph.html

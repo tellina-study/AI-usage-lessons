@@ -256,7 +256,7 @@ td {
 
 <script>
 (function() {
-  const CONN_MAP = {"doc_v2": ["doc_rpd_new", "doc_v1", "diag_roadmap", "t_mfg", "t_eth", "t_gov", "t_cre", "t_fin", "t_med", "t_sw", "t_prm"], "doc_v1": ["doc_v2"], "doc_rpd_old": ["doc_rpd_new", "t_rec", "doc_fos", "t_exp"], "doc_rpd_new": ["doc_rpd_old", "doc_v2"], "doc_fos": ["doc_rpd_old", "t_rec", "t_exp"], "t_sw": ["lec_1", "doc_v2"], "t_fin": ["doc_v2"], "t_med": ["doc_v2"], "t_mfg": ["doc_v2"], "t_gov": ["doc_v2"], "t_cre": ["doc_v2"], "t_eth": ["lec_1", "doc_v2"], "t_prm": ["lec_1", "doc_v2"], "t_rec": ["doc_rpd_old", "doc_fos"], "t_exp": ["doc_rpd_old", "doc_fos"], "lec_1": ["t_prm", "deck_1", "t_sw", "t_eth"], "deck_1": ["lec_1"], "deck_old": [], "diag_roadmap": ["doc_v2"]};
+  const CONN_MAP = {"doc_v2": ["diag_roadmap", "doc_v1", "t_gov", "t_cre", "t_eth", "t_fin", "t_sw", "t_prm", "doc_rpd_new", "t_mfg", "t_med"], "doc_v1": ["doc_v2"], "doc_rpd_old": ["t_exp", "t_rec", "doc_fos", "doc_rpd_new"], "doc_rpd_new": ["doc_rpd_old", "doc_v2"], "doc_fos": ["t_exp", "t_rec", "doc_rpd_old"], "t_sw": ["lec_1", "doc_v2"], "t_fin": ["doc_v2"], "t_med": ["doc_v2"], "t_mfg": ["doc_v2"], "t_gov": ["doc_v2"], "t_cre": ["doc_v2"], "t_eth": ["lec_1", "doc_v2"], "t_prm": ["lec_1", "doc_v2"], "t_rec": ["doc_fos", "doc_rpd_old"], "t_exp": ["doc_fos", "doc_rpd_old"], "lec_1": ["t_eth", "deck_1", "t_prm", "t_sw"], "deck_1": ["lec_1"], "deck_old": [], "diag_roadmap": ["doc_v2"]};
 
   // --- Sorting ---
   const table = document.getElementById('onto-table');

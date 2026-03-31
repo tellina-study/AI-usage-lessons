@@ -1,0 +1,136 @@
+<https://ai-usage-lessons.local/ontology#diag_semester_roadmap> <https://ai-usage-lessons.local/ontology#illustrates> <https://ai-usage-lessons.local/ontology#doc_v2_course_plan> ;
+	<https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "diagrams/lecture-flows/semester-roadmap.drawio" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
+	<https://ai-usage-lessons.local/ontology#title> "Semester Roadmap — 14 lessons across 3 blocks" ;
+	a <https://ai-usage-lessons.local/ontology#Diagram> .
+<https://ai-usage-lessons.local/ontology#deck_ii_i_mir> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#owner> "kzlevko@gmail.com" ;
+	<https://ai-usage-lessons.local/ontology#status> "archived" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/presentation/d/1j-7csuSNLQimTNz1gkV5aupormpqfPEL/edit" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	a <https://ai-usage-lessons.local/ontology#SlideDeck> .
+<https://ai-usage-lessons.local/ontology#doc_fos> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_expert_systems> , <https://ai-usage-lessons.local/ontology#topic_recommender_systems> .
+<https://ai-usage-lessons.local/ontology#doc_formal_program_old> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_expert_systems> , <https://ai-usage-lessons.local/ontology#topic_recommender_systems> .
+<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_software> .
+<https://ai-usage-lessons.local/ontology#doc_v1_course_plan> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_in_software> .
+<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_software> .
+<https://ai-usage-lessons.local/ontology#doc_fos> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#doc_formal_program_old> ;
+	<https://ai-usage-lessons.local/ontology#cites> <https://ai-usage-lessons.local/ontology#doc_formal_program_old> .
+<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#doc_formal_program_updated> .
+<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#supersedes> <https://ai-usage-lessons.local/ontology#doc_formal_program_old> .
+<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#supersedes> <https://ai-usage-lessons.local/ontology#doc_v1_course_plan> .
+<https://ai-usage-lessons.local/ontology#doc_fos> <https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "FOS Otraslevoe primenenie II" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "RPD Otraslevoe primenenie II (updated)" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_formal_program_old> <https://ai-usage-lessons.local/ontology#status> "archived" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "RPD Otraslevoe primenenie II (original)" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_v1_course_plan> <https://ai-usage-lessons.local/ontology#updated_at> "2026-02-23T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "archived" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1UliavdtqqZAyHu-JYDOGPFCbJZ44Enhju5TwmqV99Xg/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "AI v tsikle sozdaniya PO (V1)" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-06T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "AI v raznyh industriyah (V2)" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#topic_expert_systems> <http://www.w3.org/2000/01/rdf-schema#label> "Expert systems" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_recommender_systems> <http://www.w3.org/2000/01/rdf-schema#label> "Recommender systems and SPPD" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_prompt_engineering> <http://www.w3.org/2000/01/rdf-schema#label> "Prompt engineering skills" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_ethics> <http://www.w3.org/2000/01/rdf-schema#label> "AI ethics and regulation" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_in_creative> <http://www.w3.org/2000/01/rdf-schema#label> "AI in creative industries" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_in_government> <http://www.w3.org/2000/01/rdf-schema#label> "AI in government and education" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> <http://www.w3.org/2000/01/rdf-schema#label> "AI in manufacturing and agriculture" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> <http://www.w3.org/2000/01/rdf-schema#label> "AI in medicine" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_in_finance> <http://www.w3.org/2000/01/rdf-schema#label> "AI in finance and retail" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_in_software> <http://www.w3.org/2000/01/rdf-schema#label> "AI in software development" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#version_label> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "version_label" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#owner> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "owner" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#status> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
+	<http://www.w3.org/2000/01/rdf-schema#comment> "draft | active | archived | deprecated" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "status" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#updated_at> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "updated_at" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#source_system> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
+	<http://www.w3.org/2000/01/rdf-schema#comment> "google_drive | github | local" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "source_system" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#source_url> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "source_url" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#belongs_to_topic> <http://www.w3.org/2000/01/rdf-schema#comment> "Entity belongs to a topic" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "belongs_to_topic" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#tracked_by> <http://www.w3.org/2000/01/rdf-schema#comment> "Entity is tracked by a task/issue" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "tracked_by" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#supersedes> <http://www.w3.org/2000/01/rdf-schema#comment> "Newer version supersedes older" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "supersedes" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#depends_on> <http://www.w3.org/2000/01/rdf-schema#comment> "Entity depends on another entity" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "depends_on" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#illustrates> <http://www.w3.org/2000/01/rdf-schema#comment> "Diagram illustrates a document, lecture, or concept" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "illustrates" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#covers> <http://www.w3.org/2000/01/rdf-schema#comment> "Lecture or deck covers a topic or requirement" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "covers" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#cites> <http://www.w3.org/2000/01/rdf-schema#comment> "Source cites target document/section" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "cites" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Property> .
+<https://ai-usage-lessons.local/ontology#Topic> <http://www.w3.org/2000/01/rdf-schema#comment> "A thematic topic grouping entities" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Topic" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://ai-usage-lessons.local/ontology#Task> <http://www.w3.org/2000/01/rdf-schema#comment> "A tracked task (linked to GitHub Issue)" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Task" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://ai-usage-lessons.local/ontology#Diagram> <http://www.w3.org/2000/01/rdf-schema#comment> "A draw.io or other diagram artifact" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Diagram" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://ai-usage-lessons.local/ontology#SlideDeck> <http://www.w3.org/2000/01/rdf-schema#comment> "A presentation (Google Slides or local)" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "SlideDeck" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://ai-usage-lessons.local/ontology#Lecture> <http://www.w3.org/2000/01/rdf-schema#comment> "A single lecture in the course" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://ai-usage-lessons.local/ontology#Requirement> <http://www.w3.org/2000/01/rdf-schema#comment> "A normative requirement extracted from documents" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Requirement" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://ai-usage-lessons.local/ontology#Section> <http://www.w3.org/2000/01/rdf-schema#comment> "A section within a document" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Section" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://ai-usage-lessons.local/ontology#Document> <http://www.w3.org/2000/01/rdf-schema#comment> "Any managed document (normative, reference, etc.)" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Document" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class>

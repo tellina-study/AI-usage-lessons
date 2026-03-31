@@ -1,2 +1,15 @@
 # Lecture catalog manifest
-lectures: []
+lectures:
+  - number: 1
+    title: "Введение: что такое AI и почему это важно"
+    doc_id: "1VwEkLgNsMlCggakFNNG9-LNLSf8o4lJItbqo---naG0"
+    source_url: "https://docs.google.com/document/d/1VwEkLgNsMlCggakFNNG9-LNLSf8o4lJItbqo---naG0/edit"
+    topics:
+      - "типы AI-систем"
+      - "история AI"
+      - "галлюцинации AI"
+      - "промптинг: Роль + Задача + Контекст"
+      - "black box to glass box"
+    prerequisites: []
+    status: draft
+    updated_at: "2026-03-31"

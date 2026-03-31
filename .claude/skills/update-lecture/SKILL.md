@@ -110,14 +110,19 @@ mcp__workspace-mcp__modify_doc_text(
 
 If the doc needs a full rewrite, it may be simpler to clear and re-insert. Use `mcp__workspace-mcp__batch_update_doc` for complex structural changes.
 
-**Create new doc:**
+**Create new doc (IMPORTANT — use import, not create_doc):**
 ```
-mcp__workspace-mcp__create_doc(
-  title="Лекция <N>: <Title>",
-  body="<full markdown content composed in Step 4>",
+mcp__workspace-mcp__import_to_google_doc(
+  user_google_email="kzlevko@gmail.com",
+  file_name="Лекция <N>: <Title>.md",
+  content="<full markdown content composed in Step 4>",
+  source_format="md",
   folder_id="1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am"
 )
 ```
+
+This preserves markdown formatting (headings, bold, lists, tables) as native Google Docs styles.
+Do NOT use `create_doc` — it inserts raw text without formatting.
 
 Save the returned document ID.
 

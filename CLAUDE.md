@@ -192,6 +192,7 @@ Keep ontology minimal — store structural facts and references only, never dupl
 - Always save `.drawio` diagrams to `diagrams/` — never just open in browser without saving the XML file
 - Update `catalog/manifests/*.yaml` after every export or ingestion operation
 - Use `ingest_file` (from saved local path), not `ingest_data` (from strings) — file-based ingestion creates traceable provenance
+- **Creating Google Docs:** use `import_to_google_doc` with `source_format="md"`, NOT `create_doc`. The import tool converts markdown headings, bold, lists, tables to native Google Docs formatting. `create_doc` inserts raw text with no formatting.
 
 ## Security Rules
 

@@ -2,8 +2,9 @@
 lectures:
   - number: 1
     title: "Введение: что такое AI и почему это важно"
-    doc_id: "1VwEkLgNsMlCggakFNNG9-LNLSf8o4lJItbqo---naG0"
-    source_url: "https://docs.google.com/document/d/1VwEkLgNsMlCggakFNNG9-LNLSf8o4lJItbqo---naG0/edit"
+    doc_id: "1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8"
+    source_url: "https://docs.google.com/document/d/1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8/edit"
+    old_doc_id: "1VwEkLgNsMlCggakFNNG9-LNLSf8o4lJItbqo---naG0"
     topics:
       - "типы AI-систем"
       - "история AI"

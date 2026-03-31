@@ -1,0 +1,95 @@
+@prefix aul: <https://ai-usage-lessons.local/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# === Classes ===
+
+aul:Document a rdfs:Class ;
+    rdfs:label "Document" ;
+    rdfs:comment "Any managed document (normative, reference, etc.)" .
+
+aul:Section a rdfs:Class ;
+    rdfs:label "Section" ;
+    rdfs:comment "A section within a document" .
+
+aul:Requirement a rdfs:Class ;
+    rdfs:label "Requirement" ;
+    rdfs:comment "A normative requirement extracted from documents" .
+
+aul:Lecture a rdfs:Class ;
+    rdfs:label "Lecture" ;
+    rdfs:comment "A single lecture in the course" .
+
+aul:SlideDeck a rdfs:Class ;
+    rdfs:label "SlideDeck" ;
+    rdfs:comment "A presentation (Google Slides or local)" .
+
+aul:Diagram a rdfs:Class ;
+    rdfs:label "Diagram" ;
+    rdfs:comment "A draw.io or other diagram artifact" .
+
+aul:Task a rdfs:Class ;
+    rdfs:label "Task" ;
+    rdfs:comment "A tracked task (linked to GitHub Issue)" .
+
+aul:Topic a rdfs:Class ;
+    rdfs:label "Topic" ;
+    rdfs:comment "A thematic topic grouping entities" .
+
+# === Object Properties ===
+
+aul:cites a rdfs:Property ;
+    rdfs:label "cites" ;
+    rdfs:comment "Source cites target document/section" .
+
+aul:covers a rdfs:Property ;
+    rdfs:label "covers" ;
+    rdfs:comment "Lecture or deck covers a topic or requirement" .
+
+aul:illustrates a rdfs:Property ;
+    rdfs:label "illustrates" ;
+    rdfs:comment "Diagram illustrates a document, lecture, or concept" .
+
+aul:depends_on a rdfs:Property ;
+    rdfs:label "depends_on" ;
+    rdfs:comment "Entity depends on another entity" .
+
+aul:supersedes a rdfs:Property ;
+    rdfs:label "supersedes" ;
+    rdfs:comment "Newer version supersedes older" .
+
+aul:tracked_by a rdfs:Property ;
+    rdfs:label "tracked_by" ;
+    rdfs:comment "Entity is tracked by a task/issue" .
+
+aul:belongs_to_topic a rdfs:Property ;
+    rdfs:label "belongs_to_topic" ;
+    rdfs:comment "Entity belongs to a topic" .
+
+# === Datatype Properties ===
+
+aul:source_url a rdfs:Property ;
+    rdfs:label "source_url" ;
+    rdfs:range xsd:anyURI .
+
+aul:source_system a rdfs:Property ;
+    rdfs:label "source_system" ;
+    rdfs:comment "google_drive | github | local" ;
+    rdfs:range xsd:string .
+
+aul:updated_at a rdfs:Property ;
+    rdfs:label "updated_at" ;
+    rdfs:range xsd:dateTime .
+
+aul:status a rdfs:Property ;
+    rdfs:label "status" ;
+    rdfs:comment "draft | active | archived | deprecated" ;
+    rdfs:range xsd:string .
+
+aul:owner a rdfs:Property ;
+    rdfs:label "owner" ;
+    rdfs:range xsd:string .
+
+aul:version_label a rdfs:Property ;
+    rdfs:label "version_label" ;
+    rdfs:range xsd:string .

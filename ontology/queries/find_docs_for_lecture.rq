@@ -1,0 +1,13 @@
+PREFIX aul: <https://ai-usage-lessons.local/ontology#>
+
+# Find all documents related to a given lecture
+SELECT ?doc ?url ?status WHERE {
+    ?lecture a aul:Lecture ;
+             aul:covers ?topic .
+    ?doc a aul:Document ;
+         aul:belongs_to_topic ?topic ;
+         aul:source_url ?url ;
+         aul:status ?status .
+    FILTER (?status != "archived")
+}
+ORDER BY ?doc

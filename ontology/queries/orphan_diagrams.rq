@@ -1,0 +1,8 @@
+PREFIX aul: <https://ai-usage-lessons.local/ontology#>
+
+# Find diagrams that are not linked to any lecture, document, or deck
+SELECT ?diagram ?url WHERE {
+    ?diagram a aul:Diagram .
+    OPTIONAL { ?diagram aul:source_url ?url }
+    FILTER NOT EXISTS { ?diagram aul:illustrates ?anything }
+}

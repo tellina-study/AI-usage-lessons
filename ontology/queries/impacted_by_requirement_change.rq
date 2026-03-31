@@ -1,0 +1,18 @@
+PREFIX aul: <https://ai-usage-lessons.local/ontology#>
+
+# Find all entities impacted when a requirement changes
+SELECT ?entity ?type ?url WHERE {
+    ?req a aul:Requirement .
+    {
+        ?entity aul:covers ?req .
+    } UNION {
+        ?entity aul:cites ?req .
+    } UNION {
+        ?entity aul:illustrates ?req .
+    } UNION {
+        ?entity aul:depends_on ?req .
+    }
+    ?entity a ?type .
+    OPTIONAL { ?entity aul:source_url ?url }
+}
+ORDER BY ?type ?entity

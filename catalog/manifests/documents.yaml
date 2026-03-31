@@ -1,0 +1,3 @@
+# Document catalog manifest
+# Each entry maps a local/exported document to its source
+documents: []

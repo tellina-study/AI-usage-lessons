@@ -1,0 +1,15 @@
+@prefix aul: <https://ai-usage-lessons.local/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Vocabulary instances for common values
+
+# Source systems
+aul:GoogleDrive a aul:SourceSystem ; rdfs:label "google_drive" .
+aul:GitHub a aul:SourceSystem ; rdfs:label "github" .
+aul:Local a aul:SourceSystem ; rdfs:label "local" .
+
+# Statuses
+aul:StatusDraft rdfs:label "draft" .
+aul:StatusActive rdfs:label "active" .
+aul:StatusArchived rdfs:label "archived" .
+aul:StatusDeprecated rdfs:label "deprecated" .

@@ -1,0 +1,26 @@
+# Exported Google artifacts (may contain sensitive content)
+catalog/exports/
+
+# RAG index data
+catalog/index/
+
+# Environment and secrets
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+token.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Oxigraph data
+oxigraph-data/

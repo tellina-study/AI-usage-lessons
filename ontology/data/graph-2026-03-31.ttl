@@ -1,3 +1,116 @@
+<https://ai-usage-lessons.local/ontology#doc_course_narrative> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#doc_v2_course_plan> .
+<https://ai-usage-lessons.local/ontology#doc_course_structure> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#doc_v2_course_plan> .
+<https://ai-usage-lessons.local/ontology#doc_exam1> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#lec_1> .
+<https://ai-usage-lessons.local/ontology#doc_sem01_guide> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#doc_sem01_task> .
+<https://ai-usage-lessons.local/ontology#doc_sem01_task> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#lec_1> .
+<https://ai-usage-lessons.local/ontology#doc_lec01_plan> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#lec_1> .
+<https://ai-usage-lessons.local/ontology#doc_stats_general> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_software> .
+<https://ai-usage-lessons.local/ontology#doc_stats_finance> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> .
+<https://ai-usage-lessons.local/ontology#doc_prompt_library> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> .
+<https://ai-usage-lessons.local/ontology#doc_ai_cheatsheet> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> .
+<https://ai-usage-lessons.local/ontology#doc_course_structure> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_software> .
+<https://ai-usage-lessons.local/ontology#doc_final_exam> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1Rr6niV4SHQr1IwH14Pzn-8ziTxZlFj4gbmfWc0AT8B4/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Итоговый экзамен" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_exam1> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1AMnpH0C05cGMbIfAUqT166JhBSXFk2bztuiCDTtzOpc/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Промежуточный контроль 1" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_sem01_guide> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1n3aW30ZANDQITh0c-BuHnWfB82wUKiuqIvh1xVg9BV4/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Семинар 1 — руководство" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_sem01_task> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1KyTg-h3S8v_NOK1SL6SMN-wDvCo0lsebBKHLpwrVJWU/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Семинар 1 — задание" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_lec01_plan> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1UX671dOrhfQ8OgnadD_8ce4dhVJ9wDVrFqPq6p9S9uo/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "План лекции 1" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_stats_finance> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1hY0mSFGrR5Gn3CR3Ah8SHQyJUL4oLeFchYlue7Sd4Nc/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Статистика — Финансы и ритейл" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_stats_general> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1i5T6naIAt-K4cFPJixN5i4w7WzHgumCsTu_v3G9ufTM/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Статистика AI — общий обзор" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_prompt_library> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1o1ctSpLqtTMRyaIyjPcMRItFMMohKWQbkl9KlrEMcFY/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Библиотека промптов" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_ai_cheatsheet> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1RODql_LKx_MSH7C6TINpvH9HxXJoDowHhgyBHhSM5qU/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "AI Cheat Sheet" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_course_narrative> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1ii8GbnjYGSoyadnBO_S5SKXVptq1QYz4QcDOGQ3DknI/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Нарратив курса" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#doc_course_structure> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1djdHRpBFFK_4rvH7nl3L4V5hM1glN1G04_HPem9JDes/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Структура курса" ;
+	a <https://ai-usage-lessons.local/ontology#Document> .
+<https://ai-usage-lessons.local/ontology#deck_lec_1> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#lec_1> ;
+	<https://ai-usage-lessons.local/ontology#status> "draft" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/presentation/d/1BviVqnn7vtHGg09h22UzfUTyQswTHfvSXqol_JaRTyM/edit" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Лекция 1: Введение — что такое AI и почему это важно" ;
+	a <https://ai-usage-lessons.local/ontology#SlideDeck> .
+<https://ai-usage-lessons.local/ontology#topic_black_box_to_glass_box> <https://ai-usage-lessons.local/ontology#status> "active" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_prompting_basics> <https://ai-usage-lessons.local/ontology#status> "active" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_hallucinations> <https://ai-usage-lessons.local/ontology#status> "active" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_history> <https://ai-usage-lessons.local/ontology#status> "active" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#topic_ai_types> <https://ai-usage-lessons.local/ontology#status> "active" ;
+	a <https://ai-usage-lessons.local/ontology#Topic> .
+<https://ai-usage-lessons.local/ontology#lec_1> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#topic_black_box_to_glass_box> , <https://ai-usage-lessons.local/ontology#topic_prompting_basics> , <https://ai-usage-lessons.local/ontology#topic_ai_hallucinations> , <https://ai-usage-lessons.local/ontology#topic_ai_history> , <https://ai-usage-lessons.local/ontology#topic_ai_types> ;
+	<https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#owner> "kzlevko@gmail.com" ;
+	<https://ai-usage-lessons.local/ontology#status> "draft" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1VwEkLgNsMlCggakFNNG9-LNLSf8o4lJItbqo---naG0/edit" ;
+	a <https://ai-usage-lessons.local/ontology#Lecture> .
+<https://ai-usage-lessons.local/ontology#diag_semester_roadmap> <https://ai-usage-lessons.local/ontology#illustrates> <https://ai-usage-lessons.local/ontology#doc_v2_course_plan> ;
+	<https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "diagrams/lecture-flows/semester-roadmap.drawio" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
+	<https://ai-usage-lessons.local/ontology#title> "Semester Roadmap — 14 lessons across 3 blocks" ;
+	a <https://ai-usage-lessons.local/ontology#Diagram> .
+<https://ai-usage-lessons.local/ontology#deck_ii_i_mir> <https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<https://ai-usage-lessons.local/ontology#owner> "kzlevko@gmail.com" ;
+	<https://ai-usage-lessons.local/ontology#status> "archived" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/presentation/d/1j-7csuSNLQimTNz1gkV5aupormpqfPEL/edit" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
+	a <https://ai-usage-lessons.local/ontology#SlideDeck> .
 <https://ai-usage-lessons.local/ontology#doc_fos> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_expert_systems> , <https://ai-usage-lessons.local/ontology#topic_recommender_systems> .
 <https://ai-usage-lessons.local/ontology#doc_formal_program_old> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_expert_systems> , <https://ai-usage-lessons.local/ontology#topic_recommender_systems> .
 <https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_software> .

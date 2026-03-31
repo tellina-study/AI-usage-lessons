@@ -50,6 +50,7 @@ RELATION_COLORS = {
 
 # Node data with links and attributes
 NODES = [
+    # Original documents (5)
     {"id": "doc_v2", "label": "AI в разных индустриях (V2)", "type": "Document", "status": "active",
      "url": "https://docs.google.com/document/d/1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY/edit",
      "local_path": "catalog/exports/docs/ai-v-raznyh-industriyah.md",
@@ -70,6 +71,40 @@ NODES = [
      "url": "https://docs.google.com/document/d/1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay/edit",
      "local_path": "catalog/exports/docs/fos_otraslevoe_primenenie_AI.docx",
      "updated_at": "2026-03-30", "owner": "kzlevko@gmail.com"},
+    # New documents from Drive restructure (11)
+    {"id": "doc_course_structure", "label": "Структура курса", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1djdHRpBFFK_4rvH7nl3L4V5hM1glN1G04_HPem9JDes/edit",
+     "local_path": "catalog/exports/docs/course-structure.md"},
+    {"id": "doc_course_narrative", "label": "Нарратив курса", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1ii8GbnjYGSoyadnBO_S5SKXVptq1QYz4QcDOGQ3DknI/edit",
+     "local_path": "catalog/exports/docs/course-narrative.md"},
+    {"id": "doc_ai_cheatsheet", "label": "AI Cheat Sheet", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1RODql_LKx_MSH7C6TINpvH9HxXJoDowHhgyBHhSM5qU/edit",
+     "local_path": "catalog/exports/docs/ai-cheatsheet.md"},
+    {"id": "doc_prompt_library", "label": "Библиотека промптов", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1o1ctSpLqtTMRyaIyjPcMRItFMMohKWQbkl9KlrEMcFY/edit",
+     "local_path": "catalog/exports/docs/prompt-library.md"},
+    {"id": "doc_stats_general", "label": "Статистика AI — обзор", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1i5T6naIAt-K4cFPJixN5i4w7WzHgumCsTu_v3G9ufTM/edit",
+     "local_path": "catalog/exports/docs/stats-overview.md"},
+    {"id": "doc_stats_finance", "label": "Статистика — Финансы", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1hY0mSFGrR5Gn3CR3Ah8SHQyJUL4oLeFchYlue7Sd4Nc/edit",
+     "local_path": "catalog/exports/docs/stats-finance-retail.md"},
+    {"id": "doc_lec01_plan", "label": "План лекции 1", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1UX671dOrhfQ8OgnadD_8ce4dhVJ9wDVrFqPq6p9S9uo/edit",
+     "local_path": "catalog/exports/docs/lec-01-plan.md"},
+    {"id": "doc_sem01_task", "label": "Семинар 1 — задание", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1KyTg-h3S8v_NOK1SL6SMN-wDvCo0lsebBKHLpwrVJWU/edit",
+     "local_path": "catalog/exports/docs/sem-01-task.md"},
+    {"id": "doc_sem01_guide", "label": "Семинар 1 — руководство", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1n3aW30ZANDQITh0c-BuHnWfB82wUKiuqIvh1xVg9BV4/edit"},
+    {"id": "doc_exam1", "label": "Промежуточный контроль 1", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1AMnpH0C05cGMbIfAUqT166JhBSXFk2bztuiCDTtzOpc/edit",
+     "local_path": "catalog/exports/docs/sem-05-midterm-1.md"},
+    {"id": "doc_final_exam", "label": "Итоговый экзамен", "type": "Document", "status": "active",
+     "url": "https://docs.google.com/document/d/1Rr6niV4SHQr1IwH14Pzn-8ziTxZlFj4gbmfWc0AT8B4/edit",
+     "local_path": "catalog/exports/docs/sem-17-final-exam.md"},
+    # Topics (10)
     {"id": "t_sw", "label": "AI в ПО", "type": "Topic"},
     {"id": "t_fin", "label": "AI в финансах", "type": "Topic"},
     {"id": "t_med", "label": "AI в медицине", "type": "Topic"},
@@ -80,20 +115,24 @@ NODES = [
     {"id": "t_prm", "label": "Промптинг", "type": "Topic"},
     {"id": "t_rec", "label": "Рек. системы", "type": "Topic"},
     {"id": "t_exp", "label": "Эксп. системы", "type": "Topic"},
+    # Lecture (1)
     {"id": "lec_1", "label": "Лекция 1: Введение", "type": "Lecture", "status": "draft",
      "url": "https://docs.google.com/document/d/1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8/edit",
      "updated_at": "2026-03-31"},
+    # Decks (2)
     {"id": "deck_1", "label": "Слайды Л1", "type": "SlideDeck", "status": "draft",
      "url": "https://docs.google.com/presentation/d/1BviVqnn7vtHGg09h22UzfUTyQswTHfvSXqol_JaRTyM/edit",
      "updated_at": "2026-03-31"},
     {"id": "deck_old", "label": "ИИ и мир (old)", "type": "SlideDeck", "status": "archived",
      "local_path": "catalog/exports/slides/ii-i-mir.pptx"},
+    # Diagram (1)
     {"id": "diag_roadmap", "label": "Семестровый план", "type": "Diagram", "status": "active",
      "local_path": "diagrams/lecture-flows/semester-roadmap.drawio",
      "git_url": "https://github.com/tellina-study/AI-usage-lessons/blob/main/diagrams/lecture-flows/semester-roadmap.drawio"},
 ]
 
 EDGES = [
+    # Original relations
     {"source": "doc_v2", "target": "doc_v1", "relation": "supersedes"},
     {"source": "doc_rpd_new", "target": "doc_rpd_old", "relation": "supersedes"},
     {"source": "doc_v2", "target": "doc_rpd_new", "relation": "depends_on"},
@@ -101,6 +140,7 @@ EDGES = [
     {"source": "doc_fos", "target": "doc_rpd_old", "relation": "cites"},
     {"source": "deck_1", "target": "lec_1", "relation": "depends_on"},
     {"source": "diag_roadmap", "target": "doc_v2", "relation": "illustrates"},
+    # V2 topic links
     {"source": "doc_v2", "target": "t_sw", "relation": "belongs_to_topic"},
     {"source": "doc_v2", "target": "t_fin", "relation": "belongs_to_topic"},
     {"source": "doc_v2", "target": "t_med", "relation": "belongs_to_topic"},
@@ -109,13 +149,41 @@ EDGES = [
     {"source": "doc_v2", "target": "t_cre", "relation": "belongs_to_topic"},
     {"source": "doc_v2", "target": "t_eth", "relation": "belongs_to_topic"},
     {"source": "doc_v2", "target": "t_prm", "relation": "belongs_to_topic"},
+    # Old program topics
     {"source": "doc_rpd_old", "target": "t_rec", "relation": "belongs_to_topic"},
     {"source": "doc_rpd_old", "target": "t_exp", "relation": "belongs_to_topic"},
     {"source": "doc_fos", "target": "t_rec", "relation": "belongs_to_topic"},
     {"source": "doc_fos", "target": "t_exp", "relation": "belongs_to_topic"},
+    # Lecture covers
     {"source": "lec_1", "target": "t_sw", "relation": "covers"},
     {"source": "lec_1", "target": "t_eth", "relation": "covers"},
     {"source": "lec_1", "target": "t_prm", "relation": "covers"},
+    # New: course_structure topic links
+    {"source": "doc_course_structure", "target": "t_sw", "relation": "belongs_to_topic"},
+    {"source": "doc_course_structure", "target": "t_fin", "relation": "belongs_to_topic"},
+    {"source": "doc_course_structure", "target": "t_med", "relation": "belongs_to_topic"},
+    {"source": "doc_course_structure", "target": "t_mfg", "relation": "belongs_to_topic"},
+    {"source": "doc_course_structure", "target": "t_gov", "relation": "belongs_to_topic"},
+    {"source": "doc_course_structure", "target": "t_cre", "relation": "belongs_to_topic"},
+    {"source": "doc_course_structure", "target": "t_eth", "relation": "belongs_to_topic"},
+    {"source": "doc_course_structure", "target": "t_prm", "relation": "belongs_to_topic"},
+    # New: cheatsheet & prompt library topic links
+    {"source": "doc_ai_cheatsheet", "target": "t_prm", "relation": "belongs_to_topic"},
+    {"source": "doc_prompt_library", "target": "t_prm", "relation": "belongs_to_topic"},
+    # New: stats topic links
+    {"source": "doc_stats_finance", "target": "t_fin", "relation": "belongs_to_topic"},
+    {"source": "doc_stats_general", "target": "t_sw", "relation": "belongs_to_topic"},
+    {"source": "doc_stats_general", "target": "t_fin", "relation": "belongs_to_topic"},
+    {"source": "doc_stats_general", "target": "t_med", "relation": "belongs_to_topic"},
+    {"source": "doc_stats_general", "target": "t_mfg", "relation": "belongs_to_topic"},
+    {"source": "doc_stats_general", "target": "t_gov", "relation": "belongs_to_topic"},
+    # New: depends_on relations
+    {"source": "doc_lec01_plan", "target": "lec_1", "relation": "depends_on"},
+    {"source": "doc_sem01_task", "target": "lec_1", "relation": "depends_on"},
+    {"source": "doc_sem01_guide", "target": "doc_sem01_task", "relation": "depends_on"},
+    {"source": "doc_exam1", "target": "lec_1", "relation": "depends_on"},
+    {"source": "doc_course_structure", "target": "doc_v2", "relation": "depends_on"},
+    {"source": "doc_course_narrative", "target": "doc_v2", "relation": "depends_on"},
 ]
 
 # Build node lookup for JS

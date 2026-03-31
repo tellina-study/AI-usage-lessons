@@ -1,16 +1,5 @@
 {
   "mcpServers": {
-    "workspace-mcp": {
-      "command": "uvx",
-      "args": ["workspace-mcp"]
-    },
-    "github": {
-      "command": "/home/levko/.local/bin/github-mcp-server",
-      "args": ["stdio"],
-      "env": {
-        "GITHUB_TOOLSETS": "repos,issues,pull_requests"
-      }
-    },
     "document-loader": {
       "command": "uvx",
       "args": ["awslabs.document-loader-mcp-server@latest"],

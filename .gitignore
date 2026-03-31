@@ -8,6 +8,7 @@ catalog/index/
 .env
 .env.*
 .claude/settings.local.json
+.mcp.json
 *.key
 *.pem
 credentials.json

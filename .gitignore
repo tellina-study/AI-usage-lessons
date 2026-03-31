@@ -7,6 +7,8 @@ catalog/index/
 # Environment and secrets
 .env
 .env.*
+.claude/settings.local.json
+.mcp.json
 *.key
 *.pem
 credentials.json
@@ -24,3 +26,7 @@ Thumbs.db
 
 # Oxigraph data
 oxigraph-data/
+
+# Local RAG data (LanceDB + models)
+lancedb/
+models/

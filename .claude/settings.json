@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "/home/levko/.local/bin/github-mcp-server",
+      "args": ["stdio"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "GITHUB_TOOLSETS": "repos,issues,pull_requests"
+      }
+    },
+    "local-rag": {
+      "command": "npx",
+      "args": ["-y", "mcp-local-rag"],
+      "env": {
+        "BASE_DIR": "/home/levko/AI-usage-lessons/catalog/exports"
+      }
+    },
+    "drawio": {
+      "command": "npx",
+      "args": ["-y", "@drawio/mcp"]
+    },
+    "open-ontologies": {
+      "command": "/home/levko/.local/bin/open-ontologies",
+      "args": ["serve"]
+    }
+  }
+}

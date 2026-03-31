@@ -1,3 +1,48 @@
 # Document catalog manifest
-# Each entry maps a local/exported document to its source
-documents: []
+# Updated: 2026-03-31
+documents:
+  - id: 1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY
+    title: "AI в разных индустриях (V2 course plan)"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY/edit"
+    local_path: "catalog/exports/docs/ai-v-raznyh-industriyah.md"
+    format: markdown
+    exported_at: "2026-03-31"
+
+  - id: 1UliavdtqqZAyHu-JYDOGPFCbJZ44Enhju5TwmqV99Xg
+    title: "AI в цикле создания ПО (V1 course plan)"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1UliavdtqqZAyHu-JYDOGPFCbJZ44Enhju5TwmqV99Xg/edit"
+    local_path: "catalog/exports/docs/ai-v-tsikle-sozdaniya-po.md"
+    format: markdown
+    exported_at: "2026-03-31"
+
+  - id: 18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE
+    title: "Рабочая программа - Отраслевое применение систем ИИ (old formal)"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE/edit"
+    local_path: "catalog/exports/docs/prog-otraslevoe-primenenie-AI.md"
+    format: markdown
+    exported_at: "2026-03-31"
+
+  - id: 1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay
+    title: "ФОС - Отраслевое применение систем ИИ"
+    type: docx-uploaded
+    source_url: "https://docs.google.com/document/d/1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay/edit"
+    local_path: "catalog/exports/docs/fos_otraslevoe_primenenie_AI.docx"
+    format: docx
+    exported_at: "2026-03-31"
+
+  - id: 1XKTGBSWGoLfTPlcBBmnH4ewdIfukO3-o
+    title: "Рабочая программа - Отраслевое применение систем ИИ (DOCX copy)"
+    type: docx-uploaded
+    source_url: "https://docs.google.com/document/d/1XKTGBSWGoLfTPlcBBmnH4ewdIfukO3-o/edit"
+    local_path: null
+    note: "Duplicate of Google Doc version, not exported separately"
+
+  - id: 1oqtfAwZqVscMKPkr7yXH4nzJKjGNW3nH
+    title: "Снимок экрана (74) (1).png"
+    type: image
+    source_url: "https://drive.google.com/file/d/1oqtfAwZqVscMKPkr7yXH4nzJKjGNW3nH/view"
+    local_path: null
+    note: "Screenshot, not exported"

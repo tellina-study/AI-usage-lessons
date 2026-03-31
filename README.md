@@ -70,12 +70,23 @@ Agent definitions live in `.claude/agents/`.
 
 ## Ontology visualization
 
-Graph and table views are available in [`catalog/exports/viz/`](catalog/exports/viz/).
+Interactive views of the knowledge graph (documents, topics, lectures, and their relationships).
 
-- `ontology-graph.html` -- interactive force-directed graph of entities and relations
-- `ontology-table.html` -- tabular view of all triples
+**Open locally after cloning:**
+```bash
+python3 scripts/viz-ontology.py         # generate graph
+python3 scripts/viz-ontology-table.py   # generate table
+open catalog/exports/viz/index.html     # open combined viewer
+```
 
-Regenerate with: `python3 scripts/viz-ontology.py`
+**Views:**
+- [**Graph view**](catalog/exports/viz/ontology-graph.html) — force-directed graph with type filters, attribute panel, Drive/GitHub links, neighbor highlighting
+- [**Table view**](catalog/exports/viz/ontology-table.html) — sortable table with search, connected objects, clickable links
+- [**Combined viewer**](catalog/exports/viz/index.html) — tabbed interface with both views
+
+**Auto-regeneration:** a pre-commit hook runs the scripts automatically when ontology data or viz scripts change.
+
+**Scripts:** [`scripts/viz-ontology.py`](scripts/viz-ontology.py) | [`scripts/viz-ontology-table.py`](scripts/viz-ontology-table.py)
 
 ## Repository structure
 

@@ -118,3 +118,7 @@ Total: X new, Y changed, Z unchanged, E errors
 ```
 
 Report any errors encountered during export or ingestion.
+
+### Step 7: Trigger compile-wiki
+
+After syncing, remind the user to run `/compile-wiki` to update the ontology and wiki index with newly exported content. If new or changed files were found, this is mandatory to keep the knowledge base in sync.

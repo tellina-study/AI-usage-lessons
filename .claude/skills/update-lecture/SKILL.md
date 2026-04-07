@@ -169,3 +169,7 @@ mcp__open-ontologies__onto_load(
 - References used: <count> documents
 - Ontology: lecture entity + <count> relations loaded
 ```
+
+### Step 9: Trigger compile-wiki
+
+After creating/updating lecture content, remind the user to run `/compile-wiki` to ingest new research notes and papers into RAG and update wiki indexes.

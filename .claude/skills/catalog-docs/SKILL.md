@@ -131,3 +131,7 @@ Print a summary:
 ### Errors
 - <any errors>
 ```
+
+### Step 8: Trigger compile-wiki
+
+After cataloging new documents, remind the user to run `/compile-wiki` to ingest newly cataloged files into RAG and update wiki indexes with the new content.

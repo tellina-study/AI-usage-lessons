@@ -311,17 +311,41 @@ Coverage indicators in frontmatter:
 5. **concept-page.md** — cross-cutting concept definition + trade-offs
 6. **decision-record.md** — ADR-style decision documentation
 
+## /compile-wiki Skill (Phased)
+
+The `/compile-wiki` skill exists from Phase 1 and grows in capability each phase. This avoids the "ontology/RAG go stale" problem — one skill, always available, increasingly powerful.
+
+**Skill file:** `.claude/skills/compile-wiki/SKILL.md`
+
+| Phase | Capability | Trigger |
+|-------|-----------|---------|
+| 1 (Reindex) | Load ontology + ingest all sources into RAG + verify | After /sync-library, /update-lecture, /catalog-docs, or manual paper import |
+| 2 (Populate) | Phase 1 + add Lecture/Requirement/LO instances to ontology | After new lecture content is created |
+| 3 (Generate) | Phase 2 + create wiki/ pages (index, topic indexes, lecture summaries) | After significant content changes |
+| 4 (Full) | Phase 3 + incremental 3-pass compilation with change detection | Daily cycle or on demand |
+
+**Integration with existing skills:**
+- `/sync-library` Step 7: reminds user to run `/compile-wiki` after syncing Drive exports
+- `/update-lecture` Step 9: reminds user to run `/compile-wiki` after creating lecture content
+- `/catalog-docs` Step 8: reminds user to run `/compile-wiki` after cataloging new documents
+
+**Daily cycle update:**
+1. Sync: `/sync-library` pulls changes from Drive
+2. **Compile: `/compile-wiki` updates RAG, ontology, and wiki indexes**
+3. Catalog: `/catalog-docs` + `/extract-links` update manifests
+4. Tasks: `/issue-from-change` creates issues from changes
+
 ## Implementation Phases
 
-### Phase 1: Fix Broken Infrastructure
+### Phase 1: Fix Broken Infrastructure + compile-wiki Phase 1
 - [ ] Fix store.ttl syntax error (line 136)
 - [ ] Populate ontology: 17 lectures, topic-lecture covers, PKS-3 requirement
-- [ ] Ingest notes/research/lecture-1/*.md into RAG (7 files)
-- [ ] Ingest 15 PDFs into RAG via document-loader
+- [ ] Create `/compile-wiki` skill (Phase 1: reindex)
+- [ ] Run `/compile-wiki` — ingest all sources into RAG, load ontology
 - [ ] Re-run tool tests for ontology and RAG — verify they return results
-- **Gate:** ontology returns data for all 3 SPARQL queries, RAG finds research notes
+- **Gate:** ontology returns data for all 3 SPARQL queries, RAG finds research notes, `/compile-wiki` runs successfully
 
-### Phase 2: Wiki Index Layer
+### Phase 2: Wiki Index Layer + compile-wiki Phase 2-3
 - [ ] Create wiki/ directory structure
 - [ ] Create wiki/index.md (master index)
 - [ ] Create wiki/topics/ with 8+ topic _index.md pages
@@ -329,20 +353,21 @@ Coverage indicators in frontmatter:
 - [ ] Create templates/wiki/ (6 templates)
 - [ ] Create catalog/manifests/wiki-manifest.yaml
 - [ ] Extend ontology schema (Paper, Concept, subtopic_of, cites_paper, LearningOutcome, assessed_by)
-- **Gate:** wiki index navigable, topic pages list all known sources
+- [ ] Advance `/compile-wiki` to Phase 2-3 (populate ontology + generate wiki pages)
+- **Gate:** wiki index navigable, topic pages list all known sources, `/compile-wiki` generates pages
 
 ### Phase 3: Paper Storage and Bulk Ingestion
 - [ ] Create raw/papers/ structure (inbox/, classified/)
-- [ ] Build bulk ingestion workflow (skill or script)
+- [ ] Build bulk ingestion into `/compile-wiki` Phase 3
 - [ ] Test with remaining Lecture 1 sources (189 not yet downloaded)
 - [ ] Update .gitignore for raw/papers/ PDFs
-- **Gate:** can ingest 50+ papers in one operation
+- **Gate:** can ingest 50+ papers in one `/compile-wiki` run
 
-### Phase 4: Compilation Skill
-- [ ] Implement 3-pass /compile-wiki skill
+### Phase 4: Full Compilation Pipeline
+- [ ] Advance `/compile-wiki` to Phase 4 (incremental 3-pass)
 - [ ] Test incremental compilation (change 1 source, verify only affected pages recompile)
-- [ ] Integrate with daily cycle
-- **Gate:** compilation produces correct wiki pages from raw sources
+- [ ] Integrate into daily cycle
+- **Gate:** compilation detects changes and only recompiles affected pages
 
 ### Re-Test
 - [ ] Run all 3 E2E scenarios in fresh sessions

@@ -133,4 +133,4 @@
 	a <http://www.w3.org/2000/01/rdf-schema#Class> .
 <https://ai-usage-lessons.local/ontology#Document> <http://www.w3.org/2000/01/rdf-schema#comment> "Any managed document (normative, reference, etc.)" ;
 	<http://www.w3.org/2000/01/rdf-schema#label> "Document" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class>
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .

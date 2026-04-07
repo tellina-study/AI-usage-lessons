@@ -93,3 +93,47 @@ aul:owner a rdfs:Property ;
 aul:version_label a rdfs:Property ;
     rdfs:label "version_label" ;
     rdfs:range xsd:string .
+
+# === New Classes (Wiki Architecture #19, Phase 2) ===
+
+aul:Paper a rdfs:Class ;
+    rdfs:label "Paper" ;
+    rdfs:comment "External academic paper or report" .
+
+aul:Concept a rdfs:Class ;
+    rdfs:label "Concept" ;
+    rdfs:comment "Cross-cutting concept auto-discovered during wiki compilation" .
+
+aul:LearningOutcome a rdfs:Class ;
+    rdfs:label "LearningOutcome" ;
+    rdfs:comment "A learning outcome that links requirements to lectures" .
+
+aul:Seminar a rdfs:Class ;
+    rdfs:label "Seminar" ;
+    rdfs:comment "A seminar session that assesses learning outcomes" .
+
+# === New Object Properties (Wiki Architecture #19, Phase 2) ===
+
+aul:subtopic_of a rdfs:Property ;
+    rdfs:label "subtopic_of" ;
+    rdfs:comment "Topic is a sub-topic of another topic (hierarchical taxonomy)" .
+
+aul:cites_paper a rdfs:Property ;
+    rdfs:label "cites_paper" ;
+    rdfs:comment "Document or lecture references an external paper" .
+
+aul:related_concept a rdfs:Property ;
+    rdfs:label "related_concept" ;
+    rdfs:comment "Concept is related to another concept" .
+
+aul:fulfills a rdfs:Property ;
+    rdfs:label "fulfills" ;
+    rdfs:comment "Learning outcome fulfills a requirement" .
+
+aul:assesses a rdfs:Property ;
+    rdfs:label "assesses" ;
+    rdfs:comment "Seminar assesses a learning outcome" .
+
+aul:supports a rdfs:Property ;
+    rdfs:label "supports" ;
+    rdfs:comment "Research note supports a lecture" .

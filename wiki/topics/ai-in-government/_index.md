@@ -1,0 +1,22 @@
+---
+title: "AI in Government and Education"
+type: topic-index
+sources_count: 0
+lectures: [6]
+coverage: low
+updated_at: 2026-04-07
+---
+
+# AI in Government and Education
+
+## Overview
+Public services, smart cities, regulatory compliance. Primary lecture: 6.
+
+## Sources
+Content pending -- lecture 6 research not yet completed.
+
+## Lectures
+- [Lecture 6](../../lectures/lec-06.md) *(planned)* -- primary lecture
+
+## Backlinks
+- [wiki/index.md](../../index.md) -- topic listing

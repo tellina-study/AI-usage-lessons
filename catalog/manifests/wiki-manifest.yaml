@@ -1,0 +1,42 @@
+# Wiki compilation manifest
+# Tracks compilation state and source hashes
+# Updated by /compile-wiki skill
+last_compiled: "2026-04-07"
+phase: 2
+ontology_triples: 293
+rag_files_indexed: 47
+wiki_pages:
+  - path: wiki/index.md
+    type: master-index
+  - path: wiki/lectures/lec-01.md
+    type: lecture-summary
+  - path: wiki/topics/ai-fundamentals/_index.md
+    type: topic-index
+    coverage: high
+  - path: wiki/topics/ai-agents/_index.md
+    type: topic-index
+    coverage: high
+  - path: wiki/topics/ai-ethics/_index.md
+    type: topic-index
+    coverage: medium
+  - path: wiki/topics/ai-in-software/_index.md
+    type: topic-index
+    coverage: low
+  - path: wiki/topics/ai-in-finance/_index.md
+    type: topic-index
+    coverage: low
+  - path: wiki/topics/ai-in-medicine/_index.md
+    type: topic-index
+    coverage: low
+  - path: wiki/topics/ai-in-manufacturing/_index.md
+    type: topic-index
+    coverage: low
+  - path: wiki/topics/ai-in-government/_index.md
+    type: topic-index
+    coverage: low
+  - path: wiki/topics/ai-in-creative/_index.md
+    type: topic-index
+    coverage: low
+  - path: wiki/topics/prompt-engineering/_index.md
+    type: topic-index
+    coverage: low

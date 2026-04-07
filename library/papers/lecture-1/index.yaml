@@ -1,0 +1,126 @@
+# Lecture 1 reference papers manifest
+# Downloaded: 2026-04-07
+# Source: notes/research/lecture-1/*.md
+papers:
+  - file: vaswani-2017-attention.pdf
+    title: "Attention Is All You Need"
+    authors: "Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, Polosukhin"
+    year: 2017
+    arxiv: "1706.03762"
+    topics: [architectures, transformers]
+    referenced_in: [classifications.md]
+
+  - file: goodfellow-2014-gan.pdf
+    title: "Generative Adversarial Nets"
+    authors: "Goodfellow, Pouget-Abadie, Mirza, Xu, Warde-Farley, Ozair, Courville, Bengio"
+    year: 2014
+    arxiv: "1406.2661"
+    topics: [architectures, generative-models]
+    referenced_in: [classifications.md]
+
+  - file: ho-2020-diffusion.pdf
+    title: "Denoising Diffusion Probabilistic Models"
+    authors: "Ho, Jain, Abbeel"
+    year: 2020
+    arxiv: "2006.11239"
+    topics: [architectures, generative-models]
+    referenced_in: [classifications.md]
+
+  - file: bommasani-2021-foundation-models.pdf
+    title: "On the Opportunities and Risks of Foundation Models"
+    authors: "Bommasani et al."
+    year: 2021
+    arxiv: "2108.07258"
+    topics: [foundation-models, survey]
+    referenced_in: [classifications.md]
+
+  - file: yao-2022-react.pdf
+    title: "ReAct: Synergizing Reasoning and Acting in Language Models"
+    authors: "Yao, Zhao, Yu, Du, Shafran, Narasimhan, Cao"
+    year: 2022
+    arxiv: "2210.03629"
+    topics: [agents, reasoning]
+    referenced_in: [model-chat-agent-app.md]
+
+  - file: schick-2023-toolformer.pdf
+    title: "Toolformer: Language Models Can Teach Themselves to Use Tools"
+    authors: "Schick et al."
+    year: 2023
+    arxiv: "2302.04761"
+    topics: [agents, tool-use]
+    referenced_in: [model-chat-agent-app.md]
+
+  - file: wang-2023-llm-agents-survey.pdf
+    title: "A Survey on Large Language Model based Autonomous Agents"
+    authors: "Wang et al."
+    year: 2023
+    arxiv: "2308.11432"
+    topics: [agents, survey]
+    referenced_in: [model-chat-agent-app.md]
+
+  - file: masterman-2024-agent-architectures.pdf
+    title: "The Landscape of Emerging AI Agent Architectures"
+    authors: "Masterman et al."
+    year: 2024
+    arxiv: "2404.11584"
+    topics: [agents, architectures, survey]
+    referenced_in: [model-chat-agent-app.md, classifications.md]
+
+  - file: balestriero-2023-self-supervised.pdf
+    title: "A Cookbook of Self-Supervised Learning"
+    authors: "Balestriero, Ibrahim, ... LeCun"
+    year: 2023
+    arxiv: "2304.12210"
+    topics: [learning-approaches, self-supervised]
+    referenced_in: [classifications.md]
+
+  - file: chollet-2019-measure-intelligence.pdf
+    title: "On the Measure of Intelligence"
+    authors: "Chollet"
+    year: 2019
+    arxiv: "1911.01547"
+    topics: [intelligence, benchmarks, arc]
+    referenced_in: [human-vs-ai.md]
+
+  - file: he-2015-resnet.pdf
+    title: "Deep Residual Learning for Image Recognition"
+    authors: "He, Zhang, Ren, Sun"
+    year: 2015
+    arxiv: "1512.03385"
+    topics: [architectures, computer-vision]
+    referenced_in: [human-vs-ai.md]
+
+  - file: baltrusaitis-2019-multimodal.pdf
+    title: "Multimodal Machine Learning: A Survey and Taxonomy"
+    authors: "Baltrusaitis, Ahuja, Morency"
+    year: 2019
+    arxiv: "1705.09406"
+    topics: [multimodal, survey, taxonomy]
+    referenced_in: [classifications.md]
+
+  - file: turing-1950-computing-machinery.pdf
+    title: "Computing Machinery and Intelligence"
+    authors: "Turing"
+    year: 1950
+    url: "https://courses.cs.umbc.edu/471/papers/turing.pdf"
+    topics: [foundations, intelligence, turing-test]
+    referenced_in: [history-and-definitions.md]
+
+  - file: dhar-2024-paradigm-shifts.pdf
+    title: "The Paradigm Shifts in Artificial Intelligence"
+    authors: "Dhar"
+    year: 2024
+    arxiv: "2308.02558"
+    topics: [history, paradigms]
+    referenced_in: [history-and-definitions.md]
+
+  # NOT DOWNLOADED - requires institutional access
+  - file: null
+    title: "Deep Learning"
+    authors: "LeCun, Bengio, Hinton"
+    year: 2015
+    doi: "10.1038/nature14539"
+    url: "https://www.nature.com/articles/nature14539"
+    topics: [deep-learning, survey]
+    referenced_in: [classifications.md]
+    status: "not-available (Nature paywall)"

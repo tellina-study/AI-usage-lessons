@@ -14,178 +14,187 @@ categories: [Data architecture]
 
 # How to Organize a Repository for an LLM Agent
 
-LLM agents today solve radically different problems. One agent writes code in a repository with 10,000 files. Another researches 500 scientific papers. A third maintains documentation for two hundred people. Applying the same knowledge organization approach to all of these is overkill.
+> TL;DR **More complex is better? I don't think so.**
+>
+> - **Tier 0 --- flat files.** Everything in context. Ideal for prototypes, configs, and small projects under 20 files.
+> - **Tier 1 --- text search + CLAUDE.md.** How every AI coding agent works. The best choice for code projects up to 500 files.
+> - **Tier 2 --- docs-as-code.** Structured documentation for teams. Stripe, Kubernetes, Django --- millions of users, no RAG.
+> - **Tier 3 --- LLM wiki, the Karpathy method.** An LLM compiles a wiki from raw sources. Paradise for researchers with hundreds of documents.
+> - **Tier 4 --- wiki + RAG + knowledge graph.** Semantic search and entity relationships. When you have 500+ sources and the index no longer fits in context.
+>
+> Don't move to the next tier until you've felt a specific pain point at the current one.
 
-While the industry was building complex RAG pipelines and knowledge graphs, Cursor [soared to $100M ARR](https://dev.to/pockit_tools/cursor-vs-windsurf-vs-claude-code-in-2026-the-honest-comparison-after-using-all-three-3gof) with a simple approach: embedding index + grep over the codebase. Not because grep is better than RAG. But because for code, grep is the right tool. Specifically for code.
+LLM agents today solve radically different problems. One writes code in a ten-thousand-file repository. Another researches five hundred scientific papers. A third maintains documentation for two hundred people. Applying the same knowledge organization approach to all of these is overkill. I went through all five tiers on my own project --- a university course on AI with hundreds of sources, dozens of artifacts, and a single author --- and below I'll explain what works at which scale.
 
-In the world of knowledge organization for agents, people make two symmetrical mistakes. Some underinvest: 500 documents and grep --- chaos, nothing gets found. Others overinvest: as [Paul Hoke described](https://medium.com/@paulhoke/the-context-window-arms-race-what-i-learned-after-deleting-2-000-lines-of-rag-code-94bf38e5eca9) --- a developer deleted 2,000 lines of RAG code, and accuracy jumped to 94%. In the [LlamaIndex 2026 benchmark](https://www.llamaindex.ai/blog/did-filesystem-tools-kill-vector-search), filesystem agents beat classic RAG on correctness: 8.4 versus 6.4.
+In 2024--2025, while the industry was building complex RAG pipelines and knowledge graphs, Cursor [soared to $100M ARR](https://dev.to/pockit_tools/cursor-vs-windsurf-vs-claude-code-in-2026-the-honest-comparison-after-using-all-three-3gof) with an approach built on an embedding index and text search over code. Not because text search is better than RAG --- but because for code, it's the right tool. Specifically for code.
 
-There is no "best" way to organize knowledge for an LLM agent. There are five tiers, each of which is the best answer for its type of task and scale. You should only move to the next one when the current tier breaks on a specific pain point.
+In the world of knowledge organization for agents, people make two symmetrical mistakes. Some underinvest: 500 documents plus text search equals chaos --- nothing gets found. Others overinvest: as [Paul Hoke described](https://medium.com/@paulhoke/the-context-window-arms-race-what-i-learned-after-deleting-2-000-lines-of-rag-code-94bf38e5eca9), a developer deleted 2,000 lines of RAG code and accuracy jumped to 94%.
 
-The 2026 context: context windows have reached 1M+ tokens across all major providers. As [Codingscape notes](https://codingscape.com/blog/llms-with-largest-context-windows): Gemini 3, Claude 4.6, Llama 4 Scout --- all offer a million tokens and more. This shifts the threshold at which search infrastructure is even justified.
+There is no "best" way to organize knowledge for an LLM agent. There are five tiers, each the best answer for its type of task and scale. Move to the next one only when the current tier breaks on a specific pain point. Context windows of all major models in 2026 have [reached a million tokens and beyond](https://codingscape.com/blog/llms-with-largest-context-windows) --- Gemini, Claude, Llama, GPT --- and this shifts the threshold at which search infrastructure is even justified.
 
 ## Tier 0: Everything Fits in Context --- and That's Great
 
-Google NotebookLM lets you upload up to 50 sources and ask questions about them. Claude Projects from Anthropic is a feature where you add files to a "project" and the agent works with them in full context. Tens of millions of users. No RAG, no embeddings. Just files in context. This isn't an MVP --- it's a [production architecture](https://elephas.app/blog/notebooklm-vs-claude-projects).
+Google NotebookLM lets you upload up to 50 sources and ask questions about them. Claude Projects from Anthropic is a feature where you add files to a "project" and the agent works with them in their entirety. Tens of millions of users. No RAG, no vector indexes. Just files in context. This isn't an MVP --- it's a [production architecture](https://elephas.app/blog/notebooklm-vs-claude-projects).
 
-The definition is simple: all files are loaded entirely into the LLM's context window. No retrieval, no indexing. With 20 files of 200 lines each, that's ~16K tokens --- 1.6% of Claude's window.
+### The Core Idea
 
-Where this works perfectly: load 10 papers into a Claude Project --- ask questions, get synthesis with zero setup time. Prototyping --- all code < 5 files, the agent sees everything, recall and precision are both 100%. Configuration and dotfiles --- 15 infra project configs, full context, zero latency. As the [Ahoi Kapptn team writes](https://ahoikapptn.com/en/blog/from-long-prompt-to-rag-how-to-build-robust-ai-agents-with-your-knowledge-base): "If your knowledge base is < 200K tokens (~500 pages), include it entirely in the prompt."
+All files are loaded entirely into the LLM's context window. No search, no indexing. With 20 files of 200 lines each, that's roughly 16,000 tokens --- 1.6% of Claude's window. As the [Ahoi Kapptn team writes](https://ahoikapptn.com/en/blog/from-long-prompt-to-rag-how-to-build-robust-ai-agents-with-your-knowledge-base): "If your knowledge base is under 200K tokens (~500 pages), include it entirely in the prompt."
+
+Where this works perfectly: load 10 articles and ask questions --- get synthesis with zero minutes of setup. A prototype with 5 files --- the agent sees everything, accuracy is maximal. 15 infrastructure project configs --- full context, zero latency. My AI course started exactly this way: two dozen files, everything fit in context, and the agent found what it needed instantly.
+
+### Example Structure
 
 ```
 my-project/
-  README.md              # ← everything starts here
-  src/
-    main.py              # all code — 3-5 files
-    utils.py
-    config.yaml
-  docs/
-    architecture.md      # the agent sees everything at once
-    api-reference.md
+  notes.md                 # notes, ideas, drafts
+  data-analysis.py         # all code — 3-5 files
+  config.yaml
+  research-paper-1.pdf     # all sources right in the root
+  research-paper-2.pdf
 ```
+
+### When to Move On
+
+One day you notice the agent starting to "forget" information. [Research from Stanford and UC Berkeley](https://arxiv.org/abs/2307.03172) (Liu et al., 2023) demonstrated the lost-in-the-middle effect: accuracy drops by 30% or more when relevant information lands in the middle of the context. [Another study](https://arxiv.org/pdf/2509.21361) found that the effective context of all models on complex tasks turned out to be far smaller than advertised. The boundary: roughly 20 files or 50,000 tokens. If you feel this pain --- time for the next tier. If not --- stay put, you're in the right place.
 
 | Pattern | Anti-pattern |
 |---------|-------------|
-| Load all files into Claude Project | Set up a RAG pipeline for 5 documents |
-| One README + a few configs | Dump 100 files into context "just in case" |
-| Simple flat structure | Create a folder hierarchy for 10 files |
+| All files in one folder, no nesting | Setting up RAG for 5 documents |
+| Maximally flat structure | Dumping 100 files into context "just in case" |
+| Zero infrastructure, zero setup | Creating a folder hierarchy for 10 files |
 
-But one day you notice the agent starts "forgetting" information. [Research from Stanford/UC Berkeley](https://arxiv.org/abs/2307.03172) (Liu et al., 2023) demonstrated the lost-in-the-middle effect: accuracy drops by 30%+ when relevant information is in the middle of the context. A separate [study (arxiv, 2025)](https://arxiv.org/pdf/2509.21361) found that the effective context of all models turned out to be 99% smaller than advertised on complex tasks. Query costs grow linearly with context: at $3/M input tokens, 500K per request means $1.50 per call. The boundary: ~20 files / ~50K tokens. If you feel this pain --- it's time for the next tier. If not --- stay put, you're in the right place.
+## Tier 1: Text Search + CLAUDE.md --- How Every AI Coding Agent Works
 
-## Tier 1: Grep + CLAUDE.md --- How All AI Coding Tools Work
+Cursor. Claude Code. Windsurf. None of them require developers to spin up a vector database. All use text search as their core infrastructure. As [BuildMVPFast writes](https://www.buildmvpfast.com/blog/ripgrep-10-years-fast-cli-tools-ai-agents-2026): "Text search has quietly become the load-bearing infrastructure for how AI writes code."
 
-Cursor. Claude Code. Windsurf. None of them require developers to spin up a vector DB. All use grep as core infrastructure. As [BuildMVPFast writes](https://www.buildmvpfast.com/blog/ripgrep-10-years-fast-cli-tools-ai-agents-2026): "Ripgrep has quietly become the load-bearing infrastructure for how AI writes code." An agent with a 10-minute timeout can execute 500 ripgrep queries --- or 2 classic grep queries on a large codebase. That's the difference between an agent that understands your code and one that guesses.
+### The Core Idea
 
-At this tier, the project has a CLAUDE.md (or [AGENTS.md](https://agents.md/), .cursorrules) that explains the structure and conventions to the agent. The agent uses grep/ripgrep for search, reads files on demand, and navigates through the project's natural structure --- directories, imports, naming conventions.
+At this tier, the project has a CLAUDE.md (or [AGENTS.md](https://agents.md/), .cursorrules) that explains the codebase structure and conventions to the agent. The agent reads CLAUDE.md and understands the lay of the land --- which directories are responsible for what, what naming conventions are in use. When a task arrives, the agent searches by keywords, finds the right files, then reads them in full for complete context. The directory structure itself becomes a navigation map.
 
-What Tier 0 problems does this solve? At Tier 0, the agent sees everything --- but doesn't know what matters. CLAUDE.md provides priorities. Grep lets the agent read only the files it needs rather than loading all 500 into context. The directory structure itself is a navigation map. [LlamaIndex 2026 benchmarks](https://www.llamaindex.ai/blog/did-filesystem-tools-kill-vector-search) showed that filesystem agents outperform classic RAG: average correctness 8.4 vs 6.4, average relevance 9.6 vs 8.0. RAG is faster (7.36s vs 11.17s) but less accurate. At scale up to 100 documents, filesystem agents win where accuracy matters more than speed.
+At Tier 0, the agent sees everything but doesn't know what matters. CLAUDE.md provides priorities. Search lets the agent read only the files it needs rather than loading all 500 into context. AGENTS.md is already [standardized](https://agents.md/) by the Linux Foundation, supported by OpenAI, Anthropic, Google, AWS, and Bloomberg. Over 60,000 repositories include it. As [HumanLayer notes](https://www.humanlayer.dev/blog/writing-a-good-claude-md): "A CLAUDE.md written in 30 minutes gives the agent 80% of the context it needs." To get started --- create a CLAUDE.md and describe the architecture, key conventions, and how to run and test the project.
 
-AGENTS.md is already [standardized](https://agents.md/) by the Linux Foundation (AAIF), supported by OpenAI, Anthropic, Google, AWS, Bloomberg, Cloudflare. Over 60,000 repositories include it. As [HumanLayer notes](https://www.humanlayer.dev/blog/writing-a-good-claude-md): "A CLAUDE.md written in 30 minutes gives the agent 80% of the context it needs." To get started --- create a CLAUDE.md or AGENTS.md and describe the architecture, key conventions, how to run, how to test. 30 minutes of work, 80% of the effect. Keep docs/ next to the code (colocation), use ADRs to record architectural decisions.
+Text search objectively outperforms semantic search for exact matches. As [ast-grep notes](https://ast-grep.github.io/blog/code-search-design-space.html): `ERROR_4532` in vector space is indistinguishable from `ERROR_4533` --- yet these are completely different errors. My AI course moved to this tier when sources exceeded twenty --- search over exported documents was fast and accurate.
 
-Grep objectively outperforms semantic search for exact matches. As [ast-grep notes](https://ast-grep.github.io/blog/code-search-design-space.html): `ERROR_4532` in vector space is indistinguishable from `ERROR_4533` --- yet these are completely different errors. Grep finds exactly what you need. Claude Code --- agentic grep with no pre-built index. Cursor --- embedding index + grep. Windsurf --- enterprise RAG pipeline, but starts with grep. All work out of the box at $0 infrastructure cost.
+### Example Structure
 
 ```
 my-repo/
   CLAUDE.md              # ← instructions for the agent: architecture, conventions
-  AGENTS.md              # standardized rules (Linux Foundation)
-  src/
-  tests/
+  AGENTS.md              # standardized rules (can be used instead of CLAUDE.md)
+  src/                   # project code
+  tests/                 # tests alongside the code
   docs/
-    architecture.md      # keep docs/ next to the code
+    architecture.md      # keep documentation next to the code
     adr/
-      001-use-postgres.md  # ADR for architectural decisions
+      001-use-postgres.md  # architectural decisions in ADR format
 ```
+
+### When to Move On
+
+You have 300 code files and search works great. Then a task comes in: find all GDPR requirements across research notes, legal documents, and meeting transcripts. Searching for the word "GDPR" finds 5 out of 20 relevant documents --- the rest talk about "personal data", "privacy regulation", "data processing". This is the [polysemy problem](https://arxiv.org/html/2601.23254v1): one concept, dozens of names. You don't need a better search engine --- you need structured navigation. The boundary: roughly 500 files, predominantly code. For non-code knowledge --- PDFs, regulations, research --- this model doesn't work.
 
 | Pattern | Anti-pattern |
 |---------|-------------|
 | CLAUDE.md with architecture and conventions | Hoping the agent will "figure it out" |
 | Consistent naming conventions | Different styles in different parts of the project |
-| AGENTS.md + .md files per subdirectory | One giant 2,000-line CLAUDE.md |
-| Grep for code and identifiers | Grep for searching concepts in prose |
+| AGENTS.md + separate .md files per subdirectory | One giant 2,000-line CLAUDE.md |
+| Text search for code and identifiers | Text search for concepts in prose |
 
-You have 300 code files and grep works great. Then a task comes in: find all GDPR requirements in research notes, legal documents, and meeting transcripts. Grep for the word "GDPR" finds 5 out of 20 relevant documents --- the rest refer to "personal data", "privacy regulation", "data processing". This is the [polysemy problem](https://arxiv.org/html/2601.23254v1): one word in hundreds of contexts, dozens of synonyms for a single concept. You don't need a better search engine --- you need structured navigation. The boundary: ~500 files, predominantly code. For non-code knowledge --- PDFs, regulations, research --- the code-first model doesn't work.
+## Tier 2: Docs-as-Code --- Structured Documentation for Teams
 
-## Tier 2: Docs-as-Code --- When Documentation Works for Both People and Agents
+This tier is for projects where documentation is created by people for people, and the AI agent gets quality navigation for free. Stripe docs, Kubernetes (3,000+ pages), Django, Terraform --- they serve millions of developers without RAG and have no plans to switch. As [Mintlify notes](https://www.mintlify.com/blog/stripe-docs): "At Stripe, a feature isn't considered shipped until the documentation is written."
 
-Stripe docs. Kubernetes docs (3,000+ pages). Django docs. Terraform docs. They serve millions of developers. None of them use RAG or LLM compilation. And they don't plan to. As [Mintlify notes](https://www.mintlify.com/blog/stripe-docs): "At Stripe, a feature isn't considered shipped until the documentation is written. Docs count toward promotions."
+### The Core Idea
 
-Documentation at this tier is organized by content type with formal templates, cross-references validated at build time, and navigational structure: sidebars, breadcrumbs, indexes.
+Documentation is organized by content type. The [Diataxis framework](https://diataxis.fr/) divides it into 4 types --- tutorials, how-to guides, reference, and explanation. When search finds the word "authentication" in 15 files, an agent without content typing has to read all 15. With Diataxis, it goes straight to `how-to/configure-oauth.md`. The framework is [adopted by](https://ubuntu.com/blog/diataxis-a-new-foundation-for-canonical-documentation) Cloudflare, Ubuntu, Django, and Gatsby.
 
-Why does an agent need this? Grep across 50 markdown files finds the word "authentication" in 15 of them. But the agent doesn't know which file answers "how to set up OAuth?" vs "why we chose OAuth" vs "what to do if OAuth breaks". Without content typing, the agent is forced to read all 15 files. With the [Diataxis framework](https://diataxis.fr/) --- it goes straight to `how-to/configure-oauth.md`. Diataxis divides documentation into 4 types (tutorials, how-to, reference, explanation) and is [adopted by](https://ubuntu.com/blog/diataxis-a-new-foundation-for-canonical-documentation) Cloudflare, Ubuntu, Django, Gatsby. [Sequin Stream](https://blog.sequinstream.com/we-fixed-our-documentation-with-the-diataxis-framework/) restructured their documentation using Diataxis --- and it uncovered dozens of product improvements.
+The key advantage is a dual audience. A new team member reads the same documents as the AI agent. At Tier 3, the wiki is also human-readable but optimized for agent navigation. Here, there's a single source of truth for both audiences. Plus, documentation gets indexed by search engines --- a wiki behind an LLM or a RAG system is invisible to Google. To get started: sort your documents into the 4 [Diataxis](https://diataxis.fr/) types and add a navigational index.md. One day for an average project.
 
-Stripe [created Markdoc](https://stripe.dev/blog/markdoc) --- their own Markdown syntax for structural validation of docs. Interactive code samples with automatically inserted API keys. Kubernetes --- 3,000+ pages, 4 content types, build-time validation of glossary terms: a broken link = a failed build. To achieve similar guarantees in your project, Docusaurus, MkDocs, or Sphinx will do --- all support auto-generated sidebars from the file structure. Numbered files (`01-intro.md`) set the order without configuration.
-
-[AWS reports](https://aws.amazon.com/blogs/architecture/master-architecture-decision-records-adrs-best-practices-for-effective-decision-making/) on their experience with "200+ Architecture Decision Records" that improved team collaboration. The [ADR](https://adr.github.io/) format (Nygard, 2011) standardizes how architectural decisions are recorded: Title, Status, Context, Decision, Consequences. If decisions in your team get lost in Slack --- create an `adr/` folder and record each decision in a single markdown file.
-
-The key advantage of this tier is the dual audience. A new team member reads the same docs as the AI agent. At Tier 3, wiki pages are also human-readable but optimized for agent navigation, not human onboarding. Here --- a single source of truth for both audiences. Documentation simultaneously serves as a developer acquisition channel: Stripe docs, Terraform docs, Django docs --- they are indexed by search engines and attract millions of developers. A wiki behind an LLM or a RAG system --- is a black box for Google.
-
-To apply [Diataxis](https://diataxis.fr/) to existing documentation: sort your files into 4 types, add a navigational index.md. One day for an average repo.
+### Example Structure
 
 ```
 docs/
   index.md                 # ← navigation hub, start here
   tutorials/
     getting-started.md     # learning material for newcomers
-    deploy-first-app.md
   how-to/
-    configure-auth.md      # tasks: "how to do X"
-    scale-workers.md
+    configure-auth.md      # instructions: "how to do X"
   reference/
-    api/                   # generated from code
-    cli/
+    api/                   # reference docs, often generated from code
   explanation/
-    architecture.md        # context: "why we chose X"
-    security-model.md
+    architecture.md        # explanations: "why we chose X"
   adr/
-    001-use-postgres.md    # architectural decisions (Nygard format)
-    002-event-sourcing.md
+    001-use-postgres.md    # architectural decisions in ADR format
 ```
+
+### When to Move On
+
+Maintenance cost --- that's what breaks this tier. At 200+ documents, classification becomes the bottleneck, and heterogeneous sources --- scientific papers, transcripts, regulatory documents --- don't fit into neat templates.
 
 | Pattern | Anti-pattern |
 |---------|-------------|
 | Diataxis: 4 content types | A flat docs/ folder with no typing |
 | Build-time link validation | Manually checking "did we break any links" |
-| ADRs for architectural decisions | Decisions in Slack/email, lost within a month |
-| One navigational index.md + sidebar | Every document is an island with no connections |
-
-Authoring overhead --- that's what breaks this tier. Every document must conform to a template, have correct frontmatter, belong to the right type. At 200+ documents, classification becomes the bottleneck: "Is this a tutorial or a how-to?" --- a question requiring human judgment. No semantic discovery --- "find everything about fairness in AI" is impossible if you don't know what to search for. The boundary: ~3,000 pages with well-defined content types. It breaks on heterogeneous sources --- papers, transcripts, regulations --- that don't fit into neat templates.
+| ADRs for architectural decisions | Decisions in chat, lost within a month |
 
 ## Tier 3: The Karpathy Method --- LLM as Librarian
 
-383 files became 13 articles. 81x compression. 130 meeting transcripts became a single 244-line digest --- 503x compression. And this isn't lossy summarization: the LLM finds connections between sources that a human would miss. As [Karpathy wrote](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): "With ~100 articles and ~400K words, the LLM's ability to navigate through summaries and index files is more than sufficient."
+According to [ussumant/llm-wiki-compiler](https://github.com/ussumant/llm-wiki-compiler), 383 files became 13 articles --- 81x compression. 130 meeting transcripts became a single 244-line digest --- 503x compression. And this isn't lossy summarization: the LLM finds connections between sources that a human would miss. As [Karpathy wrote](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): "With ~100 articles and ~400K words, the LLM's ability to navigate through summaries and index files is more than sufficient."
 
-Three-layer architecture (Andrej Karpathy, April 2026): `raw/` --- immutable sources (PDFs, transcripts, notes), append-only; `wiki/` --- LLM-generated and LLM-maintained pages; `index.md` --- catalog of all wiki pages with one-line descriptions. The index is the search mechanism: the LLM scans it, finds the right page, reads it.
+### The Core Idea
 
-Three operations: **Ingest** --- read a source, write a wiki page, update the index, update 10-15 related pages. **Query** --- find an answer by scanning the index, save good answers as new pages. **Lint** --- detect contradictions, orphan pages, outdated claims.
+Three-layer architecture (Andrej Karpathy, April 2026): `raw/` --- immutable sources (PDFs, transcripts, notes), append-only, no editing; `wiki/` --- LLM-generated and LLM-maintained pages; `index.md` --- a catalog of all wiki pages with one-line descriptions. The index is the search mechanism: the LLM scans it, finds the right page, reads it.
 
-This is paradise for the solo researcher. One person + one LLM replaces a documentation team. Our AI-usage-lessons project --- a single maintainer manages 200+ course sources through a wiki. Lint proactively detects outdated claims and contradictions --- unlike Tier 2 docs, which go stale silently. The entire "stack" is markdown in git. `git push` = deployment. Data from [ussumant/llm-wiki-compiler](https://github.com/ussumant/llm-wiki-compiler) shows an 84% reduction in starting tokens: the agent begins a session with a compact index (~7.7K) instead of hundreds of files (~47K).
+Three operations: **Ingest** --- read a source, write a wiki page, update the index, update 10--15 related pages. **Query** --- find an answer by scanning the index, save good answers as new pages. **Lint** --- detect contradictions, orphaned pages, and outdated claims.
 
-Karpathy's gist garnered [16 million views](https://venturebeat.com/data/karpathy-shares-llm-knowledge-base-architecture-that-bypasses-rag-with-an) --- it struck a nerve. The DPC Messenger team discovered they had already implemented ~70% of the pattern. One user built a personal-life knowledge base from X data, Google Takeout, health exports, and AI chat histories. Full implementations have already appeared: [ussumant/llm-wiki-compiler](https://github.com/ussumant/llm-wiki-compiler) (Claude Code plugin, coverage indicators, three adoption modes), [atomicmemory/llm-wiki-compiler](https://github.com/atomicmemory/llm-wiki-compiler) (TypeScript, concept extraction, orphan detection, bidirectional links), [xoai/sage-wiki](https://github.com/xoai/sage-wiki) (Go, 5-pass pipeline, SQLite, hybrid BM25 + vector search, watch mode with 2-second debounce). As [MindStudio notes](https://www.mindstudio.ai/blog/llm-wiki-vs-rag-markdown-knowledge-base-comparison): "If your knowledge base is < 50,000--100,000 tokens, there's no technical reason to use RAG."
+This is paradise for the solo researcher. One person plus one LLM replaces a documentation team. My AI course moved to this tier when sources reached the hundreds --- a single maintainer manages the entire knowledge base through a wiki. Lint proactively detects outdated claims --- unlike Tier 2 documentation, which goes stale silently. The entire "stack" is markdown in git. According to [ussumant/llm-wiki-compiler](https://github.com/ussumant/llm-wiki-compiler), the agent starts a session with a compact index (~7.7K tokens) instead of hundreds of files (~47K) --- an 84% reduction.
 
-To get started: create `raw/` and `wiki/` directories, add a CLAUDE.md with conventions from Karpathy's gist. Don't compile everything at once --- ingest 10-20 documents per session. The wiki grows organically.
+[Karpathy's gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) garnered [millions of views](https://venturebeat.com/data/karpathy-shares-llm-knowledge-base-architecture-that-bypasses-rag-with-an) --- it struck a nerve. Full implementations have already appeared: [ussumant/llm-wiki-compiler](https://github.com/ussumant/llm-wiki-compiler) (Claude Code plugin), [atomicmemory/llm-wiki-compiler](https://github.com/atomicmemory/llm-wiki-compiler) (TypeScript, concept extraction), [xoai/sage-wiki](https://github.com/xoai/sage-wiki) (Go, hybrid text + vector search). As [MindStudio notes](https://www.mindstudio.ai/blog/llm-wiki-vs-rag-markdown-knowledge-base-comparison): "If your knowledge base is under 50,000--100,000 tokens, there's no technical reason to use RAG."
+
+If you need semantic search over heterogeneous sources but without wiki compilation, you can simply load documents into a local RAG system and get meaning-based search in a single evening. To start with a wiki: create `raw/` and `wiki/`, add a CLAUDE.md with conventions from [Karpathy's gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f). Ingest 10--20 documents per session --- the wiki grows organically.
+
+### Example Structure
 
 ```
 knowledge-base/
   CLAUDE.md                # ← schema and conventions from Karpathy's gist
-  index.md                 # catalog with one-line summaries
-  log.md                   # append-only operations log
+  index.md                 # catalog: one line per wiki page
+  log.md                   # operations log (append-only)
   raw/                     # immutable sources
     paper-attention-2017.pdf
     meeting-2026-03-15.txt
     regulation-gdpr.md
-  wiki/                    # LLM-generated markdown
+  wiki/                    # LLM-generated pages (flat structure)
     transformer-architectures.md
-    gdpr-compliance.md     # ← LLM itself found the connection to 3 sources
+    gdpr-compliance.md     # ← the LLM found a connection to three sources
     team-decisions-q1.md
+    # wiki is flat: LLM navigates via index.md, no subdirectories needed
 ```
+
+### When to Move On
+
+You're running a research project: 200 papers, 50 meeting transcripts, 30 regulatory documents. The wiki handles it beautifully. Then a request comes in: "find everything related to model fairness evaluation." But in wiki pages, this topic is called "fairness metrics"; in source files, "bias evaluation"; in regulatory documents, "equity assessment." The index is a precision tool: it finds what's listed. Semantic discovery is not its job. At 500+ sources, the index itself exceeds 50,000 tokens and no longer fits in context.
 
 | Pattern | Anti-pattern |
 |---------|-------------|
-| raw/ append-only, wiki/ LLM-maintained | Editing wiki by hand (breaks on recompilation) |
-| One index.md with one-line descriptions | Nested indexes "for the future" with < 100 pages |
+| raw/ append-only, wiki/ maintained by LLM | Editing the wiki by hand (breaks on recompilation) |
+| One index.md with one-line descriptions | Nested indexes "for the future" with fewer than 100 pages |
 | Incremental compilation | Full recompilation of 500 sources every time |
-| Lint after every Ingest | Accumulating 100 sources then compiling all at once |
-
-You're running a research project: 200 papers, 50 meeting notes, 30 regulatory docs. The wiki handles it beautifully. Then a request comes in: "find everything related to fairness metrics." But in wiki pages the topic is called "equity measures", in source files --- "bias evaluation", in regulatory documents --- "equity assessment". The index is a precision tool: it finds what's listed. But semantic discovery is not its job. At 500+ sources, the index itself exceeds 50K tokens and no longer fits in context. The boundary: ~500 heterogeneous sources.
+| Lint after every Ingest | Accumulating 100 sources and compiling them all at once |
 
 ## Tier 4: When the Index Doesn't Fit in Context --- Add Semantics
 
-Imagine a research library: 500 papers on a research topic, in two languages, with cross-citations. The Karpathy-method wiki compiles thematic reviews --- but when you search for "methods for evaluating model fairness", the index doesn't help: the topic is called "fairness metrics", "equity measures", "bias evaluation" --- and scattered across 15 different pages. You need semantic search that understands meaning, not word matching.
+In my AI course, the Karpathy-method wiki delivered a 7.6x reduction in tool calls and 9 out of 9 on completeness scores. But when I needed to find "everything about AI agents" across Russian-language documents, the wiki index didn't help. The topic appeared under five different names in fifteen different places. Only semantic search found what text search and the index missed.
 
-At this tier, the wiki (Tier 3) is supplemented with one or two layers. **RAG (vector search)** --- semantic search via embeddings, finds "equity measures" when you search for "fairness metrics". **Knowledge graph (ontology)** --- structured relationships: "paper X cites method Y, applied in domain Z." The wiki remains the foundation --- readable, navigable, in git. RAG and the graph are additional search layers on top of it, with results combined via [Reciprocal Rank Fusion](https://www.pinecone.io/learn/vectors-and-graphs-better-together/).
+### The Core Idea
 
-The cost isn't necessarily high. Local open-source tools make Tier 4 accessible to a single person: Oxigraph (RDF store) --- free, mcp-local-rag --- local semantic search without external services, everything lives in a single git repository. [LazyGraphRAG](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/) from Microsoft reduced indexing costs by 1,000x compared to classic GraphRAG. [LightRAG](https://medium.com/accelerated-analyst/lightrag-a-better-approach-to-graph-enhanced-retrieval-augmented-generation-0ac9e7bf9b74) delivers 70-90% of the quality at 1/100th the cost.
+At this tier, the wiki (Tier 3) is supplemented with one or two layers. **RAG (vector search)** --- semantic search via embeddings, finds "equity measures" when you search for "fairness metrics." **Knowledge graph (ontology)** --- structured relationships between entities: "paper X cites method Y, applied in domain Z." The wiki remains the foundation --- readable, navigable, in git. RAG and the graph are additional search layers on top, with results combined via [Reciprocal Rank Fusion](https://www.pinecone.io/learn/vectors-and-graphs-better-together/).
 
-Where this works: **Research library** --- wiki compiles literature reviews, RAG finds papers by semantics, graph tracks citation chains. **Agent knowledge base** --- a single maintainer manages a course with 200+ sources: wiki for navigation, RAG for cross-lingual search, ontology for traceability "requirement -> lecture -> seminar -> assessment". **Team knowledge base** --- 3 years of working knowledge: meeting notes, design docs, post-mortems, RFCs; wiki provides topic overviews, RAG finds "that time we already solved a similar problem".
+The cost isn't necessarily high. In my course, I use local free tools: [Oxigraph](https://github.com/oxigraph/oxigraph) (an RDF store for the knowledge graph), mcp-local-rag (local semantic search with no external services) --- everything lives in a single git repository, infrastructure cost is zero. For larger-scale tasks, [LazyGraphRAG](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/) from Microsoft promises order-of-magnitude reductions in indexing costs. [LightRAG](https://medium.com/accelerated-analyst/lightrag-a-better-approach-to-graph-enhanced-retrieval-augmented-generation-0ac9e7bf9b74) delivers 70--90% of the quality at a hundredth of the cost.
 
-Start with RAG on top of an existing wiki --- one evening: install local-rag, ingest the wiki/ folder, test search. Add a graph only when specific relational queries appear --- "show all papers citing method X" or "which lectures cover requirement Y".
+**Research library** --- the wiki compiles literature reviews, RAG finds papers by meaning, the graph tracks citation chains. **Agent knowledge base** --- in my course: wiki for navigation, RAG for bilingual search (Russian and English), ontology on Oxigraph for traceability: "requirement -> lecture -> seminar -> assessment." **Team knowledge base** --- three years of accumulated experience: meeting transcripts, project documents, post-mortems; the wiki provides topic overviews, RAG finds "that time we already solved a similar problem." Start with RAG on top of an existing wiki --- one evening. Add the graph only when specific relational queries appear.
 
-| You need RAG when | You need a knowledge graph when |
-|-----------------|--------------------------|
-| Cross-lingual search (RU and EN) | Multi-hop queries ("papers by author X -- method Y -- domain Z") |
-| "Find something similar" (fuzzy discovery) | Traceability (requirement -- test -- coverage) |
-| Wiki index > 50K tokens | Aggregation ("all papers without cited-by") |
-| Heterogeneous sources | Taxonomies and classifications |
+### Example Structure
 
 ```
 knowledge-base/
@@ -193,55 +202,64 @@ knowledge-base/
   index.md                 # wiki index (Tier 3)
   raw/                     # sources
     papers/
-      by-topic/
+      by-topic/            # grouped by topic for convenience
     meeting-notes/
     regulations/
   wiki/                    # LLM-compiled pages
-  index/                   # ← RAG index (embeddings), add this first
+  index/                   # ← RAG index, add this first
   ontology/                # knowledge graph, add when you need relationships
-    schema.ttl
-    store.ttl
+    schema.ttl             # classes and properties (I use Oxigraph)
+    store.ttl              # data
     queries/               # SPARQL queries for common questions
 ```
+
+### When You Need This
+
+| You need RAG when | You need a knowledge graph when |
+|-----------------|--------------------------|
+| Bilingual search (RU and EN) | Multi-hop queries ("papers by author X -> method Y -> domain Z") |
+| "Find something similar" (fuzzy discovery) | Traceability (requirement -> test -> coverage) |
+| Wiki index exceeds 50,000 tokens | Aggregation ("all papers with no citations") |
+| Heterogeneous sources | Taxonomies and classifications |
 
 | Pattern | Anti-pattern |
 |---------|-------------|
 | Wiki as foundation + RAG/graph as layers | RAG instead of wiki (you lose navigation) |
-| Local free tools | Enterprise vector DB at $200/mo for 100 documents |
-| Adding layers one at a time | Building all infrastructure at once "for growth" |
+| Local free tools (Oxigraph, local-rag) | Paying $200/mo for a vector DB to index 100 documents |
+| Adding layers one at a time | Building the entire infrastructure upfront "for growth" |
 | Graph for specific relational queries | Graph "because it looks cool" with no clear use cases |
 
-## How We Walked This Path: From Flat Files to Wiki + Ontology
+## How I Walked This Path
 
-Our AI-usage-lessons repository is a teaching course on AI with 200+ sources and a single maintainer.
+My AI course --- hundreds of sources, dozens of artifacts, one maintainer.
 
-We started at Tier 0: 20 files, everything in context. Quickly outgrew into Tier 1: grep over catalog/exports/. Tried RAG --- got 10% precision on Russian-language queries. Tried an ontology --- beautiful schema, zero instance data.
+I started at Tier 0: two dozen files, everything in context. Quickly outgrew it into Tier 1: search over exported documents. Tried RAG --- got 10% precision on Russian-language queries. Tried an ontology --- a beautiful schema, zero data.
 
-We implemented Tier 3 --- wiki using the Karpathy method: 7.6x reduction in tool calls, 9/9 completeness on test scenarios. Added RAG for semantic search on cross-lingual queries --- but only after the wiki was working.
+I implemented Tier 3 --- the Karpathy-method wiki: 7.6x reduction in tool calls, 9 out of 9 on completeness across test scenarios. Added RAG for semantic search on bilingual queries --- but only after the wiki was working.
 
-The key lesson: we tried to jump from Tier 1 to Tier 4 --- and got beautifully empty infrastructure. Only when we went back to Tier 3 as the foundation and added search layers on top --- the system started working.
+The key lesson: I tried to jump from Tier 1 to Tier 4 --- and got beautifully empty infrastructure. Only when I went back to Tier 3 as the foundation and layered search on top did the system start working.
 
-## Two Questions That Determine Your Tier
+## How to Determine the Right Structure
 
 The entire selection framework boils down to two questions:
 
-1. **How many sources do you have?** (< 20 / 20-500 / 500+)
-2. **What is it --- code or documentation?** (code and code-adjacent docs / documentation for people / research, papers, heterogeneous sources)
+1. **How many sources do you have?** (fewer than 20 / 20 to 500 / more than 500)
+2. **What is it --- code or documentation?** (code / documentation for people / research, papers, heterogeneous sources)
 
-| Scale \ Content | Code | Documentation for people | Research, papers, mixed |
-|-------------------|-----|----------------------|--------------------------|
-| < 20 files | Tier 0 | Tier 0 | Tier 0 |
-| 20--500 | Tier 1 (grep + CLAUDE.md) | Tier 2 (docs-as-code) | Tier 3 (LLM wiki) |
-| 500+ | Tier 1 + indexed search | Tier 2 (scales to 3,000+) | Tier 3 + Tier 4 (RAG/graph) |
+| Scale \ Content | Code | Documentation for people | Research, heterogeneous |
+|-------------------|-----|----------------------|---------------------------|
+| Fewer than 20 files | Tier 0 | Tier 0 | Tier 0 |
+| 20--500 | Tier 1 (search + CLAUDE.md) | Tier 2 (docs-as-code) | Tier 3 (LLM wiki) |
+| More than 500 | Tier 1 + indexed search | Tier 2 (scales to 3,000+) | Tier 3 + 4 (RAG/graph) |
 
-Hybrid situations are the norm. "200 code files + 50 research papers" --- code at Tier 1 (grep + CLAUDE.md), papers at Tier 3 (wiki). Tiers aren't mutually exclusive; they're about content type.
+Hybrid situations are the norm. "200 code files + 50 research papers" means code at Tier 1 (search + CLAUDE.md), papers at Tier 3 (wiki). Tiers aren't mutually exclusive --- they're about content type.
 
-The key rule: don't move to the next tier until you've experienced a specific pain point at the current one.
+## Most of You Are at Tier 1. And That's Fine
 
-## Most of You Are at Tier 1. And That's Probably Right
+Entrepreneur Vamshi Reddy wrote to Karpathy: "Every business has a raw/ directory. Nobody has compiled it yet. There's the product."
 
-In the world of enterprise AI, there's a popular genre: "we implemented a Knowledge Graph and got 300% ROI." But there are also reverse stories that get told less often. A developer [deleted 2,000 lines of RAG code](https://medium.com/@paulhoke/the-context-window-arms-race-what-i-learned-after-deleting-2-000-lines-of-rag-code-94bf38e5eca9) and loaded all the documentation into a single 200K-token prompt --- accuracy jumped to 94%. Entrepreneur Vamshi Reddy wrote to Karpathy: "Every business has a raw/ directory. Nobody has compiled it yet. There's the product." Karpathy agreed. We ourselves spent a sprint on a four-layer system with an ontology, SPARQL queries, and SHACL validation --- then opened the knowledge graph at a demo and discovered it was empty. Next to it sat a 40-line CLAUDE.md through which the agent had already been finding everything it needed for a week.
+I myself spent a sprint on a four-layer system with an ontology and SPARQL queries. Beautiful architecture. Graphs, relationships, validation. Then I opened the knowledge graph and discovered it was empty. Zero data. Right next to it sat a 40-line CLAUDE.md through which the agent had already been finding everything it needed for a week.
 
-The right answer depends on the task. Tier 0 will always be the best for small projects --- NotebookLM serves millions of users without a single embedding. Tier 1, always --- for code. Stripe will never switch to RAG for their docs, nor should they. The Karpathy-method wiki is ideal for researchers with hundreds of heterogeneous sources. And hybrid Tier 4 is justified where the cost of unfound information is measured in lost revenue or patients.
+The right answer depends on the task. Tier 0 remains the best for small projects --- NotebookLM serves millions of users without a single vector index. Tier 1 is for code. Stripe isn't switching to RAG for their documentation, and they see no reason to. The Karpathy-method wiki is for researchers with hundreds of heterogeneous sources. And hybrid Tier 4 is justified where the cost of unfound information is measured in lost revenue or patients.
 
 Each tier is not a step on a ladder but the right tool for its scale. A simple rule: if you're not experiencing a specific pain point at your current tier --- you're in the right place.

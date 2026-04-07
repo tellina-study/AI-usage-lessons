@@ -59,21 +59,23 @@
 
 **Open items:** 16 lecture pages not yet compiled, concept creation not owned by a skill.
 
-## 2026-04-07: Blog article storage format (#36)
+## 2026-04-07: Publication storage format (#36)
 
-**Decision:** Blog articles live in `publications/blog/` directory with `drafts/` and `published/` subdirectories.
+**Decision:** Publications live in `publications/` directory with `drafts/` and `published/` subdirectories. Organized by work (each publication is a folder), not by target type.
 
 **Structure:**
-- `publications/blog/drafts/{slug}/` — one folder per article with: outline.md, draft-vN.md, article-ru.md, article-en.md
-- `publications/blog/drafts/{slug}/assets/` — images, diagrams, screenshots for the article
-- `publications/blog/published/` — final versions copied here after WordPress publication
-- Template at `templates/blog-article.md` with YAML frontmatter (title, slug, date, status, tags, lang, wordpress_url, pair_slug)
+- `publications/drafts/{slug}/` — one folder per publication with: outline.md, draft-vN.md, article-ru.md, article-en.md
+- `publications/drafts/{slug}/assets/` — images, diagrams, screenshots for the publication
+- `publications/published/` — final versions copied here after publication
+- Template at `templates/publication.md` with YAML frontmatter (title, slug, date, status, targets, tags, lang, published_urls, pair_slug)
 
 **Rationale:**
+- One publication can be published to multiple targets (blog, LinkedIn, journal, Habr), so organizing by target type creates false hierarchy
+- The `targets` field in frontmatter specifies where the publication gets published; `published_urls` tracks published locations
 - Slug-based folders keep bilingual pairs (RU + EN) together with their assets
-- Frontmatter enables future automation (status tracking, WordPress sync)
+- Frontmatter enables future automation (status tracking, multi-target publishing)
 - Drafts vs published separation mirrors the editorial workflow
-- Top-level `publications/` keeps article content separate from course materials (`library/`, `catalog/`); `blog/` is a subdir to support future publication types
+- Top-level `publications/` keeps article content separate from course materials (`library/`, `catalog/`)
 
 ## 2026-04-07: WordPress publishing mechanism (#39)
 

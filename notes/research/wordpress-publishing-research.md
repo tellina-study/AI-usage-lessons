@@ -96,7 +96,7 @@ Create post endpoint: `POST https://public-api.wordpress.com/rest/v1.1/sites/tel
 ### Option 1: WordPress.com REST API v1.1 + shell script (RECOMMENDED)
 
 **How it works:**
-1. Markdown articles in `publications/blog/drafts/{slug}/` (already set up per #36)
+1. Markdown articles in `publications/drafts/{slug}/` (already set up per #36)
 2. Convert MD to HTML using pandoc
 3. Wrap EN + RU HTML in bilingual div structure matching existing posts
 4. POST to WordPress.com REST API v1.1 with OAuth2 token
@@ -187,14 +187,14 @@ Create post endpoint: `POST https://public-api.wordpress.com/rest/v1.1/sites/tel
 1. Register a WordPress.com OAuth2 app (one-time, manual)
 2. Get bearer token via password grant (one-time, store in `.env` or `.mcp.json`)
 3. Create `scripts/publish-to-wp.sh`:
-   - Reads article-en.md and article-ru.md from a publications/blog/drafts/{slug}/ folder
+   - Reads article-en.md and article-ru.md from a publications/drafts/{slug}/ folder
    - Converts each to HTML via pandoc
    - Wraps in bilingual div structure
    - Extracts frontmatter (title, tags, categories, slug)
    - POSTs to WordPress.com API
    - Returns the published URL
 4. Create a Claude Code skill `publish-article` that orchestrates the above
-5. Update blog-article.md template with publishing instructions
+5. Update publication.md template with publishing instructions
 
 ### Bilingual HTML template
 

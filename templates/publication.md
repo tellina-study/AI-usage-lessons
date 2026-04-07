@@ -3,9 +3,10 @@ title: ""
 slug: ""
 date: YYYY-MM-DD
 status: draft  # draft | review | published
+targets: [blog]  # blog | linkedin | journal | habr
 tags: []
 lang: ru  # ru | en
-wordpress_url: ""
+published_urls: {}  # e.g., {blog: "https://...", linkedin: "https://..."}
 pair_slug: ""  # slug of the paired translation
 ---
 

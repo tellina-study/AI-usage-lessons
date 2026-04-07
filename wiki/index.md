@@ -87,3 +87,6 @@ Lectures: 1-8 (micro-exercises), Seminars: 7, 12, 13
 - 2026-04-07: Phase 1 complete — RAG expanded to 47 files, ontology loaded (293 triples)
 - 2026-04-07: Phase 2 — ontology populated with 8 lectures, 8 LOs, 2 requirements, 4 seminars; wiki index created
 - 2026-04-07: Phase 4 — cross-links resolved (0 [[wiki-links]] remaining), backlinks + related topics added to all 11 pages, link validation passed
+- 2026-04-07: #22 — ontology enriched (389 triples, 17 concepts), RAG expanded (61 docs), /query-kb skill created
+- 2026-04-07: #23 — final tests: 7 manual tool calls for 3 scenarios (was 53 baseline)
+- 2026-04-07: #24 — roast complete, pre-commit hook + post-compile automation added

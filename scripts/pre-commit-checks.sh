@@ -36,7 +36,7 @@ fi
 # 3. Check no [[wiki-links]] remain in wiki/
 if git diff --cached --name-only | grep -q "^wiki/"; then
   echo "Checking for unresolved wiki-links..."
-  UNRESOLVED=$(grep -r '\[\[' wiki/ --include="*.md" -l 2>/dev/null || true)
+  UNRESOLVED=$(grep -rn '\[\[' wiki/ --include="*.md" 2>/dev/null | grep -v '## Compilation Log' | grep -v 'cross-links resolved' | cut -d: -f1 | sort -u || true)
   if [ -n "$UNRESOLVED" ]; then
     echo "ERROR: Unresolved [[wiki-links]] in: $UNRESOLVED"
     ERRORS=$((ERRORS + 1))

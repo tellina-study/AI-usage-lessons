@@ -44,3 +44,17 @@
 - draw.io for presentation-quality static diagrams
 - Pyvis script at scripts/viz-ontology.py (to be created)
 - Output to catalog/exports/viz/ontology-graph.html
+
+## 2026-04-07: Knowledge Architecture Complete (#17)
+
+**Decision:** Implemented 4-tier hybrid retrieval (Wiki → Ontology → RAG → Grep) with wiki compilation, ontology concepts, and automated validation.
+
+**Results:** Manual tests show 7.6x reduction in tool calls (53→7) with perfect recall across all 3 scenarios. Wiki and Ontology are the primary tiers; RAG useful for paper discovery; Grep demoted to fallback.
+
+**Key findings:**
+- Wiki index is the best entry point for navigational queries (2 reads for full chain)
+- Ontology concepts enable structured SPARQL queries (9/9 taxonomies, 8/8 agent categories)
+- RAG cross-lingual gap: embedding model can't bridge RU→EN, compensate with bilingual queries
+- Pre-commit hook + Post-Compile phase automate mechanical validation and indexing
+
+**Open items:** 16 lecture pages not yet compiled, concept creation not owned by a skill.

@@ -142,38 +142,56 @@ This alone would reduce Scenario 1 from 29 calls to ~3 (read index, read source,
 7. **Create raw/papers/ structure** -- inbox/ and classified/ folders for paper management. Move library/papers/ convention to this.
 8. **Update .gitignore** -- track paper manifests (index.yaml), ignore PDF binaries.
 
-### P3: Deferred Until 100+ Sources
+### P2: Hierarchical Indexes and Topic Structure (High Impact, Medium Effort)
 
-9. Wiki compilation pipeline (5-pass)
-10. Content type templates
-11. Concept extraction
-12. Hierarchical topic indexes
-13. Cross-reference automation
-14. Folder restructuring / file migration
+7. **Create wiki/topics/ with per-topic index pages** -- at 200+ sources per lecture, a flat index.md won't survive. Each topic needs its own _index.md listing sources, papers, lectures.
+8. **Create raw/papers/ structure** -- inbox/ and classified/ folders. Bulk import is needed NOW, not later.
+9. **Content type templates** -- needed for consistency when generating 200+ document/paper summaries per lecture.
 
-## Expected Improvement (If P0+P1 Implemented)
+### P3: Compilation and Automation (Medium Impact, Higher Effort)
 
-| Scenario | Current E2E | Target After P0+P1 |
-|----------|-------------|---------------------|
+10. **Simplified compilation pipeline** (2-3 pass: catalog -> summarize -> index) -- not the full 5-pass sage-wiki pipeline, but enough to process bulk paper imports.
+11. **Concept extraction** -- at 200+ sources, cross-cutting concepts are valuable for navigation.
+12. **Cross-reference automation** -- manual linking is impossible at this scale.
+13. **Folder restructuring** -- only if current paths become unmanageable.
+
+## Scale Reality Check
+
+**CORRECTION:** The original roast assumed 27 documents = small scale. This was wrong.
+
+Lecture 1 alone references **204 external sources** (110 papers, 60 websites, 20 books). We downloaded 15 PDFs. When lectures 2-17 are built at similar density, the repo will hold **2000-3000+ sources**.
+
+This means:
+- Hierarchical indexes are needed NOW, not at "100+ sources"
+- Bulk ingestion pipeline is needed NOW (can't manually ingest 200+ papers)
+- Topic taxonomy must handle sub-topics from the start
+- The 600-line limit will be hit by individual topic indexes, not just the master index
+- RAG must handle thousands of chunks, not dozens
+
+The original Part 3 design for 1000+ sources was right. The roast was too conservative.
+
+## Revised Implementation Sequence
+
+| Phase | What | Why Now |
+|-------|------|---------|
+| **Phase 1** | Fix ontology + RAG (P0) | Broken infrastructure, zero effort wasted |
+| **Phase 2** | Create wiki/index.md + topic indexes (P1) | Discoverability bottleneck, hierarchical from start |
+| **Phase 3** | Paper storage + bulk ingestion (P2) | 204 sources for Lecture 1 alone need a home |
+| **Phase 4** | Compilation skill + templates (P3) | Can't manually compile 200+ summaries per lecture |
+| **Re-test** | Run E2E scenarios again | Validate improvement |
+
+## Expected Improvement (If Phases 1-3 Implemented)
+
+| Scenario | Current E2E | Target |
+|----------|-------------|--------|
 | 1: Single-doc | 29 calls, 61.6s | ~3 calls, <10s (index -> source) |
-| 2: Cross-doc | 35 calls, 87.9s | ~8 calls, <30s (index -> topic files + RAG) |
-| 3: Multi-hop | 32 calls, 79.4s | ~10 calls, <30s (ontology chain + index) |
+| 2: Cross-doc | 35 calls, 87.9s | ~5 calls, <20s (topic index + RAG) |
+| 3: Multi-hop | 32 calls, 79.4s | ~5 calls, <15s (ontology chain + index) |
 
 ### Why These Targets Are Realistic
-- P0 makes ontology and RAG functional (currently both return 0)
-- P1 eliminates the discoverability bottleneck (currently 20+ calls just to find files)
-- Together they cover what the Explore agent does in 30+ calls with infrastructure-supported lookups
-
-## What About 1000+ Sources?
-
-The design for scale (hierarchical indexes, topic taxonomies, auto-classification pipeline) is correct IN PRINCIPLE but should be implemented incrementally:
-
-1. **Now (27 docs):** Flat index + populated ontology + full RAG coverage
-2. **At 100 docs:** Topic sub-indexes, paper classification, lecture summaries
-3. **At 500 docs:** Hierarchical indexes, concept extraction, compilation pipeline
-4. **At 1000+ docs:** Auto-split indexes, bulk import workflows, retrieval routing
-
-Each step is triggered by actual scale pain, not anticipated complexity.
+- Phase 1 makes ontology and RAG functional (currently both return 0)
+- Phase 2 eliminates discoverability bottleneck with hierarchical navigation
+- Phase 3 means all 200+ Lecture 1 sources are findable via topic indexes + RAG
 
 ## Ontology-Specific Improvements
 
@@ -190,10 +208,10 @@ Each step is triggered by actual scale pain, not anticipated complexity.
 5. Add belongs_to_topic for all existing Document instances that lack it
 6. Test all 3 pre-written SPARQL queries after loading -- they should return real data
 
-### Deferred Ontology Work
-- Paper and Concept classes -- add when we start ingesting papers into ontology
-- subtopic_of hierarchy -- add when topics need sub-topics (at ~20 topics)
-- Requirement -> LearningOutcome -> Lecture chain -- add when we model the full curriculum graph
+### Phase 2 Ontology Work (needed for 200+ sources)
+- Paper class + cites_paper relation -- needed NOW to track 204 Lecture 1 sources
+- subtopic_of hierarchy -- needed NOW: "AI Classification" has 9 sub-taxonomies
+- Requirement -> LearningOutcome -> Lecture chain -- needed for Scenario 3 to become a single SPARQL query
 
 ## RAG-Specific Improvements
 
@@ -208,18 +226,20 @@ Each step is triggered by actual scale pain, not anticipated complexity.
 2. Ingest 15 downloaded PDFs via document-loader -> local-rag pipeline
 3. Re-test Russian queries after ingestion -- if still poor, evaluate multilingual embedding model
 
-### Deferred RAG Work
-- Multilingual embedding model evaluation -- only if Russian stays broken after content fix
-- Chunk size tuning -- only after we have enough content to benchmark
-- Filtered search (by topic, type, date) -- only when index exceeds ~100 documents
+### Phase 2-3 RAG Work (needed for 200+ sources)
+- Multilingual embedding model evaluation -- Russian scores 0.19-0.31 with English-optimized model. At 2000+ sources with mixed RU/EN content, this MUST be fixed.
+- Bulk ingestion workflow -- manual ingest_file per document won't scale to 200+ papers. Need a batch script or skill.
+- Filtered search (by topic, type, date) -- at 200+ sources, unfiltered semantic search returns too much noise. Topic-scoped search is essential.
 
 ## Summary
 
-The architecture design is directionally correct but front-loads complexity we don't need yet. The tests show that:
+The architecture design from Part 3 is **more correct than the initial roast gave it credit for**. The tests show:
 
-1. **The system already works** via brute-force (quality is high)
-2. **Two things are broken** that should work: ontology (0 triples) and RAG (blind to research)
-3. **One thing is missing** that would help most: a simple file index
-4. **Everything else can wait** until we have more content
+1. **The system already works** via brute-force (quality is high, but cost is 30+ calls / 60-90s)
+2. **Two things are broken** that should work: ontology (0 triples) and RAG (blind to research notes)
+3. **One thing is missing** that would help most: hierarchical file index for discoverability
+4. **Scale is real NOW** -- 204 sources for Lecture 1 alone means the 1000+ design is not premature
+5. **The original Part 3 design was right about:** hierarchical indexes, topic taxonomy, ontology extension (Paper, Concept), bulk ingestion
+6. **The original Part 3 design was wrong about:** 5-pass compilation (simplify to 2-3), folder restructuring (skip the rename, just add new folders)
 
-Fix what's broken, add the index, defer the rest. Then re-run the tests.
+Fix what's broken (P0), build the index layer (P1-P2), add automation (P3), then re-run the tests.

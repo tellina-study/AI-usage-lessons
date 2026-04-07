@@ -36,6 +36,11 @@ If count is 0, load both files:
 1. `mcp__open-ontologies__onto_load` with file_path `/home/levko/AI-usage-lessons/ontology/schema.ttl`, format `turtle`
 2. `mcp__open-ontologies__onto_load` with file_path `/home/levko/AI-usage-lessons/ontology/store.ttl`, format `turtle`
 
+### RAG Coverage Check
+Run `mcp__local-rag__status` and verify:
+- documentCount >= 60 (current: 61)
+- If significantly lower, wiki pages may not be ingested. Run `/compile-wiki` Post-Compile phase.
+
 ### Step 1: Tier 1 — Wiki Index Navigation (always try first)
 Read `wiki/index.md`. Scan for relevant topics, lectures, LOs, or requirements.
 If a topic matches, follow the link to `wiki/topics/{topic}/_index.md`.

@@ -29,6 +29,10 @@ Thumbs.db
 *.swp
 *.swo
 
+# Downloaded papers (PDFs) — track manifests, ignore binaries
+library/papers/**/*.pdf
+library/papers/**/*.epub
+
 # Oxigraph data
 oxigraph-data/
 

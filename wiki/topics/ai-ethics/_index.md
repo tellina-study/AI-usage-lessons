@@ -26,8 +26,15 @@ Bias detection, fairness metrics, regulatory frameworks (EU AI Act, NIST AI RMF)
 - Assessment: Sem 5, 10, 17 (via LO3)
 
 ## Lectures
-- [[lec-07]] -- AI Ethics and Regulation (primary)
+- [Lecture 7](../../lectures/lec-07.md) *(planned)* -- AI Ethics and Regulation (primary)
 - Lectures 3, 4, 6, 8 -- ethical considerations in industry context (via LO3)
 
 ## Normative Requirements
 - PKS-4 -> LO3, LO7, LO8
+
+## Related Topics
+- [AI Fundamentals](../ai-fundamentals/_index.md) -- ethical dimensions of AI classification
+- [AI Agents](../ai-agents/_index.md) -- autonomy levels raise ethical questions
+
+## Backlinks
+- [wiki/index.md](../../index.md) -- topic listing

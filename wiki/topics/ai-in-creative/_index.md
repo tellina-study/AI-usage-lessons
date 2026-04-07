@@ -16,4 +16,7 @@ Media, art, music, content generation. Primary lecture: 8.
 Content pending -- lecture 8 research not yet completed.
 
 ## Lectures
-- [[lec-08]] -- primary lecture
+- [Lecture 8](../../lectures/lec-08.md) *(planned)* -- primary lecture
+
+## Backlinks
+- [wiki/index.md](../../index.md) -- topic listing

@@ -16,4 +16,7 @@ AI-assisted coding, testing, DevOps, CI/CD integration. Primary lecture: 2.
 Content pending -- lecture 2 research not yet completed.
 
 ## Lectures
-- [[lec-02]] -- primary lecture
+- [Lecture 2](../../lectures/lec-02.md) *(planned)* -- primary lecture
+
+## Backlinks
+- [wiki/index.md](../../index.md) -- topic listing

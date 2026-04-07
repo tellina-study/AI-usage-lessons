@@ -15,9 +15,9 @@ updated_at: 2026-04-07
 Foundational lecture covering what AI is, how it's classified, its history, capabilities vs humans, and current industry landscape. Introduces 9 classification taxonomies, the model/chat/agent/app hierarchy, and basic prompting skills.
 
 ## Topics Covered
-- [[ai-fundamentals]] -- 9 classification taxonomies, history, definitions, benchmarks
-- [[ai-agents]] -- model/chat/agent/app hierarchy, architectures overview
-- [[prompt-engineering]] -- "Role + Task + Context" micro-exercise
+- [AI Fundamentals](../topics/ai-fundamentals/_index.md) -- 9 classification taxonomies, history, definitions, benchmarks
+- [AI Agents](../topics/ai-agents/_index.md) -- model/chat/agent/app hierarchy, architectures overview
+- [Prompt Engineering](../topics/prompt-engineering/_index.md) -- "Role + Task + Context" micro-exercise
 - Data privacy and AI security overview
 
 ## Learning Outcomes
@@ -53,3 +53,9 @@ Foundational lecture covering what AI is, how it's classified, its history, capa
 - Sem 1: practicum (LO4, LO6)
 - Sem 5: midterm -- classification accuracy rubric, 0-3 pts (LO1)
 - Sem 17: final exam -- classification accuracy rubric, 0-3 pts (LO1)
+
+## Backlinks
+- [AI Fundamentals](../topics/ai-fundamentals/_index.md) -- primary lecture
+- [AI Agents](../topics/ai-agents/_index.md) -- overview lecture
+- [Prompt Engineering](../topics/prompt-engineering/_index.md) -- micro-exercises
+- [wiki/index.md](../index.md) -- course structure

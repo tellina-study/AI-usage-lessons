@@ -16,4 +16,7 @@ Banking, insurance, trading, retail analytics. Primary lecture: 3.
 Content pending -- lecture 3 research not yet completed.
 
 ## Lectures
-- [[lec-03]] -- primary lecture
+- [Lecture 3](../../lectures/lec-03.md) *(planned)* -- primary lecture
+
+## Backlinks
+- [wiki/index.md](../../index.md) -- topic listing

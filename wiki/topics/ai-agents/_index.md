@@ -43,7 +43,17 @@ AI agent architectures, definitions, frameworks, and autonomy levels. Covered as
 - [masterman-2024-agent-architectures.pdf](../../../library/papers/lecture-1/masterman-2024-agent-architectures.pdf)
 
 ## Lectures
-- [[lec-01]] -- overview as part of AI landscape
+- [Lecture 1](../../lectures/lec-01.md) -- overview as part of AI landscape
 
 ## Gap
 No dedicated lecture on agents in 17-lecture structure. Consider adding or expanding Lecture 1 coverage.
+
+## Related Topics
+- [AI Fundamentals](../ai-fundamentals/_index.md) -- agents are a classification category in the taxonomy
+- [AI in Software](../ai-in-software/_index.md) -- coding agents (Claude Code, Devin, Copilot)
+- [Prompt Engineering](../prompt-engineering/_index.md) -- prompt design for agent orchestration
+
+## Backlinks
+- [Lecture 1](../../lectures/lec-01.md) -- model/chat/agent/app hierarchy overview
+- [AI Fundamentals](../ai-fundamentals/_index.md) -- agentic AI as classification taxonomy #8
+- [wiki/index.md](../../index.md) -- topic listing

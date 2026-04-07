@@ -16,4 +16,7 @@ Production optimization, precision agriculture, supply chain. Primary lecture: 5
 Content pending -- lecture 5 research not yet completed.
 
 ## Lectures
-- [[lec-05]] -- primary lecture
+- [Lecture 5](../../lectures/lec-05.md) *(planned)* -- primary lecture
+
+## Backlinks
+- [wiki/index.md](../../index.md) -- topic listing

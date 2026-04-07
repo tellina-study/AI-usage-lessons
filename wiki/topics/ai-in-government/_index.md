@@ -16,4 +16,7 @@ Public services, smart cities, regulatory compliance. Primary lecture: 6.
 Content pending -- lecture 6 research not yet completed.
 
 ## Lectures
-- [[lec-06]] -- primary lecture
+- [Lecture 6](../../lectures/lec-06.md) *(planned)* -- primary lecture
+
+## Backlinks
+- [wiki/index.md](../../index.md) -- topic listing

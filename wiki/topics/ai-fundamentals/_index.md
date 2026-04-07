@@ -42,7 +42,7 @@ Core AI concepts: what AI is, how it's classified, its history, capabilities vs 
 - Market statistics, adoption rates, industry-specific applications
 
 ## Lectures
-- [[lec-01]] -- Introduction (primary lecture for this topic)
+- [Lecture 1](../../lectures/lec-01.md) -- Introduction (primary lecture for this topic)
 - Lectures 2-8 revisit classification via LO1 in industry context
 
 ## Key Papers (downloaded)
@@ -59,3 +59,13 @@ Core AI concepts: what AI is, how it's classified, its history, capabilities vs 
 
 ## Normative Requirements
 - PKS-3 -> LO1: classify AI solution types
+
+## Related Topics
+- [AI Agents](../ai-agents/_index.md) -- agentic AI is classification taxonomy #8
+- [AI Ethics](../ai-ethics/_index.md) -- ethical considerations intersect via LO3
+- [Prompt Engineering](../prompt-engineering/_index.md) -- prompting enables AI interaction
+
+## Backlinks
+- [Lecture 1](../../lectures/lec-01.md) -- covers classification taxonomies, history, definitions
+- [AI Agents](../ai-agents/_index.md) -- agentic AI taxonomy (Masterman 2024) listed as classification #8
+- [wiki/index.md](../../index.md) -- topic listing

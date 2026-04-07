@@ -50,6 +50,47 @@ Sources: [Codingscape](https://codingscape.com/blog/llms-with-largest-context-wi
 
 Source: [Karpathy LLM Wiki gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
 
+### Where Tier 0 Shines
+
+**1. Zero Retrieval Latency — Perfect When Speed Matters**
+
+RAG pipelines add 50-200ms retrieval latency per query, with retrieval accounting for 41% of end-to-end latency and 45-47% of time-to-first-token. In contrast, Tier 0 has zero retrieval overhead — the data is already in context. For interactive applications where sub-second response matters, this is a real advantage, not a limitation.
+
+Sources: [Milvus — RAG Latency](https://milvus.io/ai-quick-reference/what-is-an-acceptable-latency-for-a-rag-system-in-an-interactive-setting-eg-a-chatbot-and-how-do-we-ensure-both-retrieval-and-generation-phases-meet-this-target), [arxiv — RAG Systems Trade-offs](https://arxiv.org/html/2412.11854v1)
+
+**2. Perfect Accuracy Within Limits**
+
+When everything fits in context, recall and precision are both 100% — no retrieval algorithm can beat examining all available information. A developer deleted 2,000 lines of RAG code and fed the AI complete documentation in a single 200K-token prompt; accuracy jumped to 94%. The counterintuitive finding from 2025: for most small-corpus deployments, the optimal retrieval strategy is no retrieval at all.
+
+Sources: [Paul Hoke — Deleting 2000 Lines of RAG Code](https://medium.com/@paulhoke/the-context-window-arms-race-what-i-learned-after-deleting-2-000-lines-of-rag-code-94bf38e5eca9), [RAGFlow — 2025 Year-End Review](https://ragflow.io/blog/rag-review-2025-from-rag-to-context)
+
+**3. Real Use Cases That STAY at Tier 0 Forever**
+
+These never need to "graduate" — Tier 0 IS the permanently correct answer:
+- Personal dotfiles and small config repos (< 20 files, change rarely)
+- Claude Projects with a handful of reference documents (team playbooks, style guides)
+- One-off analysis scripts where the entire codebase is disposable
+- Pair programming sessions where the human provides context verbally
+
+**4. The Tier 0 Product Category Is Worth Billions**
+
+Google's NotebookLM (20M+ token context, 50 sources) and Claude Projects (200K-1M tokens depending on tier) are essentially Tier 0 products serving millions of users. NotebookLM leverages a 2M-token context window and supports document capacity up to 25M words through summarization. These aren't "limited" products — they're purpose-built for the Tier 0 sweet spot.
+
+Sources: [Elephas — Claude Projects vs NotebookLM 2026](https://elephas.app/blog/notebooklm-vs-claude-projects), [Atlas Workspace — NotebookLM vs Claude Projects](https://www.atlasworkspace.ai/blog/notebooklm-vs-claude-projects)
+
+**5. Anti-Pattern: RAG for 5 Documents**
+
+"Standard RAG is overkill for small corpora. If your knowledge base is a few hundred pages of documentation, you don't need embedding infrastructure." If your knowledge base is under 200K tokens (~500 pages), you can include it entirely in the prompt with no retrieval needed. Setting up a vector DB, embedding pipeline, and chunking strategy for a small knowledge base is the definition of over-engineering.
+
+Sources: [Ahoi Kapptn — From Long Prompt to RAG](https://ahoikapptn.com/en/blog/from-long-prompt-to-rag-how-to-build-robust-ai-agents-with-your-knowledge-base), [MindStudio — LLM Wiki vs RAG](https://www.mindstudio.ai/blog/llm-wiki-vs-rag-markdown-knowledge-base-comparison)
+
+### When NOT to Upgrade from Tier 0
+
+- Your knowledge base is < 200K tokens and changes less than weekly — **stay at Tier 0**
+- You're building a prototype or POC — structure overhead exceeds project lifetime
+- You're using Claude Projects or NotebookLM — the product handles Tier 0 optimally
+- Your team is < 5 people who share context verbally — adding infrastructure adds friction, not value
+
 ### Pain Points (Why Tier 0 Breaks)
 
 **1. Lost-in-the-Middle Effect**
@@ -127,6 +168,43 @@ Source: [AGENTS.md specification](https://agents.md/)
 - **Matthew Groff's guide** — Why/What/How/Progressive Disclosure structure for agent documentation
 
 Sources: [HumanLayer](https://www.humanlayer.dev/blog/writing-a-good-claude-md), [awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code)
+
+### Where Tier 1 Shines
+
+**1. Battle-Tested on Millions of Repos**
+
+This is how ALL major AI coding tools work in 2026. Claude Code executes grep, glob, and file reads iteratively at runtime with no pre-built index. Cursor, Copilot, Codex CLI, and Aider all chose ripgrep as core infrastructure. Tools like Claude Code "don't spin up a vector database to understand your codebase. They run grep."
+
+Source: [MindStudio — Is RAG Dead?](https://www.mindstudio.ai/blog/is-rag-dead-what-ai-agents-use-instead)
+
+**2. Zero Infrastructure, Zero Maintenance**
+
+No vector DB, no embedding pipeline, no graph DB, no managed service. Just files + grep. Maintenance cost = 0. Cost per query = 0. Compare: a 3-strategy hybrid system costs ~$185/month minimum (vector DB $70 + graph DB $65 + BM25 index $50). For a solo developer or small team, that's $2,220/year for infrastructure that grep replaces for free.
+
+**3. Exact Matching Superiority**
+
+For identifiers, error codes, API endpoints, and log patterns — grep is objectively BETTER than semantic search. `ERROR_4532` in vector space is close to `ERROR_4533`, but they're completely different errors. Grep finds exactly the right one. "Grep is fast, exact, and deterministic... the right tool for finding where a function is defined, where a variable is used, where an error message originates."
+
+Source: [Medium — RAG Retrieval Beyond Semantic Search: grep](https://medium.com/@vanshkharidia7/rag-retrieval-beyond-semantic-search-day-1-grep-599cec898a68)
+
+**4. Filesystem Agent Beats RAG on Accuracy**
+
+LlamaIndex's 2026 benchmarks showed filesystem-based agents outperformed traditional RAG: 8.4 vs 6.4 average correctness (+2.0), 9.6 vs 8.0 average relevance (+1.6). RAG was faster (7.36s vs 11.17s) but less accurate. At smaller scales (< 100 documents), filesystem agents excel where accuracy trumps speed.
+
+Source: [LlamaIndex — Filesystem Tools vs Vector Search 2026](https://www.llamaindex.ai/blog/did-filesystem-tools-kill-vector-search)
+
+**5. The CLAUDE.md Revolution**
+
+One file that gives the agent 80% of what it needs. Cost of creating it: 30 minutes. Cost of setting up RAG: days. Ripgrep turned 10 in 2026 and "has quietly become load-bearing infrastructure for how AI writes code." An agent with a 10-minute timeout can run 500 ripgrep searches or 2 grep searches on a large codebase — the difference between an agent that understands your code and one that guesses.
+
+Source: [BuildMVPFast — Ripgrep at 10 Years](https://www.buildmvpfast.com/blog/ripgrep-10-years-fast-cli-tools-ai-agents-2026)
+
+### When NOT to Upgrade from Tier 1
+
+- Your project is a software repo < 500 files with consistent naming — **stay at Tier 1**
+- Your team uses a well-structured CLAUDE.md/AGENTS.md — the agent already navigates effectively
+- Your knowledge is mostly code (not research papers, regulations, or heterogeneous docs)
+- You value zero maintenance over marginally better discovery — grep never needs re-indexing
 
 ### Pain Points (Why Tier 1 Breaks)
 
@@ -212,6 +290,42 @@ Sources: [Stripe blog on Markdoc](https://stripe.dev/blog/markdoc), [Mintlify an
 - Number-prefixed files: `01-intro.md` -> position 1, slug "intro"
 - `_category_.json` per directory for metadata
 - Convention-over-configuration: sidebar mirrors filesystem
+
+### Where Tier 2 Shines
+
+**1. The Human+LLM Sweet Spot**
+
+Structured docs are the ONLY tier equally readable by both humans and LLMs. Wiki pages (Tier 3) are LLM-compiled and less human-readable. RAG results (Tier 4) are invisible to humans until queried. Tier 2 docs serve both audiences from the same source of truth — a new team member reads the same docs the AI reads. No "the AI knows things the docs don't say."
+
+**2. Build-Time Guarantees That Scale**
+
+Broken links caught at build time, not at query time. Kubernetes validates glossary term_ids at build — invalid references halt the build. Stripe's Markdoc enforces structural validation. These guarantees work at scale: Kubernetes maintains 3,000+ pages with build-time validation across 10+ versions. No RAG system offers equivalent consistency guarantees.
+
+**3. SEO and Discoverability**
+
+Structured docs are indexable by search engines. A Tier 3 wiki behind an LLM is invisible to Google. A Tier 4 RAG system is a black box externally. Stripe's docs, Terraform's docs, Django's docs — these serve millions of developers via organic search. The documentation IS the product's marketing and developer acquisition channel.
+
+**4. Products Built on Tier 2 That Never Need More**
+
+These serve millions of developers and do NOT use RAG or wiki compilation:
+- **Stripe docs** (Markdoc): interactive code examples, auto-inserted test API keys, language switching — "a feature isn't shipped until its documentation is written"
+- **Terraform docs** (HashiCorp Developer): provider/resource reference generated from code, serves the entire IaC ecosystem
+- **Django docs**: comprehensive tutorials + reference that have been the gold standard for 15+ years
+- **Kubernetes docs** (Hugo): 3,000+ pages with archetypes enforcing required sections per content type
+
+**5. Diataxis Success Stories**
+
+Cloudflare used Diataxis as their "north star for information architecture" when redesigning developer docs. Canonical (Ubuntu) adopted Diataxis across all documentation properties including Anbox Cloud, Charmed Kubeflow, Juju OLM, OpenStack Charms, and Ubuntu Core. Gatsby, Django, and the Python documentation community also adopted it. Sequin Stream rebuilt docs with Diataxis, reduced quickstart to ~3 minutes, and "surfaced dozens of product improvements."
+
+Sources: [Ubuntu — Diataxis Foundation](https://ubuntu.com/blog/diataxis-a-new-foundation-for-canonical-documentation), [Sequin — We Fixed Our Docs](https://blog.sequinstream.com/we-fixed-our-documentation-with-the-diataxis-framework/)
+
+### When NOT to Upgrade from Tier 2
+
+- Your docs serve both human readers and AI agents — Tier 2 is the only tier optimized for both
+- Your docs are a developer acquisition channel (SEO matters) — higher tiers lose discoverability
+- Your content types are well-defined (tutorials, reference, how-to, explanation) — Diataxis covers this
+- You have a team of 5+ contributors who all need to edit docs — Tier 3 single-maintainer model doesn't scale
+- Your docs are < 3,000 pages with clear taxonomy — build-time validation handles consistency
 
 ### Pain Points (Why Tier 2 Breaks)
 

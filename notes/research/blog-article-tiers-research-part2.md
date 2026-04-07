@@ -99,6 +99,49 @@ Source: [MindStudio — LLM Wiki vs RAG](https://www.mindstudio.ai/blog/llm-wiki
 
 Sources: [Notion vs Obsidian 2026](https://www.browse-ai.tools/blog/ai-automation-agency-guide-notion-vs-obsidian-2026), [NxCode — Obsidian AI](https://www.nxcode.io/resources/news/obsidian-ai-second-brain-complete-guide-2026)
 
+### Where Tier 3 Shines
+
+**1. The Compression Miracle**
+
+This isn't just smaller — it's BETTER because the LLM synthesizes across sources:
+- ussumant/llm-wiki-compiler: 383 files (13.1 MB) -> 13 articles (161 KB) = **81x compression**
+- Meeting transcripts: 130 transcripts (122,625 lines) -> 1 digest (244 lines) = **503x compression**
+- Session startup: ~47K -> ~7.7K tokens = **84% reduction**
+
+The compiled wiki doesn't just compress — it surfaces cross-cutting themes, resolves contradictions, and creates navigational structure that didn't exist in the raw sources.
+
+**2. Zero-Infrastructure Semantic Search**
+
+The index IS the search. No vector DB, no embedding pipeline, no managed service. Just markdown files in a git repo. Deploy by pushing to GitHub. The entire "infrastructure" is `git push`. Compare this to Tier 4's minimum ~$185/month for vector DB + graph DB + BM25 index.
+
+**3. Solo Researcher Paradise**
+
+One person + one LLM can maintain a knowledge base that would require a dedicated documentation team at Tier 2. The LLM does the librarian work: classifying, cross-referencing, summarizing, detecting concept overlap. Karpathy's gist amassed 16 million views and thousands of reposts because it resonated with solo researchers drowning in unstructured sources.
+
+Source: [VentureBeat — Karpathy LLM Knowledge Base](https://venturebeat.com/data/karpathy-shares-llm-knowledge-base-architecture-that-bypasses-rag-with-an)
+
+**4. Self-Healing Knowledge Base**
+
+The Lint operation detects stale claims, orphan pages, and contradictions. Tier 2 docs go stale silently — a tutorial linking to a deprecated API passes validation if the page still exists. Tier 3 wiki actively maintains itself: the LLM can flag "this claim from source X contradicts the newer finding in source Y."
+
+**5. Real Adoption Beyond Karpathy**
+
+- DPC Messenger team found they "already implement ~70% of the LLM Wiki pattern" and extended it into a social knowledge system
+- Lex Fridman and others echoed similar setups, confirming the pattern's resonance
+- One user built a full personal-life knowledge base from X data, Google Takeout, health exports, and AI chat histories
+- Entrepreneur Vamshi Reddy: "Every business has a raw/ directory. Nobody's ever compiled it. That's the product." Karpathy agreed.
+- Our own repo (AI-usage-lessons) uses this pattern for course material management
+
+Sources: [DAIR.AI — LLM Knowledge Bases](https://academy.dair.ai/blog/llm-knowledge-bases-karpathy), [Antigravity — Karpathy's LLM Wiki Guide](https://antigravity.codes/blog/karpathy-llm-wiki-idea-file)
+
+### When NOT to Upgrade from Tier 3
+
+- Your knowledge base is < 500 heterogeneous sources — the wiki index fits in context, no need for RAG
+- You're a solo researcher or small team — the LLM-as-librarian model works perfectly
+- Your queries are navigational ("what do we know about X?") not discovery ("find something related to fairness") — index scanning handles navigational queries well
+- You value zero infrastructure over marginally better fuzzy search — markdown files in git > vector DB
+- "If your knowledge base is under 50,000-100,000 tokens, there's no technical reason to use RAG" — MindStudio
+
 ### Pain Points (Why Tier 3 Breaks)
 
 **1. Index Exceeds Context Window**
@@ -210,6 +253,53 @@ Sources: [LabelYourData](https://labelyourdata.com/articles/llm-fine-tuning/rag-
 
 Source: [Oxigraph benchmarks from our raw research](knowledge-architecture-raw-research-part2.md)
 
+### Where Tier 4 Shines
+
+**1. Discovery of Unknown Unknowns**
+
+"Find me something related to fairness" — only semantic search can do this. All other tiers require you to know what you're looking for. Vector search finds conceptually related content even when terminology differs ("equity measures" matches "fairness metrics"). This is the tier where the system surfaces knowledge you didn't know you had.
+
+**2. Multi-Hop Reasoning**
+
+"Papers by Author X citing Method Y applied to Domain Z" — only graph traversal answers this efficiently. "Company X acquired Company Y in Q3" — vector similarity misses structured relational facts that graph traversal captures naturally. HybridRAG (NVIDIA/BlackRock) demonstrated that combining vector + graph outperforms either alone on financial earnings call transcripts.
+
+Source: [HybridRAG paper](https://arxiv.org/abs/2408.04948)
+
+**3. Enterprise Compliance — Requirements, Not Nice-to-Haves**
+
+Permission-aware retrieval (Glean), audit trails, provenance chains — these are regulatory requirements in finance, healthcare, and legal. A multi-agent knowledge graph framework for regulatory QA enables agents to build and maintain knowledge graphs by extracting subject-predicate-object triplets from regulatory documents, with embedded triplets stored for both graph-based reasoning and efficient retrieval.
+
+Source: [arxiv — RAGulating Compliance](https://arxiv.org/html/2508.09893v1), [Oxford Semantic — Rules and Regulation Compliance](https://www.oxfordsemantic.tech/rules-and-regulation-compliance-with-knowledge-graphs-and-ai)
+
+**4. Real Enterprise ROI Numbers**
+
+The investment pays back when missing information has real cost:
+- RAG implementation: $200K-$500K year one, with average return of **$3.70 per $1 invested** (300-500% ROI)
+- Customer support: ticket resolution time from 45 minutes to under 10 minutes (one client, 90 days)
+- Cynet: 14-point CSAT lift, 47% ticket deflection, resolution times cut nearly in half
+- Internal search: employee information retrieval from 9 minutes to 30 seconds (**95% improvement**)
+- A major European bank: automated audit and compliance saving **EUR 20M+ over 3 years**, ROI in 2 months
+- Northwestern Mutual: processing time from hours to minutes for compliance-heavy workflows
+
+Sources: [LeanWare — Enterprise RAG Consulting](https://www.leanware.co/insights/enterprise-rag-consulting), [Techment — RAG Architectures 2026](https://www.techment.com/blogs/rag-architectures-enterprise-use-cases-2026/), [Squirro — RAG in 2026](https://squirro.com/squirro-blog/state-of-rag-genai)
+
+**5. When It's NOT Over-Engineering**
+
+Domains where missing information has real cost justify Tier 4 complexity:
+- **Legal/compliance**: regulatory documents with cross-references, version tracking, audit requirements
+- **Medical knowledge bases**: clinical decision support where missed connections can harm patients
+- **Financial research**: earnings calls, filings, market data requiring relational reasoning across entities
+- **Large enterprise knowledge**: 10K+ sources where no single tier handles both precision and discovery
+
+### When NOT to Upgrade to Tier 4
+
+This is the "are you SURE?" checklist before adding hybrid retrieval:
+- Your knowledge base is < 500 sources — Tier 3 wiki handles this without infrastructure
+- You don't have relational queries ("who cited whom", "which requirement maps to which test") — vector search alone suffices
+- Your budget is < $200/month for infrastructure — the 3-system stack is expensive
+- You're a solo maintainer without graph expertise — the learning curve is steep
+- Your content is narrative/opinion without clear entities — the graph channel adds cost without benefit
+
 ### Pain Points of Tier 4
 
 Tier 4 is the current ceiling, but it has its own costs:
@@ -286,6 +376,8 @@ Source: [Long Context vs RAG paper](https://arxiv.org/abs/2501.01880)
 | Knowledge graphs add value at any scale | **Disproven** | Justified only for multi-hop/relational queries at 500+ sources |
 | Diataxis is the best doc framework | **Partially verified** | Works well for product docs; doesn't address research, papers, heterogeneous sources |
 | Flat files work for small projects | **Verified** | Unequivocally works under ~20 files / 50K tokens |
+| Every tier has a "forever" sweet spot | **Verified** | Tier 0: NotebookLM/Claude Projects serve millions; Tier 1: all AI coding tools use grep; Tier 2: Stripe/K8s docs never need RAG; Tier 3: solo researchers at < 500 sources |
+| Upgrading tiers is often over-engineering | **Verified** | Developer deleted 2K lines of RAG, accuracy jumped to 94%; filesystem agents beat RAG on correctness (8.4 vs 6.4) |
 
 ---
 
@@ -347,6 +439,26 @@ Source: [Long Context vs RAG paper](https://arxiv.org/abs/2501.01880)
 - [GrepRAG paper](https://arxiv.org/html/2601.23254v1)
 - [burntsushi — ripgrep benchmarks](https://burntsushi.net/ripgrep/)
 - [Semgrep — Stop grepping code](https://semgrep.dev/blog/2020/semgrep-stop-grepping-code/)
+
+### Tier Strengths & Over-Engineering Evidence (NEW)
+- [Paul Hoke — Deleting 2000 Lines of RAG Code](https://medium.com/@paulhoke/the-context-window-arms-race-what-i-learned-after-deleting-2-000-lines-of-rag-code-94bf38e5eca9)
+- [RAGFlow — 2025 Year-End Review](https://ragflow.io/blog/rag-review-2025-from-rag-to-context)
+- [Ahoi Kapptn — From Long Prompt to RAG](https://ahoikapptn.com/en/blog/from-long-prompt-to-rag-how-to-build-robust-ai-agents-with-your-knowledge-base)
+- [Elephas — Claude Projects vs NotebookLM 2026](https://elephas.app/blog/notebooklm-vs-claude-projects)
+- [Atlas Workspace — NotebookLM vs Claude Projects](https://www.atlasworkspace.ai/blog/notebooklm-vs-claude-projects)
+- [MindStudio — Is RAG Dead?](https://www.mindstudio.ai/blog/is-rag-dead-what-ai-agents-use-instead)
+- [Medium — RAG Retrieval Beyond Semantic Search: grep](https://medium.com/@vanshkharidia7/rag-retrieval-beyond-semantic-search-day-1-grep-599cec898a68)
+- [LlamaIndex — Filesystem Tools vs Vector Search 2026](https://www.llamaindex.ai/blog/did-filesystem-tools-kill-vector-search)
+- [BuildMVPFast — Ripgrep at 10 Years](https://www.buildmvpfast.com/blog/ripgrep-10-years-fast-cli-tools-ai-agents-2026)
+- [Ubuntu — Diataxis Foundation](https://ubuntu.com/blog/diataxis-a-new-foundation-for-canonical-documentation)
+- [DAIR.AI — LLM Knowledge Bases](https://academy.dair.ai/blog/llm-knowledge-bases-karpathy)
+- [Antigravity — Karpathy's LLM Wiki Guide](https://antigravity.codes/blog/karpathy-llm-wiki-idea-file)
+- [arxiv — RAGulating Compliance](https://arxiv.org/html/2508.09893v1)
+- [Oxford Semantic — Rules and Regulation Compliance](https://www.oxfordsemantic.tech/rules-and-regulation-compliance-with-knowledge-graphs-and-ai)
+- [LeanWare — Enterprise RAG Consulting](https://www.leanware.co/insights/enterprise-rag-consulting)
+- [Squirro — RAG in 2026](https://squirro.com/squirro-blog/state-of-rag-genai)
+- [Milvus — RAG Latency](https://milvus.io/ai-quick-reference/what-is-an-acceptable-latency-for-a-rag-system-in-an-interactive-setting-eg-a-chatbot-and-how-do-we-ensure-both-retrieval-and-generation-phases-meet-this-target)
+- [arxiv — RAG Systems Trade-offs](https://arxiv.org/html/2412.11854v1)
 
 ### Knowledge Management Tools
 - [Notion vs Obsidian 2026](https://www.browse-ai.tools/blog/ai-automation-agency-guide-notion-vs-obsidian-2026)

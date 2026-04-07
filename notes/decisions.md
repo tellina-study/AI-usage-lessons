@@ -61,16 +61,34 @@
 
 ## 2026-04-07: Blog article storage format (#36)
 
-**Decision:** Blog articles live in `blog/` top-level directory with `drafts/` and `published/` subdirectories.
+**Decision:** Blog articles live in `publications/blog/` directory with `drafts/` and `published/` subdirectories.
 
 **Structure:**
-- `blog/drafts/{slug}/` — one folder per article with: outline.md, draft-vN.md, article-ru.md, article-en.md
-- `blog/drafts/{slug}/assets/` — images, diagrams, screenshots for the article
-- `blog/published/` — final versions copied here after WordPress publication
+- `publications/blog/drafts/{slug}/` — one folder per article with: outline.md, draft-vN.md, article-ru.md, article-en.md
+- `publications/blog/drafts/{slug}/assets/` — images, diagrams, screenshots for the article
+- `publications/blog/published/` — final versions copied here after WordPress publication
 - Template at `templates/blog-article.md` with YAML frontmatter (title, slug, date, status, tags, lang, wordpress_url, pair_slug)
 
 **Rationale:**
 - Slug-based folders keep bilingual pairs (RU + EN) together with their assets
 - Frontmatter enables future automation (status tracking, WordPress sync)
 - Drafts vs published separation mirrors the editorial workflow
-- Top-level `blog/` keeps article content separate from course materials (`library/`, `catalog/`)
+- Top-level `publications/` keeps article content separate from course materials (`library/`, `catalog/`); `blog/` is a subdir to support future publication types
+
+## 2026-04-07: WordPress publishing mechanism (#39)
+
+**Decision:** Use WordPress.com REST API v1.1 with OAuth2 bearer token for publishing articles from the repo to https://tellian.io/.
+
+**Key findings:**
+- tellian.io is WordPress.com hosted (not self-hosted), theme TwentySixteen
+- The standard `/wp-json/` REST API is not available (404); must use WordPress.com API v1.1 at `public-api.wordpress.com`
+- Bilingual posts use manual in-post structure: two `<div class="lang-block">` sections (EN default, RU), not a multilingual plugin
+- WordPress.com built-in MCP is read-only — cannot create posts, only read analytics
+- AI Engine MCP plugin requires Business plan upgrade ($33/mo) to install plugins — overkill
+- OAuth2 password grant flow works from CLI without browser interaction
+
+**Approach:** Shell script (`scripts/publish-to-wp.sh`) that converts MD to HTML via pandoc, wraps in bilingual div structure, POSTs via API. Future Claude Code skill to orchestrate.
+
+**Setup required:** Register OAuth2 app at developer.wordpress.com/apps, get bearer token, store in `.env` (gitignored).
+
+**Research:** `notes/research/wordpress-publishing-research.md`

@@ -2,7 +2,7 @@
 title: "AI Agents"
 type: topic-index
 sources_count: 30
-sub_topics: [definitions, architectures, frameworks, autonomy-levels]
+sub_topics: [definitions, architectures, frameworks, autonomy-levels, capabilities]
 lectures: [1]
 coverage: high
 updated_at: 2026-04-07
@@ -35,6 +35,14 @@ AI agent architectures, definitions, frameworks, and autonomy levels. Covered as
 
 ### Autonomy Levels (arXiv:2506.12469)
 - L1 Operator -> L2 Collaborator -> L3 Consultant -> L4 Approver -> L5 Observer
+
+### Capabilities and Limitations
+- Planning: decomposing complex tasks into steps (Ng 2024)
+- Tool Use: API calls, web browsing, code execution (Schick 2023)
+- Memory: short-term (context window) and long-term (RAG, vector stores)
+- Multi-Agent Collaboration: specialized agents working together (Li et al. 2024)
+- Limitations: hallucination in tool calls, lack of causal reasoning, prompt sensitivity
+- Primary: [human-vs-ai.md](../../../notes/research/lecture-1/human-vs-ai.md), [2026-updates.md](../../../notes/research/lecture-1/2026-updates.md)
 
 ## Key Papers (downloaded)
 - [yao-2022-react.pdf](../../../library/papers/lecture-1/yao-2022-react.pdf)

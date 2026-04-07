@@ -292,6 +292,42 @@ Only recompile pages whose source files changed (by content hash). Full recompil
 - If a wiki page would exceed 600 lines: split into sub-pages automatically.
 - If any step fails: do NOT skip silently. Report all errors in the final report.
 
+## Phase: Post-Compile (Mechanical — run after any content phase)
+
+This phase handles all mechanical indexing operations. Run it after any content changes.
+
+### Step 1: Load Ontology
+```
+mcp__open-ontologies__onto_load: path = /home/levko/AI-usage-lessons/ontology/schema.ttl
+mcp__open-ontologies__onto_load: path = /home/levko/AI-usage-lessons/ontology/store.ttl
+```
+Verify: `SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }` should return > 300.
+
+### Step 2: Ingest Wiki Pages into RAG
+For each .md file in wiki/:
+```
+mcp__local-rag__ingest_file: filePath = /home/levko/AI-usage-lessons/wiki/{path}
+```
+Files to ingest: wiki/index.md, wiki/lectures/*.md, wiki/topics/*/_index.md
+
+### Step 3: Verify RAG Coverage
+```
+mcp__local-rag__status
+```
+Check documentCount >= 60 and chunkCount >= 13000.
+
+### Step 4: Validate Wiki Links
+Run `grep -r '\[\[' wiki/ --include='*.md'` — should return empty (no unresolved links).
+Check all relative markdown links resolve to existing files.
+
+### Step 5: Report
+Print summary:
+- Ontology: X triples loaded
+- RAG: X documents, X chunks
+- Wiki links: all valid / N broken
+
+---
+
 ## When to Run
 
 - **After /sync-library:** new Drive exports need indexing

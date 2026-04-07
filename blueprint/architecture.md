@@ -139,6 +139,48 @@ PR merged, issue closed
 
 ---
 
+## Knowledge Retrieval Pipeline (#22)
+
+4-tier hybrid retrieval. Skill: `/query-kb`. Start with cheapest tier, escalate as needed.
+
+```
+Query
+  → Tier 1: Wiki Index (Read wiki/index.md → topic/lecture pages)   [1-3 reads, ~free]
+  → Tier 2: Ontology SPARQL (onto_query for relations/chains)       [1-3 queries]
+  → Tier 3: RAG Semantic Search (query_documents, EN + RU)          [1-2 queries]
+  → Tier 4: Grep (exact match fallback)                             [1-2 searches]
+  → Merge & deduplicate → Present with provenance
+```
+
+### Tier Selection
+
+| Query Type | Tier | Example |
+|------------|------|---------|
+| Navigational | 1 (Wiki) | "What does Lecture 1 cover?" |
+| Relational | 2 (Ontology) | "Which LOs fulfill PKS-3?" |
+| Semantic/discovery | 3 (RAG) | "Papers on agent architectures" |
+| Exact match | 4 (Grep) | "Find ПКС-3 text" |
+| Cross-cutting | All | "Everything about AI agents" |
+
+### Current Coverage (2026-04-07)
+
+| Tier | Tool | Data | Scale |
+|------|------|------|-------|
+| Wiki | Read | 12 pages (10 topics, 1 lecture, 1 index) | Hundreds of pages |
+| Ontology | onto_query | 352 triples, 12 topics, 8 lectures, 8 LOs | Millions of triples |
+| RAG | query_documents | 61 docs, 13,712 chunks | Millions of chunks |
+| Grep | Grep | All repo files | Thousands of files |
+
+### Session Startup
+
+Oxigraph is in-memory. At session start, load ontology:
+1. `onto_load` schema.ttl
+2. `onto_load` store.ttl
+
+RAG (LanceDB) persists on disk — no startup needed.
+
+---
+
 ## Subagent Architecture
 
 Claude Code (orchestrator) delegates implementation to subagents via the Agent tool.
@@ -176,7 +218,8 @@ catalog/
   manifests/     -- documents.yaml, lectures.yaml, decks.yaml, diagrams.yaml
 diagrams/        -- canonical .drawio files and exports
 library/         -- source materials: normative/, lectures/, materials/, project/
-ontology/        -- RDF schema (TTL), vocab, SPARQL queries
+ontology/        -- RDF schema (TTL), store (TTL), SPARQL queries
+wiki/            -- compiled knowledge base (topics, lectures, index)
 templates/       -- reusable templates for lectures, slides, issues, requirements
 workflows/       -- routine descriptions, checklists, triage rules
 notes/           -- decisions, limitations, experiments, reflections

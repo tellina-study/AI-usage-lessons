@@ -69,7 +69,7 @@
 	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 2: AI in Software Development" ;
 	a <https://ai-usage-lessons.local/ontology#Lecture> .
 <https://ai-usage-lessons.local/ontology#lec_01> <https://ai-usage-lessons.local/ontology#updated_at> "2026-04-07T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-	<https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo6> , <https://ai-usage-lessons.local/ontology#lo4> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
+	<https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo6> , <https://ai-usage-lessons.local/ontology#lo4> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> , <https://ai-usage-lessons.local/ontology#topic_ai_agents> ;
 	<https://ai-usage-lessons.local/ontology#status> "draft" ;
 	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1UX671dOrhfQ8OgnadD_8ce4dhVJ9wDVrFqPq6p9S9uo/edit"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
 	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 1: Introduction — What is AI and why it matters" ;
@@ -109,6 +109,62 @@
 	<http://www.w3.org/2000/01/rdf-schema#label> "Recommender systems and SPPD" .
 <https://ai-usage-lessons.local/ontology#topic_expert_systems> a <https://ai-usage-lessons.local/ontology#Topic> ;
 	<http://www.w3.org/2000/01/rdf-schema#label> "Expert systems" .
+<https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> a <https://ai-usage-lessons.local/ontology#Topic> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "AI fundamentals and classification" .
+<https://ai-usage-lessons.local/ontology#topic_ai_agents> a <https://ai-usage-lessons.local/ontology#Topic> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "AI agents and autonomous systems" .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_task_type> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Task Type (Russell & Norvig 2021)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_modality> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Modality (Baltrusaitis et al. 2019)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_learning> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Learning Approach (Mitchell 1997, Bishop 2006, Sutton & Barto 2018)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_capability> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Capability Level ANI/AGI/ASI (Searle 1980, Bostrom 2014)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_architecture> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Architecture (Vaswani et al. 2017, Ho et al. 2020)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_gen_disc> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Generative vs Discriminative (Ng & Jordan 2001, Goodfellow et al. 2014)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_foundation> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Foundation Models (Bommasani et al. 2021)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_agentic> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Agentic AI (Masterman et al. 2024)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
+	<https://ai-usage-lessons.local/ontology#related_concept> <https://ai-usage-lessons.local/ontology#concept_agent_architectures> .
+<https://ai-usage-lessons.local/ontology#concept_taxonomy_hintze> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Hintze 4 Types - reactive/limited memory/ToM/self-aware (Hintze 2016)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
+<https://ai-usage-lessons.local/ontology#concept_agent_definitions> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent definitions: model/chat/agent/app hierarchy (Weng 2023, Google 2024)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#concept_agent_architectures> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent architectures: ReAct, Toolformer, Anthropic spectrum, Ng patterns" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#concept_agent_papers> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent key papers: Yao 2022, Schick 2023, Wang 2023, Masterman 2024, Liu 2025" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#concept_agent_frameworks> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent frameworks: Claude Code, Devin, AutoGPT, CrewAI, LangGraph, OpenAI Assistants" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#concept_agent_course_coverage> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent course coverage: Lecture 1 overview, no dedicated lecture" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#concept_agent_capabilities> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent capabilities: planning, tool use, memory, multi-agent collaboration" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#concept_agent_autonomy> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent autonomy levels: L1 Operator to L5 Observer (arXiv:2506.12469)" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#concept_agent_ontology> a <https://ai-usage-lessons.local/ontology#Concept> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Agent ontology: topic node, research doc, concept entities in knowledge graph" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
 <https://ai-usage-lessons.local/ontology#doc_v2_course_plan> a <https://ai-usage-lessons.local/ontology#Document> ;
 	<http://www.w3.org/2000/01/rdf-schema#label> "AI v raznyh industriyah (V2)" ;
 	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY/edit" ;
@@ -147,6 +203,43 @@
 <https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_in_software> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> .
 <https://ai-usage-lessons.local/ontology#doc_formal_program_old> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_recommender_systems> , <https://ai-usage-lessons.local/ontology#topic_expert_systems> .
 <https://ai-usage-lessons.local/ontology#doc_fos> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_recommender_systems> , <https://ai-usage-lessons.local/ontology#topic_expert_systems> .
+<https://ai-usage-lessons.local/ontology#research_classifications> a <https://ai-usage-lessons.local/ontology#Document> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Research: AI Classification Taxonomies" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/classifications.md" ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
+	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
+<https://ai-usage-lessons.local/ontology#research_agents> a <https://ai-usage-lessons.local/ontology#Document> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Research: Model vs Chat vs Agent vs App" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/model-chat-agent-app.md" ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> ;
+	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
+<https://ai-usage-lessons.local/ontology#research_human_vs_ai> a <https://ai-usage-lessons.local/ontology#Document> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Research: Human vs AI Capabilities" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/human-vs-ai.md" ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
+	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
+<https://ai-usage-lessons.local/ontology#research_history> a <https://ai-usage-lessons.local/ontology#Document> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Research: AI History and Definitions" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/history-and-definitions.md" ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
+	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
+<https://ai-usage-lessons.local/ontology#research_security> a <https://ai-usage-lessons.local/ontology#Document> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Research: Data Privacy and Security" ;
+	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
+	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/security-local-cloud.md" ;
+	<https://ai-usage-lessons.local/ontology#status> "active" ;
+	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_ethics> ;
+	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
+<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> , <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
+<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> , <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
 <https://ai-usage-lessons.local/ontology#deck_ii_i_mir> a <https://ai-usage-lessons.local/ontology#SlideDeck> ;
 	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
 	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/presentation/d/1j-7csuSNLQimTNz1gkV5aupormpqfPEL/edit" ;
@@ -234,4 +327,4 @@
 	a <http://www.w3.org/2000/01/rdf-schema#Class> .
 <https://ai-usage-lessons.local/ontology#Document> <http://www.w3.org/2000/01/rdf-schema#comment> "Any managed document (normative, reference, etc.)" ;
 	<http://www.w3.org/2000/01/rdf-schema#label> "Document" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class>
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .

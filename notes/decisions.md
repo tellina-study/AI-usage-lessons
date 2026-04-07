@@ -58,3 +58,19 @@
 - Pre-commit hook + Post-Compile phase automate mechanical validation and indexing
 
 **Open items:** 16 lecture pages not yet compiled, concept creation not owned by a skill.
+
+## 2026-04-07: Blog article storage format (#36)
+
+**Decision:** Blog articles live in `blog/` top-level directory with `drafts/` and `published/` subdirectories.
+
+**Structure:**
+- `blog/drafts/{slug}/` — one folder per article with: outline.md, draft-vN.md, article-ru.md, article-en.md
+- `blog/drafts/{slug}/assets/` — images, diagrams, screenshots for the article
+- `blog/published/` — final versions copied here after WordPress publication
+- Template at `templates/blog-article.md` with YAML frontmatter (title, slug, date, status, tags, lang, wordpress_url, pair_slug)
+
+**Rationale:**
+- Slug-based folders keep bilingual pairs (RU + EN) together with their assets
+- Frontmatter enables future automation (status tracking, WordPress sync)
+- Drafts vs published separation mirrors the editorial workflow
+- Top-level `blog/` keeps article content separate from course materials (`library/`, `catalog/`)

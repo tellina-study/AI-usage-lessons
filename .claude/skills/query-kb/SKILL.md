@@ -89,7 +89,7 @@ SELECT ?entity ?label ?type WHERE {
 **Cost:** 1-3 SPARQL queries
 
 ### Step 3: Tier 3 — RAG Semantic Search (for discovery)
-Use when looking for content by meaning, not exact terms. Good for: finding papers, discovering related content, cross-language search.
+Use when looking for content by meaning, not exact terms. Good for: finding papers, discovering related content.
 
 ```
 mcp__local-rag__query_documents:
@@ -97,10 +97,16 @@ mcp__local-rag__query_documents:
   limit: 10
 ```
 
-Try both English and Russian queries if content is bilingual.
+**Cross-language rule:** The embedding model does NOT support cross-lingual matching. Russian queries only find Russian content; English queries only find English content. To search effectively:
+1. If the user query is in Russian, **translate key concepts to English** and run a SECOND query in English
+2. Always run at least 2 RAG queries: one in each language
+3. Merge results from both queries, deduplicate by file path
+4. Example: user asks "найди всё про AI агентов" → run both:
+   - `"AI агенты автономные системы архитектуры"` (finds Russian course docs)
+   - `"AI agents definitions architectures frameworks"` (finds English research + wiki)
 
 **Tools:** `mcp__local-rag__query_documents`
-**Cost:** 1-2 queries
+**Cost:** 2-4 queries (always bilingual)
 
 ### Step 4: Tier 4 — Grep Fallback (for exact matches)
 Use when you need exact string matches: specific IDs, competency codes, technical terms.
@@ -125,6 +131,6 @@ Combine results from all tiers used. Deduplicate. Present with provenance:
 
 ## Current Coverage (2026-04-07)
 - Wiki: 12 pages (10 topics, 1 lecture, 1 index)
-- Ontology: 352 triples (12 topics, 8 lectures, 8 LOs, 2 requirements, 4 seminars, 10 documents)
+- Ontology: 389 triples (12 topics, 17 concepts, 8 lectures, 8 LOs, 2 requirements, 4 seminars, 10 documents)
 - RAG: 61 documents, 13,712 chunks (16 exports, 15 papers, 10 research notes, 12 wiki pages, 8 other)
 - Grep: all repo files

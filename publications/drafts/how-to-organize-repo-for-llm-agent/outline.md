@@ -1,36 +1,346 @@
 ---
-title: "How to Organize a Repository for an LLM Agent"
+title: "Как организовать репозиторий для LLM-агента"
 slug: how-to-organize-repo-for-llm-agent
 date: 2026-04-07
 status: draft
-tags: [claude-code, repository, llm-agent, devops]
-lang: en
-wordpress_url: ""
-pair_slug: how-to-organize-repo-for-llm-agent
+targets: [blog, habr]
+tags: [claude-code, repository, llm-agent, knowledge-management, rag, devops]
+lang: ru
+published_urls: {}
+pair_slug: how-to-organize-repo-for-llm-agent-en
+issue: "#38"
 ---
 
-# How to Organize a Repository for an LLM Agent
+# Как организовать репозиторий для LLM-агента: аутлайн
 
-## Outline
+## Метаданные статьи
 
-### Target audience
-Developers and technical leads who use LLM agents (Claude Code, Copilot Workspace, Cursor, etc.) as development tools and want to structure their repos for maximum agent effectiveness.
+- **Целевая аудитория:** CTO, техлиды, senior-инженеры, работающие с LLM-агентами (Claude Code, Cursor, Copilot, Codex CLI)
+- **Тон:** авторитетный, практический, evidence-based. Не академический, но со ссылками на исследования.
+- **Целевой объём:** 2500-3500 слов (~15000-21000 знаков)
+- **Ключевой нарратив:** Каждый уровень -- ЛУЧШИЙ на своём масштабе. Мы НЕ строим лестницу "каждый следующий лучше". Мы строим карту: выбери правильный инструмент для своей задачи.
 
-### Key thesis
-A repository designed for an LLM agent needs explicit conventions, machine-readable metadata, and a clear separation of concerns -- the same things that help human developers, but taken further.
+---
 
-### Planned sections
+## 1. Введение
 
-1. **Why repo structure matters for agents** -- agents read your repo as context; poor structure = poor results
-2. **CLAUDE.md / rules files** -- the "briefing document" pattern for agent instructions
-3. **Directory layout conventions** -- predictable paths, manifests, catalogs
-4. **Ontology and metadata** -- machine-readable relationships between artifacts
-5. **Git workflow for agents** -- branch naming, issue-driven work, commit conventions
-6. **Templates and skills** -- reusable recipes that agents can follow
-7. **What we learned** -- real findings from this project (notes/decisions.md)
+**Заголовок:** Пять уровней организации знаний: выберите свой
 
-### Sources
-- This repository's own structure and CLAUDE.md
-- notes/decisions.md findings
-- Anthropic Claude Code documentation
-- Community practices (Cursor rules, Copilot instructions)
+**Содержание (3-5 предложений):**
+Открываем провокационным утверждением: большинство команд либо недоинвестируют в структуру (хаос), либо переинвестируют (RAG для пяти документов). Разработчик, удаливший 2000 строк RAG-кода и получивший рост точности до 94%, -- не аномалия, а закономерность. Контекстные окна в 2026 году достигли 1M+ токенов у всех крупных провайдеров -- это меняет точку, где инфраструктура оправдана. Статья предлагает 5-уровневую модель, где каждый уровень -- лучший ответ на определённый масштаб. Переход на следующий уровень нужен только когда текущий ломается на конкретной болевой точке.
+
+**Ключевые тезисы:**
+- Оверинжиниринг знаний -- такая же проблема, как и недоинжиниринг
+- В 2026 контекстные окна 1M+ у Claude, Gemini, Llama, GPT -- это меняет математику
+- Разработчик удалил 2000 строк RAG-кода, точность выросла до 94% (Paul Hoke, Medium)
+- Filesystem-агенты обыгрывают RAG по точности: 8.4 vs 6.4 (LlamaIndex, 2026)
+- Каждый уровень имеет "вечную" нишу -- NotebookLM/Claude Projects (Tier 0), все AI-кодинг-тулы (Tier 1), Stripe/K8s docs (Tier 2)
+
+**Источники:**
+- Paul Hoke -- Deleting 2000 Lines of RAG Code (Medium)
+- LlamaIndex -- Filesystem Tools vs Vector Search 2026
+- Codingscape, Elvex, Morph -- данные по контекстным окнам 2026
+
+**Объём:** ~300 слов
+
+---
+
+## 2. Tier 0: Плоские файлы
+
+**Заголовок:** Уровень 0: Просто закиньте всё в контекст (<20 файлов)
+
+**Содержание (3-5 предложений):**
+Самый простой подход: все файлы проекта целиком загружаются в контекстное окно LLM. Никакого retrieval, никакой индексации -- контекстное окно И ЕСТЬ механизм поиска. При 20 файлах по 200 строк это ~16K токенов -- 1.6% от окна Claude. Показываем, что NotebookLM (20M+ токенов, 50 источников) и Claude Projects -- это продукты Tier 0, обслуживающие миллионы пользователей. Tier 0 -- это не "ещё не настроили", это осознанный архитектурный выбор для малого масштаба.
+
+**Ключевые тезисы:**
+- **Где сияет:** Нулевая задержка retrieval (RAG добавляет 50-200мс, 41% e2e latency). Точность recall/precision = 100% когда всё в контексте. NotebookLM и Claude Projects -- продукты на миллионы пользователей, построенные на Tier 0.
+- **Анти-паттерн:** RAG для 5 документов -- классический оверинжиниринг. "Если база знаний < 200K токенов (~500 страниц), включите её целиком в промпт" (Ahoi Kapptn).
+- **Когда ломается:** Lost-in-the-middle эффект (30%+ падение точности для информации в середине контекста, Stanford/UC Berkeley). Эффективный контекст << рекламируемого (99% падение на сложных задачах). Стоимость линейно растёт: $1.50 за запрос при 500K токенов.
+- **Порог перехода:** ~20 файлов / ~50K токенов общего контента.
+
+**Пример структуры:**
+```
+my-project/
+  README.md
+  src/
+    main.py
+    utils.py
+    config.yaml
+  docs/
+    architecture.md
+    api-reference.md
+```
+
+**Реальные примеры:** NotebookLM (Google), Claude Projects (Anthropic), персональные dotfiles-репо, одноразовые скрипты анализа.
+
+**Источники:**
+- Liu et al. 2023 -- Lost in the Middle (arxiv)
+- Milvus -- RAG Latency benchmarks
+- Elephas -- Claude Projects vs NotebookLM 2026
+- Ahoi Kapptn -- From Long Prompt to RAG
+- arxiv 2509.21361 -- Maximum Effective Context Window
+
+**Объём:** ~350 слов
+
+---
+
+## 3. Tier 1: Code-first
+
+**Заголовок:** Уровень 1: Grep + CLAUDE.md -- как на самом деле работают AI-кодинг-тулы
+
+**Содержание (3-5 предложений):**
+Проект имеет CLAUDE.md (или AGENTS.md, .cursorrules), который объясняет агенту структуру кодовой базы. Агент использует grep/ripgrep для поиска, читает файлы по запросу, навигирует через естественную структуру проекта. Это не "бедная альтернатива RAG" -- это то, как ВСЕ главные AI-кодинг-инструменты работают в 2026. Claude Code не поднимает vector DB -- он запускает grep. Ripgrep исполнилось 10 лет и он "тихо стал несущей инфраструктурой для того, как AI пишет код".
+
+**Ключевые тезисы:**
+- **Где сияет:** Все AI-кодинг-тулы используют grep как core infrastructure (Claude Code -- agentic search без индекса, Cursor -- embedding index, Windsurf -- enterprise RAG pipeline). Zero infrastructure, zero maintenance, zero cost (vs ~$185/мес для гибридной системы). Для точного поиска идентификаторов grep ОБЪЕКТИВНО лучше семантического поиска (`ERROR_4532` vs `ERROR_4533`).
+- **AGENTS.md выиграл гонку стандартизации:** Linux Foundation, 60K+ репо, поддержка OpenAI, Anthropic, Google, AWS, Bloomberg. Таблица сравнения конфиг-файлов (CLAUDE.md, AGENTS.md, .cursorrules, copilot-instructions.md, GEMINI.md).
+- **Когда ломается:** Полисемия grep (одно слово `init` в сотнях файлов). Фрагментация контекста (grep возвращает строку, не функцию). Не-код не помещается (PDF, Google Docs, исследования). Ripgrep vs indexed search при 500K+ файлов (0.013s vs 15s).
+- **Порог перехода:** ~500 файлов, преимущественно код, с единообразными naming conventions.
+
+**Пример структуры:**
+```
+my-repo/
+  CLAUDE.md          # инструкции агенту
+  AGENTS.md          # стандартизованные правила
+  src/
+  tests/
+  docs/
+    architecture.md
+    adr/
+```
+
+**Реальные примеры:** Все репозитории, использующие Claude Code, Cursor, Copilot, Codex CLI. wshobson/agents (182 агента, 16 оркестраторов).
+
+**Источники:**
+- AGENTS.md specification (agents.md)
+- Morph -- Codebase Indexing
+- DEV.to -- Cursor vs Windsurf vs Claude Code 2026
+- BuildMVPFast -- Ripgrep at 10 Years
+- LlamaIndex -- Filesystem Tools vs Vector Search 2026
+- ast-grep blog -- Code Search Design Space
+
+**Объём:** ~450 слов
+
+---
+
+## 4. Tier 2: Структурированная документация
+
+**Заголовок:** Уровень 2: Docs-as-code -- единственный уровень для людей И машин одновременно
+
+**Содержание (3-5 предложений):**
+Документация организована по типу контента с формальными шаблонами, кросс-ссылками, валидируемыми на этапе сборки, и навигационной структурой. Ключевое преимущество: это ЕДИНСТВЕННЫЙ уровень, одинаково читаемый людьми и LLM. Wiki (Tier 3) компилируется LLM и менее удобен для людей. RAG (Tier 4) невидим до запроса. Tier 2 обслуживает обе аудитории из одного источника истины. Stripe, Kubernetes, Django, Terraform -- все используют Tier 2 и НИКОГДА не перейдут на RAG.
+
+**Ключевые тезисы:**
+- **Где сияет:** Human+LLM sweet spot -- новый член команды читает те же доки, что и AI. Build-time гарантии (Kubernetes валидирует glossary term_id, Stripe Markdoc обеспечивает структурную валидацию). SEO и discoverability -- Tier 3/4 невидимы для Google. Diataxis framework (Tutorials, How-to, Reference, Explanation) -- adopted by Cloudflare, Ubuntu, Django, Gatsby.
+- **ADR (Architecture Decision Records):** формат Nygard (2011), шаблоны MADR и Y-Statements, инструменты adr-tools/Log4brains. AWS: "200+ ADR улучшили командное сотрудничество".
+- **Когда ломается:** Authoring overhead (каждый документ должен соответствовать шаблону). Нет семантического обнаружения ("найди всё про fairness в AI"). Человеческий bottleneck для классификации ("это tutorial или how-to?"). Устаревшие кросс-ссылки проходят валидацию, если страница существует.
+- **Порог перехода:** ~3000 страниц с чёткой таксономией типов контента.
+
+**Пример структуры:**
+```
+docs/
+  tutorials/
+    getting-started.md
+    deploy-first-app.md
+  how-to/
+    configure-auth.md
+    scale-workers.md
+  reference/
+    api/
+    cli/
+  explanation/
+    architecture.md
+    security-model.md
+  adr/
+    001-use-postgres.md
+    002-event-sourcing.md
+```
+
+**Реальные примеры:** Kubernetes docs (3000+ страниц, Hugo), Stripe docs (Markdoc), Terraform docs, Django docs, Docusaurus.
+
+**Источники:**
+- Diataxis.fr
+- Sequin blog -- We Fixed Our Docs with Diataxis
+- Kubernetes content guide
+- Stripe blog -- Markdoc
+- AWS -- ADR Best Practices
+- Ubuntu -- Diataxis Foundation
+
+**Объём:** ~450 слов
+
+---
+
+## 5. Tier 3: LLM-компилируемая вики
+
+**Заголовок:** Уровень 3: Метод Карпати -- raw -> wiki -> index
+
+**Содержание (3-5 предложений):**
+Сырые источники складываются в `raw/`. LLM читает их, компилирует вики-страницы, поддерживает индекс. Индекс -- основной механизм поиска: LLM сканирует его для нахождения нужных страниц. Три операции: Ingest (прочитать источник, написать саммари, обновить индекс, обновить 10-15 связанных страниц), Query (найти ответ в вики, хорошие ответы сохранить как новые страницы), Lint (детектировать противоречия, осиротевшие страницы, устаревшие утверждения). Гист Карпати набрал 16 миллионов просмотров -- это резонирует.
+
+**Ключевые тезисы:**
+- **Где сияет:** Компрессия 81x (383 файла -> 13 статей, ussumant/llm-wiki-compiler). Совещания: 503x (130 транскриптов -> 1 дайджест). Старт сессии: 84% сокращение токенов (~47K -> ~7.7K). Zero-infrastructure семантический поиск -- весь "стек" это `git push`. Рай для соло-исследователя: один человек + один LLM = работа целой документационной команды.
+- **Три реализации:** ussumant (Claude Code plugin, coverage indicators), atomicmemory (TypeScript, кросс-ссылки, orphan detection), xoai/sage-wiki (Go, 5-pass pipeline, BM25+vector hybrid, SQLite).
+- **Самовосстанавливающаяся база знаний:** Lint обнаруживает устаревшие утверждения, Tier 2 docs устаревают молча.
+- **Когда ломается:** Индекс превышает контекстное окно (~500+ источников, 50K+ токенов только индекс). Стоимость компиляции ($10-50 за полную перекомпиляцию 500 источников). Нет fuzzy discovery ("fairness metrics" не найдёт "equity measures"). Single-maintainer bottleneck.
+- **Порог перехода:** ~500 гетерогенных источников.
+
+**Пример структуры:**
+```
+knowledge-base/
+  CLAUDE.md          # схема и конвенции
+  index.md           # каталог с однострочными саммари
+  log.md             # append-only журнал операций
+  raw/               # неизменяемые источники
+    paper-attention-2017.pdf
+    meeting-2026-03-15.txt
+    regulation-gdpr.md
+  wiki/              # LLM-сгенерированный markdown
+    transformer-architectures.md
+    gdpr-compliance.md
+    team-decisions-q1.md
+```
+
+**Реальные примеры:** Karpathy LLM Wiki, DPC Messenger (70% паттерна уже было), наш собственный репозиторий (AI-usage-lessons), предприниматель Vamshi Reddy ("У каждого бизнеса есть raw/ -- никто ещё не скомпилировал его").
+
+**Источники:**
+- Karpathy LLM Wiki gist
+- ussumant/llm-wiki-compiler (GitHub)
+- MindStudio -- LLM Wiki vs RAG
+- VentureBeat -- Karpathy LLM Knowledge Base
+- DAIR.AI -- LLM Knowledge Bases
+
+**Объём:** ~500 слов
+
+---
+
+## 6. Tier 4: Гибридный retrieval
+
+**Заголовок:** Уровень 4: Wiki + RAG + граф знаний -- когда ставки высоки
+
+**Содержание (3-5 предложений):**
+Комбинация скомпилированной вики с векторным поиском для семантического обнаружения и опционально графом знаний для реляционных запросов. Несколько стратегий поиска объединяются через Reciprocal Rank Fusion (RRF). Это уровень enterprise-масштаба, где пропущенная информация имеет реальную стоимость: юридическая, медицинская, финансовая сферы. 85% enterprise AI-приложений используют RAG в 2026. Но GraphRAG стал доступнее: LazyGraphRAG снижает стоимость индексации в 1000x, LightRAG даёт 70-90% качества за 1/100 цены.
+
+**Ключевые тезисы:**
+- **Где сияет:** Обнаружение unknown unknowns ("найди что-то про fairness" -- только семантический поиск). Multi-hop reasoning ("статьи автора X, цитирующие метод Y в домене Z"). Enterprise compliance -- permission-aware retrieval, audit trails, provenance chains. ROI: $3.70 на $1 инвестиций; bank EUR 20M+ за 3 года; support: 45мин -> 10мин.
+- **Ключевые системы:** Microsoft GraphRAG (72-83% win rate по comprehensiveness vs naive RAG, но $33K indexing). LazyGraphRAG (1000x дешевле индексация, 700x дешевле запрос). LightRAG (70-90% качества за 1/100 цены). HybridRAG (NVIDIA/BlackRock -- vector + graph превосходит каждый по отдельности).
+- **Когда граф знаний оправдан:** Multi-hop reasoning, provenance chains, aggregation/negation, permission-aware retrieval, 500+ источников. НЕ оправдан: < 500 источников, нет реляционных запросов, бюджет < $200/мес, соло-мейнтейнер.
+- **Стоимость:** ~$185/мес минимум (vector DB $70 + graph DB $65 + BM25 $50). Enterprise: $200K-$500K первый год.
+
+**Пример структуры:**
+```
+knowledge-platform/
+  wiki/              # скомпилированная вики (Tier 3)
+  raw/               # источники
+  embeddings/        # векторные индексы
+  graph/             # граф знаний (RDF/TTL или Neo4j dump)
+  pipelines/
+    ingest.py        # chunking + embedding + graph extraction
+    query.py         # RRF fusion across strategies
+  config/
+    retrieval.yaml   # веса стратегий, пороги
+```
+
+**Реальные примеры:** Glean (enterprise search), Neo4j + Pinecone, финансовые аналитические платформы, compliance-системы (Northwestern Mutual, European bank).
+
+**Источники:**
+- Microsoft GraphRAG paper (arxiv)
+- Microsoft -- LazyGraphRAG
+- LightRAG (Medium)
+- HybridRAG paper (arxiv)
+- Pinecone + Neo4j
+- LeanWare -- Enterprise RAG Consulting
+- Techment -- RAG Architectures 2026
+
+**Объём:** ~500 слов
+
+---
+
+## 7. Фреймворк принятия решений
+
+**Заголовок:** Какой уровень выбрать: таблица решений
+
+**Содержание (3-5 предложений):**
+Сводная таблица для быстрого принятия решения. Не "прочитай всю статью и реши" -- а "ответь на 3 вопроса и получи ответ". Три оси: масштаб (количество файлов/источников), тип контента (код vs гетерогенные документы), аудитория (AI-only, human+AI, enterprise). Дополнительно -- таблица метрик по всем тирам для детального сравнения.
+
+**Ключевые тезисы:**
+
+- **Блок-схема решений (текстовая):**
+  - Всё помещается в контекст (<20 файлов)? -> Tier 0
+  - Преимущественно код, <500 файлов? -> Tier 1
+  - Нужна документация для людей И AI? -> Tier 2
+  - Гетерогенные источники, соло/малая команда, <500 источников? -> Tier 3
+  - Enterprise, compliance, 500+ источников, multi-hop запросы? -> Tier 4
+
+- **Сводная таблица метрик:**
+
+| Метрика | Tier 0 | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
+|---------|--------|--------|--------|--------|--------|
+| Время настройки | 0 | Часы | Дни-недели | Часы | Дни-недели |
+| Обслуживание | Нет | Низкое | Среднее | Среднее | Высокое |
+| Стоимость инфра | Нет | Нет | Static site gen | Нет (markdown) | $185+/мес |
+| Потолок масштаба | ~50K токенов | ~500 файлов | ~3000 стр. | ~500 источ. | 10K+ источ. |
+| Precision (известные запросы) | Высокая | Высокая | Высокая | Высокая | Наивысшая |
+| Recall (обнаружение) | Высокий | Низкий | Средний | Средний | Высокий |
+
+- **Ключевое правило:** Не переходите на следующий уровень пока текущий не сломался на конкретной болевой точке. "Upgrading tiers is often over-engineering" -- подтверждено исследованиями.
+
+**Источники:**
+- Сводная таблица из research part 2 (cross-cutting findings)
+- LaRA benchmark (ICML 2025) -- LC 56.3% vs RAG 49.0%
+
+**Объём:** ~350 слов
+
+---
+
+## 8. Заключение
+
+**Заголовок:** Лучшая архитектура -- та, которая соответствует вашему масштабу
+
+**Содержание (3-5 предложений):**
+Возвращаемся к главному тезису: нет "лучшего" способа организовать знания для LLM-агентов. Есть правильный способ для вашего масштаба. Tier 0 навсегда останется правильным ответом для персональных проектов. Tier 1 навсегда останется тем, как работают AI-кодинг-тулы. Stripe никогда не перейдёт на RAG для своей документации. Закрываем призывом: посмотрите на свой текущий проект, определите масштаб, выберите уровень -- и НЕ добавляйте инфраструктуру, пока она не понадобилась.
+
+**Ключевые тезисы:**
+- Каждый уровень имеет "вечную" нишу -- это не лестница, а карта
+- Главный анти-паттерн: преждевременная инфраструктура
+- Простое правило: если вы не испытываете конкретную боль текущего уровня -- вы на правильном уровне
+- CTA: начните с аудита текущей организации знаний, определите болевые точки, выберите целевой уровень
+
+**Источники:**
+- Verified/Disproven theses из research (summary)
+
+**Объём:** ~200 слов
+
+---
+
+## 9. Ссылки
+
+**Заголовок:** Источники и дополнительные материалы
+
+Полный список источников, сгруппированных по темам:
+- Контекстные окна и возможности LLM (5 источников)
+- Конфигурационные файлы агентов и AI-кодинг-тулы (6 источников)
+- Фреймворки документации (7 источников)
+- Karpathy LLM Wiki и реализации (7 источников)
+- Гибридный retrieval и GraphRAG (7 источников)
+- RAG vs Long Context (3 источника)
+- Enterprise RAG и метрики (2 источника)
+- Tier strengths и evidence (12+ источников)
+
+**Объём:** ~100 слов (ссылки)
+
+---
+
+## Общий расчёт объёма
+
+| Секция | Слов |
+|--------|------|
+| 1. Введение | ~300 |
+| 2. Tier 0 | ~350 |
+| 3. Tier 1 | ~450 |
+| 4. Tier 2 | ~450 |
+| 5. Tier 3 | ~500 |
+| 6. Tier 4 | ~500 |
+| 7. Фреймворк решений | ~350 |
+| 8. Заключение | ~200 |
+| 9. Ссылки | ~100 |
+| **Итого** | **~3200** |

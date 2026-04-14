@@ -22,10 +22,12 @@
 - Свести пользовательские правки и приоритеты в `notes/lecture-1-review/user-notes.md`.
 - **Gate C:** согласованный список задач для синтеза улучшенной версии.
 
-### Фаза D — Синтез улучшенной версии
-- Делегировать субагенту (`doc-editor` или `deck-editor`) создание улучшенного плана слайдов.
-- Артефакт: `notes/lecture-1-review/improved-plan.md` + (опционально) обновление Google Doc через `workspace-mcp` в отдельной версии.
-- **Gate D:** пользователь прочитал улучшенную версию, одобрил для PR.
+### Фаза D — Синтез улучшенной версии ✅ ЗАВЕРШЕНА
+- Созданы три варианта (A — roast-only, B — user-only, C — combined) в `notes/lecture-1-review/variants/`.
+- Финальный синтез по правилам пользователя:
+  - `notes/lecture-1-review/final/new-plan-v4-final.md` — production-ready план (29 слайдов, 75 мин).
+  - `notes/lecture-1-review/final/synthesis-rationale.md` — матрица «слайд → источник» + разрешённые конфликты (7 конфликтов).
+- **Gate D:** ожидает прочтения пользователем и одобрения для PR.
 
 ### Фаза E — Ревью и PR
 - Открыть PR из `issue-47-lecture-1-review` в `main`.

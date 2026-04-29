@@ -436,43 +436,56 @@ seminars:
     status: draft
   - number: 9
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Уровни автономности и сертификация: где AI НЕ принимает решения"
+    summary: >-
+      Разбор трёх кейсов автономных систем (MCAS, Су-57, MQ-9), классификация
+      по уровням автономности и требования к сертификации в критических системах.
     module: M2
     related_lecture: 9
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    format: кейс+групповой_анализ
     status: draft
   - number: 10
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Cognitive Agro Pilot и precision farming: разбор данных с поля"
+    summary: >-
+      Команды по сырым IoT-данным агрополя строят мини-архитектуру AI-решения
+      (CV / ML-прогноз / RAG); рефлексия перспектив AI в АПК РФ.
     module: M2
     related_lecture: 10
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO5]
+    format: кейс+групповой_анализ
     status: draft
   - number: 11
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Predictive maintenance и коботы: разбор архитектуры цеха"
+    summary: >-
+      Демо NASA Bearing Dataset + кейс «Северсталь/ММК»: команды
+      проектируют AI-архитектуру цеха и определяют границу кобот / человек.
     module: M2
     related_lecture: 11
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO7, LO8]
+    format: демо+кейс+групповой_анализ
     status: draft
   - number: 12
     type: контрольный
-    title: "TBD"
-    summary: "TBD (включает Рубежный контроль 2)"
+    title: "Рубежный контроль 2"
+    summary: >-
+      Контрольное мероприятие модуля M2 (75 мин): тест из 12 вопросов
+      (LO1, LO2, LO3, LO5, LO7, LO8) + кейс на анализ AI-архитектуры
+      производственного сценария.
     module: M2
     related_lecture: 12
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO5, LO7, LO8]
+    format: контроль
     rubezhnyi_control: 2
     status: draft
   - number: 13

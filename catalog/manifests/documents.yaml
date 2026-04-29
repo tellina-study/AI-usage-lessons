@@ -79,6 +79,24 @@ documents:
     export_path: "catalog/exports/docs/prog-otraslevoe-updated-formal.md"
     synced_at: "2026-03-31"
 
+  - id: 1WxYdLGONVQwy18fD2sP9ahIuwSy83m-l5exNXFTANGs
+    title: "РПД - Отраслевое применение систем ИИ (Doc#2)"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1WxYdLGONVQwy18fD2sP9ahIuwSy83m-l5exNXFTANGs/edit"
+    folder: "01-formal"
+    export_path: "catalog/exports/docs/rpd-doc2-2026-04-29-after-phase4a.md"
+    backup_path: "catalog/exports/docs/rpd-doc2-2026-04-29-backup.md"
+    synced_at: "2026-04-29"
+    updated_at: "2026-04-29"
+    summary: >-
+      Phase 4A (issue #51): Литература реструктурирована — 5 основных позиций
+      сохранены, дополнительные материалы (плейсхолдеры «Позиция доп 1/2/3»)
+      заменены 6 реальными позициями (Девятков, Макаров, Сосинская, Николенко,
+      Гудфеллоу, Флах) с URL-ссылками на library.bmstu.ru. Итого 11 позиций.
+      Часы в Таблице 3 (Содержание дисциплины) не обновлены: find_and_replace_doc
+      не работает через границы ячеек таблицы — отложено до отдельного агента
+      с batch_update_doc.
+
   # =============================================================================
   # 02-lectures — Lecture plans and materials
   # =============================================================================

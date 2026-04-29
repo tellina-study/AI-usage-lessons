@@ -326,85 +326,112 @@ lectures:
     status: draft
 
 seminars:
+  # S1-S8 (модуль M1) наполнены в Phase 2 pack 1 (issue #51).
+  # Полные summary живут в catalog/manifests/seminars.yaml; здесь —
+  # короткий summary + минимум полей для синхронизации структуры.
   - number: 1
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Чек-лист «Какой тип AI выбрать»: 4 вопроса инженера ИУ6"
+    summary: >-
+      Применение чек-листа 4 вопросов из L1 к четырём инженерным задачам
+      в малых группах с публичным разбором.
     module: M1
     related_lecture: 1
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO4, LO6]
+    format: групповой_анализ+опрос_дискуссия
     status: draft
   - number: 2
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Почему промпт работает: разбор через токены, контекст и attention"
+    summary: >-
+      Разбор 6 промптов (3 рабочих, 3 ломающихся) с объяснением через
+      токенизацию, длину контекста, температуру; tokenizer-демо.
     module: M1
     related_lecture: 2
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO6, LO7]
+    format: разбор+демо
     status: draft
   - number: 3
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Архитектурный выбор: чат, агент, RAG или API — разбор трёх кейсов"
+    summary: >-
+      Команды выбирают и защищают архитектуру (чат / агент / RAG /
+      fine-tune / API) для трёх инженерных задач.
     module: M1
     related_lecture: 3
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO7, LO4]
+    format: кейс+групповой_анализ
     status: draft
   - number: 4
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "AI в цикле разработки ПО: Copilot vs Cursor vs coding-agent"
+    summary: >-
+      Демо одной задачи разработки тремя способами; команды оценивают
+      контроль / скорость / детерминизм / доверие; разбор статистики 84% / 46%.
     module: M1
     related_lecture: 4
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO4, LO7]
+    format: демо+групповой_анализ
     status: draft
   - number: 5
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Fact-checking AI на финансовых данных: проверка 5 заявлений"
+    summary: >-
+      Команды проверяют 5 утверждений о AI в банках/ритейле РФ
+      по первоисточникам; разбор антипаттерна «AI знает всё».
     module: M1
     related_lecture: 5
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO6]
+    format: мини_практика+разбор
     status: draft
   - number: 6
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Генеративный дизайн и цена ошибки: разбор инженерных кейсов"
+    summary: >-
+      Три кейса (успех, дорогая ошибка, спорный); чек-лист обязательных
+      проверок выхода генеративной модели для машиностроения.
     module: M1
     related_lecture: 6
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO7]
+    format: кейс+групповой_анализ
     status: draft
   - number: 7
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "AI-диагностика: sensitivity, specificity и вопрос ответственности"
+    summary: >-
+      Расчёт ложно-+/- на кейсе mosmed.ai и этическая дискуссия об
+      ответственности (разработчик / врач / больница / регулятор).
     module: M1
     related_lecture: 7
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO8]
+    format: кейс+опрос_дискуссия
     status: draft
   - number: 8
     type: контрольный
-    title: "TBD"
-    summary: "TBD (включает Рубежный контроль 1)"
+    title: "Разбор L8 (креатив, авторское право) и Рубежный контроль 1"
+    summary: >-
+      30 мин — разбор кейсов авторства AI-контента в РФ/ЕС/США;
+      45 мин — Рубежный контроль 1 (тест из 15 вопросов + кейсовый анализ).
     module: M1
     related_lecture: 8
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO4, LO5, LO6, LO7, LO8]
+    format: разбор+контроль
     rubezhnyi_control: 1
     status: draft
   - number: 9

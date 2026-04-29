@@ -34,6 +34,23 @@ documents:
     export_path: "catalog/exports/docs/course-structure.md"
     synced_at: "2026-03-31"
 
+  - id: 1-k8Xap6FeSnyw2ZFYKSIqcte6_wLTD3FBw0rpYXWJPY
+    title: "Структура курса «Отраслевое применение систем искусственного интеллекта» (Doc #1)"
+    type: google-doc
+    source_url: "https://docs.google.com/document/d/1-k8Xap6FeSnyw2ZFYKSIqcte6_wLTD3FBw0rpYXWJPY/edit"
+    folder: "00-course"
+    export_path: "catalog/exports/docs/course-structure-doc1-2026-04-29-new.md"
+    backup_path: "catalog/exports/docs/course-structure-doc1-2026-04-29-backup.md"
+    synced_at: "2026-04-29"
+    updated_at: "2026-04-29"
+    summary: >-
+      Phase 3 (issue #51): доc реструктурирован в 3 модуля (Модуль 1: Л1–Л8 +
+      С1–С8; Модуль 2: Л9–Л12 + С9–С12; Модуль 3: Л13–Л17 + С13–С17). Заголовок
+      выровнен с РПД («Отраслевое применение систем ИИ»). Все 17 детализаций
+      лекций (таблицы LO/Паттерн/Антипаттерн/Безопасность/Человек vs AI)
+      сохранены. Добавлены: 17 описаний семинаров (тема, LO, формат), новая
+      таблица «Распределение по модулям», «Покрытие LO по семинарам».
+
   - id: 1ii8GbnjYGSoyadnBO_S5SKXVptq1QYz4QcDOGQ3DknI
     title: "course-narrative"
     type: google-doc

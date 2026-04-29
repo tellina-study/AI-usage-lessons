@@ -490,52 +490,73 @@ seminars:
     status: draft
   - number: 13
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Маршрутизация, склады и last-mile: где RL, где CV, где dynamic pricing"
+    summary: >-
+      Команды выбирают тип AI (RL / CV / ML-прогноз) для трёх кейсов
+      (склад Wildberries, маршрутизация «Достависта», pricing «Яндекс Go»);
+      разбор уровней SAE 0–5 на «КамАЗ-беспилотник М-11».
     module: M3
     related_lecture: 13
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO7]
+    format: кейс+групповой_анализ
     status: draft
   - number: 14
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "AI как щит и как меч: разбор атак и защиты сетевой инфраструктуры"
+    summary: >-
+      Демо deepfake-голоса и AI-фишинга; команды разбирают три инцидента
+      (Colonial Pipeline, deepfake-CEO Arup 25 млн $, anomaly detection
+      МТС/Ростелеком); дискуссия «гонка вооружений атакующий vs защитник».
     module: M3
     related_lecture: 14
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    format: демо+кейс+групповой_анализ
     status: draft
   - number: 15
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "AI для ВКР: literature review, AlphaFold-кейсы и обязательность указания"
+    summary: >-
+      Команды делают AI literature review своей темы (Elicit / Consensus /
+      Perplexity Scholar), разбирают кейс AlphaFold и retraction из-за
+      неуказанного AI; формулируют раздел «Использование AI» для своего ВКР.
     module: M3
     related_lecture: 15
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO4, LO5, LO6, LO8]
+    format: мини_практика+кейс+опрос_дискуссия
     status: draft
   - number: 16
     type: предметный
-    title: "TBD"
-    summary: "TBD"
+    title: "Сейсморазведка, трубопровод, скважина: AI-архитектура для нефтегаза"
+    summary: >-
+      Кейс «Газпром нефть»/«Роснефть»: команды проектируют AI-архитектуру
+      для трёх задач (3D-сейсмика, мониторинг 1200 км трубопровода,
+      оптимизация 200 скважин); демо CV на сейсмо-кубах + дискуссия Stuxnet
+      и OT-безопасность.
     module: M3
     related_lecture: 16
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    format: кейс+демо+групповой_анализ
     status: draft
   - number: 17
     type: контрольный
-    title: "TBD"
-    summary: "TBD (включает Рубежный контроль 3 и итоговую систематизацию)"
+    title: "Рубежный контроль 3"
+    summary: >-
+      Финальный контроль M3 и всего курса (75 мин, 18/30 баллов по РПД):
+      тест из 15 вопросов (LO1–LO8) + итоговый кейс на синтез — выбор и
+      обоснование AI-архитектуры для произвольной отраслевой задачи.
     module: M3
     related_lecture: 17
     duration_min: 75
     duration_ahours: 2
-    learning_outcomes: []
+    learning_outcomes: [LO1, LO2, LO3, LO4, LO5, LO6, LO7, LO8]
+    format: контроль
     rubezhnyi_control: 3
     status: draft

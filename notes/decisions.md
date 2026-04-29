@@ -141,3 +141,20 @@ LO1→ПКС-5; LO2→ПКС-11; LO3→ПКС-4; LO4→ПКС-4+ПКС-11; LO5�
 **Что НЕ затронуто в Фазе 1:** ontology/schema.ttl (нет класса `Module` пока), wiki/lectures/* и wiki/seminars/* страницы (отдельный issue), `library/lectures/lec-NN/` пустые папки, Google Doc'и (Фазы 3/4 issue #51).
 
 **Правило поддержки:** при изменении структуры — править `course.yaml`, затем синхронизировать lectures.yaml/seminars.yaml/wiki/onтологию (будущий skill `sync-course-structure`).
+
+## 2026-04-29 — Phase 4B Doc#2 РПД (#51) — partial, lessons learned
+
+**Done:** Table 3 (Содержание дисциплины) — все 9 ячеек часов M1/M2/M3 обновлены через `mcp__workspace-mcp__batch_update_doc` с `replace_text` по explicit cell character ranges (highest-to-lowest order, чтобы избежать сдвига индексов). Итого 16/16/0/0/22, 8/8/0/0/11, 10/10/0/0/13, totals 34/34/0/0/76 — verified via `debug_table_structure`.
+
+**Partial:** «Содержание по темам» (Table index 5, 65 строк) — успешно переименовали 5 ячеек с уникальным текстом (С1.2, С1.3, 2.1, 2.2, 2.3) + СР1.4 hours. Остальное deferred.
+
+**Anti-patterns confirmed:**
+1. `find_and_replace_doc` с табом-разделителем (`"2.4\tТема лекции"`) — НЕ срабатывает: cell-границы непреодолимы для find. Plain-text внутри одной ячейки работает.
+2. Нумерация лекций («10», «12», «1.5», «1.25», «8.5», «10») в часовых ячейках совпадает с числами в книгах раздела 7 и в Table 2. Простой `find_and_replace_doc` ВСЕГДА затронет лишнее. Например: `8.5` → `15` затронуло 3 occurrences (1 нужная + 2 в `28.5` Table 2). Цепная коррекция через `215 → 28.5` затем сломала ISBN-страницы книг.
+3. Module-title prefix «Теоретико-методологические основы систем искусственного» совпадает в 3 местах: Table 3 row M1, Содержание по темам M1 header, С1.1 cell. Plain-text find без уникального суффикса = guaranteed damage.
+
+**Подход для следующей фазы:**
+- Для всех изменений в больших таблицах с похожими ячейками — ОБЯЗАТЕЛЬНО `mcp__workspace-mcp__batch_update_doc` + explicit `replace_text` по start/end character indices, полученным из `debug_table_structure`. НЕ использовать `find_and_replace_doc` для коротких/неуникальных строк.
+- При выводе `debug_table_structure` >25KB — sometime saves to tool-results file. Читать его в чанках через `Read` с offset/limit.
+- Для row-count adjustment — `insert_table_row` / `delete_table_row` operations.
+- Workaround для повреждённой ячейки С1.1 («Чек-лист «Какой тип AI выбрать»: 4 вопроса инженера ИУ6\u000bинтеллекта») — отдельный fix через cell-range replace_text при следующем заходе.

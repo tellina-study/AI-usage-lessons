@@ -422,16 +422,16 @@ seminars:
     status: draft
   - number: 8
     type: контрольный
-    title: "Разбор L8 (креатив, авторское право) и Рубежный контроль 1"
+    title: "Рубежный контроль 1"
     summary: >-
-      30 мин — разбор кейсов авторства AI-контента в РФ/ЕС/США;
-      45 мин — Рубежный контроль 1 (тест из 15 вопросов + кейсовый анализ).
+      Контрольное мероприятие модуля M1 (75 мин): тест из 15 вопросов
+      (LO1–LO8) + кейс на письменный анализ.
     module: M1
     related_lecture: 8
     duration_min: 75
     duration_ahours: 2
     learning_outcomes: [LO1, LO2, LO3, LO4, LO5, LO6, LO7, LO8]
-    format: разбор+контроль
+    format: контроль
     rubezhnyi_control: 1
     status: draft
   - number: 9

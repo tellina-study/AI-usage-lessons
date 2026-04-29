@@ -24,7 +24,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 2
-    title: "Почему промпт работает: разбор через токены, контекст и attention"
+    title: "Почему промпт работает: разбор через токены, контекст и механизм внимания"
     type: предметный
     module: M1
     related_lecture: 2
@@ -63,7 +63,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 4
-    title: "AI в цикле разработки ПО: Copilot vs Cursor vs coding-agent"
+    title: "AI в цикле разработки ПО: автодополнение, чат-ассистент и агент"
     type: предметный
     module: M1
     related_lecture: 4
@@ -84,7 +84,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 5
-    title: "Fact-checking AI на финансовых данных: проверка 5 заявлений"
+    title: "Проверка фактов AI на финансовых данных: разбор 5 заявлений"
     type: предметный
     module: M1
     related_lecture: 5
@@ -126,7 +126,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 7
-    title: "AI-диагностика: sensitivity, specificity и вопрос ответственности"
+    title: "AI-диагностика: чувствительность, специфичность и вопрос ответственности"
     type: предметный
     module: M1
     related_lecture: 7
@@ -188,7 +188,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 10
-    title: "Cognitive Agro Pilot и precision farming: разбор данных с поля"
+    title: "Когнитивный Агропилот и точное земледелие: разбор данных с поля"
     type: предметный
     module: M2
     related_lecture: 10
@@ -210,7 +210,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 11
-    title: "Predictive maintenance и коботы: разбор архитектуры цеха"
+    title: "Предиктивное обслуживание и коботы: разбор архитектуры цеха"
     type: предметный
     module: M2
     related_lecture: 11
@@ -255,7 +255,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 13
-    title: "Маршрутизация, склады и last-mile: где RL, где CV, где dynamic pricing"
+    title: "Маршрутизация, склады и последняя миля: разбор трёх задач логистики"
     type: предметный
     module: M3
     related_lecture: 13
@@ -302,7 +302,7 @@ seminars:
     updated_at: "2026-04-29"
 
   - number: 15
-    title: "AI для ВКР: literature review, AlphaFold-кейсы и обязательность указания"
+    title: "AI для ВКР: обзор литературы, кейсы AlphaFold и обязательность указания"
     type: предметный
     module: M3
     related_lecture: 15

@@ -60,6 +60,25 @@ Primary working folder: `https://drive.google.com/drive/folders/1-f2hpJrlUbfnMcx
 
 Issues and tasks are tracked at: `https://github.com/orgs/tellina-study/projects/1/views/1`
 
+## Course Structure
+
+The course is **«Отраслевое применение систем искусственного интеллекта»** (МГТУ ИУ6, 09.03.01, 1 семестр, 4 з.е., 144 ак.ч.).
+
+**Single source of truth:** `catalog/manifests/course.yaml`.
+
+**Структура:**
+- 3 модуля (M1, M2, M3) + экзамен
+- 17 лекций (Л1–Л17), по 75 мин (2 ак.ч.)
+- 17 семинаров (С1–С17), по 75 мин: 14 предметных + 3 контрольных (С8, С12, С17 = РК1, РК2, РК3)
+
+**Производные артефакты:**
+- `catalog/manifests/lectures.yaml`, `seminars.yaml` — синхронизированы с course.yaml
+- `wiki/index.md`, `wiki/lectures/*`, `wiki/seminars/*` — выводятся skill'ом compile-wiki
+- `ontology/store.ttl` — instances модулей/лекций/семинаров (отдельный issue)
+- Google Drive `00-course/`, `02-lectures/`, `03-seminars/` — экспорт
+
+**Правило:** при изменении структуры курса — править `course.yaml`, потом синхронизировать остальное (skill — будущий `sync-course-structure`).
+
 ## Mandatory Git Rules
 
 - **NEVER push to main directly** — always create feature branches and PRs. This is NON-NEGOTIABLE, even for "small" fixes, doc updates, or config changes.

@@ -1,0 +1,501 @@
+# Course single source of truth
+# Generated for issue #51 (Phase 1).
+# Derived artifacts: lectures.yaml, seminars.yaml, wiki/index.md, ontology/store.ttl,
+# Google Drive 00-course/, 02-lectures/, 03-seminars/.
+
+course:
+  code: "09.03.01"
+  title_full: "Отраслевое применение систем искусственного интеллекта"
+  title_short: "Прикладные задачи AI"
+  faculty: "ИУ6 / Информатика и системы управления"
+  department: "ИУ6 «Компьютерные системы и сети»"
+  university: "МГТУ им. Н.Э. Баумана"
+  level: "бакалавриат"
+  direction: "09.03.01 «Информатика и вычислительная техника»"
+  semester: 1
+  total_hours: 144
+  total_credits: 4
+  hours:
+    lectures: 34
+    seminars: 34
+    self_study: 76
+  exam: true
+  authors:
+    - "Скворцова М.А."
+
+competencies:
+  - id: PKS-4
+    code: "ПКС-4"
+    direction_code: "09.03.01/05"
+    description: >-
+      Способен разрабатывать и тестировать программные компоненты решения задач
+      в системах искусственного интеллекта.
+  - id: PKS-5
+    code: "ПКС-5"
+    direction_code: "09.03.01/05"
+    description: >-
+      Способен осуществлять концептуальное моделирование проблемной области
+      и проводить формализацию представления знаний в системах искусственного
+      интеллекта.
+  - id: PKS-11
+    code: "ПКС-11"
+    direction_code: "09.03.01/05"
+    description: >-
+      Способен создавать и внедрять одну или несколько сквозных цифровых
+      субтехнологий искусственного интеллекта.
+
+learning_outcomes:
+  - id: LO1
+    text: "Классифицировать типы AI-решений и сопоставить их с задачами индустрий"
+    competencies: [PKS-5]
+  - id: LO2
+    text: "Оценить применимость AI-решения к конкретной бизнес-задаче"
+    competencies: [PKS-11]
+  - id: LO3
+    text: "Проанализировать риски AI-систем: безопасность данных, ограничения, уязвимости"
+    competencies: [PKS-4]
+  - id: LO4
+    text: "Применить AI-инструменты для решения типовой аналитической задачи"
+    competencies: [PKS-4, PKS-11]
+  - id: LO5
+    text: "Сформулировать обоснованное заключение о перспективах AI в индустрии"
+    competencies: [PKS-5, PKS-11]
+  - id: LO6
+    text: "Выявить типичные ошибки и ограничения AI-систем"
+    competencies: [PKS-4]
+  - id: LO7
+    text: "Обосновать выбор архитектуры AI (чат, агент, RAG, API, модель) для задачи"
+    competencies: [PKS-5]
+  - id: LO8
+    text: >-
+      Определить роль человека и AI в совместной работе: сильные стороны,
+      ответственность, human-in-the-loop
+    competencies: [PKS-11]
+
+modules:
+  - id: M1
+    number: 1
+    title: >-
+      Теоретико-методологические основы систем искусственного интеллекта
+      и их применение в цифровых и социально значимых отраслях
+    short_title: "Теория и цифровые отрасли"
+    lectures: [1, 2, 3, 4, 5, 6, 7, 8]
+    seminars: [1, 2, 3, 4, 5, 6, 7, 8]
+    hours:
+      lectures: 16
+      seminars: 16
+      self_study: 22
+    competencies: [PKS-4, PKS-5, PKS-11]
+    rubezhnyi_control: 1
+    rk_seminar: 8
+  - id: M2
+    number: 2
+    title: >-
+      Применение искусственного интеллекта в высокотехнологичных отраслях
+      материального производства и системах двойного назначения
+    short_title: "Высокотехнологичное производство"
+    lectures: [9, 10, 11, 12]
+    seminars: [9, 10, 11, 12]
+    hours:
+      lectures: 8
+      seminars: 8
+      self_study: 11
+    competencies: [PKS-4, PKS-5, PKS-11]
+    rubezhnyi_control: 2
+    rk_seminar: 12
+  - id: M3
+    number: 3
+    title: >-
+      Искусственный интеллект в инфокоммуникационных системах,
+      научных исследованиях и добывающей промышленности
+    short_title: "Инфокоммуникации, наука, добыча"
+    lectures: [13, 14, 15, 16, 17]
+    seminars: [13, 14, 15, 16, 17]
+    hours:
+      lectures: 10
+      seminars: 10
+      self_study: 13
+    competencies: [PKS-4, PKS-5, PKS-11]
+    rubezhnyi_control: 3
+    rk_seminar: 17
+
+lectures:
+  - number: 1
+    title: "Введение: искусственный интеллект в современном мире"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO4, LO6]
+    summary: >-
+      Определение и классификация AI-систем; формы использования (модели,
+      приложения, чаты, агенты). Первый опыт промптинга и демонстрация
+      галлюцинаций как фундаментального ограничения генеративных моделей.
+    doc_id: "1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8"
+    status: draft
+  - number: 2
+    title: "Архитектура AI: от машинного обучения до трансформеров"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO6, LO7]
+    summary: >-
+      Классификация подходов (ML, DL, CV, audio, LLM); архитектура трансформера,
+      авторегрессионная генерация, контекстное окно. После лекции студент
+      понимает, почему определённые приёмы промптинга работают.
+    doc_id: null
+    status: draft
+  - number: 3
+    title: "Архитектуры AI-систем: агенты, RAG, API"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO7, LO4]
+    summary: >-
+      AI-агенты (plan-act-check-iterate), RAG, fine-tuning vs промптинг,
+      работа через API, MCP и tool use. Понятийная база для обсуждения
+      AI-решений в каждой последующей индустрии.
+    doc_id: null
+    status: draft
+  - number: 4
+    title: "AI в разработке программного обеспечения"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO4, LO7]
+    summary: >-
+      Самая близкая студентам индустрия. AI-инструменты в цикле разработки;
+      84% разработчиков используют AI, 46% не доверяют результатам.
+      Сравнение IDE-интеграции (Copilot, Cursor) vs чат vs coding agent.
+    doc_id: null
+    status: draft
+  - number: 5
+    title: "AI в финансовом секторе и ритейле"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO3, LO6]
+    summary: >-
+      90–100% крупных банков РФ используют AI: кредитный скоринг, fraud
+      detection, голосовые ассистенты, рекомендательные системы, dynamic
+      pricing. Первый опыт fact-checking на реальных данных.
+    doc_id: null
+    status: draft
+  - number: 6
+    title: "AI в инженерном проектировании и CAD/CAM"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO7]
+    summary: >-
+      Близкая Бауманке тема. Генеративный дизайн как оптимизационный ML,
+      topology optimization, AI-ассистенты для расчётов. Критичность точности
+      и допусков: ошибка в единицах = от неудобства до катастрофы.
+    doc_id: null
+    status: draft
+  - number: 7
+    title: "AI в медицине и фармацевтике"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO3, LO8]
+    summary: >-
+      Сильнейшие кейсы и острейшие дилеммы: drug discovery (DSP-1181),
+      AI-диагностика (mosmed.ai), FDA AI/ML framework. Метрики sensitivity
+      и specificity, вопрос ответственности за ошибку AI-диагноза.
+    doc_id: null
+    status: draft
+  - number: 8
+    title: "AI в креативных индустриях и медиа"
+    module: M1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO4, LO5]
+    summary: >-
+      Визуально самая яркая лекция: генеративные модели (текст, изображения,
+      музыка, видео, 3D), диффузионные модели, мультимодальная и итеративная
+      генерация. Правовой статус AI-контента в РФ, ЕС, США.
+    doc_id: null
+    status: draft
+  - number: 9
+    title: "AI в авиакосмической отрасли и оборонном комплексе"
+    module: M2
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    summary: >-
+      Digital twins для моделирования полётных нагрузок, CV для
+      неразрушающего контроля, автономные системы и уровни автономности,
+      сертификация AI в критических системах, робототехника в космосе.
+    doc_id: null
+    status: draft
+  - number: 10
+    title: "AI в сельском хозяйстве"
+    module: M2
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO5]
+    summary: >-
+      AI в физическом мире: Cognitive Agro Pilot (1500+ комбайнов),
+      precision farming (IoT + спутники + ML), дроны для мониторинга,
+      роботы для сортировки. Специфика неструктурированной среды.
+    doc_id: null
+    status: draft
+  - number: 11
+    title: "AI в дискретном и процессном производстве"
+    module: M2
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO7, LO8]
+    summary: >-
+      Predictive maintenance, CV для контроля качества на конвейере,
+      коботы и принципы безопасного взаимодействия с человеком.
+      500 млрд руб. дополнительной прибыли от AI в промышленности РФ.
+    doc_id: null
+    status: draft
+  - number: 12
+    title: "AI в автоматизации производства и цифровые двойники"
+    module: M2
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO2, LO5, LO7]
+    summary: >-
+      Digital twin производственного процесса; AI для планирования и
+      оптимизации цепочки поставок; промышленный IoT как фундамент данных.
+      От отдельных AI-решений к интегрированной «умной фабрике».
+    doc_id: null
+    status: draft
+  - number: 13
+    title: "AI в логистике и транспорте"
+    module: M3
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO7]
+    summary: >-
+      Reinforcement learning для маршрутизации, автономный транспорт
+      (6 уровней SAE), CV для складов (Amazon-роботы), dynamic pricing
+      в такси и авиакомпаниях, оптимизация «последней мили».
+    doc_id: null
+    status: draft
+  - number: 14
+    title: "AI в телекоммуникациях, сетевой инфраструктуре и кибербезопасности"
+    module: M3
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    summary: >-
+      Прямая область будущей работы студентов ИУ6. ML для оптимизации сетей,
+      AI для кибербезопасности и AI как инструмент атаки (deepfakes,
+      adversarial ML). Гонка вооружений AI в кибербезопасности.
+    doc_id: null
+    status: draft
+  - number: 15
+    title: "AI в научных исследованиях"
+    module: M3
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO4, LO5, LO6, LO8]
+    summary: >-
+      Практическая ценность для ВКР: AI для literature review, AI в
+      вычислительных экспериментах (AlphaFold, материаловедение),
+      воспроизводимость и обязательность указания AI в исследованиях.
+    doc_id: null
+    status: draft
+  - number: 16
+    title: "AI в нефтегазовой отрасли и добыче ресурсов"
+    module: M3
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    summary: >-
+      Сейсморазведка (CV для интерпретации данных), оптимизация добычи,
+      мониторинг трубопроводов (IoT + ML для предсказания утечек),
+      роботы в опасных средах, кибербезопасность промышленного IoT.
+    doc_id: null
+    status: draft
+  - number: 17
+    title: "Систематизация знаний и навыков"
+    module: M3
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: [LO1, LO2, LO3, LO4, LO5, LO6, LO7, LO8]
+    summary: >-
+      Финальная лекция — синтез всего курса: чит-шит из ~30 паттернов и
+      антипаттернов, дерево решений «какой AI для задачи X», финальная
+      рефлексия и персональный чек-лист безопасности.
+    doc_id: null
+    status: draft
+
+seminars:
+  - number: 1
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M1
+    related_lecture: 1
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 2
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M1
+    related_lecture: 2
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 3
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M1
+    related_lecture: 3
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 4
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M1
+    related_lecture: 4
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 5
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M1
+    related_lecture: 5
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 6
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M1
+    related_lecture: 6
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 7
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M1
+    related_lecture: 7
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 8
+    type: контрольный
+    title: "TBD"
+    summary: "TBD (включает Рубежный контроль 1)"
+    module: M1
+    related_lecture: 8
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    rubezhnyi_control: 1
+    status: draft
+  - number: 9
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M2
+    related_lecture: 9
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 10
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M2
+    related_lecture: 10
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 11
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M2
+    related_lecture: 11
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 12
+    type: контрольный
+    title: "TBD"
+    summary: "TBD (включает Рубежный контроль 2)"
+    module: M2
+    related_lecture: 12
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    rubezhnyi_control: 2
+    status: draft
+  - number: 13
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M3
+    related_lecture: 13
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 14
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M3
+    related_lecture: 14
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 15
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M3
+    related_lecture: 15
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 16
+    type: предметный
+    title: "TBD"
+    summary: "TBD"
+    module: M3
+    related_lecture: 16
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    status: draft
+  - number: 17
+    type: контрольный
+    title: "TBD"
+    summary: "TBD (включает Рубежный контроль 3 и итоговую систематизацию)"
+    module: M3
+    related_lecture: 17
+    duration_min: 75
+    duration_ahours: 2
+    learning_outcomes: []
+    rubezhnyi_control: 3
+    status: draft

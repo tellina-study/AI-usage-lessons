@@ -1,0 +1,195 @@
+# Seminar catalog manifest
+# Synchronised with catalog/manifests/course.yaml (single source of truth).
+# 17 seminars: 14 предметных + 3 контрольных (S8, S12, S17 — Рубежные контроли 1/2/3).
+# Titles, summaries и learning_outcomes являются placeholder ("TBD" / []) —
+# они будут заполнены в Фазе 2 (issue #51).
+seminars:
+  - number: 1
+    title: "TBD"
+    type: предметный
+    module: M1
+    related_lecture: 1
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 2
+    title: "TBD"
+    type: предметный
+    module: M1
+    related_lecture: 2
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 3
+    title: "TBD"
+    type: предметный
+    module: M1
+    related_lecture: 3
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 4
+    title: "TBD"
+    type: предметный
+    module: M1
+    related_lecture: 4
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 5
+    title: "TBD"
+    type: предметный
+    module: M1
+    related_lecture: 5
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 6
+    title: "TBD"
+    type: предметный
+    module: M1
+    related_lecture: 6
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 7
+    title: "TBD"
+    type: предметный
+    module: M1
+    related_lecture: 7
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 8
+    title: "TBD"
+    type: контрольный
+    module: M1
+    related_lecture: 8
+    summary: "TBD (включает Рубежный контроль 1)"
+    learning_outcomes: []
+    duration_min: 75
+    rubezhnyi_control: 1
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 9
+    title: "TBD"
+    type: предметный
+    module: M2
+    related_lecture: 9
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 10
+    title: "TBD"
+    type: предметный
+    module: M2
+    related_lecture: 10
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 11
+    title: "TBD"
+    type: предметный
+    module: M2
+    related_lecture: 11
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 12
+    title: "TBD"
+    type: контрольный
+    module: M2
+    related_lecture: 12
+    summary: "TBD (включает Рубежный контроль 2)"
+    learning_outcomes: []
+    duration_min: 75
+    rubezhnyi_control: 2
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 13
+    title: "TBD"
+    type: предметный
+    module: M3
+    related_lecture: 13
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 14
+    title: "TBD"
+    type: предметный
+    module: M3
+    related_lecture: 14
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 15
+    title: "TBD"
+    type: предметный
+    module: M3
+    related_lecture: 15
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 16
+    title: "TBD"
+    type: предметный
+    module: M3
+    related_lecture: 16
+    summary: "TBD"
+    learning_outcomes: []
+    duration_min: 75
+    status: draft
+    updated_at: "2026-04-29"
+
+  - number: 17
+    title: "TBD"
+    type: контрольный
+    module: M3
+    related_lecture: 17
+    summary: "TBD (включает Рубежный контроль 3 и итоговую систематизацию)"
+    learning_outcomes: []
+    duration_min: 75
+    rubezhnyi_control: 3
+    status: draft
+    updated_at: "2026-04-29"

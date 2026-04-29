@@ -120,3 +120,24 @@ mcp__workspace-mcp__list_docs_in_folder \
 - Удалять `kzlevko@gmail.com.json` — НЕ требуется, авто-flow перепишет файл.
 - Перезапускать Claude Code — НЕ требуется, MCP-сервер сам подхватывает новые credentials.
 - Менять `.mcp.json` — конфиг корректный (`GOOGLE_OAUTH_CLIENT_ID` и `..._SECRET` валидны).
+
+## 2026-04-29 — Course structure single source of truth (#51)
+
+**Решение:** primary артефакт по структуре курса — `catalog/manifests/course.yaml`. Все остальные представления (wiki, ontology store, lectures.yaml, seminars.yaml, Google Doc структуры, РПД) — derivative и должны синхронизироваться из него.
+
+**Что в course.yaml:**
+- метаданные курса (код, название, кафедра, часы, семестр, экзамен);
+- 3 компетенции (ПКС-4, ПКС-5, ПКС-11) с дословными формулировками из РПД;
+- 8 LO (LO1–LO8) с маппингом на ПКС;
+- 3 модуля (M1: лекции 1–8, M2: 9–12, M3: 13–17) с распределением часов 16/8/10 (Л) + 16/8/10 (С) + 22/11/13 (СР), всего 144 ак.ч.;
+- 17 лекций — полные название, summary, learning_outcomes, привязка к модулю;
+- 17 семинаров — структурные записи (related_lecture, type, module). Темы и LO семинаров — placeholder (`title: TBD`, `summary: TBD`, `learning_outcomes: []`); наполнение в Фазе 2 issue #51.
+
+**Семинары как 14 предметных + 3 контрольных:** S8, S12, S17 — type `контрольный`, на них приходятся РК1/РК2/РК3 (соответствуют неделям 8/12/17 в РПД).
+
+**Распределение LO → ПКС** (в course.yaml):
+LO1→ПКС-5; LO2→ПКС-11; LO3→ПКС-4; LO4→ПКС-4+ПКС-11; LO5→ПКС-5+ПКС-11; LO6→ПКС-4; LO7→ПКС-5; LO8→ПКС-11. Все три ПКС покрыты во всех трёх модулях (как в РПД, табл. 3).
+
+**Что НЕ затронуто в Фазе 1:** ontology/schema.ttl (нет класса `Module` пока), wiki/lectures/* и wiki/seminars/* страницы (отдельный issue), `library/lectures/lec-NN/` пустые папки, Google Doc'и (Фазы 3/4 issue #51).
+
+**Правило поддержки:** при изменении структуры — править `course.yaml`, затем синхронизировать lectures.yaml/seminars.yaml/wiki/onтологию (будущий skill `sync-course-structure`).

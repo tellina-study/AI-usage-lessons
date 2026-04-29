@@ -3,8 +3,12 @@
 > Last compiled: 2026-04-07 | Sources: 47 indexed (16 exports + 10 research + 6 course research + 15 papers) | Ontology: 293 triples
 
 ## Course Structure
+**«Отраслевое применение систем искусственного интеллекта»** (ИУ6, 1 сем., 144 ак.ч.)
 
-- [Lectures](lectures/) -- 8 defined (lec 1-8), 9 TBD (lec 9-17)
+- 3 модуля → [course.yaml](../catalog/manifests/course.yaml)
+- 17 лекций ([Lectures](lectures/))
+- 17 семинаров ([Seminars](seminars/))
+- LO1–LO8, ПКС-4/5/11
 - [Documents](documents/) -- 16 Google Drive exports cataloged
 - [Papers](papers/) -- 15 academic PDFs downloaded (Lecture 1)
 

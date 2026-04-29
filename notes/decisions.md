@@ -94,3 +94,29 @@
 **Setup required:** Register OAuth2 app at developer.wordpress.com/apps, get bearer token, store in `.env` (gitignored).
 
 **Research:** `notes/research/wordpress-publishing-research.md`
+
+## 2026-04-29 — workspace-mcp OAuth refresh expiry (#49)
+
+**Симптом:** все вызовы `workspace-mcp` (Drive/Docs/Sheets/Slides) возвращают `ACTION REQUIRED: Google Authentication Needed`, хотя `claude mcp list` показывает сервер как `✓ Connected`.
+
+**Диагноз:**
+- Файл токена `~/.google_workspace_mcp/credentials/kzlevko@gmail.com.json` существует, имеет `refresh_token` и 39 scopes.
+- `expiry` access_token: `2026-03-31T16:30:56` (т.е. протух 16+ дней назад).
+- Refresh не сработал — Google отозвал refresh_token. Причина: OAuth-приложение в Google Cloud Console находится в **Testing** publishing status, в этом режиме refresh_token автоматически отзывается через 7 дней неактивности.
+
+**Лечение (разовое):** пройти OAuth-flow заново — любой первый вызов `workspace-mcp`-инструмента возвращает auth URL, после клика и согласия в браузере токен пишется обратно в credentials/. Файл `kzlevko@gmail.com.json` обновляется (mtime меняется), последующие вызовы работают.
+
+**Долгосрочный фикс (рекомендуется):** в Google Cloud Console → OAuth consent screen → переключить Publishing status с **Testing** на **In production**. Тогда refresh_token становится бессрочным и не требует ручного обновления каждую неделю.
+
+**Как проверить, что подключение живо:**
+```
+mcp__workspace-mcp__list_docs_in_folder \
+  user_google_email=kzlevko@gmail.com \
+  folder_id=1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am
+```
+Если возвращает список Docs — ок. Если возвращает auth URL — токен снова отвалился, см. «Лечение».
+
+**Не помогает / не нужно:**
+- Удалять `kzlevko@gmail.com.json` — НЕ требуется, авто-flow перепишет файл.
+- Перезапускать Claude Code — НЕ требуется, MCP-сервер сам подхватывает новые credentials.
+- Менять `.mcp.json` — конфиг корректный (`GOOGLE_OAUTH_CLIENT_ID` и `..._SECRET` валидны).

@@ -178,20 +178,45 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 
 ### Subagents (`.claude/agents/`)
 
+**General-purpose / infrastructure:**
 | Agent | Responsibility |
 |-------|---------------|
 | `librarian` | Search, sync, export, index documents |
 | `course-curator` | Link normative docs, lectures, materials, assignments |
 | `doc-editor` | Edit Google Docs via workspace-mcp |
 | `issue-manager` | Create/triage GitHub Issues, track change queue |
-| `presentation-designer` | **Визуальный дизайнер deck'а** — рендер слайдов через PowerPoint MCP с visual-loop, использует Ocean Gradient palette + Anthropic pptx skill anti-patterns |
-| `presentation-critic` | Методический + визуальный ревью deck'ов (vision-enabled) |
-| `student-simulator` | Симулирует студента на лекции (PNG + speaker notes) |
-| `reader-simulator` | Симулирует чтение материалов без лектора; 2 режима: `text-only` и `rendered` |
 
-### Presentation Pipeline (ENFORCED)
+**Lecture production (multi-artifact: chapter + slides + speech):**
+| Agent | Producer/Critic | Responsibility |
+|-------|---|---------------|
+| `book-editor` | Producer | Пишет/правит главу методички (`chapter.md`, ~10k слов, academic) |
+| `presentation-designer` | Producer | Визуальный дизайнер deck'а — рендер через PowerPoint MCP с visual-loop, Ocean palette + Anthropic anti-patterns |
+| `speech-writer` | Producer | Пишет речь лектора (`speech.md`, ~5k слов, conversational) |
+| `methodology-critic` | Critic | Pedagogical depth, LO coverage, sequence, assertion-evidence (применяется к chapter, plan, slides, speech) |
+| `fact-checker` | Critic | Проверка фактов, цифр, дат, citations (использует WebSearch для verification) |
+| `presentation-critic` | Critic | Методико-визуальный ревью slides (vision-enabled) |
+| `student-simulator` | Critic | Симулирует студента в зале (PNG + speaker notes) |
+| `reader-simulator` | Critic | 2 режима: `text-only` (md без рендера) и `rendered` (PNG+notes через 2 нед) |
+| `consistency-checker` | Critic | Cross-artifact alignment: chapter ↔ slides ↔ speech |
 
-**Single source of truth:** `tools/presentation-build/README.md` — pipeline + slide-types library (8 типов) + visual-loop workflow + 12-section design playbook + anti-patterns + tool catalog.
+### Lecture Production Pipeline (ENFORCED, multi-artifact)
+
+**Canonical doc:** `tools/lecture-production/README.md` — полный 10-фазный pipeline для production лекции с **3 финальными артефактами**:
+1. `library/lectures/lec-NN/chapter.md` — глава методички (~10k слов, **source of truth**, academic).
+2. `library/lectures/lec-NN/rendered/lec-NN.pptx` — презентация со speaker notes (derived from chapter).
+3. `library/lectures/lec-NN/speech.md` — речь лектора (~5k слов, conversational; derived from chapter+slides).
+
+**Source of truth: book-first.** Chapter — primary, slides + speech derive. При conflict — fix slides/speech (если chapter сам не ошибается).
+
+**3 USER GATEs** между phases 4-5 (chapter approved), 8-9 (slides approved), 11 (final). Не двигаться к следующей фазе без explicit user approval.
+
+**Critic agents применяются на каждом этапе** (промежуточные + финальные результаты — обязательное требование).
+
+### Presentation Pipeline (slides-specific subset)
+
+**Single source of truth:** `tools/presentation-build/README.md` — slides-specific pipeline + slide-types library (8 типов) + visual-loop workflow + 12-section design playbook + anti-patterns + tool catalog.
+
+Используется в **Phase 5-8** lecture-production pipeline.
 
 **Stack:**
 - **Render-target:** PowerPoint (PPTX) через `office-powerpoint-mcp-server` (GongRzhe, `uvx`-установка, 37 tools).

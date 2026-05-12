@@ -169,8 +169,19 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 | `librarian` | Search, sync, export, index documents |
 | `course-curator` | Link normative docs, lectures, materials, assignments |
 | `doc-editor` | Edit Google Docs via workspace-mcp |
-| `deck-editor` | Build/update Google Slides, insert diagrams |
+| `deck-editor` | Build/update presentations (PowerPoint MCP, visual loop) |
 | `issue-manager` | Create/triage GitHub Issues, track change queue |
+| `presentation-critic` | Методический + визуальный ревью deck'ов (vision-enabled) |
+| `student-simulator` | Симулирует студента ИУ6 на лекции (PNG + speaker notes) |
+| `reader-simulator` | Симулирует чтение материалов без лектора; 2 режима: `text-only` и `rendered` |
+
+### Presentation Pipeline
+
+See `tools/presentation-build/README.md` for: PowerPoint MCP setup, visual-loop workflow, `deck.yaml` schema, slide-types library, anti-patterns.
+
+**Required reading** for any work со слайдами для агентов: `deck-editor`, `presentation-critic`, `student-simulator`, `reader-simulator`. Каждый агент начинается с явной ссылки на этот файл.
+
+**Render-target:** PowerPoint (PPTX) через `office-powerpoint-mcp-server` (GongRzhe, `uvx`-установка). Source-of-truth — `library/lectures/lec-NN/deck.yaml` + `slides/*.md`. Drive — только публикация (отложено).
 
 ### Skills (`.claude/skills/`)
 

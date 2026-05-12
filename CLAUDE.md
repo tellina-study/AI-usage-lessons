@@ -66,7 +66,7 @@ Issues and tasks are tracked at: `https://github.com/orgs/tellina-study/projects
 - **Branch naming**: `issue-{NUMBER}-{short-description}`
 - **Every commit references the issue**: `#{NUMBER}` in commit message
 - **Workflow**: create branch → commit → push branch → create PR → review → merge
-- **Never merge own PRs** without explicit user confirmation
+- **PR merge — только по прямому указанию пользователя.** Не мержить PR без явной команды («мерж», «merge», «давай», «go ahead»). Когда указание получено — Claude мержит сам через `gh pr merge <N> --merge --delete-branch`. НЕ перекладывать кнопку на пользователя.
 - **No work without an issue.** If one doesn't exist, create it first.
 
 ---

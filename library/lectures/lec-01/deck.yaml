@@ -2,15 +2,26 @@
 #
 # Deck-структура Лекции 1. Заполняется в sub-issues #54 (s05b) и #55 (s01-s05b).
 # Schema — см. tools/presentation-build/README.md §6.
-#
-# Placeholder — детали приходят с пилотом.
 
 deck:
   lecture_number: 1
   title: "Введение — AI вокруг нас"
   audience: "бакалавры ИУ6, МГТУ Баумана"
   duration_min: 75
+  central_question: "Как инженеру ИУ6 попасть в оставшиеся 10% AI-пилотов?"
+  learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
 
-slides: []
+slides:
+  - id: s05b
+    file: slides/s05b-course-frame.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: 'Главный вопрос курса — не "можно ли AI?", а "НУЖНО ли и ГДЕ?"'
+    learning_goal: "Установить рамку курса и зафиксировать центральный вопрос"
+    learning_outcomes: [LO1, LO4]
+    references: [gartner-2025, ano-cifrovaya-ekonomika-2025]
+    visual:
+      pattern: central_question
+      primary: "Большой вопрос по центру; assertion сверху; стейкс мелким шрифтом"

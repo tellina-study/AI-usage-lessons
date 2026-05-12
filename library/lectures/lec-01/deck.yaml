@@ -1,0 +1,16 @@
+# library/lectures/lec-01/deck.yaml
+#
+# Deck-структура Лекции 1. Заполняется в sub-issues #54 (s05b) и #55 (s01-s05b).
+# Schema — см. tools/presentation-build/README.md §6.
+#
+# Placeholder — детали приходят с пилотом.
+
+deck:
+  lecture_number: 1
+  title: "Введение — AI вокруг нас"
+  audience: "бакалавры ИУ6, МГТУ Баумана"
+  duration_min: 75
+  language: ru
+  status: draft
+
+slides: []

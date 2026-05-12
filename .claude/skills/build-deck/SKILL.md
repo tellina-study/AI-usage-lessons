@@ -1,196 +1,131 @@
 # build-deck
 
-Build or rebuild a Google Slides presentation for a lecture.
+Build/rebuild a PowerPoint (PPTX) presentation for a lecture using the repo-first pipeline + visual loop + 3 QA agents.
 
 ## Role
 
-You are a deck-editor agent. Your job is to take a lecture number, read the lecture content and related materials, and create a Google Slides presentation with structured slides following the slide outline template.
+You are an orchestrator. **Do NOT render slides yourself.** Delegate rendering to `presentation-designer` agent and QA to `presentation-critic` + `student-simulator` + `reader-simulator` agents. Your job is to coordinate, gate phases, synthesize results.
+
+## ОБЯЗАТЕЛЬНОЕ ЧТЕНИЕ перед инвокацией
+
+1. **`tools/presentation-build/README.md`** — pipeline + slide-types + visual-loop + anti-patterns.
+2. **`notes/mcp-limitations.md`** — известные баги PowerPoint MCP + workaround'ы.
+3. **`notes/decisions.md`** § «2026-05-12 — Presentation pipeline» — anti-pattern catalog + iteration journey.
 
 ## Arguments
 
-This skill expects a lecture number as argument. Example invocation: `/build-deck 3`
+`/build-deck N` где N — номер лекции (1-17). Пример: `/build-deck 3`.
 
-If no argument is provided, ask which lecture number to process.
+Если аргумент не дан — спросить, какую лекцию строить.
 
-## Constants
+## Pre-flight (before starting)
 
-- Google account: kzlevko@gmail.com
-- Lectures manifest: `/home/levko/AI-usage-lessons/catalog/manifests/lectures.yaml`
-- Decks manifest: `/home/levko/AI-usage-lessons/catalog/manifests/decks.yaml`
-- Slide template: `/home/levko/AI-usage-lessons/templates/slide-outline.md`
-- Diagrams directory: `/home/levko/AI-usage-lessons/diagrams/`
-- Google Drive folder ID: `1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am`
-- Ontology prefix: `aul: <https://ai-usage-lessons.local/ontology#>`
+Проверить готовность:
+- `mcp__powerpoint__get_server_info` отвечает (PowerPoint MCP живой).
+- `which mmdc convert rsvg-convert libreoffice pdftoppm` — все 5 утилит доступны.
+- `library/lectures/lec-NN/deck.yaml` существует и содержит `slides: [...]`.
+- `library/lectures/lec-NN/slides/sNN-*.md` существуют для каждой записи в `deck.yaml`.
+
+Если что-то не готово — STOP, report пользователю.
 
 ## Execution
 
-### Step 1: Read source materials
-
-Read these files using the Read tool:
-1. `/home/levko/AI-usage-lessons/catalog/manifests/lectures.yaml` — find lecture N entry
-2. `/home/levko/AI-usage-lessons/catalog/manifests/decks.yaml` — check if deck already exists
-3. `/home/levko/AI-usage-lessons/templates/slide-outline.md` — slide structure template
-
-If lecture N has a `doc_id` in the manifest, read the lecture Google Doc:
-```
-mcp__workspace-mcp__get_doc_as_markdown(document_id="<lecture_doc_id>")
-```
-
-If no doc_id, read the course plan instead:
-Read `/home/levko/AI-usage-lessons/catalog/exports/docs/ai-v-raznyh-industriyah.md` and extract lecture N content.
-
-### Step 2: Find relevant diagrams
-
-Check for diagrams related to this lecture:
-```bash
-ls -la /home/levko/AI-usage-lessons/diagrams/
-```
-
-Also query the ontology for diagrams that illustrate this lecture's topics:
-```
-mcp__open-ontologies__onto_query(
-  query="PREFIX aul: <https://ai-usage-lessons.local/ontology#>\nSELECT ?diagram ?url WHERE {\n    aul:lec_<N> aul:covers ?topic .\n    ?diagram a aul:Diagram ;\n             aul:illustrates ?topic .\n    OPTIONAL { ?diagram aul:source_url ?url }\n}"
-)
-```
-
-### Step 3: Design slide structure
-
-Based on the lecture content and template, plan the slides:
-
-1. **Title slide**: Lecture number, title, date
-2. **Agenda slide**: List of topics to cover
-3. **Content slides** (one per major topic/subtopic):
-   - Heading
-   - 3-5 bullet points of key content
-   - Speaker notes with detailed explanation
-   - Diagram reference if applicable
-4. **Summary slide**: Key takeaways
-5. **Next lecture preview**: What comes next
-
-Aim for 12-20 slides depending on content density.
-
-### Step 4: Check if deck already exists
-
-Read the decks manifest. If lecture N already has a deck entry with a `presentation_id`:
-
-**Update existing deck** — use batch_update to modify slides:
-```
-mcp__workspace-mcp__get_presentation(presentation_id="<existing_presentation_id>")
-```
-Review existing slides, then update:
-```
-mcp__workspace-mcp__batch_update_presentation(
-  presentation_id="<existing_presentation_id>",
-  requests=[
-    {"deleteObject": {"objectId": "<slide_id>"}},
-    ...
-  ]
-)
-```
-
-**Create new presentation:**
-```
-mcp__workspace-mcp__create_presentation(
-  title="Лекция <N>: <Title>",
-  folder_id="1-f2hpJrlUbfnMcxhR-6vF3xCsXZUI6am"
-)
-```
-
-Save the returned presentation ID.
-
-### Step 5: Populate slides
-
-Use `mcp__workspace-mcp__batch_update_presentation` to add slides with content.
-
-For each slide, create a request batch. Example for adding a new slide with content:
-```
-mcp__workspace-mcp__batch_update_presentation(
-  presentation_id="<presentation_id>",
-  requests=[
-    {
-      "createSlide": {
-        "slideLayoutReference": {"predefinedLayout": "TITLE_AND_BODY"},
-        "insertionIndex": <index>
-      }
-    }
-  ]
-)
-```
-
-Then get the presentation to find the new slide's object IDs:
-```
-mcp__workspace-mcp__get_presentation(presentation_id="<presentation_id>")
-```
-
-Insert text into the slide placeholders:
-```
-mcp__workspace-mcp__batch_update_presentation(
-  presentation_id="<presentation_id>",
-  requests=[
-    {
-      "insertText": {
-        "objectId": "<placeholder_object_id>",
-        "text": "<slide content>",
-        "insertionIndex": 0
-      }
-    }
-  ]
-)
-```
-
-Add speaker notes:
-```
-mcp__workspace-mcp__batch_update_presentation(
-  presentation_id="<presentation_id>",
-  requests=[
-    {
-      "insertText": {
-        "objectId": "<notes_object_id>",
-        "text": "<speaker notes>",
-        "insertionIndex": 0
-      }
-    }
-  ]
-)
-```
-
-### Step 6: Update decks manifest
-
-Update `/home/levko/AI-usage-lessons/catalog/manifests/decks.yaml` using the Write tool:
-
-```yaml
-decks:
-  - lecture_number: <N>
-    title: "Лекция <N>: <Title>"
-    presentation_id: "<google_slides_id>"
-    source_url: "https://docs.google.com/presentation/d/<id>/edit"
-    slide_count: <number>
-    diagrams_used:
-      - "<diagram filename>"
-    status: draft
-    updated_at: "<today YYYY-MM-DD>"
-```
-
-Preserve existing entries. Only add/update the one being processed.
-
-### Step 7: Update ontology
+### Phase 1 — Read source
 
 ```
-mcp__open-ontologies__onto_load(
-  data="@prefix aul: <https://ai-usage-lessons.local/ontology#> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n\naul:deck_lec_<N> a aul:SlideDeck ;\n    aul:source_url \"https://docs.google.com/presentation/d/<id>/edit\" ;\n    aul:source_system \"google_drive\" ;\n    aul:status \"draft\" ;\n    aul:owner \"kzlevko@gmail.com\" ;\n    aul:updated_at \"<today>T00:00:00\"^^xsd:dateTime ;\n    aul:covers aul:topic_<topic_slug> ;\n    aul:depends_on aul:lec_<N> .",
-  format="turtle"
-)
+1. Read library/lectures/lec-NN/deck.yaml
+2. Read all library/lectures/lec-NN/slides/*.md
+3. Read catalog/manifests/lectures.yaml — lecture N entry
+4. (optional) Read notes/lecture-N-review/final/new-plan-vN-final.md если есть narrative source
 ```
 
-### Step 8: Report
+### Phase 2 — Reader-text-only QA (ДО рендера)
 
-```
-## Deck Build Report — <date>
+Спавнить `reader-simulator` agent в режиме `text-only`:
+- Читает только `slides/*.md` без PNG.
+- Проверяет методический текст ДО рендера.
+- Отчёт → `library/lectures/lec-NN/qa-reports/{YYYY-MM-DD}/reader-text-only.md`.
 
-- Lecture: <N> — <title>
-- Action: <created|updated>
-- Google Slides: https://docs.google.com/presentation/d/<id>/edit
-- Slides: <count>
-- Diagrams included: <list>
-- Ontology: deck entity + <count> relations loaded
-```
+Если P0 issues найдены — STOP, фиксить source markdowns, повторить.
+Если только P1/P2 — фиксить инкрементально или продолжать с пометками.
+
+### Phase 3 — Render через presentation-designer
+
+Спавнить `presentation-designer` agent с инструкцией:
+- Читать `library/lectures/lec-NN/deck.yaml` + `slides/*.md`.
+- Применять Ocean Gradient + Teal palette + Gold highlight ≥1×/слайд.
+- Применять Visual motif (Ocean rounded box) на каждом content слайде.
+- Visual loop **минимум 3 итерации на слайд** (Anthropic principle: «assume there are problems»).
+- Output: `library/lectures/lec-NN/rendered/lec-NN-pilot.pptx` + `snapshots/sNN.png` + `iteration-log.md` + assets.
+
+Designer должен прочитать `.claude/agents/presentation-designer.md` (его playbook) — там палитра, типы слайдов, anti-patterns.
+
+После завершения — orchestrator смотрит snapshots глазами через Read tool.
+
+### Phase 4 — 3 QA agents в параллель (после рендера)
+
+Спавнить **в одном сообщении** (parallel):
+1. `presentation-critic` — методист + визуальный (yaml + md + PNG).
+2. `student-simulator` — студент в зале.
+3. `reader-simulator` mode=`rendered` — студент через 2 недели.
+
+Каждый пишет отчёт в `library/lectures/lec-NN/qa-reports/{YYYY-MM-DD-vN}/`:
+- `presentation-critic.md`
+- `student-simulator.md`
+- `reader-rendered.md`
+
+### Phase 5 — Synthesize + fix iteration
+
+Orchestrator:
+- Сводит 3 отчёта в `qa-reports/{YYYY-MM-DD-vN}/SYNTHESIS.md`.
+- Identifies convergent findings (≥2 agents agree) — это блокеры.
+- Identifies unique findings — каждое оценить severity.
+- Подготовить top-N (5-10) правок для следующей итерации.
+- Представить пользователю: «согласен на эти фиксы? нужны ли другие?»
+- После approval — спавнить fix iteration через presentation-designer (короткий subagent с конкретным списком).
+
+### Phase 6 — Repeat until acceptable
+
+Повторять Phase 4-5 пока:
+- User approve визуально OK для проведения лекции.
+- Все P0 закрыты.
+
+Каждая итерация архивируется в `library/lectures/lec-NN/rendered/archive-vN/` (orchestrator делает `mv` через Bash перед новой итерацией).
+
+### Phase 7 — Update manifest + commit
+
+После accept:
+- Update `catalog/manifests/decks.yaml` — добавить/обновить запись для лекции N (status: pilot/draft/final, version: vN, snapshots дата).
+- Commit на feature branch + PR.
+
+## Output (deliverables)
+
+- `library/lectures/lec-NN/rendered/lec-NN-pilot.pptx` — финальный PPTX.
+- `library/lectures/lec-NN/rendered/lec-NN-pilot.pdf` — PDF render.
+- `library/lectures/lec-NN/rendered/snapshots/s01.png ... sNN.png` — финальные snapshots.
+- `library/lectures/lec-NN/rendered/iteration-log.md` — лог всех итераций.
+- `library/lectures/lec-NN/rendered/build_vN.py` — build script (чтобы воспроизвести).
+- `library/lectures/lec-NN/rendered/assets/{icons,charts,diagrams,illustrations}/*` — все assets.
+- `library/lectures/lec-NN/qa-reports/{YYYY-MM-DD}/reader-text-only.md`.
+- `library/lectures/lec-NN/qa-reports/{YYYY-MM-DD-vN}/{critic,student-simulator,reader-rendered,SYNTHESIS}.md`.
+
+## Что НЕ делает skill
+
+- НЕ рендерит сам — делегирует presentation-designer.
+- НЕ проверяет качество — делегирует 3 QA agents.
+- НЕ загружает в Drive — пилот всё локально (Drive integration отложена).
+- НЕ коммитит без approval пользователя.
+
+## Если что-то падает
+
+- MCP error → проверить `notes/mcp-limitations.md`. Если новая limitation — добавить запись по шаблону.
+- libreoffice/pdftoppm/mmdc/ImageMagick недоступны → STOP, попросить установить.
+- presentation-designer не справляется → orchestrator смотрит snapshots глазами, формирует точечный fix-prompt и спавнит снова.
+- 5+ итераций без прогресса → STOP, обсудить с пользователем (возможно концепция слайда нуждается в пересмотре, не дизайн).
+
+## Ссылки
+
+- Pipeline: `tools/presentation-build/README.md`
+- Designer playbook: `.claude/agents/presentation-designer.md`
+- Anti-patterns + journey: `notes/decisions.md`
+- MCP gotchas: `notes/mcp-limitations.md`

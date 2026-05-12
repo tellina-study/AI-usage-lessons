@@ -170,7 +170,7 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 ### Read Rule (обязательная проверка)
 **Перед использованием MCP-tool, который ранее давал проблемы**, или **в начале работы с малознакомым MCP-сервером**, агент **обязан** прочитать соответствующий раздел `notes/mcp-limitations.md`.
 
-Это касается всех агентов (`deck-editor`, `presentation-critic`, `librarian`, `course-curator`, `doc-editor`, `issue-manager`) и Claude как orchestrator.
+Это касается всех агентов (`presentation-designer`, `presentation-critic`, `librarian`, `course-curator`, `doc-editor`, `issue-manager`, `student-simulator`, `reader-simulator`) и Claude как orchestrator.
 
 ---
 
@@ -183,19 +183,27 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 | `librarian` | Search, sync, export, index documents |
 | `course-curator` | Link normative docs, lectures, materials, assignments |
 | `doc-editor` | Edit Google Docs via workspace-mcp |
-| `deck-editor` | Build/update presentations (PowerPoint MCP, visual loop) |
 | `issue-manager` | Create/triage GitHub Issues, track change queue |
+| `presentation-designer` | **Визуальный дизайнер deck'а** — рендер слайдов через PowerPoint MCP с visual-loop, использует Ocean Gradient palette + Anthropic pptx skill anti-patterns |
 | `presentation-critic` | Методический + визуальный ревью deck'ов (vision-enabled) |
-| `student-simulator` | Симулирует студента ИУ6 на лекции (PNG + speaker notes) |
+| `student-simulator` | Симулирует студента на лекции (PNG + speaker notes) |
 | `reader-simulator` | Симулирует чтение материалов без лектора; 2 режима: `text-only` и `rendered` |
 
-### Presentation Pipeline
+### Presentation Pipeline (ENFORCED)
 
-See `tools/presentation-build/README.md` for: PowerPoint MCP setup, visual-loop workflow, `deck.yaml` schema, slide-types library, anti-patterns.
+**Single source of truth:** `tools/presentation-build/README.md` — pipeline + slide-types library (8 типов) + visual-loop workflow + 12-section design playbook + anti-patterns + tool catalog.
 
-**Required reading** for any work со слайдами для агентов: `deck-editor`, `presentation-critic`, `student-simulator`, `reader-simulator`. Каждый агент начинается с явной ссылки на этот файл.
+**Stack:**
+- **Render-target:** PowerPoint (PPTX) через `office-powerpoint-mcp-server` (GongRzhe, `uvx`-установка, 37 tools).
+- **Source-of-truth:** `library/lectures/lec-NN/deck.yaml` + `slides/*.md` (repo-first; Drive — только publish target, отложено).
+- **Visual generation:** Generate→Convert (libreoffice + pdftoppm)→Inspect (Claude vision)→Fix цикл, **минимум 3 итерации на слайд** (Anthropic principle).
+- **Visual elements:** PowerPoint MCP shapes + QuickChart API (charts) + mermaid CLI (diagrams) + ImageMagick + librsvg2-bin (icons recolor) + Lucide/Heroicons/Phosphor/LobeHub CDN.
+- **Palette LOCKED:** Ocean Gradient (`#21295C` / `#065A82` / `#1C7293`) + Teal `#028090` secondary + Gold `#F0AB00` highlight ≥1×/слайд.
+- **Visual motif:** «Ocean rounded box» (radius 12, surface `#F4F7FA`, stroke `#1C7293`) на каждом content слайде.
 
-**Render-target:** PowerPoint (PPTX) через `office-powerpoint-mcp-server` (GongRzhe, `uvx`-установка). Source-of-truth — `library/lectures/lec-NN/deck.yaml` + `slides/*.md`. Drive — только публикация (отложено).
+**Workflow:** `/build-deck N` — orchestrator-skill, спавнит `presentation-designer` для рендера + 3 QA agents (`presentation-critic` + `student-simulator` + `reader-simulator` mode=rendered) параллельно. `reader-simulator` mode=`text-only` запускается ДО рендера для методического контроля.
+
+**Required reading для любого agent'а, работающего со слайдами:** `tools/presentation-build/README.md` (агенты начинаются с явной ссылки на этот файл). Также обязательно `notes/mcp-limitations.md` (PowerPoint MCP gotchas) и `notes/decisions.md` § «2026-05-12 — Presentation pipeline» (anti-patterns каталог).
 
 ### Skills (`.claude/skills/`)
 

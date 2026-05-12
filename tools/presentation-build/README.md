@@ -65,39 +65,84 @@ libreoffice --headless --convert-to pdf /tmp/test.pptx       # smoke test conver
 
 ---
 
-## 4. Slide-types library (на старте — 4 типа, расширяется по мере появления)
+## 4. Slide-types library (финальная после пилота #55, 8 типов)
 
-| Type | Когда | Layout-pattern |
-|---|---|---|
-| `cover` | Титул лекции | большой заголовок + центральный вопрос лекции крупно + meta-блок |
-| `assertion_visual` | Содержательный слайд (основной тип) | тезис сверху + большой визуал в центре (картинка/схема/число) |
-| `poll_reveal` | Опрос/reveal (2 шага) | step1 — вопросы; step2 — данные vs оценка |
-| `live_demo` | Внешнее демо/код | минимальный слайд + backup-ссылка в speaker notes |
+Каждый тип = layout + правила контента + чек-лист QA. Слайд **должен** иметь явный `type` в frontmatter и `deck.yaml`.
 
-После пилота #55 добавятся: `process`, `comparison`, `quadrant`, `data_block`, `diagram_slide`, `summary`. Список открытый — добавляем по реальной нужде, не upfront.
+| Type | Когда | Layout-pattern | Использовался в пилоте |
+|---|---|---|---|
+| `cover` | Титул лекции (всегда первый, единственный) | Tinted bg + 64pt title + декоративный lecture-number (200pt+ outline) + hero motif + короткий navigation subtitle. **БЕЗ** Ocean rounded box callout (motif для content). | s02 |
+| `assertion_visual` | Содержательный слайд (основной тип, ~70% контента) | Assertion-headline (полное предложение) сверху + большой визуал в центре (icon-схема / chart / иллюстрация). Body left-aligned. | s05a, s05b |
+| `live_demo` | Внешнее живое демо/код | Минимум на слайде: hook-assertion + mock-screenshot или preview. Главный визуал вне слайда (на проекторе). | s01 |
+| `poll_reveal` step 1 | Опрос (часть 1 reveal-пары) | 2 rounded-card блока с 96px иконками (Lucide) + chip-pills для вариантов. Семантически отделить single/multi-select. | s03 |
+| `poll_reveal` step 2 (`data_chart`) | Раскрытие данных опроса | 1-2 chart'а (donut + bar) в Ocean rounded box motif. Лидер выделен gold. Methodology caveat 13pt italic. | s04 |
+| `process` | Последовательность шагов (3-5) | Numbered horizontal flow через shape-блоки + connectors. (В пилоте не использовался — добавится в следующих лекциях.) | — |
+| `comparison` | Сравнение 2 вариантов | Две равные колонки, одинаковая структура. (Не использовался.) | — |
+| `summary` | 3 главных вывода (последний слайд раздела или лекции) | 3 крупные тезис-карточки. (Не использовался.) | — |
 
-### Правила для `assertion_visual`
-- **Заголовок слайда = assertion** (полное предложение, например: «Главный вопрос курса — не "можно ли AI?", а "НУЖНО ли и ГДЕ?"»). Не «Введение». Не «Цели лекции».
-- **Визуал в центре** = доказательство тезиса (схема / число / изображение). Не декоративная картинка.
+**Расширения** по реальной нужде: `quadrant` (2×2), `section_divider` (разделитель крупно), `case_study`, `exercise`, `reflection_question`. Не добавляем upfront — только когда понадобятся.
+
+### Правила для `assertion_visual` (главный тип)
+- **Заголовок слайда = assertion** — полное предложение-тезис, например «Главный вопрос курса — не "можно ли AI?", а "НУЖНО ли и ГДЕ?"». Не «Введение». Не «Цели лекции».
+- **Визуал в центре** = доказательство тезиса (схема / число / изображение / icon-композиция). Не декоративная картинка.
 - **Не больше 4 буллетов**, если без визуала — заменить на текстовый блок крупным шрифтом.
 - **Speaker notes** — что говорит преподаватель (1-3 абзаца).
+- **Visual motif Ocean rounded box** — обязательно обрамляет главный контент-блок.
+
+### Правила для `cover`
+- **Визуально distinct** от content slides (subtle background tint `#F4F7FA`, крупная типография 60-72pt, decorative lecture number, hero motif).
+- **Subtitle/hook** — короткая навигационная фраза (1 строка). НЕ обещание («за 75 мин разберёмся»), НЕ дублирование central question из content.
+- **БЕЗ** Ocean rounded box motif (motif принадлежит content слайдам).
+- **БЕЗ** методических footers (LO codes, продолжительность — для методиста, не для аудитории).
 
 ---
 
-## 5. Visual-loop workflow (по одному слайду)
+## 5. Visual-loop workflow
+
+**Принцип Anthropic** (буквально работает): «**Assume there are problems. Your job is to find them. A first render without issues indicates insufficient scrutiny. Perform at least one fix-and-verify cycle before declaring success.**»
+
+**Минимум 3 итерации на слайд. Обычно 3-7.** Если на 3-й итерации «всё ок» — недостаточно критики, найди что улучшить.
 
 ```
-1. Read deck.yaml + slides/sNN.md            ← source
-2. Render slide via PowerPoint MCP            ← create_presentation / add_slide / add_shape...
-3. Save .pptx in library/lectures/lec-NN/rendered/
-4. Snapshot: libreoffice --headless --convert-to pdf, then pdf2image → PNG
-5. Read PNG visually (Claude vision)          ← agent describes what it sees
-6. Compare with assertion + intent
-7. If issues → patch via MCP (move_shape / update_text_style / etc.)
-8. Re-snapshot, re-look
-9. Loop steps 5-8 until acceptable, max 5-7 iterations
-10. Log iterations in rendered/iteration-log.md
+1. PLAN — choose slide type + visual concept (icon? chart? diagram? illustration?)
+2. PREP visuals — download icons (curl), recolor (sed/ImageMagick), generate charts (QuickChart), build diagrams (mermaid CLI or shape composition)
+   Все assets в library/lectures/lec-NN/rendered/assets/{icons,charts,diagrams,illustrations}/
+3. GENERATE — build slide via PowerPoint MCP (BLANK layout + shapes + manage_text + manage_image)
+4. CONVERT:
+     cd library/lectures/lec-NN/rendered
+     libreoffice --headless --convert-to pdf lec-NN-pilot.pptx
+     pdftoppm -r 150 -png lec-NN-pilot.pdf snapshots/iter
+5. INSPECT — Read PNG через Claude vision. Active checking:
+   - контраст текст/фон (WCAG AA min 4.5:1)
+   - иерархия (главное больше, второстепенное мелче)
+   - spacing/baseline (нет дыр и слипания)
+   - image proportions (не сплющен)
+   - цвета только из палитры
+   - НЕТ accent line под title, НЕТ красного, НЕТ дублирования
+   - визуал работает на assertion
+   - text wraps аккуратные (не «перево / д»)
+6. FIX через MCP — учти limitation [#54-3] (нет update_shape_position → full rebuild presentation на каждой итерации)
+7. RE-SNAPSHOT + RE-INSPECT
+8. Repeat 5-8. **Min 3 iter** на слайд.
+9. LOG в rendered/iteration-log.md (per-slide section: что делал, что увидел, что менял)
 ```
+
+### Pre-flight checklist (Anthropic principle перед invoking pipeline)
+
+- [ ] Read this README (§1-§5 как минимум).
+- [ ] Read `notes/mcp-limitations.md` — известные грабли PowerPoint MCP.
+- [ ] Read `notes/decisions.md` (последний раздел) — anti-patterns каталог.
+- [ ] Verify tools: `mmdc --version`, `convert --version`, `rsvg-convert --version`, `libreoffice --headless --version`, `pdftoppm -v`.
+- [ ] Verify PowerPoint MCP: `mcp__powerpoint__get_server_info` отвечает.
+
+### Post-render QA loop (после стабильной версии)
+
+3 QA-агента запускаются **параллельно**:
+- `presentation-critic` — методист + визуальный (yaml + md + PNG).
+- `student-simulator` — студент в зале (только PNG + видимые speaker notes).
+- `reader-simulator` — 2 режима: `text-only` (md ДО рендера), `rendered` (PNG+notes через 2 недели).
+
+Orchestrator сводит отчёты в `qa-reports/{date}/SYNTHESIS.md`, решает 3-5 главных правок, делает fix-итерацию, ре-рендер.
 
 ---
 
@@ -162,39 +207,59 @@ library/lectures/lec-01/
 
 | Агент | Перспектива | Видит |
 |---|---|---|
-| `deck-editor` | Сборщик/редактор | всё (yaml + md + PNG) |
-| `presentation-critic` | Методист | yaml + md + PNG |
-| `student-simulator` | Студент ИУ6 в зале | только PNG + видимые speaker notes |
-| `reader-simulator` | Тот же студент через 2 недели; **2 режима**: `text-only` и `rendered` | text-only: только md; rendered: PNG + notes |
+| `presentation-designer` | Визуальный дизайнер deck'а — строит слайды, итерирует visual loop | yaml + md + PNG + tools (PowerPoint MCP, mmdc, QuickChart, ImageMagick) |
+| `presentation-critic` | Методист + визуальный ревью | yaml + md + PNG |
+| `student-simulator` | Студент в зале (PNG + видимые speaker notes) | только PNG + видимые speaker notes |
+| `reader-simulator` | Студент через 2 недели; **2 режима**: `text-only` и `rendered` | text-only: только md; rendered: PNG + notes |
 
-Каждый агент в своём `.md`-файле — первая строка `**REQUIRED READING:** этот файл`.
+Каждый агент в своём `.md`-файле начинается с **REQUIRED READING:** этого README.
+
+`deck-editor` агент v1 (Google Slides обёртка) **удалён** в #56 — orchestration теперь через `/build-deck` skill + presentation-designer + 3 QA.
 
 ---
 
-## 9. Что НЕ делаем (anti-patterns)
+## 9. Anti-patterns — НЕ делаем
 
-- **Не используем Title+Body универсально.** Каждый слайд — конкретный тип из библиотеки.
-- **Не делаем декоративные картинки.** Визуал = доказательство.
-- **Не пишем 8+ буллетов.** Лимит 4.
-- **Не делаем заголовок «Тема X».** Заголовок = тезис.
-- **Не правим Drive напрямую.** Source — репо, Drive — только artifact (когда подключим upload).
-- **Не пропускаем visual loop.** Минимум 1 итерация для каждого слайда.
+15-пунктный каталог поддерживается в `notes/decisions.md` § «2026-05-12 — Presentation pipeline». **Перед сборкой обязательно прочитай.**
+
+Краткий top-10:
+
+1. ❌ **Accent lines под titles** (Anthropic AI-tell).
+2. ❌ **Title+Body универсально** — каждый слайд имеет конкретный тип.
+3. ❌ **Generic blue/red palettes** — только Ocean + Teal + Gold.
+4. ❌ **Text-only слайды без визуала** — каждый слайд имеет ≥1 визуал.
+5. ❌ **Centered body text** — body left-aligned, title центрировать ситуативно.
+6. ❌ **Repeating identical layouts** — каждый distinct.
+7. ❌ **Familiar CTA tone** («УГАДАЙ», «ты») — уважительная «вы».
+8. ❌ **Magic-pill framing** — exploratory navigation tone.
+9. ❌ **Methodist comments на слайдах** — в speaker notes.
+10. ❌ **Native add_chart PowerPoint MCP** — Office 2010 вид → QuickChart → PNG.
 
 ---
 
 ## 10. Roadmap инструмента (sub-issues EPIC #52)
 
-- **#53 (этот setup)** — установка MCP + агенты + структура.
-- **#54** — 1-слайдный спайк s05b, валидация visual-loop.
-- **#55** — 6-слайдный пилот Лекции 1 (s01-s05b), 3 QA агента в действии.
-- **#56** — стабилизация: переписать `/build-deck` skill, формализовать `deck.yaml` schema, обновить `decisions.md`.
-- **#57** — factory: остальные слайды Л1, потом Л2-Л17.
+- **#53** — setup PowerPoint MCP + 3 QA agents + структура. ✅ merged.
+- **#54** — 1-слайдный спайк s05b. ✅ merged.
+- **#55** — 6-слайдный пилот Лекции 1 (5 итераций v1→v3.6). ✅ merged.
+- **#56 (этот этап)** — стабилизация: README final, SKILL rewrite, decisions.md catalog, CLAUDE.md final.
+- **#57** — factory: остальные s06-s29 Лекции 1, затем Л2-Л17.
 
 ---
 
-## 11. Открытые вопросы / TODO для следующих sub-issues
+## 11. Открытые вопросы
 
-- **list_shapes / get_shape_properties** — отсутствуют в GongRzhe MCP. При первой реальной потребности (вероятно в #55) — форкнуть `tellina-study/Office-PowerPoint-MCP-Server` и добавить как 2 простых обёртки над python-pptx.
-- **Reference template** — выбираем после спайка #54.
+- **list_shapes / get_shape_properties** — отсутствуют в GongRzhe MCP. Форкнуть при реальной потребности (вероятно в #57 при сложных deck'ах).
+- **Reference template PPTX** — не понадобился в пилоте (голый python-pptx + примитивы + recolored icons дали хороший результат). Можно добавить при росте сложности.
 - **Drive upload + feedback pull** — отложено до момента, когда понадобится внешний рецензент.
-- **/build-deck skill update** — текущий SKILL.md ориентирован на Google Slides. Переписывается в #56.
+- **FLUX через Replicate API** — для AI-сгенерированных hero illustrations. Опционально, $0.003/image. Подключаем когда понадобится.
+
+---
+
+## 12. References
+
+- **Design playbook:** `notes/issue-52-presentations-methodology/design-research.md`
+- **Tool catalog:** `notes/issue-52-presentations-methodology/design-superpowers.md`
+- **Anti-patterns + iteration journey:** `notes/decisions.md` § «2026-05-12 — Presentation pipeline»
+- **MCP limitations:** `notes/mcp-limitations.md`
+- **Anthropic pptx skill** (knowledge source, не используется как skill): `github.com/anthropics/skills/blob/main/skills/pptx/SKILL.md`

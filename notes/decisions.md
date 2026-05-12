@@ -120,3 +120,82 @@ mcp__workspace-mcp__list_docs_in_folder \
 - Удалять `kzlevko@gmail.com.json` — НЕ требуется, авто-flow перепишет файл.
 - Перезапускать Claude Code — НЕ требуется, MCP-сервер сам подхватывает новые credentials.
 - Менять `.mcp.json` — конфиг корректный (`GOOGLE_OAUTH_CLIENT_ID` и `..._SECRET` валидны).
+
+## 2026-05-12 — Presentation pipeline (EPIC #52, sub-issues #53-#56)
+
+**Контекст:** масштабная переработка генерации презентаций. От тонкой обёртки над Google Slides API (TITLE_AND_BODY default) к full repo-first pipeline через PowerPoint MCP + visual-loop + 3 QA-агента + presentation-designer. Пилот — 6 слайдов Лекции 1, 5 итераций v1→v3.6, ~22 часа реальной работы.
+
+### Архитектурные решения
+
+1. **Repo-first source of truth.** `library/lectures/lec-NN/deck.yaml` + `slides/*.md` — единственный источник. Google Drive — только publish target (отложено), не для прямой правки.
+2. **Render-target PPTX, не Google Slides.** `office-powerpoint-mcp-server` (GongRzhe, PyPI v2.0.7) через uvx. 37 tools. Архивирован upstream, но стабилен (python-pptx mainline). При нужде форкаем.
+3. **Visual-loop — first-class фаза**, не QA-after-thought. Generate→Convert (libreoffice+pdftoppm)→Inspect (Claude vision)→Fix через MCP→Repeat. **Минимум 3 итерации на слайд**, обычно 3-7.
+4. **Slide-types library** обязательна. Universal Title+Body — anti-pattern. Каждый слайд имеет тип с конкретным layout-рецептом.
+5. **Visual motif** — повторяющийся элемент через весь deck (Anthropic skill principle). У нас — «Ocean rounded box» (radius 12, surface `#F4F7FA`, stroke `#1C7293`).
+6. **Палитра локирована.** Ocean Gradient (`#21295C` deep, `#065A82` mid, `#1C7293` light) + Teal `#028090` secondary + Gold `#F0AB00` ≥1×/слайд highlight. Без красного, cream, dark backgrounds (кроме deliberate cover).
+7. **Иконки/иллюстрации через локальный workflow.** SVG (Lucide/Heroicons/Phosphor/LobeHub CDN) → ImageMagick recolor → rsvg-convert PNG → manage_image. Никаких URL/SVG в `manage_image` напрямую.
+8. **Charts через QuickChart API** (curl + URL-encoded JSON), не PowerPoint MCP native `add_chart` (даёт Office 2010 вид).
+
+### 3 QA-агента (обязательная петля)
+
+- `presentation-critic` — методист + визуальный ревью (vision-enabled, yaml+md+PNG).
+- `student-simulator` — студент в зале (PNG + видимые speaker notes).
+- `reader-simulator` — 2 режима: `text-only` (md без рендера — методический контроль ДО рендера) и `rendered` (PNG+notes через 2 недели после лекции).
+
+Запускать **параллельно после рендера** на стабильной версии, синтезировать в SYNTHESIS.md, делать fix-итерации.
+
+### Anti-patterns catalog (из пилота #55)
+
+| # | Anti-pattern | Чем заменить | Источник |
+|---|---|---|---|
+| 1 | Accent lines под titles | Whitespace или background slab | Anthropic pptx skill — «AI-tell» |
+| 2 | Red on cream / corporate 2003 | Ocean Gradient + Teal + Gold | пилот v2 |
+| 3 | Centered body text везде | Body left-aligned, только titles центрировать | Anthropic |
+| 4 | Repeating identical layouts | Каждый слайд distinct visual approach | Anthropic |
+| 5 | Generic blue / monochrome | 2-3 уровня + 1 secondary + sparingly gold | пилот v3 |
+| 6 | Text-only slides | ≥1 визуал (icon/chart/diagram/illustration) на слайде | пилот v1→v3 |
+| 7 | Familiar CTA tone («УГАДАЙ», «ты») | Уважительная «вы»-форма, нейтрально | пилот v3.6 |
+| 8 | Local audience binding («инженер ИУ6») | Обезличить (инженер, выпускник, без курсо-зависимости) | пилот v3.6 |
+| 9 | Methodist comments на слайдах (footers с D8/refs) | Перенести в speaker notes | пилот v3.6 |
+| 10 | Magic-pill framing («за 75 минут разберёмся») | Exploratory navigation tone | пилот v3.6 |
+| 11 | Native `add_chart` PowerPoint MCP | QuickChart API → PNG → manage_image | пилот v3 |
+| 12 | URL/SVG в `manage_image` напрямую | rsvg-convert → локальный PNG | MCP limitation [#55-1] |
+| 13 | Dark cover в light deck | Coherent palette: cover same family as content | пилот v2→v3 |
+| 14 | Footer-tax (5 типов мелкого курсива) | 1 общий стиль, max 2 строки, только источники | пилот v3 designer self-review |
+| 15 | Cover как ещё один content slide | Distinct typography + composition (tinted bg, big lecture number, no motif callout) | пилот v3.6 |
+
+### Anthropic pptx skill discovery (важное!)
+
+В ходе #55 нашли официальный **Anthropic pptx skill** в `github.com/anthropics/skills` — содержит 10 проверенных палитр с HEX, явный список anti-patterns (включая «NEVER accent lines under titles»), Generate→Convert→Inspect→Fix loop как канон.
+
+**Skill сам не используем** (он на PptxGenJS, у нас PowerPoint MCP), но **знания инкорпорированы** в `.claude/agents/presentation-designer.md` и `tools/presentation-build/README.md`.
+
+### Инструменты установлены (system-level)
+
+- `libreoffice-impress` + `libreoffice-core` + `poppler-utils` (PPTX→PDF→PNG snapshot pipeline).
+- `imagemagick` + `librsvg2-bin` (SVG icon recolor + resize).
+- `@mermaid-js/mermaid-cli` npm global (`mmdc`) — для диаграмм при нужде.
+
+### PowerPoint MCP limitations (5 новых из пилота — см. `notes/mcp-limitations.md`)
+
+`[#54-1]` нет list_shapes/get_shape_properties · `[#54-2]` format_runs ломает inline runs · `[#54-3]` нет update_shape_position (каждая итерация = full rebuild) · `[#54-4]` vertical_alignment middle неполный · `[#55-1]` 4:3 default — нужен python-pptx post-process для 16:9 · `[#55-2]` `add_slide background_type=solid` не работает — XML inject · `[#55-3]` inline runs (часть текста другим цветом) недоступны через MCP.
+
+### Цикл итераций пилота (важный урок)
+
+| Версия | Главная проблема | Метод обнаружения |
+|---|---|---|
+| v1 | TITLE_AND_BODY default — corporate 2003 | User жёсткая критика |
+| v2 | Монохромно, accent lines, dark cover, дубль question, factual error на chart | Critic + student + reader + designer self-review (4 параллельных agents) |
+| v3 | Visual bugs (donut overlap, chip wraps, funnel overflow), tone issues | Orchestrator vision (мой собственный осмотр) |
+| v3.5 | Tone/content issues (фамильярный CTA, ИУ6 binding, magic-pill) | User content review |
+| v3.6 | Acceptable for publication | Visual + content + tone все ОК |
+
+**Урок:** Anthropic правило «Assume there are problems. Your job is to find them. A first render without issues indicates insufficient scrutiny» — буквально работает. 5 итераций реально нужны.
+
+### Что в #56 стабилизуется
+
+- `/build-deck` skill переписывается под новый pipeline (PowerPoint MCP + visual-loop + 3 QA + designer).
+- `tools/presentation-build/README.md` финализируется — slide-types библиотека до 8+ типов с конкретными рецептами.
+- Старая Google Slides Лекции 1 удаляется из Drive.
+- `deck-editor` agent либо удаляется (orchestration через skill достаточна), либо repurposed под deck.yaml maintenance.
+- CLAUDE.md presentation pipeline block финализируется.

@@ -160,6 +160,20 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 
 ---
 
+## MCP Limitations Catalog (ENFORCED)
+
+**Reference:** `notes/mcp-limitations.md` — централизованный каталог известных багов, отсутствующих фич и обходов в MCP-серверах + render-toolchain'е.
+
+### Update Rule (обязательная актуализация)
+Каждый раз, когда обнаружена новая limitation MCP-сервера или render-инструмента (failed tool call с явной причиной, баг внутри сервера, отсутствующая capability, render artifact), она **должна быть добавлена в `notes/mcp-limitations.md`** в той же сессии. Использовать готовый шаблон записи (см. начало файла).
+
+### Read Rule (обязательная проверка)
+**Перед использованием MCP-tool, который ранее давал проблемы**, или **в начале работы с малознакомым MCP-сервером**, агент **обязан** прочитать соответствующий раздел `notes/mcp-limitations.md`.
+
+Это касается всех агентов (`deck-editor`, `presentation-critic`, `librarian`, `course-curator`, `doc-editor`, `issue-manager`) и Claude как orchestrator.
+
+---
+
 ## Working Conventions
 
 ### Subagents (`.claude/agents/`)

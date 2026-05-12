@@ -61,7 +61,7 @@ libreoffice --headless --convert-to pdf /tmp/test.pptx       # smoke test conver
 | Inspection | `get_presentation_info`, `get_slide_info`, `extract_slide_text`, `extract_presentation_text`, `list_presentations` |
 | Шаблоны | `list_slide_templates`, `apply_professional_design`, `auto_generate_presentation`, `get_template_info` |
 
-**Limitation:** **нет** нативного `list_shapes` / `get_shape_properties`. Для visual-loop правок агент держит локальный «mental model» расположения шейпов (либо ведёт их в `deck.yaml` со стабильными ID).
+**Известные limitations PowerPoint MCP** (нет `list_shapes`, баг `format_runs`, нет `update_shape_position`/`delete_shape` и др.) — централизованно зафиксированы в **`notes/mcp-limitations.md`** с конкретными workaround'ами. Перед глубокой работой с MCP — обязательно прочитай этот файл (правило `CLAUDE.md` § «MCP Limitations Catalog»). Новые находки добавлять туда же, не сюда.
 
 ---
 

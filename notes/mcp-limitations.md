@@ -99,6 +99,66 @@
 - **First seen in:** #54 (s05b spike, iter-5, 2026-05-12)
 - **Fork target:** низкий приоритет — workaround надёжный.
 
+### [#55-1] `create_presentation` создаёт 4:3 (10×7.5") по умолчанию, нет опции 16:9
+
+- **Server:** `powerpoint`
+- **Tool / feature:** `create_presentation` (нет параметров `slide_width` / `slide_height` / `aspect_ratio`).
+- **Symptom:** Все новые презентации — 9144000×6858000 EMU = 10×7.5 дюймов = 4:3. Современные decks 16:9 (13.333×7.5) — нужен post-processing.
+- **Root cause:** GongRzhe MCP оборачивает `Presentation()` без overrides. python-pptx default — это шаблон с 4:3 размером.
+- **Severity:** P1 (на современных проекторах 4:3 выглядит дёшево + контент строится для 13.333" wide и обрезается).
+- **Workaround:** После `save_presentation` патчить через python-pptx:
+  ```python
+  from pptx import Presentation
+  from pptx.util import Inches
+  p = Presentation('path.pptx')
+  p.slide_width = Inches(13.333)
+  p.slide_height = Inches(7.5)
+  p.save('path.pptx')
+  ```
+  Шейпы при ресайзе **не двигаются** — остаются на абсолютных координатах. Поэтому строй контент сразу для 13.333×7.5, потом ресайзи canvas.
+- **Status:** active.
+- **First seen in:** #55 redo (2026-05-12). Документировано в `library/lectures/lec-01/rendered/iteration-log.md`.
+- **Fork target:** добавить `aspect_ratio` параметр в `create_presentation` (`"4:3" | "16:9" | "16:10" | "widescreen"`). ~30 минут работы.
+
+### [#55-2] `add_slide(background_type="solid", background_colors=...)` НЕ применяет фон слайда
+
+- **Server:** `powerpoint`
+- **Tool / feature:** `add_slide(layout_index=6, background_type="solid", background_colors=[[10,14,39]])`.
+- **Symptom:** Параметр `background_colors` не создаёт `<p:bg>` элемент в slide XML — слайд остаётся с дефолтным белым фоном (наследуется от master). Команда возвращает success, но визуально dark background не появляется.
+- **Root cause:** Не выяснено детально — возможно, фон применяется к `slide.background` через python-pptx API, который меняет shape-fill master'а (или просто игнорируется без `gradient_direction` валидации).
+- **Severity:** P1 (для cover/section divider слайдов с тёмным фоном)
+- **Workaround:** После save patch через python-pptx с inject `<p:bg>` XML:
+  ```python
+  from lxml import etree
+  from pptx.oxml.ns import qn
+  cSld = slide.element.find(qn('p:cSld'))
+  bg_xml = '<p:bg xmlns:p="..."><p:bgPr><a:solidFill><a:srgbClr val="0A0E27"/></a:solidFill><a:effectLst/></p:bgPr></p:bg>'
+  cSld.insert(0, etree.fromstring(bg_xml))
+  ```
+- **Status:** active.
+- **First seen in:** #55 redo (2026-05-12), s02 cover slide.
+- **Fork target:** проверить почему `background_colors` arg не работает; вероятно нужно прокинуть в `slide.background.fill.solid()` + `fore_color.rgb`. ~1 час работы.
+
+### [#55-3] `manage_text(text_runs=...)` для inline-эмфазиса — отсутствует операция inline runs
+
+- **Server:** `powerpoint`
+- **Tool / feature:** `manage_text` operation set.
+- **Symptom:** Чтобы выделить часть текста (например, «10%» отдельным цветом в central question), `manage_text(text_runs=...)` есть в schema, но `format_runs` ломает paragraph (см. #54-2). Inline runs недоступны через MCP.
+- **Root cause:** Связано с #54-2 — `format_runs` использует `add_paragraph` вместо `add_run`.
+- **Severity:** P1 (для accent typography)
+- **Workaround:** После save patch через python-pptx:
+  ```python
+  from pptx.dml.color import RGBColor
+  tf = shape.text_frame
+  tf.clear()
+  para = tf.paragraphs[0]
+  r1 = para.add_run(); r1.text = "часть 1"; r1.font.color.rgb = RGBColor(0xFF,0xFF,0xFF)
+  r2 = para.add_run(); r2.text = "10%"; r2.font.color.rgb = RGBColor(0xF0,0xAB,0x00)
+  ```
+- **Status:** active (см. #54-2 fork target).
+- **First seen in:** #55 redo (2026-05-12), s02 cover slide highlight «10%».
+- **Fork target:** см. #54-2.
+
 ### [#54-5] `manage_text(operation="add")` шейп-индексация после правок
 
 - **Server:** `powerpoint`
@@ -190,6 +250,26 @@ _Пока не обнаружено._
 
 ## Render toolchain (adjacent инструменты, не MCP)
 
+### [#55-render-1] mermaid-cli (`mmdc`) требует Chrome, отсутствует в WSL Ubuntu 24.04 by default
+
+- **Tool:** `mmdc` (`@mermaid-js/mermaid-cli` 11.14.0).
+- **Symptom:** `mmdc -i in.mmd -o out.png` падает с `Could not find Chrome (ver. 148.0.7778.97)` и `puppeteer-core` cache miss.
+- **Root cause:** `mmdc` использует Puppeteer, который ждёт chromium binary по `~/.cache/puppeteer`. В WSL по умолчанию Chrome нет, `npx puppeteer browsers install chrome-headless-shell` не выполнялся.
+- **Severity:** P2 (workaround надёжный).
+- **Workaround:** Писать диаграммы вручную как **SVG** (литеральный XML с rect/circle/path/text) → конвертить через `rsvg-convert -w W -h H -f png in.svg -o out.png`. Полный контроль над typography, цветами палитры, layout. Эта же стратегия лучше для строгого соответствия palette (Mermaid не даёт точно палитру).
+- **Status:** active.
+- **First seen in:** #55 redo (2026-05-12). Документировано в `library/lectures/lec-01/rendered/iteration-log.md`.
+
+### [#55-render-2] QuickChart `indexAxis: y` игнорируется без `version: "4"`
+
+- **Tool:** QuickChart API (`https://quickchart.io/chart`).
+- **Symptom:** Запрос на horizontal bar chart с `options.indexAxis: "y"` рендерится как vertical bar; `dataset.label` не задан → легенда показывает `undefined`. С `borderRadius` для каждого bar и др. Chart.js v3+ свойствами тоже не работает.
+- **Root cause:** QuickChart по умолчанию использует Chart.js **v2**, где `indexAxis` отсутствует, нужен `chart.type: "horizontalBar"`. Чтобы получить v3/v4 поведение, надо явно передать `"version": "4"` в JSON-payload.
+- **Severity:** P2 (workaround точечный).
+- **Workaround:** В POST-запросе в JSON всегда добавлять `"version": "4"` рядом с `"chart"`, `"width"`, `"height"`. Также включать `plugins.legend.display: false` чтобы скрыть `undefined`-label при пустом `dataset.label`.
+- **Status:** active.
+- **First seen in:** #55 redo (2026-05-12), при сборке s04 charts.
+
 ### [#54-render-1] LibreOffice headless добавляет drop-shadow к rectangle при PDF-export
 
 - **Tool:** `libreoffice --headless --convert-to pdf` (LibreOffice 24.2.7.2).
@@ -207,6 +287,7 @@ _Пока не обнаружено._
 - **2026-04-29 (#49):** workspace-mcp OAuth fix.
 - **2026-04-29 (#51):** find_and_replace_doc gotcha с большими таблицами.
 - **2026-05-12 (#54):** PowerPoint MCP — 5 limitations найдено за один спайк.
+- **2026-05-12 (#55 redo):** PowerPoint MCP — 3 новых (slide-size 4:3 default, dark bg ignored, inline runs); render-toolchain — 2 (mermaid Chrome missing, QuickChart v4 explicit).
 
 При обнаружении новой limitation — добавить запись по шаблону, обновить дату «Last update» ниже, упомянуть в commit message: `Add MCP limitation #X (server) — see notes/mcp-limitations.md`.
 

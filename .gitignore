@@ -41,3 +41,7 @@ lancedb/
 models/
 scripts/__pycache__/
 lib/
+
+# Presentation rendering archives (intermediate iterations kept locally only)
+# Only final rendered/lec-NN-pilot.{pptx,pdf} + snapshots + assets stay in git
+library/lectures/*/rendered/archive-v*/

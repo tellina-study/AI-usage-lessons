@@ -270,6 +270,26 @@ _Пока не обнаружено._
 - **Status:** active.
 - **First seen in:** #55 redo (2026-05-12), при сборке s04 charts.
 
+### [#69-render-1] Snapshot resolution mismatch: 110dpi скрывает overlap-bugs которые видны на 150dpi
+
+- **Tool:** `pdftoppm` snapshots при iterative visual loop.
+- **Symptom:** При итерациях с 110dpi PNG-снапшотами всё «выглядит ОК», но при финальной 150dpi inspection обнаруживаются множественные overlapping textbox'ы и обрезанные элементы (например s09 deck Лекции 1 — счётчик «$244-390B» прятался за gold counter-fact band'ом, видно только при 150dpi).
+- **Root cause:** Не баг — поведение by design. 110dpi даёт ~1450×815 PNG, в котором мелкий текст (10-12pt) сжимается до неразличимости; 150dpi даёт ~2000×1125 PNG где видна каждая строка.
+- **Severity:** P2 (workaround — discipline).
+- **Workaround:** Финальная inspection слайдов с тяжёлыми content (charts, multi-region layouts, dense tiles) ОБЯЗАТЕЛЬНА при 150dpi. Iterations 1-2 ОК на 110dpi (быстрее); iter-3 final accept — всегда 150dpi.
+- **Status:** active (workflow rule).
+- **First seen in:** #69 (full 29-slide deck Лекции 1, 2026-05-12). Обнаружено при iter-3 inspection s09 — на 110dpi казалось ОК, на 150dpi видна явная overflow проблема.
+
+### [#69-svg-fallback] Литерал-SVG + rsvg-convert как fallback для diagrams когда mermaid не работает
+
+- **Tool:** `rsvg-convert` + ручной SVG.
+- **Symptom:** Mermaid CLI требует Chrome (см. [#55-render-1]); в WSL не установлен.
+- **Workaround:** Создавать SVG литералом (heredoc или через Write tool) с inline styles в палитре проекта, конвертировать через `rsvg-convert -w W -h H -f png in.svg -o out.png`. Полный контроль типографики и палитры. Использовался для `d2-funnel-v36-clean.png` (3-уровневая воронка с Ocean palette + gold endpoint).
+- **Преимущества vs mermaid:** точное соответствие палитре; нет рандомных layout shifts; reproducible bit-by-bit.
+- **Недостатки:** ручная работа на каждую diagram; не подходит для сложных flowchart'ов с автоматическим layout.
+- **Status:** preferred fallback when mermaid не работает.
+- **First seen in:** #69 (2026-05-12).
+
 ### [#54-render-1] LibreOffice headless добавляет drop-shadow к rectangle при PDF-export
 
 - **Tool:** `libreoffice --headless --convert-to pdf` (LibreOffice 24.2.7.2).
@@ -293,4 +313,4 @@ _Пока не обнаружено._
 
 ---
 
-**Last update:** 2026-05-12 (#60 — централизация каталога; добавлены 5 powerpoint, 2 workspace-mcp, 1 github, 1 local-rag, 1 render-toolchain).
+**Last update:** 2026-05-12 (#69 — добавлены [#69-render-1] snapshot resolution + [#69-svg-fallback] SVG fallback для diagrams).

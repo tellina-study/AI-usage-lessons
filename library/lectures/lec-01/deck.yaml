@@ -1,10 +1,11 @@
 # library/lectures/lec-01/deck.yaml
 #
-# Deck-структура Лекции 1. Заполняется в sub-issues #54 (s05b) и #55 (s01-s05a).
+# Deck-структура Лекции 1 (29 слайдов, full version).
 # Schema — см. tools/presentation-build/README.md §6.
 #
-# Состав пилота #55: s01 → s02 → s03 → s04 → s05a → s05b (6 слайдов открытия лекции).
-# Полный план — notes/lecture-1-review/final/new-plan-v4-final.md (29 слайдов).
+# v3.6 pilot (6 слайдов s01-s05b) — archive-v36-6slide/.
+# Full 29-slide deck — Phase 5-6 of EPIC #64 (issue #69), 2026-05-12, на основе chapter v2.
+# План — notes/lecture-1-review/final/new-plan-v5-final.md (29 слайдов, 75 мин).
 
 deck:
   lecture_number: 1
@@ -15,19 +16,22 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
+  source: chapter v2 (status=reviewed, 13268 слов)
+  plan: notes/lecture-1-review/final/new-plan-v5-final.md
 
 slides:
+  # ─── Раздел 0. Открытие и вовлечение (9 мин) ───
   - id: s01
     file: slides/s01-ice-breaker-cv.md
     type: live_demo
     duration_min: 3
     assertion: "Идентификация людей в реальном времени — уже с 2023 года на простом ноутбуке."
     learning_goal: "Открывающий hook: показать, что AI — рабочий локальный инструмент"
-    learning_outcomes: [LO1, LO7]
+    learning_outcomes: [LO1]
     references: [yolov8-ultralytics-2023, mediapipe-google]
     visual:
       pattern: external_demo
-      primary: "Live-камера на проекторе с bounding-box детекцией; слайд минимальный"
+      primary: "Mock YOLO inference output (2 человека в bbox) обрамлён Ocean rounded box; assertion слева"
       backup: assets/code/ice-breaker-cv/backup/screenshot.png
     interaction: live_demo
 
@@ -36,12 +40,12 @@ slides:
     type: cover
     duration_min: 0.5
     assertion: "Введение — AI вокруг нас"
-    learning_goal: "Cover-слайд: визуально отличается от content slides (крупный title, декоративный «01», навигационный subtitle)"
+    learning_goal: "Cover-слайд: визуально отличается от content slides"
     learning_outcomes: [LO1, LO4, LO6, LO7]
     references: []
     visual:
       pattern: cover_distinct
-      primary: "Декоративная огромная «01» в outline; крупный title 60-72pt; короткий subtitle (навигационный, не обещание); hero motif справа"
+      primary: "Декоративная «01» в outline, title 64pt, navigational subtitle, hero motif справа"
 
   - id: s03
     file: slides/s03-poll-questions.md
@@ -53,7 +57,7 @@ slides:
     references: []
     visual:
       pattern: poll_questions_only
-      primary: "2 вопроса крупно (без ответов и цифр) — step 1 reveal"
+      primary: "2 motif cards (Q1 single-select + Q2 multi-select chips)"
     paired_with: s04
 
   - id: s04
@@ -61,12 +65,12 @@ slides:
     type: poll_reveal
     duration_min: 2
     assertion: "Разница между вашей оценкой и реальностью — карта ваших слепых зон про AI"
-    learning_goal: "Раскрыть данные по AI в РФ; через эффект разрыва зафиксировать роль курса"
+    learning_goal: "Раскрыть данные ВЦИОМ; multi-select disclaimer"
     learning_outcomes: [LO1, LO4]
-    references: [vciom-2025, bloomberg-2025-deepseek, cybsafe-2024]
+    references: [vciom-2025-onlay-dec, vciom-2025-oct]
     visual:
       pattern: data_reveal
-      primary: "Ключевые цифры крупно (ВЦИОМ 51%; DeepSeek 43% / ChatGPT 27% / YandexGPT 23% / GigaChat 15%) + инсайт-фраза снизу"
+      primary: "Donut 51% (ВЦИОМ-Онлайн дек 2025) + horizontal bar 5 LLM (ВЦИОМ окт 2025 multi-select)"
     paired_with: s03
 
   - id: s05a
@@ -74,21 +78,317 @@ slides:
     type: assertion_visual
     duration_min: 1
     assertion: "Кто я и почему мне это важно"
-    learning_goal: "Короткая визитка преподавателя перед рамкой курса"
+    learning_goal: "Короткая визитка преподавателя"
     learning_outcomes: [LO1]
     references: []
     visual:
       pattern: instructor_card
-      primary: "3 пункта 'обо мне' с явными placeholder'ами (контент не утверждён)"
+      primary: "Monogram-tile + 3 motif cards (briefcase / lightbulb / users)"
 
   - id: s05b
     file: slides/s05b-course-frame.md
     type: assertion_visual
     duration_min: 1
     assertion: 'Главный вопрос курса — не "можно ли AI?", а "НУЖНО ли и ГДЕ?"'
-    learning_goal: "Установить рамку курса; центральный вопрос в исследовательском тоне (показ, не обещание)"
+    learning_goal: "Рамка курса и центральный вопрос"
     learning_outcomes: [LO1, LO4]
-    references: [gartner-2025, ano-cifrovaya-ekonomika-2025]
+    references: [gartner-2024, cnews-vedomosti-2026]
     visual:
       pattern: central_question
-      primary: "Большой исследовательский вопрос по центру; assertion сверху; стейкс мелким шрифтом"
+      primary: "Funnel 100→10 (gold endpoint) слева + main takeaway + central question справа"
+
+  # ─── Раздел 1. Что такое AI (7 мин) ───
+  - id: s06
+    file: slides/s06-two-definitions.md
+    type: comparison
+    duration_min: 1
+    assertion: "Академическое определение размыто, инженерное даёт критерий «можно ли сюда AI»."
+    learning_goal: "Различить академическое vs инженерное определение AI"
+    learning_outcomes: [LO1]
+    references: [russell-norvig-2021, iso-iec-22989-2022]
+    visual:
+      pattern: two_column_comparison
+      primary: "2 колонки: Academic (Russell&Norvig) vs Engineering (рабочее)"
+
+  - id: s07
+    file: slides/s07-timeline-2017.md
+    type: process
+    duration_min: 4
+    assertion: "70 лет AI делятся на три эпохи — открытия, зимы и прорывы, и точка перелома 2017."
+    learning_goal: "Сжатый таймлайн AI; ввести AI Effect"
+    learning_outcomes: [LO1]
+    references: [vaswani-2017-attention, mccorduck-2004, dhar-2024-paradigms]
+    visual:
+      pattern: horizontal_timeline_grouped
+      primary: "Линейка 1950→2026 в 3 группах + gold-точка на 2017 + AI Effect callout"
+
+  - id: s08
+    file: slides/s08-classifications-4-axes.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "AI-инструмент имеет 4 координаты — задача, модальность, подход, архитектура."
+    learning_goal: "4-осевая карта AI + worked example GitHub Copilot"
+    learning_outcomes: [LO1]
+    references: [russell-norvig-2021, goodfellow-2016-dl, baltrusaitis-2019-multimodal]
+    visual:
+      pattern: four_axes_compass
+      primary: "Радиальная композиция 4 осей с примерами + worked example Copilot снизу"
+
+  # ─── Раздел 2. Где мы сейчас (6 мин) ───
+  - id: s09
+    file: slides/s09-scale-numbers.md
+    type: data_chart
+    duration_min: 3
+    assertion: "AI стал инфраструктурой за 3 года: ежедневный инструмент 51% разработчиков, 46% кода у пользователей Copilot."
+    learning_goal: "Масштаб AI в цифрах + парадокс «массовое внедрение + массовый провал»"
+    learning_outcomes: [LO1]
+    references: [stack-overflow-2025, openai-2026-wau, github-octoverse-2025, cnews-vedomosti-2026, statista-mckinsey-2025]
+    visual:
+      pattern: stat_grid_callout
+      primary: "Сетка из 4 метрик (900M / 51% / 46% / $244-390B) + gold counter-fact «90% откатов»"
+
+  - id: s10
+    file: slides/s10-deepseek-moment.md
+    type: case_study
+    duration_min: 3
+    assertion: "В AI побеждает изобретательность: $5.6M marginal, $589B капотери Nvidia за один день."
+    learning_goal: "Скорость изменений в AI; marginal vs full infra cost"
+    learning_outcomes: [LO1]
+    references: [bloomberg-2025-deepseek, deepseek-2025-r1, semianalysis-2025, anthropic-mcp-2024]
+    visual:
+      pattern: timeline_with_anchor_stats
+      primary: "Хронология дек 2024 → 27 янв 2025 + 3 анкер-стата (V3 / R1 / Nvidia)"
+
+  # ─── Раздел 3. Четыре способа (21 мин) ───
+  - id: s11
+    file: slides/s11-layered-mental-model.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Модель / чат / агент / приложение — это слои, а не альтернативы."
+    learning_goal: "Слоистая mental model для раздела 3"
+    learning_outcomes: [LO1, LO4]
+    references: [anthropic-2024-effective-agents, weng-2023-agents]
+    visual:
+      pattern: nested_layers_diagram
+      primary: "4 концентрических слоя (модель → чат → агент → приложение) с подписями компонентов"
+
+  - id: s12
+    file: slides/s12-three-ways-demo.md
+    type: live_demo
+    duration_min: 5
+    assertion: "Одна задача, три способа: контроль и стоимость растут с обвязкой."
+    learning_goal: "Слоистая модель через сравнение Model→Chat→Agent на одной задаче"
+    learning_outcomes: [LO1, LO4]
+    references: [anthropic-2024-effective-agents]
+    visual:
+      pattern: demo_with_comparison_table
+      primary: "Зафиксированная задача + 3-колоночная таблица сравнения (Контроль / Детерминизм / Шаги / Стоимость)"
+    interaction: live_demo
+
+  - id: s13
+    file: slides/s13-model-conveyor.md
+    type: case_study
+    duration_min: 2.5
+    assertion: "Поток 10K изображений/час с латентностью 50мс — это standalone-модель, не чат."
+    learning_goal: "Модель = stateless inference, single-task"
+    learning_outcomes: [LO1, LO4]
+    references: [kreuzberger-2023-mlops, jumper-2021-alphafold]
+    visual:
+      pattern: case_card_with_examples
+      primary: "Кейс конвейера + 4 примера моделей (YOLO/Whisper/SD/AlphaFold) + when-to-take rules"
+
+  - id: s14
+    file: slides/s14-chat-rf-shares.md
+    type: case_study
+    duration_min: 2.5
+    assertion: "Чат = модель + UI + память. Большинство откатившихся пилотов выбрали чат там, где нужна была модель или агент."
+    learning_goal: "Чат как layer + возврат к центральному вопросу"
+    learning_outcomes: [LO1, LO4, LO6]
+    references: [vciom-2025-oct, dam-2024-llm-chatbots]
+    visual:
+      pattern: case_card_with_distribution
+      primary: "Кейс ТЗ-документа + bar chart 5 LLM РФ multi-select + возврат к central question"
+
+  - id: s15
+    file: slides/s15-rtc-pattern.md
+    type: comparison
+    duration_min: 3
+    assertion: "Роль радикально меняет ответ. RTC = Роль + Задача + Контекст — паттерн №1."
+    learning_goal: "Сила промпта через контраст 2 ролей; RTC как базовый паттерн"
+    learning_outcomes: [LO4]
+    references: [white-2023-prompt-patterns, giray-2023-prompt-engineering]
+    visual:
+      pattern: bad_vs_good_prompt
+      primary: "3 колонки: bad prompt / Role A (McKinsey) / Role B (не-специалист) + RTC формула"
+
+  - id: s16
+    file: slides/s16-agent-200pdf.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Агент = чат + инструменты + планирование. Уровень автономии — ваше дизайн-решение."
+    learning_goal: "Агент + 5 уровней автономии (Feng et al. 2025) как design choice"
+    learning_outcomes: [LO1, LO4]
+    references: [weng-2023-agents, feng-mcdonald-zhang-2025-autonomy, yao-2022-react]
+    visual:
+      pattern: case_with_autonomy_ladder
+      primary: "Кейс 200 PDF + Agent=LLM+M+P+T + лесенка 5 уровней (operator→observer)"
+
+  - id: s17
+    file: slides/s17-app-translate.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Приложение = AI, упакованный в продуктовый UX. Большинство уже им пользуются, не зная этого."
+    learning_goal: "Приложение как layer; GitHub Copilot как ambiguous case"
+    learning_outcomes: [LO1, LO4]
+    references: [google-translate-2026, anthropic-2024-effective-agents]
+    visual:
+      pattern: app_logos_grid
+      primary: "Google Translate metrics + сетка 8 логотипов + Copilot ambiguity callout"
+
+  - id: s18
+    file: slides/s18-checklist-4-questions.md
+    type: summary
+    duration_min: 3
+    assertion: "AI работает там, где задача и тип инструмента совпали. 4 вопроса до внедрения — ваш чек-лист."
+    learning_goal: "Кульминация раздела 3 — operationalizable чек-лист"
+    learning_outcomes: [LO1, LO4]
+    references: [anthropic-2024-effective-agents, google-2024-ai-agents-whitepaper, ng-2024-design-patterns]
+    visual:
+      pattern: checklist_with_quadrant
+      primary: "4 вопроса (Q1-Q4 decision flow) + 2x2 quadrant Control×Determinism + worked example callout"
+
+  # ─── Раздел 4. Границы и безопасность (17 мин) ───
+  - id: s19
+    file: slides/s19-why-boundaries.md
+    type: section_divider
+    duration_min: 1
+    assertion: "Границы AI — ваша зона ответственности, не «отдельный вопрос для специалистов по safety»."
+    learning_goal: "Вводный фрейм раздела 4 — 3 причины"
+    learning_outcomes: [LO6, LO7]
+    references: [nist-ai-rmf-2023, nist-ai-600-1-2024, eu-ai-act-2024]
+    visual:
+      pattern: three_reasons_with_bridge
+      primary: "3 пронумерованные причины (shield/repeat/boundary иконки) + bridge-фраза"
+
+  - id: s20
+    file: slides/s20-local-vs-cloud.md
+    type: comparison
+    duration_min: 3
+    assertion: "Consumer-тарифы обучаются на ваших данных по умолчанию. Samsung 2023 — 3 утечки за месяц."
+    learning_goal: "Consumer vs enterprise; Samsung incident + регуляторика EU AI Act"
+    learning_outcomes: [LO6, LO7]
+    references: [bloomberg-2023-samsung, openai-terms-2025, eu-ai-act-2024]
+    visual:
+      pattern: two_column_with_case_anchor
+      primary: "Consumer (data→training) vs Enterprise (data≠training) + Samsung incident + EU fines"
+
+  - id: s21
+    file: slides/s21-hallucinations.md
+    type: case_study
+    duration_min: 3
+    assertion: "AI уверенно генерирует несуществующие DOI. Hallucination rate — от <1% до 15%."
+    learning_goal: "Готовый пример галлюцинаций + анти-паттерн «AI знает всё» + LO7 retrieval"
+    learning_outcomes: [LO6, LO7]
+    references: [huang-2023-hallucination, ji-2023-hallucination, vectara-hhem-2025, cybsafe-2024-oh-behave]
+    visual:
+      pattern: example_with_metric_band
+      primary: "Промпт+3 fake DOI + Vectara HHEM range <1%-15% + anti-pattern gold"
+    retrieval_moment: "s21+ think-pair-share «найдите подделку» (~1 мин, embedded)"
+
+  - id: s22
+    file: slides/s22-bias-sycophancy-shift.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Bias, sycophancy, distribution shift — три проявления одной природы: AI = отражение данных, не источник истины."
+    learning_goal: "Связное trio + якорный кейс GPT-4o sycophancy rollback апрель 2025"
+    learning_outcomes: [LO6]
+    references: [openai-2025-sycophancy-postmortem, pan-2022-reward-misspecification]
+    visual:
+      pattern: three_concepts_with_anchor
+      primary: "3 cards (bias/sycophancy/shift) + GPT-4o timeline 25→28→29 апреля 2025 + общая причина"
+    retrieval_moment: "s22+ mini-poll «что опаснее в вашей области» (~1 мин, embedded)"
+
+  - id: s23
+    file: slides/s23-arc-agi-economics.md
+    type: data_chart
+    duration_min: 3
+    assertion: "AI 54% за $30 vs человек 60% за $50–150/час: инженерный вопрос — не «хорош ли AI», а «сколько стоит ошибка»."
+    learning_goal: "Открытый экономический вопрос; переключить с «качество модели» на «цена ошибки»"
+    learning_outcomes: [LO6]
+    references: [chollet-2019-arc, arc-prize-2026]
+    visual:
+      pattern: comparison_bars_with_open_question
+      primary: "3 bars (человек 60% / refinement 54% / commercial 37.6%) + open question gold"
+
+  - id: s24
+    file: slides/s24-narrow-vs-general.md
+    type: comparison
+    duration_min: 3
+    assertion: "Все существующие AI — narrow. Прогнозы AGI 2-30 лет говорят больше про стимулы спикеров, чем про науку."
+    learning_goal: "Narrow vs general; инструмент критического чтения публичных прогнозов AGI"
+    learning_outcomes: [LO6]
+    references: [searle-1980-chinese-room, bostrom-2014-superintelligence]
+    visual:
+      pattern: spectrum_of_predictions
+      primary: "Шкала 2-30 лет с 4 лидерами (Altman/Amodei/Hassabis/LeCun) + их stakes + Chinese Room"
+
+  - id: s25
+    file: slides/s25-pearl-3-levels.md
+    type: comparison
+    duration_min: 2
+    assertion: "AI работает на уровне 1 (ассоциация); человек думает на 3 (контрфактуальность). Это граница, не починка."
+    learning_goal: "Завершить раздел 4 концептуальной границей Pearl"
+    learning_outcomes: [LO6]
+    references: [pearl-2018-book-of-why, he-2015-resnet, jumper-2021-alphafold, moravec-1988-mind-children]
+    visual:
+      pattern: two_columns_with_pyramid
+      primary: "AI лучше / Человек лучше колонки + Pearl 3 уровня пирамида с примерами"
+
+  # ─── Раздел 5. Заключение (6 мин) ───
+  - id: s26
+    file: slides/s26-course-roadmap.md
+    type: process
+    duration_min: 1.5
+    assertion: "17 лекций — 4 блока, путь от концептов к деплою и к границам ответственности."
+    learning_goal: "Карта семестра — куда движемся"
+    learning_outcomes: [LO1]
+    references: []
+    visual:
+      pattern: 4_blocks_roadmap
+      primary: "4 блока (Основы / Инструменты / Интеграция / Границы) + outcome-фраза под каждым"
+
+  - id: s27
+    file: slides/s27-teaser-callback.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Камера в s1 узнала аудиторию за 30 мс. На лекции 2 — посмотрим КАК."
+    learning_goal: "Callback на камеру + central question + тизер лекции 2"
+    learning_outcomes: [LO1]
+    references: []
+    visual:
+      pattern: callback_with_teaser
+      primary: "Мини-кадр YOLO + central question recall + 4 концепта лекции 2 (токены/эмбеддинги/attention/temp)"
+
+  - id: s28
+    file: slides/s28-three-takeaways.md
+    type: summary
+    duration_min: 1.5
+    assertion: "AI — спектр. Выбор типа — навык. Целеполагание — наше."
+    learning_goal: "3 главных вывода + домашнее задание apply-уровня"
+    learning_outcomes: [LO1, LO4, LO6, LO7]
+    references: []
+    visual:
+      pattern: three_takeaway_cards_with_homework
+      primary: "3 карточки выводов с иконками + gold homework callout"
+
+  - id: s29
+    file: slides/s29-qa-provocation.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Q&A — кто после этой лекции изменил мнение о чём-то?"
+    learning_goal: "Открытый Q&A с 2 backup-провокациями"
+    learning_outcomes: []
+    references: []
+    visual:
+      pattern: qa_with_backup_provocations
+      primary: "Крупное Q&A + 2 backup-провокации в motif boxes"

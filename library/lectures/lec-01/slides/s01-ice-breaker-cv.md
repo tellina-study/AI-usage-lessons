@@ -4,7 +4,7 @@ type: live_demo
 duration_min: 3
 assertion: "Идентификация людей в реальном времени — уже с 2023 года на простом ноутбуке."
 learning_goal: "Открывающий hook: показать, что AI — рабочий инструмент, который запускается локально без облака"
-learning_outcomes: [LO1, LO7]
+learning_outcomes: [LO1]
 references: [yolov8-ultralytics-2023, mediapipe-google]
 visual:
   pattern: external_demo

@@ -75,50 +75,40 @@ library/lectures/lec-01/
 
 ## DoD из issue #53
 
-- [x] MCP сервер `powerpoint` отвечает на `tools/list` (✅ 37 tools).
+- [x] MCP сервер `powerpoint` отвечает на `tools/list` (✅ 32 tools после restart, server v2.1.0 «Enhanced Edition»).
 - [x] 3 агента в `.claude/agents/`, каждый начинается с REQUIRED READING.
 - [x] `tools/presentation-build/README.md` написан.
 - [x] `CLAUDE.md` ссылается.
 - [x] Структура `library/lectures/lec-01/` готова.
 - [x] Smoke-тест: пустая PPTX создана через MCP (28KB, valid PPTX).
-- [ ] **libreoffice доступен для PNG-snapshot** ← **БЛОКЕР, нужен sudo пользователя.**
+- [x] **libreoffice 24.2.7.2 + pdftoppm установлены** (после `sudo apt install`).
+- [x] **End-to-end pipeline проверен** после restart Claude Code:
+  - MCP → `create_presentation` → `add_slide` → `save_presentation` → PPTX.
+  - libreoffice headless → PDF (13KB).
+  - pdftoppm @150dpi → PNG (36KB).
+  - **Claude vision прочитал PNG** — вижу title «PowerPoint MCP smoke-test #53 — pipeline ready», шрифт читаемый (Liberation Sans / Calibri), пустой content placeholder ниже. Visual-loop технически готов.
 
 ---
 
-## Что нужно от пользователя — libreoffice
-
-Sudo требует пароль, не могу автоматом. Выполни в терминале (можно через `! ...` в Claude Code, чтобы вывод попал в сессию):
+## Установка libreoffice (выполнено пользователем)
 
 ```bash
+sudo apt update
 sudo apt install -y libreoffice-impress libreoffice-core poppler-utils
 ```
 
-Опционально (pdf2image для конвертации PDF → PNG в Python):
-
-```bash
-pip install --user --break-system-packages pdf2image Pillow
-```
-
-После установки — короткий verify:
-```bash
-libreoffice --headless --version
-which pdftoppm     # из poppler-utils
-```
-
-Это нужно для **#54** (визуальный цикл). Для **#53** — не блокер на закрытие, поскольку smoke-test MCP'а прошёл успешно.
+Версии после установки: LibreOffice 24.2.7.2, pdftoppm в `/usr/bin/`.
 
 ---
 
 ## Что НЕ сделано (для следующего issue)
 
-- Не запускал MCP `powerpoint` через subagent в текущей сессии — нужен restart Claude Code, чтобы он подхватил `.mcp.json`. После restart — проверить `claude mcp list`.
-- libreoffice (см. выше).
 - `list_shapes` / `get_shape_properties` обёртки в форк MCP — отложено до момента, когда они реально понадобятся (вероятно в #55).
 
 ---
 
 ## Следующий шаг
 
-После твоего approval на этом коммите + установки libreoffice + restart Claude Code:
+После approval:
 1. Push ветки `issue-53-pptx-mcp-setup` + создать PR против main.
 2. После merge → старт #54 (1-слайдный спайк s05b).

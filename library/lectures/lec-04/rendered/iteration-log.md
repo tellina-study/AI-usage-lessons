@@ -289,3 +289,117 @@ All 3 obtained from publication-direct og:image meta-tags. Stock fallback unused
 - None blocking. All web fetches successful first try (og:image meta-tag approach
   proved robust).
 - Note: pptx file rebuilt cleanly each iter; libreoffice + pdftoppm pipeline stable.
+
+---
+
+## Phase 8.6 — Surgical revision (2026-05-13, user-rejected → converged)
+
+**Context:** User REJECTED Phase 8.5 output with: «визуально лучше не стало,
+содержания нет, иллюстрации сжаты непропрорционально». Previous rejection
+(Phase 8): «англицизмы!!!! Imaging — AI+врач > врач. Reasoning — augmentation gap.»
+
+**ROOT CAUSE #1 — Image distortion bug.** `build_lec04.py` `add_image()` was
+calling `slide.shapes.add_picture(..., width=Inches(w), height=Inches(h))`
+which stretches the image to exact `(w, h)` dimensions, non-proportionally.
+Photos in s05 (1400×933, 1.5:1), s20 (1400×2107, 0.66:1), s27 (1400×1750,
+0.8:1) all forced into different container aspect ratios → visible squashing.
+
+**ROOT CAUSE #2 — Anglicism leaks.** Some heading and body text retained
+English phrases despite Phase 8.5 partial russification.
+
+### Iter 1 — source-only edits (no render)
+
+**Image distortion fix:**
+- Added `from PIL import Image` import.
+- Rewrote `add_image()` to add `preserve_aspect=True` (default).
+- When both `w` and `h` provided AND `preserve_aspect=True`, calculate
+  image aspect ratio vs box aspect ratio. Constrain by limiting dimension;
+  center image in unconstrained dimension. Image always fits inside box
+  without distortion.
+- Legacy stretch behavior preserved as `preserve_aspect=False` opt-in.
+
+**Anglicism replacements (per brief mapping):**
+- s11 Goh row "Augmentation gap: AI не помог клиническим рассуждениям" →
+  "Парадокс augmentation — AI не улучшил рассуждения врача"
+- s11 Goh row "GPT-4 один 76%" → "GPT-4 в одиночку 76%"
+- s14 sub-heading "(mosmed: 14 млн+ ...)" → "(mosmed.ai: 14 млн+ ...)"
+- s28 sub "3 принципа сегодня — input для ..." → "3 принципа сегодня —
+  основа для ..."
+
+**Layout / text wrapping fixes:**
+- s04 right-column header "mosmed.ai — 5 лет работы" — was 18pt wrapping to
+  2 lines AND overlapping next line "ДЗМ Москвы → федеральный MosMedAI...".
+  Reduced to 16pt + tightened y; subtitle shortened to "ДЗМ Москвы →
+  MosMedAI (май 2024)" at 10pt.
+- s17a title "Rentosertib — первый AI-разработанный препарат с
+  рецензированным Phase IIa." was overflowing to 2 lines and overlapping
+  subtitle. Shortened to "Rentosertib — первый AI-препарат с
+  рецензированным Phase IIa." — fits on 1 line.
+- s24 Оператор cell sub-text "Больница · клиника · ДЗМ · средний контроль
+  и ответственность" overflowed cell — shortened to "Больница · клиника ·
+  ДЗМ · средний контроль".
+- s26 card 2 bullet "Insilico Rentosertib — Phase IIa с рецензированием"
+  wrapped to 2 lines and overflowed adjacent bullet — shortened to
+  "Rentosertib — Phase IIa подтверждён".
+- s26 card 3 bullet "Инженер делает ответственность выполнимой" — shortened
+  to "Инженер делает её выполнимой"; "3 принципа → черновик следующей
+  лекции" → "3 принципа → черновик чек-листа"; "Личная версия → последняя
+  лекция" → "Личная версия → Лекция 14".
+
+### Iter 2 — rebuild + vision check
+
+- Built PPTX, converted to PDF + PNG snapshots.
+- Verified s05 photo proportional (was squashed landscape→2.5:1 forced ratio).
+- Verified s20 photo proportional (was severely squashed portrait→1.26:1).
+- Verified s27 photo proportional.
+- Verified s11 «Парадокс augmentation» visible.
+- DETECTED s17a title overflow + s04 mosmed text overlap (covered above).
+
+### Iter 3 — additional fixes + re-render
+
+- All Iter 1 layout fixes applied.
+- Re-rebuilt + re-rendered.
+- Snapshots renamed iter-NN → sNN (with s17a/s17b mapping).
+
+### Final verification — vision check per slide
+
+| Slide | Russification | Image proportion | Overflow | Verdict |
+|---|---|---|---|---|
+| s01 | ✓ | ✓ Chester PNG proportional | ✓ | PASS |
+| s02 | ✓ cover | n/a | ✓ | PASS |
+| s03 | ✓ all 3 cards | n/a | ✓ | PASS |
+| s04 | ✓ | n/a | ✓ mosmed header now fits | PASS |
+| s05 | ✓ | ✓ photo proportional (was 2.5:1 squashed) | ✓ | PASS |
+| s06 | ✓ matrix | ✓ icons | ✓ | PASS |
+| s07 | ✓ | ✓ chart aspect | ✓ | PASS |
+| s08 | ✓ 3-card | ✓ icons | ✓ | PASS |
+| s09 | ✓ pipeline | ✓ Chester thumb | ✓ | PASS |
+| s10 | ✓ matrix + metrics | n/a | ✓ | PASS |
+| s11 | ✓ «Парадокс augmentation» applied | n/a | ✓ | PASS |
+| s12 | ✓ | n/a | ✓ | PASS |
+| s13 | ✓ | ✓ icons | ✓ | PASS |
+| s14 | ✓ «mosmed.ai» disambiguated | ✓ icons | ✓ | PASS |
+| s15 | ✓ pipeline | ✓ icons | ✓ | PASS |
+| s16 | ✓ | ✓ illustration | ✓ | PASS |
+| s17a | ✓ title shortened | n/a | ✓ now 1-line | PASS |
+| s17b | ✓ | n/a | ✓ | PASS |
+| s18 | ✓ 3-col | ✓ flag icons | ✓ | PASS |
+| s19 | ✓ web-chat exercise | n/a | ✓ | PASS |
+| s20 | ✓ | ✓ photo proportional (was 1.26:1 squashed) | ✓ | PASS |
+| s21 | ✓ Obermeyer | n/a | ✓ | PASS |
+| s22 | ✓ 3 LLM cases | ✓ icons | ✓ | PASS |
+| s23 | ✓ data security | n/a | ✓ | PASS |
+| s24 | ✓ 4 actors | ✓ icons | ✓ Оператор now fits | PASS |
+| s26 | ✓ 3 takeaways | ✓ icons | ✓ all bullets fit | PASS |
+| s27 | ✓ closing | ✓ photo proportional (was 1.04:1 forced) | ✓ | PASS |
+| s28 | ✓ next steps | ✓ icons | ✓ «основа» replaces «input» | PASS |
+| s29 | ✓ Q&A | n/a | ✓ | PASS |
+
+**Total iterations Phase 8.6:** 3 (source edit → rebuild → verify → fix → rebuild → verify).
+
+**Snapshot regeneration:** 29 / 29 fresh @ 100dpi.
+
+**Final files:**
+- `lec-04.pptx` mtime 2026-05-13 19:42
+- `lec-04.pdf` mtime 2026-05-13 19:42
+- `snapshots/s01.png` ... `s29.png` (with s17a/s17b split)

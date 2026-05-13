@@ -3,7 +3,7 @@ id: s11
 type: assertion_visual
 section: "Раздел 2. Эмбеддинги"
 duration_min: 2
-assertion: "3 применения: similarity, clustering, search"
+assertion: "Эмбеддинги дают similarity, clustering и search — основу RAG"
 learning_goal: "3 практических применения эмбеддингов — карты для Раздела 3 курса"
 learning_outcomes: [LO1]
 chapter_ref: "§2.3 [for-slide-s11]"

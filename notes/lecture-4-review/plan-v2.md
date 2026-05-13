@@ -32,6 +32,8 @@
 | 11 | s22 | **Expanded to 4 мин, 3 cases:** NEDA Tessa (corrected dates: rule-based pre-2023; **March 2023 vendor Cass switches к generative**; **May 30 2023** Sharon Maxwell screenshots → 24h suspension. Frame as **vendor accountability story**) + Adversarial hallucination 83% rate (Communications Medicine 2025) + 40M Americans use ChatGPT для healthcare (OpenAI/Gallup 2024-2025). | P1 |
 | 12 | glossary | **Glossary lock:** «AI-диагностика» = canonical RU form; «CADe» = FDA-specific alert-mode subset; «AI medical imaging» = English research form. Added `aliases_forbidden` + `aliases_allowed` map. Glossary candidate #24 «Хосзу-роль» → replaced с **«Healthcare operator role»**. | P1 |
 | 13 | s1 | **Hook SELECTED:** AlphaFold-server (alphafoldserver.com), public, 30-sec query, 3D structure visual impact. Backup PNG в speaker notes. Точки выбора → SELECTED. | P1 |
+| 13a | s1 | **POST-GATE-0 REVISION:** Chester AI X-ray (mlmed.org/tools/xray/) selected over AlphaFold-server. Reasons: no Google login required, runs locally in browser (privacy-by-design — bonus s23 setup), direct setup для AI-диагностика section s9-13. AlphaFold-server demo deprecated to backup option only. | USER-DECISION |
+| 13b | s17a speaker notes | **POST-GATE-0 REVISION:** verified Russian AI drug discovery context added — MADD (ITMO + Сбер AI Lab, EMNLP 2025 Findings peer-reviewed), AIDD center (Сбер + AIRI Q1 2025), DiMA (AIRI ICML 2025), Сбер+Р-Фарм CD137 oncology + Alzheimer alliance. Strict caveat: zero RU-designed drugs в clinical trials май 2026 — «RF preclinical vs Insilico Phase IIa» honest framing. Source: `notes/research/lecture-4/sources-ru-drug-discovery.md`. | USER-DECISION |
 | 14 | s19 | **Micro-exercise extended к 10 мин** (course-doc compliance). Concrete instruction: «Открой web-chat → готовый промпт → отметь карандашом 1 неточность / unverifiable claim / abstract place. На reveal — 2-3 студента читают (1 мин each)». Fallback: pre-printed 3-5 sample AI responses (3 EN + 2 RU). | P1 |
 | 15 | s15 speaker notes | **Hit/lead definitions** для non-medic: «Hit = молекула с initial activity signal vs target; Lead = hit, доведённый до preclinical-readiness (улучшенная affinity, selectivity, stability)». | P1 |
 | 16 | s10 | **Prevalence/PPV added:** 4-row table (sens, spec, prevalence, PPV). Speaker notes: «Sens/spec не зависят от prevalence; PPV — зависит. При prev=1%, sens=0.94, spec=0.89 → PPV ~8%». | P1 |
@@ -79,7 +81,7 @@
 
 | Этап | Слайды | Время | Функция |
 |------|--------|-------|---------|
-| 0. Открытие + central question | 1–5 | 9 мин | hook (AlphaFold-server live query — SELECTED); титул; опрос; central question framing |
+| 0. Открытие + central question | 1–5 | 9 мин | hook (Chester AI X-ray live drag-drop — SELECTED post-GATE-0); титул; опрос; central question framing |
 | 1. Карта AI в медицине | 6–8 | 7 мин | 4 типа применения (диагностика / drug discovery / personalized / admin); масштаб (FDA-authorized 1,451); зачем медицина — instructive case |
 | 2. AI-диагностика как зеркало (computer vision) | 9–13 | 14 мин | radiology CV; mosmed.ai РФ case (operational metrics); sensitivity vs specificity + prevalence/PPV; AI vs радиолог (Liu/MASAI/Goh); bias studies |
 | 3. Drug discovery: обещания vs реальность | 14–17b | 14 мин | AlphaFold 3 + AlphaProteo; **Rentosertib success (s17a)**; **DSP-1181 reality check (s17b)** |
@@ -96,37 +98,39 @@
 
 ## Раздел 0. Открытие и вовлечение (9 мин)
 
-### Слайд 1 — Ice breaker: live AlphaFold-server query (3 мин) (`live_demo`)
+### Слайд 1 — Ice breaker: live Chester AI X-ray demo (3 мин) (`live_demo`)
 
-**Описание:** ноутбук + проектор; live AlphaFold-server query на DeepMind alphafoldserver.com — запрос структуры белка с фронта зала, появление 3D-структуры через ~30-60 сек. **SELECTED hook** (per P1 fix — mosmed.ai live tour deferred to backup; AlphaFold выбран за 3D visual impact + public access без auth wall).
+**Описание:** ноутбук + проектор; live drag-and-drop chest X-ray в Chester AI tool (`mlmed.org/tools/xray/`) — модель работает **локально в браузере** (no server upload, privacy-by-design), выдаёт heatmap + probability scores для 18 pathologies за ~3 секунды. **SELECTED hook** (revised post-USER-GATE-0: AlphaFold-server заменён на Chester по причине — Chester не требует логина, runs locally, и напрямую setup-ит AI-диагностика секцию s9-13).
 
-**Содержание (visible):** title-screen демо + assertion внизу. Assertion: «AI ставит метку патологии на рентгене за ~3 секунды. AI разворачивает 3D-структуру белка за ~30 секунд. Обе системы — production-ready в 2026.»
+**Содержание (visible):** title-screen демо + assertion внизу. Assertion: «AI ставит метку патологии на рентгене за ~3 секунды. Эта модель работает локально в браузере, без облака. Это — narrow CV, не ChatGPT.»
 
-**LO mapping:** **LO1** (типы AI в медицине — ML+protein-folding для drug discovery; CV для diagnostics упоминается).
+**LO mapping:** **LO1** (типы AI в медицине — CV для диагностики CORE; foundation models для drug discovery упомянуты как parallel).
 
-**Frame mapping:** Другой AI (не LLM) — это foundation model для protein folding. **Демонстрирует:** medical AI ≠ ChatGPT для врачей.
+**Frame mapping:** Другой AI (не LLM) — это computer vision (классификация + localization) + **Безопасность** (privacy-by-design: locally computed, no PHI leaves device).
 
 **Иллюстрация (MANDATORY):**
 - **Тип:** live demo + backup PNG.
 - **Источник-кандидаты:**
-  - **A (SELECTED):** `https://alphafoldserver.com/` — input query «predict structure of hemoglobin» (или другой known protein) + 3D output through Mol* viewer.
-  - **B (backup):** PNG screenshot AlphaFold prediction (например, GPCR, hemoglobin) saved в `library/lectures/lec-04/assets/backup/alphafold-hemoglobin.png`.
-  - **C (fallback):** screenshot mosmed.ai dashboard (если AlphaFold internet недоступен).
-- **Caption (5-10 слов):** «AlphaFold-server (alphafoldserver.com) — публичный, 30-сек query (2026)»
-- **Визуальная функция:** emotional anchor («это работает прямо сейчас») + technical wow (3D-структура впечатляет даже не-биолога). Создаёт engagement через визуальную конкретику.
+  - **A (SELECTED):** `https://mlmed.org/tools/xray/` — drag-drop pre-prepared chest X-ray (использовать публичный sample, например, из NIH Chest X-ray dataset CC0 ИЛИ Wikimedia Commons CC0 normal-vs-pneumonia X-ray pair). 18-class probability + heatmap.
+  - **B (backup PNG):** pre-saved screenshot Chester result (heatmap + probability list) в `library/lectures/lec-04/assets/backup/chester-pneumonia-result.png`.
+  - **C (paper citation):** Cohen et al. arXiv:1901.11210 (Chester paper); Mila Quebec/McGill.
+- **Caption (5-10 слов):** «Chester AI (Mila/McGill, Cohen et al. 2019) — runs locally in browser»
+- **Визуальная функция:** emotional anchor («AI smотрит на рентген впервые») + technical evidence (probability scores + heatmap) + privacy framing (no upload). Создаёт engagement через визуальную конкретику + setup для AI-диагностика section.
 
 **Speaker notes hints:**
-1. **Backup decision-tree (P1 fix):** если internet OK → live AlphaFold query; если internet flaky → backup PNG; если проектор подведёт → словесное описание AlphaFold возможностей с reference к Нобель 2024.
-2. Связать с лекцией 1 («помните камера-демо? — YOLO для людей; сегодня AlphaFold — foundation model для биологии. Оба — narrow AI, не chat»).
-3. Подчеркнуть: AI here is **narrow** (protein structure prediction), NOT LLM.
-4. Заранее проверить, что demo URLs живы накануне лекции (freshness-check 12 мая 2026).
-5. Не входить в техническую глубину — это hook, 3 мин total.
+1. **Backup decision-tree:** если internet OK → live Chester drag-drop; если internet flaky → backup PNG; если проектор подведёт → словесное описание Chester возможностей + ссылка на paper (Cohen et al. 2019).
+2. Связать с лекцией 1 («помните камера-демо? — YOLO для людей в зале; сегодня Chester — CV-классификация рентгена. Оба — narrow CV, не chat»).
+3. **Privacy frame (важно для s23 callback):** «обратите внимание — изображение НЕ загружается на сервер. Модель работает локально в браузере. Это design choice — медицинские данные ≠ regular data».
+4. Заранее проверить, что mlmed.org/tools/xray/ жив + sample X-ray pre-loaded на ноутбук лектора (freshness-check 12 мая 2026 — checked nothing changed).
+5. **NEW pre-flight:** скачать 2 sample chest X-ray (pneumonia + normal) из NIH CXR8 dataset (CC0); проверить, что Chester классифицирует их различно на лекторской машине накануне.
+6. Не входить в техническую глубину — это hook, 3 мин total. Лектор НЕ объясняет CheXNet architecture или 18 pathologies — это setup для s10-s11.
+7. **AlphaFold callback:** «структурные модели типа AlphaFold — тоже narrow AI, но для другой задачи; вернёмся к ним на s15-s17b».
 
-**Связь с другими слайдами:** setup для s09-s13 (диагностика block) + s15-s17b (drug discovery block).
+**Связь с другими слайдами:** setup для s09-s13 (AI-диагностика block — CORE) + s15-s17b (drug discovery — parallel mention).
 
-**Risks / things to verify в Phase 0b:** `[FACT-CHECK: live]` AlphaFold-server активный URL + public access не изменён на 12 мая 2026.
+**Risks / things to verify в Phase 0b:** `[FACT-CHECK: live]` Chester AI URL `mlmed.org/tools/xray/` активный + drag-drop function working на 12 мая 2026; sample X-ray licensing (use NIH CXR8 CC0 explicitly, NOT random Google image).
 
-**Cross-frame anchor:** Другой AI (не LLM) + LO1.
+**Cross-frame anchor:** Другой AI (не LLM) + LO1 + **Безопасность** (privacy-by-design preview для s23).
 
 ---
 
@@ -762,7 +766,11 @@
 2. **Why Rentosertib не DSP-1181 (P0-1):** «На plan-v1 мы планировали DSP-1181 как flagship. Fact-check показал — drug discontinued в 2022. Rentosertib (Insilico) — peer-reviewed positive readout в Nature Medicine June 2025. Это credibility upgrade.»
 3. **IPF (Idiopathic Pulmonary Fibrosis)** — серьёзное заболевание лёгких; positive FVC change = клинически значимый endpoint.
 4. **TNIK inhibitor mechanism** — AI помог identify novel target + design ligand; verified в independent peer review.
-5. **Russian context:** Webiomed (российский medical AI vendor) — параллельная история (clinical decision support, не drug discovery). Sber AI Lab — мало public drug discovery data, `[FACT-CHECK]` нужен.
+5. **Russian context (verified via dedicated RU research pass `notes/research/lecture-4/sources-ru-drug-discovery.md`, 2026-05-13):** российский AI-drug-discovery landscape **формируется в 2024-2025**, но пока **preclinical only**. Главные verified facts:
+   - **MADD (Multi-Agent Drug Discovery Orchestra)** — совместный проект **ITMO + Сбер AI Lab**, peer-reviewed на **EMNLP 2025 Findings** (Mityagin et al., arXiv:2511.08217, ноябрь 2025) — strongest verifiable RU AI drug discovery claim. Open-source на GitHub.
+   - **AIDD center (Сбер + AIRI)** — официально запущен **Q1 2025**. Alliances: Сбер+AIRI+Р-Фарм CD137 oncology (май 2024); AIRI+Р-Фарм+Сбер Alzheimer (ноябрь 2025); Сбер+AIRI+Promomed (PMEF 2025).
+   - **DiMA (AIRI Bioinformatics, Meshchaninov, Kardymon et al.)** — peer-reviewed на **ICML 2025**.
+   - **Strict caveat для лектора:** **zero Russian-designed drugs в clinical trials на май 2026.** «RF preclinical vs Insilico peer-reviewed Phase IIa» — честное сравнение. Избегать framing «Russian Rentosertib» — пока нет equivalents.
 6. Engineering lesson: **AI ускоряет design (verified). Clinical efficacy — separate question (биология). Two distinct claims, не один.**
 7. **Critical:** AI не изменил ~90% clinical attrition rate. Rentosertib — early success; Phase 3 ещё требуется.
 
@@ -1288,7 +1296,7 @@
 | Разделов | 6 (0–5) |
 | Время | 9 + 7 + 14 + 14 + 10 + 12 + 6 = **72 мин content** + ~3 мин transitions = ~68 мин active + 7 мин буфер = **75 мин total** (P2-12 arithmetic fix) |
 | Опросы / interactive | s3 (опрос), s4 (reveal), s14 (mid-callback), s19 (micro-exercise — единственное упражнение, 10 мин per course doc), s29 (Q&A) |
-| Демо | s1 (AlphaFold-server live SELECTED), s19 (LLM web-chat student-driven LO4 apply) |
+| Демо | s1 (Chester AI X-ray live drag-drop SELECTED post-GATE-0; AlphaFold-server deprecated to backup), s19 (LLM web-chat student-driven LO4 apply) |
 | Центральный вопрос | s5 → callbacks s12, s14, s17a, s17b → answer s24 → payoff s27 |
 | Главный case study | mosmed.ai operational (s12), Rentosertib peer-reviewed success (s17a), DSP-1181 reality check (s17b), Obermeyer Optum (s21), NEDA Tessa + 3 LLM cases (s22), Change Healthcare breach (s23) |
 | Студенческие упражнения | 1 micro-exercise s19 (10 min per course doc); НЕТ полноценных упражнений |
@@ -1406,7 +1414,7 @@ ai_diagnostics:
 | **Exscientia / Recursion post-merger clinical readouts** | Weekly | Check FierceBiotech / Endpoints 1 week pre-lecture |
 | **Insilico Rentosertib post-Phase IIa** | Monthly | Check Insilico investor news / Phase 3 announcements |
 | **mosmed.ai operational stats** | Quarterly | Check mos.ru ДЗМ press для Q1-Q2 2026 figures |
-| **AlphaFold-server URL liveness** | Day-of | Verify alphafoldserver.com active 12 мая 2026 |
+| **Chester AI URL liveness** (s1 demo dependency, replaces AlphaFold-server post-GATE-0) | Day-of | Verify mlmed.org/tools/xray/ active + drag-drop functional 12 мая 2026 |
 | **NEDA Tessa case freshness** | Yearly | Confirm no new significant developments |
 | **EU AI Act 2 Aug 2026 deadline** | Monthly | Hot topic = 81 days post-lecture |
 | **Russian medical AI registrations** | Quarterly | Webiomed updated count |
@@ -1416,7 +1424,7 @@ ai_diagnostics:
 1. FDA AI/ML device count (most likely to have moved).
 2. Insilico Rentosertib news (Phase 3 announcement potential).
 3. mosmed.ai dashboard URL liveness + key stats.
-4. AlphaFold-server URL active (s1 demo dependency).
+4. Chester AI URL active (s1 demo dependency, mlmed.org/tools/xray/) + sample NIH CXR8 X-ray pre-loaded.
 
 ---
 
@@ -1461,7 +1469,9 @@ ai_diagnostics:
 ## Артефакты, создаваемые этим планом (owner: преподаватель + producer agents)
 
 - `library/lectures/lec-04/glossary.yaml` — 25 terms + canonical-lock map (generated после chapter approval Phase 4).
-- `library/lectures/lec-04/assets/backup/alphafold-hemoglobin.png` — backup для s01 demo.
+- `library/lectures/lec-04/assets/backup/chester-pneumonia-result.png` — backup для s01 demo (Chester result heatmap + probability list, screenshot from successful pre-flight run).
+- `library/lectures/lec-04/assets/backup/alphafold-hemoglobin.png` — secondary backup (AlphaFold-server screenshot, кept as fallback option for drug-discovery framing if Chester unavailable).
+- `library/lectures/lec-04/assets/control/sample-chest-xray-cxr8.jpg` — pre-prepared NIH CXR8 (CC0) sample X-ray для s1 drag-drop.
 - `library/lectures/lec-04/assets/control/s19-baseline-llm-response.png` — lecturer's control AI response для s19 micro-exercise.
 - `library/lectures/lec-04/assets/control/s19-fallback-responses.pdf` — 5 pre-printed sample AI responses (3 EN + 2 RU) для no-internet fallback.
 - `library/lectures/lec-04/assets/charts/` — self-generated charts (s4 FDA growth, s7 trend, s10 4-metric table, s11 3-row comparison, s17a Rentosertib timeline, s17b DSP-1181 timeline).
@@ -1483,7 +1493,7 @@ ai_diagnostics:
 
 | Слайд | Что | Выбор | Статус |
 |-------|-----|-------|--------|
-| 1 | Ice breaker demo | **AlphaFold-server (alphafoldserver.com)** live OR backup PNG | **SELECTED** (P1-8 fix) |
+| 1 | Ice breaker demo | **Chester AI X-ray (mlmed.org/tools/xray/)** live drag-drop OR backup PNG | **SELECTED** (P1-8 fix + post-GATE-0 user choice — Chester replaces AlphaFold-server; no login, runs locally, direct setup для AI-диагностика s9-13) |
 | 5 | Central question | «Какие обещания сбылись + кто отвечает» (B+C blend) | SELECTED (kept from v1) |
 | 17a | Drug discovery success | **Insilico Rentosertib (Nature Medicine June 2025)** | **SELECTED** (P0-1 fix — replaces DSP-1181 как flagship) |
 | 17b | Drug discovery reality | **DSP-1181 discontinued reality check** | SELECTED (kept v1 narrative; simplified to 3 events) |

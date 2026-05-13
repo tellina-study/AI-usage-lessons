@@ -17,7 +17,7 @@
 <rect x="540" y="242" width="158" height="42" fill="#1C7293" rx="6"/>
 <text x="619.0" y="270" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">ization</text>
 <text x="1130" y="270" text-anchor="end" font-family="Arial" font-size="20" font-weight="bold" fill="#21295C">2 токена</text>
-<text x="40" y="348" font-family="Arial" font-size="16" fill="#1C7293" font-style="italic">Пример 3 — слово strawberry (см. s07)</text>
+<text x="40" y="348" font-family="Arial" font-size="16" fill="#1C7293" font-style="italic">Пример 3 — слово strawberry</text>
 <text x="40" y="390" font-family="Courier New, monospace" font-size="28" font-weight="bold" fill="#21295C">strawberry</text>
 <text x="350" y="390" font-family="Arial" font-size="28" fill="#065A82">→</text>
 <rect x="410" y="362" width="80" height="42" fill="#065A82" rx="6"/>

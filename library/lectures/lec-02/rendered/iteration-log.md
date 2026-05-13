@@ -118,3 +118,66 @@ zap, magnet, search-check, target, sliders-horizontal, file-text, flashlight, ga
 ## Tool footprint update
 
 No new MCP limitations or render-toolchain artifacts encountered in this run. All existing limitations (PowerPoint MCP missing inspection tools, QuickChart UTF-8 in POST requires `ensure_ascii=True` workaround, mermaid Chrome missing — used custom SVG path) avoided through python-pptx direct + Python urllib for QuickChart + rsvg-convert for SVG.
+
+---
+
+## v1.0 → v1.1 — Phase 8 revision (2026-05-13)
+
+**Source:** `qa-reports/2026-05-13-phase7-slides-v1/SYNTHESIS.md` (combined Phase 7 verdict REVISE).
+
+**Build script change:** ROOT path made relative via `Path(__file__).resolve().parent.parent` to support isolated worktree.
+
+### P0 fixes (visible student-facing leaks)
+
+1. **`[VERIFY-DAY-OF]` marker leak** — removed from visible body of `s16` and `s27` rendered slides; moved verification cue to speaker notes. Slide MDs updated accordingly.
+2. **Visual scale fix on 11 slides** — `s07`, `s14`, `s15`, `s19`, `s21`, `s22`, `s24`, `s25`, `s26`, `s27`, `s28`:
+   - Body font bumped to ≥14pt (most ≥15-17pt for cards / 18pt for headers)
+   - Sub-label / caption fonts ≥12pt
+   - Icon sizes increased (0.7→0.8, 0.85→0.95-1.10)
+   - Card heights expanded (s27 cards: 3.3→3.55; s19: 3.8→4.55) to fill canvas to ≥80%
+   - Number badges enlarged (s23: 0.7→0.85; s24: 0.85→0.95; s04: 0.55→0.65)
+
+### P1 fixes (visual + content polish)
+
+3. **s11 title** list («3 применения: similarity, clustering, search») → assertion («Эмбеддинги дают similarity, clustering и search — основу RAG»). Slide MD assertion field also updated.
+4. **s14 flashlight metaphor** reduced to small inset (1.3×1.3) at bottom-right corner; bar chart distribution promoted to dominant 8.5×4.6 visual (was 6.0×4.0).
+5. **s17 gold focus** flipped from negative middle dip (~30% — cognitive dissonance per P1-V6) to positive endpoints (~75% beginning/end); middle softened to ~50% per Liu et al. (P1-F2). Chart `s17-u-shape.png` regenerated via QuickChart with new Y values [78,72,58,52,58,72,76] and gold points on indices 0 and 6.
+6. **s18 «Σ = 1» overflow** fixed — top-5 list row spacing tightened (0.55→0.45 row pitch), bottom label box repositioned at y=5.30 (was 5.85) with more height (0.45→0.95) and proper multi-line spacing.
+7. **s19 «стандарт» unification** — T=1.0 designated «стандарт» throughout, T=0.7 noted as «consensus для чата». Gold accent moved from T=0 card to T=1.0 (standard recommendation). Slide MD updated.
+8. **s23 designer-extras removal** — «← s05-s08»/«← s09-s12»/«← s13-s17»/«← s18-s20» anchor footers deleted from 4 pipeline stages; «id → learned table» unified to «id → вектор из обученной таблицы» (RU).
+9. **s24 «→ sNN» forward-refs removal** — all 3 forward-ref labels («→ s15», «→ s05-s07», «→ s18-s19») removed from answer cards. Fonts bumped (q: 16→18pt, a: 13→15pt, number: 38→44pt).
+10. **s25 forward-ref removal** — «Глубже — Лекции 4-7 (индустрии)» footer caption deleted. Branch heads rephrased as semantic labels (was «Ветка 1/2/3») into «Фиксированные классы / Интерпретируемость / Real-time».
+11. **s26 Pearl callback softened** — replaced 3-level Pearl breakdowns («1. Ассоциация — да», etc.) with single assertion in sub-title («AI считает корреляции в данных, не строит каузальный граф»). Added gold engineering-takeaway callout.
+12. **s28 «(s10-s12)» and «Lec-1 §2.2» refs removed** from concept body text; cell heights increased (2.10→2.20) and fonts bumped.
+13. **s16 disambiguation** — gold callout extended to include «1M ≈ 16× дороже 100k — production-pricing с batching; чистая N²-теория дала бы 100×».
+14. **s04 designer-extras removal** — «якорь: sNN» markers deleted from 3 promise cards; «3 ответа — payoff на s24» rephrased as «3 ответа — финал лекции».
+15. **s01 mockup «(см. s07)» cross-ref removed** from SVG source; PNG regenerated via rsvg-convert.
+
+### P2 cosmetics
+
+16. s17 QuickChart legend disabled (`legend.display=false`); chart regenerated.
+17. s23 number badges enlarged (0.7→0.85) and centered properly.
+18. Subtitle font sizes bumped from 15pt to 16-18pt across most slides for projector readability.
+
+### Render output
+
+- `lec-02.pptx` rebuilt (28 slides, ~741 KB).
+- `lec-02.pdf` regenerated via libreoffice headless.
+- All 28 PNG snapshots at 130 dpi regenerated in `snapshots/s-NN.png`.
+- No slide IDs added/removed/reordered (s01-s28 monotonic preserved).
+- All 17 glossary_lock terms preserved (no drift).
+- Both Phase 3 P0 fixes (Llama-3 tokenizer + strawberry split) preserved in slide visible_content + speaker notes.
+
+### Files modified
+
+- `library/lectures/lec-02/rendered/build_lec02.py` (P0+P1+P2 — main builder)
+- `library/lectures/lec-02/rendered/assets/charts/s17-u-shape.png` (P1-F2 — regenerated)
+- `library/lectures/lec-02/rendered/assets/diagrams/s01-tiktokenizer-mock.{svg,png}` (P2 — designer-extra removed)
+- `library/lectures/lec-02/slides/s11-three-uses-of-embeddings.md` (P1-V5 — assertion fix)
+- `library/lectures/lec-02/slides/s16-context-window.md` (P0-1 — VERIFY-DAY-OF → notes)
+- `library/lectures/lec-02/slides/s17-long-context-fails.md` (P1-F2 — softened middle)
+- `library/lectures/lec-02/slides/s19-temperature.md` (P1-F3 — T=1.0 unification)
+- `library/lectures/lec-02/slides/s26-attention-vs-causality.md` (P1-V4 — Pearl softened)
+- `library/lectures/lec-02/slides/s27-homework.md` (P0-1 — VERIFY-DAY-OF → notes)
+
+**Status:** Ready for re-QA / USER GATE B.

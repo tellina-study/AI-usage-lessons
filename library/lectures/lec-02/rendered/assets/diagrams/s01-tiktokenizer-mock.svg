@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+<rect width="1200" height="700" fill="#FFFFFF"/>
+<rect x="0" y="0" width="1200" height="60" fill="#21295C"/>
+<text x="30" y="38" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">tiktokenizer.vercel.app</text>
+<text x="1170" y="38" text-anchor="end" font-family="Arial" font-size="14" fill="#F0AB00">o200k_base · GPT-4o</text>
+<text x="40" y="108" font-family="Arial" font-size="16" fill="#1C7293" font-style="italic">Пример 1 — короткое английское слово</text>
+<text x="40" y="150" font-family="Courier New, monospace" font-size="28" font-weight="bold" fill="#21295C">cat</text>
+<text x="350" y="150" font-family="Arial" font-size="28" fill="#065A82">→</text>
+<rect x="410" y="122" width="86" height="42" fill="#065A82" rx="6"/>
+<text x="453.0" y="150" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">cat</text>
+<text x="1130" y="150" text-anchor="end" font-family="Arial" font-size="20" font-weight="bold" fill="#21295C">1 токен</text>
+<text x="40" y="228" font-family="Arial" font-size="16" fill="#1C7293" font-style="italic">Пример 2 — длинное английское слово (с суффиксом)</text>
+<text x="40" y="270" font-family="Courier New, monospace" font-size="28" font-weight="bold" fill="#21295C">tokenization</text>
+<text x="350" y="270" font-family="Arial" font-size="28" fill="#065A82">→</text>
+<rect x="410" y="242" width="122" height="42" fill="#065A82" rx="6"/>
+<text x="471.0" y="270" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">token</text>
+<rect x="540" y="242" width="158" height="42" fill="#1C7293" rx="6"/>
+<text x="619.0" y="270" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">ization</text>
+<text x="1130" y="270" text-anchor="end" font-family="Arial" font-size="20" font-weight="bold" fill="#21295C">2 токена</text>
+<text x="40" y="348" font-family="Arial" font-size="16" fill="#1C7293" font-style="italic">Пример 3 — слово strawberry (см. s07)</text>
+<text x="40" y="390" font-family="Courier New, monospace" font-size="28" font-weight="bold" fill="#21295C">strawberry</text>
+<text x="350" y="390" font-family="Arial" font-size="28" fill="#065A82">→</text>
+<rect x="410" y="362" width="80" height="42" fill="#065A82" rx="6"/>
+<text x="450.0" y="390" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">st</text>
+<rect x="498" y="362" width="86" height="42" fill="#1C7293" rx="6"/>
+<text x="541.0" y="390" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">raw</text>
+<rect x="592" y="362" width="122" height="42" fill="#028090" rx="6"/>
+<text x="653.0" y="390" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">berry</text>
+<text x="1130" y="390" text-anchor="end" font-family="Arial" font-size="20" font-weight="bold" fill="#21295C">3 токена</text>
+<text x="40" y="468" font-family="Arial" font-size="16" fill="#1C7293" font-style="italic">Пример 4 — русское слово</text>
+<text x="40" y="510" font-family="Courier New, monospace" font-size="28" font-weight="bold" fill="#21295C">клубника</text>
+<text x="350" y="510" font-family="Arial" font-size="28" fill="#065A82">→</text>
+<rect x="410" y="482" width="80" height="42" fill="#065A82" rx="6"/>
+<text x="450.0" y="510" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">к</text>
+<rect x="498" y="482" width="86" height="42" fill="#1C7293" rx="6"/>
+<text x="541.0" y="510" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">луб</text>
+<rect x="592" y="482" width="104" height="42" fill="#028090" rx="6"/>
+<text x="644.0" y="510" text-anchor="middle" font-family="Courier New, monospace" font-size="20" font-weight="bold" fill="#FFFFFF">ника</text>
+<text x="1130" y="510" text-anchor="end" font-family="Arial" font-size="20" font-weight="bold" fill="#21295C">3 токена</text>
+<rect x="40" y="610" width="1120" height="60" fill="#FEF5E0" stroke="#F0AB00" stroke-width="2" rx="8"/>
+<text x="600" y="648" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#21295C">В среднем: 1 токен ≈ 4 символа EN ≈ 2 символа RU</text>
+</svg>

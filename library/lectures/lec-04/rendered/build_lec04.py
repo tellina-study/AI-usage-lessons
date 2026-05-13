@@ -284,6 +284,91 @@ def load_notes(slide_id):
 
 
 # ============================================================
+# Section divider — unified template (6 cards, like Лекция 1)
+# Used by s05b, s08a, s13a, s18a, s19a, s24a.
+#
+# NAV_SECTIONS — 6 разделов Лекции 4 (как в deck.yaml).
+# ============================================================
+NAV_SECTIONS = [
+    ("0", "Открытие\nи опросы",   "Где мы\nкак пользователи"),
+    ("1", "Карта AI\nв медицине", "4 типа\n+ масштаб FDA"),
+    ("2", "AI-диагностика\nкак зеркало", "CV · sens/spec\n· MASAI · bias"),
+    ("3", "Разработка\nлекарств",      "AlphaFold · Rentosertib\n· DSP-1181"),
+    ("4", "Микро-упражнение",          "10 мин ·\nLO4 на практике"),
+    ("5", "Этика и\nответственность",  "Obermeyer · Tessa\n· 4 актёра"),
+    ("6", "Заключение",                "3 вывода ·\nLec 6 · Q&A"),
+]
+
+
+def build_section_divider(p, here_idx, title, frame_phrase, notes_slide_id):
+    """Section divider — bold large section number + title + 1-line frame
+    phrase + 7-card progress bar (sections 0..6) с gold-подсветкой текущей.
+
+    here_idx: 1..6 (раздел 1..6). 0 reserved for open.
+    """
+    s = blank(p)
+    set_slide_bg(s, SURFACE)
+    # Big section number outline left (decorative, soft gray)
+    text_box(s, x=0.55, y=1.2, w=4.0, h=4.5,
+             text=str(here_idx),
+             size=300, bold=True, color=COVER_OUTLINE,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP, line_spacing=1.0)
+    # Section label — small caps overhead
+    text_box(s, x=4.7, y=1.6, w=8.0, h=0.5,
+             text="РАЗДЕЛ",
+             size=18, bold=True, color=TEAL,
+             align=PP_ALIGN.LEFT, line_spacing=1.0)
+    # Section title — large, ocean deep
+    text_box(s, x=4.7, y=2.15, w=8.0, h=1.8,
+             text=title,
+             size=44, bold=True, color=DEEP,
+             align=PP_ALIGN.LEFT, line_spacing=1.15)
+    # Frame phrase — italic, muted
+    filled_rect(s, 4.7, 3.95, 0.04, 0.55, fill=TEAL)
+    text_box(s, x=4.85, y=3.95, w=7.9, h=1.0,
+             text=frame_phrase,
+             size=18, italic=False, color=MID,
+             align=PP_ALIGN.LEFT, line_spacing=1.30)
+    # Progress bar — 7 cards (sections 0..6).
+    bar_y = 5.85
+    n_cells = 7
+    total_w = 12.3
+    gap = 0.12
+    cell_w = (total_w - gap * (n_cells - 1)) / n_cells
+    start_x = 0.55
+    card_h = 0.95
+    for i, (num, sec_title, desc) in enumerate(NAV_SECTIONS):
+        x = start_x + i * (cell_w + gap)
+        is_here = (i == here_idx)
+        if is_here:
+            ocean_box(s, x, bar_y, cell_w, card_h,
+                      fill=GOLD, stroke=GOLD, stroke_pt=2.0)
+            num_color = WHITE
+            title_color = WHITE
+        elif i < here_idx:
+            # past section — teal/passed
+            ocean_box(s, x, bar_y, cell_w, card_h,
+                      fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.2)
+            num_color = TEAL
+            title_color = MID
+        else:
+            # future section — neutral
+            ocean_box(s, x, bar_y, cell_w, card_h,
+                      fill=WHITE, stroke=LIGHT, stroke_pt=1.0)
+            num_color = LIGHT
+            title_color = SLATE
+        text_box(s, x=x, y=bar_y + 0.10, w=cell_w, h=0.45, text=num,
+                 size=24, bold=True, color=num_color,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP, line_spacing=1.0)
+        text_box(s, x=x + 0.04, y=bar_y + 0.50, w=cell_w - 0.08, h=card_h - 0.55,
+                 text=sec_title, size=9, bold=is_here, color=title_color,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP, line_spacing=1.15)
+    # Footer label «Вы здесь — раздел N из 6» REMOVED per No Extra Content Rule.
+    # Color highlight (GOLD card) is sufficient orientation cue.
+    speaker_notes(s, load_notes(notes_slide_id))
+
+
+# ============================================================
 # Slide builders — 29 slides
 # ============================================================
 
@@ -534,46 +619,68 @@ def build_s06(p):
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
              text="Модальность данных × охват = карта применений",
              size=15, italic=True, color=MID)
-    grid_x, grid_y, grid_w, grid_h = 1.65, 1.95, 10.45, 4.6
+    # v3.5: thicker borders (3pt), larger fonts (title 20pt, body 16pt, examples
+    # 13pt), denser content per cell, bigger icons (100px), gold accent strip
+    # on gold-marked cells (top-left, bottom-right) to flag focus quadrants.
+    grid_x, grid_y, grid_w, grid_h = 1.50, 1.70, 10.60, 5.25
     cell_w = grid_w / 2
     cell_h = grid_h / 2
+    # 4 cells: each (title, sub, examples, products, icon, color, col, row, is_focus).
     cells = [
-        ("AI-диагностика", "КТ · МРТ · рентген · дермато-скан",
-         "mosmed.ai · IDx-DR · Aidoc",
-         "lucide-scan-blue.png", MID, 0, 0),
-        ("Популяционная визуализация", "Скрининговые программы",
-         "MASAI (Швеция) · BreastScreen",
-         "lucide-heart-pulse-blue.png", LIGHT, 1, 0),
-        ("Персонализированная медицина", "Геномный AI · клинические решения",
-         "Tempus · Foundation Med · Webiomed",
-         "lucide-pill-blue.png", LIGHT, 0, 1),
-        ("Разработка лекарств + эпид.", "Генеративная химия · структуры белков",
-         "AlphaFold · Insilico · Generate Bio",
-         "lucide-flask-conical-blue.png", MID, 1, 1),
+        ("AI-диагностика",
+         "КТ · МРТ · рентген · дермато-скан",
+         "Типичные продукты:",
+         "mosmed.ai · IDx-DR · Aidoc · Watson Imaging",
+         "lucide-scan-blue.png", MID, 0, 0, True),
+        ("Популяционная визуализация",
+         "Скрининговые программы для миллионов",
+         "Типичные программы:",
+         "MASAI (Швеция, n>100k) · BreastScreen · NHS",
+         "lucide-heart-pulse-blue.png", LIGHT, 1, 0, False),
+        ("Персонализированная медицина",
+         "Геномный AI · клинические решения",
+         "Типичные платформы:",
+         "Tempus · Foundation Med · Webiomed (РФ)",
+         "lucide-pill-blue.png", LIGHT, 0, 1, False),
+        ("Разработка лекарств + эпид.",
+         "Генеративная химия · структуры белков",
+         "Типичные игроки:",
+         "AlphaFold · Insilico · Recursion · Сбер AI Lab",
+         "lucide-flask-conical-blue.png", MID, 1, 1, True),
     ]
-    for title, sub, exs, icon, color, col, row in cells:
+    for title, sub, exs_label, exs, icon, color, col, row, is_focus in cells:
         x = grid_x + col * cell_w
         y = grid_y + row * cell_h
-        ocean_box(s, x + 0.1, y + 0.1, cell_w - 0.2, cell_h - 0.2)
-        add_image(s, ASSETS / "icons" / icon, x=x + 0.3, y=y + 0.30, w=0.7, h=0.7)
-        text_box(s, x=x + 1.15, y=y + 0.25, w=cell_w - 1.35, h=0.75,
-                 text=title, size=16, bold=True, color=color, line_spacing=1.15)
-        text_box(s, x=x + 0.3, y=y + 1.25, w=cell_w - 0.5, h=0.55,
-                 text=sub, size=13, color=DEEP, italic=True)
-        text_box(s, x=x + 0.3, y=y + 1.80, w=cell_w - 0.5, h=0.50,
-                 text=exs, size=12, color=SLATE)
-    # Gold dots — AI-диагностика (top-left) и Разработка лекарств (bottom-right).
-    filled_rect(s, grid_x + 0.15, grid_y + 0.15, 0.18, 0.18, GOLD, radius=True, radius_adj=0.5)
-    filled_rect(s, grid_x + cell_w + 0.15, grid_y + cell_h + 0.15, 0.18, 0.18, GOLD, radius=True, radius_adj=0.5)
-    text_box(s, x=grid_x, y=grid_y + grid_h + 0.1, w=grid_w, h=0.35,
+        # Thicker stroke (3pt vs 1.5pt), more contrast.
+        stroke = GOLD if is_focus else LIGHT
+        stroke_w = 3.0 if is_focus else 2.0
+        fill = GOLD_TINT if is_focus else SURFACE
+        ocean_box(s, x + 0.1, y + 0.1, cell_w - 0.2, cell_h - 0.2,
+                  fill=fill, stroke=stroke, stroke_pt=stroke_w)
+        # Top accent strip — gold for focus cells, color band for normal.
+        strip_color = GOLD if is_focus else color
+        filled_rect(s, x + 0.1, y + 0.1, cell_w - 0.2, 0.10, strip_color)
+        # Compact: icon top-left + title middle-right (1 row), sub, label, exs.
+        add_image(s, ASSETS / "icons" / icon, x=x + 0.30, y=y + 0.32, w=0.95, h=0.95)
+        text_box(s, x=x + 1.40, y=y + 0.32, w=cell_w - 1.60, h=0.95,
+                 text=title, size=19, bold=True, color=DEEP, line_spacing=1.15,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=x + 0.30, y=y + 1.35, w=cell_w - 0.50, h=0.45,
+                 text=sub, size=13, color=color, italic=True, line_spacing=1.25)
+        text_box(s, x=x + 0.30, y=y + 1.85, w=cell_w - 0.50, h=0.30,
+                 text=exs_label, size=10, bold=True, color=SLATE, line_spacing=1.20)
+        text_box(s, x=x + 0.30, y=y + 2.15, w=cell_w - 0.50, h=0.40,
+                 text=exs, size=12, color=DEEP, line_spacing=1.30)
+    # Gold dots — moved to corner of cells (visual anchor confirming focus).
+    text_box(s, x=grid_x, y=grid_y + grid_h + 0.08, w=grid_w, h=0.35,
              text="◄ один пациент        ОХВАТ        популяция / фарма ►",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, italic=True)
-    text_box(s, x=0.40, y=grid_y, w=1.15, h=grid_h,
+    text_box(s, x=0.30, y=grid_y, w=1.30, h=grid_h,
              text="МОДАЛЬНОСТЬ\n\n▲ изображения /\n   сигналы\n\n\n▼ текст /\n   молекулы",
-             size=10, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
-    text_box(s, x=0.55, y=7.10, w=12.3, h=0.35,
-             text="Фокус лекции — квадранты с золотыми точками: AI-диагностика + разработка лекарств.",
+             size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.20)
+    text_box(s, x=0.55, y=7.15, w=12.3, h=0.30,
+             text="Фокус лекции — квадранты с золотой подсветкой: AI-диагностика + разработка лекарств.",
              size=12, italic=True, color=GOLD, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s06"))
 
@@ -628,6 +735,8 @@ def build_s08(p):
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
              text="Высокие ставки + строгое регулирование + прозрачные операционные метрики.",
              size=15, italic=True, color=MID)
+    # v3.5: добавлено photographic anchor «radiologist with AI screen» —
+    # реальная клиническая сцена справа (slim column), 3 cards смещены влево.
     cards = [
         ("Высокие ставки",
          "Ошибка модели → ошибка диагноза → вред пациенту.",
@@ -642,23 +751,34 @@ def build_s08(p):
          "Метрики измеримы — не маркетинговая оценка.",
          "lucide-coins-blue.png", MID),
     ]
-    card_y = 2.0
-    card_h = 4.4
-    card_w = 4.05
+    # 3 cards take ~8.4" + photo 3.6" on right.
+    card_y = 1.85
+    card_h = 4.55
+    card_w = 2.70
     gap = 0.15
+    cards_total_w = card_w * 3 + gap * 2  # 8.40"
     for i, (title, line1, line2, icon, color) in enumerate(cards):
         x = 0.55 + i * (card_w + gap)
         ocean_box(s, x, card_y, card_w, card_h)
-        add_image(s, ASSETS / "icons" / icon, x=x + 0.30, y=card_y + 0.35, w=1.0, h=1.0)
-        text_box(s, x=x + 0.30, y=card_y + 1.50, w=card_w - 0.6, h=0.75,
-                 text=title, size=20, bold=True, color=color, line_spacing=1.20)
-        text_box(s, x=x + 0.30, y=card_y + 2.35, w=card_w - 0.6, h=1.1,
-                 text=line1, size=14, color=DEEP, line_spacing=1.30)
-        text_box(s, x=x + 0.30, y=card_y + 3.40, w=card_w - 0.6, h=0.95,
-                 text=line2, size=12, italic=True, color=SLATE, line_spacing=1.30)
-    gold_callout(s, 0.55, 6.55, 12.3, 0.55,
+        add_image(s, ASSETS / "icons" / icon, x=x + 0.30, y=card_y + 0.35, w=0.95, h=0.95)
+        text_box(s, x=x + 0.30, y=card_y + 1.45, w=card_w - 0.6, h=0.80,
+                 text=title, size=16, bold=True, color=color, line_spacing=1.20)
+        text_box(s, x=x + 0.30, y=card_y + 2.35, w=card_w - 0.6, h=1.10,
+                 text=line1, size=11, color=DEEP, line_spacing=1.30)
+        text_box(s, x=x + 0.30, y=card_y + 3.45, w=card_w - 0.6, h=1.0,
+                 text=line2, size=10, italic=True, color=SLATE, line_spacing=1.30)
+    # Photo anchor on right.
+    photo_x = 0.55 + cards_total_w + 0.20
+    photo_w = 13.333 - 0.55 - photo_x  # 3.60"
+    ocean_box(s, photo_x, card_y, photo_w, card_h)
+    add_image(s, ASSETS / "photos/s08-radiologist-screen.jpg",
+              x=photo_x + 0.15, y=card_y + 0.25, w=photo_w - 0.30, h=card_h - 0.85)
+    text_box(s, x=photo_x + 0.15, y=card_y + card_h - 0.50, w=photo_w - 0.30, h=0.35,
+             text="Radiologist + AI workstation",
+             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    gold_callout(s, 0.55, 6.60, 12.3, 0.50,
                  "→ Регуляторные навыки переносятся: PCI DSS · ФЗ-152 · ISO 26262 · DO-178C.",
-                 size=14)
+                 size=13)
     speaker_notes(s, load_notes("s08"))
 
 
@@ -994,19 +1114,31 @@ def build_s13(p):
 
 def build_s14(p):
     s = blank(p)
-    text_box(s, x=0.55, y=0.5, w=12.3, h=0.5,
+    # v3.5: added photographic anchor «pharma lab» в правой части — мост к
+    # разработке лекарств. Уменьшен central qbox, anchors переехали ниже.
+    text_box(s, x=0.55, y=0.4, w=12.3, h=0.5,
              text="МЫ ПРОШЛИ ПОЛОВИНУ",
              size=14, bold=True, color=TEAL, align=PP_ALIGN.CENTER)
-    text_box(s, x=0.55, y=0.95, w=12.3, h=0.60,
+    text_box(s, x=0.55, y=0.85, w=12.3, h=0.60,
              text="AI-диагностика — обещание сбылось (mosmed.ai: 14 млн+ исследований, 74 региона).",
              size=18, italic=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.30)
-    qbox_x, qbox_y, qbox_w, qbox_h = 1.5, 1.95, 10.3, 2.5
+    # Left: pharma lab photo (visual hook к drug discovery).
+    photo_x, photo_y, photo_w, photo_h = 0.55, 1.70, 4.6, 2.85
+    ocean_box(s, photo_x, photo_y, photo_w, photo_h)
+    add_image(s, ASSETS / "photos/s14-pharma-lab.jpg",
+              x=photo_x + 0.15, y=photo_y + 0.20, w=photo_w - 0.30, h=photo_h - 0.65)
+    text_box(s, x=photo_x + 0.15, y=photo_y + photo_h - 0.42, w=photo_w - 0.30, h=0.32,
+             text="Фарма-лаборатория — где AI-дизайн встречается с биологией",
+             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # Right: question box.
+    qbox_x, qbox_y, qbox_w, qbox_h = 5.40, 1.70, 7.40, 2.85
     ocean_box(s, qbox_x, qbox_y, qbox_w, qbox_h)
-    text_runs(s, qbox_x + 0.4, qbox_y + 0.4, qbox_w - 0.8, qbox_h - 0.8, [
-        {"text": "Разработка лекарств — ", "size": 26, "color": DEEP, "bold": True},
-        {"text": "обещали в 10 раз быстрее.", "size": 26, "color": GOLD, "bold": True},
+    text_runs(s, qbox_x + 0.35, qbox_y + 0.30, qbox_w - 0.70, qbox_h - 0.60, [
+        {"text": "Разработка лекарств —\n", "size": 23, "color": DEEP, "bold": True},
+        {"text": "обещали в 10 раз быстрее.", "size": 23, "color": GOLD, "bold": True},
+        {"newpara": True, "text": " ", "size": 8, "color": WHITE},
         {"newpara": True, "text": "Что реально к 2026 году?",
-         "size": 26, "color": DEEP, "bold": True, "align": PP_ALIGN.CENTER},
+         "size": 23, "color": DEEP, "bold": True, "align": PP_ALIGN.CENTER},
     ], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.30)
     a_y = 4.8
     a_h = 1.7
@@ -1144,20 +1276,12 @@ def build_s16(p):
                  text=foot, size=11, italic=True, color=SLATE, line_spacing=1.25)
     img_x, img_y, img_w, img_h = 8.30, 1.85, 4.55, 4.95
     ocean_box(s, img_x, img_y, img_w, img_h)
-    cx = img_x + img_w / 2
-    cy = img_y + img_h / 2 - 0.2
-    filled_rect(s, img_x + 0.3, img_y + 0.5, img_w - 0.6, img_h - 1.2,
-                RGBColor(0xE6, 0xEC, 0xF2), radius=True, radius_adj=0.05)
-    colors = [LIGHT, MID, DEEP, TEAL, GOLD]
-    for j, col in enumerate(colors):
-        offs_x = -0.7 + j * 0.35
-        offs_y = -0.4 + (j % 2) * 0.5
-        for k in range(5):
-            x = cx + offs_x + k * 0.18
-            y = cy + offs_y + (k % 2) * 0.12
-            filled_rect(s, x, y, 0.28, 0.28, col, radius=True, radius_adj=0.5)
-    text_box(s, x=img_x + 0.2, y=img_y + img_h - 0.55, w=img_w - 0.4, h=0.40,
-             text="3D-структура белка (схематично)",
+    # v3.5: replaced abstract «circles» mock with real molecular biology photo —
+    # symbolizes proteins/biology layer.
+    add_image(s, ASSETS / "photos/s16-molecular.jpg",
+              x=img_x + 0.20, y=img_y + 0.25, w=img_w - 0.40, h=img_h - 0.95)
+    text_box(s, x=img_x + 0.20, y=img_y + img_h - 0.55, w=img_w - 0.40, h=0.40,
+             text="Молекулярная биология — поле, где работают AlphaFold/AlphaProteo",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     filled_rect(s, 10.0, 1.20, 2.9, 0.45, GOLD, radius=True, radius_adj=0.30)
     text_box(s, x=10.0, y=1.20, w=2.9, h=0.45,
@@ -1443,10 +1567,15 @@ def build_s19(p):
              size=11, italic=True, color=DEEP, font=FONT_MONO, line_spacing=1.40)
     ctrl_x, ctrl_y, ctrl_w, ctrl_h = card_x + card_w + 0.30, 1.85, 4.0, 5.0
     ocean_box(s, ctrl_x, ctrl_y, ctrl_w, ctrl_h)
-    text_box(s, x=ctrl_x + 0.30, y=ctrl_y + 0.30, w=ctrl_w - 0.60, h=0.40,
+    # v3.5: top strip = student-laptop photo (visual hook к web-chat session).
+    photo_h_strip = 1.20
+    add_image(s, ASSETS / "photos/s19-student-laptop.jpg",
+              x=ctrl_x + 0.20, y=ctrl_y + 0.20, w=ctrl_w - 0.40, h=photo_h_strip)
+    text_box(s, x=ctrl_x + 0.30, y=ctrl_y + 0.20 + photo_h_strip + 0.10, w=ctrl_w - 0.60, h=0.40,
              text="Эталонный ответ (готовится накануне)",
              size=13, bold=True, color=DEEP, line_spacing=1.15)
-    filled_rect(s, ctrl_x + 0.30, ctrl_y + 0.85, ctrl_w - 0.60, ctrl_h - 1.6,
+    filled_rect(s, ctrl_x + 0.30, ctrl_y + 0.20 + photo_h_strip + 0.60, ctrl_w - 0.60,
+                ctrl_h - 0.20 - photo_h_strip - 0.60 - 0.50,
                 WHITE, stroke=LIGHT, stroke_pt=0.6,
                 radius=True, radius_adj=0.03)
     lines = [
@@ -1461,12 +1590,13 @@ def build_s19(p):
         "Маммография — пример:",
         "MASAI sens 80.5%, spec 98.5%",
     ]
+    lines_start_y = ctrl_y + 0.20 + photo_h_strip + 0.85
     for j, ln in enumerate(lines):
-        ly = ctrl_y + 1.05 + j * 0.27
+        ly = lines_start_y + j * 0.23
         if ly > ctrl_y + ctrl_h - 0.55:
             break
-        text_box(s, x=ctrl_x + 0.45, y=ly, w=ctrl_w - 0.90, h=0.27,
-                 text=ln, size=11,
+        text_box(s, x=ctrl_x + 0.45, y=ly, w=ctrl_w - 0.90, h=0.23,
+                 text=ln, size=10,
                  color=DEEP if ln and not ln.startswith("MASAI") else MID,
                  bold=ln.startswith("MASAI"),
                  line_spacing=1.20)
@@ -1657,12 +1787,15 @@ def build_s23(p):
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
              text="Change Healthcare (февр. 2024): 190 млн человек, $2.457 млрд на восстановление — медданные мишень №1.",
              size=13, italic=True, color=MID)
-    nh_x, nh_y, nh_w, nh_h = 0.55, 1.85, 12.3, 0.8
+    # v3.5: news headline (full width, taller); cybersecurity photo placed
+    # within the connector/«Связь с AI» band as a small inline anchor (top-right)
+    # rather than next to headline. Avoids aspect-ratio cropping issues.
+    nh_x, nh_y, nh_w, nh_h = 0.55, 1.85, 12.3, 0.85
     ocean_box(s, nh_x, nh_y, nh_w, nh_h)
-    text_box(s, x=nh_x + 0.30, y=nh_y + 0.10, w=nh_w - 0.6, h=0.30,
+    text_box(s, x=nh_x + 0.30, y=nh_y + 0.10, w=nh_w - 0.6, h=0.28,
              text="BleepingComputer · 21.02.2024",
-             size=10, bold=True, color=MID)
-    text_box(s, x=nh_x + 0.30, y=nh_y + 0.35, w=nh_w - 0.6, h=0.40,
+             size=11, bold=True, color=MID)
+    text_box(s, x=nh_x + 0.30, y=nh_y + 0.35, w=nh_w - 0.6, h=0.50,
              text="UnitedHealth: 190 млн американцев пострадали от утечки данных Change Healthcare 2024",
              size=15, bold=True, color=DEEP, line_spacing=1.20)
     grid_y = 2.85
@@ -1693,10 +1826,15 @@ def build_s23(p):
     bridge_y = 4.75
     bridge_h = 1.4
     ocean_box(s, 0.55, bridge_y, 12.3, bridge_h)
-    text_box(s, x=0.85, y=bridge_y + 0.20, w=11.7, h=0.40,
+    # Inline cybersecurity photo (left thumbnail).
+    cyber_thumb_w, cyber_thumb_h = 1.6, 1.0
+    add_image(s, ASSETS / "photos/s23-cybersecurity.jpg",
+              x=0.75, y=bridge_y + 0.20, w=cyber_thumb_w, h=cyber_thumb_h)
+    bridge_text_x = 0.75 + cyber_thumb_w + 0.20  # ~ 2.55
+    text_box(s, x=bridge_text_x, y=bridge_y + 0.20, w=12.3 - (bridge_text_x - 0.55) - 0.30, h=0.40,
              text="Связь с AI — обучающие датасеты медицинского AI наследуют те же риски",
              size=14, bold=True, color=DEEP)
-    text_box(s, x=0.85, y=bridge_y + 0.65, w=11.7, h=0.65,
+    text_box(s, x=bridge_text_x, y=bridge_y + 0.65, w=12.3 - (bridge_text_x - 0.55) - 0.30, h=0.65,
              text="mosmed.ai = 18 млн+ изображений → расширяет цели для ransomware. Анонимизация ≠ необратимая (Sweeney 2002 — re-identification губернатора Массачусетса).",
              size=12, color=DEEP, line_spacing=1.40)
     chip_y = 6.30
@@ -1720,10 +1858,14 @@ def build_s24(p):
     text_box(s, x=0.55, y=1.10, w=12.3, h=0.40,
              text="4 актёра с разной комбинацией: технический контроль × юридическая ответственность.",
              size=13, italic=True, color=MID)
-    grid_x, grid_y, grid_w, grid_h = 1.40, 1.85, 10.7, 3.7
+    # v3.5: thicker borders (3pt), larger fonts (title 19pt, body 14pt,
+    # examples 11pt), denser content per cell (added concrete jurisdictional
+    # examples for Регулятор; AI vendor — concrete companies), bigger icons
+    # (95px), gold accent strip on Врач cell + top accent strips on all cells.
+    grid_x, grid_y, grid_w, grid_h = 1.30, 1.60, 10.8, 4.70
     cell_w = grid_w / 2
     cell_h = grid_h / 2
-    # Cells per user brief (v3):
+    # Cells per user brief:
     #   Top-left  (col=0, row=0): Регулятор   (высокая ответственность + низкий контроль)
     #   Top-right (col=1, row=0): Врач        (высокая ответственность + высокий контроль) — GOLD
     #   Bottom-left  (col=0, row=1): Оператор (средняя ответственность + средний контроль)
@@ -1731,19 +1873,19 @@ def build_s24(p):
     cells = [
         ("Регулятор",
          "Одобряет · проверяет · отзывает разрешения",
-         "FDA · EU NB · Росздравнадзор · надзорная роль",
+         "FDA (US) · Notified Bodies (EU) · Росздравнадзор (РФ)\nнадзорная роль",
          "lucide-gavel-blue.png", LIGHT, 0, 0, False),
         ("Врач",
          "Конечный диагностический ответ",
-         "AI — подсказка, не решение · высокая ответственность",
+         "AI = подсказка, не решение\nПриказ 203н · EU AI Act Art. 14",
          "lucide-stethoscope-blue.png", GOLD, 1, 0, True),
         ("Оператор",
          "Выбор вендора · обучение · развёртывание",
-         "Больница · клиника · ДЗМ · средний контроль",
+         "Больница · клиника · ДЗМ Москвы\nсредний технический контроль",
          "lucide-building-2-blue.png", MID, 0, 1, False),
         ("Вендор AI",
          "Дизайн модели · заявки на безопасность",
-         "Обновления PCCP · пострыночный мониторинг · высокий контроль",
+         "Insilico · Aidoc · Webiomed · Care Mentor AI\nPCCP-обновления · пост-маркет мониторинг",
          "lucide-code-blue.png", MID, 1, 1, False),
     ]
     for title, sub, exs, icon, color, col, row, is_gold in cells:
@@ -1751,36 +1893,40 @@ def build_s24(p):
         y = grid_y + row * cell_h
         fill = GOLD_TINT if is_gold else SURFACE
         stroke = GOLD if is_gold else LIGHT
-        sw = 2.5 if is_gold else 1.5
+        sw = 3.0 if is_gold else 2.0
         ocean_box(s, x + 0.1, y + 0.1, cell_w - 0.2, cell_h - 0.2,
                   fill=fill, stroke=stroke, stroke_pt=sw)
-        add_image(s, ASSETS / "icons" / icon, x=x + 0.30, y=y + 0.30, w=0.7, h=0.7)
-        text_box(s, x=x + 1.15, y=y + 0.30, w=cell_w - 1.35, h=0.50,
-                 text=title, size=17, bold=True,
-                 color=GOLD if is_gold else color, line_spacing=1.15)
-        text_box(s, x=x + 0.30, y=y + 0.95, w=cell_w - 0.5, h=0.40,
-                 text=sub, size=12, color=DEEP, line_spacing=1.25)
-        text_box(s, x=x + 0.30, y=y + 1.35, w=cell_w - 0.5, h=0.55,
-                 text=exs, size=9, italic=True, color=SLATE, line_spacing=1.20)
-    # Axis label inside grid - horizontal at bottom.
-    text_box(s, x=grid_x, y=grid_y + grid_h + 0.1, w=grid_w, h=0.30,
+        # Top accent strip (5pt) — gold for is_gold, color band otherwise.
+        strip_color = GOLD if is_gold else color
+        filled_rect(s, x + 0.1, y + 0.1, cell_w - 0.2, 0.08, strip_color)
+        # Compact layout: icon left + title right (1 row), sub below, exs at bottom.
+        add_image(s, ASSETS / "icons" / icon, x=x + 0.28, y=y + 0.30, w=0.80, h=0.80)
+        text_box(s, x=x + 1.20, y=y + 0.30, w=cell_w - 1.40, h=0.85,
+                 text=title, size=19, bold=True,
+                 color=GOLD if is_gold else color, line_spacing=1.15,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=x + 0.30, y=y + 1.20, w=cell_w - 0.50, h=0.50,
+                 text=sub, size=13, bold=True, color=DEEP, line_spacing=1.25)
+        text_box(s, x=x + 0.30, y=y + 1.70, w=cell_w - 0.50, h=0.60,
+                 text=exs, size=10, italic=True, color=SLATE, line_spacing=1.25)
+    # Axis labels — slightly bigger.
+    text_box(s, x=grid_x, y=grid_y + grid_h + 0.08, w=grid_w, h=0.30,
              text="◄ низкий контроль · ТЕХНИЧЕСКИЙ КОНТРОЛЬ · высокий контроль ►",
-             size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, italic=True)
-    # Axis label inside grid - vertical on left.
-    text_box(s, x=0.40, y=grid_y, w=0.9, h=grid_h,
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, italic=True)
+    text_box(s, x=0.30, y=grid_y, w=1.00, h=grid_h,
              text="ОТВЕТ-\nСТВЕН-\nНОСТЬ\n\n▲ высокая\n\n\n▼ низкая",
-             size=10, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
-    cl_y = 6.0
-    cl_h = 1.0
-    ocean_box(s, 0.55, cl_y, 12.3, cl_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    text_runs(s, 0.85, cl_y + 0.20, 11.7, cl_h - 0.4, [
+    cl_y = 6.65
+    cl_h = 0.55
+    ocean_box(s, 0.55, cl_y, 12.3, cl_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.5)
+    text_runs(s, 0.85, cl_y + 0.05, 11.7, cl_h - 0.10, [
         {"text": "Врач ставит диагноз. AI подсказывает. Конечная клиническая ответственность — ",
-         "size": 17, "color": DEEP, "bold": True},
-        {"text": "неделима.", "size": 17, "color": GOLD, "bold": True},
+         "size": 14, "color": DEEP, "bold": True},
+        {"text": "неделима.", "size": 14, "color": GOLD, "bold": True},
     ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.20)
-    text_box(s, x=0.55, y=7.10, w=12.3, h=0.30,
-             text="Price 2019 Stanford TLR · Gerke et al. 2020 (Elsevier) · EU AI Act 2024/1689.",
+    text_box(s, x=0.55, y=7.25, w=12.3, h=0.20,
+             text="Price 2019 Stanford TLR · Gerke et al. 2020 (Elsevier) · EU AI Act 2024/1689 Art. 14.",
              size=10, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s24"))
 
@@ -1887,20 +2033,22 @@ def build_s28(p):
     card_w = 6.0
     gap = 0.30
     ocean_box(s, 0.55, card_y, card_w, card_h)
-    add_image(s, ASSETS / "icons/lucide-tractor-blue.png",
-              x=0.85, y=card_y + 0.35, w=1.0, h=1.0)
-    text_box(s, x=2.0, y=card_y + 0.40, w=card_w - 2.2, h=0.60,
+    # v3.5: добавлено фото agriculture/комбайны (Lec 6 anchor).
+    photo_h = 1.55
+    add_image(s, ASSETS / "photos/s28-agriculture.jpg",
+              x=0.85, y=card_y + 0.25, w=card_w - 0.6, h=photo_h)
+    text_box(s, x=0.85, y=card_y + 0.25 + photo_h, w=card_w - 0.6, h=0.35,
              text="Лекция 6 — Производство и сельское хозяйство",
-             size=16, bold=True, color=DEEP, line_spacing=1.20)
-    text_box(s, x=0.85, y=card_y + 1.55, w=card_w - 0.5, h=0.55,
+             size=15, bold=True, color=DEEP, line_spacing=1.20)
+    text_box(s, x=0.85, y=card_y + 0.25 + photo_h + 0.35, w=card_w - 0.6, h=0.40,
              text="Cognitive Agro Pilot — 1 500+ машин",
-             size=14, bold=True, color=DEEP, line_spacing=1.20)
-    text_runs(s, 0.85, card_y + 2.05, card_w - 0.5, 0.50, [
-        {"text": "+30–40%", "size": 24, "bold": True, "color": GOLD},
+             size=13, bold=True, color=DEEP, line_spacing=1.15)
+    text_runs(s, 0.85, card_y + 0.25 + photo_h + 0.80, card_w - 0.5, 0.45, [
+        {"text": "+30–40%", "size": 22, "bold": True, "color": GOLD},
         {"text": "  эффективности (российский кейс)",
-         "size": 13, "color": DEEP, "italic": True},
+         "size": 12, "color": DEEP, "italic": True},
     ], line_spacing=1.10, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=0.85, y=card_y + 2.60, w=card_w - 0.5, h=0.35,
+    text_box(s, x=0.85, y=card_y + 0.25 + photo_h + 1.30, w=card_w - 0.5, h=0.35,
              text="Предиктивное обслуживание · контроль качества · физический AI",
              size=11, italic=True, color=LIGHT)
     lc9_x = 0.55 + card_w + gap
@@ -1949,17 +2097,100 @@ def build_s29(p):
 
 
 # ============================================================
+# Section dividers (6 new slides — Лекция 1 pattern)
+# ============================================================
+
+def build_s05b(p):
+    """Section 1 divider — переход в раздел «Карта AI в медицине»."""
+    build_section_divider(
+        p, here_idx=1,
+        title="Карта AI\nв медицине",
+        frame_phrase="4 типа применений · масштаб FDA · почему медицина — инструктивный кейс",
+        notes_slide_id="s05b",
+    )
+
+
+def build_s08a(p):
+    """Section 2 divider — переход в раздел «AI-диагностика»."""
+    build_section_divider(
+        p, here_idx=2,
+        title="AI-диагностика\nкак зеркало",
+        frame_phrase="computer vision · sens/spec/PPV · MASAI vs Goh · mosmed.ai · bias",
+        notes_slide_id="s08a",
+    )
+
+
+def build_s13a(p):
+    """Section 3 divider — переход в раздел «Разработка лекарств»."""
+    build_section_divider(
+        p, here_idx=3,
+        title="Разработка лекарств:\nобещания vs реальность",
+        frame_phrase="AlphaFold · Rentosertib peer-reviewed · DSP-1181 reality check · регулирование",
+        notes_slide_id="s13a",
+    )
+
+
+def build_s18a(p):
+    """Section 4 divider — переход в практический раздел."""
+    build_section_divider(
+        p, here_idx=4,
+        title="Микро-упражнение\nс AI",
+        frame_phrase="10 минут · ChatGPT/Claude/YandexGPT · применяем LO4 на практике",
+        notes_slide_id="s18a",
+    )
+
+
+def build_s19a(p):
+    """Section 5 divider — переход в раздел «Этика и ответственность»."""
+    build_section_divider(
+        p, here_idx=5,
+        title="Этика\nи ответственность",
+        frame_phrase="Obermeyer bias · NEDA Tessa · Change Healthcare · 4-actor framework",
+        notes_slide_id="s19a",
+    )
+
+
+def build_s24a(p):
+    """Section 6 divider — переход в заключение."""
+    build_section_divider(
+        p, here_idx=6,
+        title="Заключение",
+        frame_phrase="3 наблюдения · тизер Лекции 6 · Q&A",
+        notes_slide_id="s24a",
+    )
+
+
+# ============================================================
 # Main
 # ============================================================
 def main():
     p = setup_pres()
     builders = [
+        # Open + central question
         build_s01, build_s02, build_s03, build_s04, build_s05,
+        # ── divider: Section 1 ──
+        build_s05b,
+        # Section 1: Карта AI в медицине
         build_s06, build_s07, build_s08,
+        # ── divider: Section 2 ──
+        build_s08a,
+        # Section 2: AI-диагностика как зеркало
         build_s09, build_s10, build_s11, build_s12, build_s13,
+        # ── divider: Section 3 ──
+        build_s13a,
+        # Section 3: Разработка лекарств
         build_s14, build_s15, build_s16, build_s17a, build_s17b, build_s18,
+        # ── divider: Section 4 ──
+        build_s18a,
+        # Section 4: Микро-упражнение
         build_s19,
+        # ── divider: Section 5 ──
+        build_s19a,
+        # Section 5: Этика и ответственность
         build_s20, build_s21, build_s22, build_s23, build_s24,
+        # ── divider: Section 6 ──
+        build_s24a,
+        # Section 6: Заключение
         build_s26, build_s27, build_s28, build_s29,
     ]
     for fn in builders:

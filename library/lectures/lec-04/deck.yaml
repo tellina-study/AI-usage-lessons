@@ -92,6 +92,20 @@ slides:
       pattern: cover_distinct
       primary: "Центральный вопрос крупно в Ocean rounded box + 4-point roadmap (Карта → Диагностика → Drug discovery → Этика)"
 
+  # ─── Section divider (1) ───
+  - id: s05b
+    file: slides/s05b-section1-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 1 — Карта AI в медицине"
+    learning_goal: "Visual divider — переход в первый раздел"
+    learning_outcomes: [LO1]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «1» + title + 1-фраза-фрейм + 7-card progress bar"
+
   # ─── Раздел 1. Карта AI в медицине (7 мин) ───
   - id: s06
     file: slides/s06-four-type-matrix.md
@@ -131,6 +145,20 @@ slides:
     visual:
       pattern: matrix
       primary: "3-column icon-cards (alert-triangle / shield / coins) — 3 причины + photographic anchor «medical AI workflow»"
+
+  # ─── Section divider (2) ───
+  - id: s08a
+    file: slides/s08a-section2-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 2 — AI-диагностика как зеркало"
+    learning_goal: "Visual divider — переход в раздел диагностики"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «2» + title + 1-фраза-фрейм + 7-card progress bar"
 
   # ─── Раздел 2. AI-диагностика как зеркало (14 мин) ───
   - id: s09
@@ -197,6 +225,20 @@ slides:
     visual:
       pattern: matrix
       primary: "2 bias case-cards в Ocean rounded box: dermatology skin tone (Daneshjou 2022) + pulse oximeter racial bias (Sjoding 2020 + FDA 2021)"
+
+  # ─── Section divider (3) ───
+  - id: s13a
+    file: slides/s13a-section3-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 3 — Разработка лекарств: обещания vs реальность"
+    learning_goal: "Visual divider — переход в раздел drug discovery"
+    learning_outcomes: [LO1, LO2, LO3]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «3» + title + 1-фраза-фрейм + 7-card progress bar"
 
   # ─── Раздел 3. Drug discovery: обещания и реальность (14 мин) ───
   - id: s14
@@ -277,6 +319,20 @@ slides:
       pattern: matrix
       primary: "3-column condensed table (US/EU/RU) с ключевыми датами + PCCP pre/post contrast explicit"
 
+  # ─── Section divider (4) ───
+  - id: s18a
+    file: slides/s18a-section4-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 4 — Микро-упражнение с AI"
+    learning_goal: "Visual divider — переход в практический раздел"
+    learning_outcomes: [LO4]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «4» + title + 1-фраза-фрейм + 7-card progress bar"
+
   # ─── Раздел 4. Микро-упражнение AI (10 мин) ───
   - id: s19
     file: slides/s19-micro-exercise-llm-explainer.md
@@ -291,6 +347,20 @@ slides:
       pattern: matrix
       primary: "Task card layout с 3 шагами (3+3+4 мин) + готовый промпт visible + control screenshot baseline AI response"
     interaction: micro_exercise
+
+  # ─── Section divider (5) ───
+  - id: s19a
+    file: slides/s19a-section5-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 5 — Этика и ответственность"
+    learning_goal: "Visual divider — переход в раздел этики"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «5» + title + 1-фраза-фрейм + 7-card progress bar"
 
   # ─── Раздел 5. Границы, этика, ответственность (12 мин) ───
   - id: s20
@@ -357,6 +427,20 @@ slides:
     visual:
       pattern: quadrant
       primary: "2×2 quadrant (technical control × legal liability) с 4 actor cards (Врач / Operator / Vendor / Regulator), каждая = 1-word role + 1-line responsibility; central line ниже"
+
+  # ─── Section divider (6) ───
+  - id: s24a
+    file: slides/s24a-section6-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 6 — Заключение"
+    learning_goal: "Visual divider — переход в заключение"
+    learning_outcomes: [LO1, LO2, LO3, LO8]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «6» + title + 1-фраза-фрейм + 7-card progress bar"
 
   # ─── Раздел 6. Заключение (6 мин) ───
   - id: s26

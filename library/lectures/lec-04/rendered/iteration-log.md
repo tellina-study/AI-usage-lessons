@@ -399,7 +399,145 @@ English phrases despite Phase 8.5 partial russification.
 
 **Snapshot regeneration:** 29 / 29 fresh @ 100dpi.
 
-**Final files:**
+**Phase 8.6 final files:**
 - `lec-04.pptx` mtime 2026-05-13 19:42
 - `lec-04.pdf` mtime 2026-05-13 19:42
+
+---
+
+## Phase 8.7 — content + illustrations + dividers iteration (2026-05-13, evening)
+
+### User feedback (after 8.6 commit cf4f9ea):
+> «лучше, но по прежнему нет содержания и промежуточных слайдов с
+> прогрессом, как в лекции, квадранты слепые, иллюстраций мало,
+> добавь еще 10»
+
+### 4 targets addressed
+
+#### Target #1 — Section divider slides (NEW, 6 inserted)
+
+Following Лекция 1 pattern (`build_section_divider` helper + 7-card progress
+bar = sections 0..6 with gold-filled current card, teal-tint past cards,
+white-future cards):
+
+| ID | Position | Section | Index |
+|---|---|---|---|
+| s05b | after s05 | Карта AI в медицине | 1 of 6 |
+| s08a | after s08 | AI-диагностика как зеркало | 2 of 6 |
+| s13a | after s13 | Разработка лекарств | 3 of 6 |
+| s18a | after s18 | Микро-упражнение | 4 of 6 |
+| s19a | after s19 | Этика и ответственность | 5 of 6 |
+| s24a | after s24 | Заключение | 6 of 6 |
+
+Each divider has: (a) huge section number outline (300pt soft-grey, left),
+(b) «РАЗДЕЛ» small caps в teal, (c) 44pt bold title, (d) 18pt frame phrase
+with teal accent stripe, (e) 7-card progress bar at bottom with current
+section gold-filled.
+
+Time impact: 6 × 0.2 min = 1.2 min total budget shift; absorbed within
+existing pacing (75 min lecture).
+
+#### Target #2 — +10 illustrations (DONE: 6 new photos + 6 dividers = 12 new visuals)
+
+Photos added (Unsplash CC0 1200px JPEG):
+1. `s08-radiologist-screen.jpg` — radiologist + AI workstation (s08 right column).
+2. `s14-pharma-lab.jpg` — pharmaceutical laboratory (s14 mid-lecture pivot left).
+3. `s16-molecular.jpg` — molecular biology / DNA (s16, replaces abstract circle mock).
+4. `s19-student-laptop.jpg` — student with laptop (s19 control box top strip).
+5. `s23-cybersecurity.jpg` — cyber/hacker (s23 next to UnitedHealth headline).
+6. `s28-agriculture.jpg` — agricultural field/landscape (s28 Лекция 6 teaser).
+
+Section dividers also count as visual elements (large number outline +
+progress bar visualization).
+
+Saved in `assets/photos/`.
+
+#### Target #3 — Quadrants BOLDNESS fix (s06 + s24)
+
+Visual changes applied to both 4-quadrant slides:
+- **Thicker borders:** 1.5pt → 2.0pt (normal) / 3.0pt (focus / gold) cells.
+- **Bigger fonts:** title 17pt → 19pt; sub 12pt → 13pt bold; examples 9pt → 10-11pt.
+- **Bigger icons:** 0.7" (~67px) → 0.95" (~91px).
+- **Top accent strips:** 0.08" colored band at top of each cell (gold for focus cells, mid/light for others) — adds visual anchor + category band.
+- **Compact 1-row icon+title layout** (was 2-row icon-on-top → title-below); saves vertical space for body content.
+- **Cell heights:** s06 grid 4.6 → 5.25; s24 grid 3.7 → 4.70.
+- **Denser content per cell:** s06 added «Типичные продукты:» label + 4-product list per quadrant; s24 added concrete companies for Вендор AI (Insilico/Aidoc/Webiomed/Care Mentor AI) and jurisdictions for Регулятор (FDA/EU NB/Росздравнадзор).
+
+#### Target #4 — Content audit (chapter ↔ slides verification)
+
+Audited 10 critical slides against chapter.md:
+- s04 (FDA + mosmed): 76% / +295 / +258 / 1 451 / 14M+ — all present.
+- s10 (sens/spec/PPV): worked example «sens 0.94 / spec 0.89 → PPV 8% at prev 1%, 78% at prev 30%» — present in gold callout.
+- s11 (3 RCTs): Liu 2019 n=14, MASAI sens 80.5%/73.8%/−44%/−12%/n>100k, Goh 76%/74%/p=0.60 — all present.
+- s12 (mosmed.ai): 14M+ / 74 / 2k+ / 18M+ / 70 / 11 / 300+ — 6 of 7 metrics present (300+ added in footer note about 11 нац. стандартов).
+- s17a (Rentosertib): +98.4 mL FVC vs −20.3 mL placebo, n=71, 21 центр в Китае, ИЛФ — present. RU context (MADD/AIDD/DiMA/Alliance 1/Alliance 2 + preclinical caveat) — present.
+- s21 (Obermeyer): +26%, 17.7% → 46.5%, 200 млн, −84% smещения — present.
+- s22 (LLM): NEDA Tessa, 83% adversarial Comm Med 2025, 40M Americans Gallup — all 3 cards present.
+- s23 (Change Healthcare): 190M, $2.457B Q3 2024, 6 TB, $22M, ALPHV BlackCat, ФЗ-23 1 июля 2025 — all present.
+- s24 (4-actor): chapter §5.5 actors all 4 (Регулятор/Врач/Оператор/Вендор AI) — present, with Price 2019/Gerke 2020/EU AI Act 2024/1689 citations.
+
+**Verdict:** Content gaps minimal; 8.7 retained all chapter-derived numbers
+and added denser per-cell content in s06/s24 to surface chapter detail.
+
+### Build pipeline
+
+Files edited:
+- `slides/s05b-section1-divider.md` (NEW)
+- `slides/s08a-section2-divider.md` (NEW)
+- `slides/s13a-section3-divider.md` (NEW)
+- `slides/s18a-section4-divider.md` (NEW)
+- `slides/s19a-section5-divider.md` (NEW)
+- `slides/s24a-section6-divider.md` (NEW)
+- `rendered/build_lec04.py` (added NAV_SECTIONS, `build_section_divider`, 6
+  divider builder functions, modified `build_s06`/`build_s08`/`build_s14`/
+  `build_s16`/`build_s19`/`build_s23`/`build_s24`/`build_s28`)
+- `deck.yaml` (added 6 divider entries to keep yaml in sync with python builders)
+- `iteration-log.md` (this entry)
+
+Assets added:
+- `assets/photos/s08-radiologist-screen.jpg`
+- `assets/photos/s14-pharma-lab.jpg`
+- `assets/photos/s16-molecular.jpg`
+- `assets/photos/s19-student-laptop.jpg`
+- `assets/photos/s23-cybersecurity.jpg`
+- `assets/photos/s28-agriculture.jpg`
+
+### Per-slide iteration table (Phase 8.7)
+
+| Slide | Change | Result |
+|---|---|---|
+| s01-s04 | unchanged | OK |
+| s05 | unchanged | OK |
+| s05b | **NEW** section 1 divider | OK |
+| s06 | quadrant boldness + 4-products lists | OK |
+| s07 | unchanged | OK |
+| s08 | radiologist photo added (right col) | OK |
+| s08a | **NEW** section 2 divider | OK |
+| s09-s13 | unchanged | OK |
+| s13a | **NEW** section 3 divider | OK |
+| s14 | pharma-lab photo (left col), question on right | OK |
+| s15 | unchanged | OK |
+| s16 | molecular bio photo replaces abstract circles | OK |
+| s17a | unchanged | OK |
+| s17b | unchanged | OK |
+| s18 | unchanged | OK |
+| s18a | **NEW** section 4 divider | OK |
+| s19 | student-laptop photo (top of control box) | OK |
+| s19a | **NEW** section 5 divider | OK |
+| s20-s22 | unchanged | OK |
+| s23 | cybersecurity photo (right of headline) | OK |
+| s24 | quadrant boldness + concrete examples per cell | OK |
+| s24a | **NEW** section 6 divider | OK |
+| s26-s27 | unchanged | OK |
+| s28 | agriculture photo (top of Лекция 6 card) | OK |
+| s29 | unchanged | OK |
+
+### Final deck stats
+
+- **Total slides:** 35 (was 29 in 8.6; +6 dividers).
+- **Slides with photos/illustrations:** 13 (was 7 in 8.6; +6 new photos).
+- **Section dividers:** 6 (was 0 in 8.6).
+- **Visual elements per quadrant cell:** title + icon (95px) + sub + examples-label + examples-list (was: title + icon (67px) + sub + small examples).
+- **Iterations Phase 8.7:** 4 (source edit → rebuild → fix s06/s24 overflows
+  → rebuild → fix s23 layout → rebuild → final accept).
 - `snapshots/s01.png` ... `s29.png` (with s17a/s17b split)

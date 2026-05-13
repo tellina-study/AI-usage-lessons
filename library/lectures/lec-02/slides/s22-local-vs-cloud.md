@@ -34,7 +34,7 @@ visual_brief: "2 Ocean rounded boxes side-by-side: Local (Ollama, llama.cpp) —
 - Данные через API провайдера
 
 [Sub-caption мелким, внизу]
-*Архитектура inference — та же. Различаются размер и среда. Глубже про trade-off — Лекция 1 §4.2.*
+*Архитектура inference — та же. Различаются размер и среда. Глубже про компромисс — Лекция 1 §4.2.*
 
 ## Speaker notes
 

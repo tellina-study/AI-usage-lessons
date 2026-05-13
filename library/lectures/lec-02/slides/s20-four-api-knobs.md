@@ -7,7 +7,7 @@ assertion: "4 параметра под задачу: temperature, top_p, max_to
 learning_goal: "LO4 teaching slide — 4 ручки API под 4 сценария"
 learning_outcomes: [LO4]
 chapter_ref: "§4.3 [for-slide-s20]"
-visual_brief: "Таблица 5 столбцов × 5 строк: заголовок (Сценарий | T | top_p | max_tokens | system_prompt) + 4 сценария. Cells цветовое кодирование по T (gold для T=0 до teal для T=1.2)."
+visual_brief: "Таблица 5 столбцов × 5 строк: заголовок (Сценарий | T | top_p | max_tokens | system_prompt) + 4 сценария. Cells цветовое кодирование по T (gold для T=0 до teal для T=1.2). Подзаголовок: «Подобрать параметры под сценарий обоснованно»."
 ---
 
 # Visible content

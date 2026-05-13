@@ -7,7 +7,7 @@ assertion: "Большое контекстное окно ≠ хорошее и
 learning_goal: "Lost-in-the-middle effect + инженерный вывод (расположение важного)"
 learning_outcomes: [LO6]
 chapter_ref: "§3.4 [for-slide-s17]"
-visual_brief: "U-shape кривая: accuracy (Y, 0-100%) vs позиция факта в 100k контексте (X, начало→середина→конец). ~75% начало (gold), провал до ~50% середина, ~75% конец (gold). Liu et al. 2023."
+visual_brief: "U-shape кривая: точность (Y, 0-100%) vs позиция факта в 100k контексте (X, начало→середина→конец). ~75% начало (gold), провал до ~50% середина, ~75% конец (gold). Liu et al. 2023."
 ---
 
 # Visible content
@@ -16,7 +16,7 @@ visual_brief: "U-shape кривая: accuracy (Y, 0-100%) vs позиция фа
 «Большое окно ≠ хорошее использование»
 
 ## Body
-[Main visual: U-shape кривая accuracy vs position, Ocean rounded box]
+[Main visual: U-shape кривая «точность vs позиция», Ocean rounded box]
 
 **Эксперимент:** factoid вставляется в начало / середину / конец 100k-контекста; модель спрашивают факт.
 

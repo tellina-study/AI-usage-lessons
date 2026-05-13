@@ -181,3 +181,67 @@ No new MCP limitations or render-toolchain artifacts encountered in this run. Al
 - `library/lectures/lec-02/slides/s27-homework.md` (P0-1 — VERIFY-DAY-OF → notes)
 
 **Status:** Ready for re-QA / USER GATE B.
+
+---
+
+## Phase 8.5a Лекция 2 v1.2 — anglicism cleanup + line breaks + designer-extras removal
+
+User feedback (verbatim): «ты потерял содержание и промежуточные слайды с тем как по нему идем/подзаголовками, некоторые иллюстрации непропорционально сжаты, квадранты плохо читаются, есть англицизмы типа accuracy, есть кривые переносы слов когда верхняя строка сдвинута налево от второй. короче очень сыро перепроверяй и улучшай. и начальный слайд не понятно о чем... это должен быть хук, а сейчас на отвали сделано»
+
+7 issue categories addressed in 2 commits (v1.2a anglicism+breaks+extras; v1.2b s01 hook + visual scale + section nav).
+
+### v1.2a — Anglicism cleanup (per user explicit «accuracy» flag + glossary lock §5)
+
+| Anglicism | Replacement | Where |
+|---|---|---|
+| `accuracy` | `точность` | s17 visual_brief + body text |
+| `Loop:` (assertion s21) | `Цикл:` | s21 assertion + build title |
+| `Forward pass` (s21 box 2) | `Прямой проход` | s21 step (2) box label |
+| `Distribution` (s21 box 3) | `Распределение` | s21 step (3) box label |
+| `Distribution` (s14 footer) | `Распределение весов` | s14 chart footer |
+| `Distribution` (s24 answer 3) | `Распределение` | s24 (3) answer text |
+| `already` (RU/EN mix in s21 box 1) | `уже` | s21 step (1) box body |
+| `trade-off` (s22 footer) | `компромисс` | s22 sub-caption |
+| `Decision tree` (s25 assertion) | `Дерево решений` | s25 assertion + build title |
+| `decision trees` (s25 branch 2 action) | `деревья решений` | s25 branch 2 right column |
+| `Real-time` (s25 branch 3) | `Скорость отклика` | s25 branch 3 head |
+| `edge` (s25 branch 3 cond) | `устройство пользователя` | s25 branch 3 condition |
+| `logistic regression + feature importance` (s25 branch 2) | `лог. регрессия + важность` | s25 branch 2 action |
+| `rule-based` (s25 branch 2) | `правила` | s25 branch 2 action |
+| `Tools / Function calling` (s28 box 2) | `Инструменты / Вызов функций` | s28 (2) box title |
+| `Agent loop` (s28 box 4) | `Цикл агента` | s28 (4) box title |
+| `act → observe → reflect` (s28 box 4) | `действуй → наблюдай → корректируй` | s28 (4) box subtitle |
+| `single-shot inference` (s28 subtitle) | `один проход inference` | s28 subtitle |
+| `embedding similarity` (s28 box 1) | `близость эмбеддингов` | s28 (1) box body |
+| `fine-tuned BERT` (s25 branch 1) | `дообученный BERT` | s25 branch 1 action |
+
+`inference` kept as canonical technical term (glossary_lock exception, used in Lec-1).
+
+### v1.2a — Designer-extras removal
+
+| What | Where | Why |
+|---|---|---|
+| `LO7` mention in body | s24 gold marker | Visible LO refs forbidden per CLAUDE.md anti-pattern «designer-added extras». Replaced with «Payoff Лекции 1 §5.3 — связь обещаний и механизмов». |
+| `См. s15` cross-ref | s24 answer 1 (slide MD) | Forward cross-refs visible to students = noise per No Extra Content Rule. |
+| `См. s05–s07` cross-ref | s24 answer 2 (slide MD) | Same. |
+| `См. s18–s19` cross-ref | s24 answer 3 (slide MD) | Same. |
+| `LO4 — подобрать параметры...` subtitle | s20 subtitle | LO4 visible. Replaced with `Подобрать параметры под сценарий обоснованно`. |
+
+### v1.2a — Line break / wrap fixes
+
+- **s02 cover title** «Как работают / современные большие / модели» (3 lines, top «Как работают» short) → «Как работают современные / большие модели» (2 lines, balanced).
+- **s04 central question** removed «внутренних» (redundant) and re-broke at semantic boundary. Old: «...между моим запросом и ответом — / и какие из этих внутренних механизмов меняют, как я её / использую?» New: «...между моим запросом и ответом — / и какие из этих механизмов меняют, как я её использую?» — 2 lines, balanced.
+- **s04 promise cards** number badge moved to top-left, question text full-card-width below — eliminates narrow wrap «Почему промпт с / ролью / работает лучше / пустого?» → «Почему промпт с ролью / работает лучше пустого?» (2 balanced lines).
+
+### Files modified (v1.2a)
+
+- `library/lectures/lec-02/rendered/build_lec02.py` — anglicism replacements, layout fixes
+- `library/lectures/lec-02/slides/s17-long-context-fails.md` — accuracy → точность
+- `library/lectures/lec-02/slides/s20-four-api-knobs.md` — visual_brief subtitle
+- `library/lectures/lec-02/slides/s21-autoregressive-loop.md` — Loop, Forward pass, Distribution, already
+- `library/lectures/lec-02/slides/s22-local-vs-cloud.md` — trade-off → компромисс
+- `library/lectures/lec-02/slides/s24-three-whys-payoff.md` — removed LO7, См. s15/s05-07/s18-19
+- `library/lectures/lec-02/slides/s25-ml-vs-llm-decision-tree.md` — Decision tree, Real-time, edge
+- `library/lectures/lec-02/slides/s28-bridge-qa.md` — Tools/Function calling, Agent loop, act→observe→reflect, single-shot
+
+**Status:** v1.2a done. v1.2b (s01 hook + visual scale + section nav) follows.

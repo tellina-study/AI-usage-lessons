@@ -3,11 +3,11 @@ id: s21
 type: process
 section: "Раздел 4. Сэмплинг"
 duration_min: 2
-assertion: "Loop: предсказали токен → добавили в контекст → предсказываем следующий"
+assertion: "Цикл: предсказали токен → добавили в контекст → предсказываем следующий"
 learning_goal: "Авторегрессионная генерация + connection к Lec-1 §3.2 stateless"
 learning_outcomes: [LO1]
 chapter_ref: "§4.4 [for-slide-s21]"
-visual_brief: "Замкнутый цикл 5 шагов с MSO_SHAPE.RIGHT_ARROW: контекст → forward pass → distribution → сэмплинг → новый токен → возврат. Stop condition: «конец ответа или max_tokens». Forward pass выделен gold."
+visual_brief: "Замкнутый цикл 5 шагов с MSO_SHAPE.RIGHT_ARROW: контекст → прямой проход → распределение → сэмплинг → новый токен → возврат. Stop condition: «конец ответа или max_tokens». Прямой проход выделен gold."
 ---
 
 # Visible content
@@ -19,16 +19,16 @@ visual_brief: "Замкнутый цикл 5 шагов с MSO_SHAPE.RIGHT_ARROW
 [Замкнутый цикл с RIGHT_ARROW связями, Ocean rounded boxes]
 
 **(1) Текущий контекст**
-системный промпт + история + запрос + всё сгенерированное за ответ
+системный промпт + история + запрос + всё уже сгенерированное за ответ
 
 →
 
-**(2) Forward pass** *(gold-обведён)*
+**(2) Прямой проход** *(gold-обведён)*
 = всё, что было в s05–s17: токенизация → эмбеддинг → attention → финальный слой
 
 →
 
-**(3) Distribution**
+**(3) Распределение**
 вероятности на все ~200k токенов словаря
 
 →

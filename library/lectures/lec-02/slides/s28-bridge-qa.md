@@ -7,7 +7,7 @@ assertion: "Лекция 3: «Агенты, RAG, API: как AI выходит �
 learning_goal: "Мост к Лекции 3 + Q&A (≤5 мин в буфере)"
 learning_outcomes: [LO1]
 chapter_ref: "§5.5 [for-slide-s28]"
-visual_brief: "4 Ocean rounded boxes с иконками — концепты Лекции 3: RAG, Tools / Function calling, MCP, Agent loop. Внизу — Q&A инфо."
+visual_brief: "4 Ocean rounded boxes с иконками — концепты Лекции 3: RAG, Tools / Вызов функций, MCP, Цикл агента. Внизу — Q&A инфо."
 ---
 
 # Visible content
@@ -24,17 +24,17 @@ visual_brief: "4 Ocean rounded boxes с иконками — концепты Л
 **(1) RAG** *(иконка: лупа+документ)*
 Retrieval-Augmented Generation — embedding similarity (s10–s12) + LLM → ответ из вашей базы.
 
-**(2) Tools / Function calling** *(иконка: шестерёнка)*
+**(2) Инструменты / Вызов функций** *(иконка: шестерёнка)*
 LLM генерирует **специальный структурированный JSON** → выполняет внешняя система → результат возвращается модели.
 
 **(3) MCP** *(иконка: коннектор)*
 Model Context Protocol — открытый стандарт подключения инструментов (Anthropic, 2024; Lec-1 §2.2).
 
-**(4) Agent loop** *(иконка: цикл)*
-act → observe → reflect — модель решает действие, видит результат, корректирует план.
+**(4) Цикл агента** *(иконка: цикл)*
+действуй → наблюдай → корректируй — модель решает действие, видит результат, корректирует план.
 
 [Sub-caption внизу]
-*Все 4 надстраиваются над single-shot inference (s21). Multimodal — там же, в составе RAG.*
+*Все 4 надстраиваются над одним проходом inference (s21). Multimodal — там же, в составе RAG.*
 
 [Q&A блок справа или внизу]
 **Q&A:** до 5 минут на вопросы в зале. Дополнительные — на Семинар 2 или e-mail.

@@ -322,9 +322,9 @@ def build_s02(p):
     text_box(s, x=0.7, y=1.0, w=8.0, h=0.55, text="ЛЕКЦИЯ 2",
              size=18, bold=True, color=TEAL, align=PP_ALIGN.LEFT)
     filled_rect(s, 0.72, 1.55, 0.7, 0.05, fill=TEAL)
-    # Title
+    # Title — line break tuned semantically
     text_box(s, x=0.7, y=2.0, w=9.0, h=2.6,
-             text="Как работают\nсовременные большие модели",
+             text="Как работают современные\nбольшие модели",
              size=52, bold=True, color=DEEP, line_spacing=1.08, align=PP_ALIGN.LEFT)
     # Subtitle / promise
     filled_rect(s, 0.7, 5.0, 0.05, 0.55, fill=TEAL)
@@ -426,10 +426,10 @@ def build_s04(p):
     text_box(s, x=0.55, y=0.4, w=12.3, h=0.4,
              text="Главный вопрос лекции",
              size=18, bold=True, color=MID, align=PP_ALIGN.LEFT)
-    # Central question — big, ocean box
+    # Central question — big, ocean box (semantic line break before «и» / after dash)
     ocean_box(s, 0.55, 1.05, 12.3, 1.95)
     text_box(s, x=1.0, y=1.20, w=11.4, h=1.65,
-             text='«Что происходит внутри LLM между моим запросом и ответом —\nи какие из этих внутренних механизмов меняют, как я её использую?»',
+             text='«Что происходит внутри LLM между моим запросом и ответом —\nи какие из этих механизмов меняют, как я её использую?»',
              size=24, bold=True, color=DEEP, italic=False,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
 
@@ -454,16 +454,16 @@ def build_s04(p):
     for i, (n, q, dest) in enumerate(promises):
         x = start_x + i * (card_w + gap)
         ocean_box(s, x, card_y, card_w, card_h)
-        # Number badge
-        filled_rect(s, x + 0.3, card_y + 0.3, 0.65, 0.65, MID, radius=True, radius_adj=0.5)
-        text_box(s, x=x + 0.3, y=card_y + 0.32, w=0.65, h=0.60,
-                 text=n, size=24, bold=True, color=WHITE,
+        # Number badge — top-left
+        filled_rect(s, x + 0.3, card_y + 0.3, 0.7, 0.7, MID, radius=True, radius_adj=0.5)
+        text_box(s, x=x + 0.3, y=card_y + 0.32, w=0.7, h=0.65,
+                 text=n, size=28, bold=True, color=WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        # Question
-        text_box(s, x=x + 1.15, y=card_y + 0.3, w=card_w - 1.35, h=1.5,
-                 text=q, size=17, bold=True, color=DEEP, line_spacing=1.25)
+        # Question — full width, below the badge (avoids narrow wrapping)
+        text_box(s, x=x + 0.25, y=card_y + 1.20, w=card_w - 0.5, h=1.40,
+                 text=q, size=18, bold=True, color=DEEP, line_spacing=1.30)
         # Arrow
-        text_box(s, x=x + 0.3, y=card_y + 2.10, w=card_w - 0.6, h=0.5,
+        text_box(s, x=x + 0.25, y=card_y + 2.40, w=card_w - 0.5, h=0.5,
                  text="→ " + dest,
                  size=15, italic=True, color=MID, line_spacing=1.2)
     speaker_notes(s, load_notes("s04"))
@@ -892,7 +892,7 @@ def build_s14(p):
     add_image(s, ASSETS / "charts/s14-attention-bars.png",
               x=0.75, y=2.20, w=8.1, h=4.3)
     text_box(s, x=0.55, y=6.70, w=8.5, h=0.4,
-             text="Distribution на токенах контекста — основное содержание",
+             text="Распределение весов на токенах контекста — основное содержание",
              size=14, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
     # Left/right: 3 facts column + small flashlight metaphor at bottom
@@ -1222,7 +1222,7 @@ def build_s20(p):
     s = blank(p)
     slide_title(s, "4 ручки API под задачу: temperature, top_p, max_tokens, system prompt", size=24)
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
-             text="LO4 — подобрать параметры под сценарий обоснованно",
+             text="Подобрать параметры под сценарий обоснованно",
              size=15, italic=True, color=MID)
 
     # Table
@@ -1281,7 +1281,7 @@ def build_s20(p):
 def build_s21(p):
     """Autoregressive loop — 5 steps cycle."""
     s = blank(p)
-    slide_title(s, "Loop: предсказали токен → добавили в контекст → предсказываем следующий", size=24)
+    slide_title(s, "Цикл: предсказали токен → добавили в контекст → предсказываем следующий", size=24)
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
              text="Авторегрессионная генерация — длинный ответ из stateless-вызовов",
              size=15, italic=True, color=MID)
@@ -1296,12 +1296,12 @@ def build_s21(p):
     start_x = 0.55
     steps = [
         ("(1) Текущий\nконтекст",
-         "system + история\n+ запрос + already\nсгенерированное",
+         "system + история\n+ запрос + уже\nсгенерированное",
          False),
-        ("(2) Forward pass",
+        ("(2) Прямой\nпроход",
          "токенизация →\nэмбеддинг →\nattention",
          True),  # gold
-        ("(3) Distribution",
+        ("(3) Распределение",
          "вероятности\nна ~200k токенов\nсловаря",
          False),
         ("(4) Сэмплинг",
@@ -1479,7 +1479,7 @@ def build_s24(p):
     # Gold marker
     filled_rect(s, 0.55, 1.45, 12.3, 0.50, GOLD_TINT, stroke=GOLD, stroke_pt=1.0, radius=True, radius_adj=0.25)
     text_box(s, x=0.55, y=1.50, w=12.3, h=0.40,
-             text="Payoff трёх «почему» — связь обещаний и механизмов",
+             text="Payoff Лекции 1 §5.3 — связь обещаний и механизмов",
              size=16, bold=True, color=DEEP, italic=True,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
@@ -1495,7 +1495,7 @@ def build_s24(p):
          "Токенизатор объединяет буквы в токены. strawberry — 3 токена, не 10 букв. Модель видит токены, не буквы.",
          MID),
         ("3", "Почему один и тот же запрос даёт разные ответы?",
-         "Сэмплинг — стохастический выбор из distribution при T > 0. Каждый запуск может выбрать разный токен.",
+         "Сэмплинг — стохастический выбор из распределения при T > 0. Каждый запуск может выбрать разный токен.",
          TEAL),
     ]
     for i, (n, q, a, col) in enumerate(answers):
@@ -1519,7 +1519,7 @@ def build_s24(p):
 def build_s25(p):
     """ML vs LLM decision tree."""
     s = blank(p)
-    slide_title(s, "LLM — не всегда правильный инструмент. Decision tree: когда не LLM", size=24)
+    slide_title(s, "LLM — не всегда правильный инструмент. Дерево решений: когда не LLM", size=24)
 
     # Root
     root_y = 1.65
@@ -1541,12 +1541,12 @@ def build_s25(p):
     branches = [
         ("cpu", "Фиксированные классы",
          "Классификация на маленьком наборе категорий (5–20)?",
-         "→ Классический ML\nlogistic, XGBoost,\nLightGBM, BERT fine-tuned"),
+         "→ Классический ML\nлог. регрессия, XGBoost,\nLightGBM, дообученный BERT"),
         ("file-text", "Интерпретируемость",
          "Нужна интерпретируемость\n(финансы, медицина, страхование)?",
-         "→ Прозрачные методы\nlogistic + feature imp,\ndecision trees, правила"),
-        ("gauge", "Real-time",
-         "Время отклика < 100 ms критично\n(антифрод, edge)?",
+         "→ Прозрачные методы\nлог. регрессия + важность,\nдеревья решений, правила"),
+        ("gauge", "Скорость отклика",
+         "Время отклика < 100 мс критично\n(антифрод, устройство пользователя)?",
          "→ Специализированная\nмаленькая модель\n(не LLM ≥200 мс)"),
     ]
     for i, (icon, head, cond, action) in enumerate(branches):
@@ -1717,7 +1717,7 @@ def build_s28(p):
     s = blank(p)
     slide_title(s, "Лекция 3:  «Агенты, RAG, API — как AI выходит за пределы чата»", size=24)
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
-             text="Все 4 концепции надстраиваются над single-shot inference",
+             text="Все 4 концепции надстраиваются над одним проходом inference",
              size=16, italic=True, color=MID)
 
     # 2×2 grid
@@ -1731,9 +1731,9 @@ def build_s28(p):
         # (icon, title, sub, body, accent_gold)
         ("search-check", "RAG",
          "Retrieval-Augmented Generation",
-         "embedding similarity + LLM → ответ из вашей базы",
+         "близость эмбеддингов + LLM → ответ из вашей базы",
          True),
-        ("workflow", "Tools / Function calling",
+        ("workflow", "Инструменты / Вызов функций",
          "структурированный JSON",
          "LLM генерирует вызов → выполняет внешняя система → результат возвращается",
          False),
@@ -1741,8 +1741,8 @@ def build_s28(p):
          "Model Context Protocol",
          "Открытый стандарт подключения инструментов (Anthropic, 2024)",
          False),
-        ("repeat-2", "Agent loop",
-         "act → observe → reflect",
+        ("repeat-2", "Цикл агента",
+         "действуй → наблюдай → корректируй",
          "Модель решает действие, видит результат, корректирует план",
          False),
     ]

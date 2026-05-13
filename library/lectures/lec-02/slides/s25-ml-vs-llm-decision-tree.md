@@ -3,20 +3,20 @@ id: s25
 type: summary
 section: "Раздел 5. Заключение"
 duration_min: 1.5
-assertion: "LLM — не всегда правильный инструмент. Decision tree: когда не LLM"
+assertion: "LLM — не всегда правильный инструмент. Дерево решений: когда не LLM"
 learning_goal: "Cross-cutting frame 2: ML vs LLM (расширяет Lec-1 §1.4)"
 learning_outcomes: [LO6]
 chapter_ref: "§5.3 [for-slide-s25]"
-visual_brief: "Decision tree с корнем «Когда не LLM?» и 3 ветками: (1) классификация на маленьком наборе → классический ML, (2) интерпретируемость → правила, (3) <100ms latency → специализированная маленькая модель. Иначе → LLM."
+visual_brief: "Дерево решений с корнем «Когда не LLM?» и 3 ветками: (1) классификация на маленьком наборе → классический ML, (2) интерпретируемость → правила, (3) <100ms latency → специализированная маленькая модель. Иначе → LLM."
 ---
 
 # Visible content
 
 ## Title bar
-«Когда не LLM: decision tree ML vs LLM»
+«Когда не LLM: дерево решений ML vs LLM»
 
 ## Body
-[Decision tree, Ocean rounded boxes, вертикальная структура]
+[Дерево решений, Ocean rounded boxes, вертикальная структура]
 
 **Корень:** Когда LLM — не правильный инструмент?
 
@@ -26,9 +26,9 @@ visual_brief: "Decision tree с корнем «Когда не LLM?» и 3 ве�
 → Классический ML: logistic regression, **XGBoost**, LightGBM, fine-tuned BERT-base.
 
 **Ветка 2.** Нужна интерпретируемость (regulated industry — финансы, медицина, страхование)?
-→ Прозрачные методы: logistic regression с feature importance, decision trees, rule-based.
+→ Прозрачные методы: логистическая регрессия с признаковой важностью, деревья решений, правила.
 
-**Ветка 3.** Время отклика < 100 ms критично (real-time, антифрод, edge)?
+**Ветка 3.** Время отклика < 100 ms критично (антифрод, на устройстве пользователя)?
 → Специализированная маленькая модель — не вызов LLM (200–500 ms).
 
 → **Иначе** — LLM подходит (chat, RAG, generation, многошаговое рассуждение).

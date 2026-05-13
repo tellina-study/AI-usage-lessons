@@ -52,6 +52,19 @@ description: Критикует методическую глубину + пед
 - [ ] Without «магическая пилюля» framing.
 - [ ] Without local audience binding («инженер ИУ6») — для chapter especially.
 
+#### Anti-pattern Grep Awareness (ENFORCED)
+
+**Mandatory step:** перед review — read `notes/decisions.md` § anti-pattern catalog (теперь 35 items после lec-01 v3 reflection).
+
+Run automated grep checks against артефакт за известные anti-patterns:
+- «магическая пилюля» / «AI спасёт» / «революция» — promise-driven tone.
+- «УГАДАЙ» / «ребят» / «короче» — disrespectful CTA / familiar.
+- «инженер ИУ6» / «студент Бауманки» — local binding (для chapter).
+- «рабочее определение» / «прикладное X» / «X в режиме Y» — insider phrasing (см. Term Canonical-Validity Check).
+- «не является целью нашего курса» / «эту тему покроем в Лекции X» — cross-reference required (см. fact-checker §7).
+
+Если grep matches — flag P1 «Anti-pattern: {name}» в report.
+
 ### Chapter-specific
 
 - [ ] Длина: 8-12k слов (5k или 15k = red flag).
@@ -76,6 +89,107 @@ description: Критикует методическую глубину + пед
 - [ ] Каждый слайд имеет `learning_goal` в frontmatter.
 - [ ] Cumulative LO coverage ≥ deck-level LO list.
 - [ ] Нет слайда «общими словами» без конкретного takeaway.
+
+#### Curriculum Relevance Check (per slide AND per chapter section, ENFORCED)
+
+For each slide / chapter section — answer:
+**«Зачем студенту лекции N (introductory / intermediate / advanced) этот концепт?»**
+
+Slides / sections без чёткого answer = **кандидаты на удаление**. Особенно concept-heavy material (Pearl 3 уровня causality, ARC-AGI economics) для introductory лекции.
+
+**Lecture-level mapping** (`catalog/manifests/lectures.yaml`):
+- Lectures 1-3: introductory.
+- Lectures 4-12: intermediate.
+- Lectures 13-17: advanced.
+
+**Decision matrix (Bloom level × lecture level):**
+
+| Bloom level | introductory (L1-3) | intermediate (L4-12) | advanced (L13-17) |
+|---|---|---|---|
+| Remember / Understand | KEEP | KEEP | KEEP (if foundational) |
+| Apply | REVIEW (depends на context) | KEEP | KEEP |
+| Analyze | RECOMMEND DELETE / DEFER | REVIEW | KEEP |
+| Evaluate / Create | RECOMMEND DELETE / DEFER | RECOMMEND DELETE / DEFER | KEEP |
+
+**Counterexamples (from L1 v3):**
+- Pearl 3 уровня causality (Evaluate level) в Лекции 1 (introductory) → RECOMMEND DELETE (user removed это в round 1 #18).
+- ARC-AGI economics (Analyze level) в Лекции 1 → RECOMMEND DELETE.
+- Copilot worked example с 4 axes (Apply level + complex) → REVIEW; user упростил до 2 осей в round 1 #4.
+
+**Output severity:** если RECOMMEND DELETE — severity P1 «Curriculum mismatch — concept-heavy для introductory».
+
+#### Term Canonical-Validity Check (Universal, ENFORCED)
+
+For each new term introduced — verify it is **canonical в литературе**, не редакторский «clean phrasing».
+
+**Insider phrasing (RED FLAG patterns):**
+- «рабочее определение X» — означает «я придумал термин для удобства».
+- «прикладное X» — adjective добавлен для disambiguation, но не каноничный.
+- «X в режиме Y» — periphrasis вместо canonical form.
+
+**Verification:**
+1. Search Google Scholar / Wikipedia: «{term} definition».
+2. Verify form matches academic literature OR explicit dictionary.
+3. If only matches custom usage — flag P1 «Insider phrasing — use canonical {alternative}».
+
+**Counterexample (из Л1):** chapter v2 §1.1 «рабочее определение AI» — user: «что за рабочее определение ты выдумал?». Каноничные: «narrow AI» (Bostrom), «weak AI» (Searle 1980), «artificial general intelligence (AGI)» (Goertzel).
+
+#### Tools / Benchmark Freshness Check (для AI-domain content)
+
+Каждое claim про «AI tool X» / «benchmark Y» / «model Z» — verify temporal relevance.
+
+**Per-claim required metadata:**
+- Date of source.
+- Typical refresh cadence:
+  - AI benchmark scores (ARC-AGI, MMLU, HumanEval, agentic-bench): **weekly**.
+  - LLM market share / usage stats: **quarterly**.
+  - Tool feature lists: **monthly**.
+  - Conceptual claims (architecture, theory): **yearly+**.
+- «Verify on day-of-lecture»: yes/no.
+
+**Decision matrix:**
+- Refresh cadence < 1 month + lecture date > source date by > 1 month → P0 «Likely stale, verify».
+- Refresh cadence 1-3 months + lecture date > source date by > 3 months → P1.
+- Refresh cadence yearly+ → P2 cite year.
+
+**Counterexample (из Л1):** ARC-AGI 37.6% (chapter draft date) устарел до 68.8% (Opus 4.6) и 85% (GPT-5.5) за 2 дня к user review.
+
+**Output:** generate `freshness-report.md` в qa-reports/{date}/ со списком claims + cadence + verify-on date.
+
+#### Designer-Added Content Audit (slides-specific)
+
+Compare current `slides/*.md` против previous version (git diff) — flag любые additions, которые не correspond к user-requested changes.
+
+**Forbidden additions list** (8 items, см. CLAUDE.md «No Extra Content Rule»):
+1. Subtitle, не запрошенный.
+2. Navigation markers («вы здесь»).
+3. Тайминг видимый студенту.
+4. «Лектору» секции в notes.
+5. Decorative SVG/icons без semantic role.
+6. Color-only highlight + text marker redundancy.
+7. Designer-driven slide deletion/addition.
+8. Cross-slide bridge text не запрошенный.
+
+**Procedure:**
+1. `git diff HEAD~1 library/lectures/lec-NN/slides/` (или vs last critic-approved version).
+2. Categorize each addition:
+   - REQUESTED (matches user/orchestrator brief) — OK.
+   - DESIGNER-INITIATIVE (not in brief) — flag P1 «Designer-added content».
+3. Output list в methodology-critic report.
+
+#### DoD Enforcement (ENFORCED, ALL metrics)
+
+**Не подписывать «approve-with-minor» если артефакт не meets ВСЕ DoD метрики.** Каждый DoD требование — pass/fail, не «approximately».
+
+**Per-artifact DoD checklist:**
+- **Speech**: WPM ≤ 95 для каждого fragment (не «average», не «8 of 10») — см. speech-writer §WPM Hard Rule.
+- **Slides matrix/quadrant**: fill rate ≥ 70% (минимум 3 из 4 квадрантов с content).
+- **Slides 2D diagram**: schema readability — все 7 subtype-specific items pass (см. presentation-designer.md «Schema Readability Checklist»).
+- **Speaker notes**: 150-300 слов, no layout descriptions, no «Лектору».
+- **Chapter**: 5k-15k words, all sections present, sources inline.
+- **Reader-simulator self-containedness**: ≥ 30/N slides self-contained.
+
+**Если any DoD metric fails:** verdict ≥ REVISE (не APPROVE-WITH-POLISH).
 
 ## Output
 
@@ -112,8 +226,24 @@ description: Критикует методическую глубину + пед
 - НЕ оцениваешь визуал слайдов (для presentation-critic).
 - НЕ симулируешь читателя (для reader-simulator).
 
-## Severity
+## Output Verdict (ENFORCED 4-level scale)
 
-- **P0** — артефакт методически непригоден (термин не определён, LO не покрыт, концепт-перескок, cognitive overload).
-- **P1** — заметно вредит обучению (нет self-check, тон неуважителен, тезис без доказательства).
+**Verdict line MUST be first line of report:**
+
+```
+VERDICT: REJECT | REVISE | APPROVE-WITH-POLISH | APPROVE-CLEAN
+```
+
+| Verdict | When |
+|---|---|
+| REJECT | Any P0 (методически непригоден) |
+| REVISE | 5+ P1 OR critical curriculum mismatch OR any DoD metric fails — must fix before show |
+| APPROVE-WITH-POLISH | ≤4 P1 — show-able с known caveats |
+| APPROVE-CLEAN | 0 P1 (все только P2 или meet hold) |
+
+**Counter check (mandatory):** если ты wrote ≥5 P1 issues но verdict = APPROVE-WITH-POLISH — STOP, change verdict to REVISE. Это replacement устаревшего «APPROVE-WITH-MINOR» catch-all.
+
+**Severity definitions:**
+- **P0** — артефакт методически непригоден (термин не определён, LO не покрыт, концепт-перескок, cognitive overload, curriculum mismatch для introductory, DoD metric fails).
+- **P1** — заметно вредит обучению (нет self-check, тон неуважителен, тезис без доказательства, terminology drift, designer-added content, insider phrasing, anti-pattern grep match).
 - **P2** — мелочи (порядок терминов, мелкая нестыковка).

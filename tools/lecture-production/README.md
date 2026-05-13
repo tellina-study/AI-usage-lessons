@@ -48,7 +48,7 @@ library/lectures/lec-NN/
 
 ---
 
-## 3. Workflow (10 фаз + 3 USER GATEs)
+## 3. Workflow (11 фаз + 3 USER GATEs A/B/C)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -68,25 +68,40 @@ library/lectures/lec-NN/
 │ Phase 4 — Chapter revision (book-editor) → finalize             │
 │ Status: draft → reviewed → finalized                            │
 ├─────────────────────────────────────────────────────────────────┤
-│ ✋ USER GATE 1 — chapter approved                                │
+│ Phase 4.5 — Pre-USER-GATE walkthrough (orchestrator self-review)│
+│ Skill: /pre-user-gate (mode=chapter)                            │
+│ Steps: read chapter as student, find P0/P1 NOT caught by critics│
+│ Outcome: fix P0/P1 BEFORE presenting GATE A                     │
+├─────────────────────────────────────────────────────────────────┤
+│ ✋ USER GATE A — chapter approved                                │
+│ Criteria: pre-gate walkthrough INCLUDED reading test            │
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 5 — Slides update from chapter                            │
 │ Agent: presentation-designer (refine deck.yaml + slides/*.md)   │
 │ Update assertions / learning_goals из chapter                   │
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 6 — Slides design + visual loop                           │
-│ Agent: presentation-designer (visual-loop min 3 iter per slide) │
-│ See: tools/presentation-build/README.md §5                      │
+│ Agent: presentation-designer (visual-loop min 3 / max 7 iter    │
+│   per slide, escalate at iter 7)                                │
+│ See: tools/presentation-build/README.md §5, §5.5, §5.6          │
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 7 — Slides QA                                             │
 │ Agents (parallel): presentation-critic + student-simulator +    │
 │                    reader-simulator mode=rendered +             │
+│                    consistency-checker (chapter ↔ slides) +     │
 │                    fact-checker (если данные на slides)         │
-│ Output: 4 reports → SYNTHESIS                                   │
+│ Output: 5 reports → SYNTHESIS                                   │
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 8 — Slides revision → finalize                            │
 ├─────────────────────────────────────────────────────────────────┤
-│ ✋ USER GATE 2 — slides approved                                 │
+│ Phase 8.5 — Pre-USER-GATE walkthrough (orchestrator self-review)│
+│ Skill: /pre-user-gate (mode=slides)                             │
+│ Steps: visual sweep all PNGs + read 5-7 random speaker notes +  │
+│   designer-extras grep + checklist (schemas, terminology, etc.) │
+│ Outcome: fix P0/P1 BEFORE presenting GATE B                     │
+├─────────────────────────────────────────────────────────────────┤
+│ ✋ USER GATE B — slides approved                                 │
+│ Criteria: pre-gate walkthrough INCLUDED visual sweep            │
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 9 — Speech draft                                          │
 │ Agent: speech-writer (из finalized chapter + slides)            │
@@ -100,32 +115,78 @@ library/lectures/lec-NN/
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 11 — Speech revision → finalize                           │
 ├─────────────────────────────────────────────────────────────────┤
-│ ✋ USER GATE 3 — final approval (всё 3 артефакта)                │
+│ Phase 11.5 — Pre-USER-GATE walkthrough (orchestrator self-review)│
+│ Skill: /pre-user-gate (mode=final)                              │
+│ Steps: cross-artifact consistency grep + pre-flight checklist   │
+│   actionability + cornerstone concepts alignment                │
+│ Outcome: fix P0/P1 BEFORE presenting GATE C                     │
+├─────────────────────────────────────────────────────────────────┤
+│ ✋ USER GATE C — final approval (всё 3 артефакта)                │
+│ Criteria: pre-gate walkthrough INCLUDED cross-artifact grep     │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 **Каждый USER GATE — explicit approval.** Не двигаться к следующей фазе без него.
+
+### USER GATE criteria (явно)
+
+| Gate | Что approve | Pre-gate walkthrough mode | Что обязательно сделано |
+|---|---|---|---|
+| **GATE A** | chapter.md (status=reviewed) | `/pre-user-gate mode=chapter` | Reading test: orchestrator прочитал главу как студент, найдены P0/P1 (relevance, terminology, factual, reading flow), исправлены ДО presenting user. |
+| **GATE B** | slides (deck.yaml + slides/*.md + rendered/lec-NN.pptx + snapshots) | `/pre-user-gate mode=slides` | Visual sweep: открыты все PNG, проверена schema readability + designer-extras grep («Лектору», «Вы здесь», тайминг, subtitle) + speaker notes sample read + checklist (palette, gold ≥1×, footer-tax 0, англицизмы 0). |
+| **GATE C** | final 3 artifacts (chapter + slides + speech) | `/pre-user-gate mode=final` | Cross-artifact consistency grep: cornerstone концепты aligned (central question, ключевые термины, числа, attributions, roadmap), terminology unified, pre-flight в speech actionable + 0 orphan refs к удалённым slides. |
+
+**Принцип pre-gate walkthrough:** «critics проходят там, где user отклоняет» (Лекция 1 v3 had 3 user feedback rounds после critic-approve). Pre-gate walkthrough — orchestrator-level self-review, который дублирует user-perspective и ловит P0/P1 ДО formal gate'а. См. `.claude/skills/pre-user-gate/SKILL.md`.
+
+---
+
+## 3.5 Cascade-of-changes tracking (ENFORCED)
+
+Когда меняется content одного artifact, downstream artifacts могут разъехаться. Orchestrator **обязан** трекать cascade и автоматически проверять impact.
+
+### Триггеры cascade-check
+
+| Изменение | Что грепать downstream |
+|---|---|
+| **Slide rename** (sNN-old-id → sNN-new-id) | speech.md, chapter.md, other slides/*.md, qa-reports — на старый ID |
+| **Term renaming** (например, «Приложение-робот» → «AI-приложение») | grep по всем 3 artifacts; consistency-checker пересчитать |
+| **Roadmap shift** (модули программы курса reshuffle) | chapter §intro, slides «карта курса», speech «карта курса», `catalog/manifests/lectures.yaml` |
+| **Slide deletion** | speech pre-flight checklist (orphan refs!), other slides «callbacks к sNN», chapter §«ссылки на материал» |
+| **Chapter section restructure** | slides assertions (если sourced from chapter §X), speech pacing (если глава была reference для timing) |
+
+### Workflow cascade-check
+
+1. **Detect change** — orchestrator замечает diff в одном из 3 artifacts.
+2. **Auto-grep** — orchestrator (или pre-user-gate skill) grepает downstream на старые references.
+3. **Report cascade list** — список найденных «orphan / stale» references → revision agent (book-editor / presentation-designer / speech-writer) фиксит.
+4. **Re-run consistency-checker** — после revision sync verifies.
+
+**Якорь правила:** speech v3 в Лекции 1 имел orphan reference на удалённый s26 (ARC-AGI слайд) — consistency-checker поймал как P0 на финальной фазе. Если бы cascade-check работал на этапе deletion — поймали бы сразу.
 
 ---
 
 ## 4. Роли всех агентов (8 total)
 
 ### Производители (writers / builders)
-| Agent | Что производит | Phase |
-|---|---|---|
-| `book-editor` | `chapter.md` | 2, 4 (revisions) |
-| `presentation-designer` | slides/*.md adjustments + rendered PPTX + snapshots | 5, 6, 8 |
-| `speech-writer` | `speech.md` | 9, 11 (revisions) |
+| Agent | Что производит | Capabilities (NEW from Лекции 1 v3) | Phase |
+|---|---|---|---|
+| `book-editor` | `chapter.md` | Mark unverified specifics `[FACT-CHECK]`; cross-reference course structure (Drive doc) для footnotes; speaker-notes section markers `[for-slide-sNN]` | 2, 4 (revisions) |
+| `presentation-designer` | slides/*.md adjustments + rendered PPTX + snapshots | **Schema Readability Checklist** per schema slide; **No-extra-content rule** (do nothing not in brief); **Speaker notes contract** (150-300 words readable text, NO layout descriptions); per-designer file ownership при parallel spawn; visual-loop max 7 iter с escalation | 5, 6, 8 |
+| `speech-writer` | `speech.md` | Pre-flight sync с deck.yaml (auto-regenerate при slide deletions); англицизм cleanup pass; reference user-provided Drive docs | 9, 11 (revisions) |
 
 ### Критики (reviewers, read-only)
-| Agent | Что проверяет | Phase |
-|---|---|---|
-| `methodology-critic` | Pedagogical depth, LO coverage, sequence, assertion-evidence | 1, 3, 7, 10 |
-| `fact-checker` | Цифры, даты, attribution, citations | 3, 7, 10 |
-| `presentation-critic` | Визуал deck'а (overlap, contrast, hierarchy, anti-patterns) | 7 |
-| `student-simulator` | Студент в зале (PNG + speaker notes) | 7 |
-| `reader-simulator` | 2 mode'а: `text-only` (md без рендера) + `rendered` (PNG + notes через 2 нед) | 1, 3, 7 |
-| `consistency-checker` | Chapter ↔ slides ↔ speech alignment | 10 |
+| Agent | Что проверяет | Capabilities (NEW) | Phase |
+|---|---|---|---|
+| `methodology-critic` | Pedagogical depth, LO coverage, sequence, assertion-evidence | **Curriculum Relevance check** («зачем в лекции N — introductory/intermediate/advanced?»); **Term canonical-validity** (insider phrasing detection); англицизмы в tone-analysis; designer-added content audit | 1, 3, 7, 10 |
+| `fact-checker` | Цифры, даты, attribution, citations | **Freshness verification** (date of source + refresh cadence + verify-on-day-of-lecture для < 1 month); user-provided source documents (Drive); mandatory file save | 3, 7, 10 |
+| `presentation-critic` | Визуал deck'а (overlap, contrast, hierarchy, anti-patterns) | **Schema Readability check** (mirror designer's checklist); cross-slide redundancy grep; **5-second teach test** для diagrams; updated verdict scale (REJECT / REVISE / APPROVE-WITH-POLISH / APPROVE-CLEAN) | 7 |
+| `student-simulator` | Студент в зале (PNG + speaker notes) | **Explicit slides-to-delete recommendation** (P1-DELETE category) | 7 |
+| `reader-simulator` | 2 mode'а: `text-only` (md без рендера) + `rendered` (PNG + notes через 2 нед) | **Structural blocker assessment** (mode=rendered: notes-fix vs structural cut) | 1, 3, 7 |
+| `consistency-checker` | Chapter ↔ slides ↔ speech alignment | **Terminology Drift sub-mode** (`terminology-only`): grep по watched terms перед каждым USER GATE; runs Phase 4.5, 8.5, 11.5 (не только 10) | 4.5, 7, 10, 11.5 |
+
+### Pre-USER-GATE walkthrough (orchestrator skill)
+
+`/pre-user-gate` — orchestrator self-review skill, запускается перед каждым USER GATE (A/B/C). Дублирует user-perspective, ловит P0/P1 что critics miss. См. `.claude/skills/pre-user-gate/SKILL.md`.
 
 ---
 

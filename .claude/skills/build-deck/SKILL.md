@@ -8,9 +8,10 @@ You are an orchestrator. **Do NOT render slides yourself.** Delegate rendering t
 
 ## ОБЯЗАТЕЛЬНОЕ ЧТЕНИЕ перед инвокацией
 
-1. **`tools/presentation-build/README.md`** — pipeline + slide-types + visual-loop + anti-patterns.
+1. **`tools/presentation-build/README.md`** — pipeline + slide-types + **schema subtypes (§4)** + visual-loop + **Schema Readability Acceptance Gate (§5.5)** + **Visual Loop iteration cap (§5.6)** + anti-patterns 1-22 (§9).
 2. **`notes/mcp-limitations.md`** — известные баги PowerPoint MCP + workaround'ы.
 3. **`notes/decisions.md`** § «2026-05-12 — Presentation pipeline» — anti-pattern catalog + iteration journey.
+4. **`.claude/skills/pre-user-gate/SKILL.md`** — orchestrator self-review перед presenting USER GATE (применяется на этапе approval).
 
 ## Arguments
 
@@ -55,10 +56,13 @@ You are an orchestrator. **Do NOT render slides yourself.** Delegate rendering t
 - Читать `library/lectures/lec-NN/deck.yaml` + `slides/*.md`.
 - Применять Ocean Gradient + Teal palette + Gold highlight ≥1×/слайд.
 - Применять Visual motif (Ocean rounded box) на каждом content слайде.
-- Visual loop **минимум 3 итерации на слайд** (Anthropic principle: «assume there are problems»).
-- Output: `library/lectures/lec-NN/rendered/lec-NN-pilot.pptx` + `snapshots/sNN.png` + `iteration-log.md` + assets.
+- Visual loop: **минимум 3 итерации на слайд (existing), максимум 7 (NEW)**. На iter 7 без §5.5 gate-pass — escalate с гипотезой «schema concept may need redesign» (см. `tools/presentation-build/README.md` §5.6).
+- Для любого schema slide (matrix / quadrant / layered / cycle / pipeline / timeline / architecture): **Schema Readability Checklist pass обязателен** перед declaring slide done (§5.5). Per-iter log включает checklist status.
+- **No-extra-content rule**: designer добавляет ТОЛЬКО что в task brief. Никаких subtitle / «Вы здесь» / тайминг в видимом / «Лектору» в notes / прочих «полезных» добавлений по своей инициативе.
+- **Speaker notes contract**: 150-300 слов читаемого текста для студента, derived from chapter §X + speech [sNN]. NO layout descriptions.
+- Output: `library/lectures/lec-NN/rendered/lec-NN-pilot.pptx` + `snapshots/sNN.png` + `iteration-log.md` (per-iter log с checklist status) + assets.
 
-Designer должен прочитать `.claude/agents/presentation-designer.md` (его playbook) — там палитра, типы слайдов, anti-patterns.
+Designer должен прочитать `.claude/agents/presentation-designer.md` (его playbook) — там палитра, типы слайдов, schema subtypes, anti-patterns.
 
 После завершения — orchestrator смотрит snapshots глазами через Read tool.
 
@@ -87,10 +91,26 @@ Orchestrator:
 ### Phase 6 — Repeat until acceptable
 
 Повторять Phase 4-5 пока:
-- User approve визуально OK для проведения лекции.
+- All critics return APPROVE-WITH-POLISH or APPROVE-CLEAN (no REJECT / REVISE).
 - Все P0 закрыты.
 
 Каждая итерация архивируется в `library/lectures/lec-NN/rendered/archive-vN/` (orchestrator делает `mv` через Bash перед новой итерацией).
+
+### Phase 6.5 — Pre-USER-GATE walkthrough (ENFORCED, NEW)
+
+После critic-approve, **ДО presenting USER GATE B пользователю**, orchestrator запускает `/pre-user-gate mode=slides`:
+- Visual sweep всех PNG snapshots (open + 5-second test per slide).
+- Read 5-7 random speaker notes (verify 150-300 words readable text, not layout description).
+- Designer-extras grep: «Лектору» / «Вы здесь» / «мин» в visible content — should be 0.
+- Schema Readability Checklist verification (per schema slide).
+- Cross-slide redundancy check.
+- Terminology drift grep (если есть chapter — verify alignment).
+- Pacing math sums correctly.
+- Palette compliance (no anti-pattern colors), gold ≥1×/slide, footer-tax 0.
+- Если найдены P0/P1 — **DO NOT present USER GATE**. Spawn revision agent для fix, re-run pre-user-gate.
+- Только после pre-gate-pass — present user.
+
+См. `.claude/skills/pre-user-gate/SKILL.md` за full checklist.
 
 ### Phase 7 — Update manifest + commit
 
@@ -121,7 +141,7 @@ Orchestrator:
 - MCP error → проверить `notes/mcp-limitations.md`. Если новая limitation — добавить запись по шаблону.
 - libreoffice/pdftoppm/mmdc/ImageMagick недоступны → STOP, попросить установить.
 - presentation-designer не справляется → orchestrator смотрит snapshots глазами, формирует точечный fix-prompt и спавнит снова.
-- 5+ итераций без прогресса → STOP, обсудить с пользователем (возможно концепция слайда нуждается в пересмотре, не дизайн).
+- **7 iter cap (NEW)** — designer обязан остановиться на iter 7 и emit escalation report с гипотезой «schema concept may need redesign» (см. `tools/presentation-build/README.md` §5.6). Orchestrator пересматривает assertion / type / chapter §-source ДО продолжения visual loop.
 
 ## Ссылки
 

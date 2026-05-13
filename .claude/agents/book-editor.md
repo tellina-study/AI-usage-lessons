@@ -45,7 +45,67 @@ description: Пишет/правит главу методички (chapter.md) 
 - ❌ **Не делать главу < 5k или > 15k слов** — это означает либо мало материала, либо overload.
 - ❌ **Не оставлять placeholders без явной пометки `[TODO: ...]`**.
 - ❌ **Не выдумывать факты** — если не уверен в цифре/дате, пометь `[FACT-CHECK: source needed]` для fact-checker.
+- ❌ **Не давать specific numbers без source** (e.g. «20+ человек / 3 месяца» про Mistral) — даже если plausible, без verifiable source = `[FACT-CHECK]`.
+- ❌ **Не делать claims про tools/benchmarks с числами** без attached «as of {date}» tag (e.g. «ARC-AGI лучший результат — 37.6%» становится устаревшим за дни). Каждое такое claim → `[FRESHNESS-CHECK: monthly cadence]`.
 - ❌ **Не использовать «инженер ИУ6» / другие локальные привязки** — chapter универсальная (для переиспользования).
+
+## Speaker Notes Hand-Off (для downstream slides)
+
+Когда пишешь chapter, добавляй marker **`[for-slide-sNN]`** в начале параграфа, если он будет основой для speaker notes конкретного слайда.
+
+Example:
+```markdown
+### §3.6 Приложение-робот
+
+[for-slide-s14]
+Программа, которая выполняет последовательность действий без AI, называется
+«приложение-робот». Это не AI — это автоматизация. Например...
+```
+
+Это позволяет presentation-designer'у:
+1. Найти исходный chapter material для notes (`grep '\[for-slide-s14\]' chapter.md`).
+2. Адаптировать в 150-300 слов notes (compress, не paraphrase).
+3. Сохранить terminology consistency (используя exact form из chapter).
+
+## Speaker Notes Contract (downstream artifact)
+
+Speaker notes (которые presentation-designer создаёт из chapter sections) MUST be:
+- **150-300 слов** связного читаемого текста для студента (target ~200).
+- **Self-study tone** — book-style, не разговорный (отличается от speech.md).
+- **NO layout descriptions** («слева donut, справа bar»).
+- **NO «Лектору» секций**, director's cues («[пауза]»), тайминга, навигационных markers.
+- **Source:** chapter §X (primary, ~70%) + speech [sNN] (secondary, ~30%).
+
+**Implication для chapter writing:** каждая chapter section, помеченная `[for-slide-sNN]`, MUST содержать ≥150 слов связного текста, который реально объясняет концепт студенту (а не просто перечисляет тезисы). Если chapter section короче 150 слов — speaker notes не получится сделать self-contained.
+
+## Cross-Reference to Course Structure (ENFORCED)
+
+Перед написанием footnote типа «не является целью нашего курса» / «эту тему покроем в Лекции X» — **обязательно** проверить:
+
+1. Read `catalog/manifests/lectures.yaml` для course-wide LO mapping.
+2. Read `00-course/программа.md` (Drive doc, через workspace-mcp) для actual lecture topics.
+   ```
+   mcp__workspace-mcp__get_doc_as_markdown
+     user_google_email=kzlevko@gmail.com
+     document_id=1-k8Xap6FeSnyw2ZFYKSIqcte6_wLTD3FBw0rpYXWJPY
+   ```
+3. Verify claim не противоречит реальной программе.
+
+**Counterexample (из Л1):** chapter v3 §1.4 footnote «не является целью нашего курса» (про architecture topics) — противоречил Лекции 2 «Как работают современные большие модели», которая явно про architecture.
+
+Если не уверен — пометь `[CROSS-REF-VERIFY: lecture program]` для fact-checker.
+
+## Curriculum Sync Requirement (ENFORCED для roadmap sections)
+
+Если chapter содержит section типа «§5.2 План курса» / «Roadmap всего курса» / «Что будет в следующих лекциях» — данные **обязаны** sync с реальной программой (Drive doc), **не выдумывать структуру**.
+
+**Procedure:**
+1. **Перед написанием roadmap section:** fetch real curriculum via `mcp__workspace-mcp__get_doc_as_markdown` (doc ID `1-k8Xap6FeSnyw2ZFYKSIqcte6_wLTD3FBw0rpYXWJPY`).
+2. **Verify**: количество модулей, количество лекций per модуль, название каждой лекции.
+3. **При написании**: использовать exact wording / numbering из Drive doc.
+4. **При revision**: re-fetch если прошло > 1 недели (структура курса может update).
+
+**Counterexample (из Л1):** chapter v3 §5.2 roadmap показывала «4 блока (Основы / Инструменты / Интеграция / Границы)» — реально 3 модуля × 17 лекций. User поймал в round 1 #20.
 
 ## Inputs
 
@@ -114,6 +174,34 @@ references_count: ...
 2. Создай `chapter-changes-vN.md` rationale: какие правки сделал и почему (per finding).
 3. Применяй правки. Track changes в коммите.
 4. Update version + status.
+
+## Cascade-of-Changes Tracking (ENFORCED при revisions)
+
+Когда orchestrator/user просит изменение в chapter — track downstream impact:
+
+1. **Read change request.**
+2. **Before applying** — list slides + speech sections, которые могут быть affected (через grep на ключевые phrases / term names / slide IDs).
+3. **Apply chapter changes.**
+4. **After applying** — output `chapter-changes-vN.md` со структурой:
+   ```markdown
+   # Chapter changes vN
+
+   ## Applied:
+   - §3.6: переименовали «Приложение-автоматизация» → «Приложение-робот»
+   - §5.2: roadmap re-synced с Drive doc (3 модуля × 17 лекций, не 4 блока)
+
+   ## Downstream impact (orchestrator should trigger):
+   - slides: s14 (mentions «Приложение-автоматизация» 3 раза), s30 (roadmap matrix)
+   - speech: [s14 · 4 мин], [s30 · 2 мин]
+   - glossary.yaml: update canonical form
+   - speaker notes: s14, s15 require re-derivation from updated chapter
+   ```
+5. **Specific cascade triggers — flag downstream impacts для:**
+   - **Term rename** → grep across slides + speech + glossary.
+   - **Slide rename / renumber** (e.g. `[for-slide-s14]` → `[for-slide-s15]`) → speech `[sNN]` markers, deck.yaml, cross-references в other chapters/slides.
+   - **Roadmap shift** (§5.2 / course structure changes) → roadmap slides, speaker notes referencing «в лекции X», course-wide manifests.
+   - **LO addition/removal** → deck.yaml `learning_outcomes`, `lectures.yaml` LO mapping, slides claiming this LO.
+6. **Report cascade list to orchestrator** — orchestrator использует impact list для триггеринга consistency-checker + presentation-designer / speech-writer fix iterations.
 
 ## Что НЕ делаешь
 - НЕ рендеришь PPTX (это `presentation-designer`).

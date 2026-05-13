@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-13
 **Source:** chapter v3.1 + deck.yaml v3.1 → v3.2 + 32 slides → 33 (s19 split into s19+s19a)
-**Builder:** `build_lec01_v31.py` (in-place updates).
+**Builder:** `build_lec01.py` (in-place updates; renamed from `build_lec01_v31.py` during Phase 5 hygiene cleanup, 2026-05-13).
 **Output:** `lec-01.pptx` (33 slides, 16:9, ~1.3 MB) + `lec-01.pdf` + 33 snapshots iter14.
 
 ## Scope (Phase 12.6 task brief, 19 fixes)

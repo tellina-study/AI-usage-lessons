@@ -171,6 +171,47 @@
 - **First seen in:** #54 (s05b spike, 2026-05-12)
 - **Fork target:** закроется через #54-1 + #54-3.
 
+### [#71-1] PowerPoint MCP — нет `list_shapes` / `update_shape_position` (Лекция 1 production scale)
+
+- **Server:** `powerpoint` (office-powerpoint-mcp-server v2.0.7).
+- **Tool / feature:** отсутствуют `list_shapes`, `update_shape_position`, `delete_shape`, `resize_shape` (extension #54-1 + #54-3 при production scale).
+- **Symptom:** Полная пересборка presentation на каждой visual-loop итерации вместо in-place modifications. Для 33-слайдной деки Лекции 1 × 14+ visual loop iterations = ~2-3 hours overhead just на rebuild scaffolding.
+- **Root cause:** см. #54-1 + #54-3 — отсутствие inspection + mutating API.
+- **Severity:** **P0 fork candidate.** ROI estimate (full course): list_shapes + update_shape_position сэкономит ~3-5 min per visual iter × 14 iter × 17 lectures = 12-20 hours. Fork = 3 hours one-time → **4× ROI**.
+- **Workaround:** Текущий — full python-pptx rebuild каждую iteration. Designer держит mental model индексов в порядке добавления.
+- **Status:** active (fork recommended до Лекции 2).
+- **First seen in:** Л1 v3.x production (2026-05-13).
+- **Fork target:** см. #54-1 + #54-3 — добавить `list_shapes(slide_index)` + `update_shape_position(slide_index, shape_index, left?, top?, width?, height?)` + `delete_shape(slide_index, shape_index)`. См. CONSOLIDATED implementation phase 6.
+
+### [#71-2] LibreOffice convert overhead at scale
+
+- **Tool:** `libreoffice --headless --convert-to pdf` в Visual Loop.
+- **Symptom:** Каждая визуальная итерация = libreoffice headless ~2-3 sec на 30+ slides. 32 slides × N iterations = significant cumulative time. С 14 итерациями × 5 параллельных designers = 1+ minute чистого latency только на convert.
+- **Root cause:** LibreOffice headless single-threaded; каждый convert spawns full process.
+- **Severity:** P2 (workaround существует).
+- **Workaround:** (a) limit to N=5 iter cap per slide; (b) batch convert vs per-iter (запускать convert one для всех designers); (c) reduce slide count для visual loop (focus на изменённые slides only); (d) per-slide convert если возможно.
+- **Status:** active.
+- **First seen in:** Л1 v3.x production (2026-05-13).
+
+### [#71-3] Snapshots bloat — repo size scaling
+
+- **Tool:** `pdftoppm` snapshots в Visual Loop.
+- **Symptom:** Лекция 1 production оставила 562 PNG snapshots @ 110-150 dpi = 71 MB в repo. Estimated 17 lectures × 71 MB = **1.2-3.6 GB на курс** если без `.gitignore`. GitHub max repo рекомендация ≤1 GB soft.
+- **Root cause:** Snapshots — build artefacts (regenerable from PPTX через libreoffice), но commit'ились по умолчанию.
+- **Severity:** **P0 для масштабирования** (без gitignore = repo unusable за 6 лекций).
+- **Workaround:** `.gitignore` policy:
+  ```
+  # Lecture rendered snapshots (regeneratable from PPTX)
+  library/lectures/*/rendered/snapshots/
+  # Iteration logs per-version (use single rolling iteration-log.md instead)
+  library/lectures/*/rendered/iteration-log-v*.md
+  # Old build scripts (consolidate to single canonical build.py per lecture)
+  library/lectures/*/rendered/build_*_v*.py
+  ```
+  Decision: ALL snapshots gitignored (включая финальные `sNN.png`) — regenerable from PPTX. Если нужен публичный snapshot view — separate `published/` directory.
+- **Status:** active (hygiene phase pending).
+- **First seen in:** Л1 v3.x production (2026-05-13). См. CONSOLIDATED implementation phase 5.
+
 ---
 
 ## workspace-mcp (uvx workspace-mcp)
@@ -308,9 +349,10 @@ _Пока не обнаружено._
 - **2026-04-29 (#51):** find_and_replace_doc gotcha с большими таблицами.
 - **2026-05-12 (#54):** PowerPoint MCP — 5 limitations найдено за один спайк.
 - **2026-05-12 (#55 redo):** PowerPoint MCP — 3 новых (slide-size 4:3 default, dark bg ignored, inline runs); render-toolchain — 2 (mermaid Chrome missing, QuickChart v4 explicit).
+- **2026-05-13 (#71 — Лекция 1 v3.x production):** добавлены [#71-1] PowerPoint MCP fork-priority elevation (production scale), [#71-2] LibreOffice convert overhead, [#71-3] Snapshots bloat → P0 gitignore policy.
 
 При обнаружении новой limitation — добавить запись по шаблону, обновить дату «Last update» ниже, упомянуть в commit message: `Add MCP limitation #X (server) — see notes/mcp-limitations.md`.
 
 ---
 
-**Last update:** 2026-05-12 (#69 — добавлены [#69-render-1] snapshot resolution + [#69-svg-fallback] SVG fallback для diagrams).
+**Last update:** 2026-05-13 (Лекция 1 v3.x production — добавлены [#71-1] fork-now PowerPoint MCP, [#71-2] LibreOffice convert overhead, [#71-3] snapshots bloat P0).

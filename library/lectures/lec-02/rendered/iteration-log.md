@@ -426,3 +426,86 @@ Slides reworked to fill more of canvas vertically (target ≥60% body content he
 **Slides added:** s04a, s08a, s17a, s22a (4 new section dividers).
 
 **Slides unchanged content-wise (still benefit from no-top-bar):** s02 (cover), s03-s04 (Раздел 0), s05-s08 (Раздел 1), s10/s12 (Раздел 2), s13 (existing divider), s16-s17 (Раздел 3), s18/s20 (Раздел 4), s23 (Раздел 5 recap pipeline), s27 (Раздел 5 homework).
+
+---
+
+## v1.4 — Phase 8.7 quick polish (2026-05-13)
+
+User feedback round 3 (2 items):
+1. «где слайд с содержанием?» → add lecture-map slide.
+2. «убери футер на титуле» → remove bottom roadmap_bar from s02 cover.
+
+### v1.4 — Changes
+
+**New slide s02a — Lecture map (between s02 cover and s03 recap).**
+Mirrors Lec-1 s02a pattern: 6 horizontal cards titled «Карта лекции — 6 разделов»,
+each card shows section number (0..5 in MID/DEEP), section title (Открытие /
+Токенизация / Эмбеддинги / Внимание / Сэмплинг / Финал), and short 2-line
+italic description (e.g. «Hook strawberry + recap + вопрос»). Active card —
+Раздел 0 — is gold-outlined (stroke 2.5pt) with gold number; other cards have
+LIGHT stroke 1.2pt. No timing on slide. Speaker notes ~270 words: descriptive
+walk-through of all 6 sections, derived from chapter §Введение.
+
+**s02 cover — bottom roadmap_bar removed.**
+Cover now contains: «ЛЕКЦИЯ 2» tag (top-left) → title «Как работают современные
+большие модели» (48pt DEEP) → subtitle «4 этапа inference…» (20pt MID) →
+4-stage pipeline pictogram (Tk → Em → At → Sm circles). Pipeline shifted down
+from y=5.7 to y=5.85 to occupy the vacated footer space. Result: cleaner,
+more breathing-room cover. Roadmap navigation moved to dedicated s02a slide.
+
+### v1.4 — File changes
+
+- `library/lectures/lec-02/rendered/build_lec02.py`:
+  - Added `NAV_SECTIONS_LEC2` constant (6-card metadata for lecture-map nav).
+  - Added `nav_slide()` helper (mirrors Lec-1 `nav_slide` but with 6-section
+    Lec-2 sections, overview state = gold-outlined card not gold-filled).
+  - Added `build_s02a()` function — single-call nav_slide invocation.
+  - Modified `build_s02()` — removed `roadmap_bar(s, here_idx=0, y=6.85)` call,
+    shifted pipeline pictogram from y=5.7 to y=5.85.
+  - `main()` builders list updated: `build_s02a` inserted after `build_s02`.
+  - `main()` slide_ids list updated: `"s02a"` inserted after `"s02"`.
+  - assert `len(slide_ids) == len(builders) == 32` → `== 33`.
+  - Header docstring updated to «Full 33-slide build» + v1.4 changelog.
+- `library/lectures/lec-02/deck.yaml`:
+  - Header comment: v1.3 → v1.4, mention s02a addition.
+  - `version: v1.3` → `v1.4`, `total_slides: 32` → `33`.
+  - s02 entry: pattern `cover_with_roadmap_bar` → `cover_clean`, learning_goal
+    updated, visual.primary rewritten to reflect cleaner cover.
+  - NEW s02a entry inserted between s02 and s03 (type: roadmap,
+    duration_min: 0.5, pattern: lecture_roadmap_6_sections).
+  - `totals.slides: 32` → `33`, `slide_times_sum_min: 57` → `57.5`,
+    `transitions_buffer_min: 5` → `4.5` (total still 75 min).
+- `library/lectures/lec-02/slides/s02a-lecture-map.md` — new MD with
+  frontmatter (id: s02a, type: roadmap, duration_min: 0.5), assertion,
+  visual brief, speaker notes ~270 words.
+
+### v1.4 — Visual verification
+
+**s02 cover (snapshot s-02.png):** clean — title, lecture tag, subtitle,
+pipeline pictogram. No bottom roadmap-bar. Decorative «2» right-side
+preserved. PASS.
+
+**s02a lecture-map (snapshot s-03.png):** 6 cards horizontally centred,
+Раздел 0 gold-outlined (visible as orange-yellow border around card 0
+with gold «0» numeral inside), other 5 cards have LIGHT teal-blue border.
+Numbers 0..5 large (44pt), titles bold 15pt DEEP, descriptions italic
+11pt SLATE. Title «Карта лекции — 6 разделов» centred at top in DEEP 30pt.
+PASS.
+
+**s03 recap (snapshot s-04.png):** unchanged from v1.3, confirms s02a
+inserted correctly between cover and recap. PASS.
+
+### v1.4 — Final status
+
+**DoD checklist:**
+- [x] New slide s02a renders correctly с 6 horizontal cards, Раздел 0 gold-outlined: PASS.
+- [x] s02 cover has NO bottom roadmap-bar anymore (clean): PASS.
+- [x] Total slides = 33 (28 original + 4 section dividers + s02a map): PASS.
+- [x] iteration-log v1.4 appended: PASS (this section).
+- [x] All Phase 8.6 improvements preserved (top_nav_bar removal, section
+      dividers, vertical fill): PASS.
+
+**Slides modified:** s02 (cover footer removed, pipeline shifted).
+**Slides added:** s02a (lecture-map).
+**Slides unchanged:** s01, s03-s04, s04a, s05-s08, s08a, s09-s12, s13,
+s14-s17, s17a, s18-s22, s22a, s23-s28 (all 31 other slides preserved bit-identical).

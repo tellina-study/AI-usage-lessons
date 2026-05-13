@@ -1,5 +1,12 @@
 """
-Full 32-slide build of Лекции 2 «Как работают современные большие модели» (Phase 6).
+Full 33-slide build of Лекции 2 «Как работают современные большие модели» (Phase 6).
+
+v1.4 changes (Phase 8.7, 2026-05-13):
+- Added s02a lecture-map slide (между s02 cover и s03 recap) — mirrors Lec-1
+  s02a pattern: 6 horizontal nav cards, Раздел 0 gold-outlined, без минут.
+- Removed bottom roadmap_bar from s02 cover — cover остаётся clean (title +
+  lecture number + subtitle + pictogram). Карта уехала на отдельный s02a.
+- Total slides: 32 → 33.
 
 v1.3 changes (Phase 8.6, 2026-05-13):
 - Removed top_nav_bar from all content slides (per Lec-1 pattern: navigation
@@ -296,6 +303,79 @@ def roadmap_bar(slide, here_idx, *, y=6.7):
 
 
 # ============================================================
+# Lecture-map nav (used by s02a) — 6 horizontal cards, Lec-1 pattern.
+# ============================================================
+NAV_SECTIONS_LEC2 = [
+    # (num, title, short description). Used in `nav_slide` below.
+    ("0", "Открытие",      "Hook strawberry +\nrecap + вопрос"),
+    ("1", "Токенизация",   "Как модель видит\nваш текст"),
+    ("2", "Эмбеддинги",    "Пространство\nсмыслов"),
+    ("3", "Внимание",      "Что важно\nсейчас"),
+    ("4", "Сэмплинг",      "От распределения\nк токену"),
+    ("5", "Финал",         "Закрытие, ДЗ,\nмост к Л3"),
+]
+
+
+def nav_slide(slide, here_idx, title, frame_phrase=None):
+    """Lecture-map navigation slide (s02a) — 6 horizontal cards.
+
+    Mirrors Lec-1 s02a layout: title top-center, 6 equal-width cards in a row,
+    active card (here_idx) gold-outlined (not filled — overview state per
+    Lec-1 Fix-17 logic; map slide is not a section divider).
+
+    here_idx     — 0..5, gold-outlined card index (Раздел 0 by default for s02a).
+    title        — slide title (centered, top).
+    frame_phrase — optional 1-line italic frame under title.
+    """
+    set_slide_bg(slide, SURFACE)
+    # Title at top
+    text_box(slide, x=0.55, y=0.45, w=12.25, h=0.95, text=title,
+             size=30, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.15)
+    if frame_phrase:
+        text_box(slide, x=0.55, y=1.45, w=12.25, h=0.55,
+                 text=frame_phrase, size=18, italic=True, color=MID,
+                 align=PP_ALIGN.CENTER, line_spacing=1.20)
+
+    # 6 cards horizontal
+    card_y = 2.55
+    card_w = 1.95
+    card_h = 3.2
+    gap = 0.15
+    start_x = (SLIDE_W_IN - (card_w * 6 + gap * 5)) / 2.0
+
+    for i, (num, sec_title, desc) in enumerate(NAV_SECTIONS_LEC2):
+        x = start_x + i * (card_w + gap)
+        is_here = (i == here_idx)
+
+        if is_here:
+            # Highlighted card: gold-outlined, deep text (overview state)
+            ocean_box(slide, x, card_y, card_w, card_h,
+                      fill=WHITE, stroke=GOLD, stroke_pt=2.5)
+            num_color = GOLD
+            title_color = DEEP
+            desc_color = MID
+        else:
+            # Normal card: white fill, light stroke
+            ocean_box(slide, x, card_y, card_w, card_h,
+                      fill=WHITE, stroke=LIGHT, stroke_pt=1.2)
+            num_color = LIGHT if i < 2 else (MID if i < 4 else DEEP)
+            title_color = DEEP
+            desc_color = SLATE
+
+        # Number — big at top
+        text_box(slide, x=x, y=card_y + 0.30, w=card_w, h=0.85, text=num,
+                 size=44, bold=True, color=num_color, align=PP_ALIGN.CENTER)
+        # Section title — middle
+        text_box(slide, x=x + 0.08, y=card_y + 1.30, w=card_w - 0.16, h=0.65,
+                 text=sec_title, size=15, bold=True, color=title_color,
+                 align=PP_ALIGN.CENTER, line_spacing=1.20)
+        # Description — bottom (2 lines)
+        text_box(slide, x=x + 0.08, y=card_y + 2.10, w=card_w - 0.16, h=1.00,
+                 text=desc, size=11, italic=True, color=desc_color,
+                 align=PP_ALIGN.CENTER, line_spacing=1.30)
+
+
+# ============================================================
 # Top progress bar — DEPRECATED in v1.3 (Phase 8.6).
 # Per Lec-1 nav pattern, top progress bar was removed from all content slides.
 # Navigation now appears ONLY on section_divider slides via roadmap_bar at bottom
@@ -416,7 +496,11 @@ def build_s01(p):
 
 
 def build_s02(p):
-    """Cover with roadmap."""
+    """Cover — clean: title + lecture number + subtitle + pictogram.
+
+    v1.4 (Phase 8.7): removed bottom roadmap_bar — карта уехала на отдельный
+    s02a slide per user feedback round 3.
+    """
     s = blank(p)
     set_slide_bg(s, SURFACE)
     # Big "02" outline gold (decorative) — single digit "2" to fit
@@ -436,8 +520,8 @@ def build_s02(p):
     text_box(s, x=0.95, y=5.0, w=11.5, h=0.7,
              text="4 этапа inference: токенизация · эмбеддинг · внимание · сэмплинг",
              size=20, color=MID, italic=False, align=PP_ALIGN.LEFT, line_spacing=1.25)
-    # Hero pipeline icon — 4-stage simple visualization (top right area)
-    pipe_y = 5.7
+    # Hero pipeline icon — 4-stage simple visualization
+    pipe_y = 5.85
     pipe_x = 0.95
     stages = ["Tk", "Em", "At", "Sm"]
     for i, label in enumerate(stages):
@@ -448,9 +532,21 @@ def build_s02(p):
         if i < 3:
             text_box(s, x=cx + 0.55, y=pipe_y + 0.05, w=0.30, h=0.45, text="→",
                      size=20, bold=True, color=MID, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    # Roadmap-bar at bottom (positioned within canvas)
-    roadmap_bar(s, here_idx=0, y=6.85)
+    # v1.4: roadmap_bar removed — карта переехала на s02a.
     speaker_notes(s, load_notes("s02"))
+
+
+def build_s02a(p):
+    """Lecture map — 6 horizontal cards, Раздел 0 gold-outlined.
+
+    v1.4 (Phase 8.7): new slide между s02 cover и s03 recap, mirrors Lec-1
+    s02a pattern. Без минут — общая карта маршрута лекции.
+    """
+    s = blank(p)
+    nav_slide(s, here_idx=0,
+              title="Карта лекции — 6 разделов",
+              frame_phrase=None)
+    speaker_notes(s, load_notes("s02a"))
 
 
 def build_s03(p):
@@ -1954,13 +2050,13 @@ def build_s22a(p):
 
 
 # ============================================================
-# Build all 32 slides (28 original + 4 new dividers s04a/s08a/s17a/s22a)
+# Build all 33 slides (28 original + 4 dividers s04a/s08a/s17a/s22a + 1 map s02a)
 # ============================================================
 def main():
     p = setup_pres()
     builders = [
         # Раздел 0 — Открытие
-        build_s01, build_s02, build_s03, build_s04,
+        build_s01, build_s02, build_s02a, build_s03, build_s04,
         # Раздел 1 — Токенизация (divider first)
         build_s04a, build_s05, build_s06, build_s07, build_s08,
         # Раздел 2 — Эмбеддинги (divider first)
@@ -1975,14 +2071,14 @@ def main():
     print(f"Building {len(builders)} slides…")
     # Map index → slide-id for log clarity
     slide_ids = [
-        "s01", "s02", "s03", "s04",
+        "s01", "s02", "s02a", "s03", "s04",
         "s04a", "s05", "s06", "s07", "s08",
         "s08a", "s09", "s10", "s11", "s12",
         "s13", "s14", "s15", "s16", "s17",
         "s17a", "s18", "s19", "s20", "s21", "s22",
         "s22a", "s23", "s24", "s25", "s26", "s27", "s28",
     ]
-    assert len(slide_ids) == len(builders) == 32, (
+    assert len(slide_ids) == len(builders) == 33, (
         f"Builder/id count mismatch: {len(builders)} builders, "
         f"{len(slide_ids)} ids")
     for i, fn in enumerate(builders):

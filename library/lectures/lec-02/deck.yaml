@@ -1,7 +1,8 @@
 # library/lectures/lec-02/deck.yaml
 #
-# Deck-структура Лекции 2 v1.3 (32 слайда: 28 original + 4 section dividers
-# s04a/s08a/s17a/s22a added in Phase 8.6 to mirror Lec-1 navigation pattern).
+# Deck-структура Лекции 2 v1.4 (33 слайда: 28 original + 4 section dividers
+# s04a/s08a/s17a/s22a added in Phase 8.6 + s02a lecture-map added in Phase 8.7
+# to mirror Lec-1 navigation pattern).
 # Phase 5 output → Phase 6 → Phase 8 polish (v1.1/v1.2/v1.3).
 # Source: chapter v1.1 (status=reviewed, ~11400 слов).
 # Plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1).
@@ -15,10 +16,10 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v1.3
+  version: v1.4
   source: chapter v1.1 (status=reviewed, ~11400 слов)
   plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1)
-  total_slides: 32
+  total_slides: 33
   curriculum_level: introductory
 
 palette:
@@ -94,12 +95,25 @@ slides:
     section: "Раздел 0. Открытие"
     duration_min: 0.5
     assertion: "Лекция 2. Как работают современные большие модели"
-    learning_goal: "Cover + roadmap-маркер «Вы здесь — Раздел 0»"
+    learning_goal: "Cover — title + lecture number + subtitle + pictogram"
     learning_outcomes: [LO1, LO4, LO6, LO7]
     chapter_ref: "§Введение [for-slide-s02]"
     visual:
-      pattern: cover_with_roadmap_bar
-      primary: "Большая «02» в outline gold, title 60pt, под ним hero motif (4-стадийный pipeline иконка). Внизу — 5 пронумерованных roadmap-карточек (0 Открытие / 1 Токены / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал) с gold-маркером «Вы здесь — Раздел 0»."
+      pattern: cover_clean
+      primary: "Большая «02» в outline gold, title 48pt, lecture tag, под ним subtitle с 4 этапами + hero motif (4-стадийный pipeline иконка). v1.4: bottom roadmap_bar убран — карта переехала на отдельный s02a."
+
+  - id: s02a
+    file: slides/s02a-lecture-map.md
+    type: roadmap
+    section: "Раздел 0. Открытие"
+    duration_min: 0.5
+    assertion: "Карта лекции — 6 разделов"
+    learning_goal: "Общая карта: что будет, в каком порядке"
+    learning_outcomes: [LO1]
+    chapter_ref: "§Карта главы"
+    visual:
+      pattern: lecture_roadmap_6_sections
+      primary: "6 пронумерованных горизонтальных карточек по разделам (0 Открытие / 1 Токенизация / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал) с короткими описаниями. Активный раздел (Раздел 0) подсвечен gold-обводкой карточки, без минут."
 
   - id: s03
     file: slides/s03-recap-lec1.md
@@ -504,12 +518,12 @@ slides:
 
 # ─── Validation ───
 totals:
-  slides: 32
-  slide_times_sum_min: 57       # 55 original + 4 × 0.5 dividers (s04a/s08a/s17a/s22a)
+  slides: 33
+  slide_times_sum_min: 57.5     # 55 original + 4 × 0.5 dividers + 0.5 s02a map
   retrieval_moments_min: 8       # s01/s05/s07/s15/s19 cumulative
-  transitions_buffer_min: 5      # lecturer commentary (reduced; dividers now absorb section transitions)
+  transitions_buffer_min: 4.5    # lecturer commentary (reduced; dividers + map absorb section transitions)
   qa_buffer_min: 5
-  total_min: 75                  # 57 + 8 + 5 + 5
+  total_min: 75                  # 57.5 + 8 + 4.5 + 5
 
 interaction_summary:
   - s01: static demo + open question (2 мин total)

@@ -245,3 +245,96 @@ User feedback (verbatim): «ты потерял содержание и пром
 - `library/lectures/lec-02/slides/s28-bridge-qa.md` — Tools/Function calling, Agent loop, act→observe→reflect, single-shot
 
 **Status:** v1.2a done. v1.2b (s01 hook + visual scale + section nav) follows.
+
+---
+
+### v1.2b — Section navigation (Option A — top progress bar)
+
+Per user feedback «потерял содержание и промежуточные слайды с тем как по нему идем/подзаголовками» — chose Option A (slim 6-cell progress bar at top of every content slide) over Option B (4 new section dividers). Less disruptive, no new slides, students always see «где я сейчас».
+
+Implementation:
+- New helper `top_nav_bar(slide, here_idx)` at top of every content slide.
+- 6 cells: `0 Открытие / 1 Токены / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал`.
+- Current section highlighted gold (`#F0AB00`), others soft grey.
+- Height 0.22", y=0.08-0.30 — clean separation from title at y=0.55.
+- Titles pushed down 0.10" (default y=0.45 → y=0.55) to make room.
+- Applied to: s01, s03-s12, s14-s28 (24 slides).
+- Excluded: s02 (cover with own bottom roadmap_bar), s13 (section divider with own bottom roadmap_bar).
+
+Section indexes:
+- 0 Открытие: s01, s02, s03, s04
+- 1 Токены: s05, s06, s07, s08
+- 2 Эмбеддинги: s09, s10, s11, s12
+- 3 Внимание: s13, s14, s15, s16, s17
+- 4 Сэмплинг: s18, s19, s20, s21, s22
+- 5 Финал: s23, s24, s25, s26, s27, s28
+
+### v1.2b — s01 Hook redesign (Option A — provocative question + reveal)
+
+Per user feedback «начальный слайд не понятно о чем... это должен быть хук, а сейчас на отвали сделано» — completely redesigned.
+
+Before: static tiktokenizer mock with 4 examples (cat/tokenization/strawberry/клубника) in tabular layout. «На отвали» per user. Hook factor 0/10.
+
+After: provocative question takes top 50% of slide («Почему ChatGPT не может посчитать, сколько букв «r» в слове strawberry?» — 46pt bold, 2 balanced lines, center). Below — italic teaser «Спросите любую LLM — половина случаев ответит «2».». Bottom 30% — gold callout «Ответ:» reveal in 2 rows: «Вы видите: s · t · r · a · w · b · e · r · r · y (10 букв)» / «AI видит: [st] [raw] [berry] (3 токена)». Footer caption mentions o200k_base token-izer with GPT-4o/Claude 4.x.
+
+Hook factor 8/10 — provocative question grabs attention, reveal answers immediately, contrast «10 букв / 3 токена» tells the whole lecture story in one glance. Also frontmatter `type: live_demo` → `type: hook`, assertion updated to match.
+
+The 4-example tiktokenizer table (cat/tokenization/strawberry/клубника) is preserved in s05 «Токен — id из словаря» — same content but now in proper pedagogical position (definition slide), not as a flat opening.
+
+### v1.2b — Visual scale fixes (Projector Readability Test: body ≥18pt, axis ≥14pt)
+
+9 slides with body text increased per «некоторые иллюстрации непропорционально сжаты, квадранты плохо читаются»:
+
+| Slide | Element | Before | After |
+|---|---|---|---|
+| s15 | «Без роли / С ролью» card titles | 18pt | 20pt |
+| s15 | «→ generic ответ» (now «обобщённый ответ») body | 15pt | 16pt |
+| s15 | role-токены body | 15pt | 16pt |
+| s17 | Эксперимент head + body | 14/12pt | 16/14pt |
+| s17 | Результаты cards | 13/14pt | 14/15pt |
+| s19 | T-distribution card titles | 18pt | 20pt |
+| s19 | T-distribution body | 14pt | 15pt |
+| s21 | Step head | 17pt | 18pt |
+| s21 | Step body | 14pt | 15pt |
+| s22 | Local/Cloud property labels | 14pt | 16pt |
+| s22 | Local/Cloud property values | 13pt | 14pt |
+| s24 | Number badge | 44pt | 48pt |
+| s24 | Question | 18pt | 20pt |
+| s24 | Answer | 15pt | 16pt |
+| s25 | Branch head | 17pt | 17pt (kept, fit) |
+| s25 | Branch condition | 14pt | 14pt (kept, fit) |
+| s25 | Branch action | 14pt | 14pt (kept, fit) |
+| s26 | Human/AI column heads | 24pt | 26pt |
+| s26 | Body italic | 15pt | 17pt |
+| s26 | Definition italic | 16pt | 18pt |
+| s28 | Concept card titles | 22pt | 20pt (smaller fixes overlap) |
+| s28 | Concept body | 14pt | 15pt |
+
+s28 also had layout fix: «Инструменты / Вызов функций» (long Russian title after anglicism cleanup) overlapped subtitle in v1.2a. Title box widened, font 22→20pt, subtitle pushed below title block — overlap eliminated.
+
+### v1.2b — Title additional anglicism cleanup
+
+- s22 title: «Inference loop одинаков» → «Inference одинаков» (removed redundant English «loop», canonical inference kept).
+- s23 title: «4 этапа inference сложились в pipeline» → «4 этапа inference сложились в конвейер» (pipeline → конвейер per glossary lock; this is the most prominent visible occurrence).
+- s23 footer caption: «этот pipeline» → «этот конвейер».
+- s15 body «generic ответ» → «обобщённый ответ» (generic anglicism removed).
+
+### v1.2b — Files modified
+
+- `library/lectures/lec-02/rendered/build_lec02.py` — `top_nav_bar()` helper, `SECTION_OF_SLIDE` map, `SECTION_LABELS`, added `top_nav_bar(s, N)` to 24 builder functions, s01 hook complete rewrite, visual scale tunings on 9 slides
+- `library/lectures/lec-02/slides/s01-live-tokenizer-demo.md` — type=hook, assertion + visible_content + speaker_notes rewritten for hook format
+
+### v1.2 final status (8.5a + 8.5b)
+
+**DoD checklist:**
+- [x] Anglicism count in visible content: 8 → 0 (inference kept as canonical)
+- [x] Section navigation visible on all content slides s03-s28 + s01: PASS
+- [x] s15, s17, s19, s21, s22, s24, s25, s26, s28 visual scale improved: PASS
+- [x] s01 transformed into real hook (not static table): PASS
+- [x] Multi-line titles have semantic line breaks (s02, s04): PASS
+- [x] 28 slide IDs preserved (s01-s28, no adds/removes): PASS
+- [x] Glossary lock preserved (17 canonical terms, no drift): PASS
+- [x] Designer-extras removed (LO refs, slide cross-refs): PASS
+- [x] WPM in speaker notes ≤95 — preserved from v1.1, no notes changes that affect WPM
+
+**Slides modified (v1.2 total):** s01 (hook redesign), s02 (line break), s04 (line break + nav), s14 (anglicism + nav), s15 (anglicism + scale + nav), s17 (anglicism + scale + nav), s20 (designer-extra + nav), s21 (anglicism + scale + nav), s22 (anglicism + scale + nav), s23 (anglicism + nav), s24 (designer-extra + scale + nav), s25 (anglicism + scale + nav), s26 (scale + nav), s28 (anglicism + scale + nav) — plus top_nav_bar added to all 24 content slides.

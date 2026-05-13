@@ -5,7 +5,7 @@ duration_min: 3
 assertion: "Imaging — AI+врач > каждый alone (MASAI RCT). Reasoning — augmentation gap: врач+AI ≈ врач alone (Goh JAMA). Вопрос «AI или врач» поставлен неправильно."
 learning_goal: "Сравнить 3 RCT/meta-analysis: imaging vs reasoning"
 learning_outcomes: [LO2, LO3]
-frame_mapping: ["Человек vs AI", "Другой AI", "LLM pattern"]
+frame_mapping: ["Человек vs AI", "Другой AI", "LLM anti-pattern (augmentation gap)"]
 chapter_ref: "§2.3 — AI vs радиолог: imaging vs reasoning"
 references: [liu-2019-lancet, masai-2024-lancet, hofvind-2025-lancet, goh-2024-jama]
 visual:

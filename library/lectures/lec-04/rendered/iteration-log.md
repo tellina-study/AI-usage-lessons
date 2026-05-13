@@ -209,3 +209,83 @@
 - reader-simulator mode=rendered (PNG + speaker notes through 2 weeks later)
 - fact-checker (numbers + sources cross-check vs chapter.md)
 - consistency-checker (chapter ↔ slides ↔ speech alignment)
+
+---
+
+## Phase 8 — Revision pass (2026-05-13)
+
+**Trigger:** 5 Phase 7 critic reports (presentation/student/reader/fact/consistency)
+flagged 1 P0 + 24 P1 + ~40 P2 (SYNTHESIS.md). Applied per `Phase 8 revision pass`
+brief.
+
+### P0 applied (1/1)
+- **P0-1 — Glossary umbrella (D1)** — chapter.md entry #1 updated. «medical AI» /
+  «медицинский AI» now `aliases_allowed_umbrella` (broader scope than
+  AI-диагностика). 0 cascade in chapter/slides per user decision Option A.
+
+### P1 applied (24/24)
+
+| # | Issue | Action |
+|---|---|---|
+| P1-1 | s05/s20/s27 placeholder illustrations | Replaced with NEWS images (per user spec: news/publications FIRST): s05 → STAT News «AI Prognosis» (statnews.com, 13.05.2026, og:image); s20 → Harvard Gazette «AI healthcare regulation» (news.harvard.edu, Jan 2026); s27 → AMA «AI Trust Index physicians + patients» (ama-assn.org). Saved to `assets/news/`. |
+| P1-2 | s24 Vendor/Operator swap | **Vendor → bottom-right (high control + mid liability); Operator → bottom-left (mid control + mid liability).** Card sub-text updated with liability annotations. Critical РК prep. |
+| P1-3 | s10 Bayes math inconsistency | Aligned to chapter lower-bound: callout now «sens 0.94–0.96, spec 0.89–0.93 (range). Для PPV math берём sens 0.94 / spec 0.89 → PPV ~8% при prev 1%, ~78% при prev 30%. Operating point зависит от threshold + патологии.» |
+| P1-4 | Cream-yellow card backgrounds | s14 cards (Rentosertib/DSP) + s17a pivot + s17b pivot + s18 EU column → all switched к Ocean surface `#F4F7FA` fill + gold stroke (`#F0AB00`, 2pt). Gold-tint fill removed. |
+| P1-5 | s17b «Phase 1 DISCONTINUED» red | Removed red. Now navy bold `#21295C` on Ocean surface; «✕ Phase 1 DISCONTINUED» (strikethrough-icon prefix) conveys closure без red palette. Stroke: dark grey. |
+| P1-6 | s10 confusion matrix red/green/yellow | Recolored: TP = Ocean Light tint + Light Ocean text; TN = Cover Outline tint + Mid Ocean text; FP = Gold tint + Deep text (highlight); FN = Navy tint + Deep text. |
+| P1-7 | s22 bottom truncation | Card heights compressed 1.55→1.42, gap 0.10→0.08; gold callout moved from y=6.85 → y=6.55. Footer (date caveat) at y=7.10. Now fits within safe area. |
+| P1-8 | s06 matrix axes hidden | Already INSIDE quadrant per build code (axes x=0.40 + caption ◄ SCOPE ►); confirmed in iter render. No change needed beyond removing slide IDs. |
+| P1-9 | s09 gold marker on wrong stage | Gold moved from stage 4 «Workflow» → stage 2 «Model». Stage 2 body updated: «CNN / ViT (не LLM) medical fine-tune». Aligns с assertion «CV, не LLM». |
+| P1-10 | s09 «3. Output» overlap | Body text reformatted: «(Grad-CAM*)» asterisk + footer disclaimer; tight wrap fixed by line break. |
+| P1-11 | s11 WIN badge too small | Badge enlarged: x=11.45, w=1.35, h=0.60, font 18pt (up from x=11.85, w=0.90, h=0.40, 11pt). Result column narrowed from 5.0 → 4.4 to accommodate. |
+| P1-12 | LO codes visible | Removed: s26 «LO1/LO2», «LO2/LO3», «LO3/LO8» tags on each card. Speaker notes retain LO mapping. s19 «LO4» removed from sub-title. |
+| P1-13 | Slide IDs visible | Removed: s14 «(s12)»/«(s17a)»/«(s17b)»; s14 footer «(s15) и две истории (s17a/s17b)»; s06 «(s9–s13) + (s15–s17)»; s28 «(s24)». |
+| P1-14 | s19 «10 мин» timing | Removed from sub-title; now «Web-chat + критическая оценка ответа.» |
+| P1-15 | «(schematic, CC0-style)» markers | Removed s05 caption (replaced with «STAT News — AI Prognosis»); s20 caption replaced with «Harvard Gazette — AI healthcare regulation»; s27 caption replaced with «AMA — AI Trust Index». |
+| P1-16 | s28 navigation badge | Removed entire «1-2-3-4-K1-6...» progress bar (No Extra Content Rule — «Вы здесь» markers forbidden). |
+| P1-17 | s17a RU drug discovery context | Added 1-row Ocean rounded box (y=6.05) с RU context: «Сбер AI Lab + AIRI + Р-Фарм — Alliance #1 CD137 (май 2024); Alliance #2 Alzheimer (ноябрь 2025); MADD (ITMO+Сбер, EMNLP 2025); DiMA (AIRI, ICML 2025). Все программы — preclinical: 0 RU-designed препаратов в клинических испытаниях на май 2026.» Sources: MADD EMNLP 2025, DiMA ICML 2025 added to footer. |
+| P1-18 | s11 Goh numbers rounding | «GPT-4 alone 76.3% · врач+GPT-4 73.7%» → «GPT-4 alone 76% · врач+GPT-4 74%» per chapter §2.3 framing. |
+| P1-19 | deck.yaml LO sync | Added `LO8` to learning_outcomes lists for: s18, s20, s21, s22, s23. Now matches slide frontmatter `[LO3, LO8]` for those 5 slides. |
+| P1-20 | s11 frame_mapping | Updated `slides/s11-*.md` frontmatter: «LLM pattern» → «LLM anti-pattern (augmentation gap)» per plan-v2 §«Frames». |
+| P1-21 | s22 «Март 2023» NEDA Tessa | Softened to «Начало 2023: Cass → generative БЕЗ NEDA approval». Footer caveat: «Точная дата generative switch — начало 2023 (источники не дают строгий месяц).» |
+| P1-22 | Vocabulary disclaimers | Added inline: s09 (Grad-CAM = визуальная attribution heatmap; DenseNet = CNN-архитектура); s17a (FVC = forced vital capacity); s18 (SaMD = Software as Medical Device, FDA category; MDR = EU Medical Device Regulation). |
+| P1-23 | s23 AI connection moved to top | Title rewrite: «Медицинские данные — target №1...» → «Medical AI training datasets наследуют data security risk.» Old bridge content (mosmed.ai = 18M+ images...) retained as mid-slide evidence. Red BREAKING banner ALSO removed (Ocean rounded box). |
+| P1-24 | s04 + s07 FDA chart redundancy | s04 differentiated: replaced bar chart with mega-stat reveal «**1 451**» (140pt gold) + 3 secondary stats (76% · +295 · +258). s07 retains full growth chart as primary visualization. |
+
+### P2 applied (selective)
+- s18 «4 декабря 2024» PCCP date — verified consistent (already in slide).
+- s27 attribution polish — caption now points к AMA AI Trust Index.
+- s23 Sweeney «2002» — left as-is (academic shorthand acceptable; chapter notes 1997 vs 2002 distinction).
+- s17a PMID format — kept as «PMID 40461817» (acceptable shorthand).
+
+### P2 deferred (~30 items)
+- Cross-artifact micro-polish on terminology variants (mosmedai dot, Insilico Medicine vs Rentosertib) — not blocking.
+- s05 assertion «реально / оказывается» — already present per chapter canonical.
+- frame_mapping для s13/s21 «LLM anti-pattern» tag — P2 (visible content correct; tag label cleanup deferred).
+- berkeley-news-2019 + stat-news-2019 chapter refs add — P2.
+- micro-exercise count cross-ref — P2 (re-verified consistent).
+
+### Illustration sourcing report (P1-1)
+
+| Slide | 1st attempt | Status | Saved file |
+|---|---|---|---|
+| s05 | STAT News «AI medical devices' dirty FDA secret» og:image | ✓ 200 OK, 69 KB | `assets/news/s05-stat-fda-ai.jpg` |
+| s20 | Harvard Gazette «AI is speeding into healthcare» og:image | ✓ 200 OK, 635 KB | `assets/news/s20-harvard-ai-regulation.jpg` |
+| s27 | AMA «For health AI to work...» 2024 AI Trust Index image | ✓ 200 OK, 109 KB | `assets/news/s27-ama-trust-ai.jpg` |
+
+All 3 obtained from publication-direct og:image meta-tags. Stock fallback unused. Old `assets/images/s05-doctor-workflow.png` retained on disk (unused; not deleted).
+
+### Visual-loop iterations (this revision pass)
+- Iter 1 (initial revision render): full P0/P1 batch applied → all 29 slides re-rendered.
+- Iter 2 (review + fixes): s11 WIN badge overlap fix (result_w 5.0→4.4); s14 footer slide IDs additional cleanup.
+- Iter 3 (s04 differentiation + s28 final cleanup): s04 mega-stat reveal replacing bar; s28 «(s24)» mention removed from callout.
+- Iter 4 (final snapshot capture): copy iter-NN → s-named PNG files.
+
+**Total iterations Phase 8:** 4 full-deck renders.
+
+### Snapshot regeneration: 29 / 29 revised
+
+### Issues encountered Phase 8
+- None blocking. All web fetches successful first try (og:image meta-tag approach
+  proved robust).
+- Note: pptx file rebuilt cleanly each iter; libreoffice + pdftoppm pipeline stable.

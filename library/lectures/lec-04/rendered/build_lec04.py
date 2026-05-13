@@ -376,22 +376,40 @@ def build_s03(p):
 def build_s04(p):
     s = blank(p)
     slide_title(s, "AI в медицине — уже не «будущее», а production-инфраструктура.", size=24)
+    # P1-24: s04 differentiates from s07 — здесь poll reveal (mega-stat 1 451),
+    # на s07 — полный growth chart.
     chart_x, chart_y, chart_w, chart_h = 0.55, 1.85, 7.3, 4.7
     ocean_box(s, chart_x, chart_y, chart_w, chart_h)
-    text_box(s, x=chart_x + 0.3, y=chart_y + 0.2, w=chart_w - 0.6, h=0.4,
-             text="FDA AI/ML-Enabled Medical Devices — cumulative 2015→2025",
+    text_box(s, x=chart_x + 0.3, y=chart_y + 0.20, w=chart_w - 0.6, h=0.40,
+             text="FDA — AI/ML-Enabled Medical Devices",
              size=14, bold=True, color=DEEP, line_spacing=1.20)
-    img_w = chart_w - 0.4
-    img_h = img_w * 540.0 / 900.0
-    if img_h > chart_h - 1.2:
-        img_h = chart_h - 1.2
-        img_w = img_h * 900.0 / 540.0
-    img_x = chart_x + (chart_w - img_w) / 2
-    img_y = chart_y + 0.7
-    add_image(s, ASSETS / "charts/c1-fda-bar.png", img_x, img_y, img_w, img_h)
-    text_box(s, x=chart_x + 0.3, y=chart_y + chart_h - 0.45, w=chart_w - 0.6, h=0.35,
-             text="76% — радиология. FDA AI/ML list, end-2025 (1 451).",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    text_box(s, x=chart_x + 0.3, y=chart_y + 0.65, w=chart_w - 0.6, h=0.35,
+             text="cumulative · end-2025",
+             size=12, italic=True, color=LIGHT)
+    # Mega-stat reveal (1 451) — gold, dominant.
+    text_box(s, x=chart_x + 0.3, y=chart_y + 1.20, w=chart_w - 0.6, h=2.0,
+             text="1 451",
+             size=140, bold=True, color=GOLD, line_spacing=1.0,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
+    text_box(s, x=chart_x + 0.3, y=chart_y + 3.25, w=chart_w - 0.6, h=0.40,
+             text="одобрено к концу 2025",
+             size=15, italic=True, color=DEEP, align=PP_ALIGN.CENTER)
+    # 3 secondary stats.
+    sub_y = chart_y + 3.85
+    sub_w = (chart_w - 0.6) / 3
+    sub_stats = [
+        ("76%", "радиология (CV)"),
+        ("+295", "новых в 2025"),
+        ("+258", "новых в 2024"),
+    ]
+    for i, (val, lbl) in enumerate(sub_stats):
+        x = chart_x + 0.3 + i * sub_w
+        text_box(s, x=x, y=sub_y, w=sub_w, h=0.45,
+                 text=val, size=22, bold=True, color=MID,
+                 align=PP_ALIGN.CENTER, line_spacing=1.0)
+        text_box(s, x=x, y=sub_y + 0.45, w=sub_w, h=0.35,
+                 text=lbl, size=11, italic=True, color=SLATE,
+                 align=PP_ALIGN.CENTER)
     info_x, info_y, info_w, info_h = chart_x + chart_w + 0.25, 1.85, 4.9, 4.7
     ocean_box(s, info_x, info_y, info_w, info_h)
     text_box(s, x=info_x + 0.3, y=info_y + 0.25, w=info_w - 0.6, h=0.45,
@@ -461,10 +479,11 @@ def build_s05(p):
                  text=label, size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     img_x, img_y, img_w, img_h = 7.30, 3.85, 5.5, 2.9
     ocean_box(s, img_x, img_y, img_w, img_h)
-    add_image(s, ASSETS / "images/s05-doctor-workflow.png",
-              x=img_x + 0.2, y=img_y + 0.3, w=img_w - 0.4, h=img_h - 0.85)
-    text_box(s, x=img_x + 0.2, y=img_y + img_h - 0.45, w=img_w - 0.4, h=0.35,
-             text="Врач + AI: типичный workflow 2026 (schematic, CC0-style)",
+    # News image: STAT News «AI medical devices' dirty FDA secret» (statnews.com, 13 May 2026)
+    add_image(s, ASSETS / "news/s05-stat-fda-ai.jpg",
+              x=img_x + 0.2, y=img_y + 0.25, w=img_w - 0.4, h=img_h - 0.85)
+    text_box(s, x=img_x + 0.2, y=img_y + img_h - 0.50, w=img_w - 0.4, h=0.35,
+             text="STAT News — AI Prognosis (statnews.com, 13.05.2026)",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     text_box(s, x=0.55, y=6.95, w=12.3, h=0.35,
              text="Стейкс: $22–38 млрд (2025), прогноз > $100 млрд к 2030 (MarketsAndMarkets, Towards Healthcare).",
@@ -516,7 +535,7 @@ def build_s06(p):
              size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
     text_box(s, x=0.55, y=7.10, w=12.3, h=0.35,
-             text="Фокус лекции — gold dots: AI-диагностика (s9–s13) + Drug discovery (s15–s17).",
+             text="Фокус лекции — gold dots: AI-диагностика + Drug discovery.",
              size=12, italic=True, color=GOLD, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s06"))
 
@@ -613,11 +632,12 @@ def build_s09(p):
              size=15, italic=True, color=MID)
     pipe_y = 2.0
     pipe_h = 2.6
+    # Gold on stage 2 «Model» — central message of slide: «CV CNN/ViT, not LLM».
     stages = [
         ("Input", "Изображение\nDICOM / PNG / JPEG\n(препроцессинг)", LIGHT),
-        ("Model", "CNN / ViT\n(pre-trained +\nmedical fine-tune)", MID),
-        ("Output", "Probability +\nheatmap / bbox\n(Grad-CAM)", DEEP),
-        ("Workflow", "Врач: decision\n+ verify + sign", GOLD),
+        ("Model", "CNN / ViT\n(не LLM)\nmedical fine-tune", GOLD),
+        ("Output", "Probability +\nheatmap / bbox\n(Grad-CAM*)", MID),
+        ("Workflow", "Врач: decision\n+ verify + sign", DEEP),
     ]
     total_w = 12.3
     n = len(stages)
@@ -653,10 +673,10 @@ def build_s09(p):
     img_y = sample_y + 0.55
     add_image(s, ASSETS / "backup/chester-pneumonia-result.png", img_x, img_y, img_w, img_h)
     text_box(s, x=sample_x + 3.2, y=sample_y + 0.65, w=sample_w - 3.5, h=1.5,
-             text="Image → CNN/ViT → probability vector + heatmap. Heatmap = Grad-CAM (Selvaraju 2017): какие пиксели вносили вклад в предсказание. Врач — decision-maker, AI — decision support.",
+             text="Image → CNN/ViT → probability vector + heatmap. Heatmap = Grad-CAM (визуальная attribution heatmap, Selvaraju 2017): какие пиксели вносили вклад в предсказание. Врач — decision-maker, AI — decision support.",
              size=13, color=DEEP, line_spacing=1.40)
     text_box(s, x=0.55, y=7.20, w=12.3, h=0.30,
-             text="Rajpurkar et al. arXiv:1711.05225 · Selvaraju et al. arXiv:1610.02391 (Grad-CAM).",
+             text="*Grad-CAM — визуальная attribution. DenseNet — CNN-архитектура. Rajpurkar arXiv:1711.05225 · Selvaraju arXiv:1610.02391.",
              size=10, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s09"))
 
@@ -695,23 +715,29 @@ def build_s10(p):
              text="healthy",
              size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE)
-    filled_rect(s, mat_x, mat_y + 0.75, cell_w, cell_h, RGBColor(0xD9, 0xF0, 0xE0),
-                stroke=GREEN_OK, stroke_pt=0.8)
+    # Ocean palette per anti-pattern #3 (no red/green semaphore).
+    # TP = Ocean light; TN = Ocean mid; FP = gold accent (highlight common error); FN = navy (significant miss).
+    tp_fill = RGBColor(0xE3, 0xEE, 0xF3)  # Light Ocean tint
+    tn_fill = RGBColor(0xD9, 0xE2, 0xEC)  # Cover outline
+    fn_fill = RGBColor(0xD7, 0xDB, 0xE4)  # Navy tint (significant)
+    fp_fill = GOLD_TINT
+    filled_rect(s, mat_x, mat_y + 0.75, cell_w, cell_h, tp_fill,
+                stroke=LIGHT, stroke_pt=0.8)
     text_box(s, x=mat_x, y=mat_y + 0.85, w=cell_w, h=0.30,
              text="TP",
-             size=20, bold=True, color=GREEN_OK, align=PP_ALIGN.CENTER)
+             size=20, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
     text_box(s, x=mat_x, y=mat_y + 1.20, w=cell_w, h=0.40,
              text="true positive\nправильно нашли",
              size=10, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
-    filled_rect(s, mat_x + cell_w, mat_y + 0.75, cell_w, cell_h, RGBColor(0xF8, 0xD7, 0xDA),
-                stroke=RED_WARN, stroke_pt=0.8)
+    filled_rect(s, mat_x + cell_w, mat_y + 0.75, cell_w, cell_h, fn_fill,
+                stroke=DEEP, stroke_pt=0.8)
     text_box(s, x=mat_x + cell_w, y=mat_y + 0.85, w=cell_w, h=0.30,
              text="FN",
-             size=20, bold=True, color=RED_WARN, align=PP_ALIGN.CENTER)
+             size=20, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     text_box(s, x=mat_x + cell_w, y=mat_y + 1.20, w=cell_w, h=0.40,
              text="false negative\nпропустили больного",
              size=10, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
-    filled_rect(s, mat_x, mat_y + 0.75 + cell_h, cell_w, cell_h, GOLD_TINT,
+    filled_rect(s, mat_x, mat_y + 0.75 + cell_h, cell_w, cell_h, fp_fill,
                 stroke=GOLD, stroke_pt=0.8)
     text_box(s, x=mat_x, y=mat_y + 0.85 + cell_h, w=cell_w, h=0.30,
              text="FP",
@@ -719,11 +745,11 @@ def build_s10(p):
     text_box(s, x=mat_x, y=mat_y + 1.20 + cell_h, w=cell_w, h=0.40,
              text="false positive\nложная тревога",
              size=10, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
-    filled_rect(s, mat_x + cell_w, mat_y + 0.75 + cell_h, cell_w, cell_h, RGBColor(0xD9, 0xF0, 0xE0),
-                stroke=GREEN_OK, stroke_pt=0.8)
+    filled_rect(s, mat_x + cell_w, mat_y + 0.75 + cell_h, cell_w, cell_h, tn_fill,
+                stroke=MID, stroke_pt=0.8)
     text_box(s, x=mat_x + cell_w, y=mat_y + 0.85 + cell_h, w=cell_w, h=0.30,
              text="TN",
-             size=20, bold=True, color=GREEN_OK, align=PP_ALIGN.CENTER)
+             size=20, bold=True, color=MID, align=PP_ALIGN.CENTER)
     text_box(s, x=mat_x + cell_w, y=mat_y + 1.20 + cell_h, w=cell_w, h=0.40,
              text="true negative\nправильно отпустили",
              size=10, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
@@ -754,10 +780,10 @@ def build_s10(p):
                  text=meaning, size=12, color=DEEP, line_spacing=1.30,
                  anchor=MSO_ANCHOR.MIDDLE)
     gold_callout(s, 0.55, 6.15, 12.3, 0.7,
-                 "CheXNet (Rajpurkar 2017): sens 0.96 · spec 0.93  →  PPV ~8% при prev 1% (skрининг)  ·  ~78% при prev 30% (госпиталь).",
-                 size=13)
+                 "CheXNet (Rajpurkar 2017): sens 0.94–0.96 · spec 0.89–0.93 (range).  Для PPV math берём sens 0.94 / spec 0.89  →  PPV ~8% при prev 1% (скрининг)  ·  ~78% при prev 30% (госпиталь).",
+                 size=12)
     text_box(s, x=0.55, y=6.95, w=12.3, h=0.35,
-             text="Та же модель, та же accuracy — разные PPV. Знать prevalence в deployment population — обязательно.",
+             text="Та же модель, та же accuracy — разные PPV. Operating point зависит от threshold + патологии.",
              size=11, italic=True, color=SLATE)
     speaker_notes(s, load_notes("s10"))
 
@@ -784,7 +810,7 @@ def build_s11(p):
         ("Goh et al. 2024",
          "JAMA Network Open (Oct 2024)",
          "Clinical reasoning, 50 врачей",
-         "GPT-4 alone 76.3%  ·  врач+GPT-4 73.7%  (p = 0.60)",
+         "GPT-4 alone 76%  ·  врач+GPT-4 74%  (p = 0.60)",
          "Augmentation gap: AI не helped human reasoning",
          LIGHT, False),
     ]
@@ -803,7 +829,7 @@ def build_s11(p):
                  text="Domain", size=10, bold=True, color=SLATE)
         text_box(s, x=4.0, y=ry + 0.45, w=2.7, h=0.95,
                  text=domain, size=13, color=DEEP, line_spacing=1.30)
-        result_w = 5.0 if is_gold else 6.0
+        result_w = 4.4 if is_gold else 6.0
         text_box(s, x=6.95, y=ry + 0.15, w=result_w, h=0.30,
                  text="Result", size=10, bold=True, color=SLATE)
         text_box(s, x=6.95, y=ry + 0.40, w=result_w, h=0.55,
@@ -812,9 +838,9 @@ def build_s11(p):
                  text="→ " + takeaway, size=12, italic=True,
                  color=GOLD if is_gold else MID, line_spacing=1.30)
         if is_gold:
-            filled_rect(s, 11.85, ry + 0.15, 0.90, 0.40, GOLD, radius=True, radius_adj=0.30)
-            text_box(s, x=11.85, y=ry + 0.15, w=0.90, h=0.40,
-                     text="WIN", size=11, bold=True, color=WHITE,
+            filled_rect(s, 11.45, ry + 0.10, 1.35, 0.60, GOLD, radius=True, radius_adj=0.30)
+            text_box(s, x=11.45, y=ry + 0.10, w=1.35, h=0.60,
+                     text="WIN", size=18, bold=True, color=WHITE,
                      align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, x=0.55, y=6.85, w=12.3, h=0.45,
              text="Liu 2019 doi: 10.1016/S2589-7500(19)30123-2  ·  MASAI Lancet 2025  ·  Goh JAMA Netw Open 2024.",
@@ -947,21 +973,25 @@ def build_s14(p):
     a_y = 4.8
     a_h = 1.7
     a_w = 3.9
+    # Removed inline slide IDs (s12)/(s17a)/(s17b) — designer extra; switched cream-yellow
+    # backgrounds → Ocean surface, gold accent only on stroke + question mark.
     anchors = [
-        ("✓", "mosmed.ai", "(s12) — обещание сбылось",
-         "lucide-check-circle-blue.png", GREEN_OK, False),
-        ("?", "Rentosertib", "(s17a) — peer-reviewed Phase IIa",
+        ("✓", "mosmed.ai", "обещание сбылось",
+         "lucide-check-circle-blue.png", TEAL, False),
+        ("?", "Rentosertib", "peer-reviewed Phase IIa",
          "lucide-help-circle-blue.png", GOLD, True),
-        ("?", "DSP-1181", "(s17b) — discontinued",
+        ("?", "DSP-1181", "discontinued",
          "lucide-help-circle-blue.png", GOLD, True),
     ]
     total_anchor_w = a_w * 3 + 0.4
     a_start_x = (SLIDE_W_IN - total_anchor_w) / 2
     for i, (mark, name, sub, icon, color, is_gold) in enumerate(anchors):
         x = a_start_x + i * (a_w + 0.2)
-        fill = GOLD_TINT if is_gold else SURFACE
+        # Ocean surface + gold stroke (not gold_tint fill) per P1-4.
+        fill = SURFACE
         stroke = GOLD if is_gold else LIGHT
-        ocean_box(s, x, a_y, a_w, a_h, fill=fill, stroke=stroke)
+        ocean_box(s, x, a_y, a_w, a_h, fill=fill, stroke=stroke,
+                  stroke_pt=2.0 if is_gold else 1.5)
         add_image(s, ASSETS / "icons" / icon, x=x + 0.25, y=a_y + 0.25, w=0.7, h=0.7)
         text_box(s, x=x + 1.1, y=a_y + 0.25, w=a_w - 1.30, h=0.45,
                  text=mark + "  " + name, size=18, bold=True,
@@ -969,7 +999,7 @@ def build_s14(p):
         text_box(s, x=x + 1.1, y=a_y + 0.75, w=a_w - 1.30, h=0.40,
                  text=sub, size=12, italic=True, color=DEEP, line_spacing=1.25)
     text_box(s, x=0.55, y=6.85, w=12.3, h=0.40,
-             text="Mid-lecture re-orientation. Дальше — где AI ускоряет drug discovery (s15) и две истории (s17a/s17b).",
+             text="Mid-lecture re-orientation. Дальше — где AI ускоряет drug discovery и две истории.",
              size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s14"))
 
@@ -1133,7 +1163,8 @@ def build_s17a(p):
         h = tl_h
         if is_pivot:
             h = tl_h + 0.3
-            fill = GOLD_TINT
+            # Surface fill + gold stroke (P1-4) — cream-yellow removed.
+            fill = SURFACE
             stroke = GOLD
             sw = 2.5
         else:
@@ -1163,14 +1194,25 @@ def build_s17a(p):
                      text="—", size=24, bold=True, color=SLATE,
                      align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         x_cursor += bw + arrow_w
-    gold_callout(s, 0.55, 5.45, 12.3, 1.0,
-                 "60 mg QD → +98.4 mL FVC vs −20.3 mL placebo (12 weeks)  ·  Δ ~118 mL.\nIdiopathic Pulmonary Fibrosis (IPF) — clinically significant FVC delta.",
-                 size=14)
-    text_box(s, x=0.55, y=6.65, w=12.3, h=0.40,
-             text="Verifiable: peer-reviewed publication. Self-reported: 18-month timeline vs traditional 4–5 years.",
-             size=11, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
+    gold_callout(s, 0.55, 5.20, 12.3, 0.75,
+                 "60 mg QD → +98.4 mL FVC (forced vital capacity) vs −20.3 mL placebo (12 weeks)  ·  Δ ~118 mL. IPF — clinically significant.",
+                 size=13)
+    # P1-17 — RU drug discovery context (chapter §3.3, 300-word block).
+    ru_y, ru_h = 6.05, 0.95
+    ocean_box(s, 0.55, ru_y, 12.3, ru_h)
+    text_runs(s, 0.85, ru_y + 0.10, 11.7, ru_h - 0.20, [
+        {"text": "RU context (2024–2025 preclinical): ", "size": 12,
+         "color": TEAL, "bold": True},
+        {"text": "Сбер AI Lab + AIRI + Р-Фарм — Alliance #1 CD137 онкология (май 2024); "
+                 "Alliance #2 Alzheimer (ноябрь 2025); MADD (ITMO+Сбер, EMNLP 2025); "
+                 "DiMA (AIRI, ICML 2025).",
+         "size": 11, "color": DEEP},
+        {"newpara": True,
+         "text": "Все программы — preclinical: 0 RU-designed препаратов в клинических испытаниях на май 2026.",
+         "size": 11, "italic": True, "color": SLATE},
+    ], line_spacing=1.30)
     text_box(s, x=0.55, y=7.05, w=12.3, h=0.35,
-             text="PubMed 40461817 · NCT05938920 · Insilico Medicine press June 2025.",
+             text="PubMed 40461817 · NCT05938920 · Nature Medicine июнь 2025 · MADD EMNLP 2025 · DiMA ICML 2025.",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s17a"))
 
@@ -1206,8 +1248,10 @@ def build_s17b(p):
         h = tl_h
         if is_pivot:
             h = tl_h + 0.3
-            fill = RGBColor(0xF0, 0xE5, 0xD8)
-            stroke = GOLD
+            # Pivot card: Ocean surface + navy text + grey stroke for «closed/discontinued».
+            # No red palette per anti-pattern #3 (P1-5).
+            fill = SURFACE
+            stroke = DARK_GREY
             sw = 2.5
         else:
             fill = SURFACE
@@ -1222,10 +1266,12 @@ def build_s17b(p):
                  w=bw - 0.4, h=0.50,
                  text=date, size=date_size, bold=True,
                  color=DARK_GREY if is_pivot else color, line_spacing=1.10)
+        # «✕ DISCONTINUED» — navy bold (no red) with strikethrough-style icon prefix.
+        body_with_strike = ("✕ " + body) if is_pivot else body
         text_box(s, x=x + 0.20, y=(tl_y - 0.15 if is_pivot else tl_y) + 0.80,
                  w=bw - 0.4, h=1.10,
-                 text=body, size=body_size, bold=is_pivot,
-                 color=RED_WARN if is_pivot else DEEP,
+                 text=body_with_strike, size=body_size, bold=is_pivot,
+                 color=DEEP if is_pivot else DEEP,
                  line_spacing=1.30)
         text_box(s, x=x + 0.20, y=(tl_y - 0.15 if is_pivot else tl_y) + 1.85,
                  w=bw - 0.4, h=0.55,
@@ -1243,7 +1289,7 @@ def build_s17b(p):
     text_runs(s, 0.85, insight_y + 0.20, 11.7, insight_h - 0.4, [
         {"text": "AI ускорил design", "size": 18, "color": MID, "bold": True},
         {"text": "  (12 мес vs 4–5 лет) — ", "size": 16, "color": DEEP},
-        {"text": "verified.", "size": 16, "color": GREEN_OK, "bold": True},
+        {"text": "verified.", "size": 16, "color": TEAL, "bold": True},
         {"newpara": True,
          "text": "Clinical efficacy", "size": 18, "color": MID, "bold": True},
         {"text": "  — отдельная задача биологии.", "size": 16, "color": DEEP},
@@ -1293,9 +1339,11 @@ def build_s18(p):
     gap = 0.15
     for i, (title, icon, items, is_gold) in enumerate(cols):
         x = 0.55 + i * (col_w + gap)
-        fill = GOLD_TINT if is_gold else SURFACE
+        # Ocean surface + gold stroke (no gold_tint fill — P1-4).
+        fill = SURFACE
         stroke = GOLD if is_gold else LIGHT
-        ocean_box(s, x, col_y, col_w, col_h, fill=fill, stroke=stroke)
+        ocean_box(s, x, col_y, col_w, col_h, fill=fill, stroke=stroke,
+                  stroke_pt=2.0 if is_gold else 1.5)
         add_image(s, ASSETS / "icons" / icon, x=x + 0.30, y=col_y + 0.30, w=0.7, h=0.7)
         text_box(s, x=x + 1.10, y=col_y + 0.35, w=col_w - 1.30, h=0.65,
                  text=title, size=18, bold=True, color=DEEP, line_spacing=1.15)
@@ -1310,6 +1358,9 @@ def build_s18(p):
     gold_callout(s, 0.55, 6.85, 12.3, 0.50,
                  "→ Проектируйте с PCCP в уме: data drift, retraining triggers, threshold updates — план ex ante.",
                  size=13)
+    text_box(s, x=0.55, y=7.35, w=12.3, h=0.20,
+             text="SaMD — Software as Medical Device (FDA category) · MDR — EU Medical Device Regulation",
+             size=10, italic=True, color=LIGHT, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s18"))
 
 
@@ -1317,7 +1368,7 @@ def build_s19(p):
     s = blank(p)
     slide_title(s, "Используем AI для понимания AI — но проверяем.", size=24)
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
-             text="10 мин · LO4 · web-chat + критическая оценка",
+             text="Web-chat + критическая оценка ответа.",
              size=14, italic=True, color=MID)
     card_x, card_y, card_w, card_h = 0.55, 1.85, 8.2, 5.0
     ocean_box(s, card_x, card_y, card_w, card_h)
@@ -1399,21 +1450,12 @@ def build_s20(p):
              size=14, italic=True, color=MID)
     img_x, img_y, img_w, img_h = 0.55, 1.85, 5.6, 4.9
     ocean_box(s, img_x, img_y, img_w, img_h)
-    filled_rect(s, img_x + 0.3, img_y + 0.4, img_w - 0.6, img_h - 0.9,
-                DEEP, radius=True, radius_adj=0.05)
-    for k in range(3):
-        cx = img_x + 1.2 + k * 1.5
-        cy = img_y + 1.8
-        filled_rect(s, cx, cy, 0.55, 0.55, SURFACE, radius=True, radius_adj=0.5)
-        filled_rect(s, cx - 0.2, cy + 0.65, 0.95, 1.4, LIGHT, radius=True, radius_adj=0.15)
-    filled_rect(s, img_x + 1.0, img_y + 3.7, img_w - 2.0, 0.7,
-                SURFACE, stroke=GOLD, stroke_pt=2.0, radius=True, radius_adj=0.05)
-    text_box(s, x=img_x + 1.0, y=img_y + 3.7, w=img_w - 2.0, h=0.7,
-             text="AI heatmap + dx",
-             size=13, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=img_x + 0.3, y=img_y + img_h - 0.45, w=img_w - 0.6, h=0.35,
-             text="Медицинская команда + AI: схематично",
+    # News image (P1-1): Harvard Gazette «AI is speeding into healthcare. Who should regulate it?»
+    # (news.harvard.edu, Jan 2026 — Prof. I. Glenn Cohen)
+    add_image(s, ASSETS / "news/s20-harvard-ai-regulation.jpg",
+              x=img_x + 0.25, y=img_y + 0.30, w=img_w - 0.5, h=img_h - 0.85)
+    text_box(s, x=img_x + 0.3, y=img_y + img_h - 0.50, w=img_w - 0.6, h=0.35,
+             text="Harvard Gazette — AI healthcare regulation (Jan 2026)",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     list_x, list_y, list_w, list_h = 6.45, 1.85, 6.35, 4.9
     ocean_box(s, list_x, list_y, list_w, list_h)
@@ -1525,7 +1567,7 @@ def build_s22(p):
     cards = [
         ("NEDA Tessa scandal",
          ["~2018–2022: rule-based, NEDA approved",
-          "Март 2023: Cass → generative БЕЗ NEDA approval",
+          "Начало 2023: Cass → generative БЕЗ NEDA approval",
           "30 мая 2023: Maxwell screenshots → suspended 24h"],
          "lucide-message-circle-warning-blue.png", "vendor accountability",
          "May 2023 · NPR · AI Incident DB #545"),
@@ -1542,44 +1584,49 @@ def build_s22(p):
          "lucide-users-blue.png", "40M Americans",
          "OpenAI / Gallup 2025 · Becker's Hospital Review"),
     ]
+    # P1-7: compressed card heights + footer pulled up so callout не cuts at safe area.
     card_y = 1.80
-    card_h = 1.55
+    card_h = 1.42
     card_w = 12.3
     for i, (title, lines, icon, badge, source) in enumerate(cards):
-        y = card_y + i * (card_h + 0.10)
+        y = card_y + i * (card_h + 0.08)
         ocean_box(s, 0.55, y, card_w, card_h)
-        add_image(s, ASSETS / "icons" / icon, x=0.85, y=y + 0.25, w=0.95, h=0.95)
-        text_box(s, x=2.0, y=y + 0.20, w=4.5, h=0.50,
-                 text=title, size=17, bold=True, color=DEEP, line_spacing=1.15)
-        filled_rect(s, 2.0, y + 0.75, 2.5, 0.35, GOLD, radius=True, radius_adj=0.30)
-        text_box(s, x=2.0, y=y + 0.75, w=2.5, h=0.35,
+        add_image(s, ASSETS / "icons" / icon, x=0.85, y=y + 0.22, w=0.85, h=0.85)
+        text_box(s, x=1.90, y=y + 0.18, w=4.5, h=0.45,
+                 text=title, size=16, bold=True, color=DEEP, line_spacing=1.15)
+        filled_rect(s, 1.90, y + 0.66, 2.5, 0.32, GOLD, radius=True, radius_adj=0.30)
+        text_box(s, x=1.90, y=y + 0.66, w=2.5, h=0.32,
                  text=badge, size=11, bold=True, color=WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=2.0, y=y + 1.20, w=4.5, h=0.30,
+        text_box(s, x=1.90, y=y + 1.05, w=4.5, h=0.30,
                  text=source, size=10, italic=True, color=LIGHT, line_spacing=1.20)
         for j, ln in enumerate(lines):
-            ly = y + 0.20 + j * 0.42
-            filled_rect(s, 6.85, ly + 0.15, 0.10, 0.10, MID, radius=True, radius_adj=0.5)
-            text_box(s, x=7.05, y=ly, w=card_w - 6.65, h=0.40,
-                     text=ln, size=12, color=DEEP, line_spacing=1.30)
-    gold_callout(s, 0.55, 6.85, 12.3, 0.50,
+            ly = y + 0.18 + j * 0.38
+            filled_rect(s, 6.75, ly + 0.13, 0.10, 0.10, MID, radius=True, radius_adj=0.5)
+            text_box(s, x=6.95, y=ly, w=card_w - 6.55, h=0.38,
+                     text=ln, size=11, color=DEEP, line_spacing=1.25)
+    gold_callout(s, 0.55, 6.55, 12.3, 0.45,
                  "→ Generative AI ≠ rule-based AI. Vendor design changes могут обойти clinical safety design.",
-                 size=14)
+                 size=13)
+    text_box(s, x=0.55, y=7.10, w=12.3, h=0.25,
+             text="Точная дата generative switch — начало 2023 (источники не дают строгий месяц).",
+             size=10, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s22"))
 
 
 def build_s23(p):
     s = blank(p)
-    slide_title(s, "Медицинские данные — target №1 для атакующих.", size=24)
+    # P1-23: AI connection assertion moved to TOP (was buried in middle).
+    slide_title(s, "Medical AI training datasets наследуют data security risk.", size=22)
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
-             text="Change Healthcare (Feb 2024): 190M человек, $2.457 млрд recovery cost.",
+             text="Change Healthcare (Feb 2024): 190M человек, $2.457 млрд recovery cost — medical data target №1.",
              size=14, italic=True, color=MID)
+    # News headline без red palette — Ocean rounded box per palette lock.
     nh_x, nh_y, nh_w, nh_h = 0.55, 1.85, 12.3, 0.8
-    filled_rect(s, nh_x, nh_y, nh_w, nh_h, RGBColor(0xF8, 0xEA, 0xEA),
-                stroke=RED_WARN, stroke_pt=1.0, radius=True, radius_adj=0.05)
+    ocean_box(s, nh_x, nh_y, nh_w, nh_h)
     text_box(s, x=nh_x + 0.30, y=nh_y + 0.10, w=nh_w - 0.6, h=0.30,
-             text="BREAKING (BleepingComputer, Feb 2024)",
-             size=10, bold=True, color=RED_WARN)
+             text="BleepingComputer · 21.02.2024",
+             size=10, bold=True, color=MID)
     text_box(s, x=nh_x + 0.30, y=nh_y + 0.35, w=nh_w - 0.6, h=0.40,
              text="UnitedHealth: 190 million Americans impacted by 2024 Change Healthcare data breach",
              size=15, bold=True, color=DEEP, line_spacing=1.20)
@@ -1641,19 +1688,25 @@ def build_s24(p):
     grid_x, grid_y, grid_w, grid_h = 1.40, 1.85, 10.7, 3.7
     cell_w = grid_w / 2
     cell_h = grid_h / 2
+    # P1-2 critical: Vendor ↔ Operator swap.
+    # Final placement after swap:
+    #   Top-left (col=0, row=0): Regulator (low control + high oversight role).
+    #   Top-right (col=1, row=0): Врач (high control + high liability) — GOLD.
+    #   Bottom-left (col=0, row=1): Operator (mid control + mid liability) — was Vendor (wrong).
+    #   Bottom-right (col=1, row=1): Vendor (high technical control + medium liability) — was Operator (wrong).
     cells = [
         ("Regulator", "Approves · audits · revokes",
-         "FDA · EU NB · Росздравнадзор",
+         "FDA · EU NB · Росздравнадзор · high oversight role",
          "lucide-gavel-blue.png", LIGHT, 0, 0, False),
         ("Врач", "Final diagnostic decision",
-         "AI = подсказка, не decision",
+         "AI = подсказка, не decision · high liability",
          "lucide-stethoscope-blue.png", GOLD, 1, 0, True),
+        ("Operator", "Vendor selection · training · deployment",
+         "Больница · клиника · ДЗМ · medium control + liability",
+         "lucide-building-2-blue.png", MID, 0, 1, False),
         ("Vendor", "Model design · safety claims",
-         "PCCP updates · post-market surveil.",
-         "lucide-code-blue.png", MID, 0, 1, False),
-        ("Operator", "Vendor selection · training",
-         "Больница · клиника · ДЗМ",
-         "lucide-building-2-blue.png", MID, 1, 1, False),
+         "PCCP updates · post-market surveil. · high control",
+         "lucide-code-blue.png", MID, 1, 1, False),
     ]
     for title, sub, exs, icon, color, col, row, is_gold in cells:
         x = grid_x + col * cell_w
@@ -1698,6 +1751,7 @@ def build_s26(p):
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
              text="Работающая инфраструктура + конкретная responsibility framework.",
              size=14, italic=True, color=MID)
+    # P1-12: LO codes removed from visible content; remain в speaker notes only.
     cards = [
         ("✓",
          "AI-диагностика работает",
@@ -1705,21 +1759,21 @@ def build_s26(p):
           "FDA 1 451 devices (end-2025)",
           "MASAI workload −44%",
           "CV-pipeline 2017–2024 уровня"],
-         "lucide-activity-blue.png", "LO1, LO2", MID, False),
+         "lucide-activity-blue.png", "", MID, False),
         ("~",
          "Drug discovery — частично",
          ["AlphaFold solved · Нобель 2024",
           "Insilico Rentosertib — Phase IIa peer-reviewed",
           "DSP-1181 — discontinued",
           "Clinical attrition unchanged"],
-         "lucide-flask-conical-blue.png", "LO2, LO3", MID, True),
+         "lucide-flask-conical-blue.png", "", MID, True),
         ("→",
          "Ответственность — на враче",
          ["AI подсказывает, врач решает",
           "Инженер делает responsibility выполнимой",
-          "3 принципа → черновик Lec 9",
-          "Personal версия → Lec 14"],
-         "lucide-users-blue.png", "LO3, LO8", DEEP, False),
+          "3 принципа → черновик следующей лекции",
+          "Personal версия → последняя лекция"],
+         "lucide-users-blue.png", "", DEEP, False),
     ]
     card_y = 1.95
     card_h = 4.6
@@ -1743,10 +1797,9 @@ def build_s26(p):
             filled_rect(s, x + 0.30, ly + 0.13, 0.10, 0.10, color, radius=True, radius_adj=0.5)
             text_box(s, x=x + 0.50, y=ly, w=card_w - 0.65, h=0.40,
                      text=ln, size=12, color=DEEP, line_spacing=1.30)
-        text_box(s, x=x + 0.30, y=card_y + card_h - 0.45, w=card_w - 0.6, h=0.35,
-                 text=los, size=11, italic=True, bold=True, color=color)
+        # LO label removed per P1-12 (No Extra Content Rule).
     gold_callout(s, 0.55, 6.85, 12.3, 0.45,
-                 "→ 3 takeaways = input для черновика чек-листа на Lec 9. Не финальный синтез — input.",
+                 "→ 3 takeaways = input для черновика чек-листа на следующей лекции. Не финальный синтез — input.",
                  size=13)
     speaker_notes(s, load_notes("s26"))
 
@@ -1756,18 +1809,12 @@ def build_s27(p):
     set_slide_bg(s, SURFACE)
     img_x, img_y, img_w, img_h = 0.55, 0.85, 5.5, 5.8
     ocean_box(s, img_x, img_y, img_w, img_h)
-    filled_rect(s, img_x + 0.3, img_y + 0.4, img_w - 0.6, img_h - 0.9,
-                DEEP, radius=True, radius_adj=0.05)
-    filled_rect(s, img_x + 1.0, img_y + 1.0, 0.7, 0.7, SURFACE, radius=True, radius_adj=0.5)
-    filled_rect(s, img_x + 0.8, img_y + 1.8, 1.1, 1.6, LIGHT, radius=True, radius_adj=0.15)
-    filled_rect(s, img_x + 3.0, img_y + 1.2, 0.65, 0.65, GOLD_TINT, radius=True, radius_adj=0.5)
-    filled_rect(s, img_x + 2.8, img_y + 1.95, 1.0, 1.5, GOLD, radius=True, radius_adj=0.15)
-    text_box(s, x=img_x + 0.3, y=img_y + 3.9, w=img_w - 0.6, h=0.4,
-             text="Human stays central",
-             size=14, bold=True, color=WHITE,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=img_x + 0.3, y=img_y + img_h - 0.45, w=img_w - 0.6, h=0.35,
-             text="Врач + пациент: explanation moment (schematic)",
+    # P1-1: news image — AMA «For health AI to work, physicians and patients have to trust it»
+    # (ama-assn.org, 2024 AI Trust Index thematic image).
+    add_image(s, ASSETS / "news/s27-ama-trust-ai.jpg",
+              x=img_x + 0.30, y=img_y + 0.40, w=img_w - 0.6, h=img_h - 1.10)
+    text_box(s, x=img_x + 0.30, y=img_y + img_h - 0.65, w=img_w - 0.6, h=0.35,
+             text="AMA — AI Trust Index, physicians + patients (ama-assn.org)",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     ph_x, ph_y, ph_w, ph_h = 6.30, 0.85, 6.50, 5.8
     ocean_box(s, ph_x, ph_y, ph_w, ph_h)
@@ -1790,41 +1837,14 @@ def build_s27(p):
 
 def build_s28(p):
     s = blank(p)
-    slide_title(s, "Что дальше: Лекция 6 + черновик чек-листа на Lec 9.", size=22)
+    slide_title(s, "Что дальше: Лекция 6 + черновик чек-листа.", size=22)
     text_box(s, x=0.55, y=1.10, w=12.3, h=0.40,
-             text="3 принципа сегодня — input для черновика чек-листа на Лекции 9.",
+             text="3 принципа сегодня — input для черновика чек-листа на следующей лекции по этике.",
              size=13, italic=True, color=MID)
-    pb_y = 1.85
-    pb_h = 0.50
-    pb_x = 0.55
-    pb_total_w = 12.3
-    n_lectures = 14
-    cell_gap = 0.04
-    cell_w = (pb_total_w - cell_gap * (n_lectures - 1)) / n_lectures
-    for i in range(n_lectures):
-        x = pb_x + i * (cell_w + cell_gap)
-        if i < 3:
-            fill = MID
-            color = WHITE
-        elif i == 3:
-            fill = GOLD
-            color = WHITE
-        elif i == 4:
-            fill = TEAL_TINT
-            color = TEAL
-        else:
-            fill = SOFT_GREY
-            color = SLATE
-        filled_rect(s, x, pb_y, cell_w, pb_h, fill, radius=True, radius_adj=0.30)
-        text_box(s, x=x, y=pb_y + 0.08, w=cell_w, h=pb_h - 0.16,
-                 text=str(i + 1) if i != 4 else "К1",
-                 size=12, bold=True, color=color,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=0.55, y=pb_y + pb_h + 0.10, w=12.3, h=0.35,
-             text="Лекция 4 (сейчас, gold)  ·  Колоквиум 1 (К1)  ·  Лекция 6 (далее)",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    card_y = 3.20
-    card_h = 3.0
+    # P1-16: navigation badge «1-2-3-4-К1-6...» removed (No Extra Content Rule —
+    # «Вы здесь» markers forbidden).
+    card_y = 2.20
+    card_h = 3.6
     card_w = 6.0
     gap = 0.30
     ocean_box(s, 0.55, card_y, card_w, card_h)
@@ -1855,7 +1875,7 @@ def build_s28(p):
              text="3 принципа сегодня\n→ черновик чек-листа на Lec 9\n→ personal версия на Lec 14",
              size=13, color=DEEP, line_spacing=1.45)
     gold_callout(s, 0.55, 6.55, 12.3, 0.65,
-                 "Опционально: найти 1 case medical AI в news + apply 4-actor framework (s24). Не оценивается; тренировка навыка.",
+                 "Опционально: найти 1 case medical AI в news + apply 4-actor framework. Не оценивается; тренировка навыка.",
                  size=13)
     speaker_notes(s, load_notes("s28"))
 

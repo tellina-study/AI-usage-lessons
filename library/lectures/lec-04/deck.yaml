@@ -270,7 +270,7 @@ slides:
     duration_min: 2
     assertion: "Medical AI = high-risk во всех 3 крупных юрисдикциях (FDA / EU / RF). Approaches отличаются процессами, не principles."
     learning_goal: "3-jurisdiction regulation comparison + PCCP innovation"
-    learning_outcomes: [LO3]
+    learning_outcomes: [LO3, LO8]
     chapter_ref: "§3.5 — Регулирование AI в медицине"
     references: [fda-pccp-2024, eu-ai-act-2024-1689, vniiimt-2024, webiomed-2026]
     visual:
@@ -299,7 +299,7 @@ slides:
     duration_min: 1
     assertion: "В медицинском AI ставки максимальны. Что инженер должен знать про границы."
     learning_goal: "Transition к ethics section — 3 темы next slides"
-    learning_outcomes: [LO3]
+    learning_outcomes: [LO3, LO8]
     chapter_ref: "§5.1 — Зачем инженеру думать про границы"
     references: []
     visual:
@@ -312,7 +312,7 @@ slides:
     duration_min: 3
     assertion: "Obermeyer 2019 (Science): commercial AI для 200M Americans systematically underestimated severity для black patients. Proxy «стоимость лечения» вместо «тяжесть болезни»."
     learning_goal: "Deep-dive bias case с actionable engineer lesson"
-    learning_outcomes: [LO3]
+    learning_outcomes: [LO3, LO8]
     chapter_ref: "§5.2 — Obermeyer 2019: выбор метрики стал выбором политики"
     references: [obermeyer-2019-science, berkeley-news-2019, stat-news-2019]
     visual:
@@ -325,7 +325,7 @@ slides:
     duration_min: 4
     assertion: "LLM в медицине ≠ медицинский AI. 3 documented anti-pattern cases на 2025-2026."
     learning_goal: "3 LLM anti-pattern cases: Tessa vendor accountability + adversarial 83% + 40M self-diagnosis"
-    learning_outcomes: [LO3]
+    learning_outcomes: [LO3, LO8]
     chapter_ref: "§5.3 — LLM-анти-паттерны в медицине"
     references: [npr-2023-tessa, ai-incident-db-545, comm-medicine-2025, beckers-2025, gallup-2025]
     visual:
@@ -338,7 +338,7 @@ slides:
     duration_min: 3
     assertion: "Медицинские данные — самая защищаемая категория. И самая ценная для атакующих. Change Healthcare (Feb 2024): 190M человек, $2.457 млрд recovery cost."
     learning_goal: "Medical data security + AI training datasets risk + ФЗ-152/ФЗ-23"
-    learning_outcomes: [LO3]
+    learning_outcomes: [LO3, LO8]
     chapter_ref: "§5.4 — Безопасность медицинских данных"
     references: [uhg-2024, bleeping-computer-2024, hipaa-journal-2024, sweeney-2002]
     visual:

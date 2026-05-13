@@ -597,7 +597,7 @@ LO8 курса — «сформулировать собственный чек-
 
 | # | Канонический термин (RU) | Канонический термин (EN) | Определение |
 |---|---|---|---|
-| 1 | **AI-диагностика** | AI medical imaging / AI medical diagnostics | Применение AI (преимущественно computer vision) для анализа медицинских изображений или сигналов с целью диагноза. Аллиасы: «AI medical diagnostics». Не путать с CADe (узкая FDA-категория, см. #11). Запрещённые синонимы: «medical AI» (слишком широко). |
+| 1 | **AI-диагностика** | AI medical imaging / AI medical diagnostics | Narrow подкатегория medical AI — применение AI (преимущественно computer vision) для анализа медицинских изображений или сигналов с целью диагноза. Аллиасы: «AI medical diagnostics», «AI medical imaging». Не путать с CADe (узкая FDA-категория, см. #11). **aliases_allowed_umbrella:** «medical AI», «медицинский AI» — общая категория-зонтик для AI в медицине, broader scope than AI-диагностика (используется в chapter + slides последовательно как umbrella term). |
 | 2 | **Drug discovery** | Drug discovery | Процесс открытия новых лекарственных молекул. Традиционно 10–15 лет, ~$1.5–2 млрд на одобренный препарат, ~6.7% шанс пройти от Phase 1 до approval. |
 | 3 | **Sensitivity (чувствительность, recall)** | Sensitivity / recall | TP / (TP + FN). Доля больных, которых AI правильно определил как больных. |
 | 4 | **Specificity (специфичность)** | Specificity | TN / (TN + FP). Доля здоровых, которых AI правильно определил как здоровых. |

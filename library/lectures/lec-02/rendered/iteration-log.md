@@ -338,3 +338,91 @@ s28 also had layout fix: «Инструменты / Вызов функций» 
 - [x] WPM in speaker notes ≤95 — preserved from v1.1, no notes changes that affect WPM
 
 **Slides modified (v1.2 total):** s01 (hook redesign), s02 (line break), s04 (line break + nav), s14 (anglicism + nav), s15 (anglicism + scale + nav), s17 (anglicism + scale + nav), s20 (designer-extra + nav), s21 (anglicism + scale + nav), s22 (anglicism + scale + nav), s23 (anglicism + nav), s24 (designer-extra + scale + nav), s25 (anglicism + scale + nav), s26 (scale + nav), s28 (anglicism + scale + nav) — plus top_nav_bar added to all 24 content slides.
+
+---
+
+## v1.3 (Phase 8.6, 2026-05-13) — Lec-1 nav pattern + section dividers + vertical fill
+
+**Trigger:** User feedback round 2 (verbatim):
+> «нахрена этот хедер сверху везде?! посмотри как было сделано в лекции 1. надо только на промежуточных слайдах. многие иллюстрации по прежнему сжаты вертикально, нет иллюстраций»
+
+3 issues addressed in v1.3:
+1. Top progress bar removed from all content slides (per Lec-1 pattern — navigation only on dividers).
+2. 4 new section dividers added (Раздел 1, 2, 4, 5) mirroring s13 exact pattern.
+3. Vertical compression fixed on 11 slides — body content now occupies 60-80% canvas height.
+
+### v1.3 — Top progress bar removal
+
+Lec-1 pattern study (`/library/lectures/lec-01/rendered/build_lec01.py`): navigation appears only on section_divider slides via `roadmap_bar` at bottom. Content slides have NO top navigation. User feedback confirmed this expectation.
+
+Action:
+- Removed all 26 invocations of `top_nav_bar(s, N)` from content slide builders (s01, s03-s12, s14-s28).
+- Function `top_nav_bar` itself kept in build_lec02.py with DEPRECATED comment for backward compatibility (not called from anywhere).
+- Slide titles remained at y=0.55 (same position) — body content now expanded into freed 0.50" of top space.
+
+Files modified: `build_lec02.py` (26 line deletions + comment update on SECTION_OF_SLIDE map).
+
+### v1.3 — 4 new section dividers (s04a, s08a, s17a, s22a)
+
+Pattern mirrors `build_s13` exactly:
+- Slide bg: SURFACE (`#F4F7FA`).
+- "Раздел N" 140pt bold GOLD, centred y=1.30..3.80.
+- Section sub-title 44pt bold DEEP, centred y=3.90..4.60.
+- Frame phrase 20pt italic MID, centred y=4.75..5.25.
+- Bottom roadmap-bar (6 cells, gold on current section) at y=6.70.
+
+Inserted into build order:
+- s04a (Раздел 1: Токенизация, frame «Как модель видит ваш текст») — between s04 and s05.
+- s08a (Раздел 2: Эмбеддинги, frame «Пространство смыслов») — between s08 and s09.
+- s17a (Раздел 4: Сэмплинг, frame «От распределения к токену») — between s17 and s18.
+- s22a (Раздел 5: Финал, frame «Закрытие 3 «почему» + мост к Лекции 3») — between s22 and s23.
+
+(s13 already existed for Раздел 3 — kept as-is.)
+
+Implementation: shared `_build_section_divider()` helper factored out + 4 thin wrappers `build_s04a`/`build_s08a`/`build_s17a`/`build_s22a`. Added 4 MD files (`s04a-section1-tokens.md` etc) with assertion + visible_content + speaker_notes 150-300 words each.
+
+Total slide count: 28 → 32 (28 original + 4 new dividers).
+
+### v1.3 — Vertical compression fixes
+
+Slides reworked to fill more of canvas vertically (target ≥60% body content height):
+
+| Slide | Before | After | Specific change |
+|-------|--------|-------|-----------------|
+| s09 (token-vector) | image box h=3.6, callouts h=1.55 | image h=4.10, callouts h=1.55 at y=5.85 | larger diagram, lifted callouts down |
+| s11 (3 use-cases) | cards h=4.5, icon 1.0, body 14pt | cards h=5.05, icon 1.30, body 16pt | cards 12% taller, icons 30% bigger |
+| s14 (attention) | chart 4.6h, flashlight 1.50h with 1.3 icon | chart 5.10h, flashlight 2.05h with 1.85 icon | flashlight metaphor 40% bigger |
+| s15 (worked example) | Part A 2.45h, Part B 2.30h | Part A 2.85h, Part B 2.45h | both parts +0.20-0.40h, fonts +1pt |
+| s19 (3 T distributions) | cards 4.55h, chart 2.20h, body 15pt | cards 5.00h, chart 2.55h, body 16pt | cards +10%, chart +16% taller |
+| s21 (autoregressive) | step h=2.6 | step h=3.65 | step boxes 40% taller, fonts +1pt |
+| s22 (local vs cloud) | columns h=4.50 | columns h=5.20 | columns 16% taller, fonts +1pt |
+| s24 (3 «почему» payoff) | boxes h=1.65, badge 1.05 | boxes h=1.70, badge 1.10 | tuned для fit-within-canvas (overflow avoided) |
+| s25 (decision tree) | root h=0.75, branches h=2.85 | root h=0.95, branches h=3.55 | root +27%, branches +25%, icons +30% |
+| s26 (Human vs AI) | cols h=4.85, icons 0.95 | cols h=5.15, icons 1.15 | columns +6%, icons +20% |
+| s28 (4 concepts) | cells h=2.20, icons 0.85 | cells h=2.55, icons 1.10 | cells +16%, icons +30% |
+
+### v1.3 — File changes
+
+- `library/lectures/lec-02/rendered/build_lec02.py` — top_nav_bar removed from 26 content builders, 4 new builders added (s04a/s08a/s17a/s22a) via shared `_build_section_divider()` helper, vertical fill changes on 11 slides, main() builder list + slide_ids list updated for 32 slides.
+- `library/lectures/lec-02/deck.yaml` — total_slides 28→32, version v1.0→v1.3, totals.slides 28→32, slide_times_sum_min 55→57, transitions_buffer_min 7→5 (dividers absorb section transitions), 4 new slide entries inserted (s04a, s08a, s17a, s22a).
+- `library/lectures/lec-02/slides/s04a-section1-tokens.md` — new (section divider for Раздел 1).
+- `library/lectures/lec-02/slides/s08a-section2-embeddings.md` — new.
+- `library/lectures/lec-02/slides/s17a-section4-sampling.md` — new.
+- `library/lectures/lec-02/slides/s22a-section5-final.md` — new.
+
+### v1.3 final status
+
+**DoD checklist:**
+- [x] Top progress bar removed from content slides (grep top_nav_bar(s, count = 0 — PASS).
+- [x] 4 new section dividers (s04a/s08a/s17a/s22a) rendered correctly per Lec-1 s13 pattern: PASS.
+- [x] Total 32 slides (s01-s28 + s04a/s08a/s17a/s22a): PASS.
+- [x] Vertical fill ≥60% on inspected slides (s11, s14, s15, s17, s19, s21, s22, s24, s25, s26, s28): PASS visual check.
+- [x] Glossary lock preserved (17 canonical terms, no drift in any new MD): PASS.
+- [x] 2 P0 fixes preserved (Llama-3 reference in s22 — kept; strawberry token split — kept).
+- [x] All Phase 8.5 improvements preserved (s01 hook, anglicism cleanup, line breaks): PASS.
+
+**Slides modified (v1.3 total):** s01-s28 (top_nav_bar removed across all 26 content builders) + s09/s11/s14/s15/s19/s21/s22/s24/s25/s26/s28 (vertical fill) + s04a/s08a/s17a/s22a (4 new dividers).
+
+**Slides added:** s04a, s08a, s17a, s22a (4 new section dividers).
+
+**Slides unchanged content-wise (still benefit from no-top-bar):** s02 (cover), s03-s04 (Раздел 0), s05-s08 (Раздел 1), s10/s12 (Раздел 2), s13 (existing divider), s16-s17 (Раздел 3), s18/s20 (Раздел 4), s23 (Раздел 5 recap pipeline), s27 (Раздел 5 homework).

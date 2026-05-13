@@ -1,7 +1,8 @@
 # library/lectures/lec-02/deck.yaml
 #
-# Deck-структура Лекции 2 v1.0 (28 слайдов, monotonic s01-s28).
-# Phase 5 output (Phase 5 — content extraction; Phase 6 — PowerPoint rendering — далее).
+# Deck-структура Лекции 2 v1.3 (32 слайда: 28 original + 4 section dividers
+# s04a/s08a/s17a/s22a added in Phase 8.6 to mirror Lec-1 navigation pattern).
+# Phase 5 output → Phase 6 → Phase 8 polish (v1.1/v1.2/v1.3).
 # Source: chapter v1.1 (status=reviewed, ~11400 слов).
 # Plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1).
 
@@ -14,10 +15,10 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v1.0
+  version: v1.3
   source: chapter v1.1 (status=reviewed, ~11400 слов)
   plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1)
-  total_slides: 28
+  total_slides: 32
   curriculum_level: introductory
 
 palette:
@@ -126,7 +127,20 @@ slides:
       pattern: central_question_with_promises
       primary: "Центральный вопрос крупно (32pt bold #21295C). Снизу — 3 промиса-якоря в Ocean rounded boxes: (1) почему промпт с ролью лучше (→ Раздел 3), (2) почему AI плохо считает буквы (→ Раздел 1), (3) почему один запрос даёт разные ответы (→ Раздел 4). 3-я промиса с gold-маркером «payoff в s24»."
 
-  # ─── Раздел 1. Токенизация (11 мин, 4 слайда: s05-s08) ───
+  # ─── Раздел 1. Токенизация (11.5 мин, 5 слайдов: s04a divider + s05-s08) ───
+  - id: s04a
+    file: slides/s04a-section1-tokens.md
+    type: section_divider
+    section: "Раздел 1. Токенизация"
+    duration_min: 0.5
+    assertion: "Раздел 1 — Токенизация: как модель видит ваш текст"
+    learning_goal: "Section divider раздела 1 — переход к токенам"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1 [for-slide-s04a]"
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Большое «Раздел 1» по центру (140pt gold). Под ним — «Токенизация». Frame-фраза «Как модель видит ваш текст». Внизу — roadmap-bar (6 секций) с gold-маркером на «1 Токены»."
+
   - id: s05
     file: slides/s05-what-is-token.md
     type: assertion_visual
@@ -181,7 +195,20 @@ slides:
       pattern: bar_chart_tokens_per_char
       primary: "Bar chart токены/символ для 4 языков: EN ~0.25, RU ~0.5, ZH ~0.8, Code (Python) ~0.4. RU bar выделен gold. Внизу — gold callout: «API-стоимость RU ≈ 2× EN. Batch на английском, если допустимо»."
 
-  # ─── Раздел 2. Эмбеддинги (11 мин, 4 слайда: s09-s12) ───
+  # ─── Раздел 2. Эмбеддинги (11.5 мин, 5 слайдов: s08a divider + s09-s12) ───
+  - id: s08a
+    file: slides/s08a-section2-embeddings.md
+    type: section_divider
+    section: "Раздел 2. Эмбеддинги"
+    duration_min: 0.5
+    assertion: "Раздел 2 — Эмбеддинги: пространство смыслов"
+    learning_goal: "Section divider раздела 2 — переход к векторам"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2 [for-slide-s08a]"
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Большое «Раздел 2» по центру (140pt gold). Под ним — «Эмбеддинги». Frame-фраза «Пространство смыслов». Внизу — roadmap-bar (6 секций) с gold-маркером на «2 Эмбеддинги»."
+
   - id: s09
     file: slides/s09-what-is-embedding.md
     type: assertion_visual
@@ -302,7 +329,20 @@ slides:
       pattern: u_shape_accuracy_curve
       primary: "U-shape кривая: accuracy (Y, 0-100%) vs позиция факта в 100k контексте (X, начало→середина→конец). 70-80% в начале, провал до 30% в середине, 70-80% в конце. Источник: Liu et al. 2023 (arXiv:2307.03172). Gold callout: «инженерный вывод: важное — в начало или в конец промпта, не в середину»."
 
-  # ─── Раздел 4. Сэмплинг (13 мин, 5 слайдов: s18-s22) ───
+  # ─── Раздел 4. Сэмплинг (13.5 мин, 6 слайдов: s17a divider + s18-s22) ───
+  - id: s17a
+    file: slides/s17a-section4-sampling.md
+    type: section_divider
+    section: "Раздел 4. Сэмплинг"
+    duration_min: 0.5
+    assertion: "Раздел 4 — Сэмплинг: от распределения к токену"
+    learning_goal: "Section divider раздела 4 — переход к выбору токена"
+    learning_outcomes: [LO1, LO4]
+    chapter_ref: "§4 [for-slide-s17a]"
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Большое «Раздел 4» по центру (140pt gold). Под ним — «Сэмплинг». Frame-фраза «От распределения к токену». Внизу — roadmap-bar (6 секций) с gold-маркером на «4 Сэмплинг»."
+
   - id: s18
     file: slides/s18-distribution.md
     type: assertion_visual
@@ -369,7 +409,20 @@ slides:
       pattern: two_column_compare
       primary: "2 Ocean rounded boxes side-by-side: Local (Ollama, llama.cpp) — Qwen 2.5 1.5B, Llama 3.2 1B, Llama 3.1 8B; приватность; медленнее на consumer; ограниченный контекст. Cloud (OpenAI, Anthropic, Yandex, GigaChat) — 200B+; 200-500ms; оплата за токены; данные через API. Sub-caption: «callback Lec-1 §4.2 — глубже про trade-off там»."
 
-  # ─── Раздел 5. Заключение (9 мин, 6 слайдов: s23-s28) ───
+  # ─── Раздел 5. Заключение (9.5 мин, 7 слайдов: s22a divider + s23-s28) ───
+  - id: s22a
+    file: slides/s22a-section5-final.md
+    type: section_divider
+    section: "Раздел 5. Финал"
+    duration_min: 0.5
+    assertion: "Раздел 5 — Финал: закрытие 3 «почему» + мост к Лекции 3"
+    learning_goal: "Section divider раздела 5 — переход к финалу лекции"
+    learning_outcomes: [LO1, LO6, LO7]
+    chapter_ref: "§5 [for-slide-s22a]"
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Большое «Раздел 5» по центру (140pt gold). Под ним — «Финал». Frame-фраза «Закрытие 3 «почему» + мост к Лекции 3». Внизу — roadmap-bar (6 секций) с gold-маркером на «5 Финал»."
+
   - id: s23
     file: slides/s23-recap-bridge-pipeline.md
     type: assertion_visual
@@ -451,12 +504,12 @@ slides:
 
 # ─── Validation ───
 totals:
-  slides: 28
-  slide_times_sum_min: 55       # sum of duration_min above
+  slides: 32
+  slide_times_sum_min: 57       # 55 original + 4 × 0.5 dividers (s04a/s08a/s17a/s22a)
   retrieval_moments_min: 8       # s01/s05/s07/s15/s19 cumulative
-  transitions_buffer_min: 7      # lecturer commentary + section transitions
+  transitions_buffer_min: 5      # lecturer commentary (reduced; dividers now absorb section transitions)
   qa_buffer_min: 5
-  total_min: 75                  # 55 + 8 + 7 + 5
+  total_min: 75                  # 57 + 8 + 5 + 5
 
 interaction_summary:
   - s01: static demo + open question (2 мин total)

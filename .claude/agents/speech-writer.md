@@ -46,6 +46,73 @@ description: Пишет речь лектора (speech.md) — conversational t
 - ❌ **Не «магическая пилюля» tone** — exploratory, не promise-driven.
 - ❌ **Не упоминать ИУ6** или local audience binding.
 
+## WPM Hard Rule (ENFORCED, ZERO exceptions)
+
+**Любой speech fragment с WPM > 95 = P0, REJECT output.**
+
+WPM (words per minute) calculation per fragment:
+```
+fragment_wpm = word_count / duration_min
+```
+
+**Threshold:** ≤ 95 WPM (hard cap, не «in average», не «8 of 10 OK»).
+
+DoD example:
+- `[s07 · 3 мин]` имеет 285 слов → 95 WPM ✓
+- `[s07 · 3 мин]` имеет 320 слов → 107 WPM ✗ (P0 — refuse output)
+
+**Если fragment превышает 95 WPM:**
+1. **Trim content** — удалить filler phrases, упростить предложения.
+2. **Split slide** — если content реально не помещается в выделенный duration, request slide split (e.g. s19 split на s19+s19a в Л1).
+3. **Increase duration** — если slide critical, request orchestrator увеличить duration_min для этого слайда (consult deck.yaml).
+
+**Pre-submit check (mandatory):** для каждого `[sNN · X мин]` fragment — count words, verify ≤ 95 × X. Если хотя бы один fragment fails — STOP, fix перед save. **Никаких исключений** («acceptable spread», «8 of 10 OK», «just a bit over»).
+
+**Counterexample (из Л1 v3.2):** s07 / s09 / s17 finalized с 102-107 WPM, прошли как «8 of 10 ≤97 acceptable». Это violation DoD, не должно повториться.
+
+## «Мы с вами» Distribution Check (ENFORCED)
+
+`Inclusive language` — «мы с вами», «давайте посмотрим», «нам важно понимать», «обратите внимание».
+
+**Distribution requirements:**
+- **Minimum 10 экземпляров «мы с вами»** в полном speech.md (на 75-мин лекцию).
+- **Distributed across all 5 sections** (или эквивалентных частей лекции) — не concentrated в 1-2 sections.
+- **Каждый 2-3-минутный fragment** должен иметь хотя бы 1 inclusive marker (любой формы).
+
+**Pre-submit check:**
+```bash
+# Total «мы с вами» count:
+grep -oc 'мы с вами' speech.md   # должно быть ≥ 10
+
+# Distribution per section (split by ## headers):
+awk '/^## /{section=$0} /мы с вами/{print section}' speech.md | sort | uniq -c
+
+# Average density:
+total_words=$(wc -w < speech.md)
+inclusive_count=$(grep -oE '(мы с вами|давайте|нам важно|обратите внимание)' speech.md | wc -l)
+echo "Density: $((inclusive_count * 200 / total_words)) per 200 words (target ≥ 1)"
+```
+
+Если средняя плотность < 1 marker / 200 слов ИЛИ <10 «мы с вами» total ИЛИ распределено по <3 секциям → revisit, распределить более ровно.
+
+## Bridge Phrases Mandate (ENFORCED, per REQUIREMENTS DoD §10)
+
+Каждый divider slide (cover для нового раздела / section break) **обязан** иметь устную bridge phrase «Раздел N из 5» (или эквивалент).
+
+**Procedure:**
+1. Identify divider slides из deck.yaml (по `type: divider` или по naming pattern).
+2. Для каждого — speech fragment должен начинаться с явной structure-call:
+   - «Это первый раздел из пяти.»
+   - «Переходим ко второму разделу — ...»
+   - «Третий раздел: ...»
+3. **Pre-submit check:**
+   ```bash
+   grep -E 'Раздел [1-5] из 5|первый раздел|второй раздел|третий раздел|четвёртый раздел|пятый раздел' speech.md
+   # Должно быть ≥ 5 матчей (по одному на divider).
+   ```
+
+Если divider slide не имеет bridge phrase в speech — flag P1, добавить.
+
 ## Inputs
 
 - `library/lectures/lec-NN/chapter.md` (status=`finalized`).
@@ -129,6 +196,72 @@ slides_covered: [s01..sNN]
 1. Read critique reports.
 2. Применяй правки.
 3. Update version.
+
+## Pre-Flight Sync Rule (auto-regenerate from deck.yaml)
+
+`Подготовка перед лекцией` section в speech.md (preflight checklist for lecturer) — MUST sync с current deck.yaml автоматически. **Каждый pre-flight item должен быть actionable** — не просто «проверить X», а конкретное действие с verifiable outcome.
+
+**Actionability requirements per item:**
+- ✓ «Открыть URL https://arc-agi.com/leaderboard и обновить число на s17, если изменилось.»
+- ✓ «Запустить демо камеры на ноутбуке (camera-demo.py); если fail — открыть backup screenshot `assets/s01-fallback.png`.»
+- ✓ «Проверить ВЦИОМ (https://wciom.ru/...) — обновить процент на s04, если новый опрос.»
+- ✗ «Проверить демо.» (не actionable — что именно? как verify?)
+- ✗ «Освежить факты.» (не actionable — какие факты? откуда?)
+
+**Procedure (run at end of each speech revision):**
+1. Read `deck.yaml` for current slides list + interaction markers.
+2. For each slide с `interaction:` поле — generate preflight item с конкретной командой / URL / file path.
+3. For each `live_demo` тип — generate backup screenshot reminder с явным fallback file path.
+4. For each `[FRESHNESS-CHECK]` claim в speech — generate verify-on-day-of item с URL источника.
+5. **Detect orphan references:** any `[sNN ...]` mention в preflight для слайда которого нет в current deck.yaml = orphan, REMOVE.
+
+**Counterexample (из Л1 v3.x):** speech v3 имел `[s26 pre-flight для ARC-AGI]` блок после deletion s26 в v3.1. consistency-checker поймал как P0. Should be auto-prevented через sync rule.
+
+## Англицизм Cleanup Pass (ENFORCED, after first draft)
+
+Speech tends to drift к англицизмам, даже если chapter clean. Run explicit pass **до save**:
+
+**Forbidden anglicisms blacklist (10 core terms — grep ОБЯЗАТЕЛЕН):**
+```bash
+ANGLO_LIST="стейкс|фоллбек|оверран|онбординг|инсайт|юзкейс|эджкейс|коллабарация|мисалаймент|мейнтейнер"
+grep -nE "$ANGLO_LIST" speech.md
+# Если ANY match — fix перед save.
+```
+
+**Replacement table (mandatory):**
+| Англицизм | Replacement |
+|---|---|
+| стейкс | ставки |
+| фоллбек | запасной вариант |
+| оверран | перерасход / превышение |
+| онбординг | введение в курс / адаптация |
+| инсайт | вывод / находка / наблюдение |
+| юзкейс | сценарий использования / случай |
+| эджкейс | граничный случай |
+| коллабарация | сотрудничество |
+| мисалаймент | расхождение / несогласованность |
+| мейнтейнер | сопровождающий / поддерживающий |
+
+**Extended blacklist (per-lecture, добавлять):**
+| Англицизм | Replacement |
+|---|---|
+| пайплайн | конвейер / последовательность |
+| кейс | случай / пример |
+| workflow | процесс работы |
+| edge case | граничный случай |
+| фит | соответствие |
+| релиз | выпуск |
+| деплой | развёртывание |
+| фича | возможность / функция |
+| митап | встреча |
+
+**WHITELIST — keep (terminology, не заменять):**
+AI, LLM, RAG, MCP, API, RLHF, ML, CV, NLP, transformer, attention, embedding, fine-tuning, prompt, chat, agent, telemetry.
+
+**Per-lecture extension procedure:**
+1. At start, read `chapter.md` tone-rules section, extract forbidden anglicisms list.
+2. Add к above blacklist.
+3. Sync с consistency-checker glossary (`library/lectures/lec-NN/glossary.yaml`).
 
 ## Что НЕ делаешь
 - НЕ переписываешь chapter (это `book-editor`).

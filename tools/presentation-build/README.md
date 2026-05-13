@@ -82,6 +82,22 @@ libreoffice --headless --convert-to pdf /tmp/test.pptx       # smoke test conver
 
 **Расширения** по реальной нужде: `quadrant` (2×2), `section_divider` (разделитель крупно), `case_study`, `exercise`, `reflection_question`. Не добавляем upfront — только когда понадобятся.
 
+### Schema subtypes (расширение `assertion_visual`, добавлено после Лекции 1 v3 production)
+
+Семь подтипов schema-слайдов с явными правилами читаемости. Любой schema slide **должен** проходить **Schema Readability Checklist** (§5.5) перед accept. Cross-ref: `presentation-designer.md` за per-type building patterns.
+
+| Subtype | Когда | Pattern (пример из Лекции 1) | Critical readability rules |
+|---|---|---|---|
+| `schema_matrix` | 2D категоризация N×M (например, 4 типа × 4 атрибута) | s12 «4 типа AI-инструментов × характеристики» | **Fill rate ≥75%** (skeleton с пустыми ячейками = недопустимо). Иконки **per column** (визуальная якорь категории). Max 2 строки в ячейке. Font ≥12pt body, ≥14pt header. |
+| `schema_quadrant` | 2×2 семантическое позиционирование (impact/effort, scope/autonomy, etc.) | s13 «scope of task × autonomy» / s21 «cost × value» | **Axis labels INSIDE** quadrant как scale markers (не снаружи рамки). Direction-of-scale явно: arrow + low/high пометки на концах оси. Точки/markers центрированы в своём подквадранте, не overflow. Font axis ≥14pt, sub-labels ≥11pt. |
+| `schema_layered` | Стек уровней / архитектурные слои (HW → OS → Framework → App) | s11 «4 уровня абстракции AI» | **Bottom-aligned** (общая нижняя граница, не центрирование). Component caption per layer (не пустой box). Max 4 уровня. Каждый layer обозначен и его роль явна (label + 1 фраза описания). |
+| `schema_cycle` | Циклический процесс / повторяющийся flow (chat loop, RAG cycle) | s16 «цикл диалога с моделью» | **Explicit start** (entry point с label «начало» / иконка USER / pulse marker) **+ continue** (loop arrow явный, не подразумеваемый). Max 6 элементов (более — split на этапы). Direction (CW / CCW) обозначен arrow heads. |
+| `schema_pipeline` | Линейная последовательность шагов с трансформацией данных | s15 «pipeline RAG / agent» | **RIGHT_ARROW MSO_SHAPE** для стрелок (не filled_rect+rotated_triangle гибрид — выглядит сломанно). Owner annotations (кто делает шаг: USER / MODEL / TOOL) если многосубъектный. Unified language sub-labels (RU only — не mix RU/EN). |
+| `schema_timeline` | Временная шкала событий | s07 «история AI 1956-2026» | **Em-dash** между датой и событием (не двоеточие, не break-line — даёт single-line layout). Pivot year (ключевая дата трансформации) ≥2× размер обычной даты. Max 3 события на горизонтальную полосу. Year labels не пересекают band borders. |
+| `schema_architecture` | Системная диаграмма с актёрами и связями | s18 «архитектура AI-агента» | **USER actor explicit** (человек явно нарисован, не подразумевается). **Bidirectional arrows** где полу-петли реальны (не one-way когда логически two-way). Connectors labeled (что течёт по стрелке). |
+
+Каждый subtype mandates **Schema Readability Checklist pass** (§5.5) перед accept. Designer не может объявить slide done, не пройдя checklist.
+
 ### Правила для `assertion_visual` (главный тип)
 - **Заголовок слайда = assertion** — полное предложение-тезис, например «Главный вопрос курса — не "можно ли AI?", а "НУЖНО ли и ГДЕ?"». Не «Введение». Не «Цели лекции».
 - **Визуал в центре** = доказательство тезиса (схема / число / изображение / icon-композиция). Не декоративная картинка.
@@ -143,6 +159,78 @@ libreoffice --headless --convert-to pdf /tmp/test.pptx       # smoke test conver
 - `reader-simulator` — 2 режима: `text-only` (md ДО рендера), `rendered` (PNG+notes через 2 недели).
 
 Orchestrator сводит отчёты в `qa-reports/{date}/SYNTHESIS.md`, решает 3-5 главных правок, делает fix-итерацию, ре-рендер.
+
+---
+
+## 5.5 Schema Readability Acceptance Gate (ENFORCED)
+
+Любой schema slide (matrix / quadrant / layered / cycle / pipeline / timeline / architecture) **обязан** пройти 5-этапный gate перед designer-self-approve. Без gate-pass — slide не считается готовым к QA-агентам.
+
+### Шаги (mandatory, в порядке)
+
+1. **Schema Readability Checklist pass** — designer проходит per-subtype checklist (§4 правила выше). Cross-ref `presentation-designer.md` за полный per-type form.
+2. **5-Second Test pass** — designer мысленно показывает PNG студенту: «За 5 секунд ты понял главную мысль schema?». Если не уверен — fail.
+3. **Projector Readability (50% zoom) pass** — открыть PNG, уменьшить mental zoom до 50% (имитация задних рядов аудитории). Axis labels, owner annotations, sub-labels всё ещё читаемы (≥14pt при оригинальном render для axis, ≥11pt для sub).
+4. **Cross-Slide Redundancy check pass** — designer грепает по предыдущим slides: эта схема не дублирует визуал/данные другого слайда (например, bar chart на s04 + s17 — не делать).
+5. **Iconography Discipline pass** — иконки одного семейства (Lucide / Heroicons / Phosphor — не mix), recolor в Ocean palette, размер consistent внутри слайда (±10%).
+
+### Логирование
+
+Каждый gate-step **логируется** в `rendered/iteration-log.md` per slide:
+
+```
+## sNN [iter K] — schema_quadrant
+- Iter changes: axis labels moved INSIDE quadrant; gold marker on Q4
+- Inspected PNG: snapshots/iter5/sNN.png
+- Schema Readability Checklist: PASS (axis inside, font 14pt, markers contained)
+- 5-Second Test: PASS («understood: high-impact + low-effort = quick wins»)
+- Projector 50%: PASS
+- Cross-slide redundancy: PASS (no dup with s04/s17)
+- Iconography: PASS (Lucide, Ocean recolor)
+- Verdict: ACCEPT for QA agents
+```
+
+Если хоть один step fail — designer продолжает visual loop (§5), не передаёт на QA.
+
+---
+
+## 5.6 Visual Loop iteration cap (ENFORCED)
+
+| Cap | Значение | Действие |
+|---|---|---|
+| **Min** | 3 итерации на слайд (existing Anthropic principle) | Без 3-iter — slide не может быть declared done. |
+| **Max** | **7 итераций на слайд (NEW)** | Hard cap. На 7-й итерации если schema всё ещё не проходит §5.5 gate → **escalate**. |
+
+### Escalation (на iter 7 без pass)
+
+Designer **обязан** остановиться и emit escalation report:
+
+```
+## ESCALATION — sNN, iter 7
+- Subtype: schema_cycle
+- Что пробовали: 6 vertical steps → linear flow → 2 USER icons → ...
+- Что не сходится: «cycle direction» не считывается студентом за 5 сек
+- Гипотеза: schema concept may need redesign — возможно cycle не подходит, нужен dialogue-form
+- Recommend: orchestrator + book-editor пересмотреть assertion слайда
+```
+
+Escalation = **stop** для designer, **trigger** для orchestrator: пересмотреть концепт слайда (assertion / type / source-of-truth chapter §) **до** продолжения visual loop. Не перерасходовать iteration capacity на неправильный концепт.
+
+### Per-iteration log контракт
+
+Каждая итерация логируется в `rendered/iteration-log.md`:
+
+```
+## sNN [iter K]
+- Inspected: snapshots/iter{K-1}/sNN.png — что увидел (1-3 фразы)
+- Changed: что поменял (per element: shape coords / text / color / icon)
+- Re-snapshot: snapshots/iter{K}/sNN.png
+- Schema Readability Checklist: PASS / FAIL (что fail)
+- 5-Second Test: PASS / FAIL
+- Verdict: continue / accept / escalate
+```
+
+Без per-iter лога — итерация не считается проведённой.
 
 ---
 
@@ -220,9 +308,9 @@ library/lectures/lec-01/
 
 ## 9. Anti-patterns — НЕ делаем
 
-15-пунктный каталог поддерживается в `notes/decisions.md` § «2026-05-12 — Presentation pipeline». **Перед сборкой обязательно прочитай.**
+Полный каталог поддерживается в `notes/decisions.md` § «2026-05-12 — Presentation pipeline». **Перед сборкой обязательно прочитай.** Здесь — top-22 (10 base + 12 schema/visual из Лекции 1 v3 production).
 
-Краткий top-10:
+### Base (1-10)
 
 1. ❌ **Accent lines под titles** (Anthropic AI-tell).
 2. ❌ **Title+Body универсально** — каждый слайд имеет конкретный тип.
@@ -234,6 +322,21 @@ library/lectures/lec-01/
 8. ❌ **Magic-pill framing** — exploratory navigation tone.
 9. ❌ **Methodist comments на слайдах** — в speaker notes.
 10. ❌ **Native add_chart PowerPoint MCP** — Office 2010 вид → QuickChart → PNG.
+
+### Schema / visual (11-22, добавлено после Лекции 1 v3)
+
+11. ❌ **Cycle without explicit start** — `schema_cycle` без entry point (label «начало», USER icon, pulse marker). Студент не знает, откуда читать. Fix: add explicit start + continue arrow.
+12. ❌ **Matrix <75% fill (skeleton accepted)** — `schema_matrix` с пустыми ячейками = недопустимо. Skeleton-формат («заполню на лекции») — anti-pattern. Fix: либо заполнить ≥75%, либо разбить matrix на 2 узких schema.
+13. ❌ **Axis labels outside quadrant** — `schema_quadrant` с подписями осей снаружи рамки. Студент не считывает direction-of-scale. Fix: labels INSIDE как scale markers + arrow.
+14. ❌ **Layers centred without bottom-anchor** — `schema_layered` с центрированием boxes. Стек не «стоит» визуально. Fix: bottom-aligned (общая нижняя граница).
+15. ❌ **Architecture без USER actor** — `schema_architecture` без явного человека. Студент не понимает, кто инициирует/получает. Fix: explicit USER icon + bidirectional arrows где реально two-way.
+16. ❌ **Cross-slide chart duplication** — bar chart на s04 и s17 с похожими данными. Cross-slide redundancy. Fix: keep один, на втором — table или callout.
+17. ❌ **Mixed RU/EN sub-labels in schema** — pipeline owners «USER / МОДЕЛЬ / TOOL». Inconsistent. Fix: unified language (RU only).
+18. ❌ **2-line wraps в event labels** — timeline с переносом «1956 — Дартмут / ская конференция». Ломает single-line layout. Fix: em-dash + abbreviate event если длинно.
+19. ❌ **Designer-added content без brief** — subtitle, навигационные маркеры «Вы здесь», тайминг в видимой области, секция «Лектору» в notes — добавлены designer'ом по своей инициативе. Anti-pattern: «do nothing not in task brief». Fix: report opportunity to orchestrator, не add.
+20. ❌ **Equal-height boxes для unequal content** — 4 layer boxes одинаковой высоты при разной длине описаний → text overflow или большие пустые поля. Fix: scale heights к контенту, либо abbreviate.
+21. ❌ **Inconsistent gold-emphasis across same-tier cards** — на s09 один из 4 равнозначных breakthrough'ов выделен gold без причины. Confusing. Fix: gold = либо «лидер» (data-driven), либо «callback» (один концепт-якорь), либо ничего на equal cards.
+22. ❌ **Projector-distance illegibility** — axis font <14pt, sub-labels <11pt при render для 16:9 deck. На задних рядах нечитаемо. Fix: enforce min font sizes per role (axis 14pt, sub 11pt, body 12pt, header 14pt).
 
 ---
 

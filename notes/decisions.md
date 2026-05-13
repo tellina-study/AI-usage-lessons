@@ -199,3 +199,97 @@ mcp__workspace-mcp__list_docs_in_folder \
 - Старая Google Slides Лекции 1 удаляется из Drive.
 - `deck-editor` agent либо удаляется (orchestration через skill достаточна), либо repurposed под deck.yaml maintenance.
 - CLAUDE.md presentation pipeline block финализируется.
+
+## 2026-05-13 — Lec 1 v3.2 Reflection Findings
+
+**Контекст:** day-long production Лекции 1 v3.x — chapter v3.1 (16k слов), slides v3.2 (33 слайда), speech v3.1 (5.1k слов). Все 4 critic agents APPROVE-WITH-MINOR. User вернулся с 23 + 8 + 19 = **62 substantive revisions** across 3 раундах (~50 user fixes).
+
+**Reflections:**
+- `notes/reflections/2026-05-13-lec-01-v3-rebuild/REFLECTION.md` — broad, 7 categories, 12 sections.
+- `REFLECTION-roast.md` — methodology-critic roast (15 missed failures + 12 unactionable→concretize + 8 risks + 10 extra recommendations).
+- `REFLECTION-visual-audit.md` — presentation-critic visual specialist (16 designer self-acceptance fails + 7 schema design patterns + Schema Readability Checklist + No Extra Content Rule + 5-Second Test + 20 visual anti-patterns 16-35).
+- `REFLECTION-CONSOLIDATED.md` — implementation plan (16 файлов, 6-8 hours).
+
+### Top failure modes
+
+1. **Critic blind spots** — 4 critics дали APPROVE-WITH-MINOR, но user вернулся 3 раза:
+   - Schema readability for laymen (s11/s13/s16/s21 переделывались 5+ iter каждый, user всё равно отверг).
+   - Curriculum relevance (Pearl 3 уровня causality / ARC-AGI economics — методически OK, но не для introductory лекции).
+   - Terminology drift («Приложение-робот» имел 3 формы across 3 артефакта).
+   - Designer-added content без request (тайминг, «вы здесь», «Лектору» секция, subtitle, s14-deletion — 8 designer-added items removed by user).
+   - Tools/data freshness (Llama-3 как «свежий пример», ARC-AGI 37.6% устарело за 2 дня к 68.8% / 85%).
+
+2. **Designer self-acceptance** — designer self-checked → declared done → critic missed → user caught. Visual loop self-acceptance threshold = «no defects designer sees» != «no defects student sees from 5-го ряда».
+
+3. **Terminology drift cycle** — chapter v3 «Приложение-робот» (book-editor) → consistency-checker П1 P1 «3 формы» → speech v3.1 unified «в режиме автоматизации» (speech-writer applied critic-suggested form, не original). **Pattern:** critic-driven rename без user approval создаёт drift.
+
+4. **WPM regression** — speech v3.2 final имел s07/s09/s17 на 102-107 WPM, прошли как «8 of 10 ≤97 acceptable». Methodology DoD требует WPM ≤95, никто не поднял.
+
+5. **Visual production process invisible** — 14+ visual loop iterations + 5 параллельных designers за 1 wall-day производства — user explicitly: «много правили визуал, но не вижу в рефлексии».
+
+### Top corrections (per CONSOLIDATED implementation plan)
+
+1. **Pre-USER-GATE Rule** (CLAUDE.md + lecture-production/README.md + build-deck/SKILL.md): orchestrator MUST run pre-review (visual scan + notes read + automated greps) перед каждым USER GATE. «Approve» = «orchestrator reviewed visually + critics approved», NOT «critics approved alone».
+
+2. **Schema Readability Checklist** (presentation-designer.md + presentation-critic.md + presentation-build/README.md): per-subtype checklist для 7 subtypes (matrix/quadrant/timeline/layered/cycle/pipeline/comparison/architecture) + 5-Second Test + Projector Readability (50% zoom).
+
+3. **No Extra Content Rule** (CLAUDE.md + presentation-designer.md + book-editor.md + speech-writer.md): 8 forbidden additions enforced — subtitle / navigation marker / тайминг / «Лектору» секция / decorative SVG / color-only highlight / slide deletion без request / cross-slide bridge text. Improvements REPORTED, не applied.
+
+4. **WPM Hard Rule** (speech-writer.md): любой fragment с WPM > 95 = P0, не submit. Trim content или split slide.
+
+5. **Speaker Notes Contract** (presentation-designer.md + book-editor.md + lecture-production/README.md): 150-300 words readable student text, derived from chapter + speech. FORBIDDEN: layout descriptions, director's cues, лекторские заметки, тайминг.
+
+6. **4-level verdict scale** (all critic agents): REJECT (any P0) / REVISE (5+ P1) / APPROVE-WITH-POLISH (≤4 P1) / APPROVE-CLEAN (0 P1). Counter-check: если ≥5 P1 но verdict APPROVE-WITH-POLISH — STOP, change to REVISE.
+
+7. **Glossary Lock** (CLAUDE.md + consistency-checker.md + lecture-production/README.md): после Phase 4 USER GATE 1 (chapter approved) — orchestrator generates `library/lectures/lec-NN/glossary.yaml`. Critics MAY flag inconsistency, MAY NOT propose rename без USER approval.
+
+8. **Curriculum Relevance Check** (methodology-critic.md): Bloom-level × lecture-level decision matrix. For introductory lectures (L1-3), Evaluate/Create-level concepts → RECOMMEND DELETE.
+
+9. **Tools/Benchmark Freshness Check** (methodology-critic.md + fact-checker.md): per-claim freshness metadata + verify-on-day-of-lecture для weekly-cadence data (AI benchmarks).
+
+10. **Visual Loop Iteration Cap** (presentation-designer.md + presentation-build/README.md): hard cap 7 iterations per slide → escalate to orchestrator с alternatives (simplify / replace / split / delete).
+
+### Anti-patterns 16-35 (extension к pipeline catalog 1-15)
+
+| # | Anti-pattern | Чем заменить | Источник (Lec 1 round/fix) |
+|---|---|---|---|
+| 16 | «Лектору» секция в speaker notes | Notes — readable student text для self-study; lectorские cues → speech.md | Round 1 #1 + Round 3 #1 |
+| 17 | «Вы здесь» текстовый маркер на nav-slides | Visual hierarchy через accent color на active section header (если нужно вообще) | Round 2 #4 + Round 3 designer-extras removal |
+| 18 | Тайминг минут на student-visible content | Тайминг → только в speech.md (lecturer-facing) | Round 2 designer-added removal |
+| 19 | Designer-added subtitles без request | No Extra Content Rule — designer asks before add | Round 1 #5 designer-added subtitle removal |
+| 20 | Schema без start/end indicator (circular cycle) | Gold dot или label «start» + arrow direction explicit | s16 cycle redesigns 3 раза |
+| 21 | Matrix <75% fill rate (skeleton accepted) | Each cell ≥1 marker + 1-2 line label; если cell empty — schema choice неверный | s11 v3 matrix iterations |
+| 22 | Axis labels вне quadrant как titles | Labels INSIDE quadrant с explicit direction-of-scale arrow | s11/s12 visual-audit findings |
+| 23 | Layered model centred (concentric balanced) | Common bottom edge — visual «foundation» feel; deepest layer = largest | s13 layered redesign |
+| 24 | Architecture без USER actor | Add user/actor icon — student question «где Я в этой схеме?» | s21 architecture redesign |
+| 25 | Cross-slide chart duplication | Pre-final grep на assertions + chart types; consolidate or differentiate | s04 + s17 bar chart duplicate |
+| 26 | Mixed RU/EN sub-labels in pipeline | Unified language sub-labels (или RU only, или EN only — не mix) | Round 2 pipeline cleanup |
+| 27 | Multi-line event labels через `\n` | Single-line через em-dash («2017 — Transformer paper»); split timeline if dense | s07 timeline 12 events fix |
+| 28 | Equal-height boxes для unequal content | Visual mass match content weight; не force grid uniformity | Round 2 visual mass feedback |
+| 29 | Inconsistent gold-emphasis across same-tier cards | Single mechanism per signal — color-only OR text marker, не both | Visual-audit redundancy finding |
+| 30 | Projector-distance illegibility (<14pt axis) | Hard minimums: title ≥24pt, body ≥18pt, chart axis ≥14pt; 50% zoom test | Round 3 projector readability |
+| 31 | Pivot year flat в timeline (same size as other years) | Pivot year ≥2× размер шрифта остальных + gold accent | s07 timeline pivot year fix |
+| 32 | filled_rect + rotated_triangle гибрид как стрелки | MSO_SHAPE.RIGHT_ARROW shapes (proper proportions) | Fix-11 Л1 v3.2 |
+| 33 | Cards с «4 названия без определений» | Each card 1-2 line definition + assertion-evidence pairing | Round 1 #18 Pearl/causality |
+| 34 | Visual loop self-acceptance threshold = «no defects designer sees» | 5-Second Test as final gate: «would student с 5-го ряда понять main message за 5 sec?» | Visual-audit primary content |
+| 35 | Schema iteration без questioning concept (s16 cycle 3 designs) | Hard cap 7 iter → escalate с alternatives (simplify / replace / split / delete) | s11/s13/s16/s21 5+ iter каждый |
+
+### Critic blind spots каталог (10 items)
+
+(Полный список с примерами — см. REFLECTION.md §4.1.) Top blind spots:
+1. Schema readability for laymen.
+2. Curriculum relevance (intro/intermediate/advanced match).
+3. Visual centring of charts.
+4. Cross-slide redundancy.
+5. Term canonical-validity.
+6. Tools/benchmark freshness.
+7. Designer-added content.
+8. Color-only highlights vs text markers.
+9. Notes-as-readable-text vs layout descriptions.
+10. Title-vs-body assertion alignment.
+
+### Verdict scale recalibration
+
+Old: APPROVE-WITH-MINOR / REJECT (binary-ish).
+New: REJECT (any P0) / REVISE (5+ P1) / APPROVE-WITH-POLISH (≤4 P1) / APPROVE-CLEAN (0 P1).
+Counter-check enforced в каждом critic agent prompt: если wrote ≥5 P1 но verdict APPROVE-WITH-POLISH — STOP, change to REVISE.

@@ -55,6 +55,90 @@ description: Проверяет согласованность между chapte
 - [ ] Speech правильно указывает на slides («сейчас на экране — donut chart»).
 - [ ] Slide visuals подкреплены описанием в chapter.
 
+### 8. Terminology Drift Auto-Grep (ENFORCED, NEW core capability)
+
+**При каждом USER GATE** — автоматический grep по ключевым неологизмам / canonical terms лекции через все артефакты.
+
+**Procedure:**
+1. Read `library/lectures/lec-NN/glossary.yaml` (если exists) — extract canonical terms + aliases_forbidden.
+2. Если glossary не exists — extract candidate terms (введённые в chapter с курсивом / bold / в quotes / с definition pattern «X — это Y»).
+3. Для каждого term — grep across all artifacts:
+   ```bash
+   grep -nE "Приложение-робот|Приложение-автоматизация|Приложение \(автоматизация\)" \
+     library/lectures/lec-NN/{chapter.md,slides/*.md,speech.md}
+   ```
+4. **Flag any term used inconsistently across artifacts** — chapter / slides / speech / speaker notes.
+
+**Counterexample (Л1):** «Приложение-робот» (chapter §3.6) vs «Приложение-автоматизация» (s14 slide content) vs «Приложение (автоматизация)» (s14 speaker notes). 3 формы одного концепта — drift detected.
+
+**Output (per-term):**
+```markdown
+- Term «Приложение-робот» has 3 forms across artifacts:
+  - chapter.md: «Приложение-робот» × 5 (canonical)
+  - slides/s14.md: «Приложение-автоматизация» × 2 (drift)
+  - speech.md: «Приложение в режиме автоматизации» × 1 (drift)
+  - **Recommendation:** sync all к canonical from glossary («Приложение-робот»).
+  - **Severity:** P1 (terminology drift confuses students).
+```
+
+### 9. Cross-Artifact Orphan Reference Detection (ENFORCED)
+
+После deletion слайда (e.g. s14 deleted в v3.1) — grep по speech / chapter / other slides на orphan references.
+
+**Procedure:**
+1. Read current `deck.yaml` — extract canonical slide IDs list.
+2. Grep по всем артефактам на patterns:
+   ```bash
+   # Speech orphan refs:
+   grep -nE '\[s[0-9]+( ·|\.|]| )' library/lectures/lec-NN/speech.md
+   # Compare extracted IDs vs deck.yaml IDs.
+
+   # Chapter orphan refs:
+   grep -nE '(см\. слайд s[0-9]+|см\. слайд [0-9]+|see slide [0-9]+)' library/lectures/lec-NN/chapter.md
+
+   # Slide-to-slide orphan refs:
+   grep -rnE 'см\. s[0-9]+' library/lectures/lec-NN/slides/
+   ```
+3. **For each reference where target slide doesn't exist in deck.yaml** → flag P0 «Orphan reference: artifact X mentions sNN, но sNN deleted».
+
+**Counterexample (из Л1 v3.x):** speech v3 имел `[s26 pre-flight для ARC-AGI]` блок после deletion s26 в v3.1. Не должно проходить через USER GATE.
+
+## Mode: terminology-only (lightweight, runs at every USER GATE)
+
+When orchestrator passes `mode=terminology-only`, run **only** terminology checks (skip coverage / sequence / etc.). Quick scan suitable для pre-USER-GATE.
+
+**Procedure:**
+1. Read `library/lectures/lec-NN/glossary.yaml` (если exists).
+2. For each canonical term + aliases_forbidden:
+   ```bash
+   grep -nE "$forbidden_form" library/lectures/lec-NN/{chapter.md,slides/*.md,speech.md}
+   ```
+3. For each term без glossary entry — check if appears в 2+ форм across artifacts (auto-detect drift).
+4. Run orphan reference detection (см. §9).
+
+**Output (lightweight):**
+```markdown
+# Terminology Drift Report — Лекция N — {date} (mode=terminology-only)
+
+VERDICT: REJECT | REVISE | APPROVE-WITH-POLISH | APPROVE-CLEAN
+
+## Drift detected:
+- Term «Приложение-робот» has 3 forms across artifacts (см. §8 detail).
+
+## Orphan references:
+- speech.md L142: `[s26 ...]` — slide s26 not в deck.yaml (deleted v3.1).
+
+## Untracked terms (not в glossary, but appears 2+ форм):
+- ...
+```
+
+## Phase mapping (ENFORCED)
+
+- **Phase 4 (after chapter draft):** mode=`chapter-only` — verify chapter terms vs research notes, generate initial glossary.
+- **Phase 7 (after slides finalized):** mode=`chapter+slides` — verify slides align с chapter, terminology, references.
+- **Phase 10 (after speech draft):** mode=`full` — все 3 артефакта.
+- **Pre-USER-GATE (любой):** mode=`terminology-only` — quick drift scan. **Mandatory call orchestrator'ом перед каждым USER GATE — не только финальным.**
+
 ## Output
 
 Файл: `library/lectures/lec-NN/qa-reports/{YYYY-MM-DD-vN}/consistency-checker.md`.
@@ -110,3 +194,18 @@ description: Проверяет согласованность между chapte
 Помни **D1 закреплено**: chapter — source of truth. При conflict между chapter и slides/speech — **fix slides/speech**, не chapter (если chapter не имеет своих P0 issues).
 
 Только если chapter сам ошибается — поднять issue для book-editor.
+
+## Glossary Lock Enforcement (ENFORCED)
+
+После Phase 4 USER GATE 1 (chapter approved) — orchestrator generates `library/lectures/lec-NN/glossary.yaml`.
+
+**Critic rule:** в downstream phases (7, 10), консистенси-checker MAY:
+- Flag inconsistency: «term X has form Y в slide, form Z в chapter».
+- Report drift across artifacts (см. §8 + §9).
+
+**Critic rule:** консистенси-checker MAY NOT:
+- Suggest rename term без USER approval.
+- Apply rename automatically.
+- Recommend changes to glossary canonical form (только REPORT).
+
+Если думает что glossary canonical неоптимальна — output rename proposal в report «PROPOSED GLOSSARY UPDATE: ... — needs user approval».

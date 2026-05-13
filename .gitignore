@@ -45,3 +45,6 @@ lib/
 # Presentation rendering archives (intermediate iterations kept locally only)
 # Only final rendered/lec-NN-pilot.{pptx,pdf} + snapshots + assets stay in git
 library/lectures/*/rendered/archive-v*/
+
+# Lecture rendered snapshots — derived ephemeral, regeneratable from PPTX
+library/lectures/*/rendered/snapshots/

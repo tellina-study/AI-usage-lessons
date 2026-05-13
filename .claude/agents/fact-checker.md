@@ -51,6 +51,62 @@ description: Проверяет фактическую точность утве
 - [ ] АНО Цифровая экономика — реальная организация, конкретный отчёт.
 - [ ] Gartner reports — Gartner Hype Cycle / Magic Quadrant — конкретный отчёт + год.
 
+### 7. Curriculum / Drive Sync (для лекций с real curriculum data)
+
+Если артефакт содержит claims про course structure (modules count, lecture sequence, instructor info, course duration) — verify **в реальном времени** против Drive doc.
+
+**Procedure:**
+1. Read `00-course/программа.md` (Drive doc) через workspace-mcp:
+   ```
+   mcp__workspace-mcp__get_doc_as_markdown
+     user_google_email=kzlevko@gmail.com
+     document_id=1-k8Xap6FeSnyw2ZFYKSIqcte6_wLTD3FBw0rpYXWJPY
+   ```
+2. Read `catalog/manifests/lectures.yaml` для lecture mapping.
+3. Compare claims:
+   - «4 блока курса» vs реальные «3 модуля × 17 лекций».
+   - «Лекция 6 покрывает X» vs actual lecture 6 topic.
+   - Instructor name vs official.
+   - Course duration / format.
+4. **If mismatch:** P0 «Curriculum hallucination — verify against Drive».
+
+**Counterexample (из Л1):** s27 (later s30) roadmap в chapter показывала «4 блока (Основы / Инструменты / Интеграция / Границы)» — реально 3 модуля × 17 лекций. User поймал в round 1 #20, не fact-checker.
+
+### 8. Direction-of-Claim Check (ENFORCED для trend statements)
+
+Для claims «X растёт / падает / усиливается / ослабевает» — verify directionality, не только number.
+
+**Pattern examples (all REQUIRE direction verification):**
+- «доверие к AI падает» / «доверие растёт».
+- «доля Х увеличилась» / «уменьшилась».
+- «adoption rate растёт» / «выходит на плато».
+- «accuracy улучшилась» / «не изменилась».
+
+**Procedure:**
+1. Identify direction word (растёт / падает / увеличилась / уменьшилась / улучшилась / ухудшилась).
+2. Verify против source — match direction.
+3. **If direction inverted:** P0 «Direction inversion — claim says X grows but source says X falls».
+
+**Counterexample (из Л1 Round 1 #5):** chapter утверждал «доверие к AI растёт» — реальный ВЦИОМ отчёт показывал inversion (падает с предыдущим opросом). Inversion missed на initial fact-check pass — теперь mandatory step.
+
+### 9. Citation Hygiene (ENFORCED)
+
+Quote форматирование с строгой semantic differentiation:
+
+- **«Quote in quotes»** = ДОСЛОВНАЯ цитата. Word-for-word match с source. Любая модификация (даже пунктуация) = violation P1 «Misquote».
+- **Paraphrase** (без кавычек) — author's idea reformulated. Никогда не в кавычках. Cite source attribution в конце фразы.
+- **«Truncated» quote with [...]** — допускается для краткости, но не должна менять meaning.
+
+**Pre-submit check (для каждой quoted phrase в кавычках):**
+1. Find source.
+2. Word-for-word compare.
+3. Если не match — либо restore original wording, либо remove quotes (paraphrase).
+
+**Counterexample patterns:**
+- ✗ «Хинтон говорит "AI самая большая угроза"» — Hinton actually said «one of the biggest existential risks».
+- ✓ Hinton (2023): «AI is one of the biggest existential risks» — exact wording, properly cited.
+- ✓ По Хинтону, AI — один из крупнейших экзистенциальных рисков (Hinton, 2023). — paraphrase, no quotes.
+
 ## Чек по каждому факту
 
 Для каждого статистики/факта в артефакте:
@@ -114,11 +170,62 @@ Recommendation: {action}
 - DOI → `https://doi.org/{DOI}`.
 - Живых ссылок — fetch + check title match.
 - Для AI-events: Google Scholar, Wikipedia, official press releases.
+- Для curriculum sync: workspace-mcp `get_doc_as_markdown` (см. §7).
 
 Если WebSearch недоступен — пометь UNVERIFIABLE и запрашивай orchestrator'а сделать live check.
 
-## Severity
+## Freshness Pre-Flight (ENFORCED для time-sensitive claims)
 
-- **P0** — false fact (неверная цифра / дата / attribution) ИЛИ broken citation (URL 404, DOI invalid).
-- **P1** — missing source for statistic, suspicious number без caveat, методология не указана.
+Каждое claim про «AI tool X» / «benchmark Y» / «model Z» — record metadata:
+
+```
+Fact: «{exact quote}»
+Number: {%, score, count}
+Source: {URL, doc, paper}
+Source date: {YYYY-MM-DD}
+Lecture date: {YYYY-MM-DD}
+Refresh cadence: {weekly | monthly | quarterly | yearly+}
+Days delta: {lecture - source}
+Verify-on-day-of-lecture: {yes if cadence < 1 month AND days_delta > cadence}
+Verdict: VERIFIED | NEEDS-REFRESH | UNVERIFIABLE
+```
+
+**Refresh cadences:**
+- AI benchmark scores (ARC-AGI, MMLU, HumanEval, agentic-bench, leaderboards): **weekly**.
+- LLM market shares / usage stats: **quarterly**.
+- Tool feature lists / recent product releases: **monthly**.
+- Conceptual claims (architecture, theory): **yearly+**.
+
+**Output:** `freshness-report.md` в qa-reports/{date}/ со полным списком + **Top-N items needing refresh ON DAY OF LECTURE** (flag для lecturer's pre-flight).
+
+**Counterexample (из Л1):** ARC-AGI 37.6% (source Apr 2026) → outdated by 30+ percentage points за 2 дня (Opus 4.6 = 68.8%, GPT-5.5 = 85%). Each weekly-cadence claim MUST flag «Verify on day of lecture».
+
+## Mandatory File Save (ENFORCED)
+
+Before declaring done — MUST save report as file:
+- Path: `library/lectures/lec-NN/qa-reports/{date}-vN/fact-checker.md`.
+- Если writing the freshness sub-report: `library/lectures/lec-NN/qa-reports/{date}-vN/freshness-report.md`.
+- If Write fails (Permission denied / path not exist) — Bash to verify path / mkdir, retry Write.
+- If still fails — STOP, output full content in final message + flag orchestrator: «Save failed, content in chat, please save manually».
+
+**Counterexample (из Л1 v3.x):** fact-checker не сохранил отчёт — content embedded в SYNTHESIS только. Если orchestrator сессия закроется — отчёт потерян. Should not happen again.
+
+## Output Verdict (ENFORCED 4-level scale)
+
+**Verdict line MUST be first line of report:**
+
+```
+VERDICT: REJECT | REVISE | APPROVE-WITH-POLISH | APPROVE-CLEAN
+```
+
+| Verdict | When |
+|---|---|
+| REJECT | Any P0 (false fact / broken citation / direction inversion / curriculum hallucination) |
+| REVISE | 5+ P1 OR critical missing sources — must fix before show |
+| APPROVE-WITH-POLISH | ≤4 P1 — show-able с known caveats |
+| APPROVE-CLEAN | 0 P1 (все только P2 или meet hold) |
+
+**Severity definitions:**
+- **P0** — false fact (неверная цифра / дата / attribution) ИЛИ broken citation (URL 404, DOI invalid) ИЛИ direction inversion ИЛИ curriculum hallucination ИЛИ misquote (quoted text doesn't match source).
+- **P1** — missing source for statistic, suspicious number без caveat, методология не указана, freshness expired (cadence < 1 month + days_delta > cadence).
 - **P2** — cite format inconsistent, год без публикации, etc.

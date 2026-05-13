@@ -101,6 +101,10 @@ Claude Code acts as **planner and orchestrator only**. It MUST NOT make implemen
 
 **If a subagent fails, do the work directly** — do not retry the same delegation.
 
+**Additional ENFORCED rules:**
+- **All critic agents must use 4-level verdict scale:** APPROVE-CLEAN / APPROVE-WITH-POLISH / REVISE / REJECT (replace APPROVE-WITH-MINOR catch-all per Lec 1 lessons). Counter-check: если ≥5 P1 issues но verdict = APPROVE-WITH-POLISH — STOP, change to REVISE.
+- **Schema Readability Checklist:** for any schema slide, designer must pass + critic must verify (cross-ref `tools/presentation-build/README.md` §5.5).
+
 ---
 
 ## Roast-Before-Implement Rule (ENFORCED)
@@ -130,6 +134,48 @@ Never skip verification. Never proceed to next phase without gate.
 
 ---
 
+## Pre-USER-GATE Walkthrough Rule (ENFORCED)
+
+Before presenting any USER GATE to user:
+1. **Mandatory:** invoke `/pre-user-gate` skill (orchestrator can also do manual walkthrough)
+2. **Visual sweep:** для slides — open all PNG snapshots, 5-sec look per slide, can I state main message?
+3. **Notes read:** 5-7 random speaker notes — verify 150-300 words connected text, no «Лектору» / no layout descriptions
+4. **Cross-artifact grep:** terminology drift, orphan references, pacing math
+5. **Designer-extras grep:** «Лектору» / «Вы здесь» / тайминг in visible content — should all be 0
+
+**Если найдены P0/P1 issues — NOT present GATE.** Spawn revision first, re-run pre-gate, потом present.
+
+**Why ENFORCED:** Лекция 1 production имела 3 раунда user feedback ПОСЛЕ critic APPROVE. Pre-gate walkthrough catches что critics miss (visual schema readability, designer-added extras, terminology drift).
+
+---
+
+## Orchestrator Self-Critique Rule
+
+When making decisions on behalf of user:
+- Slide composition (e.g., «which 4 breakthroughs in s09») — do **freshness pre-check** through web search before committing
+- Term renames — do **cascade-of-changes** grep through all artifacts
+- Slide adds/deletes — do **curriculum relevance** check (зачем это в лекции N?)
+- Visual choices (palette deviations, motif breaks) — defer to designer/user, не decide alone
+
+**Why:** Lec 1 — orchestrator chose Llama-3 + MCP в s09 (refused by user as «not прорывы»). Should have done freshness check.
+
+---
+
+## No Extra Content Rule (ENFORCED for all agents)
+
+Agents do nothing not in task brief. Common temptations to RESIST:
+
+- Designer adding «Лектору» sections, «Вы здесь» markers, timing on visible content, subtitles, callback frames, mini-dividers — FORBIDDEN
+- Writer adding terminology variants without cross-artifact sync — FORBIDDEN
+- Critic recommending content additions without curriculum relevance check — FORBIDDEN
+- Orchestrator implementing «improvements» on behalf of user — FORBIDDEN
+
+If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER implement.
+
+**Why:** Lec 1 had 8 designer-added items removed by user across 2 rounds.
+
+---
+
 ## Anti-Patterns (NEVER DO THESE)
 
 | Anti-Pattern | Correct Approach |
@@ -142,6 +188,10 @@ Never skip verification. Never proceed to next phase without gate.
 | Make implementation changes as orchestrator | Delegate all implementation to subagents |
 | Skip roast step for non-trivial work | Always roast before implement |
 | Proceed without phase gate approval | Wait for explicit user approval between phases |
+| Designer-added extras без brief (subtitle, «вы здесь», тайминг, «Лектору») | Producer agents REPORT improvements, не apply (см. No Extra Content Rule) |
+| Speaker notes как layout description («слева donut, справа bar») | Notes — readable student text 150-300 слов, derived from chapter+speech |
+| Critic catch-all APPROVE-WITH-MINOR | 4-level verdict scale: APPROVE-CLEAN / APPROVE-WITH-POLISH / REVISE / REJECT |
+| Term drift без cascade tracking | Glossary lock после chapter approval; cascade-of-changes grep при renames |
 
 ---
 
@@ -209,6 +259,8 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 **Source of truth: book-first.** Chapter — primary, slides + speech derive. При conflict — fix slides/speech (если chapter сам не ошибается).
 
 **3 USER GATEs** между phases 4-5 (chapter approved), 8-9 (slides approved), 11 (final). Не двигаться к следующей фазе без explicit user approval.
+
+**Phase 9.5 (Pre-USER-GATE walkthrough)** — orchestrator must run pre-gate review before EACH USER GATE (см. `tools/lecture-production/README.md` + Pre-USER-GATE Walkthrough Rule выше).
 
 **Critic agents применяются на каждом этапе** (промежуточные + финальные результаты — обязательное требование).
 

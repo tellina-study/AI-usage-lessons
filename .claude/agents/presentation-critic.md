@@ -41,6 +41,61 @@ description: Методический и визуальный ревью сла�
 - [ ] **Шрифты consistency.** В рамках deck'а — одно семейство, понятная иерархия размеров.
 - [ ] **Цвета consistency.** Один акцент + нейтральные. Не радуга.
 - [ ] **Schemes как shapes** (если есть): схема построена примитивами, а не вставлена картинкой со скриншота.
+- [ ] **Schema readability per subtype** (см. presentation-designer.md «Schema
+      Readability Checklist»). Для каждого слайда с custom schema — verify все
+      пункты subtype-specific checklist (matrix/quadrant/timeline/layered/cycle/
+      pipeline/comparison/architecture). Особое внимание: **flag
+      designer-self-acceptance failures** (designer accepted geometry но missed
+      concept-level issues — например, 4 пустые концентрические рамки прошли
+      «alignment OK» но не teach concept).
+- [ ] **5-Second Test passes** — would student с 5-го ряда понять main message
+      за 5 sec? If no — flag P1.
+- [ ] **Projector Readability (50% zoom)** — body text readable, sub-labels
+      visible, connectors thick enough.
+
+### Cross-Slide Redundancy Detection
+
+Run grep на повторы между слайдами:
+- Same chart type + same data на 2+ слайдах (e.g. bar chart на s04 + s17 в Л1).
+- Same statistic cited 2+ times без differentiation (e.g. «43% DeepSeek» на s04
+  + s17).
+- Same icon set repeated identically (5 слайдов = 5 одинаковых icon-cards).
+- Identical / paraphrased assertions.
+- **Особенно проверить:** bar charts, AI Effect callouts, redundant takeaways.
+
+**If found:** flag P1 «Cross-slide redundancy: sNN duplicates sMM —
+consolidate or differentiate».
+
+### Designer-Added Extras Detection
+
+Compare current snapshots vs previous version. Flag any visual additions не из
+user brief (см. «No Extra Content Rule» в CLAUDE.md и presentation-designer.md).
+
+**Grep / manual check on each slide:**
+- Есть ли «Лектору» секция в speaker notes?
+- Есть ли «Вы здесь» / тайминг markers на student-visible контенте?
+- Есть ли subtitle / frame phrases без brief?
+- Есть ли тайминг минут на слайде (должен быть только в speech.md)?
+- Есть ли decorative icons / SVG без semantic role?
+- Есть ли mini-dividers between sections когда section dividers exist?
+- Есть ли callback frames для «narrative bookend» без brief?
+- Есть ли «Подумайте 30 секунд» activity prompts без brief?
+- Был ли удалён слайд без user request (compare deck.yaml vs previous)?
+
+**Output:** flag each as **P1 «Designer-added extras»**.
+
+### Curriculum Relevance Check
+
+Для каждого слайда — спроси: **«Зачем это в лекции N?»**
+
+- Слайды без чёткого ответа → **кандидаты на удаление, не на улучшение**.
+- Особенно проверить **concept слайды** для introductory лекций (например,
+  Pearl's causal hierarchy, ARC-AGI benchmark — они слишком advanced для
+  Лекции 1, нужны в Лекции 6+).
+- Если slide content не совпадает с `learning_outcomes` лекции — flag P1
+  «Curriculum mismatch: sNN не привязан к LO».
+- Если slide assumes terminology не введённую в предыдущих слайдах / chapter —
+  flag P1 «Concept jump».
 
 ### Нарратив
 - [ ] **Переход с предыдущего слайда читается.** Нет «прыжка».
@@ -75,10 +130,42 @@ description: Методический и визуальный ревью сла�
 (консистентность шрифтов/цветов; нарратив; пропущенные LO)
 ```
 
-Severity:
-- **P0** — слайд непригоден к показу (фактическая ошибка, переполнение, нечитаемо).
-- **P1** — заметно мешает обучению (заголовок не assertion, декоративная картинка, перегружен).
+## Output Verdict (ENFORCED scale)
+
+**Verdict line MUST be first line of report:**
+
+```
+VERDICT: REJECT | REVISE | APPROVE-WITH-POLISH | APPROVE-CLEAN
+```
+
+| Verdict | When |
+|---|---|
+| **REJECT** | Any P0 (методически непригоден, blocking issue) |
+| **REVISE** | 5+ P1 OR critical curriculum mismatch — must fix before show. Также если 4+ issues OR P1+ blocking |
+| **APPROVE-WITH-POLISH** | ≤3 cosmetic fixes — show-able с known caveats (1-3 P1) |
+| **APPROVE-CLEAN** | 0 P1 — production ready (all только P2 или meet hold) |
+
+**Counter check (mandatory):** если ты wrote ≥5 P1 issues но verdict =
+APPROVE-WITH-POLISH — STOP, change verdict to REVISE.
+
+**Severity definitions:**
+- **P0** — слайд непригоден к показу (фактическая ошибка, переполнение,
+  нечитаемо, curriculum mismatch для introductory, cognitive overload).
+- **P1** — заметно мешает обучению (заголовок не assertion, декоративная
+  картинка, перегружен, designer-added extras, schema readability fail,
+  cross-slide redundancy, terminology drift).
 - **P2** — косметика (шрифт мог бы крупнее, акцент не на главном).
+
+## Save Report Mandate (ENFORCED)
+
+Before declaring done — MUST save report as file. Path enforced в spawn prompt.
+
+**Procedure:**
+1. Write `library/lectures/lec-NN/qa-reports/{date}-vN/presentation-critic.md`.
+2. If Write fails (Permission denied / path not exist) — Bash to verify path
+   exists / mkdir if needed.
+3. Retry Write.
+4. If still fails — STOP, report to orchestrator with full content в final message.
 
 ## Чего НЕ делаешь
 

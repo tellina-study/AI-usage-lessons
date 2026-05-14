@@ -3,7 +3,7 @@ id: s07
 type: case_study
 section: "Раздел 1. Токенизация"
 duration_min: 3
-assertion: "AI ошибается в «сколько r в strawberry» — потому что слова не из букв, а из 2-3 токенов"
+assertion: "AI ошибается в «сколько r в strawberry» — потому что слова не из букв, а из 3 токенов"
 learning_goal: "Слепота к буквам — структурное ограничение + retrieval moment"
 learning_outcomes: [LO6, LO7]
 chapter_ref: "§1.3 [for-slide-s07]"

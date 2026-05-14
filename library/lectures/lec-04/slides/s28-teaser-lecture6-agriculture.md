@@ -6,7 +6,7 @@ assertion: "Дальше — Коллоквиум 1 и Лекция 6 «AI в п
 learning_goal: "Тизер Лекции 6 + Lec 9 LO8 forward reference + домашнее задание"
 learning_outcomes: [LO8]
 frame_mapping: ["Безопасность", "Другой AI"]
-chapter_ref: "§6.2 — Что будет дальше"
+chapter_ref: "§5.2 — Что будет дальше"
 references: []
 visual:
   pattern: timeline

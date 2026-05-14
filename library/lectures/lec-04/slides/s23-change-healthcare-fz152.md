@@ -6,7 +6,7 @@ assertion: "Медицинские данные — самая защищаем�
 learning_goal: "Medical data security + AI training datasets risk + ФЗ-152/ФЗ-23"
 learning_outcomes: [LO3, LO8]
 frame_mapping: ["Безопасность", "Человек vs AI"]
-chapter_ref: "§5.4 — Безопасность медицинских данных"
+chapter_ref: "§4.5 — Безопасность медицинских данных"
 references: [uhg-2024, bleeping-computer-2024, hipaa-journal-2024, sweeney-2002]
 visual:
   pattern: matrix

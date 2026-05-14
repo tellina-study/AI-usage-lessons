@@ -6,7 +6,7 @@ assertion: "Врач ставит диагноз. AI подсказывает. �
 learning_goal: "4-actor responsibility framework — ответ на central question"
 learning_outcomes: [LO3, LO8]
 frame_mapping: ["Человек vs AI", "Безопасность"]
-chapter_ref: "§5.5 — Кто отвечает за AI-ошибку: 4-actor framework"
+chapter_ref: "§4.6 — Кто отвечает за AI-ошибку: 4-actor framework"
 references: [price-2019-stanford, gerke-2020-elsevier, eu-ai-act-2024-1689]
 visual:
   pattern: quadrant
@@ -16,8 +16,8 @@ visual:
     sources:
       - "Self-generated 2×2 quadrant через PowerPoint shapes (Ocean palette)"
       - "Lucide icons https://lucide.dev — `stethoscope` (Врач), `building-2` (Operator), `code` (Vendor), `gavel` (Regulator), 32px badge size, recolored к Primary mid"
-      - "Reference paper: Gerke et al. 2020 — Artificial Intelligence in Healthcare (Elsevier)"
-      - "Reference paper: Price 2019 — Stanford Technology Law Review"
+      - "Reference paper: Price 2019 (U Michigan Law School)"
+      - "Reference paper: Gerke 2020 (Penn State Dickinson Law)"
     caption: "4-actor responsibility framework (Price 2019, Gerke 2020)"
 interaction: none
 ---
@@ -34,7 +34,7 @@ interaction: none
 
 ## Speaker notes
 
-Это центральная секция для центрального вопроса лекции. Мы прошли половину пути: AI-диагностика работает, mosmed.ai тому пример; drug discovery частично работает, Rentosertib и DSP-1181 — две стороны одной медали; bias и LLM анти-паттерны реальны. Теперь — кто отвечает, когда AI ошибается. Применяем 4-actor framework: Price 2019, Stanford Technology Law Review; Gerke et al. 2020, Artificial Intelligence in Healthcare, Elsevier. Ответственность распределяется между четырьмя акторами с разной комбинацией technical control × legal liability.
+Это центральная секция для центрального вопроса лекции. Мы прошли половину пути: AI-диагностика работает, mosmed.ai тому пример; drug discovery частично работает, Rentosertib и DSP-1181 — две стороны одной медали; bias и LLM анти-паттерны реальны. Теперь — кто отвечает, когда AI ошибается. Применяем 4-actor framework: Price 2019 (U Michigan Law School) и Gerke 2020 (Penn State Dickinson Law) — основа 4-actor framework. Ответственность распределяется между четырьмя акторами с разной комбинацией technical control × legal liability.
 
 Врач — высокий control и высокая liability. Ставит финальный диагноз. AI — это input, не decision-maker. С юридической точки зрения врач остаётся primary responsible person; AI-suggestion — это «второе мнение», не decision. Это не punitive distribution: только врач имеет full context — анамнез, осмотр, лабораторные результаты, AI-output как один из inputs; никакой другой actor этого full context не имеет.
 

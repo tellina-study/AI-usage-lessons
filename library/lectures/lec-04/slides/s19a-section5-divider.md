@@ -2,7 +2,7 @@
 id: s19a
 type: section_divider
 duration_min: 0.2
-assertion: "Раздел 4 — Этика и ответственность"
+assertion: "Раздел 4 — AI как объяснитель и его границы. Этика."
 learning_goal: "Visual divider — переход в раздел этики"
 learning_outcomes: [LO3, LO8]
 references: []
@@ -11,15 +11,15 @@ visual:
   primary: "Большое «4» + title + 1-фраза-фрейм + 6-card progress bar с gold-подсветкой текущей секции"
 ---
 
-# Раздел 4. Этика и ответственность
+# Раздел 4. AI как объяснитель и его границы. Этика.
 
 ## Assertion
 
-Раздел 4 — Этика и ответственность.
+Раздел 4 — AI как объяснитель и его границы. Этика.
 
 ## Visual
 
-Минималистичный divider: 6 horizontal cards с секциями 0..5; текущая (4) подсвечена gold. Сверху large title 36pt «Этика и ответственность» и одна фраза-фрейм 20pt: «AI как объяснитель · Obermeyer · NEDA Tessa · Change Healthcare · 4 актёра».
+Минималистичный divider: 6 horizontal cards с секциями 0..5; текущая (4) подсвечена gold. Сверху large title 36pt «AI как объяснитель и его границы. Этика.» и одна фраза-фрейм 20pt: «AI как объяснитель · Obermeyer · NEDA Tessa · Change Healthcare · 4 актёра».
 
 ## Speaker notes
 

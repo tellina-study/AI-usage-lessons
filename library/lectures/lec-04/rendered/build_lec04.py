@@ -299,7 +299,7 @@ NAV_SECTIONS = [
     ("1", "Карта AI\nв медицине", "4 типа\n+ масштаб FDA"),
     ("2", "AI-диагностика\nкак зеркало", "CV · sens/spec\n· MASAI · bias"),
     ("3", "Разработка\nлекарств",      "AlphaFold · Rentosertib\n· DSP-1181"),
-    ("4", "Этика и\nответственность",  "Obermeyer · Tessa\n· 4 актёра"),
+    ("4", "AI-объяснитель\n+ этика",  "Obermeyer · Tessa\n· 4 актёра"),
     ("5", "Заключение",                "3 вывода ·\nLec 6 · Q&A"),
 ]
 
@@ -589,7 +589,7 @@ def build_s05(p):
         ("1", "Карта AI в медицине"),
         ("2", "AI-диагностика как зеркало"),
         ("3", "Разработка лекарств — обещания vs реальность"),
-        ("4", "Этика и ответственность"),
+        ("4", "AI как объяснитель и его границы. Этика."),
     ]
     rm_item_y = rm_y + 0.75
     for i, (num, label) in enumerate(roadmap):
@@ -1931,7 +1931,7 @@ def build_s24(p):
         {"text": "неделима.", "size": 14, "color": GOLD, "bold": True},
     ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.20)
     text_box(s, x=0.55, y=7.25, w=12.3, h=0.20,
-             text="Price 2019 Stanford TLR · Gerke et al. 2020 (Elsevier) · EU AI Act 2024/1689 Art. 14.",
+             text="Price 2019 (U Michigan Law School) · Gerke 2020 (Penn State Dickinson Law) · EU AI Act 2024/1689 Art. 14.",
              size=10, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s24"))
 
@@ -2126,11 +2126,11 @@ def build_s13a(p):
 
 
 def build_s19a(p):
-    """Section 4 divider — переход в раздел «Этика и ответственность»
-    (Phase 8.8: было section 5, теперь 4 после удаления Micro-упражнения)."""
+    """Section 4 divider — «AI как объяснитель и его границы. Этика.»
+    (Phase 11.6: title sync с speech v2; ранее «Этика и ответственность»)."""
     build_section_divider(
         p, here_idx=4,
-        title="Этика\nи ответственность",
+        title="AI как объяснитель\nи его границы. Этика.",
         frame_phrase="AI как объяснитель · Obermeyer · NEDA Tessa · Change Healthcare · 4 актёра",
         notes_slide_id="s19a",
     )

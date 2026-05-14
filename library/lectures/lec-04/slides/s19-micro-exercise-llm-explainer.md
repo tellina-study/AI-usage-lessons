@@ -6,7 +6,7 @@ assertion: "AI как объяснитель — что меняется в об
 learning_goal: "Понять, как LLM меняют workflow студента-медика и врача — паттерн «explain-as-for-student-N» и его границы"
 learning_outcomes: [LO2, LO3]
 frame_mapping: ["LLM pattern", "LLM anti-pattern"]
-chapter_ref: "§4.1 + §4.2 — AI как объяснитель"
+chapter_ref: "§4.2 — AI как объяснитель: pattern и его границы"
 references: []
 visual:
   pattern: matrix

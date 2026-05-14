@@ -6,7 +6,7 @@ assertion: "LLM в медицине ≠ медицинский AI. 3 documented 
 learning_goal: "3 LLM anti-pattern cases: Tessa vendor accountability + adversarial 83% + 40M self-diagnosis"
 learning_outcomes: [LO3, LO8]
 frame_mapping: ["LLM anti-pattern", "Безопасность", "Человек vs AI"]
-chapter_ref: "§5.3 — LLM-анти-паттерны в медицине"
+chapter_ref: "§4.4 — LLM-анти-паттерны в медицине"
 references: [npr-2023-tessa, ai-incident-db-545, comm-medicine-2025, beckers-2025, gallup-2025]
 visual:
   pattern: matrix

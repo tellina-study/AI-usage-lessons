@@ -6,7 +6,7 @@ assertion: "Obermeyer 2019 (Science): commercial AI для 200M Americans system
 learning_goal: "Deep-dive bias case с actionable engineer lesson"
 learning_outcomes: [LO3, LO8]
 frame_mapping: ["Безопасность", "Человек vs AI", "LLM anti-pattern"]
-chapter_ref: "§5.2 — Obermeyer 2019: как выбор метрики стал выбором политики"
+chapter_ref: "§4.3 — Obermeyer 2019: как выбор метрики стал выбором политики"
 references: [obermeyer-2019-science, berkeley-news-2019, stat-news-2019]
 visual:
   pattern: pipeline

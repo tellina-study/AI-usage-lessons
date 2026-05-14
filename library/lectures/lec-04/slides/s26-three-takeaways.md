@@ -6,7 +6,7 @@ assertion: "Медицинский AI к 2026 — работающая инфр�
 learning_goal: "3 takeaways — explicit LO1+LO2+LO3+LO8 framing для Lec 9"
 learning_outcomes: [LO1, LO2, LO3, LO8]
 frame_mapping: ["Другой AI", "Человек vs AI", "Безопасность"]
-chapter_ref: "§6.1 — Три главных вывода"
+chapter_ref: "§5.1 — Три главных вывода"
 references: []
 visual:
   pattern: matrix

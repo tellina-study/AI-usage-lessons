@@ -6,7 +6,7 @@ assertion: "В медицинском AI ставки максимальны: о
 learning_goal: "Transition к ethics section — 3 темы next slides"
 learning_outcomes: [LO3, LO8]
 frame_mapping: ["Безопасность", "Человек vs AI"]
-chapter_ref: "§5.1 — Зачем инженеру думать про границы medical AI"
+chapter_ref: "§4.1 — Зачем инженеру думать про границы medical AI"
 references: []
 visual:
   pattern: cover_distinct

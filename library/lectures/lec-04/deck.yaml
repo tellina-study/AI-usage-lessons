@@ -331,7 +331,7 @@ slides:
     file: slides/s19a-section5-divider.md
     type: section_divider
     duration_min: 0.2
-    assertion: "Раздел 4 — Этика и ответственность"
+    assertion: "Раздел 4 — AI как объяснитель и его границы. Этика."
     learning_goal: "Visual divider — переход в раздел этики"
     learning_outcomes: [LO3, LO8]
     chapter_ref: "frontmatter"
@@ -340,7 +340,7 @@ slides:
       pattern: section_divider_with_progress
       primary: "Большое «4» + title + 1-фраза-фрейм + 6-card progress bar"
 
-  # ─── Раздел 4. Этика и ответственность (15 мин) ───
+  # ─── Раздел 4. AI как объяснитель и его границы. Этика. (15 мин) ───
   - id: s19
     file: slides/s19-micro-exercise-llm-explainer.md
     type: assertion_visual
@@ -348,7 +348,7 @@ slides:
     assertion: "AI как объяснитель — что меняется в обучении и работе врача."
     learning_goal: "Понять, как LLM меняют workflow студента-медика и врача — паттерн explain-as-for-student-N и его границы"
     learning_outcomes: [LO2, LO3]
-    chapter_ref: "§4.1 + §4.2 — AI как объяснитель"
+    chapter_ref: "§4.2 — AI как объяснитель: pattern и его границы"
     references: []
     visual:
       pattern: matrix
@@ -363,7 +363,7 @@ slides:
     assertion: "В медицинском AI ставки максимальны. Что инженер должен знать про границы."
     learning_goal: "Transition к ethics section — 3 темы next slides"
     learning_outcomes: [LO3, LO8]
-    chapter_ref: "§5.1 — Зачем инженеру думать про границы"
+    chapter_ref: "§4.1 — Зачем инженеру думать про границы"
     references: []
     visual:
       pattern: cover_distinct
@@ -376,7 +376,7 @@ slides:
     assertion: "Obermeyer 2019 (Science): commercial AI для 200M Americans systematically underestimated severity для black patients. Proxy «стоимость лечения» вместо «тяжесть болезни»."
     learning_goal: "Deep-dive bias case с actionable engineer lesson"
     learning_outcomes: [LO3, LO8]
-    chapter_ref: "§5.2 — Obermeyer 2019: выбор метрики стал выбором политики"
+    chapter_ref: "§4.3 — Obermeyer 2019: выбор метрики стал выбором политики"
     references: [obermeyer-2019-science, berkeley-news-2019, stat-news-2019]
     visual:
       pattern: pipeline
@@ -389,7 +389,7 @@ slides:
     assertion: "LLM в медицине ≠ медицинский AI. 3 documented anti-pattern cases на 2025-2026."
     learning_goal: "3 LLM anti-pattern cases: Tessa vendor accountability + adversarial 83% + 40M self-diagnosis"
     learning_outcomes: [LO3, LO8]
-    chapter_ref: "§5.3 — LLM-анти-паттерны в медицине"
+    chapter_ref: "§4.4 — LLM-анти-паттерны в медицине"
     references: [npr-2023-tessa, ai-incident-db-545, comm-medicine-2025, beckers-2025, gallup-2025]
     visual:
       pattern: matrix
@@ -402,7 +402,7 @@ slides:
     assertion: "Медицинские данные — самая защищаемая категория. И самая ценная для атакующих. Change Healthcare (Feb 2024): 190M человек, $2.457 млрд recovery cost."
     learning_goal: "Medical data security + AI training datasets risk + ФЗ-152/ФЗ-23"
     learning_outcomes: [LO3, LO8]
-    chapter_ref: "§5.4 — Безопасность медицинских данных"
+    chapter_ref: "§4.5 — Безопасность медицинских данных"
     references: [uhg-2024, bleeping-computer-2024, hipaa-journal-2024, sweeney-2002]
     visual:
       pattern: matrix
@@ -415,7 +415,7 @@ slides:
     assertion: "Врач ставит диагноз. AI подсказывает. Ответственность — на враче. Vendor + regulator + operator — обеспечивают системные условия."
     learning_goal: "4-actor responsibility framework — ответ на central question"
     learning_outcomes: [LO3, LO8]
-    chapter_ref: "§5.5 — Кто отвечает за AI-ошибку: 4-actor framework"
+    chapter_ref: "§4.6 — Кто отвечает за AI-ошибку: 4-actor framework"
     references: [price-2019-stanford, gerke-2020-elsevier, eu-ai-act-2024-1689]
     visual:
       pattern: quadrant
@@ -423,7 +423,7 @@ slides:
 
   # ─── Section divider (5) ───
   - id: s24a
-    file: slides/s24a-section6-divider.md
+    file: slides/s24a-section5-divider.md
     type: section_divider
     duration_min: 0.2
     assertion: "Раздел 5 — Заключение"
@@ -443,7 +443,7 @@ slides:
     assertion: "Медицинский AI к 2026 — работающая инфраструктура. И вместе с этим — конкретная responsibility framework."
     learning_goal: "3 takeaways — explicit LO1+LO2+LO3+LO8 framing для Lec 9"
     learning_outcomes: [LO1, LO2, LO3, LO8]
-    chapter_ref: "§6.1 — Три главных вывода"
+    chapter_ref: "§5.1 — Три главных вывода"
     references: []
     visual:
       pattern: matrix
@@ -456,7 +456,7 @@ slides:
     assertion: "Врач ставит диагноз. AI подсказывает. Инженер делает так, чтобы врач мог по-настоящему решать."
     learning_goal: "Closing emotional payoff — callback к central question"
     learning_outcomes: [LO8]
-    chapter_ref: "§6.1 — закрывающая фраза"
+    chapter_ref: "§5.1 — закрывающая фраза"
     references: []
     visual:
       pattern: cover_distinct
@@ -469,7 +469,7 @@ slides:
     assertion: "Дальше — Коллоквиум 1 и Лекция 6 «AI в производстве и сельском хозяйстве». 3 принципа сегодня — input для черновика чек-листа на Лекции 9."
     learning_goal: "Тизер Лекции 6 + Lec 9 LO8 forward reference + домашнее задание"
     learning_outcomes: [LO8]
-    chapter_ref: "§6.2 — Что будет дальше"
+    chapter_ref: "§5.2 — Что будет дальше: Коллоквиум 1 и Лекция 6"
     references: []
     visual:
       pattern: timeline

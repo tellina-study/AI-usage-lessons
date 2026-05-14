@@ -6,7 +6,7 @@ assertion: "Врач ставит диагноз. AI подсказывает. �
 learning_goal: "Closing emotional payoff — callback к central question"
 learning_outcomes: [LO8]
 frame_mapping: ["Человек vs AI"]
-chapter_ref: "§6.1 — закрывающая фраза"
+chapter_ref: "§5.1 — закрывающая фраза"
 references: []
 visual:
   pattern: cover_distinct

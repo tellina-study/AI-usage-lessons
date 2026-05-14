@@ -285,18 +285,22 @@ def load_notes(slide_id):
 
 # ============================================================
 # Section divider — unified template (6 cards, like Лекция 1)
-# Used by s05b, s08a, s13a, s18a, s19a, s24a.
+# Used by s05b, s08a, s13a, s19a, s24a (Phase 8.8: s18a deleted with section 4).
 #
 # NAV_SECTIONS — 6 разделов Лекции 4 (как в deck.yaml).
 # ============================================================
+#
+# Fix 9 (Phase 8.8): section 4 «Микро-упражнение» удалён (replaced by s19
+# lecture content «AI как объяснитель» что подходит к Section 4 «Этика и
+# ответственность»). Структура теперь 6 sections (0..5), не 7. Также
+# обновлены here_idx у всех других dividers ниже.
 NAV_SECTIONS = [
     ("0", "Открытие\nи опросы",   "Где мы\nкак пользователи"),
     ("1", "Карта AI\nв медицине", "4 типа\n+ масштаб FDA"),
     ("2", "AI-диагностика\nкак зеркало", "CV · sens/spec\n· MASAI · bias"),
     ("3", "Разработка\nлекарств",      "AlphaFold · Rentosertib\n· DSP-1181"),
-    ("4", "Микро-упражнение",          "10 мин ·\nLO4 на практике"),
-    ("5", "Этика и\nответственность",  "Obermeyer · Tessa\n· 4 актёра"),
-    ("6", "Заключение",                "3 вывода ·\nLec 6 · Q&A"),
+    ("4", "Этика и\nответственность",  "Obermeyer · Tessa\n· 4 актёра"),
+    ("5", "Заключение",                "3 вывода ·\nLec 6 · Q&A"),
 ]
 
 
@@ -329,9 +333,9 @@ def build_section_divider(p, here_idx, title, frame_phrase, notes_slide_id):
              text=frame_phrase,
              size=18, italic=False, color=MID,
              align=PP_ALIGN.LEFT, line_spacing=1.30)
-    # Progress bar — 7 cards (sections 0..6).
+    # Progress bar — 6 cards (sections 0..5) (Fix 9, Phase 8.8 — was 7).
     bar_y = 5.85
-    n_cells = 7
+    n_cells = 6
     total_w = 12.3
     gap = 0.12
     cell_w = (total_w - gap * (n_cells - 1)) / n_cells
@@ -425,9 +429,8 @@ def build_s02(p):
     text_box(s, x=0.95, y=5.45, w=10.5, h=0.6,
              text="Какие AI-обещания в медицине сбылись — и кто отвечает за ошибки.",
              size=20, color=MID, italic=False, align=PP_ALIGN.LEFT, line_spacing=1.25)
-    text_box(s, x=0.95, y=6.15, w=10.5, h=0.35,
-             text="Курс «AI в разных индустриях»  ·  75 мин  ·  13 мая 2026",
-             size=14, italic=True, color=LIGHT, align=PP_ALIGN.LEFT)
+    # Fix 1 (Phase 8.8): footer line «Курс · 75 мин · 13 мая 2026» удалена —
+    # cover должен быть minimal (title + lecture number).
     speaker_notes(s, load_notes("s02"))
 
 
@@ -568,10 +571,9 @@ def build_s05(p):
     s = blank(p)
     qbox_x, qbox_y, qbox_w, qbox_h = 0.55, 0.6, 12.25, 3.0
     ocean_box(s, qbox_x, qbox_y, qbox_w, qbox_h)
-    text_box(s, x=qbox_x + 0.5, y=qbox_y + 0.35, w=qbox_w - 1.0, h=0.45,
-             text="ЦЕНТРАЛЬНЫЙ ВОПРОС ЛЕКЦИИ",
-             size=14, bold=True, color=TEAL, align=PP_ALIGN.LEFT)
-    text_runs(s, qbox_x + 0.5, qbox_y + 0.85, qbox_w - 1.0, qbox_h - 1.1, [
+    # Fix 2 (Phase 8.8): «ЦЕНТРАЛЬНЫЙ ВОПРОС ЛЕКЦИИ» banner удалён —
+    # сам вопрос крупно говорит о себе, banner — лишний noise.
+    text_runs(s, qbox_x + 0.5, qbox_y + 0.55, qbox_w - 1.0, qbox_h - 0.8, [
         {"text": "Какие AI-обещания в медицине ", "size": 30, "color": DEEP, "bold": True},
         {"text": "реально сбылись", "size": 30, "color": GOLD, "bold": True},
         {"text": " к 2026 году — и ", "size": 30, "color": DEEP, "bold": True},
@@ -605,11 +607,11 @@ def build_s05(p):
     add_image(s, ASSETS / "photos/s05-doctor-laptop.jpg",
               x=img_x + 0.2, y=img_y + 0.25, w=img_w - 0.4, h=img_h - 0.85)
     text_box(s, x=img_x + 0.2, y=img_y + img_h - 0.50, w=img_w - 0.4, h=0.35,
-             text="Врач + ноутбук + стетоскоп — где AI встречает клиническую работу",
+             text="Иллюстрация: врач + ноутбук + стетоскоп — рабочий процесс с AI в клинике",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    text_box(s, x=0.55, y=6.95, w=12.3, h=0.35,
-             text="Стейкс: $22–38 млрд (2025), прогноз > $100 млрд к 2030 (MarketsAndMarkets, Towards Healthcare).",
-             size=11, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
+    # Fix 3 (Phase 8.8): footer line «Стейкс: $22–38 млрд …» удалена —
+    # anglicism «Стейкс» + irrelevant marketing metadata. Слайд = central
+    # question + roadmap + photo, без отвлечений.
     speaker_notes(s, load_notes("s05"))
 
 
@@ -671,17 +673,31 @@ def build_s06(p):
                  text=exs_label, size=10, bold=True, color=SLATE, line_spacing=1.20)
         text_box(s, x=x + 0.30, y=y + 2.15, w=cell_w - 0.50, h=0.40,
                  text=exs, size=12, color=DEEP, line_spacing=1.30)
-    # Gold dots — moved to corner of cells (visual anchor confirming focus).
+    # Fix 5 (Phase 8.8, Option A): axes упрощены — single-word labels
+    # «изображения» / «текст», убраны disambiguators «/сигналы» «/молекулы»
+    # (упоминаются в cell content). Также: «один пациент / популяция»
+    # без «фарма» (уже в bottom-right cell).
+    # Iter 2: vertical label «МОДАЛЬНОСТЬ» rotated (rendered as vertical
+    # column with character-per-line) → switched to compact «◄ изображения →
+    # текст ►» horizontal markers on left/right edges similar to bottom axis.
     text_box(s, x=grid_x, y=grid_y + grid_h + 0.08, w=grid_w, h=0.35,
-             text="◄ один пациент        ОХВАТ        популяция / фарма ►",
+             text="◄ один пациент        ОХВАТ        популяция ►",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, italic=True)
-    text_box(s, x=0.30, y=grid_y, w=1.30, h=grid_h,
-             text="МОДАЛЬНОСТЬ\n\n▲ изображения /\n   сигналы\n\n\n▼ текст /\n   молекулы",
+    # Top inside the grid — modality marker (top: изображения, bottom: текст).
+    text_box(s, x=0.30, y=grid_y - 0.05, w=1.30, h=grid_h / 2,
+             text="▲\nизображения",
              size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.20)
-    text_box(s, x=0.55, y=7.15, w=12.3, h=0.30,
-             text="Фокус лекции — квадранты с золотой подсветкой: AI-диагностика + разработка лекарств.",
-             size=12, italic=True, color=GOLD, align=PP_ALIGN.LEFT)
+    text_box(s, x=0.30, y=grid_y + grid_h / 2, w=1.30, h=grid_h / 2,
+             text="текст\n▼",
+             size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.20)
+    text_box(s, x=0.30, y=grid_y + grid_h / 2 - 0.20, w=1.30, h=0.40,
+             text="МОДАЛЬНОСТЬ",
+             size=10, bold=True, color=TEAL, align=PP_ALIGN.CENTER, italic=True)
+    # Fix 4 (Phase 8.8): footer «Фокус лекции — квадранты с золотой
+    # подсветкой» удалён — это editorial/designer note, не контент для
+    # аудитории. Gold-подсветка квадрантов сама говорит о фокусе.
     speaker_notes(s, load_notes("s06"))
 
 
@@ -731,7 +747,8 @@ def build_s07(p):
 
 def build_s08(p):
     s = blank(p)
-    slide_title(s, "Медицина — инструктивный пример для инженера.", size=24)
+    # Fix 6 (Phase 8.8): «инструктивный пример» (anglicism) → «показательный кейс».
+    slide_title(s, "Медицина — показательный кейс для инженера.", size=24)
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
              text="Высокие ставки + строгое регулирование + прозрачные операционные метрики.",
              size=15, italic=True, color=MID)
@@ -774,7 +791,7 @@ def build_s08(p):
     add_image(s, ASSETS / "photos/s08-radiologist-screen.jpg",
               x=photo_x + 0.15, y=card_y + 0.25, w=photo_w - 0.30, h=card_h - 0.85)
     text_box(s, x=photo_x + 0.15, y=card_y + card_h - 0.50, w=photo_w - 0.30, h=0.35,
-             text="Radiologist + AI workstation",
+             text="Иллюстрация: радиолог + AI-рабочая станция",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     gold_callout(s, 0.55, 6.60, 12.3, 0.50,
                  "→ Регуляторные навыки переносятся: PCI DSS · ФЗ-152 · ISO 26262 · DO-178C.",
@@ -917,10 +934,14 @@ def build_s10(p):
     text_box(s, x=mt_x + 0.3, y=mt_y + 0.15, w=mt_w - 0.6, h=0.35,
              text="4 метрики — формула + смысл",
              size=14, bold=True, color=DEEP)
+    # Fix 7 (Phase 8.8): «не напуганных» → «верно классифицированных как
+    # здоровые»; «поймал AI» → «верно идентифицированных AI»;
+    # «болезнь в популяции» → «болезнь встречается в популяции» (точная
+    # медицинская формулировка).
     metrics = [
-        ("Чувствительность", "TP / (TP+FN)", "доля больных, которых поймал AI"),
-        ("Специфичность", "TN / (TN+FP)", "доля здоровых, не напуганных"),
-        ("Распространённость",  "(TP+FN) / всего", "как часто болезнь в популяции"),
+        ("Чувствительность", "TP / (TP+FN)", "доля больных, верно идентифицированных AI"),
+        ("Специфичность", "TN / (TN+FP)", "доля здоровых, верно классифицированных как здоровые"),
+        ("Распространённость",  "(TP+FN) / всего", "как часто болезнь встречается в популяции"),
         ("PPV", "TP / (TP+FP)", "если AI сказал «болен» — насколько верить"),
     ]
     row_y = mt_y + 0.65
@@ -948,8 +969,12 @@ def build_s10(p):
 
 def build_s11(p):
     s = blank(p)
-    slide_title(s, "Визуализация: AI+врач > врач. Рассуждения: парадокс augmentation.", size=22)
-    text_box(s, x=0.55, y=1.10, w=12.3, h=0.40,
+    # Fix 8 (Phase 8.8): «парадокс augmentation» (anglicism) → «AI один
+    # сильнее тандема врач+AI». Передаёт суть Goh result без anglicism.
+    # Iter 2: increased title height to fit 2 lines without overlap with sub.
+    slide_title(s, "Визуализация: AI+врач сильнее каждого. Рассуждения: AI один сильнее тандема врач+AI.",
+                size=20, h=1.35)
+    text_box(s, x=0.55, y=1.50, w=12.3, h=0.40,
              text="Вопрос «AI или врач» поставлен неправильно. Правильный — «какая задача и какой рабочий процесс».",
              size=13, italic=True, color=MID)
     rows = [
@@ -957,7 +982,7 @@ def build_s11(p):
          "Lancet Digital Health — мета-анализ, 14 проспективных",
          "Мета-анализ по визуализации",
          "объединённая чувствительность: AI 0.87  ·  врач 0.85",
-         "Близко к паритету, исторический baseline",
+         "Близко к паритету, исторический ориентир",
          MID, False),
         ("MASAI 2024–2025",
          "Lancet Digital Health (2024) + Lancet (2025)",
@@ -965,15 +990,17 @@ def build_s11(p):
          "чувствит. 80.5% (AI) vs 73.8% (стандарт)  ·  нагрузка −44%  ·  интервальный рак −12%",
          "AI+радиолог — значимо лучше каждого по отдельности",
          MID, True),
+        # Fix 8 (Phase 8.8): «Парадокс augmentation» (anglicism) → русская
+        # формулировка про парадокс совместной работы.
         ("Goh et al. 2024",
          "JAMA Network Open (окт. 2024)",
          "Клинические рассуждения, 50 врачей",
          "GPT-4 в одиночку 76%  ·  врач+GPT-4 74%  (p = 0.60)",
-         "Парадокс augmentation — AI не улучшил рассуждения врача",
+         "AI один сильнее тандема врач+AI — парадокс совместной работы",
          LIGHT, False),
     ]
-    row_y = 1.65
-    row_h = 1.65
+    row_y = 1.95
+    row_h = 1.55
     for i, (study, journal, domain, result, takeaway, color, is_gold) in enumerate(rows):
         ry = row_y + i * (row_h + 0.05)
         stroke = GOLD if is_gold else LIGHT
@@ -1085,7 +1112,7 @@ def build_s13(p):
          "lucide-eye-blue.png", "Daneshjou 2022, Science Advances"),
         ("Пульсоксиметр — расовое смещение",
          ["Механизм: датчик систематически завышает SpO2 на тёмной коже",
-          "Доказательство: Sjoding 2020 NEJM — гипоксия чаще пропускается у Black-пациентов",
+          "Доказательство: Sjoding 2020 NEJM — гипоксия чаще пропускается у чернокожих пациентов",
           "Что значит для AI: модели с SpO2 на входе наследуют ошибку датчика"],
          "lucide-alert-triangle-blue.png", "Sjoding 2020, NEJM · FDA Safety 2021"),
     ]
@@ -1128,7 +1155,7 @@ def build_s14(p):
     add_image(s, ASSETS / "photos/s14-pharma-lab.jpg",
               x=photo_x + 0.15, y=photo_y + 0.20, w=photo_w - 0.30, h=photo_h - 0.65)
     text_box(s, x=photo_x + 0.15, y=photo_y + photo_h - 0.42, w=photo_w - 0.30, h=0.32,
-             text="Фарма-лаборатория — где AI-дизайн встречается с биологией",
+             text="Иллюстрация: фарма-лаборатория — место встречи AI-дизайна и биологии",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     # Right: question box.
     qbox_x, qbox_y, qbox_w, qbox_h = 5.40, 1.70, 7.40, 2.85
@@ -1526,86 +1553,65 @@ def build_s18(p):
 
 
 def build_s19(p):
+    """Fix 9 (Phase 8.8): полностью переработанный s19. Было — micro-exercise
+    «студент открывает web-chat». Стало — лекционный контент «AI как
+    объяснитель: что меняется в обучении и работе врача» (3 мин, без student
+    activity). 3 темы: pattern explain-as-for-student-N · safety caveat
+    (verify before trust) · что меняется в обучении медиков.
+    """
     s = blank(p)
-    slide_title(s, "Используем AI для понимания AI — но проверяем.", size=24)
+    slide_title(s, "AI как объяснитель — что меняется в обучении и работе врача.", size=22)
     text_box(s, x=0.55, y=1.20, w=12.3, h=0.40,
-             text="Web-чат + критическая оценка ответа.",
+             text="Один из самых стабильно работающих паттернов LLM — «объясни как для студента N курса».",
              size=14, italic=True, color=MID)
-    card_x, card_y, card_w, card_h = 0.55, 1.85, 8.2, 5.0
-    ocean_box(s, card_x, card_y, card_w, card_h)
-    steps = [
-        ("Шаг 1  ·  3 мин",
-         "Открой web-чат (ChatGPT / Claude / YandexGPT / GigaChat). Введи промпт ниже:",
-         MID),
-        ("Шаг 2  ·  3 мин",
-         "Отметь карандашом: 1 неточность ИЛИ 1 непроверяемое утверждение ИЛИ 1 слишком абстрактное место.",
-         LIGHT),
-        ("Шаг 3  ·  4 мин — разбор",
-         "Лектор спросит — 2–3 студента читают (1 мин). Лектор покажет эталонный ответ.",
-         DEEP),
+    # 3 cards layout: левая (пример паттерна), центральная (что меняется),
+    # правая (caveat — проверяй).
+    cards = [
+        ("Паттерн «объясни как для…»",
+         "«Объясни sensitivity/specificity как для студента 2 курса техвуза» — LLM выдаёт связное объяснение с примером.",
+         "Работает: интерн читает редкое заболевание, ординатор — методику исследования, врач — новый класс препаратов.",
+         "lucide-book-open-blue.png",
+         MID, False),
+        ("Что меняется в обучении",
+         "Студент-инженер получает персонального наставника по запросу. Время «спросить старшего» сокращается с часов до секунд.",
+         "Качество — нестабильно. AI отлично пересказывает учебник, плохо передаёт неявное знание клинициста.",
+         "lucide-graduation-cap-blue.png",
+         LIGHT, False),
+        ("Оговорка: проверяй перед тем, как доверять",
+         "AI даёт цифры без источника. AI пересказывает учебник 5-летней давности как «текущую практику».",
+         "Правило: AI = первое приближение. Финальная верификация — учебник, guidelines, старший коллега.",
+         "lucide-alert-triangle-blue.png",
+         GOLD, True),
     ]
-    step_y = card_y + 0.35
-    for i, (label, body, color) in enumerate(steps):
-        sy = step_y + i * 1.05
-        filled_rect(s, card_x + 0.30, sy, 0.55, 0.55, color, radius=True, radius_adj=0.5)
-        text_box(s, x=card_x + 0.30, y=sy, w=0.55, h=0.55,
-                 text=str(i + 1), size=22, bold=True, color=WHITE,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=card_x + 1.0, y=sy + 0.05, w=card_w - 1.2, h=0.30,
-                 text=label, size=13, bold=True, color=color, line_spacing=1.10)
-        text_box(s, x=card_x + 1.0, y=sy + 0.40, w=card_w - 1.2, h=0.55,
-                 text=body, size=13, color=DEEP, line_spacing=1.30)
-    prompt_y = card_y + 3.65
-    filled_rect(s, card_x + 0.30, prompt_y, card_w - 0.60, 1.20,
-                RGBColor(0xF0, 0xF4, 0xF8), stroke=LIGHT, stroke_pt=0.8,
-                radius=True, radius_adj=0.05)
-    text_box(s, x=card_x + 0.45, y=prompt_y + 0.10, w=card_w - 0.90, h=0.30,
-             text="Готовый промпт:",
-             size=11, bold=True, color=MID)
-    text_box(s, x=card_x + 0.45, y=prompt_y + 0.40, w=card_w - 0.90, h=0.75,
-             text="«Объясни мне, что такое чувствительность и специфичность для AI-диагностики на конкретном примере (скрининг маммографии). Объясни как для студента 2 курса техн. вуза, со знанием базовой теории вероятностей.»",
-             size=11, italic=True, color=DEEP, font=FONT_MONO, line_spacing=1.40)
-    ctrl_x, ctrl_y, ctrl_w, ctrl_h = card_x + card_w + 0.30, 1.85, 4.0, 5.0
-    ocean_box(s, ctrl_x, ctrl_y, ctrl_w, ctrl_h)
-    # v3.5: top strip = student-laptop photo (visual hook к web-chat session).
-    photo_h_strip = 1.20
-    add_image(s, ASSETS / "photos/s19-student-laptop.jpg",
-              x=ctrl_x + 0.20, y=ctrl_y + 0.20, w=ctrl_w - 0.40, h=photo_h_strip)
-    text_box(s, x=ctrl_x + 0.30, y=ctrl_y + 0.20 + photo_h_strip + 0.10, w=ctrl_w - 0.60, h=0.40,
-             text="Эталонный ответ (готовится накануне)",
-             size=13, bold=True, color=DEEP, line_spacing=1.15)
-    filled_rect(s, ctrl_x + 0.30, ctrl_y + 0.20 + photo_h_strip + 0.60, ctrl_w - 0.60,
-                ctrl_h - 0.20 - photo_h_strip - 0.60 - 0.50,
-                WHITE, stroke=LIGHT, stroke_pt=0.6,
-                radius=True, radius_adj=0.03)
-    lines = [
-        "Чувствительность — доля...",
-        "...правильно пойманных AI.",
-        "TP / (TP + FN).",
-        "",
-        "Специфичность — доля...",
-        "...правильно отпущенных.",
-        "TN / (TN + FP).",
-        "",
-        "Маммография — пример:",
-        "MASAI sens 80.5%, spec 98.5%",
-    ]
-    lines_start_y = ctrl_y + 0.20 + photo_h_strip + 0.85
-    for j, ln in enumerate(lines):
-        ly = lines_start_y + j * 0.23
-        if ly > ctrl_y + ctrl_h - 0.55:
-            break
-        text_box(s, x=ctrl_x + 0.45, y=ly, w=ctrl_w - 0.90, h=0.23,
-                 text=ln, size=10,
-                 color=DEEP if ln and not ln.startswith("MASAI") else MID,
-                 bold=ln.startswith("MASAI"),
-                 line_spacing=1.20)
-    text_box(s, x=ctrl_x + 0.30, y=ctrl_y + ctrl_h - 0.45, w=ctrl_w - 0.60, h=0.35,
-             text="Готовится преподавателем накануне.",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    gold_callout(s, 0.55, 6.95, 12.3, 0.40,
-                 "Цель — критика на уровне абзаца. AI отлично объясняет — это паттерн. AI даёт цифры без источника — антипаттерн.",
-                 size=12)
+    card_y = 1.85
+    card_h = 4.55
+    card_w = 4.05
+    gap = 0.15
+    for i, (title, line1, line2, icon, color, is_gold) in enumerate(cards):
+        x = 0.55 + i * (card_w + gap)
+        fill = GOLD_TINT if is_gold else SURFACE
+        stroke = GOLD if is_gold else LIGHT
+        sw = 2.5 if is_gold else 1.5
+        ocean_box(s, x, card_y, card_w, card_h, fill=fill, stroke=stroke,
+                  stroke_pt=sw)
+        # Top accent strip.
+        strip_color = GOLD if is_gold else color
+        filled_rect(s, x, card_y, card_w, 0.10, strip_color)
+        add_image(s, ASSETS / "icons" / icon,
+                  x=x + 0.30, y=card_y + 0.35, w=0.95, h=0.95)
+        text_box(s, x=x + 0.30, y=card_y + 1.40, w=card_w - 0.60, h=0.95,
+                 text=title, size=16, bold=True,
+                 color=GOLD if is_gold else color, line_spacing=1.20)
+        text_box(s, x=x + 0.30, y=card_y + 2.40, w=card_w - 0.60, h=1.15,
+                 text=line1, size=12, color=DEEP, line_spacing=1.35)
+        text_box(s, x=x + 0.30, y=card_y + 3.55, w=card_w - 0.60, h=0.95,
+                 text=line2, size=11, italic=True, color=SLATE, line_spacing=1.35)
+    gold_callout(s, 0.55, 6.55, 12.3, 0.50,
+                 "→ AI — мощный объяснитель. Не источник истины. Это меняет рабочий процесс врача и студента — но не отменяет проверку.",
+                 size=13)
+    text_box(s, x=0.55, y=7.10, w=12.3, h=0.25,
+             text="Паттерн «explain like for» широко используется студентами медфаков 2024–2026 (см. JAMA Educ 2024 · Med Teach 2025).",
+             size=10, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s19"))
 
 
@@ -1622,32 +1628,39 @@ def build_s20(p):
     add_image(s, ASSETS / "photos/s20-medical-team.jpg",
               x=img_x + 0.25, y=img_y + 0.30, w=img_w - 0.5, h=img_h - 0.85)
     text_box(s, x=img_x + 0.3, y=img_y + img_h - 0.50, w=img_w - 0.6, h=0.35,
-             text="Каждый AI-диагноз заканчивается этим — взаимодействием врача с пациентом.",
+             text="Иллюстрация: каждый AI-диагноз заканчивается этим — взаимодействием врача с пациентом.",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     list_x, list_y, list_w, list_h = 6.45, 1.85, 6.35, 4.9
     ocean_box(s, list_x, list_y, list_w, list_h)
     text_box(s, x=list_x + 0.30, y=list_y + 0.25, w=list_w - 0.6, h=0.4,
              text="Что инженер должен знать про границы",
              size=14, bold=True, color=DEEP)
+    # Fix 11 (Phase 8.8): для каждого пункта — 1-2-предложения explanation
+    # с конкретным масштабом + последствием, не только topic-reference.
     items = [
         ("Смещение (bias) в медицинском AI",
-         "Глубокий разбор: Obermeyer 2019",
+         "Optum/UnitedHealth занижал риск у чернокожих в 2 раза — proxy «расходы» вместо «тяжесть».",
+         "200 млн американцев · 5 лет до фикса",
          "lucide-scale-blue.png"),
         ("LLM-антипаттерны",
-         "NEDA Tessa + adversarial + 40 млн самодиагностик",
+         "NEDA Tessa давал опасные советы при eating disorder — приводил к госпитализации.",
+         "40 млн американцев — самодиагностика без врача",
          "lucide-message-circle-warning-blue.png"),
         ("Безопасность данных + ответственность",
-         "Change Healthcare + рамка 4 актёров",
+         "Change Healthcare ransomware (февр. 2024): 190 млн пострадали, $2.5 млрд убытков.",
+         "mosmed.ai = 18 млн+ изображений — та же поверхность атаки",
          "lucide-shield-check-blue.png"),
     ]
-    item_y = list_y + 0.95
-    for i, (title, sub, icon) in enumerate(items):
-        iy = item_y + i * 1.30
-        add_image(s, ASSETS / "icons" / icon, x=list_x + 0.30, y=iy + 0.15, w=0.8, h=0.8)
-        text_box(s, x=list_x + 1.25, y=iy + 0.10, w=list_w - 1.40, h=0.50,
-                 text=str(i + 1) + ".  " + title, size=16, bold=True, color=MID, line_spacing=1.15)
-        text_box(s, x=list_x + 1.25, y=iy + 0.65, w=list_w - 1.40, h=0.50,
-                 text=sub, size=12, italic=True, color=DEEP, line_spacing=1.30)
+    item_y = list_y + 0.85
+    for i, (title, explanation, scale, icon) in enumerate(items):
+        iy = item_y + i * 1.35
+        add_image(s, ASSETS / "icons" / icon, x=list_x + 0.30, y=iy + 0.10, w=0.7, h=0.7)
+        text_box(s, x=list_x + 1.15, y=iy + 0.00, w=list_w - 1.25, h=0.40,
+                 text=str(i + 1) + ".  " + title, size=14, bold=True, color=MID, line_spacing=1.15)
+        text_box(s, x=list_x + 1.15, y=iy + 0.42, w=list_w - 1.25, h=0.55,
+                 text=explanation, size=11, color=DEEP, line_spacing=1.30)
+        text_box(s, x=list_x + 1.15, y=iy + 0.97, w=list_w - 1.25, h=0.30,
+                 text=scale, size=10, italic=True, color=GOLD, line_spacing=1.25)
     gold_callout(s, 0.55, 6.85, 12.3, 0.50,
                  "→ Думать про границы сразу, на стадии проектирования — не задним числом после первого инцидента.",
                  size=14)
@@ -1658,14 +1671,14 @@ def build_s21(p):
     s = blank(p)
     slide_title(s, "Obermeyer 2019 — выбор прокси стал выбором политики.", size=22)
     text_box(s, x=0.55, y=1.10, w=12.3, h=0.40,
-             text="Коммерческий AI для 200 млн американцев систематически недооценивал тяжесть болезни у Black-пациентов.",
+             text="Коммерческий AI для 200 млн американцев систематически недооценивал тяжесть болезни у чернокожих пациентов.",
              size=13, italic=True, color=MID)
     pipe_y = 1.85
     pipe_h = 1.65
     boxes = [
         ("Цель", "Найти пациентов,\nкому нужна\nдоп. помощь", LIGHT),
         ("Прокси", "Расходы на\nпредыдущее\nлечение\n(не тяжесть)", GOLD),
-        ("Источник смещения", "Black: −$1 800/год\n(разный доступ)\n→ AI «менее больны»", DARK_GREY),
+        ("Источник смещения", "Чернокожие: −$1 800/год\n(разный доступ)\n→ AI «менее больны»", DARK_GREY),
     ]
     n = 3
     arrow_w = 0.50
@@ -1689,7 +1702,7 @@ def build_s21(p):
     rc_x, rc_y, rc_w, rc_h = 0.55, 3.7, 6.0, 2.7
     ocean_box(s, rc_x, rc_y, rc_w, rc_h)
     text_box(s, x=rc_x + 0.3, y=rc_y + 0.20, w=rc_w - 0.6, h=0.40,
-             text="При одинаковом риск-скоре у Black-пациентов:",
+             text="При одинаковом риск-скоре у чернокожих пациентов:",
              size=13, bold=True, color=DEEP)
     text_box(s, x=rc_x + 0.3, y=rc_y + 0.75, w=rc_w - 0.6, h=1.0,
              text="+26%",
@@ -1711,7 +1724,7 @@ def build_s21(p):
         {"text": "46.5%", "size": 32, "bold": True, "color": GOLD},
     ], line_spacing=1.0, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, x=fix_x + 0.3, y=fix_y + 1.65, w=fix_w - 0.6, h=0.50,
-             text="доля Black-пациентов в программах ведения пациентов высокого риска",
+             text="доля чернокожих пациентов в программах ведения пациентов высокого риска",
              size=11, color=DEEP, line_spacing=1.30)
     text_box(s, x=fix_x + 0.3, y=fix_y + rc_h - 0.40, w=fix_w - 0.6, h=0.35,
              text="−84% смещения  ·  не теория — реальные пациенты",
@@ -1999,7 +2012,7 @@ def build_s27(p):
     add_image(s, ASSETS / "photos/s27-doctor-patient.jpg",
               x=img_x + 0.30, y=img_y + 0.40, w=img_w - 0.6, h=img_h - 1.10)
     text_box(s, x=img_x + 0.30, y=img_y + img_h - 0.65, w=img_w - 0.6, h=0.35,
-             text="Врач — тот, кто берёт ответственность за пациента.",
+             text="Иллюстрация: врач — тот, кто берёт ответственность за пациента.",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     ph_x, ph_y, ph_w, ph_h = 6.30, 0.85, 6.50, 5.8
     ocean_box(s, ph_x, ph_y, ph_w, ph_h)
@@ -2070,29 +2083,20 @@ def build_s28(p):
 def build_s29(p):
     s = blank(p)
     set_slide_bg(s, SURFACE)
-    text_box(s, x=0.55, y=1.5, w=12.3, h=2.5,
-             text="Q&A?",
+    # Fix 13 (Phase 8.8): 3 backup discussion prompts удалены — слайд
+    # минимальный, чистый Q&A: большое «Вопросы?» + spasibo строка снизу.
+    # Backup-промпты переехали в speaker notes (лектор использует, не студент).
+    text_box(s, x=0.55, y=2.6, w=12.3, h=2.6,
+             text="Вопросы?",
              size=160, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    add_image(s, ASSETS / "icons/lucide-help-circle-blue.png",
-              x=10.5, y=1.9, w=1.5, h=1.5)
-    backups = [
-        "1. Кто изменил мнение о медицинском AI?",
-        "2. Чей знакомый получал AI-диагноз? Поделитесь.",
-        "3. Стартап в медицинском AI — какой первый вопрос про валидацию?",
-    ]
-    chip_y = 4.85
-    chip_h = 0.65
-    chip_w = 12.3
-    for i, b in enumerate(backups):
-        cy = chip_y + i * (chip_h + 0.08)
-        ocean_box(s, 0.55, cy, chip_w, chip_h)
-        text_box(s, x=0.85, y=cy, w=chip_w - 0.6, h=chip_h,
-                 text=b, size=14, italic=True, color=DEEP,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.20)
+    text_box(s, x=0.55, y=5.55, w=12.3, h=0.55,
+             text="Спасибо за внимание.",
+             size=24, italic=True, color=MID,
+             align=PP_ALIGN.CENTER, line_spacing=1.20)
     text_box(s, x=0.55, y=7.10, w=12.3, h=0.30,
              text="Курс «AI в разных индустриях» · Семинар-04 — разбор кейса · консультации",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s29"))
 
 
@@ -2102,10 +2106,11 @@ def build_s29(p):
 
 def build_s05b(p):
     """Section 1 divider — переход в раздел «Карта AI в медицине»."""
+    # Fix 6 (Phase 8.8): «инструктивный кейс» (anglicism) → «показательный кейс».
     build_section_divider(
         p, here_idx=1,
         title="Карта AI\nв медицине",
-        frame_phrase="4 типа применений · масштаб FDA · почему медицина — инструктивный кейс",
+        frame_phrase="4 типа применений · масштаб FDA · почему медицина — показательный кейс",
         notes_slide_id="s05b",
     )
 
@@ -2130,30 +2135,26 @@ def build_s13a(p):
     )
 
 
-def build_s18a(p):
-    """Section 4 divider — переход в практический раздел."""
-    build_section_divider(
-        p, here_idx=4,
-        title="Микро-упражнение\nс AI",
-        frame_phrase="10 минут · ChatGPT/Claude/YandexGPT · применяем LO4 на практике",
-        notes_slide_id="s18a",
-    )
+# Fix 9 (Phase 8.8): build_s18a удалён — section 4 «Микро-упражнение»
+# больше не существует, s19 теперь lecture content в Section 4 (Этика).
+# Indexes сдвинулись: s19a здесь_idx 5→4, s24a 6→5.
 
 
 def build_s19a(p):
-    """Section 5 divider — переход в раздел «Этика и ответственность»."""
+    """Section 4 divider — переход в раздел «Этика и ответственность»
+    (Phase 8.8: было section 5, теперь 4 после удаления Micro-упражнения)."""
     build_section_divider(
-        p, here_idx=5,
+        p, here_idx=4,
         title="Этика\nи ответственность",
-        frame_phrase="Obermeyer bias · NEDA Tessa · Change Healthcare · 4-actor framework",
+        frame_phrase="AI как объяснитель · Obermeyer · NEDA Tessa · Change Healthcare · 4 актёра",
         notes_slide_id="s19a",
     )
 
 
 def build_s24a(p):
-    """Section 6 divider — переход в заключение."""
+    """Section 5 divider — переход в заключение (Phase 8.8: было section 6)."""
     build_section_divider(
-        p, here_idx=6,
+        p, here_idx=5,
         title="Заключение",
         frame_phrase="3 наблюдения · тизер Лекции 6 · Q&A",
         notes_slide_id="s24a",
@@ -2181,16 +2182,16 @@ def main():
         # Section 3: Разработка лекарств
         build_s14, build_s15, build_s16, build_s17a, build_s17b, build_s18,
         # ── divider: Section 4 ──
-        build_s18a,
-        # Section 4: Микро-упражнение
-        build_s19,
-        # ── divider: Section 5 ──
+        # Fix 9 (Phase 8.8): old section 4 «Микро-упражнение» удалена,
+        # build_s18a divider убран. s19 теперь содержит lecture content
+        # «AI как объяснитель», лежит в Section 4 (Этика).
         build_s19a,
-        # Section 5: Этика и ответственность
-        build_s20, build_s21, build_s22, build_s23, build_s24,
-        # ── divider: Section 6 ──
+        # Section 4: Этика и ответственность (s19 — «AI как объяснитель»
+        # как natural intro к Section 4 — про границы LLM в медицине).
+        build_s19, build_s20, build_s21, build_s22, build_s23, build_s24,
+        # ── divider: Section 5 ──
         build_s24a,
-        # Section 6: Заключение
+        # Section 5: Заключение
         build_s26, build_s27, build_s28, build_s29,
     ]
     for fn in builders:

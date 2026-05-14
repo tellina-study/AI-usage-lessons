@@ -13,10 +13,13 @@ deck:
   audience: "студенты-инженеры 3 курса (универсальная, не медики)"
   duration_min: 75
   central_question: "Какие AI-обещания в медицине реально сбылись к 2026 году — и кто отвечает, когда AI-диагноз оказывается ошибочным?"
-  learning_outcomes: [LO1, LO2, LO3, LO4, LO8]
+  # Phase 8.8 (Fix 9): LO4 удалён — s19 был apply-based для micro-exercise.
+  # Теперь s19 = lecture content «AI как объяснитель» (LO2 + LO3), без
+  # student activity. Раздел «Микро-упражнение» отсутствует.
+  learning_outcomes: [LO1, LO2, LO3, LO8]
   language: ru
   status: draft
-  version: v2
+  version: v3
   source: chapter v2 (status=reviewed, ~12,692 слов)
   plan: notes/lecture-4-review/plan-v2.md
 
@@ -319,50 +322,40 @@ slides:
       pattern: matrix
       primary: "3-column condensed table (US/EU/RU) с ключевыми датами + PCCP pre/post contrast explicit"
 
+  # Phase 8.8 (Fix 9): s18a divider удалён — раздел «Микро-упражнение»
+  # больше не существует. s19 переезжает в Section 4 (Этика) как natural
+  # intro к LLM-границам в медицине.
+
   # ─── Section divider (4) ───
-  - id: s18a
-    file: slides/s18a-section4-divider.md
-    type: section_divider
-    duration_min: 0.2
-    assertion: "Раздел 4 — Микро-упражнение с AI"
-    learning_goal: "Visual divider — переход в практический раздел"
-    learning_outcomes: [LO4]
-    chapter_ref: "frontmatter"
-    references: []
-    visual:
-      pattern: section_divider_with_progress
-      primary: "Большое «4» + title + 1-фраза-фрейм + 7-card progress bar"
-
-  # ─── Раздел 4. Микро-упражнение AI (10 мин) ───
-  - id: s19
-    file: slides/s19-micro-exercise-llm-explainer.md
-    type: assertion_visual
-    duration_min: 10
-    assertion: "Используем AI для понимания AI. Но не доверяем без проверки."
-    learning_goal: "Apply LO4: студент использует web-chat + критически оценивает"
-    learning_outcomes: [LO4, LO2, LO3]
-    chapter_ref: "§4.1 + §4.2 — Микро-упражнение"
-    references: []
-    visual:
-      pattern: matrix
-      primary: "Task card layout с 3 шагами (3+3+4 мин) + готовый промпт visible + control screenshot baseline AI response"
-    interaction: micro_exercise
-
-  # ─── Section divider (5) ───
   - id: s19a
     file: slides/s19a-section5-divider.md
     type: section_divider
     duration_min: 0.2
-    assertion: "Раздел 5 — Этика и ответственность"
+    assertion: "Раздел 4 — Этика и ответственность"
     learning_goal: "Visual divider — переход в раздел этики"
     learning_outcomes: [LO3, LO8]
     chapter_ref: "frontmatter"
     references: []
     visual:
       pattern: section_divider_with_progress
-      primary: "Большое «5» + title + 1-фраза-фрейм + 7-card progress bar"
+      primary: "Большое «4» + title + 1-фраза-фрейм + 6-card progress bar"
 
-  # ─── Раздел 5. Границы, этика, ответственность (12 мин) ───
+  # ─── Раздел 4. Этика и ответственность (15 мин) ───
+  - id: s19
+    file: slides/s19-micro-exercise-llm-explainer.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "AI как объяснитель — что меняется в обучении и работе врача."
+    learning_goal: "Понять, как LLM меняют workflow студента-медика и врача — паттерн explain-as-for-student-N и его границы"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§4.1 + §4.2 — AI как объяснитель"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "3-card layout: Паттерн explain-as-for + Что меняется + Caveat verify; gold-подсветка на caveat"
+    interaction: none
+
+  # ─── Раздел 4 продолжение. Границы, этика, ответственность ───
   - id: s20
     file: slides/s20-ethics-transition.md
     type: assertion_visual
@@ -428,21 +421,21 @@ slides:
       pattern: quadrant
       primary: "2×2 quadrant (technical control × legal liability) с 4 actor cards (Врач / Operator / Vendor / Regulator), каждая = 1-word role + 1-line responsibility; central line ниже"
 
-  # ─── Section divider (6) ───
+  # ─── Section divider (5) ───
   - id: s24a
     file: slides/s24a-section6-divider.md
     type: section_divider
     duration_min: 0.2
-    assertion: "Раздел 6 — Заключение"
+    assertion: "Раздел 5 — Заключение"
     learning_goal: "Visual divider — переход в заключение"
     learning_outcomes: [LO1, LO2, LO3, LO8]
     chapter_ref: "frontmatter"
     references: []
     visual:
       pattern: section_divider_with_progress
-      primary: "Большое «6» + title + 1-фраза-фрейм + 7-card progress bar"
+      primary: "Большое «5» + title + 1-фраза-фрейм + 6-card progress bar"
 
-  # ─── Раздел 6. Заключение (6 мин) ───
+  # ─── Раздел 5. Заключение (6 мин) ───
   - id: s26
     file: slides/s26-three-takeaways.md
     type: takeaway

@@ -65,6 +65,26 @@ Run automated grep checks against артефакт за известные anti-
 
 Если grep matches — flag P1 «Anti-pattern: {name}» в report.
 
+#### Lec-N-1 Pattern Compliance Check (ENFORCED для plan + slides критики)
+
+Для любой лекции **N > 1** — read Lec-N-1 deck structure **before** critique:
+1. `library/lectures/lec-(N-1)/slides/sNN-*.md` — slide files (skim for structure)
+2. `library/lectures/lec-(N-1)/rendered/build_lec(N-1).py` — Python builder (design patterns)
+3. `library/lectures/lec-(N-1)/deck.yaml` — full deck metadata
+
+**Mandatory checks (Lec-N artifact vs Lec-N-1 reference):**
+- [ ] Lecture-map slide present? (Lec-1 had `s02a-lecture-map.md`)
+- [ ] Section dividers для ALL major sections (не just one)?
+- [ ] Dedicated Q&A slide at end? (Lec-1 had `s31-qa.md`)
+- [ ] Roadmap-bar / progress bar только на section dividers + cover, не на каждом content slide?
+- [ ] Cover composition matches (decorative number / subtitle pattern / no extra footer)?
+- [ ] Same palette + motif locked (Ocean / rounded box / typography conventions)?
+- [ ] Slide-type inventory matches (cover, lecture-map, section dividers, content variants, Q&A)?
+
+**If pattern-divergence found без explicit user authorization → P1 issue «Lec-N-1 pattern deviation: {specifically}».**
+
+**Counterexample (из L2 production):** designer added top progress bar на каждый content slide в Phase 8.5/8.6 (vs Lec-1 pattern «only on dividers»). 4 sub-iterations to align. Reference read at start would have prevented.
+
 ### Chapter-specific
 
 - [ ] Длина: 8-12k слов (5k или 15k = red flag).
@@ -82,6 +102,24 @@ Run automated grep checks against артефакт за известные anti-
 - [ ] Buffer 7-10% времени (для Q&A).
 - [ ] Reveal-пары (ваша оценка → реальные данные).
 - [ ] Хотя бы 1 интерактивный момент на каждые 15 минут.
+
+#### Hook Engagement Quality Check (ENFORCED для plan + chapter критики)
+
+Для lecture opening (s01 / hook slide) проверяй:
+
+1. **Time-evergreen?** Будет ли hook работать через 12 месяцев? Specific empirical tests (strawberry, math, ROT-13) устаревают, когда модели улучшаются. Visualization / cost-asymmetry / concept-reveal hooks more stable.
+
+2. **Emotionally engaging?** Hook сюрпризит / провоцирует curiosity / создаёт cognitive dissonance? Pure educational facts ≠ hook.
+
+3. **«Висит на экране» worthy?** Hook stays visible during introduction (~1-3 min). Visual richness needed — не голый текст / table.
+
+4. **Connected to assertion of lecture?** Hook foreshadows main concept, не standalone fact.
+
+5. **Counter-example check:** Compare draft hook к Lec-1 s01 «AI вокруг нас live demo» pattern. Is yours similarly engaging?
+
+**If hook fails any check → P1 «Hook engagement quality: {specifically}».** Recommend specific replacement (Token Rainbow visualization / cost-asymmetry chart / concept-reveal / etc.).
+
+**Counterexample (из L2 production):** plan v1 s01 = strawberry test «сколько r в strawberry → 2 vs 3». Топ-3 модели в 2026 reliably answer «3» — методологически устарел. Phase 8.5/8.8 пришлось redesign в Token Rainbow visualization. Hook engagement check at plan stage would have prevented.
 
 ### Slides-specific (если применяется к slides)
 
@@ -117,6 +155,44 @@ Slides / sections без чёткого answer = **кандидаты на уд�
 - Copilot worked example с 4 axes (Apply level + complex) → REVIEW; user упростил до 2 осей в round 1 #4.
 
 **Output severity:** если RECOMMEND DELETE — severity P1 «Curriculum mismatch — concept-heavy для introductory».
+
+**ALSO check temporal placement:** does this content belong в **current** lecture OR is it forward-pointing к future lecture? If forward-pointing — recommend DEFER к future lecture, не KEEP.
+
+**Counterexample (из L2 production):** s11 «3 применения эмбеддингов (similarity / clustering / search → основа RAG)» — RAG application принадлежит Лекции 3. Curriculum Relevance check categorized as «Understand» (KEEP) но missed temporal placement. User в R4: «defer Lec-3».
+
+#### Missing-Fundamentals Check (ENFORCED для chapter + slides критики)
+
+Для каждого major концепта introduced — verify dependencies and full-picture presence. Concept-specific checks:
+
+**Attention:**
+- [ ] Matrix nature explained (не just «distribution»)?
+- [ ] N×N quadratic cost shown / mentioned?
+- [ ] Multi-head mentioned (даже brief)?
+- [ ] Per-token recompute pattern (не once-per-sequence)?
+
+**Embeddings:**
+- [ ] Vector space introduced **BEFORE** similarity is used?
+- [ ] Dimensions clarified (1536 / 3072 / 12288 etc.)?
+- [ ] Training process briefly mentioned (similar contexts → close vectors)?
+- [ ] Internal vs output embeddings distinguished?
+
+**Tokenization:**
+- [ ] End-to-end flow shown somewhere (words → tokens → vectors → LLM → vectors → words)?
+- [ ] BPE compromise nature stated (alphabet vs vocabulary trade-off)?
+- [ ] Когда tokenizer training происходит (offline before model training, не runtime)?
+
+**Sampling:**
+- [ ] Distribution → token selection explicit?
+- [ ] T=0 vs T>0 behavior contrast?
+- [ ] Local vs cloud parameter availability comparison (если применимо)?
+
+**Inference loop:**
+- [ ] Autoregressive cycle shown (each step new distribution → new token)?
+- [ ] Stateless nature of single forward pass?
+
+**For each missing fundamental → P1 «Missing-fundamental: {concept} — {what's absent}».**
+
+**Counterexample (из L2 production):** chapter v1.0 + slides v1.0 описывали attention как «distribution на токены, сумма=1» (s14). Never mentioned matrix nature. User в R4: «механизм же не линейный а матричный!». Phase 8.8 created s13a attention matrix slide. Missing-Fundamentals check on chapter would have caught at Phase 3.
 
 #### Term Canonical-Validity Check (Universal, ENFORCED)
 

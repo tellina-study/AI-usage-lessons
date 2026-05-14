@@ -141,11 +141,15 @@ Before presenting any USER GATE to user:
 2. **Visual sweep:** для slides — open all PNG snapshots, 5-sec look per slide, can I state main message?
 3. **Notes read:** 5-7 random speaker notes — verify 150-300 words connected text, no «Лектору» / no layout descriptions
 4. **Cross-artifact grep:** terminology drift, orphan references, pacing math
-5. **Designer-extras grep:** «Лектору» / «Вы здесь» / тайминг in visible content — should all be 0
+5. **Designer-extras grep:** «Лектору» / «Вы здесь» / тайминг / `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / `LO[1-9]` / `§[0-9]+\.[0-9]+` / `→ s[0-9]+` in visible content — should all be 0 (frontmatter exempt)
+6. **Lec-N-1 pattern compliance (для slides):** does Lec-N have lecture-map slide? section dividers для всех major sections? dedicated Q&A slide? roadmap-bar только на dividers + cover (не на каждом content slide)?
+7. **Artifacts в main repo (для GATE B):** `library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}` MUST exist в main repo path BEFORE opening GATE. If only в worktree → STOP, sync first.
 
 **Если найдены P0/P1 issues — NOT present GATE.** Spawn revision first, re-run pre-gate, потом present.
 
-**Why ENFORCED:** Лекция 1 production имела 3 раунда user feedback ПОСЛЕ critic APPROVE. Pre-gate walkthrough catches что critics miss (visual schema readability, designer-added extras, terminology drift).
+**Why ENFORCED:**
+- Лекция 1 production имела 3 раунда user feedback ПОСЛЕ critic APPROVE.
+- **Лекция 2 production имела 5 раундов user feedback ПОСЛЕ critic APPROVE** на slides — driven by (a) Lec-1 pattern deviations (top bar everywhere, missing lecture-map, missing Q&A), (b) designer-extras leaks (`[VERIFY-DAY-OF]` on PNG, LO codes visible), (c) artifacts not synced to main repo (user opened wrong lecture's PPTX). Pre-gate walkthrough additions points 5-7 prevent these specifically.
 
 ---
 
@@ -192,6 +196,47 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 | Speaker notes как layout description («слева donut, справа bar») | Notes — readable student text 150-300 слов, derived from chapter+speech |
 | Critic catch-all APPROVE-WITH-MINOR | 4-level verdict scale: APPROVE-CLEAN / APPROVE-WITH-POLISH / REVISE / REJECT |
 | Term drift без cascade tracking | Glossary lock после chapter approval; cascade-of-changes grep при renames |
+| `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / LO codes / `§X.X` / `→ sNN` visible to students в body | Frontmatter / speaker_notes only; pre-render grep enforce 0 hits в visible body |
+| Designer making independent decisions diverging from Lec-N-1 pattern | Lec-N-1 reference read MANDATORY at start of Lec-N design; match unless explicit divergence approval |
+| Top progress bar / navigation bar на каждом content slide | Only on section dividers + cover (Lec-1 pattern) |
+| Missing lecture-map / dedicated Q&A / section dividers для всех major sections | Lec-N-1 slide-type inventory matches by default |
+| Hook outdated empirical test (strawberry-type, 2026 models pass) | 2026-evergreen visualization / cost-asymmetry / concept-reveal preferred; Hook Engagement check at plan stage |
+| Missing concept fundamentals (attention matrix, embedding space, end-to-end flow) | Missing-Fundamentals check в methodology-critic per concept |
+| Insufficient stock illustrations (text-heavy deck) | 5-10 supportive visual assets baseline in presentation-designer DoD |
+| Artifacts only in temp worktree (not main repo) at GATE | Pre-USER-GATE artifacts sync mandatory (memory rule [[feedback-pre-gate-render-artifacts]]) |
+| Branch contention from parallel session (shared `.git`) | Git worktree isolation mandatory для multi-lecture parallel |
+| 5+ user feedback rounds на slides | Plan critique + Phase 7 critic checklists must include Lec-N-1 pattern + hook quality + missing-fundamentals checks |
+| Per-artifact spawns for polish rounds (separate designer / writer per phase) | Single batched revision agent (book-editor OR speech-writer) для 3-artifact touches; Phase 11 pattern |
+
+---
+
+## Multi-Lecture Parallel Production (ENFORCED)
+
+When starting Lec-N production while Lec-(N-1) или Lec-(N+k) is still в active production (parallel session с shared `.git`):
+
+1. **Use git worktree isolation MANDATORY:**
+   ```bash
+   git worktree add --detach /tmp/lec-NN-wt <base-commit>
+   cd /tmp/lec-NN-wt && git checkout -b phase-X-Y
+   ```
+
+2. **Agent prompts must include explicit working directory:**
+   - «cd /tmp/lec-NN-wt FIRST»
+   - «git branch --show-current should return phase-X-Y»
+   - «If branch changes mid-session → STOP, report (don't recover)»
+
+3. **Artifacts sync to main repo BEFORE every USER GATE:**
+   - Copy from worktree to `/home/levko/AI-usage-lessons/library/lectures/lec-NN/rendered/`
+   - Verify via `ls -la library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}`
+   - GATE cannot open без main-repo artifacts accessible (memory rule [[feedback-pre-gate-render-artifacts]])
+
+4. **Branch ref management через `git update-ref`:**
+   - После phase commits в worktree → `git update-ref refs/heads/issue-NN-lec-NN <commit-sha>` from main repo
+   - Это propagates branch HEAD без requiring main worktree checkout (avoids contention)
+
+5. **Final merge:** push branch + create PR + merge after USER GATE C.
+
+**Why ENFORCED:** Лекция 2 production имела ~2 hours wasted на branch contention recovery (lec-04 parallel session, shared `.git`). Worktree isolation после Phase 8.5 полностью eliminated issue.
 
 ---
 

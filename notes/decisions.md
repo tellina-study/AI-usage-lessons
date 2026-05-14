@@ -293,3 +293,70 @@ mcp__workspace-mcp__list_docs_in_folder \
 Old: APPROVE-WITH-MINOR / REJECT (binary-ish).
 New: REJECT (any P0) / REVISE (5+ P1) / APPROVE-WITH-POLISH (≤4 P1) / APPROVE-CLEAN (0 P1).
 Counter-check enforced в каждом critic agent prompt: если wrote ≥5 P1 но verdict APPROVE-WITH-POLISH — STOP, change to REVISE.
+
+---
+
+## 2026-05-14 — Лекция 2 production lessons
+
+**Контекст:** 12 phases (Phase 0 → Phase 11), 3 USER GATEs, PR #75 merged 2026-05-14. Speech v1.1 + slides v1.7 (36 slides) + chapter v1.2 (11,477 слов) finalized. **5 раундов user feedback на slides** (Phase 8 → 8.5 → 8.6 → 8.7 → 8.8 → 8.9) caught issues that critics didn't.
+
+**Reflection sources:** `notes/reflections/2026-05-14-lec-02-production/REFLECTION.md` + per-area files (improvements / user-feedback / tools / workflow / content).
+
+### Anti-patterns 36-50 (extension к Lec-1 catalog 16-35)
+
+| # | Anti-pattern | Чем заменить | Источник |
+|---|---|---|---|
+| 36 | `[VERIFY-DAY-OF]` / `[FACT-CHECK]` markers visible в body | Frontmatter + speaker_notes only; pre-render grep enforce 0 hits | L2 R1 Phase 7 P0 (s16, s27) |
+| 37 | LO codes (LO1/LO4/LO6/LO7) visible to students в body | Frontmatter `learning_outcomes` only | L2 R1 14 designer-extras |
+| 38 | `§X.X` cross-references visible в body | Frontmatter `chapter_ref` only | L2 R1 designer-extras |
+| 39 | Forward-refs «→ sNN» / «(см. sNN)» visible | Move to speaker_notes if needed | L2 R1 designer-extras |
+| 40 | Top progress bar / navigation bar на каждом content slide | Only on section dividers + cover (Lec-1 pattern) | L2 R2: «нахрена этот хедер сверху везде?» |
+| 41 | Missing lecture-map slide | Add s02a-style map after cover | L2 R3: «где слайд с содержанием?» |
+| 42 | Missing dedicated Q&A slide | Add standalone Q&A slide (Lec-1 s31 pattern) | L2 R5: «сделай отдельный QA как в лекции 1» |
+| 43 | Insufficient section dividers (only 1 of N) | Dividers для ALL major sections | L2 Phase 8.6 +4 dividers |
+| 44 | Outdated empirical test as hook (strawberry-type) | 2026-evergreen visualization / cost-asymmetry / concept-reveal | L2 R4 #1: «strawberry test устарел» |
+| 45 | Missing fundamental concepts (attention matrix, embedding space, end-to-end flow) | Methodology-critic Missing-Fundamentals check per concept | L2 R4 #7: «механизм же не линейный а матричный» |
+| 46 | Insufficient stock illustrations (text-heavy deck) | 5-10 supportive visual assets baseline в designer DoD | L2 R4 #8: «докинь 5-10 картинок» |
+| 47 | Artifacts only in temp worktree (not main repo) при GATE | Memory rule [[feedback-pre-gate-render-artifacts]] + pre-USER-GATE sync mandatory | L2: «запрети приходить на ревью слайдов без PPTX и PDF» |
+| 48 | Branch contention from parallel session (shared `.git`) | Git worktree isolation mandatory для multi-lecture parallel | L2 7+ branch switches mid-session |
+| 49 | Designer making independent decisions diverging от Lec-N-1 pattern | Lec-N-1 reference read MANDATORY at start | L2 R2, R3, R5 все Lec-1 deviations |
+| 50 | Per-artifact spawns для polish rounds (separate designer/writer per phase) | Single batched revision agent (Phase 11 pattern) | Phase 11 vs 8.X sub-iterations efficiency |
+
+### Lec-N-1 pattern compliance — new check category (3 agent layers)
+
+After Лекция 1 production stabilized как canonical reference — all subsequent lectures должны pattern-match **unless explicit divergence approved**. 3 enforcement layers:
+
+1. **methodology-critic** — Lec-N-1 Pattern Compliance Check (plan + slides critique).
+2. **presentation-designer** — Lec-N-1 Reference Read MANDATORY at start.
+3. **presentation-critic** — Lec-N-1 Pattern Compliance Check (visual perspective).
+
+### Hook engagement quality — new check category
+
+Hook (s01) is methodologically subjective beyond «is it correct?». Methodology-critic Hook Engagement Quality Check criteria:
+- Time-evergreen (12 month stability)
+- Emotionally engaging (surprise / curiosity / dissonance)
+- «Висит на экране» worthy (visual richness)
+- Connected to lecture assertion
+- Counter-example check vs Lec-1 s01
+
+### Missing-fundamentals check — new check category
+
+Critics check what IS present; rarely check what's ABSENT. Per-concept checks:
+- **Attention:** matrix nature? N×N cost? multi-head?
+- **Embeddings:** vector space before similarity? dimensions? training?
+- **Tokenization:** end-to-end flow? BPE compromise?
+- **Sampling:** distribution → token explicit?
+
+### Critic blind spots catalog (расширен 10 → 15)
+
+Original Lec-1 list + 5 new from L2:
+
+11. Hook engagement quality (correctness ≠ hook).
+12. Lec-N-1 pattern compliance (designer independent decisions).
+13. Missing-fundamental concepts (matrix nature, vector space, end-to-end flow).
+14. Artifacts main-repo sync (worktree-only at GATE).
+15. Branch contention в parallel sessions (shared `.git`).
+
+### Batched revision pattern (Phase 11)
+
+Phase 11 demonstrated single speech-writer agent doing 3-artifact touches (chapter + slides + speech) в 40 min closing 6/6 P1 + 9/16 P2. **5-10× more efficient than per-artifact spawns.** For polish rounds — single batched revision agent recommended.

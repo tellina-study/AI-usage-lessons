@@ -1,5 +1,29 @@
 """
-Full 33-slide build of Лекции 2 «Как работают современные большие модели» (Phase 6).
+Full 35-slide build of Лекции 2 «Как работают современные большие модели» (Phase 6).
+
+v1.5 changes (Phase 8.8, 2026-05-14):
+- s01 hook redesign: strawberry test removed (top LLMs pass it in 2026);
+  replaced with token rainbow on 3 examples (EN/RU/code) showing one-meaning
+  different-token-cost. Beautiful 2026-evergreen visualization.
+- s05: removed «Подумайте 15 сек» retrieval moment, replaced with forward
+  reference to cross-language cost (s08).
+- s06: added BPE-compromise explanatory line («не из всех слов и не из
+  всех букв — а из частых подпоследовательностей»).
+- s10 redesign: heatmap + 2D PCA scatter side-by-side (vector illustration
+  per user feedback; cosine note moved to gold callout).
+- s11 REMOVED: «3 uses of embeddings» — deferred to Лекция 3.
+- s12 REFORMULATED: now «Эмбеддинги — фундамент понимания LLM» — shows
+  word→token→vector→LLM→vector→token→word reverse-flow + 3 «understanding»
+  examples (paraphrases, synonyms, cross-lang).
+- s04b NEW: «Поток данных в LLM» — pipeline overview placed after Раздел 1
+  divider, before s05.
+- s09a NEW: «Пространство эмбеддингов» — concept slide between s09 and s10,
+  explaining dimensions, learning, projection.
+- s13a NEW: «Внимание — это матрица» — 7×7 heatmap example, placed between
+  s13 divider and s14, emphasizing matrix nature + multi-head + cost.
+- Added stock illustrations across deck (Lucide icons): focus, languages,
+  globe-2, sparkles, eye, code-2, etc.
+- Slide count: 33 → 35 (28 original − 1 s11 + 4 dividers + 1 s02a + 3 new).
 
 v1.4 changes (Phase 8.7, 2026-05-13):
 - Added s02a lecture-map slide (между s02 cover и s03 recap) — mirrors Lec-1
@@ -307,7 +331,7 @@ def roadmap_bar(slide, here_idx, *, y=6.7):
 # ============================================================
 NAV_SECTIONS_LEC2 = [
     # (num, title, short description). Used in `nav_slide` below.
-    ("0", "Открытие",      "Hook strawberry +\nrecap + вопрос"),
+    ("0", "Открытие",      "Hook + recap +\nцентральный вопрос"),
     ("1", "Токенизация",   "Как модель видит\nваш текст"),
     ("2", "Эмбеддинги",    "Пространство\nсмыслов"),
     ("3", "Внимание",      "Что важно\nсейчас"),
@@ -429,68 +453,90 @@ def top_nav_bar(slide, here_idx):
 # Slide builders
 # ============================================================
 def build_s01(p):
-    """Opening hook — provocative question + reveal of token split."""
+    """Opening hook — token rainbow на 3 примерах (v1.5).
+
+    User feedback round 4 #1: strawberry test устарел, top-3 LLM проходят.
+    Replace with beautiful 2026-evergreen visualization: показать как одна и
+    та же мысль режется по-разному на 3 типах входа (EN/RU/код), и что это
+    даёт инженерное следствие (стоимость API).
+    """
     s = blank(p)
 
-    # Big provocative question — occupies top half (60% height)
-    # Two-line poser, deep navy, very large
-    text_box(s, x=0.55, y=0.85, w=12.3, h=2.85,
-             text="Почему ChatGPT не может посчитать,\nсколько букв «r» в слове  strawberry?",
-             size=46, bold=True, color=DEEP, line_spacing=1.18,
+    # Headline — 1 line
+    text_box(s, x=0.55, y=0.50, w=12.3, h=0.80,
+             text="Модель видит ваш запрос не словами — а фрагментами",
+             size=30, bold=True, color=DEEP, line_spacing=1.10,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
-    # Smaller "сам тест" line
-    text_box(s, x=0.55, y=3.65, w=12.3, h=0.5,
-             text="Спросите любую LLM — половина случаев ответит «2».",
-             size=18, italic=True, color=MID, line_spacing=1.25,
-             align=PP_ALIGN.CENTER)
+    # Sub-line italic teal
+    text_box(s, x=0.55, y=1.30, w=12.3, h=0.40,
+             text="Эти фрагменты называются токенами. Они — единственное, что попадает в LLM.",
+             size=15, italic=True, color=TEAL, line_spacing=1.20,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
-    # Reveal — gold callout in lower half
-    reveal_y = 4.55
-    reveal_h = 1.95
-    ocean_box(s, 1.7, reveal_y, 10.0, reveal_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.5)
+    # 3 token rainbow examples in Ocean rounded boxes — горизонтально
+    # Каждая строка: language chip | original text | chips | count
 
-    # "Ответ:" small kicker
-    text_box(s, x=1.7, y=reveal_y + 0.12, w=10.0, h=0.35,
-             text="Ответ:",
-             size=14, italic=True, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
+    examples = [
+        # (label, label_color, original_text, tokens, token_colors, count)
+        ("EN", MID,
+         "tokenization is fascinating",
+         ["token", "ization", " is", " fascin", "ating"],
+         [MID, LIGHT, TEAL, MID, LIGHT],
+         "5 токенов"),
+        ("RU", LIGHT,
+         "Привет, как дела?",
+         ["Прив", "ет", ", как", " дела", "?"],  # collapsed comma + space into one chip
+         [LIGHT, TEAL, MID, LIGHT, TEAL],
+         "5 токенов"),
+        ("Code", TEAL,
+         "def hello(name):",
+         ["def", " hello", "(name)", ":"],  # collapsed parens around name
+         [TEAL, MID, LIGHT, TEAL],
+         "4 токена"),
+    ]
 
-    # «Вы видите → strawberry» / «AI видит → [st][raw][berry]»
-    # Two rows visualization
-    # Row 1: "Вы видите:  s·t·r·a·w·b·e·r·r·y  (10 букв)"
-    row1_y = reveal_y + 0.55
-    text_box(s, x=1.9, y=row1_y, w=2.6, h=0.55,
-             text="Вы видите:",
-             size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=4.4, y=row1_y, w=5.5, h=0.55,
-             text="s · t · r · a · w · b · e · r · r · y",
-             size=17, bold=True, color=DEEP, font=FONT_MONO,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=9.95, y=row1_y, w=1.6, h=0.55,
-             text="(10 букв)",
-             size=13, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    row_y = 1.85
+    row_h = 1.40
+    row_gap = 0.10
+    for i, (lang_label, lang_color, orig, tokens, token_colors, count) in enumerate(examples):
+        y = row_y + i * (row_h + row_gap)
+        ocean_box(s, 0.55, y, 12.3, row_h)
+        # Language chip (LEFT)
+        chip(s, 0.75, y + 0.50, 0.85, 0.45, lang_label,
+             fill=lang_color, color=WHITE, size=16)
+        # Original text — middle-top, mono
+        text_box(s, x=1.75, y=y + 0.20, w=8.5, h=0.45,
+                 text=f'"{orig}"',
+                 size=18, bold=True, color=DEEP, font=FONT_MONO,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        # Arrow under text
+        text_box(s, x=1.75, y=y + 0.65, w=0.55, h=0.30,
+                 text="↓",
+                 size=14, bold=True, color=MID, align=PP_ALIGN.CENTER)
+        # Token chips — start under original text
+        chip_x_cur = 1.75
+        chip_y = y + 0.85
+        for j, (tok, col) in enumerate(zip(tokens, token_colors)):
+            # Width sized to content
+            tw = max(0.65, len(tok) * 0.13 + 0.35)
+            chip(s, chip_x_cur, chip_y, tw, 0.42, f"[{tok}]",
+                 fill=col, color=WHITE, size=13)
+            chip_x_cur += tw + 0.08
+        # Count label — right side
+        text_box(s, x=10.65, y=y + 0.45, w=1.55, h=0.50,
+                 text=count,
+                 size=15, bold=True, italic=True, color=DEEP,
+                 align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
 
-    # Row 2: "AI видит: [st][raw][berry] (3 токена)"
-    row2_y = reveal_y + 1.15
-    text_box(s, x=1.9, y=row2_y, w=2.6, h=0.55,
-             text="AI видит:",
-             size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-    # Three chips
-    chip_x = 4.4
-    chip_gap = 0.12
-    # widths sized to content
-    w1, w2, w3 = 0.85, 1.05, 1.20
-    chip(s, chip_x, row2_y + 0.05, w1, 0.50, "[st]", fill=MID, color=WHITE, size=15)
-    chip(s, chip_x + w1 + chip_gap, row2_y + 0.05, w2, 0.50, "[raw]", fill=LIGHT, color=WHITE, size=15)
-    chip(s, chip_x + w1 + w2 + 2 * chip_gap, row2_y + 0.05, w3, 0.50, "[berry]", fill=TEAL, color=WHITE, size=15)
-    text_box(s, x=chip_x + w1 + w2 + w3 + 3 * chip_gap + 0.10, y=row2_y, w=1.8, h=0.55,
-             text="(3 токена)",
-             size=13, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    # Gold callout snizu — main insight
+    gold_callout(s, 0.55, 6.40, 12.3, 0.70,
+                 "Один и тот же смысл — разное число токенов. EN дешевле RU почти в 2×.",
+                 size=17, bold=True)
 
     # Footer caption — minimal source
-    text_box(s, x=0.55, y=6.85, w=12.3, h=0.40,
-             text="Слово strawberry в токенизаторе o200k_base (GPT-4o, Claude 4.x) разрезается на 3 токена. Модель не «видит» буквы.",
+    text_box(s, x=0.55, y=7.20, w=12.3, h=0.30,
+             text="Реальные разрезы в токенизаторе o200k_base (GPT-4o, Claude 4.x). Подробно — в Разделе 1.",
              size=12, italic=True, color=LIGHT, line_spacing=1.25, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s01"))
 
@@ -720,25 +766,31 @@ def build_s05(p):
                  "В среднем: 1 токен ≈ 4 символа в EN ≈ 2 символа в RU",
                  size=18)
 
-    # Poll prompt
-    teal_callout(s, 0.55, 6.35, 12.3, 0.75,
-                 "Подумайте 15 сек: «сильнее» — 1, 2 или 3 токена? (Проверить через tiktokenizer)",
-                 size=14, bold=True)
+    # Caption — v1.5 (removed retrieval moment, replaced with forward link)
+    text_box(s, x=0.55, y=6.35, w=12.3, h=0.45,
+             text="Для русского inference обходится примерно вдвое дороже — мы вернёмся к этому через 2 слайда.",
+             size=14, italic=True, color=LIGHT, line_spacing=1.30,
+             align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s05"))
 
 
 def build_s06(p):
-    """BPE before/after — 2 columns."""
+    """BPE before/after — 2 columns. v1.5: added compromise phrase."""
     s = blank(p)
     slide_title(s, "BPE — компромисс между алфавитом и словарём", size=26)
-    text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
-             text="Словарь строится один раз перед обучением; в inference — lookup",
-             size=15, italic=True, color=MID)
+    # v1.5 explanatory line per user feedback #3
+    text_box(s, x=0.55, y=1.45, w=12.3, h=0.45,
+             text="Словарь не из всех слов (как лемматизация) и не из всех букв (как character-level) — а из частых подпоследовательностей.",
+             size=15, italic=True, color=MID, line_spacing=1.25)
+    # Sub-line 2: original technical detail
+    text_box(s, x=0.55, y=1.92, w=12.3, h=0.30,
+             text="Словарь строится один раз перед обучением; в inference — lookup готовых правил.",
+             size=13, italic=True, color=LIGHT)
 
-    # Two columns
+    # Two columns — shifted down 0.20 чтобы вместить новую строку
     col_w = 5.5
-    col_h = 4.05
-    col_y = 2.15
+    col_h = 3.85
+    col_y = 2.40
     left_x = 1.0
     right_x = 6.8
 
@@ -900,158 +952,149 @@ def build_s09(p):
 
 
 def build_s10(p):
-    """Sentence similarity 5×5 heatmap."""
+    """Sentence similarity — heatmap + scatter (v1.5).
+
+    User feedback round 4 #4: add vector illustration (2D scatter projection)
+    next to heatmap. Both subordinate to assertion line about близость.
+    """
     s = blank(p)
     slide_title(s, "Близость в пространстве эмбеддингов = семантическая близость", size=26)
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
              text="В 2026 это работает на уровне предложений, не только слов",
              size=15, italic=True, color=MID)
 
-    # Heatmap centered
-    ocean_box(s, 1.7, 2.05, 10.0, 4.55)
+    # Left — heatmap (60% width)
+    ocean_box(s, 0.55, 2.05, 7.55, 4.30)
     add_image(s, ASSETS / "diagrams/s10-heatmap.png",
-              x=2.0, y=2.20, w=9.4, h=4.30)
+              x=0.70, y=2.18, w=7.25, h=4.05)
 
-    # Footer caption
-    text_box(s, x=0.55, y=6.75, w=12.3, h=0.40,
-             text="Cosine similarity — мера угла между векторами; диапазон [−1, 1], ближе к 1 — более похожи.",
-             size=13, italic=True, color=DEEP, align=PP_ALIGN.CENTER)
+    # Right — 2D scatter (40% width)
+    ocean_box(s, 8.25, 2.05, 4.65, 4.30)
+    add_image(s, ASSETS / "diagrams/s10-vector-scatter.png",
+              x=8.35, y=2.18, w=4.45, h=4.05)
+
+    # Gold callout — cosine definition
+    gold_callout(s, 0.55, 6.50, 12.3, 0.55,
+                 "Cosine similarity — мера угла между векторами; диапазон [−1, 1], ближе к 1 — более похожи.",
+                 size=14)
+
+    # Footer source caption
     text_box(s, x=0.55, y=7.15, w=12.3, h=0.30,
              text="Числа illustrative; воспроизводимы на sentence-transformers/all-MiniLM-L6-v2 (384-dim) или OpenAI text-embedding-3-small (1536-dim).",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s10"))
 
 
-def build_s11(p):
-    """3 uses of embeddings — 3 motif cards horizontal."""
+def build_s12(p):
+    """Эмбеддинги — фундамент понимания LLM (v1.5).
+
+    User feedback round 4 #6: reformulate в понимание LLM, показать обратное
+    преобразование из токенов в слова, добавить связь со схемой s04b.
+    Previous version (Semantic vs full-text) removed — better fits Лекция 3.
+    """
     s = blank(p)
-    slide_title(s, "Эмбеддинги дают similarity, clustering и search — основу RAG", size=26)
-    text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
-             text="Три практических применения, надстраиваемых над одной embedding-таблицей",
+    slide_title(s, "Эмбеддинги — фундамент понимания LLM", size=26)
+    text_box(s, x=0.55, y=1.45, w=12.3, h=0.40,
+             text="Внутри модель работает только с векторами; слова — только на входе и на выходе.",
              size=15, italic=True, color=MID)
 
-    # 3 cards horizontal — v1.3 enlarged to fill canvas (h 4.5→5.0, icon 1.0→1.30)
-    card_y = 2.05
-    card_h = 5.05
-    card_w = 3.95
-    gap = 0.20
-    start_x = 0.55
-    cards = [
-        ("magnet", "Similarity", "Поиск похожих",
-         "Похожие тикеты в support,\nкейсы в юр-базе,\nрезюме в HR-системе.",
-         False),
-        ("box", "Clustering", "Кластеризация",
-         "k-means — анализ\nжалоб клиентов,\nтематика корпусов.",
-         False),
-        ("search-check", "Search", "Семантический поиск",
-         "Запрос → top-K\nпохожих документов.\n\n→ Основа RAG (Лекция 3)",
-         True),
+    # Layout: 2 columns
+    # Left: vertical flow вход→LLM→выход (encoder side + decoder side)
+    # Right: 3 example cards (what this gives "understanding")
+
+    # ─── LEFT — vertical pipeline (explicit Y positions) ───
+    lx = 0.55
+    lw = 6.0
+    ly = 2.00
+    lh = 5.10
+    ocean_box(s, lx, ly, lw, lh)
+    text_box(s, x=lx + 0.10, y=ly + 0.08, w=lw - 0.20, h=0.32,
+             text="Вход → LLM → Выход",
+             size=14, bold=True, color=MID, align=PP_ALIGN.CENTER)
+
+    # Layout constants for left pipeline
+    label_x = lx + 0.20    # left side label (слова→, токены→, …)
+    label_w = 1.30
+    p_chip_x = lx + 1.65   # chip start x
+    p_chip_w = lw - 1.85   # chip width
+    p_step_h = 0.32
+    p_arrow_h = 0.20
+
+    # All steps as data — y-positions computed sequentially below
+    # last_field None means "no arrow after this step"; "LLM_BOX" means special gold box
+    pipeline = [
+        ("слова →", "«Привет, мир»", LIGHT, 12, "↓ токенизация"),
+        ("токены →", "[Прив][ет][,][ мир]", MID, 11, "↓ embedding lookup"),
+        ("векторы →", "[vec₁, vec₂, vec₃, vec₄]", DEEP, 11, "LLM_BOX"),
+        ("← векторы", "[vec_out]", DEEP, 11, "↓ distribution + sampling"),
+        ("← токены", "[Здра][вствуй]", MID, 11, "↓ de-tokenize"),
+        ("← слова", "«Здравствуй»", LIGHT, 12, None),
     ]
-    for i, (icon, ttl, sub, body, is_gold) in enumerate(cards):
-        x = start_x + i * (card_w + gap)
-        if is_gold:
-            ocean_box(s, x, card_y, card_w, card_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.5)
-        else:
-            ocean_box(s, x, card_y, card_w, card_h)
-        # Icon — bigger 1.30
+
+    cy = ly + 0.48
+    for label, chip_text, fill, csize, arrow_or_llm in pipeline:
+        # Label (RIGHT-aligned to its area, sits beside the chip)
+        text_box(s, x=label_x, y=cy, w=label_w, h=p_step_h,
+                 text=label, size=11, italic=True, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.RIGHT)
+        # Chip with the actual content
+        chip(s, p_chip_x, cy, p_chip_w, p_step_h, chip_text,
+             fill=fill, color=WHITE, size=csize)
+        cy += p_step_h + 0.02
+
+        if arrow_or_llm == "LLM_BOX":
+            # Gold LLM box, spans full pipeline width
+            llm_h = 0.50
+            filled_rect(s, lx + 0.40, cy, lw - 0.80, llm_h, GOLD_TINT,
+                        stroke=GOLD, stroke_pt=2.0, radius=True, radius_adj=0.18)
+            text_box(s, x=lx + 0.40, y=cy + 0.06, w=lw - 0.80, h=0.40,
+                     text="LLM  (attention + forward — Раздел 3)",
+                     size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                     anchor=MSO_ANCHOR.MIDDLE)
+            cy += llm_h + 0.05
+        elif arrow_or_llm is not None:
+            # Mini arrow label
+            text_box(s, x=p_chip_x, y=cy, w=p_chip_w, h=p_arrow_h,
+                     text=arrow_or_llm, size=9, italic=True, color=MID,
+                     align=PP_ALIGN.CENTER)
+            cy += p_arrow_h + 0.02
+
+    # ─── RIGHT — 3 example cards ───
+    rx = 6.75
+    rw = 6.15
+    text_box(s, x=rx, y=ly + 0.12, w=rw, h=0.40,
+             text="Что это даёт «понимание»",
+             size=15, bold=True, color=MID)
+
+    cards = [
+        ("message-square-text", "Перефразирования",
+         "«Как настроить SSL» и «Установка HTTPS» → близкие векторы → одинаковый ответ."),
+        ("globe-2", "Синонимы",
+         "«авто» и «машина» → близкие векторы → одна и та же реакция."),
+        ("languages", "Cross-lang",
+         "«клубника» и strawberry → близкие векторы → корректный ответ на любом языке."),
+    ]
+    cy = ly + 0.60
+    ch = 1.35
+    cgap = 0.12
+    for i, (icon, head, body) in enumerate(cards):
+        y = cy + i * (ch + cgap)
+        ocean_box(s, rx, y, rw, ch, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.2)
+        # Icon left
         icon_path = ASSETS / f"icons/{icon}.png"
         if icon_path.exists():
-            add_image(s, icon_path, x=x + (card_w - 1.30) / 2, y=card_y + 0.40, w=1.30, h=1.30)
-        # Title
-        text_box(s, x=x + 0.2, y=card_y + 1.95, w=card_w - 0.4, h=0.55,
-                 text=ttl, size=24, bold=True, color=DEEP,
-                 align=PP_ALIGN.CENTER)
-        # Subtitle
-        text_box(s, x=x + 0.2, y=card_y + 2.55, w=card_w - 0.4, h=0.45,
-                 text=sub, size=16, italic=True, color=MID,
-                 align=PP_ALIGN.CENTER)
-        # Body — bigger area + 16pt
-        text_box(s, x=x + 0.25, y=card_y + 3.15, w=card_w - 0.5, h=1.80,
-                 text=body, size=16, color=DEEP,
-                 align=PP_ALIGN.CENTER, line_spacing=1.35, bold=is_gold)
+            add_image(s, icon_path, x=rx + 0.15, y=y + 0.30, w=0.75, h=0.75)
+        # Head
+        text_box(s, x=rx + 1.05, y=y + 0.12, w=rw - 1.20, h=0.40,
+                 text=head, size=16, bold=True, color=DEEP)
+        # Body
+        text_box(s, x=rx + 1.05, y=y + 0.55, w=rw - 1.20, h=0.75,
+                 text=body, size=12, color=DEEP, line_spacing=1.30)
 
-    speaker_notes(s, load_notes("s11"))
-
-
-def build_s12(p):
-    """Semantic vs full-text — query + 2 columns."""
-    s = blank(p)
-    slide_title(s, "Semantic search находит то, что full-text пропустит", size=26)
-
-    # Query
-    filled_rect(s, 4.0, 1.45, 5.3, 0.7, GOLD_TINT, stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.25)
-    text_box(s, x=4.0, y=1.50, w=5.3, h=0.30,
-             text="Запрос",
-             size=11, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
-    text_box(s, x=4.0, y=1.75, w=5.3, h=0.35,
-             text="клубника",
-             size=22, bold=True, color=DEEP, font=FONT_MONO,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-
-    # Two result columns
-    col_w = 5.8
-    col_h = 4.2
-    col_y = 2.50
-    left_x = 0.55
-    right_x = 6.95
-
-    # Full-text
-    ocean_box(s, left_x, col_y, col_w, col_h)
-    text_box(s, x=left_x + 0.3, y=col_y + 0.15, w=col_w - 0.6, h=0.4,
-             text="Full-text (Elasticsearch, Lucene)",
-             size=15, bold=True, color=MID)
-    full_text_items = [
-        ("клубника", True),
-        ("клубники (стемминг)", True),
-        ("клубнику", True),
-        ("strawberry", False),
-        ("ягода", False),
-        ("лесная земляника", False),
-    ]
-    for i, (item, found) in enumerate(full_text_items):
-        y = col_y + 0.7 + i * 0.50
-        mark = "✓" if found else "✗"
-        mark_color = TEAL if found else SLATE
-        text_box(s, x=left_x + 0.35, y=y, w=0.45, h=0.45,
-                 text=mark, size=20, bold=True, color=mark_color,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=left_x + 0.85, y=y, w=col_w - 1.1, h=0.45,
-                 text=item, size=14,
-                 color=DEEP if found else SLATE,
-                 italic=not found,
-                 anchor=MSO_ANCHOR.MIDDLE)
-
-    # Semantic
-    ocean_box(s, right_x, col_y, col_w, col_h, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, x=right_x + 0.3, y=col_y + 0.15, w=col_w - 0.6, h=0.4,
-             text="Semantic (эмбеддинги + ближайшие соседи)",
-             size=15, bold=True, color=DEEP)
-    semantic_items = [
-        ("клубника", "точное"),
-        ("клубники", "морфология"),
-        ("strawberry", "cross-lang"),
-        ("ягода", "родовое"),
-        ("лесная земляника", "близкий смысл"),
-        ("…", "ещё близкие"),
-    ]
-    for i, (item, why) in enumerate(semantic_items):
-        y = col_y + 0.7 + i * 0.50
-        text_box(s, x=right_x + 0.35, y=y, w=0.45, h=0.45,
-                 text="✓", size=20, bold=True, color=GOLD,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=right_x + 0.85, y=y, w=col_w * 0.55, h=0.45,
-                 text=item, size=14, bold=True, color=DEEP,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=right_x + 0.85 + col_w * 0.55, y=y, w=col_w * 0.4 - 0.85, h=0.45,
-                 text=f"— {why}",
-                 size=12, italic=True, color=MID,
-                 anchor=MSO_ANCHOR.MIDDLE)
-
-    # Gold callout bottom
-    gold_callout(s, 0.55, 6.85, 12.3, 0.55,
-                 "Base layer RAG — реализация в Лекции 3 (Retrieval-Augmented Generation).",
-                 size=15)
+    # Gold callout snizu
+    gold_callout(s, 0.55, 7.10, 12.3, 0.35,
+                 "Семантическая близость на уровне предложений — основа того, что LLM «понимает» переформулировки.",
+                 size=12)
     speaker_notes(s, load_notes("s12"))
 
 
@@ -1628,27 +1671,31 @@ def build_s23(p):
     stage_w = (total_w - gap * n) / n  # gap between + final arrow at end
     start_x = 0.55
     stages = [
-        ("Токенизация", "Текст → id\nиз словаря (BPE)"),
-        ("Эмбеддинг", "id → вектор\nиз обученной таблицы"),
-        ("Внимание", "Распределение\nвесов на контекст"),
-        ("Сэмплинг", "Распределение →\nодин токен (T / p / k)"),
+        ("Токенизация", "Текст → id\nиз словаря (BPE)", "binary"),
+        ("Эмбеддинг", "id → вектор\nиз обученной таблицы", "scaling"),
+        ("Внимание", "Распределение\nвесов на контекст", "focus"),
+        ("Сэмплинг", "Распределение →\nодин токен (T / p / k)", "sparkles"),
     ]
-    for i, (head, body) in enumerate(stages):
+    for i, (head, body, icon) in enumerate(stages):
         x = start_x + i * (stage_w + gap)
         ocean_box(s, x, stage_y, stage_w, stage_h)
         # Stage number circle
-        filled_rect(s, x + (stage_w - 0.85) / 2, stage_y + 0.30, 0.85, 0.85, MID, radius=True, radius_adj=0.5)
-        text_box(s, x=x, y=stage_y + 0.37, w=stage_w, h=0.70,
+        filled_rect(s, x + (stage_w - 0.85) / 2, stage_y + 0.20, 0.85, 0.85, MID, radius=True, radius_adj=0.5)
+        text_box(s, x=x, y=stage_y + 0.27, w=stage_w, h=0.70,
                  text=str(i + 1), size=28, bold=True, color=WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        # Icon — v1.5, small under number
+        icon_path = ASSETS / f"icons/{icon}.png"
+        if icon_path.exists():
+            add_image(s, icon_path, x=x + (stage_w - 0.60) / 2, y=stage_y + 1.15, w=0.60, h=0.60)
         # Head
-        text_box(s, x=x + 0.1, y=stage_y + 1.30, w=stage_w - 0.2, h=0.55,
+        text_box(s, x=x + 0.1, y=stage_y + 1.85, w=stage_w - 0.2, h=0.55,
                  text=head,
                  size=20, bold=True, color=DEEP,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         # Body
-        text_box(s, x=x + 0.1, y=stage_y + 1.95, w=stage_w - 0.2, h=1.0,
-                 text=body, size=15, italic=True, color=DEEP,
+        text_box(s, x=x + 0.1, y=stage_y + 2.45, w=stage_w - 0.2, h=0.65,
+                 text=body, size=14, italic=True, color=DEEP,
                  align=PP_ALIGN.CENTER, line_spacing=1.30)
         # Arrow between
         if i < n - 1:
@@ -1682,21 +1729,22 @@ def build_s24(p):
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
     # 3 boxes vertical — v1.3 enlarged (1.65→1.70, font+1, careful with overflow)
+    # v1.5: добавили иконку справа от номера, чтобы визуально различать «почему»
     box_y_start = 2.00
     box_h = 1.70
     box_gap = 0.15
     answers = [
         ("1", "Почему промпт с ролью работает лучше пустого?",
          "На уровне attention role-токены получают высокий вес — модель опирается на них при выборе следующих токенов.",
-         GOLD),
+         GOLD, "focus"),  # focus — внимание/role
         ("2", "Почему AI плохо считает буквы?",
          "Токенизатор объединяет буквы в токены. strawberry — 3 токена, не 10 букв. Модель видит токены, не буквы.",
-         MID),
+         MID, "binary"),  # binary — токены/цифры
         ("3", "Почему один и тот же запрос даёт разные ответы?",
          "Сэмплинг — стохастический выбор из распределения при T > 0. Каждый запуск может выбрать разный токен.",
-         TEAL),
+         TEAL, "sparkles"),  # sparkles — randomness
     ]
-    for i, (n, q, a, col) in enumerate(answers):
+    for i, (n, q, a, col, icon) in enumerate(answers):
         y = box_y_start + i * (box_h + box_gap)
         ocean_box(s, 0.55, y, 12.3, box_h)
         # Number badge (1.10×1.10)
@@ -1704,11 +1752,15 @@ def build_s24(p):
         text_box(s, x=0.80, y=y + 0.32, w=1.10, h=1.05,
                  text=n, size=48, bold=True, color=WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        # Icon — справа от номера, v1.5
+        icon_path = ASSETS / f"icons/{icon}.png"
+        if icon_path.exists():
+            add_image(s, icon_path, x=11.50, y=y + 0.45, w=0.80, h=0.80)
         # Question
-        text_box(s, x=2.15, y=y + 0.20, w=9.95, h=0.55,
+        text_box(s, x=2.15, y=y + 0.20, w=9.20, h=0.55,
                  text=q, size=21, bold=True, color=DEEP)
         # Answer
-        text_box(s, x=2.15, y=y + 0.80, w=9.95, h=0.85,
+        text_box(s, x=2.15, y=y + 0.80, w=9.20, h=0.85,
                  text=a, size=17, color=DEEP, italic=True, line_spacing=1.32)
 
     speaker_notes(s, load_notes("s24"))
@@ -1980,6 +2032,158 @@ def build_s28(p):
 
 
 # ============================================================
+# New v1.5 builders (Phase 8.8) — 3 new slides per user feedback round 4.
+# s04b: data flow schema (after Раздел 1 divider, before s05).
+# s09a: embedding space concept (after s09, before s10).
+# s13a: attention matrix (after s13 divider, before s14).
+# ============================================================
+def build_s04b(p):
+    """Поток данных в LLM — roadmap всего inference-конвейера (v1.5).
+
+    User feedback round 4 #6: «перед токенами не хватает схемки —
+    слова в векторы, уже они в LLM, оттуда тоже вектора и они в слова».
+    Placed between s04a (Раздел 1 divider) and s05 (что такое токен) —
+    sets up the pipeline overview before zooming into токенизация.
+    """
+    s = blank(p)
+    slide_title(s, "Поток данных в LLM — туда и обратно", size=26)
+    text_box(s, x=0.55, y=1.45, w=12.3, h=0.45,
+             text="Каждый из этапов разберём отдельно. Сейчас — карта целиком.",
+             size=15, italic=True, color=MID, line_spacing=1.25)
+
+    # Big data flow diagram (full width)
+    ocean_box(s, 0.55, 2.05, 12.3, 4.55)
+    add_image(s, ASSETS / "diagrams/s04b-data-flow.png",
+              x=0.75, y=2.20, w=11.9, h=4.30)
+
+    # Gold callout below
+    gold_callout(s, 0.55, 6.75, 12.3, 0.65,
+                 "Слово существует только на границах. Внутри модели — только векторы. Сегодня разбираем 4 этапа.",
+                 size=15)
+    speaker_notes(s, load_notes("s04b"))
+
+
+def build_s09a(p):
+    """Пространство эмбеддингов — концептуальная иллюстрация (v1.5).
+
+    User feedback round 4 #4: «нужно пояснение, может даже отдельный слайд
+    до этого про пространство в котором вектора появляются, что там за
+    измерения и как они проставляются у векторов». Bridges s09 (token→vector
+    lookup) → s10 (sentence similarity heatmap).
+    """
+    s = blank(p)
+    slide_title(s, "Пространство эмбеддингов — где живут векторы", size=26)
+    text_box(s, x=0.55, y=1.45, w=12.3, h=0.40,
+             text="Перед тем как сравнивать векторы — посмотрим, в каком пространстве они находятся.",
+             size=15, italic=True, color=MID)
+
+    # Left: 2D scatter illustration (60%)
+    ocean_box(s, 0.55, 2.00, 7.50, 4.55)
+    add_image(s, ASSETS / "diagrams/s09a-embedding-space.png",
+              x=0.70, y=2.15, w=7.20, h=4.30)
+
+    # Right: 3 facts in motif boxes (40%)
+    rx = 8.25
+    rw = 4.65
+    facts = [
+        ("Размерность",
+         "OpenAI text-embedding-3-small: 1536 dim.\n"
+         "text-embedding-3-large: 3072 dim.\n"
+         "Flagship LLM: тысячи."),
+        ("Обучение",
+         "Координаты не задаются вручную. Модель учится:\n"
+         "токены в похожих контекстах → близкие векторы."),
+        ("Проекция",
+         "Чтобы увидеть пространство — PCA или t-SNE\n"
+         "снижают размерность до 2D/3D.\n"
+         "Часть структуры теряется."),
+    ]
+    fy = 2.00
+    fh = 1.45
+    fgap = 0.10
+    for i, (head, body) in enumerate(facts):
+        y = fy + i * (fh + fgap)
+        ocean_box(s, rx, y, rw, fh)
+        # Number badge
+        filled_rect(s, rx + 0.18, y + 0.18, 0.36, 0.36, MID, radius=True, radius_adj=0.5)
+        text_box(s, x=rx + 0.18, y=y + 0.19, w=0.36, h=0.34,
+                 text=str(i + 1), size=14, bold=True, color=WHITE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        # Head
+        text_box(s, x=rx + 0.65, y=y + 0.13, w=rw - 0.80, h=0.40,
+                 text=head, size=15, bold=True, color=MID)
+        # Body
+        text_box(s, x=rx + 0.20, y=y + 0.55, w=rw - 0.35, h=0.85,
+                 text=body, size=12, color=DEEP, line_spacing=1.30)
+
+    # Gold callout снизу
+    gold_callout(s, 0.55, 6.75, 12.3, 0.55,
+                 "Семантическая близость = геометрическая близость векторов. На следующем слайде — мера.",
+                 size=14)
+    speaker_notes(s, load_notes("s09a"))
+
+
+def build_s13a(p):
+    """Внимание — это матрица (v1.5).
+
+    User feedback round 4 #7: «механизм внимания — пропустили матрицу
+    внимания! Механизм же не линейный а матричный!». Placed between s13
+    (Раздел 3 divider) and s14 (attention as distribution) — explains the
+    matrix nature of attention before discussing its softmax output.
+    """
+    s = blank(p)
+    slide_title(s, "Внимание — это матрица, не линейная операция", size=26)
+    text_box(s, x=0.55, y=1.45, w=12.3, h=0.40,
+             text="Каждый токен «смотрит» на все остальные одновременно. На каждом шаге — N × N связей.",
+             size=15, italic=True, color=MID)
+
+    # Left: 7×7 matrix heatmap (60%)
+    ocean_box(s, 0.55, 2.00, 7.85, 5.10)
+    add_image(s, ASSETS / "diagrams/s13a-attention-matrix.png",
+              x=0.70, y=2.15, w=7.55, h=4.85)
+
+    # Right: 3 facts about matrices (40%)
+    rx = 8.55
+    rw = 4.35
+    facts = [
+        ("Размерность",
+         "N × N, где N — длина контекста.\n"
+         "Контекст 100k → матрица из ~10 млрд чисел.\n"
+         "→ квадратичная стоимость attention."),
+        ("На каждом шаге",
+         "Матрица пересчитывается на каждом\n"
+         "новом токене генерации (не один раз)."),
+        ("Multi-head",
+         "В одном слое — десятки таких матриц\n"
+         "параллельно. Разные «головы» смотрят\n"
+         "на грамматику, тему, дистанцию."),
+    ]
+    fy = 2.00
+    fh = 1.60
+    fgap = 0.10
+    for i, (head, body) in enumerate(facts):
+        y = fy + i * (fh + fgap)
+        ocean_box(s, rx, y, rw, fh)
+        # Number badge
+        filled_rect(s, rx + 0.18, y + 0.18, 0.36, 0.36, MID, radius=True, radius_adj=0.5)
+        text_box(s, x=rx + 0.18, y=y + 0.19, w=0.36, h=0.34,
+                 text=str(i + 1), size=14, bold=True, color=WHITE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        # Head
+        text_box(s, x=rx + 0.65, y=y + 0.13, w=rw - 0.80, h=0.40,
+                 text=head, size=14, bold=True, color=MID)
+        # Body
+        text_box(s, x=rx + 0.20, y=y + 0.55, w=rw - 0.35, h=1.00,
+                 text=body, size=11, color=DEEP, line_spacing=1.30)
+
+    # Gold callout снизу
+    gold_callout(s, 0.55, 7.25, 12.3, 0.20,
+                 "Attention — матричная, не линейная операция. Каждый токен сравнивается со всеми.",
+                 size=12)
+    speaker_notes(s, load_notes("s13a"))
+
+
+# ============================================================
 # Section dividers (v1.3, Phase 8.6) — mirror s13 pattern.
 # Pattern: large «Раздел N» (140pt gold) + sub-title (44pt deep)
 # + frame phrase (20pt italic mid) + bottom roadmap_bar with gold cell.
@@ -2050,19 +2254,21 @@ def build_s22a(p):
 
 
 # ============================================================
-# Build all 33 slides (28 original + 4 dividers s04a/s08a/s17a/s22a + 1 map s02a)
+# Build all 35 slides v1.5 (Phase 8.8):
+#   28 original − 1 removed (s11) + 4 dividers (s04a/s08a/s17a/s22a)
+#   + 1 map (s02a) + 3 new (s04b/s09a/s13a) = 35 slides.
 # ============================================================
 def main():
     p = setup_pres()
     builders = [
         # Раздел 0 — Открытие
         build_s01, build_s02, build_s02a, build_s03, build_s04,
-        # Раздел 1 — Токенизация (divider first)
-        build_s04a, build_s05, build_s06, build_s07, build_s08,
-        # Раздел 2 — Эмбеддинги (divider first)
-        build_s08a, build_s09, build_s10, build_s11, build_s12,
-        # Раздел 3 — Внимание (existing divider s13)
-        build_s13, build_s14, build_s15, build_s16, build_s17,
+        # Раздел 1 — Токенизация (divider + flow schema first)
+        build_s04a, build_s04b, build_s05, build_s06, build_s07, build_s08,
+        # Раздел 2 — Эмбеддинги (divider first; s11 removed in v1.5; s09a added)
+        build_s08a, build_s09, build_s09a, build_s10, build_s12,
+        # Раздел 3 — Внимание (existing divider s13 + s13a matrix slide)
+        build_s13, build_s13a, build_s14, build_s15, build_s16, build_s17,
         # Раздел 4 — Сэмплинг (divider first)
         build_s17a, build_s18, build_s19, build_s20, build_s21, build_s22,
         # Раздел 5 — Финал (divider first)
@@ -2072,13 +2278,13 @@ def main():
     # Map index → slide-id for log clarity
     slide_ids = [
         "s01", "s02", "s02a", "s03", "s04",
-        "s04a", "s05", "s06", "s07", "s08",
-        "s08a", "s09", "s10", "s11", "s12",
-        "s13", "s14", "s15", "s16", "s17",
+        "s04a", "s04b", "s05", "s06", "s07", "s08",
+        "s08a", "s09", "s09a", "s10", "s12",
+        "s13", "s13a", "s14", "s15", "s16", "s17",
         "s17a", "s18", "s19", "s20", "s21", "s22",
         "s22a", "s23", "s24", "s25", "s26", "s27", "s28",
     ]
-    assert len(slide_ids) == len(builders) == 33, (
+    assert len(slide_ids) == len(builders) == 35, (
         f"Builder/id count mismatch: {len(builders)} builders, "
         f"{len(slide_ids)} ids")
     for i, fn in enumerate(builders):

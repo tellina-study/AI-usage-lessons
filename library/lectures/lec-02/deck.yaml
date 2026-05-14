@@ -1,9 +1,8 @@
 # library/lectures/lec-02/deck.yaml
 #
-# Deck-структура Лекции 2 v1.4 (33 слайда: 28 original + 4 section dividers
-# s04a/s08a/s17a/s22a added in Phase 8.6 + s02a lecture-map added in Phase 8.7
-# to mirror Lec-1 navigation pattern).
-# Phase 5 output → Phase 6 → Phase 8 polish (v1.1/v1.2/v1.3).
+# Deck-структура Лекции 2 v1.5 (35 слайдов).
+# v1.5 (Phase 8.8): s01 hook redesign + new s04b/s09a/s13a + s11 removed +
+# s12 reformulated. Net: 33 − 1 (s11) + 3 (s04b/s09a/s13a) = 35.
 # Source: chapter v1.1 (status=reviewed, ~11400 слов).
 # Plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1).
 
@@ -16,10 +15,10 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v1.4
+  version: v1.5
   source: chapter v1.1 (status=reviewed, ~11400 слов)
   plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1)
-  total_slides: 33
+  total_slides: 35
   curriculum_level: introductory
 
 palette:
@@ -77,17 +76,17 @@ slides:
   # ─── Раздел 0. Открытие (8 мин, 4 слайда: s01-s04) ───
   - id: s01
     file: slides/s01-live-tokenizer-demo.md
-    type: live_demo
+    type: hook
     section: "Раздел 0. Открытие"
     duration_min: 2
-    assertion: "Модель видит ваш запрос не буквами и не словами — а токенами"
-    learning_goal: "Открывающий hook: модель видит токены, не буквы"
+    assertion: "Модель видит ваш запрос не словами и не буквами — а токенами"
+    learning_goal: "Открывающий hook через визуализацию токенизации реального запроса"
     learning_outcomes: [LO1]
     chapter_ref: "§1.1 [for-slide-s01]"
     visual:
-      pattern: live_demo_static_first
-      primary: "Static screenshot Tiktokenizer с 4 примерами: cat→1 токен, tokenization→2 ([token][ization]), strawberry→3 ([st][raw][berry] в o200k_base), клубника→3 ([к][луб][ника] в o200k_base). Gold callout: «1 токен ≈ 4 символа в EN ≈ 2 в RU»."
-      backup: "static-first; live demo optional если интернет работает"
+      pattern: token_rainbow_3_examples
+      primary: "v1.5: token rainbow — 3 строки с примерами на 3 типах входа (EN: 'tokenization is fascinating' → 5 токенов; RU: 'Привет, как дела?' → 5 токенов; Code: 'def hello(name):' → 4 токена) с цветными chip'ами и количеством токенов. Gold callout: «один и тот же смысл — разное число токенов; EN дешевле RU почти в 2×»."
+      backup: "static-first; no live demo (replaced strawberry-test per user feedback round 4)"
 
   - id: s02
     file: slides/s02-cover-roadmap.md
@@ -154,6 +153,19 @@ slides:
     visual:
       pattern: section_divider_with_roadmap
       primary: "Большое «Раздел 1» по центру (140pt gold). Под ним — «Токенизация». Frame-фраза «Как модель видит ваш текст». Внизу — roadmap-bar (6 секций) с gold-маркером на «1 Токены»."
+
+  - id: s04b
+    file: slides/s04b-data-flow.md
+    type: assertion_visual
+    section: "Раздел 1. Токенизация"
+    duration_min: 1
+    assertion: "Поток данных в LLM: слова → токены → векторы → LLM → векторы → токены → слова"
+    learning_goal: "Roadmap всего inference-конвейера перед детальным разбором каждого этапа"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1 [for-slide-s04b]"
+    visual:
+      pattern: pipeline_7_stages_horizontal
+      primary: "v1.5 NEW: горизонтальный 7-stage pipeline: Текст → Токены → Векторы → LLM (gold center) → Распределение → Токен → Текст. Под каждой стадией — короткая подпись. Под pipeline — 4 sub-cards Раздел 1/2/3/4 указывают какие стадии будем разбирать."
 
   - id: s05
     file: slides/s05-what-is-token.md
@@ -236,6 +248,19 @@ slides:
       pattern: token_to_vector_lookup
       primary: "Схема: [кот] → стрелка lookup → вектор [0.21, -0.45, 0.88, ..., 0.13] (5 размерностей с многоточием). Mini-callout справа: «text-embedding-3-small 1536 dim; text-embedding-3-large 3072 dim; внутренний эмбеддинг GPT-4 — тысячи измерений [FACT-CHECK]»."
 
+  - id: s09a
+    file: slides/s09a-embedding-space.md
+    type: assertion_visual
+    section: "Раздел 2. Эмбеддинги"
+    duration_min: 1.5
+    assertion: "Пространство эмбеддингов — это сотни-тысячи измерений; близкие по смыслу токены лежат рядом"
+    learning_goal: "Что такое пространство эмбеддингов: размерность, как координаты выучиваются, проекция в 2D для интуиции"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 [for-slide-s09a]"
+    visual:
+      pattern: embedding_space_2d_concept
+      primary: "v1.5 NEW: 2D scatter (PCA-style) — 3 кластера: животные {кот/собака/тигр}, транспорт {машина/авто/мотоцикл}, языки прог {Python/JavaScript}. Подписи осей как «измерение 1/2 ≈ живое/абстрактное». Справа 3 fact-cards: размерность (1536-3072), обучение (similar contexts → close vectors), проекция (PCA/t-SNE)."
+
   - id: s10
     file: slides/s10-sentence-similarity.md
     type: case_study
@@ -249,31 +274,22 @@ slides:
       pattern: similarity_heatmap_5x5
       primary: "Heatmap 5×5 cosine similarity для 5 предложений: (1) Как настроить SSL, (2) Установка HTTPS-сертификата, (3) Деплой React-компонента, (4) Сборка React-приложения, (5) Рецепт борща. Видны кластеры: 1↔2 ~0.85, 3↔4 ~0.78, борщ vs техническое ~0.05-0.15. Cells цветовая шкала Ocean (тёмный = высокое сходство)."
 
-  - id: s11
-    file: slides/s11-three-uses-of-embeddings.md
-    type: assertion_visual
-    section: "Раздел 2. Эмбеддинги"
-    duration_min: 2
-    assertion: "3 применения: similarity, clustering, search"
-    learning_goal: "3 практических применения эмбеддингов — карты для Раздела 3 курса"
-    learning_outcomes: [LO1]
-    chapter_ref: "§2.3 [for-slide-s11]"
-    visual:
-      pattern: 3_motif_cards_horizontal
-      primary: "3 Ocean rounded boxes: (1) Similarity — иконка магнита, «поиск похожих документов», (2) Clustering — иконка кластера точек, «k-means для группировки», (3) Search — иконка лупы, «семантический поиск». Card 3 (Search) выделен gold: «Основа RAG — Лекция 3»."
+  # v1.5: s11 (3 uses of embeddings — similarity/clustering/search) REMOVED.
+  # User feedback round 4 #5: «убрать, будем на следующей лекции разбирать».
+  # Deferred to Лекция 3 (RAG).
 
   - id: s12
     file: slides/s12-semantic-vs-fulltext.md
-    type: case_study
+    type: assertion_visual
     section: "Раздел 2. Эмбеддинги"
     duration_min: 2
-    assertion: "Semantic search находит то, что full-text пропустит"
-    learning_goal: "Comparison semantic vs full-text — bridge к Лекции 3 RAG"
+    assertion: "Эмбеддинги — фундамент понимания LLM: модель работает в пространстве векторов, не строк"
+    learning_goal: "Reformulation: эмбеддинги как фундамент LLM-понимания + обратное преобразование вектор→токен→слово"
     learning_outcomes: [LO1]
     chapter_ref: "§2.4 [for-slide-s12]"
     visual:
-      pattern: query_two_results_comparison
-      primary: "Запрос `«клубника»` сверху. 2 колонки результатов: Full-text — только «клубника», «клубники», «клубнику» (морфология). Semantic — дополнительно «strawberry» (cross-lang), «ягода» (родовое), «лесная земляника» (близкий смысл). Gold callout: «base layer RAG — Лекция 3»."
+      pattern: vertical_pipeline_plus_3_examples
+      primary: "v1.5 REFORMULATED: слева — вертикальная схема в обе стороны (слова → токены → векторы → LLM gold center → векторы → токены → слова), справа — 3 motif cards с иконками (перефразирования / синонимы / cross-lang) объясняющие, что даёт эмбеддингам «понимание». Gold callout: «семантическая близость на уровне предложений — основа понимания»."
 
   # ─── Раздел 3. Механизм внимания (18 мин, 5 слайдов: s13-s17) ───
   - id: s13
@@ -288,6 +304,19 @@ slides:
     visual:
       pattern: section_divider_with_roadmap
       primary: "Большое «Раздел 3» по центру слайда (mega 120pt в outline gold). Под ним мелким — «Механизм внимания». Внизу — roadmap-bar (5 карточек) с gold-маркером «Вы здесь — Раздел 3»."
+
+  - id: s13a
+    file: slides/s13a-attention-matrix.md
+    type: assertion_visual
+    section: "Раздел 3. Механизм внимания"
+    duration_min: 2
+    assertion: "Внимание — это матрица: каждый токен смотрит на все остальные одновременно"
+    learning_goal: "Attention как матричная операция, не линейная — основа понимания multi-head + квадратичной стоимости"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3.1 [for-slide-s13a]"
+    visual:
+      pattern: attention_matrix_7x7_heatmap
+      primary: "v1.5 NEW: слева — 7×7 attention matrix для предложения «Кот съел мышь, потому что она была голодна», cell «она→мышь» подсвечена gold (0.7). Цвет cell кодирует weight (#21295C dark = high, #E3ECF3 light = low). Справа — 3 fact-cards: размерность (N×N, quadratic cost), пересчёт на каждом шаге, multi-head параллельность."
 
   - id: s14
     file: slides/s14-what-is-attention.md
@@ -518,16 +547,16 @@ slides:
 
 # ─── Validation ───
 totals:
-  slides: 33
-  slide_times_sum_min: 57.5     # 55 original + 4 × 0.5 dividers + 0.5 s02a map
-  retrieval_moments_min: 8       # s01/s05/s07/s15/s19 cumulative
-  transitions_buffer_min: 4.5    # lecturer commentary (reduced; dividers + map absorb section transitions)
+  slides: 35
+  # v1.5: 35 = 33 v1.4 − 1 (s11 removed) + 3 (s04b/s09a/s13a added)
+  slide_times_sum_min: 62.0     # +1.0 s04b, +1.5 s09a, +2.0 s13a, −2.0 s11
+  retrieval_moments_min: 6       # s07/s15/s19 — s05 retrieval moment removed v1.5
+  transitions_buffer_min: 2.0    # absorbed by additions (was 4.5)
   qa_buffer_min: 5
-  total_min: 75                  # 57.5 + 8 + 4.5 + 5
+  total_min: 75                  # 62 + 6 + 2 + 5
 
 interaction_summary:
-  - s01: static demo + open question (2 мин total)
-  - s05: inline poll 15 sec ("как разрезалось бы сильнее?")
+  - s01: token rainbow hook (2 мин total)
   - s07: live attempt 1 мин ("сколько 'r' в strawberry?") — VERIFY-DAY-OF
   - s15: think pause 30 sec ("Программа упала, потому что она...")
   - s19: live comparison T=0 vs T=1.5

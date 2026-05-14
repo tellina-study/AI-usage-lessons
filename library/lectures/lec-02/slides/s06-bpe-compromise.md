@@ -16,6 +16,9 @@ visual_brief: "Two columns Before/After: Before — обучающий корп�
 «BPE — компромисс между алфавитом и словарём»
 
 ## Body
+[Одна строка-объяснение под заголовком, 16pt italic]
+*Словарь не из всех слов (как лемматизация) и не из всех букв (как character-level), а из частых подпоследовательностей.*
+
 [2 колонки Before/After в Ocean rounded boxes, parallel structure]
 
 **Before (обучающий корпус)**

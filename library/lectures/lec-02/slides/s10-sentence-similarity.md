@@ -13,10 +13,15 @@ visual_brief: "Heatmap 5×5 cosine similarity для 5 предложений (S
 # Visible content
 
 ## Title bar
-«Семантическое сходство на современных эмбеддингах»
+«Близость в пространстве эмбеддингов = семантическая близость»
 
 ## Body
-[Heatmap 5×5 cosine similarity, Ocean rounded box]
+[Sub-title 16pt italic]
+*В 2026 это работает на уровне предложений, не только слов.*
+
+[Two columns: левая 60% — heatmap 5×5; правая 40% — 2D PCA projection]
+
+**Слева — Heatmap 5×5 cosine similarity:**
 
 | | (1) SSL | (2) HTTPS | (3) React-комп. | (4) React-прил. | (5) Борщ |
 |---|---|---|---|---|---|
@@ -26,11 +31,15 @@ visual_brief: "Heatmap 5×5 cosine similarity для 5 предложений (S
 | (4) Сборка React-приложения | 0.20 | 0.19 | 0.78 | 1.00 | 0.10 |
 | (5) Рецепт борща | 0.08 | 0.07 | 0.12 | 0.10 | 1.00 |
 
-[Caption под таблицей]
+**Справа — Векторы в 2D-проекции (PCA):**
+- 5 точек, 3 кластера: {1,2} security · {3,4} React · {5} борщ.
+- Линии-стрелки между парами с высоким cosine.
+
+[Gold callout снизу]
 **Cosine similarity** = мера угла между векторами; диапазон [−1, 1], ближе к 1 — более похожи.
 
-[Footnote мелким]
-*Числа illustrative; верифицируются эмпирически на `sentence-transformers/all-MiniLM-L6-v2` (384-dim) или OpenAI `text-embedding-3-small` (1536-dim).*
+[Footnote мелким, gold-tint surface]
+*Числа illustrative; воспроизводимы на `sentence-transformers/all-MiniLM-L6-v2` (384-dim) или OpenAI `text-embedding-3-small` (1536-dim).*
 
 ## Speaker notes
 

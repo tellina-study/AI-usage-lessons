@@ -509,3 +509,213 @@ inserted correctly between cover and recap. PASS.
 **Slides added:** s02a (lecture-map).
 **Slides unchanged:** s01, s03-s04, s04a, s05-s08, s08a, s09-s12, s13,
 s14-s17, s17a, s18-s22, s22a, s23-s28 (all 31 other slides preserved bit-identical).
+
+---
+
+## v1.5 — Phase 8.8 substantial content polish (2026-05-14)
+
+User feedback round 4 (8 items addressed): strawberry hook outdated + retrieval
+moment removal + BPE compromise phrase + s10 vector illustration + s11 removal +
+s12 reformulation + attention matrix + 5-10 stock illustrations.
+
+### v1.5 — Changes
+
+**1. s01 hook redesign — token rainbow (replaces strawberry test).**
+Strawberry test is reliably passed by top-3 LLMs in 2026 (GPT-4o, Claude 4.7,
+GPT-5). Replaced with 2026-evergreen visualization: 3 parallel examples on
+3 input types (EN: «tokenization is fascinating» → 5 tokens; RU: «Привет, как
+дела?» → 5 tokens; Code: «def hello(name):» → 4 tokens). Headline «Модель видит
+ваш запрос не словами — а фрагментами» (30pt 1 line). Each row shows: language
+chip → mono original text → ↓ → colored token chips → token count. Gold callout:
+«Один и тот же смысл — разное число токенов. EN дешевле RU почти в 2×».
+Speaker notes ~280 words explain BPE foundation + cross-language cost insight.
+
+**2. s05 — removed «Подумайте 15 сек: "сильнее" — 1, 2 или 3 токена?» retrieval
+moment.** Replaced with forward-link caption «Для русского inference обходится
+примерно вдвое дороже — мы вернёмся к этому через 2 слайда». Aligns lecture
+tone — narrative-driven, not classroom activity.
+
+**3. s06 BPE — added compromise phrase as explanatory line.**
+New italic sub-title (16pt) above before/after columns: «Словарь не из всех
+слов (как лемматизация) и не из всех букв (как character-level) — а из частых
+подпоследовательностей». Communicates BPE's positioning in 1 sentence. Body
+shifted down 0.20" to fit.
+
+**4. s10 sentence similarity — redesign to dual-panel + cosine note.**
+Left 60%: heatmap 5×5 (existing). Right 40%: NEW 2D PCA scatter showing 5 dots
+in 3 clusters (security {1,2}, React {3,4}, борщ {5}) with gold lines между
+parami близких pairs (cos 0.85, 0.78) and grey dashed lines к odd-one-out
+(борщ). Assertion line moved into prominent gold callout: «Cosine similarity —
+мера угла между векторами; диапазон [−1, 1], ближе к 1 — более похожи». Source
+footer (sentence-transformers, OpenAI text-embedding-3-small) preserved.
+
+**5. s11 REMOVED — «3 uses of embeddings (similarity, clustering, search)».**
+User explicit instruction: «убрать, будем на следующей лекции разбирать».
+Deferred to Лекция 3 (RAG). Slide deleted from build pipeline + deck.yaml +
+slides/*.md.
+
+**6. s12 REFORMULATED — «Эмбеддинги — фундамент понимания LLM».**
+Previous version (Semantic search vs full-text) was a comparison better-fit
+к Лекции 3. New focus: эмбеддинги как фундамент LLM-понимания + обратное
+преобразование. Left column: vertical 6-step pipeline в обе стороны (слова →
+токены → векторы → LLM gold center → векторы → токены → слова). Right column:
+3 motif cards с иконками (message-square-text/globe-2/languages) — перефразирования,
+синонимы, cross-lang — explaining what gives «понимание». Gold callout: «семан-
+тическая близость на уровне предложений — основа того, что LLM "понимает"
+переформулировки».
+
+**7. NEW s04b — «Поток данных в LLM» schema slide.**
+Inserted after s04a (Раздел 1 divider) before s05. Horizontal 7-stage pipeline:
+Текст → Токены → Векторы → LLM (gold center) → Распределение → Токен → Текст
+с arrow labels (tokenize, embed, sample, de-tokenize). Под каждой стадией —
+short caption (слова/id/numeric/inference/вероятности/sample/de-tokenize).
+Bottom shows 4 sub-cards «Раздел 1/2/3/4» indicating which sections cover which
+stages. Gold callout: «слово существует только на границах. Внутри модели —
+только векторы. Сегодня разбираем 4 этапа».
+
+**8. NEW s09a — «Пространство эмбеддингов».**
+Inserted between s09 (token→vector lookup) и s10 (sentence similarity).
+Left 60%: 2D PCA scatter with 3 semantic clusters: животные {кот/собака/тигр},
+транспорт {машина/авто/мотоцикл}, языки прог {Python/JavaScript}. Axis labels
+explain «измерение 1 ≈ живое/неживое», «измерение 2 ≈ абстрактное» (semantic).
+Right 40%: 3 fact-cards — Размерность (1536-3072 dim), Обучение (similar
+contexts → close vectors), Проекция (PCA / t-SNE для интуиции). Gold callout:
+«семантическая близость = геометрическая близость векторов».
+
+**9. NEW s13a — «Внимание — это матрица».**
+Inserted between s13 (Раздел 3 divider) and s14 (attention as distribution).
+Left 60%: 7×7 attention matrix heatmap for «Кот съел мышь, потому что она была
+голодна». Cell «она→мышь» подсвечена gold (0.7) with annotation box. Color
+encoding (#21295C dark = high attention, #E3ECF3 light = low). Right 40%:
+3 fact-cards — Размерность (N×N, для 100k context = 10 млрд чисел, quadratic
+cost), На каждом шаге (recomputed per generation), Multi-head (dozens of such
+matrices параллельно). Gold callout: «attention — матричная, не линейная
+операция. Каждый токен сравнивается со всеми».
+
+**10. Stock illustrations / icons — 5-10 new visual touches.**
+- s23 (pipeline recap): added 4 icons under stage numbers (binary, scaling,
+  focus, sparkles) — visual differentiation of 4 inference stages.
+- s24 (3 whys payoff): added 3 icons на правом краю boxes (focus, binary,
+  sparkles) — semantic differentiation of «1, 2, 3» why questions.
+- s12: 3 new icons in understanding cards (message-square-text, globe-2,
+  languages).
+- s01 hook: token-rainbow chips на 3 строки (cosmetic, fresh).
+- s04b: full data flow diagram (SVG → PNG).
+- s09a: 2D scatter PCA conceptual diagram.
+- s10: 2D vector scatter beside heatmap.
+- s13a: 7×7 attention matrix heatmap.
+
+Total: 8 new visual assets + 10 icons reused. Plus 13 new Lucide icons
+downloaded for use across deck (focus, binary, code-2, message-square-text,
+languages, globe-2, scaling, chart-line, spell-check, sparkles, eye, telescope,
+microscope).
+
+### v1.5 — File changes
+
+- `library/lectures/lec-02/rendered/build_lec02.py`:
+  - Header docstring updated: v1.5 changelog (~30 lines).
+  - `build_s01()` rewritten — token rainbow на 3 примерах вместо strawberry.
+  - `build_s05()` modified — removed teal_callout «Подумайте 15 сек»,
+    replaced with text_box forward-link caption.
+  - `build_s06()` modified — added 2nd sub-title для BPE compromise phrase,
+    columns shifted down 0.20".
+  - `build_s10()` rewritten — heatmap 60% + scatter 40% layout; gold callout
+    для cosine definition; source footer preserved.
+  - `build_s11()` DELETED.
+  - `build_s12()` rewritten — vertical 6-step pipeline (с LLM gold center
+    box) + 3 example cards (Перефразирования / Синонимы / Cross-lang).
+  - NEW `build_s04b()` — full-width pipeline diagram + gold callout.
+  - NEW `build_s09a()` — 2D scatter + 3 fact-cards layout.
+  - NEW `build_s13a()` — 7×7 matrix + 3 fact-cards layout.
+  - `build_s23()` modified — added 4 stage-specific icons (binary/scaling/
+    focus/sparkles) under stage number badges.
+  - `build_s24()` modified — added 3 right-side icons (focus/binary/sparkles)
+    for visual differentiation of 3 «whys».
+  - `NAV_SECTIONS_LEC2` modified — replaced «Hook strawberry + recap +
+    вопрос» description with «Hook + recap + центральный вопрос» (since
+    strawberry hook is gone).
+  - `main()` builders list: removed `build_s11`, added `build_s04b`,
+    `build_s09a`, `build_s13a` in correct positions.
+  - `main()` slide_ids list: removed `s11`, added `s04b`, `s09a`, `s13a`.
+  - `assert len(slide_ids) == len(builders) == 33` → `== 35`.
+
+- `library/lectures/lec-02/deck.yaml`:
+  - Header comment: v1.4 → v1.5, mention 3 new slides + s11 removal.
+  - `version: v1.4` → `v1.5`, `total_slides: 33` → `35`.
+  - `s01` entry: type=hook (was live_demo), assertion updated, visual.pattern
+    `live_demo_static_first` → `token_rainbow_3_examples`, primary rewritten.
+  - NEW `s04b` entry inserted between s04a and s05.
+  - NEW `s09a` entry inserted between s09 and s10.
+  - `s11` entry REMOVED, replaced with comment «s11 removed v1.5».
+  - `s12` entry rewritten — type=assertion_visual (was case_study), new
+    assertion + visual.pattern `vertical_pipeline_plus_3_examples`.
+  - NEW `s13a` entry inserted between s13 and s14.
+  - `totals.slides: 33` → `35`, `slide_times_sum_min: 57.5` → `62.0`,
+    `retrieval_moments_min: 8` → `6` (s05 retrieval moment removed),
+    `transitions_buffer_min: 4.5` → `2.0` (absorbed by additions),
+    `total_min: 75` (unchanged).
+  - `interaction_summary` — removed s01 «open question» + s05 «inline poll».
+
+- `library/lectures/lec-02/slides/`:
+  - `s01-live-tokenizer-demo.md` — entire markdown rewritten for token
+    rainbow (assertion, visual_brief, body, speaker notes ~280 words).
+  - `s05-what-is-token.md` — removed «Подумайте 15 сек» inline poll line,
+    replaced with forward-link caption.
+  - `s06-bpe-compromise.md` — added explanatory sub-title line.
+  - `s10-sentence-similarity.md` — body updated with two-column structure
+    description, cosine note prominent, source footer preserved.
+  - `s11-three-uses-of-embeddings.md` — DELETED.
+  - `s12-semantic-vs-fulltext.md` — entire body rewritten для «Эмбеддинги —
+    фундамент понимания LLM» framing.
+  - NEW `s04b-data-flow.md` — full 7-stage pipeline body + speaker notes.
+  - NEW `s09a-embedding-space.md` — 2D-projection + 3 facts body + notes.
+  - NEW `s13a-attention-matrix.md` — 7×7 matrix body + 3 facts + notes.
+
+- `library/lectures/lec-02/rendered/assets/`:
+  - NEW `diagrams/s04b-data-flow.svg` + `.png` (1280×500).
+  - NEW `diagrams/s09a-embedding-space.svg` + `.png` (640×560).
+  - NEW `diagrams/s10-vector-scatter.svg` + `.png` (500×500).
+  - NEW `diagrams/s13a-attention-matrix.svg` + `.png` (720×640).
+  - 13 new Lucide icons added (focus, binary, code-2, message-square-text,
+    languages, globe-2, scaling, chart-line, spell-check, sparkles, eye,
+    telescope, microscope) — recolored to #065A82, 96×96 PNG.
+
+### v1.5 — Visual verification
+
+All 35 slides re-rendered + PDF generated + 35 PNG snapshots produced. Spot
+checks:
+
+- **s01 (token rainbow):** 1-line title (30pt), 3 example rows with colored
+  chips, gold callout — clean and engaging. PASS.
+- **s04b (data flow):** 7-stage horizontal pipeline + 4 section indicators
+  + gold callout. PASS.
+- **s05:** «Подумайте 15 сек» removed, forward-link caption visible. PASS.
+- **s06:** new BPE compromise sub-title visible, columns fit. PASS.
+- **s09a (embedding space):** 2D scatter + 3 fact-cards readable. PASS.
+- **s10:** heatmap + scatter side-by-side, cosine in gold callout. PASS.
+- **s12:** new vertical pipeline + 3 understanding cards (with icons). PASS.
+- **s13a (attention matrix):** 7×7 heatmap with «она→мышь» gold cell +
+  3 fact-cards. PASS.
+- **s23 (pipeline):** 4 icons добавлены под номера стадий. PASS.
+- **s24 (3 whys):** 3 icons добавлены справа. PASS.
+- **s02a (lecture map):** strawberry reference removed from card 0. PASS.
+
+### v1.5 — Final status
+
+**DoD checklist:**
+- [x] All 8 user feedback points addressed.
+- [x] All Phase 8.7 fixes preserved (lecture-map s02a, no cover footer).
+- [x] All Phase 8.6 fixes preserved (no top bar on content, 4 dividers).
+- [x] Glossary lock 17 terms preserved (verified in chapter, slides).
+- [x] Chapter v1.1 unchanged (book-first principle).
+- [x] Total slides: 33 → 35 (28 original − 1 s11 + 4 dividers + 1 s02a
+      + 3 new s04b/s09a/s13a).
+- [x] Speaker notes contract preserved (150-300 words readable text;
+      no «Лектору» / no layout descriptions / no timing).
+- [x] iteration-log v1.5 appended.
+
+**Slides modified (10):** s01, s05, s06, s10, s12, s23, s24, s02a (nav).
+**Slides added (3):** s04b, s09a, s13a.
+**Slides removed (1):** s11.
+**Slides unchanged (24):** s02, s03, s04, s04a, s07, s08, s08a, s09, s13,
+s14, s15, s16, s17, s17a, s18, s19, s20, s21, s22, s22a, s25, s26, s27, s28.

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="640" viewBox="0 0 720 640">
+<rect width="720" height="640" fill="#FFFFFF"/>
+
+<!-- Title -->
+<text x="360" y="32" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">Attention matrix 7×7 (single-head, упрощение)</text>
+<text x="360" y="52" text-anchor="middle" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">«Кот съел мышь, потому что она была голодна»</text>
+
+<!-- Column labels (top) -->
+<text x="160" y="92" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">Кот</text>
+<text x="230" y="92" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">съел</text>
+<text x="300" y="92" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">мышь</text>
+<text x="370" y="80" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C" font-weight="bold">потому</text>
+<text x="370" y="93" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C" font-weight="bold">что</text>
+<text x="440" y="92" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">она</text>
+<text x="510" y="92" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">была</text>
+<text x="580" y="92" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">голодна</text>
+
+<!-- Row labels (left) — colored boxes for matrix cells -->
+<!-- Helper: each cell is 60×60, starts at x=130, y=100; gap=10 between cells via spacing -->
+
+<!-- Cell color mapping:
+  v >= 0.9: #21295C (almost black/dark)  (diagonal)
+  v 0.5-0.7: GOLD #F0AB00 (highlight для она→мышь)
+  v 0.3-0.5: #065A82 dark
+  v 0.2-0.3: #1C7293 medium
+  v 0.1-0.2: #B3CADD light
+  v <0.1: #E3ECF3 very light
+-->
+
+<!-- Row 1: Кот -->
+<text x="120" y="138" text-anchor="end" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">Кот</text>
+<rect x="130" y="105" width="60" height="60" fill="#21295C"/><text x="160" y="142" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1.0</text>
+<rect x="200" y="105" width="60" height="60" fill="#065A82"/><text x="230" y="142" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.3</text>
+<rect x="270" y="105" width="60" height="60" fill="#1C7293"/><text x="300" y="142" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="340" y="105" width="60" height="60" fill="#B3CADD"/><text x="370" y="142" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="410" y="105" width="60" height="60" fill="#B3CADD"/><text x="440" y="142" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="480" y="105" width="60" height="60" fill="#B3CADD"/><text x="510" y="142" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="550" y="105" width="60" height="60" fill="#E3ECF3"/><text x="580" y="142" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.0</text>
+
+<!-- Row 2: съел -->
+<text x="120" y="203" text-anchor="end" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">съел</text>
+<rect x="130" y="170" width="60" height="60" fill="#065A82"/><text x="160" y="207" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.4</text>
+<rect x="200" y="170" width="60" height="60" fill="#21295C"/><text x="230" y="207" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1.0</text>
+<rect x="270" y="170" width="60" height="60" fill="#065A82"/><text x="300" y="207" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.5</text>
+<rect x="340" y="170" width="60" height="60" fill="#B3CADD"/><text x="370" y="207" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="410" y="170" width="60" height="60" fill="#B3CADD"/><text x="440" y="207" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="480" y="170" width="60" height="60" fill="#B3CADD"/><text x="510" y="207" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="550" y="170" width="60" height="60" fill="#B3CADD"/><text x="580" y="207" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+
+<!-- Row 3: мышь -->
+<text x="120" y="268" text-anchor="end" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">мышь</text>
+<rect x="130" y="235" width="60" height="60" fill="#1C7293"/><text x="160" y="272" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="200" y="235" width="60" height="60" fill="#065A82"/><text x="230" y="272" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.4</text>
+<rect x="270" y="235" width="60" height="60" fill="#21295C"/><text x="300" y="272" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1.0</text>
+<rect x="340" y="235" width="60" height="60" fill="#B3CADD"/><text x="370" y="272" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="410" y="235" width="60" height="60" fill="#B3CADD"/><text x="440" y="272" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="480" y="235" width="60" height="60" fill="#E3ECF3"/><text x="510" y="272" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.0</text>
+<rect x="550" y="235" width="60" height="60" fill="#B3CADD"/><text x="580" y="272" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+
+<!-- Row 4: потому что -->
+<text x="120" y="328" text-anchor="end" font-family="Arial" font-size="11" fill="#21295C" font-weight="bold">потому что</text>
+<rect x="130" y="300" width="60" height="60" fill="#B3CADD"/><text x="160" y="337" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="200" y="300" width="60" height="60" fill="#1C7293"/><text x="230" y="337" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="270" y="300" width="60" height="60" fill="#1C7293"/><text x="300" y="337" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="340" y="300" width="60" height="60" fill="#21295C"/><text x="370" y="337" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1.0</text>
+<rect x="410" y="300" width="60" height="60" fill="#065A82"/><text x="440" y="337" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.3</text>
+<rect x="480" y="300" width="60" height="60" fill="#1C7293"/><text x="510" y="337" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="550" y="300" width="60" height="60" fill="#1C7293"/><text x="580" y="337" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+
+<!-- Row 5: она (KEY ROW, GOLD CELL) -->
+<text x="120" y="398" text-anchor="end" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">она</text>
+<rect x="130" y="365" width="60" height="60" fill="#B3CADD"/><text x="160" y="402" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="200" y="365" width="60" height="60" fill="#B3CADD"/><text x="230" y="402" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="270" y="365" width="60" height="60" fill="#F0AB00" stroke="#21295C" stroke-width="3"/><text x="300" y="402" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.7</text>
+<rect x="340" y="365" width="60" height="60" fill="#1C7293"/><text x="370" y="402" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="410" y="365" width="60" height="60" fill="#21295C"/><text x="440" y="402" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1.0</text>
+<rect x="480" y="365" width="60" height="60" fill="#065A82"/><text x="510" y="402" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.3</text>
+<rect x="550" y="365" width="60" height="60" fill="#065A82"/><text x="580" y="402" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.4</text>
+
+<!-- Row 6: была -->
+<text x="120" y="463" text-anchor="end" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">была</text>
+<rect x="130" y="430" width="60" height="60" fill="#B3CADD"/><text x="160" y="467" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="200" y="430" width="60" height="60" fill="#1C7293"/><text x="230" y="467" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="270" y="430" width="60" height="60" fill="#1C7293"/><text x="300" y="467" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="340" y="430" width="60" height="60" fill="#065A82"/><text x="370" y="467" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.3</text>
+<rect x="410" y="430" width="60" height="60" fill="#065A82"/><text x="440" y="467" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.4</text>
+<rect x="480" y="430" width="60" height="60" fill="#21295C"/><text x="510" y="467" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1.0</text>
+<rect x="550" y="430" width="60" height="60" fill="#065A82"/><text x="580" y="467" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.5</text>
+
+<!-- Row 7: голодна -->
+<text x="120" y="528" text-anchor="end" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">голодна</text>
+<rect x="130" y="495" width="60" height="60" fill="#B3CADD"/><text x="160" y="532" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#21295C">0.1</text>
+<rect x="200" y="495" width="60" height="60" fill="#1C7293"/><text x="230" y="532" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.2</text>
+<rect x="270" y="495" width="60" height="60" fill="#065A82"/><text x="300" y="532" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.3</text>
+<rect x="340" y="495" width="60" height="60" fill="#065A82"/><text x="370" y="532" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.3</text>
+<rect x="410" y="495" width="60" height="60" fill="#065A82"/><text x="440" y="532" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.4</text>
+<rect x="480" y="495" width="60" height="60" fill="#065A82"/><text x="510" y="532" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">0.5</text>
+<rect x="550" y="495" width="60" height="60" fill="#21295C"/><text x="580" y="532" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1.0</text>
+
+<!-- Annotation для она→мышь — переместить ниже и под матрицу -->
+<rect x="290" y="575" width="160" height="40" rx="6" fill="#FEF5E0" stroke="#F0AB00" stroke-width="1.5"/>
+<text x="370" y="592" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C" font-weight="bold">«она» смотрит на «мышь»</text>
+<text x="370" y="608" text-anchor="middle" font-family="Arial" font-size="11" fill="#F0AB00" font-weight="bold">вес = 0.7 (gold cell)</text>
+
+<!-- Bottom caption — moved right side, since annotation occupies bottom-centre -->
+<text x="580" y="592" text-anchor="end" font-family="Arial" font-size="11" fill="#1C7293" font-style="italic">N × N связей; для 100k</text>
+<text x="580" y="608" text-anchor="end" font-family="Arial" font-size="11" fill="#1C7293" font-style="italic">— ≈ 10 млрд чисел</text>
+
+</svg>

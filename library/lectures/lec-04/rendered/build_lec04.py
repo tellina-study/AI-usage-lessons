@@ -606,9 +606,7 @@ def build_s05(p):
     # не баннер: studio-quality иллюстрация связки AI(ноутбук) + медицина(стетоскоп).
     add_image(s, ASSETS / "photos/s05-doctor-laptop.jpg",
               x=img_x + 0.2, y=img_y + 0.25, w=img_w - 0.4, h=img_h - 0.85)
-    text_box(s, x=img_x + 0.2, y=img_y + img_h - 0.50, w=img_w - 0.4, h=0.35,
-             text="Иллюстрация: врач + ноутбук + стетоскоп — рабочий процесс с AI в клинике",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # Phase 8.8c: «Иллюстрация: …» caption removed — technical commentary.
     # Fix 3 (Phase 8.8): footer line «Стейкс: $22–38 млрд …» удалена —
     # anglicism «Стейкс» + irrelevant marketing metadata. Слайд = central
     # question + roadmap + photo, без отвлечений.
@@ -790,9 +788,7 @@ def build_s08(p):
     ocean_box(s, photo_x, card_y, photo_w, card_h)
     add_image(s, ASSETS / "photos/s08-radiologist-screen.jpg",
               x=photo_x + 0.15, y=card_y + 0.25, w=photo_w - 0.30, h=card_h - 0.85)
-    text_box(s, x=photo_x + 0.15, y=card_y + card_h - 0.50, w=photo_w - 0.30, h=0.35,
-             text="Иллюстрация: радиолог + AI-рабочая станция",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # Phase 8.8c: «Иллюстрация: …» caption removed — technical commentary.
     gold_callout(s, 0.55, 6.60, 12.3, 0.50,
                  "→ Регуляторные навыки переносятся: PCI DSS · ФЗ-152 · ISO 26262 · DO-178C.",
                  size=13)
@@ -1154,9 +1150,7 @@ def build_s14(p):
     ocean_box(s, photo_x, photo_y, photo_w, photo_h)
     add_image(s, ASSETS / "photos/s14-pharma-lab.jpg",
               x=photo_x + 0.15, y=photo_y + 0.20, w=photo_w - 0.30, h=photo_h - 0.65)
-    text_box(s, x=photo_x + 0.15, y=photo_y + photo_h - 0.42, w=photo_w - 0.30, h=0.32,
-             text="Иллюстрация: фарма-лаборатория — место встречи AI-дизайна и биологии",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # Phase 8.8c: «Иллюстрация: …» caption removed — technical commentary.
     # Right: question box.
     qbox_x, qbox_y, qbox_w, qbox_h = 5.40, 1.70, 7.40, 2.85
     ocean_box(s, qbox_x, qbox_y, qbox_w, qbox_h)
@@ -1627,9 +1621,7 @@ def build_s20(p):
     # Это содержательная клиническая сцена, не баннер; визуализирует «ставки на пациенте».
     add_image(s, ASSETS / "photos/s20-medical-team.jpg",
               x=img_x + 0.25, y=img_y + 0.30, w=img_w - 0.5, h=img_h - 0.85)
-    text_box(s, x=img_x + 0.3, y=img_y + img_h - 0.50, w=img_w - 0.6, h=0.35,
-             text="Иллюстрация: каждый AI-диагноз заканчивается этим — взаимодействием врача с пациентом.",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # Phase 8.8c: «Иллюстрация: …» caption removed — technical commentary.
     list_x, list_y, list_w, list_h = 6.45, 1.85, 6.35, 4.9
     ocean_box(s, list_x, list_y, list_w, list_h)
     text_box(s, x=list_x + 0.30, y=list_y + 0.25, w=list_w - 0.6, h=0.4,
@@ -2011,9 +2003,7 @@ def build_s27(p):
     # «врач принимает решение». Не баннер; реальная клиническая визуальная связка.
     add_image(s, ASSETS / "photos/s27-doctor-patient.jpg",
               x=img_x + 0.30, y=img_y + 0.40, w=img_w - 0.6, h=img_h - 1.10)
-    text_box(s, x=img_x + 0.30, y=img_y + img_h - 0.65, w=img_w - 0.6, h=0.35,
-             text="Иллюстрация: врач — тот, кто берёт ответственность за пациента.",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # Phase 8.8c: «Иллюстрация: …» caption removed — technical commentary.
     ph_x, ph_y, ph_w, ph_h = 6.30, 0.85, 6.50, 5.8
     ocean_box(s, ph_x, ph_y, ph_w, ph_h)
     text_runs(s, ph_x + 0.4, ph_y + 0.6, ph_w - 0.8, ph_h - 1.2, [
@@ -2024,12 +2014,8 @@ def build_s27(p):
         {"newpara": True, "text": "по-настоящему", "size": 36, "color": GOLD, "bold": True},
         {"text": " решать.", "size": 30, "color": DEEP, "bold": True},
     ], line_spacing=1.30, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=ph_x + 0.4, y=ph_y + ph_h - 0.50, w=ph_w - 0.8, h=0.40,
-             text="Возврат к центральному вопросу — ответ.",
-             size=12, italic=True, color=LIGHT, align=PP_ALIGN.LEFT)
-    text_box(s, x=0.55, y=6.85, w=12.3, h=0.40,
-             text="Прозрачность · валидированная популяция · audit-trail — три инженерных принципа в копилку Лекции 9.",
-             size=12, italic=True, color=MID, align=PP_ALIGN.CENTER)
+    # Phase 8.8c: «Возврат к центральному вопросу …» + «Прозрачность · …
+    # audit-trail … в копилку Лекции 9» footers removed — technical commentary.
     speaker_notes(s, load_notes("s27"))
 
 
@@ -2074,9 +2060,8 @@ def build_s28(p):
     text_box(s, x=lc9_x + 0.30, y=card_y + 1.50, w=card_w - 0.5, h=1.50,
              text="3 принципа сегодня\n→ черновик чек-листа на Лекции 9\n→ личная версия на Лекции 14",
              size=13, color=DEEP, line_spacing=1.45)
-    gold_callout(s, 0.55, 6.55, 12.3, 0.65,
-                 "Опционально: найти 1 случай медицинского AI в новостях + применить рамку 4 актёров. Не оценивается; тренировка навыка.",
-                 size=13)
+    # Phase 8.8c: «Опционально: найти 1 случай …» homework callout removed —
+    # technical commentary не для student-visible content.
     speaker_notes(s, load_notes("s28"))
 
 

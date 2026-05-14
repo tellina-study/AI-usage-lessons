@@ -719,3 +719,64 @@ checks:
 **Slides removed (1):** s11.
 **Slides unchanged (24):** s02, s03, s04, s04a, s07, s08, s08a, s09, s13,
 s14, s15, s16, s17, s17a, s18, s19, s20, s21, s22, s22a, s25, s26, s27, s28.
+
+---
+
+## v1.5 → v1.6 (Phase 8.9 — small polish)
+
+**User feedback (2 points):**
+1. начальная часть — введение, и убери там «Открытие Hook + recap + центральный вопрос»
+2. сделай отдельный слайд QA как в Лекции 1
+
+**Changes applied:**
+
+### Fix 1 — «Открытие» → «Введение» (label rename across deck)
+- `slides/s02a-lecture-map.md`: card 0 title «Открытие» → «Введение»; description «Hook + recap + центральный вопрос» → «Что такое токен + центральный вопрос». Speaker notes phrase «открытие» → «введение».
+- `slides/s01-live-tokenizer-demo.md`, `s02-cover-roadmap.md`, `s03-recap-lec1.md`, `s04-central-question.md`: frontmatter `section: "Раздел 0. Открытие"` → `"Раздел 0. Введение"`.
+- `slides/s04a-section1-tokens.md`, `s08a-section2-embeddings.md`, `s13-section-divider-attention.md`, `s17a-section4-sampling.md`, `s22a-section5-final.md`: visible roadmap-bar label list `- 0. Открытие` → `- 0. Введение`.
+- `slides/s02-cover-roadmap.md`: visual_brief roadmap-bar enumeration.
+- `slides/s04a-section1-tokens.md`: speaker notes opening phrase «Открытие лекции закончено» → «Введение закончено».
+- `slides/s01-live-tokenizer-demo.md`: speaker notes opening phrase «Открытие лекции — простая…» → «Введение лекции — простая…».
+- `deck.yaml`: all 5 `section: "Раздел 0. Открытие"` entries → `"Раздел 0. Введение"`; visual.primary on s02a/s02.
+- `build_lec02.py`: `roadmap_bar` labels list, `NAV_SECTIONS_LEC2` tuple (also rewrote description «Hook + recap + центральный вопрос» → «Что такое токен + центральный вопрос»), `SECTION_LABELS` list.
+
+### Fix 2 — Dedicated Q&A slide (s29)
+- **New** `slides/s29-qa.md`: 36 lines. Type `qa_minimal`, duration 2 min, minimalist composition (huge Q&A center 140pt DEEP, «Спасибо за внимание!» 32pt MID, small reminder bottom 14pt italic LIGHT). Speaker notes 200+ words covering open-Q&A handling, fallback if silence, transition to семинар.
+- **Modified** `slides/s28-bridge-qa.md`: removed «+ Q&A» from title (now «Что в Лекции 3»), removed Q&A block from body, removed last paragraph of speaker notes about «5 минут на вопросы в зале» (replaced with brief transition «оставшееся время — вашим вопросам»). `learning_goal` simplified from «Мост к Лекции 3 + Q&A (≤5 мин в буфере)» → «Мост к Лекции 3».
+- `deck.yaml`: s28 entry visual.primary cleaned (no «Внизу — Q&A» phrase); new s29 entry added at end of slides list (8 lines); `totals.slides: 35 → 36`; section header comment «(9.5 мин, 7 слайдов: s22a divider + s23-s28)» → «(11.5 мин, 8 слайдов: s22a divider + s23-s29)»; meta `total_slides: 35 → 36`, `version: v1.5 → v1.6`.
+- `build_lec02.py`:
+  - `build_s28` modified: title shortened to «Лекция 3: …» (no «+ Q&A»); 2×2 grid stretched (cell_h 2.55→2.75, grid_y 1.95→2.10) to use freed bottom area; Q&A footer block removed entirely (filled_rect+text_box pair deleted).
+  - **New** `build_s29(p)` function: huge centered Q&A 140pt DEEP at y≈2.30; «Спасибо за внимание!» 32pt MID at y≈4.85; reminder 14pt italic LIGHT at y≈6.50; no header bar, no roadmap-bar.
+  - `main()`: builders list, slide_ids list, and assertion count updated 35 → 36; Раздел 5 comment notes «s29 Q&A new in v1.6».
+  - `SECTION_OF_SLIDE` map (deprecated but kept) — added `29: 5`.
+
+**Render:**
+- All 36 builders OK; `lec-02.pptx` 1175 KB; PDF regenerated; snapshots 36/36 (s-01.png .. s-36.png).
+- Visual verification:
+  - `s-03.png` (s02a lecture-map): card 0 shows «Введение» with new description «Что такое токен + центральный вопрос», gold outline on card 0 preserved.
+  - `s-06.png` (s04a Раздел 1 divider): bottom roadmap-bar shows «0 Введение» in first cell.
+  - `s-35.png` (s28 bridge): clean 2×2 grid of 4 concepts, no Q&A footer, title «Лекция 3: …».
+  - `s-36.png` (s29 Q&A): huge «Q&A» centered, «Спасибо за внимание!» below, reminder bottom — minimalist composition mirroring Lec-1 s31.
+
+**Preserved (untouched):**
+- All Phase 8.8 v1.5 improvements (Token Rainbow hook s01, attention matrix s13a, flow schema s04b, cosine cleanup s10, embedding space s09a, s11 removed, 8 illustrations, 13 icons).
+- All Phase 8.7 v1.4 (lecture-map s02a as separate slide, no cover footer).
+- All Phase 8.6 v1.3 (no top bar on content, 4 section dividers, vertical fill on key slides).
+- Glossary lock 17 canonical terms.
+- Chapter v1.1 unchanged (book-first principle preserved).
+- Speaker notes contract (150-300 words readable, no «Лектору» / no layout / no timing).
+
+**DoD checklist:**
+- [x] «Открытие» replaced with «Введение» everywhere in slide content / labels / builder. Historical QA reports under `qa-reports/2026-05-13-phase7-slides-v1/` retain the old word (frozen artifacts; not slide content).
+- [x] New `s29-qa.md` created (36 lines, frontmatter + visible body + 200+ word speaker notes).
+- [x] s29 rendered as snapshot 36/36 — visual mirrors Lec-1 s31 pattern.
+- [x] s28 simplified — no Q&A merge, cleaner 4-concept preview.
+- [x] Total slides = 36 (`deck.yaml` meta `total_slides: 36`; `totals.slides: 36`; builder assertion `== 36`; snapshots count = 36).
+- [x] iteration-log v1.6 appended.
+
+**Slides modified (10):** s01, s02, s02a, s03, s04 (frontmatter section rename); s04a, s08a, s13, s17a, s22a (roadmap-bar label content); s02-cover-roadmap (visual_brief); s04a/s01 (speaker notes opening phrase); s28 (title + body cleanup + speaker notes last paragraph rewrite).
+**Slides added (1):** s29.
+**Slides removed (0).**
+**Builder modifications:** `roadmap_bar` labels, `NAV_SECTIONS_LEC2`, `SECTION_LABELS`, `SECTION_OF_SLIDE`, `build_s28`, **new** `build_s29`, `main()` builders/ids/assertion.
+
+**Final slide count: 36** (was 35 in v1.5).

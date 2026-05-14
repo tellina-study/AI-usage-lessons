@@ -1,7 +1,7 @@
 ---
 id: s03
 type: assertion_visual
-section: "Раздел 0. Открытие"
+section: "Раздел 0. Введение"
 duration_min: 1.5
 assertion: "Сегодня углубляем слой «модель» из четырёх слоёв Лекции 1"
 learning_goal: "Recap Лекции 1 §3.2 + bridge к внутренностям модели"

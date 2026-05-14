@@ -1,7 +1,7 @@
 ---
 id: s04
 type: assertion_visual
-section: "Раздел 0. Открытие"
+section: "Раздел 0. Введение"
 duration_min: 1
 assertion: "Главный вопрос: что внутри LLM меняет то, как мы её используем?"
 learning_goal: "Центральный вопрос + 3 промиса-якоря (callback к Lec-1 §5.3)"

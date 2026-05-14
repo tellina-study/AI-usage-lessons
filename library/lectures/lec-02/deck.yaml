@@ -15,10 +15,10 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v1.5
+  version: v1.6
   source: chapter v1.1 (status=reviewed, ~11400 слов)
   plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1)
-  total_slides: 35
+  total_slides: 36
   curriculum_level: introductory
 
 palette:
@@ -73,11 +73,11 @@ glossary_lock:
   - слепота к буквам
 
 slides:
-  # ─── Раздел 0. Открытие (8 мин, 4 слайда: s01-s04) ───
+  # ─── Раздел 0. Введение (8 мин, 4 слайда: s01-s04) ───
   - id: s01
     file: slides/s01-live-tokenizer-demo.md
     type: hook
-    section: "Раздел 0. Открытие"
+    section: "Раздел 0. Введение"
     duration_min: 2
     assertion: "Модель видит ваш запрос не словами и не буквами — а токенами"
     learning_goal: "Открывающий hook через визуализацию токенизации реального запроса"
@@ -91,7 +91,7 @@ slides:
   - id: s02
     file: slides/s02-cover-roadmap.md
     type: cover
-    section: "Раздел 0. Открытие"
+    section: "Раздел 0. Введение"
     duration_min: 0.5
     assertion: "Лекция 2. Как работают современные большие модели"
     learning_goal: "Cover — title + lecture number + subtitle + pictogram"
@@ -104,7 +104,7 @@ slides:
   - id: s02a
     file: slides/s02a-lecture-map.md
     type: roadmap
-    section: "Раздел 0. Открытие"
+    section: "Раздел 0. Введение"
     duration_min: 0.5
     assertion: "Карта лекции — 6 разделов"
     learning_goal: "Общая карта: что будет, в каком порядке"
@@ -112,12 +112,12 @@ slides:
     chapter_ref: "§Карта главы"
     visual:
       pattern: lecture_roadmap_6_sections
-      primary: "6 пронумерованных горизонтальных карточек по разделам (0 Открытие / 1 Токенизация / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал) с короткими описаниями. Активный раздел (Раздел 0) подсвечен gold-обводкой карточки, без минут."
+      primary: "6 пронумерованных горизонтальных карточек по разделам (0 Введение / 1 Токенизация / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал) с короткими описаниями. Активный раздел (Раздел 0) подсвечен gold-обводкой карточки, без минут."
 
   - id: s03
     file: slides/s03-recap-lec1.md
     type: assertion_visual
-    section: "Раздел 0. Открытие"
+    section: "Раздел 0. Введение"
     duration_min: 1.5
     assertion: 'Сегодня углубляем слой «модель» из четырёх слоёв Лекции 1'
     learning_goal: "Recap Лекции 1 §3.2 + bridge к внутренностям модели"
@@ -130,7 +130,7 @@ slides:
   - id: s04
     file: slides/s04-central-question.md
     type: assertion_visual
-    section: "Раздел 0. Открытие"
+    section: "Раздел 0. Введение"
     duration_min: 1
     assertion: "Главный вопрос: что внутри LLM меняет то, как мы её используем?"
     learning_goal: "Центральный вопрос + 3 промиса-якоря (callback к Lec-1 §5.3)"
@@ -452,7 +452,7 @@ slides:
       pattern: two_column_compare
       primary: "2 Ocean rounded boxes side-by-side: Local (Ollama, llama.cpp) — Qwen 2.5 1.5B, Llama 3.2 1B, Llama 3.1 8B; приватность; медленнее на consumer; ограниченный контекст. Cloud (OpenAI, Anthropic, Yandex, GigaChat) — 200B+; 200-500ms; оплата за токены; данные через API. Sub-caption: «callback Lec-1 §4.2 — глубже про trade-off там»."
 
-  # ─── Раздел 5. Заключение (9.5 мин, 7 слайдов: s22a divider + s23-s28) ───
+  # ─── Раздел 5. Заключение (11.5 мин, 8 слайдов: s22a divider + s23-s29) ───
   - id: s22a
     file: slides/s22a-section5-final.md
     type: section_divider
@@ -538,18 +538,31 @@ slides:
     section: "Раздел 5. Заключение"
     duration_min: 1.5
     assertion: 'Лекция 3: «Агенты, RAG, API: как AI выходит за пределы чата»'
-    learning_goal: "Мост к Лекции 3 + Q&A (≤5 мин в буфере)"
+    learning_goal: "Мост к Лекции 3"
     learning_outcomes: [LO1]
     chapter_ref: "§5.5 [for-slide-s28]"
     visual:
       pattern: 4_concepts_preview
-      primary: "4 Ocean rounded boxes с иконками — концепты Лекции 3: (1) RAG — embedding similarity + LLM, ответ из вашей базы. (2) Tools / Function calling — LLM генерирует структурированный JSON, выполняет внешняя система. (3) MCP — открытый стандарт подключения инструментов (Anthropic, 2024). (4) Agent loop — act → observe → reflect. Внизу — Q&A: «до 5 минут в зале; дополнительные — на Семинар 2 / e-mail»."
+      primary: "4 Ocean rounded boxes с иконками — концепты Лекции 3: (1) RAG — embedding similarity + LLM, ответ из вашей базы. (2) Tools / Function calling — LLM генерирует структурированный JSON, выполняет внешняя система. (3) MCP — открытый стандарт подключения инструментов (Anthropic, 2024). (4) Agent loop — act → observe → reflect."
+
+  - id: s29
+    file: slides/s29-qa.md
+    type: qa_minimal
+    section: "Раздел 5. Заключение"
+    duration_min: 2
+    assertion: 'Q&A'
+    learning_goal: "Открытый Q&A без backup-провокаций"
+    learning_outcomes: []
+    chapter_ref: "—"
+    visual:
+      pattern: qa_minimal
+      primary: "Минималистичный финальный слайд: большое «Q&A» 140pt по центру в `#21295C`. Под ним «Спасибо за внимание!» 32pt. Без footer, без roadmap-bar — фокус на диалоге."
 
 # ─── Validation ───
 totals:
-  slides: 35
-  # v1.5: 35 = 33 v1.4 − 1 (s11 removed) + 3 (s04b/s09a/s13a added)
-  slide_times_sum_min: 62.0     # +1.0 s04b, +1.5 s09a, +2.0 s13a, −2.0 s11
+  slides: 36
+  # v1.6: 36 = 35 v1.5 + 1 (s29 Q&A dedicated slide; Q&A merged at bottom of s28 removed)
+  slide_times_sum_min: 62.0     # s29 Q&A 2min = qa_buffer_min was already 5; net 0
   retrieval_moments_min: 6       # s07/s15/s19 — s05 retrieval moment removed v1.5
   transitions_buffer_min: 2.0    # absorbed by additions (was 4.5)
   qa_buffer_min: 5

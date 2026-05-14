@@ -298,7 +298,7 @@ def load_notes(slide_id):
 # ============================================================
 def roadmap_bar(slide, here_idx, *, y=6.7):
     """6-section roadmap bar at bottom of slide.
-    Sections: 0 Открытие / 1 Токены / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал.
+    Sections: 0 Введение / 1 Токены / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал.
     here_idx: 0..5 — gold highlight on current.
     """
     bar_h = 0.45
@@ -308,7 +308,7 @@ def roadmap_bar(slide, here_idx, *, y=6.7):
     cell_w = (total_w - gap * (n_cells - 1)) / n_cells
     start_x = 0.55
     labels = [
-        "0  Открытие",
+        "0  Введение",
         "1  Токены",
         "2  Эмбеддинги",
         "3  Внимание",
@@ -331,7 +331,7 @@ def roadmap_bar(slide, here_idx, *, y=6.7):
 # ============================================================
 NAV_SECTIONS_LEC2 = [
     # (num, title, short description). Used in `nav_slide` below.
-    ("0", "Открытие",      "Hook + recap +\nцентральный вопрос"),
+    ("0", "Введение",      "Что такое токен +\nцентральный вопрос"),
     ("1", "Токенизация",   "Как модель видит\nваш текст"),
     ("2", "Эмбеддинги",    "Пространство\nсмыслов"),
     ("3", "Внимание",      "Что важно\nсейчас"),
@@ -414,11 +414,11 @@ SECTION_OF_SLIDE = {
     13: 3,
     14: 3, 15: 3, 16: 3, 17: 3,
     18: 4, 19: 4, 20: 4, 21: 4, 22: 4,
-    23: 5, 24: 5, 25: 5, 26: 5, 27: 5, 28: 5,
+    23: 5, 24: 5, 25: 5, 26: 5, 27: 5, 28: 5, 29: 5,
 }
 
 SECTION_LABELS = [
-    "0  Открытие",
+    "0  Введение",
     "1  Токены",
     "2  Эмбеддинги",
     "3  Внимание",
@@ -1962,19 +1962,22 @@ def build_s27(p):
 
 
 def build_s28(p):
-    """Bridge to Lec 3 + Q&A — 4 concepts preview."""
+    """Bridge to Lec 3 — 4 concepts preview.
+    v1.6 (Phase 8.9): Q&A block at bottom removed — dedicated s29 slide replaces it.
+    Title simplified ('+ Q&A' removed). Grid centered vertically with extra breathing room.
+    """
     s = blank(p)
     slide_title(s, "Лекция 3:  «Агенты, RAG, API — как AI выходит за пределы чата»", size=24)
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
              text="Все 4 концепции надстраиваются над одним проходом inference",
              size=16, italic=True, color=MID)
 
-    # 2×2 grid — v1.3 taller (2.20→2.55, icon 0.85→1.10)
+    # 2×2 grid — v1.6 slightly taller (2.55→2.75) now that bottom Q&A block is gone
     grid_x = 0.55
-    grid_y = 1.95
+    grid_y = 2.10
     cell_w = 6.0
-    cell_h = 2.55
-    gap = 0.20
+    cell_h = 2.75
+    gap = 0.22
 
     concepts = [
         # (icon, title, sub, body, accent_gold)
@@ -2007,28 +2010,52 @@ def build_s28(p):
         # Icon — bigger 1.10
         icon_path = ASSETS / f"icons/{icon}.png"
         if icon_path.exists():
-            add_image(s, icon_path, x=x + 0.25, y=y + 0.30, w=1.10, h=1.10)
+            add_image(s, icon_path, x=x + 0.25, y=y + 0.35, w=1.10, h=1.10)
         # Title
-        text_box(s, x=x + 1.50, y=y + 0.25, w=cell_w - 1.65, h=0.60,
+        text_box(s, x=x + 1.50, y=y + 0.30, w=cell_w - 1.65, h=0.60,
                  text=title, size=21, bold=True, color=DEEP, line_spacing=1.15)
         # Subtitle
-        text_box(s, x=x + 1.50, y=y + 0.95, w=cell_w - 1.65, h=0.40,
+        text_box(s, x=x + 1.50, y=y + 1.00, w=cell_w - 1.65, h=0.40,
                  text=sub, size=14, italic=True, color=MID)
         # Body
-        text_box(s, x=x + 0.30, y=y + 1.55, w=cell_w - 0.55, h=0.95,
+        text_box(s, x=x + 0.30, y=y + 1.65, w=cell_w - 0.55, h=1.00,
                  text=body, size=16, color=DEEP, line_spacing=1.32)
 
-    # Q&A block bottom — v1.3 bigger
-    qa_y = 7.05
-    filled_rect(s, 0.55, qa_y, 12.3, 0.40, GOLD_TINT, stroke=GOLD, stroke_pt=2.0, radius=True, radius_adj=0.30)
-    text_box(s, x=0.85, y=qa_y + 0.03, w=2.0, h=0.35,
-             text="Q&A",
-             size=18, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=2.85, y=qa_y + 0.03, w=10.0, h=0.35,
-             text="До 5 минут на вопросы в зале. Дополнительные — на Семинар 2 или e-mail.",
-             size=13, color=DEEP, italic=True, anchor=MSO_ANCHOR.MIDDLE)
-
     speaker_notes(s, load_notes("s28"))
+
+
+def build_s29(p):
+    """Q&A — dedicated minimal final slide (v1.6, Phase 8.9).
+
+    Pattern mirrors Lec-1 s31: huge centered «Q&A» 140pt in DEEP, below it
+    «Спасибо за внимание!» 32pt in MID. Optional small reminder at bottom.
+    No footer, no roadmap-bar — visual quiet for open Q&A.
+    """
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+
+    # Huge centered Q&A — 140pt deep
+    text_box(s, x=0.55, y=2.30, w=12.25, h=2.40,
+             text="Q&A",
+             size=140, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.0)
+
+    # «Спасибо за внимание!» — 32pt below
+    text_box(s, x=0.55, y=4.85, w=12.25, h=0.80,
+             text="Спасибо за внимание!",
+             size=32, bold=False, color=MID,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.20)
+
+    # Small reminder at bottom — italic, light color
+    text_box(s, x=0.55, y=6.50, w=12.25, h=0.45,
+             text="Семинар 2 — через неделю.  Дополнительные вопросы — на e-mail.",
+             size=14, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.20)
+
+    speaker_notes(s, load_notes("s29"))
 
 
 # ============================================================
@@ -2254,14 +2281,13 @@ def build_s22a(p):
 
 
 # ============================================================
-# Build all 35 slides v1.5 (Phase 8.8):
-#   28 original − 1 removed (s11) + 4 dividers (s04a/s08a/s17a/s22a)
-#   + 1 map (s02a) + 3 new (s04b/s09a/s13a) = 35 slides.
+# Build all 36 slides v1.6 (Phase 8.9):
+#   35 v1.5 + 1 (s29 dedicated Q&A slide; Q&A merged at bottom of s28 removed).
 # ============================================================
 def main():
     p = setup_pres()
     builders = [
-        # Раздел 0 — Открытие
+        # Раздел 0 — Введение
         build_s01, build_s02, build_s02a, build_s03, build_s04,
         # Раздел 1 — Токенизация (divider + flow schema first)
         build_s04a, build_s04b, build_s05, build_s06, build_s07, build_s08,
@@ -2271,8 +2297,8 @@ def main():
         build_s13, build_s13a, build_s14, build_s15, build_s16, build_s17,
         # Раздел 4 — Сэмплинг (divider first)
         build_s17a, build_s18, build_s19, build_s20, build_s21, build_s22,
-        # Раздел 5 — Финал (divider first)
-        build_s22a, build_s23, build_s24, build_s25, build_s26, build_s27, build_s28,
+        # Раздел 5 — Финал (divider first; s29 Q&A new in v1.6)
+        build_s22a, build_s23, build_s24, build_s25, build_s26, build_s27, build_s28, build_s29,
     ]
     print(f"Building {len(builders)} slides…")
     # Map index → slide-id for log clarity
@@ -2282,9 +2308,9 @@ def main():
         "s08a", "s09", "s09a", "s10", "s12",
         "s13", "s13a", "s14", "s15", "s16", "s17",
         "s17a", "s18", "s19", "s20", "s21", "s22",
-        "s22a", "s23", "s24", "s25", "s26", "s27", "s28",
+        "s22a", "s23", "s24", "s25", "s26", "s27", "s28", "s29",
     ]
-    assert len(slide_ids) == len(builders) == 35, (
+    assert len(slide_ids) == len(builders) == 36, (
         f"Builder/id count mismatch: {len(builders)} builders, "
         f"{len(slide_ids)} ids")
     for i, fn in enumerate(builders):

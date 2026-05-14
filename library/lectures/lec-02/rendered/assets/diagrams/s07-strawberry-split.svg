@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500">
+<rect width="1000" height="500" fill="#FFFFFF"/>
+<text x="500" y="50" text-anchor="middle" font-family="Arial" font-size="22" font-weight="bold" fill="#21295C">strawberry в o200k_base (GPT-4o)</text>
+<text x="500" y="100" text-anchor="middle" font-family="Arial" font-size="15" font-style="italic" fill="#1C7293">10 букв — то, что видит человек:</text>
+<rect x="200" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="227.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">s</text>
+<rect x="260" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="287.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">t</text>
+<rect x="320" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="347.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">r</text>
+<rect x="380" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="407.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">a</text>
+<rect x="440" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="467.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">w</text>
+<rect x="500" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="527.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">b</text>
+<rect x="560" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="587.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">e</text>
+<rect x="620" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="647.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">r</text>
+<rect x="680" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="707.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">r</text>
+<rect x="740" y="120" width="55" height="55" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5" rx="6"/>
+<text x="767.5" y="158" text-anchor="middle" font-family="Courier New, monospace" font-size="26" font-weight="bold" fill="#21295C">y</text>
+<text x="500" y="220" text-anchor="middle" font-family="Arial" font-size="34" fill="#065A82">↓</text>
+<text x="500" y="270" text-anchor="middle" font-family="Arial" font-size="15" font-style="italic" fill="#1C7293">3 токена — то, что видит модель:</text>
+<rect x="200" y="290" width="120" height="70" fill="#065A82" rx="8"/>
+<text x="260.0" y="335" text-anchor="middle" font-family="Courier New, monospace" font-size="30" font-weight="bold" fill="#FFFFFF">st</text>
+<rect x="340" y="290" width="140" height="70" fill="#1C7293" rx="8"/>
+<text x="410.0" y="335" text-anchor="middle" font-family="Courier New, monospace" font-size="30" font-weight="bold" fill="#FFFFFF">raw</text>
+<rect x="500" y="290" width="200" height="70" fill="#028090" rx="8"/>
+<text x="600.0" y="335" text-anchor="middle" font-family="Courier New, monospace" font-size="30" font-weight="bold" fill="#FFFFFF">berry</text>
+<rect x="100" y="420" width="800" height="60" fill="#FEF5E0" stroke="#F0AB00" stroke-width="2" rx="8"/>
+<text x="500" y="458" text-anchor="middle" font-family="Arial" font-size="19" font-weight="bold" fill="#21295C">Модель видит 3 единицы — не 10 букв</text>
+</svg>

@@ -321,6 +321,27 @@ _Пока не обнаружено._
 - **Status:** active (workflow rule).
 - **First seen in:** #69 (full 29-slide deck Лекции 1, 2026-05-12). Обнаружено при iter-3 inspection s09 — на 110dpi казалось ОК, на 150dpi видна явная overflow проблема.
 
+### [#73-render-1] python-pptx `add_picture(width=W, height=H)` стрейчит изображение non-proportionally
+
+- **Tool:** `python-pptx` `slide.shapes.add_picture(path, x, y, width=W, height=H)`.
+- **Symptom:** When BOTH `width` AND `height` are passed, python-pptx stretches
+  the image to exactly `(W, H)` dimensions — non-proportional distortion.
+  Portraits become squashed landscapes; landscapes become elongated rectangles.
+  User-visible quality issue («иллюстрации сжаты непропрорционально»).
+- **Root cause:** by design in python-pptx — both dimensions are absolute, not
+  "fit-inside-box". To preserve aspect, caller must compute either width-only
+  or height-only based on image actual dimensions.
+- **Severity:** P1 (visible quality bug, easy to overlook in build scripts).
+- **Workaround:** Wrap `add_picture` in a helper that uses Pillow (PIL) to read
+  image dimensions, then:
+  - Compute `img_ratio = img_w / img_h` and `box_ratio = w / h`.
+  - If `img_ratio > box_ratio` → constrain by width, center vertically.
+  - Else → constrain by height, center horizontally.
+  - Pass ONLY the constraining dimension to `add_picture()`.
+  - Example: `library/lectures/lec-04/rendered/build_lec04.py:add_image()`.
+- **Status:** active (workaround standard).
+- **First seen in:** Лекция 4 Phase 8.6 surgical revision (2026-05-13, #73).
+
 ### [#69-svg-fallback] Литерал-SVG + rsvg-convert как fallback для diagrams когда mermaid не работает
 
 - **Tool:** `rsvg-convert` + ручной SVG.
@@ -355,4 +376,4 @@ _Пока не обнаружено._
 
 ---
 
-**Last update:** 2026-05-13 (Лекция 1 v3.x production — добавлены [#71-1] fork-now PowerPoint MCP, [#71-2] LibreOffice convert overhead, [#71-3] snapshots bloat P0).
+**Last update:** 2026-05-13 (Лекция 4 Phase 8.6 — добавлен [#73-render-1] python-pptx add_picture non-proportional stretch bug + Pillow-based workaround).

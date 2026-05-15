@@ -1,0 +1,489 @@
+# library/lectures/lec-04/deck.yaml
+#
+# Deck-структура Лекции 4 «AI в медицине и фармацевтике» (30 слайдов).
+#
+# Source: chapter v2 (status=reviewed, ~12,692 слов, commit 5c4b06c) +
+# plan v2 (USER GATE 0 approved with post-GATE-0 revisions).
+# Phase 5 multi-artifact pipeline — slides content alignment.
+# Issue #73 · Branch: issue-73-lec-04-medicine-production
+
+deck:
+  lecture_number: 4
+  title: "AI в медицине и фармацевтике"
+  audience: "студенты-инженеры 3 курса (универсальная, не медики)"
+  duration_min: 75
+  central_question: "Какие AI-обещания в медицине реально сбылись к 2026 году — и кто отвечает, когда AI-диагноз оказывается ошибочным?"
+  # Phase 8.8 (Fix 9): LO4 удалён — s19 был apply-based для micro-exercise.
+  # Теперь s19 = lecture content «AI как объяснитель» (LO2 + LO3), без
+  # student activity. Раздел «Микро-упражнение» отсутствует.
+  learning_outcomes: [LO1, LO2, LO3, LO8]
+  language: ru
+  status: draft
+  version: v3
+  source: chapter v2 (status=reviewed, ~12,692 слов)
+  plan: notes/lecture-4-review/plan-v2.md
+
+slides:
+  # ─── Раздел 0. Открытие + центральный вопрос (9 мин) ───
+  - id: s01
+    file: slides/s01-ice-breaker-chester-xray.md
+    type: live_demo
+    duration_min: 3
+    assertion: "AI ставит метку патологии на рентгене за ~3 секунды — локально в браузере, без облака. Это narrow CV, не ChatGPT."
+    learning_goal: "Открывающий hook: medical AI — работающий локальный инструмент, narrow CV"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.1 — Что AI делает в медицине сегодня"
+    references: [cohen-2019-chester, rajpurkar-2017-chexnet, wang-2017-cxr8]
+    visual:
+      pattern: external_demo
+      primary: "Live drag-and-drop Chester AI X-ray (mlmed.org/tools/xray/) — модель работает локально в браузере, выдаёт heatmap + probability scores для 18 патологий"
+      backup: assets/backup/chester-pneumonia-result.png
+    interaction: live_demo
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 0.1
+    assertion: "Лекция 4. AI в медицине и фармацевтике"
+    learning_goal: "Cover-слайд: title + meta"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Hero-cover: outline «04» крупно + title 36pt + дата + длительность в Ocean palette"
+
+  - id: s03
+    file: slides/s03-poll-questions.md
+    type: poll_reveal
+    duration_min: 1.5
+    assertion: "Сначала — ваша оценка, потом — данные"
+    learning_goal: "Активировать аудиторию опросом до показа цифр"
+    learning_outcomes: []
+    chapter_ref: "§0.2 — Опрос и оценка читателя"
+    references: []
+    visual:
+      pattern: poll_step1
+      primary: "3 question cards в Ocean rounded box: FDA-устройств / опыт AI в медицине / доверие AI vs врач"
+    interaction: poll
+    paired_with: s04
+
+  - id: s04
+    file: slides/s04-poll-reveal-fda-mosmed.md
+    type: poll_reveal
+    duration_min: 2
+    assertion: "AI в медицине — уже не «будущее», а production-инфраструктура: 1 451 FDA-устройств и 14 млн исследований mosmed.ai."
+    learning_goal: "Раскрыть FDA cumulative + mosmed operational metrics"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.2 — Опрос и оценка читателя"
+    references: [fda-aiml-list-2025, imaging-wire-2025, mos-ru-2025, remedium-2025]
+    visual:
+      pattern: chart
+      primary: "Bar chart FDA AI/ML devices 2015→2025 (рост к 1,451 cumulative) + info-card mosmed.ai operational (14M+, 74 региона, 70 services)"
+    paired_with: s03
+
+  - id: s05
+    file: slides/s05-central-question.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Какие AI-обещания в медицине сбылись к 2026 — и кто отвечает, когда AI-диагноз ошибочен?"
+    learning_goal: "Поставить центральный вопрос лекции + roadmap"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.3 — Рамка лекции + Центральный вопрос"
+    references: [markets-and-markets-2025, towards-healthcare-2025]
+    visual:
+      pattern: cover_distinct
+      primary: "Центральный вопрос крупно в Ocean rounded box + 4-point roadmap (Карта → Диагностика → Drug discovery → Этика)"
+
+  # ─── Section divider (1) ───
+  - id: s05b
+    file: slides/s05b-section1-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 1 — Карта AI в медицине"
+    learning_goal: "Visual divider — переход в первый раздел"
+    learning_outcomes: [LO1]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «1» + title + 1-фраза-фрейм + 7-card progress bar"
+
+  # ─── Раздел 1. Карта AI в медицине (7 мин) ───
+  - id: s06
+    file: slides/s06-four-type-matrix.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "AI в медицине — 4 разные индустрии, не один tools-set. Modality × Scope = design-driven taxonomy."
+    learning_goal: "4 типа AI-применений как mental model"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1 — Четыре типа AI-применений"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "2×2 matrix (modality × scope) с 4 примерами в ячейках: диагностика / population imaging / personalized / drug discovery + 4 иконки Lucide"
+
+  - id: s07
+    file: slides/s07-fda-growth-timeline.md
+    type: data_chart
+    duration_min: 2
+    assertion: "За 10 лет — от ~6 до 1 451 AI-устройств в FDA-list. Это инфраструктура, не футурология."
+    learning_goal: "Quantitative evidence — exponential growth FDA AI/ML adoption"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.2 — Масштаб: FDA-одобренные устройства и mosmed.ai"
+    references: [fda-aiml-list-2025, jama-network-open-2025, imaging-wire-2025]
+    visual:
+      pattern: timeline
+      primary: "Bar chart с timeline overlay 2015→2025 (рост к 1,451 cumulative), pivot 2022-2024 acceleration; caption «76% — радиология»"
+
+  - id: s08
+    file: slides/s08-medicine-instructive-case.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Если научиться оценивать AI в медицине — научишься оценивать AI везде. Высокие ставки + строгое регулирование + прозрачная operational scale."
+    learning_goal: "Зачем инженеру глубоко погружаться в medical AI"
+    learning_outcomes: [LO2]
+    chapter_ref: "§1.3 — Почему медицина — инструктивный кейс"
+    references: [eu-ai-act-2024-1689, fda-pccp-2024]
+    visual:
+      pattern: matrix
+      primary: "3-column icon-cards (alert-triangle / shield / coins) — 3 причины + photographic anchor «medical AI workflow»"
+
+  # ─── Section divider (2) ───
+  - id: s08a
+    file: slides/s08a-section2-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 2 — AI-диагностика как зеркало"
+    learning_goal: "Visual divider — переход в раздел диагностики"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «2» + title + 1-фраза-фрейм + 7-card progress bar"
+
+  # ─── Раздел 2. AI-диагностика как зеркало (14 мин) ───
+  - id: s09
+    file: slides/s09-cv-radiology-pipeline.md
+    type: process
+    duration_min: 2
+    assertion: "AI-диагностика — это computer vision-классификация: image → label, с confidence score. Это не LLM."
+    learning_goal: "Как технически работает CV-диагностика"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 — Как технически работает AI-диагностика"
+    references: [rajpurkar-2017-chexnet, selvaraju-2017-gradcam]
+    visual:
+      pattern: pipeline
+      primary: "4-stage pipeline (Input → Model → Output → Workflow) с RIGHT_ARROW + sample X-ray с heatmap справа"
+
+  - id: s10
+    file: slides/s10-sens-spec-prev-ppv.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Для медицинского AI «accuracy» недостаточна. Нужны 4 метрики: sensitivity, specificity, prevalence, PPV. Sens/spec не зависят от prevalence; PPV — зависит."
+    learning_goal: "Apply Bayes intuition к medical AI оценке"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§2.2 — Sensitivity, specificity, prevalence, PPV"
+    references: [rajpurkar-2017-chexnet]
+    visual:
+      pattern: matrix
+      primary: "2×2 confusion matrix (TP/FN/FP/TN с цветовыми маркерами) + 4-metric table с формулами + CheXNet sens 0.96, spec 0.93"
+
+  - id: s11
+    file: slides/s11-ai-vs-radiologist-3row.md
+    type: comparison
+    duration_min: 3
+    assertion: "Imaging — AI+врач > каждый alone (MASAI RCT). Reasoning — augmentation gap: врач+AI ≈ врач alone (Goh JAMA)."
+    learning_goal: "Сравнить 3 RCT/meta-analysis: imaging vs reasoning"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§2.3 — AI vs радиолог: imaging vs reasoning"
+    references: [liu-2019-lancet, masai-2024-lancet, hofvind-2025-lancet, goh-2024-jama]
+    visual:
+      pattern: matrix
+      primary: "3-row comparison (Liu 2019 / MASAI 2024-2025 / Goh 2024) с stacked bar charts; gold marker на MASAI 80.5% vs 73.8%"
+
+  - id: s12
+    file: slides/s12-mosmed-operational.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "mosmed.ai — конкретный пример сбывшегося обещания: 5 лет production, 14M+ исследований, 74 региона, 70 AI-сервисов."
+    learning_goal: "Российский operational case — federated AI-platform"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§2.4 — Российский кейс: mosmed.ai"
+    references: [mos-ru-2025, remedium-2025, healthcare-me-2026, webiomed-2026]
+    visual:
+      pattern: pipeline
+      primary: "Mini-pipeline (Снимок → mosmed.ai cloud → AI-анализ → результат врачу) + 6 info-cards verified operational metrics"
+
+  - id: s13
+    file: slides/s13-bias-cv-derm-pulseox.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "AI-диагностика хорошо работает в распределении обучения. Outside — может проваливаться unfairly. Bias = consequence design choices, не bug."
+    learning_goal: "2 bias case-cards (dermatology + pulse-ox); validation set должен покрывать deployment population"
+    learning_outcomes: [LO3]
+    chapter_ref: "§2.5 — Где AI-диагностика проваливается: bias в CV"
+    references: [daneshjou-2022-science-advances, adamson-2018-jama-derm, sjoding-2020-nejm]
+    visual:
+      pattern: matrix
+      primary: "2 bias case-cards в Ocean rounded box: dermatology skin tone (Daneshjou 2022) + pulse oximeter racial bias (Sjoding 2020 + FDA 2021)"
+
+  # ─── Section divider (3) ───
+  - id: s13a
+    file: slides/s13a-section3-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 3 — Разработка лекарств: обещания vs реальность"
+    learning_goal: "Visual divider — переход в раздел drug discovery"
+    learning_outcomes: [LO1, LO2, LO3]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «3» + title + 1-фраза-фрейм + 7-card progress bar"
+
+  # ─── Раздел 3. Drug discovery: обещания и реальность (14 мин) ───
+  - id: s14
+    file: slides/s14-drug-discovery-intro.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Мы прошли половину. AI-диагностика — обещание сбылось. Drug discovery — обещали 10× быстрее. Что реально на 2026?"
+    learning_goal: "Mid-lecture callback к central question"
+    learning_outcomes: []
+    chapter_ref: "§3.0 — методическая рамка для §3"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Central question крупно в Ocean rounded box + 3 anchor pointers (s12 mosmed ✓ / s17a Rentosertib ? / s17b DSP-1181 ?)"
+
+  - id: s15
+    file: slides/s15-drug-discovery-pipeline.md
+    type: process
+    duration_min: 2.5
+    assertion: "Drug discovery: 10-15 лет, $1-2 млрд, ~6.7% success. AI ускоряет stages 1-3 (discovery + preclinical); stages 4-5 (clinical) — биология."
+    learning_goal: "5-stage pipeline drug discovery + где AI помогает"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§3.1 — Pipeline drug discovery и где AI помогает"
+    references: [dimasi-2016-jhe, wouters-2020-jama, mullard-2024-nrdd]
+    visual:
+      pattern: pipeline
+      primary: "5-stage pipeline (Target → Hit → Lead → Preclinical → Clinical) с RIGHT_ARROW; AI-icons над stages 1-3, human-icon над stages 4-5"
+
+  - id: s16
+    file: slides/s16-alphafold-alphaproteo.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "AlphaFold предсказал 200M+ структур белков — решённая задача 50-летней давности. AlphaProteo проектирует binders de novo."
+    learning_goal: "AlphaFold/AlphaProteo concrete achievements + Нобель 2024"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§3.2 — AlphaFold 3 и AlphaProteo"
+    references: [jumper-2021-nature, abramson-2024-nature, watson-2024-alphaproteo, alphafold-db]
+    visual:
+      pattern: matrix
+      primary: "3 evidence-cards (200M+ structures / AlphaProteo 88% BHRF1 / AlphaFold 3 +50% PoseBusters) + AlphaFold 3D snapshot"
+
+  - id: s17a
+    file: slides/s17a-rentosertib-success.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Insilico Rentosertib — первый AI-designed drug с peer-reviewed positive Phase IIa (Nature Medicine, июнь 2025)."
+    learning_goal: "Drug discovery success case — verified peer-reviewed"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§3.3 — Insilico Rentosertib и российский контекст"
+    references: [insilico-nature-medicine-2025, pubmed-40461817, prnewswire-2024, madd-emnlp-2025, dima-icml-2025]
+    visual:
+      pattern: timeline
+      primary: "3-event timeline (2020-22 AI design → окт 2024 topline → июнь 2025 Nature Medicine) + result info-card +98.4 mL FVC"
+
+  - id: s17b
+    file: slides/s17b-dsp1181-reality-check.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "DSP-1181 (2020): «первый AI-designed drug в clinical trials». В 2022 — Phase 1 discontinued. AI ускорил design; clinical efficacy — отдельная задача."
+    learning_goal: "Drug discovery reality check — defensible balance"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§3.4 — DSP-1181: проверка реальностью"
+    references: [synapse-patsnap-dsp1181, sumitomo-2020-pr, cas-insights-2024, recursion-2024-pr]
+    visual:
+      pattern: timeline
+      primary: "3-event timeline (янв 2020 entry → 2022 discontinue → 2026 current=Discontinued); pivot 2022 ≥2× larger"
+
+  - id: s18
+    file: slides/s18-regulation-3-jurisdiction.md
+    type: comparison
+    duration_min: 2
+    assertion: "Medical AI = high-risk во всех 3 крупных юрисдикциях (FDA / EU / RF). Approaches отличаются процессами, не principles."
+    learning_goal: "3-jurisdiction regulation comparison + PCCP innovation"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "§3.5 — Регулирование AI в медицине"
+    references: [fda-pccp-2024, eu-ai-act-2024-1689, vniiimt-2024, webiomed-2026]
+    visual:
+      pattern: matrix
+      primary: "3-column condensed table (US/EU/RU) с ключевыми датами + PCCP pre/post contrast explicit"
+
+  # Phase 8.8 (Fix 9): s18a divider удалён — раздел «Микро-упражнение»
+  # больше не существует. s19 переезжает в Section 4 (Этика) как natural
+  # intro к LLM-границам в медицине.
+
+  # ─── Section divider (4) ───
+  - id: s19a
+    file: slides/s19a-section5-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 4 — AI как объяснитель и его границы. Этика."
+    learning_goal: "Visual divider — переход в раздел этики"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «4» + title + 1-фраза-фрейм + 6-card progress bar"
+
+  # ─── Раздел 4. AI как объяснитель и его границы. Этика. (15 мин) ───
+  - id: s19
+    file: slides/s19-micro-exercise-llm-explainer.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "AI как объяснитель — что меняется в обучении и работе врача."
+    learning_goal: "Понять, как LLM меняют workflow студента-медика и врача — паттерн explain-as-for-student-N и его границы"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§4.2 — AI как объяснитель: pattern и его границы"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "3-card layout: Паттерн explain-as-for + Что меняется + Caveat verify; gold-подсветка на caveat"
+    interaction: none
+
+  # ─── Раздел 4 продолжение. Границы, этика, ответственность ───
+  - id: s20
+    file: slides/s20-ethics-transition.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "В медицинском AI ставки максимальны. Что инженер должен знать про границы."
+    learning_goal: "Transition к ethics section — 3 темы next slides"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "§4.1 — Зачем инженеру думать про границы"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Stock photo medical team + 3 темы next 5 slides (bias / LLM anti-pattern / data security + responsibility)"
+
+  - id: s21
+    file: slides/s21-obermeyer-bias-deep.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Obermeyer 2019 (Science): commercial AI для 200M Americans systematically underestimated severity для black patients. Proxy «стоимость лечения» вместо «тяжесть болезни»."
+    learning_goal: "Deep-dive bias case с actionable engineer lesson"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "§4.3 — Obermeyer 2019: выбор метрики стал выбором политики"
+    references: [obermeyer-2019-science, berkeley-news-2019, stat-news-2019]
+    visual:
+      pattern: pipeline
+      primary: "3-box mechanism (Goal → Proxy used → Bias source) + result chart 26% more chronic illness + fix arrow «17.7% → 46.5% Black served»"
+
+  - id: s22
+    file: slides/s22-llm-antipatterns-tessa.md
+    type: assertion_visual
+    duration_min: 4
+    assertion: "LLM в медицине ≠ медицинский AI. 3 documented anti-pattern cases на 2025-2026."
+    learning_goal: "3 LLM anti-pattern cases: Tessa vendor accountability + adversarial 83% + 40M self-diagnosis"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "§4.4 — LLM-анти-паттерны в медицине"
+    references: [npr-2023-tessa, ai-incident-db-545, comm-medicine-2025, beckers-2025, gallup-2025]
+    visual:
+      pattern: matrix
+      primary: "3 case-cards (Tessa timeline March/May 2023 + Adversarial 83% + 40M self-diagnosis); NEDA framed как vendor accountability story"
+
+  - id: s23
+    file: slides/s23-change-healthcare-fz152.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Медицинские данные — самая защищаемая категория. И самая ценная для атакующих. Change Healthcare (Feb 2024): 190M человек, $2.457 млрд recovery cost."
+    learning_goal: "Medical data security + AI training datasets risk + ФЗ-152/ФЗ-23"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "§4.5 — Безопасность медицинских данных"
+    references: [uhg-2024, bleeping-computer-2024, hipaa-journal-2024, sweeney-2002]
+    visual:
+      pattern: matrix
+      primary: "News screenshot Change Healthcare + 5 info-cards (190M / $2.457B / 6 TB / multi-week / $22M ransom) + AI connection bridge mosmed.ai 18M+ images"
+
+  - id: s24
+    file: slides/s24-4actor-responsibility.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Врач ставит диагноз. AI подсказывает. Ответственность — на враче. Vendor + regulator + operator — обеспечивают системные условия."
+    learning_goal: "4-actor responsibility framework — ответ на central question"
+    learning_outcomes: [LO3, LO8]
+    chapter_ref: "§4.6 — Кто отвечает за AI-ошибку: 4-actor framework"
+    references: [price-2019-stanford, gerke-2020-elsevier, eu-ai-act-2024-1689]
+    visual:
+      pattern: quadrant
+      primary: "2×2 quadrant (technical control × legal liability) с 4 actor cards (Врач / Operator / Vendor / Regulator), каждая = 1-word role + 1-line responsibility; central line ниже"
+
+  # ─── Section divider (5) ───
+  - id: s24a
+    file: slides/s24a-section5-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 5 — Заключение"
+    learning_goal: "Visual divider — переход в заключение"
+    learning_outcomes: [LO1, LO2, LO3, LO8]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «5» + title + 1-фраза-фрейм + 6-card progress bar"
+
+  # ─── Раздел 5. Заключение (6 мин) ───
+  - id: s26
+    file: slides/s26-three-takeaways.md
+    type: takeaway
+    duration_min: 2
+    assertion: "Медицинский AI к 2026 — работающая инфраструктура. И вместе с этим — конкретная responsibility framework."
+    learning_goal: "3 takeaways — explicit LO1+LO2+LO3+LO8 framing для Lec 9"
+    learning_outcomes: [LO1, LO2, LO3, LO8]
+    chapter_ref: "§5.1 — Три главных вывода"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "3-card summary layout (Диагностика ✓ / Drug discovery частично / Ответственность на враче) + Lucide иконки (activity/flask-conical/users)"
+
+  - id: s27
+    file: slides/s27-closing-doctor-decides.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Врач ставит диагноз. AI подсказывает. Инженер делает так, чтобы врач мог по-настоящему решать."
+    learning_goal: "Closing emotional payoff — callback к central question"
+    learning_outcomes: [LO8]
+    chapter_ref: "§5.1 — закрывающая фраза"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Stock photo doctor + patient + большая closing-фраза в Ocean rounded box"
+
+  - id: s28
+    file: slides/s28-teaser-lecture6-agriculture.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Дальше — Коллоквиум 1 и Лекция 6 «AI в производстве и сельском хозяйстве». 3 принципа сегодня — input для черновика чек-листа на Лекции 9."
+    learning_goal: "Тизер Лекции 6 + Lec 9 LO8 forward reference + домашнее задание"
+    learning_outcomes: [LO8]
+    chapter_ref: "§5.2 — Что будет дальше: Коллоквиум 1 и Лекция 6"
+    references: []
+    visual:
+      pattern: timeline
+      primary: "Mini course-map (4/14 progress bar) + Лекция 6 teaser (Cognitive Agro Pilot 1500+ машин, +30-40%) + Lec 9 arrow"
+
+  - id: s29
+    file: slides/s29-qa.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Q&A"
+    learning_goal: "Open Q&A с 3 backup-prompts"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Большой «Q&A?» + small subdued course-contact card + 3 backup prompts видимые"

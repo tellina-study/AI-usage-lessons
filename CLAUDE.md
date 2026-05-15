@@ -71,6 +71,32 @@ Issues and tasks are tracked at: `https://github.com/orgs/tellina-study/projects
 
 ---
 
+## AI-Failure & Judgment Content Rule (ENFORCED — фундаментальное)
+
+**Миссия курса.** Курс учит студентов **когда можно и нужно применять ИИ, а когда — нет**: генерировать идеи и **говорить «нет» неправильным**. Цель — критическое суждение и осознанный выбор инструмента, а не пропаганда ИИ. Это правило — **одно из фундаментальных**, наравне с Mandatory Git Rules.
+
+**Правило.** В **каждой** лекции **≥30%** содержания описывает хотя бы одно из:
+- документированные **провалы ИИ** + явно сформулированный **выученный урок**;
+- разбор **фундаментальных ограничений / рисков** подхода;
+- явные **критерии «здесь ИИ не нужен / не применим»**;
+- **сравнение с более правильным альтернативным инструментом** (не-ИИ или другой класс ИИ/метод).
+
+**Измерение — холистическое, strict-in.** Доля **strict-in ≥30%** должна быть видна **в каждом из 3 артефактов** (`chapter.md`, slides/deck, `speech.md`) отдельно, не сконцентрирована в одном. Метрика — доля слов / слайдов / минут. **Засчитывается только полностью in-bucket контент**: смешанные / частично-bucket блоки, общие оговорки и «риск мимоходом» **не учитываются** (partial → как out при подсчёте %). Решение #78 (2026-05-15): порог именно strict-in, не weighted.
+
+**Что НЕ засчитывается:** общие дисклеймеры, однострочные оговорки, «ИИ иногда ошибается» без урока / критерия / альтернативы; «магическая пилюля» с приставкой «но будьте осторожны».
+
+**Counter-check (mandatory):** лекция < 30% **ИЛИ** доля сконцентрирована в одном артефакте → verdict **REVISE** (не APPROVE). Это не «polish» — это структурный gap.
+
+**Enforcement points:**
+- План лекции (Phase 1) выделяет ≥30% бюджета на failure/judgment-контент.
+- `methodology-critic` проверяет долю + холистичность на Phase 1/3/7/10; <30% или single-artifact concentration → REVISE.
+- USER GATE A/B/C: pre-gate walkthrough включает failure-share check.
+- `tools/lecture-production/README.md` §3.6 + `templates/lecture-outline.md` содержат обязательный блок «Провалы, ограничения и альтернативы».
+
+**Почему ENFORCED:** инженер, умеющий только запускать ИИ, опасен; ценность специалиста — знать границы и отвергать неподходящие применения. Лекция без провалов учит доверию, а не суждению.
+
+---
+
 ## Orchestration Rule (ENFORCED)
 
 Claude Code acts as **planner and orchestrator only**. It MUST NOT make implementation changes directly. ALL implementation work MUST be delegated to subagents (Agent tool with appropriate prompts).
@@ -192,6 +218,8 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 | Speaker notes как layout description («слева donut, справа bar») | Notes — readable student text 150-300 слов, derived from chapter+speech |
 | Critic catch-all APPROVE-WITH-MINOR | 4-level verdict scale: APPROVE-CLEAN / APPROVE-WITH-POLISH / REVISE / REJECT |
 | Term drift без cascade tracking | Glossary lock после chapter approval; cascade-of-changes grep при renames |
+| Лекция < 30% контента про провалы/ограничения/альтернативы ИЛИ доля в одном артефакте | ≥30% holistic (chapter+slides+speech), иначе verdict REVISE (см. AI-Failure & Judgment Content Rule) |
+| «Магическая пилюля»: ИИ-восторг без выученных уроков и границ применимости | Каждая лекция учит говорить «нет» неподходящему ИИ; ≥30% — провалы/ограничения/альтернативы |
 
 ---
 

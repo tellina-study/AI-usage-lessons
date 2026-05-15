@@ -165,6 +165,24 @@ library/lectures/lec-NN/
 
 ---
 
+## 3.6 AI-Failure & Judgment Content Check (ENFORCED ≥30%)
+
+**Источник правила:** `CLAUDE.md` § «AI-Failure & Judgment Content Rule» (single source of truth — здесь только enforcement-механика, текст правила не дублировать).
+
+Каждая лекция: **strict-in ≥30%** содержания — провалы ИИ + выученные уроки, фундаментальные ограничения/риски, явные критерии «здесь ИИ не нужен», или сравнение с более правильным альтернативным инструментом. Измерение **холистическое + strict-in**: доля ≥30% видна **в каждом из 3 артефактов** (chapter / slides / speech) отдельно. Засчитывается только **полностью** in-bucket контент — частично-bucket блоки и общие оговорки идут как out (решение #78, 2026-05-15: strict-in, не weighted).
+
+| Где проверяется | Кто | Триггер провала |
+|---|---|---|
+| Phase 1 — plan | `methodology-critic` + orchestrator | план не выделяет ≥30% бюджета на failure/judgment → REVISE плана |
+| Phase 3 — chapter | `methodology-critic` | <30% слов chapter в bucket'е → REVISE |
+| Phase 7 — slides | `methodology-critic` | <30% слайдов/минут в bucket'е → REVISE |
+| Phase 10 — speech | `methodology-critic` | <30% речи в bucket'е, либо доля только в chapter → REVISE |
+| GATE A/B/C | orchestrator (`/pre-user-gate`) | failure-share check не пройден → NOT present GATE |
+
+**Не засчитывается:** общие дисклеймеры, однострочные оговорки без урока/критерия/альтернативы, «магическая пилюля + будьте осторожны». Counter-check: <30% или single-artifact concentration = структурный gap (REVISE), не polish.
+
+---
+
 ## 4. Роли всех агентов (8 total)
 
 ### Производители (writers / builders)

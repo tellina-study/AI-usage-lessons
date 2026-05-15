@@ -93,6 +93,8 @@ Issues and tasks are tracked at: `https://github.com/orgs/tellina-study/projects
 - USER GATE A/B/C: pre-gate walkthrough включает failure-share check.
 - `tools/lecture-production/README.md` §3.6 + `templates/lecture-outline.md` содержат обязательный блок «Провалы, ограничения и альтернативы».
 
+**Owner waiver (только вводные L1–L3).** Для лекций **L1–L3** (introductory по curriculum-mapping) владелец курса может **явным документированным решением** снять требование strict-in ≥30%. Waiver обязан быть: (1) явным, не молчаливым; (2) записанным в реестре `tools/lecture-production/README.md` §3.6 со ссылкой на issue. Без записанного waiver правило применяется. Для **L4–L17 waiver недоступен** — strict-in ≥30% обязательно. Решение #82 (2026-05-15).
+
 **Почему ENFORCED:** инженер, умеющий только запускать ИИ, опасен; ценность специалиста — знать границы и отвергать неподходящие применения. Лекция без провалов учит доверию, а не суждению.
 
 ---

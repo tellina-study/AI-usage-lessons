@@ -181,6 +181,15 @@ library/lectures/lec-NN/
 
 **Не засчитывается:** общие дисклеймеры, однострочные оговорки без урока/критерия/альтернативы, «магическая пилюля + будьте осторожны». Counter-check: <30% или single-artifact concentration = структурный gap (REVISE), не polish.
 
+### Owner waiver — реестр (только L1–L3, решение #82)
+
+Для вводных лекций **L1–L3** владелец может явным решением снять ≥30%. Waiver действует **только если записан в таблице ниже** со ссылкой на issue. `methodology-critic` для L1–L3 с записанным waiver: strict-in <30% → informational note «WAIVED», НЕ P0/REVISE. **L4–L17 — waiver недоступен.**
+
+| Лекция | Класс | Waiver | Issue | Дата |
+|---|---|---|---|---|
+| Лекция 1 | introductory (L1–L3) | ✅ granted (owner) | #82 (закрыл #80) | 2026-05-15 |
+| Лекция 2 | introductory (L1–L3) | ✅ granted (owner) | #82 (закрыл #81) | 2026-05-15 |
+
 ---
 
 ## 4. Роли всех агентов (8 total)

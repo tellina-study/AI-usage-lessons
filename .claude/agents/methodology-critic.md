@@ -78,6 +78,8 @@ Run automated grep checks against артефакт за известные anti-
 2. Помечай каждый блок: in-bucket / out / partial. **Официальная метрика = strict-in: только полностью in-bucket блоки.** Partial и общие оговорки идут как **out** при подсчёте % (можно отметить partial-upside отдельной строкой, но в порог НЕ включать). Считай долю (слова для chapter, слайды/минуты для slides/speech).
 3. Оцени **холистичность**: strict-in доля ≥30% должна быть в каждом проверяемом артефакте отдельно, не «вся в одной главе про этику».
 
+**Owner waiver (L1–L3, решение #82):** если лекция ∈ **L1–L3** И в реестре `tools/lecture-production/README.md` §3.6 для неё записан owner-waiver со ссылкой на issue — strict-in <30% фиксируй как **informational note «WAIVED by owner #NN»**, НЕ как P0/REVISE. Для **L4–L17 waiver неприменим** (всегда P0 при <30%). Без записи в реестре — правило применяется как обычно.
+
 **Severity:**
 - strict-in доля < 30% в артефакте → **P0** «Failure-content gap — структурный, не polish» (DoD fail).
 - Доля ≥ 30%, но сконцентрирована в 1 секции/разделе (нет распределения по лекции) → **P1** «Single-cluster concentration».

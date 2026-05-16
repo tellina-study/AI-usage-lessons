@@ -389,3 +389,69 @@ case-refs в notes, deck.yaml split, сторителлинг-проход. v2-�
 
 VERDICT v3: ACCEPT — 36 слайдов, s01–s30 НЕ перенумерованы, палитра/
 gold/motif соблюдены, 0 extras сверх plan §4. Handed to orchestrator.
+
+---
+
+## v3→v3.1: s14 dedupe (P1-1 из v3 SYNTHESIS, точечно — ТОЛЬКО s14)
+
+**Контекст.** v3 вынес определение fine-tuning на новый s13b (ПЕРЕД
+s14). presentation-critic v3 P1-1: видимое тело s14 + 1-й абзац notes
+всё ещё несли почти идентичный inline-парафраз определения → back-to-
+back дубль с s13b и противоречие deck-part2.yaml note «s14 inline-define
+больше НЕ дублируется». Причина: s14-md/build не обновили под решение
+v3. deck-part2.yaml note s14 (строка 49) уже корректна — НЕ трогали.
+
+**Что изменено (только s14):**
+- `build_v3.py` build_s14: текст subtitle-бокса (геометрия x/y/w/h
+  0.55/1.16/12.25/0.78 НЕ менялась) — было дубль-определение «доп.
+  обучение готовой модели на своих данных, меняются веса. В Л1 — тип
+  использования; здесь — архитектурный выбор…» → стало опора на s13b +
+  hook: «Fine-tuning (определение — предыдущий слайд) меняет сами веса.
+  Среди инженеров ходит: «в 2026 он умер — всё решает RAG». Это
+  неточно — он не умер, а сузился.»
+- `slides/s14-*.md` Body: тот же дубль-define заменён на ту же опору-
+  на-s13b строку (видимый слой синхронизирован с build).
+- `slides/s14-*.md` Speaker notes 1-й абзац: убрано повторное
+  определение FT (verbatim с s13b); начинается с опоры на s13b
+  («На предыдущем слайде мы зафиксировали определение…») и сразу к
+  сути «почему сузился» (знание → RAG, поведение → FT). Derived из
+  chapter §3.1 [for-slide-s14] абз.1-2 (book-first), без новых фактов.
+  Слов в notes: 292 (orig) → 300 (≤300 ceiling соблюдён, в [150,300]);
+  абз.1: 97 → 105 слов; абз.2-3 не трогали.
+
+### Iter 1 — s14 (P1-1 dedupe)
+- (a) inspected: snapshots/s14.png (page 17, 150dpi) — subtitle-строка
+  vs s13b subtitle (pptx text extract обоих слайдов).
+- (b) changed: subtitle-текст build_s14 + Body md + notes абз.1.
+- (c) checklist: dedupe vs s13b — PASS (s13b = «продолжение обучения
+  готовой модели…», s14 = «определение — предыдущий слайд… он
+  сузился»; back-to-back парафраз устранён). assertion_visual: motif
+  Ocean box обе зоны PASS, gold callout ≥1× PASS, палитра 0 off PASS.
+  Регрессия: 35/36 PNG byte-identical к committed (md5), CHANGED=[s14]
+  только; s13b byte-identical (не задет).
+
+### Iter 2 — s14 Projector Readability (50% zoom)
+- (a) inspected: /tmp/s14_50pct.png (1000×563, row-5 симуляция).
+- (b) changed: ничего (проверка).
+- (c) Projector 50%: PASS — title/subtitle/zone-headers/gold callout
+  читаемы; subtitle wrap = 2 строки (как было), 2-зона стартует с
+  locked y=2.08 → нет floating/thin gap; visual mass balance L/R равны.
+
+### Iter 3 — s14 5-Second Test (final accept gate)
+- (a) inspected: snapshots/s14.png overview.
+- (b) changed: ничего (gate).
+- (c) 5-sec: PASS — main message read = «FT не умер, сузился: знание
+  → RAG, поведение остаётся за FT» == assertion YAML «Fine-tuning не
+  "умер" — он сузился: … поведение/…, НЕ знания». Match.
+- Verdict: ACCEPT.
+
+**Подтверждение v3.1:** изменён ТОЛЬКО s14 (35/36 PNG byte-identical);
+дубль с s13b устранён (видимый слой + notes); notes 300 слов book-first
+(≤300 ceiling, no new facts); 0 регрессий палитра/gold/motif; 0
+forbidden-добавлений; deck.yaml/deck-part2.yaml/title s14 НЕ менялись;
+iter count = 3 (min соблюдён, layout не менялся — текст в существующем
+боксе). Файлы: build_v3.py, slides/s14-*.md, lec-03.pptx, lec-03.pdf
+(оба перегенерены из единого build, 36 слайдов), snapshots/s14.png.
+
+VERDICT v3.1: ACCEPT — точечный s14 dedupe, 0 collateral. Handed to
+orchestrator.

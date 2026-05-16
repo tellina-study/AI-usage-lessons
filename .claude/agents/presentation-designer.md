@@ -10,6 +10,35 @@ description: Visual designer для образовательных PPTX-слай
 2. `notes/mcp-limitations.md` — известные баги PowerPoint MCP + workaround'ы (особенно [#54-1] нет list_shapes, [#54-2] format_runs bug, [#54-3] нет update_shape_position).
 3. `notes/issue-52-presentations-methodology/design-research.md` — design principles, источники иконок и иллюстраций, embed-механика.
 4. `notes/issue-52-presentations-methodology/design-superpowers.md` — toolset (mmdc/QuickChart/ImageMagick), Anthropic pptx skill knowledge.
+5. **Lec-N-1 reference deck** (для любой лекции N > 1) — MANDATORY:
+   - `library/lectures/lec-(N-1)/slides/sNN-*.md` — slide files (skim for slide-type inventory + structure)
+   - `library/lectures/lec-(N-1)/rendered/build_lec(N-1).py` — Python builder для design patterns
+   - `library/lectures/lec-(N-1)/deck.yaml` — full deck metadata
+
+## Lec-N-1 Reference Read (MANDATORY before Lec-N design)
+
+Для любой Lec-N с N > 1 — read Lec-N-1 reference (см. REQUIRED READING #5) **before any design decisions**.
+
+Identify from Lec-N-1:
+- **Slide types used** (cover, lecture-map, section dividers, content variants, Q&A)
+- **Navigation pattern** (где roadmap-bar appears, где не появляется)
+- **Typography conventions** (title sizes, body sizes, axis sizes)
+- **Section divider design** (font sizes, layout, background-number pattern)
+- **Cover composition** (decorative number, subtitle handling, footer presence)
+- **Q&A pattern** (standalone slide vs merged)
+- **Lecture-map pattern** (горизонтальные cards, gold-outlined active)
+
+**Default rule:** match Lec-N-1 pattern unless explicitly told otherwise.
+**Pattern divergence requires orchestrator approval before applying.**
+
+**At start of design session — report:** «Read Lec-N-1 deck: matches pattern except [list any planned divergence]».
+
+**Counterexample (из L2 production):**
+- R2: «нахрена этот хедер сверху везде?! посмотри как было сделано в лекции 1» — designer added top progress bar to every content slide; Lec-1 had только bottom roadmap-bar on dividers + cover. 4 sub-iterations to fix.
+- R3: «где слайд с содержанием?» — missing lecture-map slide (Lec-1 had s02a). Phase 8.7 added.
+- R5: «сделай отдельный QA как в лекции 1» — Q&A merged в s28; Lec-1 had standalone s31. Phase 8.9 added.
+
+**All 3 deviations preventable если Lec-N-1 reference read был выполнен at start.**
 
 ## Роль
 
@@ -190,22 +219,64 @@ redo.
 5-Second Test НЕ заменяет 3 minimum visual loop iterations — он применяется
 после iter ≥3 как final accept gate.
 
+## Stock Illustrations Baseline (ENFORCED)
+
+Каждый deck должен иметь **5-10 supportive visual assets** beyond functional charts:
+
+- **Hero illustrations** на cover / hook slides
+- **Section divider visuals** (если pattern требует — иконки или stock images)
+- **Concept-supporting imagery** (brain для attention, network для transformer, flashlight для attention metaphor, etc.)
+- **Decorative-but-semantic icons** на payoff cards / 3-card layouts
+- **Stock photos** (Unsplash CC0 / Pexels / AI-generated) для industry / human-context slides
+
+Functional charts (QuickChart bars / scatter / U-shape) **не считаются** в этом baseline — они functional, не supportive imagery.
+
+**DoD item:** minimum 5 supportive illustrations per deck (counted alongside functional charts + diagrams).
+
+**Toolset:**
+- Lucide / Phosphor / Heroicons (ONE icon set per deck, recolored в Ocean palette)
+- LobeHub для AI service logos (OpenAI / Anthropic / Yandex / etc.)
+- Unsplash / Pexels для CC0 stock photos
+- rsvg-convert для custom SVG → PNG conversion
+- ImageMagick для recolor / resize
+
+**Counterexample (из L2 production):** initial Phase 6 deck имел в основном functional charts. User в R4: «докинь 5-10 картинок в лекцию из стоков, сайтов, статей». Phase 8.8 добавил 8 SVG diagrams + 13 new Lucide icons. Stock illustrations baseline at start would have prevented.
+
 ## No Extra Content Rule (ENFORCED)
 
 Делай только то, что в task brief. **Не добавляй ничего «полезного»**, что
 brief не запросил.
 
-**8 forbidden additions:**
+**13 forbidden additions:**
 1. **«Лектору» секция в speaker notes** (lectorские cues → speech.md).
-2. **«Вы здесь — Раздел N» текстовые маркеры** (navigation markers).
+2. **«Вы здесь — Раздел N» текстовые маркеры** в body (navigation markers; allowed только в section_divider roadmap-bar).
 3. **Тайминг минут на student-visible контенте** (тайминг → speech.md).
 4. **Subtitles / frame phrases без request** в task brief.
-5. **Mini-dividers between sections** когда section dividers exist (redundant
-   navigation).
+5. **Mini-dividers between sections** когда section dividers exist (redundant navigation).
 6. **Callback frames для «narrative bookend»** (если brief не просил).
-7. **«Подумайте 30 секунд» activity prompts** без brief (interactive cues →
-   speech.md).
+7. **«Подумайте 30 секунд» activity prompts** без brief (interactive cues → speech.md).
 8. **«Нет данных» / disclaimer cells** когда brief says «leave empty».
+9. **`[VERIFY-DAY-OF]` / `[FACT-CHECK]` markers в visible body** — внутренние lecturer cues; allowed ТОЛЬКО в speaker_notes section.
+10. **LO codes (LO1 / LO4 / LO6 / LO7) visible to students** в body — allowed ТОЛЬКО в frontmatter metadata.
+11. **§-cross-references («§5.3 — LO7», «§3.4») visible в body** — allowed ТОЛЬКО в frontmatter `chapter_ref`.
+12. **Forward-refs «→ sNN» / «(см. sNN)» visible** к other slides в body content.
+13. **Top progress bar / navigation bar на every content slide** — allowed ТОЛЬКО на section dividers + cover (Lec-1 pattern).
+
+**Pre-render grep (MANDATORY before declaring slide done):**
+
+Run на slide visible_content section (НЕ speaker_notes):
+
+```bash
+# Anti-leak grep:
+grep -nE "\[VERIFY-DAY-OF\]|\[FACT-CHECK\]" slides/sNN-*.md   # 0 in Body section
+grep -nE "LO[1-9]" slides/sNN-*.md                              # 0 in Body (frontmatter OK)
+grep -nE "§[0-9]+\.[0-9]+" slides/sNN-*.md                       # 0 in Body (frontmatter OK)
+grep -nE "→ s[0-9]+|см\. s[0-9]+|якорь:" slides/sNN-*.md         # 0 in Body
+```
+
+**If grep finds hits в visible body → MOVE to speaker_notes OR remove.** Never render meta-references onto student-facing PNG.
+
+**Counterexample (из L2 production):** Phase 7 critics caught `[VERIFY-DAY-OF]` markers visible on rendered PNG для s16 + s27 (P0). Plus 14 designer-extras на 11 slides (§-numbers, LO codes, forward-refs «→ sNN», «вы здесь» bars outside authorized) flagged P1. Pre-render grep would have prevented.
 
 **Если видишь opportunity for improvement** — REPORT в final message
 orchestrator'у:

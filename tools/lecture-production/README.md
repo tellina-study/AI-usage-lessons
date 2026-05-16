@@ -254,6 +254,89 @@ library/lectures/lec-NN/
 6. ❌ **Local audience binding** («инженер ИУ6») в chapter — она универсальная для переиспользования.
 7. ❌ **Skip USER GATE** — каждый gate explicit.
 8. ❌ **Single-pass без critic'а** — каждый артефакт должен пройти ≥1 critic перед финализацией.
+9. ❌ **Lec-N-1 pattern divergence без explicit approval** (R2-R5 L2 production all stem from this).
+10. ❌ **Hook outdated empirical test** (strawberry-type when 2026 models pass) — use 2026-evergreen.
+11. ❌ **Missing fundamental concepts** (attention matrix, embedding space, end-to-end flow) — Missing-Fundamentals check.
+12. ❌ **Artifacts only in temp worktree at GATE** — sync to main repo before opening.
+13. ❌ **Branch contention from parallel session** — worktree isolation для multi-lecture parallel.
+14. ❌ **Per-artifact spawns для polish** (separate designer + writer per phase) — use single batched revision agent.
+
+---
+
+## 8. Multi-Lecture Parallel Production Policy (ENFORCED после L2 lessons)
+
+When starting Lec-N production while parallel session (Lec-N-1 или Lec-N+k) активна:
+
+### Pre-conditions
+- Identify parallel sessions: `git worktree list` shows other lectures in production
+- Decide: same-session sequential ИЛИ separate worktree
+
+### Worktree isolation (RECOMMENDED для parallel)
+
+```bash
+git worktree add --detach /tmp/lec-NN-wt <base-commit>
+cd /tmp/lec-NN-wt && git checkout -b phase-X-Y
+```
+
+**All subsequent agent spawns:** include explicit `cd /tmp/lec-NN-wt FIRST` в prompt. Agent должен verify `git branch --show-current` returns `phase-X-Y`. If branch changes mid-session → STOP, report (don't recover).
+
+### Branch ref management
+
+After phase commits в worktree → `git update-ref refs/heads/issue-NN-lec-NN <commit-sha>` from main repo. This propagates branch HEAD без requiring main worktree checkout (avoids contention с parallel session).
+
+### Pre-USER-GATE artifacts sync (MANDATORY)
+
+Before opening **any** USER GATE — copy artifacts из worktree to main repo:
+```bash
+cp /tmp/lec-NN-wt/library/lectures/lec-NN/chapter.md /home/levko/AI-usage-lessons/library/lectures/lec-NN/
+cp /tmp/lec-NN-wt/library/lectures/lec-NN/speech.md /home/levko/AI-usage-lessons/library/lectures/lec-NN/
+cp /tmp/lec-NN-wt/library/lectures/lec-NN/deck.yaml /home/levko/AI-usage-lessons/library/lectures/lec-NN/
+cp /tmp/lec-NN-wt/library/lectures/lec-NN/slides/*.md /home/levko/AI-usage-lessons/library/lectures/lec-NN/slides/
+cp /tmp/lec-NN-wt/library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf,build*.py,iteration-log.md} /home/levko/AI-usage-lessons/library/lectures/lec-NN/rendered/
+cp /tmp/lec-NN-wt/library/lectures/lec-NN/rendered/snapshots/*.png /home/levko/AI-usage-lessons/library/lectures/lec-NN/rendered/snapshots/
+```
+
+**Verify before GATE opens:**
+```bash
+ls -la /home/levko/AI-usage-lessons/library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}
+```
+
+If missing → STOP, do NOT open GATE. (Memory rule: `feedback_pre_gate_render_artifacts.md`.)
+
+### Final merge
+
+After USER GATE C approval:
+```bash
+git push origin refs/heads/issue-NN-lec-NN:refs/heads/issue-NN-lec-NN
+gh pr create --base main --head issue-NN-lec-NN --title ...
+gh pr merge <PR#> --merge --delete-branch
+```
+
+### Worktree cleanup
+
+```bash
+git worktree remove /tmp/lec-NN-wt --force
+```
+
+---
+
+## 9. Polish Round Pattern (после Phase 7 OR post-GATE feedback)
+
+**Anti-pattern:** spawning separate designer/writer per-artifact для каждого feedback round (Lec-2 Phase 8.5 / 8.6 / 8.7 / 8.8 / 8.9 — 5 sub-iterations).
+
+**Recommended pattern (proven Phase 11 efficient):** single batched revision agent doing 3-artifact touches:
+
+- **book-editor** для chapter-heavy revisions (text content + chapter cross-refs)
+- **presentation-designer** для slide-heavy revisions (visual + structural + deck.yaml)
+- **speech-writer** для cross-artifact polish (speech + minor chapter/slide touches)
+
+Brief должен включать:
+- All critic reports (paths)
+- Synthesis с prioritized fixes
+- 3-artifact touch list
+- Single commit message
+
+**Phase 11 demonstrated:** 1 spawn × 40 min closed 6/6 P1 + 9/16 P2 across chapter + slides + speech. Estimated 5-10× more efficient than per-artifact spawns.
 
 ---
 

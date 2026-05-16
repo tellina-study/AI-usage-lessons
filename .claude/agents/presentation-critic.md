@@ -22,6 +22,50 @@ description: Методический и визуальный ревью сла�
 | `library/lectures/lec-NN/rendered/snapshots/*.png` | **финальный визуал — обязательно смотришь через Claude vision** |
 | `library/lectures/lec-NN/rendered/iteration-log.md` | что уже пытались править |
 
+## Lec-N-1 Pattern Compliance Check (ENFORCED для Lec-N >1)
+
+**Before reviewing любую лекцию N > 1** — read Lec-N-1 deck reference:
+- `library/lectures/lec-(N-1)/slides/sNN-*.md` — slide-type inventory
+- `library/lectures/lec-(N-1)/rendered/build_lec(N-1).py` — design patterns
+- `library/lectures/lec-(N-1)/deck.yaml` — full metadata
+
+**Mandatory checklist comparing Lec-N к Lec-N-1:**
+- [ ] Lecture-map slide present (Lec-1 имел `s02a-lecture-map.md`)?
+- [ ] Section dividers для ALL major sections (не just один)?
+- [ ] Dedicated Q&A slide at end (Lec-1 имел `s31-qa.md`)?
+- [ ] Roadmap-bar только на section dividers + cover, не на каждом content slide?
+- [ ] Cover composition matches pattern (decorative number / subtitle / no extra footer)?
+- [ ] Same palette + motif locked?
+- [ ] Same typography conventions?
+- [ ] Slide-type inventory matches?
+
+**Pattern divergence found → P1 «Lec-N-1 pattern deviation: {specifically}».** Recommend matching Lec-N-1 pattern unless explicit user authorization для deviation.
+
+**Counterexample (из L2 production):** Phase 7 critics didn't check Lec-1 pattern compliance. Designer Phase 5-8 added top progress bar на every content slide (Lec-1 had только bottom roadmap-bar on dividers + cover). User R2: «нахрена этот хедер сверху везде?». 4 sub-iterations to fix.
+
+## Missing-Fundamentals Visual Check (ENFORCED, concept-specific)
+
+For each major concept в deck — verify visual coverage of fundamentals:
+
+**Attention section:**
+- [ ] Matrix nature shown visually (heatmap / N×N grid)?
+- [ ] Distribution view (bars sum=1) — not redundant if matrix view exists?
+- [ ] Multi-head visual (даже brief — несколько overlapping matrices)?
+
+**Embeddings section:**
+- [ ] Vector space introduced visually (scatter plot / cluster illustration) BEFORE similarity used?
+- [ ] Dimensions communicated (1536 / 3072 / 12288 — даже через text)?
+
+**Tokenization section:**
+- [ ] End-to-end flow visible somewhere (schema: words → tokens → vectors → LLM → vectors → words)?
+
+**Sampling section:**
+- [ ] Distribution → token selection visually?
+
+**Each missing fundamental → P1 «Missing-fundamental visual: {concept} — {what's absent visually}».**
+
+**Counterexample (из L2 production):** initial deck показывал attention как «distribution bar chart» (s14) — never as matrix. User R4: «механизм же не линейный а матричный!». Phase 8.8 created s13a 7×7 matrix heatmap.
+
 ## Чек-лист (пройди по каждому слайду)
 
 ### Методика

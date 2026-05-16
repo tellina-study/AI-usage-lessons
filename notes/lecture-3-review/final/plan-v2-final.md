@@ -19,6 +19,11 @@
 - [reader-P1] fine-tuning — gap пререквизита закрыт: inline-define в s14 (1 предложение) + glossary.
 - Hook — **открытый вопрос USER GATE 0** (Air Canada vs $4,200 loop); рекомендация — Air Canada.
 
+**USER GATE 0 — РЕШЕНИЯ ВЛАДЕЛЬЦА (2026-05-16, зафиксировано):**
+- **Q1 Hook = Air Canada** (s01). $4,200-loop остаётся в s23.
+- **Q2 Глубина chapter = 22k+ слов, БЕЗ верхней границы** (максимальный референс). **Явное документированное owner-решение:** red-flag «>15k слов» из `tools/lecture-production/README.md` §6 СНЯТ для `lec-03/chapter.md` (governance escape-hatch, см. `notes/decisions.md` 2026-05-16). Глава ОБЯЗАНА быть разбита на части (Document Size Limit 600 строк, waiver недоступен) — `chapter.md` (индекс+§0–§2) + `chapter-part2.md` (§3–§5) с двусторонними кросс-ссылками.
+- **Q3 plan-v2-final ОДОБРЕН** → Phase 2 chapter draft.
+
 ---
 
 ## 1. Контекст и зависимости
@@ -85,7 +90,7 @@ LO4 = применение аналитической рамки выбора к
 ## 4. Slide list (s01–s30 LOCKED)
 
 **Раздел 0 (8 мин):**
-- **s01 Hook (3, `case_study`)** — [GATE0-Q1] Air Canada *(реком.)* ИЛИ $4,200 agent loop. Air Canada: чат-бот выдумал тариф-политику → трибунал 14.02.2024 обязал платить; «что выбрали (генеративный чат) vs что было нужно (детерм. lookup)». Retrieval 30 сек. *Partial→out из strict-in (урок раскрыт в s13).*
+- **s01 Hook — Air Canada (3, `case_study`)** [GATE0-Q1 LOCKED] — чат-бот выдумал тариф-политику → трибунал 14.02.2024 обязал платить; «что выбрали (генеративный чат) vs что было нужно (детерм. lookup)». Retrieval 30 сек. *Partial→out из strict-in (урок раскрыт в s13).*
 - **s02 Cover+roadmap (0.5, `cover`)** — roadmap 0–5, gold-маркер «Раздел 0».
 - **s03 Recap Lec-2 + мост (1.5, `assertion_visual`)** — single-shot inference в центре → 4 обвязки. **Speaker note (reader-P1):** «RAG = semantic search из Лекции 2 §2 + LLM сверху; детали — Раздел 2».
 - **s04 ЦВ + лестница (3, `assertion_visual`)** — ЦВ крупно + лестница код→промпт→RAG→workflow→агент→multi-agent. **Disclaimer (reader-P1):** «лестница — карта лекции, не требование понять всё сейчас; каждый уровень разберём».
@@ -203,7 +208,7 @@ library/lectures/lec-03/
 └── speech.md ← derived from chapter + slides
 ```
 
-## 12. Phase 2 brief (book-editor, после USER GATE 0)
-`library/lectures/lec-03/chapter.md` — **глубокий расширенный референс, ориентир 16–22k слов (red-flag >15k снят owner-решением Q2 для этой главы)**: 5 разделов (mirror §2.2: Промпт/границы → RAG → Fine-tune vs промпт vs RAG → API·tools·MCP·агенты+безопасность → Фреймворк решения) + Введение/Цели. Deep-dive boxes «что не вошло, но важно»: GraphRAG internals, RFT vs DPO, MCP wire-format, ReAct/Reflexion/Plan-Execute, полный дебат Cognition↔Anthropic multi-agent, vendor retention детали, CVE-хронология, кейсы #13 DPD / #14 Chevrolet-MyCity. «Вероятные вопросы аудитории + развёрнутые ответы» в конце каждого раздела (Q&A-бэкап). LO7+LO4 (success-критерии §3). Glossary §6 + Forbidden/inline §7 — ENFORCED. `[FACT-CHECK]`/`[VFY]` по §9. Speaker-notes markers `[for-slide-sNN]`, s01–s30 monotonic. Tone: инженерно-аналитический, anti-hype, strict-in ≥40% holistic. После draft — Phase 3 (methodology-critic + fact-checker + reader-text-only).
+## 12. Phase 2 brief (book-editor, USER GATE 0 ✅ 2026-05-16)
+`library/lectures/lec-03/chapter.md` — **глубокий расширенный референс, 22k+ слов БЕЗ верхней границы (red-flag >15k снят явным owner-решением Q2; decisions.md 2026-05-16)**. Document Size Limit 600 строк — waiver НЕТ → разбить: `chapter.md` (frontmatter+§0 Введение/Цели+§1 Промпт/границы+§2 RAG) + `chapter-part2.md` (§3 Fine-tune+§4 API·MCP·агенты+безопасность+§5 Фреймворк) с двусторонними кросс-ссылками; общий changelog в `chapter.md`. 5 разделов (mirror §2.2: Промпт/границы → RAG → Fine-tune vs промпт vs RAG → API·tools·MCP·агенты+безопасность → Фреймворк решения) + Введение/Цели. Deep-dive boxes «что не вошло, но важно»: GraphRAG internals, RFT vs DPO, MCP wire-format, ReAct/Reflexion/Plan-Execute, полный дебат Cognition↔Anthropic multi-agent, vendor retention детали, CVE-хронология, кейсы #13 DPD / #14 Chevrolet-MyCity. «Вероятные вопросы аудитории + развёрнутые ответы» в конце каждого раздела (Q&A-бэкап). LO7+LO4 (success-критерии §3). Glossary §6 + Forbidden/inline §7 — ENFORCED. `[FACT-CHECK]`/`[VFY]` по §9. Speaker-notes markers `[for-slide-sNN]`, s01–s30 monotonic. Tone: инженерно-аналитический, anti-hype, strict-in ≥40% holistic. После draft — Phase 3 (methodology-critic + fact-checker + reader-text-only).
 
 **Status:** v2-final ready → **USER GATE 0** (Q1–Q3).

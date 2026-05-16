@@ -322,3 +322,19 @@ Counter-check enforced в каждом critic agent prompt: если wrote ≥5 
 - `notes/reviews/2026-05-15-failure-content-audit/{lec-01,lec-02,lec-04}.md` — seed-таблицы документированных провалов ИИ по темам (использовать при production failure-контента L3/L5–L17).
 - Л4 = reference-модель структуры failure-контента (strict-in 62/53/53%, APPROVE-CLEAN).
 - Системно: slides — слабейший артефакт для failure-контента (урок устно, не на видимом слое).
+
+## 2026-05-16 — Лекция 3: owner-решения USER GATE 0 (#87)
+
+**Контекст:** Phase 1 Лекции 3 «Архитектуры AI-систем». plan-v2-final после critique (methodology APPROVE-WITH-POLISH/4P1 + reader-text-only REVISE/7P1) + orchestrator roast.
+
+### Governance escape-hatch (документированное owner-решение)
+
+- **Глубина `lec-03/chapter.md` = 22k+ слов, без верхней границы.** Red-flag «chapter >15k слов = red-flag» (`tools/lecture-production/README.md` §6) **явно снят владельцем для lec-03** на USER GATE 0. Обоснование: глава = глубокий референс + Q&A-бэкап + deep-dive boxes («что не вошло в лекцию, но важно»); слайды/речь остаются 75-мин срезом. methodology-critic Phase 1 подтвердил методическую корректность (reference depth ≠ delivery scope). Это escape-hatch по принципу governance-правил (явное + документированное owner-решение для класса-исключения; см. memory feedback_governance_rules). **Действует только для lec-03**; для других лекций red-flag в силе без явного аналогичного решения.
+- **Document Size Limit 600 строк — waiver НЕДОСТУПЕН.** chapter обязан быть разбит на `chapter.md` + `chapter-part2.md` с кросс-ссылками.
+
+### Прочие решения GATE 0
+
+- Hook s01 = Moffatt v. Air Canada (universal, юр. ставки, рамкирует тезис). $4,200 agent loop → s23.
+- Slide-count Лекции 3 LOCKED = 30 (cascade-tracking).
+- strict-in метрика: считать честно partial→out (решение #78) на этапе планирования, не только на Phase 3/7/10 — завышенный baseline в плане = downstream-ловушка (Phase 1 methodology P1-3). Plan §5 → честно 12/30≈40% + per-artifact таблица.
+- book-first: speech-нарративные кейсы (#13 DPD, #14 Chevrolet) обязаны присутствовать в chapter (deep-dive) до использования в speech.

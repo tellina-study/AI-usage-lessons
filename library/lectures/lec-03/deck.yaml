@@ -17,7 +17,7 @@ deck:
   learning_outcomes: [LO7, LO4]
   language: ru
   status: draft
-  version: v1
+  version: v2
   source: chapter v1.1 finalized (~22450 слов, 3 части)
   plan: notes/lecture-3-review/final/plan-v2-final.md (v2-final)
   total_slides: 30
@@ -113,7 +113,7 @@ slides:
     references: []
     visual:
       pattern: cover_distinct
-      primary: "Hero-cover: крупная outline «03» (200pt, Primary mid контур). Справа — title 36pt bold deep, под ним 16pt italic light: курс · 75 мин · дата. Внизу — roadmap-bar из 6 карточек (0 Открытие / 1 Промпт / 2 RAG / 3 Fine-tune / 4 API·агенты / 5 Фреймворк), текущая (0) подсвечена gold. БЕЗ Ocean rounded box callout (motif принадлежит content)."
+      primary: "Hero-cover: крупная outline «03» (Primary mid, soft). Слева — tag «ЛЕКЦИЯ 3» (teal) + teal-подчёркивание, title 46pt bold deep. Subtitle v2: приведён к КАНОНУ cover lec-02 (teal вертикальная accent-полоса + MID-цвет, content-promise, НЕ italic-light meta): «Какую архитектуру выбрать под задачу — и когда правильный ответ „не ИИ“»; designer-инициативная meta «Курс · 75 минут» УБРАНА. Внизу — roadmap-bar из 6 карточек, текущая (0) gold. БЕЗ Ocean rounded box (motif принадлежит content)."
     interaction: none
 
   - id: s03
@@ -452,7 +452,9 @@ slides:
     references: [nyt-v-openai-2025, anthropic-2026-data-retention]
     visual:
       pattern: data_chain_map
-      subtype: schema_architecture
+      subtype: schema_pipeline   # v2: reclassified architecture→pipeline
+                                 # (data-flow конвейер границ доверия, не
+                                 # actor-interaction архитектура; QA P1-2 опция B)
       primary: "Горизонтальная карта-цепочка в Ocean rounded box: ваши данные → агент → инструмент → внешний API → провайдер → подрядчики; каждое звено помечено «своя retention-граница». 2 факта-плашки: судебный приказ (логи сохраняются поверх вашей политики); ZDR не покрывает third-party/Files/Batch/MCP-коннектор. Правило: «карта данных по фиче, не галочка ZDR»; не слать регулируемое без ZDR/BAA. Gold — фраза-урок. CVE/vendor-числа НЕ на видимом слое (→ notes/глава)."
     interaction: none
 
@@ -494,14 +496,24 @@ slides:
     section: "Раздел 5. Фреймворк решения"
     duration_min: 3
     assertion: "Матрица — структура для аргумента, не сумма баллов; нижняя плашка: детерминированная верифицируемая задача → обычный код, без ИИ"
-    learning_goal: "Матрица выбора по 7 осям + «когда не ИИ вовсе» (LO7)"
+    learning_goal: "Матрица выбора по 5 осям × 5 архитектур + «когда не ИИ вовсе» (LO7)"
     learning_outcomes: [LO7]
     chapter_ref: "§5.2 [for-slide-s27]"
     references: []
     visual:
       pattern: decision_matrix
       subtype: schema_matrix
-      primary: "Матрица: строки — оси (объём знания · частота изменений · свежесть/провенанс · стоимость · латентность · аудируемость · риск недетерминизма); столбцы — архитектуры (Код · Промпт · RAG · PEFT · Длинный контекст · Агент · Multi-agent); ячейки — короткие пометки (мин/высокая/часто/да). Цветовое кодирование по семантике (gold = сильная сторона, teal = слабая). Нижняя плашка во всю ширину (gold-обведена): «детерминированная, верифицируемая, повторяемая → обычный код, без ИИ; ИИ добавил бы только недетерминизм + стоимость + латентность + поверхность инъекции»."
+      primary: >
+        v2 (owner-decision): 7×7 крипто-сокращения не читались / сливались в
+        бежевый — СЖАТО до читаемой 5×5. Колонки (иконка на каждой): Промпт ·
+        RAG · Fine-tune · Агент · Код (без ИИ). Строки: Знание большое/меняется ·
+        Свежесть/провенанс · Стоимость · Аудируемость · Недетерминизм/риск петель.
+        Ячейки — читаемые слова без крипто-сокращений (мало/да/нет/через RAG/
+        детерм./низкая/средняя/высокая/минимум/полная). Контраст усилен: золото
+        SOLID = сильная сторона, бирюза SOLID = слабая, surface = нейтр. (v1 tint
+        сливался в бежевый). Ocean motif за матрицей. Нижняя gold-плашка во всю
+        ширину (доминанта, stroke 3pt): детерминированная верифицируемая
+        повторяемая → обычный код без ИИ. Schema §5.5 + 5-сек + 50% PASS.
     interaction: none
 
   - id: s28

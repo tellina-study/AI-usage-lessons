@@ -5,9 +5,9 @@
 #   library/normative/rpd-otraslevoe-primenenie-ai.md
 #   library/project/course-plan.md (+ course-plan-seminars.md)
 #
-# ВНИМАНИЕ: repo_dir != number. Номера папок репозитория
-# (library/lectures/lec-NN) НЕ совпадают 1:1 с номерами лекций РПД.
-# Маппинг: lec-01 -> Л1, lec-02 -> Л2, lec-03 -> Л3, lec-04 -> Л7.
+# repo_dir совпадает с номером лекции РПД для всех произведённых лекций:
+# lec-01 -> Л1, lec-02 -> Л2, lec-03 -> Л3, lec-07 -> Л7.
+# repo_title_note у lec-02 — про формулировку названия (не про номер).
 # Остальные лекции — planned (папка ещё не создана).
 #
 # Статусы: produced (готова в репо) | in_production (в работе) | planned.
@@ -76,9 +76,9 @@ lectures:
     title: "AI в медицине и фармацевтике"
     module: 1
     learning_outcomes: [LO1, LO2, LO3, LO8]
-    repo_dir: lec-04
+    repo_dir: lec-07
     status: produced
-    repo_title_note: "произведена в репо как lec-04 (номер папки != номер лекции РПД)"
+    repo_title_note: "произведена в репо как lec-07 (номер папки совпадает с номером лекции РПД)"
     updated_at: "2026-05-16"
 
   - number: 8

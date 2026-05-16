@@ -415,3 +415,11 @@ Phase 11 demonstrated single speech-writer agent doing 3-artifact touches (chapt
 - deck.yaml >600 строк (Document Size Limit) + явное прежнее указание владельца «делай несколько» → split на `deck.yaml`+`deck-part2.yaml` с кросс-ссылками + обновить loader build-скрипта.
 - divider'ы/определение/Q&A — strict-in partial→out; минутная доля (~43%) — честная метрика (divider'ы ~0.3 мин), слайдо-доля 12/36≈33% ≥30% сохранена; chapter strict-in ~58% не затронут.
 - U-6: не выносить функцию слайда в title (ретайтл s30); section-divider с темой раздела — норма канона (не нарушение).
+
+## 2026-05-16 — repo_dir = номер РПД: переименование lec-04→lec-07 (#94)
+
+После #92 (медицина = Лекция 7) папка `library/lectures/lec-04` стала единственным mismatch repo_dir≠number → путаница владельца. Решение владельца: `git mv lec-04 → lec-07` + полный каскад. Теперь **repo_dir == номер РПД для всех произведённых лекций** (lec-01→Л1, lec-02→Л2, lec-03→Л3, lec-07→Л7); прежняя конвенция «repo_dir != number» (зафиксированная в #86) **отменена** — она и была корнем путаницы. Каскад: 206 файлов git mv, build_lec04.py→build_lec07.py, lec-04.pptx/pdf→lec-07, lectures.yaml/documents.yaml/course-plan/CLAUDE.md/wiki/plan-v2-final обновлены (16 текст-правок). **Историческое НЕ тронуто** (принцип всей сессии): qa-reports content, notes/lecture-4-review, reflections, mcp-limitations, decisions.md прежние записи, iteration-log, branch:issue-73 frontmatter — перемещены git mv, текст-история сохранена.
+
+**Урок:** имя папки лекции должно сразу = номеру РПД (не порядку производства). Конвенция «repo_dir != number» из #86 создала путаницу за 2 шага (производство → перенумерация → переименование). Для будущих лекций: папка `lec-NN` = номер РПД сразу.
+
+**Открытый pre-existing gap (НЕ из #94):** `ontology/store.ttl` моделирует старую структуру (lec_04=медицина, lec_07=этика) — рассинхрон с РПД. Отдельный issue #95 (требует RDF-ремоделяции, не path-rename; слепая замена = IRI-коллизия).

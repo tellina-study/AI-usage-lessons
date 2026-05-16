@@ -12,7 +12,7 @@
 **Inputs:**
 - Canon: `library/project/course-plan.md` (Лекция 3 brief), `library/normative/rpd-otraslevoe-primenenie-ai.md`.
 - Research: `notes/research/lecture-3/{trends-2026,decision-criteria,failures-and-limitations,sources}.md`.
-- Style/format reference: `notes/lecture-2-review/final/plan-v2-final.md`; reference-модель failure-структуры — lec-04.
+- Style/format reference: `notes/lecture-2-review/final/plan-v2-final.md`; reference-модель failure-структуры — lec-07.
 - Handoff: lec-02 s28 промис («Лекция 3: Агенты, RAG, API») + lec-02 changelog (s11 «Search → основа RAG» deferred to Лекция 3).
 - Owner-директива (память `feedback_chapter_depth`): chapter — глубокий расширенный референс + Q&A-бэкап.
 

@@ -1,10 +1,11 @@
 """
-Full 29-slide build of Лекции 4 «AI в медицине и фармацевтике» (Phase 6 visual loop).
+Full 29-slide build of Лекции 7 «AI в медицине и фармацевтике» (Phase 6 visual loop).
+(Папка репо lec-04 сохраняется; номер лекции по плану курса — 7.)
 
 Source-of-truth: deck.yaml v2 + chapter v2 (status=reviewed, 12,692 слов) +
 slides/*.md (29 файлов с readable speaker notes 150-300 слов).
 
-Issue #73 · Branch: issue-73-lec-04-medicine-production
+Issue #92 (renumber 4→7, downstream-каскад от chapter/speech, book-first)
 
 Palette LOCKED v3: Ocean Gradient (#21295C / #065A82 / #1C7293) + Teal (#028090)
 secondary + Gold (#F0AB00) ≥1×/slide.
@@ -287,7 +288,7 @@ def load_notes(slide_id):
 # Section divider — unified template (6 cards, like Лекция 1)
 # Used by s05b, s08a, s13a, s19a, s24a (Phase 8.8: s18a deleted with section 4).
 #
-# NAV_SECTIONS — 6 разделов Лекции 4 (как в deck.yaml).
+# NAV_SECTIONS — 6 разделов Лекции 7 (как в deck.yaml).
 # ============================================================
 #
 # Fix 9 (Phase 8.8): section 4 «Микро-упражнение» удалён (replaced by s19
@@ -300,7 +301,7 @@ NAV_SECTIONS = [
     ("2", "AI-диагностика\nкак зеркало", "CV · sens/spec\n· MASAI · bias"),
     ("3", "Разработка\nлекарств",      "AlphaFold · Rentosertib\n· DSP-1181"),
     ("4", "AI-объяснитель\n+ этика",  "Obermeyer · Tessa\n· 4 актёра"),
-    ("5", "Заключение",                "3 вывода ·\nLec 6 · Q&A"),
+    ("5", "Заключение",                "3 вывода ·\nкопилка · Q&A"),
 ]
 
 
@@ -417,7 +418,7 @@ def build_s01(p):
 def build_s02(p):
     s = blank(p)
     set_slide_bg(s, SURFACE)
-    text_box(s, x=8.0, y=2.0, w=5.3, h=5.5, text="04",
+    text_box(s, x=8.0, y=2.0, w=5.3, h=5.5, text="07",
              size=320, bold=True, color=COVER_OUTLINE,
              align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP, line_spacing=1.0)
     text_box(s, x=0.7, y=1.0, w=6.5, h=0.55, text="ЛЕКЦИЯ",
@@ -1961,8 +1962,8 @@ def build_s26(p):
          "Ответственность — на враче",
          ["AI подсказывает, врач решает",
           "Инженер делает её выполнимой",
-          "3 принципа → черновик чек-листа",
-          "Личная версия → Лекция 14"],
+          "3 принципа → копилка для синтеза",
+          "Финал — Лекция 17"],
          "lucide-users-blue.png", "", DEEP, False),
     ]
     card_y = 1.95
@@ -1989,7 +1990,7 @@ def build_s26(p):
                      text=ln, size=12, color=DEEP, line_spacing=1.30)
         # LO label removed per P1-12 (No Extra Content Rule).
     gold_callout(s, 0.55, 6.85, 12.3, 0.45,
-                 "→ 3 вывода = заготовка для черновика чек-листа на следующей лекции. Не финальный синтез — заготовка.",
+                 "→ 3 вывода = сырьё для копилки чек-листа. Не финальный синтез — финал на Лекции 17.",
                  size=13)
     speaker_notes(s, load_notes("s26"))
 
@@ -2020,48 +2021,80 @@ def build_s27(p):
 
 
 def build_s28(p):
+    # Issue #92: переписан под новый canon §5.2 (book-first). Удалено
+    # canon-противоречащее: Коллоквиум 1, «Лекция 6 = производство/с-х teaser»,
+    # Lec 9 arrow, Lec 14 personal-версия. Now number-neutral forward:
+    # медицина = 4-я отраслевая → тур продолжается → синтез на Лекции 17.
     s = blank(p)
-    slide_title(s, "Что дальше: Лекция 6 + черновик чек-листа.", size=22)
+    slide_title(s, "Что дальше: место медицины в туре + копилка для синтеза.",
+                size=22)
     text_box(s, x=0.55, y=1.10, w=12.3, h=0.40,
-             text="3 принципа сегодня — основа для черновика чек-листа на следующей лекции по этике.",
+             text="Медицина — четвёртая отраслевая лекция; принципы переносятся, "
+                  "финал синтеза — на Лекции 17.",
              size=13, italic=True, color=MID)
-    # P1-16: navigation badge «1-2-3-4-К1-6...» removed (No Extra Content Rule —
-    # «Вы здесь» markers forbidden).
-    card_y = 2.20
-    card_h = 3.6
+    card_y = 2.05
+    card_h = 4.05
     card_w = 6.0
     gap = 0.30
+    # ── Card 1: Где мы в отраслевом туре ──
     ocean_box(s, 0.55, card_y, card_w, card_h)
-    # v3.5: добавлено фото agriculture/комбайны (Lec 6 anchor).
-    photo_h = 1.55
-    add_image(s, ASSETS / "photos/s28-agriculture.jpg",
-              x=0.85, y=card_y + 0.25, w=card_w - 0.6, h=photo_h)
-    text_box(s, x=0.85, y=card_y + 0.25 + photo_h, w=card_w - 0.6, h=0.35,
-             text="Лекция 6 — Производство и сельское хозяйство",
-             size=15, bold=True, color=DEEP, line_spacing=1.20)
-    text_box(s, x=0.85, y=card_y + 0.25 + photo_h + 0.35, w=card_w - 0.6, h=0.40,
-             text="Cognitive Agro Pilot — 1 500+ машин",
-             size=13, bold=True, color=DEEP, line_spacing=1.15)
-    text_runs(s, 0.85, card_y + 0.25 + photo_h + 0.80, card_w - 0.5, 0.45, [
-        {"text": "+30–40%", "size": 22, "bold": True, "color": GOLD},
-        {"text": "  эффективности (российский кейс)",
-         "size": 12, "color": DEEP, "italic": True},
-    ], line_spacing=1.10, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=0.85, y=card_y + 0.25 + photo_h + 1.30, w=card_w - 0.5, h=0.35,
-             text="Предиктивное обслуживание · контроль качества · физический AI",
-             size=11, italic=True, color=LIGHT)
-    lc9_x = 0.55 + card_w + gap
-    ocean_box(s, lc9_x, card_y, card_w, card_h)
-    add_image(s, ASSETS / "icons/lucide-arrow-right-circle-blue.png",
-              x=lc9_x + 0.30, y=card_y + 0.35, w=1.0, h=1.0)
-    text_box(s, x=lc9_x + 1.45, y=card_y + 0.40, w=card_w - 1.65, h=0.60,
-             text="Лекция 9 — Этика и регулирование",
-             size=16, bold=True, color=DEEP, line_spacing=1.20)
-    text_box(s, x=lc9_x + 0.30, y=card_y + 1.50, w=card_w - 0.5, h=1.50,
-             text="3 принципа сегодня\n→ черновик чек-листа на Лекции 9\n→ личная версия на Лекции 14",
-             size=13, color=DEEP, line_spacing=1.45)
-    # Phase 8.8c: «Опционально: найти 1 случай …» homework callout removed —
-    # technical commentary не для student-visible content.
+    add_image(s, ASSETS / "icons/lucide-trending-up-blue.png",
+              x=0.85, y=card_y + 0.32, w=0.85, h=0.85)
+    text_box(s, x=1.85, y=card_y + 0.42, w=card_w - 2.05, h=0.65,
+             text="Где мы в отраслевом туре",
+             size=18, bold=True, color=DEEP, line_spacing=1.15)
+    text_runs(s, 0.85, card_y + 1.40, card_w - 0.6, 0.55, [
+        {"text": "Медицина — ", "size": 14, "color": DEEP},
+        {"text": "четвёртая отраслевая лекция", "size": 14, "bold": True,
+         "color": GOLD},
+        {"text": ".", "size": 14, "color": DEEP},
+    ], line_spacing=1.20)
+    text_box(s, x=0.85, y=card_y + 1.95, w=card_w - 0.6, h=0.45,
+             text="ПО → финансы → инженерное проектирование → медицина",
+             size=12, italic=True, color=LIGHT, line_spacing=1.20)
+    text_box(s, x=0.85, y=card_y + 2.50, w=card_w - 0.6, h=1.55,
+             text="Дальше тур продолжается — другие индустрии, где ставки "
+                  "другие: не пациент, а оборудование, урожай, инфраструктура.",
+             size=13, color=DEEP, line_spacing=1.35)
+    text_box(s, x=0.85, y=card_y + 3.62, w=card_w - 0.6, h=0.35,
+             text="Принципы переносятся: валидация · transparency · monitoring.",
+             size=12, italic=True, color=MID, line_spacing=1.15)
+    # ── Card 2: 3 наблюдения → копилка ──
+    c2_x = 0.55 + card_w + gap
+    ocean_box(s, c2_x, card_y, card_w, card_h)
+    add_image(s, ASSETS / "icons/lucide-list-checks-blue.png",
+              x=c2_x + 0.30, y=card_y + 0.32, w=0.85, h=0.85)
+    text_box(s, x=c2_x + 1.30, y=card_y + 0.42, w=card_w - 1.50, h=0.65,
+             text="3 наблюдения → копилка",
+             size=18, bold=True, color=DEEP, line_spacing=1.15)
+    # Каждое наблюдение = bold-термин + однострочный canon-gloss (chapter §5.3)
+    # — заполняет карту равномерно, балансирует visual mass с Card 1.
+    obs = [
+        ("Transparency + calibration",
+         "интерпретируемый выход; confidence калибровано-проверен"),
+        ("Validation set покрывает deployment population",
+         "bias тестируется явно; датасет репрезентативен"),
+        ("Audit-trail + post-market monitoring",
+         "кто/когда/какая версия восстановимо; качество мониторится"),
+    ]
+    obs_y = card_y + 1.35
+    for j, (term, gloss) in enumerate(obs):
+        oy = obs_y + j * 0.78
+        filled_rect(s, c2_x + 0.30, oy + 0.07, 0.11, 0.11, MID,
+                    radius=True, radius_adj=0.5)
+        text_box(s, x=c2_x + 0.55, y=oy, w=card_w - 0.95, h=0.34,
+                 text=term, size=13, bold=True, color=DEEP, line_spacing=1.10)
+        text_box(s, x=c2_x + 0.55, y=oy + 0.34, w=card_w - 0.95, h=0.34,
+                 text=gloss, size=11, italic=True, color=LIGHT,
+                 line_spacing=1.10)
+    text_box(s, x=c2_x + 0.30, y=card_y + 3.62, w=card_w - 0.6, h=0.35,
+             text="Это вход в копилку персонального чек-листа.",
+             size=12, italic=True, color=MID, line_spacing=1.15)
+    # Gold-strip снизу: финал синтеза = Лекция 17 (canon §5.3).
+    gold_callout(s, 0.55, 6.40, 12.3, 0.55,
+                 "Финал синтеза — Лекция 17 «Систематизация знаний и навыков»: "
+                 "сборка чек-листа из всех отраслевых кейсов курса.",
+                 size=13)
     speaker_notes(s, load_notes("s28"))
 
 
@@ -2141,7 +2174,7 @@ def build_s24a(p):
     build_section_divider(
         p, here_idx=5,
         title="Заключение",
-        frame_phrase="3 наблюдения · тизер Лекции 6 · Q&A",
+        frame_phrase="3 наблюдения · что дальше · Q&A",
         notes_slide_id="s24a",
     )
 

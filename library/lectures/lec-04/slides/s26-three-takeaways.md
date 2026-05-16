@@ -3,7 +3,7 @@ id: s26
 type: takeaway
 duration_min: 2
 assertion: "Медицинский AI к 2026 — работающая инфраструктура. И вместе с этим — конкретная responsibility framework."
-learning_goal: "3 takeaways — explicit LO1+LO2+LO3+LO8 framing для Lec 9"
+learning_goal: "3 takeaways — explicit LO1+LO2+LO3+LO8; 3 принципа = вход в копилку синтеза Лекции 17"
 learning_outcomes: [LO1, LO2, LO3, LO8]
 frame_mapping: ["Другой AI", "Человек vs AI", "Безопасность"]
 chapter_ref: "§5.1 — Три главных вывода"
@@ -16,7 +16,7 @@ visual:
     sources:
       - "Self-generated 3-card layout через PowerPoint shapes (Ocean palette)"
       - "Lucide icons https://lucide.dev — `activity` (диагностика), `flask-conical` (drug discovery), `users` (ответственность), 96px hero size, recolored"
-    caption: "3 takeaways — input для черновика Lec 9"
+    caption: "3 takeaways — сырьё для копилки синтеза Лекции 17"
 interaction: none
 ---
 
@@ -28,7 +28,7 @@ interaction: none
 
 ## Visual
 
-3 равные takeaway-cards в Ocean rounded box по горизонтали. Card 1 (Primary mid): иконка `activity` 96px сверху, заголовок «AI-диагностика работает ✓» 22pt semi-bold; текст 16pt: «mosmed.ai 14M+ исследований; FDA 1 451 devices; MASAI 44% workload ↓; CV-pipeline 2017–2024 уровня». Labels: LO1, LO2. Card 2 (Primary mid, **gold highlight на «Нобель 2024»**): иконка `flask-conical`, заголовок «Drug discovery — частично», текст: «AlphaFold solved structure prediction; Нобель 2024 (Hassabis + Jumper + Baker). Insilico Rentosertib peer-reviewed Phase IIa. DSP-1181 discontinued. Clinical attrition unchanged». Labels: LO2, LO3. Card 3 (deep): иконка `users`, заголовок «Ответственность — на враче», текст: «AI подсказывает, врач решает. Инженер делает responsibility технически выполнимой. 3 принципа → input для черновика Лекции 9». Labels: LO3, LO8.
+3 равные takeaway-cards в Ocean rounded box по горизонтали. Card 1 (Primary mid): иконка `activity` 96px сверху, заголовок «AI-диагностика работает ✓» 22pt semi-bold; текст 16pt: «mosmed.ai 14M+ исследований; FDA 1 451 devices; MASAI 44% workload ↓; CV-pipeline 2017–2024 уровня». Labels: LO1, LO2. Card 2 (Primary mid, **gold highlight на «Нобель 2024»**): иконка `flask-conical`, заголовок «Drug discovery — частично», текст: «AlphaFold solved structure prediction; Нобель 2024 (Hassabis + Jumper + Baker). Insilico Rentosertib peer-reviewed Phase IIa. DSP-1181 discontinued. Clinical attrition unchanged». Labels: LO2, LO3. Card 3 (deep): иконка `users`, заголовок «Ответственность — на враче», текст: «AI подсказывает, врач решает. Инженер делает responsibility технически выполнимой. 3 принципа → копилка для синтеза; финал — Лекция 17». Labels: LO3, LO8.
 
 ## Speaker notes
 
@@ -36,4 +36,4 @@ interaction: none
 
 Второй. Drug discovery работает частично. AlphaFold предсказал более двухсот миллионов структур белков и получил Нобелевскую премию по химии 2024 года — Hassabis, Jumper и Baker, последний за computational protein design. Insilico Rentosertib стал первым AI-designed препаратом с peer-reviewed positive Phase IIa readout в Nature Medicine, июнь 2025 года. DSP-1181 — discontinued. AI ускоряет discovery в пять–десять раз; clinical attrition rate около девяноста процентов AI не меняет, потому что эта статистика определяется биологией, а не алгоритмом.
 
-Третий. Ответственность — на враче. AI подсказывает, врач решает. Инженер строит систему так, чтобы responsibility была технически выполнима: transparency и калибровка confidence, audit-trail, деперсонализация данных, post-market monitoring. Конкретные три принципа — transparency + calibration; validation set покрывает deployment population; audit-trail + post-market monitoring — это input для черновика чек-листа на лекции 9 «Этика и регулирование». Не финальный синтез — input. Если в одной фразе: врач ставит диагноз, AI подсказывает, инженер делает так, чтобы врач мог по-настоящему решать.
+Третий. Ответственность — на враче. AI подсказывает, врач решает. Инженер строит систему так, чтобы responsibility была технически выполнима: transparency и калибровка confidence, audit-trail, деперсонализация данных, post-market monitoring. Конкретные три принципа — transparency + calibration; validation set покрывает deployment population; audit-trail + post-market monitoring — это вход в копилку персонального чек-листа. Не финальный синтез — сырьё; финал собирается на Лекции 17 «Систематизация знаний и навыков» из всех отраслевых кейсов курса. Если в одной фразе: врач ставит диагноз, AI подсказывает, инженер делает так, чтобы врач мог по-настоящему решать.

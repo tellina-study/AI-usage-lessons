@@ -621,3 +621,63 @@ Assets added:
 - **Sections:** 5 (0..5; was 6: 0..6).
 - **LOs in deck:** LO1, LO2, LO3, LO8 (was LO1..LO4, LO8; −LO4).
 - **Photos with «Иллюстрация:» honest captions:** 5 (s05, s08, s14, s20, s27).
+
+---
+
+# Issue #92 — Renumber 4→7 downstream cascade (deck artifacts)
+
+**Issue:** #92 · **Branch:** issue-92-lec-04-renumber-l7 · **Date:** 2026-05-16
+**Scope:** deck-only (chapter/speech уже обновлены book-first; qa-reports не трогались).
+**Source of truth:** chapter.md §5.2/§5.3 + speech.md s28 block (canon-true).
+
+## Changed slides (4) — verified via pptx-vs-HEAD slide-by-slide diff
+
+| Slide | Change |
+|---|---|
+| s02 cover | decorative «04»→«07»; assertion/title «Лекция 4»→«Лекция 7» |
+| s24a divider | frame_phrase «тизер Лекции 6»→«что дальше»; notes canon-sync (L9→L17) |
+| s26 takeaways | card3 «Личная версия → Лекция 14»→«Финал — Лекция 17»; gold-strip + notes canon-sync |
+| s28 what-next | full rewrite: removed Коллоквиум1 / Лекция6=производство teaser / Lec9 arrow / Lec14; new 2-card number-neutral forward + копилка→Лекция 17 |
+
+30 slides byte-identical (text+notes) vs git HEAD pptx — no collateral regression.
+
+## Visual loop — s28 (≥3 iter)
+
+### Iter 1 — s28
+- (a) inspected: new 2-card layout, canon-correctness, mass balance.
+- (b) changed: rebuilt build_s28 (2 Ocean cards, trending-up + list-checks
+  icons, gold highlight «четвёртая отраслевая лекция», gold-strip L17).
+- (c) pass: canon PASS (0 violations), palette/motif PASS; FAIL Visual Mass
+  Balance — Card 2 ~30% empty vs dense Card 1.
+
+### Iter 2 — s28
+- (a) inspected: card-vs-card mass balance.
+- (b) changed: each obs = bold term + canon §5.3 gloss (2-line blocks),
+  closing line color LIGHT→MID.
+- (c) pass: mass improved; FAIL — reverse imbalance, Card 1 now emptier
+  (~40% bottom whitespace) than Card 2.
+
+### Iter 3 — s28 (ACCEPT)
+- (a) inspected: symmetric structure, projector readability, 5-sec test.
+- (b) changed: Card 1 body → 13pt + italic closing line «Принципы
+  переносятся…» at card_y+3.62 (parallel to Card 2 closing line).
+- (c) pass: Visual Mass Balance PASS (both cards end ~card_y+3.97),
+  Schema(matrix/2-card) PASS, Projector 50% PASS (min 11pt italic),
+  5-Sec PASS (main msg = assertion).
+
+## 5-Second Test — final accept gate (all PASS)
+
+- s02: read «AI в медицине · Лекция 07» = assertion. PASS.
+- s24a: read «Заключение · 3 наблюдения · что дальше · Q&A» = assertion. PASS.
+- s26: read «3 вывода + 3 принципа→копилка, финал L17» = assertion. PASS.
+- s28: read «медицина=4-я отраслевая, тур продолжается, копилка→L17» = assertion. PASS.
+
+## Canon scan — 0 violations
+
+pptx full-text + notes regex scan: 0 hits of «Лекция 4/6/9/14», «Коллоквиум»,
+«Практикум», «Cognitive/Agro Pilot». Cover decorative number = «07».
+
+## Notes word counts (changed slides)
+
+s28=197, s26=248 (both within [150,300]). s02=108, s24a=104 — cover/divider
+non-content slides, short by design, pre-existing (not lengthened by #92).

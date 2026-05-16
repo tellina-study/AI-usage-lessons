@@ -2,7 +2,7 @@
 lecture: 3
 title: "Лекция 3. Архитектуры AI-систем: агенты, RAG, API"
 length_words: ~22450
-status: reviewed
+status: finalized
 version: v1.1
 references_count: 38
 parts: 3

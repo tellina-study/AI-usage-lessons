@@ -1,7 +1,7 @@
 ---
 lecture: 3
 title: "Лекция 3. Архитектуры AI-систем — Часть 3 (§4 окончание, §5, Источники)"
-status: reviewed
+status: finalized
 version: v1.1
 part: 3
 of_parts: 3

@@ -219,3 +219,173 @@ Issue #87 · build_v2.py · фиксы только по SYNTHESIS fix-list + US
   не достигнут.
 
 VERDICT v2: ACCEPT — handed to orchestrator for pre-gate + QA.
+
+---
+
+# v2 → v3 STRUCTURAL REVISION (owner-обратная связь, plan §4, U-1…U-9)
+
+Issue #87 · branch issue-87-lec-03-architectures · 2026-05-16 · НЕ git.
+Объём: +6 suffix-слайдов (НЕ перенумеровывая s01–s30), ретайтл s30,
+case-refs в notes, deck.yaml split, сторителлинг-проход. v2-геометрия
+30 базовых слайдов идентична (rebuild bit-identical для них — build_v3
+тот же код-путь, только +6 builders и порядок).
+
+## Scope guard
+- s01–s30 ID НЕ перенумерованы (cascade lock). 6 suffix: s04a/s13a/s13b/
+  s23a/s25a/s31. Порядок предъявления — plan §4. build_v3 main() имеет
+  assert len(builders)==36 + load_deck() assert на канонический порядок.
+- 0 designer-extras сверх plan §4. 0 локального binding. Палитра LOCKED.
+
+## Новые слайды — итерации
+
+### s04a / s13a / s25a — section_divider (U-1/U-3/U-5b)
+- (a) inspected: консистентность с locked-шаблоном build_section_divider
+  (тем же, что s09/s18 v2 — accepted).
+- (b) changed: только текст (here_idx, subtitle, narrative bridge, sid);
+  геометрия НЕ менялась (locked template).
+- iter-1 render+inspect: pixel-консистентны с s09/s18 (cross-checked
+  s04a vs s09 snapshot — идентичный layout/roadmap/типографика).
+- iter-2 cross-check: roadmap-бар 5+1 карточек, gold-маркер на корректном
+  активном разделе (1/3/5), РАЗДЕЛ N teal + gold-underline.
+- iter-3 projector 50% + 5-сек: subtitle 38pt / label 20pt / bridge 18pt /
+  roadmap 11pt — все > hard-min; main message = тема раздела. PASS.
+- VERDICT: accept iter-3 (3 iter; дефектов нет — наследует accepted
+  v2-template, что и есть требование «единый стиль с s09/s18»).
+
+### s23a — section_divider (sub, U-5a)
+- (a) inspected: остаётся в Разделе 4 (giant «4», roadmap gold Раздел 4),
+  но distinct subtitle + «РАЗДЕЛ 4 · БЕЗОПАСНОСТЬ» label.
+- (b) changed: новый helper build_subdivider_security (тот же layout,
+  кастомный label/subtitle/bridge); roadmap_bar(s,4).
+- iter-1: render — label «РАЗДЕЛ 4 · БЕЗОПАСНОСТЬ» teal, subtitle «Кто
+  видит данные в цепочке», bridge-фраза читается, roadmap gold Раздел 4.
+- iter-2: cross-check vs s18 (тот же Раздел 4 divider) — семейство
+  консистентно, sub-блок визуально отличён через label suffix.
+- iter-3: projector 50% + 5-сек — PASS (main = «безопасность: кто видит
+  данные»).
+- VERDICT: accept iter-3.
+
+### s13b — assertion_visual + mini-schema pipeline (U-2) — KEY new visual
+- (a) inspected: определение FT + 3-node pipeline + контраст-плашка.
+- iter-1: «дообучение»-label и arrow зажаты между node2/node3 (gap 0.48",
+  label overflow к gold node top). Schema §5.5 Pipeline: arrow есть, но
+  output→input коннект тесный → FAIL читаемости.
+- (b iter-2) changed: bw 3.30→2.85, gap-зоны явные («+» 0.58, arrow 1.50),
+  узлы центрированы (n1x 1.35, симметричные поля 0.80/0.82), label
+  «дообучение» поднят над arrow с clearance, schema box sh 2.30→2.48.
+  Schema §5.5: PASS (arrow MSO_SHAPE.RIGHT_ARROW, per-stage sub-captions,
+  ≤3 слова/label, RU единый, 3 stage ≤5).
+- (b iter-3) changed: «дообучение» y-fine-tune, arrow толще (0.40→0.42),
+  контраст-плашка текст переписан (убран orphan «запроса.»/«контекст.»),
+  line_spacing 1.18→1.22.
+- iter-3 projector 50%: 3-node pipeline + gold «ВЕСА» + контраст читаются
+  из ряда 5. 5-сек: main = «FT меняет ВЕСА, промпт/RAG — контекст» =
+  assertion. PASS.
+- Schema §5.5 Process/Pipeline checklist (final):
+  [x] RIGHT_ARROW (не rect+triangle гибрид)
+  [x] per-stage sub-caption (общие веса / примеры поведения / модель др.)
+  [x] unified RU sub-labels
+  [x] 3 stage ≤5
+  [x] stage label ≤3 слов (2/2/2)
+  [x] output→input visually connected («+» и arrow коннекторы)
+  → ALL PASS.
+- VERDICT: accept iter-3.
+
+### s30 — retitle + Q&A removal (U-6/U-7)
+- (a) inspected: title было «Мост к отраслям + задание» (function-as-title).
+- (b iter-1) changed: title → «AI-архитектура — несущая ось отраслевых
+  лекций.» (контентный тезис, = assertion). Q&A-блок (правая teal-колонка
+  «Q&A»+«Спасибо») УДАЛЁН → s31. Homework-box → full-width (rebalance
+  mass, иначе 40% пустоты справа). + route-icon в bridge. + gold takeaway.
+- iter-1 inspect: rebalanced, но bottom takeaway orphan «лекции.» +
+  whitespace под ним.
+- (b iter-2) changed: homework hh 2.50→2.85, body 13→14pt, такаway
+  shorter.
+- iter-2 inspect: лучше, остался 1-словный orphan.
+- (b iter-3) changed: takeaway → одна строка, centered, h 0.78→0.72.
+- iter-3: orphan устранён, mass-balance OK (нет пустой колонки), gold
+  ×2 (homework + takeaway). 5-сек: main = «рамка = ось Л4–17 + ДЗ С3» =
+  assertion. PASS.
+- VERDICT: accept iter-3.
+
+### s31 — qa_minimal dedicated Q&A (U-7)
+- (a) inspected: зеркалит lec-02 dedicated Q&A (s29): «Вопросы» 120pt
+  deep центр, «Спасибо за внимание» 32pt mid, тихий reminder bottom,
+  белый фон, без footer/roadmap.
+- iter-1: рендер консистентен с lec-02 canon. Намеренно «тихий» слайд —
+  это и есть subtype qa_minimal.
+- INTENTIONAL CANON DEVIATION: нет gold (gold ≥1×/slide уступает
+  qa_minimal-канону — lec-02 s29 dedicated Q&A тоже без gold/motif;
+  закрывающий слайд намеренно визуально тих). Документировано как
+  осознанное, canon-consistent отклонение, НЕ регрессия.
+- iter-2/3: cross-check vs lec-02 s29 — layout-семейство идентично;
+  projector 50% — «Вопросы» 120pt тривиально читается. PASS.
+- VERDICT: accept (qa_minimal — минимальный по дизайну, как и требует
+  brief «как dedicated Q&A в lec-02»).
+
+## Notes case-refs (U-4) — book-first, fact-checker verified в chapter
+- s01: + «Moffatt v. Air Canada, BC CRT (Канада)», истец Дж. Моффатт,
+  ответчик Air Canada, 14.02.2024, McCarthy Tétrault 2024 + ABA 2024.
+- s13: + Barnett et al. arXiv:2401.05856 (2024) — паттерн 7 точек отказа
+  RAG; Air Canada callback с явной датой (Moffatt v. Air Canada, BC CRT,
+  14.02.2024).
+- s16: + Luo et al. arXiv:2308.08747 (2023) — catastrophic forgetting
+  эмпирически при continual fine-tuning.
+- s23: + постмортем Sattyam Jain 2026-04 (single-author, illustrative,
+  числа округлены); MindStudio 2025–2026 (reliability compounding).
+- s24: + NYT v. OpenAI федеральный суд май 2025 (Bloomberg Law 2025,
+  National Law Review 2025, [VFY day-of]); ZDR — Anthropic live-doc 2026
+  ([VFY quarterly]).
+- s25: + GitHub MCP heist май 2025 (Docker «MCP Horror Stories» 2025,
+  AuthZed 2025–2026, Simon Willison 2025-04-09).
+- Все notes в [150,300] слов (auto-checked, см. final). CVE-номера /
+  vendor-pricing НЕ вынесены на видимый слой (остались в chapter/notes
+  framing). s30 notes: Q&A-хвост убран, добавлен мост к s31.
+
+## deck.yaml split (U-9)
+- deck.yaml (PART 1, 353 строки ≤600): deck/palette/motif/typography/
+  glossary_lock + slides s01..s13a (15). version v1→v3, total_slides 36.
+- deck-part2.yaml (PART 2, 425 строк ≤600): slides s13b..s31 (21) +
+  totals + ai_failure_judgment + verify_day_of_items + fact_check_items.
+- Двусторонние кросс-ссылки-комментарии в обоих файлах (SPLIT box).
+- Loader build_v3.load_deck(): читает обе части, merge `slides`, assert
+  канонический 36-порядок (cascade lock guard) + totals.slides==36.
+  Запуск build_v3 печатает «deck spec OK — 36 slides … version v3».
+- YAML оба валидны (yaml.safe_load), 36 slide-id, s01–s30 не
+  перенумерованы.
+
+## Storytelling pass (U-8) — findings
+- ЦВ return-chain (s04 ЦВ → s08/s12/s17/s22/s23 → payoff s26–s28):
+  непрерывна. s23 notes явно «пятая точка возврата ЦВ»; s25a bridge
+  явно закрывает петлю («…инструмент, которым отвечать на ЦВ»).
+- Air Canada through-line (s01 hook → s13 revisited → s27 matrix):
+  непрерывна; U-4 усилил единой атрибуцией (Moffatt v. Air Canada,
+  BC CRT 14.02.2024) на s01 и s13.
+- Divider bridges: 6/6 — «откуда пришли → куда идём», НЕ
+  function-as-title. s04a/s13a/s23a/s25a — новые; s09/s18 — v2
+  (bridge в build-коде, не трогали).
+- Найденный narrative-разрыв в scope v2→v3: НЕТ.
+
+## Final accept (v3, 150dpi, 36/36)
+- Палитра LOCKED Ocean+Teal+Gold — 0 off-palette. Gold ≥1× на всех
+  content/divider слайдах (divider — gold underline + roadmap-маркер;
+  s13b — gold node+takeaway; s30 — gold homework+takeaway). s31
+  qa_minimal — намеренно без gold (canon lec-02, документировано).
+- Ocean motif на всех content-слайдах; dividers/cover/s31 exempt (canon).
+- 0 forbidden-добавлений сверх plan §4 (grep новых .md: нет «Лектору»/
+  «Вы здесь»/тайминг/subtitle на видимом слое).
+- Schema §5.5: s13b Pipeline PASS (полный чек-лист выше).
+- 5-сек тест: s04a/s13a/s23a/s25a/s13b/s30/s31 — main = assertion, PASS.
+  Projector 50%: s13b/s30 explicit PASS; dividers наследуют accepted
+  v2-template (>hard-min).
+- Iterations: s13b=3, s30=3, s04a/s13a/s23a/s25a=3 (locked-template,
+  cross-check + projector + 5-сек, дефектов нет), s31=accept (qa_minimal
+  by-design). Min 3 соблюдён; max 7 не достигнут.
+- Геометрия s01–s30 (кроме s30) НЕ менялась — v2-снапшоты валидны,
+  перегенерены из единого pptx для полного набора.
+- Файлы: lec-03.pptx + lec-03.pdf (36 слайдов), snapshots/ s01..s31
+  (включая suffix, 36 PNG), build_v3.py, deck.yaml + deck-part2.yaml,
+  6 новых slides/*.md + s30 правка + 6 notes-правок case-слайдов.
+
+VERDICT v3: ACCEPT — 36 слайдов, s01–s30 НЕ перенумерованы, палитра/
+gold/motif соблюдены, 0 extras сверх plan §4. Handed to orchestrator.

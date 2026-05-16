@@ -1,7 +1,7 @@
 ---
 lecture: 4
 title: "Глава 4. AI в разработке ПО"
-status: reviewed
+status: finalized
 version: v1.1
 length_words: ~22300
 references_count: 83

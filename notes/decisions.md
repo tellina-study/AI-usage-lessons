@@ -293,3 +293,32 @@ mcp__workspace-mcp__list_docs_in_folder \
 Old: APPROVE-WITH-MINOR / REJECT (binary-ish).
 New: REJECT (any P0) / REVISE (5+ P1) / APPROVE-WITH-POLISH (≤4 P1) / APPROVE-CLEAN (0 P1).
 Counter-check enforced в каждом critic agent prompt: если wrote ≥5 P1 но verdict APPROVE-WITH-POLISH — STOP, change to REVISE.
+
+## 2026-05-16 — Fundamental rule ≥30% failure-content + branch hygiene (#78/#82)
+
+Рефлексия: `notes/reflections/2026-05-16-failure-content-rule/`.
+
+### Governance / методика (findings 36–38, 43)
+
+| # | Урок | Применение |
+|---|---|---|
+| 36 | Бриф субагентов, выведенный из спеки/правила, нельзя запускать до фиксации спеки | Спеку-чекпойнт ДО спавна параллельных агентов (lock rule → потом запуск критиков) |
+| 37 | Измеримое правило без определения метода подсчёта → критики разъезжаются | В момент фиксации measurable-правила определить: что считается, что нет, как считать смешанное (partial). Якорь: 3 критика изобрели weighted vs strict-in |
+| 38 | ENFORCED governance-правило без escape hatch → тихое нарушение или ненужная работа | Сразу проектировать явный документированный owner-escape + реестр + проверку критиком |
+| 43 | Предпочтение пользователя: строгое правило + явная owner-дискреция для фундамента/вводных | При предложении governance — строгий порог + явный waiver для класса-исключения; миссия = дух, не слепой % |
+
+### Git / repo hygiene (findings 39–42)
+
+| # | Урок | Применение |
+|---|---|---|
+| 39 | squash-merge ломает `rev-list origin/main..branch` как признак merged | Классифицировать ветки через merged-PR: `gh pr list --state merged --json headRefName` (authoritative) |
+| 40 | `git push origin --delete <много>` срабатывает частично и тихо | После batch-delete — верифицировать `git branch -r`, ретраить остаток; не доверять grep по выводу push |
+| 41 | local main stale/dirty, нужно базироваться на remote | `git worktree add /tmp/wt -b <br> origin/main`; после merge — `worktree remove --force` |
+| 42 | `comm` для сравнения деревьев чувствителен к префиксу пути | Нормализовать пути обеих сторон ИЛИ пофайловый `git show origin/main:p \| diff -` |
+
+Заметка: pre-commit secret-scanner ложно warning'ит на arXiv-URL/ID в research-таблицах (checks всё равно passed) — не блокер, не MCP-limitation (это hook).
+
+### Артефакты-наследие
+- `notes/reviews/2026-05-15-failure-content-audit/{lec-01,lec-02,lec-04}.md` — seed-таблицы документированных провалов ИИ по темам (использовать при production failure-контента L3/L5–L17).
+- Л4 = reference-модель структуры failure-контента (strict-in 62/53/53%, APPROVE-CLEAN).
+- Системно: slides — слабейший артефакт для failure-контента (урок устно, не на видимом слое).

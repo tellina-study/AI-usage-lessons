@@ -16,7 +16,7 @@ Diagnostics, drug discovery, clinical decision support. Primary lecture: 4.
 Content pending -- lecture 4 research not yet completed.
 
 ## Lectures
-- [Lecture 4](../../lectures/lec-04.md) *(planned)* -- primary lecture
+- [Lecture 4](../../lectures/lec-07.md) *(planned)* -- primary lecture
 
 ## Backlinks
 - [wiki/index.md](../../index.md) -- topic listing

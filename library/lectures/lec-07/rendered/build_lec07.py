@@ -1,6 +1,6 @@
 """
 Full 29-slide build of Лекции 7 «AI в медицине и фармацевтике» (Phase 6 visual loop).
-(Папка репо lec-04 сохраняется; номер лекции по плану курса — 7.)
+(Папка репо lec-07 совпадает с номером лекции по плану курса — 7.)
 
 Source-of-truth: deck.yaml v2 + chapter v2 (status=reviewed, 12,692 слов) +
 slides/*.md (29 файлов с readable speaker notes 150-300 слов).
@@ -13,7 +13,7 @@ Visual motif: «Ocean rounded box» (radius 12, surface #F4F7FA, stroke #1C7293 
 
 Canvas: 13.333" × 7.5" (16:9). Pacing per deck.yaml ≈ 75 мин.
 
-Build via: python3 build_lec04.py — generates lec-04.pptx.
+Build via: python3 build_lec07.py — generates lec-07.pptx.
 """
 import re
 from pathlib import Path
@@ -46,10 +46,10 @@ RED_WARN  = RGBColor(0xC0, 0x39, 0x2B)
 # === Constants ===
 SLIDE_W_IN = 13.333
 SLIDE_H_IN = 7.5
-ROOT = Path("/home/levko/AI-usage-lessons/library/lectures/lec-04")
+ROOT = Path("/home/levko/AI-usage-lessons/library/lectures/lec-07")
 ASSETS = ROOT / "assets"
 SLIDES_DIR = ROOT / "slides"
-OUT = ROOT / "rendered/lec-04.pptx"
+OUT = ROOT / "rendered/lec-07.pptx"
 FONT_HEAD = "Arial"
 FONT_BODY = "Arial"
 FONT_MONO = "Liberation Mono"

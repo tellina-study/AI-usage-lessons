@@ -52,3 +52,7 @@ library/lectures/*/rendered/snapshots/
 # Office temp lock files
 ~$*
 library/lectures/*/rendered/~$*
+
+# Python bytecode
+__pycache__/
+*.pyc

@@ -23,6 +23,35 @@ decks:
     created_at: "2026-05-12"
     drive_published: false  # Drive integration отложена
 
+  # Лекция 3 «Архитектуры AI-систем: агенты, RAG, API» — full deck (USER GATE B approved)
+  - lecture: 3
+    repo_dir: lec-03
+    title: "Лекция 3. Архитектуры AI-систем: агенты, RAG, API"
+    type: pptx-local
+    format: pptx
+    pipeline_version: "v3.1"
+    status: final
+    slides_count: 36
+    coverage: "s01–s30 + s04a/s13a/s13b/s23a/s25a/s31 (полная лекция, 75 мин)"
+    local_path: "library/lectures/lec-03/rendered/lec-03.pptx"
+    pdf_path: "library/lectures/lec-03/rendered/lec-03.pdf"
+    snapshots_path: "library/lectures/lec-03/rendered/snapshots/"
+    source:
+      deck_yaml: ["library/lectures/lec-03/deck.yaml", "library/lectures/lec-03/deck-part2.yaml"]
+      slides_dir: "library/lectures/lec-03/slides/"
+      chapter: ["library/lectures/lec-03/chapter.md", "library/lectures/lec-03/chapter-part2.md", "library/lectures/lec-03/chapter-part3.md"]
+      glossary: "library/lectures/lec-03/glossary.yaml"
+      plan: "notes/lecture-3-review/final/plan-v2-final.md"
+    qa_reports:
+      - "library/lectures/lec-03/qa-reports/2026-05-16/reader-text-only.md"
+      - "library/lectures/lec-03/qa-reports/2026-05-16-v1/SYNTHESIS.md"
+      - "library/lectures/lec-03/qa-reports/2026-05-16-v3/SYNTHESIS.md"
+      - "library/lectures/lec-03/qa-reports/2026-05-16-v3/PRE-GATE-B-walkthrough.md"
+    iterations: ["v1", "v2", "v3", "v3.1"]
+    issue: 87
+    created_at: "2026-05-16"
+    drive_published: false  # Drive integration отложена
+
   # Reference — старая загруженная PPTX (контекстная), не пилот
   - id: 1j-7csuSNLQimTNz1gkV5aupormpqfPEL
     title: "ИИ и мир.pptx (старая презентация для контекста)"

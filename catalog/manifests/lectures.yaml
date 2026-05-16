@@ -1,7 +1,23 @@
 # Lecture catalog manifest
+#
+# Источник: РПД-канон 2026-05-16
+#   catalog/exports/docs/course-rpd-and-structure-2026-05-16-userpaste.md
+#   library/normative/rpd-otraslevoe-primenenie-ai.md
+#   library/project/course-plan.md (+ course-plan-seminars.md)
+#
+# ВНИМАНИЕ: repo_dir != number. Номера папок репозитория
+# (library/lectures/lec-NN) НЕ совпадают 1:1 с номерами лекций РПД.
+# Маппинг: lec-01 -> Л1, lec-02 -> Л2, lec-03 -> Л3, lec-04 -> Л7.
+# Остальные лекции — planned (папка ещё не создана).
+#
+# Статусы: produced (готова в репо) | in_production (в работе) | planned.
 lectures:
   - number: 1
-    title: "Введение: что такое AI и почему это важно"
+    title: "Введение: искусственный интеллект в современном мире"
+    module: 1
+    learning_outcomes: [LO1, LO4, LO6]
+    repo_dir: lec-01
+    status: produced
     doc_id: "1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8"
     source_url: "https://docs.google.com/document/d/1TsPeWdhgje3pj4yXMQrA9MDFb-hD9Ljed4hao7n-Ft8/edit"
     old_doc_id: "1VwEkLgNsMlCggakFNNG9-LNLSf8o4lJItbqo---naG0"
@@ -12,5 +28,135 @@ lectures:
       - "промптинг: Роль + Задача + Контекст"
       - "black box to glass box"
     prerequisites: []
-    status: draft
-    updated_at: "2026-03-31"
+    updated_at: "2026-05-16"
+
+  - number: 2
+    title: "Архитектура AI: от машинного обучения до трансформеров"
+    module: 1
+    learning_outcomes: [LO1, LO6, LO7]
+    repo_dir: lec-02
+    status: produced
+    repo_title_note: "в репо производилась как «Как работают современные большие модели»"
+    updated_at: "2026-05-16"
+
+  - number: 3
+    title: "Архитектуры AI-систем: агенты, RAG, API"
+    module: 1
+    learning_outcomes: [LO7, LO4]
+    repo_dir: lec-03
+    status: in_production
+    issue: 87
+    updated_at: "2026-05-16"
+
+  - number: 4
+    title: "AI в разработке программного обеспечения"
+    module: 1
+    learning_outcomes: [LO1, LO4, LO7]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 5
+    title: "AI в финансовом секторе и ритейле"
+    module: 1
+    learning_outcomes: [LO1, LO2, LO3, LO6]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 6
+    title: "AI в инженерном проектировании и CAD/CAM"
+    module: 1
+    learning_outcomes: [LO1, LO2, LO7]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 7
+    title: "AI в медицине и фармацевтике"
+    module: 1
+    learning_outcomes: [LO1, LO2, LO3, LO8]
+    repo_dir: lec-04
+    status: produced
+    repo_title_note: "произведена в репо как lec-04 (номер папки != номер лекции РПД)"
+    updated_at: "2026-05-16"
+
+  - number: 8
+    title: "AI в креативных индустриях и медиа"
+    module: 1
+    learning_outcomes: [LO1, LO2, LO4, LO5]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 9
+    title: "AI в авиакосмической отрасли и оборонном комплексе"
+    module: 2
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 10
+    title: "AI в сельском хозяйстве"
+    module: 2
+    learning_outcomes: [LO1, LO2, LO5]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 11
+    title: "AI в дискретном и процессном производстве"
+    module: 2
+    learning_outcomes: [LO1, LO2, LO7, LO8]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 12
+    title: "AI в автоматизации производства и цифровые двойники"
+    module: 2
+    learning_outcomes: [LO2, LO5, LO7]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 13
+    title: "AI в логистике и транспорте"
+    module: 3
+    learning_outcomes: [LO1, LO2, LO7]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 14
+    title: "AI в телекоммуникациях, сетевой инфраструктуре и кибербезопасности"
+    module: 3
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 15
+    title: "AI в научных исследованиях"
+    module: 3
+    learning_outcomes: [LO4, LO5, LO6, LO8]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 16
+    title: "AI в нефтегазовой отрасли и добыче ресурсов"
+    module: 3
+    learning_outcomes: [LO1, LO2, LO3, LO7]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"
+
+  - number: 17
+    title: "Систематизация знаний и навыков"
+    module: 3
+    learning_outcomes: [LO1, LO2, LO3, LO4, LO5, LO6, LO7, LO8]
+    repo_dir: null
+    status: planned
+    updated_at: "2026-05-16"

@@ -239,6 +239,17 @@
 - **Status:** active (поведение by design)
 - **First seen in:** #51 Phase 4B (2026-04-29). См. `notes/decisions.md` § «2026-04-29 — Phase 4B Doc#2 РПД (#51) — partial, lessons learned».
 
+### [#86] `uvx workspace-mcp` не стартует — регрессия транзитивной зависимости `aiofile` 3.10.0 (`KeyError: 'Author'`)
+
+- **Server:** `workspace-mcp` (uvx, без пина версии).
+- **Tool / feature:** запуск сервера целиком (все 120 tools недоступны, `claude mcp list` → `✗ Failed to connect`).
+- **Symptom:** При старте — Python traceback на импорте: `workspace-mcp → fastmcp.server.auth.oauth_proxy → key_value.aio.stores.filetree → aiofile/__init__ → aiofile/version.py` → `__author__ = package_metadata["Author"]` → `KeyError: 'Author'` (через `importlib_metadata/_adapters.py:102`).
+- **Root cause:** `aiofile==3.10.0` (последняя на 2026-05-16) собрана без поля `Author` в wheel-метадате, а её `version.py` обращается к `package_metadata["Author"]` напрямую (хрупкий код, без `.get`). `uvx` без пина тянет latest → ломается. Баг не в workspace-mcp, а в транзитивной зависимости.
+- **Severity:** P0 (сервер полностью не стартует; блокирует весь Google Workspace).
+- **Workaround:** пин рабочей версии `aiofile` через uvx `--with`. В `.mcp.json` (gitignored) `workspace-mcp.args` = `["--with", "aiofile==3.9.0", "workspace-mcp"]`. Проверено эмпирически: `3.9.0` и `3.8.8` стартуют чисто («Starting MCP server 'google_workspace' with transport 'stdio'»), `3.10.0` падает. Требуется рестарт Claude Code для применения (как любая MCP-config-правка).
+- **Status:** active (workaround в .mcp.json применён 2026-05-16, вступает в силу после рестарта; upstream aiofile/workspace-mcp не патчены).
+- **First seen in:** #86 (2026-05-16) — забор плана курса; обойдено пользовательской вставкой текста + пином.
+
 ---
 
 ## drawio (npx @drawio/mcp)
@@ -371,9 +382,10 @@ _Пока не обнаружено._
 - **2026-05-12 (#54):** PowerPoint MCP — 5 limitations найдено за один спайк.
 - **2026-05-12 (#55 redo):** PowerPoint MCP — 3 новых (slide-size 4:3 default, dark bg ignored, inline runs); render-toolchain — 2 (mermaid Chrome missing, QuickChart v4 explicit).
 - **2026-05-13 (#71 — Лекция 1 v3.x production):** добавлены [#71-1] PowerPoint MCP fork-priority elevation (production scale), [#71-2] LibreOffice convert overhead, [#71-3] Snapshots bloat → P0 gitignore policy.
+- **2026-05-16 (#86 — снимок плана курса):** добавлен [#86] workspace-mcp P0 — регрессия `aiofile` 3.10.0 (`KeyError 'Author'`); workaround — пин `aiofile==3.9.0` через uvx `--with` в `.mcp.json`.
 
 При обнаружении новой limitation — добавить запись по шаблону, обновить дату «Last update» ниже, упомянуть в commit message: `Add MCP limitation #X (server) — see notes/mcp-limitations.md`.
 
 ---
 
-**Last update:** 2026-05-13 (Лекция 4 Phase 8.6 — добавлен [#73-render-1] python-pptx add_picture non-proportional stretch bug + Pillow-based workaround).
+**Last update:** 2026-05-16 (#86 — добавлен [#86] workspace-mcp P0: регрессия aiofile 3.10.0, пин 3.9.0 в .mcp.json).

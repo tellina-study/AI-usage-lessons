@@ -26,8 +26,8 @@ deck:
   central_question: "У меня есть задача и доступ к LLM. Какую архитектуру выбрать — и когда правильный ответ «не ИИ»?"
   learning_outcomes: [LO7, LO4]
   language: ru
-  status: draft
-  version: v3
+  status: final
+  version: v3.1
   source: chapter v1.1 finalized (~22450 слов, 3 части)
   plan: notes/lecture-3-review/final/plan-v2-final.md (v2-final §4)
   total_slides: 36          # s01–s30 monotonic + s04a/s13a/s13b/s23a/s25a/s31

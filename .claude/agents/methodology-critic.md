@@ -65,6 +65,28 @@ Run automated grep checks against артефакт за известные anti-
 
 Если grep matches — flag P1 «Anti-pattern: {name}» в report.
 
+#### AI-Failure & Judgment Share Check (Universal, ENFORCED)
+
+**Источник правила:** `CLAUDE.md` § «AI-Failure & Judgment Content Rule». Курс учит **когда применять ИИ, а когда нет**; цель — суждение, не пропаганда.
+
+**Что считать (bucket):** документированный провал ИИ + выученный урок; разбор фундаментального ограничения/риска; явный критерий «здесь ИИ не нужен/не применим»; сравнение с более правильным альтернативным инструментом (не-ИИ или другой класс ИИ/метод).
+
+**Что НЕ считать:** общие дисклеймеры, однострочные оговорки без урока/критерия/альтернативы, «магическая пилюля + но осторожно».
+
+**Процедура (strict-in, решение #78 2026-05-15):**
+1. Размеси артефакт на смысловые блоки (секции chapter / слайды / фрагменты speech).
+2. Помечай каждый блок: in-bucket / out / partial. **Официальная метрика = strict-in: только полностью in-bucket блоки.** Partial и общие оговорки идут как **out** при подсчёте % (можно отметить partial-upside отдельной строкой, но в порог НЕ включать). Считай долю (слова для chapter, слайды/минуты для slides/speech).
+3. Оцени **холистичность**: strict-in доля ≥30% должна быть в каждом проверяемом артефакте отдельно, не «вся в одной главе про этику».
+
+**Owner waiver (L1–L3, решение #82):** если лекция ∈ **L1–L3** И в реестре `tools/lecture-production/README.md` §3.6 для неё записан owner-waiver со ссылкой на issue — strict-in <30% фиксируй как **informational note «WAIVED by owner #NN»**, НЕ как P0/REVISE. Для **L4–L17 waiver неприменим** (всегда P0 при <30%). Без записи в реестре — правило применяется как обычно.
+
+**Severity:**
+- strict-in доля < 30% в артефакте → **P0** «Failure-content gap — структурный, не polish» (DoD fail).
+- Доля ≥ 30%, но сконцентрирована в 1 секции/разделе (нет распределения по лекции) → **P1** «Single-cluster concentration».
+- Bucket есть, но без явного *урока/критерия/альтернативы* (только «риски» абстрактно) → **P1** «Disclaimer, не суждение».
+
+**Output:** в report — таблица «блок → in/out/partial → слова/слайды», итоговая доля %, и оценка разрыва (сколько слов/слайдов/минут добавить до 30%).
+
 #### Lec-N-1 Pattern Compliance Check (ENFORCED для plan + slides критики)
 
 Для любой лекции **N > 1** — read Lec-N-1 deck structure **before** critique:
@@ -264,6 +286,7 @@ Compare current `slides/*.md` против previous version (git diff) — flag 
 - **Speaker notes**: 150-300 слов, no layout descriptions, no «Лектору».
 - **Chapter**: 5k-15k words, all sections present, sources inline.
 - **Reader-simulator self-containedness**: ≥ 30/N slides self-contained.
+- **AI-Failure & Judgment share**: ≥ 30% bucket-контента в артефакте, holistic across chapter/slides/speech (single-artifact concentration = fail; см. AI-Failure & Judgment Share Check).
 
 **Если any DoD metric fails:** verdict ≥ REVISE (не APPROVE-WITH-POLISH).
 

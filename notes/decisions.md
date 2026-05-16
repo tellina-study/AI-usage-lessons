@@ -304,6 +304,8 @@ Counter-check enforced в каждом critic agent prompt: если wrote ≥5 
 
 ### Anti-patterns 36-50 (extension к Lec-1 catalog 16-35)
 
+> Disambiguation (merge #77↔#78/#82/#84): нумерация **anti-pattern-каталога** сквозная 16→50 (Lec-1: 16-35, Lec-2 #77: 36-50). Отдельная нумерация «findings 36–43» в секции «2026-05-16 … (#78/#82)» ниже — **независимый** список governance/git-выводов, НЕ продолжение anti-pattern-каталога (совпадение чисел случайно, списки различаются заголовками).
+
 | # | Anti-pattern | Чем заменить | Источник |
 |---|---|---|---|
 | 36 | `[VERIFY-DAY-OF]` / `[FACT-CHECK]` markers visible в body | Frontmatter + speaker_notes only; pre-render grep enforce 0 hits | L2 R1 Phase 7 P0 (s16, s27) |
@@ -360,3 +362,56 @@ Original Lec-1 list + 5 new from L2:
 ### Batched revision pattern (Phase 11)
 
 Phase 11 demonstrated single speech-writer agent doing 3-artifact touches (chapter + slides + speech) в 40 min closing 6/6 P1 + 9/16 P2. **5-10× more efficient than per-artifact spawns.** For polish rounds — single batched revision agent recommended.
+
+## 2026-05-16 — Fundamental rule ≥30% failure-content + branch hygiene (#78/#82)
+
+Рефлексия: `notes/reflections/2026-05-16-failure-content-rule/`.
+
+### Governance / методика (findings 36–38, 43)
+
+| # | Урок | Применение |
+|---|---|---|
+| 36 | Бриф субагентов, выведенный из спеки/правила, нельзя запускать до фиксации спеки | Спеку-чекпойнт ДО спавна параллельных агентов (lock rule → потом запуск критиков) |
+| 37 | Измеримое правило без определения метода подсчёта → критики разъезжаются | В момент фиксации measurable-правила определить: что считается, что нет, как считать смешанное (partial). Якорь: 3 критика изобрели weighted vs strict-in |
+| 38 | ENFORCED governance-правило без escape hatch → тихое нарушение или ненужная работа | Сразу проектировать явный документированный owner-escape + реестр + проверку критиком |
+| 43 | Предпочтение пользователя: строгое правило + явная owner-дискреция для фундамента/вводных | При предложении governance — строгий порог + явный waiver для класса-исключения; миссия = дух, не слепой % |
+
+### Git / repo hygiene (findings 39–42)
+
+| # | Урок | Применение |
+|---|---|---|
+| 39 | squash-merge ломает `rev-list origin/main..branch` как признак merged | Классифицировать ветки через merged-PR: `gh pr list --state merged --json headRefName` (authoritative) |
+| 40 | `git push origin --delete <много>` срабатывает частично и тихо | После batch-delete — верифицировать `git branch -r`, ретраить остаток; не доверять grep по выводу push |
+| 41 | local main stale/dirty, нужно базироваться на remote | `git worktree add /tmp/wt -b <br> origin/main`; после merge — `worktree remove --force` |
+| 42 | `comm` для сравнения деревьев чувствителен к префиксу пути | Нормализовать пути обеих сторон ИЛИ пофайловый `git show origin/main:p \| diff -` |
+
+Заметка: pre-commit secret-scanner ложно warning'ит на arXiv-URL/ID в research-таблицах (checks всё равно passed) — не блокер, не MCP-limitation (это hook).
+
+### Артефакты-наследие
+- `notes/reviews/2026-05-15-failure-content-audit/{lec-01,lec-02,lec-04}.md` — seed-таблицы документированных провалов ИИ по темам (использовать при production failure-контента L3/L5–L17).
+- Л4 = reference-модель структуры failure-контента (strict-in 62/53/53%, APPROVE-CLEAN).
+- Системно: slides — слабейший артефакт для failure-контента (урок устно, не на видимом слое).
+
+## 2026-05-16 — Лекция 3: owner-решения USER GATE 0 (#87)
+
+**Контекст:** Phase 1 Лекции 3 «Архитектуры AI-систем». plan-v2-final после critique (methodology APPROVE-WITH-POLISH/4P1 + reader-text-only REVISE/7P1) + orchestrator roast.
+
+### Governance escape-hatch (документированное owner-решение)
+
+- **Глубина `lec-03/chapter.md` = 22k+ слов, без верхней границы.** Red-flag «chapter >15k слов = red-flag» (`tools/lecture-production/README.md` §6) **явно снят владельцем для lec-03** на USER GATE 0. Обоснование: глава = глубокий референс + Q&A-бэкап + deep-dive boxes («что не вошло в лекцию, но важно»); слайды/речь остаются 75-мин срезом. methodology-critic Phase 1 подтвердил методическую корректность (reference depth ≠ delivery scope). Это escape-hatch по принципу governance-правил (явное + документированное owner-решение для класса-исключения; см. memory feedback_governance_rules). **Действует только для lec-03**; для других лекций red-flag в силе без явного аналогичного решения.
+- **Document Size Limit 600 строк — waiver НЕДОСТУПЕН.** chapter обязан быть разбит на `chapter.md` + `chapter-part2.md` с кросс-ссылками.
+
+### Прочие решения GATE 0
+
+- Hook s01 = Moffatt v. Air Canada (universal, юр. ставки, рамкирует тезис). $4,200 agent loop → s23.
+- Slide-count Лекции 3 LOCKED = 30 (cascade-tracking).
+- strict-in метрика: считать честно partial→out (решение #78) на этапе планирования, не только на Phase 3/7/10 — завышенный baseline в плане = downstream-ловушка (Phase 1 methodology P1-3). Plan §5 → честно 12/30≈40% + per-artifact таблица.
+- book-first: speech-нарративные кейсы (#13 DPD, #14 Chevrolet) обязаны присутствовать в chapter (deep-dive) до использования в speech.
+
+### Лекция 3 deck — owner-структурная ревизия после GATE-A QA (2026-05-16, #87)
+
+Владелец после Phase 4 QA дал 7-пунктовую структурную правку + сторителлинг. Решения:
+- Slide-count «LOCKED=30» (cascade-tracking) — **снят owner-директивой**: +6 слайдов (s04a/s13a/s13b/s23a/s25a/s31). Применена **suffix-ID схема** (как lec-04 s05b/s08a/s13a), чтобы НЕ перенумеровывать s01–s30 и не ломать `[for-slide-sNN]` маркеры finalized-главы — cascade-safe (глава не правится; новые слайды → существующие §). Lesson: cascade-lock защищает от случайного дрейфа, но осознанная owner-правка структуры исполняется через suffix-ID, а не renumber.
+- deck.yaml >600 строк (Document Size Limit) + явное прежнее указание владельца «делай несколько» → split на `deck.yaml`+`deck-part2.yaml` с кросс-ссылками + обновить loader build-скрипта.
+- divider'ы/определение/Q&A — strict-in partial→out; минутная доля (~43%) — честная метрика (divider'ы ~0.3 мин), слайдо-доля 12/36≈33% ≥30% сохранена; chapter strict-in ~58% не затронут.
+- U-6: не выносить функцию слайда в title (ретайтл s30); section-divider с темой раздела — норма канона (не нарушение).

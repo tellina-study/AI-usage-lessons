@@ -1,0 +1,425 @@
+# library/lectures/lec-03/deck-part2.yaml  —  PART 2 of 2
+#
+# Продолжение deck-структуры Лекции 3 (36 слайдов). U-9 split.
+#
+# ┌─ SPLIT (U-9): см. deck.yaml (PART 1) — deck/palette/motif/typography/ ──┐
+# │ glossary_lock + slides s01..s13a. ЭТОТ ФАЙЛ — slides s13b..s31 +        │
+# │ totals + ai_failure_judgment + verify_day_of_items + fact_check_items.  │
+# │ Loader (rendered/build_v3.py) читает ОБЕ части и объединяет `slides`.   │
+# └────────────────────────────────────────────────────────────────────────┘
+#
+# Issue #87 · Branch: issue-87-lec-03-architectures · version v3 (см. deck.yaml).
+# Порядок предъявления — см. deck.yaml PART 1 (s13a → s13b → s14..).
+
+slides:
+  # ─── s13b (U-2): ОПРЕДЕЛЕНИЕ fine-tuning, ПОСЛЕ s13a, ПЕРЕД s14 ───
+  - id: s13b
+    file: slides/s13b-what-is-fine-tuning.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 1.5
+    assertion: "Fine-tuning меняет САМИ ВЕСА модели на ваших данных — этим он принципиально отличается от промпта и RAG, которые меняют только контекст"
+    learning_goal: "Определение fine-tuning ДО его критики/применимости; закрыть пререквизит-gap на видимом слое (раньше только inline в s14)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.1 [for-slide-s14]"
+    references: [bigdata-boutique-2026]
+    suffix_insert_after: s13a
+    new_in: v3
+    partial_out_strict_in: true   # определение, не failure/judgment (plan §5)
+    visual:
+      pattern: definition_plus_mini_schema
+      subtype: schema_pipeline    # мини-схема: [предобуч.модель]+[датасет]→[дообуч.веса]
+      primary: "Сверху — определение одной фразой (16pt). Центр — мини-схема в Ocean rounded box: [Предобученная модель (общие веса)] ＋ [Ваш датасет (примеры поведения)] → дообучение → [Дообученные веса (модель другая)]. Низ — контраст-плашка 2 половины: промпт/RAG меняют КОНТЕКСТ (веса не трогают) vs fine-tuning меняет ВЕСА. Gold — слово «ВЕСА» как смысловой якорь. Schema §5.5 + 5-сек + 50% PASS."
+      schema_readability_subtype: pipeline   # §5.5 Process/Pipeline checklist
+    interaction: none
+
+  # ─── Раздел 3. Fine-tune vs промпт vs RAG (9 мин, s14-s17) ───
+  - id: s14
+    file: slides/s14-fine-tuning-narrowed.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "Fine-tuning не «умер» — он сузился: в 2026 это поведение/стиль/формат/политика/дистилляция, НЕ знания"
+    learning_goal: "Калибровка области fine-tuning (опирается на определение s13b)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.1 [for-slide-s14]"
+    references: [bigdata-boutique-2026]
+    visual:
+      pattern: scope_split
+      primary: "Опирается на определение s13b (inline-define больше НЕ дублируется здесь — gap закрыт на видимом слое в s13b). 2 зоны в Ocean rounded box: «ушло из FT → RAG/длинный контекст: знание, факты, что меняется» vs «осталось за FT: поведение / стиль / формат / политика / дистилляция». Gold — слово «сузился» / граница знание↔поведение."
+    interaction: none
+
+  - id: s15
+    file: slides/s15-peft-not-full-ft.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2
+    assertion: "PEFT (LoRA/QLoRA) почти всегда лучше full fine-tuning: дешевле, модульнее и заметно снижает риск catastrophic forgetting"
+    learning_goal: "PEFT вместо full-FT — 3 причины, третья архитектурная (надёжность)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.2 [for-slide-s15]"
+    references: []
+    visual:
+      pattern: frozen_base_plus_adapters
+      primary: "Слева — схема в Ocean rounded box: большой замороженный блок «базовые веса (frozen)» + маленькие подключаемые «адаптеры LoRA». Справа — 3 причины: дешевле/быстрее; модульность (1 база — много адаптеров); ↓ риск forgetting (база не переписывается). DPO/RFT — 1 строка «спектр методов — в главе». Gold — «адаптеры мегабайты vs гигабайты» или причина №3 (архитектурная)."
+    interaction: none
+
+  - id: s16
+    file: slides/s16-catastrophic-forgetting.md
+    type: case_study
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "Узкий агрессивный fine-tuning ломает общие способности; без eval-петли и версий датасета — это не риск, а критерий «не делай»"
+    learning_goal: "Провал catastrophic forgetting + дисциплина превращает риск в критерий"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.3 [for-slide-s16]"
+    references: [luo-2023-catastrophic-forgetting]
+    visual:
+      pattern: two_metrics_diverge
+      primary: "Слева — 2 расходящиеся линии в Ocean rounded box: целевая метрика ↑ (модель отлично классифицирует), общие способности ↓ (рассуждение проседает незаметно). Подпись: «тяжелее с ростом масштаба модели». Справа — критерий-плашка: «нет eval-петли + версий датасета → нет сигнала о поломке и кнопки отката → НЕ делай FT». Gold — расходящаяся точка / слово «незаметно». Footer 12pt italic — источник + framing «исследования показывают»."
+    interaction: none
+    notes_case_refs_v3: "U-4: Luo et al. arXiv:2308.08747 (2023) — catastrophic forgetting эмпирически при continual fine-tuning"
+
+  - id: s17
+    file: slides/s17-criteria-what-where.md
+    type: comparison
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2
+    assertion: "Знание меняется → RAG (не FT); поведение/тон/формат → fine-tuning (PEFT); детерминированное → код. Гибрид — норма 2026"
+    learning_goal: "Критерии «что куда» (LO7) + почему гибрид — норма"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.4 [for-slide-s17]"
+    references: [bigdata-boutique-2026]
+    visual:
+      pattern: criteria_table
+      subtype: schema_matrix
+      primary: "Таблица «если задача требует… → правильный инструмент → и НЕ этот, потому что»: 4 строки (меняющееся знание → RAG; поведение/тон/формат → PEFT; снизить стоимость на узкой задаче → дистилляция; детерминированный ответ → код без ИИ). Под таблицей — плашка «гибрид = норма там, где есть И проблема знания, И проблема поведения; не „больше компонентов лучше“». Gold — строка «детерминированное → код без ИИ» (нижняя граница)."
+    interaction: none
+
+  # ─── Раздел 4. API · tools · MCP · агенты + безопасность (19 мин, s18-s25) ───
+  - id: s18
+    file: slides/s18-section4-divider-api.md
+    type: section_divider
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 1
+    assertion: "Раздел 4 — как AI становится компонентом системы: API, MCP, цикл агента + кто видит данные"
+    learning_goal: "Section divider раздела 4 (самый большой) + одно-фразовый фрейм"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4 [for-slide-s18]"
+    references: []
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider (единый с s04a/s09/s13a). Подзаголовок «API · tools · MCP · агенты + безопасность». Frame-фраза: «от собеседника в окне чата — к компоненту продакшен-системы, и кто видит данные в цепочке». Roadmap-bar 6 карточек, gold-маркер Раздел 4."
+      narrative_bridge: "Критерии что-куда у нас есть — теперь как модель встроить в систему, а не в окно чата."
+    interaction: none
+
+  - id: s19
+    file: slides/s19-api-layer.md
+    type: assertion_visual
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "3 механизма делают модель компонентом системы: structured output (встраиваемая), function calling (активная), prompt caching (экономически жизнеспособная)"
+    learning_goal: "API-слой — 3 механизма на assertion-уровне (разбор и приватность → notes/глава)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.1 [for-slide-s19]"
+    references: []
+    visual:
+      pattern: three_role_cards
+      primary: "3 равные карточки в Ocean rounded box, по одному тезису на механизм: structured output → «выход = валидные данные, не текст для парсинга» (встраиваемая); function calling → «модель формулирует намерение, ваш код исполняет» (активная); prompt caching → «не переплачивать за неизменный префикс» (экономически жизнеспособная). Плашка снизу: «ни один не делает модель надёжнее — правило лестницы не отменяется». Gold — связка-вывод. Числа экономии НЕ на видимом слое (→ notes)."
+    interaction: none
+
+  - id: s20
+    file: slides/s20-mcp-standard.md
+    type: assertion_visual
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2
+    assertion: "MCP — де-факто стандарт подключения инструментов («USB-C для LLM»); но стандартизация подключения НЕ равна безопасности подключаемого"
+    learning_goal: "MCP как стандарт (N×M → N+M) + критический поворот доверия"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.2 [for-slide-s20]"
+    references: [mcp-adoption-2025]
+    visual:
+      pattern: nxm_to_npm_plus_warning
+      primary: "Слева — визуал «N×M несовместимых интеграций → N+M через MCP» (USB-C метафора) в Ocean rounded box; мини-таймлайн принятия (Anthropic 11/2024 → OpenAI 03/2025 → Google 04/2025 → независимый фонд). Справа — плашка-предупреждение: «подключить за минуту ≠ доверять подключённому; каждый инструмент — код + носитель инъекции + новая retention-граница». Gold — фраза-поворот «удобство подключения — не аргумент за подключение». Footer 12pt italic — caveat «VFY adoption day-of»."
+    interaction: none
+
+  - id: s21
+    file: slides/s21-agent-loop.md
+    type: process
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 3
+    assertion: "Агент = цикл plan → act → check → iterate; каждый шаг — место отказа, и шаг check не должен быть самооценкой модели"
+    learning_goal: "Цикл агента + check как несущий шаг (callback s07)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.3 [for-slide-s21]"
+    references: [yao-2022-react]
+    visual:
+      pattern: cycle_4_steps
+      subtype: schema_cycle
+      primary: "Замкнутый цикл 4 шага (plan → act → check → iterate) со стрелками по часовой и явной стрелкой возврата iterate→plan + меткой «повторяется». Под каждым шагом — его режим отказа (близорукий план / падающий инструмент / нет проверки / нет лимита итераций). Шаг check — gold-акцент: «валидация против ВНЕШНЕГО критерия, не self-rationale (callback s07)». ReAct/Reflexion — 1 строка «паттерны — в главе»."
+    interaction: none
+
+  - id: s22
+    file: slides/s22-workflow-vs-agent.md
+    type: comparison
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "Предсказуемая задача → workflow; непредсказуемая И ценность оправдывает кратный рост стоимости → агент. Большинство надёжных систем — workflow"
+    learning_goal: "Workflow vs Agent (LO7) — операциональное различение + размен"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.4 [for-slide-s22]"
+    references: [anthropic-2024-building-effective-agents]
+    visual:
+      pattern: two_column_compare
+      subtype: schema_matrix
+      primary: "2 равные колонки в Ocean rounded box: Workflow — «предопределённые в коде пути; последовательность известна заранее; предсказуемо/аудируемо» vs Агент — «динамически определяет процесс; кратно больше токенов; ниже аудируемость, выше риск петель». Диагностический вопрос-плашка: «могу ли я заранее выписать последовательность шагов? да → workflow». Multi-agent дебаты — 1 строка «Cognition vs Anthropic — в главе». Gold — фраза «найди простейшее»."
+    interaction: none
+
+  - id: s23
+    file: slides/s23-agent-failures.md
+    type: case_study
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 3
+    assertion: "Агент сжёг $4,200 за 63ч в петле, потому что не «видит» бюджета; 5×99% = 95%, не 99% — надёжности перемножаются"
+    learning_goal: "Провалы агентов: петля без лимитов + reliability compounding + мульти-агентная хрупкость"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.5 [for-slide-s23]"
+    references: [jain-2026-agent-loop, mindstudio-2025-reliability]
+    visual:
+      pattern: three_failure_cards
+      primary: "3 карточки-провала в Ocean rounded box: (1) $4,200/63ч петля — нет budget/loop-лимитов; правильно — retry-with-backoff скрипт, не агент; (2) reliability compounding — 5×99%≈95%, 10×99%≈90%; «улучшить шаг» слабее «убрать хопы»; (3) мульти-агентная хрупкость на зависимостях → single-threaded агент. Gold — число «$4,200» / «95%» как якорь. Footer 12pt italic — источники + framing «illustrative / single-author»."
+    interaction: none
+    notes_case_refs_v3: "U-4: $4,200 петля — постмортем Sattyam Jain 2026-04 (single-author, illustrative); reliability compounding — MindStudio 2025–2026"
+
+  # ─── s23a (U-5a): SUB-Divider Безопасность (внутри Раздела 4), ПЕРЕД s24 ───
+  - id: s23a
+    file: slides/s23a-subdivider-security.md
+    type: section_divider
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 0.3
+    assertion: "Безопасность: как только агент действует через инструменты — вопрос смещается с «работает ли» на «кто видит данные и кто может прислать команду»"
+    learning_goal: "Sub-divider блока безопасности внутри раздела 4 + нарративный мост от провалов агентов к угрозам цепочки"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.6, §4.7 [for-slide-s24]"
+    references: []
+    suffix_insert_after: s23
+    new_in: v3
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider (единый, sub-блок Раздела 4 — гигантская «4» остаётся). Подзаголовок «Кто видит данные в цепочке» + нарративная строка-мост, roadmap-bar 6 карточек, gold-маркер Раздел 4."
+      narrative_bridge: "Разобрали, надёжен ли агент. Теперь: агент действует через инструменты и внешние API — кто видит данные и кто может прислать команду?"
+    interaction: none
+
+  - id: s24
+    file: slides/s24-data-in-chain.md
+    type: assertion_visual
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "«У нас ZDR» ≠ «нигде ничего не хранится»: судебный приказ и third-party/MCP-звенья системно уводят данные из-под ZDR"
+    learning_goal: "Безопасность: карта данных в цепочке + retention/ZDR границы (SECURITY)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.6 [for-slide-s24]"
+    references: [nyt-v-openai-2025, anthropic-2026-data-retention]
+    visual:
+      pattern: data_chain_map
+      subtype: schema_pipeline   # data-flow конвейер границ доверия (QA P1-2 опция B)
+      primary: "Горизонтальная карта-цепочка в Ocean rounded box: ваши данные → агент → инструмент → внешний API → провайдер → подрядчики; каждое звено помечено «своя retention-граница». 2 факта-плашки: судебный приказ (логи сохраняются поверх вашей политики); ZDR не покрывает third-party/Files/Batch/MCP-коннектор. Правило: «карта данных по фиче, не галочка ZDR»; не слать регулируемое без ZDR/BAA. Gold — фраза-урок. CVE/vendor-числа НЕ на видимом слое (→ notes/глава)."
+    interaction: none
+    notes_case_refs_v3: "U-4: NYT v. OpenAI — федеральный суд май 2025 (Bloomberg Law 2025, National Law Review 2025); ZDR — Anthropic live-doc 2026"
+
+  - id: s25
+    file: slides/s25-tool-attacks.md
+    type: case_study
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "Для агента недоверенный контент = команда (prompt injection); катастрофа = инъекция × широкие права. Защита — карта + 4 правила"
+    learning_goal: "Атаки через инструменты + 4 правила проектирования (SECURITY)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.7 [for-slide-s25]"
+    references: [willison-2025-prompt-injection]
+    visual:
+      pattern: attack_map_plus_4_rules
+      primary: "Слева — карта-механизм в Ocean rounded box: недоверенный контент (issue/тикет/страница) → попадает в контекст модели → исполняется как команда; «инъекция × широкие права = катастрофа» (GitHub MCP heist, tool poisoning — кратко, без CVE). Справа — 4 правила: least-privilege; изоляция недоверенного контента; human-in-the-loop на write; allowlist/pin. Gold — фраза «недоверенный контент = команда». CVE-номера НЕ на видимом слое (→ глава/notes)."
+    interaction: none
+    notes_case_refs_v3: "U-4: GitHub MCP heist — май 2025 (Docker «MCP Horror Stories» 2025, AuthZed 2025–2026, Simon Willison 2025-04-09)"
+
+  # ─── Раздел 5. Фреймворк решения + финал (s26-s31) ───
+  # ─── s25a (U-5b): Divider Раздела 5, ПЕРЕД s26 ───
+  - id: s25a
+    file: slides/s25a-section5-divider-framework.md
+    type: section_divider
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 0.3
+    assertion: "Раздел 5 — собрать все разобранные архитектуры и их провалы в один инструмент выбора"
+    learning_goal: "Section divider раздела 5 (итоговое обобщение) + нарративный мост от частных архитектур к фреймворку решения"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5 [for-slide-s26]"
+    references: []
+    suffix_insert_after: s25
+    new_in: v3
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider (единый с s04a/s09/s13a/s18). Гигантская «5» справа, РАЗДЕЛ 5 + подзаголовок «Как выбрать: фреймворк решения» + нарративная строка-мост слева, roadmap-bar 6 карточек, gold-маркер Раздел 5."
+      narrative_bridge: "Разобрали все архитектуры и где каждая проваливается — соберём это в один инструмент выбора."
+    interaction: none
+
+  - id: s26
+    file: slides/s26-complexity-ladder.md
+    type: process
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 2
+    assertion: "Лестница сложности: оставайся на нижней ступени, поднимайся только под требование задачи; нижняя ступень — обычный код без ИИ"
+    learning_goal: "Лестница сложности как инструмент (LO7 payoff) + правило движения"
+    learning_outcomes: [LO7]
+    chapter_ref: "§5.1 [for-slide-s26]"
+    references: [anthropic-2024-building-effective-agents]
+    visual:
+      pattern: ladder_with_triggers
+      subtype: schema_layered
+      primary: "Лестница 6 ступеней (bottom-aligned, снизу вверх): обычный код → один вызов → RAG/контекст → workflow → агент → multi-agent. У каждой стрелки-перехода — требование, которое его открывает (NL-ввод / меняющееся+приватное знание / известная последовательность / непредсказуемость+ценность / широкая параллельность). Правило-плашка: «каждый подъём — обмен, не улучшение». Gold — нижняя ступень «обычный код (без ИИ)» как точка отсчёта."
+    interaction: none
+
+  - id: s27
+    file: slides/s27-decision-matrix.md
+    type: matrix
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 3
+    assertion: "Матрица — структура для аргумента, не сумма баллов; нижняя плашка: детерминированная верифицируемая задача → обычный код, без ИИ"
+    learning_goal: "Матрица выбора по 5 осям × 5 архитектур + «когда не ИИ вовсе» (LO7)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§5.2 [for-slide-s27]"
+    references: []
+    visual:
+      pattern: decision_matrix
+      subtype: schema_matrix
+      primary: >
+        5×5 читаемая матрица. Колонки (иконка на каждой): Промпт · RAG ·
+        Fine-tune · Агент · Код (без ИИ). Строки: Знание большое/меняется ·
+        Свежесть/провенанс · Стоимость · Аудируемость · Недетерминизм/риск
+        петель. Ячейки — читаемые слова без крипто-сокращений. Контраст:
+        золото SOLID = сильная сторона, бирюза SOLID = слабая, surface =
+        нейтр. Ocean motif за матрицей. Нижняя gold-плашка во всю ширину
+        (доминанта, stroke 3pt): детерминированная верифицируемая повторяемая
+        → обычный код без ИИ. Schema §5.5 + 5-сек + 50% PASS.
+    interaction: none
+
+  - id: s28
+    file: slides/s28-checklist-apply.md
+    type: summary
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 3
+    assertion: "8 вопросов «прежде чем строить» сворачивают лестницу и матрицу в инструмент, применимый к задаче за 2 минуты"
+    learning_goal: "Чек-лист (LO7 payoff) + worked example (лектор) → mini-apply (студенты, LO4)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.3 [for-slide-s28]"
+    references: []
+    visual:
+      pattern: checklist_plus_apply
+      primary: "Слева — нумерованный чек-лист 8 пунктов в Ocean rounded box (код? один промпт? знание меняется→RAG? поведение→PEFT? влезает→длинный контекст? предсказуемо→workflow? независимо→multi-agent? данные чувствительны→карта+least-privilege). Справа — 2 блока apply: worked example (задача A: 2000 регламентов → RAG, 2 причины по осям) + mini-apply (задача B: бот на ~150 FAQ — студенты проходят сами; разбор позже). Gold — заголовок чек-листа / «сначала попытка, потом сверка»."
+    interaction: apply
+
+  - id: s29
+    file: slides/s29-human-validator-nanda.md
+    type: assertion_visual
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 1.5
+    assertion: "Агент делает — человек проверяет результат и факты (не самообъяснение); ~95% пилотов без ROI — дело в интеграции, не в модели"
+    learning_goal: "Человек-валидатор (callback s07) + урок MIT NANDA"
+    learning_outcomes: [LO7]
+    chapter_ref: "§5.4 [for-slide-s29]"
+    references: [mit-nanda-2025]
+    visual:
+      pattern: role_plus_report
+      primary: "Слева — блок «человек-валидатор» в Ocean rounded box: проверяет результат/факты против источника истины НА значимых решениях ДО действия; callback s07 (не self-rationale). Справа — отчёт MIT NANDA: ~95% пилотов без измеримого ROI; корень — learning gap / провал интеграции, не качество модели. Gold — «~95%» как якорь (подаётся как заголовок отчёта). Footer 12pt italic — framing «отчёт с методологией, не закон»."
+    interaction: none
+
+  - id: s30
+    file: slides/s30-bridge-homework-qa.md
+    type: summary
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 1.5
+    assertion: "Эта рамка — база Лекций 4–17: в каждой индустрии звучит «какая архитектура и почему именно она»"
+    learning_goal: "Рамка лекции как основа отраслевых Л4–17 + ДЗ (Семинар 3). Q&A вынесен в s31 (U-7)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.5 [for-slide-s30]"
+    references: []
+    retitled_v3: "U-6 — было «Мост к отраслям + задание» (function-as-title) → «AI-архитектура — несущая ось отраслевых лекций» (контентный тезис). Q&A удалён → s31."
+    visual:
+      pattern: bridge_plus_homework
+      primary: "Сверху — мост: «Модуль 1 (Л1 что → Л2 почему → Л3 как выбрать) закрыт; дальше отраслевые Л4–17 применяют рамку, тот же вопрос в новой обёртке». Снизу — ДЗ-блок во всю ширину в Ocean rounded box: Семинар 3 «Архитектурный выбор: чат/агент/RAG/API — 3 кейса» (применить чек-лист, формат success-критерия LO7); mini-apply задачи B — разминка. Gold — заголовок Семинар 3. Q&A УБРАН (теперь s31)."
+    interaction: none
+
+  # ─── s31 (U-7): отдельный финальный Q&A слайд ───
+  - id: s31
+    file: slides/s31-qa.md
+    type: qa_minimal
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 5
+    assertion: "Вопросы"
+    learning_goal: "Отдельный финальный слайд Q&A (выделен из s30); минимальный, стиль dedicated Q&A lec-02"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.5 [for-slide-s30]"
+    references: []
+    suffix_insert_after: s30
+    new_in: v3
+    partial_out_strict_in: true   # Q&A — не failure/judgment
+    visual:
+      pattern: qa_minimal
+      primary: "Минимальный финальный слайд (зеркалит dedicated Q&A lec-02 s29): крупное центрированное «Вопросы» (mega bold deep), ниже «Спасибо за внимание» (mid). Внизу — тихая строка-напоминание (Семинар 3 — на следующей неделе). Белый фон, без footer и roadmap-bar — визуальная тишина для открытого Q&A."
+    interaction: qa
+
+# ─── Validation ───
+totals:
+  slides: 36                    # s01–s30 monotonic (30) + 6 suffix
+  suffix_slides: [s04a, s13a, s13b, s23a, s25a, s31]
+  base_slides_locked: "s01–s30 НЕ перенумерованы (cascade-tracking lock, plan §4)"
+  slide_times_sum_min: 70.2     # 68.0 (s01–s30) + 6 suffix:
+                                #   s04a/s13a/s23a/s25a 0.3 + s13b 1.5 +
+                                #   s31 5.0 (Q&A буфер) − s30 уже не содержит Q&A
+  pure_content_min: ~56         # plan §2.2: slide-content без retrieval/переходов
+  retrieval_transitions_min: ~7 # retrieval-моменты (s01/s06/s13/s28) + переходы
+  qa_buffer_min: ~5             # теперь явный отдельный слайд s31 (было в s30)
+  total_min: 75                 # активный ~70 + ~5 Q&A (s31) = 75
+  note: >
+    Plan §2.2 арка (36 слайдов): Р0 s01–s04 = 8 · div s04a 0.3 ·
+    Р1 s05–s08 = 9 · div s09 ~1 · Р2 s10–s13 = 12 · div s13a 0.3 ·
+    s13b 1.5 + Р3 s14–s17 = 9 · div s18 ~1 · Р4 s19–s23 = 13 ·
+    sub-div s23a 0.3 · Р4-sec s24–s25 = 6 · div s25a 0.3 ·
+    Р5 s26–s29 = 11 · s30 1.5 · Q&A s31 ≤5. Divider'ы по 0.3 почти
+    не двигают минутную долю. Итог ≈70 активный + ~5 Q&A = 75.
+
+# Раздел-бюджеты (plan §2.2, с suffix): Р0 s01–s04(+s04a) = 8 ·
+# Р1 s05–s08 = 9 · Р2 s09–s13(+s13a) = 12 · Р3 s13b–s17 = 9 ·
+# Р4 s18–s25(+s23a) = 19 · Р5 s25a–s31 = 11 (+ Q&A буфер s31).
+
+ai_failure_judgment:
+  # plan §5 — strict-in слайды. +6 структурных suffix = partial→out (честно
+  # НЕ засчитаны: divider'ы / определение s13b / Q&A s31 — не failure/judgment).
+  in_bucket_slides: [s07, s08, s12, s13, s16, s17, s22, s23, s24, s25, s27, s28]
+  count: 12
+  share_by_slides: "12/36 ≈ 33% по слайдам; ≈30/70 ≈ ~43% по минутам (честная метрика)"
+  partial_out: [s01, s14, s26, s29, s04a, s13a, s13b, s23a, s25a, s31]
+  note: >
+    speaker notes этих 12 слайдов несут failure/judgment связным студенческим
+    текстом. +6 структурных suffix — partial→out (plan §5, решение #78):
+    s04a/s13a/s23a/s25a divider, s13b определение, s31 Q&A. Минутная доля
+    strict-in ≥30% сохранена (divider'ы по 0.3 мин почти не двигают метрику).
+    chapter strict-in ~58% не затронут (глава не правится). Holistic ≥30%
+    в каждом артефакте удержан, single-artifact concentration отсутствует.
+
+verify_day_of_items:
+  - s07_cot_faithfulness_percentages   # Claude 3.7 ~25% / DeepSeek R1 ~39%
+  - s20_mcp_adoption                    # MCP принятие/масштаб экосистемы
+  - s24_retention_zdr_boundary          # граница ZDR Anthropic / retention статус
+
+fact_check_items:
+  - s16_catastrophic_forgetting_mechanisms  # Luo et al. arXiv:2308.08747 (2023)
+  - s23_4200_loop                            # Sattyam Jain postmortem 2026-04, single-author, illustrative
+  - s29_mit_nanda_95                          # отчёт + методология, не закон
+
+# ─────────────────────────────────────────────────────────────────────────
+# КОНЕЦ PART 2. Начало (deck/palette/motif/typography/glossary_lock +
+# slides s01..s13a) — см. deck.yaml (PART 1).
+# ─────────────────────────────────────────────────────────────────────────

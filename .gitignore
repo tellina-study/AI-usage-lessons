@@ -48,3 +48,7 @@ library/lectures/*/rendered/archive-v*/
 
 # Lecture rendered snapshots — derived ephemeral, regeneratable from PPTX
 library/lectures/*/rendered/snapshots/
+
+# Office temp lock files
+~$*
+library/lectures/*/rendered/~$*

@@ -1,0 +1,104 @@
+# library/lectures/lec-03/glossary.yaml
+# Glossary LOCK — Лекция 3 «Архитектуры AI-систем: агенты, RAG, API».
+# Сгенерирован оркестратором после USER GATE A (chapter v1.1 finalized, 2026-05-16).
+# Источник канона: plan-v2-final.md §6 + §7 inline-required + chapter v1.1.
+# Правило: critics MAY flag inconsistency, MAY NOT propose rename без USER approval.
+# consistency-checker сверяет slides/*.md и speech.md по этому файлу (terminology-only mode).
+# Issue: #87.
+
+lecture: 3
+locked_at: "2026-05-16"
+source: "notes/lecture-3-review/final/plan-v2-final.md §6/§7; chapter v1.1"
+
+terms:
+  - canonical: "архитектура AI-системы"
+    aliases: []
+    forbidden: ["стек", "пайплайн (как синоним архитектуры)"]
+  - canonical: "промпт"
+    aliases: []
+    forbidden: ["prompt"]
+  - canonical: "few-shot (примеры в промпте)"
+    aliases: ["few-shot"]
+    forbidden: ["фью-шот"]
+  - canonical: "Chain-of-thought (пошаговое рассуждение)"
+    aliases: ["CoT (1× в скобках при первом упоминании)"]
+    forbidden: ["цепочка мыслей (как термин)"]
+  - canonical: "faithfulness (верность рассуждения)"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании (§1.3)"
+  - canonical: "RAG (Retrieval-Augmented Generation)"
+    aliases: ["поиск-дополненная генерация (1×)"]
+    forbidden: ["раг"]
+  - canonical: "retrieval (поиск релевантного)"
+    aliases: []
+    forbidden: ["ретривал"]
+  - canonical: "grounding (опора на источник)"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании"
+  - canonical: "observability (наблюдаемость)"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании"
+  - canonical: "golden set (эталонный проверочный набор)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §2.4 при первом упоминании"
+  - canonical: "fine-tuning (дообучение)"
+    aliases: ["дообучение"]
+    forbidden: ["файнтюнинг (в chapter)"]
+    note: "inline-define §3 (был пробел пререквизита)"
+  - canonical: "PEFT (LoRA/QLoRA)"
+    aliases: ["PEFT"]
+    forbidden: []
+    note: "расшифровка 1× при первом упоминании"
+  - canonical: "distillation (дистилляция)"
+    aliases: ["дистилляция"]
+    forbidden: []
+  - canonical: "контекст-инжиниринг"
+    aliases: []
+    forbidden: ["промпт-инжиниринг (как синоним)"]
+  - canonical: "context rot (деградация на длинном контексте)"
+    aliases: []
+    forbidden: []
+    note: "сшить с «lost in the middle» из Лекции 2 §3 при первом упоминании"
+  - canonical: "tool use / function calling"
+    aliases: ["вызов инструментов (1×)"]
+    forbidden: ["тулюз"]
+  - canonical: "MCP (Model Context Protocol)"
+    aliases: ["MCP"]
+    forbidden: ["эм-си-пи"]
+  - canonical: "агент (plan → act → check → iterate)"
+    aliases: ["агент"]
+    forbidden: ["бот (как синоним агента)"]
+  - canonical: "workflow (предопределённые пути)"
+    aliases: []
+    forbidden: ["воркфлоу"]
+    note: "в chapter допускается пояснение «сценарий / рабочий поток»"
+  - canonical: "prompt injection (инъекция в промпт)"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании (§4.1), формальный разбор §4.7"
+  - canonical: "least-privilege (принцип наименьших привилегий)"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании"
+  - canonical: "ZDR (Zero Data Retention)"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании (§4.6)"
+  - canonical: "BAA (Business Associate Agreement — договор об обработке данных)"
+    aliases: []
+    forbidden: []
+    note: "расшифровка при первом упоминании (§4.6)"
+  - canonical: "catastrophic forgetting (катастрофическое забывание)"
+    aliases: []
+    forbidden: []
+
+forbidden_anglicisms:
+  # speech-writer Англицизм Cleanup Pass: заменять на русское
+  - { wrong: "пайплайн", use: "конвейер" }
+  - { wrong: "фоллбэк", use: "запасной вариант" }
+  - { wrong: "эдж-кейс", use: "краевой случай" }
+  - { wrong: "инсайт", use: "вывод / наблюдение" }

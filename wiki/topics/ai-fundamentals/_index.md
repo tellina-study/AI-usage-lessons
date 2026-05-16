@@ -3,15 +3,15 @@ title: "AI Fundamentals"
 type: topic-index
 sources_count: 45
 sub_topics: [classification-taxonomies, history-definitions, human-vs-ai, benchmarks]
-lectures: [1, 2, 3, 4, 5, 6, 8]
+lectures: [1, 2]
 coverage: high
-updated_at: 2026-04-07
+updated_at: 2026-05-16
 ---
 
 # AI Fundamentals
 
 ## Overview
-Core AI concepts: what AI is, how it's classified, its history, capabilities vs humans, and key benchmarks. This is the foundational topic covered primarily in Lecture 1 and revisited across all industry lectures (2-8) via LO1.
+Core AI concepts: what AI is, how it's classified, its history, capabilities vs humans, and key benchmarks. This is the foundational topic covered primarily in **Lecture 1 "Введение"** (produced), with **Lecture 2 "Архитектура AI: от машинного обучения до трансформеров"** (produced) as the second key foundation lecture (ML → transformers, attention, context window). The classification framework is revisited across the industry lectures (4-17) via LO1.
 
 ## Sub-topics
 
@@ -42,8 +42,9 @@ Core AI concepts: what AI is, how it's classified, its history, capabilities vs 
 - Market statistics, adoption rates, industry-specific applications
 
 ## Lectures
-- [Lecture 1](../../lectures/lec-01.md) -- Introduction (primary lecture for this topic)
-- Lectures 2-8 revisit classification via LO1 in industry context
+- [Lecture 1](../../lectures/lec-01.md) -- Introduction (primary lecture for this topic, produced)
+- [Lecture 2](../../lectures/lec-02.md) -- Архитектура AI: ML → transformers (second key foundation lecture, produced)
+- Industry lectures 4-17 revisit classification via LO1 in industry context
 
 ## Key Papers (downloaded)
 - [vaswani-2017-attention.pdf](../../../library/papers/lecture-1/vaswani-2017-attention.pdf)

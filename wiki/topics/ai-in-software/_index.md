@@ -2,21 +2,21 @@
 title: "AI in Software Development"
 type: topic-index
 sources_count: 0
-lectures: [2]
+lectures: [4]
 coverage: low
-updated_at: 2026-04-07
+updated_at: 2026-05-16
 ---
 
 # AI in Software Development
 
 ## Overview
-AI-assisted coding, testing, DevOps, CI/CD integration. Primary lecture: 2.
+AI-assisted coding, testing, DevOps, CI/CD integration. Primary lecture: 4 "AI в разработке программного обеспечения".
 
 ## Sources
-Content pending -- lecture 2 research not yet completed.
+Content pending -- lecture 4 research not yet completed.
 
 ## Lectures
-- [Lecture 2](../../lectures/lec-02.md) *(planned)* -- primary lecture
+- [Lecture 4](../../lectures/lec-04.md) *(planned)* -- primary lecture
 
 ## Backlinks
 - [wiki/index.md](../../index.md) -- topic listing

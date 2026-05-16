@@ -423,3 +423,12 @@ Phase 11 demonstrated single speech-writer agent doing 3-artifact touches (chapt
 **Урок:** имя папки лекции должно сразу = номеру РПД (не порядку производства). Конвенция «repo_dir != number» из #86 создала путаницу за 2 шага (производство → перенумерация → переименование). Для будущих лекций: папка `lec-NN` = номер РПД сразу.
 
 **Открытый pre-existing gap (НЕ из #94):** `ontology/store.ttl` моделирует старую структуру (lec_04=медицина, lec_07=этика) — рассинхрон с РПД. Отдельный issue #95 (требует RDF-ремоделяции, не path-rename; слепая замена = IRI-коллизия).
+
+## 2026-05-16 — Лекция 4 USER GATE 0 (#99): owner-решения
+
+Phase 1 Лекции 4 «AI в разработке ПО». plan-v2-final после critique (methodology REVISE 1P0/6P1 + reader-text-only APPROVE-WITH-POLISH) + roast — 8 пунктов закрыты.
+- **Глубина `lec-04/chapter.md` = 22k+ слов** (как Глава 3): red-flag «>15k» (`tools/lecture-production/README.md` §6) **явно снят владельцем** на GATE 0 (тот же governance escape-hatch, что для lec-03; принцип memory feedback_governance_rules — явное+документированное owner-решение для класса-исключения). Только для lec-04. Document Size Limit 600 строк — split, waiver НЕТ.
+- Hook s01 = METR −19% perception-gap; Replit → s16.
+- Slide-count Лекции 4 LOCKED = 32.
+- **L4 — owner-waiver ≥30% НЕдоступен** (∉ L1–L3, Решение #82): несущая ось A→D сама НЕ failure → failure/judgment-плотность главы проектируется намеренно (каждый раздел завершать failure-кейсом + критерием «когда не/опасно»; ось не засчитывается). strict-in slides честно 14/32≈44%, per-artifact операционализирован (chapter≥40%/slides≥40%/speech≥35% с именованными блоками).
+- Конвенция repo-папок (после #94): `lec-04` = канон Лекция 4 (ПО); медицина = lec-07.

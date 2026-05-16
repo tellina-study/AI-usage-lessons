@@ -164,13 +164,11 @@ s01 open-Q 30с («ускоряет ли вас AI — откуда знаете
 ## 9. Свежесть (fact-checker)
 `[VFY-day-of]`: SWE-bench Verified/Pro числа+лидеры (s12 — Л1-урок ARC-AGI устарел за 2 дня), adoption-доли (SO/JetBrains/DORA, s27), market-size, «лучший инструмент». `[FACT-CHECK]`: METR late-2025 «unreliable» (s17 — early-2025 RCT + честная оговорка, reversal в chapter), slopsquatting % (s22). Стабильные (yearly+): Brooks essential/accidental, METR early-2025 perception-gap, SO-2025 trust↓ direction, Anthropic −17% junior, GitClear churn, инциденты с датами (Replit/Kiro/curl/CamoLeak).
 
-## 10. Открытые вопросы USER GATE 0
-| # | Вопрос | Реком. |
-|---|---|---|
-| Q1 | Hook s01: METR −19% perception-gap **vs** Replit-деструктив | **METR** (контринтуитив, рамкирует «измеряй не верь» + личное для аудитории; Replit→s16) |
-| Q2 | Глубина chapter — как Л3 (22k+, deep-dive+Q&A-бэкап, split по 600 строк)? | Да (память feedback_chapter_depth) — owner-подтверждение |
-| Q3 | Общее одобрение plan-v2 → Phase 2 chapter | — |
-| — | Q4 (slide-count 32), Q5 (LO4 entry-Apply) — **закрыты** в v2 | — |
+## 10. USER GATE 0 — РЕШЕНИЯ ВЛАДЕЛЬЦА (2026-05-16, зафиксировано)
+- **Q1 Hook = METR −19% perception-gap** (s01). Replit-деструктив остаётся s16.
+- **Q2 Глубина chapter = 22k+ как Глава 3** (глубокий референс + deep-dive boxes + Q&A-бэкап). **Явное документированное owner-решение:** red-flag «>15k слов» (`tools/lecture-production/README.md` §6) СНЯТ для `lec-04/chapter.md` (governance escape-hatch, `notes/decisions.md` 2026-05-16). Split по Document Size Limit 600 строк (waiver недоступен) — `chapter.md` + `chapter-part2.md`[+part3] с кросс-ссылками.
+- **Q3 plan-v2-final ОДОБРЕН** → Phase 2 chapter draft.
+- Q4 (slide-count LOCKED=32), Q5 (LO4 = entry-Apply, mastery Семинар 4) — закрыты в v2.
 **Pre-Phase-2 (orchestrator/book-editor):** сверить §-ссылки Л3 против finalized `library/lectures/lec-03/chapter*.md` (PR #91 merged).
 
 ## 11. Source-of-truth chain

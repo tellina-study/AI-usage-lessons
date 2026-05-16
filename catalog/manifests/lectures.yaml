@@ -44,7 +44,7 @@ lectures:
     module: 1
     learning_outcomes: [LO7, LO4]
     repo_dir: lec-03
-    status: in_production
+    status: produced
     issue: 87
     updated_at: "2026-05-16"
 

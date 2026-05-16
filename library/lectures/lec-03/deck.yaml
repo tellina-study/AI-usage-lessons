@@ -1,0 +1,590 @@
+# library/lectures/lec-03/deck.yaml
+#
+# Deck-структура Лекции 3 «Архитектуры AI-систем: агенты, RAG, API» (30 слайдов).
+#
+# Source: chapter v1.1 finalized (~22450 слов, 3 части) +
+# plan v2-final (USER GATE 0 approved 2026-05-16, Q1–Q3).
+# Phase 5 multi-artifact pipeline — slides content alignment (НЕ рендер).
+# Issue #87 · Branch: issue-87-lec-03-architectures
+# Slide-IDs s01–s30 LOCKED (cascade-tracking lock, plan §4).
+
+deck:
+  lecture_number: 3
+  title: "Лекция 3. Архитектуры AI-систем: агенты, RAG, API"
+  audience: "3 курс ИУ6, инженеры-разработчики (универсально, без локального binding в контенте)"
+  duration_min: 75
+  central_question: "У меня есть задача и доступ к LLM. Какую архитектуру выбрать — и когда правильный ответ «не ИИ»?"
+  learning_outcomes: [LO7, LO4]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v1.1 finalized (~22450 слов, 3 части)
+  plan: notes/lecture-3-review/final/plan-v2-final.md (v2-final)
+  total_slides: 30
+  curriculum_level: introductory
+
+palette:
+  primary_deep: "#21295C"      # Ocean deep — text on light bg, assertions
+  primary_mid: "#065A82"       # Ocean mid — headings, accents, primary chart series
+  primary_light: "#1C7293"     # Ocean light — icons, borders, motif strokes
+  teal: "#028090"              # secondary accent — chart contrast, secondary icons
+  gold: "#F0AB00"              # highlight — wow-stat, ≥1× per slide
+  surface: "#F4F7FA"           # motif rounded box background
+  background: "#FFFFFF"        # default slide background
+
+motif:
+  type: ocean_rounded_box
+  radius_pt: 12
+  stroke: "#1C7293"
+  stroke_pt: 1.5
+  surface: "#F4F7FA"
+  padding_pt: 16
+  cast_shadow: false
+
+typography:
+  heading_font: "Inter"
+  mono_font: "JetBrains Mono"
+  fallback_heading: "Arial"
+  sizes:
+    cover_title: 36
+    cover_hero: 60
+    slide_assertion: 28
+    sub_heading: 20
+    body: 16
+    caption: 12
+    mega_stat: 80
+
+glossary_lock:
+  # 25 canonical terms — from glossary.yaml (locked 2026-05-16, chapter v1.1).
+  # designer/critic enforce no drift; alias только 1× при первом упоминании.
+  - архитектура AI-системы
+  - промпт
+  - few-shot (примеры в промпте)
+  - Chain-of-thought (пошаговое рассуждение)
+  - faithfulness (верность рассуждения)
+  - RAG (Retrieval-Augmented Generation)
+  - retrieval (поиск релевантного)
+  - grounding (опора на источник)
+  - observability (наблюдаемость)
+  - golden set (эталонный проверочный набор)
+  - fine-tuning (дообучение)
+  - PEFT (LoRA/QLoRA)
+  - distillation (дистилляция)
+  - контекст-инжиниринг
+  - context rot (деградация на длинном контексте)
+  - tool use / function calling
+  - MCP (Model Context Protocol)
+  - агент (plan → act → check → iterate)
+  - workflow (предопределённые пути)
+  - prompt injection (инъекция в промпт)
+  - least-privilege (принцип наименьших привилегий)
+  - ZDR (Zero Data Retention)
+  - BAA (Business Associate Agreement)
+  - catastrophic forgetting (катастрофическое забывание)
+  - distillation (дистилляция)
+
+slides:
+  # ─── Раздел 0. Открытие + recap + ЦВ (8 мин, s01-s04) ───
+  - id: s01
+    file: slides/s01-air-canada-hook.md
+    type: case_study
+    section: "Раздел 0. Открытие"
+    duration_min: 3
+    assertion: "Air Canada заплатила за выдумку чат-бота — потому что выбрала генеративную архитектуру для задачи, требовавшей детерминированного lookup"
+    learning_goal: "Hook: неправильный выбор архитектуры = реальное последствие; рамкирование тезиса лекции"
+    learning_outcomes: [LO7]
+    chapter_ref: "§Введение [for-slide-s01]"
+    references: [mccarthy-tetrault-2024, aba-2024]
+    visual:
+      pattern: case_study_contrast
+      primary: "Слева — assertion + краткая хроника дела (вопрос → выдуманный ответ → трибунал 14.02.2024 → компания платит) в Ocean rounded box. Справа — контраст-блок «что выбрали (генеративный чат) vs что было нужно (детерминированный lookup политики)». Gold highlight — дата решения трибунала / факт «компания отвечает за выдумку бота»."
+      backup: none
+    interaction: open_question
+
+  - id: s02
+    file: slides/s02-cover-roadmap.md
+    type: cover
+    section: "Раздел 0. Открытие"
+    duration_min: 0.5
+    assertion: "Лекция 3. Архитектуры AI-систем: агенты, RAG, API"
+    learning_goal: "Cover + roadmap 5 разделов; gold-маркер «Раздел 0»"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§Введение [for-slide-s02]"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Hero-cover: крупная outline «03» (200pt, Primary mid контур). Справа — title 36pt bold deep, под ним 16pt italic light: курс · 75 мин · дата. Внизу — roadmap-bar из 6 карточек (0 Открытие / 1 Промпт / 2 RAG / 3 Fine-tune / 4 API·агенты / 5 Фреймворк), текущая (0) подсвечена gold. БЕЗ Ocean rounded box callout (motif принадлежит content)."
+    interaction: none
+
+  - id: s03
+    file: slides/s03-recap-lec2-bridge.md
+    type: assertion_visual
+    section: "Раздел 0. Открытие"
+    duration_min: 1.5
+    assertion: "Вокруг одного вызова модели надстраиваются 4 обвязки — и одна из них (RAG) стоит прямо на эмбеддингах Лекции 2"
+    learning_goal: "Recap Лекции 2 (single-shot + эмбеддинги) + мост к RAG"
+    learning_outcomes: [LO7]
+    chapter_ref: "§Введение [for-slide-s03]"
+    references: []
+    visual:
+      pattern: hub_and_spokes
+      primary: "В центре — блок «один вызов LLM (single-shot, Лекция 2 §4)» в Ocean rounded box. Вокруг — 4 обвязки: RAG (помечено «= semantic search Лекции 2 §2 + LLM»), function calling, MCP, цикл агента. Стрелка от «эмбеддинги Л2 §2» к RAG-узлу подсвечена gold. Sub-caption: детали — Раздел 2."
+    interaction: none
+
+  - id: s04
+    file: slides/s04-central-question-ladder.md
+    type: assertion_visual
+    section: "Раздел 0. Открытие"
+    duration_min: 3
+    assertion: "Ответ на «какую архитектуру?» — это лестница из 6 ступеней и правило подниматься только под требование задачи"
+    learning_goal: "Центральный вопрос крупно + лестница (карта лекции) с disclaimer"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§Введение [for-slide-s04]"
+    references: [anthropic-2024-building-effective-agents]
+    visual:
+      pattern: ladder_6_steps
+      primary: "Центральный вопрос крупно (28pt bold deep) сверху. Под ним — лестница 6 ступеней снизу вверх: обычный код → один вызов → RAG/контекст → workflow → агент → multi-agent. Каждая ступень — Ocean rounded box. Нижняя ступень «обычный код (без ИИ)» с gold-акцентом (точка отсчёта). Disclaimer 12pt italic: «лестница — карта лекции, не требование понять всё сейчас; каждую ступень разберём отдельно»."
+    interaction: none
+
+  # ─── Раздел 1. Промпт и его границы (9 мин, s05-s08) ───
+  - id: s05
+    file: slides/s05-default-one-call.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Дефолт — один вызов с хорошим промптом; любой подъём по лестнице оплачивается требованием задачи"
+    learning_goal: "Точка отсчёта лестницы + распределение бремени доказательства"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.1 [for-slide-s05]"
+    references: [anthropic-2024-building-effective-agents]
+    visual:
+      pattern: anchor_plus_cost_list
+      primary: "Слева — крупный блок «1 вызов = минимум стоимости + латентности + максимум предсказуемости» в Ocean rounded box. Справа — список «что добавляет каждый подъём»: RAG → конвейер индексации/хранилище/деградация retrieval; агент → внешние вызовы/петли/недетерминизм/поверхность атаки. Gold — фраза-правило «усложнение оплачивается требованием задачи»."
+    interaction: none
+
+  - id: s06
+    file: slides/s06-chain-of-thought.md
+    type: case_study
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2.5
+    assertion: "Chain-of-thought повышает надёжность одного вызова на цепочечных задачах — но это инструмент под класс задач, не глобальный тумблер"
+    learning_goal: "CoT как паттерн лекции + worked example без/с CoT + граница применимости"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.2 [for-slide-s06]"
+    references: [wei-2022-cot]
+    visual:
+      pattern: before_after_contrast
+      primary: "2 колонки в Ocean rounded boxes: «без CoT» (правдоподобный, но неверный ответ на задаче про яблоки) vs «с CoT» (шаги 23−7=16; 2×6=12; 16+12=28 → верно). Внизу — узкая плашка «когда CoT НЕ нужен: извлечение факта / простая классификация — удлиняет, может навредить». Gold — итог «28» в правильной колонке."
+    interaction: think_pause
+
+  - id: s07
+    file: slides/s07-cot-faithfulness-limit.md
+    type: case_study
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Проговорённое рассуждение модели не обязано отражать реальную причину ответа — поэтому человек проверяет результат, а не самообъяснение"
+    learning_goal: "Предел CoT: unfaithfulness как свойство класса + сквозная линия «человек-валидатор»"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.3 [for-slide-s07]"
+    references: [anthropic-2025-reasoning-faithfulness]
+    visual:
+      pattern: stat_pair_plus_rule
+      primary: "2 крупные метрики в Ocean rounded boxes: Claude 3.7 ~25% / DeepSeek R1 ~39% — доля случаев, где модель упомянула реально использованную подсказку. Самая низкая метрика (25%) — gold-акцент как «якорь тревоги». Под ними — правило-плашка: «контроль на self-rationale — не контроль; проверяй результат против внешнего источника». Footer 12pt italic — источник + caveat «freshness quarterly»."
+    interaction: none
+
+  - id: s08
+    file: slides/s08-context-engineering.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2.5
+    assertion: "Минимальный высокосигнальный контекст — инженерное требование: точность падает с длиной (context rot = «lost in the middle» Лекции 2)"
+    learning_goal: "Контекст-инжиниринг + context rot (явная сшивка) + критерий «когда НЕ RAG»"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.4 [for-slide-s08]"
+    references: [anthropic-2025-context-engineering, chroma-2025-context-rot]
+    visual:
+      pattern: curve_plus_criterion
+      primary: "Слева — нисходящая кривая «точность извлечения ↓ по мере роста токенов в контексте» (Ocean rounded box), подпись «context rot = lost in the middle Лекции 2 §3, новый термин». Справа — критерий-плашка «когда НЕ RAG: малый стабильный корпус → full-context + кэширование». Gold — точка/зона провала на кривой."
+    interaction: none
+
+  # ─── Раздел 2. RAG (12 мин, s09-s13) ───
+  - id: s09
+    file: slides/s09-section2-divider-rag.md
+    type: section_divider
+    section: "Раздел 2. RAG"
+    duration_min: 1
+    assertion: "Раздел 2 — RAG: поиск-дополненная генерация поверх эмбеддингов Лекции 2"
+    learning_goal: "Section divider раздела 2 + одно-фразовое «что такое RAG»"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.1 [for-slide-s09]"
+    references: []
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Большое «Раздел 2» по центру (mega 120pt gold-outline). Под ним — «RAG: поиск-дополненная генерация». Frame-фраза 20pt: «извлечь релевантное → положить в контекст → ответить с опорой на источник». Внизу — roadmap-bar (6 карточек) с gold-маркером на «2 RAG»."
+    interaction: none
+
+  - id: s10
+    file: slides/s10-rag-principle.md
+    type: process
+    section: "Раздел 2. RAG"
+    duration_min: 3
+    assertion: "RAG = индексация → retrieval (semantic search Лекции 2) → генерация с опорой; «не знаю» — корректный ответ, выдумка — дефект"
+    learning_goal: "Принцип RAG в 3 шага + инвариант grounding"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.1 [for-slide-s10]"
+    references: [lewis-2020-rag]
+    visual:
+      pattern: pipeline_3_stages
+      subtype: schema_pipeline
+      primary: "Горизонтальный 3-stage pipeline (MSO_SHAPE.RIGHT_ARROW): (1) Индексация — корпус → чанки → эмбеддинги в хранилище; (2) Retrieval — вопрос → эмбеддинг → top-k фрагментов (помечено «= semantic search Л2 §2, не переобъясняем»); (3) Генерация с опорой — ответ + цитата источника. Под pipeline — gold-плашка инвариант: «ответ с цитатой ≠ правдоподобный текст; „не знаю“ — корректно»."
+    interaction: none
+
+  - id: s11
+    file: slides/s11-when-rag-right.md
+    type: assertion_visual
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "RAG оправдан, когда 4 признака складываются ОДНОВРЕМЕННО: знание большое И меняется И нужен провенанс И приватное"
+    learning_goal: "Когда RAG — правильный выбор (признаки в конъюнкции, не дизъюнкции)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.2 [for-slide-s11]"
+    references: [u-niah-2025]
+    visual:
+      pattern: four_conjunction_cards
+      primary: "4 равные карточки-признака в Ocean rounded box: «большое/растущее», «меняется», «нужны свежесть+провенанс», «приватная база» — соединены явным знаком «И» (конъюнкция) к центральному «→ RAG». Под ними — worked example (корп. база регламентов: все 4 признака ✓). Gold — слово «ОДНОВРЕМЕННО» / знак И как смысловой якорь."
+    interaction: none
+
+  - id: s12
+    file: slides/s12-when-not-rag.md
+    type: comparison
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "Знать, когда RAG НЕ нужен, ценнее: малый корпус → full-context; фиксированная политика → lookup; нет observability → скрытая бомба"
+    learning_goal: "3 критерия «когда НЕ RAG» (вклад в LO7)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.3 [for-slide-s12]"
+    references: [anthropic-2025-context-engineering]
+    visual:
+      pattern: three_criteria_columns
+      subtype: schema_matrix
+      primary: "3 равные колонки в Ocean rounded box, каждая — критерий «не RAG» + правильная альтернатива: (1) корпус <~200k ток. → full-context + кэш; (2) фиксированная политика/значение → детерминированный lookup; (3) нет процесса наблюдения за retrieval → скрытая бомба (отложенный невидимый отказ). Gold — формулировка «скрытая бомба» как самый недооценённый случай."
+    interaction: none
+
+  - id: s13
+    file: slides/s13-rag-fails-air-canada.md
+    type: case_study
+    section: "Раздел 2. RAG"
+    duration_min: 3
+    assertion: "«Вернул что-то ≠ вернул правильное»: RAG без observability тихо деградирует на масштабе; Air Canada — отказ grounding в чистом виде"
+    learning_goal: "Провал RAG на масштабе (3 кейса) + Air Canada revisited как grounding"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.4, §2.5 [for-slide-s13]"
+    references: [barnett-2024-rag-failures, mccarthy-tetrault-2024]
+    visual:
+      pattern: failure_cases_plus_callback
+      primary: "Слева — 3 компактных кейса деградации в Ocean rounded box: legal-AI (нерелевантные прецеденты), medical-RAG (смешал пациентов), support-бот (тихо просел после ~10k док.). Справа — Air Canada revisited: диагноз «сгенерированный текст в роли извлечённого факта» + правильная альтернатива (lookup / strict grounding + цитата + «не знаю»). Gold — фраза-урок «вернул что-то ≠ вернул правильное». Footer 12pt italic — источники + framing «illustrative»."
+    interaction: poll
+
+  # ─── Раздел 3. Fine-tune vs промпт vs RAG (9 мин, s14-s17) ───
+  - id: s14
+    file: slides/s14-fine-tuning-narrowed.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "Fine-tuning не «умер» — он сузился: в 2026 это поведение/стиль/формат/политика/дистилляция, НЕ знания"
+    learning_goal: "Калибровка области fine-tuning + inline-define дообучения"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.1 [for-slide-s14]"
+    references: [bigdata-boutique-2026]
+    visual:
+      pattern: scope_split
+      primary: "Inline-define сверху 16pt italic: «дообучение = доп. обучение готовой модели на своих данных, меняются веса (в Л1 — тип использования, здесь — архитектурный выбор)». Ниже — 2 зоны в Ocean rounded box: «ушло из FT → RAG/длинный контекст: знание, факты, что меняется» vs «осталось за FT: поведение / стиль / формат / политика / дистилляция». Gold — слово «сузился» / граница знание↔поведение."
+    interaction: none
+
+  - id: s15
+    file: slides/s15-peft-not-full-ft.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2
+    assertion: "PEFT (LoRA/QLoRA) почти всегда лучше full fine-tuning: дешевле, модульнее и заметно снижает риск catastrophic forgetting"
+    learning_goal: "PEFT вместо full-FT — 3 причины, третья архитектурная (надёжность)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.2 [for-slide-s15]"
+    references: []
+    visual:
+      pattern: frozen_base_plus_adapters
+      primary: "Слева — схема в Ocean rounded box: большой замороженный блок «базовые веса (frozen)» + маленькие подключаемые «адаптеры LoRA». Справа — 3 причины: дешевле/быстрее; модульность (1 база — много адаптеров); ↓ риск forgetting (база не переписывается). DPO/RFT — 1 строка «спектр методов — в главе». Gold — «адаптеры мегабайты vs гигабайты» или причина №3 (архитектурная)."
+    interaction: none
+
+  - id: s16
+    file: slides/s16-catastrophic-forgetting.md
+    type: case_study
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "Узкий агрессивный fine-tuning ломает общие способности; без eval-петли и версий датасета — это не риск, а критерий «не делай»"
+    learning_goal: "Провал catastrophic forgetting + дисциплина превращает риск в критерий"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.3 [for-slide-s16]"
+    references: [luo-2023-catastrophic-forgetting]
+    visual:
+      pattern: two_metrics_diverge
+      primary: "Слева — 2 расходящиеся линии в Ocean rounded box: целевая метрика ↑ (модель отлично классифицирует), общие способности ↓ (рассуждение проседает незаметно). Подпись: «тяжелее с ростом масштаба модели». Справа — критерий-плашка: «нет eval-петли + версий датасета → нет сигнала о поломке и кнопки отката → НЕ делай FT». Gold — расходящаяся точка / слово «незаметно». Footer 12pt italic — источник + framing «исследования показывают»."
+    interaction: none
+
+  - id: s17
+    file: slides/s17-criteria-what-where.md
+    type: comparison
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2
+    assertion: "Знание меняется → RAG (не FT); поведение/тон/формат → fine-tuning (PEFT); детерминированное → код. Гибрид — норма 2026"
+    learning_goal: "Критерии «что куда» (LO7) + почему гибрид — норма"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.4 [for-slide-s17]"
+    references: [bigdata-boutique-2026]
+    visual:
+      pattern: criteria_table
+      subtype: schema_matrix
+      primary: "Таблица «если задача требует… → правильный инструмент → и НЕ этот, потому что»: 4 строки (меняющееся знание → RAG; поведение/тон/формат → PEFT; снизить стоимость на узкой задаче → дистилляция; детерминированный ответ → код без ИИ). Под таблицей — плашка «гибрид = норма там, где есть И проблема знания, И проблема поведения; не „больше компонентов лучше“». Gold — строка «детерминированное → код без ИИ» (нижняя граница)."
+    interaction: none
+
+  # ─── Раздел 4. API · tools · MCP · агенты + безопасность (19 мин, s18-s25) ───
+  - id: s18
+    file: slides/s18-section4-divider-api.md
+    type: section_divider
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 1
+    assertion: "Раздел 4 — как AI становится компонентом системы: API, MCP, цикл агента + кто видит данные"
+    learning_goal: "Section divider раздела 4 (самый большой) + одно-фразовый фрейм"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4 [for-slide-s18]"
+    references: []
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Большое «Раздел 4» по центру (mega 120pt gold-outline). Под ним — «API · tools · MCP · агенты + безопасность». Frame-фраза 20pt: «от собеседника в окне чата — к компоненту продакшен-системы, и кто видит данные в цепочке». Внизу — roadmap-bar (6 карточек), gold-маркер на «4 API·агенты»."
+    interaction: none
+
+  - id: s19
+    file: slides/s19-api-layer.md
+    type: assertion_visual
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "3 механизма делают модель компонентом системы: structured output (встраиваемая), function calling (активная), prompt caching (экономически жизнеспособная)"
+    learning_goal: "API-слой — 3 механизма на assertion-уровне (разбор и приватность → notes/глава)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.1 [for-slide-s19]"
+    references: []
+    visual:
+      pattern: three_role_cards
+      primary: "3 равные карточки в Ocean rounded box, по одному тезису на механизм: structured output → «выход = валидные данные, не текст для парсинга» (встраиваемая); function calling → «модель формулирует намерение, ваш код исполняет» (активная); prompt caching → «не переплачивать за неизменный префикс» (экономически жизнеспособная). Плашка снизу: «ни один не делает модель надёжнее — правило лестницы не отменяется». Gold — связка-вывод. Числа экономии НЕ на видимом слое (→ notes)."
+    interaction: none
+
+  - id: s20
+    file: slides/s20-mcp-standard.md
+    type: assertion_visual
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2
+    assertion: "MCP — де-факто стандарт подключения инструментов («USB-C для LLM»); но стандартизация подключения НЕ равна безопасности подключаемого"
+    learning_goal: "MCP как стандарт (N×M → N+M) + критический поворот доверия"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.2 [for-slide-s20]"
+    references: [mcp-adoption-2025]
+    visual:
+      pattern: nxm_to_npm_plus_warning
+      primary: "Слева — визуал «N×M несовместимых интеграций → N+M через MCP» (USB-C метафора) в Ocean rounded box; мини-таймлайн принятия (Anthropic 11/2024 → OpenAI 03/2025 → Google 04/2025 → независимый фонд). Справа — плашка-предупреждение: «подключить за минуту ≠ доверять подключённому; каждый инструмент — код + носитель инъекции + новая retention-граница». Gold — фраза-поворот «удобство подключения — не аргумент за подключение». Footer 12pt italic — caveat «VFY adoption day-of»."
+    interaction: none
+
+  - id: s21
+    file: slides/s21-agent-loop.md
+    type: process
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 3
+    assertion: "Агент = цикл plan → act → check → iterate; каждый шаг — место отказа, и шаг check не должен быть самооценкой модели"
+    learning_goal: "Цикл агента + check как несущий шаг (callback s07)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.3 [for-slide-s21]"
+    references: [yao-2022-react]
+    visual:
+      pattern: cycle_4_steps
+      subtype: schema_cycle
+      primary: "Замкнутый цикл 4 шага (plan → act → check → iterate) со стрелками по часовой и явной стрелкой возврата iterate→plan + меткой «повторяется». Под каждым шагом — его режим отказа (близорукий план / падающий инструмент / нет проверки / нет лимита итераций). Шаг check — gold-акцент: «валидация против ВНЕШНЕГО критерия, не self-rationale (callback s07)». ReAct/Reflexion — 1 строка «паттерны — в главе»."
+    interaction: none
+
+  - id: s22
+    file: slides/s22-workflow-vs-agent.md
+    type: comparison
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "Предсказуемая задача → workflow; непредсказуемая И ценность оправдывает кратный рост стоимости → агент. Большинство надёжных систем — workflow"
+    learning_goal: "Workflow vs Agent (LO7) — операциональное различение + размен"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.4 [for-slide-s22]"
+    references: [anthropic-2024-building-effective-agents]
+    visual:
+      pattern: two_column_compare
+      subtype: schema_matrix
+      primary: "2 равные колонки в Ocean rounded box: Workflow — «предопределённые в коде пути; последовательность известна заранее; предсказуемо/аудируемо» vs Агент — «динамически определяет процесс; кратно больше токенов; ниже аудируемость, выше риск петель». Диагностический вопрос-плашка: «могу ли я заранее выписать последовательность шагов? да → workflow». Multi-agent дебаты — 1 строка «Cognition vs Anthropic — в главе». Gold — фраза «найди простейшее»."
+    interaction: none
+
+  - id: s23
+    file: slides/s23-agent-failures.md
+    type: case_study
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 3
+    assertion: "Агент сжёг $4,200 за 63ч в петле, потому что не «видит» бюджета; 5×99% = 95%, не 99% — надёжности перемножаются"
+    learning_goal: "Провалы агентов: петля без лимитов + reliability compounding + мульти-агентная хрупкость"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.5 [for-slide-s23]"
+    references: [jain-2026-agent-loop, mindstudio-2025-reliability]
+    visual:
+      pattern: three_failure_cards
+      primary: "3 карточки-провала в Ocean rounded box: (1) $4,200/63ч петля — нет budget/loop-лимитов; правильно — retry-with-backoff скрипт, не агент; (2) reliability compounding — 5×99%≈95%, 10×99%≈90%; «улучшить шаг» слабее «убрать хопы»; (3) мульти-агентная хрупкость на зависимостях → single-threaded агент. Gold — число «$4,200» / «95%» как якорь. Footer 12pt italic — источники + framing «illustrative / single-author»."
+    interaction: none
+
+  - id: s24
+    file: slides/s24-data-in-chain.md
+    type: assertion_visual
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "«У нас ZDR» ≠ «нигде ничего не хранится»: судебный приказ и third-party/MCP-звенья системно уводят данные из-под ZDR"
+    learning_goal: "Безопасность: карта данных в цепочке + retention/ZDR границы (SECURITY)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.6 [for-slide-s24]"
+    references: [nyt-v-openai-2025, anthropic-2026-data-retention]
+    visual:
+      pattern: data_chain_map
+      subtype: schema_architecture
+      primary: "Горизонтальная карта-цепочка в Ocean rounded box: ваши данные → агент → инструмент → внешний API → провайдер → подрядчики; каждое звено помечено «своя retention-граница». 2 факта-плашки: судебный приказ (логи сохраняются поверх вашей политики); ZDR не покрывает third-party/Files/Batch/MCP-коннектор. Правило: «карта данных по фиче, не галочка ZDR»; не слать регулируемое без ZDR/BAA. Gold — фраза-урок. CVE/vendor-числа НЕ на видимом слое (→ notes/глава)."
+    interaction: none
+
+  - id: s25
+    file: slides/s25-tool-attacks.md
+    type: case_study
+    section: "Раздел 4. API · tools · MCP · агенты + безопасность"
+    duration_min: 2.5
+    assertion: "Для агента недоверенный контент = команда (prompt injection); катастрофа = инъекция × широкие права. Защита — карта + 4 правила"
+    learning_goal: "Атаки через инструменты + 4 правила проектирования (SECURITY)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.7 [for-slide-s25]"
+    references: [willison-2025-prompt-injection]
+    visual:
+      pattern: attack_map_plus_4_rules
+      primary: "Слева — карта-механизм в Ocean rounded box: недоверенный контент (issue/тикет/страница) → попадает в контекст модели → исполняется как команда; «инъекция × широкие права = катастрофа» (GitHub MCP heist, tool poisoning — кратко, без CVE). Справа — 4 правила: least-privilege; изоляция недоверенного контента; human-in-the-loop на write; allowlist/pin. Gold — фраза «недоверенный контент = команда». CVE-номера НЕ на видимом слое (→ глава/notes)."
+    interaction: none
+
+  # ─── Раздел 5. Фреймворк решения + финал (12 мин, s26-s30) ───
+  - id: s26
+    file: slides/s26-complexity-ladder.md
+    type: process
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 2
+    assertion: "Лестница сложности: оставайся на нижней ступени, поднимайся только под требование задачи; нижняя ступень — обычный код без ИИ"
+    learning_goal: "Лестница сложности как инструмент (LO7 payoff) + правило движения"
+    learning_outcomes: [LO7]
+    chapter_ref: "§5.1 [for-slide-s26]"
+    references: [anthropic-2024-building-effective-agents]
+    visual:
+      pattern: ladder_with_triggers
+      subtype: schema_layered
+      primary: "Лестница 6 ступеней (bottom-aligned, снизу вверх): обычный код → один вызов → RAG/контекст → workflow → агент → multi-agent. У каждой стрелки-перехода — требование, которое его открывает (NL-ввод / меняющееся+приватное знание / известная последовательность / непредсказуемость+ценность / широкая параллельность). Правило-плашка: «каждый подъём — обмен, не улучшение». Gold — нижняя ступень «обычный код (без ИИ)» как точка отсчёта."
+    interaction: none
+
+  - id: s27
+    file: slides/s27-decision-matrix.md
+    type: matrix
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 3
+    assertion: "Матрица — структура для аргумента, не сумма баллов; нижняя плашка: детерминированная верифицируемая задача → обычный код, без ИИ"
+    learning_goal: "Матрица выбора по 7 осям + «когда не ИИ вовсе» (LO7)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§5.2 [for-slide-s27]"
+    references: []
+    visual:
+      pattern: decision_matrix
+      subtype: schema_matrix
+      primary: "Матрица: строки — оси (объём знания · частота изменений · свежесть/провенанс · стоимость · латентность · аудируемость · риск недетерминизма); столбцы — архитектуры (Код · Промпт · RAG · PEFT · Длинный контекст · Агент · Multi-agent); ячейки — короткие пометки (мин/высокая/часто/да). Цветовое кодирование по семантике (gold = сильная сторона, teal = слабая). Нижняя плашка во всю ширину (gold-обведена): «детерминированная, верифицируемая, повторяемая → обычный код, без ИИ; ИИ добавил бы только недетерминизм + стоимость + латентность + поверхность инъекции»."
+    interaction: none
+
+  - id: s28
+    file: slides/s28-checklist-apply.md
+    type: summary
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 3
+    assertion: "8 вопросов «прежде чем строить» сворачивают лестницу и матрицу в инструмент, применимый к задаче за 2 минуты"
+    learning_goal: "Чек-лист (LO7 payoff) + worked example (лектор) → mini-apply (студенты, LO4)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.3 [for-slide-s28]"
+    references: []
+    visual:
+      pattern: checklist_plus_apply
+      primary: "Слева — нумерованный чек-лист 8 пунктов в Ocean rounded box (код? один промпт? знание меняется→RAG? поведение→PEFT? влезает→длинный контекст? предсказуемо→workflow? независимо→multi-agent? данные чувствительны→карта+least-privilege). Справа — 2 блока apply: worked example (задача A: 2000 регламентов → RAG, 2 причины по осям) + mini-apply (задача B: бот на ~150 FAQ — студенты проходят сами; разбор позже). Gold — заголовок чек-листа / «сначала попытка, потом сверка»."
+    interaction: apply
+
+  - id: s29
+    file: slides/s29-human-validator-nanda.md
+    type: assertion_visual
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 1.5
+    assertion: "Агент делает — человек проверяет результат и факты (не самообъяснение); ~95% пилотов без ROI — дело в интеграции, не в модели"
+    learning_goal: "Человек-валидатор (callback s07) + урок MIT NANDA"
+    learning_outcomes: [LO7]
+    chapter_ref: "§5.4 [for-slide-s29]"
+    references: [mit-nanda-2025]
+    visual:
+      pattern: role_plus_report
+      primary: "Слева — блок «человек-валидатор» в Ocean rounded box: проверяет результат/факты против источника истины НА значимых решениях ДО действия; callback s07 (не self-rationale). Справа — отчёт MIT NANDA: ~95% пилотов без измеримого ROI; корень — learning gap / провал интеграции, не качество модели. Gold — «~95%» как якорь (подаётся как заголовок отчёта). Footer 12pt italic — framing «отчёт с методологией, не закон»."
+    interaction: none
+
+  - id: s30
+    file: slides/s30-bridge-homework-qa.md
+    type: summary
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 1.5
+    assertion: "Эта рамка — база Лекций 4–17: в каждой индустрии звучит «какая архитектура и почему именно она»"
+    learning_goal: "Мост к отраслям + ДЗ (Семинар 3) + Q&A"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.5 [for-slide-s30]"
+    references: []
+    visual:
+      pattern: bridge_plus_homework_qa
+      primary: "Сверху — мост: «Модуль 1 (Л1 что → Л2 почему → Л3 как выбрать) закрыт; дальше отраслевые Л4–17 применяют рамку». В центре — ДЗ-блок в Ocean rounded box: Семинар 3 «Архитектурный выбор: чат/агент/RAG/API — 3 кейса» (применить чек-лист, формат success-критерия LO7); mini-apply задачи B — разминка. Внизу — крупное «Q&A» + «Спасибо за внимание». Gold — заголовок Семинар 3 / «Q&A»."
+    interaction: qa
+
+# ─── Validation ───
+totals:
+  slides: 30
+  slide_times_sum_min: 68.0     # сумма duration_min всех s01–s30 (включает
+                                # встроенные в раздел-бюджеты retrieval+переходы,
+                                # plan §2.2 считает их внутри секций)
+  pure_content_min: ~55         # plan §2.2: slide-content ~55 без retrieval/переходов
+  retrieval_transitions_min: ~7 # retrieval-моменты (s01/s06/s13/s28) + переходы
+                                # (учтены внутри 68, не сверх — см. note)
+  qa_buffer_min: ~6             # абсорбирован в s30 (1.5) + хвост Р5
+  total_min: 75                 # 68 active + ~7 буфер/Q&A = 75
+  note: >
+    Per-section суммы точно совпадают с plan §2.2: Р0=8 · Р1=9 · Р2=12 ·
+    Р3=9 · Р4=19 · Р5=11 (12 в плане − ~1 поглощён Q&A на s30).
+    Plan §2.2: «slide-times ~55 + retrieval ~8 + переходы ~7 = 70 active + 5 буфер».
+    retrieval/переходы УЖЕ внутри раздел-бюджетов (а значит внутри 68),
+    не добавляются сверх — иначе двойной учёт.
+
+# Раздел-бюджеты (plan §2.2): Р0 s01–s04 = 8 · Р1 s05–s08 = 9 ·
+# Р2 s09–s13 = 12 · Р3 s14–s17 = 9 · Р4 s18–s25 = 19 · Р5 s26–s30 = 11 (≈12).
+
+ai_failure_judgment:
+  # plan §5 — strict-in слайды (failure+урок+альт / фундам. ограничение /
+  # критерий «не применять» / сравнение с более правильным инструментом).
+  in_bucket_slides: [s07, s08, s12, s13, s16, s17, s22, s23, s24, s25, s27, s28]
+  count: 12
+  share_by_slides: "12/30 ≈ 40%"
+  partial_out: [s01, s14, s26, s29]   # honestly NOT counted (plan §5, решение #78)
+  note: "speaker notes этих 12 слайдов несут failure/judgment связным студенческим текстом"
+
+verify_day_of_items:
+  - s07_cot_faithfulness_percentages   # Claude 3.7 ~25% / DeepSeek R1 ~39%
+  - s20_mcp_adoption                    # MCP принятие/масштаб экосистемы
+  - s24_retention_zdr_boundary          # граница ZDR Anthropic / retention статус
+
+fact_check_items:
+  - s16_catastrophic_forgetting_mechanisms  # arXiv 2026-01 preprint, illustrative
+  - s23_4200_loop                            # single-author postmortem 2026-04
+  - s29_mit_nanda_95                          # отчёт + методология, не закон

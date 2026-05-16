@@ -1,14 +1,15 @@
 # library/lectures/lec-04/deck.yaml
 #
-# Deck-структура Лекции 4 «AI в медицине и фармацевтике» (30 слайдов).
+# Deck-структура Лекции 7 «AI в медицине и фармацевтике» (34 слайда).
+# (Папка репо lec-04 сохраняется; номер лекции по плану курса — 7.)
 #
 # Source: chapter v2 (status=reviewed, ~12,692 слов, commit 5c4b06c) +
 # plan v2 (USER GATE 0 approved with post-GATE-0 revisions).
 # Phase 5 multi-artifact pipeline — slides content alignment.
-# Issue #73 · Branch: issue-73-lec-04-medicine-production
+# Issue #92 (renumber 4→7) · downstream-каскад от chapter/speech (book-first).
 
 deck:
-  lecture_number: 4
+  lecture_number: 7
   title: "AI в медицине и фармацевтике"
   audience: "студенты-инженеры 3 курса (универсальная, не медики)"
   duration_min: 75
@@ -44,14 +45,14 @@ slides:
     file: slides/s02-cover.md
     type: cover
     duration_min: 0.1
-    assertion: "Лекция 4. AI в медицине и фармацевтике"
+    assertion: "Лекция 7. AI в медицине и фармацевтике"
     learning_goal: "Cover-слайд: title + meta"
     learning_outcomes: []
     chapter_ref: "frontmatter"
     references: []
     visual:
       pattern: cover_distinct
-      primary: "Hero-cover: outline «04» крупно + title 36pt + дата + длительность в Ocean palette"
+      primary: "Hero-cover: outline «07» крупно + title 36pt + дата + длительность в Ocean palette"
 
   - id: s03
     file: slides/s03-poll-questions.md
@@ -463,17 +464,17 @@ slides:
       primary: "Stock photo doctor + patient + большая closing-фраза в Ocean rounded box"
 
   - id: s28
-    file: slides/s28-teaser-lecture6-agriculture.md
+    file: slides/s28-whats-next-synthesis.md
     type: assertion_visual
     duration_min: 1.5
-    assertion: "Дальше — Коллоквиум 1 и Лекция 6 «AI в производстве и сельском хозяйстве». 3 принципа сегодня — input для черновика чек-листа на Лекции 9."
-    learning_goal: "Тизер Лекции 6 + Lec 9 LO8 forward reference + домашнее задание"
+    assertion: "Медицина — четвёртая отраслевая лекция. Отраслевой тур продолжается; сквозные принципы систематизируются на Лекции 17."
+    learning_goal: "Number-neutral forward: место медицины в отраслевом туре + 3 наблюдения как вход в копилку синтеза Лекции 17"
     learning_outcomes: [LO8]
-    chapter_ref: "§5.2 — Что будет дальше: Коллоквиум 1 и Лекция 6"
+    chapter_ref: "§5.2 — Что будет дальше"
     references: []
     visual:
-      pattern: timeline
-      primary: "Mini course-map (4/14 progress bar) + Лекция 6 teaser (Cognitive Agro Pilot 1500+ машин, +30-40%) + Lec 9 arrow"
+      pattern: matrix
+      primary: "2 Ocean-box карты: «Где мы в туре» (медицина = 4-я отраслевая, дальше другие индустрии, принципы переносятся) + «3 наблюдения → копилка» (Transparency+calibration / Validation set / Audit-trail+monitoring → синтез на Лекции 17)"
 
   - id: s29
     file: slides/s29-qa.md

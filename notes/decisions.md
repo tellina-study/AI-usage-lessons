@@ -338,3 +338,11 @@ Counter-check enforced в каждом critic agent prompt: если wrote ≥5 
 - Slide-count Лекции 3 LOCKED = 30 (cascade-tracking).
 - strict-in метрика: считать честно partial→out (решение #78) на этапе планирования, не только на Phase 3/7/10 — завышенный baseline в плане = downstream-ловушка (Phase 1 methodology P1-3). Plan §5 → честно 12/30≈40% + per-artifact таблица.
 - book-first: speech-нарративные кейсы (#13 DPD, #14 Chevrolet) обязаны присутствовать в chapter (deep-dive) до использования в speech.
+
+### Лекция 3 deck — owner-структурная ревизия после GATE-A QA (2026-05-16, #87)
+
+Владелец после Phase 4 QA дал 7-пунктовую структурную правку + сторителлинг. Решения:
+- Slide-count «LOCKED=30» (cascade-tracking) — **снят owner-директивой**: +6 слайдов (s04a/s13a/s13b/s23a/s25a/s31). Применена **suffix-ID схема** (как lec-04 s05b/s08a/s13a), чтобы НЕ перенумеровывать s01–s30 и не ломать `[for-slide-sNN]` маркеры finalized-главы — cascade-safe (глава не правится; новые слайды → существующие §). Lesson: cascade-lock защищает от случайного дрейфа, но осознанная owner-правка структуры исполняется через suffix-ID, а не renumber.
+- deck.yaml >600 строк (Document Size Limit) + явное прежнее указание владельца «делай несколько» → split на `deck.yaml`+`deck-part2.yaml` с кросс-ссылками + обновить loader build-скрипта.
+- divider'ы/определение/Q&A — strict-in partial→out; минутная доля (~43%) — честная метрика (divider'ы ~0.3 мин), слайдо-доля 12/36≈33% ≥30% сохранена; chapter strict-in ~58% не затронут.
+- U-6: не выносить функцию слайда в title (ретайтл s30); section-divider с темой раздела — норма канона (не нарушение).

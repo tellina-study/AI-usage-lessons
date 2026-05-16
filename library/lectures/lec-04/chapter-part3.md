@@ -40,7 +40,7 @@
 [for-slide-s25]
 Не все методологии разработки одинаково совместимы с AI. Различие не вкусовое — оно следует прямо из механики «почти правильного» (§1.4, Часть 1) и из паттерна structure + constraints + tests (§1.5, Часть 1).
 
-- **TDD (Test-Driven Development, разработка через тесты) — №1.** Тест пишется **до** кода и является точной исполняемой спецификацией. Для AI это идеальный режим: модель получает не свободную формулировку, а машинно-проверяемую цель, и цикл «сгенерировать → прогнать тест → поправить» даёт детерминированный feedback-loop, не подверженный perception-gap. DORA 2025 формулирует это как «AI — амплификатор, и TDD усиливается»; отдельное исследование (GraphRAG+TDD, arXiv:2603.17973) сообщает −72%/−81% peer-review-провалов против vanilla/TDD-only `[VFY-day-of: GraphRAG+TDD числа — single-study, treat as illustrative]`. TDD — это §1.5, поднятый до уровня методологии.
+- **TDD (Test-Driven Development, разработка через тесты) — №1.** Причина первенства — структурная, а не отчётная, и выводится прямо из паттерна §1.5 (Часть 1): тест пишется **до** кода и является точной **исполняемой спецификацией** — то есть TDD реализует ровно связку structure + constraints + tests, поднятую до уровня методологии. Для AI это идеальный режим по двум совпадающим причинам: (1) модель получает не свободную формулировку, а машинно-проверяемую цель — то самое сужение пространства «правдоподобных, но неверных» интерпретаций, которое снимает «почти правильное» (§1.4); (2) цикл «сгенерировать → прогнать тест → поправить» даёт агенту **детерминированный feedback-loop**, не подверженный ни «почти правильному», ни perception-gap, — в отличие от самооценки агента (которая, как показал Replit, §3.4, не контроль). Эмпирически это и фиксирует DORA 2025 как «AI — амплификатор, и TDD усиливается» (§5.2): TDD — методология, на которую AI «ложится» лучше всех, потому что тест = спецификация, а спецификация — это именно то, чего freeform-промпту не хватает.
 - **Spec-driven development (SDD, разработка от спецификации) — близкий второй.** Введём термин: SDD — подход, где сначала формализуется спецификация (требования/дизайн/задачи как файлы, например `requirements.md`/`design.md`/`tasks.md`), и агент имплементит **против контракта**, а не против freeform-промпта. Мейнстрим инструментов 2025–2026 (GitHub Spec Kit, AWS Kiro и др.). Эффект-числа (3–10× first-pass) — vendor/early-adopter, не независимое исследование `[FACT-CHECK: SDD 3–10× — vendor-claim, помечать как оценку]`. Концептуально работает по той же причине, что TDD: контракт сужает пространство правдоподобных, но неверных интерпретаций.
 - **Trunk-based + строгие CI quality-gates — необходимое дополнение.** AI повышает throughput (объём изменений), но DORA фиксирует, что это сопровождается падением delivery stability (§5.2). Поэтому строгие автоматические gates (тесты, mutation, security-scan AI-кода, детерминизм/flaky-gate, approval перед прод) — не бюрократия, а компенсация системного эффекта.
 - **Хуже всего «ложится» vibe-coding.** Дадим строгое определение (отложенное из §1.5, Часть 1). **Vibe-coding** — практика генерировать и принимать код «по ощущению»: без структуры, без явных ограничений, без тестов и без квалити-гейтов, доверяя правдоподобию вывода. Это не методология, а **отсутствие** методологии, и именно она снимает все три опоры паттерна §1.5 одновременно. Явный критерий-антипаттерн: vibe-coding-без-гейтов — это режим, в котором сходятся почти все провалы этой главы (Replit, Lovable/Moltbook, curl-slop как продукт slop-кода); индустрия отвергает не AI, а именно этот паттерн (§5.4, «уходит как практика»).
@@ -185,7 +185,7 @@
 [for-slide-s30]
 Детальный кейс, критичный для аудитории студентов лично.
 
-**Что за исследование.** Anthropic (research, 2026-02; arXiv:2601.20245, Shen & Tamkin): рандомизированное контролируемое исследование, n = 52 junior-разработчика (≥1 год Python), задача — освоить незнакомую библиотеку (Trio, асинхронность). Часть участников работала с AI-ассистентом, часть — без; затем — квиз на понимание материала.
+**Что за исследование.** Anthropic, *How AI Impacts Skill Formation* (Shen & Tamkin, 2026; arXiv:2601.20245): рандомизированное контролируемое исследование, n = 52 junior-разработчика (≥1 год Python), задача — освоить незнакомую библиотеку (Trio, асинхронность). Часть участников работала с AI-ассистентом, часть — без; затем — квиз на понимание материала.
 
 **Результат.** Группа с AI показала на квизе в среднем **−17%** (порядка двух буквенных оценок ниже). Расщепление по поведению (ключевое): те, кто **делегировал генерацию** (просил AI написать код), использовали AI «написать за меня» в >60% случаев и просели сильнее; те, кто **спрашивал концепции** («как это работает», «почему так»), задавали концептуальные вопросы в ≥65% и **не** показали значимой деградации. Ускорение выполнения задачи при этом не достигло статистической значимости — то есть «быстрее» не подтвердилось, а «хуже усвоил» — да (anthropic.com/research; arXiv:2601.20245; InfoQ, 2026-02) `[FACT-CHECK: Anthropic −17% / >60% / ≥65%, primary research 2026-02, проценты re-verify]`.
 
@@ -312,19 +312,19 @@
 - **ruh.ai; particula.tech; Medium/CodeToDeploy.** (2026). Amazon Kiro 13ч outage. `[FACT-CHECK recent — corroborate]` (§3.3)
 - **Euronews (2026-04-28); Zenity.** PocketOS/Cursor: БД за 9 сек, 30+ч. `[FACT-CHECK recent]` (§3.3)
 - **Medium/@bruvajc.** (2026-02). Агрегатор инцидентов (Claude CLI `rm -rf ~/` и др.). `[FACT-CHECK aggregator, illustrative]` (§3.6, §6.5)
-- **Meta (ACM FSE 2025).** *TestGen-LLM* + arXiv:2501.12862 + arXiv:2506.02954. 32% vs 5,3% классов / 2,4% vs 15% мутантов; coverage слабый индикатор. `[VFY-day-of проценты; концепт yearly]` (§4.1)
+- **Meta, *TestGen-LLM*** (ACM FSE 2025; arXiv:2501.12862) — улучшение существующих тестов. **arXiv:2506.02954** — сравнение охват-классов vs обнаружение-дефектов: 32% vs 5,3% классов / 2,4% vs 15% мутантов; coverage — слабый индикатор. `[VFY-day-of проценты; концепт yearly]` (§4.1)
 - **Greptile.** (2025-07). *Code Review Benchmarks.* greptile.com. Greptile 82%/11FP, CodeRabbit 44%/2FP, Graphite 6%. `[VFY-day-of monthly, vendor]` (§4.2)
-- **Pearce, H., et al. (NYU).** (2023, upd). arXiv:2310.02059. ~40% Copilot-программ уязвимы в 89 сценариях (CWE-79/89/798/22). (§4.4, Deep-dive box 4)
+- **Pearce, H., Ahmad, B., Tan, B., Dolan-Gavitt, B., Karri, R. (NYU).** (2022). *Asleep at the Keyboard? Assessing the Security of GitHub Copilot's Code Contributions.* IEEE S&P 2022; arXiv:2108.09293. ~40% Copilot-программ уязвимы в 89 сценариях (CWE-79/89/798/22). (§4.4, Deep-dive box 4)
 - **ACM TOSEM (Stanford).** (2025). dl.acm.org/10.1145/3716848. С AI вносят больше уязвимостей и увереннее. (§4.4, Deep-dive box 4)
 - **Schreiber & Tippe.** (2025-10). arXiv:2510.26103. 7703 файла, 12,1% CWE (77 типов), Python 16–18%. `[VFY-day-of проценты]` (§4.4)
 - **The New Stack; The Register (2026-01-21); Socket.** curl AI-slop ×8, valid <5%, закрытие bug-bounty. `[FACT-CHECK recent — corroborate]` (§4.5)
-- **Help Net Security (2025-04-14); Wikipedia/Slopsquatting; nesbitt.io (2025-12-10); arXiv:2512.08213.** Slopsquatting: 756k сэмплов, ~20%, 43%/58% воспроизводимо; термин Seth Larson (PSF). `[FACT-CHECK проценты]` (§4.6, Deep-dive box 4)
+- **Help Net Security (2025-04-14); Wikipedia/Slopsquatting; nesbitt.io (2025-12-10); arXiv:2512.08213.** Slopsquatting: 576k сэмплов, ~20%, 43%/58% воспроизводимо; термин Seth Larson (PSF). `[FACT-CHECK проценты]` (§4.6, Deep-dive box 4)
 - **Legit Security; Security Boulevard.** (2025-10). CamoLeak CVE-2025-59145 CVSS 9.6: prompt-injection в Copilot Chat, эксфильтрация через Camo image-proxy; патч 08.2025. (§4.7, Deep-dive box 4)
 - **The Next Web; The Register (2026-02-27); CSA Labs.** Lovable CVE-2025-48757 (без RLS), Moltbook взлом за 3 дня. (§5.1, §6.5)
 - **getautonoma.** (2026). Tea App leak (агрегатор). `[FACT-CHECK aggregator]` (§4.4, §6.5)
-- **Anthropic.** (2026-02). *AI Assistance and Coding Skill Formation.* anthropic.com/research + arXiv:2601.20245 (Shen & Tamkin) + InfoQ. RCT n=52 junior, −17%. `[FACT-CHECK проценты, primary]` (§6.3)
+- **Anthropic (Shen, J., Tamkin, A.).** (2026). *How AI Impacts Skill Formation.* anthropic.com/research + arXiv:2601.20245 + InfoQ. RCT n=52 junior, −17%. `[FACT-CHECK проценты, primary]` (§6.3)
 - **Google Cloud / DORA.** (2025-09-23). *2025 DORA Report / State of AI-assisted Software Development.* cloud.google.com + PDF. n~5000, adoption ~90%, negative AI↔stability, «amplifies», 7 capabilities. (§5.1, §5.2, Deep-dive box 5)
-- **Google Cloud / DORA.** (2025). *How TDD Amplifies AI Success.* + arXiv:2603.17973 (GraphRAG+TDD −72%/−81%). `[VFY-day-of single-study]` (§5.1)
+- **Google Cloud / DORA.** (2025). *How TDD Amplifies AI Success.* cloud.google.com — TDD как амплификатор AI (структурный аргумент §5.1; конкретные эффект-числа не приводятся как несущие). (§5.1)
 - **InfoWorld; github.com/gotalab/cc-sdd; Loadsys.** (2026). Spec-driven development: Kiro/Spec Kit; «code remains source of truth»; «ломается solo→команда». `[FACT-CHECK 3–10× vendor]` (§5.1, §5.4, Deep-dive box 5)
 - **Brooks, F.** (1975/1986/1995). *The Mythical Man-Month* + *No Silver Bullet.* en.wikipedia.org/Mythical_Man-Month. essential/accidental; «hardest part is deciding what to build»; закон Брукса. (§5.2, Deep-dive box 5)
 - **Pragmatic Engineer (2025); Forret, P. (2025-10).** *Revisiting No Silver Bullets* / *Mythical Agent-Month.* Brooks под агентами. (§5.2, Deep-dive box 5)
@@ -351,12 +351,12 @@
 **Для безопасности AI-кода.**
 - **Legit Security, CamoLeak** + **Лекция 3, §4.7** — prompt injection как структурный класс.
 - **Help Net Security / Wikipedia, Slopsquatting** + **Seth Larson (PSF)** — supply-chain через галлюцинацию.
-- **NYU (arXiv:2310.02059) + Stanford (ACM TOSEM)** — уязвимый код + ложная уверенность.
+- **NYU *Asleep at the Keyboard?* (arXiv:2108.09293) + Stanford (ACM TOSEM)** — уязвимый код + ложная уверенность.
 
 **Для процесса и людей.**
 - **Brooks, *No Silver Bullet* (первоисточник)** — обязательно; essential/accidental не устарели.
 - **DORA 2025 (PDF) — 7 capabilities** — читать как условную модель «AI-амплификатор», не как рейтинг.
-- **Anthropic, *AI Assistance and Coding Skill Formation* (2026)** — критично для студента лично: как учиться с AI и не разучиться.
+- **Anthropic, *How AI Impacts Skill Formation* (Shen & Tamkin, 2026)** — критично для студента лично: как учиться с AI и не разучиться.
 
 **Российский контекст.**
 - Документация YandexGPT / GigaChat — практические ориентиры по API-слою и retention в РФ-юрисдикции; применять матрицу §6.1 и вопрос «кто видит данные» (Лекция 3, §4.6) с учётом локальной юрисдикции и корпоративных политик размещения кода.

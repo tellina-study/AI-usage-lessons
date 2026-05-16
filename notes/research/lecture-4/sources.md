@@ -18,7 +18,7 @@ Confidence: H=high (primary/peer-reviewed) · M=medium (vendor/press) · L=low (
 | 7 | https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf | DORA 2025 PDF | 2025-09 | Report PDF | Y | H | n~5000, 7 capabilities |
 | 8 | https://dora.dev/research/2024/dora-report/ | DORA 2024 | 2024 | Report | Y | H | прошлогодний baseline |
 | 9 | https://cloud.google.com/discover/how-test-driven-development-amplifies-ai-success | Google Cloud / DORA | 2025 | Article | Y | H | TDD amplifies AI |
-| 10 | https://www.helpnetsecurity.com/2025/04/14/package-hallucination-slopsquatting-malicious-code/ | Help Net Security | 2025-04-14 | News | Y | H | failures #6 — 756k samples, ~20%, 21.7%/5.2% |
+| 10 | https://www.helpnetsecurity.com/2025/04/14/package-hallucination-slopsquatting-malicious-code/ | Help Net Security | 2025-04-14 | News | Y | H | failures #6 — 576k samples, ~20%, 21.7%/5.2% (число сэмплов исправлено 756k→576k v1.1, транспозиция) |
 | 11 | https://en.wikipedia.org/wiki/Slopsquatting | Wikipedia | 2025+ | Encyclopaedia | Y | M | термин, Seth Larson PSF апр 2025 |
 | 12 | https://nesbitt.io/2025/12/10/slopsquatting-meets-dependency-confusion.html | Andrew Nesbitt | 2025-12-10 | Blog | Q | M | slopsquatting × dependency-confusion |
 | 13 | https://arxiv.org/html/2512.08213 | UTSA et al. | 2025-12 | arXiv | Y | H | package hallucination quantized LLMs |
@@ -44,10 +44,10 @@ Confidence: H=high (primary/peer-reviewed) · M=medium (vendor/press) · L=low (
 | 33 | https://www.gitclear.com/ai_assistant_code_quality_2025_research | GitClear | 2025-02 | Research | Y | H | failures #13 — 211M LOC, copy-paste 8.3→12.3, refactor 24.1→9.5 |
 | 34 | https://gitclear-public.s3.us-west-2.amazonaws.com/GitClear-AI-Copilot-Code-Quality-2025.pdf | GitClear PDF | 2025-02 | Report PDF | Y | H | GitClear primary PDF |
 | 35 | https://dl.acm.org/doi/10.1145/3716848 | ACM TOSEM | 2025 | Peer-reviewed | Y | H | failures #14 — Copilot security empirical |
-| 36 | https://arxiv.org/html/2310.02059v2 | Pearce/NYU et al. | 2023 (upd) | arXiv | Y | H | NYU ~40% vuln 89 scenarios |
+| 36 | https://arxiv.org/abs/2108.09293 | Pearce, Ahmad, Tan, Dolan-Gavitt, Karri (NYU) | 2022 (IEEE S&P) | arXiv | Y | H | NYU «Asleep at the Keyboard?» ~40% vuln 89 scenarios CWE-79/89/798/22 (arXiv ID исправлен 2310.02059→2108.09293 v1.1: 2310.02059 = Fu et al., чужая статья) |
 | 37 | https://arxiv.org/abs/2510.26103 | Schreiber & Tippe | 2025-10-30 | arXiv | Y | H | failures #15 — 7703 файла, 12.1% CWE, Python 16-18.5% |
 | 38 | https://www.anthropic.com/research/AI-assistance-coding-skills | Anthropic | 2026-02 | Research (primary) | Y | H | failures #16 — n=52 junior, −17% |
-| 39 | https://arxiv.org/pdf/2601.20245 | Shen & Tamkin (Anthropic) | 2026-02-03 | arXiv | Y | H | Anthropic skill-formation primary |
+| 39 | https://arxiv.org/pdf/2601.20245 | Shen & Tamkin (Anthropic) | 2026-02-03 | arXiv | Y | H | Anthropic «How AI Impacts Skill Formation» primary, n=52 junior −17%, >60%/≥65% split, Trio (название статьи уточнено v1.1) |
 | 40 | https://www.infoq.com/news/2026/02/ai-coding-skill-formation/ | InfoQ | 2026-02 | News | Y | H | Anthropic study coverage |
 | 41 | https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/ | GitHub | 2022 | Research | Y | H (vendor) | trends Q1(а) — +55% lab RCT |
 | 42 | https://arxiv.org/abs/2302.06590 | Peng/GitHub et al. | 2023-02 | arXiv | Y | H | Copilot +55% primary, CI[21,89] |
@@ -72,7 +72,7 @@ Confidence: H=high (primary/peer-reviewed) · M=medium (vendor/press) · L=low (
 | 61 | https://www.pixee.ai/blog/best-sast-tools-2026 | Pixee | 2026 | Vendor | M | L | Pixee 76% merge-rate |
 | 62 | https://dl.acm.org/doi/10.1145/3696630.3728544 | Meta (ACM FSE) | 2025 | Peer-reviewed | Y | H | TestGen-LLM mutation-guided |
 | 63 | https://arxiv.org/pdf/2501.12862 | Foster/Meta et al. | 2025-01 | arXiv | Y | H | TestGen-LLM primary, 32% vs 5.3% / 2.4% vs 15% |
-| 64 | https://arxiv.org/html/2506.02954v2 | MutGen authors | 2025-06 | arXiv | Y | H | mutation-guided test gen, coverage слабый индикатор |
+| 64 | https://arxiv.org/html/2506.02954v2 | MutGen authors | 2025-06 | arXiv | Y | H | mutation-guided test gen; источник чисел 32% vs 5,3% классов / 2,4% vs 15% мутантов (§4.1 — атрибуция перенесена с #63 на #64 v1.1); coverage слабый индикатор |
 | 65 | https://arxiv.org/html/2602.08146 | AdverTest authors | 2026-02 | arXiv | Y | M | AdverTest +8.56%/+63.3% |
 | 66 | https://www.diffblue.com/resources/java-unit-test-generator-comparison-diffblue-cover-vs-evosuite-vs-randoop-vs-squaretest/ | Diffblue | 2025-26 | Vendor | M | L | Diffblue bytecode-подход |
 | 67 | https://www.microsoft.com/en-us/research/blog/systematic-debugging-for-ai-agents-introducing-the-agentrx-framework/ | Microsoft Research | 2025 | Research | Y | H | AgentRx +23.6% failure-localization |
@@ -91,7 +91,7 @@ Confidence: H=high (primary/peer-reviewed) · M=medium (vendor/press) · L=low (
 | 80 | https://www.loadsys.com/blog/spec-driven-development-ai-teams/ | Loadsys | 2026 | Blog | Q | L | SDD «ломается» team-переход |
 | 81 | https://www.infoworld.com/article/4171332/four-cutting-edge-tools-for-spec-driven-development.html | InfoWorld | 2026 | Analysis | M | M | SDD-инструменты Kiro/SpecKit/Tessl |
 | 82 | https://github.com/gotalab/cc-sdd | gotalab (GitHub) | 2026 | Repo/docs | M | M | «code remains source of truth» — docs-as-code оговорка |
-| 83 | https://arxiv.org/html/2603.17973v1 | TDAD authors | 2026-03 | arXiv | Y | M | GraphRAG+TDD −72%/−81% failures |
+| 83 | https://arxiv.org/html/2603.17973v1 | TDAD authors | 2026-03 | arXiv | N | M | НЕ цитируется в v1.1: arXiv:2603.17973 = «TDAD: Test-Driven Agentic Development» (регрессии 6.08→1.82%, ~70%), НЕ «GraphRAG+TDD −72/−81% peer-review» — была misattribution. §5.1 теперь ведёт структурным аргументом (тест=исполн. спека §1.5 + детерм. feedback-loop), источник = DORA «How TDD Amplifies AI Success» (#9) |
 
 **Итого: 83 источника.** HIGH: ~38 · MEDIUM: ~28 · LOW: ~17.
 **Weekly (VERIFY ON DAY OF LECTURE):** #47, #48, #49 (все SWE-bench/leaderboard).

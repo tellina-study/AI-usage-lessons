@@ -464,7 +464,7 @@ slides:
       primary: "Stock photo doctor + patient + большая closing-фраза в Ocean rounded box"
 
   - id: s28
-    file: slides/s28-teaser-lecture6-agriculture.md
+    file: slides/s28-whats-next-synthesis.md
     type: assertion_visual
     duration_min: 1.5
     assertion: "Медицина — четвёртая отраслевая лекция. Отраслевой тур продолжается; сквозные принципы систематизируются на Лекции 17."

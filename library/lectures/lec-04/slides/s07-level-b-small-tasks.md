@@ -14,7 +14,7 @@ interaction: none
 # Visible content
 
 ## Title bar
-«Мелкие задачи через чат — уровень B»
+«Граница A↔B — первое реальное делегирование: человек проверяет после, а не во время»
 
 ## Body
 [2 колонки в Ocean rounded box, parallel structure — граница A↔B операционально]

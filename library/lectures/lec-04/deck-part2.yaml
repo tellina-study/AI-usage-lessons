@@ -377,21 +377,24 @@ totals:
 ai_failure_judgment:
   # plan §5 — strict-in слайды (solid IN-bucket: failure/ограничение/критерий/
   # альтернатива несомым связным текстом в speaker notes).
-  in_bucket_slides: [s08, s12, s13, s16, s17, s21, s22, s23, s24, s25, s26, s27, s29, s30]
-  count: 14
-  share_by_slides: "14/32 ≈ 44% по слайдам; минутная доля ≈ ~45% (честная метрика, plan §5)"
-  partial_out: [s01, s02, s03, s04, s05, s06, s07, s09, s10, s11, s14, s15, s18, s19, s20, s28, s31, s32]
+  in_bucket_slides: [s05, s08, s12, s13, s16, s17, s21, s22, s23, s24, s25, s26, s27, s29, s30]
+  count: 15
+  share_by_slides: "15/32 ≈ 47% по слайдам / 54.5% минут (42/77) — methodology-critic v3 re-QA 2026-05-17 (Решение #100 ЗАКРЫТО; s05 переопределён judgment/limits-якорь strict-in)"
+  partial_out: [s01, s02, s03, s04, s06, s07, s09, s10, s11, s14, s15, s18, s19, s20, s28, s31, s32]
   note: >
-    speaker notes этих 14 слайдов несут failure/judgment связным студенческим
-    текстом (провал + урок + альтернатива/критерий). Partial→out (plan §5,
-    решение #78): s01 hook, s02 cover, s03/s04 recap+ЦВ, s05–s07/s11/s15
-    калибровка уровней, s09 паттерн, s10/s14/s18 divider, s19/s20 тест/ревью
-    при правильной роли, s28 docs частично, s31 payoff, s32 мост. Несущая ось
-    A→D сама НЕ засчитывается (course-scaffold таксономия, не разбор ошибки).
-    chapter strict-in ~69% не затронут (глава не правится). Holistic ≥40%
-    в slides удержан, single-artifact concentration отсутствует (распределено
-    по 6 разделам: s08-Р1 · s12/s13-Р2 · s16/s17-Р3 · s21/s22/s23/s24-Р4 ·
-    s25/s26/s27-Р5 · s29/s30-Р6).
+    speaker notes этих 15 слайдов несут failure/judgment связным студенческим
+    текстом (провал + урок + альтернатива/критерий). [Решение #100, 2026-05-17
+    ЗАКРЫТО] s05 переопределён «единый паттерн» → «цена ошибки растёт с
+    автономией» = judgment/limits-якорь, strict-in (count 14→15). Partial→out
+    (plan §5, решение #78): s01 hook, s02 cover, s03/s04 recap+ЦВ, s06/s07/s11/
+    s15 калибровка уровней, s09 паттерн, s10/s14/s18 divider, s19/s20 тест/
+    ревью при правильной роли, s28 docs частично, s31 payoff, s32 мост.
+    Несущая ось A→D сама НЕ засчитывается (course-scaffold таксономия, не
+    разбор ошибки). chapter strict-in ~69% не затронут (глава не правится).
+    Holistic ≥40% в slides удержан с запасом ~15 п.п., single-artifact
+    concentration отсутствует (распределено по 6 разделам: s05-Р1 · s08-Р1 ·
+    s12/s13-Р2 · s16/s17-Р3 · s21/s22/s23/s24-Р4 · s25/s26/s27-Р5 ·
+    s29/s30-Р6).
 
 verify_day_of_items:
   - s06_copilot_lab_field_numbers       # Copilot RCT ~56% / поле +7–22% — лабораторные

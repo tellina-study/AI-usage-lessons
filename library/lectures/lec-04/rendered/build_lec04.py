@@ -444,27 +444,36 @@ def build_s01(p):
              size=13.5, color=DEEP, line_spacing=1.18)
     text_box(s, lx + 0.30, ly + 1.52, lw - 0.60, 0.32,
              "Три числа об одном и том же", size=15, bold=True, color=MID)
+    # zone tags make expectation-vs-reality unambiguous in 5 sec
     rows = [
-        ("Прогноз до эксперимента", "ждали ускорение", "−24%", LIGHT, False),
-        ("Вера после, уже поработав", "думали, что ускорил",
-         "≈ −20%", LIGHT, False),
-        ("Измеренный факт", "по времени — замедление", "+19%", GOLD, True),
+        ("Прогноз до эксперимента", "ОЖИДАЛИ", "−24%", "быстрее",
+         LIGHT, False),
+        ("Вера после, уже поработав", "ОЖИДАЛИ", "≈ −20%", "быстрее",
+         LIGHT, False),
+        ("Измеренный факт", "ВЫШЛО", "+19%", "ДОЛЬШЕ", GOLD, True),
     ]
     ry = ly + 1.94
-    for lab, tag, val, col, hi in rows:
+    for lab, zone, val, dirn, col, hi in rows:
         bg = GOLD_TINT if hi else SURFACE
         filled_rect(s, lx + 0.30, ry, lw - 0.60, 0.78, bg,
                     stroke=(GOLD if hi else SOFT_GREY),
                     stroke_pt=(1.5 if hi else 1.0), radius=True, radius_adj=0.10)
-        text_box(s, lx + 0.50, ry + 0.10, 3.55, 0.32, lab,
-                 size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.0)
-        text_box(s, lx + 0.50, ry + 0.42, 3.55, 0.30, tag,
-                 size=11.5, italic=True, color=(GOLD if hi else SLATE),
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-        text_box(s, lx + 4.20, ry + 0.06, lw - 4.70, 0.66, val,
-                 size=30, bold=True, color=(GOLD if hi else MID),
+        # zone chip — cool «ОЖИДАЛИ» vs gold «ВЫШЛО»
+        filled_rect(s, lx + 0.44, ry + 0.21, 1.16, 0.36,
+                    GOLD if hi else SOFT_GREY, radius=True, radius_adj=0.4)
+        text_box(s, lx + 0.44, ry + 0.21, 1.16, 0.36, zone,
+                 size=11, bold=True, color=(DEEP if hi else MID),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, lx + 1.72, ry + 0.10, 2.02, 0.58, lab,
+                 size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.05)
+        text_box(s, lx + 3.78, ry + 0.06, 1.40, 0.66, val,
+                 size=28, bold=True, color=(GOLD if hi else MID),
                  align=PP_ALIGN.RIGHT,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, lx + 5.28, ry + 0.06, 1.45, 0.66, dirn,
+                 size=(14 if hi else 12.5), bold=hi,
+                 color=(GOLD if hi else SLATE), align=PP_ALIGN.LEFT,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
         ry += 0.86
     # Right — perception-gap gloss
@@ -512,165 +521,227 @@ def build_s02(p):
 
 
 def build_s03(p):
-    """comparison / schema_matrix — mapping table Л3 → Л4 projection."""
+    """schema_matrix KEYSTONE — лестница автономности A→D: 4 уровня
+    (строки A/B/C/D) × что делает AI · кто принимает решение · живой пример.
+    Несущая ось всей лекции. Letter-badge escalation = рост автономии.
+    course-scaffold-атрибуция → ТОЛЬКО speaker notes; 0 §/disclaimer."""
     s = blank(p)
-    slide_title(s, "Лекция 4 не вводит новый аппарат — она применяет аппарат Лекции 3.",
-                size=24, y=0.34, h=0.62)
-    text_box(s, 0.55, 0.96, 12.25, 0.32,
-             "Переносим готовым, не переобъясняем: 4 блока обзорного Модуля 1 → "
-             "их проекция на разработку ПО.", size=13, italic=True, color=MID)
-    ocean_box(s, 0.40, 1.40, 12.55, 4.40)
-    tx, ty = 0.55, 1.54
-    col_w = [6.05, 6.15]
-    hh = 0.56
-    rh = 0.86
-    headers = ["Из обзорного Модуля 1 (Лекции 1–3)",
-               "→ Проекция на разработку ПО (эта лекция)"]
+    slide_title(s, "Лестница автономности A→D — четыре уровня участия AI.",
+                size=27, y=0.34, h=0.60, w=12.25)
+    text_box(s, 0.55, 1.04, 12.25, 0.34,
+             "Как лестница сложности из Лекции 3 — выбираешь ступень под "
+             "задачу, не выше: каждый шаг вверх отдаёт AI больше решений.",
+             size=14, italic=True, color=MID, line_spacing=1.1)
+
+    ocean_box(s, 0.40, 1.50, 12.55, 4.34)
+    tx, ty = 0.56, 1.64
+    # columns: [уровень-бейдж+имя | что делает AI | кто принимает решение | живой пример]
+    col_w = [2.12, 3.28, 2.98, 4.01]
+    hh = 0.50
+    rh = 0.94
+    headers = ["Уровень", "Что делает AI",
+               "Кто принимает решение", "Живой пример"]
     cx = tx
     for j, hd in enumerate(headers):
         filled_rect(s, cx, ty, col_w[j], hh, MID)
-        text_box(s, cx + 0.16, ty, col_w[j] - 0.30, hh, hd,
-                 size=14, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, cx + 0.12, ty, col_w[j] - 0.20, hh, hd,
+                 size=13.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
+                 align=(PP_ALIGN.CENTER if j == 0 else PP_ALIGN.LEFT))
         cx += col_w[j]
+
+    # A→D — цвет бейджа эскалирует (рост автономии — несущая ось);
+    # D = апекс автономии → gold-кольцо (несущий gold-акцент слайда)
     rows = [
-        ("Лестница сложности: оставайся на нижней ступени, "
-         "поднимайся под требование",
-         "Лестница автономности A→D — та же лестница, та же логика подъёма",
-         False),
-        ("«Когда не ИИ вовсе»: детерминированное → обычный код",
-         "Критерий «не AI» применяем в каждом разделе", False),
-        ("Цикл агента: планируй → делай → проверяй → повторяй",
-         "Кодинг-агент (уровень C) = ровно этот цикл, применённый к коду",
-         False),
-        ("Prompt injection (внедрение команды через недоверенный "
-         "контент)",
-         "CamoLeak — та же атака, но внутри dev-агента", False),
+        ("A", "автодополнение", LIGHT, None,
+         "дописывает строку или блок прямо в потоке набора",
+         "человек — на каждом нажатии Tab",
+         "Copilot подсказал хвост строки — нажал Tab, читая"),
+        ("B", "мелкие задачи", MID, None,
+         "пишет функцию или фикс по запросу в чате/inline",
+         "человек ставит задачу и ревьюит результат",
+         "«напиши парсер CSV» в чате — вставил, проверил"),
+        ("C", "кодинг-агент", DEEP, None,
+         "берёт многофайловую задачу, сам гоняет тесты, итерирует",
+         "человек ревьюит pull request и решает о слиянии",
+         "«реализуй фичу X» — агент правит 5 файлов + тесты"),
+        ("D", "оркестратор", DEEP, GOLD,
+         "берёт задачу из трекера и доводит до PR сам",
+         "человек — стратегия, approval, merge, прод-гейт",
+         "агент взял тикет, открыл PR — человек ревьюит / мержит"),
     ]
     yy = ty + hh
-    for ri, (c0, c1, _hi) in enumerate(rows):
+    for ri, (lt, lname, badge, ring, c_ai, c_dec, c_ex) in enumerate(rows):
         bg = WHITE if ri % 2 == 0 else SURFACE
         cx = tx
-        for j, cc in enumerate((c0, c1)):
+        # уровень-ячейка: бейдж слева (вертикально по центру) + имя уровня
+        # справа на всю оставшуюся ширину ячейки (1 строка, без переноса)
+        filled_rect(s, cx, yy, col_w[0], rh, bg, stroke=SOFT_GREY,
+                    stroke_pt=0.75)
+        bd = 0.56
+        if ring is not None:
+            circle(s, cx + 0.16 - 0.055, yy + rh / 2 - bd / 2 - 0.055,
+                   bd + 0.11, ring)
+        circle(s, cx + 0.16, yy + rh / 2 - bd / 2, bd, badge)
+        text_box(s, cx + 0.16, yy + rh / 2 - bd / 2, bd, bd, lt,
+                 size=26, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, cx + 0.80, yy, col_w[0] - 0.84, rh, lname,
+                 size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0, align=PP_ALIGN.LEFT)
+        cx += col_w[0]
+        for j, cc in enumerate((c_ai, c_dec, c_ex), start=1):
             filled_rect(s, cx, yy, col_w[j], rh, bg, stroke=SOFT_GREY,
                         stroke_pt=0.75)
-            text_box(s, cx + 0.16, yy + 0.05, col_w[j] - 0.30, rh - 0.10, cc,
-                     size=12.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                     line_spacing=1.08)
+            text_box(s, cx + 0.16, yy + 0.04, col_w[j] - 0.30, rh - 0.08, cc,
+                     size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                     line_spacing=1.10)
             cx += col_w[j]
         yy += rh
-    gold_callout(s, 0.55, 5.96, 12.25, 0.92,
-                 "A→D — это лестница сложности Лекции 3, применённая к одной "
-                 "индустрии. Правило не меняется: чем выше уровень автономии, "
-                 "тем строже критерий «здесь обязателен человек».", size=14)
+
+    # gold spine: несущая ось — рост автономии снизу вверх по A→D
+    gold_callout(s, 0.55, 5.96, 12.25, 0.90,
+                 "Чем ниже в таблице — тем больше решений у AI и тем меньше "
+                 "у человека. Эти три колонки — линза, как читать "
+                 "каждый уровень.", size=14)
     speaker_notes(s, load_notes("s03"))
 
 
 def build_s04(p):
-    """assertion_visual — central question + 5 return-points + disclaimer."""
+    """assertion_visual — central question + answer-frame + 5 «где человек
+    обязателен» якорей именами по смыслу. 0 «возвращаемся N раз» / §-кодов /
+    course-scaffold disclaimer (атрибуция → speaker notes s03)."""
     s = blank(p)
-    slide_title(s, "Центральный вопрос лекции.", size=26)
-    icon(s, "target", 11.75, 0.36, 0.80, "gold")
-    bx, by, bw, bh = 0.55, 1.42, 12.25, 1.78
+    slide_title(s, "Центральный вопрос лекции.",
+                size=27, y=0.34, h=0.58, w=9.5)
+    icon(s, "target", 12.05, 0.36, 0.78, "gold")
+    bx, by, bw, bh = 0.55, 1.22, 12.25, 1.70
     ocean_box(s, bx, by, bw, bh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    text_box(s, bx + 0.40, by + 0.22, bw - 0.80, bh - 0.44,
+    text_box(s, bx + 0.40, by + 0.20, bw - 0.80, bh - 0.40,
              "«AI пишет код всё лучше — где он реально ускоряет, где "
              "замедляет или вредит, и что в работе инженера НЕ делегируется?»",
              size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.18, align=PP_ALIGN.CENTER)
-    # 5 return points — подписаны смыслом, не кодами
-    text_box(s, 0.55, 3.42, 12.25, 0.32,
-             "К второй половине вопроса — «где человек обязателен» — "
-             "возвращаемся 5 раз:", size=14, bold=True, color=MID)
+             line_spacing=1.16, align=PP_ALIGN.CENTER)
+    # Рамка ответа
+    teal_callout(s, 0.55, 3.10, 12.25, 0.80,
+                 "Ответ — не «AI хорош» или «AI плох», а: назвать уровень "
+                 "A–D, конфигурацию и точку, где человек обязателен.",
+                 size=14.5, bold=True)
+    # 5 якорей «где человек обязателен» — именами по смыслу
+    text_box(s, 0.55, 4.06, 12.25, 0.30,
+             "Пять мест, где человек обязателен:",
+             size=14, bold=True, color=MID)
     anchors = [
-        ("1", "«почти\nправильный» код"),
-        ("2", "merge\nбез чтения"),
-        ("3", "деструктив +\nперекос ощущения"),
-        ("4", "уязвимость +\nутечка"),
-        ("5", "что строить\n(Brooks / DORA)"),
+        ("«почти правильный»\nкод"),
+        ("merge\nи ревью"),
+        ("деструктив\nна prod"),
+        ("безопасность\nкода"),
+        ("что строить\n(essential)"),
     ]
     n = len(anchors)
-    gap = 0.22
+    gap = 0.20
     cw = (12.25 - gap * (n - 1)) / n
-    ax = 0.55
-    for num, lab in anchors:
-        ocean_box(s, ax, 3.84, cw, 1.18)
-        circle(s, ax + cw / 2 - 0.17, 3.93, 0.34, TEAL)
-        text_box(s, ax + cw / 2 - 0.17, 3.93, 0.34, 0.34, num,
-                 size=14, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, ax + 0.06, 4.34, cw - 0.12, 0.74, lab,
-                 size=12.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+    ax, ay, ah = 0.55, 4.42, 1.10
+    for idx, lab in enumerate(anchors, start=1):
+        ocean_box(s, ax, ay, cw, ah)
+        # верхняя teal-полоска «человек обязателен» — общий семантический ярлык
+        filled_rect(s, ax + 0.14, ay + 0.12, cw - 0.28, 0.28, TEAL_TINT,
+                    stroke=None, radius=True, radius_adj=0.4)
+        text_box(s, ax + 0.14, ay + 0.12, cw - 0.28, 0.28,
+                 "человек обязателен", size=9.5, bold=True, color=TEAL,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, ax + 0.12, ay + 0.46, cw - 0.24, ah - 0.56, lab,
+                 size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
         ax += cw + gap
-    gold_callout(s, 0.55, 5.20, 12.25, 1.06,
-                 "Ответ — не «AI хорош» и не «AI плох», а аппарат: для "
-                 "конкретной задачи назвать уровень автономии, конфигурацию "
-                 "и точку обязательного человеческого контроля. Главное в "
-                 "работе инженера — то, что НЕ делегируется.", size=14.5)
-    footer(s, "Лестница автономности A–D — учебная карта этой лекции, "
-              "не отраслевой стандарт. Каждый уровень разберём отдельно.")
+    gold_callout(s, 0.55, 5.70, 12.25, 1.16,
+                 "Главное в работе инженера — именно то, что НЕ делегируется. "
+                 "Первая половина вопроса — про скорость; вторая — про "
+                 "ответственность. Ответственность не делегируется.",
+                 size=14.5)
     speaker_notes(s, load_notes("s04"))
 
 
 def build_s05(p):
-    """assertion_visual — 4-question frame for every level A→D."""
+    """assertion_visual — несущий принцип: цена ошибки (радиус поражения)
+    растёт с автономией A→D; точка человеческого контроля смещается и
+    ужесточается. НЕ meta, НЕ защита таксономии. Визуал — растущий
+    blast-radius вдоль A→D. Слот переиспользован (НЕ renumber)."""
     s = blank(p)
-    slide_title(s, "Одна рамка для всех четырёх уровней.", size=26)
-    text_box(s, 0.55, 1.16, 12.25, 0.34,
-             "Снимает главный риск перечисления уровней — превращение их в "
-             "список инструментов вместо аппарата суждения.",
-             size=14, italic=True, color=MID)
-    cards = [
-        ("layout-grid", "1. Что делает AI",
-         "какой объём работы AI выполняет самостоятельно на этом уровне",
-         "mid", False),
-        ("users", "2. Кто решает",
-         "кто принимает содержательное решение — что строить, что принять, "
-         "что слить", "mid", False),
-        ("user-check", "3. Где человек обязателен",
-         "точка, где отсутствие человека превращает уровень из инструмента "
-         "в источник катастрофы", "gold", True),
-        ("triangle-alert", "4. Типичный риск",
-         "характерный режим отказа именно этого уровня", "mid", False),
+    slide_title(s, "Чем выше автономия — тем больше радиус поражения ошибки.",
+                size=25, y=0.34, h=0.58, w=12.25)
+    text_box(s, 0.55, 0.98, 12.25, 0.34,
+             "Поэтому точка обязательного человека не исчезает с подъёмом — "
+             "она смещается и ужесточается.",
+             size=14, italic=True, color=MID, line_spacing=1.1)
+
+    # 4 столбца A→D: растущий сплошной blast-bar (bottom-aligned) с тем,
+    # что задевает ошибка, на самом баре; внизу — где человек контролирует
+    ocean_box(s, 0.40, 1.42, 12.55, 4.10)
+    levels = [
+        ("A", "автодополнение", LIGHT, False,
+         "одна строка", "каждый токен", 0.60),
+        ("B", "мелкие задачи", MID, False,
+         "функция / фикс", "ревью фрагмента", 1.12),
+        ("C", "кодинг-агент", DEEP, False,
+         "много файлов сразу", "ревью PR до merge", 1.74),
+        ("D", "оркестратор", GOLD, True,
+         "прод-данные,\nнеобратимое", "только вход / выход", 2.42),
     ]
     n = 4
     gap = 0.22
-    cw = (12.25 - gap * (n - 1)) / n
-    cx = 0.55
-    cy, chh = 1.62, 3.05
-    for ic, ttl, body, var, hi in cards:
-        if hi:
-            ocean_box(s, cx, cy, cw, chh, fill=GOLD_TINT, stroke=GOLD,
-                      stroke_pt=2.0)
-        else:
-            ocean_box(s, cx, cy, cw, chh)
-        icon(s, ic, cx + cw / 2 - 0.30, cy + 0.26, 0.60, var)
-        text_box(s, cx + 0.14, cy + 1.00, cw - 0.28, 0.62, ttl,
-                 size=15, bold=True, color=(DEEP if hi else MID),
+    cw = (12.55 - 0.56 - gap * (n - 1)) / n
+    cx = 0.40 + 0.28
+    base_y = 4.98  # общая нижняя граница bars (bottom-aligned)
+    badge_y = 1.56
+    for lt, lname, bar_col, is_d, scope, ctrl, bh in levels:
+        bd = 0.50
+        if is_d:
+            circle(s, cx + cw / 2 - bd / 2 - 0.055, badge_y - 0.055,
+                   bd + 0.11, GOLD)
+        circle(s, cx + cw / 2 - bd / 2, badge_y, bd,
+               DEEP if is_d else bar_col)
+        text_box(s, cx + cw / 2 - bd / 2, badge_y, bd, bd, lt,
+                 size=22, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, cx, badge_y + 0.54, cw, 0.28, lname, size=11.5,
+                 bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+        # сплошной растущий blast-bar (цвет = badge; D = gold)
+        filled_rect(s, cx + 0.16, base_y - bh, cw - 0.32, bh, bar_col,
+                    stroke=None, radius=True, radius_adj=0.05)
+        text_box(s, cx + 0.10, base_y - bh + 0.08, cw - 0.20, bh - 0.16,
+                 scope, size=12, bold=True,
+                 color=(DEEP if is_d else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.05)
+        # где человек контролирует — под баром (DEEP — читаемо; gold уже
+        # несёт bar+ring+callout, текстовый контраст важнее)
+        text_box(s, cx, base_y + 0.08, cw, 0.42,
+                 "человек:\n" + ctrl, size=11, bold=True,
+                 color=(DEEP if is_d else MID),
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.0)
-        text_box(s, cx + 0.18, cy + 1.66, cw - 0.36, chh - 1.78, body,
-                 size=12.5, color=DEEP, align=PP_ALIGN.CENTER,
-                 line_spacing=1.16)
         cx += cw + gap
-    gold_callout(s, 0.55, 4.92, 12.25, 1.34,
-                 "Не повышай уровень автономии AI без явного требования "
-                 "задачи, которого уровень ниже не закрывает — каждый подъём "
-                 "оплачивается ослаблением человеческого контроля над тем, "
-                 "что попадает в кодовую базу. Это отраслевая проекция "
-                 "правила лестницы Лекции 3.", size=14.5)
+
+    gold_callout(s, 0.55, 5.74, 12.25, 1.10,
+                 "Тот же провал на уровне D стоит несравнимо дороже, чем на "
+                 "A. Поднимать автономию имеет смысл только под требование "
+                 "задачи — и только с гейтом под выросшую цену ошибки.",
+                 size=14.5)
     speaker_notes(s, load_notes("s05"))
 
 
 def build_s06(p):
-    """case_study — Level A: 3 contexts chart + §1.1 frame. Gold −19%."""
+    """case_study — Уровень A: спуск на 1-ю ступень лестницы с s03.
+    3 контекста-эффекта + «где уже стоит / в чём ловушка». Gold −19%.
+    Подаём как новое: что это / где стоит / ловушка — БЕЗ scaffold-рамки."""
     s = blank(p)
-    slide_title(s, "Самый безопасный уровень безопасен только пока человек реально читает.",
-                size=20, y=0.36, h=0.52)
-    text_box(s, 0.55, 0.96, 12.25, 0.50,
-             "Автодополнение — AI дописывает строку/блок по контексту файла; "
-             "человек принимает или отклоняет каждое предложение в момент "
-             "написания.", size=13, italic=True, color=MID, line_spacing=1.15)
+    slide_title(s, "Уровень A — автодополнение: безопасен только пока человек реально читает.",
+                size=21, y=0.34, h=0.56, w=12.25)
+    text_box(s, 0.55, 0.96, 12.25, 0.46,
+             "Первая ступень лестницы: AI дописывает строку или блок по "
+             "контексту файла; человек принимает или отклоняет каждое "
+             "предложение в момент написания.",
+             size=13, italic=True, color=MID, line_spacing=1.12)
     # Left — 3 крупных stat-плашки (вместо декор-chart)
     lx, ly, lw, lh = 0.55, 1.58, 7.05, 3.95
     ocean_box(s, lx, ly, lw, lh)
@@ -678,13 +749,14 @@ def build_s06(p):
              "Один инструмент — три разных эффекта на скорость",
              size=14, bold=True, color=MID)
     ctx = [
-        ("Лаборатория — изолированная новая задача", "+56%", MID, False),
-        ("Поле — Microsoft / Accenture", "+7…22%", LIGHT, False),
-        ("Знакомое легаси — эксперты (METR)", "−19%", GOLD, True),
+        ("Лаборатория — изолированная новая задача", "+56%", 33, MID, False),
+        ("Поле — Microsoft / Accenture", "+7…22%", 33, LIGHT, False),
+        ("Знакомое легаси у экспертов",
+         "выигрыш\nисчезает", 18, GOLD, True),
     ]
     cyy = ly + 0.58
     csh = 1.04
-    for lab, val, col, hi in ctx:
+    for lab, val, vsz, col, hi in ctx:
         bg = GOLD_TINT if hi else SURFACE
         filled_rect(s, lx + 0.26, cyy, lw - 0.52, csh, bg,
                     stroke=(GOLD if hi else SOFT_GREY),
@@ -694,31 +766,34 @@ def build_s06(p):
                  size=13, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.10)
         text_box(s, lx + lw - 2.45, cyy + 0.08, 2.05, csh - 0.16, val,
-                 size=33, bold=True, color=(GOLD if hi else DEEP),
-                 align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
+                 size=vsz, bold=True, color=(GOLD if hi else DEEP),
+                 align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
         cyy += csh + 0.07
-    # Right — §1.1 frame for A
+    # Right — уровень A на практике: где стоит / в чём ловушка (не scaffold)
     rx, rw = 7.80, 5.00
     ocean_box(s, rx, ly, rw, 2.55)
-    text_box(s, rx + 0.26, ly + 0.16, rw - 0.52, 0.30, "Рамка уровня A",
-             size=14, bold=True, color=MID)
+    text_box(s, rx + 0.26, ly + 0.16, rw - 0.52, 0.30,
+             "Где уже стоит — и в чём ловушка", size=14, bold=True,
+             color=MID)
     frame = [
-        ("Что делает AI:", "предлагает продолжение по контексту"),
-        ("Кто решает:", "человек, на каждом предложении"),
-        ("Где обязателен:", "везде — максимум контроля"),
-        ("Типичный риск:", "автопринятие без чтения"),
+        ("Где стоит:", "в IDE почти каждого инженера — Copilot-класс"),
+        ("Человек:", "читает и принимает каждое предложение сам"),
+        ("Ловушка:", "привычка жать «принять», не читая"),
+        ("Цена:", "клоны и уязвимые паттерны попадают молча"),
     ]
     fy = ly + 0.52
     for a, b in frame:
-        text_box(s, rx + 0.26, fy, 1.85, 0.46, a, size=12.5, bold=True,
+        text_box(s, rx + 0.26, fy, 1.30, 0.46, a, size=12, bold=True,
                  color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, rx + 2.12, fy, rw - 2.38, 0.46, b, size=12.5, color=DEEP,
+        text_box(s, rx + 1.58, fy, rw - 1.84, 0.46, b, size=12, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
         fy += 0.50
     gold_callout(s, 7.80, ly + 2.72, 5.00, 1.46,
                  "Сними чтение — и самый безопасный уровень становится "
-                 "поставщиком техдолга на скорости набора текста. Gold-факт: "
-                 "−19% на знакомом легаси у экспертов (METR).", size=13)
+                 "поставщиком техдолга на скорости набора текста: на знакомом "
+                 "коде у экспертов выигрыш в скорости исчезает совсем.",
+                 size=13)
     footer(s, "Peng et al. (Copilot RCT, 2023, лабораторные); MIT GenAI "
               "(2024, поле). Эффект AI контекстно-зависим; лабораторные числа "
               "подавать как лабораторные.")
@@ -726,12 +801,14 @@ def build_s06(p):
 
 
 def build_s07(p):
-    """assertion_visual — A↔B boundary 2-col compare + §1.1 frame for B."""
+    """assertion_visual — Уровень B: граница A↔B как РАЗЛИЧЕНИЕ (не
+    оправдание классификации). 2-кол сравнение + что эта граница меняет
+    на практике (концентр., не scaffold-рамка)."""
     s = blank(p)
-    slide_title(s, "Граница A↔B — первое реальное делегирование: человек проверяет после, а не во время.",
-                size=20, y=0.34, h=0.90)
+    slide_title(s, "Уровень B: человек проверяет после, а не во время — первое делегирование.",
+                size=21, y=0.34, h=0.56, w=12.25)
     # 2-col compare in ocean box
-    bx, by, bw, bh = 0.55, 1.50, 12.25, 2.66
+    bx, by, bw, bh = 0.55, 1.48, 12.25, 2.66
     ocean_box(s, bx, by, bw, bh)
     cols = ["", "Уровень A", "Уровень B"]
     col_w = [3.05, 4.55, 4.55]
@@ -765,31 +842,29 @@ def build_s07(p):
                      line_spacing=1.0)
             cx += col_w[j]
         yy += rh
-    gold_callout(s, 0.55, 4.30, 12.25, 0.74,
+    gold_callout(s, 0.55, 4.28, 12.25, 0.78,
                  "Смещение «человек проверяет после, а не во время» — первое "
                  "реальное делегирование в лестнице. С него начинаются "
                  "характерные проблемы AI-кода.", size=14.5)
-    # §1.1 frame for B
-    ocean_box(s, 0.55, 5.18, 12.25, 1.72)
-    text_box(s, 0.78, 5.30, 3.0, 0.30, "Рамка уровня B", size=14, bold=True,
-             color=MID)
+    # Что эта граница меняет на практике (концентрированно, не scaffold)
+    ocean_box(s, 0.55, 5.20, 12.25, 1.66)
+    text_box(s, 0.80, 5.32, 5.0, 0.30, "Что эта граница меняет на практике",
+             size=14, bold=True, color=MID)
     fr = [
-        ("Что делает AI:", "генерирует законченный фрагмент по задаче"),
-        ("Кто решает:", "человек ставит задачу и принимает результат"),
-        ("Где обязателен:", "на ревью результата до интеграции"),
-        ("Типичный риск:", "«почти правильный» код — разберём далее"),
+        ("Защита «я видел каждую строку»", "на B уже не работает"),
+        ("Ревью становится отдельным шагом", "его легко пропустить"),
+        ("Появляется «почти правильный» код", "разберём следующим"),
     ]
-    fx = 0.78
-    cwf = 6.0
+    fx = 0.80
+    cwf = 3.95
+    fy = 5.72
     for i, (a, b) in enumerate(fr):
-        col = i % 2
-        row = i // 2
-        xx = fx + col * cwf
-        yy = 5.66 + row * 0.56
-        text_box(s, xx, yy, 1.65, 0.46, a, size=12, bold=True, color=TEAL,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, xx + 1.68, yy, cwf - 1.85, 0.46, b, size=12, color=DEEP,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        xx = fx + i * cwf
+        text_box(s, xx, fy, cwf - 0.20, 0.42, a, size=12, bold=True,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+        text_box(s, xx, fy + 0.46, cwf - 0.20, 0.40, "→ " + b, size=11.5,
+                 italic=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
     speaker_notes(s, load_notes("s07"))
 
 
@@ -835,8 +910,7 @@ def build_s08(p):
                  "обнаружится автоматически, обязан пройти человеческое "
                  "ревью до интеграции.", size=14.5)
     footer(s, "Osmani (70%-проблема, 2024); Stack Overflow Survey 2025 "
-              "(66% — опрос, направление стабильно). Первая точка возврата "
-              "центрального вопроса.")
+              "(66% — опрос, направление стабильно).")
     speaker_notes(s, load_notes("s08"))
 
 
@@ -911,21 +985,19 @@ def build_s11(p):
     ocean_box(s, cx, cy, cw, chh)
     steps = [
         ("plan", "формулирует следующий шаг (какой файл, что изменить)",
-         "режим отказа: близорукий план — не видит накопленную "
-         "стоимость и время", "mid", False),
+         "mid", False),
         ("act", "правит код, запускает тест/сборку (его «инструменты»)",
-         "режим отказа: падающий или зацикленный act", "mid", False),
+         "mid", False),
         ("check", "читает результат прогона, оценивает цель",
-         "режим отказа: подмена реальной проверки самооценкой "
-         "(«тесты прошли», не прогнав)", "gold", True),
-        ("iterate", "повторяет",
-         "режим отказа: нет внешнего лимита итераций", "mid", False),
+         "gold", True),
+        ("iterate", "повторяет цикл, пока цель не достигнута",
+         "mid", False),
     ]
     n = 4
     gap = 0.20
     sw = (cw - 0.50 - gap * (n - 1)) / n
     sx = cx + 0.25
-    for i, (nm, desc, fail, var, hi) in enumerate(steps):
+    for i, (nm, desc, var, hi) in enumerate(steps):
         bx = sx + i * (sw + gap)
         if hi:
             filled_rect(s, bx, cy + 0.22, sw, 2.66, GOLD_TINT, stroke=GOLD,
@@ -933,15 +1005,12 @@ def build_s11(p):
         else:
             filled_rect(s, bx, cy + 0.22, sw, 2.66, WHITE, stroke=SOFT_GREY,
                         stroke_pt=1.0, radius=True, radius_adj=0.07)
-        text_box(s, bx + 0.10, cy + 0.36, sw - 0.20, 0.42, nm,
-                 size=18, bold=True, color=(DEEP if hi else MID),
+        text_box(s, bx + 0.10, cy + 0.52, sw - 0.20, 0.50, nm,
+                 size=20, bold=True, color=(DEEP if hi else MID),
                  align=PP_ALIGN.CENTER)
-        text_box(s, bx + 0.14, cy + 0.84, sw - 0.28, 0.92, desc,
-                 size=12, color=DEEP, align=PP_ALIGN.CENTER,
-                 line_spacing=1.12)
-        text_box(s, bx + 0.14, cy + 1.78, sw - 0.28, 1.02, fail,
-                 size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
-                 line_spacing=1.08)
+        text_box(s, bx + 0.16, cy + 1.18, sw - 0.32, 1.40, desc,
+                 size=13.5, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.18)
         if i < n - 1:
             right_arrow(s, bx + sw + 0.01, cy + 1.30, gap - 0.02, 0.42,
                         fill=LIGHT)
@@ -1075,8 +1144,7 @@ def build_s13(p):
                  "review между людьми не отменяется доверием к коллеге.",
                  size=13.5)
     footer(s, "GitClear 2025 (211M строк, 25 крупнейших OSS + приватные) — "
-              "корреляция во времени, направление стабильно. Вторая точка "
-              "возврата центрального вопроса.")
+              "корреляция во времени, направление стабильно.")
     speaker_notes(s, load_notes("s13"))
 
 
@@ -1140,14 +1208,11 @@ def build_s15(p):
              "неявные конфликтующие решения. Один линейный агент надёжнее "
              "— тот же вывод, что в Лекции 3",
              size=13, color=DEEP, line_spacing=1.20)
-    ocean_box(s, 0.55, 5.28, 12.25, 0.98)
-    text_box(s, 0.78, 5.40, 11.8, 0.76,
-             "Рамка D:  что делает AI — ведёт цикл от issue до PR · кто "
-             "решает — человек: стратегия, приоритеты, approval, merge, "
-             "прод · где обязателен — на любом необратимом/прод-действии · "
-             "риск — автономный деструктив без подтверждения",
-             size=12, color=DEEP, line_spacing=1.18,
-             anchor=MSO_ANCHOR.MIDDLE)
+    gold_callout(s, 0.55, 5.28, 12.25, 0.98,
+                 "Уровень D — максимум автономии и максимум риска: человек "
+                 "обязателен на любом необратимом или прод-действии, иначе "
+                 "автономный деструктив проходит без подтверждения.",
+                 size=14)
     speaker_notes(s, load_notes("s15"))
 
 
@@ -1267,8 +1332,8 @@ def build_s17(p):
                  "Измеряйте, не ощущайте. Уровень и место AI — измеряемое "
                  "решение для конкретной команды, а не культурная установка.",
                  size=15)
-    footer(s, "METR 2025 (RCT, n=16). Поздний-2025 «разворот» сигнала и его "
-              "методологическая ловушка — в главе. Третья точка возврата.")
+    footer(s, "METR 2025 (RCT, n=16). Поздний-2025 «разворот» сигнала есть, "
+              "но методологически слабее исходного — на него опираться рано.")
     speaker_notes(s, load_notes("s17"))
 
 
@@ -1298,14 +1363,12 @@ def build_s19(p):
              "входов). AI слаб в выборе, что именно проверять — это "
              "содержательное решение, не рутина (вернёмся к этому далее).",
              size=13, color=DEEP, line_spacing=1.18)
-    text_box(s, lx + 0.26, ly + 1.96, lw - 0.52, 0.85,
-             "mutation-тестирование — в код вносят искусственные дефекты-"
-             "«мутанты»; mutation score = доля упавших хотя бы на одном "
-             "тесте.", size=12, italic=True, color=MID, line_spacing=1.16)
-    text_box(s, lx + 0.26, ly + 2.84, lw - 0.52, 0.80,
-             "quality-gate — автоматический порог в CI, ниже которого "
-             "изменение не проходит.", size=12, italic=True, color=MID,
-             line_spacing=1.16)
+    text_box(s, lx + 0.26, ly + 2.04, lw - 0.52, 0.42,
+             "mutation score — доля пойманных дефектов",
+             size=12.5, italic=True, color=MID, line_spacing=1.12)
+    text_box(s, lx + 0.26, ly + 2.56, lw - 0.52, 0.42,
+             "quality-gate — порог в CI",
+             size=12.5, italic=True, color=MID, line_spacing=1.12)
     # Right — illusion
     rx, rw = 7.80, 5.00
     ocean_box(s, rx, ly, rw, 1.95, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
@@ -1415,25 +1478,24 @@ def build_s21(p):
              size=13.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.15)
     text_box(s, lx + 0.26, dy + 1.00, lw - 0.52, 0.95,
-             "CWE — стандартный каталог-классификатор типов уязвимостей "
-             "(напр. CWE-89 — SQL-инъекция)",
+             "CWE — каталог типов уязвимостей",
              size=11.5, italic=True, color=MID, line_spacing=1.16)
-    # Right — security tools
+    # Right — security tools (термин + 3-словный смысл; разворот → notes)
     rx, rw = 7.65, 5.15
     ocean_box(s, rx, ly, rw, 3.85, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     text_box(s, rx + 0.26, ly + 0.16, rw - 0.52, 0.32,
              "Security-инструментарий", size=14, bold=True, color=TEAL)
     tools = [
-        ("SAST", "статический анализ кода без запуска"),
-        ("DAST", "анализ работающего приложения"),
-        ("SCA", "анализ зависимостей на известные уязвимости"),
-        ("secret-scanning", "поиск утёкших ключей / токенов"),
+        ("SAST", "анализ кода"),
+        ("DAST", "анализ приложения"),
+        ("SCA", "анализ зависимостей"),
+        ("secret-scan", "поиск утёкших ключей"),
     ]
     tyy = ly + 0.56
     for a, b in tools:
-        text_box(s, rx + 0.26, tyy, 1.85, 0.74, a, size=13, bold=True,
+        text_box(s, rx + 0.26, tyy, 2.05, 0.74, a, size=14, bold=True,
                  color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, rx + 2.10, tyy, rw - 2.36, 0.74, b, size=12, color=DEEP,
+        text_box(s, rx + 2.30, tyy, rw - 2.56, 0.74, b, size=13, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
         tyy += 0.80
     gold_callout(s, 0.55, 5.32, 12.25, 0.92,
@@ -1572,8 +1634,8 @@ def build_s23(p):
                  "Структурное свойство, а не баг продукта. Лекция 3 это уже "
                  "доказала; CamoLeak — её dev-инстанс. Защита та же, не "
                  "новая.", size=14.5)
-    footer(s, "CVE-номер и точный механизм/хронология — в главе. "
-              "Полный четвёртый возврат центрального вопроса.")
+    footer(s, "CamoLeak — задокументированный prompt-injection в Copilot "
+              "Chat (раскрыт 2025, исправлен вендором).")
     speaker_notes(s, load_notes("s23"))
 
 
@@ -1886,65 +1948,70 @@ def build_s28(p):
 
 
 def build_s29(p):
-    """matrix → доминанта-вывод (синтез research-2026) + 3 ключевые оси
-    КРУПНО. Полная 5×4-матрица → speaker notes (не на проекцию мелким).
-    Читаемость из зала на 68-й мин — приоритет."""
+    """matrix → LO7 payoff: доминанта-вывод + 5 канонических осей выбора
+    ПО ИМЕНАМ компактной лентой (chapter §6.1), читаемые ≥14pt из зала.
+    «Решающая ось, не сумма баллов». Полная сетка 5×4 → speaker notes.
+    «Повторяемость» — НЕ ось матрицы (это pre-фильтр «не AI», нижняя
+    плашка). Читаемость на 68-й мин — приоритет."""
     s = blank(p)
-    slide_title(s, "Что отдать AI, а что писать руками.", size=26)
-    # DOMINANT conclusion plate (the synthesized takeaway)
-    dx, dy, dw, dh = 0.55, 1.30, 12.25, 1.62
+    slide_title(s, "Чем мерить требование задачи — пять осей выбора.",
+                size=25, y=0.32, h=0.56)
+    # DOMINANT conclusion plate (the synthesized takeaway — 5-sec anchor)
+    dx, dy, dw, dh = 0.55, 1.00, 12.25, 1.30
     filled_rect(s, dx, dy, dw, dh, GOLD_TINT, stroke=GOLD, stroke_pt=3.0,
-                radius=True, radius_adj=0.06)
-    icon(s, "scale", dx + 0.34, dy + (dh - 0.62) / 2, 0.62, "gold")
-    text_box(s, dx + 1.20, dy + 0.18, dw - 1.50, dh - 0.36,
-             "Простое и повторяемое AI делает отлично. Писать код руками "
-             "сейчас осмысленно для сложного и нестандартного — там, где "
-             "цена ошибки и нужный контекст высоки.",
-             size=18, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.18)
-    # 3 KEY axes — large, ≥14pt, simple→AI / complex→hands framing
-    text_box(s, 0.55, 3.06, 12.25, 0.30,
-             "Три оси, которые решают (а не сумма баллов):",
-             size=13.5, bold=True, color=MID)
+                radius=True, radius_adj=0.07)
+    icon(s, "scale", dx + 0.32, dy + (dh - 0.58) / 2, 0.58, "gold")
+    text_box(s, dx + 1.12, dy + 0.14, dw - 1.42, dh - 0.28,
+             "Простое и обратимое AI ведёт сам; сложное, незнакомое и "
+             "необратимое — руки + человеческий гейт. Решает не сумма "
+             "баллов, а главная ось задачи.",
+             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.16)
+    # 5 canonical axes — named ribbon, ≥14pt names (chapter §6.1)
+    text_box(s, 0.55, 2.46, 12.25, 0.28,
+             "Пять осей — для каждой задачи назвать решающую, проверить "
+             "остальные на блокеры:",
+             size=13, bold=True, color=MID)
     axes = [
-        ("scan-search", "Цена ошибки",
-         "низкая, обратимо — выше автономия AI",
-         "высокая, необратимо — руки + человеческий гейт"),
         ("git-compare", "Незнакомость кода",
-         "типовой, знакомый — AI надёжен",
-         "незнакомый, приватный — надёжность AI резко падает"),
-        ("refresh-cw", "Повторяемость",
-         "повторяемое, по правилу — кандидат на AI",
-         "разовое, нестандартное — здесь сильнее человек"),
+         "знакомый типовой → AI надёжен · приватный/легаси → надёжность падает"),
+        ("refresh-cw", "Обратимость операции",
+         "обратимо → выше автономия · необратимо → жёсткий человеческий гейт"),
+        ("flame", "Критичность / прод",
+         "некритичное → шире автономия · прод и пользователи → строгий гейт"),
+        ("gavel", "Аудит / ответственность",
+         "нет следа → можно · нужен владелец решения → человек на merge"),
+        ("scale", "Цена ошибки",
+         "задаёт приоритет осей — она вето: одна высокая опускает потолок"),
     ]
-    n = 3
-    gap = 0.25
-    cw = (12.25 - gap * (n - 1)) / n
-    cx = 0.55
-    cy, chh = 3.42, 1.86
-    for ic, ttl, lo, hi in axes:
-        ocean_box(s, cx, cy, cw, chh)
-        icon(s, ic, cx + 0.22, cy + 0.20, 0.42, "mid")
-        text_box(s, cx + 0.78, cy + 0.22, cw - 0.95, 0.42, ttl,
-                 size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, cx + 0.24, cy + 0.74, cw - 0.48, 0.52, lo,
-                 size=12, color=DEEP, line_spacing=1.10)
-        filled_rect(s, cx + 0.20, cy + 1.26, cw - 0.40, 0.46, GOLD_TINT,
-                    stroke=GOLD, stroke_pt=1.2, radius=True, radius_adj=0.16)
-        text_box(s, cx + 0.32, cy + 1.26, cw - 0.64, 0.46, hi,
-                 size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.06)
-        cx += cw + gap
-    # bottom anchor — «not AI at all»
-    teal_callout(s, 0.55, 5.46, 12.25, 0.84,
-                 "Крайний случай: детерминированная, проверяемая, "
-                 "повторяемая задача (парсинг, валидация по схеме, "
-                 "арифметика) → обычный код, без AI вовсе. Полная матрица "
-                 "5 осей × 4 уровня — в материалах лекции.",
+    n = len(axes)
+    rx0, ry0 = 0.40, 2.80
+    rw, rgap = 12.55, 0.10
+    rh = 0.50
+    for i, (ic, ttl, sub) in enumerate(axes):
+        yy = ry0 + i * (rh + rgap)
+        is_price = (ttl == "Цена ошибки")
+        filled_rect(s, rx0, yy, rw, rh,
+                    GOLD_TINT if is_price else SURFACE,
+                    stroke=GOLD if is_price else SOFT_GREY,
+                    stroke_pt=2.0 if is_price else 1.0,
+                    radius=True, radius_adj=0.16)
+        icon(s, ic, rx0 + 0.16, yy + (rh - 0.32) / 2, 0.32,
+             "gold" if is_price else "mid")
+        text_box(s, rx0 + 0.62, yy, 3.35, rh, ttl,
+                 size=14, bold=True, color=DEEP if is_price else MID,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, rx0 + 4.05, yy, rw - 4.20, rh, sub,
+                 size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+    # bottom anchor — pre-filter «not AI at all» (where «повторяемость» lives)
+    teal_callout(s, 0.55, 5.92, 12.25, 0.74,
+                 "Сначала отсев: детерминированная, проверяемая, повторяемая "
+                 "задача (парсинг, валидация по схеме, арифметика) → обычный "
+                 "код, без AI вовсе — остальные оси не нужны.",
                  size=13, bold=False)
-    footer(s, "Синтез: METR (эксперты медленнее на знакомом сложном), "
-              "Brooks (рутина ≠ суть), 70/80%-проблема, разрыв SWE-bench "
-              "Verified ↔ Pro. Полная матрица — в главе.")
+    footer(s, "Синтез разделов: METR · Brooks · 70/80%-проблема · разрыв "
+              "SWE-bench Verified↔Pro · Replit/CamoLeak.")
     speaker_notes(s, load_notes("s29"))
 
 
@@ -1991,8 +2058,7 @@ def build_s30(p):
                  "каждой задачи называет уровень, конфигурацию, точку "
                  "человеческого контроля и условие смены.", size=14)
     footer(s, "Anthropic «How AI Impacts Skill Formation» (2026, n=52): "
-              "−17% / >60% делегировали / ≥65% спрашивали концепции. Это "
-              "payoff центрального вопроса.")
+              "−17% / >60% делегировали / ≥65% спрашивали концепции.")
     speaker_notes(s, load_notes("s30"))
 
 

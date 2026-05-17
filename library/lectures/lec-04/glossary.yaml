@@ -1,0 +1,110 @@
+# library/lectures/lec-04/glossary.yaml
+# Glossary LOCK — Лекция 4 «AI в разработке программного обеспечения».
+# Сгенерирован оркестратором после USER GATE A (chapter v1.1 finalized, 2026-05-16).
+# Канон: plan-v2-final.md §6 + §7 inline-required + chapter v1.1.
+# Правило: critics MAY flag inconsistency, MAY NOT propose rename без USER approval.
+# consistency-checker сверяет slides/*.md и speech.md по этому файлу (terminology-only mode).
+# Issue: #99.
+
+lecture: 4
+locked_at: "2026-05-16"
+source: "notes/lecture-4-software-review/final/plan-v2-final.md §6/§7; chapter v1.1"
+
+terms:
+  - canonical: "лестница автономности (A автодополнение / B мелкие задачи / C кодинг-агент / D оркестратор+трекер)"
+    aliases: ["лестница A–D"]
+    forbidden: []
+    note: "course-scaffold-конструкт лекции, НЕ отраслевой стандарт. Атрибуция — в speaker notes s03 + chapter §0 (научная честность сохраняется). На ВИДИМОМ слое s03/s04 disclaimer'а НЕТ (Deck-wide tone-принцип, Решение #100, 2026-05-17): teach-not-defend, подаём уровни как новое студенту, не оправдываем таксономию."
+  - canonical: "автодополнение"
+    aliases: []
+    forbidden: ["автокомплит"]
+  - canonical: "кодинг-агент"
+    aliases: []
+    forbidden: ["coding-агент (в chapter)"]
+  - canonical: "оркестратор"
+    aliases: []
+    forbidden: []
+  - canonical: "«почти правильный» код"
+    aliases: []
+    forbidden: []
+  - canonical: "70/80%-проблема"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании"
+  - canonical: "perception-gap (разрыв ощущение↔измеренный факт)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §0.1"
+  - canonical: "SWE-bench (Verified / Pro)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §2.2; числа [VFY-day-of]"
+  - canonical: "TDD (разработка через тестирование, тест-первым)"
+    aliases: ["TDD"]
+    forbidden: []
+  - canonical: "spec-driven development"
+    aliases: []
+    forbidden: []
+  - canonical: "trunk-based development"
+    aliases: ["trunk-based"]
+    forbidden: []
+  - canonical: "quality-gate"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании"
+  - canonical: "mutation-тестирование"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании"
+  - canonical: "SAST / DAST / SCA"
+    aliases: []
+    forbidden: []
+    note: "расшифровка 1× блоком-врезкой §4.4"
+  - canonical: "secret-scanning"
+    aliases: []
+    forbidden: []
+  - canonical: "supply-chain (цепочка поставок ПО)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §4.5 (до §4.6)"
+  - canonical: "slopsquatting (галлюцинация имени пакета)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §4.6"
+  - canonical: "prompt injection (инъекция в промпт)"
+    aliases: []
+    forbidden: []
+    note: "из Л3 — мини-фраза-напоминание при 1-м упоминании, НЕ визуальный дубль Л3"
+  - canonical: "vibe-coding (антипаттерн: без тестов/спеки/гейтов)"
+    aliases: []
+    forbidden: []
+    note: "teaser §1.5 с forward-pointer; строгое определение §5.1"
+  - canonical: "accidental vs essential complexity (Brooks)"
+    aliases: []
+    forbidden: []
+    note: "inline-скобка §1.4; первоисточник «No Silver Bullet» §5.2"
+  - canonical: "confused-deputy"
+    aliases: []
+    forbidden: []
+    note: "глосс при 1-м упоминании (§3 Replit)"
+  - canonical: "docs-as-code"
+    aliases: []
+    forbidden: []
+    note: "inline §5.4; «спека замещает код» — vendor-claim, помечать «слабо подтверждено»"
+  - canonical: "AGENTS.md / CLAUDE.md (машиночитаемый контекст агента)"
+    aliases: []
+    forbidden: []
+  - canonical: "accountability (ответственность, не делегируется)"
+    aliases: []
+    forbidden: []
+  - canonical: "least-privilege (принцип наименьших привилегий)"
+    aliases: []
+    forbidden: []
+    note: "из Л3; inline-усиление §3.3 (уровень D)"
+
+forbidden_anglicisms:
+  - { wrong: "пайплайн", use: "конвейер" }
+  - { wrong: "фоллбэк", use: "запасной вариант" }
+  - { wrong: "эдж-кейс", use: "краевой случай" }
+  - { wrong: "инсайт", use: "вывод / наблюдение" }
+  - { wrong: "мейнтейнер", use: "сопровождающий" }   # Решение #103 (GATE C owner, 2026-05-17): cascade-rename во всех 3 артефактах

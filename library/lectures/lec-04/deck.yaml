@@ -1,0 +1,356 @@
+# library/lectures/lec-04/deck.yaml  —  PART 1 of 2
+#
+# Deck-структура Лекции 4 «AI в разработке программного обеспечения» (32 слайда).
+#
+# Source: chapter v1.1 finalized (~22300 слов, 3 части) +
+# plan v2-final (USER GATE 0 approved 2026-05-16, Q1–Q5).
+# Issue #99 · Branch: issue-99-lec-04-software-production
+#
+# Slide-IDs s01–s32 нумерация неизменна (cascade-tracking lock, plan §4 +
+# GATE 0 Q4). [Решение #101, 2026-05-17 — owner GATE B] slide-count LOCK=32
+# → 35: добавлены 3 раздела-дивайдера suffix-ID s04a/s24a/s28a (cascade-safe,
+# НЕ renumber: chapter [for-slide-sNN] s01–s32 финализирован GATE A).
+# s01 = METR perception-gap hook (GATE-0 Q1 LOCKED).
+#
+# ┌─ SPLIT: deck.yaml >600 строк (Document Size Limit, waiver НЕТ) → разбит ──┐
+# │ deck.yaml      (ЭТОТ ФАЙЛ) — deck/palette/motif/typography/glossary_lock  │
+# │                + slides s01..s13 вкл. s04a (через конец Раздела 2).       │
+# │ deck-part2.yaml — slides s14..s32 + s24a/s28a + totals + ai_failure +     │
+# │                verify_day_of_items + fact_check_items.                    │
+# │ Loader (rendered build-скрипт) читает ОБЕ части. Кросс-ссылка внизу.      │
+# └────────────────────────────────────────────────────────────────────────┘
+#
+# Phase 5 (структура): deck.yaml + slides/*.md из finalized главы; рендер PPTX —
+# следующая фаза. Speaker-notes маркеры [for-slide-sNN] s01–s32 в chapter*.
+
+deck:
+  lecture_number: 4
+  title: "Лекция 4. AI в разработке программного обеспечения"
+  audience: "3 курс ИУ6, инженеры-разработчики (универсально, без локального binding в контенте)"
+  duration_min: 75
+  central_question: "AI пишет код всё лучше — где он реально ускоряет, где замедляет или вредит, и что в работе инженера НЕ делегируется?"
+  learning_outcomes: [LO1, LO4, LO7]
+  language: ru
+  status: finalized
+  version: v3.4
+  source: chapter v1.3 finalized (~23700 слов, 3 части)
+  plan: notes/lecture-4-software-review/final/plan-v2-final.md (v2-final §4)
+  total_slides: 36          # 32 (s01–s32 нумерация неизменна) + 4 suffix-ID: 3 дивайдера s04a/s24a/s28a (#101) + s22a curl-slop (#103)
+  curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3)"
+  deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
+
+palette:
+  primary_deep: "#21295C"      # Ocean deep — text on light bg, assertions
+  primary_mid: "#065A82"       # Ocean mid — headings, accents, primary chart series
+  primary_light: "#1C7293"     # Ocean light — icons, borders, motif strokes
+  teal: "#028090"              # secondary accent — chart contrast, secondary icons
+  gold: "#F0AB00"              # highlight — wow-stat, ≥1× per slide
+  surface: "#F4F7FA"           # motif rounded box background
+  background: "#FFFFFF"        # default slide background
+
+motif:
+  type: ocean_rounded_box
+  radius_pt: 12
+  stroke: "#1C7293"
+  stroke_pt: 1.5
+  surface: "#F4F7FA"
+  padding_pt: 16
+  cast_shadow: false
+
+typography:
+  heading_font: "Inter"
+  mono_font: "JetBrains Mono"
+  fallback_heading: "Arial"
+  sizes:
+    cover_title: 36
+    cover_hero: 60
+    slide_assertion: 28
+    sub_heading: 20
+    body: 16
+    caption: 12
+    mega_stat: 80
+
+glossary_lock:
+  # Канонические термины — из glossary.yaml (locked 2026-05-16, chapter v1.1).
+  # designer/critic enforce no drift; alias только 1× при первом упоминании.
+  # forbidden_anglicisms: пайплайн→конвейер, фоллбэк→запасной вариант,
+  # эдж-кейс→краевой случай, инсайт→вывод/наблюдение.
+  - "лестница автономности (A автодополнение / B мелкие задачи / C кодинг-агент / D оркестратор+трекер)"
+  - автодополнение
+  - кодинг-агент
+  - оркестратор
+  - "«почти правильный» код"
+  - 70/80%-проблема
+  - "perception-gap (разрыв ощущение↔измеренный факт)"
+  - "SWE-bench (Verified / Pro)"
+  - "TDD (разработка через тестирование, тест-первым)"
+  - spec-driven development
+  - trunk-based development
+  - quality-gate
+  - mutation-тестирование
+  - SAST / DAST / SCA
+  - secret-scanning
+  - "supply-chain (цепочка поставок ПО)"
+  - "slopsquatting (галлюцинация имени пакета)"
+  - prompt injection (инъекция в промпт)
+  - "vibe-coding (антипаттерн: без тестов/спеки/гейтов)"
+  - accidental vs essential complexity (Brooks)
+  - confused-deputy
+  - docs-as-code
+  - "AGENTS.md / CLAUDE.md (машиночитаемый контекст агента)"
+  - "accountability (ответственность, не делегируется)"
+  - "least-privilege (принцип наименьших привилегий)"
+
+# ─────────────────────────────────────────────────────────────────────────
+# Порядок предъявления (plan §4, арка §2.2): s01..s32 + 3 suffix-ID дивайдера.
+# Р0 s01–s04 · Р1 [s04a] s05–s09 · Р2 s10–s13 · Р3 s14–s17 · Р4a s18–s20 ·
+# Р4b s21–s24 · Р5 [s24a] s25–s28 · Р6 [s28a] s29–s32.
+# 6 дивайдеров на 6 контент-разделов: s04a(Р1) s10(Р2) s14(Р3) s18(Р4)
+# s24a(Р5) s28a(Р6). Р0 = открытие, без дивайдера. Решение #101.
+# ЭТОТ ФАЙЛ содержит slides s01..s13 (вкл. s04a). Продолжение — deck-part2.yaml.
+# ─────────────────────────────────────────────────────────────────────────
+slides:
+  # ─── Раздел 0. Открытие + recap Л3 + ЦВ (8 мин, s01–s04) ───
+  - id: s01
+    file: slides/s01-metr-perception-gap-hook.md
+    type: case_study
+    section: "Раздел 0. Открытие"
+    duration_min: 3
+    assertion: "16 экспертов с AI работали на 19% дольше — а были уверены, что AI их ускоряет: ощущение продуктивности — гипотеза, не данные"
+    learning_goal: "Hook (GATE0-Q1): perception-gap на чистом RCT; рамкирование тезиса лекции"
+    learning_outcomes: [LO7]
+    chapter_ref: "§0.1 [for-slide-s01]"
+    references: [metr-2025]
+    in_bucket: false   # hook; раскрытие/урок — s17 (partial→out, plan §5)
+    visual:
+      pattern: case_study_contrast
+      primary: "Слева — assertion + 3 числа METR RCT (прогноз −24% ускорение → пост-факт вера −20% → измеренный факт +19% времени) в Ocean rounded box. Справа — inline-gloss perception-gap (разрыв ощущение↔измеренный факт). Gold highlight — контраст «вера −20% vs факт +19%» (ошибка на знак)."
+    interaction: open_question
+
+  - id: s02
+    file: slides/s02-cover-roadmap.md
+    type: cover
+    section: "Раздел 0. Открытие"
+    duration_min: 0.5
+    assertion: "Лекция 4. AI в разработке программного обеспечения"
+    learning_goal: "Cover + roadmap 0–6; gold-маркер «Раздел 0»"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§0.2 [for-slide-s02]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: cover_distinct
+      primary: "Hero-cover: крупная outline «04» (Primary mid контур). Справа — title 36pt bold deep, под ним 16pt italic light: курс · 75 мин. Внизу — roadmap-bar из 7 карточек (0 Открытие / 1 A+B / 2 C / 3 D / 4 Не только код / 5 Методологии / 6 Фреймворк), текущая (0) gold. БЕЗ Ocean rounded box (motif принадлежит content)."
+    interaction: none
+
+  - id: s03
+    file: slides/s03-recap-lec3-ladder.md
+    type: matrix
+    section: "Раздел 0. Открытие"
+    duration_min: 2.5
+    keystone: true
+    assertion: "Лестница автономности A→D — четыре уровня того, насколько AI ведёт разработку сам: от подсказки строки до агента, который сам доводит задачу из трекера до PR"
+    learning_goal: "KEYSTONE — несущая ось лекции: студент впервые видит сами 4 уровня + линза анализа (что делает AI / кто решает / живой пример)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§0.2, §0.4 [for-slide-s03]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: ladder_matrix
+      subtype: schema_matrix
+      primary: "KEYSTONE-матрица в Ocean rounded box: 4 строки A/B/C/D × 3 колонки «что делает AI · кто принимает решение · живой пример». A — автодополняет строку в потоке (Copilot-Tab); B — пишет функцию/фикс по запросу в чате; C — кодинг-агент берёт многофайловую задачу, гоняет тесты, итерирует; D — оркестратор берёт issue из трекера и доводит до PR сам. Буква-бейдж эскалирует по цвету (Light→Mid→Deep) = монотонный рост автономии. Л3-связь = 1 строка в подзаголовке словами (не §-код, не таблица-мэппинг). Gold — несущая ось «чем ниже — тем больше решений у AI». course-scaffold-атрибуция → ТОЛЬКО speaker notes; 0 §/disclaimer на видимом слое."
+    interaction: none
+
+  - id: s04
+    file: slides/s04-central-question.md
+    type: assertion_visual
+    section: "Раздел 0. Открытие"
+    duration_min: 2.5
+    assertion: "Центральный вопрос: где AI ускоряет, где вредит — и что не делегируется; ответ — назвать уровень A–D, конфигурацию и точку, где человек обязателен"
+    learning_goal: "ЦВ крупно + рамка ответа + 5 якорей «где человек обязателен» именами по смыслу"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§0.3 [for-slide-s04]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: central_question_plus_anchors
+      primary: "ЦВ крупно (22pt bold deep) в gold Ocean rounded box. Рамка ответа (teal callout): «не AI хорош/плох, а назвать уровень A–D, конфигурацию, точку где человек обязателен». 5 якорей «где человек обязателен» — именами по смыслу: «почти правильный» код · merge и ревью · деструктив на prod · безопасность кода · что строить (essential). Gold callout — «главное — то, что НЕ делегируется». БЕЗ «возвращаемся N раз», БЕЗ §-кодов, БЕЗ course-scaffold disclaimer-футера (атрибуция → speaker notes s03)."
+    interaction: none
+
+  # ─── Раздел 1. Уровни A+B: автодополнение и мелкие задачи (11 мин, s05–s09) ───
+  - id: s04a
+    file: slides/s04a-section1-divider-levels-a-b.md
+    type: section_divider
+    section: "Раздел 1. Уровни A и B: автодополнение и мелкие задачи"
+    duration_min: 0.3
+    assertion: "Раздел 1 — уровни A и B: AI дописывает строку в потоке и пишет фрагмент по запросу; человек видит каждый кусок кода"
+    learning_goal: "Section divider раздела 1 + одно-фразовое «что такое уровни A и B»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1 (структурный divider — раздел-вступление; глава не правится, [for-slide] не вводится)"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true   # структурный divider — не failure/judgment
+    # [Решение #101, 2026-05-17 — owner GATE B] suffix-ID, cascade-safe:
+    # открывает Раздел 1, в последовательности между s04 и s05.
+    # Нумерация s01–s32 неизменна, chapter [for-slide-sNN] не затронут.
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider лекции (единый с s10/s14/s18/s24a/s28a): гигантская декоративная «1» справа soft-outline, РАЗДЕЛ 1 + подзаголовок «Уровни A и B: автодополнение и мелкие задачи» + 1 нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 1."
+      narrative_bridge: "Начинаем снизу лестницы. A — AI дописывает строку прямо в потоке набора; B — пишет функцию или фикс по запросу в чате. На обоих человек видит каждый фрагмент кода — это AI, который уже стоит в каждой IDE."
+    interaction: none
+
+  - id: s05
+    file: slides/s05-unified-level-pattern.md
+    type: assertion_visual
+    section: "Раздел 1. Уровни A и B"
+    duration_min: 1.5
+    assertion: "Цена ошибки растёт вместе с автономией A→D: тот же провал на уровне D стоит несравнимо дороже, чем на A — поэтому точка обязательного человека смещается и ужесточается"
+    learning_goal: "Несущий контентный принцип (слот переиспользован, НЕ renumber; бывш. «единый паттерн» свёрнут в s03): радиус поражения растёт по A→D → гейт под выросшую цену ошибки. Ранний посев → собирается в матрице s29"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.1 [for-slide-s05]"
+    references: []
+    in_bucket: true   # judgment/limits-якорь «цена ошибки растёт A→D» — strict-in (Решение #100 ЗАКРЫТО; methodology-critic v3 re-QA 2026-05-17 подтвердил пересчёт 14→15)
+    visual:
+      pattern: blast_radius_along_ladder
+      primary: "4 столбца A→D в Ocean rounded box: растущая blast-radius-плашка (bottom-aligned, высота ↑ монотонно A→D — A одна строка, B функция/фикс, C много файлов, D прод-данные/необратимое). Под каждым — что задевает ошибка + где человек контролирует (A каждый токен → D только вход/выход). D = gold-апекс. Gold callout: «тот же провал на D дороже, чем на A; поднимать автономию — только под требование + гейт под цену ошибки». НЕ meta, НЕ защита таксономии — контентный мост в Раздел 1."
+    interaction: none
+
+  - id: s06
+    file: slides/s06-level-a-autocomplete.md
+    type: case_study
+    section: "Раздел 1. Уровни A и B"
+    duration_min: 2.5
+    assertion: "Уровень A (автодополнение): +56% в лаборатории, +7–22% в поле, −19% на знакомом легаси — самый безопасный уровень безопасен только пока человек реально читает"
+    learning_goal: "Спуск на 1-ю ступень лестницы с s03: что это / где уже стоит / в чём ловушка + лаб/поле/легаси-контраст (БЕЗ scaffold-рамки, БЕЗ «не вводим нового»)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.2 [for-slide-s06]"
+    references: [peng-2023-copilot, mit-genai-2024]
+    in_bucket: false
+    visual:
+      pattern: stat_contrast_plus_practice
+      primary: "Слева — 3 контекста-эффекта в Ocean rounded box: лаборатория ~+56% (изолированная новая задача) · поле +7–22% (Microsoft/Accenture) · знакомое легаси −19% (METR, разбор далее). Справа — где уже стоит / в чём ловушка: стоит в IDE почти каждого инженера · человек читает и принимает сам · ловушка = жать «принять» не читая · цена = клоны/уязвимые паттерны молча. Gold — «−19% на знакомом легаси» (контекст-зависимость). Footer 12pt italic — источники + caveat «лабораторные числа подавать как лабораторные». Подаётся как новое (что/где/ловушка), НЕ как слот scaffold-грида."
+    interaction: none
+
+  - id: s07
+    file: slides/s07-level-b-small-tasks.md
+    type: assertion_visual
+    section: "Раздел 1. Уровни A и B"
+    duration_min: 2
+    assertion: "Уровень B: человек проверяет после, а не во время — это и есть граница A↔B и первое реальное делегирование в лестнице"
+    learning_goal: "Граница A↔B как РАЗЛИЧЕНИЕ (A=строка-в-потоке/человек каждый токен; B=задача-фрагмент/человек-ревью-после) + что эта граница меняет на практике (НЕ оправдание классификации)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.3 [for-slide-s07]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: boundary_contrast
+      primary: "2 колонки в Ocean rounded box, parallel structure: A — единица работы «строка-в-потоке», человек в цикле на каждом токене, ревью в момент написания vs B — единица «задача-фрагмент» (функция/фикс), человек в цикле ПОСЛЕ, ревью отдельным шагом. Снизу — что эта граница меняет на практике: защита «я видел каждую строку» на B не работает · ревью = отдельный шаг, легко пропустить · появляется «почти правильный» код (разберём следующим). Gold — «человек проверяет после, а не во время». Граница подаётся как различение, НЕ как scaffold-рамка/оправдание классификации."
+    interaction: none
+
+  - id: s08
+    file: slides/s08-almost-right-code.md
+    type: case_study
+    section: "Раздел 1. Уровни A и B"
+    duration_min: 3
+    assertion: "«Почти правильный» код дороже явно неправильного: 66% разработчиков назвали его топ-фрустрацией; он перемещает работу с написания на отладку чужой логики"
+    learning_goal: "70/80%-проблема + «почти правильный» (66%) — структурный, не временный разрыв; ЦВ-возврат 1"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.4, §1.6 [for-slide-s08]"
+    references: [osmani-2024-70pct, stackoverflow-2025]
+    in_bucket: true   # ограничение + критерий «человек обязателен» + альтернатива
+    visual:
+      pattern: problem_plus_lesson
+      primary: "Слева — 70/80%-проблема в Ocean rounded box: первые 70–80% быстро (типовое, было в обучении) vs последние 20–30% так же трудны (специфика системы, не было и быть не могло) — разрыв структурный. Справа — «почти правильный»: 66% SO-2025 топ-фрустрация; дороже явно неверного (компилируется, проходит счастливый путь, ломается в проде). Урок-плашка: ревью + тест ДО доверия. Gold — «66%». Footer 12pt italic — источники + caveat «опрос, направление стабильно»."
+    interaction: think_pause
+
+  - id: s09
+    file: slides/s09-structure-constraints-tests.md
+    type: assertion_visual
+    section: "Раздел 1. Уровни A и B"
+    duration_min: 2
+    assertion: "Паттерн structure + constraints + tests — это TDD, применённый к постановке задачи для LLM: машина ловит «почти правильное», а не глаза в проде"
+    learning_goal: "Canon-паттерн промпта для кода + мост к TDD (s25); антипаттерн vibe-coding teaser"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.5 [for-slide-s09]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: three_component_cards
+      primary: "3 карточки-компонента в Ocean rounded box: Structure (сигнатуры/типы/контракт — сужает пространство правдоподобно-неверного) · Constraints (чего нельзя, какие инварианты — модель не выведет сама) · Tests (исполняемая спецификация — не подвержена ни «почти правильному», ни perception-gap). Под ними — мост-плашка: «это TDD на постановке задачи; антипаттерн — vibe-coding (без структуры/ограничений/теста/гейта), строгое определение s25». Gold — слово «Tests» / «исполняемая спецификация»."
+    interaction: none
+
+  # ─── Раздел 2. Уровень C: кодинг-агент (10 мин, s10–s13) ───
+  - id: s10
+    file: slides/s10-section2-divider-level-c.md
+    type: section_divider
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 1
+    assertion: "Раздел 2 — уровень C: кодинг-агент ведёт многошаговую разработку сам, человек ревьюит PR и решает о слиянии"
+    learning_goal: "Section divider раздела 2 + одно-фразовое «что такое уровень C»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 [for-slide-s10]"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true   # структурный divider — не failure/judgment
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider лекции (единый с s14/s18/s25/s29): гигантская декоративная «2» справа soft-outline, РАЗДЕЛ 2 + подзаголовок «Уровень C: кодинг-агент» + 1 нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 2."
+      narrative_bridge: "На A и B человек видел каждый фрагмент. Уровень C — AI сам планирует, правит много файлов, гоняет тесты; человек видит только итог — pull request."
+    interaction: none
+
+  - id: s11
+    file: slides/s11-coding-agent-cycle.md
+    type: process
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 2.5
+    assertion: "Кодинг-агент — это цикл plan → act → check → iterate Лекции 3, применённый к коду; check как самооценка агента — иллюзия контроля"
+    learning_goal: "Что делает агент C = многофайл/тесты/итерация = цикл Л3 (мини-напоминание термина)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.1 [for-slide-s11]"
+    references: [yao-2022-react]
+    in_bucket: false
+    visual:
+      pattern: cycle_4_steps
+      subtype: schema_cycle
+      primary: "Замкнутый цикл 4 шага (plan → act → check → iterate) со стрелками по часовой и явной стрелкой возврата iterate→plan + меткой «повторяется». Под каждым шагом — его режим отказа: близорукий plan (не видит накопленную стоимость/время) / падающий или зацикленный act / check как самооценка («тесты прошли», не прогнав) / iterate без внешнего лимита. Шаг check — gold-акцент: «самооценка агента ≠ контроль (callback Л3 §4.3)». Рамка §1.1 для C — строка-плашка."
+    interaction: none
+
+  - id: s12
+    file: slides/s12-swe-bench-verified-vs-pro.md
+    type: comparison
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 3
+    assertion: "Один класс систем: ~88% на знакомом публичном коде, ~64% на честном незнакомом — доверие к агенту обратно пропорционально незнакомости и критичности кода"
+    learning_goal: "Знакомый vs незнакомый код: SWE-bench Verified↔Pro разрыв + критерий доверия (LO7)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2 [for-slide-s12]"
+    references: [swe-bench-verified, swe-bench-pro]
+    in_bucket: true   # ограничение + правило выбора (вклад в LO7)
+    visual:
+      pattern: stat_pair_plus_criterion
+      subtype: schema_matrix
+      primary: "Inline-define SWE-bench (бенчмарк: реальная issue из open-source трекера, доля задач, где патч проходит тесты проекта). 2 крупные метрики в Ocean rounded box: Verified ~88,7% (~500 отвалидированных задач, публичный код) vs Pro ~64,3% (приватные кодбазы, контаминация-резистентно). Разрыв ~24 п.п. Критерий-плашка: «незнакомее/критичнее код → ниже фактическая надёжность → строже человеческий gate». Gold — разрыв ~24 п.п. / «~64%». Footer 12pt italic — caveat «числа [VFY-day-of], лидер меняется еженедельно»."
+    interaction: none
+
+  - id: s13
+    file: slides/s13-review-merge-gate.md
+    type: case_study
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 3.5
+    assertion: "«Зелёные тесты» — необходимое, но не достаточное: 211M строк GitClear показывают клоны↑ рефакторинг↓ churn↑ — скорость ≠ качество; merge не делегируется"
+    learning_goal: "Антипаттерн «принять PR не читая» + GitClear + критерий «merge — accountability»; ЦВ-возврат 2"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.3, §2.4 [for-slide-s13]"
+    references: [gitclear-2025]
+    in_bucket: true   # антипаттерн + урок + не-AI альтернатива
+    visual:
+      pattern: failure_metrics_plus_lesson
+      primary: "Слева — антипаттерн в Ocean rounded box: «merge по зелёным тестам без чтения» = уровень C, деградировавший до D без решения о повышении автономии. Справа — GitClear 211M строк: клоны 8,3→12,3% · рефакторинг 24,1→9,5% · churn 5,5→7,9% (скорость↑ качество↓). Урок-плашка: обязательное человеческое ревью PR + метрики дублирования/churn в CI как gate; merge = решение об ответственности, не делегируется. Gold — связка «скорость ≠ качество». Footer 12pt italic — источник + caveat «корреляция во времени, направление стабильно»."
+    interaction: poll
+
+# ─────────────────────────────────────────────────────────────────────────
+# КОНЕЦ PART 1. Слайды s14..s32 + s24a/s28a + totals + ai_failure_judgment +
+# verify_day_of_items + fact_check_items → deck-part2.yaml.
+# Loader (rendered build-скрипт) загружает: deck.yaml (этот) + deck-part2.yaml,
+# объединяет ключ `slides`, валидирует totals из part 2.
+# ─────────────────────────────────────────────────────────────────────────

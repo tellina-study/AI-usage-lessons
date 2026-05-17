@@ -424,6 +424,68 @@ Phase 11 demonstrated single speech-writer agent doing 3-artifact touches (chapt
 
 **Открытый pre-existing gap (НЕ из #94):** `ontology/store.ttl` моделирует старую структуру (lec_04=медицина, lec_07=этика) — рассинхрон с РПД. Отдельный issue #95 (требует RDF-ремоделяции, не path-rename; слепая замена = IRI-коллизия).
 
+## 2026-05-16 — Лекция 4 USER GATE 0 (#99): owner-решения
+
+Phase 1 Лекции 4 «AI в разработке ПО». plan-v2-final после critique (methodology REVISE 1P0/6P1 + reader-text-only APPROVE-WITH-POLISH) + roast — 8 пунктов закрыты.
+- **Глубина `lec-04/chapter.md` = 22k+ слов** (как Глава 3): red-flag «>15k» (`tools/lecture-production/README.md` §6) **явно снят владельцем** на GATE 0 (тот же governance escape-hatch, что для lec-03; принцип memory feedback_governance_rules — явное+документированное owner-решение для класса-исключения). Только для lec-04. Document Size Limit 600 строк — split, waiver НЕТ.
+- Hook s01 = METR −19% perception-gap; Replit → s16.
+- Slide-count Лекции 4 LOCKED = 32.
+- **L4 — owner-waiver ≥30% НЕдоступен** (∉ L1–L3, Решение #82): несущая ось A→D сама НЕ failure → failure/judgment-плотность главы проектируется намеренно (каждый раздел завершать failure-кейсом + критерием «когда не/опасно»; ось не засчитывается). strict-in slides честно 14/32≈44%, per-artifact операционализирован (chapter≥40%/slides≥40%/speech≥35% с именованными блоками).
+- Конвенция repo-папок (после #94): `lec-04` = канон Лекция 4 (ПО); медицина = lec-07.
+
+## 2026-05-17 — Лекция 4 deck v2: Раздел-0 сторителлинг-перетряска + сквозной tone-pass (Решение #100, #99)
+
+deck v2 (после Phase-4 v1→v2 fix) показан владельцу — **сторителлинг сломан**: несущая ось A→D (хребет лекции) **нигде не показана отдельным слайдом**; s03 = защитный мэппинг «Лекция 4 не вводит новый аппарат» (оправдание), s04 = «возвращаемся 5 раз» meta + §-коды + course-scaffold disclaimer-футер, s05 = абстрактная рамка для невиданных уровней + «проекция правила Л3», s06 «внезапен». Цитата владельца: «где сами уровни и их описание?! ты вообще сторителлинг продумывал? надо перетряхивать».
+
+**Корень (planning error, не designer):** в plan-v2-final не было keystone-слайда с самой лестницей — уровни «всплывали» по ходу; тон Раздела 0 = защита курсовой методологии вместо подачи нового студенту.
+
+**Owner-решения (AskUserQuestion, подтверждено):**
+- **Новый s03 = карта лестницы A→D (KEYSTONE)**: 4 строки A/B/C/D × «что делает AI · кто решает · живой пример»; бывш. s05-«единый паттерн» (линза анализа) **свёрнут в s03 как колонки**; Л3-связь = 1 строка в теле (не таблица-мэппинг).
+- **s04** = ЦВ + 5 якорей «где человек обязателен» **именами по смыслу**; «возвращаемся N раз» и course-scaffold disclaimer-футер **удалены**.
+- **s05** слот **переиспользован** (НЕ renumber — 32 ID и chapter `[for-slide-sNN]`/deck.yaml chapter_ref s06–s32 стабильны) → контентный несущий принцип «**цена ошибки растёт с автономией A→D**» (ранний посев → собирается в матрице s29).
+- **Сквозной tone-принцип (ENFORCED, все 32 слайда)**: подаём новое студенту, впервые сталкивающемуся с темой — не защищаемся, не оправдываем методологию. Видимый слой: **0** §-кодов / (sNN) / (Раздел N) / LO-кодов / course-scaffold-disclaimer / «не вводим нового»/«проекция Л3»/«возвращаемся N раз» meta. Атрибуция course-scaffold + Л3-связь (научная честность) — **в speaker notes**, не на слайде. Закреплено: plan-v2-final §4 преамбула + §7 Forbidden; glossary.yaml note «лестница автономности».
+- **strict-in:** s05 переопределён → judgment/limits-якорь, strict-in-eligible (15/32≈47%); пересчёт — methodology-critic Phase-7 re-QA.
+
+**Урок:** несущая ось лекции обязана быть отдельным keystone-слайдом в Разделе 0 **до** первого погружения в неё; Раздел 0 учит новому, а не защищает курсовую методологию. Атрибуция homegrown-таксономии (научная честность) ≠ видимый disclaimer-футер — её место в speaker notes. Рецидив-класс Л2-R1/Л3 (§/meta-leak) → теперь явный deck-wide ENFORCED-принцип в плане, не только anti-pattern постфактум.
+
+### Лекция 4 deck v3.1 → GATE B + owner-override slide-count (Решение #101, 2026-05-17)
+
+deck v3.1 (Раздел-0 keystone + сквозной tone-strip): re-QA 5 критиков — presentation-critic/consistency-checker APPROVE-WITH-POLISH, methodology-critic/reader APPROVE-CLEAN, student APPROVE-WITH-POLISH; **0 открытых P0/P1**; independent grep оркестратора видимый слой TOTAL=0 ×2; pre-USER-GATE walkthrough PASS. Структурная браковка владельца (несущая ось не показана) — закрыта и независимо подтверждена 5/5.
+
+**Owner GATE B (AskUserQuestion):**
+- **+3 раздела-дивайдера Разделам 1/5/6** (симметрия 7-секционного roadmap-бара). Полная схема 6 дивайдеров: s04a(Р1)/s10(Р2)/s14(Р3)/s18(Р4)/s24a(Р5)/s28a(Р6).
+- **Owner-override GATE-0 Q4 «slide-count LOCKED=32» → 35.** Явное документированное решение владельца (governance escape-hatch pattern, как chapter-depth Решение #82-класс). Реализация — **suffix-ID s04a/s24a/s28a, cascade-safe**: глава финализирована GATE A с `[for-slide-sNN]` s01–s32; renumber рассинхронит book-first → suffix-ID НЕ трогает chapter/chapter_ref/нумерацию (конвенция Лекции 3, post-GATE-A добавления).
+- **GATE B: deck v3.1 принят → Phase 9 (речь).** Дивайдеры ложатся ДО речи (speech-writer derive из финального deck) — порядок: divider-add → re-QA delta → finalize → speech.
+- strict-in: count=15 неизменно, дивайдеры partial→out; слайдо-доля 15/35≈43% (≥40% держится), минутная 54.5% не затронута (дивайдеры ~0.3 мин); methodology-critic re-confirm на delta.
+
+**Урок:** post-GATE-A добавление слайдов = всегда suffix-ID (chapter `[for-slide-sNN]` финализирован — renumber = book-first drift). slide-count LOCK снимается ТОЛЬКО явным owner-решением с записью в реестр (как все governance escape-hatch'и). Owner-визуальная симметрия (roadmap ↔ дивайдеры) — решение владельца, не оркестратора (Orchestrator Self-Critique: визуальные структурные выборы defer to owner).
+
+### Лекция 4: owner-требование «тулы на каждом уровне A/B/C/D» во всех 3 артефактах (Решение #102, 2026-05-17)
+
+Владелец (после Phase 11, pre-GATE-C): «для каждого типа уровня не хватает тулов, обязательно дополни презу, часть, речь тулами на каждом уровне. смотри, что распространено в 2026». Реальный content-gap: лестница A→D без named-инструментов под каждый уровень.
+
+**Owner-override:** chapter финализирован v1.1 (GATE A), deck GATE-B-approved, speech reviewed v1.1 — явное документированное owner-указание дополнить ВСЕ 3 (тот же governance escape-hatch pattern). Мы pre-GATE-C → окно открыто, ничего не финализировано окончательно.
+
+**Решения:**
+- **Research-first (свежесть критична — урок ARC-AGI устаревания):** веб-верифицировано 2026-05-17, `notes/research/lecture-4/tools-landscape.md` раздел «2026-05-17 update». Маппинг: A=Copilot tab/Cursor Tab/JetBrains; B=ChatGPT-чат/Copilot·Cursor inline; C=Claude Code/Cursor Agent/Codex; D=Copilot agent/Devin/Jules. Все adoption-числа `[VFY-day-of]` (волатильны), на видимом слое — только направление (паттерн s12/s27).
+- **Book-first порядок:** chapter v1.1→**v1.2** (per-level тулы в Р1/Р2/Р3 + tools-landscape deep-dive) → deck derive → speech v1.1→v1.2 derive → re-QA delta (4 критика) → GATE C.
+- **Owner-выбор размещения в deck (AskUserQuestion): per-level слайды** s06(A)/s07(B)/s11-12(C)/s15(D) — блок «Инструменты 2026» + 1 строка adoption-направление + 1 anti-hype-оговорка. **Keystone s03 НЕ трогаем** (5-сек читаемость защищена, presentation-critic warned). s27 держит мета-тренд «в/из». Без новых слайдов (35 LOCKED), без renumber.
+- **AI-Failure усиление, не хайп:** тулы вносятся С judgment-оговорками (Devin overclaim, «Copilot стагнирует ≠ умер», «низкая доля ≠ decline», trust-gap 29%, mode≠brand, infrastructure≠level-tool) — это failure/limits-контент, не вендор-реклама.
+
+**Урок:** при owner-расширении pre-GATE-C — строго book-first каскад (chapter → deck → speech, не параллельно); свежие vendor/adoption-факты ВСЕГДА `[VFY-day-of]` + только направление на видимом слое; добавление инструментов в обучающий материал обязано нести anti-hype/границы (mode≠brand, overclaim), иначе нарушает AI-Failure-правило. Размещение, трогающее user-approved keystone, → defer to owner (Orchestrator Self-Critique).
+
+### Лекция 4 USER GATE C: финализировать + 3 pre-final owner-правки (Решение #103, 2026-05-17)
+
+Все 3 артефакта reviewed, 0 P0/P1 через 11 фаз, обе owner-интервенции (storytelling #100/#101 + тулы #102) интегрированы и подтверждены 5/5 → 4/4 критиками. Owner GATE C (AskUserQuestion): **финализировать → PR**, предварительно применив 3 owner-note-правки (вариант «ничего» отменён выбором действий):
+- **Тег-унификация:** `[VERIFY-DAY-OF]` → `[VFY-day-of]` в speech l.25/26/225 (project-tag-стандарт; косметика, нерендеримый lecturer-док).
+- **«мейнтейнер» → «сопровождающий»:** добавлено в `glossary.yaml forbidden_anglicisms` (glossary-lock, orchestrator-owned). **Cascade-of-changes** (grep-scoped): chapter.md/part2/part3 (вкл. **заголовок §4.5 + TOC-якорь** — атомарная синхронизация anchor), speech l.43, slides/s01. book-first: chapter renames первым, deck/speech mirror.
+- **curl #5 отдельным слайдом:** plan §5 изначально называл «#5 curl-slop» речевым нарративом; deck его не имел (s22=slopsquatting), был устный якорь. Owner: вынести в **suffix-ID s22a** (security-раздел, между s22 и s23), derive из chapter §4.5 (детальный ≥600-слов кейс уже есть — book-editor добавляет `[for-slide-s22a]` маркер, нового chapter-контента не нужно). Cascade-safe (s01–s32 + suffix неизменны). slide-count 35→**36** (owner-override, документировано). strict-in: s22a = named failure #5 → count 15→16, 16/36≈44% (methodology re-confirm).
+
+**Порядок (book-first):** decisions/glossary → chapter v1.2→v1.3 (rename + §4.5 heading/TOC/anchor + [for-slide-s22a]) → deck v3.3→v3.4 (s22a + rename-if-present) → speech v1.2→v1.3 (tag + rename + curl-фрагмент s22a, корректировка s25/s32 якоря) → re-QA delta 4 критика → pre-GATE-C delta → finalize status→finalized → push → PR (мерж только по явной owner-команде).
+
+**Урок:** term-rename = ВСЕГДА cascade-of-changes grep ПЕРЕД делегированием (заголовки/TOC/anchor — скрытая зависимость, ловится только грепом); slide-add post-review = suffix-ID + owner-документированный slide-count override; «принять как есть» + actions в multiSelect → actions выигрывают (явное намерение пользователя на изменение).
+
+**ЗАКРЫТО (GATE C passed, 2026-05-17):** re-QA delta #103 — fact-checker + presentation-critic APPROVE-CLEAN, methodology + consistency APPROVE-WITH-POLISH, **0 P0/P1**. Подтверждено: s22a book-first==§4.5 (0 phantom), strict-in 16/36≈44% слайды (Р4 single-cluster НЕ вернулся, 31%), pacing ≤75 (~74 active, speech=истина доставки), rename ПОЛНЫЙ (0 остатка кроме changelog-doc), frozen/keystone байт-идентичны, ЦВ-возврат-4 цел, discrepancy #1 структурно RESOLVED. deck.yaml frontmatter синхронизирован (consistency P2 D1: v3.4/chapter v1.3/36). **Все 3 артефакта `status: finalized`** (chapter v1.3 / deck v3.4 / speech v1.3). **Лекция 4 ПРОИЗВЕДЕНА ПОЛНОСТЬЮ** через 11 фаз + 4 owner-интервенции (#100 storytelling-keystone, #101 дивайдеры, #102 тулы-per-level, #103 rename+curl-слайд). → push + PR (мерж по явной owner-команде).
 ## 2026-05-17 — Лекция 5: owner-решения USER GATE 0 (#100)
 
 **Контекст:** Phase 1 Лекции 5 «AI в финансовом секторе и ритейле» (issue #100, branch `issue-100-lec-05-finance-retail`). plan-v2-final после Phase 1 critique (methodology APPROVE-WITH-POLISH/0P0·4P1·7P2 + reader-text-only APPROVE-WITH-POLISH/0P0·4P1) + orchestrator finalize. Производится параллельно с lec-04 (shared `.git`, worktree-изоляция `/tmp/lec-05-wt`).

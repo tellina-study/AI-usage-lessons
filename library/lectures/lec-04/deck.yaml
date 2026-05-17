@@ -31,11 +31,11 @@ deck:
   central_question: "AI пишет код всё лучше — где он реально ускоряет, где замедляет или вредит, и что в работе инженера НЕ делегируется?"
   learning_outcomes: [LO1, LO4, LO7]
   language: ru
-  status: draft
-  version: v1
-  source: chapter v1.1 finalized (~22300 слов, 3 части)
+  status: finalized
+  version: v3.4
+  source: chapter v1.3 finalized (~23700 слов, 3 части)
   plan: notes/lecture-4-software-review/final/plan-v2-final.md (v2-final §4)
-  total_slides: 35          # 32 (s01–s32 нумерация неизменна) + 3 suffix-ID дивайдера s04a/s24a/s28a (Решение #101)
+  total_slides: 36          # 32 (s01–s32 нумерация неизменна) + 4 suffix-ID: 3 дивайдера s04a/s24a/s28a (#101) + s22a curl-slop (#103)
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3)"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
 

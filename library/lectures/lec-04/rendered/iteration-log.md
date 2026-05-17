@@ -693,3 +693,106 @@ teal_callout). 0 §/(sNN)/LO/[VFY]/scaffold + 0 волатильных доле�
   lec-01/02/03/07 restored origin/main, lock-файлы 0, lec-05/06
   untracked-isolated.
 - micro-polish: JetBrains AI Assistant + yaml-note + slide-companion sync
+
+## v3.4 — s22a curl-slop #5 + rename (Решение #103, owner GATE C)
+
+Брифом: +1 suffix-ID контент-слайд **s22a** (curl-slop #5, кейс
+безопасности) между s22 (slopsquatting) и s23 (CamoLeak/секреты);
+cascade-rename «мейнтейнер»→«сопровождающий» в видимом+notes слое deck;
+35→**36** слайдов; ai_failure_judgment count 15→**16**. 35 frozen + keystone
+s03 НЕ трогать (кроме rename-if-present). chapter*.md / speech.md /
+glossary НЕ трогать designer'ом (book-first — chapter v1.3 финал, источник
+§4.5).
+
+### Подготовка
+- Archive `rendered/lec-04.pptx`+`.pdf` → `rendered/archive-v3.3/` ДО правок.
+- v3.3 baseline visible-text → `/tmp/v33_baseline.json` (35 слайдов) для
+  byte-identity diff frozen.
+- Side-effect guard: `git checkout origin/main -- lec-01/02/03/07` —
+  pathspec не в origin/main на этом ref (lec-NN на другой базе),
+  модификаций lec-01/02/03/07 в рабочем дереве нет (git diff --stat
+  пуст) → guard moot, подтверждён clean. lock-файлы `~$*.pptx` 0.
+  lec-05/06 untracked-isolated (не тронуты).
+
+### Задача 2 — cascade-rename «мейнтейнер»→«сопровождающий»
+- Греп всего deck-scope (slides/ + deck.yaml + deck-part2.yaml +
+  build_lec04.py): ровно 1 вхождение — s01 speaker notes l.44
+  («не студенты, а мейнтейнеры зрелых проектов»).
+- Замена → «не студенты, а сопровождающие зрелых проектов»
+  (именительный мн., граммат. падеж; согласовано с chapter-part2 l.87
+  «сопровождающие зрелых репозиториев»).
+- Post-rename греп `мейнтейнер|maintainer` в deck-scope: **exit 1
+  (0 вхождений) — PASS**. speech.md l.43 «мейнтейнеры» вне deck-scope
+  (book-first, speech-writer per Решение #103 порядок; брифом
+  speech.md НЕ трогать) — НЕ правлено, REPORT не fix.
+
+### Задача 1 — slide s22a (curl-slop #5)
+- `slides/s22a-curl-slop.md`: frontmatter (id s22a, type case_study,
+  `chapter_ref: "§4.5 [for-slide-s22a]"`, in_bucket true, references
+  curl-slop-2026) + Body-зеркало + speaker notes. Стиль = failure-слайд
+  как s21/s22 (кейс → асимметрия → системно → урок + не-AI альтернатива
+  + критерий-footer).
+- Derive 100% из chapter §4.5 (строки 200–209, маркер
+  `[for-slide-s22a]`): 0 утверждений вне §4.5. Несущая ось — асимметрия
+  стоимости (фейк ≈ секунды vs опровержение = часы → DDoS на внимание
+  сопровождающих → supply-chain), урок (виновата архитектура процесса,
+  не «AI»), не-AI альтернатива (приватное раскрытие GitHub Security
+  Advisories · убрать junk-стимул · барьер воспроизводимого PoC на
+  входе = машинный критерий, аналогия «тест как спецификация»),
+  критерий «когда AI здесь опасен».
+- Speaker notes: связный студенческий текст, **299 слов** (контракт
+  150–300; матчит s22-эталон 299). `[FACT-CHECK: curl valid-rate <5%,
+  ×8 объём, дата сворачивания]` ТОЛЬКО в notes. 0 forbidden lecturer-
+  cues, 0 forbidden-англицизмов.
+- Видимый слой: 0 §/(sNN)/LO/[VFY]/[FACT-CHECK]/scaffold + 0 точных
+  волатильных чисел (×8/<5%/15%/576/43%/58%/1 февраля — нет). Только
+  направление/асимметрия словами: «объём кратно вырос», «доля валидных
+  рухнула», «секунды» vs «часы человека», «× 1000+».
+
+### Cascade-safe build
+- `build_lec04.py`: `build_s22a` вставлен после `build_s22`, перед
+  `build_s23` в sequence; load_deck validator — expected += s22a после
+  s22, totals assert 35→**36**, builders assert 35→**36**. s01–s32 +
+  suffix s04a/s24a/s28a неизменны.
+- `deck-part2.yaml`: entry s22a между s22/s23; totals.slides 35→**36**;
+  slide_times_sum 77.9→80.9 + s22a 3.0 мин Р4b 11→14 (минутная
+  пере-балансировка → methodology-critic re-confirm flag, designer не
+  решает один); ai_failure_judgment count 15→**16**, s22a в
+  in_bucket_slides (len 16), share «16/36 ≈ 44%», note + распределение
+  (s21/s22/**s22a**/s23/s24-Р4) + fact_check_items s22a_curl_slop_rates.
+- Rebuild: `python3 build_lec04.py` → «deck spec OK — 36 slides»,
+  валидатор OK (totals 36, builders 36, base s01–s32 нумерация
+  неизменна), «saved … 36 slides». PDF пересобран (libreoffice rc=0).
+
+### Visual-loop s22a (4 итерации — failure-слайд, page 24)
+- **iter1** `snapshots/v34/s22a-iter1-24.png`: context-band overflow
+  (3-строчный italic в 0.66" → spill на asymmetry box); column body
+  top-weighted; «× 1000+» faint. 5-сек: ось читается, но top шумит.
+  FIX: context-band текст короче + h 0.66→0.74; asymmetry box y 1.74→
+  1.80.
+- **iter2** `…iter2`: context дышит (2 строки), ось — доминанта, teal
+  band 1 блок чисто. Issues: LEFT/RIGHT body top-weighted (пусто снизу
+  ~0.3"); «× 1000+» 11.5pt слабый; редундантен vs «секунды/часы».
+  FIX: column body MIDDLE-anchor; «× 1000+» 13pt над стрелкой +
+  «разрыв» под стрелкой = gold-ось-триплет; «секунды/часы» 15→16pt.
+- **iter3** `…iter3`: column body вертикально центрирован, ось =
+  3-частный gold-маркер (× 1000+ → стрелка → разрыв), LEFT/RIGHT
+  visual mass сбалансирован (gold-сторона тяжелее = «дорогая/опасная»
+  сторона highlighted, матчит assertion). 5-сек: PASS (message =
+  assertion). Projector 50% (`/tmp/s22a-proj50.png`): headline-фразы
+  читаемы из 5-го ряда — PASS. Critique: gold-callout (урок) = teal-band
+  (системно) одинаковый вес — урок должен доминировать как финальный
+  takeaway; «разрыв» 11pt LIGHT faint @50%.
+- **iter4** `…iter4` (accept): gold lesson-callout 13.5→**14pt** (3
+  строки, тяжелее teal-band — корректная финальная иерархия teal→gold);
+  «разрыв» 11.5pt italic **GOLD** (завершает gold-ось-триплет, читаем
+  @50%). Вертикальный ритм чист, 0 overflow, mass balanced.
+  - 5-Second Test: PASS — message read = «фейк ≈ секунды → [× 1000+
+    разрыв] → опровергнуть = часы человека; DDoS на внимание; виновата
+    архитектура процесса, чинить процесс не «AI»» = assertion. MATCH.
+  - Ocean motif: ocean_box на asymmetry-блоке. Palette LOCKED (DEEP/MID/
+    LIGHT/TEAL/GOLD, 0 red/cream). Gold ≥1× (ось асимметрии + lesson-
+    callout). Failure-стиль = s21/s22 (кейс→асимметрия→системно→урок+
+    не-AI альт+критерий-footer). Iconography: triangle-alert-gold
+    (Lucide, Ocean recolor) — semantic (предупреждение/риск).
+  - Verdict: ACCEPT (4 iter, min-3 satisfied, found+fixed каждый раунд).

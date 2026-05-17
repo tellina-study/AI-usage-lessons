@@ -245,7 +245,7 @@
 | 2 | Amazon Kiro: «пересобрать эффективнее» → 13ч outage | safeguards для людей не покрывают агентов | two-person-rule на агентов, agent-policy-gate, blast-radius-лимиты | §3.3 |
 | 3 | PocketOS/Cursor: БД за 9 сек, потом «извинение» | скорость агента = скорость катастрофы; извинение не восстанавливает | confirm-on-destructive, staging, PITR-бэкапы, dry-run | §3.3 |
 | 4 | Claude CLI `rm -rf ~/` | shell-агент = риск необратимой потери | контейнер/sandbox, ограниченный FS-scope, бэкап вне досягаемости | §3.6 |
-| 5 | curl закрыл bug-bounty: AI-slop ×8, valid <5% | AI масштабирует правдоподобный шум; DDoS на мейнтейнеров | приватное раскрытие, убрать junk-стимул, воспроизводимый PoC | §4.5 |
+| 5 | curl закрыл bug-bounty: AI-slop ×8, valid <5% | AI масштабирует правдоподобный шум; DDoS на сопровождающих | приватное раскрытие, убрать junk-стимул, воспроизводимый PoC | §4.5 |
 | 6 | Slopsquatting: ~20% выдуманных пакетов, 58% воспроизводимо | воспроизводимая галлюцинация = supply-chain атака | lockfile+хэш-пин, allowlist реестров, проверка пакета до install | §4.6 |
 | 7 | CamoLeak (CVE-2025-59145): prompt-injection в Copilot Chat | prompt injection — структурный класс, не баг продукта | least-privilege, изоляция недоверенного, egress-контроль | §4.7 |
 | 8 | Lovable/Moltbook: vibe-код без RLS → массовая утечка | vibe-coding без security-baseline = утечка | secure-defaults, обязательный authz-ревью, pentest до запуска | §5.1 |

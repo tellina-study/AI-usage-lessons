@@ -409,12 +409,17 @@ def load_deck():
     # [Решение #101, 2026-05-17 — owner GATE B] 32 base (s01–s32 нумерация
     # неизменна) + 3 suffix-ID раздела-дивайдера s04a/s24a/s28a (cascade-safe:
     # chapter [for-slide-sNN] s01–s32 финализирован GATE A, НЕ renumber).
+    # [Решение #103, 2026-05-17 — owner GATE C] +1 контент-слайд suffix-ID
+    # s22a (curl-slop #5) между s22 и s23 — security-раздел, derive §4.5;
+    # owner-документированный slide-count override 35→36, cascade-safe.
     base = [f"s{n:02d}" for n in range(1, 33)]
     expected = []
     for sid in base:
         expected.append(sid)
         if sid == "s04":
             expected.append("s04a")   # Раздел 1 divider
+        elif sid == "s22":
+            expected.append("s22a")   # curl-slop #5 (Решение #103)
         elif sid == "s24":
             expected.append("s24a")   # Раздел 5 divider
         elif sid == "s28":
@@ -426,7 +431,7 @@ def load_deck():
     assert base_in_order == base, (
         f"base s01–s32 numbering changed:\n got={base_in_order}")
     tot = d2.get("totals", {}).get("slides")
-    assert tot == 35, f"deck-part2 totals.slides={tot}, expected 35"
+    assert tot == 36, f"deck-part2 totals.slides={tot}, expected 36"
     return {"slides": slides, "totals": d2.get("totals", {}),
             "deck": d1.get("deck", {})}
 
@@ -1706,6 +1711,95 @@ def build_s22(p):
     speaker_notes(s, load_notes("s22"))
 
 
+def build_s22a(p):
+    """case_study — curl-slop #5 (Решение #103, owner GATE C). Несущая
+    ось — асимметрия стоимости: «сгенерировать фейк ≈ секунды» vs gold
+    «опровергнуть = часы человека» → DDoS на внимание сопровождающих;
+    чинить процесс, не запрещать AI. Стиль = failure-слайд (как
+    s21/s22): Ocean motif, palette LOCKED, gold = ось асимметрии.
+    Числа волатильны → видимый слой только направление/асимметрия
+    словами; [FACT-CHECK] только в speaker notes."""
+    s = blank(p)
+    slide_title(s, "AI-slop как DDoS на внимание сопровождающих.",
+                size=24, y=0.34, h=0.58)
+    icon(s, "triangle-alert", 11.75, 0.34, 0.78, "gold")
+    # Context band — что произошло (words only, 0 точных чисел)
+    text_box(s, 0.55, 0.92, 11.05, 0.74,
+             "curl — критичная open-source-библиотека, её ведёт небольшая "
+             "команда. В её bug-bounty хлынул поток AI-сгенерированных "
+             "«отчётов об уязвимостях»: объём кратно вырос, доля валидных "
+             "рухнула (пример — фиктивные GDB-дампы + ссылка на "
+             "несуществующую функцию). Открытый приём свёрнут.",
+             size=12.5, italic=True, color=MID, line_spacing=1.18)
+    # ── Несущая ось: асимметрия стоимости (gold = «секунды → часы») ──
+    ax, ay, aw, ah = 0.40, 1.80, 12.55, 2.16
+    ocean_box(s, ax, ay, aw, ah)
+    text_box(s, ax + 0.24, ay + 0.12, aw - 0.48, 0.30,
+             "Асимметрия стоимости — почему это атака, а не просто спам",
+             size=13.5, bold=True, color=MID)
+    colw = (aw - 0.48 - 1.18) / 2.0
+    cy = ay + 0.52
+    cyh = ah - 0.68
+    # LEFT — сгенерировать фейк: дёшево (нейтральный surface)
+    lcx = ax + 0.24
+    filled_rect(s, lcx, cy, colw, cyh, SURFACE, stroke=SOFT_GREY,
+                stroke_pt=1.0, radius=True, radius_adj=0.06)
+    text_box(s, lcx + 0.18, cy + 0.16, colw - 0.36, 0.32,
+             "Сгенерировать фейк-отчёт", size=14, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER)
+    text_box(s, lcx + 0.18, cy + 0.52, colw - 0.36, 0.42,
+             "секунды · почти ноль усилий", size=16, bold=True, color=MID,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, lcx + 0.18, cy + 0.96, colw - 0.36, cyh - 1.08,
+             "правдоподобный жаргон, дампы, ссылки — по форме не отличить "
+             "от настоящего без ручной проверки",
+             size=11.5, color=DEEP, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
+    # Center — gold asymmetry axis «секунды → часы» (× 1000+ = magnitude)
+    midx = lcx + colw + 0.14
+    text_box(s, midx - 0.04, cy + cyh / 2 - 0.62, 0.98, 0.30,
+             "× 1000+", size=13, bold=True, color=GOLD,
+             align=PP_ALIGN.CENTER)
+    right_arrow(s, midx, cy + cyh / 2 - 0.24, 0.90, 0.50, fill=GOLD)
+    text_box(s, midx - 0.04, cy + cyh / 2 + 0.32, 0.98, 0.30,
+             "разрыв", size=11.5, bold=True, italic=True, color=GOLD,
+             align=PP_ALIGN.CENTER)
+    # RIGHT — опровергнуть: дорого (gold = ось)
+    rcx = midx + 0.98
+    filled_rect(s, rcx, cy, colw, cyh, GOLD_TINT, stroke=GOLD,
+                stroke_pt=2.0, radius=True, radius_adj=0.06)
+    text_box(s, rcx + 0.18, cy + 0.16, colw - 0.36, 0.32,
+             "Опровергнуть фейк", size=14, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER)
+    text_box(s, rcx + 0.18, cy + 0.52, colw - 0.36, 0.42,
+             "часы человека", size=16, bold=True, color=GOLD,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, rcx + 0.18, cy + 0.96, colw - 0.36, cyh - 1.08,
+             "понять сценарий · воспроизвести (или показать "
+             "невоспроизводимость) · проверить смежный код",
+             size=11.5, color=DEEP, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
+    # Conclusion band — DDoS на внимание / supply-chain (teal = системно)
+    teal_callout(s, 0.55, 4.12, 12.25, 0.98,
+                 "Одна сторона дешевеет в тысячи раз, другая нет — процесс "
+                 "ломается. Атакуется не сервер, а невосполнимый ресурс — "
+                 "время разбора сопровождающих (DDoS на внимание). Закроют "
+                 "канал — реальные уязвимости утонут в шуме, риск уходит во "
+                 "всю supply-chain.", size=13)
+    # Lesson + non-AI alternative (gold callout, как s21/s22)
+    gold_callout(s, 0.55, 5.24, 12.25, 1.04,
+                 "Виновата архитектура процесса, не «AI» (запрет "
+                 "неисполним). Чинить процесс, не-AI: приватное раскрытие "
+                 "(GitHub Security Advisories) · убрать junk-стимул · "
+                 "барьер воспроизводимого PoC на входе — машинный критерий "
+                 "вместо человеческой проверки правдоподобия.", size=14)
+    footer(s, "Критерий «когда AI здесь опасен»: открытый процесс, "
+              "принимающий правдоподобный текст от кого угодно, И дорогая "
+              "валидация на людях. Конкретные доли уточняются, асимметрия "
+              "стабильна.")
+    speaker_notes(s, load_notes("s22a"))
+
+
 def build_s23(p):
     """case_study — 2 canons + CamoLeak + 4 Лекция-3 rules."""
     s = blank(p)
@@ -2317,14 +2411,17 @@ def main():
     # [Решение #101, 2026-05-17 — owner GATE B] 32 base (s01–s32 нумерация
     # неизменна) + 3 suffix-ID раздела-дивайдера: s04a после s04 (Р1),
     # s24a после s24 (Р5), s28a после s28 (Р6). cascade-safe.
+    # [Решение #103, 2026-05-17 — owner GATE C] +1 контент-слайд s22a
+    # (curl-slop #5) после s22, перед s23 (security-раздел). cascade-safe.
     builders = [build_s01, build_s02, build_s03, build_s04, build_s04a,
                 build_s05, build_s06, build_s07, build_s08, build_s09,
                 build_s10, build_s11, build_s12, build_s13, build_s14,
                 build_s15, build_s16, build_s17, build_s18, build_s19,
-                build_s20, build_s21, build_s22, build_s23, build_s24,
-                build_s24a, build_s25, build_s26, build_s27, build_s28,
-                build_s28a, build_s29, build_s30, build_s31, build_s32]
-    assert len(builders) == 35, f"expected 35 builders, got {len(builders)}"
+                build_s20, build_s21, build_s22, build_s22a, build_s23,
+                build_s24, build_s24a, build_s25, build_s26, build_s27,
+                build_s28, build_s28a, build_s29, build_s30, build_s31,
+                build_s32]
+    assert len(builders) == 36, f"expected 36 builders, got {len(builders)}"
     for b in builders:
         b(p)
     OUT.parent.mkdir(parents=True, exist_ok=True)

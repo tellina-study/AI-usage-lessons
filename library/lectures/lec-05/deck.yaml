@@ -1,0 +1,373 @@
+# library/lectures/lec-05/deck.yaml  —  PART 1 of 2
+#
+# Deck-структура Лекции 5 «AI в финансовом секторе и ритейле».
+#
+# Source: chapter v2 finalized (~22650 слов, 3 части) +
+# plan v2-final (USER GATE 0 approved 2026-05-17, G-1..G-4).
+# Issue #100 · Branch: phase-1-plan (worktree /tmp/lec-05-wt)
+#
+# Slide-IDs LOCKED = 32 (s01–s32) + ОДИН suffix-ID s04a (divider Раздела 1),
+# как lec-03/lec-04 precedent (cascade-safe structural revision, plan §Q6).
+# Итог: 33 deck-слайда (32 LOCKED + s04a). НЕ перенумеровывать —
+# chapter [for-slide-sNN] маппинг (33 уник. маркера: s01..s32 + s04a) цел.
+#
+# s31 РЕШЕНИЕ: глава §6.3 имеет 5 [for-slide-s31] sub-block маркеров
+# (А данные+закон / Б CV-пласт). Plan §4 LOCKED перечисляет s31 как ОДИН
+# слайд (assertion_visual, 3 мин). РЕШЕНИЕ: АГРЕГИРОВАТЬ в один s31
+# (2-колонка: А ФЗ-152/PII / Б KYC-CV), НЕ дробить на s31a — s04a уже
+# единственный suffix, оправданный маркерами; дробление s31 вышло бы за
+# авторизованную арку. Отчёт в SYNTHESIS.
+#
+# s01 = Zillow iBuying коллапс (GATE 0 G-1 LOCKED), payoff — s09.
+#
+# ┌─ SPLIT: deck.yaml >600 строк (Document Size Limit, waiver НЕТ) → разбит ──┐
+# │ deck.yaml      (ЭТОТ ФАЙЛ) — deck/palette/motif/typography/glossary_lock  │
+# │                + slides s01..s14 (через конец Раздела 2).                 │
+# │ deck-part2.yaml — slides s15..s32 + totals + ai_failure_judgment +        │
+# │                verify_day_of_items + fact_check_items.                    │
+# │ Loader (rendered build-скрипт) читает ОБЕ части. Кросс-ссылка внизу.      │
+# └────────────────────────────────────────────────────────────────────────┘
+
+deck:
+  lecture_number: 5
+  title: "Лекция 5. AI в финансовом секторе и ритейле"
+  audience: "3 курс ИУ6 (универсально, без локального binding в контенте)"
+  duration_min: 75
+  central_question: "Финансы и ритейл — отрасли максимального внедрения ИИ. Под какую задачу — какой тип ИИ, почему именно он (а не LLM везде), и где этот тип ломается?"
+  learning_outcomes: [LO1, LO2, LO3, LO6]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v2 finalized (~22650 слов, 3 части)
+  plan: notes/lecture-5-review/final/plan-v2-final.md (v2-final §4)
+  total_slides: 33          # 32 LOCKED (s01–s32) + s04a suffix divider
+  curriculum_level: "Модуль 1, вторая отраслевая (после Л4 ПО; Л1–Л3 обзорные)"
+  deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
+
+palette:
+  primary_deep: "#21295C"      # Ocean deep — text on light bg, assertions
+  primary_mid: "#065A82"       # Ocean mid — headings, accents, primary chart series
+  primary_light: "#1C7293"     # Ocean light — icons, borders, motif strokes
+  teal: "#028090"              # secondary accent — chart contrast, secondary icons
+  gold: "#F0AB00"              # highlight — wow-stat, ≥1× per slide
+  surface: "#F4F7FA"           # motif rounded box background
+  background: "#FFFFFF"        # default slide background
+
+motif:
+  type: ocean_rounded_box
+  radius_pt: 12
+  stroke: "#1C7293"
+  stroke_pt: 1.5
+  surface: "#F4F7FA"
+  padding_pt: 16
+  cast_shadow: false
+
+typography:
+  heading_font: "Inter"
+  mono_font: "JetBrains Mono"
+  fallback_heading: "Arial"
+  sizes:
+    cover_title: 36
+    cover_hero: 60
+    slide_assertion: 28
+    sub_heading: 20
+    body: 16
+    caption: 12
+    mega_stat: 80
+
+glossary_lock:
+  # Канонические термины — из glossary.yaml (locked 2026-05-17, chapter v2).
+  # designer/critic enforce no drift; alias только 1× при первом упоминании.
+  # forbidden_anglicisms: пайплайн→конвейер, фоллбэк→запасной вариант,
+  # эдж-кейс→краевой случай, инсайт→вывод/наблюдение. Оставить: чёрный ящик, скоринг.
+  - "единый паттерн карточки типа ИИ (course-scaffold; НЕ в strict-in)"
+  - "прогнозирование временных рядов (time-series forecasting)"
+  - "distribution shift (дрейф распределения)"
+  - "асимметрия цены ошибки"
+  - "поиск аномалий (anomaly detection)"
+  - "AML (атрибут fraud-задачи, не отдельный тип)"
+  - "false positive / false negative (FP/FN), матрица ошибок"
+  - "cost-sensitive (стоимостно-взвешенная оценка)"
+  - "precision ↔ recall (точность ↔ полнота)"
+  - "кредитный скоринг (scoring)"
+  - "reason codes (коды причин)"
+  - "прокси-предвзятость (proxy bias)"
+  - "collaborative filtering / content-based filtering / hybrid recommender"
+  - "cold-start / popularity bias / over-specialization / serendipity"
+  - "filter bubble (информационный пузырь)"
+  - "dynamic pricing (динамическое ценообразование)"
+  - "прокси≠цель (единый класс ошибки главы)"
+  - "grounding (опора на источник) / fact-checking"
+  - "KYC / liveness / hidden human cost"
+  - "PII (персональные данные) / ФЗ-152"
+  - "circuit-breaker / kill-switch (аварийный выключатель)"
+  - "SHAP (метод объяснения вклада признаков)"
+  - "iBuying (алгоритмическая скупка жилья)"
+  - "augmentation vs замена"
+
+# ─────────────────────────────────────────────────────────────────────────
+# Порядок предъявления (plan §4, арка §2.2). 7 разделов roadmap: 0..6.
+# Divider'ы: s04a (Р1) · s10 (Р2) · s15 (Р3) · s20 (Р4) · s25 (Р5).
+# Р6 без divider (plan §2.2 — 5 divider'ов). roadmap-bar ТОЛЬКО на
+# divider'ах + cover (s02), НЕ на content-слайдах (Л2-урок #40).
+# ЭТОТ ФАЙЛ: slides s01..s14. Продолжение (s15..s32) — deck-part2.yaml.
+# ─────────────────────────────────────────────────────────────────────────
+slides:
+  # ─── Раздел 0. Открытие + recap + ЦВ (8 мин, s01–s04) ───
+  - id: s01
+    file: slides/s01-zillow-hook.md
+    type: case_study
+    section: "Раздел 0. Открытие"
+    duration_min: 3
+    assertion: "Алгопрогноз цен жилья закрыл целое направление Zillow: $500M+ списаний, ~2000 уволенных, акция −25% — обычная ошибка модели стала потерей бизнеса"
+    learning_goal: "Hook (G-1 LOCKED): Zillow iBuying коллапс; рамкирование тезиса; payoff — s09"
+    learning_outcomes: [LO6]
+    chapter_ref: "§0.1 [for-slide-s01]"
+    references: [cbs-zillow-2021, stanford-gsb-2022]
+    in_bucket: false   # hook; раскрытие/урок — s09 (partial→out, plan §5)
+    visual:
+      pattern: case_study_contrast
+      primary: "Слева — assertion + 3 числа Zillow в Ocean rounded box ($300M+ списание/квартал · $500M+ потери направления · ~2000 уволенных ~25% штата · акция −25%). Справа — open-Q + рамка «какой тип ИИ это был и почему не LLM». Gold highlight — «$500M+ / закрыто целое направление»."
+    interaction: open_question
+
+  - id: s02
+    file: slides/s02-cover-roadmap.md
+    type: cover
+    section: "Раздел 0. Открытие"
+    duration_min: 0.5
+    assertion: "Лекция 5. AI в финансовом секторе и ритейле"
+    learning_goal: "Cover + roadmap 0–6; gold-маркер «Раздел 0»"
+    learning_outcomes: [LO1, LO2, LO3, LO6]
+    chapter_ref: "§0.2 [for-slide-s02]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: cover_distinct
+      primary: "Hero-cover: крупная outline «05». Справа — title 36pt bold deep + подзаголовок. Внизу — roadmap-bar 7 карточек (0 Открытие / 1 Прогноз / 2 Аномалии / 3 Скоринг / 4 LLM / 5 Рекомендации / 6 Фреймворк), текущая (0) gold. БЕЗ Ocean rounded box."
+    interaction: none
+
+  - id: s03
+    file: slides/s03-recap-palette.md
+    type: comparison
+    section: "Раздел 0. Открытие"
+    duration_min: 2
+    keystone: true
+    assertion: "Л4 показала один тип ИИ вглубь; финансы и ритейл требуют палитры из 5 типов под палитру задач — LLM не универсальный молоток"
+    learning_goal: "KEYSTONE-мост Л2/Л4 → палитра 5 типов + CV-пласт; тезис §1.1 виден"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.2 [for-slide-s03]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: bridge_table
+      subtype: schema_matrix
+      primary: "Ocean rounded box: 2-колонка-мост «Л2 дерево ML/LLM + Л4 один тип вглубь → Л5 палитра». Карта 5 типов (прогноз · аномалии · скоринг · LLM · recsys) + CV-пласт. Gold — «LLM — НЕ универсальный молоток». 4 понятия «вводим с нуля» — строка."
+    interaction: none
+
+  - id: s04
+    file: slides/s04-central-question.md
+    type: assertion_visual
+    section: "Раздел 0. Открытие"
+    duration_min: 2.5
+    assertion: "Центральный вопрос: под какую задачу — какой тип ИИ, почему именно он (а не LLM везде), и где этот тип ломается?"
+    learning_goal: "ЦВ крупно + единый паттерн карточки (5 шагов) + карта 5 типов + disclaimer"
+    learning_outcomes: [LO1, LO2, LO3, LO6]
+    chapter_ref: "§0.3, §0.4 [for-slide-s04]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: central_question_plus_pattern
+      primary: "ЦВ крупно (22pt bold deep) в gold Ocean rounded box. Единый паттерн карточки = 5 шагов (задача → тип и почему именно он → пример → где ломается → альтернатива/критерий) teal-лентой. Disclaimer-плашка «карта — структура лекции, не требование понять всё сейчас». Gold — «где ломается»."
+    interaction: none
+
+  # ─── div Раздел 1 ───
+  - id: s04a
+    file: slides/s04a-divider-forecasting.md
+    type: section_divider
+    section: "Раздел 1. Прогнозирование рядов"
+    duration_min: 0.3
+    assertion: "Раздел 1 — прогнозирование временных рядов: самая массовая задача ритейла, и сразу тип ИИ, который НЕ LLM"
+    learning_goal: "Section divider Р1 + одно-фразовый мост"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1 [for-slide-s04a]"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider (единый s04a/s10/s15/s20/s25): гигантская «1» справа soft-outline, РАЗДЕЛ 1 + подзаголовок «Прогнозирование: спрос, продажи, отток» + 1 нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 1."
+      narrative_bridge: "Начнём с самой массовой задачи ритейла — и сразу с типа ИИ, который НЕ LLM."
+    interaction: none
+
+  # ─── Раздел 1. Прогноз рядов (11 мин, s05–s09) ───
+  - id: s05
+    file: slides/s05-pattern-why-not-llm.md
+    type: assertion_visual
+    section: "Раздел 1. Прогнозирование рядов"
+    duration_min: 1.5
+    assertion: "Прогноз ряда — предсказание следующего ЧИСЛА с трендом и сезонностью; LLM предсказывает следующий ТОКЕН ТЕКСТА — это структурно разные задачи"
+    learning_goal: "Тип ИИ под прогноз = классическая статистика/ML; «почему НЕ LLM» операционализирован 3 фразами"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1 [for-slide-s05]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: contrast_two_columns
+      primary: "2-колонка в Ocean rounded box: LLM (следующий токен текста · правдоподобие · нет понятия сезонность) vs прогноз ряда (следующее число · тренд+сезонность+шум · калиброванная ошибка). Тип ИИ: ARIMA-семейство / бустинг. Gold — «структурно разные задачи»."
+    interaction: none
+
+  - id: s06
+    file: slides/s06-task-forecast-criterion.md
+    type: assertion_visual
+    section: "Раздел 1. Прогнозирование рядов"
+    duration_min: 2.5
+    assertion: "Прогноз спроса/cash-flow/оттока требует табличной модели с измеримой ошибкой — 3 аргумента почему не LLM: структура данных, калибровка, что сломается"
+    learning_goal: "Развёрнутый критерий «почему классическая статистика/ML, не LLM» (граничный strict-in P1-1: in только при ≥3 аргумента)"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§1.2 [for-slide-s06]"
+    references: []
+    in_bucket: true   # граничный — развёрнут до ≥3 аргументов + альтернатива (P1-1)
+    visual:
+      pattern: three_argument_cards
+      primary: "3 карточки-аргумента в Ocean rounded box: (1) структура данных — табличные ряды, не текст; (2) измеримость+калибровка — нужна численная ошибка+интервал; (3) что сломается — LLM даст правдоподобное число без обоснования × объём (механизм Zillow). Альтернатива+критерий-плашка. Gold — «измеримая ошибка». Footer — PII/ФЗ-152 caveat."
+    interaction: none
+
+  - id: s07
+    file: slides/s07-x5-magnit.md
+    type: case_study
+    section: "Раздел 1. Прогнозирование рядов"
+    duration_min: 2.5
+    assertion: "X5: точность >70%, +5 млрд ₽, −2% списаний; Магнит строит свою F&R после ухода SAP/Blue Yonder — прогноз диктуется задачей, ни один не взял LLM"
+    learning_goal: "Реальный пример РФ + импортозамещение прогнозных систем как инженерная задача"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.3 [for-slide-s07]"
+    references: [x5-tadviser-2023, magnit-tadviser-2024]
+    in_bucket: false
+    visual:
+      pattern: two_case_panels
+      primary: "2 панели в Ocean rounded box: X5 (3 stat-плашки: >70% точность · +5 млрд ₽ · −2% списаний, gold на +5 млрд) + Магнит (импортозамещение SAP/Blue Yonder → своя F&R). Вывод-плашка «ни один не взял LLM — тип диктуется задачей». Footer — атрибуция+[VFY-day-of] caveat."
+    interaction: none
+
+  - id: s08
+    file: slides/s08-how-it-works.md
+    type: process
+    section: "Раздел 1. Прогнозирование рядов"
+    duration_min: 1.5
+    assertion: "Прогноз раскладывает историю на тренд + сезонность + шум и продлевает паттерны прошлого — отсюда встроенная уязвимость: силён, пока завтра похоже на вчера"
+    learning_goal: "Механика «на пальцах» + аналогия товаровед + посев уязвимости (ключ к s09)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.4 [for-slide-s08]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: decomposition_diagram_plus_analogy
+      primary: "Слева — d08 (история = тренд+сезонность+шум, 4 ряда) в Ocean rounded box. Справа — аналогия «опытный товаровед» + цепочка прогноз→действие(закупка) + gold-плашка встроенной уязвимости «пока завтра похоже на вчера»."
+    interaction: none
+
+  - id: s09
+    file: slides/s09-zillow-payoff.md
+    type: case_study
+    section: "Раздел 1. Прогнозирование рядов"
+    duration_min: 2
+    assertion: "Zillow: distribution shift × необратимое авто-действие без circuit-breaker = потеря направления; Opendoor выжил на том же типе ИИ — решает не модель, а обвязка"
+    learning_goal: "Эталон failure-слайда: payoff hook; distribution shift+асимметрия с нуля; Knight callback; критерий+альтернатива (ЦВ-возврат 1)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§1.5 [for-slide-s09]"
+    references: [cbs-zillow-2021, ssrn-4121706, sec-knight-2013]
+    in_bucket: true   # solid IN-BUCKET (provala + урок + критерий + альтернатива)
+    visual:
+      pattern: failure_mechanism_plus_lesson
+      primary: "Слева — механизм в Ocean rounded box: distribution shift (inline-define) → асимметрия цены ошибки (≈0 рекомендация vs десятки тыс.$ × N) → 3 условия (необратимое+авто+нестационарно без circuit-breaker). Knight callback-плашка ($440M/45мин — тот же класс). Справа — Zillow vs Opendoor + критерий+альтернатива. Gold — «тот же тип ИИ, другая обвязка → банкротство vs выживание»."
+    interaction: think_pause
+
+  # ─── div Раздел 2 ───
+  - id: s10
+    file: slides/s10-divider-anomaly.md
+    type: section_divider
+    section: "Раздел 2. Поиск аномалий"
+    duration_min: 0.3
+    assertion: "Раздел 2 — поиск аномалий: прогноз про будущее, теперь про настоящее — поймать аномалию за миллисекунды"
+    learning_goal: "Section divider Р2 + одно-фразовый мост"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 [for-slide-s10]"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider: гигантская «2» справа, РАЗДЕЛ 2 + подзаголовок «Поиск аномалий: фрод и AML» + нарративная строка-мост, roadmap-bar 7 карточек, gold-маркер Раздел 2."
+      narrative_bridge: "Прогноз — про будущее; теперь про настоящее — поймать аномалию за миллисекунды, пока платёж ещё не прошёл."
+    interaction: none
+
+  # ─── Раздел 2. Anomaly / fraud (11.5 мин, s11–s14) ───
+  - id: s11
+    file: slides/s11-task-fraud-realtime.md
+    type: assertion_visual
+    section: "Раздел 2. Поиск аномалий"
+    duration_min: 3
+    assertion: "Фрод редок и дрейфует — учить «как выглядит норма клиента» (anomaly detection), а не «как выглядит фрод»; это не прогноз ряда, не генерация, не LLM"
+    learning_goal: "Задача фрод real-time; почему anomaly detection; AML = атрибут (1 строка); аналогия облако+выброс (макс 3 концепта, P1-4)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 [for-slide-s11]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: analogy_cloud_plus_why
+      primary: "Слева — d11 (облако нормы + выброс) в Ocean rounded box. Справа — почему НЕ классификация (фрод редок+дрейфует) / НЕ прогноз / НЕ LLM (транзакция структурирована, задача геометрическая). AML = 1 строка-атрибут. Gold — «учить норму, а не фрод»."
+    interaction: none
+
+  - id: s12
+    file: slides/s12-fraud-examples.md
+    type: case_study
+    section: "Раздел 2. Поиск аномалий"
+    duration_min: 2
+    assertion: "Stripe Radar −32% фрода при одобрении >99%, JPMorgan −30% ложных, Visa предотвратила ~$40 млрд (FY2023) — антифрод диктует тип «норма/отклонение»"
+    learning_goal: "Реальные примеры + намёк «ключевая метрика — не точность вообще»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.2 [for-slide-s12]"
+    references: [stripe-radar-2024, visa-reuters-2024, cbr-2025]
+    in_bucket: false
+    visual:
+      pattern: chart_plus_hint
+      primary: "Слева — c12 (Stripe/JPMorgan/Visa bar) в Ocean rounded box. Справа — РФ (Банк России: традиц. ИИ широко в антифроде) + hint-плашка «снижение ЛОЖНЫХ СРАБАТЫВАНИЙ — намёк: метрика не accuracy вообще». Gold — «$40 млрд / >99% одобрено». Footer — [FACT-CHECK]/[VFY] caveat."
+    interaction: none
+
+  - id: s13
+    file: slides/s13-confusion-matrix.md
+    type: comparison
+    section: "Раздел 2. Поиск аномалий"
+    duration_min: 3
+    assertion: "FP = заблокирован честный клиент, FN = пропущен фрод; «accuracy 99,9%» при дисбалансе обманчива — мерить FP и FN раздельно и в деньгах (cost-sensitive)"
+    learning_goal: "ВВОД С НУЛЯ (G-2): матрица ошибок TP/FP/FN/TN на пальцах + accuracy лжёт + cost-sensitive; forward→Л7"
+    learning_outcomes: [LO3]
+    chapter_ref: "§2.3 [for-slide-s13]"
+    references: []
+    in_bucket: true   # solid IN-BUCKET (ограничение + критерий, LO3)
+    visual:
+      pattern: confusion_matrix_2x2
+      subtype: schema_matrix
+      primary: "2×2 матрица ошибок в Ocean rounded box: TP/TN (зелёная семантика teal) · FP «честный клиент заблокирован» (gold) · FN «фрод пропущен, деньги ушли» (deep). Под — accuracy-обман (1M поток, 1000 фрода → 99,9% у бесполезной модели) + cost-sensitive плашка. Forward-pointer плашка «формальный аппарат — Л7». Gold — «accuracy лжёт»."
+    interaction: none
+
+  - id: s14
+    file: slides/s14-false-positives.md
+    type: case_study
+    section: "Раздел 2. Поиск аномалий"
+    duration_min: 3
+    assertion: "$5 за кофе и $5000 за лечение — два FP с ценой, различной на порядки; precision↔recall — компромисс, не задача «обе в ноль»; крупное/необратимое → не глухой блок"
+    learning_goal: "Реальный вред FP на масштабе + precision↔recall + Knight callback 2 + критерий мягкий challenge (ЦВ-возврат 2)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§2.4 [for-slide-s14]"
+    references: []
+    in_bucket: true   # solid IN-BUCKET (антипаттерн + урок + альтернатива)
+    visual:
+      pattern: cost_contrast_plus_lesson
+      primary: "Слева — 2 FP-контраст в Ocean rounded box: $5 кофе (обратимо, цена≈0) vs $5000 лечение за границей (необратимо по последствиям) — тот же класс ошибки, цена на порядки. precision↔recall плашка (компромисс не отменяется). Knight callback-2. Справа — критерий: авто-блок только обратимое/мелкое; крупное → мягкий challenge (3DS/звонок/пуш) + human-in-the-loop; AML-порог = rules-engine. Gold — «$5000 vs $5»."
+    interaction: poll
+
+# ─────────────────────────────────────────────────────────────────────────
+# КОНЕЦ PART 1. Слайды s15..s32 + totals + ai_failure_judgment +
+# verify_day_of_items + fact_check_items → deck-part2.yaml.
+# Loader (rendered build-скрипт) загружает: deck.yaml (этот) + deck-part2.yaml,
+# объединяет ключ `slides` (33: s01..s32 + s04a после s04), валидирует totals.
+# ─────────────────────────────────────────────────────────────────────────

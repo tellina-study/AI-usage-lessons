@@ -113,7 +113,7 @@ s27 (matrix), s29 (matrix — WATCH). Dividers: s10/s14/s18.
 - 3 iter: all other 26 slides (rendered + 2 review passes + final accept)
 - All slides ≥3 iter (min), max 4 (well under 7 cap). No escalations.
 
-### Schema §5.5 final pass matrix
+### Schema §5.5 final pass matrix (v1)
 | Slide | Subtype | §5.5 | 5-sec | 50% proj |
 |---|---|---|---|---|
 | s03 | matrix (mapping) | PASS | PASS | PASS |
@@ -128,3 +128,63 @@ s27 (matrix), s29 (matrix — WATCH). Dividers: s10/s14/s18.
 | **s25** | **matrix (WATCH)** | **PASS** | **PASS** | **PASS** |
 | s27 | matrix | PASS | PASS | PASS |
 | **s29** | **matrix (WATCH)** | **PASS** | **PASS** | **PASS** |
+
+---
+
+## v1 → v2 fix-iteration (Phase 7 QA: presentation-critic REVISE + 4 critics)
+
+Issue #99. SYNTHESIS fix-list (P0 + 6 P1 + P2) + 3 USER-decisions (s28/s26/s29
+reformulate) + deck-wide newcomer-pass. v1 archived в `archive-v1/`.
+
+### Iter 1 — apply all fixes + first render (150dpi)
+- (a) inspected: s01,s03,s04,s06,s08,s12,s13,s17,s22,s26,s28,s29 @150dpi.
+- (b) changed (БЛОК A): P0 — 0 [VFY] на видимом (5 футеров→человеч. язык;
+  verify-флаг только deck.yaml). P1 §/sNN/LO/Раздел leak — s03/s04/s07/s09/
+  s11/s15/s17/s20/s23/s24/s25/s30/s32 + s32-md Body «LO4»/«§6.1». P1 charts
+  — s06/s08/s12/s13/s17 декор-bar→крупные mega-stat-плашки (s01-стиль; chart
+  embed убран, gen_charts.py больше не нужен). s13 GitClear→3 trend-числа
+  (8,3↑12,3 / 24,1↓9,5 / 5,5↑7,9; числа НЕ менялись). P1 s16 confused-deputy
+  inline-gloss в notes. P1 s19–23 ритм — s22 → single-focus горизонт.
+  attack-flow + hero «58%» (ломает 2-кол ритм). P1 s25/s29 убрана
+  color-legend subtitle. P2 s01 явная знаковая легенда. БЛОК B — s28/s26/s29
+  переформулированы (s26 EN-цитаты→notes; s29 20-ячеек→доминанта-вывод +
+  3 оси; s28 why-for-AI/where-weak). БЛОК C — newcomer Russify s20/s25/s27,
+  course-scaffold/vendor-бенчмарк→рус.
+- (c) found: s13 right — 3 плашки overflow за ocean-box (bottom-text
+  накладывается на 3-ю); s01 — value-колонка узкая, «времени» рвётся
+  «врем\nени».
+- verdict: continue → iter 2 (fix s13 overflow + s01 layout).
+
+### Iter 2 — fix s13 overflow + s01 row layout
+- (a) inspected: s01, s13 @150dpi.
+- (b) changed: s13 — sh 1.00→0.86, gap 0.06→0.05, bottom-line привязан к
+  факт. концу плашек (no overlap). trend_stat helper — число-бокс scale
+  by h, 27→25pt. s01 — 3-кол (label/tag/value) → 2-зона (label+italic-tag
+  слева, big 30pt число справа, value-box 0.55→2.35 wide).
+- (c) verified: s13 — 3 числа чисто, no overlap, gold на «клоны». s01 —
+  «Прогноз / ждали ускорение → −24%», знак однозначен, gold на +19%.
+- verdict: continue → iter 3 (full-deck systematic review).
+
+### Iter 3 — full-deck systematic review + final accept
+- (a) inspected: s07/s11/s23/s24/s25/s27/s32 deep + 25% montage 5-sec sweep
+  + s29 50% projector + byte-diff vs v1.
+- (b) found (Anthropic principle — iter-3 not clean): none blocking;
+  s23 confused-deputy gloss reads, s24 №-column centered clean, s27 jargon
+  Russified, s29 dominant conclusion reads @50%. Montage: palette coherent,
+  gold ≥1× all 32, s22 rhythm-break visible.
+- (c) FINAL gates:
+  - 5-Second Test (25% montage): PASS — main message = assertion на всех 32.
+    s04 «5 точек возврата» теперь читается смыслом (не §-кодами); s12/s13/
+    s17/s06/s08 числа крупные; s29 доминанта-вывод.
+  - Projector 50% (s25/s29 WATCH + s12/s13 new mega-stat): PASS.
+  - Schema §5.5: s03/s11/s12/s15/s20/s24/s25/s27/s29 + s10/s14/s18 PASS.
+  - Palette LOCKED: PASS (Ocean+Teal+Gold only). Gold ≥1×/slide: 32/32.
+  - Canvas 13.333×7.5 (16:9): PASS. 32 slides (no add/del): PASS.
+  - 0 [VFY]/[VERIFY]/§/(sNN)/LO на видимом слое: PASS (grep-verified).
+  - Speaker notes edited (s16/s28/s32): 297/254/278 слов — в [150,300].
+  - Side-effects: lec-01/02/03/07 clean, no ~$*.pptx, only lec-04 touched.
+- byte-identical vs v1: 6/32 (s02,s05,s10,s14,s18,s31 — не редактировались);
+  changed: 26/32 = ровно edited-set (no unintended render-drift).
+- iterations: 3 на изменённые (s01/s13 — 3 с доп. fix-pass на iter 2).
+  Max 3, well under 7 cap. No escalations.
+- verdict: **ACCEPT** — все gates PASS, v2 готов к re-QA.

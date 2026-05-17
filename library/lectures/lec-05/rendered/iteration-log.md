@@ -103,3 +103,84 @@ Palette LOCKED Ocean + Teal + Gold ≥1×/slide. Motif Ocean rounded box.
 - s09 (Zillow exemplar): 3 iter (inspect → restructure → 150dpi confirm).
 - s12,s13,s14,s26: 3 iter (inspect → fix → 150dpi confirm).
 - Max iter used = 4 (s03); no escalation needed (cap 7).
+
+---
+
+# Phase 8 — batched revision (Phase 7 5×QA reports, Issue #100)
+
+Inputs: presentation-critic REVISE (6 P1 / 7 P2), student-simulator REVISE,
+reader-rendered APPROVE-WITH-POLISH (1 P1 s17 + P2 visual-enlarge),
+consistency APPROVE-CLEAN (1 P2), fact APPROVE-CLEAN (2 P2).
+Constraint: notes UNTOUCHED (reader: notes strong), LOCKED=33, branch
+phase-1-plan, worktree-only.
+
+## New analogy shape-diagrams (derivation from chapter source-of-truth)
+
+- **d16-inspector-reason-codes** (chapter §3.3) — interpretable model shows
+  reason codes line-by-line vs black box refuses → s16.
+- **d22-grounding-student** (chapter §4.3) — student guesses confidently vs
+  opens the reference first → s22 (bottom band; resolves 8-point overload).
+- **d26b-three-sellers** (chapter §5) — collaborative=behaviour pattern /
+  content=catalogue / hybrid=both+context → s26 (replaces weak d26 matrix
+  that confused student+reader).
+- **d31-password-vs-face** (chapter §6.3) — password rotatable (reversible)
+  vs face/print (irreversible) → s31 large gold anchor band.
+- All emoji replaced by geometric `person()` glyph + drawn icons
+  (rsvg-convert has no emoji font — codepoint-box bug caught iter-1).
+
+## P1 fixes (visual loop ≥3 iter each touched slide)
+
+- **s01** (3 iter): inspect → mega-stat $500M+ dominant + 3 small support
+  + 1-line gold → 150dpi confirm. 5-sec PASS.
+- **s03** (3 iter): inspect → compact bridge-strip secondary + large 5-type
+  map main + «вводим с нуля» line moved off-slide (in notes) → confirm.
+  5-sec PASS, keystone declutter done.
+- **s12** (3 iter): inspect → 3 separate stat-plates (distinct units, Visa
+  gold, NO false shared axis) → confirm. Misleading-scale P1 resolved.
+- **s17** (3 iter): inspect (confirmed 4th bullet overlap teal) → 4th opt-out
+  bullet in gold plate + teal pushed clear, box-math verified no overlap →
+  150dpi confirm. reader-P1 (only P1) resolved.
+- **s24** (3 iter): inspect → re-angled to PIVOT checkpoint (✓4/5 strip +
+  forward-question gold, NOT «необходим/недостаточен» dup) → confirm.
+- **s27** (3 iter): inspect → 2 stat-plates replace ghost bars + historical
+  caveat → confirm. Projector-invisible P1 resolved.
+- **s30** (3 iter): inspect → FINAL PAYOFF distinct from s29-matrix /
+  s24-pivot (dominant gold principle band + case→fix evidence strip) →
+  confirm. synthesis-redundancy differentiated.
+- **s31** (3 iter): inspect → 2 explicitly separated panels (bold header
+  plates + vertical divider) + large gold d31 anchor band; iter-2 widened
+  d31 1080→1480px for better band fill; PII glossed inline → confirm.
+- **s19**: angle already distinct (automation-without-gate criterion, Knight
+  context) — kept; kill-switch/circuit-breaker glossed inline (P2).
+
+## P2 fixes
+
+- s28: right empty panel → counter-weight «proxy↑ vs goal→» divergence
+  mini-diagram + compact criterion (chapter §5.5 derived).
+- s08: explicit decomposition caption under d08.
+- s09/s19: circuit-breaker/kill-switch inline glosses.
+- s31: PII «(персональные данные)» inline in title.
+- s12/s17 footer: «Банк России 2025» → «20.11.2025» (fact P2-1).
+- s23: «(Klarna, 2024)» added to ~$40 млн (fact P2-2).
+- s13: visible matrix «1-го/2-го рода» → «первого/второго рода» (consistency
+  P2 D1, intra-slide unify at first-introduction).
+- s21/s27/s31 right-panel text enlarged for projector-50%.
+
+## Verification (final)
+
+- Anti-leak grep (PPTX visible + speaker_notes): 0 hits
+  ([FACT-CHECK]/[VFY]/LO/§X.X/→sNN/for-slide).
+- LOCKED=33: order exact (s04a@5), count 33, totals 33, suffix-ID intact,
+  s05/s06 NOT merged.
+- Schema Readability final: s03 bridge PASS, s13 2×2 PASS, s26 grid PASS,
+  s29 6×3 PASS.
+- 5-Second Test on every touched slide @150dpi: PASS (main message ==
+  re-angled assertion for s24/s30; mega-stat = s01; stat-plates = s12/s27).
+- Notes word count: 3 slides 308-317 (s14/s22/s28) — PRE-EXISTING, notes
+  NOT touched per brief (reader rated notes strong). Residual for orchestrator.
+- charts c12/c27 deprecated (gen_charts.py header note); no longer referenced.
+
+## Per-slide iter count (Phase 8)
+
+- s01,s03,s12,s17,s24,s27,s30 = 3 iter; s31 = 3 iter (incl. d31-widen
+  sub-fix iter-2). Pass-checklist trumped count; no escalation (cap 7).

@@ -1,7 +1,14 @@
 """
 QuickChart generation for Лекция 5 deck.
-Uses urllib GET (proven path; POST/encoded query unreliable in sandbox).
-Run: python3 gen_charts.py  → assets/charts/*.png
+
+DEPRECATED after Phase 8 (Issue #100): both embedded bar-charts were
+removed in the Phase-7 5×QA batched revision —
+ - c12 (Stripe/JPMorgan/Visa): mixed %/$bn on one axis = misleading scale
+   (presentation-critic P1) → replaced by 3 separate stat-plates on s12.
+ - c27 (Amazon/Netflix): pale-grey ghost bars, invisible on projector
+   (presentation-critic P1) → replaced by 2 stat-plates on s27.
+Neither chart is referenced by build_lec05.py anymore; this file is kept
+for provenance only. Run: python3 gen_charts.py  → assets/charts/*.png
 """
 import json
 import ssl

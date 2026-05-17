@@ -30,6 +30,23 @@ def render(name, svg, w, h):
     print(name + ".png", "OK")
 
 
+def person(cx, cy, r, fill, ring=DEEP):
+    """Geometric person glyph (rsvg has no emoji font) — head + shoulders
+    clipped to a circle badge."""
+    cid = f"clip{abs(int(cx*7+cy*13)):x}"
+    head_r = r * 0.34
+    return (
+        f'<defs><clipPath id="{cid}">'
+        f'<circle cx="{cx}" cy="{cy}" r="{r}"/></clipPath></defs>'
+        f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{fill}" '
+        f'stroke="{ring}" stroke-width="3"/>'
+        f'<g clip-path="url(#{cid})">'
+        f'<circle cx="{cx}" cy="{cy - r*0.30}" r="{head_r}" '
+        f'fill="#FFFFFF"/>'
+        f'<ellipse cx="{cx}" cy="{cy + r*0.78}" rx="{r*0.62}" '
+        f'ry="{r*0.58}" fill="#FFFFFF"/></g>')
+
+
 # ---- d08: time-series decomposition (trend + seasonality + noise) ----
 def d08():
     import math
@@ -175,7 +192,248 @@ def d26():
     render("d26-user-item-matrix", svg, W, H)
 
 
+# ---- d16: credit inspector — reason codes line-by-line (chapter §3.3) ----
+def d16():
+    W, H = 1180, 470
+    parts = [f'<rect width="{W}" height="{H}" fill="none"/>']
+    # LEFT — interpretable inspector (shows the calculation)
+    parts.append(
+        f'<rect x="14" y="14" width="556" height="{H-28}" rx="18" '
+        f'fill="{SURF}" stroke="{TEAL}" stroke-width="3"/>')
+    parts.append(
+        f'<circle cx="92" cy="86" r="34" fill="{TEAL}"/>'
+        f'<text x="92" y="96" font-family="{FONT}" font-size="34" '
+        f'fill="#FFFFFF" font-weight="700" text-anchor="middle">✓</text>')
+    parts.append(
+        f'<text x="148" y="72" font-family="{FONT}" font-size="24" '
+        f'font-weight="700" fill="{DEEP}">Интерпретируемая модель</text>'
+        f'<text x="148" y="102" font-family="{FONT}" font-size="19" '
+        f'fill="{SLATE}">инспектор показывает расчёт построчно</text>')
+    codes = [
+        ("Высокая долговая нагрузка", "−18"),
+        ("Короткая кредитная история", "−9"),
+        ("Стабильная занятость", "+6"),
+    ]
+    cy = 160
+    for lab, w in codes:
+        col = GOLD if w.startswith("−") else MID
+        parts.append(
+            f'<rect x="44" y="{cy}" width="496" height="62" rx="10" '
+            f'fill="#FFFFFF" stroke="{GREY}" stroke-width="1.5"/>')
+        parts.append(
+            f'<text x="66" y="{cy+39}" font-family="{FONT}" font-size="20" '
+            f'fill="{DEEP}">{lab}</text>')
+        parts.append(
+            f'<text x="516" y="{cy+39}" font-family="{FONT}" font-size="23" '
+            f'font-weight="700" fill="{col}" text-anchor="end">{w}</text>')
+        cy += 74
+    parts.append(
+        f'<text x="292" y="442" font-family="{FONT}" font-size="20" '
+        f'font-weight="700" fill="{TEAL}" text-anchor="middle">'
+        f'«Отказ: причина — долговая нагрузка» (reason codes)</text>')
+    # RIGHT — black box (says "no", refuses to explain)
+    parts.append(
+        f'<rect x="610" y="14" width="556" height="{H-28}" rx="18" '
+        f'fill="{SURF}" stroke="{GOLD}" stroke-width="3"/>')
+    parts.append(
+        f'<rect x="660" y="150" width="456" height="150" rx="14" '
+        f'fill="{DEEP}"/>')
+    parts.append(
+        f'<text x="888" y="242" font-family="{FONT}" font-size="40" '
+        f'font-weight="700" fill="#FFFFFF" text-anchor="middle">'
+        f'? ? ?</text>')
+    parts.append(
+        f'<text x="888" y="72" font-family="{FONT}" font-size="24" '
+        f'font-weight="700" fill="{DEEP}" text-anchor="middle">'
+        f'Чёрный ящик</text>'
+        f'<text x="888" y="102" font-family="{FONT}" font-size="19" '
+        f'fill="{SLATE}" text-anchor="middle">говорит «нет», '
+        f'объяснить отказывается</text>')
+    parts.append(
+        f'<text x="888" y="360" font-family="{FONT}" font-size="20" '
+        f'font-weight="700" fill="{GOLD}" text-anchor="middle">'
+        f'«Отказано». Почему — неизвестно</text>'
+        f'<text x="888" y="392" font-family="{FONT}" font-size="18" '
+        f'fill="{SLATE}" text-anchor="middle">'
+        f'в регулируемой отрасли недопустимо по закону</text>')
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" '
+           f'height="{H}" viewBox="0 0 {W} {H}">' + "".join(parts) + "</svg>")
+    render("d16-inspector-reason-codes", svg, W, H)
+
+
+# ---- d22: grounding — student guesses vs opens reference (chapter §4.3) ----
+def d22():
+    W, H = 1180, 430
+    parts = [f'<rect width="{W}" height="{H}" fill="none"/>']
+    # LEFT — without grounding (confident guess)
+    parts.append(
+        f'<rect x="14" y="14" width="556" height="{H-28}" rx="18" '
+        f'fill="{SURF}" stroke="{GOLD}" stroke-width="3"/>')
+    parts.append(
+        f'<text x="292" y="58" font-family="{FONT}" font-size="23" '
+        f'font-weight="700" fill="{DEEP}" text-anchor="middle">'
+        f'Без grounding</text>')
+    parts.append(person(120, 190, 44, GOLD))
+    parts.append(
+        f'<path d="M196 150 h300 v96 h-220 l-40 34 v-34 h-40 z" '
+        f'fill="#FFFFFF" stroke="{GOLD}" stroke-width="2"/>')
+    parts.append(
+        f'<text x="346" y="188" font-family="{FONT}" font-size="20" '
+        f'fill="{DEEP}" text-anchor="middle">«Ставка примерно</text>'
+        f'<text x="346" y="216" font-family="{FONT}" font-size="20" '
+        f'fill="{DEEP}" text-anchor="middle">7,5%…» (уверенно)</text>')
+    parts.append(
+        f'<text x="292" y="332" font-family="{FONT}" font-size="20" '
+        f'font-weight="700" fill="{GOLD}" text-anchor="middle">'
+        f'правдоподобно ≠ верно</text>'
+        f'<text x="292" y="364" font-family="{FONT}" font-size="18" '
+        f'fill="{SLATE}" text-anchor="middle">'
+        f'источник — статистика обучающего текста</text>')
+    # RIGHT — with grounding (opens the reference first)
+    parts.append(
+        f'<rect x="610" y="14" width="556" height="{H-28}" rx="18" '
+        f'fill="{SURF}" stroke="{TEAL}" stroke-width="3"/>')
+    parts.append(
+        f'<text x="888" y="58" font-family="{FONT}" font-size="23" '
+        f'font-weight="700" fill="{DEEP}" text-anchor="middle">'
+        f'С grounding</text>')
+    parts.append(person(716, 190, 44, TEAL))
+    # open reference book (drawn, not glyph)
+    parts.append(
+        f'<rect x="800" y="138" width="118" height="118" rx="8" '
+        f'fill="#FFFFFF" stroke="{MID}" stroke-width="2.5"/>'
+        f'<line x1="859" y1="138" x2="859" y2="256" stroke="{MID}" '
+        f'stroke-width="2.5"/>'
+        f'<line x1="814" y1="166" x2="850" y2="166" stroke="{LIGHT}" '
+        f'stroke-width="3"/><line x1="814" y1="190" x2="850" y2="190" '
+        f'stroke="{LIGHT}" stroke-width="3"/><line x1="814" y1="214" '
+        f'x2="850" y2="214" stroke="{LIGHT}" stroke-width="3"/>'
+        f'<line x1="868" y1="166" x2="904" y2="166" stroke="{GOLD}" '
+        f'stroke-width="3.5"/><line x1="868" y1="190" x2="904" y2="190" '
+        f'stroke="{LIGHT}" stroke-width="3"/><line x1="868" y1="214" '
+        f'x2="904" y2="214" stroke="{LIGHT}" stroke-width="3"/>')
+    parts.append(
+        f'<path d="M946 150 h188 v96 h-120 l-34 30 v-30 h-34 z" '
+        f'fill="#FFFFFF" stroke="{TEAL}" stroke-width="2"/>'
+        f'<text x="1040" y="190" font-family="{FONT}" font-size="19" '
+        f'fill="{DEEP}" text-anchor="middle">«По тарифу</text>'
+        f'<text x="1040" y="216" font-family="{FONT}" font-size="19" '
+        f'fill="{DEEP}" text-anchor="middle">с.12: 8,3%»</text>')
+    parts.append(
+        f'<text x="888" y="332" font-family="{FONT}" font-size="20" '
+        f'font-weight="700" fill="{TEAL}" text-anchor="middle">'
+        f'сначала открыл справочник → потом ответил</text>'
+        f'<text x="888" y="364" font-family="{FONT}" font-size="18" '
+        f'fill="{SLATE}" text-anchor="middle">'
+        f'источник — проверяемый документ (можно показать)</text>')
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" '
+           f'height="{H}" viewBox="0 0 {W} {H}">' + "".join(parts) + "</svg>")
+    render("d22-grounding-student", svg, W, H)
+
+
+# ---- d26b: three sellers analogy (collaborative / content / hybrid) ----
+def d26b():
+    W, H = 1180, 360
+    parts = [f'<rect width="{W}" height="{H}" fill="none"/>']
+    sellers = [
+        (MID, "Collaborative",
+         "«Брали то же, что вы —", "ещё взяли вот это»",
+         "помнит ПАТТЕРН поведения,", "не знает товар"),
+        (TEAL, "Content-based",
+         "«Похоже по описанию", "на вашу любимую вещь»",
+         "знает КАТАЛОГ наизусть,", "не знает толпу"),
+        (DEEP, "Hybrid",
+         "«И что брали похожие,", "и что похоже + контекст»",
+         "совмещает оба + ситуацию", "(вечер пятницы, телефон)"),
+    ]
+    cw = 372
+    for i, (col, name, q1, q2, d1, d2) in enumerate(sellers):
+        x = 20 + i * (cw + 14)
+        parts.append(
+            f'<rect x="{x}" y="14" width="{cw}" height="{H-28}" rx="16" '
+            f'fill="{SURF}" stroke="{col}" stroke-width="3"/>')
+        parts.append(person(x + 58, 74, 34, col))
+        parts.append(
+            f'<text x="{x+108}" y="84" font-family="{FONT}" font-size="24" '
+            f'font-weight="700" fill="{col}">{name}</text>')
+        parts.append(
+            f'<text x="{x+30}" y="158" font-family="{FONT}" font-size="20" '
+            f'fill="{DEEP}">{q1}</text>'
+            f'<text x="{x+30}" y="186" font-family="{FONT}" font-size="20" '
+            f'fill="{DEEP}">{q2}</text>')
+        parts.append(
+            f'<rect x="{x+22}" y="224" width="{cw-44}" height="96" rx="10" '
+            f'fill="#FFFFFF" stroke="{GREY}" stroke-width="1.5"/>'
+            f'<text x="{x+38}" y="262" font-family="{FONT}" '
+            f'font-size="18" fill="{SLATE}">{d1}</text>'
+            f'<text x="{x+38}" y="290" font-family="{FONT}" '
+            f'font-size="18" fill="{SLATE}">{d2}</text>')
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" '
+           f'height="{H}" viewBox="0 0 {W} {H}">' + "".join(parts) + "</svg>")
+    render("d26b-three-sellers", svg, W, H)
+
+
+# ---- d31: password can be changed, face cannot (chapter §6.3) ----
+def d31():
+    W, H = 1480, 360
+    parts = [f'<rect width="{W}" height="{H}" fill="none"/>']
+    # LEFT — password leaked → can rotate (reversible)
+    parts.append(
+        f'<rect x="14" y="14" width="690" height="{H-28}" rx="18" '
+        f'fill="{SURF}" stroke="{TEAL}" stroke-width="3"/>')
+    parts.append(
+        f'<text x="359" y="58" font-family="{FONT}" font-size="26" '
+        f'font-weight="700" fill="{DEEP}" text-anchor="middle">'
+        f'Пароль</text>')
+    parts.append(
+        f'<rect x="180" y="98" width="360" height="84" rx="12" '
+        f'fill="#FFFFFF" stroke="{MID}" stroke-width="2.5"/>'
+        f'<text x="360" y="154" font-family="{FONT}" font-size="34" '
+        f'fill="{MID}" font-weight="700" text-anchor="middle">'
+        f'••••••••</text>')
+    parts.append(
+        f'<text x="359" y="248" font-family="{FONT}" font-size="46" '
+        f'fill="{TEAL}" text-anchor="middle">↻</text>')
+    parts.append(
+        f'<text x="359" y="312" font-family="{FONT}" font-size="25" '
+        f'font-weight="700" fill="{TEAL}" text-anchor="middle">'
+        f'Утёк → сменил. ОБРАТИМО</text>')
+    # vs
+    parts.append(
+        f'<text x="740" y="200" font-family="{FONT}" font-size="34" '
+        f'font-weight="700" fill="{SLATE}" text-anchor="middle">vs</text>')
+    # RIGHT — biometrics leaked → cannot reissue (irreversible)
+    parts.append(
+        f'<rect x="776" y="14" width="690" height="{H-28}" rx="18" '
+        f'fill="{SURF}" stroke="{GOLD}" stroke-width="3"/>')
+    parts.append(
+        f'<text x="1121" y="58" font-family="{FONT}" font-size="26" '
+        f'font-weight="700" fill="{DEEP}" text-anchor="middle">'
+        f'Лицо / отпечаток</text>')
+    parts.append(
+        f'<circle cx="1121" cy="148" r="52" fill="#FFFFFF" '
+        f'stroke="{GOLD}" stroke-width="3.5"/>'
+        f'<circle cx="1103" cy="136" r="6" fill="{DEEP}"/>'
+        f'<circle cx="1139" cy="136" r="6" fill="{DEEP}"/>'
+        f'<path d="M1098 164 Q1121 185 1144 164" fill="none" '
+        f'stroke="{DEEP}" stroke-width="4.5" stroke-linecap="round"/>')
+    parts.append(
+        f'<text x="1121" y="252" font-family="{FONT}" font-size="44" '
+        f'font-weight="700" fill="{GOLD}" text-anchor="middle">✕</text>')
+    parts.append(
+        f'<text x="1121" y="312" font-family="{FONT}" font-size="25" '
+        f'font-weight="700" fill="{GOLD}" text-anchor="middle">'
+        f'Утекло → новое не выдать. НЕОБРАТИМО</text>')
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" '
+           f'height="{H}" viewBox="0 0 {W} {H}">' + "".join(parts) + "</svg>")
+    render("d31-password-vs-face", svg, W, H)
+
+
 if __name__ == "__main__":
     d08()
     d11()
     d26()
+    d16()
+    d22()
+    d26b()
+    d31()

@@ -6,7 +6,7 @@ duration_min: 3
 assertion: "Hybrid = композиция (большинство промышленных систем); filter bubble — сужение разнообразия без злого умысла; dynamic pricing — справедливость это ограничение, не переменная"
 learning_goal: "ВВОД С НУЛЯ: hybrid + filter bubble + dynamic pricing; Amazon/Netflix историческая оценка (fact-discipline)"
 chapter_ref: "§5.2, §5.3, §5.4"
-visual_brief: "Слева — hybrid + c27 (Amazon/Netflix историческая оценка). Справа — filter bubble + dynamic pricing. Gold — «filter bubble без злого умысла». Footer — caveat."
+visual_brief: "Слева — hybrid + 2 читаемые stat-плашки Amazon ~35% / Netflix ~75% (вместо невидимого c27-bar; явный caveat «историческая McKinsey-оценка, числом не графиком-фактом»). Справа — filter bubble + dynamic pricing. Gold — «filter bubble без злого умысла». Footer — caveat."
 interaction: none
 verify_day_of: false
 ---

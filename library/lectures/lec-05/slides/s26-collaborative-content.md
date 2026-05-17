@@ -6,7 +6,7 @@ duration_min: 3
 assertion: "Collaborative — «похожие на тебя люди брали X» (cold-start, popularity bias); content-based — «похоже по признакам на любимое» (over-specialization)"
 learning_goal: "ВВОД С НУЛЯ: 2 подхода recsys + аналогия user×item / облако признаков; слабости по имени"
 chapter_ref: "§5.1"
-visual_brief: "2-колонка: collaborative (d26 матрица) vs content-based (атрибуты). Аналогия-плашка. Gold — обе слабости поимённо."
+visual_brief: "Верх — компактная 2-колонка collaborative vs content-based (слабости поимённо). Низ — ВИЗУАЛ-band d26b (аналогия-якорь «три продавца»: collaborative=паттерн поведения / content=каталог / hybrid=оба+контекст). Gold — обе слабости поимённо. (d26-матрица заменена d26b: матрица сбивала student/reader)."
 interaction: none
 verify_day_of: false
 ---

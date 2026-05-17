@@ -452,35 +452,43 @@ def build_s01(p):
     slide_title(s, "Одна прогнозная модель закрыла целое направление крупной "
                    "компании.", size=23, w=11.0, h=0.96)
     icon(s, "landmark", 12.05, 0.42, 0.74, "mid")
+    # LEFT — mega-stat dominates; 3 small support stats below
     lx, ly, lw, lh = 0.55, 1.46, 7.05, 4.55
     ocean_box(s, lx, ly, lw, lh)
-    text_box(s, lx + 0.30, ly + 0.20, lw - 0.60, 0.34,
+    text_box(s, lx + 0.30, ly + 0.18, lw - 0.60, 0.30,
              "Zillow Offers · iBuying · ноябрь 2021",
-             size=15, bold=True, color=MID)
-    text_box(s, lx + 0.30, ly + 0.58, lw - 0.60, 0.80,
-             "Модель прогнозировала будущую цену дома · Zillow "
-             "автоматически покупала, ремонтировала, перепродавала — тысячи "
-             "домов в десятках городов · модель систематически переоценивала",
-             size=13, color=DEEP, line_spacing=1.18)
-    rows = [
-        ("Списание запасов за квартал", "$300M+", False),
-        ("Совокупные потери направления", "$500M+", True),
-        ("Уволено (≈25% штата)", "~2000 чел.", False),
-        ("Акция за дни", "−25%", False),
-    ]
-    ry = ly + 1.52
-    for lab, val, hi in rows:
-        bg = GOLD_TINT if hi else SURFACE
-        filled_rect(s, lx + 0.30, ry, lw - 0.60, 0.66, bg,
-                    stroke=(GOLD if hi else SOFT_GREY),
-                    stroke_pt=(1.5 if hi else 1.0), radius=True,
-                    radius_adj=0.10)
-        text_box(s, lx + 0.48, ry, lw - 2.55, 0.66, lab,
-                 size=13, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, lx + lw - 2.10, ry, 1.70, 0.66, val,
-                 size=23, bold=True, color=(GOLD if hi else DEEP),
-                 align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
-        ry += 0.72
+             size=14, bold=True, color=MID)
+    # mega number — the single point of impact
+    filled_rect(s, lx + 0.30, ly + 0.54, lw - 0.60, 1.78, GOLD_TINT,
+                stroke=GOLD, stroke_pt=2.0, radius=True, radius_adj=0.08)
+    text_box(s, lx + 0.50, ly + 0.66, lw - 1.00, 1.02, "$500M+",
+             size=68, bold=True, color=GOLD, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, lx + 0.50, ly + 1.70, lw - 1.00, 0.52,
+             "совокупные потери — целое направление закрыто",
+             size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    sup = [("$300M+", "списание за квартал"),
+           ("~2000", "уволено (≈25%)"),
+           ("−25%", "акция за дни")]
+    n = 3
+    gap = 0.18
+    cw = (lw - 0.60 - gap * (n - 1)) / n
+    sx = lx + 0.30
+    for val, lab in sup:
+        filled_rect(s, sx, ly + 2.50, cw, 0.94, SURFACE, stroke=SOFT_GREY,
+                    stroke_pt=1.0, radius=True, radius_adj=0.10)
+        text_box(s, sx + 0.06, ly + 2.58, cw - 0.12, 0.42, val,
+                 size=21, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, sx + 0.06, ly + 3.00, cw - 0.12, 0.38, lab,
+                 size=11, color=MID, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        sx += cw + gap
+    text_box(s, lx + 0.30, ly + 3.62, lw - 0.60, 0.78,
+             "Модель прогнозировала цену дома · Zillow авто покупала, "
+             "ремонтировала, перепродавала тысячи домов · систематически "
+             "переоценивала",
+             size=11.5, color=SLATE, line_spacing=1.16)
+    # RIGHT — "не ChatGPT" + open question
     rx, rw = 7.80, 5.00
     ocean_box(s, rx, ly, rw, 2.30, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     icon(s, "circle-help", rx + 0.28, ly + 0.24, 0.50, "teal")
@@ -497,10 +505,10 @@ def build_s01(p):
              "потерей бизнеса, а не мелкой неточностью?",
              size=14.5, italic=True, color=MID, line_spacing=1.22,
              anchor=MSO_ANCHOR.MIDDLE)
-    gold_callout(s, 0.55, 6.16, 12.25, 0.74,
-                 "Ошибка прогноза — нормальное явление. Бизнес рухнул из-за "
-                 "того, КУДА она подключена: к авто-, необратимому, "
-                 "капиталоёмкому действию в масштабе тысяч домов.", size=14)
+    gold_callout(s, 0.55, 6.20, 12.25, 0.66,
+                 "Ошибка прогноза нормальна. Бизнес рухнул из-за того, КУДА "
+                 "она подключена: к авто-, необратимому действию в масштабе "
+                 "тысяч домов.", size=14)
     speaker_notes(s, load_notes("s01"))
 
 
@@ -530,66 +538,53 @@ def build_s03(p):
     """comparison — bridge Л2/Л4 → палитра 5 типов. KEYSTONE."""
     s = blank(p)
     slide_title(s, "Один тип ИИ вглубь (Л4) → палитра типов под палитру "
-                   "задач (Л5).", size=24, y=0.34, h=0.62, w=12.25)
-    bx, by, bw, bh = 0.55, 1.16, 12.25, 2.30
+                   "задач (Л5).", size=24, y=0.32, h=0.56, w=12.25)
+    # compact secondary bridge strip (Л2/Л4 → Л5) — single line each
+    bx, by, bw, bh = 0.55, 0.98, 12.25, 1.16
     ocean_box(s, bx, by, bw, bh)
-    col_w = [6.0, 6.05]
-    heads = ["Что было", "Что теперь"]
-    cx = bx + 0.20
-    for j, hd in enumerate(heads):
-        filled_rect(s, cx, by + 0.18, col_w[j] - 0.20, 0.46, MID)
-        text_box(s, cx, by + 0.18, col_w[j] - 0.20, 0.46, hd,
-                 size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        cx += col_w[j]
-    rows = [
+    bridges = [
         ("Л2: дерево «какой ИИ» — ML / глубокое / LLM",
          "Л5: пять структурно разных типов под разные задачи"),
         ("Л4: один тип (LLM-кодер) в глубину по автономности",
          "Л5: палитра типов под палитру задач одной индустрии"),
     ]
-    yy = by + 0.74
-    for a, b in rows:
-        cx = bx + 0.20
-        for j, cc in enumerate((a, b)):
-            filled_rect(s, cx, yy, col_w[j] - 0.20, 0.70, SURFACE,
-                        stroke=SOFT_GREY, stroke_pt=0.75)
-            text_box(s, cx + 0.16, yy, col_w[j] - 0.46, 0.70, cc,
-                     size=12.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                     line_spacing=1.08)
-            cx += col_w[j]
-        yy += 0.76
-    # palette of 5 types — icon top-band, single-line label band below
-    text_box(s, 0.55, 3.62, 12.25, 0.30, "Карта пяти типов:",
-             size=14, bold=True, color=MID)
-    types = [["Прогноз", "рядов"], ["Поиск", "аномалий"],
-             ["ML-", "скоринг"], ["LLM-", "ассистенты"],
-             ["Рекомендации", "и цены"]]
+    yy = by + 0.16
+    for a, b in bridges:
+        text_box(s, bx + 0.26, yy, 5.55, 0.40, a,
+                 size=11.5, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+        text_box(s, bx + 5.86, yy + 0.06, 0.34, 0.30, "→",
+                 size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, bx + 6.26, yy, bw - 6.52, 0.40, b,
+                 size=11.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+        yy += 0.44
+    # MAIN VISUAL — palette of 5 types, large
+    text_box(s, 0.55, 2.34, 12.25, 0.34,
+             "Карта пяти типов ИИ под пять разных задач (+ сквозной "
+             "CV-пласт):", size=15, bold=True, color=MID)
+    types = ["Прогноз\nрядов", "Поиск\nаномалий", "ML-\nскоринг",
+             "LLM-\nассистенты", "Рекомендации\nи цены"]
     icns = ["trending-up", "radar", "scale", "message-circle",
             "shopping-cart"]
     n = 5
-    gap = 0.20
+    gap = 0.22
     cw = (12.25 - gap * (n - 1)) / n
-    ax, ay, ah = 0.55, 3.98, 1.16
+    ax, ay, ah = 0.55, 2.78, 2.06
     for i in range(n):
         ocean_box(s, ax, ay, cw, ah)
-        icon(s, icns[i], ax + cw / 2 - 0.20, ay + 0.12, 0.40, "mid")
-        text_box(s, ax + 0.04, ay + 0.58, cw - 0.08, 0.28, types[i][0],
-                 size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-        text_box(s, ax + 0.04, ay + 0.83, cw - 0.08, 0.28, types[i][1],
-                 size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        icon(s, icns[i], ax + cw / 2 - 0.36, ay + 0.30, 0.72, "mid")
+        for li, line in enumerate(types[i].split("\n")):
+            text_box(s, ax + 0.04, ay + 1.18 + li * 0.36, cw - 0.08, 0.36,
+                     line, size=14, bold=True, color=DEEP,
+                     align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                     line_spacing=1.0)
         ax += cw + gap
-    text_box(s, 0.55, 5.12, 12.25, 0.30,
-             "+ сквозной CV-пласт · впервые в курсе вводим с нуля: "
-             "false positive / false negative, прокси-предвзятость, "
-             "distribution shift",
-             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    gold_callout(s, 0.55, 5.62, 12.25, 1.16,
+    gold_callout(s, 0.55, 5.10, 12.25, 1.66,
                  "Большую часть ценности здесь даёт НЕ языковая модель. "
                  "LLM — не универсальный молоток: разная задача требует "
-                 "разного типа ИИ.", size=15)
+                 "разного типа ИИ. Это и есть «палитра типов под палитру "
+                 "задач».", size=16)
     speaker_notes(s, load_notes("s03"))
 
 
@@ -818,7 +813,12 @@ def build_s08(p):
     lx, ly, lw, lh = 0.55, 1.22, 7.30, 3.95
     ocean_box(s, lx, ly, lw, lh)
     add_image(s, DIAGRAMS / "d08-timeseries-decomp.png",
-              lx + 0.20, ly + 0.18, lw - 0.40, lh - 0.36)
+              lx + 0.20, ly + 0.16, lw - 0.40, lh - 0.62)
+    text_box(s, lx + 0.24, ly + lh - 0.42, lw - 0.48, 0.34,
+             "Любой ряд продаж = тренд + сезонность + шум; модель "
+             "продлевает регулярную часть.",
+             size=10.5, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.05)
     rx, rw = 8.05, 4.75
     ocean_box(s, rx, ly, rw, 3.95)
     text_box(s, rx + 0.24, ly + 0.16, rw - 0.48, 0.30,
@@ -866,7 +866,7 @@ def build_s09(p):
          "десятки тыс. $ × N, и НЕОБРАТИМА"),
         ("Три вещи вместе = фатально",
          "необратимое действие × авто по выходу модели × нестационарная "
-         "среда без circuit-breaker"),
+         "среда без circuit-breaker (авто-стоп при аномалии)"),
     ]
     by = ly + 0.20
     for ttl, body in blocks:
@@ -963,31 +963,59 @@ def build_s12(p):
     s = blank(p)
     slide_title(s, "Антифрод — это «норма / отклонение» в реальном времени, "
                    "не генерация.", size=23, y=0.34, h=0.58, w=12.25)
-    lx, ly, lw, lh = 0.55, 1.22, 7.05, 3.66
-    ocean_box(s, lx, ly, lw, lh)
-    add_image(s, CHARTS / "c12-fraud-stats.png",
-              lx + 0.18, ly + 0.18, lw - 0.36, lh - 0.36)
-    rx, rw = 7.80, 5.00
-    ocean_box(s, rx, ly, rw, 1.70)
-    text_box(s, rx + 0.24, ly + 0.16, rw - 0.48, 0.30, "Россия",
-             size=13.5, bold=True, color=MID)
-    text_box(s, rx + 0.24, ly + 0.50, rw - 0.48, 1.10,
-             "Обнаружение аномалий — стандартная практика крупных банков; "
-             "традиционный ИИ широко применяется в антифроде "
-             "(по материалам Банка России, 2025).",
-             size=12, color=DEEP, line_spacing=1.16)
-    teal_callout(s, rx, ly + 1.86, rw, 2.02,
-                 "Заметьте формулировку: «снижение ЛОЖНЫХ СРАБАТЫВАНИЙ».\n\n"
-                 "Намёк: ключевая метрика антифрода — НЕ «точность вообще», "
-                 "а соотношение двух типов ошибок. Разберём дальше.",
-                 size=12, bold=False)
-    gold_callout(s, 0.55, 5.04, 12.25, 0.88,
-                 "Visa: предотвращено ~$40 млрд мошеннических операций "
-                 "(FY2023) · Stripe: одобрение легитимных > 99% — и всё "
-                 "равно метрика не «accuracy».", size=14)
+    # 3 SEPARATE stat-plates — each its own unit (no false shared axis)
+    text_box(s, 0.55, 1.16, 12.25, 0.30,
+             "Что даёт поиск аномалий в антифроде — каждая метрика в своих "
+             "единицах:", size=13.5, bold=True, color=MID)
+    plates = [
+        ("Stripe Radar", "−32% фрода", "при одобрении легитимных > 99%",
+         False),
+        ("JPMorgan", "−30% ложных", "меньше ложных срабатываний",
+         False),
+        ("Visa · предотвращено", "~$40 млрд", "мошеннических операций "
+         "(FY2023)", True),
+    ]
+    n = 3
+    gap = 0.24
+    cw = (12.25 - gap * (n - 1)) / n
+    px, py, ph = 0.55, 1.54, 2.16
+    for lab, val, sub, hi in plates:
+        bg = GOLD_TINT if hi else SURFACE
+        edge = GOLD if hi else LIGHT
+        ocean_box(s, px, py, cw, ph, fill=bg, stroke=edge,
+                  stroke_pt=(2.0 if hi else 1.5))
+        text_box(s, px + 0.20, py + 0.20, cw - 0.40, 0.34, lab,
+                 size=14, bold=True, color=MID, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, px + 0.16, py + 0.62, cw - 0.32, 0.78, val,
+                 size=33, bold=True, color=(GOLD if hi else DEEP),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, px + 0.20, py + 1.46, cw - 0.40, 0.58, sub,
+                 size=12, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        px += cw + gap
+    # Russia context + the metric hint, side by side below plates
+    lx2, lw2 = 0.55, 6.00
+    ocean_box(s, lx2, 3.92, lw2, 1.04)
+    text_box(s, lx2 + 0.24, 4.04, lw2 - 0.48, 0.28, "Россия",
+             size=13, bold=True, color=MID)
+    text_box(s, lx2 + 0.24, 4.34, lw2 - 0.48, 0.56,
+             "Поиск аномалий — стандартная практика крупных банков "
+             "(по материалам Банка России, 20.11.2025).",
+             size=11.5, color=DEEP, line_spacing=1.12)
+    rx2, rw2 = 6.80, 6.00
+    teal_callout(s, rx2, 3.92, rw2, 1.04,
+                 "Заметьте: «снижение ЛОЖНЫХ срабатываний» — ключевая "
+                 "метрика антифрода НЕ «точность вообще», а соотношение "
+                 "двух типов ошибок. Разберём дальше.",
+                 size=11.5, bold=False)
+    gold_callout(s, 0.55, 5.12, 12.25, 0.86,
+                 "Разные единицы — НЕ одна шкала: % снижения, % ложных, "
+                 "млрд $. И всё равно главная метрика — не «accuracy», а "
+                 "FP / FN раздельно.", size=14)
     footer(s, "Stripe/JPMorgan/Visa — заявленные компаниями; Visa — по "
               "сообщениям Reuters/CNBC, июль 2024; РФ — по материалам Банка "
-              "России, 2025; числа сверяются в день лекции.")
+              "России, 20.11.2025; числа сверяются в день лекции.")
     speaker_notes(s, load_notes("s12"))
 
 
@@ -1009,9 +1037,9 @@ def build_s13(p):
     rlab = ["Система:\nфрод", "Система:\nпропуск"]
     cells = [
         [("TP", "поймали (хорошо)", TEAL_TINT, TEAL),
-         ("FP", "честный клиент заблокирован\n(ошибка 1-го рода)",
+         ("FP", "честный клиент заблокирован\n(ошибка первого рода)",
           GOLD_TINT, GOLD)],
-        [("FN", "деньги ушли мошеннику\n(ошибка 2-го рода)",
+        [("FN", "деньги ушли мошеннику\n(ошибка второго рода)",
           RGBColor(0xE6, 0xE9, 0xF2), DEEP),
          ("TN", "корректно пропустили\n(хорошо)", TEAL_TINT, TEAL)],
     ]
@@ -1142,30 +1170,34 @@ def build_s16(p):
          "кризис (Apple Card) · нестабильно → не защитить перед "
          "регулятором.", "gold", True),
     ]
-    cw2, ch2 = 6.0, 1.62
+    # left: 4 argument cards (compact, single column band) ; right: analogy
+    cw2, ch2 = 5.95, 0.96
     for i, (ic, ttl, body, var, hi) in enumerate(cards):
-        col = i % 2
-        row = i // 2
-        cx = 0.55 + col * (cw2 + 0.25)
-        cy = 1.18 + row * (ch2 + 0.18)
+        cx = 0.55
+        cy = 1.16 + i * (ch2 + 0.14)
         if hi:
             ocean_box(s, cx, cy, cw2, ch2, fill=GOLD_TINT, stroke=GOLD,
                       stroke_pt=2.0)
         else:
             ocean_box(s, cx, cy, cw2, ch2)
-        icon(s, ic, cx + 0.22, cy + 0.20, 0.44, var)
-        text_box(s, cx + 0.78, cy + 0.18, cw2 - 1.0, 0.48, ttl,
-                 size=13.5, bold=True, color=(DEEP if hi else MID),
-                 anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, cx + 0.24, cy + 0.70, cw2 - 0.48, ch2 - 0.82, body,
-                 size=11.5, color=DEEP, line_spacing=1.14)
-    teal_callout(s, 0.55, 4.94, 12.25, 0.82,
-                 "Аналогия: интерпретируемая модель — кредитный инспектор, "
-                 "показывающий расчёт построчно (логрег / GBM+SHAP). Чёрный "
-                 "ящик — инспектор, который говорит «нет» и отказывается "
-                 "объяснять. В регулируемой отрасли второй недопустим по "
-                 "закону.", size=12.5, bold=False)
-    gold_callout(s, 0.55, 5.90, 12.25, 0.88,
+        icon(s, ic, cx + 0.18, cy + (ch2 - 0.36) / 2, 0.36, var)
+        text_box(s, cx + 0.66, cy + 0.10, cw2 - 0.84, 0.30, ttl,
+                 size=12.5, bold=True, color=(DEEP if hi else MID))
+        text_box(s, cx + 0.66, cy + 0.40, cw2 - 0.84, ch2 - 0.48, body,
+                 size=10.5, color=DEEP, line_spacing=1.08)
+    # right — inspector analogy diagram (chapter §3.3, derived)
+    rx, ry, rw, rh = 6.70, 1.16, 6.10, 4.54
+    ocean_box(s, rx, ry, rw, rh)
+    text_box(s, rx + 0.24, ry + 0.14, rw - 0.48, 0.30,
+             "Аналогия-якорь: кредитный инспектор", size=13, bold=True,
+             color=MID)
+    add_image(s, DIAGRAMS / "d16-inspector-reason-codes.png",
+              rx + 0.18, ry + 0.50, rw - 0.36, rh - 1.30)
+    text_box(s, rx + 0.24, ry + rh - 0.74, rw - 0.48, 0.62,
+             "Интерпретируемая модель показывает расчёт построчно (reason "
+             "codes); чёрный ящик отказывается объяснять.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.10)
+    gold_callout(s, 0.55, 5.86, 12.25, 0.92,
                  "«Новое = нейросеть, значит лучше» в скоринге — структурная "
                  "ошибка: объяснимость здесь не бонус, а УСЛОВИЕ "
                  "ЗАКОННОСТИ.", size=14)
@@ -1199,29 +1231,41 @@ def build_s17(p):
         cyy += 1.08
     rx, rw = 6.30, 6.50
     ocean_box(s, rx, ly, rw, 3.95)
-    text_box(s, rx + 0.26, ly + 0.16, rw - 0.52, 0.30,
+    text_box(s, rx + 0.26, ly + 0.14, rw - 0.52, 0.28,
              "«100% ИИ» означает на самом деле:", size=14, bold=True,
              color=MID)
     items = [
-        "высокая автоматизация конвейера на интерпретируемых моделях",
-        "reason codes на каждое решение",
-        "регуляторный надзор Банка России",
-        "сохранённое право клиента на сотрудника — свыше 80% "
-        "финорганизаций дают opt-out на человека",
+        ("высокая автоматизация конвейера на интерпретируемых моделях",
+         False),
+        ("reason codes на каждое решение", False),
+        ("регуляторный надзор Банка России", False),
+        ("сохранённое право клиента на сотрудника: > 80% "
+         "финорганизаций дают opt-out на человека", True),
     ]
-    iy = ly + 0.56
-    for it in items:
-        circle(s, rx + 0.26, iy + 0.06, 0.13, MID)
-        text_box(s, rx + 0.54, iy, rw - 0.80, 0.66, it,
-                 size=12, color=DEEP, line_spacing=1.12)
-        iy += 0.72
-    teal_callout(s, rx, ly + 3.10, rw, 0.74,
+    iy = ly + 0.48
+    for it, hi in items:
+        ih = 0.74 if hi else 0.52
+        if hi:
+            filled_rect(s, rx + 0.20, iy, rw - 0.40, ih, GOLD_TINT,
+                        stroke=GOLD, stroke_pt=1.5, radius=True,
+                        radius_adj=0.12)
+            circle(s, rx + 0.38, iy + ih / 2 - 0.06, 0.13, GOLD)
+            text_box(s, rx + 0.66, iy, rw - 0.92, ih, it,
+                     size=12, bold=True, color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
+        else:
+            circle(s, rx + 0.30, iy + 0.13, 0.12, MID)
+            text_box(s, rx + 0.56, iy, rw - 0.82, ih, it,
+                     size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                     line_spacing=1.10)
+        iy += ih + 0.14
+    teal_callout(s, rx, ly + 3.24, rw, 0.60,
                  "Тип ИИ — табличный ML, выбранный из-за объяснимости, а не "
                  "вопреки. Тезис лекции на масштабе крупнейшего банка.",
-                 size=12, bold=False)
+                 size=11.5, bold=False)
     footer(s, "По заявлениям банка (TAdviser/AdIndex/Интерфакс, 2024) и "
-              "материалам Банка России (2025); числа сверяются в день "
-              "лекции.")
+              "материалам Банка России (20.11.2025); числа сверяются в "
+              "день лекции.")
     speaker_notes(s, load_notes("s17"))
 
 
@@ -1309,12 +1353,13 @@ def build_s19(p):
         text_box(s, tx + 0.12, by + 0.90, cwt - 0.24, 0.50, body,
                  size=11, color=DEEP, line_spacing=1.05)
         tx += cwt + gap
-    gold_callout(s, 0.55, 3.00, 12.25, 1.30,
+    gold_callout(s, 0.55, 3.00, 12.25, 1.42,
                  "Автоматика, исполняющая необратимые финансовые действия в "
-                 "открытом контуре без kill-switch, без budget/position "
-                 "limits, без circuit-breaker и без верифицированного "
-                 "развёртывания, превращает обычную ошибку модели в "
-                 "СКОРОСТЬ РАЗОРЕНИЯ.", size=15)
+                 "открытом контуре без kill-switch (ручного «всё стоп»), без "
+                 "лимитов на объём/позицию, без circuit-breaker (авто-стоп "
+                 "при аномалии) и без верифицированного развёртывания, "
+                 "превращает обычную ошибку модели в СКОРОСТЬ РАЗОРЕНИЯ.",
+                 size=14)
     teal_callout(s, 0.55, 4.46, 12.25, 1.30,
                  "Скоринг в РФ ~100% автоматизирован → критерий применим "
                  "остро. «100% ИИ» приемлемо ТОЛЬКО в обвязке: reason codes "
@@ -1377,17 +1422,16 @@ def build_s21(p):
     text_box(s, rx + 0.26, ly + 0.18, rw - 0.52, 0.30,
              "Почему НЕ «> 90% обращений банков»", size=14, bold=True,
              color=TEAL)
-    text_box(s, rx + 0.26, ly + 0.58, rw - 0.52, 1.70,
+    text_box(s, rx + 0.26, ly + 0.58, rw - 0.52, 1.74,
              "Цифра ~90% реальна — но это доля звонков голосового "
              "ассистента В КОЛЛ-ЦЕНТРЕ ОДНОГО БАНКА, не доля обращений "
              "банков в целом. Это ПОДМЕНА БАЗЫ (класс 5 fact-checking).",
-             size=12.5, color=DEEP, line_spacing=1.20)
-    text_box(s, rx + 0.26, ly + 2.40, rw - 0.52, 1.50,
+             size=13.5, color=DEEP, line_spacing=1.22)
+    text_box(s, rx + 0.26, ly + 2.46, rw - 0.52, 1.50,
              "Лекция учит fact-checking — строить assertion на цифре с "
              "подменённой базой значило бы нарушить ровно тот принцип, "
-             "которому она учит. Точная скромная цифра ценнее громкой с "
-             "подменённой базой.",
-             size=12, italic=True, color=MID, line_spacing=1.18)
+             "которому она учит. Точная скромная цифра ценнее громкой.",
+             size=12.5, italic=True, color=MID, line_spacing=1.20)
     gold_callout(s, 0.55, 5.36, 12.25, 0.92,
                  "Симметрия с Разделами 1–3: «разная задача — разный тип "
                  "ИИ» означает не «LLM плох», а «LLM хорош ровно там, где "
@@ -1401,38 +1445,33 @@ def build_s22(p):
     s = blank(p)
     slide_title(s, "LLM здесь не источник истины, а интерфейс к источнику "
                    "истины.", size=23, y=0.34, h=0.58, w=12.25)
-    lx, ly, lw, lh = 0.55, 1.18, 6.10, 4.05
+    # TOP-LEFT — criterion (3 args, compact) ; TOP-RIGHT — 5 error classes
+    lx, ly, lw, lh = 0.55, 1.12, 6.10, 2.42
     ocean_box(s, lx, ly, lw, lh)
-    text_box(s, lx + 0.26, ly + 0.14, lw - 0.52, 0.30,
-             "Критерий «когда LLM НЕ источник истины»", size=13,
+    text_box(s, lx + 0.24, ly + 0.12, lw - 0.48, 0.28,
+             "Когда LLM НЕ источник истины — 3 аргумента", size=12.5,
              bold=True, color=MID)
     args = [
-        ("Арг. 1 — механизм", "LLM генерирует правдоподобное продолжение, "
-                              "не извлекает факт. «Правдоподобно» ≠ «верно»."),
-        ("Арг. 2 — цена", "неверная ставка/условие = нарушение + ущерб, "
-                          "отвечает организация."),
-        ("Арг. 3 — что сломается", "свободная генерация о фактах = "
-                                   "масштабируемый генератор дезинформации "
-                                   "с юр. ответственностью банка."),
+        ("механизм", "генерирует правдоподобное, не извлекает факт "
+                      "(«правдоподобно» ≠ «верно»)"),
+        ("цена", "неверная ставка/условие = нарушение, отвечает "
+                 "организация"),
+        ("что сломается", "свободная генерация о фактах = генератор "
+                          "дезинформации с юр. ответственностью"),
     ]
-    ay = ly + 0.50
+    ay = ly + 0.46
     for ttl, body in args:
-        text_box(s, lx + 0.26, ay, lw - 0.52, 0.26, ttl,
-                 size=12, bold=True, color=TEAL)
-        text_box(s, lx + 0.26, ay + 0.28, lw - 0.52, 0.66, body,
-                 size=11.5, color=DEEP, line_spacing=1.10)
-        ay += 1.00
-    filled_rect(s, lx + 0.26, ay + 0.02, lw - 0.52, 0.82, TEAL_TINT,
-                stroke=TEAL, stroke_pt=1.2, radius=True, radius_adj=0.10)
-    text_box(s, lx + 0.40, ay + 0.02, lw - 0.80, 0.82,
-             "Альтернатива: фиксированный факт → детерминированная выборка "
-             "(lookup / grounded RAG), не свободная генерация.",
-             size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.08)
-    rx, rw = 6.85, 5.95
-    ocean_box(s, rx, ly, rw, 4.05)
-    text_box(s, rx + 0.24, ly + 0.14, rw - 0.48, 0.28,
-             "Пять классов ошибок ИИ-утверждения", size=13, bold=True,
+        text_box(s, lx + 0.24, ay, 1.55, 0.62, ttl,
+                 size=11.5, bold=True, color=TEAL,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, lx + 1.82, ay, lw - 2.06, 0.62, body,
+                 size=10.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.08)
+        ay += 0.64
+    rx, rw = 6.80, 6.00
+    ocean_box(s, rx, ly, rw, lh)
+    text_box(s, rx + 0.24, ly + 0.12, rw - 0.48, 0.28,
+             "Пять классов ошибок ИИ-утверждения", size=12.5, bold=True,
              color=MID)
     classes = [
         "1. галлюцинация факта → сверить с первоисточником",
@@ -1441,23 +1480,25 @@ def build_s22(p):
         "4. обман метрикой → FP/FN раздельно в деньгах",
         "5. подмена базы → запросить «доля чего от чего»",
     ]
-    cy = ly + 0.50
+    cy = ly + 0.44
     for c in classes:
-        filled_rect(s, rx + 0.24, cy, rw - 0.48, 0.50, SURFACE,
-                    stroke=SOFT_GREY, stroke_pt=0.75, radius=True,
-                    radius_adj=0.16)
-        text_box(s, rx + 0.40, cy, rw - 0.72, 0.50, c,
-                 size=11.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+        text_box(s, rx + 0.26, cy, rw - 0.50, 0.38, c,
+                 size=11, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.0)
-        cy += 0.56
-    text_box(s, rx + 0.24, cy + 0.04, rw - 0.48, 0.84,
-             "grounding: студент сначала открывает справочник на нужной "
-             "странице, читает точное значение, потом формулирует — а не "
-             "угадывает уверенным тоном.",
-             size=11, italic=True, color=SLATE, line_spacing=1.14)
-    gold_callout(s, 0.55, 5.36, 12.25, 0.92,
-                 "На лекции: распознать класс + назвать принцип "
-                 "(Understand). Самостоятельная проверка 5 заявлений по "
+        cy += 0.38
+    # BOTTOM BAND — grounding analogy as visual anchor (chapter §4.3)
+    gx, gy, gw, gh = 0.55, 3.70, 12.25, 1.62
+    ocean_box(s, gx, gy, gw, gh)
+    text_box(s, gx + 0.26, gy + 0.12, gw - 0.52, 0.26,
+             "Аналогия-якорь grounding: студент угадывает уверенным тоном "
+             "vs сначала открывает справочник",
+             size=12, bold=True, color=MID)
+    add_image(s, DIAGRAMS / "d22-grounding-student.png",
+              gx + 0.30, gy + 0.42, gw - 0.60, gh - 0.54)
+    gold_callout(s, 0.55, 5.52, 12.25, 1.24,
+                 "Альтернатива: фиксированный факт → детерминированная "
+                 "выборка (grounded RAG), не генерация. На лекции — "
+                 "распознать класс (Understand); проверить 5 заявлений по "
                  "первоисточникам — Семинар 5 (Apply).", size=14)
     speaker_notes(s, load_notes("s22"))
 
@@ -1480,7 +1521,7 @@ def build_s23(p):
           "класс: галлюцинация финфакта = юр. ответственность"]),
         ("Кейс F — Klarna (дуга 2023 → 2025)",
          ["LLM-ассистент: ~2/3 обращений, ~11 мин → < 2 мин",
-          "заявленная экономия ~$40 млн/год",
+          "заявленная экономия ~$40 млн/год (Klarna, 2024)",
           "2024: подавалось как «ИИ заменяет поддержку»",
           "сер. 2025: CSAT↓ → вернулись к найму людей"]),
     ]
@@ -1512,49 +1553,60 @@ def build_s23(p):
 
 
 def build_s24(p):
-    """assertion_visual — two-level synthesis pivot."""
+    """assertion_visual — PIVOT checkpoint Р4→Р5 (NOT retro-summary;
+    distinct gold angle from s30 payoff; two-level insight = chapter §4.5).
+    """
     s = blank(p)
-    slide_title(s, "Тип был выбран верно — ломалось не в типе, а в обвязке "
-                   "вокруг него.", size=22, y=0.34, h=0.58, w=12.25)
-    bx, by, bw, bh = 0.55, 1.20, 12.25, 1.40
+    slide_title(s, "Чекпойнт: 4 типа из 5 пройдены — поворот к «человек + "
+                   "обвязка».", size=22, y=0.34, h=0.58, w=12.25)
+    # progress checkpoint — 4 done, 1 to go (explicit, not retro-summary)
+    bx, by, bw, bh = 0.55, 1.18, 12.25, 1.46
     ocean_box(s, bx, by, bw, bh)
     text_box(s, bx + 0.26, by + 0.12, bw - 0.52, 0.28,
-             "4 структурно разных типа ИИ — провал одинаковой формы:",
+             "Прогресс по 5 типам — у 4 пройденных провал одной формы:",
              size=13.5, bold=True, color=MID)
-    four = [("Zillow", "необратимое действие"),
-            ("fraud-FP", "крупная блокировка"),
-            ("Apple Card", "регулируемое решение"),
-            ("Air Canada", "обязывающий факт")]
-    n = 4
-    gap = 0.18
+    prog = [("✓ Прогноз", "Zillow", TEAL),
+            ("✓ Аномалии", "fraud-FP", TEAL),
+            ("✓ Скоринг", "Apple Card", TEAL),
+            ("✓ LLM", "Air Canada", TEAL),
+            ("→ Recsys", "следующий", GOLD)]
+    n = 5
+    gap = 0.16
     cwf = (bw - 0.52 - gap * (n - 1)) / n
     fx = bx + 0.26
-    for ttl, body in four:
-        filled_rect(s, fx, by + 0.48, cwf, 0.78, SURFACE, stroke=SOFT_GREY,
-                    stroke_pt=1.0, radius=True, radius_adj=0.10)
-        text_box(s, fx + 0.08, by + 0.54, cwf - 0.16, 0.28, ttl,
-                 size=12.5, bold=True, color=TEAL, align=PP_ALIGN.CENTER)
-        text_box(s, fx + 0.08, by + 0.82, cwf - 0.16, 0.40, body,
-                 size=10.5, color=DEEP, align=PP_ALIGN.CENTER,
+    for ttl, body, col in prog:
+        nxt = (col == GOLD)
+        filled_rect(s, fx, by + 0.48, cwf, 0.82,
+                    GOLD_TINT if nxt else SURFACE,
+                    stroke=(GOLD if nxt else SOFT_GREY),
+                    stroke_pt=(1.5 if nxt else 1.0), radius=True,
+                    radius_adj=0.10)
+        text_box(s, fx + 0.06, by + 0.54, cwf - 0.12, 0.30, ttl,
+                 size=12.5, bold=True, color=col, align=PP_ALIGN.CENTER)
+        text_box(s, fx + 0.06, by + 0.86, cwf - 0.12, 0.36, body,
+                 size=10, color=DEEP, align=PP_ALIGN.CENTER,
                  line_spacing=1.0)
         fx += cwf + gap
-    teal_callout(s, 0.55, 2.78, 12.25, 1.34,
-                 "Уровень 1. «Какой тип ИИ» — решается структурой задачи, "
-                 "чаще однозначно.\nУровень 2. «Что вокруг ИИ на цене "
-                 "ошибки» — НЕ выводится из выбора типа, проектируется "
-                 "отдельно под каждую задачу.", size=14, bold=True)
-    filled_rect(s, 0.55, 4.28, 12.25, 1.10, SURFACE, stroke=LIGHT,
+    # two-level insight (chapter §4.5 — kept; it is the pivot's substance)
+    teal_callout(s, 0.55, 2.80, 12.25, 1.16,
+                 "Уровень 1 «какой тип ИИ» — решается структурой задачи, "
+                 "чаще однозначно. Уровень 2 «что вокруг ИИ на цене ошибки» "
+                 "— проектируется отдельно. Поворот лекции: дальше внимание "
+                 "уходит с типа на обвязку.", size=13.5, bold=True)
+    # the pivot itself — why the harmless-looking type is next
+    filled_rect(s, 0.55, 4.12, 12.25, 1.16, SURFACE, stroke=LIGHT,
                 stroke_pt=1.5, radius=True, radius_adj=0.07)
-    text_box(s, 0.80, 4.40, 11.75, 0.90,
-             "Дальше — последний тип. Recsys/pricing кажется самым "
-             "БЕЗОБИДНЫМ — цена ошибки около нуля. Именно поэтому он "
-             "опаснее: провал ТИХИЙ — система рапортует успех по своей "
-             "метрике.", size=13, color=DEEP, line_spacing=1.18,
+    icon(s, "shopping-cart", 0.85, 4.46, 0.48, "mid")
+    text_box(s, 1.55, 4.22, 11.00, 0.98,
+             "Последний тип — recsys / pricing — кажется самым "
+             "БЕЗОБИДНЫМ: цена ошибки около нуля. Именно поэтому он "
+             "опаснее остальных: провал ТИХИЙ — система рапортует успех "
+             "по своей метрике.", size=13, color=DEEP, line_spacing=1.16,
              anchor=MSO_ANCHOR.MIDDLE)
-    gold_callout(s, 0.55, 5.56, 12.25, 1.20,
-                 "Правильный выбор типа ИИ НЕОБХОДИМ, но НЕ ДОСТАТОЧЕН. "
-                 "Инженер, усвоивший только первый уровень, всё равно "
-                 "строит системы класса Zillow / Apple Card.", size=15)
+    gold_callout(s, 0.55, 5.46, 12.25, 1.30,
+                 "Вопрос на оставшийся раздел — НЕ «какой тип», а «почему "
+                 "самый безобидный по цене ошибки тип может оказаться "
+                 "опаснее громких провалов?»", size=15)
     speaker_notes(s, load_notes("s24"))
 
 
@@ -1570,48 +1622,47 @@ def build_s26(p):
     s = blank(p)
     slide_title(s, "Два базовых подхода рекомендаций — и слабость у каждого "
                    "по имени.", size=23, y=0.34, h=0.58, w=12.25)
-    lx, ly, lw, lh = 0.55, 1.20, 5.30, 4.05
-    ocean_box(s, lx, ly, lw, lh)
-    add_image(s, DIAGRAMS / "d26-user-item-matrix.png",
-              lx + 0.18, ly + 0.18, lw - 0.36, lh - 0.36)
-    rx, rw = 6.05, 6.75
-    ocean_box(s, rx, ly, rw, 4.05)
-    col_w = (rw - 0.40) / 2
-    heads = ["Collaborative", "Content-based"]
+    # TOP — comparison table (full width, compact, parallel structure)
+    bx, by, bw, bh = 0.55, 1.12, 12.25, 1.90
+    ocean_box(s, bx, by, bw, bh)
+    col_w = (bw - 0.40) / 2
+    heads = ["Collaborative — «спроси похожих на тебя»",
+             "Content-based — «ещё похожее по описанию»"]
     for j, hd in enumerate(heads):
-        px = rx + 0.20 + j * col_w
-        filled_rect(s, px, ly + 0.18, col_w - 0.10, 0.44,
+        px = bx + 0.20 + j * col_w
+        filled_rect(s, px, by + 0.16, col_w - 0.10, 0.42,
                     MID if j == 0 else TEAL)
-        text_box(s, px, ly + 0.18, col_w - 0.10, 0.44, hd,
-                 size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+        text_box(s, px, by + 0.16, col_w - 0.10, 0.42, hd,
+                 size=12.5, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
                  anchor=MSO_ANCHOR.MIDDLE)
     rows = [
-        ("«похожие на тебя люди брали X»",
-         "«похоже по признакам на любимое»"),
         ("матрица пользователь × товар", "атрибуты товара (жанр, бренд)"),
         ("⊕ ловит неожиданные связи", "⊕ нет cold-start нового товара"),
-        ("⊖ cold-start + popularity bias",
-         "⊖ over-specialization (ниша)"),
+        ("⊖ cold-start + popularity bias", "⊖ over-specialization (ниша)"),
     ]
-    yy = ly + 0.74
+    yy = by + 0.62
     for a, b in rows:
         for j, cc in enumerate((a, b)):
-            px = rx + 0.20 + j * col_w
-            filled_rect(s, px, yy, col_w - 0.10, 0.62, SURFACE,
+            px = bx + 0.20 + j * col_w
+            filled_rect(s, px, yy, col_w - 0.10, 0.40, SURFACE,
                         stroke=SOFT_GREY, stroke_pt=0.75, radius=True,
-                        radius_adj=0.12)
-            text_box(s, px + 0.16, yy, col_w - 0.34, 0.62, cc,
+                        radius_adj=0.14)
+            text_box(s, px + 0.18, yy, col_w - 0.36, 0.40, cc,
                      size=11, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                     align=PP_ALIGN.LEFT, line_spacing=1.02)
-        yy += 0.66
-    text_box(s, rx + 0.20, yy + 0.02, rw - 0.40, 0.46,
-             "collaborative — «спроси похожих на тебя»;\ncontent-based — "
-             "«ещё похожее по описанию».",
-             size=11, italic=True, color=SLATE, line_spacing=1.08)
-    gold_callout(s, 0.55, 5.36, 12.25, 0.92,
+                     align=PP_ALIGN.LEFT, line_spacing=1.0)
+        yy += 0.42
+    # BOTTOM BAND — three sellers analogy as the main teaching visual
+    gx, gy, gw, gh = 0.55, 3.16, 12.25, 1.78
+    ocean_box(s, gx, gy, gw, gh)
+    text_box(s, gx + 0.26, gy + 0.10, gw - 0.52, 0.26,
+             "Аналогия-якорь: три продавца (collaborative · content · "
+             "hybrid)", size=12, bold=True, color=MID)
+    add_image(s, DIAGRAMS / "d26b-three-sellers.png",
+              gx + 0.30, gy + 0.40, gw - 0.60, gh - 0.52)
+    gold_callout(s, 0.55, 5.12, 12.25, 0.92,
                  "Запомнить: ЧТО это за подходы и КАКАЯ слабость по "
-                 "названию у каждого. Механизм — на конкретной матрице "
-                 "дальше.", size=14)
+                 "названию у каждого — collaborative (паттерн поведения) vs "
+                 "content (суть товара).", size=14)
     speaker_notes(s, load_notes("s26"))
 
 
@@ -1624,17 +1675,34 @@ def build_s27(p):
     ocean_box(s, lx, ly, lw, lh)
     text_box(s, lx + 0.26, ly + 0.14, lw - 0.52, 0.28,
              "Hybrid recommender", size=14, bold=True, color=MID)
-    text_box(s, lx + 0.26, ly + 0.46, lw - 0.52, 0.92,
+    text_box(s, lx + 0.26, ly + 0.46, lw - 0.52, 0.78,
              "collaborative + content-based + контекст. Контентная часть "
              "закрывает cold-start, коллаборативная ломает "
              "over-specialization. Большинство промышленных систем.",
-             size=11.5, color=DEEP, line_spacing=1.16)
-    add_image(s, CHARTS / "c27-recsys-shares.png",
-              lx + 0.20, ly + 1.50, lw - 0.40, 1.55)
-    text_box(s, lx + 0.26, ly + 3.16, lw - 0.52, 0.74,
-             "Amazon ~35% / Netflix ~75% — исторически приводимая оценка "
-             "(McKinsey ~2013), НЕ свежий headline.",
-             size=10.5, italic=True, color=SLATE, line_spacing=1.10)
+             size=11.5, color=DEEP, line_spacing=1.14)
+    # 2 stat-plates instead of ghost bars — readable + honest (estimate)
+    pgap = 0.20
+    pcw = (lw - 0.52 - pgap) / 2
+    for i, (co, val, lab) in enumerate([
+            ("Amazon", "~35%", "выручки — от рекомендаций"),
+            ("Netflix", "~75%", "просмотров — от рекомендаций")]):
+        ppx = lx + 0.26 + i * (pcw + pgap)
+        filled_rect(s, ppx, ly + 1.34, pcw, 1.46, SURFACE, stroke=LIGHT,
+                    stroke_pt=1.5, radius=True, radius_adj=0.10)
+        text_box(s, ppx + 0.10, ly + 1.44, pcw - 0.20, 0.28, co,
+                 size=12.5, bold=True, color=MID, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, ppx + 0.06, ly + 1.74, pcw - 0.12, 0.62, val,
+                 size=30, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, ppx + 0.10, ly + 2.36, pcw - 0.20, 0.38, lab,
+                 size=10.5, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+    text_box(s, lx + 0.26, ly + 2.92, lw - 0.52, 0.98,
+             "Историческая оценка (восходит к McKinsey ~2013), НЕ свежий "
+             "верифицированный показатель — поэтому числом, не графиком-"
+             "«фактом».",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.12)
     rx, rw = 7.10, 5.70
     ocean_box(s, rx, ly, rw, 1.92)
     text_box(s, rx + 0.24, ly + 0.14, rw - 0.48, 0.28,
@@ -1693,12 +1761,29 @@ def build_s28(p):
              "ОГРАНИЧЕНИЕ, а не переменная.",
              size=11.5, color=DEEP, line_spacing=1.18)
     rx, rw = 7.80, 5.00
-    teal_callout(s, rx, ly, rw, 4.05,
-                 "Критерий:\n\n• метрика-прокси ≠ цель → встроить "
-                 "serendipity (намеренная доля неожиданного) + "
-                 "объяснимость + аудит на дискриминацию\n\n• ценовая "
-                 "политика — решение ЧЕЛОВЕКА В ПРАВОВОЙ РАМКЕ, не выход "
-                 "оптимизатора", size=13, bold=False)
+    # counter-weight: «прокси ≠ цель» mini-diagram (chapter §5.5, derived)
+    ocean_box(s, rx, ly, rw, 1.94)
+    text_box(s, rx + 0.22, ly + 0.12, rw - 0.44, 0.26,
+             "Почему провал ТИХИЙ:", size=12.5, bold=True, color=MID)
+    # rising proxy line vs flat/declining true goal
+    gx0, gy0, gx1 = rx + 0.30, ly + 1.62, rx + rw - 0.30
+    connector(s, gx0, gy0, gx0, ly + 0.52, color=SLATE, width=1.2)
+    connector(s, gx0, gy0, gx1, gy0, color=SLATE, width=1.2)
+    connector(s, gx0, ly + 1.42, gx1, ly + 0.62, color=GOLD, width=3.0)
+    connector(s, gx0, ly + 1.12, gx1, ly + 1.30, color=TEAL, width=3.0,
+              dash="dash")
+    text_box(s, gx1 - 1.70, ly + 0.50, 1.70, 0.26, "прокси-метрика ↑",
+             size=10, bold=True, color=GOLD, align=PP_ALIGN.RIGHT)
+    text_box(s, gx1 - 1.70, ly + 1.30, 1.70, 0.26, "истинная цель →",
+             size=10, bold=True, color=TEAL, align=PP_ALIGN.RIGHT)
+    text_box(s, rx + 0.22, ly + 1.66, rw - 0.44, 0.24,
+             "дашборд зелёный, доверие падает", size=10,
+             italic=True, color=SLATE)
+    teal_callout(s, rx, ly + 2.10, rw, 1.95,
+                 "Критерий:\n• прокси ≠ цель → serendipity + объяснимость "
+                 "+ аудит на дискриминацию\n• цена — решение ЧЕЛОВЕКА В "
+                 "ПРАВОВОЙ РАМКЕ, не выход оптимизатора", size=12,
+                 bold=False)
     gold_callout(s, 0.55, 5.36, 12.25, 0.92,
                  "Единый класс через всю лекцию: accuracy-обман, прокси-"
                  "bias скоринга, Klarna, filter bubble — ПРОКСИ ≠ ЦЕЛЬ. "
@@ -1782,104 +1867,123 @@ def build_s29(p):
 
 
 def build_s30(p):
-    """assertion_visual — 5 principle cards (when not AI)."""
+    """assertion_visual — FINAL PAYOFF: one principle, distinct from s29
+    matrix (operational apparatus) and s24 pivot. Dominant principle
+    statement on top; 5 cases as compact evidence strip below."""
     s = blank(p)
-    slide_title(s, "Один принцип в пяти проявлениях: исправление — не "
-                   "«лучшая модель».", size=22, y=0.34, h=0.58, w=12.25)
-    cards = [
-        ("circle-x", "1. Необратимое авто-действие без gate",
-         "Zillow / Knight → human-gate + узкий сегмент + live-мониторинг"),
-        ("eye-off", "2. Регулируемое решение без объяснимости",
-         "Apple Card → объяснимая модель + человек на эскалации + аудит"),
-        ("circle-help", "3. Финфакт без grounding",
-         "Air Canada → grounding + проверяемость + путь к человеку"),
-        ("users", "4. Полная замена людей в сервисе",
-         "Klarna → augmentation с гарантированной эскалацией"),
-        ("scale", "5. Ценовая дискриминация без правовой рамки",
-         "Wendy's → цена — человек в правовой рамке, оптимизатор в "
-         "границах"),
+    slide_title(s, "Содержательный ответ на центральный вопрос лекции.",
+                size=23, y=0.34, h=0.56, w=12.25)
+    # DOMINANT principle band — the single payoff statement
+    bx, by, bw, bh = 0.55, 1.06, 12.25, 1.84
+    ocean_box(s, bx, by, bw, bh, fill=GOLD_TINT, stroke=GOLD,
+              stroke_pt=2.0)
+    text_box(s, bx + 0.50, by + 0.20, bw - 1.00, bh - 0.40,
+             "Ни в одном из пяти провалов исправление — это «лучшая "
+             "модель». Во всех — лучшее СУЖДЕНИЕ о том, что стоит вокруг "
+             "ИИ на цене ошибки.",
+             size=21, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             align=PP_ALIGN.CENTER, line_spacing=1.20)
+    # 5 cases as a compact horizontal evidence strip (case → fix)
+    text_box(s, 0.55, 3.06, 12.25, 0.28,
+             "Пять кейсов лекции — одно и то же лекарство (НЕ модель):",
+             size=12.5, bold=True, color=MID)
+    strip = [
+        ("Zillow", "human-gate"),
+        ("Apple Card", "объяснимость + аудит"),
+        ("Air Canada", "grounding"),
+        ("Klarna", "augmentation"),
+        ("Wendy's", "правовая рамка"),
     ]
-    cw2, ch2 = 6.0, 1.04
-    for i, (ic, ttl, body) in enumerate(cards):
-        if i < 4:
-            col = i % 2
-            row = i // 2
-            cx = 0.55 + col * (cw2 + 0.25)
-            cy = 1.20 + row * (ch2 + 0.16)
-            wbox = cw2
-        else:
-            cx = 0.55
-            cy = 1.20 + 2 * (ch2 + 0.16)
-            wbox = 12.25
-        ocean_box(s, cx, cy, wbox, ch2)
-        icon(s, ic, cx + 0.22, cy + (ch2 - 0.40) / 2, 0.40, "mid")
-        text_box(s, cx + 0.78, cy + 0.12, wbox - 1.0, 0.40, ttl,
-                 size=13, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, cx + 0.78, cy + 0.52, wbox - 1.0, 0.46, body,
-                 size=11.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.05)
-    gold_callout(s, 0.55, 5.42, 12.25, 1.34,
-                 "Ни в одном случае исправление — НЕ «лучшая модель». Во "
-                 "всех — лучшее суждение о том, что стоит вокруг ИИ на цене "
-                 "ошибки. Это и есть содержательный ответ на центральный "
-                 "вопрос.", size=15)
+    n = 5
+    gap = 0.18
+    cw = (12.25 - gap * (n - 1)) / n
+    sx, sy, sh = 0.55, 3.42, 1.46
+    for case, fix in strip:
+        ocean_box(s, sx, sy, cw, sh)
+        text_box(s, sx + 0.08, sy + 0.16, cw - 0.16, 0.34, case,
+                 size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, sx + cw / 2 - 0.10, sy + 0.54, 0.20, 0.26, "↓",
+                 size=15, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
+        filled_rect(s, sx + 0.14, sy + 0.82, cw - 0.28, 0.50, TEAL_TINT,
+                    stroke=TEAL, stroke_pt=1.0, radius=True,
+                    radius_adj=0.16)
+        text_box(s, sx + 0.18, sy + 0.82, cw - 0.36, 0.50, fix,
+                 size=10.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        sx += cw + gap
+    gold_callout(s, 0.55, 5.06, 12.25, 1.00,
+                 "Это и есть ответ: не «ИИ хорош/плох», а «назвать тип, "
+                 "обосновать выбор и спроектировать обвязку под цену "
+                 "ошибки».", size=14)
     speaker_notes(s, load_notes("s30"))
 
 
 def build_s31(p):
     """assertion_visual — security 2 panels (А law / Б CV) — AGGREGATED."""
     s = blank(p)
-    slide_title(s, "Финданные, PII и биометрию нельзя в публичный LLM — и "
-                   "«автономно» требует проверки.", size=21, y=0.34,
-                h=0.58, w=12.25)
-    lx, ly, lw, lh = 0.55, 1.18, 6.10, 4.05
+    slide_title(s, "Финданные, PII (персональные данные) и биометрию нельзя "
+                   "в публичный LLM.", size=21, y=0.32, h=0.56, w=12.25)
+    # TWO clearly separated panels with header plates + thick divider
+    lx, ly, lw, lh = 0.55, 1.06, 6.00, 2.78
     ocean_box(s, lx, ly, lw, lh)
-    icon(s, "lock", lx + 0.24, ly + 0.18, 0.42, "mid")
-    text_box(s, lx + 0.78, ly + 0.20, lw - 1.0, 0.40,
-             "(А) Данные и закон: ФЗ-152 / PII", size=13.5, bold=True,
-             color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    filled_rect(s, lx, ly, lw, 0.50, MID, radius=True, radius_adj=0.06)
+    icon(s, "lock", lx + 0.22, ly + 0.07, 0.36, "white")
+    text_box(s, lx + 0.70, ly, lw - 0.90, 0.50,
+             "(А) Данные и закон: ФЗ-152 / PII", size=13, bold=True,
+             color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     a_pts = [
         "финданные + PII + биометрия = чувствительные; ФЗ-152 — "
         "локализация ПДн граждан РФ, биометрия = строгий режим",
-        "3 минуса публичного облака: данные покидают контур · нет "
-        "контроля retention · аудируемость падает",
-        "критерий выбора — по чувствительности данных и режиму, а НЕ по "
-        "силе модели",
+        "публичное облако: данные покидают контур · нет контроля "
+        "retention · аудируемость падает",
+        "критерий — по чувствительности данных и режиму, НЕ по силе "
+        "модели",
     ]
-    ay = ly + 0.78
+    ay = ly + 0.62
     for t in a_pts:
-        circle(s, lx + 0.26, ay + 0.06, 0.12, MID)
-        text_box(s, lx + 0.52, ay, lw - 0.78, 1.00, t,
-                 size=11.5, color=DEEP, line_spacing=1.14)
-        ay += 1.04
-    rx, rw = 6.85, 5.95
-    ocean_box(s, rx, ly, rw, 4.05)
-    icon(s, "scan-face", rx + 0.24, ly + 0.18, 0.42, "teal")
-    text_box(s, rx + 0.78, ly + 0.20, rw - 1.0, 0.40,
+        circle(s, lx + 0.24, ay + 0.05, 0.11, MID)
+        text_box(s, lx + 0.48, ay, lw - 0.72, 0.70, t,
+                 size=11, color=DEEP, line_spacing=1.10)
+        ay += 0.72
+    # vertical divider between the two independent sub-topics
+    filled_rect(s, 6.62, ly, 0.06, lh, LIGHT)
+    rx, rw = 6.80, 6.00
+    ocean_box(s, rx, ly, rw, lh)
+    filled_rect(s, rx, ly, rw, 0.50, TEAL, radius=True, radius_adj=0.06)
+    icon(s, "scan-face", rx + 0.22, ly + 0.07, 0.36, "white")
+    text_box(s, rx + 0.70, ly, rw - 0.90, 0.50,
              "(Б) CV-пласт: KYC, биометрия, скрытый труд", size=13,
-             bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
+             bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     b_pts = [
         "KYC = идентификация клиента; liveness — перед камерой живой "
-        "человек, не фото/маска/дипфейк (биометрия, строгий режим)",
-        "биометрия НЕОБРАТИМО скомпрометирована при утечке: пароль "
-        "сменить можно, лицо и отпечаток — нет",
+        "человек, не фото/маска/дипфейк (строгий режим)",
         "Just Walk Out (Amazon) свёрнут 2024: «автономная» касса "
-        "опиралась на > 1000 ревьюеров в Индии (hidden human cost)",
+        "опиралась на > 1000 ревьюеров в Индии — скрытый труд",
+        "Bias компьютерного зрения углубляется в Лекции 7.",
     ]
-    by2 = ly + 0.78
+    by2 = ly + 0.62
     for t in b_pts:
-        circle(s, rx + 0.24, by2 + 0.06, 0.12, TEAL)
-        text_box(s, rx + 0.50, by2, rw - 0.76, 1.00, t,
-                 size=11.5, color=DEEP, line_spacing=1.14)
-        by2 += 1.04
-    text_box(s, rx + 0.24, by2 + 0.02, rw - 0.48, 0.36,
-             "Bias компьютерного зрения углубляется в Лекции 7.",
-             size=10.5, italic=True, color=SLATE)
-    gold_callout(s, 0.55, 5.36, 12.25, 0.92,
-                 "Биометрия необратима при утечке — та же логика "
-                 "«необратимое требует более строгого гейта», что прошла "
-                 "через всю лекцию. «Полностью автономно» в маркетинге — "
-                 "гипотеза для проверки, не факт.", size=14)
+        circle(s, rx + 0.24, by2 + 0.05, 0.11, TEAL)
+        text_box(s, rx + 0.48, by2, rw - 0.72, 0.70, t,
+                 size=11, color=DEEP, line_spacing=1.10)
+        by2 += 0.72
+    # GOLD ANCHOR BAND — biometrics irreversible (password vs face) — large
+    gx, gy, gw, gh = 0.55, 3.96, 12.25, 1.98
+    filled_rect(s, gx, gy, gw, gh, GOLD_TINT, stroke=GOLD, stroke_pt=2.5,
+                radius=True, radius_adj=0.05)
+    text_box(s, gx + 0.34, gy + 0.16, 3.95, gh - 0.32,
+             "Биометрия необратимо\nскомпрометирована\nпри утечке — та же\n"
+             "логика «необратимое →\nстрогий гейт», что\nпрошла через всю "
+             "лекцию.",
+             size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.16)
+    add_image(s, DIAGRAMS / "d31-password-vs-face.png",
+              gx + 4.40, gy + 0.14, gw - 4.70, gh - 0.28)
+    gold_callout(s, 0.55, 6.08, 12.25, 0.78,
+                 "«Полностью автономно» в маркетинге — гипотеза для "
+                 "проверки, не факт (Amazon оспаривал масштаб).",
+                 size=14)
     speaker_notes(s, load_notes("s31"))
 
 

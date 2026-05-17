@@ -530,3 +530,18 @@ deck v3.1 (Раздел-0 keystone + сквозной tone-strip): re-QA 5 кр�
 - **Slide-count LOCK formulation.** «LOCKED=N» неоднозначно (Л5: план «32» vs deck 33 = 32 content + s04a divider; designer объяснял дважды). Канон-формулировка: «N content slides + структурные divider'ы через suffix-ID (НЕ в LOCK-счётчике)». Внести в `templates/lecture-outline.md` + presentation-build README (без issue, bundle).
 - **Валидации (подтверждено, action не требуется):** Lec-N-1-check предотвратил ложный P1 (видимый `## Changelog` в chapter body = установленная конвенция lec-04, не designer-extra leak — сверка с Lec-N-1 обязательна ДО флага); usage-limit re-spawn сработал (консистентно с Л6); worktree-изоляция при 3 параллельных лекциях (lec-04/05/06) — 0 контеншена (повторное подтверждение).
 - **Forward-pointer vs «мост назад» ловится на Phase 1 critique дёшево.** Л5: reader-критик Phase 1 поймал, что FP/FN/bias подаются как «мост назад к Л7», хотя Л7 идёт ПОСЛЕ Л5 по курсу; исправлено в plan-v2 ДО chapter-draft. Каскад-предотвращение на этапе плана >> фикс в 3 артефактах потом. Reusable: на Phase 1 critique проверять направление всех меж-лекционных ссылок против course-plan порядка.
+
+## 2026-05-17 — Рефлексия Лекции 4: синтез + ENFORCED-улучшения (#115)
+
+Рефлексия: `notes/reflections/2026-05-17-lec-04-production/`. Production Л4 завершён (PR #109 merged, #99 closed), дороже необходимого: 4 owner-интервенции post-APPROVE (#100–#103) + 1 процессное нарушение оркестратора. ~60% перепроизводства предотвратимо.
+
+- **IMP-1 Keystone-axis (главный рычаг, ~5 циклов deck цена пропуска).** Несущая ось A→D не была standalone keystone до 1-го погружения; plan-critique/deck-QA это не ловили. → `CLAUDE.md` Anti-Patterns + Pre-USER-GATE п.6 + `methodology-critic.md` чек-лист (Phase 1 plan + 4/7 deck) + `lecture-outline.md`. REVISE если ось «всплывает» или Раздел 0 защищается/recap.
+- **IMP-2 usage-limit ≠ subagent-failure.** Оркестратор сделал chapter v1.3 напрямую при лимите book-editor (generic вместо specific `feedback_subagent_usage_limit`). → `CLAUDE.md` Subagent Rules: классифицировать сбой ПЕРЕД «do directly»; limit → wait+re-delegate, НИКОГДА не self-implement. Контент был критик-валиден, память исправлена.
+- **IMP-3 отраслевые L4+: tools-per-taxonomy-level в Phase-0/plan.** → `lecture-outline.md` блок; `CLAUDE.md` Anti-Pattern «§-named narrative без слайда → Phase-5 check».
+- **IMP-4 orchestrator-independent grep TOTAL=0.** designer self-grep ложный TOTAL=0 (v3, словесный scaffold). → Pre-USER-GATE п.5: оркестратор грепит САМ rendered pptx со словесными scaffold-фразами; self-report ≠ verification.
+- **IMP-5 GATE-C DoD = manifest→produced.** → `CLAUDE.md` 3-USER-GATEs + Anti-Pattern; lec-04→produced в этом PR.
+- **IMP-6 toil:** secret-scanner false-positive security-проза = known-expected; convention `git merge origin/main` ДО GATE-C; decisions.md append-конфликт = объединять ОБА набора. follow-up: `tools/presentation-build/side-effect-guard.sh`.
+
+**Сработало (усилить):** suffix-ID cascade-safe (4×); cascade-of-changes grep ПЕРЕД rename (поймал §4.5 heading↔TOC↔anchor); book-first строго последовательно; independent-verification > trust-report; isolated commits; No-Extra-Content REPORT-not-fix; `[VFY-day-of]`-дисциплина (ARC-AGI не повторился).
+
+**Метрика успеха:** следующая отраслевая лекция — 0 owner-интервенций класса «нет keystone» / «нет tools-per-level»; ≤1 owner-структурная post-APPROVE (только чистый вкус).

@@ -3,7 +3,7 @@ lecture: 5
 title: "Лекция 5. AI в финансовом секторе и ритейле"
 length_words: ~5800
 length_min: 75
-status: draft
+status: finalized
 version: v2
 derived_from: "chapter v2 finalized (3 части, ~22650 слов) + deck v2 (33 слайда LOCKED: s01–s32 + s04a) + plan v2-final (USER GATE 0)"
 slides_covered: [s01, s02, s03, s04, s04a, s05, s06, s07, s08, s09, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31, s32]

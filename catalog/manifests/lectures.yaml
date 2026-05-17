@@ -61,7 +61,7 @@ lectures:
     module: 1
     learning_outcomes: [LO1, LO2, LO3, LO6]
     repo_dir: lec-05
-    status: in_production
+    status: produced
     issue: 100
     updated_at: "2026-05-17"
 

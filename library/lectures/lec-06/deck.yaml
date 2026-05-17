@@ -1,16 +1,21 @@
 # library/lectures/lec-06/deck.yaml
 #
-# Deck-структура Лекции 6 «AI в инженерном проектировании и CAD/CAM» (31 слайд).
+# Deck-структура Лекции 6 «AI в инженерном проектировании и CAD/CAM» (32 слайда).
 # (Папка репо lec-06 совпадает с номером лекции по плану курса — 6.)
 #
 # Source: chapter v2 (status=reviewed, ~12,860 слов) +
-#   plan v2 (notes/lecture-6-review/plan-v2.md §4 — поэлементный план s01–s31) +
+#   plan v2 (notes/lecture-6-review/plan-v2.md §4 — поэлементный план) +
 #   cascade-ограничения qa-reports/2026-05-17-v1/SYNTHESIS.md «НЕ для Phase 4».
-# Phase 5 multi-artifact pipeline — slides content alignment (book-first).
+# Phase 6 multi-artifact pipeline — deck render v1 (book-first).
 # Issue #101 · downstream-каскад от chapter (source of truth).
 #
-# Lec-N-1 паттерн (lec-07): lecture-map (s03), 5 section-divider'ов
-#   (s04/s09/s15/s20/s25), выделенный Q&A (s31). Roadmap-bar ТОЛЬКО на
+# Phase 6 структурная правка: добавлен 6-й section-divider перед Частью 6
+#   (s29 «Часть 6. Синтез»); worked-decision → s30, правило+матрица → s31,
+#   Q&A → s32. Итого 32 слайда. duration_min сумма = 75.0 (Части 6
+#   минуты перераспределены: divider 0.3 + s30 2.4 + s31 2.4 + s32 0.9).
+#
+# Lec-N-1 паттерн (lec-07): lecture-map (s03), 6 section-divider'ов
+#   (s04/s09/s15/s20/s25/s29), выделенный Q&A (s32). Roadmap-bar ТОЛЬКО на
 #   divider'ах + cover (НЕ на каждом content-слайде).
 #
 # Палитра LOCKED — Ocean Gradient: Primary deep `#21295C` /
@@ -36,7 +41,7 @@ deck:
   central_question: "Прежде чем доверять инструменту проектное решение — назови вид ИИ: детерминированная математика или обученная вероятностная модель? что оптимизируется и кто задал ограничения? кто несёт ответственность?"
   learning_outcomes: [LO1, LO2, LO7]
   language: ru
-  status: draft
+  status: rendered
   version: v1
   source: chapter v2 (status=reviewed, ~12,860 слов)
   plan: notes/lecture-6-review/plan-v2.md
@@ -417,11 +422,25 @@ slides:
       pattern: comparison
       primary: "Две колонки в Ocean rounded box: «AI: предлагает форму при фиксированной функции» vs «Человек: задаёт ограничения, ОТВЕЧАЕТ (подпись = деонтология), изобретает функцию». Под ними ТРИЗ-контраст: «ТРИЗ (Альтшуллер 1946) формализует изобретение — уровень выше оптимизатора формы». gold-плашка-формула «AI генерирует — человек отвечает, верифицирует и изобретает функцию»"
 
-  # ─── Часть 6. Синтез + Бауманка + Q&A (4 мин) ───
+  # ─── Section divider (6) ───
   - id: s29
-    file: slides/s29-worked-decision.md
+    file: slides/s29-section6-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Часть 6 — Синтез: правило решения на конкретной задаче"
+    learning_goal: "Visual divider — переход в синтезирующую часть"
+    learning_outcomes: [LO1, LO2, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «6» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой текущей части"
+
+  # ─── Часть 6. Синтез + Бауманка + Q&A (6 мин) ───
+  - id: s30
+    file: slides/s30-worked-decision.md
     type: assertion_visual
-    duration_min: 2.5
+    duration_min: 2.4
     assertion: "Одна задача — облегчить кронштейн — даёт разные обоснованные ответы для серийной фрезеровки и для аддитива, проведённая по трём вопросам-якорям."
     learning_goal: "Worked decision (измеримый LO7): задача → дерево по 3 вопросам → обоснованный класс + почему НЕ другие"
     learning_outcomes: [LO1, LO2, LO7]
@@ -431,10 +450,10 @@ slides:
       pattern: schema_pipeline
       primary: "Дерево решения: задача «облегчить кронштейн» → разветвление на 2 ветки (а) серийная фрезеровка / (б) аддитив; каждая ветка проходит 3 вопроса-якоря → разный обоснованный вывод (а: параметрика + ручная топ-оптимизация; б: детерминированная топ-оптимизация + финал на решателе). gold-выделение «один вопрос-якорь развёл ответы»"
 
-  - id: s30
-    file: slides/s30-decision-rule-matrix.md
+  - id: s31
+    file: slides/s31-decision-rule-matrix.md
     type: assertion_visual
-    duration_min: 2.5
+    duration_min: 2.4
     assertion: "Правило решения — пять вопросов; полная таксономическая матрица шести классов собрана из всех частей; этот спектр — текущая инженерная практика, в том числе в Бауманке."
     learning_goal: "Правило решения (чек-лист 5 пунктов) + ПОЛНАЯ таксономическая матрица (кристаллизация s06) + Бауманский контекст"
     learning_outcomes: [LO1, LO2, LO7]
@@ -442,12 +461,12 @@ slides:
     references: []
     visual:
       pattern: schema_matrix
-      primary: "Слева — ментальный чек-лист 5 пунктов в Ocean rounded box (назови вид → детерм./вероятн.? → что оптимизирует, кто задал ограничения? → есть точный/нормативный инструмент? → кто отвечает?). Справа — компактная полная матрица 6 классов (Природа · Что гарантирует · Зрелость · Кто отвечает), fill ≥75%, single-line. Внизу строка: профильные кафедры и суперкомпьютерные центры технических университетов работают со всем спектром"
+      primary: "Слева — ментальный чек-лист 5 пунктов ВИЗУАЛЬНО ДОМИНИРУЕТ в Ocean rounded box (назови вид → детерм./вероятн.? → что оптимизирует, кто задал ограничения? → есть точный/нормативный инструмент? → кто отвечает?). Справа — компактная полная матрица 6 классов (Природа · Что гарантирует · Зрелость · Кто отвечает), subdued подтверждение, fill ≥75%, single-line. Внизу строка: профильные кафедры и суперкомпьютерные центры технических университетов работают со всем спектром"
 
-  - id: s31
-    file: slides/s31-qa.md
+  - id: s32
+    file: slides/s32-qa.md
     type: assertion_visual
-    duration_min: 1.0
+    duration_min: 0.9
     assertion: "Q&A"
     learning_goal: "Открытое Q&A с 3 backup-prompts (выделенный слайд, Lec-N-1 паттерн)"
     learning_outcomes: []

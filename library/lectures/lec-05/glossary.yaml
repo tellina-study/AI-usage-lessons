@@ -1,0 +1,118 @@
+# library/lectures/lec-05/glossary.yaml
+# Glossary (черновой) — Лекция 5 «AI в финансовом секторе и ритейле».
+# Сгенерирован book-editor'ом на Phase 2 (chapter v1 draft). БУДЕТ ЗАЛОЧЕН оркестратором после USER GATE A.
+# Канон: notes/lecture-5-review/final/plan-v2-final.md §6 + §7 inline-required + chapter v1.
+# Правило: critics MAY flag inconsistency, MAY NOT propose rename без USER approval.
+# consistency-checker сверяет slides/*.md и speech.md по этому файлу (terminology-only mode) ПОСЛЕ lock.
+# Issue: #100.
+
+lecture: 5
+locked_at: null   # будет проставлено оркестратором после USER GATE A
+status: draft
+source: "notes/lecture-5-review/final/plan-v2-final.md §6/§7; chapter v1 (chapter.md + chapter-part2.md + chapter-part3.md)"
+
+terms:
+  - canonical: "единый паттерн карточки типа ИИ (задача → тип ИИ и почему именно он → пример → где ломается → альтернатива)"
+    aliases: ["паттерн карточки типа ИИ"]
+    forbidden: []
+    note: "course-scaffold-конструкт лекции, аналог лестницы A→D Л4. НЕ отраслевой стандарт, НЕ канонический термин, НЕ засчитывается в strict-in. Атрибуция — chapter §0.4 + speaker notes s04. Teach-not-defend на видимом слое."
+  - canonical: "прогнозирование временных рядов (time-series forecasting)"
+    aliases: ["time-series forecasting", "прогноз рядов"]
+    forbidden: []
+    note: "inline-define §1.1 (первое упоминание); тип ИИ — классическая статистика/табличный ML, НЕ LLM"
+  - canonical: "distribution shift (дрейф распределения)"
+    aliases: ["дрейф распределения"]
+    forbidden: []
+    note: "inline-define §1.5 с нуля одной фразой-интуицией ДО использования в s09 (P2-4); несущий механизм failure-нити"
+  - canonical: "асимметрия цены ошибки"
+    aliases: []
+    forbidden: []
+    note: "inline-define §1.5; ≈0 в рекомендации vs десятки тыс.$ при необратимом капитальном действии"
+  - canonical: "поиск аномалий (anomaly detection)"
+    aliases: ["anomaly detection"]
+    forbidden: []
+    note: "inline-define §2.1; модель нормы → отклонение; НЕ генерация, НЕ прогноз ряда"
+  - canonical: "AML (anti-money laundering / противодействие отмыванию)"
+    aliases: ["AML"]
+    forbidden: []
+    note: "1 строка-атрибут §2.1; подмножество fraud-задачи (anomaly), НЕ отдельный тип ИИ; жёсткие пороги = rules-engine"
+  - canonical: "false positive / false negative (FP/FN), матрица ошибок (TP/TN/FP/FN)"
+    aliases: ["FP/FN", "матрица ошибок", "confusion matrix"]
+    forbidden: []
+    note: "ВВОД С НУЛЯ §2.3 (первое появление в курсе — Л7 ПОСЛЕ Л5); forward-pointer → Л7 §2.2 (не recall, не «напоминание»). БЕЗ prevalence/PPV"
+  - canonical: "cost-sensitive (стоимостно-взвешенная оценка)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §2.3; FP/FN взвешены реальной ценой (деньги/доверие), порог под минимизацию ожидаемой стоимости"
+  - canonical: "precision ↔ recall (точность ↔ полнота)"
+    aliases: ["precision/recall"]
+    forbidden: []
+    note: "inline §2.4; структурный компромисс — лучшая модель сдвигает кривую, не отменяет выбор точки"
+  - canonical: "кредитный скоринг (scoring)"
+    aliases: ["скоринг"]
+    forbidden: []
+    note: "inline-define §3.1; тип ИИ — классический табличный ML (логрег/GBM/скоркарта), НЕ нейросеть/LLM"
+  - canonical: "reason codes (коды причин)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §3.1/§3.3; машинно-извлекаемое объяснение решения; регуляторное требование, не опция"
+  - canonical: "прокси-предвзятость (proxy bias)"
+    aliases: ["прокси-bias"]
+    forbidden: []
+    note: "ВВОД С НУЛЯ §3.4 (механизм «на пальцах», 2-3 фразы); forward-pointer → Obermeyer/Optum Л7 §4.3 (НЕ §3 — P1-2)"
+  - canonical: "collaborative filtering (коллаборативная фильтрация)"
+    aliases: []
+    forbidden: []
+    note: "1× расшифровка §5.1 с нуля; матрица пользователь×товар; cold-start, popularity bias"
+  - canonical: "content-based filtering (контентная фильтрация)"
+    aliases: []
+    forbidden: []
+    note: "1× расшифровка §5.1 с нуля; атрибуты товара; over-specialization"
+  - canonical: "hybrid recommender (гибрид)"
+    aliases: ["гибридная рекомендательная система"]
+    forbidden: []
+    note: "inline §5.2; композиция collaborative + content-based + контекст; большинство промышленных систем"
+  - canonical: "filter bubble (информационный пузырь)"
+    aliases: ["информационный пузырь"]
+    forbidden: []
+    note: "ВВОД С НУЛЯ §5.2; оптимизация краткосрочной релевантности схлопывает разнообразие, без злого умысла"
+  - canonical: "dynamic pricing (динамическое ценообразование)"
+    aliases: ["динамическое ценообразование"]
+    forbidden: []
+    note: "inline-define §5.2; справедливость/закон — ограничение, НЕ оптимизируемая переменная"
+  - canonical: "прокси≠цель"
+    aliases: []
+    forbidden: []
+    note: "единый класс ошибки главы (§5.5, DDB5): оптимизатор максимизирует измеримый прокси, расходящийся с целью; объединяет accuracy-обман/прокси-bias/filter bubble/Klarna"
+  - canonical: "grounding (опора на источник)"
+    aliases: []
+    forbidden: []
+    note: "из Л3 — мини-напоминание §4.2/§4.3, НЕ визуальный дубль Л3; опора ответа LLM на проверяемый первоисточник"
+  - canonical: "fact-checking (сверка с первоисточником — паттерн лекции)"
+    aliases: []
+    forbidden: []
+    note: "паттерн §4.2; распознать класс ошибки + назвать принцип проверки. Лекция = Understand (LO6); Семинар 5 = Apply. НЕ дублировать семинар"
+  - canonical: "KYC (know-your-customer / проверка клиента)"
+    aliases: ["KYC"]
+    forbidden: []
+    note: "inline-define §6.3; в цифре — биометрия (строгий режим ФЗ-152)"
+  - canonical: "liveness (живость в биометрии)"
+    aliases: []
+    forbidden: []
+    note: "inline-required §6.3 (reader-A6); проверка, что перед камерой реальный живой человек, не фото/маска/дипфейк"
+  - canonical: "hidden human cost (скрытый человеческий труд)"
+    aliases: ["скрытый человеческий труд"]
+    forbidden: []
+    note: "inline-required §6.3 (reader-A6); «автономная» система может опираться на скрытую ручную обработку; TCO ≠ демо"
+  - canonical: "ФЗ-152 «О персональных данных»"
+    aliases: ["ФЗ-152"]
+    forbidden: []
+    note: "§6.3; локализация ПДн граждан РФ, биометрия — отдельный строгий режим. Юр-детали → chapter/notes, не видимый слой"
+
+forbidden_anglicisms:
+  - { wrong: "пайплайн", use: "конвейер" }
+  - { wrong: "фоллбэк", use: "запасной вариант" }
+  - { wrong: "эдж-кейс", use: "краевой случай" }
+  - { wrong: "инсайт", use: "вывод / наблюдение" }
+
+# Оставить как термины (не англицизм-флаг): чёрный ящик, скоринг.

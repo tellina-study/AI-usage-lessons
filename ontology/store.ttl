@@ -1,330 +1,443 @@
-<https://ai-usage-lessons.local/ontology#sem_17> <https://ai-usage-lessons.local/ontology#assesses> <https://ai-usage-lessons.local/ontology#lo8> , <https://ai-usage-lessons.local/ontology#lo7> , <https://ai-usage-lessons.local/ontology#lo6> , <https://ai-usage-lessons.local/ontology#lo5> , <https://ai-usage-lessons.local/ontology#lo4> , <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Seminar 17: Final Exam" ;
-	a <https://ai-usage-lessons.local/ontology#Seminar> .
-<https://ai-usage-lessons.local/ontology#sem_10> <https://ai-usage-lessons.local/ontology#assesses> <https://ai-usage-lessons.local/ontology#lo5> , <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Seminar 10: Midterm 2 (Lectures 1-9)" ;
-	a <https://ai-usage-lessons.local/ontology#Seminar> .
-<https://ai-usage-lessons.local/ontology#sem_05> <https://ai-usage-lessons.local/ontology#assesses> <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Seminar 5: Midterm 1 (Lectures 1-4)" ;
-	a <https://ai-usage-lessons.local/ontology#Seminar> .
-<https://ai-usage-lessons.local/ontology#sem_01> <https://ai-usage-lessons.local/ontology#assesses> <https://ai-usage-lessons.local/ontology#lo6> , <https://ai-usage-lessons.local/ontology#lo4> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Seminar 1: Practicum (Lecture 1)" ;
-	a <https://ai-usage-lessons.local/ontology#Seminar> .
-<https://ai-usage-lessons.local/ontology#req_pks4> <https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "PKS-4: Evaluate ethical and social implications of AI systems" ;
-	a <https://ai-usage-lessons.local/ontology#Requirement> .
-<https://ai-usage-lessons.local/ontology#req_pks3> <https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "PKS-3: Classify and identify AI tasks, select adequate methods" ;
-	a <https://ai-usage-lessons.local/ontology#Requirement> .
-<https://ai-usage-lessons.local/ontology#lo8> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks4> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO8: Formulate principles of responsible AI use" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lo7> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks4> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO7: Justify critical verification of AI results" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lo6> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks4> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO6: Identify typical errors and limitations of AI systems" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lo5> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks3> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO5: Formulate conclusions about AI industry prospects" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lo4> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks3> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO4: Apply AI tools to typical analytical tasks" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lo3> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks4> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO3: Analyze ethical risks of AI in sensitive areas" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lo2> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks3> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO2: Evaluate AI solution applicability to business tasks" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lo1> <https://ai-usage-lessons.local/ontology#fulfills> <https://ai-usage-lessons.local/ontology#req_pks3> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LO1: Classify AI solution types and match to industry tasks" ;
-	a <https://ai-usage-lessons.local/ontology#LearningOutcome> .
-<https://ai-usage-lessons.local/ontology#lec_08> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> ;
-	<https://ai-usage-lessons.local/ontology#status> "planned" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 8: AI in Creative Industries and Media" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#lec_07> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo8> , <https://ai-usage-lessons.local/ontology#lo7> , <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> ;
-	<https://ai-usage-lessons.local/ontology#status> "planned" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 7: AI Ethics and Regulation" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#lec_06> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> ;
-	<https://ai-usage-lessons.local/ontology#status> "planned" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 6: AI in Government and Education" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#lec_05> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo5> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> ;
-	<https://ai-usage-lessons.local/ontology#status> "planned" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 5: AI in Manufacturing and Agriculture" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#lec_04> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> ;
-	<https://ai-usage-lessons.local/ontology#status> "planned" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 4: AI in Medicine and Pharmaceuticals" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#lec_03> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo3> , <https://ai-usage-lessons.local/ontology#lo2> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> ;
-	<https://ai-usage-lessons.local/ontology#status> "planned" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 3: AI in Finance and Retail" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#lec_02> <https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo7> , <https://ai-usage-lessons.local/ontology#lo4> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_ai_in_software> ;
-	<https://ai-usage-lessons.local/ontology#status> "planned" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 2: AI in Software Development" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#lec_01> <https://ai-usage-lessons.local/ontology#updated_at> "2026-04-07T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-	<https://ai-usage-lessons.local/ontology#covers> <https://ai-usage-lessons.local/ontology#lo6> , <https://ai-usage-lessons.local/ontology#lo4> , <https://ai-usage-lessons.local/ontology#lo1> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> , <https://ai-usage-lessons.local/ontology#topic_ai_agents> ;
-	<https://ai-usage-lessons.local/ontology#status> "draft" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1UX671dOrhfQ8OgnadD_8ce4dhVJ9wDVrFqPq6p9S9uo/edit"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture 1: Introduction — What is AI and why it matters" ;
-	a <https://ai-usage-lessons.local/ontology#Lecture> .
-<https://ai-usage-lessons.local/ontology#supports> <http://www.w3.org/2000/01/rdf-schema#comment> "Research note supports a lecture" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "supports" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#assesses> <http://www.w3.org/2000/01/rdf-schema#comment> "Seminar assesses a learning outcome" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "assesses" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#fulfills> <http://www.w3.org/2000/01/rdf-schema#comment> "Learning outcome fulfills a requirement" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "fulfills" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#Seminar> <http://www.w3.org/2000/01/rdf-schema#comment> "A seminar session that assesses learning outcomes" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Seminar" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#LearningOutcome> <http://www.w3.org/2000/01/rdf-schema#comment> "A learning outcome that links requirements to lectures" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "LearningOutcome" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#topic_ai_in_software> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI in software development" .
-<https://ai-usage-lessons.local/ontology#topic_ai_in_finance> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI in finance and retail" .
-<https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI in medicine" .
-<https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI in manufacturing and agriculture" .
-<https://ai-usage-lessons.local/ontology#topic_ai_in_government> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI in government and education" .
-<https://ai-usage-lessons.local/ontology#topic_ai_in_creative> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI in creative industries" .
-<https://ai-usage-lessons.local/ontology#topic_ai_ethics> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI ethics and regulation" .
-<https://ai-usage-lessons.local/ontology#topic_prompt_engineering> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Prompt engineering skills" .
-<https://ai-usage-lessons.local/ontology#topic_recommender_systems> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Recommender systems and SPPD" .
-<https://ai-usage-lessons.local/ontology#topic_expert_systems> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Expert systems" .
-<https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI fundamentals and classification" .
-<https://ai-usage-lessons.local/ontology#topic_ai_agents> a <https://ai-usage-lessons.local/ontology#Topic> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI agents and autonomous systems" .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_task_type> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Task Type (Russell & Norvig 2021)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_modality> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Modality (Baltrusaitis et al. 2019)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_learning> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Learning Approach (Mitchell 1997, Bishop 2006, Sutton & Barto 2018)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_capability> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Capability Level ANI/AGI/ASI (Searle 1980, Bostrom 2014)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_architecture> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: By Architecture (Vaswani et al. 2017, Ho et al. 2020)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_gen_disc> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Generative vs Discriminative (Ng & Jordan 2001, Goodfellow et al. 2014)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_foundation> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Foundation Models (Bommasani et al. 2021)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_agentic> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Agentic AI (Masterman et al. 2024)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
-	<https://ai-usage-lessons.local/ontology#related_concept> <https://ai-usage-lessons.local/ontology#concept_agent_architectures> .
-<https://ai-usage-lessons.local/ontology#concept_taxonomy_hintze> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Taxonomy: Hintze 4 Types - reactive/limited memory/ToM/self-aware (Hintze 2016)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> .
-<https://ai-usage-lessons.local/ontology#concept_agent_definitions> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent definitions: model/chat/agent/app hierarchy (Weng 2023, Google 2024)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#concept_agent_architectures> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent architectures: ReAct, Toolformer, Anthropic spectrum, Ng patterns" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#concept_agent_papers> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent key papers: Yao 2022, Schick 2023, Wang 2023, Masterman 2024, Liu 2025" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#concept_agent_frameworks> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent frameworks: Claude Code, Devin, AutoGPT, CrewAI, LangGraph, OpenAI Assistants" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#concept_agent_course_coverage> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent course coverage: Lecture 1 overview, no dedicated lecture" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#concept_agent_capabilities> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent capabilities: planning, tool use, memory, multi-agent collaboration" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#concept_agent_autonomy> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent autonomy levels: L1 Operator to L5 Observer (arXiv:2506.12469)" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#concept_agent_ontology> a <https://ai-usage-lessons.local/ontology#Concept> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Agent ontology: topic node, research doc, concept entities in knowledge graph" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI v raznyh industriyah (V2)" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY/edit" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#updated_at> "2026-03-06T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
-<https://ai-usage-lessons.local/ontology#doc_v1_course_plan> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "AI v tsikle sozdaniya PO (V1)" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1UliavdtqqZAyHu-JYDOGPFCbJZ44Enhju5TwmqV99Xg/edit" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
-	<https://ai-usage-lessons.local/ontology#status> "archived" ;
-	<https://ai-usage-lessons.local/ontology#updated_at> "2026-02-23T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
-<https://ai-usage-lessons.local/ontology#doc_formal_program_old> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "RPD Otraslevoe primenenie II (original)" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE/edit" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
-	<https://ai-usage-lessons.local/ontology#status> "archived" .
-<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "RPD Otraslevoe primenenie II (updated)" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
-<https://ai-usage-lessons.local/ontology#doc_fos> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "FOS Otraslevoe primenenie II" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/document/d/1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay/edit" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" .
-<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#supersedes> <https://ai-usage-lessons.local/ontology#doc_v1_course_plan> .
-<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#supersedes> <https://ai-usage-lessons.local/ontology#doc_formal_program_old> .
-<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#doc_formal_program_updated> .
-<https://ai-usage-lessons.local/ontology#doc_fos> <https://ai-usage-lessons.local/ontology#cites> <https://ai-usage-lessons.local/ontology#doc_formal_program_old> ;
-	<https://ai-usage-lessons.local/ontology#depends_on> <https://ai-usage-lessons.local/ontology#doc_formal_program_old> .
-<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_in_software> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> .
-<https://ai-usage-lessons.local/ontology#doc_v1_course_plan> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_in_software> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> .
-<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_in_software> , <https://ai-usage-lessons.local/ontology#topic_ai_in_finance> , <https://ai-usage-lessons.local/ontology#topic_ai_in_medicine> , <https://ai-usage-lessons.local/ontology#topic_ai_in_manufacturing> , <https://ai-usage-lessons.local/ontology#topic_ai_in_government> , <https://ai-usage-lessons.local/ontology#topic_ai_in_creative> , <https://ai-usage-lessons.local/ontology#topic_ai_ethics> , <https://ai-usage-lessons.local/ontology#topic_prompt_engineering> .
-<https://ai-usage-lessons.local/ontology#doc_formal_program_old> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_recommender_systems> , <https://ai-usage-lessons.local/ontology#topic_expert_systems> .
-<https://ai-usage-lessons.local/ontology#doc_fos> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_recommender_systems> , <https://ai-usage-lessons.local/ontology#topic_expert_systems> .
-<https://ai-usage-lessons.local/ontology#research_classifications> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Research: AI Classification Taxonomies" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/classifications.md" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
-	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
-<https://ai-usage-lessons.local/ontology#research_agents> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Research: Model vs Chat vs Agent vs App" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/model-chat-agent-app.md" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_agents> ;
-	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
-<https://ai-usage-lessons.local/ontology#research_human_vs_ai> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Research: Human vs AI Capabilities" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/human-vs-ai.md" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
-	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
-<https://ai-usage-lessons.local/ontology#research_history> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Research: AI History and Definitions" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/history-and-definitions.md" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> ;
-	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
-<https://ai-usage-lessons.local/ontology#research_security> a <https://ai-usage-lessons.local/ontology#Document> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Research: Data Privacy and Security" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "notes/research/lecture-1/security-local-cloud.md" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_ethics> ;
-	<https://ai-usage-lessons.local/ontology#supports> <https://ai-usage-lessons.local/ontology#lec_01> .
-<https://ai-usage-lessons.local/ontology#doc_v2_course_plan> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> , <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#doc_formal_program_updated> <https://ai-usage-lessons.local/ontology#belongs_to_topic> <https://ai-usage-lessons.local/ontology#topic_ai_fundamentals> , <https://ai-usage-lessons.local/ontology#topic_ai_agents> .
-<https://ai-usage-lessons.local/ontology#deck_ii_i_mir> a <https://ai-usage-lessons.local/ontology#SlideDeck> ;
-	<https://ai-usage-lessons.local/ontology#source_system> "google_drive" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "https://docs.google.com/presentation/d/1j-7csuSNLQimTNz1gkV5aupormpqfPEL/edit" ;
-	<https://ai-usage-lessons.local/ontology#status> "archived" ;
-	<https://ai-usage-lessons.local/ontology#owner> "kzlevko@gmail.com" ;
-	<https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
-<https://ai-usage-lessons.local/ontology#diag_semester_roadmap> a <https://ai-usage-lessons.local/ontology#Diagram> ;
-	<https://ai-usage-lessons.local/ontology#title> "Semester Roadmap — 14 lessons across 3 blocks" ;
-	<https://ai-usage-lessons.local/ontology#source_system> "local" ;
-	<https://ai-usage-lessons.local/ontology#source_url> "diagrams/lecture-flows/semester-roadmap.drawio" ;
-	<https://ai-usage-lessons.local/ontology#status> "active" ;
-	<https://ai-usage-lessons.local/ontology#updated_at> "2026-03-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-	<https://ai-usage-lessons.local/ontology#illustrates> <https://ai-usage-lessons.local/ontology#doc_v2_course_plan> .
-<https://ai-usage-lessons.local/ontology#StatusDeprecated> <http://www.w3.org/2000/01/rdf-schema#label> "deprecated" .
-<https://ai-usage-lessons.local/ontology#StatusArchived> <http://www.w3.org/2000/01/rdf-schema#label> "archived" .
-<https://ai-usage-lessons.local/ontology#StatusActive> <http://www.w3.org/2000/01/rdf-schema#label> "active" .
-<https://ai-usage-lessons.local/ontology#StatusDraft> <http://www.w3.org/2000/01/rdf-schema#label> "draft" .
-<https://ai-usage-lessons.local/ontology#Local> <http://www.w3.org/2000/01/rdf-schema#label> "local" ;
-	a <https://ai-usage-lessons.local/ontology#SourceSystem> .
-<https://ai-usage-lessons.local/ontology#GitHub> <http://www.w3.org/2000/01/rdf-schema#label> "github" ;
-	a <https://ai-usage-lessons.local/ontology#SourceSystem> .
-<https://ai-usage-lessons.local/ontology#GoogleDrive> <http://www.w3.org/2000/01/rdf-schema#label> "google_drive" ;
-	a <https://ai-usage-lessons.local/ontology#SourceSystem> .
-<https://ai-usage-lessons.local/ontology#version_label> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "version_label" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#owner> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "owner" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#status> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
-	<http://www.w3.org/2000/01/rdf-schema#comment> "draft | active | archived | deprecated" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "status" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#updated_at> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#dateTime> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "updated_at" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#source_system> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> ;
-	<http://www.w3.org/2000/01/rdf-schema#comment> "google_drive | github | local" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "source_system" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#source_url> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "source_url" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#belongs_to_topic> <http://www.w3.org/2000/01/rdf-schema#comment> "Entity belongs to a topic" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "belongs_to_topic" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#tracked_by> <http://www.w3.org/2000/01/rdf-schema#comment> "Entity is tracked by a task/issue" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "tracked_by" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#supersedes> <http://www.w3.org/2000/01/rdf-schema#comment> "Newer version supersedes older" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "supersedes" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#depends_on> <http://www.w3.org/2000/01/rdf-schema#comment> "Entity depends on another entity" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "depends_on" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#illustrates> <http://www.w3.org/2000/01/rdf-schema#comment> "Diagram illustrates a document, lecture, or concept" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "illustrates" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#covers> <http://www.w3.org/2000/01/rdf-schema#comment> "Lecture or deck covers a topic or requirement" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "covers" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#cites> <http://www.w3.org/2000/01/rdf-schema#comment> "Source cites target document/section" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "cites" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Property> .
-<https://ai-usage-lessons.local/ontology#Topic> <http://www.w3.org/2000/01/rdf-schema#comment> "A thematic topic grouping entities" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Topic" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#Task> <http://www.w3.org/2000/01/rdf-schema#comment> "A tracked task (linked to GitHub Issue)" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Task" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#Diagram> <http://www.w3.org/2000/01/rdf-schema#comment> "A draw.io or other diagram artifact" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Diagram" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#SlideDeck> <http://www.w3.org/2000/01/rdf-schema#comment> "A presentation (Google Slides or local)" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "SlideDeck" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#Lecture> <http://www.w3.org/2000/01/rdf-schema#comment> "A single lecture in the course" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Lecture" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#Requirement> <http://www.w3.org/2000/01/rdf-schema#comment> "A normative requirement extracted from documents" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Requirement" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#Section> <http://www.w3.org/2000/01/rdf-schema#comment> "A section within a document" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Section" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
-<https://ai-usage-lessons.local/ontology#Document> <http://www.w3.org/2000/01/rdf-schema#comment> "Any managed document (normative, reference, etc.)" ;
-	<http://www.w3.org/2000/01/rdf-schema#label> "Document" ;
-	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+@prefix aiul: <https://ai-usage-lessons.local/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================
+# Course structure — canon: library/project/course-plan.md +
+# course-plan-seminars.md (owner canon 2026-05-16, issue #97/#95).
+# 17 lectures + 17 seminars. covers links lecture -> topic + LO.
+# ============================================================
+
+# === Learning Outcomes (labels = canon course-plan.md §"Результаты обучения") ===
+aiul:lo1 a aiul:LearningOutcome ;
+	rdfs:label "LO1: Classify AI solution types and match them to industry tasks" ;
+	aiul:fulfills aiul:req_pks3 .
+aiul:lo2 a aiul:LearningOutcome ;
+	rdfs:label "LO2: Evaluate applicability of an AI solution to a specific business task" ;
+	aiul:fulfills aiul:req_pks3 .
+aiul:lo3 a aiul:LearningOutcome ;
+	rdfs:label "LO3: Analyze AI-system risks: data security, limitations, vulnerabilities" ;
+	aiul:fulfills aiul:req_pks4 .
+aiul:lo4 a aiul:LearningOutcome ;
+	rdfs:label "LO4: Apply AI tools to solve a typical analytical task" ;
+	aiul:fulfills aiul:req_pks3 .
+aiul:lo5 a aiul:LearningOutcome ;
+	rdfs:label "LO5: Formulate a substantiated conclusion about AI prospects in an industry" ;
+	aiul:fulfills aiul:req_pks3 .
+aiul:lo6 a aiul:LearningOutcome ;
+	rdfs:label "LO6: Identify typical errors and limitations of AI systems" ;
+	aiul:fulfills aiul:req_pks4 .
+aiul:lo7 a aiul:LearningOutcome ;
+	rdfs:label "LO7: Justify the choice of AI architecture (chat, agent, RAG, API, model) for a task" ;
+	aiul:fulfills aiul:req_pks4 .
+aiul:lo8 a aiul:LearningOutcome ;
+	rdfs:label "LO8: Define the role of human and AI in collaboration: strengths, responsibility, human-in-the-loop" ;
+	aiul:fulfills aiul:req_pks4 .
+
+# === Requirements (unchanged from prior store; LO->requirement mapping preserved) ===
+aiul:req_pks3 a aiul:Requirement ;
+	rdfs:label "PKS-3: Classify and identify AI tasks, select adequate methods" ;
+	aiul:source_url "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit"^^xsd:anyURI .
+aiul:req_pks4 a aiul:Requirement ;
+	rdfs:label "PKS-4: Evaluate ethical and social implications of AI systems" ;
+	aiul:source_url "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit"^^xsd:anyURI .
+
+# === Topics ===
+aiul:topic_ai_fundamentals a aiul:Topic ;
+	rdfs:label "AI fundamentals and classification" .
+aiul:topic_ai_agents a aiul:Topic ;
+	rdfs:label "AI agents and autonomous systems" .
+aiul:topic_prompt_engineering a aiul:Topic ;
+	rdfs:label "Prompt engineering skills" .
+aiul:topic_ai_in_software a aiul:Topic ;
+	rdfs:label "AI in software development" .
+aiul:topic_ai_in_finance a aiul:Topic ;
+	rdfs:label "AI in finance and retail" .
+aiul:topic_ai_in_medicine a aiul:Topic ;
+	rdfs:label "AI in medicine and pharmaceuticals" .
+aiul:topic_ai_in_creative a aiul:Topic ;
+	rdfs:label "AI in creative industries and media" .
+aiul:topic_ai_in_manufacturing a aiul:Topic ;
+	rdfs:label "AI in manufacturing and production automation" .
+aiul:topic_ai_ethics a aiul:Topic ;
+	rdfs:label "AI ethics, regulation and responsibility (cross-cutting)" ;
+	rdfs:comment "Cross-cutting theme (LO3/LO8). No dedicated primary lecture in the actualized RPD; covered by several lectures (5, 7, 15, 17)." .
+aiul:topic_ai_in_government a aiul:Topic ;
+	rdfs:label "AI in government and education (legacy, deprecated)" ;
+	rdfs:comment "Legacy from the old (April) course structure. The actualized RPD (canon 2026-05-16) has NO corresponding lecture. Retained for provenance; flagged for owner decision (keep/delete)." ;
+	aiul:status "deprecated" .
+# Industry topics introduced for canon lectures lacking an existing topic
+# (required so every lecture has >=1 covers->topic per project convention).
+# Flagged for owner review.
+aiul:topic_ai_in_engineering a aiul:Topic ;
+	rdfs:label "AI in engineering design and CAD/CAM" ;
+	rdfs:comment "Introduced for canon lecture 6 (issue #97/#95); no prior topic existed." .
+aiul:topic_ai_in_aerospace a aiul:Topic ;
+	rdfs:label "AI in aerospace and defense" ;
+	rdfs:comment "Introduced for canon lecture 9 (issue #97/#95); no prior topic existed." .
+aiul:topic_ai_in_agriculture a aiul:Topic ;
+	rdfs:label "AI in agriculture" ;
+	rdfs:comment "Introduced for canon lecture 10 (issue #97/#95); no prior topic existed." .
+aiul:topic_ai_in_logistics a aiul:Topic ;
+	rdfs:label "AI in logistics and transport" ;
+	rdfs:comment "Introduced for canon lecture 13 (issue #97/#95); no prior topic existed." .
+aiul:topic_ai_in_telecom a aiul:Topic ;
+	rdfs:label "AI in telecom, network infrastructure and cybersecurity" ;
+	rdfs:comment "Introduced for canon lecture 14 (issue #97/#95); no prior topic existed." .
+aiul:topic_ai_in_science a aiul:Topic ;
+	rdfs:label "AI in scientific research" ;
+	rdfs:comment "Introduced for canon lecture 15 (issue #97/#95); no prior topic existed." .
+aiul:topic_ai_in_oilgas a aiul:Topic ;
+	rdfs:label "AI in oil & gas and resource extraction" ;
+	rdfs:comment "Introduced for canon lecture 16 (issue #97/#95); no prior topic existed." .
+aiul:topic_ai_synthesis a aiul:Topic ;
+	rdfs:label "Knowledge and skills synthesis" ;
+	rdfs:comment "Introduced for canon lecture 17 (issue #97/#95); no prior topic existed." .
+# Legacy topics retained for document provenance (referenced by archived docs)
+aiul:topic_recommender_systems a aiul:Topic ;
+	rdfs:label "Recommender systems and SPPD" .
+aiul:topic_expert_systems a aiul:Topic ;
+	rdfs:label "Expert systems" .
+
+# === Lectures (17, canon labels + LO + covers->topic) ===
+aiul:lec_01 a aiul:Lecture ;
+	rdfs:label "Lecture 1: Introduction — AI in the modern world" ;
+	aiul:covers aiul:topic_ai_fundamentals , aiul:topic_ai_agents , aiul:topic_prompt_engineering ,
+		aiul:lo1 , aiul:lo4 , aiul:lo6 ;
+	aiul:status "draft" ;
+	aiul:source_url "https://docs.google.com/document/d/1UX671dOrhfQ8OgnadD_8ce4dhVJ9wDVrFqPq6p9S9uo/edit"^^xsd:anyURI ;
+	aiul:updated_at "2026-04-07T00:00:00"^^xsd:dateTime .
+aiul:lec_02 a aiul:Lecture ;
+	rdfs:label "Lecture 2: AI Architecture — from ML to Transformers" ;
+	aiul:covers aiul:topic_ai_fundamentals , aiul:lo1 , aiul:lo6 , aiul:lo7 ;
+	aiul:status "draft" .
+aiul:lec_03 a aiul:Lecture ;
+	rdfs:label "Lecture 3: AI-System Architectures — Agents, RAG, API" ;
+	aiul:covers aiul:topic_ai_agents , aiul:lo7 , aiul:lo4 ;
+	aiul:status "draft" .
+aiul:lec_04 a aiul:Lecture ;
+	rdfs:label "Lecture 4: AI in Software Development" ;
+	aiul:covers aiul:topic_ai_in_software , aiul:lo1 , aiul:lo4 , aiul:lo7 ;
+	aiul:status "planned" .
+aiul:lec_05 a aiul:Lecture ;
+	rdfs:label "Lecture 5: AI in Finance and Retail" ;
+	aiul:covers aiul:topic_ai_in_finance , aiul:topic_ai_ethics ,
+		aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo6 ;
+	aiul:status "planned" .
+aiul:lec_06 a aiul:Lecture ;
+	rdfs:label "Lecture 6: AI in Engineering Design and CAD/CAM" ;
+	aiul:covers aiul:topic_ai_in_engineering , aiul:lo1 , aiul:lo2 , aiul:lo7 ;
+	aiul:status "planned" .
+aiul:lec_07 a aiul:Lecture ;
+	rdfs:label "Lecture 7: AI in Medicine and Pharmaceuticals" ;
+	aiul:covers aiul:topic_ai_in_medicine , aiul:topic_ai_ethics ,
+		aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo8 ;
+	aiul:status "draft" .
+aiul:lec_08 a aiul:Lecture ;
+	rdfs:label "Lecture 8: AI in Creative Industries and Media" ;
+	aiul:covers aiul:topic_ai_in_creative , aiul:lo1 , aiul:lo2 , aiul:lo4 , aiul:lo5 ;
+	aiul:status "planned" .
+aiul:lec_09 a aiul:Lecture ;
+	rdfs:label "Lecture 9: AI in Aerospace and Defense" ;
+	aiul:covers aiul:topic_ai_in_aerospace , aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo7 ;
+	aiul:status "planned" .
+aiul:lec_10 a aiul:Lecture ;
+	rdfs:label "Lecture 10: AI in Agriculture" ;
+	aiul:covers aiul:topic_ai_in_agriculture , aiul:topic_ai_in_manufacturing ,
+		aiul:lo1 , aiul:lo2 , aiul:lo5 ;
+	aiul:status "planned" .
+aiul:lec_11 a aiul:Lecture ;
+	rdfs:label "Lecture 11: AI in Discrete and Process Manufacturing" ;
+	aiul:covers aiul:topic_ai_in_manufacturing , aiul:lo1 , aiul:lo2 , aiul:lo7 , aiul:lo8 ;
+	aiul:status "planned" .
+aiul:lec_12 a aiul:Lecture ;
+	rdfs:label "Lecture 12: AI in Production Automation and Digital Twins" ;
+	aiul:covers aiul:topic_ai_in_manufacturing , aiul:lo2 , aiul:lo5 , aiul:lo7 ;
+	aiul:status "planned" .
+aiul:lec_13 a aiul:Lecture ;
+	rdfs:label "Lecture 13: AI in Logistics and Transport" ;
+	aiul:covers aiul:topic_ai_in_logistics , aiul:lo1 , aiul:lo2 , aiul:lo7 ;
+	aiul:status "planned" .
+aiul:lec_14 a aiul:Lecture ;
+	rdfs:label "Lecture 14: AI in Telecom, Network Infrastructure and Cybersecurity" ;
+	aiul:covers aiul:topic_ai_in_telecom , aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo7 ;
+	aiul:status "planned" .
+aiul:lec_15 a aiul:Lecture ;
+	rdfs:label "Lecture 15: AI in Scientific Research" ;
+	aiul:covers aiul:topic_ai_in_science , aiul:topic_ai_ethics ,
+		aiul:lo4 , aiul:lo5 , aiul:lo6 , aiul:lo8 ;
+	aiul:status "planned" .
+aiul:lec_16 a aiul:Lecture ;
+	rdfs:label "Lecture 16: AI in Oil & Gas and Resource Extraction" ;
+	aiul:covers aiul:topic_ai_in_oilgas , aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo7 ;
+	aiul:status "planned" .
+aiul:lec_17 a aiul:Lecture ;
+	rdfs:label "Lecture 17: Knowledge & Skills Synthesis" ;
+	aiul:covers aiul:topic_ai_synthesis , aiul:topic_prompt_engineering , aiul:topic_ai_ethics ,
+		aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo4 , aiul:lo5 , aiul:lo6 , aiul:lo7 , aiul:lo8 ;
+	aiul:status "planned" .
+
+# === Seminars (17, canon labels + assesses->LO per course-plan-seminars.md) ===
+aiul:sem_01 a aiul:Seminar ;
+	rdfs:label "Seminar 1: Which type of AI to choose — 4 questions of an IU6 engineer" ;
+	aiul:assesses aiul:lo1 , aiul:lo4 , aiul:lo6 .
+aiul:sem_02 a aiul:Seminar ;
+	rdfs:label "Seminar 2: Why a prompt works — tokens, context, attention" ;
+	aiul:assesses aiul:lo1 , aiul:lo6 , aiul:lo7 .
+aiul:sem_03 a aiul:Seminar ;
+	rdfs:label "Seminar 3: Architectural choice — chat, agent, RAG or API (three cases)" ;
+	aiul:assesses aiul:lo4 , aiul:lo7 .
+aiul:sem_04 a aiul:Seminar ;
+	rdfs:label "Seminar 4: AI in the software development cycle" ;
+	aiul:assesses aiul:lo1 , aiul:lo4 , aiul:lo7 .
+aiul:sem_05 a aiul:Seminar ;
+	rdfs:label "Seminar 5: Fact-checking AI on financial data" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo6 .
+aiul:sem_06 a aiul:Seminar ;
+	rdfs:label "Seminar 6: Generative design and the cost of error — engineering cases" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo7 .
+aiul:sem_07 a aiul:Seminar ;
+	rdfs:label "Seminar 7: AI diagnostics — sensitivity, specificity, responsibility" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo8 .
+aiul:sem_08 a aiul:Seminar ;
+	rdfs:label "Seminar 8: Midterm Control 1 (Module 1)" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo4 , aiul:lo5 , aiul:lo6 , aiul:lo7 , aiul:lo8 .
+aiul:sem_09 a aiul:Seminar ;
+	rdfs:label "Seminar 9: Autonomy levels and certification — where AI does not decide" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo7 .
+aiul:sem_10 a aiul:Seminar ;
+	rdfs:label "Seminar 10: Cognitive Agro Pilot and precision farming" ;
+	rdfs:comment "Canon source inconsistency: the per-seminar tag in course-plan-seminars.md reads 'LO1, LO2, LO5', but the authoritative LO-coverage table (§Покрытие LO по семинарам, LO5 row) lists seminars 8,12,15,17 — NOT 10. assesses aligned to the coverage table per issue #97/#95 task spec. Flagged for owner: confirm whether sem_10 assesses LO5." ;
+	aiul:assesses aiul:lo1 , aiul:lo2 .
+aiul:sem_11 a aiul:Seminar ;
+	rdfs:label "Seminar 11: Predictive maintenance and cobots — shop-floor architecture" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo7 , aiul:lo8 .
+aiul:sem_12 a aiul:Seminar ;
+	rdfs:label "Seminar 12: Midterm Control 2 (Module 2)" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo5 , aiul:lo7 , aiul:lo8 .
+aiul:sem_13 a aiul:Seminar ;
+	rdfs:label "Seminar 13: Routing, warehouses and last mile" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo7 .
+aiul:sem_14 a aiul:Seminar ;
+	rdfs:label "Seminar 14: AI as shield and sword — attacking and defending networks" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo7 .
+aiul:sem_15 a aiul:Seminar ;
+	rdfs:label "Seminar 15: AI for thesis work — literature review, AlphaFold, mandatory disclosure" ;
+	aiul:assesses aiul:lo4 , aiul:lo5 , aiul:lo6 , aiul:lo8 .
+aiul:sem_16 a aiul:Seminar ;
+	rdfs:label "Seminar 16: Seismic, pipeline, well — AI architecture for oil & gas" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo7 .
+aiul:sem_17 a aiul:Seminar ;
+	rdfs:label "Seminar 17: Midterm Control 3 — final synthesis of the whole course" ;
+	aiul:assesses aiul:lo1 , aiul:lo2 , aiul:lo3 , aiul:lo4 , aiul:lo5 , aiul:lo6 , aiul:lo7 , aiul:lo8 .
+
+# === Concepts (preserved verbatim from prior store; lecture-1 knowledge graph) ===
+aiul:concept_taxonomy_task_type a aiul:Concept ;
+	rdfs:label "Taxonomy: By Task Type (Russell & Norvig 2021)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_taxonomy_modality a aiul:Concept ;
+	rdfs:label "Taxonomy: By Modality (Baltrusaitis et al. 2019)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_taxonomy_learning a aiul:Concept ;
+	rdfs:label "Taxonomy: By Learning Approach (Mitchell 1997, Bishop 2006, Sutton & Barto 2018)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_taxonomy_capability a aiul:Concept ;
+	rdfs:label "Taxonomy: By Capability Level ANI/AGI/ASI (Searle 1980, Bostrom 2014)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_taxonomy_architecture a aiul:Concept ;
+	rdfs:label "Taxonomy: By Architecture (Vaswani et al. 2017, Ho et al. 2020)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_taxonomy_gen_disc a aiul:Concept ;
+	rdfs:label "Taxonomy: Generative vs Discriminative (Ng & Jordan 2001, Goodfellow et al. 2014)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_taxonomy_foundation a aiul:Concept ;
+	rdfs:label "Taxonomy: Foundation Models (Bommasani et al. 2021)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_taxonomy_agentic a aiul:Concept ;
+	rdfs:label "Taxonomy: Agentic AI (Masterman et al. 2024)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals ;
+	aiul:related_concept aiul:concept_agent_architectures .
+aiul:concept_taxonomy_hintze a aiul:Concept ;
+	rdfs:label "Taxonomy: Hintze 4 Types - reactive/limited memory/ToM/self-aware (Hintze 2016)" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals .
+aiul:concept_agent_definitions a aiul:Concept ;
+	rdfs:label "Agent definitions: model/chat/agent/app hierarchy (Weng 2023, Google 2024)" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+aiul:concept_agent_architectures a aiul:Concept ;
+	rdfs:label "Agent architectures: ReAct, Toolformer, Anthropic spectrum, Ng patterns" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+aiul:concept_agent_papers a aiul:Concept ;
+	rdfs:label "Agent key papers: Yao 2022, Schick 2023, Wang 2023, Masterman 2024, Liu 2025" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+aiul:concept_agent_frameworks a aiul:Concept ;
+	rdfs:label "Agent frameworks: Claude Code, Devin, AutoGPT, CrewAI, LangGraph, OpenAI Assistants" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+aiul:concept_agent_course_coverage a aiul:Concept ;
+	rdfs:label "Agent course coverage: Lecture 1 overview, no dedicated lecture" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+aiul:concept_agent_capabilities a aiul:Concept ;
+	rdfs:label "Agent capabilities: planning, tool use, memory, multi-agent collaboration" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+aiul:concept_agent_autonomy a aiul:Concept ;
+	rdfs:label "Agent autonomy levels: L1 Operator to L5 Observer (arXiv:2506.12469)" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+aiul:concept_agent_ontology a aiul:Concept ;
+	rdfs:label "Agent ontology: topic node, research doc, concept entities in knowledge graph" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents .
+
+# === Documents (preserved verbatim from prior store) ===
+aiul:doc_v2_course_plan a aiul:Document ;
+	rdfs:label "AI v raznyh industriyah (V2)" ;
+	aiul:source_url "https://docs.google.com/document/d/1k0ASel9hqLeBhtaDjS8k83Kpf640WFe8lln_MaV-OFY/edit" ;
+	aiul:source_system "google_drive" ;
+	aiul:status "active" ;
+	aiul:updated_at "2026-03-06T00:00:00"^^xsd:dateTime ;
+	aiul:supersedes aiul:doc_v1_course_plan ;
+	aiul:depends_on aiul:doc_formal_program_updated ;
+	aiul:belongs_to_topic aiul:topic_ai_in_software , aiul:topic_ai_in_finance , aiul:topic_ai_in_medicine ,
+		aiul:topic_ai_in_manufacturing , aiul:topic_ai_in_government , aiul:topic_ai_in_creative ,
+		aiul:topic_ai_ethics , aiul:topic_prompt_engineering , aiul:topic_ai_fundamentals , aiul:topic_ai_agents .
+aiul:doc_v1_course_plan a aiul:Document ;
+	rdfs:label "AI v tsikle sozdaniya PO (V1)" ;
+	aiul:source_url "https://docs.google.com/document/d/1UliavdtqqZAyHu-JYDOGPFCbJZ44Enhju5TwmqV99Xg/edit" ;
+	aiul:source_system "google_drive" ;
+	aiul:status "archived" ;
+	aiul:updated_at "2026-02-23T00:00:00"^^xsd:dateTime ;
+	aiul:belongs_to_topic aiul:topic_ai_in_software , aiul:topic_prompt_engineering , aiul:topic_ai_ethics .
+aiul:doc_formal_program_old a aiul:Document ;
+	rdfs:label "RPD Otraslevoe primenenie II (original)" ;
+	aiul:source_url "https://docs.google.com/document/d/18AFEqywR2utCu6a99zPuNa0MrIKYGmFd5ZWqKbu-6YE/edit" ;
+	aiul:source_system "google_drive" ;
+	aiul:status "archived" ;
+	aiul:belongs_to_topic aiul:topic_recommender_systems , aiul:topic_expert_systems .
+aiul:doc_formal_program_updated a aiul:Document ;
+	rdfs:label "RPD Otraslevoe primenenie II (updated)" ;
+	aiul:source_url "https://docs.google.com/document/d/1zgAWfdyWlJBFMElmtKpmjgxySUCRccF9lNT-tj7J4fU/edit" ;
+	aiul:source_system "google_drive" ;
+	aiul:status "active" ;
+	aiul:updated_at "2026-03-31T00:00:00"^^xsd:dateTime ;
+	aiul:supersedes aiul:doc_formal_program_old ;
+	aiul:belongs_to_topic aiul:topic_ai_in_software , aiul:topic_ai_in_finance , aiul:topic_ai_in_medicine ,
+		aiul:topic_ai_in_manufacturing , aiul:topic_ai_in_government , aiul:topic_ai_in_creative ,
+		aiul:topic_ai_ethics , aiul:topic_prompt_engineering , aiul:topic_ai_fundamentals , aiul:topic_ai_agents .
+aiul:doc_fos a aiul:Document ;
+	rdfs:label "FOS Otraslevoe primenenie II" ;
+	aiul:source_url "https://docs.google.com/document/d/1adJu0mKKIRgNHKRVNwVSdTI6sVdSykay/edit" ;
+	aiul:source_system "google_drive" ;
+	aiul:status "active" ;
+	aiul:cites aiul:doc_formal_program_old ;
+	aiul:depends_on aiul:doc_formal_program_old ;
+	aiul:belongs_to_topic aiul:topic_recommender_systems , aiul:topic_expert_systems .
+aiul:research_classifications a aiul:Document ;
+	rdfs:label "Research: AI Classification Taxonomies" ;
+	aiul:source_system "local" ;
+	aiul:source_url "notes/research/lecture-1/classifications.md" ;
+	aiul:status "active" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals ;
+	aiul:supports aiul:lec_01 .
+aiul:research_agents a aiul:Document ;
+	rdfs:label "Research: Model vs Chat vs Agent vs App" ;
+	aiul:source_system "local" ;
+	aiul:source_url "notes/research/lecture-1/model-chat-agent-app.md" ;
+	aiul:status "active" ;
+	aiul:belongs_to_topic aiul:topic_ai_agents ;
+	aiul:supports aiul:lec_01 .
+aiul:research_human_vs_ai a aiul:Document ;
+	rdfs:label "Research: Human vs AI Capabilities" ;
+	aiul:source_system "local" ;
+	aiul:source_url "notes/research/lecture-1/human-vs-ai.md" ;
+	aiul:status "active" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals ;
+	aiul:supports aiul:lec_01 .
+aiul:research_history a aiul:Document ;
+	rdfs:label "Research: AI History and Definitions" ;
+	aiul:source_system "local" ;
+	aiul:source_url "notes/research/lecture-1/history-and-definitions.md" ;
+	aiul:status "active" ;
+	aiul:belongs_to_topic aiul:topic_ai_fundamentals ;
+	aiul:supports aiul:lec_01 .
+aiul:research_security a aiul:Document ;
+	rdfs:label "Research: Data Privacy and Security" ;
+	aiul:source_system "local" ;
+	aiul:source_url "notes/research/lecture-1/security-local-cloud.md" ;
+	aiul:status "active" ;
+	aiul:belongs_to_topic aiul:topic_ai_ethics ;
+	aiul:supports aiul:lec_01 .
+
+# === SlideDeck / Diagram (preserved verbatim) ===
+aiul:deck_ii_i_mir a aiul:SlideDeck ;
+	aiul:source_system "google_drive" ;
+	aiul:source_url "https://docs.google.com/presentation/d/1j-7csuSNLQimTNz1gkV5aupormpqfPEL/edit" ;
+	aiul:status "archived" ;
+	aiul:owner "kzlevko@gmail.com" ;
+	aiul:updated_at "2026-03-31T00:00:00"^^xsd:dateTime .
+aiul:diag_semester_roadmap a aiul:Diagram ;
+	aiul:title "Semester Roadmap — 14 lessons across 3 blocks" ;
+	aiul:source_system "local" ;
+	aiul:source_url "diagrams/lecture-flows/semester-roadmap.drawio" ;
+	aiul:status "active" ;
+	aiul:updated_at "2026-03-31T00:00:00"^^xsd:dateTime ;
+	aiul:illustrates aiul:doc_v2_course_plan .
+
+# === Schema mirror: classes, properties, vocabulary (preserved verbatim) ===
+aiul:Document a rdfs:Class ; rdfs:label "Document" ;
+	rdfs:comment "Any managed document (normative, reference, etc.)" .
+aiul:Section a rdfs:Class ; rdfs:label "Section" ;
+	rdfs:comment "A section within a document" .
+aiul:Requirement a rdfs:Class ; rdfs:label "Requirement" ;
+	rdfs:comment "A normative requirement extracted from documents" .
+aiul:Lecture a rdfs:Class ; rdfs:label "Lecture" ;
+	rdfs:comment "A single lecture in the course" .
+aiul:SlideDeck a rdfs:Class ; rdfs:label "SlideDeck" ;
+	rdfs:comment "A presentation (Google Slides or local)" .
+aiul:Diagram a rdfs:Class ; rdfs:label "Diagram" ;
+	rdfs:comment "A draw.io or other diagram artifact" .
+aiul:Task a rdfs:Class ; rdfs:label "Task" ;
+	rdfs:comment "A tracked task (linked to GitHub Issue)" .
+aiul:Topic a rdfs:Class ; rdfs:label "Topic" ;
+	rdfs:comment "A thematic topic grouping entities" .
+aiul:LearningOutcome a rdfs:Class ; rdfs:label "LearningOutcome" ;
+	rdfs:comment "A learning outcome that links requirements to lectures" .
+aiul:Seminar a rdfs:Class ; rdfs:label "Seminar" ;
+	rdfs:comment "A seminar session that assesses learning outcomes" .
+aiul:cites a rdfs:Property ; rdfs:label "cites" ;
+	rdfs:comment "Source cites target document/section" .
+aiul:covers a rdfs:Property ; rdfs:label "covers" ;
+	rdfs:comment "Lecture or deck covers a topic or requirement" .
+aiul:illustrates a rdfs:Property ; rdfs:label "illustrates" ;
+	rdfs:comment "Diagram illustrates a document, lecture, or concept" .
+aiul:depends_on a rdfs:Property ; rdfs:label "depends_on" ;
+	rdfs:comment "Entity depends on another entity" .
+aiul:supersedes a rdfs:Property ; rdfs:label "supersedes" ;
+	rdfs:comment "Newer version supersedes older" .
+aiul:tracked_by a rdfs:Property ; rdfs:label "tracked_by" ;
+	rdfs:comment "Entity is tracked by a task/issue" .
+aiul:belongs_to_topic a rdfs:Property ; rdfs:label "belongs_to_topic" ;
+	rdfs:comment "Entity belongs to a topic" .
+aiul:fulfills a rdfs:Property ; rdfs:label "fulfills" ;
+	rdfs:comment "Learning outcome fulfills a requirement" .
+aiul:assesses a rdfs:Property ; rdfs:label "assesses" ;
+	rdfs:comment "Seminar assesses a learning outcome" .
+aiul:supports a rdfs:Property ; rdfs:label "supports" ;
+	rdfs:comment "Research note supports a lecture" .
+aiul:source_url a rdfs:Property ; rdfs:label "source_url" ;
+	rdfs:range xsd:anyURI .
+aiul:source_system a rdfs:Property ; rdfs:label "source_system" ;
+	rdfs:comment "google_drive | github | local" ;
+	rdfs:range xsd:string .
+aiul:updated_at a rdfs:Property ; rdfs:label "updated_at" ;
+	rdfs:range xsd:dateTime .
+aiul:status a rdfs:Property ; rdfs:label "status" ;
+	rdfs:comment "draft | active | archived | deprecated" ;
+	rdfs:range xsd:string .
+aiul:owner a rdfs:Property ; rdfs:label "owner" ;
+	rdfs:range xsd:string .
+aiul:version_label a rdfs:Property ; rdfs:label "version_label" ;
+	rdfs:range xsd:string .
+aiul:GoogleDrive a aiul:SourceSystem ; rdfs:label "google_drive" .
+aiul:GitHub a aiul:SourceSystem ; rdfs:label "github" .
+aiul:Local a aiul:SourceSystem ; rdfs:label "local" .
+aiul:StatusDraft rdfs:label "draft" .
+aiul:StatusActive rdfs:label "active" .
+aiul:StatusArchived rdfs:label "archived" .
+aiul:StatusDeprecated rdfs:label "deprecated" .

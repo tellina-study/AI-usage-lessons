@@ -4,7 +4,7 @@ type: topic-index
 sources_count: 0
 lectures: [8]
 coverage: low
-updated_at: 2026-04-07
+updated_at: 2026-05-16
 ---
 
 # AI in Creative Industries

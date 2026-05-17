@@ -3,15 +3,15 @@ title: "AI Ethics and Regulation"
 type: topic-index
 sources_count: 12
 sub_topics: [bias-fairness, regulatory-frameworks, data-privacy, responsible-ai]
-lectures: [7]
+lectures: [5, 7, 15, 17]
 coverage: medium
-updated_at: 2026-04-07
+updated_at: 2026-05-16
 ---
 
 # AI Ethics and Regulation
 
 ## Overview
-Bias detection, fairness metrics, regulatory frameworks (EU AI Act, NIST AI RMF), data privacy, responsible AI principles. Primary lecture: 7.
+Bias detection, fairness metrics, regulatory frameworks (EU AI Act, NIST AI RMF), data privacy, responsible AI principles. **Not a standalone lecture** in the current 17-lecture RPD — ethics, responsibility and regulation are a **cross-cutting theme (LO3 / LO8)** addressed in every relevant lecture in its industry context (e.g. medicine — Lecture 7, finance — Lecture 5, science — Lecture 15), with final systematization in **Lecture 17 "Систематизация знаний и навыков"**.
 
 ## Sub-topics
 
@@ -26,8 +26,11 @@ Bias detection, fairness metrics, regulatory frameworks (EU AI Act, NIST AI RMF)
 - Assessment: Sem 5, 10, 17 (via LO3)
 
 ## Lectures
-- [Lecture 7](../../lectures/lec-07.md) *(planned)* -- AI Ethics and Regulation (primary)
-- Lectures 3, 4, 6, 8 -- ethical considerations in industry context (via LO3)
+Cross-cutting theme (LO3 / LO8) — no dedicated lecture. Addressed in industry context across the course, including:
+- [Lecture 5](../../lectures/lec-05.md) *(planned)* -- finance & retail: scoring bias, FZ-152, PII (via LO3)
+- [Lecture 7](../../lectures/lec-07.md) -- medicine: responsibility for AI-diagnosis errors, HIPAA (via LO3/LO8, produced)
+- [Lecture 15](../../lectures/lec-15.md) *(planned)* -- science: reproducibility, AI-disclosure, retraction crisis (via LO8)
+- [Lecture 17](../../lectures/lec-17.md) *(planned)* -- final systematization (personal AI safety checklist)
 
 ## Normative Requirements
 - PKS-4 -> LO3, LO7, LO8

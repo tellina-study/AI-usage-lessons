@@ -16,7 +16,7 @@ Foundational lecture covering what AI is, how it's classified, its history, capa
 
 ## Topics Covered
 - [AI Fundamentals](../topics/ai-fundamentals/_index.md) -- 9 classification taxonomies, history, definitions, benchmarks
-- [AI Agents](../topics/ai-agents/_index.md) -- model/chat/agent/app hierarchy, architectures overview
+- [AI Agents](../topics/ai-agents/_index.md) -- brief model/chat/agent/app landscape mention only (dedicated coverage in Lecture 3)
 - [Prompt Engineering](../topics/prompt-engineering/_index.md) -- "Role + Task + Context" micro-exercise
 - Data privacy and AI security overview
 
@@ -56,6 +56,6 @@ Foundational lecture covering what AI is, how it's classified, its history, capa
 
 ## Backlinks
 - [AI Fundamentals](../topics/ai-fundamentals/_index.md) -- primary lecture
-- [AI Agents](../topics/ai-agents/_index.md) -- overview lecture
+- [AI Agents](../topics/ai-agents/_index.md) -- brief landscape mention (primary lecture: 3)
 - [Prompt Engineering](../topics/prompt-engineering/_index.md) -- micro-exercises
 - [wiki/index.md](../index.md) -- course structure

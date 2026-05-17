@@ -3,15 +3,15 @@ title: "AI Agents"
 type: topic-index
 sources_count: 30
 sub_topics: [definitions, architectures, frameworks, autonomy-levels, capabilities]
-lectures: [1]
+lectures: [3, 1]
 coverage: high
-updated_at: 2026-04-07
+updated_at: 2026-05-16
 ---
 
 # AI Agents
 
 ## Overview
-AI agent architectures, definitions, frameworks, and autonomy levels. Covered as part of Lecture 1's landscape overview. No dedicated lecture exists yet.
+AI agent architectures, definitions, frameworks, and autonomy levels. Primary lecture: **Lecture 3 "Архитектуры AI-систем: агенты, RAG, API"** (produced) — dedicated lecture covering the agent loop (plan → act → check → iterate), RAG, fine-tuning vs prompting, API access, and MCP / tool use. Lecture 1 introduces agents only as a brief landscape mention in the model/chat/agent/app hierarchy.
 
 ## Sub-topics
 
@@ -51,10 +51,8 @@ AI agent architectures, definitions, frameworks, and autonomy levels. Covered as
 - [masterman-2024-agent-architectures.pdf](../../../library/papers/lecture-1/masterman-2024-agent-architectures.pdf)
 
 ## Lectures
-- [Lecture 1](../../lectures/lec-01.md) -- overview as part of AI landscape
-
-## Gap
-No dedicated lecture on agents in 17-lecture structure. Consider adding or expanding Lecture 1 coverage.
+- [Lecture 3](../../lectures/lec-03.md) -- primary lecture: agents, RAG, API, MCP / tool use (produced)
+- [Lecture 1](../../lectures/lec-01.md) -- brief overview mention as part of AI landscape
 
 ## Related Topics
 - [AI Fundamentals](../ai-fundamentals/_index.md) -- agents are a classification category in the taxonomy

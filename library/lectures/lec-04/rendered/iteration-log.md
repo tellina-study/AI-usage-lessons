@@ -555,3 +555,141 @@ s04a(Р1) · s10(Р2, есть) · s14(Р3, есть) · s18(Р4, есть) · s
   ai_failure_judgment count=15 НЕизменно, share 15/35≈43%, s04a/s24a/s28a
   в partial_out.
 - chapter*.md UNMODIFIED; 32 slides/*.md контент не тронут.
+
+---
+
+## v3.3 — per-level тулы 2026, Решение #102
+
+**Scope:** in-place добавление компактной врезки «Инструменты 2026» (Ocean
+rounded-box, новый helper `tools_strip()`) на 4 per-level слайда. 35 LOCKED,
+нумерация неизменна, keystone s03 + s04 + 30 прочих НЕ тронуты. chapter*.md
+UNMODIFIED (book-first: контент блоков уже в chapter v1.2 §1.2/§1.3/§2.2/§3.2
+[for-slide-sNN]).
+
+**C-level выбор: s12** (не s11). Обоснование: (1) chapter-маркер C-тулов =
+`[for-slide-s12]` (book-first якорь); (2) anti-hype-оговорка «SWE-bench как
+доказательство автономии дыряв; бренд≠режим» тематически = s12 trust-слайд
+(там и живёт SWE-bench Verified↔Pro); (3) s11 — process/cycle-визуал
+(plan→act→check→iterate), врезка-блок туда конфликтует с замкнутым циклом,
+на s12 (comparison) врезка ложится нативно под gold-критерий.
+
+**tools_strip helper:** Ocean rounded-box, 2-колоночный внутр. layout —
+левая = caption «Инструменты 2026» + chips (вендор-режим) + adoption-
+НАПРАВЛЕНИЕ словами; правая = teal ⚠-band (anti-hype/границы, критический
+тон, НЕ вендор-реклама; teal = «граница/осторожно» semantics как
+teal_callout). 0 §/(sNN)/LO/[VFY]/scaffold + 0 волатильных долей/чисел/
+«лидер»/benchmark на видимом слое (только направление словами; Решение
+#100/#9 freshness). Точные [VFY-day-of]-числа НЕ выносились — см. open-risk
+ниже (book-first: они в chapter v1.2 + research, видимый слой их не несёт).
+
+### s06 (Уровень A) — pages 7
+- Iter 1: caveat-band схлопнулся (баг helper: cb_h = h−0.92−0.12 ≈ 0.06);
+  strip перекрывал footer.
+- Iter 2: helper переписан на 2-кол layout; strip всё ещё впритык к gold-
+  callout (5.76) и footer (7.04) — текст caveat переполнял band.
+- Iter 3: сжата верхняя вёрстка (left-box lh 3.95→3.46, csh 1.04→0.90,
+  right-box 2.55→2.34, gold-callout h 1.46→0.96); strip → y=5.02 h=1.42;
+  3-row left-col (caption/chips/direction). Inspected p7: чисто.
+- Iter 4: helper финализирован (chips own-row, auto-fit font, left_ratio
+  param); re-render. PASS — strip между контентом и footer, 0 overlap,
+  Ocean motif, существующие плашки +56/+7…22/выигрыш-исчезает не тронуты.
+- Schema (n/a — assertion_visual+strip): 5-sec PASS (main message =
+  «один инструмент, три эффекта, на легаси выигрыш исчезает» = assertion;
+  strip явно вторичен). Projector 50% crop: chips/direction/⚠ читаемы.
+- Iter на s06: 4. Verdict: ACCEPT.
+
+### s07 (Уровень B) — page 8
+- Iter 1-2: strip overlap с «что меняет»-box (gap 0.04).
+- Iter 3: compare-table сжата (hh 0.50→0.46, rh 0.62→0.54), gold-callout
+  4.28→3.92 h 0.78→0.74, «что меняет»-box 5.20→4.72 h 1.66→1.28;
+  strip y=6.06. Inspected p8: чисто.
+- Iter 4: helper-финализация re-render. PASS — 0 overflow, нет footer на
+  s07 → strip до 7.40, compare-table контент не урезан (только spacing).
+- 5-sec PASS (main = «B: человек проверяет после, не во время» = assertion).
+  Projector crop: chips «ChatGPT-чат·Copilot Chat·Cursor Cmd-K» + ⚠ читаемы.
+- Iter на s07: 4. Verdict: ACCEPT.
+
+### s12 (Уровень C — выбран) — page 13
+- Iter 1-2: strip впритык к footer; mega-числа под угрозой сжатия.
+- Iter 3: верх сжат БЕЗ урезания mega-чисел (42pt 88,7/64,3 = 5-сек
+  якорь сохранён); plate-h 1.30→1.14, gold-band 0.46→0.42, boxes
+  ly 1.80→1.54 lh 3.28→3.14, gold-callout 5.02→4.80 h 0.76→0.74;
+  strip y=5.62 h=1.36. Inspected p13: чисто.
+- Iter 4: helper-финализация re-render. PASS — keystone trust-message
+  (88,7%/−24пп/64,3%) интактен и доминирует; strip вторичен; footer
+  слегка укорочен (дубль-define SWE-bench убран, смысл сохранён).
+- Schema_matrix readability: fill OK, single-line, цвет-семантика
+  (teal ⚠), font ≥12. 5-sec PASS (main = «88 знакомый vs 64 незнакомый,
+  разрыв 24пп» = assertion). Projector crop: strip+footer читаемы.
+- Iter на s12: 4. Verdict: ACCEPT.
+
+### s15 (Уровень D) — page 16
+- Iter 1-2: 4-я chip «Codex Cloud» клиппилась за левую колонку
+  (4 тула > 3 у прочих; left_w слишком узок).
+- Iter 3: chips → own-row + auto-fit-font + left_ratio=0.58; «Copilot
+  coding agent»→«Copilot agent» (короче, режим тот же); амплифайеры
+  сжаты 2.10→1.92, pipeline 1.40→1.30, gold-callout 5.28→4.88;
+  strip y=5.84 h=1.36. Inspected p16: 4 chip в ряд, 0 clip.
+- Iter 4: re-render. PASS — pipeline+амплифайеры+gold-callout+strip
+  без overflow; контент усилителей не урезан (только высота).
+- Schema_pipeline readability: RIGHT_ARROW сохранены, owner-аннотации
+  не тронуты. 5-sec PASS (main = «тот же цикл + 2 усилителя риска» =
+  assertion). Projector crop: 4 chip + ⚠ «Devin overclaim / 5 отказов
+  + kill-switch» читаемы.
+- Iter на s15: 4. Verdict: ACCEPT.
+
+### Итог v3.3
+- Iter на слайд: s06=4, s07=4, s12=4, s15=4 (≥3 min соблюдён;
+  iter-3 находил проблемы → accept на iter-4).
+- build_lec04.py: +helper `tools_strip()`; 4 builder-функции +tools_strip
+  вызов + compressed spacing; рендер OK «35 slides», валидатор
+  (35 + base-numbering-неизменность) НЕ сломан.
+- Видимый слой 4 изменённых: 0 §/(sNN)/LO/[VFY]/scaffold (authoritative
+  grep из rendered .pptx); 0 волатильных долей/% в strip-тексте (только
+  «2026»-title, «№1»-качеств., «Devin 2.0»-версия, «5 отказов»-event-
+  stable anti-hype-якорь — все owner-approved/non-volatile).
+- chapter*.md UNMODIFIED; deck.yaml/deck-part2 chapter_ref s06/s07/s12/s15
+  уже = §1.2/§1.3/§2.2/§3.1,§3.2 [for-slide-sNN] v1.2 (book-first
+  satisfied) → не правились; keystone s03 + s04 + 30 прочих слайдов
+  не тронуты; 35 LOCKED, нумерация неизменна.
+- OPEN-RISK (REPORT, не self-fix): точные [VFY-day-of]-числа НЕ
+  добавлены в speaker notes — конфликт с ENFORCED speaker-notes
+  contract (s06 281w / s12 262w → +параграф пробил бы 300w-ceiling) +
+  «существующий контент СОХРАНИТЬ» (notes = finalized v1.1). Числа
+  живут в chapter v1.2 [for-slide-sNN] + research (book-first source).
+  Видимый слой намеренно несёт только направление-словами (Решение
+  #100/#9). Нужно owner-решение.
+
+### micro-polish v3.3 (re-QA delta — methodology P2-1/P2-2 + fact-checker P2-1)
+Скоуп: ТОЛЬКО 3 правки, остаётся v3.3, без renumber/новых слайдов.
+- **#1 s06 chip:** `JetBrains AI` → `JetBrains AI Assistant` (каноничное
+  полное имя; methodology P2-2). Только chip-строка L885 в `tools_strip`-
+  вызове s06; s07/s12/s15 chips/direction/caveat НЕ тронуты (build word-
+  diff подтверждён: изменена ровно одна строка-список chips).
+- **#2 deck-part2.yaml:** `ai_failure_judgment.note` +1 предложение про
+  тул-врезки s06/s07/s12/s15 (anti-hype/границы; s06/s07/s15 partial-
+  upside, s12 reinforce in-bucket; count=15 неизменно). count /
+  in_bucket_slides / partial_out / share_by_slides НЕ тронуты.
+- **#3 slide-companions sync:** s06/s07/s12/s15 `## Body`-зеркало —
+  добавлен блок «Инструменты 2026» (chips + adoption-направление словами
+  + ⚠ anti-hype), текст дословно из rendered v3.3 pptx (binding =
+  pptx). `## Speaker notes` companion-секции НЕ раздувались (frozen
+  300w; Решение #100/RISK-2 — volatile-числа не в notes).
+- **Visual-loop s06 chip-fit (2 iter):** iter-1 full-slide @150dpi —
+  врезка рендерится чисто, 3 chips single-row, ⚠ band intact; iter-2
+  zoom chip-row — «JetBrains AI Assistant» полностью внутри chip, без
+  обрезки/wrap (auto-fit scaler `tools_strip` понизил шрифт на 1 шаг,
+  абсорбировал +9 символов). PASS.
+- Rebuild: `python3 build_lec04.py` → «35 slides», валидатор OK,
+  нумерация неизменна; PDF пересобран (libreoffice rc=0).
+- Verify: видимый слой s06 — 0 §/(sNN)/LO/[VFY]/Раздел/→sNN; 0
+  волатильных тул-долей в врезке (digits в band = только «2026»-title
+  + «№1»-quote; +56%/+7…22% — pre-existing v1.1 effect-size вне
+  тул-band, GATE-B-approved, не Решение #102). Visible-text diff vs
+  archive-v3.2: ровно pptx 7/8/13/16 (= deck s06/s07/s12/s15,
+  ожидаемая v3.3-врезка); keystone s03 + s04 + 31 frozen — visible-
+  text байт-идентичны v3.2. chapter*.md / speech.md НЕ тронуты
+  designer'ом (diff = pre-session v1.2 WIP). Side-effect guard:
+  lec-01/02/03/07 restored origin/main, lock-файлы 0, lec-05/06
+  untracked-isolated.
+- micro-polish: JetBrains AI Assistant + yaml-note + slide-companion sync

@@ -459,3 +459,17 @@ deck v3.1 (Раздел-0 keystone + сквозной tone-strip): re-QA 5 кр�
 - strict-in: count=15 неизменно, дивайдеры partial→out; слайдо-доля 15/35≈43% (≥40% держится), минутная 54.5% не затронута (дивайдеры ~0.3 мин); methodology-critic re-confirm на delta.
 
 **Урок:** post-GATE-A добавление слайдов = всегда suffix-ID (chapter `[for-slide-sNN]` финализирован — renumber = book-first drift). slide-count LOCK снимается ТОЛЬКО явным owner-решением с записью в реестр (как все governance escape-hatch'и). Owner-визуальная симметрия (roadmap ↔ дивайдеры) — решение владельца, не оркестратора (Orchestrator Self-Critique: визуальные структурные выборы defer to owner).
+
+### Лекция 4: owner-требование «тулы на каждом уровне A/B/C/D» во всех 3 артефактах (Решение #102, 2026-05-17)
+
+Владелец (после Phase 11, pre-GATE-C): «для каждого типа уровня не хватает тулов, обязательно дополни презу, часть, речь тулами на каждом уровне. смотри, что распространено в 2026». Реальный content-gap: лестница A→D без named-инструментов под каждый уровень.
+
+**Owner-override:** chapter финализирован v1.1 (GATE A), deck GATE-B-approved, speech reviewed v1.1 — явное документированное owner-указание дополнить ВСЕ 3 (тот же governance escape-hatch pattern). Мы pre-GATE-C → окно открыто, ничего не финализировано окончательно.
+
+**Решения:**
+- **Research-first (свежесть критична — урок ARC-AGI устаревания):** веб-верифицировано 2026-05-17, `notes/research/lecture-4/tools-landscape.md` раздел «2026-05-17 update». Маппинг: A=Copilot tab/Cursor Tab/JetBrains; B=ChatGPT-чат/Copilot·Cursor inline; C=Claude Code/Cursor Agent/Codex; D=Copilot agent/Devin/Jules. Все adoption-числа `[VFY-day-of]` (волатильны), на видимом слое — только направление (паттерн s12/s27).
+- **Book-first порядок:** chapter v1.1→**v1.2** (per-level тулы в Р1/Р2/Р3 + tools-landscape deep-dive) → deck derive → speech v1.1→v1.2 derive → re-QA delta (4 критика) → GATE C.
+- **Owner-выбор размещения в deck (AskUserQuestion): per-level слайды** s06(A)/s07(B)/s11-12(C)/s15(D) — блок «Инструменты 2026» + 1 строка adoption-направление + 1 anti-hype-оговорка. **Keystone s03 НЕ трогаем** (5-сек читаемость защищена, presentation-critic warned). s27 держит мета-тренд «в/из». Без новых слайдов (35 LOCKED), без renumber.
+- **AI-Failure усиление, не хайп:** тулы вносятся С judgment-оговорками (Devin overclaim, «Copilot стагнирует ≠ умер», «низкая доля ≠ decline», trust-gap 29%, mode≠brand, infrastructure≠level-tool) — это failure/limits-контент, не вендор-реклама.
+
+**Урок:** при owner-расширении pre-GATE-C — строго book-first каскад (chapter → deck → speech, не параллельно); свежие vendor/adoption-факты ВСЕГДА `[VFY-day-of]` + только направление на видимом слое; добавление инструментов в обучающий материал обязано нести anti-hype/границы (mode≠brand, overclaim), иначе нарушает AI-Failure-правило. Размещение, трогающее user-approved keystone, → defer to owner (Orchestrator Self-Critique).

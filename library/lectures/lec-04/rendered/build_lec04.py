@@ -337,6 +337,62 @@ def load_notes(slide_id):
     return notes.strip()
 
 
+def tools_strip(slide, x, y, w, h, tools, direction, caveat, *,
+                 chip_fill=MID, left_ratio=0.555):
+    """[v3.3, Решение #102] Компактная врезка «Инструменты 2026».
+
+    3 элемента (book-first из chapter v1.2 [for-slide-sNN]):
+      (1) tools — список «вендор-режим» строк → chips;
+      (2) direction — adoption-НАПРАВЛЕНИЕ словами (растёт/стагнирует),
+          БЕЗ точных волатильных чисел/долей на видимом слое;
+      (3) caveat — anti-hype/границы-оговорка (⚠), критический тон
+          (это AI-Failure-усиление, НЕ вендор-реклама).
+    Ocean rounded-box motif; teal-под-band для ⚠ (семантика «граница/
+    осторожно», как teal_callout). 0 §/(sNN)/LO/[VFY]/чисел-долей.
+    Layout: левая колонка = caption-строка + chips-строка + direction;
+    правая = ⚠ band на всю высоту. left_ratio регулирует сплит.
+    """
+    ocean_box(slide, x, y, w, h)
+    pad = 0.22
+    inx = x + pad
+    iny = y + 0.12
+    inh = h - 0.24
+    # 2-column inner layout: left = caption+chips+direction, right = ⚠ band.
+    left_w = (w - 2 * pad) * left_ratio
+    gap = 0.20
+    right_x = inx + left_w + gap
+    right_w = x + w - pad - right_x
+    # Left, row 1 — caption label (own line — chips get full left width)
+    text_box(slide, inx, iny, left_w, 0.26, "Инструменты 2026",
+             size=12, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    # Left, row 2 — tool chips (full left-column width; auto-fit font)
+    n = len(tools)
+    cgap = 0.10
+    raw = [0.22 + 0.082 * len(t) for t in tools]
+    avail = left_w - cgap * (n - 1)
+    scale = min(1.0, avail / sum(raw)) if sum(raw) else 1.0
+    csz = 11.5 if scale >= 0.92 else (10.5 if scale >= 0.80 else 9.5)
+    cx = inx
+    cy = iny + 0.32
+    for t, rw0 in zip(tools, raw):
+        cw = rw0 * scale
+        chip(slide, cx, cy, cw, 0.32, t, fill=chip_fill,
+             color=WHITE, size=csz, bold=True)
+        cx += cw + cgap
+    # Left, row 3 — adoption direction (words only, no volatile numbers)
+    text_box(slide, inx, iny + 0.70, left_w, inh - 0.70, direction,
+             size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.08)
+    # Right — anti-hype caveat band (teal = boundary/caution, critical tone;
+    # AI-Failure-усиление, НЕ вендор-реклама)
+    filled_rect(slide, right_x, iny, right_w, inh, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.25, radius=True, radius_adj=0.07)
+    text_runs(slide, right_x + 0.16, iny + 0.04, right_w - 0.32, inh - 0.08, [
+        {"text": "⚠  ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": caveat, "size": 11.5, "bold": True, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+
+
 # ============================================================
 # Deck loader — deck.yaml split на 2 части (≤600 строк каждая).
 # Loader читает ОБЕ части, объединяет ключ `slides`, валидирует totals.
@@ -765,25 +821,26 @@ def build_s06(p):
     s = blank(p)
     slide_title(s, "Уровень A — автодополнение: безопасен только пока человек реально читает.",
                 size=21, y=0.34, h=0.56, w=12.25)
-    text_box(s, 0.55, 0.96, 12.25, 0.46,
+    text_box(s, 0.55, 0.94, 12.25, 0.42,
              "Первая ступень лестницы: AI дописывает строку или блок по "
              "контексту файла; человек принимает или отклоняет каждое "
              "предложение в момент написания.",
-             size=13, italic=True, color=MID, line_spacing=1.12)
-    # Left — 3 крупных stat-плашки (вместо декор-chart)
-    lx, ly, lw, lh = 0.55, 1.58, 7.05, 3.95
+             size=13, italic=True, color=MID, line_spacing=1.10)
+    # Left — 3 крупных stat-плашки (v3.3: spacing compressed to fit
+    # tools_strip; числа +56/+7…22/выигрыш-исчезает НЕ изменены)
+    lx, ly, lw, lh = 0.55, 1.44, 7.05, 3.46
     ocean_box(s, lx, ly, lw, lh)
-    text_box(s, lx + 0.26, ly + 0.16, lw - 0.52, 0.32,
+    text_box(s, lx + 0.26, ly + 0.14, lw - 0.52, 0.30,
              "Один инструмент — три разных эффекта на скорость",
              size=14, bold=True, color=MID)
     ctx = [
-        ("Лаборатория — изолированная новая задача", "+56%", 33, MID, False),
-        ("Поле — Microsoft / Accenture", "+7…22%", 33, LIGHT, False),
+        ("Лаборатория — изолированная новая задача", "+56%", 31, MID, False),
+        ("Поле — Microsoft / Accenture", "+7…22%", 31, LIGHT, False),
         ("Знакомое легаси у экспертов",
-         "выигрыш\nисчезает", 18, GOLD, True),
+         "выигрыш\nисчезает", 17, GOLD, True),
     ]
-    cyy = ly + 0.58
-    csh = 1.04
+    cyy = ly + 0.52
+    csh = 0.90
     for lab, val, vsz, col, hi in ctx:
         bg = GOLD_TINT if hi else SURFACE
         filled_rect(s, lx + 0.26, cyy, lw - 0.52, csh, bg,
@@ -800,8 +857,8 @@ def build_s06(p):
         cyy += csh + 0.07
     # Right — уровень A на практике: где стоит / в чём ловушка (не scaffold)
     rx, rw = 7.80, 5.00
-    ocean_box(s, rx, ly, rw, 2.55)
-    text_box(s, rx + 0.26, ly + 0.16, rw - 0.52, 0.30,
+    ocean_box(s, rx, ly, rw, 2.34)
+    text_box(s, rx + 0.26, ly + 0.14, rw - 0.52, 0.28,
              "Где уже стоит — и в чём ловушка", size=14, bold=True,
              color=MID)
     frame = [
@@ -810,18 +867,27 @@ def build_s06(p):
         ("Ловушка:", "привычка жать «принять», не читая"),
         ("Цена:", "клоны и уязвимые паттерны попадают молча"),
     ]
-    fy = ly + 0.52
+    fy = ly + 0.48
     for a, b in frame:
-        text_box(s, rx + 0.26, fy, 1.30, 0.46, a, size=12, bold=True,
+        text_box(s, rx + 0.26, fy, 1.30, 0.44, a, size=12, bold=True,
                  color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, rx + 1.58, fy, rw - 1.84, 0.46, b, size=12, color=DEEP,
+        text_box(s, rx + 1.58, fy, rw - 1.84, 0.44, b, size=12, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-        fy += 0.50
-    gold_callout(s, 7.80, ly + 2.72, 5.00, 1.46,
+        fy += 0.46
+    gold_callout(s, 7.80, ly + 2.50, 5.00, 0.96,
                  "Сними чтение — и самый безопасный уровень становится "
                  "поставщиком техдолга на скорости набора текста: на знакомом "
                  "коде у экспертов выигрыш в скорости исчезает совсем.",
-                 size=13)
+                 size=12.5)
+    # [v3.3, Решение #102] Инструменты уровня A 2026 (book-first §1.2)
+    tools_strip(
+        s, 0.55, 5.02, 12.25, 1.42,
+        ["Copilot ghost-text", "Cursor Tab", "JetBrains AI Assistant"],
+        "Adoption: A — самый зрелый и широкий по охвату уровень; "
+        "лидер по охвату — Copilot-класс, но рост лидера остановился.",
+        "«Copilot — №1» — это охват, не динамика. Стагнация лидера "
+        "≠ «инструмент умер». На уровень A ставит режим "
+        "tab-completion, а не логотип.")
     footer(s, "Peng et al. (Copilot RCT, 2023, лабораторные); MIT GenAI "
               "(2024, поле). Эффект AI контекстно-зависим; лабораторные числа "
               "подавать как лабораторные.")
@@ -835,8 +901,9 @@ def build_s07(p):
     s = blank(p)
     slide_title(s, "Уровень B: человек проверяет после, а не во время — первое делегирование.",
                 size=21, y=0.34, h=0.56, w=12.25)
-    # 2-col compare in ocean box
-    bx, by, bw, bh = 0.55, 1.48, 12.25, 2.66
+    # 2-col compare in ocean box (v3.3: compressed vertically to fit
+    # tools_strip — контент не урезан, только spacing)
+    bx, by, bw, bh = 0.55, 1.34, 12.25, 2.42
     ocean_box(s, bx, by, bw, bh)
     cols = ["", "Уровень A", "Уровень B"]
     col_w = [3.05, 4.55, 4.55]
@@ -845,8 +912,8 @@ def build_s07(p):
         ("Где человек в цикле", "на каждом токене", "после генерации"),
         ("Когда ревью", "в момент написания", "отдельным шагом"),
     ]
-    tx, ty = bx + 0.20, by + 0.18
-    hh, rh = 0.50, 0.62
+    tx, ty = bx + 0.20, by + 0.16
+    hh, rh = 0.46, 0.54
     cx = tx
     for j, c in enumerate(cols):
         filled_rect(s, cx, ty, col_w[j], hh, MID if j else SURFACE,
@@ -870,14 +937,14 @@ def build_s07(p):
                      line_spacing=1.0)
             cx += col_w[j]
         yy += rh
-    gold_callout(s, 0.55, 4.28, 12.25, 0.78,
+    gold_callout(s, 0.55, 3.92, 12.25, 0.74,
                  "Смещение «человек проверяет после, а не во время» — первое "
                  "реальное делегирование в лестнице. С него начинаются "
-                 "характерные проблемы AI-кода.", size=14.5)
+                 "характерные проблемы AI-кода.", size=14)
     # Что эта граница меняет на практике (концентрированно, не scaffold)
-    ocean_box(s, 0.55, 5.20, 12.25, 1.66)
-    text_box(s, 0.80, 5.32, 5.0, 0.30, "Что эта граница меняет на практике",
-             size=14, bold=True, color=MID)
+    ocean_box(s, 0.55, 4.72, 12.25, 1.28)
+    text_box(s, 0.80, 4.81, 5.0, 0.28, "Что эта граница меняет на практике",
+             size=13, bold=True, color=MID)
     fr = [
         ("Защита «я видел каждую строку»", "на B уже не работает"),
         ("Ревью становится отдельным шагом", "его легко пропустить"),
@@ -885,14 +952,23 @@ def build_s07(p):
     ]
     fx = 0.80
     cwf = 3.95
-    fy = 5.72
+    fy = 5.13
     for i, (a, b) in enumerate(fr):
         xx = fx + i * cwf
-        text_box(s, xx, fy, cwf - 0.20, 0.42, a, size=12, bold=True,
+        text_box(s, xx, fy, cwf - 0.20, 0.38, a, size=12, bold=True,
                  color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
-        text_box(s, xx, fy + 0.46, cwf - 0.20, 0.40, "→ " + b, size=11.5,
+        text_box(s, xx, fy + 0.40, cwf - 0.20, 0.36, "→ " + b, size=11.5,
                  italic=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.0)
+    # [v3.3, Решение #102] Инструменты уровня B 2026 (book-first §1.3)
+    tools_strip(
+        s, 0.55, 6.06, 12.25, 1.34,
+        ["ChatGPT-чат", "Copilot Chat", "Cursor Cmd-K"],
+        "Adoption: чат-LLM — самый массовый способ применять AI к "
+        "коду (не требует интеграции, доступен каждому).",
+        "Чат-LLM — строго уровень B (петля copy-paste, человек "
+        "после каждого шага), даже если вендор обещает «агентно»: "
+        "без обвязки «может агентно» — маркетинг.")
     speaker_notes(s, load_notes("s07"))
 
 
@@ -1065,65 +1141,74 @@ def build_s12(p):
     """comparison / schema_matrix — SWE-bench Verified vs Pro (c12)."""
     s = blank(p)
     slide_title(s, "Один класс систем — два разных результата.", size=26)
-    text_box(s, 0.55, 1.14, 12.25, 0.56,
+    text_box(s, 0.55, 1.04, 12.25, 0.46,
              "SWE-bench — стандартный бенчмарк (мерило): AI дают реальную "
              "задачу из трекера open-source проекта; считают долю задач, где "
              "патч проходит тесты проекта.", size=13, italic=True, color=MID,
-             line_spacing=1.15)
-    # Left — 2 mega-stat плашки + gold-дельта (вместо 2-бар chart)
-    lx, ly, lw, lh = 0.55, 1.80, 7.05, 3.50
+             line_spacing=1.10)
+    # Left — 2 mega-stat плашки + gold-дельта (v3.3: spacing compressed
+    # to fit tools_strip; mega-числа 42pt = 5-сек якорь, НЕ урезаны)
+    lx, ly, lw, lh = 0.55, 1.54, 7.05, 3.14
     ocean_box(s, lx, ly, lw, lh)
     px, pw = lx + 0.26, lw - 0.52
     # Verified
-    filled_rect(s, px, ly + 0.22, pw, 1.30, SURFACE, stroke=SOFT_GREY,
+    filled_rect(s, px, ly + 0.16, pw, 1.14, SURFACE, stroke=SOFT_GREY,
                 stroke_pt=1.0, radius=True, radius_adj=0.08)
-    text_box(s, px + 0.24, ly + 0.34, pw - 1.9, 1.06,
+    text_box(s, px + 0.24, ly + 0.24, pw - 1.9, 0.98,
              "SWE-bench Verified\nзнакомый публичный код (был в обучении)",
              size=13, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.10)
-    text_box(s, px + pw - 2.05, ly + 0.30, 1.85, 1.14, "88,7%",
+             line_spacing=1.06)
+    text_box(s, px + pw - 2.05, ly + 0.18, 1.85, 1.10, "88,7%",
              size=42, bold=True, color=DEEP, align=PP_ALIGN.RIGHT,
              anchor=MSO_ANCHOR.MIDDLE)
     # gold delta band
-    filled_rect(s, px, ly + 1.60, pw, 0.46, GOLD, radius=True,
+    filled_rect(s, px, ly + 1.36, pw, 0.42, GOLD, radius=True,
                 radius_adj=0.20)
-    text_box(s, px, ly + 1.60, pw, 0.46,
+    text_box(s, px, ly + 1.36, pw, 0.42,
              "разрыв −24 процентных пункта",
              size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE)
     # Pro
-    filled_rect(s, px, ly + 2.14, pw, 1.30, GOLD_TINT, stroke=GOLD,
+    filled_rect(s, px, ly + 1.84, pw, 1.14, GOLD_TINT, stroke=GOLD,
                 stroke_pt=1.5, radius=True, radius_adj=0.08)
-    text_box(s, px + 0.24, ly + 2.26, pw - 1.9, 1.06,
+    text_box(s, px + 0.24, ly + 1.92, pw - 1.9, 0.98,
              "SWE-bench Pro\nчестный незнакомый приватный код",
              size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.10)
-    text_box(s, px + pw - 2.05, ly + 2.22, 1.85, 1.14, "64,3%",
+             line_spacing=1.06)
+    text_box(s, px + pw - 2.05, ly + 1.86, 1.85, 1.10, "64,3%",
              size=42, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
              anchor=MSO_ANCHOR.MIDDLE)
     # Right — explanation
     rx, rw = 7.80, 5.00
-    ocean_box(s, rx, ly, rw, 1.55, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, rx + 0.26, ly + 0.16, rw - 0.52, 1.25,
+    ocean_box(s, rx, ly, rw, 1.40, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, rx + 0.26, ly + 0.12, rw - 0.52, 1.16,
              "Главный инженерный факт уровня C: «почти 90%» на знакомом "
              "коде → «примерно 2 из 3» на незнакомом",
              size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.16)
-    ocean_box(s, rx, ly + 1.70, rw, 1.80)
-    text_box(s, rx + 0.26, ly + 1.86, rw - 0.52, 1.50,
+             line_spacing=1.12)
+    ocean_box(s, rx, ly + 1.52, rw, 1.62)
+    text_box(s, rx + 0.26, ly + 1.64, rw - 0.52, 1.40,
              "Verified — ~500 проверенных задач из публичного кода, который "
              "модель видела при обучении. Pro — приватные кодбазы, которых "
              "модель видеть не могла: честный незнакомый код.",
-             size=12.5, color=DEEP, line_spacing=1.18)
-    gold_callout(s, 0.55, 5.42, 12.25, 0.84,
+             size=12.5, color=DEEP, line_spacing=1.14)
+    gold_callout(s, 0.55, 4.80, 12.25, 0.74,
                  "Доверие к кодинг-агенту обратно пропорционально "
                  "незнакомости и критичности кода. Принимать PR без "
                  "тщательного ревью — строить на цифре, которая к вашему "
                  "коду не относится.", size=14)
-    footer(s, "SWE-bench — это бенчмарк (мерило): набор реальных задач, на "
-              "котором сравнивают модели; лидеры меняются почти еженедельно. "
-              "Цифра без среза («Verified или Pro?») и без даты для решения "
-              "не информативна.")
+    # [v3.3, Решение #102] Инструменты уровня C 2026 (book-first §2.2)
+    tools_strip(
+        s, 0.55, 5.62, 12.25, 1.36,
+        ["Claude Code", "Cursor Composer", "Codex CLI"],
+        "Adoption: C — самый быстрорастущий уровень; частый паттерн "
+        "«связка инструментов» (редактор-агент + кодинг-агент).",
+        "SWE-bench как доказательство автономии дыряв: высокая цифра "
+        "≠ «мерджить без senior-ревью». Уровень задаёт режим (сам "
+        "итерирует и гоняет тесты), а не бренд.")
+    footer(s, "SWE-bench — мерило: набор реальных задач, на котором "
+              "сравнивают модели; лидеры меняются почти еженедельно. Цифра "
+              "без среза («Verified или Pro?») и без даты не информативна.")
     speaker_notes(s, load_notes("s12"))
 
 
@@ -1190,7 +1275,8 @@ def build_s15(p):
     s = blank(p)
     slide_title(s, "Тот же цикл — но с двумя усилителями риска.", size=26)
     # Horizontal pipeline
-    px, py, pw, ph = 0.55, 1.40, 12.25, 1.40
+    # v3.3: spacing compressed to fit tools_strip — контент не урезан
+    px, py, pw, ph = 0.55, 1.36, 12.25, 1.30
     ocean_box(s, px, py, pw, ph)
     stages = [
         ("issue\nиз трекера", LIGHT),
@@ -1216,31 +1302,41 @@ def build_s15(p):
         if i < n - 1:
             right_arrow(s, bx + sw + 0.02, py + ph / 2 - 0.21, aw - 0.04,
                         0.42, fill=LIGHT)
-    # 2 amplifiers
+    # 2 amplifiers (v3.3: высота сжата, текст не урезан)
     aw2 = 6.0
-    ocean_box(s, 0.55, 3.00, aw2, 2.10)
-    text_box(s, 0.78, 3.14, aw2 - 0.45, 0.40,
+    ocean_box(s, 0.55, 2.84, aw2, 1.92)
+    text_box(s, 0.78, 2.96, aw2 - 0.45, 0.38,
              "Усилитель 1 — источник задачи: трекер, не человек",
              size=14, bold=True, color=MID, line_spacing=1.05)
-    text_box(s, 0.78, 3.62, aw2 - 0.45, 1.35,
+    text_box(s, 0.78, 3.40, aw2 - 0.45, 1.28,
              "двусмысленный или плохо написанный issue идёт в работу без "
              "промежуточного человеческого осмысления",
-             size=13, color=DEEP, line_spacing=1.20)
-    ocean_box(s, 6.80, 3.00, aw2, 2.10, fill=GOLD_TINT, stroke=GOLD,
+             size=13, color=DEEP, line_spacing=1.16)
+    ocean_box(s, 6.80, 2.84, aw2, 1.92, fill=GOLD_TINT, stroke=GOLD,
               stroke_pt=2.0)
-    text_box(s, 7.03, 3.14, aw2 - 0.45, 0.40,
+    text_box(s, 7.03, 2.96, aw2 - 0.45, 0.38,
              "Усилитель 2 — мульти-агент по умолчанию ≠ апгрейд",
              size=14, bold=True, color=DEEP, line_spacing=1.05)
-    text_box(s, 7.03, 3.62, aw2 - 0.45, 1.35,
+    text_box(s, 7.03, 3.40, aw2 - 0.45, 1.28,
              "параллельные субагенты на зависимых подзадачах принимают "
              "неявные конфликтующие решения. Один линейный агент надёжнее "
              "— тот же вывод, что в Лекции 3",
-             size=13, color=DEEP, line_spacing=1.20)
-    gold_callout(s, 0.55, 5.28, 12.25, 0.98,
+             size=13, color=DEEP, line_spacing=1.16)
+    gold_callout(s, 0.55, 4.88, 12.25, 0.86,
                  "Уровень D — максимум автономии и максимум риска: человек "
                  "обязателен на любом необратимом или прод-действии, иначе "
                  "автономный деструктив проходит без подтверждения.",
                  size=14)
+    # [v3.3, Решение #102] Инструменты уровня D 2026 (book-first §3.2)
+    tools_strip(
+        s, 0.55, 5.84, 12.25, 1.36,
+        ["Copilot agent", "Devin 2.0", "Jules", "Codex Cloud"],
+        "Adoption: D — самый молодой сегмент; мульти-агентные "
+        "системы — верхняя кромка, emerging, а не мейнстрим.",
+        "«Полностью автономный инженер» (Devin) — overclaim, не "
+        "факт. Copilot coding agent в проде = 5 отказов + "
+        "«аварийный выключатель» → гейты обязательны.",
+        left_ratio=0.58)
     speaker_notes(s, load_notes("s15"))
 
 

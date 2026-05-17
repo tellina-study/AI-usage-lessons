@@ -443,7 +443,12 @@ ai_failure_judgment:
     (глава не правится). Holistic ≥40% в slides удержан с запасом ~3 п.п.,
     single-artifact concentration отсутствует (распределено по 6 разделам:
     s05-Р1 · s08-Р1 · s12/s13-Р2 · s16/s17-Р3 · s21/s22/s23/s24-Р4 ·
-    s25/s26/s27-Р5 · s29/s30-Р6).
+    s25/s26/s27-Р5 · s29/s30-Р6). [Решение #102, 2026-05-17] тул-врезки
+    «Инструменты 2026» на s06/s07/s12/s15 несут anti-hype/границы (overclaim-
+    коррекция + critical caveat): s06/s07/s15 — partial-upside калибровочных
+    слайдов (методически плотнее, strict-#78 partial→out сохранён), s12 —
+    reinforce уже-in-bucket; count=15 неизменно (тулы не меняют strict-in-
+    счётчик).
 
 verify_day_of_items:
   - s06_copilot_lab_field_numbers       # Copilot RCT ~56% / поле +7–22% — лабораторные

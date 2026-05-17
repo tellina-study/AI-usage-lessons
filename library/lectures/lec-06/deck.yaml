@@ -41,8 +41,8 @@ deck:
   central_question: "Прежде чем доверять инструменту проектное решение — назови вид ИИ: детерминированная математика или обученная вероятностная модель? что оптимизируется и кто задал ограничения? кто несёт ответственность?"
   learning_outcomes: [LO1, LO2, LO7]
   language: ru
-  status: rendered
-  version: v1
+  status: finalized
+  version: v2
   source: chapter v2 (status=reviewed, ~12,860 слов)
   plan: notes/lecture-6-review/plan-v2.md
 
@@ -120,7 +120,7 @@ slides:
     type: assertion_visual
     duration_min: 3.5
     assertion: "Шесть классов ИИ в проектировании ложатся на одну ось — детерминированное ↔ вероятностное; чем правее, тем меньше встроенных гарантий."
-    learning_goal: "Скелет таксономии: одна ось, 6 ярлыков с микроопределением (НЕ полная матрица — она на s30)"
+    learning_goal: "Скелет таксономии: одна ось, 6 ярлыков с микроопределением (НЕ полная матрица — она на s31)"
     learning_outcomes: [LO1]
     chapter_ref: "§1.2 — Скелет таксономии: одна ось, шесть ярлыков"
     references: []

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 580" width="780" height="580">
+  <defs>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2C82A4"/>
+      <stop offset="0.55" stop-color="#065A82"/>
+      <stop offset="1" stop-color="#21295C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Canonical topology-optimized "grown" bracket:
+       2 upper mounting hubs + 1 lower load eye, joined by one continuous
+       organically branching, tapered, porous body (lattice lightening
+       holes). Single union path => looks like one cast, optimized part. -->
+
+  <path fill="url(#metal)" fill-rule="evenodd" d="
+      M 130 70
+      C  70 90, 55 175, 78 250
+      C  98 320, 145 372, 210 405
+      C  248 425, 270 450, 300 510
+      C  300 555, 340 580, 388 580
+      C  436 580, 476 555, 476 510
+      C  476 455, 500 428, 545 405
+      C  620 368, 678 312, 700 240
+      C  720 170, 706 92, 648 70
+      C  690 130, 670 215, 600 275
+      C  548 320, 492 348, 452 408
+      C  430 392, 410 384, 388 384
+      C  366 384, 346 392, 326 408
+      C  286 348, 232 320, 182 276
+      C  112 216, 92 132, 130 70 Z
+
+      M 388 432
+      C  430 432, 462 460, 462 502
+      C  462 540, 430 562, 388 562
+      C  346 562, 314 540, 314 502
+      C  314 460, 346 432, 388 432 Z
+
+      M 152 132 m -38 0 a 38 38 0 1 0 76 0 a 38 38 0 1 0 -76 0 Z
+      M 628 132 m -38 0 a 38 38 0 1 0 76 0 a 38 38 0 1 0 -76 0 Z
+      M 388 497 m -28 0 a 28 28 0 1 0 56 0 a 28 28 0 1 0 -56 0 Z
+
+      M 232 232 a 30 46 -22 1 0 0.1 0 Z
+      M 548 232 a 30 46 22 1 0 -0.1 0 Z
+      M 286 336 a 24 34 -30 1 0 0.1 0 Z
+      M 494 336 a 24 34 30 1 0 -0.1 0 Z
+  "/>
+
+  <!-- Slender organic cross-strut tying the two arms (separate flowing rib) -->
+  <path fill="#1C7293" d="
+      M 210 360
+      C 290 408, 490 408, 570 360
+      C 558 392, 532 412, 480 423
+      C 420 436, 356 436, 296 423
+      C 244 412, 222 392, 210 360 Z"/>
+
+  <!-- Rim highlights on bolt holes for a machined look -->
+  <circle cx="152" cy="132" r="38" fill="none" stroke="#0B3550" stroke-width="5"/>
+  <circle cx="628" cy="132" r="38" fill="none" stroke="#0B3550" stroke-width="5"/>
+  <circle cx="388" cy="497" r="28" fill="none" stroke="#0B3550" stroke-width="5"/>
+</svg>

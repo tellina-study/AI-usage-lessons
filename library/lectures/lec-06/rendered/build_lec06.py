@@ -303,7 +303,7 @@ def load_notes(slide_id):
 # ============================================================
 
 NAV_SECTIONS = [
-    ("0", "Hook\n+ карта"),
+    ("0", "Старт\n+ карта"),
     ("1", "Фундамент\n+ таксономия"),
     ("2", "Генеративный\nдизайн ≠ genAI"),
     ("3", "Суррогат\n/ PINN"),
@@ -361,48 +361,51 @@ def build_section_divider(p, here_idx, title, frame_phrase, notes_slide_id):
 # ============================================================
 
 def two_col_compare(s, *, box_y, box_h, left, right,
-                    left_color=MID, right_color=TEAL):
+                    left_color=MID, right_color=TEAL, body_size=17):
     """left/right = dict(title, icon, icon_color, lines:[str]).
     Fixed even row slots — each line gets an equal vertical slot computed
-    from box_h so text never overflows the ocean box."""
+    from box_h so text never overflows the ocean box. body_size raised to
+    fill the taller box (P1-1 vertical-fill: ~85-90% canvas, projector-safe
+    ≥16pt body, lec-07 baseline)."""
     box_x, box_w = 0.55, 12.25
     ocean_box(s, box_x, box_y, box_w, box_h)
     mid_x = box_x + box_w / 2
-    filled_rect(s, mid_x - 0.01, box_y + 0.35, 0.02, box_h - 0.70,
+    filled_rect(s, mid_x - 0.01, box_y + 0.40, 0.02, box_h - 0.80,
                 COVER_OUTLINE)
-    header_h = 1.05
+    header_h = 1.25
     for cx, cfg, ccol in [
-        (box_x + 0.45, left, left_color),
-        (mid_x + 0.45, right, right_color),
+        (box_x + 0.50, left, left_color),
+        (mid_x + 0.50, right, right_color),
     ]:
-        cw = box_w / 2 - 0.90
+        cw = box_w / 2 - 1.00
         add_image(s, icon(cfg["icon"], cfg.get("icon_color", "blue")),
-                  cx, box_y + 0.32, 0.60, 0.60)
-        text_box(s, x=cx + 0.78, y=box_y + 0.36, w=cw - 0.78, h=0.70,
-                 text=cfg["title"], size=18, bold=True, color=ccol,
+                  cx, box_y + 0.40, 0.70, 0.70)
+        text_box(s, x=cx + 0.92, y=box_y + 0.42, w=cw - 0.92, h=0.78,
+                 text=cfg["title"], size=20, bold=True, color=ccol,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
         lines = cfg["lines"]
         area_y = box_y + header_h
-        area_h = box_h - header_h - 0.22
+        area_h = box_h - header_h - 0.28
         slot = area_h / len(lines)
         for i, ln in enumerate(lines):
             sy = area_y + i * slot
-            filled_rect(s, cx + 0.02, sy + slot / 2 - 0.05, 0.10, 0.10, ccol,
+            filled_rect(s, cx + 0.02, sy + slot / 2 - 0.06, 0.12, 0.12, ccol,
                         radius=True, radius_adj=0.5)
-            text_box(s, x=cx + 0.28, y=sy, w=cw - 0.20, h=slot,
-                     text=ln, size=14, color=DEEP,
-                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.18)
+            text_box(s, x=cx + 0.32, y=sy, w=cw - 0.24, h=slot,
+                     text=ln, size=body_size, color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.22)
     return box_x, box_w
 
 
 def pipeline_row(s, *, y, h, stages, gold_idx=None):
-    """stages = list of (title, body). gold_idx → gold-framed stage."""
+    """stages = list of (title, body). gold_idx → gold-framed stage.
+    Fonts raised for projector readability (P1-1 / Schema §5.5)."""
     total_w = 12.25
     x0 = 0.55
     n = len(stages)
-    aw = 0.50
+    aw = 0.52
     sw = (total_w - (n - 1) * aw) / n
-    head_h = 0.80
+    head_h = 1.00
     for i, (title, body) in enumerate(stages):
         x = x0 + i * (sw + aw)
         is_gold = (i == gold_idx)
@@ -410,19 +413,19 @@ def pipeline_row(s, *, y, h, stages, gold_idx=None):
                   fill=GOLD_TINT if is_gold else SURFACE,
                   stroke=GOLD if is_gold else LIGHT,
                   stroke_pt=2.0 if is_gold else 1.5)
-        filled_rect(s, x + 0.16, y + 0.16, sw - 0.32, head_h,
+        filled_rect(s, x + 0.18, y + 0.18, sw - 0.36, head_h,
                     GOLD if is_gold else MID, radius=True, radius_adj=0.14)
-        text_box(s, x=x + 0.20, y=y + 0.16, w=sw - 0.40, h=head_h,
-                 text=f"{i + 1}. {title}", size=13.5, bold=True,
+        text_box(s, x=x + 0.22, y=y + 0.18, w=sw - 0.44, h=head_h,
+                 text=f"{i + 1}. {title}", size=15, bold=True,
                  color=DEEP if is_gold else WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.08)
-        text_box(s, x=x + 0.22, y=y + head_h + 0.26, w=sw - 0.44,
-                 h=h - head_h - 0.42,
-                 text=body, size=12.5, color=DEEP, line_spacing=1.22,
+                 line_spacing=1.10)
+        text_box(s, x=x + 0.24, y=y + head_h + 0.30, w=sw - 0.48,
+                 h=h - head_h - 0.48,
+                 text=body, size=14, color=DEEP, line_spacing=1.28,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         if i < n - 1:
-            right_arrow(s, x + sw + 0.04, y + h / 2 - 0.22, aw - 0.08, 0.44,
+            right_arrow(s, x + sw + 0.05, y + h / 2 - 0.24, aw - 0.10, 0.48,
                         fill=MID)
 
 
@@ -455,14 +458,18 @@ def build_s02(p):
     """Hook — кронштейн «какой вид ИИ»."""
     s = blank(p)
     slide_title(s, "Какой вид ИИ спроектировал этот кронштейн?", size=26)
-    # Left: bracket illustration in ocean box (~52%)
+    # Left: bionic/topology-optimized bracket in ocean box (~52%).
+    # P1-4: recognizable organic "grown" lattice silhouette (2 mount hubs +
+    # load eye + branching ribs + porous lightening holes) — drives the
+    # cognitive dissonance "this looks AI-grown / no, it is not AI".
     bx, by, bw, bh = 0.55, 1.55, 6.6, 4.85
     ocean_box(s, bx, by, bw, bh)
-    add_image(s, ASSETS / "illustrations/bracket.png",
-              bx + 0.25, by + 0.25, bw - 0.5, bh - 0.95)
-    text_box(s, x=bx, y=by + bh - 0.50, w=bw, h=0.40,
-             text="«Органическая» ажурная форма — выглядит как «выращенная» нейросетью",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    add_image(s, ASSETS / "illustrations/bionic-bracket.png",
+              bx + 0.30, by + 0.22, bw - 0.6, bh - 0.92)
+    text_box(s, x=bx, y=by + bh - 0.52, w=bw, h=0.42,
+             text="«Органическая» ажурная форма — выглядит как «выращенная» "
+                  "нейросетью",
+             size=12, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     # Right: reveal block
     rx, ry, rw, rh = 7.35, 1.55, 5.45, 4.85
     ocean_box(s, rx, ry, rw, rh)
@@ -521,7 +528,7 @@ def build_s03(p):
     sx = 0.55
     ch = 1.55
     parts = [
-        ("0", "Hook\n+ карта"),
+        ("0", "Старт\n+ карта"),
         ("1", "Фундамент\n+ таксономия"),
         ("2", "Генеративный\nдизайн ≠ genAI"),
         ("3", "Суррогат\n/ PINN"),
@@ -582,10 +589,10 @@ def build_s05(p):
             "Ошибка не самодиагностируется",
         ],
     }
-    two_col_compare(s, box_y=1.55, box_h=4.05, left=left, right=right)
-    gold_callout(s, 0.55, 5.85, 12.25, 0.70,
+    two_col_compare(s, box_y=1.55, box_h=4.55, left=left, right=right)
+    gold_callout(s, 0.55, 6.25, 12.25, 0.78,
                  "Любой инструмент «с ИИ» сначала располагают на этой оси.",
-                 size=18, align=PP_ALIGN.CENTER)
+                 size=19, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s05"))
 
 
@@ -593,20 +600,31 @@ def build_s06(p):
     """Таксономия — одна ось, 6 ярлыков (schema_axis)."""
     s = blank(p)
     slide_title(s, "Шесть классов ИИ ложатся на одну ось: чем правее — тем "
-                   "меньше встроенных гарантий.", size=24, h=1.15)
-    box_x, box_y, box_w, box_h = 0.55, 1.55, 12.25, 4.55
+                   "меньше встроенных гарантий.", size=24, h=1.05)
+    # Visible "reference skeleton — don't memorize now" signal (P1-6).
+    sig_x, sig_y, sig_w, sig_h = 0.55, 1.42, 12.25, 0.56
+    filled_rect(s, sig_x, sig_y, sig_w, sig_h, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.4, radius=True, radius_adj=0.18)
+    add_image(s, icon("bookmark", "gold"), sig_x + 0.22, sig_y + 0.10,
+              0.36, 0.36)
+    text_box(s, x=sig_x + 0.72, y=sig_y, w=sig_w - 0.95, h=sig_h,
+             text="Это справочный скелет — шесть классов не нужно заучивать "
+                  "сразу: они наполнятся смыслом по ходу лекции.",
+             size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.10)
+    box_x, box_y, box_w, box_h = 0.55, 2.14, 12.25, 4.30
     ocean_box(s, box_x, box_y, box_w, box_h)
     # Axis line with arrow
-    axis_y = box_y + 0.95
+    axis_y = box_y + 0.90
     filled_rect(s, box_x + 0.55, axis_y, box_w - 2.0, 0.06, MID)
     right_arrow(s, box_x + box_w - 1.45, axis_y - 0.13, 0.55, 0.32, fill=GOLD)
-    text_box(s, x=box_x + 0.45, y=box_y + 0.30, w=4.0, h=0.40,
-             text="детерминированное", size=13, bold=True, color=MID)
-    text_box(s, x=box_x + box_w - 5.0, y=box_y + 0.30, w=4.5, h=0.40,
-             text="вероятностное →  меньше гарантий", size=13, bold=True,
+    text_box(s, x=box_x + 0.45, y=box_y + 0.28, w=4.0, h=0.40,
+             text="детерминированное", size=14, bold=True, color=MID)
+    text_box(s, x=box_x + box_w - 5.0, y=box_y + 0.28, w=4.5, h=0.40,
+             text="вероятностное →  меньше гарантий", size=14, bold=True,
              color=GOLD, align=PP_ALIGN.RIGHT)
     classes = [
-        ("sliders", "Оптим. ML /\nтоп-оптимизация",
+        ("sliders", "Оптим. ML /\nтопологическая\nоптимизация",
          "двигает плотность материала,\nмин. массу при σ ≤ [σ]", MID),
         ("git-branch", "Эволюционные\n/ GA",
          "мутация и отбор по\nзаданной целевой функции", MID),
@@ -622,84 +640,84 @@ def build_s06(p):
     n = 6
     cw = (box_w - 0.9) / n
     cx0 = box_x + 0.45
-    card_y = axis_y + 0.45
+    card_y = axis_y + 0.42
     for i, (ic, name, defn, col) in enumerate(classes):
         x = cx0 + i * cw
         # marker dot on axis
-        filled_rect(s, x + cw / 2 - 0.07, axis_y - 0.05, 0.16, 0.16, col,
+        filled_rect(s, x + cw / 2 - 0.08, axis_y - 0.06, 0.18, 0.18, col,
                     radius=True, radius_adj=0.5)
-        add_image(s, icon(ic, "blue"), x + cw / 2 - 0.24, card_y, 0.48, 0.48)
-        text_box(s, x=x + 0.04, y=card_y + 0.55, w=cw - 0.08, h=0.70,
-                 text=f"{i + 1}. {name}", size=12, bold=True, color=col,
-                 align=PP_ALIGN.CENTER, line_spacing=1.10)
-        text_box(s, x=x + 0.04, y=card_y + 1.30, w=cw - 0.08, h=0.95,
-                 text=defn, size=10.5, color=DEEP, align=PP_ALIGN.CENTER,
-                 line_spacing=1.15)
-    text_box(s, x=box_x + 0.45, y=box_y + box_h - 0.42, w=box_w - 0.9, h=0.35,
+        add_image(s, icon(ic, "blue"), x + cw / 2 - 0.28, card_y, 0.56, 0.56)
+        text_box(s, x=x + 0.03, y=card_y + 0.64, w=cw - 0.06, h=0.95,
+                 text=f"{i + 1}. {name}", size=13, bold=True, color=col,
+                 align=PP_ALIGN.CENTER, line_spacing=1.08)
+        text_box(s, x=x + 0.03, y=card_y + 1.62, w=cw - 0.06, h=1.05,
+                 text=defn, size=12, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=1.16)
+    text_box(s, x=box_x + 0.45, y=box_y + box_h - 0.46, w=box_w - 0.9, h=0.38,
              text="классы 1–2 — оптимизация заданной функции · 3 — "
                   "аппроксимация решателя · 4–6 — вероятностные модели",
-             size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+             size=12.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
     footer(s, "Полная атрибутивная матрица — в финале лекции, когда каждая "
               "ячейка наполнится смыслом.")
     speaker_notes(s, load_notes("s06"))
 
 
-def _matrix_da_net(s, *, box_y, box_h, rows, col_titles, gold_col=1):
-    """Generic ДА/НЕТ/альтернатива matrix. rows = list of
-    (icon, row_title, [c1, c2, c3], row_color)."""
+def _matrix_da_net(s, *, box_y, box_h, rows, col_titles, gold_col=1,
+                   body_size=12, label_size=13):
+    """Generic ДА/НЕТ/альтернатива matrix (canonical format-template grid).
+    rows = list of (icon, row_title, [c1, c2, c3], row_color)."""
     bx, bw = 0.55, 12.25
     ocean_box(s, bx, box_y, bw, box_h)
-    label_w = 2.55
+    label_w = 2.75
     col_w = (bw - label_w - 0.6) / 3
     # header row
-    hy = box_y + 0.18
+    hy = box_y + 0.22
     for c, ct in enumerate(col_titles):
         cx = bx + label_w + 0.30 + c * col_w
         fill = GOLD if c == gold_col else MID
-        filled_rect(s, cx, hy, col_w - 0.12, 0.46, fill, radius=True,
+        filled_rect(s, cx, hy, col_w - 0.12, 0.52, fill, radius=True,
                     radius_adj=0.16)
-        text_box(s, x=cx, y=hy, w=col_w - 0.12, h=0.46, text=ct,
-                 size=13, bold=True, color=DEEP if c == gold_col else WHITE,
+        text_box(s, x=cx + 0.05, y=hy, w=col_w - 0.22, h=0.52, text=ct,
+                 size=14, bold=True, color=DEEP if c == gold_col else WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    row_y = hy + 0.60
-    rh = (box_h - 0.78 - 0.20) / len(rows)
+    row_y = hy + 0.68
+    rh = (box_h - 0.90 - 0.24) / len(rows)
     for ri, (ic, rt, cells, rcol) in enumerate(rows):
         ry = row_y + ri * rh
         # row label cell
-        filled_rect(s, bx + 0.25, ry + 0.06, label_w, rh - 0.12,
+        filled_rect(s, bx + 0.25, ry + 0.07, label_w, rh - 0.14,
                     TEAL_TINT if rcol == TEAL else SURFACE,
                     stroke=rcol, stroke_pt=1.2, radius=True, radius_adj=0.10)
-        add_image(s, icon(ic, "blue"), bx + 0.40, ry + rh / 2 - 0.24,
-                  0.46, 0.46)
-        text_box(s, x=bx + 0.92, y=ry + 0.06, w=label_w - 0.70, h=rh - 0.12,
-                 text=rt, size=13, bold=True, color=rcol,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        add_image(s, icon(ic, "blue"), bx + 0.42, ry + rh / 2 - 0.26,
+                  0.50, 0.50)
+        text_box(s, x=bx + 1.00, y=ry + 0.07, w=label_w - 0.78, h=rh - 0.14,
+                 text=rt, size=label_size, bold=True, color=rcol,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
         for c, txt in enumerate(cells):
             cx = bx + label_w + 0.30 + c * col_w
             is_gold = (c == gold_col)
-            filled_rect(s, cx, ry + 0.06, col_w - 0.12, rh - 0.12,
+            filled_rect(s, cx, ry + 0.07, col_w - 0.12, rh - 0.14,
                         GOLD_TINT if is_gold else WHITE,
                         stroke=GOLD if is_gold else LIGHT,
                         stroke_pt=1.2 if is_gold else 1.0,
                         radius=True, radius_adj=0.10)
-            text_box(s, x=cx + 0.14, y=ry + 0.06, w=col_w - 0.40, h=rh - 0.12,
-                     text=txt, size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                     line_spacing=1.18)
+            text_box(s, x=cx + 0.16, y=ry + 0.07, w=col_w - 0.42,
+                     h=rh - 0.14, text=txt, size=body_size, color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.20)
     return bx, bw
 
 
 def build_s07(p):
-    """Пара 1 — матрица 2×3."""
+    """Пара 1 — матрица 2×3 (канонический формат-шаблон: грид ДА/НЕТ/альт).
+    Дифференцирована от s08 (s08 = вертикальные класс-карточки)."""
     s = blank(p)
     slide_title(s, "Оптимизационный ML и суррогат/PINN — узнать по границе.",
                 size=25)
-    subhead(s, "Формат «когда ДА — когда НЕТ — классическая альтернатива» = "
-               "операциональная форма центральной мысли курса.")
     _matrix_da_net(
-        s, box_y=1.75, box_h=4.55,
+        s, box_y=1.55, box_h=4.85,
         col_titles=["Когда ДА", "Когда НЕТ", "Классическая альтернатива"],
         rows=[
-            ("sliders", "Оптимизационный ML / топ-оптимизация",
+            ("sliders", "Оптимизационный ML / топологическая оптимизация",
              ["снижение массы при заданной прочности; детали под аддитив",
               "ограничения заданы неполно — оптимум под неверную постановку",
               "параметрическая оптимизация + расчёт по нормам"], MID),
@@ -707,37 +725,62 @@ def build_s07(p):
              ["быстрый прогон многих вариантов внутри обучающей области",
               "экстраполяция за обучение, разрывы полей, сертификация",
               "полный МКЭ / CFD с проверкой сходимости сетки"], LIGHT),
-        ], gold_col=1)
-    footer(s, "Это справочник — не нужно удерживать целиком; собирается по "
-              "ходу дальнейших частей.")
+        ], gold_col=1, body_size=14, label_size=15)
     speaker_notes(s, load_notes("s07"))
 
 
 def build_s08(p):
-    """Пара 2 — матрица 3×3 + 3 вопроса-якоря."""
+    """Пара 2 — ТРИ вертикальные класс-карточки (умышленно ИНОЙ layout, чем
+    s07-грид: разбивает монотонность s06→s07→s08). Каждая карточка:
+    цветной хедер с иконкой + 3 сегмента ✓ДА / ✗НЕТ / ↳альтернатива."""
     s = blank(p)
     slide_title(s, "Генеративный AI/LLM, Computer Vision и эволюционные/GA — "
                    "по одному примеру и границе.", size=23, h=1.05)
-    _matrix_da_net(
-        s, box_y=1.40, box_h=4.30,
-        col_titles=["Когда ДА", "Когда НЕТ", "Альтернатива"],
-        rows=[
-            ("message-square", "Генеративный AI / LLM-ассистент",
-             ["концепт-скетч, мудборд; черновик текста под проверку",
-              "деталь в расчёт/производство без переработки; истина по нормам",
-              "параметрика + детерм. топ-оптимизация + КЭ; нормативная база"],
-             TEAL),
-            ("scan-eye", "Computer Vision",
-             ["высокообъёмная рутинная сортировка как первый фильтр",
-              "единственный арбитр годности в безопасностно-критичном НК",
-              "нормированный НК с дефектоскопистом и методикой POD"], LIGHT),
-            ("git-branch", "Эволюционные / GA",
-             ["противоречивые требования (антенна NASA ST5)",
-              "нужна интерпретируемость и сертификационная объяснимость",
-              "аналитический / градиентный синтез по проверенной методике"],
-             MID),
-        ], gold_col=0)
-    gold_callout(s, 0.55, 5.85, 12.25, 0.62,
+    cards = [
+        ("message-square", "Генеративный AI / LLM-ассистент", TEAL,
+         "концепт-скетч, мудборд; черновик текста под проверку",
+         "деталь в расчёт/производство без переработки; истина по нормам",
+         "параметрика + детерм. топ-оптимизация + КЭ; норматив"),
+        ("scan-eye", "Computer Vision", LIGHT,
+         "высокообъёмная рутинная сортировка как первый фильтр",
+         "единственный арбитр годности в безопасностно-критичном НК",
+         "нормированный НК с дефектоскопистом и методикой POD "
+         "(вероятность обнаружения дефекта)"),
+        ("git-branch", "Эволюционные / GA", MID,
+         "противоречивые требования (антенна NASA ST5)",
+         "нужна сертификационная объяснимость и интерпретируемость",
+         "аналитический / градиентный синтез по методике"),
+    ]
+    cw = 4.05
+    gap = 0.15
+    cy, ch = 1.55, 4.85
+    seg_defs = [("✓  когда ДА", GOLD, GOLD_TINT),
+                ("✗  когда НЕТ", LIGHT, WHITE),
+                ("↳  альтернатива", MID, TEAL_TINT)]
+    for i, (ic, name, accent, da, net, alt) in enumerate(cards):
+        x = 0.55 + i * (cw + gap)
+        ocean_box(s, x, cy, cw, ch, stroke=accent, stroke_pt=1.8)
+        # colored header band — distinct visual signature vs s07 grid
+        filled_rect(s, x + 0.18, cy + 0.18, cw - 0.36, 0.98, accent,
+                    radius=True, radius_adj=0.14)
+        add_image(s, icon(ic, "white"), x + 0.34, cy + 0.38, 0.60, 0.60)
+        text_box(s, x=x + 1.04, y=cy + 0.20, w=cw - 1.22, h=0.94, text=name,
+                 size=15, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.10)
+        seg_y = cy + 1.32
+        seg_h = (ch - 1.32 - 0.20) / 3
+        for (lab, sc, sf), body in zip(seg_defs, (da, net, alt)):
+            filled_rect(s, x + 0.18, seg_y, cw - 0.36, seg_h - 0.12, sf,
+                        stroke=sc, stroke_pt=1.0, radius=True,
+                        radius_adj=0.07)
+            text_box(s, x=x + 0.34, y=seg_y + 0.09, w=cw - 0.62, h=0.30,
+                     text=lab, size=12.5, bold=True,
+                     color=DEEP if sc == GOLD else sc)
+            text_box(s, x=x + 0.34, y=seg_y + 0.40, w=cw - 0.62,
+                     h=seg_h - 0.54, text=body, size=12, color=DEEP,
+                     anchor=MSO_ANCHOR.TOP, line_spacing=1.16)
+            seg_y += seg_h
+    gold_callout(s, 0.55, 6.55, 12.25, 0.62,
                  "Якоря: детерм./вероятн.?  ·  что оптимизируется, кто задал "
                  "ограничения?  ·  кто отвечает?", size=14,
                  align=PP_ALIGN.CENTER)
@@ -747,8 +790,9 @@ def build_s08(p):
 def build_s09(p):
     build_section_divider(
         p, here_idx=2, title="Генеративный дизайн —\nэто не генеративный AI",
-        frame_phrase="детерминированный оптимизатор с математикой 1904–1989, "
-                     "а не порождающая модель",
+        frame_phrase="детерминированный оптимизатор на классической "
+                     "математике (Мичелл, Коши, SIMP), а не порождающая "
+                     "модель",
         notes_slide_id="s09")
 
 
@@ -776,10 +820,10 @@ def build_s10(p):
             "Сам вендор различает топ-оптимизацию и «генеративный AI»",
         ],
     }
-    two_col_compare(s, box_y=1.55, box_h=4.05, left=left, right=right)
-    gold_callout(s, 0.55, 5.85, 12.25, 0.70,
+    two_col_compare(s, box_y=1.55, box_h=4.55, left=left, right=right)
+    gold_callout(s, 0.55, 6.25, 12.25, 0.78,
                  "Урок: прежде чем доверять — спроси, какой это вид ИИ.",
-                 size=18, align=PP_ALIGN.CENTER)
+                 size=19, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s10"))
 
 
@@ -788,7 +832,20 @@ def build_s11(p):
     s = blank(p)
     slide_title(s, "Топологическая оптимизация — это градиентный спуск по "
                    "плотности материала.", size=24, h=1.15)
-    box_x, box_y, box_w, box_h = 0.55, 1.55, 12.25, 4.05
+    # Visible "lineage, not chronology" annotation (P2: 1904→1847→1988→1989
+    # is a logical родословная, not a date sequence — pre-empt misread).
+    ann_x, ann_y, ann_w, ann_h = 0.55, 1.42, 12.25, 0.54
+    filled_rect(s, ann_x, ann_y, ann_w, ann_h, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.2, radius=True, radius_adj=0.18)
+    add_image(s, icon("git-branch", "teal"), ann_x + 0.22, ann_y + 0.10,
+              0.34, 0.34)
+    text_box(s, x=ann_x + 0.70, y=ann_y, w=ann_w - 0.95, h=ann_h,
+             text="Это родословная идеи (логический порядок), а не хронология: "
+                  "сначала интуиция Мичелла, затем — что алгоритм у неё "
+                  "старый, Коши.",
+             size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.08)
+    box_x, box_y, box_w, box_h = 0.55, 2.10, 12.25, 4.32
     ocean_box(s, box_x, box_y, box_w, box_h)
     nodes = [
         ("Известно из\nсопромата", "недогруженный материал\nможно убрать "
@@ -807,34 +864,37 @@ def build_s11(p):
     # baseline through vertical centre of box (label above, sub below)
     base_y = box_y + 1.95
     filled_rect(s, box_x + 0.55, base_y, box_w - 1.1, 0.05, LIGHT)
+    text_box(s, x=box_x + 0.55, y=box_y + 0.12, w=box_w - 1.1, h=0.32,
+             text="логическая родословная  →", size=12, bold=True,
+             italic=True, color=LIGHT, align=PP_ALIGN.RIGHT)
     for i, (title, sub, col, is_pivot) in enumerate(nodes):
         cx = box_x + 0.55 + seg * i + seg / 2
         # connector arrow segment (behind dot)
         if i < n - 1:
             right_arrow(s, cx + 0.18, base_y - 0.085, seg - 0.36, 0.22,
                         fill=COVER_OUTLINE)
-        dr = 0.30 if is_pivot else 0.17
+        dr = 0.32 if is_pivot else 0.18
         filled_rect(s, cx - dr / 2, base_y + 0.025 - dr / 2, dr, dr, col,
                     radius=True, radius_adj=0.5)
         # title ABOVE node, close to it
-        text_box(s, x=cx - seg / 2 + 0.06, y=box_y + 0.45,
-                 w=seg - 0.12, h=1.10,
-                 text=title, size=15 if is_pivot else 13,
+        text_box(s, x=cx - seg / 2 + 0.06, y=box_y + 0.50,
+                 w=seg - 0.12, h=1.20,
+                 text=title, size=16 if is_pivot else 14,
                  bold=True, color=GOLD if is_pivot else DEEP,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.BOTTOM,
                  line_spacing=1.10)
         # sub BELOW node, close to it
-        text_box(s, x=cx - seg / 2 + 0.06, y=base_y + 0.30,
-                 w=seg - 0.12, h=1.05,
-                 text=sub, size=11.5, color=SLATE,
+        text_box(s, x=cx - seg / 2 + 0.06, y=base_y + 0.32,
+                 w=seg - 0.12, h=1.15,
+                 text=sub, size=13, color=SLATE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP,
-                 line_spacing=1.15)
-    gold_callout(s, box_x + 0.5, box_y + box_h - 0.85, box_w - 1.0, 0.62,
+                 line_spacing=1.16)
+    gold_callout(s, box_x + 0.5, box_y + box_h - 0.92, box_w - 1.0, 0.70,
                  "на каждом шаге явно решается уравнение равновесия — "
                  "сходимость к оптимуму, НЕ сэмпл из распределения",
-                 size=13, align=PP_ALIGN.CENTER)
+                 size=14, align=PP_ALIGN.CENTER)
     footer(s, "KKT / множители Лагранжа — формальное условие оптимума; "
-              "детали — в главе. Формул на слайде нет.")
+              "формул на слайде нет.")
     speaker_notes(s, load_notes("s11"))
 
 
@@ -854,29 +914,29 @@ def build_s12(p):
     cw = 6.0
     gap = 0.25
     cx0 = 0.55
-    cy, ch = 1.65, 3.95
+    cy, ch = 1.60, 4.55
     for i, (ic, title, nums, label) in enumerate(cards):
         x = cx0 + i * (cw + gap)
         ocean_box(s, x, cy, cw, ch)
-        add_image(s, icon(ic, "blue"), x + 0.35, cy + 0.32, 0.85, 0.85)
-        text_box(s, x=x + 1.35, y=cy + 0.45, w=cw - 1.55, h=0.65,
-                 text=title, size=20, bold=True, color=DEEP,
+        add_image(s, icon(ic, "blue"), x + 0.40, cy + 0.40, 0.95, 0.95)
+        text_box(s, x=x + 1.50, y=cy + 0.52, w=cw - 1.70, h=0.75,
+                 text=title, size=22, bold=True, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE)
-        ny = cy + 1.40
+        ny = cy + 1.75
         for num in nums:
-            filled_rect(s, x + 0.40, ny + 0.07, 0.12, 0.12, MID,
+            filled_rect(s, x + 0.45, ny + 0.10, 0.14, 0.14, MID,
                         radius=True, radius_adj=0.5)
-            text_box(s, x=x + 0.70, y=ny, w=cw - 1.0, h=0.40, text=num,
-                     size=17, bold=True, color=DEEP, line_spacing=1.10)
-            ny += 0.52
-        filled_rect(s, x + 0.40, cy + ch - 0.85, cw - 0.80, 0.60, MID,
+            text_box(s, x=x + 0.78, y=ny, w=cw - 1.1, h=0.50, text=num,
+                     size=19, bold=True, color=DEEP, line_spacing=1.10)
+            ny += 0.66
+        filled_rect(s, x + 0.45, cy + ch - 1.05, cw - 0.90, 0.78, MID,
                     radius=True, radius_adj=0.14)
-        text_box(s, x=x + 0.55, y=cy + ch - 0.85, w=cw - 1.10, h=0.60,
-                 text=label, size=12, bold=True, color=WHITE,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
-    gold_callout(s, 0.55, 5.85, 12.25, 0.62,
+        text_box(s, x=x + 0.62, y=cy + ch - 1.05, w=cw - 1.24, h=0.78,
+                 text=label, size=14, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.16)
+    gold_callout(s, 0.55, 6.32, 12.25, 0.72,
                  "Обе детали требуют аддитива — это ограничение, не "
-                 "случайность.", size=15, align=PP_ALIGN.CENTER)
+                 "случайность.", size=16, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s12"))
 
 
@@ -888,7 +948,8 @@ def build_s13(p):
     cards = [
         ("award", "Реальные достижения", MID, [
             "ОКБ Сухого — силовой кронштейн Су-57 ~на четверть легче",
-            "цифровая модель на суперкомпьютере · LPBF",
+            "цифровая модель на суперкомпьютере · LPBF "
+            "(лазерное послойное сплавление)",
             "прорабатывался прототип для МС-21-300",
         ]),
         ("alert-triangle", "Подмена понятий", GOLD, [
@@ -905,7 +966,7 @@ def build_s13(p):
     ]
     cw = 4.05
     gap = 0.15
-    cy, ch = 1.50, 5.10
+    cy, ch = 1.45, 5.30
     for i, (ic, title, tc, lines) in enumerate(cards):
         x = 0.55 + i * (cw + gap)
         is_gold = (tc == GOLD)
@@ -914,29 +975,30 @@ def build_s13(p):
                   stroke=GOLD if is_gold else LIGHT,
                   stroke_pt=2.0 if is_gold else 1.5)
         add_image(s, icon(ic, "gold" if is_gold else "blue"),
-                  x + 0.30, cy + 0.32, 0.80, 0.80)
-        text_box(s, x=x + 0.30, y=cy + 1.25, w=cw - 0.6, h=0.75,
-                 text=title, size=17, bold=True,
+                  x + 0.32, cy + 0.34, 0.88, 0.88)
+        text_box(s, x=x + 0.32, y=cy + 1.38, w=cw - 0.64, h=0.85,
+                 text=title, size=18, bold=True,
                  color=GOLD if is_gold else tc, line_spacing=1.12)
-        ly = cy + 2.10
+        ly = cy + 2.35
         for ln in lines:
-            filled_rect(s, x + 0.30, ly + 0.08, 0.10, 0.10,
+            filled_rect(s, x + 0.32, ly + 0.09, 0.11, 0.11,
                         GOLD if is_gold else MID, radius=True, radius_adj=0.5)
-            text_box(s, x=x + 0.50, y=ly, w=cw - 0.75, h=0.82, text=ln,
-                     size=12, color=DEEP, line_spacing=1.22)
-            ly += 0.95
-    footer(s, "Без точного числа доли объёма APM FEM (vendor-claim) — детали "
-              "по заявлению вендора в материалах главы.")
+            text_box(s, x=x + 0.54, y=ly, w=cw - 0.80, h=0.92, text=ln,
+                     size=13.5, color=DEEP, line_spacing=1.24)
+            ly += 1.02
+    footer(s, "Точная доля объёма, исключаемого APM FEM, — по заявлению "
+              "вендора.")
     speaker_notes(s, load_notes("s13"))
 
 
 def build_s14(p):
     """Провал раздела — pipeline garbage-in → optimal garbage."""
     s = blank(p)
-    slide_title(s, "Главный риск топ-оптимизации — не «галлюцинация», а "
-                   "garbage-in → optimal garbage.", size=24, h=1.15)
+    slide_title(s, "Главный риск топологической оптимизации — не "
+                   "«галлюцинация», а garbage-in → optimal garbage.",
+                   size=24, h=1.15)
     pipeline_row(
-        s, y=1.65, h=2.55,
+        s, y=1.60, h=3.05,
         stages=[
             ("Неполная постановка",
              "забыт нагрузочный случай;\nне заданы технологические\n"
@@ -947,20 +1009,19 @@ def build_s14(p):
              "математически верна,\nизготовить нельзя"),
         ], gold_idx=2)
     # callout + alternative
-    cx, cy, cwd, chd = 0.55, 4.45, 6.05, 1.30
+    cx, cy, cwd, chd = 0.55, 4.90, 6.05, 2.10
     ocean_box(s, cx, cy, cwd, chd)
-    add_image(s, icon("ban", "blue"), cx + 0.25, cy + 0.30, 0.70, 0.70)
-    text_box(s, x=cx + 1.10, y=cy + 0.20, w=cwd - 1.30, h=chd - 0.35,
+    add_image(s, icon("ban", "blue"), cx + 0.30, cy + 0.34, 0.84, 0.84)
+    text_box(s, x=cx + 1.28, y=cy + 0.26, w=cwd - 1.54, h=chd - 0.52,
              text="Неизготовимость: замкнутые полости и криволинейные рёбра "
                   "без доступа фрезы — только аддитив; трудно для обмера и "
                   "нормоконтроля по ЕСКД.",
-             size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.22)
-    gold_callout(s, 6.75, 4.45, 6.05, 1.30,
+             size=14, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.24)
+    gold_callout(s, 6.75, 4.90, 6.05, 2.10,
                  "Альтернатива для серийной фрезеровки/литья — классическая "
-                 "параметрика + ручная топ-оптимизация под технологичность.",
-                 size=13)
-    footer(s, "Метод детерминирован — галлюцинации тут нет; риск = неполно "
-              "заданные ограничения.")
+                 "параметрика + ручная топологическая оптимизация под "
+                 "технологичность.",
+                 size=15)
     speaker_notes(s, load_notes("s14"))
 
 
@@ -997,10 +1058,10 @@ def build_s16(p):
             "обучение оффлайн, заранее, на дорогом архиве",
         ],
     }
-    two_col_compare(s, box_y=1.55, box_h=4.05, left=left, right=right)
-    gold_callout(s, 0.55, 5.85, 12.25, 0.70,
+    two_col_compare(s, box_y=1.55, box_h=4.55, left=left, right=right)
+    gold_callout(s, 0.55, 6.25, 12.25, 0.78,
                  "Под капотом — система уравнений равновесия; суррогат её не "
-                 "решает.", size=17, align=PP_ALIGN.CENTER)
+                 "решает.", size=18, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s16"))
 
 
@@ -1024,22 +1085,23 @@ def build_s17(p):
     ]
     cw = 4.05
     gap = 0.15
-    cy, ch = 1.85, 3.05
+    cy, ch = 1.80, 3.50
     for i, (name, tag, body) in enumerate(cards):
         x = 0.55 + i * (cw + gap)
         ocean_box(s, x, cy, cw, ch)
-        add_image(s, icon("zap", "blue"), x + 0.30, cy + 0.30, 0.66, 0.66)
-        text_box(s, x=x + 1.10, y=cy + 0.32, w=cw - 1.30, h=0.60,
-                 text=name, size=16, bold=True, color=DEEP,
+        add_image(s, icon("zap", "blue"), x + 0.32, cy + 0.34, 0.74, 0.74)
+        text_box(s, x=x + 1.20, y=cy + 0.36, w=cw - 1.40, h=0.68,
+                 text=name, size=18, bold=True, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
-        text_box(s, x=x + 0.30, y=cy + 1.10, w=cw - 0.6, h=0.35, text=tag,
-                 size=12, italic=True, color=TEAL)
-        text_box(s, x=x + 0.30, y=cy + 1.50, w=cw - 0.6, h=1.40, text=body,
-                 size=13, color=DEEP, line_spacing=1.28)
-    gold_callout(s, 0.55, 5.10, 12.25, 1.35,
-                 "«до ~10²–10³×» — на выгодном для вендора частном случае. "
-                 "Стоимость генерации обучающего архива (тысячи дорогих "
-                 "прогонов решателя) из ROI исключают.", size=15)
+        text_box(s, x=x + 0.32, y=cy + 1.24, w=cw - 0.64, h=0.38, text=tag,
+                 size=13, italic=True, color=TEAL)
+        text_box(s, x=x + 0.32, y=cy + 1.70, w=cw - 0.64, h=1.65, text=body,
+                 size=14.5, color=DEEP, line_spacing=1.30)
+    gold_callout(s, 0.55, 5.55, 12.25, 1.48,
+                 "«до ~10²–10³×» (≈ ×100–×1000) — на выгодном для вендора "
+                 "частном случае. Стоимость генерации обучающего архива "
+                 "(тысячи дорогих прогонов решателя) из ROI исключают.",
+                 size=16)
     speaker_notes(s, load_notes("s17"))
 
 
@@ -1048,78 +1110,108 @@ def build_s18(p):
     s = blank(p)
     slide_title(s, "PINN «размазывает» пик у концентратора и выдаёт заниженное "
                    "напряжение.", size=24, h=1.15)
-    # Left: stress-curve sketch
+    # Left: stress-curve sketch — rebuilt for projector legibility (P1-7).
+    # Two SOLID filled freeform curves (no thin staircase polylines), labels
+    # placed in clear space away from the curves, single bold gold gap
+    # annotation between the peak tops.
     gx, gy, gw, gh = 0.55, 1.55, 6.85, 4.85
     ocean_box(s, gx, gy, gw, gh)
-    # axes
-    ox, oy = gx + 0.75, gy + gh - 0.85
-    filled_rect(s, ox, gy + 0.55, 0.04, oy - (gy + 0.55), SLATE)  # y-axis
-    filled_rect(s, ox, oy, gw - 1.35, 0.04, SLATE)  # x-axis
-    text_box(s, x=gx + 0.20, y=gy + 0.30, w=gw - 0.4, h=0.35,
-             text="напряжение вдоль сечения у отверстия / выточки",
-             size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    # true sharp peak (freeform-ish via thin rects approximating a spike)
     import math
-    pts_true = []
-    pts_pinn = []
-    span_w = gw - 1.55
-    base = oy
-    for k in range(61):
-        t = k / 60.0
-        xx = ox + 0.10 + t * span_w
-        # sharp gaussian peak near center
-        peak = math.exp(-((t - 0.5) ** 2) / 0.0035)
-        yy_true = base - (0.55 + 2.55 * peak)
-        smooth = math.exp(-((t - 0.5) ** 2) / 0.020)
-        yy_pinn = base - (0.55 + 1.45 * smooth)
-        pts_true.append((xx, yy_true))
-        pts_pinn.append((xx, yy_pinn))
+    # plot frame
+    ox = gx + 0.55              # y-axis x
+    oy = gy + gh - 1.05         # x-axis y (baseline)
+    plot_top = gy + 1.05
+    span_w = gw - 1.20
+    filled_rect(s, ox, plot_top, 0.035, oy - plot_top, SLATE)  # y-axis
+    filled_rect(s, ox, oy, span_w + 0.20, 0.035, SLATE)        # x-axis
+    text_box(s, x=gx + 0.30, y=gy + 0.22, w=gw - 0.6, h=0.34,
+             text="напряжение вдоль сечения у отверстия / выточки",
+             size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
 
-    def polyline(pts, color, weight):
-        for a, b in zip(pts, pts[1:]):
-            ln = s.shapes.add_connector(2, Inches(a[0]), Inches(a[1]),
-                                        Inches(b[0]), Inches(b[1]))
-            ln.line.color.rgb = color
-            ln.line.width = Pt(weight)
-            disable_shadow(ln)
-    polyline(pts_true, MID, 2.5)
-    polyline(pts_pinn, TEAL, 2.5)
-    # gap marker (gold) between peaks
-    top_t = ox + 0.10 + 0.5 * span_w
-    filled_rect(s, top_t - 0.02, base - 3.10, 0.04, 1.10, GOLD)
-    add_image(s, icon("trending-down", "gold"), top_t + 0.10, base - 2.55,
-              0.40, 0.40)
-    text_box(s, x=gx + 0.30, y=gy + 0.85, w=3.0, h=0.55,
-             text="истинное — концентратор\n(здесь деталь разрушается)",
-             size=10, bold=True, color=MID, line_spacing=1.10)
-    text_box(s, x=gx + gw - 3.2, y=gy + 2.05, w=2.9, h=0.70,
-             text="PINN — размазанный,\nзаниженный пик", size=10, bold=True,
+    base_lvl = 0.55             # nominal far-field stress height (in)
+    peak_h = 2.45               # true sharp peak height
+    pinn_h = 1.30               # PINN smoothed (lower) peak height
+
+    def curve_pts(amp, sigma):
+        pts = []
+        for k in range(81):
+            t = k / 80.0
+            xx = ox + 0.12 + t * span_w
+            yy = oy - (base_lvl + amp * math.exp(-((t - 0.5) ** 2) / sigma))
+            pts.append((xx, yy))
+        return pts
+
+    def filled_curve(pts, color, line_color):
+        fb = s.shapes.build_freeform(Inches(pts[0][0]), Inches(oy))
+        fb.add_line_segments(
+            [(Inches(x), Inches(y)) for x, y in pts] +
+            [(Inches(pts[-1][0]), Inches(oy))], close=True)
+        shp = fb.convert_to_shape()
+        shp.fill.solid()
+        shp.fill.fore_color.rgb = color
+        shp.line.color.rgb = line_color
+        shp.line.width = Pt(2.0)
+        disable_shadow(shp)
+        return shp
+
+    # PINN (smoothed) drawn first, behind; teal tint area
+    filled_curve(curve_pts(pinn_h, 0.020), TEAL_TINT, TEAL)
+    # True sharp peak in front; light-blue area with deep outline
+    filled_curve(curve_pts(peak_h, 0.0042), RGBColor(0xDD, 0xEC, 0xF2), MID)
+
+    cx_peak = ox + 0.12 + 0.5 * span_w
+    true_top = oy - (base_lvl + peak_h)
+    pinn_top = oy - (base_lvl + pinn_h)
+    # gold double-headed gap arrow between the two peak tops, placed in the
+    # clear band well right of the spike (iter2: more clearance, no overlap).
+    gap_x = cx_peak + 1.55
+    up = s.shapes.add_shape(MSO_SHAPE.UP_DOWN_ARROW,
+                            Inches(gap_x - 0.14), Inches(true_top + 0.04),
+                            Inches(0.28), Inches(pinn_top - true_top - 0.08))
+    up.fill.solid(); up.fill.fore_color.rgb = GOLD
+    up.line.fill.background(); disable_shadow(up)
+    text_box(s, x=gap_x + 0.26, y=(true_top + pinn_top) / 2 - 0.36,
+             w=1.85, h=0.82,
+             text="занижение\nнапряжения", size=13, bold=True, color=GOLD,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+    # small marker dot just below the spike apex (does not sit on the tip)
+    filled_rect(s, cx_peak - 0.06, true_top + 0.16, 0.12, 0.12, MID,
+                radius=True, radius_adj=0.5)
+    # label: true peak (upper-left clear zone) + thin leader to the spike
+    text_box(s, x=gx + 0.42, y=gy + 0.62, w=2.45, h=0.78,
+             text="истинный пик —\nконцентратор", size=14, bold=True,
+             color=MID, line_spacing=1.10)
+    # label: PINN curve — sits over its own broad teal shoulder (right side,
+    # mid-height) so the association reads without a leader line
+    text_box(s, x=gx + gw - 2.75, y=oy - 1.55, w=2.45, h=0.78,
+             text="PINN — размазанный,\nзаниженный пик", size=14, bold=True,
              color=TEAL, line_spacing=1.10, align=PP_ALIGN.RIGHT)
-    text_box(s, x=gx + 0.55, y=oy + 0.10, w=gw - 1.0, h=0.60,
-             text="заниженное напряжение в опасном сечении = недооценённый "
-                  "риск разрушения", size=11, bold=True, color=GOLD,
-             align=PP_ALIGN.CENTER, line_spacing=1.15)
+    # takeaway strip under x-axis
+    text_box(s, x=gx + 0.40, y=oy + 0.16, w=gw - 0.80, h=0.74,
+             text="заниженное напряжение в опасном сечении = "
+                  "недооценённый риск разрушения", size=13, bold=True,
+             color=GOLD, align=PP_ALIGN.CENTER, line_spacing=1.16)
     # Right: other limitations + niche
     rx, ry, rw, rh = 7.60, 1.55, 5.20, 4.85
     ocean_box(s, rx, ry, rw, rh)
-    text_box(s, x=rx + 0.30, y=ry + 0.25, w=rw - 0.6, h=0.45,
-             text="Прочие ограничения", size=15, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.32, y=ry + 0.28, w=rw - 0.64, h=0.48,
+             text="Прочие ограничения", size=17, bold=True, color=DEEP)
     lims = [
         "не превосходит зрелые решатели на прямых задачах, часто медленнее",
         "не обобщается за пределы обучения",
         "при сбое непрозрачен",
         "усиливает высокочастотный шум данных",
     ]
-    ly = ry + 0.85
+    ly = ry + 1.00
     for ln in lims:
-        filled_rect(s, rx + 0.30, ly + 0.07, 0.10, 0.10, LIGHT,
+        filled_rect(s, rx + 0.32, ly + 0.08, 0.12, 0.12, LIGHT,
                     radius=True, radius_adj=0.5)
-        text_box(s, x=rx + 0.52, y=ly, w=rw - 0.80, h=0.62, text=ln,
-                 size=12, color=DEEP, line_spacing=1.20)
-        ly += 0.70
-    gold_callout(s, rx + 0.30, ry + rh - 1.15, rw - 0.60, 0.95,
+        text_box(s, x=rx + 0.56, y=ly, w=rw - 0.86, h=0.72, text=ln,
+                 size=14, color=DEEP, line_spacing=1.22)
+        ly += 0.82
+    gold_callout(s, rx + 0.32, ry + rh - 1.30, rw - 0.64, 1.10,
                  "Где PINN реально полезен: разреженные данные, обратные "
-                 "задачи, сложная геометрия — НЕ замена FEM/CFD.", size=12)
+                 "задачи, сложная геометрия — НЕ замена FEM/CFD.", size=14)
     speaker_notes(s, load_notes("s18"))
 
 
@@ -1187,10 +1279,10 @@ def build_s21(p):
             "даты",
         ],
     }
-    two_col_compare(s, box_y=1.55, box_h=4.05, left=left, right=right)
-    gold_callout(s, 0.55, 5.85, 12.25, 0.70,
+    two_col_compare(s, box_y=1.55, box_h=4.55, left=left, right=right)
+    gold_callout(s, 0.55, 6.25, 12.25, 0.78,
                  "Сам вендор помечает Bernini «strictly experimental, not for "
-                 "public use» — честный сигнал зрелости.", size=14,
+                 "public use» — честный сигнал зрелости.", size=15,
                  align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s21"))
 
@@ -1201,7 +1293,7 @@ def build_s22(p):
     slide_title(s, "LLM пишет черновик технического текста — инженер "
                    "верифицирует факты.", size=25)
     pipeline_row(
-        s, y=1.70, h=2.70,
+        s, y=1.65, h=3.30,
         stages=[
             ("Промпт с точной\nтерминологией формы",
              "требуемая структура\nи терминология документа"),
@@ -1211,12 +1303,11 @@ def build_s22(p):
             ("ОБЯЗАТЕЛЬНАЯ\nверификация инженером",
              "сверка по\nпервоисточнику"),
         ], gold_idx=3)
-    gold_callout(s, 0.55, 4.65, 12.25, 1.05,
+    gold_callout(s, 0.55, 5.30, 12.25, 1.72,
                  "LLM даёт правильную ФОРМУ и потенциально неверное "
                  "СОДЕРЖАНИЕ — полезно для черновика, опасно для финала. "
-                 "Верификация — всегда, без исключений.", size=15)
-    footer(s, "Граница проходит не «использовать / не использовать», а между "
-              "формой (модель) и содержанием (инженер).")
+                 "Граница проходит между формой (модель) и содержанием "
+                 "(инженер); верификация — всегда, без исключений.", size=16)
     speaker_notes(s, load_notes("s22"))
 
 
@@ -1226,11 +1317,11 @@ def build_s23(p):
     slide_title(s, "Mars Climate Orbiter: $327 млн — непроверенное "
                    "рассогласование единиц на стыке систем.", size=23, h=1.15)
     # Dominant block ~74%
-    bx, by, bw, bh = 0.55, 1.50, 12.25, 3.80
+    bx, by, bw, bh = 0.55, 1.45, 12.25, 4.30
     ocean_box(s, bx, by, bw, bh)
-    add_image(s, icon("satellite", "blue"), bx + 0.35, by + 0.32, 1.05, 1.05)
-    text_box(s, x=bx + 1.65, y=by + 0.40, w=bw - 1.9, h=0.65,
-             text="Mars Climate Orbiter (1999)", size=22, bold=True,
+    add_image(s, icon("satellite", "blue"), bx + 0.38, by + 0.36, 1.15, 1.15)
+    text_box(s, x=bx + 1.80, y=by + 0.44, w=bw - 2.1, h=0.72,
+             text="Mars Climate Orbiter (1999)", size=24, bold=True,
              color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     facts = [
         ("потеря связи при выходе на орбиту Марса · стоимость миссии ",
@@ -1240,21 +1331,21 @@ def build_s23(p):
         ("конвертацию никто не выполнил: каждая сторона предположила, что её "
          "сделала другая", ""),
     ]
-    fy = by + 1.30
+    fy = by + 1.55
     for pre, hi in facts:
-        filled_rect(s, bx + 0.45, fy + 0.07, 0.12, 0.12, MID, radius=True,
+        filled_rect(s, bx + 0.48, fy + 0.09, 0.14, 0.14, MID, radius=True,
                     radius_adj=0.5)
-        runs = [{"text": pre, "size": 13.5, "color": DEEP}]
+        runs = [{"text": pre, "size": 15.5, "color": DEEP}]
         if hi:
-            runs.append({"text": hi, "size": 16, "color": GOLD, "bold": True})
-        text_runs(s, bx + 0.75, fy, bw - 1.2, 0.45, runs, line_spacing=1.15)
-        fy += 0.50
-    gold_callout(s, bx + 0.45, by + bh - 1.00, bw - 0.90, 0.82,
+            runs.append({"text": hi, "size": 18, "color": GOLD, "bold": True})
+        text_runs(s, bx + 0.82, fy, bw - 1.3, 0.52, runs, line_spacing=1.18)
+        fy += 0.62
+    gold_callout(s, bx + 0.48, by + bh - 1.10, bw - 0.96, 0.92,
                  "LLM-ассистент = такой стык систем: берёт величины из одного "
                  "контекста, передаёт в другой и УВЕРЕННО путает единицы "
-                 "(psi и МПа, мм и дюймы).", size=13)
+                 "(psi и МПа, мм и дюймы).", size=15)
     # narrow strip — Gimli / Hyatt one line each
-    sx, sy, sw, sh = 0.55, 5.45, 12.25, 1.05
+    sx, sy, sw, sh = 0.55, 5.92, 12.25, 1.10
     ocean_box(s, sx, sy, sw, sh)
     for j, (ic, txt) in enumerate([
         ("plane", "Gimli Glider (1983) — ручной пересчёт топлива с неверным "
@@ -1262,12 +1353,11 @@ def build_s23(p):
         ("building-2", "Hyatt Regency (1981) — изменение узла подвески «на "
          "словах» без независимого пересчёта"),
     ]):
-        yy = sy + 0.14 + j * 0.42
-        add_image(s, icon(ic, "blue"), sx + 0.30, yy + 0.02, 0.30, 0.30)
-        text_box(s, x=sx + 0.74, y=yy, w=sw - 1.05, h=0.36, text=txt,
-                 size=12, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+        yy = sy + 0.16 + j * 0.42
+        add_image(s, icon(ic, "blue"), sx + 0.32, yy + 0.02, 0.32, 0.32)
+        text_box(s, x=sx + 0.78, y=yy, w=sw - 1.10, h=0.38, text=txt,
+                 size=13, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.05)
-    footer(s, "Доказательная база (бенчмарки) — на следующем слайде.")
     speaker_notes(s, load_notes("s23"))
 
 
@@ -1277,14 +1367,14 @@ def build_s24(p):
     slide_title(s, "LLM ошибается примерно у трети–половины инженерных "
                    "расчётов.", size=25)
     subhead(s, "Воспроизводимая статистика — аргумент другого типа, чем "
-               "исторические катастрофы (они на предыдущем слайде).")
-    bx, by, bw, bh = 0.55, 1.85, 12.25, 2.30
+               "единичные исторические катастрофы.")
+    bx, by, bw, bh = 0.55, 1.80, 12.25, 2.85
     ocean_box(s, bx, by, bw, bh)
-    text_box(s, x=bx + 0.30, y=by + 0.22, w=bw - 0.6, h=0.40,
+    text_box(s, x=bx + 0.35, y=by + 0.26, w=bw - 0.7, h=0.45,
              text="ORCA Benchmark — 5 SOTA-моделей на реальных расчётах",
-             size=14, bold=True, color=DEEP)
+             size=16, bold=True, color=DEEP)
     # range bar
-    track_x, track_y, track_w, track_h = bx + 0.45, by + 0.95, bw - 4.0, 0.62
+    track_x, track_y, track_w, track_h = bx + 0.50, by + 1.15, bw - 4.2, 0.80
     filled_rect(s, track_x, track_y, track_w, track_h, SURFACE,
                 stroke=LIGHT, stroke_pt=1.0, radius=True, radius_adj=0.10)
     # 45..63 of 0..100 scale
@@ -1292,19 +1382,19 @@ def build_s24(p):
     seg_w = track_w * (0.63 - 0.45)
     filled_rect(s, seg_x, track_y, seg_w, track_h, MID, radius=True,
                 radius_adj=0.12)
-    filled_rect(s, seg_x + seg_w - 0.06, track_y - 0.05, 0.10, track_h + 0.10,
+    filled_rect(s, seg_x + seg_w - 0.07, track_y - 0.06, 0.12, track_h + 0.12,
                 GOLD)
-    text_box(s, x=track_x, y=track_y + track_h + 0.05, w=track_w, h=0.30,
-             text="точность ~45–63%  (диапазон, не точное число)", size=12,
+    text_box(s, x=track_x, y=track_y + track_h + 0.08, w=track_w, h=0.34,
+             text="точность ~45–63%  (диапазон, не точное число)", size=13,
              italic=True, color=SLATE)
-    text_box(s, x=track_x + track_w + 0.20, y=track_y - 0.05,
-             w=bw - track_w - 1.0, h=0.75,
-             text="лучшая ~63%", size=18, bold=True, color=GOLD,
+    text_box(s, x=track_x + track_w + 0.25, y=track_y - 0.05,
+             w=bw - track_w - 1.1, h=0.90,
+             text="лучшая ~63%", size=20, bold=True, color=GOLD,
              anchor=MSO_ANCHOR.MIDDLE)
     # two compact cards
     cw = 6.0
     gap = 0.25
-    cy, ch = 4.30, 1.05
+    cy, ch = 4.85, 1.35
     for i, (title, body) in enumerate([
         ("EngiBench",
          "падение точности при простом перефразировании = паттерн-матчинг, "
@@ -1315,15 +1405,15 @@ def build_s24(p):
     ]):
         x = 0.55 + i * (cw + gap)
         ocean_box(s, x, cy, cw, ch)
-        text_box(s, x=x + 0.30, y=cy + 0.12, w=cw - 0.6, h=0.35, text=title,
-                 size=14, bold=True, color=DEEP)
-        text_box(s, x=x + 0.30, y=cy + 0.46, w=cw - 0.6, h=0.55, text=body,
-                 size=11.5, color=SLATE, line_spacing=1.18)
-    gold_callout(s, 0.55, 5.55, 12.25, 0.95,
+        text_box(s, x=x + 0.32, y=cy + 0.16, w=cw - 0.64, h=0.40, text=title,
+                 size=16, bold=True, color=DEEP)
+        text_box(s, x=x + 0.32, y=cy + 0.58, w=cw - 0.64, h=0.70, text=body,
+                 size=13, color=SLATE, line_spacing=1.20)
+    gold_callout(s, 0.55, 6.32, 12.25, 0.72,
                  "LLM — не источник истины по маркам/ГОСТ/допускам · "
                  "независимая верификация на каждом интерфейсе с ИИ · правка "
                  "силовой схемы = формальный change-request, не «ОК» в чате.",
-                 size=13)
+                 size=14)
     speaker_notes(s, load_notes("s24"))
 
 
@@ -1340,15 +1430,15 @@ def build_s26(p):
     icon-anchor)."""
     s = blank(p)
     slide_title(s, "Чем выше цена ошибки — тем меньше места вероятностному ИИ.",
-                size=24, h=0.95)
-    bx, by, bw, bh = 0.55, 1.35, 12.25, 5.05
+                size=24, h=0.85)
+    bx, by, bw, bh = 0.55, 1.28, 12.25, 5.18
     ocean_box(s, bx, by, bw, bh)
-    # column headers
-    ic_w = 0.55
-    crit_w = 3.05
-    colA_w = 4.05
-    colB_w = bw - 0.60 - ic_w - crit_w - colA_w
-    hx0 = bx + 0.30
+    # column headers — wider critic column, single-line cells, ≥14pt
+    ic_w = 0.62
+    crit_w = 3.15
+    colA_w = 3.95
+    colB_w = bw - 0.56 - ic_w - crit_w - colA_w
+    hx0 = bx + 0.28
     hy = by + 0.16
     heads = [
         (hx0, ic_w + crit_w, "Критерий"),
@@ -1356,59 +1446,61 @@ def build_s26(p):
         (hx0 + ic_w + crit_w + colA_w, colB_w, "Более правильный инструмент"),
     ]
     for hx, hw, ht in heads:
-        filled_rect(s, hx, hy, hw - 0.10, 0.42, MID, radius=True,
+        filled_rect(s, hx, hy, hw - 0.10, 0.48, MID, radius=True,
                     radius_adj=0.14)
-        text_box(s, x=hx, y=hy, w=hw - 0.10, h=0.42, text=ht, size=12.5,
-                 bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+        text_box(s, x=hx + 0.06, y=hy, w=hw - 0.22, h=0.48, text=ht,
+                 size=14, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
                  anchor=MSO_ANCHOR.MIDDLE)
+    # Phrasings compacted to ≤4 key words per cell (P1-2 (b)) so each cell
+    # is single-line legible ≥14pt @150dpi.
     rows = [
         ("file-check", "Сертификационный расчёт",
-         "нужны воспроизводимость и трассируемость",
-         "аттестованный решатель + независимая верификация"),
+         "нужна трассируемость",
+         "аттестованный решатель + верификация"),
         ("shield", "Коэффициент запаса",
-         "задаётся нормой, не оптимизируется моделью",
-         "нормативное значение + инженерное обоснование"),
+         "задаётся нормой, не моделью",
+         "норматив + обоснование инженера"),
         ("file-stack", "Нормоконтроль ГОСТ/ISO",
-         "LLM галлюцинирует номера и допуски",
+         "галлюцинирует номера и допуски",
          "нормативная база + нормоконтролёр"),
         ("scale", "Юридическая ответственность",
          "ИИ не субъект ответственности",
-         "квалифицированный инженер с подписью"),
+         "инженер с подписью"),
         ("function-square", "Есть точный решатель",
-         "аппроксимация хуже точного расчёта",
+         "аппроксимация хуже точного",
          "прямой численный расчёт"),
         ("heart-pulse", "Безопасность жизни",
-         "цена ошибки = человеческие жизни",
-         "нормированный расчёт + независимая проверка + НК"),
+         "цена ошибки — жизни людей",
+         "норм. расчёт + проверка + НК"),
         ("ruler", "Единицы на стыке систем",
-         "ИИ уверенно путает единицы (Mars)",
-         "машинная проверка размерностей + единая СИ"),
+         "уверенно путает единицы (Mars)",
+         "проверка размерностей + единая СИ"),
         ("git-pull-request", "Изменение силовой схемы",
-         "«по чату» без пересчёта = Hyatt",
-         "формальный change-request + независимый пересчёт"),
+         "«по чату» без пересчёта (Hyatt)",
+         "change-request + пересчёт"),
     ]
-    ry0 = hy + 0.50
-    rh = (bh - 0.16 - 0.50 - 0.62) / len(rows)
+    ry0 = hy + 0.56
+    rh = (bh - 0.16 - 0.56 - 0.66) / len(rows)
     for i, (ic, crit, why, tool) in enumerate(rows):
         ry = ry0 + i * rh
         band = WHITE if i % 2 == 0 else SURFACE
-        filled_rect(s, bx + 0.30, ry, bw - 0.60, rh - 0.06, band,
+        filled_rect(s, bx + 0.28, ry, bw - 0.56, rh - 0.05, band,
                     stroke=COVER_OUTLINE, stroke_pt=0.75, radius=False)
-        add_image(s, icon(ic, "blue"), bx + 0.40, ry + rh / 2 - 0.19,
-                  0.36, 0.36)
-        text_box(s, x=bx + 0.30 + ic_w, y=ry, w=crit_w - 0.05, h=rh - 0.06,
-                 text=crit, size=13, bold=True, color=DEEP,
+        add_image(s, icon(ic, "blue"), bx + 0.38, ry + rh / 2 - 0.20,
+                  0.40, 0.40)
+        text_box(s, x=bx + 0.28 + ic_w, y=ry, w=crit_w - 0.05, h=rh - 0.05,
+                 text=crit, size=14, bold=True, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-        text_box(s, x=bx + 0.30 + ic_w + crit_w, y=ry, w=colA_w - 0.15,
-                 h=rh - 0.06, text=why, size=12.5, color=SLATE,
+        text_box(s, x=bx + 0.28 + ic_w + crit_w, y=ry, w=colA_w - 0.14,
+                 h=rh - 0.05, text=why, size=14, color=SLATE,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-        text_box(s, x=bx + 0.30 + ic_w + crit_w + colA_w, y=ry,
-                 w=colB_w - 0.15, h=rh - 0.06, text=tool, size=12.5,
+        text_box(s, x=bx + 0.28 + ic_w + crit_w + colA_w, y=ry,
+                 w=colB_w - 0.14, h=rh - 0.05, text=tool, size=14,
                  bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.0)
-    gold_callout(s, bx + 0.30, by + bh - 0.62, bw - 0.60, 0.50,
+    gold_callout(s, bx + 0.28, by + bh - 0.66, bw - 0.56, 0.54,
                  "ИИ — инструмент расширения вариативности и черновика, не "
-                 "арбитр истины и не носитель ответственности.", size=14,
+                 "арбитр истины и не носитель ответственности.", size=15,
                  align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s26"))
 
@@ -1438,30 +1530,31 @@ def build_s27(p):
     ]
     cw = 6.0
     gap = 0.25
-    ch = 2.30
-    gy = 0.15
+    ch = 2.55
+    gy = 0.22
     for i, (ic, title, tc, lines) in enumerate(cards):
         col = i % 2
         row = i // 2
         x = 0.55 + col * (cw + gap)
-        y = 1.55 + row * (ch + gy)
+        y = 1.50 + row * (ch + gy)
         is_gold = (tc == GOLD)
         ocean_box(s, x, y, cw, ch,
                   fill=GOLD_TINT if is_gold else SURFACE,
                   stroke=GOLD if is_gold else LIGHT,
                   stroke_pt=2.0 if is_gold else 1.5)
         add_image(s, icon(ic, "gold" if is_gold else "blue"),
-                  x + 0.30, y + 0.28, 0.62, 0.62)
-        text_box(s, x=x + 1.10, y=y + 0.32, w=cw - 1.30, h=0.55, text=title,
-                 size=16, bold=True, color=GOLD if is_gold else DEEP,
+                  x + 0.34, y + 0.32, 0.70, 0.70)
+        text_box(s, x=x + 1.22, y=y + 0.36, w=cw - 1.44, h=0.62, text=title,
+                 size=18, bold=True, color=GOLD if is_gold else DEEP,
                  anchor=MSO_ANCHOR.MIDDLE)
-        ly = y + 1.10
+        ly = y + 1.28
         for ln in lines:
-            filled_rect(s, x + 0.32, ly + 0.07, 0.10, 0.10,
+            filled_rect(s, x + 0.36, ly + 0.09, 0.12, 0.12,
                         GOLD if is_gold else MID, radius=True, radius_adj=0.5)
-            text_box(s, x=x + 0.54, y=ly, w=cw - 0.85, h=0.55, text=ln,
-                     size=12, color=DEEP, line_spacing=1.18)
-            ly += 0.56
+            text_box(s, x=x + 0.60, y=ly, w=cw - 0.92, h=0.62, text=ln,
+                     size=14, color=DEEP, line_spacing=1.22)
+            ly += 0.66
+    footer(s, "КИИ — критическая информационная инфраструктура (187-ФЗ).")
     speaker_notes(s, load_notes("s27"))
 
 
@@ -1488,20 +1581,20 @@ def build_s28(p):
             "ограничение деонтологическое, не техническое — не делегируется",
         ],
     }
-    two_col_compare(s, box_y=1.45, box_h=3.35, left=left, right=right)
+    two_col_compare(s, box_y=1.45, box_h=3.85, left=left, right=right)
     # ТРИЗ strip
-    tx, ty, tw, th = 0.55, 5.00, 12.25, 0.85
+    tx, ty, tw, th = 0.55, 5.45, 12.25, 1.00
     ocean_box(s, tx, ty, tw, th)
-    add_image(s, icon("lightbulb", "blue"), tx + 0.30, ty + 0.15, 0.55, 0.55)
-    text_box(s, x=tx + 1.05, y=ty + 0.10, w=tw - 1.30, h=th - 0.20,
+    add_image(s, icon("lightbulb", "blue"), tx + 0.32, ty + 0.20, 0.60, 0.60)
+    text_box(s, x=tx + 1.12, y=ty + 0.12, w=tw - 1.40, h=th - 0.24,
              text="ТРИЗ (Альтшуллер, с 1946) формализует ИЗОБРЕТЕНИЕ — "
                   "разрешение технического противоречия; это уровень выше, "
                   "чем оптимизация формы при фиксированной функции.",
-             size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.18)
-    gold_callout(s, 0.55, 6.05, 12.25, 0.70,
+             size=14, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.20)
+    gold_callout(s, 0.55, 6.58, 12.25, 0.62,
                  "AI генерирует — человек отвечает, верифицирует и изобретает "
-                 "функцию.", size=18, align=PP_ALIGN.CENTER)
+                 "функцию.", size=17, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s28"))
 
 
@@ -1582,12 +1675,14 @@ def build_s31(p):
     s = blank(p)
     slide_title(s, "Правило решения — пять вопросов; полная матрица собрана из "
                    "всех частей.", size=23, h=1.05)
-    # LEFT — checklist DOMINATES (~46% width, large)
-    lx, ly, lw, lh = 0.55, 1.45, 5.65, 5.00
-    ocean_box(s, lx, ly, lw, lh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    add_image(s, icon("list-checks", "gold"), lx + 0.35, ly + 0.30, 0.70, 0.70)
-    text_box(s, x=lx + 1.20, y=ly + 0.38, w=lw - 1.40, h=0.60,
-             text="Правило решения", size=20, bold=True, color=DEEP,
+    # LEFT — checklist DOMINATES (gold box, large numbered circles, 15pt
+    # bold). Slightly narrowed so the payoff matrix becomes legible, but
+    # visual weight stays on the checklist (Phase-6 hierarchy preserved).
+    lx, ly, lw, lh = 0.55, 1.42, 5.25, 5.03
+    ocean_box(s, lx, ly, lw, lh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.2)
+    add_image(s, icon("list-checks", "gold"), lx + 0.34, ly + 0.30, 0.72, 0.72)
+    text_box(s, x=lx + 1.18, y=ly + 0.36, w=lw - 1.38, h=0.66,
+             text="Правило решения", size=21, bold=True, color=DEEP,
              anchor=MSO_ANCHOR.MIDDLE)
     checks = [
         "Назови вид ИИ, расположи на оси",
@@ -1596,48 +1691,55 @@ def build_s31(p):
         "Есть ли точный / нормативный инструмент?",
         "Кто отвечает?",
     ]
-    chy = ly + 1.30
+    chy = ly + 1.32
     for i, c in enumerate(checks):
-        filled_rect(s, lx + 0.40, chy, 0.46, 0.46, MID, radius=True,
+        filled_rect(s, lx + 0.38, chy, 0.50, 0.50, MID, radius=True,
                     radius_adj=0.5)
-        text_box(s, x=lx + 0.40, y=chy, w=0.46, h=0.46, text=str(i + 1),
-                 size=17, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+        text_box(s, x=lx + 0.38, y=chy, w=0.50, h=0.50, text=str(i + 1),
+                 size=18, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
                  anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=lx + 1.02, y=chy - 0.04, w=lw - 1.30, h=0.72, text=c,
+        text_box(s, x=lx + 1.02, y=chy - 0.06, w=lw - 1.28, h=0.80, text=c,
                  size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.14)
-        chy += 0.72
-    # RIGHT — full 6×4 matrix, subdued (smaller, muted)
-    mx, my, mw, mh = 6.45, 1.45, 6.35, 5.00
+                 line_spacing=1.16)
+        chy += 0.74
+    # RIGHT — full 6×5 matrix (payoff). Widened + taller rows + ≥11pt
+    # headers / 12pt cells so it reads from back rows (P1-5), still muted
+    # (no gold box, neutral fills) so checklist keeps the focal weight.
+    mx, my, mw, mh = 5.95, 1.42, 6.85, 5.03
     ocean_box(s, mx, my, mw, mh)
-    add_image(s, icon("table", "blue"), mx + 0.22, my + 0.18, 0.36, 0.36)
-    text_box(s, x=mx + 0.66, y=my + 0.20, w=mw - 0.85, h=0.35,
-             text="Полная таксономическая матрица 6 классов", size=12.5,
+    add_image(s, icon("table", "blue"), mx + 0.26, my + 0.22, 0.42, 0.42)
+    text_box(s, x=mx + 0.76, y=my + 0.22, w=mw - 0.95, h=0.42,
+             text="Полная таксономическая матрица 6 классов", size=14,
              bold=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE)
-    cols = ["Класс", "Природа", "Гарантирует", "Зрелость", "Кто отвечает"]
-    cw_list = [1.55, 1.30, 1.30, 1.05, 1.05]
-    tx0 = mx + 0.20
-    hy = my + 0.65
+    cols = ["Класс", "Природа", "Гарантирует", "Зрелость", "Кто\nотвечает"]
+    cw_list = [1.78, 1.20, 1.45, 1.05, 1.07]
+    tx0 = mx + 0.22
+    hy = my + 0.76
     cxx = tx0
     for ci, ct in enumerate(cols):
         is_resp = (ci == 4)
-        filled_rect(s, cxx, hy, cw_list[ci] - 0.06, 0.40,
+        filled_rect(s, cxx, hy, cw_list[ci] - 0.06, 0.56,
                     GOLD if is_resp else LIGHT, radius=True, radius_adj=0.14)
-        text_box(s, x=cxx, y=hy, w=cw_list[ci] - 0.06, h=0.40, text=ct,
-                 size=9.5, bold=True, color=DEEP if is_resp else WHITE,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=cxx + 0.02, y=hy, w=cw_list[ci] - 0.10, h=0.56, text=ct,
+                 size=11, bold=True, color=DEEP if is_resp else WHITE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=0.95)
         cxx += cw_list[ci]
     mrows = [
-        ("Топ-оптимизация", "детерм.", "оптимум функции", "зрелая", "инженер"),
-        ("Эволюц. / GA", "стохаст.", "оптимум функции", "нишево", "инженер"),
-        ("Суррогат / PINN", "вероятн.", "только в домене", "растёт", "инженер"),
-        ("Computer Vision", "вероятн.", "первый фильтр", "зрелая", "инженер"),
-        ("LLM-ассистент", "вероятн.", "языковую форму", "зрелая", "инженер"),
-        ("Генерат. геометрии", "вероятн.", "ничего о физике", "бета",
+        ("Топ-\nоптимизация", "детерм.", "оптимум\nфункции", "зрелая",
+         "инженер"),
+        ("Эволюц. / GA", "стохаст.", "оптимум\nфункции", "нишево", "инженер"),
+        ("Суррогат /\nPINN", "вероятн.", "только\nв домене", "растёт",
+         "инженер"),
+        ("Computer\nVision", "вероятн.", "первый\nфильтр", "зрелая",
+         "инженер"),
+        ("LLM-\nассистент", "вероятн.", "языковую\nформу", "зрелая",
+         "инженер"),
+        ("Генерат.\nгеометрии", "вероятн.", "ничего\nо физике", "бета",
          "инженер"),
     ]
-    ry0 = hy + 0.46
-    rh = (mh - 0.65 - 0.46 - 0.48) / len(mrows)
+    ry0 = hy + 0.62
+    rh = (mh - 0.76 - 0.62 - 0.50) / len(mrows)
     for ri, row in enumerate(mrows):
         ry = ry0 + ri * rh
         band = WHITE if ri % 2 == 0 else SURFACE
@@ -1647,14 +1749,14 @@ def build_s31(p):
         for ci, val in enumerate(row):
             is_resp = (ci == 4)
             text_box(s, x=cxx + 0.04, y=ry, w=cw_list[ci] - 0.10, h=rh - 0.05,
-                     text=val, size=9, bold=(ci == 0 or is_resp),
+                     text=val, size=12, bold=(ci == 0 or is_resp),
                      color=GOLD if is_resp else (DEEP if ci == 0 else SLATE),
                      anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER,
-                     line_spacing=1.0)
+                     line_spacing=0.98)
             cxx += cw_list[ci]
-    text_box(s, x=mx + 0.20, y=my + mh - 0.46, w=mw - 0.40, h=0.40,
+    text_box(s, x=mx + 0.22, y=my + mh - 0.48, w=mw - 0.44, h=0.40,
              text="колонка «кто отвечает» — везде инженер",
-             size=10, italic=True, bold=True, color=GOLD,
+             size=11, italic=True, bold=True, color=GOLD,
              align=PP_ALIGN.CENTER)
     footer(s, "Профильные кафедры и суперкомпьютерные центры технических "
               "университетов работают со всем этим спектром.")
@@ -1680,7 +1782,7 @@ def build_s32(p):
         "это на самом деле вид ИИ?",
         "Где в проекте возникает «стык систем», на котором ИИ мог бы уверенно "
         "перепутать единицы?",
-        "Назвать задачу, где ИИ обоснованно говорят «нет», и правильный "
+        "Назвать задачу, где ИИ обоснованно отвечают «нет», и правильный "
         "инструмент.",
     ]
     slot = (bh - 0.85) / 3
@@ -1697,7 +1799,7 @@ def build_s32(p):
                  line_spacing=1.20)
     text_box(s, x=0.55, y=6.55, w=12.3, h=0.35,
              text="Курс «AI в разных индустриях» · семинар — case study "
-                  "инженерного проектирования · office hours",
+                  "инженерного проектирования · консультации",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s32"))
 

@@ -146,9 +146,85 @@
   connector polyline, gold-маркер занижения).
 - ≥10 supportive visual elements (baseline ≥5–10 satisfied).
 
-## Итог
+## Итог (Phase 6 v1)
 
 32 слайда, сумма duration_min = 75.0, 6 divider'ов, lecture-map s03,
 выделенный Q&A s32. 4 visual-loop итерации (min 3 — выполнено; iter 4 по
 реальному s30-overlap). Все schema-слайды проходят §5.5. 3 P1 закрыты.
 Cascade удержан. Speaker notes 151–268 слов. 0 anti-leak hits.
+
+---
+
+# Phase 8 — Polish Round (7 P1 + P2 из qa-reports/2026-05-17-v2/SYNTHESIS)
+
+Единый presentation-designer проход по Phase-7 синтезу. Все правки в
+`build_lec06.py` (canonical render path) + deck.yaml. Slide .md не тронуты
+(контент финален). БЕЗ ренумерации — 32 слайда фиксированы. split s26 = НЕТ.
+
+## Итерации (min 3 — выполнено: 3 visual-loop iter)
+
+- **Iter 1** — applied 7 P1 + P2; built+rendered all 32. Inspected priority
+  (s02/s06/s07/s08/s18/s26/s31) + P1-1 montage + projector 50% (s26/s31).
+  Found: s18 PINN label overlaps teal shoulder + marker on spike apex;
+  s14 pipeline↔bottom gap loose. s26 NO-SPLIT confirmed (projector PASS).
+- **Iter 2** — s18: gold-arrow clearance +0.6", labels → upper clear zone,
+  marker below apex; s14: bottom blocks 5.00→4.90, taller. Re-rendered,
+  full-deck montage scan (2 grids). s18 projector 50% PASS.
+- **Iter 3** — s18: right PINN label → mid-height over its own teal
+  shoulder (association без leader). Final render, all 32 snapshots
+  sNN.png, anti-leak grep 0, notes 151–268.
+
+## 7 P1 — закрыто
+
+- **P1-1** вертикаль: `two_col_compare` body 14→17pt + box_h +0.5";
+  `pipeline_row` body 12.5→14pt, head_h ↑; per-slide box→~85–90% canvas на
+  s05/s10/s12/s13/s14/s16/s17/s21/s23/s24/s27/s28. Контент не добавлен.
+- **P1-2** s26: box 5.05→5.18", cells single-line ≥14pt, формулировки
+  col2/col3 компактнее (≤4 слов). Projector 50% PASS → **split НЕ нужен**.
+  Schema §5.5 Matrix: fill 100% / icon/row / single-line / color-code / RU.
+- **P1-3** мета снята из visible (footer/subhead, не speaker_notes —
+  notes уже чисты): s11 «детали — в главе» убрано; s13 «(vendor-claim)…в
+  материалах главы»→«по заявлению вендора»; s23 footer «на следующем
+  слайде» убран; s24 subhead «(они на предыдущем слайде)» убран.
+- **P1-4** s02: новый `bionic-bracket.svg→png` (rsvg, Ocean palette,
+  лицензионно-чистая авторская вектор-иллюстрация: 2 крепёж-бобышки +
+  load-eye + ветвящиеся рёбра + lattice-облегчения) вместо абстрактного
+  эскиза. Узнаваемая «выращенная» форма — концепт-диссонанс работает.
+- **P1-5** s31: матрица 9pt→12pt cells / 9.5→11pt headers, шире (mw
+  6.35→6.85), выше строки; чек-лист gold-box 17pt circles доминирует
+  (Phase-6 иерархия сохранена). Projector 50% PASS.
+- **P1-6** s06: gold visible-сигнал «справочный скелет — 6 классов не
+  заучивать сразу» (bookmark-иконка). s07≠s08: s07 = канонический
+  грид-шаблон; s08 = ТРИ вертикальные класс-карточки с цвет-хедерами +
+  3 сегмента ✓/✗/↳ (иной визуальный ритм; монотонность s06→s07→s08 снята).
+- **P1-7** s18: 2 SOLID filled freeform-кривые (sharp blue spike vs broad
+  teal shoulder) вместо тонких staircase-polyline; gold UP_DOWN_ARROW
+  «занижение напряжения» в чистой зоне; подписи разведены. Schema §5.5
+  chart: 5-sec teach PASS, projector 50% PASS.
+
+## P2 — закрыто
+
+s04 «шестии»→«шести» (build script уже верен — re-render фиксит);
+s09 «1904–1989»→«классическая математика (Мичелл, Коши, SIMP)»;
+s11 видимая аннотация «родословная (логический порядок), не хронология»;
+s32 «office hours»→«консультации» + backup-3 «говорят»→«отвечают»;
+s03+divider roadmap «Hook»→«Старт»; POD (s08) + LPBF (s13) + КИИ (s27)
+first-use расшифрованы; deck.yaml:123 s30→s31; «топ-оптимизация»→
+«топологическая оптимизация» first-use (s06/s07) + s14 title;
+дубль-курсив снят: s07 субхед+футер, s14 футер, s22 футер (слит в callout).
+
+## Schema-Readability §5.5
+
+- **s06** schema_axis: 5-sec PASS, projector PASS, signal-banner visible.
+- **s18** chart: 5-sec PASS, projector 50% PASS, solid curves ≥2pt.
+- **s26** matrix 8×3: fill 100%, single-line ≥14pt, projector 50% PASS.
+- **s31** matrix 6×5: ≥11pt headers/12pt cells, projector 50% PASS,
+  чек-лист доминирует.
+
+## Финал
+
+32 слайда (без ренумерации), deck.yaml status=finalized v2. Cascade
+удержан (s12/s17/s19/s21/s27 ≤3числа/≤4названия; s23 Mars ведущий; s24
+без катастроф; s13 APM FEM без числа; диапазоны). Anti-leak grep: 0 hits
+в visible. Speaker notes не тронуты (151–268 слов, контракт держится).
+Escalations: 0 (все P1 закрыты ≤3 iter).

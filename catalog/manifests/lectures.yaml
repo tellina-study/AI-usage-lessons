@@ -44,9 +44,9 @@ lectures:
     module: 1
     learning_outcomes: [LO7, LO4]
     repo_dir: lec-03
-    status: in_production
+    status: produced
     issue: 87
-    updated_at: "2026-05-16"
+    updated_at: "2026-05-17"
 
   - number: 4
     title: "AI в разработке программного обеспечения"
@@ -60,17 +60,19 @@ lectures:
     title: "AI в финансовом секторе и ритейле"
     module: 1
     learning_outcomes: [LO1, LO2, LO3, LO6]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-05
+    status: produced
+    issue: 100
+    updated_at: "2026-05-17"
 
   - number: 6
     title: "AI в инженерном проектировании и CAD/CAM"
     module: 1
     learning_outcomes: [LO1, LO2, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-06
+    status: produced
+    issue: 101
+    updated_at: "2026-05-17"
 
   - number: 7
     title: "AI в медицине и фармацевтике"

@@ -2,7 +2,7 @@
 lecture: 6
 title: "Лекция 6. AI в инженерном проектировании и CAD/CAM"
 length_words: ~12860
-status: reviewed
+status: finalized
 version: v2
 issue: 101
 learning_outcomes: [LO1, LO2, LO7]

@@ -127,7 +127,9 @@ Claude Code acts as **planner and orchestrator only**. It MUST NOT make implemen
 - Specific file paths (not just directory names)
 - Error handling instructions ("if auth fails, stop and report")
 
-**If a subagent fails, do the work directly** — do not retry the same delegation.
+**If a subagent fails, FIRST classify the failure, then act (ENFORCED — Лекция 4 lesson):**
+- **Usage / rate / quota limit** (agent returns 0 tokens, "You've hit your limit · resets HH:MM", no tool uses) — this is **NOT a subagent failure**. Do **NOT** self-implement, do NOT apply the "do directly" rule. Wait for reset (`ScheduleWakeup`) and **re-delegate the same task**. Orchestrator MUST NOT author implementation content as a limit workaround (specific memory rule `feedback_subagent_usage_limit` overrides the generic rule below).
+- **Logic failure** (agent ran but result is unusable / tool error / wrong output) — then do the work directly; do not retry the same delegation verbatim.
 
 **Additional ENFORCED rules:**
 - **All critic agents must use 4-level verdict scale:** APPROVE-CLEAN / APPROVE-WITH-POLISH / REVISE / REJECT (replace APPROVE-WITH-MINOR catch-all per Lec 1 lessons). Counter-check: если ≥5 P1 issues но verdict = APPROVE-WITH-POLISH — STOP, change to REVISE.
@@ -169,9 +171,10 @@ Before presenting any USER GATE to user:
 2. **Visual sweep:** для slides — open all PNG snapshots, 5-sec look per slide, can I state main message?
 3. **Notes read:** 5-7 random speaker notes — verify 150-300 words connected text, no «Лектору» / no layout descriptions
 4. **Cross-artifact grep:** terminology drift, orphan references, pacing math
-5. **Designer-extras grep:** «Лектору» / «Вы здесь» / тайминг / `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / `LO[1-9]` / `§[0-9]+\.[0-9]+` / `→ s[0-9]+` in visible content — should all be 0 (frontmatter exempt)
-6. **Lec-N-1 pattern compliance (для slides):** does Lec-N have lecture-map slide? section dividers для всех major sections? dedicated Q&A slide? roadmap-bar только на dividers + cover (не на каждом content slide)?
-7. **Artifacts в main repo (для GATE B):** `library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}` MUST exist в main repo path BEFORE opening GATE. If only в worktree → STOP, sync first.
+5. **Designer-extras grep (orchestrator-INDEPENDENT, ENFORCED — Лекция 4 lesson):** orchestrator runs its OWN grep over the **rendered pptx visible layer** (notes excluded) — subagent self-report TOTAL=0 is NOT accepted as verification (Лекция 4 v3: designer self-grep дал ложный TOTAL=0, пропустил словесный scaffold). Паттерн ОБЯЗАН включать словесные scaffold-фразы, не только коды: «Лектору» / «Вы здесь» / тайминг / `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / `LO[1-9]` / `§[0-9]` / `→ s[0-9]+` / `(s[0-9][0-9])` / «точк* возврата» / «— в главе» / «в материалах лекции» / «это payoff» / «возвращаемся [0-9N]» / «не вводи* нов» / «course-scaffold» — all 0 (frontmatter exempt).
+6. **Keystone-axis check (ENFORCED — Лекция 4 lesson):** несущая концептуальная ось лекции предъявлена **отдельным keystone-слайдом в Разделе 0 ДО первого погружения в неё**? Заголовок + 1-я строка — про саму ось, НЕ про устройство курса / защиту подхода / «мы не вводим нового». Если ось «всплывает» только в середине или это защитный recap — STOP, структурный gap (цена: Лекция 4 = ~5 циклов deck), не polish.
+7. **Lec-N-1 pattern compliance (для slides):** does Lec-N have lecture-map slide? section dividers для всех major sections? dedicated Q&A slide? roadmap-bar только на dividers + cover (не на каждом content slide)?
+8. **Artifacts в main repo (для GATE B):** `library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}` MUST exist в main repo path BEFORE opening GATE. If only в worktree → STOP, sync first.
 
 **Если найдены P0/P1 issues — NOT present GATE.** Spawn revision first, re-run pre-gate, потом present.
 
@@ -237,6 +240,10 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 | Per-artifact spawns for polish rounds (separate designer / writer per phase) | Single batched revision agent (book-editor OR speech-writer) для 3-artifact touches; Phase 11 pattern |
 | Лекция < 30% контента про провалы/ограничения/альтернативы ИЛИ доля в одном артефакте | ≥30% holistic (chapter+slides+speech), иначе verdict REVISE (см. AI-Failure & Judgment Content Rule) |
 | «Магическая пилюля»: ИИ-восторг без выученных уроков и границ применимости | Каждая лекция учит говорить «нет» неподходящему ИИ; ≥30% — провалы/ограничения/альтернативы |
+| Несущая ось лекции не предъявлена отдельным keystone-слайдом до 1-го погружения (Раздел 0 защищается/делает recap вместо подачи оси) | Keystone-axis ENFORCED-check: methodology-critic (Phase 1 plan + Phase 4/7 deck) + lecture-outline template + Pre-USER-GATE п.6. Цена пропуска: Лекция 4 = ~5 циклов deck |
+| Отраслевая лекция (L4+): несущая таксономия без named current tools на каждый уровень; plan §-named speech-narrative без слайда | lecture-outline (L4+) требует tools-per-taxonomy-level (вендор-режим+adoption-направление+anti-hype+mode≠brand, volatile→[VFY-day-of]); Phase-5: §-named narrative ⇒ слайд либо явное owner-обоснование устного якоря |
+| usage/rate-limit субагента трактуется как failure → оркестратор пишет контент сам | Классифицировать сбой: limit ≠ failure → wait+re-delegate, НИКОГДА не self-implement (Subagent Rules; `feedback_subagent_usage_limit`) |
+| lectures.yaml lec-NN→produced забыт после GATE C (батчится отдельным manifest-PR) | GATE-C definition-of-done включает manifest status→produced (в том же финализирующем PR) |
 
 ---
 
@@ -333,7 +340,7 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 
 **Source of truth: book-first.** Chapter — primary, slides + speech derive. При conflict — fix slides/speech (если chapter сам не ошибается).
 
-**3 USER GATEs** между phases 4-5 (chapter approved), 8-9 (slides approved), 11 (final). Не двигаться к следующей фазе без explicit user approval.
+**3 USER GATEs** между phases 4-5 (chapter approved), 8-9 (slides approved), 11 (final). Не двигаться к следующей фазе без explicit user approval. **GATE-C definition-of-done (ENFORCED — Лекция 4 lesson):** финализирующий PR обязан включать `catalog/manifests/lectures.yaml` lec-NN status → `produced` (не оставлять как забытый follow-up для отдельного manifest-PR).
 
 **Phase 9.5 (Pre-USER-GATE walkthrough)** — orchestrator must run pre-gate review before EACH USER GATE (см. `tools/lecture-production/README.md` + Pre-USER-GATE Walkthrough Rule выше).
 

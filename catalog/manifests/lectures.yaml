@@ -52,9 +52,10 @@ lectures:
     title: "AI в разработке программного обеспечения"
     module: 1
     learning_outcomes: [LO1, LO4, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-04
+    status: produced
+    issue: 99
+    updated_at: "2026-05-17"
 
   - number: 5
     title: "AI в финансовом секторе и ритейле"

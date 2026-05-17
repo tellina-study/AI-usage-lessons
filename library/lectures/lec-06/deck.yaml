@@ -1,0 +1,458 @@
+# library/lectures/lec-06/deck.yaml
+#
+# Deck-структура Лекции 6 «AI в инженерном проектировании и CAD/CAM» (31 слайд).
+# (Папка репо lec-06 совпадает с номером лекции по плану курса — 6.)
+#
+# Source: chapter v2 (status=reviewed, ~12,860 слов) +
+#   plan v2 (notes/lecture-6-review/plan-v2.md §4 — поэлементный план s01–s31) +
+#   cascade-ограничения qa-reports/2026-05-17-v1/SYNTHESIS.md «НЕ для Phase 4».
+# Phase 5 multi-artifact pipeline — slides content alignment (book-first).
+# Issue #101 · downstream-каскад от chapter (source of truth).
+#
+# Lec-N-1 паттерн (lec-07): lecture-map (s03), 5 section-divider'ов
+#   (s04/s09/s15/s20/s25), выделенный Q&A (s31). Roadmap-bar ТОЛЬКО на
+#   divider'ах + cover (НЕ на каждом content-слайде).
+#
+# Палитра LOCKED — Ocean Gradient: Primary deep `#21295C` /
+#   Primary mid `#065A82` / Primary light `#1C7293` + Teal secondary
+#   `#028090` + Gold highlight `#F0AB00` (≥1×/слайд). Visual motif —
+#   «Ocean rounded box» (radius 12, surface `#F4F7FA`, stroke `#1C7293`)
+#   на каждом content-слайде (НЕ на cover).
+#
+# Cascade-ограничения (ОБЯЗАТЕЛЬНО при рендере Phase 6):
+#   - s12/s17/s19/s21/s27 — ≤3 числа / ≤4 названия продукта на слайд.
+#   - s23 — Mars Climate Orbiter ведущий, Gimli/Hyatt одной строкой.
+#   - s24 — НЕ смешивать бенчмарки с катастрофами (это отдельный слайд).
+#   - APM FEM «~70% объёма» — НЕ точным числом на слайд (vendor-claim,
+#     только speaker_notes «по заявлению вендора»).
+#   - Непроверенные точные числа — диапазонами («масса −~40%»,
+#     «~45–63%», «до ~10³×»). [VERIFY-DAY-OF] — только speaker_notes.
+
+deck:
+  lecture_number: 6
+  title: "AI в инженерном проектировании и CAD/CAM"
+  audience: "студенты-инженеры 3 курса ИУ6 МГТУ Баумана (универсальная подача)"
+  duration_min: 75
+  central_question: "Прежде чем доверять инструменту проектное решение — назови вид ИИ: детерминированная математика или обученная вероятностная модель? что оптимизируется и кто задал ограничения? кто несёт ответственность?"
+  learning_outcomes: [LO1, LO2, LO7]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v2 (status=reviewed, ~12,860 слов)
+  plan: notes/lecture-6-review/plan-v2.md
+
+slides:
+  # ─── Часть 0. Hook + центральный вопрос + карта (7 мин) ───
+  - id: s01
+    file: slides/s01-cover.md
+    type: cover
+    duration_min: 0.5
+    assertion: "Лекция 6. AI в инженерном проектировании и CAD/CAM"
+    learning_goal: "Cover-слайд: title + meta"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Hero-cover: outline «06» крупно (200pt) + title 36pt + длительность + дата; Ocean palette, hero motif справа"
+
+  - id: s02
+    file: slides/s02-hook-bracket.md
+    type: assertion_visual
+    duration_min: 4
+    assertion: "Этот «органический» кронштейн спроектировал не генеративный AI, а детерминированный оптимизатор — постановка восходит к 1904 году."
+    learning_goal: "Concept-reveal hook: разоблачение «AI придумал деталь» → вход в центральный вопрос"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0 — Кронштейн, который принимают за работу нейросети"
+    references: [autodesk-gm-bracket, michell-1904]
+    visual:
+      pattern: assertion_visual
+      primary: "Фото GM seat bracket (ажурная «органическая» форма) в Ocean rounded box; вопрос-overlay «Какой вид ИИ это спроектировал?» → reveal-блок «Ни один. Детерминированная оптимизация, 1904»"
+
+  - id: s03
+    file: slides/s03-lecture-map.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Спайн лекции — три вопроса к самому себе и шесть частей: классификация всех 6 классов ИИ, глубина — для трёх с высшей ценой ошибки."
+    learning_goal: "Карта лекции: 3 вопроса-якоря + 6 частей"
+    learning_outcomes: [LO1]
+    chapter_ref: "§Введение — три вопроса; §1.2 promise/delivery"
+    references: []
+    visual:
+      pattern: roadmap
+      primary: "3 вопроса-якоря крупно в Ocean rounded box + 6-card horizontal roadmap-bar (части 0–6); текущая часть gold. Roadmap-bar появляется здесь и далее только на divider'ах"
+
+  # ─── Section divider (1) ───
+  - id: s04
+    file: slides/s04-section1-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Часть 1 — Назови вид ИИ: фундамент и таксономия шести классов"
+    learning_goal: "Visual divider — переход в часть фундамента"
+    learning_outcomes: [LO1]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «1» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой текущей части"
+
+  # ─── Часть 1. Фундамент + таксономия (13 мин) ───
+  - id: s05
+    file: slides/s05-foundation-solve-vs-guess.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Детерминированная оптимизация решает заданное инженером уравнение; обученная порождающая модель угадывает по примерам и не содержит внутри физического закона."
+    learning_goal: "Несущая ось лекции: решать уравнение vs угадывать по примерам (фундамент перед таксономией)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1 — Фундаментальное различение"
+    references: []
+    visual:
+      pattern: comparison
+      primary: "Две равные колонки в Ocean rounded box: слева «РЕШАЕТ заданное уравнение» (физический закон внутри, тот же вход → тот же ответ), справа «УГАДЫВАЕТ по примерам» (закона внутри нет, воспроизводит «как обычно выглядит»). Без формул"
+
+  - id: s06
+    file: slides/s06-taxonomy-axis.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Шесть классов ИИ в проектировании ложатся на одну ось — детерминированное ↔ вероятностное; чем правее, тем меньше встроенных гарантий."
+    learning_goal: "Скелет таксономии: одна ось, 6 ярлыков с микроопределением (НЕ полная матрица — она на s30)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.2 — Скелет таксономии: одна ось, шесть ярлыков"
+    references: []
+    visual:
+      pattern: schema_axis
+      primary: "Горизонтальная ось «детерминированное → вероятностное» со стрелкой; 6 ярлыков-меток вдоль оси (топ-оптимизация · эволюционные/GA · суррогат/PINN · CV · LLM-ассистент · генеративный AI геометрии), у каждого микроопределение одной строкой. Caption: «Полная матрица — в финале лекции»"
+
+  - id: s07
+    file: slides/s07-pair-optim-surrogate.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Оптимизационный ML и суррогат/PINN — узнать по границе: где ДА, где НЕТ, какая классическая альтернатива."
+    learning_goal: "Узнавание пары 1 (оптимизационный ML + суррогат/PINN): пример + граница + альтернатива"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.3 — Шесть классов: узнавание, пример, граница"
+    references: [michell-1904, bendsoe-kikuchi-1988]
+    visual:
+      pattern: matrix
+      primary: "2 строки-карточки (Оптимизационный ML / Суррогат-PINN) × 3 колонки (Когда ДА · Когда НЕТ · Классическая альтернатива); иконки Lucide per строка"
+
+  - id: s08
+    file: slides/s08-pair-genai-cv-ga.md
+    type: assertion_visual
+    duration_min: 3.2
+    assertion: "Генеративный AI/LLM, Computer Vision и эволюционные/GA — три класса, по одному реальному примеру и явной границе применимости."
+    learning_goal: "Узнавание пары 2 (генеративный AI/LLM + CV + GA); 3 вопроса-якоря как повторяющаяся рамка"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.3 — Шесть классов; три вопроса-якоря"
+    references: [nasa-st5-antenna-2006]
+    visual:
+      pattern: matrix
+      primary: "3 строки-карточки (Генеративный AI/LLM / Computer Vision / Эволюционные-GA) × 3 колонки (Когда ДА · Когда НЕТ · Альтернатива); иконки Lucide; внизу повтор 3 вопросов-якорей мелко"
+
+  # ─── Section divider (2) ───
+  - id: s09
+    file: slides/s09-section2-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Часть 2 — Генеративный дизайн — это не генеративный AI"
+    learning_goal: "Visual divider — переход в часть оптимизационного ML"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «2» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой текущей части"
+
+  # ─── Часть 2. GD = оптимизационный ML ≠ генеративный AI (15 мин) ───
+  - id: s10
+    file: slides/s10-terminology-trap.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "«AI generates the design» — маркетинговая подмена: под капотом детерминированный оптимизатор решает поставленную инженером задачу, а не порождающая модель."
+    learning_goal: "Терминологическая ловушка (FAILURE/judgment): спрашивать «какой это вид ИИ» до доверия"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.1 — Терминологическая ловушка"
+    references: [autodesk-fusion-blog-topopt]
+    visual:
+      pattern: comparison
+      primary: "Две колонки-контраст в Ocean rounded box: «Маркетинг говорит: AI generates the design» vs «Что на самом деле: детерминированный оптимизатор решает заданную инженером задачу»; gold-выделение урока внизу"
+
+  - id: s11
+    file: slides/s11-classical-pedigree.md
+    type: assertion_visual
+    duration_min: 3.8
+    assertion: "Топологическая оптимизация — это градиентный спуск, двигающий не веса сети, а плотность материала, минимизируя массу при известном из сопромата ограничении σ_vM ≤ [σ]."
+    learning_goal: "Классическая родословная от ИЗВЕСТНОГО (сопромат + градиентный спуск из лекции 2) → SIMP; KKT/Лагранж только name-drop"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2 — Классическая родословная: от известного к SIMP; §2.3 — KKT (name-drop)"
+    references: [michell-1904, cauchy-1847, bendsoe-kikuchi-1988, bendsoe-1989-simp]
+    visual:
+      pattern: schema_timeline
+      primary: "Горизонтальная родословная-timeline: «известно из сопромата: недогружен → можно убрать» → Мичелл 1904 (интуиция) → Коши 1847 / градиентный спуск из лекции 2 → Бендсё–Кикучи 1988 → SIMP 1989. Em-dash подписи, single-line. KKT — мелкая сноска «формальное условие оптимума, детали — в главе». Вывод-плашка: «сходимость к оптимуму, не сэмпл из распределения»"
+
+  - id: s12
+    file: slides/s12-industrial-cases.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "GM seat bracket и Airbus bionic partition: радикальное снижение массы получено численной оптимизацией и перебором, а не диффузионной моделью."
+    learning_goal: "Реальные кейсы — вид ИИ = оптимизация+перебор, НЕ diffusion; cascade: ≤3 числа / ≤4 названия"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.4 — Реальные промышленные кейсы"
+    references: [autodesk-gm-bracket, airbus-bionic-partition]
+    visual:
+      pattern: matrix
+      primary: "2 кейс-карточки в Ocean rounded box: GM seat bracket (8→1 деталь, масса −~40%) + Airbus bionic partition (масса −~45%, Scalmalloy). По ≤3 числа на карточку; ярлык вида ИИ «оптимизация + перебор» на каждой; иконки Lucide"
+
+  - id: s13
+    file: slides/s13-russia-honest.md
+    type: assertion_visual
+    duration_min: 2.8
+    assertion: "В России APM FEM в КОМПАС-3D — это детерминированный SIMP, а не AI: та же терминологическая ловушка на отечественном инструменте."
+    learning_goal: "Россия (honest): достижения ОКБ Сухого + подмена понятий в РФ-маркетинге + честный пробел"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.5 — Россия: честная картина"
+    references: [okb-sukhoi-bracket-tass, askon-apm-fem]
+    visual:
+      pattern: matrix
+      primary: "3 honest-карточки в Ocean rounded box: «Реальные достижения» (ОКБ Сухого — кронштейн Су-57 ~на ¼ легче, LPBF) · «Подмена понятий» (APM FEM = детерминированный SIMP, не AI; C3D-ядро — стратегический актив) · «Где честно отстаём» (зрелого AI-генеративного движка уровня Fusion почти нет). Без точного числа APM FEM"
+
+  - id: s14
+    file: slides/s14-section2-failure.md
+    type: assertion_visual
+    duration_min: 2.9
+    assertion: "Главный риск топологической оптимизации — не «галлюцинация», а garbage-in → optimal garbage: безупречный оптимум под неполно заданную постановку."
+    learning_goal: "Провал раздела (FAILURE): неполные ограничения + неизготовимость + альтернатива (параметрика + ручная топ-оптимизация)"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§2.6 — Провал раздела: garbage-in → optimal garbage"
+    references: [isicad-generative-ru, mcgan-2024]
+    visual:
+      pattern: schema_pipeline
+      primary: "Pipeline-схема «Неполная постановка → детерминированный оптимизатор → математически безупречная, инженерно непригодная форма» (RIGHT_ARROW); рядом callout «неизготовимость литьём/ЧПУ» + gold-плашка альтернативы «классическая параметрика + ручная топ-оптимизация под технологичность»"
+
+  # ─── Section divider (3) ───
+  - id: s15
+    file: slides/s15-section3-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Часть 3 — ИИ ускоряет счёт, не заменяет физику"
+    learning_goal: "Visual divider — переход в часть суррогата/PINN"
+    learning_outcomes: [LO2]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «3» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой текущей части"
+
+  # ─── Часть 3. Surrogate/PINN: ускоряет счёт, не заменяет физику (12 мин) ───
+  - id: s16
+    file: slides/s16-known-to-surrogate.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "КЭ-анализ решает уравнения равновесия на сетке; суррогат не решает их, а угадывает поле напряжений по тысячам прошлых расчётов."
+    learning_goal: "От ИЗВЕСТНОГО КЭ-анализа к суррогату; Галёркин/K·u=f — только одной фразой (вывод — в главе)"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.1 — От известного КЭ-анализа к суррогату; §3.2 — слабая форма (фраза)"
+    references: [turner-clough-1956]
+    visual:
+      pattern: comparison
+      primary: "Две колонки в Ocean rounded box: «КЭ-решатель: сетка → решает K·u=f → поле напряжений (прослеживаемо)» vs «Суррогат: вход → выучил отображение на тысячах расчётов → ответ мгновенно, НЕ решая уравнение». Подпись: «под капотом — система уравнений равновесия; суррогат её не решает»"
+
+  - id: s17
+    file: slides/s17-state-2026.md
+    type: data_chart
+    duration_min: 2.5
+    assertion: "К 2026 крупные вендоры превратили суррогаты в продукт; заявленные ускорения «до N×» — верхняя граница на узком классе задач, не типичное."
+    learning_goal: "Состояние 2026 (диапазоны, критическое чтение чисел); cascade: ≤3–4 названия"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.3 — Состояние 2026: что предлагает рынок"
+    references: [ansys-simai-2026, altair-physicsai-2026, nvidia-physicsnemo]
+    visual:
+      pattern: matrix
+      primary: "3–4 продукт-карточки в Ocean rounded box (Ansys SimAI · Altair PhysicsAI · NVIDIA PhysicsNeMo) с ускорением как «до ~10²–10³×»; gold-плашка-caveat «N× — верхняя граница на выгодном частном случае; стоимость обучающего архива в ROI не входит»"
+
+  - id: s18
+    file: slides/s18-pinn-hype-vs-reality.md
+    type: assertion_visual
+    duration_min: 3.3
+    assertion: "PINN сглаживает резкие переходы: у концентратора напряжений (известен из сопромата) он «размазывает» пик и выдаёт заниженное — наихудший тип ошибки в расчёте на прочность."
+    learning_goal: "PINN: хайп vs реальность (FAILURE/limitation) — спектральный сдвиг у концентратора; где реально полезен"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.4 — PINN: хайп против реальности"
+    references: [pinn-flaws-sciencedirect-2025, pinn-vs-fem-oxford]
+    visual:
+      pattern: assertion_visual
+      primary: "Иллюстрация-эскиз: реальный острый пик напряжения у выточки/отверстия (истинная кривая) vs сглаженная «размазанная» кривая PINN с заниженным пиком, gold-маркер на опасном занижении. Справа: «где PINN полезен» — разреженные данные, обратные задачи, сложная геометрия (НЕ замена FEM/CFD)"
+
+  - id: s19
+    file: slides/s19-why-surrogate-criterion.md
+    type: assertion_visual
+    duration_min: 2.6
+    assertion: "Суррогат ускоряет перебор сотен вариантов на этапе поиска; финал по отобранным кандидатам считает аттестованный детерминированный решатель."
+    learning_goal: "Зачем тогда суррогат + критерий применимости (молчаливая ошибка вне домена) + Россия; cascade: ≤3 числа / ≤4 названия"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.5 — Зачем тогда суррогат: критерий применимости и Россия"
+    references: [logos-rosatom, cml-bench-spbpu]
+    visual:
+      pattern: schema_pipeline
+      primary: "Pipeline «сотни вариантов → суррогат отсеивает быстро → 5–10 кандидатов → аттестованный решатель считает финал» (RIGHT_ARROW); gold-плашка-критерий «суррогат валиден только в обучающем домене; экстраполяция = молчаливая ошибка». Россия: «Логос» + CML-Bench одной строкой"
+
+  # ─── Section divider (4) ───
+  - id: s20
+    file: slides/s20-section4-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Часть 4 — Где галлюцинация стоит дорого"
+    learning_goal: "Visual divider — переход в часть генеративного AI/LLM"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «4» + title + 1-фраза-фрейм + 7-card progress bar; 1-фраза-фрейм отсылает к фундаменту: genAI не содержит физического закона"
+
+  # ─── Часть 4. Генеративный AI и LLM в CAD: цена галлюцинации (12 мин) ───
+  - id: s21
+    file: slides/s21-landscape-2026.md
+    type: assertion_visual
+    duration_min: 2.8
+    assertion: "Зрелое — это LLM как интерфейс к детерминированным операциям; генерация геометрии по тексту в 2026 — концепт и ранняя бета."
+    learning_goal: "Ландшафт 2026 (маркетинг vs зрелость); cascade: ≤3 числа / ≤4 названия; Autodesk-цитату не дословно"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.2 — Ландшафт 2026: маркетинг против зрелости"
+    references: [autodesk-bernini, autodesk-neural-cad]
+    visual:
+      pattern: comparison
+      primary: "Две колонки-зрелость в Ocean rounded box: «Зрелый слой: LLM-копайлоты как интерфейс» (Autodesk Assistant, Siemens Design Copilot) vs «Незрелый слой: text-to-CAD / нейро-CAD» (Zoo.dev, Bernini — сам вендор пометил «strictly experimental»). gold-выделение vendor-самооценки Bernini"
+
+  - id: s22
+    file: slides/s22-llm-pattern.md
+    type: assertion_visual
+    duration_min: 2.7
+    assertion: "LLM хорошо генерирует черновик технического текста с точной терминологией формы — но фактическое наполнение подлежит обязательной сверке инженера."
+    learning_goal: "Паттерн LLM: где полезен (черновик под обязательную проверку); демо-структура промпта"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.3 — Паттерн: где LLM полезен"
+    references: []
+    visual:
+      pattern: schema_pipeline
+      primary: "Pipeline «промпт с точной терминологией формы → LLM → черновик пояснительной записки/ТУ → ОБЯЗАТЕЛЬНАЯ верификация инженером по первоисточнику» (RIGHT_ARROW); gold-плашка границы: «правильная форма + потенциально неверное содержание»"
+
+  - id: s23
+    file: slides/s23-antipattern-mars.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Mars Climate Orbiter: $327 млн потеряны из-за непроверенного рассогласования единиц на стыке систем — LLM в проекте это ровно такой «стык систем»."
+    learning_goal: "Антипаттерн LLM + исторические провалы (FAILURE-ядро); Mars ВЕДУЩИЙ, Gimli/Hyatt — строкой (cascade)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.4 — Антипаттерн и исторические провалы: Mars Climate Orbiter и его братья"
+    references: [nasa-mco-mishap-1999, gimli-glider, hyatt-regency]
+    visual:
+      pattern: assertion_visual
+      primary: "Доминирующий блок Mars Climate Orbiter в Ocean rounded box: фунт-сила↔Н, расхождение ×4,45, $327 млн, «каждый предполагал, что проверит другой» → проекция «LLM = такой стык систем, уверенно путает единицы». Внизу одной строкой каждый: Gimli Glider (неверный коэф. пересчёта топлива) · Hyatt Regency (изменение узла без пересчёта). Доказательная база — на следующем слайде"
+
+  - id: s24
+    file: slides/s24-benchmarks-lesson.md
+    type: data_chart
+    duration_min: 2.7
+    assertion: "На реальных инженерных расчётах сильнейшие модели ошибаются примерно у трети–половины задач — «уверенно ошибается» опаснее, чем «не знает»."
+    learning_goal: "Бенчмарки + выученный урок (отдельно от катастроф — cascade s24); LLM не источник истины по нормам/числам"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.5 — Бенчмарки и выученный урок"
+    references: [orca-benchmark-2025, engibench-2025, aerospace-llm-2025]
+    visual:
+      pattern: data_chart
+      primary: "Bar/range chart: ORCA ~45–63% точности (5 SOTA-моделей, диапазон) + EngiBench падение при перефразировке + аэрокосмический кейс (рекомендация нарушала 3 стандарта сразу). gold-выделение урока: «LLM — не источник истины по маркам/ГОСТ/допускам; независимая верификация на каждом интерфейсе с ИИ»"
+
+  # ─── Section divider (5) ───
+  - id: s25
+    file: slides/s25-section5-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Часть 5 — Когда сказать ИИ «нет»"
+    learning_goal: "Visual divider — переход в часть критериев неприменимости и ответственности"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «5» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой текущей части"
+
+  # ─── Часть 5. Где ИИ не нужен/не применим + ответственность (12 мин) ───
+  - id: s26
+    file: slides/s26-criteria-table.md
+    type: assertion_visual
+    duration_min: 3.8
+    assertion: "Чем выше детерминированность задачи и цена ошибки, тем меньше в ней места вероятностному ИИ — для каждого критерия есть более правильный инструмент."
+    learning_goal: "Критерии неприменимости + правильный инструмент (judgment-ядро, таблица)"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§5.1 — Критерии неприменимости и правильный инструмент"
+    references: [vonmises-1913, gost-eskd]
+    visual:
+      pattern: schema_matrix
+      primary: "Таблица-критерии в Ocean rounded box: строки = критерии (сертификационный расчёт · коэф. запаса · нормоконтроль ГОСТ · юр. ответственность · есть точный решатель · безопасность жизни · единицы на стыке · изменение силовой схемы) × 2 колонки (Почему вероятностный ИИ не годится · Более правильный инструмент). Fill ≥75%, single-line cells, иконки per строка"
+
+  - id: s27
+    file: slides/s27-russia-norms.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "В России границы ИИ-геометрии конкретны: барьер ЕСКД, аттестация Ростехнадзора, 187-ФЗ/58-ФЗ (облако vs on-premise), машина не субъект авторского права."
+    learning_goal: "Россия — нормативные границы; cascade: ≤3 числа / ≤4 названия"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§5.2 — Россия: нормативные границы"
+    references: [eskd-gost, apm-structure3d-rostech, fz-187-kii]
+    visual:
+      pattern: matrix
+      primary: "4 граница-карточки в Ocean rounded box: «Барьер ЕСКД» (выращенная геометрия не ложится на 2D-чертёж) · «Аттестация» (APM Structure3D — аттестат Ростехнадзора; без аттестованной верификации не допускается) · «187-ФЗ/58-ФЗ» (облако vs on-premise; лицензионная блокировка как риск) · «Право/IP» (машина не субъект права РФ). Иконки Lucide per карточка"
+
+  - id: s28
+    file: slides/s28-human-vs-ai-triz.md
+    type: assertion_visual
+    duration_min: 2.9
+    assertion: "AI генерирует форму — человек отвечает, верифицирует и изобретает функцию; ТРИЗ формализует изобретение, оптимизатор лишь распределяет материал."
+    learning_goal: "Человек vs AI (подпись = деонтология, не делегируется) + ТРИЗ-контраст"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§5.3 — Человек против AI и контраст с ТРИЗ"
+    references: [altshuller-triz-1946]
+    visual:
+      pattern: comparison
+      primary: "Две колонки в Ocean rounded box: «AI: предлагает форму при фиксированной функции» vs «Человек: задаёт ограничения, ОТВЕЧАЕТ (подпись = деонтология), изобретает функцию». Под ними ТРИЗ-контраст: «ТРИЗ (Альтшуллер 1946) формализует изобретение — уровень выше оптимизатора формы». gold-плашка-формула «AI генерирует — человек отвечает, верифицирует и изобретает функцию»"
+
+  # ─── Часть 6. Синтез + Бауманка + Q&A (4 мин) ───
+  - id: s29
+    file: slides/s29-worked-decision.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Одна задача — облегчить кронштейн — даёт разные обоснованные ответы для серийной фрезеровки и для аддитива, проведённая по трём вопросам-якорям."
+    learning_goal: "Worked decision (измеримый LO7): задача → дерево по 3 вопросам → обоснованный класс + почему НЕ другие"
+    learning_outcomes: [LO1, LO2, LO7]
+    chapter_ref: "§6.1 — Worked decision: облегчить кронштейн"
+    references: []
+    visual:
+      pattern: schema_pipeline
+      primary: "Дерево решения: задача «облегчить кронштейн» → разветвление на 2 ветки (а) серийная фрезеровка / (б) аддитив; каждая ветка проходит 3 вопроса-якоря → разный обоснованный вывод (а: параметрика + ручная топ-оптимизация; б: детерминированная топ-оптимизация + финал на решателе). gold-выделение «один вопрос-якорь развёл ответы»"
+
+  - id: s30
+    file: slides/s30-decision-rule-matrix.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Правило решения — пять вопросов; полная таксономическая матрица шести классов собрана из всех частей; этот спектр — текущая инженерная практика, в том числе в Бауманке."
+    learning_goal: "Правило решения (чек-лист 5 пунктов) + ПОЛНАЯ таксономическая матрица (кристаллизация s06) + Бауманский контекст"
+    learning_outcomes: [LO1, LO2, LO7]
+    chapter_ref: "§6.2 — Правило решения и полная таксономическая матрица"
+    references: []
+    visual:
+      pattern: schema_matrix
+      primary: "Слева — ментальный чек-лист 5 пунктов в Ocean rounded box (назови вид → детерм./вероятн.? → что оптимизирует, кто задал ограничения? → есть точный/нормативный инструмент? → кто отвечает?). Справа — компактная полная матрица 6 классов (Природа · Что гарантирует · Зрелость · Кто отвечает), fill ≥75%, single-line. Внизу строка: профильные кафедры и суперкомпьютерные центры технических университетов работают со всем спектром"
+
+  - id: s31
+    file: slides/s31-qa.md
+    type: assertion_visual
+    duration_min: 1.0
+    assertion: "Q&A"
+    learning_goal: "Открытое Q&A с 3 backup-prompts (выделенный слайд, Lec-N-1 паттерн)"
+    learning_outcomes: []
+    chapter_ref: "frontmatter (closing)"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Крупный «Q&A?» 80pt + иконка `message-circle-question` 96px gold + 3 backup-prompt chips в Ocean rounded box (12pt italic) + subdued course-contact card"

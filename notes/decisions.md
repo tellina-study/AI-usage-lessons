@@ -447,3 +447,15 @@ deck v2 (после Phase-4 v1→v2 fix) показан владельцу — *
 - **strict-in:** s05 переопределён → judgment/limits-якорь, strict-in-eligible (15/32≈47%); пересчёт — methodology-critic Phase-7 re-QA.
 
 **Урок:** несущая ось лекции обязана быть отдельным keystone-слайдом в Разделе 0 **до** первого погружения в неё; Раздел 0 учит новому, а не защищает курсовую методологию. Атрибуция homegrown-таксономии (научная честность) ≠ видимый disclaimer-футер — её место в speaker notes. Рецидив-класс Л2-R1/Л3 (§/meta-leak) → теперь явный deck-wide ENFORCED-принцип в плане, не только anti-pattern постфактум.
+
+### Лекция 4 deck v3.1 → GATE B + owner-override slide-count (Решение #101, 2026-05-17)
+
+deck v3.1 (Раздел-0 keystone + сквозной tone-strip): re-QA 5 критиков — presentation-critic/consistency-checker APPROVE-WITH-POLISH, methodology-critic/reader APPROVE-CLEAN, student APPROVE-WITH-POLISH; **0 открытых P0/P1**; independent grep оркестратора видимый слой TOTAL=0 ×2; pre-USER-GATE walkthrough PASS. Структурная браковка владельца (несущая ось не показана) — закрыта и независимо подтверждена 5/5.
+
+**Owner GATE B (AskUserQuestion):**
+- **+3 раздела-дивайдера Разделам 1/5/6** (симметрия 7-секционного roadmap-бара). Полная схема 6 дивайдеров: s04a(Р1)/s10(Р2)/s14(Р3)/s18(Р4)/s24a(Р5)/s28a(Р6).
+- **Owner-override GATE-0 Q4 «slide-count LOCKED=32» → 35.** Явное документированное решение владельца (governance escape-hatch pattern, как chapter-depth Решение #82-класс). Реализация — **suffix-ID s04a/s24a/s28a, cascade-safe**: глава финализирована GATE A с `[for-slide-sNN]` s01–s32; renumber рассинхронит book-first → suffix-ID НЕ трогает chapter/chapter_ref/нумерацию (конвенция Лекции 3, post-GATE-A добавления).
+- **GATE B: deck v3.1 принят → Phase 9 (речь).** Дивайдеры ложатся ДО речи (speech-writer derive из финального deck) — порядок: divider-add → re-QA delta → finalize → speech.
+- strict-in: count=15 неизменно, дивайдеры partial→out; слайдо-доля 15/35≈43% (≥40% держится), минутная 54.5% не затронута (дивайдеры ~0.3 мин); methodology-critic re-confirm на delta.
+
+**Урок:** post-GATE-A добавление слайдов = всегда suffix-ID (chapter `[for-slide-sNN]` финализирован — renumber = book-first drift). slide-count LOCK снимается ТОЛЬКО явным owner-решением с записью в реестр (как все governance escape-hatch'и). Owner-визуальная симметрия (roadmap ↔ дивайдеры) — решение владельца, не оркестратора (Orchestrator Self-Critique: визуальные структурные выборы defer to owner).

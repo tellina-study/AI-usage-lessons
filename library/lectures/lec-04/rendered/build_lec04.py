@@ -350,11 +350,27 @@ def load_deck():
     d2 = yaml.safe_load((ROOT / "deck-part2.yaml").read_text(encoding="utf-8"))
     slides = list(d1.get("slides", [])) + list(d2.get("slides", []))
     ids = [s["id"] for s in slides]
-    expected = [f"s{n:02d}" for n in range(1, 33)]
+    # [Решение #101, 2026-05-17 — owner GATE B] 32 base (s01–s32 нумерация
+    # неизменна) + 3 suffix-ID раздела-дивайдера s04a/s24a/s28a (cascade-safe:
+    # chapter [for-slide-sNN] s01–s32 финализирован GATE A, НЕ renumber).
+    base = [f"s{n:02d}" for n in range(1, 33)]
+    expected = []
+    for sid in base:
+        expected.append(sid)
+        if sid == "s04":
+            expected.append("s04a")   # Раздел 1 divider
+        elif sid == "s24":
+            expected.append("s24a")   # Раздел 5 divider
+        elif sid == "s28":
+            expected.append("s28a")   # Раздел 6 divider
     assert ids == expected, (
         f"deck slide order mismatch:\n got={ids}\n exp={expected}")
+    # s01–s32 нумерация неизменна — base IDs присутствуют все 32 и в порядке
+    base_in_order = [i for i in ids if not i.endswith("a")]
+    assert base_in_order == base, (
+        f"base s01–s32 numbering changed:\n got={base_in_order}")
     tot = d2.get("totals", {}).get("slides")
-    assert tot == 32, f"deck-part2 totals.slides={tot}, expected 32"
+    assert tot == 35, f"deck-part2 totals.slides={tot}, expected 35"
     return {"slides": slides, "totals": d2.get("totals", {}),
             "deck": d1.get("deck", {})}
 
@@ -659,6 +675,18 @@ def build_s04(p):
                  "ответственность. Ответственность не делегируется.",
                  size=14.5)
     speaker_notes(s, load_notes("s04"))
+
+
+def build_s04a(p):
+    """section_divider — Раздел 1: Уровни A и B. [Решение #101 owner GATE B]
+    suffix-ID, cascade-safe; here_idx=1 → roadmap gold-маркер Раздел 1.
+    Шаблон полностью единый с s10/s14/s18 (build_section_divider)."""
+    build_section_divider(
+        p, 1, "Уровни A и B:\nавтодополнение и чат",
+        "Начинаем снизу лестницы. A — AI дописывает строку прямо в потоке "
+        "набора; B — пишет функцию или фикс по запросу в чате. На обоих "
+        "человек видит каждый фрагмент кода — это AI, который уже стоит в "
+        "каждой IDE.", "s04a")
 
 
 def build_s05(p):
@@ -1687,6 +1715,18 @@ def build_s24(p):
     speaker_notes(s, load_notes("s24"))
 
 
+def build_s24a(p):
+    """section_divider — Раздел 5: Методологии, конфигурации, люди.
+    [Решение #101 owner GATE B] suffix-ID, cascade-safe; here_idx=5 →
+    roadmap gold-маркер Раздел 5. Шаблон единый с s10/s14/s18."""
+    build_section_divider(
+        p, 5, "Методологии,\nконфигурации, люди",
+        "Разделы 1–4 были про AI-код и его риски. Дальше — про процесс и "
+        "людей: какие методологии ложатся на AI, чем solo+AI отличается от "
+        "команды. AI меняет цену рутины — но методологии и роли не уходят, "
+        "они уточняются.", "s24a")
+
+
 def build_s25(p):
     """matrix / schema_matrix — methodologies × AI compatibility.
     WATCH-ITEM: peak density. axis-in, ≥14pt, ≥75% fill, solid color."""
@@ -1947,6 +1987,18 @@ def build_s28(p):
     speaker_notes(s, load_notes("s28"))
 
 
+def build_s28a(p):
+    """section_divider — Раздел 6: Фреймворк решения. [Решение #101 owner
+    GATE B] suffix-ID, cascade-safe; here_idx=6 → roadmap gold-маркер
+    Раздел 6. Шаблон единый с s10/s14/s18."""
+    build_section_divider(
+        p, 6, "Фреймворк решения",
+        "Всё, что разобрали — «где ускоряет / где вредит / что не "
+        "делегируется» — собираем в один аппарат: матрица уровень × задача, "
+        "критерий «когда не и опасно», чек-лист перед тем, как дать задачу "
+        "AI.", "s28a")
+
+
 def build_s29(p):
     """matrix → LO7 payoff: доминанта-вывод + 5 канонических осей выбора
     ПО ИМЕНАМ компактной лентой (chapter §6.1), читаемые ≥14pt из зала.
@@ -2166,14 +2218,17 @@ def main():
         print(f"deck spec OK — {n} slides (deck.yaml + deck-part2.yaml), "
               f"totals {spec['totals'].get('slides')}")
     p = setup_pres()
-    builders = [build_s01, build_s02, build_s03, build_s04, build_s05,
-                build_s06, build_s07, build_s08, build_s09, build_s10,
-                build_s11, build_s12, build_s13, build_s14, build_s15,
-                build_s16, build_s17, build_s18, build_s19, build_s20,
-                build_s21, build_s22, build_s23, build_s24, build_s25,
-                build_s26, build_s27, build_s28, build_s29, build_s30,
-                build_s31, build_s32]
-    assert len(builders) == 32, f"expected 32 builders, got {len(builders)}"
+    # [Решение #101, 2026-05-17 — owner GATE B] 32 base (s01–s32 нумерация
+    # неизменна) + 3 suffix-ID раздела-дивайдера: s04a после s04 (Р1),
+    # s24a после s24 (Р5), s28a после s28 (Р6). cascade-safe.
+    builders = [build_s01, build_s02, build_s03, build_s04, build_s04a,
+                build_s05, build_s06, build_s07, build_s08, build_s09,
+                build_s10, build_s11, build_s12, build_s13, build_s14,
+                build_s15, build_s16, build_s17, build_s18, build_s19,
+                build_s20, build_s21, build_s22, build_s23, build_s24,
+                build_s24a, build_s25, build_s26, build_s27, build_s28,
+                build_s28a, build_s29, build_s30, build_s31, build_s32]
+    assert len(builders) == 35, f"expected 35 builders, got {len(builders)}"
     for b in builders:
         b(p)
     OUT.parent.mkdir(parents=True, exist_ok=True)

@@ -6,13 +6,16 @@
 # plan v2-final (USER GATE 0 approved 2026-05-16, Q1–Q5).
 # Issue #99 · Branch: issue-99-lec-04-software-production
 #
-# Slide-IDs s01–s32 LOCKED (cascade-tracking lock, plan §4 + GATE 0 Q4),
-# монотонно, без suffix-ID. s01 = METR perception-gap hook (GATE-0 Q1 LOCKED).
+# Slide-IDs s01–s32 нумерация неизменна (cascade-tracking lock, plan §4 +
+# GATE 0 Q4). [Решение #101, 2026-05-17 — owner GATE B] slide-count LOCK=32
+# → 35: добавлены 3 раздела-дивайдера suffix-ID s04a/s24a/s28a (cascade-safe,
+# НЕ renumber: chapter [for-slide-sNN] s01–s32 финализирован GATE A).
+# s01 = METR perception-gap hook (GATE-0 Q1 LOCKED).
 #
 # ┌─ SPLIT: deck.yaml >600 строк (Document Size Limit, waiver НЕТ) → разбит ──┐
 # │ deck.yaml      (ЭТОТ ФАЙЛ) — deck/palette/motif/typography/glossary_lock  │
-# │                + slides s01..s13 (через конец Раздела 2).                 │
-# │ deck-part2.yaml — slides s14..s32 + totals + ai_failure_judgment +        │
+# │                + slides s01..s13 вкл. s04a (через конец Раздела 2).       │
+# │ deck-part2.yaml — slides s14..s32 + s24a/s28a + totals + ai_failure +     │
 # │                verify_day_of_items + fact_check_items.                    │
 # │ Loader (rendered build-скрипт) читает ОБЕ части. Кросс-ссылка внизу.      │
 # └────────────────────────────────────────────────────────────────────────┘
@@ -32,7 +35,7 @@ deck:
   version: v1
   source: chapter v1.1 finalized (~22300 слов, 3 части)
   plan: notes/lecture-4-software-review/final/plan-v2-final.md (v2-final §4)
-  total_slides: 32          # s01–s32 monotonic, без suffix
+  total_slides: 35          # 32 (s01–s32 нумерация неизменна) + 3 suffix-ID дивайдера s04a/s24a/s28a (Решение #101)
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3)"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
 
@@ -99,10 +102,12 @@ glossary_lock:
   - "least-privilege (принцип наименьших привилегий)"
 
 # ─────────────────────────────────────────────────────────────────────────
-# Порядок предъявления (plan §4, арка §2.2): монотонно s01..s32.
-# Р0 s01–s04 · Р1 s05–s09 · Р2 s10–s13 · Р3 s14–s17 · Р4a s18–s20 ·
-# Р4b s21–s24 · Р5 s25–s28 · Р6 s29–s32.
-# ЭТОТ ФАЙЛ содержит slides s01..s13. Продолжение (s14..s32) — deck-part2.yaml.
+# Порядок предъявления (plan §4, арка §2.2): s01..s32 + 3 suffix-ID дивайдера.
+# Р0 s01–s04 · Р1 [s04a] s05–s09 · Р2 s10–s13 · Р3 s14–s17 · Р4a s18–s20 ·
+# Р4b s21–s24 · Р5 [s24a] s25–s28 · Р6 [s28a] s29–s32.
+# 6 дивайдеров на 6 контент-разделов: s04a(Р1) s10(Р2) s14(Р3) s18(Р4)
+# s24a(Р5) s28a(Р6). Р0 = открытие, без дивайдера. Решение #101.
+# ЭТОТ ФАЙЛ содержит slides s01..s13 (вкл. s04a). Продолжение — deck-part2.yaml.
 # ─────────────────────────────────────────────────────────────────────────
 slides:
   # ─── Раздел 0. Открытие + recap Л3 + ЦВ (8 мин, s01–s04) ───
@@ -173,6 +178,27 @@ slides:
     interaction: none
 
   # ─── Раздел 1. Уровни A+B: автодополнение и мелкие задачи (11 мин, s05–s09) ───
+  - id: s04a
+    file: slides/s04a-section1-divider-levels-a-b.md
+    type: section_divider
+    section: "Раздел 1. Уровни A и B: автодополнение и мелкие задачи"
+    duration_min: 0.3
+    assertion: "Раздел 1 — уровни A и B: AI дописывает строку в потоке и пишет фрагмент по запросу; человек видит каждый кусок кода"
+    learning_goal: "Section divider раздела 1 + одно-фразовое «что такое уровни A и B»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1 (структурный divider — раздел-вступление; глава не правится, [for-slide] не вводится)"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true   # структурный divider — не failure/judgment
+    # [Решение #101, 2026-05-17 — owner GATE B] suffix-ID, cascade-safe:
+    # открывает Раздел 1, в последовательности между s04 и s05.
+    # Нумерация s01–s32 неизменна, chapter [for-slide-sNN] не затронут.
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider лекции (единый с s10/s14/s18/s24a/s28a): гигантская декоративная «1» справа soft-outline, РАЗДЕЛ 1 + подзаголовок «Уровни A и B: автодополнение и мелкие задачи» + 1 нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 1."
+      narrative_bridge: "Начинаем снизу лестницы. A — AI дописывает строку прямо в потоке набора; B — пишет функцию или фикс по запросу в чате. На обоих человек видит каждый фрагмент кода — это AI, который уже стоит в каждой IDE."
+    interaction: none
+
   - id: s05
     file: slides/s05-unified-level-pattern.md
     type: assertion_visual
@@ -323,7 +349,7 @@ slides:
     interaction: poll
 
 # ─────────────────────────────────────────────────────────────────────────
-# КОНЕЦ PART 1. Слайды s14..s32 + totals + ai_failure_judgment +
+# КОНЕЦ PART 1. Слайды s14..s32 + s24a/s28a + totals + ai_failure_judgment +
 # verify_day_of_items + fact_check_items → deck-part2.yaml.
 # Loader (rendered build-скрипт) загружает: deck.yaml (этот) + deck-part2.yaml,
 # объединяет ключ `slides`, валидирует totals из part 2.

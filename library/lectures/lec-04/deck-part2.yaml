@@ -1,10 +1,11 @@
 # library/lectures/lec-04/deck-part2.yaml  —  PART 2 of 2
 #
-# Продолжение deck-структуры Лекции 4 (32 слайда). Split по Document Size Limit.
+# Продолжение deck-структуры Лекции 4 (35 слайдов = 32 + 3 suffix-ID
+# дивайдера s04a/s24a/s28a, Решение #101). Split по Document Size Limit.
 #
 # ┌─ SPLIT: см. deck.yaml (PART 1) — deck/palette/motif/typography/ ────────┐
-# │ glossary_lock + slides s01..s13. ЭТОТ ФАЙЛ — slides s14..s32 +          │
-# │ totals + ai_failure_judgment + verify_day_of_items + fact_check_items.  │
+# │ glossary_lock + slides s01..s13 (вкл. s04a). ЭТОТ ФАЙЛ — slides         │
+# │ s14..s32 + s24a/s28a + totals + ai_failure + verify + fact_check.       │
 # │ Loader (rendered build-скрипт) читает ОБЕ части и объединяет `slides`.  │
 # └────────────────────────────────────────────────────────────────────────┘
 #
@@ -199,6 +200,27 @@ slides:
     interaction: none
 
   # ─── Раздел 5. Методологии, конфигурации, люди (11 мин, s25–s28) ───
+  - id: s24a
+    file: slides/s24a-section5-divider-methodologies.md
+    type: section_divider
+    section: "Раздел 5. Методологии, конфигурации, люди"
+    duration_min: 0.3
+    assertion: "Раздел 5 — процесс и люди: методологии и роли с AI не исчезают, они уточняются и становятся критичнее"
+    learning_goal: "Section divider раздела 5 + одно-фразовое «что не уходит с AI»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5 (структурный divider — раздел-вступление; глава не правится, [for-slide] не вводится)"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true   # структурный divider — не failure/judgment
+    # [Решение #101, 2026-05-17 — owner GATE B] suffix-ID, cascade-safe:
+    # открывает Раздел 5, в последовательности между s24 и s25.
+    # Нумерация s01–s32 неизменна, chapter [for-slide-sNN] не затронут.
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider (единый с s10/s14/s18/s04a/s28a). Гигантская «5» справа, РАЗДЕЛ 5 + подзаголовок «Методологии, конфигурации, люди» + нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 5."
+      narrative_bridge: "Разделы 1–4 были про AI-код и его риски. Дальше — про процесс и людей: какие методологии ложатся на AI, чем solo+AI отличается от команды. AI меняет цену рутины — но методологии и роли не уходят, они уточняются."
+    interaction: none
+
   - id: s25
     file: slides/s25-methodologies-x-ai.md
     type: matrix
@@ -266,6 +288,27 @@ slides:
     interaction: none
 
   # ─── Раздел 6. Фреймворк решения + финал (12 мин, s29–s32 + буфер) ───
+  - id: s28a
+    file: slides/s28a-section6-divider-decision-framework.md
+    type: section_divider
+    section: "Раздел 6. Фреймворк решения"
+    duration_min: 0.3
+    assertion: "Раздел 6 — payoff: лестница, риски и критерии собираются в один аппарат решения «как выбирать уровень под задачу»"
+    learning_goal: "Section divider раздела 6 + одно-фразовое «что соберём в фреймворк»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§6 (структурный divider — раздел-вступление; глава не правится, [for-slide] не вводится)"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true   # структурный divider — не failure/judgment
+    # [Решение #101, 2026-05-17 — owner GATE B] suffix-ID, cascade-safe:
+    # открывает Раздел 6, в последовательности между s28 и s29.
+    # Нумерация s01–s32 неизменна, chapter [for-slide-sNN] не затронут.
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider (единый с s10/s14/s18/s04a/s24a). Гигантская «6» справа, РАЗДЕЛ 6 + подзаголовок «Фреймворк решения» + нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 6."
+      narrative_bridge: "Всё, что разобрали — «где ускоряет / где вредит / что не делегируется» — собираем в один аппарат: матрица уровень × задача, критерий «когда не и опасно», чек-лист перед тем, как дать задачу AI."
+    interaction: none
+
   - id: s29
     file: slides/s29-decision-matrix.md
     type: matrix
@@ -341,60 +384,66 @@ slides:
 
 # ─── Validation ───
 totals:
-  slides: 32                    # s01–s32 monotonic, без suffix
-  base_slides_locked: "s01–s32 LOCKED (cascade-tracking lock, plan §4 + GATE 0 Q4); s01 = METR perception-gap hook (GATE 0 Q1)"
-  slide_times_sum_min: 77.0     # сумма duration_min всех 32 слайдов (см. разбивку ниже)
+  slides: 35                    # 32 (s01–s32 нумерация неизменна) + 3 suffix-ID дивайдера s04a/s24a/s28a
+  base_slides_locked: "s01–s32 нумерация неизменна (cascade-tracking lock, plan §4 + GATE 0 Q4); s01 = METR perception-gap hook (GATE 0 Q1). [Решение #101 owner GATE B] +3 раздела-дивайдера suffix-ID s04a/s24a/s28a (cascade-safe: chapter [for-slide-sNN] s01–s32 финализирован GATE A, НЕ renumber)"
+  slide_times_sum_min: 77.9     # 77.0 (32 слайда) + 3×0.3 дивайдера ≈ 77.9; +1 мин поглощается Q&A-буфером (5→~4)
   pure_content_min: ~55         # plan §2.2: slide-content без retrieval/переходов
   retrieval_min: ~8             # retrieval-моменты (s01/s08/s17/s22/s31), plan §2.2
   transitions_min: ~7           # переходы/комментарий между слайдами, plan §2.2
-  qa_buffer_min: ~5             # явный буфер на s32 (Q&A, ≤5 мин)
-  total_min: 75                 # активный ~70 (55+8+7) + ~5 Q&A буфер = 75
+  qa_buffer_min: ~4             # буфер на s32 (Q&A); 5→~4: +1 мин дивайдеров поглощён (Решение #101)
+  total_min: 75                 # активный ~71 (55+8+7+~1 дивайдеры) + ~4 Q&A буфер = 75
   note: >
-    Plan §2.2 раздел-бюджеты (32 слайда): Р0 s01–s04 = 8 · Р1 s05–s09 = 11 ·
+    Plan §2.2 раздел-бюджеты: Р0 s01–s04 = 8 · Р1 [s04a]+s05–s09 = 11 ·
     Р2 s10–s13 = 10 · Р3 s14–s17 = 9.5 · Р4a s18–s20 = 6.5 · Р4b s21–s24 = 11 ·
-    Р5 s25–s28 = 11 · Р6 s29–s32 = 10 (включает Q&A-буфер на s32). Сумма
-    per-slide duration_min (plan §4) = 77.0 — эта величина включает время
-    обсуждения у слайда, не только показ (как в Лекции 3: slide_times_sum
-    выше pure_content). Plan §2.2 честная минутная разбивка активной части:
-    Σ slide-content ≈55 + retrieval-моменты ≈8 (s01/s08/s17/s22/s31) +
-    переходы/комментарий ≈7 = 70 активных + 5 буфер = 75. Финальная
+    Р5 [s24a]+s25–s28 = 11 · Р6 [s28a]+s29–s32 = 10 (включает Q&A-буфер на
+    s32). Сумма per-slide duration_min = 77.0 (32 слайда) + 3×0.3 дивайдера
+    ≈ 77.9 — включает время обсуждения у слайда, не только показ (как в
+    Лекции 3: slide_times_sum выше pure_content). [Решение #101, 2026-05-17 —
+    owner GATE B] 3 раздела-дивайдера (s04a/s24a/s28a) по ~0.3 мин = +1 мин,
+    поглощается Q&A-буфером (5→~4). Plan §2.2 честная минутная разбивка
+    активной части: Σ slide-content ≈55 + retrieval ≈8 (s01/s08/s17/s22/s31)
+    + переходы ≈7 + дивайдеры ≈1 = ~71 активных + ~4 буфер = 75. Финальная
     per-slide минутная калибровка — на рендер-фазе. Per-slide duration_min
-    взяты дословно из plan §4 (s01–s32 LOCKED).
+    s01–s32 взяты дословно из plan §4 (нумерация неизменна).
 
-# Per-slide duration_min (plan §4):
+# Per-slide duration_min (plan §4 + 3 suffix-ID дивайдера, Решение #101):
 #   s01=3 s02=0.5 s03=2 s04=2.5 (Р0=8) ·
-#   s05=1.5 s06=2.5 s07=2 s08=3 s09=2 (Р1=11) ·
+#   [s04a=0.3] s05=1.5 s06=2.5 s07=2 s08=3 s09=2 (Р1=11) ·
 #   s10=1 s11=2.5 s12=3 s13=3.5 (Р2=10) ·
 #   s14=1 s15=2.5 s16=3 s17=3 (Р3=9.5) ·
 #   s18=0.5 s19=3 s20=3 (Р4a=6.5) ·
 #   s21=3 s22=3 s23=3 s24=2 (Р4b=11) ·
-#   s25=3 s26=3 s27=3 s28=2 (Р5=11) ·
-#   s29=3 s30=2 s31=3.5 s32=1.5 (Р6=10, s32 + ≤5 Q&A буфер)
-#   Σ per-slide duration_min = 77.0 (включает обсуждение у слайда).
+#   [s24a=0.3] s25=3 s26=3 s27=3 s28=2 (Р5=11) ·
+#   [s28a=0.3] s29=3 s30=2 s31=3.5 s32=1.5 (Р6=10, s32 + ≤4 Q&A буфер)
+#   Σ per-slide duration_min = 77.0 (s01–s32) + 0.9 (3 дивайдера) ≈ 77.9.
 #   Активная минутная часть (plan §2.2): ~55 контент + ~8 retrieval +
-#   ~7 переходы = ~70 + ~5 Q&A буфер (s32) = 75.
+#   ~7 переходы + ~1 дивайдеры = ~71 + ~4 Q&A буфер (s32) = 75.
 
 ai_failure_judgment:
   # plan §5 — strict-in слайды (solid IN-bucket: failure/ограничение/критерий/
   # альтернатива несомым связным текстом в speaker notes).
   in_bucket_slides: [s05, s08, s12, s13, s16, s17, s21, s22, s23, s24, s25, s26, s27, s29, s30]
   count: 15
-  share_by_slides: "15/32 ≈ 47% по слайдам / 54.5% минут (42/77) — methodology-critic v3 re-QA 2026-05-17 (Решение #100 ЗАКРЫТО; s05 переопределён judgment/limits-якорь strict-in)"
-  partial_out: [s01, s02, s03, s04, s06, s07, s09, s10, s11, s14, s15, s18, s19, s20, s28, s31, s32]
+  share_by_slides: "15/35 ≈ 43% по слайдам / 54.5% минут (42/77) — [Решение #101 owner GATE B] +3 раздела-дивайдера (s04a/s24a/s28a) partial→out: count=15 неизменно, слайдо-знаменатель 32→35 (≥40% держится с запасом), минутная доля не затронута (дивайдеры ~0.3 мин ∉ strict-in-минут). methodology-critic re-confirm на delta. Прежнее v3: 15/32≈47% (Решение #100 ЗАКРЫТО; s05 judgment/limits-якорь strict-in)"
+  partial_out: [s01, s02, s03, s04, s04a, s06, s07, s09, s10, s11, s14, s15, s18, s19, s20, s24a, s28, s28a, s31, s32]
   note: >
     speaker notes этих 15 слайдов несут failure/judgment связным студенческим
     текстом (провал + урок + альтернатива/критерий). [Решение #100, 2026-05-17
     ЗАКРЫТО] s05 переопределён «единый паттерн» → «цена ошибки растёт с
-    автономией» = judgment/limits-якорь, strict-in (count 14→15). Partial→out
-    (plan §5, решение #78): s01 hook, s02 cover, s03/s04 recap+ЦВ, s06/s07/s11/
-    s15 калибровка уровней, s09 паттерн, s10/s14/s18 divider, s19/s20 тест/
-    ревью при правильной роли, s28 docs частично, s31 payoff, s32 мост.
-    Несущая ось A→D сама НЕ засчитывается (course-scaffold таксономия, не
-    разбор ошибки). chapter strict-in ~69% не затронут (глава не правится).
-    Holistic ≥40% в slides удержан с запасом ~15 п.п., single-artifact
-    concentration отсутствует (распределено по 6 разделам: s05-Р1 · s08-Р1 ·
-    s12/s13-Р2 · s16/s17-Р3 · s21/s22/s23/s24-Р4 · s25/s26/s27-Р5 ·
-    s29/s30-Р6).
+    автономией» = judgment/limits-якорь, strict-in (count 14→15). [Решение
+    #101, 2026-05-17 — owner GATE B] +3 раздела-дивайдера s04a/s24a/s28a —
+    структурные, partial→out (как s10/s14/s18 дивайдеры): count=15 НЕ
+    меняется, слайдо-знаменатель 32→35 (15/35≈43%, ≥40% держится),
+    минутная доля 54.5% не затронута (дивайдеры ~0.3 мин вне strict-in-минут).
+    Partial→out (plan §5, решение #78): s01 hook, s02 cover, s03/s04 recap+ЦВ,
+    s04a/s10/s14/s18/s24a/s28a divider, s06/s07/s11/s15 калибровка уровней,
+    s09 паттерн, s19/s20 тест/ревью при правильной роли, s28 docs частично,
+    s31 payoff, s32 мост. Несущая ось A→D сама НЕ засчитывается (course-
+    scaffold таксономия, не разбор ошибки). chapter strict-in ~69% не затронут
+    (глава не правится). Holistic ≥40% в slides удержан с запасом ~3 п.п.,
+    single-artifact concentration отсутствует (распределено по 6 разделам:
+    s05-Р1 · s08-Р1 · s12/s13-Р2 · s16/s17-Р3 · s21/s22/s23/s24-Р4 ·
+    s25/s26/s27-Р5 · s29/s30-Р6).
 
 verify_day_of_items:
   - s06_copilot_lab_field_numbers       # Copilot RCT ~56% / поле +7–22% — лабораторные

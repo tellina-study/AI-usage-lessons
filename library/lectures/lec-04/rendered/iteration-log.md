@@ -496,3 +496,62 @@ gold-callout «…линза, которой разберём каждый ур�
 - side-effect guard: lec-01/02/03/07 восстановлены из origin/main
   (0 изменений), `~$*.pptx` удалены.
 - **s03 callout scaffold-fix ACCEPT** — keystone НЕ деградировал.
+
+---
+
+## v3.2 — +3 suffix-ID дивайдера Р1/Р5/Р6 (Решение #101, owner GATE B)
+
+Точечная итерация v3.1 → v3.2: добавлены 3 раздела-дивайдера для симметрии
+7-секционного roadmap-бара. 32 существующих слайда заморожены (5/5 критиков
+APPROVE) — контент НЕ тронут. Полная схема 6 дивайдеров на 6 контент-разделов:
+s04a(Р1) · s10(Р2, есть) · s14(Р3, есть) · s18(Р4, есть) · s24a(Р5) · s28a(Р6).
+Реализация — suffix-ID, cascade-safe: chapter [for-slide-sNN] s01–s32
+финализирован GATE A, НЕ renumber. Шаблон — единый `build_section_divider`
+(тот же, что s10/s14/s18): здесь_idx → roadmap gold-маркер автоматически.
+
+### Iter 1 — s04a / s24a / s28a (110dpi, vs ref s10/s14/s18)
+- (a) inspected: 3 новых дивайдера side-by-side против отрендеренных из того
+  же deck эталонов s10(p11)/s14(p15)/s18(p19). Сверял: teal eyebrow «РАЗДЕЛ N»,
+  gold-rule, гигантская soft-outline цифра справа, deep-blue подзаголовок,
+  italic light-blue narrative bridge, 7-карточный roadmap, gold-маркер.
+- (b) changed: none на этой итерации (диагностика).
+- (c) pass: s24a (2-строчный titв) и s28a (1-строчный) — стилистически
+  идентичны эталонам, roadmap gold корректен (Р5 / Р6). s04a — единственное
+  отклонение: подзаголовок «Уровни A и B: автодополнение и мелкие задачи»
+  переносится в 3 строки (эталоны 1–2 строки), bridge прижат к титулу →
+  нарушена spacing-parity. roadmap Р1 корректен.
+
+### Iter 2 — s04a fix (запятая)
+- (a) inspected: s04a после замены «и мелкие задачи» → «, мелкие задачи».
+- (b) changed: подзаголовок «Уровни A и B:\nавтодополнение, мелкие задачи»
+  (build_lec04.py build_s04a + slide md sync).
+- (c) pass: всё ещё 3 строки (~28 символов 2-й сегмент > порог ~25, как у
+  эталонного s18 «тест, ревью, безопасность»=25 ✓). FAIL — parity не достигнут.
+
+### Iter 3 — s04a fix (tight 2-строчная форма) + 150dpi final
+- (a) inspected: s04a после «автодополнение и чат» (паритет длины с эталонным
+  s14 «оркестратор и трекер»); затем все 3 новых @150dpi (#69-render-1:
+  финальный accept всегда 150dpi) + parity-montage interleave new/ref.
+- (b) changed: подзаголовок «Уровни A и B:\nавтодополнение и чат»
+  (build_s04a + slide md sync). Канонич. полное имя раздела сохранено в
+  deck.yaml `section:` и slide frontmatter (как s10: section=полное,
+  subtitle=короткое).
+- (c) pass ALL: s04a — чистые 2 строки, gap до bridge = как у эталонов,
+  стилистически НЕОТЛИЧИМ. s24a/s28a @150dpi — без overflow/clip/bleed в
+  цифру, bridge в своей зоне. Schema-readability (Timeline/Divider — n/a;
+  это section_divider шаблон, паритет с принятыми s10/s14/s18 = критерий).
+  5-сек тест PASS ×3: main message = «новый раздел + тема + позиция в
+  roadmap» = assertion каждого. Projector 50%: titв+roadmap читаемы.
+  Roadmap-маркер: s04a→Р1, s24a→Р5, s28a→Р6 (here_idx-arg, автоматический
+  механизм как у существующих); s10/s14/s18 эталоны не сломаны (re-render
+  из того же deck).
+
+### Итог v3.2
+- Iter на дивайдер: s04a=3, s24a=3, s28a=3.
+- build_lec04.py: load_deck() expected 32→35 (base s01–s32 + suffix s04a
+  после s04 / s24a после s24 / s28a после s28); base-numbering-неизменности
+  assert добавлен; builders 32→35; рендер OK «35 slides».
+- deck.yaml +s04a (Р1 регион), deck-part2.yaml +s24a/+s28a; totals 32→35;
+  ai_failure_judgment count=15 НЕизменно, share 15/35≈43%, s04a/s24a/s28a
+  в partial_out.
+- chapter*.md UNMODIFIED; 32 slides/*.md контент не тронут.

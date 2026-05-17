@@ -7,8 +7,8 @@
 # Issue: #100.
 
 lecture: 5
-locked_at: null   # будет проставлено оркестратором после USER GATE A
-status: draft
+locked_at: "2026-05-17"   # залочен оркестратором после USER GATE A (issue #100)
+status: locked
 source: "notes/lecture-5-review/final/plan-v2-final.md §6/§7; chapter v1 (chapter.md + chapter-part2.md + chapter-part3.md)"
 
 terms:

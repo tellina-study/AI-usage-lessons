@@ -1,7 +1,7 @@
 ---
 lecture: 5
 title: "Глава 5. AI в финансовом секторе и ритейле"
-status: draft
+status: finalized
 version: v2
 length_words: ~22650
 references_count: 38

@@ -36,8 +36,8 @@ deck:
   central_question: "Финансы и ритейл — отрасли максимального внедрения ИИ. Под какую задачу — какой тип ИИ, почему именно он (а не LLM везде), и где этот тип ломается?"
   learning_outcomes: [LO1, LO2, LO3, LO6]
   language: ru
-  status: draft
-  version: v1
+  status: finalized
+  version: v2
   source: chapter v2 finalized (~22650 слов, 3 части)
   plan: notes/lecture-5-review/final/plan-v2-final.md (v2-final §4)
   total_slides: 33          # 32 LOCKED (s01–s32) + s04a suffix divider

@@ -192,6 +192,18 @@ library/lectures/lec-NN/
 
 ---
 
+## 3.7 Self-reported метрики — critic re-verify (ENFORCED)
+
+**Источник:** рефлексия Лекции 5 (#100), issue #111.
+
+Producer-агенты (book-editor / presentation-designer / speech-writer) часто прилагают self-проверку метрики (WPM, strict-in %, word-count, pacing-sum, coverage-count) со скриптом. **Self-report НЕ является gate-сигналом.**
+
+- Якорь: speech-writer Phase 9 Л5 заявил «все ≤95 WPM, PROVEN PASS» — фактически s28=100.3 (non-greedy баг скрипта producer'а); methodology-critic Phase 10 поймал → REVISE.
+- Producer в отчёте помечает self-reported метрику как **«требует critic-ре-верификации»**, НЕ «PROVEN / zero-tolerance соблюдён».
+- Если метрика погнала **REVISE** и revision-agent заявил fix → авторитетная ре-верификация = **focused re-spawn профильного critic'а** (узкий scope, методика Phase N), НЕ ad-hoc orchestrator-grep (тоже ненадёжен — Л5 Phase 11.5 orchestrator-WPM-скрипт дал s32=794). Механика — `.claude/skills/pre-user-gate/SKILL.md` Step 0.
+
+---
+
 ## 4. Роли всех агентов (8 total)
 
 ### Производители (writers / builders)
@@ -284,24 +296,33 @@ cd /tmp/lec-NN-wt && git checkout -b phase-X-Y
 
 After phase commits в worktree → `git update-ref refs/heads/issue-NN-lec-NN <commit-sha>` from main repo. This propagates branch HEAD без requiring main worktree checkout (avoids contention с parallel session).
 
-### Pre-USER-GATE artifacts sync (MANDATORY)
+### Pre-USER-GATE artifacts sync (MANDATORY — hardened)
 
-Before opening **any** USER GATE — copy artifacts из worktree to main repo:
+**Silent-failure mode (Лекция 5 #100):** `cd /tmp/lec-NN-wt && … && cp src dst` оставляет cwd в worktree → `cp` получает **src==dst** («are the same file»), sync в main-repo **молча НЕ происходит**. Поймано только inode-check'ом перед GATE. Поэтому процедура ниже — ENFORCED, с обязательным пост-верификатором.
+
+**Правила (нарушение = sync считается невыполненным):**
+- **Абсолютные src И dst** в каждой `cp`. НИКОГДА `cd`-в-worktree в том же compound, где `cp` (cwd-relative dst разрешится в worktree → src==dst).
+- Запускать sync **из main-repo cwd** (или вообще без `cd`), оба пути абсолютные.
+- **Обязательный пост-верификатор** (inode-diff ИЛИ `rsync --checksum`) — без него sync НЕ считается выполненным.
+
 ```bash
-cp /tmp/lec-NN-wt/library/lectures/lec-NN/chapter.md /home/levko/AI-usage-lessons/library/lectures/lec-NN/
-cp /tmp/lec-NN-wt/library/lectures/lec-NN/speech.md /home/levko/AI-usage-lessons/library/lectures/lec-NN/
-cp /tmp/lec-NN-wt/library/lectures/lec-NN/deck.yaml /home/levko/AI-usage-lessons/library/lectures/lec-NN/
-cp /tmp/lec-NN-wt/library/lectures/lec-NN/slides/*.md /home/levko/AI-usage-lessons/library/lectures/lec-NN/slides/
-cp /tmp/lec-NN-wt/library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf,build*.py,iteration-log.md} /home/levko/AI-usage-lessons/library/lectures/lec-NN/rendered/
-cp /tmp/lec-NN-wt/library/lectures/lec-NN/rendered/snapshots/*.png /home/levko/AI-usage-lessons/library/lectures/lec-NN/rendered/snapshots/
+SRC=/tmp/lec-NN-wt/library/lectures/lec-NN
+DST=/home/levko/AI-usage-lessons/library/lectures/lec-NN
+mkdir -p "$DST/slides" "$DST/rendered/snapshots"
+cp "$SRC"/chapter*.md "$SRC"/speech.md "$SRC"/glossary.yaml "$SRC"/deck*.yaml "$DST/"
+cp "$SRC"/slides/*.md "$DST/slides/"
+cp "$SRC"/rendered/lec-NN.{pptx,pdf} "$SRC"/rendered/iteration-log.md "$DST/rendered/" 2>/dev/null
+cp "$SRC"/rendered/snapshots/*.png "$DST/rendered/snapshots/" 2>/dev/null
 ```
 
-**Verify before GATE opens:**
+**Verify before GATE opens (ОБА обязательны):**
 ```bash
-ls -la /home/levko/AI-usage-lessons/library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}
+ls -la "$DST"/rendered/lec-NN.{pptx,pdf}                              # существование
+stat -c '%i' "$SRC"/chapter.md "$DST"/chapter.md                      # inodes ДОЛЖНЫ различаться = реальная копия
 ```
+- `ls` отсутствует ИЛИ inodes совпадают (src==dst — sync не произошёл) → **STOP, do NOT open GATE**, пере-выполнить sync абсолютными путями.
 
-If missing → STOP, do NOT open GATE. (Memory rule: `feedback_pre_gate_render_artifacts.md`.)
+(Memory rule: `feedback_pre_gate_render_artifacts.md`. Якорь hardening: рефлексия Л5, issue #112.)
 
 ### Final merge
 

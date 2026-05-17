@@ -35,6 +35,17 @@ Before each USER GATE in lecture-production pipeline (см. `tools/lecture-produ
 
 ## Steps
 
+### 0. Self-reported metric re-verification (ENFORCED — все modes)
+
+**Якорь (Лекция 5 #100):** speech-writer Phase 9 заявил «все 33 фрагмента ≤95 WPM, PROVEN PASS» — фактически s28=100.3 (non-greedy `«…»` баг самопроверочного скрипта producer'а). methodology-critic Phase 10 поймал → REVISE. На Phase 11.5 **ad-hoc orchestrator-скрипт независимой ре-верификации ТОЖЕ сломался** (s32=794 WPM — крудовый regex захватил non-spoken хвост; divider'ы 0.3 мин = ложные 100-120). Оба источника (producer self-report И orchestrator-grep) независимо дали неверный сигнал.
+
+**Правило:** если хоть один critic вынес REVISE из-за **метрики** (WPM / strict-in % / word-count / pacing-sum / coverage-count), и revision-agent заявил fix:
+
+- **НЕ принимать self-report producer'а как gate-сигнал.** Формулировка «PROVEN PASS / zero-tolerance соблюдён» в отчёте producer'а — НЕ доказательство.
+- **НЕ полагаться на ad-hoc orchestrator-скрипт/grep** для ре-верификации этой метрики. Одноразовые regex/awk по chapter/speech/split-deck ненадёжны (fragment-boundary, non-greedy, totals/metadata double-count — см. Step 3 pacing).
+- **Авторитетная ре-верификация = focused re-spawn профильного critic'а** (methodology-critic для WPM/strict-in, fact-checker для чисел, consistency-checker для terminology) с **узким scope «только эта метрика» и ТОЙ ЖЕ методикой Phase N**. Кросс-валидировать: critic должен символьно воспроизвести число, заявленное producer'ом в changelog (если не воспроизводит — методики разошлись, разобраться ДО gate).
+- Артефакт НЕ финализировать и GATE НЕ presenting, пока focused critic re-check не вернул PASS.
+
 ### 1. Visual sweep (для slides — `mode=slides` and `mode=final`)
 
 - Open all PNG snapshots: `library/lectures/lec-NN/rendered/snapshots/sNN.png`.
@@ -61,7 +72,7 @@ Before each USER GATE in lecture-production pipeline (см. `tools/lecture-produ
 - [ ] No designer-added extras: «Лектору» = 0, «Вы здесь» в visible content = 0, «мин» в visible (not metadata) = 0, subtitle добавленный по инициативе = 0, callback frame от designer = 0.
 - [ ] No terminology drift (cross-artifact grep по watched terms лекции — например «Приложение-робот» variants).
 - [ ] No orphan references к удалённым slides (grep speech / chapter / other slides на старые sNN ID).
-- [ ] Pacing math sums correctly (sum of `duration_min` per slide = lecture total).
+- [ ] Pacing math sums correctly. **Считать ТОЛЬКО per-slide `duration_min`** — исключить `totals:`/metadata-поля. При split-deck (`deck.yaml`+`deck-part2.yaml`) наивный `grep|awk` по обоим файлам **двойной счёт** (Л5: ложные 144 мин при реальных 70+5). Предпочесть: читать deck-поле `totals.slide_times_sum_min` ИЛИ scope grep к строкам внутри `- id: sNN` блоков; при сомнении — это метрика → Step 0 (critic re-verify), не ad-hoc сумма.
 - [ ] Palette consistent — Ocean Gradient + Teal + Gold only, no anti-pattern colors (red, generic blue).
 - [ ] Gold ≥1×/slide.
 - [ ] 0 footer-tax (LO codes / методические комментарии в видимой области).
@@ -144,6 +155,7 @@ Return a report to orchestrator:
 - НЕ исправляет issues сам — спавнит revision agents.
 - НЕ presenting USER GATE без pass.
 - НЕ ignore-ит P0 («можно показать пользователю, он сам решит» — нет, fix first).
+- **НЕ доверяет ad-hoc orchestrator-скриптам для метрик** (WPM/strict-in%/word-count/pacing) — для метрики, погнавшей verdict, авторитетен только focused critic re-spawn с методикой Phase N (Step 0).
 
 ## Ссылки
 

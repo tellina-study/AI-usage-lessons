@@ -37,9 +37,9 @@ terms:
     forbidden: []
     note: "1 строка-атрибут §2.1; подмножество fraud-задачи (anomaly), НЕ отдельный тип ИИ; жёсткие пороги = rules-engine"
   - canonical: "false positive / false negative (FP/FN), матрица ошибок (TP/TN/FP/FN)"
-    aliases: ["FP/FN", "матрица ошибок", "confusion matrix"]
+    aliases: ["FP/FN", "матрица ошибок", "confusion matrix", "ошибка первого рода", "ошибка второго рода", "ошибка 1-го рода", "ошибка 2-го рода"]
     forbidden: []
-    note: "ВВОД С НУЛЯ §2.3 (первое появление в курсе — Л7 ПОСЛЕ Л5); forward-pointer → Л7 §2.2 (не recall, не «напоминание»). БЕЗ prevalence/PPV"
+    note: "ВВОД С НУЛЯ §2.3 (первое появление в курсе — Л7 ПОСЛЕ Л5); forward-pointer → Л7 §2.2 (не recall, не «напоминание»). БЕЗ prevalence/PPV. FP = ошибка первого рода (заблокирован честный клиент); FN = ошибка второго рода (пропущен фрод)"
   - canonical: "cost-sensitive (стоимостно-взвешенная оценка)"
     aliases: []
     forbidden: []
@@ -68,6 +68,22 @@ terms:
     aliases: []
     forbidden: []
     note: "1× расшифровка §5.1 с нуля; атрибуты товара; over-specialization"
+  - canonical: "cold-start (холодный старт)"
+    aliases: ["холодный старт"]
+    forbidden: []
+    note: "inline-define §5.1; для нового товара/пользователя нет истории взаимодействий — рекомендовать не на чем; слабость collaborative; механизм — §5.4"
+  - canonical: "popularity bias (смещение к популярному)"
+    aliases: ["смещение к популярному"]
+    forbidden: []
+    note: "inline-define §5.1; система склонна рекомендовать и без того популярное (по нему больше данных), усиливая «богатые богатеют»; слабость collaborative; механизм — §5.4"
+  - canonical: "over-specialization (чрезмерная специализация)"
+    aliases: ["чрезмерная специализация"]
+    forbidden: []
+    note: "inline-define §5.1; система замыкает пользователя в узкую нишу «ещё такого же»; слабость content-based; механизм — §5.4"
+  - canonical: "serendipity (намеренная неожиданность рекомендаций)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §5.5; намеренная доля рекомендаций вне узкого профиля — инженерный ответ на filter bubble"
   - canonical: "hybrid recommender (гибрид)"
     aliases: ["гибридная рекомендательная система"]
     forbidden: []
@@ -104,6 +120,26 @@ terms:
     aliases: ["скрытый человеческий труд"]
     forbidden: []
     note: "inline-required §6.3 (reader-A6); «автономная» система может опираться на скрытую ручную обработку; TCO ≠ демо"
+  - canonical: "PII (personally identifiable information / персональные данные)"
+    aliases: ["PII", "персональные данные"]
+    forbidden: []
+    note: "inline-define §1.2 (первое упоминание) — данные, по которым можно идентифицировать конкретного человека (имя, телефон, история покупок); ПДн граждан РФ → ФЗ-152, локализация. Самый частый незнакомый термин главы (reader-P1)"
+  - canonical: "circuit-breaker / kill-switch (аварийный выключатель)"
+    aliases: ["circuit-breaker", "kill-switch", "аварийный выключатель"]
+    forbidden: []
+    note: "inline-define §1.5; механизм, мгновенно останавливающий систему при выходе показателя за порог; несущее понятие критерия «автоматизация без gate». Биржевой синоним — circuit-breaker"
+  - canonical: "SHAP (метод объяснения вклада признаков)"
+    aliases: ["SHAP"]
+    forbidden: []
+    note: "inline-define §3.1 (первое упоминание); метод, показывающий вклад каждого признака в конкретное решение модели; источник reason codes из GBM"
+  - canonical: "iBuying (алгоритмическая скупка жилья)"
+    aliases: ["iBuying"]
+    forbidden: []
+    note: "inline-define §0.1; instant buying — модель оценивает дом, компания автоматически покупает/ремонтирует/перепродаёт (кейс Zillow)"
+  - canonical: "augmentation vs замена (ИИ на рутине + человек на хвосте)"
+    aliases: ["augmentation"]
+    forbidden: []
+    note: "несущая дихотомия Klarna-урока §4.4/§4.5/§6.2/Заключение; устойчива не полная замена человека ИИ, а augmentation — ИИ на массовой рутине + гарантированная человеческая эскалация на тяжёлом хвосте"
   - canonical: "ФЗ-152 «О персональных данных»"
     aliases: ["ФЗ-152"]
     forbidden: []

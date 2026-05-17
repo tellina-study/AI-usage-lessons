@@ -423,3 +423,29 @@ Phase 11 demonstrated single speech-writer agent doing 3-artifact touches (chapt
 **Урок:** имя папки лекции должно сразу = номеру РПД (не порядку производства). Конвенция «repo_dir != number» из #86 создала путаницу за 2 шага (производство → перенумерация → переименование). Для будущих лекций: папка `lec-NN` = номер РПД сразу.
 
 **Открытый pre-existing gap (НЕ из #94):** `ontology/store.ttl` моделирует старую структуру (lec_04=медицина, lec_07=этика) — рассинхрон с РПД. Отдельный issue #95 (требует RDF-ремоделяции, не path-rename; слепая замена = IRI-коллизия).
+
+## 2026-05-17 — Лекция 5: owner-решения USER GATE 0 (#100)
+
+**Контекст:** Phase 1 Лекции 5 «AI в финансовом секторе и ритейле» (issue #100, branch `issue-100-lec-05-finance-retail`). plan-v2-final после Phase 1 critique (methodology APPROVE-WITH-POLISH/0P0·4P1·7P2 + reader-text-only APPROVE-WITH-POLISH/0P0·4P1) + orchestrator finalize. Производится параллельно с lec-04 (shared `.git`, worktree-изоляция `/tmp/lec-05-wt`).
+
+### Governance escape-hatch (документированное owner-решение)
+
+- **Глубина `lec-05/chapter.md` = 22k+ слов, без верхней границы.** Red-flag «chapter >15k слов = red-flag» (`tools/lecture-production/README.md` §6) **явно снят владельцем для `lec-05/chapter.md`** на USER GATE 0. Тот же governance-паттерн, что Л3 (2026-05-16, #87) и Л4 (#99): глава = глубокий референс + Q&A-бэкап + deep-dive boxes; слайды/речь = 75-мин срез. methodology-critic Phase 1 подтвердил методическую корректность (reference depth ≠ delivery scope). Escape-hatch по принципу governance-правил (явное + документированное owner-решение для класса-исключения; memory feedback_governance_rules). **Действует только для lec-05**; для других лекций red-flag в силе без явного аналогичного решения.
+- **Document Size Limit 600 строк — waiver НЕДОСТУПЕН.** chapter обязан быть разбит на `chapter.md` (frontmatter+§0+Раздел 1+Раздел 2) + `chapter-part2.md` (Раздел 3–6+Глоссарий+Источники) с двусторонними кросс-ссылками.
+
+### Fact-integrity: РПД-цифра «голосовые ассистенты >90% обращений» заменена verified-данными
+
+- РПД-аспект Л5 содержит «голосовые ассистенты (>90% обращений)». Verified-источники (WebSearch, research 02) дают только «Т-Банк чат-бот >40% обращений» (TAdviser, 2025) и «70% банков планируют голос к 2025»; первоисточник «>90%» НЕ найден. **Решение владельца USER GATE 0:** на видимом слое слайдов и в плане используется **verified-формулировка** («значительная и растущая доля первого контакта автоматизирована; Т-Банк >40%; 70% планируют к 2025») с атрибуцией+датой; РПД-цифра «>90%» **НЕ используется**, не «округляется вверх». Обоснование — **fact-integrity**: лекция сама учит fact-checking (паттерн Р4, mastery — Семинар 5); assertion на неверифицированной цифре подорвал бы доверие к лекции. `[FACT-CHECK]` до day-of. Зафиксировано: research-02 §1, plan-v2-final G-3/§7/§9.
+
+### Л7-мосты = forward-pointer'ы (Л7 идёт ПОСЛЕ Л5 по course-plan.md)
+
+- Phase 1 critics (methodology P1-2/P2-2 + reader A2/A3/D) выявили: план v1 строил FP/FN, матрицу ошибок и прокси-bias как «мост назад к Л7, не переобъяснять» — но **Л7 (медицина) идёт ПОСЛЕ Л5** по `course-plan.md`; для студента, идущего по порядку, это первое формальное появление, не recall. **Решение владельца:** roast-4 v1 «не переобъяснять» **СНЯТ**; Л5 вводит FP/FN + матрицу ошибок (TP/FP/FN/TN на пальцах) + cost-sensitive + механизм прокси-bias **с нуля компактно** (БЕЗ медицинской prevalence/PPV-глубины), Л7-ссылки = **forward-pointer** «углубите там». Корректные §-якоря (verified против finalized `library/lectures/lec-07/chapter.md`): sensitivity/specificity = **Л7 §2.2**; Obermeyer/Optum = **Л7 §4.3** (НЕ §3 — §3 = drug discovery; P1-2 cascade-fix во всех местах плана/research). **Урок:** forward-reference на ещё-не-прочитанную лекцию ≠ «мост назад» — для студента по порядку это ввод нового понятия; план должен делать ввод самодостаточным + явный forward-pointer, а §-якорь forward-цели — verified против finalized chapter ДО GATE 0 (не «найдём на Phase 2»).
+
+### Прочие решения GATE 0
+
+- Hook s01 = Zillow iBuying коллапс (universal, крупные ставки 2021-исторический, рамкирует ЦВ, payoff в Р1/s09). Knight Capital → callback внутри s09/s14 (не отдельная failure-процентовка — reader C2).
+- Slide-count Лекции 5 LOCKED = 32 + suffix-ID схема (как lec-03/lec-04) для structural-правок после GATE-A без renumber `[for-slide-sNN]`.
+- CV = сквозной иллюстративный пласт + KYC в безопасности s31, НЕ отдельный 6-й раздел (75 мин не тянут 6 равновесных типов; methodology Curriculum-check D подтвердил).
+- strict-in метрика: solid headline = 11/32≈34% slides (граничные s06/s16/s22 — upside, НЕ baseline; в bucket ТОЛЬКО при развёрнутом критерии ≥3 аргумента — P1-1). Per-artifact таблица chapter/slides/speech раздельно, цель solid ≥30% каждый; chapter измеряется долей слов (P2-1). Не повторять Л3 v1-ловушку (завышенный baseline 52%→40%).
+- LO6 Bloom-разводка: Лекция 5 = Understand (распознать класс ошибки + назвать принцип проверки), Семинар 5 = Apply/Analyze (команды сами проверяют по первоисточникам). §3 success-критерий НЕ дублирует практику Сем5 (P1-3).
+- Q3 plan-v2-final ОДОБРЕН → Phase 2 chapter draft.

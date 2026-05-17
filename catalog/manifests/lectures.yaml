@@ -44,9 +44,9 @@ lectures:
     module: 1
     learning_outcomes: [LO7, LO4]
     repo_dir: lec-03
-    status: in_production
+    status: produced
     issue: 87
-    updated_at: "2026-05-16"
+    updated_at: "2026-05-17"
 
   - number: 4
     title: "AI в разработке программного обеспечения"
@@ -69,7 +69,7 @@ lectures:
     module: 1
     learning_outcomes: [LO1, LO2, LO7]
     repo_dir: lec-06
-    status: in_production
+    status: produced
     issue: 101
     updated_at: "2026-05-17"
 

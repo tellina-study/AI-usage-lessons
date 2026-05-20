@@ -246,7 +246,7 @@ Capella Space и финский ICEYE — это операторы радара
 
 [Переход на s11.]
 
-### [Слайд 11 — Predictive maintenance + F-35 ALIS failure] 16:45–19:30
+### [Слайд 11 — Прогностическое обслуживание + провал F-35 ALIS] 16:45–19:30
 
 [На слайде — две колонки: Rolls-Royce + Airbus Skywise (success); F-35 ALIS → ODIN (failure) с фото F-35.]
 

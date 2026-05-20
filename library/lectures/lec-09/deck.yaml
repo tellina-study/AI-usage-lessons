@@ -1,0 +1,606 @@
+# library/lectures/lec-09/deck.yaml
+#
+# Deck-структура Лекции 9 «AI в авиакосмической отрасли и оборонном комплексе» (33 слайда).
+#
+# Source: chapter v3 (status=finalized, ~17k слов, OODA keystone §0.2,
+# 28-term Глоссарий, 104 источника) + plan v2 (USER GATE 0 approved).
+# Phase 5 multi-artifact pipeline — slides content alignment.
+# Issue #118 · downstream-каскад от chapter/speech (book-first).
+#
+# Lec-N-1 pattern compliance: match lec-07 (cover + lecture-map + 6 section
+# dividers + dedicated Q&A; top progress bar только на dividers + cover).
+
+deck:
+  lecture_number: 9
+  title: "AI в авиакосмической отрасли и оборонном комплексе"
+  audience: "студенты-инженеры 3 курса (универсальная, не aerospace/defense-специалисты)"
+  duration_min: 75
+  central_question: "Где в цепи Sense → Decide → Act аэрокосмической или оборонной задачи AI действительно даёт измеримое преимущество — и где он становится либо опасной автоматизацией, либо предметом международного договора?"
+  learning_outcomes: [LO1a, LO1b, LO2, LO3, LO7]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v3 (status=finalized, ~17k слов)
+  plan: notes/lecture-9-review/plan-v2.md
+  keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976)"
+
+slides:
+
+  # ─── Раздел 0 — Открытие + keystone + roadmap (≈5 мин) ───
+
+  - id: s01
+    file: slides/s01-hook-satellite-before-after.md
+    type: live_demo
+    duration_min: 2
+    assertion: "AI-аналитика спутниковой съёмки превращает 250 петабайт архива Maxar в детекции за часы — то, что раньше требовало дней работы аналитика."
+    learning_goal: "Эмоциональный hook + сразу показать: AI в Sense — рабочая инфраструктура, не футурология"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§0.1 — Открытие: то, что увидел спутник за ночь"
+    references: [defense-one-2025-maxar, businesswire-2025-maxar-sentry, military-aerospace-2025]
+    visual:
+      pattern: external_demo
+      primary: "BEFORE/AFTER satellite imagery — Maxar Sentry change detection (Sudan port construction или Arctic ice change); annotated bounding boxes"
+      sources:
+        - "Wikimedia Commons / Maxar public press imagery (CC-BY-SA)"
+        - "Backup: schematic illustration через ImageMagick если sat-imagery licensing закроется"
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 0.2
+    assertion: "Лекция 9. AI в авиакосмической отрасли и оборонном комплексе"
+    learning_goal: "Cover-слайд: title + meta + decorative «09»"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Hero-cover: outline «09» крупно + title 36pt + дата + длительность в Ocean palette; небольшая drone/satellite silhouette decoration"
+
+  - id: s03
+    file: slides/s03-lecture-map.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Карта лекции — 4 содержательных раздела + граница и сборка."
+    learning_goal: "Lecture-map — навигация по 6 разделам + центральный вопрос напомнить"
+    learning_outcomes: []
+    chapter_ref: "§0.5 — Дорожная карта главы"
+    references: []
+    visual:
+      pattern: lecture_map
+      primary: "6 horizontal cards (Р0 ▸ Sense ▸ Decide ▸ Act ▸ Граница ▸ Сборка); central question внизу"
+
+  - id: s04
+    file: slides/s04-glossary-mini.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Шесть аббревиатур, без которых дальше не пройти."
+    learning_goal: "Снять glossary-блокер перед погружением в Р1; 6 acronyms × 2 колонки"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§0.3 — Шесть аббревиатур, без которых дальше не пройти"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "6 acronyms × 2 колонки (SAR / ATR / ISR / EW / LAWS / OODA) — компактный glossary-style, не полноценный slide"
+
+  - id: s05
+    file: slides/s05-keystone-ooda.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Три звена цепи. AI входит в каждое — но по-разному."
+    learning_goal: "Keystone slide — OODA как несущая ось всей лекции"
+    learning_outcomes: [LO1a, LO1b]
+    chapter_ref: "§0.2 — Keystone: OODA — Sense → Decide → Act"
+    references: [boyd-1976, osinga-2007]
+    visual:
+      pattern: keystone_chain
+      primary: "Горизонтальная цепочка Sense → Decide → Act + 3 иконки (eye / brain / drone); под каждым звеном — 2 строки «где AI и где человек»; тонкая dual-use лента сверху (гражданское ↔ военное); OODA-sourcing footnote «Boyd, USAF, 1976»"
+
+  # ─── Section divider (1) ───
+  - id: s06
+    file: slides/s06-section1-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 1 — Sense. Глаза в небе и на земле."
+    learning_goal: "Visual divider — переход в первый содержательный раздел"
+    learning_outcomes: [LO1a, LO1b]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «1» + title + 1-фраза-фрейм + 6-card progress bar с gold-подсветкой Р1"
+
+  # ─── Раздел 1 — Sense (≈12 мин) ───
+
+  - id: s07
+    file: slides/s07-sense-intro.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Sense — самое благополучное звено OODA для AI: доступная ground truth, терпимая FP-цена, multi-sensor fusion."
+    learning_goal: "Зачем именно в Sense AI работает лучше всего; четыре типа сигнала"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§1.1 — Что такое «Sense»"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "4 типа сигнала × 4 иконки (спутник / телеметрия / радио / open-source) + 3 причины «почему здесь AI работает»"
+
+  - id: s08
+    file: slides/s08-maxar-sentry.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Maxar Sentry — predictive intelligence suite: ML над архивом ~250 ПБ + multi-sensor tipping (EO + SAR + AIS). Детекции в часах после съёмки."
+    learning_goal: "Главный коммерческий пример Sense + anti-hype: «AI-derived» = оркестрация классики + ML"
+    learning_outcomes: [LO1a, LO1b]
+    chapter_ref: "§1.2 — Спутниковая аналитика"
+    references: [defense-one-2025-maxar, businesswire-2025-maxar-sentry]
+    visual:
+      pattern: assertion_visual
+      primary: "BEFORE/AFTER satellite snippet (зданий между съёмками) + sidebar «250 PB архив / NGA Luno A D01 контракт» с gold-выделением ключевой метрики"
+
+  - id: s09
+    file: slides/s09-blacksky-planet-constellation.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "BlackSky + Planet + Capella + ICEYE — четвёрка комплементарных подходов: высокая частота revisit + ежедневное покрытие + всепогодный SAR."
+    learning_goal: "Различие EO vs SAR; почему констелляция — это структурное преимущество"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§1.2 — Спутниковая аналитика"
+    references: [blacksky-2024-8k, planet-ir-2024]
+    visual:
+      pattern: matrix
+      primary: "Constellation diagram 4 операторов + таблица: спутников / revisit / sensor type / главный контракт"
+
+  - id: s10
+    file: slides/s10-edge-ai-on-orbit.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Edge AI on-orbit: ML прямо на спутнике вместо передачи сырого сигнала. ESA Φ-sat-2 — remote-upgradable модели."
+    learning_goal: "On-orbit edge ML как separate класс задач; demonstrator → production"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§1.3 — SAR и edge-AI на орбите"
+    references: [esa-2024-phi-sat-2, planetek-2025, slingshot-2025-talos]
+    visual:
+      pattern: matrix
+      primary: "4 категории edge-AI: Demonstrators (Φ-sat-2) / Production telemetry (Pony Express) / SDA tracking (Slingshot Agatha) / Commercial archive (TerraTech) — карточки с иконками"
+
+  - id: s11
+    file: slides/s11-russian-sat-layer.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Российский слой Sense — ТЕРРА ТЕХ / СКАНЭКС / СПУТНИКС. Асимметричный западному по объёму открытых данных, но операционные кейсы есть."
+    learning_goal: "Russian context: 3 игрока + BRICS agro-monitoring; что публично, что нет"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§1.5 — Российский слой"
+    references: [tass-2024-brics, aviation-week-2024, sputnix-2025]
+    visual:
+      pattern: matrix
+      primary: "3 player cards: ТЕРРА ТЕХ (BRICS agro) / СКАНЭКС (3.5M архив, direct-receiving) / СПУТНИКС (Zorkiy-2M, 100+ кубсатов) + иконки спутников"
+
+  - id: s12
+    file: slides/s12-predictive-maintenance.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Predictive maintenance: Rolls-Royce IntelligentEngine + Airbus Skywise. ~11 600 ВС подключены к Skywise; ~400 предотвращённых событий в год у Rolls-Royce."
+    learning_goal: "Predictive maintenance — массовая гражданская AI-инфраструктура"
+    learning_outcomes: [LO1a, LO1b]
+    chapter_ref: "§1.4 — Predictive maintenance"
+    references: [airbus-2024-skywise, klover-2024-rr, cio-2024-rr]
+    visual:
+      pattern: data_chart
+      primary: "QuickChart bar: 11 600 ВС в Skywise (gold highlight) + side-stat 400 prevented events/year RR + Skywise dashboard photo if available"
+
+  - id: s13
+    file: slides/s13-f35-alis-failure.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "F-35 ALIS нарушил все три условия predictive maintenance — и был списан в июне 2024. Урок номер один для инженера."
+    learning_goal: "Канонический failure-кейс Sense: 3 условия predictive maintenance + cost-per-flight-hour $42-44k"
+    learning_outcomes: [LO1b, LO3]
+    chapter_ref: "§1.6 — Провал F-35 ALIS"
+    references: [gao-20-316, gao-22-105128, asf-2024-odin]
+    visual:
+      pattern: matrix
+      primary: "3-card layout: feedback loop / ground truth / FP≤FN cost — ALIS «×» на каждой + QuickChart bar F-35 $42-44k/h vs F-22 baseline"
+
+  - id: s14
+    file: slides/s14-adversarial-sar-gps.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Adversarial-атаки на SAR ATR + GPS-spoofing — accuracy benchmark обманчив, single-source decision хрупка. 820 случаев GPS-интерференции в Латвии 2024 vs 26 в 2022."
+    learning_goal: "2-в-1 failure: adversarial SAR + GPS spoofing → urok про single-source"
+    learning_outcomes: [LO1b, LO3]
+    chapter_ref: "§1.7 — Adversarial-атаки и GPS-spoofing"
+    references: [du-2024-arxiv, stanford-scpnt-2025, foreign-policy-2024]
+    visual:
+      pattern: matrix
+      primary: "2 case cards: adversarial scatterer illustration + 820 GPS spoof events 2024 (32× growth); Bayesian uncertainty + multi-GNSS защита"
+
+  - id: s15
+    file: slides/s15-sense-criteria.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Sense — когда не AI: 2 критерия. Distribution shift + single-sensor."
+    learning_goal: "2 критерия для Sense — закрытие раздела"
+    learning_outcomes: [LO3]
+    chapter_ref: "§1.8 — Когда не AI для Sense"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "2 criterion cards (#1 low-data / shift, #2 single-sensor) + закрывающий takeaway Sense"
+
+  # ─── Section divider (2) ───
+  - id: s16
+    file: slides/s16-section2-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 2 — Decide. От наблюдения к решению."
+    learning_goal: "Visual divider — переход в раздел Decide"
+    learning_outcomes: [LO1a, LO1b, LO2]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «2» + title + 1-фраза-фрейм + 6-card progress bar с gold-подсветкой Р2"
+
+  # ─── Раздел 2 — Decide (≈14 мин) ───
+
+  - id: s17
+    file: slides/s17-decide-intro.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Decide — звено, где LLM-хайп опаснее всего. «Accuracy 90%» звучит хорошо до момента, когда 10% — это тысячи человек."
+    learning_goal: "Зачем Decide — самое тонкое звено OODA; multi-modal foundation models"
+    learning_outcomes: [LO1a, LO2]
+    chapter_ref: "§2.1 — Что такое «Decide»"
+    references: []
+    visual:
+      pattern: assertion_visual
+      primary: "Decide stack illustration: text + image + map + telemetry → fusion → COA recommendation; gold pointer на 10% × 37 000 = 3 700 hook to Lavender"
+
+  - id: s18
+    file: slides/s18-palantir-mss.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Palantir Maven Smart System — главный американский decision-support флагман. Потолок ~$1,3 миллиарда до 2029 года. Уровень автономии L1 Assistive."
+    learning_goal: "MSS как пример L1; история Maven 2017-2026"
+    learning_outcomes: [LO1a, LO1b]
+    chapter_ref: "§2.2 — Palantir MSS"
+    references: [defensescoop-2025-mss, govconwire-2024]
+    visual:
+      pattern: assertion_visual
+      primary: "Palantir logo + 3 contract milestones (May 2024 $480M / Sept 2024 +$99.8M / May 2025 +$795M) timeline; «L1 Assistive» бейдж gold"
+
+  - id: s19
+    file: slides/s19-scale-helsing.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Scale AI Donovan → Defense Llama → Thunderforge: эволюционная линия. Helsing — главный европейский игрок, €12 млрд оценка."
+    learning_goal: "Scale + Helsing — два других ключевых vendor'а Decide"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§2.2 — Scale + Helsing"
+    references: [businesswire-2023-scale, defensescoop-2024-llama, helsing-2025]
+    visual:
+      pattern: matrix
+      primary: "Scale evolution timeline (Donovan 2023 → Defense Llama Nov 2024 → Thunderforge Mar 2025) + Helsing €12B sidebar"
+
+  - id: s20
+    file: slides/s20-anthropic-russian-c2.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Anthropic-Palantir-AWS (ноябрь 2024): Claude на IL6. Российский C2 — Svod / Glaz-Groza с явным single-source caveat."
+    learning_goal: "Anthropic IL6 + Russian Svod (one-source caveat); сравнение"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§2.2 — Anthropic + Russian C2"
+    references: [businesswire-2024-anthropic, csis-2026-bondar]
+    visual:
+      pattern: matrix
+      primary: "2 cards: Anthropic IL6 (Nov 2024, gold) + Russian Svod/Glaz-Groza (caveat «CSIS + Russian press, independent verification limited»)"
+
+  - id: s21
+    file: slides/s21-lavender-failure.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "IDF Lavender (Газа 2023-24): ~37 000 помечены, 90% accuracy → ~3 700 false positives. «Accuracy %» — не та метрика для life-and-death."
+    learning_goal: "Canonical Lavender — 3 урока (wrong metric + frictionless + degenerate HITL)"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§2.4 — Провал IDF Lavender"
+    references: [abraham-2024-972, lieber-2024, aoav-2025]
+    visual:
+      pattern: data_chart
+      primary: "QuickChart sankey/funnel: 37 000 detected → 90% accuracy → 3 700 FP → 15-20 civilian casualties authorized; gold danger marker; sidebar — 20 sec review per target"
+
+  - id: s22
+    file: slides/s22-lancet-vincennes.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Lancet ATR rollback — демо ≠ продакшен. USS Vincennes 1988 (290 KIA) — UI под стрессом, и почему этот урок про LLM."
+    learning_goal: "Lancet (LO2 canonical) + Vincennes (urok про UI и confident BS)"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§2.5, §2.6 — Lancet + Vincennes"
+    references: [csis-2025-lancet, usni-2018-vincennes, foreign-affairs-2024]
+    visual:
+      pattern: matrix
+      primary: "2 case cards: Lancet «Target Locked» UI BEFORE 2022 / AFTER 2024 (no autonomous-locking) + Iran Air 655 timeline 1988 — confident BS bridge to LLM"
+
+  - id: s23
+    file: slides/s23-decide-criteria.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Decide — когда не AI: 2 критерия. Long-tail edge cases + life-and-death без HITL."
+    learning_goal: "Критерии 3-4 для Decide — закрытие раздела"
+    learning_outcomes: [LO3]
+    chapter_ref: "§2.7 — Когда не AI для Decide"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "2 criterion cards (#3 long-tail / abstention, #4 life-and-death без HITL) + закрывающий takeaway Decide"
+
+  # ─── Section divider (3) ───
+  - id: s24
+    file: slides/s24-section3-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 3 — Act. Автономия на платформе."
+    learning_goal: "Visual divider — переход в раздел Act"
+    learning_outcomes: [LO1a, LO1b, LO2, LO3]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «3» + title + 1-фраза-фрейм + 6-card progress bar с gold-подсветкой Р3"
+
+  # ─── Раздел 3 — Act (≈14 мин) ───
+
+  - id: s25
+    file: slides/s25-act-intro.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Act — звено, где hype далеко впереди реальности. Большая часть combat-strikes остаётся operator-in-loop или semi-auto."
+    learning_goal: "Зачем Act — overhyped, но adoption растёт; counter-drone asymmetry $300 vs $3M"
+    learning_outcomes: [LO1a, LO2]
+    chapter_ref: "§3.1 — Что такое «Act»"
+    references: []
+    visual:
+      pattern: assertion_visual
+      primary: "Autonomy spectrum L1→L5 mini-preview + cost-asymmetry callout «$300 drone vs $3M Patriot» gold"
+
+  - id: s26
+    file: slides/s26-anduril-fury-cca.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Anduril Fury YFQ-44A — CCA Increment 1. Первый полёт 31 октября 2025; серийное производство с 23 марта 2026 на Arsenal-1."
+    learning_goal: "Fury как canonical CCA case; L3 Supervised autonomy; Hivemind + Lattice"
+    learning_outcomes: [LO1a, LO1b]
+    chapter_ref: "§3.2 — Anduril Fury"
+    references: [wikipedia-yfq44, asf-2026-arsenal, aviationist-2026]
+    visual:
+      pattern: assertion_visual
+      primary: "Fury YFQ-44A photo (DARPA / Air Force public) + spec sidebar (50 000 ft / M 0.95 / 9g / AIM-120 AMRAAM) + «L3 Supervised» bold gold"
+
+  - id: s27
+    file: slides/s27-x62a-vista-saker.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "DARPA X-62A VISTA — первый AI-vs-человек dogfight (сентябрь 2023). Saker Scout Ukraine — 64 autonomous targets, EW-resistant, combat-tested."
+    learning_goal: "X-62A + Saker — 2 рабочих кейса разной автономии; anti-hype про narrow scripted scenario"
+    learning_outcomes: [LO1a, LO2]
+    chapter_ref: "§3.2 — X-62A + Saker"
+    references: [darpa-2024-ace, aviationist-2024-x62, mwi-2025-saker]
+    visual:
+      pattern: matrix
+      primary: "2 case cards: X-62A VISTA F-16 photo + dogfight timeline (Dec 2022 → Sep 2023 → May 2024 Kendall) / Saker Scout (Brave1 ecosystem, mother-drone 300 km)"
+
+  - id: s28
+    file: slides/s28-geran-cognitive-pilot.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Geran-2 evolution — NVIDIA Jetson onboard (wreckage); Alabuga ~2 700-3 000/мес. Cognitive Pilot — российский civilian dual-use (СберАгро, КАМАЗ)."
+    learning_goal: "Russian Act: defense (Geran-2) + civilian dual-use (Cognitive Pilot); supply chain caveat (Shreya 1111 серверов)"
+    learning_outcomes: [LO1a]
+    chapter_ref: "§3.2 — Geran-2 + Cognitive Pilot"
+    references: [csis-2026-bondar, autonomy-2025-geran, toms-2024-shreya, cognitive-pilot-2025]
+    visual:
+      pattern: matrix
+      primary: "2 cards: Geran-2 (Алабуга 2700-3000/мес, NVIDIA Jetson photo wreckage) + Cognitive Pilot (КАМАЗ photo, plan 50K systems/year); supply-chain caveat сноска"
+
+  - id: s29
+    file: slides/s29-mcas-patriot-failure.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Boeing 737 MAX MCAS — canonical anti-pattern safety-critical AI. Single-AoA + opacity + software-cures-hardware + FMEA не пройден. 346 погибших."
+    learning_goal: "MCAS — 4 урока для всего safety-critical AI; Patriot 2003 + 2024 callback к automation bias"
+    learning_outcomes: [LO1b, LO3]
+    chapter_ref: "§3.3, §3.4 — MCAS + Patriot"
+    references: [pmc-2020-boeing, gao-737, trenchart-2018-patriot]
+    visual:
+      pattern: matrix
+      primary: "MCAS 4-lesson cards: redundancy / transparency / FMEA / software-cures-hardware + side timeline Lion Air Oct 2018 / Ethiopian Mar 2019 → 346 KIA gold-warning; Patriot mini-callback"
+
+  - id: s30
+    file: slides/s30-act-criteria.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Act — когда не AI: 2 критерия. Автономия не нужна + COTS sensor дешевле."
+    learning_goal: "Критерии 5-6 для Act — закрытие раздела"
+    learning_outcomes: [LO3]
+    chapter_ref: "§3.6 — Когда не AI для Act"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "2 criterion cards (#5 autonomy не нужна, #6 COTS sensor дешевле) + закрывающий takeaway Act"
+
+  # ─── Section divider (4) ───
+  - id: s31
+    file: slides/s31-section4-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 4 — Граница и регулирование."
+    learning_goal: "Visual divider — переход в meta-уровень регулирования"
+    learning_outcomes: [LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «4» + title + 1-фраза-фрейм + 6-card progress bar с gold-подсветкой Р4"
+
+  # ─── Раздел 4 — Граница и регулирование (≈15 мин) ───
+
+  - id: s32
+    file: slides/s32-l1-l5-ladder.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Лестница автономии L1-L5: каждый уровень — операциональное определение «что делает AI / что делает человек» + ms-to-intervention."
+    learning_goal: "L1-L5 ladder — центральный visual меты-раздела; границы L3↔L4 (engineering) и L4↔L5 (treaty)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.1 — Лестница L1-L5"
+    references: []
+    visual:
+      pattern: schema_layered
+      primary: "Лестница 5 уровней с примерами 2026 (Palantir MSS / Saker Scout / Fury / Patriot auto / LAWS debated) + ms-to-intervention колонка; граница L4↔L5 = «treaty negotiation zone» gold"
+
+  - id: s33
+    file: slides/s33-un-gge-timeline.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "UN GGE on LAWS: третья подряд резолюция UNGA 2025 — 164/6/7 (UN press; 156/5/8 по SKR). США сместились с «за» (2024) на «против» (2025)."
+    learning_goal: "UN GGE timeline 2024-2025; voting context; DoD Directive 3000.09 brief"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.2 — UN GGE + DoD Directive"
+    references: [skr-2024, un-press-ga12736, dod-2023-3000-09]
+    visual:
+      pattern: schema_timeline
+      primary: "Timeline 5 ноября 2024 (161/3/13) → 2 декабря 2024 (166/3/15) → 6 ноября 2025 (164/6/7); voting world map mini; DoD 3000.09 callout sidebar"
+
+  - id: s34
+    file: slides/s34-icrc-skr-civil-society.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "ICRC: «It is not the weapon system that must comply with IHL, but the humans using it». Stop Killer Robots — 30 стран явной поддержки полного запрета."
+    learning_goal: "ICRC ethical + procedural core + SKR 30 countries; non-state давление"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.3 — ICRC + SKR"
+    references: [icrc-2024-position, hrw-2020]
+    visual:
+      pattern: matrix
+      primary: "2 cards: ICRC ethical + procedural quotes (gold accent на «humans using it») + SKR 30-country list excerpt + map snippet"
+
+  - id: s35
+    file: slides/s35-maven-bigtech-shift.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Maven walkout 2018 → vendor replacement 2018-2024 → big-tech возврат 2024-2026. Индустриальная этика дрейфует за 6 лет."
+    learning_goal: "Narrative arc Maven 2018 → OpenAI/Anthropic/Cohere 2024-25; «personal ethics ≠ industry regulation»"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.4, §4.5 — Maven + big-tech shift"
+    references: [techpolicy-2018-maven, intercept-2024-openai, businesswire-2024-anthropic]
+    visual:
+      pattern: schema_timeline
+      primary: "Horizontal timeline 2018 (Google walkout 4000+) → 2018-2024 (Anduril/Palantir/Scale grow) → 2024-2026 (OpenAI Jan, Anthropic Nov, Google Sept return); pivot 2024 ≥2× gold"
+
+  - id: s36
+    file: slides/s36-hitl-hool-hotl.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "HITL / HOOL / HOTL — инженерная триада. Граница HOOL → HOTL формально определяется engineering decision «сколько ms у оператора на intervention»."
+    learning_goal: "Триада + mapping на L1-L5; engineering takeaway про ms-to-intervention"
+    learning_outcomes: [LO7, LO3]
+    chapter_ref: "§4.6 — HITL/HOOL/HOTL"
+    references: []
+    visual:
+      pattern: schema_architecture
+      primary: "3 human stick figures относительно AI-loop: HITL (внутри loop) / HOOL (над loop) / HOTL (вне loop); mapping L1-L2 / L3-L4 / L5; ms-to-intervention axis gold"
+
+  - id: s37
+    file: slides/s37-russia-votes-context.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Россия — одна из стран против UN LAWS-резолюций. Engineering design определяется одинаково независимо от geopolitical alignment."
+    learning_goal: "Russia votes context + инженер внутри рамок; критерий 7 cross-cutting"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.7 — Позиция России и инженер"
+    references: [skr-2025, un-press-ga12736]
+    visual:
+      pattern: matrix
+      primary: "UN voting world map (against = Belarus/КНДР/Russia/Israel/Burundi/USA 2025); 3 точки «что делает инженер» с иконками"
+
+  # ─── Section divider (5) ───
+  - id: s38
+    file: slides/s38-section5-divider.md
+    type: section_divider
+    duration_min: 0.2
+    assertion: "Раздел 5 — Сборка: критерии, карьера, чтение, замыкание."
+    learning_goal: "Visual divider — переход в финальную сборку"
+    learning_outcomes: [LO3, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «5» + title + 1-фраза-фрейм + 6-card progress bar с gold-подсветкой Р5"
+
+  # ─── Раздел 5 — Сборка (≈6 мин) ───
+
+  - id: s39
+    file: slides/s39-seven-criteria-matrix.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Семь критериев «когда AI плохая идея». Прогоните предложенное AI-решение через эту матрицу — если хоть один срабатывает, нужен redesign."
+    learning_goal: "Consolidation 7 критериев по OODA — главная takeaway-матрица лекции"
+    learning_outcomes: [LO3]
+    chapter_ref: "§5.1 — Семь критериев"
+    references: []
+    visual:
+      pattern: schema_matrix
+      primary: "Matrix 7 строк × 3 колонки (# / звено / критерий / иллюстрация); gold-подсветка #4 Lavender + #5 MCAS как канонических"
+
+  - id: s40
+    file: slides/s40-career-angle.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Карьерный угол: гражданский dual-use (Cognitive Pilot, ТЕРРА ТЕХ), глобальный контур (Boeing, Anduril, NASA), 5 инженерных профилей."
+    learning_goal: "Карьерные пути без агитации; CV/ML/embedded/safety/policy"
+    learning_outcomes: []
+    chapter_ref: "§5.2 — Карьерный угол"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "5 profile cards с Lucide иконками: CV/DL (scan) / ML-RL (cpu) / Embedded (microchip) / Safety (shield-check) / Policy (scale)"
+
+  - id: s41
+    file: slides/s41-reading-list.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Семь источников для тех, кто идёт дальше."
+    learning_goal: "Reading list — book + 6 academic/non-state references"
+    learning_outcomes: []
+    chapter_ref: "§5.3 — Список для чтения"
+    references: [scharre-2018-army, csis-2026-bondar, abraham-2024-972, icrc-2024-position]
+    visual:
+      pattern: matrix
+      primary: "7-item list карточек: Scharre Army of None / CSIS Bondar / Abraham +972 / ICRC 2024 / DARPA ACE / GAO ALIS / SKR briefs"
+
+  - id: s42
+    file: slides/s42-closing-callback.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Цепь по-прежнему держит инженер. AI вошёл в каждое звено, но человек остался ответственным за переход между ними."
+    learning_goal: "Closing callback к keystone; 3 строки Sense/Decide/Act"
+    learning_outcomes: [LO1a, LO1b, LO2, LO3, LO7]
+    chapter_ref: "§5.4 — Замыкание"
+    references: []
+    visual:
+      pattern: keystone_chain
+      primary: "Repeat OODA chain Sense → Decide → Act с подписью «Цепь по-прежнему держит инженер» (gold) и 3 строки «где AI / где человек»"
+
+  - id: s43
+    file: slides/s43-qa.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Q&A"
+    learning_goal: "Dedicated Q&A slide с 3 backup-prompts"
+    learning_outcomes: []
+    chapter_ref: "Q&A backup"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Большой «Q&A?» + Lucide message-circle-question icon + 3 backup prompts (LAWS treaty / Lavender critique / career path) видимые мелкими"

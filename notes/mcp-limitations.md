@@ -389,3 +389,14 @@ _Пока не обнаружено._
 ---
 
 **Last update:** 2026-05-16 (#86 — добавлен [#86] workspace-mcp P0: регрессия aiofile 3.10.0, пин 3.9.0 в .mcp.json).
+
+### [#118-1] mmdc / mermaid-cli: missing Chrome browser dependency
+
+- **Tool:** `mmdc` (mermaid-cli @mermaid-js/mermaid-cli)
+- **Symptom:** «Error: Could not find Chrome (ver. 148.0.7778.97)» — puppeteer cannot launch headless Chrome
+- **Root cause:** puppeteer-core dependency requires Chrome at `~/.cache/puppeteer/`; not installed in current env
+- **Severity:** P2 (mermaid blocked; have python-pptx shapes alternative)
+- **Workaround:** Build all diagrams via python-pptx primitive shapes (`add_shape` + `add_connector`) instead of mermaid PNG embed. This is actually closer to "diagrams as shapes" principle from `tools/presentation-build/README.md` §1.
+- **Status:** active
+- **First seen in:** #118 (lec-09 Phase 6, 2026-05-20)
+- **Fork target:** Install Chrome OR use alternative renderer

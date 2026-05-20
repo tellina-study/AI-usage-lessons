@@ -1,15 +1,15 @@
 ---
 lecture: 9
 title: "Лекция 9. AI в авиакосмической отрасли и оборонном комплексе"
-length_words: ~15300
+length_words: ~17000
 status: finalized
-version: v2
+version: v3
 issue: 118
 branch: issue-118-lec-09-aerospace-defense
-audience: "студенты-инженеры 3 курса ИУ6 МГТУ Бауман — будущие сотрудники КБ, РКК/ОКБ, оборонной индустрии, dual-use стартапов"
+audience: "студенты-инженеры 3 курса (универсальная, не aerospace/defense-специалисты)"
 date: 2026-05-20
 learning_outcomes: [LO1a, LO1b, LO2, LO3, LO7]
-references_count: 105
+references_count: 104
 keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976) + dual-use bridge + L1-L5 autonomy ladder"
 ---
 
@@ -64,10 +64,11 @@ keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976) + dual-use bridge 
   - [4.8. Подытог Раздела 4](#48-подытог-раздела-4)
 - [Раздел 5. Сборка: критерии, карьера, чтение, замыкание](#раздел-5-сборка-критерии-карьера-чтение-замыкание)
   - [5.1. Семь критериев «когда AI плохая идея»](#51-семь-критериев-когда-ai-плохая-идея)
-  - [5.2. Карьерный угол для студента ИУ](#52-карьерный-угол-для-студента-иу)
+  - [5.2. Карьерный угол](#52-карьерный-угол)
   - [5.3. Список для чтения](#53-список-для-чтения)
   - [5.4. Замыкание: цепь по-прежнему держит инженер](#54-замыкание-цепь-по-прежнему-держит-инженер)
 - [Q&A backup: типичные каверзные вопросы](#qa-backup-типичные-каверзные-вопросы)
+- [Глоссарий](#глоссарий)
 - [Источники](#источники)
 
 ---
@@ -329,7 +330,7 @@ Sense — самое благополучное звено OODA для AI. До�
 - **Svod Tactical Situational Awareness Complex** — объявлен в августе 2025, активная разработка с 2024, экспериментальное развёртывание в подразделениях с осени 2025 (Russian official press; CSIS, 2026).
 - **Glaz/Groza-ZOV digital ecosystem.** Glaz — приложения для операторов дронов (разведка, геомэппинг); Groza — fire-control и mission management; ZOV Maps — геопространственная платформа (CSIS, 2026).
 
-**Caveat (явный single-source).** Information о Svod и Glaz-Groza поступает из двух источников: Russian official press (Ростех, MoD статьи) и CSIS-аналитика на основе этой press плюс OSINT. Independent western verification отсутствует. Effectiveness в combat — по CSIS — **uneven**. Pedagogically мы упоминаем эти системы, потому что они **существуют как попытка**, и студент-инженер ИУ должен знать, что в российском оборонном AI этот класс задач разрабатывается. Не упоминать был бы перекос; некритично сообщать как success — был бы пропаганда. Мы выбираем промежуточный путь: упомянуть с явной оговоркой источников.
+**Caveat (явный single-source).** Information о Svod и Glaz-Groza поступает из двух источников: Russian official press (Ростех, MoD статьи) и CSIS-аналитика на основе этой press плюс OSINT. Independent western verification отсутствует. Effectiveness в combat — по CSIS — **uneven**. Pedagogically мы упоминаем эти системы, потому что они **существуют как попытка**, и студент-инженер должен знать, что в российском оборонном AI этот класс задач разрабатывается. Не упоминать был бы перекос; некритично сообщать как success — был бы пропаганда. Мы выбираем промежуточный путь: упомянуть с явной оговоркой источников.
 
 ### 2.3. И что ещё на этой полке: краткий список
 
@@ -613,7 +614,7 @@ Act — звено, где hype далеко впереди реальности
 
 **Урок.** Индустриальная этика **дрейфует** за 6 лет. Между Maven walkout и Anthropic-Palantir-AWS — всего 6 лет, и за это время AI-индустрия прошла полный цикл от «отказа от военных контрактов как принцип» до «военные контракты — критический revenue stream».
 
-**Что это значит для инженера ИУ 2026 года.** Когда вы выбираете компанию, вы выбираете не только продукт. Вы выбираете её **позицию** в этом дрейфе. Это правомерное инженерное решение — но оно должно быть **осознанным**.
+**Что это значит для инженера-выпускника 2026 года.** Когда вы выбираете компанию, вы выбираете не только продукт. Вы выбираете её **позицию** в этом дрейфе. Это правомерное инженерное решение — но оно должно быть **осознанным**.
 
 ### 4.6. HITL / HOOL / HOTL: инженерная триада
 
@@ -687,15 +688,11 @@ LAWS-блок применим не только к weapons. Критерии «
 
 Эта матрица — не догма. Она работает в 2026 году с теми данными, которые у нас есть. Через 5 лет, возможно, появятся новые критерии (например, про energy footprint AI-систем в боевых условиях), и старые могут сместить акценты. Это **рабочий инструмент**, который надо обновлять с опытом.
 
-### 5.2. Карьерный угол для студента ИУ
+### 5.2. Карьерный угол
 
-Часть этой главы написана с расчётом на студента 3 курса ИУ МГТУ Баумана. Без агитации — просто перечислим, где в этой области находятся реальные карьерные пути.
+Без агитации — перечислим, где в этой области находятся реальные карьерные пути.
 
-**Российский академический контур.**
-
-- **МГТУ им. Баумана, Факультет ИУ.** Кафедра «Технологии искусственного интеллекта» `[CROSS-REF-VERIFY: точный номер кафедры — bauman.ru]`. Магистерская программа «Программно-алгоритмическое обеспечение систем ИИ» в рамках направления «Ракетные комплексы и космонавтика». Профили подготовки: «Системы управления ракет-носителей и космических аппаратов» + «ИИ в системах обработки информации и управления» (bauman.ru, 2026).
-- **ВКА им. А.Ф. Можайского (Санкт-Петербург).** Системообразующий политехнический университет Минобороны; ведущий образовательно-научно-методологический центр в области военно-космической деятельности. Факультет управления системами ракетных и космических комплексов + Факультет специальных информационных технологий (vka.mil.ru).
-- **МАИ, СПбГУ** — параллельные программы AI в aerospace, с меньшей публичной видимостью конкретных лабораторий.
+**Российский академический контур.** Профильные технические университеты предлагают магистерские программы AI в системах управления и космической инженерии; ряд политехнических университетов Минобороны ведёт исследования в военно-космической области. Типичные тематики магистерских профилей: программно-алгоритмическое обеспечение систем ИИ; системы управления ракет-носителей и космических аппаратов; ИИ в системах обработки информации и управления; computer vision для спутниковой аналитики; embedded ML для autonomous platforms. Доступ через institutional channels (профильная кафедра, научный руководитель) даёт более глубокий разговор с этой областью, чем open-source path — особенно для closed defence-research направлений.
 
 **Гражданский dual-use в РФ.**
 
@@ -785,7 +782,7 @@ Act:     AI исполняет в envelope → человек supervises (CCA wi
 
 Ответ. Открытых данных на этот счёт очень мало. То, что мы знаем — это **внешняя проекция** через CSIS-аналитику (Bondar 2026), Russian press (Ростех, MoD статьи), wreckage-анализ украинской стороны. Внутренние программы и closed labs не публикуются. **Гипотезы избегаем**: лучше честно сказать «открытых данных нет», чем выдумывать.
 
-**Что мы можем оценить достоверно:** (a) wreckage analysis (Tom's Hardware, ISW, открытое); (b) Russian press (TASS, TAdviser — с propaganda filter); (c) academic mirrors (МГТУ ИУ, ВКА им. Можайского — thesis-level публикации); (d) US/EU intelligence reports (CSIS Bondar, CNAS — extrapolation). **Что остаётся закрытым:** точные performance metrics, supply chains внутри РФ, конкретные ML-методы за пределами Geran-2. Это нормально для оборонной AI-индустрии любой страны. Если вас интересует эта область — путь через академический контур (МГТУ ИУ, ВКА Можайского), там вы получите доступ через institutional channels, не через open-source.
+**Что мы можем оценить достоверно:** (a) wreckage analysis (Tom's Hardware, ISW, открытое); (b) Russian press (TASS, TAdviser — с propaganda filter); (c) academic mirrors (профильные технические университеты + военно-космические академии — thesis-level публикации); (d) US/EU intelligence reports (CSIS Bondar, CNAS — extrapolation). **Что остаётся закрытым:** точные performance metrics, supply chains внутри РФ, конкретные ML-методы за пределами Geran-2. Это нормально для оборонной AI-индустрии любой страны. Если вас интересует эта область — путь через академический контур (профильные технические университеты + военно-космические академии), там вы получите доступ через institutional channels, не через open-source.
 
 **В5. «Lavender обсуждается с осуждением. А что насчёт критики +972 — может, они преувеличили?»**
 
@@ -810,6 +807,60 @@ Act:     AI исполняет в envelope → человек supervises (CCA wi
 **В10. «Что если AI делает работу настолько лучше, что человеческий контроль просто замедляет?»**
 
 Ответ. Это и есть **главный вопрос** UN GGE дебатов. И ответ ICRC: «It is not the weapon system that must comply with IHL, but the humans using it». То есть **human-in-the-loop — это не optimization concern, это юридическое требование**. Engineering — найти решения, при которых человек остаётся в петле, но темпы не замедляются драматически. Это не «или скорость, или контроль» — это design challenge, требующий calibrated uncertainty, structured outputs, abstention pathways. Все эти инструменты обсуждались в §4.6.
+
+---
+
+## Глоссарий
+
+Этот раздел — locked-glossary для лекции (28 терминов, canonical forms). Между лекцией, slides и speech.md эти термины используются единообразно. Курсивная пометка §X.Y в конце определения — указание на раздел главы, где термин впервые введён или подробно разобран.
+
+### AI fundamentals (cross-cutting)
+
+| # | Канонический термин (RU) | Канонический термин (EN) | Определение |
+|---|---|---|---|
+| 1 | **OODA** | OODA (Observe-Orient-Decide-Act) | Цикл принятия решения, сформулированный американским военным лётчиком и теоретиком полковником Джоном Бойдом (USAF) в 1976 году. Изначально модель воздушного боя; к 2026 году универсальная decision-loop рамка в военной доктрине, кибербезопасности, бизнес-стратегии. В этой главе свёрнута до трёх звеньев Sense → Decide → Act как несущая ось. *§0.2.* |
+| 2 | **Sense → Decide → Act** | Sense / Decide / Act | Упрощение OODA до трёх звеньев: Sense — сбор и первичная интерпретация сигналов; Decide — выбор действия на основе картины ситуации; Act — исполнение действия (рекомендация оператору, развёртывание системы, удар). Разделы 1–3 главы организованы по этим звеньям. *§0.2.* |
+| 3 | **SAR** | Synthetic Aperture Radar | Радар с синтезированной апертурой. Активный радар, формирующий изображение по принципу пересчёта эха со множества положений антенны; видит сквозь облака и ночью. Главная альтернатива оптической съёмке для всепогодного мониторинга. *§0.3, §1.3.* |
+| 4 | **ATR** | Automatic Target Recognition | Автоматическое распознавание целей. ML-классификатор, который по сенсорному изображению (оптика, SAR, IR) определяет тип и идентичность объекта. Главный «декорированный» термин в военной AI-рекламе; канонический failure-кейс — Russian Lancet ATR rollback. *§0.3, §2.5.* |
+| 5 | **ISR** | Intelligence, Surveillance, Reconnaissance | Зонтичный термин для разведзадач: спутниковая, воздушная, наземная разведка плюс долгосрочное наблюдение. Включает SIGINT, ELINT, COMINT, GEOINT. *§0.3.* |
+| 6 | **EW** | Electronic Warfare | Радиоэлектронная борьба. Класс действий, направленных на подавление, обман или перехват сигналов противника: глушение GPS, подмена координат, перехват связи дронов. Косвенно атакует AI-системы через сенсорный вход. *§0.3, §1.7.* |
+| 7 | **LAWS** | Lethal Autonomous Weapon Systems | Летальные автономные системы оружия. Термин, вокруг которого идут переговоры в UN GGE: системы, способные применять летальную силу без человеческой авторизации в конкретном эпизоде. *§0.3, §4.2.* |
+| 8 | **Dual-use** | Dual-use | Феномен: одни и те же ML-конвейеры на одинаковых типах данных работают в гражданском и военном контурах. CV для агро-аналитики ≈ CV для разведки; predictive maintenance для коммерческих двигателей ≈ для F-35. *§0.4.* |
+
+### Autonomy ladder и человеческий контроль
+
+| # | Канонический термин (RU) | Канонический термин (EN) | Определение |
+|---|---|---|---|
+| 9 | **Лестница L1–L5** | L1–L5 autonomy ladder | Концептуальная шкала автономии оружейных систем (аналог SAE-уровней для cars). L1 Assistive — AI выдаёт detections, человек решает. L2 Semi-auto perception — AI рекомендует, человек авторизует. L3 Supervised autonomy — AI executes в pre-authorised envelope, человек supervises. L4 Pre-authorised auto-engage — AI engages по pre-set ROE, человек может intervene. L5 Full LAWS — лётальное действие без human authorisation; формально не deployed, предмет UN GGE. *§4.1.* |
+| 10 | **HITL** | Human-In-The-Loop | Человек в каждой decision-point. AI не действует без явной human authorisation. Mapping на лестницу: L1, L2. Вырожденный HITL (20-секундный review, как в Lavender) — это формально HITL, функционально HOTL. *§4.6, §2.4.* |
+| 11 | **HOOL** | Human-On-The-Loop | Человек supervises AI-цикл, может intervene в любой момент, но не required в каждой decision-point. Mapping: L3, L4. Пример — Fury CCA wingman, Patriot auto ROE. *§4.6.* |
+| 12 | **HOTL** | Human-Out-of-The-Loop | Человек вне execution-loop, не имеет real-time intervention capability. Mapping: L5 по определению treaty-discussion. Граница HOOL → HOTL формально определяется engineering decision «сколько ms у оператора на intervention». *§4.6.* |
+| 13 | **Pre-authorisation envelope** | Pre-authorisation envelope | Формальное юридическое понятие: набор условий (зона, тип цели, ROE), при которых система может действовать без отдельной авторизации каждого эпизода. Инженерия должна квантифицировать ширину envelope — иначе «pre-authorised L4» становится de facto L5, прикрытым бумажкой. *§4.1.* |
+
+### Aerospace/defense инструменты 2026 (vendor-mode)
+
+| # | Канонический термин (RU) | Канонический термин (EN) | Определение |
+|---|---|---|---|
+| 14 | **Maxar Sentry** | Maxar Sentry | Predictive intelligence suite, запущенный 25 июня 2025 года. ML-модели над архивом ~250 петабайт спутниковых снимков + multi-sensor tipping (EO + SAR + AIS). Главный контракт — NGA Luno A D01. Adoption: растёт. *§1.2.* |
+| 15 | **Palantir MSS** | Palantir Maven Smart System | Главный американский decision-support флагман. UI-orchestration layer Palantir над Maven AI. Суммарный потолок ~$1,3 миллиарда до 2029 года `[VFY-day-of]`. Уровень автономии — L1 Assistive. *§2.2.* |
+| 16 | **Scale Donovan / Defense Llama / Thunderforge** | Scale Donovan / Defense Llama / Thunderforge | Эволюционная линия Scale AI: Donovan (decision-support LLM на classified networks, 2022–2023) → Defense Llama (fine-tuned Llama 3 на defense corpus, ноябрь 2024) → Thunderforge (wargaming + COA generation, март 2025). Авторизация — FedRAMP HIGH, деплой на SC2S/SIPR/IL4/JWICS. *§2.2.* |
+| 17 | **Helsing Altra / Centaur** | Helsing Altra / Centaur | Главный европейский defense-AI игрок. Altra — fusion ISR-дронов + наблюдателей для land combat. Centaur — AI-пилот, испытания на Saab Gripen E в июне 2025. Оценка после Series D — ~€12 миллиардов. *§2.2.* |
+| 18 | **Anduril Lattice + Fury YFQ-44A** | Anduril Lattice + Fury YFQ-44A | Lattice — proprietary OS для autonomous mesh-coordination. Fury YFQ-44A — CCA Increment 1; первый полёт 31 октября 2025, серийное производство с 23 марта 2026 на Arsenal-1. Управляется Hivemind + Lattice. Уровень автономии — L3 Supervised. *§3.2.* |
+| 19 | **Shield AI V-BAT + Hivemind** | Shield AI V-BAT + Hivemind | V-BAT — Group 3 VTOL UAS, эндьюренс 12+ часов. Hivemind — autonomy stack. Контракты: USCG $198M (июль 2024), Индийская армия — выбор V-BAT (январь 2026). Уровень — L2/L3. *§3.2.* |
+| 20 | **DARPA X-62A VISTA** | DARPA X-62A VISTA | AI dogfight testbed, модифицированный F-16, на котором AI-агент управляет самолётом. Первый AI-vs-manned F-16 dogfight — сентябрь 2023; секретарь USAF Кендалл летал в AI-управляемом X-62A в мае 2024. Anti-hype: narrow scripted scenario, не replacement для пилота. *§3.2.* |
+| 21 | **CCA** | Collaborative Combat Aircraft | Программа ВВС США по созданию беспилотных wingmen, летающих рядом с пилотируемыми истребителями. Increment 1 — Anduril Fury YFQ-44A и General Atomics YFQ-42A. *§3.2.* |
+| 22 | **Replicator / DAWG** | DoD Replicator / DAWG | Программа DoD 2023–2025 на тысячи autonomous attritable систем; missed scale (доставлено «сотни», не «тысячи»). Replicator-2 (сентябрь 2024) перефокусирован на counter-UAS. DAWG (декабрь 2025) — преемник с фокусом на larger UAS. *§3.5.* |
+| 23 | **SDA Tracking Layer / PWSA** | SDA Tracking Layer / PWSA | Space Development Agency proliferated architecture. Tranche 3 — constellation для отслеживания спутников и orbital объектов. Параллельно с коммерческими SDA-сервисами (Slingshot Agatha + TALOS). *§1.3.* |
+
+### Failures / границы (canonical learned patterns)
+
+| # | Канонический термин (RU) | Канонический термин (EN) | Определение |
+|---|---|---|---|
+| 24 | **F-35 ALIS → ODIN** | F-35 ALIS → ODIN | Autonomic Logistics Information System — Lockheed Martin система предиктивного обслуживания F-35. К концу 2010-х превратилась в источник проблем: high FP rate, неточные данные, adversarial UX, $42-44k/h flight cost. Финал — июнь 2024; преемник ODIN (government-owned, disconnected mode, явный HITL для flight-clearance). Канонический контрпример «predictive maintenance без трёх условий». *§1.6.* |
+| 25 | **IDF Lavender** | IDF Lavender | AI-database, помечающая палестинских мужчин как «подозреваемых членов Хамас или PIJ»; Газа 2023–2024. ~37 000 человек помечено, 90% accuracy (то есть ~3 700 false positives), 20 секунд review per target. Канонический разбор «accuracy % — wrong metric для life-and-death» и «вырожденный HITL». *§2.4.* |
+| 26 | **Boeing 737 MAX MCAS** | Boeing 737 MAX MCAS | Maneuvering Characteristics Augmentation System. Two crashes 2018–2019, 346 погибших, 20-месячная остановка эксплуатации. Single-AoA-sensor, opacity, software-cures-hardware, FMEA не пройден. Канонический anti-pattern для всех safety-critical AI. *§3.3.* |
+| 27 | **Demo ≠ production** | Demo ≠ production | Pedagogical pattern: ML performance в narrow training distribution не переносится на full battlefield variance. Канонический кейс — Russian Lancet ATR rollback (демо-условия → production «отключили AI-guidance»). Применимо ко всем ATR-системам, drone autonomy claims, «autonomous targeting» рекламам. *§2.5.* |
+| 28 | **Accuracy as wrong metric** | Accuracy as wrong metric | Pedagogical pattern: для life-and-death решений «accuracy %» не та метрика. Правильная — false positive consequence × population × frequency (cost-asymmetry FP↔FN). Канонический кейс — Lavender (10% FP × 37 000 = ~3 700 ошибочно помеченных). *§2.4.* |
 
 ---
 
@@ -936,10 +987,8 @@ Act:     AI исполняет в envelope → человек supervises (CCA wi
 
 96. Scharre, P. (2018). *Army of None: Autonomous Weapons and the Future of War*. W. W. Norton. ISBN 978-0-393-35658-8.
 97. Russell, S., & Norvig, P. (2021). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson. ISBN 978-0-13-461099-3.
-98. Bauman MSTU (2026). *Кафедра «Технологии искусственного интеллекта»*. URL: https://bmstu.ru/chair/tekhnologii-iskusstvennogo-intellekta.
-99. VKA Mozhaisky (2026). *Военно-космическая академия имени А.Ф. Можайского*. URL: https://vka.mil.ru/.
-100. Roediger, H. L., & Karpicke, J. D. (2006). *Test-enhanced learning: Taking memory tests improves long-term retention*. Psychological Science, 17(3), 249–255.
+98. Roediger, H. L., & Karpicke, J. D. (2006). *Test-enhanced learning: Taking memory tests improves long-term retention*. Psychological Science, 17(3), 249–255.
 
 ---
 
-*Конец главы 9. Версия v2 (reviewed). Phase 3 critique applied: 2 P0 + 13 P1 + 11 P2 closed. Готов к Phase 4.5 pre-gate walkthrough + USER GATE A.*
+*Конец главы 9. Версия v3 (finalized). User feedback 2026-05-20: §5.2 anonymized (removed institutional/named refs МГТУ/Бауман/ИУ/ВКА/Можайский/МАИ/СПбГУ), Q&A B4 generalised, references 98–99 removed (count 105 → 104), добавлен ## Глоссарий (28 канонических терминов EN+RU с § cross-refs). Готов к USER GATE A.*

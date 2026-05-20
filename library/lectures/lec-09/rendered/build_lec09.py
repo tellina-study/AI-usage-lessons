@@ -341,7 +341,7 @@ def slide_02_cover(prs):
     if icon_p.exists():
         add_image(s, icon_p, 11.5, 6.3, w=0.9, h=0.9)
 
-    add_progress_bar(s, current_section=-1, y=6.95)  # cover — no gold
+    # P2-1: Lec-07 pattern — cover BEZ progress bar (только dividers + content где включено)
 
     add_speaker_notes(s,
         "Это титульный слайд лекции 9 — седьмой отраслевой в нашем курсе "
@@ -701,30 +701,30 @@ def slide_08_maxar_sentry(prs):
     if photo_p.exists():
         add_image(s, photo_p, 0.85, 2.5, w=7.0, h=3.6)
         text_box(s, 0.85, 6.15, 7.0, 0.4,
-                 "Sentinel-2 (ESA, Wikimedia Commons CC-BY-SA) — иллюстрация класса данных.",
+                 "Радарная (SAR) съёмка — пример класса данных Sentry; цифры 1, 2, 3 — отмеченные ИИ изменения. Источник: Wikimedia Commons, CC-BY-SA.",
                  size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
     # Right — 4 info cards
     cards_data = [
         ("250 ПБ", "архив", "20+ лет данных", GOLD),
-        ("NGA Luno A D01", "главный контракт", "Детекции от ИИ", MID),
+        ("NGA Luno A", "главный контракт", "Детекции от ИИ", MID),
         ("3 сенсора", "слияние", "оптика + радар + AIS судов", LIGHT),
         ("Часы", "после съёмки", "не дни, не недели", GOLD),
     ]
     cc_w = 4.3; cc_h = 1.15; cy = 1.8
     for big, lbl, sub, color in cards_data:
         ocean_box(s, 8.5, cy, cc_w, cc_h, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
-        text_box(s, 8.7, cy + 0.12, 2.0, 0.5, big,
+        text_box(s, 8.7, cy + 0.12, 2.4, 0.5, big,
                  size=22, bold=True, color=color)
         text_box(s, 8.7, cy + 0.6, 2.5, 0.3, lbl,
                  size=12, color=DEEP, italic=True)
-        text_box(s, 10.9, cy + 0.3, 1.7, 0.6, sub,
+        text_box(s, 11.2, cy + 0.3, 1.5, 0.6, sub,
                  size=10, color=MID, italic=True, align=PP_ALIGN.RIGHT, line_spacing=1.2)
         cy += cc_h + 0.1
 
-    # Anti-hype caveat
+    # Anti-hype caveat — russified
     text_box(s, 0.6, 6.7, 12.13, 0.35,
-             "Анти-хайп: «AI-derived» в маркетинге означает оркестрацию классических CV-методов + change detection + multi-sensor tipping, а не одну foundation model.",
+             "Без преувеличений: «AI-derived» в маркетинге означает оркестрацию классической компьютерной разведки + обнаружение изменений + межсенсорное наведение, а не одну фундаментальную модель.",
              size=11, italic=True, color=LIGHT)
 
     add_footer(s, "Источники: Defense One июнь 2025 · BusinessWire 20250625")

@@ -3,7 +3,7 @@ lecture: 9
 title: "Лекция 9. AI в авиакосмической отрасли и оборонном комплексе"
 length_words: ~17000
 status: finalized
-version: v3
+version: v4
 issue: 118
 branch: issue-118-lec-09-aerospace-defense
 audience: "студенты-инженеры 3 курса (универсальная, не aerospace/defense-специалисты)"
@@ -255,7 +255,7 @@ ALIS нарушил все три условия. ODIN строится в яв�
 
 ### 1.7. Провал: adversarial-атаки на SAR ATR и GPS-spoofing гражданской авиации
 
-Второй провальный кейс Sense — **adversarial-атаки на SAR ATR**. Идея проста: classifier обучен распознавать танки и пусковые установки по SAR-снимкам; противник размещает на местности или на технике дешёвые металлические рассеиватели (corner reflectors) в специальной геометрии, и classifier начинает неправильно классифицировать объекты. Опубликованные исследования показывают физическую реализуемость таких атак (Du et al., 2024; arXiv 2312.02912). Это не лабораторный edge case — это знание, доступное любой противоборствующей стороне.
+Второй провальный кейс Sense — **adversarial-атаки на SAR ATR**. Идея проста: classifier обучен распознавать танки и пусковые установки по SAR-снимкам; противник размещает на местности или на технике дешёвые металлические рассеиватели (corner reflectors) в специальной геометрии, и classifier начинает неправильно классифицировать объекты. Опубликованные исследования показывают физическую реализуемость таких атак (Ye et al., 2023; arXiv 2312.02912). Это не лабораторный edge case — это знание, доступное любой противоборствующей стороне.
 
 **Урок.** Стандартный benchmark accuracy обманчив для adversarial-доменов: противник определяет distribution на test-time. Защита требует трёх вещей одновременно:
 
@@ -317,7 +317,7 @@ Sense — самое благополучное звено OODA для AI. До�
 |---|---|---|---|
 | **Donovan** | 2022–2023 | DoD command/control (XVIII Airborne Corps) | Decision-support LLM на classified networks; 100 000+ страниц orders/SitReps/intel |
 | **Defense Llama** | ноябрь 2024 | Scale + Meta + DoD | Fine-tuned Llama 3 на defense corpus; operations planning, vulnerabilities analysis |
-| **Thunderforge** | март 2025 | CENTCOM, INDOPACOM | Wargaming + COA (course-of-action) generation для движения войск, кораблей, самолётов |
+| **Thunderforge** | март 2025 | INDOPACOM, EUCOM | Wargaming + COA (course-of-action) generation для движения войск, кораблей, самолётов |
 
 Авторизация Scale-стека — **FedRAMP HIGH** (federal cloud security framework), деплой на **SC2S, SIPR, DISA IL4, JWICS** (три уровня classified networks с разными грифами секретности) (BusinessWire, 2023; DefenseScoop, 2024).
 
@@ -900,7 +900,7 @@ Act:     AI исполняет в envelope → человек supervises (CCA wi
 25. GAO-22-105943 (2022). *F-35 Sustainment Costs / ODIN Transition*. URL: https://www.gao.gov/assets/gao-22-105943.pdf.
 25a. GAO-22-105128 (2022). *F-35 Aircraft Sustainment: DoD Faces Challenges in Sustaining Operations and Maintenance Costs* (cost-per-flight-hour benchmark). URL: https://www.gao.gov/products/gao-22-105128.
 26. Defense Daily (2024). *Start of F-35 ODIN software fielding delayed*. URL: https://www.defensedaily.com/start-of-f-35-odin-software-fielding-to-squadrons-delayed-until-2025/.
-27. Du, X., et al. (2024). *Realistic Scatterer SAR Adversarial Attacks*. arXiv:2312.02912. URL: https://arxiv.org/abs/2312.02912.
+27. Ye, K., Kannan, R., Prasanna, V., Busart, C., & Kaplan, L. (2023). *Recent Advances in Adversarial Machine Learning for Radar Frequency*. arXiv:2312.02912. URL: https://arxiv.org/abs/2312.02912.
 28. Bayesian SAR ATR defense (2024). arXiv:2403.18318. URL: https://arxiv.org/pdf/2403.18318.
 29. Foreign Policy (March 19, 2024). *War-Zone GPS Spoofing Threat to Civil Aviation*. URL: https://foreignpolicy.com/2024/03/19/war-zone-gps-spoofing-threat-civil-aviation-russia-iran/.
 30. Stanford SCPNT (2025). *Russia spoofing 2023-24*. URL: https://web.stanford.edu/group/scpnt/gpslab/pubs/papers/Lo_ION_ITM_2025_Russia_Spoofing.pdf.

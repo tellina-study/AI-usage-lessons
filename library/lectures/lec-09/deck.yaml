@@ -1,7 +1,7 @@
 # library/lectures/lec-09/deck.yaml
 #
 # Deck-структура Лекции 9 «AI в авиакосмической отрасли и оборонном комплексе»
-# (v2: 34 слайда, real photos, anti-anglicism cleanup).
+# (v3: 35 слайдов, P0 fact fixes + SPLIT s-15 + acronym inline + Lavender RU chart).
 #
 # Source: chapter v3 (status=finalized, ~17k слов) + plan v2.
 # Phase 5 multi-artifact pipeline. Issue #118.
@@ -26,12 +26,27 @@ deck:
   learning_outcomes: [LO1a, LO1b, LO2, LO3, LO7]
   language: ru
   status: draft
-  version: v2
-  source: chapter v3 (status=finalized, ~17k слов)
+  version: v3
+  source: chapter v4 (status=finalized, ~17k слов, Du→Ye + CENTCOM→EUCOM fixed)
   plan: notes/lecture-9-review/plan-v2.md
   keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976)"
 
-# Final slide list (34 slides):
+# v3 changes from v2 (34 → 35 slides):
+#   - P0-1 fact fix: Du et al. 2024 → Ye et al. 2023 (slide s14 adversarial SAR)
+#   - P0-2 fact fix: CENTCOM → INDOPACOM/EUCOM (Scale Thunderforge deployment)
+#   - P0-3 structural: SPLIT s-15 (Decide vendors) на 2 slides — US (Palantir+Scale+Anthropic) +
+#     EU/RU (Helsing + Russian C2) для self-containedness через 2 нед
+#   - P1: Lavender chart RU labels (Помечено / 90 % точности / Ложные срабатывания)
+#   - P1: ghost text «D01²/001¹» на s-08 + «2024-2026» на s-27 (Maven Эра 3) fixed
+#   - P1: 8 acronyms inline expansion (CCA, MCAS, IFF, ROE, BVR, ALIS, FedRAMP HIGH, FMEA/FTA)
+#   - P1: Russian codename context inline (Красуха-4, Geran-2 как модификация Shahed-136)
+#   - P1: Slingshot Agatha/TALOS disambig (TALOS dropped from constellation card)
+#   - P1: Era 2 Anduril dates trajectory; UN press vs SKR disambig 164/6/7 vs 156/5/8
+#   - P1: easyJet «44 cancellations в июле 2024» (year framing precision)
+#   - P2: cover progress bar removed; «Анти-хайп»/«redesign»/«hype» russified
+#   - P2: L4-L5 «когда плохая идея» callout (strict-in strengthening)
+#
+# Final slide list (35 slides):
 #
 # Section 0 — Открытие + keystone + roadmap (≈5 мин):
 #   s01 — hook satellite (Sentinel-2 real imagery + Maxar Sentry sidebar)
@@ -56,8 +71,9 @@ deck:
 #
 # Section 2 — Decide (≈14 мин):
 #   s17 — decide intro (4-source pipeline + 10% × 37000 = 3700 callout)
-#   s18 — MERGED: Decide vendor landscape (Palantir+Scale+Helsing+Anthropic+RU)
-#   s21 — Lavender (chart + 3 lessons)
+#   s18 — SPLIT v3 part 1: US vendor landscape (Palantir + Scale + Anthropic-AWS)
+#   s18b — SPLIT v3 part 2: EU + Russian C2 (Helsing + Svod/Glaz/Groza + caveat)
+#   s21 — Lavender (chart с RU labels + 3 lessons)
 #   s22 — Lancet rollback + Vincennes 1988 (with Lancet + Iran Air photos)
 #
 # Section divider 3

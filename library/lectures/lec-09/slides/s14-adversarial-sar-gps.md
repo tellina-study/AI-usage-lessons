@@ -6,7 +6,7 @@ assertion: "Adversarial-атаки на SAR ATR + GPS-spoofing — accuracy benc
 learning_goal: "2-в-1 failure: adversarial SAR + GPS spoofing → urok про single-source"
 learning_outcomes: [LO1b, LO3]
 chapter_ref: "§1.7 — Adversarial-атаки и GPS-spoofing"
-references: [du-2024-arxiv, stanford-scpnt-2025, foreign-policy-2024]
+references: [ye-2023-arxiv, stanford-scpnt-2025, foreign-policy-2024]
 visual:
   pattern: matrix
   primary: "2 case cards + Bayesian + multi-GNSS защита"
@@ -26,7 +26,7 @@ Adversarial-атаки на SAR ATR + GPS-spoofing — accuracy benchmark обм
 - Schematic illustration: танк с corner reflectors → SAR classifier → misclassification
 - Иконка `triangle-alert` Primary mid 32px
 - Текст: «Дешёвые металлические рассеиватели в специальной геометрии обманывают classifier»
-- Source: Du et al. 2024 arXiv:2312.02912
+- Source: Ye et al. 2023 arXiv:2312.02912
 - Защита (3 пункта):
   - Bayesian uncertainty estimates
   - Adversarial training
@@ -35,7 +35,7 @@ Adversarial-атаки на SAR ATR + GPS-spoofing — accuracy benchmark обм
 **Справа — GPS-spoofing civil aviation** (Ocean rounded box):
 - QuickChart mini bar: 2022 — 26 cases; 2024 — 820 cases (~32×, gold)
 - Иконка `radio-tower` Primary mid 32px
-- Текст: «Российские средства РЭБ (Krasukha-4, Borisoglebsk-2) — Чёрное море, Восточная Европа»
+- Текст: «Российские наземные РЭБ-системы (Krasukha-4, Borisoglebsk-2) — Чёрное море, Восточная Европа»
 - Source: Stanford SCPNT 2025
 - Защита (3 пункта):
   - Multi-GNSS (GPS+GLONASS+Galileo+BeiDou)
@@ -46,7 +46,7 @@ Adversarial-атаки на SAR ATR + GPS-spoofing — accuracy benchmark обм
 
 ## Speaker notes
 
-Второй провальный кейс Sense — adversarial-атаки на SAR ATR. Идея проста. Classifier обучен распознавать танки и пусковые установки по SAR-снимкам; противник размещает на местности или на технике дешёвые металлические рассеиватели — corner reflectors — в специальной геометрии, и classifier начинает неправильно классифицировать объекты. Опубликованные исследования показывают физическую реализуемость таких атак — Du et al., 2024. Это не лабораторный edge case, это знание, доступное любой противоборствующей стороне.
+Второй провальный кейс Sense — adversarial-атаки на SAR ATR. Идея проста. Classifier обучен распознавать танки и пусковые установки по SAR-снимкам; противник размещает на местности или на технике дешёвые металлические рассеиватели — corner reflectors — в специальной геометрии, и classifier начинает неправильно классифицировать объекты. Опубликованные исследования показывают физическую реализуемость таких атак — Ye et al., 2023. Это не лабораторный edge case, это знание, доступное любой противоборствующей стороне.
 
 Урок. Стандартный benchmark accuracy обманчив для adversarial-доменов: противник определяет distribution на test-time. Защита требует трёх вещей одновременно. Bayesian uncertainty estimates — модель должна уметь сказать «я не уверена», а не выдать confident wrong answer. Adversarial training — обучение на adversarial-примерах, дополняющее обычный датасет. И pathway абстракции, abstention: когда uncertainty высокая, модель эскалирует к человеку, а не молча выбирает «наиболее вероятный» класс.
 

@@ -139,7 +139,7 @@ def slide_09_constellation(prs):
     edge_cards = [
         ("Φ-sat-2 (ESA) ·\nавг. 2024", "Демонстраторы"),
         ("Lockheed\nPony Express", "Промышленная телеметрия"),
-        ("Slingshot Agatha\nТАЛОС · 2025", "Слежение за космосом"),
+        ("Slingshot Agatha\n2024 · поведение спутников", "Слежение за космосом"),
         ("ТЕРРА ТЕХ /\nРоскосмос", "Гражданская аналитика"),
     ]
     cw = (12.25 - 0.3 * 3) / 4
@@ -177,9 +177,11 @@ def slide_09_constellation(prs):
         "Демонстраторы: ESA Φ-sat-2 — европейский спутник с моделями, "
         "обновляемыми по телекомандам. Промышленная телеметрия: Lockheed Pony "
         "Express 2 — американский военный аналог. Слежение за космосом: Slingshot "
-        "Agatha с ТАЛОС — 204 сенсора в 21 локации, наблюдение за самими "
-        "спутниками. Гражданская аналитика: ТЕРРА ТЕХ от Роскосмоса — "
-        "аграрный и инфраструктурный мониторинг.")
+        "Agatha — система обнаружения аномального поведения спутников, "
+        "развёрнута с 2024. TALOS — это другой продукт Slingshot, тренажёр для "
+        "операторов Space Force, появился в июле 2025; на этом слайде мы говорим "
+        "только про on-orbit tracking. Гражданская аналитика: ТЕРРА ТЕХ от "
+        "Роскосмоса — аграрный и инфраструктурный мониторинг.")
     return s
 
 
@@ -264,14 +266,17 @@ def slide_12_predictive_maintenance(prs):
     if photo_p.exists():
         add_image(s, photo_p, 0.8, 3.75, w=5.6, h=2.4)
     text_box(s, 0.8, 6.25, 5.6, 0.55,
-             "easyJet: −8,1 тонны топлива/ВС/год + 44 отменённых рейса предотвращены (2024).",
+             "easyJet: −8,1 тонны топлива/ВС/год + 44 отменённых рейса предотвращены в июле 2024.",
              size=10, italic=True, color=MID, line_spacing=1.2)
 
     # Right half — оборонный провал F-35 ALIS
     ocean_box(s, 6.75, 1.85, 6.05, 5.0, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 6.95, 1.95, 5.65, 0.35, "Оборонная авиация — провал F-35 ALIS",
              size=15, bold=True, color=DEEP)
-    text_box(s, 6.95, 2.3, 5.65, 0.3, "Списан июнь 2024 — нарушил все три условия:",
+    text_box(s, 6.95, 2.25, 5.65, 0.28,
+             "ALIS — Autonomic Logistics Information System.",
+             size=9, italic=True, color=LIGHT)
+    text_box(s, 6.95, 2.5, 5.65, 0.3, "Списан в июне 2024 — нарушил все три условия:",
              size=11, italic=True, color=MID)
     conds = [
         ("Быстрая обратная связь", "Сдвиг распределения видно за годы, не дни."),
@@ -279,7 +284,7 @@ def slide_12_predictive_maintenance(prs):
         ("Цена FP ≤ цена FN", "Ложные тревоги → персонал обходит через Excel."),
     ]
     for i, (t, d) in enumerate(conds):
-        y = 2.75 + i * 0.65
+        y = 2.95 + i * 0.62
         text_box(s, 6.95, y, 0.45, 0.35, "✗",
                  size=20, bold=True, color=RED_WARN, anchor=MSO_ANCHOR.MIDDLE)
         text_box(s, 7.45, y, 5.15, 0.3, t,
@@ -453,7 +458,7 @@ def slide_14_adversarial_gps(prs):
         text_box(s, 0.95, 4.85 + i * 0.3, 5.4, 0.28, "• " + d,
                  size=11, color=MID)
 
-    text_box(s, 0.8, 6.2, 5.6, 0.3, "Источник: Du et al. 2024 (arXiv:2312.02912)",
+    text_box(s, 0.8, 6.2, 5.6, 0.3, "Источник: Ye et al. 2023 (arXiv:2312.02912)",
              size=10, italic=True, color=LIGHT)
 
     # Right: GPS spoofing
@@ -472,7 +477,7 @@ def slide_14_adversarial_gps(prs):
              size=14, bold=True, color=GOLD, line_spacing=1.3)
 
     text_box(s, 7.0, 4.75, 5.5, 0.5,
-             "Российские средства РЭБ («Красуха-4», «Борисоглебск-2»). Чёрное море, Восточная Европа.",
+             "Российские наземные РЭБ-системы («Красуха-4», «Борисоглебск-2»). Чёрное море, Восточная Европа.",
              size=11, italic=True, color=MID, line_spacing=1.2)
 
     text_box(s, 7.0, 5.3, 5.5, 0.35, "Защита:",
@@ -673,106 +678,233 @@ def slide_17_decide_intro(prs):
 
 
 def slide_18_palantir(prs):
-    """MERGED s18+s19+s20: Decide vendor landscape — Palantir + Scale + Helsing
-    + Anthropic + Russian C2 caveat in one compact slide."""
+    """SPLIT v3 part 1: US vendors landscape — Palantir MSS + Scale AI + Anthropic-AWS.
+    European + Russian C2 → slide_18b_eu_ru_vendors."""
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Decide — ландшафт вендоров: США, Европа, Россия",
+        "Decide — американский ландшафт вендоров (1/2)",
         size=24)
 
-    # 4 vendor cards in 2×2 grid
     text_box(s, 0.6, 1.85, 12.13, 0.35,
-             "Главные игроки рынка систем поддержки принятия решений в 2026:",
+             "Три главных игрока в системах поддержки принятия решений США, 2026:",
              size=12, italic=True, color=MID)
 
-    vendors = [
-        # (name, country, level, big_metric, big_metric_label, descrip, color, accent)
-        ("Palantir Maven Smart System (MSS)", "США", "L1 · поддержка",
-         "$1,3 млрд", "потолок до 2029",
-         "Главный американский флагман. Слияние разведки + сводки для командиров. Человек решает.",
+    # 3 vendor cards horizontal
+    us_vendors = [
+        # (name, level, big_metric, big_metric_label, bullet_lines, color)
+        ("Palantir MSS\n(Maven Smart System)",
+         "L1 · поддержка",
+         "$1,3 млрд",
+         "потолок IDIQ-контракта Армии США до 2029",
+         ["Главный американский флагман",
+          "Слияние разведки + сводки для командиров",
+          "Решение принимает человек, не ИИ",
+          "IDIQ — Indefinite Delivery / Indefinite Quantity"],
          GOLD),
-        ("Scale AI: Donovan → Defense Llama → Thunderforge", "США", "L1–L2",
-         "Mar 2025", "Thunderforge для CENTCOM/INDOPACOM",
-         "Эволюционная линия LLM на закрытых сетях. От текстовой поддержки к планированию операций.",
+        ("Scale AI\nDonovan → Defense Llama → Thunderforge",
+         "L1–L2",
+         "Mar 2025",
+         "Thunderforge для INDOPACOM и EUCOM",
+         ["Эволюция от текстовой LLM (2022) к",
+          "планированию операций (2025)",
+          "Donovan — закрытые сети XVIII Airborne",
+          "Thunderforge — военные игры + варианты действий"],
          MID),
-        ("Helsing (Германия) — Altra + Centaur", "Европа", "L2",
-         "€12 млрд", "оценка после Series D (июнь 2025)",
-         "Главный европейский игрок. Altra: слияние БПЛА + наблюдателей. Centaur: ИИ-пилот на Gripen E.",
-         LIGHT),
-        ("Anthropic + Palantir + AWS на IL6 (ноябрь 2024)", "США", "L1",
-         "IL6", "высший уровень секретности US-облака",
-         "Claude 3/3.5 на Impact Level 6. Поворотная точка: индустрия вернулась в оборону.",
+        ("Anthropic + Palantir + AWS\nClaude 3/3.5 на IL6",
+         "L1 · ноябрь 2024",
+         "IL6",
+         "Impact Level 6 — высший уровень US-облака",
+         ["Поворотная точка: AI-индустрия",
+          "вернулась в оборону через 6 лет после",
+          "Maven walkout (см. Раздел 4)",
+          "FedRAMP HIGH — авторизация облаков"],
          TEAL),
     ]
-    cw = (12.13 - 0.3) / 2
-    ch = 2.25
-    for i, (name, country, lvl, num, num_label, desc, color) in enumerate(vendors):
-        row = i // 2; col = i % 2
-        x = 0.6 + col * (cw + 0.3)
-        y = 2.3 + row * (ch + 0.2)
+    cw = (12.13 - 0.3) / 3  # 3 columns
+    ch = 4.5  # taller cards
+    for i, (name, lvl, num, num_label, bullets, color) in enumerate(us_vendors):
+        x = 0.6 + i * (cw + 0.15)
+        y = 2.3
         ocean_box(s, x, y, cw, ch)
-        # Header strip
-        text_box(s, x + 0.2, y + 0.1, cw - 0.4, 0.4, name,
-                 size=12, bold=True, color=DEEP, line_spacing=1.15)
-        text_box(s, x + 0.2, y + 0.5, cw - 0.4, 0.3,
-                 f"{country} · уровень {lvl}",
+        # Vendor name (2 lines)
+        text_box(s, x + 0.2, y + 0.15, cw - 0.4, 0.7, name,
+                 size=13, bold=True, color=DEEP, line_spacing=1.2)
+        # Level chip
+        text_box(s, x + 0.2, y + 0.95, cw - 0.4, 0.3,
+                 f"США · {lvl}",
                  size=10, italic=True, color=color)
-        # Big number/year on right side
-        text_runs(s, x + 0.2, y + 0.95, cw - 0.4, 0.7, [
-            {"text": num, "size": 22, "bold": True, "color": color},
-            {"text": " — ", "size": 11, "color": MID},
-            {"text": num_label, "size": 11, "italic": True, "color": MID},
-        ])
-        text_box(s, x + 0.2, y + 1.6, cw - 0.4, 0.6, desc,
-                 size=10, color=MID, italic=True, line_spacing=1.25)
+        hr_line(s, x + 0.2, y + 1.3, cw - 0.4, color=color, weight=0.8)
+        # Big number
+        text_box(s, x + 0.2, y + 1.4, cw - 0.4, 0.55, num,
+                 size=22, bold=True, color=color)
+        text_box(s, x + 0.2, y + 1.95, cw - 0.4, 0.45, num_label,
+                 size=10, italic=True, color=MID, line_spacing=1.2)
+        # Bullet lines
+        for j, b in enumerate(bullets):
+            text_box(s, x + 0.2, y + 2.55 + j * 0.42, cw - 0.4, 0.42, "• " + b,
+                     size=10, color=MID, italic=True, line_spacing=1.25)
 
-    # Russian C2 caveat strip at bottom
-    ocean_box(s, 0.6, 6.95, 12.13, 0.5, fill=TEAL_TINT, stroke=TEAL)
-    text_runs(s, 0.85, 7.0, 11.63, 0.4, [
-        {"text": "Российский C2: ", "size": 12, "bold": True, "color": DEEP},
-        {"text": "Svod / Glaz / Groza — система оперативного управления, развёртывание с осени 2025. ", "size": 11, "color": MID},
-        {"text": "Оговорка: ", "size": 11, "bold": True, "color": TEAL},
-        {"text": "независимая западная верификация ограничена (CSIS + российская пресса).", "size": 11, "italic": True, "color": MID},
-    ], anchor=MSO_ANCHOR.MIDDLE)
+    # History footer — Maven 2017-2018 callback
+    ocean_box(s, 0.6, 6.95, 12.13, 0.45, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.85, 6.98, 11.63, 0.4,
+             "Линия Maven (2017): утечка Google март 2018 → ~12 увольнений, 4000+ подписей → июнь 2018 контракт не продлён → подхватили Palantir, Anduril, Scale. Полный разбор — Раздел 4.",
+             size=10, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
 
     add_footer(s,
-        "Источники: DefenseScoop 2024–2025 · BusinessWire 2023 · Helsing IR 2025 · Anthropic press 2024 · CSIS Bondar 2026.")
+        "Источники: DefenseScoop 2024–2025 · DIU.mil март 2025 · Anthropic press ноябрь 2024.")
     add_speaker_notes(s,
-        "Декабрь 2024 — май 2026. На рынок систем поддержки принятия решений в "
-        "обороне вышли четыре крупных игрока, и важно понимать ландшафт целиком, "
-        "а не каждого по отдельности.\n\n"
-        "Palantir Maven Smart System — главный американский флагман. История "
-        "начинается с Project Maven в 2017 году: программа анализа видео с БПЛА. "
-        "В марте 2018 года утечка показала, что Google помогает программе; к "
-        "июню 2018 года контракт с Google не был продлён под давлением "
-        "сотрудников — подробнее в Разделе 4. Программа была подхвачена "
-        "Palantir, Anduril и Scale. Контракты MSS: первый IDIQ на 480 миллионов "
-        "в мае 2024 года; дополнение на 99,8 миллиона в сентябре 2024; "
-        "увеличение потолка на 795 миллионов в мае 2025. Суммарный потолок — "
-        "около 1,3 миллиарда долларов до 2029 года. Уровень автономии — L1, "
-        "ассистирующий: ИИ выдаёт детекции и сводки, командир решает.\n\n"
-        "Scale AI прошёл эволюцию из трёх продуктов: Donovan на классифицированных "
-        "сетях XVIII Airborne Corps (2022–23) → Defense Llama, дообученная на "
-        "оборонном корпусе (ноябрь 2024) → Thunderforge для CENTCOM и "
-        "INDOPACOM (март 2025) — это уже планирование вариантов действий, "
-        "движения войск, кораблей.\n\n"
-        "Helsing — главный европейский игрок. Altra: слияние данных с БПЛА и "
-        "наблюдателей для наземного боя. Centaur: ИИ-пилот, испытания на Saab "
-        "Gripen E в июне 2025. Оценка после раунда D — 12 миллиардов евро, "
-        "главный инвестор — Prima Materia под управлением Дэниэла Эка из Spotify.\n\n"
-        "Anthropic-Palantir-AWS — поворотная точка ноября 2024. Claude 3 и 3.5 "
-        "выведены на Impact Level 6 — высший уровень секретности облака для "
-        "американского правительства. Между Maven walkout 2018 года и этим "
-        "партнёрством — шесть лет, и индустрия прошла полный цикл.\n\n"
+        "На рынок американских систем поддержки принятия решений в обороне к 2026 "
+        "году вышли три крупных игрока. Важно понимать их сравнительно, а не "
+        "каждого изолированно.\n\n"
+        "Первый — Palantir Maven Smart System. История начинается с Project Maven "
+        "в 2017 году: программа анализа видео с БПЛА. В марте 2018 года утечка "
+        "показала, что Google помогает программе; к июню 2018 года контракт с "
+        "Google не был продлён под давлением сотрудников — подробнее в Разделе 4. "
+        "Программа была подхвачена Palantir, Anduril и Scale. Контракты MSS: "
+        "первый IDIQ на 480 миллионов в мае 2024 года; дополнение на 99,8 "
+        "миллиона в сентябре 2024 года; увеличение потолка на 795 миллионов в "
+        "мае 2025 года. Суммарный потолок — около 1,3 миллиарда долларов до 2029 "
+        "года. IDIQ расшифровывается как Indefinite Delivery, Indefinite Quantity "
+        "— это рамочный контракт, по которому заказчик может выбирать конкретные "
+        "поставки по мере необходимости в пределах потолка. Уровень автономии MSS "
+        "— L1, ассистирующий: ИИ выдаёт детекции и сводки, командир решает.\n\n"
+        "Второй — Scale AI. Эволюция из трёх продуктов в одной линии. Donovan на "
+        "закрытых сетях XVIII Airborne Corps в 2022–2023 годах — это первый LLM, "
+        "развёрнутый в US classified network, через него прошли более ста тысяч "
+        "страниц приказов, разведсводок, оперативных документов. В ноябре 2024 — "
+        "Defense Llama, дообученная Llama 3 на оборонном корпусе. В марте 2025 — "
+        "Thunderforge для INDOPACOM (Индо-Тихоокеанского командования) и EUCOM "
+        "(Европейского командования). Это уже планирование вариантов действий, "
+        "движения войск, кораблей, самолётов. Уровень автономии — L1–L2.\n\n"
+        "Третий — Anthropic в партнёрстве с Palantir и AWS. Ноябрь 2024 — Claude "
+        "3 и 3.5 выведены на Impact Level 6, высший уровень секретности облака "
+        "для американского правительства. Между Maven walkout 2018 года и этим "
+        "партнёрством прошло шесть лет, и AI-индустрия прошла полный цикл от "
+        "«отказа как принципа» до «оборонные контракты — критический revenue».\n\n"
+        "Главный инженерный вывод: оценивая оборонного ИИ-вендора, разделяйте "
+        "две оси — возможности ИИ и уровни допуска инфраструктуры (FedRAMP HIGH, "
+        "IL6, SCIF). FedRAMP HIGH — это Federal Risk and Authorization Management "
+        "Program, высокий уровень. Обе оси важны, но это разные инженерные "
+        "компетенции. Европейский и российский ландшафт — на следующем слайде.")
+    return s
+
+
+def slide_18b_eu_ru_vendors(prs):
+    """SPLIT v3 part 2: European + Russian C2 vendor landscape — Helsing + Russian C2.
+    Split-out from slide_18_palantir для self-containedness через 2 нед (P0-3)."""
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s,
+        "Decide — европейский и российский ландшафт (2/2)",
+        size=24)
+
+    text_box(s, 0.6, 1.85, 12.13, 0.35,
+             "Один доминирующий европейский игрок плюс российский слой с оговоркой о доказательности:",
+             size=12, italic=True, color=MID)
+
+    # Helsing — large left card (60%)
+    ocean_box(s, 0.6, 2.3, 7.3, 4.55, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.8, 2.45, 7.0, 0.45, "Helsing (Германия)",
+             size=20, bold=True, color=DEEP)
+    text_box(s, 0.8, 2.95, 7.0, 0.3, "Главный европейский игрок · уровень L2",
+             size=11, italic=True, color=LIGHT)
+    hr_line(s, 0.8, 3.4, 7.0, color=LIGHT, weight=0.8)
+
+    # Big number
+    text_runs(s, 0.8, 3.55, 7.0, 0.7, [
+        {"text": "€12 млрд", "size": 32, "bold": True, "color": GOLD},
+    ])
+    text_box(s, 0.8, 4.2, 7.0, 0.3,
+             "оценка после Series D, июнь 2025",
+             size=11, italic=True, color=MID)
+
+    # Products
+    text_box(s, 0.8, 4.65, 7.0, 0.35, "Два продукта:",
+             size=13, bold=True, color=DEEP)
+    helsing_prods = [
+        ("Altra", "слияние данных БПЛА + наземных наблюдателей для боя"),
+        ("Centaur", "ИИ-пилот, испытания на Saab Gripen E (июнь 2025)"),
+    ]
+    for i, (name, desc) in enumerate(helsing_prods):
+        y = 5.05 + i * 0.65
+        text_box(s, 0.8, y, 2.0, 0.35, name,
+                 size=14, bold=True, color=MID)
+        text_box(s, 2.85, y + 0.03, 4.85, 0.55, desc,
+                 size=11, color=DEEP, italic=True, line_spacing=1.25)
+
+    text_box(s, 0.8, 6.4, 7.0, 0.35,
+             "Главный инвестор — Prima Materia (Daniel Ek, со-основатель Spotify).",
+             size=10, italic=True, color=LIGHT)
+
+    # Russian C2 — right card (38%)
+    ocean_box(s, 8.05, 2.3, 4.7, 4.55, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 8.25, 2.45, 4.4, 0.4, "Российский слой C2",
+             size=18, bold=True, color=DEEP)
+    text_box(s, 8.25, 2.9, 4.4, 0.3, "Системы оперативного управления",
+             size=11, italic=True, color=TEAL)
+    hr_line(s, 8.25, 3.3, 4.2, color=TEAL, weight=0.8)
+
+    text_box(s, 8.25, 3.4, 4.4, 0.35, "Открыто известные системы:",
+             size=12, bold=True, color=DEEP)
+    ru_systems = [
+        ("Svod", "оперативный обмен"),
+        ("Glaz", "геопространственная платформа"),
+        ("Groza", "управление группировкой"),
+        ("ZOV Maps", "карты приложение"),
+    ]
+    for i, (name, desc) in enumerate(ru_systems):
+        y = 3.8 + i * 0.4
+        text_box(s, 8.4, y, 1.4, 0.32, "• " + name,
+                 size=12, bold=True, color=DEEP)
+        text_box(s, 9.85, y + 0.02, 2.85, 0.32, desc,
+                 size=10, italic=True, color=MID)
+
+    # Caveat
+    ocean_box(s, 8.25, 5.5, 4.3, 1.3, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 8.4, 5.6, 4.0, 0.3, "⚠ Оговорка о доказательности",
+             size=11, bold=True, color=DEEP)
+    text_box(s, 8.4, 5.95, 4.0, 0.75,
+             "Развёртывание с осени 2025. Независимая западная верификация ограничена (CSIS Bondar + российская пресса). Цитируем с явной меткой — не «верить», не «отвергать».",
+             size=9, italic=True, color=DEEP, line_spacing=1.3)
+
+    # Engineering takeaway band
+    ocean_box(s, 0.6, 6.95, 12.13, 0.45, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 6.98, 11.63, 0.4,
+             "Инженерный вывод: оценивая оборонного ИИ-вендора, держите в голове ДВЕ оси — возможности ИИ и уровень допуска инфраструктуры (FedRAMP HIGH, IL6, SCIF).",
+             size=11, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+
+    add_footer(s,
+        "Источники: Helsing IR июнь 2025 · CSIS Bondar 2026 · российская открытая пресса 2024–2025.")
+    add_speaker_notes(s,
+        "Европейский и российский ландшафт. Сразу подчеркну: пропорция другая — в "
+        "Европе один доминирующий игрок, в России — слой нескольких систем под "
+        "общим зонтиком оперативного управления, и совершенно другой уровень "
+        "независимой верификации.\n\n"
+        "Helsing — главный европейский игрок в обороне-AI. Базируется в Германии. "
+        "Два ключевых продукта. Altra — слияние данных с БПЛА и наземных "
+        "наблюдателей для наземного боя; это аналог Palantir-Maven на европейской "
+        "стороне Атлантики. Centaur — ИИ-пилот; в июне 2025 года успешно прошли "
+        "испытания на Saab Gripen E. Финансы: 600 миллионов евро раунд D в июне "
+        "2025; оценка после раунда — 12 миллиардов евро. Главный инвестор — Prima "
+        "Materia под управлением Дэниэла Эка, со-основателя Spotify. Это "
+        "интересный сигнал: технологический капитал из гражданского сектора "
+        "уверенно перетекает в оборонный. Если ваш карьерный интерес — европейская "
+        "defense-AI индустрия, Helsing и Министерство обороны Великобритании — "
+        "главные адреса.\n\n"
         "Российский слой — Svod, Glaz, Groza, ZOV Maps. Это система оперативного "
         "управления и геопространственная платформа, экспериментальное "
-        "развёртывание с осени 2025. Источники: CSIS Bondar и российская пресса. "
-        "Независимая западная верификация ограничена, поэтому мы упоминаем с "
-        "явной оговоркой — не «верить» и не «отвергать», а маркировать уровень "
-        "доказательности.\n\n"
-        "Главный инженерный вывод: оценивая оборонного ИИ-вендора, разделяйте две "
-        "оси — возможности ИИ и уровни допуска (FedRAMP HIGH, IL6, SCIF). Это "
-        "разные инженерные компетенции, обе важны.")
+        "развёртывание с осени 2025. Источники о технических деталях — CSIS "
+        "Bondar 2026 и российская открытая пресса. Независимая западная "
+        "верификация ограничена, поэтому мы упоминаем эти системы с явной "
+        "оговоркой о доказательности. Это методологический принцип: ни верить, "
+        "ни отвергать, а маркировать уровень источника. То же самое мы будем "
+        "делать с любыми данными из подобных источников в курсе.\n\n"
+        "Главный инженерный вывод тот же, что был на предыдущем слайде, но теперь "
+        "виден полнее. Оценивая оборонного ИИ-вендора — американского, "
+        "европейского или российского, — разделяйте две оси: возможности ИИ и "
+        "уровень допуска инфраструктуры. FedRAMP HIGH, IL6, SCIF — это серьёзная "
+        "инженерная работа, по объёму сравнимая с разработкой собственно ИИ-"
+        "моделей. Эти две оси требуют разных инженерных компетенций, и обе "
+        "одинаково важны.")
     return s
 
 
@@ -881,7 +1013,7 @@ def _slide_19_old(prs):
     products = [
         ("Donovan", "2022-23", "XVIII Airborne Corps · 100k+ страниц · classified", MID),
         ("Defense Llama", "Nov 2024", "Fine-tuned Llama 3 · ops planning", LIGHT),
-        ("Thunderforge", "Mar 2025", "CENTCOM + INDOPACOM · COA wargaming", GOLD),
+        ("Thunderforge", "Mar 2025", "INDOPACOM + EUCOM · COA wargaming", GOLD),
     ]
     for i, (name, date, desc, col) in enumerate(products):
         y = 2.7 + i * 1.0
@@ -938,7 +1070,7 @@ def _slide_19_old(prs):
         "SitReps, intel прошли через него. Donovan был первым LLM, развёрнутым "
         "в US classified network. В ноябре 2024 — Defense Llama, fine-tuned "
         "Llama 3 на defense corpus. И в марте 2025 — Thunderforge: wargaming "
-        "плюс COA generation, используется в CENTCOM и INDOPACOM. Авторизация — "
+        "плюс COA generation, используется в INDOPACOM и EUCOM. Авторизация — "
         "FedRAMP HIGH, развёртывание на трёх уровнях classified networks.\n\n"
         "Второй — Helsing. Главный европейский игрок в defense-AI. Altra — "
         "fusion ISR-дронов плюс наблюдателей-spotters для land combat. Параллельно "
@@ -1122,7 +1254,7 @@ def slide_22_lancet_vincennes(prs):
     ocean_box(s, 0.6, 1.95, 6.0, 4.7)
     text_box(s, 0.8, 2.1, 5.6, 0.4, "Российский «Ланцет»: откат автономии",
              size=16, bold=True, color=DEEP)
-    text_box(s, 0.8, 2.5, 5.6, 0.35, "2022–2024 · канонический разбор LO2",
+    text_box(s, 0.8, 2.5, 5.6, 0.35, "2022–2024 · канонический разбор «демо ≠ продакшен»",
              size=11, italic=True, color=GOLD, bold=True)
 
     text_box(s, 0.8, 3.05, 5.6, 0.35, "2022–23:", size=12, bold=True, color=MID)
@@ -1263,7 +1395,7 @@ def _slide_23_old(prs):
 
     ocean_box(s, 0.6, 6.35, 12.13, 0.65, fill=TEAL_TINT, stroke=TEAL)
     text_box(s, 0.85, 6.43, 11.63, 0.5,
-             "Decide — звено самое тонкое. LLM-hype опаснее всего. AI — accelerator, не decision-maker.",
+             "Decide — звено самое тонкое. LLM-преувеличения опаснее всего. ИИ — ускоритель, а не решающее звено.",
              size=14, italic=True, color=DEEP, bold=True,
              anchor=MSO_ANCHOR.MIDDLE)
     add_speaker_notes(s,
@@ -1380,7 +1512,7 @@ def slide_26_fury(prs):
     text_box(s, 0.8, 2.1, 7.1, 0.4, "YFQ-44A · Fury (ОТА Anduril)",
              size=18, bold=True, color=DEEP)
     text_box(s, 0.8, 2.5, 7.1, 0.35,
-             "Anduril CCA Increment 1 · первый полёт 31 октября 2025",
+             "CCA (Collaborative Combat Aircraft) · первый полёт 31 октября 2025",
              size=12, italic=True, color=MID)
 
     # Real Anduril Sentry photo (Anduril asset photo proxy)
@@ -1417,7 +1549,7 @@ def slide_26_fury(prs):
              align=PP_ALIGN.CENTER, line_spacing=1.3)
 
     ocean_box(s, 8.4, 4.3, 4.4, 1.05, fill=TEAL_TINT, stroke=TEAL)
-    text_box(s, 8.55, 4.4, 4.1, 0.4, "23 марта 2026",
+    text_box(s, 8.55, 4.4, 4.1, 0.4, "Март 2026 · серийное производство",
              size=14, bold=True, color=DEEP)
     text_box(s, 8.55, 4.75, 4.1, 0.5,
              "Arsenal-1, Огайо · $1 млрд инвестиций",
@@ -1433,14 +1565,15 @@ def slide_26_fury(prs):
     add_footer(s,
         "Источники: Wikipedia YFQ-44 · Air & Space Forces 2026 · The Aviationist March 24 2026")
     add_speaker_notes(s,
-        "Anduril Fury YFQ-44A — Beautiful poster child современной американской "
-        "ставки на автономию. CCA — Collaborative Combat Aircraft — программа "
-        "ВВС США по созданию беспилотных wingmen, летающих рядом с пилотируемыми "
-        "истребителями. Fury YFQ-44A — Increment 1.\n\n"
+        "Anduril Fury YFQ-44A — главная американская ставка на автономию в "
+        "воздухе. CCA расшифровывается как Collaborative Combat Aircraft — "
+        "программа ВВС США по созданию беспилотных ведомых, летающих рядом с "
+        "пилотируемыми истребителями. Fury YFQ-44A — Increment 1, первая "
+        "серийная итерация программы.\n\n"
         "Спецификации: высота до 50 000 футов, скорость 0,95 Маха, перегрузка "
         "9g, двигатель Williams FJ44-4M на 4 000 фунтов тяги. Главное вооружение — "
         "AIM-120 AMRAAM. Первый полёт состоялся 31 октября 2025. Серийное "
-        "производство стартовало 23 марта 2026 на новом заводе Arsenal-1 в "
+        "производство стартовало в марте 2026 года на новом заводе Arsenal-1 в "
         "Огайо — миллиард долларов инвестиций.\n\n"
         "Управляется Fury стеком: Hivemind (Shield AI autonomy stack) плюс "
         "Lattice (Anduril proprietary OS для autonomous mesh-coordination). "
@@ -1486,10 +1619,10 @@ def slide_27_x62a_saker(prs):
 
     # Anti-hype caveat in gold-tint
     ocean_box(s, 0.8, 5.7, 5.55, 0.9, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.95, 5.78, 5.3, 0.3, "Анти-хайп:",
+    text_box(s, 0.95, 5.78, 5.3, 0.3, "Без преувеличений:",
              size=11, bold=True, color=DEEP)
     text_box(s, 0.95, 6.05, 5.3, 0.5,
-             "Узкий сценарий, дуэль 1-на-1, бой вне визуального диапазона исключён, расход топлива и правила открытия огня не учитывались.",
+             "Узкий сценарий, дуэль 1-на-1, бой BVR (вне визуальной дальности) исключён, расход топлива и ROE (правила открытия огня) не учитывались.",
              size=9, italic=True, color=DEEP, line_spacing=1.2)
 
     # Right: Saker
@@ -1560,12 +1693,15 @@ def slide_28_geran_cognitive(prs):
     ocean_box(s, 0.6, 1.95, 6.0, 4.7)
     text_box(s, 0.8, 2.1, 5.6, 0.4, "Geran-2 — эволюция",
              size=16, bold=True, color=DEEP)
+    text_box(s, 0.8, 2.45, 5.6, 0.32,
+             "Российская модификация иранского Shahed-136 (loitering munition)",
+             size=9, italic=True, color=LIGHT, line_spacing=1.2)
 
     # Shahed-136 photo (Geran-2 is RU modification of this)
     photo_p = ASSETS / "photos" / "p28-shahed.jpg"
     if photo_p.exists():
-        add_image(s, photo_p, 0.8, 2.55, w=2.6, h=1.5)
-        text_box(s, 0.8, 4.1, 2.6, 0.25,
+        add_image(s, photo_p, 0.8, 2.85, w=2.6, h=1.4)
+        text_box(s, 0.8, 4.27, 2.6, 0.22,
                  "Shahed-136 (исходник для Geran-2)",
                  size=8, italic=True, color=LIGHT)
 
@@ -1575,21 +1711,21 @@ def slide_28_geran_cognitive(prs):
         (">40 000", "план к концу 2025"),
     ]
     for i, (big, desc) in enumerate(geran_stats):
-        y = 2.6 + i * 0.42
+        y = 2.85 + i * 0.42
         text_box(s, 3.5, y, 1.7, 0.3, big,
                  size=11, bold=True, color=GOLD)
         text_box(s, 3.5, y + 0.3, 2.9, 0.25, desc,
                  size=9, italic=True, color=MID)
 
-    hr_line(s, 0.8, 4.5, 5.4, color=LIGHT, weight=0.5)
-    text_box(s, 0.8, 4.6, 5.4, 0.35, "Бортовой стек (по анализу обломков):",
+    hr_line(s, 0.8, 4.55, 5.4, color=LIGHT, weight=0.5)
+    text_box(s, 0.8, 4.65, 5.4, 0.35, "Бортовой стек (по анализу обломков):",
              size=12, bold=True, color=DEEP)
     stack = ["NVIDIA Jetson — бортовой компьютер",
              "Камеры высокого разрешения + тепловизор",
              "FPGA для защиты от помех РЭБ",
-             "2026 — головка наведения на радиоизлучение"]
+             "2026 — головка наведения на радиоизлучение (ожидается)"]
     for i, s_ in enumerate(stack):
-        text_box(s, 0.95, 4.95 + i * 0.25, 5.2, 0.23, "• " + s_,
+        text_box(s, 0.95, 5.0 + i * 0.24, 5.2, 0.23, "• " + s_,
                  size=10, color=MID, line_spacing=1.15)
 
     # Supply chain warning
@@ -1661,6 +1797,11 @@ def slide_29_mcas(prs):
     add_assertion_title(s,
         "Boeing 737 MAX MCAS — канонический анти-паттерн критичной к безопасности автоматики", size=22)
 
+    # Mini-glossary band под assertion (для расшифровки акронимов)
+    text_box(s, 0.6, 1.35, 12.13, 0.42,
+             "MCAS — Maneuvering Characteristics Augmentation System (система коррекции трима); FMEA / FTA — анализ режимов отказов / дерево отказов.",
+             size=11, italic=True, color=LIGHT, line_spacing=1.25)
+
     # Left: 4 lessons in 2x2
     lessons = [
         ("Единая точка отказа",
@@ -1724,10 +1865,10 @@ def slide_29_mcas(prs):
     photo_p = ASSETS / "photos" / "p29-patriot.jpg"
     if photo_p.exists():
         add_image(s, photo_p, 0.7, 6.15, w=1.5, h=0.8)
-    text_box(s, 2.3, 6.1, 5.3, 0.35, "Patriot — параллельный урок",
+    text_box(s, 2.3, 6.1, 5.3, 0.35, "Patriot — параллельный урок (IFF не ответил)",
              size=12, bold=True, color=DEEP)
     text_box(s, 2.3, 6.4, 5.3, 0.6,
-             "2003 (RAF Tornado + ВМС США F/A-18) + 2024 (украинский F-16). Склонность доверять автомату.",
+             "2003 (RAF Tornado + ВМС США F/A-18) + 2024 (украинский F-16). IFF — Identification Friend or Foe. Склонность доверять автомату.",
              size=10, italic=True, color=MID, line_spacing=1.25)
 
     add_footer(s,
@@ -1798,7 +1939,7 @@ def _slide_30_old(prs):
 
     ocean_box(s, 0.6, 6.35, 12.13, 0.65, fill=TEAL_TINT, stroke=TEAL)
     text_box(s, 0.85, 6.43, 11.63, 0.5,
-             "Act — звено, где hype далеко впереди реальности. Большинство strikes — operator-in-loop. Не путайте L3 с L5.",
+             "Act — звено, где преувеличения далеко впереди реальности. Большинство ударов — с оператором в петле. Не путайте L3 с L5.",
              size=13, italic=True, color=DEEP, bold=True,
              anchor=MSO_ANCHOR.MIDDLE)
     add_speaker_notes(s,
@@ -1850,7 +1991,7 @@ def slide_32_l1_l5(prs):
          "Anduril Fury — ведомый (CCA)",
          "100–1000 мс", LIGHT_TINT, MID),
         ("L4", "Авто-применение по правилам",
-         "ИИ: применяет по правилам открытия огня · Человек: может вмешаться",
+         "ИИ: применяет по ROE (правилам открытия огня) · Человек: может вмешаться",
          "Patriot auto, С-400 auto",
          "<100 мс", TEAL_TINT, TEAL),
         ("L5", "Полная LAWS",
@@ -1903,10 +2044,14 @@ def slide_32_l1_l5(prs):
              "← L4↔L5\nспор о\nдоговоре",
              size=8, italic=True, color=GOLD, bold=True, line_spacing=1.1)
 
-    # Bottom takeaway
-    text_box(s, 0.6, 7.0, 12.13, 0.3,
+    # Bottom takeaway + L4-L5 failure case callout
+    ocean_box(s, 0.6, 6.85, 12.13, 0.45, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 6.9, 11.63, 0.4,
+             "Когда L4-L5 — плохая идея: единая точка отказа (один сенсор, ROE с дырами в краевых случаях) → MCAS-паттерн в безопасностно-критичной области. Инженер обязан говорить «нет».",
+             size=10, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+    text_box(s, 0.6, 7.32, 12.13, 0.2,
              "Инженерное правило: про конкретную систему говорите «L3 с границами шириной X», а не «автономная».",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+             size=9, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     add_speaker_notes(s,
         "Чтобы говорить о границе «где можно, где нельзя», нужна общая шкала. "
         "В индустрии используется лестница L1-L5 — концептуальный аналог SAE-"
@@ -1965,9 +2110,12 @@ def slide_33_un_gge(prs):
 
     text_box(s, 0.8, 5.05, 5.9, 0.3, "Против в 2025:",
              size=11, bold=True, color=DEEP)
-    text_box(s, 0.8, 5.35, 5.9, 0.35,
+    text_box(s, 0.8, 5.32, 5.9, 0.25,
              "Беларусь · Бурунди · КНДР · Израиль · Россия · США",
-             size=11, italic=True, color=MID)
+             size=10, italic=True, color=MID)
+    text_box(s, 0.8, 5.57, 5.9, 0.25,
+             "Цифры: UN press ga12736 — 164/6/7; Stop Killer Robots — 156/5/8 (разная методика).",
+             size=8, italic=True, color=LIGHT)
 
     # DoD Directive
     ocean_box(s, 0.8, 5.85, 5.9, 1.0, fill=TEAL_TINT, stroke=TEAL)
@@ -2189,11 +2337,11 @@ def slide_35_maven_shift(prs):
          ["Март 2018: утечка Google",
           "4 000+ подписей · ~12 увольнений",
           "Июнь 2018: Google не продлевает"]),
-        ("Эра 2: замена вендоров", "2018–2024", LIGHT_TINT, MID, "building-2",
-         ["Anduril — $30,5 млрд",
-          "Palantir — $60 млрд капитализация",
-          "Scale, Helsing — растут"]),
-        ("Эра 3: возврат больших ИИ-компаний", "2024–2026", GOLD_TINT, GOLD, "refresh-ccw",
+        ("Эра 2: замена вендоров", "2018–2025", LIGHT_TINT, MID, "building-2",
+         ["Anduril — $14 млрд (авг. 2024) →",
+          "$30,5 млрд (июнь 2025)",
+          "Scale, Palantir, Helsing — растут"]),
+        ("Эра 3: возврат ИИ-компаний", "2024–2026", GOLD_TINT, GOLD, "refresh-ccw",
          ["Янв. 2024: OpenAI снимает запрет",
           "Нояб. 2024: Anthropic IL6 (поворот)",
           "Сент. 2025: Google возвращается"]),
@@ -2206,14 +2354,14 @@ def slide_35_maven_shift(prs):
         icon_p = ASSETS / "icons" / f"{icon}-48.png"
         if icon_p.exists():
             add_image(s, icon_p, x + 0.2, 2.1, w=0.5, h=0.5)
-        text_box(s, x + 0.8, 2.15, ew - 0.9, 0.4, title,
+        text_box(s, x + 0.8, 2.15, ew - 0.9, 0.55, title,
                  size=13, bold=True, color=DEEP, line_spacing=1.15)
-        text_box(s, x + 0.8, 2.5, ew - 0.9, 0.3, date,
+        text_box(s, x + 0.8, 2.75, ew - 0.9, 0.3, date,
                  size=11, italic=True, color=col, bold=True)
-        hr_line(s, x + 0.2, 3.0, ew - 0.4, color=col, weight=0.5)
+        hr_line(s, x + 0.2, 3.15, ew - 0.4, color=col, weight=0.5)
 
         for j, b in enumerate(bullets):
-            text_box(s, x + 0.25, 3.15 + j * 0.55, ew - 0.45, 0.5, "• " + b,
+            text_box(s, x + 0.25, 3.3 + j * 0.55, ew - 0.45, 0.5, "• " + b,
                      size=11, color=DEEP, line_spacing=1.25)
 
         # Arrow to next
@@ -2508,7 +2656,7 @@ def slide_39_seven_criteria(prs):
     # Bottom callout
     ocean_box(s, 0.6, 6.6, 12.13, 0.5, fill=TEAL_TINT, stroke=TEAL)
     text_box(s, 0.85, 6.65, 11.63, 0.4,
-             "Главное в матрице — она ИНСТРУМЕНТ. Один срабатывает → redesign; несколько → пересмотр подхода",
+             "Главное в матрице — она ИНСТРУМЕНТ. Один срабатывает → перепроектирование; несколько → пересмотр подхода",
              size=13, italic=True, color=DEEP, bold=True,
              anchor=MSO_ANCHOR.MIDDLE)
     add_speaker_notes(s,
@@ -2874,6 +3022,7 @@ def build_part2(prs):
     slide_16(prs)
     slide_17_decide_intro(prs)
     slide_18_palantir(prs)
+    slide_18b_eu_ru_vendors(prs)  # SPLIT v3 P0-3: EU+RU vendors на отдельном слайде
     slide_19_scale_helsing(prs)
     slide_20_anthropic_russian(prs)
     slide_21_lavender(prs)

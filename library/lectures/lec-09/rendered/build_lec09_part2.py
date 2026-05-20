@@ -83,165 +83,135 @@ def assertion_with_cards(prs, assertion, cards_data, *, footer=None, notes="",
 # ========== Concrete slide builders ==========
 
 def slide_09_constellation(prs):
+    """MERGED s09+s10: constellation 4 vendors + edge-AI on-orbit."""
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "BlackSky + Planet + Capella + ICEYE — четыре комплементарных подхода")
+        "Спутниковая аналитика: четвёрка вендоров + ML прямо на орбите",
+        size=24)
 
-    # Table-style 4 rows
-    headers = ["Игрок", "Подход", "Контракт", "Тип"]
+    # Left half — vendors mini-table
+    text_box(s, 0.6, 1.85, 6.5, 0.35, "Четыре коммерческих вендора:",
+             size=13, bold=True, color=DEEP)
     rows = [
-        ("BlackSky Gen-3 + Spectra AI", "Малые сат, частая revisit",
-         "$100M+ subscription", "EO + CV"),
-        ("Planet Labs Dove", "Сотни сат, ежедневное покрытие",
-         "NRO EOCL $146M+", "EO"),
-        ("Capella Space", "SAR — всепогодный",
-         "NGA partnership", "SAR"),
-        ("ICEYE (Финляндия)", "SAR коммерческий",
-         "Украина + НАТО", "SAR"),
+        ("BlackSky Gen-3", "Малые спутники · частая ревизия", "EO + CV"),
+        ("Planet Labs Dove", "Сотни спутников · ежедневное покрытие", "EO"),
+        ("Capella Space", "Радар — всепогодный", "SAR"),
+        ("ICEYE (Финляндия)", "Радар коммерческий · Украина с 2022", "SAR"),
     ]
-    table_x = 0.6; table_w = 8.5
-    col_widths = [3.0, 2.8, 1.6, 1.1]
-    cum_x = 0
-    cell_h = 0.8
-    header_y = 2.0
-
+    table_x = 0.6
+    col_widths = [2.3, 3.3, 0.9]
+    header_y = 2.25
     # Header row
-    for i, h in enumerate(headers):
-        cx = table_x + cum_x
-        filled_rect(s, cx, header_y, col_widths[i], 0.5, MID)
-        text_box(s, cx + 0.1, header_y + 0.05, col_widths[i] - 0.2, 0.4, h,
-                 size=12, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
-        cum_x += col_widths[i]
-
-    # Body rows
-    body_y = header_y + 0.5
+    for i, h in enumerate(["Игрок", "Подход", "Тип"]):
+        cx = table_x + sum(col_widths[:i])
+        filled_rect(s, cx, header_y, col_widths[i], 0.45, MID)
+        text_box(s, cx + 0.08, header_y + 0.04, col_widths[i] - 0.16, 0.37, h,
+                 size=11, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+    cell_h = 0.55
+    body_y = header_y + 0.45
     for r_i, row in enumerate(rows):
         bg = SURFACE if r_i % 2 == 0 else WHITE
-        cum_x = 0
         for c_i, cell in enumerate(row):
-            cx = table_x + cum_x
+            cx = table_x + sum(col_widths[:c_i])
             filled_rect(s, cx, body_y + r_i * cell_h, col_widths[c_i], cell_h, bg,
                         stroke=LIGHT, stroke_pt=0.5)
-            text_box(s, cx + 0.12, body_y + r_i * cell_h + 0.1,
-                     col_widths[c_i] - 0.24, cell_h - 0.2, cell,
-                     size=11, color=DEEP if c_i == 0 else MID,
-                     bold=(c_i == 0), line_spacing=1.2,
+            text_box(s, cx + 0.1, body_y + r_i * cell_h + 0.06,
+                     col_widths[c_i] - 0.2, cell_h - 0.12, cell,
+                     size=10, color=DEEP if c_i == 0 else MID,
+                     bold=(c_i == 0), line_spacing=1.15,
                      anchor=MSO_ANCHOR.MIDDLE)
-            cum_x += col_widths[c_i]
+    text_box(s, 0.6, body_y + 4 * cell_h + 0.15, 6.5, 0.4,
+             "Радар видит сквозь облака и ночью — структурное преимущество.",
+             size=11, italic=True, color=TEAL, line_spacing=1.2)
 
-    # Right — constellation diagram
-    ocean_box(s, 9.4, 2.0, 3.4, 3.7)
-    text_box(s, 9.55, 2.15, 3.1, 0.35, "Орбитальный микс",
-             size=13, bold=True, color=MID,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
-    # Earth circle in middle
-    earth = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(10.55), Inches(3.55),
-                               Inches(1.1), Inches(1.1))
-    earth.fill.solid(); earth.fill.fore_color.rgb = SURFACE
-    earth.line.color.rgb = LIGHT; earth.line.width = Pt(1.5)
-    text_box(s, 10.55, 3.55, 1.1, 1.1, "Earth",
-             size=10, italic=True, color=MID,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    # 4 colored dots around
-    dots = [(0.5, 2.7, MID), (1.6, 2.55, LIGHT), (0.4, 4.7, TEAL), (1.7, 4.85, GOLD)]
-    for dx, dy, col in dots:
-        dot = s.shapes.add_shape(MSO_SHAPE.OVAL,
-                                 Inches(9.4 + dx), Inches(2.0 + dy),
-                                 Inches(0.3), Inches(0.3))
-        dot.fill.solid(); dot.fill.fore_color.rgb = col
-        dot.line.fill.background()
+    # Right — real Sentinel-1 photo + edge-AI 4 categories compact
+    photo_p = ASSETS / "photos" / "p09-sentinel.jpg"
+    if photo_p.exists():
+        ocean_box(s, 7.3, 1.85, 5.55, 2.5)
+        add_image(s, photo_p, 7.45, 2.0, w=5.25, h=2.2)
+        text_box(s, 7.45, 4.05, 5.25, 0.3,
+                 "Sentinel-1 (ESA, фото — Wikimedia Commons CC-BY-SA)",
+                 size=9, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Bottom callout
-    ocean_box(s, 0.6, 6.4, 12.13, 0.6, fill=TEAL_TINT, stroke=TEAL)
-    text_box(s, 0.85, 6.48, 11.63, 0.45,
-             "Главное преимущество SAR — видит сквозь облака и ночью. ICEYE активен в Украине с 2022.",
-             size=13, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    # Edge-AI on-orbit 4 categories — single row below
+    text_box(s, 0.6, 5.1, 12.25, 0.4, "ML прямо на борту спутника (без передачи сырого сигнала на землю):",
+             size=13, bold=True, color=DEEP)
+    edge_cards = [
+        ("Φ-sat-2 (ESA) ·\nавг. 2024", "Демонстраторы"),
+        ("Lockheed\nPony Express", "Промышленная телеметрия"),
+        ("Slingshot Agatha\nТАЛОС · 2025", "Слежение за космосом"),
+        ("ТЕРРА ТЕХ /\nРоскосмос", "Гражданская аналитика"),
+    ]
+    cw = (12.25 - 0.3 * 3) / 4
+    for i, (body, label) in enumerate(edge_cards):
+        x = 0.6 + i * (cw + 0.3)
+        ocean_box(s, x, 5.55, cw, 1.3, fill=LIGHT_TINT)
+        text_box(s, x + 0.1, 5.65, cw - 0.2, 0.3, label,
+                 size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+        text_box(s, x + 0.1, 5.95, cw - 0.2, 0.85, body,
+                 size=10, italic=True, color=MID,
+                 align=PP_ALIGN.CENTER, line_spacing=1.2)
 
+    add_footer(s, "Сценарий 2026-2028 — от «детекций за часы» к «упреждению до события». Источники: BlackSky 8-K 2024, Planet IR 2024, ESA 2024.")
     add_speaker_notes(s,
-        "Четвёрка коммерческих игроков формирует рынок 2026 года, и у каждого "
-        "свой стратегический подход. BlackSky сделал ставку на малые спутники "
-        "с высокой частотой revisit. Их Gen-3 спутники работают со Spectra AI, "
-        "который делает CNN-классификацию и change detection. Planet Labs — "
-        "самая массовая сеть с сотнями малых спутников Dove и ежедневным "
-        "глобальным покрытием. Главный контракт — NRO EOCL. Capella Space и "
-        "ICEYE — SAR-операторы. Преимущество SAR — всепогодная съёмка, "
-        "способность видеть сквозь облака и ночью. Главное применение — "
-        "морское наблюдение, отслеживание «теневого флота», мониторинг военной "
-        "инфраструктуры. Capella сотрудничает с NGA, ICEYE — финский оператор с "
-        "активными контрактами в Украине и НАТО. Структурный takeaway: вы не "
-        "выбираете «лучшего» вендора. Вы выбираете правильный сенсор и "
-        "правильную частоту покрытия для вашей задачи. AI работает поверх этого "
-        "выбора, а не вместо него.")
+        "Коммерческий рынок 2026 года формируют четыре игрока — BlackSky, Planet, "
+        "Capella и ICEYE — с двумя разными классами сенсоров. BlackSky сделал "
+        "ставку на малые спутники с высокой частотой повторной съёмки. Их Gen-3 "
+        "спутники работают со Spectra AI — это свёрточная классификация и "
+        "обнаружение изменений. Planet Labs — самая массовая сеть с сотнями малых "
+        "спутников Dove и ежедневным глобальным покрытием. Главный контракт — "
+        "NRO EOCL.\n\n"
+        "Capella Space и ICEYE — операторы радара с синтезированной апертурой. "
+        "Преимущество радара — всепогодная съёмка, способность видеть сквозь "
+        "облака и ночью. Главное применение — морское наблюдение, отслеживание "
+        "«теневого флота», мониторинг военной инфраструктуры. Capella работает с "
+        "NGA, ICEYE — финский оператор с активными контрактами в Украине и НАТО.\n\n"
+        "Структурный вывод: вы не выбираете «лучшего» вендора. Вы выбираете "
+        "правильный сенсор и правильную частоту покрытия для вашей задачи. AI "
+        "работает поверх этого выбора, а не вместо него.\n\n"
+        "Параллельно с большой коммерческой аналитикой развивается отдельная "
+        "линия — машинное обучение прямо на спутнике, без передачи сырого сигнала "
+        "на землю. Цель — снизить задержку и ширину канала: вместо мегабайтов "
+        "сырого изображения передаётся килобайт сводки «вот тут изменение». "
+        "Программы 2024-2026 года группируются в четыре категории. "
+        "Демонстраторы: ESA Φ-sat-2 — европейский спутник с моделями, "
+        "обновляемыми по телекомандам. Промышленная телеметрия: Lockheed Pony "
+        "Express 2 — американский военный аналог. Слежение за космосом: Slingshot "
+        "Agatha с ТАЛОС — 204 сенсора в 21 локации, наблюдение за самими "
+        "спутниками. Гражданская аналитика: ТЕРРА ТЕХ от Роскосмоса — "
+        "аграрный и инфраструктурный мониторинг.")
     return s
 
 
 def slide_10_edge_ai(prs):
-    cards = [
-        ("flask-conical", "Demonstrators",
-         ["ESA Φ-sat-2 (август 2024)", "Planetek AI-eXpress на Jetson Orin NX"],
-         MID),
-        ("activity", "Production telemetry",
-         ["Lockheed Pony Express 2 + T-TAURI", "Onboard ML аномалии телеметрии"],
-         MID),
-        ("radar", "SDA tracking",
-         ["Slingshot Agatha + TALOS · июль 2025", "204 сенсора · 21 локация · 5 континентов"],
-         TEAL),
-        ("database", "Commercial archive",
-         ["TerraTech / Роскосмос", "Гражданская onboard-классификация"],
-         LIGHT),
-    ]
-    s = assertion_with_cards(prs,
-        "Edge AI on-orbit: ML на спутнике, не на земле. ESA Φ-sat-2 — remote-upgradable.",
-        cards, card_layout="2x2",
-        footer="Adoption: от «AI-derived detection in hours» к «predictive intelligence before event». Сценарий 2026-2028.",
-        notes=(
-            "Параллельно с большой коммерческой аналитикой развивается отдельная "
-            "линия — edge AI on-orbit. Это ML-вычисления прямо на спутнике, без "
-            "передачи сырого сигнала на землю. Цель — снизить латентность и "
-            "ширину канала: вместо мегабайтов сырого изображения передаётся "
-            "килобайт сводки «вот тут изменение».\n\n"
-            "Программы 2024-2026 года группируются в четыре категории. "
-            "Демонстраторы: ESA Φ-sat-2 — европейский demonstration satellite с "
-            "remote-upgradable ML-моделями. После запуска модель можно дообучить "
-            "и заменить новым весом по телекомандам, без замены оборудования. "
-            "AI-eXpress 1+ от Planetek Italia — серия европейских edge-computing "
-            "спутников на NVIDIA Jetson Orin NX.\n\n"
-            "Production telemetry: Lockheed Pony Express 2 + T-TAURI — "
-            "американский военный production-аналог. Это уже не demo, это "
-            "инфраструктура. SDA tracking: Slingshot Agatha + TALOS — 204 "
-            "сенсора в 21 локации на 5 континентах плюс ML-«отпечатки» спутников "
-            "по фотометрическому паттерну. Это не ISR в смысле наблюдения за "
-            "землёй, это наблюдение за самим космосом.\n\n"
-            "Commercial archive: TerraTech от Роскосмоса — гражданская "
-            "коммерческая edge-аналитика. Adoption-направление по Sense — "
-            "растёт быстро."))
-    return s
+    """MERGED into slide_09_constellation — no-op stub."""
+    pass
 
 
 def slide_11_russian_sat(prs):
     cards = [
         ("globe", "ТЕРРА ТЕХ",
-         ["Дочерняя структура Роскосмоса (2017)",
-          "BRICS agriculture monitoring (2024)",
-          "Spatial data + ML-классификация",
-          "Caveat: объём метрик не публикуется"],
+         ["Дочерняя Роскосмоса (2017)",
+          "Агромониторинг в странах БРИКС (2024)",
+          "Пространственные данные + ML",
+          "Оговорка: метрики не публикуются"],
          GOLD),
         ("satellite-dish", "СКАНЭКС",
-         ["Единственная direct-receiving в РФ/СНГ",
-          "3,5М+ архив снимков",
+         ["Единственный прямой приём в РФ/СНГ",
+          "Архив 3,5 млн+ снимков",
           "Эксклюзив для Яндекс.Карт",
-          "Court ban на >2м distribution"],
+          "Суд ограничил снимки >2 м"],
          MID),
         ("satellite", "СПУТНИКС",
          ["100+ кубсатов с 2013",
-          "Zorkiy-2M · 2,5м · 4 спектр канала",
-          "Sitronics 45 cubsats 2024 (53% RU)"],
+          "Зоркий-2М · 2,5 м · 4 спектр. канала",
+          "Sitronics 45 кубсатов 2024 (53% от РФ)"],
          LIGHT),
     ]
     s = assertion_with_cards(prs,
         "Российский слой Sense — ТЕРРА ТЕХ, СКАНЭКС, СПУТНИКС",
         cards, card_layout="row",
-        footer="Оборонный Russian Sense — открытых данных мало. Geran-2 — Раздел 3; российский C2 — Раздел 2.",
+        footer="Оборонный российский Sense — открытых данных мало. Geran-2 — в Разделе 3; российский C2 — в Разделе 2.",
         notes=(
             "В российском контексте Sense развивается тремя путями, и публичная "
             "часть из этих путей — гражданская спутниковая аналитика.\n\n"
@@ -269,68 +239,112 @@ def slide_11_russian_sat(prs):
 
 
 def slide_12_predictive_maintenance(prs):
+    """MERGED s12+s13: predictive maintenance success (Rolls-Royce/Skywise) +
+    canonical failure (F-35 ALIS)."""
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Predictive maintenance — массовая гражданская AI-инфраструктура")
+        "Прогностическое обслуживание — гражданский успех vs. оборонный провал",
+        size=22)
 
-    # Left: Skywise chart
-    ocean_box(s, 0.6, 2.0, 6.5, 4.4)
-    chart_p = ASSETS / "charts" / "c12-skywise-bar.png"
-    if chart_p.exists():
-        add_image(s, chart_p, 0.75, 2.2, w=6.2, h=2.9)
-    text_box(s, 0.85, 5.3, 6.0, 0.95,
-             "easyJet: 8,1 тонны топлива/ВС/год сэкономлено; "
-             "44 предотвращённые отмены рейсов (июль 2024)",
-             size=12, italic=True, color=MID, line_spacing=1.25)
+    # Left half — гражданский успех
+    ocean_box(s, 0.6, 1.85, 6.0, 5.0)
+    text_box(s, 0.8, 1.95, 5.6, 0.35, "Гражданская авиация — работает",
+             size=15, bold=True, color=MID)
+    text_box(s, 0.8, 2.3, 5.6, 0.3, "Skywise (Airbus): 11 600 самолётов подключены.",
+             size=11, color=DEEP, line_spacing=1.2)
+    text_box(s, 0.8, 2.65, 2.0, 0.5, "~400",
+             size=30, bold=True, color=GOLD)
+    text_box(s, 2.4, 2.85, 4.0, 0.3, "событий/год предотвращены",
+             size=12, color=DEEP)
+    text_box(s, 0.8, 3.2, 5.6, 0.4,
+             "у Rolls-Royce IntelligentEngine (цифровой двойник двигателя с 2018).",
+             size=10, italic=True, color=MID, line_spacing=1.2)
+    # Skywise photo
+    photo_p = ASSETS / "photos" / "p12-skywise.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.8, 3.75, w=5.6, h=2.4)
+    text_box(s, 0.8, 6.25, 5.6, 0.55,
+             "easyJet: −8,1 тонны топлива/ВС/год + 44 отменённых рейса предотвращены (2024).",
+             size=10, italic=True, color=MID, line_spacing=1.2)
 
-    # Right: Rolls-Royce + stack cards
-    ocean_box(s, 7.4, 2.0, 5.4, 2.2)
-    text_box(s, 7.6, 2.15, 5.0, 0.45, "Rolls-Royce IntelligentEngine",
-             size=16, bold=True, color=DEEP)
-    text_box(s, 7.6, 2.65, 5.0, 0.35,
-             "С 2018 · digital twin каждого двигателя",
+    # Right half — оборонный провал F-35 ALIS
+    ocean_box(s, 6.75, 1.85, 6.05, 5.0, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 6.95, 1.95, 5.65, 0.35, "Оборонная авиация — провал F-35 ALIS",
+             size=15, bold=True, color=DEEP)
+    text_box(s, 6.95, 2.3, 5.65, 0.3, "Списан июнь 2024 — нарушил все три условия:",
              size=11, italic=True, color=MID)
-    text_runs(s, 7.6, 3.1, 5.0, 1.05, [
-        {"text": "~400", "size": 36, "bold": True, "color": GOLD},
-        {"text": " предотвращённых событий", "size": 14, "color": DEEP},
-        {"newpara": True, "text": "обслуживания в год", "size": 12, "italic": True, "color": MID},
+    conds = [
+        ("Быстрая обратная связь", "Сдвиг распределения видно за годы, не дни."),
+        ("Доступная разметка", "Нет способа верифицировать тревоги — доверие падает."),
+        ("Цена FP ≤ цена FN", "Ложные тревоги → персонал обходит через Excel."),
+    ]
+    for i, (t, d) in enumerate(conds):
+        y = 2.75 + i * 0.65
+        text_box(s, 6.95, y, 0.45, 0.35, "✗",
+                 size=20, bold=True, color=RED_WARN, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, 7.45, y, 5.15, 0.3, t,
+                 size=11, bold=True, color=DEEP)
+        text_box(s, 7.45, y + 0.3, 5.15, 0.3, d,
+                 size=9, italic=True, color=MID, line_spacing=1.15)
+
+    # F-35 photo + cost annotation
+    photo_p = ASSETS / "photos" / "p13-f35.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 6.95, 4.95, w=2.5, h=1.45)
+    text_runs(s, 9.6, 5.0, 3.05, 1.4, [
+        {"text": "$42–44 тыс./час", "size": 17, "bold": True, "color": GOLD},
+        {"newpara": True, "text": "у F-35 — выше, чем у более сложного F-22 (~$33 тыс./час).",
+         "size": 10, "italic": True, "color": DEEP, "line_spacing": 1.2},
     ])
+    text_box(s, 6.95, 6.5, 5.65, 0.3,
+             "Преемник ALIS — ODIN: автономный режим + явный HITL для допуска полётов.",
+             size=10, italic=True, color=DEEP, bold=True)
 
-    ocean_box(s, 7.4, 4.4, 5.4, 1.95, fill=LIGHT_TINT)
-    text_box(s, 7.6, 4.55, 5.0, 0.4, "Стек публичный",
-             size=14, bold=True, color=DEEP)
-    stack = ["Microsoft Azure data lake", "Databricks lakehouse", "ML pipelines"]
-    for i, item in enumerate(stack):
-        text_box(s, 7.7, 4.95 + i * 0.4, 5.0, 0.35, "• " + item,
-                 size=12, color=MID)
-
-    add_footer(s, "В обороне аналог — F-35 ALIS → ODIN. См. следующий слайд")
+    add_footer(s, "Источники: Airbus 2024, Rolls-Royce 2024, GAO-20-316, GAO-22-105128, Air & Space Forces 2024.")
     add_speaker_notes(s,
-        "Помимо разведки, AI в Sense массово работает на собственных аппаратах. "
-        "Predictive maintenance — это семейство задач: по телеметрии двигателей, "
-        "систем, бортового оборудования предсказать отказ компонента до того, "
-        "как он случится, и заменить его на плановом обслуживании, а не на "
-        "аварийной посадке.\n\n"
-        "Rolls-Royce IntelligentEngine плюс TotalCare работает с 2018 года и "
-        "сейчас представляет собой digital twin каждого летающего двигателя "
-        "плюс ML-конвейеры на телеметрии. Стек публичный: Microsoft Azure data "
-        "lake, поверх него Databricks lakehouse, далее ML pipelines. Главная "
-        "метрика — около 400 непланированных событий обслуживания "
-        "предотвращаются в год.\n\n"
-        "Airbus Skywise — более широкая платформа. К концу 2024 года к "
-        "платформе подключены около 11 600 самолётов; около 40 авиакомпаний "
-        "на расширенной подписке SFP+, что покрывает около 1 500 ВС. easyJet "
-        "с использованием Skywise сообщил об экономии топлива около 8,1 тонны "
-        "на ВС в год и о 44 предотвращённых отменах рейсов.\n\n"
-        "Что важно для нашего инженерного слуха: это не пилот, это не "
-        "лаборатория, это рабочая инфраструктура, которая обслуживает каждый "
-        "день тысячи коммерческих самолётов. В оборонном секторе аналог — "
-        "F-35 ALIS, и его преемник ODIN. О том, почему ALIS не сработал — "
-        "следующий слайд.")
+        "Прогностическое обслуживание — это семейство задач: по телеметрии "
+        "двигателей и систем предсказать отказ компонента и заменить его на "
+        "плановом обслуживании, а не на аварийной посадке. В гражданской "
+        "авиации это рабочая инфраструктура. Rolls-Royce IntelligentEngine "
+        "вместе с TotalCare работает с 2018 года — это цифровой двойник каждого "
+        "летающего двигателя плюс модели машинного обучения на телеметрии. "
+        "Главная метрика — около 400 непланированных событий обслуживания "
+        "предотвращаются в год. Airbus Skywise — более широкая платформа. К "
+        "концу 2024 года к ней подключены около 11 600 самолётов. easyJet с "
+        "использованием Skywise сообщил об экономии топлива около 8,1 тонны на "
+        "ВС в год и о 44 предотвращённых отменах рейсов.\n\n"
+        "В оборонном секторе аналог — F-35 ALIS, и здесь история другая. К "
+        "концу 2010-х ALIS превратился в источник проблем. Высокая "
+        "ложноположительная активность: ALIS помечал самолёт как «нельзя "
+        "лететь», когда никакой реальной проблемы не было. GAO в отчёте 2020 "
+        "года сообщал, что неточные данные приводили к тому, что система "
+        "сигнализировала о запрете полётов исправных самолётов. Враждебный "
+        "интерфейс: пользоваться ALIS было настолько сложно, что персонал "
+        "систематически обходил систему через Excel. Стоимость лётного часа к "
+        "пику — 42–44 тысячи долларов, выше чем у F-22. Финальная версия ALIS "
+        "вышла в июне 2024 года, начался переход на ODIN — государственное "
+        "решение, с явно отделённой авторизацией полётов, с автономным режимом.\n\n"
+        "Урок номер один: прогностическое обслуживание в безопасностно-"
+        "критичной области работает только при выполнении трёх условий: "
+        "быстрая обратная связь, доступная эталонная разметка, цена ложной "
+        "тревоги не выше цены пропуска. ALIS нарушил все три. ODIN строится в "
+        "явной осведомлённости об этом нарушении. Урок номер два: тот же "
+        "триплет применим к любой прогностической системе — от мониторинга "
+        "турбин до диагностики промышленных линий.")
     return s
 
 
+def _DEPRECATED_slide_13_f35_alis(prs):
+    """MERGED into slide_12_predictive_maintenance — no-op stub kept for ref."""
+    return None
+
+
 def slide_13_f35_alis(prs):
+    """MERGED into slide_12_predictive_maintenance — no-op stub."""
+    pass
+
+
+def _slide_13_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "F-35 ALIS нарушил все три условия predictive maintenance — списан в июне 2024",
@@ -402,24 +416,24 @@ def slide_13_f35_alis(prs):
 def slide_14_adversarial_gps(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Adversarial SAR ATR + GPS-spoofing — accuracy обманчив, single-source хрупок",
+        "Атаки на SAR-классификатор + помехи GPS — точность обманчива, один источник хрупок",
         size=22)
 
     # Left: Adversarial SAR
     ocean_box(s, 0.6, 1.95, 6.0, 4.7)
-    text_box(s, 0.8, 2.1, 5.6, 0.4, "Adversarial SAR ATR",
+    text_box(s, 0.8, 2.1, 5.6, 0.4, "Атаки на SAR-классификатор",
              size=18, bold=True, color=DEEP)
     icon_p = ASSETS / "icons" / "triangle-alert-48.png"
     if icon_p.exists():
         add_image(s, icon_p, 5.9, 2.1, w=0.55, h=0.55)
 
-    text_box(s, 0.8, 2.6, 5.6, 0.5, "Дешёвые металлические рассеиватели в специальной геометрии обманывают classifier",
+    text_box(s, 0.8, 2.6, 5.6, 0.5, "Дешёвые металлические уголковые отражатели в специальной геометрии обманывают классификатор",
              size=12, italic=True, color=MID, line_spacing=1.25)
 
     # Schematic illustration: tank → SAR → wrong label
-    for i, (label, x_off) in enumerate([("Танк +\nрассеиватели", 0.0),
-                                          ("SAR\nclassifier", 1.95),
-                                          ("Wrong\nlabel", 3.9)]):
+    for i, (label, x_off) in enumerate([("Танк +\nотражатели", 0.0),
+                                          ("SAR-\nклассификатор", 1.95),
+                                          ("Неверная\nметка", 3.9)]):
         bx = 0.85 + x_off
         ocean_box(s, bx, 3.3, 1.7, 1.0, fill=LIGHT_TINT)
         text_box(s, bx, 3.45, 1.7, 0.7, label,
@@ -431,20 +445,20 @@ def slide_14_adversarial_gps(prs):
     text_box(s, 0.8, 4.5, 5.6, 0.35, "Защита:",
              size=13, bold=True, color=DEEP)
     defenses = [
-        "Bayesian uncertainty estimates",
-        "Adversarial training",
-        "Abstention pathway → human"
+        "Байесовская оценка неуверенности модели",
+        "Обучение на состязательных примерах",
+        "Маршрут отказа → передача человеку"
     ]
     for i, d in enumerate(defenses):
         text_box(s, 0.95, 4.85 + i * 0.3, 5.4, 0.28, "• " + d,
                  size=11, color=MID)
 
-    text_box(s, 0.8, 6.2, 5.6, 0.3, "Source: Du et al. 2024 (arXiv:2312.02912)",
+    text_box(s, 0.8, 6.2, 5.6, 0.3, "Источник: Du et al. 2024 (arXiv:2312.02912)",
              size=10, italic=True, color=LIGHT)
 
     # Right: GPS spoofing
     ocean_box(s, 6.8, 1.95, 5.95, 4.7)
-    text_box(s, 7.0, 2.1, 5.5, 0.4, "GPS-spoofing civil aviation",
+    text_box(s, 7.0, 2.1, 5.5, 0.4, "Подмена GPS на гражданской авиации",
              size=18, bold=True, color=DEEP)
     icon_p = ASSETS / "icons" / "radio-tower-48.png"
     if icon_p.exists():
@@ -458,14 +472,14 @@ def slide_14_adversarial_gps(prs):
              size=14, bold=True, color=GOLD, line_spacing=1.3)
 
     text_box(s, 7.0, 4.75, 5.5, 0.5,
-             "Российские РЭБ (Krasukha-4, Borisoglebsk-2). Чёрное море, Восточная Европа",
+             "Российские средства РЭБ («Красуха-4», «Борисоглебск-2»). Чёрное море, Восточная Европа.",
              size=11, italic=True, color=MID, line_spacing=1.2)
 
     text_box(s, 7.0, 5.3, 5.5, 0.35, "Защита:",
              size=13, bold=True, color=DEEP)
-    gps_def = ["Multi-GNSS (GPS+GLONASS+Galileo+BeiDou)",
-               "INS-fallback (инерциальная)",
-               "eLORAN наземная радионавигация"]
+    gps_def = ["Несколько систем (GPS+ГЛОНАСС+Galileo+BeiDou)",
+               "Инерциальная навигация как резерв",
+               "eLORAN — наземная радионавигация"]
     for i, d in enumerate(gps_def):
         text_box(s, 7.15, 5.65 + i * 0.3, 5.3, 0.28, "• " + d,
                  size=11, color=MID)
@@ -473,7 +487,7 @@ def slide_14_adversarial_gps(prs):
     # Bottom callout
     ocean_box(s, 0.6, 6.75, 12.13, 0.45, fill=TEAL_TINT, stroke=TEAL)
     text_box(s, 0.85, 6.8, 11.63, 0.35,
-             "Spillover: военный РЭБ-эффект распространяется на не-комбатантов. Защита GNSS — collective good",
+             "Побочный эффект: военный РЭБ распространяется на не-боевые цели. Защита спутниковой навигации — общее благо.",
              size=11, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
     add_speaker_notes(s,
@@ -501,6 +515,11 @@ def slide_14_adversarial_gps(prs):
 
 
 def slide_15_sense_criteria(prs):
+    """DELETED — criteria consolidated in s39 7-criteria matrix."""
+    pass
+
+
+def _slide_15_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Sense — когда не AI: 2 критерия. Distribution shift + single-sensor")
@@ -572,7 +591,7 @@ def slide_15_sense_criteria(prs):
 
 def slide_16(prs):
     return section_divider(prs, 2, "Decide — от наблюдения к решению",
-        "Где LLM-хайп опасен, и почему «accuracy» — не та метрика",
+        "Где LLM-хайп опасен, и почему «точность» — не та метрика",
         current_section=2,
         caption="14 минут · 5 кейсов · 3 провала (Lavender / Lancet / Vincennes) · 2 критерия")
 
@@ -583,15 +602,15 @@ def slide_17_decide_intro(prs):
         "Decide — звено, где LLM-хайп опаснее всего", size=26)
 
     text_box(s, 0.6, 1.4, 12.13, 0.5,
-             "«Accuracy 90%» звучит хорошо до момента, когда 10% — это тысячи человек",
+             "«Точность 90 %» звучит хорошо до момента, когда 10 % — это тысячи человек.",
              size=18, italic=True, color=MID, line_spacing=1.3)
 
     # Pipeline visual
-    text_box(s, 0.6, 2.4, 12.13, 0.4, "Decide stack:",
+    text_box(s, 0.6, 2.4, 12.13, 0.4, "Поток данных в Decide:",
              size=14, bold=True, color=DEEP)
 
-    sources = [("Text reports", "newspaper"), ("Image", "scan"),
-               ("Map", "map"), ("Telemetry", "activity")]
+    sources = [("Текст", "newspaper"), ("Снимок", "scan"),
+               ("Карта", "map"), ("Телеметрия", "activity")]
     sx = 0.6; sw = 2.0; gap = 0.15
     for i, (label, icon) in enumerate(sources):
         x = sx + i * (sw + gap)
@@ -606,32 +625,31 @@ def slide_17_decide_intro(prs):
     add_arrow(s, 9.3, 3.25, 0.3, 0.35, fill=MID)
 
     ocean_box(s, 9.7, 2.9, 1.5, 1.05, fill=MID)
-    text_box(s, 9.7, 2.9, 1.5, 1.05, "Fusion",
-             size=15, bold=True, color=WHITE,
+    text_box(s, 9.7, 2.9, 1.5, 1.05, "Слияние",
+             size=14, bold=True, color=WHITE,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
     add_arrow(s, 11.3, 3.25, 0.3, 0.35, fill=MID)
 
     ocean_box(s, 11.7, 2.9, 1.1, 1.05, fill=GOLD)
-    text_box(s, 11.7, 2.9, 1.1, 1.05, "COA",
-             size=14, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 11.7, 2.9, 1.1, 1.05, "План\nдействий",
+             size=11, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
 
     # Gold callout - cost asymmetry — single wide textbox for the equation
     ocean_box(s, 0.6, 4.5, 12.13, 2.2, fill=GOLD_TINT, stroke=GOLD)
     text_runs(s, 0.85, 4.7, 11.63, 1.3, [
-        {"text": "10% × 37 000 = ", "size": 60, "bold": True, "color": DEEP},
+        {"text": "10 % × 37 000 = ", "size": 60, "bold": True, "color": DEEP},
         {"text": "3 700", "size": 60, "bold": True, "color": GOLD},
     ], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, 0.85, 6.0, 12.0, 0.6,
-             "Lavender, Газа 2023-24. 90% accuracy в life-and-death = "
+             "Lavender, Газа 2023–24. 90 % точности в задачах жизни и смерти = "
              "3 700 человек, помеченных по ошибке. Метрика была не той.",
              size=13, italic=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
     text_box(s, 0.6, 6.85, 12.13, 0.3,
-             "Если потенциальная цена ошибки — человеческая жизнь, «accuracy %» — "
-             "это показатель количества кошмаров, которые вы готовы принять",
+             "Если потенциальная цена ошибки — человеческая жизнь, «точность %» — это показатель количества кошмаров, которые вы готовы принять.",
              size=11, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
     add_speaker_notes(s,
@@ -655,6 +673,110 @@ def slide_17_decide_intro(prs):
 
 
 def slide_18_palantir(prs):
+    """MERGED s18+s19+s20: Decide vendor landscape — Palantir + Scale + Helsing
+    + Anthropic + Russian C2 caveat in one compact slide."""
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s,
+        "Decide — ландшафт вендоров: США, Европа, Россия",
+        size=24)
+
+    # 4 vendor cards in 2×2 grid
+    text_box(s, 0.6, 1.85, 12.13, 0.35,
+             "Главные игроки рынка систем поддержки принятия решений в 2026:",
+             size=12, italic=True, color=MID)
+
+    vendors = [
+        # (name, country, level, big_metric, big_metric_label, descrip, color, accent)
+        ("Palantir Maven Smart System (MSS)", "США", "L1 · поддержка",
+         "$1,3 млрд", "потолок до 2029",
+         "Главный американский флагман. Слияние разведки + сводки для командиров. Человек решает.",
+         GOLD),
+        ("Scale AI: Donovan → Defense Llama → Thunderforge", "США", "L1–L2",
+         "Mar 2025", "Thunderforge для CENTCOM/INDOPACOM",
+         "Эволюционная линия LLM на закрытых сетях. От текстовой поддержки к планированию операций.",
+         MID),
+        ("Helsing (Германия) — Altra + Centaur", "Европа", "L2",
+         "€12 млрд", "оценка после Series D (июнь 2025)",
+         "Главный европейский игрок. Altra: слияние БПЛА + наблюдателей. Centaur: ИИ-пилот на Gripen E.",
+         LIGHT),
+        ("Anthropic + Palantir + AWS на IL6 (ноябрь 2024)", "США", "L1",
+         "IL6", "высший уровень секретности US-облака",
+         "Claude 3/3.5 на Impact Level 6. Поворотная точка: индустрия вернулась в оборону.",
+         TEAL),
+    ]
+    cw = (12.13 - 0.3) / 2
+    ch = 2.25
+    for i, (name, country, lvl, num, num_label, desc, color) in enumerate(vendors):
+        row = i // 2; col = i % 2
+        x = 0.6 + col * (cw + 0.3)
+        y = 2.3 + row * (ch + 0.2)
+        ocean_box(s, x, y, cw, ch)
+        # Header strip
+        text_box(s, x + 0.2, y + 0.1, cw - 0.4, 0.4, name,
+                 size=12, bold=True, color=DEEP, line_spacing=1.15)
+        text_box(s, x + 0.2, y + 0.5, cw - 0.4, 0.3,
+                 f"{country} · уровень {lvl}",
+                 size=10, italic=True, color=color)
+        # Big number/year on right side
+        text_runs(s, x + 0.2, y + 0.95, cw - 0.4, 0.7, [
+            {"text": num, "size": 22, "bold": True, "color": color},
+            {"text": " — ", "size": 11, "color": MID},
+            {"text": num_label, "size": 11, "italic": True, "color": MID},
+        ])
+        text_box(s, x + 0.2, y + 1.6, cw - 0.4, 0.6, desc,
+                 size=10, color=MID, italic=True, line_spacing=1.25)
+
+    # Russian C2 caveat strip at bottom
+    ocean_box(s, 0.6, 6.95, 12.13, 0.5, fill=TEAL_TINT, stroke=TEAL)
+    text_runs(s, 0.85, 7.0, 11.63, 0.4, [
+        {"text": "Российский C2: ", "size": 12, "bold": True, "color": DEEP},
+        {"text": "Svod / Glaz / Groza — система оперативного управления, развёртывание с осени 2025. ", "size": 11, "color": MID},
+        {"text": "Оговорка: ", "size": 11, "bold": True, "color": TEAL},
+        {"text": "независимая западная верификация ограничена (CSIS + российская пресса).", "size": 11, "italic": True, "color": MID},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    add_footer(s,
+        "Источники: DefenseScoop 2024–2025 · BusinessWire 2023 · Helsing IR 2025 · Anthropic press 2024 · CSIS Bondar 2026.")
+    add_speaker_notes(s,
+        "Декабрь 2024 — май 2026. На рынок систем поддержки принятия решений в "
+        "обороне вышли четыре крупных игрока, и важно понимать ландшафт целиком, "
+        "а не каждого по отдельности.\n\n"
+        "Palantir Maven Smart System — главный американский флагман. История "
+        "начинается с Project Maven в 2017 году: программа анализа видео с БПЛА. "
+        "В марте 2018 года утечка показала, что Google помогает программе; к "
+        "июню 2018 года контракт с Google не был продлён под давлением "
+        "сотрудников — подробнее в Разделе 4. Программа была подхвачена "
+        "Palantir, Anduril и Scale. Контракты MSS: первый IDIQ на 480 миллионов "
+        "в мае 2024 года; дополнение на 99,8 миллиона в сентябре 2024; "
+        "увеличение потолка на 795 миллионов в мае 2025. Суммарный потолок — "
+        "около 1,3 миллиарда долларов до 2029 года. Уровень автономии — L1, "
+        "ассистирующий: ИИ выдаёт детекции и сводки, командир решает.\n\n"
+        "Scale AI прошёл эволюцию из трёх продуктов: Donovan на классифицированных "
+        "сетях XVIII Airborne Corps (2022–23) → Defense Llama, дообученная на "
+        "оборонном корпусе (ноябрь 2024) → Thunderforge для CENTCOM и "
+        "INDOPACOM (март 2025) — это уже планирование вариантов действий, "
+        "движения войск, кораблей.\n\n"
+        "Helsing — главный европейский игрок. Altra: слияние данных с БПЛА и "
+        "наблюдателей для наземного боя. Centaur: ИИ-пилот, испытания на Saab "
+        "Gripen E в июне 2025. Оценка после раунда D — 12 миллиардов евро, "
+        "главный инвестор — Prima Materia под управлением Дэниэла Эка из Spotify.\n\n"
+        "Anthropic-Palantir-AWS — поворотная точка ноября 2024. Claude 3 и 3.5 "
+        "выведены на Impact Level 6 — высший уровень секретности облака для "
+        "американского правительства. Между Maven walkout 2018 года и этим "
+        "партнёрством — шесть лет, и индустрия прошла полный цикл.\n\n"
+        "Российский слой — Svod, Glaz, Groza, ZOV Maps. Это система оперативного "
+        "управления и геопространственная платформа, экспериментальное "
+        "развёртывание с осени 2025. Источники: CSIS Bondar и российская пресса. "
+        "Независимая западная верификация ограничена, поэтому мы упоминаем с "
+        "явной оговоркой — не «верить» и не «отвергать», а маркировать уровень "
+        "доказательности.\n\n"
+        "Главный инженерный вывод: оценивая оборонного ИИ-вендора, разделяйте две "
+        "оси — возможности ИИ и уровни допуска (FedRAMP HIGH, IL6, SCIF). Это "
+        "разные инженерные компетенции, обе важны.")
+    return s
+
+
+def _slide_18_palantir_old_full(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Palantir MSS — главный американский decision-support флагман")
@@ -742,6 +864,11 @@ def slide_18_palantir(prs):
 
 
 def slide_19_scale_helsing(prs):
+    """MERGED into slide_18_palantir — no-op stub."""
+    pass
+
+
+def _slide_19_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Scale AI эволюция + Helsing Altra — другие ключевые игроки Decide")
@@ -825,6 +952,11 @@ def slide_19_scale_helsing(prs):
 
 
 def slide_20_anthropic_russian(prs):
+    """MERGED into slide_18_palantir — no-op stub."""
+    pass
+
+
+def _slide_20_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Anthropic IL6 (ноябрь 2024) + Russian C2 (Svod/Glaz-Groza) — две разные карты")
@@ -915,7 +1047,7 @@ def slide_20_anthropic_russian(prs):
 def slide_21_lavender(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "IDF Lavender — 37 000 помечены, 90% accuracy → 3 700 false positives",
+        "IDF Lavender — 37 000 помечены, точность 90 % → 3 700 ложноположительных",
         size=22)
 
     # Left: cascade chart
@@ -924,17 +1056,17 @@ def slide_21_lavender(prs):
     if chart_p.exists():
         add_image(s, chart_p, 0.7, 2.05, w=7.2, h=4.0)
     text_box(s, 0.7, 6.15, 7.2, 0.4,
-             "20 секунд review per target · 15-20 civilian casualties auth'd per junior operative",
+             "20 секунд проверки на одну цель · до 15–20 гражданских жертв на одного младшего оператора",
              size=10, italic=True, color=MID, line_spacing=1.2, align=PP_ALIGN.CENTER)
 
     # Right: 3 lessons
     lessons = [
-        ("«Accuracy» — wrong metric",
-         "FP consequence × population × frequency.\nCost-asymmetry FP↔FN неприемлемо"),
-        ("AI снимает фрикцию",
-         "Темпы вырастают → качество deliberation падает.\nВ life-and-death катастрофично"),
-        ("HITL ≠ Human-In-Decision",
-         "20 sec review = формальный HITL,\nфункциональный HOTL"),
+        ("«Точность» — не та метрика",
+         "Цена FP × популяция × частота применения.\nАсимметрия FP/FN неприемлема."),
+        ("ИИ снимает трение принятия решений",
+         "Темпы вырастают → качество обдумывания падает.\nВ задачах жизни и смерти катастрофично."),
+        ("«Человек в петле» ≠ «человек в решении»",
+         "20-секундная проверка = формальный HITL,\nфункциональный HOTL."),
     ]
     lc_w = 4.7; lc_h = 1.45; gap = 0.12
     for i, (title, desc) in enumerate(lessons):
@@ -983,51 +1115,53 @@ def slide_21_lavender(prs):
 def slide_22_lancet_vincennes(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Lancet rollback (демо ≠ продакшен) + Vincennes 1988 (UI под стрессом → LLM)",
+        "Откат Lancet (демо ≠ продакшен) + Vincennes 1988 (интерфейс под стрессом → LLM)",
         size=22)
 
     # Left: Lancet
     ocean_box(s, 0.6, 1.95, 6.0, 4.7)
-    text_box(s, 0.8, 2.1, 5.6, 0.4, "Russian Lancet ATR rollback",
+    text_box(s, 0.8, 2.1, 5.6, 0.4, "Российский «Ланцет»: откат автономии",
              size=16, bold=True, color=DEEP)
-    text_box(s, 0.8, 2.5, 5.6, 0.35, "2022-2024 · LO2 canonical case",
+    text_box(s, 0.8, 2.5, 5.6, 0.35, "2022–2024 · канонический разбор LO2",
              size=11, italic=True, color=GOLD, bold=True)
 
-    text_box(s, 0.8, 3.05, 5.6, 0.35, "2022-23:", size=12, bold=True, color=MID)
+    text_box(s, 0.8, 3.05, 5.6, 0.35, "2022–23:", size=12, bold=True, color=MID)
     text_box(s, 1.4, 3.05, 5.0, 0.35,
-             "«autonomously find and hit target» + videos с UI",
+             "«сам найдёт и поразит цель» + ролики с подписью «захват»",
              size=11, italic=True, color=DEEP)
 
     text_box(s, 0.8, 3.55, 5.6, 0.35, "2024:", size=12, bold=True, color=GOLD)
     text_box(s, 1.4, 3.55, 5.0, 0.35,
-             "CSIS / MWI: AI-guidance off · videos без autonomous-locking UI",
+             "Анализ CSIS / MWI: ИИ-наведение отключено в новых роликах",
              size=11, italic=True, color=DEEP)
 
     icon_p = ASSETS / "icons" / "triangle-alert-48.png"
     if icon_p.exists():
         add_image(s, icon_p, 5.9, 2.05, w=0.55, h=0.55)
 
-    text_box(s, 0.8, 4.2, 5.6, 0.5,
-             "Edge cases — это БОЛЬШАЯ ЧАСТЬ реального поля боя: "
-             "пыль, дым, EW, новые маскировки",
-             size=11, color=DEEP, italic=True, line_spacing=1.25)
+    # Lancet photo (small inset)
+    photo_p = ASSETS / "photos" / "p28-lancet.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.8, 4.15, w=2.0, h=1.0)
+    text_box(s, 2.9, 4.2, 3.5, 0.95,
+             "Редкие случаи в обучающей выборке — это БОЛЬШАЯ ЧАСТЬ реального поля боя: пыль, дым, РЭБ, новые маскировки.",
+             size=10, color=DEEP, italic=True, line_spacing=1.25)
 
-    hr_line(s, 0.8, 4.85, 5.4, color=LIGHT, weight=0.5)
-    text_box(s, 0.8, 4.95, 5.6, 0.4, "Альтернатива:",
+    hr_line(s, 0.8, 5.3, 5.4, color=LIGHT, weight=0.5)
+    text_box(s, 0.8, 5.4, 5.6, 0.4, "Альтернатива:",
              size=12, bold=True, color=DEEP)
-    text_box(s, 0.8, 5.3, 5.6, 0.5,
-             "Operator-in-the-loop + automated tracking-assist. Не autonomous engage до production hardening",
-             size=11, color=TEAL, italic=True, line_spacing=1.25)
-
-    text_box(s, 0.8, 6.05, 5.6, 0.4,
-             "ML perf в narrow distribution не переносится на full battlefield variance",
-             size=11, bold=True, color=DEEP, italic=True, line_spacing=1.2)
+    text_box(s, 0.8, 5.75, 5.6, 0.5,
+             "Оператор в петле + автоматизированное удержание цели. Без полной автономии до боевого подтверждения.",
+             size=10, color=TEAL, italic=True, line_spacing=1.25)
+    text_box(s, 0.8, 6.35, 5.6, 0.35,
+             "Производительность модели в узком распределении не переносится на полную изменчивость боя.",
+             size=10, bold=True, color=DEEP, italic=True, line_spacing=1.2)
 
     # Right: Vincennes
     ocean_box(s, 6.8, 1.95, 5.95, 4.7)
-    text_box(s, 7.0, 2.1, 5.6, 0.4, "USS Vincennes / Iran Air 655",
+    text_box(s, 7.0, 2.1, 5.6, 0.4, "Крейсер «Vincennes» / Iran Air 655",
              size=16, bold=True, color=DEEP)
-    text_box(s, 7.0, 2.5, 5.6, 0.35, "3 июля 1988 · 290 KIA",
+    text_box(s, 7.0, 2.5, 5.6, 0.35, "3 июля 1988 · 290 погибших",
              size=11, italic=True, color=RED_WARN, bold=True)
 
     icon_p = ASSETS / "icons" / "eye-off-48.png"
@@ -1035,9 +1169,9 @@ def slide_22_lancet_vincennes(prs):
         add_image(s, icon_p, 12.0, 2.05, w=0.55, h=0.55)
 
     events = [
-        ("Aegis записал track как climbing", "✓", TEAL),
-        ("Экипаж под стрессом доложил «descending into attack»", "✗", RED_WARN),
-        ("2 ракеты SM-2 → 290 KIA", "", GOLD),
+        ("Aegis зафиксировал траекторию как «набор высоты»", "✓", TEAL),
+        ("Экипаж под стрессом доложил «снижается на нас»", "✗", RED_WARN),
+        ("2 ракеты SM-2 → 290 погибших", "", GOLD),
     ]
     for i, (txt, mark, col) in enumerate(events):
         y = 3.0 + i * 0.55
@@ -1047,16 +1181,18 @@ def slide_22_lancet_vincennes(prs):
         text_box(s, 7.5, y, 5.1, 0.4, txt,
                  size=11, color=DEEP, italic=True, line_spacing=1.2)
 
-    hr_line(s, 7.0, 4.75, 5.5, color=LIGHT, weight=0.5)
+    # Iran Air 655 wreckage photo
+    photo_p = ASSETS / "photos" / "p22-iran-air.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 7.0, 4.7, w=2.4, h=0.9)
 
     # Bridge to LLM
-    ocean_box(s, 7.0, 4.9, 5.5, 1.45, fill=TEAL_TINT, stroke=TEAL)
-    text_box(s, 7.15, 5.0, 5.2, 0.35, "Bridge to LLM:",
-             size=12, bold=True, color=DEEP)
-    text_box(s, 7.15, 5.35, 5.2, 0.95,
-             "LLM выдаёт fluent confident output → оператор под давлением "
-             "склонен принять. Confident BS = high-risk confident BS в high-stakes",
-             size=11, color=DEEP, italic=True, line_spacing=1.25)
+    ocean_box(s, 9.55, 4.7, 3.1, 1.7, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 9.65, 4.8, 2.95, 0.3, "Мостик к LLM:",
+             size=11, bold=True, color=DEEP)
+    text_box(s, 9.65, 5.1, 2.95, 1.25,
+             "LLM выдаёт уверенный гладкий текст → оператор под давлением склонен принять. Уверенная чепуха в задачах с высокой ценой ошибки.",
+             size=10, color=DEEP, italic=True, line_spacing=1.25)
 
     add_footer(s,
         "Источники: CSIS 2025 Lancet · USNI Proceedings Jul 2018 · Foreign Affairs 2024")
@@ -1087,6 +1223,11 @@ def slide_22_lancet_vincennes(prs):
 
 
 def slide_23_decide_criteria(prs):
+    """DELETED — criteria consolidated in s39."""
+    pass
+
+
+def _slide_23_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s, "Decide — когда не AI: 2 критерия")
 
@@ -1149,30 +1290,30 @@ def slide_23_decide_criteria(prs):
 # Continue with rest...
 def slide_24(prs):
     return section_divider(prs, 3, "Act — автономия на платформе",
-        "Где hype далеко впереди реальности — но adoption всё-таки растёт",
+        "Где хайп далеко впереди реальности — но применение всё-таки растёт",
         current_section=3,
-        caption="14 минут · 6 кейсов · 3 провала (MCAS / Patriot / Replicator) · 2 критерия · RU dual-use")
+        caption="14 минут · 6 кейсов · 3 провала (MCAS / Patriot / Replicator) · 2 критерия · российское двойное применение")
 
 
 def slide_25_act_intro(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Act — звено, где hype далеко впереди реальности")
+        "Act — звено, где хайп далеко впереди реальности")
 
     text_box(s, 0.6, 1.4, 12.13, 0.5,
-             "Большая часть combat-strikes — operator-in-loop или semi-auto, не fully-autonomous",
+             "Большая часть боевых применений — с оператором в петле или с полу-автоматикой, не полностью автономно.",
              size=16, italic=True, color=MID)
 
     # L1-L5 mini-preview
-    text_box(s, 0.6, 2.4, 12.13, 0.35, "Лестница автономии (preview):",
+    text_box(s, 0.6, 2.4, 12.13, 0.35, "Лестница автономии (предварительный обзор):",
              size=14, bold=True, color=DEEP)
 
     levels = [
-        ("L1", "Assistive", LIGHT),
-        ("L2", "Semi-auto", LIGHT),
-        ("L3", "Supervised", GOLD),
-        ("L4", "Pre-authorised", MID),
-        ("L5", "Full LAWS", RED_WARN),
+        ("L1", "Помогающий", LIGHT),
+        ("L2", "Полу-автомат", LIGHT),
+        ("L3", "Под надзором", GOLD),
+        ("L4", "Авто-применение", MID),
+        ("L5", "Полная LAWS", RED_WARN),
     ]
     lw = 2.3; gap = 0.15
     for i, (lvl, name, col) in enumerate(levels):
@@ -1188,7 +1329,7 @@ def slide_25_act_intro(prs):
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
 
     text_box(s, 0.6, 4.1, 12.13, 0.35,
-             "Большая часть Act в 2026 — L2-L3, не L4-L5",
+             "Большая часть Act в 2026 — L2–L3, не L4–L5.",
              size=12, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
     # Cost-asymmetry callout
@@ -1199,12 +1340,12 @@ def slide_25_act_intro(prs):
     text_box(s, 6.4, 4.95, 0.6, 1.2, "↔",
              size=56, bold=True, color=MID,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 7.1, 4.85, 2.7, 1.4, "$3M",
-             size=72, bold=True, color=GOLD,
+    text_box(s, 7.1, 4.85, 4.5, 1.4, "$3 млн",
+             size=58, bold=True, color=GOLD,
              align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
     text_box(s, 0.85, 6.15, 12.0, 0.6,
-             "Counter-drone asymmetry — дешёвый дрон против Patriot. "
-             "Замена $3M на AI-perimeter-defence — explosive growth Act 2026",
+             "Асимметрия противодействия дронам — дешёвый БПЛА против Patriot. "
+             "Замена ракеты за $3 млн на ИИ-защиту периметра — взрывной рост Act в 2026.",
              size=13, italic=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
 
@@ -1232,68 +1373,46 @@ def slide_25_act_intro(prs):
 def slide_26_fury(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Anduril Fury YFQ-44A — CCA Increment 1, L3 Supervised", size=24)
+        "Anduril Fury YFQ-44A — CCA Increment 1, уровень L3 (под надзором)", size=24)
 
-    # Left: Fury silhouette + spec
+    # Left: Anduril Sentry photo + spec
     ocean_box(s, 0.6, 1.95, 7.5, 4.7)
-    # Drone-aircraft outline using shapes
-    text_box(s, 0.8, 2.1, 7.1, 0.4, "YFQ-44A · Fury",
+    text_box(s, 0.8, 2.1, 7.1, 0.4, "YFQ-44A · Fury (ОТА Anduril)",
              size=18, bold=True, color=DEEP)
     text_box(s, 0.8, 2.5, 7.1, 0.35,
-             "Anduril CCA Increment 1 · first flight 31 Oct 2025",
+             "Anduril CCA Increment 1 · первый полёт 31 октября 2025",
              size=12, italic=True, color=MID)
 
-    # Aircraft silhouette built via shapes
-    # Body
-    body = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
-                              Inches(1.5), Inches(3.4), Inches(5.0), Inches(0.7))
-    body.adjustments[0] = 0.4
-    body.fill.solid(); body.fill.fore_color.rgb = MID
-    body.line.fill.background()
-    # Nose
-    nose = s.shapes.add_shape(MSO_SHAPE.RIGHT_TRIANGLE,
-                              Inches(6.4), Inches(3.45), Inches(0.6), Inches(0.6))
-    nose.fill.solid(); nose.fill.fore_color.rgb = MID
-    nose.line.fill.background()
-    # Wings (delta)
-    wing1 = s.shapes.add_shape(MSO_SHAPE.RIGHT_TRIANGLE,
-                               Inches(2.5), Inches(3.05), Inches(2.0), Inches(0.4))
-    wing1.fill.solid(); wing1.fill.fore_color.rgb = LIGHT
-    wing1.line.fill.background()
-    wing2 = s.shapes.add_shape(MSO_SHAPE.RIGHT_TRIANGLE,
-                               Inches(2.5), Inches(4.05), Inches(2.0), Inches(0.4))
-    wing2.rotation = 180
-    wing2.fill.solid(); wing2.fill.fore_color.rgb = LIGHT
-    wing2.line.fill.background()
-    # Tail
-    tail = s.shapes.add_shape(MSO_SHAPE.RIGHT_TRIANGLE,
-                              Inches(1.2), Inches(3.0), Inches(0.5), Inches(0.5))
-    tail.rotation = 90
-    tail.fill.solid(); tail.fill.fore_color.rgb = MID
-    tail.line.fill.background()
+    # Real Anduril Sentry photo (Anduril asset photo proxy)
+    photo_p = ASSETS / "photos" / "p26-anduril-sentry.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.8, 2.95, w=7.1, h=2.1)
+    text_box(s, 0.8, 5.1, 7.1, 0.3,
+             "На фото — Anduril Sentry (Wikimedia Commons, CC-BY-SA). YFQ-44A фотографий в публичном доступе мало.",
+             size=9, italic=True, color=LIGHT)
 
-    text_box(s, 0.8, 5.1, 7.0, 0.4, "Спецификации:",
+    text_box(s, 0.8, 5.45, 7.0, 0.35, "Характеристики:",
              size=13, bold=True, color=DEEP)
     specs = [
         "Высота: до 50 000 футов",
-        "Скорость: M 0.95 · Перегрузка 9g",
+        "Скорость: 0,95 Маха · перегрузка 9g",
         "Двигатель: Williams FJ44-4M (4 000 фунтов тяги)",
         "Вооружение: AIM-120 AMRAAM",
     ]
     for i, sp in enumerate(specs):
-        text_box(s, 0.95, 5.5 + i * 0.3, 6.8, 0.27, "• " + sp,
-                 size=11, color=MID, line_spacing=1.15)
+        text_box(s, 0.95, 5.8 + i * 0.22, 6.8, 0.22, "• " + sp,
+                 size=10, color=MID, line_spacing=1.15)
 
     # Right: L3 + production
     ocean_box(s, 8.4, 1.95, 4.4, 2.2, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 8.4, 2.05, 4.4, 1.0, "L3",
              size=72, bold=True, color=GOLD,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.9)
-    text_box(s, 8.4, 3.15, 4.4, 0.4, "Supervised autonomy",
-             size=15, italic=True, color=DEEP,
+    text_box(s, 8.4, 3.15, 4.4, 0.4, "Автономия под надзором",
+             size=14, italic=True, color=DEEP,
              align=PP_ALIGN.CENTER)
     text_box(s, 8.6, 3.6, 4.0, 0.55,
-             "AI executes в pre-authorised envelope; пилотируемый wingman supervises",
+             "ИИ исполняет внутри заранее заданных границ; пилотируемый ведущий — на надзоре.",
              size=10, italic=True, color=MID,
              align=PP_ALIGN.CENTER, line_spacing=1.3)
 
@@ -1305,7 +1424,7 @@ def slide_26_fury(prs):
              size=11, italic=True, color=MID, line_spacing=1.2)
 
     ocean_box(s, 8.4, 5.5, 4.4, 1.15, fill=LIGHT_TINT)
-    text_box(s, 8.55, 5.6, 4.1, 0.4, "Autonomy stack",
+    text_box(s, 8.55, 5.6, 4.1, 0.4, "Стек автономии",
              size=13, bold=True, color=DEEP)
     text_box(s, 8.55, 6.0, 4.1, 0.6,
              "Hivemind (Shield AI) + Lattice (Anduril OS)",
@@ -1337,7 +1456,7 @@ def slide_26_fury(prs):
 def slide_27_x62a_saker(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "X-62A VISTA (Sep 2023 dogfight) + Saker Scout (Ukraine combat-tested)",
+        "X-62A VISTA (сент. 2023, дуэль) + Saker Scout (Украина, боевой опыт)",
         size=22)
 
     # Left: X-62A
@@ -1345,65 +1464,65 @@ def slide_27_x62a_saker(prs):
     text_box(s, 0.8, 2.1, 5.6, 0.4, "DARPA X-62A VISTA",
              size=16, bold=True, color=DEEP)
     text_box(s, 0.8, 2.5, 5.6, 0.3,
-             "Модифицированный F-16 · AI-agent управляет",
+             "Модифицированный F-16 · управляет ИИ-агент",
              size=11, italic=True, color=MID)
 
+    # Real X-62A VISTA photo
+    photo_p = ASSETS / "photos" / "p27-x62a.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.8, 2.9, w=5.6, h=1.7)
+
     events = [
-        ("Dec 2022", "Начало испытаний", MID),
-        ("Feb 2023", "12 полётов в Эдвардсе", MID),
-        ("Sep 2023", "Первый AI-vs-manned dogfight · 2 000 ft @ 1 200 mph", GOLD),
-        ("May 2024", "USAF Secretary Kendall летал", MID),
+        ("Дек. 2022", "Начало испытаний", MID),
+        ("Сент. 2023", "Первая ИИ-дуэль с F-16: 600 м @ 1 200 миль/ч", GOLD),
+        ("Май 2024", "Секретарь USAF Кендалл летал в ИИ-X-62A", MID),
     ]
     for i, (date, ev, col) in enumerate(events):
-        y = 3.0 + i * 0.42
-        text_box(s, 0.95, y, 1.5, 0.3, date,
-                 size=11, bold=True, color=col)
-        text_box(s, 2.45, y, 4.0, 0.3, ev,
-                 size=11, color=DEEP, italic=True)
-
-    text_box(s, 0.8, 4.85, 5.6, 0.35, "Объём: 100 000+ строк FCS changes · 21 полёт",
-             size=11, italic=True, color=LIGHT)
+        y = 4.7 + i * 0.32
+        text_box(s, 0.95, y, 1.6, 0.3, date,
+                 size=10, bold=True, color=col)
+        text_box(s, 2.55, y, 3.9, 0.3, ev,
+                 size=10, color=DEEP, italic=True)
 
     # Anti-hype caveat in gold-tint
-    ocean_box(s, 0.8, 5.3, 5.55, 1.25, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.95, 5.4, 5.3, 0.35, "Anti-hype:",
-             size=12, bold=True, color=DEEP)
-    text_box(s, 0.95, 5.75, 5.3, 0.8,
-             "Narrow scripted scenario · 1-на-1 dogfight · BVR исключён · "
-             "fuel mgmt не покрыт · ROE не учитывался",
-             size=10, italic=True, color=DEEP, line_spacing=1.25)
+    ocean_box(s, 0.8, 5.7, 5.55, 0.9, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.95, 5.78, 5.3, 0.3, "Анти-хайп:",
+             size=11, bold=True, color=DEEP)
+    text_box(s, 0.95, 6.05, 5.3, 0.5,
+             "Узкий сценарий, дуэль 1-на-1, бой вне визуального диапазона исключён, расход топлива и правила открытия огня не учитывались.",
+             size=9, italic=True, color=DEEP, line_spacing=1.2)
 
     # Right: Saker
     ocean_box(s, 6.8, 1.95, 5.95, 4.7)
     text_box(s, 7.0, 2.1, 5.5, 0.4, "Saker Scout (Украина)",
              size=16, bold=True, color=DEEP)
     text_box(s, 7.0, 2.5, 5.5, 0.3,
-             "Combat-tested · L2 Semi-auto",
+             "Боевой опыт · уровень L2 «полу-автомат»",
              size=11, italic=True, color=GOLD, bold=True)
 
+    # Bayraktar TB2 photo as visual proxy (Saker images scarce)
+    photo_p = ASSETS / "photos" / "p27-bayraktar.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 7.0, 2.9, w=5.5, h=1.7)
+        text_box(s, 7.0, 4.6, 5.5, 0.25,
+                 "На фото — Bayraktar TB2 (Wikimedia CC-BY-SA) как иллюстрация класса.",
+                 size=8, italic=True, color=LIGHT)
+
     saker_stats = [
-        ("64", "автономных целей идентифицирует"),
+        ("64", "автономно идентифицируемых цели"),
         ("~10 км", "дальность"),
-        ("EW-resistant", "CV-классификация target ID"),
-        ("Brave1", "300+ AI dev · 70+ AI/CV в combat"),
+        ("Brave1", "300+ AI-разработчиков"),
     ]
     for i, (big, desc) in enumerate(saker_stats):
-        y = 3.0 + i * 0.55
-        text_box(s, 7.05, y, 1.5, 0.4, big,
-                 size=15, bold=True, color=GOLD if i == 0 else DEEP)
-        text_box(s, 8.6, y + 0.05, 4.0, 0.35, desc,
-                 size=11, color=MID, italic=True)
-
-    hr_line(s, 7.0, 5.3, 5.5, color=LIGHT, weight=0.5)
-    text_box(s, 7.0, 5.4, 5.5, 0.35, "Пивот 2024-25:",
-             size=12, bold=True, color=DEEP)
-    pivots = [
-        "Dec 2024: первый unmanned ground op (UGV + FPV)",
-        "2025: AI-mother-drone · 2 AI-FPV strike · 300 км",
-    ]
-    for i, p in enumerate(pivots):
-        text_box(s, 7.15, 5.75 + i * 0.3, 5.3, 0.28, "• " + p,
+        y = 4.95 + i * 0.32
+        text_box(s, 7.05, y, 1.5, 0.3, big,
+                 size=12, bold=True, color=GOLD if i == 0 else DEEP)
+        text_box(s, 8.6, y + 0.02, 4.0, 0.3, desc,
                  size=10, color=MID, italic=True)
+
+    text_box(s, 7.0, 6.0, 5.5, 0.6,
+             "Декабрь 2024 — первая полностью беспилотная наземная операция; 2025 — БПЛА-носитель с 2 FPV на 300 км.",
+             size=9, italic=True, color=MID, line_spacing=1.2)
 
     add_footer(s,
         "Источники: DARPA 2024 · The Aviationist 2024 · MWI 2025 · CSIS 2025 · Kyiv Independent 2025")
@@ -1434,34 +1553,41 @@ def slide_27_x62a_saker(prs):
 def slide_28_geran_cognitive(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Russian Act — Geran-2 (defense) + Cognitive Pilot (civilian dual-use)",
+        "Российский Act — Geran-2 (оборона) + Cognitive Pilot (гражданское двойное)",
         size=22)
 
     # Left: Geran-2
     ocean_box(s, 0.6, 1.95, 6.0, 4.7)
-    text_box(s, 0.8, 2.1, 5.6, 0.4, "Geran-2 evolution",
+    text_box(s, 0.8, 2.1, 5.6, 0.4, "Geran-2 — эволюция",
              size=16, bold=True, color=DEEP)
 
+    # Shahed-136 photo (Geran-2 is RU modification of this)
+    photo_p = ASSETS / "photos" / "p28-shahed.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.8, 2.55, w=2.6, h=1.5)
+        text_box(s, 0.8, 4.1, 2.6, 0.25,
+                 "Shahed-136 (исходник для Geran-2)",
+                 size=8, italic=True, color=LIGHT)
+
     geran_stats = [
-        ("Алабуга ОЭЗ", "Производство в Татарстане"),
-        ("~2 700-3 000 / мес", "К концу 2025 [VFY-day-of]"),
-        (">26 000", "произведено к поздней весне 2025"),
-        (">40 000", "план к концу 2025 [VFY]"),
+        ("~2 700–3 000 / мес", "к концу 2025"),
+        (">26 000", "произведено к весне 2025"),
+        (">40 000", "план к концу 2025"),
     ]
     for i, (big, desc) in enumerate(geran_stats):
-        y = 2.6 + i * 0.45
-        text_box(s, 1.0, y, 2.5, 0.35, big,
-                 size=13, bold=True, color=GOLD if i in [1, 2, 3] else DEEP)
-        text_box(s, 3.6, y + 0.03, 2.8, 0.3, desc,
-                 size=10, italic=True, color=MID)
+        y = 2.6 + i * 0.42
+        text_box(s, 3.5, y, 1.7, 0.3, big,
+                 size=11, bold=True, color=GOLD)
+        text_box(s, 3.5, y + 0.3, 2.9, 0.25, desc,
+                 size=9, italic=True, color=MID)
 
     hr_line(s, 0.8, 4.5, 5.4, color=LIGHT, weight=0.5)
-    text_box(s, 0.8, 4.6, 5.4, 0.35, "AI-stack (wreckage analysis):",
+    text_box(s, 0.8, 4.6, 5.4, 0.35, "Бортовой стек (по анализу обломков):",
              size=12, bold=True, color=DEEP)
-    stack = ["NVIDIA Jetson onboard",
-             "High-res камеры + thermal",
-             "FPGA для EW-resistance",
-             "2026 — anti-radiation seeker"]
+    stack = ["NVIDIA Jetson — бортовой компьютер",
+             "Камеры высокого разрешения + тепловизор",
+             "FPGA для защиты от помех РЭБ",
+             "2026 — головка наведения на радиоизлучение"]
     for i, s_ in enumerate(stack):
         text_box(s, 0.95, 4.95 + i * 0.25, 5.2, 0.23, "• " + s_,
                  size=10, color=MID, line_spacing=1.15)
@@ -1469,43 +1595,41 @@ def slide_28_geran_cognitive(prs):
     # Supply chain warning
     ocean_box(s, 0.8, 6.0, 5.55, 0.7, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 0.95, 6.1, 5.25, 0.55,
-             "Supply-chain caveat: 1 111 Dell PowerEdge XE9680 через "
-             "Shreya Life Sciences (India) → Russia, Apr-Aug 2024",
+             "Цепочка поставок: 1 111 серверов Dell PowerEdge XE9680 через индийскую Shreya Life Sciences в апреле–августе 2024.",
              size=10, italic=True, color=DEEP, line_spacing=1.2)
 
     # Right: Cognitive Pilot
     ocean_box(s, 6.8, 1.95, 5.95, 4.7, fill=LIGHT_TINT)
-    text_box(s, 7.0, 2.1, 5.5, 0.4, "Cognitive Pilot · civilian dual-use",
-             size=16, bold=True, color=DEEP)
+    text_box(s, 7.0, 2.1, 5.5, 0.4, "Cognitive Pilot — гражданское применение",
+             size=15, bold=True, color=DEEP)
     text_box(s, 7.0, 2.5, 5.5, 0.3,
-             "JV Сбер + Cognitive Technologies (Москва)",
+             "СП Сбера + Cognitive Technologies (Москва)",
              size=11, italic=True, color=MID)
 
-    text_box(s, 7.0, 3.0, 5.5, 0.35, "Stack:",
-             size=13, bold=True, color=DEEP)
-    text_box(s, 7.15, 3.35, 5.3, 0.4,
-             "CV + радар + LiDAR (автономия без GNSS)",
-             size=11, color=MID, italic=True)
+    # KAMAZ photo
+    photo_p = ASSETS / "photos" / "p28-kamaz.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 7.0, 2.9, w=5.5, h=1.65)
+        text_box(s, 7.0, 4.55, 5.5, 0.25,
+                 "КАМАЗ — целевая платформа Cognitive Pilot для агро- и грузоперевозок.",
+                 size=8, italic=True, color=LIGHT)
 
-    text_box(s, 7.0, 3.85, 5.5, 0.35, "Применения:",
-             size=13, bold=True, color=DEEP)
+    text_box(s, 7.0, 4.85, 5.5, 0.3, "Применения:",
+             size=12, bold=True, color=DEEP)
     apps = ["КАМАЗ-комбайны, тракторы СберАгро",
-            "Городской транспорт",
-            "Железная дорога",
-            "Снегоуборочная техника"]
+            "Городской транспорт · железная дорога"]
     for i, a in enumerate(apps):
-        text_box(s, 7.15, 4.2 + i * 0.28, 5.3, 0.25, "• " + a,
-                 size=11, color=MID, line_spacing=1.15)
+        text_box(s, 7.15, 5.15 + i * 0.28, 5.3, 0.25, "• " + a,
+                 size=10, color=MID, line_spacing=1.15)
 
-    text_runs(s, 7.0, 5.5, 5.5, 0.55, [
-        {"text": "До 50 000", "size": 22, "bold": True, "color": GOLD},
-        {"text": " систем/год (план)", "size": 13, "color": DEEP},
+    text_runs(s, 7.0, 5.75, 5.5, 0.55, [
+        {"text": "До 50 000", "size": 20, "bold": True, "color": GOLD},
+        {"text": " систем/год (план)", "size": 12, "color": DEEP},
     ])
 
-    text_box(s, 7.0, 6.15, 5.5, 0.45,
-             "НЕ identified as defense supplier в открытых источниках. "
-             "Те же CV+LiDAR — в CAD/CAM (Лек 6) и пром автоматизации (Лек 14)",
-             size=10, italic=True, color=TEAL, line_spacing=1.25)
+    text_box(s, 7.0, 6.25, 5.5, 0.45,
+             "Не указан как оборонный поставщик в открытых источниках. Те же CV+LiDAR — в CAD/CAM (Лек 6) и в промавтоматизации (Лек 14).",
+             size=9, italic=True, color=TEAL, line_spacing=1.25)
 
     add_footer(s,
         "Источники: CSIS Bondar 2026 · Tom's Hardware 2024 · Fortune 2026 · TASS 2024 · Cognitive Pilot 2025")
@@ -1535,18 +1659,18 @@ def slide_28_geran_cognitive(prs):
 def slide_29_mcas(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Boeing 737 MAX MCAS — canonical anti-pattern safety-critical AI", size=22)
+        "Boeing 737 MAX MCAS — канонический анти-паттерн критичной к безопасности автоматики", size=22)
 
     # Left: 4 lessons in 2x2
     lessons = [
-        ("Single-point-of-failure",
-         "Одна модель, один сенсор, одно решение"),
-        ("Opacity",
-         "Пилоты НЕ знали о MCAS · нет override"),
-        ("Software cures hardware",
-         "MCAS компенсировал hardware shortfall"),
-        ("FMEA / FTA не пройден",
-         "SPOF должен быть пойман на анализе"),
+        ("Единая точка отказа",
+         "Одна модель, один сенсор, одно решение."),
+        ("Непрозрачность",
+         "Пилоты не знали о существовании MCAS, не было ручного выключения."),
+        ("Софт лечит железо",
+         "MCAS компенсировал физическую особенность планера."),
+        ("Анализ FMEA / FTA не пройден",
+         "Единая точка отказа должна быть поймана на этапе анализа отказов."),
     ]
     lc_w = 3.5; lc_h = 1.9; gap = 0.15
     for i, (title, desc) in enumerate(lessons):
@@ -1562,43 +1686,48 @@ def slide_29_mcas(prs):
         text_box(s, x + 0.65, y + 0.7, lc_w - 0.75, 1.1, desc,
                  size=11, color=MID, italic=True, line_spacing=1.25)
 
-    # Right: vertical timeline
-    ocean_box(s, 7.8, 1.95, 5.0, 4.0)
-    text_box(s, 8.0, 2.05, 4.8, 0.4, "Crash timeline",
+    # Right: 737 MAX photo + vertical timeline + Patriot photo at bottom
+    ocean_box(s, 7.8, 1.95, 5.0, 5.05)
+    text_box(s, 8.0, 2.05, 4.8, 0.4, "Хронология крушений",
              size=15, bold=True, color=DEEP)
 
+    # 737 MAX photo
+    photo_p = ASSETS / "photos" / "p29-737max.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 8.0, 2.5, w=4.6, h=1.1)
+
     crash_events = [
-        ("29 окт 2018", "Lion Air 610", "189 KIA"),
-        ("10 мар 2019", "Ethiopian Airlines 302", "157 KIA"),
-        ("", "→ 346 KIA total", "20 мес остановки в США"),
+        ("29 окт 2018", "Lion Air 610", "189 погибших"),
+        ("10 мар 2019", "Ethiopian Airlines 302", "157 погибших"),
+        ("", "→ 346 погибших всего", "20 мес. остановки в США"),
     ]
     for i, (date, ev, casualty) in enumerate(crash_events):
-        y = 2.55 + i * 0.9
+        y = 3.7 + i * 0.55
         if date:
-            text_box(s, 8.0, y, 1.8, 0.35, date,
-                     size=12, bold=True, color=MID)
-            text_box(s, 8.0, y + 0.35, 4.6, 0.3, ev,
-                     size=11, color=DEEP, italic=True)
-            text_box(s, 8.0, y + 0.65, 4.6, 0.3, "→ " + casualty,
-                     size=10, italic=True, color=RED_WARN)
+            text_box(s, 8.0, y, 1.6, 0.27, date,
+                     size=10, bold=True, color=MID)
+            text_box(s, 9.6, y, 3.0, 0.27, ev,
+                     size=10, color=DEEP, italic=True)
+            text_box(s, 9.6, y + 0.27, 3.0, 0.25, "→ " + casualty,
+                     size=9, italic=True, color=RED_WARN)
         else:
-            ocean_box(s, 8.0, y, 4.6, 0.85, fill=GOLD_TINT, stroke=GOLD)
-            text_box(s, 8.0, y, 4.6, 0.45, ev,
-                     size=18, bold=True, color=GOLD,
+            ocean_box(s, 8.0, y, 4.6, 0.55, fill=GOLD_TINT, stroke=GOLD)
+            text_box(s, 8.0, y, 4.6, 0.28, ev,
+                     size=14, bold=True, color=GOLD,
                      align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
-            text_box(s, 8.0, y + 0.45, 4.6, 0.35, casualty,
-                     size=10, italic=True, color=DEEP,
+            text_box(s, 8.0, y + 0.28, 4.6, 0.25, casualty,
+                     size=9, italic=True, color=DEEP,
                      align=PP_ALIGN.CENTER)
 
-    # Patriot mini-callback
-    ocean_box(s, 7.8, 6.05, 5.0, 1.0, fill=TEAL_TINT, stroke=TEAL)
-    icon_p = ASSETS / "icons" / "radar-48.png"
-    if icon_p.exists():
-        add_image(s, icon_p, 7.9, 6.15, w=0.5, h=0.5)
-    text_box(s, 8.5, 6.1, 4.2, 0.35, "Patriot mini-callback",
+    # Patriot mini-callback with photo
+    ocean_box(s, 0.6, 6.05, 7.05, 1.0, fill=TEAL_TINT, stroke=TEAL)
+    photo_p = ASSETS / "photos" / "p29-patriot.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.7, 6.15, w=1.5, h=0.8)
+    text_box(s, 2.3, 6.1, 5.3, 0.35, "Patriot — параллельный урок",
              size=12, bold=True, color=DEEP)
-    text_box(s, 8.5, 6.4, 4.2, 0.6,
-             "2003 (RAF Tornado + USN F/A-18) + 2024 (Ukr F-16). Automation bias.",
+    text_box(s, 2.3, 6.4, 5.3, 0.6,
+             "2003 (RAF Tornado + ВМС США F/A-18) + 2024 (украинский F-16). Склонность доверять автомату.",
              size=10, italic=True, color=MID, line_spacing=1.25)
 
     add_footer(s,
@@ -1629,6 +1758,11 @@ def slide_29_mcas(prs):
 
 
 def slide_30_act_criteria(prs):
+    """DELETED — criteria consolidated in s39."""
+    pass
+
+
+def _slide_30_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s, "Act — когда не AI: 2 критерия")
 
@@ -1692,43 +1826,43 @@ def slide_31(prs):
     return section_divider(prs, 4, "Граница и регулирование",
         "Где звено Act обрезано международным правом и государственной политикой",
         current_section=4,
-        caption="15 минут · L1-L5 + UN GGE + ICRC + Maven shift + HITL/HOOL/HOTL · целиком strict-in")
+        caption="15 минут · L1–L5 + UN GGE + МККК + сдвиг Maven + HITL/HOOL/HOTL · целиком про границы")
 
 
 def slide_32_l1_l5(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Лестница автономии L1-L5: что делает AI / что делает человек / ms-to-intervention",
+        "Лестница автономии L1–L5: что делает ИИ / что делает человек / время на вмешательство",
         size=22)
 
     # Build 5-row table-style ladder
     levels = [
-        ("L1", "Assistive",
-         "AI: выдаёт detections · Человек: решает",
-         "Palantir MSS analyst surface",
-         "минуты-часы", LIGHT_TINT, LIGHT),
-        ("L2", "Semi-auto perception",
-         "AI: рекомендует action · Человек: авторизует",
-         "Saker Scout target lock",
-         "seconds", LIGHT_TINT, LIGHT),
-        ("L3", "Supervised autonomy",
-         "AI: executes в envelope · Человек: supervises",
-         "Anduril Fury wingman (CCA)",
-         "100-1000 ms", LIGHT_TINT, MID),
-        ("L4", "Pre-authorised auto-engage",
-         "AI: engages по ROE · Человек: может intervene",
-         "Patriot auto, S-400 auto ROE",
-         "<100 ms", TEAL_TINT, TEAL),
-        ("L5", "Full LAWS",
-         "AI: lethal без human · Человек: вне loop",
-         "Currently debated, not deployed",
-         "N/A — вне loop", GOLD_TINT, RED_WARN),
+        ("L1", "Помогающий",
+         "ИИ: выдаёт детекции · Человек: решает",
+         "Palantir MSS — обзор для аналитика",
+         "минуты — часы", LIGHT_TINT, LIGHT),
+        ("L2", "Полу-автомат",
+         "ИИ: рекомендует действие · Человек: авторизует",
+         "Saker Scout — захват цели",
+         "секунды", LIGHT_TINT, LIGHT),
+        ("L3", "Под надзором",
+         "ИИ: исполняет в заданных границах · Человек: следит",
+         "Anduril Fury — ведомый (CCA)",
+         "100–1000 мс", LIGHT_TINT, MID),
+        ("L4", "Авто-применение по правилам",
+         "ИИ: применяет по правилам открытия огня · Человек: может вмешаться",
+         "Patriot auto, С-400 auto",
+         "<100 мс", TEAL_TINT, TEAL),
+        ("L5", "Полная LAWS",
+         "ИИ: применяет силу без человека · Человек: вне петли",
+         "Сейчас обсуждается, не развёрнуто",
+         "Нет — вне петли", GOLD_TINT, RED_WARN),
     ]
     row_h = 0.78; row_y = 1.85
     col_widths = [0.7, 2.2, 4.2, 3.0, 1.5]
 
     # Header
-    headers = ["#", "Уровень", "AI / Человек", "Пример 2026", "ms-intervention"]
+    headers = ["#", "Уровень", "ИИ / Человек", "Пример 2026", "Время вмешательства"]
     cum_x = 0.6
     for i, h in enumerate(headers):
         filled_rect(s, cum_x, row_y, col_widths[i], 0.42, MID)
@@ -1763,15 +1897,15 @@ def slide_32_l1_l5(prs):
 
     # Boundary callouts on right side of L3 and L4-L5 boundary
     text_box(s, 12.3, row_y + 0.42 + 2*row_h, 1.0, 0.5,
-             "← L3↔L4\nengineering\ndebate",
+             "← L3↔L4\nинженерный\nспор",
              size=8, italic=True, color=MID, bold=True, line_spacing=1.1)
     text_box(s, 12.3, row_y + 0.42 + 4*row_h, 1.0, 0.5,
-             "← L4↔L5\ntreaty\ndebate",
+             "← L4↔L5\nспор о\nдоговоре",
              size=8, italic=True, color=GOLD, bold=True, line_spacing=1.1)
 
     # Bottom takeaway
     text_box(s, 0.6, 7.0, 12.13, 0.3,
-             "Студент-инженер: сказать про конкретную систему НА КАКОМ УРОВНЕ. Не «автономная» — а «L3 с envelope шириной X»",
+             "Инженерное правило: про конкретную систему говорите «L3 с границами шириной X», а не «автономная».",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     add_speaker_notes(s,
         "Чтобы говорить о границе «где можно, где нельзя», нужна общая шкала. "
@@ -1798,80 +1932,130 @@ def slide_32_l1_l5(prs):
 
 
 def slide_33_un_gge(prs):
+    """MERGED s33+s34: UN GGE timeline + ICRC/SKR civil society."""
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "UN GGE on LAWS — третья подряд резолюция 2025 (164/6/7 UN press)",
-        size=22)
+        "UN GGE on LAWS — три подряд резолюции; ICRC + Stop Killer Robots — давление НКО",
+        size=20)
 
-    # Left: vertical timeline
-    ocean_box(s, 0.6, 1.95, 7.8, 4.7)
-    text_box(s, 0.8, 2.1, 7.4, 0.45, "Хронология 2024-2025",
-             size=15, bold=True, color=DEEP)
+    # Left half: UN GGE compact timeline
+    ocean_box(s, 0.6, 1.7, 6.3, 5.3)
+    text_box(s, 0.8, 1.85, 5.9, 0.4, "UN GGE — хронология 2024–2025",
+             size=14, bold=True, color=DEEP)
 
     timeline = [
-        ("5 Nov 2024", "First Committee UNGA", "161 / 3 / 13", MID,
-         "Против: Беларусь · КНДР · Россия"),
-        ("2 Dec 2024", "Pleno UNGA · Резолюция 79/62", "166 / 3 / 15", MID,
-         ""),
-        ("Sep 2025", "UN GGE — 42 states joint statement", "rolling text", LIGHT,
-         "объявлен достаточной основой для переговоров"),
-        ("6 Nov 2025", "First Committee · третья подряд", "164 / 6 / 7", GOLD,
-         "Против: Беларусь · Бурунди · КНДР · Израиль · Россия · США"),
+        ("Нояб. 2024", "Первый комитет UNGA", "161 / 3 / 13", MID),
+        ("Дек. 2024", "Резолюция 79/62 пленумa", "166 / 3 / 15", MID),
+        ("Сент. 2025", "42 страны — общее заявление UN GGE", "rolling text", LIGHT),
+        ("Нояб. 2025", "Третья подряд резолюция", "164 / 6 / 7", GOLD),
     ]
-    for i, item in enumerate(timeline):
-        date, body, vote, col, note = item
-        y = 2.6 + i * 1.0
-        # Dot
+    for i, (date, body, vote, col) in enumerate(timeline):
+        y = 2.35 + i * 0.65
         dot = s.shapes.add_shape(MSO_SHAPE.OVAL,
-                                 Inches(0.95), Inches(y + 0.15),
-                                 Inches(0.25), Inches(0.25))
+                                 Inches(0.95), Inches(y + 0.1),
+                                 Inches(0.2), Inches(0.2))
         dot.fill.solid(); dot.fill.fore_color.rgb = col
         dot.line.fill.background()
-        text_box(s, 1.4, y, 1.6, 0.4, date,
-                 size=12, bold=True, color=col)
-        text_box(s, 3.05, y, 3.5, 0.35, body,
-                 size=11, color=DEEP, italic=True)
-        text_box(s, 6.6, y, 1.7, 0.4, vote,
-                 size=13, bold=True, color=col, align=PP_ALIGN.RIGHT)
-        if note:
-            text_box(s, 1.4, y + 0.45, 7.0, 0.4, note,
-                     size=10, italic=True, color=MID, line_spacing=1.2)
+        text_box(s, 1.3, y, 1.5, 0.3, date,
+                 size=10, bold=True, color=col)
+        text_box(s, 2.85, y, 2.7, 0.3, body,
+                 size=10, color=DEEP, italic=True)
+        text_box(s, 5.55, y, 1.3, 0.3, vote,
+                 size=11, bold=True, color=col, align=PP_ALIGN.RIGHT)
 
-    # Right: DoD Directive callout
-    ocean_box(s, 8.5, 1.95, 4.3, 4.7, fill=TEAL_TINT, stroke=TEAL)
-    text_box(s, 8.7, 2.1, 4.0, 0.45, "DoD Directive 3000.09",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 8.7, 2.55, 4.0, 0.35,
-             "«Autonomy in Weapon Systems»",
-             size=11, italic=True, color=MID)
-    text_box(s, 8.7, 2.95, 4.0, 0.35,
-             "2012, updated 2023",
-             size=11, italic=True, color=MID)
-
-    hr_line(s, 8.7, 3.4, 3.8, color=TEAL, weight=0.5)
-
-    text_box(s, 8.7, 3.55, 4.0, 0.5,
-             "US policy формально требует HITL для kinetic engagement",
-             size=11, color=DEEP, italic=True, line_spacing=1.25)
-
-    text_box(s, 8.7, 4.25, 4.0, 0.4, "Системы по умолчанию:",
+    text_box(s, 0.8, 5.05, 5.9, 0.3, "Против в 2025:",
              size=11, bold=True, color=DEEP)
-    text_runs(s, 8.7, 4.65, 4.0, 0.5, [
-        {"text": "L1-L3", "size": 18, "bold": True, "color": GOLD},
-        {"text": ", waiver для L4", "size": 12, "color": DEEP},
+    text_box(s, 0.8, 5.35, 5.9, 0.35,
+             "Беларусь · Бурунди · КНДР · Израиль · Россия · США",
+             size=11, italic=True, color=MID)
+
+    # DoD Directive
+    ocean_box(s, 0.8, 5.85, 5.9, 1.0, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.95, 5.95, 5.6, 0.35, "DoD Directive 3000.09 (2012, обнов. 2023)",
+             size=11, bold=True, color=DEEP)
+    text_runs(s, 0.95, 6.3, 5.6, 0.5, [
+        {"text": "Системы по умолчанию ", "size": 10, "color": DEEP},
+        {"text": "L1–L3", "size": 14, "bold": True, "color": GOLD},
+        {"text": ", допуск для L4. Политика США требует HITL для применения силы.",
+         "size": 10, "italic": True, "color": MID},
     ])
 
-    text_box(s, 8.7, 5.5, 4.0, 1.1,
-             "US не противник договора в принципе, но опасается жёстких ограничений. "
-             "Сдвиг 2024→2025: «за» → «против»",
-             size=10, italic=True, color=MID, line_spacing=1.3)
+    # Right half: ICRC + SKR
+    ocean_box(s, 7.05, 1.7, 5.75, 5.3)
+    text_box(s, 7.25, 1.85, 5.35, 0.4, "Гражданское общество — давление",
+             size=14, bold=True, color=DEEP)
 
-    # Goal callout
-    ocean_box(s, 0.6, 6.85, 12.13, 0.4, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.88, 11.63, 0.35,
-             "Цель Генсека ООН: договор к 2026 [VFY-day-of]",
-             size=13, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    # ICRC quote — main
+    ocean_box(s, 7.25, 2.35, 5.35, 1.55, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 7.4, 2.45, 5.15, 0.3, "МККК (ICRC) — главное:",
+             size=11, bold=True, color=DEEP)
+    text_box(s, 7.4, 2.75, 5.15, 1.1,
+             "«Не оружейная система должна соответствовать международному гуманитарному праву — это люди, использующие её.»",
+             size=11, italic=True, color=DEEP, line_spacing=1.3, bold=True)
+
+    # ICRC prohibit list
+    text_box(s, 7.25, 4.0, 5.35, 0.3, "Полный запрет МККК предлагает на:",
+             size=10, bold=True, color=DEEP)
+    proh = ["непредсказуемые автономные системы оружия",
+            "оружие, применяющее силу против людей"]
+    for i, p in enumerate(proh):
+        text_box(s, 7.4, 4.3 + i * 0.25, 5.2, 0.22, "• " + p,
+                 size=10, color=MID, line_spacing=1.15)
+
+    # Stop Killer Robots
+    hr_line(s, 7.25, 4.9, 5.15, color=LIGHT, weight=0.5)
+    text_runs(s, 7.25, 5.0, 5.35, 0.5, [
+        {"text": "Stop Killer Robots: ", "size": 12, "bold": True, "color": DEEP},
+        {"text": "30 стран", "size": 18, "bold": True, "color": GOLD},
+        {"text": " за полный запрет", "size": 11, "color": MID},
+    ])
+    text_box(s, 7.25, 5.55, 5.35, 0.35,
+             "Коалиция 270 НКО из 70 стран — главный негосударственный игрок.",
+             size=10, italic=True, color=MID, line_spacing=1.2)
+
+    # Compact country sample
+    text_box(s, 7.25, 6.0, 5.35, 0.85,
+             "Включая Австрию, Бразилию, Китай, Эквадор, Святой Престол, "
+             "Мексику, Пакистан, Палестину, Венесуэлу.",
+             size=9, italic=True, color=MID, line_spacing=1.3)
+
+    add_footer(s,
+        "Источники: SKR briefs 2024–2025 · UN press GA12736 · DoD 3000.09 · "
+        "ICRC 2024 position · HRW 2020–2025.")
+    add_speaker_notes(s,
+        "Регулирование автономного оружия идёт по двум контурам — "
+        "межгосударственному и негосударственному, и оба важно понимать.\n\n"
+        "Первый контур — UN GGE on LAWS, главный международный форум переговоров. "
+        "Создан в 2016 году. За последние три года произошёл сдвиг от «обсуждаем» "
+        "к «работаем над текстом». 5 ноября 2024 — Первый комитет UNGA: 161 за, "
+        "3 против, 13 воздержавшихся. Против — Беларусь, КНДР, Россия. 2 декабря "
+        "2024 — резолюция 79/62 на пленарном: 166 / 3 / 15. Сентябрь 2025 — UN "
+        "GGE: 42 государства подписали общее заявление, rolling text объявлен "
+        "достаточной основой для переговоров. 6 ноября 2025 — Первый комитет, "
+        "третья подряд резолюция: 164 / 6 / 7 по данным ООН. Против — Беларусь, "
+        "Бурунди, КНДР, Израиль, Россия, и теперь США. США сместились с «за» в "
+        "2024 году на «против» в 2025, объяснив это противодействием конкретной "
+        "формулировке про переговоры о связывающем инструменте, а не отказом от "
+        "обсуждений LAWS как таковых.\n\n"
+        "Параллельно — позиция США через DoD Directive 3000.09 «Автономия в "
+        "системах оружия», принятая в 2012 году и обновлённая в 2023. Политика "
+        "США формально требует «человека в петле» для применения силы в "
+        "большинстве сценариев. Системы по умолчанию — L1–L3, с явным процессом "
+        "допуска для L4.\n\n"
+        "Второй контур — гражданское общество. Помимо государств важны два "
+        "негосударственных игрока. МККК — Международный комитет Красного Креста — "
+        "главный международный авторитет по применению международного "
+        "гуманитарного права в вооружённых конфликтах. Stop Killer Robots — "
+        "коалиция 270 НКО из 70 стран. Главный non-state драйвер переговоров.\n\n"
+        "Позиция МККК: полный запрет на непредсказуемые автономные системы "
+        "оружия и на оружие, спроектированное или используемое для применения "
+        "силы против людей. Ограничения — на все остальные категории. Центральная "
+        "формулировка: «не оружейная система должна соответствовать "
+        "международному гуманитарному праву — это люди, использующие её». В "
+        "центре — человек, а не машина.\n\n"
+        "Stop Killer Robots — 30 стран явной поддержки полного запрета. Это "
+        "страны Латинской Америки, Африки, ряд арабских государств, Святой "
+        "Престол, и Китай.")
     add_speaker_notes(s,
         "UN GGE on LAWS — основной международный форум переговоров по LAWS. "
         "Создан в 2016. За последние три года произошёл сдвиг от «обсуждаем» к "
@@ -1894,6 +2078,11 @@ def slide_33_un_gge(prs):
 
 
 def slide_34_icrc_skr(prs):
+    """MERGED into slide_33_un_gge — no-op stub."""
+    pass
+
+
+def _slide_34_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "ICRC + Stop Killer Robots — non-state давление на переговоры", size=22)
@@ -1991,23 +2180,23 @@ def slide_34_icrc_skr(prs):
 def slide_35_maven_shift(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Maven walkout 2018 → vendor replacement → big-tech возврат 2024-2026",
+        "Maven 2018 → замена вендоров → возврат больших ИИ-компаний 2024–2026",
         size=22)
 
     # 3 eras horizontal
     eras = [
-        ("ERA 1: Maven walkout", "2018", LIGHT_TINT, LIGHT, "door-open",
-         ["Март 2018: Google leak",
-          "4 000+ подписей · ~12 резигнаций",
+        ("Эра 1: уход из Maven", "2018", LIGHT_TINT, LIGHT, "door-open",
+         ["Март 2018: утечка Google",
+          "4 000+ подписей · ~12 увольнений",
           "Июнь 2018: Google не продлевает"]),
-        ("ERA 2: Vendor replacement", "2018-2024", LIGHT_TINT, MID, "building-2",
-         ["Anduril $30,5 млрд",
-          "Palantir $60B капитализация",
+        ("Эра 2: замена вендоров", "2018–2024", LIGHT_TINT, MID, "building-2",
+         ["Anduril — $30,5 млрд",
+          "Palantir — $60 млрд капитализация",
           "Scale, Helsing — растут"]),
-        ("ERA 3: Big-tech возврат", "2024-2026", GOLD_TINT, GOLD, "refresh-ccw",
-         ["Jan 2024: OpenAI · ban removed",
-          "Nov 2024: Anthropic IL6 (pivot)",
-          "Sep 2025: Google возвращается"]),
+        ("Эра 3: возврат больших ИИ-компаний", "2024–2026", GOLD_TINT, GOLD, "refresh-ccw",
+         ["Янв. 2024: OpenAI снимает запрет",
+          "Нояб. 2024: Anthropic IL6 (поворот)",
+          "Сент. 2025: Google возвращается"]),
     ]
     ew = 4.0; gap = 0.1
     for i, (title, date, bg, col, icon, bullets) in enumerate(eras):
@@ -2034,8 +2223,7 @@ def slide_35_maven_shift(prs):
     # Bottom callout
     ocean_box(s, 0.6, 6.45, 12.13, 0.65, fill=TEAL_TINT, stroke=TEAL)
     text_box(s, 0.85, 6.5, 11.63, 0.55,
-             "Personal ethics ≠ industry regulation. Только legal regulation "
-             "(treaty) может блокировать adoption на indust-level",
+             "Личная этика ≠ отраслевое регулирование. Только государственный закон или договор могут заблокировать применение на уровне отрасли.",
              size=13, italic=True, color=DEEP, bold=True,
              anchor=MSO_ANCHOR.MIDDLE)
     add_footer(s,
@@ -2067,29 +2255,29 @@ def slide_35_maven_shift(prs):
 def slide_36_hitl_hool_hotl(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "HITL / HOOL / HOTL — триада. Граница HOOL→HOTL = engineering decision",
+        "HITL / HOOL / HOTL — триада. Граница HOOL → HOTL = инженерное решение",
         size=22)
 
     # 3 panel layout
     panels = [
-        ("HITL", "Human-In-The-Loop", LIGHT_TINT, LIGHT,
-         "Человек в КАЖДОЙ decision-point",
-         "AI не действует без явной authorisation",
+        ("HITL", "Человек В петле", LIGHT_TINT, LIGHT,
+         "Человек в КАЖДОЙ точке решения",
+         "ИИ не действует без явной авторизации",
          "L1, L2",
-         ["Palantir MSS analyst",
-          "Saker Scout operator"]),
-        ("HOOL", "Human-On-The-Loop", LIGHT_TINT, MID,
-         "Человек SUPERVISES",
-         "Может intervene, но не required",
+         ["Palantir MSS — аналитик",
+          "Saker Scout — оператор"]),
+        ("HOOL", "Человек НАД петлёй", LIGHT_TINT, MID,
+         "Человек НАБЛЮДАЕТ",
+         "Может вмешаться, но не обязан",
          "L3, L4",
-         ["Fury CCA wingman",
-          "Patriot auto ROE"]),
-        ("HOTL", "Human-Out-of-The-Loop", GOLD_TINT, RED_WARN,
-         "Человек ВНЕ execution-loop",
-         "Нет real-time intervention",
+         ["Fury — пилотируемый ведущий",
+          "Patriot — автоматический режим"]),
+        ("HOTL", "Человек ВНЕ петли", GOLD_TINT, RED_WARN,
+         "Человек ВНЕ цикла исполнения",
+         "Нет вмешательства в реальном времени",
          "L5",
-         ["Treaty-discussion",
-          "Currently не deployed"]),
+         ["Сейчас в стадии договоров",
+          "Не развёрнуто"]),
     ]
     pw = 4.0; gap = 0.1
     for i, item in enumerate(panels):
@@ -2111,7 +2299,7 @@ def slide_36_hitl_hool_hotl(prs):
                                   Inches(0.8), Inches(0.8))
         loop.fill.background()
         loop.line.color.rgb = col; loop.line.width = Pt(1.5)
-        text_box(s, x, 3.25, pw, 0.7, "AI\nloop",
+        text_box(s, x, 3.25, pw, 0.7, "петля",
                  size=10, italic=True, color=col, bold=True,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
 
@@ -2138,7 +2326,7 @@ def slide_36_hitl_hool_hotl(prs):
 
         # Mapping
         text_runs(s, x + 0.2, 5.25, pw - 0.4, 0.4, [
-            {"text": "L1-L5: ", "size": 11, "color": DEEP},
+            {"text": "L1–L5: ", "size": 11, "color": DEEP},
             {"text": mapping, "size": 13, "bold": True, "color": col},
         ])
 
@@ -2150,10 +2338,10 @@ def slide_36_hitl_hool_hotl(prs):
     # Big engineering callout bottom
     ocean_box(s, 0.6, 6.4, 12.13, 0.75, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 0.85, 6.48, 11.63, 0.3,
-             "Engineering takeaway: «сколько ms у оператора на intervention» = ФОРМАЛЬНАЯ категоризация",
+             "Инженерный вывод: «сколько миллисекунд у оператора на вмешательство» — это формальная категоризация системы.",
              size=12, bold=True, color=DEEP)
     text_box(s, 0.85, 6.78, 11.63, 0.3,
-             "10 сек = HOOL · 200 мс = формально HOOL, фактически HOTL · 5 мс = инженерно HOTL",
+             "10 с = HOOL · 200 мс = формально HOOL, фактически HOTL · 5 мс = инженерно HOTL.",
              size=11, italic=True, color=DEEP)
     add_speaker_notes(s,
         "Самая важная mental model этого раздела — триада уровней человеческого "
@@ -2188,7 +2376,7 @@ def slide_37_russia_votes(prs):
 
     # Left: voting context
     ocean_box(s, 0.6, 1.95, 6.0, 4.7)
-    text_box(s, 0.8, 2.1, 5.6, 0.4, "Voting context",
+    text_box(s, 0.8, 2.1, 5.6, 0.4, "Голосования по UN LAWS",
              size=16, bold=True, color=DEEP)
 
     votes = [
@@ -2214,11 +2402,11 @@ def slide_37_russia_votes(prs):
 
     actions = [
         ("book-open", "Знать ландшафт",
-         "UN GGE, ICRC, голоса UNGA, DoD 3000.09. Как FAR для civil aviation"),
-        ("scale", "Знать engineering определения",
-         "HITL/HOOL/HOTL + L1-L5 применимы независимо от geopolitical alignment"),
+         "UN GGE, МККК, голоса UNGA, DoD 3000.09 — базовая профессиональная грамотность."),
+        ("scale", "Знать инженерные определения",
+         "HITL / HOOL / HOTL и L1–L5 применимы одинаково независимо от политического выбора страны."),
         ("compass", "Делать осознанный выбор",
-         "Civilian dual-use / оборона L1-L2 / оборона L3-L4 — каждый правомерный, но РАЗНЫЙ"),
+         "Гражданское двойное / оборона L1–L2 / оборона L3–L4 — каждый правомерный, но РАЗНЫЙ."),
     ]
     for i, (icon, title, desc) in enumerate(actions):
         y = 2.4 + i * 1.3
@@ -2266,22 +2454,22 @@ def slide_38(prs):
     return section_divider(prs, 5, "Сборка: критерии, карьера, чтение, замыкание",
         "Семь критериев, карьерный угол, чтение, замыкание",
         current_section=5,
-        caption="6 минут · 7 критериев · 5 профилей · 7 источников · замыкание к keystone")
+        caption="6 минут · 7 критериев · 5 профилей · 5 источников · замыкание к OODA-цепи")
 
 
 def slide_39_seven_criteria(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Семь критериев «когда AI плохая идея» — рабочая матрица")
+        "Семь критериев «когда AI — плохая идея». Рабочая матрица.")
 
     criteria_data = [
-        (1, "Sense", "Low-data domain или distribution shift", "Adversarial SAR ATR · новые цели", LIGHT),
-        (2, "Sense", "High-stakes single-sensor без избыточности", "F-35 ALIS без HITL flight gate", LIGHT),
-        (3, "Decide", "Long-tail edge cases с low ML confidence", "Mission planning под новые ROE", MID),
-        (4, "Decide", "High-stakes life-and-death без HITL", "Lavender canonical anti-example", GOLD),
+        (1, "Sense", "Редкий домен или сдвиг распределения", "Атаки на SAR-классификатор · новые цели", LIGHT),
+        (2, "Sense", "Один сенсор без резервирования", "F-35 ALIS без HITL для допуска полётов", LIGHT),
+        (3, "Decide", "Редкие случаи с низкой уверенностью модели", "Планирование под новые правила открытия огня", MID),
+        (4, "Decide", "Жизнь и смерть без реального HITL", "Lavender — канонический контрпример", GOLD),
         (5, "Act", "Автономия не нужна, человек медленнее", "737 MAX MCAS — «решение не было нужно»", GOLD),
-        (6, "Act", "COTS sensor дешевле + reliable", "AoA-redundancy на 737 MAX", TEAL),
-        (7, "Cross-cutting", "HOOL → HOTL = treaty-territory", "LAWS · UN GGE", RED_WARN),
+        (6, "Act", "Готовый сенсор дешевле и надёжнее ML", "Резервирование AoA на 737 MAX", TEAL),
+        (7, "Cross-cutting", "Граница HOOL → HOTL = территория договоров", "LAWS · UN GGE", RED_WARN),
     ]
     col_widths = [0.5, 1.8, 5.5, 4.0]
     row_h = 0.55
@@ -2347,72 +2535,112 @@ def slide_39_seven_criteria(prs):
 
 
 def slide_40_career(prs):
+    """MERGED s40+s41: career profiles + reading list."""
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Карьерный угол — 5 инженерных профилей × 3 контура")
+        "Дальнейший путь — 5 профилей × 3 контура × 5 источников",
+        size=24)
 
-    # 5 profiles in a row
+    # Left half: 5 profiles compact
+    text_box(s, 0.6, 1.85, 6.3, 0.35, "Пять инженерных профилей:",
+             size=13, bold=True, color=DEEP)
     profiles = [
-        ("scan", "CV / DL",
-         ["Спутниковая аналитика",
-          "Defense ML",
-          "Perception для drones"]),
-        ("cpu", "ML / RL",
-         ["Autonomous platforms",
-          "Drone swarms",
-          "Gen design"]),
-        ("microchip", "Embedded / edge",
-         ["On-orbit ML",
-          "Drone autonomy",
-          "On-platform inference"]),
-        ("shield-check", "Safety eng",
-         ["DO-178C / ARP4754A",
-          "FMEA / FTA",
-          "Redundancy design"]),
-        ("scale", "Ethics / policy",
-         ["UN GGE process",
-          "ICRC engineering",
-          "AI policy в orgs"]),
+        ("scan", "Компьютерное зрение / DL",
+         "Спутниковая аналитика, distance perception"),
+        ("cpu", "ML / обучение с подкреплением",
+         "Autonomous platforms, рои дронов"),
+        ("microchip", "Встраиваемые системы / edge",
+         "ML на спутнике, на дроне, на борту"),
+        ("shield-check", "Инженерия безопасности",
+         "DO-178C / ARP4754A, FMEA / FTA, резервирование"),
+        ("scale", "Этика / политика",
+         "Процесс UN GGE, политика ИИ в компаниях"),
     ]
-    pw = 2.4; gap = 0.1
-    for i, (icon, title, items) in enumerate(profiles):
-        x = 0.6 + i * (pw + gap)
-        ocean_box(s, x, 1.85, pw, 2.55)
-        icon_p = ASSETS / "icons" / f"{icon}-96.png"
+    for i, (icon, title, desc) in enumerate(profiles):
+        y = 2.3 + i * 0.62
+        ocean_box(s, 0.6, y, 6.3, 0.55, fill=LIGHT_TINT)
+        icon_p = ASSETS / "icons" / f"{icon}-48.png"
         if icon_p.exists():
-            add_image(s, icon_p, x + (pw - 0.9) / 2, 2.0, w=0.9, h=0.9)
-        text_box(s, x, 3.0, pw, 0.45, title,
-                 size=14, bold=True, color=DEEP,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
-        for j, it in enumerate(items):
-            text_box(s, x + 0.15, 3.5 + j * 0.3, pw - 0.3, 0.28, "• " + it,
-                     size=10, color=MID, italic=True, line_spacing=1.15)
+            add_image(s, icon_p, 0.7, y + 0.08, w=0.4, h=0.4)
+        text_box(s, 1.2, y + 0.05, 5.65, 0.25, title,
+                 size=11, bold=True, color=DEEP)
+        text_box(s, 1.2, y + 0.3, 5.65, 0.22, desc,
+                 size=9, italic=True, color=MID)
+
+    # Right half: 5 key sources + 3 contours
+    text_box(s, 7.05, 1.85, 5.75, 0.35, "Пять источников для дальнейшего чтения:",
+             size=13, bold=True, color=DEEP)
+    readings = [
+        ("Scharre, «Army of None» (2018)", "базовая книга по LAWS — на русском есть перевод"),
+        ("CSIS / Bondar (апрель 2026)", "разбор российской экосистемы дронов с ИИ"),
+        ("Abraham, +972 (2024)", "первичная публикация по Lavender"),
+        ("ICRC Position Paper (2024)", "главный негосударственный документ"),
+        ("Stop Killer Robots briefs 2025", "сводки по UN GGE и UNGA"),
+    ]
+    for i, (title, desc) in enumerate(readings):
+        y = 2.3 + i * 0.5
+        text_runs(s, 7.05, y, 5.75, 0.4, [
+            {"text": f"{i+1}. ", "size": 11, "bold": True, "color": GOLD},
+            {"text": title, "size": 11, "bold": True, "color": DEEP},
+            {"newpara": True, "text": "    " + desc, "size": 10, "italic": True, "color": MID, "line_spacing": 1.15},
+        ])
 
     # 3 contours bottom
-    text_box(s, 0.6, 4.65, 12.13, 0.35, "Три контура работы:",
-             size=14, bold=True, color=DEEP)
-
+    text_box(s, 0.6, 5.55, 12.25, 0.3, "Три контура работы:",
+             size=13, bold=True, color=DEEP)
     contours = [
-        ("Российский dual-use", "Cognitive Pilot · VisionLabs · ТЕРРА ТЕХ · СКАНЭКС",
+        ("Российский dual-use",
+         "Cognitive Pilot · VisionLabs · ТЕРРА ТЕХ · СКАНЭКС",
          LIGHT_TINT, LIGHT),
-        ("Глобальный контур", "Boeing · Airbus · NASA · Anduril · Palantir · Helsing",
+        ("Глобальный контур",
+         "Boeing · Airbus · NASA · Anduril · Palantir · Helsing",
          LIGHT_TINT, MID),
         ("Гражданский без оборонной нагрузки",
          "Wisk Aero · Joby · Maxar · Planet · BlackSky", TEAL_TINT, TEAL),
     ]
-    cw = 4.0; cgap = 0.1
+    cw = (12.25 - 0.3) / 3
     for i, (title, content, bg, col) in enumerate(contours):
-        x = 0.6 + i * (cw + cgap)
-        ocean_box(s, x, 5.1, cw, 1.5, fill=bg, stroke=col)
-        text_box(s, x + 0.2, 5.2, cw - 0.4, 0.4, title,
-                 size=12, bold=True, color=DEEP, line_spacing=1.15)
-        text_box(s, x + 0.2, 5.65, cw - 0.4, 0.9, content,
-                 size=11, color=MID, italic=True, line_spacing=1.25)
+        x = 0.6 + i * (cw + 0.15)
+        ocean_box(s, x, 5.9, cw, 1.0, fill=bg, stroke=col)
+        text_box(s, x + 0.15, 5.97, cw - 0.3, 0.3, title,
+                 size=11, bold=True, color=DEEP, line_spacing=1.15)
+        text_box(s, x + 0.15, 6.27, cw - 0.3, 0.65, content,
+                 size=9, color=MID, italic=True, line_spacing=1.25)
 
-    # Bottom takeaway
-    text_box(s, 0.6, 6.8, 12.13, 0.35,
-             "Выбор есть — и он НЕ сводится к «либо военная индустрия, либо ничего»",
-             size=13, italic=True, color=DEEP, bold=True, align=PP_ALIGN.CENTER)
+    add_footer(s, "Все 104 источника главы — в разделе «Источники» chapter.md. Выбор есть — он не сводится к «либо военная индустрия, либо ничего».")
+    add_speaker_notes(s,
+        "Без агитации — где в этой области реальные карьерные пути и куда "
+        "идти за более глубоким пониманием.\n\n"
+        "Пять инженерных профилей. Специалист по компьютерному зрению и "
+        "глубокому обучению — спутниковая аналитика (Maxar, BlackSky), оборонное "
+        "ML (Palantir, Helsing), восприятие для дронов (Shield AI). Специалист "
+        "по ML и обучению с подкреплением — автономные платформы (CCA), рои "
+        "дронов, генеративный дизайн для аэрокосмических компонентов. Специалист "
+        "по встраиваемым системам и edge-вычислениям — ML на орбите, автономия "
+        "дрона, инференс на самом объекте. Системный инженер безопасности — "
+        "сертификация по DO-178C и ARP4754A, FMEA и FTA, проектирование "
+        "резервирования. Этика и политика — процесс UN GGE, инженерное "
+        "взаимодействие с МККК, политика ИИ в организациях.\n\n"
+        "Три контура работы. Российский dual-use: Cognitive Pilot, VisionLabs "
+        "(под санкциями), ТЕРРА ТЕХ, СКАНЭКС, СПУТНИКС. Глобальный контур: "
+        "Boeing, Airbus, NASA, ESA, Lockheed, Northrop, RTX; Anduril, Palantir, "
+        "Helsing, Shield AI, Scale. Гражданский без оборонной нагрузки: Wisk "
+        "Aero, Joby Aviation, Maxar, Planet Labs, BlackSky.\n\n"
+        "Для тех, кто хочет идти дальше — пять ключевых источников. Книга "
+        "Пола Скэра «Army of None» 2018 года — базовая книга по LAWS, доступна "
+        "на русском. CSIS Bondar апрель 2026 — главный академический разбор "
+        "российской экосистемы дронов. Abraham, +972 / Local Call 2024 — "
+        "первичная публикация по Lavender. ICRC Position Paper 2024 — главный "
+        "негосударственный документ. Stop Killer Robots briefs 2025 — "
+        "регулярные сводки. Все 104 источника главы — в разделе «Источники» "
+        "в chapter.md.\n\n"
+        "Главное — выбор есть, и он не сводится к «либо военная индустрия, либо "
+        "ничего». Гражданская аэрокосмическая отрасль — полноценное "
+        "профессиональное поле.")
+    return s
+
+
+def _slide_40_old(prs):
     add_speaker_notes(s,
         "Без агитации — где в этой области реальные карьерные пути.\n\n"
         "Пять инженерных профилей. CV/DL specialist — спутниковая аналитика "
@@ -2434,6 +2662,11 @@ def slide_40_career(prs):
 
 
 def slide_41_reading_list(prs):
+    """MERGED into slide_40_career — no-op stub."""
+    pass
+
+
+def _slide_41_old(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s, "Семь источников для тех, кто идёт дальше")
 
@@ -2497,20 +2730,20 @@ def slide_42_closing_callback(prs):
     # Dual-use band
     filled_rect(s, 0.6, 1.6, 12.13, 0.25, SOFT_GREY)
     text_box(s, 0.6, 1.6, 12.13, 0.22,
-             "Гражданское ↔ Военное · те же стеки, два контура",
+             "Гражданское ↔ Военное · те же стеки, два контура применения",
              size=10, italic=True, color=DARK_GREY,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
     items = [
         ("Sense", "eye",
-         "AI ускоряет → человек верифицирует ground truth",
-         "(ALIS)"),
+         "ИИ ускоряет → человек проверяет эталонной разметкой",
+         "(ALIS — где не сработало)"),
         ("Decide", "brain",
-         "AI ассистирует → человек удерживает authority",
+         "ИИ ассистирует → человек удерживает право решения",
          "(Lavender — анти-пример)"),
         ("Act", "plane",
-         "AI исполняет в envelope → человек supervises",
-         "(CCA wingman, не replacement)"),
+         "ИИ исполняет в заданных границах → человек следит",
+         "(Fury — ведомый, не замена пилота)"),
     ]
     card_w = 3.7; card_h = 2.7; gap = 0.55
     start_x = 0.6 + (12.13 - 3*card_w - 2*gap) / 2
@@ -2543,15 +2776,15 @@ def slide_42_closing_callback(prs):
              size=32, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
     text_box(s, 0.85, 5.7, 11.63, 0.6,
-             "AI — инструмент в инженерных руках, не автономный субъект. "
-             "Профессионализм — умение сказать «да» и «нет»",
+             "ИИ — инструмент в инженерных руках, не автономный субъект. "
+             "Профессионализм — умение сказать «да» и «нет».",
              size=14, italic=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
 
     # Forward
     text_box(s, 0.6, 6.7, 12.13, 0.35,
              "Следующие лекции: 10 — энергетика; 11 — транспорт и логистика. "
-             "Цепь Sense → Decide → Act работает везде, где есть инженерное решение и физический мир",
+             "Цепь Sense → Decide → Act работает везде, где есть инженерное решение и физический мир.",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     add_speaker_notes(s,
         "Главная мысль, с которой мы хотим оставить студента: цепь по-прежнему "

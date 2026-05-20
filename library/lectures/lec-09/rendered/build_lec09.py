@@ -237,51 +237,32 @@ def slide_01_hook(prs):
     """s01 — BEFORE/AFTER satellite hook"""
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "AI-аналитика спутниковой съёмки превращает 250 ПБ архива Maxar\n"
+        "ИИ-аналитика спутниковой съёмки превращает 250 ПБ архива Maxar\n"
         "в детекции за часы — то, что раньше требовало дней.",
         size=24)
 
-    # Left: satellite illustration placeholder (Ocean box with annotated rectangles)
-    # — будем строить through shapes (нет sat-photo licensed)
-    sat_box = ocean_box(s, 0.6, 2.0, 7.5, 4.6)
-
-    # «BEFORE» label на верхней половине
-    text_box(s, 0.8, 2.2, 3.5, 0.35, "BEFORE · 22 мая 03:00 UTC",
-             size=12, italic=True, color=LIGHT, bold=True)
-    # Stylized satellite image — gradient + dotted lines simulating port
-    filled_rect(s, 0.8, 2.6, 7.1, 1.7, SOFT_GREY)
-    # Coastline-like shape
-    coast = s.shapes.add_shape(MSO_SHAPE.WAVE, Inches(0.85), Inches(3.4),
-                               Inches(6.9), Inches(0.5))
-    coast.fill.solid(); coast.fill.fore_color.rgb = LIGHT_TINT
-    coast.line.color.rgb = LIGHT; coast.line.width = Pt(1.0)
-
-    text_box(s, 0.8, 4.4, 3.5, 0.35, "AFTER · 22 мая 11:00 UTC (+8h)",
-             size=12, italic=True, color=LIGHT, bold=True)
-    filled_rect(s, 0.8, 4.8, 7.1, 1.7, SOFT_GREY)
-    # Same wave
-    coast2 = s.shapes.add_shape(MSO_SHAPE.WAVE, Inches(0.85), Inches(5.6),
-                                Inches(6.9), Inches(0.5))
-    coast2.fill.solid(); coast2.fill.fore_color.rgb = LIGHT_TINT
-    coast2.line.color.rgb = LIGHT; coast2.line.width = Pt(1.0)
-    # New buildings — annotated rectangles
-    bb1 = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(2.5), Inches(5.0),
-                             Inches(0.7), Inches(0.5))
-    bb1.fill.background()
-    bb1.line.color.rgb = GOLD; bb1.line.width = Pt(2.5)
-    bb2 = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4.5), Inches(5.05),
-                             Inches(0.5), Inches(0.4))
-    bb2.fill.background()
-    bb2.line.color.rgb = GOLD; bb2.line.width = Pt(2.5)
-    text_box(s, 2.5, 5.55, 1.5, 0.25, "new structure", size=9,
-             italic=True, color=GOLD, bold=True)
+    # Left: real satellite imagery (Sentinel-2 from Wikimedia Commons)
+    ocean_box(s, 0.6, 2.0, 7.5, 4.6)
+    photo_p = ASSETS / "photos" / "p01-sat-imagery.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.8, 2.2, w=7.1, h=4.0)
+        # Annotated overlay: gold rectangle highlighting "change region"
+        bb1 = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(2.8), Inches(3.7),
+                                 Inches(1.5), Inches(0.9))
+        bb1.fill.background()
+        bb1.line.color.rgb = GOLD; bb1.line.width = Pt(2.5)
+        text_box(s, 2.7, 4.65, 1.8, 0.25, "обнаруженное\nизменение", size=9,
+                 italic=True, color=GOLD, bold=True, line_spacing=1.1)
+        text_box(s, 0.85, 6.3, 7.0, 0.3,
+                 "Sentinel-2 (ESA, Wikimedia Commons CC-BY-SA) — иллюстрация формата спутниковых данных, на которых работает Maxar Sentry.",
+                 size=9, italic=True, color=LIGHT, line_spacing=1.2)
 
     # Right: info-card sidebar
     ocean_box(s, 8.5, 2.0, 4.3, 4.6, fill=LIGHT_TINT)
     text_box(s, 8.75, 2.2, 3.8, 0.4, "Maxar Sentry · 2025",
              size=18, bold=True, color=DEEP)
     text_box(s, 8.75, 2.7, 3.8, 0.35,
-             "Predictive intelligence suite", size=13, italic=True, color=MID)
+             "Платформа упреждающей разведки", size=13, italic=True, color=MID)
     hr_line(s, 8.75, 3.15, 3.7, color=LIGHT, weight=0.75)
 
     text_runs(s, 8.75, 3.3, 3.8, 0.7, [
@@ -292,8 +273,8 @@ def slide_01_hook(prs):
 
     text_runs(s, 8.75, 4.3, 3.8, 0.6, [
         {"text": "3 сенсора", "size": 22, "bold": True, "color": DEEP},
-        {"newpara": True, "text": "EO + SAR + AIS · cross-cueing",
-         "size": 11, "italic": True, "color": MID},
+        {"newpara": True, "text": "оптика + радар + AIS судов · перекрёстное наведение",
+         "size": 11, "italic": True, "color": MID, "line_spacing": 1.2},
     ])
 
     text_runs(s, 8.75, 5.1, 3.8, 0.8, [
@@ -502,12 +483,12 @@ def slide_04_glossary(prs):
 def slide_05_keystone(prs):
     """s05 — Keystone OODA chain"""
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Три звена цепи. AI входит в каждое — но по-разному.")
+    add_assertion_title(s, "Три звена цепи. ИИ входит в каждое — но по-разному.")
 
-    # Dual-use тонкая лента сверху над цепью
+    # Dual-use band
     filled_rect(s, 0.6, 1.65, 12.13, 0.3, SOFT_GREY)
     text_box(s, 0.6, 1.7, 12.13, 0.25,
-             "Гражданское ↔ Военное · dual-use одни модели, два контура",
+             "Гражданское ↔ Военное · одни модели, два контура применения",
              size=11, italic=True, color=DARK_GREY,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
@@ -517,19 +498,19 @@ def slide_05_keystone(prs):
 
     items = [
         ("Sense", "eye", LIGHT, [
-            ("AI работает лучше всего", DEEP),
-            ("Доступная ground truth", MID),
-            ("Терпимая FP-цена", MID),
+            ("ИИ работает лучше всего", DEEP),
+            ("Эталонная разметка доступна", MID),
+            ("Терпимая цена ложной тревоги", MID),
         ]),
         ("Decide", "brain", MID, [
-            ("AI = ускоритель аналитика — хорошо", DEEP),
-            ("AI = замена аналитика — плохо", GOLD),
-            ("LLM-хайп опаснее всего здесь", MID),
+            ("ИИ как ускоритель аналитика — хорошо", DEEP),
+            ("ИИ как замена аналитика — плохо", GOLD),
+            ("Здесь LLM-хайп опаснее всего", MID),
         ]),
         ("Act", "plane", DEEP, [
-            ("Узкие сценарии с supervised pilots", DEEP),
+            ("Узкие сценарии с пилотом-наблюдателем", DEEP),
             ("Полная автономия — маркетинг 2026", MID),
-            ("Большинство strikes — operator-in-loop", MID),
+            ("Большинство ударов — с оператором в петле", MID),
         ]),
     ]
     for i, (name, icon_name, accent, lines) in enumerate(items):
@@ -567,8 +548,8 @@ def slide_05_keystone(prs):
                       gap - 0.1, 0.4, fill=LIGHT)
 
     add_footer(s,
-        "Boyd, USAF, 1976 — изначально модель воздушного боя; "
-        "теперь универсальная decision-loop рамка")
+        "Бойд, ВВС США, 1976 — изначально модель воздушного боя; "
+        "теперь универсальная рамка цикла принятия решений.")
 
     add_speaker_notes(s,
         "Любая аэрокосмическая или оборонная задача — будь то перехват ракеты, "
@@ -629,7 +610,7 @@ def slide_06_section1_divider(prs):
 def slide_07_sense_intro(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Sense — самое благополучное звено OODA: ground truth, FP-цена, fusion")
+        "Sense — самое благополучное звено OODA: эталон есть, цена FP мала, слияние работает")
 
     # Left — 4 sensor types в 2×2 grid
     text_box(s, 0.6, 1.6, 7.4, 0.5, "Четыре типа сигнала",
@@ -658,12 +639,12 @@ def slide_07_sense_intro(prs):
     text_box(s, 8.5, 1.6, 4.3, 0.5, "Почему здесь AI работает",
              size=18, bold=True, color=MID)
     reasons = [
-        ("1", "Доступная ground truth",
-         "Снимки верифицируются полевым выездом и историей"),
-        ("2", "Терпимая FP-цена",
-         "Лишний alert — время аналитика, не жизнь"),
-        ("3", "Множество сенсоров → fusion",
-         "Снижает индивидуальную хрупкость моделей", GOLD),
+        ("1", "Доступная эталонная разметка",
+         "Снимки проверяются полевым выездом и историей."),
+        ("2", "Терпимая цена ложной тревоги",
+         "Лишний сигнал — время аналитика, не жизнь."),
+        ("3", "Слияние нескольких сенсоров",
+         "Снижает индивидуальную хрупкость моделей.", GOLD),
     ]
     rc_h = 1.4; rc_gap = 0.15
     for i, item in enumerate(reasons):
@@ -710,33 +691,25 @@ def slide_07_sense_intro(prs):
 def slide_08_maxar_sentry(prs):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Maxar Sentry — predictive intelligence в часах, не днях", size=26)
+        "Maxar Sentry — упреждающая разведка в часах, не днях", size=26)
 
-    # Left — BEFORE/AFTER stylized
+    # Left — real satellite imagery
     ocean_box(s, 0.6, 1.8, 7.5, 4.8)
-    text_box(s, 0.85, 1.95, 7.0, 0.4, "BEFORE/AFTER · change detection",
+    text_box(s, 0.85, 1.95, 7.0, 0.4, "Спутниковая съёмка + обнаружение изменений",
              size=13, italic=True, color=MID, bold=True)
-    filled_rect(s, 0.85, 2.5, 7.0, 1.85, SOFT_GREY)
-    # Buildings before — none. Single rectangle outline at empty land
-    text_box(s, 0.85, 4.4, 7.0, 0.3, "+ 8 часов после съёмки →",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    filled_rect(s, 0.85, 4.8, 7.0, 1.55, SOFT_GREY)
-    # Buildings after — gold annotated boxes
-    for bx, by, bw, bh in [(2.0, 5.0, 0.5, 0.4), (3.0, 5.2, 0.6, 0.4),
-                            (4.5, 5.1, 0.4, 0.45)]:
-        bb = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(bx), Inches(by),
-                                Inches(bw), Inches(bh))
-        bb.fill.background()
-        bb.line.color.rgb = GOLD; bb.line.width = Pt(2.0)
-    text_box(s, 2.0, 5.55, 2.0, 0.25, "new structures (3)",
-             size=10, italic=True, color=GOLD, bold=True)
+    photo_p = ASSETS / "photos" / "p01-sat-imagery.jpg"
+    if photo_p.exists():
+        add_image(s, photo_p, 0.85, 2.5, w=7.0, h=3.6)
+        text_box(s, 0.85, 6.15, 7.0, 0.4,
+                 "Sentinel-2 (ESA, Wikimedia Commons CC-BY-SA) — иллюстрация класса данных.",
+                 size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
     # Right — 4 info cards
     cards_data = [
         ("250 ПБ", "архив", "20+ лет данных", GOLD),
-        ("NGA Luno A D01", "главный контракт", "AI-derived detections", MID),
-        ("3 сенсора", "fusion", "EO + SAR + AIS", LIGHT),
-        ("Часы", "после съёмки", "не дни", GOLD),
+        ("NGA Luno A D01", "главный контракт", "Детекции от ИИ", MID),
+        ("3 сенсора", "слияние", "оптика + радар + AIS судов", LIGHT),
+        ("Часы", "после съёмки", "не дни, не недели", GOLD),
     ]
     cc_w = 4.3; cc_h = 1.15; cy = 1.8
     for big, lbl, sub, color in cards_data:
@@ -746,13 +719,12 @@ def slide_08_maxar_sentry(prs):
         text_box(s, 8.7, cy + 0.6, 2.5, 0.3, lbl,
                  size=12, color=DEEP, italic=True)
         text_box(s, 10.9, cy + 0.3, 1.7, 0.6, sub,
-                 size=11, color=MID, italic=True, align=PP_ALIGN.RIGHT)
+                 size=10, color=MID, italic=True, align=PP_ALIGN.RIGHT, line_spacing=1.2)
         cy += cc_h + 0.1
 
     # Anti-hype caveat
     text_box(s, 0.6, 6.7, 12.13, 0.35,
-             "Anti-hype: «AI-derived» в маркетинге = оркестрация классической "
-             "CV + change detection + multi-sensor tipping, не одна foundation model",
+             "Анти-хайп: «AI-derived» в маркетинге означает оркестрацию классических CV-методов + change detection + multi-sensor tipping, а не одну foundation model.",
              size=11, italic=True, color=LIGHT)
 
     add_footer(s, "Источники: Defense One июнь 2025 · BusinessWire 20250625")

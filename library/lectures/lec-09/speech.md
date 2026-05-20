@@ -3,7 +3,7 @@ lecture: 9
 title: "Лекция 9. Речь лектора. AI в авиакосмической отрасли и оборонном комплексе"
 length_words: ~6600
 length_min: 75
-status: reviewed
+status: finalized
 version: v2
 issue: 118
 branch: issue-118-lec-09-aerospace-defense

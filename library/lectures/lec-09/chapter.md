@@ -1,15 +1,15 @@
 ---
 lecture: 9
 title: "Лекция 9. AI в авиакосмической отрасли и оборонном комплексе"
-length_words: ~14800
-status: draft
-version: v1
+length_words: ~15300
+status: reviewed
+version: v2
 issue: 118
 branch: issue-118-lec-09-aerospace-defense
 audience: "студенты-инженеры 3 курса ИУ6 МГТУ Бауман — будущие сотрудники КБ, РКК/ОКБ, оборонной индустрии, dual-use стартапов"
 date: 2026-05-20
 learning_outcomes: [LO1a, LO1b, LO2, LO3, LO7]
-references_count: 100
+references_count: 105
 keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976) + dual-use bridge + L1-L5 autonomy ladder"
 ---
 
@@ -88,9 +88,9 @@ keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976) + dual-use bridge 
 
 > **Где в цепи Sense → Decide → Act аэрокосмической или оборонной задачи AI действительно даёт измеримое преимущество — и в каком месте этой же цепи он становится либо опасной автоматизацией, либо предметом международного договора, который инженер не должен переступать?**
 
-Вопрос намеренно сформулирован в двух частях. Первая часть — позитивная: AI в этой отрасли уже не лаборатория. Спутниковая аналитика выдаёт детекции в часах после съёмки (Maxar, 2025); predictive maintenance Airbus Skywise охватывает около 11 600 воздушных судов к концу 2024 года (Airbus, 2024); CCA-беспилотник Fury YFQ-44A совершил первый полёт 31 октября 2025 года, и серийное производство стартовало в марте 2026 года (Air & Space Forces, 2026). Это работает.
+Вопрос намеренно сформулирован в двух частях. Первая часть — позитивная: AI в этой отрасли уже не лаборатория. Спутниковая аналитика выдаёт детекции в часах после съёмки (Maxar, 2025); predictive maintenance Airbus Skywise охватывает около 11 600 воздушных судов к концу 2024 года (Airbus, 2024); CCA-беспилотник (Collaborative Combat Aircraft, беспилотный wingman) Fury YFQ-44A совершил первый полёт 31 октября 2025 года, и серийное производство стартовало в марте 2026 года (Air & Space Forces, 2026). Это работает.
 
-Вторая часть — нормативная и инженерная одновременно. В Газе 2023–2024 годов система Lavender пометила около 37 000 человек как «подозреваемых членов Хамас или PIJ» со «90% accuracy» по самопризнанию ЦАХАЛ; при этом среднее время проверки одной цели офицером составляло около 20 секунд, а разрешённый «сопутствующий ущерб» доходил до 15–20 гражданских жертв на одного оперативника низшего звена (Abraham, 2024). Если умножить 37 000 на 10% — это около 3 700 человек, помеченных по ошибке. Метрика «accuracy» оказалась не той метрикой, под которую система проектировалась. И параллельно с этим — третий год подряд Генеральная Ассамблея ООН голосует за переговоры о договоре, ограничивающем летальные автономные системы (UNGA, ноябрь 2025: 156 за, 5 против, 8 воздержавшихся). Это, технически говоря, чёрная зона лестницы автономии, и инженер, проектирующий систему рядом с этой границей, обязан знать, где именно она проходит.
+Вторая часть — нормативная и инженерная одновременно. В Газе 2023–2024 годов система Lavender пометила около 37 000 человек как «подозреваемых членов Хамас или PIJ (Palestinian Islamic Jihad)» со «90% accuracy» по самопризнанию ЦАХАЛ; при этом среднее время проверки одной цели офицером составляло около 20 секунд, а разрешённый «сопутствующий ущерб» доходил до 15–20 гражданских жертв на одного оперативника низшего звена (Abraham, 2024). Если умножить 37 000 на 10% — это около 3 700 человек, помеченных по ошибке. Метрика «accuracy» оказалась не той метрикой, под которую система проектировалась. И параллельно с этим — третий год подряд Генеральная Ассамблея ООН голосует за переговоры о договоре, ограничивающем летальные автономные системы (UNGA, ноябрь 2025: 164 за, 6 против, 7 воздержавшихся по UN official press; 156/5/8 по Stop Killer Robots — расхождение связано с разными счётами First Committee и plenary). Это, технически говоря, чёрная зона лестницы автономии, и инженер, проектирующий систему рядом с этой границей, обязан знать, где именно она проходит.
 
 Эти две части — где AI делает работу лучше человека и где он не должен её делать — образуют главную ось этой главы.
 
@@ -102,7 +102,7 @@ keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976) + dual-use bridge 
 
 В отличие от медицины, аэрокосмическая отрасль имеет ещё одну особенность. В медицине регулятор (FDA, EU AI Act, Росздравнадзор) — это единый рамочный игрок, и инженер встраивается в его требования. В аэрокосмосе и обороне инженер одновременно встроен в три рамки. Первая — гражданская сертификация (DO-178C для авиационного ПО, ARP4754A для разработки систем); вторая — оборонная политика отдельной страны (DoD Directive 3000.09 в США, национальные политики в РФ и ЕС); третья — международное право: UN GGE on LAWS, ICRC, дополнительные протоколы Женевских конвенций. Эти три рамки иногда совпадают, иногда конкурируют, и навык находить свой путь между ними — отдельная инженерная компетенция, которую мы будем тренировать в этой главе.
 
-К 2026 году аэрокосмический и оборонный AI обладает тремя характеристиками, важными для понимания. Во-первых, **это уже инфраструктура, а не футурология**: контракт Anduril Lattice с армией США имеет потолок до 20 миллиардов долларов на 10 лет (Army Recognition, март 2026); Palantir Maven Smart System — потолок около 1,3 миллиарда долларов до 2029 года (DefenseScoop, 2025). Во-вторых, **это поле с самой высокой плотностью документированных провалов из всех индустрий, которые мы изучали**: от Boeing 737 MAX MCAS (2018–2019, 346 погибших) и Lancet ATR rollback до IDF Lavender и DoD Replicator. В-третьих, **это единственное поле, в котором уже идут официальные переговоры о международном договоре**, прямо ограничивающем класс AI-систем — летальные автономные.
+К 2026 году аэрокосмический и оборонный AI обладает тремя характеристиками, важными для понимания. Во-первых, **это уже инфраструктура, а не футурология**: контракт Anduril Lattice с армией США имеет потолок до 20 миллиардов долларов на 10 лет (Army Recognition, март 2026); Palantir Maven Smart System — потолок около 1,3 миллиарда долларов до 2029 года (DefenseScoop, 2025). Во-вторых, **это поле с самой высокой плотностью документированных провалов из всех индустрий, которые мы изучали**: от Boeing 737 MAX MCAS (2018–2019, 346 погибших) и Lancet ATR rollback до IDF Lavender и DoD (Department of Defense) Replicator. В-третьих, **это единственное поле, в котором уже идут официальные переговоры о международном договоре**, прямо ограничивающем класс AI-систем — летальные автономные.
 
 Тон главы — **trust-but-verify**: не евангелизм, не диссидентство. Мы разбираем, что именно работает, где именно ломается и где именно проходит граница, которую инженер не пересекает по решению вендора, а только по решению государства и международного сообщества. После каждого раздела даны вопросы для самопроверки. Все аббревиатуры расшифровываются при первом появлении; центральные шесть (SAR, ATR, ISR, EW, LAWS, OODA) собраны в §0.3 — туда можно возвращаться при чтении.
 
@@ -183,11 +183,11 @@ AI в Sense — это в основном **компьютерное зрени
 
 К 2026 году в коммерческой спутниковой аналитике сложилась устойчивая четвёрка игроков с похожими бизнес-моделями: запуск собственных спутников высокого разрешения + ML-надстройка над архивом снимков + продажа сервиса разведывательным агентствам и коммерческим клиентам.
 
-**Maxar Sentry** запущен 25 июня 2025 года как «predictive intelligence suite»; компания продаёт его как способность видеть кризисы до того, как они развернутся. Под капотом — ML-модели над архивом 250 петабайт снимков плюс multi-sensor tipping (EO + SAR + AIS). Главный контракт — NGA Luno A D01, в рамках которого Maxar обязан выдавать AI-генерируемые детекции самолётов, кораблей и техники в часах после съёмки (Defense One, 2025; BusinessWire, 2025).
+**Maxar Sentry** запущен 25 июня 2025 года как «predictive intelligence suite»; компания продаёт его как способность видеть кризисы до того, как они развернутся. Под капотом — ML-модели над архивом 250 петабайт снимков плюс multi-sensor tipping (EO + SAR + AIS). Главный контракт — NGA (National Geospatial-Intelligence Agency) Luno A D01, в рамках которого Maxar обязан выдавать AI-генерируемые детекции самолётов, кораблей и техники в часах после съёмки (Defense One, 2025; BusinessWire, 2025).
 
 **BlackSky Gen-3 + Spectra AI** — другой подход к тому же рынку: констелляция малых спутников с высокой частотой revisit (буквально несколько раз в сутки на каждую точку) + CNN-классификация и change detection. Выручка 2024 года — 102,1 миллиона долларов (BlackSky Q4 2024 8-K). Контракт на международную подписку Gen-2+Gen-3 — более 100 миллионов на семь лет `[VFY-day-of]`.
 
-**Planet Labs** — самая массовая сеть (сотни малых спутников Dove) с ежедневным глобальным покрытием. ML-модели в основном на CNN-архитектурах для object detection и change detection. Главный контракт — NRO **EOCL** (Electro-Optical Commercial Layer), первый этап на $146 миллионов плюс последующие транши `[VFY-day-of]` (Planet Labs IR, 2024).
+**Planet Labs** — самая массовая сеть (сотни малых спутников Dove) с ежедневным глобальным покрытием. ML-модели в основном на CNN-архитектурах для object detection и change detection. Главный контракт — NRO (National Reconnaissance Office) **EOCL** (Electro-Optical Commercial Layer), первый этап на $146 миллионов плюс последующие транши `[VFY-day-of]` (Planet Labs IR, 2024).
 
 **Capella Space** и **ICEYE** — это уже SAR-операторы. Их преимущество — всепогодная съёмка, способность видеть сквозь облака и ночью. Главное применение — морское наблюдение (отслеживание «теневого флота», нелегальной рыбалки), мониторинг военной инфраструктуры. Capella сотрудничает с NGA, ICEYE — финский оператор с активными контрактами в Украине и НАТО.
 
@@ -195,15 +195,15 @@ AI в Sense — это в основном **компьютерное зрени
 
 ### 1.3. SAR и edge-AI на орбите: Slingshot, Φ-sat-2, Pony Express
 
-Параллельно с большой коммерческой аналитикой в Sense развивается отдельная линия — **edge AI on-orbit**, то есть ML-вычисления прямо на спутнике, без передачи сырого сигнала на землю. Цель — снизить латентность и ширину канала: вместо мегабайтов сырого изображения передаётся килобайт сводки «вот тут изменение».
+Параллельно с большой коммерческой аналитикой в Sense развивается отдельная линия — **edge AI on-orbit**, то есть ML-вычисления прямо на спутнике, без передачи сырого сигнала на землю. Цель — снизить латентность и ширину канала: вместо мегабайтов сырого изображения передаётся килобайт сводки «вот тут изменение». Программы 2024–2026 года естественно группируются по типу миссии в четыре категории.
 
-**ESA Φ-sat-2** (август 2024) — европейский demonstration satellite с remote-upgradable ML-моделями. Это значит, что после запуска модель можно дообучить и заменить новым весом по телекоммандам, без замены оборудования (ESA, 2024).
+**Демонстраторы.** **ESA Φ-sat-2** (август 2024) — европейский demonstration satellite с remote-upgradable ML-моделями. После запуска модель можно дообучить и заменить новым весом по телекоммандам, без замены оборудования (ESA, 2024). **AI-eXpress 1+** (Planetek Italia, ноябрь 2025) — серия европейских edge-computing спутников на Jetson Orin NX, выводящих ML-инференс на орбитальный уровень (Planetek, 2025). Это лаборатории на орбите: цель — отработать, что вообще можно делать ML-моделью прямо на спутнике.
 
-**Lockheed Pony Express 2 + T-TAURI** — американский военный аналог: onboard ML для обнаружения аномалий в телеметрии. Это уже не demo, это production-инфраструктура (Lockheed, 2025).
+**Production telemetry.** **Lockheed Pony Express 2 + T-TAURI** — американский военный production-аналог: onboard ML для обнаружения аномалий в телеметрии. Это уже не demo, это инфраструктура для разведывательных программ США (Lockheed, 2025). Здесь edge-ML работает не как эксперимент, а как штатный сервис.
 
-**Slingshot Aerospace Agatha + TALOS** — отдельный класс задач: **SDA** (Space Domain Awareness, обзор космической обстановки). 204 сенсора в 21 локации на 5 континентах + ML-«отпечатки» спутников по photometric pattern. Это не ISR в смысле наблюдения за землёй, это наблюдение за самим космосом — отслеживание спутников, обломков, потенциально враждебных rendezvous. TALOS запущен в июле 2025 как AI-агент для «mission-ready space operations» (Slingshot, 2025).
+**SDA tracking.** **Slingshot Aerospace Agatha + TALOS** — отдельный класс задач: **SDA** (Space Domain Awareness, обзор космической обстановки). 204 сенсора в 21 локации на 5 континентах + ML-«отпечатки» спутников по photometric pattern. Это не ISR в смысле наблюдения за землёй, это наблюдение за самим космосом — отслеживание спутников, обломков, потенциально враждебных rendezvous. TALOS запущен в июле 2025 как AI-агент для «mission-ready space operations» (Slingshot, 2025). Параллельно американский **SDA Tranche 3** разворачивает constellation для отслеживания тех же объектов с государственной стороны.
 
-**AI-eXpress 1+** (Planetek Italia, ноябрь 2025) — серия европейских edge-computing спутников на Jetson Orin NX, выводящих ML-инференс на орбитальный уровень (Planetek, 2025).
+**Commercial archive (Россия).** **TerraTech / Роскосмос** — гражданская коммерческая edge-аналитика: ML-обработка снимков для аграрного и инфраструктурного мониторинга, частично с onboard-классификацией (см. §1.5). Это не SDA и не demo: это коммерческая аналитика на orbital tier с прикладной фокусировкой.
 
 Adoption направление по Sense — растёт быстро. Сценарий 2026–2028: от «AI-derived detection in hours» к «predictive intelligence before event». Volatile контракты — потолки NRO EOCL, BlackSky подписка, расписание SDA Tranche 3 — на сегодня в репозитории помечены `[VFY-day-of]`; они могут смениться к моменту лекции.
 
@@ -234,9 +234,9 @@ Adoption направление по Sense — растёт быстро. Сце
 Помимо успехов есть и педагогически важный провал. **F-35 ALIS** — система предиктивного обслуживания истребителя F-35, развёрнутая Lockheed Martin для тысяч единиц самолёта по всему миру. К концу 2010-х годов ALIS превратился в источник постоянных проблем:
 
 - **Высокая ложноположительная активность.** ALIS помечал самолёт как «no-fly» в случаях, когда никакой реальной проблемы не было; экипаж тратил время на ручные инспекции, чтобы убедиться, что самолёт исправен.
-- **Неточные и неполные данные.** GAO в отчёте 2020 года прямо сообщал: «Inaccurate and missing data have at times resulted in the system signalling that an F-35 should not be flown — even though aircraft had no issues» (GAO-20-316, 2020).
+- **Неточные и неполные данные.** GAO (US Government Accountability Office) в отчёте 2020 года прямо сообщал: «Inaccurate and missing data have at times resulted in the system signalling that an F-35 should not be flown — even though aircraft had no issues» (GAO-20-316, 2020).
 - **Adversarial UX.** Пользоваться ALIS было настолько сложно, что персонал систематически обходил систему, делая параллельный учёт в Excel и других инструментах.
-- **Cost-per-flight-hour.** К пику проблем стоимость лётного часа F-35 составляла около $44 000 — выше, чем у F-22 Raptor, более сложного и старого самолёта (GAO-22-105943, 2022).
+- **Cost-per-flight-hour.** К пику проблем стоимость лётного часа F-35 составляла **$42 000-44 000 в разных GAO reports** (GAO-22-105128, 2022) — выше, чем у F-22 Raptor, более сложного и старого самолёта.
 
 Финальная версия ALIS была выпущена в июне 2024 года, после чего начался поэтапный переход на новую систему **ODIN** (Operational Data Integrated Network). ODIN — government-owned, меньший по охвату, с явно отделённой логикой flight-clearance authority (то есть решение «можно ли летать» отделено от predictive analytics), с поддержкой disconnected mode (Air & Space Forces, 2024; Defense Daily, 2024).
 
@@ -272,7 +272,9 @@ ALIS нарушил все три условия. ODIN строится в яв�
 
 ### 1.8. Когда не AI для Sense: два критерия
 
-Из разобранных провалов извлекаем два критерия для звена Sense:
+Из разобранных провалов извлекаем два критерия для звена Sense. Это первые два из общей нумерации матрицы §5.1 — там собраны все семь критериев главы.
+
+**Критерии «когда не AI для Sense» (общая нумерация для матрицы §5.1):**
 
 **Критерий 1 (распределение).** *Низкая плотность данных или неминуемый distribution shift.* Если домен редкий (новый класс цели, экзотическая среда) или входное распределение меняется в полёте (война создаёт новые маскировки, новые погодные условия, новые типы техники), ML-классификатор не успеет выучить. Классическая обработка сигналов + multi-sensor fusion стоит дешевле и даёт больше предсказуемости. Это не «AI плохой», это «AI здесь не подходит».
 
@@ -300,15 +302,25 @@ Sense — самое благополучное звено OODA для AI. До�
 
 В отличие от Sense, где ML опирается на обучаемые сенсорные features, в Decide LLM и foundation models обрабатывают **смешанный input**: текстовые отчёты, изображения, тактические карты, бортовые телеметрии. Это территория **multi-modal foundation models**, и именно сюда заходят все главные US labs (Anthropic, OpenAI), все Chinese labs (DeepSeek, Qwen в military context) и все классические defense-vendors (Palantir, Scale, Helsing).
 
+**Adoption направление по Decide.** Растёт по числу контрактов и охвата (Palantir MSS $1,3 миллиарда потолка, Scale Donovan на 3 классифицированных сетях, Anthropic IL6); **но LLM hype outpaces verifiable ground truth**. **Анти-hype:** «accuracy 90%» ≠ «90% правильных решений» — cost-asymmetry FP↔FN в Decide звене катастрофическая (см. Lavender §2.4). **Инфраструктура (FedRAMP HIGH, IL4/IL6, SC2S/SIPR/JWICS — три уровня secrecy compartmentation) — отделена от AI capability**: это authorization-стек, а не модель. Вендор может пройти IL6 и при этом иметь слабую модель; модель может быть мощной и при этом не получить авторизацию. Эти две оси оценивают отдельно.
+
 ### 2.2. Пять рабочих кейсов
 
 В этой подсекции мы рассмотрим пять конкретных продакшен-кейсов decision-support в 2026 году. Шестой возможный кейс (Anthropic-Palantir-AWS partnership) разбирается в §4.5 в более широком нарративе «возвращения big-tech в оборону».
 
 **1. Palantir Maven Smart System (MSS).** Главный американский decision-support флагман. История начинается с **Project Maven** в 2017 году — программа DoD по анализу drone footage с помощью ML. В марте 2018 года Google leaked, что компания участвует в Maven, к июню 2018 контракт не был продлён под давлением сотрудников (см. §4.4). Программа была подхвачена Anduril, Palantir и Scale. **MSS** — это UI-orchestration layer Palantir над Maven AI. Контракты: первый IDIQ $480 млн в мае 2024 года, дополнение $99,8 млн в сентябре 2024 года на расширение на все рода войск, увеличение потолка на $795 млн в мае 2025 года — суммарный потолок **около $1,3 миллиарда до 2029 года** `[VFY-day-of]` (DefenseScoop, 2024–2025; GovConWire, 2024). Capability: fusion мульти-источниковой разведки, AI-assisted target nomination, дашборды для командиров. Уровень автономии (см. §4.1) — **L1 (Assistive)**: AI выдаёт детекции и сводки, командир решает.
 
-**2. Scale AI Donovan + Defense Llama.** В 2023 году Scale Donovan стал первой LLM, развёрнутой в американской classified network (XVIII Airborne Corps, US Army) — обработка 100 000+ страниц orders, SitReps, intelligence reports. В ноябре 2024 года Scale выпустил **Defense Llama** — fine-tuned версию Meta Llama 3 для national security use cases: operations planning, анализ vulnerabilities противника. Авторизация — **FedRAMP HIGH** (federal cloud security framework), деплой на **SC2S, SIPR, DISA IL4, JWICS** (три уровня classified networks с разными грифами секретности) (BusinessWire, 2023; DefenseScoop, 2024). В марте 2025 года Scale выиграл многомиллионный контракт **Thunderforge** — AI-планировщик движения войск, кораблей и самолётов.
+**2. Scale AI Donovan + Defense Llama + Thunderforge.** Три продукта в одной линии — это не параллельные tracks, а эволюция: Donovan (decision-support core) → Defense Llama (fine-tuned LLM на defense corpus) → Thunderforge (wargaming + COA generation на базе предыдущих двух).
 
-**3. Helsing Altra (Европа).** Главный европейский игрок в этом сегменте. Altra — система fusion ISR-дронов + наблюдателей-spotters для land combat: high-precision картина боевого пространства + targeting для непрямого огня (артиллерия, минометы). Параллельно Helsing развивает **Centaur** — AI-пилот; в июне 2025 года успешно прошли испытания на Saab Gripen E. Финансы: €600 млн раунд D (июнь 2025) → оценка **€12 миллиардов**, общий капитал €1,37 млрд. Главный инвестор — Prima Materia под управлением Daniela Ek (Spotify). Helsing приобрёл Grob Aircraft (немецкий производитель лёгких самолётов) для собственного производства (Helsing, 2025; CNBC, 2025).
+| Продукт | Запуск | Клиент | Capability |
+|---|---|---|---|
+| **Donovan** | 2022–2023 | DoD command/control (XVIII Airborne Corps) | Decision-support LLM на classified networks; 100 000+ страниц orders/SitReps/intel |
+| **Defense Llama** | ноябрь 2024 | Scale + Meta + DoD | Fine-tuned Llama 3 на defense corpus; operations planning, vulnerabilities analysis |
+| **Thunderforge** | март 2025 | CENTCOM, INDOPACOM | Wargaming + COA (course-of-action) generation для движения войск, кораблей, самолётов |
+
+Авторизация Scale-стека — **FedRAMP HIGH** (federal cloud security framework), деплой на **SC2S, SIPR, DISA IL4, JWICS** (три уровня classified networks с разными грифами секретности) (BusinessWire, 2023; DefenseScoop, 2024).
+
+**3. Helsing Altra (Европа).** Главный европейский игрок в этом сегменте. Altra — система fusion ISR-дронов + наблюдателей-spotters для land combat: high-precision картина боевого пространства + targeting для непрямого огня (артиллерия, минометы). Параллельно Helsing развивает **Centaur** — AI-пилот; в июне 2025 года успешно прошли испытания на Saab Gripen E. Финансы: €600 млн раунд D (июнь 2025) → оценка **€12 миллиардов**, общий капитал €1,37 млрд. Главный инвестор — Prima Materia под управлением **Daniel Ek** (Spotify co-founder). Helsing приобрёл Grob Aircraft (немецкий производитель лёгких самолётов) для собственного производства (Helsing, 2025; CNBC, 2025).
 
 **4. Anthropic-Palantir-AWS partnership (ноябрь 2024).** Хронологически — это один из ключевых сдвигов поздних 2024-х: Anthropic вывел свои модели Claude 3 и Claude 3.5 на **IL6** (Impact Level 6) — высший US gov-cloud уровень секретности, через Palantir и AWS GovCloud. Use cases: complex data processing, pattern identification, time-sensitive decisions (BusinessWire, ноябрь 2024). Этот partnership — точка инфлексии в industry posture, см. §4.5.
 
@@ -321,18 +333,16 @@ Sense — самое благополучное звено OODA для AI. До�
 
 ### 2.3. И что ещё на этой полке: краткий список
 
-Помимо пяти разобранных кейсов на decision-support полке 2026 года есть ещё около десятка значимых названий. Краткое перечисление, без разбора деталей (для тех, кто потом будет искать вакансию):
+Помимо пяти разобранных кейсов на decision-support полке 2026 года есть ещё около десятка значимых названий. Краткое перечисление — для тех, кто потом будет искать вакансию:
 
-- **Helsing Centaur** — AI-пилот в воздушных платформах (отдельно от Altra).
-- **NASA FDL FOXES** — ML-модель, предсказывающая силу и положение солнечных вспышек по EUV-снимкам Solar Dynamics Observatory.
-- **Scale Thunderforge** — AI-планировщик движения сил (упомянут в кейсе 2 как продолжение Defense Llama).
-- **DAGGER++ / SHEATH-DAGGER** — NASA FDL модели прогноза геомагнитных штормов.
-- **ZOV Maps** — российская геопространственная платформа (упомянута как часть Glaz-Groza-ZOV).
-- **Cohere classified deployments** — Cohere LLM в US classified networks (Aug 2024).
-- **Microsoft Azure Government + OpenAI** — после удаления Microsoft своего military ban в январе 2024 (см. §4.5).
-- **Lockheed AI Center (LAIC) + AI Factory** — MLOps backbone Lockheed для enterprise-scale AI.
-- **US Army CGSC AI-wargaming** — GPT-4 Turbo / GPT-4 Vision в Command and General Staff College для анализа местности и состава сил (SWJ, 2026).
-- **Air Force ShOC-N** (Shadow Operations Center-Nellis) — capstone events 2024–2025 с AI для dynamic targeting.
+- **Helsing Centaur** — AI-пилот для воздушных платформ.
+- **NASA FDL FOXES** — прогноз солнечных вспышек по EUV-снимкам.
+- **DAGGER++ / SHEATH-DAGGER** — NASA FDL прогноз геомагнитных штормов.
+- **Cohere classified deployments** — Cohere LLM в US gov networks, Aug 2024.
+- **Microsoft Azure Government + OpenAI** — после Jan 2024 (см. §4.5).
+- **Lockheed AI Center (LAIC) + AI Factory** — MLOps backbone enterprise AI.
+- **US Army CGSC AI-wargaming** — GPT-4 для анализа местности (SWJ, 2026).
+- **Air Force ShOC-N** — Shadow Operations Center-Nellis, dynamic targeting 2024–2025.
 
 Студент видит, что список длинный, но детали каждого — это уже отраслевой narrow knowledge, который имеет смысл копать только при конкретном карьерном выборе.
 
@@ -382,7 +392,9 @@ Sense — самое благополучное звено OODA для AI. До�
 
 ### 2.7. Когда не AI для Decide: два критерия
 
-Из разобранных провалов извлекаем два критерия для звена Decide:
+Из разобранных провалов извлекаем два критерия для звена Decide — Критерии 3-4 общей нумерации матрицы §5.1.
+
+**Критерии «когда не AI для Decide» (Критерии 3-4):**
 
 **Критерий 3 (long-tail).** *Long-tail edge cases с низкой ML confidence.* Если задача — это decision в области, где модель часто встречается с примерами вне обучающего распределения, automation bias масштабирует ошибки. Нужен structured abstention: «AI говорит "не знаю" и эскалирует человеку», а не «AI выдаёт наиболее вероятный класс». Это требует engineering: calibrated uncertainty, явный threshold для эскалации, UI который показывает неуверенность.
 
@@ -414,17 +426,17 @@ Adoption-направление по Act — растёт быстро по чи
 
 Шесть рабочих кейсов в звене Act — пять оборонных и один гражданский dual-use.
 
-**1. Anduril Fury YFQ-44A — CCA Increment 1.** Beautiful poster child современной американской ставки на автономию. **CCA** (Collaborative Combat Aircraft) — программа ВВС США по созданию беспилотных wingmen, летающих рядом с пилотируемыми истребителями. Fury YFQ-44A: высота до 50 000 футов, M 0.95, перегрузка 9g, двигатель Williams FJ44-4M на 4 000 фунтов тяги. **Первый полёт — 31 октября 2025 года.** Серийное производство стартовало 23 марта 2026 года на новом заводе Arsenal-1 в Пикуэй-Каунти, Огайо ($1 миллиард инвестиций). Управляется Shield AI Hivemind + Anduril Lattice; летает с ракетой AIM-120 AMRAAM (Advanced Medium-Range Air-to-Air Missile) (Wikipedia YFQ-44; Air & Space Forces, 2026; The Aviationist, 2026). **Уровень автономии — L3 (Supervised autonomy)**: AI executes действие в pre-authorised envelope, пилотируемый wingman сверху supervises.
+**1. Anduril Fury YFQ-44A — CCA Increment 1.** Beautiful poster child современной американской ставки на автономию. **CCA** (Collaborative Combat Aircraft) — программа ВВС США по созданию беспилотных wingmen, летающих рядом с пилотируемыми истребителями. Fury YFQ-44A: высота до 50 000 футов, M 0.95, перегрузка 9g, двигатель Williams FJ44-4M на 4 000 фунтов тяги. **Первый полёт — 31 октября 2025 года.** Серийное производство стартовало 23 марта 2026 года на новом заводе Arsenal-1 в Пикуэй-Каунти, Огайо ($1 миллиард инвестиций). Управляется **Hivemind (Shield AI autonomy stack для unmanned platforms)** + **Lattice (Anduril proprietary OS для autonomous mesh-coordination)**; летает с ракетой AIM-120 AMRAAM (Advanced Medium-Range Air-to-Air Missile) (Wikipedia YFQ-44; Air & Space Forces, 2026; The Aviationist, 2026). **Уровень автономии — L3 (Supervised autonomy)**: AI executes действие в pre-authorised envelope, пилотируемый wingman сверху supervises.
 
-**2. Shield AI V-BAT + Hivemind.** Group 3 VTOL UAS (vertical take-off / landing unmanned aircraft, средне-тяжёлый класс), эндьюренс 12+ часов, ducted-fan design, heavy-fuel engine, EW-resistant. Контракты: **$198 миллионов от USCG** (US Coast Guard, июль 2024) — крупнейший maritime ISR contractor-owned/operated UAV deployment; **Индийская армия (январь 2026)** — выбор V-BAT + Hivemind license; JSW Defence строит производство на $90 миллионов в Хайдерабаде. Финансы Shield AI — $2 миллиарда раунд 2025 → оценка между $5,6 и $12,7 миллиарда в зависимости от источника `[VFY-day-of]` (Shield AI, 2024–2026). **Уровень — L2/L3**: target lock confirmation operator (Saker Scout style) на нижнем уровне, supervised autonomy на верхнем.
+**2. Shield AI V-BAT + Hivemind.** Group 3 VTOL UAS (vertical take-off / landing unmanned aircraft, средне-тяжёлый класс), эндьюренс 12+ часов, ducted-fan design, heavy-fuel engine, EW-resistant. Контракты: **$198 миллионов от USCG** (US Coast Guard, июль 2024) — крупнейший maritime ISR contractor-owned/operated UAV deployment; **Индийская армия (январь 2026)** — выбор V-BAT + Hivemind license ($35M initial emergency procurement contract); JSW Defence строит производство на $90 миллионов в Хайдерабаде. Финансы Shield AI — $2 миллиарда раунд 2025 → оценка между $5,6 и $12,7 миллиарда в зависимости от источника `[VFY-day-of]` (Shield AI, 2024–2026). **Уровень — L2/L3**: target lock confirmation operator (Saker Scout style) на нижнем уровне, supervised autonomy на верхнем.
 
 **3. DARPA ACE X-62A VISTA.** «Первый в мире AI-vs-человек воздушный бой в реальном времени». X-62A VISTA — модифицированный F-16, на котором AI-агент управляет самолётом. Хронология: декабрь 2022 — начало испытаний; февраль 2023 — 12 полётов в Эдвардсе; сентябрь 2023 — первый AI-vs-manned F-16 dogfight (defensive → offensive → 2 000 футов nose-to-nose на 1 200 миль/час); май 2024 — секретарь USAF Кендалл лично летал в AI-управляемом X-62A. Объём изменений: 100 000+ строк flight-critical software changes; 21 испытательный полёт за год (DARPA, 2024; The Aviationist, 2024).
 
-**Anti-hype оговорка.** X-62A — это **narrow scripted scenario**: один-на-один dogfight в известной зоне, известный противник, BVR-критерии исключены, fuel management не покрыт, ROE не учитывался. «AI заменит пилотов в реальном бою» в 2026 году — это маркетинговая экстраполяция от этого узкого demo. Реальность будет ближе к **collaborative supervised CCA** (Fury) — wingman, а не replacement.
+**Anti-hype оговорка.** X-62A — это **narrow scripted scenario**: один-на-один dogfight в известной зоне, известный противник, **BVR (Beyond Visual Range)**-критерии исключены, fuel management не покрыт, **ROE (Rules of Engagement)** не учитывался. «AI заменит пилотов в реальном бою» в 2026 году — это маркетинговая экстраполяция от этого узкого demo. Реальность будет ближе к **collaborative supervised CCA** (Fury) — wingman, а не replacement.
 
 **4. Saker Scout (Украина).** Один из самых combat-tested AI-loitering munitions. Идентифицирует автономно до 64 целей; дальность около 10 км; CV-классификация для target ID; передаёт координаты под EW-подавлением. Часть **Brave1** — государственной платформы Украины, на которой к 2026 году зарегистрировано 300+ AI-разработок, 70+ AI/CV систем в активном боевом использовании. Первый полностью unmanned ground operation — декабрь 2024 (UGV + FPV-дроны, без пехоты). В 2025 году появилась AI-mother-drone, доставляющая 2 AI-FPV strike дрона за 300 км за линию фронта (Modern War Institute, 2025; CSIS, 2025; Kyiv Independent, 2025). **Уровень — L2 (Semi-auto perception)**: AI рекомендует target lock, оператор подтверждает.
 
-**5. Россия: Geran-2 evolution + Lancet (failure context из §2.5).** **Geran-2** (на основе иранского Shahed-136) производится на Алабугской ОЭЗ; к концу 2025 года — производительность более 5 000 дронов в месяц; общий объём произведённого — более 26 000 к поздней весне 2025 года, план — более 40 000 к концу 2025 года `[VFY-day-of]`. AI-evolution: анализ обломков (украинское восстановление) показывает наличие **NVIDIA Jetson** onboard, high-res камеры, тепловизионные модули, FPGA для EW-resistance. В 2026 году появился вариант с anti-radiation seeker (Autonomy Global, 2025; CSIS, 2026; Meta-Defense, 2026).
+**5. Россия: Geran-2 evolution + Lancet (failure context из §2.5).** **Geran-2** (на основе иранского Shahed-136) производится на Алабугской ОЭЗ; к концу 2025 года — производительность **около 2 700-3 000 дронов в месяц с plan-capacity 5 000+** (Ukrainian Defence Intelligence, 2025; ISW, 2025) `[VFY-day-of]`; общий объём произведённого — более 26 000 к поздней весне 2025 года, план — более 40 000 к концу 2025 года `[VFY-day-of]`. AI-evolution: анализ обломков (украинское восстановление) показывает наличие **NVIDIA Jetson** onboard, high-res камеры, тепловизионные модули, FPGA для EW-resistance. В 2026 году появился вариант с anti-radiation seeker (Autonomy Global, 2025; CSIS, 2026; Meta-Defense, 2026).
 
 **Caveat по «автономии».** Wreckage-анализ подтверждает onboard ML-компоненты. Но **реальная роль autonomous decision quality vs operator override unclear**. Большая часть strikes остаётся operator-guided плюс GPS-guided; «autonomy» в смысле «решает сама от целеуказания до удара» — overstated. См. также §2.5 Lancet — российский failure-кейс этой же категории.
 
@@ -438,7 +450,7 @@ Cognitive Pilot **не идентифицирован как defense supplier** 
 
 ### 3.3. Провал: Boeing 737 MAX MCAS — анти-паттерн safety-critical AI
 
-Первый и канонический провал Act — **Boeing 737 MAX MCAS** (Maneuvering Characteristics Augmentation System). Два крушения: Lion Air Flight 610 (29 октября 2018, погибли 189 человек) и Ethiopian Airlines Flight 302 (10 марта 2019, погибли 157 человек). Суммарно **346 погибших**, 20-месячная остановка эксплуатации модели по всему миру.
+Первый и канонический провал Act — **Boeing 737 MAX MCAS** (Maneuvering Characteristics Augmentation System). Два крушения: Lion Air Flight 610 (29 октября 2018, погибли 189 человек) и Ethiopian Airlines Flight 302 (10 марта 2019, погибли 157 человек). Суммарно **346 погибших**, **20-месячная остановка эксплуатации в США (FAA un-grounding Nov 2020); международная un-grounding продолжалась до 2022 года (EU Jan 2021, China Dec 2022)**.
 
 **Что произошло.** Boeing 737 MAX получил двигатели большего размера, чем у предыдущих 737. Это сместило аэродинамический центр и сделало самолёт склонным к задиранию носа на крутых режимах. Решение Boeing — **программное**: MCAS, система, автоматически корректирующая trim (балансировку) самолёта вниз. MCAS активировался по показаниям **одного** AoA-сенсора (Angle of Attack, угол атаки), без резервирования. Когда сенсор давал ложное показание (а это случается), MCAS повторно командовал nose-down trim, и пилот **не мог** override команду — у него не было ни тренировок, ни понимания, что система делает. Документация была минимальна.
 
@@ -462,7 +474,7 @@ Cognitive Pilot **не идентифицирован как defense supplier** 
 
 Второй провал Act — **friendly fire incidents Patriot** в двух хронологических точках.
 
-**Patriot 2003 в Iraqi Freedom.** Британский RAF Tornado GR4 (22 марта 2003, 2 экипажа KIA) и US Navy F/A-18C лейтенанта Натана Уайта (2 апреля 2003, KIA) — оба сбиты собственными Patriot batteries во время операции в Ираке. **Корневая причина.** Tornado был misclassified как иракская противорадарная ракета; **IFF** (Identification Friend or Foe, система свой-чужой) был interrogated, но **не ответил** (проблема была известна и не исправлена). Операторы воспринимали automated mode как «лучше человека» по статистике — и ослабили активный мониторинг. Это **automation bias** в чистом виде (Trenchart; SOFREP, 2003).
+**Patriot 2003 в Iraqi Freedom.** Британский RAF Tornado GR4 (22-23 марта 2003 overnight, 2 экипажа KIA) и US Navy F/A-18C лейтенанта Натана Уайта (2 апреля 2003, KIA) — оба сбиты собственными Patriot batteries во время операции в Ираке. **Корневая причина.** Tornado был misclassified как иракская противорадарная ракета; **IFF** (Identification Friend or Foe, система свой-чужой) был interrogated, но **не ответил** (проблема была известна и не исправлена). Операторы воспринимали automated mode как «лучше человека» по статистике — и ослабили активный мониторинг. Это **automation bias** в чистом виде (Trenchart; SOFREP, 2003).
 
 **Украинский F-16 Patriot 2024.** Украинский F-16 (на перехвате крылатых ракет) был сбит **дружественной** Patriot battery. Обстоятельства полностью не раскрыты (Medium / O'Donnell, 2024).
 
@@ -482,7 +494,9 @@ Cognitive Pilot **не идентифицирован как defense supplier** 
 
 ### 3.6. Когда не AI для Act: два критерия
 
-Из разобранных провалов извлекаем два критерия для звена Act:
+Из разобранных провалов извлекаем два критерия для звена Act — Критерии 5-6 общей нумерации матрицы §5.1.
+
+**Критерии «когда не AI для Act» (Критерии 5-6):**
 
 **Критерий 5 (autonomy не нужна).** *Автономия не нужна; человек медленнее, но безопаснее.* Канонический контрпример — MCAS: автоматическая корректировка триммирования была «решением» проблемы, которой могло не быть в первую очередь (если бы Boeing просто пересмотрел двигатели). Если ваша задача — auto-correct физическую проблему, **сначала** пересмотрите hardware. Software для compensation hardware shortfall — это часто индикатор более глубокой проблемы.
 
@@ -510,13 +524,15 @@ Act — звено, где hype далеко впереди реальности
 
 Ключ — на каждом уровне явно сказано, что делает AI и что делает человек. Без этого «уровень» — пустое слово.
 
-| Уровень | Что делает AI | Что делает человек | Пример 2026 |
-|---------|--------------|-------------------|-------------|
-| **L1 — Assistive** | **Выдаёт** information / detections | Решает, действовать ли | Palantir MSS analyst surface |
-| **L2 — Semi-auto perception** | **Рекомендует** action (target lock, route) | Авторизует каждое действие | Saker Scout target lock confirmation |
-| **L3 — Supervised autonomy** | **Executes** action в pre-authorised envelope | Supervises, может intervene | Anduril Fury wingman (CCA Increment 1) |
-| **L4 — Pre-authorised auto-engage** | **Engages** target по pre-set ROE | Может intervene, но не required в loop | Patriot auto mode, S-400 auto ROE |
-| **L5 — Full LAWS** | **Executes lethal action** без human authorisation | Вне loop | **Currently debated, not deployed** |
+| Уровень | Что делает AI | Что делает человек | Пример 2026 | ms-to-intervention |
+|---------|--------------|-------------------|-------------|-------------------|
+| **L1 — Assistive** | **Выдаёт** information / detections | Решает, действовать ли | Palantir MSS analyst surface | human-paced (минуты-часы) |
+| **L2 — Semi-auto perception** | **Рекомендует** action (target lock, route) | Авторизует каждое действие | Saker Scout target lock confirmation | seconds |
+| **L3 — Supervised autonomy** | **Executes** action в pre-authorised envelope | Supervises, может intervene | Anduril Fury wingman (CCA Increment 1) | 100–1000 ms |
+| **L4 — Pre-authorised auto-engage** | **Engages** target по pre-set ROE | Может intervene, но не required в loop | Patriot auto mode, S-400 auto ROE | <100 ms |
+| **L5 — Full LAWS** | **Executes lethal action** без human authorisation | Вне loop | **Currently debated, not deployed** | N/A — вне loop |
+
+См. **§4.6** для HITL/HOOL/HOTL mapping per уровень L1–L5: ms-to-intervention в правой колонке — это **формальный engineering parameter**, который определяет, в какой категории человеческого контроля живёт система.
 
 Внимание к двум границам.
 
@@ -534,7 +550,7 @@ Act — звено, где hype далеко впереди реальности
 
 - **5 ноября 2024.** Первый комитет UNGA (Генеральная Ассамблея ООН) — резолюция о LAWS: **161 за / 3 против / 13 воздержавшихся** `[VFY-day-of]`. Против — Беларусь, Северная Корея, Россия. Воздержались: Китай, Индия, Иран, Израиль, Латвия, Литва, Польша, Украина (Stop Killer Robots, 2024).
 - **2 декабря 2024.** Резолюция 79/62 на пленарном заседании UNGA: **166 / 3 / 15**.
-- **6 ноября 2025.** Первый комитет, **третья подряд резолюция: 156 / 5 / 8** `[VFY-day-of]` (Stop Killer Robots, 2025).
+- **6 ноября 2025.** Первый комитет, третья подряд резолюция: **164/6/7** (UN official press; 156/5/8 по Stop Killer Robots — расхождение связано с разными счётами First Committee и plenary) `[VFY-day-of]`. Против — Беларусь, Бурунди, КНДР, Израиль, Россия, США (UN A/80/PV; US Geneva Mission explanation of vote, 2025). Это значимый сдвиг: США в 2024 голосовали «за», в 2025 — «против».
 - **Сентябрь 2025.** UN GGE — 42 государства подписали совместное заявление; **rolling text объявлен достаточной основой для переговоров о договоре**.
 - **Цель Генсека ООН — договор к 2026 году** `[VFY-day-of]` (HRW, 2024–2026).
 
@@ -550,12 +566,12 @@ Act — звено, где hype далеко впереди реальности
 
 Помимо государств, важны два игрока non-state. **ICRC** (International Committee of the Red Cross) — главный международный авторитет по применению международного гуманитарного права (МГП) в вооружённых конфликтах. **Stop Killer Robots** — коалиция 270 НКО из 70 стран, главный non-state драйвер переговоров о LAWS.
 
-**Позиция ICRC** (position paper 2024).
+**Позиция ICRC** (position paper 2021; Vienna Conference statement 2024; updated position 2025).
 
 - **Prohibit** (полный запрет): (а) непредсказуемые автономные системы оружия; (б) AWS, спроектированные или используемые для применения силы **против людей**.
 - **Restrict** (ограничения): все остальные категории AWS.
 - **Ethical core:** «Ceding life-and-death decisions to machine sensors and software is a dehumanizing process».
-- **Procedural core:** «It is not the weapon system that must comply with IHL, but the humans using it» (ICRC, 2024).
+- **Procedural core:** «It is not the weapon system that must comply with IHL (International Humanitarian Law), but the humans using it» (ICRC, 2021 — повторено в 2024 Vienna statement).
 
 Эти две формулировки — этическое ядро и процедурное ядро — стоят в центре всех современных переговоров. Первая говорит **что**, вторая — **кто**. И в обеих центральный субъект — человек, а не машина.
 
@@ -601,7 +617,7 @@ Act — звено, где hype далеко впереди реальности
 
 ### 4.6. HITL / HOOL / HOTL: инженерная триада
 
-Самая важная mental model этого раздела — триада уровней человеческого контроля над AI-циклом.
+Самая важная mental model этого раздела — триада уровней человеческого контроля над AI-циклом. Эта секция — **продолжение §4.1 L1-L5 ladder**: те же уровни автономии, но взгляд с противоположной стороны (что делает не AI, а человек). Колонка «ms-to-intervention» из таблицы §4.1 здесь становится **формальной осью категоризации**.
 
 - **HITL — Human-In-The-Loop.** Человек в **каждой** decision-point. AI **не действует** без явной human authorisation. Mapping на L1–L5: **L1, L2**. Примеры: Palantir MSS analyst, Saker Scout operator confirmation.
 - **HOOL — Human-On-The-Loop.** Человек **supervises** AI-цикл, может intervene в любой момент, но **не required** в каждом decision-point. Mapping: **L3, L4**. Примеры: Fury CCA wingman (пилот oversees), Patriot auto ROE (оператор monitors).
@@ -624,17 +640,19 @@ Act — звено, где hype далеко впереди реальности
 
 ### 4.7. Позиция России и инженер внутри этих рамок
 
-Геополитический контекст для российского студента-инженера: **Россия — одна из трёх стран, голосующих систематически против резолюций UN LAWS** (вместе с Беларусью и Северной Кореей). На голосовании ноябрь 2024 года — «против»; на голосовании ноябрь 2025 года — «против» (Stop Killer Robots, 2024–2025).
+Геополитический контекст для российского студента-инженера: **Россия — одна из стран, голосующих против резолюций UN LAWS**. На голосовании ноябрь 2024 года резолюция прошла **161/3/13**; против — Беларусь, КНДР, Россия (Stop Killer Robots, 2024). На голосовании ноябрь 2025 года резолюция прошла **164/6/7** (UN official press; 156/5/8 по Stop Killer Robots); против — Беларусь, Бурунди, КНДР, Израиль, Россия, **США** (UN A/80/PV; US Geneva Mission explanation of vote, 2025).
 
-Это **факт**. Что с ним делать инженеру?
+Это значимый сдвиг по сравнению с 2024 годом: **США в 2024 голосовали «за», в 2025 — «против»**, объяснив противодействием конкретной формулировке про переговоры о binding instrument, не отказом от обсуждений LAWS как таковых. Россия остаётся в позиции «против» с 2018 года, но «лагерь против» в 2025 — больше 3 стран, и состав политически разнообразен. Это **факт**. Что с ним делать инженеру?
 
-Мы не предлагаем студенту встать в политическую позицию. Мы предлагаем:
+Мы не **предписываем** студенту определённую политическую позицию — это его выбор. Но мы обязаны дать ему ландшафт, в котором этот выбор делается:
 
 1. **Знать ландшафт.** UN GGE, ICRC, голоса UNGA, DoD Directive 3000.09 — это базовая профессиональная грамотность в этой области, как знать FAR (Federal Aviation Regulations) для civil aviation engineer.
-2. **Знать, что критерии HITL/HOOL/HOTL и L1–L5 применимы независимо от geopolitical alignment.** Engineering design — это engineering design. Если ваша система формально HOTL, то она HOTL — и независимо от того, как ваша страна голосует в ООН, это даст разные правовые последствия в разных юрисдикциях.
+2. **Знать, что критерии HITL/HOOL/HOTL и L1–L5 применимы независимо от geopolitical alignment.** Engineering design определяется одинаково независимо от политического голосования. Если ваша система формально HOTL, то она HOTL — и независимо от того, как ваша страна голосует в ООН, это даст разные правовые последствия в разных юрисдикциях.
 3. **Делать осознанный выбор внутри этих рамок.** Можно работать в гражданском dual-use (Cognitive Pilot, ТЕРРА ТЕХ). Можно работать в обороне на L1–L2 уровнях. Можно работать в обороне на L3–L4 уровнях. Каждый из этих выборов — правомерный, но **разный**.
 
-Это и есть мысль, которую мы хотим донести: **в этой области инженер не остаётся нейтральным — он внутри рамок**, и его профессионализм проявляется в том, насколько осознанно он эти рамки чувствует.
+Это и есть мысль, которую мы хотим донести: **в этой области инженер не остаётся нейтральным — он внутри рамок**, и его профессионализм проявляется в том, насколько осознанно он эти рамки чувствует. Государства разной позиции голосуют по-разному, но **engineering design определяется одинаково** — и именно за это отвечает инженер.
+
+**Критерий 7 (cross-cutting).** Граница HOOL → HOTL — это **treaty-territory**, не engineering. Когда вы проектируете систему рядом с этой границей, вы выходите за рамки чистой инженерии в зону международного права; инженерный профессионализм здесь — знать, где именно граница проходит, и куда деваться при её пересечении.
 
 ### 4.8. Подытог Раздела 4
 
@@ -675,7 +693,7 @@ LAWS-блок применим не только к weapons. Критерии «
 
 **Российский академический контур.**
 
-- **МГТУ им. Баумана, Факультет ИУ.** Кафедра «Технологии искусственного интеллекта» (ИУ-Х). Магистерская программа «Программно-алгоритмическое обеспечение систем ИИ» в рамках направления «Ракетные комплексы и космонавтика». Профили подготовки: «Системы управления ракет-носителей и космических аппаратов» + «ИИ в системах обработки информации и управления» (bauman.ru, 2026).
+- **МГТУ им. Баумана, Факультет ИУ.** Кафедра «Технологии искусственного интеллекта» `[CROSS-REF-VERIFY: точный номер кафедры — bauman.ru]`. Магистерская программа «Программно-алгоритмическое обеспечение систем ИИ» в рамках направления «Ракетные комплексы и космонавтика». Профили подготовки: «Системы управления ракет-носителей и космических аппаратов» + «ИИ в системах обработки информации и управления» (bauman.ru, 2026).
 - **ВКА им. А.Ф. Можайского (Санкт-Петербург).** Системообразующий политехнический университет Минобороны; ведущий образовательно-научно-методологический центр в области военно-космической деятельности. Факультет управления системами ракетных и космических комплексов + Факультет специальных информационных технологий (vka.mil.ru).
 - **МАИ, СПбГУ** — параллельные программы AI в aerospace, с меньшей публичной видимостью конкретных лабораторий.
 
@@ -698,7 +716,7 @@ LAWS-блок применим не только к weapons. Критерии «
 - **CV / DL specialist** — спутниковая аналитика (Maxar/BlackSky), defense ML (Palantir, Helsing), perception для drones (Shield AI).
 - **ML / RL specialist** — autonomous platforms (CCA programs), drone swarms, gen design для aerospace components.
 - **Embedded / edge AI** — on-orbit ML, drone autonomy, on-platform inference.
-- **Systems / safety engineer** — certification под DO-178C/ARP4754A, FMEA/FTA, redundancy design.
+- **Systems / safety engineer** — certification под DO-178C (RTCA software certification standard со шкалой DAL-A (catastrophic) до DAL-E (no effect)) и ARP4754A (SAE standard для интеграции систем), FMEA/FTA, redundancy design.
 - **Ethics / policy interface** — UN GGE process, ICRC engineering interface, AI policy в больших организациях.
 
 Список не исчерпывающий. Главное — что **выбор есть**, и он не сводится к «либо военная индустрия, либо ничего». Гражданская аэрокосмическая отрасль (Боинг гражданская, частная авиация, eVTOL, спутниковая коммерция) — это полноценное профессиональное поле, в котором те же AI-навыки применимы без оборонной нагрузки.
@@ -721,9 +739,23 @@ LAWS-блок применим не только к weapons. Критерии «
 
 Главная мысль, с которой мы хотим оставить студента: **цепь по-прежнему держит инженер**. AI вошёл в каждое звено, но он не заменил человека. Он ускорил Sense — но Sense без человеческой проверки не работает (ALIS, GPS-spoofing). Он ускорил Decide — но Decide без real HITL превращается в Lavender. Он расширил Act — но Act без supervised pilots overhead не выходит из demo-stage (X-62A, Lancet rollback).
 
+Те же CV/ML-pipelines, те же сенсорные стеки работают и в гражданской аэрокосмосе, и в обороне; **инженер выбирает контур**.
+
 Это не значит, что AI «маленький» или «обманчивый». Это значит, что в high-stakes отрасли AI — это **инструмент в инженерных руках**, а не автономный субъект. Профессионализм инженера в этой области — это умение **сказать «да»** там, где AI действительно даёт измеримое преимущество, и умение **сказать «нет»** там, где AI создаёт риск, который не закрывается одной моделью.
 
 Курс продолжается. В Лекции 10 мы переходим к AI в энергетике; в Лекции 11 — к транспорту и логистике. И в каждой из них вы будете узнавать паттерны из этой главы — потому что цепь Sense → Decide → Act работает везде, где есть инженерное решение и физический мир.
+
+<!--
+Для closing-slide Phase 5 designer:
+заголовок «Цепь по-прежнему держит инженер»
++ 3 строки Sense / Decide / Act «где AI и где человек»,
+а не paragraph-style текст. Каждая строка — 1 предложение.
+
+Sense:   AI ускоряет → человек верифицирует ground truth (ALIS).
+Decide:  AI ассистирует → человек удерживает authority (Lavender как анти-пример).
+Act:     AI исполняет в envelope → человек supervises (CCA wingman, не replacement).
+-->
+
 
 ### Self-check (Раздел 5)
 
@@ -751,7 +783,9 @@ LAWS-блок применим не только к weapons. Критерии «
 
 **В4. «А что насчёт закрытых российских программ Минобороны и Роскосмоса по AI? Что они реально умеют?»**
 
-Ответ. Открытых данных на этот счёт очень мало. То, что мы знаем — это **внешняя проекция** через CSIS-аналитику (Bondar 2026), Russian press (Ростех, MoD статьи), wreckage-анализ украинской стороны. Внутренние программы и closed labs не публикуются. **Гипотезы избегаем**: лучше честно сказать «открытых данных нет», чем выдумывать. Если вас интересует эта область — путь через академический контур (МГТУ ИУ, ВКА Можайского), там вы получите доступ через institutional channels, не через open-source.
+Ответ. Открытых данных на этот счёт очень мало. То, что мы знаем — это **внешняя проекция** через CSIS-аналитику (Bondar 2026), Russian press (Ростех, MoD статьи), wreckage-анализ украинской стороны. Внутренние программы и closed labs не публикуются. **Гипотезы избегаем**: лучше честно сказать «открытых данных нет», чем выдумывать.
+
+**Что мы можем оценить достоверно:** (a) wreckage analysis (Tom's Hardware, ISW, открытое); (b) Russian press (TASS, TAdviser — с propaganda filter); (c) academic mirrors (МГТУ ИУ, ВКА им. Можайского — thesis-level публикации); (d) US/EU intelligence reports (CSIS Bondar, CNAS — extrapolation). **Что остаётся закрытым:** точные performance metrics, supply chains внутри РФ, конкретные ML-методы за пределами Geran-2. Это нормально для оборонной AI-индустрии любой страны. Если вас интересует эта область — путь через академический контур (МГТУ ИУ, ВКА Можайского), там вы получите доступ через institutional channels, не через open-source.
 
 **В5. «Lavender обсуждается с осуждением. А что насчёт критики +972 — может, они преувеличили?»**
 
@@ -813,6 +847,7 @@ LAWS-блок применим не только к weapons. Критерии «
 23. Air & Space Forces (2024). *F-35 dumps ALIS for ODIN*. URL: https://www.airandspaceforces.com/f-35-program-dumps-alis-for-odin/.
 24. GAO-20-316 (2020). *F-35 Sustainment*. URL: https://www.gao.gov/assets/gao-20-316.pdf.
 25. GAO-22-105943 (2022). *F-35 Sustainment Costs / ODIN Transition*. URL: https://www.gao.gov/assets/gao-22-105943.pdf.
+25a. GAO-22-105128 (2022). *F-35 Aircraft Sustainment: DoD Faces Challenges in Sustaining Operations and Maintenance Costs* (cost-per-flight-hour benchmark). URL: https://www.gao.gov/products/gao-22-105128.
 26. Defense Daily (2024). *Start of F-35 ODIN software fielding delayed*. URL: https://www.defensedaily.com/start-of-f-35-odin-software-fielding-to-squadrons-delayed-until-2025/.
 27. Du, X., et al. (2024). *Realistic Scatterer SAR Adversarial Attacks*. arXiv:2312.02912. URL: https://arxiv.org/abs/2312.02912.
 28. Bayesian SAR ATR defense (2024). arXiv:2403.18318. URL: https://arxiv.org/pdf/2403.18318.
@@ -858,6 +893,8 @@ LAWS-блок применим не только к weapons. Критерии «
 62. Wikipedia. *Brave1*. URL: https://en.wikipedia.org/wiki/Brave1.
 63. Autonomy Global (2025). *Russia mass-producing AI-enabled Geran-2 drones*. URL: https://www.autonomyglobal.co/what-the-other-guys-are-doing-russia-mass-producing-ai-enabled-geran-2-drones/.
 64. Meta-Defense (April 2026). *Geran-2 Anti-Radar Evolution Drones*. URL: https://meta-defense.fr/en/2026/04/03/geran-2-anti-radar-evolution-drones/.
+64a. ISW / Institute for the Study of War (2025). *Geran-2 production capacity assessments — Russian Offensive Campaign Assessment*. URL: https://www.understandingwar.org/.
+64b. Ukrainian Defence Intelligence (HUR, 2025). *Russian UAV production estimates — Alabuga SEZ*. (Cited via ISW/CSIS aggregation; primary HUR press briefings.)
 65. Tom's Hardware (2024). *Indian firms secretly funneled AMD/NVIDIA AI GPUs to Russia*. URL: https://www.tomshardware.com/tech-industry/artificial-intelligence/indian-firms-secretly-funneled-amd-nvidia-ai-gpus-to-russia/.
 66. Fortune (May 2026). *NVIDIA Chip Smuggling: China, Russia, Iran Export Controls*. URL: https://fortune.com/2026/05/13/nvidia-chip-smuggling-china-russia-iran-export-controls-supermicro/.
 67. Cognitive Pilot (2025). *Company overview*. URL: https://en.cognitivepilot.com/.
@@ -876,6 +913,8 @@ LAWS-блок применим не только к weapons. Критерии «
 
 78. Stop Killer Robots (November 2024). *161 states vote against the machine at the UN General Assembly*. URL: https://www.stopkillerrobots.org/news/161-states-vote-against-the-machine-at-the-un-general-assembly/.
 79. Stop Killer Robots (November 2025). *156 states support UNGA resolution*. URL: https://www.stopkillerrobots.org/news/156-states-support-unga-resolution/.
+79a. UN Press Release ga12736 (November 2025). *First Committee Cluster 4: Conventional Weapons — A/C.1/80/L.41 vote 164/6/7*. URL: https://press.un.org/en/2025/ga12736.doc.htm.
+79b. US Mission to the UN in Geneva (November 4, 2025). *80th Session of the UN General Assembly First Committee — Cluster 4 Conventional Weapons (explanation of vote on A/C.1/80/L.41)*. URL: https://geneva.usmission.gov/2025/11/04/80th-session-of-the-united-nations-general-assembly-first-committee-cluster-4-conventional-weapons/.
 80. Stop Killer Robots (September 2025). *GGE Joint Statement*. URL: https://www.stopkillerrobots.org/news/september-2025-gge-joint-statement/.
 81. Stop Killer Robots Policy Brief (May 2025). *Autonomous Weapons Systems: Key Issues and Path to a Treaty*. URL: https://www.stopkillerrobots.org/wp-content/uploads/2025/05/.
 82. HRW (May 2025). *UN should start talks on treaty to ban killer robots*. URL: https://www.hrw.org/news/2025/05/21/.
@@ -903,4 +942,4 @@ LAWS-блок применим не только к weapons. Критерии «
 
 ---
 
-*Конец главы 9. Версия v1 (draft). Ожидает Phase 3 critique (methodology-critic + fact-checker + reader-text-only). USER GATE A — после revision v2/v3.*
+*Конец главы 9. Версия v2 (reviewed). Phase 3 critique applied: 2 P0 + 13 P1 + 11 P2 closed. Готов к Phase 4.5 pre-gate walkthrough + USER GATE A.*

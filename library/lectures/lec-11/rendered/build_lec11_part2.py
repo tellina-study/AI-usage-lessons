@@ -73,7 +73,7 @@ def s14_cv_inspection(p):
     # Bottom callout
     rounded_box(slide, 0.5, 6.5, 12.33, 0.55, fill=SURFACE, stroke=LIGHT)
     text_box(slide, 0.7, 6.55, 12.0, 0.5,
-             "Общее: defect rate 1–2% → class imbalance → разметка — рычаг (s16)",
+             "Общее: defect rate 1–2% → class imbalance → разметка — критический рычаг",
              size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     attribution(slide, "BMW Press 2025 · TSMC · Boeing · Wikimedia CC-BY-SA")
 

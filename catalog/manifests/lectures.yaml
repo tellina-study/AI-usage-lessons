@@ -96,9 +96,10 @@ lectures:
     title: "AI в авиакосмической отрасли и оборонном комплексе"
     module: 2
     learning_outcomes: [LO1, LO2, LO3, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-09
+    status: produced
+    updated_at: "2026-05-20"
+    repo_title_note: "произведена в репо как lec-09; OODA-keystone + LAWS Раздел 4 + ≥50% media (фактически 73%); chapter v4 + slides v3 + speech v2 finalized"
 
   - number: 10
     title: "AI в сельском хозяйстве"

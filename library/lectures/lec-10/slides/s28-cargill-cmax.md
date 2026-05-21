@@ -20,7 +20,7 @@ Predictive port + shipping logistics для grain flows; CV для protein suppl
 
 ## Visual
 
-Сверху (40% высоты) — split image: слева — screenshot Cargill press release «2026 BIG AI Excellence Award» с заголовком; справа — фото большого зернового порта (Cargill Brazil grain logistics или Mississippi terminal). Обрамлено Ocean rounded box. Caption внизу 12pt italic: «Cargill press release, февраль 2026; 2026 BIG AI Excellence Award».
+Сверху (40% высоты) — split image: слева — screenshot Cargill press release «2026 BIG AI Excellence Award» с заголовком; справа — фото большого зернового порта (Cargill Brazil grain logistics или Mississippi terminal). Обрамлено Ocean rounded box. Caption внизу 12pt italic: «Cargill press release, апрель 2026; 2026 BIG AI Excellence Award».
 
 Под фото — большой central data **gold accent**: **2026 BIG AI Excellence Award**.
 
@@ -50,7 +50,7 @@ Footer 12pt italic: «Источник: Cargill press release 2026; BIG AI Excel
 
 CMAX — commercial intelligence platform, платформа коммерческой аналитики. Она делает predictive port and shipping logistics, оптимизирующие потоки зерна; CV для белковой цепочки поставок — yield estimation, waste reduction; в Бразилии — AI-driven grain mixing. Cargill оперирует в семидесяти плюс странах с тысячью плюс объектами.
 
-В феврале 2026 года Cargill получила премию 2026 BIG AI Excellence Award — конкретное публичное признание развёрнутой работы. Это редкий случай в AgTech, когда вендор получает industry award не за демо-видео, а за подтверждённое промышленное внедрение.
+В апреле 2026 года Cargill получила премию 2026 BIG AI Excellence Award — конкретное публичное признание развёрнутой работы. Это редкий случай в AgTech, когда вендор получает industry award не за демо-видео, а за подтверждённое промышленное внедрение.
 
 Главное архитектурное наблюдение: CMAX — это узкий агентный ИИ. Одно действие — hedge. Не «управляй всей цепочкой поставок». Не «оптимизируй от поля до полки». Узкое одно действие, на котором есть быстрая обратная связь в basis-points за минуты-часы. И именно эта узость — причина, по которой он работает. Расширение того же агента на end-to-end supply chain — пока не работает; это уровень амбиций 2030+, не промышленное внедрение 2026 года. К композиции задержек и fault propagation в попытках построить end-to-end мы вернёмся через слайд.
 

@@ -218,3 +218,109 @@ Pattern reference: lec-09 (35 слайдов, OODA-keystone, 6 section dividers,
 - ✅ iteration-log.md содержит per-slide iter count + media acquisition tier
 
 **Phase 6 Status: COMPLETE** — ready for Phase 7 QA agents (presentation-critic + student-simulator + reader-simulator).
+
+---
+
+## Phase 8 — v2 combined revision (2026-05-21)
+
+**Triggers:** 
+- 8 P0 + 32 P1 fixes from Phase 7
+- NEW ENFORCED rules: A. NO TIMING / NO METHODOLOGY in slides visible body + speaker_notes
+- NEW ENFORCED rules: B. BASELINE / COUNTERFACTUAL для measurable claims
+- Chapter cascade v3.1 → v3.2 (already done in earlier session, baselines added §1.1)
+
+**v2 changes — slide markdown + python builders:**
+
+### A. Timing removal (orchestrator-independent grep target 0):
+- **s02 cover** ("75 минут · вопросы и ответы") → "вопросы и ответы в конце"
+- **s03 lecture-map**: 7 timing chips removed, replaced with content-tags (5 кейсов · 3 провала, 4 кейса · 3 урока etc.)
+- **s06 Р1 divider**: "14 минут · ..." → "1 working case + 3 vendor matrix · 3 провала · 2 анти-ИИ критерия"
+- **s15 Р2 divider**: "15 минут · ..." → content-only "4 working specialization cases · 3 провала · РФ-параллель"
+- **s22 Р3 divider**: "12 минут · ..." → content-only
+- **s27 Р4 divider**: "10 минут · ..." → content-only
+- **s33 Р4-bis divider**: "8 минут · ..." → content-only
+- **s37 Р5 divider** (renders as s37 PPTX): "6 минут · ..." → "L5 кратко (Walmart, Tesco, X5) + 5 критериев + чек-лист..."
+- **s38 Q&A** (renders as s43 PPTX): "10 минут на обсуждение" → "Резервные вопросы про термодинамику VF, agentic AI scope, ИТЭЛМА vs Cognitive Pilot, foundation models"
+- **Slide markdown sync**: s03 list items + 6 divider Visual sections + s02 cover Visual section all updated to match
+
+### B. Methodology removal (orchestrator-independent grep target 0):
+- **s17** speaker notes: 4 hits cleaned
+  - «методически неверное» → «неверное упрощение»
+  - «методически важный кейс» → «важный кейс»
+  - «главный методический пункт» → «И главное»
+  - «главная методическая ценность этого раздела» → «главная ценность этого раздела»
+- **s25** speaker notes: «методически важный сигнал» → «важный сигнал»
+- **s12** speaker notes: «методическая значимость» → «значимость»
+- **s33** speaker notes: «самая методически-важная мысль» → «самая важная мысль»
+- **s35** speaker notes: «важный методический урок» → «важный урок»
+- **s37s** speaker notes: «методически важное наблюдение» → «важное наблюдение»
+- **s37** closing speaker notes: «методическая рамка» → «рамка»
+- **s38 Q&A** speaker notes: «методически неверное» → «неверное упрощение»
+
+### C. Baseline/counterfactual additions (measurable claims):
+- **s07 See & Spray** data cards:
+  - "5M акров · сезон 2025" → ext "≈0,55% от 900M акров US ag total"
+  - "–50% контактных гербицидов" → ext "от baseline ≈1 lb/акр AI → ≈0,5 lb"
+  - "+2,0 бушеля сои с акра" → ext "от среднего US ≈177 bu/A = +1,1%"
+- **s10 vertical farming** cards:
+  - "AppHarvest $600M потерь" → "$600M от $475M SPAC + $341M долга"
+  - "Plenty $940M, –99% оценки" → "$940M из $1B+ raised c 2014; –99% оценки"
+  - "Bowery $672M потерь" → "$672M из $700M raised; пик $2,3B"
+- **s16 LaserWeeder**:
+  - "250 000 акров обработано · 14 стран" → "≈0,028% из 900M акров US ag"
+  - "$1,4 млн стоимость одной машины" → ext "vs прыскиватель ~$50k + химия $200-400/акр → окупаемость 3-4 года на 1k+ акров"
+- **s17 Cognitive Pilot**:
+  - "1200+ установок" → "1700+ установок (~1,3% из ≈130k комбайнов РФ; vendor self-report май 2024)"
+- **s19 Monarch**:
+  - "~38% штата" → "~38% (102 / ~270 после 10% cut нояб. 2024)"
+- **s23 SenseHub** assertion: "2 миллиона коров с сенсорами" → "2 млн коров с сенсорами (≈0,75% из 265M dairy cows worldwide)"
+- **s28 Cargill**:
+  - "70+ стран география операций" → ext "из 195 (≈36% мира) · ~155k штат"
+- **s31 USDA Climate-Smart**:
+  - "$3,1 млрд финансирование" → ext "≈$23M / проект ср."
+  - "3,2 млн акров вышли из программы" → ext "≈0,36% от 900M акров US ag"
+- **s34 Connectivity**:
+  - "18% американских ферм без интернета" → "≈360k из 2M ферм США без интернета (vs <1% urban)"
+  - "123 000 авиа-рейсов с помехами" → "≈1,2% от 10M рейсов Q1 2025 (vs <1k Q1 2022)"
+
+### D. P0/P1 fixes confirmed:
+- **s02 cover title** "AI в инженерных задачах" → "ИИ в сельском хозяйстве" (already in py builder, slide md fixed)
+- **s19 Monarch HQ** Livermore, CA — confirmed correct already
+- **s28 Cargill BIG AI** "апрель 2026" — confirmed correct
+- **s07 "40M images"** → "миллионах изображений (>1M)" — confirmed (40M reserved for s16 LaserWeeder)
+- **s01 H1 anglicism**: "# AI-управляемая..." → "# ИИ-управляемая..."
+
+### E. Tzachor date cascade (P1 fix):
+- s06 + s12 (all 5 places): "Nature Food, май 2024" → "Nature Food, ноябрь 2023 (press coverage Phys.org 2024-05)"
+- Builder already had "ноябрь 2023" — slide markdown synced
+
+### F. Frontmatter:
+- deck.yaml: title "AI в сельском хозяйстве" → "ИИ в сельском хозяйстве"; version v2 confirmed
+- chapter v3.2 frontmatter confirmed (already v3.2 from prior session with baselines in §1.1)
+- §1.1 chapter cascade: added counterfactual baseline para ("5M акров — ≈0,55% от 900M US ag; –50% от ~1 lb/acre blanket-spray baseline; +2 bu/A — +1,1% от 177 bu/A US avg")
+
+### G. Verification (orchestrator-independent grep on v2 PPTX visible body):
+- TIMING hits: **0** ✓ (target 0)
+- METHODOLOGY hits: **0** ✓ (target 0)
+- DESIGNER-EXTRAS hits: **0** ✓
+- BASELINE coverage spot-check: **11/11** measurable claims with explicit baselines ✓
+  - 0,55% / 900M акров / 265M dairy / 195 countries / 2M ферм / ~270 Monarch / Livermore / ноябрь 2023 / 1700 / $1B+ raised / $700M raised
+- Russification spot-check: 0 critical anglicism hits ("AI-управляемая" — clean)
+
+### H. Files updated:
+- `library/lectures/lec-10/rendered/build_lec10_p1.py` — s02 cover + s03 lecture-map cards + s06 caption + s07 baselines + s10 baselines
+- `library/lectures/lec-10/rendered/build_lec10_p2.py` — s15 caption + s16 baselines + s19 Monarch denominator
+- `library/lectures/lec-10/rendered/build_lec10_p3.py` — s22/s27/s33/s36 captions + s23 SenseHub baseline + s28 baselines + s31 baselines + s34 baselines + s38 Q&A
+- `library/lectures/lec-10/deck.yaml` — title v2
+- 13 slide markdown files: s01 / s02 / s03 / s06 / s12 / s15 / s17 / s22 / s25 / s27 / s33 / s35 / s36 / s37 / s37s / s38 (visual descriptions + speaker notes synced)
+- `library/lectures/lec-10/chapter.md` — §1.1 baseline para added
+
+### I. Acceptance status:
+- ✅ 43 slides in v2 PPTX (5,167,681 bytes)
+- ✅ lec-10.pdf regenerated (4.9 MB)
+- ✅ 43 snapshots/sNN.png regenerated (rebuilt cycle)
+- ✅ All ENFORCED checks pass (timing/methodology/designer-extras = 0)
+- ✅ Baseline coverage 11/11 sampled measurable claims
+- ✅ No commits (orchestrator centralizes)
+
+**Phase 8 v2 Status: COMPLETE** — ready for Phase 7.1 re-validation OR USER GATE B re-presentation.

@@ -22,7 +22,7 @@ visual:
 
 Слева — огромная цифра «2» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «L2 — Робот / машина. Specialization побеждает generic» + 1 фраза-фрейм 20pt italic Primary mid: «Узкая ниша работает; универсальный farm robot — банкротится».
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р2) выделена gold. Caption 12pt italic: «15 минут · 4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry) · РФ-параллель CV vs sensor-fusion».
+Внизу — progress bar: 7 horizontal cards, текущая (Р2) выделена gold. Caption 12pt italic: «4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry) · РФ-параллель CV vs sensor-fusion».
 
 ## Speaker notes
 

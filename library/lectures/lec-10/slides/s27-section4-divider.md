@@ -22,7 +22,7 @@ visual:
 
 Слева — огромная цифра «4» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «L4 — Цепочка поставок. Агентный ИИ лидирует» + 1 фраза-фрейм 20pt italic Primary mid: «Узкий агент работает; end-to-end — пока нет; federal policy — хвостовой риск».
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р4) выделена gold. Caption 12pt italic: «10 минут · 4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)».
+Внизу — progress bar: 7 horizontal cards, текущая (Р4) выделена gold. Caption 12pt italic: «4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)».
 
 ## Speaker notes
 

@@ -22,7 +22,7 @@ visual:
 
 Слева — огромная цифра «3» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «L3 — Животное. CV стабильнее L1-L2» + 1 фраза-фрейм 20pt italic Primary mid: «Экономика концентрирована, измерения на уровне индивидуального животного — AI работает».
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р3) выделена gold. Caption 12pt italic: «12 минут · 4 working cases (SenseHub, CattleEye, DeLaval, Birdoo) · 3 anti-hype урока (Cainthus, tie-stall, Holstein-bias)».
+Внизу — progress bar: 7 horizontal cards, текущая (Р3) выделена gold. Caption 12pt italic: «4 working cases (SenseHub, CattleEye, DeLaval, Birdoo) · 3 анти-хайп урока (Cainthus, tie-stall, Holstein-bias)».
 
 ## Speaker notes
 

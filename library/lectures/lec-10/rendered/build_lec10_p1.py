@@ -23,7 +23,7 @@ def build_part1(prs, H):
     # ============== s01 hook — Plenty Compton split-frame ==============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "AI-управляемая ферма обещала революцию. 19 месяцев — и закрылась.",
+        "ИИ-управляемая ферма обещала революцию. 19 месяцев — и закрылась.",
         size=24)
 
     # LEFT panel — открытие май 2023 (use vertical-farm interior photo)
@@ -76,12 +76,12 @@ def build_part1(prs, H):
 
     # Meta top right
     text_box(s, 6.0, 1.5, 6.8, 0.5,
-             "Лекция 10 · AI в инженерных задачах · 3 курс",
+             "Лекция 10 · ИИ в сельском хозяйстве · 3 курс",
              size=18, italic=True, color=MID)
 
     # Title
     text_box(s, 6.0, 2.3, 6.8, 3.0,
-             "AI в сельском хозяйстве",
+             "ИИ в сельском хозяйстве",
              size=44, bold=True, color=DEEP, line_spacing=1.15)
 
     # Subtitle / scope
@@ -90,7 +90,7 @@ def build_part1(prs, H):
              size=20, italic=True, color=LIGHT, line_spacing=1.3)
 
     # Duration
-    text_box(s, 6.0, 6.0, 6.8, 0.5, "75 минут · Q&A",
+    text_box(s, 6.0, 6.0, 6.8, 0.5, "вопросы и ответы в конце",
              size=18, italic=True, color=LIGHT)
 
     # Decorative icon
@@ -156,13 +156,13 @@ def build_part1_full(prs, H):
 
     # 7 horizontal cards
     cards = [
-        ("0. Открытие", "Hook + keystone + глоссарий", ""),
-        ("1. L1 Поле", "Открытая биология", "14 мин"),
-        ("2. L2 Робот", "Specialization > generic", "15 мин"),
-        ("3. L3 Животное", "Semi-closed indiv.-level", "12 мин"),
-        ("4. L4 Цепочка", "Агентный ИИ лидер", "10 мин"),
-        ("4-bis. Среда", "Связь · lock-in · регуляторика", "8 мин"),
-        ("5. L5 Полка", "+ 5 критериев + payoff", "6 мин"),
+        ("0. Открытие", "Зацепка + ось + глоссарий", ""),
+        ("1. L1 Поле", "Открытая биология", "5 кейсов · 3 провала"),
+        ("2. L2 Робот", "Специализация > универсальность", "4 кейса · 3 провала"),
+        ("3. L3 Животное", "Полузакрытая среда, особь", "4 кейса · 3 урока"),
+        ("4. L4 Цепочка", "Агентный ИИ лидер", "4 кейса · 2 провала"),
+        ("4-bis. Среда", "Связь · привязка · регуляторика", "3 sub-блока"),
+        ("5. L5 Полка", "+ 5 критериев + закрытие", "L5 + 5 AP + чек-лист"),
     ]
     n = len(cards)
     col_w = 1.72; col_h = 2.7; gap = 0.06
@@ -179,7 +179,7 @@ def build_part1_full(prs, H):
                  align=PP_ALIGN.CENTER)
         if dur:
             text_box(s, x + 0.1, y + col_h - 0.45, col_w - 0.2, 0.3, dur,
-                     size=11, italic=True, color=GOLD, bold=True,
+                     size=10, italic=True, color=LIGHT, bold=True,
                      align=PP_ALIGN.CENTER)
 
     # Central question banner
@@ -216,25 +216,27 @@ def build_part1_full(prs, H):
     text_box(s, 0.85, 4.65, 5.45, 1.4,
              "Открытая биологическая среда (поле, луг). "
              "Погода, переменное освещение, пыль, тени. ИИ работает в узких задачах. "
-             "Универсальная «autonomous farm» — банкротится.",
+             "Универсальная «автономная ферма» — банкротится.",
              size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
 
-    # RIGHT: 5 L4 terms
+    # RIGHT: 5 L4 terms — gold accent on first item (AP1 P1-presentation)
     text_box(s, 6.85, 1.5, 5.95, 0.4, "5 терминов цепочки поставок",
              size=16, bold=True, color=MID)
     terms = [
-        ("Агентный ИИ", "ML + RAG + конвейер действий с человеком в петле"),
-        ("bp (basis points)", "1 bp = 0,01%. Метрика проскальзывания сделок"),
-        ("Проскальзывание сделки", "Разрыв между планом сделки и фактом исполнения"),
-        ("Scope-3 выбросы", "Косвенные выбросы по цепочке поставок"),
-        ("AI-MRV", "ИИ-мониторинг, отчёт, верификация — климат-учёт"),
+        ("Агентный ИИ", "ML + поиск (RAG) + конвейер действий + человек в петле", True),
+        ("bp (базисный пункт)", "1 bp = 0,01%. Метрика проскальзывания сделок", False),
+        ("Проскальзывание", "Разрыв между планом сделки и фактом исполнения", False),
+        ("Выбросы Scope-3", "Косвенные выбросы по цепочке поставок", False),
+        ("ИИ-MRV", "ИИ-мониторинг, отчёт, верификация — климат-учёт", False),
     ]
     term_y = 2.0
-    for i, (term, defn) in enumerate(terms):
-        ocean_box(s, 6.85, term_y, 5.95, 0.8, fill=LIGHT_TINT)
-        text_box(s, 7.05, term_y + 0.08, 1.95, 0.4, term,
-                 size=12, bold=True, color=DEEP)
-        text_box(s, 9.0, term_y + 0.08, 3.7, 0.6, defn,
+    for term, defn, is_gold in terms:
+        fill = GOLD_TINT if is_gold else LIGHT_TINT
+        stroke = GOLD if is_gold else LIGHT
+        ocean_box(s, 6.85, term_y, 5.95, 0.8, fill=fill, stroke=stroke)
+        text_box(s, 7.05, term_y + 0.08, 2.15, 0.4, term,
+                 size=12, bold=True, color=GOLD if is_gold else DEEP)
+        text_box(s, 9.2, term_y + 0.08, 3.5, 0.6, defn,
                  size=10, color=MID, italic=True, line_spacing=1.25)
         term_y += 0.85
 
@@ -298,14 +300,14 @@ def build_part1_full(prs, H):
                  size=9, color=DARK_GREY, italic=True, line_spacing=1.2)
         ay += 0.95
 
-    add_footer(s, "Несущая ось всей лекции · L11 кибер-физическое производство — следующая")
+    add_footer(s, "↑ контролируемость среды ↔ ↑ проникновение ИИ · следующая — L11 кибер-физическое производство")
     add_speaker_notes(s, load_speaker_notes("s05"))
 
     # ============ s06 section1 divider — L1 Поле ============
     section_divider(prs, 1, "Раздел 1 — L1 «Поле»",
         "Открытая биологическая среда: где ИИ работает узко — и где ломается даже здесь",
         current_section=1,
-        caption="14 минут · 5 рабочих кейсов · 3 провала · разбираем по строгим критериям")
+        caption="1 working case + 3 vendor matrix · 3 провала (vertical farming, ChatGPT, Plantix) · 2 анти-ИИ критерия")
     s_last = prs.slides[-1]
     add_speaker_notes(s_last, load_speaker_notes("s06"))
 
@@ -321,26 +323,26 @@ def build_part1_full(prs, H):
     text_box(s, 0.85, 5.85, 6.9, 0.25, "John Deere ExactApply + See & Spray Ultimate · ноябрь 2025",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Right data cards
+    # Right data cards — увеличенный шрифт (P0-7: spec text ≥14pt) + baselines
     cards = [
-        ("5M акров", "сезон 2025", "> штат Нью-Джерси", GOLD),
-        ("–50%", "контактных гербицидов", "~31 млн галлонов / сезон", MID),
-        ("+2,0 бушеля", "сои с акра", "лучшие случаи до 4,8", LIGHT),
+        ("5M акров", "сезон 2025", "≈0,55% от 900M акров US ag total", GOLD),
+        ("–50%", "контактных гербицидов", "от baseline ≈1 lb/акр AI → ≈0,5 lb", MID),
+        ("+2,0 бушеля", "сои с акра", "от среднего US ≈177 bu/A = +1,1%", LIGHT),
     ]
     cy = 1.6
     for big, lbl, sub, color in cards:
         ocean_box(s, 8.2, cy, 4.55, 1.2, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
-        text_box(s, 8.4, cy + 0.1, 2.4, 0.5, big, size=22, bold=True, color=color)
-        text_box(s, 8.4, cy + 0.6, 2.4, 0.4, lbl, size=12, color=DEEP, italic=True)
-        text_box(s, 10.9, cy + 0.3, 1.7, 0.7, sub,
-                 size=10, color=MID, italic=True, align=PP_ALIGN.RIGHT, line_spacing=1.2)
+        text_box(s, 8.4, cy + 0.08, 2.4, 0.55, big, size=26, bold=True, color=color)
+        text_box(s, 8.4, cy + 0.65, 2.4, 0.4, lbl, size=14, color=DEEP, italic=True)
+        text_box(s, 10.9, cy + 0.3, 1.75, 0.85, sub,
+                 size=12, color=MID, italic=True, align=PP_ALIGN.RIGHT, line_spacing=1.25)
         cy += 1.3
 
-    # Spec card
-    ocean_box(s, 8.2, 5.5, 4.55, 0.7, fill=SURFACE)
-    text_box(s, 8.4, 5.6, 4.25, 0.5,
-             "36 камер · нейросеть на 40 млн изображений · NVIDIA Jetson на устройстве · <50 мс",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.3)
+    # Spec card — увеличенный шрифт ≥14pt
+    ocean_box(s, 8.2, 5.5, 4.55, 0.85, fill=SURFACE)
+    text_box(s, 8.4, 5.58, 4.25, 0.7,
+             "36 камер · CNN на миллионах изображений (>1M) · NVIDIA Jetson edge · <50 мс",
+             size=12, color=DARK_GREY, italic=True, line_spacing=1.35)
 
     add_footer(s, "Источники: AgTechNavigator 2025-11-10; пресс-релиз John Deere ноябрь 2025; GrowIWM 2024")
     add_speaker_notes(s, load_speaker_notes("s07"))
@@ -387,60 +389,71 @@ def build_part1_full(prs, H):
                      anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
             cx += w + 0.05
 
-    # Sidebar callout: BASF Japan rice
-    ocean_box(s, 0.6, 5.5, 12.13, 1.2, fill=GOLD_TINT, stroke=GOLD)
+    # Sidebar callout: BASF Japan rice (ключевая точка — остальные 4 для self-study)
+    ocean_box(s, 0.6, 5.5, 12.13, 1.4, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 0.85, 5.6, 11.5, 0.4,
-             "BASF xarvio в Японии — гарантия урожайности риса · октябрь 2025 (пресс-релиз p-25-191)",
-             size=12, bold=True, color=DEEP)
-    text_box(s, 0.85, 6.0, 11.5, 0.65,
+             "★ Ключевое на слайде — BASF xarvio в Японии: гарантия урожайности риса (октябрь 2025)",
+             size=13, bold=True, color=GOLD)
+    text_box(s, 0.85, 6.0, 11.5, 0.85,
              "Первый случай гарантированной урожайности под ИИ-советы: BASF выплачивает компенсацию "
-             "при недоборе урожая. Закрытый контур данных + страховой механизм = единственный известный к 2026 году пример.",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.3)
+             "при недоборе урожая. Закрытый контур данных + страховой механизм = единственный известный к 2026 году пример.\n"
+             "Остальные 4 платформы матрицы — для самостоятельной проработки; критерий «бренд ≠ режим работы» применяется к каждой.",
+             size=11, color=DARK_GREY, italic=True, line_spacing=1.35)
 
     add_footer(s, "Источник: пресс-релиз BASF p-25-191 октябрь 2025 · TAdviser FieldView 2022")
     add_speaker_notes(s, load_speaker_notes("s08"))
 
-    # ============ s09 foundation models ============
+    # ============ s09 foundation models — simplified, 3 key claims ============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Базовые модели 2026 — TerraMind и Prithvi-EO 2.0 меняют порог входа",
+        "Базовые модели 2026 — порог входа упал на 2-3 порядка",
         size=22)
 
-    # Left: Sentinel-2 imagery
-    ocean_box(s, 0.6, 1.6, 6.3, 4.7)
+    # Left (55%): Sentinel-2 imagery + short formula
+    ocean_box(s, 0.6, 1.5, 6.5, 4.0)
     p = ASSETS / "photos" / "p09-sentinel-brazil.jpg"
     if p.exists():
-        add_image(s, p, 0.85, 1.85, w=5.8, h=4.2)
-    text_box(s, 0.85, 6.1, 5.8, 0.25,
-             "Sentinel-2 / Copernicus (ESA, CC-BY-SA): класс данных для TerraMind",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+        add_image(s, p, 0.85, 1.7, w=6.0, h=3.0)
+    text_box(s, 0.85, 4.75, 6.0, 0.4,
+             "Sentinel-2 / Copernicus (ESA, CC-BY-SA) — класс данных для TerraMind",
+             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Right: foundation-model architecture stack
-    text_box(s, 7.2, 1.6, 5.6, 0.5, "Архитектура: базовая модель + поиск (RAG)",
+    # Short formula below image
+    ocean_box(s, 0.6, 5.7, 6.5, 1.2, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.85, 5.8, 6.0, 0.4,
+             "TerraMind (IBM + ESA, 2025)",
+             size=15, bold=True, color=DEEP)
+    text_box(s, 0.85, 6.2, 6.0, 0.65,
+             "«GPT-3 для Earth observation». Команда из 3 человек\n"
+             "дообучает на тысячах изображений вместо миллионов.",
+             size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
+
+    # Right (45%): 2 callouts
+    # Callout 1 — vendor concentration risk (GOLD)
+    ocean_box(s, 7.3, 1.5, 5.45, 2.6, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 7.5, 1.65, 5.05, 0.4,
+             "Риск концентрации у вендоров",
+             size=16, bold=True, color=GOLD)
+    text_box(s, 7.5, 2.15, 5.05, 1.9,
+             "Вся индустрия L1 — на 2-3 базовых моделях\n"
+             "(IBM / NASA / ESA).\n\n"
+             "Закрытие модели = команды теряют\n"
+             "возможности одномоментно.",
+             size=13, color=DEEP, italic=True, line_spacing=1.5)
+
+    # Callout 2 — advisor architecture
+    ocean_box(s, 7.3, 4.3, 5.45, 2.6, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 7.5, 4.45, 5.05, 0.4,
+             "Архитектура советника 2026",
              size=16, bold=True, color=MID)
+    text_box(s, 7.5, 4.95, 5.05, 1.9,
+             "Базовая модель (TerraMind)\n"
+             "+ поиск (RAG) к локальному регулятору\n"
+             "+ LLM генерация\n"
+             "+ явный отказ при низкой уверенности.",
+             size=13, color=DEEP, italic=True, line_spacing=1.5)
 
-    stack = [
-        ("4. Поиск релевантных данных", "под специфику хозяйства", LIGHT_TINT, LIGHT),
-        ("3. Дообучение (~1 000 изобр.)", "под культуру/регион", LIGHT_TINT, LIGHT),
-        ("2. TerraMind / Prithvi", "предобученные IBM-NASA / ESA", GOLD_TINT, GOLD),
-        ("1. Sentinel-2 мультиспектр", "10 м разрешение, 12 каналов", LIGHT_TINT, LIGHT),
-    ]
-    sy = 2.15
-    for label, sub, fill, stroke in stack:
-        ocean_box(s, 7.2, sy, 5.6, 0.85, fill=fill, stroke=stroke)
-        text_box(s, 7.4, sy + 0.1, 5.2, 0.35, label,
-                 size=13, bold=True, color=DEEP)
-        text_box(s, 7.4, sy + 0.45, 5.2, 0.35, sub,
-                 size=10, color=MID, italic=True)
-        sy += 0.95
-
-    # Bottom risk callout
-    ocean_box(s, 0.6, 6.4, 12.13, 0.5, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.8, 6.45, 11.8, 0.4,
-             "⚠ Концентрация у вендоров: вся индустрия L1 строится на 2-3 моделях IBM / NASA / ESA",
-             size=12, bold=True, color=GOLD,
-             anchor=MSO_ANCHOR.MIDDLE)
-
+    add_footer(s, "Источники: IBM Research, апрель 2025; NASA Earth Observatory 2025")
     add_speaker_notes(s, load_speaker_notes("s09"))
 
     # ============ s10 vertical farming collapse ============
@@ -455,11 +468,11 @@ def build_part1_full(prs, H):
     if c.exists():
         add_image(s, c, 0.85, 1.7, w=5.8, h=3.7)
 
-    # Right: 3 cards
+    # Right: 3 cards — с baseline counterfactuals
     cards = [
-        ("AppHarvest", "Тепличный, нерентабельный 2023", "$600 млн потерь"),
-        ("Plenty", "Compton ИИ-фабрика 19 мес → банкротство", "$940 млн, –99% оценки"),
-        ("Bowery", "Коллапс перед IPO, ноябрь 2024", "$672 млн потерь"),
+        ("AppHarvest", "Тепличный, нерентабельный 2023", "$600M от $475M SPAC + $341M долга"),
+        ("Plenty", "Compton ИИ-фабрика 19 мес → банкротство", "$940M из $1B+ raised с 2014; –99% оценки"),
+        ("Bowery", "Коллапс перед IPO, ноябрь 2024", "$672M из $700M raised; пик $2,3B"),
     ]
     cy = 1.5
     for name, ev, money in cards:
@@ -515,16 +528,16 @@ def build_part1_full(prs, H):
             add_arrow(s, sx + step_w, sy + step_h/2 - 0.15, gap, 0.3, fill=LIGHT)
         sx += step_w + gap
 
-    # Bottom takeaway
-    ocean_box(s, 0.6, 4.6, 12.13, 1.9, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 4.75, 11.6, 0.5,
+    # Bottom takeaway — увеличен gap от steps (P1-4 student-sim)
+    ocean_box(s, 0.6, 4.9, 12.13, 1.9, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 5.0, 11.6, 0.5,
              "Корневая причина: разрыв в два порядка. Никакая модель не закроет.",
              size=18, bold=True, color=DEEP)
-    text_box(s, 0.85, 5.3, 11.6, 0.45,
+    text_box(s, 0.85, 5.55, 11.6, 0.45,
              "0,5 (солнце→LED) × 0,7 (LED→растение) × 0,3 (растение→выход) ≈ 10,5% от начала до конца. "
              "ИИ оптимизирует знаменатель (5-15%); разрыв в числителе.",
              size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
-    text_box(s, 0.85, 5.8, 11.6, 0.6,
+    text_box(s, 0.85, 6.1, 11.6, 0.6,
              "AP1 в строгой форме: «когда ИИ оптимизирует неверно сформулированную целевую функцию — лучше не ИИ».",
              size=12, bold=True, italic=True, color=GOLD, line_spacing=1.3)
 
@@ -540,10 +553,10 @@ def build_part1_full(prs, H):
     # Left: study summary
     ocean_box(s, 0.6, 1.5, 6.0, 5.0)
     text_box(s, 0.85, 1.65, 5.5, 0.5,
-             "Tzachor et al., Nature Food, май 2024",
+             "Tzachor et al., Nature Food, ноябрь 2023",
              size=14, bold=True, color=DEEP)
     text_box(s, 0.85, 2.15, 5.5, 0.4,
-             "Reichman University · 184 вопроса о пестицидах",
+             "Reichman University · 184 вопроса (publication 11.2023, press 05.2024)",
              size=11, italic=True, color=MID)
     hr_line(s, 0.85, 2.6, 5.3, color=LIGHT, weight=1.0)
 
@@ -595,7 +608,7 @@ def build_part1_full(prs, H):
              "+ человек в петле: финальную рекомендацию подтверждает агроном",
              size=11, bold=True, italic=True, color=GOLD, line_spacing=1.3)
 
-    add_footer(s, "Источник: Tzachor et al., Nature Food, май 2024; Phys.org 2024-05")
+    add_footer(s, "Источник: Tzachor et al., Nature Food, ноябрь 2023 (press coverage Phys.org 2024-05)")
     add_speaker_notes(s, load_speaker_notes("s12"))
 
     # ============ s13 Plantix ============

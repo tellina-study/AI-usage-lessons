@@ -22,7 +22,7 @@ visual:
 
 Слева — огромная цифра «5» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «L5 — Потребитель + 5 критериев + payoff» + 1 фраза-фрейм 20pt italic Primary mid: «Самая зрелая ступень + главный consolidation + callback к Plenty».
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р5) выделена gold. Caption 12pt italic: «6 минут · L5 кратко (Walmart, Tesco, X5) + 5 критериев + checklist + карьера + closing callback».
+Внизу — progress bar: 7 horizontal cards, текущая (Р5) выделена gold. Caption 12pt italic: «L5 кратко (Walmart, Tesco, X5) + 5 критериев + чек-лист + карьера + closing callback».
 
 ## Speaker notes
 

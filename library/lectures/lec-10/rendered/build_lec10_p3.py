@@ -22,12 +22,12 @@ def build_part3(prs, H):
     section_divider(prs, 3, "Раздел 3 — L3 «Животное»",
         "Полузакрытая среда + измерения на уровне особи. ИИ работает стабильнее, чем на L1-L2.",
         current_section=3,
-        caption="12 минут · 4 рабочих кейса + 3 анти-хайп урока · РФ-параллель")
+        caption="4 working cases (SenseHub, CattleEye, DeLaval, Birdoo) · 3 анти-хайп урока (Cainthus, tie-stall, Holstein-bias)")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s22"))
 
     # ============ s23 SenseHub 2M cows ============
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Allflex SenseHub — 2 миллиона коров с сенсорами", size=26)
+    add_assertion_title(s, "Allflex SenseHub — 2 млн коров с сенсорами (≈0,75% из 265M dairy cows worldwide)", size=22)
 
     # Left: photo
     ocean_box(s, 0.6, 1.5, 6.5, 5.1)
@@ -52,30 +52,30 @@ def build_part3(prs, H):
     ]
     fy = 2.15
     for hdr, sub, color in flow_steps:
-        ocean_box(s, 7.3, fy, 5.4, 0.75, fill=LIGHT_TINT if color != GOLD else GOLD_TINT, stroke=color)
-        text_box(s, 7.5, fy + 0.1, 5.0, 0.3, hdr,
-                 size=13, bold=True, color=DEEP)
-        text_box(s, 7.5, fy + 0.4, 5.0, 0.3, sub,
-                 size=10, color=MID, italic=True)
-        fy += 0.85
+        ocean_box(s, 7.3, fy, 5.4, 0.85, fill=LIGHT_TINT if color != GOLD else GOLD_TINT, stroke=color)
+        text_box(s, 7.5, fy + 0.12, 5.0, 0.35, hdr,
+                 size=15, bold=True, color=DEEP)
+        text_box(s, 7.5, fy + 0.48, 5.0, 0.32, sub,
+                 size=12, color=MID, italic=True)
+        fy += 0.95
 
     # Alerts row
-    text_box(s, 7.3, 4.85, 5.4, 0.4, "5 классов сигналов",
-             size=13, bold=True, color=DEEP)
+    text_box(s, 7.3, 5.05, 5.4, 0.4, "5 классов сигналов",
+             size=14, bold=True, color=DEEP)
     alerts = ["эструс", "отёл", "хромота", "мастит", "пневмония"]
     ax = 7.3
     aw = 1.0
     for al in alerts:
-        ocean_box(s, ax, 5.3, aw, 0.5, fill=GOLD_TINT, stroke=GOLD)
-        text_box(s, ax, 5.3, aw, 0.5, al, size=10, bold=True, color=DEEP,
+        ocean_box(s, ax, 5.5, aw, 0.55, fill=GOLD_TINT, stroke=GOLD)
+        text_box(s, ax, 5.5, aw, 0.55, al, size=11, bold=True, color=DEEP,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         ax += aw + 0.08
 
     # Bottom: augmentation principle
-    ocean_box(s, 7.3, 6.0, 5.4, 0.65, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.5, 6.1, 5.0, 0.45,
+    ocean_box(s, 7.3, 6.2, 5.4, 0.6, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 7.5, 6.25, 5.0, 0.5,
              "ИИ = усиление человека, не замена",
-             size=12, bold=True, color=GOLD,
+             size=13, bold=True, color=GOLD,
              anchor=MSO_ANCHOR.MIDDLE)
 
     add_footer(s, "Источник: Merck Animal Health, 2025 — рубеж 2 млн молочных коров")
@@ -211,7 +211,7 @@ def build_part3(prs, H):
     section_divider(prs, 4, "Раздел 4 — L4 «Цепочка поставок»",
         "Агентный ИИ лидирует. Результат измеряется в долях процента за минуты, не в сезонах.",
         current_section=4,
-        caption="10 минут · Cargill CMAX + Tract + провал USDA + РФ-параллель")
+        caption="4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s27"))
 
     # ============ s28 Cargill CMAX ============
@@ -230,29 +230,29 @@ def build_part3(prs, H):
              "ИИ оптимизирует прогноз для порта и судоходную логистику",
              size=10, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
-    # Right: KPIs
+    # Right: KPIs — с baseline counterfactuals
     kpis = [
-        ("70+ стран", "география операций", LIGHT),
-        ("1000+ объектов", "складов / портов / силосов", MID),
+        ("70+ стран", "из 195 (≈36% мира) · ~155k штат", LIGHT),
+        ("1000+ объектов", "склады / порты / силосы Cargill", MID),
         ("BIG AI 2026", "Excellence Award на уровне L4", GOLD),
     ]
     cy = 1.5
     for big, lbl, color in kpis:
-        ocean_box(s, 7.8, cy, 4.95, 1.2, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
-        text_box(s, 8.0, cy + 0.15, 4.6, 0.5, big,
-                 size=22, bold=True, color=color)
-        text_box(s, 8.0, cy + 0.65, 4.6, 0.4, lbl,
-                 size=12, color=DEEP, italic=True)
-        cy += 1.3
+        ocean_box(s, 7.8, cy, 4.95, 1.25, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
+        text_box(s, 8.0, cy + 0.12, 4.6, 0.55, big,
+                 size=26, bold=True, color=color)
+        text_box(s, 8.0, cy + 0.72, 4.6, 0.4, lbl,
+                 size=14, color=DEEP, italic=True)
+        cy += 1.35
 
-    ocean_box(s, 7.8, 5.4, 4.95, 1.25, fill=SURFACE)
-    text_box(s, 8.0, 5.55, 4.55, 0.4, "Принцип успеха: узкость агентного ИИ",
-             size=12, bold=True, color=DEEP)
-    text_box(s, 8.0, 5.95, 4.55, 0.65,
-             "Одно действие на агента (хеджирование / маршрут) + человек в петле для сделок >$10 млн номинала",
-             size=10, color=DARK_GREY, italic=True, line_spacing=1.4)
+    ocean_box(s, 7.8, 5.55, 4.95, 1.15, fill=SURFACE)
+    text_box(s, 8.0, 5.6, 4.55, 0.4, "Принцип успеха: узость агента",
+             size=14, bold=True, color=DEEP)
+    text_box(s, 8.0, 6.0, 4.55, 0.7,
+             "Одно действие на агента (хеджирование / маршрут) + человек в петле для сделок >$10 млн номинала.",
+             size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
 
-    add_footer(s, "Источник: пресс-релиз Cargill 2026 BIG AI Excellence Award")
+    add_footer(s, "Источник: пресс-релиз Cargill, апрель 2026 (BIG AI Excellence Award)")
     add_speaker_notes(s, load_speaker_notes("s28"))
 
     # ============ s29 hedge pseudo-flow ============
@@ -266,9 +266,9 @@ def build_part3(prs, H):
          "входные данные", "database"),
         ("2. Расчёт", "Распределение цен\n5/30/90 дней + неопределённость",
          "ML-модель", "brain"),
-        ("3. Решение", "4 действия:\nкупить / продать /\nдержать / хеджировать\n+ человек при >$10 млн",
+        ("3. Решение", "4 действия:\nкупить / продать /\nдержать / хеджировать\n+ человек при >$10 млн номинала",
          "Слой действий", "settings"),
-        ("4. Обратная связь", "bp за минуты,\nонлайн-обучение",
+        ("4. Обратная связь", "bp (базисный пункт) за минуты,\nонлайн-обучение",
          "Цикл замыкается", "trending-up"),
     ]
     step_w = 2.85; step_h = 3.7; gap = 0.2
@@ -370,10 +370,10 @@ def build_part3(prs, H):
     text_box(s, 0.85, 2.15, 5.5, 0.4, "программу Climate-Smart Commodities",
              size=11, italic=True, color=MID)
     nums = [
-        ("$3,1 млрд", "финансирование"),
+        ("$3,1 млрд", "финансирование · ≈$23M / проект ср."),
         ("135 проектов", "отменены"),
         ("14 000 ферм", "потеряли поддержку"),
-        ("3,2 млн акров", "вышли из программы"),
+        ("3,2 млн акров", "≈0,36% от 900M акров US ag"),
     ]
     ny = 2.65
     for big, lbl in nums:
@@ -443,7 +443,7 @@ def build_part3(prs, H):
     section_divider(prs, 4, "Раздел 4-bis — Среда",
         "Сквозные темы: связь · привязка к вендору · регуляторика. Без них ни одна ступень не работает.",
         current_section=5,
-        caption="8 минут · связь + двойная оптика привязки + ЕС/USDA/РФ")
+        caption="3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s33"))
 
     # ============ s34 Connectivity + GNSS ============
@@ -452,10 +452,10 @@ def build_part3(prs, H):
         "Связь — 18% ферм без интернета + помехи навигации в I кв. 2025",
         size=22)
 
-    # Top: 3 mega-numbers
+    # Top: 3 mega-numbers — с baselines
     nums = [
-        ("18%", "американских ферм\nбез интернета", GOLD),
-        ("123 000", "авиа-рейсов с помехами\nнавигации, I кв. 2025", DEEP),
+        ("18%", "≈360k из 2M ферм США\nбез интернета (vs <1% urban)", GOLD),
+        ("123 000", "≈1,2% от 10M рейсов\nQ1 2025 (vs <1k Q1 2022)", DEEP),
         ("апр. 2026", "запрет Starlink в РФ", LIGHT),
     ]
     nx = 0.6; ny = 1.5
@@ -539,7 +539,7 @@ def build_part3(prs, H):
     text_box(s, 7.05, 4.65, 5.5, 0.4, "Декабрь 2025 — FCC запретил DJI",
              size=13, bold=True, color=DEEP)
     text_box(s, 7.05, 5.05, 5.5, 1.4,
-             "80% сельхоз-дронов в США потеряли\n"
+             "80-90% сельхоз-дронов в США потеряли\n"
              "легальный статус. Одно решение FCC —\n"
              "привязка к вендору стала геополитическим риском.",
              size=11, color=DARK_GREY, italic=True, line_spacing=1.5)
@@ -598,58 +598,58 @@ def build_part3(prs, H):
     section_divider(prs, 5, "Раздел 5 — L5 «Полка» + 5 критериев",
         "Розничный ИИ зрел + пять анти-ИИ критериев + чек-лист + карьерный ландшафт + замыкание к Plenty.",
         current_section=6,
-        caption="6 минут · L5 + 5 критериев + чек-лист + возврат к Plenty Compton")
+        caption="L5 кратко (Walmart, Tesco, X5) + 5 критериев + чек-лист + карьера + closing callback")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s36"))
 
-    # ============ s37s L5 retail ============
+    # ============ s37s L5 retail — 2×2 grid (D1 Магнит F&R as 4th card) ============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток»",
-        size=24)
+        "L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток» + Магнит F&R (гибрид)",
+        size=22)
 
     cards = [
         ("Walmart Eden", "ML с 2017",
          "Прогноз скоропортящихся +\nмаршруты свежести на 11 000+ магазинов",
          GOLD),
-        ("Tesco AI", "−30% пищевых отходов с 2017",
-         "Ежедневный прогноз на ~3500\nсупермаркетов Великобритании",
+        ("Tesco AI", "−30% пищевых отходов",
+         "С 2017 — ежедневный прогноз\nна ~3500 супермаркетов Великобритании",
          MID),
         ("X5 «Перекрёсток»", "ML с 2020 · 200+ факторов",
          "Российский флагман L5.\nМировой уровень.",
          LIGHT),
+        ("Магнит F&R (гибрид)", "Прогноз ✓ · Пополнение — пилот",
+         "Прогнозирование на 46 РЦ январь 2026 — в эксплуатации.\nПополнение — пилот на 3 РЦ.",
+         TEAL),
     ]
-    card_w = 3.95; card_h = 3.5; gap = 0.18
-    sx = 0.6; sy = 1.6
+    # 2×2 grid
+    card_w = 6.0; card_h = 2.5; gap_x = 0.18; gap_y = 0.15
+    sx = 0.6; sy = 1.5
     for i, (name, kpi, desc, color) in enumerate(cards):
-        x = sx + i * (card_w + gap)
-        ocean_box(s, x, sy, card_w, card_h,
-                  fill=GOLD_TINT if color == GOLD else LIGHT_TINT, stroke=color)
+        col = i % 2
+        row = i // 2
+        x = sx + col * (card_w + gap_x)
+        y = sy + row * (card_h + gap_y)
+        is_teal = (color == TEAL)
+        ocean_box(s, x, y, card_w, card_h,
+                  fill=GOLD_TINT if color == GOLD else (TEAL_TINT if is_teal else LIGHT_TINT),
+                  stroke=color)
         icon_p = ASSETS / "icons" / "shopping-cart-96.png"
         if icon_p.exists():
-            add_image(s, icon_p, x + (card_w - 0.9) / 2, sy + 0.25, w=0.9, h=0.9)
-        text_box(s, x + 0.15, sy + 1.3, card_w - 0.3, 0.4, name,
-                 size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x + 0.15, sy + 1.75, card_w - 0.3, 0.5, kpi,
-                 size=13, bold=True, color=color, align=PP_ALIGN.CENTER, line_spacing=1.2)
-        text_box(s, x + 0.2, sy + 2.4, card_w - 0.4, 1.0, desc,
-                 size=10, color=DARK_GREY, italic=True, align=PP_ALIGN.CENTER, line_spacing=1.4)
+            add_image(s, icon_p, x + 0.2, y + 0.25, w=0.7, h=0.7)
+        text_box(s, x + 1.05, y + 0.2, card_w - 1.2, 0.45, name,
+                 size=15, bold=True, color=DEEP)
+        text_box(s, x + 1.05, y + 0.65, card_w - 1.2, 0.4, kpi,
+                 size=13, bold=True, color=color, line_spacing=1.2)
+        text_box(s, x + 0.2, y + 1.15, card_w - 0.4, 1.25, desc,
+                 size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
 
-    # Bottom — supermarket aisle photo + caveat
-    ocean_box(s, 0.6, 5.4, 6.0, 1.5)
-    p = ASSETS / "photos" / "p37s-supermarket-aisle.jpg"
-    if p.exists():
-        add_image(s, p, 0.85, 5.55, w=5.5, h=1.2)
+    # Bottom caveat row (compact)
+    ocean_box(s, 0.6, 6.85, 12.13, 0.45, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 6.88, 11.6, 0.35,
+             "⚠ Оговорка: L5 — розничный ИИ, не агро. Магнит F&R — нюанс «гибрид»: прогноз в промышленной эксплуатации, пополнение — пилот.",
+             size=11, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
-    ocean_box(s, 6.8, 5.4, 6.0, 1.5, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.05, 5.55, 5.5, 0.4,
-             "⚠ Оговорка: L5 ≠ агро-готовность",
-             size=13, bold=True, color=GOLD)
-    text_box(s, 7.05, 5.95, 5.5, 0.9,
-             "Успех на L5 — это розничный ИИ, не сельскохозяйственный.\n"
-             "Большая часть L5 — не агро-специфика. Опыт ≠ агро-инструмент.",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
-
-    add_footer(s, "Источники: Walmart corporate 2025; Tesco AI annual report; X5 Tech 2024")
+    add_footer(s, "Walmart corporate 2025 · Tesco AI annual report · X5 Tech 2024 · Habr Магнит 2026-01")
     add_speaker_notes(s, load_speaker_notes("s37s"))
 
     # ============ s38s 5 criteria matrix ============
@@ -779,7 +779,7 @@ def build_part3(prs, H):
         ("L1 Поле", "John Deere · Bayer · BASF\nClimate · Taranis · Granular",
          "Cognitive Pilot · ИТЭЛМА\nЭФКО · Геоскан · ExactFarming", LIGHT),
         ("L2 Робот", "Carbon Robotics · Saga · Tevel\nAGCO · Aigen", "(точечные RU стартапы)", MID),
-        ("L3 Животное", "DeLaval · GEA · Lely\nCargill Birdoo · Allflex", "Connectome.ai · Сколково pipeline", LIGHT),
+        ("L3 Животное", "DeLaval · GEA · Lely\nCargill Birdoo · Allflex", "Connectome.ai · Сколково", LIGHT),
         ("L4 Цепочка", "Cargill CMAX · Tract · Olam\nADM · Walmart×Cropin", "X5 Tech · Магнит digital\nРусагро Тех · РСХБ.цифра", GOLD),
         ("L5 Полка", "Walmart Eden · Tesco AI\nWooliesX · Carrefour AI", "X5 «Перекрёсток»\n(мировой уровень)", MID),
     ]
@@ -807,54 +807,88 @@ def build_part3(prs, H):
     add_footer(s, "Рыночный ландшафт без агитации. Родовая форма — «профильные технические университеты»")
     add_speaker_notes(s, load_speaker_notes("s36c"))
 
-    # ============ s37 closing hero ============
+    # ============ s37 closing hero + 5-level ladder recap (D3) ============
     s = blank(prs); set_slide_bg(s, WHITE)
 
     # Top callback box
-    ocean_box(s, 0.6, 0.4, 12.13, 2.5, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 0.55, 11.6, 0.5,
+    ocean_box(s, 0.6, 0.3, 12.13, 1.9, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 0.4, 11.6, 0.35,
              "Возврат к началу лекции (Plenty Compton):",
-             size=13, italic=True, color=GOLD, bold=True)
-    text_box(s, 0.85, 1.05, 11.6, 0.7,
+             size=12, italic=True, color=GOLD, bold=True)
+    text_box(s, 0.85, 0.8, 11.6, 0.55,
              "Plenty не закрылась из-за плохого ИИ.",
-             size=26, bold=True, color=DEEP)
-    text_box(s, 0.85, 1.8, 11.6, 0.7,
+             size=22, bold=True, color=DEEP)
+    text_box(s, 0.85, 1.4, 11.6, 0.55,
              "Plenty закрылась из-за термодинамики LED.",
-             size=26, bold=True, color=GOLD)
-    text_box(s, 0.85, 2.55, 11.6, 0.3,
-             "Контроллер работал. Компьютерное зрение распознавало. Модель обучалась. LED ≈ 100× энергии солнца — AP1.",
-             size=11, italic=True, color=DARK_GREY)
+             size=22, bold=True, color=GOLD)
+    text_box(s, 0.85, 1.95, 11.6, 0.25,
+             "Контроллер работал. CV распознавало. Модель обучалась. LED ≈ 100× энергии солнца — AP1.",
+             size=10, italic=True, color=DARK_GREY)
 
-    # Mid: main payoff
-    text_box(s, 0.6, 3.15, 12.13, 1.0,
-             "Инженер держит лестницу в голове целиком,",
-             size=22, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.3)
-    text_box(s, 0.6, 3.65, 12.13, 0.9,
-             "выбирая правильный инструмент для каждой ступени, и зная, где ИИ не работает и почему.",
-             size=18, color=MID, italic=True, align=PP_ALIGN.CENTER, line_spacing=1.4)
+    # Mid: 5-level mini-ladder recap (D3 — на каждый уровень success / failure)
+    text_box(s, 0.6, 2.4, 12.13, 0.35,
+             "На каждый уровень лестницы — работает и ломается:",
+             size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER, italic=True)
 
-    # Bottom: hero image + bridge
-    ocean_box(s, 0.6, 4.7, 6.5, 2.0)
-    p = ASSETS / "photos" / "p20-farmwise-titan.jpg"
-    if p.exists():
-        add_image(s, p, 0.85, 4.85, w=6.0, h=1.7)
-    text_box(s, 0.85, 6.6, 6.0, 0.3,
-             "Carbon Robotics LaserWeeder G2 · от поля до фабрики",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    ladder = [
+        ("L1 Поле",      "See & Spray (5M акров)",           "Plenty / Bowery (термодинамика)"),
+        ("L2 Робот",     "LaserWeeder G2 (узкий лазер)",     "Monarch (демо ≠ внедрение)"),
+        ("L3 Животное",  "SenseHub (2M коров)",              "Cainthus / привязное содержание"),
+        ("L4 Цепочка",   "Cargill CMAX (узкий агент)",       "USDA Climate-Smart / Verra 94%"),
+        ("L5 Полка",     "Walmart Eden / Tesco / X5",        "GNSS-jamming Финляндия"),
+    ]
+    ladder_x = 0.6
+    ladder_y = 2.8
+    row_h = 0.42
+    # Header
+    headers = [("Уровень", 2.0, DEEP), ("✓ Работает", 5.0, LIGHT), ("✗ Ломается", 5.13, GOLD)]
+    cx = ladder_x
+    for hdr, w, color in headers:
+        ocean_box(s, cx, ladder_y, w, row_h, fill=color, stroke=color)
+        text_box(s, cx, ladder_y, w, row_h, hdr,
+                 size=12, bold=True, color=WHITE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        cx += w + 0.0
+    ladder_y += row_h + 0.03
+    for i, (lvl, success, failure) in enumerate(ladder):
+        cx = ladder_x
+        fill = SURFACE if i % 2 == 0 else LIGHT_TINT
+        # Level
+        ocean_box(s, cx, ladder_y, 2.0, row_h, fill=fill, stroke=LIGHT, stroke_pt=0.5)
+        text_box(s, cx + 0.1, ladder_y, 1.8, row_h, lvl,
+                 size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        cx += 2.0
+        # Success
+        ocean_box(s, cx, ladder_y, 5.0, row_h, fill=fill, stroke=LIGHT, stroke_pt=0.5)
+        text_box(s, cx + 0.1, ladder_y, 4.8, row_h, success,
+                 size=11, color=DEEP, italic=True, anchor=MSO_ANCHOR.MIDDLE)
+        cx += 5.0
+        # Failure
+        ocean_box(s, cx, ladder_y, 5.13, row_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=0.5)
+        text_box(s, cx + 0.1, ladder_y, 4.93, row_h, failure,
+                 size=11, color=DARK_GREY, italic=True, anchor=MSO_ANCHOR.MIDDLE)
+        ladder_y += row_h + 0.03
+
+    # Bottom: main payoff + bridge to L11
+    ocean_box(s, 0.6, 5.5, 6.5, 1.4, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.8, 5.6, 6.1, 0.4,
+             "Инженер держит лестницу в голове целиком",
+             size=14, bold=True, color=DEEP)
+    text_box(s, 0.8, 6.0, 6.1, 0.85,
+             "и выбирает правильный инструмент для каждой ступени.\n"
+             "Знает где ИИ не работает — и почему.",
+             size=12, color=MID, italic=True, line_spacing=1.4)
 
     # Bridge box
-    ocean_box(s, 7.3, 4.7, 5.45, 2.0, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 7.5, 4.85, 5.05, 0.4, "Переход к Лекции 11",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 7.5, 5.3, 5.05, 1.3,
-             "L11 — кибер-физическое\n"
-             "производство. Закрытый контур\n"
-             "как L4-L5 + физический контакт\n"
-             "ИИ с продуктом как L2. Прогностич.\n"
-             "обслуживание · робото-сборка · контроль качества.",
+    ocean_box(s, 7.3, 5.5, 5.45, 1.4, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 7.5, 5.6, 5.05, 0.4, "Переход к Лекции 11",
+             size=14, bold=True, color=GOLD)
+    text_box(s, 7.5, 6.0, 5.05, 0.9,
+             "L11 — кибер-физическое производство. Закрытый контур\n"
+             "как L4-L5 + физический контакт ИИ с продуктом как L2.",
              size=11, color=DEEP, italic=True, line_spacing=1.4)
 
-    add_footer(s, "Спасибо. Дальше — вопросы и ответы · Carbon Robotics, businesswire 2025-02-10")
+    add_footer(s, "Спасибо. Дальше — вопросы и ответы")
     add_speaker_notes(s, load_speaker_notes("s37"))
 
     # ============ s38 dedicated Q&A ============
@@ -866,8 +900,8 @@ def build_part3(prs, H):
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
              font=H["FONT_HEAD"])
 
-    text_box(s, 0.6, 3.2, 12.13, 0.5, "10 минут на обсуждение",
-             size=18, italic=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(s, 0.6, 3.2, 12.13, 0.5, "Резервные вопросы про термодинамику VF, agentic AI scope, ИТЭЛМА vs Cognitive Pilot, foundation models",
+             size=14, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
     # 3 backup prompts
     text_box(s, 0.6, 4.3, 12.13, 0.4, "Резервные вопросы",

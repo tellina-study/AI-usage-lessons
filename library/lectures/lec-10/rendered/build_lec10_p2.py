@@ -19,7 +19,7 @@ def build_part2(prs, H):
     section_divider(prs, 2, "Раздел 2 — L2 «Робот»",
         "Специализация побеждает универсальность. Узкие победы против универсальных провалов.",
         current_section=2,
-        caption="15 минут · LaserWeeder + 3 специализированных + 2 провала + РФ-параллель")
+        caption="4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry) · РФ-параллель CV vs sensor-fusion")
     s_last = prs.slides[-1]
     add_speaker_notes(s_last, load_speaker_notes("s15"))
 
@@ -39,26 +39,26 @@ def build_part2(prs, H):
              "ИИ-управляемый робот для борьбы с сорняками (репрезентативное фото · класс «Titan / LaserWeeder»)",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Right: 4 KPI cards + 1 spec card
+    # Right: 4 KPI cards — с baseline counterfactuals
     kpis = [
-        ("250 000 акров", "обработано · 14 стран", GOLD),
+        ("250 000 акров", "≈0,028% из 900M акров US ag", GOLD),
         ("15 млрд", "сорняков уничтожено", DEEP),
-        ("$1,4 млн", "стоимость одной машины", LIGHT),
-        ("240 Вт лазер", "+ нейросеть на 40 млн изобр.", MID),
+        ("$1,4 млн", "vs прыскиватель ~$50k + химия $200-400/акр → окупаемость 3-4 года на 1k+ акров", LIGHT),
+        ("240 Вт лазер", "+ CNN на 40 млн изображений", MID),
     ]
     cy = 1.5
     for big, lbl, color in kpis:
-        ocean_box(s, 8.3, cy, 4.45, 1.05, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
-        text_box(s, 8.5, cy + 0.12, 4.1, 0.5, big, size=20, bold=True, color=color)
-        text_box(s, 8.5, cy + 0.6, 4.1, 0.4, lbl,
-                 size=11, color=DEEP, italic=True)
-        cy += 1.15
+        ocean_box(s, 8.3, cy, 4.45, 1.15, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
+        text_box(s, 8.5, cy + 0.1, 4.1, 0.55, big, size=24, bold=True, color=color)
+        text_box(s, 8.5, cy + 0.65, 4.1, 0.45, lbl,
+                 size=13, color=DEEP, italic=True)
+        cy += 1.25
 
     # Bottom: principle
     ocean_box(s, 0.6, 6.55, 12.13, 0.4, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.6, 11.6, 0.3,
+    text_box(s, 0.85, 6.58, 11.6, 0.32,
              "Замена химии физикой — узкая замена операции, не «автономный трактор». Рабочий паттерн L2.",
-             size=12, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+             size=13, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
     add_footer(s, "Источник: пресс-релиз Carbon Robotics, businesswire 2025-02-10")
     add_speaker_notes(s, load_speaker_notes("s16"))
@@ -81,7 +81,7 @@ def build_part2(prs, H):
              size=11, italic=True, color=MID)
     hr_line(s, 0.8, cy + 1.05, col_w - 0.4, color=LIGHT, weight=1.0)
     text_box(s, 0.8, cy + 1.2, col_w - 0.4, 0.4,
-             "1200+ установок (трактора, комбайны)",
+             "1700+ установок (трактора, комбайны)",
              size=12, bold=True, color=DEEP)
     text_box(s, 0.8, cy + 1.6, col_w - 0.4, 0.4,
              "4 иска фермеров (~12,7 млн ₽)",
@@ -179,10 +179,10 @@ def build_part2(prs, H):
 
     # Timeline 2018-2026 — compact, fits within 0.6-12.73 inches
     events = [
-        ("2018", "Основание", "Carmel Valley, CA", LIGHT),
+        ("2018", "Основание", "Livermore, CA", LIGHT),
         ("2022", "Демо MK-V", "Большая PR-волна", MID),
         ("сент. 2025", "Иск Burks Tractor", "10 тракторов · $773 088\n«не может работать\nавтономно»", GOLD),
-        ("нояб. 2025", "102 сокращения", "~38% штата", GOLD),
+        ("нояб. 2025", "102 сокращения", "~38% (102 / ~270\nпосле 10% cut нояб. 2024)", GOLD),
         ("апр. 2026", "Поглощение\nCaterpillar", "Конец независимости", DEEP),
     ]
 
@@ -238,8 +238,8 @@ def build_part2(prs, H):
 
     # Left: cause
     ocean_box(s, 0.6, 1.5, 6.0, 4.6, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.85, 1.65, 5.5, 0.5, "Причина провалов CV-стека",
-             size=15, bold=True, color=DEEP)
+    text_box(s, 0.85, 1.65, 5.5, 0.5, "Причина провалов CV-стека (компьютерное зрение)",
+             size=14, bold=True, color=DEEP)
     p = ASSETS / "photos" / "p20-farmwise-titan.jpg"
     if p.exists():
         add_image(s, p, 0.85, 2.2, w=5.5, h=2.0)

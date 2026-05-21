@@ -12,7 +12,7 @@ visual:
   primary: "Vertical schema 5 blocks × 2 пункта + scoring rubric (8-10 / 5-7 / ≤4)"
 ---
 
-# Pre-purchase verification checklist — операционный артефакт LO2
+# Чек-лист проверки перед покупкой ИИ-решения
 
 ## Assertion
 
@@ -48,7 +48,7 @@ visual:
 - **5-7 green** ◐ → conditional pilot (1-2 объекта + критерии выхода)
 - **≤4 green** ✗ → reject or escalate to expert audit
 
-Bottom callout 14pt italic в gold-tint box: «**Каждый пункт проверяется НЕ словами вендора**, а **внешними источниками**: independent reports, public registers, customer references, regulatory filings. Это конкретный артефакт LO2 — навык, которым инженер защищает компанию от vendor maskirovka».
+Bottom callout 14pt italic в gold-tint box: «**Каждый пункт проверяется НЕ словами вендора**, а **внешними источниками**: independent reports, public registers, customer references, regulatory filings. Это конкретный практический инструмент критической оценки вендорского claim — навык, которым инженер защищает компанию от vendor maskirovka».
 
 Footer 12pt italic: «Источник: Chapter v3.1 §6.1a Часть 3».
 
@@ -68,7 +68,7 @@ Footer 12pt italic: «Источник: Chapter v3.1 §6.1a Часть 3».
 
 Scoring rubric: восемь-десять green — buy / pilot ready, решение проходит due diligence для коммерческого внедрения. Пять-семь green — conditional pilot, ограниченное пилотирование на одном-двух объектах с явными критериями выхода. Менее или равно четырём green — reject или escalate to expert audit.
 
-Это минимальный аудит-чек, на который у студента — или CTO любой компании, оценивающей AgTech-инвестицию — должен быть прямой и измеряемый ответ. Каждый из десяти пунктов проверяется не словами вендора, а внешними источниками: independent reports, public registers, customer references, regulatory filings. Это и есть конкретный артефакт LO-два — навык, которым инженер защищает компанию от vendor maskirovka.
+Это минимальный аудит-чек, на который у студента — или CTO любой компании, оценивающей AgTech-инвестицию — должен быть прямой и измеряемый ответ. Каждый из десяти пунктов проверяется не словами вендора, а внешними источниками: independent reports, public registers, customer references, regulatory filings. Это и есть конкретный практический инструмент критической оценки вендорского claim — навык, которым инженер защищает компанию от vendor maskirovka.
 
 ## Источники
 

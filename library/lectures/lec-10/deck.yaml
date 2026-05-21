@@ -19,15 +19,15 @@
 
 deck:
   lecture_number: 10
-  title: "AI в сельском хозяйстве"
+  title: "ИИ в сельском хозяйстве"
   audience: "студенты-инженеры 3 курса"
   duration_min: 75
   central_question: "Где на лестнице L1→L5 ИИ работает, где ломается — и какой класс решения / альтернатива применимы на каждой ступени?"
   learning_outcomes: [LO1a, LO1b, LO2, LO5]
   language: ru
   status: draft
-  version: v1
-  source: "library/lectures/lec-10/chapter.md (Часть 1) + chapter-part2.md + chapter-part3.md (chapter v3.1 finalized, 31 960 слов)"
+  version: v2
+  source: "library/lectures/lec-10/chapter.md (Часть 1) + chapter-part2.md + chapter-part3.md (chapter v3.2 — Phase 8 cascade fix from Phase 7 P0-3 + P0-4)"
   plan: "notes/lecture-10-review/plan-v2.md"
   keystone_axis: "Лестница AI-проникновения в АПК — от поля к полке (L1 поле → L2 робот → L3 животное → L4 цепочка поставок → L5 потребитель) + injection «closed-loop vs open-environment AI» как объяснительный механизм провалов"
 

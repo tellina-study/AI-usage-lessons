@@ -22,7 +22,7 @@ visual:
 
 Слева — огромная цифра «4-bis» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «Среда — связь, привязка к поставщику, регуляторика» + 1 фраза-фрейм 20pt italic Primary mid: «Cross-cutting meta-уровень: всё, без чего ни одна ступень не работает».
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р4-bis) выделена gold. Caption 12pt italic: «8 минут · 3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-AI критерия (AP5, AP6, AP7)».
+Внизу — progress bar: 7 horizontal cards, текущая (Р4-bis) выделена gold. Caption 12pt italic: «3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)».
 
 ## Speaker notes
 
@@ -30,7 +30,7 @@ visual:
 
 Связь. Восемнадцать процентов американских ферм без интернета в принципе; сто двадцать три тысячи авиа-рейсов с GNSS-interference в первые четыре месяца 2025 года; Starlink в РФ запрет с тридцатого апреля 2026-го на полгода. Это AP-пять: cloud-first для off-grid farm — архитектурная ошибка. Альтернатива — edge ML и TinyML.
 
-Привязка к поставщику. Январь 2025 — иск FTC против John Deere за десятилетние ограничения ремонта. Май 2022 — Мелитопольский remote-brick: Deere дистанционно отключил двадцать семь единиц техники, переехавших из оккупированной Запорожской области в Чечню. Декабрь 2025 — FCC ban DJI ag-drones: восемьдесят процентов US ag-spray drone fleet под угрозой. И самая методически-важная мысль раздела — двойная оптика. Один и тот же механизм — geo-locking плюс VIN-locking — даёт две противоположные интерпретации: anti-theft success с одной стороны, vendor control surface с другой. AI security feature сегодня — это AI control surface завтра.
+Привязка к поставщику. Январь 2025 — иск FTC против John Deere за десятилетние ограничения ремонта. Май 2022 — Мелитопольский remote-brick: Deere дистанционно отключил двадцать семь единиц техники, переехавших из оккупированной Запорожской области в Чечню. Декабрь 2025 — FCC ban DJI ag-drones: восемьдесят процентов US ag-spray drone fleet под угрозой. И самая важная мысль раздела — двойная оптика. Один и тот же механизм — geo-locking плюс VIN-locking — даёт две противоположные интерпретации: anti-theft success с одной стороны, vendor control surface с другой. AI security feature сегодня — это AI control surface завтра.
 
 Регуляторика. EU AI Act high-risk classification для autonomous agricultural machinery с февраля 2025-го, плюс AI literacy для операторов, плюс liability cascade. USDA AI Strategy формальна. РФ программа «АПК будущего» 2026-2030 декларативна — наследница «Цифрового сельского хозяйства», которое цели удвоения производительности не достигла.
 

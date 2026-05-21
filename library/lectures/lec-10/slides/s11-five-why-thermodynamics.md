@@ -8,8 +8,8 @@ learning_outcomes: [LO5]
 chapter_ref: "§1.4 Часть 1 — 5-Why физико-экономическая логика"
 references: [hannah-ritchie-2024-vertical, mdpi-sustainability-2024]
 visual:
-  pattern: chain_5step_vertical
-  primary: "5-step chain vertical (Why → Why → Why → Why → Why), физика → экономика → инженерная архитектура + numerical breakdown 0,5 × 0,7 × 0,3 = 10,5%"
+  pattern: chain_5step_horizontal
+  primary: "5-step chain horizontal (Почему 1→2→3→4→5), физика → экономика → инженерная архитектура + numerical breakdown 0,5 × 0,7 × 0,3 = 10,5%"
 ---
 
 # 5-Why — почему ML не закрыл термодинамический gap

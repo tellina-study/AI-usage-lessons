@@ -613,3 +613,29 @@ Production Л11 «AI в дискретном и процессном произ�
 - USER GATE feedback rounds: target 0 (pre-USER-GATE walkthrough catches P0)
 - Wall-clock: single-day cycle achievable с parallel critics
 - Artifacts: chapter ≥30k multi-part / slides 35-41 / speech ~5k / manifest update / reflection
+
+---
+
+## 2026-05-21 — Лекция 10 production findings (issue #137 reflection)
+
+- **2 NEW ENFORCED rules introduced mid-flight по explicit user feedback.** Both bundled в PR #136 с lec-10 production (precedent: Лекция 9 #123, Лекция 11 #129):
+  - **«No Timing / No Methodology in Slides»** — user signal «в каждой лекции правлю» indicates rule violated systematically across L1-L9+10. Existing No Extra Content Rule был too abstract; новая section provides explicit forbidden pattern list (timing regex `\b[0-9]+\s*мин(ут)?\b` + methodology regex `(методическ|педагогическ)\s*\w+|На этом этапе студент|Зачем это в Лекции`). Pre-USER-GATE Walkthrough Rule §5 расширен 3 groups grep (scaffold + timing + methodology). Anti-Patterns table +2 rows.
+  - **«Baseline / Counterfactual Mandate for Measurable Claims»** — user signal «во многих оценках эффектов/потерь не хватает базы. а сколько на человека или без робота? а сколько было?» exposes pedagogical gap. Pre-USER-GATE точка 12 added (baseline coverage check sample 5-7 measurable). Anti-Patterns +1 row. Все measurable claims (acres / cows / $$ / % / kg / hours) ОБЯЗАНЫ inline base / counterfactual / denominator.
+
+- **Batched revision pattern окупается на P0+P1 combined fixes.** Phase 8 v2 (lec-10): single presentation-designer agent applied 8 P0 + 32 P1 batched, regenerated PPTX + PNG snapshots. Phase 11 v2: single book-editor agent applied 3 P0 + 12 P1 across 3 artifacts atomically (speech v1→v2 + chapter v3.2→v3.3 + slides s05/s10/s37s re-render). **vs per-artifact serial fixing** — batched eliminates inter-phase drift и снижает agent invocations.
+
+- **Self-report inflation × 2 verified в этой сессии.** Phase 6 designer self-report 66 anglicism candidates → independent presentation-critic scan 84 (~27% inflation). Phase 9 speech-writer self-report 2 critical → methodology-critic broad regex 43. **Pattern stable across lectures:** subagent self-grep систематически underestimates. **Mitigation already in CLAUDE.md (Pre-USER-GATE Walkthrough Rule §5 ENFORCED orchestrator-INDEPENDENT)** — это works когда applied.
+
+- **Usage limit handled correctly per memory rule `feedback_subagent_usage_limit`.** 2 hits в этой сессии (Phase 4b chapter expansion + Phase 11 batched revise). Memory rule explicit: **«limit ≠ failure»**, wait for reset + re-spawn same brief. Orchestrator НЕ self-implement как workaround. **Verified pattern.**
+
+- **AP2a/AP2b split — strongest pedagogical insight отраслевых лекций.** Cognitive Pilot (CV) vs ИТЭЛМА (sensor-fusion на multi-GNSS) framed как «architecture choice within AI domain», not «AI vs не-AI». **Это concept-cracker** для студентов после L7 (closed-loop medicine) + L9 (OODA dual-use). Применимо к будущим отраслевым лекциям где есть multiple AI architectures для same task.
+
+- **Лестница 5 уровней (L1→L5) как keystone-axis для отраслевых лекций.** Reader-simulator verified «через 2 недели восстанавливается по памяти» — sticky mnemonic. Pattern: для industry-applied lecture, taxonomic ladder с growing controllability + falling biological/environmental noise + measurable ROI — образцовый scaffold. Compare к L9 OODA-keystone (conceptual axis) — both work, но ladder лучше для multi-segment industries.
+
+- **Plenty Compton failure-first hook + closing callback arc.** Pattern: open lecture с dramatic recent failure ($940M / 19 мес / –99% valuation) + close с causal explanation («не из-за плохого AI, из-за термодинамики LED»). Hook → keystone → 5 анти-AI критериев → close = narrative arc complete. **Align с course mission «учить говорить нет»**, не «AI revolution». Применимо ко всем отраслевым лекциям.
+
+- **Multi-lecture parallel production проверен (4 worktrees one-time).** lec-10 (`/tmp/lec-10-wt`) + lec-12 + lec-13 + lec-14 worktrees coexist; main repo на main; branch ref sync через `git update-ref` без contention. Лекция 10 finalization (PR #136) clean-merged несмотря на parallel Лекция 11 (#129) infrastructure changes. **Pattern works for ≥4 parallel lectures.**
+
+- **Cross-artifact cascade fix pattern (chapter ↔ slides ↔ speech) в одном batched book-editor agent.** Phase 11 v2 lec-10 demonstrated: agent касается 3 артефактов atomically + re-renders affected slides + updates frontmatters. **Превосходит per-artifact serial cascade** (avoid drift between fixes). Recommended для все cross-artifact P0 cascade fixes в future lectures.
+
+**Metric для L10:** 0 user feedback rounds AFTER each critic-APPROVE (vs Лекция 1 v3 = 3 rounds; Лекция 8 = 3 rounds wasted ~83 min). 2 user mid-flight interventions handled как infrastructure improvements, не one-off fixes. **Pre-USER-GATE Walkthrough Rule patterns (3 versions: A/B/C) sustainably eliminate post-critic owner intervention.**

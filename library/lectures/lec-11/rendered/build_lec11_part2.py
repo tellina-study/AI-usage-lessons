@@ -32,17 +32,17 @@ def s14_cv_inspection(p):
     cards = [
         ("BMW GenAI4Q", "Regensburg, 2025",
          ["Bespoke catalogue per vehicle", "FACTORY OF THE YEAR 2024", "Partner: Datagon AI"],
-         "Каждый автомобиль — свой набор checkpoints", MID),
+         "Каждый автомобиль — свой набор checkpoints", MID, "factory"),
         ("TSMC defect detection", "5nm / 3nm узлы",
          ["95% accuracy", "+10–15% yield", "Сотни миллионов $ в год"],
-         "Самый зрелый CV-кейс в производстве чипов", TEAL),
+         "Самый зрелый CV-кейс в производстве чипов", TEAL, "cpu"),
         ("Boeing 737 fuselage", "декабрь 2025",
          ["Post-door-plug crisis", "Photo-driven part validation", "Дополнительный слой"],
-         "CV-инспекция критических зон fuselage", GOLD),
+         "CV-инспекция критических зон fuselage", GOLD, "shield-check"),
     ]
     card_w = 4.05
     gap = 0.1
-    for i, (name, when, bullets, sub, color) in enumerate(cards):
+    for i, (name, when, bullets, sub, color, icon) in enumerate(cards):
         x = 0.5 + i * (card_w + gap)
         y = 1.75
         rounded_box(slide, x, y, card_w, 4.6)
@@ -51,15 +51,16 @@ def s14_cv_inspection(p):
                  size=17, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         text_box(slide, x + 0.15, y + 0.85, card_w - 0.3, 0.35, when,
                  size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-        # TSMC photo for middle card
+        # TSMC photo for middle card; icons for others
         if name.startswith("TSMC"):
             img_path = ASSETS / "screenshots" / "s14-tsmc.jpg"
             if img_path.exists():
                 add_image(slide, img_path, x + 0.2, y + 1.3, card_w - 0.4, 1.5)
         else:
-            rectangle(slide, x + 0.2, y + 1.3, card_w - 0.4, 1.5, fill=SOFT_GREY)
-            text_box(slide, x + 0.2, y + 1.95, card_w - 0.4, 0.4,
-                     "[фото]", size=11, color=SLATE, align=PP_ALIGN.CENTER)
+            # Icon centered
+            icon_path = ASSETS / "icons" / f"{icon}.png"
+            if icon_path.exists():
+                add_image(slide, icon_path, x + card_w/2 - 0.6, y + 1.4, 1.2, 1.2)
         # Bullets
         for j, b in enumerate(bullets):
             text_box(slide, x + 0.25, y + 2.95 + j*0.32, card_w - 0.4, 0.3,
@@ -221,13 +222,13 @@ def s18_cobots_jidoka(p):
              size=14, italic=True, color=LIGHT)
     # 3 cards
     cards = [
-        ("Hyundai + Boston Dynamics", "Spot для exterior QC", "Atlas humanoid — HMGMA, Georgia\nПервое коммерческое развёртывание гуманоида", MID),
-        ("Toyota GAIA", "8 000 (2023) → 10 000 (2024)", "AI-моделей создано сотрудниками,\nне data scientists. 10 000 часов saved/year", TEAL),
-        ("Toyota Jidoka 2.0", "Официальная позиция", "«Goal of jidoka isn't to replace people\nbut to protect quality, expose issues, free people for judgment»", GOLD),
+        ("Hyundai + Boston Dynamics", "Spot для exterior QC", "Atlas humanoid — HMGMA, Georgia\nПервое коммерческое развёртывание гуманоида", MID, "cog"),
+        ("Toyota GAIA", "8 000 (2023) → 10 000 (2024)", "AI-моделей создано сотрудниками,\nне data scientists. 10 000 часов saved/year", TEAL, "users"),
+        ("Toyota Jidoka 2.0", "Официальная позиция", "«Goal of jidoka isn't to replace people\nbut to protect quality, expose issues, free people for judgment»", GOLD, "wrench"),
     ]
     card_w = 4.05
     gap = 0.1
-    for i, (name, sub, body, color) in enumerate(cards):
+    for i, (name, sub, body, color, icon) in enumerate(cards):
         x = 0.5 + i * (card_w + gap)
         y = 1.7
         rounded_box(slide, x, y, card_w, 4.6)
@@ -236,9 +237,10 @@ def s18_cobots_jidoka(p):
                  size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         text_box(slide, x + 0.15, y + 0.85, card_w - 0.3, 0.4, sub,
                  size=12, italic=True, color=GOLD, align=PP_ALIGN.CENTER)
-        rectangle(slide, x + 0.3, y + 1.4, card_w - 0.6, 2.0, fill=SOFT_GREY)
-        text_box(slide, x + 0.3, y + 2.0, card_w - 0.6, 0.5,
-                 "[фото]", size=11, color=SLATE, align=PP_ALIGN.CENTER)
+        # Icon centered
+        icon_path = ASSETS / "icons" / f"{icon}.png"
+        if icon_path.exists():
+            add_image(slide, icon_path, x + card_w/2 - 0.9, y + 1.45, 1.8, 1.8)
         text_box(slide, x + 0.25, y + 3.6, card_w - 0.4, 0.9, body,
                  size=11, color=DEEP, line_spacing=1.35, align=PP_ALIGN.CENTER)
     # Bottom
@@ -458,9 +460,13 @@ def s24_soft_sensors(p):
     rectangle(slide, 6.7, 1.7, 6.13, 0.6, fill=TEAL)
     text_box(slide, 6.7, 1.75, 6.13, 0.5, "Pfizer Vox · 2024–2025",
              size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    rectangle(slide, 6.9, 2.45, 5.73, 2.2, fill=SOFT_GREY)
-    text_box(slide, 6.9, 3.4, 5.73, 0.5, "[Pfizer plant photo]",
-             size=12, color=SLATE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    # Pfizer Vox — pill icon as illustrative
+    pill_path = ASSETS / "icons" / "pill.png"
+    if pill_path.exists():
+        add_image(slide, pill_path, 9.0, 2.55, 1.5, 1.5)
+    text_box(slide, 6.9, 4.1, 5.73, 0.4,
+             "GenAI на AWS Bedrock + SageMaker",
+             size=11, italic=True, color=DARK_GREY, align=PP_ALIGN.CENTER)
     multiline_box(slide, 6.9, 4.75, 5.73, 1.4, [
         ("+20 000 doses per batch", {"size": 16, "bold": True, "color": GOLD}),
         ("AWS Bedrock + SageMaker", {"size": 11, "italic": True, "color": SLATE}),

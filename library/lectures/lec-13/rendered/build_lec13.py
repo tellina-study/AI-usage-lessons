@@ -1839,28 +1839,32 @@ def s41_closing_hero_noc(p):
     """s41 — Closing hero NOC bridge to lec-14."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
-    # Hero image left (≥40% area)
+    # Hero image left (≥40% area = ≥40 sq inch on 13.33×7.5 slide; 8.0×5.5 = 44 sq inch)
     img_path = ASSETS / "screenshots" / "s41-noc-iupui.jpg"
-    add_image_aspect(slide, img_path, 0.5, 0.5, 7.0, 5.0)
+    add_image_aspect(slide, img_path, 0.5, 0.5, 8.0, 5.5)
     attribution(slide, "Network Operations Center · IUPUI · Wikimedia · CC-BY-SA",
-                x=0.5, y=5.6, w=7.0)
-    # Right: bridge text
-    multiline_box(slide, 7.8, 0.6, 5.2, 5.0, [
+                x=0.5, y=6.05, w=8.0)
+    # Right: bridge text (narrower column)
+    multiline_box(slide, 8.8, 0.6, 4.2, 5.5, [
         ("Мост к Лекции 14", {"size": 14, "bold": True, "color": LIGHT}),
-        ("Другая среда,", {"size": 28, "bold": True, "color": DEEP}),
-        ("та же логика", {"size": 28, "bold": True, "color": DEEP}),
+        ("Другая среда,", {"size": 24, "bold": True, "color": DEEP}),
+        ("те же 5 вопросов", {"size": 24, "bold": True, "color": DEEP}),
         ("", {"size": 12}),
-        ("Завтра — телекоммуникации,", {"size": 14, "color": MID}),
-        ("сетевая инфраструктура, кибербез.", {"size": 14, "color": MID}),
+        ("Следующая лекция —", {"size": 13, "color": MID}),
+        ("телекоммуникации,", {"size": 13, "color": MID}),
+        ("сетевая инфраструктура,", {"size": 13, "color": MID}),
+        ("кибербезопасность.", {"size": 13, "color": MID}),
         ("", {"size": 8}),
-        ("· AI augments человек SOC analyst", {"size": 12, "color": DEEP}),
-        ("· OR + на правилах threat detection — mainstream", {"size": 12, "color": DEEP}),
-        ("· ML helps в-distribution, слепо вне распределения", {"size": 12, "color": DEEP}),
-        ("· HITL обязателен в исключение events", {"size": 12, "color": DEEP}),
+        ("· AI помогает SOC-аналитику", {"size": 11, "color": DEEP}),
+        ("· OR + правиловая детекция —", {"size": 11, "color": DEEP}),
+        ("  mainstream", {"size": 11, "color": DEEP}),
+        ("· ML — в-распределении силён,", {"size": 11, "color": DEEP}),
+        ("  вне — слеп", {"size": 11, "color": DEEP}),
+        ("· HITL обязателен на исключениях", {"size": 11, "color": DEEP}),
         ("", {"size": 8}),
-        ("Лестница среды переходит", {"size": 14, "bold": True, "color": GOLD}),
-        ("из физического мира в сетевой.", {"size": 14, "bold": True, "color": GOLD}),
-    ], line_spacing=1.2)
+        ("Среда меняется.", {"size": 14, "bold": True, "color": GOLD}),
+        ("Критическое суждение — нет.", {"size": 14, "bold": True, "color": GOLD}),
+    ], line_spacing=1.15)
     # Recap callout
     rounded_box(slide, 0.5, 6.1, 12.33, 1.0, fill=GOLD_TINT, stroke=GOLD, stroke_w=2)
     multiline_box(slide, 0.7, 6.2, 11.9, 0.9, [

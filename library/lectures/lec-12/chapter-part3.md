@@ -6,7 +6,7 @@ title: "Глава 12. Часть 3: §5 (где AI НЕ применим) + §6
 lecture_number: 12
 length_words: ~6500
 status: reviewed
-version: v2
+version: v3
 ---
 
 ---

@@ -5,7 +5,7 @@ parent: "chapter.md"
 title: "Глава 12. Источники"
 lecture_number: 12
 status: reviewed
-version: v2
+version: v3
 ---
 
 # Источники для Главы 12
@@ -58,6 +58,7 @@ version: v2
 - [38] Eclatron. «The Role of OPC UA in Smart Manufacturing and Digital Transformation». 2026. https://www.eclatron.com/post/the-role-of-opc-ua-in-smart-manufacturing-and-digital-transformation
 - [39] Manufacturing Dive. «ABB Robotics + NVIDIA simulation scale industrial physical AI». 2026. https://www.manufacturingdive.com/news/abb-robotics-nvidia-simulation-scale-industrial-physical-ai/814415/
 - [40] Siemens news. «Digital Twin Composer CES 2026». https://news.siemens.com/en-us/digital-twin-composer-ces-2026/
+- [41] Build in Digital. «Why Construction Digital Twins Fail and How to Build Ones That Work». 2024–2025. https://buildindigital.com/why-construction-digital-twins-fail-how-to-build-ones-that-work/ — основной источник по кейсу Southeast Asian Port digital twin ($12 миллионов / 18 месяцев / списан 2024); название порта в источнике анонимизировано из соображений конфиденциальности.
 
 ---
 

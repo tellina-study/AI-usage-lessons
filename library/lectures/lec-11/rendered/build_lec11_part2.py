@@ -347,7 +347,7 @@ def s21_foxbrain(p):
              "«80% работы по настройке» — заявление вендора, не измеренный показатель",
              size=22, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.1, 12.33, 0.4,
-             "Янг Лиу, председатель Foxconn, Computex, май 2025 — упражнение в критической оценке",
+             "Young Liu, председатель Foxconn, Computex, май 2025 — упражнение в критической оценке",
              size=14, italic=True, color=LIGHT)
     # Quote big — RU primary
     rounded_box(slide, 0.5, 1.65, 12.33, 1.4, fill=GOLD_TINT, stroke=GOLD, stroke_w=2.0)
@@ -355,7 +355,7 @@ def s21_foxbrain(p):
              "«После подключения AI-инструментов в рабочие процессы Foxconn софт сейчас выполняет около 80 процентов работы по настройке оборудования к новому производственному запуску.»",
              size=14, italic=True, color=DEEP, align=PP_ALIGN.CENTER)
     text_box(slide, 0.7, 2.55, 12.0, 0.4,
-             "— Янг Лиу, председатель Foxconn · Computex, май 2025",
+             "— Young Liu, председатель Foxconn · Computex, май 2025",
              size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
     # 4 questions
     text_box(slide, 0.5, 3.2, 12.33, 0.5,
@@ -1025,7 +1025,7 @@ def s35_framework(p):
              "5-шаговая рамка — ваш инструмент для кармана",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "Пять шагов + четыре вопроса к вендору + гибридные паттерны",
+             "Пять шагов + пять вопросов к вендору + гибридные паттерны",
              size=14, italic=True, color=LIGHT)
     # 5 steps as horizontal flow
     steps = [

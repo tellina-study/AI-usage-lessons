@@ -88,9 +88,9 @@ lectures:
     title: "AI в креативных индустриях и медиа"
     module: 1
     learning_outcomes: [LO1, LO2, LO4, LO5]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-08
+    status: produced
+    updated_at: "2026-05-21"
 
   - number: 9
     title: "AI в авиакосмической отрасли и оборонном комплексе"

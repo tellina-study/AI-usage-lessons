@@ -427,19 +427,19 @@ def s05_keystone_ladder(p):
              "Пять уровней — от контролируемого склада к чёрному лебедю. Каждый раздел = мотивированный шаг по этой оси.",
              size=13, italic=True, color=LIGHT)
     # 5 horizontal steps
-    уровеньs = [
-        ("1", "Контролируемое", "Symbotic+Walmart 400 APD\nAmazon 1M+ роботов\nKONUX железная дорога PdM", "ROI 2-4 года", LIGHT),
+    levels = [
+        ("1", "Контролируемое", "Symbotic+Walmart 400 APD\nAmazon 1M+ роботов\nKONUX железная дорога PdM", "Капитальная интенсивность $$$", LIGHT),
         ("2", "Магистраль", "Aurora Dallas-Houston\nMobileye L3 eyes-off\nКамАЗ М-11 «Нева»", "$20B+ сожжено невыжившие", MID),
-        ("3", "Городской robotaxi", "Waymo 500K/неделю\nApollo Go 22 города\nPony.ai единица прибыль", "Cruise: $10B → 0", TEAL),
-        ("4", "Последняя миля", "Starship 9M+ кампусы\nZipline 100M миль Africa\nNuro разворот 2024", "Дроны городской US заблокировано", GOLD),
-        ("5", "Чёрный лебедь", "Хуситы 2024 (-90%)\nSuez 2021 (12% торговля)\nCOVID 2020 обвал", "AI не работает — нужен человек", RED_WARN),
+        ("3", "Городской robotaxi", "Waymo 500K/неделю\nApollo Go 22 города\nPony.ai прибыль на машину", "Cruise: $10B → 0", TEAL),
+        ("4", "Последняя миля", "Starship 9M+ кампусы\nZipline 100M миль Africa\nNuro разворот 2024", "Дроны в городе США заблокированы", GOLD),
+        ("5", "Чёрный лебедь", "Хуситы 2024 (-90%)\nSuez 2021 (12% торговли)\nCOVID 2020 обвал", "AI не работает — нужен человек", RED_WARN),
     ]
     step_w = 2.42
-    разрыв = 0.05
+    gap = 0.05
     x0 = 0.5
     y = 1.7
-    for i, (num, name, examples, fail, accent) in enumerate(уровеньs):
-        x = x0 + i * (step_w + разрыв)
+    for i, (num, name, examples, fail, accent) in enumerate(levels):
+        x = x0 + i * (step_w + gap)
         h = 4.5
         # Box height grows with уровень для visual progression
         rounded_box(slide, x, y, step_w, h, stroke=accent, stroke_w=2.0)
@@ -765,8 +765,11 @@ def s15_mobileye_kamaz(p):
     ], line_spacing=1.3)
     # Right: КамАЗ
     rounded_box(slide, 6.9, 1.9, 6.0, 4.5)
-    text_box(slide, 7.1, 2.05, 5.6, 0.5, "КамАЗ-54901 + Cognitive Pilot",
+    text_box(slide, 7.1, 2.05, 5.6, 0.4, "КамАЗ-54901 + Cognitive Pilot",
              size=18, bold=True, color=TEAL)
+    text_box(slide, 7.1, 2.45, 5.6, 0.2,
+             "Cognitive Pilot — российский разработчик стека восприятия для AV",
+             size=9, italic=True, color=SLATE)
     img_path = ASSETS / "screenshots" / "s15b-kamaz-truck.jpg"
     add_image_aspect(slide, img_path, 7.1, 2.6, 5.6, 2.3)
     attribution(slide, "КамАЗ · Wikimedia Commons · CC-BY-SA", x=7.1, y=4.95, w=5.6)
@@ -1140,7 +1143,7 @@ def s24_waymo(p):
     # Hero left
     img_path = ASSETS / "screenshots" / "s24-waymo-self-driving-side.jpg"
     add_image_aspect(slide, img_path, 0.5, 1.9, 6.5, 4.3)
-    attribution(slide, "Waymo самоуправление car · Wikimedia · CC-BY-SA", x=0.5, y=6.25, w=6.5)
+    attribution(slide, "Waymo Jaguar I-Pace · Wikimedia · CC-BY-SA", x=0.5, y=6.25, w=6.5)
     # Right: stats
     rounded_box(slide, 7.3, 1.9, 5.5, 4.3)
     multiline_box(slide, 7.5, 2.05, 5.1, 4.1, [
@@ -1477,7 +1480,7 @@ def s31_tesla_nhtsa(p):
     add_notes(slide, "См. slides/s31-tesla-autopilot-nhtsa.md speaker notes.")
 
 
-def s32_городской_failure_matrix(p):
+def s32_urban_failure_matrix(p):
     """s32 — провал matrix Раздел 3."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
@@ -1924,7 +1927,7 @@ def main():
     s29_cruise_centerpiece(p)
     s30_uber_tempe(p)
     s31_tesla_nhtsa(p)
-    s32_городской_failure_matrix(p)
+    s32_urban_failure_matrix(p)
     # Section 4
     s33_section4(p)
     s34_houthi(p)

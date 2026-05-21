@@ -28,19 +28,19 @@ part: 3
 
 В конце главы выкристаллизуем семь практических критериев, по которым инженер может в первые тридцать секунд разговора с поставщиком отличить **разумное AI-предложение** от **маркетингового пика-питча**. Эти семь критериев — суть всей главы в компактной форме.
 
-**Критерий первый. Среда контролируемая?** Если да — AI применим на уровне 1 (склад, порт, рельсы). Если нет — переходить к остальным критериям. Это **главный предиктор**, и он работает быстрее и надёжнее, чем любые другие. Маркер: контролируемые лед, известная геометрия, отсутствие пешеходов, известный SKU-каталог. Anti-маркер: city-streets, погода, эмерджентность.
+**Критерий первый. Среда контролируемая?** Если да — AI применим на уровне 1 (склад, порт, рельсы). Если нет — переходить к остальным критериям. Это **главный предиктор**, и он работает быстрее и надёжнее, чем любые другие. Маркер: контролируемые условия, известная геометрия, отсутствие пешеходов, известный SKU-каталог. Анти-маркер: городская улица, погода, эмерджентность.
 
-**Критерий второй. Задача — well-defined optimization?** Если да — **OR (operations research) лучше, чем ML/RL**. UPS ORION, авиа yield management, vehicle scheduling — это всё **OR**, и Google OR-Tools открыт и бесплатен как baseline. Если поставщик не может предоставить сравнение с OR-baseline — настаивайте.
+**Критерий второй. Задача — well-defined optimization?** Если да — **OR (operations research) лучше, чем ML/RL**. UPS ORION, авиа yield management, vehicle scheduling — это всё **OR**, и Google OR-Tools открыт и бесплатен как базовая линия для сравнения. Если поставщик не может предоставить сравнение с OR-базовой линией — настаивайте.
 
-**Критерий третий. Demand pattern стационарный?** Если да — **EOQ + safety stock + ABC лучше, чем ML** для большинства SKU. Аудит-вопрос: какой процент SKU реально требует ML vs классических формул?
+**Критерий третий. Профиль спроса стационарный?** Если да — **EOQ + safety stock + ABC лучше, чем ML** для большинства SKU. Аудит-вопрос: какой процент SKU реально требует ML вместо классических формул?
 
 **Критерий четвёртый. Safety-critical с регуляторным аудитом?** Если да — **rule-based + human-in-the-loop требуется**. Чёрный ящик ML не работает в авиации, фарме, медицине, ядерной энергетике. Это **regulatory hard fact**, не предмет дискуссии.
 
-**Критерий пятый. Событие в-distribution?** Если да — ML работает. Если нет (чёрный лебедь — geopolitical, pandemic, port-strike) — **human dispatcher + сценарное планирование**. Houthi 2024, Suez 2021, COVID 2020 — три урока за пять лет.
+**Критерий пятый. Событие внутри обучающего распределения?** Если да — ML работает. Если нет (чёрный лебедь — геополитика, пандемия, забастовка в порту) — **человек-диспетчер + сценарное планирование**. Houthi 2024, Suez 2021, COVID 2020 — три урока за пять лет.
 
-**Критерий шестой. Production track record шесть месяцев+?** Если да — продукт valid. Если нет — **pilot-purgatory риск**. Девяносто пять процентов GenAI-пилотов не доходят до production (MIT Sloan 2025). Поставщик без 6+ месяцев track record — pre-production, и инвестиция несёт значительно больший риск.
+**Критерий шестой. Послужной список в промышленной эксплуатации шесть месяцев и больше?** Если да — продукт обоснован. Если нет — **риск пилот-чистилища**. Девяносто пять процентов GenAI-пилотов не доходят до промышленной эксплуатации (MIT Sloan 2025). Поставщик без 6+ месяцев послужного списка — pre-промышленный, и инвестиция несёт значительно больший риск.
 
-**Критерий седьмой. Baseline + counterfactual articulated?** Если поставщик не может назвать конкретную baseline и явное counterfactual сравнение — заявленный «AI экономит +25%» бессмысленен. Это **buyer-beware** маркер.
+**Критерий седьмой. Базовая линия и контрфактуальное сравнение явно сформулированы?** Если поставщик не может назвать конкретную базовую линию и явное контрфактуальное сравнение — заявленный «AI экономит +25%» бессмысленен. Это **сигнал «покупатель, будь начеку»**.
 
 Эти семь критериев — **не пятиминутная теоретическая модель**, а **инженерный быстрый тест**, который инженер сможет провести в любой переговорной с поставщиком. Каждый критерий имеет конкретный ответ «да» или «нет», и в каждом случае есть **defensible альтернатива** — OR, EOQ, scenario planning, rule-based, human-in-loop, или просто отказ от инвестиции.
 
@@ -54,7 +54,7 @@ part: 3
 
 - **Производители грузового и пассажирского транспорта с автономным направлением.** КамАЗ (автономный КамАЗ-54901 с Cognitive Pilot стеком), несколько других автозаводов с pilot-программами.
 - **Технологические компании с автономным стеком.** Cognitive Pilot (отделение Cognitive Technologies, специализация на восприятии для специальных рабочих сред — агросектор, магистральный transport), Yandex SDG до санкционного раздела 2024 года и её спин-аут Avride под голландской parent-компанией для non-Russia операций.
-- **Логистические компании с in-house ML-инжинирингом.** Сбер (включая Сберлогистику), Wildberries (распределительные центры + last-mile), Деловые Линии (cargo classification + route optimization), Pony Express, СДЭК. Public production-метрики этих компаний ограничены, но adoption активный.
+- **Логистические компании с in-house ML-инжинирингом.** Сбер (включая Сберлогистику), Wildberries (распределительные центры + last-mile), Деловые Линии (cargo classification + route optimization), Pony Express, СДЭК. Public производство-метрики этих компаний ограничены, но adoption активный.
 - **Военно-космические и оборонные интеграторы** с дуально-используемой autonomy технологией. Подробнее об оборонном контуре — в Лекции 9; в логистическом контексте они работают на cargo-доставку в труднодоступные зоны, военно-транспортную авиацию, специальные перевозки. Эти организации требуют специфической допуска и обычно не публичны в найме.
 
 **В мире** ландшафт значительно шире:
@@ -62,7 +62,7 @@ part: 3
 - **AV-сurvivors:** Waymo (Alphabet), Aurora Innovation, Mobileye (Intel subsidiary), Apollo Go (Baidu), Pony.ai, WeRide, Tesla (с особенностями vision-only ставки). Также — Wayve (UK end-to-end), Plus.ai (supervised L2+/L3), Kodiak (defense + commercial dual).
 - **Складская роботизация.** Symbotic, Amazon Robotics (внутренний), Locus Robotics, GreyOrange, Geek+, плюс integration-партнёры (Honeywell Intelligrated, KION Dematic, Vanderlande, Knapp).
 - **Last-mile.** Starship Technologies, Coco Robotics, Zipline, Nuro (пивот в licensing), Wing (Alphabet), Manna (Ирландия), Serve Robotics (US).
-- **OR-software vendors.** Gurobi Optimization, IBM ILOG CPLEX, Google (OR-Tools), Coupa (supply chain), Flexport (digital freight forwarder), C.H. Robinson, Convoy (распущена в 2023 году но активы куплены Flexport).
+- **OR-software vendors.** Gurobi Optimization, IBM ILOG CPLEX, Google (OR-Tools), Coupa (цепочка поставок), Flexport (digital freight forwarder), C.H. Robinson, Convoy (распущена в 2023 году но активы куплены Flexport).
 - **Telematics + SaaS.** Samsara, project44, FourKites, FreightWaves, Loadsmart.
 
 **Образовательная подготовка.** Универсальные технические университеты готовят инженеров с пересекающимися навыками — control systems, machine learning, operations research, embedded systems. **Профильные кафедры в области инфокоммуникаций и транспортных систем** обычно дают сильную базу по сетям + транспортной логистике. **Военно-космические академии** готовят инженеров с экспертизой в дуально-используемой autonomy технологии (mission planning, real-time decision-making под пределами по latency, formal verification под регуляторным давлением), и эти навыки переносимы в гражданский сегмент через дуально-используемых интеграторов. Магистерские программы AI и Data Science в профильных технических университетах России и мира — путь продолжения обучения для инженера логистики с базовой инженерной подготовкой.
@@ -71,10 +71,10 @@ part: 3
 
 - **Operations Research fundamentals** — линейное и целочисленное программирование, методы branch-and-bound, эвристики savings, simulated annealing, tabu search. Google OR-Tools как минимум практический инструмент.
 - **Machine Learning fundamentals** — supervised learning, основные архитектуры (CNN для perception, transformers для sequential data, GNN для graph problems), distributional shift awareness.
-- **Multi-modal sensor fusion** — лидар + камеры + радар, классические алгоритмы Kalman filtering, particle filtering, понимание trade-off между типами сенсоров.
+- **Multi-modal sensor fusion** — лидар + камеры + радар, классические алгоритмы Kalman filtering, particle filtering, понимание компромисс между типами сенсоров.
 - **Regulatory landscape** — SAE J3016, NHTSA SGO, ICAO Annex 10, IMO MASS, FAA Part 107, EU AI Act, российский ЭПР. Умение читать regulatory docs и говорить с регулятором.
-- **Safety case engineering** — formal safety case, ISO 26262, ISO 21448 (SOTIF — Safety of the Intended Functionality), Mobileye Responsibility-Sensitive Safety (RSS), Waymo safety report methodology.
-- **Critical judgment.** Это самый важный навык, и весь курс — про это. Умение задать правильный вопрос поставщику, отличить демо от production, разпознать buyer-beware маркеры.
+- **Формальное обоснование безопасности engineering** — formal формальное обоснование безопасности, ISO 26262, ISO 21448 (SOTIF — Safety of the Intended Functionality), Mobileye Responsibility-Sensitive Safety (RSS), Waymo safety report methodology.
+- **Critical judgment.** Это самый важный навык, и весь курс — про это. Умение задать правильный вопрос поставщику, отличить демо от производство, разпознать buyer-beware маркеры.
 
 ### §5.3. Список для чтения: что прочесть после главы
 
@@ -86,7 +86,7 @@ part: 3
 
 1. **Stefan Seltz-Axmacher. «The end of Starsky Robotics» (Medium, март 2020).** Личное эссе основателя обанкротившегося AV-trucking стартапа. Точно объясняет sim-to-real gap, money-vs-progress gap, supervised ML overpromising. **Предсказал в марте 2020 года всё, что произошло с Argo, Embark, TuSimple в 2022–2024 годах.**
 2. **NTSB Highway Accident Report HAR-19/03.** Официальный отчёт о Uber Tempe 2018 fatality. Defensible authority — это голос регулятора, не блогера. Учит, как regulator анализирует AV-инциденты.
-3. **Waymo Safety Report 2025.** Самый подробный публичный safety case для L4 robotaxi. Демонстрирует метрики crash rate per million miles, разбор edge cases, ODD-дисциплину.
+3. **Waymo Safety Report 2025.** Самый подробный публичный формальное обоснование безопасности для L4 robotaxi. Демонстрирует метрики crash rate per million miles, разбор краевые случаи, ODD-дисциплину.
 
 **Второй приоритет — для развития картины индустрии:**
 
@@ -99,14 +99,14 @@ part: 3
 
 8. **Bertsimas, Tsitsiklis. «Introduction to Linear Optimization» (классический учебник).** Базовый учебник по OR. Глава о VRP — must-read для понимания, почему OR лучше RL для well-defined routing.
 9. **INFORMS UPS ORION case study.** Полный case study, как UPS внедрила OR-based routing и достигла 300–400 миллионов долларов savings в год без deep learning.
-10. **Hopp, Spearman. «Factory Physics» (классический учебник).** Не специфично для логистики, но содержит главу о just-in-time vs just-in-case + safety stock fundamentals. Помогает понять, почему JIT хрупкая в условиях черных лебедей.
+10. **Hopp, Spearman. «Factory Physics» (классический учебник).** Не специфично для логистики, но содержит главу о точно-в-срок vs just-in-case + safety stock fundamentals. Помогает понять, почему JIT хрупкая в условиях черных лебедей.
 
 **Дополнительные источники для специфических интересов:**
 
 - Mobileye Responsibility-Sensitive Safety (RSS) framework whitepaper.
 - ICAO Annex 10 (air traffic regulation).
 - Wikipedia article «List of Tesla Autopilot crashes» (постоянно обновляемый, с references).
-- J.P. Morgan supply chain research portal (для дальнейших обновлений Red Sea и black-swan ситуаций).
+- J.P. Morgan цепочка поставок research portal (для дальнейших обновлений Red Sea и black-swan ситуаций).
 
 ### §5.4. Лекция инженерного смирения: Cruise vs Waymo
 
@@ -137,12 +137,12 @@ Waymo масштабируется медленно, методично, sun-bel
 - Где ML работает в-distribution, и где слепо out-of-distribution?
 - Где OR / классические алгоритмы / rule-based методы остаются правильным выбором?
 - Где human-in-loop обязательна, а где допустима полная автоматизация?
-- Как отличить демо от production-proven system? Какие критерии baseline / counterfactual / denominator?
+- Как отличить демо от производство-proven system? Какие критерии базовая линия / counterfactual / denominator?
 - Когда AI — wrong tool, а правильный — policy / engineering / classical method?
 
 Эти **пять вопросов** — главный takeaway сегодняшней лекции, и они будут применимы и завтра. Что **не переносится** — конкретный список инструментов (Waymo / Aurora / Symbotic не имеют cyber-аналогов), конкретные регуляторные frameworks (NHTSA / FAA / IMO ≠ cyber regulation), и конкретные failure modes (Cruise dragging incident ≠ data breach).
 
-Лекция 14 покажет, как пять вопросов адаптируются к cyber-домену. Ваша задача — слушая её, держать в голове эту лекцию как ground truth для физической логистики, и применять те же критерии к новому материалу, не предполагая, что выводы переносятся механически.
+Лекция 14 покажет, как пять вопросов адаптируются к cyber-домену. Ваша задача — слушая её, держать в голове эту лекцию как эталонная разметка для физической логистики, и применять те же критерии к новому материалу, не предполагая, что выводы переносятся механически.
 
 ### §5.6. Заключительная мысль
 
@@ -173,7 +173,7 @@ Waymo масштабируется медленно, методично, sun-bel
 9. **NHTSA EA22002 investigation documents.** Engineering Analysis on Tesla Autopilot foreseeable misuse and Emergency Vehicle incidents. https://static.nhtsa.gov/odi/inv/2022/INCR-EA22002-14496.pdf
 10. **NHTSA PE21-020.** Preliminary Evaluation Tesla Autopilot stationary emergency vehicles (August 2021).
 11. **FMCSA exemptions** для AV-trucking pilots, 2017–2026 (Aurora, Embark, TuSimple, Plus.ai).
-12. **California DMV AV testing and deployment regulations.** Section 38750-38755 of California Vehicle Code.
+12. **California DMV AV testing and развёртывание regulations.** Section 38750-38755 of California Vehicle Code.
 13. **California DMV Cruise suspension order** (October 24, 2023). Public regulatory document citing «misrepresentation».
 14. **BMVI L4-Verordnung** (Germany). Federal regulation for L4 vehicles on approved routes.
 15. **KBA approval framework** (Germany). Federal Motor Transport Authority for Mercedes Drive Pilot и Mobileye Chauffeur.
@@ -189,14 +189,14 @@ Waymo масштабируется медленно, методично, sun-bel
 22. **Aurora Innovation Inc. 10-Q May 2025.** Driverless commercial launch disclosure, cash position. SEC EDGAR.
 23. **Pony.ai Holding Inc. 6-K filings (2024–2026).** Unit economics disclosure: первый положительный per-machine operating profit в Гуанчжоу (ноябрь 2025 — **первый город**), затем повторение в Шэньчжэне (февраль 2026 — **второй город**, 338 RMB daily net income per vehicle). SEC EDGAR. См. также CnEVPost / Gasgoo / ChinaEVHome coverage о хронологии Guangzhou-first.
 24. **WeRide Inc. 6-K Q3 2025.** Robotaxi revenue 35.3M yuan growth +761% YoY. SEC EDGAR.
-25. **Mobileye Global Inc. 10-K FY2024.** Intel subsidiary, SuperVision deployment metrics, Chauffeur roadmap.
+25. **Mobileye Global Inc. 10-K FY2024.** Intel subsidiary, SuperVision развёртывание metrics, Chauffeur roadmap.
 26. **Tesla Inc. 10-Q quarterly filings (2024–2025).** Autopilot/FSD revenue, fleet metrics.
 27. **SEC TuSimple Schedule 13D** (November 2024). Asset transfer disclosure to Chinese entities. https://www.sec.gov/Archives/edgar/data/0001823593/000092189524002952/ex991to13d14283002_112724.pdf
 28. **Wayve Series C/D announcement disclosures** (May 2024, February 2026).
 
 ### Корпоративные документы и press releases
 
-29. **Waymo Safety Report 2025.** Annual public safety case document. https://waymo.com/safety/
+29. **Waymo Safety Report 2025.** Annual public формальное обоснование безопасности document. https://waymo.com/safety/
 30. **Waymo geographic expansion press releases 2024–2026.** Austin, Atlanta, Miami, Dallas, Houston, San Antonio, Orlando launch announcements.
 31. **Aurora Innovation press release May 2025.** Dallas-Houston commercial driverless launch.
 32. **Aurora Innovation crawl-walk-run technical white paper** (2024).
@@ -205,7 +205,7 @@ Waymo масштабируется медленно, методично, sun-bel
 35. **Cruise October 2023 incident disclosure documents.** Initial communication к California DMV (partial footage); subsequent full disclosure under regulator pressure.
 36. **GM Mary Barra Cruise exit statement** (December 10–11, 2024). Corporate communication.
 37. **Apollo Go quarterly operating reports (Baidu).** 240M autonomous km global, 17M cumulative orders.
-38. **КамАЗ-54901 М-11 deployment press release** (June 14, 2023 ПМЭФ).
+38. **КамАЗ-54901 М-11 развёртывание press release** (June 14, 2023 ПМЭФ).
 39. **Cognitive Pilot company materials.** Stack architecture, Agro Pilot heritage, M-11 commercial pilot.
 40. **Cognitive Pilot Agro reporting (2024).** 590 000 тонн зерновых с >130 000 гектаров.
 41. **Pony.ai Robotaxi operating disclosure** — Guangzhou (November 2025, **first city** с per-machine operating profit) + Shenzhen (February 2026, **second city**).
@@ -218,7 +218,7 @@ Waymo масштабируется медленно, методично, sun-bel
 48. **ZPMC (Shanghai Zhenhua Heavy Industries) port automation customer references.**
 49. **KONUX Deutsche Bahn turnout monitoring case study.**
 50. **Starship Technologies milestones press releases** (9M+ deliveries, 2700+ robots, 150+ locations, 60+ universities).
-51. **Coco Robotics LA deployment data** (1000+ robots, 500K deliveries).
+51. **Coco Robotics LA развёртывание data** (1000+ robots, 500K deliveries).
 52. **Zipline annual updates** (100M autonomous miles 2025, 2M commercial deliveries January 2026, $7.6B valuation).
 53. **Zipline-US State Department partnership press release** (November 2025).
 54. **Nuro pivot announcement 2024** (B2C to licensing).
@@ -273,11 +273,11 @@ Waymo масштабируется медленно, методично, sun-bel
 97. **Bellman, R. (1957).** «Dynamic Programming.» Princeton University Press. Foundational text для DP applications в логистике.
 98. **Russell, S., Norvig, P. (2021).** «Artificial Intelligence: A Modern Approach» (4th ed.). Pearson. RL chapter reference для OR vs RL comparison.
 99. **Sutton, R.S., Barto, A.G. (2018).** «Reinforcement Learning: An Introduction» (2nd ed.). MIT Press.
-100. **Hopp, W.J., Spearman, M.L. (2000, updated editions).** «Factory Physics.» McGraw-Hill. Little's Law, queueing theory для inventory + production planning.
+100. **Hopp, W.J., Spearman, M.L. (2000, updated editions).** «Factory Physics.» McGraw-Hill. Little's Law, queueing theory для inventory + производство planning.
 101. **Stefan Seltz-Axmacher (March 2020).** «The end of Starsky Robotics.» Medium. https://medium.com/starsky-robotics-blog/the-end-of-starsky-robotics-acb8a6a8a5f5 — Personal essay основателя обанкротившегося AV-trucking startup. **Must-read for every AV-engineer.**
 102. **Anca Dragan papers on AV-human interaction** (UC Berkeley research, 2018–2024). Game-theoretic safety models для interaction between AV and human drivers.
 103. **Chris Urmson Aurora founder essays** (Medium, 2017–2024). Public reflections от Aurora CEO on AV industry direction.
-104. **Waymo Safety Methodologies paper** (2020, обновлено). Formal safety case framework.
+104. **Waymo Safety Methodologies paper** (2020, обновлено). Formal формальное обоснование безопасности framework.
 105. **Mobileye Responsibility-Sensitive Safety (RSS) whitepaper** (Shalev-Shwartz, Shashua, 2017). Mathematical framework для defining «safe driving». https://www.mobileye.com/responsibility-sensitive-safety/
 106. **MIT Mobility of the Future report** (multi-year program reports).
 107. **Pierre Wack — Shell scenario planning methodology** (Harvard Business Review reprint articles, 1985).
@@ -288,10 +288,10 @@ Waymo масштабируется медленно, методично, sun-bel
 109. **Frost & Sullivan AV market reports.**
 110. **ABI Research warehouse robotics analysis.**
 111. **Interact Analysis last-mile delivery reports.**
-112. **LogisticsIQ supply chain technology market sizing.**
+112. **LogisticsIQ цепочка поставок technology market sizing.**
 113. **Gartner Hype Cycle Mobility 2025.**
 114. **Forrester transport AI 2024.**
-115. **IDC supply chain technology 2025.**
+115. **IDC цепочка поставок technology 2025.**
 116. **CB Insights AV startup tracking (2017–2026).**
 117. **PitchBook AV venture analysis.**
 118. **S&P Global automotive industry analysis (chip shortage impact).**
@@ -304,7 +304,7 @@ Waymo масштабируется медленно, методично, sun-bel
 
 ### Russian and CIS context references
 
-125. **КамАЗ Press Service materials** (2023–2026). Autonomous КамАЗ-54901 deployment.
+125. **КамАЗ Press Service materials** (2023–2026). Autonomous КамАЗ-54901 развёртывание.
 126. **Cognitive Pilot annual reports** (2023–2025).
 127. **Yandex SDG 2024 split announcement** (sanctions-related entity restructuring).
 128. **Sberlogistics automation press releases.**

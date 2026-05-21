@@ -880,40 +880,45 @@ def s18_cumulative_20b(p):
     text_box(slide, 0.5, 0.4, 12.33, 1.2,
              "Cumulative: >$20 миллиардов сожжено на невыжившие\nautonomous trucking + robotaxi 2017-2024.",
              size=22, bold=True, color=DEEP, line_spacing=1.1)
-    # Stacked bars
+    # Layout: [Company label | Bar | $ value] + desc row below
     companies = [
-        ("Cruise (GM)", 10.0, "$10B операционный loss · <$500M выручка · 2016-2024"),
+        ("Cruise (GM)", 10.0, "$10B операционный убыток · <$500M выручка · 2016-2024"),
         ("Argo AI", 7.0, "Ford $5B+ + VW $2,6B · 2017-2022"),
         ("TuSimple", 1.0, "IPO proceeds + private · 91% loss · 2017-2024"),
         ("Embark", 0.5, "SPAC target $5,16B · 16 мес. жизни · 2020-2023"),
         ("Starsky", 0.2, "Первая волна · 2015-2020"),
         ("Waymo Via", 0.5, "Alphabet investment · сегмент закрыт 2023"),
     ]
-    total = sum(c[1] for c in companies)
-    bar_x = 1.0
-    bar_y = 1.9
-    bar_max_w = 11.0
-    bar_h = 0.6
-    py = bar_y
+    max_amt = max(c[1] for c in companies)
+    label_x = 0.5      # Company label column
+    label_w = 1.8
+    bar_x = 2.4        # Bar starts here
+    bar_max_w = 8.0    # Bar drawing area
+    value_x = 10.5     # $ value column
+    value_w = 1.5
+    row_h = 0.40       # Row total height for bar
+    desc_h = 0.22      # Desc text row height
+    row_gap = 0.03
+    py = 1.85
     for name, amt, desc in companies:
-        w = bar_max_w * amt / total
-        rectangle(slide, bar_x, py, w, bar_h, fill=RED_WARN if amt >= 5 else LIGHT)
-        # Number outside (right of bar)
-        text_box(slide, bar_x + w + 0.1, py + 0.05, 3.0, bar_h - 0.1,
+        w = bar_max_w * amt / max_amt
+        # Company label (left column, outside bar)
+        text_box(slide, label_x, py, label_w, row_h,
+                 name, size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        # Bar
+        rectangle(slide, bar_x, py + 0.05, max(w, 0.15), row_h - 0.1,
+                  fill=RED_WARN if amt >= 5 else LIGHT)
+        # $ value (right column, outside bar)
+        text_box(slide, value_x, py, value_w, row_h,
                  f"${amt:.1f}B" if amt >= 1 else f"${int(amt*1000)}M",
                  size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-        # Name + desc inside or below
-        text_box(slide, bar_x + 0.15, py + 0.05, w - 0.3, bar_h - 0.1,
-                 name, size=12, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(slide, 0.5, py + 0.05, 0.5, bar_h - 0.1, "",
-                 size=10, color=DEEP)
-        # Desc below bar
-        text_box(slide, bar_x + 0.15, py + bar_h + 0.02, bar_max_w, 0.3, desc,
+        # Desc row below
+        text_box(slide, bar_x, py + row_h + row_gap, bar_max_w + 2.0, desc_h, desc,
                  size=10, italic=True, color=SLATE)
-        py += bar_h + 0.4
+        py += row_h + desc_h + row_gap + 0.05
     # Total callout
-    rounded_box(slide, 0.5, 6.0, 12.33, 1.0, fill=GOLD_TINT, stroke=GOLD, stroke_w=2)
-    multiline_box(slide, 0.7, 6.1, 11.9, 0.9, [
+    rounded_box(slide, 0.5, 6.15, 12.33, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_w=2)
+    multiline_box(slide, 0.7, 6.20, 11.9, 0.75, [
         (">$20 миллиардов  ·  только невыжившие AV-грузоперевозки + robotaxi 2017-2024",
          {"size": 18, "bold": True, "color": GOLD, "align": PP_ALIGN.CENTER}),
         ("До $50 миллиардов с early-stage investments в Cruise, Zoox, Aurora ранние раунды",

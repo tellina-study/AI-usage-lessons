@@ -580,3 +580,36 @@ Production Л9 завершён (PR #120 merged 2026-05-21), 1-day cycle, 12 com
 - **Memory rules не embedded в agent defaults — структурный gap.** До Л9 правила (anonymization, Russification, no_mock_fallbacks, hero_images) существовали только в memory files; subagent prompts требовали orchestrator manual injection. **Fix:** Memory rules с ENFORCED статусом embedded в `.claude/agents/*.md` defaults — agent видит mandate каждый spawn без orchestrator повторения. Survival rate rules в production цикле = высокий.
 
 **Метрика успеха для Л10+:** 0 owner-интервенций классов (а) named institutions в chapter, (б) anglicism self-report inflation, (в) primitive-only media, (г) inherited fact drift. Updated infra catches все 4 automatically.
+
+## 2026-05-21 — Лекция 11 production (рефлексия, #131; reflection-folder `notes/reflections/2026-05-21-lec-11-production/`)
+
+Production Л11 «AI в дискретном и процессном производстве» завершён (PR #130 merged 2026-05-21), single-day cycle, 38 commits, ~22 agent-spawns. Финал: chapter v5 multi-part (30 930 слов, 3 файла ≤600 строк) + slides v2.2 (41 слайд, 56% media, hero ≥40% s01+s39) + speech v2 (5 289 spoken words, 0/41 фрагмент >95 WPM).
+
+- **Chapter Depth Baseline ENFORCED — новое фундаментальное правило (PR #129).** Owner explicit «30k цель твоя» override на ad-hoc Лекция 10 target 20-26k → **минимум 30 000 слов для всех L4+ chapter'ов**. Записано в CLAUDE.md новой ENFORCED секцией «Chapter Depth Baseline» + tools/lecture-production/README.md §6 + memory `feedback_chapter_depth`. Multi-part split mandatory при >600 строк per file (chapter.md + chapter-part2.md + chapter-part3.md). L1-L3 owner waiver доступен, L4-L17 mandatory. Counter-check: <28.5k для L4+ → REVISE структурный gap.
+
+- **Лекция 4 «designer self-report FALSE» паттерн повторился ДВАЖДЫ в L11.** (а) Phase 8.5: presentation-designer заявил «designer-extras 17→0» — orchestrator-INDEPENDENT regex на rendered PPTX visible body нашёл 10 timing markers «N мин» на 6 slides (s03 lecture-map + 5 dividers). (б) Phase 11.5: parallel revision designer заявил «4 slide fixes complete» — orchestrator-INDEPENDENT cross-artifact verify нашёл slide s34c brewery numbers drift (60K bph vs chapter+speech 30K canonical, parallel scope не touched s34c). Оба caught via independent python-pptx text extract + grep, не self-report. **Fix carry-forward:** centralized `tools/presentation-build/deep_designer_extras_scan.py` script + `cross_artifact_numbers_check.py` для auto-detection drift между artifacts. Pre-USER-GATE skill вызывает scripts automatically. (См. improvements.md I-1, I-2.)
+
+- **Parallel revision agent scope gaps cost +15 мин quick-fix.** Phase 11 spawned speech-writer + presentation-designer параллельно с different briefs — speech-writer fixed brewery в speech, designer fixed unrelated 4 slides. Brewery slide s34c не в scope ни одного. **Fix:** при parallel revision спавнах — orchestrator brief MUST include EXPLICIT cross-artifact alignment requirements per agent, не assume sibling artifact consistency. Carry-forward в `tools/lecture-production/README.md` § Polish Round Pattern.
+
+- **Hero size designer self-report unreliable.** Phase 8 designer заявил «s01 42.5% / s39 43.2% area». Visual sweep showed s01 31% / s39 32.5% (P0 — below ≥40% mandate). **Fix:** independent hero size measurement script `tools/presentation-build/hero_size_check.py` (PPTX shape coordinates × slide dimensions) — orchestrator не trust self-report, measure independently. (См. improvements.md I-4.)
+
+- **Russification regression на новом контенте при каждой revision.** Chapter v3 expansion (Phase 4b) добавил 16k новых слов — 101 anglicism leak hits (regression от v2 closed-P1). Slides v1 design имел 620 unique non-whitelist latin tokens. Phase 5+6 designer initial render имел Tier 1-4 English subheaders, рекурсивные parens. **Fix:** deep latin-token scan **после каждой revision** mandatory, не только финальный pre-GATE. Producer agents всё ещё drift при новом content generation.
+
+- **Owner mandate M1/M2/M3 labeling pattern works well.** Phase 8 owner brief contained 3 explicit mandates («убери методические + временные», «убери англицизмы», «переведи цитаты»). Orchestrator labeled M1/M2/M3 в spawn brief — каждый стал independent acceptance criterion. **Fix:** formalize pattern в CLAUDE.md methodology или anti-patterns section — when user gives multi-part mandate, label M1/M2/M3 + propagate в agent prompts с explicit verify per M.
+
+- **Quote translation mandate — extension of Russification.** Owner explicit «переведи цитаты!» extended Russification rule beyond narrative — to direct quotes. 5 quotes translated to RU primary на slides + speech (Musk April 2018 / Bainbridge 4 ironies / Foxconn Liu Computex 2025 / Trump «8th wonder» / Toyota GAIA). English original optional в speaker notes parenthetical italic gloss. **Fix:** update memory rule `feedback_russification` + producer agent prompts с quote translation mandate.
+
+- **Snapshot PNG numbering shift при slide insertion.** Phase 8 added s34b + s34c (worked examples for §4.3) → original s35-s39 shifted to s37-s41 in render position. PNG snapshot names `s-XX.png` follow render position, не source slide ID. Caused orchestrator confusion at GATE C walkthrough (s-39.png ≠ slide s39). **Fix:** auto-generated sidecar `library/lectures/lec-NN/rendered/slide-index.yaml` mapping PNG-position → source-slide-ID. (См. improvements.md I-7.)
+
+- **Pre-USER-GATE walkthrough как separate phase окупается.** L11 имел 0 user feedback rounds AFTER each GATE — все P0/P1 caught в walkthrough ДО presenting. Это паттерн который sustainably eliminates Лекция 1-стиль rounds (3 user feedback rounds post-critic-approve). Walkthrough is mandatory phase, not optional polish.
+
+- **Manifest update в том же finalizing PR — соблюдено** (GATE-C definition-of-done ENFORCED). lectures.yaml lec-11 status planned → produced в commit на той же branch. Carry-forward pattern.
+
+**Метрика успеха для L10/L12+:** 0 owner-интервенций классов (а) designer self-report FALSE (extras / hero / Russification), (б) cross-artifact numbers drift в worked examples, (в) parallel revision scope gaps, (г) quote translation missed для RU аудитории. Updated infra (PR #129 + I-1/I-2/I-3/I-4) catches все 4 automatically.
+
+**Production efficiency baseline для отраслевых лекций (L_N+):**
+- Phases: 11 standard + 4.5/8.5/11.5 pre-USER-GATE = 14 distinct steps
+- Agent spawns: ~20-25 (research + plan + chapter draft+revise+expand + slides design+visual+revise + speech draft+revise + 8 critic runs)
+- USER GATE feedback rounds: target 0 (pre-USER-GATE walkthrough catches P0)
+- Wall-clock: single-day cycle achievable с parallel critics
+- Artifacts: chapter ≥30k multi-part / slides 35-41 / speech ~5k / manifest update / reflection

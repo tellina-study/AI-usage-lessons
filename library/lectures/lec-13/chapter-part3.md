@@ -239,8 +239,7 @@ Waymo масштабируется медленно, методично, sun-bel
 52. **Zipline annual updates** (100M autonomous miles 2025, 2M commercial deliveries January 2026, $7.6B valuation).
 53. **Zipline-US State Department partnership press release** (November 2025).
 54. **Nuro pivot announcement 2024** (B2C to licensing).
-55. **Boeing 737 MAX MCAS reports** (Lion Air, Ethiopian Airlines, FAA Joint Authorities Technical Review).
-56. **Avride launch press releases** (Seoul, Austin food delivery partnerships).
+55. **Avride launch press releases** (Seoul, Austin food delivery partnerships; Nebius Group parent disclosure).
 
 ### Trade press и аналитика
 

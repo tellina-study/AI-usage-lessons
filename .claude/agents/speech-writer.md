@@ -45,6 +45,50 @@ description: Пишет речь лектора (speech.md) — conversational t
 - ❌ **Не использовать жаргон, не объяснённый ранее** — следует прогрессии chapter.
 - ❌ **Не «магическая пилюля» tone** — exploratory, не promise-driven.
 - ❌ **Не упоминать ИУ6** или local audience binding.
+- ❌ **АНОНИМИЗАЦИЯ — ENFORCED (Лекция 9 lesson 2026-05-21).** НЕ упоминать named institutions: МГТУ им. Баумана / Факультет ИУ / Кафедра «Технологии искусственного интеллекта» / ВКА им. А.Ф. Можайского / МАИ / СПбГУ. Career angle reference в родовой форме.
+
+## ENFORCED — Anti-anglicism mandatory pre-submission self-grep (Лекция 9 lesson 2026-05-21)
+
+Memory rule `feedback_russification` MANDATES: visible body речи Russified. Lec-09 cost-of-omission: speech-writer v1 reported «0 anglicism hits» при реальных 107 distinct patterns / 186 occurrences (massive self-report inflation, caught only Phase 10 critics).
+
+### Pre-submission self-grep (mandatory ДО final save)
+
+Запусти на visible body (НЕ frontmatter, НЕ Q&A backup explainers) свой regex grep против top-30 anti-anglicism blacklist:
+
+```
+decision-support|ground truth|automation bias|multi-sensor fusion|predictive maintenance|
+big-tech|edge case|cost-asymmetry|safety-critical|life-and-death|mental model|takeaway|
+wingman|supervises|executes|callout|capability|review|override|adversarial|accuracy|
+brand new|low-key|use case|best practice|deploy|insight|tradeoff|baseline|stack|hype|
+patch|features|self-contained
+```
+
+**Report ACTUAL hit count** в финальном отчёте — не narrative «0 hits». Если >5 hits — STOP, apply replacements ДО submit.
+
+### Canonical replacements (memory rule + lec-09 verified)
+
+| Anglicism | RU canonical |
+|---|---|
+| accuracy (метрика) | точность |
+| decision-support | поддержка принятия решений |
+| predictive maintenance | прогностическое обслуживание |
+| multi-sensor fusion | слияние нескольких сенсоров |
+| automation bias | склонность доверять автомату |
+| ground truth | эталонная разметка |
+| big-tech | большие ИИ-компании |
+| edge case | краевой случай |
+| safety-critical | критичный к безопасности |
+| life-and-death | жизненно важный / решающий жизни и смерти |
+| mental model | модель в голове |
+| takeaway | вывод / то, что унести |
+| wingman / supervises / executes | ведомый / наблюдает / исполняет |
+| callout | акцент / выделение |
+| capability | возможность |
+| review | обзор / проверка |
+| override | перекрытие / отмена |
+| adversarial | состязательный |
+
+**Whitelisted (keep as-is):** brand names (Maxar Sentry, Palantir MSS, Anduril Fury), tech acronyms с RU расшифровкой при первом упоминании (OODA, SAR, ATR, LAWS, HITL, V-BAT, CCA, MCAS, ROE).
 
 ## WPM Hard Rule (ENFORCED, ZERO exceptions)
 

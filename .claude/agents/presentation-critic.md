@@ -145,6 +145,54 @@ user brief (см. «No Extra Content Rule» в CLAUDE.md и presentation-designe
 - [ ] **Переход с предыдущего слайда читается.** Нет «прыжка».
 - [ ] **Reveal-последовательности парные.** Если step1 — должен быть step2.
 
+### Check 11: Hero images на s01 + s39 (per [[hero-images-required]], ENFORCED — Лекция 8 lesson)
+
+Для каждого deck курса:
+- [ ] **s01**: ≥40% area, real image (не stylized mock), foreshadows keystone OR domain identity, attribution visible?
+- [ ] **s39**: ≥40% area, real image, bridges Lec-N+1 OR emotional payoff OR iconic case visual, attribution visible?
+
+**Не подходит:** stock illustration с laptop+brain icon, generic «AI» visual, plain Ocean palette card, thank you slide, Q&A repeat на s39.
+
+**Severity:** missing OR <40% area OR stylized mock → **P1 «Hero structural gap: sNN»**.
+
+### Check 12: Real images vs mocks (per [[no-mock-fallbacks]], ENFORCED — Лекция 8 lesson + visual-quality check)
+
+**Vision-enabled distinguishing:** для каждого слайда claiming показ external screenshot / case visual — спроси себя:
+- [ ] **«Is this image REAL or stylized mock?»** — verbatim headline в Ocean-palette card = mock.
+- [ ] Identifiable real source page URL (в `iteration-log.md` или `assets/screenshots/sNN-real-source.url`)?
+- [ ] Per-image acquisition log present (Tier 1-6 used, source URL)?
+- [ ] Real image matches what source would actually show (e.g. CNN article — actual CNN visual style, не Ocean-palette redesign)?
+
+**Mock disguised as real image** (stylized card looks similar to real screenshot но clearly designed) → P1 «Mock disguised as real image — replace via 6-tier acquisition».
+
+**Mock-fallback допустим только при documented 6/6 tier failure** в `iteration-log.md`.
+
+**Sample size:** check minimum 5 slides claiming external screenshots. Если >50% of sampled = mocks → P0 «Mock-fallback structural gap, not polish».
+
+**Cost-of-omission lec-08:** 16 mocks прошли self-report «87.2% media coverage» → owner reject «это моканное говно. все переделать».
+
+### Check 13: Russification depth (per [[russification]], ENFORCED — Лекция 8 lesson)
+
+**Deep latin-token scan на rendered PPTX visible body** (broad regex + brand allowlist) — pattern-narrow grep НЕ достаточен.
+
+```bash
+# Extract PPTX visible:
+python3 -c "from pptx import Presentation; p=Presentation('library/lectures/lec-NN/rendered/lec-NN.pptx'); \
+  [print(s.text_frame.text) for sl in p.slides for s in sl.shapes if s.has_text_frame]" > /tmp/pptx-visible.txt
+python3 tools/presentation-build/deep_latin_scan.py /tmp/pptx-visible.txt
+```
+
+**Acceptance:**
+- [ ] **Critical anglicism hits = 0** в narrative body (production-уровень, capability, hype demo, MAJORS × STATUS, regurgitation theory, verbatim, predictive maintenance, ground truth, etc.).
+- [ ] **Deep scan results** показывают только legitimate Latin tokens: brand names (Sora, NYT), tech acronyms whitelisted (AI, ML, LLM, RAG, API), URLs, case names.
+- [ ] **`unique - whitelist = ∅`** для narrative body content.
+
+**Severity:**
+- Critical anglicism hits >5 в visible body → **P0 «Anti-anglicism mandate violated»**.
+- Critical anglicism hits 1-5 → **P1 «Russification incomplete»**.
+
+**Cost-of-omission lec-08:** deck v1 имел 224 unique latin tokens в PPTX → owner reject «обилие англицизмов! это просто трындец! провал» → 3 revision passes.
+
 ## Output
 
 Пиши отчёт в `library/lectures/lec-NN/qa-reports/{YYYY-MM-DD}/presentation-critic.md`.

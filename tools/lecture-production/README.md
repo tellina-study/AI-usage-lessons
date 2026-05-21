@@ -216,7 +216,56 @@ library/lectures/lec-NN/
 
 **Pre-submission self-grep** обязателен для speech-writer (см. `.claude/agents/speech-writer.md` § ENFORCED Anti-anglicism mandatory pre-submission self-grep).
 
-**Cost-of-omission lec-09:** speech v1 self-report «0 hits» при 107 реальных → caught Phase 10 → speech revision 2-3ч.
+**Pre-GATE deep latin-token scan** (broad regex + brand allowlist) — обязательный orchestrator-INDEPENDENT check перед GATE B/C; pattern-narrow grep маскирует depth (см. `tools/presentation-build/README.md` §5.8).
+
+**Cost-of-omission lec-08+09:** speech v1 self-report «0 hits» при 107-186 реальных → caught Phase 10 critic → speech revision 2-3ч × 3 passes.
+
+## 3.7c Plan-level mandates carry-forward (ENFORCED — Лекция 8 lesson)
+
+**Phase 1 plan-checklist** обязан содержать (carry-forward instructions для downstream chapter / slides / speech):
+
+- [ ] **Hero images plan для s01 + s39** — какие real images планируются (entity + источник + 6-tier acquisition strategy). См. [[hero-images-required]] + `tools/presentation-build/README.md` §5.9.
+- [ ] **Russification mandate в plan v1 sam** — никаких anglicisms в plan itself; carry-forward instruction для chapter / slides / speech ([[russification]] + `tools/presentation-build/README.md` §5.8).
+- [ ] **6-tier real image acquisition strategy** sketched per case-study slide — minimum 12-15 real images на типичный deck из 32-35 слайдов ([[no-mock-fallbacks]] + `tools/presentation-build/README.md` §5.7).
+- [ ] **Anonymization carry-forward** — generic «студенты-инженеры 3 курса», без named institutions (см. §3.7a).
+- [ ] **Anti-anglicism таблица** ссылается на canonical replacements (см. §3.7b).
+
+## 3.7d Phase 5 (Deck design) acceptance additions (ENFORCED — Лекция 8 lesson)
+
+**Deck spec acceptance criteria additions:**
+
+- [ ] ≥80% media coverage requires **REAL images** (no mocks) per [[no-mock-fallbacks]]. Self-report «X% coverage» НЕ trustworthy без per-image source URL.
+- [ ] **Hero s01 + s39 mandatory** per [[hero-images-required]] — ≥40% area, real image via 6-tier, attribution.
+- [ ] **Russification mandate** в visible body + speaker notes per [[russification]] — pre-submission deep latin-token scan.
+- [ ] **Per-slide media kind explicit** в `deck.yaml` (см. `templates/slide-outline.md` `media:` block) — acquisition_tier + source_url + attribution_label.
+
+## 3.7e Phase 7.5 (Critic pass) additions (ENFORCED — Лекция 8 lesson)
+
+**Critic checklists augmented:**
+
+- **presentation-critic:**
+  - [ ] «Mock vs real» check per slide claiming external screenshot — identifiable real source URL?
+  - [ ] Russification deep scan на rendered PPTX visible body — 0 critical anglicism hits.
+  - [ ] Hero check: s01 + s39 ≥40% area, real image, attribution visible.
+- **student-simulator:**
+  - [ ] Comprehension check assuming real images present (если slide claims «вот скриншот от NYT» — студент должен видеть actual NYT page, не abstract case name).
+- **reader-simulator (mode=rendered):**
+  - [ ] Deep latin-token scan на speaker notes + visible body — sample 5 random slides.
+- **methodology-critic:**
+  - [ ] Real-image-check (см. presentation-critic Check 12) на bucket-контенте (cases, failures) — abstract case names без real visual = pedagogical gap.
+
+## 3.7f Pre-USER-GATE B walkthrough additions (ENFORCED — Лекция 8 lesson)
+
+Explicit checklist (расширяет existing Pre-USER-GATE Walkthrough Rule в CLAUDE.md):
+
+- [ ] **Deep latin-token scan на rendered pptx visible body** (broad regex + brand allowlist; не только narrow Russification таблица patterns) — `unique - whitelist = ∅` для narrative content.
+- [ ] **6-tier image acquisition log per image** (no blanket mocks; если Tier 6/6 failed — ≥6 documented attempts).
+- [ ] **Hero on s01** (≥40% area, real image via 6-tier, attribution visible).
+- [ ] **Hero on s39** (≥40% area, real image via 6-tier, attribution visible).
+- [ ] **Visual sweep: каждый «screenshot» claim — actual real source identifiable?** Sample 5 slides → identifiable real source URL? matches what source would show?
+- [ ] **Stylized Ocean-palette card с verbatim headline ≠ real image** — это mock, FAIL.
+
+**Если P0/P1 found — NOT present GATE.** Spawn revision, re-run pre-gate, потом present.
 
 ## 3.7 Self-reported метрики — critic re-verify (ENFORCED)
 

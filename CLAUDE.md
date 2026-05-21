@@ -175,12 +175,16 @@ Before presenting any USER GATE to user:
 6. **Keystone-axis check (ENFORCED — Лекция 4 lesson):** несущая концептуальная ось лекции предъявлена **отдельным keystone-слайдом в Разделе 0 ДО первого погружения в неё**? Заголовок + 1-я строка — про саму ось, НЕ про устройство курса / защиту подхода / «мы не вводим нового». Если ось «всплывает» только в середине или это защитный recap — STOP, структурный gap (цена: Лекция 4 = ~5 циклов deck), не polish.
 7. **Lec-N-1 pattern compliance (для slides):** does Lec-N have lecture-map slide? section dividers для всех major sections? dedicated Q&A slide? roadmap-bar только на dividers + cover (не на каждом content slide)?
 8. **Artifacts в main repo (для GATE B):** `library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}` MUST exist в main repo path BEFORE opening GATE. If only в worktree → STOP, sync first.
+9. **Hero check (ENFORCED — Лекция 8 lesson):** s01 и s39 имеют hero-иллюстрацию (≥40% area, real image via 6-tier acquisition, attribution label visible)? Stylized Ocean card с verbatim headline = mock, FAIL. ([[hero-images-required]])
+10. **Deep latin-token scan (ENFORCED — Лекция 8 lesson):** на rendered pptx visible body + speech narrative + chapter body — broad regex + brand allowlist; **pattern-narrow grep НЕ достаточен**. `unique - whitelist = ∅` для narrative body content (URLs / case names / brand markers OK). Sample command: `python3 tools/presentation-build/deep_latin_scan.py <files>`. ([[russification]])
+11. **Real-image verification (ENFORCED — Лекция 8 lesson):** sample 5 slides claiming external screenshots → identifiable real source URL? matches what source would show? stylized Ocean-palette card с verbatim headline = mock (FAIL). Per-image acquisition tier documented в `iteration-log.md`. ([[no-mock-fallbacks]])
 
 **Если найдены P0/P1 issues — NOT present GATE.** Spawn revision first, re-run pre-gate, потом present.
 
 **Why ENFORCED:**
 - Лекция 1 production имела 3 раунда user feedback ПОСЛЕ critic APPROVE.
 - **Лекция 2 production имела 5 раундов user feedback ПОСЛЕ critic APPROVE** на slides — driven by (a) Lec-1 pattern deviations (top bar everywhere, missing lecture-map, missing Q&A), (b) designer-extras leaks (`[VERIFY-DAY-OF]` on PNG, LO codes visible), (c) artifacts not synced to main repo (user opened wrong lecture's PPTX). Pre-gate walkthrough additions points 5-7 prevent these specifically.
+- **Лекция 8 production имела 3 owner-интервенции на GATE B** (~3 revision rounds, ~83 мин wasted): (a) 16 stylized mocks вместо real images — self-report «87.2% coverage» прошёл orchestrator sweep, (b) 224 unique англицизмов в PPTX + 919 в speech (narrow grep показал 0-4 hits — pattern-маскировка), (c) missing hero на s01 + s39. Pre-gate additions points 9-11 prevent all 3 specifically.
 
 ---
 
@@ -244,6 +248,11 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 | Отраслевая лекция (L4+): несущая таксономия без named current tools на каждый уровень; plan §-named speech-narrative без слайда | lecture-outline (L4+) требует tools-per-taxonomy-level (вендор-режим+adoption-направление+anti-hype+mode≠brand, volatile→[VFY-day-of]); Phase-5: §-named narrative ⇒ слайд либо явное owner-обоснование устного якоря |
 | usage/rate-limit субагента трактуется как failure → оркестратор пишет контент сам | Классифицировать сбой: limit ≠ failure → wait+re-delegate, НИКОГДА не self-implement (Subagent Rules; `feedback_subagent_usage_limit`) |
 | lectures.yaml lec-NN→produced забыт после GATE C (батчится отдельным manifest-PR) | GATE-C definition-of-done включает manifest status→produced (в том же финализирующем PR) |
+| Designer fallback to stylized mocks при paywall/JS-block | 6-tier real image acquisition (og:image / Wikipedia / press release / YouTube thumb / Wayback / Google Images); per-image honest log при failure ([[no-mock-fallbacks]]; `tools/presentation-build/README.md` §5.7) |
+| Excessive англицизмы в visible body / speaker notes для RU-аудитории МГТУ ИУ6 | Anti-anglicism mandate в каждом producer prompt + Russification таблица 45+ + deep latin-token scan (не только pattern grep); explicit keep-list (brand names + established acronyms с inline gloss + mode names) ([[russification]]; `tools/presentation-build/README.md` §5.8) |
+| Text-only s01 (ice-breaker) или s39 (closing) без hero иллюстрации | Hero ≥40% area на s01 + s39 для всех deck'ов курса; real image via 6-tier acquisition; foreshadow keystone (s01) / bridge к Lec-N+1 (s39) ([[hero-images-required]]; `tools/presentation-build/README.md` §5.9) |
+| Pattern-narrow grep как verification «deck clean от anglicisms» | Deep latin-token scan (any English word вне brand allowlist) для RU-language deck — narrow pattern grep маскирует depth (Лекция 8: narrow 32 patterns = 0-4 hits, deep scan = 919 unique в speech) |
+| Subagent claim «X% media coverage» trustworthy | Orchestrator visually verifies sample slides + checks real-source identifiability (Лекция 8 lesson: mocks с verbatim headlines прошли coverage check, но не real images) |
 
 ---
 

@@ -82,6 +82,15 @@ libreoffice --headless --convert-to pdf /tmp/test.pptx       # smoke test conver
 
 **Расширения** по реальной нужде: `quadrant` (2×2), `section_divider` (разделитель крупно), `case_study`, `exercise`, `reflection_question`. Не добавляем upfront — только когда понадобятся.
 
+### Hero slide types (ENFORCED, добавлено после Лекции 8 production)
+
+`hero_cover` и `hero_closing` — обязательные типы для каждого deck курса. См. §5.9 ниже.
+
+| Type | Когда | Layout-pattern | Acceptance |
+|---|---|---|---|
+| `hero_cover` | s01 (ice-breaker / cover, всегда первый) | Hero ≥40% площади ИЛИ full-bleed background. Real image via 6-tier acquisition. Foreshadow keystone OR domain identity. Russian caption + attribution. | См. §5.9 |
+| `hero_closing` | s39 (closing / bridge, всегда последний) | Hero ≥40% площади. Real image via 6-tier. Bridge к Lec-N+1 OR emotional payoff OR iconic case visual. Russian caption + attribution. | См. §5.9 |
+
 ### Schema subtypes (расширение `assertion_visual`, добавлено после Лекции 1 v3 production)
 
 Семь подтипов schema-слайдов с явными правилами читаемости. Любой schema slide **должен** проходить **Schema Readability Checklist** (§5.5) перед accept. Cross-ref: `presentation-designer.md` за per-type building patterns.
@@ -191,6 +200,233 @@ Orchestrator сводит отчёты в `qa-reports/{date}/SYNTHESIS.md`, ре
 ```
 
 Если хоть один step fail — designer продолжает visual loop (§5), не передаёт на QA.
+
+---
+
+## 5.7 Image acquisition — 6-tier fallback (ENFORCED — [[no-mock-fallbacks]])
+
+**Источник:** рефлексия Лекции 8 (#122), owner feedback «что за херня, где картинки? не верю что не мог найти, ты просто забил! ... все переделать». Designer Phase 6+7 столкнулся с paywall/JS на BBC/Futurism/NYT/Reuters → blanket-fallback 16 stylized Ocean-palette PNG mocks с verbatim headlines. Self-report «87.2% media coverage» прошёл orchestrator visual sweep (mocks выглядели похоже на cards).
+
+**Правило:** для каждого слайда, требующего real visual (case studies, news screenshots, product UI) — designer **не уходит в stylized primitive** без attempting 6-tier acquisition. Mock fallback допустим **только** при documented 6/6 failure в `iteration-log.md`.
+
+### 6-tier acquisition table
+
+| Tier | Источник | Пример URL / запрос | Note |
+|---|---|---|---|
+| **1. og:image / twitter:card** | `<meta property="og:image">` из article page | `curl -sLA "Mozilla/5.0" https://nytimes.com/...article.html \| grep -oP 'og:image[^>]*content="\K[^"]+'` | Almost always public, обходит paywall на image |
+| **2. Wikipedia / Wikimedia Commons** | Free CC infobox / featured images | Commons API `prop=imageinfo&iiurlwidth=960` thumbnails. **PROVEN: Tier 2 = 17/15 в lec-09 production.** | Smaller bypass rate-limits лучше full-size |
+| **3. Press release / official pages** | RIAA / OpenAI / DeepMind / NPR / CNN press rooms | `curl -sLA "Mozilla/5.0" https://openai.com/blog/...` + extract `<figure>` / first `<img>` | Usually open, no paywall |
+| **4. YouTube thumbnails** | Canonical video frame | `https://img.youtube.com/vi/{VIDEO_ID}/maxresdefault.jpg` | Always public, no auth |
+| **5. Wayback Machine** | Archived version of blocked live pages | `https://web.archive.org/web/2024*/https://blocked.com/article` | Bypass JS-block / 404 |
+| **6. Google / Bing / DuckDuckGo Images** | Last resort image search | DuckDuckGo HTML scrape (no JS); verify CC license перед use | Manual licensing check |
+
+### Acceptance criteria
+
+- **N/N mocks replaced with real images** — minimum target. Self-report «X% coverage» НЕ trustworthy без per-image source URL.
+- **Per-image attempt log** при failure: если subagent flags failure on слайде X — must show ≥6 tried URLs в `iteration-log.md` (не blanket «paywalls blocked everything»).
+- **Educational fair use mandate** — для учебных лекций ANY copyrighted image OK с reference attribution. Sub-agent должен явно знать это разрешение.
+- **Orchestrator MUST visually verify final result** через PNG snapshot read — designer self-report «13 real images embedded» может означать 13 stylized mocks. Need to LOOK.
+
+### Storage convention
+
+```
+library/lectures/lec-NN/assets/screenshots/sNN-real-source.png
+library/lectures/lec-NN/assets/screenshots/sNN-real-source.url   # source URL текстом
+```
+
+Attribution label visible на slide: source name + date (e.g. «CNN · 16 мая 2024», «Wikimedia · CC-BY-SA»).
+
+### Sample acquisition snippet
+
+```bash
+# Tier 1: og:image
+URL="https://nytimes.com/2024/05/15/tech/some-article.html"
+OG=$(curl -sLA "Mozilla/5.0" "$URL" | grep -oP 'og:image[^>]*content="\K[^"]+' | head -1)
+[ -n "$OG" ] && curl -sLo "library/lectures/lec-NN/assets/screenshots/s12-real.jpg" "$OG"
+
+# Tier 2: Wikimedia Commons (через API thumb)
+ENTITY="Kelly_McKernan"
+curl -sL "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=960&titles=$ENTITY" \
+  | python3 -c "import sys,json; d=json.load(sys.stdin); print(list(d['query']['pages'].values())[0].get('thumbnail',{}).get('source',''))" \
+  | xargs -I{} curl -sLo "library/lectures/lec-NN/assets/screenshots/s05-real.jpg" "{}"
+```
+
+**Cost-of-omission lec-08:** v1 designer reported «87.2% media coverage» при 16 mocks → owner reject «провал» → ~1.5h cycle wasted. Lec-09 v2 acquisition после re-spawn — 87.5% Tier 1 success, 17/15 real photos.
+
+**Связанные правила:** [[no-mock-fallbacks]], [[hero-images-required]], `presentation-designer.md` § ENFORCED — 6-tier real image acquisition.
+
+---
+
+## 5.8 Russification — anti-anglicism mandate (ENFORCED — [[russification]])
+
+**Источник:** рефлексия Лекции 8 (#122), owner feedback «обилие англицизмов в презе! это просто трындец! убирай все!!! это провал». Producer agents (designer + speech-writer) свободно использовали English tech-лексику в visible body для RU-аудитории. Pattern-narrow grep (32 patterns) показал 0-72 hits; **deep latin-token scan** (любое English word вне brand allowlist) показал 224 unique в PPTX и 919 unique в speech.
+
+**Правило:** все content words в visible slide body + speaker notes + chapter prose — на русском. Whitelisted: brand names, established acronyms с inline gloss при первом упоминании, mode names (text-to-video, text-to-image), legal jurisdiction terms (fair use, CDPA, DMCA — с RU расшифровкой).
+
+### Russification table (45+ canonical replacements)
+
+| English | Russian |
+|---|---|
+| production use / production-уровень | промышленное применение |
+| capability | возможность / функция |
+| hype demo | демо для хайпа / реклама без production-готовности |
+| freelance | фрилансер / независимый исполнитель |
+| stock photo | сток-фотография (русифицировано) |
+| out-of-band verification | проверка через независимый канал |
+| multi-factor authentication | многофакторная аутентификация |
+| lawsuit-driven licensing | лицензирование под давлением исков |
+| Settlement matrix | таблица урегулирований |
+| MAJORS × STATUS | КРУПНЫЕ ЛЕЙБЛЫ × СТАТУС |
+| regurgitation theory | теория воспроизведения тренировочных данных |
+| verbatim | дословно |
+| Trial chip / Pending | Суд / Ожидание |
+| Backup screenshot | резервный скриншот |
+| character consistency | сохранение персонажа между генерациями |
+| voice cloning | клонирование голоса |
+| model collapse / Model Autophagy Disorder | коллапс модели (MAD) |
+| identity proof | подтверждение личности |
+| likeness rights | права на использование образа |
+| predictive maintenance | прогностическое обслуживание |
+| ground truth | эталонная разметка |
+| automation bias | склонность доверять автомату |
+| multi-sensor fusion | слияние нескольких сенсоров |
+| decision-support | поддержка принятия решений |
+| accuracy (метрика) | точность |
+| big-tech | большие ИИ-компании |
+| edge case | краевой случай |
+| safety-critical | критичный к безопасности |
+| life-and-death | жизненно важный / решающий жизни и смерти |
+| mental model | модель в голове |
+| takeaway | вывод / то, что унести |
+| wingman / supervises / executes | ведомый / наблюдает / исполняет |
+| callout | акцент / выделение |
+| adversarial | состязательный |
+| use case | сценарий использования |
+| best practice | проверенный подход / лучшая практика |
+| deploy / deployment | развёртывание |
+| insight | вывод / находка / наблюдение |
+| tradeoff | компромисс |
+| baseline | базовый уровень / отправная точка |
+| stack | стек технологий |
+| review | обзор / проверка |
+| override | перекрытие / отмена |
+| self-contained | самодостаточный |
+| pipeline | конвейер / последовательность |
+
+### Keep-list (whitelisted — НЕ заменять)
+
+- **Brand names** без хорошего перевода: Sora 2, Midjourney, Suno, ElevenLabs, Adobe Firefly, OpenAI, Anthropic, NYT, Bloomberg, Reuters, BBC, RIAA.
+- **Established acronyms** с **inline расшифровкой при первом появлении**: NYT (New York Times), RIAA (Recording Industry Association of America), DMCA, CDPA, GDPR, API, ML, GenAI, LLM, RAG, MCP, OODA, HITL, LAWS.
+- **Mode/method names** без принятого русского эквивалента: text-to-video, text-to-image, prompt (но «инженер промптов» вместо «promt-engineer»), fine-tuning (с inline «дообучение»).
+- **Legal terms** с inline gloss: fair use (доктрина «добросовестного использования»), opt-out (право отказа).
+- **URLs, case names, dates** — естественно латиница.
+
+### Pre-GATE deep latin-token scan (mandatory, ENFORCED)
+
+Pattern-narrow grep маскирует depth — Лекция 8 verification (32-pattern) показал 0-4 hits → подумал deck clean. Deep scan показал 919 в speech. Поэтому ОБЯЗАТЕЛЕН **deep latin-token scan** перед каждым USER GATE B/C:
+
+```python
+# deep_latin_scan.py — broad regex + brand allowlist
+import re, sys, pathlib
+
+BRAND_ALLOWLIST = {
+    # Brands
+    "Sora", "Midjourney", "Suno", "ElevenLabs", "OpenAI", "Anthropic", "Adobe",
+    "Firefly", "NYT", "Bloomberg", "Reuters", "BBC", "CNN", "RIAA", "DMCA", "CDPA",
+    "GDPR", "Wikipedia", "Wikimedia", "YouTube", "GitHub", "Google", "Microsoft",
+    "Meta", "Apple", "DeepMind", "DeepSeek", "Claude", "GPT", "ChatGPT", "Gemini",
+    "Copilot", "Llama", "Mistral", "Cursor", "Maxar", "Palantir", "Anduril",
+    # Tech acronyms (с RU расшифровкой обычно где-то)
+    "AI", "ML", "LLM", "RAG", "MCP", "API", "GenAI", "RLHF", "CV", "NLP", "UI",
+    "UX", "SaaS", "PaaS", "OS", "GPU", "CPU", "TPU", "CC", "PDF", "PNG", "JPG",
+    "SVG", "HTML", "CSS", "JSON", "YAML", "URL", "URI", "HTTP", "HTTPS", "OAuth",
+    "JWT", "REST", "gRPC", "SQL", "OODA", "HITL", "LAWS", "SAR", "ATR", "MCAS",
+    "ROE", "ARC", "AGI", "MMLU", "HumanEval", "BPE", "v1", "v2", "v3",
+    # Slide markers / mode names
+    "text", "image", "video", "audio", "fair", "use", "opt", "out",
+}
+
+def scan(path: str):
+    text = pathlib.Path(path).read_text(encoding="utf-8")
+    # Strip frontmatter + code blocks (не считать)
+    text = re.sub(r"^---\n.*?\n---\n", "", text, flags=re.S)
+    text = re.sub(r"```.*?```", "", text, flags=re.S)
+    # Strip URLs
+    text = re.sub(r"https?://\S+", "", text)
+    # Latin word: ≥3 chars, начинается с буквы
+    tokens = re.findall(r"\b[A-Za-z][A-Za-z\-]{2,}\b", text)
+    hits = [t for t in tokens if t not in BRAND_ALLOWLIST and t.lower() not in {b.lower() for b in BRAND_ALLOWLIST}]
+    unique = sorted(set(hits))
+    print(f"{path}: {len(hits)} occurrences, {len(unique)} unique")
+    for tok in unique[:50]:
+        cnt = hits.count(tok)
+        print(f"  {cnt}× {tok}")
+
+if __name__ == "__main__":
+    for p in sys.argv[1:]:
+        scan(p)
+```
+
+Run:
+```bash
+python3 deep_latin_scan.py library/lectures/lec-NN/speech.md library/lectures/lec-NN/slides/*.md
+# Также на extracted PPTX visible text:
+python3 -c "from pptx import Presentation; p=Presentation('library/lectures/lec-NN/rendered/lec-NN.pptx'); \
+  [print(s.text) for sl in p.slides for s in sl.shapes if s.has_text_frame]" > /tmp/pptx-visible.txt
+python3 deep_latin_scan.py /tmp/pptx-visible.txt
+```
+
+### Acceptance criteria
+
+- **0 critical anglicism hits** (top-30 blacklist) в narrative body.
+- **Deep scan results** показывают только legitimate Latin tokens: brand names, URLs, case names (people / orgs), slide markers `[sNN]`, tech acronyms whitelisted.
+- **Whitelist-only unique** (i.e. `unique - whitelist = ∅` для narrative body content; URLs / case names / markers OK).
+
+**Cost-of-omission lec-08:** speech v1 self-report «0 hits» при 107 patterns / 186 occurrences → owner reject → 3h, 3 revision passes.
+
+**Связанные правила:** [[russification]], `speech-writer.md` § ENFORCED Anti-anglicism, `book-editor.md` § RUSSIFICATION в chapter body, `presentation-designer.md` § ENFORCED — Russification для RU lectures.
+
+---
+
+## 5.9 Hero images на s01 + s39 (ENFORCED — [[hero-images-required]])
+
+**Источник:** рефлексия Лекции 8 (#122), owner explicit запрос «не хватает броской иллюстрации на самом первом слайде и на завершающем, сделай и запиши себе как общее требования ко всем презам».
+
+**Правило:** **каждая** презентация курса ОБЯЗАНА иметь hero-иллюстрацию на первом (s01 / ice-breaker / cover) и последнем (s39 / closing / bridge) слайдах. **≥40% площади слайда** или full-bleed background.
+
+### s01 (ice-breaker / cover) — что делать
+
+- Hero ≥40% площади или full-bleed background с текстом сверху.
+- **Foreshadow keystone axis лекции** (визуально намекать на main концепцию).
+- ИЛИ показывать **iconic visual из домена** (real product screenshot, demo frame, signature image).
+- ИЛИ создавать **«wow factor»** — что-то, что заставит студента сразу заинтересоваться.
+- **Не подходит:** stock illustration с laptop + brain icon, generic «AI» visual, plain Ocean palette card, чисто текстовый cover.
+- **Подходит:** collage of generated outputs (Sora 2 frame + Midjourney work + Suno waveform), iconic product screenshot, viral case visual.
+
+### s39 (closing / bridge) — что делать
+
+- Hero ≥40% площади.
+- **Замыкать emotional arc** — повторить keystone visual из s05 / показать «после AI» state.
+- ИЛИ **bridge к следующей лекции** — visual hint на тему Лекции N+1.
+- ИЛИ **iconic case visual** — самый запоминающийся artefact из лекции (e.g., Drew Ortiz fake profile, Kelly McKernan plaintiff portrait, X-62 VISTA DARPA).
+- **Не подходит:** thank you slide, Q&A repeat, sources list только.
+
+### Source images
+
+Используй **6-tier acquisition** (§5.7). При truly unavailable real image → custom data-viz hero (NOT plain text card), e.g. cost-collapse chart full-bleed для finance lecture.
+
+### Acceptance criteria
+
+- s01: hero image present, ≥40% площади, links to keystone OR domain identity, attribution label visible.
+- s39: hero image present, ≥40% площади, links to emotional payoff OR Lec-N+1 bridge, attribution label visible.
+- Captions на русском (см. §5.8 Russification).
+- Ocean palette consistency (см. §5.5 + дизайн-плейбук).
+
+**Cost-of-omission lec-08:** 6 min — простое улучшение, но владелец заметил отсутствие сразу — упущенная возможность hook + payoff.
+
+**Слайд-инвентарь:** добавить `hero_cover` + `hero_closing` к mandatory slide types (см. §4 «Slide-types library»). Каждый deck должен иметь оба типа.
+
+**Связанные правила:** [[hero-images-required]], [[no-mock-fallbacks]] (Hero images REAL, не stylized mock), [[russification]] (captions на русском), `presentation-designer.md` § ENFORCED — Hero images на s01 + s39.
 
 ---
 
@@ -337,6 +573,53 @@ library/lectures/lec-01/
 20. ❌ **Equal-height boxes для unequal content** — 4 layer boxes одинаковой высоты при разной длине описаний → text overflow или большие пустые поля. Fix: scale heights к контенту, либо abbreviate.
 21. ❌ **Inconsistent gold-emphasis across same-tier cards** — на s09 один из 4 равнозначных breakthrough'ов выделен gold без причины. Confusing. Fix: gold = либо «лидер» (data-driven), либо «callback» (один концепт-якорь), либо ничего на equal cards.
 22. ❌ **Projector-distance illegibility** — axis font <14pt, sub-labels <11pt при render для 16:9 deck. На задних рядах нечитаемо. Fix: enforce min font sizes per role (axis 14pt, sub 11pt, body 12pt, header 14pt).
+
+### Лекция 8 lessons (23-27)
+
+23. ❌ **Mock-fallback при paywall/JS-block (stylized Ocean PNG с verbatim headlines)** — designer self-fallback на «cards looking like screenshots» = visually-passes-orchestrator-sweep но user reject «это моканное говно» ([[no-mock-fallbacks]]). Fix: 6-tier real image acquisition (og:image / Wikipedia / press release / YouTube thumb / Wayback / Google Images) + per-image attempt log при failure. См. §5.7.
+24. ❌ **Self-report «X% media coverage» trustworthy** — counterintuitive: subagent counts mocks + primitives + icons-in-boxes как media. Fix: orchestrator визуально verifies sample 5 slides + checks identifiable real source URL (Лекция 8: 16 stylized mocks прошли «87.2% coverage» check).
+25. ❌ **Excessive англицизмы в visible body / speaker notes для RU-аудитории** — Лекция 8: «production-уровень», «capability», «freelance», «hype demo», «out-of-band verification», «MAJORS × STATUS» и т.д. на slides. Fix: anti-anglicism mandate в каждом producer prompt + Russification таблица + **deep latin-token scan** (не только pattern grep). См. §5.8.
+26. ❌ **Pattern-narrow grep как verification «deck clean от anglicisms»** — Лекция 8: narrow scan (32 patterns) показал 0-4 hits → orchestrator подумал clean → deep scan показал 919 unique в speech. Fix: deep latin-token scan (broad regex + brand allowlist) для RU-language deck перед каждым GATE.
+27. ❌ **Text-only s01 (ice-breaker) или s39 (closing) без hero иллюстрации** — упущенная возможность hook + emotional payoff. Fix: Hero ≥40% площади на s01 + s39 для всех deck'ов курса; real image via 6-tier ([[hero-images-required]]). См. §5.9.
+
+---
+
+## 9.5 Pre-USER-GATE B walkthrough — Лекция 8 additions (ENFORCED)
+
+Дополнительные checks к существующему Pre-USER-GATE walkthrough (см. `CLAUDE.md` § Pre-USER-GATE Walkthrough Rule + `tools/lecture-production/README.md` GATE B):
+
+### Visual sweep additions
+
+- [ ] **Hero on s01 (≥40% area, real image, attribution visible)** — иначе structural gap, не polish.
+- [ ] **Hero on s39 (≥40% area, real image, attribution visible)** — иначе structural gap.
+- [ ] **Visual sweep: каждый «screenshot» claim — actual real source identifiable?** Sample 5 slides claiming external screenshot → identifiable source URL? matches what source would show? Stylized Ocean card с verbatim headline = FAIL (mock, не real image).
+- [ ] **«Is this image REAL or stylized mock?» visual check** per slide claiming to show external screenshot — vision-enabled distinguishing.
+- [ ] **Real-image attribution label visible** per slide (source name + date, e.g. «CNN · 16 мая 2024»).
+
+### Deep latin-token scan (mandatory ДО GATE)
+
+- [ ] **Deep latin-token scan на rendered pptx visible body** (broad regex + brand allowlist, не только narrow Russification таблица patterns) — `unique - whitelist = ∅`.
+- [ ] **Deep scan на speaker notes** — same threshold (≥150 слов connected text, no англицизмы вне whitelist).
+- [ ] **Deep scan на speech.md** narrative body — same threshold.
+
+```bash
+# Sample command:
+python3 tools/presentation-build/deep_latin_scan.py \
+  library/lectures/lec-NN/speech.md \
+  library/lectures/lec-NN/slides/*.md
+# Extract PPTX visible:
+python3 -c "from pptx import Presentation; p=Presentation('library/lectures/lec-NN/rendered/lec-NN.pptx'); \
+  [print(s.text_frame.text) for sl in p.slides for s in sl.shapes if s.has_text_frame]" > /tmp/pptx-visible.txt
+python3 tools/presentation-build/deep_latin_scan.py /tmp/pptx-visible.txt
+```
+
+### 6-tier acquisition log verification
+
+- [ ] **`iteration-log.md` per slide содержит** acquisition tier used per real image (Tier 1-6 + source URL).
+- [ ] **Per-image honest log при failure** — если Tier 6/6 failed, ≥6 tried URLs documented в log.
+- [ ] **0 blanket «paywalls blocked everything»** statements без per-source attempt log.
+
+**Если найдены P0/P1 issues — NOT present GATE.** Spawn revision first, re-run pre-gate, потом present.
 
 ---
 

@@ -88,7 +88,37 @@ patch|features|self-contained
 | override | перекрытие / отмена |
 | adversarial | состязательный |
 
-**Whitelisted (keep as-is):** brand names (Maxar Sentry, Palantir MSS, Anduril Fury), tech acronyms с RU расшифровкой при первом упоминании (OODA, SAR, ATR, LAWS, HITL, V-BAT, CCA, MCAS, ROE).
+**Whitelisted (keep as-is):** brand names (Maxar Sentry, Palantir MSS, Anduril Fury, Sora 2, Midjourney, Suno, ElevenLabs, Adobe Firefly, OpenAI, Anthropic, NYT, Bloomberg, Reuters, BBC, RIAA), tech acronyms с RU расшифровкой при первом упоминании (OODA, SAR, ATR, LAWS, HITL, V-BAT, CCA, MCAS, ROE, DMCA, CDPA, GDPR, API, ML, LLM, RAG, MCP, GenAI), mode/method names (text-to-video, text-to-image, prompt, fine-tuning с inline «дообучение»), legal terms с inline gloss (fair use → «добросовестное использование», opt-out → «право отказа»).
+
+### Lec-08 extended Russification таблица (применять always)
+
+| Anglicism | RU canonical |
+|---|---|
+| production use / production-уровень | промышленное применение |
+| hype demo | демо для хайпа |
+| freelance | фрилансер / независимый исполнитель |
+| stock photo | сток-фотография |
+| out-of-band verification | проверка через независимый канал |
+| multi-factor authentication | многофакторная аутентификация |
+| lawsuit-driven licensing | лицензирование под давлением исков |
+| regurgitation theory | теория воспроизведения тренировочных данных |
+| verbatim | дословно |
+| character consistency | сохранение персонажа между генерациями |
+| voice cloning | клонирование голоса |
+| model collapse / MAD | коллапс модели |
+| identity proof | подтверждение личности |
+| likeness rights | права на использование образа |
+
+### Pre-GATE deep latin-token scan (orchestrator-INDEPENDENT, ENFORCED)
+
+После speech-writer self-grep — orchestrator должен запустить **deep latin-token scan** (broad regex + brand allowlist) перед каждым GATE. Pattern-narrow grep маскирует depth (Лекция 8: narrow scan 32 patterns показал 0-4 hits, deep scan 919 unique).
+
+```bash
+python3 tools/presentation-build/deep_latin_scan.py library/lectures/lec-NN/speech.md
+# Expected: unique - whitelist = ∅ для narrative body content
+```
+
+**Cost-of-omission lec-08:** speech v1 self-report «0 hits» при 107 distinct patterns / 186 occurrences → owner reject → 3 revision passes / ~3h.
 
 ## WPM Hard Rule (ENFORCED, ZERO exceptions)
 

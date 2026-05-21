@@ -1,0 +1,388 @@
+# library/lectures/lec-11/deck.yaml
+#
+# Deck-структура Лекции 11 «AI в дискретном и процессном производстве»
+# v1: 35 слайдов согласно plan-v2-final.md, chapter v5 multi-part.
+#
+# Phase 5 multi-artifact pipeline. Issue #127.
+#
+# Pattern carry-forward от Лекции 9:
+#   - 35 слайдов общим объёмом
+#   - section dividers (5 шт.): s06 / s13 / s23 / s31 / s36
+#   - cover (s02), lecture-map (s03), glossary mini (s04), keystone (s05) — Раздел 0
+#   - dedicated Q&A slide (s38), bridge к lec-12 (s39 closing hero)
+#   - Hero on s01 (Tesla Giga Press BEFORE/AFTER) + s39 (BMW Digital Twin)
+
+deck:
+  lecture_number: 11
+  title: "AI в дискретном и процессном производстве"
+  audience: "студенты-инженеры 3 курса (универсальная, не отраслевая)"
+  duration_min: 75
+  central_question: "Где AI работает в производстве, где не работает — и как инженер должен решать, в какой колонне он работает (дискретное / процессное) и какой AI-стек применим?"
+  learning_outcomes: [LO1a, LO1b, LO2, LO7, LO8]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v5 multi-part (status=finalized, ~28k слов; chapter.md + chapter-part2.md + chapter-part3.md)
+  plan: notes/lecture-11-review/final/plan-v2-final.md
+  keystone_axis: "Дискретное vs Процессное — две модели производства"
+
+# Final slide list (35 slides):
+#
+# Section 0 — Открытие + keystone + lecture-map + glossary (5–7 мин):
+#   s01 — hero hook: Tesla Giga Press BEFORE/AFTER 2018→2024 (Tesla retreats)
+#   s02 — cover (lecture title + meta + roadmap-bar)
+#   s03 — lecture-map (5 horizontal section cards)
+#   s04 — glossary mini (6 must-know × 2 cols: ISA-95, MES, SCADA, PLC, OEE, soft sensor)
+#   s05 — keystone: «Две модели производства. AI входит в обе — но по-разному»
+#
+# Section divider 1
+#   s06 — divider Section 1: Общее для обеих моделей
+#
+# Section 1 — Общее для обеих моделей (≈12 мин):
+#   s07 — adoption landscape + 78% / 5,5% + OEE intro
+#   s08 — три расходящиеся рыночные оценки (Markets&Markets / Fortune / Precedence)
+#   s09 — OT/IT раскол (structural divide schema)
+#   s10 — фундаментальные модели как augmentation (Siemens IFM + FoxBrain + 3 причины почему не controller)
+#   s11 — Tesla Optimus reality check (видеодемо vs production gap)
+#   s12 — трио hype-collapse: GE Predix + IBM Watson + Foxconn Wisconsin
+#
+# Section divider 2
+#   s13 — divider Section 2: Дискретное производство
+#
+# Section 2 — Дискретное deep-dive (≈17 мин):
+#   s14 — CV-инспекция + эталонная разметка (BMW GenAI4Q + TSMC + Boeing)
+#   s15 — Boeing 737 door plug — «CV последняя линия защиты, не первая»
+#   s16 — стоимость разметки vs объём данных (cornerstone)
+#   s17 — прогностическое обслуживание дискретное (Tata Steel + BMW AIQX + OEE callback)
+#   s18 — коботы + worker-augmentation (Hyundai-BD + Toyota GAIA + Jidoka 2.0)
+#   s19 — Tesla 2018 over-automation (Musk admit + Bainbridge automation paradox)
+#   s20 — границы CV-QC (alternatives: structured light / X-ray / rules-vision)
+#   s21 — Foxconn FoxBrain «80%» — vendor self-claim (LO2 hook)
+#   s22 — failure-pattern matrix: discrete failures × 4 типа
+#
+# Section divider 3
+#   s23 — divider Section 3: Процессное производство
+#
+# Section 3 — Процессное deep-dive (≈17 мин):
+#   s24 — мягкие сенсоры (BASF Geismar + Pfizer Vox + AI-formulation)
+#   s25 — MPC / RL гибрид + CIRL (Yokogawa-JSR FKDPP + BASF CIRL diagram)
+#   s26 — RL distribution drift (когда batch transitions ломают политику)
+#   s27 — PdM на границе + детерминизм edge-вывода (POSCO + Holcim + 1мс vs 100мс)
+#   s28 — регуляторные блокеры: FDA Part 11 + ATEX + Указ 250
+#   s29 — российский контекст (Норникель + СИБУР + кризис отрасли)
+#   s30 — failure-pattern matrix: process failures × 4 типа
+#
+# Section divider 4
+#   s31 — divider Section 4: Карта решения «когда AI не нужен»
+#
+# Section 4 — Рамка решения + альтернативы (≈12 мин):
+#   s32 — 4 категории критериев (Данные / Стоимость / Регуляторика / Человек)
+#   s33 — матрица альтернатив (SPC / DOE / MPC / RCM / physics-sim / rules-vision × 5 столбцов)
+#   s34 — worked example Pfizer Vox через 5-step framework
+#   s35 — 5-step framework + 3 вопроса к вендору + OEE-вопрос
+#
+# Section divider 5
+#   s36 — divider Section 5: Замыкание
+#
+# Section 5 — Замыкание + Q&A (≈6 мин):
+#   s37 — recap двухколонной схемы + explicit failure-callback
+#   s38 — Q&A + 5 вендор-вопросов для кармана
+#   s39 — closing hero: BMW Digital Twin (bridge к Лекции 12)
+
+slides:
+  - id: s01
+    file: slides/s01-hook-tesla-giga-press.md
+    type: hero_cover
+    duration_min: 3
+    assertion: "Tesla отступила от gigacasting дважды — в 2018 и 2024. Компании не учатся один раз."
+    learning_goal: "Эмоциональный hook + предъявить central question"
+    failure_bucket: strict_in
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 1
+    assertion: "Производство — две параллельные ветви: дискретное и процессное. AI входит в обе, но по-разному."
+    learning_goal: "Контекст лекции + LO + roadmap"
+
+  - id: s03
+    file: slides/s03-lecture-map.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Пять разделов: общее → дискретное → процессное → рамка решения → замыкание."
+    learning_goal: "Навигация: куда мы идём"
+
+  - id: s04
+    file: slides/s04-glossary.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Шесть терминов из мира промышленных систем — must-know для лекции."
+    learning_goal: "ISA-95, MES, SCADA, PLC, OEE, soft sensor — inline gloss"
+
+  - id: s05
+    file: slides/s05-keystone-two-models.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Две модели производства. AI входит в обе — но по-разному."
+    learning_goal: "Keystone ось discrete/process с failure-метками и универсальным поясом застревания"
+    failure_bucket: strict_in
+
+  - id: s06
+    file: slides/s06-section1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 1. Что общее для обеих моделей."
+    learning_goal: "Section break"
+
+  - id: s07
+    file: slides/s07-adoption-landscape.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "78% компаний используют AI. Только 5,5% — high performers с EBIT >5%. Это и есть «застревание на пилотной стадии»."
+    learning_goal: "Adoption gap, OEE intro как central метрика"
+    failure_bucket: strict_in
+
+  - id: s08
+    file: slides/s08-market-estimates-divergence.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Три аналитика дают рыночные оценки 2025, расходящиеся в 5×. Это первая красная тряпка для инженера."
+    learning_goal: "Vendor estimates расходятся → читайте methodology"
+    failure_bucket: strict_in
+
+  - id: s09
+    file: slides/s09-ot-it-split.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "AI приходит из IT в OT и упирается в structural divide: детерминированные циклы vs eventually-consistent."
+    learning_goal: "OT/IT раскол как фундаментальный лоскут (cornerstone)"
+    failure_bucket: strict_in
+
+  - id: s10
+    file: slides/s10-foundation-models-augmentation.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Промышленные фундаментальные модели — augmentation для инженера, не autonomous controller. Три причины: задержка, галлюцинации, сертификация."
+    learning_goal: "LO7 architectural distinction — chat-helper vs controller"
+    failure_bucket: strict_in
+
+  - id: s11
+    file: slides/s11-tesla-optimus-reality.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Tesla Optimus в видеодемо 2024 — впечатляюще. На production-линии 2026 — нигде."
+    learning_goal: "Демо vs production gap (recurring pattern)"
+    failure_bucket: strict_in
+
+  - id: s12
+    file: slides/s12-hype-collapse-trio.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "GE Predix $4B сгорел. IBM Watson продан за parts. Foxconn Wisconsin: 10000 рабочих → 1500. Три истории, один урок."
+    learning_goal: "Hype-collapse trio с уроками — industrial AI ≠ general cloud, demo ≠ production, anti-signal «8th wonder»"
+    failure_bucket: strict_in
+
+  - id: s13
+    file: slides/s13-section2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2. Дискретное производство deep-dive."
+    learning_goal: "Section break"
+
+  - id: s14
+    file: slides/s14-cv-inspection-real-cases.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "CV-инспекция работает в production: BMW GenAI4Q, TSMC 95% accuracy, Boeing fuselage 2025."
+    learning_goal: "Discrete production CV cases с эталонной разметкой как cornerstone"
+
+  - id: s15
+    file: slides/s15-boeing-737-door-plug.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "AI inspection НЕ предотвратил door-plug blow-out Alaska Airlines 737 MAX 9. CV — последняя линия защиты, не первая."
+    learning_goal: "Anti-case: без upstream sign-off + audit trail AI не починит"
+    failure_bucket: strict_in
+
+  - id: s16
+    file: slides/s16-label-cost-vs-data-volume.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Сырые данные дёшевы. Эталонная разметка требует domain-эксперт × часы = дорого. Это рычаг для §4."
+    learning_goal: "Стоимость разметки vs объём данных (cornerstone fundamental)"
+    failure_bucket: strict_in
+
+  - id: s17
+    file: slides/s17-discrete-pdm-oee.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Vendor обещает –25% downtime. McKinsey: большинство не извлекают ценность. ROI 8–14 мес. Только 5,5% high performers."
+    learning_goal: "PdM на дискретном + OEE callback (–25% downtime ≠ +25% OEE)"
+    failure_bucket: strict_in
+
+  - id: s18
+    file: slides/s18-cobots-toyota-jidoka.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Hyundai-Boston Dynamics Spot для QC. Toyota GAIA: 10000 моделей создано сотрудниками. Jidoka 2.0 — augmentation, не replacement."
+    learning_goal: "Коботы + worker-augmentation; Toyota Jidoka stance"
+
+  - id: s19
+    file: slides/s19-tesla-2018-over-automation.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "«Excessive automation at Tesla was a mistake. Humans are underrated» — Musk, апрель 2018. Канонический урок automation paradox."
+    learning_goal: "Tesla 2018 canonical case + Bainbridge 1983 + Toyota alternative"
+    failure_bucket: strict_in
+
+  - id: s20
+    file: slides/s20-cv-limits-alternatives.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "CV brittle на low-contrast defects + сдвиг распределения при смене продукта. Physical signal amplification + rules-based — до ML."
+    learning_goal: "Границы CV-QC + альтернативы (structured light, X-ray, rules)"
+    failure_bucket: strict_in
+
+  - id: s21
+    file: slides/s21-foxconn-foxbrain-vendor-claim.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Foxconn: «AI делает 80% configuration work» — vendor self-claim, не third-party metric. Различать."
+    learning_goal: "LO2 hook — 3 уточняющих вопроса к вендору"
+    failure_bucket: strict_in
+
+  - id: s22
+    file: slides/s22-discrete-failure-matrix.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Четыре типа провалов на дискретном: чрезмерная автоматизация / сдвиг распределения / scarce labels / vendor self-claim."
+    learning_goal: "Failure-pattern matrix дискретного"
+    failure_bucket: strict_in
+
+  - id: s23
+    file: slides/s23-section3-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 3. Процессное производство deep-dive."
+    learning_goal: "Section break"
+
+  - id: s24
+    file: slides/s24-soft-sensors-pfizer-basf.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "BASF Geismar: –30% batch defects. Pfizer Vox: +20000 доз mRNA per batch — но «recommend», не autonomous."
+    learning_goal: "Мягкие сенсоры + AI-formulation; Pfizer Vox forward-link к §4"
+
+  - id: s25
+    file: slides/s25-mpc-rl-cirl.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Yokogawa-JSR FKDPP: 35 дней автономного RL в distillation column (2022). CIRL: RL расширяет PID, не замещает."
+    learning_goal: "MPC/RL гибрид; CIRL — PID внутри loss function (mermaid diagram)"
+
+  - id: s26
+    file: slides/s26-rl-distribution-drift.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "RL ломается на batch transitions, смене feedstock, seasonal shifts, equipment wear. MPC dominates control."
+    learning_goal: "RL drift + MPC как safe-fallback"
+    failure_bucket: strict_in
+
+  - id: s27
+    file: slides/s27-edge-pdm-determinism.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "POSCO: 180 edge nodes. PLC-цикл = 1–10 мс детерминирован. LLM = 100–500 мс. Latency = determinism, не только speed."
+    learning_goal: "Edge AI + детерминизм edge-вывода (cornerstone fundamental)"
+    failure_bucket: strict_in
+
+  - id: s28
+    file: slides/s28-regulatory-blockers.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "FDA Part 11: audit trail обязателен → black-box не работает. ATEX Zone 0: non-certified AI запрещён физически. Указ 250: КИИ-обвязка в РФ."
+    learning_goal: "Регуляторные блокеры FDA + ATEX + Указ 250"
+    failure_bucket: strict_in
+
+  - id: s29
+    file: slides/s29-russian-context.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Норникель достиг industrial stage на flotation. СИБУР Marketplace 2026. Public-disclosure скудна — анти-pattern в reporting, не absence adoption."
+    learning_goal: "Российский контекст + LO2 (различать PR statement и измеримый эффект)"
+
+  - id: s30
+    file: slides/s30-process-failure-matrix.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Четыре типа провалов на процессном: RL drift / regulatory blocker / OT-IT раскол / vendor PR без metrics."
+    learning_goal: "Failure-pattern matrix процессного"
+    failure_bucket: strict_in
+
+  - id: s31
+    file: slides/s31-section4-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 4. Карта решения — когда AI не нужен."
+    learning_goal: "Section break"
+
+  - id: s32
+    file: slides/s32-four-criteria-categories.md
+    type: assertion_visual
+    duration_min: 4
+    assertion: "Четыре категории критериев «AI не подходит»: Данные / Стоимость / Регуляторика / Человек."
+    learning_goal: "LO8 центральный — payoff лекции"
+    failure_bucket: strict_in
+
+  - id: s33
+    file: slides/s33-alternatives-matrix.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Шесть альтернативных инструментов: SPC / DOE / MPC / RCM / physics-sim / rules-vision — каждый со своей нишей."
+    learning_goal: "Alternatives matrix (6 × 5)"
+    failure_bucket: strict_in
+
+  - id: s34
+    file: slides/s34-pfizer-vox-worked-example.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Pfizer Vox проходит 5-step framework: процессное, SPC недостаточно, FDA Part 11 → recommend mode, HITL → готов к production."
+    learning_goal: "Worked example — рамка применима, не abstract theory"
+    failure_bucket: strict_in
+
+  - id: s35
+    file: slides/s35-five-step-framework.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Пять шагов: identify class → map alternatives → apply 4 категории → pilot с go-criteria → production с HITL + audit trail."
+    learning_goal: "5-step framework для кармана + 3 вопроса к вендору + OEE-вопрос"
+    failure_bucket: strict_in
+
+  - id: s36
+    file: slides/s36-section5-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 5. Замыкание."
+    learning_goal: "Section break"
+
+  - id: s37
+    file: slides/s37-recap-failure-callback.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Discrete: CV + коботы + копилоты. Process: мягкие сенсоры + MPC/RL + PdM + регуляторика. Общее: foundation models как дополнение, застревание на пилотной стадии universal."
+    learning_goal: "Recap + explicit failure-callback"
+    failure_bucket: strict_in
+
+  - id: s38
+    file: slides/s38-qa-vendor-questions.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Пять вопросов к вендору на завтра — практический инструмент для кармана."
+    learning_goal: "Q&A: типичные вопросы + 5 vendor-вопросов"
+
+  - id: s39
+    file: slides/s39-closing-hero-bmw-digital-twin.md
+    type: hero_closing
+    duration_min: 2
+    assertion: "BMW: 30+ заводов готовы к цифровому двойнику (2024–2025). Лекция 12 — сшивка отдельных инструментов в production-fabric."
+    learning_goal: "Closing hero + bridge к лекции 12"

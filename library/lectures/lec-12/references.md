@@ -1,18 +1,18 @@
 ---
 part: references
-of: 3
+of: 4
 parent: "chapter.md"
 title: "Глава 12. Источники"
 lecture_number: 12
-status: draft
-version: v1
+status: reviewed
+version: v2
 ---
 
 # Источники для Главы 12
 
 > Этот файл содержит полный список источников (40+ ссылок) для Главы 12. Inline-cross-references в формате `[N]` в `chapter.md` / `chapter-part2.md` / `chapter-part3.md` ссылаются на пронумерованные записи ниже.
 
-**Навигация:** [← chapter.md (Часть 1)](chapter.md) | [chapter-part2.md (Часть 2)](chapter-part2.md) | [chapter-part3.md (Часть 3)](chapter-part3.md)
+**Навигация:** [← chapter.md (Часть 1)](chapter.md) | [chapter-part2.md (Часть 2)](chapter-part2.md) | [chapter-part3.md (Часть 3)](chapter-part3.md) | [chapter-part4.md (Часть 4)](chapter-part4.md)
 
 ---
 
@@ -61,4 +61,4 @@ version: v1
 
 ---
 
-**Навигация:** [← chapter.md (Часть 1)](chapter.md) | [chapter-part2.md (Часть 2)](chapter-part2.md) | [chapter-part3.md (Часть 3)](chapter-part3.md)
+**Навигация:** [← chapter.md (Часть 1)](chapter.md) | [chapter-part2.md (Часть 2)](chapter-part2.md) | [chapter-part3.md (Часть 3)](chapter-part3.md) | [chapter-part4.md (Часть 4)](chapter-part4.md)

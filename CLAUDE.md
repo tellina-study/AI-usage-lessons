@@ -211,13 +211,18 @@ Before presenting any USER GATE to user:
 2. **Visual sweep:** для slides — open all PNG snapshots, 5-sec look per slide, can I state main message?
 3. **Notes read:** 5-7 random speaker notes — verify 150-300 words connected text, no «Лектору» / no layout descriptions
 4. **Cross-artifact grep:** terminology drift, orphan references, pacing math
-5. **Designer-extras grep (orchestrator-INDEPENDENT, ENFORCED — Лекция 4 lesson):** orchestrator runs its OWN grep over the **rendered pptx visible layer** (notes excluded) — subagent self-report TOTAL=0 is NOT accepted as verification (Лекция 4 v3: designer self-grep дал ложный TOTAL=0, пропустил словесный scaffold). Паттерн ОБЯЗАН включать словесные scaffold-фразы, не только коды: «Лектору» / «Вы здесь» / тайминг / `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / `LO[1-9]` / `§[0-9]` / `→ s[0-9]+` / `(s[0-9][0-9])` / «точк* возврата» / «— в главе» / «в материалах лекции» / «это payoff» / «возвращаемся [0-9N]» / «не вводи* нов» / «course-scaffold» — all 0 (frontmatter exempt).
+5. **Designer-extras grep (orchestrator-INDEPENDENT, ENFORCED — Лекция 4 + Лекция 10 lesson):** orchestrator runs its OWN grep over the **rendered pptx visible layer + speaker_notes** (frontmatter exempt) — subagent self-report TOTAL=0 is NOT accepted as verification. Паттерн ОБЯЗАН включать **3 группы**:
+   - **Scaffold-фразы:** «Лектору» / «Вы здесь» / `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / `LO[1-9][a-z]?` / `§[0-9]` / `→ s[0-9]+` / `(s[0-9][0-9])` / «точк* возврата» / «— в главе» / «в материалах лекции» / «это payoff» / «возвращаемся [0-9N]» / «не вводи* нов» / «course-scaffold»
+   - **Timing-маркеры (ENFORCED Лекция 10):** `\b[0-9]+\s*мин(ут)?\b` (на section dividers / lecture-map / cover / Q&A — все 0); «Время раздел» / «Тайминг» / «Длительность»; «⏱» / «⏰»
+   - **Методические комментарии (ENFORCED Лекция 10):** `(методическ|педагогическ)\s*\w+` / «На этом этапе студент» / «Здесь студент усваивает» / «Зачем это в Лекции» / «Этот раздел учит» / «главный методический пункт» / «методическая рамка/ценность/значимость» / «для инженера это означает» (если мета-комментарий, не утверждение из материала)
+   All 0 в visible body + speaker_notes (frontmatter exempt). См. [[no-timing-no-methodology-in-slides]].
 6. **Keystone-axis check (ENFORCED — Лекция 4 lesson):** несущая концептуальная ось лекции предъявлена **отдельным keystone-слайдом в Разделе 0 ДО первого погружения в неё**? Заголовок + 1-я строка — про саму ось, НЕ про устройство курса / защиту подхода / «мы не вводим нового». Если ось «всплывает» только в середине или это защитный recap — STOP, структурный gap (цена: Лекция 4 = ~5 циклов deck), не polish.
 7. **Lec-N-1 pattern compliance (для slides):** does Lec-N have lecture-map slide? section dividers для всех major sections? dedicated Q&A slide? roadmap-bar только на dividers + cover (не на каждом content slide)?
 8. **Artifacts в main repo (для GATE B):** `library/lectures/lec-NN/rendered/lec-NN.{pptx,pdf}` MUST exist в main repo path BEFORE opening GATE. If only в worktree → STOP, sync first.
 9. **Hero check (ENFORCED — Лекция 8 lesson):** s01 и s39 имеют hero-иллюстрацию (≥40% area, real image via 6-tier acquisition, attribution label visible)? Stylized Ocean card с verbatim headline = mock, FAIL. ([[hero-images-required]])
 10. **Deep latin-token scan (ENFORCED — Лекция 8 lesson):** на rendered pptx visible body + speech narrative + chapter body — broad regex + brand allowlist; **pattern-narrow grep НЕ достаточен**. `unique - whitelist = ∅` для narrative body content (URLs / case names / brand markers OK). Sample command: `python3 tools/presentation-build/deep_latin_scan.py <files>`. ([[russification]])
 11. **Real-image verification (ENFORCED — Лекция 8 lesson):** sample 5 slides claiming external screenshots → identifiable real source URL? matches what source would show? stylized Ocean-palette card с verbatim headline = mock (FAIL). Per-image acquisition tier documented в `iteration-log.md`. ([[no-mock-fallbacks]])
+12. **Baseline / counterfactual coverage check (ENFORCED — Лекция 10 lesson):** sample 5-7 measurable claims (acres / cows / $$ / % / kg / hours) на rendered pptx visible body + speaker_notes + chapter visible — каждый имеет inline baseline или counterfactual? «–50% гербицидов» БЕЗ исходного kg/acre = P1 «missing denominator». «Магнит 46 РЦ» без total Магнит РЦ baseline = P1. «5M acres» без US ag total baseline = P1. **Любое measurable claim без базы = P1 «missing denominator».** Orchestrator самостоятельно проверяет sample; subagent self-report «verified» — недостаточно. См. § «Baseline / Counterfactual Mandate for Measurable Claims».
 
 **Если найдены P0/P1 issues — NOT present GATE.** Spawn revision first, re-run pre-gate, потом present.
 
@@ -255,6 +260,91 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 
 ---
 
+## No Timing / No Methodology in Slides (ENFORCED — фундаментальное, 2026-05-21 Лекция 10 owner override)
+
+**Источник:** Owner explicit instruction (2026-05-21, Lec-10 GATE B prep) — «в каждой лекции правлю»; memory `feedback_no_timing_no_methodology_in_slides` ([[no-timing-no-methodology-in-slides]]).
+
+### Запрещено в **visible body** slides + speaker_notes (всё, что видит студент):
+
+**1. Timing-маркеры любого вида:**
+- «14 минут · X working cases» на section dividers footer
+- «(5 мин)», «(14 мин)», «(15 мин)» в roadmap / lecture-map
+- «75 минут», «10 минут Q&A» на cover / Q&A slide
+- «⏱», «⏰», «Время раздела», «Тайминг», «Длительность»
+
+**2. Методические комментарии любого вида:**
+- «**методически** важно/значимо/неверное/важная мысль»
+- «**педагогическ**ая цель / задача»
+- «**главный методический пункт**», «**методическая рамка/ценность**», «**методический урок**»
+- «**На этом этапе студент должен**», «**Здесь студент усваивает**»
+- «**Зачем это в Лекции** N», «**Этот раздел учит**»
+- «**Для инженера это означает**» (если используется как «мета-комментарий», не как утверждение из материала)
+- «**Лектору**», «**Преподавателю**», «**Вы здесь**»
+
+### Где timing/методология ВОЗМОЖНЫ (exempt):
+
+- **frontmatter** `.md` (`duration_min`, `timing_min`, `learning_outcomes`, `learning_goal` — это metadata для оркестрации)
+- **`deck.yaml`** `timing_min` / `chapter_ref` — metadata
+- **`speech.md`** Phase 9-11 — речь лектора может содержать методологический discourse
+- **plan files** / **critic reports** / **iteration-log.md** — planning artefacts
+
+### Что писать вместо:
+
+- **Section divider:** смысл раздела одной строкой + tag «3 working cases · 2 провала» (БЕЗ минут).
+- Вместо «Методически важно X» — просто X. Если утверждение значимо — оно само звучит важно.
+- Вместо «На этом этапе студент должен Y» — переформулируй как сам тезис Y.
+
+### Enforcement points:
+
+- **Pre-USER-GATE Walkthrough Rule §5** — расширено явным запретом timing + методологии (см. ниже)
+- **`.claude/agents/presentation-designer.md`** — explicit no-timing / no-methodology mandate в каждый prompt
+- **Pre-USER-GATE B/C independent grep** — паттерны:
+  - `\b[0-9]+\s*мин\b` / `Время раздел` / `Тайминг`
+  - `(методическ|педагогическ)\s*\w+`
+  - «На этом этапе» / «Лектору» / «Преподавателю» / «Зачем это в»
+
+### Cost-of-omission
+
+Пользователь правил каждую лекцию L1-L9 + L10 (10× × ~10-15 мин cleanup) = ~2-3 часа wasted user time. Поэтому правило **фундаментальное**.
+
+---
+
+## Baseline / Counterfactual Mandate for Measurable Claims (ENFORCED — 2026-05-21 Лекция 10 owner override)
+
+**Источник:** Owner explicit instruction (2026-05-21, Lec-10 GATE B prep) — «во многих оценках эффектов/потерь не хватает базы. а сколько на человека или без робота? а сколько было?».
+
+**Правило.** Каждое **измеримое количественное утверждение** (acres / cows / $$ / % / kg / hours / времена) в всех 3 артефактах (chapter / slides / speech) ОБЯЗАНО иметь **базу** или **counterfactual**:
+
+- «5M акров See & Spray» → **сколько было до See & Spray? сколько без selective spray? per-acre herbicide baseline?**
+- «–50% гербицидов» → **от какого исходного значения? стандартное применение X kg/acre → Y kg/acre?**
+- «Plenty $940M потерь» → **vs raised $X total? vs industry baseline VF capex?**
+- «Monarch 102 layoffs (38%)» → **38% от какого пика workforce? в какой момент?**
+- «Cargill $32k saved per trade» → **per annual hedge volume? total Cargill hedging $?**
+- «Магнит 46 РЦ Forecasting» → **из скольких всего РЦ Магнит? denominator?**
+- «Saga 20% UK strawberry» → **от какого total UK strawberry production? в каких единицах?**
+- «X5 200 факторов прогноза» → **vs baseline без ML? accuracy improvement vs предыдущая система?**
+
+### Что нужно (template):
+
+| Утверждение | База / counterfactual | Источник |
+|---|---|---|
+| «5M acres See & Spray» | До 2021 (commercial launch): 0; baseline без selective = blanket spray на 100% поля | Deere press / Blue River timeline |
+| «–50% non-residual herbicide» | Industry baseline blanket spray ≈ 1 lb/acre AI; selective ≈ 0.5 lb/acre | Deere field trial data |
+| «Plenty $940M потерь» | $1B+ raised since 2014; total VF category $1.37B+ потерь 2025 | TechCrunch + AgFunder |
+| «Cognitive Pilot 1700+ установок» | Total комбайнов в РФ ≈ 130k (Минсельхоз); penetration ≈ 1.3% | Минсельхоз stats + Cognitive Pilot press |
+
+### Применимость:
+
+- **Все 3 артефакта** (chapter / slides / speech) — каждое measurable claim либо имеет inline baseline, либо помечено «[VFY-baseline]» как known gap
+- **Critics** (methodology + fact-checker) должны flag claims без baseline как **P1 «missing denominator»**
+- **Pre-USER-GATE walkthrough** — добавлен check «baseline coverage» (sample 5-7 measurable claims → есть ли base?)
+
+### Cost-of-omission:
+
+Без базы цифры выглядят впечатляюще, но инженерно недостаточны для оценки **реального** effect size. Студент не может сравнить «5M acres» с total US ag acres (≈900M) — это 0.55%. «–50% гербицидов» без kg/acre baseline — не интерпретируется. **Это структурный gap, не polish.**
+
+---
+
 ## Anti-Patterns (NEVER DO THESE)
 
 | Anti-Pattern | Correct Approach |
@@ -284,6 +374,10 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 | Per-artifact spawns for polish rounds (separate designer / writer per phase) | Single batched revision agent (book-editor OR speech-writer) для 3-artifact touches; Phase 11 pattern |
 | Лекция < 30% контента про провалы/ограничения/альтернативы ИЛИ доля в одном артефакте | ≥30% holistic (chapter+slides+speech), иначе verdict REVISE (см. AI-Failure & Judgment Content Rule) |
 | «Магическая пилюля»: ИИ-восторг без выученных уроков и границ применимости | Каждая лекция учит говорить «нет» неподходящему ИИ; ≥30% — провалы/ограничения/альтернативы |
+| chapter.md <30k слов для L4+ (single-file 8-12k или multi-part 20-26k) | ≥30 000 слов mandatory (target 28 500-31 500); split на 4-5 частей по 6 500-8 500 слов; <28 500 = P0 BLOCKING REVISE (см. § «Chapter Depth Baseline (ENFORCED)», issue #128) |
+| Timing на visible body slides («14 минут · X cases» на dividers / «(5 мин)» в lecture-map / «75 минут» на cover / «10 минут» на Q&A / ⏱) | Timing **ТОЛЬКО** в frontmatter / deck.yaml / iteration-log / plan files. Section dividers — смысл раздела + tag «X working cases · Y провала» БЕЗ минут (см. § «No Timing / No Methodology in Slides») |
+| Методические комментарии в visible body slides («методически важно», «главный методический пункт», «педагогическая цель», «на этом этапе студент должен», «зачем это в Лекции N», «Лектору», «Преподавателю») | Только в speech.md / plan files / critic reports. Visible body — материал, не диалог-сценарий с лектором (см. § «No Timing / No Methodology in Slides») |
+| Measurable claim без базы / counterfactual («–50% гербицидов» без kg/acre baseline; «5M acres» без US total ag baseline; «Магнит 46 РЦ» без denominator) | Каждая измеримая claim ОБЯЗАНА inline baseline или counterfactual: «–50% от X kg/acre до Y kg/acre», «5M из ≈900M US ag acres = 0.55%», «46 из N total Магнит РЦ» (см. § «Baseline / Counterfactual Mandate») |
 | Несущая ось лекции не предъявлена отдельным keystone-слайдом до 1-го погружения (Раздел 0 защищается/делает recap вместо подачи оси) | Keystone-axis ENFORCED-check: methodology-critic (Phase 1 plan + Phase 4/7 deck) + lecture-outline template + Pre-USER-GATE п.6. Цена пропуска: Лекция 4 = ~5 циклов deck |
 | Отраслевая лекция (L4+): несущая таксономия без named current tools на каждый уровень; plan §-named speech-narrative без слайда | lecture-outline (L4+) требует tools-per-taxonomy-level (вендор-режим+adoption-направление+anti-hype+mode≠brand, volatile→[VFY-day-of]); Phase-5: §-named narrative ⇒ слайд либо явное owner-обоснование устного якоря |
 | usage/rate-limit субагента трактуется как failure → оркестратор пишет контент сам | Классифицировать сбой: limit ≠ failure → wait+re-delegate, НИКОГДА не self-implement (Subagent Rules; `feedback_subagent_usage_limit`) |
@@ -329,6 +423,76 @@ When starting Lec-N production while Lec-(N-1) или Lec-(N+k) is still в acti
 ## Document Size Limit (ENFORCED)
 
 **No single document may exceed 600 lines.** If a document grows beyond 600 lines, split it into logical parts with cross-links. Code files are exempt but should still favor smaller, focused modules.
+
+---
+
+## Chapter Depth Baseline (ENFORCED — фундаментальное, issue #128, 2026-05-21)
+
+**Источник:** Owner explicit override (Лекция 11 production); reference — memory `feedback_chapter_depth` ([[chapter-depth]]).
+
+**Правило.** `library/lectures/lec-NN/chapter.md` для **L4+** — **минимум 30 000 слов** (target 30k ±5% = **28 500–31 500**). Это базовый референс уровня academic textbook chapter + Q&A backup + self-study deep-dive материал, **не конспект 75-мин лекции**.
+
+**Что засчитывается в 30k:**
+- Narrative body всех частей (chapter.md + chapter-part2.md + chapter-part3.md)
+- Inline definitions / examples / case studies / failure deep-dives / cornerstone glossary
+- Q&A backup ответы (раздел § Q&A)
+
+**Что НЕ засчитывается:**
+- Frontmatter YAML
+- Markdown headings без содержания
+- TOC / list-only sections
+- Источники / bibliography (отдельный счёт `references_count`)
+
+**Применимость:**
+- **L1–L3 (introductory):** 8–12k acceptable; owner waiver доступен (аналогично AI-Failure rule).
+- **L4–L17:** ≥30k mandatory, **waiver недоступен**. <28 500 слов → **P0 BLOCKING REVISE** (структурный gap, не polish).
+
+**Why ENFORCED:** chapter = source-of-truth + Q&A резерв преподавателя + источник derivation slides/speech. На 75-мин лекции реально проходится **30–40% содержания chapter'а** — остальное Q&A backup + self-study + источник derivation. 30k = textbook chapter depth, соответствует уровню expectation для серьёзного университетского курса.
+
+**Enforcement points:**
+- **Phase 2 brief для book-editor:** explicit «target ≥30 000 слов», expansion mandates per section с конкретикой по deltas.
+- **Phase 3 methodology-critic:** word count check; <28 500 для L4+ → P0 BLOCKING.
+- **Pre-USER-GATE A walkthrough:** word count verify в orchestrator self-review.
+- **Anti-Patterns table** — добавлено «chapter <30k для L4+».
+
+**Эволюция правила:**
+- Лекции 1–3 (introductory): ~8–12k слов.
+- Лекции 4–5: 8.9k / 8.7k слов (ранний стиль single-file).
+- Лекции 6–7: 12.7–12.9k слов.
+- Лекции 8–9: 15.9k / 17k слов.
+- Лекция 11 production 2026-05-21: owner override → **минимум 30k для всех L4+**.
+
+**Старый red-flag «>15k слов»** из `tools/lecture-production/README.md` для L4+ — **НЕ применять** (обновлено issue #128).
+
+---
+
+## Chapter Multi-Part Pattern (ENFORCED — Lec-4/5 lesson)
+
+**Все `library/lectures/lec-NN/chapter.md` для L4+ пишутся multi-part структурой** (4-5 частей при ≥30k слов; lec-04/lec-05 эталоны — 3 части, но lec-04/05 были 22-26k; для ≥30k baseline частей нужно 4-5).
+
+### Структура
+
+```
+library/lectures/lec-NN/
+  chapter.md          ← Часть 1 (≤600 строк, ~7-9k слов; frontmatter; § Введение + первые 1-2 раздела)
+  chapter-part2.md    ← Часть 2 (≤600 строк, ~6-9k слов; средние разделы)
+  chapter-part3.md    ← Часть 3 (≤600 строк, ~7-9k слов; финальные разделы + Q&A + Reading list + References)
+```
+
+### Обязательные элементы
+
+1. **Frontmatter в `chapter.md`** включает: `parts: 3`, `length_words: ~XX000`, `slide_map`, `strict_in_self_estimate`, `lo: [...]`.
+2. **Карта главы и индекс частей** — в `chapter.md` сразу после Changelog: оглавление 3 частей с cross-links.
+3. **`## Оглавление (Часть N)`** в начале каждой части.
+4. **Каждый файл ≤600 строк** (CLAUDE.md doc-size limit) — НЕ исключение для chapter; split строго принудительный.
+5. **Slide-маркеры `[for-slide-sNN]`** — на каждом ≥150-слов разделе как Phase 5 anchor для speaker notes.
+6. **Cross-references между частями:** «(см. §X.Y в части 2)» / «см. Часть 3 §Z» / forward-anchors / `[FACT-CHECK]` / `[VFY-day-of]` маркеры — все strip-safe (в конце клауз).
+7. **Целевой word count:** **≥30 000 слов** total (см. § «Chapter Depth Baseline (ENFORCED)») — типично 4-5 частей по 6 500–8 500 слов. Lec-04/05 эталон 3-частной структуры был при 22-26k baseline; для ≥30k обычно нужно 4 части.
+
+### Cost-of-omission
+
+- **Lec-04 lesson:** chapter.md 23 700 слов в одном файле = unmanageable, methodology-critic не успевает прочесть, downstream cascade (speech/slides revise) ломается. Split → 3 файла → atomic edits, parallel critic-passes, диффы читаемы.
+- Apply by default для всех новых лекций — не ждать пока документ перерастёт 600 строк.
 
 ---
 

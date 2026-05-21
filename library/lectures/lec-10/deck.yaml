@@ -1,0 +1,880 @@
+# library/lectures/lec-10/deck.yaml
+#
+# Deck-структура Лекции 10 «AI в сельском хозяйстве»
+# (v1: 35 слайдов, Phase 5 structure-only).
+#
+# Source: chapter v3.1 (status=finalized, ~31 960 слов, 3 parts) + plan v2.
+# Phase 5 multi-artifact pipeline. Issue #126.
+#
+# Pattern reference: lec-09 (35 слайдов, OODA-keystone, 6 section dividers, dedicated Q&A).
+# Match lec-09 pattern:
+#   - 1 hook (s01), 1 cover (s02), 1 lecture-map (s03), 1 glossary mini (s04), 1 keystone (s05)
+#   - 7 section dividers (Р1 / Р2 / Р3 / Р4 / Р4-bis / Р5 / Q&A)
+#   - 1 dedicated Q&A slide
+#   - 1 closing hero (s37 — Carbon Robotics LaserWeeder G2)
+#   - top progress bar ТОЛЬКО на section dividers + cover
+#
+# Slide IDs preserved with planned gaps (s02b combined into cover frame; s17, s28 reserved
+# for potential future expansion). Actual rendered PPTX will use sequential numbering.
+
+deck:
+  lecture_number: 10
+  title: "ИИ в сельском хозяйстве"
+  audience: "студенты-инженеры 3 курса"
+  duration_min: 75
+  central_question: "Где на лестнице L1→L5 ИИ работает, где ломается — и какой класс решения / альтернатива применимы на каждой ступени?"
+  learning_outcomes: [LO1a, LO1b, LO2, LO5]
+  language: ru
+  status: draft
+  version: v2
+  source: "library/lectures/lec-10/chapter.md (Часть 1) + chapter-part2.md + chapter-part3.md (chapter v3.2 — Phase 8 cascade fix from Phase 7 P0-3 + P0-4)"
+  plan: "notes/lecture-10-review/plan-v2.md"
+  keystone_axis: "Лестница AI-проникновения в АПК — от поля к полке (L1 поле → L2 робот → L3 животное → L4 цепочка поставок → L5 потребитель) + injection «closed-loop vs open-environment AI» как объяснительный механизм провалов"
+
+# Slide-type budget (ACTUAL final 35 slides):
+#   - 1 hook (s01 Plenty Compton split-frame failure-first)
+#   - 1 cover (s02)
+#   - 1 lecture-map (s03)
+#   - 1 glossary mini (s04 closed-loop vs open-environment + RU acronyms)
+#   - 1 keystone (s05 — 5-уровневая лестница)
+#   - 7 section dividers:
+#       s06 Р1 «Поле»
+#       s15 Р2 «Робот»
+#       s22 Р3 «Животное»
+#       s27 Р4 «Цепочка поставок»
+#       s33 Р4-bis «Среда»
+#       s36 Р5 «Потребитель + payoff»
+#       (Q&A — без отдельного divider; s37 closing + s38 dedicated Q&A)
+#   - 22 content slides:
+#       s07, s08, s09, s10, s11, s12, s13, s14 (Р1 — 8)
+#       s16, s17, s18, s19, s20, s21 (Р2 — 6; s17 RU-параллель CV vs sensor-fusion)
+#       s23, s24, s25, s26 (Р3 — 4)
+#       s28, s29, s30, s31, s32 (Р4 — 5)
+#       s34, s30b, s35 (Р4-bis — 3; s30b vendor lock-in double optic)
+#       s37s, s38s, s35c, s36c (Р5 — 4; L5 retail + 5 critеria + checklist + career)
+#   - 1 closing hero (s37 — Carbon Robotics LaserWeeder G2 + bridge к L11)
+#   - 1 dedicated Q&A slide (s38)
+#
+# Total: 43 slides (s01-s38 + 5 sub-IDs s30b, s37s, s38s, s35c, s36c)
+#
+# NOTE: Slide IDs preserved with gaps + sub-IDs for chapter [for-slide-sNN] cross-ref
+# stability. Actual rendered PPTX will use sequential numbering 1-43.
+#
+# Schema slides (designer + critic readability pass required):
+#   - s05 keystone лестница (vertical 5-step + arrows)
+#   - s08 vendor matrix L1 (5×4 + BASF Japan rice sidebar)
+#   - s10 vertical farming 3×3 mini-table (AppHarvest / Plenty / Bowery)
+#   - s11 5-Why physics-economics chain
+#   - s17 Cognitive Pilot CV vs ИТЭЛМА sensor-fusion-AI (2-col comparison)
+#   - s04 inline glossary (5 RU terms + 2 environments × 2 cols)
+#   - s29 «как агент делает hedge» 4-step pseudo-flow
+#   - s31 Verra phantom credits + USDA cancellation 2-col timeline
+#   - s35 EU AI Act + USDA + «АПК будущего» 3-col comparison
+#   - s30b vendor lock-in двойная оптика schema
+#   - s38s 5 анти-AI критериев consolidation matrix
+#   - s35c Pre-purchase verification checklist 5 блоков
+#
+# Media coverage plan (≥50%, target 63%):
+# Tier acquisition: Tier 1 = vendor press / og:image / Wikipedia commercial-use;
+# Tier 2 = Wikipedia fallback; Tier 3 = YouTube thumbnail; Tier 4 = Wayback;
+# Tier 5 = Google Images (last resort); Tier 6 = stylized — REJECT для real-case slides.
+#
+# Real-image-bearing slides (22 из 35 mapped, ~63%):
+#   s01 Plenty Compton split-frame hero (Tier 1 — Plenty press + TechCrunch)
+#   s07 See & Spray в работе (Tier 1 — Deere press 2025-11)
+#   s08 BASF xarvio Japan rice yield map (Tier 1 — BASF press p-25-191)
+#   s09 Sentinel-2 satellite imagery + TerraMind architecture (Tier 1 — ESA + IBM)
+#   s10 Plenty/AppHarvest/Bowery interior photo (Tier 1)
+#   s12 ChatGPT response screenshot из Nature Food paper (Tier 1 — Tzachor 2024)
+#   s13 Plantix mobile UI screenshot (Tier 1 — Plantix.net)
+#   s14 ExactFarming dashboard + Яков и Партнёры figure (Tier 1-2)
+#   s16 LaserWeeder G2 в поле (Tier 1 — Carbon Robotics businesswire)
+#   s17 Cognitive Pilot CV vs ИТЭЛМА comparative (own drawio + Tier 1 photos)
+#   s18 4 product photos (Solinftec + Saga + Tevel + Outrun) (Tier 1)
+#   s19 Monarch MK-V + TechCrunch иск headline (Tier 1)
+#   s20 FarmWise photo + Lemken/Kverneland mechanical weeder (Tier 1-3)
+#   s21 manual strawberry picker + robot prototype (Tier 2-3)
+#   s23 SenseHub ear-tag photo (Tier 1 — Merck Animal Health)
+#   s24 CattleEye + DeLaval VMS + Cargill Birdoo product photos (Tier 1)
+#   s25 tie-stall vs free-stall + Holstein photo (Wikimedia CC-BY-SA Tier 2 + own)
+#   s26 Connectome.ai UI + Лобня infographic (Tier 1-2)
+#   s28 Cargill BIG AI Award press + grain port (Tier 1)
+#   s30 4 logos + Tract Series A FreshPlaza screenshot (Tier 1)
+#   s31 USDA press + Guardian Verra article (Tier 1)
+#   s34 Stanford ITM 2025 GNSS-jamming Finland figure (Tier 1)
+#   s30b Мелитополь tractors map + FTC press conference photo (Tier 1)
+#   s37s supermarket aisle photo (Tier 2-3 — Wikimedia / Unsplash)
+#   s37 Carbon Robotics LaserWeeder G2 hero (Tier 1)
+#
+# Own-diagrams: s02 (cover), s03 (lecture-map), s04 (glossary), s05 (keystone ladder),
+#               s06/s15/s22/s27/s33/s36 (section dividers), s11 (5-Why),
+#               s17 (Cognitive vs ИТЭЛМА), s25 (tie-stall vs free-stall),
+#               s29 (hedge pseudo-flow), s32 (РФ status grid), s35 (3-col regulatory),
+#               s38s (5 criteria matrix), s35c (5-block checklist), s36c (career landscape)
+#
+# Anti-anglicism mandate (memory rule feedback_russification):
+#   - Visible body — преимущественно RU
+#   - Whitelist: brand names (John Deere, See & Spray, Carbon Robotics, Cargill, BASF и пр.) +
+#     tech acronyms с inline gloss при первом упоминании (CV / NDVI / RTK / LLM / RAG / bp / MRV)
+#   - Pre-render deep latin-token scan mandatory
+#
+# Anonymization mandate (CLAUDE.md §3.7a + memory feedback_anonymization):
+#   - 0 named institutions в visible body (МГТУ / Бауман / ИУ-N / МСХА / Тимирязевка / Кубанский ГАУ)
+#   - Career section — родовая форма «профильные технические университеты»
+#
+# No designer extras (CLAUDE.md Anti-Patterns):
+#   - НЕ visible: «Лектору» / «Вы здесь» / тайминг на content / [VERIFY-DAY-OF] на body /
+#     LO codes / §N.M / [for-slide-sNN] / forward-refs «→ sNN» — frontmatter / speaker_notes ONLY
+
+# ============================================================================
+# Slide list (35 slides)
+# ============================================================================
+
+slides:
+  # ---------------------------------------------------------------------------
+  # Раздел 0 — Keystone + hook (~5 мин)
+  # ---------------------------------------------------------------------------
+
+  - id: s01
+    title: "AI-управляемая ферма обещала революцию. 19 месяцев — и закрылась."
+    assertion: "Plenty Unlimited Compton — открыт май 2023 с делегацией мэра, закрыт декабрь 2024. $940M потерь, оценка $1,9 млрд → <$15M (–99%). Закрылась не из-за плохого ИИ — из-за термодинамики LED."
+    section: "Р0"
+    slide_type: "hook"
+    layout: "hero-split-frame"
+    timing_min: 2
+    chapter_ref: "§0.1 Часть 1 — Зачем инженеру эта глава"
+    learning_goal: "Эмоциональный hook + foreshadow keystone — AI не везде работает; ось — открытая среда vs закрытая"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "split-frame photo BEFORE/AFTER"
+      source_candidate: "Plenty press May 2023 ribbon-cutting + TechCrunch / Bloomberg Dec 2024 closure"
+      acquisition_tier: "Tier 1 (2 sources)"
+      attribution_label: "Plenty Unlimited Inc. Compton facility, май 2023 / декабрь 2024. Источники: Plenty press, TechCrunch 2025-03-24"
+
+  - id: s02
+    title: "Лекция 10. AI в сельском хозяйстве"
+    assertion: "Лекция 10. AI в сельском хозяйстве"
+    section: "Р0"
+    slide_type: "cover"
+    layout: "cover-distinct"
+    timing_min: 0.2
+    chapter_ref: "frontmatter"
+    learning_goal: "Cover-слайд: title + meta + decorative «10»"
+    learning_outcomes: []
+    media:
+      kind: "decorative outline number + icon"
+      source_candidate: "own (Lucide `sprout` или `wheat` icon, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s03
+    title: "Карта лекции — лестница пяти уровней"
+    assertion: "Карта лекции — лестница пяти уровней от поля к полке: семь содержательных разделов."
+    section: "Р0"
+    slide_type: "lecture-map"
+    layout: "horizontal-cards"
+    timing_min: 1
+    chapter_ref: "§0.5 Часть 1 — Что переносим из Лекций 2, 3, 7"
+    learning_goal: "Lecture-map — навигация по 7 разделам + центральный вопрос напомнить"
+    learning_outcomes: []
+    media:
+      kind: "horizontal cards diagram"
+      source_candidate: "own drawio (7 horizontal cards Р0..Р5 + Q&A)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s04
+    title: "Глоссарий: open-environment vs closed-loop AI + 5 acronyms L4"
+    assertion: "Две рабочие формулировки и пять терминов цепочки поставок — единый язык всей лекции."
+    section: "Р0"
+    slide_type: "glossary-mini"
+    layout: "2-col-list"
+    timing_min: 0.8
+    chapter_ref: "§0.3 + §4.1 Часть 2 — Operational definitions + L4 glossary"
+    learning_goal: "Inline gloss closed-loop vs open-environment + 5 L4 terms (агентный ИИ / bp / hedge slippage / scope-3 / AI-MRV)"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "2-column glossary cards"
+      source_candidate: "own drawio (mini-cards 2 cols × 6 items)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s05
+    title: "Лестница AI — от поля к полке. На каждой ступени работает по-разному"
+    assertion: "Пять уровней лестницы. AI поднимается от поля к полке — controllability растёт, биологическая непредсказуемость падает, измеримый ROI растёт."
+    section: "Р0"
+    slide_type: "keystone"
+    layout: "vertical-ladder-5-steps"
+    timing_min: 2
+    chapter_ref: "§0.2 Часть 1 — Несущая ось"
+    learning_goal: "KEYSTONE slide — лестница как несущая ось всей лекции; closed-loop vs open-environment как объяснительный механизм"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "vertical-ladder diagram"
+      source_candidate: "own drawio (5 steps L1→L5 + правая стрелка «↑ controllability ↑ ROI ↑ predictability»)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Section divider Р1
+  # ---------------------------------------------------------------------------
+
+  - id: s06
+    title: "Раздел 1 — L1 «Поле». Открытая биологическая среда"
+    assertion: "Раздел 1 — L1 «Поле». Самый нижний уровень: где AI работает в узкой задаче (See & Spray), где ломается — в попытках generic advisory и closed-loop."
+    section: "Р1"
+    slide_type: "section_divider"
+    layout: "divider-with-progress"
+    timing_min: 0.2
+    chapter_ref: "frontmatter"
+    learning_goal: "Visual divider — переход в Р1 + 7-card progress bar с gold-подсветкой Р1"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "decorative number + progress bar"
+      source_candidate: "own (Lucide `sprout`, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Раздел 1 — L1 «Поле» (~14 мин)
+  # ---------------------------------------------------------------------------
+
+  - id: s07
+    title: "See & Spray Ultimate — каноничный success-кейс L1"
+    assertion: "5 миллионов акров сезон 2025, –50% non-residual гербицидов, +2,0 бушеля сои с акра. 36 камер по штанге + CNN на 40M размеченных изображениях. Edge ML на NVIDIA Jetson — задержка <50 мс."
+    section: "Р1"
+    slide_type: "content"
+    layout: "photo-left-data-right"
+    timing_min: 2
+    chapter_ref: "§1.1 Часть 1 — John Deere See & Spray Ultimate"
+    learning_goal: "Working case L1: узкая задача + edge ML + измеримый ROI"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "photo in field + data card"
+      source_candidate: "Deere press release ноябрь 2025 + AgTechNavigator 2025-11-10"
+      acquisition_tier: "Tier 1"
+      attribution_label: "John Deere ExactApply + See & Spray Ultimate. Источник: Deere press 2025-11"
+
+  - id: s08
+    title: "Vendor matrix L1 — пять платформ, разные режимы"
+    assertion: "xarvio / FieldView / Cropwise / Granular / Taranis — пять L1-платформ с разными географиями, разными режимами работы и разными бизнес-моделями. Бренд ≠ режим. «250M акров FieldView» = подписки, не «AI оптимизирует каждый акр»."
+    section: "Р1"
+    slide_type: "content"
+    layout: "matrix-5x5"
+    timing_min: 2
+    chapter_ref: "§1.2 Часть 1 — xarvio, FieldView, ГК «Прогресс Агро»"
+    learning_goal: "Vendor matrix — anti-hype навыки маппинга «бренд → режим работы»"
+    learning_outcomes: [LO1a, LO2]
+    media:
+      kind: "matrix table 5×5 + BASF xarvio Japan rice yield map"
+      source_candidate: "own table + BASF press p-25-191 2025-10"
+      acquisition_tier: "Tier 1"
+      attribution_label: "BASF Japan rice yield guarantee, октябрь 2025. Источник: BASF press p-25-191"
+
+  - id: s09
+    title: "Foundation models 2026 — TerraMind, Prithvi-EO 2.0"
+    assertion: "Foundation models меняют порог входа: команда из 3 человек дообучает TerraMind на тысячах изображений вместо миллионов. Риск — vendor concentration: вся индустрия L1 строится на 2-3 моделях IBM / NASA / ESA."
+    section: "Р1"
+    slide_type: "content"
+    layout: "2-col-diagram"
+    timing_min: 1.5
+    chapter_ref: "§1.3 Часть 1 — Foundation models 2026"
+    learning_goal: "Foundation model + RAG-pattern + vendor concentration risk"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "satellite imagery (Sentinel-2) + foundation-model architecture diagram"
+      source_candidate: "ESA Copernicus Sentinel-2 sample + IBM Research TerraMind blog 2025-04"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Sentinel-2 / Copernicus (ESA, CC-BY-SA); IBM Research TerraMind, апрель 2025"
+
+  - id: s10
+    title: "Vertical farming — провал не из-за плохого ИИ"
+    assertion: "AppHarvest, Plenty, Bowery: $1,37 млрд+ потерь, 14 банкротств 2025. Контроллеры работали, CV распознавал, ML предсказывал. Не сработала арифметика энергии: LED ≈ 100× free sunlight."
+    section: "Р1"
+    slide_type: "content"
+    layout: "3x3-mini-table"
+    timing_min: 2.5
+    chapter_ref: "§1.4 Часть 1 — Strict-in F1 коллапс vertical farming"
+    learning_goal: "Vertical farming как класс — AP1 закон термодинамики важнее ML"
+    learning_outcomes: [LO5]
+    media:
+      kind: "3-row mini-table (компания / капитал / главная причина) + Bowery interior photo"
+      source_candidate: "own table + Bowery press / TechCrunch 2024-11-04"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: TechCrunch 2025-03-24 (Plenty); 2024-11-04 (Bowery); Agriculture Dive 689039 (AppHarvest)"
+
+  - id: s11
+    title: "5-Why — почему ML не закрыл термодинамический gap"
+    assertion: "ML оптимизирует на знаменателе (efficiency 5-15%). Разрыв в числителе (LED energy vs free sunlight): 0,5 × 0,7 × 0,3 ≈ 10,5% end-to-end. Этот gap — на два порядка; никакая модель не закроет."
+    section: "Р1"
+    slide_type: "content"
+    layout: "5-step-chain"
+    timing_min: 2
+    chapter_ref: "§1.4 Часть 1 — 5-Why физико-экономическая логика"
+    learning_goal: "5-Why анализ как метод; AP1 операционально"
+    learning_outcomes: [LO5]
+    media:
+      kind: "5-step chain diagram (физика → экономика → инженерная архитектура)"
+      source_candidate: "own drawio (5 boxes горизонтально + связь arrows)"
+      acquisition_tier: "own"
+      attribution_label: "Анализ Hannah Ritchie на основе MDPI Sustainability journal 2024"
+
+  - id: s12
+    title: "ChatGPT/Bard как агроном — «уверенно ошибочный»"
+    assertion: "Tzachor et al. (Reichman University, Nature Food, май 2024): 184 вопроса о применении пестицидов; GPT-3.5/GPT-4/Bard в десятках процентов отвечают confident-wrong. AP4 — обобщённый LLM в advisory — категорический антипаттерн."
+    section: "Р1"
+    slide_type: "content"
+    layout: "2-col-question-answer"
+    timing_min: 1.5
+    chapter_ref: "§1.5 Часть 1 — Strict-in F2 галлюцинации generic LLM"
+    learning_goal: "AP4 категорический антипаттерн + альтернатива RAG-grounded"
+    learning_outcomes: [LO2, LO5]
+    media:
+      kind: "screenshot of model response + Nature Food paper figure"
+      source_candidate: "Phys.org 2024-05 + Nature Food 2024 supplementary"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Tzachor et al., Nature Food, май 2024; Reichman University"
+
+  - id: s13
+    title: "Plantix — 10-15% misdiagnosis на 10M+ загрузок"
+    assertion: "Plantix self-report 85-90% accuracy (не independent). 10-15% misdiagnosis × 10M+ загрузок = ~100k неправильных pesticide-рекомендаций в год. AP3 — пороговая точность ≠ готовность к внедрению. Альтернатива — calibrated confidence + abstention."
+    section: "Р1"
+    slide_type: "content"
+    layout: "ui-screenshot + breakdown"
+    timing_min: 1.5
+    chapter_ref: "§1.6 Часть 1 — Strict-in F3 Plantix"
+    learning_goal: "AP3 + FP/FN dose-criticality breakdown"
+    learning_outcomes: [LO5]
+    media:
+      kind: "Plantix mobile UI screenshot + FP/FN breakdown chart"
+      source_candidate: "Plantix.net + own QuickChart"
+      acquisition_tier: "Tier 1+own"
+      attribution_label: "Plantix.net UI; данные Frontiers in Plant Science 2020 + Plantix self-report"
+
+  - id: s14
+    title: "L1 РФ — ExactFarming, Прогресс Агро + политический риск"
+    assertion: "ExactFarming 12 700 хозяйств, 9,8M га. ГК «Прогресс Агро» +5% рентабельности (внутренний замер). Индекс цифровизации 27,2 vs 75,5 США. Главный урок политического риска L1 — Climate FieldView вышел из РФ в 2022."
+    section: "Р1"
+    slide_type: "content"
+    layout: "2-col-data"
+    timing_min: 1.3
+    chapter_ref: "§1.7 Часть 1 — РФ-параллель Раздела 1"
+    learning_goal: "РФ-параллель L1 + AP6 inline (Climate FieldView выход)"
+    learning_outcomes: [LO1b]
+    media:
+      kind: "ExactFarming dashboard + map of regions"
+      source_candidate: "Яков и Партнёры 2024 report figure + ExactFarming.com"
+      acquisition_tier: "Tier 1-2"
+      attribution_label: "Яков и Партнёры «Digitalizing Russia's Agricultural Sector», 2024"
+
+  # ---------------------------------------------------------------------------
+  # Section divider Р2
+  # ---------------------------------------------------------------------------
+
+  - id: s15
+    title: "Раздел 2 — L2 «Робот». Specialization побеждает generic"
+    assertion: "Раздел 2 — L2 «Робот». Узкая специализация работает (LaserWeeder, Saga UV-C, Tevel); универсальный «autonomous farm robot» — банкротится (Monarch, FarmWise)."
+    section: "Р2"
+    slide_type: "section_divider"
+    layout: "divider-with-progress"
+    timing_min: 0.2
+    chapter_ref: "frontmatter"
+    learning_goal: "Visual divider — переход в Р2 + 7-card progress bar с gold-подсветкой Р2"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "decorative number + progress bar"
+      source_candidate: "own (Lucide `truck` или `tractor`, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Раздел 2 — L2 «Робот» (~15 мин)
+  # ---------------------------------------------------------------------------
+
+  - id: s16
+    title: "Carbon Robotics LaserWeeder G2 — каноничный success L2"
+    assertion: "250 000 акров обработано, 15 млрд сорняков уничтожено, 14 стран. $1,4M / машина. 240W лазер + CNN на 40M изображений. Замена химии физикой — узкая subституция, не «autonomous tractor»."
+    section: "Р2"
+    slide_type: "content"
+    layout: "photo-hero + 3-card-spec"
+    timing_min: 2.5
+    chapter_ref: "§2.2 Часть 1 — LaserWeeder G2 deep dive"
+    learning_goal: "Working case L2: узкая ниша + замена физики физикой + measurable ROI"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "LaserWeeder G2 в работе photo"
+      source_candidate: "Carbon Robotics businesswire press 2025-02-10"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Carbon Robotics LaserWeeder G2 launch. Источник: businesswire 2025-02-10"
+
+  - id: s18
+    title: "Узкие победы L2 — Solinftec, Saga UV-C, Tevel, AGCO Outrun"
+    assertion: "Solinftec Solix +243% YoY 2025 (vendor-self ≤98% reduction herbicide). Saga Robotics 20% UK strawberry — UV-C НОЧНАЯ обработка, НЕ harvest. Tevel — flying apple pickers. AGCO PTx Outrun — retrofit для смешанного парка. Все — узкие specialization."
+    section: "Р2"
+    slide_type: "content"
+    layout: "4-card-grid"
+    timing_min: 2
+    chapter_ref: "§2.3 Часть 1 — Solinftec, Saga, Tevel, AGCO PTx"
+    learning_goal: "Specialization-pattern + Saga UV-C ≠ harvest misattribution warning"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "4 product photos (Solinftec + Saga + Tevel + Outrun)"
+      source_candidate: "Solinftec.com + Saga Robotics + Tevel + AGCO Tech Day 2025 press"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: Solinftec.com, sagarobotics.com, tevel-tech.com, agcocorp.com 2025"
+
+  - id: s19
+    title: "Monarch Tractor — «autonomous» при сломанной автономии"
+    assertion: "Сентябрь 2025: иск Burks Tractor (Idaho) — 10 тракторов за $773 088, «unable to operate autonomously». Ноябрь 2025: 102 сокращения (~38% штата). Апрель 2026: Caterpillar acqui-hire. Демо ≠ промышленное внедрение."
+    section: "Р2"
+    slide_type: "content"
+    layout: "timeline-2018-2026"
+    timing_min: 2.5
+    chapter_ref: "§2.4 Часть 2 — Strict-in F4 Monarch Tractor"
+    learning_goal: "AP — demo ≠ deployment; маркетинг «autonomous» = юридическая ловушка"
+    learning_outcomes: [LO2, LO5]
+    media:
+      kind: "Monarch MK-V photo + TechCrunch иск headline screenshot"
+      source_candidate: "Monarch press + TechCrunch 2025-11-18"
+      acquisition_tier: "Tier 1"
+      attribution_label: "TechCrunch 2025-11-18 + 2025-11-19 + 2026-04-15"
+
+  - id: s20
+    title: "FarmWise wind-down + Naïo recovery — open-environment ломает CV"
+    assertion: "FarmWise wind-down 2025; Naïo €4M → €2,4M (–40%) judicial recovery 2025. Причина: CV-стек, обученный в тепличных условиях, ломается в пыль / shadow bias / переменное освещение. AP2b — mechanical weeders как deterministic альтернатива."
+    section: "Р2"
+    slide_type: "content"
+    layout: "2-col-cause-alternative"
+    timing_min: 2
+    chapter_ref: "§2.5 Часть 2 — Strict-in F5 FarmWise + Naïo"
+    learning_goal: "AP2b genuine не-AI альтернатива vs AP2a"
+    learning_outcomes: [LO5]
+    media:
+      kind: "FarmWise robot photo + Lemken/Kverneland mechanical weeder photo"
+      source_candidate: "FarmWise archive + Lemken press + Kverneland press"
+      acquisition_tier: "Tier 1-3"
+      attribution_label: "Источники: Farm Progress 2025; arXiv 2508.19511 (shadow bias); Lemken / Kverneland press"
+
+  - id: s21
+    title: "Робот-сборщик клубники — 10 лет pilot, не production"
+    assertion: "$200-350k капитальные затраты на робот / annualized $68-130k. Адресуемый рынок ручного труда США = $50 млрд; роботы <5%. CA picking-labor $43k на акр. «Harvesting is the last great unsolved problem»."
+    section: "Р2"
+    slide_type: "content"
+    layout: "data-numbers + photo"
+    timing_min: 1.5
+    chapter_ref: "§2.6 Часть 2 — Strict-in F7 strawberry economics"
+    learning_goal: "Failure-pattern «затянувшийся pilot phase» + human baseline в open environment"
+    learning_outcomes: [LO2, LO5]
+    media:
+      kind: "manual strawberry picker photo + robot-arm prototype"
+      source_candidate: "Wikimedia Commons CC-BY-SA + DailyRobotics / agrotech press"
+      acquisition_tier: "Tier 2-3"
+      attribution_label: "Wikimedia Commons (strawberry harvest, CC-BY-SA); RobotToday market analysis 2024"
+
+  - id: s17
+    title: "Cognitive Pilot vs ИТЭЛМА — архитектурный выбор внутри ИИ-домена"
+    assertion: "Cognitive Pilot CV: 1200+ установок + 4 иска фермеров на 12,7М ₽ за CV-сбои в пыли. ИТЭЛМА Квадро multi-GNSS sensor-fusion: ГЛОНАСС+GPS+Galileo+BeiDou + RTK 2-5 см. Это НЕ AI vs не-AI; это один класс AI vs другой класс AI."
+    section: "Р2"
+    slide_type: "content"
+    layout: "2-col-architecture-comparison"
+    timing_min: 2.5
+    chapter_ref: "§2.7 Часть 2 — РФ-параллель Cognitive Pilot vs ИТЭЛМА"
+    learning_goal: "AP2a архитектурный выбор внутри AI-домена; «где я» vs «что я вижу»"
+    learning_outcomes: [LO1b, LO5]
+    media:
+      kind: "comparative diagram CV vs sensor-fusion"
+      source_candidate: "own drawio (2-col: Cognitive Pilot CV-stack + ИТЭЛМА GNSS-stack)"
+      acquisition_tier: "own"
+      attribution_label: "Источники: RTVI 2025 (Cognitive Pilot иски); Фонтанка 2026-01-26 (ИТЭЛМА)"
+
+  # ---------------------------------------------------------------------------
+  # Section divider Р3
+  # ---------------------------------------------------------------------------
+
+  - id: s22
+    title: "Раздел 3 — L3 «Животное». CV стабильнее L1-L2"
+    assertion: "Раздел 3 — L3 «Животное». Полу-закрытая среда + измерения на уровне индивидуального животного: AI работает стабильнее, чем на L1-L2. Ограничения — физическая конфигурация + Holstein-bias + small dairy economics."
+    section: "Р3"
+    slide_type: "section_divider"
+    layout: "divider-with-progress"
+    timing_min: 0.2
+    chapter_ref: "frontmatter"
+    learning_goal: "Visual divider — переход в Р3 + 7-card progress bar с gold-подсветкой Р3"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "decorative number + progress bar"
+      source_candidate: "own (Lucide `bird` или `cow`, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Раздел 3 — L3 «Животное» (~12 мин)
+  # ---------------------------------------------------------------------------
+
+  - id: s23
+    title: "Allflex SenseHub — 2 миллиона коров mounted"
+    assertion: "Ошейник с акселерометром + 5-7 лет батарея + cloud-аналитика. Алерты: эструс / отёл / хромота / мастит / BRD. AI — раннее предупреждение, не назначение лекарства. Augmentation, не replacement."
+    section: "Р3"
+    slide_type: "content"
+    layout: "photo-hero + 3-card-flow"
+    timing_min: 2
+    chapter_ref: "§3.2 Часть 2 — Allflex SenseHub"
+    learning_goal: "Working case L3: augmentation pattern + sensor + ML pipeline"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "SenseHub ear-tag на корове + dashboard UI"
+      source_candidate: "Merck Animal Health newsroom 2025"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Allflex SenseHub, 2 миллиона коров milestone 2025. Источник: Merck Animal Health"
+
+  - id: s24
+    title: "CattleEye + DeLaval VMS V310 + Cargill Birdoo"
+    assertion: "CattleEye CCTV + cloud AI: lameness score по биомеханике; 60 ферм, 11k коров (GEA channel >250k). DeLaval VMS V310: 99,8% attachment rate (998/1000 успешных подключений). Cargill Birdoo CV: >95% точность weight estimation, экономия 10-30 г корма на бройлера."
+    section: "Р3"
+    slide_type: "content"
+    layout: "3-card-grid"
+    timing_min: 2
+    chapter_ref: "§3.2 + §3.3 Часть 2 — CattleEye, DeLaval, Cargill Birdoo"
+    learning_goal: "3 working cases L3 — узкие задачи + measurable ROI"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "3 product photos (CattleEye UI + DeLaval V310 + Cargill Birdoo)"
+      source_candidate: "Fortune 2025-06 (CattleEye) + DeLaval press 2025-04 + Cargill.com"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: Fortune 2025-06 (CattleEye GEA); DeLaval press 2025-04; Cargill.com 2025"
+
+  - id: s25
+    title: "Cainthus, tie-stall barns, Holstein-bias — 3 anti-hype урока"
+    assertion: "Cainthus (Cargill 2018) — публичных production-метрик нет (анонс ≠ внедрение). Tie-stall barns ломают CV; алгоритм работает на free-stall + Holstein, не на местных породах РФ. AI capability ≠ AI applicability."
+    section: "Р3"
+    slide_type: "content"
+    layout: "3-row-anti-hype"
+    timing_min: 2.5
+    chapter_ref: "§3.4 Часть 2 — Strict-in F8 Cainthus + tie-stall + Holstein-bias"
+    learning_goal: "AP3 в L3 — applicability gap + architecture asymmetry для local breeds"
+    learning_outcomes: [LO5]
+    media:
+      kind: "tie-stall vs free-stall diagram + Holstein vs Якутская порода photo comparison"
+      source_candidate: "own drawio + Wikimedia (Holstein + Ярославская / Якутская breed photo CC-BY-SA)"
+      acquisition_tier: "Tier 2 + own"
+      attribution_label: "Wikimedia Commons (Holstein, Ярославская порода, CC-BY-SA)"
+
+  - id: s26
+    title: "L3 РФ — Connectome.ai + санкционная неопределённость dairy AI-стека"
+    assertion: "Connectome.ai (Сколково) — узкая CV-задача контроля отёлов телят. DeLaval / GEA / Lely AI-сервисы в РФ в сером статусе — оборудование физически у фермеров, cloud-аналитика зависит от Европы. Лобня 2026 — hardware замещение; AI-стек требует отдельной траектории."
+    section: "Р3"
+    slide_type: "content"
+    layout: "2-col-working-vs-uncertain"
+    timing_min: 2
+    chapter_ref: "§3.5 + §3.6 Часть 2 — РФ-параллель Раздела 3"
+    learning_goal: "F9 vapor risk vs documented Microsoft Azure / FieldView precedent"
+    learning_outcomes: [LO1b]
+    media:
+      kind: "Connectome.ai newborn calf detection UI + map sanctions impact"
+      source_candidate: "Connectome.ai press + own infographic"
+      acquisition_tier: "Tier 2 + own"
+      attribution_label: "Connectome.ai (Сколково resident); BUSINESS-stat 2026 (Лобня 2026 4 млрд ₽)"
+
+  # ---------------------------------------------------------------------------
+  # Section divider Р4
+  # ---------------------------------------------------------------------------
+
+  - id: s27
+    title: "Раздел 4 — L4 «Цепочка поставок». Агентный ИИ лидирует"
+    assertion: "Раздел 4 — L4 «Цепочка поставок». Place, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны."
+    section: "Р4"
+    slide_type: "section_divider"
+    layout: "divider-with-progress"
+    timing_min: 0.2
+    chapter_ref: "frontmatter"
+    learning_goal: "Visual divider — переход в Р4 + 7-card progress bar с gold-подсветкой Р4"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "decorative number + progress bar"
+      source_candidate: "own (Lucide `truck` или `package`, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Раздел 4 — L4 «Цепочка поставок» (~10 мин)
+  # ---------------------------------------------------------------------------
+
+  - id: s28
+    title: "Cargill CMAX — 2026 BIG AI Excellence Award"
+    assertion: "Predictive port + shipping logistics для grain flows; CV для protein supply chain. Cargill 70+ стран, 1000+ объектов. Узкий агент: одно действие — hedge с явным human-in-the-loop для сделок >$10M notional."
+    section: "Р4"
+    slide_type: "content"
+    layout: "photo-hero + 3-card-spec"
+    timing_min: 1.5
+    chapter_ref: "§4.3 Часть 2 — Cargill CMAX + CarVe"
+    learning_goal: "Working case L4 + узость агентного ИИ как причина успеха"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "Cargill press release screenshot + grain port photo"
+      source_candidate: "Cargill.com 2026 BIG AI Award announcement"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Cargill press release, 2026 BIG AI Excellence Award"
+
+  - id: s29
+    title: "Как агент делает hedge — pseudo-flow 4 шага"
+    assertion: "(1) Сенсор: state vector цены+погода+валюта. (2) Inference: распределение цен 5/30/90 дней + uncertainty bands. (3) Решение: 4 действия + human-in-the-loop при >$10M. (4) Feedback: bp за минуты, online learning. Узкий агентный ИИ работает; end-to-end — пока нет."
+    section: "Р4"
+    slide_type: "content"
+    layout: "4-step-flow-diagram"
+    timing_min: 2.5
+    chapter_ref: "§4.3 Часть 2 — pseudo-flow «как агент делает hedge»"
+    learning_goal: "Grounding L4 абстракции: как именно агент работает + 45→8 bp = $32k экономии"
+    learning_outcomes: [LO1b, LO2]
+    media:
+      kind: "4-step flow diagram (sensor → inference → decision → feedback)"
+      source_candidate: "own drawio (4 boxes горизонтально + связи стрелками)"
+      acquisition_tier: "own"
+      attribution_label: "Worked example по McKinsey 2025 hedging report typical manual slippage"
+
+  - id: s30
+    title: "Tract + Olam Mindsprint + Walmart × Cropin + Tesco"
+    assertion: "Tract €18,6M Series A (Icos Capital, 2023, 4 anchor: Cargill+ADM+Olam+LDC) — конкуренты совместно строят инфраструктуру compliance. Tract = data backbone, НЕ агентный. Olam Procuresprint — агентная закупка. Walmart × Cropin (US+SA, не Индия)."
+    section: "Р4"
+    slide_type: "content"
+    layout: "4-card-grid"
+    timing_min: 1.5
+    chapter_ref: "§4.4 Часть 2 — Tract, Olam, Walmart, Tesco"
+    learning_goal: "Vendor landscape L4 + misattribution warning Tract"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "4 logos + news screenshot Tract Series A"
+      source_candidate: "FreshPlaza Tract press 2024-08 + Wipro 2026 announcement"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: Tract press 2024-08 (Icos Capital); Wipro press 2026 (Mindsprint)"
+
+  - id: s31
+    title: "USDA Climate-Smart отменён + Verra phantom credits 94%"
+    assertion: "Апрель 2025: USDA отменил $3,1 млрд / 135 проектов / 14 000 ферм / 3,2M акров Climate-Smart Commodities. Январь 2023: The Guardian + Die Zeit + SourceMaterial: 94% rainforest credits Verra = phantom. AP7 — AI-MRV без direct measurement = scaled greenwashing."
+    section: "Р4"
+    slide_type: "content"
+    layout: "2-col-failure-comparison"
+    timing_min: 2.5
+    chapter_ref: "§4.5 + §4.6 Часть 2 — Strict-in F10 USDA + F11 Verra"
+    learning_goal: "AP7 + business-model tail risk на public funding"
+    learning_outcomes: [LO5]
+    media:
+      kind: "USDA press release + The Guardian article screenshot"
+      source_candidate: "USDA.gov 2025-04-14 + The Guardian январь 2023"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: USDA press 2025-04-14; The Guardian 2023-01"
+
+  - id: s32
+    title: "L4 РФ — X5 паритет, Магнит гибрид, РСХБ vapor"
+    assertion: "X5 «Перекрёсток» ML с 2020, 200+ факторов — мировой уровень. Магнит F&R разнесён: Forecasting 46 РЦ январь 2026 в эксплуатации; Replenishment пилот 3 РЦ 2026. РСХБ AI-сервисы заявлены, метрик нет. GigaChat — демо-эпизод, не внедрение."
+    section: "Р4"
+    slide_type: "content"
+    layout: "4-card-status-grid"
+    timing_min: 2
+    chapter_ref: "§4.7 Часть 2 — РФ-параллель Раздела 4"
+    learning_goal: "Паритет L4-L5 при отставании L1-L2 + Магнит nuance"
+    learning_outcomes: [LO1b]
+    media:
+      kind: "X5 dashboard + Магнит F&R архитектура schema"
+      source_candidate: "Habr Магнит 2026-01 + TAdviser X5"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: Habr Магнит 2026-01 (F&R архитектура); TAdviser X5 Tech 2024"
+
+  # ---------------------------------------------------------------------------
+  # Section divider Р4-bis (Среда)
+  # ---------------------------------------------------------------------------
+
+  - id: s33
+    title: "Раздел 4-bis — Среда: связь, привязка, регуляторика"
+    assertion: "Раздел 4-bis — Среда. Cross-cutting meta-уровень: связь / привязка к поставщику / регуляторика. Все три — failure-перспектива. Без них ни одна ступень лестницы не работает."
+    section: "Р4-bis"
+    slide_type: "section_divider"
+    layout: "divider-with-progress"
+    timing_min: 0.2
+    chapter_ref: "frontmatter"
+    learning_goal: "Visual divider — переход в Р4-bis + 7-card progress bar с gold-подсветкой Р4-bis"
+    learning_outcomes: [LO5]
+    media:
+      kind: "decorative number + progress bar"
+      source_candidate: "own (Lucide `network` или `lock`, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Раздел 4-bis — Среда (~8 мин)
+  # ---------------------------------------------------------------------------
+
+  - id: s34
+    title: "Связь — 18% ферм без интернета + GNSS-jamming"
+    assertion: "18% американских ферм без интернета в принципе. 123 000 авиа-рейсов с GNSS-interference Q1 2025 (Финляндия unfarmable). Starlink в РФ запрет апрель 2026. AP5 — cloud-first для off-grid = архитектурная ошибка. Альтернатива: edge ML / TinyML."
+    section: "Р4-bis"
+    slide_type: "content"
+    layout: "3-numbers + map"
+    timing_min: 2.5
+    chapter_ref: "§5.1 Часть 3 — Связь"
+    learning_goal: "AP5 + edge ML как реалистичная архитектура"
+    learning_outcomes: [LO5]
+    media:
+      kind: "GNSS-jamming map Finland + Stanford ITM 2025 figure"
+      source_candidate: "Stanford GPS Lab ITM 2025 paper Figure + ICAO 2025 report"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Stanford GPS Lab ITM 2025; ICAO 2025 report (Switzerland/Finland/Estonia)"
+
+  - id: s30b
+    title: "Привязка к поставщику — двойная оптика John Deere"
+    assertion: "Май 2022: John Deere remote-brick 27 единиц в Мелитополе ($5M) — anti-theft success. Январь 2025: FTC v. Deere — десятилетние ограничения ремонта. Декабрь 2025: FCC ban DJI (80% US ag-drones). Один механизм, две стороны: AI security feature сегодня = AI control surface завтра."
+    section: "Р4-bis"
+    slide_type: "content"
+    layout: "double-optic-comparison"
+    timing_min: 2.5
+    chapter_ref: "§5.2 Часть 3 — Привязка к поставщику + Мелитополь + FTC + FCC"
+    learning_goal: "AP6 + двойная оптика как stand-alone framework"
+    learning_outcomes: [LO5]
+    media:
+      kind: "Мелитополь stolen tractors map + FTC press conference photo"
+      source_candidate: "CSO Online 572811 + FTC press 2025-01-15"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: The Register 2022-05-02; CSO Online 572811; FTC press 2025-01-15"
+
+  - id: s35
+    title: "Регуляторика — EU AI Act vs USDA vs «АПК будущего»"
+    assertion: "EU AI Act high-risk for autonomous ag-machinery (Регламент 2024/1689, ferramentos с февраля 2025) + AI literacy для операторов + liability cascade. USDA AI Strategy формальна. РФ «АПК будущего» 2026-2030 декларативна (предыдущая программа цели не достигла — АПК 2024 –3,2%)."
+    section: "Р4-bis"
+    slide_type: "content"
+    layout: "3-col-comparison"
+    timing_min: 2
+    chapter_ref: "§5.3 Часть 3 — Регуляторика"
+    learning_goal: "Регуляторное сравнение трёх юрисдикций"
+    learning_outcomes: [LO1b]
+    media:
+      kind: "3-col table EU / US / RU + flags icons"
+      source_candidate: "own table + Cambridge EJRR 2024 + USDA AI Strategy + Распоряжение Правительства 31.12.2025"
+      acquisition_tier: "own + Tier 1"
+      attribution_label: "Источники: Cambridge EJRR 2024; USDA AI Strategy FY2025-26; Распоряжение Правительства РФ 31.12.2025"
+
+  # ---------------------------------------------------------------------------
+  # Section divider Р5
+  # ---------------------------------------------------------------------------
+
+  - id: s36
+    title: "Раздел 5 — L5 «Потребитель» + 5 критериев + payoff"
+    assertion: "Раздел 5 — L5 «Потребитель / retail». Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton."
+    section: "Р5"
+    slide_type: "section_divider"
+    layout: "divider-with-progress"
+    timing_min: 0.2
+    chapter_ref: "frontmatter"
+    learning_goal: "Visual divider — переход в Р5 + 7-card progress bar с gold-подсветкой Р5"
+    learning_outcomes: [LO5]
+    media:
+      kind: "decorative number + progress bar"
+      source_candidate: "own (Lucide `shopping-cart`, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Раздел 5 — L5 + payoff (~6 мин)
+  # ---------------------------------------------------------------------------
+
+  - id: s37s
+    title: "L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток»"
+    assertion: "Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрёсток» ML с 2020 (мировой уровень). Но L5-успех ≠ АПК-готовность: это специфика retail-AI. Большая часть L5 — не agriculture-specific."
+    section: "Р5"
+    slide_type: "content"
+    layout: "3-card-success"
+    timing_min: 1.5
+    chapter_ref: "§6.1 Часть 3 — L5 retail кратко"
+    learning_goal: "L5 как зрелый слой + anti-hype оговорка про specificity"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "3 logos + supermarket aisle photo"
+      source_candidate: "Walmart press + Tesco press + X5 Tech"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Источники: Walmart corporate 2025; Tesco AI annual report; X5 Tech 2024"
+
+  - id: s38s
+    title: "Пять критериев «когда не AI» — главный takeaway"
+    assertion: "AP1 термодинамика > ML / AP3 порог точности ≠ внедрение / AP4 generic LLM как советник = антипаттерн / AP6 AI-equipment = vendor lock-in / AP7 AI-MRV без direct measurement = greenwashing. + AP2a/AP2b/AP5 inline."
+    section: "Р5"
+    slide_type: "content"
+    layout: "matrix-5-row-criteria"
+    timing_min: 1.5
+    chapter_ref: "§6.2 Часть 3 — Пять явных «когда не ИИ» — consolidation"
+    learning_goal: "Главный consolidation takeaway лекции (LO5)"
+    learning_outcomes: [LO5]
+    media:
+      kind: "5-row matrix (критерий / пример / альтернатива)"
+      source_candidate: "own drawio (matrix 5 строк × 3 колонки + gold accent)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s35c
+    title: "Pre-purchase verification checklist — операционный артефакт LO2"
+    assertion: "10 вопросов в 5 блоках (Классификация / Промышленное состояние / Ответственность / Lock-in / Подключение). 8-10 green = buy / pilot; 5-7 = conditional; ≤4 = reject. Минимальный аудит-чек, ответ не словами вендора, а внешними источниками."
+    section: "Р5"
+    slide_type: "content"
+    layout: "checklist-5-blocks"
+    timing_min: 1.5
+    chapter_ref: "§6.1a Часть 3 — Pre-purchase verification checklist"
+    learning_goal: "LO2 операционно — application артефакт для due diligence"
+    learning_outcomes: [LO2]
+    media:
+      kind: "5-block checklist diagram"
+      source_candidate: "own drawio (5 блоков × 2 пункта vertical)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s36c
+    title: "Карьерный ландшафт — L1-L5 сегменты + российский рынок"
+    assertion: "L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga, Aigen). L3 (DeLaval, GEA, Lely, Cargill Birdoo). L4-L5 (Cargill CMAX, ADM, Tract, Walmart Eden, Cropin). РФ: Cognitive Pilot, ИТЭЛМА, Геоскан, ЭФКО, Русагро Тех, РСХБ.цифра, Магнит digital, X5 Tech, ExactFarming, Connectome.ai."
+    section: "Р5"
+    slide_type: "content"
+    layout: "5-segment-landscape"
+    timing_min: 1.5
+    chapter_ref: "§6.3 Часть 3 — Карьерные траектории"
+    learning_goal: "Рыночный ландшафт без агитации; родовая форма"
+    learning_outcomes: []
+    media:
+      kind: "5-segment landscape diagram with logos"
+      source_candidate: "own drawio + AI service logos from LobeHub"
+      acquisition_tier: "own + Tier 1"
+      attribution_label: ""
+
+  # ---------------------------------------------------------------------------
+  # Closing hero
+  # ---------------------------------------------------------------------------
+
+  - id: s37
+    title: "От поля до фабрики: инженер держит лестницу в голове"
+    assertion: "Plenty закрылась не из-за плохого ИИ — из-за термодинамики LED. На каждой ступени лестницы — свои working tools и свои failure modes. Инженер выбирает правильный инструмент для каждой ступени. Лекция 11 — переход к L11 cyber-physical manufacturing."
+    section: "Р5"
+    slide_type: "closing-hero"
+    layout: "hero-full-bleed-photo + callback-callout"
+    timing_min: 1
+    chapter_ref: "§6.4 Часть 3 — Closing callback к keystone"
+    learning_goal: "Emotional payoff + bridge к Lec-11"
+    learning_outcomes: [LO1a, LO5]
+    media:
+      kind: "Carbon Robotics LaserWeeder G2 hero photo"
+      source_candidate: "Carbon Robotics press 2025-02 LaserWeeder G2 launch"
+      acquisition_tier: "Tier 1"
+      attribution_label: "Carbon Robotics LaserWeeder G2, февраль 2025. Источник: carbonrobotics.com press"
+
+  # ---------------------------------------------------------------------------
+  # Dedicated Q&A slide
+  # ---------------------------------------------------------------------------
+
+  - id: s38
+    title: "Q&A"
+    assertion: "Q&A — 10 минут. Backup-вопросы про термодинамику vertical farming, agentic AI scope, ИТЭЛМА vs Cognitive Pilot, foundation models к 2030."
+    section: "Q&A"
+    slide_type: "qa"
+    layout: "cover-distinct"
+    timing_min: 1
+    chapter_ref: "Q&A backup + §9 Часть 3"
+    learning_goal: "Dedicated Q&A slide с 3 backup-prompts"
+    learning_outcomes: []
+    media:
+      kind: "huge Q&A typography + icon"
+      source_candidate: "own (Lucide `message-circle-question` 96px)"
+      acquisition_tier: "own"
+      attribution_label: ""

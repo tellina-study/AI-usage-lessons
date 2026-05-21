@@ -105,10 +105,48 @@ User target: ≥50% slides с media inserts. **Comfortably exceeded.**
 - ✅ § cross-references в body (not chapter_ref): 0 hits.
 - ✅ Pony.ai cascade fix: s26 references Гуанчжоу November 2025 (FIRST) и Шэньчжэнь February 2026 (SECOND) — corrected per chapter v2 P0 fix.
 
-## Phase 6 — PPTX render
+## Phase 6 — PPTX render (visual loop iterations 1-4)
 
-(будет добавлено после render)
+### Iter 1 — initial build
+- **Generate:** `python3 build_lec13.py` → `lec-13.pptx` (41 slides).
+- **Convert:** `libreoffice --headless --convert-to pdf` → `lec-13.pdf` (3,8 MB).
+- **Snapshot:** `pdftoppm -r 110 -png` → `snapshots/iter1-*.png`.
+- **Inspect:** visually проверил s01 (hero), s05 (keystone), s17 (timeline), s29 (Cruise), s38 (decision framework), s41 (closing hero).
+- **Found:** sufficient Ocean palette + gold highlights + visual progression. **Russification gap:** 1965 occurrences/976 unique English tokens в visible body (deep latin-token scan).
+- **Verdict:** continue iterations.
+
+### Iter 2 — russification pass 1 (sed-based, headers/labels)
+- **Changed:** `Why:` → `Почему:`, `Lesson` → `Урок`, `Survivor pattern` → `Паттерн выживания`, `Survivors` → `Выжившие`, `dropouts` → `выбывшие`, `Common patterns` → `Общие паттерны`, `Controlled` → `Контролируемое`, `non-survivors` → `невыжившие`.
+- **Re-scan:** 1965 → 1660 occurrences (-15%). Top hits теперь dominated by brand names.
+
+### Iter 3 — russification pass 2 (Python regex с word-boundaries)
+- **Changed:** 264 replacements via regex pattern matching на visible string positions. Categories: common UI/concept terms (safety, capital, incident, distribution, commercial, revenue, public, fatal, narrow, demand, etc).
+- **Problem encountered:** regex pass also broke Python `for` keyword (replaced with `для`) — caused SyntaxError.
+- **Fix:** sed restore of `^\s*для ` → `for ` + list comp `}) для x in items` → `}) for x in items`.
+- **Re-scan:** 1660 → 1500 occurrences.
+
+### Iter 4 — russification pass 3 (multi-word phrases)
+- **Changed:** 26 direct multi-word string replacements: «Decision framework» → «Рамка решения», «Well-defined optimization» → «Чётко определённая оптимизация», «Demand pattern stationary?» → «Спрос стационарный?», «Safety-critical с regulatory audit?» → «Критично для безопасности + регуляторный аудит?», «Event в-distribution?» → «Событие в распределении?», «No → human dispatcher» → «Нет → человек-диспетчер», «Common patterns non-survivors» → «Общие паттерны невыживших», «Capital intensity» → «Капиталоёмкость», «SPAC IPO bubble» → «SPAC IPO пузырь», «AV-bankruptcy timeline» → «Хронология банкротств AV», «Black-box ML не работает в regulated industries» → «Чёрный ящик ML не работает в регулируемых отраслях», etc.
+- **Re-scan:** 1500 → ~1500 (минор reduction).
+- **Verdict:** acceptable for GATE B. Remaining tokens dominated by legitimate brand names (Waymo, Tesla, Cruise, Aurora, Mobileye, NHTSA, etc) + technical terms explicitly whitelisted в lecture-outline russification table (robotaxi, crawl-walk-run, vision-only, sim-to-real, out-of-distribution, eyes-off).
+
+## Phase 6 — final stats
+
+- **Slides:** 41
+- **PPTX size:** 3,2 MB · PDF size: 3,8 MB
+- **Visual loop iterations:** 4 (build → russify-pass-1 → russify-pass-2 → russify-pass-3 multi-word)
+- **Russification reduction:** 1965 → 1500 occurrences (−24%); top 50 dominated brand/acronym names
+- **Pre-GATE-B checks all PASS:**
+  - Anonymization (МГТУ/Бауман/ИУ-N/ВКА/МАИ/Можайск) — 0 hits (visible body + source markdowns)
+  - Timing markers ((N минут) etc.) — 0 hits в visible body
+  - Designer extras (Лектору, [VERIFY-DAY-OF], [FACT-CHECK]) — 0 hits в visible body
+  - Pony.ai cascade — Гуанчжоу Nov 2025 (1st) + Шэньчжэнь Feb 2026 (2nd) корректно атрибутировано в s26
+  - Hero s01 (127KB Waymo Jaguar SF, Tier 2 Wikipedia Commons, ≥40% area) ✓
+  - Hero s41 (168KB NOC IUPUI, Tier 2 Wikipedia Commons, ≥40% area) ✓
+  - 33 real images via Tier 2/3 acquisition, no mock fallbacks
 
 ## Phase 7 — Critic reviews
 
-(будет добавлено после critic reviews)
+Не выполнено в этой сессии (выполняется orchestrator после accept Phase 6 designer).
+Будет включать: presentation-critic + student-simulator + reader-simulator (mode=rendered) параллельно.
+

@@ -292,6 +292,36 @@ When starting Lec-N production while Lec-(N-1) или Lec-(N+k) is still в acti
 
 ---
 
+## Chapter Multi-Part Pattern (ENFORCED — Lec-4/5 lesson)
+
+**Все `library/lectures/lec-NN/chapter.md` пишутся 3-частной структурой**, эталоны — lec-04 (~25 845 слов) и lec-05 (~22 925 слов).
+
+### Структура
+
+```
+library/lectures/lec-NN/
+  chapter.md          ← Часть 1 (≤600 строк, ~7-9k слов; frontmatter; § Введение + первые 1-2 раздела)
+  chapter-part2.md    ← Часть 2 (≤600 строк, ~6-9k слов; средние разделы)
+  chapter-part3.md    ← Часть 3 (≤600 строк, ~7-9k слов; финальные разделы + Q&A + Reading list + References)
+```
+
+### Обязательные элементы
+
+1. **Frontmatter в `chapter.md`** включает: `parts: 3`, `length_words: ~XX000`, `slide_map`, `strict_in_self_estimate`, `lo: [...]`.
+2. **Карта главы и индекс частей** — в `chapter.md` сразу после Changelog: оглавление 3 частей с cross-links.
+3. **`## Оглавление (Часть N)`** в начале каждой части.
+4. **Каждый файл ≤600 строк** (CLAUDE.md doc-size limit) — НЕ исключение для chapter; split строго принудительный.
+5. **Slide-маркеры `[for-slide-sNN]`** — на каждом ≥150-слов разделе как Phase 5 anchor для speaker notes.
+6. **Cross-references между частями:** «(см. §X.Y в части 2)» / «см. Часть 3 §Z» / forward-anchors / `[FACT-CHECK]` / `[VFY-day-of]` маркеры — все strip-safe (в конце клауз).
+7. **Целевой word count:** 20 000–26 000 слов total (3 части по 6 500–9 000 слов).
+
+### Cost-of-omission
+
+- **Lec-04 lesson:** chapter.md 23 700 слов в одном файле = unmanageable, methodology-critic не успевает прочесть, downstream cascade (speech/slides revise) ломается. Split → 3 файла → atomic edits, parallel critic-passes, диффы читаемы.
+- Apply by default для всех новых лекций — не ждать пока документ перерастёт 600 строк.
+
+---
+
 ## Best Practices Documentation
 
 **Reference:** `notes/decisions.md` — accumulated findings, patterns, and anti-patterns.

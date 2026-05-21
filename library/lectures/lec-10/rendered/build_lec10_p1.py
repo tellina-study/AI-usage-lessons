@@ -470,9 +470,9 @@ def build_part1_full(prs, H):
 
     # Right: 3 cards — с baseline counterfactuals
     cards = [
-        ("AppHarvest", "Тепличный, нерентабельный 2023", "$600M от $475M SPAC + $341M долга"),
+        ("AppHarvest", "Тепличный, нерентабельный 2023", "$475M SPAC + $341M долга ≈ $816M"),
         ("Plenty", "Compton ИИ-фабрика 19 мес → банкротство", "$940M из $1B+ raised с 2014; –99% оценки"),
-        ("Bowery", "Коллапс перед IPO, ноябрь 2024", "$672M из $700M raised; пик $2,3B"),
+        ("Bowery", "Коллапс перед IPO, ноябрь 2024", ">$700M raised; $32M never-used Locust Grove"),
     ]
     cy = 1.5
     for name, ev, money in cards:

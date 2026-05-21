@@ -2,7 +2,7 @@
 lecture: 10
 title: "Глава 10. AI в сельском хозяйстве"
 status: draft
-version: v3.2
+version: v3.3
 length_words: ~31900
 references_count: ~59
 parts: 3
@@ -19,6 +19,14 @@ keystone_axis: "Лестница AI-проникновения в АПК — о�
 # Глава 10. AI в сельском хозяйстве
 
 ## Changelog
+
+### v3.3 (2026-05-21) — Phase 11 batched revision cascade (Phase 10 critique of speech v1)
+
+Узкие cascade-фиксы из Phase 10 fact-checker критики speech v1 (P0 + P1), применённые в chapter (book-first методология).
+
+- **chapter-part2.md §2.7 L109 (Cognitive Pilot installations P0 fact-error).** «более 1200 установок» → «более 1700 установок (vendor self-report май 2024; [VFY-day-of: актуальное число установок Cognitive Pilot на 2026]) — около 1,3% из ≈130 000 комбайнов России по данным Минсельхоз». Source: TAdviser, Cognitive Pilot vendor materials, RTVI 2025: «By May 2024, more than 1,700 tractors and combines with the company's autopilots were operating in Russia»; Q1 2024 alone shipped 405 autopilots. Slide s17 + speech v1 уже корректны (1700+) — chapter был stale, now reconciled.
+- **chapter-part3.md §8 misattribution warning L297 (Tzachor publication date P1).** «Nature Food 2024 lead author — Dr. Asaf Tzachor» → «Nature Food ноябрь 2023 (публикация); press coverage Phys.org май 2024. Lead author — Dr. Asaf Tzachor». Sync с §1.5 + slide s12 (которые корректны «ноябрь 2023, press coverage 2024-05»). Internal chapter inconsistency between §1.5 + slide s12 («ноябрь 2023») и §8 («2024») resolved в пользу canonical «ноябрь 2023 publication / май 2024 press coverage».
+- Frontmatter version v3.2 → v3.3.
 
 ### v3.2 (2026-05-21) — Phase 8 cascade fix (Phase 7 P0-3 + P0-4)
 

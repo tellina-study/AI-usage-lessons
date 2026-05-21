@@ -9,7 +9,7 @@ chapter_ref: "§1.4 Часть 1 — Strict-in F1 коллапс vertical farmin
 references: [techcrunch-2025-plenty-ch11, agriculture-dive-2023-appharvest, techcrunch-2024-bowery, agfunder-2025-indoor]
 visual:
   pattern: mini_table_3x3
-  primary: "3-row mini-table (компания / капитал / главная причина) + photo Bowery interior + footer AgFunder 91% YoY"
+  primary: "3-row mini-table (компания / капитал / главная причина) + photo Bowery interior + footer AgFunder novel farming systems –53% YoY"
 ---
 
 # Vertical farming — провал не из-за плохого ИИ
@@ -32,13 +32,13 @@ AppHarvest, Plenty, Bowery: $1,37 млрд+ потерь, 14 банкротст�
 
 Справа (40% ширины) — фотография интерьера vertical farm Bowery или AppHarvest (стеллажи с зеленью под LED) обрамлённая Ocean rounded box. Caption 12pt italic: «Bowery / AppHarvest interior · 200 000 ft² фасилитет Locust Grove».
 
-Под mini-table — footer callout 14pt italic в Teal-tint box: «**Общий капитал категории $3 млрд+ за 2018-2024; индекс indoor farming –91% YoY в 2024-2025** (AgFunder Year-in-Review 2025)».
+Под mini-table — footer callout 14pt italic в Teal-tint box: «**Общий капитал категории $3 млрд+ за 2018-2024; novel farming systems funding –53% YoY в 2024** (AgFunder Global AgriFoodTech Investment Report 2025: Q1-Q3 2025 $1,5 млрд vs $3,2 млрд 2024)».
 
-Footer 12pt italic: «Источники: TechCrunch 2025-03-24 (Plenty); 2024-11-04 (Bowery); Agriculture Dive 689039 (AppHarvest)».
+Footer 12pt italic: «Источники: TechCrunch 2025-03-24 (Plenty); 2024-11-04 (Bowery); Agriculture Dive 689039 (AppHarvest); AgFunder Global Report 2025».
 
 ## Speaker notes
 
-Перейдём к первому большому failure-блоку. Vertical farming — это попытка построить closed-loop AI-управляемую ферму: LED вместо солнца, питательный раствор вместо почвы, климатконтроль вместо погоды, ИИ-оптимизация всех параметров. Идея 2018-2021 годов выглядела убедительно: устранить погоду, сезонность, патогены полей; разместить производство в городах. Итог 2022-2026 годов — коллапс категории. Около трёх миллиардов долларов потерянного венчурного капитала, не менее четырнадцати банкротств только в 2025 году на сумму около миллиарда трёхсот семидесяти миллионов долларов, девяносто один процент падения венчурных инвестиций год-к-году в indoor farming сегмент.
+Перейдём к первому большому failure-блоку. Vertical farming — это попытка построить closed-loop AI-управляемую ферму: LED вместо солнца, питательный раствор вместо почвы, климатконтроль вместо погоды, ИИ-оптимизация всех параметров. Идея 2018-2021 годов выглядела убедительно: устранить погоду, сезонность, патогены полей; разместить производство в городах. Итог 2022-2026 годов — коллапс категории. Около трёх миллиардов долларов потерянного венчурного капитала, не менее четырнадцати банкротств только в 2025 году на сумму около миллиарда трёхсот семидесяти миллионов долларов, минус 53 процента финансирования сегмента novel farming systems год-к-году по данным AgFunder Global AgriFoodTech Investment Report 2025 (Q1-Q3 2025 $1,5 млрд против $3,2 млрд за 2024-й).
 
 Три якорных кейса. AppHarvest — флагман американского indoor-фермерства, на пике котировался около миллиарда долларов через SPAC-сделку в 2021 году; в совете директоров — Марта Стюарт, Дж. Д. Вэнс, Дэвид Ли. Долг на момент банкротства — триста сорок один миллион при текущих активах сто десять миллионов. Причина — комбинация высоких OPEX отопления Кентукки в зимний период и вируса томатной мозаики, который, проникнув на флагманскую площадку в Морхеде, распространился по всему контуру теплицы за дни. Это и есть феномен «closed-loop ↑ blast radius»: в открытом поле тот же вирус распространялся бы по гектарам за недели, в закрытом контуре он покрывает всю производственную мощность.
 
@@ -53,4 +53,4 @@ Bowery Farming — на пике 2021 года оценена в два и тр�
 - TechCrunch (2025-03-24) — Plenty Chapter 11.
 - TechCrunch (2024-11-04) — Bowery ABC.
 - Agriculture Dive 689039 (2023) — AppHarvest ToBRFV.
-- AgFunder Year-in-Review (2025) — 91% YoY indoor farming.
+- AgFunder Global AgriFoodTech Investment Report 2025 — novel farming systems funding –53% YoY (Q1-Q3 2025 $1,5B vs $3,2B 2024).

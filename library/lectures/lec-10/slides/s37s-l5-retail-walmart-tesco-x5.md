@@ -2,27 +2,27 @@
 id: s37s
 type: working_case_grid
 duration_min: 1.5
-assertion: "Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрёсток» ML с 2020 (мировой уровень). Но L5-успех ≠ АПК-готовность: это специфика retail-AI. Большая часть L5 — не agriculture-specific."
+assertion: "Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрёсток» ML с 2020, Магнит F&R: Forecasting 46 РЦ в production + Replenishment 3 РЦ пилот. L5-успех ≠ АПК-готовность: это специфика retail-AI."
 learning_goal: "L5 как зрелый слой + anti-hype оговорка про specificity"
 learning_outcomes: [LO1a, LO1b]
 chapter_ref: "§6.1 Часть 3 — L5 retail кратко"
-references: [walmart-corporate-2025, tesco-annual-2024, x5-tech-2024]
+references: [walmart-corporate-2025, tesco-annual-2024, x5-tech-2024, habr-magnit-2026]
 visual:
-  pattern: 3card_success
-  primary: "3-card grid Walmart Eden + Tesco AI + X5 — все в промышленной эксплуатации с метриками; supermarket aisle photo как hero context"
+  pattern: 4card_success
+  primary: "4-card grid Walmart Eden + Tesco AI + X5 + Магнит F&R — все в промышленной эксплуатации или гибридном статусе; supermarket aisle photo как hero context"
 ---
 
-# L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток»
+# L5 — Walmart + Tesco + X5 + Магнит F&R
 
 ## Assertion
 
-Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрёсток» ML с 2020 (мировой уровень). Но L5-успех ≠ АПК-готовность: это специфика retail-AI. Большая часть L5 — не agriculture-specific.
+Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрёсток» ML с 2020, Магнит F&R: Forecasting 46 РЦ в production + Replenishment 3 РЦ пилот. L5-успех ≠ АПК-готовность: это специфика retail-AI.
 
 ## Visual
 
 Сверху (35% высоты) — hero photo supermarket aisle с свежими овощами / фруктами + shelf-edge цена. Обрамлено Ocean rounded box. Caption 12pt italic: «L5 — fully digital environment: каждая SKU имеет цифровой след».
 
-Под фото — 3-card grid в Ocean rounded boxes:
+Под фото — 4-card grid в Ocean rounded boxes (2×2):
 
 **Card 1 — Walmart Eden ML:**
 - В промышленной эксплуатации **с 2017** ★
@@ -42,13 +42,20 @@ Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрё
 - **Полностью in-house ML team** — мировой уровень
 - Разрыв с Tesco/Walmart — ~3 года, продолжает сокращаться
 
+**Card 4 — Магнит F&R (гибридный статус):**
+- **Forecasting: 46 РЦ в промышленной эксплуатации** (январь 2026) ★ — сетевой уровень
+- **Replenishment: пилот на 3 РЦ** — план 10-20 к началу 2027
+- Совместная разработка с Napoleon IT
+- ≈83% Forecasting / ≈5,5% Replenishment по охвату сети
+- Источник: Habr Магнит 2026
+
 Bottom callout 14pt italic в Teal-tint box (важная анти-hype оговорка):
 - **Большая часть L5 — НЕ agriculture-specific**, а общий retail-supply ML
 - L5-success **не доказывает** «AI-готовность всей АПК-цепочки»
 - L5 спускается в L1 через scope-3 visibility (Walmart Eden + Cropin на supplier farms)
 - Единственный уровень, где «AI везде» — не hype, а промышленная реальность у established игроков
 
-Footer 12pt italic: «Источники: Walmart corporate 2025; Tesco AI annual report; X5 Tech 2024».
+Footer 12pt italic: «Источники: Walmart corporate 2025; Tesco AI annual report; X5 Tech 2024; Habr Магнит 2026».
 
 ## Speaker notes
 
@@ -60,7 +67,9 @@ Tesco AI demand forecast — британский ритейлер исполь�
 
 X5 «Перекрёсток» — российский ритейлер, развернул ML-систему прогноза спроса с 2020 года. Использует более двухсот факторов: исторический спрос, погода, день недели, локальные события, цена конкурентов, акции, остатки на складах. Категории — плодоовощная и молочная. Полностью in-house ML team. По данным X5 Tech, точность прогноза — на мировом уровне. Это тот самый паритет с мировыми лидерами, о котором мы говорили в Разделе 4: X5 в промышленной эксплуатации шесть лет, Tesco и Walmart — девять лет, разрыв около трёх лет и продолжает сокращаться.
 
-И этот уровень надёжно работает у мировых лидеров и у X5. Это единственный уровень, где «AI везде» — не hype, а промышленная реальность у established игроков. Но — и это критическая анти-hype оговорка — большая часть этого слоя не специфична для сельского хозяйства, а представляет собой общий retail-supply ML. ML demand forecasting в продуктовом ритейле — это та же ML demand forecasting, что в fashion-retail или в FMCG-non-food. И это важное наблюдение: успехи L5 не доказывают «AI-готовность всей АПК-цепочки» — они доказывают зрелость retail-AI как отдельной дисциплины.
+Магнит F&R — четвёртый канонический success-кейс пятой ступени, и для него важно различать два модуля. Forecasting-модуль развёрнут в промышленной эксплуатации на 46 распределительных центрах с января 2026 года — это сетевой уровень и фактический паритет с мировыми лидерами в этой узкой задаче (Habr Магнит 2026). Replenishment-модуль — пилот на 3 РЦ с планом масштабирования до 10-20 к началу 2027. Это гибридный статус: половина F&R-стека на мировом уровне, вторая половина — пилот-фаза. Корректная формулировка — модульное разделение, не общее «Магнит на мировом уровне» и не «Магнит на пилоте».
+
+И этот уровень надёжно работает у мировых лидеров, у X5 и в Forecasting-модуле Магнита. Это единственный уровень, где «AI везде» — не hype, а промышленная реальность у established игроков. Но — и это критическая анти-hype оговорка — большая часть этого слоя не специфична для сельского хозяйства, а представляет собой общий retail-supply ML. ML demand forecasting в продуктовом ритейле — это та же ML demand forecasting, что в fashion-retail или в FMCG-non-food. И это важное наблюдение: успехи L5 не доказывают «AI-готовность всей АПК-цепочки» — они доказывают зрелость retail-AI как отдельной дисциплины.
 
 Зачем эта ступень в курсе АПК-AI? Три ответа. Первый — показывает «зрелую ML»: что бывает, когда среда полностью оцифрована и обратная связь приходит за секунды-минуты; это контрастный фон для понимания, почему L1-L2 работают иначе. Второй — L5-success не доказывает АПК-готовность; критично для anti-hype: «AI revolution в АПК» обычно опирается на L5-метрики, которые относятся к retail-AI, не к полевым задачам. Третий — L5 спускается в L1 через scope-3 visibility: Walmart Eden плюс Cropin плюс Walmart-supplier farms образуют cross-level паттерн, где L5-игрок проникает в L1-данные поставщиков. Это место, где L4-L5 архитектуры выходят за пределы своего домена.
 
@@ -69,3 +78,4 @@ X5 «Перекрёсток» — российский ритейлер, раз�
 - Walmart corporate (2025) — Eden ML.
 - Tesco AI annual report.
 - X5 Tech (2024) — Перекрёсток ML.
+- Habr Магнит (2026) — F&R Forecasting 46 РЦ + Replenishment 3 РЦ. <https://habr.com/ru/companies/magnit/articles/1023866/>

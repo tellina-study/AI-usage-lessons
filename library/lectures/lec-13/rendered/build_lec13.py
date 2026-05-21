@@ -341,10 +341,10 @@ def s03_lecture_map(p):
              "Маршрут лекции — пять разделов",
              size=28, bold=True, color=DEEP)
     sections = [
-        ("1", "Контролируемое", "6 слайдов", "Склад · порт · рельсы · границы уровня 1", LIGHT),
+        ("1", "Склад / порт", "6 слайдов", "Склад · порт · рельсы · границы уровня 1", LIGHT),
         ("2", "Магистраль", "10 слайдов", "Aurora · Mobileye · КамАЗ · UPS ORION · банкротства AV-грузоперевозки", MID),
-        ("3", "Город+миля", "10 слайдов", "Waymo · Apollo Go · Pony.ai · Tesla · Cruise · Uber · Tesla NHTSA · Starship · Zipline", TEAL),
-        ("4", "Чрезвыч.", "7 слайдов", "Хуситы · Suez · COVID · trucker дефицит · 5 критериев · альтернативы", GOLD),
+        ("3", "Город + миля", "10 слайдов", "Waymo · Apollo Go · Pony.ai · Tesla · Cruise · Uber · Tesla NHTSA · Starship · Zipline", TEAL),
+        ("4", "Чёрный лебедь", "7 слайдов", "Хуситы · Suez · COVID · дефицит дальнобойщиков · 5 критериев · альтернативы", GOLD),
         ("5", "Замыкание", "2 слайда", "Q&A · мост к Лекции 14", DEEP),
     ]
     card_w = 2.42
@@ -354,18 +354,18 @@ def s03_lecture_map(p):
     for i, (num, title, dur, desc, accent) in enumerate(sections):
         x = x0 + i * (card_w + разрыв)
         rounded_box(slide, x, y, card_w, 5.2)
-        # Number circle on top
-        circle(slide, x + 0.2, y + 0.25, 0.7, 0.7, fill=accent)
-        text_box(slide, x + 0.2, y + 0.25, 0.7, 0.7, num,
-                 size=22, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        # Title
-        text_box(slide, x + 1.0, y + 0.25, card_w - 1.1, 0.7, title,
-                 size=18, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        # Number circle on top-left
+        circle(slide, x + 0.15, y + 0.2, 0.55, 0.55, fill=accent)
+        text_box(slide, x + 0.15, y + 0.2, 0.55, 0.55, num,
+                 size=18, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        # Title (on its own line, full card width)
+        text_box(slide, x + 0.15, y + 0.85, card_w - 0.3, 0.5, title,
+                 size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
         # Slides count
-        text_box(slide, x + 0.2, y + 1.1, card_w - 0.3, 0.4, dur,
+        text_box(slide, x + 0.15, y + 1.4, card_w - 0.3, 0.35, dur,
                  size=11, italic=True, color=LIGHT)
         # Description
-        text_box(slide, x + 0.2, y + 1.55, card_w - 0.3, 3.5, desc,
+        text_box(slide, x + 0.15, y + 1.85, card_w - 0.3, 3.2, desc,
                  size=12, color=DEEP, line_spacing=1.3)
     footer(slide, "Спуск по лестнице среды: от контролируемая к чёрному лебедю")
     add_notes(slide, "См. slides/s03-lecture-map.md speaker notes.")
@@ -1073,14 +1073,21 @@ def s22_starsky_quote(p):
     # Large quote box
     rounded_box(slide, 1.0, 1.8, 11.3, 2.8, fill=GOLD_TINT, stroke=GOLD, stroke_w=2)
     multiline_box(slide, 1.5, 2.0, 10.3, 2.4, [
-        ("«Supervised machine learning doesn't live up to  хайп.»", {"size": 22, "bold": True, "italic": True, "color": DEEP}),
+        ("«Supervised machine learning doesn't live up to the hype.»",
+         {"size": 20, "bold": True, "italic": True, "color": DEEP}),
+        ("«Контролируемое машинное обучение не оправдывает ажиотажа.»",
+         {"size": 14, "italic": True, "color": MID}),
+        ("", {"size": 6}),
+        ("«Sim-to-real has very real limits.»",
+         {"size": 20, "bold": True, "italic": True, "color": DEEP}),
+        ("«У разрыва симуляция-к-реальности есть очень реальные пределы.»",
+         {"size": 14, "italic": True, "color": MID}),
         ("", {"size": 8}),
-        ("«Sim-to-real has very real limits.»", {"size": 22, "bold": True, "italic": True, "color": DEEP}),
-        ("", {"size": 10}),
         ("— Стефан Зельц-Аксмахер, основатель и CEO Starsky Robotics,",
-         {"size": 13, "italic": True, "color": SLATE}),
-        ("Medium эссе «The end of Starsky Robotics», март 2020", {"size": 13, "italic": True, "color": SLATE}),
-    ], line_spacing=1.4, align=PP_ALIGN.CENTER)
+         {"size": 12, "italic": True, "color": SLATE}),
+        ("Medium-эссе «The end of Starsky Robotics», март 2020",
+         {"size": 12, "italic": True, "color": SLATE}),
+    ], line_spacing=1.25, align=PP_ALIGN.CENTER)
     # Three lessons
     lessons = [
         ("ML не оправдывает ожиданий", "Каждый новый edge-case требует labeled данных. На до выручки масштаб денег не хватает."),

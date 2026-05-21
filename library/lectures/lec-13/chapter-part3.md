@@ -187,7 +187,7 @@ Waymo масштабируется медленно, методично, sun-bel
 20. **Volkswagen Group annual report 2022.** Argo AI write-down disclosure.
 21. **Symbotic Inc. 10-K FY2024.** Symbotic Walmart contract details, financial reporting. SEC EDGAR.
 22. **Aurora Innovation Inc. 10-Q May 2025.** Driverless commercial launch disclosure, cash position. SEC EDGAR.
-23. **Pony.ai Holding Inc. 6-K filings (2024–2025).** Unit economics Shenzhen disclosure (338 RMB daily net income per vehicle). SEC EDGAR.
+23. **Pony.ai Holding Inc. 6-K filings (2024–2026).** Unit economics disclosure: первый положительный per-machine operating profit в Гуанчжоу (ноябрь 2025 — **первый город**), затем повторение в Шэньчжэне (февраль 2026 — **второй город**, 338 RMB daily net income per vehicle). SEC EDGAR. См. также CnEVPost / Gasgoo / ChinaEVHome coverage о хронологии Guangzhou-first.
 24. **WeRide Inc. 6-K Q3 2025.** Robotaxi revenue 35.3M yuan growth +761% YoY. SEC EDGAR.
 25. **Mobileye Global Inc. 10-K FY2024.** Intel subsidiary, SuperVision deployment metrics, Chauffeur roadmap.
 26. **Tesla Inc. 10-Q quarterly filings (2024–2025).** Autopilot/FSD revenue, fleet metrics.
@@ -208,7 +208,7 @@ Waymo масштабируется медленно, методично, sun-bel
 38. **КамАЗ-54901 М-11 deployment press release** (June 14, 2023 ПМЭФ).
 39. **Cognitive Pilot company materials.** Stack architecture, Agro Pilot heritage, M-11 commercial pilot.
 40. **Cognitive Pilot Agro reporting (2024).** 590 000 тонн зерновых с >130 000 гектаров.
-41. **Pony.ai Robotaxi Shenzhen operating disclosure** (February 2025).
+41. **Pony.ai Robotaxi operating disclosure** — Guangzhou (November 2025, **first city** с per-machine operating profit) + Shenzhen (February 2026, **second city**).
 42. **WeRide Nasdaq IPO prospectus** (2024).
 43. **Symbotic-Walmart contract expansion press** (January 2025). 400 APD multi-year, backlog +$5B.
 44. **Amazon Robotics fulfillment center metrics** (cumulative robots in network annual updates).

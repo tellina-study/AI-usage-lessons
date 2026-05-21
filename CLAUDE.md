@@ -244,6 +244,7 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 | Per-artifact spawns for polish rounds (separate designer / writer per phase) | Single batched revision agent (book-editor OR speech-writer) для 3-artifact touches; Phase 11 pattern |
 | Лекция < 30% контента про провалы/ограничения/альтернативы ИЛИ доля в одном артефакте | ≥30% holistic (chapter+slides+speech), иначе verdict REVISE (см. AI-Failure & Judgment Content Rule) |
 | «Магическая пилюля»: ИИ-восторг без выученных уроков и границ применимости | Каждая лекция учит говорить «нет» неподходящему ИИ; ≥30% — провалы/ограничения/альтернативы |
+| chapter.md <30k слов для L4+ (single-file 8-12k или multi-part 20-26k) | ≥30 000 слов mandatory (target 28 500-31 500); split на 4-5 частей по 6 500-8 500 слов; <28 500 = P0 BLOCKING REVISE (см. § «Chapter Depth Baseline (ENFORCED)», issue #128) |
 | Несущая ось лекции не предъявлена отдельным keystone-слайдом до 1-го погружения (Раздел 0 защищается/делает recap вместо подачи оси) | Keystone-axis ENFORCED-check: methodology-critic (Phase 1 plan + Phase 4/7 deck) + lecture-outline template + Pre-USER-GATE п.6. Цена пропуска: Лекция 4 = ~5 циклов deck |
 | Отраслевая лекция (L4+): несущая таксономия без named current tools на каждый уровень; plan §-named speech-narrative без слайда | lecture-outline (L4+) требует tools-per-taxonomy-level (вендор-режим+adoption-направление+anti-hype+mode≠brand, volatile→[VFY-day-of]); Phase-5: §-named narrative ⇒ слайд либо явное owner-обоснование устного якоря |
 | usage/rate-limit субагента трактуется как failure → оркестратор пишет контент сам | Классифицировать сбой: limit ≠ failure → wait+re-delegate, НИКОГДА не self-implement (Subagent Rules; `feedback_subagent_usage_limit`) |
@@ -292,9 +293,49 @@ When starting Lec-N production while Lec-(N-1) или Lec-(N+k) is still в acti
 
 ---
 
+## Chapter Depth Baseline (ENFORCED — фундаментальное, issue #128, 2026-05-21)
+
+**Источник:** Owner explicit override (Лекция 11 production); reference — memory `feedback_chapter_depth` ([[chapter-depth]]).
+
+**Правило.** `library/lectures/lec-NN/chapter.md` для **L4+** — **минимум 30 000 слов** (target 30k ±5% = **28 500–31 500**). Это базовый референс уровня academic textbook chapter + Q&A backup + self-study deep-dive материал, **не конспект 75-мин лекции**.
+
+**Что засчитывается в 30k:**
+- Narrative body всех частей (chapter.md + chapter-part2.md + chapter-part3.md)
+- Inline definitions / examples / case studies / failure deep-dives / cornerstone glossary
+- Q&A backup ответы (раздел § Q&A)
+
+**Что НЕ засчитывается:**
+- Frontmatter YAML
+- Markdown headings без содержания
+- TOC / list-only sections
+- Источники / bibliography (отдельный счёт `references_count`)
+
+**Применимость:**
+- **L1–L3 (introductory):** 8–12k acceptable; owner waiver доступен (аналогично AI-Failure rule).
+- **L4–L17:** ≥30k mandatory, **waiver недоступен**. <28 500 слов → **P0 BLOCKING REVISE** (структурный gap, не polish).
+
+**Why ENFORCED:** chapter = source-of-truth + Q&A резерв преподавателя + источник derivation slides/speech. На 75-мин лекции реально проходится **30–40% содержания chapter'а** — остальное Q&A backup + self-study + источник derivation. 30k = textbook chapter depth, соответствует уровню expectation для серьёзного университетского курса.
+
+**Enforcement points:**
+- **Phase 2 brief для book-editor:** explicit «target ≥30 000 слов», expansion mandates per section с конкретикой по deltas.
+- **Phase 3 methodology-critic:** word count check; <28 500 для L4+ → P0 BLOCKING.
+- **Pre-USER-GATE A walkthrough:** word count verify в orchestrator self-review.
+- **Anti-Patterns table** — добавлено «chapter <30k для L4+».
+
+**Эволюция правила:**
+- Лекции 1–3 (introductory): ~8–12k слов.
+- Лекции 4–5: 8.9k / 8.7k слов (ранний стиль single-file).
+- Лекции 6–7: 12.7–12.9k слов.
+- Лекции 8–9: 15.9k / 17k слов.
+- Лекция 11 production 2026-05-21: owner override → **минимум 30k для всех L4+**.
+
+**Старый red-flag «>15k слов»** из `tools/lecture-production/README.md` для L4+ — **НЕ применять** (обновлено issue #128).
+
+---
+
 ## Chapter Multi-Part Pattern (ENFORCED — Lec-4/5 lesson)
 
-**Все `library/lectures/lec-NN/chapter.md` пишутся 3-частной структурой**, эталоны — lec-04 (~25 845 слов) и lec-05 (~22 925 слов).
+**Все `library/lectures/lec-NN/chapter.md` для L4+ пишутся multi-part структурой** (4-5 частей при ≥30k слов; lec-04/lec-05 эталоны — 3 части, но lec-04/05 были 22-26k; для ≥30k baseline частей нужно 4-5).
 
 ### Структура
 
@@ -313,7 +354,7 @@ library/lectures/lec-NN/
 4. **Каждый файл ≤600 строк** (CLAUDE.md doc-size limit) — НЕ исключение для chapter; split строго принудительный.
 5. **Slide-маркеры `[for-slide-sNN]`** — на каждом ≥150-слов разделе как Phase 5 anchor для speaker notes.
 6. **Cross-references между частями:** «(см. §X.Y в части 2)» / «см. Часть 3 §Z» / forward-anchors / `[FACT-CHECK]` / `[VFY-day-of]` маркеры — все strip-safe (в конце клауз).
-7. **Целевой word count:** 20 000–26 000 слов total (3 части по 6 500–9 000 слов).
+7. **Целевой word count:** **≥30 000 слов** total (см. § «Chapter Depth Baseline (ENFORCED)») — типично 4-5 частей по 6 500–8 500 слов. Lec-04/05 эталон 3-частной структуры был при 22-26k baseline; для ≥30k обычно нужно 4 части.
 
 ### Cost-of-omission
 

@@ -10,12 +10,15 @@
 
 ```
 library/lectures/lec-NN/
-  chapter.md              ← глава методички ~8-12k слов (academic)         [PRIMARY = source of truth]
-  rendered/lec-NN.pptx    ← презентация со speaker notes для студентов     [DERIVED from chapter]
-  speech.md               ← речь лектора ~4-6k слов (conversational)        [DERIVED from chapter + slides]
+  chapter.md              ← глава методички ≥30k слов для L4+ (multi-part 4-5 файлов)    [PRIMARY = source of truth]
+  chapter-part2.md / -part3.md / -part4.md (при ≥30k обычно 4-5 частей; см. CLAUDE.md § «Chapter Depth Baseline (ENFORCED)»)
+  rendered/lec-NN.pptx    ← презентация со speaker notes для студентов                    [DERIVED from chapter]
+  speech.md               ← речь лектора ~4-6k слов (conversational)                       [DERIVED from chapter + slides]
 ```
 
 **Source of truth:** `chapter.md`. Slides и speech derive из неё. При conflict — fix slides/speech, не chapter (если chapter сам не ошибается).
+
+**L4+ chapter mandatory ≥30 000 слов** (target 30k ±5% = 28 500–31 500). Issue #128 + memory `feedback_chapter_depth`. См. CLAUDE.md § «Chapter Depth Baseline (ENFORCED)». L1–L3 introductory — 8–12k acceptable с owner waiver.
 
 ---
 
@@ -323,11 +326,15 @@ Producer-агенты (book-editor / presentation-designer / speech-writer) ча
 
 | Артефакт | Длина | Pacing |
 |---|---|---|
-| `chapter.md` | 8-12k слов (~30-50 страниц A4) | Self-study, ~30-60 мин чтения |
+| `chapter.md` (L4+) | **≥30 000 слов** (target 28 500–31 500), multi-part 4-5 файлов по 6 500–8 500 слов; ~100-130 страниц A4 | Self-study reference, ~2-3 ч чтения; на лекции проходится 30-40%, остальное Q&A backup + self-study deep-dive |
+| `chapter.md` (L1–L3 introductory) | 8–12k слов acceptable с owner waiver | Self-study, ~30-60 мин чтения |
 | `slides/*.md` | ~150-300 слов на slide × 25-30 slides ≈ 5-8k слов суммарно | Visible content + speaker notes |
 | `speech.md` | 4-6k слов (≈70-80 wpm × 75 мин) | Сliceful pacing, паузы, переходы |
 
-**Если chapter < 5k или > 15k — red flag** (либо мало материала для лекции, либо overload).
+**Red flags:**
+- **L4+ chapter < 28 500 слов** → P0 BLOCKING REVISE (структурный gap, см. CLAUDE.md § «Chapter Depth Baseline (ENFORCED)», issue #128).
+- **L1–L3 chapter < 5k** (overlight) или **single-file > 600 строк без split** (multi-part mandate violation).
+- **Старый red-flag «>15k» НЕ применять для L4+** — обновлено 2026-05-21 (issue #128).
 
 ---
 

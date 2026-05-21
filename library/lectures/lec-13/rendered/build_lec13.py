@@ -319,15 +319,16 @@ def s02_cover(p):
     ], line_spacing=1.05)
     # Meta
     multiline_box(slide, 4.5, 4.4, 8.3, 1.0, [
-        ("Модуль 3 · 75 минут + Q&A", {"size": 16, "color": LIGHT}),
+        ("Модуль 3", {"size": 16, "color": LIGHT}),
         ("Студенты-инженеры 3 курса", {"size": 16, "color": LIGHT}),
     ])
-    # LO summary box
-    rounded_box(slide, 4.5, 5.5, 8.3, 1.4)
-    multiline_box(slide, 4.7, 5.65, 8.0, 1.2, [
-        ("Цели лекции:", {"size": 14, "bold": True, "color": MID}),
-        ("LO1 — пять уровней лестницы среды · LO2 — критически оценить вендора AV/AI", {"size": 12, "color": DEEP}),
-        ("LO7 — регуляторный ландшафт + критерии «AI не работает» + альтернативы", {"size": 12, "color": DEEP}),
+    # Learning outcomes (descriptive prose, no LO codes)
+    rounded_box(slide, 4.5, 5.5, 8.3, 1.6)
+    multiline_box(slide, 4.7, 5.65, 8.0, 1.4, [
+        ("Вы научитесь:", {"size": 14, "bold": True, "color": MID}),
+        ("· Различать пять уровней автономии в логистике и транспорте.", {"size": 12, "color": DEEP}),
+        ("· Критически оценивать вендорские заявления об AV/AI-системах.", {"size": 12, "color": DEEP}),
+        ("· Применять регуляторные критерии «когда AI не работает» + альтернативы.", {"size": 12, "color": DEEP}),
     ], line_spacing=1.2)
     footer(slide, "Курс «Применение AI в инженерии» · 2026")
     add_notes(slide, "См. slides/s02-cover.md speaker notes.")

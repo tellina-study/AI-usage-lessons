@@ -1,0 +1,63 @@
+---
+id: s27
+type: assertion_visual
+duration_min: 2.5
+assertion: "Tesla Robotaxi Austin: старт 22 июня 2025, около 800 000 миль, 14 ДТП за 8 месяцев. Vision-only без HD-карты — статистически пока недоказанная ставка."
+learning_goal: "Tesla Austin current state (без demonization, statistical sample)"
+learning_outcomes: [LO1, LO2]
+chapter_ref: "§3.2 — Tesla Robotaxi Austin"
+failure_bucket: strict_in
+references: [national-today-tesla-14, wikipedia-tesla-robotaxi]
+visual:
+  pattern: timeline_with_current_state
+  primary: "Timeline с key events 2025-2026 + current state stat box + comparison Waymo"
+---
+
+# Tesla Robotaxi Austin: текущее состояние
+
+## Timeline
+
+- **22 июня 2025** — старт с ~10 машин + safety monitor.
+- **Декабрь 2025** — тесты без operators (employees как drivers).
+- **Январь 2026** — public unsupervised режим.
+- **Февраль 2026** — **14 ДТП Austin зарегистрировано** за 8 месяцев.
+- **Март 2026** — расширение в downtown Austin.
+- **Апрель 2026** — unsupervised в Houston + Dallas.
+
+## Текущее состояние (volatile, [VFY-day-of])
+
+- **~700 000-800 000 платных миль** к маю 2026.
+- **14 ДТП Austin** за 8 месяцев.
+- **Vision-only без LiDAR без HD-карты.**
+
+## Comparison с Waymo
+
+- **Объём в 1000 раз меньше Waymo.** 700K миль vs 500K rides/неделю (~10M миль/неделю Waymo).
+- **Sample size слишком мал** для conclusion «safer than Waymo» / «менее safe».
+- **Не доказано:** что vision-only стек обеспечивает sufficient safety на L4-uncomfortable городских ситуациях.
+
+## Что Маск обещает
+
+«We Robotaxi everywhere by end of 2026.» — Elon Musk, October 2024 «We, Robot» event (verifiable required).
+
+## Pedagogical point — без demonization
+
+- **НЕ говорим:** Tesla провалится.
+- **НЕ говорим:** Tesla безопаснее Waymo.
+- **Говорим:** sample size слишком мал для серьёзного safety conclusion. Vision-only ставка — философская, статистически на 2026 не подтверждена. Нужны три года данных и сравнение с Waymo при сравнимом mileage.
+
+## Speaker notes
+
+Tesla Robotaxi Austin — это самая текущая (на середину 2026 года) разработка. Я хочу быть аккуратным с этим кейсом, потому что Tesla — компания с большим следом ошибок (Autopilot, Cybertruck delays, и т.д.), но это не означает, что Tesla Robotaxi обречена. Просто на 2026 год есть слишком мало данных для серьёзного safety conclusion.
+
+Timeline. Двадцать второго июня 2025 года — старт Robotaxi в Остине с примерно десятью машинами и safety monitor в кабине. Декабрь 2025 — тесты без operators, где employees как drivers. Январь 2026 — public unsupervised режим. Февраль 2026 — четырнадцать ДТП в Остине зарегистрировано за восемь месяцев эксплуатации, при примерно семистах тысяч-восьмистах тысячах платных миль кумулятивно. Март 2026 — расширение в downtown Austin. Апрель 2026 — unsupervised в Houston и Dallas.
+
+Comparison с Waymo. Это важно — Tesla в Остине пока в тысячу раз меньше Waymo по объёму. Семьсот тысяч миль кумулятивно vs Waymo десять миллионов миль в неделю. Это означает, что sample size слишком мал для серьёзного safety conclusion. Tesla 14 ДТП за восемь месяцев — это может быть «лучше Waymo», «хуже Waymo», «сравнимо с Waymo» — мы не знаем, потому что объём выборки разный на три порядка.
+
+Стек Tesla — vision-only без LiDAR без HD-карты. Это философская ставка. Tesla верит, что end-to-end vision-only стек достаточен для L4 robotaxi. Waymo использует противоположный подход — multi-modal sensor stack плюс HD-map. На 2026 год статистически не доказано, кто прав.
+
+Что Маск обещает. «We robotaxi everywhere by end of 2026», цитата из октября 2024 года на event «We, Robot». На середину 2026 года Tesla в Остине + Хьюстоне + Далласе, не «everywhere». Это паттерн Tesla — overpromise по timelines, но иногда реализация подтягивается (Tesla Model 3 ramp 2018-2019 был с delays, но потом серийный продукт).
+
+Pedagogical point. Я хочу, чтобы вы вышли из этого слайда с тремя мыслями. Первая — не утверждать, что Tesla провалится. Это не подтверждено. Sample size мал. Вторая — не утверждать, что Tesla безопаснее Waymo. Это не подтверждено. Vision-only ставка статистически не доказана. Третья — критическая оценка требует трёх лет данных при сравнимом mileage. На 2026 год — слишком рано для serious conclusion.
+
+Lesson для инженера. Когда вендор показывает «X ДТП на Y миль» — спрашивайте про denominator (количество миль) и про baseline (что было бы у human driver или у конкурента при том же объёме). 14 ДТП на 800K миль — это много или мало? Без baseline нельзя сказать. Human driver в США имеет примерно 1 fatal crash на 100 миллионов миль, и около 200 crashes (всех типов) на 100 миллионов миль. Tesla 14 на 800K — пересчитайте на 100 миллионов миль, и сравните с baseline. Получите грубую оценку.

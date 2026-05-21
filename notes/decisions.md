@@ -545,3 +545,38 @@ deck v3.1 (Раздел-0 keystone + сквозной tone-strip): re-QA 5 кр�
 **Сработало (усилить):** suffix-ID cascade-safe (4×); cascade-of-changes grep ПЕРЕД rename (поймал §4.5 heading↔TOC↔anchor); book-first строго последовательно; independent-verification > trust-report; isolated commits; No-Extra-Content REPORT-not-fix; `[VFY-day-of]`-дисциплина (ARC-AGI не повторился).
 
 **Метрика успеха:** следующая отраслевая лекция — 0 owner-интервенций класса «нет keystone» / «нет tools-per-level»; ≤1 owner-структурная post-APPROVE (только чистый вкус).
+
+## 2026-05-21 — Рефлексия Лекции 8: 3 ENFORCED-правила в инфраструктуру (#122)
+
+Рефлексия: `notes/reflections/2026-05-21-lec-08/`. Production Л8 завершён (PR #121 merged, #119 closed), 3 owner-интервенции на GATE B (~3 дополнительных revision rounds, ~83 минуты wasted). Все 3 предотвратимы постоянной инфраструктурой.
+
+- **IMP-1 No-mock-fallbacks (стоимость ~1.5h cycle wasted).** Designer Phase 6+7 столкнулся с paywall/JS на BBC/Futurism/NYT/Reuters/etc. → blanket-fallback: 16 stylized Ocean-palette PNG mocks с verbatim headlines. Self-report 87.2% media coverage прошёл orchestrator visual sweep (mocks выглядели похоже на cards). Owner: «что за херня, где картинки? ты просто забил! ... все переделать». → Memory rule [[no-mock-fallbacks]] + 6-tier acquisition (og:image / Wikipedia / press release / YouTube thumb / Wayback / Google Images) с per-image attempt log. Validation: 16/16 real images, 87.5% Tier 1 success. → propagated в `tools/presentation-build/README.md` + `presentation-designer.md` + `presentation-critic.md` + Pre-USER-GATE skill + CLAUDE.md anti-patterns.
+- **IMP-2 Russification (стоимость ~3h, 3 revision passes).** Producer agents (designer + speech-writer) свободно использовали английскую tech-лексику в visible body для RU-аудитории МГТУ ИУ6. Pattern-narrow grep (32 patterns) показал 0-72 hits; deep latin-token scan (любое English слово вне brand allowlist) показал 224 unique в PPTX и 919 unique в speech. Owner: «обилие англицизмов в презе! это просто трындец! провал». → Memory rule [[russification]] + таблица 45+ replacements + explicit keep-list (brand names, established acronyms с inline gloss, mode names) + deep latin-token scan в pre-GATE. → propagated в `tools/presentation-build/README.md` + `presentation-designer.md` + `speech-writer.md` + `book-editor.md` + `presentation-critic.md` + Pre-USER-GATE skill + CLAUDE.md.
+- **IMP-3 Hero-images на s01 + s39 (стоимость 6 min — простое улучшение).** Owner explicit запрос: «не хватает броской иллюстрации на самом первом слайде и на завершающем, сделай и запиши себе как общее требования ко всем презам». → Memory rule [[hero-images-required]] ≥40% area + 6-tier acquisition + Russian captions + Ocean palette. → propagated в `tools/presentation-build/README.md` + `presentation-designer.md` + `presentation-critic.md` + Pre-USER-GATE skill + CLAUDE.md.
+- **IMP-4 Pattern-narrow grep маскирует depth of problem.** Мой initial Russification verification (32-pattern) вернул 0-4 hits → подумал deck clean. Deep latin-token scan показал 919 в speech. → новый mandatory check «deep latin-token scan» для RU-language deck перед каждым USER GATE (не только pattern check).
+- **IMP-5 Critics в Phase 7.5 не отличали mock от real image.** 3 critics (presentation/student/reader) flag-нули placeholder issues, но не различали «stylized mock с verbatim headline в Ocean palette» от actual screenshot. → `presentation-critic.md` checklist: «if slide claims to show screenshot from external source — can you identify source page URL? matches what source would show?»
+- **IMP-6 Single batched revision agent (Phase 11) сработал отлично.** Per CLAUDE.md anti-pattern, one book-editor agent смог touch chapter + slide MD + speech одним проходом для consistency fixes (4 P0 + 7 P1 + 5 P2). Подтверждено как preferred pattern для multi-artifact polish.
+
+**Сработало (усилить):** Worktree-изоляция параллельно с Лекцией 9 (0 контеншена); 6-tier image acquisition после re-spawn (87.5% Tier 1); 12 case-слайдов с «Урок для инженера» в Ocean gold rounded box format; Kelly McKernan plaintiff portrait + Drew Ortiz CNN screenshot — real images dramatically сильнее abstract case names; X-62 VISTA DARPA bridge к Лекции 9 — strongest pedagogical bookend.
+
+**Метрика успеха:** следующая лекция (Л10+) — 0 owner-интервенций классов (а) mock-вместо-real, (б) anglicism leaks, (в) missing hero s01/s39. Pre-GATE B walkthrough catches все 3 automatically через updated infra.
+
+## 2026-05-21 — Лекция 9 production (рефлексия, #118; reflection-folder `notes/reflections/2026-05-21-lec-09/`)
+
+Production Л9 завершён (PR #120 merged 2026-05-21), 1-day cycle, 12 commits, 17 critic-spawns. Lessons learned:
+
+- **Анонимизация = default, не per-lecture intervention.** Л9 v2 chapter содержал «МГТУ им. Баумана, Факультет ИУ, Кафедра... ВКА им. Можайского, МАИ, СПбГУ» в §5.2 + frontmatter audience «ИУ6 МГТУ Бауман». User explicit correction → 1 revision cycle (v2→v3). **Fix:** embedded mandate в `.claude/agents/book-editor.md` + `tools/lecture-production/README.md §3.7a` + `templates/lecture-outline.md`. Эталон: lec-03/lec-05/lec-07 — 0 named institutions.
+
+- **Speech-writer self-report «0 anglicism hits» был массивно ложным (реальность 107 patterns).** Memory rule `feedback_russification` существовала, но не embedded в agent default. **Fix:** mandatory pre-submission anti-anglicism self-grep в `.claude/agents/speech-writer.md` § ENFORCED Anti-anglicism (top-30 regex blacklist, report ACTUAL count не narrative «0»). Lec-09 cost-of-omission: 2-3ч revision pass.
+
+- **Designer self-report «72% media-rich» был misleading.** Counted icons-in-boxes + primitive shapes как media. **Fix:** strict media-rich definition в `.claude/agents/presentation-designer.md` § ENFORCED Media-rich definition: real photo OR generated diagram OR chart OR UI screenshot OR BEFORE/AFTER case. НЕ icons, НЕ primitives. Pre-render counter с specific media kind per slide. Lec-09: v1 0 real photos → v2 17 photos (113% target after 6-tier Tier 2 Wikimedia acquisition).
+
+- **Inherited fact drift из chapter в slides — subset rerun недостаточен.** Phase 4.5 fact-checker subset rerun (UN LAWS only) пропустил §1.7 (Du→Ye) + §2.2 (CENTCOM→EUCOM). Found только Phase 7 slides QA fact-checker. **Fix:** ENFORCED full citation sweep на каждой chapter revision в `tools/lecture-production/README.md` Phase 4 line. Subset reruns acceptable только для P0 verification ПОСЛЕ full sweep.
+
+- **API 529 overload pattern: defer retry 30+ мин, не immediate.** Lec-09 consistency-checker Phase 7 dropped 2× immediate retries, 3-я попытка через ~30 min recovery succeeded. Reusable для transient infra issues.
+
+- **GATE-C definition-of-done honored.** Manifest lectures.yaml lec-09 → produced включён в финализирующий PR #120 (не отдельный manifest-PR). Лекция 4 lesson applied successfully — repeatable pattern.
+
+- **Memory rules не embedded в agent defaults — структурный gap.** До Л9 правила (anonymization, Russification, no_mock_fallbacks, hero_images) существовали только в memory files; subagent prompts требовали orchestrator manual injection. **Fix:** Memory rules с ENFORCED статусом embedded в `.claude/agents/*.md` defaults — agent видит mandate каждый spawn без orchestrator повторения. Survival rate rules в production цикле = высокий.
+
+**Метрика успеха для Л10+:** 0 owner-интервенций классов (а) named institutions в chapter, (б) anglicism self-report inflation, (в) primitive-only media, (г) inherited fact drift. Updated infra catches все 4 automatically.

@@ -67,6 +67,10 @@ library/lectures/lec-NN/
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 4 — Chapter revision (book-editor) → finalize             │
 │ Status: draft → reviewed → finalized                            │
+│ ENFORCED: full citation sweep на revised chapter (не subset).   │
+│   Subset reruns acceptable только для P0 verification ПОСЛЕ     │
+│   full sweep — иначе inherited fact drift в slides (Лекция 9    │
+│   lesson: Du→Ye + CENTCOM→EUCOM пропущены subset rerun).        │
 ├─────────────────────────────────────────────────────────────────┤
 │ Phase 4.5 — Pre-USER-GATE walkthrough (orchestrator self-review)│
 │ Skill: /pre-user-gate (mode=chapter)                            │
@@ -191,6 +195,28 @@ library/lectures/lec-NN/
 | Лекция 2 | introductory (L1–L3) | ✅ granted (owner) | #82 (закрыл #81) | 2026-05-15 |
 
 ---
+
+## 3.7a Anonymization mandate (ENFORCED — Лекция 9 lesson 2026-05-21)
+
+**Источник:** рефлексия Лекции 9 (#118), user explicit feedback «убери конкретные ссылки на специальности и кафедры».
+
+Все 3 артефакта (chapter / slides / speech) обезличены:
+- Frontmatter `audience`: «студенты-инженеры 3 курса (универсальная)» — НЕ ИУ6 / МГТУ / Бауман
+- Career section в родовой форме: «профильные технические университеты + военно-космические академии»
+- 0 named institutions: МГТУ / Бауман / ИУ-N / Кафедра «...» / ВКА им. Можайского / МАИ / СПбГУ / bauman.ru / vka.mil
+- Эталон pattern: lec-03 / lec-05 / lec-07 — 0 named institutions; lec-06 — единственная generic «профильные кафедры»
+
+**Cost-of-omission:** Lec-09 v2 потребовала 1 revision cycle (v2→v3) anonymization. Lec-10+ — apply by default, не require user-intervention.
+
+## 3.7b Russification (anti-anglicism) mandate (ENFORCED — memory rule `feedback_russification`)
+
+Все 3 артефакта visible body Russified. Whitelisted: brand names + tech acronyms с RU расшифровкой при первом упоминании.
+
+**Producer agents** имеют embedded mandate в `.claude/agents/book-editor.md`, `speech-writer.md`, `presentation-designer.md` — orchestrator не обязан повторять в каждом spawn brief.
+
+**Pre-submission self-grep** обязателен для speech-writer (см. `.claude/agents/speech-writer.md` § ENFORCED Anti-anglicism mandatory pre-submission self-grep).
+
+**Cost-of-omission lec-09:** speech v1 self-report «0 hits» при 107 реальных → caught Phase 10 → speech revision 2-3ч.
 
 ## 3.7 Self-reported метрики — critic re-verify (ENFORCED)
 

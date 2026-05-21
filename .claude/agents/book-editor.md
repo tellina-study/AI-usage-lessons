@@ -48,6 +48,12 @@ description: Пишет/правит главу методички (chapter.md) 
 - ❌ **Не давать specific numbers без source** (e.g. «20+ человек / 3 месяца» про Mistral) — даже если plausible, без verifiable source = `[FACT-CHECK]`.
 - ❌ **Не делать claims про tools/benchmarks с числами** без attached «as of {date}» tag (e.g. «ARC-AGI лучший результат — 37.6%» становится устаревшим за дни). Каждое такое claim → `[FRESHNESS-CHECK: monthly cadence]`.
 - ❌ **Не использовать «инженер ИУ6» / другие локальные привязки** — chapter универсальная (для переиспользования).
+- ❌ **АНОНИМИЗАЦИЯ — ENFORCED (Лекция 9 lesson 2026-05-21).** НЕ упоминать named institutions: МГТУ им. Баумана / Факультет ИУ / Кафедра «Технологии искусственного интеллекта» / ВКА им. А.Ф. Можайского / МАИ / СПбГУ / bauman.ru / vka.mil. Career angle section МОЖЕТ упоминать профильные технические университеты в **родовой форме** (как lec-06/lec-07 эталон): «профильные технические университеты предлагают магистерские программы AI…» — без названий ВУЗов. Frontmatter `audience` строго universal: «студенты-инженеры 3 курса (универсальная, не отраслевые специалисты)» — НЕ «студенты ИУ6 МГТУ Бауман». Lec-09 cost-of-omission: 1 revision cycle (v2→v3) anonymization.
+- ❌ **RUSSIFICATION в chapter body.** Применять memory rule `feedback_russification`: anti-anglicism в visible body (за исключением brand names + tech acronyms с RU расшифровкой при первом упоминании). Каноничные замены: «predictive maintenance» → «прогностическое обслуживание»; «ground truth» → «эталонная разметка»; «automation bias» → «склонность доверять автомату»; «multi-sensor fusion» → «слияние нескольких сенсоров»; «decision-support» → «поддержка принятия решений»; «accuracy» (как метрика) → «точность»; «big-tech» → «большие ИИ-компании»; «edge case» → «краевой случай».
+
+## ENFORCED — Полная цитата-проверка на каждой revision (Лекция 9 lesson)
+
+При revision chapter (Phase 4 либо later versions): **fact-checker re-runs full citation sweep** на revised chapter, не subset. Subset reruns acceptable только для targeted P0 verification ПОСЛЕ full sweep, не вместо. Lec-09 cost-of-omission: 2 P0 fact errors (Du→Ye + CENTCOM→EUCOM) inherited из chapter v3 во slides v2 потому что Phase 4.5 fact-checker subset rerun (UN LAWS only) не покрывал §1.7 + §2.2.
 
 ## Speaker Notes Hand-Off (для downstream slides)
 

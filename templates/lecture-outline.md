@@ -46,3 +46,17 @@
 
 ## Assessment
 - 
+
+## Анонимизация (ENFORCED — Лекция 9 lesson 2026-05-21)
+
+<!-- Career angle / academic contour ОБЯЗАНЫ быть в родовой форме без named institutions. -->
+
+- Frontmatter `audience` строго universal: «студенты-инженеры 3 курса (универсальная, не отраслевые специалисты)» — НЕ «ИУ6 МГТУ Бауман / ВКА Можайского».
+- Career section: «профильные технические университеты + военно-космические академии» — без названий МГТУ / Бауман / ИУ-N / Кафедра / ВКА им. Можайского / МАИ / СПбГУ / bauman.ru / vka.mil.
+- Эталон: lec-03 / lec-05 / lec-07 chapters — 0 named institutions. lec-06 — единственная generic «профильные кафедры» (родовое).
+- Cost-of-omission lec-09: 1 revision cycle (v2→v3) anonymization.
+
+## Russification visible body (ENFORCED — memory rule `feedback_russification`)
+
+- Anti-anglicism в chapter / slides / speech visible body. Brand names + tech acronyms с RU расшифровкой при первом упоминании = whitelisted.
+- Top replacements: predictive maintenance → прогностическое обслуживание; ground truth → эталонная разметка; automation bias → склонность доверять автомату; multi-sensor fusion → слияние нескольких сенсоров; decision-support → поддержка принятия решений; accuracy (метрика) → точность; big-tech → большие ИИ-компании; edge case → краевой случай.

@@ -126,7 +126,7 @@ references_count_target: 90
   - Tesla Robotaxi Austin: **14 ДТП за 8 месяцев**.
   - Вопрос: «Почему Waymo выжила, Cruise разорилась, а Tesla только начинает? Дело не в технологии — дело в среде».
 - **§0.2. Keystone slide** — лестница 5 уровней «структурированность среды» (визуально + 1 пример на уровень).
-- **§0.3.** Шесть аббревиатур, без которых дальше не пройти: SAE (Society of Automotive Engineers), ODD (Operational Design Domain), AMR (Autonomous Mobile Robot), AV (Autonomous Vehicle), OR (Operations Research), HD-map (High-Definition map).
+- **§0.3.** Десять аббревиатур, без которых дальше не пройти: SAE J3016 (Society of Automotive Engineers — taxonomy уровней автономии), ODD (Operational Design Domain), AMR (Autonomous Mobile Robot), AV (Autonomous Vehicle), OR (Operations Research), HD-map (High-Definition map), SGO (NHTSA Standing General Order), EOQ (Economic Order Quantity), TSP/VRP (Travelling Salesman / Vehicle Routing Problem), HITL/HOOL/HOTL (Human-In/On/Off-The-Loop). Sync с chapter §0.2 как book-first source of truth.
 - **§0.4. Roadmap.** Что покажу: §1 controlled (где AI работает легко), §2 highway (где first L4 commercial), §3 urban (где Cruise пала), §4 exception (где AI не работает в принципе).
 
 **Cross-link к chapter §0.**

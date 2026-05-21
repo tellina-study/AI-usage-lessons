@@ -518,7 +518,7 @@ def s08_amazon_robotics(p):
              "Amazon: более 1 миллиона роботов в фулфилменте.\nSparrow → Vulcan: путь от vision-only к тактильному.",
              size=22, bold=True, color=DEEP, line_spacing=1.1)
     # Hero image left
-    img_path = ASSETS / "screenshots" / "s08-amazon-warehouse-robot-2020.JPG"
+    img_path = ASSETS / "screenshots" / "s08-amazon-warehouse-robot-2020.jpg"
     add_image_aspect(slide, img_path, 0.5, 1.9, 5.5, 4.3)
     attribution(slide, "Amazon склад робот · 2020 · Wikimedia · CC-BY-SA", x=0.5, y=6.25, w=5.5)
     # 4 робот panels right (2×2)
@@ -559,7 +559,7 @@ def s09_amr_locus(p):
              "AMR-стек: Locus 5 миллиардов pick-ов.\nНо AMR — не готовый к работе, и worker нагрузка отпор реален.",
              size=22, bold=True, color=DEEP, line_spacing=1.1)
     # Hero image left
-    img_path = ASSETS / "screenshots" / "s09-item-picking-robot.png"
+    img_path = ASSETS / "screenshots" / "s09-item-picking-robot.jpg"
     add_image_aspect(slide, img_path, 0.5, 1.9, 5.5, 4.3)
     attribution(slide, "Item Picking Robot · Wikimedia · CC-BY-SA", x=0.5, y=6.25, w=5.5)
     # 3 player cards right
@@ -1526,7 +1526,7 @@ def s34_houthi(p):
              "Хуситы в Красном море, конец 2023. За 2 месяца контейнерный трафик упал на 90%.\nОбласть, в которой ML слеп по определению.",
              size=20, bold=True, color=DEEP, line_spacing=1.1)
     # Hero map left
-    img_path = ASSETS / "screenshots" / "s34b-prosperity-guardian-map.png"
+    img_path = ASSETS / "screenshots" / "s34b-prosperity-guardian-map.jpg"
     add_image_aspect(slide, img_path, 0.5, 1.9, 6.5, 4.0)
     attribution(slide, "Map of Operation Prosperity Guardian · Wikimedia · CC-BY-SA",
                 x=0.5, y=5.95, w=6.5)

@@ -99,6 +99,46 @@ Issues and tasks are tracked at: `https://github.com/orgs/tellina-study/projects
 
 ---
 
+## Chapter Depth Baseline (ENFORCED — фундаментальное)
+
+**Правило.** `library/lectures/lec-NN/chapter.md` для всех **L4–L17 лекций — минимум 30 000 слов** (target 30k ±5% = 28 500–31 500). Это **базовый референс**, не конспект 75-мин лекции; chapter — это **полный методический референс уровня академического textbook chapter**, source-of-truth для slides+speech derivation + Q&A backup + self-study deep-dive материал.
+
+**Применимость:**
+- **L1–L3 (introductory):** owner waiver доступен (как для AI-Failure rule). Без записанного waiver — правило применяется. Реестр waivers в `tools/lecture-production/README.md` §3.6.
+- **L4–L17:** ≥30 000 слов **mandatory**, waiver недоступен.
+
+**Multi-part split:** если chapter >600 строк, обязательное разбиение на части:
+- `chapter.md` — частина 1 + frontmatter с `parts: N`, `length_words: ~XXk`
+- `chapter-part2.md` — часть 2
+- `chapter-part3.md` — часть 3 (если нужно)
+- Cross-link через TOC в chapter.md
+
+Каждый файл ≤600 строк per CLAUDE.md «Document Size Limit».
+
+**Что НЕ засчитывается в 30k:**
+- Frontmatter YAML
+- Markdown headings без содержания
+- TOC / list-only sections
+- Источники / bibliography (это отдельно)
+
+**Counter-check (mandatory):** chapter <30k для L4+ → **REVISE verdict**, не «короткий — норм». Это структурный gap, не polish. `methodology-critic` Phase 3 проверяет word count + reading-as-textbook-chapter quality.
+
+**Why ENFORCED:**
+- 30k = textbook chapter depth (соответствует уровню expectation для серьёзного университетского курса).
+- 75-мин лекция проходит ≤40% содержания chapter'а — остальное Q&A backup + self-study + источник для derivation slides/speech.
+- Лекции 4-5 = 8.7-8.9k (рано) — owner explicit «недостаточно глубоко».
+- Лекция 11 v2 = 13.4k — owner explicit «должен быть как L8/L9, минимум 30k для всех». Решение 2026-05-21, issue #128.
+
+**Enforcement points:**
+- Phase 1 plan-checklist выделяет 30k target в plan v1.
+- Phase 2 chapter draft — book-editor target 30k.
+- Phase 3 methodology-critic проверяет word count: <30k → REVISE; <28.5k для L4+ → P0 BLOCKING.
+- Pre-USER-GATE A — word count check в orchestrator walkthrough.
+
+**Связано:** [[feedback_chapter_depth]] (memory rule).
+
+---
+
 ## Orchestration Rule (ENFORCED)
 
 Claude Code acts as **planner and orchestrator only**. It MUST NOT make implementation changes directly. ALL implementation work MUST be delegated to subagents (Agent tool with appropriate prompts).
@@ -330,7 +370,7 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 **Lecture production (multi-artifact: chapter + slides + speech):**
 | Agent | Producer/Critic | Responsibility |
 |-------|---|---------------|
-| `book-editor` | Producer | Пишет/правит главу методички (`chapter.md`, ~10k слов, academic) |
+| `book-editor` | Producer | Пишет/правит главу методички (`chapter.md`, ≥30k слов для L4+, см. § Chapter Depth Baseline) |
 | `presentation-designer` | Producer | Визуальный дизайнер deck'а — рендер через PowerPoint MCP с visual-loop, Ocean palette + Anthropic anti-patterns |
 | `speech-writer` | Producer | Пишет речь лектора (`speech.md`, ~5k слов, conversational) |
 | `methodology-critic` | Critic | Pedagogical depth, LO coverage, sequence, assertion-evidence (применяется к chapter, plan, slides, speech) |
@@ -343,7 +383,7 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 ### Lecture Production Pipeline (ENFORCED, multi-artifact)
 
 **Canonical doc:** `tools/lecture-production/README.md` — полный 10-фазный pipeline для production лекции с **3 финальными артефактами**:
-1. `library/lectures/lec-NN/chapter.md` — глава методички (~10k слов, **source of truth**, academic).
+1. `library/lectures/lec-NN/chapter.md` — глава методички (**≥30k слов** для L4+ per § Chapter Depth Baseline, **source of truth**, academic textbook chapter; multi-part split при >600 строк).
 2. `library/lectures/lec-NN/rendered/lec-NN.pptx` — презентация со speaker notes (derived from chapter).
 3. `library/lectures/lec-NN/speech.md` — речь лектора (~5k слов, conversational; derived from chapter+slides).
 

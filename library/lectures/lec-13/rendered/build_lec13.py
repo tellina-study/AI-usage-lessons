@@ -270,17 +270,17 @@ def assertion_visual(p, assertion, body_lines, *, image_path=None, attribution_t
 
 def s01_hero_three_pictures(p):
     """s01 — hero hook: Waymo Jaguar I-Pace SF + three time-cards.
-    Hero ≥40% area: image 8.5×5.0 = 42.5% of canvas (13.333×7.5)."""
+    Hero ≥40% area: image 4:3 ratio, box 7.5×5.7 → fit 7.5×5.6=42.0 sq in = 42.0% of canvas."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     # Hero image left
     img_path = ASSETS / "screenshots" / "s01-waymo-jaguar-sf-dllu.jpg"
-    add_image_aspect(slide, img_path, 0.5, 0.5, 8.5, 5.0)
+    add_image_aspect(slide, img_path, 0.5, 0.4, 7.5, 5.7)
     # Caption under hero
     attribution(slide, "Waymo Jaguar I-Pace в Сан-Франциско · 2023 · Wikimedia Commons · CC-BY-SA",
-                x=0.5, y=5.55, w=8.5)
+                x=0.5, y=6.15, w=7.5)
     # Title right
-    multiline_box(slide, 9.2, 0.6, 3.8, 5.0, [
+    multiline_box(slide, 8.3, 0.5, 4.7, 5.4, [
         ("Три картинки", {"size": 22, "bold": True, "color": DEEP}),
         ("рядом —", {"size": 22, "bold": True, "color": DEEP}),
         ("и один вопрос", {"size": 22, "bold": True, "color": MID}),
@@ -470,7 +470,7 @@ def s05_keystone_ladder(p):
 def s06_section1(p):
     """s06 — divider Раздел 1."""
     section_divider(p, 1, "Контролируемое",
-                    ["Склад: Symbotic+Walmart, Amazon Роботics, AMR (Locus / GreyOrange / Geek+)",
+                    ["Склад: Symbotic+Walmart, Amazon Robotics, AMR (Locus / GreyOrange / Geek+)",
                      "Порт: ABB, Konecranes, ZPMC — и ILA-страйки 2024",
                      "Железная дорога: KONUX + Deutsche Bahn",
                      "Границы уровня 1: гумано-робот ажиотажа, безлюдный миф, капитал интенсивность, распределение сдвиг"],
@@ -512,7 +512,7 @@ def s07_symbotic_walmart(p):
 
 
 def s08_amazon_robotics(p):
-    """s08 — Amazon Роботics: 4 поколения."""
+    """s08 — Amazon Robotics: 4 поколения."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 1.2,
@@ -565,7 +565,7 @@ def s09_amr_locus(p):
     attribution(slide, "Item Picking Робот · Wikimedia · CC-BY-SA", x=0.5, y=6.25, w=5.5)
     # 3 player cards right
     players = [
-        ("Locus Роботics", "Совместный отбор. 5+ миллиардов операций отбора, 350+ развёртываний.\nFedEx · GXO · DHL.", LIGHT),
+        ("Locus Robotics", "Совместный отбор. 5+ миллиардов операций отбора, 350+ развёртываний.\nFedEx · GXO · DHL.", LIGHT),
         ("GreyOrange Butler", "Товары-to-person. Рак-полка движется к человеку. Плотность хранения растёт ×1,5-2.", MID),
         ("Geek+ (Китай)", "Лидер по объёмам в Азии. Hybrid совместный + «товар-к-человеку». Расширение в Европу.", TEAL),
     ]
@@ -835,7 +835,7 @@ def s17_av_bankruptcy_timeline(p):
     rectangle(slide, 1.0, 4.0, 11.3, 0.05, fill=LIGHT)
     # 5 событиеs on хронология
     событиеs = [
-        ("Март 2020", "Starsky\nРоботics", "~$200M\nсожжено", "Первая волна\nсимуляция-к-реальности эссе"),
+        ("Март 2020", "Starsky\nRobotics", "~$200M\nсожжено", "Первая волна\nсимуляция-к-реальности эссе"),
         ("Окт 2022", "Argo AI", "$7B\nсожжено", "Ford+VW тянуть финансирование\n$2,7B impairment"),
         ("Март 2023", "Embark\nTrucks", "$5,16B цель\ncap, 16 мес.", "От SPAC IPO\nдо банкротства"),
         ("2023", "Waymo Via", "Alphabet\nзакрыла", "Бесконечный капитал\nне нашёл прибыльный"),
@@ -1072,31 +1072,31 @@ def s22_starsky_quote(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 1.0,
-             "Старски — первый, кто публично признал гэп.",
+             "Старски — первый, кто публично признал разрыв.",
              size=26, bold=True, color=DEEP)
     # Large quote box
     rounded_box(slide, 1.0, 1.8, 11.3, 2.8, fill=GOLD_TINT, stroke=GOLD, stroke_w=2)
     multiline_box(slide, 1.5, 2.0, 10.3, 2.4, [
-        ("«Supervised machine обучение doesn't live up to the hype.»",
+        ("«Supervised machine learning doesn't live up to the hype.»",
          {"size": 20, "bold": True, "italic": True, "color": DEEP}),
         ("«Контролируемое машинное обучение не оправдывает ажиотажа.»",
          {"size": 14, "italic": True, "color": MID}),
         ("", {"size": 6}),
-        ("«симуляция-к-реальности has very реальный limits.»",
+        ("«Sim-to-real has very real limits.»",
          {"size": 20, "bold": True, "italic": True, "color": DEEP}),
         ("«У разрыва симуляция-к-реальности есть очень реальные пределы.»",
          {"size": 14, "italic": True, "color": MID}),
         ("", {"size": 8}),
-        ("— Стефан Зельц-Аксмахер, основатель и CEO Starsky Роботics,",
+        ("— Стефан Зельц-Аксмахер, основатель и CEO Starsky Robotics,",
          {"size": 12, "italic": True, "color": SLATE}),
-        ("Medium-эссе «The конец of Starsky Роботics», март 2020",
+        ("Medium-эссе «The end of Starsky Robotics», март 2020",
          {"size": 12, "italic": True, "color": SLATE}),
     ], line_spacing=1.25, align=PP_ALIGN.CENTER)
     # Three lessons
     lessons = [
-        ("ML не оправдывает ожиданий", "Каждый новый краевой случай требует размеченных данных. На до получения выручки масштаб денег не хватает."),
-        ("симуляция-к-реальности имеет реальные пределы", "Симуляция не покрывает длинный хвост. ML, обученная только на sim, не обобщается на публичный дороги."),
-        ("Большие контракт'ы не материализуются", "Грузоперевозчики — консервативные клиенты. Неиспытанный стек не покупают."),
+        ("ML не оправдывает ожиданий", "Каждый новый краевой случай требует размеченных данных. До получения выручки масштаба денег не хватает."),
+        ("Разрыв симуляция-к-реальности — реальный", "Симуляция не покрывает длинный хвост. ML, обученная только на sim, не обобщается на дороги общего пользования."),
+        ("Крупные контракты не материализуются", "Грузоперевозчики — консервативные клиенты. Неиспытанный стек не покупают."),
     ]
     py = 4.8
     for title, desc in lessons:
@@ -1116,7 +1116,7 @@ def s22_starsky_quote(p):
         text_box(slide, px + 0.2, py + 0.6, 3.7, 1.0, desc,
                  size=10, color=DEEP, line_spacing=1.3)
         px += 4.2
-    footer(slide, "First-wave casualty с honest first-person разбор полётов · читать эссе полностью")
+    footer(slide, "Жертва первой волны · откровенный разбор полётов от основателя · читать эссе полностью")
     add_notes(slide, "См. slides/s22-starsky-sim-to-real.md speaker notes.")
 
 
@@ -1303,7 +1303,7 @@ def s28_last_mile(p):
          "Где работает: кампусы, узкий controlled\nГде не: плотный городской (снег, вандализм)", LIGHT,
          "s28b-starship-tartu-2017.jpg",
          "Starship робот · Tartu, 2017 · Wikimedia"),
-        ("Coco Роботics", "1000+ роботов в LA\n500K+ доставок\nЦель 10K единиц",
+        ("Coco Robotics", "1000+ роботов в LA\n500K+ доставок\nЦель 10K единиц",
          "LA + Dallas + Miami + Helsinki + Chicago", MID, None, None),
         ("Zipline (дроны Africa)", "100M миль (Mar 2025)\n2M доставок (Jan 2026)\n22M доз вакцин",
          "$7,6B оценка · $150M State Dept Nov 2025\nProven массовый-развёртывание медицинский Africa", TEAL,

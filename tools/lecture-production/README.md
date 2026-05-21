@@ -10,8 +10,9 @@
 
 ```
 library/lectures/lec-NN/
-  chapter.md              ← глава методички ≥30k слов для L4+ (multi-part 4-5 файлов)    [PRIMARY = source of truth]
-  chapter-part2.md / -part3.md / -part4.md (при ≥30k обычно 4-5 частей; см. CLAUDE.md § «Chapter Depth Baseline (ENFORCED)»)
+  chapter.md              ← глава методички ≥30k слов для L4+ (academic)                  [PRIMARY = source of truth]
+  chapter-part2.md        ← multi-part split при >600 строк (CLAUDE.md doc-size-limit)
+  chapter-part3.md        ← при ≥30k обычно 3 части по 6 500–8 500 слов; >1200 строк суммарно — split продолжать
   rendered/lec-NN.pptx    ← презентация со speaker notes для студентов                    [DERIVED from chapter]
   speech.md               ← речь лектора ~4-6k слов (conversational)                       [DERIVED from chapter + slides]
 ```
@@ -326,15 +327,19 @@ Producer-агенты (book-editor / presentation-designer / speech-writer) ча
 
 | Артефакт | Длина | Pacing |
 |---|---|---|
-| `chapter.md` (L4+) | **≥30 000 слов** (target 28 500–31 500), multi-part 4-5 файлов по 6 500–8 500 слов; ~100-130 страниц A4 | Self-study reference, ~2-3 ч чтения; на лекции проходится 30-40%, остальное Q&A backup + self-study deep-dive |
+| `chapter.md` (L4+) | **≥30 000 слов** (target 28 500–31 500), multi-part 3-5 файлов по 6 500–8 500 слов; ~100-130 страниц A4 | Textbook chapter depth + Q&A backup + self-study reference; ~2-3 ч глубокого чтения; на лекции проходится 30-40%, остальное Q&A backup + self-study deep-dive |
 | `chapter.md` (L1–L3 introductory) | 8–12k слов acceptable с owner waiver | Self-study, ~30-60 мин чтения |
 | `slides/*.md` | ~150-300 слов на slide × 25-30 slides ≈ 5-8k слов суммарно | Visible content + speaker notes |
 | `speech.md` | 4-6k слов (≈70-80 wpm × 75 мин) | Сliceful pacing, паузы, переходы |
 
-**Red flags:**
-- **L4+ chapter < 28 500 слов** → P0 BLOCKING REVISE (структурный gap, см. CLAUDE.md § «Chapter Depth Baseline (ENFORCED)», issue #128).
-- **L1–L3 chapter < 5k** (overlight) или **single-file > 600 строк без split** (multi-part mandate violation).
-- **Старый red-flag «>15k» НЕ применять для L4+** — обновлено 2026-05-21 (issue #128).
+**Chapter Depth Baseline (ENFORCED — см. `CLAUDE.md` § «Chapter Depth Baseline»):**
+- L4–L17: **≥30 000 слов** mandatory, waiver недоступен; <28 500 слов → P0 BLOCKING REVISE (структурный gap, не polish; issue #128).
+- L1–L3: 8-12k acceptable; ≥30k если owner explicit instruction.
+- **Multi-part split mandatory при >600 строк per file** (CLAUDE.md «Document Size Limit»): `chapter.md` + `chapter-part2.md` + `chapter-part3.md`, cross-link через TOC.
+
+**Что НЕ засчитывается в 30k:** frontmatter YAML, heading-only sections, TOC, Источники / bibliography (это отдельно).
+
+**Старый red-flag «>15k» НЕ применять для L4+** — обновлено 2026-05-21 (issue #128).
 
 ---
 
@@ -440,6 +445,63 @@ Brief должен включать:
 - Single commit message
 
 **Phase 11 demonstrated:** 1 spawn × 40 min closed 6/6 P1 + 9/16 P2 across chapter + slides + speech. Estimated 5-10× more efficient than per-artifact spawns.
+
+### Parallel revision spawn — cross-artifact alignment mandate (ENFORCED — Лекция 11 lesson)
+
+При parallel spawn'ах **двух или более** producer agents (например, `speech-writer` + `presentation-designer` одновременно для closure cross-artifact P0s), orchestrator brief **MUST** включать:
+
+1. **Explicit cross-artifact alignment requirements per agent.** Каждый агент должен явно перепроверить, что его fix **matches sibling artifact's fix** через цитирование canonical source.
+2. **Canonical anchor** (обычно chapter) — все cross-artifact numbers, формулировки, ordering anchor на canonical, не на parallel artifact.
+3. **Cross-reference list** — orchestrator brief lists конкретные slides/sections где аналогичная content есть в parallel artifact (например, «brewery numbers в s34c slide ОБЯЗАН match chapter §4.3c canonical 30K bph / 700K/day / 3.5K defects / 30 days»).
+
+**Anchor:** Лекция 11 Phase 11 — speech-writer fixed brewery в speech к canonical 30K bph, presentation-designer parallel scope не touched s34c, slide остался с 60K bph drift. Independent pre-USER-GATE C walkthrough caught — +15 мин quick-fix spawn. Без explicit cross-reference brief — parallel spawns создают scope gaps.
+
+---
+
+## 10. Phase 4b — Chapter expansion (ad-hoc OR owner-mandated)
+
+После Phase 4 (chapter v2 finalized), owner может explicit запросить chapter expansion к глубине L8/L9-style или 30k-baseline. В этом случае:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ Phase 4b — Chapter expansion (conditional)                      │
+│ Trigger: owner explicit instruction («сделай как в L8/L9»,      │
+│   «30к target», «глубже») OR pre-USER-GATE A walkthrough flag   │
+│   chapter < ≥30k baseline (per CLAUDE.md Chapter Depth)         │
+│ Agent: book-editor с expansion mandate                          │
+│ Output: chapter.md v3 status=reviewed (expansion preserves      │
+│   structure, не reorders)                                       │
+│ ENFORCED: full citation sweep на expanded chapter; Russification│
+│   regression risk — deep latin scan mandatory post-expansion    │
+├─────────────────────────────────────────────────────────────────┤
+│ Phase 4c — Focused critique post-expansion                      │
+│ Critics: methodology + fact-checker (focused на new content,    │
+│   reader-text-only skipped если структура не менялась)          │
+├─────────────────────────────────────────────────────────────────┤
+│ Phase 4d — Chapter expansion revision → finalize v4             │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Anchor:** Лекция 11 Phase 4b — owner explicit «30k цель твоя», chapter 13.4k → 29.8k (+122%). Phase 4c focused critique (methodology + fact-checker) caught 2 P0 + 12 P1 (mostly Russification regression на new content + minor fact-corrections). Phase 4d closed all P0/P1 → v4 finalize 30 499 слов.
+
+## 11. Phase 4e — Chapter multi-part split (ENFORCED при >600 строк)
+
+Per `CLAUDE.md` § «Document Size Limit» + § «Chapter Depth Baseline» — chapter >600 строк per file требует multi-part split:
+
+```
+chapter.md         (Part 1 — frontmatter + intro + early sections, ≤600 lines)
+chapter-part2.md   (Part 2 — middle sections, ≤600 lines)
+chapter-part3.md   (Part 3 — late sections + Q&A + Источники, ≤600 lines)
+```
+
+Frontmatter chapter.md: `parts: 3`, `parts_files: ["chapter.md", "chapter-part2.md", "chapter-part3.md"]`.
+Frontmatter chapter-partN.md: `part: N`, `of: 3`, `parent: "chapter.md"`.
+
+**Cross-references update:** при split, intra-file refs unchanged; cross-part refs получают path hints (например, «см. §1.1 (chapter.md)» в Part 2/3).
+
+**Navigation block** mandatory: nav header в каждом part (prev / current / next), nav footer в конце.
+
+**Anchor:** Лекция 11 Phase 4e — chapter v4 single-file 1438 строк → split в 3 parts (409/510/592 строк), все ≤600. Zero content loss (+431 слов от navigation blocks). Owner explicit decision «Split на 3 parts → потом slides».
 
 ---
 

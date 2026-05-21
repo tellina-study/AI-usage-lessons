@@ -115,9 +115,11 @@ lectures:
     title: "AI в дискретном и процессном производстве"
     module: 2
     learning_outcomes: [LO1, LO2, LO7, LO8]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-11
+    status: produced
+    issue: 127
+    updated_at: "2026-05-21"
+    repo_title_note: "chapter v5 multi-part (30 930 слов, 3 файла ≤600 строк) + slides v2.2 (41 слайд, hero s01 Tesla + s39 BMW Welt) + speech v2 (5 289 spoken words, 75 мин); keystone Variant C «Discrete vs Process»; failure-bucket strict-in 41,1% chapter words"
 
   - number: 12
     title: "AI в автоматизации производства и цифровые двойники"

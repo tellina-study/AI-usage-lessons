@@ -1,0 +1,568 @@
+# library/lectures/lec-08/deck.yaml
+#
+# Deck-структура Лекции 8 «AI в креативных индустриях и медиа» (39 слайдов).
+#
+# Source: chapter v2 + plan v2 (USER GATE 0 approved).
+# Phase 5 multi-artifact pipeline — slides content alignment.
+# Issue #119 · Media-heavy ≥80% (≥33/39 slides с embedded media + fallback).
+#
+# Palette LOCKED v3: Ocean Gradient (#21295C / #065A82 / #1C7293) + Teal
+# (#028090) secondary + Gold (#F0AB00) ≥1×/slide.
+# Visual motif: «Ocean rounded box» (radius 12, surface #F4F7FA, stroke #1C7293).
+
+deck:
+  lecture_number: 8
+  title: "AI в креативных индустриях и медиа"
+  audience: "студенты-инженеры 3 курса (универсальная, не дизайнеры/творцы)"
+  duration_min: 75
+  central_question: "Что AI сделал с creative-индустрией к 2026 году — и где инженеру разумно сказать «здесь AI не нужен»?"
+  learning_outcomes: [LO1, LO2, LO4, LO5]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v2
+  plan: library/lectures/lec-08/plan.md
+
+slides:
+  # ─── Раздел 0. Открытие + keystone (9.5 мин) ───
+  - id: s01
+    file: slides/s01-ice-breaker-suno-firefly.md
+    type: live_demo
+    duration_min: 3
+    assertion: "AI генерирует production-уровень artefact за секунды без специальных навыков — это новая базовая capability creative-индустрии."
+    learning_goal: "Открывающий hook: live demo музыка (Suno) или image (Firefly)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.1 — Что генеративные модели медиа делают сегодня"
+    references: [suno-create, firefly-adobe, vivideo-2026]
+    visual:
+      pattern: external_demo
+      primary: "Live URL Suno (primary) / Firefly (fallback) + QR + screenshot + before/after cost"
+      backup: assets/backup/s01-suno-firefly-mockup.png
+    interaction: live_demo
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 0.1
+    assertion: "Лекция 8. AI в креативных индустриях и медиа"
+    learning_goal: "Cover-слайд: title + meta"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Hero-cover: outline «08» крупно + title 36pt + длительность; Ocean palette"
+
+  - id: s03
+    file: slides/s03-central-question.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Что AI сделал с creative-индустрией к 2026 — и где инженеру разумно сказать «здесь AI не нужен»?"
+    learning_goal: "Поставить центральный вопрос лекции"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0 — Центральный вопрос лекции"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Центральный вопрос крупно в Ocean rounded box + 2 половины вопроса визуально разделены"
+
+  - id: s04
+    file: slides/s04-lecture-map.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "6 разделов лекции — горизонталь roadmap"
+    learning_goal: "Lecture-map: 6-card horizontal roadmap"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0 — Оглавление"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "6-card horizontal roadmap (Разделы 0/1/2/3/4/5 + Q&A); gold на текущей секции 0"
+
+  - id: s05
+    file: slides/s05-keystone.md
+    type: assertion_visual
+    duration_min: 1.4
+    assertion: "AI ДОБАВИЛ → ИЗМЕНИЛ → СЛОМАЛ. Три времени одного процесса — каждое поколение creative-инструментов проходит их за месяцы."
+    learning_goal: "KEYSTONE: вертикаль метафоры — ось 3 времён"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§0.2 — Keystone-ось"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "Большой заголовок «ДОБАВИЛ → ИЗМЕНИЛ → СЛОМАЛ» + 3 timing-полоски с иконографией"
+
+  - id: s05a
+    file: slides/s05a-three-families.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "3 семейства генеративных моделей медиа: diffusion / latent video transformer / neural audio synthesis. Каждое — со своими inherent limits."
+    learning_goal: "Mental model 3 архитектурных семейств → объясняет limits"
+    learning_outcomes: [LO2]
+    chapter_ref: "§0.1 — Три семейства генеративных моделей медиа"
+    references: [ho-2020-ddpm, rombach-2022-ldm, sora-system-card-2024]
+    visual:
+      pattern: matrix
+      primary: "3-card horizontal в Ocean rounded box: diffusion (noise→reverse) / latent video transformer (latent space + temporal) / neural audio (autoregressive + diffusion)"
+
+  # ─── Section 1 divider ───
+  - id: s06
+    file: slides/s06-section1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 1 — AI ДОБАВИЛ. Новые capabilities."
+    learning_goal: "Visual divider — переход в первый раздел"
+    learning_outcomes: [LO1]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «1» + title + 1-фраза-фрейм + 6-card progress bar"
+
+  # ─── Раздел 1. AI ДОБАВИЛ (12 мин) ───
+  - id: s07
+    file: slides/s07-text-to-video.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Text-to-video 2026 — production-grade. Sora 2 (25 сек, 1080p, sync audio), Veo 3.1, Kling 3.0 (#1 ELO, 4K/60fps)."
+    learning_goal: "3 флагманские модели text-to-video + production use"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§1.1 — Text-to-video поколение 2026"
+    references: [sora-2-openai, veo-3-google, kling-3-kuaishou]
+    visual:
+      pattern: matrix
+      primary: "3-card comparison Sora 2 / Veo 3.1 / Kling 3.0 + Sora 2 release reel frame + QR на openai.com/index/sora-2/"
+      backup: assets/backup/s07-sora2-frame.png
+
+  - id: s08
+    file: slides/s08-character-consistency.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Character consistency: Sora 2 cameos + Midjourney Omni Reference + Runway Director Mode — multi-scene narrative стал возможен."
+    learning_goal: "Character consistency capability + anti-hype (drift в multi-scene)"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§1.2 — Character consistency: cameos & Omni Reference"
+    references: [midjourney-omni, sora-cameos, runway-director]
+    visual:
+      pattern: matrix
+      primary: "Side-by-side: Sora 2 cameo frame + Midjourney Omni Reference grid + caption «но multi-scene drift»"
+      backup: assets/backup/s08-character-consistency.png
+
+  - id: s09
+    file: slides/s09-voice-cloning.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "ElevenLabs: voice clone из 1 мин аудио → 32+ языков. Dubbing $50-500/мин → <$1/мин. Production use: Deutsche Telekom, Klarna."
+    learning_goal: "Voice cloning + multilingual dubbing capability"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§1.3 — Voice cloning + multilingual dubbing"
+    references: [elevenlabs-cloning, elevenlabs-dubbing, scarjo-openai-sky-variety]
+    visual:
+      pattern: matrix
+      primary: "ElevenLabs voice library screenshot + QR + cost-collapse arrow $50-500→<$1 + mini-failure block ScarJo"
+      backup: assets/backup/s09-elevenlabs.png
+
+  - id: s10
+    file: slides/s10-genie-world-models.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Genie 3 (DeepMind, 29.01.2026) — text → playable 3D world @ 24 fps. Это не video gen — это simulated environment."
+    learning_goal: "World models — другой класс инструмента"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§1.4 — World models — Genie 3"
+    references: [genie-3-deepmind, wavespeed-genie-3]
+    visual:
+      pattern: assertion_visual
+      primary: "Genie 3 demo frame + QR + caption «не video gen — simulated environment»"
+      backup: assets/backup/s10-genie3.png
+
+  - id: s10a
+    file: slides/s10a-russian-context.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "RU GenAI — local convenience (бесплатно, RU-промпты, без VPN, рубли), но НЕ frontier-quality на видео и музыке. Концентрация R&D в US/CN — структурное, не идеологическое."
+    learning_goal: "Russian context: Kandinsky 6.0, Шедеврум, SymFormer, SaluteSpeech, Минцифры законопроект"
+    learning_outcomes: [LO1, LO2, LO5]
+    chapter_ref: "§1.6 — Russian context"
+    references: [kandinsky-6-sber, sheddev-yandex, symformer-sber, cnews-mincifry]
+    visual:
+      pattern: matrix
+      primary: "Side-by-side: Kandinsky 5.0 Video sample frame vs Kling 3.0 sample frame + 4-card RU landscape (image/video/audio/legal)"
+      backup: assets/backup/s10a-russian-vs-frontier.png
+
+  - id: s11
+    file: slides/s11-personalisation-firefly.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Adobe Firefly: 22B+ ассетов <2 лет, $400M direct revenue 2024-25. Lionsgate × Runway — production use в Hollywood pre/post."
+    learning_goal: "Personalisation at scale + enterprise production use"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§1.5 — Personalisation at scale"
+    references: [adobe-firefly-q4-2025, lionsgate-runway, iab-2026]
+    visual:
+      pattern: matrix
+      primary: "Adobe Firefly enterprise logos collage (Deloitte/Tapestry/Paramount+/Pepsi) + Lionsgate quote + 3 metric chips (22B / $400M / 40% video ads)"
+      backup: assets/backup/s11-firefly-enterprise.png
+
+  # ─── Section 2 divider ───
+  - id: s13
+    file: slides/s13-section2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2 — AI ИЗМЕНИЛ. Pipeline, экономика, профессии."
+    learning_goal: "Visual divider — переход во второй раздел"
+    learning_outcomes: [LO2, LO4]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «2» + title + 1-фраза-фрейм + 6-card progress bar"
+
+  # ─── Раздел 2. AI ИЗМЕНИЛ (11.5 мин) ───
+  - id: s14
+    file: slides/s14-cost-collapse.md
+    type: data_chart
+    duration_min: 3
+    assertion: "Cost-collapse 100×–10 000× по asset-классам. Но enterprise commercial-safe — отдельный $400M+ сегмент."
+    learning_goal: "Cost-collapse таблица + ключевая mental: bottom vs middle vs top market"
+    learning_outcomes: [LO2]
+    chapter_ref: "§2.1 — Cost-collapse 100×–10 000×"
+    references: [zsky-ai-art, sora-2-pricing, elevenlabs-pricing]
+    visual:
+      pattern: chart
+      primary: "Horizontal bar chart cost comparison (1 image, 50 images, 1 min video, dub) + Firefly $400M callout"
+      backup: assets/backup/s14-cost-bars.png
+
+  - id: s15
+    file: slides/s15-speed-collapse.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Скорость collapse: concept art дни → секунды; dubbing недели → минуты. Iteration loop становится 10-100× плотнее."
+    learning_goal: "Time-collapse параллельно с cost-collapse"
+    learning_outcomes: [LO2]
+    chapter_ref: "§2.2 — Скорость: дни → секунды"
+    references: []
+    visual:
+      pattern: matrix
+      primary: "Side-by-side timer mockup: 4 строки (concept art / B-roll / dubbing / variants) с before→after time"
+      backup: assets/backup/s15-speed.png
+
+  - id: s16
+    file: slides/s16-new-professions.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Новые профессии: prompt engineer, AI director, GenAI workflow specialist. Upwork 70% YoY AI/ML; 52% gross services volume — AI-related."
+    learning_goal: "Новые роли + специализация между AI и client deliverable"
+    learning_outcomes: [LO2]
+    chapter_ref: "§2.3 — Новые профессии"
+    references: [upwork-2026, mbo-partners]
+    visual:
+      pattern: matrix
+      primary: "Upwork screenshot AI/ML category + 4 role-cards (prompt engineer / AI director / workflow specialist / continuity supervisor)"
+      backup: assets/backup/s16-upwork.png
+
+  - id: s17
+    file: slides/s17-displacement.md
+    type: data_chart
+    duration_min: 2
+    assertion: "Displacement: graphic designers −17%, Shutterstock contributors single digits/мес. Getty+Shutterstock merger $3.7B — defensive consolidation."
+    learning_goal: "Displacement quantified + wage compression снизу"
+    learning_outcomes: [LO2, LO4]
+    chapter_ref: "§2.4 — Displacement"
+    references: [jobbers-index, kaptur-silent-collapse, kaptur-cartel]
+    visual:
+      pattern: chart
+      primary: "Bar chart Upwork −17% + Shutterstock licensing $104M→$138M→$250M timeline + SAG-AFTRA Digital Replicas chip"
+      backup: assets/backup/s17-displacement.png
+
+  # ─── Section 3 divider ───
+  - id: s19
+    file: slides/s19-section3-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 3 — AI СЛОМАЛ. Главный failure budget."
+    learning_goal: "Visual divider — переход в основной failure-раздел"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «3» + title + 1-фраза-фрейм + 6-card progress bar"
+
+  # ─── Раздел 3. AI СЛОМАЛ (24 мин) — 12 case-слайдов ───
+  - id: s20
+    file: slides/s20-copyright-4-categories.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "«AI vs copyright» — не один вопрос, а 4 категории исков: training scraping / output similarity / style mimicry / voice/likeness."
+    learning_goal: "Taxonomy 4 категорий исков"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.1 — Авторское право: taxonomy 4 категорий"
+    references: []
+    visual:
+      pattern: quadrant
+      primary: "2×2 matrix categories + «Урок для инженера» Ocean rounded box"
+
+  - id: s21
+    file: slides/s21-nyt-openai.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "NYT v OpenAI (Dec 2023): 20M ChatGPT logs обязательно выдать. SJ deadline 2 апр 2026. Regurgitation theory."
+    learning_goal: "Case 1: training + output similarity"
+    learning_outcomes: [LO4]
+    chapter_ref: "§3.2 — NYT v OpenAI"
+    references: [bloomberg-law-nyt-openai, nyt-complaint-2023]
+    visual:
+      pattern: assertion_visual
+      primary: "Bloomberg Law headline screenshot + timeline (Dec 2023 → 2 апр 2026 SJ) + «Урок для инженера»"
+      backup: assets/backup/s21-nyt-bloomberg.png
+
+  - id: s22
+    file: slides/s22-getty-stability.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Getty v Stability AI: UK High Court 04.11.2025 — Stability выиграл primary claims (weights ≠ copy по CDPA). US case MTD 10.02.2026."
+    learning_goal: "Case 2: cross-jurisdiction split (UK win vs US pending)"
+    learning_outcomes: [LO4]
+    chapter_ref: "§3.3 — Getty v Stability AI"
+    references: [bird-bird-ruling, getty-stability-uk]
+    visual:
+      pattern: assertion_visual
+      primary: "Bird & Bird ruling screenshot + UK vs US split visual + «Урок: проверяй обе юрисдикции»"
+      backup: assets/backup/s22-getty-uk-ruling.png
+
+  - id: s23
+    file: slides/s23-andersen-stability.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Andersen v Stability/Midjourney/DeviantArt — class action artists. MTD denied → discovery; trial 8 сент 2026. Style mimicry."
+    learning_goal: "Case 3: style mimicry class action"
+    learning_outcomes: [LO4]
+    chapter_ref: "§3.4 — Andersen v Stability"
+    references: [andersen-docket, judge-orrick-2024]
+    visual:
+      pattern: assertion_visual
+      primary: "Court docket screenshot + timeline (Jan 2023 → Aug 2024 MTD denied → 8 sep 2026 trial) + «Урок про style mimicry»"
+      backup: assets/backup/s23-andersen-docket.png
+
+  - id: s24
+    file: slides/s24-riaa-suno.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "RIAA v Suno/Udio (24.06.2024). UMG settled Udio 29.10.2025 + Warner late 2025. Sony — последний major litigating. Suno SJ июль 2026."
+    learning_goal: "Case 4: lawsuit-driven licensing music"
+    learning_outcomes: [LO4]
+    chapter_ref: "§3.5 — RIAA v Suno/Udio"
+    references: [riaa-suno-press, umg-udio-settlement]
+    visual:
+      pattern: assertion_visual
+      primary: "RIAA press release screenshot + settlement timeline (24.06.2024 → 29.10.2025 UMG → июль 2026 Suno SJ) + «Урок: lawsuit-driven licensing»"
+      backup: assets/backup/s24-riaa.png
+
+  - id: s25
+    file: slides/s25-thomson-reuters-ross.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Thomson Reuters v Ross (Feb 2025): first US ruling REJECTING fair-use в AI training. 2200/3000 headnotes infringed. Caveat: Ross — non-generative."
+    learning_goal: "Case 5: fair-use rejected (с caveat)"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.6 — Thomson Reuters v Ross"
+    references: [reed-smith-tr-ross, judge-bibas-feb-2025]
+    visual:
+      pattern: assertion_visual
+      primary: "Reed Smith analysis screenshot + Warhol v Goldsmith 4-factor chip + «Урок: fair-use не дефолт»"
+      backup: assets/backup/s25-thomson-ross.png
+
+  - id: s26
+    file: slides/s26-arup-deepfake.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Arup CFO deepfake scam: Hong Kong Jan 2024, $25.6M за 15 транзакций. Финансист на видеозвонке с deepfake-CFO + colleagues."
+    learning_goal: "Case 6: deepfake corporate fraud"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.7 — Deepfakes: Arup CFO scam"
+    references: [arup-cnn, arup-fortune]
+    visual:
+      pattern: assertion_visual
+      primary: "CNN article screenshot + attack diagram (Финансист → видеозвонок с deepfake-CFO+colleagues → 15 транзакций → $25.6M) + «Урок: out-of-band verification»"
+      backup: assets/backup/s26-arup.png
+
+  - id: s27
+    file: slides/s27-korea-deepfake.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Korea schoolgirl deepfake crisis (Aug 2024): >230 Telegram-чатов из selfies; 6,500 takedowns Jan-Jul 2024 (4× over 2023); 793 reported / 16 prosecuted."
+    learning_goal: "Case 7: class harm + weak enforcement"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.8 — Korea schoolgirl deepfake crisis"
+    references: [korea-npr, korea-daily-star]
+    visual:
+      pattern: assertion_visual
+      primary: "NPR headline screenshot (text only, NO deepfake visuals) + numbers data card + «Урок: safety layer обязателен до launch»"
+      backup: assets/backup/s27-korea-npr.png
+
+  - id: s28
+    file: slides/s28-slop-model-collapse.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Slop + model collapse: Google AI Overviews «put glue on pizza» + «eat one rock per day». Shumailov Nature 2024: recursive training → деградация."
+    learning_goal: "Case 8: source quality > volume"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.9 — Slop & model collapse"
+    references: [google-ai-overview, shumailov-nature-2024]
+    visual:
+      pattern: assertion_visual
+      primary: "Google AI Overview «glue on pizza» screenshot + Nature paper header + «Урок: source quality > volume»"
+      backup: assets/backup/s28-slop.png
+
+  - id: s29
+    file: slides/s29-si-fake-authors.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Sports Illustrated fake authors (Nov 2023): articles с AI-generated profile photos. Amazon: 19/100 top-bestseller — actual humans."
+    learning_goal: "Case 9: brand-trust collapse через AI-pseudonyms"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.10 — SI fake authors + Amazon sham books"
+    references: [futurism-si, authors-guild]
+    visual:
+      pattern: assertion_visual
+      primary: "Futurism article screenshot + Authors Guild data card + «Урок: имя должно быть реальным human или явно AI-disclosed»"
+      backup: assets/backup/s29-si-futurism.png
+
+  - id: s30
+    file: slides/s30-marketing-backlash.md
+    type: data_chart
+    duration_min: 1.5
+    assertion: "Coca-Cola + Toys R Us marketing backlash. Toys R Us sentiment swing +12.2%→+3.4% positive, 13.5%→53.4% negative. Joe Russo: «fucking sucks»."
+    learning_goal: "Case 10: brand-trust риск measurable"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.11 — Coca-Cola + Toys R Us backlash"
+    references: [toys-r-us-cannes, coca-cola-2025]
+    visual:
+      pattern: chart
+      primary: "2 sentiment bar charts side-by-side (Toys R Us positive collapse + negative spike) + «Урок: brand-trust риск — sentiment swing, не CTR»"
+      backup: assets/backup/s30-sentiment.png
+
+  - id: s31
+    file: slides/s31-displacement-consolidated.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Displacement consolidated: graphic design −17%, income compression в bottom-tier. SAG-AFTRA Digital Replicas + 2026 4-year extension."
+    learning_goal: "Case 11 (closing s3): structural displacement"
+    learning_outcomes: [LO4, LO5]
+    chapter_ref: "§3.12 — Displacement consolidated"
+    references: [sag-aftra-2026, wga-2026]
+    visual:
+      pattern: matrix
+      primary: "3-stat block: −17% Upwork / 40% работ $10-19/час AI-detected / 4-year extension + «Урок: структурный, не temp shock»"
+      backup: assets/backup/s31-displacement-3stats.png
+
+  # ─── Section 4 divider ───
+  - id: s32
+    file: slides/s32-section4-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Раздел 4 — AI здесь не нужен. Критерии негативного выбора."
+    learning_goal: "Visual divider — переход в раздел критериев отказа"
+    learning_outcomes: [LO5]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «4» + title + 1-фраза-фрейм + 6-card progress bar"
+
+  # ─── Раздел 4. AI не нужен (7.5 мин) ───
+  - id: s33
+    file: slides/s33-four-criteria.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "4 критерия отказа от AI: training data license / output similarity / voice-likeness consent / brand-trust риск."
+    learning_goal: "Чек-лист критериев негативного выбора"
+    learning_outcomes: [LO5]
+    chapter_ref: "§4.1 — 4 критерия отказа от AI"
+    references: []
+    visual:
+      pattern: quadrant
+      primary: "4-card decision matrix + связь к cases (Andersen / NYT / ScarJo / Coca-Cola)"
+
+  - id: s34
+    file: slides/s34-human-only.md
+    type: comparison
+    duration_min: 2
+    assertion: "Где только human: investigative journalism (NYT/WaPo guidelines), original creative direction, long-form coherent narrative."
+    learning_goal: "3 зоны human-only + почему"
+    learning_outcomes: [LO5]
+    chapter_ref: "§4.2 — Где human только"
+    references: [nyt-ai-guidelines, wapo-ai-guidelines]
+    visual:
+      pattern: matrix
+      primary: "3-column comparison (investigative / creative direction / long-form narrative) + причины каждой"
+
+  - id: s35
+    file: slides/s35-youtube-thumbnails.md
+    type: data_chart
+    duration_min: 2.7
+    assertion: "YouTube AI thumbnails: 47.3% creators dropped. -22% CTR (creepy skin), -19% CTR (mobile text fail), -61.8% first-15-sec drop-off."
+    learning_goal: "Empirical end-user rejection — мост к Разделу 5"
+    learning_outcomes: [LO5]
+    chapter_ref: "§4.3 — YouTube AI thumbnails"
+    references: [social-blade-dec-2025]
+    visual:
+      pattern: chart
+      primary: "3-stat block с numbers + bar chart drop reasons + «Урок: end-users замечают и наказывают»"
+      backup: assets/backup/s35-youtube.png
+
+  # ─── Section 5 divider ───
+  - id: s36
+    file: slides/s36-section5-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 5 — Что инженеру делать. Actionable checklist."
+    learning_goal: "Visual divider — переход в actionable раздел"
+    learning_outcomes: [LO5]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «5» + title + 1-фраза-фрейм + 6-card progress bar"
+
+  # ─── Раздел 5. Что инженеру делать (4 мин) ───
+  - id: s37
+    file: slides/s37-five-question-checklist.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "5-вопросный чек-лист перед использованием AI в creative-проекте."
+    learning_goal: "Actionable checklist — main deliverable лекции"
+    learning_outcomes: [LO5]
+    chapter_ref: "§5.1 — 5-вопросный чек-лист"
+    references: []
+    visual:
+      pattern: pipeline
+      primary: "5-вопросный flowchart в Ocean rounded box + decision tree"
+
+  # ─── Q&A + Closing ───
+  - id: s38
+    file: slides/s38-qa.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Q&A"
+    learning_goal: "Q&A с 3 anticipated questions"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Большое «Q&A?» + central question recap + 3 backup prompts"
+
+  - id: s39
+    file: slides/s39-closing.md
+    type: cover
+    duration_min: 0.5
+    assertion: "Лекция 9 — AI в авиакосмической отрасли и оборонном комплексе. Источники — QR."
+    learning_goal: "Closing + источники"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Closing card + QR к source-bibliography + next-lecture tease"

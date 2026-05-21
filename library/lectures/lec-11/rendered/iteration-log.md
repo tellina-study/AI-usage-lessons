@@ -195,3 +195,70 @@ Issue #127 · Phase 6 visual loop · ~32-35 слайдов (39 final)
 ✅ Schema Readability + 5-Second Test + Projector Readability passed.
 
 Ready for QA phase.
+
+---
+
+## Phase 8 — Slides v2 revision (closure 9 P0 + 28 P1 + 3 owner mandates)
+
+**Дата:** 2026-05-21 · **Slides:** 39 → 41 (+s34b avionics fail + s34c brewery pass)
+
+### Owner Mandates (priority)
+
+- **M1 (designer-extras sweep):** all visible body cleansed except LO codes on cover s02 (2 hits, mandate-compliant). `[VFY-day-of]` / `[FACT-CHECK]` / `§N` / `→ sN` / `callback` / «PAYOFF» / «возвращаемся в разделах N» — **0** в visible body после rebuild.
+- **M2 (deep Russification):** 620 unique latin tokens → **143** (77% reduction). Остаток — brand names (Tesla, Siemens, BMW, TSMC, BASF, Pfizer, Foxconn, AWS, Wikimedia, McKinsey, RAND, etc.) + acronyms (SCADA, PLC, MES, OEE, MTBF, RCM, MPC, RL, CIRL, PINN, SIL, ATEX, FDA, GAMP, HITL, ISO).
+- **M3 (translate quotes):** Musk 2018 «Excessive automation...» → «Да, чрезмерная автоматизация на Tesla была ошибкой...» · Foxconn Young Liu «80%» → перевод · Toyota Jidoka quote → RU · Trump «8th wonder» → «восьмое чудо света». English originals optional in speaker notes.
+
+### P0 fixes (9)
+
+1. **s09 «Sertification» → «Сертификация»** ✓ + перевод OT/IT body content
+2. **`[VFY-day-of]` removed from s07/s08 footers** ✓
+3. **Hero resize s01 (31% → ~42%) + s39 (32.5% → ~43%)** ✓ — both ≥40% area
+4. **s07 Deloitte 42%/$7.2M → S&P Global 46%/$7M** ✓ (chapter v4 verified)
+5. **s11 «февраль 2026» → «май 2026»** ✓ + Optimus numbers fixed
+6. **s29 Норникель overclaim → honest hedge** ✓ + Газпром нефть separated
+7. **s34b avionics MTBF 8 fail + s34c brewery CV-QC pass added** ✓
+8. **s32 11 critеria → 10 + 1 бонус (4 categories grouped)** ✓
+
+### P1 systemic fixes (3)
+
+- **Designer-extras leak sweep — 0 hits** (orchestrator-independent verify) ✓
+- **Russification deep scan 620 → 143** (77% reduction) ✓
+- `[VFY-day-of]` moved to speaker notes only ✓
+
+### P1 fact fixes (5)
+
+- s18 RMAC (not HMGMA) ✓ — «Robotics Manufacturing Application Center»
+- s10 FoxBrain «Llama 3.1 70B методом дистилляции + DeepSeek-дистиллят сравнение» ✓
+- s14 TSMC «иллюстративная оценка по индустрии, не TSMC IR» ✓
+- s11 Optimus «несколько тысяч к концу 2025, миллион к 2027, $25K; V3 reveal late 2026» ✓
+- s18 Toyota GAIA «10 000 часов в год экономии (по заявлению Toyota — без независимого аудита)» ✓
+
+### P1 consistency fixes (3)
+
+- Vendor Q5 unified: 5 questions both s35 + s38 (base / window / interventions / OEE / past failures) ✓
+- «OT/IT раскол» canonical (slash, not dash) — s30, s37 fixed ✓
+- `[VFY-day-of]` markers only in speaker notes ✓
+
+### P1 layout fixes (8)
+
+- Font resize s14/s24/s27/s29 — body ≥11pt, headlines ≥22pt ✓
+- s39 hero closing strip resized for ≥40% area ✓
+- s07 «Эти 4 цифры друг друга поддерживают» connection headline ✓
+- s10 Siemens image vs 3 cards rebalanced ✓
+- s25 CIRL diagram simplified + «PID внутри RL, не вместо» annotation ✓
+- s32 4 categories visually grouped (3+2+3+2 = 10 + 1 бонус) ✓
+- s35-s38 consolidated to unified 5-question vendor set ✓
+- s10 Foxconn quote removed from main slide (s21 Foxconn dedicated) ✓
+
+### Final verification (post-rebuild)
+
+- **41 slides built** ✓
+- **PPTX + PDF + 41 PNG snapshots** ✓
+- **Designer-extras grep:** 0 hits (VFY/FACT-CHECK/callback/payoff/forward-refs) ✓
+- **LO codes:** 2 hits only on cover s02 ✓
+- **§-cross-references:** 0 hits ✓
+- **Latin tokens:** 143 unique (was 620) — 99% brand names + acronyms ✓
+- **Hero verification:** s01 = 42.5% area · s39 = 43.2% area ✓
+- **Sync to main repo:** inodes differ (445884 ≠ 446074) ✓
+
+**Ready for Pre-USER-GATE B walkthrough.**

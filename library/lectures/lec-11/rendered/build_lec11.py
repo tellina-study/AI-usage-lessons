@@ -212,38 +212,40 @@ def attribution(slide, text, *, x=0.5, y=6.95, w=12.33):
 # ========== SECTION 0 ==========
 
 def s01_hero_tesla(p):
-    """s01 — hero hook: Tesla Giga Press BEFORE/AFTER."""
+    """s01 — hero hook: Tesla Giga Press BEFORE/AFTER. Hero ≥40% area."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
-    # Hero image left (50% area)
+    # Hero image left — 8.5 × 5.0 ≈ 42.5% of canvas (target ≥40%)
     img_path = ASSETS / "screenshots" / "s01-tesla-giga-press.png"
     if img_path.exists():
-        add_image(slide, img_path, 0.5, 0.5, 6.5, 4.8)
+        add_image(slide, img_path, 0.5, 0.5, 8.5, 5.0)
     else:
-        rectangle(slide, 0.5, 0.5, 6.5, 4.8, fill=SOFT_GREY)
-        text_box(slide, 0.5, 2.5, 6.5, 0.6, "[Tesla Giga Press hero]",
+        rectangle(slide, 0.5, 0.5, 8.5, 5.0, fill=SOFT_GREY)
+        text_box(slide, 0.5, 2.5, 8.5, 0.6, "[Tesla Giga Press hero]",
                  size=16, color=SLATE, align=PP_ALIGN.CENTER)
     # Caption under hero
-    attribution(slide, "Tesla Giga Press · Idra OL 6100 CS · Fremont, 2020 · Wikimedia CC-BY-SA",
-                x=0.5, y=5.4, w=6.5)
-    # Title block right
-    multiline_box(slide, 7.3, 0.7, 5.7, 5.0, [
-        ("Tesla отступила дважды.", {"size": 30, "bold": True, "color": DEEP}),
-        ("Компании не учатся один раз.", {"size": 24, "bold": True, "color": MID}),
+    attribution(slide, "Tesla Giga Press · Idra OL 6100 CS · Фримонт, 2020 · Wikimedia · CC-BY-SA",
+                x=0.5, y=5.6, w=8.5)
+    # Title block right (narrower column)
+    multiline_box(slide, 9.2, 0.6, 3.8, 5.2, [
+        ("Tesla отступила", {"size": 24, "bold": True, "color": DEEP}),
+        ("дважды.", {"size": 24, "bold": True, "color": DEEP}),
+        ("", {"size": 6}),
+        ("Компании не учатся", {"size": 18, "bold": True, "color": MID}),
+        ("один раз.", {"size": 18, "bold": True, "color": MID}),
         ("", {"size": 10}),
-        ("Май 2024:", {"size": 14, "bold": True, "color": GOLD}),
-        ("Tesla отказалась от next-generation gigacasting для Model 2.", {"size": 14, "color": DEEP}),
-        ("", {"size": 10}),
-        ("Апрель 2018:", {"size": 14, "bold": True, "color": MID}),
-        ("«Excessive automation at Tesla was a mistake. To be precise, my mistake. Humans are underrated.»", {"size": 13, "italic": True, "color": DEEP}),
-        ("— Илон Маск, X, 13.04.2018", {"size": 11, "italic": True, "color": SLATE}),
+        ("Май 2024:", {"size": 13, "bold": True, "color": GOLD}),
+        ("Tesla отказалась от gigacasting нового поколения для Model 2.", {"size": 12, "color": DEEP}),
+        ("", {"size": 8}),
+        ("Апрель 2018:", {"size": 13, "bold": True, "color": MID}),
+        ("«Да, чрезмерная автоматизация на Tesla была ошибкой. Точнее, моей ошибкой. Людей недооценивают.»", {"size": 11, "italic": True, "color": DEEP}),
+        ("— Илон Маск, X (Twitter), 13.04.2018", {"size": 10, "italic": True, "color": SLATE}),
     ], line_spacing=1.2)
     # Central question
-    rounded_box(slide, 0.5, 5.9, 12.33, 1.0, fill=GOLD_TINT, stroke=GOLD, stroke_w=1.5)
-    text_box(slide, 0.8, 6.05, 11.8, 0.8,
-             "MIT Sloan 2025: 95% AI-пилотов не доходят до production. Где AI работает, где нет — и как решать инженеру?",
+    rounded_box(slide, 0.5, 6.0, 12.33, 1.0, fill=GOLD_TINT, stroke=GOLD, stroke_w=1.5)
+    text_box(slide, 0.8, 6.15, 11.8, 0.8,
+             "MIT Sloan 2025: 95% AI-пилотов не доходят до промышленной эксплуатации. Где AI работает, где нет — и как решать инженеру?",
              size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    add_notes(slide, "В мае 2024 Tesla отступила от next-generation gigacasting. Это вторая отмена — первая была в апреле 2018, в кризис Model 3, когда Маск признал чрезмерную автоматизацию своей ошибкой. Компании не учатся один раз. Параллельно GE сожгла 4 миллиарда на Predix, IBM Watson продан за parts, Foxconn Wisconsin превратился в дата-центр Microsoft. И поверх — MIT Sloan: 95% пилотов не доходят до production. Это лекция про то, где AI работает, где не работает, и как решать инженеру, в какой колонне он стоит — дискретное или процессное.")
 
 
 def s02_cover(p):
@@ -266,15 +268,14 @@ def s02_cover(p):
         ("Модуль 2 · 75 минут + Q&A", {"size": 16, "color": LIGHT}),
         ("Студенты-инженеры 3 курса", {"size": 16, "color": LIGHT}),
     ])
-    # LO summary in rounded box
+    # Learning objectives summary in rounded box (LO codes allowed on cover only)
     rounded_box(slide, 4.5, 5.4, 8.3, 1.4)
     multiline_box(slide, 4.7, 5.55, 8.0, 1.2, [
         ("Цели лекции:", {"size": 14, "bold": True, "color": MID}),
-        ("LO1 — назвать инструменты дискретного и процессного AI · LO2 — критически оценить vendor-claim ·", {"size": 12, "color": DEEP}),
-        ("LO7 — различить chat-помощник vs autonomous controller · LO8 — сформулировать «когда AI не нужен»", {"size": 12, "color": DEEP}),
+        ("LO1 — назвать инструменты дискретного и процессного AI · LO2 — критически оценить заявления вендора", {"size": 12, "color": DEEP}),
+        ("LO7 — отличить chat-помощник от автономного контроллера · LO8 — сформулировать «когда AI не нужен»", {"size": 12, "color": DEEP}),
     ], line_spacing=1.2)
     footer(slide, "Курс «Применение AI в инженерии» · 2026")
-    add_notes(slide, "Лекция 11, первая из двух про реальное производство. Сегодня дискретное и процессное. Лекция 12 продолжит с фокусом на цифровые двойники. Пять целей по таксономии Блума: назвать инструменты, оценить vendor-claim, различить архитектурные классы AI, сформулировать когда AI не подходит.")
 
 
 def s03_lecture_map(p):
@@ -285,11 +286,11 @@ def s03_lecture_map(p):
              "Маршрут лекции — пять разделов",
              size=28, bold=True, color=DEEP)
     sections = [
-        ("1", "Общее", "12 мин", "Adoption · OT/IT · foundation models · трио hype-collapse", LIGHT),
-        ("2", "Дискретное", "17 мин", "CV-инспекция · разметка · PdM · коботы · Tesla 2018", MID),
-        ("3", "Процессное", "17 мин", "Мягкие сенсоры · MPC/RL · регуляторика · РФ", TEAL),
-        ("4", "Рамка решения", "12 мин", "4 категории критериев · альтернативы · 5-step · Pfizer", GOLD),
-        ("5", "Замыкание", "6 мин", "Recap · 5 вендор-вопросов · bridge к Лекции 12", DEEP),
+        ("1", "Общее", "12 мин", "Распространение AI · OT/IT раскол · фундаментальные модели · трио хайп-провалов", LIGHT),
+        ("2", "Дискретное", "17 мин", "Машинное зрение · разметка · прогностическое обслуживание · коботы · Tesla 2018", MID),
+        ("3", "Процессное", "17 мин", "Мягкие сенсоры · MPC/RL · регуляторика · российский контекст", TEAL),
+        ("4", "Рамка решения", "12 мин", "4 категории критериев · альтернативы · 5-шаговая рамка · Pfizer", GOLD),
+        ("5", "Замыкание", "6 мин", "Краткое замыкание · 5 вопросов вендору · переход к Лекции 12", DEEP),
     ]
     card_w = 2.42
     gap = 0.05
@@ -312,8 +313,7 @@ def s03_lecture_map(p):
         # Description
         text_box(slide, x + 0.2, y + 2.85, card_w - 0.4, 2.3, desc,
                  size=11, color=DARK_GREY, align=PP_ALIGN.CENTER, line_spacing=1.3)
-    footer(slide, "Раздел 4 — PAYOFF лекции · применимый инструмент для кармана")
-    add_notes(slide, "Маршрут пять разделов. Сначала общее — adoption, OT/IT раскол, foundation models, трио хайп-провалов. Потом 17 минут дискретное — CV, разметка, PdM, коботы, Tesla 2018. Потом 17 минут процессное — soft sensors, MPC/RL, регуляторика, российский контекст. Потом 12 минут рамка решения — 4 категории критериев, альтернативы, worked example Pfizer Vox, 5-step framework. Раздел 4 — payoff лекции. И 6 минут на замыкание. Bridge к Лекции 12 — цифровые двойники.")
+    footer(slide, "Применимый инструмент для кармана — рамка решения «AI не нужен» на 4-м разделе")
 
 
 def s04_glossary(p):
@@ -324,15 +324,15 @@ def s04_glossary(p):
              "Шесть терминов из мира промышленных систем",
              size=28, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "Must-know для лекции · остальные acronyms — inline gloss при первом упоминании",
+             "Обязательны для лекции · остальные сокращения расшифровываются при первом упоминании",
              size=14, italic=True, color=LIGHT)
     terms = [
-        ("ISA-95", "5-уровневая иерархия систем управления (L0 процесс ↔ L4 ERP). Опорная сетка."),
-        ("MES", "Manufacturing Execution System. Уровень L3 — производственные заказы, OEE-отчёты, traceability."),
-        ("SCADA", "Supervisory Control And Data Acquisition. Уровень L2 — мнемосхема, диспетчерский контроль."),
-        ("PLC", "Programmable Logic Controller. Уровень L1. Цикл 1–10 мс, детерминированный. Сюда AI не идёт."),
-        ("OEE", "Overall Equipment Effectiveness = доступность × производительность × качество. Central метрика."),
-        ("Мягкий сенсор", "Программная модель: оценивает трудно-измеряемые параметры по легко-измеряемым. Cornerstone процессного."),
+        ("ISA-95", "5-уровневая иерархия систем управления (L0 процесс ↔ L4 корпоративные ERP-системы). Опорная сетка."),
+        ("MES", "Manufacturing Execution System — система оперативного управления производством. Уровень L3 — производственные заказы, OEE-отчёты, прослеживаемость."),
+        ("SCADA", "Supervisory Control And Data Acquisition — диспетчерское управление и сбор данных. Уровень L2 — мнемосхема, диспетчерский контроль."),
+        ("PLC", "Programmable Logic Controller — программируемый логический контроллер. Уровень L1. Цикл 1–10 мс, детерминированный. Сюда AI не идёт."),
+        ("OEE", "Overall Equipment Effectiveness — общая эффективность оборудования = доступность × производительность × качество. Главная метрика."),
+        ("Мягкий сенсор", "Программная модель: оценивает труднoизмеряемые параметры по легко-измеряемым. Опорный концепт процессного производства."),
     ]
     col_w = 5.9
     item_h = 1.5
@@ -351,8 +351,7 @@ def s04_glossary(p):
         text_box(slide, x + 1.95, y + 0.2, col_w - 2.1, item_h - 0.4, defn,
                  size=11, color=DEEP, line_spacing=1.3,
                  anchor=MSO_ANCHOR.MIDDLE)
-    footer(slide, "OEE — самая важная метрика лекции · возвращаемся в разделах 1, 2, 4")
-    add_notes(slide, "Шесть терминов промышленных систем. ISA-95 — пятиуровневая модель Purdue. MES, SCADA, PLC — уровни L3, L2, L1 этой иерархии. OEE — общая эффективность оборудования, central метрика. Мягкий сенсор — фундаментальная концепция процессного производства, программная замена лабораторной пробы. AI заходит на L3 и L4 спокойно, на L2 со скрипом, на L1 почти никогда, на L0 никогда.")
+    footer(slide, "OEE — самая важная метрика лекции")
 
 
 def s05_keystone(p):
@@ -378,14 +377,14 @@ def s05_keystone(p):
         ("", {"size": 6}),
         ("Инструменты AI:", {"size": 13, "bold": True, "color": DEEP}),
         ("· Компьютерное зрение для контроля качества", {"size": 13, "color": DEEP}),
-        ("· Коботы и worker-augmentation", {"size": 13, "color": DEEP}),
-        ("· Generative process planning", {"size": 13, "color": DEEP}),
+        ("· Коботы и расширение возможностей рабочего", {"size": 13, "color": DEEP}),
+        ("· Генеративное планирование операций", {"size": 13, "color": DEEP}),
     ], line_spacing=1.3)
     # Failure mark
     rounded_box(slide, 0.65, col_y + col_h - 0.85, col_w - 0.3, 0.7,
                 fill=GOLD_TINT, stroke=GOLD, stroke_w=1.5)
     text_box(slide, 0.85, col_y + col_h - 0.78, col_w - 0.4, 0.55,
-             "Канонический провал: Tesla 2018 — «excessive automation a mistake»",
+             "Канонический провал: Tesla 2018 — «чрезмерная автоматизация была ошибкой»",
              size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
     # RIGHT: Process
@@ -399,15 +398,15 @@ def s05_keystone(p):
         ("Химия · фарма · металлургия · цемент · пивоварение", {"size": 12, "italic": True, "color": LIGHT}),
         ("", {"size": 6}),
         ("Инструменты AI:", {"size": 13, "bold": True, "color": DEEP}),
-        ("· Мягкие сенсоры (real-time оценка качества)", {"size": 13, "color": DEEP}),
-        ("· MPC / RL гибрид + CIRL", {"size": 13, "color": DEEP}),
-        ("· Прогностическое обслуживание + edge AI", {"size": 13, "color": DEEP}),
+        ("· Мягкие сенсоры (оценка качества в реальном времени)", {"size": 13, "color": DEEP}),
+        ("· Прогностическое управление + обучение с подкреплением (MPC/RL)", {"size": 13, "color": DEEP}),
+        ("· Прогностическое обслуживание + AI на крае сети", {"size": 13, "color": DEEP}),
     ], line_spacing=1.3)
     # Failure mark
     rounded_box(slide, 6.98, col_y + col_h - 0.85, col_w - 0.3, 0.7,
                 fill=GOLD_TINT, stroke=GOLD, stroke_w=1.5)
     text_box(slide, 7.18, col_y + col_h - 0.78, col_w - 0.4, 0.55,
-             "Канонический провал: F-35 ALIS — $44K/час, заменён ODIN",
+             "Канонический провал: F-35 ALIS — $44 тыс./час, заменён системой ODIN",
              size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
     # Universal belt
@@ -416,14 +415,14 @@ def s05_keystone(p):
              "ОБЩЕЕ ДЛЯ ОБЕИХ КОЛОНН",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     text_box(slide, 0.7, 6.5, 12.0, 0.4,
-             "78% используют AI · 5,5% high performers · 95% пилотов не доходят до production",
-             size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    add_notes(slide, "Keystone слайд. Производство — две принципиально разные ветви. Дискретное — штучные продукты, инструменты CV / коботы / process planning, провал — Tesla 2018. Процессное — непрерывный поток, инструменты soft sensors / MPC-RL / PdM, провал — F-35 ALIS. Это разные физики, разные регуляторные карты, разные культуры. И поверх обеих — universal: 78 процентов используют AI, только 5,5 процентов high performers; 95 процентов пилотов не доходят до production. Это структурная картина 2025-2026, не аномалия.")
+             "78% используют AI · 5,5% — компании с высокой результативностью · 95% пилотов не доходят до промышленной эксплуатации",
+             size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+    add_notes(slide, "Keystone слайд. Производство — две принципиально разные ветви. Дискретное — штучные продукты, инструменты CV / коботы / process planning, провал — Tesla 2018. Процессное — непрерывный поток, инструменты soft sensors / MPC-RL / PdM, провал — F-35 ALIS. Это разные физики, разные регуляторные карты, разные культуры. И поверх обеих — universal: 78 процентов используют AI, только 5,5 процентов высокая результативность; 95 процентов пилотов не доходят до промышленной эксплуатации. Это структурная картина 2025-2026, не аномалия.")
 
 
 def s06_section1_divider(p):
-    section_divider(p, 1, "Что общее для обеих моделей",
-                    "Adoption · OT/IT раскол · foundation models · трио hype-collapse",
+    section_divider(p, 1, "Что общее для обеих моделей производства",
+                    "Распространение AI · OT/IT раскол · фундаментальные модели · трио хайп-провалов",
                     "Раздел 1 · 12 мин · 6 слайдов")
 
 
@@ -455,7 +454,7 @@ def s07_adoption(p):
              "78% используют. 5,5% извлекают ценность.",
              size=28, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "McKinsey State of AI 2025 — adoption-value gap в ~14×",
+             "McKinsey «State of AI» 2025 — разрыв между распространением и ценностью ~14×",
              size=14, italic=True, color=LIGHT)
     # Hero number left
     rounded_box(slide, 0.5, 1.8, 4.0, 3.2, fill=GOLD_TINT, stroke=GOLD, stroke_w=2.0)
@@ -463,10 +462,10 @@ def s07_adoption(p):
              size=100, bold=True, color=GOLD,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 0.7, 3.3, 3.6, 1.6, [
-        ("high performers", {"size": 16, "bold": True, "color": DEEP}),
-        ("EBIT impact >5% от AI", {"size": 13, "italic": True, "color": DARK_GREY}),
+        ("компании с высокой результативностью", {"size": 14, "bold": True, "color": DEEP}),
+        ("прирост операционной прибыли (EBIT) >5% от AI", {"size": 12, "italic": True, "color": DARK_GREY}),
         ("", {"size": 6}),
-        ("McKinsey State of AI 2025", {"size": 11, "italic": True, "color": SLATE}),
+        ("McKinsey «State of AI» 2025", {"size": 11, "italic": True, "color": SLATE}),
     ], align=PP_ALIGN.CENTER, line_spacing=1.3)
     # Bar chart right
     chart_path = ASSETS / "charts" / "s07-pilot-failure.png"
@@ -476,12 +475,16 @@ def s07_adoption(p):
     # Other sources
     multiline_box(slide, 0.5, 5.15, 12.33, 1.5, [
         ("Параллельные источники:", {"size": 14, "bold": True, "color": MID}),
-        ("· MIT Sloan 2025: 95% GenAI-пилотов не доходят до production. Среднее время pilot→shutdown — 14 мес.", {"size": 13, "color": DEEP}),
-        ("· RAND 2025: 80,3% AI-проектов без business value. $547B из $684B AI-инвестиций — без эффекта.", {"size": 13, "color": DEEP}),
-        ("· Deloitte 2025: 42% компаний прекратили ≥1 AI-инициативу. Sunk cost per abandoned — $7,2M.", {"size": 13, "color": DEEP}),
+        ("· MIT Sloan 2025: 95% пилотов на генеративном AI не доходят до промышленной эксплуатации. Среднее время пилот → закрытие — 14 мес.", {"size": 13, "color": DEEP}),
+        ("· RAND 2025: 80,3% AI-проектов без бизнес-ценности. $547 млрд из $684 млрд AI-инвестиций — без эффекта.", {"size": 13, "color": DEEP}),
+        ("· S&P Global Market Intelligence (опрос «AI Experiences» 2025): 46% пилотов закрыты до промышленной эксплуатации. Средние невозвратные затраты — ~$7 млн.", {"size": 13, "color": DEEP}),
     ], line_spacing=1.35)
-    attribution(slide, "Источники: McKinsey 2025, MIT Sloan 2025, RAND 2025, Deloitte 2025 · [VFY-day-of]")
-    add_notes(slide, "Запомните две цифры. 78 процентов используют AI, только 5,5 процентов — high performers. Разрыв 14 раз. Не верите McKinsey — посмотрите MIT Sloan: 95 процентов пилотов не доходят до production. RAND: 80 процентов проектов без business value, 547 миллиардов из 684 без эффекта. Deloitte: 42 процента компаний прекратили хотя бы одну AI-инициативу. Запомните паттерн: застревание на пилотной стадии — норма, а не аномалия. И OEE callback — vendor обещает –25 процентов downtime, спросите про OEE breakdown.")
+    # Connecting headline
+    text_box(slide, 0.5, 6.75, 12.33, 0.3,
+             "Эти четыре цифры друг друга поддерживают — это совокупный сигнал, а не одиночное наблюдение",
+             size=12, italic=True, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
+    attribution(slide, "Источники: McKinsey 2025, MIT Sloan 2025, RAND 2025, S&P Global Market Intelligence 2025", y=7.1)
+    add_notes(slide, "Запомните две цифры. 78 процентов используют AI, только 5,5 процентов — высокая результативность. Разрыв 14 раз. Не верите McKinsey — посмотрите MIT Sloan: 95 процентов пилотов не доходят до промышленной эксплуатации. RAND: 80 процентов проектов без business value, 547 миллиардов из 684 без эффекта. Deloitte: 42 процента компаний прекратили хотя бы одну AI-инициативу. Запомните паттерн: застревание на пилотной стадии — норма, а не аномалия. И OEE callback — vendor обещает –25 процентов downtime, спросите про OEE breakdown.")
 
 
 def s08_market_estimates(p):
@@ -506,16 +509,16 @@ def s08_market_estimates(p):
         ("", {"size": 8}),
         ("Это не ошибка одного аналитика — это особенность жанра.", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
-        ("Определения сегмента, methodology, scope радикально различаются между источниками.", {"size": 12, "color": DEEP}),
+        ("Определения сегмента, методология и охват радикально различаются между источниками.", {"size": 12, "color": DEEP}),
         ("", {"size": 8}),
         ("УРОК ДЛЯ ИНЖЕНЕРА:", {"size": 12, "bold": True, "color": MID}),
-        ("читайте methodology, не верьте одной цифре.", {"size": 12, "color": DEEP}),
+        ("читайте методологию, не верьте одной цифре.", {"size": 12, "color": DEEP}),
     ], line_spacing=1.35)
     # Gartner footer note
     multiline_box(slide, 0.5, 6.0, 12.33, 0.7, [
-        ("Gartner оценивает worldwide GenAI spending в $644B на 2025 — но это все индустрии вместе, не только производство.", {"size": 12, "italic": True, "color": DARK_GREY}),
+        ("Gartner оценивает мировые расходы на генеративный AI в $644 млрд на 2025 г. — но это все индустрии вместе, не только производство.", {"size": 12, "italic": True, "color": DARK_GREY}),
     ])
-    attribution(slide, "Markets and Markets · Precedence · Fortune Business Insights · Gartner 2025 · [VFY-day-of]")
+    attribution(slide, "Markets and Markets · Precedence · Fortune Business Insights · Gartner 2025")
     add_notes(slide, "Первая красная тряпка. Три респектабельных аналитика дают радикально разные оценки одного сегмента в одном году. Markets and Markets — 34 миллиарда. Precedence — 8,57. Fortune — 7,6. Разница в 4,5 раза. Кто прав — никто. Они правы каждый внутри своей methodology. Markets and Markets включает сервисы, оборудование, ПО, консалтинг. Fortune — только программные платформы. Когда вендор приходит с цифрой — спрашивайте methodology. Gartner оценивает worldwide GenAI в 644 миллиарда — но это все индустрии.")
 
 
@@ -524,10 +527,10 @@ def s09_ot_it_split(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "OT/IT раскол — фундаментальный structural divide",
+             "OT/IT раскол — фундаментальное структурное разделение",
              size=28, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "AI приходит из IT в OT и упирается в этот раскол",
+             "AI приходит из мира IT в мир OT и упирается в этот раскол",
              size=14, italic=True, color=LIGHT)
     # Two columns
     col_y = 1.8
@@ -536,43 +539,42 @@ def s09_ot_it_split(p):
     # OT left
     rounded_box(slide, 0.5, col_y, col_w, col_h, fill=SURFACE, stroke=MID, stroke_w=2.0)
     rectangle(slide, 0.5, col_y, col_w, 0.6, fill=MID)
-    text_box(slide, 0.5, col_y + 0.05, col_w, 0.5, "OT · Operational Technology",
+    text_box(slide, 0.5, col_y + 0.05, col_w, 0.5, "OT · операционные технологии",
              size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 0.75, col_y + 0.8, col_w - 0.5, 3.5, [
         ("Где живёт:", {"size": 11, "bold": True, "color": LIGHT}),
-        ("PLC · SCADA · DCS · конвейерные приводы · реакторы", {"size": 12, "color": DEEP}),
+        ("PLC · SCADA · DCS · приводы конвейеров · реакторы", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
         ("Цикл управления:", {"size": 11, "bold": True, "color": LIGHT}),
-        ("1–10 мс детерминированный", {"size": 13, "bold": True, "color": GOLD}),
+        ("1–10 мс, детерминированный", {"size": 13, "bold": True, "color": GOLD}),
         ("", {"size": 6}),
-        ("Консистентность: strong", {"size": 12, "color": DEEP}),
-        ("Audit trail: обязательный, регуляторный", {"size": 12, "color": DEEP}),
-        ("Sertification: SIL 2/3 для safety-critical", {"size": 12, "color": DEEP}),
+        ("Консистентность: строгая (strong)", {"size": 12, "color": DEEP}),
+        ("Журнал аудита: обязательный, регуляторный", {"size": 12, "color": DEEP}),
+        ("Сертификация: SIL 2/3 для критичных по безопасности контуров", {"size": 12, "color": DEEP}),
     ], line_spacing=1.3)
     # IT right
     rounded_box(slide, 6.83, col_y, col_w, col_h, fill=SURFACE, stroke=TEAL, stroke_w=2.0)
     rectangle(slide, 6.83, col_y, col_w, 0.6, fill=TEAL)
-    text_box(slide, 6.83, col_y + 0.05, col_w, 0.5, "IT · Information Technology",
+    text_box(slide, 6.83, col_y + 0.05, col_w, 0.5, "IT · информационные технологии",
              size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 7.08, col_y + 0.8, col_w - 0.5, 3.5, [
         ("Где живёт:", {"size": 11, "bold": True, "color": LIGHT}),
-        ("Облако · дата-центры · корпоративные базы · ML pipelines", {"size": 12, "color": DEEP}),
+        ("Облако · дата-центры · корпоративные базы · конвейеры ML", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
         ("Цикл:", {"size": 11, "bold": True, "color": LIGHT}),
-        ("100–500 мс недетерминированный (LLM)", {"size": 13, "bold": True, "color": GOLD}),
+        ("100–500 мс, недетерминированный (LLM)", {"size": 13, "bold": True, "color": GOLD}),
         ("", {"size": 6}),
-        ("Консистентность: eventually-consistent", {"size": 12, "color": DEEP}),
-        ("Audit trail: security и compliance, не control", {"size": 12, "color": DEEP}),
-        ("Sertification: SaaS-обновления каждую неделю", {"size": 12, "color": DEEP}),
+        ("Консистентность: итоговая (eventually consistent)", {"size": 12, "color": DEEP}),
+        ("Журнал аудита: для безопасности и соответствия, не для управления", {"size": 12, "color": DEEP}),
+        ("Сертификация: облачные обновления каждую неделю", {"size": 12, "color": DEEP}),
     ], line_spacing=1.3)
     # Conclusion
     rounded_box(slide, 0.5, 6.4, 12.33, 0.7, fill=GOLD_TINT, stroke=GOLD, stroke_w=1.5)
     text_box(slide, 0.7, 6.45, 12.0, 0.6,
-             "LLM с задержкой 100–500 мс физически не вмещается в PLC-цикл 1–10 мс — это арифметика, не временное препятствие",
+             "Языковая модель с задержкой 100–500 мс физически не вмещается в цикл PLC 1–10 мс — это арифметика, не временное препятствие",
              size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    add_notes(slide, "OT — мир PLC, SCADA, конвейеров. Время в миллисекундах, детерминированный budget. Audit trail регуляторный. SIL 2/3 для safety. IT — облако, ML pipelines. Время в миллисекундах-секундах, eventually-consistent. AI родился в IT-мире и приходит в OT. Упирается в structural divide. LLM 100-500 мс не вмещается в PLC-цикл 1-10 мс. Это арифметика. Из этого: AI на L3-L4 ISA-95 работает. На L2 — со скрипом через decision-support. На L1 — почти никогда. На L0 — никогда.")
 
 
 def s10_foundation_models(p):
@@ -580,25 +582,25 @@ def s10_foundation_models(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Фундаментальные модели = augmentation, НЕ controller",
-             size=26, bold=True, color=DEEP)
+             "Фундаментальные модели = расширение возможностей, НЕ автономный контроллер",
+             size=24, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "Siemens IFM + Foxconn FoxBrain — три причины, почему не контроллер",
+             "Siemens Industrial Foundation Model + Foxconn FoxBrain — три причины, почему не контроллер",
              size=14, italic=True, color=LIGHT)
     # Left: examples
     rounded_box(slide, 0.5, 1.7, 4.0, 5.1)
     text_box(slide, 0.7, 1.85, 3.6, 0.4, "ЧТО ЕСТЬ",
              size=14, bold=True, color=MID)
     multiline_box(slide, 0.7, 2.3, 3.6, 2.4, [
-        ("Siemens IFM", {"size": 14, "bold": True, "color": DEEP}),
-        ("Hannover Messe март 2025", {"size": 10, "italic": True, "color": SLATE}),
-        ("150 ПБ engineering data", {"size": 11, "color": DEEP}),
+        ("Siemens Industrial Foundation Model", {"size": 13, "bold": True, "color": DEEP}),
+        ("Hannover Messe, март 2025", {"size": 10, "italic": True, "color": SLATE}),
+        ("150 ПБ инженерных данных", {"size": 11, "color": DEEP}),
         ("1000+ AI-патентов Siemens", {"size": 11, "color": DEEP}),
         ("", {"size": 10}),
-        ("Foxconn FoxBrain", {"size": 14, "bold": True, "color": DEEP}),
+        ("Foxconn FoxBrain", {"size": 13, "bold": True, "color": DEEP}),
         ("Computex 2025", {"size": 10, "italic": True, "color": SLATE}),
-        ("Llama 3.1 70B derivative", {"size": 11, "color": DEEP}),
-        ("Injection-molding параметры", {"size": 11, "color": DEEP}),
+        ("Обучена на Llama 3.1 70B методом дистилляции", {"size": 11, "color": DEEP}),
+        ("Незначительное отставание от модели DeepSeek-дистиллята", {"size": 11, "color": DEEP}),
     ], line_spacing=1.3)
     # Siemens HQ image bottom
     img_path = ASSETS / "screenshots" / "s10-siemens-hq.jpg"
@@ -610,9 +612,9 @@ def s10_foundation_models(p):
         ("ЧТО НЕ ДЕЛАЮТ — три причины", {"size": 14, "bold": True, "color": MID}),
     ])
     reasons = [
-        ("1. Задержка вывода", "LLM 100–500 мс vs PLC-цикл 1–10 мс. Физически не вмещается в control loop.", MID),
-        ("2. Галлюцинации", "Недетерминированный output несовместим с замыканием контура управления.", LIGHT),
-        ("3. Сертификация", "Нет audit trail для SIL 2/3, FDA Part 11, GAMP®5. Black-box ML не проходит валидацию.", TEAL),
+        ("1. Задержка вывода", "Языковая модель: 100–500 мс против цикла PLC 1–10 мс. Физически не вмещается в контур управления.", MID),
+        ("2. Галлюцинации", "Недетерминированный вывод несовместим с замыканием контура управления.", LIGHT),
+        ("3. Сертификация", "Нет журнала аудита для SIL 2/3, FDA Part 11, GAMP®5. Чёрный ящик ML не проходит валидацию.", TEAL),
     ]
     for i, (title, desc, color) in enumerate(reasons):
         y = 2.4 + i * 1.35
@@ -625,7 +627,7 @@ def s10_foundation_models(p):
     # Conclusion
     rounded_box(slide, 4.8, 6.5, 8.1, 0.6, fill=GOLD_TINT, stroke=GOLD, stroke_w=1.5)
     text_box(slide, 5.0, 6.55, 7.9, 0.5,
-             "Chat-помощник для оператора ≠ autonomous controller — два разных архитектурных класса",
+             "Чат-помощник для оператора ≠ автономный контроллер — два разных архитектурных класса",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     add_notes(slide, "Siemens IFM на Hannover Messe март 2025 — обучен на 150 ПБ engineering data + 1000 AI-патентов. Foxconn FoxBrain март 2025 — derivative Llama 3.1 70B с injection-molding параметрами. Это серьёзные модели от серьёзных компаний. И вокруг маркетинг про революцию. Я хочу, чтобы вы сделали один концептуальный шаг — это augmentation, не autonomous controller. Три причины. Задержка вывода — 100-500 мс не вмещается в PLC. Галлюцинации — недетерминированный output несовместим с control loop. Сертификация — нет audit trail для SIL 2/3, FDA Part 11. Эти причины не уходят со временем.")
 
@@ -635,10 +637,10 @@ def s11_optimus_reality(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Tesla Optimus: демо есть, production нет",
+             "Tesla Optimus: демо есть, промышленной эксплуатации нет",
              size=28, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "Recurring pattern: capability в контролируемой среде vs reliability 99,9% в неконтролируемой",
+             "Повторяющийся паттерн: возможность в контролируемой среде vs надёжность 99,9% в неконтролируемой",
              size=14, italic=True, color=LIGHT)
     # Two columns
     col_y = 1.8
@@ -650,7 +652,7 @@ def s11_optimus_reality(p):
     text_box(slide, 0.5, col_y + 0.05, col_w, 0.5, "ДЕМО · 2022–2024",
              size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 0.75, col_y + 0.8, col_w - 0.5, 3.5, [
-        ("Tesla AI Day 2022, 2024 · Cybercab event Oct 2024", {"size": 11, "italic": True, "color": SLATE}),
+        ("Tesla AI Day 2022, 2024 · мероприятие Cybercab, октябрь 2024", {"size": 11, "italic": True, "color": SLATE}),
         ("", {"size": 8}),
         ("Видеодемо:", {"size": 13, "bold": True, "color": MID}),
         ("· Складывает футболки", {"size": 13, "color": DEEP}),
@@ -658,28 +660,29 @@ def s11_optimus_reality(p):
         ("· Ходит по фабрике", {"size": 13, "color": DEEP}),
         ("· Передаёт инструменты", {"size": 13, "color": DEEP}),
         ("", {"size": 8}),
-        ("Маркетинг:", {"size": 13, "bold": True, "color": MID}),
-        ("10–20 тыс. Optimus к 2025, цена ~$30K, миллионы к 2030", {"size": 12, "color": DEEP}),
+        ("Маркетинг (заявления Маска):", {"size": 13, "bold": True, "color": MID}),
+        ("«Несколько тысяч к концу 2025; миллион к 2027; цена ~$25 тыс. Точное количество не раскрывается.»", {"size": 12, "color": DEEP}),
     ], line_spacing=1.3)
     # REALITY right
     rounded_box(slide, 6.83, col_y, col_w, col_h, fill=GOLD_TINT, stroke=GOLD, stroke_w=2.0)
     rectangle(slide, 6.83, col_y, col_w, 0.6, fill=GOLD)
-    text_box(slide, 6.83, col_y + 0.05, col_w, 0.5, "PRODUCTION · 2026",
+    text_box(slide, 6.83, col_y + 0.05, col_w, 0.5, "ПРОМ. ЭКСПЛУАТАЦИЯ · 2026",
              size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 7.08, col_y + 0.8, col_w - 0.5, 3.5, [
-        ("На февраль 2026:", {"size": 11, "italic": True, "color": SLATE}),
+        ("На май 2026 (текущий момент):", {"size": 11, "italic": True, "color": SLATE}),
         ("", {"size": 8}),
-        ("Tesla Optimus НЕ задействован в production-сборке ни на одном заводе.", {"size": 14, "bold": True, "color": DEEP}),
+        ("Tesla Optimus НЕ задействован в промышленной сборке ни на одном заводе.", {"size": 14, "bold": True, "color": DEEP}),
         ("", {"size": 8}),
-        ("Cybercab event Oct 2024:", {"size": 12, "bold": True, "color": MID}),
+        ("Мероприятие Cybercab, октябрь 2024:", {"size": 12, "bold": True, "color": MID}),
         ("Optimus раздавал напитки гостям — Wired подтвердил, что роботы управлялись людьми удалённо.", {"size": 12, "italic": True, "color": DEEP}),
+        ("", {"size": 6}),
+        ("Полное масштабирование Tesla отложено до представления Optimus V3 в конце 2026.", {"size": 11, "italic": True, "color": DARK_GREY}),
     ], line_spacing=1.35)
     # Conclusion
     rounded_box(slide, 0.5, 6.45, 12.33, 0.55, fill=SURFACE, stroke=LIGHT)
     text_box(slide, 0.7, 6.5, 12.0, 0.45,
-             "Между демо и production — обычно 5–10 лет, и большинство демо не переходят",
+             "Между демо и промышленной эксплуатацией — обычно 5–10 лет, и большинство демо не переходят",
              size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    add_notes(slide, "Tesla Optimus — отличный пример паттерна демо-vs-production. Маркетинг яркий: 10-20 тысяч Optimus к 2025, миллионы к 2030. Reality check февраль 2026: не задействован в production-сборке ни на одном заводе. На Cybercab event октябрь 2024 Optimus раздавал напитки — Wired подтвердил, роботы управлялись людьми удалённо. Это не критика Tesla — это иллюстрация паттерна. Демо демонстрирует capability в контролируемой среде. Production — надёжность 99,9% в неконтролируемой × десятки тысяч часов × тысячи юнитов. Между этими состояниями обычно 5-10 лет.")
 
 
 def s12_hype_collapse_trio(p):
@@ -687,21 +690,21 @@ def s12_hype_collapse_trio(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Три истории на $4B+ каждая. Один урок: AI ≠ магия.",
+             "Три истории на $4 млрд+ каждая. Один урок: AI ≠ магия.",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
              "GE Predix · IBM Watson · Foxconn Wisconsin — три провала, три урока",
              size=14, italic=True, color=LIGHT)
     cards = [
-        ("GE Predix", "2011–2020", "$4B+",
-         "AOS for industrial — свой облачный конкурент AWS.\n«be everything to everyone» → развал 2018, продажа частями к 2020.",
-         "Industrial AI ≠ general cloud AI. Размер инвестиций ≠ результат.", MID),
-        ("IBM Watson", "2018–2022", "Multi-$B",
-         "«–47% downtime, –48% defect rate» (маркетинг).\nWatson for Drug Discovery остановлен 2019. Watson Health продан за $1B в 2022.",
-         "Демо ≠ production. Маркетинговые проценты ≠ measured production metrics.", TEAL),
-        ("Foxconn Wisconsin", "2018–2024", "$10B обещано",
-         "«Восьмое чудо света» (2018).\n10 000 рабочих → 1 500. LCD → screens → AI hub → coffee kiosks → Microsoft Fairwater data center ($3,3B, май 2024).",
-         "«Чудо света» от главы государства — anti-signal. Маркетинг ≠ физика.", GOLD),
+        ("GE Predix", "2011–2020", "$4 млрд+",
+         "Промышленная облачная платформа — конкурент AWS.\n«Быть всем для всех» → развал в 2018, продажа частями к 2020.",
+         "Промышленный AI ≠ универсальный облачный AI. Размер инвестиций ≠ результат.", MID),
+        ("IBM Watson", "2018–2022", "Многомиллиардные",
+         "«–47% простоев, –48% брака» (маркетинговое обещание).\nWatson for Drug Discovery остановлен в 2019. Watson Health продан за $1 млрд в 2022.",
+         "Демо ≠ промышленная эксплуатация. Маркетинговые проценты ≠ измеренные в производстве показатели.", TEAL),
+        ("Foxconn Wisconsin", "2018–2024", "$10 млрд обещано",
+         "«Восьмое чудо света» (2018, Дональд Трамп).\n10 000 рабочих → 1 500. ЖК-экраны → дисплеи → AI-хаб → кофейные киоски → дата-центр Microsoft Fairwater ($3,3 млрд, май 2024).",
+         "«Чудо света» от главы государства — антисигнал. Маркетинг ≠ физика.", GOLD),
     ]
     card_w = 4.05
     gap = 0.1
@@ -726,8 +729,7 @@ def s12_hype_collapse_trio(p):
                     fill=GOLD_TINT, stroke=GOLD, stroke_w=1.0)
         text_box(slide, x + 0.3, y + 4.25, card_w - 0.6, 0.8, "Урок: " + lesson,
                  size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
-    attribution(slide, "GE 10-K filings 2017-2020 · IBM Watson Health 2022 sale press · Microsoft Fairwater press May 2024")
-    add_notes(slide, "Три истории, каждая 4 миллиарда плюс. GE Predix: с 2011 по 2020 GE потратил 4 миллиарда плюс на промышленное облако, конкурент AWS. «Be everything to everyone» — провал. Урок: industrial AI ≠ general cloud AI. IBM Watson: маркетинг 47 процентов снижение downtime, Watson for Drug Discovery остановлен 2019, Watson Health продан за миллиард в 2022. Урок: демо ≠ production. Foxconn Wisconsin: «восьмое чудо света» в 2018, 10 тысяч рабочих обещано → 1500 к 2024, площадка стала дата-центром Microsoft. Урок: «чудо света» от главы государства — anti-signal.")
+    attribution(slide, "Отчёты GE 10-K 2017–2020 · пресс-релиз о продаже IBM Watson Health, 2022 · Microsoft Fairwater, май 2024")
 
 
 def apply_md_notes(pres):
@@ -763,7 +765,8 @@ if __name__ == "__main__":
         s19_tesla_2018, s20_cv_limits, s21_foxbrain, s22_discrete_matrix,
         s23_section3_divider, s24_soft_sensors, s25_mpc_rl_cirl,
         s26_rl_drift, s27_edge_pdm, s28_regulatory, s29_russian, s30_process_matrix,
-        s31_section4_divider, s32_criteria, s33_alternatives, s34_pfizer_vox, s35_framework,
+        s31_section4_divider, s32_criteria, s33_alternatives, s34_pfizer_vox,
+        s34b_avionics_fail, s34c_brewery_pass, s35_framework,
         s36_section5_divider, s37_recap, s38_qa, s39_closing,
     )
 
@@ -807,6 +810,8 @@ if __name__ == "__main__":
     s32_criteria(pres)
     s33_alternatives(pres)
     s34_pfizer_vox(pres)
+    s34b_avionics_fail(pres)
+    s34c_brewery_pass(pres)
     s35_framework(pres)
     # Section 5
     s36_section5_divider(pres)

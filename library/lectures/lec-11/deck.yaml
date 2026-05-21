@@ -1,16 +1,16 @@
 # library/lectures/lec-11/deck.yaml
 #
 # Deck-структура Лекции 11 «AI в дискретном и процессном производстве»
-# v1: 35 слайдов согласно plan-v2-final.md, chapter v5 multi-part.
+# v2: 41 слайд (Phase 8 revision: +s34b avionics fail + s34c brewery pass).
 #
-# Phase 5 multi-artifact pipeline. Issue #127.
+# Phase 8 multi-artifact pipeline. Issue #127.
 #
 # Pattern carry-forward от Лекции 9:
-#   - 35 слайдов общим объёмом
+#   - 41 слайд общим объёмом (39 → 41 в v2 — добавлены 2 worked examples)
 #   - section dividers (5 шт.): s06 / s13 / s23 / s31 / s36
 #   - cover (s02), lecture-map (s03), glossary mini (s04), keystone (s05) — Раздел 0
 #   - dedicated Q&A slide (s38), bridge к lec-12 (s39 closing hero)
-#   - Hero on s01 (Tesla Giga Press BEFORE/AFTER) + s39 (BMW Digital Twin)
+#   - Hero on s01 (Tesla Giga Press BEFORE/AFTER, ≥40% area) + s39 (BMW Welt + Digital Twin, ≥40% area)
 
 deck:
   lecture_number: 11
@@ -20,8 +20,8 @@ deck:
   central_question: "Где AI работает в производстве, где не работает — и как инженер должен решать, в какой колонне он работает (дискретное / процессное) и какой AI-стек применим?"
   learning_outcomes: [LO1a, LO1b, LO2, LO7, LO8]
   language: ru
-  status: draft
-  version: v1
+  status: reviewed
+  version: v2
   source: chapter v5 multi-part (status=finalized, ~28k слов; chapter.md + chapter-part2.md + chapter-part3.md)
   plan: notes/lecture-11-review/final/plan-v2-final.md
   keystone_axis: "Дискретное vs Процессное — две модели производства"
@@ -346,9 +346,25 @@ slides:
     file: slides/s34-pfizer-vox-worked-example.md
     type: assertion_visual
     duration_min: 3
-    assertion: "Pfizer Vox проходит 5-step framework: процессное, SPC недостаточно, FDA Part 11 → recommend mode, HITL → готов к production."
-    learning_goal: "Worked example — рамка применима, не abstract theory"
+    assertion: "Pfizer Vox проходит 5-шаговую рамку: процессное, SPC недостаточно, FDA Part 11 → режим характеристики, человек в цикле → готов к промышленной эксплуатации."
+    learning_goal: "Разобранный пример — рамка применима, не абстрактная теория"
     failure_bucket: strict_in
+
+  - id: s34b
+    file: slides/s34b-avionics-mtbf-fail.md
+    type: worked_example
+    duration_min: 2.5
+    assertion: "Рамка отсекает: для авиадвигателя с MTBF 8 лет AI не нужен — данные редкие, регуляторика жёсткая, надёжностно-ориентированное обслуживание уже работает."
+    learning_goal: "Показать симметрию рамки — она работает и негативно"
+    failure_bucket: strict_in
+
+  - id: s34c
+    file: slides/s34c-brewery-cv-qc-pass.md
+    type: worked_example
+    duration_min: 2.5
+    assertion: "Рамка пропускает: для контроля упаковки на пивоварне (>1 млн бутылок/день) AI уместен — данных много, регуляторика мягче, эскалация работает."
+    learning_goal: "Показать положительное применение рамки"
+    failure_bucket: out
 
   - id: s35
     file: slides/s35-five-step-framework.md

@@ -13,68 +13,68 @@ visual:
   primary: "Decision tree 5 critical questions с примерами для каждого"
 ---
 
-# Decision framework: 5 критериев AI/не AI в логистике
+# Фреймворк решения: 5 критериев AI/не AI в логистике
+
+> Дополняется 7 вопросами вендору на слайде s40.
 
 ## Пять критериев
 
 **1. Среда контролируемая?**
-- Yes → AI applicable (warehouse, port, rail).
-- No → continue.
+- Да → AI применим (склад, порт, рельсы).
+- Нет → следующий критерий.
 
-**2. Задача — well-defined optimization (TSP, VRP, scheduling)?**
-- Yes → **OR (Gurobi, CPLEX, OR-Tools) лучше RL/ML**.
-- UPS ORION = canonical proof ($300-400M/год через OR + heuristics).
+**2. Задача — чётко поставленная оптимизация (TSP, VRP, планирование расписаний)?**
+- Да → **OR (Gurobi, CPLEX, OR-Tools) лучше RL/ML**.
+- UPS ORION = канонический пример ($300-400M/год через OR + эвристики).
 
-**3. Demand pattern stationary?**
-- Yes → **EOQ + safety stock + ABC classical formulas лучше ML**.
-- Audit: какой % SKU реально требует ML? Часто <20%.
+**3. Спрос стационарный?**
+- Да → **EOQ + страховой запас + ABC-классические формулы лучше ML**.
+- Аудит: какой % SKU реально требует ML? Часто <20%.
 
-**4. Safety-critical с regulatory audit?**
-- Yes → **rule-based + human-in-loop required**.
-- Black-box ML не работает (FDA, FAA, IMO).
+**4. Критично для безопасности + регуляторный аудит?**
+- Да → **правиловой подход + человек-в-цикле обязательны**.
+- Чёрный ящик ML не работает (FDA, FAA, IMO).
 
-**5. Event в-distribution?**
-- Yes → ML scoring.
-- No → **human dispatcher + scenario planning**.
+**5. Событие в-распределении?**
+- Да → ML-скоринг.
+- Нет → **диспетчер-человек + сценарное планирование**.
 
 ## Применение
 
-- Складская роботизация (Symbotic Walmart) — Criterion 1 yes, Criterion 4 partial → AI applicable + safety + HITL.
-- UPS ORION маршрутизация — Criterion 2 yes (VRP) → OR, не ML.
-- Houthi-style crisis demand forecast — Criterion 5 no → human dispatcher.
-- FDA-regulated cold-chain pharma logistics — Criterion 4 yes → rule-based + HITL.
-- Симфическая seasonal inventory ритейлера — Criterion 3 partial (mix stationary + spike) → hybrid EOQ + targeted ML на seasonal SKU.
+- Складская роботизация (Symbotic Walmart) — Критерий 1 да, Критерий 4 частично → AI применим + безопасность + HITL.
+- UPS ORION маршрутизация — Критерий 2 да (VRP) → OR, не ML.
+- Прогноз спроса в кризис типа хуситов — Критерий 5 нет → диспетчер-человек.
+- FDA-регулируемая холодовая фарма-логистика — Критерий 4 да → правиловой + HITL.
+- Сезонные запасы ритейлера — Критерий 3 частично (смесь стационарного + всплеска) → гибрид EOQ + точечный ML на сезонных SKU.
 
-## Pedagogical point
+## Педагогический смысл
 
-**Это не «всегда AI» или «никогда AI».** Это decision framework, который разбивает logistics workload на категории, и для каждой определяет proper tool.
+**Это не «всегда AI» или «никогда AI».** Это фреймворк решения, который разбивает логистическую нагрузку на категории и для каждой определяет правильный инструмент.
 
 ## Speaker notes
 
-Это центральный payoff раздела четыре и всей лекции. Пять критериев, которые позволяют инженеру решить, AI или не AI для конкретной логистической задачи.
+Это центральная окупаемость раздела четыре и всей лекции. Пять критериев, которые позволяют инженеру решить, AI или не AI для конкретной логистической задачи. (На слайде s40 эта 5-критерийная рамка дополняется 7 вопросами вендору.)
 
-Первый критерий — среда контролируемая или нет. Если warehouse, port, rail — yes, AI applicable. Это уровень один лестницы среды, и AI зрело работает. Symbotic, Amazon Robotics, KONUX — canonical examples.
+**Критерий 1 — среда контролируемая или нет.** Если склад, порт, рельсы — да, AI применим. Это уровень один лестницы среды, и AI зрело работает. Symbotic, Amazon Robotics, KONUX — канонические примеры. Если нет — городские, магистраль, исключение — переход к следующему критерию.
 
-Если nope — городские, magistral, exception — continue к следующему критерию.
+**Критерий 2 — чётко поставленная задача оптимизации.** Задача коммивояжёра, задача маршрутизации, планирование расписаний. Если да — это территория OR. Gurobi, CPLEX, Google OR-Tools работают лучше, дешевле, объяснимее, чем RL или ML. UPS ORION — канонический пример, триста-четыреста миллионов экономии в год через OR плюс эвристики, не глубокое обучение.
 
-Второй критерий — well-defined optimization задача. Travelling Salesman Problem, Vehicle Routing Problem, scheduling. Если yes — это OR territory. Gurobi, CPLEX, Google OR-Tools работают лучше, дешевле, объяснимее, чем RL или ML. UPS ORION — canonical proof, триста-четыреста миллионов savings в год через OR плюс heuristics, не deep learning.
+**Критерий 3 — стационарный спрос или нестационарный.** Если спрос предсказуем по сезонам — это территория EOQ. Оптимальный размер заказа, страховой запас, ABC-анализ. Формулы 1913 года, простые, работают. Урок — сделать аудит ваших запасов: какой процент SKU реально требует ML? Часто менее двадцати процентов. Остальные — классических формул достаточно.
 
-Третий критерий — demand pattern stationary или non-stationary. Если spending pattern predictable по сезонам — это EOQ territory. Economic Order Quantity, safety stock, ABC analysis. Формулы 1913 года, simple, работают. Lesson — сделать audit вашего inventory: какой процент SKU реально требует ML? Часто less than двадцати процентов. Остальные — classical formulas достаточно.
+**Критерий 4 — критично для безопасности с регуляторным аудитом.** FDA для холодовой фармы. FAA для авиации. IMO для морской безопасности. ICAO для авиатрафика. Если да — это территория правилового подхода плюс человек-в-цикле. Чёрный ящик ML не работает в регулируемых индустриях, потому что аудиторский след обязателен.
 
-Четвёртый критерий — safety-critical с regulatory audit. FDA для pharma cold-chain. FAA для aviation. IMO для shipping safety. ICAO для air traffic. Если yes — это rule-based plus human-in-loop territory. Black-box ML не работает в regulated industries, потому что audit trail обязателен.
+**Критерий 5 — событие в-распределении или вне.** Если ежедневные операции в нормальном распределении спроса — это территория ML-скоринга. ML может оптимизировать на маржинах. Если событие чёрного лебедя (хуситы, Suez, COVID) — это уровень пять лестницы. Диспетчер-человек плюс сценарное планирование, не ML.
 
-Пятый критерий — event в-distribution или out. Если daily operations в normal demand distribution — это ML scoring territory. ML может оптимизировать на margins. Если black-swan event (хуситы, Suez, COVID) — это уровень пять лестницы. Human dispatcher plus scenario planning, не ML.
+**Примеры применения.** Складская роботизация — Критерий 1 да, Критерий 4 частично (безопасность склада, но легче, чем фарма). AI применим плюс безопасность плюс HITL.
 
-Application примеры. Складская роботизация — Criterion 1 yes, Criterion 4 partial (warehouse safety но lighter than pharma). AI applicable plus safety plus HITL.
+UPS ORION маршрутизация — Критерий 2 да, VRP с десятками тысяч маршрутов. OR, не ML.
 
-UPS ORION маршрутизация — Criterion 2 yes, VRP с tens of thousands routes. OR, не ML.
+Прогноз спроса в кризис типа хуситов — Критерий 5 нет, полностью вне-распределения. Диспетчер-человек.
 
-Houthi-style crisis demand forecast — Criterion 5 no, completely out-of-distribution. Human dispatcher.
+FDA-регулируемая холодовая фарма-логистика — Критерий 4 да. Правиловой плюс HITL.
 
-FDA-regulated cold-chain pharma logistics — Criterion 4 yes. Rule-based plus HITL.
+Сезонные запасы ритейлера — Критерий 3 частично. Смесь стационарного плюс всплеск. Гибрид EOQ плюс точечный ML на сезонных SKU. Это не «полностью AI» или «полностью формула» — это гибрид с правильным выбором инструмента на каждой категории SKU.
 
-Симфическая seasonal inventory ритейлера — Criterion 3 partial. Mix stationary plus spike. Hybrid EOQ plus targeted ML на seasonal SKU. Это не «полностью AI» или «полностью formula» — это hybrid с правильным choice tool на каждой категории SKU.
+**Педагогический смысл.** Это не «всегда AI» или «никогда AI». Это фреймворк решения, который разбивает логистическую нагрузку на категории, и для каждой определяет правильный инструмент. Урок для инженера — когда вы оцениваете предложение вендора, проходите по этим пяти критериям. Какой критерий применим? Какой инструмент правильный для этой категории?
 
-Pedagogical point. Это не «всегда AI» или «никогда AI». Это decision framework, который разбивает logistics workload на категории, и для каждой определяет proper tool. Lesson для инженера — когда вы оцениваете vendor proposal, проходите по этим пяти критериям. Какой критерий применим? Какой инструмент правильный для этой category?
-
-Это framework, который останется с вами после лекции. Это main payoff лекции тринадцать.
+Это фреймворк, который останется с вами после лекции. Это главная окупаемость лекции тринадцать.

@@ -549,7 +549,7 @@ def s08_amazon_robotics(p):
              "Зрение-стек не универсален. Multi-modal сенсор — урок 3 лет.",
              size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
     footer(slide, "Amazon ~1M роботов 2025 · крупнейший складской автоматизатор в мире")
-    add_notes(slide, "См. slides/s08-amazon-роботics.md speaker notes.")
+    add_notes(slide, "См. slides/s08-amazon-robotics.md speaker notes.")
 
 
 def s09_amr_locus(p):
@@ -695,7 +695,7 @@ def s12_discrete_failure_matrix(p):
                      size=11 if j > 0 else 12, bold=(j == 0), color=DEEP, line_spacing=1.25)
         y += row_h + 0.05
     footer(slide, "Чек-лист «что спросить» при оценке любого решения уровня 1")
-    add_notes(slide, "См. slides/s12-discrete-провал-matrix.md speaker notes.")
+    add_notes(slide, "См. slides/s12-discrete-failure-matrix.md speaker notes.")
 
 
 # ========== SECTION 2 ==========
@@ -871,7 +871,7 @@ def s17_av_bankruptcy_timeline(p):
         ("• Выживший консолидация 10:1 — выжили 3-4 из 30+", {"size": 11, "bold": True, "color": GOLD}),
     ], line_spacing=1.3)
     footer(slide, "См. также s22 Stefan Seltz-Axmacher разбор полётов")
-    add_notes(slide, "См. slides/s17-av-банкротство-хронология.md speaker notes.")
+    add_notes(slide, "См. slides/s17-av-bankruptcy-timeline.md speaker notes.")
 
 
 def s18_cumulative_20b(p):
@@ -926,7 +926,7 @@ def s18_cumulative_20b(p):
          {"size": 12, "italic": True, "color": DEEP, "align": PP_ALIGN.CENTER}),
     ], align=PP_ALIGN.CENTER, line_spacing=1.2)
     footer(slide, "Lec-11 Pilot чистилище был $десятки тысяч/пилот · AV-провал в тысячи раз дороже")
-    add_notes(slide, "См. slides/s18-совокупно-20b-burned.md speaker notes.")
+    add_notes(slide, "См. slides/s18-cumulative-20b-burned.md speaker notes.")
 
 
 def s19_survivor_consolidation(p):
@@ -1020,7 +1020,7 @@ def s20_trucker_shortage_false(p):
                  size=10, italic=True, color=SLATE)
         py += 0.75
     footer(slide, "Bob Costello (ATA главный экономист): «для всех  неправильных причин» — не AI снизил, спад")
-    add_notes(slide, "См. slides/s20-дальнобойщик-shortage-false-framing.md speaker notes.")
+    add_notes(slide, "См. slides/s20-trucker-shortage-false-framing.md speaker notes.")
 
 
 def s21_highway_failure_matrix(p):
@@ -1061,7 +1061,7 @@ def s21_highway_failure_matrix(p):
                      size=11 if j > 0 else 12, bold=(j == 0), color=DEEP, line_spacing=1.25)
         y += row_h + 0.05
     footer(slide, "Выжившие применяют поэтапный ввод (ползком-шагом-бегом) против всех 4 причин (см. s19)")
-    add_notes(slide, "См. slides/s21-highway-провал-matrix.md speaker notes.")
+    add_notes(slide, "См. slides/s21-highway-failure-matrix.md speaker notes.")
 
 
 def s22_starsky_quote(p):
@@ -1114,7 +1114,7 @@ def s22_starsky_quote(p):
                  size=10, color=DEEP, line_spacing=1.3)
         px += 4.2
     footer(slide, "First-wave casualty с honest first-person разбор полётов · читать эссе полностью")
-    add_notes(slide, "См. slides/s22-starsky-симуляция-к-реальности.md speaker notes.")
+    add_notes(slide, "См. slides/s22-starsky-sim-to-real.md speaker notes.")
 
 
 # ========== SECTION 3 ==========
@@ -1239,7 +1239,7 @@ def s26_pony_unit_economics(p):
          {"size": 11, "italic": True, "color": DEEP}),
     ], line_spacing=1.25)
     footer(slide, "Контраст с Waymo: не публикует за-поездку экономика · большой чёрный ящик на 2026")
-    add_notes(slide, "См. slides/s26-pony-ai-unit-экономика.md speaker notes.")
+    add_notes(slide, "См. slides/s26-pony-ai-unit-economics.md speaker notes.")
 
 
 def s27_tesla_austin(p):
@@ -1382,7 +1382,7 @@ def s29_cruise_centerpiece(p):
          {"size": 10, "italic": True, "color": DEEP}),
     ], line_spacing=1.2)
     footer(slide, "Паттерн выживания Waymo: поэтапный ввод (ползком-шагом-бегом), conservative ODD, формальный безопасность кейс · Cruise: быстрое ODD ради IPO хронология")
-    add_notes(slide, "См. slides/s29-cruise-центральный кейс.md speaker notes.")
+    add_notes(slide, "См. slides/s29-cruise-centerpiece.md speaker notes.")
 
 
 def s30_uber_tempe(p):
@@ -1695,7 +1695,7 @@ def s37_trucker_shortage_structural(p):
         ("AI может помочь на margins, не заменить политика.", {"size": 11, "italic": True, "color": DEEP}),
     ], line_spacing=1.25)
     footer(slide, "Bob Costello (ATA главный экономист): «для всех  неправильных причин» — спад, не AV")
-    add_notes(slide, "См. slides/s37-дальнобойщик-shortage-структурный.md speaker notes.")
+    add_notes(slide, "См. slides/s37-trucker-shortage-structural.md speaker notes.")
 
 
 def s38_decision_framework(p):
@@ -1736,9 +1736,10 @@ def s38_decision_framework(p):
     # Bottom takeaway
     rounded_box(slide, 0.5, 6.7, 12.33, 0.5, fill=GOLD_TINT, stroke=GOLD)
     text_box(slide, 0.7, 6.75, 11.9, 0.4,
-             "Это не «всегда AI» или «никогда AI». Рамка решения разбивает нагрузка на категории + правильный инструмент на категорию.",
+             "Это не «всегда AI» или «никогда AI». Рамка разбивает нагрузку на категории + правильный инструмент на каждую.",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    add_notes(slide, "См. slides/s38-решение-фреймворк.md speaker notes.")
+    footer(slide, "+ дополняется 7 вопросами вендору (слайд s40)")
+    add_notes(slide, "См. slides/s38-decision-framework.md speaker notes.")
 
 
 def s39_alternative_toolkit(p):
@@ -1790,7 +1791,7 @@ def s39_alternative_toolkit(p):
     text_box(slide, 0.7, 6.75, 11.9, 0.4,
              "Инженер-логист, знающий только AI — incomplete engineer. AI ≠ универсальное решение.",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    add_notes(slide, "См. slides/s39-alternative-инструментарий.md speaker notes.")
+    add_notes(slide, "См. slides/s39-alternative-toolkit.md speaker notes.")
 
 
 # ========== SECTION 5 ==========
@@ -1804,20 +1805,20 @@ def s40_qa_vendor_questions(p):
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     # 7 questions in 2 columns
     questions = [
-        ("1", "Какое сравнение с базовая линия OR\n(Google OR-Tools, Gurobi, CPLEX)?",
-         "UPS ORION: OR > ML для well-defined оптимизация.\nЕсли поставщик не делал сравнения — красный флаг.", LIGHT),
-        ("2", "Какой ваш ODD,\nи как валидируется новый расширение?",
-         "Cruise волочения инцидент Oct 2023 — провал именно ODD-дисциплины.\nРасширение без обширный валидации — anti-pattern.", MID),
-        ("3", "Какой ваш мониторинг водителя стек\n(для L2/L3)?",
-         "Tesla EA22002: 13 смертельный ДТП с предвидимое неправильное использование.\nСтруктурная проблема дизайна, не вина водителей.", TEAL),
-        ("4", "Ratio км в симуляции / км на публичный roads?",
+        ("1", "Какое сравнение с базовой линией OR\n(Google OR-Tools, Gurobi, CPLEX)?",
+         "UPS ORION: OR > ML для чётко поставленной оптимизации.\nЕсли поставщик не делал сравнения — красный флаг.", LIGHT),
+        ("2", "Какой ваш ODD,\nи как валидируется новое расширение?",
+         "Cruise dragging инцидент Oct 2023 — провал именно ODD-дисциплины.\nРасширение без обширной валидации — анти-паттерн.", MID),
+        ("3", "Какой ваш стек мониторинга водителя\n(для L2/L3)?",
+         "Tesla EA22002: 13 смертельных ДТП с предсказуемым неправильным использованием.\nСтруктурная проблема дизайна, не вина водителей.", TEAL),
+        ("4", "Отношение км в симуляции / км на дорогах общего пользования?",
          "Starsky разрыв симуляция-к-реальности.\nЕсли только симуляция — серьёзный красный флаг.", GOLD),
-        ("5", "Ошибка rate на сезонных распределение shifts\n(Чёрная пятница, Рождество)?",
-         "Distribution сдвиг на сезонных пиках убивает ML-модели,\nобученные на off-peak data.", LIGHT),
-        ("6", "Какие сертификации\n(FDA (рег.) Part 11, ATEX, ISO (стандарт) 26262, NHTSA SGO)?",
-         "Регуляторy аудит обязателен в безопасность-критический категориях.\nBlack-box ML не проходит аудит.", MID),
-        ("7", "Какова единица экономика\n(на машину / маршрут / тонну)?",
-         "Pony.ai первый robotaxi с положительная операционная прибыль на автомобиль\n(Гуанчжоу Nov 2025, Шэньчжэнь Feb 2026).", RED_WARN),
+        ("5", "Частота ошибок на сезонных сдвигах распределения\n(Чёрная пятница, Рождество)?",
+         "Сдвиг распределения на сезонных пиках убивает ML-модели,\nобученные на данных вне пиков.", LIGHT),
+        ("6", "Какие сертификации\n(FDA Part 11, ATEX, ISO 26262, NHTSA SGO)?",
+         "Регуляторный аудит обязателен в категориях, критичных для безопасности.\nЧёрный ящик ML не проходит аудит.", MID),
+        ("7", "Какова удельная экономика\n(на машину / маршрут / тонну)?",
+         "Pony.ai первая robotaxi с положительной операционной прибылью на автомобиль\n(Гуанчжоу ноябрь 2025, Шэньчжэнь февраль 2026).", RED_WARN),
     ]
     px = 0.5
     py = 1.7
@@ -1839,8 +1840,8 @@ def s40_qa_vendor_questions(p):
         # Почему
         text_box(slide, x + 0.15, y + 0.85, card_w - 0.3, 0.65, "Почему: " + why,
                  size=10, italic=True, color=SLATE, line_spacing=1.25)
-    footer(slide, "Чек-лист для оценки вендор proposals · окупаемость лекции 13")
-    add_notes(slide, "См. slides/s40-qa-вендор-questions.md speaker notes.")
+    footer(slide, "Дополняет 5-критерийную рамку слайда s38 · окупаемость лекции 13")
+    add_notes(slide, "См. slides/s40-qa-vendor-questions.md speaker notes.")
 
 
 def s41_closing_hero_noc(p):

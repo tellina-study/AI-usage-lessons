@@ -10,7 +10,9 @@
 
 ```
 library/lectures/lec-NN/
-  chapter.md              ← глава методички ~8-12k слов (academic)         [PRIMARY = source of truth]
+  chapter.md              ← глава методички ≥30k слов для L4+ (academic)   [PRIMARY = source of truth]
+  chapter-part2.md        ← multi-part split при >600 строк (CLAUDE.md doc-size-limit)
+  chapter-part3.md        ← опционально при >1200 строк суммарно
   rendered/lec-NN.pptx    ← презентация со speaker notes для студентов     [DERIVED from chapter]
   speech.md               ← речь лектора ~4-6k слов (conversational)        [DERIVED from chapter + slides]
 ```
@@ -323,11 +325,16 @@ Producer-агенты (book-editor / presentation-designer / speech-writer) ча
 
 | Артефакт | Длина | Pacing |
 |---|---|---|
-| `chapter.md` | 8-12k слов (~30-50 страниц A4) | Self-study, ~30-60 мин чтения |
+| `chapter.md` | **≥30 000 слов для L4+** (target 30k ±5% = 28 500–31 500), L1–L3 8-12k без waiver | Textbook chapter depth + Q&A backup + self-study reference; ~2-3 ч глубокого чтения |
 | `slides/*.md` | ~150-300 слов на slide × 25-30 slides ≈ 5-8k слов суммарно | Visible content + speaker notes |
 | `speech.md` | 4-6k слов (≈70-80 wpm × 75 мин) | Сliceful pacing, паузы, переходы |
 
-**Если chapter < 5k или > 15k — red flag** (либо мало материала для лекции, либо overload).
+**Chapter Depth Baseline (ENFORCED — см. `CLAUDE.md` § «Chapter Depth Baseline»):**
+- L4–L17: **≥30 000 слов** mandatory, waiver недоступен; <28 500 слов → REVISE (структурный gap, не polish).
+- L1–L3: 8-12k acceptable; ≥30k если owner explicit instruction.
+- **Multi-part split mandatory при >600 строк per file** (CLAUDE.md «Document Size Limit»): `chapter.md` + `chapter-part2.md` + `chapter-part3.md`, cross-link через TOC.
+
+**Что НЕ засчитывается в 30k:** frontmatter YAML, heading-only sections, TOC, Источники / bibliography (это отдельно).
 
 ---
 

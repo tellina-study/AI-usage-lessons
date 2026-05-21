@@ -276,6 +276,63 @@ Compare current `slides/*.md` против previous version (git diff) — flag 
    - DESIGNER-INITIATIVE (not in brief) — flag P1 «Designer-added content».
 3. Output list в methodology-critic report.
 
+#### Check 11: Hero images на s01 + s39 (per [[hero-images-required]], ENFORCED — Лекция 8 lesson)
+
+Для **каждого** deck курса:
+- [ ] **s01**: ≥40% area, real image (не stylized mock), foreshadows keystone OR domain identity?
+- [ ] **s01**: attribution label visible (source + date)?
+- [ ] **s39**: ≥40% area, real image, bridges Lec-N+1 OR emotional payoff OR iconic case visual?
+- [ ] **s39**: attribution label visible?
+
+**Не подходит:** stock illustration с laptop+brain icon, generic «AI» visual, plain Ocean palette card, чисто текстовый cover, thank you slide, Q&A repeat на s39.
+
+**Если миссинг ИЛИ <40% area ИЛИ stylized mock вместо real image** → P1 «Hero structural gap: sNN». Cost-of-omission lec-08: 6 min — простое добавление, но owner заметил сразу.
+
+#### Check 12: Real images (not mocks) per [[no-mock-fallbacks]] (ENFORCED — Лекция 8 lesson)
+
+**Sample 5 slides claiming to show external screenshots / case visuals** — verify:
+- [ ] Identifiable real source page URL (в `iteration-log.md` или `assets/screenshots/sNN-real-source.url`)?
+- [ ] Per-image acquisition log present (Tier 1-6 used, source URL)?
+- [ ] **Stylized Ocean-palette card с verbatim headline = FAIL** (это mock, не real image).
+- [ ] **Primitive shapes (rectangles / circles / waves) построенные через python-pptx — это mock, не real visual.**
+
+**Mock-fallback допустим только при documented 6/6 tier failure** в `iteration-log.md` (≥6 tried URLs per failed slide).
+
+**Severity:**
+- Mock-fallback без documented 6-tier attempt → **P0** «Mock-fallback structural gap, not polish».
+- Mock с verbatim headline = visually-passes-orchestrator-sweep но pedagogical failure → **P1** «Mock disguised as real image».
+- Real image без attribution label visible → **P2** «Missing attribution».
+
+**Cost-of-omission lec-08:** 16 mocks прошли self-report «87.2% media coverage» → owner reject «это моканное говно. все переделать» → ~1.5h cycle wasted.
+
+#### Check 13: Russification depth per [[russification]] (ENFORCED — Лекция 8 lesson)
+
+**Deep latin-token scan** (broad regex + brand allowlist) на rendered pptx + speech + chapter narrative — **pattern-narrow grep НЕ достаточен** (Лекция 8: narrow scan 32 patterns показал 0-4 hits, deep scan показал 919 unique в speech).
+
+```bash
+# Sample command:
+python3 tools/presentation-build/deep_latin_scan.py \
+  library/lectures/lec-NN/chapter.md \
+  library/lectures/lec-NN/speech.md \
+  library/lectures/lec-NN/slides/*.md
+# Extract PPTX visible:
+python3 -c "from pptx import Presentation; p=Presentation('library/lectures/lec-NN/rendered/lec-NN.pptx'); \
+  [print(s.text_frame.text) for sl in p.slides for s in sl.shapes if s.has_text_frame]" > /tmp/pptx-visible.txt
+python3 tools/presentation-build/deep_latin_scan.py /tmp/pptx-visible.txt
+```
+
+**Acceptance:**
+- [ ] **Critical anglicism hits = 0** в narrative body (top-30 blacklist: production-уровень, capability, hype demo, freelance, out-of-band verification, MAJORS × STATUS, regurgitation theory, verbatim, predictive maintenance, ground truth, automation bias, multi-sensor fusion, decision-support, accuracy, big-tech, edge case, takeaway, use case, best practice, deploy, insight, tradeoff, baseline, stack, review, override, self-contained, pipeline, etc.).
+- [ ] **Deep scan results** показывают только legitimate Latin tokens: brand names (Sora, Midjourney, NYT, etc.), tech acronyms whitelisted (AI, ML, LLM, RAG, MCP, API), URLs, case names (people / orgs), slide markers `[sNN]`.
+- [ ] **`unique - whitelist = ∅`** для narrative body content.
+
+**Severity:**
+- Critical anglicism hits >5 в visible body → **P0** «Anti-anglicism mandate violated».
+- Critical anglicism hits 1-5 → **P1** «Russification incomplete».
+- Producer self-report «0 hits» при deep scan >5 → **P1 + flag «inflated self-report»** (Лекция 8 pattern: 0 vs 919).
+
+**Cost-of-omission lec-08:** speech v1 self-report «0 hits» при 107 patterns / 186 occurrences → owner reject «это просто трындец! провал» → 3 revision passes / ~3h wasted.
+
 #### DoD Enforcement (ENFORCED, ALL metrics)
 
 **Не подписывать «approve-with-minor» если артефакт не meets ВСЕ DoD метрики.** Каждый DoD требование — pass/fail, не «approximately».

@@ -49,7 +49,29 @@ description: Пишет/правит главу методички (chapter.md) 
 - ❌ **Не делать claims про tools/benchmarks с числами** без attached «as of {date}» tag (e.g. «ARC-AGI лучший результат — 37.6%» становится устаревшим за дни). Каждое такое claim → `[FRESHNESS-CHECK: monthly cadence]`.
 - ❌ **Не использовать «инженер ИУ6» / другие локальные привязки** — chapter универсальная (для переиспользования).
 - ❌ **АНОНИМИЗАЦИЯ — ENFORCED (Лекция 9 lesson 2026-05-21).** НЕ упоминать named institutions: МГТУ им. Баумана / Факультет ИУ / Кафедра «Технологии искусственного интеллекта» / ВКА им. А.Ф. Можайского / МАИ / СПбГУ / bauman.ru / vka.mil. Career angle section МОЖЕТ упоминать профильные технические университеты в **родовой форме** (как lec-06/lec-07 эталон): «профильные технические университеты предлагают магистерские программы AI…» — без названий ВУЗов. Frontmatter `audience` строго universal: «студенты-инженеры 3 курса (универсальная, не отраслевые специалисты)» — НЕ «студенты ИУ6 МГТУ Бауман». Lec-09 cost-of-omission: 1 revision cycle (v2→v3) anonymization.
-- ❌ **RUSSIFICATION в chapter body.** Применять memory rule `feedback_russification`: anti-anglicism в visible body (за исключением brand names + tech acronyms с RU расшифровкой при первом упоминании). Каноничные замены: «predictive maintenance» → «прогностическое обслуживание»; «ground truth» → «эталонная разметка»; «automation bias» → «склонность доверять автомату»; «multi-sensor fusion» → «слияние нескольких сенсоров»; «decision-support» → «поддержка принятия решений»; «accuracy» (как метрика) → «точность»; «big-tech» → «большие ИИ-компании»; «edge case» → «краевой случай».
+- ❌ **RUSSIFICATION в chapter body.** Применять memory rule `feedback_russification`: anti-anglicism в visible body (за исключением brand names + tech acronyms с RU расшифровкой при первом упоминании). Каноничные замены: «predictive maintenance» → «прогностическое обслуживание»; «ground truth» → «эталонная разметка»; «automation bias» → «склонность доверять автомату»; «multi-sensor fusion» → «слияние нескольких сенсоров»; «decision-support» → «поддержка принятия решений»; «accuracy» (как метрика) → «точность»; «big-tech» → «большие ИИ-компании»; «edge case» → «краевой случай». Full таблица (45+ phrases) и keep-list — `tools/presentation-build/README.md` §5.8.
+
+## ENFORCED — Russification для RU chapters (Лекция 8 lesson, memory rule `feedback_russification`)
+
+Chapter может иметь больше legal/technical English terms с inline gloss, чем slides (academic text допускает «fair use», «opt-out», «embedding» с расшифровкой). Однако **narrative prose должна быть RU** — никаких «production-уровень», «capability», «hype demo», «out-of-band verification» в основном тексте.
+
+### Self-check (mandatory перед reporting completion)
+
+Deep latin-token scan на chapter narrative (broad regex + brand allowlist):
+
+```bash
+python3 tools/presentation-build/deep_latin_scan.py library/lectures/lec-NN/chapter.md
+# Expected: unique - whitelist = ∅ для narrative body content
+# (URLs, case names, brand markers, technical refs OK)
+```
+
+**Report ACTUAL hit count** в финальном отчёте — не narrative «0 hits». Если >10 hits — STOP, apply replacements ДО declaring done.
+
+### Russification reference
+
+Каноничная таблица (45+ phrases) + keep-list (brand names + acronyms + mode names + legal jurisdiction terms) — single source of truth в `tools/presentation-build/README.md` §5.8. Не дублировать здесь.
+
+**Cost-of-omission lec-08:** chapter narrative для финансового / музыкального / визуального доменов содержит много AI-tech терминологии — без явного mandate producer не Russifies → cascade в speech/slides → 3 revision passes.
 
 ## ENFORCED — Полная цитата-проверка на каждой revision (Лекция 9 lesson)
 

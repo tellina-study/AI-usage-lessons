@@ -1,0 +1,407 @@
+# library/lectures/lec-12/deck.yaml
+#
+# Deck-структура Лекции 12 «AI в автоматизации производства и цифровые двойники»
+# v1: ~39 слайдов (Phase 5-6: первый рендер).
+#
+# Phase 5-6 multi-artifact pipeline. Issue #133.
+#
+# Pattern carry-forward от Лекции 11:
+#   - section dividers (8 шт.): s05/s14/s19/s24/s28/s32/s36/s38
+#   - cover (s02), lecture-map (s03), glossary mini (s04), keystone (s02 cover-keystone)
+#   - dedicated Q&A slide (s38), bridge к lec-13 (s39 closing hero)
+#   - Hero on s01 (Hannover Messe / NVIDIA / Siemens, ≥40% area) + s39 (Toyota Digit, ≥40% area)
+#   - Roadmap-bar только на dividers + cover (НЕ на каждом content slide)
+
+deck:
+  lecture_number: 12
+  title: "AI в автоматизации производства и цифровые двойники"
+  audience: "студенты-инженеры 3 курса (универсальная, не отраслевые специалисты)"
+  duration_min: 75
+  central_question: "На какой ступени автономии AI можно поднять процесс — A0/A1/A2/A3 — и где цифровой двойник обязателен как мост, а где AI не нужен вовсе?"
+  learning_outcomes: [LO2, LO5, LO7]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v3 multi-part (status=reviewed, ~30k слов; chapter.md + chapter-part2.md + chapter-part3.md + chapter-part4.md)
+  plan: notes/lecture-12-review/plan-v2.md
+  keystone_axis: "Шкала автономии AI в производстве A0→A1→A2→A3; цифровой двойник — мост"
+
+# Final slide list (39 slides):
+#
+# Section 0 — Cover + keystone + lecture-map + glossary + roadmap (5 мин):
+#   s01 — hero hook: Hannover Messe + NVIDIA Omniverse / Siemens Composer
+#   s02 — cover (lecture title + meta + roadmap-bar) + keystone foreshadow
+#   s03 — lecture-map (8 horizontal section cards)
+#   s04 — keystone: «Шкала автономии AI A0→A3» (4 ступени + disclaimer ISA-95)
+#
+# Section divider 1
+#   s05 — divider §1: Что такое цифровой двойник в 2026
+#
+# Section 1 — §1 DT 2026 + Kritzinger + рынок + 75% fail (5 слайдов):
+#   s06 — Kritzinger 3-уровневая taxonomy + ГОСТ Р 57700.37
+#   s07 — 4-слойная архитектура (physical / sensors / model / AI-consumers)
+#   s08 — рынок 36→180 + AI-mfg 155 + OPC-UA-AI 17,15
+#   s09 — Southeast Asian Port failure $12M / 18 мес
+#   s10 — data layer audit 5 questions
+#
+# Section divider 2
+#   s11 — divider §2: A0 Наблюдать — vision QC + PdM
+#
+# Section 2 — §2 A0 (4 слайда):
+#   s12 — vision QC + 99% tuned / 0,1-2% FP / cost-of-FP 100 годных
+#   s13 — PdM ROI breakdown (Deloitte 10:1 + cement 57× + chemical $2M)
+#   s14 — когда vision/PdM НЕ применим — альтернативы
+#
+# Section divider 3
+#   s15 — divider §3: A1 Советовать — MES + alarm + PLC Copilot
+#
+# Section 3 — §3 A1 (4 слайда):
+#   s16 — MES advisory + alarm prediction time-series
+#   s17 — PLC Copilot 85% acc + ChatGPT MOV %M99999 failure split
+#   s18 — engineer-in-loop architecture
+#
+# Section divider 4
+#   s19 — divider §4: A2 Замыкать петлю + twin как песочница
+#
+# Section 4 — §4 A2 (4 слайда):
+#   s20 — Yokogawa FKDPP в JSR 35 days
+#   s21 — digital twin как песочница для RL (Omniverse / Composer)
+#   s22 — sim-to-real gap concrete T=300°C / T=315°C + fouling
+#   s23 — когда RL НЕ применим — MPC + formal verification
+#
+# Section divider 5
+#   s24 — divider §4.5: A3 — единичные кейсы + 3 блокера
+#
+# Section 4.5 — §4.5 A3 (1 слайд):
+#   s25 — Toyota Digit / BMW Leipzig + 3 блокера (regulatory + cost + complexity)
+#
+# Section divider 6
+#   s26 — divider §5: Где AI НЕ применим
+#
+# Section 5 — §5 (6 слайдов):
+#   s27 — Southeast Asian Port intro hero §5
+#   s28 — 10 критериев + альтернатив matrix
+#   s29 — worked example фарма + дозировка + FDA ±0,5% vs ±0,1%
+#   s30 — Gartner 40% agentic + 30% GenAI PoC abandoned
+#   s31 — 5 вопросов вендору
+#
+# Section divider 7
+#   s32 — divider §6: OT/IT архитектура
+#
+# Section 6 — §6 (3 слайда):
+#   s33 — 7-слойная архитектура (sensor → network → edge → MES → twin → cloud → human)
+#   s34 — OPC UA + MQTT + TSN dataflow
+#   s35 — Lighthouse Network 220+ + 16% EBIT
+#
+# Section divider 8
+#   s36 — divider §7: РФ context + карьерный мост
+#
+# Section 7 — §7 (2 слайда):
+#   s37 — российский кейс (ГОСТ + КАМАЗ + Норникель)
+#   s38 — карьерный мост: 4 роли (AI/ML eng / DT eng / MES integration / Edge AI)
+#
+# Section 8 — §8 Закрытие + Q&A
+#   s39 — closing hero: Toyota Digit (bridge к Лекции 13)
+
+slides:
+  - id: s01
+    file: slides/s01-hero-hannover-messe.md
+    type: hero_cover
+    duration_min: 1
+    assertion: "AI поднимается по шкале автономии A0→A3; цифровой двойник — единственный известный мост между ступенями."
+    learning_goal: "Hero hook + foreshadow keystone (физика ↔ AI bridge)"
+    failure_bucket: out
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 1
+    assertion: "Лекция строится вокруг шкалы автономии A0–A3; цифровой двойник — мост."
+    learning_goal: "Контекст лекции + LO + roadmap"
+
+  - id: s03
+    file: slides/s03-lecture-map.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Восемь разделов: вход → DT 2026 → A0 → A1 → A2 → A3 → где AI НЕ → OT/IT + РФ + закрытие."
+    learning_goal: "Навигация по 8 разделам лекции"
+
+  - id: s04
+    file: slides/s04-keystone-autonomy-ladder.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Шкала автономии AI в производстве: A0 наблюдать → A1 советовать → A2 замыкать петлю → A3 действовать автономно. Цифровой двойник — мост между ступенями."
+    learning_goal: "Keystone-ось A0–A3 + disclaimer ISA-95 L0-L2 vs A0-A3 + disclaimer A3-asymmetry"
+    failure_bucket: strict_in
+
+  - id: s05
+    file: slides/s05-section1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 1. Что такое цифровой двойник в 2026."
+    learning_goal: "Section break"
+
+  - id: s06
+    file: slides/s06-kritzinger-gost.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Цифровой двойник — это двусторонняя петля (physical ↔ digital с симуляцией обратного действия). НЕ CAD-картинка, НЕ dashboard."
+    learning_goal: "Kritzinger taxonomy: Digital Model / Shadow / Twin + ГОСТ Р 57700.37-2021"
+    failure_bucket: strict_in
+
+  - id: s07
+    file: slides/s07-four-layers-architecture.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Цифровой двойник требует четырёх слоёв одновременно: физический актив → датчики (OPC UA+MQTT) → модель (физика+ML) → AI-потребители. Без любого = не twin."
+    learning_goal: "4-слойная архитектура + Siemens Digital Twin Composer как пример"
+    failure_bucket: strict_in
+
+  - id: s08
+    file: slides/s08-market-numbers.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Рынок цифровых двойников: $36,19 млрд 2025 → $180,28 млрд 2030 (CAGR 37,87%). AI-mfg → $155 млрд. OPC UA+MQTT уже $17,15 млрд."
+    learning_goal: "Рыночная картина + темпы роста"
+    failure_bucket: out
+
+  - id: s09
+    file: slides/s09-southeast-asian-port.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Southeast Asian Port digital twin: $12 миллионов, 18 месяцев, списан 2024. Причина — слабый слой данных."
+    learning_goal: "75% проектов не дают ROI; 11% O&G expected; 14% expectation match"
+    failure_bucket: strict_in
+
+  - id: s10
+    file: slides/s10-data-layer-audit.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Аудит слоя данных: 5 вопросов до пилота. Если ≥1 «нет» — деньги на ветер."
+    learning_goal: "5-вопросный checklist для предотвращения Southeast Asian Port"
+    failure_bucket: strict_in
+
+  - id: s11
+    file: slides/s11-section2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2. A0 — Наблюдать. Vision QC + прогностическое обслуживание."
+    learning_goal: "Section break"
+
+  - id: s12
+    file: slides/s12-vision-qc.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Vision QC tuned 99%+ при ложных срабатываниях 0,1-2%. Но 1% × 10 000 деталей = 100 годных отвергнуто за смену."
+    learning_goal: "Vision QC возможности + cost-of-FP cascade"
+    failure_bucket: strict_in
+
+  - id: s13
+    file: slides/s13-pdm-roi.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Прогностическое обслуживание: ROI 10:1 за 2 года. Инвестиции $200K-$600K → $1,2M-$3,5M экономии. Cement 57× / Chemical $2M annual."
+    learning_goal: "PdM ROI breakdown + Deloitte статистика"
+    failure_bucket: out
+
+  - id: s14
+    file: slides/s14-vision-pdm-limits.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Когда vision/PdM НЕ применимы: жёсткие допуски ±0,001 мм → метрология+GD&T+SPC. Редкие отказы MTBF>1 года → physics+RCM."
+    learning_goal: "Границы A0 — критерии «не AI»"
+    failure_bucket: strict_in
+
+  - id: s15
+    file: slides/s15-section3-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 3. A1 — Советовать. MES + alarm prediction + PLC Copilot."
+    learning_goal: "Section break"
+
+  - id: s16
+    file: slides/s16-mes-alarm.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "MES советующий режим + предсказание тревог за 5-15 минут до каскада. Mature применения работают."
+    learning_goal: "A1 mature use cases"
+    failure_bucket: out
+
+  - id: s17
+    file: slides/s17-plc-copilot-vs-chatgpt.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "PLC Copilot purpose-built: 3-4 дня → 10 минут, 85% точности. Generic ChatGPT на PLC — провал: `MOV %M99999` нелегальный адрес в S7-1500."
+    learning_goal: "Purpose-built vs generic LLM на PLC; инженер в петле (engineer-in-loop) обязателен"
+    failure_bucket: strict_in
+
+  - id: s18
+    file: slides/s18-engineer-in-loop.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Архитектура «инженер в петле» (engineer-in-loop): AI предлагает → инженер ревьюит → симуляция → safety check → PLC deploy. Безопасный паттерн A1."
+    learning_goal: "Operational pattern для A1 c LLM-помощниками"
+    failure_bucket: strict_in
+
+  - id: s19
+    file: slides/s19-section4-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 4. A2 — Замыкать петлю. RL + twin как песочница."
+    learning_goal: "Section break"
+
+  - id: s20
+    file: slides/s20-yokogawa-fkdpp.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Yokogawa FKDPP в JSR chemical plant: 35 дней непрерывной работы под RL в 2022. Первый промышленного класса RL-кейс."
+    learning_goal: "A2 production case + algorithmic anchor"
+    failure_bucket: out
+
+  - id: s21
+    file: slides/s21-twin-as-sandbox.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Цифровой двойник как песочница: RL обучается в симуляции до переноса на железо. NVIDIA Omniverse + Siemens Composer."
+    learning_goal: "Twin↔RL — central architectural angle vs lec-11"
+    failure_bucket: strict_in
+
+  - id: s22
+    file: slides/s22-sim-to-real-gap.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Разрыв «симуляция → реальность»: симуляция T=300°C без поверхностных отложений. Реальность T=315°C с отложениями. RL не видит этого → excursion 10%."
+    learning_goal: "Sim-to-real concrete gap"
+    failure_bucket: strict_in
+
+  - id: s23
+    file: slides/s23-rl-limits-mpc.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Когда RL НЕ применим: критичные по безопасности → проводной PLC + IEC 61508 SIL 2/3. Известная физика → MPC, не RL."
+    learning_goal: "RL границы + alternative anchors (MPC, formal verification, IEC 61508)"
+    failure_bucket: strict_in
+
+  - id: s24
+    file: slides/s24-section45-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 4.5. A3 — действовать автономно. Единичные кейсы 2026."
+    learning_goal: "Section break"
+
+  - id: s25
+    file: slides/s25-a3-cases-blockers.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "A3 в 2026 — единицы: Toyota Digit на RAV4 line + BMW Leipzig humanoid pilot. Три блокера массового A3: регуляторика + стоимость + сложность."
+    learning_goal: "A3 — humanoid логистика + 3 структурных блокера"
+    failure_bucket: strict_in
+
+  - id: s26
+    file: slides/s26-section5-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 5. Где AI НЕ применим — десять критериев и альтернативы."
+    learning_goal: "Section break"
+
+  - id: s27
+    file: slides/s27-port-failure-intro.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Southeast Asian Port $12M / 18 мес / abandoned 2024. 3D-визуализация без слоя данных = музей, не twin."
+    learning_goal: "Intro hero §5 + failure pattern"
+    failure_bucket: strict_in
+
+  - id: s28
+    file: slides/s28-ten-criteria-matrix.md
+    type: assertion_visual
+    duration_min: 4
+    assertion: "Десять структурных критериев «AI не подходит» с альтернативами для каждого."
+    learning_goal: "10×2 matrix — LO7 payoff"
+    failure_bucket: strict_in
+
+  - id: s29
+    file: slides/s29-pharma-fda-example.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Проработанный пример: фарма AI ±0,5% accuracy vs FDA-required ±0,1% precision. Разрыв → AI не подходит для release decision; альтернатива — HITL QA + statistical batch sampling."
+    learning_goal: "Concrete worked example по 5-критерию LO7"
+    failure_bucket: strict_in
+
+  - id: s30
+    file: slides/s30-gartner-cancellation.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Gartner: 40% агентных AI-проектов отменены к 2027. 30% GenAI PoC abandoned 2025. Хайп-куртuru индустрии."
+    learning_goal: "Gartner cancellation context"
+    failure_bucket: strict_in
+
+  - id: s31
+    file: slides/s31-five-vendor-questions.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Пять вопросов вендору на завтра — практический инструмент для кармана."
+    learning_goal: "Vendor question framework"
+    failure_bucket: strict_in
+
+  - id: s32
+    file: slides/s32-section6-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 6. OT/IT архитектура 2026 — 7 слоёв."
+    learning_goal: "Section break"
+
+  - id: s33
+    file: slides/s33-seven-layers.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Семь слоёв производственной AI-архитектуры: датчик → сеть (TSN) → ИИ на границе → MES → цифровой двойник → облако → человек."
+    learning_goal: "Семи-слойный стек как operational reality 2026"
+    failure_bucket: out
+
+  - id: s34
+    file: slides/s34-opcua-mqtt-tsn.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "OPC UA даёт семантику. MQTT — транспорт. TSN — детерминизм Ethernet с гарантированной задержкой. Edge AI инференс <10 мс."
+    learning_goal: "Три протокола + edge AI latency"
+    failure_bucket: out
+
+  - id: s35
+    file: slides/s35-lighthouse-network.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Lighthouse Network WEF+McKinsey: 220+ заводов в 35 странах, 23 новых 2026, 90% включают AI, +16% EBIT vs peers."
+    learning_goal: "Industry benchmark + scaling proof"
+    failure_bucket: out
+
+  - id: s36
+    file: slides/s36-section7-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 7. Российский контекст + карьерный мост."
+    learning_goal: "Section break"
+
+  - id: s37
+    file: slides/s37-russian-context.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "РФ: ГОСТ Р 57700.37-2021 + КАМАЗ (КАМА-1) + Росатом (T-FLEX, АтомМайнд) + Норникель (flotation AI). Российский process-control case."
+    learning_goal: "РФ контекст + 187-ФЗ КИИ"
+    failure_bucket: out
+
+  - id: s38
+    file: slides/s38-career-bridge.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Четыре роли инженера: AI/ML industrial · digital twin engineer · MES integration · инженер ИИ на границе сети (edge AI engineer). Каждая со своими навыками и точкой входа."
+    learning_goal: "Career bridge — куда дальше"
+    failure_bucket: out
+
+  - id: s39
+    file: slides/s39-closing-hero.md
+    type: hero_closing
+    duration_min: 5
+    assertion: "A0–A3 + цифровой двойник как мост — операционная рамка 2026. Toyota Digit на RAV4 line — первая ступень supply chain. Лекция 13 расширит до глобальной цепочки."
+    learning_goal: "Closing + bridge к Лекции 13 «AI в логистике, цепях поставок и транспорте»"
+    failure_bucket: out

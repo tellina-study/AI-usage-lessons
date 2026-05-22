@@ -125,9 +125,10 @@ lectures:
     title: "AI в автоматизации производства и цифровые двойники"
     module: 2
     learning_outcomes: [LO2, LO5, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-12
+    status: produced
+    issue: 133
+    updated_at: "2026-05-22"
 
   - number: 13
     title: "AI в логистике и транспорте"

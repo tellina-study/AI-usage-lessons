@@ -1158,7 +1158,8 @@ def s24_waymo(p):
         ("Цифры март 2026", {"size": 14, "bold": True, "color": MID}),
         ("500 000 платных поездок/неделю", {"size": 12, "color": DEEP}),
         ("3 067 машин 5-го поколения (NHTSA Dec 2025)", {"size": 12, "color": DEEP}),
-        ("10+ городов: Phoenix · SF · LA · Austin · Atlanta · Miami · Dallas · Houston · San Antonio · Orlando", {"size": 11, "color": DEEP}),
+        ("10+ городов (все Sun-Belt): Phoenix · SF · LA · Austin · Atlanta · Miami · Dallas · Houston · San Antonio · Orlando", {"size": 11, "color": DEEP}),
+        ("Sun-Belt ODD: без снега, без льда, без зимней погоды", {"size": 10, "italic": True, "color": GOLD}),
         ("14M совокупно поездок за 2025", {"size": 12, "color": DEEP}),
         ("Рост ×10 за 19 месяцев (с 50K/неделю мая 2024)", {"size": 12, "color": GOLD, "bold": True}),
         ("", {"size": 6}),
@@ -1170,7 +1171,7 @@ def s24_waymo(p):
         ("Что НЕ публикует", {"size": 14, "bold": True, "color": RED_WARN}),
         ("Per-trip удельная экономика — большая черная коробка на 2026", {"size": 11, "italic": True, "color": DEEP}),
     ], line_spacing=1.25)
-    footer(slide, "Паттерн выживания: поэтапный ввод (ползком-шагом-бегом) · узкий ODD · не переобещают · терпеливый капитал Alphabet")
+    footer(slide, "Паттерн выживания: поэтапный ввод (ползком-шагом-бегом) · узкий Sun-Belt ODD · не переобещают · терпеливый капитал Alphabet")
     add_notes(slide, "См. slides/s24-waymo-survivor.md speaker notes.")
 
 
@@ -1303,7 +1304,7 @@ def s28_last_mile(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 1.2,
-             "Последняя миля: Starship 9M+ доставок · Coco 1000+ роботов LA.\nZipline 100M миль Africa · Nuro разворот 2024 — выход B2C.",
+             "Последняя миля: Starship 9M+ доставок · Coco 1000+ роботов LA + Даллас/Майами/Хельсинки/Чикаго.\nZipline 100M миль Africa · Nuro разворот 2024 — выход B2C.",
              size=20, bold=True, color=DEEP, line_spacing=1.1)
     # 4 quadrant cards
     items = [
@@ -1311,8 +1312,8 @@ def s28_last_mile(p):
          "Где работает: кампусы, узкий controlled\nГде не: плотный городской (снег, вандализм)", LIGHT,
          "s28b-starship-tartu-2017.jpg",
          "Starship робот · Tartu, 2017 · Wikimedia"),
-        ("Coco Robotics", "1000+ роботов в LA\n500K+ доставок\nЦель 10K единиц",
-         "LA + Dallas + Miami + Helsinki + Chicago", MID, None, None),
+        ("Coco Robotics", "1000+ роботов\n500K+ доставок\nЦель 10K единиц",
+         "LA + Даллас + Майами + Хельсинки + Чикаго\n(не «только LA»)", MID, None, None),
         ("Zipline (дроны Africa)", "100M миль (Mar 2025)\n2M доставок (Jan 2026)\n22M доз вакцин",
          "$7,6B оценка · $150M State Dept Nov 2025\nProven массовый-развёртывание медицинский Africa", TEAL,
          "s28-zipline-drone-launch.jpg",

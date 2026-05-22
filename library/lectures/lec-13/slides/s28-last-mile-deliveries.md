@@ -2,7 +2,7 @@
 id: s28
 type: assertion_visual
 duration_min: 2
-assertion: "Starship 9 миллионов доставок на 60+ кампусах. Coco 1000+ роботов в Лос-Анджелесе. Zipline 100 миллионов миль в Африке. Nuro pivot 2024 — exit B2C."
+assertion: "Starship 9 миллионов доставок на 60+ кампусах. Coco 1000+ роботов в Лос-Анджелесе + Далласе/Майами/Хельсинки/Чикаго. Zipline 100 миллионов миль в Африке. Nuro pivot 2024 — exit B2C."
 learning_goal: "Last-mile (sidewalk + drone) — узкие ниши + Nuro pivot"
 learning_outcomes: [LO1, LO2]
 chapter_ref: "§3.5 — Уровень 4: тротуар, кампус, дрон"
@@ -28,10 +28,9 @@ visual:
 
 ## Coco Robotics
 
-- **>1 000 роботов** в Лос-Анджелесе.
+- **>1 000 роботов** в Лос-Анджелесе, Далласе, Майами, Хельсинки и Чикаго.
 - **>500 000 доставок** к 2025.
 - **Цель: 10 000 роботов** при географическом расширении.
-- **Дополнительные города:** LA, Dallas, Miami, Helsinki, Chicago.
 
 ## Zipline (medical drones Africa)
 

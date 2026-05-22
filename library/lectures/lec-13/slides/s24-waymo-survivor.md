@@ -22,7 +22,7 @@ visual:
 
 - **500 000 платных поездок в неделю** — март 2026.
 - **3 067 машин 5-го поколения** — по NHTSA disclosure декабря 2025.
-- **10+ городов:** Phoenix, San Francisco, Los Angeles, Austin, Atlanta, Miami, Dallas, Houston, San Antonio, Orlando.
+- **10+ городов — все Sun-Belt:** Phoenix, San Francisco, Los Angeles, Austin, Atlanta, Miami, Dallas, Houston, San Antonio, Orlando. **Сознательный Sun-Belt ODD** — без снега, без льда, без зимней погоды.
 - **14 миллионов поездок кумулятивно** за 2025 год.
 - **Рост в 10× за 19 месяцев** (с 50K rides/неделю в мае 2024).
 
@@ -43,7 +43,7 @@ visual:
 
 - **Crawl-walk-run** — начали в Phoenix, потом SF, потом LA, потом каждый новый город — отдельный отработанный ODD.
 - **Patient capital Alphabet.**
-- **Narrow ODD expansion** — каждое новое lane требует extensive валидации.
+- **Narrow ODD expansion** — каждое новое lane требует extensive валидации; **Sun-Belt-only focus** (никаких снежных городов).
 - **Не overpromise** — никаких «1M robotaxi by 2024».
 
 ## Speaker notes

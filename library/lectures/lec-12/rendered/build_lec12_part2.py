@@ -388,7 +388,7 @@ def s25_a3_cases(p):
     slide = blank(p)
     set_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "A3 в 2026: Toyota Digit + BMW Leipzig humanoid — единичные кейсы",
+             "A3 в 2026: Toyota Digit + BMW Leipzig — гуманоиды как единичные кейсы",
              size=24, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
              "Три блокера массового A3: регуляторика + стоимость + сложность",
@@ -660,7 +660,7 @@ def s33_seven_layers(p):
              "Семь слоёв производственной AI-архитектуры 2026",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "OPC UA + TSN + ИИ на границе сети inference <10 мс — операционные условия для A2",
+             "OPC UA + TSN + ИИ на границе сети, инференс <10 мс — операционные условия для A2",
              size=13, italic=True, color=LIGHT)
     # 7 layers stacked
     layers = [
@@ -694,7 +694,7 @@ def s34_opcua(p):
              "OPC UA + MQTT + TSN: семантика, транспорт, детерминизм",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "Три протокола покрывают разные задачи; вместе обеспечивают ИИ на границе сети inference <10 мс",
+             "Три протокола покрывают разные задачи; вместе обеспечивают ИИ на границе сети, инференс <10 мс",
              size=13, italic=True, color=LIGHT)
     # Three columns
     items = [
@@ -747,7 +747,7 @@ def s35_lighthouse(p):
     slide = blank(p)
     set_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Lighthouse Network: 220+ заводов, 90% с AI, +16% EBIT vs peers",
+             "Lighthouse Network: 220+ заводов, 90% с AI, +16% EBIT к аналогам",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
              "Программа Всемирного экономического форума и McKinsey — заводы-образцы с полной AI-трансформацией",

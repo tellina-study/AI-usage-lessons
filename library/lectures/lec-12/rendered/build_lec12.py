@@ -675,10 +675,10 @@ def s12_vision(p):
     """s12 — Vision QC + FP cascade."""
     slide = blank(p)
     set_bg(slide, WHITE)
-    text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Vision QC в отлаженных системах: ≥99% при ложных срабатываниях 0,1–2%",
+    text_box(slide, 0.5, 0.35, 12.33, 0.7,
+             "Машинное зрение: ≥99% при 0,1–2% ложных срабатываний",
              size=26, bold=True, color=DEEP)
-    text_box(slide, 0.5, 1.15, 12.33, 0.4,
+    text_box(slide, 0.5, 1.05, 12.33, 0.55,
              "Но даже 1% ложных срабатываний × 10 000 деталей = 100 годных отвергнуто за смену — каскад срабатываний",
              size=13, italic=True, color=LIGHT)
     # Left: chart
@@ -746,10 +746,10 @@ def s14_a0_limits(p):
     slide = blank(p)
     set_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Где A0 не применим — границы vision и прогностического обслуживания",
+             "Где A0 не применим: границы зрения и прогн. обслуживания",
              size=24, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "Жёсткие допуски → метрология + GD&T + SPC · редкие отказы → physics + RCM",
+             "Жёсткие допуски → метрология + GD&T + SPC · редкие отказы → физика + RCM",
              size=13, italic=True, color=LIGHT)
     # Two columns
     col_y = 1.8

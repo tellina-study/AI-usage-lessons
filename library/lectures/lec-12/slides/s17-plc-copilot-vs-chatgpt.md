@@ -7,7 +7,7 @@ assertion: "PLC Copilot purpose-built: 3-4 дня → 10 минут, 85% точ�
 
 ## Visible content
 
-Purpose-built vs generic LLM на PLC; engineer-in-loop обязателен.
+Purpose-built vs generic LLM на PLC; инженер в петле (engineer-in-loop) обязателен.
 
 ## Speaker notes
 

@@ -22,7 +22,7 @@ acquisition_tier: 2
 - Якорь: «Цифровой двойник — единственный известный мост между ступенями.»
 - Caption: «Hannover Messe — Industry 4.0 · Wikimedia · CC-BY-SA»
 
-**Footer:** «Лекция 12 · 75 минут + Q&A · Курс „Применение AI в инженерии"»
+**Footer:** «Лекция 12 · Курс „Применение AI в инженерии"»
 
 ## Speaker notes
 

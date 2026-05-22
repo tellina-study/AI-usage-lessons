@@ -17,7 +17,7 @@ Concrete worked example по критерию 5.3.
 
 Что FDA требует. FDA 21 CFR Part 11 — стандарт для электронных записей и подписей в регулируемой фармацевтической среде. GAMP 5 — Good Automated Manufacturing Practice version 5, gold-standard для валидации программных систем в фарма-производстве. Для batch release decision требуется precision ±0,1% от номинала.
 
-Разрыв. AI accuracy ±0,5% меньше required tolerance ±0,1%. Это несовместимо. Verdict: AI не подходит для финального release decision.
+Разрыв. AI accuracy ±0,5% — в 5 раз шире (хуже) required tolerance ±0,1%. Это несовместимо. Verdict: AI не подходит для финального release decision.
 
 Альтернатива. AI как advisory tool на этапе process design, где точность ±0,5% полезна. Инженер видит рекомендации AI при дизайне нового продукта, оценивает, принимает или отвергает. Для release — human-in-loop QA плюс statistical batch sampling, validated по USP и GMP.
 

@@ -2,7 +2,7 @@
 id: s38
 type: assertion_visual
 duration_min: 2
-assertion: "Четыре роли инженера AI в производстве: AI/ML industrial · digital twin engineer · MES integration · edge AI."
+assertion: "Четыре роли инженера AI в производстве: AI/ML industrial · digital twin engineer · MES integration · инженер ИИ на границе сети (edge AI engineer)."
 ---
 
 ## Visible content
@@ -19,4 +19,4 @@ Career bridge — куда дальше.
 
 Третья — MES integration specialist. Что делает: внедряет advisory-AI в существующий MES (Opcenter, FactoryTalk, SAP MII). Конфигурирует workflow «AI рекомендация → оператор апрув → исполнение». Ключевые навыки: SQL, REST/OPC UA, конкретный MES-стек вендора, бизнес-процессы цеха. Учиться: vendor-сертификации Siemens / Rockwell / SAP.
 
-Четвёртая — edge AI engineer. Что делает: деплоит inference на edge-устройства (NVIDIA Jetson, Modicon edge), оптимизирует latency и throughput, разрабатывает fail-safe handover. Ключевые навыки: C++/Rust, embedded Linux, ONNX/TensorRT, real-time scheduling, безопасность сети для КИИ-объектов. Учиться: embedded плюс ML — стык. Сертификации NVIDIA Jetson плюс cybersecurity для КИИ.
+Четвёртая — инженер ИИ на границе сети (edge AI engineer). Что делает: разворачивает inference на устройствах вблизи оборудования (NVIDIA Jetson, Modicon edge), оптимизирует latency и throughput, разрабатывает fail-safe handover. Ключевые навыки: C++/Rust, embedded Linux, ONNX/TensorRT, real-time scheduling, безопасность сети для КИИ-объектов. Учиться: embedded плюс ML — стык. Сертификации NVIDIA Jetson плюс cybersecurity для КИИ.

@@ -232,14 +232,14 @@ slides:
     type: assertion_visual
     duration_min: 3
     assertion: "PLC Copilot purpose-built: 3-4 дня → 10 минут, 85% точности. Generic ChatGPT на PLC — провал: `MOV %M99999` нелегальный адрес в S7-1500."
-    learning_goal: "Purpose-built vs generic LLM на PLC; engineer-in-loop обязателен"
+    learning_goal: "Purpose-built vs generic LLM на PLC; инженер в петле (engineer-in-loop) обязателен"
     failure_bucket: strict_in
 
   - id: s18
     file: slides/s18-engineer-in-loop.md
     type: assertion_visual
     duration_min: 2
-    assertion: "Архитектура engineer-in-loop: AI предлагает → инженер ревьюит → симуляция → safety check → PLC deploy. Безопасный паттерн A1."
+    assertion: "Архитектура «инженер в петле» (engineer-in-loop): AI предлагает → инженер ревьюит → симуляция → safety check → PLC deploy. Безопасный паттерн A1."
     learning_goal: "Operational pattern для A1 c LLM-помощниками"
     failure_bucket: strict_in
 
@@ -394,14 +394,14 @@ slides:
     file: slides/s38-career-bridge.md
     type: assertion_visual
     duration_min: 2
-    assertion: "Четыре роли инженера: AI/ML industrial · digital twin engineer · MES integration · edge AI engineer. Каждая со своими навыками и точкой входа."
+    assertion: "Четыре роли инженера: AI/ML industrial · digital twin engineer · MES integration · инженер ИИ на границе сети (edge AI engineer). Каждая со своими навыками и точкой входа."
     learning_goal: "Career bridge — куда дальше"
     failure_bucket: out
 
   - id: s39
     file: slides/s39-closing-hero.md
     type: hero_closing
-    duration_min: 2
+    duration_min: 5
     assertion: "A0–A3 + цифровой двойник как мост — операционная рамка 2026. Toyota Digit на RAV4 line — первая ступень supply chain. Лекция 13 расширит до глобальной цепочки."
     learning_goal: "Closing + bridge к Лекции 13 «AI в логистике, цепях поставок и транспорте»"
     failure_bucket: out

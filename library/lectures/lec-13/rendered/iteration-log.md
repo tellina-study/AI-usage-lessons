@@ -234,4 +234,95 @@ Replaced LO1/LO2/LO7 коды с descriptive prose. Removed «75 минут + Q&
 
 **Russification note:** 409 unique residual tokens dominated by (1) brand fragments (Jaguar, Google, Picking, Item, WMS-, AMR-) — legitimate technical/proper nouns; (2) 3-char regex false positives (`ics` in Robotaxi-related Cyrillic compounds, `ing` in compound terms); (3) s22 Starsky English original quote (designed bilingual); (4) slide-ID cross-references (s38, s40). Further reduction would break proper-noun integrity OR loss of Stefan Seltz-Axmacher voice authority. Acceptable per Russification rule's brand-name whitelist.
 
+---
+
+## Phase 8b — User-flagged deck fixes (5 critical issues после review rendered PPTX)
+
+После Phase 8 GATE B walkthrough user отметил 5 issues — все P0/P1 blocking.
+
+### Fix 1 — P0 CATASTROPHIC: Speaker notes были file references, не readable text
+
+**Issue:** `build_lec13.py` инжектировал в PPTX `notes_text_frame` строку «См. slides/sNN-name.md speaker notes.» вместо полного speaker-notes текста. Лектор не мог читать notes во время лекции.
+
+**Root cause:** упрощённый stub `add_notes(slide, ref_string)` оставлен с phase 6 как placeholder, never replaced с full extraction.
+
+**Fix:** новый скрипт `inject_notes.py` извлекает текст после `## Speaker notes` из каждого `slides/sNN-*.md` и инжектирует в `notes_slide.notes_text_frame`. Contract:
+```bash
+python3 build_lec13.py    # генерирует PPTX (notes = stub refs)
+python3 inject_notes.py   # ПОСЛЕ build — injects full notes
+```
+
+**Result:** 41/41 slides got full notes; avg ~2.3k chars / slide; диапазон 1164 (s06 divider) — 3491 chars (s31).
+
+**Verification:** sample s01/s05/s29/s38/s41 — все ≥2k chars, нет «См. slides/» в первых 50 символах.
+
+Commit: `ff804ac`.
+
+### Fix 2 — P1: s01 «Три картинки рядом» heading не matched 1 image
+
+**Issue:** Hero slide title «Три картинки рядом — и один вопрос», но визуально только 1 image (Waymo Jaguar hero). Mismatch.
+
+**Fix:** text-side — изменил heading на «Три истории, один вопрос». Сохраняет cost-asymmetry triplet (Cruise/Waymo/Tesla cards), fits 1-hero-image + 3-text-panel layout.
+
+**Verification:** s01 visible body has «Три истории», нет старого «Три картинки».
+
+Commit: `1949d88`.
+
+### Fix 3 — P1: slide-count meta в deck.yaml plan
+
+**Issue:** «41 слайд» в 3 местах в `deck.yaml` (комментарии). User: «в плане убери количество слайдов».
+
+**Fix:** удалены 3 string'а: `# v1: 41 слайд по pattern lec-11.` → `# v1 по pattern lec-11.`; `41 слайд общим объёмом` строка удалена; `# Final slide list (41 slides):` → `# Final slide list:`.
+
+**Verification:** `grep -niE "41 слайд|41 slides|slide_count|количество слайдов" deck.yaml` = 0 hits.
+
+Commit: `2ec126c`.
+
+### Fix 4 — P1: «Мост к Лекции 14» framing убран с s02/s03/s41
+
+**Issue:** «Мост к Лекции 14» появлялся на 3 slides — user: «убери такие пояснения как мост к лекции 14».
+
+**Fix per slide:**
+- **s02 cover:** в speaker notes изменил «мост к Лекции 14» → «короткое замыкание и Q&A». Visible body не содержал — clean.
+- **s03 lecture-map:** card 5 description «Q&A · мост к Лекции 14» → «Q&A · короткое замыкание». Speaker notes тоже обновлены.
+- **s41 closing:** убрана отдельная label «Мост к Лекции 14» 14pt из right column. Subheading «Другая среда, те же 5 вопросов» сохранён (теперь становится main heading). Slide markdown heading тоже обновлён.
+
+**Verification:** s02/s03/s41 visible body — 0 hits «Мост к Лекции».
+
+Commit: `f1d8d8e`.
+
+### Fix 5 — P1: s40 не выглядел как Q&A invitation
+
+**Issue:** s40 title «Семь вопросов вендору на завтра» — это content slide, не Q&A invitation для аудитории. User: «забыл слайд QA».
+
+**Fix:** добавлен gold banner top «Q&A — ваши вопросы» (24pt bold), subtitle «…и семь вопросов вендорам на завтра — практический инструмент для кармана». Cards compressed (card_h 1.55→1.32, font 12→11, why 10→9) чтобы fit 7 cards + Q&A banner в 7.5" height. Footer changed → «10 минут на вопросы аудитории».
+
+**Verification:** s40 visible body has «Q&A — ваши вопросы»; 7 cards still fit; PNG sample confirmed.
+
+Commit: `6a70fcf`.
+
+### Phase 8b final verification
+
+| Check | Target | Result | Status |
+|---|---|---|---|
+| Speaker notes injection s01 | >2000 chars | 2313 | PASS |
+| Speaker notes injection s05 | >2000 chars | 2438 | PASS |
+| Speaker notes injection s29 | >2000 chars | 2641 | PASS |
+| Speaker notes injection s38 | >2000 chars | 3004 | PASS |
+| Speaker notes injection s41 | >2000 chars | 2048 | PASS |
+| s01 «Три истории» | present | YES | PASS |
+| s01 OLD «Три картинки» | absent | YES | PASS |
+| deck.yaml slide-count | 0 hits | 0 | PASS |
+| s02/s03/s41 bridge in visible body | 0 hits | 0 | PASS |
+| s40 Q&A invitation framing | present | YES | PASS |
+| Anonymization | 0 | 0 | PASS |
+| Designer extras | 0 | 0 | PASS |
+| Missing image placeholders | 0 | 0 | PASS |
+| Slide count | 41 | 41 | PASS |
+| Main repo PPTX sync | yes | yes | PASS |
+| Main repo PDF sync | yes | yes | PASS |
+
+**Pipeline contract update:** build_lec13.py docstring updated с warning, что `inject_notes.py` ОБЯЗАТЕЛЬНО запускать после каждого rebuild PPTX (build script ставит stub refs).
+
+
 **Verdict:** 6 P0 + 9 P1 all fixed; P2 polish 7/7 applied. Ready for re-review or USER GATE B.

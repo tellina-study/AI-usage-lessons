@@ -353,7 +353,7 @@ def s03_lecture_map(p):
         ("1", "Склад / порт", "6 слайдов", "Склад · порт · рельсы · границы уровня 1", LIGHT),
         ("2", "Магистраль", "10 слайдов", "Aurora · Mobileye · КамАЗ · UPS ORION · банкротства AV-грузоперевозки", MID),
         ("3", "Город + миля", "10 слайдов", "Waymo · Apollo Go · Pony.ai · Tesla · Cruise · Uber · Tesla NHTSA · Starship · Zipline", TEAL),
-        ("4", "Чёрный лебедь", "7 слайдов", "Хуситы · Suez · COVID · дефицит дальнобойщиков · 5 критериев · альтернативы", GOLD),
+        ("4", "Чёрный лебедь", "7 слайдов", "Хуситы · Suez · COVID · дефицит дальнобойщиков · 7 критериев · альтернативы", GOLD),
         ("5", "Замыкание", "2 слайда", "Q&A · короткое замыкание", DEEP),
     ]
     card_w = 2.42
@@ -1537,7 +1537,7 @@ def s33_section4(p):
                      "Suez Ever Given 2021 — 12% мировой торговля",
                      "COVID 2020 снабжение chain обвал",
                      "Дефицит дальнобойщиков 78K — структурная, не AI",
-                     "Рамка решения: 5 критериев AI/не AI",
+                     "Рамка решения: 7 критериев AI/не AI",
                      "Alternative инструментарий: OR / EOQ / сценарный / на правилах / HITL"],
                     section_idx=3)
 
@@ -1710,46 +1710,56 @@ def s37_trucker_shortage_structural(p):
 
 
 def s38_decision_framework(p):
-    """s38 — 5 criteria решение фреймворк."""
+    """s38 — 7 criteria решение фреймворк (5 структурных + 2 anti-hype)."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
-    text_box(slide, 0.5, 0.4, 12.33, 1.2,
-             "Рамка решения: 5 критериев AI/не AI в логистике.\nСреда · задача · спрос · безопасность · распределение.",
-             size=22, bold=True, color=DEEP, line_spacing=1.1)
-    # 5 criteria as cards
+    text_box(slide, 0.5, 0.3, 12.33, 1.0,
+             "Рамка решения: 7 критериев AI/не AI в логистике.\n5 структурных предикторов + 2 anti-hype фильтра.",
+             size=20, bold=True, color=DEEP, line_spacing=1.1)
+    # 7 criteria as cards — grid 2 rows × 4 cols (8th cell = takeaway)
     criteria = [
-        ("1", "Среда контролируемая?", "Да → AI applicable\n(склад · port · железная дорога)", "Symbotic, Amazon, KONUX", LIGHT),
-        ("2", "Чётко определённая оптимизация\n(TSP, VRP, планирование расписаний)?", "Да → OR > RL/ML\n(Gurobi, CPLEX, OR-Tools)", "UPS ORION — $300-400M/год", MID),
-        ("3", "Спрос стационарный?", "Да → EOQ + безопасность запас\n+ ABC > ML", "Аудит: какой % SKU реально требует ML? Часто <20%.", TEAL),
-        ("4", "Критично для безопасности с\nрегуляторный аудит?", "Да → на правилах + HITL\n(FDA (рег.), FAA, IMO)", "Чёрный ящик ML не работает в регулируемых отраслях.", GOLD),
-        ("5", "Событие в распределении?", "Да → ML scoring\nНет → человек-диспетчер\n+ сценарный планирование", "Хуситы, Suez, COVID — вне распределения = ML слеп.", RED_WARN),
+        ("1", "Среда контролируемая?", "Да → AI applicable\n(склад · порт · ж/д)", "Symbotic, Amazon, KONUX", LIGHT),
+        ("2", "Чётко определённая оптимизация\n(TSP, VRP, расписания)?", "Да → OR > RL/ML\n(Gurobi, CPLEX, OR-Tools)", "UPS ORION — $300-400M/год", MID),
+        ("3", "Спрос стационарный?", "Да → EOQ + safety stock\n+ ABC > ML", "Аудит SKU: часто <20% требует ML.", TEAL),
+        ("4", "Критично для безопасности\n+ регуляторный аудит?", "Да → правиловой + HITL\n(FDA, FAA, IMO)", "Чёрный ящик ML не проходит аудит.", GOLD),
+        ("5", "Событие в распределении?", "Да → ML scoring\nНет → диспетчер-человек\n+ сценарное планирование", "Хуситы, Suez, COVID — вне распределения.", RED_WARN),
+        ("6", "Послужной список в проде\n6+ месяцев?", "Да → продукт обоснован\nНет → REJECT по умолчанию", "Anti-hype #1. 95% GenAI-пилотов не доходят до прода.", DEEP),
+        ("7", "Baseline + контрфактуал\nявно сформулированы?", "Да → продукт оценим\nНет → REJECT", "Anti-hype #2. «Лучше, чем конкуренты» без чисел = маркетинг.", DEEP),
     ]
-    card_w = 2.42
-    px = 0.5
-    py = 1.9
-    for num, q, ans, ex, color in criteria:
-        rounded_box(slide, px, py, card_w, 4.6, stroke=color, stroke_w=2)
+    card_w = 2.95
+    card_h = 2.55
+    gap_x = 0.10
+    gap_y = 0.15
+    grid_left = 0.5
+    grid_top = 1.5
+    for i, (num, q, ans, ex, color) in enumerate(criteria):
+        row = i // 4
+        col = i % 4
+        px = grid_left + col * (card_w + gap_x)
+        py = grid_top + row * (card_h + gap_y)
+        rounded_box(slide, px, py, card_w, card_h, stroke=color, stroke_w=2)
         # Number circle
-        circle(slide, px + card_w/2 - 0.35, py + 0.15, 0.7, 0.7, fill=color)
-        text_box(slide, px + card_w/2 - 0.35, py + 0.15, 0.7, 0.7, num,
-                 size=24, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        circle(slide, px + 0.15, py + 0.15, 0.55, 0.55, fill=color)
+        text_box(slide, px + 0.15, py + 0.15, 0.55, 0.55, num,
+                 size=20, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         # Question
-        text_box(slide, px + 0.1, py + 1.0, card_w - 0.2, 1.0, q,
-                 size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.15)
+        text_box(slide, px + 0.8, py + 0.10, card_w - 0.9, 0.7, q,
+                 size=11, bold=True, color=DEEP, align=PP_ALIGN.LEFT, line_spacing=1.15)
         # Answer
-        text_box(slide, px + 0.1, py + 2.1, card_w - 0.2, 1.3, ans,
-                 size=11, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.3)
+        text_box(slide, px + 0.1, py + 0.85, card_w - 0.2, 0.95, ans,
+                 size=10, color=DEEP, align=PP_ALIGN.LEFT, line_spacing=1.25)
         # Example
-        rounded_box(slide, px + 0.15, py + 3.5, card_w - 0.3, 1.0, fill=GOLD_TINT, stroke=GOLD)
-        text_box(slide, px + 0.25, py + 3.55, card_w - 0.5, 0.9, ex,
-                 size=9, italic=True, color=DEEP, line_spacing=1.25, align=PP_ALIGN.CENTER)
-        px += card_w + 0.05
-    # Bottom takeaway
-    rounded_box(slide, 0.5, 6.7, 12.33, 0.5, fill=GOLD_TINT, stroke=GOLD)
-    text_box(slide, 0.7, 6.75, 11.9, 0.4,
-             "Это не «всегда AI» или «никогда AI». Рамка разбивает нагрузку на категории + правильный инструмент на каждую.",
-             size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    footer(slide, "+ дополняется 7 вопросами вендору (слайд s40)")
+        rounded_box(slide, px + 0.10, py + 1.85, card_w - 0.20, 0.62, fill=GOLD_TINT, stroke=GOLD)
+        text_box(slide, px + 0.18, py + 1.88, card_w - 0.36, 0.58, ex,
+                 size=8, italic=True, color=DEEP, line_spacing=1.20, align=PP_ALIGN.LEFT)
+    # 8th cell — takeaway in last grid position
+    px_t = grid_left + 3 * (card_w + gap_x)
+    py_t = grid_top + 1 * (card_h + gap_y)
+    rounded_box(slide, px_t, py_t, card_w, card_h, fill=GOLD_TINT, stroke=GOLD, stroke_w=2)
+    text_box(slide, px_t + 0.15, py_t + 0.20, card_w - 0.30, card_h - 0.40,
+             "Это не «всегда AI» или «никогда AI».\n\nРамка разбивает нагрузку на категории + правильный инструмент на каждую.\n\nКритерии 1-5 = структура.\nКритерии 6-7 = anti-hype фильтры.",
+             size=10, bold=True, color=DEEP, align=PP_ALIGN.LEFT, line_spacing=1.3)
+    footer(slide, "+ дополняется 7 тактическими вопросами вендору (слайд s40) и 8 вопросами due-diligence главы §4.7")
     add_notes(slide, "См. slides/s38-decision-framework.md speaker notes.")
 
 
@@ -1856,7 +1866,7 @@ def s40_qa_vendor_questions(p):
         # Почему
         text_box(slide, x + 0.12, y + 0.7, card_w - 0.24, 0.6, "Почему: " + why,
                  size=9, italic=True, color=SLATE, line_spacing=1.2)
-    footer(slide, "Дополняет 5-критерийную рамку слайда s38 · 10 минут на вопросы аудитории")
+    footer(slide, "Дополняет 7-критерийную рамку слайда s38 + 8 вопросов due-diligence главы §4.7 · 10 минут на вопросы аудитории")
     add_notes(slide, "См. slides/s40-qa-vendor-questions.md speaker notes.")
 
 
@@ -1872,7 +1882,7 @@ def s41_closing_hero_noc(p):
     # Right: bridge text (narrower column)
     multiline_box(slide, 8.8, 0.6, 4.2, 5.5, [
         ("Другая среда,", {"size": 26, "bold": True, "color": DEEP}),
-        ("те же 5 вопросов", {"size": 26, "bold": True, "color": DEEP}),
+        ("те же 7 критериев", {"size": 26, "bold": True, "color": DEEP}),
         ("", {"size": 12}),
         ("Следующая лекция —", {"size": 13, "color": MID}),
         ("телекоммуникации,", {"size": 13, "color": MID}),

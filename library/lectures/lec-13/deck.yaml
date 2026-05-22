@@ -88,11 +88,11 @@ deck:
 #   s35 — Suez Ever Given 2021 — 12% world trade + AI не имела роли
 #   s36 — COVID 2020 supply chain meltdown + JIT fragility
 #   s37 — ATA trucker shortage 78K (2022) → 60K (2023) — структурный, не AI
-#   s38 — Decision framework: 5 критериев «AI или не AI»
+#   s38 — Decision framework: 7 критериев «AI или не AI»
 #   s39 — Alternative toolkit (OR / EOQ / scenario planning / rule-based / HITL) матрица
 #
 # Section 5 — Замыкание (5 мин):
-#   s40 — Q&A + 5 вопросов вендору карточка
+#   s40 — Q&A + 7 вопросов вендору карточка (дополняет 8 вопросов главы §4.7)
 #   s41 — closing hero: telecom NOC (bridge к Лекции 14)
 
 slides:
@@ -381,8 +381,8 @@ slides:
     file: slides/s38-decision-framework.md
     type: assertion_visual
     duration_min: 3
-    assertion: "Пять критериев AI или не AI в логистике: среда / задача / спрос / безопасность / распределение."
-    learning_goal: "Decision framework 5 критериев"
+    assertion: "Семь критериев AI или не AI в логистике: среда / задача / спрос / безопасность / распределение / послужной список / базовая линия."
+    learning_goal: "Decision framework 7 критериев"
     failure_bucket: strict_in
 
   - id: s39

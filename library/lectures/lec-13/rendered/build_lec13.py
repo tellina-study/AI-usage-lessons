@@ -1808,12 +1808,18 @@ def s39_alternative_toolkit(p):
 # ========== SECTION 5 ==========
 
 def s40_qa_vendor_questions(p):
-    """s40 — Q&A + 7 вендор questions."""
+    """s40 — Q&A invitation + 7 вендор questions."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
-    text_box(slide, 0.5, 0.4, 12.33, 1.2,
-             "Семь вопросов вендору на завтра —\nпрактический инструмент для кармана.",
-             size=26, bold=True, color=DEEP, line_spacing=1.1)
+    # Gold Q&A invitation banner top
+    rounded_box(slide, 0.5, 0.3, 12.33, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_w=2)
+    text_box(slide, 0.7, 0.35, 11.9, 0.75,
+             "Q&A — ваши вопросы",
+             size=24, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    # Subtitle: 7 vendor questions
+    text_box(slide, 0.5, 1.2, 12.33, 0.45,
+             "…и семь вопросов вендорам на завтра — практический инструмент для кармана.",
+             size=14, italic=True, color=MID, align=PP_ALIGN.CENTER)
     # 7 questions in 2 columns
     questions = [
         ("1", "Какое сравнение с базовой линией OR\n(Google OR-Tools, Gurobi, CPLEX)?",
@@ -1831,27 +1837,26 @@ def s40_qa_vendor_questions(p):
         ("7", "Какова удельная экономика\n(на машину / маршрут / тонну)?",
          "Pony.ai первая robotaxi с положительной операционной прибылью на автомобиль\n(Гуанчжоу ноябрь 2025, Шэньчжэнь февраль 2026).", RED_WARN),
     ]
-    px = 0.5
-    py = 1.7
     card_w = 6.05
-    card_h = 1.55
+    card_h = 1.32
+    y0 = 1.75
     for i, (num, q, why, color) in enumerate(questions):
         col = i % 2
         row = i // 2
         x = 0.5 + col * (card_w + 0.1)
-        y = 1.7 + row * (card_h + 0.05)
+        y = y0 + row * (card_h + 0.05)
         rounded_box(slide, x, y, card_w, card_h, stroke=color, stroke_w=2)
         # Number circle
-        circle(slide, x + 0.15, y + 0.2, 0.5, 0.5, fill=color)
-        text_box(slide, x + 0.15, y + 0.2, 0.5, 0.5, num,
-                 size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        circle(slide, x + 0.12, y + 0.15, 0.45, 0.45, fill=color)
+        text_box(slide, x + 0.12, y + 0.15, 0.45, 0.45, num,
+                 size=14, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         # Question
-        text_box(slide, x + 0.75, y + 0.1, card_w - 0.85, 0.7, q,
-                 size=12, bold=True, color=DEEP, line_spacing=1.2)
+        text_box(slide, x + 0.65, y + 0.08, card_w - 0.75, 0.55, q,
+                 size=11, bold=True, color=DEEP, line_spacing=1.15)
         # Почему
-        text_box(slide, x + 0.15, y + 0.85, card_w - 0.3, 0.65, "Почему: " + why,
-                 size=10, italic=True, color=SLATE, line_spacing=1.25)
-    footer(slide, "Дополняет 5-критерийную рамку слайда s38 · окупаемость лекции 13")
+        text_box(slide, x + 0.12, y + 0.7, card_w - 0.24, 0.6, "Почему: " + why,
+                 size=9, italic=True, color=SLATE, line_spacing=1.2)
+    footer(slide, "Дополняет 5-критерийную рамку слайда s38 · 10 минут на вопросы аудитории")
     add_notes(slide, "См. slides/s40-qa-vendor-questions.md speaker notes.")
 
 

@@ -379,7 +379,7 @@ def s23_rl_limits_mpc(p):
 
 def s24_div(p):
     section_divider(p, 5, 5, "A3 — Действовать автономно",
-                    "Toyota Digit на RAV4 · BMW Leipzig humanoid · единичные кейсы 2026",
+                    "Toyota Digit на RAV4 · BMW Leipzig — гуманоиды · единичные кейсы 2026",
                     "Раздел 4.5 · верхняя ступень — единицы кейсов")
 
 
@@ -397,7 +397,7 @@ def s25_a3_cases(p):
     img = ASSETS / "screenshots" / "s25-toyota-digit.jpg"
     if img.exists():
         add_image(slide, img, 0.5, 1.75, 5.8, 5.0)
-        attribution(slide, "Humanoid-роботы на фабрике · Wikimedia · CC-BY-SA · аналог Agility Digit",
+        attribution(slide, "Гуманоидные роботы на фабрике · Wikimedia · CC-BY-SA · аналог Agility Digit",
                     x=0.5, y=6.8, w=5.8)
     # Right: 3 blockers
     multiline(slide, 6.5, 1.85, 6.3, 0.45, [
@@ -405,10 +405,10 @@ def s25_a3_cases(p):
     ])
     blockers = [
         ("1. Регуляторика",
-         "Для критичных по безопасности действий требуется IEC 61508 SIL 2/3 или ATEX Zone 0. RL и humanoid-роботы не сертифицируются.",
+         "Для критичных по безопасности действий требуется IEC 61508 SIL 2/3 или ATEX Zone 0. RL и гуманоидные роботы не сертифицируются.",
          GOLD),
         ("2. Стоимость",
-         "Humanoid Agility Robotics — несколько сотен тысяч долларов за единицу. Окупается только в нишах с высокой стоимостью труда и предсказуемой задачей.",
+         "Гуманоид Agility Robotics — несколько сотен тысяч долларов за единицу. Окупается только в нишах с высокой стоимостью труда и предсказуемой задачей.",
          MID),
         ("3. Сложность",
          "A3 требует полный стек: двойник + ИИ на границе сети + безопасная зона действия + управление флотом. Большинство заводов не имеет ни одного компонента промышленного класса.",
@@ -903,7 +903,7 @@ def s39_closing(p):
         attr_text = "Cassie · Agility Robotics (компания-производитель Digit) · Oregon State · Wikimedia · CC-BY-SA"
     elif img_humanoid.exists():
         img = img_humanoid
-        attr_text = "Humanoid-роботы на фабрике · Wikimedia · CC-BY-SA · аналог Toyota Digit"
+        attr_text = "Гуманоидные роботы на фабрике · Wikimedia · CC-BY-SA · аналог Toyota Digit"
     else:
         img = img_factory
         attr_text = "Toyota Motor Manufacturing · Wikimedia · CC-BY-SA"
@@ -927,7 +927,7 @@ def s39_closing(p):
          {"size": 11, "color": DEEP}),
         ("· A2: RL + двойник как песочница (Yokogawa)",
          {"size": 11, "color": DEEP}),
-        ("· A3: humanoid-логистика — единично",
+        ("· A3: гуманоидная логистика — единично",
          {"size": 11, "color": DEEP}),
         ("· 10 критериев «AI не нужен» + 5 вопросов вендору",
          {"size": 11, "bold": True, "color": GOLD}),

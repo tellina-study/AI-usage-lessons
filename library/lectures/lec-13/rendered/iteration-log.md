@@ -326,3 +326,48 @@ Commit: `6a70fcf`.
 
 
 **Verdict:** 6 P0 + 9 P1 all fixed; P2 polish 7/7 applied. Ready for re-review or USER GATE B.
+
+---
+
+## Phase 11 — Batched revision (2026-05-22)
+
+Phase 10 consistency-checker verdict REVISE: 7 P0 + 11 P1 + 9 P2 cross-artifact alignment issues.
+Single batched revision agent per CLAUDE.md Anti-Pattern table.
+
+### Commits applied (8 atomic + 1 final)
+
+| # | SHA prefix | Issue | Scope |
+|---|---|---|---|
+| 1 | ff48785 | P0-1: 5→7 critериев reconciliation | slides s02/s03/s33/s38/s40/s41 + speech + deck.yaml + build script (book-first per chapter §4.5) |
+| 2 | 6f3b490 | P0-2: speech s17 Argo headcount 20K→2K | speech.md (matches chapter+slide) |
+| 3 | (covered by #1) | P0-3: «лестница переходит» regression | s41 rewritten in commit 1 |
+| 4 | 87e4ee6 | P0-4: [VFY-day-of] метка removed | s27 visible heading «Состояние на февраль 2026» |
+| 5 | c871a51 | P0-5: bulk chapter_ref correction | 24 slide frontmatters aligned to actual chapter sections |
+| 6 | 56f69b2 | P0-6: failure-share normalization | chapter+speech «более половины» / strict_in_share «>50%» |
+| 7 | (covered by #1) | P0-7: s40 cross-ref to chapter §4.7 | merged into commit 1 |
+| 8 | cac43ac | P1 polish | Aurora date precision + Coco geographic scope + s24 Sun-Belt framing |
+| 9 | (this commit) | FINAL: re-render + inject_notes + main repo sync | full pipeline |
+
+### Verification (post-revision)
+
+| Check | Target | Actual | Status |
+|---|---|---|---|
+| Stub notes | 0 | 0 | PASS |
+| «лестница переходит» visible | 0 | 0 | PASS |
+| «лестница переходит» notes | 0 | 0 | PASS |
+| «пять критериев» visible | 0 | 0 | PASS |
+| «семь критериев» visible | ≥3 | 5 | PASS |
+| [VFY-day-of] visible | 0 | 0 | PASS |
+| Designer extras | 0 | 0 | PASS |
+| Argo headcount speech | «две тысячи» | «Две тысячи с лишним» | PASS |
+| chapter_ref drift spot-check (8 slides) | all match actual chapter § | all match | PASS |
+| s38 layout | 7 cards + takeaway | 7 cards in 2×4 grid + 8th cell takeaway | PASS visually |
+| s27 heading | no [VFY-day-of] | «Состояние на февраль 2026» | PASS visually |
+| s41 hero | «другая среда, те же 7 критериев» | rendered correctly | PASS visually |
+
+### Sync
+
+- /home/levko/AI-usage-lessons/library/lectures/lec-13/rendered/lec-13.pptx: 3 496 566 bytes
+- /home/levko/AI-usage-lessons/library/lectures/lec-13/rendered/lec-13.pdf: 4 005 076 bytes
+
+**Verdict:** all 7 P0 + 11 P1 fixed. Ready for GATE C.

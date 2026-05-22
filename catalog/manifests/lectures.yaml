@@ -104,10 +104,12 @@ lectures:
   - number: 10
     title: "AI в сельском хозяйстве"
     module: 2
-    learning_outcomes: [LO1, LO2, LO5]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    learning_outcomes: [LO1a, LO1b, LO2, LO5]
+    repo_dir: lec-10
+    status: produced
+    issue: 126
+    updated_at: "2026-05-21"
+    repo_title_note: "keystone-ось «Лестница AI-проникновения L1→L5 + closed-loop vs open-environment injection»; chapter v3.3 multi-part 32k слов + slides v2 (43 слайда) + speech v2 finalized; 2 новых ENFORCED-правила введены в этом PR (No Timing/Methodology в слайдах + Baseline/Counterfactual mandate)"
 
   - number: 11
     title: "AI в дискретном и процессном производстве"
@@ -131,9 +133,9 @@ lectures:
     title: "AI в логистике и транспорте"
     module: 3
     learning_outcomes: [LO1, LO2, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: "library/lectures/lec-13"
+    status: produced
+    updated_at: "2026-05-22"
 
   - number: 14
     title: "AI в телекоммуникациях, сетевой инфраструктуре и кибербезопасности"

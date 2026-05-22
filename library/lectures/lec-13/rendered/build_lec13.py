@@ -13,7 +13,15 @@ Canvas: 13.333" × 7.5" (16:9). Pacing per deck.yaml ≈ 75 мин.
 Lec-N-1 паттерн compliance: match lec-11 (cover + lecture-map + 5 section dividers +
 выделенный Q&A; top progress bar только на dividers + cover).
 
-Build via: python3 build_lec13.py — generates lec-13.pptx.
+Build via:
+  python3 build_lec13.py            # generates lec-13.pptx (notes = file refs)
+  python3 inject_notes.py           # injects FULL speaker notes from slides/*.md
+
+ВНИМАНИЕ (Phase 8b P0): build_lec13.py ставит file-references как notes
+(«См. slides/sNN-name.md speaker notes.») — это placeholder. Полные
+speaker notes для лектора (~2.3k chars/slide, читаемый связный текст)
+инжектятся отдельно через inject_notes.py — запускать ПОСЛЕ каждого
+rebuild PPTX.
 """
 import re
 from pathlib import Path

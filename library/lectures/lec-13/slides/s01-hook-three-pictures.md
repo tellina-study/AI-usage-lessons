@@ -18,7 +18,7 @@ visual:
     - "Tier 6: Reuters / AP / TechCrunch press photo"
 ---
 
-# Три картинки рядом — и один вопрос
+# Три истории, один вопрос
 
 ## Visual
 

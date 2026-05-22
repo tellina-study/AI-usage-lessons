@@ -289,9 +289,9 @@ def s01_hero_three_pictures(p):
                 x=0.5, y=6.15, w=7.5)
     # Title right
     multiline_box(slide, 8.3, 0.5, 4.7, 5.4, [
-        ("Три картинки", {"size": 22, "bold": True, "color": DEEP}),
-        ("рядом —", {"size": 22, "bold": True, "color": DEEP}),
-        ("и один вопрос", {"size": 22, "bold": True, "color": MID}),
+        ("Три истории,", {"size": 24, "bold": True, "color": DEEP}),
+        ("один вопрос", {"size": 24, "bold": True, "color": MID}),
+        ("", {"size": 8}),
         ("", {"size": 8}),
         ("Декабрь 2024 · Cruise:", {"size": 12, "bold": True, "color": LIGHT}),
         ("10 миллиардов → 0", {"size": 14, "bold": True, "color": RED_WARN}),

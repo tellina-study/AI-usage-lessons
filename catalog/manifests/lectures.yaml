@@ -141,9 +141,11 @@ lectures:
     title: "AI в телекоммуникациях, сетевой инфраструктуре и кибербезопасности"
     module: 3
     learning_outcomes: [LO1, LO2, LO3, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-14
+    status: produced
+    issue: 134
+    updated_at: "2026-05-22"
+    repo_title_note: "chapter v3.1 (4 parts, 34 425 слов) + slides v2.4 (39 slides, 51.3% media, hero s01 CrowdStrike BSOD LGA + s39 NOC IUPUI) + speech v2 (6 402 слов, ≤95 WPM all slides); keystone «Лестница автономии AI: Видит → Решает → Действует» с canonical refs Parasuraman&Sheridan / SAE J3016 / OODA / Endsley; failure-bucket strict-in ~50% chapter / ~62% slides / 80.3% speech holistic; cascade-of-changes pattern caught 2 inherited Anthropic постмортем «март→апрель 2026» drift в chapter §2 + chapter-part2 Q&A"
 
   - number: 15
     title: "AI в научных исследованиях"

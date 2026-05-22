@@ -1,0 +1,352 @@
+# library/lectures/lec-14/deck.yaml
+#
+# Deck-структура Лекции 14 «AI в телекоммуникациях, сетевой инфраструктуре и кибербезопасности».
+#
+# Phase 5+6 multi-artifact pipeline. Issue #134.
+# Source: plan-v2 (39 slides) + chapter v3.1 (~34k слов, 4 parts).
+#
+# Pattern carry-forward от Лекции 11:
+#   - 39 слайдов
+#   - 5 section dividers: s04 (lecture-map с roadmap-bar), s05 (keystone), s14, s23, s31
+#     (формально 4 numbered раздела; §0 включает 4 слайда без отдельного divider,
+#     §5 — closing)
+#   - cover (s02), lecture-map (s04), keystone (s03 inline), Q&A (s39 closing hero)
+#   - Hero on s01 (CrowdStrike BSOD LGA, real Wikimedia CC-BY-SA, ≥40% area) + s39 (NOC photo, real Wikimedia, ≥40% area)
+
+deck:
+  lecture_number: 14
+  title: "AI в телекоммуникациях, сетевой инфраструктуре и кибербезопасности"
+  audience: "студенты-инженеры 3 курса (универсальная, не отраслевая)"
+  duration_min: 75
+  central_question: "Где AI работает в телекоме/инфре/cyber, где может остановить аэропорт, и какие три вопроса нужно задать вендору, чтобы не повторить CrowdStrike?"
+  learning_outcomes: [LO1, LO2, LO3, LO7, LO-failure]
+  language: ru
+  status: draft
+  version: v2.4
+  source: "chapter v3.1 multi-part (chapter.md + chapter-part2.md + chapter-part3.md + chapter-part4.md, ~34k слов)"
+  plan: "notes/lecture-14-review/plan-v2.md"
+  keystone_axis: "Лестница автономии AI: Видит → Решает → Действует (taxonomy по blast radius)"
+
+# Slide structure (39 slides, plan-v2):
+#
+# Section 0 — Hook + keystone + lecture-map (4 мин): s01-s04
+# Section 1 — Телеком (15 мин): s05-s13
+# Section 2 — AIOps (18 мин): s14-s22
+# Section 3 — Cyber (14 мин): s23-s30
+# Section 4 — Синтез + framework (12 мин): s31-s36
+# Section 5 — Замыкание + Q&A (4 мин): s37-s39
+
+slides:
+  - id: s01
+    file: slides/s01-hook-crowdstrike-bsod.md
+    type: hero_cover
+    duration_min: 3
+    assertion: "19 июля 2024 один файл-обновление от CrowdStrike положил 8,5 миллиона устройств. Не атака. Автодеплой."
+    learning_goal: "Эмоциональный hook + предъявить лестницу автономии"
+    failure_bucket: strict_in
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 1
+    assertion: "Три поддомена под одной осью: телеком / AIOps / cyber. Все каскадные сбои 2024–2025 — на верхнем уровне «Действует»."
+    learning_goal: "Контекст лекции + LO + roadmap"
+
+  - id: s03
+    file: slides/s03-keystone-ladder.md
+    type: keystone
+    duration_min: 3
+    assertion: "Видит → Решает → Действует. Чем выше — тем больше масштаб поражения при ошибке."
+    learning_goal: "Keystone ось autonomy ladder + 3×3 grid + 4 failure-метки + coined-term scaffold"
+    failure_bucket: partial
+
+  - id: s04
+    file: slides/s04-lecture-map.md
+    type: lecture_map
+    duration_min: 1
+    assertion: "Пять разделов: keystone → телеком → AIOps → cyber → рамка решения → замыкание."
+    learning_goal: "Навигация + 5 must-know терминов inline gloss"
+
+  - id: s05
+    file: slides/s05-operator-stack.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Operator stack: RAN → core → BSS/OSS → customer. AI входит на каждый уровень, но с разным масштабом ошибки."
+    learning_goal: "Operator stack diagram + autonomy ladder overlay"
+    failure_bucket: partial
+
+  - id: s06
+    file: slides/s06-ai-ran-open-ran.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Open RAN отделяет мозг (RIC) от железа. rApps (минуты) и xApps (миллисекунды) — два темпа автономии."
+    learning_goal: "AI-RAN + Open RAN + inline gloss RIC/rApps/xApps/Open RAN"
+
+  - id: s07
+    file: slides/s07-customer-llm-cases.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Vodafone TOBi, Telefónica AURA, Verizon Gemini — customer LLM в промышленной эксплуатации."
+    learning_goal: "Customer LLM cases — adoption frame"
+
+  - id: s08
+    file: slides/s08-customer-ai-triarchy.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Три типа провала customer-AI: бизнес-разворот (Klarna), юридическая ответственность (Air Canada), деградация UX (Vodafone Italy)."
+    learning_goal: "Triarchy customer-AI failures с уроком: гибрид > full-auto"
+    failure_bucket: strict_in
+
+  - id: s09
+    file: slides/s09-vendor-questions.md
+    type: framework
+    duration_min: 2
+    assertion: "Три вопроса вендору — anchor early. (1) Baseline до AI? (2) Окно + методология? (3) Change-control + canary + rollback?"
+    learning_goal: "LO2 vendor-question framework + hidden Act check"
+    failure_bucket: strict_in
+
+  - id: s10
+    file: slides/s10-fraud-voice-biometric.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Голосовая биометрия защищала от телеком-мошенничества. Теперь голос сам атакован — +1300% deepfake клонов за год."
+    learning_goal: "Fraud detection success + voice biometric vulnerability + bridge к cyber"
+    failure_bucket: partial
+
+  - id: s11
+    file: slides/s11-att-rogers-outages.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "AT&T 22 февраля 2024 — это CrowdStrike-pattern до CrowdStrike. Один не проверенный конфиг — 125 миллионов устройств без связи."
+    learning_goal: "Telco outage failures с foreshadow к §2 cascade pattern"
+    failure_bucket: strict_in
+
+  - id: s12
+    file: slides/s12-telco-no-ai-criteria.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Когда AI НЕ нужен в телекоме: E911, биллинг, законный перехват, URLLC, объяснимость под EU AI Act."
+    learning_goal: "Criteria «AI не нужен» — телеком"
+    failure_bucket: strict_in
+
+  - id: s13
+    file: slides/s13-telco-alternatives.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Альтернативы AI в телекоме: 3GPP SON, инженерия трафика по Erlang, ПИД/MPC, федеративное обучение."
+    learning_goal: "Alternative tools для телеком"
+    failure_bucket: strict_in
+
+  - id: s14
+    file: slides/s14-section-aiops-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2. AIOps — лестница автономии в действии."
+    learning_goal: "Section break + AIOps ladder visual"
+    failure_bucket: partial
+
+  - id: s15
+    file: slides/s15-observe-aiops.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Observe-уровень AIOps работает в промышленной эксплуатации: Dynatrace Davis, Datadog Bits AI, Cisco ThousandEyes."
+    learning_goal: "Observe-level production deployments"
+
+  - id: s16
+    file: slides/s16-decide-aiops-honest.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Anthropic сами разобрали три back-to-back регрессии Claude Code. DORA 2025: AI ↑ индивидуально, но ↓ командно."
+    learning_goal: "Decide-level honest failure + DORA paradox"
+    failure_bucket: strict_in
+
+  - id: s17
+    file: slides/s17-act-aiops.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Act-level автоматическое исправление: Cisco DNA, Juniper Mist, Netflix 56% инцидентов. Setup для разбора каскадов."
+    learning_goal: "Act-level autonomous remediation"
+
+  - id: s18
+    file: slides/s18-2025-cascade-failures.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "2025: Cloudflare 5ч 38мин, AWS DynamoDB, Azure Front Door — три каскада за 30 дней, все на уровне «Действует»."
+    learning_goal: "2025 cascade-failures triple"
+    failure_bucket: strict_in
+
+  - id: s19
+    file: slides/s19-crowdstrike-deepdive.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "CrowdStrike 19.07.2024: не код, а конфиг. Без canary. 8,5 миллиона устройств в BSOD. $5+ миллиардов ущерба."
+    learning_goal: "CrowdStrike deep-dive — пост-мортем"
+    failure_bucket: strict_in
+
+  - id: s20
+    file: slides/s20-replit-cursor-deletions.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Replit удалил production-базу SaaStr за один промпт. Cursor + PocketOS — «9 секунд» уничтожения работы."
+    learning_goal: "Agentic AI delete-failures 2025"
+    failure_bucket: strict_in
+
+  - id: s21
+    file: slides/s21-bayesian-fp-math.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "При точности детектора 99,9% и базовой ставке 1% — на 99,9 истинных приходится 9,9 ложных. Это математика выгорания SOC."
+    learning_goal: "Bayesian FP math + alert-fatigue economy fundamentals"
+    failure_bucket: strict_in
+
+  - id: s22
+    file: slides/s22-aiops-no-ai-alternatives.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Когда AI НЕ нужен в AIOps + альтернативы: Nagios/Zabbix, SPC, Rundeck, SLO burn-rate, chaos engineering."
+    learning_goal: "AIOps criteria + alternatives"
+    failure_bucket: strict_in
+
+  - id: s23
+    file: slides/s23-cyber-three-angles.md
+    type: keystone
+    duration_min: 2
+    assertion: "Три угла cyber: AI-augmented defense, adversarial use of AI, attack on AI (MITRE ATLAS). Kill chain phases — карта поверх."
+    learning_goal: "Cyber 3-tuple + kill chain overlay (canonical)"
+    failure_bucket: partial
+
+  - id: s24
+    file: slides/s24-cyber-defense-augmented.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Microsoft Security Copilot, CrowdStrike Charlotte AI — Observe + Decide. PSM-метрики, не RCT. Vendor-self-claim ≠ доказательство."
+    learning_goal: "AI-augmented defense + honest measurement caveat"
+
+  - id: s25
+    file: slides/s25-cyber-edr-ndr-email.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "EDR/XDR/NDR/email-AI/identity — Observe-уровень в проде. Tenable: только 3% CVE реально эксплуатируемых."
+    learning_goal: "Cyber Observe tools + Tenable Bayes bridge"
+
+  - id: s26
+    file: slides/s26-arup-deepfake.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Arup потерял $25,6 миллиона на видеоконференции с deepfake-CFO. Ferrari и WPP победили — простым вопросом по независимому каналу."
+    learning_goal: "Deepfake adversarial use + low-tech defense wins"
+    failure_bucket: strict_in
+
+  - id: s27
+    file: slides/s27-echoleak-zero-click.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "EchoLeak — первый zero-click prompt injection в Microsoft Copilot. Жертва — не человек. Жертва — сам AI."
+    learning_goal: "Attack on AI #1 — prompt injection + zero-click definition"
+    failure_bucket: strict_in
+
+  - id: s28
+    file: slides/s28-gtg-1002-overhype.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Anthropic GTG-1002: государственный actor использовал Claude 80–90% автономно. Но сам Anthropic: «hit limits на тех же галлюцинациях, что и защитники»."
+    learning_goal: "Offensive AI honest + WormGPT/ChaosGPT overhype counter"
+    failure_bucket: strict_in
+
+  - id: s29
+    file: slides/s29-cyber-no-ai-criteria.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Когда AI НЕ нужен в cyber: forensic chain, compliance hardlines, IR hot phase, signature threats, crypto, SMB."
+    learning_goal: "Cyber criteria «AI не нужен»"
+    failure_bucket: strict_in
+
+  - id: s30
+    file: slides/s30-cyber-alternatives.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Альтернативы в cyber: YARA + Sigma + Snort, NIST SP 800-207 Zero Trust, out-of-band verification — 80% защиты за 20% стоимости."
+    learning_goal: "Cyber alternatives"
+    failure_bucket: strict_in
+
+  - id: s31
+    file: slides/s31-verdict-matrix-3x3.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Сводная таблица: 3 поддомена × 3 уровня автономии × вердикт. Самый плотный слайд лекции."
+    learning_goal: "Synthesis 3×3 verdict matrix"
+    failure_bucket: strict_in
+
+  - id: s32
+    file: slides/s32-key-insight-act-level.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Все каскадные сбои 2024–2025 — на уровне «Действует». Не теория. Эмпирическое наблюдение. Закономерность."
+    learning_goal: "Key insight — pattern observation"
+    failure_bucket: strict_in
+
+  - id: s33
+    file: slides/s33-six-criteria-bayes.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Шесть критериев «AI не нужен» + Bayes refresh: forensic, compliance, latency, редкие события, крипто, малый scope."
+    learning_goal: "6 criteria + Bayes refresh"
+    failure_bucket: strict_in
+
+  - id: s34
+    file: slides/s34-five-step-framework.md
+    type: framework
+    duration_min: 2
+    assertion: "Пять шагов перед включением auto: identify уровень → quantify blast radius → 6 critеria → pilot с canary → production с HITL."
+    learning_goal: "5-step framework flow-chart"
+    failure_bucket: strict_in
+
+  - id: s35
+    file: slides/s35-worked-example-soar.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Вендор предлагает SOAR auto-block для phishing. Применяем 6 критериев пошагово. Вердикт: HITL required — auto-flag, not auto-block."
+    learning_goal: "LO-failure worked example"
+    failure_bucket: strict_in
+
+  - id: s36
+    file: slides/s36-career-matrix.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Три карьерных трека: NetEng / SRE / SOC. Каждый — fundamentals + tools + self-select hint."
+    learning_goal: "Career matrix 3 tracks × 3 rows"
+
+  - id: s37
+    file: slides/s37-recap-vendor-callback.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Через год на работе начальник предложит «включить auto-remediate» — спросите: уровень? blast radius? rollback?"
+    learning_goal: "Recap + callback на vendor questions"
+    failure_bucket: strict_in
+
+  - id: s38
+    file: slides/s38-bridge-lec15.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Production-AI (мы) vs Discovery-AI (Лекция 15). В науке wrong answer — гипотеза. В инфре wrong answer — outage."
+    learning_goal: "Bridge к Лекции 15 + 2×3 table"
+    failure_bucket: partial
+
+  - id: s39
+    file: slides/s39-closing-soc-hero.md
+    type: hero_closing
+    duration_min: 1
+    assertion: "Лучшая защита — инженер, который знает, где AI помогает, а где остановить его."
+    learning_goal: "Closing hero + Q&A"
+
+# Mandates carry-forward
+mandates:
+  hero_s01: "CrowdStrike BSOD LGA, Wikimedia CC-BY-SA, ≥40% area, attribution visible"
+  hero_s39: "NOC photo IUPUI, Wikimedia, ≥40% area, attribution visible"
+  russification: "deep latin-token scan ≥0 unique tokens outside brand-allowlist"
+  anonymization: "0 named institutions; «студенты-инженеры 3 курса (универсальная)»"
+  media_coverage: "≥21/39 slides с media (real photos + charts + diagrams)"
+  palette: "Ocean Gradient + Teal secondary + Gold ≥1× per slide + Ocean rounded box motif"
+
+# Iteration tracking
+iteration_log: "rendered/iteration-log.md"

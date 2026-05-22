@@ -1,0 +1,408 @@
+# library/lectures/lec-13/deck.yaml
+#
+# Deck-структура Лекции 13 «AI в логистике и транспорте»
+# v1 по pattern lec-11.
+#
+# Phase 5-7 multi-artifact pipeline. Issue #135.
+#
+# Pattern carry-forward от Лекции 11:
+#   - section dividers (4 шт.): s06 / s13 / s23 / s33
+#   - cover (s02), lecture-map (s03), glossary mini (s04), keystone (s05) — Раздел 0
+#   - dedicated Q&A slide (s40), bridge к lec-14 (s41 closing hero)
+#   - Hero on s01 (Waymo Jaguar I-Pace, ≥40% area) + s41 (NOC bridge к lec-14, ≥40% area)
+#
+# Keystone axis: лестница структурированности среды (5 уровней)
+#   уровень 1 controlled (склад/порт/рельсы) → §1
+#   уровень 2 highway (магистраль) → §2
+#   уровни 3+4 urban+last-mile (robotaxi+sidewalk+drone) → §3
+#   уровень 5 exception (black-swan) + decision framework → §4
+#   замыкание + bridge к lec-14 → §5
+
+deck:
+  lecture_number: 13
+  title: "AI в логистике и транспорте"
+  audience: "студенты-инженеры 3 курса (универсальная, не отраслевая)"
+  duration_min: 75
+  central_question: "Почему Waymo выжила, Cruise разорилась, Tesla только начинает? Дело не в технологии — дело в среде. Где AI работает в логистике, где нет — и как инженер должен решать?"
+  learning_outcomes: [LO1, LO2, LO7]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v2 multi-part (status=draft, ~31k слов; chapter.md + chapter-part2.md + chapter-part3.md)
+  plan: library/lectures/lec-13/lecture-outline.md
+  keystone_axis: "Лестница структурированности среды — 5 уровней от controlled warehouse к exception black-swan"
+
+# Final slide list:
+#
+# Section 0 — Открытие + keystone + lecture-map + glossary (5-7 мин):
+#   s01 — hero hook: Waymo Jaguar I-Pace SF/LA (3 картинки рядом — Cruise / Waymo / Tesla)
+#   s02 — cover (lecture title + meta + roadmap-bar)
+#   s03 — lecture-map (5 horizontal section cards)
+#   s04 — glossary mini (SAE J3016, ODD, AMR, AV, OR, HD-map, EOQ, HITL/HOOL/HOTL)
+#   s05 — keystone: лестница 5 уровней структурированности среды
+#
+# Section divider 1
+#   s06 — divider Section 1: Controlled (склад / порт / рельсы)
+#
+# Section 1 — Controlled environment (12 мин):
+#   s07 — Symbotic + Walmart 400 APD ($5B backlog)
+#   s08 — Amazon Robotics 1M+ роботов (Sparrow / Sequoia / Proteus / Vulcan)
+#   s09 — AMR Locus + GreyOrange + Geek+ + worker workload pushback
+#   s10 — Port automation ABB / Konecranes / ZPMC + ILA strikes 2024
+#   s11 — KONUX rail PdM + границы humanoid hype / capital intensity / lights-out myth
+#   s12 — Failure-matrix Раздел 1
+#
+# Section divider 2
+#   s13 — divider Section 2: Highway (магистраль)
+#
+# Section 2 — Highway (15 мин):
+#   s14 — Aurora Innovation Dallas-Houston май 2025 — первая commercial L4
+#   s15 — Mobileye Chauffeur L3 + КамАЗ-54901 М-11 «Нева»
+#   s16 — UPS ORION (canonical OR success, не RL) — fundamental slide
+#   s17 — AV-bankruptcy timeline (Argo Oct 2022 / Embark Mar 2023 / TuSimple Jan 2024 / Waymo Via 2023 / Starsky Mar 2020)
+#   s18 — Cumulative $20B+ chart non-survivors
+#   s19 — Survivor consolidation 10:1 (Waymo / Aurora / Mobileye)
+#   s20 — «AV решит trucker shortage» — false framing (78K дефицит vs ~10 Aurora trucks)
+#   s21 — Failure-matrix Раздел 2
+#   s22 — Stefan Seltz-Axmacher quote («sim-to-real has very real limits»)
+#
+# Section divider 3
+#   s23 — divider Section 3: Urban robotaxi + last-mile
+#
+# Section 3 — Urban + last-mile (15 мин):
+#   s24 — Waymo 500K rides/week, 14M cumulative, 10+ городов
+#   s25 — Apollo Go (Baidu) + Pony.ai + WeRide — Китай 3 крупных
+#   s26 — Pony.ai Гуанчжоу Nov 2025 + Шэньчжэнь Feb 2026 (positive unit profit) [P0 cascade fix]
+#   s27 — Tesla Robotaxi Austin (14 ДТП / 800K миль / vision-only без HD-map)
+#   s28 — Last-mile: Starship 9M+ / Coco 1K LA / Zipline 100M миль Africa + Nuro pivot
+#   s29 — Cruise GM exit December 2024 — centerpiece ($10B → 0 timeline)
+#   s30 — Uber Tempe 2018 (NTSB report) — first AV-pedestrian fatality
+#   s31 — Tesla Autopilot NHTSA SGO (54 verified fatalities)
+#   s32 — Failure-matrix Раздел 3
+#
+# Section divider 4
+#   s33 — divider Section 4: Exception + decision framework
+#
+# Section 4 — Exception + decision (15 мин):
+#   s34 — Houthi Red Sea 2024 — 90% drop за 2 месяца + Cape of Good Hope rerouting
+#   s35 — Suez Ever Given 2021 — 12% world trade + AI не имела роли
+#   s36 — COVID 2020 supply chain meltdown + JIT fragility
+#   s37 — ATA trucker shortage 78K (2022) → 60K (2023) — структурный, не AI
+#   s38 — Decision framework: 7 критериев «AI или не AI»
+#   s39 — Alternative toolkit (OR / EOQ / scenario planning / rule-based / HITL) матрица
+#
+# Section 5 — Замыкание (5 мин):
+#   s40 — Q&A + 7 вопросов вендору карточка (дополняет 8 вопросов главы §4.7)
+#   s41 — closing hero: telecom NOC (bridge к Лекции 14)
+
+slides:
+  - id: s01
+    file: slides/s01-hook-three-pictures.md
+    type: hero_cover
+    duration_min: 3
+    assertion: "Cruise сожгла 10 миллиардов. Waymo делает 500 000 поездок в неделю. Tesla накопила 14 ДТП за 8 месяцев. Дело не в технологии — дело в среде."
+    learning_goal: "Эмоциональный hook + central question"
+    failure_bucket: strict_in
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 1
+    assertion: "AI в логистике и транспорте: где работает, где нет, как решать инженеру"
+    learning_goal: "Контекст лекции + LO + roadmap"
+
+  - id: s03
+    file: slides/s03-lecture-map.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Пять разделов: controlled → highway → urban → exception → замыкание"
+    learning_goal: "Навигация по лекции"
+
+  - id: s04
+    file: slides/s04-glossary.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Десять аббревиатур, без которых дальше не пройти"
+    learning_goal: "SAE J3016, ODD, AV, AMR, OR, HD-map, EOQ, TSP/VRP, HITL — inline gloss"
+
+  - id: s05
+    file: slides/s05-keystone-environment-ladder.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Структурированность среды — главный предиктор успеха AI в логистике. Пять уровней от склада к чёрному лебедю."
+    learning_goal: "Keystone-ось лекции: 5 уровней + представитель + failure mode на каждом"
+    failure_bucket: strict_in
+
+  - id: s06
+    file: slides/s06-section1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 1. Контролируемая среда: склад, порт, рельсы."
+    learning_goal: "Section break"
+
+  - id: s07
+    file: slides/s07-symbotic-walmart.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Symbotic + Walmart: 400 APD-центров, более 5 миллиардов backlog — канонический пример складской автоматизации."
+    learning_goal: "Уровень 1.1: warehouse как самая контролируемая среда"
+
+  - id: s08
+    file: slides/s08-amazon-robotics.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Amazon: более миллиона роботов в фулфилменте. Sparrow → Vulcan: путь от vision-only к тактильному сенсору."
+    learning_goal: "Sparrow / Sequoia / Proteus / Vulcan + урок мульти-модального сенсорного стека"
+
+  - id: s09
+    file: slides/s09-amr-locus-greyorange.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Locus Robotics: более 5 миллиардов pick-операций. Но AMR не plug-and-play, и worker workload pushback — реальный риск."
+    learning_goal: "AMR + worker workload pushback (Toyota Jidoka callback)"
+    failure_bucket: strict_in
+
+  - id: s10
+    file: slides/s10-port-automation.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Maasvlakte II, Long Beach LBCT, Yangshan — автоматизированы. Но ILA-страйки 2024: технология упирается в трудовую политику."
+    learning_goal: "ABB / Konecranes / ZPMC + ILA labor pushback"
+    failure_bucket: strict_in
+
+  - id: s11
+    file: slides/s11-rail-konux-limits.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "KONUX + Deutsche Bahn: прогностическое обслуживание стрелок зрело. Humanoid-роботы и lights-out warehouse — пока миф."
+    learning_goal: "Rail PdM + границы уровня 1 (humanoid hype, capital intensity, lights-out)"
+    failure_bucket: strict_in
+
+  - id: s12
+    file: slides/s12-discrete-failure-matrix.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Четыре границы уровня 1: капитальная интенсивность, OEM lock-in, lights-out миф, сезонный distribution shift."
+    learning_goal: "Failure-matrix Раздел 1"
+    failure_bucket: strict_in
+
+  - id: s13
+    file: slides/s13-section2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2. Полуструктурированная магистраль."
+    learning_goal: "Section break"
+
+  - id: s14
+    file: slides/s14-aurora-dallas-houston.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Aurora Innovation: 1 мая 2025 — первая в США коммерческая беспилотная грузоперевозка. Маршрут Даллас-Хьюстон, около 10 машин."
+    learning_goal: "Aurora как первый survivor highway L4"
+
+  - id: s15
+    file: slides/s15-mobileye-kamaz.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Mobileye Chauffeur L3 eyes-off на премиум европейских OEM. КамАЗ-54901 + Cognitive Pilot на М-11: 67 единиц 2024, план 100 на 2025."
+    learning_goal: "L3 eyes-off + российский контекст highway"
+
+  - id: s16
+    file: slides/s16-ups-orion-fundamental.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "UPS ORION: 100 миллионов миль/год, $300-400 миллионов savings/год. Это операционные исследования (OR), не глубокое обучение и не RL."
+    learning_goal: "Canonical OR success как anti-hype fundamental"
+    failure_bucket: strict_in
+
+  - id: s17
+    file: slides/s17-av-bankruptcy-timeline.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "За 4 года: Argo Oct 2022, Embark Mar 2023, TuSimple Jan 2024, Waymo Via 2023, Starsky Mar 2020. Серия катастроф для AV-trucking."
+    learning_goal: "AV-bankruptcy timeline (5 точек на одном слайде)"
+    failure_bucket: strict_in
+
+  - id: s18
+    file: slides/s18-cumulative-20b-burned.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Более 20 миллиардов долларов сожжено только на non-survivors autonomous trucking + robotaxi 2017-2024. Survivor consolidation 10:1."
+    learning_goal: "Cumulative damage chart"
+    failure_bucket: strict_in
+
+  - id: s19
+    file: slides/s19-survivor-consolidation.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Из 30+ серьёзных AV-стартапов 2015-2020 выжили 3-4: Waymo, Aurora, Mobileye (eyes-off L3), Apollo Go в Китае."
+    learning_goal: "Survivor pattern + сравнение dropouts vs survivors"
+    failure_bucket: strict_in
+
+  - id: s20
+    file: slides/s20-trucker-shortage-false-framing.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "ATA: 78 000 дефицит водителей в 2022, около 60 000 в 2023. Aurora: ~10 машин на коммерческих маршрутах. Math не работает."
+    learning_goal: "«AV решит trucker shortage» — false framing"
+    failure_bucket: strict_in
+
+  - id: s21
+    file: slides/s21-highway-failure-matrix.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Четыре причины schwankenia AV-trucking startup'ов: capital intensity / regulatory / SPAC-bust / sim-to-real gap."
+    learning_goal: "Failure-matrix Раздел 2"
+    failure_bucket: strict_in
+
+  - id: s22
+    file: slides/s22-starsky-sim-to-real.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "«Supervised machine learning doesn't live up to the hype. Sim-to-real has very real limits.» — Стефан Зельц-Аксмахер, март 2020."
+    learning_goal: "Honest first-person post-mortem"
+    failure_bucket: strict_in
+
+  - id: s23
+    file: slides/s23-section3-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 3. Городская улица robotaxi и последняя миля."
+    learning_goal: "Section break"
+
+  - id: s24
+    file: slides/s24-waymo-survivor.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Waymo март 2026: 500 000 поездок в неделю, 3 067 машин 5-го поколения, 10+ городов. HD-карта + лидар + удалённые операторы + формальное обоснование безопасности."
+    learning_goal: "Waymo как canonical survivor robotaxi"
+
+  - id: s25
+    file: slides/s25-china-robotaxi.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Apollo Go: 240 миллионов километров, 17 миллионов заказов, 22 города (октябрь 2025). Pony.ai + WeRide — три крупных в Китае."
+    learning_goal: "China robotaxi (Apollo Go / Pony.ai / WeRide)"
+
+  - id: s26
+    file: slides/s26-pony-ai-unit-economics.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Pony.ai Гуанчжоу ноябрь 2025: первая положительная unit-экономика на машину. Шэньчжэнь февраль 2026: второй город. Не «общая прибыль», а признак выхода из режима венчурного жжения."
+    learning_goal: "Pony.ai unit profit (правильная атрибуция: Гуанчжоу первый, Шэньчжэнь второй)"
+
+  - id: s27
+    file: slides/s27-tesla-robotaxi-austin.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Tesla Robotaxi Austin: старт 22 июня 2025, около 800 000 миль, 14 ДТП за 8 месяцев. Vision-only без HD-карты — статистически пока недоказанная ставка."
+    learning_goal: "Tesla Austin current state (без demonization, statistical sample)"
+    failure_bucket: strict_in
+
+  - id: s28
+    file: slides/s28-last-mile-deliveries.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Starship 9 миллионов доставок на 60+ кампусах. Coco 1000+ роботов в Лос-Анджелесе. Zipline 100 миллионов миль в Африке. Nuro pivot 2024 — exit B2C."
+    learning_goal: "Last-mile (sidewalk + drone) — узкие ниши + Nuro pivot"
+
+  - id: s29
+    file: slides/s29-cruise-centerpiece.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Cruise: 10 миллиардов сожжено, менее 500 миллионов выручки. От 2 октября 2023 (incident SF) до 11 декабря 2024 (GM exit) — 14 месяцев краха."
+    learning_goal: "Cruise centerpiece — timeline 4-уровневого failure pattern"
+    failure_bucket: strict_in
+
+  - id: s30
+    file: slides/s30-uber-tempe-2018.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "18 марта 2018, Tempe, Arizona. Элейн Хёрцберг — первая жертва беспилотника. Uber отключил заводское экстренное торможение, водитель безопасности смотрел телевизор."
+    learning_goal: "Uber Tempe — first AV pedestrian fatality + NTSB lessons"
+    failure_bucket: strict_in
+
+  - id: s31
+    file: slides/s31-tesla-autopilot-nhtsa.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "NHTSA SGO октябрь 2025: 65 сообщений, 54 подтверждённых смертельных случая с Tesla Autopilot. EA22002 идентифицировало 13 fatal crashes с foreseeable misuse."
+    learning_goal: "Tesla Autopilot fatalities + naming-driven over-reliance lesson"
+    failure_bucket: strict_in
+
+  - id: s32
+    file: slides/s32-urban-failure-matrix.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Четыре урока городского AV: ODD дисциплина / driver-monitoring обязателен / naming matters / hardware ≠ платформа."
+    learning_goal: "Failure-matrix Раздел 3"
+    failure_bucket: strict_in
+
+  - id: s33
+    file: slides/s33-section4-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 4. Чёрный лебедь и рамка решения."
+    learning_goal: "Section break"
+
+  - id: s34
+    file: slides/s34-houthi-red-sea.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Хуситы, Красное море, конец 2023 года. За 2 месяца контейнерный трафик упал на 90 процентов. Это область, в которой ML слеп по определению."
+    learning_goal: "Houthi crisis + Cape of Good Hope rerouting"
+    failure_bucket: strict_in
+
+  - id: s35
+    file: slides/s35-suez-ever-given.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Suez Ever Given март 2021: 6 дней блокировки, 12 процентов мировой торговли, $9,6 миллиарда удержанных грузов. AI не имела роли — физика и лоцманство."
+    learning_goal: "Ever Given case + AI не помогала"
+    failure_bucket: strict_in
+
+  - id: s36
+    file: slides/s36-covid-supply-chain.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "COVID 2020: глобальный обвал цепочек поставок. Точно-в-срок + ML прогноз спроса = хрупкая система. Человеческое exception-управление спасло."
+    learning_goal: "COVID supply chain meltdown + JIT fragility"
+    failure_bucket: strict_in
+
+  - id: s37
+    file: slides/s37-trucker-shortage-structural.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Дефицит дальнобойщиков в США — структурная проблема, не технологическая. Решается политикой, переподготовкой, визами и условиями труда — не AV-развёртываниями."
+    learning_goal: "Structural labor problem НЕ решается AV"
+    failure_bucket: strict_in
+
+  - id: s38
+    file: slides/s38-decision-framework.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Семь критериев AI или не AI в логистике: среда / задача / спрос / безопасность / распределение / послужной список / базовая линия."
+    learning_goal: "Decision framework 7 критериев"
+    failure_bucket: strict_in
+
+  - id: s39
+    file: slides/s39-alternative-toolkit.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Шесть альтернатив AI в логистике: OR (Gurobi/CPLEX/OR-Tools), классические запасы (EOQ/safety stock/ABC), сценарное планирование, rule-based, гибридные сенсоры, человек в петле."
+    learning_goal: "Alternative toolkit матрица"
+    failure_bucket: strict_in
+
+  - id: s40
+    file: slides/s40-qa-vendor-questions.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Семь вопросов вендору на завтра — практический инструмент для кармана."
+    learning_goal: "Q&A + 7 vendor-вопросов для логистического AI"
+
+  - id: s41
+    file: slides/s41-closing-hero-noc-bridge.md
+    type: hero_closing
+    duration_min: 2
+    assertion: "Лестница среды переходит из физического мира в сетевой. Лекция 14 — телекоммуникации, сетевая инфраструктура, кибербез."
+    learning_goal: "Closing hero + bridge к лекции 14"

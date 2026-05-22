@@ -133,9 +133,9 @@ lectures:
     title: "AI в логистике и транспорте"
     module: 3
     learning_outcomes: [LO1, LO2, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: "library/lectures/lec-13"
+    status: produced
+    updated_at: "2026-05-22"
 
   - number: 14
     title: "AI в телекоммуникациях, сетевой инфраструктуре и кибербезопасности"

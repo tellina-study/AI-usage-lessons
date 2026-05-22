@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "Более 20 миллиардов долларов сожжено только на non-survivors autonomous trucking + robotaxi 2017-2024. Survivor consolidation 10:1."
 learning_goal: "Cumulative damage chart + контраст с Lec-11 95% pilot purgatory"
 learning_outcomes: [LO2]
-chapter_ref: "§2.5 — Cumulative damage"
+chapter_ref: "§2.6.6 — Суммарный масштаб ущерба"
 failure_bucket: strict_in
 references: []
 visual:

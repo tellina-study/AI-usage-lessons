@@ -5,7 +5,7 @@ duration_min: 2.5
 assertion: "18 марта 2018, Tempe, Arizona. Элейн Хёрцберг — первая жертва беспилотника. Uber отключил заводское экстренное торможение, водитель безопасности смотрел телевизор."
 learning_goal: "Uber Tempe — first AV pedestrian fatality + NTSB lessons"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§3.4 — Uber Tempe 2018"
+chapter_ref: "§3.7 — Uber Tempe 2018: первая AV-фатальность пешехода"
 failure_bucket: strict_in
 references: [wikipedia-elaine-herzberg, ntsb-har-19-03]
 visual:

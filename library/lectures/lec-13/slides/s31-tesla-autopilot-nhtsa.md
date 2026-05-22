@@ -5,7 +5,7 @@ duration_min: 2.5
 assertion: "NHTSA SGO октябрь 2025: 65 сообщений, 54 подтверждённых смертельных случая с Tesla Autopilot. EA22002 идентифицировало 13 fatal crashes с foreseeable misuse."
 learning_goal: "Tesla Autopilot fatalities + naming-driven over-reliance lesson"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§3.4 — Tesla Autopilot fatalities"
+chapter_ref: "§3.8 — Tesla Autopilot: 54 верифицированные фатальности NHTSA"
 failure_bucket: strict_in
 references: [wikipedia-tesla-autopilot-crashes, nhtsa-ea22002]
 visual:

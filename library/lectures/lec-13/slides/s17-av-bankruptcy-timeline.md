@@ -5,7 +5,7 @@ duration_min: 3
 assertion: "За 4 года: Argo Oct 2022, Embark Mar 2023, TuSimple Jan 2024, Waymo Via 2023, Starsky Mar 2020. Серия катастроф для AV-trucking."
 learning_goal: "AV-bankruptcy timeline — 5 точек на одной линии"
 learning_outcomes: [LO2]
-chapter_ref: "§2.5 — Failure deep-dive"
+chapter_ref: "§2.6 — Серия банкротств autonomous trucking"
 failure_bucket: strict_in
 references: [cnbc-argo-shutdown, techcrunch-embark-layoffs, sec-tusimple-13d]
 visual:

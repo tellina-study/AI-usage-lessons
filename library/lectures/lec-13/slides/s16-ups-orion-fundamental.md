@@ -5,7 +5,7 @@ duration_min: 3
 assertion: "UPS ORION: 100 миллионов миль/год, $300-400 миллионов savings/год. Это операционные исследования (OR), не глубокое обучение и не RL."
 learning_goal: "Canonical OR success как fundamental — anti-hype payoff"
 learning_outcomes: [LO1, LO7]
-chapter_ref: "§2.4 — UPS ORION: canonical OR success"
+chapter_ref: "§2.5 — UPS ORION: операционные исследования как альтернатива ML-маршрутизации"
 failure_bucket: strict_in
 references: [informs-ups-orion, supply-chain-dive-ups]
 visual:

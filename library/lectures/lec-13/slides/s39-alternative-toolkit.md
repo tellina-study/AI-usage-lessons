@@ -5,7 +5,7 @@ duration_min: 2.5
 assertion: "Шесть альтернатив AI в логистике: OR (Gurobi/CPLEX/OR-Tools), классические запасы (EOQ/safety stock/ABC), сценарное планирование, rule-based, гибридные сенсоры, человек в петле."
 learning_goal: "Alternative toolkit матрица — карман инструментов инженера-логиста"
 learning_outcomes: [LO7]
-chapter_ref: "§4.3 — Альтернативные инструменты"
+chapter_ref: "§4.6 — Альтернативный инструментарий: что должен знать инженер логистики"
 failure_bucket: strict_in
 references: []
 visual:

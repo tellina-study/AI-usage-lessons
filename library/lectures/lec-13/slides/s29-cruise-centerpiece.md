@@ -5,7 +5,7 @@ duration_min: 3.5
 assertion: "Cruise: 10 миллиардов сожжено, менее 500 миллионов выручки. От 2 октября 2023 (incident SF) до 11 декабря 2024 (GM exit) — 14 месяцев краха."
 learning_goal: "Cruise centerpiece — timeline 4-уровневого failure pattern"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§3.4 — Cruise GM exit centerpiece"
+chapter_ref: "§3.6 — Cruise GM exit: канонический провал robotaxi 2024"
 failure_bucket: strict_in
 references: [cnbc-cruise-exit, npr-gm-retreats]
 visual:

@@ -5,7 +5,7 @@ duration_min: 2.5
 assertion: "Waymo март 2026: 500 000 поездок в неделю, 3 067 машин 5-го поколения, 10+ городов. HD-карта + лидар + удалённые операторы + формальное обоснование безопасности."
 learning_goal: "Waymo как canonical survivor robotaxi"
 learning_outcomes: [LO1]
-chapter_ref: "§3.1 — Waymo deep-dive"
+chapter_ref: "§3.2 — Waymo: дисциплина ODD как условие выживания"
 references: [techcrunch-waymo-march-2026, eweek-waymo-14m, carbon-credits-waymo]
 visual:
   pattern: case_study_hero_with_stack

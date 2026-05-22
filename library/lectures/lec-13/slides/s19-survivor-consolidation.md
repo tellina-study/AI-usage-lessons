@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "Из 30+ серьёзных AV-стартапов 2015-2020 выжили 3-4: Waymo, Aurora, Mobileye (eyes-off L3), Apollo Go в Китае."
 learning_goal: "Survivor pattern + сравнение dropouts vs survivors"
 learning_outcomes: [LO2]
-chapter_ref: "§2.5 — Survivor analysis"
+chapter_ref: "§2.6 — Серия банкротств + выжившие"
 failure_bucket: strict_in
 references: []
 visual:

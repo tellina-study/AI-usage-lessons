@@ -5,7 +5,7 @@ duration_min: 1.5
 assertion: "«Supervised machine learning doesn't live up to the hype. Sim-to-real has very real limits.» — Стефан Зельц-Аксмахер, март 2020."
 learning_goal: "Honest first-person post-mortem"
 learning_outcomes: [LO2]
-chapter_ref: "§2.5 — Starsky lesson"
+chapter_ref: "§2.6.5 — Starsky Robotics + эссе Зельц-Аксмахера"
 failure_bucket: strict_in
 references: [seltz-axmacher-starsky-essay]
 visual:

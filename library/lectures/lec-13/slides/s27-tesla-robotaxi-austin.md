@@ -5,7 +5,7 @@ duration_min: 2.5
 assertion: "Tesla Robotaxi Austin: старт 22 июня 2025, около 800 000 миль, 14 ДТП за 8 месяцев. Vision-only без HD-карты — статистически пока недоказанная ставка."
 learning_goal: "Tesla Austin current state (без demonization, statistical sample)"
 learning_outcomes: [LO1, LO2]
-chapter_ref: "§3.2 — Tesla Robotaxi Austin"
+chapter_ref: "§3.4 — Tesla Robotaxi Austin: vision-only ставка"
 failure_bucket: strict_in
 references: [national-today-tesla-14, wikipedia-tesla-robotaxi]
 visual:

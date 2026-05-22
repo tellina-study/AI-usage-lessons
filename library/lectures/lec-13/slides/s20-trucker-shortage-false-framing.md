@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "ATA: 78 000 дефицит водителей в 2022, около 60 000 в 2023. Aurora: ~10 машин на коммерческих маршрутах. Math не работает."
 learning_goal: "«AV решит trucker shortage» — false framing"
 learning_outcomes: [LO2]
-chapter_ref: "§2.5 — Trucker shortage analysis"
+chapter_ref: "§2.7 — «AV решит дефицит дальнобойщиков» — ложная рамка"
 failure_bucket: strict_in
 references: [ata-driver-shortage, trucking-dive-costello]
 visual:

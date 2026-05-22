@@ -5,7 +5,7 @@ duration_min: 1.5
 assertion: "Четыре причины schwankenia AV-trucking startup'ов: capital intensity / regulatory / SPAC-bust / sim-to-real gap."
 learning_goal: "Failure-matrix Раздел 2"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§2.5 — Common patterns"
+chapter_ref: "§2.6 — Серия банкротств: общие паттерны"
 failure_bucket: strict_in
 references: []
 visual:

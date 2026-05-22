@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "Pony.ai Гуанчжоу ноябрь 2025: первая положительная unit-экономика на машину. Шэньчжэнь февраль 2026: второй город. Не «общая прибыль», а признак выхода из режима венчурного жжения."
 learning_goal: "Pony.ai unit profit — правильная атрибуция (Гуанчжоу первый, Шэньчжэнь второй)"
 learning_outcomes: [LO2]
-chapter_ref: "§3.1 — Pony.ai unit economics"
+chapter_ref: "§3.3 — Pony.ai юнит-экономика"
 references: [sec-pony-6k]
 visual:
   pattern: timeline_two_cities

@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "Apollo Go: 240 миллионов километров, 17 миллионов заказов, 22 города (октябрь 2025). Pony.ai + WeRide — три крупных в Китае."
 learning_goal: "China robotaxi (Apollo Go / Pony.ai / WeRide)"
 learning_outcomes: [LO1]
-chapter_ref: "§3.1 — Robotaxi survivors China"
+chapter_ref: "§3.3 — Apollo Go, Pony.ai, WeRide: китайский путь к юнит-экономика"
 references: [cmc-china-robotaxi, sec-pony-6k]
 visual:
   pattern: 3_company_comparison_china

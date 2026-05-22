@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "COVID 2020: глобальный обвал цепочек поставок. Точно-в-срок + ML прогноз спроса = хрупкая система. Человеческое exception-управление спасло."
 learning_goal: "COVID supply chain meltdown + JIT fragility"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§4.1 — COVID 2020"
+chapter_ref: "§4.3 — COVID 2020: хрупкость точно-в-срок"
 failure_bucket: strict_in
 references: []
 visual:

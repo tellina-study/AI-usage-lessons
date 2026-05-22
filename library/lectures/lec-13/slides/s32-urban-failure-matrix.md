@@ -5,7 +5,7 @@ duration_min: 1.5
 assertion: "Четыре урока городского AV: ODD дисциплина / driver-monitoring обязателен / naming matters / hardware ≠ платформа."
 learning_goal: "Failure-matrix Раздел 3"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§3.4 — Urban failure-matrix"
+chapter_ref: "§3.6-3.8 — Urban failure-matrix (Cruise + Uber Tempe + Tesla NHTSA)"
 failure_bucket: strict_in
 references: []
 visual:

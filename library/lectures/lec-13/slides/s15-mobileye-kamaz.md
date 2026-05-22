@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "Mobileye Chauffeur L3 eyes-off на премиум европейских OEM. КамАЗ-54901 + Cognitive Pilot на М-11: 67 единиц 2024, план 100 на 2025."
 learning_goal: "L3 eyes-off + российский контекст highway"
 learning_outcomes: [LO1]
-chapter_ref: "§2.2 + §2.3 — Mobileye + КамАЗ"
+chapter_ref: "§2.3 + §2.4 — Mobileye Chauffeur + КамАЗ-54901"
 references: [mobileye-news, kamaz-press, comnews-100-trucks]
 visual:
   pattern: dual_company_comparison

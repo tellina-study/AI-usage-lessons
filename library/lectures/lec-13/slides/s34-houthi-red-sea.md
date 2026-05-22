@@ -5,7 +5,7 @@ duration_min: 3
 assertion: "Хуситы, Красное море, конец 2023 года. За 2 месяца контейнерный трафик упал на 90 процентов. Это область, в которой ML слеп по определению."
 learning_goal: "Houthi crisis + Cape of Good Hope rerouting + ML out-of-distribution"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§4.1 — Houthi Red Sea 2024"
+chapter_ref: "§4.1 — Чёрный лебедь: где ML слеп (Houthi Red Sea 2024)"
 failure_bucket: strict_in
 references: [atlas-institute-red-sea, jpmorgan-red-sea]
 visual:

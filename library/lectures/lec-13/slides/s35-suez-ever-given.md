@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "Suez Ever Given март 2021: 6 дней блокировки, 12 процентов мировой торговли, $9,6 миллиарда удержанных грузов. AI не имела роли — физика и лоцманство."
 learning_goal: "Ever Given case + AI не помогала + alternative is engineering"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§4.1 — Suez Ever Given 2021"
+chapter_ref: "§4.2 — Suez Ever Given 2021: физика, а не AI"
 failure_bucket: strict_in
 references: [wikipedia-2021-suez, cnbc-suez-400m]
 visual:

@@ -5,7 +5,7 @@ duration_min: 2.5
 assertion: "Aurora Innovation: 1 мая 2025 — первая в США коммерческая беспилотная грузоперевозка. Маршрут Даллас-Хьюстон, около 10 машин."
 learning_goal: "Aurora как первый survivor highway L4 + crawl-walk-run approach"
 learning_outcomes: [LO1]
-chapter_ref: "§2.1 — Aurora Innovation: первая commercial driverless trucking"
+chapter_ref: "§2.2 — Aurora Innovation: первая коммерческая driverless trucking в США"
 references: [aurora-press-may-2025, electrek-aurora-class-8]
 visual:
   pattern: case_study_hero_image

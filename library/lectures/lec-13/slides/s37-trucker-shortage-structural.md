@@ -5,7 +5,7 @@ duration_min: 2
 assertion: "Дефицит дальнобойщиков в США — структурная проблема, не технологическая. Решается политикой, переподготовкой, визами и условиями труда — не AV-развёртываниями."
 learning_goal: "Structural labor problem НЕ решается AV"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§4.1 — Trucker shortage 78K"
+chapter_ref: "§4.4 — Дефицит дальнобойщиков и почему AV не решит"
 failure_bucket: strict_in
 references: [ata-driver-shortage, trucking-dive-costello]
 visual:

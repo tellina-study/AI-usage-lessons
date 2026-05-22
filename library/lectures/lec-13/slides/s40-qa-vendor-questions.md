@@ -5,7 +5,7 @@ duration_min: 3
 assertion: "Семь вопросов вендору на завтра — практический инструмент для кармана."
 learning_goal: "Q&A + 7 vendor-вопросов для логистического AI"
 learning_outcomes: [LO2, LO7]
-chapter_ref: "§5 — Замыкание"
+chapter_ref: "§4.7 + §5.1 — Anti-hype reset: вопросы поставщику + финальный recap"
 references: []
 visual:
   pattern: vendor_questions_checklist

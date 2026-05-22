@@ -16,7 +16,7 @@ visual:
     - "Tier 6: Stock photos (Unsplash CC0)"
 ---
 
-# Мост к Лекции 14: другая среда, та же логика
+# Другая среда, те же 5 вопросов
 
 ## Hero visual
 

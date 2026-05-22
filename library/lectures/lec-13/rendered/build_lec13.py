@@ -354,7 +354,7 @@ def s03_lecture_map(p):
         ("2", "Магистраль", "10 слайдов", "Aurora · Mobileye · КамАЗ · UPS ORION · банкротства AV-грузоперевозки", MID),
         ("3", "Город + миля", "10 слайдов", "Waymo · Apollo Go · Pony.ai · Tesla · Cruise · Uber · Tesla NHTSA · Starship · Zipline", TEAL),
         ("4", "Чёрный лебедь", "7 слайдов", "Хуситы · Suez · COVID · дефицит дальнобойщиков · 5 критериев · альтернативы", GOLD),
-        ("5", "Замыкание", "2 слайда", "Q&A · мост к Лекции 14", DEEP),
+        ("5", "Замыкание", "2 слайда", "Q&A · короткое замыкание", DEEP),
     ]
     card_w = 2.42
     разрыв = 0.05
@@ -1866,9 +1866,8 @@ def s41_closing_hero_noc(p):
                 x=0.5, y=6.05, w=8.0)
     # Right: bridge text (narrower column)
     multiline_box(slide, 8.8, 0.6, 4.2, 5.5, [
-        ("Мост к Лекции 14", {"size": 14, "bold": True, "color": LIGHT}),
-        ("Другая среда,", {"size": 24, "bold": True, "color": DEEP}),
-        ("те же 5 вопросов", {"size": 24, "bold": True, "color": DEEP}),
+        ("Другая среда,", {"size": 26, "bold": True, "color": DEEP}),
+        ("те же 5 вопросов", {"size": 26, "bold": True, "color": DEEP}),
         ("", {"size": 12}),
         ("Следующая лекция —", {"size": 13, "color": MID}),
         ("телекоммуникации,", {"size": 13, "color": MID}),

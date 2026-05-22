@@ -1,12 +1,11 @@
 # library/lectures/lec-13/deck.yaml
 #
 # Deck-структура Лекции 13 «AI в логистике и транспорте»
-# v1: 41 слайд по pattern lec-11.
+# v1 по pattern lec-11.
 #
 # Phase 5-7 multi-artifact pipeline. Issue #135.
 #
 # Pattern carry-forward от Лекции 11:
-#   - 41 слайд общим объёмом
 #   - section dividers (4 шт.): s06 / s13 / s23 / s33
 #   - cover (s02), lecture-map (s03), glossary mini (s04), keystone (s05) — Раздел 0
 #   - dedicated Q&A slide (s40), bridge к lec-14 (s41 closing hero)
@@ -33,7 +32,7 @@ deck:
   plan: library/lectures/lec-13/lecture-outline.md
   keystone_axis: "Лестница структурированности среды — 5 уровней от controlled warehouse к exception black-swan"
 
-# Final slide list (41 slides):
+# Final slide list:
 #
 # Section 0 — Открытие + keystone + lecture-map + glossary (5-7 мин):
 #   s01 — hero hook: Waymo Jaguar I-Pace SF/LA (3 картинки рядом — Cruise / Waymo / Tesla)

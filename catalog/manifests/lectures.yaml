@@ -160,9 +160,15 @@ lectures:
     title: "AI в нефтегазовой отрасли и добыче ресурсов"
     module: 3
     learning_outcomes: [LO1, LO2, LO3, LO7]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: "library/lectures/lec-16"
+    status: produced
+    updated_at: "2026-05-27"
+    keystone_axis: "доступность данных × определённость процессов (2×2 матрица)"
+    artifacts:
+      chapter: "library/lectures/lec-16/chapter.md (+ chapter-part2/3/4/5.md, 5 parts, 32 463 слов)"
+      slides: "library/lectures/lec-16/rendered/lec-16.pptx (42 slides) + lec-16.pdf"
+      speech: "library/lectures/lec-16/speech.md (6 729 слов body, 75 мин)"
+    pr: 144
 
   - number: 17
     title: "Систематизация знаний и навыков"

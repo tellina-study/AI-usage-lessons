@@ -152,9 +152,11 @@ lectures:
     title: "AI в научных исследованиях"
     module: 3
     learning_outcomes: [LO4, LO5, LO6, LO8]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-15
+    status: produced
+    issue: 143
+    updated_at: "2026-05-27"
+    repo_title_note: "chapter v2.4 multi-part (4 файла, 33 959 слов; Russification 485→0 deep rewrite + 4 P0 cascade Galactica 15/17 ноября + Palgrave UCL+Princeton + MICrONS >200k + МФТИ regression fix) + slides v2 (39 slides, ~77% media, hero s01 side-by-side Stockholm Konserthuset + MIT TR Galactica retraction + s39 AlphaFold ribbon composite) + speech v2.0 (5 543 narrative слов, ≤95 WPM all 39 slides, avg 78.6); keystone «Лестница научного цикла Hypothesis→Design→Experiment→Analyse→Write→Review» cyclical (vs lec-13/14 sequential); failure-bucket strict-in ~46% chapter holistic / 40-81% speech (measurement methodology varies); 3 applicable walked examples (WE-1 grant idea / WE-2 bibliography 4-step / WE-3 catalyst propylene oxidation 5-step) + WE-TESS transit search; cascade-of-changes caught 6 hallucinated arxiv IDs introduced by Phase 5/6 designer (TESS Cui→Huang/Jiang, Coscientist Nature 593→624, BLS 1976→2002, Boltz arxiv→biorxiv 2024.11.19, AlphaProof arxiv→Nature DOI, Sakana arxiv 2503→2504.08066) + s37 fabricated RU narrative (GigaChat/НТИ) re-render Phase 11; 11 anchors numbers convention lock canonical через 3 артефакта"
 
   - number: 16
     title: "AI в нефтегазовой отрасли и добыче ресурсов"

@@ -1,0 +1,11 @@
+flowchart LR
+    H["1. Hypothesis<br/><i>гипотеза</i>"] --> D["2. Design<br/><i>план</i>"]
+    D --> E["3. Experiment<br/><i>эксперимент</i>"]
+    E --> A["4. Analyse<br/><i>анализ</i>"]
+    A --> W["5. Write<br/><i>текст</i>"]
+    W --> R["6. Review<br/><i>рецензия</i>"]
+    R -.->|"цикл"| H
+    classDef ocean fill:#065A82,stroke:#21295C,color:#fff,stroke-width:2px,font-size:18px
+    classDef gold fill:#F0AB00,stroke:#21295C,color:#21295C,stroke-width:3px,font-size:18px,font-weight:bold
+    class H,D,A,W ocean
+    class E,R gold

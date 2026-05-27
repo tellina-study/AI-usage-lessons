@@ -1,0 +1,15 @@
+flowchart LR
+    A["Соавтор присылает<br/>47 LLM-цитат"] --> B["1 DOI-resolve<br/>через crossref.org<br/><i>каждый DOI существует?</i>"]
+    B --> C["2 Выборка релевантности<br/>5 случайных DOI<br/><i>статьи говорят о теме?</i>"]
+    C --> D["3 GPTZero check<br/>текст рядом с цитатой<br/><i>LLM-сгенерирован?</i>"]
+    D --> E["4 Запросить исходные<br/>файлы у соавтора<br/><i>есть рабочая копия?</i>"]
+    E --> F{"≥3 фейка?"}
+    F -->|"да"| G["Отказ<br/>от соавторства"]
+    F -->|"нет"| H["Принять<br/>с правкой"]
+    classDef ocean fill:#065A82,stroke:#21295C,color:#fff,stroke-width:2px,font-size:13px
+    classDef gold fill:#F0AB00,stroke:#21295C,color:#21295C,stroke-width:2px,font-size:13px
+    classDef warn fill:#C0392B,stroke:#21295C,color:#fff,stroke-width:2px,font-size:13px
+    class A,B,C,D,E ocean
+    class F gold
+    class G warn
+    class H ocean

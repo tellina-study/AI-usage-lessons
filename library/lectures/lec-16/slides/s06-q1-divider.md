@@ -1,0 +1,39 @@
+---
+id: s06
+type: section_divider
+duration_min: 0.5
+assertion: "Q1: зрелое производство — AI как multiplier классических методов."
+learning_goal: "Section break Q1 + tag «3 working cases · 2 структурных провала»"
+failure_bucket: partial
+chapter_ref:
+  parts: [chapter.md]
+  sections: ["§1.1 Почему мы начинаем именно отсюда"]
+visual:
+  type: text
+  description: "Section divider — большая цифра «Q1» слева, mood-line справа, tag внизу"
+visible_numbers: ["86% pilot stuck"]
+russification_check: "«зрелое месторождение» — RU; brand list нет."
+speaker_notes_target_words: 150
+---
+
+# Q1 — Mature production: AI как multiplier классических методов
+
+## Visible content
+
+Section divider layout: левая часть слайда — большая цифра «**Q1**» (160pt gold `#F0AB00`), под ней — «**Mature production**».
+
+Правая часть — mood-line (32pt deep ocean):
+
+«AI здесь — мультипликатор классических методов. Самый освоенный квадрант. И самый структурно проваленный.»
+
+Bottom tag (gold tint полоса):
+
+**3 working cases · 2 структурных провала · 86% pilot stuck — статистическая норма**
+
+## Speaker notes
+
+Раздел один. Q1 — зрелое производство. Это самый освоенный квадрант нефтегазового AI. Зрелое месторождение Пермского бассейна имеет историю добычи тридцать с лишним лет, тысячу пробуренных скважин, хорошо изученную геологию. Пластовая симуляция на Eclipse даёт надёжные прогнозы. Senior reservoir engineer с двадцатью с лишним лет опыта добавляет implicit knowledge.
+
+AI здесь не приходит «спасать». Он приходит как мультипликатор. Даёт плюс пять — пятнадцать процентов дополнительной добычи поверх уже оптимизированной операции. Ловит за несколько минут до каскадного отказа компрессор. Рекомендует оптимальный график перетоков в коллекторе.
+
+И всё равно — восемьдесят шесть процентов AI-проектов в энергетике застряли в пилотной фазе. Это парадокс, который определяет тон всего раздела. Мы будем разбирать конкретные working cases — Ambyint, Aspen Mtell, Honeywell UOP, Роснефть Digital Field — и параллельно почему массовая статистика говорит, что большинство таких deployments не масштабируются.

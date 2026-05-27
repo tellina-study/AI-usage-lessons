@@ -1,0 +1,59 @@
+---
+id: s36
+type: case_with_chart
+duration_min: 2
+assertion: "Роснефть Digital Field детально: 23 продукта (10 коммерциализованных), +1 Mt/год, ~1 млрд ₽/год. Татнефть, ЛУКОЙЛ, Сургутнефтегаз — public info ограничена."
+learning_goal: "Russia Q1 deep-dive + ограничения public info"
+chapter_ref:
+  parts: [chapter-part4.md]
+  sections: ["§5.3 Роснефть + остальные NOC"]
+visual:
+  type: image
+  description: "Роснефть Башнефть field photo OR Digital Field control room screenshot"
+  source_url: "https://www.rosneft.ru/press/news/"
+  acquisition_tier: 3
+visible_numbers: ["23 продукта (10 коммерциализованных)", "+1 Mt/год Башнефть", "~1 млрд ₽/год"]
+russification_check: "Роснефть, Башнефть, Илишевское, Татнефть, АнтиХрупкий, Нижнекамск, ЛУКОЙЛ, Волго-Урал, Сургутнефтегаз, Cognitive Pilot, Sberbank — brand list."
+speaker_notes_target_words: 230
+---
+
+# Роснефть детально + Татнефть, ЛУКОЙЛ, Сургутнефтегаз — public info ограничена
+
+## Visible content
+
+Заголовок: «Российский Q1: flagship + средний эшелон» (28pt deep ocean).
+Sub: «Disclosure gap structural — корпоративные пресс-релизы вместо SEC 10-K mandatory.» (16pt italic)
+
+**Слева — Ocean rounded box «Роснефть Digital Field (Башнефть Илишевское):**
+
+- **23 программных продукта**, **10 коммерциализованных** наружу (gold).
+- **+1 Mt/год** дополнительная добыча.
+- **~1 млрд ₽/год** экономический эффект.
+- +60% удалённо управляемых, +5% энергоэффективности, −5% логистики.
+- Башнефть baseline ~17 Mt/год = +5,9% delta.
+
+**Справа — Ocean rounded box «Средний эшелон NOC»:**
+
+- **Татнефть АнтиХрупкий Нижнекамск** — предсказательное обслуживание + оптимизация колонн ректификации. Конкретные KPI не опубликованы.
+- **ЛУКОЙЛ Волго-Урал** — оптимизация зрелых месторождений, прогнозирование простоев, логистика нефтепродуктов. Independent verification limited.
+- **Сургутнефтегаз** — closed company, минимальная publicity. AI deployments упоминаются в industry-интервью; numerics практически отсутствуют.
+
+**Bottom bar (gold tint):**
+
+«**Cognitive Pilot** (Sberbank + Cog Tech JV) — primarily agri (1700+ installations к 2024). Transfer к heavy O&G equipment partial: heavy mobile equipment + remote sensing — yes; ATEX-rated + SIL compliance — non-trivial.»
+
+## Speaker notes
+
+Роснефть Digital Field мы уже разобрали в десятом слайде. Quick recap. Плюс один миллион тонн нефти в год дополнительная добыча — это плюс пять и девять десятых процентов от исходного уровня Башнефть семнадцать миллионов тонн в год. Около одного миллиарда рублей в год экономический эффект. Двадцать три программных продукта, десять коммерциализованных. Плюс шестьдесят процентов удалённо управляемых объектов.
+
+Татнефть, ЛУКОЙЛ, Сургутнефтегаз — детали public info ограничены. Эти три NOC формируют средний эшелон российской нефтегазовой отрасли — после двух flagship Роснефть и Газпром нефть — и реализуют AI-программы, но публичная отчётность по конкретным KPI существенно скуднее.
+
+Татнефть АнтиХрупкий Нижнекамск — программа предсказательного обслуживания и оптимизации производства на нефтехимическом комплексе Нижнекамска. Применяет ML для прогноза сбоев оборудования плюс оптимизация технологических режимов колонн ректификации. Конкретные numerical KPI не опубликованы.
+
+ЛУКОЙЛ — пакет AI-приложений в Волго-Уральском регионе: оптимизация добычи на зрелых месторождениях, прогнозирование технологических простоев, оптимизация маршрутов транспортировки нефтепродуктов. Независимая верификация ограничена.
+
+Сургутнефтегаз — традиционно closed company с минимальной publicity; компания исторически не раскрывает digital initiatives на корпоративном уровне.
+
+Этот дефицит публичной информации сам по себе информативен: показывает, что российский corporate disclosure для AI deployments существенно менее прозрачен, чем у западных публичных компаний. Это структурное ограничение для студента-аналитика: основной массив independent fact — у двух flagship; остальные NOC остаются чёрным ящиком.
+
+Cognitive Pilot — Sberbank плюс Cognitive Technologies joint venture, primarily agricultural combine automation. Семьсот плюс installations в 2021 → тысяча семьсот плюс в 2024. Transferability к O&G — partial: heavy mobile equipment и remote sensing — yes; ATEX-rated и SIL compliance — non-trivial.

@@ -367,7 +367,7 @@ def s04_lecture_map(p):
              "Карта лекции — 7 разделов",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.05, 12.33, 0.4,
-             "Не по value chain, а по структуре AI-задачи: данные × физика",
+             "Не по цепочке создания стоимости, а по структуре AI-задачи: данные × физика",
              size=14, italic=True, color=LIGHT)
     sections = [
         ("1", "Стержень", "Матрица", "Данные × физика, 4 квадранта", LIGHT),
@@ -397,7 +397,7 @@ def s04_lecture_map(p):
         text_box(slide, x + 0.1, y + 1.85, card_w - 0.2, 2.5, desc,
                  size=11, color=DEEP, line_spacing=1.3, align=PP_ALIGN.CENTER)
     gold_callout(slide, 0.5, 6.2, 12.33, 0.85,
-                 "Quick glossary: MRV = выявление-учёт-проверка · OGI = оптическая газовая визуализация · CCS = улавливание и хранение углерода · EGS = улучшенные геотермальные системы · SIS = приборная система безопасности",
+                 "Краткий словарь: MRV = выявление-учёт-проверка · OGI = оптическая газовая визуализация · CCS = улавливание и хранение углерода · EGS = улучшенные геотермальные системы · SIS = приборная система безопасности",
                  size=10)
     add_notes(slide, "См. slides/s04-lecture-map.md speaker notes.")
 
@@ -435,7 +435,7 @@ def s05_keystone_matrix(p):
         (0, 0, TEAL_TINT, "Q2 — Метановая MRV", "AI необходим\nMethaneSAT / Carbon Mapper / GHGSat", TEAL),
         (1, 0, SURFACE, "Q1 — Зрелое производство", "AI как мультипликатор\nAmbyint +15% на 200 скважинах", MID),
         (0, 1, GOLD_TINT, "Q4 — Энергопереход", "AI и физика буксуют вместе\nNorthern Lights / Fervo", GOLD),
-        (1, 1, SURFACE, "Q3 — Разведка фронтиров", "Physics-first, AI как дополнение\nAramco METABRAIN / Eni HPC6", LIGHT),
+        (1, 1, SURFACE, "Q3 — Разведка фронтиров", "Сначала физика, AI как дополнение\nAramco METABRAIN / Eni HPC6", LIGHT),
     ]
     for col, row, fill, title, body, accent in quads:
         x = quad_x0 + col * (quad_w + 0.2)
@@ -470,7 +470,7 @@ def s07_pilot_stuck(p):
              "86% AI-проектов в энергетике застряли в пилоте",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "McKinsey State of AI 2024 — vs cross-industry ~67%. Энергетика на 18 п.п. хуже среднего.",
+             "McKinsey State of AI 2024 — vs средний по отраслям ~67%. Энергетика на 18 п.п. хуже среднего.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.7, 6.0, 4.6)
     img = ASSETS / "charts" / "s07-pilot-stuck.png"
@@ -507,7 +507,7 @@ def s07b_aspen_alert_fatigue(p):
     rounded_box(slide, 0.5, 1.7, 5.5, 4.5)
     img = ASSETS / "screenshots" / "s09-aspen.jpg"
     add_image_aspect(slide, img, 0.7, 1.85, 5.1, 4.0)
-    attribution(slide, "AspenTech · Aspen Mtell product page", x=0.7, y=5.85, w=5.0)
+    attribution(slide, "AspenTech · страница продукта Aspen Mtell", x=0.7, y=5.85, w=5.0)
     rounded_box(slide, 6.2, 1.7, 6.63, 4.5)
     multiline_box(slide, 6.4, 1.8, 6.3, 4.4, [
         ("Маркетинг (AspenTech):", {"size": 13, "bold": True, "color": MID}),
@@ -656,7 +656,7 @@ def s11_cognite_c3ai(p):
              "Cognite + C3.ai: чистые AI-вендоры теряют долю",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.25, 12.33, 0.4,
-             "Базовые модели (foundation models) поедают узких отраслевых AI-вендоров. Адресуемый рынок уже, чем ожидалось.",
+             "Базовые модели поедают узких отраслевых AI-вендоров. Адресуемый рынок уже, чем ожидалось.",
              size=13, italic=True, color=LIGHT)
     boxes = [
         ("Cognite (Норвегия, выделён из Aker BP 2017)", LIGHT, [
@@ -703,7 +703,7 @@ def s12_q1_no_ai_criteria(p):
              "Когда AI НЕ нужен в Q1 — 6 структурных критериев",
              size=24, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.15, 12.33, 0.4,
-             "Distilled из практики последних 5 лет. Каждый — с конкретной альтернативой.",
+             "Дистиллировано из практики последних 5 лет. Каждый — с конкретной альтернативой.",
              size=13, italic=True, color=LIGHT)
     criteria = [
         ("1", "Зрелый пласт + классический симулятор (Eclipse)", "Опытный инженер + классический симулятор дают надёжные ответы. ML — накладные расходы без существенного прироста.", LIGHT),
@@ -806,7 +806,7 @@ def s15_slb_lumi(p):
     rounded_box(slide, 0.5, 1.85, 5.5, 4.4)
     img = ASSETS / "screenshots" / "s15-slb2.jpg"
     add_image_aspect(slide, img, 0.65, 2.0, 5.2, 4.05)
-    attribution(slide, "SLB / Schlumberger press kit · 2024", x=0.65, y=6.05, w=5.2)
+    attribution(slide, "SLB / Schlumberger пресс-кит · 2024", x=0.65, y=6.05, w=5.2)
     rounded_box(slide, 6.2, 1.85, 6.63, 4.4)
     multiline_box(slide, 6.4, 1.95, 6.3, 4.25, [
         ("Что Lumi делает:", {"size": 14, "bold": True, "color": MID}),
@@ -833,7 +833,7 @@ def s16_exxon_discovery6(p):
              "ExxonMobil Discovery 6 — 4D-сейсмика месяцы → недели",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "HPE Cray EX4000, 4 032 NVIDIA Grace Hopper, 4× compute vs Discovery 5. $200–400 млн капитальных затрат.",
+             "HPE Cray EX4000, 4 032 NVIDIA Grace Hopper, 4× вычислений vs Discovery 5. $200–400 млн капитальных затрат.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.85, 5.5, 4.4)
     img = ASSETS / "screenshots" / "s16-stabroek.jpg"

@@ -1,5 +1,5 @@
 ---
-id: s07
+id: s06
 type: failure_case
 duration_min: 2
 assertion: "86% AI-проектов в энергетике застряли в pilot phase. Это не «AI плохой» — это статистическая норма отрасли."

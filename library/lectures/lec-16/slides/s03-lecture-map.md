@@ -1,5 +1,5 @@
 ---
-id: s04
+id: s03
 type: lecture_map
 duration_min: 1
 assertion: "Шесть разделов: keystone-матрица → Q1 mainstream → Q3 frontier → Q2 methane → Q4 transition → Россия → синтез."
@@ -9,17 +9,17 @@ chapter_ref:
   sections: ["§0.5 Дорожная карта главы"]
 visual:
   type: text
-  description: "Roadmap bar внизу с 7 этапами; каждый этап — rounded card с tag «X working cases · Y провала» БЕЗ минут"
+  description: "Roadmap внизу с 7 этапами; каждый этап — rounded card с tag «X working cases · Y провала» БЕЗ минут; все 7 cards одной brightness (нет активного highlight на initial overview — это план, не «вы здесь»)"
 visible_numbers: []
 russification_check: "Только domain terms inline gloss; brand list нет."
 speaker_notes_target_words: 200
 ---
 
-# Карта лекции — 7 разделов через матрицу
+# План лекции — 7 разделов
 
 ## Visible content
 
-Заголовок: «Карта лекции — 7 разделов» (28pt).
+Заголовок: «План лекции — 7 разделов» (28pt).
 Sub: «Не по value chain, а по структуре AI-задачи: данные × физика» (16pt italic).
 
 Roadmap (7 горизонтальных rounded cards, каждая в Ocean motif):

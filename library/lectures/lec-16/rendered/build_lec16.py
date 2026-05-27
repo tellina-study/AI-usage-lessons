@@ -205,7 +205,7 @@ def add_notes(slide, text):
 
 
 # Roadmap sections for Lec-16: 7 разделов
-SECTIONS = ["Стержень", "Q1 Зрелое", "Q3 Разведка", "Q2 Метан", "Q4 Переход", "Россия", "Сквозные"]
+SECTIONS = ["Стержень", "Q1 Зрелое", "Q3 Разведка", "Q2 Метан", "Q4 Новые опоры", "Россия", "Сквозные"]
 
 
 def roadmap_bar(slide, current_section):
@@ -361,22 +361,24 @@ def s03_about(p):
 
 
 def s04_lecture_map(p):
+    """s03 (new ID) — План лекции. Все 7 cards одной яркости (LIGHT) — это план, не «вы здесь»."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Карта лекции — 7 разделов",
+             "План лекции — 7 разделов",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.05, 12.33, 0.4,
-             "Не по цепочке создания стоимости, а по структуре AI-задачи: данные × физика",
+             "Не по цепочке создания стоимости, а по структуре AI-задачи: доступность данных × определённость процессов",
              size=14, italic=True, color=LIGHT)
+    # Neutralize Q2 highlight — все 7 cards одной яркости (LIGHT).
     sections = [
-        ("1", "Стержень", "Матрица", "Данные × физика, 4 квадранта", LIGHT),
-        ("2", "Q1 Зрелое", "3 кейса · 2 провала", "Зрелое производство", MID),
-        ("3", "Q3 Разведка", "3 кейса · 2 провала", "Разведка фронтиров", TEAL),
-        ("4", "Q2 Метан", "4 системы · 2 провала", "Метановая MRV", GOLD),
-        ("5", "Q4 Переход", "2 пилота · 2 провала", "CCS + EGS", LIGHT),
-        ("6", "Россия", "3 программы", "Санкции, инсорсинг", MID),
-        ("7", "Сквозные риски", "2 провала", "Кибер + кризис 2020", DEEP),
+        ("1", "Стержень", "Матрица", "Данные × процессы, 4 квадранта", LIGHT),
+        ("2", "Q1 Зрелое", "3 кейса · 2 провала", "Зрелое производство", LIGHT),
+        ("3", "Q3 Разведка", "3 кейса · 2 провала", "Разведка фронтиров", LIGHT),
+        ("4", "Q2 Метан", "4 системы · 2 провала", "Метановая MRV", LIGHT),
+        ("5", "Q4 Новые опоры", "2 пилота · 2 провала", "CCS + EGS", LIGHT),
+        ("6", "Россия", "3 программы", "Санкции, инсорсинг", LIGHT),
+        ("7", "Сквозные риски", "2 провала", "Кибер + кризис 2020", LIGHT),
     ]
     card_w = 1.71
     gap = 0.05
@@ -399,32 +401,32 @@ def s04_lecture_map(p):
     gold_callout(slide, 0.5, 6.2, 12.33, 0.85,
                  "Краткий словарь: MRV = выявление-учёт-проверка · OGI = оптическая газовая визуализация · CCS = улавливание и хранение углерода · EGS = улучшенные геотермальные системы · SIS = приборная система безопасности",
                  size=10)
-    add_notes(slide, "См. slides/s04-lecture-map.md speaker notes.")
+    add_notes(slide, "См. slides/s03-lecture-map.md speaker notes.")
 
 
 def s05_keystone_matrix(p):
-    """s05 — KEYSTONE: 2x2 matrix данные × физика."""
+    """s04 (new ID) — KEYSTONE: 2x2 matrix доступность данных × определённость процессов."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.3, 12.33, 0.7,
-             "Когда AI работает в нефтегазе? Матрица данные × физика",
-             size=24, bold=True, color=DEEP)
+             "Когда AI работает в нефтегазе? Доступность данных × определённость процессов",
+             size=22, bold=True, color=DEEP)
     text_box(slide, 0.5, 0.95, 12.33, 0.4,
              "От разведки фронтиров до спутникового метана — AI имеет 4 разных профиля",
              size=13, italic=True, color=LIGHT)
     # Y-axis labels (placed in column на левой стороне)
     text_box(slide, 0.1, 1.7, 1.5, 0.4, "Высокая ↑",
              size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    text_box(slide, 0.1, 3.7, 1.5, 0.5, "Данные",
-             size=14, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(slide, 0.05, 3.55, 1.6, 0.7, "Доступность\nданных",
+             size=13, bold=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.1)
     text_box(slide, 0.1, 5.55, 1.5, 0.4, "↓ Низкая",
              size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
     # X-axis labels
-    text_box(slide, 2.0, 6.4, 4.0, 0.4, "← Низкая",
+    text_box(slide, 2.0, 6.4, 3.5, 0.4, "← Низкая",
              size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    text_box(slide, 5.5, 6.4, 2.5, 0.5, "Физика",
-             size=14, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    text_box(slide, 7.5, 6.4, 4.0, 0.4, "Высокая →",
+    text_box(slide, 5.0, 6.35, 3.5, 0.55, "Определённость\nпроцессов",
+             size=13, bold=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.05)
+    text_box(slide, 8.0, 6.4, 3.5, 0.4, "Высокая →",
              size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
     # Matrix 2x2
     quad_x0 = 1.7
@@ -434,7 +436,7 @@ def s05_keystone_matrix(p):
     quads = [
         (0, 0, TEAL_TINT, "Q2 — Метановая MRV", "AI необходим\nMethaneSAT / Carbon Mapper / GHGSat", TEAL),
         (1, 0, SURFACE, "Q1 — Зрелое производство", "AI как мультипликатор\nAmbyint +15% на 200 скважинах", MID),
-        (0, 1, GOLD_TINT, "Q4 — Энергопереход", "AI и физика буксуют вместе\nNorthern Lights / Fervo", GOLD),
+        (0, 1, GOLD_TINT, "Q4 — Новые опоры (CCS + EGS)", "AI и физика буксуют вместе\nNorthern Lights / Fervo", GOLD),
         (1, 1, SURFACE, "Q3 — Разведка фронтиров", "Сначала физика, AI как дополнение\nAramco METABRAIN / Eni HPC6", LIGHT),
     ]
     for col, row, fill, title, body, accent in quads:
@@ -448,7 +450,7 @@ def s05_keystone_matrix(p):
     gold_callout(slide, 0.5, 7.0, 12.33, 0.45,
                  "За каждым AI-внедрением — альтернатива: физический симулятор, OGI-камера, классическая интерпретация.",
                  size=12)
-    add_notes(slide, "См. slides/s05-keystone-matrix.md speaker notes.")
+    add_notes(slide, "См. slides/s04-keystone-matrix.md speaker notes.")
 
 
 # ====================================================================
@@ -492,7 +494,7 @@ def s07_pilot_stuck(p):
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
                  "Это не «AI плохой» — это статистическая норма отрасли. 14% работают vs 86% застряли — инженерный фильтр, а не приговор.",
                  size=12)
-    add_notes(slide, "См. slides/s07-86-percent-pilot-stuck.md speaker notes.")
+    add_notes(slide, "См. slides/s06-86-percent-pilot-stuck.md speaker notes.")
 
 
 def s07b_aspen_alert_fatigue(p):
@@ -526,7 +528,7 @@ def s07b_aspen_alert_fatigue(p):
     gold_callout(slide, 0.5, 6.35, 12.33, 0.55,
                  "Урок: отчёт поставщика ≠ реальность на установке. Коммерческий учёт, SIS, общезаводская переработка — AI ещё не дошёл.",
                  size=12)
-    add_notes(slide, "См. slides/s07b-aspen-alert-fatigue.md speaker notes.")
+    add_notes(slide, "См. slides/s07-aspen-alert-fatigue.md speaker notes.")
 
 
 def s08_ambyint(p):

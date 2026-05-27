@@ -11,7 +11,7 @@ from build_lec16 import *
 
 def s28_q4_divider(p):
     return section_divider(
-        p, "Q4", "Энергопереход: CCS + EGS",
+        p, "Q4", "Новые опоры: CCS + EGS",
         "Здесь AI и физика буксуют вместе. Длинный горизонт, мало данных, низкая определённость физики. Самый честный квадрант.",
         "2 рабочих пилота · 2 структурных провала · 190× разрыв масштабирования",
         section_idx=4, large_size=200, label_color=GOLD)
@@ -210,7 +210,7 @@ def s34_russia_divider(p):
         ("Q1 Зрелое", "Роснефть Digital Field\nна Башнефть Илишевское\n+1 млн т/год нефти", MID),
         ("Q3 Разведка", "Газпром нефть Cognitive Geo\nс IBM Research Brazil 2019–2022\n→ внутренняя разработка после ухода IBM", LIGHT),
         ("Q2 Метан", "EU 2024/1787 не применяется\nк компаниям РФ через импорт\nсоответствие с 2027", TEAL),
-        ("Q4 Переход", "CCS / EGS — ограниченные\nпилоты. Санкции блокируют\nзамкнутую AI-инфраструктуру", GOLD),
+        ("Q4 Новые опоры", "CCS / EGS — ограниченные\nпилоты. Санкции блокируют\nзамкнутую AI-инфраструктуру", GOLD),
     ]
     q_w = 6.0
     q_h = 2.0
@@ -426,7 +426,7 @@ def s39_synthesis_matrix(p):
     quads = [
         ("Q2 Метан — AI необходим", "Работает:\n· MethaneSAT (15,5 мес до потери)\n· Carbon Mapper Tanager-1\n· GHGSat — группировка 13 спутников\n· Bridger авиа-LiDAR\n\nПровалы (2):\n· Потеря MethaneSAT 20 июня 2025\n· 4× разрыв с EPA", TEAL),
         ("Q1 Зрелое — AI как мультипликатор", "Работает:\n· Ambyint +15% / 200 скважин\n· Honeywell UOP 310+ установок\n· Роснефть Digital Field +1 млн т/год\n\nПровалы (2):\n· 86% пилотов застряло\n· Aspen Mtell — усталость от тревог", MID),
-        ("Q4 Переход — буксуют вместе", "Работает (ограниченно):\n· Northern Lights 1,5 млн т/год\n· Fervo IPO $1,89 млрд\n\nПровалы (2):\n· CCS 190× разрыв масштабирования\n· Общезаводская стагнация НПЗ", GOLD),
+        ("Q4 Новые опоры — буксуют вместе", "Работает (ограниченно):\n· Northern Lights 1,5 млн т/год\n· Fervo IPO $1,89 млрд\n\nПровалы (2):\n· CCS 190× разрыв масштабирования\n· Общезаводская стагнация НПЗ", GOLD),
         ("Q3 Разведка — сначала физика", "Работает:\n· Eni HPC6 / Aramco METABRAIN\n· SLB Lumi / ExxonMobil Discovery 6\n· Газпром Cognitive Geo\n\nПровалы (2):\n· BP+Beyond Limits — 7 лет 0\n· IBM+Repsol Kalimba", LIGHT),
     ]
     q_w = 6.0
@@ -523,35 +523,76 @@ def s41_qa(p):
 
 
 def s42_hero_methanesat_map(p):
-    """s42 — closing hero: MethaneSAT global methane map."""
+    """s41 (new ID, Item 8 clarify) — closing hero with single clear payoff.
+
+    Owner feedback Item 8: «43 слайд совершенно не понятен. итог это итог и что?»
+    → Single clarified message: 10 разобранных провалов → 3 переносимых cornerstone оси.
+    """
     slide = blank(p)
     set_slide_bg(slide, WHITE)
-    # Hero image LEFT (60% width × 5.5" = ~44% area)
+    # Hero image LEFT (60% width × 5.4" = ~43% area)
     img = ASSETS / "screenshots" / "s42-methanesat.png"
-    add_image_aspect(slide, img, 0.5, 0.4, 7.8, 5.4)
+    add_image_aspect(slide, img, 0.5, 0.4, 7.5, 5.5)
     attribution(slide, "EDF / MethaneSAT data via Google Earth Engine · февраль 2026",
-                x=0.5, y=5.85, w=7.8)
-    # Title + text RIGHT
-    multiline_box(slide, 8.4, 0.5, 4.6, 5.5, [
-        ("Спутник потерян —", {"size": 22, "bold": True, "color": DEEP}),
-        ("карта осталась.", {"size": 26, "bold": True, "color": GOLD}),
+                x=0.5, y=5.95, w=7.5)
+    # Single clarified payoff RIGHT (large typography, focus on 1 message)
+    multiline_box(slide, 8.2, 0.6, 4.7, 5.5, [
+        ("10 разобранных", {"size": 28, "bold": True, "color": GOLD}),
+        ("провалов", {"size": 28, "bold": True, "color": GOLD}),
+        ("", {"size": 18}),
+        ("↓", {"size": 36, "bold": True, "color": LIGHT, "align": "center"}),
         ("", {"size": 12}),
-        ("Горько-сладкая развязка:", {"size": 13, "bold": True, "color": MID}),
-        ("· 20 июня 2025 — потеря MethaneSAT", {"size": 11, "color": DEEP}),
-        ("· ~2 000 файлов данных за 15,5 мес → ретроспективный реестр", {"size": 11, "color": DEEP, "italic": True}),
-        ("", {"size": 8}),
-        ("Финальная рамка:", {"size": 13, "bold": True, "color": MID}),
-        ("AI в нефтегазе — это", {"size": 12, "color": DEEP}),
-        ("измеримый успех", {"size": 13, "bold": True, "color": DEEP}),
-        ("+ структурная уязвимость", {"size": 13, "bold": True, "color": GOLD}),
-        ("в одном кадре.", {"size": 12, "color": DEEP}),
-        ("", {"size": 6}),
-        ("Хороший инженер строит честный портфельный обзор, не одиночный квадрант.", {"size": 10, "color": DEEP, "italic": True}),
-    ], line_spacing=1.2)
-    gold_callout(slide, 0.5, 6.4, 12.33, 0.7,
-                 "Мост к Лекции 17 — систематизация. Несущие оси L11–L16 как универсальные шаблоны.",
-                 size=14)
-    add_notes(slide, "См. slides/s42-hero-methanesat-map.md speaker notes.")
+        ("3 переносимых", {"size": 26, "bold": True, "color": DEEP}),
+        ("cornerstone оси", {"size": 26, "bold": True, "color": DEEP}),
+        ("", {"size": 16}),
+        ("· AI judgment как структурная задача", {"size": 12, "color": DEEP}),
+        ("· Альтернатива-как-исходный-уровень", {"size": 12, "color": DEEP}),
+        ("· Industry cyclicality > AI hype cycle", {"size": 12, "color": DEEP}),
+    ], line_spacing=1.15)
+    gold_callout(slide, 0.5, 6.5, 12.33, 0.65,
+                 "Мост к Лекции 17 — систематизация. Несущие оси L11–L16 как универсальные шаблоны для всех остальных лекций.",
+                 size=13)
+    add_notes(slide, "См. slides/s41-hero-methanesat-map.md speaker notes.")
+
+
+def s42_qa_normal(p):
+    """s42 (new ID, Item 9) — normal Q&A slide AFTER closing hero.
+
+    Owner feedback: «после 43 должен быть обычный QA».
+    Big «Q&A» typography + 3 prompt questions from chapter §8 backup для starter.
+    """
+    slide = blank(p)
+    set_slide_bg(slide, WHITE)
+    # Big «Вопросы?» typography
+    text_box(slide, 0.5, 0.4, 12.33, 1.1, "Вопросы?",
+             size=64, bold=True, color=DEEP, align=PP_ALIGN.LEFT)
+    text_box(slide, 0.5, 1.5, 12.33, 0.5,
+             "Q&A — обсуждаем в группе, потом синтез на доске.",
+             size=16, italic=True, color=LIGHT)
+    # 3 starter prompts из chapter §8 backup
+    questions = [
+        ("Q1", "Где в России Variant Q1/Q2/Q3/Q4 матрицы применяется наиболее остро? Назовите 2 конкретных кейса.", TEAL),
+        ("Q2", "Какая из трёх cornerstone осей лекции (AI judgment как структурная задача · альтернатива-как-исходный-уровень · industry cyclicality > AI hype cycle) наиболее переносима на вашу будущую инженерную работу?", MID),
+        ("Q3", "Когда НЕ применять AI в нефтегазе — назовите 2 структурных критерия с конкретным примером из 6 разобранных на лекции.", GOLD),
+    ]
+    q_w = 12.33
+    q_h = 1.35
+    gap = 0.18
+    x0 = 0.5
+    y0 = 2.45
+    for i, (qn, body, accent) in enumerate(questions):
+        y = y0 + i * (q_h + gap)
+        rounded_box(slide, x0, y, q_w, q_h, stroke=accent, stroke_w=2)
+        rectangle(slide, x0, y, 1.2, q_h, fill=accent)
+        text_box(slide, x0, y + 0.35, 1.2, 0.6, qn,
+                 size=26, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(slide, x0 + 1.4, y + 0.15, q_w - 1.6, q_h - 0.3, body,
+                 size=13, color=DEEP, line_spacing=1.4, anchor=MSO_ANCHOR.MIDDLE)
+    gold_callout(slide, 0.5, 6.85, 12.33, 0.5,
+                 "Контакт для follow-up: см. slides и chapter §8 backup (12 разобранных вопросов).",
+                 size=12)
+    add_notes(slide, "См. slides/s42-qa-normal.md speaker notes.")
 
 
 # ====================================================================
@@ -559,25 +600,36 @@ def s42_hero_methanesat_map(p):
 # ====================================================================
 
 def build_all():
-    """Assemble full 43-slide deck."""
+    """Assemble full 42-slide deck (v3 after owner Phase 8.6 feedback).
+
+    Changes vs v2:
+      - DELETED s03 about (Item 2 owner feedback)
+      - DELETED s41 Q&A title slide (Item 7)
+      - RENAMED Q4 «Энергопереход» → «Новые опоры (CCS + EGS)» (Item 6)
+      - Lecture-map → «План лекции» + neutralized Q2 highlight (Item 3)
+      - Keystone axis labels: «Данные» → «Доступность данных»; «Физика» → «Определённость процессов» (Item 4)
+      - Hero s01 — re-acquired AI-explicit image (Item 1)
+      - s41 closing (was s42) — clarified single message (Item 8)
+      - NEW s42 — normal Q&A slide (Item 9)
+      - Mini-matrix on section dividers (Item 5) — added per-divider in section_divider helper
+    """
     p = setup_pres()
-    # Section 0 (s01-s05): 5 slides
-    s01_hero_permian(p)
-    s02_cover(p)
-    s03_about(p)
-    s04_lecture_map(p)
-    s05_keystone_matrix(p)
-    # Section 1 (s06-s12): 7 slides incl s07b → 8
-    s06_q1_divider(p)
-    s07_pilot_stuck(p)
-    s07b_aspen_alert_fatigue(p)
-    s08_ambyint(p)
-    s09_vendor_landscape(p)
-    s10_rosneft_digital_field(p)
-    s11_cognite_c3ai(p)
-    s12_q1_no_ai_criteria(p)
+    # Section 0 (s01-s04): 4 slides
+    s01_hero_permian(p)            # s01 — hero
+    s02_cover(p)                   # s02 — cover
+    s04_lecture_map(p)             # s03 (new ID) — План лекции
+    s05_keystone_matrix(p)         # s04 (new ID) — keystone matrix
+    # Section 1 (s05-s12): 8 slides
+    s06_q1_divider(p)              # s05 — Q1 divider
+    s07_pilot_stuck(p)             # s06 — 86% pilot
+    s07b_aspen_alert_fatigue(p)    # s07 — Aspen
+    s08_ambyint(p)                 # s08 — Ambyint
+    s09_vendor_landscape(p)        # s09
+    s10_rosneft_digital_field(p)   # s10
+    s11_cognite_c3ai(p)            # s11
+    s12_q1_no_ai_criteria(p)       # s12
     # Section 2 (s13-s19): 7 slides
-    s13_q3_divider(p)
+    s13_q3_divider(p)              # s13 — Q3 divider
     s14_hpc_eni_aramco(p)
     s15_slb_lumi(p)
     s16_exxon_discovery6(p)
@@ -586,7 +638,7 @@ def build_all():
     s19_q3_alternatives(p)
     # Section 3 (s20-s27): 8 slides
     s20_methane_alphabet(p)
-    s21_q2_divider(p)
+    s21_q2_divider(p)              # s21 — Q2 divider
     s22_methanesat_permian(p)
     s23_methanesat_loss(p)
     s24_post_methanesat_players(p)
@@ -594,24 +646,24 @@ def build_all():
     s26_eu_vs_epa(p)
     s27_q2_alternatives(p)
     # Section 4 (s28-s33): 6 slides
-    s28_q4_divider(p)
+    s28_q4_divider(p)              # s28 — Q4 divider («Новые опоры»)
     s29_northern_lights(p)
     s30_fervo_egs(p)
     s31_ccs_scale_gap(p)
     s32_refinery_q4(p)
     s33_q4_alternatives_sis(p)
     # Section 5 (s34-s36): 3 slides
-    s34_russia_divider(p)
+    s34_russia_divider(p)          # s34 — Russia divider
     s35_gazprom_cognitive_geo(p)
     s36_rosneft_detail(p)
     # Section 6 (s37-s38): 2 slides
     s37_cyber_935(p)
     s38_2020_crash_deepwater(p)
     # Section 7 (s39-s42): 4 slides
-    s39_synthesis_matrix(p)
-    s40_three_cornerstones(p)
-    s41_qa(p)
-    s42_hero_methanesat_map(p)
+    s39_synthesis_matrix(p)         # s39
+    s40_three_cornerstones(p)       # s40
+    s42_hero_methanesat_map(p)      # s41 (new ID) — closing hero (clarified)
+    s42_qa_normal(p)                # s42 — NEW normal Q&A slide
 
     p.save(str(OUT))
     print(f"Saved {OUT} with {len(p.slides)} slides")

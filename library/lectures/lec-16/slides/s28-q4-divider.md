@@ -2,24 +2,24 @@
 id: s28
 type: section_divider
 duration_min: 0.5
-assertion: "Q4: энергетический переход — AI и физика struggle вместе. Самый честный квадрант."
-learning_goal: "Section break Q4 + tag «2 working pilots · 2 структурных провала»"
+assertion: "Q4: новые опоры (CCS + EGS) — AI и физика буксуют вместе. Самый честный квадрант."
+learning_goal: "Section break Q4 + tag «2 working pilots · 2 структурных провала» + mini-matrix Q4 highlighted"
 chapter_ref:
   parts: [chapter-part3.md]
   sections: ["§4.1 Самый честный квадрант"]
 visual:
   type: text
-  description: "Section divider — большая «Q4» слева, mood-line справа, tag внизу"
+  description: "Section divider — большая «Q4» слева, mood-line справа, tag внизу; + mini-matrix с Q4 highlighted (Item 5)"
 visible_numbers: []
 russification_check: "«улавливание и хранение углерода (CCS)», «улучшенные геотермальные системы (EGS)» — RU inline gloss."
 speaker_notes_target_words: 150
 ---
 
-# Q4 — Energy transition: AI и физика struggle вместе
+# Q4 — Новые опоры (CCS + EGS): AI и физика буксуют вместе
 
 ## Visible content
 
-Section divider: левая часть — «**Q4**» (160pt gold `#F0AB00`), под — «**Energy transition: CCS + EGS**».
+Section divider: левая часть — «**Q4**» (160pt gold `#F0AB00`), под — «**Новые опоры: CCS + EGS**».
 
 Правая часть — mood-line (32pt deep ocean):
 

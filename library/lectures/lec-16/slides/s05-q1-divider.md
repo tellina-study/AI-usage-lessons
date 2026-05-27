@@ -1,5 +1,5 @@
 ---
-id: s06
+id: s05
 type: section_divider
 duration_min: 0.5
 assertion: "Q1: зрелое производство — AI как multiplier классических методов."

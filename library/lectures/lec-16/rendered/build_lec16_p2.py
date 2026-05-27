@@ -11,9 +11,9 @@ from build_lec16 import *
 
 def s28_q4_divider(p):
     return section_divider(
-        p, "Q4", "Energy transition: CCS + EGS",
-        "Здесь AI и физика struggle вместе. Long-horizon, low-data, low-physics-certainty. Самый честный квадрант.",
-        "2 working pilots · 2 структурных провала · 190× scale-up gap",
+        p, "Q4", "Энергопереход: CCS + EGS",
+        "Здесь AI и физика буксуют вместе. Long-horizon, low-data, low-physics-certainty. Самый честный квадрант.",
+        "2 рабочих пилота · 2 структурных провала · 190× разрыв масштабирования",
         section_idx=4, large_size=200, label_color=GOLD)
 
 
@@ -498,23 +498,22 @@ def s41_qa(p):
              "3 ключевых вопроса для exit ticket — обсуждаем в малых группах, потом общий слайд.",
              size=14, italic=True, color=LIGHT)
     questions = [
-        ("Q1", "LO1", "Для какого квадранта матрицы данные × физика AI является ESSENTIAL (а не augmentation)? Конкретный case + почему классической физики недостаточно?", TEAL),
-        ("Q2", "LO2 + cross", "Приведите 2 documented failure из лекции + выученные уроки. (Любые 2 из 10: BP+Beyond Limits, IBM+Repsol, MethaneSAT loss, 86% pilot stuck, Aspen alert fatigue, 4× discrepancy, CCS 190× gap, refinery stagnation, 2020 crash, cyber +935%.)", LIGHT),
-        ("Q3", "LO2 + LO3", "Когда в нефтегазе НЕ применять AI — назовите 3 критерия с примерами из 6 на лекции.", GOLD),
+        ("Q1", "Для какого квадранта матрицы данные × физика AI является ESSENTIAL (а не augmentation)? Конкретный case + почему классической физики недостаточно?", TEAL),
+        ("Q2", "Приведите 2 documented failure из лекции + выученные уроки. (Любые 2 из 10: BP+Beyond Limits, IBM+Repsol, MethaneSAT loss, 86% pilot stuck, Aspen alert fatigue, 4× discrepancy, CCS 190× gap, refinery stagnation, 2020 crash, cyber +935%.)", LIGHT),
+        ("Q3", "Когда в нефтегазе НЕ применять AI — назовите 3 критерия с примерами из 6 на лекции.", GOLD),
     ]
     q_w = 12.33
     q_h = 1.4
     gap = 0.15
     x0 = 0.5
     y0 = 2.0
-    for i, (qn, lo, body, accent) in enumerate(questions):
+    for i, (qn, body, accent) in enumerate(questions):
         y = y0 + i * (q_h + gap)
         rounded_box(slide, x0, y, q_w, q_h, stroke=accent, stroke_w=2)
         rectangle(slide, x0, y, 1.3, q_h, fill=accent)
-        text_box(slide, x0, y + 0.15, 1.3, 0.5, qn,
-                 size=22, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-        text_box(slide, x0, y + 0.75, 1.3, 0.4, lo,
-                 size=10, italic=True, color=WHITE, align=PP_ALIGN.CENTER)
+        text_box(slide, x0, y + 0.4, 1.3, 0.6, qn,
+                 size=28, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
         text_box(slide, x0 + 1.5, y + 0.15, q_w - 1.7, q_h - 0.3, body,
                  size=12, color=DEEP, line_spacing=1.35, anchor=MSO_ANCHOR.MIDDLE)
     gold_callout(slide, 0.5, 6.75, 12.33, 0.5,
@@ -527,27 +526,29 @@ def s42_hero_methanesat_map(p):
     """s42 — closing hero: MethaneSAT global methane map."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
+    # Hero image LEFT (60% width × 5.5" = ~44% area)
     img = ASSETS / "screenshots" / "s42-methanesat.png"
-    add_image_aspect(slide, img, 0.5, 0.4, 8.0, 5.7)
+    add_image_aspect(slide, img, 0.5, 0.4, 7.8, 5.4)
     attribution(slide, "EDF / MethaneSAT data via Google Earth Engine · февраль 2026",
-                x=0.5, y=6.15, w=8.0)
-    multiline_box(slide, 8.8, 0.6, 4.1, 5.5, [
-        ("Bittersweet payoff:", {"size": 14, "bold": True, "color": MID}),
-        ("", {"size": 4}),
-        ("· Спутник потерян 20 июня 2025", {"size": 12, "color": DEEP}),
-        ("· Но карта осталась", {"size": 14, "bold": True, "color": GOLD}),
-        ("· ~2 000 data files за 15,5 мес работы → retrospective inventory", {"size": 11, "color": DEEP, "italic": True}),
-        ("", {"size": 10}),
-        ("Final framing:", {"size": 14, "bold": True, "color": MID}),
-        ("", {"size": 4}),
-        ("AI в нефтегазе —", {"size": 13, "color": DEEP}),
-        ("это измеримый успех", {"size": 13, "bold": True, "color": DEEP}),
+                x=0.5, y=5.85, w=7.8)
+    # Title + text RIGHT
+    multiline_box(slide, 8.4, 0.5, 4.6, 5.5, [
+        ("Спутник потерян —", {"size": 22, "bold": True, "color": DEEP}),
+        ("карта осталась.", {"size": 26, "bold": True, "color": GOLD}),
+        ("", {"size": 12}),
+        ("Bittersweet payoff:", {"size": 13, "bold": True, "color": MID}),
+        ("· 20 июня 2025 — потеря MethaneSAT", {"size": 11, "color": DEEP}),
+        ("· ~2 000 data files за 15,5 мес → retrospective inventory", {"size": 11, "color": DEEP, "italic": True}),
+        ("", {"size": 8}),
+        ("Final framing:", {"size": 13, "bold": True, "color": MID}),
+        ("AI в нефтегазе — это", {"size": 12, "color": DEEP}),
+        ("измеримый успех", {"size": 13, "bold": True, "color": DEEP}),
         ("+ структурная уязвимость", {"size": 13, "bold": True, "color": GOLD}),
-        ("в одном кадре.", {"size": 13, "color": DEEP}),
+        ("в одном кадре.", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
-        ("Хороший инженер строит portfolio reading, не single-quadrant reading.", {"size": 11, "color": DEEP, "italic": True}),
-    ], line_spacing=1.25)
-    gold_callout(slide, 0.5, 6.45, 12.33, 0.7,
+        ("Хороший инженер строит portfolio reading, не single-quadrant.", {"size": 10, "color": DEEP, "italic": True}),
+    ], line_spacing=1.2)
+    gold_callout(slide, 0.5, 6.4, 12.33, 0.7,
                  "Bridge к Лекции 17 — systematization. Keystone'ы L11–L16 как universal patterns.",
                  size=14)
     add_notes(slide, "См. slides/s42-hero-methanesat-map.md speaker notes.")

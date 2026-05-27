@@ -205,7 +205,7 @@ def add_notes(slide, text):
 
 
 # Roadmap sections for Lec-16: 7 разделов
-SECTIONS = ["Keystone", "Q1 Mature", "Q3 Frontier", "Q2 Methane", "Q4 Transition", "Россия", "Cross-cutting"]
+SECTIONS = ["Keystone", "Q1 Mature", "Q3 Frontier", "Q2 Methane", "Q4 Transition", "Россия", "Сквозные"]
 
 
 def roadmap_bar(slide, current_section):
@@ -242,18 +242,19 @@ def gold_callout(slide, x, y, w, h, text, *, size=14):
              align=PP_ALIGN.LEFT, line_spacing=1.25)
 
 
-def section_divider(p, q_label, q_title, mood_line, tag_text, section_idx, large_size=200,
+def section_divider(p, q_label, q_title, mood_line, tag_text, section_idx, large_size=160,
                     label_color=GOLD):
     """Section divider with large quadrant label + mood + tag."""
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     roadmap_bar(slide, current_section=section_idx)
-    # Decorative large Q-label
-    text_box(slide, 0.5, 1.0, 5.5, 4.5, q_label,
+    # Decorative large Q-label (centered in upper area only)
+    text_box(slide, 0.5, 1.0, 5.5, 3.6, q_label,
              size=large_size, bold=True, color=label_color, anchor=MSO_ANCHOR.MIDDLE,
              align=PP_ALIGN.CENTER)
-    text_box(slide, 0.5, 4.8, 5.5, 0.6, q_title,
-             size=24, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+    # Subtitle BELOW Q-label (clear separation)
+    text_box(slide, 0.5, 4.85, 5.5, 0.55, q_title,
+             size=22, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     # Mood line
     multiline_box(slide, 6.2, 1.5, 6.6, 4.0, [
         (mood_line, {"size": 20, "bold": True, "color": DEEP}),
@@ -317,9 +318,9 @@ def s02_cover(p):
          {"size": 13, "color": DEEP}),
         ("становится мультипликатором классических методов,",
          {"size": 13, "color": DEEP}),
-        ("а где он либо essential, либо опасен — на материале",
+        ("а где он либо необходим, либо опасен — на материале",
          {"size": 13, "color": DEEP}),
-        ("10 documented failures индустрии 2014–2026?",
+        ("10 documented провалов индустрии 2014–2026?",
          {"size": 13, "bold": True, "color": DEEP}),
     ], line_spacing=1.15)
     footer(slide, "Курс «Применение AI в инженерии» · Студенты-инженеры 3 курса · 2026")
@@ -337,8 +338,8 @@ def s03_about(p):
              size=14, italic=True, color=LIGHT)
     cards = [
         ("Аудитория", "Студенты-инженеры\n3 курса\n(универсальная,\nне отраслевые\nспециалисты)", LIGHT),
-        ("Формат", "75 минут\n· 42 слайда\n· 10 documented\nпровалов\n· 7 разделов", MID),
-        ("Вы научитесь", "Различать 4 квадранта\nматрицы\n· Критически читать\nвендорские заявления\n· Применять критерии\n«AI не нужен»\n· Альтернативы\nне-AI", TEAL),
+        ("Формат", "42 слайда\n· 10 разобранных\nпровалов\n· 12+ рабочих\nкейсов\n· 7 разделов", MID),
+        ("Вы научитесь", "Различать 4 квадранта\nматрицы\n· Критически читать\nвендорские заявления\n· Применять критерии\n«AI не нужен»\n· Альтернативы\nбез AI", TEAL),
     ]
     card_w = 4.0
     gap = 0.15
@@ -354,7 +355,7 @@ def s03_about(p):
         text_box(slide, x+0.2, y+0.9, card_w-0.4, 3.5, body,
                  size=14, color=DEEP, line_spacing=1.35)
     gold_callout(slide, 0.5, 6.85, 12.33, 0.5,
-                 "10 documented failures + 12+ working cases = инженерный фильтр, не каталог инноваций.",
+                 "10 разобранных провалов + 12+ рабочих кейсов = инженерный фильтр, не каталог инноваций.",
                  size=13)
     add_notes(slide, "См. slides/s03-about.md speaker notes.")
 
@@ -370,12 +371,12 @@ def s04_lecture_map(p):
              size=14, italic=True, color=LIGHT)
     sections = [
         ("1", "Keystone", "Матрица", "Данные × физика, 4 квадранта", LIGHT),
-        ("2", "Q1 Mature", "3 cases · 2 провала", "Зрелое производство", MID),
-        ("3", "Q3 Frontier", "3 cases · 2 провала", "Разведка фронтиров", TEAL),
-        ("4", "Q2 Methane", "4 systems · 2 провала", "Метановая MRV", GOLD),
-        ("5", "Q4 Transition", "2 pilots · 2 провала", "CCS + EGS", LIGHT),
-        ("6", "Россия", "3 programs", "Sanctions, insourcing", MID),
-        ("7", "Cross-cutting", "2 failures", "Кибер + кризис 2020", DEEP),
+        ("2", "Q1 Mature", "3 кейса · 2 провала", "Зрелое производство", MID),
+        ("3", "Q3 Frontier", "3 кейса · 2 провала", "Разведка фронтиров", TEAL),
+        ("4", "Q2 Methane", "4 системы · 2 провала", "Метановая MRV", GOLD),
+        ("5", "Q4 Transition", "2 пилота · 2 провала", "CCS + EGS", LIGHT),
+        ("6", "Россия", "3 программы", "Санкции, инсорсинг", MID),
+        ("7", "Сквозные риски", "2 провала", "Кибер + кризис 2020", DEEP),
     ]
     card_w = 1.71
     gap = 0.05
@@ -411,30 +412,30 @@ def s05_keystone_matrix(p):
     text_box(slide, 0.5, 0.95, 12.33, 0.4,
              "От разведки фронтиров до спутникового метана — AI имеет 4 разных profile",
              size=13, italic=True, color=LIGHT)
-    # Y-axis label
-    text_box(slide, 0.3, 3.0, 1.3, 0.4, "Данные →",
-             size=12, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    text_box(slide, 0.3, 1.8, 1.3, 0.4, "↑ Высокая",
-             size=10, color=SLATE, align=PP_ALIGN.CENTER)
-    text_box(slide, 0.3, 5.6, 1.3, 0.4, "↓ Низкая",
-             size=10, color=SLATE, align=PP_ALIGN.CENTER)
-    # X-axis label
-    text_box(slide, 2.8, 6.4, 3.5, 0.4, "← Низкая",
-             size=10, color=SLATE, align=PP_ALIGN.CENTER)
-    text_box(slide, 8.2, 6.4, 3.5, 0.4, "Высокая →",
-             size=10, color=SLATE, align=PP_ALIGN.CENTER)
-    text_box(slide, 4.5, 6.7, 4.5, 0.4, "Физика →",
-             size=12, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    # Y-axis labels (placed in column на левой стороне)
+    text_box(slide, 0.1, 1.7, 1.5, 0.4, "Высокая ↑",
+             size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(slide, 0.1, 3.7, 1.5, 0.5, "Данные",
+             size=14, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(slide, 0.1, 5.55, 1.5, 0.4, "↓ Низкая",
+             size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    # X-axis labels
+    text_box(slide, 2.0, 6.4, 4.0, 0.4, "← Низкая",
+             size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(slide, 5.5, 6.4, 2.5, 0.5, "Физика",
+             size=14, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(slide, 7.5, 6.4, 4.0, 0.4, "Высокая →",
+             size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
     # Matrix 2x2
     quad_x0 = 1.7
-    quad_y0 = 1.6
+    quad_y0 = 1.55
     quad_w = 5.0
     quad_h = 2.25
     quads = [
-        (0, 0, TEAL_TINT, "Q2 — Methane MRV", "AI essential\nMethaneSAT / Carbon Mapper / GHGSat", TEAL),
-        (1, 0, SURFACE, "Q1 — Mature production", "AI мультипликатор\nAmbyint +15% на 200 wells", MID),
-        (0, 1, GOLD_TINT, "Q4 — Energy transition", "AI и физика struggle вместе\nNorthern Lights / Fervo", GOLD),
-        (1, 1, SURFACE, "Q3 — Frontier exploration", "Physics-first, AI augmentation\nAramco METABRAIN / Eni HPC6", LIGHT),
+        (0, 0, TEAL_TINT, "Q2 — Метановая MRV", "AI необходим\nMethaneSAT / Carbon Mapper / GHGSat", TEAL),
+        (1, 0, SURFACE, "Q1 — Зрелое производство", "AI как мультипликатор\nAmbyint +15% на 200 скважинах", MID),
+        (0, 1, GOLD_TINT, "Q4 — Энергопереход", "AI и физика буксуют вместе\nNorthern Lights / Fervo", GOLD),
+        (1, 1, SURFACE, "Q3 — Разведка фронтиров", "Physics-first, AI как дополнение\nAramco METABRAIN / Eni HPC6", LIGHT),
     ]
     for col, row, fill, title, body, accent in quads:
         x = quad_x0 + col * (quad_w + 0.2)
@@ -444,7 +445,7 @@ def s05_keystone_matrix(p):
                  size=15, bold=True, color=DEEP)
         text_box(slide, x + 0.2, y + 0.7, quad_w - 0.4, quad_h - 0.85, body,
                  size=12, color=DEEP, line_spacing=1.35)
-    gold_callout(slide, 0.5, 6.95, 12.33, 0.45,
+    gold_callout(slide, 0.5, 7.0, 12.33, 0.45,
                  "За каждым AI-внедрением — alternative tool: физический симулятор, OGI-камера, классическая интерпретация.",
                  size=12)
     add_notes(slide, "См. slides/s05-keystone-matrix.md speaker notes.")
@@ -456,9 +457,9 @@ def s05_keystone_matrix(p):
 
 def s06_q1_divider(p):
     return section_divider(
-        p, "Q1", "Mature production",
+        p, "Q1", "Зрелое производство",
         "AI здесь — мультипликатор классических методов. Самый освоенный квадрант. И самый структурно проваленный.",
-        "3 working cases · 2 структурных провала · 86% pilot stuck — статистическая норма",
+        "3 рабочих кейса · 2 структурных провала · 86% пилотов застряло — статистическая норма",
         section_idx=1, large_size=200, label_color=MID)
 
 
@@ -497,18 +498,18 @@ def s07_pilot_stuck(p):
 def s07b_aspen_alert_fatigue(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
-    text_box(slide, 0.5, 0.4, 12.33, 0.85,
+    text_box(slide, 0.5, 0.35, 12.33, 0.85,
              "«Усталость от ложных тревог устранена» — это маркетинг",
-             size=24, bold=True, color=DEEP, line_spacing=1.1)
-    text_box(slide, 0.5, 1.25, 12.33, 0.4,
+             size=22, bold=True, color=DEEP, line_spacing=1.1)
+    text_box(slide, 0.5, 1.2, 12.33, 0.4,
              "Aspen Mtell на нефтепереработке: 100–500 алертов в день; plant-wide пилоты тихо закрываются.",
              size=13, italic=True, color=LIGHT)
-    rounded_box(slide, 0.5, 1.85, 5.5, 4.4)
+    rounded_box(slide, 0.5, 1.7, 5.5, 4.5)
     img = ASSETS / "screenshots" / "s09-aspen.jpg"
-    add_image_aspect(slide, img, 0.7, 2.0, 5.1, 4.0)
-    attribution(slide, "AspenTech · Aspen Mtell product page", x=0.7, y=6.0, w=5.0)
-    rounded_box(slide, 6.2, 1.85, 6.63, 4.4)
-    multiline_box(slide, 6.4, 1.95, 6.3, 4.2, [
+    add_image_aspect(slide, img, 0.7, 1.85, 5.1, 4.0)
+    attribution(slide, "AspenTech · Aspen Mtell product page", x=0.7, y=5.85, w=5.0)
+    rounded_box(slide, 6.2, 1.7, 6.63, 4.5)
+    multiline_box(slide, 6.4, 1.8, 6.3, 4.4, [
         ("Маркетинг (AspenTech):", {"size": 13, "bold": True, "color": MID}),
         ("«Снижение незапланированного простоя на 60%»", {"size": 11, "color": DEEP, "italic": True}),
         ("«Усталость операторов устранена»", {"size": 11, "color": DEEP, "italic": True}),
@@ -522,7 +523,7 @@ def s07b_aspen_alert_fatigue(p):
         ("Структурный gap:", {"size": 13, "bold": True, "color": GOLD}),
         ("Multi-physics (масс + энергия + реакция + коррозия) ломает ML-суррогаты на edge cases.", {"size": 11, "color": DEEP}),
     ], line_spacing=1.3)
-    gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
+    gold_callout(slide, 0.5, 6.35, 12.33, 0.55,
                  "Урок: vendor self-report ≠ field reality. Custody transfer, SIS, plant-wide refinery — AI ещё не дошёл.",
                  size=12)
     add_notes(slide, "См. slides/s07b-aspen-alert-fatigue.md speaker notes.")
@@ -733,7 +734,7 @@ def s12_q1_no_ai_criteria(p):
         text_box(slide, x + 0.2, y + 0.85, card_w - 0.4, card_h - 1.0, body,
                  size=10, color=DEEP, line_spacing=1.3)
     gold_callout(slide, 0.5, 6.65, 12.33, 0.45,
-                 "LO2 — главный навык курса: уметь сказать «нет» там, где AI не нужен. 14% successful vs 86% pilot stuck — разница часто именно здесь.",
+                 "Главный навык курса: уметь сказать «нет» там, где AI не нужен. 14% successful vs 86% pilot stuck — разница часто именно здесь.",
                  size=12)
     add_notes(slide, "См. slides/s12-q1-no-ai-criteria.md speaker notes.")
 
@@ -744,9 +745,9 @@ def s12_q1_no_ai_criteria(p):
 
 def s13_q3_divider(p):
     return section_divider(
-        p, "Q3", "Frontier exploration",
-        "Каждая wildcat скважина = $50–100M. Sample size 1–5 wells. ML не generalize без аналогов. Physics ground truth, AI augmentation.",
-        "3 working cases · 2 провала десятилетия · HPC-гонка $100–400M на инсталляцию",
+        p, "Q3", "Разведка фронтиров",
+        "Каждая wildcat-скважина = $50–100M. Размер выборки 1–5 скважин. ML не обобщается без аналогов. Physics ground truth, AI как дополнение.",
+        "3 рабочих кейса · 2 провала десятилетия · HPC-гонка $100–400M на инсталляцию",
         section_idx=2, large_size=200, label_color=LIGHT)
 
 
@@ -1043,9 +1044,9 @@ def s20_methane_alphabet(p):
 
 def s21_q2_divider(p):
     return section_divider(
-        p, "Q2", "Methane MRV",
-        "Данные — петабайты в день. Физика — разорвана. Слияние 4 сенсоров + атрибуция малой утечки — открытая ML-задача. AI essential. Но один спутник = catastrophic SPOF.",
-        "4 working systems · 2 провала · regulatory pressure из EU 2024/1787",
+        p, "Q2", "Метановая MRV",
+        "Данные — петабайты в день. Физика — разорвана. Слияние 4 сенсоров + атрибуция малой утечки — открытая ML-задача. AI необходим. Но один спутник = катастрофическая единичная уязвимость.",
+        "4 рабочих системы · 2 провала · регуляторное давление из EU 2024/1787",
         section_idx=3, large_size=200, label_color=TEAL)
 
 

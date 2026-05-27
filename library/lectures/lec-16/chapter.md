@@ -1,13 +1,13 @@
 ---
 lecture: 16
 title: "AI в нефтегазовой отрасли и добыче ресурсов"
-length_words: ~31900
-length_words_actual: 31888
-chapter_status: reviewed
+length_words: ~32300
+length_words_actual: 32309
+chapter_status: reviewed (polish-applied)
 status: reviewed
-version: v2
-revision_round: 2
-prev_version: v1
+version: v2.1
+revision_round: 2.5
+prev_version: v2
 issue: 144
 branch: issue-144-lec-16
 module: 3
@@ -190,11 +190,11 @@ slide_map:
 
 **Q1. Зрелое производство (high data + high physics).** «Mainstream production optimization»: оптимизация добычи на зрелых месторождениях, прогностическое обслуживание оборудования, оптимизация нефтепереработки. AI здесь — **мультипликатор** классических методов. Примеры: Ambyint InfinityRL (+15% на 200 скважинах), Aspen Mtell (прогностическое обслуживание для компрессоров и насосов), Honeywell UOP Connect (310+ юнитов на 100+ сайтах), ABB Ability Genix, Yokogawa OpreX, Emerson DeltaV. Здесь же — **86% AI-пилотов в энергетике застряли в pilot phase** (McKinsey 2024). Q1 — самый освоенный квадрант, и одновременно тот, где статистически большинство deployments не достигают промышленной эксплуатации.
 
-**Q2. Метановая MRV (high data + low physics).** Спутники, дроны, аэроизмерения, наземные OGI-камеры в одной системе. AI здесь **essential** — потому что классической физики для слияния данных от 4 сенсорных модальностей и атрибуции малых утечек к конкретным источникам **не существует**. Примеры: MethaneSAT (потерян 20 июня 2025), Carbon Mapper Tanager-1 (запущен 16 августа 2024), GHGSat (созвездие 16 спутников), Bridger Photonics (аэро-LiDAR), SeekOps (дроны), Project Canary. Здесь же — единичная уязвимость спутника как инфраструктуры, **4× factor** разрыв между MethaneSAT и инвентарём EPA, и регуляторный mandate (EU Methane Regulation 2024/1787 + EPA Subpart W).
+**Q2. Метановая MRV (high data + low physics).** Спутники, дроны, аэроизмерения, наземные OGI-камеры в одной системе. AI здесь **essential** — потому что классической физики для слияния данных от 4 сенсорных модальностей и атрибуции малых утечек к конкретным источникам **не существует**. Примеры: MethaneSAT (потерян 20 июня 2025), Carbon Mapper Tanager-1 (запущен 16 августа 2024), GHGSat (созвездие 13 спутников к середине 2025), Bridger Photonics (аэро-LiDAR), SeekOps (дроны), Project Canary. Здесь же — единичная уязвимость спутника как инфраструктуры, **4× factor** разрыв между MethaneSAT и инвентарём EPA, и регуляторный mandate (EU Methane Regulation 2024/1787 + EPA Subpart W).
 
 **Q3. Разведка фронтиров (low data + high physics).** Foundation models поверх пластовых симуляторов; гонка HPC. Каждая разведочная скважина — 50–100 миллионов долларов, размер выборки = 1–5 wells. **Физика определена** (Eclipse, INTERSECT, CMG), AI — **augmentation**, не замена. Примеры: SLB Lumi (сентябрь 2024), Aramco METABRAIN (250 млрд параметров на 90 годах данных), Eni HPC6 (606 PFLOPS, Top500 #5, $104 млн), ExxonMobil Discovery 6 (4 032 NVIDIA Grace Hopper). Здесь же — два провала десятилетия: BP + Beyond Limits (2018–2023, $20 млн, vendor pivot) и IBM Watson + Repsol Kalimba (2014–2022, тихое сворачивание).
 
-**Q4. Энергетический переход (low data + low physics).** CCS и EGS. И данных мало (единицы проектов в мире), и физика на длинных горизонтах не закрыта. **Оба — AI и физика — struggle вместе.** Примеры: Northern Lights CCS (1,5 Mt CO₂/год в Эугарден, Норвегия), Fervo Energy EGS (IPO в мае 2026, +331% к offering price). Здесь же — структурный 190× scale-up gap для CCS относительно цели IEA 2050 года, и риск **галлюцинации** LLM-based агентов на горизонте 100 лет.
+**Q4. Энергетический переход (low data + low physics).** CCS и EGS. И данных мало (единицы проектов в мире), и физика на длинных горизонтах не закрыта. **Оба — AI и физика — struggle вместе.** Примеры: Northern Lights CCS (1,5 Mt CO₂/год в Эугарден, Норвегия), Fervo Energy EGS (IPO 12 мая 2026, $1,89 млрд привлечено, оценка $7,7 млрд, ~30% first-day pop). Здесь же — структурный 190× scale-up gap для CCS относительно цели IEA 2050 года, и риск **галлюцинации** LLM-based агентов на горизонте 100 лет.
 
 **Внизу матрицы на keystone-слайде s05:** строка-якорь «За каждым AI-внедрением — альтернативный инструмент: физический симулятор, OGI-камера, классическая интерпретация». Это не дисклеймер «AI иногда ошибается». Это **структурный признак** отрасли: в нефтегазе AI почти всегда живёт **рядом с** классическим инструментом, а не вместо него. Понимание этого — критическая часть LO3.
 

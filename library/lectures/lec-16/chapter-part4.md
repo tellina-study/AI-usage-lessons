@@ -51,8 +51,8 @@ prev_version: v1
 
 | Квадрант | Российский эквивалент | Sanctions impact | Status |
 |---|---|---|---|
-| **Q1** mature production | Роснефть Digital Field; Газпром нефть Cognitive system Ямал | Нет западных vendors (Aspen Mtell, Honeywell UOP, ABB Genix ушли) → insourcing | Развёрнут production-grade |
-| **Q3** frontier exploration | Газпром нефть Cognitive Geo (с IBM Research Brazil 2019–2022 → internal) | Нет SLB Lumi, нет ExxonMobil Discovery 6 → собственный HPC + foundation model | Развёрнут на Ямале 2024 |
+| **Q1** mature production | Роснефть Digital Field; Газпром нефть Cognitive system Ямал | Нет западных vendors (Aspen Mtell, Honeywell UOP, ABB Genix ушли) → insourcing | Промышленно развёрнут |
+| **Q3** frontier exploration | Газпром нефть Cognitive Geo (с IBM Research Brazil 2019–2022 → internal) | Нет SLB Lumi, нет ExxonMobil Discovery 6 → собственный высокопроизводительный кластер (HPC) + базовая модель | Развёрнут на Ямале 2024 |
 | **Q2** методан-MRV | Не приоритет — нет давления со стороны регулятора ЕС | EU 2024/1787 не применяется к российскому экспорту в нерегулируемые рынки; внутренняя регуляция мягче | Ограниченное развёртывание |
 | **Q4** energy transition (CCS/EGS) | Очень ограниченная публичная информация | Зарубежные partnerships заморожены; внутренние pilots отчёт по ВИНК limited | Pilots, public info ограничена [VFY-day-of] |
 
@@ -174,7 +174,7 @@ Transferability к O&G:
 
 **Канонические incidents.**
 
-**Colonial Pipeline 2021.** Атакующий получил доступ через **VPN без MFA** (multi-factor authentication). Pipeline shutdown ~6 days; ~$5M ransom paid; **операционные потери — десятки миллионов долларов**; США federal coordinated response (Cybersecurity and Infrastructure Security Agency, CISA) [41]. Lesson: **flat OT/IT network + no MFA на VPN = unacceptable risk** для critical infrastructure.
+**Colonial Pipeline 2021.** Атакующий получил доступ через **VPN без MFA** (multi-factor authentication). Pipeline shutdown ~6 days; **$4,4M ransom paid** (75 BTC; ~$2,3M recovered by DOJ June 2021); **операционные потери — десятки миллионов долларов**; США federal coordinated response (Cybersecurity and Infrastructure Security Agency, CISA) [41]. Lesson: **flat OT/IT network + no MFA на VPN = unacceptable risk** для critical infrastructure.
 
 **Shell MOVEit 2022 + vendor compromise 2024.** Shell был impacted by Clop ransomware через MOVEit file transfer vendor (third-party software, used by multiple companies для transfer data между systems). 2022 + 2024 incidents — customer data leaked; financial impact moderate, но reputational и regulatory follow-through significant [42].
 
@@ -204,7 +204,7 @@ Transferability к O&G:
 
 В марте-октябре 2020 года, после пандемийного collapse нефтяного спроса (нефтяные фьючерсы West Texas Intermediate уходили в **отрицательную зону** 20 апреля 2020 года — впервые в истории), нефтегазовая индустрия пережила структурную shake-out.
 
-- **107 000 рабочих мест потеряно** в US O&G и нефтехимии (Deloitte) — «fastest layoffs in industry history» [43]. **Денoминатор:** из total US O&G workforce **~1,1 миллиона** (BLS 2019 baseline) — это **~9,7% индустрии за 6 месяцев**. Для контекста: financial crisis 2008–2009 oil&gas потерял ~7% за 12 месяцев; 2020 crash — почти 10% за половину времени.
+- **107 000 рабочих мест потеряно** в US O&G и нефтехимии (Deloitte) — «fastest layoffs in industry history» [43]. **Знаменатель (база отсчёта):** из total US O&G workforce **~1,1 миллиона** (BLS 2019 baseline) — это **~9,7% индустрии за 6 месяцев**. Для контекста: financial crisis 2008–2009 oil&gas потерял ~7% за 12 месяцев; 2020 crash — почти 10% за половину времени.
 - **BP — 10 000 уволенных** (15% workforce), плюс план «slash oil output by 40%» в рамках Beyond Petroleum pivot [44].
 - **Shell — 9 000 уволенных**, including digital и new energies team [45].
 - **Chevron, ExxonMobil, ConocoPhillips** — major cuts.
@@ -276,9 +276,9 @@ Transferability к O&G:
 
 **Q3 (frontier exploration — low data + high physics):** AI как **augmentation поверх physics simulators**. Working cases: Eni HPC6 (606 PFLOPS Top500 #5), Aramco METABRAIN (250B params, $1,8B realized 2024), SLB Lumi (Sep 2024), ExxonMobil Discovery 6 (4D-сейсмика месяцы → недели, Stabroek Guyana). **Failures**: BP+Beyond Limits ($20M vendor pivot 2023), IBM+Repsol Kalimba (2014–2022 wind-down).
 
-**Q2 (методан-MRV — high data + low physics):** AI как **essential** для cross-modality fusion. Working cases: Carbon Mapper Tanager-1 (Aug 2024), GHGSat 16-spacecraft constellation, Bridger Photonics aerial LiDAR. **Failures**: MethaneSAT loss June 2025 (13 месяцев из 5+ лет дизайн-life), 4× discrepancy MethaneSAT vs EPA (15 Mt vs 4 Mt).
+**Q2 (методан-MRV — high data + low physics):** AI как **essential** для cross-modality fusion. Working cases: Carbon Mapper Tanager-1 (Aug 2024), GHGSat 13-spacecraft constellation (mid-2025), Bridger Photonics aerial LiDAR. **Failures**: MethaneSAT loss June 2025 (~15,5 месяцев из 5+ лет дизайн-life), 4× discrepancy MethaneSAT vs EPA (15 Mt vs 4 Mt).
 
-**Q4 (energy transition — low data + low physics):** **AI и физика struggle вместе**. Working pilots: Northern Lights CCS (1,5 Mt/год Норвегия), Fervo Energy EGS (IPO May 2026 +331%). **Failures**: 190× scale-up gap CCS (Northern Lights 0,02% от needed scale), refinery plant-wide stagnation в multi-physics frame.
+**Q4 (energy transition — low data + low physics):** **AI и физика struggle вместе**. Working pilots: Northern Lights CCS (1,5 Mt/год Норвегия), Fervo Energy EGS (IPO May 2026: $1,89B raised, $7,7B valuation, ~30% first-day pop). **Failures**: 190× scale-up gap CCS (Northern Lights 0,02% от needed scale), refinery plant-wide stagnation в multi-physics frame.
 
 **Раздел 5 (Россия — insourcing):** **Все 4 квадранта в санкционном режиме** для России (Газпром Cognitive Geo заменяет SLB Lumi в Q3; Роснефть Digital Field в Q1).
 
@@ -302,7 +302,7 @@ Transferability к O&G:
 | 2 | IBM Watson + Repsol Kalimba (2014–2022 wind-down) | §2.6 / Часть 2 | General-purpose «cognitive» не scales в narrow domain |
 | 3 | Cognite IPO postpone ($94M ARR vs $2–3B cancelled) | §1.7 / Часть 1 | Vertical AI SaaS unit economics не proven в O&G |
 | 4 | C3.ai O&G vertical declining (5.9% FY24 → declining) | §1.7 / Часть 1 | Foundation models едят vertical AI specialists |
-| 5 | MethaneSAT loss июнь 2025 (~13 месяцев из 5+ лет) | §3.3 / Часть 3 | Single-satellite = catastrophic SPOF для regulatory MRV |
+| 5 | MethaneSAT loss июнь 2025 (~15,5 месяцев из 5+ лет) | §3.3 / Часть 3 | Single-satellite = catastrophic SPOF для regulatory MRV |
 | 6 | 86% AI pilot stuck (McKinsey 2024) | §1.2 / Часть 1 | Структурная норма: pilot ≠ production |
 | 7 | Aspen Mtell alert fatigue + refinery plant-wide stagnation | §1.3 / Часть 1 + §4.5 / Часть 3 | «Alert fatigue eliminated» = marketing; multi-physics surrogate gap |
 | 8 | 2020 oil crash 107 000 jobs (BP 10k Shell 9k) | §6.2 / Часть 4 | Industry cyclicality > AI hype cycle |

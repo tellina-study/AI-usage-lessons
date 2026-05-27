@@ -259,7 +259,7 @@ Niche, но stable. Используется в специфических за�
 
 1. **Mature reservoir + regulatory submission.** Регулятор требует **physics-traceable submission** — Eclipse / INTERSECT даёт это; ML-суррогат не даёт.
 2. **Complex EOR scenarios.** Тепловой EOR, газонагнетание, химическое EOR — все три требуют compositional / thermal модели. CMG STARS / GEM — стандарт.
-3. **Hydraulic fracturing modelling.** Geomechanics + fluid flow. Eclipse / INTERSECT покрывают; ML только в специфических narrow приложениях.
+3. **Hydraulic fracturing modelling.** Geomechanics + fluid flow. Eclipse / INTERSECT покрывают; ML только в специфических узких применениях.
 4. **CCS plume migration long-horizon.** Eclipse + OpenFOAM (для CFD around injectors) — стандарт. ML на 100-летнем horizon галлюцинирует (см. §4.5 в Части 3 о Q4 hallucination risk).
 5. **Frontier basin без analog.** ML не на чем обучать; **physics-based + senior geophysicist + analog-basin reasoning** — единственный workable путь.
 

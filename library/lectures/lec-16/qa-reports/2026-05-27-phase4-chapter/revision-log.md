@@ -93,3 +93,61 @@ Pre-USER GATE A walkthrough checklist:
 - [x] Axis tie-back для всех 4 quadrants (Q1 §1, Q3 §2, Q2 §3, Q4 §4)
 - [x] References 46 inline (chapter-part5.md §9)
 - [x] Frontmatter updated chapter_status: reviewed
+
+---
+
+## Spawn 4 (polish — Phase 4.5, 2026-05-27)
+
+Applied 10 surgical fixes per methodology-critic-v2.md (APPROVE-WITH-POLISH: 3 P1 + 6 P2) + fact-checker-v2.md (REVISE: 1 P0 + 4 P1).
+
+### Applied fixes
+
+| # | Fix | Anchor | Status |
+|---|---|---|---|
+| **P0-FV1** | **Fervo IPO math corrected**: +331% к offering price → real numbers $27/share, $1.89B raised, $7.7B valuation, ~30% first-day pop. Added Series E $462M (2025) to funding stack. Replaced fabricated «markdown relative to last private round» framing with verified up-round ($6.5B pre-IPO → $7.7B IPO = +18% uplift). Added Q4 scale-gap baseline (400 MWe pipeline / IEA 2050 200+ GWe = 0.2% needed scale). | chapter-part3.md §4.3 + cross-refs (chapter.md, chapter-part4.md, chapter-part5.md ref [34]) | DONE |
+| **P1-FV2** | **Bolivia ACISA framing softened + ACISA/TBEA disambiguated**: removed «AI-augmented lithium extraction» framing (no AI angle in public sources); explicit «failure social-political risk, NOT failure AI»; disambiguated ACISA (Dec 2018, Salar de Uyuni, $1.3B) from Xinjiang TBEA (Feb 2019, Coipasa+Pastos Grandes, $2.3B, separate deal also paused 2025); preserved Nov 4 2019 cancellation + 3% vs 11% royalty (verified accurate); reframed lesson «political economy + indigenous consent, not AI judgment»; noted separate Albemarle+SQM Chile ML reserve estimation as actual mining-AI story. | chapter-part5.md Q3 | DONE |
+| **P1-FV3** | **PINN deployments softened**: replaced 3 named «production deployment» claims with verified academic-industrial collaboration framing + [FACT-CHECK: public source pending] markers. Aramco+KAUST + ExxonMobil+Princeton labeled as broader collaborations without specific deployment verification. **TotalEnergies+IFP replaced with verified TotalEnergies+NVIDIA PINO collaboration** (NVIDIA GTC25 March 2025, CCUS modeling). Added explicit «все три — направления R&D, не scale deployments» note. | chapter-part3.md §4.4 | DONE |
+| **P1-MC1** | **GHGSat 16 → 13 satellites recap consistency**: chapter.md:193, chapter-part3.md:100, chapter-part4.md:279, chapter-part5.md:270 — 4 locations all updated to «13 спутников / 13-spacecraft / 13-satellite» (with note ранее анонсировались до 16 in body §3.4 and reference). | 4 locations | DONE |
+| **P1-MC2** | **MethaneSAT 13mo → 15.5mo recap consistency**: chapter-part4.md:279 (Q2 quick-recap «~15,5 месяцев») + chapter-part4.md:305 (10 failures table). Body chapter-part3.md already correct. | 2 locations | DONE |
+| **P1-FV4** | **Colonial Pipeline $5M → $4.4M harmonized**: chapter-part4.md:177 (was «$5M ransom paid», now «$4,4M ransom paid (75 BTC; ~$2,3M recovered by DOJ June 2021)»); chapter-part4.md:169 already correct. | 1 location | DONE |
+| **P2-MC3-a** | «narrow приложениях» → «узких применениях» (chapter-part2.md:262) | 1 location | DONE |
+| **P2-MC3-b** | «полезный tool в стек» → «полезный инструмент в стеке» + inline «stack — стек технологий» (chapter-part5.md:36) | 1 location | DONE |
+| **P2-MC3-c** | «inter-discipline collaboration» → «межотраслевое сотрудничество (inter-discipline collaboration)» (chapter-part5.md:38) | 1 location | DONE |
+| **P2-MC3-d** | «инженерном workflow» → «инженерном рабочем процессе» (chapter-part3.md:421 + 425) | 2 locations | DONE |
+| **P2-MC3-e** | «Развёрнут production-grade» → «Промышленно развёрнут» + «собственный HPC + foundation model» → «собственный высокопроизводительный кластер (HPC) + базовая модель» (chapter-part4.md:54-55) | 2 cells | DONE |
+| **P2-MC3-f** | «production-grade deployments» → «промышленно-развёрнутыми (production-grade) deployments» (chapter-part3.md:368) | 1 location | DONE |
+| **P2-MC4** | **«Денoминатор» encoding fix**: Latin 'o' inside Cyrillic word → «Знаменатель (база отсчёта)» (chapter-part4.md:207) | 1 location | DONE |
+
+### Verification grep results
+
+- `+331|331%`: 0 hits в chapter narrative body
+- `GHGSat.*16 / 16 спутник / 16-spacecraft / 16-satellite`: 0 hits в Q2 recap (1 hit в body §3.4 = «ранее планы анонсировались до 16» — intentional historical context; 1 hit в ref [25] = same context)
+- `~13 месяц / 13 месяцев` MethaneSAT: 0 hits в recap tables
+- `Colonial.*$5 / $5M ransom`: 0 hits (both lines now $4.4M)
+- `Денoминатор`: 0 hits (replaced with Знаменатель)
+- `narrow приложен / production-grade deployments / собственный HPC + foundation`: 0 raw anglicism hits
+
+### Word count delta
+
+- v2: 31 888 words → v2.1: **32 309 words** (+421 words, +1.3%)
+- Per-file: chapter.md 8 991 / part2 5 875 / part3 8 201 / part4 5 198 / part5 4 044
+- **Within Chapter Depth Baseline band** (28 500–31 500 ±5% = up to ~33 075). Slightly above center 30 000 target but acceptable (P1-C verdict «accept as-is» from methodology-critic).
+
+### Frontmatter updated
+
+- `version: v2` → `v2.1`
+- `revision_round: 2` → `2.5`
+- `prev_version: v1` → `v2`
+- `length_words: ~31900` → `~32300`
+- `length_words_actual: 31888` → `32309`
+- `chapter_status: reviewed` → `reviewed (polish-applied)`
+
+### Outstanding items (acceptable for GATE A)
+
+- **«subsurface workflows» (chapter-part2.md:110)** — technical English compound noun, retained as-is (vendor verbiage из Aker BP digital platform marketing).
+- **Word count +809 над upper-band 31 500** — within ±5% sliding scale per Chapter Depth Baseline rule; OK for GATE A. Could be trimmed in Phase 5 if needed.
+- **All 3 `[FACT-CHECK: public source pending]` markers** in §4.4 PINN deployments — explicit honesty about gap, acceptable for academic textbook framing.
+
+### Recommendation
+
+**Ready for USER GATE A pre-walkthrough.** All P0 + P1 from both critic reports addressed. Polish residuals at acceptable level (5+ minor anglicism hits acceptable, mostly gloss-qualified). No additional spawn needed.

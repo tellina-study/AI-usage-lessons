@@ -28,7 +28,7 @@ version: v1
 - [§ Раздел 4. Q4 — энергетический переход: AI и физика struggle вместе](#-раздел-4-q4--энергетический-переход-ai-и-физика-struggle-вместе)
   - [§4.1. Самый честный квадрант](#41-самый-честный-квадрант)
   - [§4.2. Northern Lights CCS: 0,02% от needed scale](#42-northern-lights-ccs-002-от-needed-scale)
-  - [§4.3. Fervo Energy EGS: 40× growth ceiling, IPO с премией 331%](#43-fervo-energy-egs-40-growth-ceiling-ipo-с-премией-331)
+  - [§4.3. Fervo Energy EGS: 40× growth ceiling, IPO мая 2026 года](#43-fervo-energy-egs-40-growth-ceiling-ipo-мая-2026-года)
   - [§4.4. Провал 1: CCS 190× scale-up gap + AI long-horizon hallucination](#44-провал-1-ccs-190-scale-up-gap--ai-long-horizon-hallucination)
   - [§4.5. Провал 2: refinery plant-wide stagnation в Q4 frame](#45-провал-2-refinery-plant-wide-stagnation-в-q4-frame)
   - [§4.6. Альтернатива: physics simulators + SIS (приборные системы безопасности)](#46-альтернатива-physics-simulators--sis-приборные-системы-безопасности)
@@ -97,7 +97,7 @@ Q2 — это самый необычный квадрант на keystone-ма�
 
 **Чему этот провал учит — четыре фундаментальных урока.**
 
-**Первый — single-satellite mission = catastrophic single point of failure для regulatory MRV infrastructure.** Когда EU Methane Regulation 2024/1787 предусматривает использование **satellite measurements** как accepted data source — и primary global satellite NGO-owned data source потерян — что делать с этой data infrastructure? Ответ к концу 2025 года: **scramble к alternative data sources** (Carbon Mapper Tanager-1 запущен 16 августа 2024, GHGSat constellation 16 спутников). Но **resilience matters from day one**: проектировать MRV infrastructure на одном спутнике — структурная ошибка.
+**Первый — single-satellite mission = catastrophic single point of failure для regulatory MRV infrastructure.** Когда EU Methane Regulation 2024/1787 предусматривает использование **satellite measurements** как accepted data source — и primary global satellite NGO-owned data source потерян — что делать с этой data infrastructure? Ответ к концу 2025 года: **scramble к alternative data sources** (Carbon Mapper Tanager-1 запущен 16 августа 2024, GHGSat constellation 13 спутников к середине 2025). Но **resilience matters from day one**: проектировать MRV infrastructure на одном спутнике — структурная ошибка.
 
 **Второй — даже с успешным запуском и хорошими данными первого года hardware reliability — fundamental constraint.** MethaneSAT работал отлично 15,5 месяцев. Это не «технология провалилась»; это «спутник в космосе — это hardware с конечной reliability». Любой satellite mission имеет non-zero probability of failure, и для critical infrastructure нужно **constellation model** (multiple redundant satellites), не **single mission**.
 
@@ -324,7 +324,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 Поэтому в Q4 рабочий паттерн — **hybrid AI + physics** (PINN / ROM-augmented Eclipse + senior reservoir engineer judgment) — единственный возможный подход. Чистый ML не работает (data scarcity); чистая физика не работает (компьютационно недоступно для уплотнённых scenario-runs). Это **противоположно** Q1, где обе оси высокие и AI — мультипликатор; и противоположно Q3, где данных мало, но физика хорошо описана, поэтому работают **physics-first + AI screening**.
 
-### §4.3. Fervo Energy EGS: 40× growth ceiling, IPO с премией 331%
+### §4.3. Fervo Energy EGS: 40× growth ceiling, IPO мая 2026 года
 
 [for-slide-s30]
 
@@ -332,7 +332,9 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 **Cape Station Utah project.** $206 миллионов финансирования в июне 2025 года [VFY-day-of]; объект — flagship EGS plant. Driver спроса — **AI data centers тянут спрос на 24/7 clean power**. Renewable solar/wind — intermittent (нужны batteries для 24/7), nuclear — slow build, geothermal — **only renewable baseload**, доступный при сегодняшних технологиях. Поэтому EGS получает venture capital в темпе, какого не было 20 лет.
 
-**Fervo IPO в мае 2026 года — +331% к offering price** [VFY-day-of] [34]. **База: от какого исходного уровня?** Премия рассчитывается от **IPO offering price** (цена размещения в первый день торгов), а не от ранних valuation rounds. Для контекстуализации: Fervo Series D осенью 2024 закрыла $244M при pre-money valuation ~$2,5B; IPO offering price отражал valuation около $1,05B (markdown относительно последнего private round — типично для clean-tech 2025–2026); +331% к IPO offering вернул market cap к ~$4,5B по итогам первого дня торгов. Таким образом, **+331%** — это **first-day pop**, не cumulative growth от founding; и это **flagship moment** для геотермальной индустрии: первый крупный clean-tech EGS IPO с такой премией. Параллельно — **Eavor Technologies** (Канада) closed-loop geothermal, **Sage Geosystems** и **Quaise Energy** в early-stage EGS variants.
+**Fervo IPO 12 мая 2026 года — цена размещения $27 за акцию, привлечено $1,89 млрд, оценка $7,7 млрд при IPO** [VFY-day-of] [34]. **Стек финансирования (база для оценки масштаба).** Fervo Series D в феврале 2024 закрыла $244M (led by Devon Energy); Series E в 2025 — $462M (для ускорения разработки и выхода на surging energy demand); IPO мая 2026 — upsized размещение $1,89B. Суммарно: **>$700M частного капитала** перед IPO + $1,89B при выходе на биржу. Pre-IPO valuation ~$6,5 млрд (по данным TechMarketBriefs); IPO зафиксировал **up-round до $7,7 млрд** (+18% к last private round) — это **не markdown**, типичный для многих clean-tech 2025–2026, а наоборот, **uplift**. В первый день торгов акции открылись около **$35** = **~30% first-day pop** относительно offering price, не trip-digit премия. Это **flagship moment** для геотермальной индустрии: первый крупный clean-tech EGS IPO с устойчивым up-round и значимой premium. Параллельно — **Eavor Technologies** (Канада) closed-loop geothermal, **Sage Geosystems** и **Quaise Energy** в early-stage EGS variants.
+
+**Scale gap к needed capacity — отдельная база.** Fervo в pipeline на 2026 год имеет ~400 MWe реализуемой capacity; IEA 2050 geothermal target — **200+ GWe** для achieve net-zero pathway. Это значит **0,2% от needed scale** — даже успешный IPO не закрывает structural gap [VFY-day-of]. AI помогает per-well cost effectiveness; scale-up к 200 GWe требует tens of thousands of wells и десятилетий.
 
 **Базовая контекстуализация — 40× growth ceiling.**
 
@@ -349,7 +351,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 **Параллель с CCS Northern Lights.** В обоих случаях — AI как **catalyst per-unit cost effectiveness**, не как **scale solution**. Fervo использует AI для thermal performance modelling, optimal well placement, fracture network design. Это снижает per-well cost на 10–20%. Но **build 150 GW EGS** — задача десятилетий, и AI не делает её десятикратно быстрее.
 
-**Fervo + AI data centers — закрытый цикл.** Особенный аспект Fervo IPO премии 331% — это **cross-industry coupling**: AI hyperscalers (Google, Microsoft, Meta) подписывают **long-term power purchase agreements** с Fervo для своих data centers. Это:
+**Fervo + AI data centers — закрытый цикл.** Особенный аспект Fervo IPO 2026 — это **cross-industry coupling**: AI hyperscalers (Google, Microsoft, Meta) подписывают **long-term power purchase agreements** с Fervo для своих data centers. Это:
 
 1. **Снижает risk для Fervo** — guaranteed offtake означает финансируемые EGS-проекты.
 2. **Снижает risk для hyperscalers** — diversified 24/7 clean baseload vs intermittent solar/wind с дорогими batteries.
@@ -363,7 +365,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 - **Sage Geosystems** (US) — **pressurized closed-loop** + энергохранилище в подземных формациях, double-purpose play.
 - **Quaise Energy** (US) — **millimeter-wave drilling** для достижения hot dry rock на 7–10 км глубине (vs Fervo 3–5 км). Технологически highest-risk, но **highest-potential**: 7–10 км даёт доступ к hot dry rock на 70–80% территории США, что радикально увеличивает theoretical capacity.
 
-Все три — **early-stage**, и **не один из них** ещё не доказал commercial scalability в 2026 году. Они представляют **option value** для следующей волны Q4 development; в моменте — Fervo единственный с production-grade deployments.
+Все три — **early-stage**, и **не один из них** ещё не доказал commercial scalability в 2026 году. Они представляют **option value** для следующей волны Q4 development; в моменте — Fervo единственный с промышленно-развёрнутыми (production-grade) deployments.
 
 **Тип-сцеплённость с Q4 (низкие данные × низкая физическая определённость).** Fervo EGS — Q4-кейс по двум причинам, симметричным к Northern Lights:
 
@@ -418,17 +420,21 @@ CCS injection хранит CO₂ под землёй **на сотни-тыся�
 
 **Зачем вообще нужен ML-суррогат в Q4 — три инженерных мотивации.**
 
-Если pure-ML галлюцинирует на длинных горизонтах, а PINN ещё не industrial-grade — почему индустрия не использует **только** классический physics simulator? Ответ — **compute-time trade-off**, который определяет, что вообще возможно делать в инженерном workflow.
+Если pure-ML галлюцинирует на длинных горизонтах, а PINN ещё не industrial-grade — почему индустрия не использует **только** классический physics simulator? Ответ — **compute-time trade-off**, который определяет, что вообще возможно делать в инженерном рабочем процессе.
 
-- **Time-to-result.** Eclipse / INTERSECT full-order simulation для basin-scale CCS plume migration на 100-летнем горизонте — **2–6 недель wall-clock time** на high-end HPC. ROM-augmented суррогат — **минуты до часов**. Difference в 3–4 orders of magnitude. Это меняет inженерный workflow от «один run в месяц» к «10 000 scenario sweeps в день». Без surrogate уровня speed-up **scenario analysis на длинных горизонтах структурно невозможен** — невозможно ответить на вопрос «как изменится plume через 100 лет при 50 разных climate-change сценариях».
+- **Time-to-result.** Eclipse / INTERSECT full-order simulation для basin-scale CCS plume migration на 100-летнем горизонте — **2–6 недель wall-clock time** на high-end HPC (высокопроизводительный кластер). ROM-augmented суррогат — **минуты до часов**. Difference в 3–4 orders of magnitude. Это меняет инженерный рабочий процесс от «один run в месяц» к «10 000 scenario sweeps в день». Без surrogate уровня speed-up **scenario analysis на длинных горизонтах структурно невозможен** — невозможно ответить на вопрос «как изменится plume через 100 лет при 50 разных climate-change сценариях».
 - **Calibration cycle.** Калибровка reservoir simulator к historical production data (history matching) требует тысяч forward simulations. С Eclipse — недели; с ML surrogate — часы. Это позволяет calibrate в **near-real-time** при поступлении новых data, что критично для active reservoir management.
 - **Uncertainty quantification.** Modern reservoir management требует **Monte Carlo runs** для characterization parameter uncertainty (geological heterogeneity, fluid PVT uncertainty, fracture network realisation). 1000+ samples × full-order simulator = **infeasible**. С surrogate — feasible.
 
-**Конкретные deployments hybrid AI + physics в нефтегазе 2024–2026.**
+**Конкретные академико-индустриальные коллаборации hybrid AI + physics в нефтегазе 2024–2026.**
 
-- **Aramco PINN-based reservoir model** — academic-industrial collaboration с KAUST (King Abdullah University of Science and Technology). Прототип для **carbonate reservoir modeling** в крупных Saudi месторождениях; production deployment не объявлен (research-grade).
-- **ExxonMobil DeepONet для THMC simulation** — collaboration с Princeton; целевая application — **CCS plume migration** на Permian basin CO₂ storage scenarios. Опять research-grade в 2026 году.
-- **TotalEnergies + IFP Énergies Nouvelles ROM-augmented Eclipse** — operational deployment для **history matching** на ряде Северо-морских месторождений. Это **rare пример commercial production deployment** — но scope ограничен specific reservoir types, не general-purpose.
+Ниже — задокументированные исследовательские коллаборации с указанием уровня публичной верификации. **Специфический scope каждого «production deployment»** в нефтегазе для PINN/DeepONet/FNO в 2026 году **публично не подтверждён** (большинство — research-grade с press release уровня general partnership, не named deployment); поэтому каждый кейс приводится как «направление R&D», а не «развёрнут в эксплуатации».
+
+- **Saudi Aramco + KAUST PINN research** — broad academic-industrial collaboration на reservoir modeling (PINNeik paper для seismic eikonal solution в открытом доступе; общая Aramco-KAUST broader research programme задокументирована). **Specific «Aramco PINN-based reservoir model production deployment» в публичных press releases не найден** [FACT-CHECK: public source pending]. Реальное направление: исследовательский pipeline для **carbonate reservoir modeling**; commercial-grade deployment не объявлен.
+- **ExxonMobil + Princeton Carbon Mitigation Initiative** — задокументированная broader collaboration на CCS hub research (CMI annual reports 2021+). **Specific DeepONet для Permian CCS plume migration в публичных источниках не подтверждён** [FACT-CHECK: public source pending]. Реальное направление: общая академическая работа по CCS, без named deployment.
+- **TotalEnergies + NVIDIA PINO (Physics-Informed Neural Operator)** — **верифицированная коллаборация**, представленная на **NVIDIA GTC25** (March 2025): применение PINO/Modulus framework к **CCUS modeling** (sub-surface CO₂ migration prediction). Конкретный scope — research-grade demo, не general production deployment, но является **citable example** реального industrial-academic hybrid AI + physics направления.
+
+**Что эти примеры показывают студенту.** Все три — **направления R&D**, не **scale deployments**. Это **отдельный** урок: даже flagship industrial-academic коллаборации в hybrid AI + physics 2024-2026 года остаются на исследовательском уровне готовности. Любой vendor pitch уровня «PINN-based reservoir model в production» в 2026 году требует **publicly citable case study** — иначе это marketing.
 
 **Trade-off, который должен знать студент.** Hybrid AI + physics — это **speed × accuracy × physical consistency** triangle, где можно выбрать только 2 из 3. Full-order Eclipse — accuracy + physical consistency, медленно. Pure ML surrogate — speed + accuracy на training distribution, теряет physical consistency на extrapolation. PINN / ROM-augmented — speed + physical consistency, но accuracy ограничена сложностью embedded physics. Нет «free lunch». Инженер должен **явно выбрать**, какие два угла важнее для конкретной задачи, и принять trade-off третьего.
 

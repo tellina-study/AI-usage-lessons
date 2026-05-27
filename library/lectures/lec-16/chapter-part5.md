@@ -33,9 +33,9 @@ prev_version: v1
 
 NVIDIA Omniverse — платформа для 3D simulation и digital twin orchestration, активно продвигаемая NVIDIA в 2023–2025 годах для industrial markets. В нефтегазе — упоминается в SLB Lumi presentation (используется как visualization layer над Petrel), в Aramco METABRAIN (упоминается как infrastructure для visualization HPC outputs), в Cognite Data Fusion (visualization layer над time-series data).
 
-**Структурная роль Omniverse** — это **visualization + collaboration layer**, не **simulation engine** в reservoir sense. Eclipse / INTERSECT всё ещё делают reservoir simulation; Omniverse визуализирует результат. Для нефтегаза это **не game-changer**, а **полезный tool в стек**. Cross-link к Лекции 12 (digital twin определения и слой архитектуры). Omniverse занимает слой 3 (visualization) в Лекции 12 архитектуре, не слой 1–2 (физическая модель + данные).
+**Структурная роль Omniverse** — это **visualization + collaboration layer**, не **simulation engine** в reservoir sense. Eclipse / INTERSECT всё ещё делают reservoir simulation; Omniverse визуализирует результат. Для нефтегаза это **не game-changer**, а **полезный инструмент в стеке** (stack — стек технологий). Cross-link к Лекции 12 (digital twin определения и слой архитектуры). Omniverse занимает слой 3 (visualization) в Лекции 12 архитектуре, не слой 1–2 (физическая модель + данные).
 
-В практическом смысле — Omniverse оптимален для **inter-discipline collaboration**: где engineers + geologists + management смотрят на одну виртуальную модель одновременно. Для самой задачи моделирования он не заменяет Eclipse.
+В практическом смысле — Omniverse оптимален для **межотраслевого сотрудничества** (inter-discipline collaboration): где engineers + geologists + management смотрят на одну виртуальную модель одновременно. Для самой задачи моделирования он не заменяет Eclipse.
 
 ### Q2. Как connect Лекция 16 с Лекциями 14 (cyber) и 12 (digital twins)?
 
@@ -51,7 +51,7 @@ NVIDIA Omniverse — платформа для 3D simulation и digital twin orc
 - **Hardrock REE mining (Mountain Pass California, Lynas Mt Weld Australia, Чибина в России):** AI для **ore grade prediction** + **processing optimization** (REE separation — сложный flow-sheet с 12+ stages solvent extraction). Mature operations имеют data; новые operations — frontier-like.
 - **Deep-sea polymetallic nodule mining (planned 2026+):** completely frontier — нет analog data, no commercial operations to-date. Companies The Metals Company и Allseas разрабатывают AI-driven nodule collection systems для Clarion-Clipperton zone Pacific. **Регуляторный gap:** International Seabed Authority (ISA) не финализировал mining code к 2026 — commercial production задерживается. AI здесь — **augmentation поверх physics**, не replacement.
 
-**Bolivia lithium AI failure case (illustrative).** В 2018–2022 годах Bolivia заключила серию AI-партнёрств с китайскими и немецкими компаниями (ACI Systems / ACISA + Xinjiang TBEA Group) для AI-augmented lithium extraction на Salar de Uyuni. Партнёрство **аннулировано в ноябре 2019** после public protests (locals не согласовались с royalty terms 3% vs запрашиваемых 11%); ACISA partnership formally cancelled в 2019. Подобный **paradigm социально-политического risk** — характерный для frontier mining в developing countries: technical AI capability **присутствует**, но political economy риски доминируют над technical risks. Параллель с failed BP+Beyond Limits и IBM+Repsol в нефтегазе: **business model и stakeholder alignment важнее**, чем technical maturity AI-инструмента.
+**Bolivia lithium failure case (illustrative — НЕ AI-провал).** Важная корректировка по сравнению с первой версией главы: Bolivia ACISA-YLB partnership (декабрь 2018, $1,3 млрд, Salar de Uyuni — lithium hydroxide plant + EV battery factory в Potosí) в публичных пресс-релизах **не содержала явной AI/ML составляющей** — это была **lithium industrialization deal**, а не «AI-augmented lithium extraction». Партнёрство **аннулировано 4 ноября 2019** после public protests (locals не согласовались с royalty terms 3% vs запрашиваемых 11%) — это **failure social-political risk**, не failure AI capability. Отдельно — Xinjiang TBEA Group (февраль 2019, $2,3 млрд, **другая** партнёрство на Coipasa + Pastos Grandes salt flats) — позже также paused court order в 2025. Эти **две отдельные deals** ранее в литературе часто объединялись — это ошибка. Параллель к нефтегазу остаётся (BP+Beyond Limits и IBM+Repsol — стэклхолдер alignment важнее technical maturity), но **проводить её надо честно**: Bolivia — урок про **political economy + indigenous consent**, не про AI judgment. AI в lithium triangle reserve estimation (Albemarle + SQM в Чили; ML по historical core samples) — **отдельная история**, более скромно документированная в публичных источниках.
 
 **Keystone-матрица применима** к mining: данные × физика. Mature lithium operation (Salar de Atacama SQM, Mountain Pass MP Materials) = Q1. Pre-salt-like polymetallic nodules = Q3. Critical mineral MRV (sourcing transparency, conflict minerals due diligence per EU Battery Regulation 2023/1542) = Q2-like (cross-modality data fusion). AI в mining — это **applicable extension** уроков нефтегаза.
 
@@ -267,7 +267,7 @@ Bayesian inference для uncertainty propagation, classical SCADA / PID / APC �
 22. SLB 8-K Q4 2024. Digital revenue $2B+ full year 2024 (5.7% total SLB revenue $35B).
 23. HPE blog 2025. ExxonMobil Discovery 6: 4 032 NVIDIA Grace Hopper Superchips on HPE Cray EX4000.
 24. EDF MethaneSAT release 2024. Permian Basin 410 t methane/h = 50% higher than EPA estimates.
-25. SpaceNews. GHGSat 16-satellite constellation by 2025.
+25. SpaceNews. GHGSat 13-satellite constellation by mid-2025 (12 cubesats к началу 2024 + Vanguard 2025; ранее планы анонсировались до 16, но фактический запуск отстал от плана).
 26. Highwood Emissions Research Digest 017. BC LDAR aerial 4× higher than ground OGI on same sites.
 27. Stanford Report. Methane emissions higher than government predictions. *Nature*, March 2024. US O&G ~7.5 Mt/y aerial.
 28. Highwood Emissions Research Digest 017. As [26].
@@ -276,7 +276,7 @@ Bayesian inference для uncertainty propagation, classical SCADA / PID / APC �
 31. EPA. Federal Register September 2024. Subpart W proposed delay to 2034.
 32. MDPI Sustainability 2025. AI in CCS: 10–15% improved monitoring accuracy. Northern Lights case.
 33. MDPI Sustainability 2025. AI in CCS capture: 10–20% cost reduction (Mongstad, Boundary Dam projects).
-34. SHM Studio. Fervo Energy IPO May 2026 +331% to offering price [VFY-day-of]. Cape Station Utah $206M financing June 2025.
+34. fervoenergy.com / Axios / Bloomberg. Fervo Energy IPO 12 мая 2026: priced $27/share, raised $1.89B, valuation $7.7B (up-round from Series E ~$6.5B); first-day open ~$35 = ~30% pop. Series D Feb 2024 $244M (Devon Energy lead); Series E 2025 $462M. Cape Station Utah $206M financing June 2025 [VFY-day-of].
 35. Gartner (in DataRobot post). 2027 prediction: 40% agentic AI projects to be cancelled due to cost overruns + poor risk controls.
 36. ROGTEC. Gazprom Neft Cognitive Geologist. Geology work 3–4 months → minutes for certain task categories.
 37. ROGTEC + Globuc. Gazprom Neft target: cut twofold time to first oil; +40% projects acceleration to 2030 vs baseline 2020–2023.

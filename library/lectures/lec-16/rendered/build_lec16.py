@@ -282,7 +282,7 @@ def s01_hero_permian(p):
         ("Пермский бассейн, 2024", {"size": 14, "italic": True, "color": LIGHT}),
         ("", {"size": 10}),
         ("Пик: ~34 000 т/ч метана", {"size": 14, "bold": True, "color": DEEP}),
-        ("для всего бассейна", {"size": 12, "color": SLATE}),
+        ("из ~80 000 скважин (~3,2% факелуют)", {"size": 11, "italic": True, "color": SLATE}),
         ("", {"size": 10}),
         ("Не аварии — нормальный", {"size": 13, "color": DEEP}),
         ("эксплуатационный режим.", {"size": 13, "color": DEEP}),

@@ -242,9 +242,48 @@ def gold_callout(slide, x, y, w, h, text, *, size=14):
              align=PP_ALIGN.LEFT, line_spacing=1.25)
 
 
+def mini_matrix(slide, x, y, *, highlight=None, label_size=8):
+    """Draw 2×2 mini-matrix (Item 5, Phase 8.6) showing keystone context.
+
+    Args:
+        slide: pptx slide
+        x, y: top-left position in inches
+        highlight: one of "Q1", "Q2", "Q3", "Q4", or None (no highlight, e.g. Russia)
+        label_size: Q-label font size
+    Layout: 4 squares 0.75×0.75" each (total ~1.5×1.5"); muted others with LIGHT fill,
+    current highlighted with GOLD fill + bold Q-label.
+    Mapping (matches s04 keystone): Q1 col1 row0, Q2 col0 row0, Q3 col1 row1, Q4 col0 row1.
+    """
+    cell_w = 0.75
+    cell_h = 0.75
+    quads = [
+        ("Q2", 0, 0), ("Q1", 1, 0),
+        ("Q4", 0, 1), ("Q3", 1, 1),
+    ]
+    for q, col, row in quads:
+        cx = x + col * cell_w
+        cy = y + row * cell_h
+        is_active = (highlight == q)
+        fill = GOLD if is_active else SOFT_GREY
+        rectangle(slide, cx, cy, cell_w - 0.04, cell_h - 0.04, fill=fill)
+        text_box(slide, cx, cy, cell_w - 0.04, cell_h - 0.04, q,
+                 size=label_size, bold=is_active,
+                 color=DEEP if is_active else DARK_GREY,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    # Axes labels (tiny)
+    text_box(slide, x - 0.05, y + 2 * cell_h - 0.05, 2 * cell_w, 0.25,
+             "процессы →", size=6, italic=True, color=DARK_GREY,
+             align=PP_ALIGN.LEFT)
+
+
 def section_divider(p, q_label, q_title, mood_line, tag_text, section_idx, large_size=160,
-                    label_color=GOLD):
-    """Section divider with large quadrant label + mood + tag."""
+                    label_color=GOLD, mini_matrix_highlight=None):
+    """Section divider with large quadrant label + mood + tag + mini-matrix (Item 5).
+
+    Args:
+        mini_matrix_highlight: Q1/Q2/Q3/Q4 to highlight in mini-matrix upper-right corner,
+        or None для Russia divider (mini-matrix shown без highlight).
+    """
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     roadmap_bar(slide, current_section=section_idx)
@@ -256,9 +295,20 @@ def section_divider(p, q_label, q_title, mood_line, tag_text, section_idx, large
     text_box(slide, 0.5, 4.85, 5.5, 0.55, q_title,
              size=22, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     # Mood line
-    multiline_box(slide, 6.2, 1.5, 6.6, 4.0, [
+    multiline_box(slide, 6.2, 1.5, 5.0, 4.0, [
         (mood_line, {"size": 20, "bold": True, "color": DEEP}),
     ], line_spacing=1.3)
+    # Mini-matrix in upper-right corner (Item 5 Phase 8.6).
+    # Pass `mini_matrix_highlight` to draw the current quadrant Gold-highlighted;
+    # None для Russia divider (all 4 quadrants без highlight — Russia spans all).
+    if mini_matrix_highlight is not None or q_label == "Россия":
+        # Place mini-matrix upper-right (~11.3-12.85 × 0.85-2.35).
+        mini_matrix(slide, 11.3, 0.85, highlight=mini_matrix_highlight)
+        # Label under mini-matrix
+        text_box(slide, 11.2, 2.45, 1.7, 0.3,
+                 "keystone" if mini_matrix_highlight else "Russia ↔ все",
+                 size=8, italic=True, color=DARK_GREY,
+                 align=PP_ALIGN.CENTER)
     # Bottom tag (gold tint)
     gold_callout(slide, 0.5, 6.0, 12.33, 0.85, tag_text, size=14)
     return slide
@@ -465,11 +515,13 @@ def s05_keystone_matrix(p):
 # ====================================================================
 
 def s06_q1_divider(p):
+    """Renders as new slide ID s05 (Phase 8.6 renumber). Mini-matrix Q1 highlighted."""
     return section_divider(
         p, "Q1", "Зрелое производство",
         "AI здесь — мультипликатор классических методов. Самый освоенный квадрант. И самый структурно проваленный.",
         "3 рабочих кейса · 2 структурных провала · 86% пилотов застряло — статистическая норма",
-        section_idx=1, large_size=200, label_color=MID)
+        section_idx=1, large_size=200, label_color=MID,
+        mini_matrix_highlight="Q1")
 
 
 def s07_pilot_stuck(p):
@@ -753,11 +805,13 @@ def s12_q1_no_ai_criteria(p):
 # ====================================================================
 
 def s13_q3_divider(p):
+    """Mini-matrix Q3 highlighted (Item 5)."""
     return section_divider(
         p, "Q3", "Разведка фронтиров",
         "Каждая поисковая скважина = $50–100 млн. Размер выборки 1–5 скважин. ML не обобщается без аналогов. Физика — эталон, AI как дополнение.",
         "3 рабочих кейса · 2 провала десятилетия · гонка суперкомпьютеров $100–400 млн на инсталляцию",
-        section_idx=2, large_size=200, label_color=LIGHT)
+        section_idx=2, large_size=200, label_color=LIGHT,
+        mini_matrix_highlight="Q3")
 
 
 def s14_hpc_eni_aramco(p):
@@ -1052,11 +1106,13 @@ def s20_methane_alphabet(p):
 
 
 def s21_q2_divider(p):
+    """Mini-matrix Q2 highlighted (Item 5)."""
     return section_divider(
         p, "Q2", "Метановая MRV",
         "Данные — петабайты в день. Физика — разорвана. Слияние 4 сенсоров + атрибуция малой утечки — открытая ML-задача. AI необходим. Но один спутник = катастрофическая единичная уязвимость.",
         "4 рабочих системы · 2 провала · регуляторное давление со стороны EU 2024/1787",
-        section_idx=3, large_size=200, label_color=TEAL)
+        section_idx=3, large_size=200, label_color=TEAL,
+        mini_matrix_highlight="Q2")
 
 
 def s22_methanesat_permian(p):

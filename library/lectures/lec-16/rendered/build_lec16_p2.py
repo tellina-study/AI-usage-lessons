@@ -10,11 +10,13 @@ from build_lec16 import *
 # ====================================================================
 
 def s28_q4_divider(p):
+    """Mini-matrix Q4 highlighted (Item 5)."""
     return section_divider(
         p, "Q4", "Новые опоры: CCS + EGS",
         "Здесь AI и физика буксуют вместе. Длинный горизонт, мало данных, низкая определённость физики. Самый честный квадрант.",
         "2 рабочих пилота · 2 структурных провала · 190× разрыв масштабирования",
-        section_idx=4, large_size=200, label_color=GOLD)
+        section_idx=4, large_size=200, label_color=GOLD,
+        mini_matrix_highlight="Q4")
 
 
 def s29_northern_lights(p):

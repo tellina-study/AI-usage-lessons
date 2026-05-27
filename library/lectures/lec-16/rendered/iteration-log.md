@@ -490,3 +490,33 @@ Note: chapter body retains some English «energy transition» mentions inside li
 ---
 
 **End of Phase 8.6 owner-feedback v3 cycle.**
+
+---
+
+## Phase 11 — Speech revision v1 → v2 (2026-05-27)
+
+### Preflight checklist (relocated from speech.md per No Extra Content Rule)
+
+Lecturer pre-flight verification checklist — to be reviewed day-of-lecture, not part of speech delivery body.
+
+1. **Проверить URL Fervo Energy IPO** (https://www.sec.gov/edgar — search Fervo Energy) — обновить дату IPO и цифры $1,89B / $7,7B на s30/s40 ЕСЛИ изменились между датой подготовки и датой лекции.
+2. **Проверить EU Subpart W статус** (https://www.epa.gov/ghgreporting/subpart-w — section «Recent Proposals») — обновить slide s26 формулировку про proposed delay до 2034 года ЕСЛИ Trump admin финализировал rule между подготовкой и лекцией.
+3. **Проверить MethaneSAT-2 successor mission** (https://www.methanesat.org — section «News») — обновить slide s23 заметку про planned successor mission funding/timeline.
+4. **Проверить Carbon Mapper Tanager-1 operational status** (https://carbonmapper.org/data) — confirm full operations 2025-2026 на slide s24.
+5. **Проверить Aramco self-reported AI value 2025** (https://www.aramco.com/en/investors — search «AI value 2025») — обновить slide s14 ЕСЛИ доступен новый годовой отчёт после марта 2026.
+6. **Подготовить backup screenshot** для slide s01 YOLOv8 hero ЕСЛИ live image hostings (Ultralytics blog) недоступен — fallback `assets/s01-fallback.png`.
+7. **Проверить GHGSat constellation count** (https://www.ghgsat.com — section «Satellites») — обновить slide s24 ЕСЛИ количество спутников изменилось с 13 (середина 2025).
+8. **Проверить Cognite ARR 2025** (Aker BP earnings calls 2025-2026) — обновить slide s11 ЕСЛИ новые quarterly updates после $94M ARR 2024.
+9. **Открыть демо браузер** на keystone-матрицу slide s04 — это слайд возврата, должен быть всегда reachable одним кликом.
+10. **Принести printed copy chapter §8 Q&A backup** (12 вопросов) — для расширенного Q&A если аудитория активна.
+
+### Speech v2 metrics (post-revision)
+
+- **Body words:** 6 012 (target 5 500-6 500 ✓)
+- **Schedule:** 75.0 min exactly (active 68 + Q&A buffer 7)
+- **WPM violations:** 0 sections > 95 WPM (peak 95)
+- **Russification:** narrative anglicisms replaced (data/model/gap/plant-wide/working cases/divider/cost/training/augmentation/Digital Field/clean energy/single point of failure/out-of-distribution); brand names + acronyms preserved per whitelist
+- **Preflight checklist:** relocated from speech body to this log
+- **s42 Q&A:** chapter §8 backup reference added
+
+Full details in `qa-reports/2026-05-27-phase10-speech/revision-log.md`.

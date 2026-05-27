@@ -151,3 +151,78 @@ Applied 10 surgical fixes per methodology-critic-v2.md (APPROVE-WITH-POLISH: 3 P
 ### Recommendation
 
 **Ready for USER GATE A pre-walkthrough.** All P0 + P1 from both critic reports addressed. Polish residuals at acceptable level (5+ minor anglicism hits acceptable, mostly gloss-qualified). No additional spawn needed.
+
+---
+
+## Phase 11 cascade-fix (2026-05-27) — Phase 8.6 owner-feedback chapter+slides cascade
+
+Triggered by Phase 10 consistency-checker REVISE (3 P1 findings) — cascade incomplete after Phase 8.6 owner rename Items 1, 4, 6.
+
+### D1 — Keystone axis label cascade: «определённость физики» → «определённость процессов»
+
+**Chapter (11 hits в 5 файлах):**
+- `chapter.md` (5 hits): frontmatter `keystone_axis`, TOC L65, LO1 L94, intro L129, §0 heading L143
+- `chapter.md` Часть 3 overview L46 reference + Q4 §0.3 definition (also part of D2)
+- `chapter-part2.md` cross-link L351 (also part of D2)
+- `chapter-part3.md` (2 hits): «Низкая определённость физики» → «процессов» в L323 + L373
+- `chapter-part4.md` (2 hits): §7.3 L327 + L333 «keystone «матрица данные × физика»» → «процессы»
+- `chapter-part5.md` (1 hit): mining «данные × физика» → «процессы»
+
+**Slides (8 hits в 3 файлах):**
+- `s02-cover.md` (4 hits): assertion + subtitle + central question + speaker notes
+- `s03-lecture-map.md` (2 hits): sub + roadmap card 1
+- `s40-three-cornerstones.md` (2 hits): visible bullet + speaker notes phrase «данные на физика» → «процессы»
+
+### D2 — Q4 quadrant naming cascade: «энергетический переход» → «Новые опоры (CCS + EGS)»
+
+**Chapter (8 hits в 5 файлах):**
+- `chapter.md` (3 hits): Часть 3 overview L46 part-title + Раздел 4 narrative L135 + §0.3 Q4 definition L197
+- `chapter-part2.md` (1 hit): cross-link L351
+- `chapter-part3.md` (3 hits): frontmatter title L5 + TOC L28 + R4 section heading L275 + reference L419 («Q4 / energy transition»)
+- `chapter-part4.md` (2 hits): Russia table row L57 + §7.1 synthesis L281
+- `chapter-part5.md` (1 hit): perekrest L177 «Q4 energy transition-like» → «Q4 новые опоры (CCS + EGS)-like»
+
+**Slides (1 hit в 1 файле):**
+- `s39-synthesis-matrix.md`: speaker notes «Квадрант четыре. Energy transition.» → «Новые опоры (CCS + EGS).»
+
+### D3 — Chapter Введение acknowledgment paragraph (Option A — lower effort)
+
+- `chapter.md` §Введение L103+: added 2-paragraph block acknowledging s01 slide YOLOv8-OBB hook (Q1 multiplier symbol + 0,41% Aramco numerical hook) + preserved Permian VIIRS flares as «extends to industry scale» secondary anchor.
+- Bridge phrase «Здесь, в главе, мы расширяем эту картину до отраслевого масштаба — через второй якорь...» links slide+chapter narratively.
+- VIIRS Permian material fully retained (cost-asymmetry frame + 2 593 шлейфа / 34 000 тонн в час measurements + ESG framing).
+
+### Frontmatter updated
+
+- `version: v2.1` → `v2.2`
+- `revision_round: 2.5` → `3`
+- `prev_version: v2` → `v2.1`
+- `length_words: ~32300` → `~32400`
+- `length_words_actual: 32309` → `32463` (actual)
+- `chapter_status: reviewed (polish-applied)` → `reviewed (cascade-fix 11)`
+
+### Verification
+
+```
+=== Axis label OLD residual (chapter+slides) ===
+0 hits total
+
+=== Q4 OLD label residual (chapter+slides) ===
+0 hits total
+
+=== Axis NEW count (chapter) ===
+chapter.md: 5, chapter-part3.md: 2, chapter-part4.md: 2, chapter-part5.md: 1 = 10 chapter hits
+slides: s02:4, s03:2, s04:6 (pre-existing), s40:1 = 13 slides hits
+
+=== Q4 NEW «новые опоры» count (chapter) ===
+12 hits across 5 chapter parts
+```
+
+### Out of scope (P2, deferred per Phase 10 consistency-checker)
+
+- D4 speech Russification density (~122 latin tokens / 1k vs chapter ~83) — Phase 11 optional polish, not blocking.
+- D5 chapter-part4.md L323 «Лекция 15 keystone = шкала автоматизации» — cross-lecture verification, out of scope.
+- Bibliography section heading «Energy transition:» в part5 L230 — kept as general industry topic classifier (CCS papers + Fervo IPO papers), не Q4 label.
+
+### Recommendation
+
+**Cascade complete.** All 3 P1 from Phase 10 consistency-checker addressed. Ready for Phase 11 consistency-checker re-run; expected next verdict **APPROVE-WITH-POLISH** (only P2 D4 Russification remains as optional polish).

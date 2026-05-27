@@ -53,7 +53,7 @@ NVIDIA Omniverse — платформа для 3D simulation и digital twin orc
 
 **Bolivia lithium failure case (illustrative — НЕ AI-провал).** Важная корректировка по сравнению с первой версией главы: Bolivia ACISA-YLB partnership (декабрь 2018, $1,3 млрд, Salar de Uyuni — lithium hydroxide plant + EV battery factory в Potosí) в публичных пресс-релизах **не содержала явной AI/ML составляющей** — это была **lithium industrialization deal**, а не «AI-augmented lithium extraction». Партнёрство **аннулировано 4 ноября 2019** после public protests (locals не согласовались с royalty terms 3% vs запрашиваемых 11%) — это **failure social-political risk**, не failure AI capability. Отдельно — Xinjiang TBEA Group (февраль 2019, $2,3 млрд, **другая** партнёрство на Coipasa + Pastos Grandes salt flats) — позже также paused court order в 2025. Эти **две отдельные deals** ранее в литературе часто объединялись — это ошибка. Параллель к нефтегазу остаётся (BP+Beyond Limits и IBM+Repsol — стэклхолдер alignment важнее technical maturity), но **проводить её надо честно**: Bolivia — урок про **political economy + indigenous consent**, не про AI judgment. AI в lithium triangle reserve estimation (Albemarle + SQM в Чили; ML по historical core samples) — **отдельная история**, более скромно документированная в публичных источниках.
 
-**Keystone-матрица применима** к mining: данные × физика. Mature lithium operation (Salar de Atacama SQM, Mountain Pass MP Materials) = Q1. Pre-salt-like polymetallic nodules = Q3. Critical mineral MRV (sourcing transparency, conflict minerals due diligence per EU Battery Regulation 2023/1542) = Q2-like (cross-modality data fusion). AI в mining — это **applicable extension** уроков нефтегаза.
+**Keystone-матрица применима** к mining: данные × процессы. Mature lithium operation (Salar de Atacama SQM, Mountain Pass MP Materials) = Q1. Pre-salt-like polymetallic nodules = Q3. Critical mineral MRV (sourcing transparency, conflict minerals due diligence per EU Battery Regulation 2023/1542) = Q2-like (cross-modality data fusion). AI в mining — это **applicable extension** уроков нефтегаза.
 
 **Cross-link к Лекции 11** (дискретное vs процессное производство). Mining — это **гибрид**: добыча сама — процессное (continuous extraction); downstream processing к metals — дискретное (batch processing per concentrate batch). AI-stack для mining наследует уроки обоих типов: для extraction — Q1-style мультипликатор поверх physics simulators; для metals processing — discrete batch optimization с MES-integration. Эта **гибридность** структурно делает mining AI deployments более сложными, чем чистый O&G — два разных AI-стека на двух разных уровнях value chain, и оба должны интегрироваться без mismatch incentives. Это **ещё одно applicable extension** keystone-матрицы — теперь с добавочной axis «дискретно vs процессно», которую студент видел в Лекции 11.
 
@@ -174,7 +174,7 @@ Bayesian inference для uncertainty propagation, classical SCADA / PID / APC �
 - High data + High physics → **Q1 mature production**.
 - Low data + High physics → **Q3 frontier exploration**.
 - High data + Low physics → **Q2 methane MRV-like (cross-modality)**.
-- Low data + Low physics → **Q4 energy transition-like**.
+- Low data + Low physics → **Q4 новые опоры (CCS + EGS)-like**.
 
 **Действие per квадрант.**
 

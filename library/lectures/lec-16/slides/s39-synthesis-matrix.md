@@ -47,7 +47,7 @@ Sub: «Возврат к keystone-матрице. AI в нефтегазе — �
 
 Квадрант два. Methane MRV. AI как необходим для cross-modality fusion. Working cases: Carbon Mapper Tanager-1 август 2024, GHGSat тринадцать-satellite группировка середина 2025, Bridger Photonics aerial LiDAR. Failures: MethaneSAT loss июнь 2025 — пятнадцать с половиной месяцев из пяти плюс лет; четыре икс discrepancy MethaneSAT vs EPA — пятнадцать Mt vs четыре Mt.
 
-Квадрант четыре. Energy transition. AI и физика struggle вместе. Working pilots: Northern Lights CCS полтора Mt в год Норвегия; Fervo Energy EGS IPO май 2026 — один и восемьдесят девять сотых миллиарда привлечено. Failures: сто девяносто икс scale-up gap CCS — Northern Lights ноль и две сотых процента от needed scale; refinery общезаводская стагнация в многослойная физика frame.
+Квадрант четыре. Новые опоры (CCS + EGS). AI и физика struggle вместе. Working pilots: Northern Lights CCS полтора Mt в год Норвегия; Fervo Energy EGS IPO май 2026 — один и восемьдесят девять сотых миллиарда привлечено. Failures: сто девяносто икс scale-up gap CCS — Northern Lights ноль и две сотых процента от needed scale; refinery общезаводская стагнация в многослойная физика frame.
 
 Раздел Россия — все четыре квадранта в санкционном режиме. Раздел шесть сквозной: cyber +935 процентов, 2020 crash 107 000 jobs, Deepwater Horizon 2010 alarm bypass.
 

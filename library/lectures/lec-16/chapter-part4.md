@@ -54,7 +54,7 @@ prev_version: v1
 | **Q1** mature production | Роснефть Digital Field; Газпром нефть Cognitive system Ямал | Нет западных vendors (Aspen Mtell, Honeywell UOP, ABB Genix ушли) → insourcing | Промышленно развёрнут |
 | **Q3** frontier exploration | Газпром нефть Cognitive Geo (с IBM Research Brazil 2019–2022 → internal) | Нет SLB Lumi, нет ExxonMobil Discovery 6 → собственный высокопроизводительный кластер (HPC) + базовая модель | Развёрнут на Ямале 2024 |
 | **Q2** методан-MRV | Не приоритет — нет давления со стороны регулятора ЕС | EU 2024/1787 не применяется к российскому экспорту в нерегулируемые рынки; внутренняя регуляция мягче | Ограниченное развёртывание |
-| **Q4** energy transition (CCS/EGS) | Очень ограниченная публичная информация | Зарубежные partnerships заморожены; внутренние pilots отчёт по ВИНК limited | Pilots, public info ограничена [VFY-day-of] |
+| **Q4** новые опоры (CCS/EGS) | Очень ограниченная публичная информация | Зарубежные partnerships заморожены; внутренние pilots отчёт по ВИНК limited | Pilots, public info ограничена [VFY-day-of] |
 
 **Что эта таблица показывает.**
 
@@ -278,7 +278,7 @@ Transferability к O&G:
 
 **Q2 (методан-MRV — high data + low physics):** AI как **essential** для cross-modality fusion. Working cases: Carbon Mapper Tanager-1 (Aug 2024), GHGSat 13-spacecraft constellation (mid-2025), Bridger Photonics aerial LiDAR. **Failures**: MethaneSAT loss June 2025 (~15,5 месяцев из 5+ лет дизайн-life), 4× discrepancy MethaneSAT vs EPA (15 Mt vs 4 Mt).
 
-**Q4 (energy transition — low data + low physics):** **AI и физика struggle вместе**. Working pilots: Northern Lights CCS (1,5 Mt/год Норвегия), Fervo Energy EGS (IPO May 2026: $1,89B raised, $7,7B valuation, ~30% first-day pop). **Failures**: 190× scale-up gap CCS (Northern Lights 0,02% от needed scale), refinery plant-wide stagnation в multi-physics frame.
+**Q4 (новые опоры (CCS + EGS) — low data + low physics):** **AI и физика struggle вместе**. Working pilots: Northern Lights CCS (1,5 Mt/год Норвегия), Fervo Energy EGS (IPO May 2026: $1,89B raised, $7,7B valuation, ~30% first-day pop). **Failures**: 190× scale-up gap CCS (Northern Lights 0,02% от needed scale), refinery plant-wide stagnation в multi-physics frame.
 
 **Раздел 5 (Россия — insourcing):** **Все 4 квадранта в санкционном режиме** для России (Газпром Cognitive Geo заменяет SLB Lumi в Q3; Роснефть Digital Field в Q1).
 
@@ -324,13 +324,13 @@ Transferability к O&G:
 - **Лекция 13** — логистика и транспорт (keystone «лестница среды»).
 - **Лекция 14** — телеком, AIOps, кибербезопасность (keystone «лестница автономии: видит → решает → действует»).
 - **Лекция 15** — энергетика (keystone «шкала автоматизации»).
-- **Лекция 16 (эта)** — нефтегаз (keystone «матрица данные × физика»).
+- **Лекция 16 (эта)** — нефтегаз (keystone «матрица данные × процессы»).
 
 В **Лекции 17** курс делает **systematization** — собирает кросс-отраслевые универсальные паттерны. Глава 16 — последний отраслевой deep-dive перед этой синтезирующей лекцией. Чтобы переход был осмыслен, мы выделяем **3 cornerstone концепта**, которые читатель должен унести из всей отраслевой серии — каждый из них **portable** на любую следующую отрасль, не только нефтегаз.
 
 **Cornerstone 1. AI judgment как структурная задача — где применим, где нет.**
 
-Главный инференциальный навык курса — не «как запустить AI», а «как определить, **применим ли AI** в данной задаче». В Лекции 16 keystone-матрица «данные × физика» формализует этот вопрос для нефтегаза, но **сам подход «structural fit assessment»** — переносимый. В Лекции 17 мы обобщим: для любой отрасли существует **2–3-мерная таксономия** (доступность данных × определённость физики × регуляторный горизонт, или аналог), которая определяет, в каком режиме AI работает (мультипликатор vs augmentation vs essential vs опасен). Без этой структурной диагностики любое AI-внедрение — это **азартная ставка**, не инженерное решение.
+Главный инференциальный навык курса — не «как запустить AI», а «как определить, **применим ли AI** в данной задаче». В Лекции 16 keystone-матрица «данные × процессы» формализует этот вопрос для нефтегаза, но **сам подход «structural fit assessment»** — переносимый. В Лекции 17 мы обобщим: для любой отрасли существует **2–3-мерная таксономия** (доступность данных × определённость процессов × регуляторный горизонт, или аналог), которая определяет, в каком режиме AI работает (мультипликатор vs augmentation vs essential vs опасен). Без этой структурной диагностики любое AI-внедрение — это **азартная ставка**, не инженерное решение.
 
 **Cornerstone 2. Альтернатива-как-исходный уровень — каждое AI-внедрение имеет параллельный не-AI вариант.**
 

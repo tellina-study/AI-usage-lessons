@@ -2,7 +2,7 @@
 part: 3
 of: 4
 parent: "chapter.md"
-title: "Глава 16. Часть 3: Раздел 3 — Q2 метановая MRV + Раздел 4 — Q4 энергетический переход"
+title: "Глава 16. Часть 3: Раздел 3 — Q2 метановая MRV + Раздел 4 — Q4 новые опоры (CCS + EGS)"
 lecture_number: 16
 length_words: ~8200
 status: draft
@@ -25,7 +25,7 @@ version: v1
   - [§3.6. Регуляторика как driver: EU 2024/1787 + EPA Subpart W](#36-регуляторика-как-driver-eu-20241787--epa-subpart-w)
   - [§3.7. Альтернатива: hand-held OGI + Picarro / LI-COR portable analyzer](#37-альтернатива-hand-held-ogi--picarro--li-cor-portable-analyzer)
   - [§3.8. Самопроверка по Q2](#38-самопроверка-по-q2)
-- [§ Раздел 4. Q4 — энергетический переход: AI и физика struggle вместе](#-раздел-4-q4--энергетический-переход-ai-и-физика-struggle-вместе)
+- [§ Раздел 4. Q4 — новые опоры (CCS + EGS): AI и физика struggle вместе](#-раздел-4-q4--новые-опоры-ccs--egs-ai-и-физика-struggle-вместе)
   - [§4.1. Самый честный квадрант](#41-самый-честный-квадрант)
   - [§4.2. Northern Lights CCS: 0,02% от needed scale](#42-northern-lights-ccs-002-от-needed-scale)
   - [§4.3. Fervo Energy EGS: 40× growth ceiling, IPO мая 2026 года](#43-fervo-energy-egs-40-growth-ceiling-ipo-мая-2026-года)
@@ -272,7 +272,7 @@ Net эффект — **AI снижает operational cost LDAR на 20–40%** �
 
 ---
 
-## § Раздел 4. Q4 — энергетический переход: AI и физика struggle вместе
+## § Раздел 4. Q4 — новые опоры (CCS + EGS): AI и физика struggle вместе
 
 <!-- for-slide-s28 -->
 
@@ -320,7 +320,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 **Тип-сцеплённость с Q4 (низкие данные × низкая физическая определённость).** Northern Lights — канонический Q4-кейс по двум причинам, и обе вытекают непосредственно из определений осей keystone-матрицы.
 
 - **Низкая доступность данных.** CO₂ plume migration на 100-летнем горизонте захоронения имеет **ограниченные операционные аналоги**. Ни один CCS-проект мира не работал 100 лет — самые старые injection wells (Sleipner, Норвегия, 1996+) дают ~30 лет данных; всё, что дальше, — extrapolation. ML-модель, обученная на доступном historical CCS, **структурно не может валидироваться** для 100-летнего горизонта.
-- **Низкая определённость физики.** CO₂-поведение в реальной геологии включает **многофазовое течение** (СО₂-сверхкритический, brine, dissolved CO₂), **геохимические реакции** с пластом (carbonate dissolution / precipitation, изменяющие проницаемость во времени), **геомеханические эффекты** (induced seismicity, caprock integrity). Каждая компонента имеет parameter uncertainty **~30–50% от laboratory values** при переходе к реальной геологии. Это **не «нужно больше моделировать»**; это **fundamental epistemic uncertainty**.
+- **Низкая определённость процессов.** CO₂-поведение в реальной геологии включает **многофазовое течение** (СО₂-сверхкритический, brine, dissolved CO₂), **геохимические реакции** с пластом (carbonate dissolution / precipitation, изменяющие проницаемость во времени), **геомеханические эффекты** (induced seismicity, caprock integrity). Каждая компонента имеет parameter uncertainty **~30–50% от laboratory values** при переходе к реальной геологии. Это **не «нужно больше моделировать»**; это **fundamental epistemic uncertainty**.
 
 Поэтому в Q4 рабочий паттерн — **hybrid AI + physics** (PINN / ROM-augmented Eclipse + senior reservoir engineer judgment) — единственный возможный подход. Чистый ML не работает (data scarcity); чистая физика не работает (компьютационно недоступно для уплотнённых scenario-runs). Это **противоположно** Q1, где обе оси высокие и AI — мультипликатор; и противоположно Q3, где данных мало, но физика хорошо описана, поэтому работают **physics-first + AI screening**.
 
@@ -370,7 +370,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 **Тип-сцеплённость с Q4 (низкие данные × низкая физическая определённость).** Fervo EGS — Q4-кейс по двум причинам, симметричным к Northern Lights:
 
 - **Низкая доступность данных.** Enhanced geothermal в hard rock на глубине 3–5 км — **новая технология промышленного масштаба**. Сlassical hydrothermal geothermal (Larderello Italy с 1904; Geysers California с 1960) даёт 50–100 years operational history, но это **другая физика** (естественные resvoirs vs искусственно созданные через фрекинг). Для Fervo-class EGS первые commercial wells пробурены 2021–2024 — горизонт «обычно поведёт» составляет 3–5 лет, а проектные lifetimes — 30+ лет. ML-модель thermal performance декomposition обучается на **очень ограниченном датасете** и **не валидирована** для 30-летнего горизонта.
-- **Низкая определённость физики.** **Coupled THMC** (thermo-hydro-mechanical-chemical) coupled-physics включает: thermal extraction (как остывает rock), hydraulic flow (как движется вода через искусственные fractures), mechanical fracture network evolution (раскрытие/закрытие fractures под thermal/pressure stress во времени), chemical scaling (mineral precipitation в fractures, blocking flow). Каждая из этих компонент — **open research question**. Industry-standard simulator для full THMC coupled physics на geological time scales **не существует** в production-grade.
+- **Низкая определённость процессов.** **Coupled THMC** (thermo-hydro-mechanical-chemical) coupled-physics включает: thermal extraction (как остывает rock), hydraulic flow (как движется вода через искусственные fractures), mechanical fracture network evolution (раскрытие/закрытие fractures под thermal/pressure stress во времени), chemical scaling (mineral precipitation в fractures, blocking flow). Каждая из этих компонент — **open research question**. Industry-standard simulator для full THMC coupled physics на geological time scales **не существует** в production-grade.
 
 Поэтому Fervo использует **fiber optic distributed temperature sensing** как **operational ground truth** для краткосрочной (днях-месяцах) валидации; на длинных горизонтах применяется **hybrid AI + physics + senior reservoir engineer judgment**. AI здесь — **catalyst per-unit cost effectiveness** (–10–20% per well через optimal placement и fracture design), не **scale solution**. **Build 150 GW EGS** требует tens of thousands wells — задача десятилетий, и AI не делает её десятикратно быстрее.
 
@@ -416,7 +416,7 @@ CCS injection хранит CO₂ под землёй **на сотни-тыся�
 - **Reduced-order modelling (ROM) с ML augmentation** — классический ROM (POD — proper orthogonal decomposition) с ML для capturing residual nonlinearities.
 - **Differentiable physics simulators** (JAX-MD, PhiFlow) — физический симулятор, написанный в авто-дифференцируемом подходе, что позволяет использовать градиентную оптимизацию для обратных задач.
 
-Это **active R&D fronts**, и инженер курса с глубоким интересом к Q4 / energy transition должен следить за этой литературой. Но коммерчески mature deployments в нефтегазе — **5–10 лет вперёд**, не сейчас.
+Это **active R&D fronts**, и инженер курса с глубоким интересом к Q4 / новым опорам (CCS + EGS) должен следить за этой литературой. Но коммерчески mature deployments в нефтегазе — **5–10 лет вперёд**, не сейчас.
 
 **Зачем вообще нужен ML-суррогат в Q4 — три инженерных мотивации.**
 

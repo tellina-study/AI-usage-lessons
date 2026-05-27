@@ -1,0 +1,10 @@
+flowchart TD
+    A["TESS-подобная задача:<br/>find exoplanets in light curves"] --> B["1 Data overlap<br/>(совпадение распределений<br/>TESS ↔ Kepler)"]
+    B --> C["2 Label availability<br/>(подтверждённые транзиты<br/>есть в Kepler — 8000+)"]
+    C --> D["3 GPU cost vs CPU<br/>(на CPU 7 дней | A100 — 4 часа)"]
+    D --> E["4 AUC baseline<br/>(BLS 78% — нужна планка)"]
+    E --> F["5 Held-out validation<br/>(2 449 высокоуверенных<br/>из 3 987 кандидатов)"]
+    classDef ocean fill:#065A82,stroke:#21295C,color:#fff,stroke-width:2px,font-size:14px
+    classDef gold fill:#F0AB00,stroke:#21295C,color:#21295C,stroke-width:2px,font-size:14px
+    class A,B,C,D,E ocean
+    class F gold

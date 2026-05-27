@@ -1,0 +1,11 @@
+flowchart TD
+    A["Задача: подобрать катализатор<br/>окисления пропилена в акролеин"] --> B["1 Classify<br/>(закрытый мир физики:<br/>DFT даёт ground truth)"]
+    B --> C["2 Map alternatives<br/>BO+GP vs Sakana<br/><i>5000 vs 50 кандидатов на $/время</i>"]
+    C --> D["3 Four criteria check<br/>(GP-BO проходит все 4)"]
+    D --> E["4 HITL design<br/>(аспирант проверяет<br/>каждый DFT-результат)"]
+    E --> F["5 Pre-publication verify<br/>(3 кандидата → лаба → 1 подтверждён)"]
+    F --> G["4 месяца vs 1-2 кандидата<br/>в год вручную"]
+    classDef ocean fill:#065A82,stroke:#21295C,color:#fff,stroke-width:2px,font-size:14px
+    classDef gold fill:#F0AB00,stroke:#21295C,color:#21295C,stroke-width:2px,font-size:14px
+    class A,B,C,D,E ocean
+    class F,G gold

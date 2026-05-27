@@ -1,0 +1,13 @@
+flowchart TD
+    A["Идея для гранта"] --> B["1 Классифицируй<br/>задачу<br/>(Hypothesis | Design)"]
+    B --> C["2 Coverage<br/>(50 кандидатов от Sakana<br/>vs 3 от PhD)"]
+    C --> D["3 Verification<br/>(валидация на отложенных<br/>+ literature check)"]
+    D --> E["4 Ethics<br/>(NSF code, ICMJE)"]
+    E --> F["5 HITL контроль<br/>(человек проверяет<br/>каждую идею)"]
+    F --> G["6 Submission<br/>integrity<br/>(раскрытие AI)"]
+    classDef start fill:#1C7293,stroke:#21295C,color:#fff,stroke-width:2px,font-size:16px
+    classDef step fill:#065A82,stroke:#21295C,color:#fff,stroke-width:2px,font-size:14px
+    classDef gold fill:#F0AB00,stroke:#21295C,color:#21295C,stroke-width:2px,font-size:14px
+    class A start
+    class B,C,D,E step
+    class F,G gold

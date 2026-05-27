@@ -1,0 +1,598 @@
+# library/lectures/lec-15/deck.yaml
+#
+# Deck-структура Лекции 15 «AI в научных исследованиях»
+# v1: 39 слайдов (Phase 5 initial deck structure).
+#
+# Phase 5 multi-artifact pipeline. Issue #143.
+#
+# Pattern carry-forward от Лекций 11, 13, 14:
+#   - 39 слайдов общим объёмом
+#   - section dividers (6 шт.): s06 / s12 / s20 / s26 / s32 / s38
+#   - cover (s02), lecture-map (s03), glossary (s04), central question (s05) — Введение
+#   - dedicated Q&A slide (s38), bridge к lec-16 (s39 closing hero)
+#   - Hero on s01 (Side-by-side AlphaFold Nobel + Galactica retraction, ≥40% area)
+#   - Hero on s39 (AlphaFold DB website screenshot bridge к Lec-16, ≥40% area)
+#
+# Keystone (Variant A, LOCKED owner decision #1):
+#   «Лестница научного цикла» из 6 ступеней Hypothesis → Design → Experiment → Analyse → Write → Review.
+#   Cyclical (в отличие от sequential лестниц lec-13/14).
+
+deck:
+  lecture_number: 15
+  title: "AI в научных исследованиях"
+  audience: "студенты-инженеры 3 курса (универсальная, не отраслевые специалисты)"
+  duration_min: 75
+  central_question: "Где AI делает прорыв в науке, где он создаёт фабрику статей, и как инженер должен решать, в какой класс попадает его конкретный случай?"
+  learning_outcomes: [LO4, LO5, LO6, LO8]
+  language: ru
+  status: draft
+  version: v1
+  source: chapter v2.2 multi-part (status=approved-USER-GATE-A, ~32 850 слов; chapter.md + chapter-part2.md + chapter-part3.md + chapter-part4.md)
+  plan: notes/lecture-15-review/plan-v2.md + plan-v2-part2.md
+  keystone_axis: "Лестница научного цикла (Hypothesis → Design → Experiment → Analyse → Write → Review) — cyclical, итеративная"
+
+# Final slide list (39 slides). Подробный outline per slide см. plan-v2.md / plan-v2-part2.md
+# Введение s01-s05 | §1 s06-s11 | §2 s12-s19 | §3 s20-s25 | §4 s26-s31 | §5 s32-s37 | §6 s38-s39
+# Section dividers: s06, s12, s20, s26, s32 (Q&A s38 — dedicated lec-13/14 pattern)
+# Hero slides: s01 (AlphaFold Nobel + Galactica composite) + s39 (AlphaFold DB → bridge к Лекции 16)
+# Walked examples: s07 WE-1 (grant idea), s25 WE-TESS, s28 WE-2 (bibliography), s34 WE-3 (catalyst)
+# Failure deep-dives: s10 Sakana cherry-pick, s17 Palgrave critique, s24 AlphaFold IDP, s29 Frontiers крыса, s30 NeurIPS fake citations
+
+slides:
+  - id: s01
+    file: slides/s01-hook-alphafold-galactica.md
+    type: hero_cover
+    duration_min: 3
+    assertion: "AlphaFold взял Нобель 2024. Galactica прожила три дня. Это одна эпоха — и одна задача инженера: различить."
+    learning_goal: "Эмоциональный hook + предъявить две стороны AI-в-науке без выбора стороны"
+    section: 0
+    chapter_ref: "§0.2 — 9 октября 2024 и 15-17 ноября 2022"
+    failure_bucket: mixed
+    media:
+      kind: hero_composite
+      acquisition_tier: "Tier 1 nobelprize.org og:image (Nobel ceremony) + Tier 6 fair-use MIT Technology Review headline screenshot (Galactica retraction); single composite image"
+      source_url: "nobelprize.org/prizes/chemistry/2024 + technologyreview.com/2022/11/18/1063487/meta-large-language-model-ai-only-survived-three-days-gpt-3-science"
+      attribution_label: "Nobel Prize Chemistry 2024 © Nobel Foundation | Galactica retraction headline © MIT Technology Review 2022 (fair-use educational excerpt)"
+    references: [nobel-chemistry-2024, heaven-2022-galactica-mit-tr, jumper-2021-alphafold-nature]
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 1
+    assertion: "Лекция 15. AI в научных исследованиях — лестница цикла из шести ступеней."
+    learning_goal: "Контекст лекции + LO + roadmap"
+    section: 0
+    chapter_ref: "§0.1 — Зачем эта лекция и куда она встроена в курс"
+    failure_bucket: mixed
+
+  - id: s03
+    file: slides/s03-lecture-map.md
+    type: lecture_map
+    duration_min: 1
+    assertion: "Шесть ступеней лестницы научного цикла: Hypothesis → Design → Experiment → Analyse → Write → Review. Cyclical, не sequential."
+    learning_goal: "Навигация: куда мы идём + предъявление keystone (cyclical отличие от лекций 13, 14)"
+    section: 0
+    chapter_ref: "§0.3 — Опорная ось"
+    failure_bucket: capability
+    media:
+      kind: diagram
+      acquisition_tier: "Custom Mermaid vertical 6-step staircase + cyclical arrow Review → Hypothesis"
+      source_url: "n/a — custom"
+    references: []
+
+  - id: s04
+    file: slides/s04-glossary.md
+    type: glossary
+    duration_min: 1
+    assertion: "Пятнадцать терминов из мира AI-в-науке. Без общего словаря следующий час не сложится."
+    learning_goal: "Шаблонный словарь: foundation model / RAG / hallucination / peer review / closed-open-world / IDP / DFT-MD / BO-GP / CASP / ECMWF / FrontierMath / ICMJE / IMO / paper mill / HITL"
+    section: 0
+    chapter_ref: "§0.4 — Глоссарий 15 терминов"
+    failure_bucket: capability
+
+  - id: s05
+    file: slides/s05-central-question.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Где AI делает прорыв, где создаёт фабрику статей, и как инженер должен решать, в какой класс попадает его конкретный случай?"
+    learning_goal: "Central question лекции, к которому возвращаемся на каждой ступени"
+    section: 0
+    chapter_ref: "§0.5 — Центральный вопрос"
+    failure_bucket: mixed
+
+  - id: s06
+    file: slides/s06-section1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 1. Hypothesis + Design — где AI продаётся за автономию, но даёт узкую помощь."
+    learning_goal: "Section break"
+    section: 1
+    chapter_ref: "§1 intro"
+    failure_bucket: mixed
+
+  - id: s07
+    file: slides/s07-we1-grant-idea-tree.md
+    type: walked_example
+    duration_min: 2.5
+    assertion: "Идея для гранта: 6-шаговое дерево решения «Sakana 50 кандидатов или PhD-руководитель 3 идеи»."
+    learning_goal: "WE-1 walked example: classify task → coverage → verification → ethics → HITL → submission integrity"
+    section: 1
+    chapter_ref: "§1.5 — Разобранный пример WE-1"
+    failure_bucket: mixed
+    media:
+      kind: mermaid
+      acquisition_tier: "Custom Mermaid 6-step decision tree"
+      source_url: "n/a — custom"
+    references: [sakana-blog-2025, nsf-ai-code-of-conduct]
+
+  - id: s08
+    file: slides/s08-sakana-ai-scientist.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Sakana AI Scientist v2: 1 из 3 прошла рецензирование. Но 3 — это уже после ручного отбора из 100. Истинная доля автономной науки — 1%."
+    learning_goal: "Sakana cherry-pick mechanics — 3 разные метрики (3% отбор / 33% «принято» / 1% истинная)"
+    section: 1
+    chapter_ref: "§1.2 — Sakana AI Scientist v1 → v2"
+    failure_bucket: strict_in
+    media:
+      kind: screenshot
+      acquisition_tier: "Tier 1 og:image sakana.ai/ai-scientist-v2 blog + Tier 6 TechCrunch March 12, 2025 screenshot"
+      source_url: "sakana.ai/ai-scientist-v2 + techcrunch.com/2025/03/12/sakana-ai-scientist-iclr-workshop"
+      attribution_label: "Sakana AI press 2025 + TechCrunch март 2025 (fair-use)"
+    references: [sakana-blog-2025, techcrunch-2025-sakana, lu-2025-sakana-v2-arxiv]
+
+  - id: s09
+    file: slides/s09-coscientist-vs-co-scientist.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Две системы, почти одинаковое имя, разные задачи: Coscientist CMU 2023 (Design, GPT-4+Claude, синтез известных) и DeepMind Co-Scientist 2026 (Hypothesis, multi-agent debate)."
+    learning_goal: "Разграничение Coscientist (CMU, Nature dec 2023, GPT-4+Claude both) vs Co-Scientist (DeepMind, Nature May 2026 [VFY-day-of])"
+    section: 1
+    chapter_ref: "§1.3 — Coscientist и DeepMind Co-Scientist"
+    failure_bucket: capability
+    media:
+      kind: diagram
+      acquisition_tier: "Tier 3 CMU press photo (Boiko et al. lab) + Tier 1 DeepMind blog Co-Scientist 2026"
+      source_url: "nature.com/articles/s41586-023-06792-0 + deepmind.com/blog (May 2026)"
+      attribution_label: "Nature 2023 (Boiko et al., CMU) + DeepMind blog 2026 — [VFY-day-of]"
+    references: [boiko-2023-coscientist-nature, deepmind-co-scientist-2026]
+
+  - id: s10
+    file: slides/s10-sakana-cherry-pick.md
+    type: failure_deep_dive
+    duration_min: 2.5
+    assertion: "Sakana пишет 100 статей, человек отбирает 3, рецензент пропускает 1. Это AI-augmented черновик с тяжёлым человеческим фильтром — не автономная наука."
+    learning_goal: "4 структурные проблемы Sakana: cherry-picking / галлюцинированные ссылки / фальсифицированные результаты / преувеличенная новизна"
+    section: 1
+    chapter_ref: "§1.2 — четыре фундаментальные проблемы Sakana"
+    failure_bucket: strict_in
+    media:
+      kind: chart
+      acquisition_tier: "Custom QuickChart bar — 3 metrics breakdown (3% selection / 33% acceptance / 1% true autonomous rate)"
+      source_url: "n/a — custom"
+    references: [sakana-blog-2025, lu-2025-sakana-v2-arxiv]
+
+  - id: s11
+    file: slides/s11-bo-gp-alternative.md
+    type: alternative_tool
+    duration_min: 1
+    assertion: "Байесовская оптимизация 40+ лет и гауссовский процесс 60+ лет. Это зрелая альтернатива, обгоняющая Sakana в материалах и химии — а не запасной вариант."
+    learning_goal: "BO+GP как success story: математическая обоснованность + ускорение экспериментальной кампании в 5-10×"
+    section: 1
+    chapter_ref: "§1.6 — Альтернатива BO+GP"
+    failure_bucket: capability
+    media:
+      kind: chart
+      acquisition_tier: "Custom QuickChart line — convergence curve BO vs random search vs grid"
+      source_url: "n/a — custom"
+    references: [mockus-1989-bayesian, jones-1998-ego, shields-2021-nature]
+
+  - id: s12
+    file: slides/s12-section2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2. Experiment — самый сильный успех AI в науке (нобелевского уровня) и его трещины."
+    learning_goal: "Section break"
+    section: 2
+    chapter_ref: "§2 intro"
+    failure_bucket: capability
+
+  - id: s13
+    file: slides/s13-alphafold-timeline.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "AlphaFold 3 — 8 мая 2024. Нобель — 9 октября 2024. Recursion-Roche — декабрь 2021, 40 программ × >$300M = до ~$12B потенциала."
+    learning_goal: "AlphaFold timeline + Recursion-Roche каскадный эффект Нобеля как baseline industry impact"
+    section: 2
+    chapter_ref: "§2.1 — AlphaFold 2 → AlphaFold 3"
+    failure_bucket: capability
+    media:
+      kind: photo
+      acquisition_tier: "Tier 1 nobelprize.org press image (Hassabis + Jumper + Baker portrait) + Tier 3 DeepMind blog AlphaFold 3 ribbon"
+      source_url: "nobelprize.org/prizes/chemistry/2024 + deepmind.com/blog/alphafold-3"
+      attribution_label: "© Nobel Foundation 2024 + © DeepMind / Isomorphic Labs 2024"
+    references: [nobel-chemistry-2024, abramson-2024-alphafold3-nature, recursion-roche-2021-sec-8k]
+
+  - id: s14
+    file: slides/s14-alphafold-db-screenshot.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "200 миллионов структур vs 200 тысяч в PDB за полвека — 1000× больше предсказанного. Но AlphaFold 3 при запуске был закрыт; 1000 учёных подписали письмо за открытость."
+    learning_goal: "AlphaFold DB как инфраструктура + open-source debate timeline (closed May 2024 → academic Nov 2024 → public Feb 2025 non-commercial)"
+    section: 2
+    chapter_ref: "§2.2 + §2.3 — AlphaFold DB и open-source debate"
+    failure_bucket: mixed
+    media:
+      kind: screenshot
+      acquisition_tier: "Tier 1 og:image alphafold.ebi.ac.uk + Tier 2 Wikipedia AlphaFold article"
+      source_url: "alphafold.ebi.ac.uk"
+      attribution_label: "© DeepMind / EBI 2024 [VFY-day-of for 200M structures count]"
+    references: [alphafold-db-ebi, abramson-2024-alphafold3-nature]
+
+  - id: s15
+    file: slides/s15-boltz-open-source.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Boltz-1 (MIT, декабрь 2024) — полностью открытый AlphaFold-3-конкурент. К концу 2025 он обогнал AlphaFold 3 по академическому внедрению."
+    learning_goal: "Открытая альтернатива обгоняет закрытую если достаточно хороша — закономерность, повторяющаяся в Stable Diffusion vs DALL-E 2 и LLaMA vs GPT-4"
+    section: 2
+    chapter_ref: "§2.3 — Появление Boltz-1 и Boltz-2"
+    failure_bucket: capability
+    media:
+      kind: chart
+      acquisition_tier: "Custom QuickChart bar Boltz-1 vs AlphaFold 3 — middle GDT_TS benchmark on protein-only structures"
+      source_url: "n/a — custom (data from Corso/Wohlwend bioRxiv 2024)"
+    references: [corso-2024-boltz1-biorxiv, wohlwend-2025-boltz2-biorxiv]
+
+  - id: s16
+    file: slides/s16-gnome-alab.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "GNoME: 2,2 миллиона кандидатов / 380 тысяч стабильных через 6 раундов активного обучения. A-Lab Berkeley: 41 из 58 синтезированы за 17 дней."
+    learning_goal: "GNoME архитектура + A-Lab 41/58 (canonical) + masштаб 44× больше Materials Project"
+    section: 2
+    chapter_ref: "§2.4 — GNoME и A-Lab Berkeley"
+    failure_bucket: capability
+    media:
+      kind: diagram
+      acquisition_tier: "Tier 3 DeepMind GNoME blog dot plot (2.2M candidates space) + Tier 3 Berkeley Lab A-Lab robot photo"
+      source_url: "deepmind.com/blog/gnome + lbl.gov/news/a-lab-autonomous-discovery"
+      attribution_label: "© DeepMind 2023 + © Lawrence Berkeley National Laboratory 2023"
+    references: [merchant-2023-gnome-nature, szymanski-2023-alab-nature]
+
+  - id: s17
+    file: slides/s17-palgrave-critique.md
+    type: failure_deep_dive
+    duration_min: 2
+    assertion: "Из 36 проб A-Lab, проверенных Палгрейвом и Шуп, 35 содержали ошибки: неверная фаза, производные известных соединений, отсутствие функции. Предсказание ≠ открытие."
+    learning_goal: "3 типа ошибок Палгрейва-Шупа: неверное присвоение фазы / производные-неверно-помеченные / отсутствие функциональной валидации"
+    section: 2
+    chapter_ref: "§2.5 — Палгрейв-Шуп критика A-Lab"
+    failure_bucket: strict_in
+    media:
+      kind: chart
+      acquisition_tier: "Tier 6 ChemRxiv Palgrave-Schoop figure 2024 + Custom QuickChart 3-segment error breakdown"
+      source_url: "chemrxiv.org/engage/chemrxiv/article-details/65ae3a5d9138d23161510fc6"
+      attribution_label: "Palgrave & Schoop ChemRxiv январь 2024 (CC-BY)"
+    references: [palgrave-2024-chemrxiv, szymanski-2023-alab-nature]
+
+  - id: s18
+    file: slides/s18-aurora-ecmwf.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Aurora в 5000× быстрее эталона ECMWF на эталонном тесте. Но ECMWF AIFS — собственная модель — стала оперативной 25 февраля 2025. Aurora — не операционная замена."
+    learning_goal: "5000× — валидное benchmark для эталонного теста, не valid для политики; ECMWF использует AIFS оперативно + IFS; tail events системно недопредставлены"
+    section: 2
+    chapter_ref: "§2.6 — Aurora, GraphCast, ECMWF AIFS"
+    failure_bucket: mixed
+    media:
+      kind: screenshot
+      acquisition_tier: "Tier 3 Microsoft Research Aurora press image (atmospheric model viz) + Tier 1 ECMWF AIFS announcement"
+      source_url: "microsoft.com/research/blog/aurora-foundation-atmosphere + ecmwf.int/en/about/media-centre/news/2025/aifs"
+      attribution_label: "© Microsoft Research 2024 + © ECMWF 2025"
+    references: [bodnar-2024-aurora-arxiv, ecmwf-aifs-2025, charlton-perez-2024-storm-ciaran]
+
+  - id: s19
+    file: slides/s19-alphaproof-imo.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "AlphaProof + AlphaGeometry 2 на IMO 2024 — 28 из 42 баллов, серебро. P1, P2, P6 решены AlphaProof; P4 — AlphaGeometry 2; P3 и P5 (комбинаторика) — нерешённая граница."
+    learning_goal: "Формальная математика как закрытый мир + конкретное разделение solved/unsolved + 4+ часа на задачу vs 90 минут у человека"
+    section: 2
+    chapter_ref: "§2.7 — AlphaProof и AlphaGeometry 2"
+    failure_bucket: mixed
+    media:
+      kind: screenshot
+      acquisition_tier: "Tier 3 DeepMind blog AlphaProof IMO 2024 visualization + Tier 6 IMO 2024 official problem screenshot"
+      source_url: "deepmind.com/blog/ai-solves-imo-problems-at-silver-medal-level"
+      attribution_label: "© DeepMind 2024 + IMO 2024 problems (fair-use)"
+    references: [deepmind-alphaproof-blog-2024, alphaproof-2025-nature, trinh-2024-alphageometry-nature]
+
+  - id: s20
+    file: slides/s20-section3-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 3. Analyse — самые надёжные применения AI в науке."
+    learning_goal: "Section break"
+    section: 3
+    chapter_ref: "§3 intro"
+    failure_bucket: capability
+
+  - id: s21
+    file: slides/s21-exoplanet-cnn.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Обнаружение экзопланет через CNN: 1 595 высокоуверенных кандидатов TESS, 83,9% точности. Это привычное обучение с учителем, не «новый AI»."
+    learning_goal: "TESS+Kepler CNN — canonical positive case для analyse-фазы; AUC 78% BLS vs 89% pre-trained CNN vs 92% custom CNN"
+    section: 3
+    chapter_ref: "§3.2 — Поиск экзопланет через CNN"
+    failure_bucket: capability
+    media:
+      kind: chart
+      acquisition_tier: "Tier 3 NASA TESS press photo + Custom QuickChart light curve waveform с transit signal"
+      source_url: "nasa.gov/tess + arxiv 2512.00967"
+      attribution_label: "© NASA TESS 2018+ + arxiv:2512.00967 (Huang & Jiang 2025)"
+    references: [shallue-2018-kepler-cnn, huang-jiang-2025-tess-arxiv]
+
+  - id: s22
+    file: slides/s22-allen-microns.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Allen MICrONS, апрель 2025: один кубический миллиметр зрительной коры мыши — 84 тысячи нейронов, 500 миллионов синапсов, 4 километра аксонов."
+    learning_goal: "AI как enabler масштабной нейронауки: задача невозможная без deep learning (U-Net + transformer segmentation); граница — 1 мм³ vs 500 мм³ мозга мыши = тысячи GPU-часов масштабирования"
+    section: 3
+    chapter_ref: "§3.3 — Allen Institute MICrONS"
+    failure_bucket: mixed
+    media:
+      kind: photo
+      acquisition_tier: "Tier 1 og:image alleninstitute.org/microns press + Tier 2 Wikipedia connectome article"
+      source_url: "alleninstitute.org/news/microns + nature.com/articles/s41586-025-08613-y"
+      attribution_label: "© Allen Institute 2025 (CC-BY-NC)"
+    references: [allen-microns-2025-nature]
+
+  - id: s23
+    file: slides/s23-ligo-ml.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "LIGO ML-конвейер: CNN + конформное предсказание для калиброванного доверительного интервала. Дополняет matched filtering, не заменяет — финальная атрибуция остаётся за физикой."
+    learning_goal: "Conformal prediction даёт калиброванный доверительный интервал без предположения о нормальности; ML — extension matched filter (Wiener 1949, 80 лет наследия), не replacement"
+    section: 3
+    chapter_ref: "§3.4 — Гравитационные волны: ML-конвейеры LIGO"
+    failure_bucket: mixed
+    media:
+      kind: chart
+      acquisition_tier: "Tier 3 LIGO Caltech waveform visualization + Custom QuickChart conformal-prediction interval band"
+      source_url: "ligo.caltech.edu + arxiv:2504.17587"
+      attribution_label: "© LIGO/Caltech 2024 + Ashton et al. arxiv 2025 (CC-BY)"
+    references: [ashton-2025-conformal-ligo, north-1943-matched-filter]
+
+  - id: s24
+    file: slides/s24-alphafold-idp.md
+    type: failure_deep_dive
+    duration_min: 2.5
+    assertion: "AlphaFold даёт 22% галлюцинаций в IDP-регионах. α-Синуклеин — белок Паркинсона — структурно не воспроизводится. Используете AlphaFold для регионов IDP без оговорки — публикуете загрязнённый результат."
+    learning_goal: "AlphaFold IDP deep-dive: PDB undertrain, α-synuclein case, pLDDT thresholds 90/70/50, mitigation через NMR + AlphaFold-Multimer + ансамбли"
+    section: 3
+    chapter_ref: "§3.5 — AlphaFold IDP — глубокий разбор"
+    failure_bucket: strict_in
+    media:
+      kind: diagram
+      acquisition_tier: "Tier 3 Akdel et al. Nature Structural & Molecular Biology 2022 figure + Tier 6 α-synuclein PDB structure"
+      source_url: "nature.com/articles/s41594-022-00849-w + arxiv:2510.15939"
+      attribution_label: "Akdel et al. NSMB 2022 + Gopalan & Narayanan arxiv 2025"
+    references: [akdel-2022-nsmb, gopalan-2025-arxiv]
+
+  - id: s25
+    file: slides/s25-we-tess.md
+    type: walked_example
+    duration_min: 2.5
+    assertion: "Walked example TESS: 5-шаговая рамка от классификации задачи к валидации на отложенных. NASA Kepler CNN дообучен — лучшее соотношение стоимости и качества."
+    learning_goal: "WE-TESS walked: data overlap → label availability → GPU cost → AUC baseline → held-out validation (универсальная рамка ML-развёртывания в analyse-фазе)"
+    section: 3
+    chapter_ref: "§3.7 — Разобранный пример WE-TESS"
+    failure_bucket: mixed
+    media:
+      kind: mermaid
+      acquisition_tier: "Custom Mermaid 5-step decision tree"
+      source_url: "n/a — custom"
+    references: [shallue-2018-kepler-cnn, cui-2025-tess-arxiv]
+
+  - id: s26
+    file: slides/s26-section4-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 4. Write + Review — где AI против академической интегриты."
+    learning_goal: "Section break"
+    section: 4
+    chapter_ref: "§4 intro"
+    failure_bucket: strict_in
+
+  - id: s27
+    file: slides/s27-notebooklm-elicit.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "NotebookLM — 17 миллионов пользователей. Elicit — 138 миллионов статей, 4× ускорение обзора литературы. Это работающее расширение — но каждая ссылка требует ручной проверки."
+    learning_goal: "Зрелые литературные инструменты — это augmentation для навигации, не замена синтеза; psychology of automation bias"
+    section: 4
+    chapter_ref: "§4.1 + §4.2 — NotebookLM + Elicit/Consensus"
+    failure_bucket: mixed
+    media:
+      kind: screenshot
+      acquisition_tier: "Tier 1 og:image notebooklm.google.com + Tier 1 og:image elicit.com + Tier 1 og:image consensus.app"
+      source_url: "notebooklm.google.com + elicit.com + consensus.app"
+      attribution_label: "© Google NotebookLM 2024-2026 + © Elicit/Ought.io + © Consensus.app (fair-use)"
+    references: [notebooklm-2024-google, elicit-2024-ought]
+
+  - id: s28
+    file: slides/s28-we2-bibliography.md
+    type: walked_example
+    duration_min: 2.5
+    assertion: "Соавтор присылает черновик с 47 LLM-цитатами. 4 шага проверки: DOI-resolve, выборка релевантности, GPTZero, запрос исходных файлов. ≥3 фейка → отказ от соавторства."
+    learning_goal: "WE-2 walked: каждый шаг с критерием провала; стоимость 45 минут vs 3 часа manual; профессиональная строгость > социальная вежливость"
+    section: 4
+    chapter_ref: "§4.3 — Разобранный пример WE-2"
+    failure_bucket: strict_in
+    media:
+      kind: mermaid
+      acquisition_tier: "Custom Mermaid 4-step verification workflow"
+      source_url: "n/a — custom"
+    references: [icmje-2024-recommendations, gptzero-2024]
+
+  - id: s29
+    file: slides/s29-frontiers-rat.md
+    type: failure_deep_dive
+    duration_min: 1.5
+    assertion: "Frontiers, 13 февраля 2024: статья с Midjourney-нарисованной анатомией крысы. «Protemns» и «zxpens» — несуществующие термины. Отозвана через 3 дня."
+    learning_goal: "Frontiers retraction case — раскрытие AI в paper не спасло; peer review должен проверять figures отдельно"
+    section: 4
+    chapter_ref: "§4.4 — Frontiers «крыса» отзыв"
+    failure_bucket: strict_in
+    media:
+      kind: photo
+      acquisition_tier: "Tier 6 phys.org screenshot Frontiers retracted rat anatomy figure (fair-use educational)"
+      source_url: "phys.org/news/2024-02-bizarre-ai-rat-anatomy-frontiers-retracts.html"
+      attribution_label: "Frontiers Cell Dev Biol 2024 retracted figure (fair-use)"
+    references: [frontiers-rat-retraction-2024-phys-org, venturebeat-2024-frontiers]
+
+  - id: s30
+    file: slides/s30-neurips-fake-citations.md
+    type: failure_deep_dive
+    duration_min: 2
+    assertion: "NeurIPS 2025: 21 575 поданных, 5 290 принятых (24,52%). 100+ фейковых цитат проникли в 53 принятые статьи. Рецензирование не справилось."
+    learning_goal: "NeurIPS 2025 fake citations canonical; cascade-effect on literature; per-cite manual verify обязателен"
+    section: 4
+    chapter_ref: "§4.5 — NeurIPS 2025 фейковые цитаты"
+    failure_bucket: strict_in
+    media:
+      kind: chart
+      acquisition_tier: "Custom QuickChart bar: submissions / accepted / fake-citation-papers distribution + Tier 6 GPTZero report 2026 screenshot"
+      source_url: "arxiv:2602.05930"
+      attribution_label: "GPTZero Research arxiv 2602.05930 (2026)"
+    references: [gptzero-2026-neurips-fake]
+
+  - id: s31
+    file: slides/s31-icmje-policies.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "ICMJE: AI не может быть автором. Springer / Elsevier / Frontiers: использование AI должно раскрываться. Это пять этических критериев: раскрытие, проверяемость, авторство, ответственность, воспроизводимость."
+    learning_goal: "ICMJE rule + publisher AI policies 2024; AI как инструмент с раскрытием OK; AI как автор — запрещён независимо от качества вывода"
+    section: 4
+    chapter_ref: "§4.6 — ICMJE и публикационные политики"
+    failure_bucket: mixed
+    media:
+      kind: diagram
+      acquisition_tier: "Custom Mermaid matrix 5 criteria × 3 publishers (Springer / Elsevier / Frontiers / Nature)"
+      source_url: "n/a — custom (data from publisher policies 2024)"
+    references: [icmje-2024-recommendations, springer-ai-policy-2024, elsevier-ai-policy-2024, frontiers-ai-policy-2024]
+
+  - id: s32
+    file: slides/s32-section5-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 5. Когда AI не нужен в науке — критерии, альтернативы, разобранный пример."
+    learning_goal: "Section break"
+    section: 5
+    chapter_ref: "§5 intro"
+    failure_bucket: strict_in
+
+  - id: s33
+    file: slides/s33-four-criteria.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Четыре категории «AI не нужен»: открытый мир без эталонной разметки; недопредставлен в обучении; нельзя проверить независимо; этический риск. Любое срабатывание — повод остановиться."
+    learning_goal: "4 критерия «AI не нужен» + пятый бонусный — закрытая физика проще доступна"
+    section: 5
+    chapter_ref: "§5.1 — Четыре категории критериев"
+    failure_bucket: strict_in
+    media:
+      kind: diagram
+      acquisition_tier: "Custom Mermaid 4-quadrant criteria matrix"
+      source_url: "n/a — custom"
+    references: []
+
+  - id: s34
+    file: slides/s34-we3-catalyst.md
+    type: walked_example
+    duration_min: 2.5
+    assertion: "Walked example катализатор окисления пропилена: GP-BO 5000 кандидатов → DFT 50 → лаборатория подтверждает 3. 4 месяца vs 1-2 за год вручную, с цепочкой проверки."
+    learning_goal: "WE-3 walked 5-step: classify → map alternatives → 4 criteria → HITL design → pre-publication verify; конкретные инструменты VASP/BoTorch/Materials Project"
+    section: 5
+    chapter_ref: "§5.3 — Разобранный пример WE-3"
+    failure_bucket: mixed
+    media:
+      kind: mermaid
+      acquisition_tier: "Custom Mermaid 5-step framework"
+      source_url: "n/a — custom"
+    references: [merchant-2023-gnome-nature, mockus-1989-bayesian, kohn-1965-dft]
+
+  - id: s35
+    file: slides/s35-alternatives-matrix.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Пять зрелых альтернатив AI работают 30-70 лет: BO+GP, DFT+MD, классическая статистика, OR-Tools, человеческое рецензирование с улучшениями."
+    learning_goal: "Альтернативы — success story 30-70 лет; принцип сохранения: зрелые методы редко устаревают, становятся частью интегрированного набора"
+    section: 5
+    chapter_ref: "§5.2 — Пять зрелых альтернатив"
+    failure_bucket: capability
+    media:
+      kind: diagram
+      acquisition_tier: "Custom matrix 5 alternatives × 4 columns (год / область / сила vs AI / типичная задача)"
+      source_url: "n/a — custom"
+    references: [mockus-1989-bayesian, kohn-1965-dft, alder-1957-md, fisher-1925-anova, dantzig-1947-simplex]
+
+  - id: s36
+    file: slides/s36-vendor-questions-framework.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Три вопроса к поставщику AI: эталон до AI, воспроизводимость, случаи провала. Плюс пятишаговая рамка: классифицируй, отобрази альтернативы, четыре критерия, HITL, проверка до публикации."
+    learning_goal: "3 vendor questions + 5-step framework recap — applicable artefact для кармана"
+    section: 5
+    chapter_ref: "§5.4 + §5.5 — Три вопроса + 5-step framework"
+    failure_bucket: mixed
+    media:
+      kind: diagram
+      acquisition_tier: "Custom card-layout 3 questions + Mermaid 5-step framework"
+      source_url: "n/a — custom"
+    references: []
+
+  - id: s37
+    file: slides/s37-ru-context.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Российский контекст: AIRI / Sber AI Lab / Yandex Research. Указ № 490 (10 октября 2019) + № 124 (15 февраля 2024). Разрыв в вычислениях 20-50× + 3-кратное недопредставление в Semantic Scholar."
+    learning_goal: "RU context: 3 institutional cases + regulatory frame + compute gap + citation visibility + что это значит для аспиранта"
+    section: 5
+    chapter_ref: "§5.6 — Российский контекст AI-в-науке"
+    failure_bucket: mixed
+    media:
+      kind: diagram
+      acquisition_tier: "Tier 3 AIRI logo от airi.net + Sber logo + Yandex Research logo; Tier 1 kremlin.ru/acts/bank/44731 reference"
+      source_url: "airi.net + sberbank.com + research.yandex.com + kremlin.ru/acts/bank/44731"
+      attribution_label: "© AIRI 2024 + © Sber AI Lab + © Yandex Research; Указ № 490 опубликован kremlin.ru"
+    references: [airi-publications-2024, kremlin-ukaz-490-2019, kremlin-ukaz-124-2024, rscf-ai4science]
+
+  - id: s38
+    file: slides/s38-qa.md
+    type: qa
+    duration_min: 3
+    assertion: "Завтра вы получаете LLM-сгенерированную библиографию от соавтора. Что делаете? — DOI-проверка, запрос исходных, отказ если не можете проверить. AlphaFold 200M + Aurora 5000× + IMO-серебро — реальные прорывы, не отменяемые провалами в Write+Review."
+    learning_goal: "Q&A dedicated: recap лестницы + failure-callback + inline positive recap"
+    section: 6
+    chapter_ref: "§6 — Замыкание + Q&A backup"
+    failure_bucket: mixed
+
+  - id: s39
+    file: slides/s39-closing-hero-alphafold-db.md
+    type: hero_closing
+    duration_min: 2
+    assertion: "AlphaFold DB — 200 миллионов структур. Биология теперь чуть больше известна, но финальная карта далека. Лекция 16 — нефтегаз, частично закрытый мир (геофизика) + частично открытый (резервуар)."
+    learning_goal: "Closing hero + bridge к Лекции 16 partially closed-world (P2-3 soften per plan-v2)"
+    section: 6
+    chapter_ref: "§6 — Замыкание + мост к Лекции 16"
+    failure_bucket: capability
+    media:
+      kind: screenshot
+      acquisition_tier: "Tier 1 og:image alphafold.ebi.ac.uk + Tier 2 Wikipedia AlphaFold article hero"
+      source_url: "alphafold.ebi.ac.uk"
+      attribution_label: "© DeepMind / Isomorphic Labs / EBI 2024"
+    references: [alphafold-db-ebi]

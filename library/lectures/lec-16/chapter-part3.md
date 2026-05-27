@@ -53,7 +53,7 @@ Q2 — это самый необычный квадрант на keystone-ма�
 
 Чтобы построить **integrated emissions inventory** — надо использовать **все четыре модальности и AI для их слияния**. Это и есть «AI essential» в Q2: альтернативы (только классическая физика) нет.
 
-**Но единичная уязвимость.** Когда **AI essential**, и оператор полагается на один спутник как primary data source — что произойдёт, если спутник потеряют? Этот сюжет уже разыгрался в Q2 в реальном времени: **MethaneSAT, флагман методологии NGO-managed мониторинга, потерян 20 июня 2025 года** через примерно 13 месяцев после запуска. Это центральное событие Раздела 3, и мы разберём его в деталях.
+**Но единичная уязвимость.** Когда **AI essential**, и оператор полагается на один спутник как primary data source — что произойдёт, если спутник потеряют? Этот сюжет уже разыгрался в Q2 в реальном времени: **MethaneSAT, флагман методологии NGO-managed мониторинга, потерян 20 июня 2025 года** через **~15,5 месяцев после запуска** (запуск 4 марта 2024, объявление о потере связи 20 июня 2025). Это центральное событие Раздела 3, и мы разберём его в деталях.
 
 **LO mapping для Раздела 3.** Раздел работает на LO1 (когда применять — Q2 как **essential** случай), LO2 (когда отказаться — OGMP Level 5 + custody transfer), LO3 (альтернатива — OGI + portable analyzers + LDAR programmes), LO7 (этика и регуляция — EU 2024/1787 + EPA Subpart W; 4× discrepancy crisis между industry и регулятором).
 
@@ -66,7 +66,7 @@ Q2 — это самый необычный квадрант на keystone-ма�
 **Что MethaneSAT отличало от других спутников.**
 
 - **Wide-area coverage** — поле зрения примерно 200 × 200 км, что покрывает крупные нефтегазовые бассейны за один проход.
-- **High precision** — chrebrolution детекции порядка **500 kg/h** на идеализированных условиях (низкая облачность, минимальный ветер); в реальности threshold выше.
+- **Высокая точность** — порог детекции порядка **500 кг/ч** при идеализированных условиях (низкая облачность, минимальный ветер); в реальности порог выше.
 - **Open data policy** — все данные публиковались open access через **Google Earth Engine** (партнёрство с Google объявлено в 2021 году), что отличало MethaneSAT от commercial спутников типа GHGSat.
 - **Mission design** — explicit фокус на нефтегазовом метане (90% emissions), не на широком GHG-мониторинге.
 
@@ -82,7 +82,7 @@ Q2 — это самый необычный квадрант на keystone-ма�
 
 **Технологический стек MethaneSAT — что внутри.** Помимо самого спутника, MethaneSAT mission включала **четыре слоя AI-обработки**:
 
-1. **Atmospheric retrieval** — преобразование raw spectral data в оценку концентрации метана в каждом пикселе. Это **physics-based pipeline** с ML-augmentation для cloud screening и aerosol correction.
+1. **Atmospheric retrieval** — преобразование исходных спектральных данных в оценку концентрации метана в каждом пикселе. Это **physics-based конвейер** с ML-augmentation для отсева облаков и аэрозольной коррекции.
 2. **Plume detection** — идентификация регионов с anomalously высокой концентрацией метана. ML-классификатор, обученный на synthetic plume training set + real-world calibration campaigns.
 3. **Emission quantification** — преобразование observed plume geometry в оценку source strength (тонн/час). **Inverse atmospheric modelling** с ML-acceleration; принципиально сложная задача из-за wind variance и ground reflection.
 4. **Source attribution** — связывание detected plume с конкретным operational asset. Использует **dense Permian basin facility maps** + ML-based matching. Это самый AI-heavy слой; он же — самый ошибкоёмкий.
@@ -93,19 +93,19 @@ Q2 — это самый необычный квадрант на keystone-ма�
 
 [for-slide-s23]
 
-**20 июня 2025 года команда MethaneSAT объявила потерю связи со спутником.** Через ~13 месяцев после запуска — что составляет примерно **15–22% от designed lifetime** в зависимости от того, считать ли operations с момента launch или с момента полной commissioning. Конкретная причина потери — публично детали не объявлены; в обновлении проекта команда указывает на «spacecraft anomaly».
+**20 июня 2025 года команда MethaneSAT объявила потерю связи со спутником.** Через **~15,5 месяцев после запуска** (4 марта 2024 — 20 июня 2025) — что составляет примерно **~26% от designed lifetime** (5-летняя проектная миссия). Конкретная причина потери — публично детали не объявлены; в обновлении проекта команда указывает на «spacecraft anomaly».
 
 **Чему этот провал учит — четыре фундаментальных урока.**
 
 **Первый — single-satellite mission = catastrophic single point of failure для regulatory MRV infrastructure.** Когда EU Methane Regulation 2024/1787 предусматривает использование **satellite measurements** как accepted data source — и primary global satellite NGO-owned data source потерян — что делать с этой data infrastructure? Ответ к концу 2025 года: **scramble к alternative data sources** (Carbon Mapper Tanager-1 запущен 16 августа 2024, GHGSat constellation 16 спутников). Но **resilience matters from day one**: проектировать MRV infrastructure на одном спутнике — структурная ошибка.
 
-**Второй — даже с успешным запуском и хорошими данными первого года hardware reliability — fundamental constraint.** MethaneSAT работал отлично 13 месяцев. Это не «технология провалилась»; это «спутник в космосе — это hardware с конечной reliability». Любой satellite mission имеет non-zero probability of failure, и для critical infrastructure нужно **constellation model** (multiple redundant satellites), не **single mission**.
+**Второй — даже с успешным запуском и хорошими данными первого года hardware reliability — fundamental constraint.** MethaneSAT работал отлично 15,5 месяцев. Это не «технология провалилась»; это «спутник в космосе — это hardware с конечной reliability». Любой satellite mission имеет non-zero probability of failure, и для critical infrastructure нужно **constellation model** (multiple redundant satellites), не **single mission**.
 
 **Третий — Regulatory enforcement не может опираться на 1 спутник.** EU regulator после MethaneSAT loss должен либо (a) принять GHGSat constellation как backup, (b) разрешить ground-only verification через OGI + portable analyzers (откатиться к Level 5 OGMP), либо (c) допустить delay в enforcement. На момент написания (май 2026) официальная позиция EU — **a + b combination**: regulator принимает GHGSat данные с осторожностью, и **приоритизирует ground OGI campaigns** для compliance. Это **усиливает позицию ground OGI** как альтернативного инструмента и **снижает зависимость от satellite AI MRV**.
 
 **Четвёртый — AI без stable upstream data source не работает.** Это самый глубокий урок. MethaneSAT использовал AI для downstream processing (atmospheric retrieval, plume detection, emission quantification). Когда **upstream sensor stream исчезает** — все downstream ML-модели становятся бесполезны на новых данных. То же самое случилось бы при потере любой ключевой сенсорной модальности: AI зависит от data stability в источнике. Это применимо за пределами satellite MRV: ML-модели на сенсорах в производственной автоматизации, ML-модели на медицинских изображениях, ML-модели на video feeds — **все они дискредитируются при потере upstream sensor**. AI — это **слой над данными**, не **источник данных**.
 
-**Какая фраза часто звучит в industry conversations.** «Если MethaneSAT — это $88 млн на 13 месяцев работы — это $7 миллионов в месяц. На той же сумме можно было профинансировать год intensive OGI campaigns на 10 крупнейших Пермских операторах + Bridger Photonics aerial campaign + 100 SeekOps drone missions». Это **upper bound on cost effectiveness** для NGO-funded environmental monitoring; и тем фактом, что MethaneSAT всё равно был запущен (под предположением 5-year lifetime), показывает, что **strategic value мониторинга на global scale** перевешивает per-month cost calculus. Но при reduced lifetime — этот расчёт меняется.
+**Какая фраза часто звучит в industry conversations.** «Если MethaneSAT — это $88 млн на 15,5 месяцев работы — это **~$5,7 миллионов в месяц** (vs предполагалось ~$1,5 млн/мес при 5-летнем lifetime, что и обосновывало миссию). На той же сумме можно было профинансировать год intensive OGI campaigns на 10 крупнейших Пермских операторах + Bridger Photonics aerial campaign + 100 SeekOps drone missions». Это **upper bound on cost effectiveness** для NGO-funded environmental monitoring; и тем фактом, что MethaneSAT всё равно был запущен (под предположением 5-year lifetime), показывает, что **strategic value мониторинга на global scale** перевешивает per-month cost calculus. Но при reduced lifetime — этот расчёт меняется драматически: **realized cost per month вырос в ~4×**.
 
 **Что делать после MethaneSAT.** К концу 2025 года и в течение 2026 года в индустрии разворачиваются параллельные направления mitigation:
 
@@ -123,19 +123,19 @@ Q2 — это самый необычный квадрант на keystone-ма�
 
 **Carbon Mapper Tanager-1.** Карбоновый mapping satellite от коалиции **Planet Labs + NASA Jet Propulsion Laboratory + Carbon Mapper Inc.** (NGO). Запущен **16 августа 2024 года**, full operations summer 2025. Facility-level detection — то есть способный идентифицировать утечки на уровне отдельной установки (компрессорная станция, отдельный wellpad). Tanager-1 — **первый из планируемой constellation Tanager**.
 
-**GHGSat (Канада).** Коммерческое созвездие из **16 спутников к 2025 году** (12 cubesats в начале 2024 + дополнительные запуски в 2024–2025) [25]. **Разрешение 25 метров** — самое детальное среди коммерческих метановых спутников. Customers — операторы в Permian, Marcellus, Alberta; страховые компании; регуляторы. GHGSat — **commercial paid service**: оператор платит за inspection своих площадок, в отличие от MethaneSAT (open data) и Carbon Mapper (mixed model). Это **более устойчивая business model** для long-term operation.
+**GHGSat (Канада).** Коммерческое созвездие из **13 спутников к середине 2025 года** (12 cubesats к началу 2024 + Vanguard в 2025; ранее планы анонсировались до 16 к концу 2025, но фактический запуск отстал от плана) [25]. **Разрешение 25 метров** — самое детальное среди коммерческих метановых спутников. Customers — операторы в Permian, Marcellus, Alberta; страховые компании; регуляторы. GHGSat — **commercial paid service**: оператор платит за inspection своих площадок, в отличие от MethaneSAT (open data) и Carbon Mapper (mixed model). Это **более устойчивая business model** для long-term operation.
 
 **Bridger Photonics.** Американская компания (Бозман, Монтана), aircraft-based **Gas Mapping LiDAR**. Самолёт пролетает над нефтепромыслом на низкой высоте; LiDAR-сенсор измеряет концентрацию метана в каждой точке трассы. Согласно валидационной кампании British Columbia LDAR, **aerial measurements 4× более точные**, чем ground OGI survey на тех же сайтах [26]. Customers — ExxonMobil, ConocoPhillips, EOG Resources, Pioneer (после слияния — часть ExxonMobil). Bridger — **flagship aerial provider** в США.
 
 **SeekOps.** Drone-based methane detection. Используется в midstream applications (compressor stations, газораспределительные сети) и для gas utilities (городское газоснабжение). Customers — TC Energy, ENGIE, gas utilities. Дроны — **самый дешёвый способ** охватить тонко-распределённую инфраструктуру (длинные трубопроводы, города), но **локальный охват** ограничивает применимость.
 
-**Project Canary.** Methane analytics + ESG ratings. Не сенсорный поставщик per se; agreggate данные от других источников + добавляет certification framework для operators. Это пример **layered MRV ecosystem**: сенсоры → ML → analytics → ratings → ESG investors.
+**Project Canary.** Methane analytics + ESG-рейтинги. Не сенсорный поставщик как таковой; агрегирует данные от других источников + добавляет сертификационный подход для операторов. Это пример **многослойной MRV-экосистемы**: сенсоры → ML → analytics → ratings → ESG-инвесторы.
 
 **Сравнительная таблица сенсорных модальностей Q2.**
 
 | Модальность | Разрешение | Cost per coverage | Применение |
 |---|---|---|---|
-| MethaneSAT (был) | ~200×200 км scenes | Низкое (open data) | Wide-area regulatory baseline |
+| MethaneSAT (был) | ~200×200 км сцены | Низкое (open data) | Wide-area регуляторный исходный уровень |
 | Carbon Mapper Tanager-1 | Facility-level | Средние (mixed) | Facility-level inventory |
 | GHGSat constellation | 25 м | Среднее (commercial) | Operator-paid inspections |
 | Bridger Photonics aerial | Sub-meter (LiDAR) | Среднее-высокое | High-precision pre-regulatory campaigns |
@@ -143,7 +143,7 @@ Q2 — это самый необычный квадрант на keystone-ма�
 | Hand-held OGI | Sub-meter | Лоу per inspection | Compliance verification |
 | Picarro / LI-COR portable | Point measurement | Лоу per point | Quantification ground truth |
 
-**Что это таблица показывает.** Q2 — это **stack нескольких модальностей**, а не «AI заменяет OGI». Эффективная MRV programme комбинирует satellite (wide-area baseline) + aerial (high-precision regional campaigns) + drone (midstream coverage) + ground OGI (compliance and localization) + portable analyzer (quantification ground truth). AI — это **слой fusion + interpretation поверх всех модальностей**. Когда вендор продаёт «AI MRV solution» — спросить: **какие модальности он покрывает?** Single-modality «AI MRV» — это marketing-фраза.
+**Что эта таблица показывает.** Q2 — это **стек нескольких модальностей**, а не «AI заменяет OGI». Эффективная MRV-программа комбинирует спутник (wide-area исходный уровень) + авиа (high-precision региональные кампании) + дрон (покрытие midstream) + наземный OGI (compliance и локализация) + переносной анализатор (эталонная разметка для количественной оценки). AI — это **слой fusion + интерпретации поверх всех модальностей**. Когда вендор продаёт «AI MRV solution» — спросить: **какие модальности он покрывает?** Single-modality «AI MRV» — это маркетинговая фраза.
 
 ### §3.5. 4× discrepancy: industry vs регулятор
 
@@ -155,7 +155,7 @@ Q2 — это самый необычный квадрант на keystone-ма�
 **EPA Inventory (официальная оценка):** **примерно 4 миллиона тонн/год**.
 **Фактор разрыва:** **примерно 4×.**
 
-**Параллельная Stanford 2024 study.** Опубликована в Nature в марте 2024 года [27]. Aerial campaign на US O&G basins; результат — **примерно 7,5 миллионов тонн/год**. Это **фактор 2 outyer EPA Inventory** — не такой большой, как MethaneSAT factor 4, но всё равно значительный.
+**Параллельная Stanford 2024 study.** Опубликована в Nature в марте 2024 года [27]. Aerial campaign на US O&G basins; результат — **>6 миллионов тонн/год** (точная цифра в paper — около 6,2–7,5 Mt в зависимости от basin coverage и aggregation method). Это **фактор ~2 outlier EPA Inventory** — не такой большой, как MethaneSAT factor 4, но всё равно значительный.
 
 **Aerial vs OGI на одних и тех же sites.** Aerial measurements (Bridger Photonics) **4× выше**, чем ground OGI на тех же sites (British Columbia LDAR validation study) [28]. Это означает: **ground OGI системно underestimates** утечки в сравнении с aerial — потому что OGI inspector проходит сайт за 10–20 минут и **физически не видит intermittent emissions**, которые случаются за пределами этого окна.
 
@@ -197,7 +197,7 @@ Q2 — это не только технологическая ниша, но и
 
 - **Allows satellite quantification** как primary data source для отчётности.
 - **«Other large release events» — новая category** для intermittent superemitters.
-- **September 2024 — EPA proposed delay** Subpart W effective date **до 2034 года** [31]. Это **критический политический контекст** — Trump admin 2025+ ведёт review EPA regulations, и Subpart W в зоне неопределённости. На момент написания (май 2026) **финальный статус волатилен** [VFY-day-of].
+- **September 2025 — Trump administration proposal**: EPA опубликовала proposed rule с delay Subpart W effective date **до 2034 года** [31]. Это **критический политический контекст** — Trump admin 2025+ ведёт review EPA regulations, и Subpart W в зоне неопределённости. Финальный статус **зависит от EPA leadership** и judicial review challenges; на момент написания (май 2026) **status uncertain** [VFY-day-of].
 
 **US IRA Waste Emissions Charge** — fees на методан-outliers, $1500/тонна CH₄ с tiered structure (планируется но statutory implementation [VFY-day-of]).
 
@@ -268,7 +268,7 @@ Net эффект — **AI снижает operational cost LDAR на 20–40%** �
 
 5. **Когда custody transfer requires direct measurement vs когда AI estimate приемлем?** Используйте регуляторный context (EPA Subpart W, EU Methane Reg, OGMP Level 4 vs 5) для structural reading. Можно ли AI вообще участвовать в custody transfer chain — в каком role?
 
-6. **LDAR programme economics с AI vs без.** Возьмите гипотетический Permian operator с 50 production sites. Стоимость traditional ground OGI LDAR (4×/год surveys) — $5–10M/год. Что добавляет AI MRV stack (aerial + satellite + ML-assisted attribution) к этой картине? Где expected cost savings, где expected cost increase?
+6. **Экономика LDAR-программы с AI vs без.** Возьмите гипотетического Пермского оператора с 50 production sites. Стоимость традиционного наземного OGI LDAR (4×/год обходов) — $5–10M/год. Что добавляет AI MRV-стек (авиа + спутник + ML-assisted attribution) к этой картине? Где ожидаемая экономия, где ожидаемый рост затрат?
 
 ---
 
@@ -284,7 +284,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 **Connection to keystone-оси.** В Q1 у нас были данные и физика — AI работал как мультипликатор. В Q3 — физика была, данных не было — AI работал как augmentation поверх симуляторов. В Q2 — данные были, физики не было — AI работал как essential (потому что классической альтернативы не было). В Q4 — **обе стороны слабые**: данных мало, физика на длинных горизонтах не закрыта. И AI **не может компенсировать** обе слабости одновременно.
 
-**Что это значит для AI deployment.**
+**Что это значит для развёртывания AI.**
 
 1. **Hybrid AI + physics — единственный workable путь.** Чистый ML — галлюцинирует на out-of-distribution; чистая физика — слишком медленно для практической инженерии; hybrid (PINN, physics-constrained ML) — research-grade, но **направление развития**.
 2. **Long-horizon prediction — структурно уязвимо.** Predicted plume migration на 100 лет — это область, где даже classical physics имеет large uncertainty bands; AI на top — ещё больше. Hallucination risk для LLM-based agents в long-horizon planning — реальный.
@@ -300,7 +300,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 - **Site selection** — где буровать injection wells, как оценить geological storage capacity. ML augments classical geomechanics; типичный claim в industry reviews — **10–15% improved monitoring accuracy** [32].
 - **Plume migration monitoring** — 4D-сейсмика + ML для tracking облака CO₂ после injection. Это **active R&D area** в 2024–2026.
-- **AI in capture (upstream от CCS injection)** — оптимизация absorber process; **10–20% cost reduction** projects на Mongstad (Норвегия) и Boundary Dam (Канада) [33]. Industry baseline cost — $80–120/тонна captured CO₂; AI снижает к $65–100/тонна.
+- **AI на этапе capture (upstream от CCS-инжекции)** — оптимизация absorber-процесса; **10–20% снижение затрат** на проектах Mongstad (Норвегия) и Boundary Dam (Канада) [33]. Отраслевой исходный уровень затрат — $80–120/тонна captured CO₂; AI снижает до $65–100/тонна.
 
 **Базовая контекстуализация — 190× scale-up gap.**
 
@@ -317,6 +317,13 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 И AI **не решает ни одну из этих структурных задач**. AI улучшает per-project cost effectiveness на 10–20% — но **не масштабирует индустрию**. Это критический момент честности: **AI — это catalyst, не silver bullet** для climate transition.
 
+**Тип-сцеплённость с Q4 (низкие данные × низкая физическая определённость).** Northern Lights — канонический Q4-кейс по двум причинам, и обе вытекают непосредственно из определений осей keystone-матрицы.
+
+- **Низкая доступность данных.** CO₂ plume migration на 100-летнем горизонте захоронения имеет **ограниченные операционные аналоги**. Ни один CCS-проект мира не работал 100 лет — самые старые injection wells (Sleipner, Норвегия, 1996+) дают ~30 лет данных; всё, что дальше, — extrapolation. ML-модель, обученная на доступном historical CCS, **структурно не может валидироваться** для 100-летнего горизонта.
+- **Низкая определённость физики.** CO₂-поведение в реальной геологии включает **многофазовое течение** (СО₂-сверхкритический, brine, dissolved CO₂), **геохимические реакции** с пластом (carbonate dissolution / precipitation, изменяющие проницаемость во времени), **геомеханические эффекты** (induced seismicity, caprock integrity). Каждая компонента имеет parameter uncertainty **~30–50% от laboratory values** при переходе к реальной геологии. Это **не «нужно больше моделировать»**; это **fundamental epistemic uncertainty**.
+
+Поэтому в Q4 рабочий паттерн — **hybrid AI + physics** (PINN / ROM-augmented Eclipse + senior reservoir engineer judgment) — единственный возможный подход. Чистый ML не работает (data scarcity); чистая физика не работает (компьютационно недоступно для уплотнённых scenario-runs). Это **противоположно** Q1, где обе оси высокие и AI — мультипликатор; и противоположно Q3, где данных мало, но физика хорошо описана, поэтому работают **physics-first + AI screening**.
+
 ### §4.3. Fervo Energy EGS: 40× growth ceiling, IPO с премией 331%
 
 [for-slide-s30]
@@ -325,7 +332,7 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 **Cape Station Utah project.** $206 миллионов финансирования в июне 2025 года [VFY-day-of]; объект — flagship EGS plant. Driver спроса — **AI data centers тянут спрос на 24/7 clean power**. Renewable solar/wind — intermittent (нужны batteries для 24/7), nuclear — slow build, geothermal — **only renewable baseload**, доступный при сегодняшних технологиях. Поэтому EGS получает venture capital в темпе, какого не было 20 лет.
 
-**Fervo IPO в мае 2026 года — +331% к offering price** [VFY-day-of] [34]. Это **flagship moment** для геотермальной индустрии: первый крупный clean-tech EGS IPO с такой премией. Параллельно — **Eavor Technologies** (Канада) closed-loop geothermal, **Sage Geosystems** и **Quaise Energy** в early-stage EGS variants.
+**Fervo IPO в мае 2026 года — +331% к offering price** [VFY-day-of] [34]. **База: от какого исходного уровня?** Премия рассчитывается от **IPO offering price** (цена размещения в первый день торгов), а не от ранних valuation rounds. Для контекстуализации: Fervo Series D осенью 2024 закрыла $244M при pre-money valuation ~$2,5B; IPO offering price отражал valuation около $1,05B (markdown относительно последнего private round — типично для clean-tech 2025–2026); +331% к IPO offering вернул market cap к ~$4,5B по итогам первого дня торгов. Таким образом, **+331%** — это **first-day pop**, не cumulative growth от founding; и это **flagship moment** для геотермальной индустрии: первый крупный clean-tech EGS IPO с такой премией. Параллельно — **Eavor Technologies** (Канада) closed-loop geothermal, **Sage Geosystems** и **Quaise Energy** в early-stage EGS variants.
 
 **Базовая контекстуализация — 40× growth ceiling.**
 
@@ -358,6 +365,13 @@ Q4 — это **самый честный квадрант** keystone-матри
 
 Все три — **early-stage**, и **не один из них** ещё не доказал commercial scalability в 2026 году. Они представляют **option value** для следующей волны Q4 development; в моменте — Fervo единственный с production-grade deployments.
 
+**Тип-сцеплённость с Q4 (низкие данные × низкая физическая определённость).** Fervo EGS — Q4-кейс по двум причинам, симметричным к Northern Lights:
+
+- **Низкая доступность данных.** Enhanced geothermal в hard rock на глубине 3–5 км — **новая технология промышленного масштаба**. Сlassical hydrothermal geothermal (Larderello Italy с 1904; Geysers California с 1960) даёт 50–100 years operational history, но это **другая физика** (естественные resvoirs vs искусственно созданные через фрекинг). Для Fervo-class EGS первые commercial wells пробурены 2021–2024 — горизонт «обычно поведёт» составляет 3–5 лет, а проектные lifetimes — 30+ лет. ML-модель thermal performance декomposition обучается на **очень ограниченном датасете** и **не валидирована** для 30-летнего горизонта.
+- **Низкая определённость физики.** **Coupled THMC** (thermo-hydro-mechanical-chemical) coupled-physics включает: thermal extraction (как остывает rock), hydraulic flow (как движется вода через искусственные fractures), mechanical fracture network evolution (раскрытие/закрытие fractures под thermal/pressure stress во времени), chemical scaling (mineral precipitation в fractures, blocking flow). Каждая из этих компонент — **open research question**. Industry-standard simulator для full THMC coupled physics на geological time scales **не существует** в production-grade.
+
+Поэтому Fervo использует **fiber optic distributed temperature sensing** как **operational ground truth** для краткосрочной (днях-месяцах) валидации; на длинных горизонтах применяется **hybrid AI + physics + senior reservoir engineer judgment**. AI здесь — **catalyst per-unit cost effectiveness** (–10–20% per well через optimal placement и fracture design), не **scale solution**. **Build 150 GW EGS** требует tens of thousands wells — задача десятилетий, и AI не делает её десятикратно быстрее.
+
 ### §4.4. Провал 1: CCS 190× scale-up gap + AI long-horizon hallucination
 
 [for-slide-s31]
@@ -373,10 +387,10 @@ Q4 — это **самый честный квадрант** keystone-матри
 CCS injection хранит CO₂ под землёй **на сотни-тысячи лет**. Mandatory regulatory requirement — **monitoring + verification** that CO₂ stays underground, **на десятилетия**. Critical question: где будет CO₂ облако через 50, 100, 500 лет?
 
 - **Classical physics-based modelling** (Eclipse + geomechanics) — имеет large uncertainty bands на 100-летнем горизонте. **Это известный gap** — geomechanics на длинных временных шкалах слабо валидирована.
-- **AI-based plume migration prediction** — overlays на classical physics. Может ускорить scenario screening. Но на out-of-distribution scenarios (e.g., earthquake disrupts caprock в год 47) — **галлюцинирует**.
+- **AI-based prediction миграции облака CO₂** — наложения на классическую физику. Может ускорить предварительный сценарный отбор. Но на out-of-distribution сценариях (например, землетрясение разрушает caprock в год 47) — **галлюцинирует**.
 - **Hallucination risk в LLM-based agents для long-horizon planning** — Gartner 2027 prediction: **40% агентных AI-проектов будут отменены** из-за cost overruns и poor risk controls [35].
 
-**Связь LLM hallucination и CCS long-horizon prediction.** LLM agents в production deployment — например, Aramco METABRAIN agents, отвечающие на вопросы инженеров — могут давать **уверенные ответы на out-of-distribution questions**. На вопрос «где будет CO₂ облако через 100 лет?» — LLM сгенерирует ответ. Inженер не сможет легко отличить galleon hallucinated ответ от physics-based ответа. **Это inherent risk LLM в high-stakes ops**, и для CCS long-horizon monitoring — этот risk материален.
+**Связь между галлюцинациями LLM и долгосрочным прогнозированием CCS.** LLM-агенты в промышленном развёртывании — например, агенты Aramco METABRAIN, отвечающие на вопросы инженеров — могут давать **уверенные ответы на вопросы вне распределения обучающих данных**. На вопрос «где будет облако CO₂ через 100 лет?» — LLM сгенерирует ответ. Инженер не сможет легко отличить галлюцинированный ответ от ответа, основанного на физике. **Это присущий риск LLM в задачах высокой ответственности**, и для долгосрочного мониторинга CCS — этот риск материален.
 
 **Mitigation — три направления.**
 
@@ -398,9 +412,25 @@ CCS injection хранит CO₂ под землёй **на сотни-тыся�
 
 - **Operator learning** (DeepONet, FNO — Fourier Neural Operator) — обучают neural network представлять **оператор** между функциями (e.g., от initial conditions к solution); компактнее чем full PINN.
 - **Reduced-order modelling (ROM) с ML augmentation** — классический ROM (POD — proper orthogonal decomposition) с ML для capturing residual nonlinearities.
-- **Differentiable physics simulators** (JAX-MD, PhiFlow) — physics simulator written в auto-differentiable framework, что позволяет use gradient-based optimization для inverse problems.
+- **Differentiable physics simulators** (JAX-MD, PhiFlow) — физический симулятор, написанный в авто-дифференцируемом подходе, что позволяет использовать градиентную оптимизацию для обратных задач.
 
 Это **active R&D fronts**, и инженер курса с глубоким интересом к Q4 / energy transition должен следить за этой литературой. Но коммерчески mature deployments в нефтегазе — **5–10 лет вперёд**, не сейчас.
+
+**Зачем вообще нужен ML-суррогат в Q4 — три инженерных мотивации.**
+
+Если pure-ML галлюцинирует на длинных горизонтах, а PINN ещё не industrial-grade — почему индустрия не использует **только** классический physics simulator? Ответ — **compute-time trade-off**, который определяет, что вообще возможно делать в инженерном workflow.
+
+- **Time-to-result.** Eclipse / INTERSECT full-order simulation для basin-scale CCS plume migration на 100-летнем горизонте — **2–6 недель wall-clock time** на high-end HPC. ROM-augmented суррогат — **минуты до часов**. Difference в 3–4 orders of magnitude. Это меняет inженерный workflow от «один run в месяц» к «10 000 scenario sweeps в день». Без surrogate уровня speed-up **scenario analysis на длинных горизонтах структурно невозможен** — невозможно ответить на вопрос «как изменится plume через 100 лет при 50 разных climate-change сценариях».
+- **Calibration cycle.** Калибровка reservoir simulator к historical production data (history matching) требует тысяч forward simulations. С Eclipse — недели; с ML surrogate — часы. Это позволяет calibrate в **near-real-time** при поступлении новых data, что критично для active reservoir management.
+- **Uncertainty quantification.** Modern reservoir management требует **Monte Carlo runs** для characterization parameter uncertainty (geological heterogeneity, fluid PVT uncertainty, fracture network realisation). 1000+ samples × full-order simulator = **infeasible**. С surrogate — feasible.
+
+**Конкретные deployments hybrid AI + physics в нефтегазе 2024–2026.**
+
+- **Aramco PINN-based reservoir model** — academic-industrial collaboration с KAUST (King Abdullah University of Science and Technology). Прототип для **carbonate reservoir modeling** в крупных Saudi месторождениях; production deployment не объявлен (research-grade).
+- **ExxonMobil DeepONet для THMC simulation** — collaboration с Princeton; целевая application — **CCS plume migration** на Permian basin CO₂ storage scenarios. Опять research-grade в 2026 году.
+- **TotalEnergies + IFP Énergies Nouvelles ROM-augmented Eclipse** — operational deployment для **history matching** на ряде Северо-морских месторождений. Это **rare пример commercial production deployment** — но scope ограничен specific reservoir types, не general-purpose.
+
+**Trade-off, который должен знать студент.** Hybrid AI + physics — это **speed × accuracy × physical consistency** triangle, где можно выбрать только 2 из 3. Full-order Eclipse — accuracy + physical consistency, медленно. Pure ML surrogate — speed + accuracy на training distribution, теряет physical consistency на extrapolation. PINN / ROM-augmented — speed + physical consistency, но accuracy ограничена сложностью embedded physics. Нет «free lunch». Инженер должен **явно выбрать**, какие два угла важнее для конкретной задачи, и принять trade-off третьего.
 
 ### §4.5. Провал 2: refinery plant-wide stagnation в Q4 frame
 
@@ -420,11 +450,11 @@ CCS injection хранит CO₂ под землёй **на сотни-тыся�
 
 CCS injection plant — это **многоюнитная инсталляция**: capture unit + transport pipeline + injection wells + monitoring wells. Координация этих компонентов на 30–50-летнем горизонте requires multi-physics coupling. AI **может** делать узкую оптимизацию (например, один injection well rate, один capture absorber). AI **не может** делать координированное plant-wide управление с multi-decade outlook.
 
-То же касается Fervo EGS — каждое EGS-устройство имеет capture + thermal extraction + power generation; multi-physics; long horizons. AI work works в каждой компоненте; **integrated plant-wide AI deployment** структурно неполный.
+То же касается Fervo EGS — каждое EGS-устройство имеет capture + thermal extraction + power generation; multi-physics; long horizons. AI работает в каждой компоненте; **интегрированное plant-wide развёртывание AI** структурно неполное.
 
 **Выученный урок (фундаментальный для LO2).**
 
-**Когда задача требует multi-physics coupling + long horizons + edge cases — AI deployment затрудняется фундаментально, не из-за нехватки training data.** Это не «больше данных решит проблему»; это **constraint самой ML методологии** — обобщение нейронных сетей хорошо работает в interpolation regime, плохо в extrapolation regime, **очень плохо в multi-physics extrapolation regime**.
+**Когда задача требует multi-physics coupling + long horizons + краевых случаев — развёртывание AI затрудняется фундаментально, не из-за нехватки обучающих данных.** Это не «больше данных решит проблему»; это **ограничение самой ML-методологии** — обобщение нейронных сетей хорошо работает в режиме интерполяции, плохо — в режиме экстраполяции, **очень плохо — в режиме multi-physics экстраполяции**.
 
 ### §4.6. Альтернатива: physics simulators + SIS (приборные системы безопасности)
 
@@ -456,7 +486,7 @@ CCS injection plant — это **многоюнитная инсталляция
 - **Blowout preventer (BOP)** — закрытие устья скважины при выбросе.
 - **Pressure relief valve (PRV)** — выпуск давления при exceedance limit.
 - **Emergency shutdown (ESD) logic** — координированное отключение технологии при критическом событии.
-- **Fire & gas detection** — деitalised срабатывание при концентрации горючих/токсичных газов.
+- **Fire & gas detection** — детерминированное срабатывание при концентрации горючих/токсичных газов.
 
 **ML не сертифицируется под IEC 61511 в текущем фрейме.** Probability of failure on demand (PFD) для ML-модели **не доказывается аналитически** так же, как для дискретной логики; в дискретной логике мы перечисляем все возможные states и докажем, что failure occurs только в specific conditions; для ML это невозможно (state space слишком большой). **Альтернатива:** physics-based redundancy + 3oo2 voting (три датчика, действие при согласии двух), периодические proof tests (квартальная проверка каждой safety функции), fail-safe design (при отказе системы — состояние safe state).
 
@@ -468,7 +498,7 @@ CCS injection plant — это **многоюнитная инсталляция
 
 **Критерий 3 — Plant-wide multi-physics coupling.** Узкие циклы — OK для AI; координация через десятки units — структурно сложно. Альтернатива: classical APC + senior operator.
 
-**Cross-link к Deepwater Horizon 2010.** Этот случай мы разбираем в Части 4 §5.5 как исторический якорь Q4 SIS alternatives. Key takeaway: **alarm bypass культура** + insufficient operator training + complex automation = catastrophe. AI добавляет complexity; для compensating нужно investments в **operator training + alarm management** + **safety case engineering** — не только в models.
+**Перекрёстная ссылка на Deepwater Horizon 2010.** Этот случай мы разбираем в Части 4 §5.5 как исторический якорь Q4 SIS-альтернатив. Ключевой вывод: **культура обхода тревог** + недостаточная подготовка операторов + сложная автоматизация = катастрофа. AI добавляет сложность; для компенсации нужны инвестиции в **подготовку операторов + управление тревогами** + **safety case engineering** — не только в модели.
 
 **Federated learning + privacy-preserving ML — emerging альтернативный путь.** Это **research-grade** в нефтегазе, но потенциально важное направление. В нефтегазовой индустрии data часто не shared между операторами по конкурентным причинам — Aramco не делится Permian data с ExxonMobil, Газпром нефть не делится Ямал data с ЛУКОЙЛ. Это создаёт **fundamental gap**: ML models учатся на одном operator data, что limits generalization и precludes cross-operator learning.
 
@@ -480,7 +510,7 @@ CCS injection plant — это **многоюнитная инсталляция
 2. **Methane MRV calibration** — multiple operators sharing calibration data без revealing competitive production details.
 3. **Drilling automation** — sharing learned drilling patterns между operators без revealing specific drilling locations.
 
-В 2026 году commercial federated learning deployments в нефтегазе **rare** — есть pilots, но scale deployment ещё нет. Демонстрировано в banking (Visa cross-bank fraud detection), healthcare (NIH multi-institutional medical imaging). К 2030 году federated learning может стать **mainstream pattern** для cross-operator AI в нефтегазе, особенно для methane MRV где регулятор требует triangulation. Для студента — направление, за которым стоит следить.
+В 2026 году коммерческие развёртывания federated learning в нефтегазе **редки** — есть пилоты, но масштабного развёртывания ещё нет. Продемонстрировано в банкинге (Visa cross-bank fraud detection), здравоохранении (NIH multi-institutional medical imaging). К 2030 году federated learning может стать **основным паттерном** для межоператорского AI в нефтегазе, особенно для метановой MRV, где регулятор требует триангуляции. Для студента — направление, за которым стоит следить.
 
 ### §4.7. Самопроверка по Q4
 

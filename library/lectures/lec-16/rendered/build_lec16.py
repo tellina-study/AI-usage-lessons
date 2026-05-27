@@ -205,7 +205,7 @@ def add_notes(slide, text):
 
 
 # Roadmap sections for Lec-16: 7 разделов
-SECTIONS = ["Keystone", "Q1 Mature", "Q3 Frontier", "Q2 Methane", "Q4 Transition", "Россия", "Сквозные"]
+SECTIONS = ["Стержень", "Q1 Зрелое", "Q3 Разведка", "Q2 Метан", "Q4 Переход", "Россия", "Сквозные"]
 
 
 def roadmap_bar(slide, current_section):
@@ -285,10 +285,10 @@ def s01_hero_permian(p):
         ("для всего бассейна", {"size": 12, "color": SLATE}),
         ("", {"size": 10}),
         ("Не аварии — нормальный", {"size": 13, "color": DEEP}),
-        ("operational режим.", {"size": 13, "color": DEEP}),
-        ("Добыча идёт быстрее,", {"size": 13, "color": DEEP}),
-        ("чем строится газовая", {"size": 13, "color": DEEP}),
-        ("инфраструктура.", {"size": 13, "color": DEEP}),
+        ("эксплуатационный режим.", {"size": 13, "color": DEEP}),
+        ("Сжигать избыточный газ", {"size": 13, "color": DEEP}),
+        ("быстрее и дешевле, чем", {"size": 13, "color": DEEP}),
+        ("строить газовую инфраструктуру.", {"size": 13, "color": DEEP}),
     ], line_spacing=1.1)
     gold_callout(slide, 0.5, 6.3, 12.33, 0.8,
                  "AI в нефтегазе — не «улучшалка на 5%», а способ закрыть конкретные провалы. И закрывает либо громко, либо публично проваливается.",
@@ -320,7 +320,7 @@ def s02_cover(p):
          {"size": 13, "color": DEEP}),
         ("а где он либо необходим, либо опасен — на материале",
          {"size": 13, "color": DEEP}),
-        ("10 documented провалов индустрии 2014–2026?",
+        ("10 разобранных провалов индустрии 2014–2026?",
          {"size": 13, "bold": True, "color": DEEP}),
     ], line_spacing=1.15)
     footer(slide, "Курс «Применение AI в инженерии» · Студенты-инженеры 3 курса · 2026")
@@ -370,11 +370,11 @@ def s04_lecture_map(p):
              "Не по value chain, а по структуре AI-задачи: данные × физика",
              size=14, italic=True, color=LIGHT)
     sections = [
-        ("1", "Keystone", "Матрица", "Данные × физика, 4 квадранта", LIGHT),
-        ("2", "Q1 Mature", "3 кейса · 2 провала", "Зрелое производство", MID),
-        ("3", "Q3 Frontier", "3 кейса · 2 провала", "Разведка фронтиров", TEAL),
-        ("4", "Q2 Methane", "4 системы · 2 провала", "Метановая MRV", GOLD),
-        ("5", "Q4 Transition", "2 пилота · 2 провала", "CCS + EGS", LIGHT),
+        ("1", "Стержень", "Матрица", "Данные × физика, 4 квадранта", LIGHT),
+        ("2", "Q1 Зрелое", "3 кейса · 2 провала", "Зрелое производство", MID),
+        ("3", "Q3 Разведка", "3 кейса · 2 провала", "Разведка фронтиров", TEAL),
+        ("4", "Q2 Метан", "4 системы · 2 провала", "Метановая MRV", GOLD),
+        ("5", "Q4 Переход", "2 пилота · 2 провала", "CCS + EGS", LIGHT),
         ("6", "Россия", "3 программы", "Санкции, инсорсинг", MID),
         ("7", "Сквозные риски", "2 провала", "Кибер + кризис 2020", DEEP),
     ]
@@ -410,7 +410,7 @@ def s05_keystone_matrix(p):
              "Когда AI работает в нефтегазе? Матрица данные × физика",
              size=24, bold=True, color=DEEP)
     text_box(slide, 0.5, 0.95, 12.33, 0.4,
-             "От разведки фронтиров до спутникового метана — AI имеет 4 разных profile",
+             "От разведки фронтиров до спутникового метана — AI имеет 4 разных профиля",
              size=13, italic=True, color=LIGHT)
     # Y-axis labels (placed in column на левой стороне)
     text_box(slide, 0.1, 1.7, 1.5, 0.4, "Высокая ↑",
@@ -446,7 +446,7 @@ def s05_keystone_matrix(p):
         text_box(slide, x + 0.2, y + 0.7, quad_w - 0.4, quad_h - 0.85, body,
                  size=12, color=DEEP, line_spacing=1.35)
     gold_callout(slide, 0.5, 7.0, 12.33, 0.45,
-                 "За каждым AI-внедрением — alternative tool: физический симулятор, OGI-камера, классическая интерпретация.",
+                 "За каждым AI-внедрением — альтернатива: физический симулятор, OGI-камера, классическая интерпретация.",
                  size=12)
     add_notes(slide, "См. slides/s05-keystone-matrix.md speaker notes.")
 
@@ -481,16 +481,16 @@ def s07_pilot_stuck(p):
         ("", {"size": 4}),
         ("1. Данные. 60–80% времени AI-проекта = очистка данных. Только 21% энергокомпаний имеют качество для AI промышленного уровня.", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("2. Legacy IT integration. Стоимость интеграции SCADA/MES/ERP — в 3–5× выше стоимости AI-софта.", {"size": 11, "color": DEEP}),
+        ("2. Интеграция со старой IT. Стоимость интеграции SCADA/MES/ERP — в 3–5× выше стоимости AI-софта.", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("3. Дефицит кадров. AI + предметная область. После 2020 крах — 107k jobs потеряно.", {"size": 11, "color": DEEP}),
+        ("3. Дефицит кадров. AI + предметная область. После кризиса 2020 — 107 тыс. рабочих мест потеряно.", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("4. Культура безопасности. Senior operator отказывает рискованной рекомендации — и часто прав.", {"size": 11, "color": DEEP}),
+        ("4. Культура безопасности. Старший оператор отказывает рискованной рекомендации — и часто прав.", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("5. Горизонт ROI. AI-vendor обещает 12–18 мес; field life 20–30 лет. Несовместимо.", {"size": 11, "color": DEEP}),
+        ("5. Горизонт окупаемости. AI-поставщик обещает 12–18 мес; срок жизни месторождения 20–30 лет. Несовместимо.", {"size": 11, "color": DEEP}),
     ], line_spacing=1.2)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Это не «AI плохой» — это статистическая норма отрасли. 14% successful vs 86% stuck — инженерный фильтр, а не приговор.",
+                 "Это не «AI плохой» — это статистическая норма отрасли. 14% работают vs 86% застряли — инженерный фильтр, а не приговор.",
                  size=12)
     add_notes(slide, "См. slides/s07-86-percent-pilot-stuck.md speaker notes.")
 
@@ -502,7 +502,7 @@ def s07b_aspen_alert_fatigue(p):
              "«Усталость от ложных тревог устранена» — это маркетинг",
              size=22, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.2, 12.33, 0.4,
-             "Aspen Mtell на нефтепереработке: 100–500 алертов в день; plant-wide пилоты тихо закрываются.",
+             "Aspen Mtell на нефтепереработке: 100–500 ложных тревог в день; общезаводские пилоты тихо закрываются.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.7, 5.5, 4.5)
     img = ASSETS / "screenshots" / "s09-aspen.jpg"
@@ -515,16 +515,16 @@ def s07b_aspen_alert_fatigue(p):
         ("«Усталость операторов устранена»", {"size": 11, "color": DEEP, "italic": True}),
         ("", {"size": 4}),
         ("Реальность на НПЗ:", {"size": 13, "bold": True, "color": RED_WARN}),
-        ("· 100–500 alerts/день — оператор перестаёт реагировать", {"size": 11, "color": DEEP}),
-        ("· Single-column success → plant-wide пилот тихо закрыт", {"size": 11, "color": DEEP}),
-        ("· Honeywell UOP 310+ юнитов / ~700 НПЗ = ~44% rate", {"size": 11, "color": DEEP}),
+        ("· 100–500 ложных тревог/день — оператор перестаёт реагировать", {"size": 11, "color": DEEP}),
+        ("· Успех на одной колонне → общезаводской пилот тихо закрыт", {"size": 11, "color": DEEP}),
+        ("· Honeywell UOP 310+ установок / ~700 НПЗ = ~44% охвата", {"size": 11, "color": DEEP}),
         ("· Многие НПЗ — «классический APC без AI»", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("Структурный gap:", {"size": 13, "bold": True, "color": GOLD}),
-        ("Multi-physics (масс + энергия + реакция + коррозия) ломает ML-суррогаты на edge cases.", {"size": 11, "color": DEEP}),
+        ("Структурный разрыв:", {"size": 13, "bold": True, "color": GOLD}),
+        ("Многослойная физика (масса + энергия + реакция + коррозия) ломает ML-суррогаты на нестандартных режимах.", {"size": 11, "color": DEEP}),
     ], line_spacing=1.3)
     gold_callout(slide, 0.5, 6.35, 12.33, 0.55,
-                 "Урок: vendor self-report ≠ field reality. Custody transfer, SIS, plant-wide refinery — AI ещё не дошёл.",
+                 "Урок: отчёт поставщика ≠ реальность на установке. Коммерческий учёт, SIS, общезаводская переработка — AI ещё не дошёл.",
                  size=12)
     add_notes(slide, "См. slides/s07b-aspen-alert-fatigue.md speaker notes.")
 
@@ -536,7 +536,7 @@ def s08_ambyint(p):
              "Ambyint InfinityRL: +15% на 200 скважинах Permian",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "Канадский стартап Калгари (2014), $25M Series B 2022. RL для оптимизации искусственного подъёма.",
+             "Канадский стартап Калгари (2014), $25 млн раунд Series B 2022. Обучение с подкреплением для оптимизации механизированной добычи.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.8, 6.0, 4.5)
     img = ASSETS / "charts" / "s08-ambyint-delta.png"
@@ -545,18 +545,18 @@ def s08_ambyint(p):
     multiline_box(slide, 6.9, 1.95, 5.83, 4.3, [
         ("Метрики кейса:", {"size": 14, "bold": True, "color": MID}),
         ("· Регионы: Permian + Eagle Ford + Bakken", {"size": 12, "color": DEEP}),
-        ("· Тип: штанговые насосы + ЭЦН (mature production)", {"size": 12, "color": DEEP}),
-        ("· Baseline: 100–500 bopd per well", {"size": 12, "color": DEEP}),
-        ("· Delta: +15% от per-well historical mean", {"size": 12, "color": DEEP, "bold": True}),
-        ("· На 200 скважинах: +3 000–15 000 bopd total", {"size": 12, "color": GOLD, "bold": True}),
+        ("· Тип: штанговые насосы + ЭЦН (зрелая добыча)", {"size": 12, "color": DEEP}),
+        ("· Исходный уровень: 100–500 баррелей/день на скважину", {"size": 12, "color": DEEP}),
+        ("· Прирост: +15% от среднего исторического", {"size": 12, "color": DEEP, "bold": True}),
+        ("· На 200 скважинах: +3 000–15 000 баррелей/день суммарно", {"size": 12, "color": GOLD, "bold": True}),
         ("", {"size": 6}),
         ("Почему это сильный кейс:", {"size": 14, "bold": True, "color": MID}),
-        ("1. Verifiable baseline — не «спас $10M» без знаменателя.", {"size": 12, "color": DEEP}),
-        ("2. RL поверх классики — augmentation, не замена.", {"size": 12, "color": DEEP}),
+        ("1. Проверяемая база — не «спас $10 млн» без знаменателя.", {"size": 12, "color": DEEP}),
+        ("2. Обучение с подкреплением поверх классики — дополнение, не замена.", {"size": 12, "color": DEEP}),
         ("3. Узкая область — оптимизация подъёма, не «AI везде».", {"size": 12, "color": DEEP}),
     ], line_spacing=1.3)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Когда Ambyint НЕ работает: stripper wells <10 bopd. +15% = +1,5 bopd; стоимость развёртывания > извлечённой ценности.",
+                 "Когда Ambyint НЕ работает: стрипперные скважины (<10 баррелей/день). +15% = +1,5 барр./день; стоимость развёртывания > извлечённой ценности.",
                  size=12)
     add_notes(slide, "См. slides/s08-ambyint-infinityrl.md speaker notes.")
 
@@ -568,20 +568,20 @@ def s09_vendor_landscape(p):
              "Ландшафт поставщиков Q1 — 3 группы",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.05, 12.33, 0.4,
-             "Тот же режим (прогностическое обслуживание) реализуют 10+ вендоров. Mode ≠ brand.",
+             "Тот же режим (прогностическое обслуживание) реализуют 10+ поставщиков. Режим ≠ бренд.",
              size=13, italic=True, color=LIGHT)
     groups = [
-        ("ML-стартапы\nдля производства", LIGHT, [
-            "Ambyint (Калгари) — InfinityRL для\nискусственного подъёма",
-            "OspreyData (→ Mesquite 2022) —\nexpert-augmented ML для ESP, газлифта",
+        ("ML-стартапы\nдля добычи", LIGHT, [
+            "Ambyint (Калгари) — InfinityRL для\nмеханизированной добычи",
+            "OspreyData (→ Mesquite 2022) —\nML с экспертом для ЭЦН, газлифта",
         ]),
-        ("Enterprise\n(NOC + super-majors)", MID, [
+        ("Корпоративные\n(нацкомпании + супермэйджоры)", MID, [
             "SLB Avocet — ПО управления\nдобычей с ML с 2020+",
-            "Halliburton DecisionSpace\nProduction — аналог. Industrial scale.",
+            "Halliburton DecisionSpace\nProduction — аналог. Промышленный масштаб.",
         ]),
-        ("Refinery + pipeline", TEAL, [
-            "AspenTech Aspen Mtell (Emerson)\n— rising через cross-продажи",
-            "Honeywell UOP Connect — 310+\nюнитов / ~700 НПЗ = ~44%",
+        ("НПЗ + трубопроводы", TEAL, [
+            "AspenTech Aspen Mtell (Emerson)\n— растёт через перекрёстные продажи",
+            "Honeywell UOP Connect — 310+\nустановок / ~700 НПЗ = ~44%",
             "Yokogawa / ABB Genix / Emerson —\nконкуренты",
         ]),
     ]
@@ -603,7 +603,7 @@ def s09_vendor_landscape(p):
                 lines.append(("", {"size": 4}))
         multiline_box(slide, x+0.2, y+1.1, col_w-0.4, 3.0, lines, line_spacing=1.3)
     gold_callout(slide, 0.5, 6.05, 12.33, 0.85,
-                 "Bonus — Drilling subset: Nabors PACE-X (4-мильный ствол Bakken) · NOV NOVOS · Precision Drilling AlphaAutomation. Mode = автоматизация бурения; brand вторичен.",
+                 "Бурение (дополнительно): Nabors PACE-X (4-мильный ствол Bakken) · NOV NOVOS · Precision Drilling AlphaAutomation. Режим = автоматизация бурения; бренд вторичен.",
                  size=12)
     add_notes(slide, "См. slides/s09-q1-vendor-landscape.md speaker notes.")
 
@@ -615,7 +615,7 @@ def s10_rosneft_digital_field(p):
              "Роснефть Digital Field на Башнефть Илишевское",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.25, 12.33, 0.4,
-             "Внутренняя разработка после ухода Roxar / Schlumberger в 2022. Vertical integration default.",
+             "Внутренняя разработка после ухода Roxar / Schlumberger в 2022. Вертикальная интеграция по умолчанию.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.8, 6.0, 4.5)
     multiline_box(slide, 0.7, 1.95, 5.7, 4.3, [
@@ -632,19 +632,19 @@ def s10_rosneft_digital_field(p):
     ], line_spacing=1.2)
     rounded_box(slide, 6.7, 1.8, 6.13, 4.5)
     multiline_box(slide, 6.9, 1.95, 5.83, 4.3, [
-        ("Контекст: санкции → insourcing", {"size": 14, "bold": True, "color": MID}),
+        ("Контекст: санкции → внутренняя разработка", {"size": 14, "bold": True, "color": MID}),
         ("", {"size": 6}),
         ("· После марта 2022 — Roxar (Schlumberger), AspenTech, Honeywell ушли с РФ.", {"size": 12, "color": DEEP}),
         ("", {"size": 4}),
-        ("· Vertical integration — необходимость, не выбор.", {"size": 12, "color": DEEP}),
+        ("· Вертикальная интеграция — необходимость, не выбор.", {"size": 12, "color": DEEP}),
         ("", {"size": 4}),
-        ("· Ближе к китайской модели (Sinopec, CNOOC), чем к американской vendor-based.", {"size": 12, "color": DEEP}),
+        ("· Ближе к китайской модели (Sinopec, CNOOC), чем к американской на основе поставщиков.", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
-        ("Caveat:", {"size": 12, "bold": True, "color": GOLD}),
-        ("Российские KPI = self-reported в press release; independent audit ограничен санкциями. Тот же уровень осторожности, что для Aramco $1,8B.", {"size": 11, "italic": True, "color": DEEP}),
+        ("Оговорка:", {"size": 12, "bold": True, "color": GOLD}),
+        ("Российские KPI — самоотчёт в пресс-релизе; независимый аудит ограничен санкциями. Тот же уровень осторожности, что для Aramco $1,8 млрд.", {"size": 11, "italic": True, "color": DEEP}),
     ], line_spacing=1.3)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Башнефть Илишевское — типичное зрелое месторождение Q1: эксплуатируется с 1980-х, ~17 Mt/год исходный уровень. Пилотировать AI на known asset, не на frontier.",
+                 "Башнефть Илишевское — типичное зрелое месторождение Q1: эксплуатируется с 1980-х, ~17 млн т/год исходный уровень. Пилотировать AI на известном активе, не на фронтире.",
                  size=12)
     add_notes(slide, "См. slides/s10-rosneft-digital-field.md speaker notes.")
 
@@ -656,22 +656,22 @@ def s11_cognite_c3ai(p):
              "Cognite + C3.ai: чистые AI-вендоры теряют долю",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.25, 12.33, 0.4,
-             "Foundation models едят vertical AI specialists. Адресуемый рынок уже, чем ожидалось.",
+             "Базовые модели (foundation models) поедают узких отраслевых AI-вендоров. Адресуемый рынок уже, чем ожидалось.",
              size=13, italic=True, color=LIGHT)
     boxes = [
         ("Cognite (Норвегия, выделён из Aker BP 2017)", LIGHT, [
-            "2018: оценка ~$300M",
-            "2021–2022: план IPO $2–3B в 2023",
+            "2018: оценка ~$300 млн",
+            "2021–2022: план IPO $2–3 млрд в 2023",
             "2023: IPO отменён — рыночные условия + сжигание капитала",
-            "2024: ARR $94M (+40% YoY), 871 сотрудник после реструктуризации",
-            "2026: «время IPO неопределённо» (Aker ASA отчёт)",
+            "2024: ARR (годовая повторяющаяся выручка) $94 млн (+40%), 871 сотрудник после реструктуризации",
+            "2026: «время IPO неопределённо» (отчёт Aker ASA)",
         ]),
-        ("C3.ai (US, основан 2009 Tom Siebel)", TEAL, [
+        ("C3.ai (США, основан 2009 Tom Siebel)", TEAL, [
             "BHC3 JV с Baker Hughes (2019) — реструктурирован к 2023",
-            "FY24 O&G вертикаль = 5,9% выручки = ~$18M из $310M",
-            "FY25: «не-нефтегазовая выручка +48% YoY» → нефтегаз уменьшается",
-            "C3.ai сместил фокус на federal/defence",
-            "IPO 2020: $42 → пик ~$15B → 2026: ~$3–4B (−70–80% от пика)",
+            "ФГ24 нефтегаз = 5,9% выручки = ~$18 млн из $310 млн",
+            "ФГ25: «не-нефтегазовая выручка +48%» → нефтегаз уменьшается",
+            "C3.ai сместил фокус на федеральный/оборонный сектор",
+            "IPO 2020: $42 → пик ~$15 млрд → 2026: ~$3–4 млрд (−70–80% от пика)",
         ]),
     ]
     col_w = 6.0
@@ -691,7 +691,7 @@ def s11_cognite_c3ai(p):
             lines.append(("", {"size": 4}))
         multiline_box(slide, x+0.2, y+0.85, col_w-0.4, 3.5, lines, line_spacing=1.25)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Foundation models (SLB Lumi, METABRAIN) поедают узкоспециализированных: (a) большая модель + LoRA > специализированная; (b) крупные NOC разрабатывают свои foundation models.",
+                 "Базовые модели (SLB Lumi, METABRAIN) поедают узкоспециализированных: (a) большая модель + лёгкое дообучение (LoRA) > специализированная; (b) крупные нацкомпании разрабатывают свои базовые модели.",
                  size=12)
     add_notes(slide, "См. slides/s11-cognite-c3ai-decline.md speaker notes.")
 
@@ -706,12 +706,12 @@ def s12_q1_no_ai_criteria(p):
              "Distilled из практики последних 5 лет. Каждый — с конкретной альтернативой.",
              size=13, italic=True, color=LIGHT)
     criteria = [
-        ("1", "Зрелый пласт + Eclipse", "Senior engineer + классический симулятор дают надёжные ответы. ML — overhead без существенного прироста.", LIGHT),
-        ("2", "Stripper wells <10 bopd", "Прибавка +15% = +1,5 bopd; стоимость развёртывания > извлечённой ценности. Юнит-экономика отрицательная.", GOLD),
-        ("3", "Custody transfer metering", "Передача товарной нефти. Регулятор требует mass flow meter 0,2% точности. Не black-box ML.", MID),
-        ("4", "BOP / PRV / ESD — SIS", "SIL3/SIL4 по IEC 61511 = детерминированно + сертифицируемо. ML не сертифицируется.", TEAL),
-        ("5", "Frontier без analog data", "ML не на чем обучать. Senior геофизик + классическая интерпретация (preview Разд. 2).", DEEP),
-        ("6", "EU Methane Reg reporting", "Traceability mandated — не black-box ML estimate. Регуляторный compliance.", LIGHT),
+        ("1", "Зрелый пласт + классический симулятор (Eclipse)", "Опытный инженер + классический симулятор дают надёжные ответы. ML — накладные расходы без существенного прироста.", LIGHT),
+        ("2", "Стрипперные скважины (<10 барр./день)", "Прибавка +15% = +1,5 барр./день; стоимость развёртывания > извлечённой ценности. Юнит-экономика отрицательная.", GOLD),
+        ("3", "Коммерческий учёт нефти (custody transfer)", "Передача товарной нефти. Регулятор требует расходомер 0,2% точности. Не «чёрный ящик» ML.", MID),
+        ("4", "Аварийная остановка (BOP/PRV/ESD) — SIS", "SIL3/SIL4 по IEC 61511 = детерминировано + сертифицируемо. ML не сертифицируется.", TEAL),
+        ("5", "Разведка фронтиров без аналогов", "ML не на чем обучать. Опытный геофизик + классическая интерпретация (далее в Разделе 2).", DEEP),
+        ("6", "Отчётность EU Methane Reg", "Прослеживаемость обязательна — не оценка «чёрного ящика». Регуляторное соответствие.", LIGHT),
     ]
     card_w = 4.0
     card_h = 2.3
@@ -734,7 +734,7 @@ def s12_q1_no_ai_criteria(p):
         text_box(slide, x + 0.2, y + 0.85, card_w - 0.4, card_h - 1.0, body,
                  size=10, color=DEEP, line_spacing=1.3)
     gold_callout(slide, 0.5, 6.65, 12.33, 0.45,
-                 "Главный навык курса: уметь сказать «нет» там, где AI не нужен. 14% successful vs 86% pilot stuck — разница часто именно здесь.",
+                 "Главный навык курса: уметь сказать «нет» там, где AI не нужен. 14% работают vs 86% застряли — разница часто именно здесь.",
                  size=12)
     add_notes(slide, "См. slides/s12-q1-no-ai-criteria.md speaker notes.")
 
@@ -746,8 +746,8 @@ def s12_q1_no_ai_criteria(p):
 def s13_q3_divider(p):
     return section_divider(
         p, "Q3", "Разведка фронтиров",
-        "Каждая wildcat-скважина = $50–100M. Размер выборки 1–5 скважин. ML не обобщается без аналогов. Physics ground truth, AI как дополнение.",
-        "3 рабочих кейса · 2 провала десятилетия · HPC-гонка $100–400M на инсталляцию",
+        "Каждая поисковая скважина = $50–100 млн. Размер выборки 1–5 скважин. ML не обобщается без аналогов. Физика — эталон, AI как дополнение.",
+        "3 рабочих кейса · 2 провала десятилетия · гонка суперкомпьютеров $100–400 млн на инсталляцию",
         section_idx=2, large_size=200, label_color=LIGHT)
 
 
@@ -755,10 +755,10 @@ def s14_hpc_eni_aramco(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "HPC-гонка Q3: $100–400M на инсталляцию",
+             "Гонка суперкомпьютеров (HPC) Q3: $100–400 млн на инсталляцию",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "Не коммодизируется как облако — стратегический CapEx. Малые операторы вытесняются capital barrier.",
+             "Не превращается в товар как облако — стратегические капитальные затраты. Малые операторы вытесняются капитальным барьером.",
              size=13, italic=True, color=LIGHT)
     # Eni HPC6
     rounded_box(slide, 0.5, 1.85, 6.0, 4.5)
@@ -768,11 +768,11 @@ def s14_hpc_eni_aramco(p):
     img = ASSETS / "screenshots" / "s14-eni.jpg"
     add_image_aspect(slide, img, 0.65, 2.5, 5.7, 1.7)
     multiline_box(slide, 0.65, 4.3, 5.7, 2.05, [
-        ("606 PFLOPS peak · 477 sustained", {"size": 13, "color": DEEP, "bold": True}),
+        ("606 PFLOPS пиковая · 477 устойчивая", {"size": 13, "color": DEEP, "bold": True}),
         ("14 000 AMD MI250X GPU", {"size": 12, "color": DEEP}),
-        ("$104 млн capex", {"size": 14, "bold": True, "color": GOLD}),
+        ("$104 млн капитальных затрат", {"size": 14, "bold": True, "color": GOLD}),
         ("Top500 #5 мирового рейтинга", {"size": 12, "color": DEEP}),
-        ("Стратегия: cost-effective per-FLOP (AMD vs NVIDIA)", {"size": 11, "color": SLATE, "italic": True}),
+        ("Стратегия: дешевле за FLOP (AMD vs NVIDIA)", {"size": 11, "color": SLATE, "italic": True}),
     ], line_spacing=1.3)
     # Aramco METABRAIN
     rounded_box(slide, 6.7, 1.85, 6.13, 4.5)
@@ -782,14 +782,14 @@ def s14_hpc_eni_aramco(p):
     img2 = ASSETS / "charts" / "s14-aramco-roi.png"
     add_image_aspect(slide, img2, 6.85, 2.5, 5.83, 1.7)
     multiline_box(slide, 6.85, 4.3, 5.83, 2.05, [
-        ("~250 млрд параметров [VFY-day-of]", {"size": 13, "color": DEEP, "bold": True}),
+        ("~250 млрд параметров", {"size": 13, "color": DEEP, "bold": True}),
         ("7 трлн токенов = 90 лет данных Aramco", {"size": 12, "color": DEEP}),
-        ("$1,8 млрд realized 2024 (Davos янв 2025)", {"size": 14, "bold": True, "color": GOLD}),
-        ("6 000 сотрудников обучены, 430 use cases", {"size": 12, "color": DEEP}),
+        ("$1,8 млрд реализовано в 2024 (Давос янв 2025)", {"size": 14, "bold": True, "color": GOLD}),
+        ("6 000 сотрудников обучены, 430 сценариев применения", {"size": 12, "color": DEEP}),
         ("Источник: CEO Amin Nasser", {"size": 11, "color": SLATE, "italic": True}),
     ], line_spacing=1.3)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Aramco выручка 2024 = $436,6 млрд → $1,8B / $436,6B = 0,41%. AI добавляет полпроцента к полностью оптимизированной операции.",
+                 "Aramco выручка 2024 = $436,6 млрд → $1,8 млрд / $436,6 млрд = 0,41%. AI добавляет полпроцента к полностью оптимизированной операции.",
                  size=12)
     add_notes(slide, "См. slides/s14-hpc-eni-aramco.md speaker notes.")
 
@@ -798,10 +798,10 @@ def s15_slb_lumi(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "SLB Lumi (сентябрь 2024) — foundation model поверх Petrel + Delfi",
+             "SLB Lumi (сентябрь 2024) — базовая модель поверх Petrel + Delfi",
              size=24, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "Anchor customers: Aker BP, Shell, Azule Energy. NVIDIA Grace Hopper backend.",
+             "Якорные заказчики: Aker BP, Shell, Azule Energy. Вычислительная база — NVIDIA Grace Hopper.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.85, 5.5, 4.4)
     img = ASSETS / "screenshots" / "s15-slb2.jpg"
@@ -810,18 +810,18 @@ def s15_slb_lumi(p):
     rounded_box(slide, 6.2, 1.85, 6.63, 4.4)
     multiline_box(slide, 6.4, 1.95, 6.3, 4.25, [
         ("Что Lumi делает:", {"size": 14, "bold": True, "color": MID}),
-        ("· Petrophysics interpretation — каротаж", {"size": 12, "color": DEEP}),
-        ("· Seismic auto-tracking — трассировка горизонтов", {"size": 12, "color": DEEP}),
-        ("· Reservoir characterization preview — фации", {"size": 12, "color": DEEP}),
-        ("· Drilling parameter optimization", {"size": 12, "color": DEEP}),
+        ("· Интерпретация петрофизики — каротаж", {"size": 12, "color": DEEP}),
+        ("· Автотрассировка сейсмических горизонтов", {"size": 12, "color": DEEP}),
+        ("· Предварительная характеристика коллектора — фации", {"size": 12, "color": DEEP}),
+        ("· Оптимизация параметров бурения", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
         ("Контекст:", {"size": 14, "bold": True, "color": MID}),
-        ("· SLB digital revenue 2024 = $2+ млрд = 5,7% от $35 млрд", {"size": 12, "color": DEEP}),
-        ("· Halliburton + OpenAI/Anthropic — partnership-driven", {"size": 12, "color": DEEP}),
-        ("· Mode «отраслевая foundation model» ≠ brand «Lumi»", {"size": 12, "color": GOLD, "bold": True}),
+        ("· Цифровая выручка SLB 2024 = $2+ млрд = 5,7% от $35 млрд", {"size": 12, "color": DEEP}),
+        ("· Halliburton + OpenAI/Anthropic — через партнёрства", {"size": 12, "color": DEEP}),
+        ("· Режим «отраслевая базовая модель» ≠ бренд «Lumi»", {"size": 12, "color": GOLD, "bold": True}),
     ], line_spacing=1.3)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Через 2-3 года: SLB Lumi 2.0 или конкурент. Brand вторичен, mode (foundation model на 80+ лет industry data) первичен.",
+                 "Через 2-3 года: SLB Lumi 2.0 или конкурент. Бренд вторичен, режим (базовая модель на 80+ лет отраслевых данных) первичен.",
                  size=12)
     add_notes(slide, "См. slides/s15-slb-lumi.md speaker notes.")
 
@@ -833,7 +833,7 @@ def s16_exxon_discovery6(p):
              "ExxonMobil Discovery 6 — 4D-сейсмика месяцы → недели",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "HPE Cray EX4000, 4 032 NVIDIA Grace Hopper, 4× compute vs Discovery 5. $200–400M capex [VFY].",
+             "HPE Cray EX4000, 4 032 NVIDIA Grace Hopper, 4× compute vs Discovery 5. $200–400 млн капитальных затрат.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.85, 5.5, 4.4)
     img = ASSETS / "screenshots" / "s16-exxon.png"
@@ -844,17 +844,17 @@ def s16_exxon_discovery6(p):
         ("Что делает Discovery 6:", {"size": 14, "bold": True, "color": MID}),
         ("· 4D-сейсмика (3D + время) — месяцы → недели", {"size": 12, "color": DEEP, "bold": True}),
         ("· Активное управление пластом в реальном времени", {"size": 12, "color": DEEP}),
-        ("· Stabroek Block Guyana — основной use case", {"size": 12, "color": DEEP}),
+        ("· Stabroek Block Guyana — основной сценарий", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
-        ("Stabroek case:", {"size": 14, "bold": True, "color": MID}),
-        ("· 6 FPSO (плавучие платформы) к 2026", {"size": 12, "color": DEEP}),
+        ("Кейс Stabroek:", {"size": 14, "bold": True, "color": MID}),
+        ("· 6 плавучих платформ (FPSO) к 2026", {"size": 12, "color": DEEP}),
         ("$1 млрд+", {"size": 28, "bold": True, "color": GOLD}),
-        ("unlock через быстрое repositioning скважин", {"size": 11, "italic": True, "color": SLATE}),
+        ("высвобождено через быстрое перепозиционирование скважин", {"size": 11, "italic": True, "color": SLATE}),
         ("", {"size": 6}),
-        ("Параллель Aramco METABRAIN: тот же mode, разные стратегии (US vs Saudi).", {"size": 11, "color": DEEP, "italic": True}),
+        ("Параллель Aramco METABRAIN: тот же режим, разные стратегии (США vs Саудовская Аравия).", {"size": 11, "color": DEEP, "italic": True}),
     ], line_spacing=1.25)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Capital barrier: $200–400M для топового HPC исключает 95% операторов. NOC + super-majors only.",
+                 "Капитальный барьер: $200–400 млн для топового суперкомпьютера исключает 95% операторов. Только нацкомпании + супермэйджоры.",
                  size=12)
     add_notes(slide, "См. slides/s16-exxonmobil-discovery6.md speaker notes.")
 
@@ -863,10 +863,10 @@ def s17_bp_beyond_limits(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "BP + Beyond Limits — $20M, vendor pivot 2023",
+             "BP + Beyond Limits — $20 млн, разворот поставщика в 2023",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "BP Ventures Series B июнь 2017 → Beyond Limits pivot в healthcare/manufacturing 2023.",
+             "BP Ventures, раунд Series B июнь 2017 → Beyond Limits разворот в медицину/производство 2023.",
              size=13, italic=True, color=LIGHT)
     # Left: promises
     rounded_box(slide, 0.5, 1.85, 6.0, 4.5)
@@ -874,18 +874,18 @@ def s17_bp_beyond_limits(p):
     text_box(slide, 0.65, 1.85, 5.7, 0.55, "Что обещали (2018):",
              size=14, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 0.7, 2.55, 5.6, 3.7, [
-        ("«AI absorb learnings of geologists", {"size": 13, "italic": True, "color": DEEP}),
-        ("and imitate their decision-making».", {"size": 13, "italic": True, "color": DEEP}),
+        ("«AI впитает знания геологов", {"size": 13, "italic": True, "color": DEEP}),
+        ("и будет имитировать их решения».", {"size": 13, "italic": True, "color": DEEP}),
         ("", {"size": 6}),
-        ("Heritage:", {"size": 13, "bold": True, "color": MID}),
-        ("· NASA JPL ($20M heritage)", {"size": 12, "color": DEEP}),
-        ("· Glendale, California 2014", {"size": 12, "color": DEEP}),
-        ("· «Cognitive AI» как differentiator", {"size": 12, "color": DEEP}),
+        ("Происхождение:", {"size": 13, "bold": True, "color": MID}),
+        ("· NASA JPL (наследие $20 млн)", {"size": 12, "color": DEEP}),
+        ("· Glendale, Калифорния, 2014", {"size": 12, "color": DEEP}),
+        ("· «Когнитивный AI» как отличие", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
-        ("BP signals 2018:", {"size": 13, "bold": True, "color": MID}),
-        ("· $20M Series B июнь 2017", {"size": 12, "color": DEEP}),
-        ("· Beyond Petroleum rebrand attempt", {"size": 12, "color": DEEP}),
-        ("· Public commitment", {"size": 12, "color": DEEP}),
+        ("Сигналы BP 2018:", {"size": 13, "bold": True, "color": MID}),
+        ("· $20 млн Series B июнь 2017", {"size": 12, "color": DEEP}),
+        ("· Попытка ребрендинга Beyond Petroleum", {"size": 12, "color": DEEP}),
+        ("· Публичное обязательство", {"size": 12, "color": DEEP}),
     ], line_spacing=1.3)
     # Right: failures
     rounded_box(slide, 6.7, 1.85, 6.13, 4.5)
@@ -898,15 +898,15 @@ def s17_bp_beyond_limits(p):
         ("", {"size": 6}),
         ("· 0 кейсов на сайте BP после 2019", {"size": 12, "color": DEEP}),
         ("· 0 публикаций в Society of Petroleum Engineers", {"size": 12, "color": DEEP}),
-        ("· Beyond Limits pivot в healthcare/manufacturing 2023", {"size": 12, "color": DEEP}),
+        ("· Beyond Limits разворот в медицину/производство 2023", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
         ("3 урока:", {"size": 13, "bold": True, "color": RED_WARN}),
-        ("1. Vendor concentration — single small vendor", {"size": 11, "color": DEEP}),
-        ("2. Cognitive marketing — anthropomorphic overpromise", {"size": 11, "color": DEEP}),
-        ("3. Imitation framing — AI не имитирует, он approximates", {"size": 11, "color": DEEP}),
+        ("1. Концентрация на одном малом поставщике — риск", {"size": 11, "color": DEEP}),
+        ("2. Когнитивный маркетинг — антропоморфное обещание", {"size": 11, "color": DEEP}),
+        ("3. Рамка имитации — AI не имитирует, он аппроксимирует", {"size": 11, "color": DEEP}),
     ], line_spacing=1.25)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "«Cognitive AI имитирует геолога» = anthropomorphic frame, который скрывает structural fit assessment.",
+                 "«Когнитивный AI имитирует геолога» — антропоморфная рамка, скрывающая оценку структурной применимости.",
                  size=12)
     add_notes(slide, "См. slides/s17-bp-beyond-limits-failure.md speaker notes.")
 
@@ -918,23 +918,23 @@ def s18_ibm_repsol(p):
              "IBM Watson + Repsol Kalimba (2014–2022)",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "Hype cycle 2014–2016 → реальное commercial use ≤10% от ожиданий. Watson Industry Solutions stagnation 2018–2022.",
+             "Цикл хайпа 2014–2016 → реальное коммерческое применение ≤10% от ожиданий. Watson Industry Solutions стагнация 2018–2022.",
              size=13, italic=True, color=LIGHT)
     # Kalimba project
     rounded_box(slide, 0.5, 1.85, 6.0, 4.5)
     rectangle(slide, 0.5, 1.85, 6.0, 0.55, fill=LIGHT)
-    text_box(slide, 0.65, 1.85, 5.7, 0.55, "Kalimba project 2014–2022",
+    text_box(slide, 0.65, 1.85, 5.7, 0.55, "Проект Kalimba 2014–2022",
              size=14, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 0.7, 2.55, 5.6, 3.7, [
         ("2014:", {"size": 13, "bold": True, "color": MID}),
         ("· IBM + Repsol объявляют партнёрство", {"size": 12, "color": DEEP}),
-        ("· Cognitive Environments Lab (NY) + Repsol Tech Centre (Мадрид)", {"size": 12, "color": DEEP}),
-        ("· «Cognitive computing для exploration»", {"size": 12, "color": DEEP, "italic": True}),
+        ("· Cognitive Environments Lab (Нью-Йорк) + Repsol Tech Centre (Мадрид)", {"size": 12, "color": DEEP}),
+        ("· «Когнитивные вычисления для разведки»", {"size": 12, "color": DEEP, "italic": True}),
         ("", {"size": 6}),
         ("2014–2022:", {"size": 13, "bold": True, "color": MID}),
-        ("· 30 лет exploration data «analyzed»", {"size": 12, "color": DEEP}),
-        ("· Конкретных new discoveries не объявлено", {"size": 12, "color": DEEP}),
-        ("· Repsol exploration budget shrunk 2019+", {"size": 12, "color": DEEP}),
+        ("· 30 лет данных разведки «проанализированы»", {"size": 12, "color": DEEP}),
+        ("· Конкретных новых открытий не объявлено", {"size": 12, "color": DEEP}),
+        ("· Бюджет разведки Repsol сократился с 2019", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
         ("2022:", {"size": 13, "bold": True, "color": RED_WARN}),
         ("· Тихое сворачивание", {"size": 12, "color": DEEP, "bold": True}),
@@ -948,16 +948,16 @@ def s18_ibm_repsol(p):
         ("$5 млрд+", {"size": 32, "bold": True, "color": GOLD}),
         ("инвестиций IBM в Watson Health 2015–2021", {"size": 12, "color": DEEP, "italic": True}),
         ("", {"size": 8}),
-        ("→ продан Francisco Partners 2022", {"size": 14, "bold": True, "color": DEEP}),
+        ("→ продан Francisco Partners в 2022", {"size": 14, "bold": True, "color": DEEP}),
         ("за ~$1 млрд (= 20% от инвестиций)", {"size": 12, "color": DEEP}),
         ("", {"size": 8}),
         ("3 урока:", {"size": 13, "bold": True, "color": RED_WARN}),
-        ("1. General-purpose cognitive не scaled в narrow domain", {"size": 11, "color": DEEP}),
-        ("2. Hype cycle 2014–2016 → реальное use ≤10% от ожиданий", {"size": 11, "color": DEEP}),
-        ("3. SLB Lumi и Aramco METABRAIN — domain-specific = успешнее", {"size": 11, "color": DEEP}),
+        ("1. Универсальный «когнитивный» AI не масштабируется в узкую область", {"size": 11, "color": DEEP}),
+        ("2. Цикл хайпа 2014–2016 → реальное применение ≤10% от ожиданий", {"size": 11, "color": DEEP}),
+        ("3. SLB Lumi и Aramco METABRAIN — отраслевые = успешнее", {"size": 11, "color": DEEP}),
     ], line_spacing=1.3)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Watson Health → ~$1B продан = $5B инвестиций vs $1B продажа = провал $4B. Indirect анчор: Kalimba не был исключением — он был частью паттерна.",
+                 "Watson Health → ~$1 млрд продан = $5 млрд инвестиций vs $1 млрд продажа = провал $4 млрд. Косвенный якорь: Kalimba не был исключением — он был частью паттерна.",
                  size=12)
     add_notes(slide, "См. slides/s18-ibm-repsol-failure.md speaker notes.")
 
@@ -966,16 +966,16 @@ def s19_q3_alternatives(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "Альтернатива Q3: physics-based simulators + senior expertise",
+             "Альтернатива Q3: физические симуляторы + старшая экспертиза",
              size=24, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "AI augmentation поверх, не replacement. Через 5 лет Eclipse будет стандартом — не AI-замена.",
+             "AI как дополнение поверх, не как замена. Через 5 лет Eclipse будет стандартом — не AI-замена.",
              size=13, italic=True, color=LIGHT)
     sims = [
-        ("Eclipse (SLB)", "Industry-standard reservoir simulator с 1983.\nMature reservoirs + regulatory submissions.\nCoupled fluid + heat + chemistry equations.", MID),
-        ("INTERSECT (SLB)", "Successor для massively parallel HPC.\nLarge models, finer grids.\nReplaces Eclipse на топовых проектах.", LIGHT),
-        ("CMG IMEX / STARS / GEM", "Computer Modelling Group (Calgary).\nIMEX black-oil, STARS thermal/EOR, GEM compositional.\nLeader в heavy oil + EOR niche.", TEAL),
-        ("OpenFOAM (CFD)", "Open-source CFD для NPV simulation,\ngeomechanics, fracturing modeling.\nResearch + reservoir characterization.", DEEP),
+        ("Eclipse (SLB)", "Отраслевой стандарт симулятора пласта с 1983.\nЗрелые коллекторы + регуляторные отчёты.\nСвязанные уравнения флюид + теплопередача + химия.", MID),
+        ("INTERSECT (SLB)", "Преемник для массивно-параллельных суперкомпьютеров.\nКрупные модели, более мелкая сетка.\nЗаменяет Eclipse на топовых проектах.", LIGHT),
+        ("CMG IMEX / STARS / GEM", "Computer Modelling Group (Калгари).\nIMEX «чёрная нефть», STARS тепловые/МУН, GEM композиционный.\nЛидер в тяжёлой нефти + МУН (методы увеличения нефтеотдачи).", TEAL),
+        ("OpenFOAM (CFD)", "Открытый CFD для расчётов NPV,\nгеомеханики, моделирования ГРП.\nИсследования + характеристика коллектора.", DEEP),
     ]
     sim_w = 6.0
     sim_h = 2.0
@@ -994,7 +994,7 @@ def s19_q3_alternatives(p):
         text_box(slide, x + 0.3, y + 0.6, sim_w - 0.4, sim_h - 0.7, body,
                  size=11, color=DEEP, line_spacing=1.35)
     gold_callout(slide, 0.5, 6.15, 12.33, 0.85,
-                 "Senior геофизик ($200–500k/год) + classical interpretation > $5–20M foundation model в frontier. PINN = research-grade, не commercial. AI augmentation, не replacement.",
+                 "Старший геофизик ($200–500 тыс./год) + классическая интерпретация > $5–20 млн базовая модель на фронтире. PINN (нейросеть с встроенной физикой) — исследовательский уровень, не коммерческий. AI как дополнение, не замена.",
                  size=12)
     add_notes(slide, "См. slides/s19-q3-alternatives.md speaker notes.")
 
@@ -1007,18 +1007,18 @@ def s20_methane_alphabet(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.7,
-             "Methane MRV alphabet — 6 must-know терминов",
+             "Алфавит метановой MRV — 6 обязательных терминов",
              size=26, bold=True, color=DEEP)
     text_box(slide, 0.5, 1.05, 12.33, 0.4,
-             "Все встретятся в следующих 8 слайдах. Brand names — не глоссируем.",
+             "Все встретятся в следующих 8 слайдах. Названия брендов — не переводим.",
              size=13, italic=True, color=LIGHT)
     terms = [
-        ("MRV", "Monitoring / Reporting / Verification\n= выявление-учёт-проверка\nMandatory под EU 2024/1787.", TEAL),
-        ("OGI", "Optical Gas Imaging\n= оптическая газовая визуализация\nIR-камера (FLIR GFx320, Opgal EyeCGas).", MID),
-        ("LDAR", "Leak Detection And Repair\n= программа выявления и устранения\n4×/год обходы с OGI + ремонт 5-15 дней.", LIGHT),
-        ("OGMP 2.0", "UN Oil & Gas Methane Partnership Level 2.0\nLevel 5 — direct measurement.\n170+ компаний подписали.", GOLD),
+        ("MRV", "Monitoring / Reporting / Verification\n= выявление-учёт-проверка\nОбязательно под EU 2024/1787.", TEAL),
+        ("OGI", "Optical Gas Imaging\n= оптическая газовая визуализация\nИК-камера (FLIR GFx320, Opgal EyeCGas).", MID),
+        ("LDAR", "Leak Detection And Repair\n= программа выявления и устранения утечек\n4×/год обходы с OGI + ремонт 5-15 дней.", LIGHT),
+        ("OGMP 2.0", "Oil & Gas Methane Partnership 2.0 (UN)\nУровень 5 — прямое измерение.\n170+ компаний подписали.", GOLD),
         ("SIL / SIS", "Safety Integrity Level / Safety Instrumented System\nIEC 61511. SIL3 = 0,001–0,0001 PFD.\nML не сертифицируется.", DEEP),
-        ("bopd / ESP", "Barrels of oil per day / Electric Submersible Pump\n= баррелей нефти/день / погружной электронасос\nStripper wells <10 bopd.", LIGHT),
+        ("барр./день / ЭЦН", "Баррелей нефти в день / Электроцентробежный насос\n(Electric Submersible Pump)\nСтрипперные скважины <10 барр./день.", LIGHT),
     ]
     card_w = 4.0
     card_h = 2.3
@@ -1037,7 +1037,7 @@ def s20_methane_alphabet(p):
         text_box(slide, x+0.2, y+0.7, card_w-0.4, card_h - 0.85, body,
                  size=11, color=DEEP, line_spacing=1.3)
     gold_callout(slide, 0.5, 6.65, 12.33, 0.45,
-                 "Bonus: AI essential именно потому, что OGI + Picarro + LI-COR покрывают facility-level — atomic detection требует слияния 4 сенсоров.",
+                 "Дополнительно: AI необходим именно потому, что OGI + Picarro + LI-COR покрывают уровень площадки — точечное выявление утечки требует слияния 4 сенсоров.",
                  size=12)
     add_notes(slide, "См. slides/s20-methane-alphabet.md speaker notes.")
 
@@ -1046,7 +1046,7 @@ def s21_q2_divider(p):
     return section_divider(
         p, "Q2", "Метановая MRV",
         "Данные — петабайты в день. Физика — разорвана. Слияние 4 сенсоров + атрибуция малой утечки — открытая ML-задача. AI необходим. Но один спутник = катастрофическая единичная уязвимость.",
-        "4 рабочих системы · 2 провала · регуляторное давление из EU 2024/1787",
+        "4 рабочих системы · 2 провала · регуляторное давление со стороны EU 2024/1787",
         section_idx=3, large_size=200, label_color=TEAL)
 
 
@@ -1054,10 +1054,10 @@ def s22_methanesat_permian(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "MethaneSAT (4 марта 2024) — flagship результат Permian",
+             "MethaneSAT (4 марта 2024) — ключевой результат по Permian",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "Первый в истории спутник, владелец которого — экологическая некоммерческая организация. Бюджет $88M.",
+             "Первый в истории спутник, владелец которого — экологическая некоммерческая организация. Бюджет $88 млн.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.85, 6.0, 4.5)
     img = ASSETS / "screenshots" / "s22-methanesat.png"
@@ -1069,20 +1069,20 @@ def s22_methanesat_permian(p):
     rounded_box(slide, 6.7, 1.85, 6.13, 4.5)
     multiline_box(slide, 6.9, 1.95, 5.83, 4.3, [
         ("Технические возможности:", {"size": 13, "bold": True, "color": MID}),
-        ("· Wide-area coverage — 200×200 км за один проход", {"size": 11, "color": DEEP}),
+        ("· Широкий охват — 200×200 км за один проход", {"size": 11, "color": DEEP}),
         ("· Высокая точность — порог детекции ~500 кг/ч", {"size": 11, "color": DEEP}),
         ("· Открытый доступ через Google Earth Engine", {"size": 11, "color": DEEP}),
         ("", {"size": 6}),
-        ("Permian flagship результат:", {"size": 13, "bold": True, "color": MID}),
+        ("Ключевой результат по Permian:", {"size": 13, "bold": True, "color": MID}),
         ("410 т/ч", {"size": 32, "bold": True, "color": GOLD}),
-        ("метана = +50% над оценкой EPA", {"size": 12, "italic": True, "color": DEEP}),
+        ("метана = +50% над оценкой EPA (~273 т/ч)", {"size": 12, "italic": True, "color": DEEP}),
         ("", {"size": 4}),
-        ("· Нью-Мексико: 1,2% intensity", {"size": 11, "color": DEEP}),
-        ("· Техас: 3,1% intensity", {"size": 11, "color": DEEP}),
-        ("· ~2 000 data files за 15,5 мес работы", {"size": 11, "color": DEEP}),
+        ("· Нью-Мексико: 1,2% интенсивности утечек", {"size": 11, "color": DEEP}),
+        ("· Техас: 3,1% интенсивности утечек", {"size": 11, "color": DEEP}),
+        ("· ~2 000 файлов данных за 15,5 мес работы", {"size": 11, "color": DEEP}),
     ], line_spacing=1.25)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "+50% над EPA — это не «AI ошибается». Это AI измеряет, а EPA inventory считает по емission factors 30-летней давности.",
+                 "+50% над EPA — это не «AI ошибается». Это AI измеряет, а EPA считает по коэффициентам эмиссий 30-летней давности.",
                  size=12)
     add_notes(slide, "См. slides/s22-methanesat-permian.md speaker notes.")
 
@@ -1094,12 +1094,12 @@ def s23_methanesat_loss(p):
              "20 июня 2025 — MethaneSAT потерян после 15,5 месяцев",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "4 марта 2024 запуск → 20 июня 2025 «spacecraft anomaly». 26% от 5-летнего designed lifetime.",
+             "4 марта 2024 запуск → 20 июня 2025 «аномалия аппарата». 26% от расчётного 5-летнего срока.",
              size=13, italic=True, color=LIGHT)
     # Timeline LEFT
     rounded_box(slide, 0.5, 1.85, 6.0, 4.5)
     rectangle(slide, 0.5, 1.85, 6.0, 0.55, fill=LIGHT)
-    text_box(slide, 0.65, 1.85, 5.7, 0.55, "Timeline",
+    text_box(slide, 0.65, 1.85, 5.7, 0.55, "Хронология",
              size=14, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 0.7, 2.55, 5.6, 3.75, [
         ("4 марта 2024", {"size": 14, "bold": True, "color": MID}),
@@ -1107,36 +1107,36 @@ def s23_methanesat_loss(p):
         ("", {"size": 4}),
         ("Март 2024 — июнь 2025", {"size": 14, "bold": True, "color": MID}),
         ("15,5 месяцев операций", {"size": 12, "color": DEEP}),
-        ("~2 000 data files собрано", {"size": 12, "color": DEEP}),
+        ("~2 000 файлов данных собрано", {"size": 12, "color": DEEP}),
         ("", {"size": 4}),
         ("20 июня 2025", {"size": 14, "bold": True, "color": RED_WARN}),
-        ("«Spacecraft anomaly» — потеря связи", {"size": 12, "color": DEEP}),
+        ("«Аномалия аппарата» — потеря связи", {"size": 12, "color": DEEP}),
         ("", {"size": 4}),
-        ("15,5 / 60 мес designed", {"size": 14, "bold": True, "color": GOLD}),
-        ("= 26% lifetime realized", {"size": 12, "color": DEEP}),
+        ("15,5 / 60 мес расчётных", {"size": 14, "bold": True, "color": GOLD}),
+        ("= 26% реализованного срока", {"size": 12, "color": DEEP}),
         ("", {"size": 4}),
-        ("$5,7M/мес realized vs $1,5M/мес планировалось", {"size": 11, "color": DEEP, "italic": True}),
+        ("$5,7 млн/мес фактически vs $1,5 млн/мес планировалось", {"size": 11, "color": DEEP, "italic": True}),
     ], line_spacing=1.2)
     # Lessons RIGHT
     rounded_box(slide, 6.7, 1.85, 6.13, 4.5)
     rectangle(slide, 6.7, 1.85, 6.13, 0.55, fill=RED_WARN)
-    text_box(slide, 6.85, 1.85, 5.83, 0.55, "4 урока loss",
+    text_box(slide, 6.85, 1.85, 5.83, 0.55, "4 урока потери",
              size=14, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 6.9, 2.55, 5.83, 3.75, [
-        ("1. SPOF (single point of failure)", {"size": 13, "bold": True, "color": MID}),
-        ("Single satellite = catastrophic loss vector. Constellation (GHGSat 13+) — robust.", {"size": 11, "color": DEEP}),
+        ("1. Единая точка отказа (SPOF)", {"size": 13, "bold": True, "color": MID}),
+        ("Один спутник = катастрофический вектор потери. Группировка (GHGSat 13+) — устойчива.", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("2. Hardware reliability", {"size": 13, "bold": True, "color": MID}),
-        ("Свободный космос ≠ контролируемая лаборатория. 26% lifetime — high risk.", {"size": 11, "color": DEEP}),
+        ("2. Надёжность аппаратуры", {"size": 13, "bold": True, "color": MID}),
+        ("Открытый космос ≠ контролируемая лаборатория. 26% срока — высокий риск.", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("3. Regulator constraint", {"size": 13, "bold": True, "color": MID}),
-        ("EU 2024/1787 inspector cannot rely on one source. Diversification mandatory.", {"size": 11, "color": DEEP}),
+        ("3. Регуляторное ограничение", {"size": 13, "bold": True, "color": MID}),
+        ("Инспектор по EU 2024/1787 не может полагаться на один источник. Диверсификация обязательна.", {"size": 11, "color": DEEP}),
         ("", {"size": 4}),
-        ("4. AI ≠ upstream data", {"size": 13, "bold": True, "color": MID}),
-        ("Software работает. Hardware failed. AI зависит от верхнего слоя.", {"size": 11, "color": DEEP}),
+        ("4. AI ≠ верхний слой данных", {"size": 13, "bold": True, "color": MID}),
+        ("Софт работает. Аппаратура отказала. AI зависит от верхнего слоя.", {"size": 11, "color": DEEP}),
     ], line_spacing=1.25)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Урок: regulatory infrastructure требует diversified sensor network, не single satellite. AI зависит от upstream hardware.",
+                 "Урок: регуляторная инфраструктура требует диверсифицированной сенсорной сети, не одного спутника. AI зависит от аппаратуры на верхнем слое.",
                  size=12)
     add_notes(slide, "См. slides/s23-methanesat-loss.md speaker notes.")
 
@@ -1145,16 +1145,16 @@ def s24_post_methanesat_players(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "Post-MethaneSAT: Carbon Mapper + GHGSat + Bridger + SeekOps",
+             "После MethaneSAT: Carbon Mapper + GHGSat + Bridger + SeekOps",
              size=24, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "Диверсифицированный sensor network — то, чем должен был быть MethaneSAT. Несколько провайдеров после loss.",
+             "Диверсифицированная сенсорная сеть — то, чем должен был быть MethaneSAT. Несколько провайдеров после потери.",
              size=13, italic=True, color=LIGHT)
     players = [
-        ("Carbon Mapper Tanager-1", "Запуск 16 авг 2024.\nPlanet Labs constellation.\nNASA JPL technology.\nFacility-level detection.", TEAL),
-        ("GHGSat constellation", "13-satellite по середине 2025.\n25м разрешение.\nFacility-level focus.\nCommercial: ExxonMobil, ConocoPhillips, EOG.", LIGHT),
-        ("Bridger Photonics aerial", "Aerial LiDAR (gas mapping).\n4× точнее ground OGI.\nClose-range, slow scan.\nFor LDAR программ.", MID),
-        ("SeekOps + Project Canary", "SeekOps — UAV-mounted methane sensors.\nProject Canary — continuous monitoring sites.\nCertification (RSG, MiQ).", GOLD),
+        ("Carbon Mapper Tanager-1", "Запуск 16 авг 2024.\nГруппировка Planet Labs.\nТехнология NASA JPL.\nДетекция на уровне площадки.", TEAL),
+        ("Группировка GHGSat", "13 спутников к середине 2025.\nРазрешение 25 м.\nФокус на уровне площадки.\nКоммерческие: ExxonMobil, ConocoPhillips, EOG.", LIGHT),
+        ("Авиасъёмка Bridger Photonics", "Воздушный LiDAR (картирование газов).\n4× точнее наземной OGI.\nБлижняя дистанция, медленное сканирование.\nДля программ LDAR.", MID),
+        ("SeekOps + Project Canary", "SeekOps — метановые сенсоры на БПЛА.\nProject Canary — непрерывный мониторинг площадок.\nСертификация (RSG, MiQ).", GOLD),
     ]
     p_w = 6.0
     p_h = 2.05
@@ -1173,7 +1173,7 @@ def s24_post_methanesat_players(p):
         text_box(slide, x+0.2, y+0.6, p_w-0.4, p_h - 0.75, body,
                  size=11, color=DEEP, line_spacing=1.3)
     gold_callout(slide, 0.5, 6.15, 12.33, 0.85,
-                 "Lesson: один спутник — single point of failure. Диверсифицированный sensor network (satellite + aerial + ground) — robust. EU regulator требует именно этого.",
+                 "Урок: один спутник — единая точка отказа. Диверсифицированная сенсорная сеть (спутник + авиа + наземная) — устойчива. Регулятор EU требует именно этого.",
                  size=12)
     add_notes(slide, "См. slides/s24-post-methanesat-players.md speaker notes.")
 
@@ -1182,10 +1182,10 @@ def s25_4x_discrepancy(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "4× разрыв industry vs регулятор — methodological gap",
+             "4× разрыв отрасль vs регулятор — методологический разрыв",
              size=24, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "MethaneSAT measured ~15 Mt/год US O&G. EPA Inventory ~4 Mt. Stanford 2024 aerial ~7 Mt = factor 2.",
+             "MethaneSAT измерил ~15 млн т/год по нефтегазу США. EPA Inventory ~4 млн т. Stanford 2024 авиа ~7 млн т = в 2 раза.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.85, 6.0, 4.5)
     img = ASSETS / "charts" / "s25-4x-discrepancy.png"
@@ -1193,20 +1193,20 @@ def s25_4x_discrepancy(p):
     rounded_box(slide, 6.7, 1.85, 6.13, 4.5)
     multiline_box(slide, 6.9, 1.95, 5.83, 4.3, [
         ("Что это значит:", {"size": 14, "bold": True, "color": MID}),
-        ("· EPA inventory: bottom-up подход, факторы 1990-х.", {"size": 11, "color": DEEP}),
-        ("· Stanford aerial: top-down measurements, 2024.", {"size": 11, "color": DEEP}),
-        ("· MethaneSAT: spaceborne, всё что меньше 500 кг/ч missed.", {"size": 11, "color": DEEP}),
+        ("· EPA inventory: подход «снизу вверх», коэффициенты 1990-х.", {"size": 11, "color": DEEP}),
+        ("· Stanford авиа: измерения «сверху вниз», 2024.", {"size": 11, "color": DEEP}),
+        ("· MethaneSAT: космос, всё что меньше 500 кг/ч пропускается.", {"size": 11, "color": DEEP}),
         ("", {"size": 6}),
-        ("9-satellite test 2024 (Atmospheric Measurement Techniques):", {"size": 13, "bold": True, "color": MID}),
-        ("· 58% emission points identified.", {"size": 11, "color": DEEP}),
-        ("· 41% false negatives.", {"size": 11, "color": DEEP, "bold": True}),
-        ("· AI не «ошибается» — sensors имеют структурные limit.", {"size": 11, "color": DEEP}),
+        ("9-спутниковый тест 2024 (Atmospheric Measurement Techniques):", {"size": 13, "bold": True, "color": MID}),
+        ("· 58% точек эмиссии идентифицировано.", {"size": 11, "color": DEEP}),
+        ("· 41% ложных пропусков.", {"size": 11, "color": DEEP, "bold": True}),
+        ("· AI не «ошибается» — сенсоры имеют структурные ограничения.", {"size": 11, "color": DEEP}),
         ("", {"size": 6}),
-        ("Это не AI failure:", {"size": 13, "bold": True, "color": GOLD}),
-        ("Это structural methodological gap. EPA modernization in progress.", {"size": 11, "color": DEEP, "italic": True}),
+        ("Это не провал AI:", {"size": 13, "bold": True, "color": GOLD}),
+        ("Это структурный методологический разрыв. Модернизация EPA в процессе.", {"size": 11, "color": DEEP, "italic": True}),
     ], line_spacing=1.25)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Cross-source triangulation = единственный валидный подход. AI essential, но AI ≠ ground truth — он измеряет, факелы факелуют.",
+                 "Триангуляция из нескольких источников — единственный валидный подход. AI необходим, но AI ≠ эталон — он измеряет, факелы факелуют.",
                  size=12)
     add_notes(slide, "См. slides/s25-4x-discrepancy.md speaker notes.")
 
@@ -1215,10 +1215,10 @@ def s26_eu_vs_epa(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "EU 2024/1787 vs EPA Subpart W — AI MRV рынок развивается асимметрично",
+             "EU 2024/1787 vs EPA Subpart W — рынок AI MRV развивается асимметрично",
              size=22, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.35, 12.33, 0.4,
-             "EU operator рискует штрафом > прибыли от добычи. US operator не торопится инвестировать.",
+             "Оператор в EU рискует штрафом > прибыли от добычи. Оператор в США не торопится инвестировать.",
              size=13, italic=True, color=LIGHT)
     # EU vs EPA boxes
     rounded_box(slide, 0.5, 1.9, 6.0, 4.4)
@@ -1227,34 +1227,34 @@ def s26_eu_vs_epa(p):
              size=15, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 0.7, 2.75, 5.6, 3.5, [
         ("до 20%", {"size": 36, "bold": True, "color": GOLD}),
-        ("оборотного штрафа за non-compliance", {"size": 11, "italic": True, "color": SLATE}),
+        ("оборотного штрафа за несоответствие", {"size": 11, "italic": True, "color": SLATE}),
         ("", {"size": 8}),
-        ("Ключевые deadlines:", {"size": 13, "bold": True, "color": DEEP}),
+        ("Ключевые сроки:", {"size": 13, "bold": True, "color": DEEP}),
         ("· LDAR обязательный — 5 мая 2025", {"size": 12, "color": DEEP}),
-        ("· OGMP Level 4/5 reports — 5 авг 2025", {"size": 12, "color": DEEP}),
-        ("· Imports compliance — с 2027", {"size": 12, "color": DEEP}),
+        ("· OGMP уровень 4/5 отчёты — 5 авг 2025", {"size": 12, "color": DEEP}),
+        ("· Соответствие для импорта — с 2027", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
-        ("Driver:", {"size": 12, "bold": True, "color": MID}),
-        ("Shell, TotalEnergies — фронт enforcement.", {"size": 12, "color": DEEP}),
+        ("Драйвер:", {"size": 12, "bold": True, "color": MID}),
+        ("Shell, TotalEnergies — на переднем крае выполнения.", {"size": 12, "color": DEEP}),
     ], line_spacing=1.25)
     rounded_box(slide, 6.7, 1.9, 6.13, 4.4)
     rectangle(slide, 6.7, 1.9, 6.13, 0.7, fill=LIGHT)
     text_box(slide, 6.85, 1.9, 5.83, 0.7, "US EPA Subpart W",
              size=15, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
     multiline_box(slide, 6.9, 2.75, 5.83, 3.5, [
-        ("6 мая 2024 final → delay 2034 [VFY]", {"size": 14, "bold": True, "color": DEEP}),
+        ("6 мая 2024 утверждён → отсрочка до 2034", {"size": 14, "bold": True, "color": DEEP}),
         ("", {"size": 6}),
         ("Что произошло:", {"size": 13, "bold": True, "color": LIGHT}),
-        ("· Final rule утверждён 6 мая 2024", {"size": 12, "color": DEEP}),
-        ("· Trump administration пересмотр сентябрь 2025", {"size": 12, "color": DEEP}),
-        ("· Proposed delay до 2034 для имплементации", {"size": 12, "color": DEEP}),
+        ("· Финальное правило утверждено 6 мая 2024", {"size": 12, "color": DEEP}),
+        ("· Администрация Трампа — пересмотр сент. 2025", {"size": 12, "color": DEEP}),
+        ("· Предлагается отсрочка до 2034 для внедрения", {"size": 12, "color": DEEP}),
         ("", {"size": 6}),
         ("Эффект на рынок:", {"size": 13, "bold": True, "color": LIGHT}),
-        ("· US AI MRV рынок ~$200M (2024)", {"size": 12, "color": DEEP}),
-        ("· vs EU ~$500M+ к 2026 (estimate)", {"size": 12, "color": DEEP, "bold": True}),
+        ("· Рынок AI MRV США ~$200 млн (2024)", {"size": 12, "color": DEEP}),
+        ("· vs EU ~$500 млн+ к 2026 (оценка)", {"size": 12, "color": DEEP, "bold": True}),
     ], line_spacing=1.25)
     gold_callout(slide, 0.5, 6.5, 12.33, 0.55,
-                 "Регуляторика — главный driver Q2. EU жёстко → AI essential. US wait-and-see → AI рынок развивается медленнее.",
+                 "Регуляторика — главный драйвер Q2. EU жёстко → AI необходим. США в режиме ожидания → рынок AI развивается медленнее.",
                  size=12)
     add_notes(slide, "См. slides/s26-eu-vs-epa-regulation.md speaker notes.")
 
@@ -1263,16 +1263,16 @@ def s27_q2_alternatives(p):
     slide = blank(p)
     set_slide_bg(slide, WHITE)
     text_box(slide, 0.5, 0.4, 12.33, 0.85,
-             "Альтернатива Q2: ground OGI + portable analyzers",
+             "Альтернатива Q2: наземная OGI + переносные анализаторы",
              size=26, bold=True, color=DEEP, line_spacing=1.1)
     text_box(slide, 0.5, 1.3, 12.33, 0.4,
-             "Когда AI не нужен — OGMP Level 5 (прямое измерение) + custody transfer metering.",
+             "Когда AI не нужен — OGMP уровень 5 (прямое измерение) + коммерческий учёт нефти.",
              size=13, italic=True, color=LIGHT)
     tools = [
-        ("FLIR GFx320 / Opgal EyeCGas", "Hand-held OGI cameras.\nIR imaging углеводородов.\n2-3 inspection events/site/год.", LIGHT),
-        ("Picarro G2210-i / LI-COR LI-7810", "Portable cavity ring-down spectroscopy.\nDirect measurement, ppb-уровень.\nFor OGMP Level 5 verification.", MID),
-        ("Rebellion Photonics", "Fixed-position OGI + analytics.\nContinuous facility-level.\nReplaces AI screening на крупных hub.", TEAL),
-        ("EPA Method 21 / EU LDAR", "Detector + sniffer for всех valves, flanges.\n4×/год обходы.\nMandatory под регуляцией.", GOLD),
+        ("FLIR GFx320 / Opgal EyeCGas", "Ручные OGI-камеры.\nИК-визуализация углеводородов.\n2-3 обхода объекта в год.", LIGHT),
+        ("Picarro G2210-i / LI-COR LI-7810", "Переносная спектроскопия затухания в полости.\nПрямое измерение, уровень частей на млрд (ppb).\nДля верификации OGMP уровень 5.", MID),
+        ("Rebellion Photonics", "Стационарная OGI + аналитика.\nНепрерывный мониторинг площадки.\nЗаменяет AI-скрининг на крупных узлах.", TEAL),
+        ("EPA Method 21 / EU LDAR", "Детектор + газоанализатор для всех клапанов, фланцев.\n4×/год обходы.\nОбязательно по регуляции.", GOLD),
     ]
     t_w = 6.0
     t_h = 2.0
@@ -1291,7 +1291,7 @@ def s27_q2_alternatives(p):
         text_box(slide, x + 0.3, y + 0.65, t_w - 0.4, t_h - 0.75, body,
                  size=11, color=DEEP, line_spacing=1.35)
     gold_callout(slide, 0.5, 6.15, 12.33, 0.85,
-                 "2 criteria когда AI не нужен в Q2: (1) OGMP Level 5 direct measurement compliance — regulator требует точность, не estimate; (2) custody transfer metering — mass flow meter mandatory, не AI.",
+                 "2 критерия когда AI не нужен в Q2: (1) соответствие OGMP уровень 5 — регулятор требует точность, не оценку; (2) коммерческий учёт нефти — расходомер обязателен, не AI.",
                  size=12)
     add_notes(slide, "См. slides/s27-q2-alternatives.md speaker notes.")
 

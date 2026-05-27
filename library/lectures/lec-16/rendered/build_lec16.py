@@ -836,9 +836,9 @@ def s16_exxon_discovery6(p):
              "HPE Cray EX4000, 4 032 NVIDIA Grace Hopper, 4× compute vs Discovery 5. $200–400 млн капитальных затрат.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.85, 5.5, 4.4)
-    img = ASSETS / "screenshots" / "s16-exxon.png"
+    img = ASSETS / "screenshots" / "s16-stabroek.jpg"
     add_image_aspect(slide, img, 0.65, 2.0, 5.2, 4.05)
-    attribution(slide, "ExxonMobil corporate press · 2024", x=0.65, y=6.05, w=5.2)
+    attribution(slide, "USS Normandy у FPSO в Stabroek Block · US Navy / Wikimedia Commons (PD)", x=0.65, y=6.05, w=5.2)
     rounded_box(slide, 6.2, 1.85, 6.63, 4.4)
     multiline_box(slide, 6.4, 1.95, 6.3, 4.25, [
         ("Что делает Discovery 6:", {"size": 14, "bold": True, "color": MID}),

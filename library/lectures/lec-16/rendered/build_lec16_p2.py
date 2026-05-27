@@ -27,9 +27,9 @@ def s29_northern_lights(p):
              "СП Equinor + Shell + TotalEnergies. Коммерческий запуск 2024. Эугарден, Норвегия.",
              size=13, italic=True, color=LIGHT)
     rounded_box(slide, 0.5, 1.85, 6.0, 4.5)
-    img = ASSETS / "screenshots" / "s29-nl.png"
+    img = ASSETS / "screenshots" / "s29-nl.jpg"
     add_image_aspect(slide, img, 0.65, 2.0, 5.7, 4.0)
-    attribution(slide, "Northern Lights JV · 2024", x=0.65, y=6.05, w=5.7)
+    attribution(slide, "Wikimedia Commons / Zypres · CC-BY-SA 4.0", x=0.65, y=6.05, w=5.7)
     rounded_box(slide, 6.7, 1.85, 6.13, 4.5)
     multiline_box(slide, 6.9, 1.95, 5.83, 4.3, [
         ("Метрики Northern Lights:", {"size": 14, "bold": True, "color": MID}),

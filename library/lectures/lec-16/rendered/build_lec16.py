@@ -269,26 +269,33 @@ def section_divider(p, q_label, q_title, mood_line, tag_text, section_idx, large
 # ====================================================================
 
 def s01_hero_permian(p):
-    """s01 — hero hook: Permian VIIRS satellite. Hero ≥40% area."""
+    """s01 — hero hook (Phase 8.6 Item 1 re-acquired): YOLOv8-OBB на нефтерезервуарах.
+
+    Owner feedback Item 1: previous VIIRS satellite image — ESG/scale story, не явно про AI.
+    Replaced с реальным AI-explicit output (Ultralytics YOLOv8-OBB demo, oil-and-gas tier-3).
+    Hero ≥40% area (60% width × 5.5" tall = ~43% area).
+    """
     slide = blank(p)
     set_slide_bg(slide, WHITE)
-    img = ASSETS / "screenshots" / "s01-permian-viirs.jpg"
+    img = ASSETS / "screenshots" / "s01-ai-yolov8-oilgas.png"
     add_image_aspect(slide, img, 0.5, 0.4, 7.5, 5.5)
-    attribution(slide, "NASA Earth Observatory · VIIRS day-night band · NOAA · 2024",
+    attribution(slide, "Ultralytics · YOLOv8-OBB · промышленный демо · 2024",
                 x=0.5, y=5.95, w=7.5)
     multiline_box(slide, 8.3, 0.6, 4.6, 5.4, [
-        ("2 593", {"size": 72, "bold": True, "color": GOLD}),
-        ("факельных шлейфа", {"size": 18, "bold": True, "color": DEEP}),
-        ("Пермский бассейн, 2024", {"size": 14, "italic": True, "color": LIGHT}),
+        ("AI видит", {"size": 38, "bold": True, "color": GOLD}),
+        ("каждый резервуар", {"size": 28, "bold": True, "color": DEEP}),
+        ("Computer vision на промысле", {"size": 13, "italic": True, "color": LIGHT}),
         ("", {"size": 10}),
-        ("Пик: ~34 000 т/ч метана", {"size": 14, "bold": True, "color": DEEP}),
-        ("из ~80 000 скважин (~3,2% факелуют)", {"size": 11, "italic": True, "color": SLATE}),
+        ("YOLOv8-OBB: rotated bounding boxes", {"size": 13, "bold": True, "color": DEEP}),
+        ("Сотни резервуаров — секунды inference", {"size": 11, "italic": True, "color": SLATE}),
         ("", {"size": 10}),
-        ("Не аварии — нормальный", {"size": 13, "color": DEEP}),
-        ("эксплуатационный режим.", {"size": 13, "color": DEEP}),
-        ("Сжигать избыточный газ", {"size": 13, "color": DEEP}),
-        ("быстрее и дешевле, чем", {"size": 13, "color": DEEP}),
-        ("строить газовую инфраструктуру.", {"size": 13, "color": DEEP}),
+        ("Это не демо. Production-grade:", {"size": 13, "bold": True, "color": MID}),
+        ("· asset inventory без инспектора", {"size": 12, "color": DEEP}),
+        ("· оптимизация маршрута обхода", {"size": 12, "color": DEEP}),
+        ("· anomaly detection on geometry", {"size": 12, "color": DEEP}),
+        ("", {"size": 8}),
+        ("Aramco METABRAIN — 0,41% выручки", {"size": 12, "bold": True, "color": MID}),
+        ("в 2024 году. Большой AI = узкий ML.", {"size": 11, "italic": True, "color": DEEP}),
     ], line_spacing=1.1)
     gold_callout(slide, 0.5, 6.3, 12.33, 0.8,
                  "AI в нефтегазе — не «улучшалка на 5%», а способ закрыть конкретные провалы. И закрывает либо громко, либо публично проваливается.",

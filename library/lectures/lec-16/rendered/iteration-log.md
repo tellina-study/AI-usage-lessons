@@ -376,3 +376,117 @@ Methodology: 0
 ---
 
 **End of Phase 8 revision section.**
+
+---
+
+# Phase 8.6 — owner feedback v3 cycle (2026-05-27)
+
+**Trigger:** owner dotted-approval list, 10 items, после Phase 8 v2 review.
+
+**Worktree:** `/tmp/lec-16-wt`, branch `issue-144-lec-16`
+**Source:** Phase 8 v2 commit baseline → Phase 8.6 v3 commits (chunked).
+
+## Per-item status
+
+| # | Item | Status | Slide(s) | Commit chunk |
+|---|---|---|---|---|
+| 1 | s01 hero re-acquired AI-explicit | DONE | s01 | Chunk 2 |
+| 2 | DELETED s03 about | DONE | — | Chunk 1 |
+| 3 | lecture-map → «План лекции» + neutralize Q2 highlight | DONE | s03 (new ID) | Chunk 1 |
+| 4 | keystone axis labels «Доступность данных» / «Определённость процессов» | DONE | s04 (new ID) + chapter cascade | Chunk 1 |
+| 5 | mini-matrix on section dividers Q1/Q2/Q3/Q4 highlighted | DONE | s05/s13/s21/s28 | Chunk 4 |
+| 6 | Q4 «Энергопереход» → «Новые опоры (CCS + EGS)» | DONE | s03/s04/s28/s39 + roadmap + deck.yaml + chapter | Chunk 1+3 |
+| 7 | DELETED s41 Q&A title slide | DONE | — | Chunk 1 |
+| 8 | s41 closing hero clarified to single message | DONE | s41 (new ID) | Chunk 1 |
+| 9 | NEW s42 normal Q&A slide | DONE | s42 (new ID) | Chunk 1 |
+| 10 | — (no item 10 in brief) | — | — | — |
+
+## New slide count
+
+- **Was:** 43 slides (Phase 8 v2)
+- **Now:** 42 slides (Phase 8.6 v3)
+- Delta: −2 (s03 about, s41 Q&A title) +1 (new s42 Q&A normal) = −1
+
+## Slide renumber map
+
+| Old ID | New ID | Content |
+|---|---|---|
+| s01 | s01 | Hero (new AI-explicit image) |
+| s02 | s02 | Cover (no change) |
+| s03 | DEL | About (deleted) |
+| s04 | s03 | Lecture-map → «План лекции» |
+| s05 | s04 | Keystone (axis labels updated) |
+| s06 | s05 | Q1 divider (+ mini-matrix Q1) |
+| s07 | s06 | 86% pilot stuck |
+| s07b | s07 | Aspen alert fatigue |
+| s08-s40 | s08-s40 | Unchanged (shift cancellation: −1 delete s03, +1 expand s07b) |
+| s13 | s13 | + mini-matrix Q3 |
+| s21 | s21 | + mini-matrix Q2 |
+| s28 | s28 | + mini-matrix Q4; «Новые опоры» rename |
+| s34 | s34 | Russia (already has full 4-quad body grid) |
+| s41 | DEL | Q&A title slide (deleted) |
+| s42 | s41 | Closing hero (clarified message) |
+| NEW | s42 | Normal Q&A (3 starter prompts) |
+
+## Hero s01 details (Item 1)
+
+- **Source URL:** https://www.ultralytics.com/blog/ai-in-oil-and-gas-refining-innovation
+- **Image:** YOLOv8-OBB output на oil storage tanks (rotated bounding boxes)
+- **Tier:** 3 (press blog + CC educational fair use)
+- **Resolution:** 1356×763 PNG (converted from WebP)
+- **Slide area:** 60% width × 5.5" tall = ~43% of slide → ≥40% target ✓
+- **Attribution:** «Ultralytics · YOLOv8-OBB · промышленный демо · 2024» visible
+- **Rationale:** previous VIIRS Permian satellite — ESG/scale story, не явно про AI;
+  new image — реальный AI inference на нефтегаз-инфраструктуре
+
+## Q4 «Новые опоры (CCS + EGS)» rename cascade (Item 6)
+
+Touch points updated:
+1. `build_lec16.py` SECTIONS roadmap bar: «Q4 Переход» → «Q4 Новые опоры»
+2. `build_lec16.py` s04_lecture_map: «Q4 Переход» card → «Q4 Новые опоры»
+3. `build_lec16.py` s05_keystone_matrix: «Q4 — Энергопереход» → «Q4 — Новые опоры (CCS + EGS)»
+4. `build_lec16_p2.py` s28_q4_divider: «Энергопереход» subtitle → «Новые опоры: CCS + EGS»
+5. `build_lec16_p2.py` s34_russia_divider Q4 cell: «Q4 Переход» → «Q4 Новые опоры»
+6. `build_lec16_p2.py` s39_synthesis_matrix Q4 cell: «Q4 Переход» → «Q4 Новые опоры»
+7. `slides/s28-q4-divider.md`: frontmatter + body «Energy transition» → «Новые опоры»
+8. `deck.yaml`: section 4 comment + `keystone_axis` + slides[].assertion для s28
+9. `chapter*.md`: slide_map `Q4_transition` → `Q4_new_pillars`
+
+Note: chapter body retains some English «energy transition» mentions inside literature context citations (e.g. cross-references к internationalRD literature), which is acceptable per brand allowlist + jurisdiction terms.
+
+## Visual verification (snapshot sample 5)
+
+- **s01** — Headline «AI видит каждый резервуар», YOLOv8 oil-tank detection visible, attribution «Ultralytics ... 2024» visible ✓
+- **s03** — «План лекции — 7 разделов», all 7 cards uniform LIGHT (no Gold Q2 highlight) ✓
+- **s04** — «Доступность данных × определённость процессов», Q4 «Новые опоры (CCS + EGS)» ✓
+- **s28** — Q4 divider title «Новые опоры: CCS + EGS», mini-matrix Q4 highlighted Gold ✓
+- **s42** — Big «Вопросы?» typography + 3 starter prompts (Q1 Teal / Q2 Mid / Q3 Gold) ✓
+
+## Russification preservation
+
+- No regression vs Phase 8 v2 baseline
+- New s01 slide adds 2 latin terms: «YOLOv8-OBB» (brand allowlist), «Computer vision» (term-of-art, retained inline gloss)
+- New s42 slide: «Q&A» (term-of-art Q&A), «cornerstone» (intentional retention as keystone term)
+- Q4 rename eliminates legacy «Энергопереход» Russian text — replaced с «Новые опоры (CCS + EGS)» — net neutral on RU/EN balance
+
+## Scaffold preservation
+
+- No regression: 0 timing / 0 methodology / 0 «Вы здесь» / 0 LO codes в visible body
+- New s42 spec maintains scaffold-free style
+- s41 closing rewrite also scaffold-free
+
+## Residual risks для Pre-USER-GATE C walkthrough
+
+1. **s04 title minor overflow** — «Когда AI работает в нефтегазе? Доступность данных × определённость процессов» — 22pt разворачивается на 2 строки (был 24pt). Уменьшение размера на 2pt компенсирует. Acceptable.
+2. **s41 closing right column** — text relatively small для projector 50% zoom test. ОК для desktop view, может потребовать font bump в Phase 8.7 if owner flags.
+3. **Chapter body still references «energy transition» в literature citations** (~3-4 mentions in chapter-part2/3/4) — brand allowlist + jurisdiction terms preserved. Phase 9 speech writing должна использовать новую terminology.
+
+## Recommendation для Phase 9 (speech)
+
+- Use new Q4 «Новые опоры (CCS + EGS)» terminology consistently
+- Reference «доступность данных × определённость процессов» вместо «данные × физика»
+- Closing arc in speech.md should mirror s41 single message «10 разобранных провалов → 3 переносимых cornerstone оси»
+
+---
+
+**End of Phase 8.6 owner-feedback v3 cycle.**

@@ -46,14 +46,14 @@ Sub: «Hybrid Bridger Photonics + ground OGI = working model. AI снижает 
 
 ## Speaker notes
 
-Это критический раздел для LO3 в Q2. Альтернатива AI MRV — это ground-based direct measurement campaigns.
+Это критический раздел в Q2. Альтернатива AI MRV — это ground-based прямое измерение campaigns.
 
-Hand-held OGI cameras. Teledyne FLIR GFx320 — flagship industry standard. Видит углеводородные газы как «облако» через IR-фильтр; цифровая запись для аудита. Используется EPA Method 21, EU LDAR programmes. Opgal EyeCGas — конкурент FLIR; добавляет quantitative OGI capability — не только видит утечку, но и приближённо измеряет её расход. Rebellion Photonics, теперь Honeywell — fixed hyperspectral imaging system, постоянный мониторинг.
+ручные OGI-камеры. Teledyne FLIR GFx320 — ключевой отрасль standard. Видит углеводородные газы как «облако» через IR-фильтр; цифровая запись для аудита. Используется EPA Method 21, EU LDAR (выявление и устранение утечек) programmes. Opgal EyeCGas — конкурент FLIR; добавляет quantitative OGI кап.ability — не только видит утечку, но и приближённо измеряет её расход. Rebellion Photonics, теперь Honeywell — fixed hyperspectral imaging system, постоянный мониторинг.
 
-Portable laser analyzers. Picarro G2210-i — cavity ring-down spectroscopy, спектроскопия с резонатором; измеряет концентрации метана с лабораторной точностью на месте измерения. Часто используется как ground truth для калибровки OGI и aerial measurements. LI-COR LI-7810 — конкурент Picarro.
+переносной laser analyzers. Picarro G2210-i — спектроскопия затухания в полости, спектроскопия с резонатором; измеряет концентрации метана с лабораторной точностью на месте измерения. Часто используется как эталон для калибровки OGI и aerial measurements. LI-COR LI-7810 — конкурент Picarro.
 
-Когда AI не нужен в Q2 — два критерия. Первый — OGMP 2.0 Level 5 verification. Level 5 требует прямого измерения всех источников эмиссии на operational asset. ML estimate не приемлем как primary methodology. Поэтому Level 5 operators обязаны иметь Picarro или LI-COR плюс OGI campaigns; AI здесь — дополнение для prioritization, не замена.
+Когда AI не нужен в Q2 — два критерия. Первый — OGMP 2.0 Level 5 верификация. Level 5 требует прямого измерения всех источников эмиссии на operational asset. ML estimate не приемлем как primary methodology. Поэтому Level 5 operators обязаны иметь Picarro или LI-COR плюс OGI campaigns; AI здесь — дополнение для prioritization, не замена.
 
 Второй критерий — custody transfer metering. Регуляторно требуется mass flow meter класса точности ноль и две десятых процента.
 
-Структурный взгляд на LDAR programmes. EU LDAR требует операторов проводить survey четыре раза в год плюс ремонт утечек в течение пяти-пятнадцати рабочих дней. Расходы для крупного European operator — порядка пяти-пятнадцати миллионов долларов в год на один production cluster. AI MRV может снизить эти расходы на двадцать-сорок процентов через aerial campaigns раз в два месяца плюс targeted ground OGI на flagged sites. Это substantial value, который не эффектен в маркетинговой картине, но practical для compliance budgets.
+Структурный взгляд на LDAR (выявление и устранение утечек) programmes. EU LDAR (выявление и устранение утечек) требует операторов проводить survey четыре раза в год плюс ремонт утечек в течение пяти-пятнадцати рабочих дней. Расходы для крупного European operator — порядка пяти-пятнадцати миллионов долларов в год на один production cluster. AI MRV может снизить эти расходы на двадцать-сорок процентов через aerial campaigns раз в два месяца плюс targeted ground OGI на flagged sites. Это substantial value, который не эффектен в маркетинговой картине, но practical для соответствие budgets.

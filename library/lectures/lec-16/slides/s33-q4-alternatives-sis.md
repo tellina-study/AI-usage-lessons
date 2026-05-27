@@ -50,16 +50,16 @@ Sub: «3 категории. Для regulatory submissions — physics-traceable
 
 ## Speaker notes
 
-Это критический раздел для LO3 в Q4. Альтернатива AI в long-horizon CCS, refinery, EGS — это classical physics-based engineering плюс deterministic safety systems.
+Это критический раздел в Q4. Альтернатива AI в длинный горизонт CCS, refinery, EGS — это классический физически обоснованный engineering плюс deterministic safety systems.
 
-Physics-based simulators для CCS. Eclipse и INTERSECT с CCS modules — reservoir-scale CO₂ migration. OpenFOAM — CFD around injection wells, multi-phase flow. Geomechanics packages — Visage от SLB, Abaqus от Dassault, Plaxis — для stress analysis в caprock. CMG GEM — compositional simulator для CO₂-impurities scenarios. Эти tools используются для regulatory submissions под EU CCS Directive 2009/31/EC. Регулятор требует physics-traceable modeling; AI surrogate не accept.
+Physics-based simulators для CCS. Eclipse и INTERSECT с CCS modules — коллектор-scale CO₂ migration. OpenFOAM — CFD around закачка wells, многофазный поток. Геомеханика packages — Visage от SLB, Abaqus от Dassault, Plaxis — для stress analysis в кап.rock. CMG GEM — compositional simulator для CO₂-impurities scenarios. Эти tools используются для регуляторные отчёты под EU CCS Directive 2009/31/EC. Регулятор требует физически прослеживаемый modeling; AI surrogate не accept.
 
-Classical APC для refinery. Honeywell Profit Controller — modelling APC standard для US refineries. AspenTech aspenONE — APC integrated в process simulation. Emerson DeltaV PredictPro — embedded APC в DCS. APC — это model-based predictive control, детерминированное и certifiable. ML controller для plant-wide refinery operation requires safety case, что ML не приведёт к exceedance процессных пределов. Safety case для ML структурно сложнее, чем для APC.
+Классический APC (передовое управление процессом) для refinery. Honeywell Profit Controller — modelling APC (передовое управление процессом) standard для US refineries. AspenTech aspenONE — APC (передовое управление процессом) integrated в process simulation. Emerson DeltaV PredictPro — embedded APC (передовое управление процессом) в DCS. APC (передовое управление процессом) — это model-based predictive control, детерминированное и certifiable. ML controller для общезаводская переработка operation requires safety case, что ML не приведёт к exceedance процессных пределов. Safety case для ML структурно сложнее, чем для APC (передовое управление процессом).
 
 SIS — Safety Instrumented Systems. Это deterministic safety logic, сертифицированная под IEC 61511 / ISA-84 на уровень SIL3 или SIL4. Применения: blowout preventer, pressure relief valve, emergency shutdown logic, fire and gas detection.
 
-ML не сертифицируется под IEC 61511. Probability of failure on demand для ML не доказывается аналитически так же, как для дискретной логики; в дискретной логике мы перечисляем все возможные states; для ML это невозможно — state space слишком большой. Альтернатива — physics-based redundancy плюс 3oo2 voting — три датчика, действие при согласии двух — плюс периодические proof tests, плюс fail-safe design.
+ML не сертифицируется под IEC 61511. Probability of failure on demand для ML не доказывается аналитически так же, как для дискретной логики; в дискретной логике мы перечисляем все возможные states; для ML это невозможно — state space слишком большой. Альтернатива — физически обоснованный redundancy плюс 3oo2 voting — три датчика, действие при согласии двух — плюс периодические proof tests, плюс fail-safe design.
 
-Три критерия «AI не нужен» в Q4. Safety-critical SIS. Long-horizon prediction beyond десяти-двадцати лет. Plant-wide multi-physics coupling.
+Три критерия «AI не нужен» в Q4. Safety-главный SIS. Long-horizon prediction beyond десяти-двадцати лет. Plant-wide многослойное сопряжение физики.
 
 Deepwater Horizon 2010 — анкор Q4 SIS-альтернатив. Альтернативы AI без strong safety culture = катастрофа. К нему вернёмся в s38.

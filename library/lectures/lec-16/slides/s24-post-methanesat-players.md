@@ -48,14 +48,14 @@ Sub: «Constellation > single satellite. Multi-modality > one stream. Triangulat
 
 После MethaneSAT loss индустрия разворачивает несколько параллельных направлений mitigation.
 
-Carbon Mapper Tanager-1. Карбоновый mapping satellite от коалиции Planet Labs плюс NASA Jet Propulsion Laboratory плюс Carbon Mapper Inc. Запущен шестнадцатого августа 2024 года, full operations summer 2025. Facility-level detection — то есть способный идентифицировать утечки на уровне отдельной установки. Tanager-1 — первый из планируемой constellation Tanager.
+Carbon Mapper Tanager-1. Карбоновый mapping satellite от коалиции Planet Labs плюс NASA Jet Propulsion Laboratory плюс Carbon Mapper Inc. Запущен шестнадцатого августа 2024 года, full operations summer 2025. Facility-level detection — то есть способный идентифицировать утечки на уровне отдельной установки. Tanager-1 — первый из планируемой группировка Tanager.
 
 GHGSat — канадская компания. Коммерческое созвездие из тринадцати спутников к середине 2025 года. Разрешение двадцать пять метров — самое детальное среди коммерческих метановых спутников. Customers — операторы в Permian, Marcellus, Alberta; страховые компании; регуляторы. GHGSat — commercial paid service: оператор платит за inspection своих площадок. Это более устойчивая business model, чем NGO-owned MethaneSAT.
 
-Bridger Photonics — американская компания из Бозмана, Монтана. Aircraft-based Gas Mapping LiDAR. Самолёт пролетает над нефтепромыслом на низкой высоте; LiDAR-сенсор измеряет концентрацию метана. Согласно валидационной кампании British Columbia LDAR, aerial measurements в четыре раза более точные, чем ground OGI на тех же сайтах. Customers — ExxonMobil, ConocoPhillips, EOG Resources, Pioneer.
+Bridger Photonics — американская компания из Бозмана, Монтана. Aircraft-based Gas Mapping LiDAR. Самолёт пролетает над нефтепромыслом на низкой высоте; LiDAR-сенсор измеряет концентрацию метана. Согласно валидационной кампании British Columbia LDAR (выявление и устранение утечек), aerial measurements в четыре раза более точные, чем ground OGI на тех же сайтах. Customers — ExxonMobil, ConocoPhillips, EOG Resources, Pioneer.
 
-SeekOps — drone-based methane detection. Используется в midstream applications — компрессорные станции, газораспределительные сети — и для gas utilities. Customers — TC Energy, ENGIE.
+SeekOps — drone-based метан detection. Используется в midstream applications — компрессорные станции, газораспределительные сети — и для gas utilities. Customers — TC Energy, ENGIE.
 
-Project Canary — methane analytics плюс ESG-рейтинги. Не сенсорный поставщик; агрегирует данные от других источников плюс добавляет сертификационный подход.
+Project Canary — метан analytics плюс ESG-рейтинги. Не сенсорный поставщик; агрегирует данные от других источников плюс добавляет сертификационный подход.
 
 Главное. Q2 — это стек нескольких модальностей. Спутник плюс авиа плюс дрон плюс наземная OGI плюс портативный анализатор. AI — это слой fusion плюс интерпретации поверх всех модальностей. Single-modality «AI MRV solution» — маркетинговая фраза.

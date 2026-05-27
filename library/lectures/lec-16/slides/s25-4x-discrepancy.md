@@ -48,14 +48,14 @@ Sub: «MethaneSAT measured ~15 Mt/год US O&G. EPA Inventory ~4 Mt. Stanford 2
 
 Центральный numerical conflict Раздела 3.
 
-MethaneSAT измерения US oil&gas methane эмиссии — примерно пятнадцать миллионов тонн в год. EPA Inventory официальная оценка — примерно четыре миллиона тонн в год. Фактор разрыва — примерно четыре.
+MethaneSAT измерения US oil&gas метан эмиссии — примерно пятнадцать миллионов тонн в год. EPA Inventory официальная оценка — примерно четыре миллиона тонн в год. Фактор разрыва — примерно четыре.
 
 Параллельная Stanford 2024 study, опубликована в Nature в марте 2024 года. Aerial campaign на US O&G basins; результат — более шести миллионов тонн в год, точная цифра в paper около шести-семи с половиной миллионов. Это фактор два outlier от EPA Inventory — не такой большой, как MethaneSAT factor четыре, но всё равно значительный.
 
-Aerial vs OGI на одних и тех же sites. Aerial measurements от Bridger Photonics в четыре раза выше, чем ground OGI на тех же sites — British Columbia LDAR validation study. Ground OGI системно underestimates утечки, потому что OGI inspector проходит сайт за десять-двадцать минут и физически не видит intermittent emissions.
+Aerial vs OGI на одних и тех же sites. Aerial measurements от Bridger Photonics в четыре раза выше, чем ground OGI на тех же sites — British Columbia LDAR (выявление и устранение утечек) validation study. Ground OGI системно underestimates утечки, потому что OGI inspector проходит сайт за десять-двадцать минут и физически не видит intermittent emissions.
 
-Девятисателлитный single-blind тест 2024 года в Atmospheric Measurement Techniques. Ноль false positives — хорошо. Но только пятьдесят восемь процентов correctly identified; сорок один false negative — пропущенных реальных утечек. Даже когда AI MRV хорошо настроена, она пропускает почти половину реальных эмиссий.
+Девятисателлитный single-blind тест 2024 года в Atmospheric Measurement Techniques. Ноль ложные срабатывания — хорошо. Но только пятьдесят восемь процентов correctly identified; сорок один false negative — пропущенных реальных утечек. Даже когда AI MRV хорошо настроена, она пропускает почти половину реальных эмиссий.
 
-Что этот конфликт означает. EPA emission factors были откалиброваны десять-двадцать лет назад и не отражают реальный operational mix современного нефтегазового производства. MethaneSAT и aerial campaigns показывают, что real-world эмиссии выше — потому что они захватывают intermittent superemitters. Satellite плюс aerial AI detection methods inconsistent друг с другом. Это не «один прав, другой нет» — это methodological calibration difference.
+Что этот конфликт означает. EPA коэффициенты эмиссии были откалиброваны десять-двадцать лет назад и не отражают реальный operational mix современного нефтегазового производства. MethaneSAT и aerial campaigns показывают, что real-world эмиссии выше — потому что они захватывают intermittent superemitters. Satellite плюс aerial AI detection methods inconsistent друг с другом. Это не «один прав, другой нет» — это methodological calibration difference.
 
-Главное. No agreed ground truth. У industry, регулятора, NGO, академии — нет согласованного методологического стандарта. Урок для LO7: AI MRV — promising, но не ready для contract enforcement без cross-validation protocols. EU 2024/1787 требует Level 4/5 = триангуляция. Это engineering necessity, не избыток bureaucracy.
+Главное. No agreed эталон. У отрасль, регулятора, NGO, академии — нет согласованного методологического стандарта. Урок: AI MRV — promising, но не ready для контрактное принуждение без протоколы перекрёстной валидации. EU 2024/1787 требует Level 4/5 = триангуляция. Это инженерная необходимость, не избыток bureaucracy.

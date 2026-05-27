@@ -39,16 +39,16 @@ Sub: «Возврат к keystone-матрице. AI в нефтегазе — �
 
 ## Speaker notes
 
-Возврат к keystone-матрице. Через все шесть разделов мы видели: AI в нефтегазе — не одна история, а четыре разных истории.
+Возврат к несущая ось-матрице. Через все шесть разделов мы видели: AI в нефтегазе — не одна история, а четыре разных истории.
 
-Квадрант один. Mature production. AI как мультипликатор. Working cases: Ambyint InfinityRL плюс пятнадцать процентов на двухстах скважинах, Honeywell UOP Connect триста десять плюс юнитов, Роснефть Digital Field плюс один миллион тонн в год. Failures: восемьдесят шесть процентов pilot stuck по McKinsey; Aspen Mtell alert fatigue плюс refinery plant-wide stagnation; Cognite IPO postpone; C3.ai O&G declining.
+Квадрант один. Mature production. AI как мультипликатор. Working cases: Ambyint InfinityRL плюс пятнадцать процентов на двухстах скважинах, Honeywell UOP Connect триста десять плюс юнитов, Роснефть Digital Field плюс один миллион тонн в год. Failures: восемьдесят шесть процентов застревание пилота по McKinsey; Aspen Mtell усталость от ложных тревог плюс refinery общезаводская стагнация; Cognite IPO postpone; C3.ai O&G declining.
 
-Квадрант три. Frontier exploration. AI как augmentation поверх physics simulators. Working cases: Eni HPC6 шестьсот шесть PFLOPS Top500 пятое место, Aramco METABRAIN двести пятьдесят миллиардов параметров и один и восемь десятых миллиарда realized 2024, SLB Lumi сентябрь 2024, ExxonMobil Discovery 6 — 4D-сейсмика месяцы в недели, Stabroek Guyana. Failures: BP плюс Beyond Limits — двадцать миллионов vendor pivot 2023; IBM Watson плюс Repsol Kalimba — 2014-2022 wind-down.
+Квадрант три. Frontier exploration. AI как дополнение поверх физический симуляторs. Working cases: Eni HPC6 шестьсот шесть PFLOPS Top500 пятое место, Aramco METABRAIN двести пятьдесят миллиардов параметров и один и восемь десятых миллиарда realized 2024, SLB Lumi сентябрь 2024, ExxonMobil Discovery 6 — 4D-сейсмика месяцы в недели, Stabroek Guyana. Failures: BP плюс Beyond Limits — двадцать миллионов разворот поставщика 2023; IBM Watson плюс Repsol Kalimba — 2014-2022 wind-down.
 
-Квадрант два. Methane MRV. AI как essential для cross-modality fusion. Working cases: Carbon Mapper Tanager-1 август 2024, GHGSat тринадцать-satellite constellation середина 2025, Bridger Photonics aerial LiDAR. Failures: MethaneSAT loss июнь 2025 — пятнадцать с половиной месяцев из пяти плюс лет; четыре икс discrepancy MethaneSAT vs EPA — пятнадцать Mt vs четыре Mt.
+Квадрант два. Methane MRV. AI как необходим для cross-modality fusion. Working cases: Carbon Mapper Tanager-1 август 2024, GHGSat тринадцать-satellite группировка середина 2025, Bridger Photonics aerial LiDAR. Failures: MethaneSAT loss июнь 2025 — пятнадцать с половиной месяцев из пяти плюс лет; четыре икс discrepancy MethaneSAT vs EPA — пятнадцать Mt vs четыре Mt.
 
-Квадрант четыре. Energy transition. AI и физика struggle вместе. Working pilots: Northern Lights CCS полтора Mt в год Норвегия; Fervo Energy EGS IPO май 2026 — один и восемьдесят девять сотых миллиарда привлечено. Failures: сто девяносто икс scale-up gap CCS — Northern Lights ноль и две сотых процента от needed scale; refinery plant-wide stagnation в multi-physics frame.
+Квадрант четыре. Energy transition. AI и физика struggle вместе. Working pilots: Northern Lights CCS полтора Mt в год Норвегия; Fervo Energy EGS IPO май 2026 — один и восемьдесят девять сотых миллиарда привлечено. Failures: сто девяносто икс scale-up gap CCS — Northern Lights ноль и две сотых процента от needed scale; refinery общезаводская стагнация в многослойная физика frame.
 
-Раздел Россия — все четыре квадранта в санкционном режиме. Раздел шесть cross-cutting: cyber +935 процентов, 2020 crash 107 000 jobs, Deepwater Horizon 2010 alarm bypass.
+Раздел Россия — все четыре квадранта в санкционном режиме. Раздел шесть сквозной: cyber +935 процентов, 2020 crash 107 000 jobs, Deepwater Horizon 2010 alarm bypass.
 
-Когда AI работает. Q1 multiplier плюс Q2 essential с triangulation. Когда осторожно. Q3 augmentation only — не пытаться replace senior geologist. Когда опасно. Q4 long-horizon plus safety-critical SIS.
+Когда AI работает. Q1 мультипликатор плюс Q2 необходим с triangulation. Когда осторожно. Q3 дополнение only — не пытаться replace senior geologist. Когда опасно. Q4 длинный горизонт plus safety-главный SIS.

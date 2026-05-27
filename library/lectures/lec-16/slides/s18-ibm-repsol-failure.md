@@ -48,16 +48,16 @@ Sub: «Hype cycle 2014-2016 → реальное commercial use ≤10% от ож
 
 ## Speaker notes
 
-В 2014 году IBM и испанская Repsol объявили партнёрство Kalimba project с целью применить IBM Watson cognitive computing к тридцати годам exploration data Repsol. Проект запустили в IBM Cognitive Environments Laboratory в Нью-Йорке и Repsol Technology Centre в Мадриде. Объявлены результаты в первой половине 2016 года.
+В 2014 году IBM и испанская Repsol объявили партнёрство Kalimba project с целью применить IBM Watson когнитивные вычисления к тридцати годам exploration data Repsol. Проект запустили в IBM Cognitive Environments Laboratory в Нью-Йорке и Repsol Technology Centre в Мадриде. Объявлены результаты в первой половине 2016 года.
 
 Что обещали в 2014 году. Тридцать лет exploration data «analyzed» Watson cognitive. Запуск результатов в первой половине 2016 года. Cognitive computing «понимает контекст», «синтезирует insights», «обогащает intuition».
 
 Что вышло за 2016-2022 годы. Конкретных результатов и метрик публично не объявлено. IBM Watson Industry Solutions — broad stagnation 2018-2022. Watson Health unwound в 2022 году — продан Francisco Partners. Watson Industrial — аналогично. К 2022 году IBM перестроил весь Watson portfolio. Repsol перешёл на собственные ML tools — платформа Repsol Lumen с 2020-го, без IBM. Партнёрство тихо завершилось без официального объявления.
 
-Три фундаментальных урока. Первый — general-purpose «cognitive computing» platforms не scaled в narrow domain как O&G exploration. Watson в 2014 году был оптимизирован под general-purpose Q&A и medical literature analysis. Применение тех же архитектур в нефтегазовой разведке требовало specialized training data, specialized model architectures — то, что Watson 2014 года не давал. IBM не инвестировал в vertical specialization.
+Три фундаментальных урока. Первый — универсальный «когнитивные вычисления» platforms не scaled в узкая область как O&G exploration. Watson в 2014 году был оптимизирован под универсальный Q&A и medical literature analysis. Применение тех же архитектур в нефтегазовой разведке требовало specialized training data, specialized model architectures — то, что Watson 2014 года не давал. IBM не инвестировал в вертикаль specialization.
 
 Второй — «тридцать лет данных проанализировано» звучит впечатляюще, но без конкретной бизнес-метрики выводы не операционализируемы. Insights без операционализуемости = застревание пилотных проектов.
 
-Третий — hype cycle 2014-2016 → реальное commercial use в 2018+ меньше десяти процентов от ожиданий. Это типичный паттерн hype-to-disappointment. Параллельный паттерн сейчас разворачивается с LLM agents в 2024-2025 — это сюжет Раздела 4.
+Третий — цикл хайпа 2014-2016 → реальное коммерческое применение в 2018+ меньше десяти процентов от ожиданий. Это типичный паттерн hype-to-disappointment. Параллельный паттерн сейчас разворачивается с LLM agents в 2024-2025 — это сюжет Раздела 4.
 
-Параллель Watson Health критична. Тот же IBM, та же эпоха, та же «cognitive computing» упаковка, та же неспособность scale. Это два manifestation одной структурной ошибки.
+Параллель Watson Health критична. Тот же IBM, та же эпоха, та же «когнитивные вычисления» упаковка, та же неспособность scale. Это два manifestation одной структурной ошибки.

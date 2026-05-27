@@ -44,18 +44,18 @@ Sub: «AI augmentation поверх, не replacement. Через 5 лет Eclip
 
 ## Speaker notes
 
-Это ключевой раздел LO3 для Q3. Когда AI в frontier exploration буксует — что используют операторы вместо? Ответ — physics-based simulators, разработанные за десятилетия и хорошо валидированные.
+Это ключевой раздел для Q3. Когда AI в разведка фронтиров буксует — что используют операторы вместо? Ответ — физически обоснованный simulators, разработанные за десятилетия и хорошо валидированные.
 
-Eclipse — industry-standard reservoir simulator от SLB. Используется с восьмидесятых; сегодня — flagship для большинства мейджоров. Решает coupled fluid плюс heat плюс chemistry equations на 3D-сетке пласта. Параметризируется через свойства породы, fluid PVT, kinetics. Скорость — десятки часов до дней на крупной модели; точность — well-characterized.
+Eclipse — отраслевой стандарт симулятор пласта от SLB. Используется с восьмидесятых; сегодня — ключевой для большинства мейджоров. Решает coupled fluid плюс heat плюс уравнения химии на 3D-сетке пласта. Параметризируется через свойства породы, fluid PVT, kinetics. Скорость — десятки часов до дней на крупной модели; точность — well-characterized.
 
 INTERSECT — next-generation Eclipse от SLB. Высокое разрешение, лучше параллелизация.
 
-CMG — Computer Modelling Group, Калгари. Три продукта. IMEX — black-oil reservoir simulator. STARS — thermal и advanced processes, для теплового EOR, паровых методов в тяжёлой нефти. GEM — compositional simulator для газоконденсатных систем. Niche, но stable.
+CMG — Computer Modelling Group, Калгари. Три продукта. IMEX — чёрная нефть симулятор пласта. STARS — thermal и advanced processes, для теплового методы увеличения нефтеотдачи (МУН), паровых методов в тяжёлой нефти. GEM — compositional simulator для газоконденсатных систем. Niche, но stable.
 
-OpenFOAM — open-source CFD пакет. Не reservoir simulator per se, но используется для CFD-моделирования в CCS, в multi-phase flow, в gas plume modelling.
+OpenFOAM — open-source CFD пакет. Не симулятор пласта per se, но используется для CFD-моделирования в CCS, в многофазный поток, в gas plume modelling.
 
-Когда использовать physics-based вместо ML. Mature reservoir плюс regulatory submission: регулятор требует physics-traceable submission. Complex EOR scenarios. Hydraulic fracturing modelling. CCS plume migration на 100-летнем горизонте. Frontier basin без analog — ML не на чем обучать.
+Когда использовать физически обоснованный вместо ML. Mature коллектор плюс регуляторный отчёт: регулятор требует физически прослеживаемый submission. Complex методы увеличения нефтеотдачи (МУН) scenarios. Hydraulic fracturing modelling. CCS миграция шлейфа на 100-летнем горизонте. Frontier basin без analog — ML не на чем обучать.
 
-PINN — physics-informed neural networks — попытка построить мост: speed of ML плюс consistency of physics. Активно изучается academia с 2019 года. К 2026 году PINN — не mainstream commercial product. Это потенциальный мост в будущее, но не сейчас.
+PINN (нейросеть с встроенной физикой) — physics-informed neural networks — попытка построить мост: speed of ML плюс consistency of physics. Активно изучается academia с 2019 года. К 2026 году PINN (нейросеть с встроенной физикой) — не mainstream commercial product. Это потенциальный мост в будущее, но не сейчас.
 
-Экономика. Senior геолог с двадцатью пятью годами опыта стоит компании двести-пятьсот тысяч долларов в год. Foundation model с обучением плюс интеграцией — пять-двадцать миллионов в год. Арифметика простая: пять-двадцать пять старших геологов за стоимость одной инсталляции foundation model. Foundation model окупается только если воспроизводит работу пяти-двадцати пяти геологов — что в 2026 году не доказано ни одним публичным бенчмарком.
+Экономика. Senior геолог с двадцатью пятью годами опыта стоит компании двести-пятьсот тысяч долларов в год. Foundation model с обучением плюс интеграцией — пять-двадцать миллионов в год. Арифметика простая: пять-двадцать пять старших геологов за стоимость одной инсталляции базовая модель. Foundation model окупается только если воспроизводит работу пяти-двадцати пяти геологов — что в 2026 году не доказано ни одним публичным бенчмарком.

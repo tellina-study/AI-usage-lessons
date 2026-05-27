@@ -49,12 +49,12 @@ Sub: «4 марта 2024 запуск → 20 июня 2025 «spacecraft anomaly�
 
 Четыре фундаментальных урока.
 
-Первый — single-satellite mission равно catastrophic single point of failure для regulatory MRV infrastructure. Когда EU Methane Regulation 2024/1787 предусматривает использование satellite measurements как accepted data source — и primary global satellite NGO-owned data source потерян — что делать с этой data infrastructure? Ответ к концу 2025 года: scramble к alternative data sources. Но resilience matters from day one.
+Первый — один спутник mission равно catastrophic single point of failure для regulatory MRV infrastructure. Когда EU Methane Regulation 2024/1787 предусматривает использование satellite measurements как accepted data source — и primary global satellite NGO-owned data source потерян — что делать с этой data infrastructure? Ответ к концу 2025 года: scramble к alternative data sources. Но resilience matters from day one.
 
-Второй — даже с успешным запуском и хорошими данными первого года hardware reliability остаётся fundamental constraint. MethaneSAT работал отлично пятнадцать с половиной месяцев. Это не «технология провалилась»; это «спутник в космосе — это hardware с конечной reliability». Для critical infrastructure нужно constellation model, не single mission.
+Второй — даже с успешным запуском и хорошими данными первого года надёжность аппаратуры остаётся fundamental constraint. MethaneSAT работал отлично пятнадцать с половиной месяцев. Это не «технология провалилась»; это «спутник в космосе — это аппаратура с конечной reliability». Для главный infrastructure нужно группировка model, не single mission.
 
-Третий — regulatory enforcement не может опираться на один спутник. EU regulator после MethaneSAT loss принимает GHGSat данные с осторожностью и приоритизирует ground OGI campaigns для compliance. Это усиливает позицию ground OGI как альтернативного инструмента и снижает зависимость от satellite AI MRV.
+Третий — regulatory enforcement не может опираться на один спутник. EU regulator после MethaneSAT loss принимает GHGSat данные с осторожностью и приоритизирует ground OGI campaigns для соответствие. Это усиливает позицию ground OGI как альтернативного инструмента и снижает зависимость от satellite AI MRV.
 
-Четвёртый — AI без stable upstream data source не работает. Это самый глубокий урок. MethaneSAT использовал AI для downstream processing — atmospheric retrieval, plume detection, emission quantification. Когда upstream sensor stream исчезает — все downstream ML-модели становятся бесполезны на новых данных. То же самое случилось бы при потере любой ключевой сенсорной модальности. AI — это слой над данными, не источник данных.
+Четвёртый — AI без stable верхний слой данных source не работает. Это самый глубокий урок. MethaneSAT использовал AI для downstream processing — atmospheric retrieval, plume detection, emission quantification. Когда upstream sensor stream исчезает — все downstream ML-модели становятся бесполезны на новых данных. То же самое случилось бы при потере любой ключевой сенсорной модальности. AI — это слой над данными, не источник данных.
 
 Реализованная стоимость per month — пять и семь десятых миллиона vs планируемые полтора. В четыре раза выше cost effectiveness, чем обосновывала миссию.

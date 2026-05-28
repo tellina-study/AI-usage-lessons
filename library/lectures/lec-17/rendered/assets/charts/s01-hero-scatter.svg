@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" font-family="Liberation Sans, Arial, sans-serif">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F4F7FA"/><stop offset="100%" stop-color="#DCE7F0"/></linearGradient></defs>
+<rect x="0" y="0" width="1200" height="820" fill="url(#bg)"/>
+<rect x="150" y="70" width="990" height="670" fill="none" stroke="#1C7293" stroke-width="1.5"/>
+<line x1="645.0" y1="70" x2="645.0" y2="740" stroke="#6B7685" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.5"/>
+<line x1="150" y1="405.0" x2="1140" y2="405.0" stroke="#6B7685" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.5"/>
+<text x="645.0" y="790" font-size="22" font-weight="bold" fill="#21295C" text-anchor="middle">Применимость ИИ  →</text>
+<text x="154" y="770" font-size="15" fill="#6B7685" text-anchor="start">детерминированный non-AI</text>
+<text x="1136" y="770" font-size="15" fill="#6B7685" text-anchor="end">полный AI</text>
+<text x="40" y="405.0" font-size="22" font-weight="bold" fill="#21295C" text-anchor="middle" transform="rotate(-90 40 405.0)">Автономия  L0 → L5  ↑</text>
+<text x="75" y="736" font-size="15" fill="#6B7685" text-anchor="middle">L0</text>
+<text x="75" y="86" font-size="15" fill="#6B7685" text-anchor="middle">L5</text>
+<circle cx="1060.8000000000002" cy="217.39999999999998" r="9" fill="#21295C"/>
+<circle cx="922.2" cy="324.6" r="9" fill="#21295C"/>
+<circle cx="843.0" cy="539.0" r="9" fill="#21295C"/>
+<circle cx="803.4" cy="472.0" r="9" fill="#028090"/>
+<circle cx="645.0" cy="512.2" r="9" fill="#21295C"/>
+<circle cx="763.8" cy="371.49999999999994" r="9" fill="#21295C"/>
+<circle cx="1001.4" cy="257.6" r="9" fill="#028090"/>
+<circle cx="417.3" cy="244.2" r="9" fill="#FFFFFF" stroke="#028090" stroke-width="3"/>
+<circle cx="417.3" cy="244.2" r="3.6" fill="#028090"/>
+<circle cx="694.5" cy="458.6" r="9" fill="#028090"/>
+<circle cx="744.0" cy="405.0" r="9" fill="#028090"/>
+<circle cx="1041.0" cy="190.60000000000002" r="9" fill="#F0AB00"/>
+<circle cx="486.6" cy="271.00000000000006" r="9" fill="#FFFFFF" stroke="#F0AB00" stroke-width="3"/>
+<circle cx="486.6" cy="271.00000000000006" r="3.6" fill="#F0AB00"/>
+<circle cx="348.0" cy="673.0" r="9" fill="#FFFFFF" stroke="#F0AB00" stroke-width="3" stroke-dasharray="3,3"/>
+<circle cx="803.4" cy="525.6" r="9" fill="#F0AB00"/>
+<circle cx="1021.2" cy="297.79999999999995" r="9" fill="#F0AB00"/>
+<circle cx="447.0" cy="297.79999999999995" r="9" fill="#FFFFFF" stroke="#F0AB00" stroke-width="3"/>
+<circle cx="447.0" cy="297.79999999999995" r="3.6" fill="#F0AB00"/>
+<circle cx="605.4000000000001" cy="539.0" r="9" fill="#F0AB00"/>
+<text x="645.0" y="46" font-size="24" font-weight="bold" fill="#21295C" text-anchor="middle">Шестнадцать отраслей — шестнадцать точек одной карты</text>
+<rect x="156" y="62" width="332" height="76" rx="6" fill="#FFFFFF" stroke="#1C7293" stroke-width="1" opacity="0.92"/>
+<rect x="164" y="68" width="14" height="14" rx="3" fill="#21295C"/>
+<text x="184" y="80" font-size="13" fill="#21295C">Модуль 1 — основы + ранние отрасли</text>
+<rect x="164" y="90" width="14" height="14" rx="3" fill="#028090"/>
+<text x="184" y="102" font-size="13" fill="#21295C">Модуль 2 — тяжёлая промышленность/оборона</text>
+<rect x="164" y="112" width="14" height="14" rx="3" fill="#F0AB00"/>
+<text x="184" y="124" font-size="13" fill="#21295C">Модуль 3 — инфраструктура/наука</text>
+</svg>

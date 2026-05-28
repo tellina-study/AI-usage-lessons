@@ -168,6 +168,14 @@ lectures:
     title: "Систематизация знаний и навыков"
     module: 3
     learning_outcomes: [LO1, LO2, LO3, LO4, LO5, LO6, LO7, LO8]
-    repo_dir: null
-    status: planned
-    updated_at: "2026-05-16"
+    repo_dir: lec-17
+    status: produced
+    issue: 145
+    updated_at: "2026-05-28"
+    keystone_axis: "2D-плоскость: применимость ИИ (горизонталь) × лестница автономии L0→L5 (вертикаль); все 16 отраслей курса как точки"
+    artifacts:
+      chapter: "library/lectures/lec-17/chapter.md (+ chapter-part2/3/3b/4.md, 5 parts, ~30.5k слов, v4)"
+      slides: "library/lectures/lec-17/rendered/lec-17.pptx (37 slides, 85% media, 13 real case images) + lec-17.pdf"
+      speech: "library/lectures/lec-17/speech.md (~6.4k слов body, 75 мин, v1.1)"
+      cheatsheets: "library/lectures/lec-17/cheatsheets/ (3 A4 + 1 A1 master-poster + combined PDF)"
+    capstone: true

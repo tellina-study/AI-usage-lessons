@@ -1,0 +1,516 @@
+# library/lectures/lec-17/deck.yaml
+#
+# Deck-структура Лекции 17 «Систематизация знаний и навыков — инженерная карта AI» (capstone курса).
+# v2 (Phase 8c-1, GATE B restructure): 37 слайдов. Issue #145.
+#
+# Изменения v1 → v2 (owner GATE B feedback, 7 правок; content-правки 8c-1 = A/B/C):
+#   A (#1+#3): intro свёрнут — s01 чистый ТИТУЛЬНЫЙ + s02 keystone сразу; central-question
+#              свёрнут в s01 хук; roadmap-слайд удалён; lecture-map перемещён перед Разделом 3.
+#   B (#7): убраны ВСЕ ссылки на номера лекций (L4/L5/L10...) из visible + speaker_notes;
+#           заменены на «индустрия + памятная деталь кейса».
+#   C (#4+#5): удалён s40 (ESO closing hero); QA → последний слайд, упрощён («Вопросы? · До новых встреч»).
+#   image_slot: размечен на case-subject слайдах (8c-img уже добыл 26 real images в assets/screenshots/).
+#
+# Pattern carry-forward от Лекции 15 (merged reference):
+#   - section dividers (4 шт.): s03 / s10 / s18 / s27
+#   - hero на s01 (clean cover, hero-визуал ≥40% добавляется в 8c-2)
+#   - dedicated Q&A slide (s37, последний) — Lec-13/14/15 pattern
+#   - lecture-map / 16 отраслей (s19) — lead-in к Разделу 3
+#   - roadmap-bar / section markers ТОЛЬКО на dividers + cover (НЕ на каждом content slide)
+#
+# Keystone (LOCKED owner decision GATE A):
+#   2D-плоскость инженерной карты AI. Горизонталь X = Применимость ИИ (AI fit) от
+#   детерминированного non-AI до full AI; вертикаль Y = Лестница автономии L0→L5
+#   (advisory → fully autonomous). Все 16 отраслей курса — точки на этой плоскости.
+#   Предъявлена отдельным keystone-слайдом s02 ДО первого погружения.
+#
+# Module color coding (для scatter plots; группировка по характеру, не по номеру лекции):
+#   Module 1 (основы + ранние отрасли)        → #065A82 (Ocean primary mid)
+#   Module 2 (тяжёлая промышленность/оборона)  → #028090 (Teal secondary)
+#   Module 3 (инфраструктура/наука)            → #F0AB00 (Gold highlight)
+
+deck:
+  lecture_number: 17
+  title: "Систематизация знаний и навыков — инженерная карта AI"
+  audience: "студенты-инженеры 3 курса (универсальная, не отраслевые специалисты)"
+  duration_min: 75
+  central_question: "Где AI работает, где — нет, и как это понять?"
+  learning_outcomes: [LO1, LO2, LO3, LO4, LO5, LO6, LO7, LO8]
+  language: ru
+  status: draft
+  version: v2
+  source: "chapter v3 multi-part (5 parts, ~30 109 слов): chapter.md + chapter-part2.md + chapter-part3.md + chapter-part3b.md + chapter-part4.md"
+  plan: "notes/lecture-17/planning/plan-v1.md (GATE A approved v1.1)"
+  keystone_axis: "2D-плоскость: Применимость ИИ (X, non-AI → full AI) × Лестница автономии L0→L5 (Y)"
+  media_target_share: 0.55
+
+# Final slide list (37 slides). Подробный per-slide контент — slides/sNN-*.md
+# Раздел 0 (вход) s01-s02 | Раздел 1 s03-s09 | Раздел 2 s10-s17
+# Раздел 3 s18-s26 (s19 — карта 16 отраслей, lead-in) | Раздел 4 s27-s31 | Раздел 5 s32-s36 | Q&A s37
+# Section dividers: s03, s10, s18, s27 (s32 — overview-as-intro для R5; Q&A s37 dedicated, последний)
+# Hero slides: s01 (title/cover) + s37 (Q&A/closing, hero-визуал в 8c-2)
+# Worked examples: s09 (ЖКХ-вода через 7 критериев), s17 (приём экзаменов через лестницу)
+# Failure deep-dives: s28-s30 (12 провалов card-grid), s31 synthesis 3 mega-pattern
+
+slides:
+  - id: s01
+    file: slides/s01-cover.md
+    type: hero_cover
+    duration_min: 2
+    assertion: "Лекция 17 — итоговая карта курса: где AI работает, где нет, и как это понять."
+    learning_goal: "Чистый титульный слайд + диагностический хук (capstone)"
+    section: 0
+    chapter_ref: "Введение"
+    failure_bucket: mixed
+    media: true
+    media_kind: "hero-визуал ≥40% (real-фото / коллаж кейсов / scatter-карта) добавляется в 8c-2"
+    image_slot: hero-title
+
+  - id: s02
+    file: slides/s02-keystone-2d-plane.md
+    type: schema
+    duration_min: 2
+    assertion: "Карта применимости ИИ: горизонталь — нужен ли AI, вертикаль — сколько ему доверить."
+    learning_goal: "Keystone reveal: 2D-плоскость с осями и квадрантами (несущая ось capstone)"
+    section: 0
+    chapter_ref: "§0.3 — keystone reveal"
+    failure_bucket: capability
+    schema_subtype: schema_quadrant
+    media: true
+    media_kind: "schema_quadrant — 2 оси + 4 подписанных квадранта, без точек (точки придут в s20-s22)"
+
+  - id: s03
+    file: slides/s03-section1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 1. Когда AI применять, когда нет — семь измеримых критериев."
+    learning_goal: "Section break"
+    section: 1
+    chapter_ref: "§1.0 — введение раздела"
+    failure_bucket: strict_in
+    media: false
+
+  - id: s04
+    file: slides/s04-seven-criteria-overview.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Семь критериев работают как последовательные ворота: один однозначный «нет» — и задача не для полной автономии AI."
+    learning_goal: "Overview 7 критериев — рамка для s05-s08"
+    section: 1
+    chapter_ref: "§1.0 — общий список семи критериев"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "нумерованный список 1-7 с иконками per критерий"
+
+  - id: s05
+    file: slides/s05-criteria-1-2.md
+    type: comparison
+    duration_min: 2.5
+    assertion: "Закрытая петля с быстрой обратной связью — AI работает; открытая среда с распределённым сдвигом — AI системно проваливается."
+    learning_goal: "Критерий 1 (закрытая/открытая) + 2 (обучающие данные); two-column cross-industry cases"
+    section: 1
+    chapter_ref: "§1.1 — критерии 1 + 2"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "two-column compare: закрытая петля (See & Spray / Aidoc / склад) vs открытая среда (Zillow / Monarch / Cruise)"
+    image_slot: see-and-spray
+
+  - id: s06
+    file: slides/s06-criteria-3-4.md
+    type: comparison
+    duration_min: 2.5
+    assertion: "AI окупается на повторяемых задачах с низкой ценой ошибки — и опасен там, где цена ошибки умножается на большой радиус разрушения."
+    learning_goal: "Критерий 3 (повторяемость+объём) + 4 (цена ошибки+blast radius)"
+    section: 1
+    chapter_ref: "§1.2 — критерии 3 + 4"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "blast-radius таблица: Copilot 1 dev → CrowdStrike 8,5 млн устройств (gold highlight на 8,5 млн)"
+    image_slot: crowdstrike
+
+  - id: s07
+    file: slides/s07-criteria-5-6.md
+    type: comparison
+    duration_min: 2.5
+    assertion: "Без быстрого эталона и без объяснимости AI остаётся на advisory — даже когда злого умысла нет, чёрная коробка разрушает доверие."
+    learning_goal: "Критерий 5 (эталон/Pearl) + 6 (объяснимость+аудит); Apple Card reframed (explainability, не bias)"
+    section: 1
+    chapter_ref: "§1.3 — критерии 5 + 6"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "3-уровня Pearl (ассоциация/вмешательство/контрфактуальность) + Apple Card 2019 callout"
+
+  - id: s08
+    file: slides/s08-criterion-7-baseline.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "AI обязан бить лучшую классическую альтернативу на деньгах — иначе отказ от AI это инженерное решение, не поражение."
+    learning_goal: "Критерий 7 (экономика vs baseline) + tools-per-quadrant"
+    section: 1
+    chapter_ref: "§1.4 — критерий 7"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "tools-per-quadrant сетка: Q1 Copilot/Stripe; Q3 ORION/MPC/EOQ (classical wins)"
+    image_slot: ups-orion
+
+  - id: s09
+    file: slides/s09-worked-example-water.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Вендор обещает «−30% потерь воды за 18 месяцев» — семь критериев за 20 минут дают вердикт: не полная автоматизация, а L1 advisory + A/B против EPANET."
+    learning_goal: "Worked example (ЖКХ-вода, не из курса) через 7 критериев → verdict; applied LO2"
+    section: 1
+    chapter_ref: "§1.5 — worked example"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "7-строк checklist с вердиктами (✓/⚠/✗) + итоговая рекомендация"
+
+  - id: s10
+    file: slides/s10-section2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2. Лестница автономии L0→L5 — сколько именно доверить AI."
+    learning_goal: "Section break"
+    section: 2
+    chapter_ref: "§2.0 — зачем нужна лестница"
+    failure_bucket: capability
+    media: false
+
+  - id: s11
+    file: slides/s11-ladder-full-reveal.md
+    type: schema
+    duration_min: 2.5
+    assertion: "Шесть дискретных ступеней — от «человек делает всё» до недостижимой в 2026 полной автономии."
+    learning_goal: "Лестница full reveal: L0-L5 vertical stack + иконки + кто решает"
+    section: 2
+    chapter_ref: "§2.1-§2.6 — L0 до L5"
+    failure_bucket: capability
+    schema_subtype: schema_layered
+    media: true
+    media_kind: "schema_layered — вертикальная лестница 6 ступеней (bottom-aligned), L5 наверху серый/недостижим"
+
+  - id: s12
+    file: slides/s12-mapping-table.md
+    type: schema
+    duration_min: 2.5
+    assertion: "Все локальные шкалы курса сводятся в единую L0→L5 — но не все они про автономию: ось среды (логистика) и функции (кибербезопасность) ортогональны."
+    learning_goal: "Маппинг: 2 таблицы (прямые шкалы автономии против ортогональных осей)"
+    section: 2
+    chapter_ref: "§2.7 — маппинг локальных шкал"
+    failure_bucket: capability
+    schema_subtype: schema_matrix
+    media: true
+    media_kind: "schema_matrix — таблица (3 шкалы автономии → L0-L5) + врезка ортогональные оси (среда, функции)"
+
+  - id: s13
+    file: slides/s13-l1-advisory.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "L1 advisory — самый частый уровень зрелой промышленной эксплуатации: AI советует, человек решает всегда."
+    learning_goal: "L1 deep-dive + criteria подъёма на L2 (baseline + change-control + rollback)"
+    section: 2
+    chapter_ref: "§2.2 — L1 advisory"
+    failure_bucket: capability
+    media: true
+    media_kind: "L1-схема: AI → рекомендация → человек решает; примеры Stripe Radar / Aidoc / Crop Wizard / Project Maven"
+    image_slot: aidoc
+
+  - id: s14
+    file: slides/s14-l2-l3-supervised-conditional.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "L2 supervised и L3 conditional — AI действует, но человек подтверждает каждое (L2) или AI работает только в узком домене (L3)."
+    learning_goal: "L2-L3 deep-dive + ODD; criteria подъёма (sim-to-real + canary + go/no-go)"
+    section: 2
+    chapter_ref: "§2.3-§2.4 — L2 supervised + L3 conditional"
+    failure_bucket: capability
+    media: true
+    media_kind: "две панели L2/L3 + ODD-врезка; Yokogawa FKDPP / Mobileye / Copilot agent"
+    image_slot: waymo
+
+  - id: s15
+    file: slides/s15-l4-l5-high-full.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "L4 high (высокая автономия) достижим в широком домене с человеком на петле; L5 full в 2026 — теоретический горизонт, не цель."
+    learning_goal: "L4-L5 deep-dive; почему L5 заблокирован (insurance / regulatory / OOD)"
+    section: 2
+    chapter_ref: "§2.5-§2.6 — L4 high + L5 full"
+    failure_bucket: mixed
+    media: true
+    media_kind: "L4 примеры (Waymo / Symbotic / See & Spray) + L5 блок-список (5 структурных блоков)"
+    image_slot: symbotic
+
+  - id: s16
+    file: slides/s16-antipatterns-per-level.md
+    type: card_grid
+    duration_min: 2.5
+    assertion: "У каждой ступени свой характерный провал — от превышения роли Klarna на L1 до блока по LAWS на L5."
+    learning_goal: "Антипаттерн на каждом уровне лестницы; card-grid 6 карточек"
+    section: 2
+    chapter_ref: "§2.8 — антипаттерны каждого уровня"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "card-grid 6 карточек: L1 Klarna / L2 Uber Tempe / L3 Cruise / L4 CrowdStrike / L5 LAWS / cross-level пропуск ступени"
+    image_slot: klarna
+
+  - id: s17
+    file: slides/s17-worked-example-exam.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "AI-помощник для приёма экзаменов — максимум L1 advisory: высокая цена ошибки + обязательная апелляция держат человека в решении."
+    learning_goal: "Worked example (приём экзаменов) через лестницу → verdict"
+    section: 2
+    chapter_ref: "§2.9 — worked example 2"
+    failure_bucket: mixed
+    media: true
+    media_kind: "лестница с маркером «потолок = L1» + criteria подъёма на L2"
+
+  - id: s18
+    file: slides/s18-section3-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 3. Шестнадцать отраслей на одной карте."
+    learning_goal: "Section break"
+    section: 3
+    chapter_ref: "§3.0 — введение раздела"
+    failure_bucket: mixed
+    media: false
+
+  - id: s19
+    file: slides/s19-lecture-map-16.md
+    type: lecture_map
+    duration_min: 1.5
+    assertion: "Каждая из 16 отраслей курса поднимала свою локальную ось — и все они про одно: насколько AI берёт действие на себя."
+    learning_goal: "Lead-in к карте: вспомнить 16 отраслей и их локальные оси перед нанесением на плоскость"
+    section: 3
+    chapter_ref: "§0.2 — карта 16 отраслей + §3.0 lead-in"
+    failure_bucket: capability
+    media: true
+    media_kind: "4×4 mini-grid карточек, каждая = отрасль + её локальная ось одной фразой (БЕЗ номеров лекций)"
+
+  - id: s20
+    file: slides/s20-map-batch1.md
+    type: schema
+    duration_min: 2
+    assertion: "Первые четыре точки уже показывают структуру: смежное с IT — вверху-справа, регулируемая медицина — внизу-справа."
+    learning_goal: "Раскрытие карты, набор 1 (разработка ПО / финансы / медицина / авиакосмос)"
+    section: 3
+    chapter_ref: "§3.1 — starter точки"
+    failure_bucket: mixed
+    schema_subtype: schema_quadrant
+    media: true
+    media_kind: "scatter plot с 4 точками + аннотации"
+
+  - id: s21
+    file: slides/s21-map-batch2.md
+    type: schema
+    duration_min: 2
+    assertion: "Средний набор добавляет двойственные (бимодальные) отрасли: агро раздваивается на узкую очерченную See & Spray и провальный Monarch."
+    learning_goal: "Раскрытие карты, набор 2 (CAD/CAM / креатив / агро / производство)"
+    section: 3
+    chapter_ref: "§3.2 — middle batch"
+    failure_bucket: mixed
+    schema_subtype: schema_quadrant
+    media: true
+    media_kind: "scatter plot 8 точек, агро как bimodal cloud (See & Spray ↑ верх-право / Monarch ↖ верх-лево, зона предупреждения)"
+
+  - id: s22
+    file: slides/s22-map-batch3.md
+    type: schema
+    duration_min: 2.5
+    assertion: "Логистика — три точки одной отрасли: склад L4, робот-такси L3, чёрный лебедь фактически L0."
+    learning_goal: "Раскрытие карты, набор 3 (двойники / логистика / кибербез / наука / нефтегаз) + бимодальность логистики (3 точки)"
+    section: 3
+    chapter_ref: "§3.3 — final batch + нефтегаз anchor"
+    failure_bucket: mixed
+    schema_subtype: schema_quadrant
+    media: true
+    media_kind: "full scatter plot ~20 точек, логистика три точки выделены, нефтегаз 4-quadrant matrix врезка"
+
+  - id: s23
+    file: slides/s23-cluster-closed-loop.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Кластер закрытой петли (верхний правый) — пять общих признаков, профиль успешного применения AI."
+    learning_goal: "Кластерный анализ 1: квадрант закрытой петли + 5 признаков"
+    section: 3
+    chapter_ref: "§3.4 — cluster closed-loop"
+    failure_bucket: capability
+    media: true
+    media_kind: "highlight верхне-правого квадранта + 5-пунктов профиль успеха"
+    image_slot: alphafold
+
+  - id: s24
+    file: slides/s24-cluster-open-env.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Кластер открытой среды (верхний левый) — зона провалов; открытая среда это физика задачи, а не недостаток модели."
+    learning_goal: "Кластерный анализ 2: квадрант открытой среды (зона предупреждения)"
+    section: 3
+    chapter_ref: "§3.5 — cluster open-environment"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "highlight квадранта (warning) + список провалов (Monarch / Plenty / Cruise / Zillow / Galactica)"
+    image_slot: monarch
+
+  - id: s25
+    file: slides/s25-cluster-high-stakes.md
+    type: assertion_visual
+    duration_min: 2
+    assertion: "Кластер высоких ставок (нижний правый) — применимость высокая, но автономия капнута регулятором; цель — усиление, не замена."
+    learning_goal: "Кластерный анализ 3: высокие ставки, регуляторно-капнутая автономия (усиление)"
+    section: 3
+    chapter_ref: "§3.6 — cluster high-stakes"
+    failure_bucket: mixed
+    media: true
+    media_kind: "highlight квадранта + augmentation-примеры (Aidoc / Project Maven / process operator)"
+    image_slot: epic-sepsis
+
+  - id: s26
+    file: slides/s26-empty-quadrants.md
+    type: schema
+    duration_min: 2
+    assertion: "Пустой верхне-левый квадрант — дидактический сигнал: низкая применимость × высокая автономия = катастрофа."
+    learning_goal: "Empty quadrants дидактика; warning zone (CrowdStrike-class) + два направления сдвига"
+    section: 3
+    chapter_ref: "§3.7 — пустые квадранты"
+    failure_bucket: strict_in
+    schema_subtype: schema_quadrant
+    media: true
+    media_kind: "schema_quadrant с подсвеченным пустым квадрантом + стрелки сдвига (вправо/вниз)"
+
+  - id: s27
+    file: slides/s27-section4-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 4. Двенадцать провалов курса — что выучили и какая альтернатива."
+    learning_goal: "Section break"
+    section: 4
+    chapter_ref: "§4.0 — введение раздела"
+    failure_bucket: strict_in
+    media: false
+
+  - id: s28
+    file: slides/s28-failures-1-4.md
+    type: card_grid
+    duration_min: 2.5
+    assertion: "Провалы 1-4: открытый мир, накопление ненадёжности, демо ≠ промышленная эксплуатация, скучный человек в петле."
+    learning_goal: "Провалы 1-4 card-grid (имя / источник / урок / альтернатива)"
+    section: 4
+    chapter_ref: "§4.1-§4.4 — провалы 1-4"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "card-grid 4 карточки failure-modes"
+    image_slot: uber-tempe
+
+  - id: s29
+    file: slides/s29-failures-5-8.md
+    type: card_grid
+    duration_min: 2.5
+    assertion: "Провалы 5-8: переавтоматизация, действие без канарейки, научная галлюцинация, голос/видео-дипфейк мошенничество."
+    learning_goal: "Провалы 5-8 card-grid"
+    section: 4
+    chapter_ref: "§4.5-§4.8 — провалы 5-8"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "card-grid 4 карточки failure-modes"
+    image_slot: arup-deepfake
+
+  - id: s30
+    file: slides/s30-failures-9-12.md
+    type: card_grid
+    duration_min: 2.5
+    assertion: "Провалы 9-12: утечка обучающих данных, привязка к вендору, slopsquatting, болото пилотов."
+    learning_goal: "Провалы 9-12 card-grid"
+    section: 4
+    chapter_ref: "§4.9-§4.12 — провалы 9-12"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "card-grid 4 карточки failure-modes"
+    image_slot: getty-stability
+
+  - id: s31
+    file: slides/s31-synthesis-mega-patterns.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "Почти все провалы сводятся к трём мега-паттернам: AI за границей закрытой петли, плохой человек в петле, проигнорированная базовая линия."
+    learning_goal: "Synthesis 3 mega-pattern; anchor для cheat-sheet #3 + 30-сек диагностика"
+    section: 4
+    chapter_ref: "§4.13 — synthesis"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "3 крупные карточки мега-паттернов + 30-сек чек-процедура"
+
+  - id: s32
+    file: slides/s32-cheatsheets-overview.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Четыре опорные карточки — то, что вы заберёте с собой и будете применять в работе."
+    learning_goal: "Overview 4 cheat-sheets (intro для Раздела 5)"
+    section: 5
+    chapter_ref: "§5.0 — что вы возьмёте с собой"
+    failure_bucket: mixed
+    media: true
+    media_kind: "4 thumbnail-превью карточек (3 A4 + 1 A1)"
+
+  - id: s33
+    file: slides/s33-cheatsheet1-decision-matrix.md
+    type: cheatsheet_preview
+    duration_min: 2
+    assertion: "Карточка #1 — матрица из 7 критериев: пройди 7 строк, один ✗ — СТОП."
+    learning_goal: "Cheat-sheet #1 fullscreen preview (Decision matrix) + QR placeholder"
+    section: 5
+    chapter_ref: "§5.1 — карточка #1"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "A4 portrait preview таблицы 7×4 + QR-placeholder"
+
+  - id: s34
+    file: slides/s34-cheatsheet2-autonomy-ladder.md
+    type: cheatsheet_preview
+    duration_min: 1.5
+    assertion: "Карточка #2 — лестница автономии L0→L5: определи текущий уровень и максимально допустимый."
+    learning_goal: "Cheat-sheet #2 preview (Autonomy ladder)"
+    section: 5
+    chapter_ref: "§5.2 — карточка #2"
+    failure_bucket: mixed
+    media: true
+    media_kind: "A4 portrait preview таблицы 6×5 + footer антипаттерны"
+
+  - id: s35
+    file: slides/s35-cheatsheet3-failure-modes.md
+    type: cheatsheet_preview
+    duration_min: 2
+    assertion: "Карточка #3 — реестр 12 провалов: главная по практической ценности, прививка против реальных ошибок."
+    learning_goal: "Cheat-sheet #3 preview (Failure-modes top-12) — главный sheet"
+    section: 5
+    chapter_ref: "§5.3 — карточка #3"
+    failure_bucket: strict_in
+    media: true
+    media_kind: "A4 portrait preview таблицы 12×4 + QR-placeholder"
+
+  - id: s36
+    file: slides/s36-cheatsheet4-master-map.md
+    type: cheatsheet_preview
+    duration_min: 1.5
+    assertion: "Карточка #4 — плакат A1: карта 16 отраслей на стену; для новой отрасли — аналогии по координатам."
+    learning_goal: "Cheat-sheet #4 preview (A1 master-poster карта 16 отраслей)"
+    section: 5
+    chapter_ref: "§5.4 — карточка #4"
+    failure_bucket: mixed
+    media: true
+    media_kind: "A1 landscape preview master scatter plot + цветовые зоны квадрантов"
+
+  - id: s37
+    file: slides/s37-qa.md
+    type: qa
+    duration_min: 3
+    assertion: "Знать ИИ — значит знать его границы. Вопросы?"
+    learning_goal: "Финальный слайд: главный вывод + Q&A + прощание (упрощённый)"
+    section: 6
+    chapter_ref: "Appendix B — Q&A backup + §5.7 closing"
+    failure_bucket: mixed
+    media: false
+    media_kind: "минималистичный текст; hero-визуал финала (≥40%) добавляется в 8c-2"
+    image_slot: hero-closing

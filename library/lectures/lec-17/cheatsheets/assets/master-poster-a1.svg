@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2380" height="1680" viewBox="0 0 2380 1680" font-family="Liberation Sans, Arial, sans-serif">
+<rect x="0" y="0" width="2380" height="1680" fill="#FFFFFF"/>
+<text x="1190.0" y="74" font-size="52" font-weight="bold" fill="#21295C" text-anchor="middle">Карта 17 отраслей курса — применимость ИИ × автономия</text>
+<text x="1190.0" y="116" font-size="28" fill="#1C7293" text-anchor="middle">Опорная карточка #4 · плакат A1 · итоговая лекция курса AI-usage-lessons v1.0</text>
+<rect x="250" y="150" width="1020.0" height="665.0" fill="#FCEFD6" stroke="#F0AB00" stroke-width="4" stroke-dasharray="14,8"/>
+<rect x="1270.0" y="150" width="1020.0" height="665.0" fill="#E4F1E8"/>
+<rect x="250" y="815.0" width="1020.0" height="665.0" fill="#ECEFF3"/>
+<rect x="1270.0" y="815.0" width="1020.0" height="665.0" fill="#E6EEF5" stroke="#065A82" stroke-width="3" stroke-dasharray="none"/>
+<text x="1759.6" y="209.85000000000014" font-size="27" font-weight="bold" fill="#028090" text-anchor="middle" opacity="0.85">AI РАБОТАЕТ И АВТОНОМНО</text>
+<text x="1759.6" y="239.85000000000014" font-size="20" fill="#6B7685" text-anchor="middle" opacity="0.9">зрелые закрытые-петли успехи</text>
+<text x="800.8000000000001" y="209.85000000000014" font-size="27" font-weight="bold" fill="#F0AB00" text-anchor="middle" opacity="0.85">ЗОНА ПРЕДУПРЕЖДЕНИЯ</text>
+<text x="800.8000000000001" y="239.85000000000014" font-size="20" fill="#6B7685" text-anchor="middle" opacity="0.9">низкая применимость × высокая автономия</text>
+<text x="800.8000000000001" y="948.0" font-size="27" font-weight="bold" fill="#6B7685" text-anchor="middle" opacity="0.85">«КЛАССИКА ВЫИГРЫВАЕТ»</text>
+<text x="800.8000000000001" y="978.0" font-size="20" fill="#6B7685" text-anchor="middle" opacity="0.9">AI не нужен / не применим</text>
+<text x="1790.2" y="1380.25" font-size="27" font-weight="bold" fill="#065A82" text-anchor="middle" opacity="0.85">AI РАБОТАЕТ, АВТОНОМИЯ КАПНУТА</text>
+<text x="1790.2" y="1410.25" font-size="20" fill="#6B7685" text-anchor="middle" opacity="0.9">регулятор ограничивает уровень</text>
+<rect x="250" y="150" width="2040" height="1330" fill="none" stroke="#1C7293" stroke-width="2"/>
+<line x1="1270.0" y1="150" x2="1270.0" y2="1480" stroke="#6B7685" stroke-width="1.2" stroke-dasharray="6,6" opacity="0.5"/>
+<line x1="250" y1="815.0" x2="2290" y2="815.0" stroke="#6B7685" stroke-width="1.2" stroke-dasharray="6,6" opacity="0.5"/>
+<text x="1270.0" y="1554" font-size="34" font-weight="bold" fill="#21295C" text-anchor="middle">Применимость ИИ  →</text>
+<text x="256" y="1524" font-size="22" fill="#6B7685" text-anchor="start">детерминированный non-AI</text>
+<text x="2284" y="1524" font-size="22" fill="#6B7685" text-anchor="end">полный AI</text>
+<text x="70" y="815.0" font-size="34" font-weight="bold" fill="#21295C" text-anchor="middle" transform="rotate(-90 70 815.0)">Автономия  L0 → L5  ↑</text>
+<text x="220" y="1474" font-size="22" fill="#6B7685" text-anchor="middle">L0</text>
+<text x="220" y="172" font-size="22" fill="#6B7685" text-anchor="middle">L5</text>
+<rect x="262" y="831.0" width="320" height="130" rx="10" fill="#FFFFFF" stroke="#1C7293" stroke-width="1.5" opacity="0.92"/>
+<rect x="274" y="853.0" width="24" height="24" rx="5" fill="#21295C"/>
+<text x="308" y="871.0" font-size="22" fill="#21295C">Модуль 1 (L1–L8)</text>
+<rect x="274" y="891.0" width="24" height="24" rx="5" fill="#028090"/>
+<text x="308" y="909.0" font-size="22" fill="#21295C">Модуль 2 (L9–L12)</text>
+<rect x="274" y="929.0" width="24" height="24" rx="5" fill="#F0AB00"/>
+<text x="308" y="947.0" font-size="22" fill="#21295C">Модуль 3 (L13–L17)</text>
+<circle cx="2126.8" cy="442.5999999999999" r="16" fill="#21295C"/>
+<text x="2098.8" y="438.5999999999999" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">L4 разработка ПО</text>
+<text x="2098.8" y="464.5999999999999" font-size="17" fill="#6B7685" text-anchor="end">Copilot: автодополнение ✓; штучная архитектура ✗</text>
+<circle cx="1841.2" cy="655.4" r="16" fill="#21295C"/>
+<text x="1813.2" y="651.4" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">L5 финансы (фрод)</text>
+<text x="1813.2" y="677.4" font-size="17" fill="#6B7685" text-anchor="end">Stripe Radar: фрод-скоринг под надзором ✓</text>
+<circle cx="1678.0" cy="1081.0" r="16" fill="#21295C"/>
+<text x="1706.0" y="1107.0" font-size="23" font-weight="bold" fill="#21295C" text-anchor="start">L7 медицина</text>
+<text x="1706.0" y="1133.0" font-size="17" fill="#6B7685" text-anchor="start">Epic Sepsis: демо ≠ клиника ✗</text>
+<circle cx="1596.4" cy="948.0" r="16" fill="#028090"/>
+<text x="1624.4" y="942.0" font-size="23" font-weight="bold" fill="#21295C" text-anchor="start">L9 авиакосмос</text>
+<text x="1624.4" y="968.0" font-size="17" fill="#6B7685" text-anchor="start">F-35 ALIS: привязка к вендору ✗</text>
+<circle cx="1270.0" cy="1027.8" r="16" fill="#21295C"/>
+<text x="1298.0" y="1023.8" font-size="23" font-weight="bold" fill="#21295C" text-anchor="start">L6 CAD/CAM</text>
+<text x="1298.0" y="1049.8" font-size="17" fill="#6B7685" text-anchor="start">генеративный дизайн как советник</text>
+<circle cx="1514.8" cy="748.4999999999999" r="16" fill="#21295C"/>
+<text x="1542.8" y="744.4999999999999" font-size="23" font-weight="bold" fill="#21295C" text-anchor="start">L8 креатив</text>
+<text x="1542.8" y="770.4999999999999" font-size="17" fill="#6B7685" text-anchor="start">Getty/NYT: утечка обуч. данных</text>
+<circle cx="2004.3999999999999" cy="522.4000000000001" r="16" fill="#028090"/>
+<text x="1976.3999999999999" y="518.4000000000001" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">See &amp; Spray</text>
+<text x="1976.3999999999999" y="544.4000000000001" font-size="17" fill="#6B7685" text-anchor="end">−50% гербицида (1→0,5 фунт/акр) ✓</text>
+<circle cx="800.8000000000001" cy="495.80000000000007" r="16" fill="#FFFFFF" stroke="#028090" stroke-width="5"/>
+<circle cx="800.8000000000001" cy="495.80000000000007" r="6.4" fill="#028090"/>
+<text x="772.8000000000001" y="481.80000000000007" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">Monarch (провал)</text>
+<text x="772.8000000000001" y="507.80000000000007" font-size="17" fill="#6B7685" text-anchor="end">открытое поле, 102 сокращения (38%) ✗</text>
+<circle cx="1372.0" cy="921.4" r="16" fill="#028090"/>
+<text x="1344.0" y="911.4" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">L11 производство</text>
+<text x="1344.0" y="937.4" font-size="17" fill="#6B7685" text-anchor="end">Tesla 2018: переавтоматизация</text>
+<circle cx="1474.0" cy="815.0" r="16" fill="#028090"/>
+<text x="1502.0" y="811.0" font-size="23" font-weight="bold" fill="#21295C" text-anchor="start">L12 автоматизация</text>
+<text x="1502.0" y="837.0" font-size="17" fill="#6B7685" text-anchor="start">двойник как мост; пропуск ступени ✗</text>
+<circle cx="2086.0" cy="389.4000000000001" r="16" fill="#F0AB00"/>
+<text x="2058.0" y="385.4000000000001" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">склад (Symbotic)</text>
+<text x="2058.0" y="411.4000000000001" font-size="17" fill="#6B7685" text-anchor="end">Symbotic: закрытый склад ✓</text>
+<circle cx="943.6" cy="549.0000000000001" r="16" fill="#FFFFFF" stroke="#F0AB00" stroke-width="5"/>
+<circle cx="943.6" cy="549.0000000000001" r="6.4" fill="#F0AB00"/>
+<text x="915.6" y="571.0000000000001" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">робот-такси</text>
+<text x="915.6" y="597.0000000000001" font-size="17" fill="#6B7685" text-anchor="end">Cruise: расширение домена → отзыв 2024 ✗</text>
+<circle cx="658.0" cy="1347.0" r="16" fill="#FFFFFF" stroke="#F0AB00" stroke-width="5" stroke-dasharray="5,5"/>
+<text x="658.0" y="1317.0" font-size="23" font-weight="bold" fill="#21295C" text-anchor="middle">чёрный лебедь</text>
+<text x="658.0" y="1291.0" font-size="17" fill="#6B7685" text-anchor="middle">редкое событие: классика/человек выигрывает</text>
+<circle cx="1596.4" cy="1054.4" r="16" fill="#F0AB00"/>
+<text x="1568.4" y="1114.4" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">L14 кибербез</text>
+<text x="1568.4" y="1140.4" font-size="17" fill="#6B7685" text-anchor="end">CrowdStrike без канарейки → 8,5М машин ✗</text>
+<circle cx="2045.2" cy="602.1999999999999" r="16" fill="#F0AB00"/>
+<text x="2017.2" y="598.1999999999999" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">AlphaFold</text>
+<text x="2017.2" y="624.1999999999999" font-size="17" fill="#6B7685" text-anchor="end">AlphaFold: закрытая задача ✓</text>
+<circle cx="862.0" cy="602.1999999999999" r="16" fill="#FFFFFF" stroke="#F0AB00" stroke-width="5"/>
+<circle cx="862.0" cy="602.1999999999999" r="6.4" fill="#F0AB00"/>
+<text x="834.0" y="660.1999999999999" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">Galactica (провал)</text>
+<text x="834.0" y="686.1999999999999" font-size="17" fill="#6B7685" text-anchor="end">текст ≠ эксперимент → отозвана за 3 дня ✗</text>
+<circle cx="1188.4" cy="1081.0" r="16" fill="#F0AB00"/>
+<text x="1160.4" y="1077.0" font-size="23" font-weight="bold" fill="#21295C" text-anchor="end">L16 нефтегаз</text>
+<text x="1160.4" y="1103.0" font-size="17" fill="#6B7685" text-anchor="end">AI как советник; безопасность капает автономию</text>
+<rect x="250" y="1550" width="2040" height="84" rx="14" fill="#F4F7FA" stroke="#1C7293" stroke-width="2"/>
+<text x="278" y="1584" font-size="22" font-weight="bold" fill="#21295C" text-anchor="start">Повесьте плакат на стену.</text>
+<text x="278" y="1616" font-size="19" fill="#1C7293" text-anchor="start">Для новой отрасли карта даёт аналогии по координатам: «похоже на See &amp; Spray по закрытой петле» или «похоже на робот-такси — домен недостаточен». Каждая точка — недели разбора кейсов и провалов.</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" font-family="Liberation Sans, Arial, sans-serif">
+<rect x="0" y="0" width="1200" height="820" fill="#FFFFFF"/>
+<rect x="150" y="40" width="990" height="700" fill="none" stroke="#1C7293" stroke-width="1.5"/>
+<line x1="645.0" y1="40" x2="645.0" y2="740" stroke="#6B7685" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.5"/>
+<line x1="150" y1="390.0" x2="1140" y2="390.0" stroke="#6B7685" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.5"/>
+<text x="645.0" y="790" font-size="22" font-weight="bold" fill="#21295C" text-anchor="middle">Применимость ИИ  →</text>
+<text x="154" y="770" font-size="15" fill="#6B7685" text-anchor="start">детерминированный non-AI</text>
+<text x="1136" y="770" font-size="15" fill="#6B7685" text-anchor="end">полный AI</text>
+<text x="40" y="390.0" font-size="22" font-weight="bold" fill="#21295C" text-anchor="middle" transform="rotate(-90 40 390.0)">Автономия  L0 → L5  ↑</text>
+<text x="75" y="736" font-size="15" fill="#6B7685" text-anchor="middle">L0</text>
+<text x="75" y="56" font-size="15" fill="#6B7685" text-anchor="middle">L5</text>
+<text x="922.2" y="180.0" font-size="19" font-weight="bold" fill="#21295C" text-anchor="middle">AI работает и автономно</text>
+<text x="922.2" y="204.0" font-size="14" fill="#6B7685" text-anchor="middle">(зрелые успехи)</text>
+<text x="367.8" y="180.0" font-size="19" font-weight="bold" fill="#F0AB00" text-anchor="middle">зона предупреждения</text>
+<text x="367.8" y="204.0" font-size="14" fill="#6B7685" text-anchor="middle">(низкая применимость × высокая автономия)</text>
+<text x="367.8" y="614.0" font-size="19" font-weight="bold" fill="#21295C" text-anchor="middle">«классика выигрывает»</text>
+<text x="367.8" y="638.0" font-size="14" fill="#6B7685" text-anchor="middle">(AI не нужен)</text>
+<text x="922.2" y="614.0" font-size="19" font-weight="bold" fill="#21295C" text-anchor="middle">AI работает, автономия ограничена</text>
+<text x="922.2" y="638.0" font-size="14" fill="#6B7685" text-anchor="middle">(регулятором)</text>
+</svg>

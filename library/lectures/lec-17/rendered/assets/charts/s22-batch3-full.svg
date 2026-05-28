@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" font-family="Liberation Sans, Arial, sans-serif">
+<rect x="0" y="0" width="1200" height="820" fill="#FFFFFF"/>
+<rect x="150" y="40" width="990" height="700" fill="none" stroke="#1C7293" stroke-width="1.5"/>
+<line x1="645.0" y1="40" x2="645.0" y2="740" stroke="#6B7685" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.5"/>
+<line x1="150" y1="390.0" x2="1140" y2="390.0" stroke="#6B7685" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.5"/>
+<text x="645.0" y="790" font-size="22" font-weight="bold" fill="#21295C" text-anchor="middle">Применимость ИИ  →</text>
+<text x="154" y="770" font-size="15" fill="#6B7685" text-anchor="start">детерминированный non-AI</text>
+<text x="1136" y="770" font-size="15" fill="#6B7685" text-anchor="end">полный AI</text>
+<text x="40" y="390.0" font-size="22" font-weight="bold" fill="#21295C" text-anchor="middle" transform="rotate(-90 40 390.0)">Автономия  L0 → L5  ↑</text>
+<text x="75" y="736" font-size="15" fill="#6B7685" text-anchor="middle">L0</text>
+<text x="75" y="56" font-size="15" fill="#6B7685" text-anchor="middle">L5</text>
+<circle cx="1060.8000000000002" cy="194.0" r="9" fill="#21295C"/>
+<text x="1045.8000000000002" y="199.0" font-size="15" fill="#21295C" text-anchor="end">разработка ПО</text>
+<circle cx="922.2" cy="306.0" r="9" fill="#21295C"/>
+<text x="937.2" y="311.0" font-size="15" fill="#21295C" text-anchor="start">финансы (фрод)</text>
+<circle cx="843.0" cy="530.0" r="9" fill="#21295C"/>
+<text x="858.0" y="535.0" font-size="15" fill="#21295C" text-anchor="start">медицина</text>
+<circle cx="803.4" cy="460.0" r="9" fill="#028090"/>
+<text x="818.4" y="465.0" font-size="15" fill="#21295C" text-anchor="start">авиакосмос</text>
+<circle cx="645.0" cy="502.0" r="9" fill="#21295C"/>
+<text x="660.0" y="507.0" font-size="15" fill="#21295C" text-anchor="start">CAD/CAM</text>
+<circle cx="763.8" cy="354.99999999999994" r="9" fill="#21295C"/>
+<text x="778.8" y="359.99999999999994" font-size="15" fill="#21295C" text-anchor="start">креатив</text>
+<circle cx="1001.4" cy="236.0" r="9" fill="#028090"/>
+<text x="986.4" y="241.0" font-size="15" fill="#21295C" text-anchor="end">See &amp; Spray</text>
+<circle cx="417.3" cy="222.0" r="9" fill="#FFFFFF" stroke="#028090" stroke-width="3"/>
+<circle cx="417.3" cy="222.0" r="3.6" fill="#028090"/>
+<text x="432.3" y="227.0" font-size="15" fill="#21295C" text-anchor="start">Monarch (провал)</text>
+<circle cx="694.5" cy="446.0" r="9" fill="#028090"/>
+<text x="709.5" y="451.0" font-size="15" fill="#21295C" text-anchor="start">производство</text>
+<circle cx="744.0" cy="390.0" r="9" fill="#028090"/>
+<text x="759.0" y="395.0" font-size="15" fill="#21295C" text-anchor="start">автоматизация</text>
+<circle cx="1041.0" cy="166.0" r="13" fill="#F0AB00"/>
+<circle cx="1041.0" cy="166.0" r="18" fill="none" stroke="#F0AB00" stroke-width="2.5"/>
+<text x="1015.0" y="171.0" font-size="15" fill="#21295C" text-anchor="end">склад (Symbotic)</text>
+<circle cx="486.6" cy="250.00000000000006" r="13" fill="#FFFFFF" stroke="#F0AB00" stroke-width="3"/>
+<circle cx="486.6" cy="250.00000000000006" r="5.2" fill="#F0AB00"/>
+<circle cx="486.6" cy="250.00000000000006" r="18" fill="none" stroke="#F0AB00" stroke-width="2.5"/>
+<text x="512.6" y="255.00000000000006" font-size="15" fill="#21295C" text-anchor="start">робот-такси</text>
+<circle cx="348.0" cy="670.0" r="13" fill="#FFFFFF" stroke="#F0AB00" stroke-width="3" stroke-dasharray="3,3"/>
+<circle cx="348.0" cy="670.0" r="18" fill="none" stroke="#F0AB00" stroke-width="2.5"/>
+<text x="348.0" y="651.0" font-size="15" fill="#21295C" text-anchor="middle">чёрный лебедь</text>
+<circle cx="803.4" cy="516.0" r="9" fill="#F0AB00"/>
+<text x="818.4" y="521.0" font-size="15" fill="#21295C" text-anchor="start">кибербез</text>
+<circle cx="1021.2" cy="278.0" r="9" fill="#F0AB00"/>
+<text x="1006.2" y="283.0" font-size="15" fill="#21295C" text-anchor="end">AlphaFold</text>
+<circle cx="447.0" cy="278.0" r="9" fill="#FFFFFF" stroke="#F0AB00" stroke-width="3"/>
+<circle cx="447.0" cy="278.0" r="3.6" fill="#F0AB00"/>
+<text x="462.0" y="283.0" font-size="15" fill="#21295C" text-anchor="start">Galactica (провал)</text>
+<circle cx="605.4000000000001" cy="530.0" r="9" fill="#F0AB00"/>
+<text x="620.4000000000001" y="535.0" font-size="15" fill="#21295C" text-anchor="start">нефтегаз</text>
+<rect x="156" y="32" width="332" height="76" rx="6" fill="#FFFFFF" stroke="#1C7293" stroke-width="1" opacity="0.92"/>
+<rect x="164" y="38" width="14" height="14" rx="3" fill="#21295C"/>
+<text x="184" y="50" font-size="13" fill="#21295C">Модуль 1 — основы + ранние отрасли</text>
+<rect x="164" y="60" width="14" height="14" rx="3" fill="#028090"/>
+<text x="184" y="72" font-size="13" fill="#21295C">Модуль 2 — тяжёлая промышленность/оборона</text>
+<rect x="164" y="82" width="14" height="14" rx="3" fill="#F0AB00"/>
+<text x="184" y="94" font-size="13" fill="#21295C">Модуль 3 — инфраструктура/наука</text>
+</svg>

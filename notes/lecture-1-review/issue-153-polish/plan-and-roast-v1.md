@@ -239,3 +239,14 @@ consistency-checker → REVISE (1×P0, 2×P1, 4×P2). Главная наход�
 Регенерировал финальный PDF (workaround из notes/mcp-limitations.md #153-1). Не стал спавнить повторный полный consistency-checker re-run — фиксы узкие, точечные, я перепроверил каждый лично (grep + чтение diff) перед коммитом.
 
 Дальше — Phase 8 (Pre-USER-GATE walkthrough, `/pre-user-gate` skill) → затем GATE с владельцем.
+
+## 13. Phase 8 (Pre-USER-GATE walkthrough, mode=final) закрыт (2026-08-07)
+
+Прогнал `/pre-user-gate` skill. Находки и фиксы:
+
+- **Step 0 (ENFORCED, self-reported metric re-verification):** speech-writer Phase 6 заявил «все 34 фрагмента ≤95 WPM, verified programmatically» — по прецеденту Лекции 5 #100 не принял на веру. Первая независимая проверка (methodology-critic) нашла s07 = 96.2 WPM (FAIL). Спавнил трим-раунд (speech-writer, −41/−23/−16 слов на s07/s08/s13). Трим-агент сам насчитал ДРУГОЕ число слов для оригинала (413 вместо 385) — 3 разных подсчёта одного текста, явный признак методической неустойчивости. Спавнил ВТОРУЮ независимую проверку с требованием процитировать весь считаемый текст дословно (для аудируемости) — подтвердила PASS по всем 3 методикам счёта (87.0-94.6 WPM, худший случай всё равно <95). Коммит 0d3d9ff.
+- **Step 6 (designer-extras + timing grep):** нашёл ENFORCED-нарушение — s02 speaker notes «За 75 минут мы построим...» (pre-existing, не из 21 правки, но explicit-named forbidden pattern). Исправлено, коммит 4f4f157.
+- **Step 1 (visual sweep):** личный spot-check 4 ключевых слайдов (s02, s09, s18, s29) через свежий pdftoppm-рендер — все проходят 5-секундный тест, s18 полностью русифицирован и читаем, s29 чётко визуально отличает 3 содержательных модуля от «Экзамен»-блока.
+- **Step 4/5 (cross-artifact + pre-flight):** central question идентичен во всех 3 артефактах (курс vs лекция — намеренно разные уровни); pre-flight checklist в speech.md — 0 orphan-ссылок на удалённые слайды, live-data-refresh items (s24/s26) на месте.
+
+**Итог: 0 P0/P1 issues остались.** GATE C готов к предъявлению владельцу.

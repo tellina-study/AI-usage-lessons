@@ -216,3 +216,18 @@ Chapter.md готов к Phase 4 (presentation-designer). Жду подтвер�
 4. s06 «AI это moving target» — поправить сейчас?
 
 Дальше по плану — Phase 6 (speech-writer sync speech.md) — но это лучше делать ПОСЛЕ ответов владельца на вопросы 1-2 (если 1 добавит текст на s05a, или 2 изменит s09 — speech.md должен это отразить, чтобы не переделывать sync дважды).
+
+## 10. Владелец: pacing OK, s06 fixed, episode-repetition принят, s05a/s31 — pending
+
+- Pacing 60.5/14.5 — подтверждено, не трогаем.
+- s09 episode 3/4 repetition — оставляем, принятый риск, доп. дифференциацию не делаем.
+- s06 «moving target» → «движущаяся цель» — исправлено кросс-артефактно (коммит c7533b6): slide+deck.yaml+speech.md×2+chapter.md§1.1+build-скрипт.
+- s05a/s31 плейсхолдеры личных данных лектора — **всё ещё pending**, владелец пришлёт данные отдельно, не блокирует дальнейшие фазы.
+
+## 11. Phase 6 закрыт (2026-08-07, коммит 9e6e1f5)
+
+speech-writer сделал полную ресинхронизацию speech.md (v3.2→v3.3) под финализированные chapter.md v3.3 + deck.yaml/slides: удалены секции s03/s04/s05b, добавлены s00a/s00b/s06a/s29a, все 34 секции переставлены в порядок deck.yaml, переписаны s09 (Kimi→Gerganov), s18 (новая ReAct pipeline), s19a (русские названия уровней), s26 (Hassabis), s08 (market-size), s28 (без домашнего задания), s29 (новая структура), s31 (rename). Прошёл собственные mandatory pre-submission checks (WPM≤95 на всех фрагментах, anti-anglicism scan, "мы с вами" ≥10, bridge-фразы на всех 3 дивайдерах, 0 orphan-ссылок, 0 плоских номеров лекций).
+
+Я перепроверил: структура секций 1:1 совпадает с deck.yaml order, spot-check s09/s18 содержания — точно соответствует брифу и slide-текстам, grep на плоские номера лекций — чисто (единственный false-positive hit — «лекции 1.1», это новая валидная нотация, не старый номер).
+
+Дальше — Phase 7 (consistency-checker: chapter↔slides↔speech cross-artifact alignment).

@@ -101,7 +101,7 @@ slides:
     file: slides/s06-multiple-definitions.md
     type: assertion_visual
     duration_min: 1.5
-    assertion: "Определений AI много — потому что AI это moving target"
+    assertion: "Определений AI много — потому что AI это движущаяся цель"
     learning_goal: "Множественность определений AI + AI Effect как причина"
     learning_outcomes: [LO1]
     references: [russell-norvig-2021, iso-iec-22989-2022, mitchell-1997, mccorduck-2004]

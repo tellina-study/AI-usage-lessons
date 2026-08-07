@@ -631,7 +631,7 @@ def build_s06(p):
     cell_h 2.40" (was 1.95") to fit full text. Grid moved up; callout moved down.
     """
     s = blank(p)
-    slide_title(s, "Определений AI много — потому что AI это moving target.", size=26)
+    slide_title(s, "Определений AI много — потому что AI это движущаяся цель.", size=26)
     cards = [
         ("Russell & Norvig (AIMA, 2021)",
          "«AI = система, мыслящая как человек, мыслящая рационально, действующая как человек или действующая рационально (4 квадранта по 2 осям).»",

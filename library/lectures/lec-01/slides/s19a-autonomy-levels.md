@@ -8,7 +8,7 @@ learning_outcomes: [LO1, LO4, LO7]
 references: [feng-mcdonald-zhang-2025-autonomy]
 visual:
   pattern: levels_with_loop_framings
-  primary: "Eyebrow-пилюля «АГЕНТ» сверху. Слева — лесенка 5 уровней (Operator → Collaborator → Consultant → Approver → Observer; уровень 5 в gold). Справа — 4 рамки расположения человека (Human-in-the-loop / on-the-loop / out-of-the-loop / Override modes) с короткими описаниями. Внизу gold-takeaway: «Уровень автономии — выбор продукта, не свойство модели»."
+  primary: "Eyebrow-пилюля «АГЕНТ» сверху. Слева — лесенка 5 уровней с русскими названиями + англ. глоссом в скобках (Оператор (Operator) → Соавтор (Collaborator) → Консультант (Consultant) → Утверждающий (Approver) → Наблюдатель (Observer); уровень 5 в gold). Справа — 4 рамки расположения человека с русскими названиями + англ. глоссом (Человек в цикле / над циклом / вне цикла / Режимы ручного перехвата) с короткими описаниями. Внизу gold-takeaway: «Уровень автономии — выбор продукта, не свойство модели»."
 ---
 
 # Уровни автономии AI-агентов: дизайн-решение, не свойство модели

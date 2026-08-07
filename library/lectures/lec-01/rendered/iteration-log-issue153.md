@@ -423,3 +423,157 @@ scope creep beyond the 21-fix list): s06 (untouched slide) assertion
 still reads "AI это moving target" — pre-existing since before issue
 #153, not one of the 21 edits. Flagged for owner decision, not
 auto-fixed.
+
+---
+
+## Phase 5 QA fix-round (2026-08-07) — 9 fixes from presentation-critic + student-simulator
+
+Scope: fix 9 concrete bugs found by Phase 5 QA (`qa-reports/2026-08-07/
+presentation-critic.md` REVISE verdict — 3×P0 + 7×P1 — and
+`student-simulator.md`). Not a new visual-loop redesign round — targeted
+fixes, meaningful re-render+re-check per slide (not full ritual 3-iteration
+count for pure text/label edits), full visual verification via 150dpi
+snapshots for every touched slide.
+
+### Fix 1 — Russification s18/s19/s19a (P1×3, batched)
+
+- **s18** (`build_s18`): 4 ReAct pipeline stage labels "Plan/Act/Observe/
+  Reflect" → "План/Действие/Наблюдение/Рефлексия", each with a small
+  inline English gloss sub-label `(Plan)`/`(Act)`/`(Observe)`/`(Reflect)`
+  added to the existing per-stage description line (cheap, matches brief's
+  optional allowance). Loop-back "continue" → "продолжить"; stop-arrow
+  "stop" → "стоп". Font size made conditional (14pt for names >8 chars) so
+  the longer Russian words still fit single-line in the 2.15" stage boxes.
+  Also addressed fix #8 in the same pass (see below).
+- **s19** (`build_s19`): 7 tool-per-step labels translated — "file system"→
+  "файловая система", "PDF reader"→"чтение PDF", "text extraction (OCR /
+  parser)"→"извлечение текста (OCR / парсер)", "embeddings + vector DB"→
+  "эмбеддинги + векторная БД", "search + LLM extract"→"поиск + извлечение
+  LLM", "Sheets API / CSV writer"→"запись в таблицу (Sheets API / CSV)",
+  "orchestrator loop"→"цикл оркестратора". Acronyms (OCR/PDF/API/CSV/LLM)
+  kept per keep-list. Tool-label font made conditional (8.5pt for labels
+  >28 chars) to keep single-line fit in the 2.30" teal box. `.md` source
+  `visual:` block synced (was English, now Russian).
+- **s19a** (`build_s19a`): 5 autonomy levels → Russian primary + English
+  gloss in parens ("1. Оператор (Operator)" … "5. Наблюдатель (Observer)"),
+  matching the s25 "Смещение (bias)" pattern. Row layout restructured (name
+  gets its own full-width line at 11.5pt, role line below at 9.5pt, example
+  right-aligned below that at 9pt) because the RU+EN names no longer fit on
+  one line at the old 13pt/2.6"-box layout. Right-side 4 framings → "Человек
+  в цикле (Human-in-the-loop)" / "Человек над циклом (Human-on-the-loop)" /
+  "Человек вне цикла (Human-out-of-the-loop)" / "Режимы ручного перехвата
+  (Override)"; name font conditional (10.5pt for names >30 chars). `.md`
+  source `visual:` block synced.
+- **Verification:** `deep_latin_scan.py` on extracted PPTX visible text,
+  before/after diff of unique-token sets — 16 tokens removed (`Disclaimer,
+  across, agent, continue, embeddings, extract, extraction, file, loop,
+  modes, orchestrator, parser, production, reader, stop, writer`), 0 new
+  tokens added. Full deck: 272→251 occurrences, 226→209 unique. Remaining
+  Plan/Act/Observe/Reflect/Operator/Collaborator/Consultant/Approver/
+  Observer/Human-in-the-loop-etc. tokens are now exclusively inside
+  parenthetical glosses next to Russian primary labels — verified by
+  re-inspecting the extracted per-shape text for s19/s21 (rendered slide
+  indices for s18/s19a).
+
+### Fix 2 — s17 "Disclaimer"/"production" (P2)
+
+`build_s17`: "Disclaimer для прод-систем" → "Оговорка для промышленных
+систем"; "не используются в production" → "не используются в промышленной
+эксплуатации" (per §5.8 table: production use → промышленное применение).
+Also synced `.md` source (`visual:` block + speaker notes: "Важный
+disclaimer для производственных систем" → "Важная оговорка для
+промышленных систем"; "standalone-модель" → "отдельная специализированная
+модель"). Follow-up fix during iteration: the longer Russian bold statement
+wrapped to 3 lines at the old 18pt/y+0.85 layout and collided with the
+paragraph below (fixed y+1.95) — reduced to 16pt and pushed the next block
+down to y+2.35 to clear the worst-case wrap height.
+
+### Fix 3 — s02 cover "01" numeral hidden behind hero image (P0)
+
+`build_s02`: root cause was NOT purely z-order — at the original 320pt bold
+size, the LibreOffice-substituted font (Arial unavailable → DejaVu Sans
+Bold fallback) renders "01" ≈6.2" wide, wider than the 5.3" text_box, so
+`word_wrap=True` wrapped "1" onto a second line that fell outside the
+visible box height entirely (clipped, not just covered). Verified via PIL
+font-metrics measurement before fixing blind. Fix: (a) reduced font
+320pt→230pt so "01" renders on one line with margin (measured ≈4.44" wide,
+fits the 5.3" box); (b) also moved `add_image(hero)` to BEFORE the "01"
+text_box call (was: image added after / on top) as defense-in-depth so the
+numeral always renders on top of the illustration regardless of future
+asset changes. Re-rendered and visually confirmed "01" fully legible with
+the hero atom/orbit illustration composed cleanly alongside/behind it.
+
+### Fix 4 — s20 text overlap + "across" (P0)
+
+`build_s20`: metrics box height increased 1.4"→1.7", text_runs font sizes
+trimmed (26/14pt → 24/13pt) and shortened wording ("уникальных
+пользователей"→"пользователей", "переведённых слов / месяц"→"слов
+переведено / месяц") to reduce wrap risk, source-caption line pushed down
+to clear the taller box. Logo grid `grid_y` nudged 3.55→3.70 and `cell_h`
+trimmed 1.4→1.3 to keep the 2-row grid clear of both the taller metrics box
+above and the `gold_callout` below. "across Google Translate..." → "в
+Google Translate..." (Russification). Re-rendered: single-line metrics, no
+overlap with caption, no collision with gold_callout.
+
+### Fix 5 — s29 "17 лекций × 4 модуля" misleading title (P2)
+
+`build_s29`: title changed to "Карта семестра: 17 лекций, 3 модуля +
+экзамен." (was "× 4 модуля", which read as 4 equal content modules). 4th
+column's module tuple label changed from "Модуль 4" to "Экзамен" (primary
+header text now names it directly instead of numbering it alongside the 3
+content modules); its subheader shortened from "Итоговая аттестация\n(не
+модуль с лекциями)" (wrapped to 3 lines and got clipped/overlapped the row
+below in the narrow 2.2-unit column) to "Итоговая\nаттестация" (fits the
+same 2-line budget as the other 3 modules). Column count/data/width
+structure unchanged (still 4 columns, same weights, same lecture data) —
+only wording/labeling changed per brief's option (a)+(b) hybrid. `.md`
+source assertion/H1/Visual block synced to match.
+
+### Fix 6 — s09 speaker notes "Урок:" marker position (P2)
+
+`s09-breakthroughs-2023-2026.md`: restructured all 4 episode paragraphs so
+"Урок: <lesson text>" is the FIRST sentence of each paragraph (was:
+episode-1/3/4 had it mid/end-of-paragraph, episode-2 had none at all). Added
+a new lesson sentence for episode 2 (DeepSeek/Nvidia): "Урок: даже спорная
+методология подсчёта себестоимости может вызвать реальный, измеримый шок на
+глобальном рынке — проверяйте заявленные цифры, но не игнорируйте их
+эффект." Episode content/facts unchanged per brief ("не меняй содержание
+уроков"). Incidentally also fixed 2 pre-existing English fragments flagged
+by the deep-scan while touching this text: "marginal training run" →
+"стоимость одного тренировочного прогона", "single-day" → "однодневная".
+This text is speaker notes only (not rendered on-slide); s09 PNG unchanged.
+
+### Fix 7 — s29 speaker notes off-topic "промптинг" paragraph (P2)
+
+`s29-course-roadmap-17x3.md`: removed the trailing paragraph "Прогрессия
+навыков промптинга через курс..." — off-topic for a "карта семестра" slide
+(reads like a remnant from a different slide's structure). Did not fit
+naturally into s29a (grading formula) either, so deleted per brief's
+fallback instruction rather than inventing a new home for it. s29 notes
+word count after removal: 174 words (within 150-300 range).
+
+### Fix 8 — s18 unlabeled vertical connectors (P2, non-blocking)
+
+`build_s18`: added small "использует" caption (8.5pt italic, teal/light
+color matching each connector) centered on both vertical connector lines
+(Act→Tools, Observe→Memory) — for parity with the labelled horizontal flow
+above. Fit within the existing connector gap without redesigning the
+schema. Done in the same pass as fix #1 since both touch `build_s18`.
+
+### Fix 9 — Stale snapshots (process)
+
+Old `snapshots/iter153-*.png` (110dpi, predated all 9 fixes above — flagged
+stale by presentation-critic Cross-deck §1) deleted and regenerated fresh
+as `snapshots/iter153b-*.png` (150dpi) from the final `lec-01.pdf` via
+`libreoffice --headless --convert-to pdf` → `pdftoppm -r 150`. Snapshots
+directory is gitignored (regenerable build artifact per [#71-3] policy in
+`notes/mcp-limitations.md`) — regeneration is for local QA verification,
+not a committed change. Verified snapshot timestamps postdate pptx/pdf
+timestamps (11:34 vs 11:31).
+
+### Full-deck visual regression spot-check
+
+Re-inspected 2 untouched slides (s17-position "Дрейф распределения" card =
+s25 bias/sycophancy, and s01 YOLO ice-breaker) at 150dpi to confirm no
+regressions from the s02/s17/s18/s19/s19a/s20/s29 edits — both render
+identically to pre-fix baseline.

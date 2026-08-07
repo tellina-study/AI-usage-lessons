@@ -509,11 +509,28 @@ def build_s00b(p):
 
 
 def build_s02(p):
-    """Cover — distinct: tinted bg, decorative «01», 60pt title."""
+    """Cover — distinct: tinted bg, decorative «01», 60pt title.
+
+    issue #153 QA fix #3 (P0, presentation-critic): "1" was fully invisible —
+    root cause was NOT only z-order. At 320pt bold, the LibreOffice-rendered
+    fallback font (Arial unavailable → DejaVu Sans Bold substitute) makes
+    "01" ≈6.2" wide, wider than the 5.3" text_box — word_wrap=True then
+    wraps "1" onto a second line, which falls outside the box's usable
+    height (single 320pt line ≈4.44" already nearly fills the 4.7" box) and
+    is invisible (clipped), NOT merely covered by the hero image. Fix: (a)
+    reduce font 320pt→230pt so "01" renders on one line with margin inside
+    the box width (verified via PIL font-metrics: "01" @230pt ≈4.44" wide,
+    fits inside 5.3"); (b) ALSO draw the hero image BEFORE the numeral
+    text_box (was: image added after, on top) as defense-in-depth so any
+    future numeral/illustration overlap resolves with text on top.
+    """
     s = blank(p)
     set_slide_bg(s, SURFACE)
-    text_box(s, x=8.0, y=2.7, w=5.3, h=4.7, text="01",
-             size=320, bold=True, color=COVER_OUTLINE,
+    if (ASSETS / "illustrations/hero-cover-light.png").exists():
+        add_image(s, ASSETS / "illustrations/hero-cover-light.png",
+                  x=8.0, y=0.9, w=5.0, h=5.0)
+    text_box(s, x=8.0, y=2.9, w=5.3, h=3.6, text="01",
+             size=230, bold=True, color=COVER_OUTLINE,
              align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP, line_spacing=1.0)
     text_box(s, x=0.7, y=1.0, w=6.5, h=0.55, text="ЛЕКЦИЯ",
              size=18, bold=True, color=TEAL, align=PP_ALIGN.LEFT)
@@ -524,9 +541,6 @@ def build_s02(p):
     text_box(s, x=0.95, y=5.45, w=8.0, h=0.6,
              text="Карта применений AI: где работает, где — нет.",
              size=22, color=MID, italic=False, align=PP_ALIGN.LEFT, line_spacing=1.25)
-    if (ASSETS / "illustrations/hero-cover-light.png").exists():
-        add_image(s, ASSETS / "illustrations/hero-cover-light.png",
-                  x=8.0, y=0.9, w=5.0, h=5.0)
     speaker_notes(s, load_notes("s02"))
 
 
@@ -1510,12 +1524,20 @@ def build_s17(p):
     # an agent at minimum (memory, RAG, tool calls).
     disc_x, disc_y, disc_w, disc_h = case_x + case_w + 0.35, 2.15, 5.4, 4.5
     ocean_box(s, disc_x, disc_y, disc_w, disc_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    # issue #153 QA fix #2 (P2, Russification): "Disclaimer"/"production" →
+    # Russian per §5.8 table ("production use" → "промышленное применение").
     text_box(s, x=disc_x + 0.30, y=disc_y + 0.25, w=disc_w - 0.6, h=0.4,
-             text="Disclaimer для прод-систем", size=14, bold=True, color=GOLD)
-    text_box(s, x=disc_x + 0.30, y=disc_y + 0.85, w=disc_w - 0.6, h=2.2,
-             text="Чистые чаты почти не используются в production.",
-             size=18, bold=True, color=DEEP, line_spacing=1.30)
-    text_box(s, x=disc_x + 0.30, y=disc_y + 1.95, w=disc_w - 0.6, h=2.4,
+             text="Оговорка для промышленных систем", size=14, bold=True, color=GOLD)
+    # issue #153 QA fix #2 follow-up: "промышленной эксплуатации" (25 chars)
+    # is longer than "production" (10 chars) — the old fixed y+1.95 offset for
+    # the paragraph below assumed a 2-line wrap; the longer RU text wraps to
+    # 3 lines at 18pt and collided with the text below it. Fix: smaller font
+    # (18→16pt) to encourage 2-line wrap, and push the next block down
+    # (1.95→2.35) to clear the worst-case 3-line wrap height.
+    text_box(s, x=disc_x + 0.30, y=disc_y + 0.85, w=disc_w - 0.6, h=1.4,
+             text="Чистые чаты почти не используются в промышленной эксплуатации.",
+             size=16, bold=True, color=DEEP, line_spacing=1.25)
+    text_box(s, x=disc_x + 0.30, y=disc_y + 2.35, w=disc_w - 0.6, h=2.0,
              text="Почти везде они расширены до агентов — хотя бы для "
                   "долгосрочной памяти и поиска по корпоративной базе (RAG).\n\n"
                   "Архитектуру агента разберём на следующем слайде.",
@@ -1569,12 +1591,15 @@ def build_s18(p):
     text_box(s, x=user_x - 0.35, y=user_y + user_d + 0.06, w=user_d + 0.7, h=0.30,
              text="Пользователь", size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
 
-    # ─── 4-stage linear ReAct pipeline: Plan → Act → Observe → Reflect ───
+    # ─── 4-stage linear ReAct pipeline: План → Действие → Наблюдение → Рефлексия ───
+    # issue #153 QA fix #1 (Russification, presentation-critic P1): stage labels
+    # were bare English verbs (Plan/Act/Observe/Reflect) — translated to Russian
+    # per §5.8, small English gloss kept in the sub-label for ReAct traceability.
     stages = [
-        ("Plan", "план действий", MID),
-        ("Act", "вызов инструмента", TEAL),
-        ("Observe", "результат в память", LIGHT),
-        ("Reflect", "цель достигнута?", MID),
+        ("План", "план действий (Plan)", MID),
+        ("Действие", "вызов инструмента (Act)", TEAL),
+        ("Наблюдение", "результат в память (Observe)", LIGHT),
+        ("Рефлексия", "цель достигнута? (Reflect)", MID),
     ]
     stage_y = 2.55
     stage_h = 1.35
@@ -1587,10 +1612,14 @@ def build_s18(p):
         x = start_x + i * (stage_w + arrow_w)
         filled_rect(s, x, stage_y, stage_w, stage_h, color, stroke=DEEP, stroke_pt=1.5,
                     radius=True, radius_adj=0.15)
+        # issue #153 QA fix #1: Russian labels are longer than EN originals
+        # («Наблюдение»/«Рефлексия» vs «Observe»/«Reflect») — smaller font for
+        # long names keeps single-line fit inside the 2.15" stage box.
+        name_size = 14 if len(name) > 8 else 17
         text_box(s, x=x, y=stage_y + 0.20, w=stage_w, h=0.45, text=name,
-                 size=17, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-        text_box(s, x=x + 0.10, y=stage_y + 0.75, w=stage_w - 0.20, h=0.50, text=sub,
-                 size=10.5, italic=True, color=WHITE, align=PP_ALIGN.CENTER, line_spacing=1.20)
+                 size=name_size, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+        text_box(s, x=x + 0.08, y=stage_y + 0.75, w=stage_w - 0.16, h=0.50, text=sub,
+                 size=9.5, italic=True, color=WHITE, align=PP_ALIGN.CENTER, line_spacing=1.15)
         if i < n - 1:
             ax = x + stage_w + 0.03
             arrow = s.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW,
@@ -1618,8 +1647,9 @@ def build_s18(p):
     stop_arrow.fill.solid(); stop_arrow.fill.fore_color.rgb = TEAL
     stop_arrow.line.fill.background()
     disable_shadow(stop_arrow)
+    # issue #153 QA fix #1 (Russification): "stop" → "стоп".
     text_box(s, x=user_x + user_d + 0.1, y=stop_y - 0.42, w=total_w - 0.2, h=0.28,
-             text="stop → результат пользователю", size=10.5, italic=True, color=TEAL,
+             text="стоп → результат пользователю", size=10.5, italic=True, color=TEAL,
              align=PP_ALIGN.LEFT)
 
     # Reflect → Plan loop-back (continue) — gold arc above the pipeline
@@ -1634,8 +1664,9 @@ def build_s18(p):
     left_arrow.fill.solid(); left_arrow.fill.fore_color.rgb = GOLD
     left_arrow.line.fill.background()
     disable_shadow(left_arrow)
+    # issue #153 QA fix #1 (Russification): "continue" → "продолжить".
     text_box(s, x=loop_x0, y=loop_y - 0.35, w=loop_x1 - loop_x0, h=0.30,
-             text="continue — цикл повторяется", size=11, bold=True, color=GOLD,
+             text="продолжить — цикл повторяется", size=11, bold=True, color=GOLD,
              align=PP_ALIGN.CENTER)
 
     # ─── Resources row below: Memory (under Observe) + Tools (under Act) ───
@@ -1658,6 +1689,13 @@ def build_s18(p):
     # Connector lines: Act → Tools, Observe → Memory
     filled_rect(s, tools_x + stage_w/2 - 0.03, stage_y + stage_h, 0.06, res_y - (stage_y + stage_h), TEAL)
     filled_rect(s, mem_x + stage_w/2 - 0.03, stage_y + stage_h, 0.06, res_y - (stage_y + stage_h), LIGHT)
+    # issue #153 QA fix #8 (P2, non-blocking): tiny "использует" caption on each
+    # vertical connector for parity with the labelled horizontal flow above.
+    conn_label_y = stage_y + stage_h + (res_y - (stage_y + stage_h)) / 2 - 0.10
+    text_box(s, x=tools_x - 0.35, y=conn_label_y, w=stage_w + 0.70, h=0.22,
+             text="использует", size=8.5, italic=True, color=TEAL, align=PP_ALIGN.CENTER)
+    text_box(s, x=mem_x - 0.35, y=conn_label_y, w=stage_w + 0.70, h=0.22,
+             text="использует", size=8.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
     text_box(s, x=0.55, y=7.05, w=12.25, h=0.35,
              text="ReAct (Reasoning + Acting) — Yao et al. 2022 (arXiv:2210.03629)",
@@ -1695,15 +1733,18 @@ def build_s19(p):
     text_box(s, x=sx + 0.25, y=sy + 0.18, w=sw - 0.5, h=0.4,
              text="Что делает агент — пошагово, с указанием инструмента",
              size=13, bold=True, color=DEEP)
+    # issue #153 QA fix #1 (Russification, presentation-critic P1): tool labels
+    # were bare English phrases — translated to Russian, acronyms (OCR, PDF,
+    # API, CSV, LLM) kept per §5.8 keep-list.
     steps = [
         # (num, action, tool)
-        ("1", "Получить список файлов",          "file system"),
-        ("2", "Открыть PDF #1",                   "PDF reader"),
-        ("3", "Извлечь текст",                    "text extraction (OCR / parser)"),
-        ("4", "Сделать сводку → vector DB",       "embeddings + vector DB"),
-        ("5", "Найти ключевые поля",              "search + LLM extract"),
-        ("6", "Записать строку в таблицу",        "Sheets API / CSV writer"),
-        ("7", "Цикл по всем 200 файлам",          "orchestrator loop"),
+        ("1", "Получить список файлов",          "файловая система"),
+        ("2", "Открыть PDF #1",                   "чтение PDF"),
+        ("3", "Извлечь текст",                    "извлечение текста (OCR / парсер)"),
+        ("4", "Сделать сводку → vector DB",       "эмбеддинги + векторная БД"),
+        ("5", "Найти ключевые поля",              "поиск + извлечение LLM"),
+        ("6", "Записать строку в таблицу",        "запись в таблицу (Sheets API / CSV)"),
+        ("7", "Цикл по всем 200 файлам",          "цикл оркестратора"),
     ]
     step_top = sy + 0.70
     step_h = 0.48
@@ -1728,12 +1769,15 @@ def build_s19(p):
         text_box(s, x=bx + bd + 0.20, y=ry + 0.08, w=4.20, h=step_h - 0.16,
                  text=action, size=12, bold=True, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE)
-        # Tool — right-aligned in teal-tinted small block
+        # Tool — right-aligned in teal-tinted small block.
+        # issue #153 QA fix #1: Russian tool phrases run longer than the EN
+        # originals — shrink font for the longest labels to keep single-line.
         tx = sx + sw - 2.60
         filled_rect(s, tx, ry + 0.08, 2.30, step_h - 0.16, TEAL_TINT,
                     stroke=TEAL, stroke_pt=0.8, radius=True, radius_adj=0.30)
-        text_box(s, x=tx, y=ry + 0.08, w=2.30, h=step_h - 0.16, text=tool,
-                 size=10, italic=True, color=TEAL,
+        tool_size = 8.5 if len(tool) > 28 else 10
+        text_box(s, x=tx + 0.05, y=ry + 0.08, w=2.20, h=step_h - 0.16, text=tool,
+                 size=tool_size, italic=True, color=TEAL,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     # Bottom takeaway
     gold_callout(s, 0.55, 6.80, 12.25, 0.55,
@@ -1758,38 +1802,49 @@ def build_s19a(p):
     text_box(s, x=lx + 0.25, y=ly + 0.20, w=lw - 0.5, h=0.4,
              text="5 уровней автономии (Feng / McDonald / Zhang, 2025)",
              size=13, bold=True, color=DEEP)
+    # issue #153 QA fix #1 (Russification, presentation-critic P1): level names
+    # were bare English terms — Russian primary label + English gloss in
+    # parens at first appearance, matching the s25 "Смещение (bias)" pattern.
     levels = [
-        ("1. Operator",     "пользователь на каждом шаге",  "Claude Code «approve each»", LIGHT),
-        ("2. Collaborator", "пара, ролями перетекая",        "Cursor парное программирование", LIGHT),
-        ("3. Consultant",   "цель + план + правки",          "Devin фиксит баг по тикету", MID),
-        ("4. Approver",     "agent действует, gate на узлах", "agent собирает PR, ждёт review", MID),
-        ("5. Observer",     "полная автономия",              "AutoGPT на ночь", GOLD),
+        ("1. Оператор (Operator)",     "пользователь на каждом шаге",  "Claude Code «approve each»", LIGHT),
+        ("2. Соавтор (Collaborator)",  "пара, ролями перетекая",        "Cursor парное программирование", LIGHT),
+        ("3. Консультант (Consultant)","цель + план + правки",          "Devin фиксит баг по тикету", MID),
+        ("4. Утверждающий (Approver)", "агент действует, gate на узлах", "агент собирает PR, ждёт review", MID),
+        ("5. Наблюдатель (Observer)",  "полная автономия",              "AutoGPT на ночь", GOLD),
     ]
     rh = 0.78
     rt = ly + 0.80
     for i, (name, role, ex, color) in enumerate(levels):
-        ry = rt + (4 - i) * rh  # bottom-up ladder visually
+        ry = rt + (4 - i) * rh  # bottom-up ladder визуально
         is_gold = (color == GOLD)
         filled_rect(s, lx + 0.25, ry, lw - 0.5, rh - 0.05, color,
                     stroke=DEEP if is_gold else None, stroke_pt=1.5 if is_gold else 0.0,
                     radius=True, radius_adj=0.15)
-        text_box(s, x=lx + 0.40, y=ry + 0.06, w=2.6, h=0.32, text=name,
-                 size=13, bold=True, color=DEEP if is_gold else WHITE)
-        text_box(s, x=lx + 0.40, y=ry + 0.40, w=lw - 0.8, h=0.30, text=role,
-                 size=10, italic=True, color=DEEP if is_gold else WHITE)
-        text_box(s, x=lx + 3.05, y=ry + 0.06, w=lw - 3.45, h=0.32, text=ex,
-                 size=10, color=DEEP if is_gold else WHITE, align=PP_ALIGN.RIGHT)
+        # issue #153 QA fix #1: RU+EN-gloss names ("4. Утверждающий (Approver)")
+        # run longer than the old bare EN names — name gets its own full-width
+        # line at a smaller font, example line moved below it (was right-aligned
+        # same line, no longer fits).
+        text_box(s, x=lx + 0.40, y=ry + 0.05, w=lw - 0.8, h=0.28, text=name,
+                 size=11.5, bold=True, color=DEEP if is_gold else WHITE)
+        text_box(s, x=lx + 0.40, y=ry + 0.34, w=lw - 0.8, h=0.22, text=role,
+                 size=9.5, italic=True, color=DEEP if is_gold else WHITE)
+        text_box(s, x=lx + 0.40, y=ry + 0.54, w=lw - 0.8, h=0.20, text=ex,
+                 size=9, color=DEEP if is_gold else WHITE, align=PP_ALIGN.RIGHT)
     # Right: 4 framings (in-the-loop / on-the-loop / out-of-the-loop / override)
     rx, ry_, rw, rh_ = lx + lw + 0.30, 1.85, SLIDE_W_IN - (lx + lw + 0.30) - 0.55, 5.05
     ocean_box(s, rx, ry_, rw, rh_)
     text_box(s, x=rx + 0.25, y=ry_ + 0.20, w=rw - 0.5, h=0.4,
              text="Где находится человек по отношению к циклу",
              size=13, bold=True, color=DEEP)
+    # issue #153 QA fix #1 (Russification, presentation-critic P1): frame names
+    # were bare English terms — Russian primary label + English gloss in
+    # parens (matches s25 pattern). "Override" kept in parens as a concept
+    # word, not left bare per brief.
     framings = [
-        ("Human-in-the-loop",       "Человек одобряет каждый шаг (≈ ур. 1-2).",            LIGHT),
-        ("Human-on-the-loop",       "Человек наблюдает, прерывает при отклонениях (≈ ур. 3-4).", MID),
-        ("Human-out-of-the-loop",   "Человек только смотрит итог (≈ ур. 5).",              GOLD),
-        ("Override modes",          "Любой уровень — с ручным перехватом по тревоге.",     TEAL),
+        ("Человек в цикле (Human-in-the-loop)",       "Человек одобряет каждый шаг (≈ ур. 1-2).",            LIGHT),
+        ("Человек над циклом (Human-on-the-loop)",    "Человек наблюдает, прерывает при отклонениях (≈ ур. 3-4).", MID),
+        ("Человек вне цикла (Human-out-of-the-loop)", "Человек только смотрит итог (≈ ур. 5).",              GOLD),
+        ("Режимы ручного перехвата (Override)",       "Любой уровень — с ручным перехватом по тревоге.",     TEAL),
     ]
     fy_top = ry_ + 0.75
     fh = 0.95
@@ -1799,8 +1854,10 @@ def build_s19a(p):
         ocean_box(s, rx + 0.20, fy, rw - 0.40, fh,
                   fill=GOLD_TINT if color == GOLD else WHITE,
                   stroke=color, stroke_pt=1.5)
+        # Longer RU+EN-gloss names need a smaller font to stay single-line.
+        name_size = 10.5 if len(name) > 30 else 12
         text_box(s, x=rx + 0.40, y=fy + 0.10, w=rw - 0.80, h=0.30,
-                 text=name, size=12, bold=True, color=color)
+                 text=name, size=name_size, bold=True, color=color)
         text_box(s, x=rx + 0.40, y=fy + 0.42, w=rw - 0.80, h=0.45,
                  text=desc, size=11, color=DEEP, line_spacing=1.30)
     # Bottom takeaway
@@ -1815,18 +1872,24 @@ def build_s20(p):
     s = blank(p)
     slide_title(s, "Приложение = AI, упакованный в продуктовый интерфейс.", size=28)
     # Top: Translate metrics
-    mt_x, mt_y, mt_w, mt_h = 0.55, 1.85, 12.25, 1.4
+    # issue #153 QA fix #4 (P0, presentation-critic): the mixed 26pt/14pt
+    # metrics line wrapped to 2 lines at the old height/box, overlapping the
+    # fixed-position source caption below it. Fix: taller box (1.4→1.7),
+    # dedicated single-line-height metrics row + caption pushed down to clear
+    # the actual wrapped height, and font sizes trimmed slightly (26→24pt,
+    # 14→13pt) to reduce wrap risk further. Also Russified "across" → "в".
+    mt_x, mt_y, mt_w, mt_h = 0.55, 1.85, 12.25, 1.7
     ocean_box(s, mt_x, mt_y, mt_w, mt_h, fill=TEAL_TINT, stroke=TEAL)
-    text_box(s, x=mt_x + 0.3, y=mt_y + 0.20, w=mt_w - 0.6, h=0.4,
+    text_box(s, x=mt_x + 0.3, y=mt_y + 0.18, w=mt_w - 0.6, h=0.35,
              text="Google Translate — масштаб 2026", size=14, bold=True, color=TEAL)
-    text_runs(s, mt_x + 0.3, mt_y + 0.65, mt_w - 0.6, 0.7, [
-        {"text": "1+ миллиард ", "size": 26, "bold": True, "color": DEEP},
-        {"text": "уникальных пользователей в месяц  ·  ", "size": 14, "color": DEEP},
-        {"text": "1 триллион ", "size": 26, "bold": True, "color": GOLD},
-        {"text": "переведённых слов / месяц", "size": 14, "color": DEEP},
+    text_runs(s, mt_x + 0.3, mt_y + 0.58, mt_w - 0.6, 0.75, [
+        {"text": "1+ миллиард ", "size": 24, "bold": True, "color": DEEP},
+        {"text": "пользователей в месяц  ·  ", "size": 13, "color": DEEP},
+        {"text": "1 триллион ", "size": 24, "bold": True, "color": GOLD},
+        {"text": "слов переведено / месяц", "size": 13, "color": DEEP},
     ], line_spacing=1.0)
-    text_box(s, x=mt_x + 0.3, y=mt_y + mt_h - 0.35, w=mt_w - 0.6, h=0.3,
-             text="across Google Translate, Search, Lens и Circle to Search (Google Blog, апрель 2026)",
+    text_box(s, x=mt_x + 0.3, y=mt_y + mt_h - 0.38, w=mt_w - 0.6, h=0.3,
+             text="в Google Translate, Search, Lens и Circle to Search (Google Blog, апрель 2026)",
              size=10, italic=True, color=LIGHT)
     # 6 logo grid
     logos = [
@@ -1837,9 +1900,12 @@ def build_s20(p):
         ("logo-yandex.png", "Яндекс.Карты", "ML маршрутизация"),
         ("logo-adobefirefly.png", "Adobe Firefly", "диффузия в Photoshop"),
     ]
-    grid_y = 3.55
+    # grid_y nudged down 0.15" (3.55→3.70) to clear the taller metrics box
+    # above (fix #4); cell_h trimmed 1.4→1.3 to keep the 2-row grid clear of
+    # the gold_callout at y=6.55 below.
+    grid_y = 3.70
     cell_w = 4.05
-    cell_h = 1.4
+    cell_h = 1.3
     grid_x = 0.55
     cell_gap = 0.10
     for i, (icon, name, role) in enumerate(logos):
@@ -2291,8 +2357,15 @@ def build_s29(p):
     to specific seminar numbers, which are out of scope per issue #153).
     Isolation: catalog/manifests/lectures.yaml and RPD NOT touched (issue #154).
     """
+    # issue #153 QA fix #5 (P2, presentation-critic + student-simulator both
+    # flagged): title "17 лекций × 4 модуля" read as if all 4 were the same
+    # kind of block, when Module 4 is the final exam, not a content module.
+    # Fix: title reworded to name 3 content modules + exam separately; the
+    # 4th column's header label changed from "Модуль 4" to "Экзамен" (primary
+    # label distinguishes it visually/textually) — column count/data/width
+    # unchanged (structure stays as approved in issue #153).
     s = blank(p)
-    slide_title(s, "Карта семестра: 17 лекций × 4 модуля.", size=28)
+    slide_title(s, "Карта семестра: 17 лекций, 3 модуля + экзамен.", size=28)
     modules = [
         ("Модуль 1", "Теор.-метод. основы\n+ знакомые индустрии", LIGHT, [
             ("1.1", "1.1 Введение", True),
@@ -2317,7 +2390,11 @@ def build_s29(p):
             ("3.5", "3.5 Медицина", False),
             ("3.6", "3.6 Синтез ◆РК3", False),
         ]),
-        ("Модуль 4", "Экзамен", TEAL, [
+        # issue #153 QA fix #5 follow-up: original subheader "Итоговая
+        # аттестация\n(не модуль с лекциями)" wrapped to 3 lines in the
+        # narrow column and got clipped/overlapped the row below — shortened
+        # to fit the same 2-line budget as the other 3 modules' subheaders.
+        ("Экзамен", "Итоговая\nаттестация", TEAL, [
             ("Экз.", "Экзамен\n(30 часов,\nвкл. подготовку)", False),
         ]),
     ]

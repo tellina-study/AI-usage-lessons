@@ -13,7 +13,7 @@ deck:
   audience: "универсальная (без привязки к ИУ6)"
   duration_min: 75
   central_question: "Где AI работает, где — нет, и как это понять?"
-  learning_outcomes: [LO1, LO4, LO6]
+  learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
   version: v3.3

@@ -8,7 +8,7 @@ learning_outcomes: [LO1, LO4, LO7]
 references: [feng-mcdonald-zhang-2025-autonomy]
 visual:
   pattern: levels_with_loop_framings
-  primary: "Слева — лесенка 5 уровней (Operator → Collaborator → Consultant → Approver → Observer; уровень 5 в gold). Справа — 4 рамки расположения человека (Human-in-the-loop / on-the-loop / out-of-the-loop / Override modes) с короткими описаниями. Внизу gold-takeaway: «Уровень автономии — выбор продукта, не свойство модели»."
+  primary: "Eyebrow-пилюля «АГЕНТ» сверху. Слева — лесенка 5 уровней (Operator → Collaborator → Consultant → Approver → Observer; уровень 5 в gold). Справа — 4 рамки расположения человека (Human-in-the-loop / on-the-loop / out-of-the-loop / Override modes) с короткими описаниями. Внизу gold-takeaway: «Уровень автономии — выбор продукта, не свойство модели»."
 ---
 
 # Уровни автономии AI-агентов: дизайн-решение, не свойство модели
@@ -19,7 +19,7 @@ visual:
 
 ## Visual
 
-Слева Ocean rounded box с лесенкой пяти уровней автономии (Feng / McDonald / Zhang, 2025), снизу-вверх: 1. Operator (пользователь жмёт каждый шаг — Claude Code «approve each»), 2. Collaborator (пара ролями — Cursor парное программирование), 3. Consultant (цель + план + правки — Devin фиксит баг по тикету), 4. Approver (agent действует, gate на узлах — agent собирает PR, ждёт review), 5. Observer (полная автономия — AutoGPT на ночь; уровень в gold). Справа Ocean rounded box с четырьмя рамками: Human-in-the-loop (≈ ур. 1-2), Human-on-the-loop (≈ ур. 3-4), Human-out-of-the-loop (≈ ур. 5, gold), Override modes (любой уровень + ручной перехват). Внизу gold callout: «Уровень автономии — выбор продукта, не свойство модели».
+Eyebrow-пилюля «АГЕНТ» в левом верхнем углу — единый паттерн с s15/s16/s17/s18/s19. Слева Ocean rounded box с лесенкой пяти уровней автономии (Feng / McDonald / Zhang, 2025), снизу-вверх: 1. Operator (пользователь жмёт каждый шаг — Claude Code «approve each»), 2. Collaborator (пара ролями — Cursor парное программирование), 3. Consultant (цель + план + правки — Devin фиксит баг по тикету), 4. Approver (agent действует, gate на узлах — agent собирает PR, ждёт review), 5. Observer (полная автономия — AutoGPT на ночь; уровень в gold). Справа Ocean rounded box с четырьмя рамками: Human-in-the-loop (≈ ур. 1-2), Human-on-the-loop (≈ ур. 3-4), Human-out-of-the-loop (≈ ур. 5, gold), Override modes (любой уровень + ручной перехват). Внизу gold callout: «Уровень автономии — выбор продукта, не свойство модели».
 
 ## Speaker notes
 

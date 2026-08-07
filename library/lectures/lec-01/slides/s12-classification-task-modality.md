@@ -8,7 +8,7 @@ learning_outcomes: [LO1]
 references: [russell-norvig-2021, goodfellow-2016-dl]
 visual:
   pattern: 2d_classifier_matrix_filled
-  primary: "Заполненная 2D-матрица 6×5 с примерами в большинстве ячеек; иконки Lucide на каждой колонке (tag/scan/search/sparkles/trending-up/list-checks); YOLO в gold как callback к s01"
+  primary: "Заполненная 2D-матрица 6×5 с примерами в большинстве ячеек; иконки Lucide на каждой колонке (tag/scan/search/sparkles/trending-up/list-checks), крупнее и чётче заголовки строк/столбцов; все ячейки — единый нейтральный цвет по типу задачи (YOLO больше не выделяется gold — обычная ячейка, читаемость осей важнее callback-эффекта)"
 ---
 
 # Классификация AI-систем: две оси — тип задачи × модальность
@@ -19,7 +19,7 @@ visual:
 
 ## Visual
 
-Двумерная матрица 6×5 в Ocean rounded box, заполненная конкретными примерами в большинстве ячеек. Заголовки колонок (тип задачи) — каждая с иконкой Lucide: классификация (tag), распознавание (scan-line), поиск (search), генерация (sparkles), прогноз (trending-up), планирование (list-checks). Заголовки строк (модальность): текст / изображение / звук-видео / структ. данные / код. В большинстве ячеек — конкретные продукты: BERT, ResNet, PANNs, XGBoost, CodeBERT, spaCy NER, YOLO ← gold-callback, Whisper, OCR, Snyk, BM25, CLIP, Shazam, vector DB, Copilot search, GPT-4o, DALL-E, ElevenLabs, Codex, Cursor, Prophet, ARIMA, ReAct, AutoGPT, Devin, OpenClaw. Цветовое кодирование по колонке (типу задачи): MID для классификации/поиска, LIGHT для распознавания/прогноза/планирования, TEAL для генерации, GOLD для YOLO.
+Двумерная матрица 6×5 в Ocean rounded box, заполненная конкретными примерами в большинстве ячеек. Заголовки колонок (тип задачи) — крупные, однострочные, каждая с иконкой Lucide сверху: классификация (tag), распознавание (scan-line), поиск (search), генерация (sparkles), прогноз (trending-up), планирование (list-checks). Заголовки строк (модальность) — тоже крупнее и чётче: текст / изображение / звук-видео / структ. данные / код. В большинстве ячеек — конкретные продукты: BERT, ResNet, PANNs, XGBoost, CodeBERT, spaCy NER, YOLO, Whisper, OCR, Snyk, BM25, CLIP, Shazam, vector DB, Copilot search, GPT-4o, DALL-E, ElevenLabs, Codex, Cursor, Prophet, ARIMA, ReAct, AutoGPT, Devin, OpenClaw. Цветовое кодирование по колонке (типу задачи): MID для классификации/поиска, LIGHT для распознавания/прогноза/планирования, TEAL для генерации — единообразно, без отдельного gold-выделения ячейки YOLO.
 
 ## Speaker notes
 

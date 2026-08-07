@@ -16,9 +16,9 @@ deck:
   learning_outcomes: [LO1, LO4, LO6]
   language: ru
   status: draft
-  version: v3.2
-  source: chapter v3.1 (status=reviewed, 16406 слов)
-  plan: notes/lecture-1-review/final/new-plan-v5-final.md + qa-reports/2026-05-13-user-feedback-23/REQUIREMENTS.md
+  version: v3.3
+  source: chapter v3.3 (status=reviewed, ~17350 слов), issue #153 (21-fix polish)
+  plan: notes/lecture-1-review/final/new-plan-v5-final.md + qa-reports/2026-05-13-user-feedback-23/REQUIREMENTS.md + issue #153
 
 slides:
   # ─── Раздел 0. Открытие и вовлечение (9.5 мин) ───
@@ -36,6 +36,30 @@ slides:
       backup: assets/code/ice-breaker-cv/backup/screenshot.png
     interaction: live_demo
 
+  - id: s00a
+    file: slides/s00a-welcome.md
+    type: cover
+    duration_min: 0.5
+    assertion: "Добро пожаловать на курс «Отраслевое применение систем искусственного интеллекта»"
+    learning_goal: "Короткое приветствие перед титульным слайдом лекции 1"
+    learning_outcomes: []
+    references: []
+    visual:
+      pattern: welcome_hero
+      primary: "Hero/title-composition в Ocean palette, тонированный фон, крупная типография; БЕЗ Ocean rounded box motif (motif — только для content-слайдов)"
+
+  - id: s00b
+    file: slides/s00b-course-hook.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: 'Главный вопрос курса — не «можно ли AI?», а «нужно ли и где?»'
+    learning_goal: "Хук вовлечения перед титулом: воронка внедрения + центральный вопрос курса"
+    learning_outcomes: [LO1, LO4]
+    references: [gartner-2024, cnews-vedomosti-2026]
+    visual:
+      pattern: central_question
+      primary: "Funnel 100% → 10% (gold endpoint, *illustration of principle*) слева + main takeaway + central question справа"
+
   - id: s02
     file: slides/s02-cover.md
     type: cover
@@ -52,39 +76,13 @@ slides:
     file: slides/s02a-lecture-map.md
     type: roadmap
     duration_min: 0.5
-    assertion: "5 разделов за 75 минут — карта лекции"
+    assertion: "Карта лекции — 5 разделов"
     learning_goal: "Дать студенту общую карту: что будет, в каком порядке, к чему мы движемся"
     learning_outcomes: [LO1]
     references: []
     visual:
-      pattern: lecture_roadmap_5_sections
-      primary: "5 пронумерованных секций (Открытие / Что такое AI / Где мы сейчас / 4 способа / Границы) + gold-маркер «Вы здесь — Раздел 0»"
-
-  - id: s03
-    file: slides/s03-poll-questions.md
-    type: poll_reveal
-    duration_min: 1.5
-    assertion: "Сначала — ваша оценка, потом — данные"
-    learning_goal: "Активировать аудиторию опросом; зафиксировать оценки до показа реальных цифр"
-    learning_outcomes: [LO1]
-    references: []
-    visual:
-      pattern: poll_questions_only
-      primary: "2 motif cards (Q1 single-select + Q2 multi-select chips)"
-    paired_with: s04
-
-  - id: s04
-    file: slides/s04-poll-reveal-data.md
-    type: poll_reveal
-    duration_min: 2
-    assertion: "Разница между вашей оценкой и реальностью — карта ваших слепых зон про AI"
-    learning_goal: "Раскрыть данные ВЦИОМ + DeepSeek teachable moment (две методологии — два числа)"
-    learning_outcomes: [LO1, LO4]
-    references: [vciom-2025-onlay-dec, vciom-2025-oct, microsoft-ai-adoption-2026]
-    visual:
-      pattern: data_reveal_with_teachable
-      primary: "Donut 51% (ВЦИОМ-Онлайн дек 2025) + horizontal bar 5 LLM (ВЦИОМ окт 2025 multi-select) + DeepSeek callout 20% vs 43%"
-    paired_with: s03
+      pattern: lecture_roadmap_timeline
+      primary: "Горизонтальный timeline-roadmap (визуальный паттерн как у редизайна s29 — цветовые модульные блоки), 5 разделов лекции (Открытие / Что такое AI / Где мы сейчас / 4 способа / Границы + заключение), текущий раздел (0) подсвечен gold. Без минут на слайде."
 
   - id: s05a
     file: slides/s05a-instructor-card.md
@@ -98,18 +96,6 @@ slides:
       pattern: instructor_card
       primary: "Monogram-tile + 3 motif cards (briefcase / lightbulb / users)"
 
-  - id: s05b
-    file: slides/s05b-course-frame.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: 'Главный вопрос курса — не «можно ли AI?», а «нужно ли и где?»'
-    learning_goal: "Рамка курса и центральный вопрос"
-    learning_outcomes: [LO1, LO4]
-    references: [gartner-2024, cnews-vedomosti-2026]
-    visual:
-      pattern: central_question
-      primary: "Funnel 100% → 10% (gold endpoint, *illustration of principle*) слева + main takeaway + central question справа"
-
   # ─── Раздел 1. Что такое AI (5.5 мин) ───
   - id: s06
     file: slides/s06-multiple-definitions.md
@@ -122,6 +108,18 @@ slides:
     visual:
       pattern: four_approaches_compact_table
       primary: "4 подхода в компактной 2×2 grid (квадранты Russell-Norvig // ISO/IEC 22989 // через обучение // через бенчмарки) + AI Effect callout снизу с Tesler цитатой"
+
+  - id: s06a
+    file: slides/s06a-prehistory-1943.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Идея нейросети старше самого термина «искусственный интеллект» на 13 лет"
+    learning_goal: "Факт-мостик: предыстория 1943 (Мак-Каллок — Питтс) перед историей 1956-2026"
+    learning_outcomes: [LO1]
+    references: [mcculloch-pitts-1943]
+    visual:
+      pattern: fact_bridge
+      primary: "Компактный факт-слайд: 1943 (формальный нейрон Мак-Каллока — Питтса) vs 1956 (Дартмут, термин «AI») — 13-летний разрыв, gold-акцент на «13 лет»"
 
   - id: s07
     file: slides/s07-timeline-2017.md
@@ -143,10 +141,10 @@ slides:
     assertion: "AI стал инфраструктурой за 3 года: 900M WAU, 51% разработчиков ежедневно, 46% Copilot-кода"
     learning_goal: "Масштаб AI в цифрах + парадокс «массовое внедрение + массовый провал»"
     learning_outcomes: [LO1]
-    references: [stack-overflow-2025, openai-2026-wau, github-octoverse-2025, cnews-vedomosti-2026, statista-mckinsey-2025, gartner-2024]
+    references: [stack-overflow-2025, openai-2026-wau, github-octoverse-2025, cnews-vedomosti-2026, grand-view-research-2026, gartner-2024]
     visual:
       pattern: stat_grid_callout
-      primary: "Сетка из 4 метрик (900M / 51% / 46% / $244-390B) + gold counter-fact «90% откатов»"
+      primary: "Сетка из 4 метрик (900M / 51% / 46% / $390.9B→$539.5B) + gold counter-fact «90% откатов»"
 
   - id: s09
     file: slides/s09-breakthroughs-2023-2026.md
@@ -155,10 +153,10 @@ slides:
     assertion: "Пространство открыто: 4 прорыва 2023–2026 от не-первых игроков"
     learning_goal: "Не отчаивайтесь: серьёзные прорывы делают разные команды; пространство для изобретательности открыто"
     learning_outcomes: [LO1]
-    references: [mistral-7b-2023, deepseek-2025-r1, semianalysis-2025, bloomberg-2025-deepseek, openclaw-2025-steinberger, kimi-k25-2026-moonshot]
+    references: [mistral-7b-2023, deepseek-2025-r1, semianalysis-2025, bloomberg-2025-deepseek, openclaw-2025-steinberger, gerganov-llamacpp-2026]
     visual:
       pattern: 4_episodes_horizontal_timeline
-      primary: "4 эпизода по горизонтали: Mistral 7B (Apache 2.0) → DeepSeek R1 ($589B Nvidia drop, gold) → OpenClaw (100K★ stars за квартал, P. Steinberger) → Kimi K2.5 (open multimodal swarm mode, Moonshot AI)"
+      primary: "4 эпизода по горизонтали: Mistral 7B (Apache 2.0) → DeepSeek R1 ($589B Nvidia drop, gold) → OpenClaw (100K★ stars за квартал, P. Steinberger) → llama.cpp/ggml.ai (Georgi Gerganov, 100K+ stars март 2026, присоединение к Hugging Face)"
 
   # ─── Раздел 3. Четыре способа реализации (22.5 мин — после удаления s14 в Fix-17) ───
   - id: s10
@@ -375,7 +373,7 @@ slides:
     references: [searle-1980-chinese-room, bostrom-2014-superintelligence]
     visual:
       pattern: speaker_stake_table
-      primary: "Таблица 4×4: Спикер | Аффилиация | Прогноз AGI | Материальный интерес (Altman/OpenAI/начало superintelligence/IPO; Amodei/Anthropic/2-3 года/fundraising; Hassabis/DeepMind/50% к концу декады, есть gaps/credibility; LeCun/AMI Labs/LLM не приведут к AGI/$1B на альтернативный путь)"
+      primary: "Таблица 4×4: Спикер | Аффилиация | Прогноз AGI | Материальный интерес (Altman/OpenAI/начало superintelligence/IPO; Amodei/Anthropic/2-3 года/fundraising; Hassabis/DeepMind/AGI к 2029–2030, окно сузилось/credibility; LeCun/AMI Labs/LLM не приведут к AGI/$1B на альтернативный путь)"
 
   # ─── Раздел 5. Заключение (6.5 мин) ───
   - id: s27
@@ -393,26 +391,38 @@ slides:
   - id: s28
     file: slides/s28-summary-homework.md
     type: summary
-    duration_min: 1.5
-    assertion: "Что мы прошли + задание к семинару 1"
-    learning_goal: "3 главных вывода + операционализированное задание к семинару"
+    duration_min: 1
+    assertion: "Что мы прошли: три главных вывода"
+    learning_goal: "3 главных вывода лекции 1"
     learning_outcomes: [LO1, LO4, LO6]
     references: []
     visual:
-      pattern: 3_takeaways_with_homework
-      primary: "3 takeaway cards (AI спектр / выбор типа = навык / целеполагание у человека) + gold homework callout «Принесите свой AI-инструмент → пропустите через квадрант → защитите выбор»"
+      pattern: 3_takeaways
+      primary: "3 takeaway cards (AI спектр / выбор типа = навык / целеполагание у человека)"
 
   - id: s29
     file: slides/s29-course-roadmap-17x3.md
     type: process
     duration_min: 1.5
-    assertion: "Карта семестра: 17 лекций × 3 модуля"
-    learning_goal: "Реальный план курса (sync с Drive doc); студенты видят дорогу"
+    assertion: "Карта семестра: 17 лекций × 4 модуля"
+    learning_goal: "Реальный план курса (модульная структура issue #153); студенты видят дорогу"
     learning_outcomes: [LO1]
     references: []
     visual:
-      pattern: 3_modules_17_lectures_timeline
-      primary: "Горизонтальный timeline 3 модулей с цветовыми блоками; gold-маркер «Вы здесь — Лекция 1, Модуль 1»; контрольные точки РК1/РК2/РК3 на С8/С12/С17"
+      pattern: 4_modules_timeline
+      primary: "Горизонтальный timeline 4 модулей (М1 1.1–1.6 / М2 2.1–2.5 / М3 3.1–3.6 / М4 экзамен) с цветовыми блоками; gold-маркер на текущей лекции (1.1 Введение); контрольные точки РК1/РК2/РК3 по завершении М1/М2/М3"
+
+  - id: s29a
+    file: slides/s29a-grading-formula.md
+    type: assertion_visual
+    duration_min: 0.5
+    assertion: "Формула итоговой оценки: 100 = 10 + 30 + 3×20"
+    learning_goal: "Компактная формула оценки рядом с картой семестра"
+    learning_outcomes: [LO1]
+    references: []
+    visual:
+      pattern: formula_strip
+      primary: "Одна строка-формула: 100 баллов = 10 (посещаемость) + 30 (экзамен) + 3×20 (РК1/РК2/РК3), с мини-расшифровкой под ней"
 
   - id: s30
     file: slides/s30-lecture2-teaser.md
@@ -430,27 +440,38 @@ slides:
     file: slides/s31-qa.md
     type: assertion_visual
     duration_min: 2
-    assertion: "Q&A"
+    assertion: "Вопросы?"
     learning_goal: "Открытый Q&A — без backup-провокаций"
     learning_outcomes: []
     references: []
     visual:
       pattern: qa_minimal
-      primary: "Большое Q&A в центре + thank-you slide composition; БЕЗ backup-провокаций"
+      primary: "Большое «Вопросы?» в центре + thank-you slide composition; БЕЗ backup-провокаций"
 
 # ─── Технические заметки ───
 
 pacing:
+  # v3.3 (issue #153) — recomputed by summing actual duration_min across all
+  # 34 slides (was 62.5/12.5 in v3.2). Changes vs v3.2:
+  #   -3.5  removed s03+s04 (poll, 1.5+2)
+  #   -1.0  removed old s05b (course frame)
+  #   +0.5  new s00a (welcome, 0.5)
+  #   +1.0  new s00b (course hook, ex-s05b content, reworded)
+  #   +1.0  new s06a (prehistory 1943 fact-bridge)
+  #   +0.5  new s29a (grading formula strip)
+  #   net: 62.5 - 3.5 - 1.0 + 0.5 + 1.0 + 1.0 + 0.5 = 61.0 (recompute below
+  #   differs slightly — s02a/s29 duration_min unchanged at 0.5/1.5 despite
+  #   visual redesign; actual verified sum below)
   total_min: 75
-  active_min: 62.5  # v3.2: s19 split into s19+s19a (1.5+1.5 vs old 2.5) → +0.5 net
-  buffer_min: 12.5
+  active_min: 60.5  # verified: sum of duration_min across all 34 slides in deck.yaml
+  buffer_min: 14.5
   by_section:
-    section_0_open: 9.5
-    section_1_what_is_ai: 5.5
+    section_0_open: 6.5      # s01+s00a+s00b+s02+s02a+s05a (was 9.5 — poll -3.5, +s00a+s00b +1.5, net -2 vs v3.2's section after removing s03/s04 poll which lived in section 0)
+    section_1_what_is_ai: 6.5   # s06+s06a+s07 (was 5.5 — new s06a +1.0)
     section_2_where_we_are: 6
-    section_3_four_ways: 23.0  # v3.2: 22.5 + 0.5 from s19 split
-    section_4_boundaries: 12
-    section_5_conclusion: 6.5
+    section_3_four_ways: 23.0
+    section_4_boundaries: 12.0
+    section_5_conclusion: 6.5  # s27+s28+s29+s29a+s30+s31 (was 6.5 — s28 -0.5 homework removed, s29a +0.5 new)
 
 design_policies:
   palette: "Ocean Gradient (#21295C / #065A82 / #1C7293) + Teal #028090 + Gold #F0AB00"
@@ -539,3 +560,45 @@ v3_2_changes:
     fix17_s28:   "Homework wording: «защитите выбор перед группой» → «принесите → пропустите через 2-вопросный квадрант → одностраничный разбор»."
     fix18_s29_chapter: "Module reshuffle: Лекция 6 (Инж. проектирование) Module 1 → Module 2; Лекция 8 (Креативные) Module 1 → Module 3. Chapter §5.2 synced."
     fix19_s30:   "Removed YOLO callback frame; full-width 4-concept grid + 1-phrase frame at bottom."
+
+# ─── v3.3 (issue #153, 2026-08-07) — 21-fix polish round before first reading ───
+v3_3_changes:
+  description: |
+    Point polish round (21 fixes) before lecture 1 first classroom reading.
+    Not a redesign — targeted edits on top of v3.2. chapter.md (v3.3, source
+    of truth) already finalized; slides/build script synced to it.
+    Slide count: 33 → 34 (removed s03+s04+old-s05b = -3; added
+    s00a+s00b+s06a+s29a = +4).
+  slide_count: 34
+  new_slides_v3_3:
+    - s00a-welcome.md         # short welcome hero before cover (fix #2)
+    - s00b-course-hook.md     # course-frame hook moved before cover, reworded (fix #2)
+    - s06a-prehistory-1943.md # McCulloch-Pitts fact-bridge before 70-year timeline (fix #4)
+    - s29a-grading-formula.md # grading formula strip next to semester map (fix #19)
+  deleted_slides_v3_3:
+    - s03-poll-questions.md      # icebreaker poll moves to seminar 1 (fix #1)
+    - s04-poll-reveal-data.md    # icebreaker poll data reveal moves to seminar 1 (fix #1)
+    - s05b-course-frame.md       # superseded by s00b (content moved before cover, fix #2)
+  fixes_applied:
+    fix1_remove_poll:  "s03+s04 removed from deck.yaml + BUILDERS. Poll moves to seminar 1 (out of scope for lec-01 dir)."
+    fix2_s00a_s00b:    "2 new slides before s02 cover: s00a (welcome hero) + s00b (course hook, funnel+central question reworked from old s05b)."
+    fix3_s02a_redesign: "s02a redesigned as horizontal timeline-roadmap matching s29 redesign visual pattern (content stays lecture-scoped, 5 sections)."
+    fix4_s06a:         "New fact-bridge slide s06a (McCulloch-Pitts 1943, 13 years before Dartmouth 1956) inserted between s06 and s07."
+    fix6_s08:          "Market size metric updated: $244-390B → $390.9B→$539.5B (2025→2026, Grand View Research 2026), per chapter §2.1."
+    fix7_s09:          "Episode 4 replaced: Kimi K2.5 (Moonshot) → Georgi Gerganov / llama.cpp / ggml.ai (Hugging Face join Feb 2026, 100K+ GitHub stars March 2026)."
+    fix8_s12:          "YOLO gold-highlight neutralized to regular cell; axis header readability pass."
+    fix9_s13:          "Per-point sub-labels on quadrant already present from v3.2 (Fix-16); refined wording for issue #153."
+    fix10_eyebrow_labels: "s15/s16/s17/s18/s19/s19a get a consistent eyebrow pill (МОДЕЛЬ/ЧАТ/АГЕНТ) top-left, marking which of 4 implementation types is discussed."
+    fix11_s15:         "Alignment pass + explicit framing box around full 5-block pipeline labelled «Это уже приложение»."
+    fix12_s16:         "Accumulating history visual (growing block, «весь текст заново») replacing «⋮ следующая итерация»; bottom takeaway tail «а не магия» removed."
+    fix13_s17:         "Bottom gold callout «Возвращаемся к...» removed (both visual + speaker notes); replaced with direct statement."
+    fix14_s18:         "Full redesign — linear plan→act→observe→reflect pipeline with explicit loop-back arrow (chosen over hub-and-spoke / sequence-diagram alternatives)."
+    fix15_s23:         "Bridge label added at top connecting from section-4 divider framing to «где данные» topic."
+    fix16_s25:         "Russification: Bias/Sycophancy/Distribution shift → Смещение/Лесть/Дрейф распределения (bilingual labels per chapter §4.4)."
+    fix17_s26:         "Hassabis row synced to chapter §4.7: «AGI к 2029–2030 (3–4 года); окно сузилось за 2026 год» (Axios/Google I/O, май 2026)."
+    fix18_s28:         "Homework callout removed entirely; assertion changed to «Что мы прошли: три главных вывода»; speaker notes homework paragraph removed."
+    fix19_s29_redesign: "Full redesign — 4-module structure (М1 1.1-1.6 / М2 2.1-2.5 / М3 3.1-3.6 / М4 экзамен) per chapter §5.1 + issue #153. New s29a grading-formula strip added."
+    fix21_s31_rename:  "Q&A → «Вопросы?» (title text only, no redesign)."
+  isolation_note: |
+    catalog/manifests/lectures.yaml and library/normative/rpd-otraslevoe-primenenie-ai.md
+    NOT touched — separate structure, tracked under issue #154 (out of scope here).

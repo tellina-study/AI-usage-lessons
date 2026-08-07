@@ -400,3 +400,19 @@ _Пока не обнаружено._
 - **Status:** active
 - **First seen in:** #118 (lec-09 Phase 6, 2026-05-20)
 - **Fork target:** Install Chrome OR use alternative renderer
+
+### [#153-1] libreoffice/pdftoppm/rsvg-convert not on default PATH — portable install exists under `/tmp/claude-999/local`
+
+- **Tool:** `libreoffice` (headless PDF export), `pdftoppm` (PDF→PNG), `rsvg-convert` (SVG→PNG icon recolor)
+- **Symptom:** `command -v libreoffice soffice pdftoppm rsvg-convert mmdc` all empty on a fresh harness session — none on default `$PATH`, and a naive `apt`/`find /usr` search finds nothing either, suggesting the tools are missing.
+- **Root cause:** A portable/sandboxed install DOES exist, just not on `PATH` and not with its shared libs on `LD_LIBRARY_PATH`: binaries live at `/tmp/claude-999/local/usr/bin/{libreoffice,soffice,pdftoppm,rsvg-convert}`, and their `.so` dependencies (`libXinerama.so.1`, `libpoppler.so.134`, `libcairo.so.2`, `libreglo.so`, etc.) live under `/tmp/claude-999/local/usr/lib/x86_64-linux-gnu/` and `/tmp/claude-999/local/usr/lib/libreoffice/program/`. Running the binary without both exports fails with `error while loading shared libraries`.
+- **Severity:** P1 (blocks the entire visual-loop Generate→Convert→Inspect step until diagnosed — cost ~15 min of exploration in Лекция 1 issue #153 polish session).
+- **Workaround:** Export both before any visual-loop command:
+  ```bash
+  export PATH="/tmp/claude-999/local/usr/bin:$PATH"
+  export LD_LIBRARY_PATH="/tmp/claude-999/local/usr/lib/libreoffice/program:/tmp/claude-999/local/usr/lib/x86_64-linux-gnu:/tmp/claude-999/local/usr/lib:$LD_LIBRARY_PATH"
+  ```
+  Verified working: `libreoffice --headless --convert-to pdf ...`, `pdftoppm -r 110 -png ...`, `rsvg-convert --version`. `mmdc` (mermaid-cli) was NOT found under this path in this session — still blocked, see [#118-1] python-pptx-shapes workaround.
+- **Status:** active
+- **First seen in:** #153 (Лекция 1 21-fix polish round, 2026-08-07)
+- **Fork target:** N/A (environment quirk, not an MCP server bug) — worth adding these two `export` lines to a shared onboarding snippet/skill so future sessions don't re-discover this by trial and error.

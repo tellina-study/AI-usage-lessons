@@ -192,3 +192,13 @@ Phase 0 завершена: ветка создана, план + roast гото
 **Верификация после revision-раунда:** сделал sanity-check напрямую (Read+grep diff), не спавнил повторный полный critic-pass — правки узкие, механические, точно соответствуют брифу; каждая сверена построчно против findings. Единственная замеченная мной мелочь вне scope находок: библиографический список чуть выбился из алфавитного порядка (Grand View Research вставлен после Stack Overflow вместо позиции после Google/перед Hassabis) — не блокирует, оставляю на Phase 7 (consistency-checker) или pre-gate sweep, не стал спавнить отдельный раунд ради одной строки.
 
 Chapter.md готов к Phase 4 (presentation-designer). Жду подтверждения владельца перед спавном — Phase 4 объёмная и дорогая (новые/переделанные слайды, redesign схемы оркестратора, visual-loop ≥3 итерации на новый/изменённый слайд).
+
+## 8. Phase 4 закрыт (2026-08-07, коммит 82a2cd8)
+
+Все 21 правка на deck.yaml/slides внесены presentation-designer'ом; агент сам выполнил independent-verification проход (не доверял собственному self-report) и поймал/исправил 2 доп. anglicism-находки (s25 timeline, s23 title+bullets) + 1 регрессию layout от своей же правки. Я лично перепроверил: git diff/status (29 файлов, rename s05b→s00b подхвачен git автоматически), содержимое s29/s09/s18/s06a/s29a (все совпадают с брифом), pacing-арифметику (`awk`-сумма по всем 34 duration_min = 60.5, совпадает с active_min в deck.yaml), grep на scaffold/timing/methodology-паттерны по всем slides/*.md (0 хитов вне frontmatter LO-кодов — чисто).
+
+**Открытые вопросы владельцу (не блокируют Phase 5, но нужно решение до GATE):**
+1. **Pacing:** active_min 60.5 + buffer_min 14.5 = 75 (совпадает с исходным слотом ровно). Formally "не в дефиците" относительно самого слота — но buffer вырос с 12.5 до 14.5 (16.7%→19.3% от урока). Устраивает ли такое соотношение, или добавить контента обратно к ~65+ активных минут?
+2. **s06 «AI это moving target»** — pre-existing англицизм, НЕ в списке 21 правки, найден presentation-designer'ом случайно при работе рядом (s06a). No Extra Content Rule → repot, не исправлять самовольно. Дёшево поправить сейчас (1 слайд, 3 вхождения) или оставить на отдельный проход?
+
+Дальше — Phase 5 (presentation-critic + student-simulator + reader-simulator mode=rendered, параллельно), не блокируясь на эти 2 вопроса.

@@ -429,3 +429,250 @@ on `text_box` calls as a follow-up audit — out of scope for this task
   rewritten to describe final composition + iteration trail; frontmatter
   `visual.pattern`/`visual.primary` updated)
 - `library/lectures/lec-01/rendered/lec-01.pptx` / `.pdf` (regenerated)
+
+---
+
+## Round 2 QA-fix pass (issue #155, post-QA-with-roles)
+
+Consolidated 10-item fix brief from orchestrator after presentation-critic +
+student-simulator QA-with-roles pass (both verdict REVISE/actionable).
+Workaround [#153-1] PATH/LD_LIBRARY_PATH exports applied throughout
+(`libreoffice`, `pdftoppm`, `rsvg-convert` under `/tmp/claude-999/local`).
+
+### P1-1 — deck-wide WCAG gold-text-on-light-bg audit (18 locations)
+
+Full audit of every `color=GOLD` text usage in `build_lec01.py` (found via
+`grep -n "color=GOLD"`), cross-checked against the actual shape drawn
+immediately before each `text_box` call in source order (z-order = paint
+order in python-pptx). All 18 locations from the brief confirmed present at
+the cited (or adjacent, after prior edits shifted line numbers) lines.
+
+| # | Slide / fn | Text | BG underneath (verified) | Verdict | Action |
+|---|---|---|---|---|---|
+| 1 | s00b `build_s00b` | "Центральный вопрос курса" | `ocean_box` default SURFACE | light | → `color=DEEP` |
+| 2 | s06a `build_s06a` | "13 лет" | `filled_rect(..., GOLD, radius=True)` — gold-ON-gold | light (worse: same color) | → `color=DEEP` |
+| 3 | s11 `build_s11` | "включает предыдущий" (copy 1) | plain WHITE slide bg | light | → `color=DEEP` |
+| 4 | s11 `build_s11` | "включает предыдущий" (copy 2 — **exact duplicate block**, confirmed byte-identical incl. `gold_callout` call, drawn twice on top of itself) | plain WHITE slide bg | light | Removed duplicate block entirely (dead code, not just color) + fixed remaining copy → `color=DEEP` |
+| 5 | s15 `build_s15` | "Это уже приложение" | `filled_rect(..., WHITE, stroke=GOLD)` | light | → `color=DEEP` |
+| 6 | s16 `build_s16` | "Системный промпт" | `filled_rect(..., GOLD_TINT, stroke=GOLD)` | light | → `color=DEEP` |
+| 7 | s17 `build_s17` | "Оговорка для промышленных систем" | `ocean_box(fill=GOLD_TINT, stroke=GOLD)` | light | → `color=DEEP` |
+| 8 | s18 `build_s18` | "продолжить — цикл повторяется" | plain WHITE slide bg (label sits above gold loop-bar, not on it) | light | → `color=DEEP` |
+| 9 | s21 `build_s21` | "ВОПРОС 1" | plain WHITE slide bg | light | → `color=DEEP` |
+| 10 | s21 `build_s21` | "ВОПРОС 2" | plain WHITE slide bg | light | → `color=DEEP` |
+| 11 | s23 `build_s23` | "ПОТРЕБИТЕЛЬСКИЕ ТАРИФЫ" | `ocean_box(fill=GOLD_TINT, stroke=GOLD)` | light | → `color=DEEP` |
+| 12 | s23 `build_s23` | "Samsung 2023 — канонический инцидент" | `filled_rect(..., GOLD_TINT, stroke=GOLD)` | light | → `color=DEEP` |
+| 13 | s23 `build_s23` | "до 35M € / 7% — за запрещённые практики" | `filled_rect(..., MID)` — dark navy fill | **dark** (measured WCAG contrast GOLD vs MID = 3.77:1, passes ≥3:1 large-bold-text AA threshold; adjacent line in same MID block already uses `color=WHITE` successfully) | **Left as-is** — contrastic, per brief's own "if ≥3:1, leave it" instruction |
+| 14 | s24 `build_s24` | "Ответ AI (3 фейк-ссылки):" | `ocean_box` default SURFACE | light | → `color=DEEP` |
+| 15 | s24 `build_s24` | DOI lines ×3 (10pt, smallest font of all 18) | `ocean_box` default SURFACE | light | → `color=DEEP` |
+| 16 | s24 `build_s24` | "10–15%" (Vectara HHEM higher-risk stat) | `ocean_box(fill=TEAL_TINT, stroke=TEAL)` | light | → `color=DEEP` (kept bold + size=24 for visual weight, per brief) |
+| 17 | s25 `build_s25` | "GPT-4o: лесть (sycophancy) — апрель 2025" | `ocean_box(fill=WHITE, stroke=GOLD, stroke_pt=2.0)` | light | → `color=DEEP` |
+| 18 | s29 `build_s29` | lecture-map current-lecture number ("1.1 Введение") | `ocean_box(fill=WHITE, stroke=color)` — module-color stroke, WHITE fill interior where the text sits | light | → always `color=DEEP` (dropped the `GOLD if is_now else DEEP` ternary); kept `bold=True` unconditionally (was `bold=is_now`) so the current-lecture row still stands out via weight, without relying on a failing color |
+
+18/18 addressed: 17 changed to DEEP, 1 (#13) confirmed contrastic and left
+untouched. Zero remaining `color=GOLD` on light backgrounds after fix —
+verified via `grep -n "color=GOLD" build_lec01.py` returning only line for
+#13. All 17 changed locations visually re-inspected at 150dpi post-render;
+dark, readable text confirmed on every affected slide (s00b, s06a, s11, s15,
+s16, s17, s18, s21, s23, s24, s25, s29).
+
+Gold as fill/stroke/pill/marker preserved everywhere (≥1×/slide rule intact)
+— only text color changed in the 17 fixed spots.
+
+### P1-2 — s18 "использует" label crossed by connector lines (3 sub-iterations)
+
+**Iter 1 (rejected):** Moved the label up from the original mid-gap position
+(which crossed BOTH the "стоп → результат пользователю" text row and the
+horizontal stop-arrow band) to just below the pipeline row, adding a white
+backing rect to mask the vertical connector passing behind. Render showed
+the white backing patch itself now overlapping/clipping the "стоп →
+результат пользователю" text ("зователю" cut) and leaving an ugly hard-edge
+white patch cutting across the horizontal teal stop-arrow line.
+
+**Iter 2 (rejected):** Moved the label down instead, into the small gap
+between the stop-arrow band's bottom edge and the resources row (`stop_y +
+0.13`). This cleared the text-row and stop-arrow-band collisions, but the
+label was still horizontally CENTERED on the vertical TEAL/LIGHT connector
+stub that runs the full height from the pipeline row to the resource boxes
+— so the connector still cut through the "у" in "использует" at the new y
+(same defect, different line).
+
+**Iter 3 (accepted):** Kept iter 2's y-position (clear of stop-arrow +
+text), but left-aligned the label starting just right of the connector's
+centerline (`tools_x + stage_w/2 + 0.14`) instead of centering it across the
+full box width. No backing rect needed — no line crosses the label's
+horizontal span at any point. Verified via 2×-zoomed crop: "использует"
+fully legible on both connectors, "стоп → результат пользователю" text
+unobstructed.
+
+### P1-3 — s02 speaker notes stale lecture-name reference
+
+`slides/s02-cover.md` — removed "Лекция называется «AI вокруг нас» —
+потому что" preamble (stale name, renamed in issue #171 to «Что такое AI?
+История, классификация, общие понятия»). Reworded to start directly with
+"К 2026 году AI перестал быть..." per brief's suggested phrasing. Rest of
+paragraph (infrastructure-layer framing + voice input / navigation / face
+unlock / spam filter / recommendations / autocomplete examples) unchanged.
+Confirmed `load_notes()` parses speaker notes directly from the `.md` file
+at render time (no duplicate copy embedded in `build_lec01.py`) — single-file
+fix sufficient, s02 cover PNG visually unaffected (notes-only change).
+
+### P1-4 — s22 spec/implementation mismatch (section divider)
+
+Confirmed `build_s22()` (unchanged, per brief) already renders the simple
+`nav_slide()` pattern with `frame_phrase="Куда уходят данные · ошибки AI ·
+«не умеет» — тоже ваше."` — matching what the brief asked the .md spec to
+describe. Updated `slides/s22-section4-boundaries.md`:
+- `visual.pattern`: `section_divider_with_3_reasons` → `section_divider_with_progress`
+  (matches s07a/s10/s27 convention).
+- `## Visual` section rewritten to describe the actual simple-divider
+  composition (large "Раздел 4" background + title + 1-line frame-phrase +
+  roadmap-bar), copying the s07a phrasing pattern.
+- Speaker notes: removed the explicit "Три причины... Первая. Вторая.
+  Третья." announcement/numbering scaffold, rewritten as connected prose
+  that still carries all 3 content points (your responsibility for
+  deploying AI; AI fails systematically/predictably; the "what AI can't do"
+  boundary is also your responsibility). Final paragraph (7 topics) kept
+  as-is.
+
+No code change to `build_s22()` — render already correct, only the .md
+spec needed to catch up to the render.
+
+### P1-5 — s12 "vector DB" used before definition
+
+Added one inline gloss sentence to `slides/s12-classification-task-modality.md`
+speaker notes, positioned right after the "модальность" axis walkthrough
+where the Поиск×Структ.данные cell content (vector DB) is contextually
+relevant: "В ячейке «Поиск × Структурированные данные» стоит vector DB —
+база данных для поиска по смысловой похожести, подробнее разберём на
+слайде про агента." No change to term-appearance order elsewhere.
+
+### P2-6 — s12 two untranslated matrix cells
+
+`build_s12()`: `"frame predict"` → `"прогноз кадра"`, `"video forecast"` →
+`"прогноз видео"` (Прогноз × Изображение / Прогноз × Звук-видео cells).
+Both fit within the matrix cell width at the existing font size (confirmed
+visually, no wrap/overflow). `slides/s12-*.md` Visual section already
+described these cells in neutral terms without the English literals — no
+sync needed there.
+
+### P2-7 — s15 "Inference:" anglicism
+
+`build_s15()` title: `"Inference:"` → `"Инференс:"` (Russian
+transliteration, lowest-risk fix per brief — doesn't change string length
+enough to affect the existing 2-line title wrap budget). Confirmed via
+render: title still wraps cleanly at 2 lines.
+
+### P2-8 — deck.yaml stale slide-count comment
+
+`deck.yaml` line 3 header comment: "34 слайда" → "36 слайдов" (actual
+current count, confirmed via `python-pptx` slide count on the regenerated
+PPTX). No other metadata touched.
+
+### P2-9 — s07 gold-pill/marker overlap + s02a/s27 nav-card sliver
+
+**s07 pill/marker overlap:** Measured exact geometry — the pivot gold OVAL
+marker (centered on the timeline, spanning `line_y-0.13`..`line_y+0.21`) and
+the "2017" gold pill below it (`line_y-0.02`..`line_y+0.42`) overlapped by
+~0.23" vertically. Since both shapes are the same GOLD fill with a DEEP
+stroke on the oval, the overlap read as a rendering glitch (a thin
+DEEP-stroked arc poking out above the pill) rather than the intended
+"badge/pin silhouette" look documented in the Round-2 redesign notes above.
+Fixed by raising the oval to `line_y-0.40` (bottom edge now `line_y-0.06`,
+clearing the pill's top `line_y-0.02` with a small visible gap). Verified
+via 2×-zoomed crop: oval and pill now read as two clearly separate shapes.
+
+**s02a/s27 nav-card sliver — root cause found (not what the brief guessed):**
+Investigated `nav_slide()` first (the function s27 actually uses) — found it
+clean, single `ocean_box` per card, no sliver reproducible on s27 at any
+card index. The actual sliver (confirmed via pixel sampling: sliver color
+`(1,126,142)` ≈ TEAL `#028090`) lives in `build_s02a()` and `build_s29()`,
+which use a DIFFERENT pattern: an outer `ocean_box` (radius computed from an
+absolute 12pt formula) with a separate colored header-strip `filled_rect` on
+top (fixed `radius_adj=0.10`, a fraction of the strip's own much-shorter
+height). Because PowerPoint's rounded-rect adjustment is a fraction of the
+shorter side, `radius_adj=0.10` on a 1.0"-tall strip produces a much smaller
+absolute corner radius (~0.05") than the ~0.167" absolute radius the outer
+card gets from its 12pt formula — so the header's tighter corner sat fully
+inside the card's rounder corner, exposing a thin sliver of the card's own
+stroke color at the top corners. This reproduced on **every card**, not
+just the edge ones (the brief's "off-by-a-few-pt at edges" hypothesis was a
+reasonable guess but not quite the actual mechanism — confirmed by
+inspecting card index 2, a middle card, which showed the same sliver).
+Fixed in both `build_s02a` and `build_s29` (identical bug, identical fix —
+not new scope, same defect class) by computing the header strip's
+`radius_adj` from the same absolute-12pt formula `ocean_box` uses, applied
+against the strip's own height. Verified via 2×-zoomed crops on s02a (cards
+0 and 2) and s29 (Модуль 1 header): sliver fully gone, corners match
+cleanly. s27 re-confirmed clean (was never actually affected — visually
+similar 6-card layout caused it to be lumped in with s02a in the original
+QA finding, but it uses `nav_slide()`, a different code path with no header
+strip).
+
+### P2-10 — s07 "зимы" takeaway not visible on-slide
+
+Added an optional per-group `caption` field to `build_s07`'s `groups` list
+(only populated for "Зимы и прорывы"): "ресурсы уходят, когда обещания не
+сбываются", rendered as a 10.5pt italic DEEP caption inline to the right of
+the group-name tab (the only clear horizontal space available — checked the
+vertical gaps above/below the panel first, both too tight at ≤0.15" for a
+readable caption). Color is DEEP, not GOLD, consistent with the P1-1 fix
+applied throughout this pass.
+
+### Verification
+
+- Regenerated `lec-01.pptx` (36 slides confirmed via python-pptx count) /
+  `.pdf` via `build_lec01.py` + `libreoffice --headless --convert-to pdf`
+  (workaround [#153-1] exports applied).
+- `pdftoppm -r 150 -png` snapshots taken at 3 checkpoints during this pass
+  (initial WCAG sweep, post s18-fix iterations, final full regenerate) —
+  final set in `snapshots/iter-issue155-r2/final-*.png`.
+- All 12 WCAG-affected slides individually re-inspected post-fix at 150dpi.
+- s18 connector-label fix re-inspected after each of the 3 sub-iterations
+  via zoomed crops (`PIL.Image.crop` + 2× resize) before accepting.
+- s07 pill/marker + caption fix re-inspected via zoomed crop.
+- s02a (card 0 + card 2) and s29 (Модуль 1) sliver fix re-inspected via
+  zoomed crops; s27 re-confirmed clean (no change needed/made there).
+- Regression spot-check on untouched-but-adjacent slides: s19/s19a
+  (autonomy levels — prior batch-3 fix), s02 cover (notes-only change,
+  PNG unaffected), s12 full matrix (icons/fill-rate unaffected by cell-text
+  edits), s23 (container/spacing from batch-4 unaffected by text-color
+  edit) — all render identically to pre-pass baseline except the intended
+  fix.
+- Anti-pattern / designer-extras grep on the 3 touched `.md` files (s22,
+  s02, s12): 0 hits for `[VERIFY-DAY-OF]`, `[FACT-CHECK]`, `LO[1-9]` in
+  body, timing markers in body.
+
+### Not touched (per brief)
+
+- s05a (instructor card) — content locked by owner request #174.
+- s06a photo (#175) — on pause, awaiting owner-supplied source.
+- s13/s23 speaker notes word count (381/354 words, slightly over 300-word
+  band) — not touched, no cheap trim found/attempted.
+
+### PROPOSED ADDITION (not applied — reporting per No Extra Content Rule)
+
+None found beyond the 10-item brief. One judgment call made within the
+brief's own explicit allowance ("если это одна и та же ошибка... можно
+заодно убрать дублирующий блок кода"): removed the fully-duplicated
+"включает предыдущий" text block in `build_s11` (P1-1 item #4) since the
+brief explicitly flagged this as a likely leftover and permitted removing
+it while fixing the color. Also fixed the identical header-strip sliver bug
+in `build_s29` in addition to the brief's named `s02a` (same root cause,
+same fix, not independently scoped — flagged here for visibility rather
+than silently expanding scope).
+
+### Files touched (Round 2 QA-fix pass)
+
+- `library/lectures/lec-01/rendered/build_lec01.py` — `build_s00b`,
+  `build_s06a`, `build_s11` (dedup + color), `build_s15`, `build_s16`,
+  `build_s17`, `build_s18` (label position, 3 sub-iterations), `build_s21`,
+  `build_s23`, `build_s24`, `build_s25`, `build_s29` (color + header-strip
+  radius fix), `build_s02a` (header-strip radius fix), `build_s07` (pill/
+  marker gap + caption), `build_s12` (2 cell translations).
+- `library/lectures/lec-01/slides/s02-cover.md` (speaker notes).
+- `library/lectures/lec-01/slides/s22-section4-boundaries.md`
+  (frontmatter `visual.pattern`, `## Visual`, speaker notes).
+- `library/lectures/lec-01/slides/s12-classification-task-modality.md`
+  (speaker notes — vector DB gloss).
+- `library/lectures/lec-01/deck.yaml` (header comment slide count).
+- `library/lectures/lec-01/rendered/lec-01.pptx` / `.pdf` (regenerated).

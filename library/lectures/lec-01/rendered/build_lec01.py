@@ -510,7 +510,7 @@ def build_s00b(p):
              size=22, bold=True, color=DEEP, line_spacing=1.30)
     text_box(s, x=right_x + 0.3, y=fun_y + 2.4, w=right_w - 0.6, h=0.45,
              text="Центральный вопрос курса",
-             size=14, bold=True, color=GOLD)
+             size=14, bold=True, color=DEEP)
     text_box(s, x=right_x + 0.3, y=fun_y + 2.85, w=right_w - 0.6, h=1.6,
              text="Где AI работает,\nгде — нет,\nи как это понять?",
              size=24, bold=True, color=DEEP, line_spacing=1.25)
@@ -586,7 +586,21 @@ def build_s02a(p):
         fill_color = GOLD if is_now else color
         text_color = DEEP if is_now else WHITE
         ocean_box(s, cur_x, mod_y, m_w - 0.06, mod_h, fill=WHITE, stroke=color, stroke_pt=2.0)
-        filled_rect(s, cur_x, mod_y, m_w - 0.06, 1.0, fill_color, radius=True, radius_adj=0.10)
+        # issue #155 QA fix P2-9 (s02a/s27 nav-card sliver): the colored
+        # header strip's rounded corners (fixed radius_adj=0.10 on a 1.0"-tall
+        # shape → ~0.05" absolute radius) were noticeably tighter than the
+        # outer ocean_box card's corners (12pt ≈ 0.167" absolute radius, per
+        # ocean_box's own radius_pt formula) — the header's straighter corner
+        # sat fully inside the card's rounder corner, so a thin sliver of the
+        # card's own stroke colour showed through the gap at the top corners
+        # (visible on EVERY card, not just the edges — misread on first look
+        # as an edge-only artifact). Fix: give the header strip the same
+        # absolute ~12pt corner radius as ocean_box uses, computed against
+        # its own (shorter) height so both shapes round by the same physical
+        # amount.
+        strip_h = 1.0
+        strip_radius_adj = max(0.04, min(0.35, (12.0 / 72.0) / (strip_h / 2.0)))
+        filled_rect(s, cur_x, mod_y, m_w - 0.06, strip_h, fill_color, radius=True, radius_adj=strip_radius_adj)
         text_box(s, x=cur_x, y=mod_y + 0.08, w=m_w - 0.06, h=0.55, text=num,
                  size=30, bold=True, color=text_color, align=PP_ALIGN.CENTER)
         text_box(s, x=cur_x + 0.10, y=mod_y + 1.15, w=m_w - 0.26, h=0.75, text=title_txt,
@@ -796,7 +810,7 @@ def build_s06a(p):
     bridge_y = anchor_y + 0.55
     filled_rect(s, bridge_x, bridge_y, bridge_w, 0.20, GOLD, radius=True, radius_adj=0.5)
     text_box(s, x=bridge_x, y=anchor_y - 0.05, w=bridge_w, h=0.5,
-             text="13 лет", size=28, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
+             text="13 лет", size=28, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     gold_callout(s, 0.55, 5.30, 12.25, 0.95,
                  "Формальный нейрон не решал прикладных задач, но предвосхитил коннекционистскую традицию — линию мысли, из которой десятилетия спустя вырастут нейросети и Трансформер.",
                  size=13)
@@ -853,17 +867,23 @@ def build_s07(p):
     DEEP_TINT_BG = tint((0x21, 0x29, 0x5C))
 
     groups = [
-        ("Открытия", LIGHT, LIGHT_TINT_BG, [
+        ("Открытия", LIGHT, LIGHT_TINT_BG, None, [
             ("1950", "Тьюринг — тест на мышление"),
             ("1966", "ELIZA — Вайценбаум"),
             ("1980-е", "Экспертные системы"),
         ]),
-        ("Зимы и прорывы", MID, MID_TINT_BG, [
+        # issue #155 QA fix P2-10: the "zимы" takeaway ("ресурсы уходят, когда
+        # обещания не сбываются") previously lived ONLY in speaker notes —
+        # invisible on the slide itself. Added as a short inline caption next
+        # to the group-name tab (not GOLD text per P1-1 WCAG rule — DEEP is
+        # readable on both the white slide bg behind the tab row and the
+        # MID_TINT_BG panel it sits just above).
+        ("Зимы и прорывы", MID, MID_TINT_BG, "ресурсы уходят, когда обещания не сбываются", [
             ("1974", "1-я зима — доклад Лайтхилла"),
             ("1997", "Deep Blue — 200M поз/сек"),
             ("2012", "AlexNet — GPU + DL"),
         ]),
-        ("Перелом и взрыв", DEEP, DEEP_TINT_BG, [
+        ("Перелом и взрыв", DEEP, DEEP_TINT_BG, None, [
             ("2017", "«Attention Is All You Need»  ★"),
             ("2022", "ChatGPT — 1M за 5 дней"),
             ("2025-26", "DeepSeek R1, Claude Code"),
@@ -873,7 +893,7 @@ def build_s07(p):
     band_y_start = 1.72
     gap = 0.15
     panel_x, panel_w = 0.55, 12.25
-    for gi, (gname, color, bg, events) in enumerate(groups):
+    for gi, (gname, color, bg, caption, events) in enumerate(groups):
         band_y = band_y_start + gi * (band_h + gap)
         # Full-width tinted panel — the group's visual "home" (replaces the
         # old plain-white background + left text column).
@@ -884,6 +904,11 @@ def build_s07(p):
                     radius=True, radius_adj=0.5)
         text_box(s, x=panel_x + 0.35, y=band_y - 0.19, w=tab_w, h=0.40, text=gname,
                  size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        if caption:
+            cap_x = panel_x + 0.35 + tab_w + 0.20
+            text_box(s, x=cap_x, y=band_y - 0.19, w=panel_w - (cap_x - panel_x) - 0.30, h=0.40,
+                     text=caption, size=10.5, italic=True, color=DEEP,
+                     align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.MIDDLE)
         line_y = band_y + band_h - 0.44
         line_x0, line_w = panel_x + 0.45, panel_w - 0.90
         filled_rect(s, line_x0, line_y, line_w, 0.08, color, radius=True, radius_adj=0.5)
@@ -894,8 +919,17 @@ def build_s07(p):
             is_pivot = "★" in label
             tick_x = ex + ev_w / 2 - 0.08
             if is_pivot:
+                # issue #155 QA fix P2-9: oval marker was centred ON the
+                # timeline (top line_y-0.13, bottom line_y+0.21) while the
+                # gold pill below started at line_y-0.02 — the pill covered
+                # the bottom ~2/3 of the oval, leaving only a thin
+                # DEEP-stroked arc poking out above the pill (read as a
+                # rendering glitch on inspection, not the intended
+                # "badge/pin silhouette"). Raised the oval so its bottom
+                # edge (line_y-0.40+0.34 = line_y-0.06) clears the pill's
+                # top (line_y-0.02) with a small visible gap (~0.04").
                 shp = s.shapes.add_shape(MSO_SHAPE.OVAL,
-                                         Inches(tick_x - 0.11), Inches(line_y - 0.13),
+                                         Inches(tick_x - 0.11), Inches(line_y - 0.40),
                                          Inches(0.34), Inches(0.34))
                 shp.fill.solid(); shp.fill.fore_color.rgb = GOLD
                 shp.line.color.rgb = DEEP; shp.line.width = Pt(1.75)
@@ -1118,20 +1152,7 @@ def build_s11(p):
              size=18, bold=True, color=DEEP)
     text_box(s, x=0.55, y=2.55, w=4.6, h=0.55,
              text="включает предыдущий",
-             size=18, bold=True, color=GOLD)
-    text_box(s, x=0.55, y=3.40, w=4.6, h=2.6,
-             text="Не четыре альтернативные технологии, а четыре способа реализации одной задачи. Каждое следующее обёртывание добавляет способности — и сложность, стоимость, потенциал ошибок.",
-             size=13, color=DEEP, line_spacing=1.40)
-    gold_callout(s, 0.55, 6.10, 4.6, 0.85,
-                 "Выбор слоя — инженерное решение, не альтернатива.",
-                 size=12)
-    # Left side — compressed explanation column (heading + lead + 1-paragraph summary).
-    text_box(s, x=0.55, y=2.0, w=4.6, h=0.55,
-             text="Каждый следующий слой",
              size=18, bold=True, color=DEEP)
-    text_box(s, x=0.55, y=2.55, w=4.6, h=0.55,
-             text="включает предыдущий",
-             size=18, bold=True, color=GOLD)
     text_box(s, x=0.55, y=3.40, w=4.6, h=2.6,
              text="Не четыре альтернативные технологии, а четыре способа реализации одной задачи. Каждое следующее обёртывание добавляет способности — и сложность, стоимость, потенциал ошибок.",
              size=13, color=DEEP, line_spacing=1.40)
@@ -1219,8 +1240,8 @@ def build_s12(p):
         # Прогноз column — #179: text×forecast now shares the "next-token
         # prediction" framing with generation (same models, same color).
         (4, 0, "GPT-4o, Claude", TEAL),
-        (4, 1, "frame predict", LIGHT),
-        (4, 2, "video forecast", LIGHT),
+        (4, 1, "прогноз кадра", LIGHT),
+        (4, 2, "прогноз видео", LIGHT),
         (4, 3, "Prophet, ARIMA", LIGHT),
     ]
     for ti, mi, label, color in cells:
@@ -1363,14 +1384,14 @@ def build_s15(p):
     """
     s = blank(p)
     eyebrow_pill(s, "МОДЕЛЬ")
-    slide_title(s, "Модель — компонент, не система. Inference: вход → препроцессинг → модель → постпроцессинг → выход.", size=20, y=0.85)
+    slide_title(s, "Модель — компонент, не система. Инференс: вход → препроцессинг → модель → постпроцессинг → выход.", size=20, y=0.85)
     # Outer framing box — the whole pipeline IS an application (key idea, fix #11)
     frame_x, frame_y = 0.75, 2.05
     frame_w, frame_h = 11.85, 2.55
     filled_rect(s, frame_x, frame_y, frame_w, frame_h, WHITE, stroke=GOLD, stroke_pt=2.0,
                 radius=True, radius_adj=0.05)
     text_box(s, x=frame_x + 0.15, y=frame_y - 0.32, w=6.0, h=0.35,
-             text="Это уже приложение", size=13, bold=True, color=GOLD, align=PP_ALIGN.LEFT)
+             text="Это уже приложение", size=13, bold=True, color=DEEP, align=PP_ALIGN.LEFT)
     # Horizontal pipeline — centred INSIDE the outer frame (fix #11 alignment)
     pip_y = frame_y + 0.55
     pip_h = 1.35
@@ -1503,7 +1524,7 @@ def build_s16(p):
                 stroke=GOLD, stroke_pt=1.2, radius=True, radius_adj=0.22)
     text_box(s, x=msg_x + 0.20, y=sysprompt_y + 0.08, w=msg_w - 0.40, h=0.30,
              text="Системный промпт",
-             size=12, bold=True, color=GOLD, align=PP_ALIGN.LEFT)
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.LEFT)
     text_box(s, x=msg_x + 0.20, y=sysprompt_y + 0.36, w=msg_w - 0.40, h=0.30,
              text="роль, ограничения, формат ответа",
              size=10, italic=True, color=DEEP, align=PP_ALIGN.LEFT)
@@ -1674,7 +1695,7 @@ def build_s17(p):
     # issue #153 QA fix #2 (P2, Russification): "Disclaimer"/"production" →
     # Russian per §5.8 table ("production use" → "промышленное применение").
     text_box(s, x=disc_x + 0.30, y=disc_y + 0.25, w=disc_w - 0.6, h=0.4,
-             text="Оговорка для промышленных систем", size=14, bold=True, color=GOLD)
+             text="Оговорка для промышленных систем", size=14, bold=True, color=DEEP)
     # issue #153 QA fix #2 follow-up: "промышленной эксплуатации" (25 chars)
     # is longer than "production" (10 chars) — the old fixed y+1.95 offset for
     # the paragraph below assumed a 2-line wrap; the longer RU text wraps to
@@ -1844,7 +1865,7 @@ def build_s18(p):
     disable_shadow(left_arrow)
     # issue #153 QA fix #1 (Russification): "continue" → "продолжить".
     text_box(s, x=loop_x0, y=loop_y - 0.35, w=loop_x1 - loop_x0, h=0.30,
-             text="продолжить — цикл повторяется", size=11, bold=True, color=GOLD,
+             text="продолжить — цикл повторяется", size=11, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER)
 
     # ─── Resources row below: Memory (under Observe) + Tools (under Act) ───
@@ -1869,11 +1890,28 @@ def build_s18(p):
     filled_rect(s, mem_x + stage_w/2 - 0.03, stage_y + stage_h, 0.06, res_y - (stage_y + stage_h), LIGHT)
     # issue #153 QA fix #8 (P2, non-blocking): tiny "использует" caption on each
     # vertical connector for parity with the labelled horizontal flow above.
-    conn_label_y = stage_y + stage_h + (res_y - (stage_y + stage_h)) / 2 - 0.10
-    text_box(s, x=tools_x - 0.35, y=conn_label_y, w=stage_w + 0.70, h=0.22,
-             text="использует", size=8.5, italic=True, color=TEAL, align=PP_ALIGN.CENTER)
-    text_box(s, x=mem_x - 0.35, y=conn_label_y, w=stage_w + 0.70, h=0.22,
-             text="использует", size=8.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # issue #155 QA fix P1-2 (3 sub-iterations):
+    # (1) original mid-gap position (y = pipeline-bottom + half the gap to
+    #     the resources row = 4.25") placed the label directly across BOTH
+    #     the "стоп → результат пользователю" text row (4.03..4.31") AND the
+    #     horizontal stop-arrow teal band (4.35..4.55"), cutting the "ь".
+    # (2) moved label down to just below the stop-arrow band (stop_y+0.13 =
+    #     4.58") — cleared the stop-arrow/text collision, but the label was
+    #     still horizontally CENTERED on the vertical TEAL/LIGHT connector
+    #     stub (which runs the full height from the pipeline row down to the
+    #     resource boxes), so the connector line still cut through the "у" in
+    #     "использует" at that y — same bug, different line.
+    # (3) final fix: keep the y from (2) (clear of stop-arrow + text), but
+    #     move the label OFF the connector's centerline — left-aligned,
+    #     starting just right of where the connector passes — instead of
+    #     centering across the full box width. No line crosses the label text
+    #     at any point along its horizontal span now.
+    conn_label_y = stop_y + 0.13
+    conn_label_dx = 0.14  # clears the 0.06"-wide connector stub + margin
+    text_box(s, x=tools_x + stage_w / 2 + conn_label_dx, y=conn_label_y, w=stage_w / 2, h=0.20,
+             text="использует", size=8.5, italic=True, color=TEAL, align=PP_ALIGN.LEFT)
+    text_box(s, x=mem_x + stage_w / 2 + conn_label_dx, y=conn_label_y, w=stage_w / 2, h=0.20,
+             text="использует", size=8.5, italic=True, color=LIGHT, align=PP_ALIGN.LEFT)
 
     text_box(s, x=0.55, y=7.05, w=12.25, h=0.35,
              text="ReAct (Reasoning + Acting) — Yao et al. 2022 (arXiv:2210.03629)",
@@ -2164,7 +2202,7 @@ def build_s21(p):
     centre_y = quad_y + quad_h / 2
     text_box(s, x=text_x, y=centre_y - 0.55, w=text_w, h=0.32,
              text="ВОПРОС 1",
-             size=12, bold=True, color=GOLD, align=PP_ALIGN.LEFT)
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.LEFT)
     text_box(s, x=text_x, y=centre_y - 0.20, w=text_w, h=0.85,
              text="Нужно ли взаимодействие с пользователем?",
              size=13, bold=True, color=DEEP, align=PP_ALIGN.LEFT, line_spacing=1.25)
@@ -2192,7 +2230,7 @@ def build_s21(p):
     title_y = marker_y + 0.50
     text_box(s, x=quad_x, y=title_y, w=quad_w, h=0.32,
              text="ВОПРОС 2",
-             size=12, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     text_box(s, x=quad_x, y=title_y + 0.32, w=quad_w, h=0.36,
              text="Нужна ли самостоятельная работа с инструментами?",
              size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
@@ -2272,7 +2310,7 @@ def build_s23(p):
     ocean_box(s, cx_, col_y, col_w, col_h, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, x=cx_ + 0.25, y=col_y + 0.18, w=col_w - 0.5, h=0.40,
              text="ПОТРЕБИТЕЛЬСКИЕ ТАРИФЫ",
-             size=14, bold=True, color=GOLD)
+             size=14, bold=True, color=DEEP)
     text_box(s, x=cx_ + 0.25, y=col_y + 0.60, w=col_w - 0.5, h=0.45,
              text="данные → обучение по умолчанию",
              size=15, bold=True, color=DEEP, line_spacing=1.20)
@@ -2310,7 +2348,7 @@ def build_s23(p):
     s_x = outer_x + pad
     filled_rect(s, s_x, bot_y, s_w, bot_h, GOLD_TINT, stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.12)
     text_box(s, x=s_x + 0.20, y=bot_y + 0.10, w=s_w - 0.4, h=0.35,
-             text="Samsung 2023 — канонический инцидент", size=13, bold=True, color=GOLD)
+             text="Samsung 2023 — канонический инцидент", size=13, bold=True, color=DEEP)
     text_box(s, x=s_x + 0.20, y=bot_y + 0.48, w=s_w - 0.4, h=bot_h - 0.55,
              text="3 эпизода за месяц (март–апрель): код, транскрипт совещания, тестовые последовательности → попали в датасет OpenAI. Самсунг ввёл запрет внешнего GenAI.",
              size=11, color=DEEP, line_spacing=1.28)
@@ -2343,7 +2381,7 @@ def build_s24(p):
              size=11, italic=True, color=DEEP, line_spacing=1.30)
     text_box(s, x=px + 0.25, y=py + 1.55, w=pw - 0.5, h=0.4,
              text="Ответ AI (3 фейк-ссылки):",
-             size=13, bold=True, color=GOLD)
+             size=13, bold=True, color=DEEP)
     fakes = [
         ("Petrov A., Smith J. (2023).", "Seismic Resilience of Small-Diameter Pipelines.", "DOI: 10.1016/j.engfailanal.2023.107214 ✗"),
         ("Ivanov K. et al. (2024).", "Underground Infrastructure Earthquake Response.", "DOI: 10.1080/15732479.2024.2218450 ✗"),
@@ -2356,7 +2394,7 @@ def build_s24(p):
         text_box(s, x=px + 0.40, y=ry + 0.25, w=pw - 0.8, h=0.30, text=title,
                  size=10, italic=True, color=DEEP)
         text_box(s, x=px + 0.40, y=ry + 0.50, w=pw - 0.8, h=0.30, text=doi,
-                 size=10, color=GOLD, bold=True)
+                 size=10, color=DEEP, bold=True)
     # Right: Vectara HHEM band
     rx, ry_, rw, rh = px + pw + 0.35, 1.95, 4.4, 3.2
     ocean_box(s, rx, ry_, rw, rh, fill=TEAL_TINT, stroke=TEAL)
@@ -2371,7 +2409,7 @@ def build_s24(p):
              text="суммаризация (Gemini 2.0 Flash)",
              size=10, italic=True, color=SLATE)
     text_box(s, x=rx + 0.25, y=ry_ + 2.20, w=rw - 0.5, h=0.45,
-             text="10–15%", size=24, bold=True, color=GOLD)
+             text="10–15%", size=24, bold=True, color=DEEP)
     text_box(s, x=rx + 0.25, y=ry_ + 2.60, w=rw - 0.5, h=0.35,
              text="reasoning (многошаговое)",
              size=10, italic=True, color=SLATE)
@@ -2426,7 +2464,7 @@ def build_s25(p):
     tl_h = 1.0
     ocean_box(s, 0.55, tl_y, 12.25, tl_h, fill=WHITE, stroke=GOLD, stroke_pt=2.0)
     text_box(s, x=0.75, y=tl_y + 0.10, w=11.85, h=0.4,
-             text="GPT-4o: лесть (sycophancy) — апрель 2025", size=13, bold=True, color=GOLD)
+             text="GPT-4o: лесть (sycophancy) — апрель 2025", size=13, bold=True, color=DEEP)
     text_runs(s, 0.75, tl_y + 0.50, 11.85, 0.4, [
         {"text": "25 апр", "size": 14, "bold": True, "color": MID},
         {"text": " — релиз обновления   →   ", "size": 12, "color": DEEP},
@@ -2613,7 +2651,13 @@ def build_s29(p):
         n = len(lectures)
         m_w = w_units * unit_w
         ocean_box(s, cur_x, mod_y, m_w - 0.05, mod_h, fill=WHITE, stroke=color, stroke_pt=2.0)
-        filled_rect(s, cur_x, mod_y, m_w - 0.05, 0.85, color, radius=True, radius_adj=0.10)
+        # issue #155 QA fix P2-9 (same sliver root cause as s02a — see the
+        # matching comment there): header strip radius must match ocean_box's
+        # absolute ~12pt corner radius, computed against the strip's own
+        # (shorter) height, not a fixed fractional radius_adj.
+        head_h = 0.85
+        head_radius_adj = max(0.04, min(0.35, (12.0 / 72.0) / (head_h / 2.0)))
+        filled_rect(s, cur_x, mod_y, m_w - 0.05, head_h, color, radius=True, radius_adj=head_radius_adj)
         text_box(s, x=cur_x, y=mod_y + 0.08, w=m_w - 0.05, h=0.35, text=label,
                  size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
         text_box(s, x=cur_x + 0.10, y=mod_y + 0.40, w=m_w - 0.25, h=0.5, text=sub,
@@ -2622,7 +2666,7 @@ def build_s29(p):
             ly = mod_y + 1.05 + j * 0.55
             text_box(s, x=cur_x + 0.15, y=ly, w=m_w - 0.3, h=0.50, text=lec_label,
                      size=11 if is_now else 10,
-                     bold=is_now, color=GOLD if is_now else DEEP,
+                     bold=True, color=DEEP,
                      line_spacing=1.20)
         cur_x += m_w
     text_box(s, x=0.55, y=6.55, w=12.25, h=0.35,

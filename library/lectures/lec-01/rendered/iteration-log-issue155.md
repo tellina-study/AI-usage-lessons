@@ -273,3 +273,159 @@ pattern used on s08/s12.
   section + frontmatter `visual.primary` updated; speaker notes untouched
   — brief only asked for visual-doc sync)
 - `library/lectures/lec-01/rendered/lec-01.pptx` / `.pdf` (regenerated)
+
+---
+
+## s07 Round-2 redesign (owner comment #176 — standalone creative pass)
+
+Unlike the other Round-2 fixes (point patches from a batched brief), owner
+comment #176 explicitly asked for a multi-iteration creative redesign of
+s07's timeline visual, spun off into its own agent pass: **"попробуй
+визуализацию таймлайна улучшить... подумай, покрути отдельным агентом и
+сделай конфетку"**.
+
+### Problem in the batch-1..4 baseline (Fix-7 v2, pre-existing)
+
+Each of the 3 groups ("Открытия (1950 — 1980-е)", "Зимы и прорывы (1973 —
+2012)", "Перелом и взрыв (2012 — 2026)") had its year-range spelled out in
+a plain-text label in a **left column**, directly duplicating the
+individual years already marked as points on the timeline 2" to the right
+of that label. No background/panel differentiated the 3 groups — all 3
+sat on plain white, stacked with a thin gap.
+
+### Method: isolated single-slide test harness
+
+Built a standalone script (`s07_test.py`, not committed — scratchpad only)
+that imports the palette + shape helpers straight from `build_lec01.py`
+and renders ONLY s07 into a throwaway 1-slide pptx, so each iteration
+converts in ~1-2s instead of re-rendering all 36 slides. This is what made
+5 real iterations practical within the time budget.
+
+### Variants tried (3 substantially different compositions, per brief)
+
+**(a) Full-width tint panel + left accent-bar + pill floating inside panel
+top-left.** Group name as a small colored pill sitting a fixed distance
+from the panel's left edge, with a thin vertical accent-color bar running
+the full height of the panel on the far left (visual echo of the old left
+column, but recolored/thinned). Readable, clean, but the accent bar felt
+like a leftover of the old "left column" idea rather than a fresh
+composition — didn't fully commit to "no left column at all."
+
+**(b) `ocean_box`-style card with explicit stroke + group title as plain
+text top-left, INSIDE the card, well above the timeline.** More
+"card"-like via the visible border, but left a dead gap between the title
+text and the timeline itself — group name floated with no strong visual
+tie to "its" timeline, worse mass balance than (a). Also the biggest radius
+setting made LibreOffice render a soft drop-shadow under the rounded-rect
+panel (still within anti-pattern rules — not a forbidden accent-line or
+red — but a less flat/clean look than (a)/(c)).
+
+**(c)/(d) Compact panel + group-name TAB badge straddling the panel's top
+edge (half in, half out — like a manila-folder tab or a section divider
+tab).** Most distinctive composition of the three — reads immediately as
+"this whole panel belongs to this label," no left column at all, no dead
+space. (d) is (c) refined: bigger panel corner radius, taller bands so the
+pivot label doesn't crowd the tab, tighter bottom-callout gap fixed.
+
+**Chosen: (d).** Strongest on the "не банальная, конфетка" criterion the
+owner asked for, cleanest mass balance (tab bridges title↔timeline instead
+of leaving a gap), and the panel-tint darkening light→mid→deep across the
+3 groups reads as a small extra narrative signal (visually "approaching"
+the 2017 pivot) that wasn't present in (a)/(b).
+
+### WCAG contrast bug found mid-iteration (not part of original brief, but blocking)
+
+Iteration 3: measured actual WCAG contrast ratios for every text/background
+pair used (script in scratchpad, formula = relative luminance / contrast
+ratio per WCAG 2.1). Result: **gold (#F0AB00) TEXT on the light Ocean-tint
+backgrounds measures ~1.6:1 to ~2.0:1 contrast — fails AA (needs ≥3:1 even
+for large bold text)**. This was already true of the "2017" gold year-label
+and the "«Attention Is All You Need» ★" gold pivot-label text in variant
+(d)'s first pass (inherited from the original baseline's gold-text-on-white
+convention, which happened to pass only because white has the highest
+possible luminance ceiling — still measured just 1.99:1, technically still
+failing AA even against pure white).
+
+Fix: gold in this slide (and, worth flagging deck-wide — see below) only
+ever works as a **fill** with DEEP text on top (measured ~6.9:1, comfortably
+passes AA). Changed: pivot event label → DEEP bold (was gold). Pivot year
+"2017" → DEEP bold 22pt text inside a dedicated GOLD pill shape (was gold
+14→22pt text with no shape backing). The gold pill + gold oval marker
+together read as a single badge/pin silhouette — this ended up stronger as
+a "wow" element than the color-only version, because it's a shape people's
+eyes catch before they even read the number.
+
+**Flag for `notes/mcp-limitations.md` / design-research follow-up:** gold
+`#F0AB00` should probably never be used as a **text color** anywhere in this
+deck's palette — it fails WCAG AA against every background in the Ocean
+palette family (verified: white 1.99:1, light-tint 1.6-1.8:1). Current
+`gold_callout()` helper already avoids this correctly (DEEP text on
+GOLD_TINT cream background). Recommend a repo-wide grep for `color=GOLD`
+on `text_box` calls as a follow-up audit — out of scope for this task
+(single-slide brief), reporting for orchestrator visibility only.
+
+### Russification pass (per brief point 4)
+
+- "Turing — Imitation Game" → "Тьюринг — тест на мышление" (explicit owner
+  request, brief's own suggested phrasing).
+- "ELIZA — Weizenbaum" → "ELIZA — Вайценбаум" — spelling matches this same
+  slide's own speaker notes ("В шестьдесят шестом — Вайценбаум создаёт
+  ELIZA..."), not chapter.md's citation-style "Weizenbaum" (chapter keeps
+  Latin surnames in academic-citation contexts, slides don't).
+- "1-я зима — Lighthill" → "1-я зима — доклад Лайтхилла" — matches speaker
+  notes phrasing ("после доклада Лайтхилла британскому правительству").
+- "«Attention Is All You Need»" kept verbatim — exact paper title in
+  quotes, legitimate citation per brief point 4's own carve-out.
+- Deep Blue / AlexNet / ChatGPT / DeepSeek R1 / Claude Code — kept as
+  proper/brand names (Russification keep-list).
+
+### Iterations (5 total, brief asked for ≥4-5)
+
+1. First pass at (a)/(b)/(c) — established the tab/panel concept was
+   strongest; found no critical blockers yet (insufficient scrutiny — see
+   iter 2).
+2. Fixed (a)'s tight bottom-callout spacing and (c)'s pivot-label/tab
+   crowding; synthesized (d) from (c) with bigger radius + more vertical
+   room. Also caught the `ocean_box` soft-shadow artifact in (b) via
+   crop-zoom inspection.
+3. WCAG contrast audit (see above) — found and fixed the gold-text-on-tint
+   failure. This was the highest-value fix of the whole pass; would not
+   have been caught without explicitly computing contrast ratios rather
+   than eyeballing.
+4. Enlarged the pivot gold pill (1.05"→1.35" wide, year 17pt→22pt) so the
+   "2017" badge visually dominates by more than the checklist's literal
+   "≥2× the regular year size" — the badge's added shape-area makes the
+   perceived weight far greater than the raw font-size ratio suggests.
+5. Fixed a spelling inconsistency introduced in iteration 2 ("Вейценбаум"
+   with е, wrong) against the slide's own speaker notes ("Вайценбаум" with
+   а) — caught during the Russification cross-check against
+   `s07-timeline-2017.md`, then verified against the real 36-slide build
+   (not just the isolated test harness) to confirm no shift on neighboring
+   s06a/s07a.
+
+### Verification
+
+- Regenerated `lec-01.pptx`/`lec-01.pdf` via `build_lec01.py` (36 slides
+  confirmed, workaround [#153-1] PATH/LD_LIBRARY_PATH applied).
+- Rendered s06a (idx 9) and s07a (idx 11) — both bracket s07 (idx 10) in
+  the deck — confirmed byte-for-byte visually unchanged from pre-redesign
+  baseline (no bleed from the new panel geometry).
+- Full Vaswani callout text (all 7 co-author surnames + citation count)
+  fits cleanly on 2 lines at 12.5pt in the real 36-slide build, matching
+  the isolated test-harness result.
+- Projector-readability check at 50% zoom: main message ("3 eras of AI
+  history, culminating in the 2017 transformer pivot") still reads
+  instantly; gold badge remains the clear visual anchor.
+- Schema Readability Checklist (`schema_timeline`, `tools/presentation-build/
+  README.md` §4): em-dash separators ✓, pivot-year visual dominance ✓ (via
+  shape, not just font-size ratio), no band-border crossing ✓, max 3
+  events/band ✓ (unchanged), timeline ≥60% slide width ✓ (measured 85%).
+
+### Files touched
+
+- `library/lectures/lec-01/rendered/build_lec01.py` (`build_s07` fully
+  rewritten — tab/panel composition, WCAG-fixed gold usage)
+- `library/lectures/lec-01/slides/s07-timeline-2017.md` (Visual section
+  rewritten to describe final composition + iteration trail; frontmatter
+  `visual.pattern`/`visual.primary` updated)
+- `library/lectures/lec-01/rendered/lec-01.pptx` / `.pdf` (regenerated)

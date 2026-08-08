@@ -807,77 +807,128 @@ def build_s06a(p):
 
 
 def build_s07(p):
-    """70 years AI timeline — Fix-7 (Phase 12.6, 2026-05-13).
+    """70 years AI timeline — issue #155 Round-2 redesign (owner comment #176).
 
-    - Single-line event labels (no \n wraps) at sufficient size.
-    - AI Effect callout REMOVED (duplicate from s06).
-    - Replaced with Vaswani-2017 deep-dive callout: 8 authors + self-attention
-      + ~160K citations on May 2026.
+    Owner feedback on Fix-7 v2 (batch 1-4 baseline): left group-labels
+    duplicated the year-range already shown on the timeline itself
+    ("Открытия (1950 — 1980-е)" next to a line that already shows 1950 /
+    1966 / 1980-е), and the 3 groups had no visual separation — just 3
+    stacked lines on white.
+
+    Redesign (5 iterations, Generate→Convert→Inspect→Fix, tried 3
+    substantially different compositions — see iteration-log-issue155.md
+    "s07 Round-2 redesign" for the full a/b/c/d trail):
+    - Left text-column label REMOVED entirely — year-range dropped since
+      years are already on the line; group name became a badge.
+    - Each of the 3 groups now sits on its own full-width tinted panel
+      (Ocean light/mid/deep tint backgrounds), with a rounded WHITE-on-color
+      "tab" pill straddling the panel's top edge as the group title — this
+      is the group's visual home instead of a separate left column.
+    - WCAG fix found during iteration: gold-COLORED TEXT on a light tinted
+      background measures ~1.6:1 contrast (fails AA) — gold in this deck
+      only works as a FILL with dark text on top (~6.9:1), never as text
+      color on a light bg. Pivot year "2017" text and pivot event label are
+      now DEEP (not gold); the "wow" signal moved to a bigger gold pill +
+      oval marker straddling the timeline (reads as a distinct badge/pin).
+    - Turing label Russified ("Turing — Imitation Game" → "Тьюринг — тест
+      на мышление") per owner request; Weizenbaum/Lighthill Russified to
+      match the spelling already used in this slide's own speaker notes
+      ("Вайценбаум", "Лайтхилла" — see s07-timeline-2017.md speaker notes).
+      "«Attention Is All You Need»" kept verbatim — exact paper title in
+      quotes, legitimate citation, not an anglicism.
+    - All facts (dates, events, gold-2017 accent, Vaswani callout with all
+      7 co-authors + 160K+ citations) unchanged — content contract preserved.
     """
     s = blank(p)
     slide_title(s, "70 лет AI: открытия, зимы, точка перелома 2017.", size=28)
-    # 3 events per band (down from 4) → ~3.18" per event → single-line labels.
+
+    def tint(color_tuple, factor=0.90):
+        r = int(color_tuple[0] + (255 - color_tuple[0]) * factor)
+        g = int(color_tuple[1] + (255 - color_tuple[1]) * factor)
+        b = int(color_tuple[2] + (255 - color_tuple[2]) * factor)
+        return RGBColor(r, g, b)
+
+    LIGHT_TINT_BG = tint((0x1C, 0x72, 0x93))
+    MID_TINT_BG = tint((0x06, 0x5A, 0x82))
+    DEEP_TINT_BG = tint((0x21, 0x29, 0x5C))
+
     groups = [
-        ("Открытия (1950 — 1980-е)", LIGHT, [
-            ("1950", "Turing — Imitation Game"),
-            ("1966", "ELIZA — Weizenbaum"),
+        ("Открытия", LIGHT, LIGHT_TINT_BG, [
+            ("1950", "Тьюринг — тест на мышление"),
+            ("1966", "ELIZA — Вайценбаум"),
             ("1980-е", "Экспертные системы"),
         ]),
-        ("Зимы и прорывы (1973 — 2012)", MID, [
-            ("1974", "1-я зима — Lighthill"),
+        ("Зимы и прорывы", MID, MID_TINT_BG, [
+            ("1974", "1-я зима — доклад Лайтхилла"),
             ("1997", "Deep Blue — 200M поз/сек"),
             ("2012", "AlexNet — GPU + DL"),
         ]),
-        ("Перелом и взрыв (2012 — 2026)", DEEP, [
+        ("Перелом и взрыв", DEEP, DEEP_TINT_BG, [
             ("2017", "«Attention Is All You Need»  ★"),
             ("2022", "ChatGPT — 1M за 5 дней"),
             ("2025-26", "DeepSeek R1, Claude Code"),
         ]),
     ]
-    band_h = 1.40   # Fix-7 v2: bigger band so year + event text fit cleanly inside it
-    band_y_start = 1.70
-    for gi, (gname, color, events) in enumerate(groups):
-        band_y = band_y_start + gi * (band_h + 0.10)
-        # Group label (left)
-        text_box(s, x=0.55, y=band_y + 0.50, w=2.5, h=0.5, text=gname,
-                 size=11, bold=True, color=color, line_spacing=1.20)
-        # Group color band — horizontal line at the visual middle of the band
-        line_y = band_y + 0.75
-        filled_rect(s, 3.20, line_y, 9.55, 0.15, color, radius=True, radius_adj=0.5)
+    band_h = 1.48
+    band_y_start = 1.72
+    gap = 0.15
+    panel_x, panel_w = 0.55, 12.25
+    for gi, (gname, color, bg, events) in enumerate(groups):
+        band_y = band_y_start + gi * (band_h + gap)
+        # Full-width tinted panel — the group's visual "home" (replaces the
+        # old plain-white background + left text column).
+        filled_rect(s, panel_x, band_y, panel_w, band_h, bg, radius=True, radius_adj=0.14)
+        # Group-name tab, straddling the panel's top edge.
+        tab_w = 0.42 + 0.155 * len(gname)
+        filled_rect(s, panel_x + 0.35, band_y - 0.19, tab_w, 0.40, color,
+                    radius=True, radius_adj=0.5)
+        text_box(s, x=panel_x + 0.35, y=band_y - 0.19, w=tab_w, h=0.40, text=gname,
+                 size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        line_y = band_y + band_h - 0.44
+        line_x0, line_w = panel_x + 0.45, panel_w - 0.90
+        filled_rect(s, line_x0, line_y, line_w, 0.08, color, radius=True, radius_adj=0.5)
         n = len(events)
-        ev_w = 9.55 / n - 0.15
+        ev_w = line_w / n
         for ei, (year, label) in enumerate(events):
-            ex = 3.20 + ei * (ev_w + 0.15) + 0.05
+            ex = line_x0 + ei * ev_w
             is_pivot = "★" in label
-            tick_x = ex + ev_w / 2 - 0.10
+            tick_x = ex + ev_w / 2 - 0.08
             if is_pivot:
                 shp = s.shapes.add_shape(MSO_SHAPE.OVAL,
-                                         Inches(tick_x - 0.10), Inches(line_y - 0.10),
-                                         Inches(0.42), Inches(0.42))
+                                         Inches(tick_x - 0.11), Inches(line_y - 0.13),
+                                         Inches(0.34), Inches(0.34))
                 shp.fill.solid(); shp.fill.fore_color.rgb = GOLD
-                shp.line.color.rgb = DEEP; shp.line.width = Pt(2.0)
+                shp.line.color.rgb = DEEP; shp.line.width = Pt(1.75)
                 disable_shadow(shp)
             else:
-                filled_rect(s, tick_x + 0.05, line_y - 0.05, 0.10, 0.25, color)
-            # Event label ABOVE the line (top half of band)
-            text_box(s, x=ex, y=band_y + 0.05, w=ev_w, h=0.55, text=label,
-                     size=12, color=DEEP if not is_pivot else GOLD,
-                     bold=is_pivot, align=PP_ALIGN.CENTER, line_spacing=1.20)
-            # Year label BELOW the line (bottom half of band)
-            year_y = band_y + 1.00 if not is_pivot else band_y + 1.05
-            text_box(s, x=ex, y=year_y, w=ev_w, h=0.36,
-                     text=year,
-                     size=14 if not is_pivot else 22,
-                     bold=True,
-                     color=GOLD if is_pivot else color, align=PP_ALIGN.CENTER)
-    # Vaswani-2017 deep-dive callout (replaces AI Effect callout — Fix-7).
-    # Total bands occupy: y_start 1.70 + 3 bands × 1.40 + 2 gaps × 0.10 = 6.10.
-    # Callout positioned at 6.30, h=1.05, ends 7.35.
-    gold_callout(s, 0.55, 6.30, 12.25, 1.05,
+                filled_rect(s, tick_x + 0.04, line_y - 0.07, 0.08, 0.22, color)
+            # Event label — DEEP for both pivot and regular (WCAG fix: gold
+            # text on light tint bg measured ~1.6:1, fails AA; see docstring).
+            text_box(s, x=ex, y=band_y + 0.33, w=ev_w, h=0.42, text=label,
+                     size=12.5, color=DEEP,
+                     bold=is_pivot, align=PP_ALIGN.CENTER, line_spacing=1.05)
+            if is_pivot:
+                # Pivot year sits in its own gold pill (DEEP text on GOLD
+                # fill = ~6.9:1 contrast) — bigger + shape-distinct so it
+                # reads as the slide's single visual anchor.
+                pill_w = 1.35
+                filled_rect(s, ex + ev_w / 2 - pill_w / 2, band_y + band_h - 0.46,
+                            pill_w, 0.44, GOLD, radius=True, radius_adj=0.5)
+                text_box(s, x=ex, y=band_y + band_h - 0.45, w=ev_w, h=0.40,
+                         text=year, size=22, bold=True,
+                         color=DEEP, align=PP_ALIGN.CENTER)
+            else:
+                text_box(s, x=ex, y=band_y + band_h - 0.35, w=ev_w, h=0.32,
+                         text=year, size=14.5, bold=True,
+                         color=color, align=PP_ALIGN.CENTER)
+    # Vaswani-2017 deep-dive callout — unchanged content (all 7 co-authors +
+    # 160K+ citations), repositioned for the new panel geometry.
+    # Bands occupy: 1.72 + 3×1.48 + 2×0.15 = 6.46. Callout starts at 6.66.
+    gold_callout(s, 0.55, 6.66, 12.25, 0.72,
                  "★ 2017 — Vaswani и 7 соавторов (Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, Polosukhin) "
                  "вводят механизм self-attention — основу всех современных LLM. "
                  "На май 2026 у статьи свыше 160 000 цитирований.",
-                 size=13)
+                 size=12.5)
     speaker_notes(s, load_notes("s07"))
 
 

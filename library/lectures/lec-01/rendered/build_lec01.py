@@ -487,13 +487,14 @@ def build_s00b(p):
     text_box(s, x=mid_x, y=mid_y + 0.20, w=mid_w, h=blk_h - 0.40,
              text="−90% откатываются",
              size=20, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    bot_w = fun_w
-    bot_x = fun_x
+    bot_w = fun_w * 0.45
+    bot_x = fun_x + (fun_w - bot_w) / 2.0
     bot_y = mid_y + blk_h + blk_gap
     filled_rect(s, bot_x, bot_y, bot_w, blk_h, GOLD, radius=True, radius_adj=0.10)
-    text_box(s, x=bot_x, y=bot_y + 0.20, w=bot_w, h=blk_h - 0.40,
-             text="10% доходят до прода",
-             size=24, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=bot_x, y=bot_y + 0.14, w=bot_w, h=blk_h - 0.28,
+             text="10% доходят\nдо прода",
+             size=18, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.10)
     text_box(s, x=fun_x, y=bot_y + blk_h + 0.15, w=fun_w, h=0.5,
              text="Иллюстрация принципа (Gartner, McKinsey подтверждают похожие цифры).",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER, line_spacing=1.30)
@@ -1048,9 +1049,8 @@ def build_s12(p):
         ("Поиск",     "lucide-search-blue.png"),
         ("Генерац.",  "lucide-sparkles-blue.png"),
         ("Прогноз",   "lucide-trending-up-blue.png"),
-        ("Планиров.", "lucide-list-checks-blue.png"),
     ]
-    modalities = ["Текст", "Изображ.", "Звук / видео", "Структ. данные", "Код"]
+    modalities = ["Текст", "Изображ.", "Звук / видео", "Структ. данные"]
     grid_left = matrix_x + 1.55
     grid_top = matrix_y + 1.10
     grid_w = matrix_w - 1.75
@@ -1087,37 +1087,27 @@ def build_s12(p):
         (0, 1, "ResNet", MID),
         (0, 2, "PANNs", MID),
         (0, 3, "XGBoost", MID),
-        (0, 4, "CodeBERT", MID),
         # Распознавание column
         (1, 0, "spaCy NER", LIGHT),
         (1, 1, "YOLO", LIGHT),
         (1, 2, "Whisper", LIGHT),
         (1, 3, "OCR таблиц", LIGHT),
-        (1, 4, "Snyk, Sonar", LIGHT),
         # Поиск column
         (2, 0, "BM25", MID),
         (2, 1, "CLIP", MID),
         (2, 2, "Shazam", MID),
         (2, 3, "vector DB", MID),
-        (2, 4, "Copilot search", MID),
         # Генерация column
         (3, 0, "GPT-4o, Claude", TEAL),
         (3, 1, "DALL-E, MJ", TEAL),
         (3, 2, "ElevenLabs, Sora", TEAL),
         (3, 3, "Codex tab.", TEAL),
-        (3, 4, "Cursor, Claude Code", TEAL),
-        # Прогноз column
-        (4, 0, "—", SLATE),
+        # Прогноз column — #179: text×forecast now shares the "next-token
+        # prediction" framing with generation (same models, same color).
+        (4, 0, "GPT-4o, Claude", TEAL),
         (4, 1, "frame predict", LIGHT),
         (4, 2, "video forecast", LIGHT),
         (4, 3, "Prophet, ARIMA", LIGHT),
-        (4, 4, "—", SLATE),
-        # Планирование column
-        (5, 0, "ReAct, AutoGPT", LIGHT),
-        (5, 1, "visual nav", LIGHT),
-        (5, 2, "—", SLATE),
-        (5, 3, "scheduling", LIGHT),
-        (5, 4, "Devin, OpenClaw", LIGHT),
     ]
     for ti, mi, label, color in cells:
         x = grid_left + ti * cell_w + 0.06
@@ -1164,21 +1154,21 @@ def build_s13(p):
              text="Контроль\nразработчика",
              size=14, bold=True, color=MID, align=PP_ALIGN.RIGHT, line_spacing=1.18)
     # ↑ arrow + «высокий» at top of Y axis (just outside quadrant, near top-left corner)
-    text_box(s, x=qx - 1.45, y=qy - 0.08, w=1.35, h=0.30, text="высокий ↑",
-             size=11, bold=True, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
+    text_box(s, x=qx - 1.55, y=qy - 0.10, w=1.45, h=0.32, text="высокий ↑",
+             size=14, bold=True, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
     # «низкий» — at bottom-left of Y axis area, OUTSIDE quadrant
-    text_box(s, x=qx - 1.45, y=qy + qh + 0.08, w=1.35, h=0.28, text="низкий ↓",
-             size=11, bold=True, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
+    text_box(s, x=qx - 1.55, y=qy + qh + 0.06, w=1.45, h=0.32, text="низкий ↓",
+             size=14, bold=True, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
     # X axis label (bottom) — Fix-16: «Делегирование от пользователя»
     text_box(s, x=qx + qw / 2 - 2.4, y=qy + qh + 0.08, w=4.8, h=0.40,
              text="Делегирование от пользователя",
              size=15, bold=True, color=MID, align=PP_ALIGN.CENTER)
     # Arrow + range markers — Fix-16: moved BELOW X-axis label (outside quadrant) so they don't collide with
     # Agent at top-right or Model at bottom-left circles inside the quadrant.
-    text_box(s, x=qx + 0.05, y=qy + qh + 0.50, w=1.2, h=0.28, text="← низкий",
-             size=10, bold=True, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
-    text_box(s, x=qx + qw - 1.25, y=qy + qh + 0.50, w=1.2, h=0.28, text="высокий →",
-             size=10, bold=True, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
+    text_box(s, x=qx + 0.05, y=qy + qh + 0.48, w=1.5, h=0.30, text="← низкий",
+             size=13, bold=True, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
+    text_box(s, x=qx + qw - 1.55, y=qy + qh + 0.48, w=1.5, h=0.30, text="высокий →",
+             size=13, bold=True, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
     # Empty-quadrant labels — italic small grey, near corners (Fix-16)
     # Top-left (X=low delegation, Y=high разраб control) — «нет смысла»
     text_box(s, x=qx + 0.15, y=qy + 0.10, w=2.0, h=0.32,
@@ -1198,11 +1188,11 @@ def build_s13(p):
     pts = [
         # (fx, fy, label, sub, color, is_gold)
         # Модель: bottom-left. fy=0.68 → cy=4.586, circle 4.11-5.06, sub 5.18-5.78 (in bottom half).
-        (0.20, 0.68, "Модель", "Сам интегрирует API,\nполный контроль", LIGHT, False),
+        (0.20, 0.68, "Модель", "Сам интегрирует API, полный контроль", LIGHT, False),
         # Чат: center.
-        (0.50, 0.50, "Чат", "Диалог, уточнения\nпо ходу", MID, False),
+        (0.50, 0.50, "Чат", "Диалог, уточнения по ходу", MID, False),
         # Агент: top-right. fy=0.20 → cy=2.69, circle 2.21-3.16, sub 3.29-3.74 (in top half).
-        (0.80, 0.20, "Агент", "Делегирование целиком,\nоркестратор решает", GOLD, True),
+        (0.80, 0.20, "Агент", "Делегирование целиком, решает оркестратор", GOLD, True),
     ]
     for fx, fy, label, sub, color, is_gold in pts:
         cx = qx + fx * qw
@@ -1217,9 +1207,14 @@ def build_s13(p):
         text_box(s, x=cx - 0.6, y=cy - 0.20, w=1.2, h=0.4, text=label,
                  size=14, bold=True, color=DEEP if is_gold else WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        # Sub-text always BELOW circle, narrow box so it fits within quadrant half.
-        text_box(s, x=cx - 0.95, y=cy + 0.50, w=1.9, h=0.55, text=sub,
-                 size=10, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.15)
+        # Sub-text always BELOW circle. issue #155 fix #183/#184: labels are
+        # now single-line (no \n). iter-2: 2.6"/9pt still wrapped for the two
+        # longest labels (word_wrap=True in text_box) — widened to 3.4" and
+        # reduced to 8.5pt. Agent's box (cx=7.67) stays clear of the task-box
+        # at qx+qw+0.5=9.6 (right edge 7.67+1.7=9.37); Модель's box (cx=3.38)
+        # stays clear of the left slide margin (left edge 3.38-1.7=1.68).
+        text_box(s, x=cx - 1.70, y=cy + 0.50, w=3.4, h=0.35, text=sub,
+                 size=8.5, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.15)
     # Right side — fixed task box
     task_x = qx + qw + 0.5
     task_w = SLIDE_W_IN - task_x - 0.35
@@ -1309,10 +1304,10 @@ def build_s15(p):
                  align=PP_ALIGN.CENTER, bold=(i != 0 and i != 4))
     # 4 model examples
     examples = [
-        ("YOLOv8", "детекция на\nизображениях"),
-        ("Whisper", "распознавание\nречи"),
-        ("Stable Diffusion", "генерация\nизображений"),
-        ("AlphaFold", "прогноз структур\nбелков"),
+        ("YOLOv8", "детекция на изображениях"),
+        ("Whisper", "распознавание речи"),
+        ("Stable Diffusion", "генерация изображений"),
+        ("AlphaFold", "прогноз структур белков"),
     ]
     ex_y = 5.05
     ex_w = 2.8

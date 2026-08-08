@@ -137,3 +137,139 @@ position, so re-ordering didn't require touching the fill-selection code.
 - `library/lectures/lec-01/slides/s19a-autonomy-levels.md` (Visual section
   updated)
 - `library/lectures/lec-01/rendered/lec-01.pptx` / `.pdf` (regenerated)
+
+---
+
+## Batch 4 — issue #155 fix #174 (s05a instructor card rebuild) + fix #194 (s23 visual polish)
+
+### Fix #174 — s05a full rebuild on sem-01 s02 reference pattern
+
+**Problem:** Previous s05a was a monogram-tile ("ИИ" initials on a blue
+circle) + 3 generic motif cards, all still containing literal placeholder
+text in square brackets (`[годы работы с AI; конкретные проекты]`,
+`[почему важно лично]`, `[контакт, формат вопросов]`) — a known finding
+carried over from issue #153. Owner asked for a full rebuild matching
+`library/seminars/sem-01/slides/s02-instructor-bio.md`'s layout: left
+vertical photo strip + right specialization/fact cards.
+
+**Fix:** Rewrote `build_s05a` from scratch:
+- Left strip (SURFACE fill, ~28% width `strip_w=3.75`, full slide height):
+  real instructor photo (`assets/instructor-photo-crop.png`, cropped from
+  the owner-supplied `assets/instructor/levko-photo.png` — same source
+  used by seminar 1 — to a 3:4 portrait framing that keeps headroom +
+  shoulders, replacing the earlier over-tight crop attempt that cut off
+  the chin), full name "Левко Максим Николаевич", divider line, 2 contact
+  rows with circular icon badges (Lucide `send`/`mail`, downloaded fresh
+  from jsdelivr CDN, recolored `#065A82`, rendered to 96px PNG via
+  `rsvg-convert` — no send/mail icon existed yet in `assets/icons/`).
+- Right area (white, ~72%): assertion title + specialization headline
+  ("Архитектор, технический и продуктовый лидер...") + 3 fact cards in a
+  2-tier layout — tier 1: experience-numbers card (briefcase icon, "20+"
+  gold-highlighted per the ≥1×/slide gold rule + "10+ завершённых
+  проектов под руководством") and expertise card (layers icon, 5-item
+  skill list); tier 2: wide "Консалтинг и inhouse" card with 4 company-name
+  pill badges (Yandex / МТС / Магнит / Сибур) using a **generic
+  building-2 Lucide icon**, not official company logos (trademark/
+  asset-sourcing risk per the brief).
+- Real contacts used throughout: Telegram `@Maxim_Levko`, email
+  `Levko.maxim@gmail.com` — no placeholders left anywhere in visible body.
+
+**Iterations (3):**
+1. Baseline render — found 2 problems: (a) "10+ завершённых проектов под
+   руководством" text descender clipped by the card's bottom edge (card
+   too short for 2-line body at the chosen y-offset), (b) large empty
+   white space below the 3 cards (card block ended at y≈5.70 vs slide
+   height 7.5", ~1.8" of unused space) — a Visual Mass Balance flag.
+2. Fixed clipping (2-line wrap + repositioned offsets inside card A/B) and
+   tightened nothing else yet — re-render confirmed no more clipping.
+3. Rebalanced vertical rhythm: grew `card_h1` 1.95"→2.15", `card_y1`
+   2.15"→2.35", `card_h2` 1.35"→1.55", gap between tiers 0.25"→0.30" so
+   the card block now spans y≈2.35–6.35 (1.15" bottom margin, roughly
+   matching the 0.55/0.45 top margins) — and added the gold "20+" run via
+   `text_runs` (mixed-color text) to satisfy the ≥1×/slide gold-highlight
+   rule, which the slide had zero of before. Final render: clean, no
+   clipping, balanced whitespace, gold present.
+
+**Speaker notes:** Rewritten from scratch — old notes had 4 literal
+placeholders (`[имя]`, `[сфера]`, `[актуальная тема]`, `[сколько лет]`,
+`[контакт]`). New notes (196 words, within 150-250 range) use the actual
+bio content from the brief (architect/product lead, 20+ years, Yandex/
+МТС/Магнит/Сибур consulting+inhouse) and keep the "карта, которой у меня
+самого не было" framing from the old notes (owner explicitly liked this
+line), closing with real contacts (Telegram/email) instead of
+`[контакт]`.
+
+### Fix #194 — s23 visual polish (single-container unification + russification)
+
+**Problem:** Owner: «тут надо чуть логичнее сделать появление слайда и
+сделать его визуально приличнее, пока внезапно и неаккуратно смотрится».
+Diagnosis on the pre-batch render: (1) "ENTERPRISE / API" right-column
+heading was not russified while the left column ("ПОТРЕБИТЕЛЬСКИЕ
+ТАРИФЫ") was — inconsistent bilingual heading pair; (2) the slide was 4
+visually disjoint floating shapes (2 column boxes + Samsung box + EU box)
+with no unifying frame, unlike the single-Ocean-rounded-box-container
+pattern used on s08/s12.
+
+**Fix:**
+- "ENTERPRISE / API" → "КОРПОРАТИВНЫЕ ТАРИФЫ / API" (kept "API" per
+  Russification keep-list — established acronym).
+- Added one outer `ocean_box` container (white fill, LIGHT stroke)
+  spanning the full composition area (2 columns + bottom strip), with all
+  previously-independent shapes now nested inside it with padding — same
+  "single-container wraps everything" pattern as s08/s12.
+- Reworked internal spacing: bullets in both columns now wrap to 2 lines
+  each with tighter, even line spacing so nothing crowds or overlaps: the
+  bottom strip (Samsung + EU AI Act) also moved fully inside the outer
+  container instead of floating below it.
+
+**Iterations (3):**
+1. Baseline (unify container + russify heading) — found bullet line-2
+   text in both columns crowding the next bullet (uneven vertical rhythm
+   from the original single-line bullet spacing applied to now-wrapped
+   2-line bullets).
+2. Fixed bullet spacing (explicit `\n` line breaks + reduced/uniform
+   0.50" per-bullet step) — re-render showed clean, non-overlapping
+   bullets in both columns; verified bottom-right EU box text ("до 35M €
+   / 7% — за запрещённые практики", 2-line wrap) fits inside its box via
+   a zoomed crop, no clipping.
+3. Full-region regression render (s22 section-4 divider, s23, s24
+   hallucinations) — confirmed no regression on neighboring slides,
+   final s23 reads top-to-bottom: bridge-label → title → single frame →
+   2 columns → bottom strip, passes 5-Second Test ("where does your data
+   go depends on the tier you're on").
+
+### Verification
+
+- Regenerated `lec-01.pptx`/`lec-01.pdf` via `build_lec01.py` +
+  `libreoffice --headless --convert-to pdf` (workaround [#153-1] PATH/
+  LD_LIBRARY_PATH exports applied). 36 slides confirmed unchanged in count.
+- Bracket-leak grep on rendered PPTX visible text for both slides (s05a
+  idx 6, s23 idx 27): 0 hits — confirms all `[...]` placeholders removed
+  from s05a (known issue #153 carry-over) and none introduced on s23.
+- Regression check: s02a (lecture-map), s05c (section-1 divider), s06
+  (untouched, downstream of s05a) and s22 (section-4 divider), s24
+  (hallucinations, downstream of s23) all re-rendered identically to
+  pre-batch baseline.
+- s06a (comment #175, owner-photo URL issue) explicitly NOT touched in
+  this batch, per instruction.
+
+### New assets created
+
+- `library/lectures/lec-01/rendered/assets/instructor-photo-crop.png` —
+  3:4 portrait crop of `assets/instructor/levko-photo.png` (720×960,
+  full width, top-aligned to keep headroom+shoulders).
+- `library/lectures/lec-01/rendered/assets/icons/lucide-send-blue.png` —
+  Telegram contact icon (Lucide `send`, recolored `#065A82`, 96px).
+- `library/lectures/lec-01/rendered/assets/icons/lucide-mail-blue.png` —
+  Email contact icon (Lucide `mail`, recolored `#065A82`, 96px).
+
+### Files touched
+
+- `library/lectures/lec-01/rendered/build_lec01.py` (`build_s05a` fully
+  rewritten, `build_s23` container/heading/spacing rework)
+- `library/lectures/lec-01/slides/s05a-instructor-card.md` (Visual section
+  + speaker notes fully rewritten, frontmatter `visual.primary` updated)
+- `library/lectures/lec-01/slides/s23-consumer-vs-enterprise.md` (Visual
+  section + frontmatter `visual.primary` updated; speaker notes untouched
+  — brief only asked for visual-doc sync)
+- `library/lectures/lec-01/rendered/lec-01.pptx` / `.pdf` (regenerated)

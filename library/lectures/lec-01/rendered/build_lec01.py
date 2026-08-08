@@ -598,37 +598,100 @@ def build_s02a(p):
 
 
 def build_s05a(p):
+    """Instructor card — issue #155 fix #174: full rebuild on sem-01 s02 reference.
+
+    Layout: left vertical strip (~28% width, SURFACE fill) with portrait
+    photo + full name + divider + 2 contact rows (Telegram/Email badges).
+    Right area (~72%, white) with specialization headline + 3 fact cards
+    (experience numbers / expertise / company badges) in a 2-tier layout,
+    matching library/seminars/sem-01/slides/s02-instructor-bio.md pattern.
+    """
     s = blank(p)
-    slide_title(s, "Кто я и почему мне это важно.", size=28)
-    # Left monogram
-    mono_x, mono_y, mono_d = 1.0, 2.2, 3.5
-    monogram = filled_rect(s, mono_x, mono_y, mono_d, mono_d, MID, radius=True, radius_adj=0.5)
-    monogram.line.fill.background()
-    text_box(s, x=mono_x, y=mono_y + 0.65, w=mono_d, h=mono_d - 1.0,
-             text="ИИ", size=120, bold=True, color=WHITE,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=mono_x - 0.3, y=mono_y + mono_d + 0.1, w=mono_d + 0.6, h=0.4,
-             text="инициалы лектора", size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    # Right 3 cards
-    cards = [
-        ("lucide-briefcase-blue.png", "Опыт", "[годы работы с AI; конкретные проекты]"),
-        ("lucide-lightbulb-blue.png", "Зачем мне курс", "[почему важно лично]"),
-        ("lucide-users-blue.png", "Связь со студентами", "[контакт, формат вопросов]"),
+    # ---- Left strip ----
+    strip_w = 3.75
+    filled_rect(s, 0, 0, strip_w, SLIDE_H_IN, SURFACE)
+    filled_rect(s, strip_w - 0.02, 0, 0.02, SLIDE_H_IN, LIGHT)
+    photo_x, photo_y, photo_w, photo_h = 0.55, 0.55, 2.65, 3.53
+    add_image(s, ASSETS / "instructor-photo-crop.png",
+              x=photo_x, y=photo_y, w=photo_w, h=photo_h)
+    # thin frame around photo
+    frame = filled_rect(s, photo_x, photo_y, photo_w, photo_h, WHITE, stroke=LIGHT, stroke_pt=1.5)
+    frame.fill.background()
+    name_y = photo_y + photo_h + 0.25
+    text_box(s, x=0.35, y=name_y, w=strip_w - 0.6, h=0.85,
+             text="Левко Максим\nНиколаевич", size=20, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, line_spacing=1.15)
+    # divider line
+    div_y = name_y + 0.95
+    filled_rect(s, 0.55, div_y, strip_w - 1.1, 0.02, COVER_OUTLINE)
+    # contact rows
+    contacts = [
+        ("lucide-send-blue.png", "Telegram", "@Maxim_Levko"),
+        ("lucide-mail-blue.png", "Email", "Levko.maxim@gmail.com"),
     ]
-    card_x = 5.5
-    card_w = 7.4
-    card_h = 1.4
-    card_gap = 0.15
-    card_y_start = 2.0
-    for i, (icon, title, body) in enumerate(cards):
-        y = card_y_start + i * (card_h + card_gap)
-        ocean_box(s, card_x, y, card_w, card_h)
-        add_image(s, ASSETS / "icons" / icon, x=card_x + 0.35, y=y + 0.4,
-                  w=0.65, h=0.65)
-        text_box(s, x=card_x + 1.2, y=y + 0.25, w=card_w - 1.4, h=0.4,
-                 text=title, size=16, bold=True, color=MID)
-        text_box(s, x=card_x + 1.2, y=y + 0.75, w=card_w - 1.4, h=0.55,
-                 text=body, size=13, italic=True, color=SLATE, line_spacing=1.30)
+    cy = div_y + 0.30
+    for icon, label, value in contacts:
+        badge = filled_rect(s, 0.55, cy, 0.5, 0.5, WHITE, stroke=LIGHT, stroke_pt=1.2,
+                            radius=True, radius_adj=0.5)
+        add_image(s, ASSETS / "icons" / icon, x=0.55 + 0.11, y=cy + 0.11, w=0.28, h=0.28)
+        text_box(s, x=1.20, y=cy - 0.02, w=strip_w - 1.35, h=0.28,
+                 text=label, size=11, bold=True, color=TEAL)
+        text_box(s, x=1.20, y=cy + 0.24, w=strip_w - 1.35, h=0.30,
+                 text=value, size=11.5, color=DEEP)
+        cy += 0.72
+    # ---- Right area ----
+    rx = strip_w + 0.45
+    rw = SLIDE_W_IN - rx - 0.55
+    slide_title(s, "Кто я и почему мне это важно.", size=26, x=rx, w=rw, y=0.45, h=0.85)
+    text_box(s, x=rx, y=1.30, w=rw, h=0.65,
+             text="Архитектор, технический и продуктовый лидер создания\nи внедрения информационных систем",
+             size=15, bold=True, color=MID, line_spacing=1.20)
+    # Card tier 1: experience stat + expertise (2 cards side by side)
+    card_y1 = 2.35
+    card_h1 = 2.15
+    gap = 0.25
+    card_w1 = (rw - gap) / 2
+    # Card A — experience numbers
+    ocean_box(s, rx, card_y1, card_w1, card_h1)
+    add_image(s, ASSETS / "icons" / "lucide-briefcase-blue.png",
+              x=rx + 0.30, y=card_y1 + 0.32, w=0.55, h=0.55)
+    text_runs(s, x=rx + 0.30, y=card_y1 + 1.02, w=card_w1 - 0.6, h=0.40,
+              runs=[
+                  {"text": "20+", "size": 16, "bold": True, "color": GOLD},
+                  {"text": " лет опыта в ИТ", "size": 16, "bold": True, "color": DEEP},
+              ])
+    text_box(s, x=rx + 0.30, y=card_y1 + 1.48, w=card_w1 - 0.6, h=0.55,
+             text="10+ завершённых проектов\nпод руководством", size=11.5, italic=True, color=SLATE, line_spacing=1.25)
+    # Card B — expertise
+    bx = rx + card_w1 + gap
+    ocean_box(s, bx, card_y1, card_w1, card_h1)
+    add_image(s, ASSETS / "icons" / "lucide-layers-blue.png",
+              x=bx + 0.30, y=card_y1 + 0.32, w=0.55, h=0.55)
+    text_box(s, x=bx + 0.30, y=card_y1 + 1.02, w=card_w1 - 0.6, h=0.35,
+             text="Экспертиза", size=16, bold=True, color=DEEP)
+    text_box(s, x=bx + 0.30, y=card_y1 + 1.42, w=card_w1 - 0.6, h=0.65,
+             text="Системный анализ · Проектирование систем · Управление данными · Автоматизация бизнеса · Управление продуктами",
+             size=10, italic=True, color=SLATE, line_spacing=1.25)
+    # Card tier 2: company badges (wide card, generic icons, no logos)
+    card_y2 = card_y1 + card_h1 + 0.30
+    card_h2 = 1.55
+    ocean_box(s, rx, card_y2, rw, card_h2)
+    text_box(s, x=rx + 0.30, y=card_y2 + 0.22, w=rw - 0.6, h=0.35,
+             text="Консалтинг и inhouse", size=16, bold=True, color=DEEP)
+    companies = ["Yandex", "МТС", "Магнит", "Сибур"]
+    pill_h = 0.62
+    pill_gap = 0.20
+    pill_w = (rw - 0.6 - 3 * pill_gap) / 4
+    for i, comp in enumerate(companies):
+        px = rx + 0.30 + i * (pill_w + pill_gap)
+        py = card_y2 + 0.78
+        filled_rect(s, px, py, pill_w, pill_h, TEAL_TINT, stroke=TEAL, stroke_pt=1.2,
+                   radius=True, radius_adj=0.5)
+        add_image(s, ASSETS / "icons" / "lucide-building-2-blue.png",
+                  x=px + 0.14, y=py + pill_h/2 - 0.16, w=0.32, h=0.32)
+        text_box(s, x=px + 0.52, y=py, w=pill_w - 0.60, h=pill_h,
+                 text=comp, size=12.5, bold=True, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s05a"))
 
 
@@ -2131,70 +2194,85 @@ def build_s23(p):
     issue #153 fix #15: bridge label added connecting from the section-4
     divider framing («Границы AI — ваша зона ответственности») to this
     slide's concrete topic (data destination).
+
+    issue #155 fix #194: full visual overhaul — owner flagged the slide as
+    "внезапно и неаккуратно". Fixes: (1) "ENTERPRISE / API" heading
+    russified to match left column's russified heading, (2) single outer
+    Ocean rounded box now wraps the whole composition (2 columns + bottom
+    strip) instead of 4 disjoint floating islands, matching the s08/s12
+    single-container pattern, (3) clearer top-to-bottom hierarchy:
+    bridge-label -> title -> outer frame -> 2 columns -> bottom strip.
     """
     s = blank(p)
-    slide_title(s, "Потребительские vs корпоративные тарифы — куда уходят ваши данные.", size=21, y=0.40, h=1.05)
-    text_box(s, x=0.55, y=1.55, w=12.25, h=0.35,
+    slide_title(s, "Потребительские vs корпоративные тарифы — куда уходят ваши данные.", size=21, y=0.35, h=1.00)
+    text_box(s, x=0.55, y=1.40, w=12.25, h=0.32,
              text="От общей зоны ответственности — к первому конкретному риску: данные.",
              size=13, italic=True, color=TEAL, align=PP_ALIGN.LEFT)
-    # Two columns
-    col_y, col_h = 2.30, 3.35
-    col_w = 6.05
+    # Single outer container wrapping the whole composition (fix #194)
+    outer_x, outer_y = 0.55, 1.85
+    outer_w, outer_h = SLIDE_W_IN - 2 * 0.55, 5.30
+    ocean_box(s, outer_x, outer_y, outer_w, outer_h, fill=WHITE, stroke=LIGHT, stroke_pt=1.5)
+    pad = 0.25
+    # Two columns (inside outer container)
+    col_y, col_h = outer_y + pad, 3.30
+    col_w = (outer_w - 2 * pad - 0.30) / 2
     # Left consumer
-    cx_ = 0.55
+    cx_ = outer_x + pad
     ocean_box(s, cx_, col_y, col_w, col_h, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, x=cx_ + 0.25, y=col_y + 0.20, w=col_w - 0.5, h=0.45,
+    text_box(s, x=cx_ + 0.25, y=col_y + 0.18, w=col_w - 0.5, h=0.40,
              text="ПОТРЕБИТЕЛЬСКИЕ ТАРИФЫ",
              size=14, bold=True, color=GOLD)
-    text_box(s, x=cx_ + 0.25, y=col_y + 0.65, w=col_w - 0.5, h=0.5,
+    text_box(s, x=cx_ + 0.25, y=col_y + 0.60, w=col_w - 0.5, h=0.45,
              text="данные → обучение по умолчанию",
              size=15, bold=True, color=DEEP, line_spacing=1.20)
     bullets_l = [
-        "ChatGPT Free / Plus — обучение по умолчанию",
-        "Anthropic Claude (с сент. 2025) — по согласию, 5 лет хранение",
-        "Gemini Free — обучение + проверка людьми, 3 года",
-        "YandexGPT Free — стандартная политика",
+        "ChatGPT Free / Plus — обучение\nпо умолчанию",
+        "Anthropic Claude (с сент. 2025) —\nпо согласию, 5 лет хранение",
+        "Gemini Free — обучение +\nпроверка людьми, 3 года",
+        "YandexGPT Free — стандартная\nполитика",
     ]
     for i, b in enumerate(bullets_l):
-        text_box(s, x=cx_ + 0.30, y=col_y + 1.4 + i * 0.45, w=col_w - 0.6, h=0.40,
-                 text=f"•  {b}", size=11, color=DEEP)
-    # Right enterprise
+        text_box(s, x=cx_ + 0.30, y=col_y + 1.20 + i * 0.50, w=col_w - 0.6, h=0.50,
+                 text=f"•  {b}", size=11, color=DEEP, line_spacing=1.12)
+    # Right enterprise — heading russified (fix #194)
     ex_ = cx_ + col_w + 0.30
     ocean_box(s, ex_, col_y, col_w, col_h, fill=TEAL_TINT, stroke=TEAL)
-    text_box(s, x=ex_ + 0.25, y=col_y + 0.20, w=col_w - 0.5, h=0.45,
-             text="ENTERPRISE / API",
+    text_box(s, x=ex_ + 0.25, y=col_y + 0.18, w=col_w - 0.5, h=0.40,
+             text="КОРПОРАТИВНЫЕ ТАРИФЫ / API",
              size=14, bold=True, color=TEAL)
-    text_box(s, x=ex_ + 0.25, y=col_y + 0.65, w=col_w - 0.5, h=0.5,
+    text_box(s, x=ex_ + 0.25, y=col_y + 0.60, w=col_w - 0.5, h=0.45,
              text="данные ≠ обучение",
              size=15, bold=True, color=DEEP, line_spacing=1.20)
     bullets_r = [
-        "ChatGPT Enterprise / Business — без обучения на данных",
-        "OpenAI API (с марта 2023) — без обучения на данных",
-        "Anthropic for Business — нулевое хранение данных доступно",
-        "Google Workspace / Vertex AI — без обучения на данных",
+        "ChatGPT Enterprise / Business —\nбез обучения на данных",
+        "OpenAI API (с марта 2023) —\nбез обучения на данных",
+        "Anthropic for Business —\nнулевое хранение данных доступно",
+        "Google Workspace / Vertex AI —\nбез обучения на данных",
     ]
     for i, b in enumerate(bullets_r):
-        text_box(s, x=ex_ + 0.30, y=col_y + 1.4 + i * 0.45, w=col_w - 0.6, h=0.40,
-                 text=f"•  {b}", size=11, color=DEEP)
-    # Bottom: Samsung anchor + EU fines
+        text_box(s, x=ex_ + 0.30, y=col_y + 1.20 + i * 0.50, w=col_w - 0.6, h=0.50,
+                 text=f"•  {b}", size=11, color=DEEP, line_spacing=1.12)
+    # Bottom strip (inside outer container): Samsung anchor + EU fines
     bot_y = col_y + col_h + 0.20
-    s_x, s_w = 0.55, 7.5
-    ocean_box(s, s_x, bot_y, s_w, 1.30, fill=WHITE, stroke=GOLD, stroke_pt=2.0)
-    text_box(s, x=s_x + 0.20, y=bot_y + 0.10, w=s_w - 0.4, h=0.4,
+    bot_h = outer_y + outer_h - pad - bot_y
+    s_w = (outer_w - 2 * pad) * 0.62
+    s_x = outer_x + pad
+    filled_rect(s, s_x, bot_y, s_w, bot_h, GOLD_TINT, stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.12)
+    text_box(s, x=s_x + 0.20, y=bot_y + 0.10, w=s_w - 0.4, h=0.35,
              text="Samsung 2023 — канонический инцидент", size=13, bold=True, color=GOLD)
-    text_box(s, x=s_x + 0.20, y=bot_y + 0.55, w=s_w - 0.4, h=0.7,
+    text_box(s, x=s_x + 0.20, y=bot_y + 0.48, w=s_w - 0.4, h=bot_h - 0.55,
              text="3 эпизода за месяц (март–апрель): код, транскрипт совещания, тестовые последовательности → попали в датасет OpenAI. Самсунг ввёл запрет внешнего GenAI.",
-             size=11, color=DEEP, line_spacing=1.30)
+             size=11, color=DEEP, line_spacing=1.28)
     # EU AI Act
-    eu_x = s_x + s_w + 0.30
-    eu_w = SLIDE_W_IN - eu_x - 0.55
-    filled_rect(s, eu_x, bot_y, eu_w, 1.30, MID, radius=True, radius_adj=0.10)
-    text_box(s, x=eu_x + 0.20, y=bot_y + 0.10, w=eu_w - 0.4, h=0.4,
+    eu_x = s_x + s_w + 0.25
+    eu_w = outer_x + outer_w - pad - eu_x
+    filled_rect(s, eu_x, bot_y, eu_w, bot_h, MID, radius=True, radius_adj=0.12)
+    text_box(s, x=eu_x + 0.20, y=bot_y + 0.10, w=eu_w - 0.4, h=0.35,
              text="EU AI Act — штрафы", size=13, bold=True, color=WHITE)
-    text_box(s, x=eu_x + 0.20, y=bot_y + 0.55, w=eu_w - 0.4, h=0.35,
+    text_box(s, x=eu_x + 0.20, y=bot_y + 0.48, w=eu_w - 0.4, h=0.33,
              text="до 15M € / 3% оборота", size=12, color=WHITE, bold=True)
-    text_box(s, x=eu_x + 0.20, y=bot_y + 0.90, w=eu_w - 0.4, h=0.35,
-             text="до 35M € / 7% — за запрещённые практики", size=11, color=GOLD, bold=True)
+    text_box(s, x=eu_x + 0.20, y=bot_y + 0.82, w=eu_w - 0.4, h=bot_h - 0.90,
+             text="до 35M € / 7% — за запрещённые практики", size=11, color=GOLD, bold=True, line_spacing=1.15)
     speaker_notes(s, load_notes("s23"))
 
 

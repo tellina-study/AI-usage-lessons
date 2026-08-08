@@ -1609,9 +1609,14 @@ def build_s18(p):
     slide_title(s, "Агент = чат + оркестратор + внешняя память + инструменты.", size=26, y=0.85)
 
     # ─── USER actor (left) ───
+    # issue #155 QA fix #189: USER cluster was vertically offset below the
+    # pipeline row (center 4.10" vs pipeline center 3.225") — raised so the
+    # USER circle's vertical center matches the pipeline stage row center.
     user_d = 1.1
     user_x = 0.75
-    user_y = 3.55
+    stage_y_ref = 2.55
+    stage_h_ref = 1.35
+    user_y = stage_y_ref + stage_h_ref / 2 - user_d / 2
     ucirc = s.shapes.add_shape(MSO_SHAPE.OVAL,
                                Inches(user_x), Inches(user_y),
                                Inches(user_d), Inches(user_d))
@@ -1671,17 +1676,40 @@ def build_s18(p):
     a1.line.fill.background()
     disable_shadow(a1)
 
-    # Reflect → USER (stop, result back) — curved via a drop-down + left arrow
+    # Reflect → USER (stop, result back) — L-shaped route: horizontal run
+    # BELOW the pipeline boxes (unchanged height, so it doesn't cut across
+    # the box labels), then a short vertical riser up to USER's own raised
+    # center, landing an UP arrowhead right on USER's bottom edge.
+    # issue #155 QA fix #191: original version's horizontal run stayed at the
+    # old fixed height tied to the pipeline bottom, which (after #189 raised
+    # USER higher) ended below the USER circle with a visible gap. A version
+    # that instead ran the whole horizontal segment at USER's new center cut
+    # straight through the pipeline box labels — also wrong. This L-route
+    # keeps the horizontal leg below the boxes (clear of their text) and only
+    # rises next to USER, where there is nothing else to collide with.
     stop_y = stage_y + stage_h + 0.55
+    user_right_edge = user_x + user_d
+    user_bottom = user_y + user_d
     filled_rect(s, end_x - 0.03, stage_y + stage_h, 0.06, stop_y - (stage_y + stage_h), TEAL)
     stop_arrow = s.shapes.add_shape(MSO_SHAPE.LEFT_ARROW,
-                                    Inches(user_x + user_d/2), Inches(stop_y - 0.10),
-                                    Inches(end_x - (user_x + user_d/2) - 0.03), Inches(0.20))
+                                    Inches(user_right_edge + 0.15), Inches(stop_y - 0.10),
+                                    Inches(end_x - (user_right_edge + 0.15) - 0.03), Inches(0.20))
     stop_arrow.fill.solid(); stop_arrow.fill.fore_color.rgb = TEAL
     stop_arrow.line.fill.background()
     disable_shadow(stop_arrow)
+    # Vertical riser from the horizontal run up to USER's bottom edge.
+    riser_x = user_right_edge + 0.15
+    riser_up = s.shapes.add_shape(MSO_SHAPE.UP_ARROW,
+                                  Inches(riser_x - 0.10), Inches(user_bottom),
+                                  Inches(0.20), Inches(stop_y - user_bottom))
+    riser_up.fill.solid(); riser_up.fill.fore_color.rgb = TEAL
+    riser_up.line.fill.background()
+    disable_shadow(riser_up)
     # issue #153 QA fix #1 (Russification): "stop" → "стоп".
-    text_box(s, x=user_x + user_d + 0.1, y=stop_y - 0.42, w=total_w - 0.2, h=0.28,
+    # issue #155 QA fix #191 follow-up: label x-start nudged right of the new
+    # riser arrow (riser occupies ~riser_x-0.10 .. riser_x+0.10) — previously
+    # it started underneath the riser and had its first letter clipped.
+    text_box(s, x=riser_x + 0.25, y=stop_y - 0.42, w=total_w - (riser_x + 0.25 - user_x), h=0.28,
              text="стоп → результат пользователю", size=10.5, italic=True, color=TEAL,
              align=PP_ALIGN.LEFT)
 
@@ -1691,7 +1719,10 @@ def build_s18(p):
     loop_x1 = end_x - stage_w / 2
     filled_rect(s, loop_x0, loop_y, loop_x1 - loop_x0, 0.06, GOLD)
     filled_rect(s, loop_x0, loop_y, 0.06, stage_y - loop_y, GOLD)
-    left_arrow = s.shapes.add_shape(MSO_SHAPE.DOWN_ARROW,
+    # issue #155 QA fix #190: flow is Reflect → (up into) loop-back bar → Plan,
+    # so the vertical connector arrowhead must point UP (out of Рефлексия into
+    # the bar), not DOWN (which read as the bar feeding INTO Рефлексия).
+    left_arrow = s.shapes.add_shape(MSO_SHAPE.UP_ARROW,
                                     Inches(loop_x1 - 0.10), Inches(loop_y - 0.02),
                                     Inches(0.20), Inches(0.10 + (stage_y - loop_y)))
     left_arrow.fill.solid(); left_arrow.fill.fore_color.rgb = GOLD
@@ -1838,12 +1869,15 @@ def build_s19a(p):
     # issue #153 QA fix #1 (Russification, presentation-critic P1): level names
     # were bare English terms — Russian primary label + English gloss in
     # parens at first appearance, matching the s25 "Смещение (bias)" pattern.
+    # issue #155 QA fix #192: role descriptions rewritten as explicit
+    # "Пользователь: ..." statements so each card reads directly as "what the
+    # user does at this level", not an abstract process description.
     levels = [
-        ("1. Оператор (Operator)",     "пользователь на каждом шаге",  "Claude Code «approve each»", LIGHT),
-        ("2. Соавтор (Collaborator)",  "пара, ролями перетекая",        "Cursor парное программирование", LIGHT),
-        ("3. Консультант (Consultant)","цель + план + правки",          "Devin фиксит баг по тикету", MID),
-        ("4. Утверждающий (Approver)", "агент действует, gate на узлах", "агент собирает PR, ждёт review", MID),
-        ("5. Наблюдатель (Observer)",  "полная автономия",              "AutoGPT на ночь", GOLD),
+        ("1. Оператор (Operator)",     "Пользователь: одобряет каждое действие",  "Claude Code «approve each»", LIGHT),
+        ("2. Соавтор (Collaborator)",  "Пользователь: работает наравне с агентом", "Cursor парное программирование", LIGHT),
+        ("3. Консультант (Consultant)","Пользователь: ставит цель, правит план",  "Devin фиксит баг по тикету", MID),
+        ("4. Утверждающий (Approver)", "Пользователь: утверждает на контрольных точках", "агент собирает PR, ждёт review", MID),
+        ("5. Наблюдатель (Observer)",  "Пользователь: только получает результат", "AutoGPT на ночь", GOLD),
     ]
     rh = 0.78
     rt = ly + 0.80
@@ -1873,10 +1907,15 @@ def build_s19a(p):
     # were bare English terms — Russian primary label + English gloss in
     # parens (matches s25 pattern). "Override" kept in parens as a concept
     # word, not left bare per brief.
+    # issue #155 QA fix #193: order reversed (was in→on→out→Override, low
+    # autonomy first) so rows line up with the left ladder, which has HIGH
+    # autonomy (5. Наблюдатель) at the top: out-of-the-loop (≈ур.5) now top,
+    # then on-the-loop (≈ур.3-4), then in-the-loop (≈ур.1-2); Override stays
+    # last since it applies to any level, not a fixed ladder position.
     framings = [
-        ("Человек в цикле (Human-in-the-loop)",       "Человек одобряет каждый шаг (≈ ур. 1-2).",            LIGHT),
-        ("Человек над циклом (Human-on-the-loop)",    "Человек наблюдает, прерывает при отклонениях (≈ ур. 3-4).", MID),
         ("Человек вне цикла (Human-out-of-the-loop)", "Человек только смотрит итог (≈ ур. 5).",              GOLD),
+        ("Человек над циклом (Human-on-the-loop)",    "Человек наблюдает, прерывает при отклонениях (≈ ур. 3-4).", MID),
+        ("Человек в цикле (Human-in-the-loop)",       "Человек одобряет каждый шаг (≈ ур. 1-2).",            LIGHT),
         ("Режимы ручного перехвата (Override)",       "Любой уровень — с ручным перехватом по тревоге.",     TEAL),
     ]
     fy_top = ry_ + 0.75

@@ -783,34 +783,70 @@ def build_s06a(p):
 
     McCulloch-Pitts 1943 vs Dartmouth 1956 — 13-year gap. Short, compact,
     single fact anchor between s06 (definitions) and s07 (70-year timeline).
+
+    issue #155 comment #175: added a real photo sidebar on the right —
+    Walter Pitts with Jerome Lettvin (1959 frog-experiment photo, Wikimedia
+    Commons, CC BY-SA 3.0). Owner-approved substitute after the originally
+    requested "McCulloch+Pitts 1943 joint photo" URL turned out to be a
+    mislabeled 1963 Nobel Prize cover with unrelated scientists — no
+    clean-license solo portrait of either man exists. This is a GROUP photo
+    from 1959, NOT 1943, so the caption explicitly disclaims the year
+    mismatch (see slide .md Visual section + iteration-log-issue155.md
+    "s06a photo insert" for the full acquisition trail).
+
+    Layout change to make room: the two year-anchor boxes shrank from
+    3.7"→2.95" wide and moved into the left ~65% of the canvas (freeing a
+    ~3.3" right-hand column for the photo). The gold callout + closing
+    takeaway line stay full-width at the bottom, unchanged in content.
     """
     s = blank(p)
-    slide_title(s, "Идея нейросети старше самого термина «искусственный интеллект» на 13 лет.", size=24)
-    # Two year anchors with a gold bridge between them
-    anchor_y = 2.5
-    anchor_w = 3.7
+    slide_title(s, "Идея нейросети старше самого термина «искусственный интеллект» на 13 лет.", size=23,
+                w=12.3)
+    # ---- Right sidebar: real 1959 photo (Pitts + Lettvin) with caption ----
+    # Source jpg pre-cropped (see notes/mcp-limitations.md-adjacent acquisition
+    # log) to trim excess dark background top/bottom: 490x569 px, ratio 0.861.
+    photo_h = 2.30
+    photo_w = photo_h * (490 / 569)
+    photo_x = SLIDE_W_IN - 0.55 - photo_w
+    photo_y = 2.35
+    add_image(s, ROOT / "assets/images/lettvin-pitts-1959-crop.jpg",
+              x=photo_x, y=photo_y, w=photo_w, h=photo_h)
+    frame = filled_rect(s, photo_x, photo_y, photo_w, photo_h, WHITE, stroke=LIGHT, stroke_pt=1.5)
+    frame.fill.background()
+    text_box(s, x=photo_x - 0.15, y=photo_y + photo_h + 0.07, w=photo_w + 0.30, h=0.65,
+             text="Питтс (справа) и Леттвин, 1959 — опыт с лягушкой в MIT "
+                  "(это НЕ фото 1943 г.). Wikimedia Commons, CC BY-SA 3.0.",
+             size=7.8, italic=True, color=SLATE, align=PP_ALIGN.LEFT, line_spacing=1.1)
+    # ---- Left: two year anchors with a gold bridge between them ----
+    # anchor_w solved so [left_x .. right anchor's right edge] ends exactly
+    # gap_to_photo (0.65") before the photo's left edge — no leftover dead
+    # whitespace between the two visual groups.
+    anchor_y = 2.35
     anchor_h = 2.35
-    left_x = 1.1
-    right_x = SLIDE_W_IN - 1.1 - anchor_w
+    left_x = 0.55
+    gap_w = 1.3
+    gap_to_photo = 0.55
+    anchor_w = ((photo_x - gap_to_photo) - left_x - gap_w) / 2
+    right_x = left_x + anchor_w + gap_w
     ocean_box(s, left_x, anchor_y, anchor_w, anchor_h, stroke=LIGHT)
     text_box(s, x=left_x, y=anchor_y + 0.28, w=anchor_w, h=0.9, text="1943",
-             size=52, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    text_box(s, x=left_x + 0.30, y=anchor_y + 1.30, w=anchor_w - 0.6, h=0.90,
+             size=46, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    text_box(s, x=left_x + 0.24, y=anchor_y + 1.28, w=anchor_w - 0.48, h=0.95,
              text="Мак-Каллок и Питтс:\nформальный нейрон\nкак логический элемент",
-             size=12, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
+             size=11.5, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.22)
     ocean_box(s, right_x, anchor_y, anchor_w, anchor_h, stroke=MID)
     text_box(s, x=right_x, y=anchor_y + 0.28, w=anchor_w, h=0.9, text="1956",
-             size=52, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    text_box(s, x=right_x + 0.30, y=anchor_y + 1.30, w=anchor_w - 0.6, h=0.90,
+             size=46, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(s, x=right_x + 0.24, y=anchor_y + 1.28, w=anchor_w - 0.48, h=0.95,
              text="Дартмутская конференция:\nтермин «artificial intelligence»",
-             size=12, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
+             size=11.5, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.22)
     # Gold bridge arrow + "13 лет" label between the two anchors
     bridge_x = left_x + anchor_w + 0.15
     bridge_w = right_x - bridge_x - 0.15
     bridge_y = anchor_y + 0.55
     filled_rect(s, bridge_x, bridge_y, bridge_w, 0.20, GOLD, radius=True, radius_adj=0.5)
-    text_box(s, x=bridge_x, y=anchor_y - 0.05, w=bridge_w, h=0.5,
-             text="13 лет", size=28, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+    text_box(s, x=bridge_x - 0.25, y=anchor_y - 0.05, w=bridge_w + 0.5, h=0.5,
+             text="13 лет", size=20, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     gold_callout(s, 0.55, 5.30, 12.25, 0.95,
                  "Формальный нейрон не решал прикладных задач, но предвосхитил коннекционистскую традицию — линию мысли, из которой десятилетия спустя вырастут нейросети и Трансформер.",
                  size=13)

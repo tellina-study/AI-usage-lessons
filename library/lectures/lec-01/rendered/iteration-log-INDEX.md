@@ -19,6 +19,7 @@ Index of per-version visual-loop iteration logs для Лекции 1. Each log 
 | `iteration-log-v32.md` | 2026-05-13 | **Phase 12.6** v3.2 — 19 user-driven fixes batch | `build_lec01.py` (renamed from `build_lec01_v31.py` post-cleanup) | Final v3.2 — 14 visual-loop iters, all 19 fixes applied |
 | `iteration-log-issue153.md` | 2026-08-07 | **issue #153** Round 1 polish — 9 fixes (P0/P1/P2) | `build_lec01.py` | GATE C approved, issue #153 closed |
 | `iteration-log-issue155.md` | 2026-08-07/08 | **issue #155** Round 2 polish, Batch 3 of 4 — s18 architecture schema (#189/#190/#191) + s19a autonomy levels (#192/#193) | `build_lec01.py` | 5/5 comment fixes applied, verified |
+| `iteration-log-issue155-comment175.md` | 2026-08-08 | **issue #155** comment #175 point-fix — s06a real photo insert (Pitts+Lettvin, 1959, Wikimedia CC BY-SA 3.0), unblocks the "on pause, awaiting owner-supplied source" item from `iteration-log-issue155.md` | `build_lec01.py` | Photo + caption added, 3-iter visual loop, ACCEPT |
 
 **Final approved deck:** v3.2 baseline, superseded by ongoing issue #153/#155 polish rounds → see latest `iteration-log-issueNNN.md`.
 

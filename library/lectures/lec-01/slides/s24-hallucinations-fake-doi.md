@@ -2,7 +2,7 @@
 id: s24
 type: case_study
 duration_min: 3
-assertion: "Галлюцинации: AI уверенно генерирует несуществующие DOI"
+assertion: "Галлюцинации — неотъемлемое свойство AI"
 learning_goal: "Готовый пример галлюцинаций + retrieval упражнение"
 learning_outcomes: [LO6]
 references: [huang-2023-hallucination, ji-2023-hallucination, vectara-hhem-2025, cybsafe-2024-oh-behave]
@@ -12,11 +12,11 @@ visual:
 retrieval_moment: "s24+ think-pair-share «найдите подделку»"
 ---
 
-# Галлюцинации: AI уверенно генерирует несуществующие DOI
+# Галлюцинации — неотъемлемое свойство AI
 
 ## Assertion
 
-Галлюцинации: AI уверенно генерирует несуществующие DOI.
+Галлюцинации — неотъемлемое свойство AI.
 
 ## Visual
 

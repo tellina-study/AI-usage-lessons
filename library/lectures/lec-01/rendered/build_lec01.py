@@ -28,7 +28,15 @@ v3.1 changes vs v3 (4-critic synthesis 2026-05-13):
 v3 baseline (preserved): Ocean Gradient palette, Ocean rounded box motif on every content
 slide, Gold ≥1×/slide, footer-tax = 0, all notes are readable text 150-300 words.
 
-Canvas: 13.333" × 7.5" (16:9). Pacing: 62.5 active + 12.5 buffer = 75 min.
+v3.3 (issue #153, 21-fix polish): 34 slides — see deck.yaml v3_3_changes for detail.
+
+v3.4 (issue #155 batch 1, 10-fix polish + section-divider audit): 36 slides —
+added s05c (section 1 divider) + s07a (section 2 divider), both reusing the
+existing nav_slide() unified template (same as s10/s22/s27). See deck.yaml
+v3_4_changes for full fix-by-fix mapping. chapter.md/speech.md NOT yet synced
+(deferred until all 4 issue #155 batches land).
+
+Canvas: 13.333" × 7.5" (16:9). Pacing (v3.4): 61.5 active + 13.5 buffer = 75 min.
 """
 import re
 from pathlib import Path
@@ -286,7 +294,7 @@ def roadmap_bar(slide, here_idx):
     cell_w = (total_w - gap * (n_cells - 1)) / n_cells
     start_x = 0.55
     labels = [
-        "0  Открытие",
+        "0  Введение",
         "1  AI",
         "2  Сейчас",
         "3  Способы",
@@ -325,7 +333,7 @@ NAV_SECTIONS = [
     # issue #153 consistency fix: «и опросы» / «задание» removed — poll
     # moved to seminar 1 (fix #1) and homework callout removed from s28
     # (fix #18); these labels would otherwise contradict those removals.
-    ("0", "Открытие",                   "Демо · инструктор ·\nцентральный вопрос"),
+    ("0", "Введение",                   "Демо · инструктор ·\nцентральный вопрос"),
     ("1", "Что такое AI",               "Определения,\nистория, перелом"),
     ("2", "Где мы\nсейчас",             "Цифры рынка\n2022–2026"),
     ("3", "Четыре способа\nреализации", "Модель · чат ·\nагент · приложение"),
@@ -535,8 +543,8 @@ def build_s02(p):
     text_box(s, x=0.7, y=1.0, w=6.5, h=0.55, text="ЛЕКЦИЯ",
              size=18, bold=True, color=TEAL, align=PP_ALIGN.LEFT)
     filled_rect(s, 0.72, 1.55, 0.7, 0.05, fill=TEAL)
-    text_box(s, x=0.7, y=2.0, w=8.5, h=2.4, text="Введение —\nAI вокруг нас",
-             size=60, bold=True, color=DEEP, line_spacing=1.05, align=PP_ALIGN.LEFT)
+    text_box(s, x=0.7, y=2.0, w=8.5, h=2.4, text="Что такое AI?\nИстория, классификация,\nобщие понятия",
+             size=42, bold=True, color=DEEP, line_spacing=1.10, align=PP_ALIGN.LEFT)
     filled_rect(s, 0.7, 5.45, 0.05, 0.55, fill=TEAL)
     text_box(s, x=0.95, y=5.45, w=8.0, h=0.6,
              text="Карта применений AI: где работает, где — нет.",
@@ -556,9 +564,9 @@ def build_s02a(p):
     section 3 stays the biggest zone (widest block) reflecting its size.
     """
     s = blank(p)
-    slide_title(s, "Карта лекции — 5 разделов", size=28, align=PP_ALIGN.CENTER)
+    slide_title(s, "План лекции", size=28, align=PP_ALIGN.CENTER)
     sections = [
-        ("0", "Открытие", "Демо · инструктор ·\nцентральный вопрос", TEAL, 1.0, True),
+        ("0", "Введение", "Демо · инструктор ·\nцентральный вопрос", TEAL, 1.0, True),
         ("1", "Что такое AI", "Определения,\nистория, перелом", LIGHT, 1.0, False),
         ("2", "Где мы сейчас", "Цифры рынка\n2022–2026", MID, 1.0, False),
         ("3", "4 способа реализации", "Модель · чат ·\nагент · приложение", DEEP, 1.6, False),
@@ -621,6 +629,21 @@ def build_s05a(p):
         text_box(s, x=card_x + 1.2, y=y + 0.75, w=card_w - 1.4, h=0.55,
                  text=body, size=13, italic=True, color=SLATE, line_spacing=1.30)
     speaker_notes(s, load_notes("s05a"))
+
+
+def build_s05c(p):
+    """Section 1 divider — issue #155 fix #177 (section-divider audit).
+
+    Zoom-in state of the unified nav template (same pattern as s10/s22/s27):
+    6-card grid, card 1 gold-FILLED with white text. Added because the
+    divider audit found NO divider before раздел 1 «Что такое AI» (lecture
+    jumped straight from s05a instructor card into s06 content).
+    """
+    s = blank(p)
+    nav_slide(s, here_idx=1,
+              title="Раздел 1 · Что такое AI",
+              frame_phrase="Определения, история, классификация.")
+    speaker_notes(s, load_notes("s05c"))
 
 
 def build_s06(p):
@@ -792,6 +815,21 @@ def build_s07(p):
                  "На май 2026 у статьи свыше 160 000 цитирований.",
                  size=13)
     speaker_notes(s, load_notes("s07"))
+
+
+def build_s07a(p):
+    """Section 2 divider — issue #155 fix #177 (section-divider audit).
+
+    Zoom-in state of the unified nav template (same pattern as s10/s22/s27):
+    6-card grid, card 2 gold-FILLED with white text. Added because the
+    divider audit found NO divider before раздел 2 «Где мы сейчас» (lecture
+    jumped straight from s07 timeline into s08 scale-numbers content).
+    """
+    s = blank(p)
+    nav_slide(s, here_idx=2,
+              title="Раздел 2 · Где мы сейчас",
+              frame_phrase="AI как инфраструктура, прорывы 2023–2026.")
+    speaker_notes(s, load_notes("s07a"))
 
 
 def build_s08(p):
@@ -2129,7 +2167,7 @@ def build_s23(p):
 def build_s24(p):
     """Hallucinations — fake DOI prompt + Vectara HHEM range + AI knows all."""
     s = blank(p)
-    slide_title(s, "Галлюцинации: AI уверенно генерирует несуществующие DOI.", size=26)
+    slide_title(s, "Галлюцинации — неотъемлемое свойство AI.", size=28)
     # Left: prompt + 3 fake DOIs
     px, py, pw, ph = 0.55, 1.95, 7.5, 4.5
     ocean_box(s, px, py, pw, ph)
@@ -2291,10 +2329,8 @@ def build_s26(p):
                      bold=is_speaker, color=DEEP if is_speaker else SLATE,
                      anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.30)
             cur_x += w
-    # Bottom takeaway
-    gold_callout(s, tx, 6.75, tw, 0.50,
-                 "Ни один из 4 спикеров не занимает нейтрально-научной позиции.",
-                 size=12)
+    # issue #155 fix #196: closing callout removed — slide ends with the
+    # table, conclusion stays only in speaker notes.
     speaker_notes(s, load_notes("s26"))
 
 
@@ -2395,7 +2431,7 @@ def build_s29(p):
         # narrow column and got clipped/overlapped the row below — shortened
         # to fit the same 2-line budget as the other 3 modules' subheaders.
         ("Экзамен", "Итоговая\nаттестация", TEAL, [
-            ("Экз.", "Экзамен\n(30 часов,\nвкл. подготовку)", False),
+            ("Экз.", "Экзамен", False),
         ]),
     ]
     mod_y = 1.75
@@ -2440,7 +2476,10 @@ def build_s29a(p):
     """
     s = blank(p)
     set_slide_bg(s, SURFACE)
-    text_runs(s, 0.4, 2.75, 12.53, 1.0, [
+    # issue #155 fix #198: explicit slide title added — slide previously
+    # opened straight on the formula with no heading.
+    slide_title(s, "Оценка за семестр", size=28, align=PP_ALIGN.CENTER)
+    text_runs(s, 0.4, 3.15, 12.53, 1.0, [
         {"text": "100", "size": 52, "bold": True, "color": GOLD},
         {"text": "  =  10 ", "size": 30, "bold": True, "color": DEEP},
         {"text": "(посещаемость)", "size": 14, "italic": True, "color": SLATE},
@@ -2449,7 +2488,7 @@ def build_s29a(p):
         {"text": "  +  3×20 ", "size": 30, "bold": True, "color": DEEP},
         {"text": "(РК1/РК2/РК3)", "size": 14, "italic": True, "color": SLATE},
     ], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    text_box(s, x=0.8, y=4.15, w=11.7, h=0.6,
+    text_box(s, x=0.8, y=4.55, w=11.7, h=0.6,
              text="Рубежные контроли — по завершении каждого из первых трёх модулей.",
              size=16, italic=True, color=MID, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s29a"))
@@ -2508,10 +2547,9 @@ def build_s31(p):
              size=96, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
     text_box(s, x=0.55, y=5.4, w=12.25, h=0.7, text="Спасибо",
              size=36, color=MID, align=PP_ALIGN.CENTER, italic=True)
-    # Contact at bottom right
-    text_box(s, x=8.0, y=6.8, w=4.85, h=0.4,
-             text="контакты лектора — заполняется перед лекцией",
-             size=11, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
+    # issue #155 fix #199: contact placeholder removed entirely (was
+    # "контакты лектора — заполняется перед лекцией") — real contacts to
+    # be added in a separate point pass later, not left as a stub.
     speaker_notes(s, load_notes("s31"))
 
 
@@ -2529,11 +2567,20 @@ BUILDERS = [
     # issue #153 fix #2: build_s05b DELETED — content moved to build_s00b
     # (reworded role: hook before cover, not "course frame after instructor").
     build_s05a,
+    # issue #155 fix #177: build_s05c (section 1 divider) NEW, inserted
+    # between build_s05a and build_s06 — section-divider audit found no
+    # divider before раздел 1.
+    build_s05c,
     build_s06,
     # issue #153 fix #4: build_s06a (McCulloch-Pitts 1943 fact-bridge) NEW,
     # inserted between build_s06 and build_s07.
     build_s06a,
-    build_s07, build_s08, build_s09,
+    build_s07,
+    # issue #155 fix #177: build_s07a (section 2 divider) NEW, inserted
+    # between build_s07 and build_s08 — section-divider audit found no
+    # divider before раздел 2.
+    build_s07a,
+    build_s08, build_s09,
     build_s10, build_s11, build_s12, build_s13,
     # Fix-17 (2026-05-13): build_s14 (mini-divider «Разберём подробнее») deleted.
     # Reason: paraphrased s10 framing, used 4-type icons inconsistent with the

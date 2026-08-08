@@ -9,16 +9,16 @@
 
 deck:
   lecture_number: 1
-  title: "Введение — AI вокруг нас"
+  title: "Что такое AI? История, классификация, общие понятия"
   audience: "универсальная (без привязки к ИУ6)"
   duration_min: 75
   central_question: "Где AI работает, где — нет, и как это понять?"
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v3.3
-  source: chapter v3.3 (status=reviewed, ~17350 слов), issue #153 (21-fix polish)
-  plan: notes/lecture-1-review/final/new-plan-v5-final.md + qa-reports/2026-05-13-user-feedback-23/REQUIREMENTS.md + issue #153
+  version: v3.4
+  source: chapter v3.3 (status=reviewed, ~17350 слов), issue #153 (21-fix polish) + issue #155 batch 1 (10-fix polish, pending chapter/speech sync)
+  plan: notes/lecture-1-review/final/new-plan-v5-final.md + qa-reports/2026-05-13-user-feedback-23/REQUIREMENTS.md + issue #153 + issue #155
 
 slides:
   # ─── Раздел 0. Открытие и вовлечение (9.5 мин) ───
@@ -64,7 +64,7 @@ slides:
     file: slides/s02-cover.md
     type: cover
     duration_min: 0.5
-    assertion: "Введение — AI вокруг нас"
+    assertion: "Что такое AI? История, классификация, общие понятия"
     learning_goal: "Cover-слайд: визуально отличается от content slides"
     learning_outcomes: [LO1, LO4, LO6]
     references: []
@@ -76,7 +76,7 @@ slides:
     file: slides/s02a-lecture-map.md
     type: roadmap
     duration_min: 0.5
-    assertion: "Карта лекции — 5 разделов"
+    assertion: "План лекции"
     learning_goal: "Дать студенту общую карту: что будет, в каком порядке, к чему мы движемся"
     learning_outcomes: [LO1]
     references: []
@@ -96,7 +96,19 @@ slides:
       pattern: instructor_card
       primary: "Monogram-tile + 3 motif cards (briefcase / lightbulb / users)"
 
-  # ─── Раздел 1. Что такое AI (5.5 мин) ───
+  # ─── Раздел 1. Что такое AI (7 мин) ───
+  - id: s05c
+    file: slides/s05c-section1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 1 — Что такое AI"
+    learning_goal: "Visual divider — переход к определениям, истории и классификации AI"
+    learning_outcomes: [LO1]
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «Раздел 1» + title + 1-фраза-фрейм «Определения, история, классификация» + roadmap-bar внизу с gold-подсветкой текущей секции"
+
   - id: s06
     file: slides/s06-multiple-definitions.md
     type: assertion_visual
@@ -133,7 +145,19 @@ slides:
       pattern: horizontal_timeline_grouped
       primary: "Линейка 1950→2026 в 3 группах + gold-точка на 2017 + AI Effect callout"
 
-  # ─── Раздел 2. Где мы сейчас (6 мин) ───
+  # ─── Раздел 2. Где мы сейчас (6.5 мин) ───
+  - id: s07a
+    file: slides/s07a-section2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Раздел 2 — Где мы сейчас"
+    learning_goal: "Visual divider — переход к масштабу AI как инфраструктуры и прорывам 2023-2026"
+    learning_outcomes: [LO1]
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "Большое «Раздел 2» + title + 1-фраза-фрейм «AI как инфраструктура, прорывы 2023-2026» + roadmap-bar внизу с gold-подсветкой текущей секции"
+
   - id: s08
     file: slides/s08-scale-numbers.md
     type: data_chart
@@ -341,7 +365,7 @@ slides:
     file: slides/s24-hallucinations-fake-doi.md
     type: case_study
     duration_min: 3
-    assertion: "Галлюцинации: AI уверенно генерирует несуществующие DOI"
+    assertion: "Галлюцинации — неотъемлемое свойство AI"
     learning_goal: "Готовый пример галлюцинаций + retrieval упражнение «найдите подделку»"
     learning_outcomes: [LO6]
     references: [huang-2023-hallucination, ji-2023-hallucination, vectara-hhem-2025, cybsafe-2024-oh-behave]
@@ -462,13 +486,20 @@ pacing:
   #   net: 62.5 - 3.5 - 1.0 + 0.5 + 1.0 + 1.0 + 0.5 = 61.0 (recompute below
   #   differs slightly — s02a/s29 duration_min unchanged at 0.5/1.5 despite
   #   visual redesign; actual verified sum below)
+  #
+  # v3.4 (issue #155, batch 1) — section-divider audit (#177): 2 new dividers
+  # added (s05c before раздел 1, s07a before раздел 2), matching the existing
+  # section_divider_with_progress pattern (0.5 min each, same as s10/s22/s27).
+  #   +0.5  new s05c (section 1 divider — «Раздел 1. Что такое AI»)
+  #   +0.5  new s07a (section 2 divider — «Раздел 2. Где мы сейчас»)
+  #   net: 60.5 + 0.5 + 0.5 = 61.5
   total_min: 75
-  active_min: 60.5  # verified: sum of duration_min across all 34 slides in deck.yaml
-  buffer_min: 14.5
+  active_min: 61.5  # verified: sum of duration_min across all 36 slides in deck.yaml
+  buffer_min: 13.5
   by_section:
     section_0_open: 6.5      # s01+s00a+s00b+s02+s02a+s05a (was 9.5 — poll -3.5, +s00a+s00b +1.5, net -2 vs v3.2's section after removing s03/s04 poll which lived in section 0)
-    section_1_what_is_ai: 6.5   # s06+s06a+s07 (was 5.5 — new s06a +1.0)
-    section_2_where_we_are: 6
+    section_1_what_is_ai: 7.0   # s05c+s06+s06a+s07 (was 6.5 — new s05c divider +0.5)
+    section_2_where_we_are: 6.5  # s07a+s08+s09 (was 6 — new s07a divider +0.5)
     section_3_four_ways: 23.0
     section_4_boundaries: 12.0
     section_5_conclusion: 6.5  # s27+s28+s29+s29a+s30+s31 (was 6.5 — s28 -0.5 homework removed, s29a +0.5 new)
@@ -602,3 +633,38 @@ v3_3_changes:
   isolation_note: |
     catalog/manifests/lectures.yaml and library/normative/rpd-otraslevoe-primenenie-ai.md
     NOT touched — separate structure, tracked under issue #154 (out of scope here).
+
+# ─── v3.4 (issue #155, batch 1, 2026-08-08) — copy fixes + section-divider audit ───
+v3_4_changes:
+  description: |
+    Batch 1 of 4 for issue #155 (Round 2 polish, 31 owner comments on pptx).
+    This batch: text/copy fixes (10 comment ids) + structural audit-fix (#177
+    section-divider gap). Layout-positional fixes, schema fixes, and
+    s05a/s06a/s07/s23 deep redesigns are out of scope — later batches.
+    Slide count: 34 → 36 (added s05c + s07a section dividers).
+    chapter.md / speech.md NOT synced in this batch — deferred until all 4
+    batches land (per issue #155 order-of-work).
+  slide_count: 36
+  new_slides_v3_4:
+    - s05c-section1-divider.md  # section divider before раздел 1 «Что такое AI» (fix #177)
+    - s07a-section2-divider.md  # section divider before раздел 2 «Где мы сейчас» (fix #177)
+  fixes_applied:
+    fix169_s00a:  "Subtitle under welcome title changed to «Где и как AI работает лучше всего, а где пока нет» (was «17 лекций о том, где AI работает в индустриях — и где нет»)."
+    fix171_s02:   "Lecture title renamed «Введение — AI вокруг нас» → «Что такое AI? История, классификация, общие понятия» — updated in deck.yaml (deck.title + s02 assertion), s02-cover.md (frontmatter + H1 + Assertion), build_lec01.py build_s02 title text box (60pt→42pt to fit 3-line title in the same box)."
+    fix172_s02a:  "Section-0 label on lecture-map renamed «Открытие» → «Введение» — in s02a-lecture-map.md AND in build_lec01.py (both the s02a-specific `sections` list and the shared NAV_SECTIONS list used by s10/s22/s27, so the rename is consistent on every divider, not just s02a)."
+    fix173_s02a:  "Slide title simplified «Карта лекции — 5 разделов» → «План лекции» — deck.yaml assertion, s02a-lecture-map.md frontmatter+H1+Assertion, build_lec01.py slide_title() call."
+    fix177_dividers: "Section-divider audit across the whole deck: dividers existed only before разделы 3/4/5 (s10/s22/s27). Added 2 new dividers matching the exact section_divider_with_progress pattern (nav_slide() helper, unified 6-card roadmap 0..5, gold-filled current card): s05c before раздел 1 («Что такое AI» / «Определения, история, классификация»), s07a before раздел 2 («Где мы сейчас» / «AI как инфраструктура, прорывы 2023-2026»). All 5 dividers now share identical roadmap-bar rendering (NAV_SECTIONS, here_idx=1..5)."
+    fix195_s24:   "Title simplified «Галлюцинации: AI уверенно генерирует несуществующие DOI» → «Галлюцинации — неотъемлемое свойство AI» — deck.yaml, s24-hallucinations-fake-doi.md, build_lec01.py slide_title()."
+    fix196_s26:   "Closing gold-callout below the 4-speaker table removed («Ни один из 4 спикеров не занимает нейтрально-научной позиции») — table now stands alone; conclusion remains in speaker notes only. build_lec01.py build_s26() gold_callout() call deleted."
+    fix197_s29:   "«Экзамен\\n(30 часов, вкл. подготовку)» → «Экзамен» — hour disclosure removed from the exam block. build_lec01.py modules list literal simplified."
+    fix198_s29a:  "Explicit slide title «Оценка за семестр» added above the grading formula (slide previously opened directly on the formula with no heading). build_lec01.py: added slide_title() call, shifted formula+caption down (2.75→3.15 / 4.15→4.55) to make room."
+    fix199_s31:   "Contact placeholder «контакты лектора — заполняется перед лекцией» removed entirely (not left as a stub) — build_lec01.py build_s31() text_box() call deleted. Real contacts to be added in a separate later pass."
+  pacing_changes:
+    active_min: "60.5 → 61.5 (+1.0 for 2 new 0.5-min dividers)"
+    buffer_min: "14.5 → 13.5"
+    section_1_what_is_ai: "6.5 → 7.0"
+    section_2_where_we_are: "6 → 6.5"
+  out_of_scope_this_batch:
+    - "21 other comment ids from issue #155 (layout-positional, schema fixes, s05a/s06a/s07/s23 redesigns) — batches 2-4."
+    - "Full QA-with-roles (presentation-critic + student-simulator + reader-simulator) — after all 4 batches."
+    - "chapter.md / speech.md sync — after all 4 batches."

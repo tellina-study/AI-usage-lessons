@@ -2,7 +2,7 @@
 id: s02
 type: cover
 duration_min: 0.5
-assertion: "Введение — AI вокруг нас"
+assertion: "Что такое AI? История, классификация, общие понятия"
 learning_goal: "Cover-слайд: визуально отличается от content slides"
 learning_outcomes: [LO1, LO4, LO6]
 references: []
@@ -11,11 +11,11 @@ visual:
   primary: "Декоративная «01» в outline, title 64pt, navigational subtitle, hero motif справа"
 ---
 
-# Лекция 1. Введение — AI вокруг нас
+# Лекция 1. Что такое AI? История, классификация, общие понятия
 
 ## Assertion
 
-Введение — AI вокруг нас.
+Что такое AI? История, классификация, общие понятия.
 
 ## Visual
 

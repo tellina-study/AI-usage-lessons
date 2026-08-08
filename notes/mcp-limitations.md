@@ -388,7 +388,7 @@ _Пока не обнаружено._
 
 ---
 
-**Last update:** 2026-05-16 (#86 — добавлен [#86] workspace-mcp P0: регрессия aiofile 3.10.0, пин 3.9.0 в .mcp.json).
+**Last update:** 2026-08-06 (sem-01 — добавлен [#sem01-render-1] python-pptx literal `\n` in single run не line-break'ается надёжно под LibreOffice).
 
 ### [#118-1] mmdc / mermaid-cli: missing Chrome browser dependency
 
@@ -400,3 +400,27 @@ _Пока не обнаружено._
 - **Status:** active
 - **First seen in:** #118 (lec-09 Phase 6, 2026-05-20)
 - **Fork target:** Install Chrome OR use alternative renderer
+
+### [#sem01-render-1] python-pptx: literal `\n` inside a single text run does not reliably line-break under LibreOffice PDF export
+
+- **Tool:** `python-pptx` (direct script usage, not PowerPoint MCP) + LibreOffice headless PDF export (render toolchain).
+- **Symptom:** A helper (`text_box`) that sets `r.text = "line one\nline two"` on a
+  single run — intending a 2-line label inside a fixed-height box — did not render as
+  2 wrapped lines in the LibreOffice-produced PDF/PNG. The label rendered effectively
+  as one run and, depending on box sizing assumptions made for 2 lines, either got
+  visually clipped or overlapped an adjacent shape positioned assuming the label was
+  taller (2 lines) than it actually rendered.
+- **Root cause:** python-pptx does not interpret `\n` inside `run.text` as an
+  OOXML line-break (`<a:br/>`) — it is written as a literal character in `<a:t>`.
+  Some renderers may collapse/ignore it; LibreOffice's behavior here was inconsistent
+  enough to cause layout bugs when downstream code assumed a hard line break.
+- **Severity:** P2 (silent layout bug — no error, just wrong-looking output; easy to
+  miss without visual snapshot inspection).
+- **Workaround:** Never rely on literal `\n` inside a single run for line breaks.
+  Either (a) call `tf.add_paragraph()` once per intended line (proper OOXML paragraph
+  break, renders reliably), or (b) avoid manual line breaks entirely and size the text
+  box for natural word-wrap at the target font size (what we did — simpler when the
+  label is short enough to auto-wrap acceptably).
+- **Status:** active.
+- **First seen in:** sem-01 seminar deck production (2026-08-06), s05 Deloitte stat-panel
+  labels (iteration 2 → 3, see `library/seminars/sem-01/rendered/iteration-log.md`).

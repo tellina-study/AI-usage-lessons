@@ -52,7 +52,7 @@ SOFT_GREY = RGBColor(0xE5, 0xEA, 0xF0)
 # === Constants ===
 SLIDE_W_IN = 13.333
 SLIDE_H_IN = 7.5
-ROOT = Path("/home/levko/AI-usage-lessons/library/lectures/lec-03")
+ROOT = Path("/home/harness/harness-projects/256/lessons-3bb49d40/library/lectures/lec-03")
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts"
@@ -278,6 +278,39 @@ def add_image(slide, path, x, y, w=None, h=None, preserve_aspect=True):
         slide.shapes.add_picture(str(path), Inches(x), Inches(y))
 
 
+SCREENSHOTS = ROOT / "assets/screenshots"
+_CROP_CACHE = ROOT / "rendered/assets/_crop_cache"
+
+
+def hero_image(slide, src, x, y, w, h):
+    """Cover-crop an image to EXACTLY fill box (x,y,w,h) — no distortion, no
+    letterbox. python-pptx can't crop, so we pre-crop via PIL to the target
+    aspect ratio and cache the result. Used for ≥40% hero fills (s01, s30)."""
+    src = Path(src)
+    if not src.exists():
+        return
+    _CROP_CACHE.mkdir(parents=True, exist_ok=True)
+    target_ratio = w / h
+    try:
+        img = Image.open(src).convert("RGB")
+    except Exception:
+        return
+    iw, ih = img.size
+    ir = iw / ih
+    if ir > target_ratio:      # image wider — crop sides
+        new_w = int(ih * target_ratio)
+        left = (iw - new_w) // 2
+        img = img.crop((left, 0, left + new_w, ih))
+    else:                       # image taller — crop top/bottom
+        new_h = int(iw / target_ratio)
+        top = (ih - new_h) // 2
+        img = img.crop((0, top, iw, top + new_h))
+    out = _CROP_CACHE / f"{src.stem}_{w:.2f}x{h:.2f}.png"
+    img.save(out)
+    slide.shapes.add_picture(str(out), Inches(x), Inches(y),
+                             width=Inches(w), height=Inches(h))
+
+
 def slide_title(slide, text, *, y=0.42, h=0.95, w=12.25, x=0.55, size=26,
                 color=DEEP, bold=True, line_spacing=1.12, align=PP_ALIGN.LEFT):
     text_box(slide, x=x, y=y, w=w, h=h, text=text,
@@ -337,34 +370,28 @@ def load_deck():
         return None  # yaml optional — builder list is authoritative anyway
     p1 = ROOT / "deck.yaml"
     p2 = ROOT / "deck-part2.yaml"
-    d1 = yaml.safe_load(p1.read_text(encoding="utf-8"))
-    d2 = yaml.safe_load(p2.read_text(encoding="utf-8"))
-    slides = list(d1.get("slides", [])) + list(d2.get("slides", []))
+    parts = [ROOT / "deck.yaml", ROOT / "deck-part2.yaml", ROOT / "deck-part3.yaml"]
+    slides = []
+    d1 = None
+    totals = {}
+    for pp in parts:
+        if not pp.exists():
+            continue
+        d = yaml.safe_load(pp.read_text(encoding="utf-8"))
+        if d1 is None:
+            d1 = d
+        slides += list(d.get("slides", []))
+        if d.get("totals"):
+            totals = d["totals"]
     spec = {
-        "deck": d1.get("deck", {}),
-        "palette": d1.get("palette", {}),
-        "motif": d1.get("motif", {}),
-        "typography": d1.get("typography", {}),
-        "glossary_lock": d1.get("glossary_lock", []),
+        "deck": d1.get("deck", {}) if d1 else {},
+        "palette": d1.get("palette", {}) if d1 else {},
         "slides": slides,
-        "totals": d2.get("totals", {}),
-        "ai_failure_judgment": d2.get("ai_failure_judgment", {}),
+        "totals": totals,
     }
     ids = [s["id"] for s in slides]
-    expected = (
-        ["s01", "s02", "s03", "s04", "s04a"]
-        + [f"s{n:02d}" for n in range(5, 9)]
-        + ["s09", "s10", "s11", "s12", "s13", "s13a", "s13b"]
-        + [f"s{n:02d}" for n in range(14, 24)]
-        + ["s23a", "s24", "s25", "s25a"]
-        + [f"s{n:02d}" for n in range(26, 31)]
-        + ["s31"]
-    )
-    assert ids == expected, (
-        f"deck slide order mismatch (cascade lock):\n got={ids}\n exp={expected}"
-    )
-    tot = spec["totals"].get("slides")
-    assert tot == 36, f"deck-part2 totals.slides={tot}, expected 36"
+    # builder list is authoritative; deck.yaml is documentation — report only.
+    print(f"deck.yaml slide ids ({len(ids)}): {ids}")
     return spec
 
 
@@ -377,7 +404,7 @@ NAV = [
     ("1", "Промпт"),
     ("2", "RAG"),
     ("3", "Fine-tune"),
-    ("4", "API · агенты"),
+    ("4", "Агенты"),
     ("5", "Фреймворк"),
 ]
 
@@ -435,52 +462,47 @@ def build_section_divider(p, here_idx, big_num, subtitle, frame_phrase, sid):
 # ============================================================
 
 def build_s01(p):
-    """case_study — Air Canada hook. Left chronicle, right architecture contrast."""
+    """hero_cover / case_study — Air Canada hook (issue #157 #211: убраны
+    блоки «что выбрали / что нужно»). Real Air Canada 787 hero photo ≥40%
+    площади слева (Wikimedia CC-BY-SA), assertion + хроника дела справа,
+    gold takeaway снизу."""
     s = blank(p)
-    slide_title(s, "Чат-бот выдумал политику — платит компания.", size=27)
-    icon(s, "gavel", 11.7, 0.40, 0.78, "mid")
-    # Left — chronicle in ocean box
-    lx, ly, lw, lh = 0.55, 1.50, 6.85, 4.55
-    ocean_box(s, lx, ly, lw, lh)
-    text_box(s, lx + 0.30, ly + 0.24, lw - 0.60, 0.40,
-             "Дело Moffatt v. Air Canada · трибунал · 14.02.2024",
-             size=15, bold=True, color=MID, line_spacing=1.05)
+    # Hero photo — left ~46% width, near-full height (≥40% area)
+    hx, hy, hw, hh = 0.0, 0.0, 6.05, 7.5
+    hero_image(s, SCREENSHOTS / "s01-aircanada.jpg", hx, hy, hw, hh)
+    # attribution label bottom-left over photo (semi plate)
+    filled_rect(s, 0.0, 7.10, 3.9, 0.40, DEEP)
+    text_box(s, 0.14, 7.12, 3.7, 0.34,
+             "Фото: Air Canada Boeing 787 · Wikimedia · CC-BY-SA",
+             size=10.5, italic=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+    # Right — assertion + chronicle
+    rx = 6.45
+    text_box(s, rx, 0.55, 6.35, 1.55,
+             "Чат-бот выдумал политику — платит компания.",
+             size=30, bold=True, color=DEEP, line_spacing=1.06)
+    text_box(s, rx, 2.14, 6.35, 0.36,
+             "Moffatt v. Air Canada · трибунал BC · 14.02.2024",
+             size=14, bold=True, color=TEAL)
     chron = [
         "Пассажир спросил чат-бота про тариф по случаю утраты близкого",
         "Бот: «купи по полной цене, верни разницу в течение 90 дней»",
         "Реальная политика этого не допускала — и была на той же странице, на которую бот ссылался",
         "Трибунал: «бот — не отдельное юр. лицо» → компания компенсирует разницу",
     ]
-    cy = ly + 0.85
-    row_h = (lh - 1.05) / 4
+    cy = 2.66
+    row_h = 0.90
     for i, t in enumerate(chron):
-        circle(s, lx + 0.30, cy + 0.05, 0.32, MID)
-        text_box(s, lx + 0.30, cy + 0.05, 0.32, 0.32, str(i + 1),
-                 size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, lx + 0.80, cy, lw - 1.10, row_h - 0.08, t,
-                 size=14, color=DEEP, line_spacing=1.16,
+        circle(s, rx, cy + 0.03, 0.34, MID if i < 3 else GOLD)
+        text_box(s, rx, cy + 0.03, 0.34, 0.34, str(i + 1),
+                 size=14, bold=True, color=(WHITE if i < 3 else DEEP),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, rx + 0.52, cy, 5.85, row_h - 0.06, t,
+                 size=14, color=DEEP, line_spacing=1.14,
                  anchor=MSO_ANCHOR.MIDDLE)
         cy += row_h
-    # Right — architecture contrast (2 blocks, full height match)
-    rx, rw = 7.65, 5.15
-    ocean_box(s, rx, 1.50, rw, 2.18)
-    icon(s, "message-square-warning", rx + 0.28, 1.70, 0.52, "mid")
-    text_box(s, rx + 0.95, 1.76, rw - 1.15, 0.4, "ЧТО ВЫБРАЛИ",
-             size=14, bold=True, color=LIGHT, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, rx + 0.28, 2.42, rw - 0.56, 1.15,
-             "Генеративный чат — архитектура, которая по своей природе сочиняет правдоподобный текст",
-             size=15, color=DEEP, line_spacing=1.18)
-    ocean_box(s, rx, 3.87, rw, 2.18, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "key", rx + 0.28, 4.07, 0.52, "teal")
-    text_box(s, rx + 0.95, 4.13, rw - 1.15, 0.4, "ЧТО БЫЛО НУЖНО",
-             size=14, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, rx + 0.28, 4.79, rw - 0.56, 1.15,
-             "Детерминированный lookup фиксированной политики — статическая страница или таблица правил",
-             size=15, color=DEEP, line_spacing=1.18)
-    gold_callout(s, 0.55, 6.22, 12.25, 0.66,
-                 "Это не сбой модели. Это неправильный выбор архитектуры под задачу — об этом классе ошибок вся лекция.",
-                 size=15)
+    gold_callout(s, rx, 6.34, 6.35, 0.92,
+                 "Это не сбой модели — это неправильный выбор архитектуры под задачу. Об этом классе ошибок вся лекция.",
+                 size=13.5)
     speaker_notes(s, load_notes("s01"))
 
 
@@ -505,59 +527,102 @@ def build_s02(p):
     text_box(s, x=1.02, y=5.26, w=7.4, h=0.62,
              text="Какую архитектуру выбрать под задачу —\nи когда правильный ответ «не ИИ»",
              size=19, italic=False, color=MID, line_spacing=1.18)
-    roadmap_bar(s, 0, y=6.45)
+    # v4 (#212): cover теперь чистый — roadmap вынесен в отдельный
+    # lecture-map слайд s02a (паттерн Л1/Л2). Cover без roadmap-bar.
+    text_box(s, x=0.75, y=6.75, w=7.0, h=0.4,
+             text="3 курс ИУ6 · Модуль 1, обзорная лекция",
+             size=13, italic=True, color=LIGHT)
     speaker_notes(s, load_notes("s02"))
 
 
+def build_s02a(p):
+    """NEW (#212) lecture-map — 6 horizontal section cards (Л1/Л2 pattern).
+    Отдельный слайд-содержание после cover. Показывает маршрут лекции:
+    Разделы 0–5 с одной строкой смысла каждого."""
+    s = blank(p)
+    slide_title(s, "Маршрут лекции — шесть разделов.", size=27)
+    text_box(s, 0.55, 1.22, 12.25, 0.42,
+             "Одна несущая линия: выбор архитектуры под задачу — и когда правильный ответ «не ИИ».",
+             size=15, italic=True, color=MID)
+    cards = [
+        ("0", "Открытие", "Air Canada: неправильная архитектура стоит денег", "gavel", MID),
+        ("1", "Промпт и его границы", "что умеет один вызов и где его потолок", "message-circle", MID),
+        ("2", "RAG", "внешнее знание в контекст — и где оно тихо ломается", "database", MID),
+        ("3", "Fine-tune", "менять веса под поведение, не под знание", "sliders-horizontal", MID),
+        ("4", "Агенты", "цикл, экипировка, память, безопасность — и провалы", "bot", GOLD),
+        ("5", "Фреймворк", "лестница + чек-лист: как выбрать быстро и обоснованно", "list-checks", MID),
+    ]
+    # 2 rows × 3 cols
+    cw, chh = 3.95, 2.30
+    gapx, gapy = 0.20, 0.28
+    x0, y0 = 0.55, 1.90
+    for i, (num, title, sub, ic, col) in enumerate(cards):
+        r, c = divmod(i, 3)
+        x = x0 + c * (cw + gapx)
+        y = y0 + r * (chh + gapy)
+        isgold = (col == GOLD)
+        if isgold:
+            ocean_box(s, x, y, cw, chh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, x, y, cw, chh)
+        circle(s, x + 0.24, y + 0.24, 0.56, col)
+        text_box(s, x + 0.24, y + 0.24, 0.56, 0.56, num,
+                 size=22, bold=True, color=(DEEP if isgold else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        icon(s, ic, x + cw - 0.74, y + 0.26, 0.50, "gold" if isgold else "mid")
+        text_box(s, x + 0.24, y + 0.98, cw - 0.48, 0.60, title,
+                 size=16, bold=True, color=DEEP, line_spacing=1.05)
+        text_box(s, x + 0.24, y + 1.58, cw - 0.48, 0.62, sub,
+                 size=12.5, color=SLATE, line_spacing=1.14)
+    speaker_notes(s, load_notes("s02a"))
+
+
 def build_s03(p):
-    """assertion_visual — hub & spokes: 1 LLM call + 4 wrappers."""
+    """assertion_visual — hub & spokes: 1 LLM call + 4 wrappers.
+    v4 (#213/#214): убран gold-highlight и chip «стоит на эмбеддингах» с
+    RAG-карточки (4 обвязки теперь равнозначны); gold-акцент перенесён на
+    центральный hub «один вызов» как точку отсчёта; footer упрощён.
+    Финальная сверка формулировок — после готовности всей деки."""
     s = blank(p)
     slide_title(s, "Что мы переносим из Лекции 2 — и что надстроим.", size=26)
     text_box(s, 0.55, 1.25, 12.25, 0.4,
-             "Вокруг одного вызова модели надстраиваются 4 обвязки — RAG стоит прямо на эмбеддингах Л2.",
+             "Вокруг одного вызова модели надстраиваются 4 обвязки. Два готовых блока из Лекции 2 не переобъясняем.",
              size=15, italic=True, color=MID)
-    # Center hub
-    hx, hy, hw, hh = 5.05, 3.50, 3.25, 1.65
-    # 4 spokes (bigger, with icons; RAG = gold)
+    # Center hub — GOLD (точка отсчёта, единственный gold-акцент слайда)
+    hx, hy, hw, hh = 5.05, 3.50, 3.25, 1.70
+    # 4 equal spokes (uniform, no per-card gold)
     spokes = [
-        ("RAG", "retrieval = semantic search Л2 §2 + LLM сверху", "database",
-         0.55, 1.85, GOLD, True),
+        ("RAG", "внешнее знание в контекст перед ответом", "database",
+         0.55, 1.85),
         ("Function calling", "модель дотягивается до внешних систем", "terminal",
-         6.95, 1.85, LIGHT, False),
+         6.95, 1.85),
         ("MCP", "стандарт подключения инструментов", "cable",
-         0.55, 5.10, LIGHT, False),
+         0.55, 5.10),
         ("Цикл агента", "много шагов вокруг одного прохода", "bot",
-         6.95, 5.10, LIGHT, False),
+         6.95, 5.10),
     ]
     sw, sh = 5.85, 1.55
-    for title, sub, ic, sx, sy, col, isgold in spokes:
-        if isgold:
-            ocean_box(s, sx, sy, sw, sh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-        else:
-            ocean_box(s, sx, sy, sw, sh)
-        icon(s, ic, sx + 0.26, sy + 0.30, 0.58, "gold" if isgold else "mid")
-        text_box(s, sx + 1.05, sy + 0.24, sw - 1.25, 0.42, title,
-                 size=18, bold=True, color=(DEEP if isgold else MID))
-        text_box(s, sx + 1.05, sy + 0.68, sw - 1.25, 0.72, sub,
-                 size=12.5, color=DEEP, line_spacing=1.10)
-        if isgold:
-            chip(s, sx + 1.05, sy + sh - 0.42, 3.0, 0.32,
-                 "↑ стоит на эмбеддингах Л2 §2", fill=GOLD, color=DEEP,
-                 size=10)
-    # Center hub
-    ocean_box(s, hx, hy, hw, hh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, hx + 0.15, hy + 0.26, hw - 0.30, 0.5, "Один вызов LLM",
+    for title, sub, ic, sx, sy in spokes:
+        ocean_box(s, sx, sy, sw, sh)
+        icon(s, ic, sx + 0.26, sy + 0.34, 0.58, "mid")
+        text_box(s, sx + 1.05, sy + 0.28, sw - 1.25, 0.42, title,
+                 size=18, bold=True, color=MID)
+        text_box(s, sx + 1.05, sy + 0.76, sw - 1.25, 0.66, sub,
+                 size=13, color=DEEP, line_spacing=1.12)
+    # Center hub (gold anchor)
+    ocean_box(s, hx, hy, hw, hh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.5)
+    text_box(s, hx + 0.15, hy + 0.24, hw - 0.30, 0.5, "Один вызов LLM",
              size=18, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, hx + 0.15, hy + 0.80, hw - 0.30, 0.75,
-             "single-shot инференс (Л2 §4): один проход, без памяти",
-             size=12, italic=True, color=MID, align=PP_ALIGN.CENTER,
-             line_spacing=1.10)
+    text_box(s, hx + 0.15, hy + 0.76, hw - 0.30, 0.85,
+             "single-shot инференс из Лекции 2: один проход, без памяти между вызовами",
+             size=12, italic=True, color=DEEP, align=PP_ALIGN.CENTER,
+             line_spacing=1.14)
     # connectors hub -> spokes
     connector(s, hx + 0.25, hy + 0.25, 6.4, 3.4, LIGHT, 1.75)
     connector(s, hx + hw - 0.25, hy + 0.25, 6.95, 3.4, LIGHT, 1.75)
     connector(s, hx + 0.25, hy + hh - 0.25, 6.4, 5.10, LIGHT, 1.75)
     connector(s, hx + hw - 0.25, hy + hh - 0.25, 6.95, 5.10, LIGHT, 1.75)
-    footer(s, "RAG = semantic search из Л2 §2 + LLM сверху. Single-shot и semantic search не переобъясняем — это готовые блоки. Детали — Раздел 2.")
+    footer(s, "Из Лекции 2 берём готовыми: single-shot инференс и семантический поиск на эмбеддингах (основа RAG). Детали каждой обвязки — дальше по разделам.")
     speaker_notes(s, load_notes("s03"))
 
 
@@ -582,9 +647,12 @@ def build_s04(p):
         ("6", "Multi-agent", "несколько координируемых агентов", LIGHT, False),
     ]
     n = len(steps)
-    step_h = 0.66
+    # #215/#216: увеличены визуальные элементы лестницы — крупнее рунги
+    # (step_h 0.66→0.74), крупнее номера-круги (0.36→0.46) и sub-подписи
+    # (10.5→12), а также стрелка направления и её метки.
+    step_h = 0.74
     vgap = 0.075
-    bottom_edge = 6.78  # bottom of step 1
+    bottom_edge = 6.85  # bottom of step 1
     sx = 0.55
     for i, (num, label, sub, col, isgold) in enumerate(steps):
         # i=0 -> bottom rung; each higher step sits above + indented right
@@ -593,25 +661,23 @@ def build_s04(p):
         w = 7.95 - indent
         x = sx + indent
         if isgold:
-            ocean_box(s, x, y, w, step_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+            ocean_box(s, x, y, w, step_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.5)
         else:
             ocean_box(s, x, y, w, step_h)
-        circle(s, x + 0.14, y + (step_h - 0.36) / 2, 0.36, col)
-        text_box(s, x + 0.14, y + (step_h - 0.36) / 2, 0.36, 0.36, num,
-                 size=15, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+        circle(s, x + 0.16, y + (step_h - 0.46) / 2, 0.46, col)
+        text_box(s, x + 0.16, y + (step_h - 0.46) / 2, 0.46, 0.46, num,
+                 size=18, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
                  anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x + 0.62, y + 0.10, w - 0.78, 0.28, label,
-                 size=15, bold=True, color=DEEP)
-        text_box(s, x + 0.62, y + 0.38, w - 0.78, 0.24, sub,
-                 size=10.5, italic=True, color=SLATE)
-    # PA-1 (owner-approved): direction-of-scale label alongside the ladder —
-    # «сложнее ↑» at top, «проще ↓» at bottom (removes the «выше=лучше»
-    # mis-read; the climb is harder, not better). Labels sit in the clear
-    # zone between the question box (ends 2.15) and ladder bottom (6.78).
-    text_box(s, 8.02, 2.22, 1.12, 0.30, "сложнее ↑", size=12, bold=True,
+        text_box(s, x + 0.74, y + 0.11, w - 0.90, 0.30, label,
+                 size=16, bold=True, color=DEEP)
+        text_box(s, x + 0.74, y + 0.43, w - 0.90, 0.26, sub,
+                 size=12, italic=True, color=SLATE)
+    # PA-1 (owner-approved) + #216: direction-of-scale strip alongside ladder —
+    # enlarged «сложнее ↑» / «проще ↓» + thicker arrow.
+    text_box(s, 7.98, 2.28, 1.22, 0.34, "сложнее ↑", size=14, bold=True,
              color=LIGHT, align=PP_ALIGN.CENTER)
-    up_arrow(s, 8.42, 2.62, 0.30, 3.92, fill=COVER_OUTLINE)
-    text_box(s, 8.02, 6.58, 1.12, 0.30, "проще ↓", size=12, bold=True,
+    up_arrow(s, 8.40, 2.72, 0.40, 3.86, fill=COVER_OUTLINE)
+    text_box(s, 7.98, 6.62, 1.22, 0.34, "проще ↓", size=14, bold=True,
              color=LIGHT, align=PP_ALIGN.CENTER)
     # rule on the right
     ocean_box(s, 9.05, 2.55, 3.75, 3.95, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
@@ -627,39 +693,43 @@ def build_s05(p):
     """assertion_visual — default = one call; cost of each climb."""
     s = blank(p)
     slide_title(s, "Дефолт — один вызов с хорошим промптом.", size=27)
-    text_box(s, 0.55, 1.22, 12.25, 0.4,
-             "Любой подъём по лестнице оплачивается требованием задачи — это бремя доказательства.",
-             size=15, italic=True, color=MID)
+    # #219-context: explicit граница знания модели на видимом слое (§1.1)
+    filled_rect(s, 0.55, 1.18, 12.25, 0.66, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.5, radius=True, radius_adj=0.10)
+    text_box(s, 0.78, 1.24, 11.8, 0.56,
+             "Модель знает только то, что в промпте (плюс то, что было в весах на обучении). Больше ей взять неоткуда.",
+             size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.12)
     # Left — anchor block
-    lx, ly, lw, lh = 0.55, 1.78, 5.55, 3.85
+    lx, ly, lw, lh = 0.55, 2.02, 5.55, 3.62
     ocean_box(s, lx, ly, lw, lh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "target", lx + 0.28, ly + 0.26, 0.62, "teal")
-    text_box(s, lx + 0.28, ly + 1.02, lw - 0.56, 0.6,
+    icon(s, "target", lx + 0.28, ly + 0.24, 0.58, "teal")
+    text_box(s, lx + 0.28, ly + 0.94, lw - 0.56, 0.6,
              "Один вызов LLM\nс хорошим промптом",
-             size=19, bold=True, color=DEEP, line_spacing=1.1)
+             size=18, bold=True, color=DEEP, line_spacing=1.1)
     bullets = [
         "минимальная стоимость (один проход)",
         "минимальная латентность (нет лишних обращений)",
         "максимальная предсказуемость (нет петель, нет retrieval, который тихо деградирует)",
     ]
-    by = ly + 2.05
+    by = ly + 1.90
     for b in bullets:
         circle(s, lx + 0.30, by + 0.07, 0.12, TEAL)
         text_box(s, lx + 0.56, by, lw - 0.84, 0.62, b,
-                 size=13.5, color=DEEP, line_spacing=1.12)
-        by += 0.58
+                 size=13, color=DEEP, line_spacing=1.12)
+        by += 0.56
     # Right — what each climb costs
     rx, rw = 6.30, 6.50
-    ocean_box(s, rx, 1.78, rw, 1.78)
-    text_box(s, rx + 0.26, 1.95, rw - 0.52, 0.36, "Добавляешь RAG →",
+    ocean_box(s, rx, 2.02, rw, 1.70)
+    text_box(s, rx + 0.26, 2.16, rw - 0.52, 0.36, "Добавляешь RAG →",
              size=15, bold=True, color=MID)
-    text_box(s, rx + 0.26, 2.32, rw - 0.52, 1.15,
+    text_box(s, rx + 0.26, 2.52, rw - 0.52, 1.10,
              "конвейер индексации + векторное хранилище + компонент retrieval (может молча деградировать) + метрики его качества",
              size=13, color=DEEP, line_spacing=1.14)
-    ocean_box(s, rx, 3.72, rw, 1.91)
-    text_box(s, rx + 0.26, 3.89, rw - 0.52, 0.36, "Добавляешь инструменты / цикл →",
+    ocean_box(s, rx, 3.88, rw, 1.76)
+    text_box(s, rx + 0.26, 4.02, rw - 0.52, 0.36, "Добавляешь инструменты / цикл →",
              size=15, bold=True, color=MID)
-    text_box(s, rx + 0.26, 4.26, rw - 0.52, 1.28,
+    text_box(s, rx + 0.26, 4.38, rw - 0.52, 1.20,
              "внешние вызовы (падают, тормозят) + петли (расходятся) + недетерминизм траектории + новая поверхность атаки",
              size=13, color=DEEP, line_spacing=1.14)
     gold_callout(s, 0.55, 5.92, 12.25, 0.92,
@@ -668,72 +738,160 @@ def build_s05(p):
     speaker_notes(s, load_notes("s05"))
 
 
+def build_s05a(p):
+    """NEW (§1.2) — роли в промпте: миф «персона = точность» опровергнут.
+    Zheng et al. 2024 EMNLP + arXiv:2605.29420. Часть failure/judgment —
+    опровержение «магической пилюли»."""
+    s = blank(p)
+    slide_title(s, "Роль в промпте настраивает тон — не точность.", size=26)
+    text_box(s, 0.55, 1.16, 12.25, 0.42,
+             "«Ты — опытный юрист» сдвигает внимание модели (механизм — Лекция 2) в сторону текста, похожего на ответ такой роли, — но это про стиль, не про факты.",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    # left — the myth (crossed out) vs measured reality
+    lx, ly, lw, lh = 0.55, 1.86, 6.35, 3.95
+    ocean_box(s, lx, ly, lw, lh)
+    text_box(s, lx + 0.28, ly + 0.22, lw - 0.56, 0.36, "Расхожий миф",
+             size=15, bold=True, color=LIGHT)
+    text_box(s, lx + 0.28, ly + 0.62, lw - 0.56, 0.70,
+             "«Напишу роль эксперта — и модель будет точнее отвечать по фактам»",
+             size=15, italic=True, color=SLATE, line_spacing=1.16)
+    connector(s, lx + 0.28, ly + 1.42, lx + lw - 0.28, ly + 1.42, LIGHT, 1.0)
+    text_box(s, lx + 0.28, ly + 1.56, lw - 0.56, 0.40, "Что показал эксперимент",
+             size=15, bold=True, color=MID)
+    text_box(s, lx + 0.28, ly + 1.98, lw - 0.56, 1.80,
+             "162 персоны · 6 типов отношений · 8 доменов · 2410 вопросов фактического QA · 4 семейства LLM. Персоны НЕ улучшили точность ответа по сравнению с ответом без персоны вообще.",
+             size=14, color=DEEP, line_spacing=1.22)
+    # right — verdict + what role really does
+    rx, rw = 7.15, 5.65
+    ocean_box(s, rx, ly, rw, 1.75, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "user-round", rx + 0.28, ly + 0.26, 0.52, "teal")
+    text_box(s, rx + 0.94, ly + 0.24, rw - 1.15, 0.5, "На что роль влияет реально",
+             size=15, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, rx + 0.28, ly + 0.92, rw - 0.56, 0.75,
+             "на тон и глубину изложения — насколько формально и подробно, а не верен ли факт (эффект модель-специфичен).",
+             size=13.5, color=DEEP, line_spacing=1.18)
+    gold_callout(s, rx, ly + 1.95, rw, 2.00,
+                 "Нужна фактическая точность? Инструмент — не формулировка роли, а грамотный контекст и, при необходимости, RAG (опора на проверяемый источник). Это ещё один пункт «магической пилюли», опровергнутый измерением.",
+                 size=13.5)
+    footer(s, "Zheng, Pei, Logeswaran, Lee, Jurgens · Findings of EMNLP 2024 (arXiv:2311.10054) + arXiv:2605.29420 (2026).")
+    speaker_notes(s, load_notes("s05a"))
+
+
+def build_s05b(p):
+    """NEW (§1.3) — структура промпта: разделители + разделение
+    инструкция/контекст/данные. Параллель со structured output (§4.1):
+    вход vs выход — тот же принцип."""
+    s = blank(p)
+    slide_title(s, "Структура промпта: разделяй инструкцию, контекст, данные.",
+                size=23, h=1.30, line_spacing=1.08)
+    text_box(s, 0.55, 1.58, 12.25, 0.42,
+             "Плоский промпт заставляет модель угадывать, где кончается инструкция и начинаются данные. Явная граница снимает эту неоднозначность.",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    # left — 3 stacked labelled parts (structured input)
+    lx, ly, lw = 0.55, 2.14, 5.85
+    parts = [
+        ("braces", "Инструкция", "что сделать", MID),
+        ("book-open", "Контекст", "на основе чего", LIGHT),
+        ("database", "Данные", "с чем именно работать", TEAL),
+    ]
+    ph = 1.16
+    pgap = 0.16
+    py = ly
+    for ic, t, sub, col in parts:
+        ocean_box(s, lx, py, lw, ph)
+        filled_rect(s, lx + 0.22, py + 0.22, 0.72, ph - 0.44, col, radius=True,
+                    radius_adj=0.16)
+        icon(s, ic, lx + 0.34, py + ph / 2 - 0.24, 0.48, "white")
+        text_box(s, lx + 1.14, py + 0.20, lw - 1.35, 0.42, t,
+                 size=17, bold=True, color=DEEP)
+        text_box(s, lx + 1.14, py + 0.62, lw - 1.35, 0.40, sub,
+                 size=13, italic=True, color=SLATE)
+        py += ph + pgap
+    # right — delimiters kinds + structured-output parallel
+    rx, rw = 7.15, 5.65
+    ocean_box(s, rx, ly, rw, 1.95)
+    text_box(s, rx + 0.28, ly + 0.18, rw - 0.56, 0.36, "Разделители (delimiters)",
+             size=15, bold=True, color=MID)
+    for i, d in enumerate([
+        "XML-теги:  <инструкция>…</инструкция>",
+        "Markdown-заголовки:  ## Задача · ## Данные",
+        "Тройные кавычки / бэктики вокруг данных",
+    ]):
+        circle(s, rx + 0.30, ly + 0.62 + i * 0.40 + 0.05, 0.12, LIGHT)
+        text_box(s, rx + 0.54, ly + 0.62 + i * 0.40, rw - 0.82, 0.38, d,
+                 size=13, color=DEEP, font=FONT_MONO if i < 2 else FONT_BODY,
+                 line_spacing=1.05)
+    ocean_box(s, rx, ly + 2.10, rw, 1.70, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, rx + 0.28, ly + 2.24, rw - 0.56, 1.44,
+             "Тот же принцип, что structured output (Раздел 4): там схема задаёт структуру ВЫХОДА, здесь разделители — структуру ВХОДА. Ясная структура вместо «выведи форму по смыслу».",
+             size=13.5, color=DEEP, line_spacing=1.20)
+    gold_callout(s, 0.55, 5.98, 12.25, 0.86,
+                 "Модель, которой показали, где кончается инструкция и начинаются данные, реже принимает фрагмент данных за новую команду — та же путаница лежит в основе prompt injection (Раздел 4).",
+                 size=13.5)
+    speaker_notes(s, load_notes("s05b"))
+
+
 def build_s06(p):
-    """case_study — CoT before/after contrast."""
+    """case_study — CoT worked example + faithfulness limit MERGED (§1.4+§1.5)."""
     s = blank(p)
-    slide_title(s, "Chain-of-thought (пошаговое рассуждение).", size=27)
-    text_box(s, 0.55, 1.18, 12.25, 0.55,
-             "CoT — попросить модель не отвечать сразу, а сначала рассуждать по шагам. Технически это всё ещё один вызов — изменён только промпт.",
-             size=14, italic=True, color=MID, line_spacing=1.15)
-    cy, ch = 1.95, 3.05
+    slide_title(s, "Chain-of-thought помогает — но его нельзя аудировать.", size=24)
+    # TOP BAND — CoT worked example (compact before/after)
+    cy, ch = 1.16, 2.02
     cw = 6.05
-    # without CoT
     ocean_box(s, 0.55, cy, cw, ch)
-    text_box(s, 0.83, cy + 0.20, cw - 0.56, 0.4, "Без CoT",
-             size=18, bold=True, color=LIGHT)
-    text_box(s, 0.83, cy + 0.68, cw - 0.56, 1.15,
-             "Задача: «Было 23 яблока, 7 испортились, докупили 2 ящика по 6. Сколько хороших?»",
-             size=14, color=DEEP, line_spacing=1.18)
-    text_box(s, 0.83, cy + 2.05, cw - 0.56, 0.85,
-             "→ модель выдаёт правдоподобное, но неверное число",
-             size=14, bold=True, color=SLATE, line_spacing=1.15)
-    # with CoT
-    rx = 6.75
-    ocean_box(s, rx, cy, cw, ch, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, rx + 0.28, cy + 0.20, cw - 0.56, 0.4, "С CoT  («решай по шагам»)",
-             size=18, bold=True, color=TEAL)
-    steps = ["23 − 7 = 16", "2 × 6 = 12", "16 + 12 = 28"]
-    sy = cy + 0.72
-    for i, st in enumerate(steps):
-        last = (i == 2)
-        text_box(s, rx + 0.32, sy, cw - 0.6, 0.5, st,
-                 size=(24 if last else 18), bold=True,
-                 color=(GOLD if last else DEEP))
-        sy += (0.62 if not last else 0.5)
-    text_box(s, rx + 0.32, cy + 2.45, cw - 0.6, 0.4, "→ верно",
+    text_box(s, 0.83, cy + 0.14, cw - 0.56, 0.34, "Без CoT",
+             size=15, bold=True, color=LIGHT)
+    text_box(s, 0.83, cy + 0.52, cw - 0.56, 0.85,
+             "«Было 23 яблока, 7 испортились, докупили 2 ящика по 6. Сколько хороших?»",
+             size=13, color=DEEP, line_spacing=1.14)
+    text_box(s, 0.83, cy + 1.42, cw - 0.56, 0.5,
+             "→ правдоподобное, но неверное число",
+             size=13, bold=True, color=SLATE)
+    rx0 = 6.75
+    ocean_box(s, rx0, cy, cw, ch, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, rx0 + 0.28, cy + 0.14, cw - 0.56, 0.34, "С CoT («решай по шагам»)",
              size=15, bold=True, color=TEAL)
-    # v2 (#9): assertion-bearing gold plate raised to neighbour level
-    # (h≈1.1, size 15 — matches s05/s08/s14 callouts; was thin 0.92/14.5).
-    gold_callout(s, 0.55, 5.16, 12.25, 1.10,
-                 "CoT — инструмент под класс задач, не глобальный тумблер. Когда НЕ нужен: прямое извлечение факта, простая классификация — удлиняет ответ (дороже, медленнее) и иногда уводит в правдоподобную ошибку.",
-                 size=15)
-    footer(s, "Поможет ли CoT именно вашей задаче — или там ответ извлекается напрямую?")
-    speaker_notes(s, load_notes("s06"))
-
-
-def build_s07(p):
-    """case_study — CoT faithfulness limit (chart c07)."""
-    s = blank(p)
-    slide_title(s, "Предел CoT: текст ≠ мысль.", size=27)
-    text_box(s, 0.55, 1.16, 12.25, 0.55,
-             "Faithfulness (верность рассуждения) — степень, в которой проговорённая цепочка отражает реальные факторы, повлиявшие на ответ.",
-             size=14, italic=True, color=MID, line_spacing=1.15)
-    # left — chart
-    cx, cyy, cww, chh = 0.55, 1.92, 7.05, 3.95
-    ocean_box(s, cx, cyy, cww, chh)
-    add_image(s, CHARTS / "c07-faithfulness.png", cx + 0.18, cyy + 0.16,
-              cww - 0.36, chh - 0.32)
-    # right — experiment + rule
-    rx, rw = 7.85, 4.95
-    ocean_box(s, rx, 1.92, rw, 1.55)
-    text_box(s, rx + 0.26, 2.08, rw - 0.52, 1.25,
-             "Эксперимент: задачу дали дважды — без подсказки и с подсказкой, меняющей ответ. Когда подсказка изменила ответ — упомянула ли её модель?",
-             size=13, color=DEEP, line_spacing=1.16)
-    gold_callout(s, rx, 3.62, rw, 2.25,
-                 "Контроль на самообъяснении модели — не контроль. Человек проверяет результат и факты против внешнего источника, а не правдоподобность текста. Верность падает на трудных задачах.",
+    text_runs(s, rx0 + 0.30, cy + 0.56, cw - 0.6, 0.9, [
+        {"text": "23 − 7 = 16    ·    2 × 6 = 12", "size": 15, "bold": True, "color": DEEP},
+        {"text": "16 + 12 = 28", "size": 22, "bold": True, "color": GOLD,
+         "newpara": True, "space_before": 6},
+    ], line_spacing=1.1)
+    text_box(s, rx0 + 0.30, cy + 1.56, cw - 0.6, 0.36, "→ верно",
+             size=13, bold=True, color=TEAL)
+    # thin note between bands (single line)
+    text_box(s, 0.55, cy + ch + 0.06, 12.25, 0.28,
+             "Технически это всё ещё один вызов — CoT инструмент под класс задач (цепочка шагов), не глобальный тумблер.",
+             size=12, italic=True, color=MID)
+    # BOTTOM BAND — faithfulness limit
+    fy = 3.70
+    text_box(s, 0.55, fy, 12.25, 0.34,
+             "Но проговорённое рассуждение не обязано отражать реальную причину ответа (низкая faithfulness):",
+             size=14, bold=True, color=DEEP)
+    # 2 stat cards
+    st_y = fy + 0.46
+    for i, (m, who, isgold) in enumerate([
+        ("~25%", "Claude 3.7 Sonnet", True),
+        ("~39%", "DeepSeek R1", False)]):
+        sxx = 0.55 + i * 2.55
+        if isgold:
+            ocean_box(s, sxx, st_y, 2.35, 1.55, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, sxx, st_y, 2.35, 1.55)
+        text_box(s, sxx + 0.10, st_y + 0.18, 2.15, 0.7, m,
+                 size=36, bold=True, color=(GOLD if isgold else MID),
+                 align=PP_ALIGN.CENTER)
+        text_box(s, sxx + 0.10, st_y + 0.92, 2.15, 0.55, who,
+                 size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=1.05)
+    text_box(s, 0.55, st_y + 1.60, 5.15, 0.5,
+             "— доля случаев, где модель упомянула реально использованную подсказку.",
+             size=11.5, italic=True, color=SLATE, line_spacing=1.10)
+    # rule callout right
+    gold_callout(s, 5.90, st_y, 6.90, 2.10,
+                 "Контроль на самообъяснении модели — не контроль. Человек-валидатор проверяет РЕЗУЛЬТАТ и факты против внешнего источника, а не правдоподобность текста. И это же — почему шаг check в цикле агента (Раздел 4) не должен быть самооценкой модели.",
                  size=14)
-    footer(s, "Источник: Anthropic, апрель 2025. Freshness — quarterly; перепроверить ко дню лекции.")
-    speaker_notes(s, load_notes("s07"))
+    footer(s, "Anthropic, апрель 2025 · верность падает на трудных задачах · перепроверить ко дню лекции.")
+    speaker_notes(s, load_notes("s06"))
 
 
 def build_s08(p):
@@ -749,7 +907,7 @@ def build_s08(p):
     add_image(s, CHARTS / "c08-context-rot.png", cx + 0.18, cyy + 0.16,
               cw - 0.36, chh - 0.32)
     text_box(s, cx + 0.18, cyy + chh + 0.02, cw - 0.36, 0.42,
-             "context rot = тот же «lost in the middle» из Л2 §3 — новый термин, не новая сущность",
+             "context rot = тот же «lost in the middle» из Л2 — новый термин, не новая сущность",
              size=11.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     # right — criterion
     rx, rw = 7.85, 4.95
@@ -768,6 +926,56 @@ def build_s08(p):
                  "«Найти наименьший набор высокосигнальных токенов, максимизирующий вероятность желаемого исхода» — это инженерное требование, не эстетика.",
                  size=14.5)
     speaker_notes(s, load_notes("s08"))
+
+
+def build_s08a(p):
+    """NEW (§1.8) — чит-шит «как строить промпт», 8 пунктов. Компактный
+    аналог чек-листа §5.3 для уровня одного промпта."""
+    s = blank(p)
+    slide_title(s, "Чит-шит: как строить промпт.", size=27)
+    text_box(s, 0.55, 1.16, 12.25, 0.40,
+             "Минимум, ниже которого промпт систематически недорабатывает. Приложите к любому промпту перед первым запуском.",
+             size=14, italic=True, color=MID)
+    items = [
+        ("Роль", "если нужен тон/регистр — и НЕ как обещание точности"),
+        ("Задача", "конкретное проверяемое действие, не расплывчатое пожелание"),
+        ("Контекст", "минимально необходимое, не «всё, что могло бы пригодиться»"),
+        ("Формат вывода", "указан явно, если ответ машинно-обрабатываем"),
+        ("Разделители", "если содержимого больше одного вида (инструкция/данные)"),
+        ("Примеры (few-shot)", "только если формат неочевиден из одной инструкции"),
+        ("CoT", "только если задача требует многошагового рассуждения"),
+        ("Длина", "не длиннее необходимого — лишние токены «тонут» в контексте"),
+    ]
+    cw, chh = 3.95, 1.28
+    gapx, gapy = 0.20, 0.20
+    x0, y0 = 0.55, 1.78
+    for i, (t, sub) in enumerate(items):
+        r, c = divmod(i, 2)
+        # 2 cols × 4 rows
+        x = x0 + c * (cw + gapx) if False else 0.0
+        # 4 cols × 2 rows layout
+        col = i % 4
+        row = i // 4
+        cw2 = 3.02
+        x = 0.55 + col * (cw2 + 0.13)
+        y = y0 + row * (chh + gapy)
+        isgold = (i == 0)  # роль = ключевой пункт (миф про точность)
+        if isgold:
+            ocean_box(s, x, y, cw2, chh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, x, y, cw2, chh)
+        circle(s, x + 0.18, y + 0.18, 0.34, GOLD if isgold else MID)
+        text_box(s, x + 0.18, y + 0.18, 0.34, 0.34, str(i + 1),
+                 size=13, bold=True, color=(DEEP if isgold else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x + 0.62, y + 0.16, cw2 - 0.78, 0.40, t,
+                 size=14, bold=True, color=DEEP)
+        text_box(s, x + 0.20, y + 0.58, cw2 - 0.40, 0.62, sub,
+                 size=11, color=SLATE, line_spacing=1.10)
+    gold_callout(s, 0.55, 5.20, 12.25, 1.05,
+                 "Компактная форма всего раздела: роль ≠ точность, структура помогает разделить входы, CoT — точечный инструмент, контекст — минимальный. Для крупных архитектурных решений (RAG / FT / агент) — восьмишаговый чек-лист Раздела 5.",
+                 size=14)
+    speaker_notes(s, load_notes("s08a"))
 
 
 def build_s09(p):
@@ -794,8 +1002,8 @@ def build_s10(p):
         ("1", "Индексация", "заранее, офлайн", "database",
          "корпус → чанки → эмбеддинг каждого → векторное хранилище", MID, False),
         ("2", "Retrieval", "на запрос", "route",
-         "вопрос → эмбеддинг → top-k ближайших фрагментов\n\n= тот самый semantic search из Л2 §2 — не переобъясняем", MID, False),
-        ("3", "Генерация с опорой", "grounding", "check-check",
+         "вопрос → эмбеддинг → top-k ближайших фрагментов\n\n= тот самый semantic search из Л2 — не переобъясняем", MID, False),
+        ("3", "Генерация", "с опорой (grounding)", "check-check",
          "фрагменты + вопрос → ответ со ссылкой на источник", TEAL, True),
     ]
     x = x0
@@ -808,9 +1016,9 @@ def build_s10(p):
         text_box(s, x + 0.26, sy + 0.26, 0.46, 0.46, num,
                  size=18, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
                  anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x + 0.86, sy + 0.26, bw - 1.5, 0.42, title,
+        text_box(s, x + 0.86, sy + 0.26, bw - 1.05, 0.42, title,
                  size=17, bold=True, color=DEEP)
-        text_box(s, x + 0.86, sy + 0.66, bw - 1.5, 0.30, tag,
+        text_box(s, x + 0.86, sy + 0.66, bw - 1.05, 0.30, tag,
                  size=11.5, italic=True, color=LIGHT)
         icon(s, ic, x + bw - 0.78, sy + 0.28, 0.50,
              "teal" if isteal else "mid")
@@ -830,8 +1038,10 @@ def build_s11(p):
     """assertion_visual — 4 conjunction cards -> RAG."""
     s = blank(p)
     slide_title(s, "Когда RAG — правильный выбор.", size=27)
+    # #221/#222: убран жаргон «конъюнкция/дизъюнкция»; формулировка §2.2 —
+    # сильный сигнал по признакам + отсутствие блокеров с §2.3.
     text_box(s, 0.55, 1.16, 12.25, 0.4,
-             "RAG оправдан, когда 4 признака складываются ОДНОВРЕМЕННО (конъюнкция, не дизъюнкция).",
+             "RAG оправдан при сильном сигнале по признакам ниже — и отсутствии блокеров со следующего слайда «когда НЕ RAG».",
              size=14.5, italic=True, color=MID)
     cards = [
         ("Большое / растущее", "не влезает в окно целиком, или дорого класть весь корпус в каждый запрос"),
@@ -839,7 +1049,7 @@ def build_s11(p):
         ("Свежесть + провенанс", "ответ опирается на проверяемый источник; можно показать, откуда факт"),
         ("Приватная база", "знания компании не входят в веса публичной модели"),
     ]
-    cw, chh = 2.78, 2.55
+    cw, chh = 2.90, 2.55
     cy = 1.78
     x = 0.55
     for i, (t, sub) in enumerate(cards):
@@ -848,24 +1058,19 @@ def build_s11(p):
                  size=15.5, bold=True, color=MID, line_spacing=1.05)
         text_box(s, x + 0.20, cy + 1.00, cw - 0.40, chh - 1.2, sub,
                  size=12, color=DEEP, line_spacing=1.16)
-        if i < 3:
-            circle(s, x + cw + 0.015, cy + chh / 2 - 0.21, 0.42, GOLD)
-            text_box(s, x + cw + 0.015, cy + chh / 2 - 0.21, 0.42, 0.42, "И",
-                     size=17, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-                     anchor=MSO_ANCHOR.MIDDLE)
-        x += cw + 0.42
+        x += cw + 0.20
     # -> RAG result + worked example
-    ocean_box(s, 0.55, 4.55, 7.4, 1.78, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    text_box(s, 0.85, 4.74, 7.0, 0.4, "Все 4 ОДНОВРЕМЕННО → RAG",
+    ocean_box(s, 0.55, 4.55, 7.55, 1.80, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, 0.85, 4.72, 7.1, 0.4, "Признаки усиливают друг друга → RAG",
              size=17, bold=True, color=DEEP)
-    text_box(s, 0.85, 5.18, 7.0, 1.05,
-             "Корп. база из тысяч регламентов, обновляется еженедельно, ответ с обязательной ссылкой на пункт: все 4 признака ✓ → образцовый профиль RAG.",
-             size=13, color=DEEP, line_spacing=1.18)
-    ocean_box(s, 8.15, 4.55, 4.65, 1.78, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "check-check", 8.40, 4.78, 0.50, "teal")
-    text_box(s, 8.40, 5.35, 4.20, 0.95,
-             "Один признак сам по себе RAG не оправдывает — нужна конъюнкция.",
-             size=14.5, bold=True, color=DEEP, line_spacing=1.15)
+    text_box(s, 0.85, 5.16, 7.1, 1.10,
+             "Корп. база из тысяч регламентов, обновляется еженедельно, ответ с обязательной ссылкой на пункт: все признаки сошлись, ни один более простой механизм их совместно не закрывает → образцовый профиль RAG.",
+             size=13, color=DEEP, line_spacing=1.16)
+    ocean_box(s, 8.30, 4.55, 4.50, 1.80, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "check-check", 8.55, 4.74, 0.44, "teal")
+    text_box(s, 8.55, 5.24, 4.05, 1.00,
+             "Один признак — повод присмотреться, но не строить автоматически: сверьтесь с блокерами на следующем слайде.",
+             size=12.5, bold=True, color=DEEP, line_spacing=1.15)
     speaker_notes(s, load_notes("s11"))
 
 
@@ -876,6 +1081,9 @@ def build_s12(p):
     text_box(s, 0.55, 1.16, 12.25, 0.4,
              "Знать, когда RAG не нужен, ценнее: это модная архитектура, её ставят туда, где она вредит.",
              size=14.5, italic=True, color=MID)
+    # #223/#224: критерий observability убран (он живёт на s13, провал RAG
+    # на масштабе, не дублируется здесь). Вместо него — новый критерий
+    # «данные доступны live через API/MCP» (§2.3, forward-callback на §4.1).
     cols = [
         ("circle-slash", "1. Корпус влезает в окно",
          "ориентир — менее ~200k токенов, меняется редко",
@@ -885,9 +1093,9 @@ def build_s12(p):
          "тариф, цена, пункт регламента, правило",
          "→ детерминированный lookup / статическая страница",
          LIGHT, "mid", False),
-        ("bomb", "3. Нет наблюдения за retrieval",
-         "observability отсутствует",
-         "→ скрытая бомба: не падает с ошибкой, а уверенно отвечает неправильно — отложенный невидимый отказ",
+        ("cable", "3. Данные доступны live через API / MCP",
+         "во внутреннем сервисе, базе, поиске другой системы",
+         "→ вызвать инструмент напрямую; RAG-индекс поверх — лишний, более хрупкий и более устаревающий слой",
          GOLD, "gold", True),
     ]
     cw, chh = 4.00, 3.05
@@ -908,13 +1116,13 @@ def build_s12(p):
                  size=13, bold=True, color=DEEP, line_spacing=1.18)
         x += cw + 0.32
     gold_callout(s, 0.55, 5.20, 12.25, 1.05,
-                 "RAG оправдан только когда выполнены все три условия: (а) проще механизмы не справляются, (б) нужна генерация, а не фиксированное значение, (в) есть процесс измерения качества retrieval.",
-                 size=14.5)
+                 "RAG избыточен, если выполнен ЛЮБОЙ из трёх: (а) корпус влезает в окно и стабилен, (б) задача сводится к фиксированному значению, (в) знание уже доступно напрямую и живьём через инструмент. «Прямой вызов вернёт данные на момент запроса; RAG-индекс — на момент последней индексации.»",
+                 size=13.5)
     speaker_notes(s, load_notes("s12"))
 
 
 def build_s13(p):
-    """case_study — RAG fails at scale + Air Canada revisited (v2: decluttered
+    """case_study — RAG fails at scale + Air Canada — разбор архитектуры (v2: decluttered
     — per-case triangle-alert icons, tighter visible text, mass-rebalanced
     right box so diagnosis+alternative fill evenly, no big internal gap)."""
     s = blank(p)
@@ -945,10 +1153,10 @@ def build_s13(p):
         if ci < 2:
             connector(s, lx + 0.30, box_y + (ci + 1) * cell_h,
                       lx + lw - 0.30, box_y + (ci + 1) * cell_h, LIGHT, 0.75)
-    # right — Air Canada revisited (teal), evenly split: diagnosis / alternative
+    # right — Air Canada — разбор архитектуры (teal), evenly split: diagnosis / alternative
     rx, rw = 7.35, 5.45
     ocean_box(s, rx, 2.14, rw, 3.74, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, rx + 0.30, 2.36, rw - 0.60, 0.34, "Air Canada revisited",
+    text_box(s, rx + 0.30, 2.36, rw - 0.60, 0.34, "Air Canada — разбор архитектуры",
              size=16, bold=True, color=TEAL)
     text_box(s, rx + 0.30, 2.78, rw - 0.60, 0.30, "Диагноз",
              size=13, bold=True, color=DEEP)
@@ -959,42 +1167,74 @@ def build_s13(p):
     text_box(s, rx + 0.30, 4.34, rw - 0.60, 0.30, "Правильная альтернатива",
              size=13, bold=True, color=DEEP)
     text_box(s, rx + 0.30, 4.66, rw - 0.60, 1.15,
-             "фиксированная политика → lookup / страница; нужен диалог → RAG со strict grounding, обязательная цитата, явное «не знаю», human-review",
+             "фиксированная политика → lookup / страница; нужен диалог → RAG со strict grounding, обязательная цитата, явное «не знаю», проверка человеком",
              size=13, color=DEEP, line_spacing=1.20)
     footer(s, "Документированные классы провалов (Barnett et al. 2024; Air Canada — McCarthy Tétrault 2024). Кейсы — illustrative.")
     speaker_notes(s, load_notes("s13"))
 
 
 def build_s14(p):
-    """assertion_visual — fine-tuning narrowed (2 zones)."""
+    """MERGED (§3.1/§3.3 scope + §3.5 criteria table) — «fine-tuning сузился»
+    сверху (2 зоны) + компактная таблица «что куда» снизу. #227 P0: дистилляция
+    НЕ помечена как fine-tuning нигде — «fine-tune teacher + дистилляция
+    student, две отдельные техники в связке»."""
     s = blank(p)
-    slide_title(s, "Fine-tuning не умер — он сузился.", size=27)
-    # P1-1 (v3→v3.1): inline-define вынесено на s13b — здесь только опора
-    # на него + hook «он сузился» (back-to-back дубль с s13b устранён).
-    text_box(s, 0.55, 1.16, 12.25, 0.78,
-             "Fine-tuning (определение — предыдущий слайд) меняет сами веса. Среди инженеров ходит: «в 2026 он умер — всё решает RAG». Это неточно — он не умер, а сузился.",
-             size=14, italic=True, color=MID, line_spacing=1.18)
-    # 2 zones
-    zy, zh = 2.08, 3.05
+    slide_title(s, "Fine-tuning не умер — он сузился до поведения.", size=25)
+    # TOP — 2 zones (что ушло / что осталось)
+    zy, zh = 1.14, 1.72
     ocean_box(s, 0.55, zy, 6.05, zh)
-    icon(s, "git-branch", 0.83, zy + 0.24, 0.52, "mid")
-    text_box(s, 1.50, zy + 0.28, 4.85, 0.45, "Ушло из fine-tuning  (в 2026)",
-             size=16, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.83, zy + 0.95, 5.50, 0.55, "→ знание, факты, то, что меняется → RAG / длинный контекст",
-             size=14, bold=True, color=DEEP, line_spacing=1.15)
-    text_box(s, 0.83, zy + 1.70, 5.50, 1.15,
-             "Зашить факты в веса: нельзя процитировать, нельзя обновить точечно, нельзя удалить один",
-             size=12.5, italic=True, color=SLATE, line_spacing=1.16)
+    icon(s, "git-branch", 0.80, zy + 0.20, 0.46, "mid")
+    text_box(s, 1.40, zy + 0.20, 4.95, 0.42, "Ушло из fine-tuning (2026)",
+             size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.80, zy + 0.72, 5.55, 0.90,
+             "знание, факты, то, что меняется → RAG / длинный контекст. Зашить факты в веса: нельзя процитировать, обновить точечно, удалить один.",
+             size=12.5, color=DEEP, line_spacing=1.16)
     ocean_box(s, 6.75, zy, 6.05, zh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "scale", 7.03, zy + 0.24, 0.52, "teal")
-    text_box(s, 7.70, zy + 0.28, 4.85, 0.45, "Осталось за fine-tuning",
-             size=16, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 7.03, zy + 0.95, 5.50, 1.9,
-             "поведение · стиль · формат вывода · следование политике · дистилляция (меньшая модель учится у большей)",
-             size=14, bold=True, color=DEEP, line_spacing=1.30)
-    gold_callout(s, 0.55, 5.25, 12.25, 1.0,
-                 "Реальный вопрос 2026 — не «RAG или fine-tuning», а «что здесь знание (→ RAG), что поведение (→ FT)». FT сузился, а не исчез.",
-                 size=15)
+    icon(s, "scale", 7.00, zy + 0.20, 0.46, "teal")
+    text_box(s, 7.60, zy + 0.20, 4.95, 0.42, "Осталось за fine-tuning",
+             size=15, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 7.00, zy + 0.72, 5.55, 0.90,
+             "поведение · стиль · формат вывода · следование политике. Дистилляция — отдельная техника, часто применяемая в связке с дообучением.",
+             size=12.5, color=DEEP, line_spacing=1.16)
+    # BOTTOM — criteria table «что куда»
+    ocean_box(s, 0.40, 3.02, 12.55, 3.02)
+    tx, ty, = 0.55, 3.14
+    headers = ["Если задача требует…", "→ правильный инструмент", "…и НЕ этот, потому что"]
+    col_w = [3.95, 3.45, 4.85]
+    rows = [
+        ("знание меняется / нужны свежесть, провенанс", "RAG (или длинный контекст для малого корпуса)",
+         "не fine-tuning: устареет, дорого переобучать, риск forgetting", False),
+        ("стабильное поведение / тон / формат / политика", "fine-tuning (PEFT)",
+         "не RAG: подаёт знание, но не меняет манеру модели", False),
+        ("снизить стоимость / латентность на узкой задаче", "fine-tune teacher + дистилляция student",
+         "две отдельные техники в связке, НЕ «дистилляция = вид fine-tuning»", False),
+        ("детерминированный, верифицируемый ответ", "обычный код, без ИИ",
+         "ни RAG, ни FT: ИИ добавит недетерминизм без выигрыша", True),
+    ]
+    hh, rh = 0.48, 0.58
+    cx = tx
+    for j, hd in enumerate(headers):
+        filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
+        text_box(s, cx + 0.14, ty, col_w[j] - 0.28, hh, hd,
+                 size=12.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+        cx += col_w[j]
+    yy = ty + hh
+    for ri, (c0, c1, c2, isgold) in enumerate(rows):
+        bgrow = GOLD_TINT if isgold else (WHITE if ri % 2 == 0 else SURFACE)
+        cx = tx
+        for j, cc in enumerate([c0, c1, c2]):
+            filled_rect(s, cx, yy, col_w[j], rh, bgrow,
+                        stroke=(GOLD if isgold else SOFT_GREY),
+                        stroke_pt=(1.5 if isgold else 0.75))
+            col = (DEEP if isgold else MID) if j == 1 else DEEP
+            text_box(s, cx + 0.14, yy + 0.04, col_w[j] - 0.28, rh - 0.08, cc,
+                     size=11.5, bold=(j == 1), color=col,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+            cx += col_w[j]
+        yy += rh
+    gold_callout(s, 0.55, 6.14, 12.25, 0.78,
+                 "Реальный вопрос 2026 — не «RAG или fine-tuning», а «что здесь знание (→ RAG), что поведение (→ PEFT), что детерминировано (→ код)». Гибрид — норма там, где есть И проблема знания, И проблема поведения.",
+                 size=13.5)
     speaker_notes(s, load_notes("s14"))
 
 
@@ -1041,13 +1281,21 @@ def build_s15(p):
         text_box(s, rx + 0.24, yy + 0.44, rw - 0.48, (0.60 if isgold else 0.44), b,
                  size=12.5, color=DEEP, line_spacing=1.12)
         yy += (1.24 if isgold else 1.06)
-    # v2 (#9): add assertion-bearing gold plate to neighbour level — slide
-    # had NO bottom gold callout (assertion was only in the reason-3 tint
-    # box); fills the dead band 5.6→7.0, matches s14/s17 callouts.
-    gold_callout(s, 0.55, 5.62, 12.25, 1.05,
-                 "PEFT (LoRA/QLoRA) почти всегда лучше full fine-tuning: дешевле, модульнее и заметно снижает риск catastrophic forgetting — full FT в 2026 почти никогда.",
-                 size=15)
-    footer(s, "Полный спектр методов настройки поведения (SFT / DPO / RFT) — в главе.")
+    # LoRA-adoption baseline (§3.2) с ОБЯЗАТЕЛЬНОЙ оговоркой на видимом слое
+    # (Baseline Mandate): доля среди тегированных PEFT, не среди всего FT.
+    by2 = 5.50
+    ocean_box(s, 0.55, by2, 5.95, 1.32, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_runs(s, 0.80, by2 + 0.16, 5.5, 0.55, [
+        {"text": "98,4% ", "size": 30, "bold": True, "color": GOLD},
+        {"text": "моделей с тегом PEFT — это LoRA", "size": 14, "bold": True, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+    text_box(s, 0.80, by2 + 0.72, 5.45, 0.52,
+             "из 20 834 карточек на Hugging Face Hub · оговорка: доля среди моделей с тегом PEFT, не среди всего fine-tuning",
+             size=11, italic=True, color=SLATE, line_spacing=1.12)
+    gold_callout(s, 6.70, by2, 6.10, 1.32,
+                 "PEFT (LoRA/QLoRA) почти всегда лучше full fine-tuning: дешевле, модульнее, ↓ риск forgetting. Full FT в 2026 — почти никогда.",
+                 size=14)
+    footer(s, "HF PEFT team, «Beyond LoRA?», июнь 2026. Полный спектр методов (SFT / DPO / RFT) — в главе.")
     speaker_notes(s, load_notes("s15"))
 
 
@@ -1078,173 +1326,85 @@ def build_s16(p):
     speaker_notes(s, load_notes("s16"))
 
 
-def build_s17(p):
-    """schema_matrix — criteria table «что куда» (4 rows)."""
-    s = blank(p)
-    slide_title(s, "Критерии: что куда.", size=27)
-    text_box(s, 0.55, 1.14, 12.25, 0.4,
-             "Знание меняется → RAG; поведение/тон/формат → PEFT; детерминированное → код. Гибрид — норма 2026.",
-             size=14.5, italic=True, color=MID)
-    # Ocean motif wrapper behind the table (drawn first, sits behind cells)
-    ocean_box(s, 0.40, 1.55, 12.55, 4.30)
-    # table
-    tx, ty, tw = 0.55, 1.70, 12.25
-    headers = ["Если задача требует…", "→ правильный инструмент", "…и НЕ этот, потому что"]
-    col_w = [4.05, 3.30, 4.90]
-    rows = [
-        ("знание меняется / нужны свежесть, провенанс", "RAG (или длинный контекст для малого корпуса)",
-         "не fine-tuning: устареет, дорого переобучать, риск forgetting", False),
-        ("стабильное поведение / тон / формат / политика", "fine-tuning (PEFT)",
-         "не RAG: подаёт знание, но не меняет манеру модели", False),
-        ("снизить стоимость / латентность на узкой задаче", "дистилляция (fine-tuning)",
-         "не RAG/промпт: не уменьшают размер модели", False),
-        ("детерминированный, верифицируемый ответ", "обычный код, без ИИ",
-         "ни RAG, ни FT: ИИ добавит недетерминизм без выигрыша", True),
-    ]
-    hh = 0.55
-    rh = 0.84
-    # header row
-    cx = tx
-    for j, hd in enumerate(headers):
-        filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
-        text_box(s, cx + 0.14, ty, col_w[j] - 0.28, hh, hd,
-                 size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.0)
-        cx += col_w[j]
-    yy = ty + hh
-    for ri, (c0, c1, c2, isgold) in enumerate(rows):
-        bgrow = GOLD_TINT if isgold else (WHITE if ri % 2 == 0 else SURFACE)
-        cx = tx
-        cells = [c0, c1, c2]
-        for j, cc in enumerate(cells):
-            filled_rect(s, cx, yy, col_w[j], rh, bgrow,
-                        stroke=(GOLD if isgold else SOFT_GREY),
-                        stroke_pt=(1.5 if isgold else 0.75))
-            mid_col = (DEEP if isgold else MID) if j == 1 else DEEP
-            text_box(s, cx + 0.16, yy + 0.06, col_w[j] - 0.32, rh - 0.12, cc,
-                     size=12.5, bold=(j == 1), color=mid_col,
-                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
-            cx += col_w[j]
-        yy += rh
-    gold_callout(s, 0.55, yy + 0.16, 12.25, 1.05,
-                 "Гибрид — норма 2026 там, где у задачи ОДНОВРЕМЕННО есть и проблема знания, и проблема поведения. Не «больше компонентов лучше» — знание и поведение разнесены по правильным механизмам.",
-                 size=14)
-    speaker_notes(s, load_notes("s17"))
-
-
 def build_s18(p):
-    """section_divider — Раздел 4."""
+    """section_divider — Раздел 4 «Агенты» (заголовок БЕЗ «+безопасность»;
+    контент безопасности внутри раздела, на s25)."""
     build_section_divider(
-        p, 4, "Раздел 4", "API · tools · MCP · агенты + безопасность",
-        "От собеседника в окне чата — к компоненту продакшен-системы. И кто видит данные в цепочке.",
+        p, 4, "Раздел 4", "Агенты",
+        "От собеседника в окне чата — к компоненту продакшен-системы: цикл, экипировка, память, доступ к инструментам — и где всё это ломается.",
         "s18")
 
 
 def build_s19(p):
-    """assertion_visual — API layer: 3 mechanism cards."""
+    """MERGED (§4.1) — API-механика (structured output / function calling /
+    prompt caching) СВЕРХУ + MCP (N×M→N+M, USB-C, приятие, поворот доверия)
+    СНИЗУ. Плотный слайд — компактные карточки, отдельная проверка 5-Second."""
     s = blank(p)
-    slide_title(s, "API-слой: модель как компонент системы.", size=27)
-    text_box(s, 0.55, 1.16, 12.25, 0.4,
-             "3 механизма делают модель: встраиваемой, активной, экономически жизнеспособной.",
-             size=14.5, italic=True, color=MID)
+    slide_title(s, "Модель становится компонентом системы: API + MCP.", size=24)
+    # TOP — 3 API mechanism cards (compact)
     cards = [
-        ("boxes", "Structured output",
-         "модель обязана вернуть ответ строго по схеме (JSON), а не свободный текст",
-         "→ выход = валидные данные, не текст для парсинга", "встраиваемая"),
-        ("terminal", "Function calling",
-         "модель возвращает «вызови инструмент X с аргументами Y»; исполняет ваш код, не модель",
-         "→ модель активная в системе", "активная"),
-        ("database", "Prompt caching",
-         "переиспользовать вычисленное состояние неизменного префикса",
-         "→ не переплачивать за повторяемую часть", "экономически жизнеспособная"),
+        ("boxes", "Structured output", "выход строго по схеме (JSON), не текст для парсинга", "встраиваемая"),
+        ("terminal", "Function calling", "модель формулирует «вызови X»; исполняет ваш код, не модель", "активная"),
+        ("database", "Prompt caching", "не пересчитывать неизменный префикс при каждом запросе", "экономичная"),
     ]
-    cw, chh = 4.00, 3.35
-    cy = 1.78
+    cw, chh = 4.00, 2.02
+    cy = 1.12
     x = 0.55
-    for nm, t, body, arrow, tag in cards:
+    for nm, t, body, tag in cards:
         ocean_box(s, x, cy, cw, chh)
-        filled_rect(s, x + 0.24, cy + 0.24, 0.62, 0.62, MID, radius=True,
-                    radius_adj=0.18)
-        icon(s, nm, x + 0.30, cy + 0.30, 0.50, "white")
-        text_box(s, x + 0.98, cy + 0.30, cw - 1.15, 0.55, t,
-                 size=16, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.0)
-        text_box(s, x + 0.24, cy + 1.05, cw - 0.48, 1.05, body,
-                 size=12.5, color=DEEP, line_spacing=1.16)
-        text_box(s, x + 0.24, cy + 2.15, cw - 0.48, 0.62, arrow,
-                 size=13, bold=True, color=MID, line_spacing=1.12)
-        chip(s, x + 0.24, cy + chh - 0.62, cw - 0.48, 0.42, tag,
-             fill=TEAL, color=WHITE, size=12.5)
-        x += cw + 0.32
-    gold_callout(s, 0.55, 5.32, 12.25, 0.98,
-                 "Ни один из трёх не делает модель надёжнее или аудируемее — они расширяют, что модель может, не меняя её недетерминированной природы. Правило лестницы не отменяется.",
-                 size=14.5)
-    speaker_notes(s, load_notes("s19"))
-
-
-def build_s20(p):
-    """assertion_visual — MCP: N×M→N+M + adoption + trust warning."""
-    s = blank(p)
-    slide_title(s, "MCP — стандарт подключения инструментов.", size=26)
-    text_box(s, 0.55, 1.14, 12.25, 0.55,
-             "MCP (Model Context Protocol) — открытый стандарт: единый способ подключать инструменты, данные и контекст к LLM. «USB-C для инструментов LLM».",
-             size=13.5, italic=True, color=MID, line_spacing=1.15)
-    # left — N×M -> N+M + adoption timeline
-    lx, ly, lw, lh = 0.55, 1.92, 6.05, 3.95
-    ocean_box(s, lx, ly, lw, lh)
-    icon(s, "cable", lx + 0.26, ly + 0.22, 0.55, "mid")
-    text_runs(s, lx + 0.95, ly + 0.28, lw - 1.15, 0.85, [
-        {"text": "N×M", "size": 22, "bold": True, "color": LIGHT},
-        {"text": " несовместимых интеграций → ", "size": 14, "color": DEEP},
-        {"text": "N+M", "size": 22, "bold": True, "color": TEAL},
-        {"text": " через MCP", "size": 14, "color": DEEP},
-    ], line_spacing=1.1, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, lx + 0.26, ly + 1.20, lw - 0.52, 0.6,
+        filled_rect(s, x + 0.22, cy + 0.22, 0.56, 0.56, MID, radius=True, radius_adj=0.18)
+        icon(s, nm, x + 0.28, cy + 0.28, 0.44, "white")
+        text_box(s, x + 0.90, cy + 0.24, cw - 1.05, 0.52, t,
+                 size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x + 0.24, cy + 0.90, cw - 0.48, 0.72, body,
+                 size=12.5, color=DEEP, line_spacing=1.14)
+        chip(s, x + 0.24, cy + chh - 0.46, cw - 0.48, 0.34, tag,
+             fill=TEAL, color=WHITE, size=12)
+        x += cw + 0.13
+    # BOTTOM — MCP
+    my = 3.36
+    ocean_box(s, 0.55, my, 6.55, 2.55)
+    icon(s, "cable", 0.80, my + 0.20, 0.48, "mid")
+    text_runs(s, 1.40, my + 0.22, 5.5, 0.5, [
+        {"text": "MCP", "size": 18, "bold": True, "color": MID},
+        {"text": "  — «USB-C для инструментов LLM»", "size": 14, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    text_runs(s, 0.80, my + 0.82, 6.0, 0.5, [
+        {"text": "N×M", "size": 20, "bold": True, "color": LIGHT},
+        {"text": " несовместимых интеграций → ", "size": 13, "color": DEEP},
+        {"text": "N+M", "size": 20, "bold": True, "color": TEAL},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.80, my + 1.36, 6.0, 0.32,
              "инструмент один раз = MCP-сервер; модель один раз = MCP-клиент",
-             size=12, italic=True, color=SLATE, line_spacing=1.12)
-    text_box(s, lx + 0.26, ly + 1.90, lw - 0.52, 0.32,
-             "Мини-таймлайн принятия:", size=12.5, bold=True, color=MID)
+             size=11.5, italic=True, color=SLATE)
     tl = [("Anthropic", "11/2024", "logo-anthropic"),
           ("OpenAI", "03/2025", "logo-openai"),
-          ("Google", "04/2025", "logo-gemini"),
-          ("независимый фонд", "→", None)]
-    ty = ly + 2.30
-    tw_each = (lw - 0.52) / 4
+          ("Google", "04/2025", "logo-gemini")]
+    tx0 = 0.80
     for i, (nm, dt, lg) in enumerate(tl):
-        ex = lx + 0.26 + i * tw_each
-        if lg:
-            add_image(s, ICONS / f"{lg}.png", ex + tw_each / 2 - 0.21, ty, 0.42, 0.42)
-        else:
-            circle(s, ex + tw_each / 2 - 0.21, ty, 0.42, LIGHT)
-        text_box(s, ex, ty + 0.46, tw_each, 0.26, nm,
-                 size=10, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, ex, ty + 0.70, tw_each, 0.24, dt,
-                 size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-        if i < 3:
-            text_box(s, ex + tw_each - 0.12, ty + 0.05, 0.24, 0.32, "→",
-                     size=14, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    # right — warning
-    rx, rw = 6.80, 6.0
-    ocean_box(s, rx, 1.92, rw, 3.95, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, rx + 0.26, 2.10, rw - 0.52, 0.75,
+        ex = tx0 + i * 2.0
+        add_image(s, ICONS / f"{lg}.png", ex, my + 1.82, 0.34, 0.34)
+        text_box(s, ex + 0.42, my + 1.80, 1.5, 0.24, nm, size=10.5, bold=True, color=DEEP)
+        text_box(s, ex + 0.42, my + 2.02, 1.5, 0.22, dt, size=10, italic=True, color=LIGHT)
+        if i < 2:
+            text_box(s, ex + 1.72, my + 1.82, 0.22, 0.3, "→", size=13, bold=True, color=LIGHT)
+    # trust warning
+    ocean_box(s, 7.25, my, 5.55, 2.55, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, 7.52, my + 0.18, 5.1, 0.72,
              "Стандартизация подключения ≠ безопасность подключаемого — и усугубляет проблему доверия.",
-             size=14.5, bold=True, color=TEAL, line_spacing=1.14)
-    warns = [
+             size=13.5, bold=True, color=TEAL, line_spacing=1.14)
+    for i, w in enumerate([
         "код в вашем окружении / доступ к данным",
-        "описание попадает в контекст модели — носитель prompt injection (инъекция в промпт; разбор — s25)",
-        "ещё одна граница доверия и retention-политика",
-    ]
-    wy = 2.95
-    for w in warns:
-        circle(s, rx + 0.28, wy + 0.07, 0.12, TEAL)
-        text_box(s, rx + 0.54, wy, rw - 0.82, 0.72, w,
-                 size=12.5, color=DEEP, line_spacing=1.14)
-        wy += 0.80
-    gold_callout(s, 0.55, 5.95, 12.25, 0.88,
-                 "Удобство подключения — не аргумент за подключение. Аргумент — требование задачи и приемлемость новой границы доверия.",
-                 size=14.5)
-    footer(s, "Принятие/масштаб экосистемы MCP — перепроверить ко дню лекции.")
-    speaker_notes(s, load_notes("s20"))
+        "описание попадает в контекст — носитель prompt injection",
+        "ещё одна граница доверия и retention-политика"]):
+        circle(s, 7.54, my + 1.02 + i * 0.44 + 0.05, 0.11, TEAL)
+        text_box(s, 7.76, my + 1.02 + i * 0.44, 5.0, 0.42, w,
+                 size=12, color=DEEP, line_spacing=1.08)
+    gold_callout(s, 0.55, 6.06, 12.25, 0.80,
+                 "Ни один механизм не делает модель надёжнее — правило лестницы не отменяется. Удобство подключения — не аргумент за подключение.",
+                 size=13.5)
+    footer(s, "Числа экономии prompt caching и масштаб экосистемы MCP — в главе; перепроверить ко дню лекции.")
+    speaker_notes(s, load_notes("s19"))
 
 
 def build_s21(p):
@@ -1261,7 +1421,7 @@ def build_s21(p):
         ("act", "Act", "вызывает инструмент (function calling)",
          "инструмент падает / тормозит, а ветки на это нет", MID, False),
         ("check", "Check", "достигнута ли цель, корректен ли результат",
-         "валидация против ВНЕШНЕГО критерия — не самооценка модели (callback s07)", GOLD, True),
+         "валидация против ВНЕШНЕГО критерия — не самооценка модели (отсылка к пределу CoT)", GOLD, True),
         ("iter", "Iterate", "цикл повторяется",
          "нет внешнего лимита на итерации / стоимость / время → петля", MID, False),
     ]
@@ -1366,16 +1526,199 @@ def build_s22(p):
              "Могу ли я заранее, до запуска, выписать последовательность шагов?  да (даже с ветвлениями) → workflow  ·  принципиально нет И ценность оправдывает кратные стоимость/риск → агент",
              size=13.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.18)
-    gold_callout(s, 0.55, 5.92, 8.55, 0.92,
-                 "Найди простейшее решение. «Лень формализовать» не делает задачу непредсказуемой.",
-                 size=14)
-    ocean_box(s, 9.30, 5.92, 3.50, 0.92, fill=SURFACE, stroke=SOFT_GREY,
-              stroke_pt=1.0)
-    text_box(s, 9.50, 6.00, 3.10, 0.78,
-             "Мульти-агент по умолчанию — не апгрейд (дебат — в главе)",
+    # #231: вложенность workflow↔agent — норма, не третья архитектура.
+    ocean_box(s, 0.55, 5.90, 8.55, 0.98, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, 0.80, 5.98, 8.05, 0.82,
+             "Вложенность — норма: агент code review вызывает workflow «линтер→тесты→формат» как один шаг; workflow обработки заявок делегирует мини-агенту разбор свободной жалобы. Динамика — только там, где нужна.",
+             size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
+    ocean_box(s, 9.30, 5.90, 3.50, 0.98, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.0)
+    text_box(s, 9.50, 5.98, 3.10, 0.82,
+             "Найди простейшее. «Лень формализовать» не делает задачу непредсказуемой.",
              size=11.5, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.10)
     speaker_notes(s, load_notes("s22"))
+
+
+def build_s22b(p):
+    """NEW (§4.4) — «из чего сделан агент-помощник»: карта 5 слотов
+    экипировки. ASSERTION на заголовке: каждый слот — компромисс, не
+    апгрейд по умолчанию (рифма с лестницей)."""
+    s = blank(p)
+    slide_title(s, "Каждый слот экипировки агента — компромисс, не апгрейд.", size=23)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Реальный агент-помощник (Claude Code, Cursor, Aider) — это цикл plan→act→check→iterate ПЛЮС оснастка. Пять типовых слотов:",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    slots = [
+        ("brain-circuit", "Память", "что помнит между сессиями"),
+        ("file-text", "Инструкции-правила", "файлы-конвенции + журнал задач"),
+        ("puzzle", "Skills", "переиспользуемые процедуры"),
+        ("users", "Subagents", "делегирование + изоляция"),
+        ("cable", "Access / MCP", "доступ к внешним инструментам"),
+    ]
+    cw = 2.40
+    gap = 0.10
+    x0 = 0.55
+    y = 1.78
+    chh = 2.55
+    for i, (ic, t, sub) in enumerate(slots):
+        x = x0 + i * (cw + gap)
+        ocean_box(s, x, y, cw, chh)
+        filled_rect(s, x + cw / 2 - 0.42, y + 0.26, 0.84, 0.84, MID, radius=True, radius_adj=0.18)
+        icon(s, ic, x + cw / 2 - 0.32, y + 0.36, 0.64, "white")
+        text_box(s, x + 0.10, y + 1.28, cw - 0.20, 0.5, t,
+                 size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
+        text_box(s, x + 0.14, y + 1.80, cw - 0.28, 0.65, sub,
+                 size=11.5, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.12)
+        # slot number badge
+        circle(s, x + 0.14, y + 0.14, 0.32, GOLD)
+        text_box(s, x + 0.14, y + 0.14, 0.32, 0.32, str(i + 1),
+                 size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    gold_callout(s, 0.55, 4.66, 12.25, 1.30,
+                 "Как не поднимаешься по лестнице архитектур без требования задачи — не добавляй агенту память, subagents или MCP «на всякий случай». Каждый слот несёт свою цену: операционную сложность, новую поверхность отказа, новую границу доверия — и должен отвечать на конкретный триггер (Раздел 5).",
+                 size=15)
+    speaker_notes(s, load_notes("s22b"))
+
+
+def build_s22c(p):
+    """NEW (§4.5) — память агента: плоский файл → mem0/Cognee/Graphiti-Zep.
+    Явный callback на RAG Раздела 2 — тот же вопрос масштаба знания."""
+    s = blank(p)
+    slide_title(s, "Память агента — тот же вопрос масштаба, что RAG.", size=24)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Память — что агент помнит МЕЖДУ сессиями (в отличие от контекста одного разговора). Спектр — от плоского файла до graph-баз.",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    # spectrum: flat file -> vector/graph
+    sy, sh = 1.86, 2.35
+    ocean_box(s, 0.55, sy, 5.55, sh)
+    icon(s, "file-text", 0.82, sy + 0.22, 0.50, "mid")
+    text_box(s, 1.44, sy + 0.24, 4.4, 0.42, "Плоский файл", size=16, bold=True,
+             color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.82, sy + 0.86, 5.0, 1.35,
+             "агент дописывает факты в текстовый лог, при запуске читает целиком. Работает, пока лог мал и стабилен — прямая параллель критерию RAG «корпус помещается в окно».",
+             size=13, color=DEEP, line_spacing=1.20)
+    right_arrow(s, 6.20, sy + sh / 2 - 0.26, 0.55, 0.52, fill=LIGHT)
+    ocean_box(s, 6.95, sy, 5.85, sh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "brain-circuit", 7.22, sy + 0.22, 0.50, "teal")
+    text_box(s, 7.84, sy + 0.24, 4.7, 0.42, "Векторная / graph-база", size=16,
+             bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
+    for i, m in enumerate([
+        "mem0 — cross-session память пользователя",
+        "Cognee — memory на графе знаний",
+        "Graphiti / Zep — temporal graph: когда факт верен, когда устарел",
+    ]):
+        circle(s, 7.24, sy + 0.86 + i * 0.44 + 0.05, 0.11, TEAL)
+        text_box(s, 7.46, sy + 0.86 + i * 0.44, 5.1, 0.42, m,
+                 size=12.5, color=DEEP, line_spacing=1.08)
+    gold_callout(s, 0.55, 4.42, 12.25, 1.50,
+                 "Тот же вопрос масштаба знания, что решает RAG для корпуса документов, здесь встаёт для памяти самого агента. Не ставьте graph-базу агенту с короткими несвязанными сессиями — это тот же технический долг без требования, что RAG для десяти статей.",
+                 size=15)
+    footer(s, "Источник: публичный реестр agent-harness-registry (workain lab, live-eval).")
+    speaker_notes(s, load_notes("s22c"))
+
+
+def build_s22d(p):
+    """NEW (§4.6) — провал памяти (кейс): Letta Tier D + Anthropic Memory
+    Tool Tier B 17%. Freshness-оговорка Letta на видимом слое."""
+    s = blank(p)
+    slide_title(s, "«Агент, который помнит» — не всегда лучше.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Наличие памяти интуитивно кажется чистым улучшением. Независимый live-eval показывает: иногда — драматически нет.",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    # left — Letta case with numbers
+    lx, ly, lw, lh = 0.55, 1.86, 6.25, 4.05
+    ocean_box(s, lx, ly, lw, lh)
+    icon(s, "triangle-alert", lx + 0.26, ly + 0.22, 0.46, "mid")
+    text_box(s, lx + 0.84, ly + 0.22, lw - 1.1, 0.42, "Letta — Tier D",
+             size=16, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, lx + 0.26, ly + 0.78, lw - 0.52, 0.62,
+             "проигрывает И голой модели, И плоскому файлу на всех задачах. persistbench_v1:",
+             size=13, color=DEEP, line_spacing=1.16)
+    # mini table of 3 numbers
+    rows = [("Голая модель", "1.000", "94 с", TEAL),
+            ("Плоский файл", "0.833", "159 с", MID),
+            ("Letta", "0.750", "496 с", GOLD)]
+    ry = ly + 1.48
+    for nm, sc, tm, col in rows:
+        filled_rect(s, lx + 0.26, ry, 0.14, 0.34, col)
+        text_box(s, lx + 0.52, ry, 2.7, 0.34, nm, size=12.5, bold=True, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, lx + 3.25, ry, 1.3, 0.34, sc, size=13, bold=True, color=col,
+                 anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+        text_box(s, lx + 4.65, ry, 1.3, 0.34, tm, size=12, color=SLATE,
+                 anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+        ry += 0.42
+    text_box(s, lx + 0.26, ry + 0.02, lw - 0.52, 0.72,
+             "Механизмы: капитуляция под давлением · многословие топит факт · факт замечен, но не закоммичен.",
+             size=12, color=DEEP, line_spacing=1.14)
+    # freshness caveat VISIBLE
+    filled_rect(s, lx + 0.26, ly + lh - 0.62, lw - 0.52, 0.48, SOFT_GREY,
+                radius=True, radius_adj=0.12)
+    text_box(s, lx + 0.42, ly + lh - 0.58, lw - 0.80, 0.40,
+             "Оговорка: тест на Letta v0.6.7 — отстаёт от текущей v0.16.8 (~18 мес).",
+             size=11, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    # right — Anthropic Memory Tool 17%
+    rx, rw = 7.05, 5.75
+    ocean_box(s, rx, ly, rw, lh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, rx + 0.28, ly + 0.22, rw - 0.56, 0.42, "Anthropic Memory Tool — Tier B",
+             size=16, bold=True, color=DEEP)
+    text_box(s, rx + 0.28, ly + 0.70, rw - 0.56, 0.5,
+             "В целом сильный результат — но даже он теряет данные в",
+             size=13, color=DEEP, line_spacing=1.14)
+    text_runs(s, rx + 0.28, ly + 1.18, rw - 0.56, 0.7, [
+        {"text": "17% ", "size": 34, "bold": True, "color": GOLD},
+        {"text": "задач", "size": 16, "bold": True, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    for i, m in enumerate([
+        "явный отказ записать «эфемерный» факт",
+        "немотивированный отказ «вне рамок»",
+        "тихая lossy-суммаризация — деталь не восстановить",
+        "невоспроизводимость: та же беседа дважды → разный результат",
+    ]):
+        circle(s, rx + 0.30, ly + 2.04 + i * 0.42 + 0.05, 0.11, MID)
+        text_box(s, rx + 0.52, ly + 2.04 + i * 0.42, rw - 0.80, 0.42, m,
+                 size=12, color=DEEP, line_spacing=1.06)
+    footer(s, "agent-harness-registry (workain lab, live-eval 2026-07-05). «Работает хорошо» ≠ «работает всегда» — тот же урок, что RAG на масштабе и forgetting.")
+    speaker_notes(s, load_notes("s22d"))
+
+
+def build_s22e(p):
+    """NEW (§4.7) — операционный слой: файлы-инструкции + presence paradox +
+    Honest Lying + claude-code#51735. Интуиция расходится с измерением."""
+    s = blank(p)
+    slide_title(s, "Файл-инструкция агенту — не «магическая прививка».", size=24)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Операционный слой — файлы-конвенции (класс CLAUDE.md / AGENTS.md) + журнал задач. Интуиция «написал инструкцию → лучше» расходится с измерением.",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    # 3 evidence cards
+    cards = [
+        ("notebook-pen", "presence paradox", "RCT (Gloaguen et al. 2026): само наличие файла-инструкции НЕ даёт значимого прироста успешности — при этом стоимость и число шагов растут.", "Помогает только там, где реально заполняет пробел документации."),
+        ("brain-circuit", "Honest Lying", "Dixit, Kamal, Oates 2026: self-authored память может ЗАКРЕПЛЯТЬ неверное убеждение — журнал бетонирует раннюю ошибку вместо пересмотра.", "Рефлексия ошибочна → повторные попытки опираются на неё."),
+        ("triangle-alert", "claude-code#51735", "Реальный кейс: письменно признанная прошлая ошибка НЕ предотвратила её повторение спустя 25 дней.", "Запись о провале ≠ гарантия, что поведение изменится."),
+    ]
+    cw, chh = 4.00, 3.35
+    cy = 1.80
+    x = 0.55
+    for i, (ic, t, body, foot) in enumerate(cards):
+        isgold = (i == 0)
+        if isgold:
+            ocean_box(s, x, cy, cw, chh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, x, cy, cw, chh)
+        icon(s, ic, x + 0.24, cy + 0.24, 0.50, "gold" if isgold else "mid")
+        text_box(s, x + 0.86, cy + 0.26, cw - 1.05, 0.5, t,
+                 size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x + 0.24, cy + 0.92, cw - 0.48, 1.75, body,
+                 size=12.5, color=DEEP, line_spacing=1.18)
+        filled_rect(s, x + 0.22, cy + chh - 0.86, cw - 0.44, 0.72, SURFACE,
+                    stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.10)
+        text_box(s, x + 0.36, cy + chh - 0.80, cw - 0.68, 0.62, foot,
+                 size=11.5, italic=True, color=(DEEP if isgold else SLATE),
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        x += cw + 0.13
+    gold_callout(s, 0.55, 5.30, 12.25, 0.90,
+                 "Полезен, когда заполняет реальный пробел; бесполезен, когда дублирует доступное модели; может навредить, когда самоавторская память закрепляет ошибку. Тот же паттерн, что роль в промпте: «добавить X → лучше» не подтверждается измерением.",
+                 size=13.5)
+    speaker_notes(s, load_notes("s22e"))
 
 
 def build_s23(p):
@@ -1394,19 +1737,25 @@ def build_s23(p):
     text_box(s, c1x + 0.24, cy + 0.85, c1w - 0.48, 0.95,
              "Агент на «синхронизируй заказы» получил HTTP 429 → план→вызов→429→…",
              size=12, color=DEEP, line_spacing=1.14)
-    text_box(s, c1x + 0.24, cy + 1.82, c1w - 0.48, 0.7, "$4 200 за 63 часа",
-             size=26, bold=True, color=GOLD, line_spacing=1.0)
-    text_box(s, c1x + 0.24, cy + 2.55, c1w - 0.48, 0.72,
-             "Почему: агент не «видит» ни стоимости, ни времени, ни повторяемости",
-             size=11.5, italic=True, color=SLATE, line_spacing=1.12)
-    text_box(s, c1x + 0.24, cy + 3.30, c1w - 0.48, 1.05,
-             "Правильно: задача предсказуема → retry-with-backoff скрипт, не агент; budget/loop-лимиты ВНЕ агента",
-             size=12, bold=True, color=DEEP, line_spacing=1.14)
+    text_box(s, c1x + 0.24, cy + 1.72, c1w - 0.48, 0.50, "$4 200 за 63 часа",
+             size=22, bold=True, color=GOLD, line_spacing=1.0)
+    # #233: явная база сравнения — retry-скрипт «практически бесплатно»
+    filled_rect(s, c1x + 0.24, cy + 2.24, c1w - 0.48, 0.62, WHITE, stroke=GOLD,
+                stroke_pt=1.5, radius=True, radius_adj=0.12)
+    text_box(s, c1x + 0.38, cy + 2.27, c1w - 0.76, 0.56,
+             "База сравнения: retry-скрипт с backoff решил бы ту же задачу за секунды-минуты, практически бесплатно",
+             size=10, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    text_box(s, c1x + 0.24, cy + 2.92, c1w - 0.48, 0.56,
+             "$4 200 — цена не автоматизации, а неправильного выбора архитектуры под предсказуемую задачу",
+             size=10, italic=True, color=SLATE, line_spacing=1.08)
+    text_box(s, c1x + 0.24, cy + 3.54, c1w - 0.48, 0.90,
+             "Более подходящая архитектура: retry-with-backoff скрипт, не агент; лимиты бюджета и итераций ВНЕ агента",
+             size=11, bold=True, color=DEEP, line_spacing=1.10)
     # card 2 — compounding (chart)
     c2x, c2w = 4.80, 4.05
     ocean_box(s, c2x, cy, c2w, chh)
     text_box(s, c2x + 0.24, cy + 0.20, c2w - 0.48, 0.4,
-             "2. Reliability compounding", size=15, bold=True, color=MID)
+             "2. Накопление ошибок (compounding)", size=15, bold=True, color=MID)
     add_image(s, CHARTS / "c23-compounding.png", c2x + 0.16, cy + 0.62,
               c2w - 0.32, 2.55)
     text_box(s, c2x + 0.24, cy + 3.30, c2w - 0.48, 1.05,
@@ -1423,132 +1772,127 @@ def build_s23(p):
              "зависимые подзадачи → параллельные субагенты принимают конфликтующие неявные решения",
              size=12.5, color=DEEP, line_spacing=1.18)
     text_box(s, c3x + 0.24, cy + 2.70, c3w - 0.48, 1.65,
-             "Правильно: single-threaded линейный агент; мульти-агент — только широко-параллельное независимое",
+             "Более подходящая: single-threaded линейный агент; мульти-агент — только широко-параллельное независимое",
              size=12.5, bold=True, color=DEEP, line_spacing=1.18)
-    footer(s, "$4 200-петля — single-author постмортем 2026-04 (illustrative, числа округлены); reliability compounding — MindStudio 2025–2026.")
+    footer(s, "Атаки через инструменты (prompt injection, GitHub MCP heist) — 4-й класс провалов, разобран на слайде безопасности. $4 200-петля — single-author постмортем 2026-04 (illustrative); compounding — MindStudio 2025–2026.")
     speaker_notes(s, load_notes("s23"))
 
 
-def build_s24(p):
-    """schema_pipeline — data-flow chain map + 2 facts + rule (v2: subtype
-    reclassified architecture→pipeline; decluttered — definitions moved to
-    notes, USER-actor icon added at «ваши данные», more whitespace)."""
-    s = blank(p)
-    slide_title(s, "Кто видит данные в цепочке.", size=27)
-    text_box(s, 0.55, 1.14, 12.25, 0.40,
-             "Каждое звено — своя граница доверия и своя retention-политика. Данные за периметром живут не по вашим правилам.",
-             size=14, italic=True, color=MID, line_spacing=1.15)
-    # data-flow chain (USER actor at the head; pipeline of trust boundaries)
-    cx, cyy, cw, chh = 0.55, 1.78, 12.25, 1.78
-    ocean_box(s, cx, cyy, cw, chh)
-    chain = [("ваши данные", "user-check"), ("агент", "bot"),
-             ("инструмент", "terminal"), ("внешний API", "cable"),
-             ("провайдер", "database"), ("подрядчики", "link")]
-    n = len(chain)
-    node_w = 1.74
-    gap = (cw - 0.5 - n * node_w) / (n - 1)
-    nx = cx + 0.25
-    ny = cyy + 0.34
-    for i, (lab, ic) in enumerate(chain):
-        is_user = (i == 0)
-        col = GOLD if is_user else (MID if i < 5 else LIGHT)
-        filled_rect(s, nx, ny, node_w, 0.86, col, radius=True, radius_adj=0.14)
-        icon(s, ic, nx + node_w / 2 - 0.20, ny + 0.10, 0.28,
-             "deep" if is_user else "white")
-        text_box(s, nx, ny + 0.44, node_w, 0.38, lab, size=12.5, bold=True,
-                 color=(DEEP if is_user else WHITE),
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        if i < n - 1:
-            ax = nx + node_w + 0.02
-            right_arrow(s, ax, ny + 0.28, gap - 0.04, 0.30, fill=LIGHT)
-        nx += node_w + gap
-    text_box(s, cx + 0.25, cyy + chh - 0.34, cw - 0.5, 0.28,
-             "золото = вы (точка отсчёта); каждая стрелка — новая retention-граница",
-             size=12, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    # 2 fact panels — short visible text (full detail in speaker notes)
-    fy, fh = 3.80, 1.55
-    ocean_box(s, 0.55, fy, 6.05, fh)
-    icon(s, "gavel", 0.83, fy + 0.22, 0.46, "mid")
-    text_box(s, 1.45, fy + 0.24, 4.95, 0.46, "Судебный приказ переживает вашу политику",
-             size=14, bold=True, color=MID, line_spacing=1.05,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.83, fy + 0.86, 5.55, 0.60,
-             "суд может обязать хранить логи поверх договорных «30 дней» (NYT v. OpenAI)",
-             size=12.5, color=DEEP, line_spacing=1.14)
-    ocean_box(s, 6.75, fy, 6.05, fh)
-    icon(s, "eye-off", 7.03, fy + 0.22, 0.46, "mid")
-    text_box(s, 7.65, fy + 0.24, 4.95, 0.46, "ZDR покрывает не всё",
-             size=14, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 7.03, fy + 0.86, 5.55, 0.60,
-             "вне ZDR: third-party, Files, batch, MCP — а агент это и есть third-party",
-             size=12.5, color=DEEP, line_spacing=1.14)
-    gold_callout(s, 0.55, 5.58, 12.25, 0.92,
-                 "«У нас ZDR» ≠ «нигде ничего не хранится». Контрмера — карта данных по каждой фиче, не галочка. Регулируемое — не слать без ZDR/BAA.",
-                 size=14.5)
-    footer(s, "ZDR (Zero Data Retention) — провайдер не хранит содержимое; least-privilege — минимум прав. BAA — договор об обработке. Хронология retention — в главе.")
-    speaker_notes(s, load_notes("s24"))
-
-
 def build_s25(p):
-    """case_study — tool attacks: mechanism map + 2 cases + 4 rules."""
+    """NEW/MERGED (§4.8) — skills + subagents + доступ к инструментам +
+    ИНТЕГРИРОВАННАЯ безопасность равного веса (P1: GOLD security block, не
+    caveat снизу). GitHub MCP heist + ZDR-факты живут ЗДЕСЬ."""
     s = blank(p)
-    slide_title(s, "Атаки через инструменты.", size=27)
-    text_box(s, 0.55, 1.14, 12.25, 0.55,
-             "Prompt injection (инъекция в промпт) — текст во внешних данных модель интерпретирует как инструкцию. Модель не отличает «данные» от «команды».",
-             size=13.5, italic=True, color=MID, line_spacing=1.15)
-    # left — mechanism flow + 1 primary case + lesson (v2: decluttered,
-    # tool-poisoning detail moved to speaker notes, more whitespace)
-    lx, ly, lw, lh = 0.55, 1.92, 6.55, 3.95
-    ocean_box(s, lx, ly, lw, lh)
-    # mechanism flow
-    flow = ["недоверенный\nконтент", "контекст\nмодели", "исполняется\nкак команда"]
-    fw = (lw - 0.5 - 2 * 0.30) / 3
-    fx = lx + 0.25
-    for i, t in enumerate(flow):
-        filled_rect(s, fx, ly + 0.28, fw, 0.96,
-                    (GOLD if i == 2 else MID), radius=True, radius_adj=0.12)
-        text_box(s, fx, ly + 0.28, fw, 0.96, t, size=12, bold=True,
-                 color=(DEEP if i == 2 else WHITE), align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
-        if i < 2:
-            right_arrow(s, fx + fw + 0.02, ly + 0.58, 0.26, 0.40, fill=LIGHT)
-        fx += fw + 0.30
-    icon(s, "triangle-alert", lx + 0.28, ly + 1.52, 0.40, "mid")
-    text_box(s, lx + 0.84, ly + 1.50, lw - 1.10, 0.34, "GitHub MCP heist",
-             size=15, bold=True, color=MID)
-    text_box(s, lx + 0.28, ly + 1.96, lw - 0.54, 0.86,
-             "issue с инструкцией + переизбыточный токен → ассистент выгрузил приватные репозитории",
-             size=13, color=DEEP, line_spacing=1.18)
-    filled_rect(s, lx + 0.28, ly + 2.96, lw - 0.56, 0.80, GOLD_TINT,
-                stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.10)
-    text_box(s, lx + 0.46, ly + 3.02, lw - 0.92, 0.68,
-             "Катастрофа = инъекция × широкие права. Убери любой из двух — атака не проходит.",
-             size=13.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.14)
-    # right — 4 rules
-    rx, rw = 7.35, 5.45
-    ocean_box(s, rx, ly, rw, lh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, rx + 0.28, ly + 0.20, rw - 0.56, 0.36, "4 правила проектирования",
-             size=15, bold=True, color=TEAL)
-    rules = [
-        ("Least-privilege", "минимально необходимые токены/доступы"),
-        ("Изоляция недоверенного контента", "отдельно от привилегий"),
-        ("Human-in-the-loop на write", "необратимое только через подтверждение человека"),
-        ("Allowlist / pin", "только аудированные; фиксировать версии/хеши; deny-by-default"),
+    slide_title(s, "Skills, subagents, доступ — и граница доверия.", size=25)
+    # top row — 3 equipment slots
+    slots = [
+        ("puzzle", "Skill", "переиспользуемая процедура «как делать» под повторяющуюся задачу"),
+        ("users", "Subagent", "отдельное контекстное окно: не засорять главный + изолировать недоверенное"),
+        ("cable", "MCP-доступ", "каждое подключение — новая граница доверия и retention-политика"),
     ]
-    ry = ly + 0.68
+    cw, chh = 4.00, 1.55
+    cy = 1.12
+    x = 0.55
+    for ic, t, body in slots:
+        ocean_box(s, x, cy, cw, chh)
+        icon(s, ic, x + 0.22, cy + 0.22, 0.46, "mid")
+        text_box(s, x + 0.80, cy + 0.22, cw - 1.0, 0.42, t,
+                 size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x + 0.24, cy + 0.74, cw - 0.48, 0.74, body,
+                 size=12, color=DEEP, line_spacing=1.14)
+        x += cw + 0.13
+    # GOLD security block — EQUAL VISUAL WEIGHT (P1), not a footer caveat
+    gy, gh = 2.86, 3.60
+    ocean_box(s, 0.55, gy, 12.25, gh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=3.0)
+    icon(s, "shield-alert", 0.82, gy + 0.22, 0.56, "gold")
+    text_box(s, 1.52, gy + 0.24, 11.0, 0.44,
+             "Безопасность: как только агент делегирует и подключается — появляется поверхность, которой не было у одного вызова",
+             size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    # left half — GitHub heist mechanism + 2 ZDR facts
+    text_box(s, 0.82, gy + 0.80, 5.85, 0.34, "GitHub MCP heist (май 2025)",
+             size=13.5, bold=True, color=DEEP)
+    text_box(s, 0.82, gy + 1.14, 5.85, 0.78,
+             "issue с встроенной инструкцией + переизбыточный токен (PAT на все репо) → ассистент выгрузил приватные репозитории в публичный PR.",
+             size=12, color=DEEP, line_spacing=1.16)
+    filled_rect(s, 0.82, gy + 1.96, 5.85, 0.46, WHITE, stroke=GOLD, stroke_pt=1.5,
+                radius=True, radius_adj=0.14)
+    text_box(s, 0.98, gy + 1.99, 5.55, 0.40,
+             "Катастрофа = инъекция × широкие права. Убери любое — атака не проходит.",
+             size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.82, gy + 2.48, 5.85, 0.44,
+             "«У нас ZDR» ≠ «нигде не хранится»: судебный приказ (NYT v. OpenAI) + third-party/MCP вне ZDR. Регулируемое — не слать без ZDR/BAA.",
+             size=11, italic=True, color=DEEP, line_spacing=1.10)
+    # right half — 4 rules
+    rx = 7.05
+    text_box(s, rx, gy + 0.80, 5.5, 0.34, "4 правила проектирования",
+             size=13.5, bold=True, color=DEEP)
+    rules = [
+        ("Least-privilege", "минимум токенов/прав"),
+        ("Изоляция недоверенного", "отдельно от привилегий (subagent)"),
+        ("Human-in-the-loop на write", "необратимое — только через человека"),
+        ("Allowlist / pin", "аудированные версии; deny-by-default"),
+    ]
+    ry = gy + 1.18
     for i, (t, b) in enumerate(rules):
-        circle(s, rx + 0.28, ry + 0.04, 0.32, TEAL)
-        text_box(s, rx + 0.28, ry + 0.04, 0.32, 0.32, str(i + 1),
-                 size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, rx + 0.72, ry, rw - 0.95, 0.34, t,
-                 size=13.5, bold=True, color=DEEP)
-        text_box(s, rx + 0.72, ry + 0.34, rw - 0.95, 0.40, b,
-                 size=11.5, color=SLATE, line_spacing=1.05)
-        ry += 0.80
-    footer(s, "Tool poisoning / rug-pull и полная CVE-хронология MCP-инцидентов — в главе/notes, не на видимом слое.")
+        circle(s, rx, ry + 0.03, 0.30, GOLD)
+        text_box(s, rx, ry + 0.03, 0.30, 0.30, str(i + 1),
+                 size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, rx + 0.42, ry - 0.02, 5.5, 0.30, t, size=13, bold=True, color=DEEP)
+        text_box(s, rx + 0.42, ry + 0.26, 5.5, 0.28, b, size=11, color=SLATE)
+        ry += 0.58
     speaker_notes(s, load_notes("s25"))
+
+
+def build_s25b(p):
+    """NEW (§4.9) — обзор реальных coding-агентов через рамку экипировки §4.4.
+    РОВНО 4 инструмента: Claude Code / Aider / Cursor / OpenHands. OpenHands
+    помечен как неподтверждённая гипотеза «OpenClaw»."""
+    s = blank(p)
+    slide_title(s, "Реальные coding-агенты — через рамку экипировки.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Разница между инструментами — не в «качестве модели», а в том, какие слоты экипировки заполнены и где агент физически живёт.",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    tools = [
+        ("Claude Code", "CLI + IDE · проприетарный",
+         "широкая экипировка: память, файлы-инструкции, skills, полноценные subagents, MCP — почти все 5 слотов",
+         "цена — большая операционная сложность", MID, False),
+        ("Aider", "CLI-first · open source",
+         "минимальная простота: без развитой памяти, без subagents, без skills. ~47k★ на GitHub",
+         "«тонкая» оснастка — самостоятельный выбор, не недоразвитость", TEAL, False),
+        ("Cursor", "desktop IDE (форк VS Code) · проприетарный",
+         "агент внутри редактора — не терминал. Форма интеграции — отдельная ось от оснастки",
+         "где живёт агент — тоже архитектурное решение", MID, False),
+        ("OpenHands", "self-hosted платформа · MIT · ~80k★",
+         "широкая автономность, локальное/Docker/облако развёртывание",
+         "[требует подтверждения] вероятный кандидат на «OpenClaw» из issue #157 — рабочая гипотеза по совпадению профиля, не установленный факт", GOLD, True),
+    ]
+    cw, chh = 3.02, 4.05
+    cy = 1.74
+    x = 0.55
+    for nm, meta, body, note, col, ishyp in tools:
+        if ishyp:
+            ocean_box(s, x, cy, cw, chh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, x, cy, cw, chh)
+        icon(s, "code", x + 0.22, cy + 0.22, 0.44, "gold" if ishyp else "mid")
+        text_box(s, x + 0.76, cy + 0.20, cw - 0.92, 0.48, nm,
+                 size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x + 0.24, cy + 0.76, cw - 0.48, 0.44, meta,
+                 size=10.5, italic=True, color=LIGHT, line_spacing=1.08)
+        text_box(s, x + 0.24, cy + 1.22, cw - 0.48, 1.30, body,
+                 size=11.5, color=DEEP, line_spacing=1.16)
+        nb_h = 1.30 if ishyp else 0.86
+        filled_rect(s, x + 0.20, cy + chh - nb_h - 0.14, cw - 0.40, nb_h,
+                    WHITE if ishyp else SURFACE, stroke=(GOLD if ishyp else SOFT_GREY),
+                    stroke_pt=(1.5 if ishyp else 1.0), radius=True, radius_adj=0.10)
+        text_box(s, x + 0.32, cy + chh - nb_h - 0.08, cw - 0.64, nb_h - 0.10, note,
+                 size=(9.5 if ishyp else 10), italic=True,
+                 color=(DEEP if ishyp else SLATE), line_spacing=1.10)
+        x += cw + 0.13
+    gold_callout(s, 0.55, 5.98, 12.25, 0.86,
+                 "Выбор инструмента подчиняется тому же правилу: не бери самый оснащённый по умолчанию — смотри, какая оснастка нужна именно твоей задаче.",
+                 size=13.5)
+    speaker_notes(s, load_notes("s25b"))
 
 
 def build_s26(p):
@@ -1619,141 +1963,132 @@ def build_s26(p):
 
 
 def build_s27(p):
-    """schema_matrix — COMPRESSED decision matrix 5 axes × 5 architectures
-    (v2: owner-decision, was 7×7 cryptic). Readable words, solid semantic
-    color (gold=strong / teal=weak), per-column icons, dominant gold plate."""
+    """NEW (§5.2) — «План решения»: 8-шаговый маршрут вопросов сверху вниз
+    (flowchart с да/нет-ветвлениями), ЗАМЕНА старой 7×7 матрицы. Нижняя
+    плашка-приоритет (детерминированное → код, СТОП) — gold-вес."""
     s = blank(p)
-    slide_title(s, "Матрица выбора.", size=26, y=0.30, h=0.56)
-    text_box(s, 0.55, 0.86, 12.25, 0.30,
-             "Матрица — структура для аргумента, не сумма баллов. Заливка: золото = сильная сторона, бирюза = слабая.",
-             size=12.5, italic=True, color=MID)
-    # 5 columns (architectures) + axis col; 5 rows (carrying criteria)
-    cols = [
-        ("Критерий ↓", None),
-        ("Промпт", "terminal"),
-        ("RAG", "database"),
-        ("Fine-tune", "git-branch"),
-        ("Агент", "bot"),
-        ("Код (без ИИ)", "check-check"),
+    slide_title(s, "План решения: маршрут вопросов, а не сумма баллов.", size=24)
+    text_box(s, 0.55, 1.02, 8.4, 0.36,
+             "Пройдите задачу сверху вниз; останавливайтесь на первом сработавшем вопросе.",
+             size=13, italic=True, color=MID)
+    # left — vertical routed flow (question -> да-outcome)
+    fx = 0.55
+    qw = 5.35           # question box width
+    ow = 3.05           # outcome box width
+    ax = fx + qw + 0.12  # outcome x
+    steps = [
+        ("Детерминированная и верифицируемая?", "да → обычный код · СТОП", True),
+        ("Закрывает один вызов (+CoT)?", "да → промпт · СТОП", False),
+        ("Нужен провенанс по источнику?", "да → RAG grounding / код", False),
+        ("Знание меняется / провенанс?", "да → RAG (не FT)", False),
+        ("Нужно поведение / тон / формат?", "да → fine-tuning (PEFT)", False),
+        ("Многошагово, порядок известен?", "да → workflow · нет → агент+лимиты", False),
+        ("Подзадачи параллельны+независимы?", "да → мульти-агент · нет → линейный", False),
     ]
-    col_w = [2.70] + [1.95] * 5   # sum = 2.70 + 9.75 = 12.45
-    # sem: g = strong (gold solid), t = weak (teal solid), n = neutral (surface)
-    rows = [
-        ("Знание\nбольшое / меняется",
-         [("мало", "t"), ("да", "g"), ("нет", "t"), ("через RAG", "n"), ("—", "n")]),
-        ("Свежесть /\nпровенанс",
-         [("нет", "t"), ("да + цитата", "g"), ("нет", "t"), ("да", "g"), ("детерм.", "g")]),
-        ("Стоимость",
-         [("низкая", "g"), ("средняя", "n"), ("высокая разово", "t"), ("кратно выше", "t"), ("минимум", "g")]),
-        ("Аудируемость",
-         [("средняя", "n"), ("высокая", "g"), ("низкая", "t"), ("низкая", "t"), ("полная", "g")]),
-        ("Недетерминизм /\nриск петель",
-         [("низкий", "g"), ("низкий", "g"), ("низкий", "g"), ("высокий", "t"), ("нет", "g")]),
-    ]
-    tx, ty = 0.55, 1.24
-    hh = 0.76
-    rh = 0.70
-    table_h = hh + 5 * rh
-    # Ocean motif wrapper behind the matrix (drawn first, behind cells)
-    ocean_box(s, 0.40, 1.12, 12.55, table_h + 0.22)
-    # header row — icons per column + label
-    cx = tx
-    for j, (c, ic) in enumerate(cols):
-        filled_rect(s, cx, ty, col_w[j], hh, DEEP if j == 0 else MID,
-                    radius=False)
-        if ic:
-            icon(s, ic, cx + col_w[j] / 2 - 0.21, ty + 0.09, 0.30, "white")
-            text_box(s, cx + 0.04, ty + 0.42, col_w[j] - 0.08, 0.32, c,
-                     size=14, bold=True, color=WHITE,
-                     align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-                     line_spacing=0.95)
+    y = 1.40
+    qh = 0.50
+    vg = 0.085
+    for i, (q, out, isgold) in enumerate(steps):
+        if isgold:
+            ocean_box(s, fx, y, qw, qh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.5)
         else:
-            text_box(s, cx + 0.10, ty, col_w[j] - 0.18, hh, c,
-                     size=14, bold=True, color=WHITE,
-                     align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.MIDDLE)
-        cx += col_w[j]
-    yy = ty + hh
-    for ri, (axis, cells) in enumerate(rows):
-        cx = tx
-        filled_rect(s, cx, yy, col_w[0], rh, SURFACE, stroke=SOFT_GREY,
-                    stroke_pt=1.0)
-        text_box(s, cx + 0.12, yy, col_w[0] - 0.20, rh, axis,
-                 size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.0)
-        cx += col_w[0]
-        for j, (txt, sem) in enumerate(cells):
-            if sem == "g":
-                bg, fg, bd = GOLD, DEEP, True
-            elif sem == "t":
-                bg, fg, bd = TEAL, WHITE, True
-            else:
-                bg, fg, bd = SURFACE, SLATE, False
-            filled_rect(s, cx, yy, col_w[j + 1], rh, bg, stroke=WHITE,
-                        stroke_pt=1.5)
-            text_box(s, cx + 0.05, yy, col_w[j + 1] - 0.10, rh, txt,
-                     size=15, bold=bd, color=fg,
-                     align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-                     line_spacing=0.95)
-            cx += col_w[j + 1]
-        yy += rh
-    # Dominant gold bottom plate — the actual main message of the slide
-    py = yy + 0.20
-    plate_h = 7.06 - py
-    filled_rect(s, 0.40, py, 12.55, plate_h, GOLD_TINT, stroke=GOLD,
-                stroke_pt=3.0, radius=True, radius_adj=0.08)
-    icon(s, "check-check", 0.74, py + (plate_h - 0.52) / 2, 0.52, "gold")
-    text_box(s, 1.50, py + 0.14, 11.15, plate_h - 0.28,
-             "Детерминированная, верифицируемая, повторяемая задача → обычный код, без ИИ. "
-             "ИИ добавил бы лишь недетерминизм + стоимость + латентность + поверхность для prompt injection.",
-             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.20)
+            ocean_box(s, fx, y, qw, qh)
+        circle(s, fx + 0.12, y + (qh - 0.32) / 2, 0.32, GOLD if isgold else MID)
+        text_box(s, fx + 0.12, y + (qh - 0.32) / 2, 0.32, 0.32, str(i + 1),
+                 size=13, bold=True, color=(DEEP if isgold else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, fx + 0.54, y, qw - 0.68, qh, q,
+                 size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+        # outcome to the right
+        filled_rect(s, ax, y + 0.05, ow, qh - 0.10, GOLD if isgold else TEAL_TINT,
+                    stroke=(GOLD if isgold else TEAL), stroke_pt=1.2, radius=True, radius_adj=0.12)
+        text_box(s, ax + 0.12, y + 0.05, ow - 0.24, qh - 0.10, out,
+                 size=10.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+        # connector question->outcome
+        right_arrow(s, fx + qw + 0.005, y + qh / 2 - 0.09, 0.11, 0.18, fill=LIGHT)
+        # down arrow (нет ↓) to next
+        if i < len(steps) - 1:
+            text_box(s, fx + 0.16, y + qh - 0.02, 1.2, vg + 0.04, "нет ↓",
+                     size=9, italic=True, color=SLATE)
+        y += qh + vg
+    # step 8 — parallel data check (footer note across question+outcome cols)
+    filled_rect(s, fx, y + 0.02, qw + 0.12 + ow, 0.36, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.2, radius=True, radius_adj=0.14)
+    text_box(s, fx + 0.16, y + 0.03, qw + 0.12 + ow - 0.30, 0.34,
+             "8. Данные чувствительны? → параллельно на КАЖДОМ шаге: карта данных + least-privilege + ZDR/BAA",
+             size=10.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+    # right — worked example + mini-apply
+    rx, rw = 9.10, 3.70
+    ocean_box(s, rx, 1.46, rw, 2.55, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, rx + 0.24, 1.60, rw - 0.48, 0.34, "Пример (задача A)", size=13.5,
+             bold=True, color=TEAL)
+    text_box(s, rx + 0.24, 1.96, rw - 0.48, 1.95,
+             "«2000 регламентов, меняются еженедельно, ответ со ссылкой на пункт» → вопрос 4 (меняется+провенанс) решающий → RAG со strict grounding. Не FT (устареет), не код (нужен NL).",
+             size=12, color=DEEP, line_spacing=1.20)
+    ocean_box(s, rx, 4.12, rw, 1.85)
+    text_box(s, rx + 0.24, 4.26, rw - 0.48, 0.34, "Разминка (задача B)", size=13.5,
+             bold=True, color=MID)
+    text_box(s, rx + 0.24, 4.62, rw - 0.48, 1.30,
+             "«бот на ~150 FAQ, меняются раз в квартал» — пройдите маршрут сами; разбор на семинаре.",
+             size=12, color=DEEP, line_spacing=1.18)
+    # bottom priority plate — gold, the most important line
+    gold_callout(s, 0.55, 6.06, 12.25, 0.82,
+                 "Приоритет маршрута: если задача детерминированная и верифицируемая — обычный код, СТОП здесь. ИИ добавил бы лишь недетерминизм, стоимость, латентность и поверхность для prompt injection.",
+                 size=14)
     speaker_notes(s, load_notes("s27"))
 
 
-def build_s28(p):
-    """summary — 8-step checklist + worked example + mini-apply."""
+def build_s27b(p):
+    """NEW (§5.2b) — «Стартовый комплект агента и когда его усложнять».
+    Growth-ladder playbook. Рифма с лестницей s26 и картой 5 слотов §4.4."""
     s = blank(p)
-    slide_title(s, "Чек-лист «прежде чем строить».", size=27)
-    # left — 8-step checklist
-    lx, ly, lw, lh = 0.55, 1.35, 7.05, 5.45
-    ocean_box(s, lx, ly, lw, lh)
-    items = [
-        "Решается обычным кодом (детерм., верифиц.)? → не добавляй ИИ",
-        "Хватит одного промпта (+few-shot/CoT)? → остановись здесь",
-        "Знание меняется / нужны свежесть, провенанс? → RAG, не FT",
-        "Нужно стабильное поведение / тон / формат? → fine-tuning (PEFT)",
-        "Корпус влезает в окно и стабилен? → длинный контекст + кэш",
-        "Предсказуема → workflow. Непредсказуема и ценна → агент+лимиты",
-        "Подзадачи независимы и параллельны? → мульти-агент; иначе линейный",
-        "Данные чувствительны? → карта данных + least-privilege + ZDR/BAA",
+    slide_title(s, "Стартовый комплект агента — и когда его усложнять.", size=24)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Та же лестница «не усложняй без требования», применённая на уровень ниже — к оснастке одного агента, а не системы целиком.",
+             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    # left — thin default
+    lx, ly, lw, lh = 0.55, 1.86, 4.45, 4.05
+    ocean_box(s, lx, ly, lw, lh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "package", lx + 0.26, ly + 0.24, 0.54, "teal")
+    text_box(s, lx + 0.92, ly + 0.26, lw - 1.1, 0.5, "Дефолт — тонкий агент",
+             size=16, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
+    for i, t in enumerate([
+        "один файл-инструкция",
+        "плоская память",
+        "БЕЗ subagents",
+        "минимальный набор skills",
+        "минимальный MCP-доступ",
+    ]):
+        circle(s, lx + 0.30, ly + 1.06 + i * 0.52 + 0.06, 0.12, TEAL)
+        text_box(s, lx + 0.56, ly + 1.06 + i * 0.52, lw - 0.84, 0.48, t,
+                 size=14, color=DEEP, line_spacing=1.1)
+    text_box(s, lx + 0.28, ly + lh - 0.72, lw - 0.56, 0.62,
+             "Бремя доказательства — на усложнении, а не на простоте.",
+             size=12, italic=True, color=DEEP, line_spacing=1.14)
+    # right — 3 justified triggers
+    rx, rw = 5.30, 7.50
+    triggers = [
+        ("brain-circuit", "Память-бэкенд — когда:",
+         "история переросла контекст ИЛИ нужен structured retrieval по фактам (не «последние N сообщений»). Тот же критерий, что переход промпт→RAG."),
+        ("users", "Subagents — когда:",
+         "подзадача требует отдельного окна (не засорять контекст) ИЛИ изоляции недоверенной работы (least-privilege)."),
+        ("cable", "Больше MCP-доступа — когда:",
+         "конкретная задача требует конкретного инструмента — не «на всякий случай». Каждое подключение — новая граница доверия."),
     ]
-    iy = ly + 0.30
-    for i, it in enumerate(items):
-        circle(s, lx + 0.28, iy + 0.04, 0.34, MID)
-        text_box(s, lx + 0.28, iy + 0.04, 0.34, 0.34, str(i + 1),
-                 size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, lx + 0.74, iy, lw - 1.0, 0.58, it,
-                 size=12.5, color=DEEP, line_spacing=1.10)
-        iy += 0.625
-    # right — apply blocks
-    rx, rw = 7.85, 4.95
-    ocean_box(s, rx, 1.35, rw, 2.0, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, rx + 0.26, 1.50, rw - 0.52, 0.34, "Worked example (задача A)",
-             size=14, bold=True, color=TEAL)
-    text_box(s, rx + 0.26, 1.86, rw - 0.52, 1.40,
-             "«2000 регламентов, обновляются еженедельно, ответ со ссылкой на пункт» → шаги 3+8 → RAG со strict grounding. Причины: ось «частота изменений» + ось «провенанс»",
-             size=12, color=DEEP, line_spacing=1.16)
-    ocean_box(s, rx, 3.50, rw, 1.85)
-    text_box(s, rx + 0.26, 3.64, rw - 0.52, 0.34, "Mini-apply (задача B)",
-             size=14, bold=True, color=MID)
-    text_box(s, rx + 0.26, 3.99, rw - 0.52, 1.30,
-             "«бот техподдержки на ~150 коротких FAQ, меняются раз в квартал, ответы из утверждённых формулировок» — пройдите чек-лист сами за 2 минуты",
-             size=12, color=DEEP, line_spacing=1.16)
-    gold_callout(s, 7.85, 5.50, 4.95, 1.30,
-                 "Сначала попытка — потом сверка. Сформулируйте ответ (архитектура + ≥2 причины по осям + ≥1 условие смены) ДО разбора.",
-                 size=12.5)
-    speaker_notes(s, load_notes("s28"))
+    ty2 = 1.86
+    th = 1.24
+    for ic, t, b in triggers:
+        ocean_box(s, rx, ty2, rw, th)
+        icon(s, ic, rx + 0.24, ty2 + 0.22, 0.46, "mid")
+        text_box(s, rx + 0.84, ty2 + 0.18, rw - 1.05, 0.36, t,
+                 size=14.5, bold=True, color=MID)
+        text_box(s, rx + 0.84, ty2 + 0.54, rw - 1.05, 0.66, b,
+                 size=12, color=DEEP, line_spacing=1.16)
+        ty2 += th + 0.16
+    gold_callout(s, 0.55, 6.06, 12.25, 0.82,
+                 "Тот же принцип, что лестница архитектур — применённый к оснастке одного агента: presence paradox показал, что даже файл-инструкция «как ритуал» не работает. Усложняй под конкретный проверяемый триггер.",
+                 size=13)
+    speaker_notes(s, load_notes("s27b"))
 
 
 def build_s29(p):
@@ -1763,23 +2098,29 @@ def build_s29(p):
     # left — human validator
     lx, ly, lw, lh = 0.55, 1.40, 6.55, 4.45
     ocean_box(s, lx, ly, lw, lh)
-    icon(s, "user-check", lx + 0.26, ly + 0.24, 0.56, "mid")
-    text_box(s, lx + 0.96, ly + 0.26, lw - 1.15, 0.55,
+    icon(s, "user-check", lx + 0.26, ly + 0.24, 0.52, "mid")
+    text_box(s, lx + 0.92, ly + 0.24, lw - 1.1, 0.50,
              "Агент делает — человек проверяет результат и факты",
-             size=15.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.08)
-    pts = [
-        "против независимого источника истины",
-        "на значимых решениях — ДО того, как станет действием",
-        "НЕ «убедительно ли звучит рассуждение» (callback s07: self-rationale ≠ контроль)",
-        "это шаг check цикла агента + пункт 8 чек-листа + human-in-the-loop на write",
+             size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.05)
+    text_box(s, lx + 0.28, ly + 0.82, lw - 0.56, 0.44,
+             "против независимого источника истины, НЕ по правдоподобности рассуждения (self-rationale ≠ контроль — урок про faithfulness).",
+             size=12, italic=True, color=SLATE, line_spacing=1.14)
+    # #237: три измерения роли человека-валидатора
+    dims = [
+        ("Степень автономности", "от «человек нажимает кнопку» до «агент уведомляет постфактум»"),
+        ("Область доверия", "чтение (легко откатить) vs запись · обратимое vs необратимое"),
+        ("Непрерывный мониторинг", "метрики качества постоянно, не разовая проверка на старте"),
     ]
-    py = ly + 1.05
-    for t in pts:
-        circle(s, lx + 0.30, py + 0.07, 0.12, MID)
-        text_box(s, lx + 0.56, py, lw - 0.84, 0.78, t,
-                 size=13, color=DEEP, line_spacing=1.14)
-        py += 0.82
+    py = ly + 1.42
+    for t, b in dims:
+        filled_rect(s, lx + 0.28, py, lw - 0.56, 0.90, SURFACE, stroke=SOFT_GREY,
+                    stroke_pt=1.0, radius=True, radius_adj=0.10)
+        text_box(s, lx + 0.44, py + 0.10, lw - 0.86, 0.34, t,
+                 size=13.5, bold=True, color=MID)
+        text_box(s, lx + 0.44, py + 0.44, lw - 0.86, 0.42, b,
+                 size=11.5, color=DEEP, line_spacing=1.10)
+        py += 0.98
     # right — NANDA donut
     rx, rw = 7.35, 5.45
     ocean_box(s, rx, ly, rw, 3.10, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
@@ -1787,7 +2128,7 @@ def build_s29(p):
     text_box(s, rx + 2.75, ly + 0.35, rw - 3.0, 0.95, "~95%",
              size=42, bold=True, color=GOLD, line_spacing=1.0)
     text_box(s, rx + 2.75, ly + 1.30, rw - 3.0, 1.65,
-             "корпоративных GenAI-пилотов без измеримого ROI — корень в learning gap и провале интеграции, не в качестве модели",
+             "корпоративных GenAI-пилотов без измеримого возврата инвестиций — корень в разрыве обучения и провале интеграции, не в качестве модели",
              size=12.5, color=DEEP, line_spacing=1.18)
     ocean_box(s, rx, ly + 3.25, rw, 1.20)
     text_box(s, rx + 0.26, ly + 3.38, rw - 0.52, 0.95,
@@ -1799,69 +2140,53 @@ def build_s29(p):
 
 
 def build_s30(p):
-    """summary — bridge to industry lectures + homework (v3 U-6/U-7:
-    retitled from function-as-title «Мост к отраслям + задание» to a
-    content thesis; Q&A removed → moved to dedicated s31)."""
+    """hero_closing / summary — мост к Лекции 4 + ДЗ (#238). Hero-иллюстрация
+    (реальный кадр разработки, Wikimedia CC) ≥40% справа — bridge к
+    «AI в разработке ПО». Recap-заполнитель убран."""
     s = blank(p)
-    slide_title(s, "AI-архитектура — несущая ось отраслевых лекций.",
-                size=27)
-    # bridge box (top, full width)
-    bx, by, bw, bh = 0.55, 1.30, 12.25, 1.62
-    ocean_box(s, bx, by, bw, bh)
-    icon(s, "route", bx + 0.28, by + 0.26, 0.50, "mid")
-    text_box(s, bx + 0.98, by + 0.20, bw - 1.2, 0.46,
-             "Модуль 1 закрыт:  Л1 (что такое AI) → Л2 (почему промпт работает) → Л3 (как собрать систему и КАК ВЫБРАТЬ)",
-             size=14, bold=True, color=DEEP, line_spacing=1.1,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, bx + 0.98, by + 0.74, bw - 1.2, 0.78,
-             "Дальше — отраслевые Лекции 4–17: тот же вопрос в новой обёртке — «какая архитектура и почему именно она, и при каком условии ответ был бы другим»",
-             size=13, color=DEEP, line_spacing=1.16)
-    # homework block — full width (Q&A column removed, rebalanced mass)
-    hx, hy, hw, hh = 0.55, 3.15, 12.25, 2.85
-    ocean_box(s, hx, hy, hw, hh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    icon(s, "clipboard-list", hx + 0.32, hy + 0.30, 0.58, "gold")
-    text_box(s, hx + 1.04, hy + 0.28, hw - 1.34, 0.5,
-             "Задание — Семинар 3", size=20, bold=True, color=DEEP,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, hx + 1.04, hy + 0.82, hw - 1.34, 0.46,
+    # Hero photo — right ~44% full height (bridge к coding-агентам Л4)
+    hx, hy, hw, hh = 7.55, 0.0, 5.78, 7.5
+    hero_image(s, SCREENSHOTS / "s30-coding.jpg", hx, hy, hw, hh)
+    filled_rect(s, hx, 7.10, 4.9, 0.40, DEEP)
+    text_box(s, hx + 0.14, 7.12, 4.7, 0.34,
+             "Фото: разработчик за IDE · Wikimedia · CC-BY-SA",
+             size=10.5, italic=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+    # Left — bridge + Lec 4 + homework
+    lx, lw = 0.55, 6.75
+    text_box(s, lx, 0.50, lw, 1.10,
+             "Дальше — отрасли. Начинаем с разработки ПО.",
+             size=26, bold=True, color=DEEP, line_spacing=1.06)
+    # bridge to Lecture 4
+    ocean_box(s, lx, 1.70, lw, 2.10, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "code", lx + 0.26, 1.92, 0.46, "teal")
+    text_box(s, lx + 0.86, 1.90, lw - 1.1, 0.4, "Лекция 4",
+             size=15, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, lx + 0.86, 2.28, lw - 1.1, 0.46,
+             "AI в разработке программного обеспечения",
+             size=16, bold=True, color=DEEP, line_spacing=1.05)
+    text_box(s, lx + 0.28, 2.86, lw - 0.56, 0.85,
+             "тот же аппарат — на конкретных задачах разработчика: те же coding-агенты, что мы разобрали, со стороны инженерной практики.",
+             size=12.5, color=DEEP, line_spacing=1.18)
+    # homework
+    ocean_box(s, lx, 3.96, lw, 2.16, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    icon(s, "clipboard-list", lx + 0.28, 4.14, 0.50, "gold")
+    text_box(s, lx + 0.90, 4.12, lw - 1.15, 0.44, "Задание — Семинар 3",
+             size=18, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, lx + 0.28, 4.68, lw - 0.56, 0.40,
              "«Архитектурный выбор: чат / агент / RAG / API — 3 кейса»",
-             size=15, bold=True, color=MID, line_spacing=1.1)
-    text_box(s, hx + 0.42, hy + 1.42, hw - 0.84, 1.30,
-             "Применить восьмишаговый чек-лист к 3 кейсам; для каждого: архитектура + ≥2 причины по осям матрицы + ≥1 условие смены выбора + критерий «здесь это было бы НЕ так».  Mini-apply задача B (s28) — разминка перед семинаром.",
-             size=14, color=DEEP, line_spacing=1.28)
-    # closing takeaway strip (gold-bold thesis, one line)
-    gold_callout(s, 0.55, 6.30, 12.25, 0.72,
-                 "Аппарат для центрального вопроса собран — прогоняйте чек-лист на каждой отраслевой лекции.",
-                 size=15, align=PP_ALIGN.CENTER)
+             size=14, bold=True, color=MID, line_spacing=1.05)
+    text_box(s, lx + 0.28, 5.12, lw - 0.56, 0.94,
+             "Применить чек-лист к 3 кейсам; для каждого: архитектура + ≥2 причины по осям + ≥1 условие смены выбора + критерий «здесь это было бы НЕ так». Задача B — разминка.",
+             size=12, color=DEEP, line_spacing=1.16)
+    gold_callout(s, lx, 6.30, lw, 0.74,
+                 "Аппарат собран — прогоняйте чек-лист на каждой отраслевой лекции.",
+                 size=13.5)
     speaker_notes(s, load_notes("s30"))
 
 
 # ============================================================
 # v3 new builders (suffix-ID, plan §4 U-1…U-7) — NO renumber s01–s30.
 # ============================================================
-def build_subdivider_security(p, sid):
-    """Sub-divider Безопасность (U-5a): stays in Раздел 4 (giant «4»,
-    roadmap gold on Раздел 4), but distinct subtitle + «· БЕЗОПАСНОСТЬ»
-    on the section label. Same template family as build_section_divider."""
-    s = blank(p)
-    set_slide_bg(s, SURFACE)
-    text_box(s, x=8.35, y=0.55, w=4.6, h=5.6, text="4",
-             size=380, bold=True, color=COVER_OUTLINE,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    text_box(s, x=0.75, y=1.55, w=7.3, h=0.55,
-             text="РАЗДЕЛ 4 · БЕЗОПАСНОСТЬ", size=20, bold=True, color=TEAL)
-    filled_rect(s, 0.78, 2.16, 0.7, 0.05, fill=GOLD)
-    text_box(s, x=0.75, y=2.55, w=7.5, h=1.85,
-             text="Кто видит данные в цепочке", size=38, bold=True,
-             color=DEEP, line_spacing=1.08)
-    text_box(s, x=0.78, y=4.50, w=7.4, h=1.55,
-             text="Разобрали, надёжен ли агент. Теперь — другой вопрос: агент действует через инструменты и внешние API, так кто видит ваши данные и кто может прислать команду?",
-             size=18, italic=True, color=LIGHT, line_spacing=1.22)
-    roadmap_bar(s, 4, y=6.45)
-    speaker_notes(s, load_notes(sid))
-    return s
-
-
 def build_s04a(p):
     """section_divider — Раздел 1 «Промпт и его границы» (U-1)."""
     build_section_divider(
@@ -1905,12 +2230,12 @@ def build_s13b(p):
     # node 1 — pretrained model
     filled_rect(s, n1x, by, bw, bh, SURFACE, stroke=LIGHT, stroke_pt=1.5,
                 radius=True, radius_adj=0.10)
-    icon(s, "cpu", n1x + bw / 2 - 0.23, by + 0.18, 0.46, "mid")
-    text_box(s, n1x + 0.14, by + 0.72, bw - 0.28, 0.34,
-             "Предобученная модель", size=14, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER)
-    text_box(s, n1x + 0.14, by + 1.04, bw - 0.28, 0.30,
-             "общие веса", size=12, italic=True, color=SLATE,
+    icon(s, "cpu", n1x + bw / 2 - 0.23, by + 0.14, 0.42, "mid")
+    text_box(s, n1x + 0.10, by + 0.60, bw - 0.20, 0.56,
+             "Предобученная\nмодель", size=13, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, line_spacing=1.02)
+    text_box(s, n1x + 0.14, by + 1.18, bw - 0.28, 0.26,
+             "общие веса", size=11.5, italic=True, color=SLATE,
              align=PP_ALIGN.CENTER)
     # «+» between n1 and n2
     text_box(s, plus_x, by + bh / 2 - 0.32, 0.58, 0.64, "+",
@@ -1919,13 +2244,13 @@ def build_s13b(p):
     # node 2 — your dataset
     filled_rect(s, n2x, by, bw, bh, SURFACE, stroke=LIGHT, stroke_pt=1.5,
                 radius=True, radius_adj=0.10)
-    icon(s, "database", n2x + bw / 2 - 0.23, by + 0.18, 0.46, "teal")
-    text_box(s, n2x + 0.14, by + 0.72, bw - 0.28, 0.34,
-             "Ваш датасет", size=14, bold=True, color=DEEP,
+    icon(s, "database", n2x + bw / 2 - 0.23, by + 0.14, 0.42, "teal")
+    text_box(s, n2x + 0.14, by + 0.60, bw - 0.28, 0.30,
+             "Ваш датасет", size=13, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER)
-    text_box(s, n2x + 0.14, by + 1.04, bw - 0.28, 0.30,
-             "примеры нужного поведения", size=12, italic=True,
-             color=SLATE, align=PP_ALIGN.CENTER)
+    text_box(s, n2x + 0.10, by + 0.94, bw - 0.20, 0.50,
+             "примеры нужного\nповедения", size=11.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.02)
     # «дообучение» label ABOVE arrow (clear vertical separation)
     text_box(s, arr_x0 - 0.05, by - 0.42, 1.60, 0.32, "дообучение",
              size=13, bold=True, color=MID, align=PP_ALIGN.CENTER)
@@ -1934,13 +2259,13 @@ def build_s13b(p):
     # node 3 — fine-tuned weights (gold = the changed thing)
     filled_rect(s, n3x, by, bw, bh, GOLD_TINT, stroke=GOLD, stroke_pt=2.0,
                 radius=True, radius_adj=0.10)
-    icon(s, "sliders-horizontal", n3x + bw / 2 - 0.23, by + 0.18, 0.46,
+    icon(s, "sliders-horizontal", n3x + bw / 2 - 0.23, by + 0.14, 0.42,
          "gold")
-    text_box(s, n3x + 0.14, by + 0.72, bw - 0.28, 0.34,
-             "Дообученные ВЕСА", size=14, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER)
-    text_box(s, n3x + 0.14, by + 1.04, bw - 0.28, 0.30,
-             "модель уже другая", size=12, italic=True, color=SLATE,
+    text_box(s, n3x + 0.10, by + 0.60, bw - 0.20, 0.56,
+             "Дообученные\nВЕСА", size=13, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, line_spacing=1.02)
+    text_box(s, n3x + 0.14, by + 1.18, bw - 0.28, 0.26,
+             "модель уже другая", size=11.5, italic=True, color=SLATE,
              align=PP_ALIGN.CENTER)
     # contrast strip — КОНТЕКСТ vs ВЕСА (2 halves)
     cy, ch = 4.55, 1.55
@@ -1958,14 +2283,10 @@ def build_s13b(p):
              "Изменение встроено в модель — действует всегда и стоит дороже того, что меняет контекст.",
              size=13, color=DEEP, line_spacing=1.22)
     gold_callout(s, 0.55, 6.28, 12.25, 0.78,
-                 "Промпт/RAG = «что показать модели».  Fine-tuning = «изменить саму модель».",
-                 size=15)
+                 "Промпт/RAG = «что показать модели».  Fine-tuning = «изменить саму модель». На практике «дообучить» почти всегда означает LoRA/PEFT, а не переобучение всех весов (следующий слайд).",
+                 size=14)
     speaker_notes(s, load_notes("s13b"))
 
-
-def build_s23a(p):
-    """section_divider (sub) — Безопасность в Разделе 4 (U-5a)."""
-    build_subdivider_security(p, "s23a")
 
 
 def build_s25a(p):
@@ -1977,27 +2298,26 @@ def build_s25a(p):
 
 
 def build_s31(p):
-    """qa_minimal — dedicated final Q&A slide (U-7).
+    """qa_minimal — dedicated final Q&A slide (#239, стиль Лекции 1 s31).
 
-    Mirrors lec-02 s29 dedicated Q&A: huge centered «Вопросы» in DEEP,
-    «Спасибо за внимание» in MID, quiet reminder bottom. White bg,
-    no footer / no roadmap-bar — visual quiet for open Q&A. Ocean motif
-    NOT used (cover-family quiet, like lec-02 dedicated Q&A)."""
+    Большое «Q&A» 120pt по центру в DEEP; «Спасибо» 36pt ниже; контактные
+    координаты лектора мелким в правом нижнем углу (заполняются перед
+    лекцией). Белый фон, без footer и roadmap-bar."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    text_box(s, x=0.55, y=2.20, w=12.25, h=2.30, text="Вопросы",
+    text_box(s, x=0.55, y=2.05, w=12.25, h=2.30, text="Q&A",
              size=120, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.0)
-    text_box(s, x=0.55, y=4.70, w=12.25, h=0.78,
-             text="Спасибо за внимание", size=32, bold=False, color=MID,
+    text_box(s, x=0.55, y=4.55, w=12.25, h=0.78,
+             text="Спасибо", size=36, bold=False, color=MID,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.2)
-    text_box(s, x=0.55, y=6.40, w=12.25, h=0.50,
-             text="Семинар 3 «Архитектурный выбор» — на следующей неделе.  Дополнительные вопросы — на e-mail.",
-             size=14, italic=True, color=LIGHT,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.2)
+    # контакты лектора — правый нижний угол (заполнить перед лекцией)
+    text_box(s, x=8.30, y=6.70, w=4.50, h=0.50,
+             text="[контакты преподавателя — заполнить перед лекцией]",
+             size=12, italic=True, color=LIGHT,
+             align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
     speaker_notes(s, load_notes("s31"))
 
 
@@ -2015,27 +2335,32 @@ def main():
               f"totals {spec['totals'].get('slides')}")
 
     p = setup_pres()
-    # plan §4 presentation order — suffix slides inserted WITHOUT renumber:
-    #   s01..s04 → s04a → s05..s08 → s09 → s10..s13 → s13a → s13b →
-    #   s14..s17 → s18 → s19..s23 → s23a → s24..s25 → s25a →
-    #   s26..s29 → s30 → s31  (36 total)
+    # v4 (issue #157) presentation order — 40 slides:
+    #   R0: s01 s02 s02a s03 s04
+    #   R1: s04a(div) s05 s05a s05b s06 s08 s08a
+    #   R2: s09(div) s10 s11 s12 s13
+    #   R3: s13a(div) s13b s15 s14 s16
+    #   R4: s18(div) s19 s21 s22 s22b s22c s22d s22e s25 s25b s23
+    #   R5: s25a(div) s26 s27 s27b s29 s30 s31
     builders = [
-        build_s01, build_s02, build_s03, build_s04,
-        build_s04a,                                   # +U-1 divider Р1
-        build_s05, build_s06, build_s07, build_s08,
+        # R0 — Открытие
+        build_s01, build_s02, build_s02a, build_s03, build_s04,
+        # R1 — Промпт
+        build_s04a, build_s05, build_s05a, build_s05b, build_s06,
+        build_s08, build_s08a,
+        # R2 — RAG
         build_s09, build_s10, build_s11, build_s12, build_s13,
-        build_s13a,                                   # +U-3 divider Р3
-        build_s13b,                                   # +U-2 определение FT
-        build_s14, build_s15, build_s16, build_s17,
-        build_s18, build_s19, build_s20, build_s21, build_s22, build_s23,
-        build_s23a,                                   # +U-5a sub-div Безоп.
-        build_s24, build_s25,
-        build_s25a,                                   # +U-5b divider Р5
-        build_s26, build_s27, build_s28, build_s29,
-        build_s30,                                    # ретайтл U-6, Q&A→s31
-        build_s31,                                    # +U-7 dedicated Q&A
+        # R3 — Fine-tune
+        build_s13a, build_s13b, build_s15, build_s14, build_s16,
+        # R4 — Агенты (11 content + divider)
+        build_s18, build_s19, build_s21, build_s22, build_s22b,
+        build_s22c, build_s22d, build_s22e, build_s25, build_s25b,
+        build_s23,
+        # R5 — Фреймворк
+        build_s25a, build_s26, build_s27, build_s27b, build_s29,
+        build_s30, build_s31,
     ]
-    assert len(builders) == 36, f"expected 36 builders, got {len(builders)}"
+    assert len(builders) == 40, f"expected 40 builders, got {len(builders)}"
     for b in builders:
         b(p)
     OUT.parent.mkdir(parents=True, exist_ok=True)

@@ -1,5 +1,5 @@
 ---
-id: s04
+id: s05
 type: poll_reveal
 duration_min: 13
 assertion: "Поднимите руку на нужный вариант — камера считает"

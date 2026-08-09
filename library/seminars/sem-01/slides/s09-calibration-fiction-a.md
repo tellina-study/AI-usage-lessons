@@ -1,5 +1,5 @@
 ---
-id: s08
+id: s09
 type: assertion_visual
 duration_min: 1.3
 assertion: "Текст A — Пелевин, «Generation П». Текст B — AI"

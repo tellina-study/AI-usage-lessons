@@ -2,7 +2,8 @@ deck:
   seminar_number: 1
   title: "Семинар 1 — знакомство"
   audience: "студенты 3 курса, направление 09.03.01, группа 1 — семинар идёт до первой лекции курса"
-  duration_min: 75
+  duration_min: 76
+  duration_note: "было 75 мин на 19 слайдов (round-2/round-3); владелец курса вручную добавил слайд s02 «О преподавателе» (~1 мин орг-часть) поверх стандартного pipeline — новый итог 76 мин, +1 мин к оргчасти не ломает баланс ≥30 мин / 40% устного обсуждения (разделы калибровки и обмена опытом не тронуты)"
   format: icebreaker
   central_question: "С чем я прихожу на этот курс — и что изменится к концу курса?"
   learning_outcomes: []
@@ -20,143 +21,151 @@ slides:
       backup: assets/screenshots/s01-*.jpg
 
   - id: s02
-    file: slides/s02-course-roadmap.md
+    file: slides/s02-instructor-bio.md
+    type: assertion_visual
+    assertion: "О преподавателе — Левко Максим Николаевич"
+    learning_goal: "Короткая орг-часть знакомства: кто ведёт курс, чем занимается вне преподавания, как связаться"
+    visual:
+      pattern: instructor_bio_card
+
+  - id: s03
+    file: slides/s03-course-roadmap.md
     type: assertion_visual
     assertion: "17 лекций × 3 модуля — от основ к разбору AI по отраслям"
     learning_goal: "Карта семестра (паттерн Лекции 1, s29) — структура отделена от сквозных тем"
     visual:
       pattern: 3_modules_17_lectures_timeline_with_today_marker
 
-  - id: s03
-    file: slides/s03-checkpoint-mechanics.md
+  - id: s04
+    file: slides/s04-checkpoint-mechanics.md
     type: process
     assertion: "Рубежный контроль — тест дома, разбор на семинаре"
     learning_goal: "Механика РК: где и как проходит тест, что происходит на самом семинаре РК"
     visual:
       pattern: two_step_process_home_then_seminar
 
-  - id: s04
-    file: slides/s04-poll-questions.md
+  - id: s05
+    file: slides/s05-poll-questions.md
     type: poll_reveal
     assertion: "Поднимите руку на нужный вариант — камера считает"
     learning_goal: "Явная механика голосования (рука + YOLO), референс-карточка 4 вопросов опроса"
     visual:
       pattern: poll_hand_yolo_reference_card
 
-  - id: s05
-    file: slides/s05-stats-developers-russia.md
+  - id: s06
+    file: slides/s06-stats-developers-russia.md
     type: assertion_visual
     assertion: "Используют чаще, доверяют меньше — и это не парадокс"
-    learning_goal: "Stack Overflow 2025 + ВЦИОМ как первые два независимых среза, плюс живые цифры вашей аудитории по всем 4 вопросам опроса"
+    learning_goal: "Stack Overflow 2025 + ВЦИОМ как первые два независимых среза; сравнение с цифрами аудитории озвучивается устно (speaker notes), без отдельных visible live-карточек на слайде"
     visual:
-      pattern: dual_stat_panel_plus_live_4slot
+      pattern: dual_stat_panel_full_height
 
-  - id: s06
-    file: slides/s06-experience-sharing.md
+  - id: s07
+    file: slides/s07-experience-sharing.md
     type: assertion_visual
     assertion: "У кого есть история — помогло или подвело?"
     learning_goal: "Plenary-scaffold для открытого обмена опытом всей аудиторией"
     visual:
       pattern: failure_category_grid
 
-  - id: s07
-    file: slides/s07-calibration-fiction-q.md
+  - id: s08
+    file: slides/s08-calibration-fiction-q.md
     type: comparison
     assertion: "Кто автор — художественный текст: AI или человек?"
     learning_goal: "Калибровка 1/5 — художественный текст, голосование до объяснения"
     visual:
       pattern: two_text_voting_cards
 
-  - id: s08
-    file: slides/s08-calibration-fiction-a.md
+  - id: s09
+    file: slides/s09-calibration-fiction-a.md
     type: assertion_visual
     assertion: "Текст A — Пелевин, «Generation П». Текст B — AI"
     learning_goal: "Раскрытие ответа: художественный текст, атрибуция и краткое объяснение"
     visual:
       pattern: reveal_two_cards_labeled
 
-  - id: s09
-    file: slides/s09-calibration-technical-q.md
+  - id: s10
+    file: slides/s10-calibration-technical-q.md
     type: comparison
     assertion: "Кто автор — технический текст: AI или человек?"
     learning_goal: "Калибровка 2/5 — техническая документация, акцент на измеримом выигрыше. A/B round-2: A=AI, B=человек"
     visual:
       pattern: two_text_voting_cards
 
-  - id: s10
-    file: slides/s10-calibration-technical-a.md
+  - id: s11
+    file: slides/s11-calibration-technical-a.md
     type: assertion_visual
     assertion: "Текст A — AI, за секунды. Текст B — официальная документация Python"
     learning_goal: "Раскрытие ответа + позитивная сторона AI: точность и скорость на типовых технических вопросах"
     visual:
       pattern: reveal_two_cards_plus_tradeoff
 
-  - id: s11
-    file: slides/s11-calibration-code-q.md
+  - id: s12
+    file: slides/s12-calibration-code-q.md
     type: comparison
     assertion: "Кто автор — код: AI или человек?"
     learning_goal: "Калибровка 3/5 — код, акцент на измеримом выигрыше"
     visual:
       pattern: two_code_voting_cards
 
-  - id: s12
-    file: slides/s12-calibration-code-a.md
+  - id: s13
+    file: slides/s13-calibration-code-a.md
     type: assertion_visual
     assertion: "Код A — библиотека requests, 10+ лет в проде. Код B — AI, 10-20 секунд"
     learning_goal: "Раскрытие ответа + позитивная сторона AI: скорость на типовых задачах, человек — на сложных и уникальных"
     visual:
       pattern: reveal_two_code_cards_plus_tradeoff
 
-  - id: s13
-    file: slides/s13-calibration-image-q.md
+  - id: s14
+    file: slides/s14-calibration-image-q.md
     type: comparison
     assertion: "Кто автор — картина: AI или человек?"
     learning_goal: "Калибровка 4/5 — изображение, про стиль и восприятие, не про продуктивность. A/B round-2: A=AI, B=человек"
     visual:
       pattern: two_image_voting_cards
 
-  - id: s14
-    file: slides/s14-calibration-image-a.md
+  - id: s15
+    file: slides/s15-calibration-image-a.md
     type: assertion_visual
     assertion: "Изображение B — Хосе Мария Веласко, 1875. AI сгенерирует похожее за секунды"
     learning_goal: "Раскрытие ответа: реальная картина (Веласко, round-2 замена Шишкина/Савицкого), честное описание AI-альтернативы без выдуманного файла"
     visual:
       pattern: reveal_two_image_cards
 
-  - id: s15
-    file: slides/s15-calibration-dataviz-q.md
+  - id: s16
+    file: slides/s16-calibration-dataviz-q.md
     type: comparison
     assertion: "Кто автор — визуализация данных: AI или человек?"
     learning_goal: "Калибровка 5/5 — график, акцент на измеримом выигрыше (верификация данных). A/B round-2: A=AI, B=человек"
     visual:
       pattern: two_chart_voting_cards
 
-  - id: s16
-    file: slides/s16-calibration-dataviz-a.md
+  - id: s17
+    file: slides/s17-calibration-dataviz-a.md
     type: assertion_visual
     assertion: "График A — AI, секунды. График B — Our World in Data, недели верификации"
     learning_goal: "Раскрытие ответа + позитивная сторона AI: решает задачу визуализации за секунды, без вопроса этики (в отличие от картины)"
     visual:
       pattern: reveal_two_chart_cards_plus_tradeoff
 
-  - id: s17
-    file: slides/s17-quickfire-quiz.md
+  - id: s18
+    file: slides/s18-quickfire-quiz.md
     type: assertion_visual
-    assertion: "Верно или неверно? Проверим интуицию про реальные возможности AI"
+    assertion: "Верно или неверно? Проверим интуицию про AI"
     learning_goal: "Блиц-квиз на 6 утверждений (round-2: было 7), голосование до ответа, без спойлер-глосс"
     visual:
       pattern: quiz_statement_list
 
-  - id: s18
-    file: slides/s18-reality-check-memo.md
+  - id: s19
+    file: slides/s19-reality-check-memo.md
     type: summary
     assertion: "Памятка «AI reality-check» — 5 пунктов на неделю вперёд"
     learning_goal: "Итоговые 5 развенчанных заблуждений из квиза, унести с собой (round-2: единообразные карточки, новый пункт про детерминизм)"
     visual:
       pattern: five_point_memo
 
-  - id: s19
-    file: slides/s19-hero-closing.md
+  - id: s20
+    file: slides/s20-hero-closing.md
     type: hero_closing
     assertion: "От сегодняшнего среза — к системному разбору AI по отраслям"
     learning_goal: "Bridge к Лекции 1 и остальному курсу; emotional payoff; реальные фото, не иконки"

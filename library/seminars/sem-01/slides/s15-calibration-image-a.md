@@ -1,5 +1,5 @@
 ---
-id: s14
+id: s15
 type: assertion_visual
 duration_min: 1.3
 assertion: "Изображение B — Хосе Мария Веласко, 1875. AI сгенерирует похожее за секунды"

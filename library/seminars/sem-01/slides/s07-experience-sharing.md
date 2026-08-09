@@ -1,5 +1,5 @@
 ---
-id: s06
+id: s07
 type: assertion_visual
 duration_min: 22
 assertion: "У кого есть история — помогло или подвело?"

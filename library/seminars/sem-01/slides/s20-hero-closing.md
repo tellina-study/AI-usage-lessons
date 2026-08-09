@@ -1,5 +1,5 @@
 ---
-id: s19
+id: s20
 type: hero_closing
 duration_min: 0
 assertion: "От сегодняшнего среза — к системному разбору AI по отраслям"

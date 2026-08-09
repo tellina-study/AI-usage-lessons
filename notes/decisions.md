@@ -639,3 +639,15 @@ Production Л11 «AI в дискретном и процессном произ�
 - **Cross-artifact cascade fix pattern (chapter ↔ slides ↔ speech) в одном batched book-editor agent.** Phase 11 v2 lec-10 demonstrated: agent касается 3 артефактов atomically + re-renders affected slides + updates frontmatters. **Превосходит per-artifact serial cascade** (avoid drift between fixes). Recommended для все cross-artifact P0 cascade fixes в future lectures.
 
 **Metric для L10:** 0 user feedback rounds AFTER each critic-APPROVE (vs Лекция 1 v3 = 3 rounds; Лекция 8 = 3 rounds wasted ~83 min). 2 user mid-flight interventions handled как infrastructure improvements, не one-off fixes. **Pre-USER-GATE Walkthrough Rule patterns (3 versions: A/B/C) sustainably eliminate post-critic owner intervention.**
+
+## 2026-08-08 — Module boundary shift (Модуль 1: 1–8→1–6, Модуль 2: 9–12→7–12)
+
+Owner подтвердил сдвиг границ модулей курса (виден на ручной правке финального слайда s03 `library/seminars/sem-01/`). Обновлены `course-plan.md`, `course-plan-seminars.md`, `catalog/manifests/lectures.yaml` (issue tracking TBD).
+
+- **Новые названия модулей:** Модуль 1 — «Теоретико-методологические основы систем искусственного интеллекта и их применение в цифровых и инженерных отраслях» (лекции 1–6). Модуль 2 — «Искусственный интеллект в специализированных отраслях с высокой ценой ошибки: от медицины и креативных индустрий до высокотехнологичного производства и систем двойного назначения» (лекции 7–12). Модуль 3 не менялся.
+
+- **Renumbering границы модуля обнажил скрытый content gap, не создал его.** Задача владельца формально требовала ДВЕ вещи, которые для слота «Семинар 6» конфликтуют: (а) «семинары зеркалят лекции 1:1» (Л6 остаётся в модуле 1, значит С6 = его практика) И (б) «Рубежный контроль 1 переезжает на Семинар 6» (слот С6 теперь = контроль). Агент (course-curator) НЕ разрешил конфликт молча — применил буквальное прочтение (б) для слота С6, сохранил старый контент С6 текстом в `[NEEDS-OWNER-CONFIRMATION]` блоке в том же каноническом файле, и явно пометил, что слот «Семинар 8» (ранее занятый текстом RK1, теперь освобождённый) логически должен зеркалить Лекцию 8 (креативные индустрии), но контента для него в источнике никогда не было — это дыра в исходном документе, не решение агента.
+
+- **Pattern: canonical doc в статусе `status: canon` — если правка создаёт неоднозначность, не разрешаемую формальной инструкцией однозначно, встраивать `[NEEDS-OWNER-CONFIRMATION]` блок прямо в canon-файл, а не только в отчёт агента.** Отчёт агента теряется в истории чата; блок в файле переживёт следующего читателя документа (следующий agent или сам owner), пока owner явно не решит и не уберёт маркер. Применимо к любому canon/РПД-подобному документу при структурных изменениях.
+
+- **Известный follow-up вне этой сессии:** `library/normative/rpd-otraslevoe-primenenie-ai.md` содержит ещё более старые границы модулей (Модуль 1 там — всего 5 лекций-плейсхолдеров), рассинхронизирован с `course-plan.md` уже до этого изменения. Не трогался (вероятно issue #51 или его продолжение) — нужен отдельный проход.

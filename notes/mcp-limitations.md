@@ -388,7 +388,43 @@ _Пока не обнаружено._
 
 ---
 
-**Last update:** 2026-08-06 (sem-01 — добавлен [#sem01-render-1] python-pptx literal `\n` in single run не line-break'ается надёжно под LibreOffice).
+**Last update:** 2026-08-08 (sem-01 slide-6 surgical edit — добавлен [#sem01-render-2] python-pptx re-serializes ALL parts on save, incl. untouched slides).
+
+### [#sem01-render-2] python-pptx `Presentation.save()` re-serializes every XML part, including untouched slides — raw byte-diff is NOT a valid "unchanged" check
+
+- **Tool:** `python-pptx` (`Presentation.save()`).
+- **Symptom:** When a script opens a `.pptx`, edits ONE slide (e.g. replaces an
+  image + adds a few text runs on slide 6 only), and saves — a raw `diff`/`cmp`
+  of the extracted slide XML for every OTHER, untouched slide reports a byte
+  difference. Also `_rels/*.xml.rels` files may show relationship entries
+  reordered (same `Id`/`Target` pairs, different sequence in the file).
+- **Root cause:** `python-pptx` re-serializes the entire OPC package tree on
+  `save()` via lxml, which normalizes whitespace, attribute/namespace-prefix
+  ordering, and XML declaration quoting (`'` vs `"`) for every part it touched
+  in memory — which in practice is every part `Presentation()` parsed, not
+  just the ones the script explicitly mutated. This is cosmetic
+  re-serialization, not a content change: canonicalizing both XML trees
+  (`lxml.etree.tostring(tree, method="c14n2")`) and comparing shows byte-for-byte
+  semantic equality for every part the script didn't touch.
+- **Severity:** P2 (verification-workflow gotcha, not a rendering bug — but can
+  cause a false "I broke other slides" panic, or worse, a false-pass if you
+  only trust `diff -q` in the other direction).
+- **Workaround:** When asked to verify "only slide N changed, everything else
+  byte-identical" after any python-pptx round-trip (open→edit→save), do NOT
+  use raw `diff`/`cmp` on the extracted part XML. Instead: (a) extract text via
+  `python-pptx` shape iteration and compare per-slide (catches real content
+  drift), AND (b) canonicalize each XML part with
+  `lxml.etree.tostring(etree.parse(path), method="c14n2")` and compare those
+  byte strings (catches real structural/attribute drift while ignoring
+  serializer-cosmetic reordering). Also diff the file list inside both zips
+  (`find . -type f`) to confirm no parts were unexpectedly added/removed
+  beyond the intended new media files.
+- **Status:** active (by design in python-pptx/lxml; not fixable without
+  avoiding python-pptx round-trips entirely, e.g. raw zip/XML surgery).
+- **First seen in:** sem-01 slide-6 surgical edit (2026-08-08) — owner-provided
+  final PPTX had to be edited on exactly one slide with all 19 others
+  guaranteed untouched; naive `diff -q` on extracted slide XML falsely flagged
+  all 19 other slides as changed.
 
 ### [#118-1] mmdc / mermaid-cli: missing Chrome browser dependency
 

@@ -1,14 +1,54 @@
 """
 Build script for Семинар 1 — «Знакомство».
 
-Icebreaker seminar, 19 slides (round-2 revision — s06 Deloitte slide removed,
-renumbered, live-poll 4-slot panel, positive AI framing on calibration reveals,
-Velasco painting, RU tech doc text), format matched to library/lectures/lec-01 v3
-Ocean Gradient design system (palette, Ocean rounded box motif, typography scale).
+Icebreaker seminar, format matched to library/lectures/lec-01 v3 Ocean Gradient
+design system (palette, Ocean rounded box motif, typography scale).
 
 Source-of-truth: deck.yaml + slides/*.md.
 
 Canvas: 13.333" x 7.5" (16:9).
+
+=== KNOWN DRIFT (2026-08-08, задокументировано задним числом, NOT YET FIXED) ===
+
+Финальный `rendered/sem-01.pptx` (20 слайдов) был отредактирован владельцем
+курса ВРУЧНУЮ поверх обычного pipeline (`deck.yaml`/`slides/*.md` →
+`build_sem01.py` → pptx). `deck.yaml` и `slides/*.md` сейчас ТОЧНО описывают
+финальный pptx (задача #github-issue: "пересобрать source-файлы задним
+числом"), но этот builder-скрипт НЕ обновлён и произведёт СТАРУЮ 19-слайдовую
+версию без слайда-биографии, если его запустить как есть. Расхождения:
+
+1. Функции `build_s01`..`build_s19` ниже соответствуют СТАРОЙ нумерации
+   (pre-insert). Реальный deck.yaml теперь: s01 (без изменений) → s02
+   ИНСТРУКТОР-БИО (НОВЫЙ, нет соответствующей функции) → s03..s20 (сдвиг +1
+   относительно старых build_s02..build_s19).
+2. Нет функции `build_s02` для нового слайда «О преподавателя» (Левко Максим
+   Николаевич) — слайд собран владельцем курса в Google Slides напрямую,
+   использует Material Icons ligature-шрифт (send/mail/schema/psychology/
+   shield/history_edu), а не Lucide-иконки деки. Полное описание layout —
+   в `slides/s02-instructor-bio.md`.
+3. `build_s05` (старая функция для stats-слайда, теперь логически s06)
+   генерирует старую версию с нижней «живой» 4-слотовой поп-панелью
+   («Ваша аудитория») и старыми PNG (`s06-stackoverflow.png`,
+   `s06-vciom.png`). Финальный pptx использует `s06-stackoverflow-v2.png` +
+   `s06-vciom-v2.png`, НЕ имеет нижней 4-слотовой панели, и содержит
+   обновлённую методологию (N=33 244, N=3209, 25–27.06.2026, ±1,7% и т.д.) —
+   см. `slides/s06-stats-developers-russia.md`.
+4. `build_s02` (старая функция roadmap) использует «Лекции 1–8» / РК на С8;
+   финальный pptx (теперь s03) показывает «Лекции 1–6» / «Лекции 7–12» /
+   РК1 на С6 — см. `slides/s03-course-roadmap.md`.
+5. `build_s03` (старая функция checkpoint mechanics) использует «Семинар 8»;
+   финальный pptx (теперь s04) показывает «РК · Семинар 6» — см.
+   `slides/s04-checkpoint-mechanics.md`.
+
+TODO (не сделано в этом заходе — приоритет был на source .md/yaml файлах,
+см. task brief): переименовать `build_s02`..`build_s19` → `build_s03`..
+`build_s20` (сдвиг +1), написать новую `build_s02` под instructor-bio слайд,
+переписать содержимое `build_s06` (новая нумерация) под point-fix (убрать
+4-слотовую панель, обновить графики/методологию/imagepaths), обновить
+`build_s03`/`build_s04` (новая нумерация) под С6-нумерацию РК, обновить
+список `BUILDERS`. До этого момента запуск `python3 build_sem01.py`
+перезапишет `sem-01.pptx` СТАРОЙ 19-слайдовой версией — НЕ запускать без
+предварительного завершения этого рефакторинга.
 """
 import re
 from pathlib import Path
@@ -1252,6 +1292,10 @@ def build_s19(p):
 # ============================================================
 # Main
 # ============================================================
+# NOTE: this list still reflects the OLD 19-slide / pre-bio-slide numbering.
+# See the "KNOWN DRIFT" block in the module docstring above — running this
+# script as-is regenerates the OLD deck, not the current 20-slide
+# rendered/sem-01.pptx. Do not run until the TODO items there are done.
 BUILDERS = [
     build_s01, build_s02, build_s03, build_s04, build_s05,
     build_s06, build_s07, build_s08, build_s09, build_s10,

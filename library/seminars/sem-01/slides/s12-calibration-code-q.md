@@ -1,5 +1,5 @@
 ---
-id: s11
+id: s12
 type: comparison
 duration_min: 1.3
 assertion: "Кто автор — код: AI или человек?"
@@ -20,7 +20,7 @@ visual:
 ## Visual
 
 Round-2: убран voting badge «рука+камера» и AI/человек pill-кнопки под карточками
-(голосуем поднятием руки, объяснено на s04) — code-карточки теперь занимают полную
+(голосуем поднятием руки, объяснено на s05) — code-карточки теперь занимают полную
 высоту блока. 2 Ocean rounded box карточки с monospace-шрифтом (JetBrains Mono /
 Courier New fallback), тёмный code-block фон. Код A:
 

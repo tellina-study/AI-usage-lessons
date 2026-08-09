@@ -1,5 +1,5 @@
 ---
-id: s10
+id: s11
 type: assertion_visual
 duration_min: 1.3
 assertion: "Текст A — AI, за секунды. Текст B — официальная документация Python"

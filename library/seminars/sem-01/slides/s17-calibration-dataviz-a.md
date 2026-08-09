@@ -1,5 +1,5 @@
 ---
-id: s16
+id: s17
 type: assertion_visual
 duration_min: 1.3
 assertion: "График A — AI, секунды. График B — Our World in Data, недели верификации"

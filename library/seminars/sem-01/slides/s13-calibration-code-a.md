@@ -1,5 +1,5 @@
 ---
-id: s12
+id: s13
 type: assertion_visual
 duration_min: 1.3
 assertion: "Код A — библиотека requests, 10+ лет в проде. Код B — AI, 10-20 секунд"

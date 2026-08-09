@@ -597,3 +597,8 @@ methodology/scaffold leaks, glossary-consistent anglicism profile. Ready for
 QA-agent pass (presentation-critic / student-simulator / reader-simulator)
 per orchestrator's pipeline, then USER GATE per plan v2 §4 (единая финальная
 сверка).
+
+---
+
+**Продолжение лога (v4.2+) — см. `iteration-log-part2.md`** (файл достиг
+лимита 600 строк, CLAUDE.md § Document Size Limit).

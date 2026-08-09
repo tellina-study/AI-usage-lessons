@@ -1075,7 +1075,14 @@ def build_s11(p):
 
 
 def build_s12(p):
-    """schema_matrix-ish — 3 criteria columns «when NOT RAG»."""
+    """schema_matrix-ish — 3 criteria columns «when NOT RAG».
+    P1 fix (issue #157 review): s11/s12 shared identical «N cards + summary
+    plaque» skeleton back-to-back — visually merged into one stretched
+    slide. Differentiated here via base card palette (TEAL instead of
+    primary LIGHT/SURFACE — «caution / exclusion» register vs s11's
+    primary-blue «inclusion» cards) + numbered gold badge per card (s22b
+    slot-badge pattern) so the two decks read as distinct compositions at
+    a glance, without touching content/copy."""
     s = blank(p)
     slide_title(s, "Когда RAG — НЕ правильный выбор.", size=27)
     text_box(s, 0.55, 1.16, 12.25, 0.4,
@@ -1085,30 +1092,36 @@ def build_s12(p):
     # на масштабе, не дублируется здесь). Вместо него — новый критерий
     # «данные доступны live через API/MCP» (§2.3, forward-callback на §4.1).
     cols = [
-        ("circle-slash", "1. Корпус влезает в окно",
+        ("circle-slash", "Корпус влезает в окно",
          "ориентир — менее ~200k токенов, меняется редко",
          "→ full-context + кэширование префикса, не RAG-инфраструктура",
-         LIGHT, "mid", False),
-        ("key", "2. Отдать фиксированную политику / значение",
+         False),
+        ("key", "Фиксированная политика / значение",
          "тариф, цена, пункт регламента, правило",
          "→ детерминированный lookup / статическая страница",
-         LIGHT, "mid", False),
-        ("cable", "3. Данные доступны live через API / MCP",
+         False),
+        ("cable", "Данные доступны live через API / MCP",
          "во внутреннем сервисе, базе, поиске другой системы",
          "→ вызвать инструмент напрямую; RAG-индекс поверх — лишний, более хрупкий и более устаревающий слой",
-         GOLD, "gold", True),
+         True),
     ]
     cw, chh = 4.00, 3.05
     cy = 1.78
     x = 0.55
-    for nm, t, tag, alt, col, var, isgold in cols:
+    for i, (nm, t, tag, alt, isgold) in enumerate(cols):
         if isgold:
             ocean_box(s, x, cy, cw, chh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
         else:
-            ocean_box(s, x, cy, cw, chh)
-        icon(s, nm, x + 0.24, cy + 0.24, 0.52, var)
-        text_box(s, x + 0.90, cy + 0.26, cw - 1.05, 0.78, t,
-                 size=15, bold=True, color=(DEEP if isgold else MID),
+            ocean_box(s, x, cy, cw, chh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.5)
+        # numbered badge top-left (s22b slot-badge pattern) — distinct
+        # silhouette from s11's plain unnumbered cards
+        circle(s, x + 0.20, cy + 0.18, 0.32, GOLD if isgold else TEAL)
+        text_box(s, x + 0.20, cy + 0.18, 0.32, 0.32, str(i + 1),
+                 size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        icon(s, nm, x + cw - 0.76, cy + 0.20, 0.52, "gold" if isgold else "teal")
+        text_box(s, x + 0.66, cy + 0.24, cw - 1.55, 0.78, t,
+                 size=15, bold=True, color=(DEEP if isgold else TEAL),
                  line_spacing=1.08)
         text_box(s, x + 0.24, cy + 1.15, cw - 0.48, 0.40, tag,
                  size=12, italic=True, color=LIGHT)
@@ -1384,26 +1397,27 @@ def build_s19(p):
     for i, (nm, dt, lg) in enumerate(tl):
         ex = tx0 + i * 2.0
         add_image(s, ICONS / f"{lg}.png", ex, my + 1.82, 0.34, 0.34)
-        text_box(s, ex + 0.42, my + 1.80, 1.5, 0.24, nm, size=10.5, bold=True, color=DEEP)
-        text_box(s, ex + 0.42, my + 2.02, 1.5, 0.22, dt, size=10, italic=True, color=LIGHT)
+        text_box(s, ex + 0.42, my + 1.78, 1.5, 0.26, nm, size=11.5, bold=True, color=DEEP)
+        text_box(s, ex + 0.42, my + 2.02, 1.5, 0.24, dt, size=11.5, bold=True, italic=True, color=LIGHT)
         if i < 2:
             text_box(s, ex + 1.72, my + 1.82, 0.22, 0.3, "→", size=13, bold=True, color=LIGHT)
-    # trust warning
+    # trust warning — P1 fix (issue #157 review): 3 bullets -> 2 most load-bearing
+    # (root cause: code/access; concrete attack vector: prompt injection carrier).
+    # Retention-policy point dropped here — it's covered on s25's ZDR block.
     ocean_box(s, 7.25, my, 5.55, 2.55, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     text_box(s, 7.52, my + 0.18, 5.1, 0.72,
              "Стандартизация подключения ≠ безопасность подключаемого — и усугубляет проблему доверия.",
              size=13.5, bold=True, color=TEAL, line_spacing=1.14)
     for i, w in enumerate([
         "код в вашем окружении / доступ к данным",
-        "описание попадает в контекст — носитель prompt injection",
-        "ещё одна граница доверия и retention-политика"]):
-        circle(s, 7.54, my + 1.02 + i * 0.44 + 0.05, 0.11, TEAL)
-        text_box(s, 7.76, my + 1.02 + i * 0.44, 5.0, 0.42, w,
-                 size=12, color=DEEP, line_spacing=1.08)
+        "описание попадает в контекст — носитель prompt injection"]):
+        circle(s, 7.54, my + 1.06 + i * 0.52 + 0.05, 0.11, TEAL)
+        text_box(s, 7.76, my + 1.06 + i * 0.52, 5.0, 0.48, w,
+                 size=12.5, color=DEEP, line_spacing=1.10)
     gold_callout(s, 0.55, 6.06, 12.25, 0.80,
                  "Ни один механизм не делает модель надёжнее — правило лестницы не отменяется. Удобство подключения — не аргумент за подключение.",
                  size=13.5)
-    footer(s, "Числа экономии prompt caching и масштаб экосистемы MCP — в главе; перепроверить ко дню лекции.")
+    footer(s, "Актуальные цифры экономии и масштаб экосистемы MCP — в главе методички.")
     speaker_notes(s, load_notes("s19"))
 
 
@@ -1864,7 +1878,7 @@ def build_s25b(p):
          "где живёт агент — тоже архитектурное решение", MID, False),
         ("OpenHands", "self-hosted платформа · MIT · ~80k★",
          "широкая автономность, локальное/Docker/облако развёртывание",
-         "[требует подтверждения] вероятный кандидат на «OpenClaw» из issue #157 — рабочая гипотеза по совпадению профиля, не установленный факт", GOLD, True),
+         "рабочая гипотеза по совпадению профиля — вероятный кандидат на «OpenClaw», не подтверждённый факт", GOLD, True),
     ]
     cw, chh = 3.02, 4.05
     cy = 1.74

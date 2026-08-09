@@ -4,10 +4,10 @@ type: assertion_visual
 section: "Раздел 5. Фреймворк решения"
 duration_min: 1.5
 assertion: "Агент делает — человек проверяет результат и факты (не самообъяснение); ~95% пилотов без ROI — дело в интеграции, не в модели"
-learning_goal: "Человек-валидатор (callback s07) + урок MIT NANDA"
+learning_goal: "Человек-валидатор (callback s06) + урок MIT NANDA"
 learning_outcomes: [LO7]
 chapter_ref: "§5.4 [for-slide-s29]"
-visual_brief: "Слева — блок «человек-валидатор» (callback s07). Справа — отчёт MIT NANDA: ~95% без ROI, корень — интеграция. Gold — «~95%». Footer 12pt italic — framing «отчёт с методологией, не закон»."
+visual_brief: "Слева — блок «человек-валидатор» (callback s06). Справа — отчёт MIT NANDA: ~95% без ROI, корень — интеграция. Gold — «~95%». Footer 12pt italic — framing «отчёт с методологией, не закон»."
 interaction: none
 verify_day_of: true
 ---

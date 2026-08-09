@@ -1,0 +1,237 @@
+deck:
+  seminar_number: 3
+  title: "Семинар 3 — Смысл, фокус, случайность: три механизма внутри модели"
+  audience: "студенты 3 курса, направление 09.03.01, группа 1 — семинар идёт ПОСЛЕ Лекции 2 в тот же день (закрепление, не введение)"
+  duration_min: 76
+  format: "разбор+опрос_дискуссия+индивидуальное_предсказание"
+  central_question: "Эмбеддинги, внимание, сэмплинг — насколько точно вы умеете предсказать, что сделает модель, прежде чем она это сделает?"
+  learning_outcomes: [LO1, LO4, LO6, LO7]
+  lo_note: "Закрепляет LO1 (четырёхэтапный конвейер inference), LO4 (подбор параметров сэмплинга под сценарий), LO6 (ограничения LLM-инференса), LO7 (обоснование трёх «почему» через механизм) из Лекции 2."
+  language: ru
+
+slides:
+  - id: s01
+    file: slides/s01-hero-cover.md
+    type: hero_cover
+    assertion: "Смысл, фокус, случайность — три механизма внутри модели"
+    learning_goal: "Emotional hook + hero-иллюстрация: реальная t-SNE визуализация embedding-пространства, foreshadow keystone-оси Блока 1"
+    visual:
+      pattern: hero_cover_real_photo
+      backup: assets/screenshots/s01-tsne-embedding-real.png
+
+  - id: s02
+    file: slides/s02-recap-pipeline.md
+    type: assertion_visual
+    assertion: "Четыре этапа конвейера — сегодня фокус на трёх последних"
+    learning_goal: "Мостик от Семинара 2 + визуальный recap 4-этапного конвейера inference (токенизация → эмбеддинг → внимание → сэмплинг)"
+    visual:
+      pattern: process_4_step_strip
+
+  - id: s03
+    file: slides/s03-block1-intro.md
+    type: assertion_visual
+    assertion: "Cosine similarity — угол между векторами смысла"
+    learning_goal: "Recap SSL/HTTPS/React/борщ пример + постановка Блока 1"
+    visual:
+      pattern: recap_card_plus_intro
+
+  - id: s04
+    file: slides/s04-omonyms-q.md
+    type: poll_reveal
+    assertion: "«Мышь» и «ключ» — одно слово, два смысла. Близко или далеко?"
+    learning_goal: "Пары А (мышь) + Б (ключ) вместе — постановка (голосование до ответа)"
+    visual:
+      pattern: vote_two_cards_no_answer
+
+  - id: s05
+    file: slides/s05-omonyms-a.md
+    type: poll_reveal
+    assertion: "Слово совпало — смысл разошёлся. Низкая семантическая близость несмотря на 100% лексическое совпадение"
+    learning_goal: "Раскрытие ответов для пар А (мышь) + Б (ключ)"
+    visual:
+      pattern: reveal_two_cards
+
+  - id: s06
+    file: slides/s06-paraphrases-q.md
+    type: poll_reveal
+    assertion: "«Продакшн-сервер» и «бэкенд» — разные слова. Близко или далеко?"
+    learning_goal: "Пары В (сервер/бэкенд) + Г (баг/дефект) вместе — постановка (голосование до ответа)"
+    visual:
+      pattern: vote_two_cards_no_answer
+
+  - id: s07
+    file: slides/s07-paraphrases-a.md
+    type: poll_reveal
+    assertion: "Слова разные — смысл совпал. Зеркальная ситуация парам А/Б"
+    learning_goal: "Раскрытие ответов для пар В (сервер/бэкенд) + Г (баг/дефект)"
+    visual:
+      pattern: reveal_two_cards
+
+  - id: s08
+    file: slides/s08-strawberry-search-q.md
+    type: poll_reveal
+    assertion: "Пять документов, запрос «клубника» — кто их найдёт?"
+    learning_goal: "Упражнение «клубника» — 5 документов-кандидатов, таблица-предсказание (постановка, голосование до ответа)"
+    visual:
+      pattern: five_row_prediction_table_no_answer
+
+  - id: s09
+    file: slides/s09-strawberry-search-a.md
+    type: poll_reveal
+    assertion: "Общий корень — не то же самое, что общий смысл"
+    learning_goal: "Раскрытие ответов упражнения «клубника», документ-ловушка 4 разобран явно"
+    visual:
+      pattern: five_row_prediction_table_reveal
+
+  - id: s10
+    file: slides/s10-block1-reflection.md
+    type: reflection_question
+    assertion: "Когда полнотекстовый поиск лучше семантического?"
+    learning_goal: "Worked-example юридического поиска по договорам + обязательный вопрос всем классом — AI-Failure/Judgment content, decision tree §5.3 связка"
+    visual:
+      pattern: worked_example_top_question_bottom
+
+  - id: s11
+    file: slides/s11-block2-intro.md
+    type: assertion_visual
+    assertion: "Фонарик в тёмной комнате — внимание распределяет вес между токенами"
+    learning_goal: "Recap метафоры фонарика + пример «Кот съел мышь» — постановка Блока 2 (ЯДРО ЗАНЯТИЯ)"
+    visual:
+      pattern: recap_card_plus_intro
+
+  - id: s12
+    file: slides/s12-winograd-1-q.md
+    type: comparison
+    assertion: "Трофей не влез в чемодан, потому что он был слишком большой — кто «он»?"
+    learning_goal: "Winograd Schema, вариант 1/2 — постановка (голосование до ответа), разминочный раунд"
+    visual:
+      pattern: story_no_answer
+
+  - id: s13
+    file: slides/s13-winograd-1-a.md
+    type: comparison
+    assertion: "«Он» = трофей — большой предмет не влезает в вместилище"
+    learning_goal: "Winograd Schema, вариант 1/2 — раскрытие ответа + академическая атрибуция (Levesque/Davis/Morgenstern)"
+    visual:
+      pattern: story_reveal_with_weight_viz
+
+  - id: s14
+    file: slides/s14-winograd-2-q.md
+    type: comparison
+    assertion: "Трофей не влез в чемодан, потому что он был слишком маленький — кто «он» теперь?"
+    learning_goal: "Winograd Schema, вариант 2/2 — постановка (голосование до ответа), ключевой момент раздела"
+    visual:
+      pattern: story_no_answer
+
+  - id: s15
+    file: slides/s15-winograd-2-a.md
+    type: comparison
+    assertion: "Одна грамматика — разный ответ. Смена слова переворачивает референт"
+    learning_goal: "Winograd Schema, вариант 2/2 — раскрытие ответа + обязательная связка «мировые знания, не только синтаксис»"
+    visual:
+      pattern: story_reveal_with_weight_viz
+
+  - id: s16
+    file: slides/s16-coref-tech-q.md
+    type: comparison
+    assertion: "Менеджер поругал стажёра, потому что он не проверил тесты — кто «он»?"
+    learning_goal: "Техническая кореференция — постановка (голосование до ответа)"
+    visual:
+      pattern: story_no_answer
+
+  - id: s17
+    file: slides/s17-coref-tech-a.md
+    type: comparison
+    assertion: "«Он» = стажёр — вес внимания на «стажёр» и «коммит»"
+    learning_goal: "Техническая кореференция — раскрытие ответа через attention-вес"
+    visual:
+      pattern: story_reveal_with_weight_viz
+
+  - id: s18
+    file: slides/s18-coref-ambiguous-q.md
+    type: comparison
+    assertion: "Пилот сказал диспетчеру, что он ошибся в расчётах — кто «он»?"
+    learning_goal: "Намеренно неоднозначный случай без единственного ответа — постановка (голосование до ответа)"
+    visual:
+      pattern: dashed_gold_border_story_no_answer
+
+  - id: s19
+    file: slides/s19-coref-ambiguous-a.md
+    type: comparison
+    assertion: "Оба прочтения разумны — распределение вероятностей, а не единственный ответ"
+    learning_goal: "Намеренно неоднозначный случай — раскрытие: оба ответа валидны, честная неопределённость"
+    visual:
+      pattern: dashed_gold_border_dual_answer
+
+  - id: s20
+    file: slides/s20-block2-reflection.md
+    type: reflection_question
+    assertion: "Уверенный ответ — это понимание или статистически надёжное угадывание?"
+    learning_goal: "Документированный провал WinoBias (Zhao et al., 2018) + закрывающая рефлексия Блока 2 — связка с уровнями причинности Перла (Лекция 1)"
+    visual:
+      pattern: worked_example_top_question_bottom
+
+  - id: s21
+    file: slides/s21-block3-intro.md
+    type: assertion_visual
+    assertion: "Четыре ручки API — предсказуемость против разнообразия"
+    learning_goal: "Recap таблицы 4 параметров API — постановка Блока 3"
+    visual:
+      pattern: recap_card_plus_intro
+
+  - id: s22
+    file: slides/s22-homework-debrief.md
+    type: case_study
+    assertion: "T=0 / T=0.7 / T=1.5 — что изменилось в вашем эксперименте?"
+    learning_goal: "Визуальный промпт для разбора ДЗ — единственный компонент занятия с реальными данными студентов"
+    visual:
+      pattern: three_column_debrief_prompt
+
+  - id: s23
+    file: slides/s23-temperature-guess-q.md
+    type: poll_reveal
+    assertion: "Три ответа на один промпт — какой температуре какой соответствует?"
+    learning_goal: "Игра «угадай температуру» — постановка (голосование до ответа), 3 illustrative-ответа"
+    visual:
+      pattern: three_text_samples_no_answer
+
+  - id: s24
+    file: slides/s24-temperature-guess-a.md
+    type: poll_reveal
+    assertion: "Повторяемость (низкая T) → естественная вариативность (средняя T) → распад связности (высокая T)"
+    learning_goal: "Игра «угадай температуру» — раскрытие ответов с явными признаками"
+    visual:
+      pattern: three_text_samples_reveal
+
+  - id: s25
+    file: slides/s25-block3-reflection.md
+    type: reflection_question
+    assertion: "Когда стохастичность ответа — риск, а не удобство?"
+    learning_goal: "Worked-example банковский чат-бот (regex+Luhn вместо LLM) + закрывающая рефлексия Блока 3 + обязательная оговорка про T=0 и побитовую воспроизводимость"
+    visual:
+      pattern: worked_example_top_question_bottom
+
+  - id: s26
+    file: slides/s26-bridge-lec3.md
+    type: assertion_visual
+    assertion: "Сегодня — три механизма поодиночке. Дальше — модель выходит за пределы цикла"
+    learning_goal: "Лёгкий мостик к Лекции 3 (RAG/tools/MCP/agent loop), без раскрытия механики заранее"
+    visual:
+      pattern: hook_card_plus_tag_row
+
+  - id: s27
+    file: slides/s27-handout-memo.md
+    type: summary
+    assertion: "Три механизма внутри модели — что помнить"
+    learning_goal: "Итоговая памятка на вынос — компиляция без нового материала"
+    visual:
+      pattern: three_column_cheatsheet
+
+  - id: s28
+    file: slides/s28-hero-closing.md
+    type: hero_closing
+    assertion: "От механизмов внутри — к тому, что снаружи"
+    learning_goal: "Bridge к Лекции 3; emotional payoff; реальное фото промышленного робота-манипулятора"
+    visual:
+      pattern: hero_closing_bridge_photo
+      backup: assets/screenshots/s-closing-industrial-robots-real.jpg

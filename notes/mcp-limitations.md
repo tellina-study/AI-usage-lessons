@@ -460,3 +460,39 @@ _Пока не обнаружено._
 - **Status:** active.
 - **First seen in:** sem-01 seminar deck production (2026-08-06), s05 Deloitte stat-panel
   labels (iteration 2 → 3, see `library/seminars/sem-01/rendered/iteration-log.md`).
+
+### [#sem03-render-1] `render-env.sh` `$HOME` override breaks `python-pptx` import (user-site-packages)
+
+- **Tool:** bootstrapped render toolchain (`/tmp/claude-999/render-env.sh`) +
+  `python-pptx` (installed under `~/.local/lib/python3.12/site-packages`, not a venv).
+- **Symptom:** Sourcing `render-env.sh` and then running `python3 build_semNN.py`
+  fails with `ModuleNotFoundError: No module named 'pptx'`, even though the exact
+  same `python3` binary (`which python3` unchanged) successfully imports `pptx`
+  when `render-env.sh` has NOT been sourced.
+- **Root cause:** `render-env.sh` sets `export HOME="${RENDER_HOME:-/tmp/claude-999/loffice-home}"`
+  (needed so LibreOffice's first-run profile bootstrap doesn't write into the real
+  home directory). Python's default `sys.path` includes a user-site-packages entry
+  derived from `$HOME` (`~/.local/lib/python3.X/site-packages`) — overriding `$HOME`
+  silently drops the real user-site path from `sys.path`, so anything installed
+  there (here: `python-pptx`, not a system/venv package) becomes unimportable.
+  Confirmed via `python3 -c "import sys; print(sys.path)"` before/after sourcing —
+  the user-site entry is present only when `$HOME` is unmodified.
+- **Severity:** P1 (blocks the entire direct-python-pptx-build workflow if the
+  build script is invoked after sourcing render-env.sh in the same shell).
+- **Workaround:** Never source `render-env.sh` before running the `build_semNN.py` /
+  `build_lecNN.py` script itself. Build the PPTX first with a plain `python3
+  build_semNN.py` (normal `$HOME`, `pptx` importable) — only source
+  `render-env.sh` (or better, let `pptx_to_png.sh` do it internally, which it
+  already does) for the PDF/PNG conversion step. The two steps never need to
+  share a shell environment; running them as two separate `Bash` tool calls
+  (build, then convert) sidesteps the issue entirely and is what actually
+  happened in sem-03 production once the error was diagnosed.
+- **Status:** active.
+- **First seen in:** sem-03 seminar deck production (2026-08-09), first
+  `python3 build_sem03.py` attempt immediately after sourcing render-env.sh for
+  toolchain verification (see `library/seminars/sem-03/rendered/iteration-log.md`).
+- **Fork target:** low priority — workaround is a one-line process change (don't
+  chain the two steps in one sourced shell). Could alternatively fix in
+  `render-env.sh` by additionally exporting `PYTHONPATH` to include the real
+  user-site-packages dir before overriding `$HOME`, but untested and not needed
+  given the trivial workaround.

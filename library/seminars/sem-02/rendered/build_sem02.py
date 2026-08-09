@@ -491,7 +491,20 @@ def build_s04(p):
     """Раздел 2 — Q-slide for tools 1-2 (YOLO / AI-чат). Round-2 split: NO
     answer badge, NO type label — just the two tool descriptions, so the
     facilitator can show this slide during the vote-before-reveal window
-    without leaking the answer (presentation-critic P0 fix)."""
+    without leaking the answer (presentation-critic P0 fix).
+    Round-3 point fix (visual mass): card height cut from 4.05" to 2.5"
+    (2nd pass — 2.7" first pass still left visible dead space above/below
+    the description line at rendered PNG inspection). Inner desc-box
+    y-offset tightened from 0.95" to 0.78" so the description sits closer
+    to the title block instead of centered in an oversized remainder.
+    grid_y kept at 2.0 (matches s05/s09 reveal-partner slides, and every
+    other card-grid Q-slide in the deck) — a 3rd pass had raised grid_y
+    to 3.0 to "balance" the empty band above vs. below the shrunk card,
+    but that just relocated the dead space into a full extra inch of
+    blank gap between title and card-top, a regression caught on
+    independent re-inspection against s05's top-anchored layout. Keeping
+    grid_y=2.0 lets the card sit where it always did; the freed height
+    only shrinks the card itself and the gap before the hint bar."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     section_tag(s, 0.55, 0.4, "Раздел 2 · Инструменты 1–2")
@@ -500,7 +513,7 @@ def build_s04(p):
     grid_y = 2.0
     gap = 0.3
     cw = (12.23 - gap) / 2
-    ch = 4.05
+    ch = 2.5
     cards = [
         ("scan", "YOLO-детектор людей в кадре",
          "Детекция людей в кадре в реальном времени — прямая перекличка "
@@ -516,11 +529,11 @@ def build_s04(p):
         text_box(s, cx + pad + 0.7, grid_y + pad - 0.03, cw - 2 * pad - 0.7, 0.9,
                  text=title, size=14.5, bold=True, color=DEEP, line_spacing=1.15,
                  anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, cx + pad, grid_y + pad + 0.95, cw - 2 * pad, ch - pad - 0.95 - pad,
+        text_box(s, cx + pad, grid_y + pad + 0.78, cw - 2 * pad, ch - pad - 0.78 - pad,
                  text=desc, size=13, italic=True, color=SLATE, line_spacing=1.35,
                  anchor=MSO_ANCHOR.MIDDLE)
 
-    hint_y = grid_y + ch + 0.25
+    hint_y = grid_y + ch + 0.9
     ocean_box(s, 0.55, hint_y, 12.23, 0.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.3)
     icon(s, "hand", "028090", 64, 0.85, hint_y + 0.1, 0.34)
     text_box(s, 1.4, hint_y, 11.2, 0.55,
@@ -686,7 +699,18 @@ def build_s08(p):
     (P1 finding): description text is MIDDLE-anchored in a shorter fixed
     card height instead of top-anchored in a tall card, per presentation-
     critic recommendation (same technique already used on s19-21/s23 in
-    round 1)."""
+    round 1).
+    Round-3 point fix (visual mass): card height cut from 4.05" to 2.5"
+    (2nd pass, same final value as s04 — identical content profile, must
+    match). Inner desc-box y-offset tightened from 0.95" to 0.78". grid_y
+    kept at 2.0 (matches s04, s05/s09 reveal-partners, and every other
+    card-grid Q-slide in the deck) — a 3rd pass had raised grid_y to 3.0
+    to "balance" empty space above/below the shrunk card, but that just
+    relocated the dead space into a full extra inch of blank gap between
+    title and card-top, a regression caught on independent re-inspection
+    against s05's top-anchored layout. Keeping grid_y=2.0 lets the card
+    sit where it always did; the freed height only shrinks the card
+    itself and the gap before the hint bar."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     section_tag(s, 0.55, 0.4, "Раздел 2 · Инструменты 5–6")
@@ -695,7 +719,7 @@ def build_s08(p):
     grid_y = 2.0
     gap = 0.3
     cw = (12.23 - gap) / 2
-    ch = 4.05
+    ch = 2.5
     cards = [
         ("search", "YandexGPT во врезке Яндекс.Поиска",
          "Сгенерированный краткий ответ над списком обычных результатов поиска."),
@@ -710,11 +734,11 @@ def build_s08(p):
         text_box(s, cx + pad + 0.7, grid_y + pad - 0.03, cw - 2 * pad - 0.7, 0.9,
                  text=title, size=14, bold=True, color=DEEP, line_spacing=1.15,
                  anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, cx + pad, grid_y + pad + 0.95, cw - 2 * pad, ch - pad - 0.95 - pad,
+        text_box(s, cx + pad, grid_y + pad + 0.78, cw - 2 * pad, ch - pad - 0.78 - pad,
                  text=desc, size=13, italic=True, color=SLATE, line_spacing=1.35,
                  anchor=MSO_ANCHOR.MIDDLE)
 
-    hint_y = grid_y + ch + 0.25
+    hint_y = grid_y + ch + 0.9
     ocean_box(s, 0.55, hint_y, 12.23, 0.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.3)
     icon(s, "hand", "028090", 64, 0.85, hint_y + 0.1, 0.34)
     text_box(s, 1.4, hint_y, 11.2, 0.55,
@@ -1407,11 +1431,17 @@ def build_s28(p):
     Unchanged content, renumbered s18 -> s28 in Round 2. Round-2 P2 fix
     (presentation-critic): title translated to Russian instead of a
     bare-English H1 — established-term exception covers single bare
-    occurrences after glossing, not a whole title in Latin script."""
+    occurrences after glossing, not a whole title in Latin script.
+    Round-3 point fix: title still listed three bare English terms
+    side-by-side with zero Russian words in between (bias, sycophancy,
+    distribution shift) even though the cards below already gloss each
+    term inline (e.g. "Bias (смещение)"). Title rewritten fully in
+    Russian to match the cards' glossing pattern; English terms remain
+    visible in the 3 cards immediately below."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     section_tag(s, 0.55, 0.4, "Раздел 5 · Три типа провала")
-    slide_title(s, "Три типа провала: bias, sycophancy, distribution shift — новые примеры", y=0.75, size=22)
+    slide_title(s, "Три типа провала данных: смещение, подстройка, сдвиг распределения", y=0.75, size=22)
 
     grid_y = 1.9
     gap = 0.28

@@ -1642,8 +1642,9 @@ def build_s13e(p):
              line_spacing=1.12)
     filled_rect(s, lx + 0.24, ly + 3.30, lw - 0.48, 0.012, SOFT_GREY)
     text_box(s, lx + 0.24, ly + 3.44, lw - 0.48, 0.52,
-             "Honest Lying: риск самостоятельной правки агентом",
-             size=13, bold=True, color=MID, line_spacing=1.05)
+             "«Honest Lying» (правдоподобное самозакрепление ошибки): "
+             "риск самостоятельной правки агентом",
+             size=12, bold=True, color=MID, line_spacing=1.05)
     text_box(s, lx + 0.24, ly + 3.98, lw - 0.48, 0.90,
              "Dixit, Kamal, Oates, arXiv:2605.29463, 2026 — заметки, "
              "написанные самим агентом (self-authored), могут не "

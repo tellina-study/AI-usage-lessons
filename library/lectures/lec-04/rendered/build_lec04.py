@@ -1199,13 +1199,15 @@ def build_s12(p):
     text_box(s, px + pw - 2.05, ly + 0.18, 1.85, 1.10, "~95–96%",
              size=36, bold=True, color=DEEP, align=PP_ALIGN.RIGHT,
              anchor=MSO_ANCHOR.MIDDLE)
-    # gold delta band [Fix C, issue #162: gap narrowed ~24pp → ~15-17pp,
-    # Scale SEAL conservative estimate, per chapter.md §2.2]
+    # gold delta band [Fix, issue #162 QA-round v3: SWE-bench Pro
+    # re-verified against labs.scale.com/leaderboard/swe_bench_pro_public
+    # (snapshot 2026-08-10) — gap widened ~15-17pp -> ~34-37pp, per
+    # chapter.md v1.5 §2.2 P0 fact-check]
     filled_rect(s, px, ly + 1.36, pw, 0.42, GOLD, radius=True,
                 radius_adj=0.20)
     text_box(s, px, ly + 1.36, pw, 0.42,
-             "разрыв ~15–17 процентных пунктов",
-             size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             "разрыв ~34–37 процентных пунктов — шире, а не уже",
+             size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE)
     # Pro [Fix B1, issue #162: gold TEXT on GOLD_TINT (≈1.8:1 FAIL) →
     # DEEP text — box already gold-framed, no need for text to be gold too]
@@ -1215,15 +1217,15 @@ def build_s12(p):
              "SWE-bench Pro\nчестный незнакомый приватный код",
              size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.06)
-    text_box(s, px + pw - 2.05, ly + 1.86, 1.85, 1.10, "~69–80%",
+    text_box(s, px + pw - 2.05, ly + 1.86, 1.85, 1.10, "~59–62%",
              size=36, bold=True, color=DEEP, align=PP_ALIGN.RIGHT,
              anchor=MSO_ANCHOR.MIDDLE)
     # Right — explanation
     rx, rw = 7.80, 5.00
     ocean_box(s, rx, ly, rw, 1.40, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     text_box(s, rx + 0.26, ly + 0.12, rw - 0.52, 1.16,
-             "Главный инженерный факт уровня C: «почти 95%» на знакомом "
-             "коде → «7–8 из 10» на незнакомом",
+             "Главный инженерный факт уровня C: «почти 96%» на знакомом "
+             "коде → «примерно 6 из 10» на незнакомом",
              size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.12)
     ocean_box(s, rx, ly + 1.52, rw, 1.62)

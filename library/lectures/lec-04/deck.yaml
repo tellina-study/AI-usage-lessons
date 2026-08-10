@@ -28,7 +28,7 @@ deck:
   lecture_number: 4
   title: "Лекция 4. AI в разработке программного обеспечения"
   audience: "3 курс ИУ6, инженеры-разработчики (универсально, без локального binding в контенте)"
-  duration_min: 75
+  duration_min: 90
   central_question: "AI пишет код всё лучше — где он реально ускоряет, где замедляет или вредит, и что в работе инженера НЕ делегируется?"
   learning_outcomes: [LO1, LO4, LO7]
   language: ru

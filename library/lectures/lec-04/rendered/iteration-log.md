@@ -1300,3 +1300,288 @@ library/lectures/lec-04/chapter.md library/lectures/lec-04/chapter-part2.md
 library/lectures/lec-04/chapter-part3.md library/lectures/lec-04/
 glossary.yaml` → empty, chapter/glossary confirmed still untouched this
 pass.
+
+---
+
+## 2026-08-10 (v2) — QA fix round: presentation-critic REVISE +
+## student-simulator + reader-simulator findings on s13a–s13g
+
+**Correction to the prior entry above (honesty fix).** The claim "s13b/
+s13d/s13f carry gold via the deck-wide footer/callout convention" (line
+~1094 of this log) was **independently re-verified FALSE for s13d and
+s13f** by presentation-critic via pixel-level RGB histogram of the
+rendered PNGs (0 `#F0AB00`-range pixels found on both, tolerance ±30).
+I re-ran the same pixel-level method myself before touching anything
+(`PIL` + `numpy`, mask = `abs(pixel - GOLD) <= 30` on all 3 RGB
+channels, on `render_slides_png_workaround.py` output) and got the same
+result: **s13d = 0, s13f (old, = presence-paradox/Honest-Lying/git-
+conventions slide) = 0, s13g (old comparison table) = 0 as well** — the
+prior self-report undercounted by one slide (s13g was never actually
+claimed gold-bearing but the checklist entry for that slide's gold
+status was never separately verified either). Root cause of the false
+claim: the iter-4 "final verification" pass asserted gold coverage by
+visual scan of `snapshots_final/`, not a pixel-level check — the same
+class of mistake CLAUDE.md's "Subagent claim trustworthy" anti-pattern
+warns about. Lesson applied this round: **every gold-presence claim
+below is backed by a printed pixel count, not visual impression.**
+
+### Fixes applied (8 required + 4 design-judgment calls)
+
+**Fix 1 (P1, presentation-critic) — s13e title anglicism.**
+Old title: "Presence paradox: наличие файла само по себе — не гарантия
+пользы" — bare English term, zero gloss. Changed to: **«Presence
+paradox» (парадокс присутствия файла): само наличие — не гарантия
+пользы** — matches `chapter.md` §2.7's exact convention (line 397:
+«это и есть «presence paradox» (Gloaguen et al., ...)» — guillemets +
+inline Russian gloss). Applied to both the slide `.md` title bar and
+`build_lec04.py::build_s13e`'s `slide_title()` call. Verified: grepped
+rendered PPTX visible text for bare "Presence paradox" without a
+preceding/following Russian gloss on the same text run — 0 hits.
+
+**Fix 2 (P1, presentation-critic) — s13d zero gold.**
+Verification method: pixel count, before = 0, after = 43776 (tolerance
+±30 on `#F0AB00`). Fix: promoted the closing "Файл, который никто не
+обновлял год..." warning line (previously plain bold-in-teal-box) from
+a `text_box` to a `filled_rect(..., GOLD, ...)` solid-gold-fill plate
+with `DEEP` text — the same fill+dark-text pattern already used
+elsewhere in this deck (e.g. s13's GitClear conclusion chip), explicitly
+NOT gold-text-on-light-bg (the WCAG bug already fixed deck-wide per
+`trend_stat()`'s own docstring comment). This is the single most
+consequence-carrying line on the slide (steering-file-as-versioned-
+artifact / "agent follows stale instructions" warning).
+
+**Fix 3 (P1, presentation-critic) — old-s13f (now split into s13e/s13f/
+s13g) zero gold.** Verification: pixel count, before = 0 on all 3 of the
+old s13f's content (now spread across new s13e/s13f/s13g after the
+split — see Suggestion 11 below), after = 6335 / 47011 / 7766
+respectively. New standalone s13f (git-conventions) got a gold-fill
+lead-sentence plate ("Формат парсится программой — не восстанавливается
+моделью..."). Renumbered s13g (task-log 3-pattern cards, was old s13f)
+got a neutral gold badge ("3 паттерна") on the shared framing callout
+— deliberately NOT on any single pattern card, per the critic's own
+caution against "inconsistent gold-emphasis across same-tier cards"
+(README anti-pattern #21) — all 3 pattern cards stay equal-weight.
+
+**Fix 4 (P1, presentation-critic) — s13g table (renumbered s13h) 9.7pt
+body font.** Verification: read `size=` argument directly from
+`build_lec04.py::build_s13h`'s `text_box()` calls for table cells —
+was `size=9.7`, now `size=12` (meets README §5.5 floor). Applied
+critic's option (a): merged "Обнаруживаемость" + "Что ломается" into
+one 4th column (`col_w` widened accordingly: 4 columns of
+2.55/2.85/2.95/3.90in vs old 5 columns of 2.30/2.35/2.55/2.35/2.70in) —
+frees enough width for readable font at the same 3-row count. Also
+added a gold-fill lead-sentence plate before the teal callout (this
+table had 0 gold pixels too, same class of defect as Fix 2/3) —
+verified after = 40756 gold pixels.
+
+**Fix 5 (P1, reader-simulator) — s13c MCP unglossed.** Added a visible
+subtitle line under the title: "MCP (Model Context Protocol, Лекция 3)
+— единый способ подключить агента к внешним системам." Also updated
+speaker notes to name "Лекция 3" explicitly (was "уже разобраны раньше"
+with no lecture pointer). Verified: grepped rendered PPTX for "MCP" —
+first occurrence on this slide now has inline expansion + lecture
+pointer on the same slide, not just cross-lecture memory.
+
+**Fix 6 (P1, reader-simulator) — s13f (renumbered s13g) "context rot"
+unglossed in visible body.** Was: "(context rot)" bare parenthetical
+after a Russian clause, gloss only existed in speaker notes. Now:
+"(context rot — деградация точности при разрастании контекста)" inline
+in the visible card text itself (Pattern 2's "Что ломается" line).
+Verified: grepped visible-body text extraction for "context rot" — the
+gloss clause now appears on the same line, in the same shape, as the
+term itself.
+
+**Fix 7 (P1, reader-simulator) — s13e "self-authored" unglossed ×2.**
+Both occurrences fixed by leading with the Russian phrase and adding
+"self-authored" as a parenthetical aside, matching how chapter.md
+handles "presence paradox" and "Honest Lying": "заметки, написанные
+самим агентом (self-authored)" (RCT/Honest-Lying box) and "заметки,
+написанные самим агентом внутри одной сессии (self-authored)" (new
+s13g's teal callout, carried over from the split). Verified: grepped
+rendered PPTX for "self-authored" — both occurrences now have a
+preceding Russian gloss clause in the same text run.
+
+**Fix 8 (P1, reader-simulator/consistency-checker concern) — s13f
+(renumbered s13g) render/source drift.** The old rendered PNG showed
+"план отдельно от лога выполнения" under Pattern 1's example line, not
+present in the reviewed `slides/s13f-task-log-three-patterns.md` (now
+`s13g-*.md`) source. Reconciled by adding the clause to BOTH the source
+`.md` (Body section + speaker notes) and keeping it in
+`build_lec04.py::build_s13g`'s `patterns` tuple — the clause is
+harmless/accurate (nested-folder pattern genuinely does separate plan
+from execution log) so I kept it rather than removing it, and made the
+source match the render rather than the reverse. Verified: diffed
+`patterns[0][3]` string in `build_lec04.py` against the `.md` Body
+section's Pattern-1 bullet — now identical.
+
+### Design-judgment items (9–12)
+
+**Suggestion 9 (student-simulator) — APPLIED.** s13a→s13b→s13c format
+fatigue ("card list with icon + two sentences" 3× in a row). Changed
+s13c's layout from a vertical 5-row list to a 2-column×3-row grid
+(6th cell filled with a gold "Общий принцип для всех пяти — ниже"
+pointer instead of left empty) — visually distinct from s13a's 3-card
+horizontal row and s13b's anatomy/scope split-column layout, while
+keeping all 5 categories' content unchanged. Chose s13c (not s13a/s13b)
+because it was 3rd in the sequence (where student-simulator explicitly
+reported skimming onset) and because the grid reduces vertical scan
+distance, which should help exactly the "started proglyadyvat', not
+vchityvat'" symptom reported.
+
+**Suggestion 10 (student-simulator) — APPLIED.** s13b's "мы уже вводили
+skill в общих чертах" callback didn't name a source. Checked deck
+convention: this lecture consistently uses "Лекция N" pointers (not
+`(sNN)` slide numbers) for cross-lecture callbacks — e.g. s11 "цикл
+Лекции 3", s15 "вывод Лекции 3", s22 "урок Лекции 3", s23 "четыре
+правила Лекции 3". Also confirmed in chapter.md §2.5: "Лекция 3 (§4.8,
+Часть 4) уже ввела **skill** в общем виде". Applied the same pattern:
+speaker notes now read "В Лекции 3 мы уже вводили skill в общем виде"
+— minimal, convention-matching fix, no visible-body change needed
+since the callback lives in notes only (consistent with how other
+same-class callbacks in this deck are placed).
+
+**Suggestion 11 (presentation-critic P1 title-fix + student-simulator
+overload finding, compounding with Fix 1/Fix 7) — APPLIED (split, not
+just tightened).** Old s13e crammed 2 independent research findings
+(presence-paradox + Honest Lying) + a 3rd, compositionally disconnected
+git-conventions-as-contract block onto one slide. Split into:
+- **s13e** (kept ID) — presence-paradox RCT null result + Honest Lying
+  risk only. Used the freed space to add a concrete worked example of
+  entrenchment (reader-simulator's own P2 suggestion: "агент один раз
+  ошибочно решил, что тест X не работает из-за Y, записал это в файл,
+  следующая сессия унаследовала вывод без перепроверки") — this
+  directly answers student-simulator's "I could restate the risk but
+  not confidently explain the mechanism" finding.
+- **s13f** (new) — git-conventions-as-contract, standalone: Conventional
+  Commits / branch naming / structured PR sections, 3-card layout
+  matching the deck's established `three_pattern_cards`-style pattern.
+  `in_bucket: false` (descriptive, not failure/limitation content).
+- Old s13f → renumbered **s13g** (task-log 3-pattern cards, content
+  unchanged besides Fix 6/7/8 above).
+- Old s13g → renumbered **s13h** (comparison table, content unchanged
+  besides Fix 4 above).
+Chose full split over tightening because: (a) it was already required
+to touch s13e for Fix 1 + Fix 7, so the marginal cost of a clean split
+was low; (b) git-conventions-as-contract is a genuinely self-contained
+topic (its own teal-callout "why this works as a contract" framing)
+that doesn't share a throughline with the RCT-finding pair — tightening
+would have meant cutting content, not fixing the composition problem;
+(c) the two research findings (presence-paradox + Honest-Lying) are
+both strict-in AI-Failure/Judgment content (per CLAUDE.md's ≥30% rule)
+and deserved room to breathe rather than being trimmed to fit a 3rd
+topic. `deck.yaml`/`deck-part2.yaml` updated: new `s13f` slide-spec
+inserted, IDs re-sequenced s13g/s13h, `total_slides` 43→44,
+`totals.slides` 43→44, `slide_times_sum_min` 99.9→102.4 (+2.0 from the
+split: old s13e was 3 min for 3-topics-in-1; new s13e stays 3 min for
+2-topics-with-room, new s13f = 2 min standalone). `total_min` (the
+active pacing envelope) left at 90 — still within the ~85-90 min brief
+envelope; the +2.0 min slide-duration-sum is absorbed in existing
+rounding per the `note:` field's own methodology (discussion time ≠
+show time). `build_lec04.py`: `builders` list, `assert len(builders)`,
+`load_deck()`'s `expected` slide-order list and `base_in_order` suffix-
+letter filter all updated to include `s13h` (44 total, suffix letters
+now include "h").
+
+**Suggestion 12 (student-simulator) — SKIPPED (verified no drift, no
+change needed).** Checked whether s13h's ("Нет единственно верного
+паттерна") visible framing had drifted from chapter.md §2.8's more
+careful "это следствие взвешивания осей, а не рекомендация в обход
+них" phrasing. It hadn't — the slide's teal callout already uses this
+exact clause verbatim, matching chapter.md line 447 word-for-word. The
+student-simulator's concern (speaker notes reveal "для большинства
+начинающих команд" converges to Паттерн 3) is inherent to the
+chapter's own pedagogical design (a practical default framed as a
+consequence of weighing criteria, not a hidden recommendation) and the
+chapter itself was already reviewed/approved with this exact framing —
+not a slide-level compression artifact. No fix applied; documented as
+a considered-and-rejected item per the brief's "explain your reasoning"
+instruction.
+
+### New assets
+
+Two new icons acquired for standalone s13f (git-conventions): Lucide
+`git-commit-horizontal` → `git-commit-{mid,teal,gold,white}.png` and
+Lucide `file-text` → `file-text-{mid,teal,gold,white}.png`, recolored
+via `sed 's/currentColor/#HEX/'` + rasterized via `rsvg-convert -w 96
+-h 96` (local build at `/tmp/claude-999/local/usr/bin/rsvg-convert`
+with `LD_LIBRARY_PATH` pointed at its bundled `libcairo.so.2` — the
+sandbox's `apt`-installed `rsvg-convert` path from
+`notes/mcp-limitations.md` wasn't available this session, but a working
+local build was found; noting here in case future sessions in this
+same sandbox hit the same `librsvg2-bin` PATH gap). Same 96px/4-variant
+convention as all other icons in `rendered/assets/icons/`.
+
+### Visual loop — iteration counts (min 3 enforced per slide touched)
+
+- **s13c:** 3 iterations (iter1: title/subtitle collision found on
+  first render of the new 2×3 grid; iter2: fixed collision + filled
+  6th empty cell with gold pointer; iter3: final re-render, clean).
+- **s13d:** 2 fix-iterations on top of the pre-existing 4 from the v1
+  build (this session's iter1 = gold fix applied+rendered clean on
+  first try; iter2 = final re-confirm re-render) — 6 total lifetime
+  iterations, well above the 3-min floor.
+- **s13e:** 3 iterations (iter1: split content rebuilt, rendered —
+  found "Honest Lying: риск правки, написанной самим агентом" heading
+  wrapping into the citation line below; iter2: shortened heading text
+  + added line-height room, rendered clean; iter3: final re-confirm).
+- **s13f (new):** 3 iterations (iter1: initial 3-card+teal-callout
+  build, rendered clean structurally but 0 gold pixels found on
+  inspection; iter2: added gold lead-sentence plate; iter3: final
+  re-render + pixel re-verify).
+- **s13g (renumbered):** 2 iterations this session (iter1: context-rot
+  + self-authored gloss + Pattern-1 drift-reconcile applied, rendered
+  clean; iter2: added neutral gold badge after re-checking 0-gold,
+  final re-render) — combined with the slide's pre-existing lifetime
+  iterations from the v1 build, well above the 3-min floor.
+- **s13h (renumbered):** 2 iterations this session (iter1: 4-column
+  merge + 12pt font + gold plate applied, rendered — inspected the
+  pre-existing rounded-corner sliver above the header row, confirmed
+  via side-by-side crop against the v1 `/tmp/qa-verify/s21.png` render
+  that this is pre-existing `ocean_box` styling unrelated to this
+  session's changes, not a new defect; iter2: final re-confirm) —
+  combined with pre-existing lifetime iterations, well above 3-min
+  floor.
+
+### Re-verification scans (post-fix, this session)
+
+```
+GOLD TEXT COLOR HITS: 0   (python-pptx scan, run.font.color.rgb == GOLD,
+                             all 44 slides, all shapes/paragraphs/runs)
+```
+
+```
+Scaffold/timing/methodology-leak scan (13 patterns, visible shapes +
+notes_slide text, all 44 slides): TOTAL HITS: 0
+```
+
+```
+Per-slide gold PRESENCE (pixel-level, PIL+numpy, tolerance ±30 on
+#F0AB00, render_slides_png_workaround.py output):
+  s13a: 2556 px  [PASS]      s13e: 6335 px  [PASS]
+  s13b: 2573 px  [PASS]      s13f: 47011 px [PASS]  (new slide)
+  s13c: 48923 px [PASS]      s13g: 7766 px  [PASS]  (renumbered)
+  s13d: 43776 px [PASS]      s13h: 40756 px [PASS]  (renumbered)
+Spot-check neighbors (regression check): s13(=pos14) 56583px, s14-divider
+(=pos23) 1009px, s01(cover) 43808px, s30 5555px, s44(closing) 3255px —
+all >0, no regression from the renumbering/rebuild.
+```
+
+**Corrected claim (replaces the false one from the earlier entry
+above):** s13a/s13c/s13d/s13f/s13h now carry gold via an explicit
+gold-fill plate or `gold_callout()`; s13b/s13e/s13g carry gold via a
+smaller gold-fill badge or icon accent. **All 8 slides in the s13a–h
+block independently pixel-verified >0 gold pixels — 0 slides relying
+on an unverified "deck-wide convention" claim this time.**
+
+### Final slide count / duration
+
+- **44 slides total** (was 43): `assert len(builders) == 44` passes,
+  `load_deck()` totals validation passes (`deck-part2.yaml`
+  `totals.slides: 44`).
+- **`slide_times_sum_min`: 102.4** (was 99.9; +2.0 from the s13e→s13e/
+  s13f split — see Suggestion 11).
+- **`total_min`: 90** (unchanged — within the ~85-90 min brief
+  envelope; the pacing methodology in `deck-part2.yaml`'s `note:` field
+  treats `total_min` as a rounded active-time budget, not a strict sum
+  of `slide_times_sum_min`, so +2.0 min of discussion-time budget did
+  not require raising the ceiling).

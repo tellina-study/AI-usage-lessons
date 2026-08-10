@@ -36,7 +36,7 @@ deck:
   version: v3.4
   source: chapter v1.3 finalized (~23700 слов, 3 части)
   plan: notes/lecture-4-software-review/final/plan-v2-final.md (v2-final §4)
-  total_slides: 43          # 32 (s01–s32 нумерация неизменна) + 4 suffix-ID: 3 дивайдера s04a/s24a/s28a (#101) + s22a curl-slop (#103) + 7 контент-слайдов s13a..s13g §2.4–§2.8 (issue #162)
+  total_slides: 44          # 32 (s01–s32 нумерация неизменна) + 4 suffix-ID: 3 дивайдера s04a/s24a/s28a (#101) + s22a curl-slop (#103) + 8 контент-слайдов s13a..s13h §2.4–§2.8 (issue #162, v2 fix-round split s13e→s13e/s13f)
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3)"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
 
@@ -414,7 +414,7 @@ slides:
     in_bucket: true   # ограничение метода (версионирование как код) — часть in-bucket пары s13d/s13e
     visual:
       pattern: components_plus_comparison
-      primary: "Слева — 4 компонента steering-файла (команды/конвенции/инварианты/что-не-делать) в Ocean rounded box. Справа — steering-файл vs README/CONTRIBUTING (2-колоночное сравнение по аудитории и частоте чтения). Teal callout — версионирование как код (устаревший файл хуже отсутствия)."
+      primary: "Слева — 4 компонента steering-файла (команды/конвенции/инварианты/что-не-делать) в Ocean rounded box. Справа — steering-файл vs README/CONTRIBUTING (2-колоночное сравнение по аудитории и частоте чтения). Teal callout — версионирование как код; закрывающая строка «файл, который никто не обновлял год…» — gold fill+DEEP text (issue #162 v2 fix, было 0 gold pixels)."
     interaction: none
 
   - id: s13e
@@ -422,19 +422,35 @@ slides:
     type: case_study
     section: "Раздел 2. Уровень C: кодинг-агент"
     duration_min: 3
-    assertion: "Presence paradox: сам факт наличия steering-файла не даёт статистически значимого прироста успеха и обычно увеличивает стоимость — файл работает только под названный информационный пробел"
-    learning_goal: "RCT null result (Gloaguen et al. 2026) + Honest Lying-риск self-authored правки + git-конвенции как контракт + критерий «когда ритуальный файл не нужен»"
+    assertion: "«Presence paradox»: сам факт наличия steering-файла не даёт статистически значимого прироста успеха и обычно увеличивает стоимость — файл работает только под названный информационный пробел"
+    learning_goal: "RCT null result (Gloaguen et al. 2026) + Honest Lying-риск самостоятельной правки агентом + критерий «когда ритуальный файл не нужен»"
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§2.7 [for-slide-s2new-steering]"
     references: []
-    in_bucket: true   # RCT null result + документированный риск self-authored entrenchment + не-AI альтернатива
+    in_bucket: true   # RCT null result + документированный риск self-authored entrenchment
     visual:
       pattern: null_result_plus_risk_plus_criterion
-      primary: "Слева — RCT null result (3 условия NONE/LLM-generated/developer-written, 2 постановки) в Ocean rounded box. Справа — Honest Lying риск self-authored правки + git-конвенции-как-контракт. Gold callout (fill+DEEP text) — явный критерий «когда файл не нужен», максимальная видимость."
+      primary: "Слева — RCT null result (3 условия NONE/LLM-generated/developer-written, 2 постановки) в Ocean rounded box, плюс Honest Lying риск (заголовок ниже). Справа — конкретный пример закрепления ошибки + «тот же класс риска». Gold callout (fill+DEEP text) — явный критерий «когда файл не нужен», максимальная видимость. [issue #162 v2] Split из прежнего s13e: git-конвенции вынесены в отдельный s13f (presentation-critic P1 title-anglicism fix + student-simulator overload finding); title получил inline Russian gloss «(парадокс присутствия файла)»; «self-authored» глоссирован inline (reader-simulator P1)."
     interaction: think_pause
 
   - id: s13f
-    file: slides/s13f-task-log-three-patterns.md
+    file: slides/s13f-git-conventions-as-contract.md
+    type: assertion_visual
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 2
+    assertion: "Git-конвенции — машинно-читаемый контракт для агента: не свободный текст, а формат, который парсится автоматически"
+    learning_goal: "Conventional Commits + именование веток + структурированные секции PR как конкретные примеры «структуры вместо прозы» для агента"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.7 [for-slide-s2new-steering]"
+    references: []
+    in_bucket: false   # описательный слайд про инженерный формат, не failure/ограничение
+    visual:
+      pattern: three_convention_cards
+      primary: "[NEW, issue #162 v2] 3 карточки в Ocean rounded box — Conventional Commits / именование веток / структура PR. Каждая — иконка + формат-пример + что автоматически получается. Teal callout — почему это работает как контракт (формат парсится программой, не восстанавливается моделью). Выделено в отдельный слайд из прежнего s13e (presentation-critic P1 title-fix + student-simulator «bolted-on git block» finding) — самодостаточная тема получила своё пространство."
+    interaction: none
+
+  - id: s13g
+    file: slides/s13g-task-log-three-patterns.md
     type: assertion_visual
     section: "Раздел 2. Уровень C: кодинг-агент"
     duration_min: 2.5
@@ -443,14 +459,14 @@ slides:
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§2.8 [for-slide-s2new-tasklog]"
     references: []
-    in_bucket: true   # разбор ограничений каждого паттерна (что ломается на масштабе) — часть in-bucket пары s13f/s13g
+    in_bucket: true   # разбор ограничений каждого паттерна (что ломается на масштабе) — часть in-bucket пары s13g/s13h
     visual:
       pattern: three_pattern_cards
-      primary: "3 карточки-паттерна в ряд в Ocean rounded box: nested per-task folder / single unified log / flat shared folder. Каждая — иконка + пример пути + сильная сторона + что ломается на масштабе. Teal callout сверху — отличие от steering-файла и self-authored памяти."
+      primary: "3 карточки-паттерна в ряд в Ocean rounded box: nested per-task folder / single unified log / flat shared folder. Каждая — иконка + пример пути + сильная сторона + что ломается на масштабе (context rot глоссирован inline, reader-simulator P1 fix). Teal callout сверху — отличие от steering-файла и заметок, написанных самим агентом (self-authored)."
     interaction: none
 
-  - id: s13g
-    file: slides/s13g-task-log-comparison-table.md
+  - id: s13h
+    file: slides/s13h-task-log-comparison-table.md
     type: comparison
     section: "Раздел 2. Уровень C: кодинг-агент"
     duration_min: 3
@@ -463,7 +479,7 @@ slides:
     visual:
       pattern: comparison_table_plus_nuance
       subtype: schema_matrix
-      primary: "Полная 4×3 таблица (Git-diff / устойчивость к параллелизму / обнаруживаемость / что ломается на масштабе) в Ocean rounded box, faithful reproduction chapter-таблицы. Teal callout — явная nuance-формулировка «следствие взвешивания осей, не рекомендация в обход них» + 2 конкретных примера валидности другого паттерна для другой команды."
+      primary: "Таблица 3×4 (Git-diff / устойчивость к параллелизму / обнаруживаемость+что-ломается объединены в 1 колонку) в Ocean rounded box — тело таблицы 12pt (issue #162 v2 fix, было 9.7pt, ниже README §5.5 floor). Gold fill-плашка — лид-предложение «нет единственно верного ответа». Teal callout — 2 конкретных примера валидности другого паттерна для другой команды."
     interaction: none
 
 # ─────────────────────────────────────────────────────────────────────────

@@ -36,7 +36,7 @@ deck:
   version: v3.4
   source: chapter v1.3 finalized (~23700 слов, 3 части)
   plan: notes/lecture-4-software-review/final/plan-v2-final.md (v2-final §4)
-  total_slides: 36          # 32 (s01–s32 нумерация неизменна) + 4 suffix-ID: 3 дивайдера s04a/s24a/s28a (#101) + s22a curl-slop (#103)
+  total_slides: 43          # 32 (s01–s32 нумерация неизменна) + 4 suffix-ID: 3 дивайдера s04a/s24a/s28a (#101) + s22a curl-slop (#103) + 7 контент-слайдов s13a..s13g §2.4–§2.8 (issue #162)
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3)"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
 
@@ -348,6 +348,123 @@ slides:
       pattern: failure_metrics_plus_lesson
       primary: "Слева — антипаттерн в Ocean rounded box: «merge по зелёным тестам без чтения» = уровень C, деградировавший до D без решения о повышении автономии. Справа — GitClear 211M строк: клоны 8,3→12,3% · рефакторинг 24,1→9,5% · churn 5,5→7,9% (скорость↑ качество↓). Урок-плашка: обязательное человеческое ревью PR + метрики дублирования/churn в CI как gate; merge = решение об ответственности, не делегируется. Gold — связка «скорость ≠ качество» (плашка fill, не текст). Footer 12pt italic — источник + caveat «корреляция во времени, направление стабильно»."
     interaction: poll
+
+  # ─── §2.4–§2.8: landscape / skills / MCP / steering-файл / task-log ───
+  # [issue #162, 2026-08-10] 7 новых контент-слайдов между s13 и s14 —
+  # раскрывают ранее не покрытые chapter-секции §2.4–§2.8 (Раздел 2,
+  # Уровень C). Marker-имена совпадают с chapter [for-slide-s2new-*].
+  - id: s13a
+    file: slides/s13a-tools-landscape.md
+    type: assertion_visual
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 2.5
+    assertion: "Три категории инструментов различаются тем, ГДЕ живёт агент — agentic IDE, CLI-агент, фреймворк — это ось, ортогональная лестнице автономности A→D"
+    learning_goal: "Словарь категорий уровня B–C по месту встраивания агента (не по бренду) + перенос правила «категория важнее бренда» из §0.4 + agent/subagent SWE-пример"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.4 [for-slide-s2new-tools]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: category_cards_plus_criterion
+      primary: "3 карточки-категории в Ocean rounded box (agentic IDE / CLI-агент / фреймворк), каждая с иконкой + флагманский пример + trade-off одной строкой. Teal callout — «категория важнее бренда» (эхо принципа для уровня автономии). Gold callout — agent/субагент SWE-пример (делегирование узкого подшага)."
+    interaction: none
+
+  - id: s13b
+    file: slides/s13b-skills-in-coding-agent.md
+    type: assertion_visual
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 2.5
+    assertion: "Skill в кодинг-агенте — директория с коротким SKILL.md для быстрого сканирования плюс scripts/ и references/ для деталей, которые подгружаются только когда навык реально используется"
+    learning_goal: "Конкретика формата skill (SKILL.md + scripts/ + references/), project-level vs personal scope, 3 SWE-примера — конкретный проектный вариант общей процедуры"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.5 [for-slide-s2new-skills]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: anatomy_plus_scope_examples
+      primary: "Слева — анатомия skill (SKILL.md/scripts/references) в Ocean rounded box. Справа — project-level vs personal (2 колонки) + 3 конкретных SWE-примера. Gold callout — общая логика: skill фиксирует конкретный проектный вариант, не учит новому в принципе."
+    interaction: none
+
+  - id: s13c
+    file: slides/s13c-mcp-categories.md
+    type: assertion_visual
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 2.5
+    assertion: "5 категорий MCP-серверов у разработчика закрывают 5 разных проблем — а какой scope дать каждой, решение отдельное от решения «подключать ли»"
+    learning_goal: "5 категорий MCP-подключений разработчика (репозиторий/файлы/CI/БД/документация) + least-privilege callback: scope — отдельное решение от подключения"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.6 [for-slide-s2new-mcp]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: five_row_categories_plus_scope
+      primary: "5 строк-карточек (иконка + категория + что закрывает) в Ocean rounded box. Gold плашка — «решение о scope, не техническая деталь». Teal callout — least-privilege с 3 конкретными SWE-примерами scope-ограничения."
+    interaction: none
+
+  - id: s13d
+    file: slides/s13d-steering-file-anatomy.md
+    type: assertion_visual
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 3
+    assertion: "Steering-файл — не описание проекта для человека, а операционный контекст агента перед КАЖДЫМ запуском: команды именно этого проекта, конвенции, инварианты, явное «что не делать»"
+    learning_goal: "Что реально идёт в steering-файл (класс AGENTS.md/CLAUDE.md) + отличие от README/CONTRIBUTING по аудитории + версионирование как код"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.7 [for-slide-s2new-steering]"
+    references: []
+    in_bucket: true   # ограничение метода (версионирование как код) — часть in-bucket пары s13d/s13e
+    visual:
+      pattern: components_plus_comparison
+      primary: "Слева — 4 компонента steering-файла (команды/конвенции/инварианты/что-не-делать) в Ocean rounded box. Справа — steering-файл vs README/CONTRIBUTING (2-колоночное сравнение по аудитории и частоте чтения). Teal callout — версионирование как код (устаревший файл хуже отсутствия)."
+    interaction: none
+
+  - id: s13e
+    file: slides/s13e-presence-paradox-honest-lying.md
+    type: case_study
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 3
+    assertion: "Presence paradox: сам факт наличия steering-файла не даёт статистически значимого прироста успеха и обычно увеличивает стоимость — файл работает только под названный информационный пробел"
+    learning_goal: "RCT null result (Gloaguen et al. 2026) + Honest Lying-риск self-authored правки + git-конвенции как контракт + критерий «когда ритуальный файл не нужен»"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.7 [for-slide-s2new-steering]"
+    references: []
+    in_bucket: true   # RCT null result + документированный риск self-authored entrenchment + не-AI альтернатива
+    visual:
+      pattern: null_result_plus_risk_plus_criterion
+      primary: "Слева — RCT null result (3 условия NONE/LLM-generated/developer-written, 2 постановки) в Ocean rounded box. Справа — Honest Lying риск self-authored правки + git-конвенции-как-контракт. Gold callout (fill+DEEP text) — явный критерий «когда файл не нужен», максимальная видимость."
+    interaction: think_pause
+
+  - id: s13f
+    file: slides/s13f-task-log-three-patterns.md
+    type: assertion_visual
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 2.5
+    assertion: "Где хранить состояние задачи между сессиями агента — не стандарт, а три архитектурных паттерна, каждый со своим специфическим режимом отказа при масштабе"
+    learning_goal: "3 паттерна журнала задач (nested folder / unified log / flat shared folder) + что именно ломается в каждом на масштабе"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.8 [for-slide-s2new-tasklog]"
+    references: []
+    in_bucket: true   # разбор ограничений каждого паттерна (что ломается на масштабе) — часть in-bucket пары s13f/s13g
+    visual:
+      pattern: three_pattern_cards
+      primary: "3 карточки-паттерна в ряд в Ocean rounded box: nested per-task folder / single unified log / flat shared folder. Каждая — иконка + пример пути + сильная сторона + что ломается на масштабе. Teal callout сверху — отличие от steering-файла и self-authored памяти."
+    interaction: none
+
+  - id: s13g
+    file: slides/s13g-task-log-comparison-table.md
+    type: comparison
+    section: "Раздел 2. Уровень C: кодинг-агент"
+    duration_min: 3
+    assertion: "Нет единственно верного паттерна журнала задач — правильный выбор называет решающую ось под ситуацию команды, а не ищет «лучший» паттерн вообще"
+    learning_goal: "Сводная таблица 4 критерия × 3 паттерна + явная 'no single right answer' формулировка — решающая ось определяет выбор, не universal recommendation"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.8 [for-slide-s2new-tasklog]"
+    references: []
+    in_bucket: true   # явный разбор «нет единственно верного ответа» + 2 конкретных примера валидности другого выбора
+    visual:
+      pattern: comparison_table_plus_nuance
+      subtype: schema_matrix
+      primary: "Полная 4×3 таблица (Git-diff / устойчивость к параллелизму / обнаруживаемость / что ломается на масштабе) в Ocean rounded box, faithful reproduction chapter-таблицы. Teal callout — явная nuance-формулировка «следствие взвешивания осей, не рекомендация в обход них» + 2 конкретных примера валидности другого паттерна для другой команды."
+    interaction: none
 
 # ─────────────────────────────────────────────────────────────────────────
 # КОНЕЦ PART 1. Слайды s14..s32 + s24a/s28a + totals + ai_failure_judgment +

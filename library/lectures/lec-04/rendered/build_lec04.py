@@ -1,5 +1,7 @@
 """
-Full 32-slide build of Лекции 4 «AI в разработке программного обеспечения».
+Full 43-slide build of Лекции 4 «AI в разработке программного обеспечения».
+(32 base s01-s32 + suffix-ID dividers s04a/s24a/s28a + content s22a +
+§2.4-§2.8 content run s13a..s13g, issue #162.)
 
 Source-of-truth: deck.yaml + deck-part2.yaml (split >600 строк, loader reads
 both) + chapter v1.1 finalized (3 части, ~22300 слов) + slides/*.md (32 файла,
@@ -16,7 +18,8 @@ Canvas: 13.333" × 7.5" (16:9, [#55-1] patch). Pacing per deck.yaml ≈ 75 ми�
 Render-style эталон: library/lectures/lec-03/rendered/build_v3.py (та же
 палитра/motif/типографика/divider-шаблон/плотность).
 
-Build: python3 build_lec04.py  → lec-04.pptx (32 slides s01..s32 monotonic).
+Build: python3 build_lec04.py  → lec-04.pptx (43 slides, s01..s32 monotonic
++ suffix-ID inserts).
 Charts pre-generated via gen_charts.py; icons via assets/icons (Lucide,
 recolored Ocean, 4 variants mid/teal/gold/white).
 """
@@ -416,12 +419,20 @@ def load_deck():
     # [Решение #103, 2026-05-17 — owner GATE C] +1 контент-слайд suffix-ID
     # s22a (curl-slop #5) между s22 и s23 — security-раздел, derive §4.5;
     # owner-документированный slide-count override 35→36, cascade-safe.
+    # [issue #162, 2026-08-10] +7 контент-слайдов suffix-ID s13a..s13g
+    # (§2.4–§2.8, ранее не покрытые слайдами) между s13 и s14 — Раздел 2
+    # (Уровень C), cascade-safe: chapter [for-slide-sNN] s01–s32 не
+    # renumber, новые marker-имена s2new-tools/skills/mcp/steering/tasklog.
+    # slide-count override 36→43.
     base = [f"s{n:02d}" for n in range(1, 33)]
     expected = []
     for sid in base:
         expected.append(sid)
         if sid == "s04":
             expected.append("s04a")   # Раздел 1 divider
+        elif sid == "s13":
+            expected.extend(["s13a", "s13b", "s13c", "s13d", "s13e",
+                              "s13f", "s13g"])   # §2.4–§2.8 (issue #162)
         elif sid == "s22":
             expected.append("s22a")   # curl-slop #5 (Решение #103)
         elif sid == "s24":
@@ -432,11 +443,11 @@ def load_deck():
         f"deck slide order mismatch:\n got={ids}\n exp={expected}")
     # s01–s32 нумерация неизменна — base IDs присутствуют все 32 и в порядке
     base_in_order = [i for i in ids if not i.endswith(("a", "b", "c", "d",
-                                                         "e", "f"))]
+                                                         "e", "f", "g"))]
     assert base_in_order == base, (
         f"base s01–s32 numbering changed:\n got={base_in_order}")
     tot = d2.get("totals", {}).get("slides")
-    assert tot == 36, f"deck-part2 totals.slides={tot}, expected 36"
+    assert tot == 43, f"deck-part2 totals.slides={tot}, expected 43"
     return {"slides": slides, "totals": d2.get("totals", {}),
             "deck": d1.get("deck", {})}
 
@@ -504,7 +515,7 @@ def build_section_divider(p, here_idx, subtitle, bridge, sid):
 
 
 # ============================================================
-# Slide builders — 32 slides s01..s32 monotonic
+# Slide builders — 43 slides (s01..s32 monotonic + suffix-ID inserts)
 # ============================================================
 
 def build_s01(p):
@@ -1286,6 +1297,459 @@ def build_s13(p):
     footer(s, "GitClear 2025 (211M строк, 25 крупнейших OSS + приватные) — "
               "корреляция во времени, направление стабильно.")
     speaker_notes(s, load_notes("s13"))
+
+
+def build_s13a(p):
+    """assertion_visual — §2.4 landscape: agentic IDE / CLI-agent / framework
+    categories (orthogonal to A->D ladder) + category>brand echo + agent vs
+    subagent SWE example (issue #162, new §2.4-2.8 content)."""
+    s = blank(p)
+    slide_title(s,
+                "Три категории инструментов — по тому, ГДЕ живёт агент.",
+                size=25, y=0.34, h=0.60)
+    text_box(s, 0.55, 0.98, 12.25, 0.32,
+             "Отдельная ось от лестницы A→D: та отвечает «сколько AI решает "
+             "сам», эта — «в каком окружении».", size=13, italic=True,
+             color=MID)
+    cards = [
+        ("code", "Agentic IDE", "mid",
+         "Desktop-редактор (форк VS Code) со встроенным агентом. Флагман — "
+         "Cursor: Tab (A), Cmd-K (B), Composer/Agent Mode (C) — всё в одном "
+         "продукте.",
+         "визуальный контроль (diff, файловое дерево) ценой привязки к "
+         "редактору"),
+        ("terminal", "CLI-агент", "mid",
+         "Работает из терминала без GUI, в связке с любым редактором. "
+         "Canonical пример — Claude Code: по умолчанию C, до D в режиме "
+         "команд агентов.",
+         "гибкость в автоматизации (CI, hook) ценой отсутствия diff-UI"),
+        ("boxes", "Фреймворк для агентов", "teal",
+         "Не готовый продукт, а библиотека/SDK для сборки своего агента под "
+         "нестандартную задачу. Для полноты словаря — курс про пользователей "
+         "готовых инструментов.",
+         "инженер строит агента сам, а не выбирает из готовых"),
+    ]
+    n = 3
+    gap = 0.24
+    cw = (12.25 - gap * (n - 1)) / n
+    cx0, cy, chh = 0.55, 1.48, 3.10
+    for ic, ttl, var, body, tail in cards:
+        ocean_box(s, cx0, cy, cw, chh)
+        icon(s, ic, cx0 + 0.24, cy + 0.20, 0.50, var)
+        text_box(s, cx0 + 0.86, cy + 0.24, cw - 1.05, 0.44, ttl,
+                 size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, cx0 + 0.24, cy + 0.86, cw - 0.48, 1.56, body,
+                 size=12, color=DEEP, line_spacing=1.16)
+        text_box(s, cx0 + 0.24, cy + 2.48, cw - 0.48, 0.56, "→ " + tail,
+                 size=11, italic=True, color=TEAL, line_spacing=1.12)
+        cx0 += cw + gap
+    teal_callout(s, 0.55, 4.76, 12.25, 0.80,
+                 "Категория важнее бренда — тот же принцип, что и для уровня "
+                 "автономии: agentic IDE выигрывает при визуальном контроле "
+                 "над многофайловым diff в одном редакторе; CLI-агент — при "
+                 "автоматизации, конвейере, headless-окружении, параллельных "
+                 "сессиях.", size=13)
+    gold_callout(s, 0.55, 5.70, 12.25, 1.06,
+                 "Агент vs субагент в коде: основной агент делегирует "
+                 "субагенту узкий подшаг («прочитай 15 файлов миграций — "
+                 "составь сводку схемы БД»), экономя контекст и изолируя "
+                 "радиус поражения при работе с чужим PR. Независимые "
+                 "подшаги → субагент оправдан; зависимые — та же хрупкость "
+                 "мульти-агента, не апгрейд.", size=13)
+    speaker_notes(s, load_notes("s13a"))
+
+
+def build_s13b(p):
+    """assertion_visual — §2.5 skills: SKILL.md anatomy + scope + 3 SWE
+    examples (issue #162)."""
+    s = blank(p)
+    slide_title(s,
+                "Skill = директория с коротким SKILL.md, который агент "
+                "быстро сканирует.", size=23, y=0.34, h=0.62)
+    # Left — anatomy
+    lx, ly, lw, lh = 0.55, 1.42, 5.85, 3.68
+    ocean_box(s, lx, ly, lw, lh)
+    icon(s, "clipboard-list", lx + 0.24, ly + 0.16, 0.42, "mid")
+    text_box(s, lx + 0.78, ly + 0.18, lw - 1.0, 0.40, "Формат",
+             size=15, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    comp = [
+        ("SKILL.md", "YAML frontmatter (название/описание/когда) + "
+                      "тело-инструкция"),
+        ("scripts/", "опционально — готовые скрипты, вызываются напрямую"),
+        ("references/", "опционально — длинные справочные материалы"),
+    ]
+    fy = ly + 0.64
+    for a, b in comp:
+        text_box(s, lx + 0.24, fy, lw - 0.48, 0.26, a, size=13, bold=True,
+                 color=DEEP)
+        text_box(s, lx + 0.24, fy + 0.26, lw - 0.48, 0.38, b, size=11,
+                 color=SLATE, line_spacing=1.06)
+        fy += 0.66
+    filled_rect(s, lx + 0.24, fy + 0.02, lw - 0.48, 0.86, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.25, radius=True, radius_adj=0.10)
+    text_box(s, lx + 0.40, fy + 0.10, lw - 0.80, 0.70,
+             "SKILL.md короткий и быстро читается моделью; тяжёлые "
+             "детали подгружаются, только когда навык реально "
+             "используется.",
+             size=11, italic=True, color=DEEP, line_spacing=1.12,
+             anchor=MSO_ANCHOR.MIDDLE)
+    # Right — scope + 3 examples
+    rx, rw = 6.65, 6.15
+    ocean_box(s, rx, ly, rw, 1.58)
+    text_box(s, rx + 0.24, ly + 0.12, 2.75, 0.52,
+             "Project-level\n(уровень проекта)", size=12.5, bold=True,
+             color=MID, line_spacing=1.02)
+    text_box(s, rx + 0.24, ly + 0.62, 2.75, 0.88,
+             "в репозитории, коммитится в git — команда получает "
+             "автоматически, та же дисциплина, что steering-файл.",
+             size=11, color=DEEP, line_spacing=1.12)
+    text_box(s, rx + 3.16, ly + 0.12, 2.75, 0.52,
+             "Personal (личный)", size=12.5, bold=True, color=TEAL,
+             line_spacing=1.02)
+    text_box(s, rx + 3.16, ly + 0.62, 2.75, 0.88,
+             "в конфигурации разработчика — все его проекты, личная "
+             "продуктивность, не контракт команды.",
+             size=11, color=DEEP, line_spacing=1.12)
+    ocean_box(s, rx, ly + 1.72, rw, 1.96)
+    text_box(s, rx + 0.24, ly + 1.80, rw - 0.48, 0.28,
+             "3 конкретных SWE-примера", size=13, bold=True, color=MID)
+    examples = [
+        "«Оформить PR по конвенциям проекта» — точный формат: Summary / "
+        "Test plan / Related issues",
+        "«Прогнать тесты» — точная команда этого проекта, отличить провал "
+        "от известного нестабильного теста",
+        "«Сгенерировать changelog» — формат проекта + классификация по "
+        "истории коммитов",
+    ]
+    ey = ly + 2.12
+    for ex in examples:
+        text_box(s, rx + 0.24, ey, rw - 0.48, 0.50, "•  " + ex,
+                 size=11.5, color=DEEP, line_spacing=1.12)
+        ey += 0.52
+    gold_callout(s, 0.55, 5.28, 12.25, 1.14,
+                 "Skill не учит модель тому, чего она не умеет в принципе, — "
+                 "он фиксирует конкретный, проектный вариант общей "
+                 "процедуры, чтобы агент не изобретал его заново и не "
+                 "дрейфовал от раза к разу. Прямая параллель паттерну "
+                 "structure + constraints + tests.", size=13.5)
+    speaker_notes(s, load_notes("s13b"))
+
+
+def build_s13c(p):
+    """assertion_visual — §2.6 MCP categories для кодинг-агента + least-
+    privilege callback (issue #162)."""
+    s = blank(p)
+    slide_title(s,
+                "5 категорий MCP-серверов разработчика — что каждая "
+                "закрывает.", size=23, y=0.34, h=0.60)
+    rows = [
+        ("git-pull-request", "Репозиторий / issue-трекер",
+         "GitHub / GitLab / Jira — читать и писать issue, PR, комментарии "
+         "напрямую. Делает возможным уровень D.", "mid"),
+        ("database", "Файловая система",
+         "доступ за пределами текущего проекта (документация, другой "
+         "репозиторий в монорепо). Контекст, не помещающийся в один "
+         "репозиторий.", "mid"),
+        ("refresh-cw", "CI/CD",
+         "статусы сборки, логи конвейера. Агент итерирует по реальному "
+         "логу CI, не по локальному прогону.", "mid"),
+        ("layers", "Базы данных",
+         "чтение (реже запись) схемы и данных. Миграция, согласованная со "
+         "схемой; причина медленного запроса.", "teal"),
+        ("scan-search", "Документация / поиск",
+         "внутренняя вики, база знаний. Разрыв между общими знаниями "
+         "модели и спецификой организации.", "teal"),
+    ]
+    bx, by, bw = 0.55, 1.36, 12.25
+    rh = 0.60
+    ocean_box(s, bx, by, bw, rh * len(rows) + 0.16)
+    ry = by + 0.10
+    for ic, ttl, desc, var in rows:
+        icon(s, ic, bx + 0.20, ry + 0.06, 0.42, var)
+        text_box(s, bx + 0.78, ry, 3.05, rh, ttl, size=13, bold=True,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+        text_box(s, bx + 3.95, ry, bw - 4.25, rh, desc, size=11.5,
+                 color=SLATE, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        ry += rh
+    filled_rect(s, 0.55, 5.28, 12.25, 0.50, GOLD, radius=True,
+                radius_adj=0.16)
+    text_box(s, 0.55, 5.28, 12.25, 0.50,
+             "Каждое подключение — решение о scope (объёме доступа), не "
+             "техническая деталь.", size=14.5, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    teal_callout(s, 0.55, 5.94, 12.25, 1.00,
+                 "Least-privilege конкретно здесь: доступ к трекеру не "
+                 "обязан включать удаление issue · доступ к БД для "
+                 "аналитики не обязан включать запись в prod-таблицы · "
+                 "доступ к CI не обязан включать право менять секреты. "
+                 "«Какой сервер» и «с каким scope» — два разных решения.",
+                 size=12.5)
+    speaker_notes(s, load_notes("s13c"))
+
+
+def build_s13d(p):
+    """assertion_visual — §2.7 part 1: steering-file components + vs
+    README/CONTRIBUTING + versioning-as-code (issue #162)."""
+    s = blank(p)
+    slide_title(s,
+                "Steering-файл: что агент должен знать ПЕРЕД запуском.",
+                size=24, y=0.34, h=0.60)
+    # Left — 4 components (full-height column, matches right column)
+    lx, ly, lw, lh = 0.55, 1.40, 6.15, 5.36
+    ocean_box(s, lx, ly, lw, lh)
+    comps = [
+        ("terminal", "Команды сборки/теста/линта",
+         "точная команда ЭТОГО проекта, не «как обычно»: конкретный "
+         "флаг, пакетный менеджер, порядок шагов"),
+        ("list-checks", "Конвенции кода",
+         "именование, предпочитаемые паттерны, структура директорий, "
+         "которую агент должен уважать"),
+        ("shield-alert", "Архитектурные ограничения",
+         "инварианты: «модуль без сетевого доступа», «не менять "
+         "публичный API без запроса»"),
+        ("circle-x", "Явное «что НЕ делать»",
+         "отдельно от позитивных инструкций — конкретный список "
+         "запрещённого для этого проекта"),
+    ]
+    cy = ly + 0.24
+    ch = (lh - 0.44) / 4
+    for ic, ttl, desc in comps:
+        icon(s, ic, lx + 0.24, cy + 0.06, 0.44, "mid")
+        text_box(s, lx + 0.82, cy, lw - 1.06, 0.38, ttl, size=14, bold=True,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, lx + 0.82, cy + 0.40, lw - 1.06, 0.80, desc, size=11.5,
+                 italic=True, color=SLATE, line_spacing=1.14)
+        if ic != "circle-x":
+            filled_rect(s, lx + 0.24, cy + ch - 0.10, lw - 0.48, 0.012,
+                        SOFT_GREY)
+        cy += ch
+    # Right — vs README/CONTRIBUTING (2-col compare) + versioning callout
+    rx, rw = 6.90, 5.90
+    ocean_box(s, rx, ly, rw, 2.60)
+    text_box(s, rx + 0.24, ly + 0.16, rw - 0.48, 0.32,
+             "Steering-файл vs README/CONTRIBUTING", size=14, bold=True,
+             color=MID)
+    pairs = [
+        ("Аудитория", "человек", "операционный контекст агента"),
+        ("Назначение", "объяснить проект, онбординг",
+         "что нужно ПРЯМО СЕЙЧАС"),
+        ("Частота чтения", "один раз, при онбординге", "на каждый запуск"),
+    ]
+    py = ly + 0.66
+    for lbl, a, b in pairs:
+        text_box(s, rx + 0.24, py, rw - 0.48, 0.24, lbl, size=11.5,
+                 bold=True, color=TEAL)
+        text_box(s, rx + 0.24, py + 0.28, (rw - 0.64) / 2, 0.48, a,
+                 size=11.5, color=DEEP, line_spacing=1.08)
+        text_box(s, rx + 0.24 + (rw - 0.48) / 2 + 0.12, py + 0.28,
+                 (rw - 0.64) / 2, 0.48, b, size=11.5, bold=True, color=DEEP,
+                 line_spacing=1.08)
+        py += 0.62
+    filled_rect(s, rx, ly + 2.74, rw, 2.62, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.5, radius=True, radius_adj=0.06)
+    text_box(s, rx + 0.26, ly + 2.86, rw - 0.52, 0.32,
+             "Версионирование как код", size=14.5, bold=True, color=MID)
+    text_box(s, rx + 0.26, ly + 3.22, rw - 0.52, 0.98,
+             "Steering-файл коммитится в git и проходит ревью в pull "
+             "request наравне с изменениями кода — если конвенция "
+             "поменялась, это часть того же PR, что и код, который её "
+             "демонстрирует.", size=12, color=DEEP, line_spacing=1.16)
+    text_box(s, rx + 0.26, ly + 4.28, rw - 0.52, 0.98,
+             "Файл, который никто не обновлял год, — не нейтральный ноль, "
+             "а источник устаревшей инструкции: агент последует "
+             "написанному, даже если оно больше не соответствует "
+             "реальности.", size=12, bold=True, color=DEEP,
+             line_spacing=1.16)
+    speaker_notes(s, load_notes("s13d"))
+
+
+def build_s13e(p):
+    """case_study — §2.7 part 2: presence-paradox RCT null result +
+    Honest Lying entrenchment risk + git-conventions + ritual-cost
+    criterion (gold-prominent per brief, issue #162)."""
+    s = blank(p)
+    slide_title(s,
+                "Presence paradox: наличие файла само по себе — не "
+                "гарантия пользы.", size=22, y=0.34, h=0.58)
+    # Left — RCT null result
+    lx, ly, lw, lh = 0.55, 1.32, 6.05, 3.00
+    ocean_box(s, lx, ly, lw, lh)
+    text_box(s, lx + 0.24, ly + 0.14, lw - 0.48, 0.30,
+             "Gloaguen et al., arXiv:2602.11988, 2026", size=12.5,
+             bold=True, color=MID)
+    text_box(s, lx + 0.24, ly + 0.48, lw - 0.48, 0.86,
+             "3 условия: NONE / LLM-generated / developer-written. "
+             "2 постановки — SWE-bench-задачи и реальные repo-issue.",
+             size=12, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.24, ly + 1.42, lw - 0.48, 0.92, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.10)
+    text_box(s, lx + 0.42, ly + 1.52, lw - 0.84, 0.74,
+             "Наличие файла не даёт статистически значимого прироста "
+             "успеха; стоимость и число шагов, как правило, растут.",
+             size=12, bold=True, color=DEEP, line_spacing=1.14)
+    text_box(s, lx + 0.24, ly + 2.42, lw - 0.48, 0.54,
+             "Исключение: LLM-файлы там, где не было другой документации "
+             "вообще.", size=10.5, italic=True, color=SLATE,
+             line_spacing=1.10)
+    # Right — Honest Lying + git conventions
+    rx, rw = 6.80, 6.00
+    ocean_box(s, rx, ly, rw, 1.72)
+    icon(s, "bot", rx + 0.22, ly + 0.14, 0.40, "gold")
+    text_box(s, rx + 0.74, ly + 0.16, rw - 0.96, 0.36,
+             "Honest Lying: риск self-authored правки", size=12.5,
+             bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, rx + 0.22, ly + 0.58, rw - 0.44, 1.06,
+             "Dixit, Kamal, Oates, arXiv:2605.29463, 2026 — self-authored "
+             "заметки могут не исправлять неверное убеждение, а "
+             "закреплять его через повторные попытки: ошибка на раннем "
+             "шаге наследуется следующей сессией как данность.",
+             size=11.5, color=DEEP, line_spacing=1.14)
+    ocean_box(s, rx, ly + 1.86, rw, 1.14)
+    icon(s, "git-branch", rx + 0.22, ly + 1.98, 0.36, "teal")
+    text_box(s, rx + 0.68, ly + 2.00, rw - 0.90, 0.30,
+             "Git-конвенции как контракт", size=12, bold=True, color=TEAL)
+    text_box(s, rx + 0.22, ly + 2.32, rw - 0.44, 0.62,
+             "Conventional Commits → авто-changelog/semver · именование "
+             "веток → авто-связь с трекером · структура PR (Summary/Test "
+             "Plan/Breaking) — не свободный текст",
+             size=11, color=DEEP, line_spacing=1.10)
+    gold_callout(s, 0.55, 4.50, 12.25, 1.90,
+                 "Когда steering-файл НЕ нужен. Нет конкретного, "
+                 "называемого информационного пробела, который файл "
+                 "закрывает, — писать его ритуально не даёт измеренной "
+                 "пользы, а стоит дороже нуля (лишний контекст на каждый "
+                 "запуск). Агент правит свой steering-файл без "
+                 "человеческого ревью правки — риск закрепления ошибки "
+                 "реален и задокументирован, не гипотетичен. Альтернатива: "
+                 "писать файл только под названный пробел, ревьюить "
+                 "изменения как обычный код.", size=13.5)
+    speaker_notes(s, load_notes("s13e"))
+
+
+def build_s13f(p):
+    """assertion_visual — §2.8 part 1: 3 task-log architectural patterns
+    (nested / unified log / flat folder), issue #162."""
+    s = blank(p)
+    slide_title(s,
+                "Где хранить состояние задачи между сессиями агента — "
+                "три паттерна.", size=21, y=0.32, h=0.86)
+    teal_callout(s, 0.55, 1.20, 12.25, 0.62,
+                 "Не steering-файл (проект целиком, живёт долго) и не "
+                 "self-authored память сессии — это межзадачное и "
+                 "межсессионное состояние на диске.", size=12)
+    patterns = [
+        ("boxes", "1. Nested per-task folder\n(вложенная директория на "
+         "задачу)", "mid",
+         "`tasks/TASK-123/` с notes.md, log.md, черновиками.",
+         "богатая структура на задачу — разные типы информации по "
+         "файлам, план отдельно от лога выполнения.",
+         "директорий растёт линейно; без архивации — захламление, "
+         "удаление ощущается как потеря истории."),
+        ("list-ordered", "2. Single unified log\n(единый растущий файл)",
+         "mid",
+         "Один файл (`PROGRESS.md`), каждая сессия дописывает в конец.",
+         "одна точка входа — вся хронология без знания номера задачи "
+         "заранее, проще всего восстановить контекст.",
+         "не помещается в контекст целиком (context rot); параллельные "
+         "сессии в один хвост — магнит merge-конфликтов."),
+        ("layout-grid", "3. Flat shared folder\n(один файл на задачу "
+         "без вложенности)", "teal",
+         "`tasks/TASK-123.md` напрямую, без вложенности.",
+         "баланс — единая точка входа (`tasks/`), но состояние задачи "
+         "изолировано в своём файле, не смешано.",
+         "список растёт без структуры; несколько артефактов на задачу "
+         "требуют условности именования."),
+    ]
+    n = 3
+    gap = 0.24
+    cw = (12.25 - gap * (n - 1)) / n
+    cx0, cy, chh = 0.55, 2.00, 4.60
+    for ic, ttl, var, ex, strong, weak in patterns:
+        ocean_box(s, cx0, cy, cw, chh)
+        icon(s, ic, cx0 + 0.22, cy + 0.18, 0.44, var)
+        text_box(s, cx0 + 0.78, cy + 0.18, cw - 0.98, 0.64, ttl,
+                 size=11.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.04)
+        text_box(s, cx0 + 0.22, cy + 0.86, cw - 0.44, 0.48, ex,
+                 size=10.5, italic=True, color=SLATE, line_spacing=1.10)
+        filled_rect(s, cx0 + 0.22, cy + 1.36, cw - 0.44, 0.012, SOFT_GREY)
+        text_runs(s, cx0 + 0.22, cy + 1.50, cw - 0.44, 1.34, [
+            {"text": "Сильная сторона: ", "size": 11, "bold": True,
+             "color": DEEP},
+            {"text": strong, "size": 11, "color": DEEP},
+        ], line_spacing=1.14)
+        filled_rect(s, cx0 + 0.22, cy + 3.02, cw - 0.44, 0.012, SOFT_GREY)
+        text_runs(s, cx0 + 0.22, cy + 3.16, cw - 0.44, 1.30, [
+            {"text": "Что ломается: ", "size": 11, "bold": True,
+             "color": TEAL},
+            {"text": weak, "size": 11, "color": TEAL},
+        ], line_spacing=1.14)
+        cx0 += cw + gap
+    speaker_notes(s, load_notes("s13f"))
+
+
+def build_s13g(p):
+    """comparison / schema_matrix — §2.8 part 2: 4-criteria x 3-pattern
+    comparison table + no-single-right-answer closing framing (issue #162).
+    """
+    s = blank(p)
+    slide_title(s,
+                "Нет единственно верного паттерна — решающая ось зависит "
+                "от команды.", size=21, y=0.34, h=0.56)
+    bx, by, bw = 0.55, 1.24, 12.25
+    ocean_box(s, bx, by, bw, 3.30)
+    headers = ["Паттерн", "Git-diff", "Параллельные сессии",
+               "Обнаруживаемость", "Что ломается"]
+    col_w = [2.30, 2.35, 2.55, 2.35, 2.70]
+    hy = by + 0.14
+    hx = bx + 0.14
+    for j, h in enumerate(headers):
+        filled_rect(s, hx, hy, col_w[j] - 0.06, 0.50, MID)
+        text_box(s, hx + 0.08, hy, col_w[j] - 0.22, 0.50, h, size=11,
+                 bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+        hx += col_w[j]
+    rows = [
+        ("1. Вложенная папка\nна задачу",
+         "конфликтов между задачами нет; растёт вложенно",
+         "высокая между задачами; директории «осиротевают»",
+         "легко по номеру; трудно обзорно без индекса",
+         "захламление неархивированными директориями"),
+        ("2. Единый\nжурнал",
+         "append-only, одна точка записи для всех",
+         "низкая — общий хвост = магнит конфликтов",
+         "высокая обзорно; низкая точечно (нужен поиск)",
+         "не помещается в контекст целиком (context rot)"),
+        ("3. Плоская общая\nпапка",
+         "конфликт только на одной и той же задаче",
+         "высокая между задачами (как 1, но без директорий)",
+         "высокая обзорно (ls) и точечно (по имени)",
+         "растёт без структуры; нужна условность именования"),
+    ]
+    ry = hy + 0.50
+    rh = 0.87
+    for i, row in enumerate(rows):
+        rx = bx + 0.14
+        bgc = SURFACE if i % 2 == 0 else WHITE
+        for j, cell in enumerate(row):
+            filled_rect(s, rx, ry, col_w[j] - 0.06, rh, bgc,
+                        stroke=SOFT_GREY, stroke_pt=0.75)
+            text_box(s, rx + 0.08, ry, col_w[j] - 0.20, rh, cell,
+                     size=9.7, bold=(j == 0), color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+            rx += col_w[j]
+        ry += rh
+    teal_callout(s, 0.55, 4.72, 12.25, 1.78,
+                 "Нет единственно верного ответа — это следствие "
+                 "взвешивания осей под ситуацию команды, а не рекомендация "
+                 "в обход них. Команда, работающая строго последовательно, "
+                 "— устойчивость к параллелизму не решающая ось, Паттерн 2 "
+                 "может быть валидным выбором. Малое число задач и низкая "
+                 "параллельность — Паттерн 1 не будет ошибкой. Регулярные "
+                 "параллельные сессии на разных задачах — решающая ось "
+                 "именно параллелизм, и здесь Паттерн 2 наиболее уязвим по "
+                 "построению.", size=13)
+    speaker_notes(s, load_notes("s13g"))
 
 
 def build_s14(p):
@@ -2480,13 +2944,15 @@ def main():
     builders = [build_s01, build_s02, build_s03, build_s04, build_s04a,
                 build_s05, build_s06, build_s07, build_s08, build_s09,
                 build_s10, build_s11, build_s12, build_s13,
+                build_s13a, build_s13b, build_s13c, build_s13d, build_s13e,
+                build_s13f, build_s13g,
                 build_s14,
                 build_s15, build_s16, build_s17, build_s18, build_s19,
                 build_s20, build_s21, build_s22, build_s22a, build_s23,
                 build_s24, build_s24a, build_s25, build_s26, build_s27,
                 build_s28, build_s28a, build_s29, build_s30, build_s31,
                 build_s32]
-    assert len(builders) == 36, f"expected 36 builders, got {len(builders)}"
+    assert len(builders) == 43, f"expected 43 builders, got {len(builders)}"
     for b in builders:
         b(p)
     OUT.parent.mkdir(parents=True, exist_ok=True)

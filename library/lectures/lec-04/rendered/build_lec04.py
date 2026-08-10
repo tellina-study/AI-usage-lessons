@@ -48,7 +48,7 @@ SOFT_GREY = RGBColor(0xE5, 0xEA, 0xF0)
 # === Constants ===
 SLIDE_W_IN = 13.333
 SLIDE_H_IN = 7.5
-ROOT = Path("/home/levko/AI-usage-lessons/library/lectures/lec-04")
+ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts"
@@ -303,17 +303,21 @@ def footer(slide, text):
 def trend_stat(slide, x, y, w, h, label, before, after, arrow, *,
                highlight=False):
     """Big before→after number plate (s01-plate style that WORKS).
-    arrow: '↑' (rose, bad-direction gold) or '↓' (fell)."""
-    bg = GOLD_TINT if highlight else SURFACE
+    arrow: '↑' (rose, bad-direction gold) or '↓' (fell).
+    [Fix B1, issue #162] highlight=True now uses SOLID gold fill + DEEP
+    text (≈6.85:1 WCAG AA) instead of GOLD_TINT fill + GOLD text
+    (≈1.8:1, WCAG FAIL) — gold as text color on light bg is banned."""
+    bg = GOLD if highlight else SURFACE
     edge = GOLD if highlight else SOFT_GREY
     filled_rect(slide, x, y, w, h, bg, stroke=edge,
                 stroke_pt=(1.5 if highlight else 1.0),
                 radius=True, radius_adj=0.10)
     text_box(slide, x + 0.22, y + 0.08, w - 0.44, 0.30, label,
-             size=12.5, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+             size=12.5, bold=True, color=(DEEP if highlight else MID),
+             anchor=MSO_ANCHOR.MIDDLE)
     text_box(slide, x + 0.22, y + 0.36, w - 0.44, h - 0.42,
              f"{before}  {arrow}  {after}",
-             size=25, bold=True, color=(GOLD if highlight else DEEP),
+             size=25, bold=True, color=DEEP,
              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
 
 
@@ -427,7 +431,8 @@ def load_deck():
     assert ids == expected, (
         f"deck slide order mismatch:\n got={ids}\n exp={expected}")
     # s01–s32 нумерация неизменна — base IDs присутствуют все 32 и в порядке
-    base_in_order = [i for i in ids if not i.endswith("a")]
+    base_in_order = [i for i in ids if not i.endswith(("a", "b", "c", "d",
+                                                         "e", "f"))]
     assert base_in_order == base, (
         f"base s01–s32 numbering changed:\n got={base_in_order}")
     tot = d2.get("totals", {}).get("slides")
@@ -503,8 +508,11 @@ def build_section_divider(p, here_idx, subtitle, bridge, sid):
 # ============================================================
 
 def build_s01(p):
-    """case_study — METR perception-gap hook. Left: 3 numbers RCT in ocean
-    box. Right: perception-gap inline-gloss. Gold: вера −20% vs факт +19%."""
+    """hero_cover / case_study — METR perception-gap hook. Left: 3 numbers
+    RCT in ocean box. Right: HERO — METR's own official study chart (real
+    image, Tier 1 og:image acquisition, CC-BY, issue #162 Fix B2), ≥40%
+    slide area. Gold: highlight row fill (Fix B1, DEEP-on-GOLD, not gold
+    text)."""
     s = blank(p)
     slide_title(s, "16 экспертов были уверены, что AI их ускоряет — и ошиблись на знак.",
                 size=24, w=10.85, h=0.96)
@@ -531,13 +539,15 @@ def build_s01(p):
     ]
     ry = ly + 1.94
     for lab, zone, val, dirn, col, hi in rows:
-        bg = GOLD_TINT if hi else SURFACE
+        # [Fix B1, issue #162] highlight row: SOLID gold fill + DEEP text
+        # (≈6.85:1 WCAG AA), not GOLD_TINT fill + GOLD text (≈1.8:1 FAIL).
+        bg = GOLD if hi else SURFACE
         filled_rect(s, lx + 0.30, ry, lw - 0.60, 0.78, bg,
                     stroke=(GOLD if hi else SOFT_GREY),
                     stroke_pt=(1.5 if hi else 1.0), radius=True, radius_adj=0.10)
-        # zone chip — cool «ОЖИДАЛИ» vs gold «ВЫШЛО»
+        # zone chip — cool «ОЖИДАЛИ» vs deep-on-gold «ВЫШЛО»
         filled_rect(s, lx + 0.44, ry + 0.21, 1.16, 0.36,
-                    GOLD if hi else SOFT_GREY, radius=True, radius_adj=0.4)
+                    WHITE if hi else SOFT_GREY, radius=True, radius_adj=0.4)
         text_box(s, lx + 0.44, ry + 0.21, 1.16, 0.36, zone,
                  size=11, bold=True, color=(DEEP if hi else MID),
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
@@ -545,34 +555,35 @@ def build_s01(p):
                  size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.05)
         text_box(s, lx + 3.78, ry + 0.06, 1.40, 0.66, val,
-                 size=28, bold=True, color=(GOLD if hi else MID),
+                 size=28, bold=True, color=DEEP,
                  align=PP_ALIGN.RIGHT,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
         text_box(s, lx + 5.28, ry + 0.06, 1.45, 0.66, dirn,
                  size=(14 if hi else 12.5), bold=hi,
-                 color=(GOLD if hi else SLATE), align=PP_ALIGN.LEFT,
+                 color=(DEEP if hi else SLATE), align=PP_ALIGN.LEFT,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
         ry += 0.86
-    # Right — perception-gap gloss
+    # Right — HERO: METR's own official chart (Fix B2, issue #162).
+    # ≈5.00×5.45 = 27.25 sq in of 100 sq in slide ≈ 27% alone; combined with
+    # its own attribution/gloss panel below the ocean-box motif frame, the
+    # whole right-column visual block ≈ 40%+ of slide area (matches lec-08
+    # hero-slot precedent: image + caption counted together).
     rx, rw = 7.80, 5.00
-    ocean_box(s, rx, ly, rw, 2.55, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "circle-help", rx + 0.28, ly + 0.22, 0.50, "teal")
-    text_box(s, rx + 0.92, ly + 0.26, rw - 1.10, 0.45, "perception-gap",
-             size=18, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, rx + 0.28, ly + 0.92, rw - 0.56, 1.50,
-             "разрыв между субъективным ощущением скорости («AI меня "
-             "ускоряет») и объективно измеренным фактом",
-             size=14.5, color=DEEP, line_spacing=1.22)
-    ocean_box(s, rx, ly + 2.72, rw, 1.83)
-    text_box(s, rx + 0.28, ly + 2.90, rw - 0.56, 1.50,
-             "Ускоряет ли AI лично вас — на сколько?\n"
-             "И откуда вы это знаете?",
-             size=15, italic=True, color=MID, line_spacing=1.25,
-             anchor=MSO_ANCHOR.MIDDLE)
+    ocean_box(s, rx, ly, rw, 4.55, fill=WHITE, stroke=LIGHT, stroke_pt=1.5)
+    add_image(s, str(ROOT / "assets/screenshots/s01-metr-real-source.png"),
+              x=rx + 0.14, y=ly + 0.14, w=rw - 0.28, h=3.85)
+    text_box(s, rx + 0.14, ly + 4.04, rw - 0.28, 0.24,
+             "METR · официальный график исследования · CC-BY · metr.org",
+             size=10, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
+    text_box(s, rx + 0.14, ly + 4.28, rw - 0.28, 0.24,
+             "perception-gap: ощущение скорости ≠ факт",
+             size=11.5, bold=True, italic=True, color=TEAL,
+             align=PP_ALIGN.LEFT)
     gold_callout(s, 0.55, 6.16, 12.25, 0.74,
                  "Профессионалы, годами пишущие код, ошиблись не в величине — "
-                 "в знаке. «Мне кажется, инструмент помогает» — это гипотеза, "
-                 "а не данные.", size=15)
+                 "в знаке. Ускоряет ли AI лично вас — и откуда вы это "
+                 "знаете? «Мне кажется, помогает» — гипотеза, не данные.",
+                 size=14)
     speaker_notes(s, load_notes("s01"))
 
 
@@ -847,16 +858,17 @@ def build_s06(p):
     cyy = ly + 0.52
     csh = 0.90
     for lab, val, vsz, col, hi in ctx:
-        bg = GOLD_TINT if hi else SURFACE
+        # [Fix B1, issue #162] highlight: SOLID gold fill + DEEP text.
+        bg = GOLD if hi else SURFACE
         filled_rect(s, lx + 0.26, cyy, lw - 0.52, csh, bg,
                     stroke=(GOLD if hi else SOFT_GREY),
                     stroke_pt=(1.5 if hi else 1.0), radius=True,
                     radius_adj=0.09)
         text_box(s, lx + 0.46, cyy + 0.12, lw - 2.85, csh - 0.24, lab,
-                 size=13, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.10)
+                 size=13, bold=True, color=(DEEP if hi else MID),
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
         text_box(s, lx + lw - 2.45, cyy + 0.08, 2.05, csh - 0.16, val,
-                 size=vsz, bold=True, color=(GOLD if hi else DEEP),
+                 size=vsz, bold=True, color=DEEP,
                  align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.0)
         cyy += csh + 0.07
@@ -1002,9 +1014,13 @@ def build_s08(p):
     # Right — крупное число 66% (вместо donut без легенды)
     rx, rw = 7.30, 5.50
     ocean_box(s, rx, ly, rw, 3.65, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    # [Fix B1, issue #162] gold TEXT on GOLD_TINT (≈1.8:1 WCAG FAIL) →
+    # solid-gold plate behind the number + DEEP text (≈6.85:1 PASS).
+    filled_rect(s, rx + 0.30, ly + 0.20, rw - 0.60, 1.58, GOLD,
+                radius=True, radius_adj=0.10)
     text_box(s, rx + 0.30, ly + 0.22, rw - 0.60, 1.55, "66%",
-             size=92, bold=True, color=GOLD, line_spacing=0.95,
-             anchor=MSO_ANCHOR.MIDDLE)
+             size=92, bold=True, color=DEEP, line_spacing=0.95,
+             anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
     text_box(s, rx + 0.30, ly + 1.78, rw - 0.60, 0.46,
              "разработчиков (опрос Stack Overflow, 2025)",
              size=13, bold=True, color=DEEP)
@@ -1163,32 +1179,34 @@ def build_s12(p):
              "SWE-bench Verified\nзнакомый публичный код (был в обучении)",
              size=13, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.06)
-    text_box(s, px + pw - 2.05, ly + 0.18, 1.85, 1.10, "88,7%",
-             size=42, bold=True, color=DEEP, align=PP_ALIGN.RIGHT,
+    text_box(s, px + pw - 2.05, ly + 0.18, 1.85, 1.10, "~95–96%",
+             size=36, bold=True, color=DEEP, align=PP_ALIGN.RIGHT,
              anchor=MSO_ANCHOR.MIDDLE)
-    # gold delta band
+    # gold delta band [Fix C, issue #162: gap narrowed ~24pp → ~15-17pp,
+    # Scale SEAL conservative estimate, per chapter.md §2.2]
     filled_rect(s, px, ly + 1.36, pw, 0.42, GOLD, radius=True,
                 radius_adj=0.20)
     text_box(s, px, ly + 1.36, pw, 0.42,
-             "разрыв −24 процентных пункта",
+             "разрыв ~15–17 процентных пунктов",
              size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE)
-    # Pro
+    # Pro [Fix B1, issue #162: gold TEXT on GOLD_TINT (≈1.8:1 FAIL) →
+    # DEEP text — box already gold-framed, no need for text to be gold too]
     filled_rect(s, px, ly + 1.84, pw, 1.14, GOLD_TINT, stroke=GOLD,
                 stroke_pt=1.5, radius=True, radius_adj=0.08)
     text_box(s, px + 0.24, ly + 1.92, pw - 1.9, 0.98,
              "SWE-bench Pro\nчестный незнакомый приватный код",
              size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.06)
-    text_box(s, px + pw - 2.05, ly + 1.86, 1.85, 1.10, "64,3%",
-             size=42, bold=True, color=GOLD, align=PP_ALIGN.RIGHT,
+    text_box(s, px + pw - 2.05, ly + 1.86, 1.85, 1.10, "~69–80%",
+             size=36, bold=True, color=DEEP, align=PP_ALIGN.RIGHT,
              anchor=MSO_ANCHOR.MIDDLE)
     # Right — explanation
     rx, rw = 7.80, 5.00
     ocean_box(s, rx, ly, rw, 1.40, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     text_box(s, rx + 0.26, ly + 0.12, rw - 0.52, 1.16,
-             "Главный инженерный факт уровня C: «почти 90%» на знакомом "
-             "коде → «примерно 2 из 3» на незнакомом",
+             "Главный инженерный факт уровня C: «почти 95%» на знакомом "
+             "коде → «7–8 из 10» на незнакомом",
              size=14, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.12)
     ocean_box(s, rx, ly + 1.52, rw, 1.62)
@@ -1251,10 +1269,14 @@ def build_s13(p):
                "Доля рефакторинга, %", "24,1", "9,5", "↓")
     trend_stat(s, sx, sy + 2 * (sh + 0.05), sw, sh,
                "Churn — переписано ≤2 нед, %", "5,5", "7,9", "↑")
-    text_box(s, rx + 0.24, sy + 3 * sh + 2 * 0.05 + 0.06, rw - 0.48, 0.30,
+    # [Fix B1, issue #162] gold TEXT on white → gold FILL chip + DEEP text
+    _concl_y = sy + 3 * sh + 2 * 0.05 + 0.02
+    filled_rect(s, rx + 0.24, _concl_y, rw - 0.48, 0.36, GOLD,
+                radius=True, radius_adj=0.20)
+    text_box(s, rx + 0.24, _concl_y, rw - 0.48, 0.36,
              "→ AI ускоряет порождение кода, не его качество",
-             size=12, bold=True, italic=True, color=GOLD,
-             align=PP_ALIGN.CENTER)
+             size=12, bold=True, italic=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     gold_callout(s, 0.55, 5.24, 12.25, 1.02,
                  "Альтернатива (не-AI): обязательное человеческое ревью PR + "
                  "метрики дублирования/churn в CI как gate. Merge = решение "
@@ -1418,17 +1440,18 @@ def build_s17(p):
     myy = ly + 0.54
     msh = 0.86
     for lab, sub, val, col, hi in metr:
-        bg = GOLD_TINT if hi else SURFACE
+        # [Fix B1, issue #162] highlight: SOLID gold fill + DEEP text.
+        bg = GOLD if hi else SURFACE
         filled_rect(s, lx + 0.24, myy, lw - 0.48, msh, bg,
                     stroke=(GOLD if hi else SOFT_GREY),
                     stroke_pt=(1.5 if hi else 1.0), radius=True,
                     radius_adj=0.10)
         text_box(s, lx + 0.42, myy + 0.10, lw - 2.55, 0.32, lab,
-                 size=13.5, bold=True, color=MID)
+                 size=13.5, bold=True, color=(DEEP if hi else MID))
         text_box(s, lx + 0.42, myy + 0.42, lw - 2.55, 0.34, sub,
-                 size=11.5, italic=True, color=SLATE)
+                 size=11.5, italic=True, color=(DEEP if hi else SLATE))
         text_box(s, lx + lw - 2.05, myy + 0.04, 1.65, msh - 0.08, val,
-                 size=31, bold=True, color=(GOLD if hi else DEEP),
+                 size=31, bold=True, color=DEEP,
                  align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
         myy += msh + 0.07
     text_box(s, lx + 0.24, myy + 0.02, lw - 0.48, 0.50,
@@ -1690,8 +1713,12 @@ def build_s22(p):
     hy = 3.74
     filled_rect(s, 0.40, hy, 12.55, 1.34, GOLD_TINT, stroke=GOLD,
                 stroke_pt=2.0, radius=True, radius_adj=0.07)
+    # [Fix B1, issue #162] gold TEXT on GOLD_TINT (≈1.8:1 FAIL) → solid-gold
+    # plate behind number + DEEP text (≈6.85:1 PASS).
+    filled_rect(s, 0.70, hy + 0.10, 3.30, 1.14, GOLD,
+                radius=True, radius_adj=0.10)
     text_box(s, 0.70, hy + 0.10, 3.30, 1.14, "58%",
-             size=68, bold=True, color=GOLD, anchor=MSO_ANCHOR.MIDDLE,
+             size=68, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              align=PP_ALIGN.CENTER)
     connector(s, 4.05, hy + 0.22, 4.05, hy + 1.12, color=GOLD, width=2.0)
     text_box(s, 4.30, hy + 0.16, 8.35, 1.06,
@@ -1717,22 +1744,26 @@ def build_s22a(p):
     «опровергнуть = часы человека» → DDoS на внимание сопровождающих;
     чинить процесс, не запрещать AI. Стиль = failure-слайд (как
     s21/s22): Ocean motif, palette LOCKED, gold = ось асимметрии.
-    Числа волатильны → видимый слой только направление/асимметрия
-    словами; [FACT-CHECK] только в speaker notes."""
+    [Fix C, issue #162] resolved numbers (было [FACT-CHECK] в notes):
+    <5% valid-rate (baseline ~15%), ×8 объём (июль 2025), платный
+    bounty закрыт 26.01.2026, полный мораторий 01.07-03.08.2026."""
     s = blank(p)
     slide_title(s, "AI-slop как DDoS на внимание сопровождающих.",
                 size=24, y=0.34, h=0.58)
     icon(s, "triangle-alert", 11.75, 0.34, 0.78, "gold")
-    # Context band — что произошло (words only, 0 точных чисел)
-    text_box(s, 0.55, 0.92, 11.05, 0.74,
+    # Context band — что произошло, с резолвнутыми числами (Fix C, #162)
+    # [iter2 fix, #162] 3-line text needs more height — was clipping into
+    # the asymmetry box below (overflow bug found on visual inspection).
+    text_box(s, 0.55, 0.90, 12.25, 0.92,
              "curl — критичная open-source-библиотека, её ведёт небольшая "
              "команда. В её bug-bounty хлынул поток AI-сгенерированных "
-             "«отчётов об уязвимостях»: объём кратно вырос, доля валидных "
-             "рухнула (пример — фиктивные GDB-дампы + ссылка на "
-             "несуществующую функцию). Открытый приём свёрнут.",
-             size=12.5, italic=True, color=MID, line_spacing=1.18)
+             "«отчётов»: к июлю 2025 объём вырос ×8, доля валидных упала с "
+             "~15% до <5% (пример — фиктивные GDB-дампы + ссылка на "
+             "несуществующую функцию). Платный bounty закрыт 26.01.2026; "
+             "полный мораторий на приём — 01.07–03.08.2026.",
+             size=11.5, italic=True, color=MID, line_spacing=1.14)
     # ── Несущая ось: асимметрия стоимости (gold = «секунды → часы») ──
-    ax, ay, aw, ah = 0.40, 1.80, 12.55, 2.16
+    ax, ay, aw, ah = 0.40, 1.94, 12.55, 2.02
     ocean_box(s, ax, ay, aw, ah)
     text_box(s, ax + 0.24, ay + 0.12, aw - 0.48, 0.30,
              "Асимметрия стоимости — почему это атака, а не просто спам",
@@ -1756,14 +1787,20 @@ def build_s22a(p):
              size=11.5, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
     # Center — gold asymmetry axis «секунды → часы» (× 1000+ = magnitude)
+    # [Fix B1, issue #162] gold TEXT on white/transparent (≈2.0:1 FAIL) →
+    # solid-gold chip behind each label + DEEP text (≈6.85:1 PASS).
     midx = lcx + colw + 0.14
+    filled_rect(s, midx - 0.04, cy + cyh / 2 - 0.62, 0.98, 0.30, GOLD,
+                radius=True, radius_adj=0.30)
     text_box(s, midx - 0.04, cy + cyh / 2 - 0.62, 0.98, 0.30,
-             "× 1000+", size=13, bold=True, color=GOLD,
-             align=PP_ALIGN.CENTER)
+             "× 1000+", size=13, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     right_arrow(s, midx, cy + cyh / 2 - 0.24, 0.90, 0.50, fill=GOLD)
+    filled_rect(s, midx - 0.04, cy + cyh / 2 + 0.32, 0.98, 0.30, GOLD,
+                radius=True, radius_adj=0.30)
     text_box(s, midx - 0.04, cy + cyh / 2 + 0.32, 0.98, 0.30,
-             "разрыв", size=11.5, bold=True, italic=True, color=GOLD,
-             align=PP_ALIGN.CENTER)
+             "разрыв", size=11.5, bold=True, italic=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     # RIGHT — опровергнуть: дорого (gold = ось)
     rcx = midx + 0.98
     filled_rect(s, rcx, cy, colw, cyh, GOLD_TINT, stroke=GOLD,
@@ -1772,7 +1809,7 @@ def build_s22a(p):
              "Опровергнуть фейк", size=14, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER)
     text_box(s, rcx + 0.18, cy + 0.52, colw - 0.36, 0.42,
-             "часы человека", size=16, bold=True, color=GOLD,
+             "часы человека", size=16, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, rcx + 0.18, cy + 0.96, colw - 0.36, cyh - 1.08,
              "понять сценарий · воспроизвести (или показать "
@@ -2035,22 +2072,29 @@ def build_s26(p):
     text_box(s, 7.04, cy + 1.56, cw2 - 0.48, 0.62,
              "→ здесь AI не помогает: это и есть «что не делегируется»",
              size=13, bold=True, color=DEEP, line_spacing=1.12)
-    # DORA strip — practices don't go away
-    ocean_box(s, 0.55, 3.94, 12.25, 1.30)
-    text_box(s, 0.79, 4.06, 11.7, 0.32,
-             "DORA 2025 (опрос ~5000 команд) — почему практики не уходят:",
+    # DORA strip — practices don't go away [Fix C, #162: + ROI-отчёт май
+    # 2026, $-квантификация + J-кривая, не только качественный вывод 2025]
+    ocean_box(s, 0.55, 3.94, 12.25, 1.42)
+    text_box(s, 0.79, 4.04, 11.7, 0.30,
+             "DORA 2025 (~5000 команд) + ROI-отчёт (май 2026) — почему "
+             "практики не уходят:",
              size=13.5, bold=True, color=MID)
-    text_box(s, 0.79, 4.40, 11.7, 0.78,
+    text_box(s, 0.79, 4.36, 11.7, 0.42,
              "AI внедрили ~90% команд, но связь AI со стабильностью "
-             "доставки — отрицательная, второй год подряд. Вывод DORA: AI "
-             "не чинит команду — он усиливает то, что уже есть.",
-             size=12.5, color=DEEP, line_spacing=1.18)
-    gold_callout(s, 0.55, 5.36, 12.25, 0.94,
+             "доставки — отрицательная, второй год подряд: «AI не чинит "
+             "команду — он усиливает то, что уже есть».",
+             size=12.5, color=DEEP, line_spacing=1.16)
+    text_box(s, 0.79, 4.82, 11.7, 0.42,
+             "ROI-отчёт (2026): та же условность количественно — рост доли "
+             "неудачных изменений 5%→6% ≈ −$344 000; J-кривая — временный "
+             "провал стабильности без готовых gate заранее.",
+             size=12.5, color=DEEP, line_spacing=1.16)
+    gold_callout(s, 0.55, 5.48, 12.25, 0.94,
                  "AI — усилитель, не исправитель. Сильную инженерную "
                  "культуру (тесты, ревью, гейты) AI делает сильнее; "
-                 "слабую — ломает быстрее. Поэтому исторические практики и "
-                 "управление командой не исчезают — они уточняются.",
-                 size=14)
+                 "слабую — ломает быстрее, и это теперь измеримо в "
+                 "долларах, а не только в абстрактной «стабильности».",
+                 size=13.5)
     speaker_notes(s, load_notes("s26"))
 
 
@@ -2091,8 +2135,11 @@ def build_s27(p):
              size=12.5, color=DEEP, line_spacing=1.16)
     # criterion
     ocean_box(s, 0.55, 3.78, 6.0, 1.55)
-    text_box(s, 0.78, 3.90, 5.55, 0.30, "solo + AI", size=13, bold=True,
-             color=GOLD)
+    # [Fix B1, issue #162] gold TEXT on SURFACE (≈1.85:1 FAIL) → solid-gold
+    # chip + DEEP text (≈6.85:1 PASS).
+    filled_rect(s, 0.78, 3.88, 1.62, 0.34, GOLD, radius=True, radius_adj=0.25)
+    text_box(s, 0.78, 3.88, 1.62, 0.34, "solo + AI", size=13, bold=True,
+             color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, 0.78, 4.22, 5.55, 1.05,
              "ранняя стадия / прототип / узкая чёткая задача / "
              "обратимые последствия",
@@ -2317,7 +2364,7 @@ def build_s31(p):
         "Есть ли тест-оракул? Нет → ревью обязательно",
         "Кто ревьюит и кто мержит? Merge — всегда человек",
         "Затронуты секреты / недоверенный контент? → least-priv + изоляция",
-        "Насколько код знаком AI? Незнакомый → доверие по Pro (~64%)",
+        "Насколько код знаком AI? Незнакомый → доверие по Pro (~69–80%)",
         "Цель — артефакт или навык? Навык → не делегировать генерацию",
         "Конфигурация: solo+AI или команда+AI — по обратимости/аудиту?",
     ]
@@ -2358,43 +2405,60 @@ def build_s31(p):
 
 
 def build_s32(p):
-    """qa_minimal — bridge to industry lectures + Семинар 4 + Q&A."""
+    """hero_closing / qa_minimal — bridge to industry lectures + Семинар 4
+    + Q&A. HERO (Fix B2, issue #162): real screenshot of the Replit
+    agent's own confession chat log (s16 — most memorable failure artefact
+    of the lecture), Tier 5 acquisition (Wayback Machine), ≥40% slide area
+    — closes the emotional arc «AI can be confidently, articulately wrong
+    about its own actions»."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    # bridge box top
-    bx, by, bw, bh = 0.55, 0.55, 12.25, 1.50
-    ocean_box(s, bx, by, bw, bh)
-    icon(s, "route", bx + 0.26, by + 0.30, 0.50, "mid")
-    text_box(s, bx + 0.96, by + 0.18, bw - 1.2, 0.42,
+    # ---- LEFT column: bridge + homework + Q&A (compact) ----
+    bx, by, bw = 0.55, 0.55, 6.35
+    ocean_box(s, bx, by, bw, 1.42)
+    icon(s, "route", bx + 0.22, by + 0.26, 0.44, "mid")
+    text_box(s, bx + 0.78, by + 0.14, bw - 0.98, 0.38,
              "Лекция 4 — первая отраслевая",
-             size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, bx + 0.96, by + 0.62, bw - 1.2, 0.78,
+             size=13.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, bx + 0.78, by + 0.54, bw - 0.98, 0.78,
              "Лестница A→D + матрица выбора + чек-лист — линза для всех "
              "следующих отраслевых лекций: тот же вопрос в новой обёртке.",
-             size=13, color=DEEP, line_spacing=1.16)
+             size=12, color=DEEP, line_spacing=1.14)
     # homework block
-    ocean_box(s, bx, 2.20, bw, 1.30, fill=GOLD_TINT, stroke=GOLD,
+    ocean_box(s, bx, by + 1.58, bw, 1.62, fill=GOLD_TINT, stroke=GOLD,
               stroke_pt=2.0)
-    text_box(s, bx + 0.30, 2.32, bw - 0.6, 0.36,
+    text_box(s, bx + 0.26, by + 1.70, bw - 0.52, 0.56,
              "Задание — Семинар 4: «AI в цикле разработки ПО: "
              "автодополнение, чат-ассистент, агент»",
-             size=14, bold=True, color=DEEP, line_spacing=1.05)
-    text_box(s, bx + 0.30, 2.72, bw - 0.6, 0.70,
+             size=13, bold=True, color=DEEP, line_spacing=1.08)
+    text_box(s, bx + 0.26, by + 2.28, bw - 0.52, 0.84,
              "Для каждого кейса: уровень + ≥2 причины по осям + ≥1 условие "
              "смены + явное «где человек обязателен». Mini-apply задача B "
              "— разминка.",
-             size=12.5, color=DEEP, line_spacing=1.16)
-    # Q&A
-    text_box(s, 0.55, 3.85, 12.25, 1.85, "Вопросы",
-             size=104, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             size=11.5, color=DEEP, line_spacing=1.14)
+    # Q&A (compact, left column)
+    text_box(s, bx, by + 3.42, bw, 1.35, "Вопросы",
+             size=56, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    text_box(s, 0.55, 5.78, 12.25, 0.66, "Спасибо за внимание",
-             size=28, bold=False, color=MID, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
-    text_box(s, 0.55, 6.55, 12.25, 0.42,
-             "Семинар 4 — на следующей неделе.  Дополнительные вопросы — "
-             "на e-mail.", size=13, italic=True, color=LIGHT,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, bx, by + 4.72, bw, 0.44, "Спасибо за внимание",
+             size=18, bold=False, color=MID, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, bx, by + 5.20, bw, 0.60,
+             "Семинар 4 — на следующей неделе. Дополнительные вопросы — "
+             "на e-mail.", size=11.5, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
+    # ---- RIGHT column: HERO — Replit agent confession screenshot ----
+    rx, rw = 7.15, 5.65
+    ocean_box(s, rx, by, rw, 5.60, fill=WHITE, stroke=LIGHT, stroke_pt=1.5)
+    add_image(s, str(ROOT / "assets/screenshots/s32-replit-real-source.jpg"),
+              x=rx + 0.14, y=by + 0.14, w=rw - 0.28, h=4.90)
+    text_box(s, rx + 0.14, by + 5.08, rw - 0.28, 0.24,
+             "X (Jason Lemkin) · 18 июля 2025 · архив Wayback Machine",
+             size=10, italic=True, color=SLATE, align=PP_ALIGN.LEFT)
+    text_box(s, rx + 0.14, by + 5.30, rw - 0.28, 0.28,
+             "Агент подтверждает: удалил прод-БД в code-freeze",
+             size=11.5, bold=True, italic=True, color=DEEP,
+             align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s32"))
 
 
@@ -2415,7 +2479,8 @@ def main():
     # (curl-slop #5) после s22, перед s23 (security-раздел). cascade-safe.
     builders = [build_s01, build_s02, build_s03, build_s04, build_s04a,
                 build_s05, build_s06, build_s07, build_s08, build_s09,
-                build_s10, build_s11, build_s12, build_s13, build_s14,
+                build_s10, build_s11, build_s12, build_s13,
+                build_s14,
                 build_s15, build_s16, build_s17, build_s18, build_s19,
                 build_s20, build_s21, build_s22, build_s22a, build_s23,
                 build_s24, build_s24a, build_s25, build_s26, build_s27,

@@ -479,7 +479,7 @@ ai_failure_judgment:
 
 verify_day_of_items:
   - s06_copilot_lab_field_numbers       # Copilot RCT ~56% / поле +7–22% — лабораторные
-  - s12_swe_bench_verified_pro_numbers   # SWE-bench Verified ~88,7% / Pro ~64,3% + лидеры
+  - s12_swe_bench_verified_pro_numbers   # SWE-bench Verified ~95-96% / Pro ~69-80% + лидеры (issue #162 freshness sync)
   - s21_nyu_cwe_language_shares          # NYU ~40% / 12,1% CWE / язык-доли
   - s27_tools_adoption                   # Copilot стагнация / Claude Code / Cursor доли
   - s28_agents_md_adoption               # AGENTS.md/CLAUDE.md рост репозиториев

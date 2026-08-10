@@ -373,6 +373,16 @@ _Пока не обнаружено._
 - **Status:** active (LibreOffice behavior)
 - **First seen in:** #54 (s05b spike, 2026-05-12).
 
+### [#162-render-1] LibreOffice PDF-export полностью сломан в этой sandbox-сессии (JuNest proot AppImage) — PNG-export работает, но только первый слайд за вызов
+
+- **Tool:** `libreoffice --headless --convert-to pdf`. В этой конкретной среде исполнения нет установленного системного `libreoffice`/`soffice` (`apt-get install` недоступен — нет root/sudo). Единственный доступный бинарник — JuNest-извлечённый AppImage по пути `/tmp/claude-999/appimage_extract/squashfs-root/AppRun` (proot-режим).
+- **Symptom:** `--convert-to pdf` **всегда** падает с `Error: Please verify input parameters... (SfxBaseModel::impl_store <file://...pdf> failed: 0xc10(Error Area:Io Class:Write Code:16))` — воспроизведено на: (1) реальном деке лекции (36-слайдовый `lec-04.pptx`), (2) минимальном тривиальном PPTX с одним пустым слайдом (`python-pptx`, ноль контента) — то есть баг не зависит от содержимого файла, а от самого PDF-export backend'а. `--convert-to png` (single-slide-per-call) при этом **работает** без ошибок.
+- **Root cause (подтверждено `ldd` на `soffice.bin`):** `libpdfiumlo.so` (PDF-export backend LibreOffice) не может быть загружен — конфликт версии GLIBC (`GLIBC_2.43' not found`) между системным `/lib/x86_64-linux-gnu/libm.so.6` этого хоста и тем, что ожидает библиотека, собранная под JuNest/proot-окружение. Дополнительно отсутствуют `libicuuc.so.78`, `libicui18n.so.78`, `libxml2.so.16`, `liblangtag.so.1`, `libgpgmepp.so.7` — PDF-специфичные зависимости (шрифты/локализация/подпись), которых нет в этой proot-песочнице. PNG-export backend этих библиотек не требует — отсюда асимметрия PDF-fail/PNG-ok.
+- **Severity:** P1 (блокирует штатный `libreoffice --convert-to pdf` + `pdftoppm` pipeline из README §5, но НЕ блокирует visual-loop как таковой — см. workaround).
+- **Workaround (использован в issue #162, lec-04):** т.к. `--convert-to png` штатно экспортирует **только первый слайд** презентации за один вызов (multi-slide PPTX → single PNG слайда №1, остальные молча игнорируются), пришлось писать per-slide isolation script: для каждого слайда N — скопировать `Presentation`, удалить из `sldIdLst` все `sldId`, кроме N-го (`python-pptx`, `slides._sldIdLst.remove(sldId)`), сохранить как временный single-slide PPTX, затем `--convert-to png` этого temp-файла → переименовать полученный PNG в `snapshots/sNN.png`. Итоговое разрешение PNG — **960×720** (ниже привычных 150dpi через `pdftoppm -r 150`, но достаточно для structural/contrast/overflow QA — все находки issue #162 итерации сделаны на этом разрешении успешно). Отдельная попытка задать resolution через `png:impress_png_Export:{"PixelWidth":...}` filter-опции — CLI парсит JSON некорректно (`Error: source file could not be loaded` + падение на дефолт), не решена.
+- **Status:** active (environment-specific — вероятно НЕ воспроизводится в других сессиях/машинах, где `apt install libreoffice-impress poppler-utils` доступен как sudo per README §Установка; но если в CI/sandbox снова встретится идентичная JuNest/proot-конфигурация без root — воркэраунд выше применим напрямую).
+- **First seen in:** issue #162 (Лекция 4 review, 2026-08-10).
+
 ---
 
 ## Историческая справка

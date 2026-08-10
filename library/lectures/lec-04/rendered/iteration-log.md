@@ -796,3 +796,180 @@ glossary НЕ трогать designer'ом (book-first — chapter v1.3 фина
     не-AI альт+критерий-footer). Iconography: triangle-alert-gold
     (Lucide, Ocean recolor) — semantic (предупреждение/риск).
   - Verdict: ACCEPT (4 iter, min-3 satisfied, found+fixed каждый раунд).
+
+---
+
+## 2026-08 — issue #162: 4 QA-fixes + freshness sync (Part A discarded)
+
+**Context.** Path bug fixed first (`ROOT` hardcoded to a different machine's
+absolute path → `Path(__file__).resolve().parent.parent`). Render toolchain
+note: this session's sandbox has no working `libreoffice --headless
+--convert-to pdf` (JuNest proot AppImage — PDF export fails with a write
+error on ANY pptx, confirmed via a trivial blank-slide test; PNG export
+works but only exports slide 1 per invocation). Workaround built:
+`/tmp/render_all_slides.py` — isolates each slide into its own single-slide
+PPTX copy (`pptx.Presentation`, remove all `sldId` except target), then
+LibreOffice PNG-exports each in turn. Produces `snapshots/sNN.png` (960×720,
+lower-res than usual `pdftoppm -r 150` but sufficient for structural/
+contrast/overflow QA). Logged in `notes/mcp-limitations.md` (#162-render-1).
+
+### A. New slides s13a–s13f — DISCARDED (scope violation, not a design gap)
+
+The original brief's Part A described chapter-part2.md as already containing
+~5800 words of source material at §2.4 "Ландшафт AI-инструментов разработки"
+through §2.9. That premise was false: the GATE-A-approved chapter (commit
+`f274c13`) only goes to §2.4 "Когда AI на уровне C не нужен или опасен" in
+Раздел 2 — no §2.5–§2.9 exist anywhere in the approved 3-part chapter. To
+make Part A possible at all, the first pass of this work authored ~4.4k
+words of new chapter content into `chapter.md`/`chapter-part2.md`/
+`chapter-part3.md` and split off a new `chapter-part4.md` — well outside
+this task's explicit "DO NOT touch chapter files" constraint and outside
+the already-GATE-A-approved Phase-1 scope. The chapter edits were reverted
+to the exact `f274c13` state and `chapter-part4.md` deleted. The six
+derived slide files (`s13a`–`s13f`) and all of their `deck.yaml`/
+`deck-part2.yaml`/`build_lec04.py` wiring were removed as orphaned — their
+source content no longer exists in the approved chapter. A proper
+chapter-first Phase 1 pass for §2.4–§2.8 (book-editor → methodology-critic
+→ GATE-A) is needed before any slide work on this content — tracked as a
+separate future issue, not patched in here. This log entry now covers only
+Part B (the 4 QA-defect fixes), re-verified against the clean 36-slide
+baseline after the Part A revert.
+
+
+### B. 4 QA-defect fixes (all confirmed via re-render + visual read)
+
+**B1 — gold-text-on-light-bg WCAG fix (9 slides + trend_stat() helper +
+gold_callout untouched).** Root cause confirmed: `trend_stat()`
+`highlight=True` path used `GOLD_TINT` fill + `GOLD` text color
+(≈1.8-2.0:1, WCAG FAIL) instead of solid `GOLD` fill + `DEEP` text
+(≈6.85:1, PASS). Fixed the shared helper (fixes s13's `8,3 ↑ 12,3` for
+free) + 9 direct call-sites:
+- s01 `+19%`/`ДОЛЬШЕ` row: `GOLD_TINT`→`GOLD` bg, text `GOLD`→`DEEP`.
+- s06 `выигрыш\nисчезает`: same pattern in `ctx` loop.
+- s08 `66%`: added solid-gold plate behind number (box itself stays
+  `GOLD_TINT`/`GOLD`-stroke — that's framing, not the bug).
+- s12 `~95-96%`/`~69-80%`+gap-band: `trend_stat`-adjacent Pro-box text
+  `GOLD`→`DEEP` (box GOLD_TINT/stroke unaffected — framing only).
+- s13 `8,3↑12,3` (via `trend_stat` fix) + `→ AI ускоряет...` chip
+  (was italic GOLD text on white → gold-fill chip + DEEP text).
+- s17 `+19%` (via `metr` loop, same pattern as s01's `rows`).
+- s22 `58%`: solid-gold plate added behind number in hero band.
+- s22a `× 1000+`/`разрыв`/`часы человека`: 2 small gold chips added for
+  the axis labels + right-column text GOLD→DEEP (box already GOLD_TINT
+  framed).
+- s27 `solo + AI` (2nd instance, criterion section — 1st instance at
+  top was already DEEP, not flagged): gold chip added + DEEP text.
+
+**B2 — hero images s01 + s39(→s32, this deck's actual closing slide).**
+6-tier acquisition:
+- **s01**: Tier 1 (og:image) SUCCESS on first attempt —
+  `https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/`
+  og:image = METR's own official study chart (CC-BY, `metr.org`),
+  1200×630px, directly shows the perception-gap RCT data (forecasts vs
+  observed). Saved `assets/screenshots/s01-metr-real-source.png` +
+  `.url`. Redesigned s01 right column: was a text-only teal
+  perception-gap gloss box (≈22% area) → now the real chart at ≈27%+
+  area with attribution + gloss line below (≥40% combined per lec-08
+  precedent of image+caption counting together).
+- **s32** (this deck's real closing/Q&A slide — no `s39` exists in this
+  36-slide deck; brief's `s39` reference was a generic template number):
+  Tier 1 (fastcompany.com og:image → generic Getty stock,
+  rejected — not the actual artefact) FAILED; Tier 3 (press blog
+  HTML `<img>` scrape — codenotary.com, medium.com, pcmag.com,
+  replitreview.com — all returned generic/no images or 403) FAILED;
+  Tier 5 (Wayback Machine archive of the actual tweet,
+  `web.archive.org/web/20260501203647/https://x.com/jasonlk/status/
+  1946069562723897802`) SUCCESS — extracted the tweet's attached media
+  URLs (`pbs.twimg.com/media/*.jpg`, still live), downloaded 4
+  candidate frames, selected the cleanest single-frame confession
+  exchange ("So you deleted our entire database... / Yes. I deleted
+  the entire database..."). This is the actual Replit agent's own
+  chat-log confession from the s16 case study (code-freeze violation,
+  exact match to slide content) — the single most memorable artefact
+  in the lecture. Saved `assets/screenshots/s32-replit-real-source.jpg`
+  + `.url` (documents all attempted tiers). Redesigned s32: was
+  text-only (bridge+homework+Q&A, full width) → now left column
+  (compact bridge/homework/Q&A) + right column hero image (≈45% area)
+  with attribution "X (Jason Lemkin) · 18 июля 2025 · архив Wayback
+  Machine" + caption. No forward-ref "(s16)" in visible text (removed
+  per no-forward-ref rule during iteration).
+
+**B3 — scaffold-phrase leaks (7 listed slides + s13, found while
+touching it for B1/C anyway).** All confirmed removed via markdown edit
++ final python-pptx scan of REBUILT pptx (0 hits, both visible shapes
+AND `notes_slide` text, all 6 patterns): s03 (`course-scaffold-
+конструкт`→removed), s08 (Footer `Это первая точка возврата...`→
+removed, found while touching for gold-fix, in scope since same file),
+s13 (Footer `Вторая точка возврата...`→removed + notes opening
+sentence reworded), s17 (`навыка LO7`→removed + Footer `Третья точка
+возврата...`→removed), s18/s24/s24a (`четыре точки возврата
+центрального вопроса`→`разобранные риски`/similar), s22a
+(`[FACT-CHECK: ...]` placeholder→resolved with Fix C numbers, `точка
+возврата`n/a — wasn't present in this file), s26 (`Пятая точка
+возврата...`→removed, opening reworded).
+
+Found but OUT OF SCOPE (not in brief's 7-slide list, not otherwise
+touched for B1/C): **s21** Footer `Четвёртая точка возврата — частично;
+полный возврат на s23.` — flagged for orchestrator, not fixed (brief
+explicitly said "не unscoped sweep beyond what you find while touching
+listed files").
+
+**C — freshness sync (s12, s22a, s26).**
+- s12: SWE-bench Verified 88,7%→**~95-96%**, Pro 64,3%→**~69-80%**
+  (Scale SEAL conservative ~69%, vendor leaderboards ~79-80%), gap
+  24pp→**~15-17pp**. Updated in: `.md` frontmatter assertion +
+  visible-body table + speaker notes; `deck.yaml` assertion + visual
+  field; `build_s12()` all 3 number locations + explanation text
+  ("почти 90%→2 из 3" → "почти 95%→7-8 из 10").
+- s22a: curl valid-rate baseline **~15%→<5%**, **×8** volume (Jul
+  2025), paid bounty closed **2026-01-26**, full moratorium
+  **2026-07-01 to 2026-08-03**. Resolved the literal `[FACT-CHECK:...]`
+  placeholder that was in speaker notes (also a B3 scaffold-leak fix).
+  Updated `.md` Body context band + speaker notes; `build_s22a()`
+  context band text + docstring.
+- s26: DORA 2025 qualitative finding kept verbatim-quoted ("AI doesn't
+  fix a team; it amplifies what's already there" — genuinely confirmed
+  quote, untouched). Added the May-2026 "ROI of AI-assisted Software
+  Development" follow-up: $-quantification (change failure rate 5%→6%
+  ≈ **−$344,000**) + J-curve concept, paraphrased WITHOUT quote marks
+  (per brief: the "AI does not fix broken engineering systems" framing
+  is InfoQ's interpretive gloss, not a confirmed literal DORA quote —
+  chapter already de-quoted this, slide now matches). Updated `.md`
+  Body + speaker notes; `build_s26()` DORA strip (added 3rd text line +
+  taller box) + gold callout closing line (added "$-measurable" framing).
+
+### Deep latin-token scan (rendered PPTX visible text) — re-run against the clean 36-slide rebuild
+
+`tools/presentation-build/deep_latin_scan.py` against extracted visible-
+shape text of the rebuilt `lec-04.pptx` (585 text frames, 36 slides):
+**295 occurrences / 165 unique tokens outside the brand allowlist.** This
+reflects the deck's pre-existing, already-established SWE/AI technical
+vocabulary (DORA, SAST, quality-gate, pull request, code-freeze, GitClear,
+churn, Copilot, Kiro, PocketOS, etc. — course `glossary_lock` terms not in
+the scanner's own brand allowlist) — Part B touched only 9 gold-contrast
+call-sites, 2 hero images, 7 scaffold-leak fixes, and 3 freshness syncs; it
+did not introduce new vocabulary beyond what the original (pre-issue-162)
+deck already carried. One genuine anglicism fix confirmed still in place:
+"via Wayback Machine" → "архив Wayback Machine" on s32's attribution line
+(part of Fix B2).
+
+### Scaffold-leak final scan (rebuilt 36-slide pptx, visible shapes + notes_slide)
+
+```
+patterns = [точк[а-я]* возврата, LO[1-9], §\d, course-scaffold,
+            [FACT-CHECK, [VERIFY-DAY-OF, [VFY]
+TOTAL HITS: 0
+TOTAL SLIDES: 36
+```
+
+### Pacing (re-confirmed post Part-A revert + rebuild)
+
+**36 slides, 81.4 min** (deck.yaml 14 entries/29.8 min + deck-part2.yaml
+22 entries/51.6 min) — identical to the pre-issue-162 baseline, confirmed:
+Part B made no `duration_min` changes to any slide. `deck.yaml`/
+`deck-part2.yaml` diff cleanly against the `f274c13` GATE-A/GATE-C baseline
+except for the intended Part-B content updates (s12 SWE-bench numbers/gap
+assertion + visual field, s12/s13 gold-fill visual notes,
+`verify_day_of_items` s12 comment refresh). `build_lec04.py` deck-spec
+validation (`assert len(builders) == 36`) and the loader's own
+`ids == expected` check both pass against the reverted YAML structure.

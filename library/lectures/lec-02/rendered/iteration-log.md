@@ -965,3 +965,79 @@ notes across all 35 slides): **0 hits** for `§[0-9]` and 0 hits for "payoff"
 missing (see s01 above) — logged to `notes/mcp-limitations.md`.
 
 **Final slide count: 35** (was 36 in v1.6/v1.7; s27-homework removed).
+
+## v1.9 — QA-with-roles fix-pass (issue #156, post batched-revision)
+
+Fix-pass applied after `presentation-critic` verdict REVISE + `student-
+simulator` + `reader-simulator` findings from a QA-with-roles round run on
+top of the earlier 10-owner-comment batched revision.
+
+**P0-1 (s28 text overflow):** 2×2 grid row 2 overflowed the slide
+(grid_y 2.10 + cell_h 2.75 + gap 0.22 + cell_h 2.75 = 7.82" > 7.5" slide
+height) — MCP + Цикл-агента card text ran past the card/slide edge. Fixed:
+grid_y 2.10→1.95, gap 0.22→0.16, cell_h 2.75→2.68, body font 16→15pt, body
+box re-tuned (y+1.58, h=1.02) — both rows now fit with margin. 3 iterations
+(layout math check → render → visual confirm).
+
+**P0-2 (s06 subtitle overlap):** two italic subtitle text boxes had
+overlapping y-coordinates — line 1 (15pt, wraps to 2 rows at this width)
+only had a 0.45"-tall box, so line 2 (starting 0.47" below) rendered on top
+of line 1's wrapped second row. Fixed: box 1 height 0.45→0.62", box 2 y
+1.92→2.12, two-column grid shifted down (col_y 2.40→2.50) with "After"
+column item-gap trimmed 0.60→0.58 to keep the 5-row list inside its box
+(col_h stays 3.85"). 3 iterations (initial fix caused a new 5th-row overflow
+on the "After" column — caught before render via layout math, corrected).
+
+**P0-4 (s07 stale "2-3 токенов" title):** title hardcoded "...из 2-3
+токенов" — leftover from an earlier `[straw][berry]` 2-token variant already
+superseded everywhere else (frontmatter, body, chapter.md all say 3 for the
+actual `o200k_base` split `[st][raw][berry]`). Fixed title string in
+`build_lec02.py` to "...из 3 токенов".
+
+**P1 (deck-wide "attention" anglicism cluster):** Russified "Attention" /
+"attention" → "Внимание" / "внимание" (or "весах внимания" where "attention
+weights" was meant) across s01, s13a (title label was baked into
+`s13a-attention-matrix.svg`/`.png` — patched via PIL text-overlay since this
+sandbox has no `rsvg-convert`/cairo), s14 (title + chart PNG regenerated via
+QuickChart API with RU title), s15 (title, "Worked example"→"Разбор
+примера", disclaimer, both body callouts), s16 (subtitle, info-line,
+gold callout), s19 ("consensus"→"стандартный выбор"), s21 (step 2 body),
+s24 (answer #1 body), s26 (title — main headline, card header "AI (через
+attention)"→"ИИ (через внимание)", body "domain-эксперта или
+causal-методы"→"эксперта предметной области или причинные методы"). Also
+fixed one additional same-cluster hit found on s14's own
+`s14-flashlight.svg`/`.png` (not in the original list but same slide,
+same cluster) — patched via PIL the same way as s13a.
+
+**Deep-scan self-check beyond the 9-slide list:** ran
+`tools/presentation-build/deep_latin_scan.py` against extracted PPTX visible
+text post-fix. One remaining "attention" hit found: s04b's pipeline-diagram
+LLM box ("LLM (attention + forward — Раздел 3)") — **not** in the assigned
+9-slide list, left untouched and reported to orchestrator rather than
+self-implemented (out-of-brief). "inference" occurrences (9×) also flagged
+per brief as pre-existing, out-of-scope P2 — untouched.
+
+**Render toolchain note:** this worktree's default `libreoffice`/`soffice`
+(both `~/.local/libreoffice-portable` and the junest-AppImage extractions)
+fail `--convert-to pdf` under proot with `SfxBaseModel::impl_store ...
+failed: 0xc10 (Io Class:Write Code:16)` — confirmed [#157-1] in
+`notes/mcp-limitations.md` still applies here. Its documented standalone
+toolchain at `/tmp/claude-999/local/usr/bin/` (with `LOPROG` +
+`LD_LIBRARY_PATH` set per that entry) **works correctly** — used it to
+produce a proper native vector `lec-02.pdf` + all 35 `snapshots/p-NN.png`
+at 150dpi/2000×1125 via `soffice --convert-to pdf` + `pdftoppm`. No new
+mcp-limitations entry needed. Separately, this sandbox also has no working
+standalone SVG rasterizer for one-off edits outside that bundle
+(`rsvg-convert` missing from plain `$PATH`, `cairosvg`→`cairocffi` fails to
+load `libcairo.so.2`) — for the 2 small baked-in SVG label edits (s13a
+matrix title, s14 flashlight caption) a PIL pixel-patch (whiteout + redraw
+with LiberationSans, matching font/size/color/position) was used instead of
+regenerating from SVG; visually confirmed clean in the final native render,
+no artifacts.
+
+**Slides re-rendered end-to-end:** s01, s06, s07, s13a, s14, s15, s16, s19,
+s21, s24, s26, s28 (12 slides, all touched-slide snapshots updated) — plus
+all remaining 23 untouched slides re-snapshotted from the same native
+rebuild so `snapshots/` stays internally consistent with the current
+`lec-02.pptx`/`lec-02.pdf` (spot-checked 2 untouched slides — p-02 cover,
+p-22 U-shape chart — for regression; both clean, no content drift).

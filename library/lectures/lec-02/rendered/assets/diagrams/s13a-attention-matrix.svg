@@ -2,7 +2,7 @@
 <rect width="720" height="640" fill="#FFFFFF"/>
 
 <!-- Title -->
-<text x="360" y="32" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">Attention matrix 7×7 (single-head, упрощение)</text>
+<text x="360" y="32" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">Матрица внимания 7×7 (single-head, упрощение)</text>
 <text x="360" y="52" text-anchor="middle" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">«Кот съел мышь, потому что она была голодна»</text>
 
 <!-- Column labels (top) -->

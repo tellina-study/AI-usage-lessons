@@ -1896,7 +1896,7 @@ def build_s26(p):
     s = blank(p)
     slide_title(s, "Внимание статистически смотрит на токены — не понимает причинности", size=24)
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
-             text="AI считает корреляции в данных, не строит каузальный граф",
+             text="ИИ считает корреляции в данных, не строит каузальный граф",
              size=16, italic=True, color=MID)
 
     # 2 columns — v1.8 (#207): grew to fill space freed by removed gold

@@ -390,6 +390,25 @@ _Пока не обнаружено._
 
 **Last update:** 2026-05-16 (#86 — добавлен [#86] workspace-mcp P0: регрессия aiofile 3.10.0, пин 3.9.0 в .mcp.json).
 
+### [#157-1] Render toolchain (libreoffice/pdftoppm/rsvg) отсутствует в PATH — есть standalone bundle в /tmp/claude-999/local
+
+- **Tool:** `libreoffice`/`soffice`, `pdftoppm`, `rsvg-convert`, `fc-list` (весь Visual Loop render toolchain).
+- **Symptom:** `command -v libreoffice/soffice/pdftoppm/rsvg-convert/convert` → MISSING в стандартном PATH. `apt-get install` невозможен (нет passwordless sudo, dpkg lock). `LibreOffice.AppImage` в /tmp/claude-999 запускается в JuNest/proot и **консистентно падает на записи** любого output-файла: `SfxBaseModel::impl_store ... failed: 0xc10 (Error Area:Io Class:Write Code:16)` — независимо от outdir / UserInstallation / TMPDIR. Читает PPTX нормально, но не может записать PDF.
+- **Root cause:** сборочная среда без системного office-стека; AppImage-proot слой не даёт writable output mount.
+- **Severity:** P0 (блокирует Visual Loop — без PNG нет vision-inspection).
+- **Workaround:** есть **standalone native toolchain** в `/tmp/claude-999/local/usr/bin/` (soffice, libreoffice, pdftoppm 24.02, rsvg-convert 2.58, fc-list). Работает при выставленном `LD_LIBRARY_PATH` с program-dir LibreOffice:
+  ```bash
+  export LOPROG=/tmp/claude-999/local/usr/lib/libreoffice/program
+  export PATH="/tmp/claude-999/local/usr/bin:$PATH"
+  export LD_LIBRARY_PATH="$LOPROG:/tmp/claude-999/local/usr/lib:/tmp/claude-999/local/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
+  soffice --headless -env:UserInstallation=file:///tmp/claude-999/loprofile_lec03 \
+    --convert-to pdf --outdir REND REND/lec-03.pptx        # PDF OK
+  pdftoppm -r 150 -png REND/lec-03.pdf SNAP/p               # PNG OK
+  ```
+  Без `LOPROG` в LD_LIBRARY_PATH: `libreglo.so: cannot open shared object file`. Cyrillic рендерится (DejaVu доступен через /usr/share/fonts + local fc-cache). Inter/Arial отсутствуют → build использует fallback (DejaVu Sans через substitution) — визуально приемлемо.
+- **Status:** active (workaround рабочий, проверен end-to-end 2026-08-09).
+- **First seen in:** #157 (lec-03 полная пересборка, 2026-08-09).
+
 ### [#118-1] mmdc / mermaid-cli: missing Chrome browser dependency
 
 - **Tool:** `mmdc` (mermaid-cli @mermaid-js/mermaid-cli)

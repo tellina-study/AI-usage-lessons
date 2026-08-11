@@ -3,7 +3,7 @@ id: s13a
 type: assertion_visual
 section: "Раздел 3. Механизм внимания"
 duration_min: 2
-assertion: "Внимание — это матрица: каждый токен смотрит на все остальные одновременно"
+assertion: "Внимание — это сверка каждого токена со всеми остальными"
 learning_goal: "Attention как матричная операция, не линейная — основа понимания multi-head"
 learning_outcomes: [LO1]
 chapter_ref: "§3.1 [for-slide-s13a]"
@@ -13,7 +13,7 @@ visual_brief: "Слева — большая 7×7 attention matrix heatmap дл�
 # Visible content
 
 ## Title bar
-«Внимание — это матрица, не линейная операция»
+«Внимание — это сверка каждого токена со всеми остальными»
 
 ## Body
 [Sub-title 16pt italic]

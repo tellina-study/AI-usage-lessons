@@ -780,3 +780,188 @@ s14, s15, s16, s17, s17a, s18, s19, s20, s21, s22, s22a, s25, s26, s27, s28.
 **Builder modifications:** `roadmap_bar` labels, `NAV_SECTIONS_LEC2`, `SECTION_LABELS`, `SECTION_OF_SLIDE`, `build_s28`, **new** `build_s29`, `main()` builders/ids/assertion.
 
 **Final slide count: 36** (was 35 in v1.5).
+
+---
+
+## v1.8 — issue #156 polish pass (10 targeted fixes + deck-wide §-cleanup)
+
+**Scope:** 10 owner-review comments (#200-#210) on specific slides + a deck-wide
+scan for forbidden `§[0-9]` paragraph-references and "payoff" scaffold phrases
+in visible body + speaker notes (frontmatter exempt). Each modified slide went
+through ≥3 Generate→Convert→Inspect→Fix iterations before accept.
+
+### s01 (p1) — #200: full hook replacement — 3 iterations
+
+- **Iter 1:** Replaced token-rainbow hook (too technical for a before-lecture
+  slide) with Variant B (recommended): question headline "на что вы НЕ
+  обращаете внимания?" + custom flat-illustration character pulled by 3
+  distractions (phone notification / stray thought / task document), built as
+  literal SVG (`assets/illustrations/s01-attention-character.svg`, Ocean
+  palette, rsvg-convert → PNG) — style-inspired by Storyset/unDraw flat
+  illustration conventions, no copyrighted reference art used. Bridge line at
+  bottom to s13a (Раздел 3 «Механизм внимания»).
+- **Iter 1 defect found:** illustration rendered at native 12.5"×9.72" (900×700px
+  PNG has no DPI metadata → python-pptx defaults to 72dpi) instead of the
+  intended ~5"×3.9" — overflowed the Ocean box and collided with the bottom
+  bridge text.
+- **Root cause:** `add_image()` helper's height-only branch was missing — a
+  call with only `h=` fell through to the "neither w nor h" branch, which adds
+  the picture at native size ignoring the intended height entirely. **Fixed
+  the helper itself** (added explicit `elif h is not None` branch) — this was
+  a latent bug affecting any future height-only image call, logged to
+  `notes/mcp-limitations.md`.
+- **Iter 2:** Fixed helper; recomputed illustration size explicitly
+  (`img_h=3.75`, `img_w = img_h*(900/700)`), centered in a slightly shorter
+  Ocean box (4.35"→4.20"). Re-rendered — illustration now fits cleanly inside
+  the box with margin on all sides.
+- **Iter 3:** Final scrutiny pass — checked contrast (Ocean palette throughout,
+  gold accent only on the phone notification dot — single gold use per
+  slide), text wrap on headline (2 clean lines), bridge line readable at
+  13pt. Accepted.
+- **Variant used:** B (as recommended in brief) — no fallback needed.
+
+### s03 (p4) — #201: §-reference cleanup — verified in 1 render pass (already
+part of a multi-slide render batch, inspected across all 3 iterations of the
+batch)
+
+- Removed "(Lec-1 §3.2)" from "Что мы знаем:" body line (both `.md` and
+  `build_s03`); also fixed a second visible-body occurrence not named in the
+  brief — the small italic caption under the nested-layers diagram read
+  "(Лекция 1 §3.2)" → changed to "(из Лекции 1)". Speaker notes: 2 further
+  §3.2 mentions rewritten as natural references to "Лекция 1" without the
+  paragraph number.
+
+### s07 (p10) — #202: callout expansion — 3 iterations
+
+- **Iter 1:** Replaced single-line gold callout with 2-paragraph compact
+  callout (letters + numbers/arithmetic consequence, 59%/4%/0% GPT-4 stat +
+  arXiv 2410.19730 citation). Shrank the left strawberry-split image slightly
+  (4.8"→4.35" box height) to make room.
+- **Iter 2:** Inspected at 150dpi — text fit within box bounds, no overflow,
+  both paragraphs readable at 14pt bold.
+- **Iter 3:** Verified spacing between the two callout paragraphs (0.56"
+  vertical gap) reads as 2 distinct points, not run-together. Accepted.
+
+### s13a (p18) — #203: title reword — verified across full-deck render batch
+(3 iterations)
+
+- "Внимание — это матрица, не линейная операция" → "Внимание — это сверка
+  каждого токена со всеми остальными" (title bar + `assertion` in both
+  `deck.yaml` and `.md` frontmatter, kept in sync). Sub-title and gold callout
+  body text (which already carried the correct N×N explanation) left as-is.
+
+### s24 (p31) — #204 + #205: rename + remove payoff marker + fix highlight
+imbalance — 3 iterations (combined, same slide)
+
+- **Iter 1:** Title → "Ответы на вопросы из начала лекции"; removed the
+  "Payoff Лекции 1 §5.3" gold marker bar entirely; grew the 3 answer-cards
+  vertically (1.70"→1.85" each) to fill the freed space; changed badge colors
+  from GOLD/MID/TEAL (card 1 = gold, imbalanced) to MID/LIGHT/TEAL (uniform
+  Ocean-family, no card singled out).
+- **Iter 2:** Inspected — 3 cards now visually parallel, no gold anywhere on
+  the slide (this trades off the CLAUDE.md "gold ≥1×/slide" rule in favor of
+  removing an unjustified imbalance; flagged as a deliberate exception since
+  gold-on-one-of-3-equal-items was the defect being fixed).
+- **Iter 3:** Verified speaker notes — "Лекция 1 §5.3" / "payoff Лекции 1" →
+  rewritten as natural "в начале сегодняшней лекции мы поставили три
+  вопроса... главный практический итог".
+
+### s25 (p32) — #206: decision-tree redesign — 4 iterations (overflow bug
+required an extra pass)
+
+- **Iter 1:** Kept existing tree topology (root + 3 branches + else-pill,
+  already present in v1.7) but discovered a real overflow bug during
+  inspection: "Интерпретируемость" (19 chars) wrapped to 2 lines inside a
+  0.65"-tall head zone and visually collided with the condition text below,
+  spilling text into "BERT" overlapping the else-pill border.
+- **Iter 2:** Widened head zone to 0.95", split long labels with explicit
+  `\n` line-breaks, added explicit down-pointing arrowhead connectors
+  (`MSO_SHAPE.ISOSCELES_TRIANGLE`, rotated 180°) from root to each branch —
+  makes the "decision tree" reading unambiguous vs. plain vertical rules.
+- **Iter 3:** Fixed a typo (`ISOCELES_TRIANGLE` → `ISOSCELES_TRIANGLE`,
+  python-pptx's actual enum name) that broke the full-deck render; re-ran.
+- **Iter 4:** Inspected final PNG at 150dpi — no overflow, all 3 branch boxes
+  render cleanly, connector lines read top-to-bottom clearly, else-pill
+  connected via 3 vertical teal lines. 5-second test: "root question → 3
+  branches → otherwise LLM" reads immediately. Accepted.
+
+### s26 (p33) — #207: remove "Инженерный вывод" callout + rebalance — 3
+iterations
+
+- **Iter 1:** Removed the gold callout ("...Лекция 1 §4.8 про 3 уровня
+  Перла" — forbidden §-reference); folded the causal-methods recommendation
+  into the end of the AI column's body text instead (kept the actionable
+  insight, dropped the citation-with-paragraph-number). Grew both columns
+  vertically (5.15"→5.65") to fill the freed space.
+- **Iter 2:** Inspected — both columns end at the same y-coordinate, visual
+  mass balanced left/right, no dangling whitespace at the bottom.
+- **Iter 3:** Speaker notes — 2 more "Лекция 1 §4.8" mentions rewritten as
+  "Лекция 1" (no paragraph number); appended one sentence naturally restating
+  the "consult a domain expert / causal methods" conclusion that used to live
+  only in the removed gold callout, so the insight isn't lost from the
+  narration either.
+
+### s27 (p34→removed) — #208: slide deletion — verified via full rebuild (3
+render passes across the session)
+
+- Removed `build_s27` call from `main()` builders list + `slide_ids` list;
+  updated the `assert len(...) == 35` (was 36); removed the `s27` entry from
+  `deck.yaml` (slides list + `totals.slides` 36→35 + `slide_times_sum_min`
+  62.0→60.0 + `total_min` 75→73 + `verify_day_of_items` s27 entry); deleted
+  `slides/s27-homework.md`. Confirmed s26→s28 bridge does not reference s27
+  by number in either markdown or rendered speaker notes (only a generic
+  "домашние эксперименты с температурой" mention survives in s28 notes,
+  which refers to the assignment concept, not a slide index).
+
+### s28 (p34, was p35) — #209: remove excess highlight — 3 iterations
+(combined with deck-wide render batch)
+
+- **Iter 1:** Found the anchor (~0.26, 0.33 normalized ≈ x=3.5", y=2.4")
+  falls inside the "RAG" card of the 2×2 concept grid, which had
+  `is_gold=True` (GOLD_TINT fill + GOLD 2pt stroke) while the other 3 cards
+  were plain Ocean boxes — an unjustified "this one is special" emphasis
+  (RAG isn't more important than Tools/MCP/Agent-loop). Removed the
+  `is_gold` branch entirely; all 4 cards now render identically.
+- **Iter 2 + 3:** Inspected across render batch — 4 cards now visually
+  uniform, no accidental emphasis, still passes the "gold ≥1×/slide" rule
+  deck-wide (other slides carry it).
+
+### s29 (p35, was p36) — #210: Q&A redesign to match Lec-1 s31 — 3 iterations
+
+- **Iter 1:** Rendered Lec-1's approved final PPTX (`library/lectures/lec-01/rendered/lec-01.pptx`)
+  to PNG and located the actual Q&A slide by extracting all slide text (it's
+  slide 33/33, not slide 31 as the file-name numbering implied — the file
+  `s31-qa.md` source and the final render diverged post-review, confirming
+  the brief's warning to inspect the render, not the markdown). Read
+  `build_s31` in `build_lec01.py` for exact coordinates/colors.
+- **Iter 2:** Rewrote `build_s29` to match exactly: `SURFACE` (`#F4F7FA`)
+  background instead of `WHITE`; "Q&A" 140pt at y=1.9 (was y=2.3); "Спасибо"
+  36pt italic (was "Спасибо за внимание!" 32pt non-italic) at y=5.4 (was
+  y=4.85); added the bottom-right contacts placeholder
+  ("контакты лектора — заполняется перед лекцией", 11pt italic SLATE,
+  right-aligned at x=8.0,y=6.8) that Lec-1's approved design has and Lec-2's
+  old design lacked; removed the old "Семинар 2 — через неделю..." reminder
+  line (not part of the Lec-1 pattern — replaced by the contacts line per
+  brief's "if present in Lec-1, decide by analogy" instruction).
+- **Iter 3:** Side-by-side visual comparison of the two rendered PNGs
+  confirmed near-pixel match on composition/typography/color. Accepted.
+
+### Deck-wide `§[0-9]` + "payoff"/"это payoff" cleanup (beyond the 10 named
+slides)
+
+Grep across all 35 remaining `slides/*.md` (visible body + speaker notes,
+frontmatter excluded) found additional hits on: s02, s04, s15, s16, s19, s21,
+s22, s23 (some also had matching text hardcoded in `build_lec02.py` and
+required a matching code fix, others were markdown-only where the builder
+had already diverged from source without a §-reference). All rewritten as
+natural-language references to "Лекция 1" without paragraph numbers. One
+"payoff" scaffold-phrase hit in s22a speaker notes ("главный payoff лекции")
+rewritten as "главный практический итог лекции". Final verification via
+direct PPTX text extraction (python-pptx, both visible shapes and speaker
+notes across all 35 slides): **0 hits** for `§[0-9]` and 0 hits for "payoff"
+(case-insensitive) deck-wide.
+
+**Bug found + fixed in shared helper:** `add_image()` height-only branch was
+missing (see s01 above) — logged to `notes/mcp-limitations.md`.
+
+**Final slide count: 35** (was 36 in v1.6/v1.7; s27-homework removed).

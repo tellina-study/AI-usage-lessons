@@ -1,0 +1,253 @@
+# library/lectures/lec-03/deck-part3.yaml  —  PART 3 of 3
+#
+# Продолжение deck-структуры Лекции 3 (v4, 40 слайдов).
+# ЭТОТ ФАЙЛ — slides s18..s31 (Разделы 4-5) + totals + метрики.
+# Meta — deck.yaml (PART 1); slides s09..s16 — deck-part2.yaml (PART 2).
+
+slides:
+  # ─────────────────────────────────────────────────────────────────────
+  # Раздел 4. Агенты (~32 мин, 11 content + divider = 12) — САМЫЙ БОЛЬШОЙ
+  # ─────────────────────────────────────────────────────────────────────
+  - id: s18
+    file: slides/s18-section4-divider-api.md
+    type: section_divider
+    section: "Раздел 4. Агенты"
+    duration_min: 1
+    assertion: "Раздел 4 — Агенты: цикл, экипировка, память, доступ к инструментам — и где всё это ломается"
+    chapter_ref: "§4 [for-slide-s18]"
+    changed_in_v4: "заголовок «Агенты» (без «+безопасность»); безопасность внутри раздела на s25"
+
+  - id: s19
+    file: slides/s19-api-layer.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "Модель становится компонентом системы: structured output / function calling / prompt caching + MCP"
+    learning_goal: "MERGED API-слой (§4.1) + MCP (N×M→N+M, поворот доверия)"
+    chapter_ref: "§4.1 [for-slide-s18, s19, s20]"
+    subtype: schema_matrix
+    changed_in_v4: "MERGED старые s19 (API) + s20 (MCP); плотный слайд — проверен 5-Second"
+
+  - id: s21
+    file: slides/s21-agent-loop.md
+    type: process
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "Агент = цикл plan → act → check → iterate; каждый шаг — место отказа; check не должен быть самооценкой"
+    learning_goal: "Цикл агента + check как несущий шаг (§4.2)"
+    chapter_ref: "§4.2 [for-slide-s21]"
+    references: [yao-2022-react]
+    subtype: schema_cycle
+
+  - id: s22
+    file: slides/s22-workflow-vs-agent.md
+    type: comparison
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Предсказуемая задача → workflow; непредсказуемая И ценность оправдывает → агент. Вложенность — норма"
+    learning_goal: "Workflow vs Agent + вложенность workflow↔agent (§4.3)"
+    chapter_ref: "§4.3 [for-slide-s22, s22a]"
+    subtype: schema_matrix
+    changed_in_v4: "#231 — добавлена идея вложенности (agent содержит workflow и наоборот)"
+
+  - id: s22b
+    file: slides/s22b-agent-equipment.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "Каждый слот экипировки агента — компромисс, не апгрейд по умолчанию"
+    learning_goal: "Карта 5 слотов экипировки (§4.4); assertion = headline"
+    chapter_ref: "§4.4 [for-slide-s22b]"
+    references: [agent-harness-registry]
+    new_in_v4: "новый слайд §4.4 — карта экипировки; рифма с лестницей"
+
+  - id: s22c
+    file: slides/s22c-agent-memory.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Память агента — тот же вопрос масштаба знания, что RAG, но для истории самого агента"
+    learning_goal: "Память: плоский файл → mem0/Cognee/Graphiti-Zep; callback RAG (§4.5)"
+    chapter_ref: "§4.5 [for-slide-s22c]"
+    references: [agent-harness-registry]
+    new_in_v4: "новый слайд §4.5"
+
+  - id: s22d
+    file: slides/s22d-memory-failure.md
+    type: case_study
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "«Агент, который помнит» — не всегда лучше: Letta Tier D и даже 17%-й хвост у лучшей системы"
+    learning_goal: "Провал памяти: Letta + Anthropic Memory Tool (§4.6)"
+    chapter_ref: "§4.6 [for-slide-s22d]"
+    references: [agent-harness-registry]
+    new_in_v4: "новый слайд §4.6; freshness-оговорка Letta v0.6.7 vs v0.16.8 на видимом слое"
+
+  - id: s22e
+    file: slides/s22e-operational-layer.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Файл-инструкция агенту — не «магическая прививка»: presence paradox + Honest Lying"
+    learning_goal: "Операционный слой: presence paradox + Honest Lying + claude-code#51735 (§4.7)"
+    chapter_ref: "§4.7 [for-slide-s22e]"
+    references: [gloaguen-2026-presence-paradox, dixit-2026-honest-lying]
+    new_in_v4: "новый слайд §4.7"
+
+  - id: s25
+    file: slides/s25-tool-attacks.md
+    type: case_study
+    section: "Раздел 4. Агенты"
+    duration_min: 3.5
+    assertion: "Skills, subagents, доступ — и граница доверия: инъекция × широкие права = катастрофа"
+    learning_goal: "Skills/subagents/MCP-доступ + ИНТЕГРИРОВАННАЯ безопасность (§4.8)"
+    chapter_ref: "§4.8 [for-slide-s23, s24, s25]"
+    references: [willison-2025-prompt-injection, nyt-v-openai-2025, anthropic-2026-data-retention]
+    changed_in_v4: "NEW/MERGED §4.8; P1 — безопасность GOLD блоком равного веса; GitHub MCP heist + ZDR-факты здесь"
+    verify_day_of: true
+
+  - id: s25b
+    file: slides/s25b-coding-agents.md
+    type: comparison
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Реальные coding-агенты — через рамку экипировки: Claude Code / Aider / Cursor / OpenHands"
+    learning_goal: "Обзор 4 coding-агентов (§4.9); OpenHands = гипотеза на OpenClaw"
+    chapter_ref: "§4.9 [for-slide-s25b]"
+    references: [agent-harness-registry]
+    new_in_v4: "новый слайд §4.9; РОВНО 4 инструмента; OpenClaw hedge = неподтверждённая гипотеза"
+
+  - id: s23
+    file: slides/s23-agent-failures.md
+    type: case_study
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "Агент сжёг $4 200 за 63ч в петле (retry-скрипт решил бы бесплатно); 5×99%≈95%; мульти-агентная хрупкость"
+    learning_goal: "Провалы агентов: петля + reliability compounding + мульти-агентная хрупкость (§4.10)"
+    chapter_ref: "§4.10 [for-slide-s23a]"
+    references: [jain-2026-agent-loop, mindstudio-2025-reliability, cognition-2025-multiagent]
+    changed_in_v4: "#233 — база сравнения retry-скрипта к $4200; #232 — «правильно»→«более подходящая»; 4-й класс (injection) → s25"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Раздел 5. Фреймворк (~16.5 мин)
+  # ─────────────────────────────────────────────────────────────────────
+  - id: s25a
+    file: slides/s25a-section5-divider-framework.md
+    type: section_divider
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 0.3
+    assertion: "Раздел 5 — собрать все архитектуры и их провалы в один инструмент выбора"
+    chapter_ref: "§5 [for-slide-s26]"
+
+  - id: s26
+    file: slides/s26-complexity-ladder.md
+    type: process
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 2
+    assertion: "Лестница сложности: оставайся на нижней ступени, поднимайся только под требование; нижняя — код без ИИ"
+    learning_goal: "Лестница сложности как инструмент (§5.1)"
+    chapter_ref: "§5.1 [for-slide-s26]"
+    subtype: schema_layered
+
+  - id: s27
+    file: slides/s27-decision-matrix.md
+    type: process
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 3
+    assertion: "План решения — маршрут 8 вопросов сверху вниз; детерминированное+верифицируемое → код, СТОП"
+    learning_goal: "Flowchart маршрут выбора + worked example + mini-apply (§5.2)"
+    chapter_ref: "§5.2 [for-slide-s27]"
+    subtype: schema_pipeline
+    changed_in_v4: "ЗАМЕНА 7×7 матрицы на flowchart с да/нет-ветвлениями (§5.2)"
+
+  - id: s27b
+    file: slides/s27b-agent-starter-kit.md
+    type: assertion_visual
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 2
+    assertion: "Стартовый комплект агента — тонкий дефолт + обоснованные триггеры усложнения"
+    learning_goal: "Growth-ladder экипировки (§5.2b); рифма с лестницей и картой 5 слотов"
+    chapter_ref: "§5.2b [for-slide-s27a]"
+    references: [agent-harness-registry]
+    new_in_v4: "новый слайд §5.2b"
+
+  - id: s29
+    file: slides/s29-human-validator-nanda.md
+    type: assertion_visual
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 1.5
+    assertion: "Агент делает — человек проверяет результат и факты; ~95% пилотов без ROI — дело в интеграции"
+    learning_goal: "Человек-валидатор + 3 измерения + урок MIT NANDA (§5.4)"
+    chapter_ref: "§5.4 [for-slide-s29]"
+    references: [mit-nanda-2025]
+    changed_in_v4: "#237 — 3 измерения: степень автономности / область доверия / непрерывный мониторинг"
+    verify_day_of: true
+
+  - id: s30
+    file: slides/s30-bridge-homework-qa.md
+    type: hero_closing
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 1.5
+    assertion: "Дальше — отрасли, начинаем с разработки ПО; эта рамка — база Лекций 4–17"
+    learning_goal: "Мост к Лекции 4 «AI в разработке ПО» + ДЗ Семинар 3; hero-фото"
+    chapter_ref: "§5.5 [for-slide-s30]"
+    hero: "assets/screenshots/s30-coding.jpg (Wikimedia CC-BY-SA), ≥40% площади"
+    changed_in_v4: "#238 — убран recap-заполнитель; тизер Л4 (точное название); hero-фото разработки"
+
+  - id: s31
+    file: slides/s31-qa.md
+    type: qa_minimal
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 5
+    assertion: "Q&A"
+    learning_goal: "Финальный Q&A (стиль Лекции 1); без hero (hero на s30)"
+    chapter_ref: "§5.5 [for-slide-s30]"
+    changed_in_v4: "#239 — стиль dedicated Q&A Лекции 1 («Q&A» + «Спасибо» + контакты)"
+
+# ─── Validation ───
+totals:
+  slides: 40
+  by_section:
+    "Раздел 0. Открытие": [s01, s02, s02a, s03, s04]          # 5
+    "Раздел 1. Промпт": [s04a, s05, s05a, s05b, s06, s08, s08a]  # 7
+    "Раздел 2. RAG": [s09, s10, s11, s12, s13]                # 5
+    "Раздел 3. Fine-tune": [s13a, s13b, s15, s14, s16]        # 5
+    "Раздел 4. Агенты": [s18, s19, s21, s22, s22b, s22c, s22d, s22e, s25, s25b, s23]  # 11
+    "Раздел 5. Фреймворк": [s25a, s26, s27, s27b, s29, s30, s31]  # 7
+  duration_min_total: 88
+  note: >
+    v4 (issue #157): 36→40 слайдов. R0 +1 (lecture-map s02a). R1 +3 (роли s05a,
+    структура s05b, чит-шит s08a) − s07 merged в s06. R3 −1 (s14+s17 merged).
+    R4: 9→11 content (+s22b/s22c/s22d/s22e/s25b, s19 merged API+MCP, s24/s23a
+    убраны, s25 стал skills+security). R5 +1 (s27b starter kit) − s28 (checklist
+    заменён flowchart s27).
+
+ai_failure_judgment:
+  # strict-in слайды (failure / limitation / criterion «не ИИ» / альтернатива)
+  in_bucket_slides: [s01, s05a, s06, s08, s12, s13, s14, s16, s22, s22d, s22e, s23, s25, s27, s29]
+  count: 15
+  share_by_slides: "15/40 ≈ 38% по слайдам"
+  note: >
+    Failure/judgment: Air Canada (s01), миф роли (s05a), unfaithfulness (s06),
+    context rot (s08), когда НЕ RAG (s12), провал RAG+Air Canada (s13),
+    критерии+forgetting (s14/s16), workflow vs agent разумный выбор (s22),
+    провал памяти (s22d), presence paradox (s22e), провалы агентов (s23),
+    безопасность+injection (s25), нижняя плашка «код без ИИ» (s27), NANDA (s29).
+    Curriculum L1-L3 introductory — owner waiver на strict-in ≥30% доступен.
+
+verify_day_of_items:
+  - s06_cot_faithfulness_percentages     # Claude 3.7 ~25% / DeepSeek R1 ~39%
+  - s19_mcp_adoption                      # MCP принятие/масштаб экосистемы
+  - s15_lora_baseline                     # 98.4% LoRA (HF PEFT blog)
+  - s22d_letta_freshness                  # Letta v0.6.7 vs v0.16.8
+  - s25_retention_zdr_boundary            # граница ZDR / retention статус
+  - s25b_stars_counts                     # Aider ~47k / OpenHands ~80k stars
+
+open_questions:
+  - openhands_openclaw: >
+      OpenHands (s25b) помечен как рабочая гипотеза на «OpenClaw» из issue #157.
+      Формулировка hedge взята дословно по смыслу из §4.9 главы. Требует
+      подтверждения владельца курса при показе финального драфта.
+# ─────────────────────────────────────────────────────────────────────────
+# КОНЕЦ PART 3.
+# ─────────────────────────────────────────────────────────────────────────

@@ -1,14 +1,16 @@
 # library/lectures/lec-03/glossary.yaml
 # Glossary LOCK — Лекция 3 «Архитектуры AI-систем: агенты, RAG, API».
 # Сгенерирован оркестратором после USER GATE A (chapter v1.1 finalized, 2026-05-16).
-# Источник канона: plan-v2-final.md §6 + §7 inline-required + chapter v1.1.
+# Обновлён Phase 4 restructure (chapter v2.0, 2026-08-09, issue #157): добавлены
+# skill / subagent / harness / presence paradox (новый §4 «Агенты» на agent-harness-registry).
+# Источник канона: plan-v2-final.md §6 + §7 inline-required + chapter v2.0.
 # Правило: critics MAY flag inconsistency, MAY NOT propose rename без USER approval.
 # consistency-checker сверяет slides/*.md и speech.md по этому файлу (terminology-only mode).
-# Issue: #87.
+# Issue: #87, #157.
 
 lecture: 3
-locked_at: "2026-05-16"
-source: "notes/lecture-3-review/final/plan-v2-final.md §6/§7; chapter v1.1"
+locked_at: "2026-08-09"
+source: "notes/lecture-3-review/final/plan-v2-final.md §6/§7; chapter v2.0 (issue #157 restructure)"
 
 terms:
   - canonical: "архитектура AI-системы"
@@ -95,6 +97,22 @@ terms:
   - canonical: "catastrophic forgetting (катастрофическое забывание)"
     aliases: []
     forbidden: []
+  - canonical: "skill (навык)"
+    aliases: ["skill"]
+    forbidden: []
+    note: "inline-define при первом упоминании (§4.8) — переиспользуемая процедура под повторяющийся класс задач"
+  - canonical: "subagent (под-агент)"
+    aliases: ["subagent", "субагент"]
+    forbidden: []
+    note: "inline-define при первом упоминании (§4.4, разбор §4.8) — делегированный агент с собственным контекстным окном"
+  - canonical: "harness (агентская экипировка)"
+    aliases: ["экипировка агента"]
+    forbidden: []
+    note: "inline-define при первом упоминании (§4.4) — совокупность памяти/инструкций/skills/subagents/MCP-доступа агента; источник термина — agent-harness-registry"
+  - canonical: "presence paradox"
+    aliases: []
+    forbidden: []
+    note: "inline-define при первом упоминании (§4.7) — RCT-термин Gloaguen et al. 2026; наличие файла-инструкции само по себе не даёт значимого прироста успешности задач"
 
 forbidden_anglicisms:
   # speech-writer Англицизм Cleanup Pass: заменять на русское

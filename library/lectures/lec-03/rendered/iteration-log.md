@@ -455,3 +455,150 @@ iter count = 3 (min соблюдён, layout не менялся — текст 
 
 VERDICT v3.1: ACCEPT — точечный s14 dedupe, 0 collateral. Handed to
 orchestrator.
+
+---
+
+## v4.0 (2026-08-09) — полная пересборка под issue #157 (chapter v2.0)
+
+Deck приведён в соответствие переписанной главе v2.0 (~31k слов, 5 частей).
+36 → **40 слайдов**. Toolchain: standalone soffice/pdftoppm/rsvg из
+`/tmp/claude-999/local` (см. notes/mcp-limitations.md [#157-1]; render.sh в
+scratchpad). Все слайды прошли Generate→Convert→Inspect→Fix ≥3 iter где
+изменялись; новые/dense — 3-4 iter.
+
+### Структурные изменения
+- R0: +lecture-map s02a (#212, cover разделён на чистый cover + карту).
+- R1: +s05a (роли, §1.2), +s05b (структура, §1.3), +s08a (чит-шит, §1.8);
+  s06+s07 MERGED (CoT worked-example + faithfulness, #219).
+- R2: s11 без жаргона конъюнкция/дизъюнкция (#221/#222); s12 3-й критерий =
+  live API/MCP, не observability (#223/#224).
+- R3: реордер (определение→PEFT s15→критерии s14→forgetting); s14+s17 MERGED;
+  **P0 #227** дистилляция = «fine-tune teacher + дистилляция student, две
+  отдельные техники», НЕ вид fine-tuning (исправлено в visible + notes);
+  s15 +LoRA baseline 98.4% с обязательной оговоркой (denominator).
+- R4 (11 content): divider «Агенты» без «+безопасность»; s19 MERGED API+MCP;
+  +s22b (экипировка, assertion=headline), +s22c (память), +s22d (провал
+  памяти Letta+Anthropic, freshness-оговорка), +s22e (операц.слой presence
+  paradox), s25 = skills+subagents+access+**безопасность GOLD-блоком равного
+  веса (P1)**, +s25b (4 coding-агента, OpenClaw hedge неподтв.гипотеза);
+  s23 +retry-baseline (#233), «правильно»→«более подходящая» (#232).
+- R5: s27 = flowchart «План решения» (замена 7×7 матрицы, §5.2); +s27b
+  (стартовый комплект, §5.2b); s29 +3 измерения (#237); s30 hero-bridge к
+  Лекции 4 «AI в разработке ПО» (#238); s31 Q&A стиль Лекции 1 (#239).
+
+### Hero images (6-tier §5.7, Tier 2 Wikimedia)
+- s01: Air Canada Boeing 787 (CC-BY-SA), ≥40% площади, attribution visible.
+- s30: разработчик за IDE (CC-BY-SA), ≥40% площади, attribution visible.
+
+### Visual-loop findings & fixes (iter 2)
+- s01: subtitle gap + gold callout height подогнаны.
+- s06: note→heading collision устранён (note в 1 строку).
+- s25: security gold-блок вырос (gh 3.0→3.6) — rule #4 больше не overflow.
+- s25b: OpenHands hedge-note box увеличен под 4 строки.
+- s27: qh/vg сжаты — step-8 line видна без коллизии с gold-плашкой.
+- s30: teal Лекция-4 box увеличен под 3-строчный body.
+- s03 (последним): убран RAG gold-highlight + chip «стоит на эмбеддингах»
+  (#213), gold перенесён на hub; footer упрощён (#214).
+
+### Verification (ENFORCED greps на rendered PPTX visible + speaker_notes)
+- P0 дистилляция(fine-tuning): **0** в обоих слоях.
+- Timing markers: 0 real (единственный хит «23 минус 7» = математика CoT).
+- Methodology/lecturer cues: 0 (хит «контакты преподавателя» на s31 =
+  легитимный placeholder контактов, паттерн Лекции 1).
+- Slide-refs / LO codes / [VERIFY]/[FACT-CHECK] в visible+notes: 0.
+- Internal §-refs в visible body: 0 (остались только cross-lecture Л2 §2/§3/§4).
+- Anti-anglicism: deep_latin_scan — все non-brand токены = glossary_lock термины
+  / paper-author names / case names / established tech (RCT, ReAct, USB-C, CLI,
+  top-k, third-party); avoidable (baseline/budget/ROI/monitoring/scope/callback/
+  learning gap/human-review/revisited) — русифицированы.
+- deck.yaml → 3 части (deck.yaml + deck-part2.yaml + deck-part3.yaml),
+  loader order == builder order (40, asserted).
+
+VERDICT v4.0: ACCEPT — 40 слайдов, 2 real hero, все 20 применимых
+comment-id закрыты, P0 #227 + P1 security/coding-agents/LoRA-baseline закрыты.
+Speaker notes (46 секций, 150-300 слов) написаны book-editor из главы v2.0.
+Передаётся оркестратору для QA-агентов.
+
+---
+
+## v4.1 (2026-08-09) — orchestrator visual-verification pass, 5 overlap fixes
+
+После v4.0 designer-handoff orchestrator восстановил standalone render toolchain
+([#157-1], `/tmp/claude-999/local`) и заново прогнал Convert→Inspect на все
+40 снимков (designer's second fix-pass agent не имел доступа к toolchain и не
+мог визуально проверить свои последние правки — только PPTX text-level greps).
+
+**Найдено 5 real text-overflow/collision дефектов** визуальной инспекцией
+(не поймано self-report предыдущих итераций):
+
+1. **s05b** («Структура промпта») — 2-строчный title (25pt) наезжал на
+   subtitle снизу (title box height не учитывал wrap). Fix: title h=1.30,
+   size=23, subtitle/left-column/right-column сдвинуты вниз + пересчитаны
+   высоты, чтобы уместиться до gold_callout.
+2. **s10** («Принцип RAG — три шага») — card 3 header «Генерация с опорой»
+   (19 симв.) не влезал в узкую box-width на 1 строке, wrap-строка наезжала
+   на tag «grounding». Fix: сокращено до «Генерация» + tag
+   «с опорой (grounding)», ширина title box увеличена.
+3. **s11** («Когда RAG — правильный выбор») — teal-box снизу справа: текст
+   «Один признак…следующем слайде» в узкой box переполнял отведённую
+   высоту, визуально «резался» о нижнюю границу box. Fix: box padding/icon
+   пересчитаны, font 14→12.5pt, text_box height увеличен.
+4. **s13b** («Что такое fine-tuning») — все 3 pipeline-узла: заголовок узла
+   (14pt bold, 1-строчный text_box) при wrap на 2 строки наезжал на subtitle
+   (за 0.02-0.04" ниже). Затронуты все 3 узла («Предобученная модель»,
+   «Ваш датасет», «Дообученные ВЕСА»). Fix: заголовки переведены на explicit
+   2-строчный `\n` формат где нужно, subtitle сдвинут вниз, font 14→13,
+   12→11.5pt.
+5. **s23** («Провалы агентов») — card 1: italic-caption «$4 200 — цена не
+   автоматизации…» (94 симв, 10.5pt) при wrap на 2-3 строки наезжала на
+   следующий bold-блок «Более подходящая архитектура…» (0.04" gap). Fix:
+   все 4 текстовых блока card 1 пересчитаны компактнее (font 10.5→10/11pt,
+   позиции сдвинуты), уместились в chh=4.55 без overflow.
+
+**Re-verification после fix:** full rebuild (`python3 build_v3.py`) →
+soffice convert → pdftoppm 150dpi → все 5 слайдов повторно инспектированы
+PNG-by-PNG — 0 residual overlap. Полный 40-slide sweep повторён для regression
+check на соседних/похожих слайдах (schema pipeline/layered nodes) — чисто.
+
+**Re-run mandatory greps на rebuilt PPTX (visible text_frame, все 40 слайдов):**
+- Timing markers (`[0-9]+\s*мин`, Тайминг, Длительность, ⏱): 0 hits.
+- Methodology/lecturer cues (методическ*, педагогическ*, Лектору, На этом
+  этапе студент): 0 hits.
+- Scaffold leaks (`[VERIFY-DAY-OF]`, LO codes, `§[0-9]`, `→ sNN`, «Вы здесь»):
+  0 hits.
+- Deep latin-token scan (`tools/presentation-build/deep_latin_scan.py`):
+  338 occurrences / 176 unique non-brand tokens — все либо glossary_lock
+  термины (fine-tuning/PEFT/CoT/LoRA/RAG/MCP/forgetting/workflow/subagents/
+  grounding/retrieval/faithfulness), либо brand/product names (Claude Code,
+  Letta, Air Canada, ZDR, MIT), либо established tech phrasing (structured
+  output, function calling, semantic search) — согласуется с glossary_lock
+  из deck.yaml, no avoidable anglicisms found.
+
+**s03 (recap Л2) — финальная сверка (делалась последней, как требовал бриф):**
+рендер (`build_s03` в build_v3.py) уже был financially синхронизирован
+дизайнером (v4.0 commit note: «финальная сверка формулировок — после
+готовности всей деки», gold-highlight и embeddings-chip убраны — #213/#214
+закрыты). Обнаружено расхождение МЕЖДУ orphaned `.md`-источником (устаревший
+черновик с visible `§2`/`§4` cross-refs) и фактическим рендером (чистый,
+0 `§`-ссылок) — сам PPTX корректен, `.md` был просто не обновлён следом за
+build-скриптом. `.md` visible-content секция приведена в соответствие
+фактическому рендеру (frontmatter `chapter_ref` тоже очищен от `§`).
+Speaker notes (parsed live из `.md` в PPTX через `load_notes()`) содержат
+«Лекции 2, раздел 2» текстом (не `§`-нумерацию) — это legitimate
+cross-lecture reference, не запрещённый паттерн.
+
+**Files touched:** `rendered/build_v3.py` (5 функций: build_s05b, build_s10,
+build_s11, build_s13b, build_s23), `rendered/lec-03.pptx` (rebuilt),
+`rendered/lec-03.pdf` + `rendered/snapshots/*.png` (regenerated 40/40),
+`slides/s03-recap-lec2-bridge.md` (doc-sync, no visible-render impact).
+
+VERDICT v4.1: ACCEPT — 40 слайдов, 0 residual overlap defects, 0 timing/
+methodology/scaffold leaks, glossary-consistent anglicism profile. Ready for
+QA-agent pass (presentation-critic / student-simulator / reader-simulator)
+per orchestrator's pipeline, then USER GATE per plan v2 §4 (единая финальная
+сверка).
+
+---
+
+**Продолжение лога (v4.2+) — см. `iteration-log-part2.md`** (файл достиг
+лимита 600 строк, CLAUDE.md § Document Size Limit).

@@ -39,7 +39,7 @@ decks:
     source:
       deck_yaml: ["library/lectures/lec-03/deck.yaml", "library/lectures/lec-03/deck-part2.yaml"]
       slides_dir: "library/lectures/lec-03/slides/"
-      chapter: ["library/lectures/lec-03/chapter.md", "library/lectures/lec-03/chapter-part2.md", "library/lectures/lec-03/chapter-part3.md"]
+      chapter: ["library/lectures/lec-03/chapter.md", "library/lectures/lec-03/chapter-part2.md", "library/lectures/lec-03/chapter-part3.md", "library/lectures/lec-03/chapter-part4.md", "library/lectures/lec-03/chapter-part5.md"]
       glossary: "library/lectures/lec-03/glossary.yaml"
       plan: "notes/lecture-3-review/final/plan-v2-final.md"
     qa_reports:

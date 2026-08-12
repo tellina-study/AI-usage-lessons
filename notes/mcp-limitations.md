@@ -388,7 +388,26 @@ _Пока не обнаружено._
 
 ---
 
-**Last update:** 2026-05-16 (#86 — добавлен [#86] workspace-mcp P0: регрессия aiofile 3.10.0, пин 3.9.0 в .mcp.json).
+**Last update:** 2026-08-11 (#156 — добавлен [#156-1] build_lecNN.py `add_image()` height-only branch bug: silently ignores `h`, embeds native-size picture).
+
+### [#157-1] Render toolchain (libreoffice/pdftoppm/rsvg) отсутствует в PATH — есть standalone bundle в /tmp/claude-999/local
+
+- **Tool:** `libreoffice`/`soffice`, `pdftoppm`, `rsvg-convert`, `fc-list` (весь Visual Loop render toolchain).
+- **Symptom:** `command -v libreoffice/soffice/pdftoppm/rsvg-convert/convert` → MISSING в стандартном PATH. `apt-get install` невозможен (нет passwordless sudo, dpkg lock). `LibreOffice.AppImage` в /tmp/claude-999 запускается в JuNest/proot и **консистентно падает на записи** любого output-файла: `SfxBaseModel::impl_store ... failed: 0xc10 (Error Area:Io Class:Write Code:16)` — независимо от outdir / UserInstallation / TMPDIR. Читает PPTX нормально, но не может записать PDF.
+- **Root cause:** сборочная среда без системного office-стека; AppImage-proot слой не даёт writable output mount.
+- **Severity:** P0 (блокирует Visual Loop — без PNG нет vision-inspection).
+- **Workaround:** есть **standalone native toolchain** в `/tmp/claude-999/local/usr/bin/` (soffice, libreoffice, pdftoppm 24.02, rsvg-convert 2.58, fc-list). Работает при выставленном `LD_LIBRARY_PATH` с program-dir LibreOffice:
+  ```bash
+  export LOPROG=/tmp/claude-999/local/usr/lib/libreoffice/program
+  export PATH="/tmp/claude-999/local/usr/bin:$PATH"
+  export LD_LIBRARY_PATH="$LOPROG:/tmp/claude-999/local/usr/lib:/tmp/claude-999/local/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
+  soffice --headless -env:UserInstallation=file:///tmp/claude-999/loprofile_lec03 \
+    --convert-to pdf --outdir REND REND/lec-03.pptx        # PDF OK
+  pdftoppm -r 150 -png REND/lec-03.pdf SNAP/p               # PNG OK
+  ```
+  Без `LOPROG` в LD_LIBRARY_PATH: `libreglo.so: cannot open shared object file`. Cyrillic рендерится (DejaVu доступен через /usr/share/fonts + local fc-cache). Inter/Arial отсутствуют → build использует fallback (DejaVu Sans через substitution) — визуально приемлемо.
+- **Status:** active (workaround рабочий, проверен end-to-end 2026-08-09).
+- **First seen in:** #157 (lec-03 полная пересборка, 2026-08-09).
 
 ### [#118-1] mmdc / mermaid-cli: missing Chrome browser dependency
 
@@ -416,3 +435,28 @@ _Пока не обнаружено._
 - **Status:** active
 - **First seen in:** #153 (Лекция 1 21-fix polish round, 2026-08-07)
 - **Fork target:** N/A (environment quirk, not an MCP server bug) — worth adding these two `export` lines to a shared onboarding snippet/skill so future sessions don't re-discover this by trial and error.
+
+### [#156-1] Custom `add_image()` helper (build_lecNN.py convention) — height-only call silently ignores `h`
+
+- **Tool:** project-local convention, not upstream python-pptx or MCP — the `add_image(slide, path, x, y, w=None, h=None)` helper defined per-lecture in `library/lectures/lec-NN/rendered/build_lecNN.py` (first seen in `build_lec02.py`, likely copy-pasted across other lecture build scripts too — worth checking).
+- **Symptom:** Calling `add_image(s, path, x=X, y=Y, h=H)` with **only** `h` set (no `w`) silently ignores `h` entirely and embeds the picture at its **native pixel size interpreted at 72dpi** (python-pptx default when the source PNG carries no DPI metadata — true for PNGs produced by `rsvg-convert`). A 900×700px PNG rendered at native size becomes 12.5"×9.72" — many times larger than a typical slide region — overflowing any containing box/motif silently (`add_picture()` doesn't error, it just places an oversized picture).
+- **Root cause:** the helper's `if/elif/else` chain only had branches for `(w and h)` and `(w only)`; the final `else` branch (meant for "neither given, use native size intentionally") also caught the `(h only)` case because there was no dedicated `elif h is not None` branch.
+  ```python
+  # BUGGY (pre-#156):
+  if w is not None and h is not None:
+      add_picture(..., width=Inches(w), height=Inches(h))
+  elif w is not None:
+      add_picture(..., width=Inches(w))
+  else:                              # <-- also matches h-only calls!
+      add_picture(...)               # native size, h silently dropped
+  ```
+- **Severity:** P1 — silent, no exception raised; only visible on PNG inspection (caught during visual-loop iter-1 inspection on lec-02 s01, issue #156). Any prior height-only `add_image(...)` call in any lecture's build script may have this defect unnoticed if the image happened to already be close to native size, or the overflow wasn't checked at 150dpi.
+- **Workaround / fix:** add the missing branch:
+  ```python
+  elif h is not None:
+      slide.shapes.add_picture(str(path), Inches(x), Inches(y), height=Inches(h))
+  ```
+  Fixed directly in `library/lectures/lec-02/rendered/build_lec02.py` (issue #156). **Recommend auditing other `build_lecNN.py` files for the same copy-pasted helper** and applying the same fix, or better: promote a single shared helper module instead of per-lecture copies.
+- **Audit result (2026-08-11):** confirmed via `grep -A20 "^def add_image"` across all `library/lectures/lec-*/rendered/build_lec*.py` — **13 of 14** lecture build scripts still carry the buggy version (lec-01, lec-04 through lec-13, lec-15, lec-17). Only lec-02 is fixed. None of these were in scope for issue #156; flagging for a future dedicated fix/backport pass.
+- **Status:** active (fixed in lec-02's copy only; other 13 lectures' copies not yet checked/patched).
+- **First seen in:** #156 (lec-02 polish pass, s01 hook redesign, 2026-08-11).

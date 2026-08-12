@@ -28,7 +28,7 @@ visual_brief: "Слева — схема туда-обратно: слова →
 - ↓ Embedding lookup
 - `[vec₁, vec₂, vec₃, vec₄]` (векторы из embedding table)
 
-**LLM** (attention + forward pass — следующий раздел)
+**LLM** (внимание + forward pass — следующий раздел)
 
 **Выход (decoder side):**
 - `[vec_out]` (вектор-кандидат)

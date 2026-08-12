@@ -13,5 +13,5 @@
 <circle cx="600" cy="350" r="35" fill="#FFFFFF" opacity="0.4"/>
 <circle cx="220" cy="250" r="32" fill="#FFFFFF" opacity="0.3"/>
 <text x="350" y="40" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#FFFFFF">Метафора: фонарик в тёмной комнате</text>
-<text x="350" y="475" text-anchor="middle" font-family="Arial" font-size="14" font-style="italic" fill="#F4F7FA">луч света = attention; яркость предмета = вес токена</text>
+<text x="350" y="475" text-anchor="middle" font-family="Arial" font-size="14" font-style="italic" fill="#F4F7FA">луч света = внимание; яркость предмета = вес токена</text>
 </svg>

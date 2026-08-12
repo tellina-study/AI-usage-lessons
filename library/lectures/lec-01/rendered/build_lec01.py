@@ -219,6 +219,8 @@ def add_image(slide, path, x, y, w=None, h=None):
                                  width=Inches(w), height=Inches(h))
     elif w is not None:
         slide.shapes.add_picture(str(path), Inches(x), Inches(y), width=Inches(w))
+    elif h is not None:
+        slide.shapes.add_picture(str(path), Inches(x), Inches(y), height=Inches(h))
     else:
         slide.shapes.add_picture(str(path), Inches(x), Inches(y))
 

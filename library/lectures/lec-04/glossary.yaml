@@ -101,6 +101,34 @@ terms:
     aliases: []
     forbidden: []
     note: "из Л3; inline-усиление §3.3 (уровень D)"
+  - canonical: "skill (навык агента)"
+    aliases: ["Anthropic Agent Skills", "SKILL.md"]
+    forbidden: []
+    note: "общее определение — Л3 §4.8; конкретика формата (SKILL.md, project-level/personal) — §2.5, issue #162"
+  - canonical: "субагент (subagent)"
+    aliases: []
+    forbidden: ["саб-агент", "sub-agent (в тексте)"]
+    note: "общее определение — Л3 §4.4/§4.8; SWE-конкретика — §2.4, issue #162"
+  - canonical: "agentic IDE (агентная среда разработки)"
+    aliases: []
+    forbidden: []
+    note: "новый термин §2.4, issue #162; категория инструмента, ортогональная лестнице A→D"
+  - canonical: "CLI-агент (агент командной строки)"
+    aliases: []
+    forbidden: []
+    note: "новый термин §2.4, issue #162"
+  - canonical: "steering-файл (класс AGENTS.md/CLAUDE.md как инженерного артефакта)"
+    aliases: []
+    forbidden: []
+    note: "§2.7, issue #162; не заменяет канонический термин «AGENTS.md / CLAUDE.md» выше, а называет его роль как versioned-артефакта; термин зеркалит терминологию, уже используемую рядом agentic-IDE вендоров (например, AWS Kiro — kiro.dev/docs/steering/), не изобретён для главы"
+  - canonical: "presence paradox (парадокс наличия файла-инструкции)"
+    aliases: []
+    forbidden: []
+    note: "введён в Л3 §4.7; callback в §2.7, issue #162, НЕ переопределять"
+  - canonical: "Honest Lying (закрепление неверного убеждения self-authored памятью)"
+    aliases: []
+    forbidden: []
+    note: "введён в Л3 §4.7; callback в §2.7, issue #162, НЕ переопределять"
 
 forbidden_anglicisms:
   - { wrong: "пайплайн", use: "конвейер" }

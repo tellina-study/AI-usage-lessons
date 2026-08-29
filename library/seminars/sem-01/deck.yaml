@@ -1,0 +1,192 @@
+deck:
+  seminar_number: 1
+  title: "Семинар 1 — знакомство"
+  audience: "студенты 3 курса, направление 09.03.01, группа 1 — семинар идёт до первой лекции курса"
+  duration_min: 77
+  duration_note: "было 76 мин на 20 слайдов; round-4 (editor comments #243–#248, 2026-08-29): +1 слайд «Чат курса в MAX» (s04b, ~1 мин), квиз s18 развёрнут в base + 6 progressive-reveal слайдов (тот же материал, ответы по одному — время не растёт). Round-4b (owner follow-up): слайд-итоги (s19 памятка) ВОССТАНОВЛЕН после reveal-последовательности; на слайд провалов s07 добавлены 6 личных историй преподавателя в notes, категория 6 переименована в «Ответ не под вашу конкретную ситуацию». Итог 27 слайдов; баланс не тронут."
+  render_note: "rendered/sem-01.pptx собран вручную/скриптом (rendered/apply_comments.py поверх ручных правок владельца); build_sem01.py УСТАРЕЛ (19-слайдовая нумерация) и НЕ должен запускаться — см. его header. Source-of-truth: этот deck.yaml + slides/*.md описывают финальный pptx (26 слайдов) задним числом."
+  format: icebreaker
+  central_question: "С чем я прихожу на этот курс — и что изменится к концу курса?"
+  learning_outcomes: []
+  lo_note: "N/A — вводный icebreaker-семинар, не привязан к конкретным LO лекций курса"
+  language: ru
+
+slides:
+  - id: s01
+    file: slides/s01-hero-cover.md
+    type: hero_cover
+    assertion: "Семинар 1 — знакомство"
+    learning_goal: "Emotional hook + hero-иллюстрация: курс охватывает AI во множестве реальных отраслей"
+    visual:
+      pattern: hero_cover_industry_photo_collage
+      backup: assets/screenshots/s01-*.jpg
+
+  - id: s02
+    file: slides/s02-instructor-bio.md
+    type: assertion_visual
+    assertion: "О преподавателе — Левко Максим Николаевич"
+    learning_goal: "Короткая орг-часть знакомства: кто ведёт курс, чем занимается вне преподавания, как связаться"
+    visual:
+      pattern: instructor_bio_card
+
+  - id: s03
+    file: slides/s03-course-roadmap.md
+    type: assertion_visual
+    assertion: "17 лекций × 3 модуля — от основ к разбору AI по отраслям"
+    learning_goal: "Карта семестра (паттерн Лекции 1, s29) — структура отделена от сквозных тем"
+    visual:
+      pattern: 3_modules_17_lectures_timeline_with_today_marker
+
+  - id: s04
+    file: slides/s04-checkpoint-mechanics.md
+    type: process
+    assertion: "Рубежный контроль — тест дома, разбор на семинаре"
+    learning_goal: "Механика РК: где и как проходит тест, что происходит на самом семинаре РК"
+    visual:
+      pattern: two_step_process_home_then_seminar
+
+  # NEW round-4 (comment #245): чат курса в MAX (объявления + материалы по мере появления)
+  - id: s04b
+    file: slides/s04b-max-chat.md
+    type: process
+    assertion: "Чат курса в MAX — всё важное в одном месте"
+    learning_goal: "Орг-часть: где студенты получают объявления и материалы лекций/семинаров по мере появления; QR для вступления в чат"
+    visual:
+      pattern: qr_plus_three_benefit_rows
+      note: "QR-код и рабочая ссылка на чат — placeholder, вставляются владельцем курса"
+
+  - id: s05
+    file: slides/s05-poll-questions.md
+    type: poll_reveal
+    assertion: "Разминка: как вы используете AI?"
+    learning_goal: "Живой разговор (round-4 comment #246: убрана механика рука+YOLO+раунды — просто обсуждаем вслух), референс-карточка 4 вопросов опроса"
+    visual:
+      pattern: poll_discussion_reference_card
+
+  - id: s06
+    file: slides/s06-stats-developers-russia.md
+    type: assertion_visual
+    assertion: "Используют чаще, доверяют меньше — и это не парадокс"
+    learning_goal: "Stack Overflow 2025 + ВЦИОМ; round-4 comment #247: нечитаемые графики заменены крупными цифрами — использование (84%), раскладка по инструментам (ChatGPT 82% / Copilot 68% / Gemini 47% / Claude 41%), доверие (29%); сравнение с аудиторией — устно"
+    visual:
+      pattern: triple_bignumber_usage_tools_trust
+
+  - id: s07
+    file: slides/s07-experience-sharing.md
+    type: assertion_visual
+    assertion: "У кого есть история — помогло или подвело?"
+    learning_goal: "Plenary-scaffold для открытого обмена опытом всей аудиторией"
+    visual:
+      pattern: failure_category_grid
+
+  - id: s08
+    file: slides/s08-calibration-fiction-q.md
+    type: comparison
+    assertion: "Кто автор — художественный текст: AI или человек?"
+    learning_goal: "Калибровка 1/5 — художественный текст, голосование до объяснения"
+    visual:
+      pattern: two_text_voting_cards
+
+  - id: s09
+    file: slides/s09-calibration-fiction-a.md
+    type: assertion_visual
+    assertion: "Текст A — Пелевин, «Generation П». Текст B — AI"
+    learning_goal: "Раскрытие ответа: художественный текст, атрибуция и краткое объяснение"
+    visual:
+      pattern: reveal_two_cards_labeled
+
+  - id: s10
+    file: slides/s10-calibration-technical-q.md
+    type: comparison
+    assertion: "Кто автор — технический текст: AI или человек?"
+    learning_goal: "Калибровка 2/5 — техническая документация, акцент на измеримом выигрыше. A/B round-2: A=AI, B=человек"
+    visual:
+      pattern: two_text_voting_cards
+
+  - id: s11
+    file: slides/s11-calibration-technical-a.md
+    type: assertion_visual
+    assertion: "Текст A — AI, за секунды. Текст B — официальная документация Python"
+    learning_goal: "Раскрытие ответа + позитивная сторона AI: точность и скорость на типовых технических вопросах"
+    visual:
+      pattern: reveal_two_cards_plus_tradeoff
+
+  - id: s12
+    file: slides/s12-calibration-code-q.md
+    type: comparison
+    assertion: "Кто автор — код: AI или человек?"
+    learning_goal: "Калибровка 3/5 — код, акцент на измеримом выигрыше"
+    visual:
+      pattern: two_code_voting_cards
+
+  - id: s13
+    file: slides/s13-calibration-code-a.md
+    type: assertion_visual
+    assertion: "Код A — библиотека requests, 10+ лет в проде. Код B — AI, 10-20 секунд"
+    learning_goal: "Раскрытие ответа + позитивная сторона AI: скорость на типовых задачах, человек — на сложных и уникальных"
+    visual:
+      pattern: reveal_two_code_cards_plus_tradeoff
+
+  - id: s14
+    file: slides/s14-calibration-image-q.md
+    type: comparison
+    assertion: "Кто автор — картина: AI или человек?"
+    learning_goal: "Калибровка 4/5 — изображение, про стиль и восприятие, не про продуктивность. A/B round-2: A=AI, B=человек"
+    visual:
+      pattern: two_image_voting_cards
+
+  - id: s15
+    file: slides/s15-calibration-image-a.md
+    type: assertion_visual
+    assertion: "Изображение B — Хосе Мария Веласко, 1875. AI сгенерирует похожее за секунды"
+    learning_goal: "Раскрытие ответа: реальная картина (Веласко, round-2 замена Шишкина/Савицкого), честное описание AI-альтернативы без выдуманного файла"
+    visual:
+      pattern: reveal_two_image_cards
+
+  - id: s16
+    file: slides/s16-calibration-dataviz-q.md
+    type: comparison
+    assertion: "Кто автор — визуализация данных: AI или человек?"
+    learning_goal: "Калибровка 5/5 — график, акцент на измеримом выигрыше (верификация данных). A/B round-2: A=AI, B=человек"
+    visual:
+      pattern: two_chart_voting_cards
+
+  - id: s17
+    file: slides/s17-calibration-dataviz-a.md
+    type: assertion_visual
+    assertion: "График A — AI, секунды. График B — Our World in Data, недели верификации"
+    learning_goal: "Раскрытие ответа + позитивная сторона AI: решает задачу визуализации за секунды, без вопроса этики (в отличие от картины)"
+    visual:
+      pattern: reveal_two_chart_cards_plus_tradeoff
+
+  # round-4 (comment #248): база-слайд квиза + 6 progressive-reveal копий (s18a..s18f).
+  # На базе ответов нет; на каждой копии подсвечен (GOLD ✓) правильный ответ для
+  # вопросов 1..k накопительно. Правильные ответы: 1 неверно, 2 неверно, 3 верно,
+  # 4 неверно, 5 неверно, 6 неверно. На каждой копии в speaker notes — разбор
+  # соответствующего вопроса.
+  - id: s18
+    file: slides/s18-quickfire-quiz.md
+    type: assertion_visual
+    assertion: "Верно или неверно? Проверим интуицию про AI"
+    learning_goal: "Блиц-квиз на 6 утверждений, голосование до ответа; ответы открываются последовательно на 6 копиях слайда (progressive reveal)"
+    visual:
+      pattern: quiz_statement_list_progressive_reveal
+    reveal_slides: [s18a, s18b, s18c, s18d, s18e, s18f]
+
+  # round-4b (owner follow-up 2026-08-29): слайд-итоги ВОССТАНОВЛЕН — стоит после
+  # всей reveal-последовательности, перед hero-closing.
+  - id: s19
+    file: slides/s19-reality-check-memo.md
+    type: summary
+    assertion: "Памятка «AI reality-check» — 5 пунктов на неделю вперёд"
+    learning_goal: "Итоговые 5 развенчанных заблуждений из квиза, унести с собой"
+    visual:
+      pattern: five_point_memo
+
+  - id: s20
+    file: slides/s20-hero-closing.md
+    type: hero_closing
+    assertion: "От сегодняшнего среза — к системному разбору AI по отраслям"
+    learning_goal: "Bridge к Лекции 1 и остальному курсу; emotional payoff; реальные фото, не иконки"
+    visual:
+      pattern: hero_closing_bridge_photo

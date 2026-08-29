@@ -409,6 +409,42 @@ _Пока не обнаружено._
 - **Status:** active (workaround рабочий, проверен end-to-end 2026-08-09).
 - **First seen in:** #157 (lec-03 полная пересборка, 2026-08-09).
 
+### [#sem01-render-2] python-pptx `Presentation.save()` re-serializes every XML part, including untouched slides — raw byte-diff is NOT a valid "unchanged" check
+
+- **Tool:** `python-pptx` (`Presentation.save()`).
+- **Symptom:** When a script opens a `.pptx`, edits ONE slide (e.g. replaces an
+  image + adds a few text runs on slide 6 only), and saves — a raw `diff`/`cmp`
+  of the extracted slide XML for every OTHER, untouched slide reports a byte
+  difference. Also `_rels/*.xml.rels` files may show relationship entries
+  reordered (same `Id`/`Target` pairs, different sequence in the file).
+- **Root cause:** `python-pptx` re-serializes the entire OPC package tree on
+  `save()` via lxml, which normalizes whitespace, attribute/namespace-prefix
+  ordering, and XML declaration quoting (`'` vs `"`) for every part it touched
+  in memory — which in practice is every part `Presentation()` parsed, not
+  just the ones the script explicitly mutated. This is cosmetic
+  re-serialization, not a content change: canonicalizing both XML trees
+  (`lxml.etree.tostring(tree, method="c14n2")`) and comparing shows byte-for-byte
+  semantic equality for every part the script didn't touch.
+- **Severity:** P2 (verification-workflow gotcha, not a rendering bug — but can
+  cause a false "I broke other slides" panic, or worse, a false-pass if you
+  only trust `diff -q` in the other direction).
+- **Workaround:** When asked to verify "only slide N changed, everything else
+  byte-identical" after any python-pptx round-trip (open→edit→save), do NOT
+  use raw `diff`/`cmp` on the extracted part XML. Instead: (a) extract text via
+  `python-pptx` shape iteration and compare per-slide (catches real content
+  drift), AND (b) canonicalize each XML part with
+  `lxml.etree.tostring(etree.parse(path), method="c14n2")` and compare those
+  byte strings (catches real structural/attribute drift while ignoring
+  serializer-cosmetic reordering). Also diff the file list inside both zips
+  (`find . -type f`) to confirm no parts were unexpectedly added/removed
+  beyond the intended new media files.
+- **Status:** active (by design in python-pptx/lxml; not fixable without
+  avoiding python-pptx round-trips entirely, e.g. raw zip/XML surgery).
+- **First seen in:** sem-01 slide-6 surgical edit (2026-08-08) — owner-provided
+  final PPTX had to be edited on exactly one slide with all 19 others
+  guaranteed untouched; naive `diff -q` on extracted slide XML falsely flagged
+  all 19 other slides as changed.
+
 ### [#118-1] mmdc / mermaid-cli: missing Chrome browser dependency
 
 - **Tool:** `mmdc` (mermaid-cli @mermaid-js/mermaid-cli)
@@ -420,6 +456,65 @@ _Пока не обнаружено._
 - **First seen in:** #118 (lec-09 Phase 6, 2026-05-20)
 - **Fork target:** Install Chrome OR use alternative renderer
 
+### [#sem01-render-1] python-pptx: literal `\n` inside a single text run does not reliably line-break under LibreOffice PDF export
+
+- **Tool:** `python-pptx` (direct script usage, not PowerPoint MCP) + LibreOffice headless PDF export (render toolchain).
+- **Symptom:** A helper (`text_box`) that sets `r.text = "line one\nline two"` on a
+  single run — intending a 2-line label inside a fixed-height box — did not render as
+  2 wrapped lines in the LibreOffice-produced PDF/PNG. The label rendered effectively
+  as one run and, depending on box sizing assumptions made for 2 lines, either got
+  visually clipped or overlapped an adjacent shape positioned assuming the label was
+  taller (2 lines) than it actually rendered.
+- **Root cause:** python-pptx does not interpret `\n` inside `run.text` as an
+  OOXML line-break (`<a:br/>`) — it is written as a literal character in `<a:t>`.
+  Some renderers may collapse/ignore it; LibreOffice's behavior here was inconsistent
+  enough to cause layout bugs when downstream code assumed a hard line break.
+- **Severity:** P2 (silent layout bug — no error, just wrong-looking output; easy to
+  miss without visual snapshot inspection).
+- **Workaround:** Never rely on literal `\n` inside a single run for line breaks.
+  Either (a) call `tf.add_paragraph()` once per intended line (proper OOXML paragraph
+  break, renders reliably), or (b) avoid manual line breaks entirely and size the text
+  box for natural word-wrap at the target font size (what we did — simpler when the
+  label is short enough to auto-wrap acceptably).
+- **Status:** active.
+- **First seen in:** sem-01 seminar deck production (2026-08-06), s05 Deloitte stat-panel
+  labels (iteration 2 → 3, see `library/seminars/sem-01/rendered/iteration-log.md`).
+
+### [#sem03-render-1] `render-env.sh` `$HOME` override breaks `python-pptx` import (user-site-packages)
+
+- **Tool:** bootstrapped render toolchain (`/tmp/claude-999/render-env.sh`) +
+  `python-pptx` (installed under `~/.local/lib/python3.12/site-packages`, not a venv).
+- **Symptom:** Sourcing `render-env.sh` and then running `python3 build_semNN.py`
+  fails with `ModuleNotFoundError: No module named 'pptx'`, even though the exact
+  same `python3` binary (`which python3` unchanged) successfully imports `pptx`
+  when `render-env.sh` has NOT been sourced.
+- **Root cause:** `render-env.sh` sets `export HOME="${RENDER_HOME:-/tmp/claude-999/loffice-home}"`
+  (needed so LibreOffice's first-run profile bootstrap doesn't write into the real
+  home directory). Python's default `sys.path` includes a user-site-packages entry
+  derived from `$HOME` (`~/.local/lib/python3.X/site-packages`) — overriding `$HOME`
+  silently drops the real user-site path from `sys.path`, so anything installed
+  there (here: `python-pptx`, not a system/venv package) becomes unimportable.
+  Confirmed via `python3 -c "import sys; print(sys.path)"` before/after sourcing —
+  the user-site entry is present only when `$HOME` is unmodified.
+- **Severity:** P1 (blocks the entire direct-python-pptx-build workflow if the
+  build script is invoked after sourcing render-env.sh in the same shell).
+- **Workaround:** Never source `render-env.sh` before running the `build_semNN.py` /
+  `build_lecNN.py` script itself. Build the PPTX first with a plain `python3
+  build_semNN.py` (normal `$HOME`, `pptx` importable) — only source
+  `render-env.sh` (or better, let `pptx_to_png.sh` do it internally, which it
+  already does) for the PDF/PNG conversion step. The two steps never need to
+  share a shell environment; running them as two separate `Bash` tool calls
+  (build, then convert) sidesteps the issue entirely and is what actually
+  happened in sem-03 production once the error was diagnosed.
+- **Status:** active.
+- **First seen in:** sem-03 seminar deck production (2026-08-09), first
+  `python3 build_sem03.py` attempt immediately after sourcing render-env.sh for
+  toolchain verification (see `library/seminars/sem-03/rendered/iteration-log.md`).
+- **Fork target:** low priority — workaround is a one-line process change (don't
+  chain the two steps in one sourced shell). Could alternatively fix in
+  `render-env.sh` by additionally exporting `PYTHONPATH` to include the real
+  user-site-packages dir before overriding `$HOME`, but untested and not needed
+  given the trivial workaround.
 ### [#153-1] libreoffice/pdftoppm/rsvg-convert not on default PATH — portable install exists under `/tmp/claude-999/local`
 
 - **Tool:** `libreoffice` (headless PDF export), `pdftoppm` (PDF→PNG), `rsvg-convert` (SVG→PNG icon recolor)

@@ -1,4 +1,7 @@
 ---
+# История: round-4 (comment #248) слайд был удалён; round-4b (owner follow-up
+# 2026-08-29) — ВОССТАНОВЛЕН. Стоит после всей quiz-reveal последовательности,
+# перед hero-closing.
 id: s19
 type: summary
 duration_min: 3

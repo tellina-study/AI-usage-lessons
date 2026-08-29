@@ -2,8 +2,9 @@ deck:
   seminar_number: 1
   title: "Семинар 1 — знакомство"
   audience: "студенты 3 курса, направление 09.03.01, группа 1 — семинар идёт до первой лекции курса"
-  duration_min: 76
-  duration_note: "было 75 мин на 19 слайдов (round-2/round-3); владелец курса вручную добавил слайд s02 «О преподавателе» (~1 мин орг-часть) поверх стандартного pipeline — новый итог 76 мин, +1 мин к оргчасти не ломает баланс ≥30 мин / 40% устного обсуждения (разделы калибровки и обмена опытом не тронуты)"
+  duration_min: 77
+  duration_note: "было 76 мин на 20 слайдов; round-4 (editor comments #243–#248, 2026-08-29): +1 слайд «Чат курса в MAX» (s04b, ~1 мин), квиз s18 развёрнут в base + 6 progressive-reveal слайдов (тот же материал, ответы по одному — время не растёт). Round-4b (owner follow-up): слайд-итоги (s19 памятка) ВОССТАНОВЛЕН после reveal-последовательности; на слайд провалов s07 добавлены 6 личных историй преподавателя в notes, категория 6 переименована в «Ответ не под вашу конкретную ситуацию». Итог 27 слайдов; баланс не тронут."
+  render_note: "rendered/sem-01.pptx собран вручную/скриптом (rendered/apply_comments.py поверх ручных правок владельца); build_sem01.py УСТАРЕЛ (19-слайдовая нумерация) и НЕ должен запускаться — см. его header. Source-of-truth: этот deck.yaml + slides/*.md описывают финальный pptx (26 слайдов) задним числом."
   format: icebreaker
   central_question: "С чем я прихожу на этот курс — и что изменится к концу курса?"
   learning_outcomes: []
@@ -44,21 +45,31 @@ slides:
     visual:
       pattern: two_step_process_home_then_seminar
 
+  # NEW round-4 (comment #245): чат курса в MAX (объявления + материалы по мере появления)
+  - id: s04b
+    file: slides/s04b-max-chat.md
+    type: process
+    assertion: "Чат курса в MAX — всё важное в одном месте"
+    learning_goal: "Орг-часть: где студенты получают объявления и материалы лекций/семинаров по мере появления; QR для вступления в чат"
+    visual:
+      pattern: qr_plus_three_benefit_rows
+      note: "QR-код и рабочая ссылка на чат — placeholder, вставляются владельцем курса"
+
   - id: s05
     file: slides/s05-poll-questions.md
     type: poll_reveal
-    assertion: "Поднимите руку на нужный вариант — камера считает"
-    learning_goal: "Явная механика голосования (рука + YOLO), референс-карточка 4 вопросов опроса"
+    assertion: "Разминка: как вы используете AI?"
+    learning_goal: "Живой разговор (round-4 comment #246: убрана механика рука+YOLO+раунды — просто обсуждаем вслух), референс-карточка 4 вопросов опроса"
     visual:
-      pattern: poll_hand_yolo_reference_card
+      pattern: poll_discussion_reference_card
 
   - id: s06
     file: slides/s06-stats-developers-russia.md
     type: assertion_visual
     assertion: "Используют чаще, доверяют меньше — и это не парадокс"
-    learning_goal: "Stack Overflow 2025 + ВЦИОМ как первые два независимых среза; сравнение с цифрами аудитории озвучивается устно (speaker notes), без отдельных visible live-карточек на слайде"
+    learning_goal: "Stack Overflow 2025 + ВЦИОМ; round-4 comment #247: нечитаемые графики заменены крупными цифрами — использование (84%), раскладка по инструментам (ChatGPT 82% / Copilot 68% / Gemini 47% / Claude 41%), доверие (29%); сравнение с аудиторией — устно"
     visual:
-      pattern: dual_stat_panel_full_height
+      pattern: triple_bignumber_usage_tools_trust
 
   - id: s07
     file: slides/s07-experience-sharing.md
@@ -148,19 +159,27 @@ slides:
     visual:
       pattern: reveal_two_chart_cards_plus_tradeoff
 
+  # round-4 (comment #248): база-слайд квиза + 6 progressive-reveal копий (s18a..s18f).
+  # На базе ответов нет; на каждой копии подсвечен (GOLD ✓) правильный ответ для
+  # вопросов 1..k накопительно. Правильные ответы: 1 неверно, 2 неверно, 3 верно,
+  # 4 неверно, 5 неверно, 6 неверно. На каждой копии в speaker notes — разбор
+  # соответствующего вопроса.
   - id: s18
     file: slides/s18-quickfire-quiz.md
     type: assertion_visual
     assertion: "Верно или неверно? Проверим интуицию про AI"
-    learning_goal: "Блиц-квиз на 6 утверждений (round-2: было 7), голосование до ответа, без спойлер-глосс"
+    learning_goal: "Блиц-квиз на 6 утверждений, голосование до ответа; ответы открываются последовательно на 6 копиях слайда (progressive reveal)"
     visual:
-      pattern: quiz_statement_list
+      pattern: quiz_statement_list_progressive_reveal
+    reveal_slides: [s18a, s18b, s18c, s18d, s18e, s18f]
 
+  # round-4b (owner follow-up 2026-08-29): слайд-итоги ВОССТАНОВЛЕН — стоит после
+  # всей reveal-последовательности, перед hero-closing.
   - id: s19
     file: slides/s19-reality-check-memo.md
     type: summary
     assertion: "Памятка «AI reality-check» — 5 пунктов на неделю вперёд"
-    learning_goal: "Итоговые 5 развенчанных заблуждений из квиза, унести с собой (round-2: единообразные карточки, новый пункт про детерминизм)"
+    learning_goal: "Итоговые 5 развенчанных заблуждений из квиза, унести с собой"
     visual:
       pattern: five_point_memo
 

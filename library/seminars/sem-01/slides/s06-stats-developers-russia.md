@@ -7,9 +7,10 @@ learning_goal: "Stack Overflow 2025 + ВЦИОМ как первые два не
 learning_outcomes: []
 references: [stackoverflow-developer-survey-2025, vciom-neiroseti-2025-2026]
 visual:
-  pattern: dual_stat_panel_full_height
-  primary: "2 полноразмерные Ocean rounded box панели side-by-side (Stack Overflow + ВЦИОМ, с data-labels на барах и методологической строкой N=/дата/погрешность); точечный ручной фикс владельца курса убрал нижнюю живую 4-слотовую полосу опроса, присутствовавшую в round-2"
-  charts: [assets/charts/s06-stackoverflow-v2.png, assets/charts/s06-vciom-v2.png]
+  pattern: triple_bignumber_usage_tools_trust
+  primary: "Round-4 (comment #247): нечитаемые bar-графики убраны, заменены 3 крупноцифровыми Ocean-картами — ИСПОЛЬЗОВАНИЕ (84%, 76%→84%), ЧТО ИСПОЛЬЗУЮТ (ChatGPT 82% / Copilot 68% / Gemini 47% / Claude 41% — мини-бары) и ДОВЕРИЕ (29%, было 40%, 46% не доверяют, 3% полностью). Внизу — gold-strip «Россия · ВЦИОМ 2026»: 78% за год (было 73%), 58% еженедельно (было 51%), 64% верят в пользу. Источники: SO Dev Survey 2025 (N=49 009) + ВЦИОМ."
+  round4_note: "comment #247 — «текст совершенно не читаемый, замени графики на крупные цифры»; свежие данные проверены в интернете (SO 2025/2026: 84% use, 29% trust, tool breakdown; ВЦИОМ 2026)"
+  charts_removed: [assets/charts/s06-stackoverflow-v2.png, assets/charts/s06-vciom-v2.png]
 ---
 
 # Используют чаще, доверяют меньше — и это не парадокс

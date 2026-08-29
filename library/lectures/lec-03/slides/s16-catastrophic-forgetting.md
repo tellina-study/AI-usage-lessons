@@ -6,7 +6,7 @@ duration_min: 2.5
 assertion: "Узкий агрессивный fine-tuning ломает общие способности; без eval-петли и версий датасета — это не риск, а критерий «не делай»"
 learning_goal: "Провал catastrophic forgetting + дисциплина превращает риск в критерий"
 learning_outcomes: [LO7]
-chapter_ref: "§3.3 [for-slide-s16]"
+chapter_ref: "§3.4 [for-slide-s16]"
 visual_brief: "Слева — 2 расходящиеся линии: целевая метрика ↑, общие способности ↓ (незаметно). Подпись «тяжелее с ростом масштаба». Справа — критерий-плашка «нет eval-петли + версий → НЕ делай FT». Gold — слово «незаметно». Footer 12pt italic — источник + framing «исследования показывают»."
 interaction: none
 ---

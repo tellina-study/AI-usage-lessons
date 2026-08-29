@@ -2,7 +2,7 @@
 id: s06
 type: assertion_visual
 duration_min: 1.5
-assertion: "Определений AI много — потому что AI это moving target"
+assertion: "Определений AI много — потому что AI это движущаяся цель"
 learning_goal: "Множественность определений AI + AI Effect как причина"
 learning_outcomes: [LO1]
 references: [russell-norvig-2021, iso-iec-22989-2022, mitchell-1997, mccorduck-2004]
@@ -11,11 +11,11 @@ visual:
   primary: "4 подхода в компактной 2×2 grid + AI Effect callout снизу с цитатой Tesler"
 ---
 
-# Определений AI много — потому что AI это moving target
+# Определений AI много — потому что AI это движущаяся цель
 
 ## Assertion
 
-Определений AI много — потому что AI это moving target.
+Определений AI много — потому что AI это движущаяся цель.
 
 ## Visual
 

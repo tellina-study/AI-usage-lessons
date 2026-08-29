@@ -6,25 +6,28 @@ duration_min: 1.5
 assertion: "Вокруг одного вызова модели надстраиваются 4 обвязки — и одна из них (RAG) стоит прямо на эмбеддингах Лекции 2"
 learning_goal: "Recap Лекции 2 (single-shot + эмбеддинги) + мост к RAG"
 learning_outcomes: [LO7]
-chapter_ref: "§Введение [for-slide-s03]"
-visual_brief: "В центре — «один вызов LLM (single-shot, Лекция 2 §4)» в Ocean rounded box. Вокруг — 4 обвязки: RAG (помечено «= semantic search Лекции 2 §2 + LLM»), function calling, MCP, цикл агента. Стрелка от «эмбеддинги Л2 §2» к RAG-узлу — gold. Sub-caption: детали — Раздел 2."
+chapter_ref: "Введение [for-slide-s03]"
+visual_brief: "Hub & spokes: в центре — «Один вызов LLM» в gold Ocean rounded box (единственный gold-акцент слайда, точка отсчёта). Вокруг — 4 равнозначные обвязки (без per-card gold): RAG, Function calling, MCP, Цикл агента. Footer — что берём готовым из Лекции 2."
 interaction: none
 ---
 
 # Visible content
 
 ## Title bar
-«Что мы переносим из Лекции 2 — и что надстроим»
+«Что мы переносим из Лекции 2 — и что надстроим.»
+
+## Subtitle
+«Вокруг одного вызова модели надстраиваются 4 обвязки. Два готовых блока из Лекции 2 не переобъясняем.»
 
 ## Body
-[В центре — узел в Ocean rounded box]
+[В центре — gold hub в Ocean rounded box]
 
 **Один вызов LLM**
-*single-shot инференс (Лекция 2 §4): один проход, без памяти между вызовами*
+*single-shot инференс из Лекции 2: один проход, без памяти между вызовами*
 
-[Вокруг центра — 4 обвязки-спицы, каждая в Ocean rounded box]
+[Вокруг центра — 4 равнозначные обвязки-спицы, каждая в Ocean rounded box]
 
-**RAG** — *retrieval = semantic search Лекции 2 §2 + LLM сверху*  ← *(стрелка от «эмбеддинги Л2 §2» к этому узлу — gold)*
+**RAG** — внешнее знание в контекст перед ответом
 
 **Function calling** — модель дотягивается до внешних систем
 
@@ -32,8 +35,8 @@ interaction: none
 
 **Цикл агента** — много шагов вокруг одного прохода
 
-[Sub-caption, низ, 12pt italic]
-*RAG = semantic search из Лекции 2 §2 + LLM сверху. Детали — Раздел 2. Single-shot и semantic search не переобъясняем — это готовые блоки.*
+[Footer, низ, 12pt italic]
+*Из Лекции 2 берём готовыми: single-shot инференс и семантический поиск на эмбеддингах (основа RAG). Детали каждой обвязки — дальше по разделам.*
 
 ## Speaker notes
 

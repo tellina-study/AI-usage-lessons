@@ -11,7 +11,7 @@ source: chapter v3.3 + deck v3.4 (36 slides, issue #153 21-fix polish + issue #1
 
 # Lecturer's Speech · Lecture 1 v3.4
 
-**Duration:** 75 minutes (61.5 min of active speech + 13.5 min buffer for Q&A and pace adjustment).
+**Duration:** 75 minutes.
 **Version:** v3.4 (issue #155— Round 2 polish, cross-artifact sync after batch 1 fixes + section-divider audit).
 **Sources for me:** chapter v3.3 (17350 words, source of truth) + deck v3.4 (36 slides).
 
@@ -21,8 +21,8 @@ source: chapter v3.3 + deck v3.4 (36 slides, issue #153 21-fix polish + issue #1
 
 Cross-artifact sync with deck v3.4 after issue #155 Round 2 batch 1 (10 copy fixes + section-divider audit #177). 15 targeted edits + 2 new sections (36 slides instead of 34).
 
-- **** Added section **[s05c]**— new section divider "Section 1— What is AI" before the start of the first content section (0.5 min). Previously section 1 started without an explicit divider right after the lecturer's bio card.
-- **** Added section **[s07a]**— new section divider "Section 2— Where we are now" before the section on the scale of AI and the breakthroughs (0.5 min). Now all 5 content sections of the lecture open with an explicit divider carrying the bridge phrase "Section N of five"— previously dividers appeared only before sections 3/4/5.
+- **** Added section **[s05c]**— new section divider "Section 1— What is AI" before the start of the first content section. Previously section 1 started without an explicit divider right after the lecturer's bio card.
+- **** Added section **[s07a]**— new section divider "Section 2— Where we are now" before the section on the scale of AI and the breakthroughs. Now all 5 content sections of the lecture open with an explicit divider carrying the bridge phrase "Section N of five"— previously dividers appeared only before sections 3/4/5.
 - **[s02]** The lecture title in the line was synced with the slide rename (#171): "Introduction— AI around us" → "What is AI? History, classification, general concepts".
 - **[s02a]** Section title "Lecture map" → "Lecture plan" (#173); mention of block 0 "opening" → "introduction" (#172).
 - **[s05a]** The lecturer's line was fully rewritten for the new bio card (#174): real name and role ("architect, technical and product leader"), 20+ years in IT, 10+ projects, real companies (Yandex, MTS, Magnit, Sibur), Telegram/Email contacts. The old duh-style "who I am and why this matters to me" with the abstract "1 phrase about the role" placeholder was removed.
@@ -49,8 +49,8 @@ Polish Round Pattern— full resync of speech.md with the finalized chapter.md v
 
 - **** Removed sections [s03] and [s04] (icebreaker poll about AI use in Russia)— the poll moved to seminar 1 and no longer appears in the lecture.
 - **** Removed section [s05b] in its old form ("Main question of the course" as a separate slide after the bio card)— the content moved to the new s00b, which now comes **before** the title slide (s02).
-- **** Added section **[s00a]**— a short welcome (~0.5 min) before the title: what the course is, what it is about, what it is not.
-- **** Added section **[s00b]**— the course hook (~1 min): the adoption funnel 100%→10% + the course's main question "not can you, but should you and where". This is now the first substantive statement of the lecture, before the title.
+- **** Added section **[s00a]**— a short welcome before the title: what the course is, what it is about, what it is not.
+- **** Added section **[s00b]**— the course hook: the adoption funnel 100%→10% + the course's main question "not can you, but should you and where". This is now the first substantive statement of the lecture, before the title.
 - **** Added section **[s06a]**— the prehistory of 1943 (McCulloch— Pitts), a fact-bridge between "what is AI" (s06) and the seventy-year timeline (s07): the idea of a neural network is 13 years older than the term "AI" itself.
 - **** Added section **[s29a]**— the grade formula (100 = 10 attendance + 30 exam + 3×20 midterms), right after the semester map.
 - **[s02a]** Rewritten for the new visual— a timeline-roadmap (the same pattern as the semester map s29), rather than section cards jumbled together.
@@ -77,7 +77,7 @@ Point synchronization of speech blocks with the updated slides v3.2 (33 slides, 
 - **** [s07]— removed the repeat of "AI Effect" (it stays in [s06]). Expanded the fragment on Vaswani-2017: 8 co-authors by name, self-attention replaced RNN/LSTM, as of May 2026— more than 160 thousand citations in Google Scholar.
 - **** [s09]— the 4 episodes were rewritten for the new layout of slide v3.2: Mistral 7B → DeepSeek R1 → OpenClaw → Kimi K2.5. Llama-3 and MCP removed. Added: OpenClaw (P. Steinberger, November 2025, >100K★ in a quarter, February 14, 2026— move to OpenAI and a non-profit foundation) and Kimi K2.5 (Moonshot AI, January 2026, swarm mode with 100 sub-agents).
 - **** [s16]— rewritten for the new visual: dialog cycle (USER ↔ Message ↔ LLM ↔ Response ↔ USER + system prompt on top + ⋮ at the bottom), rather than a 6-step linear flow. The same tone: "we remove the magic", two consequences— the lever of the system prompt and the limitation of the context window.
-- **** [s17]— added a production disclaimer (~30 sec): "pure chats are almost never used in production— everywhere there are agents with RAG for long-term memory and search over the corporate knowledge base; the boundary 'chat vs agent' is blurred on the production side".
+- **** [s17]— added a production disclaimer: "pure chats are almost never used in production— everywhere there are agents with RAG for long-term memory and search over the corporate knowledge base; the boundary 'chat vs agent' is blurred on the production side".
 - **** [s19] split— now 2 blocks. [s19] = "Agent at work: 200 PDFs"— 7 numbered steps with an explicit tool at each (file system / PDF reader / extraction / vector DB / search+LLM / Sheets API / orchestrator loop). NEW [s19a] = "Levels of autonomy + Human-in/on/out-of-the-loop"— 5 levels of Feng/McDonald/Zhang 2025 in parallel with 4 frames for including the human in the loop. Total time for the 2 slides— 3 min (was 2.5).
 - **** [s21]— updated the description of the visual for the new layout: Q1 on the left scale (vertically), Q2 on the bottom scale (horizontally)— as axis markers of the quadrant, not as cards on top. Worked examples preserved.
 - **** [s28]— the assignment was simplified: the phrase "defense before the group" was removed, leaving "bring → run through the 2-question quadrant → a one-page analysis in any format".
@@ -709,7 +709,7 @@ Thank you for your attention. See you at the seminar."
 
 ---
 
-## Reserve (~14.5 min)
+## Reserve
 
 If time remains after Q&A— backup stories to add:
 

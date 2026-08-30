@@ -711,3 +711,21 @@ _Пока не обнаружено._
   `library/lectures/lec-04/rendered/render.sh`.
 - **Status:** active (workaround reliable, verified lec-04 v4 40-slide render 2026-08-30).
 - **First seen in:** #170 (lec-04 v4 methodology-first render).
+
+### [#172-1] EN re-render coupling: RU-keyed `NOTES_INLINE` anchors silently drop `[N]` refs on translated notes
+
+- **Tool:** `build_lecNN.py` reference system (inline `[N]` injection into speaker notes) when re-used for a translated (EN) deck.
+- **Symptom:** After translating speaker notes to EN (via `slides-en/`), the `NOTES_INLINE` dict keys are still Russian phrases (e.g. `("Трансформер", "[1]")`, `("границ", "[1] [2] [3]")`). The injector matches `phrase in note_body`; on EN notes those RU phrases never match, so the inline superscript `[N]` markers **silently vanish** — no error, notes just lose their citation anchors. The bottom numbered source list still renders (it's keyed on `SLIDE_REFS`, independent), so the divergence is easy to miss.
+- **Root cause:** the anchor phrases are load-bearing content coupled to note language, but they live in the build script, not in the (translated) md. Duplicating the script for EN does not translate them.
+- **Severity:** P2 (citations degrade, not a hard break). Must translate `NOTES_INLINE` keys to the EN phrase that actually appears in the EN note.
+- **Workaround:** when producing `build_lecNN_en.py`, translate every `NOTES_INLINE` key alongside the visible strings. Confirmed for lec-01 (#172): 21 anchor phrases translated.
+- **Also:** `notes_sources_block` detects the sources heading by literal `startswith("Источники:")` — must become `"Sources:"` for EN, and the EN notes md must use `Sources:` (not `Источники:`) as the in-note heading, or the numbered list won't attach.
+- **First seen in:** #172 (bilingual production calibration, lec-01, 2026-08-30).
+
+### [#172-2] Canonical portable-LibreOffice env wrapper on this host: `source /home/harness/.local/lo-portable-env.sh`
+
+- **Tool:** portable LibreOffice + poppler render toolchain (headless PDF export + `pdftoppm`). Complements [#170-1] / earlier `/tmp/claude-999/local` note.
+- **Symptom:** `libreoffice`/`soffice`/`pdftoppm` are absent from `PATH`; `soffice` fails with `libXinerama.so.1: cannot open shared object file`; there is no passwordless `sudo` to `apt-get install`.
+- **Root cause:** a no-root portable install exists at `/home/harness/.local/{libreoffice-portable,lo-sysroot}` with its own env wrapper; nothing is on `PATH`/`LD_LIBRARY_PATH` by default.
+- **Workaround:** `source /home/harness/.local/lo-portable-env.sh` in the same shell before any convert/raster — it exports `LD_LIBRARY_PATH` (Xinerama etc.), `FONTCONFIG_FILE`, and prepends `$LO_HOME/program` + `$LO_SYSROOT/usr/bin` (gives `soffice` 26.2 + `pdftoppm` 24.02) to `PATH`. Then combine with the [#170-1] isolated-`$HOME`/profile workaround for repeated converts.
+- **First seen in:** #172 (lec-01 EN render, 2026-08-30).

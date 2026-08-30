@@ -35,6 +35,14 @@ from pptx.util import Inches, Pt, Emu
 from lxml import etree
 from PIL import Image
 
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+import refs_lec03 as R  # noqa: E402  (issue #171 reference/page-number system)
+
+# issue #171: footer text capture so ref-slides can fold the caveat into the
+# clickable [N] source list (single bottom band, no overlap).
+_FOOTER_TEXT = {}
+
 # === Palette (LOCKED v3) ===
 DEEP    = RGBColor(0x21, 0x29, 0x5C)
 MID     = RGBColor(0x06, 0x5A, 0x82)
@@ -52,7 +60,12 @@ SOFT_GREY = RGBColor(0xE5, 0xEA, 0xF0)
 # === Constants ===
 SLIDE_W_IN = 13.333
 SLIDE_H_IN = 7.5
-ROOT = Path("/home/harness/harness-projects/256/lessons-3bb49d40/library/lectures/lec-03")
+# issue #171: run from the worktree — read slides/assets/notes + write pptx
+# from THIS repo checkout (slides identical to main). Falls back to main-repo
+# ROOT only if the worktree copy is missing.
+_WT = Path(__file__).resolve().parents[1]      # …/lec-03 in the current checkout
+_MAIN = Path("/home/harness/harness-projects/256/lessons-3bb49d40/library/lectures/lec-03")
+ROOT = _WT if (_WT / "slides").exists() else _MAIN
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts"
@@ -328,9 +341,14 @@ def gold_callout(slide, x, y, w, h, text, *, size=15, bold=True,
 
 
 def footer(slide, text):
-    text_box(slide, x=0.55, y=7.02, w=12.25, h=0.36, text=text,
-             size=12, italic=True, color=LIGHT, align=PP_ALIGN.LEFT,
-             line_spacing=1.0)
+    # issue #171: record the footer so ref-slides can relocate/fold it; still
+    # render normally (post-processing removes it only on ref-slides).
+    _FOOTER_TEXT[id(slide)] = text
+    tb = text_box(slide, x=0.55, y=7.02, w=12.25, h=0.36, text=text,
+                  size=12, italic=True, color=LIGHT, align=PP_ALIGN.LEFT,
+                  line_spacing=1.0)
+    _FOOTER_TEXT.setdefault("_shapes", {})[id(slide)] = tb
+    return tb
 
 
 def icon(slide, name, x, y, size, variant="mid"):
@@ -2374,9 +2392,57 @@ def main():
         build_s25a, build_s26, build_s27, build_s27b, build_s29,
         build_s30, build_s31,
     ]
+    # sid list — MUST match `builders` order 1:1 (display order, 40 slides).
+    sids = [
+        "s01", "s02", "s02a", "s03", "s04",
+        "s04a", "s05", "s05a", "s05b", "s06", "s08", "s08a",
+        "s09", "s10", "s11", "s12", "s13",
+        "s13a", "s13b", "s15", "s14", "s16",
+        "s18", "s19", "s21", "s22", "s22b",
+        "s22c", "s22d", "s22e", "s25", "s25b", "s23",
+        "s25a", "s26", "s27", "s27b", "s29", "s30", "s31",
+    ]
     assert len(builders) == 40, f"expected 40 builders, got {len(builders)}"
-    for b in builders:
+    assert len(sids) == 40, f"expected 40 sids, got {len(sids)}"
+
+    total = len(builders)
+    inject_report = {}
+    for idx, (b, sid) in enumerate(zip(builders, sids)):
         b(p)
+        slide = p.slides[idx]
+        # (1) inject small superscript [N] markers at claim anchors
+        inject_report[sid] = R.inject_ref_markers(slide, sid)
+        # (2) bottom clickable numbered source list (fold any footer caveat in)
+        if sid in R.SLIDE_REFS:
+            ftext = _FOOTER_TEXT.get(id(slide))
+            fshape = _FOOTER_TEXT.get("_shapes", {}).get(id(slide))
+            if fshape is not None:
+                # remove the standalone footer; its words survive as ref tail
+                fshape._element.getparent().remove(fshape._element)
+            # s01 hero: photo + its attribution plate own the left half; keep the
+            # ref line in the RIGHT column, just below the gold-callout text, so
+            # it never collides with the photo caption.
+            if sid == "s01":
+                R.refs_of_slide(slide, sid, y=7.24, x=6.45, w=6.35, tail=ftext)
+            else:
+                R.refs_of_slide(slide, sid, y=7.02, tail=ftext)
+        # (3) speaker notes already carry the «Источники:» block + [N] markers
+        # (baked into slides/*.md by patch_notes.py — single source of truth,
+        # so slide-[N] и notes-[N] не расходятся; builder's speaker_notes(
+        # load_notes(sid)) picks it up). Nothing to do here.
+        # (4) muted page number «N / 40» bottom-right on every slide
+        R.page_number(slide, idx + 1, total)
+
+    # verification print — any anchor that failed to match
+    missed = [(sid, a) for sid, rep in inject_report.items()
+              for (a, ok) in rep if not ok]
+    if missed:
+        print("!! UNMATCHED ANCHORS:")
+        for sid, a in missed:
+            print(f"   {sid}: {a[:70]}")
+    else:
+        print("all ref anchors matched OK")
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     p.save(str(OUT))
     print(f"saved {OUT} — {len(p.slides.__iter__.__self__._sldIdLst)} slides")

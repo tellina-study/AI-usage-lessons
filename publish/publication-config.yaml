@@ -69,6 +69,36 @@ keep:
   - "Академический контент лекции: слайды, комментарии, inline [N]-цитаты, источники"
   - "Кросс-ссылки на другие ЛЕКЦИИ курса (не семинары)"
 
+# ── RU→EN МАППИНГ ФАЙЛОВ (для генератора) ────────────────────────────────────
+# EN выводится из RU по суффиксу. NN = zero-padded номер лекции (01..17; lec-16 нет).
+naming:
+  comments:    { ru: "speech.md",            en: "speech.en.md" }
+  deck_pptx:   { ru: "rendered/lec-NN.pptx", en: "rendered/lec-NN-en.pptx" }
+  deck_pdf:    { ru: "rendered/lec-NN.pdf",  en: "rendered/lec-NN-en.pdf" }
+  deck_yaml:   { ru: "deck.yaml",            en: "deck.en.yaml" }
+  slides_dir:  { ru: "slides/",              en: "slides-en/" }
+
+# ── СЕКЦИИ КОММЕНТАРИЕВ: ЧТО ПУБЛИКОВАТЬ ──────────────────────────────────────
+# ГЛАВНОЕ правило (совпадает с текущим whitelist генератора): публикуются ТОЛЬКО
+# секции с заголовком-якорем [sNN]. Всё прочее (meta/prep) авто-исключается.
+comment_sections:
+  publish_only_slide_sections: true      # заголовок матчит ^#{2,3}\s*\[s\d+[a-z]?\]
+  # Явный blacklist на всякий случай (RU+EN, case-insensitive, по заголовку):
+  exclude_by_header_regex:
+    - "^#+\\s*Подготовка перед лекцией"
+    - "^#+\\s*Pre-?flight checklist"
+    - "^#+\\s*Preparation before"
+    - "^#+\\s*Самооценка"
+    - "^#+\\s*Self-?assessment"
+    - "^#+\\s*Резерв"
+    - "^#+\\s*Reserve"
+    - "^#+\\s*Changelog"
+    - "^#+\\s*Открытые расхождения"
+    - "^#+\\s*Open discrepancies"
+  # Внутри публикуемых [sNN]-секций убрать из отображения сам якорь [sNN]
+  # (он только для маппинга комментарий→слайд).
+  strip_anchor_from_display: true
+
 # ── PER-LECTURE публикационные метаданные ────────────────────────────────────
 lectures:
   lec-01: { slug: what-is-ai,          status: published, order: 1 }

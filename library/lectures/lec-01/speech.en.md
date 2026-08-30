@@ -137,8 +137,6 @@ Full rewrite for the structure of deck v3.1 after 23 edits by the user at USER G
 
 ## [s01]— Real-time identification of people
 
-[I turn on the laptop, the projector shows a live frame from the webcam. On the faces in the room— bounding boxes. The "N people detected" counter updates.]
-
 "Hello. Before I say a single word about AI— look at the projector.
 
 What you see is a laptop. An ordinary laptop. Running on it is a computer vision model. It was trained in twenty twenty-three. It sees you for the first time— there are none of your photos in its training set. And it runs locally. No internet. No cloud. No subscription. No sending data to anyone whatsoever.
@@ -146,8 +144,6 @@ What you see is a laptop. An ordinary laptop. Running on it is a computer vision
 This is AI. Not magic, not a threat, not "the future that will arrive"— but a tool that works right now, on a single laptop, in this room.
 
 This is **narrow AI**. The model solves one task: find people in the frame. Nothing more. It doesn't understand who you are. It doesn't know your names. It draws no conclusions. Just detection of objects of the class "person".
-
-[Backup line, if the demo failed: "The projector had bad luck today— but here's a screenshot of the same demo, run yesterday. See the two rectangles on the faces? That's the result: a model in real time, on a CPU, without the cloud, thirty frames per second."]
 
 Today, over seventy-five minutes, you and I will walk through the main archetypes of AI tools. Not so that you memorize the names— for something else. So that you learn to **tell apart**: where AI works, where it doesn't work, and **how to figure that out in advance**, before you've invested three months of development in it."
 
@@ -181,8 +177,6 @@ This is the first of seventeen lectures of the course. Today— the general map.
 
 ## [s02a]— Lecture plan
 
-[On the slide— a horizontal timeline of 5 color blocks, the same visual pattern as the semester map s29; the current section (0) is highlighted in gold.]
-
 "Briefly— the navigation. Five sections. Right now— the introduction. Next: what is AI; where we are now; four ways to implement— the largest section; and the boundaries of AI."
 
 ---
@@ -202,8 +196,6 @@ Questions outside the lecture— the contacts are on the slide."
 ---
 
 ## [s05c]— Section 1. What is AI
-
-[On the slide— a divider: a large "Section 1", the title "What is AI", the 1-phrase frame "Definitions, history, classification", a roadmap bar at the bottom with the current section highlighted in gold.]
 
 "We've introduced ourselves and stated the main question of the course. This is the first section of five— what is AI.
 
@@ -361,8 +353,6 @@ When discussing each implementation type, you and I will ask: what task and what
 
 ## [s13]— One task, three ways: the control quadrant
 
-[On the slide— a 2×2 quadrant on top, the task on the right. Three points on the diagonal: Model in the bottom-left, Chat in the center, Agent in the top-right (gold), with a short caption under each point.]
-
 "So the layered model isn't just theory, let's run it on one task through three ways of solving it.
 
 The task: extract fields from an incoming PDF contract and put them into a table. Signing date, counterparty, amount, term of validity. Five or six fields. A familiar engineering task.
@@ -387,8 +377,6 @@ Next, you and I will break down each of the four types in more detail: model, ch
 
 ## [s15]— Model: input → preprocessing → model → postprocessing → output
 
-[On the slide— an eyebrow pill "MODEL", on top a schema of 5 blocks horizontally in a common frame "This is already an application", at the bottom 4 examples of models.]
-
 "Let's start with the bottom layer— the model, and from there you and I will climb up, layer by layer.
 
 A model is a trained neural network that takes an input and returns an output. Without state between calls, without tools, without dialogue. From the integration point of view— the simplest component: a model call is a function.
@@ -408,8 +396,6 @@ When it's wrong: a one-off request; a task that requires dialogue; a task that c
 ---
 
 ## [s16]— How a chat works: the dialog cycle
-
-[On the slide— an eyebrow pill "CHAT", a compact dialog-cycle schema: USER on the left in two roles, in the middle Message and Response, on the right a large LLM block, on top the System prompt with a gold arrow down, under the Response a growing history block with the caption "the whole text anew at each step".]
 
 "Let's remove the magic from the chat. At each iteration of the dialogue a compact cycle happens.
 
@@ -451,8 +437,6 @@ The prompt. The minimal formula: **prompt = role + task + context**. In detail�
 
 ## [s18]— Agent architecture: plan, action, observation, reflection
 
-[On the slide— an eyebrow pill "AGENT". A linear ReAct pipeline: Plan → Action → Observation → Reflection, with labeled connectors to the Tools and Memory, a gold loop-back arrow "continue" and a branch "stop → result to user".]
-
 "The agent— the next layer. Compared to the chat, the agent has three new components.
 
 **First— the orchestrator.** It looks at the goal, breaks it into steps, chooses the tool, decides when to stop.
@@ -471,8 +455,6 @@ Lilian Weng's formula: **Agent = LLM + Memory + Planning + Tool Use**. Products 
 
 ## [s19]— Agent at work: 200 PDFs— a sequence of steps
 
-[On the slide— an eyebrow pill "AGENT". On the left the case "200 PDFs", on the right 7 numbered steps indicating the tool at each, gold highlight on step 7 (orchestrator loop).]
-
 "A concrete case. Two hundred PDF reports; from each, extract the date, the counterparty, the amount, and assemble a summary table. A multi-step task with tools. Neither a model fits— there's no such specialized one— nor a chat— it's uncomfortable to copy two hundred files. The agent is the natural choice.
 
 Look at the right part. Seven steps, at each— an explicit tool. The agent doesn't "think" the whole path itself; at each step it decides which tool is needed now.
@@ -484,8 +466,6 @@ Each step is an explicit tool call. This is exactly what an "agent" is: a chat p
 ---
 
 ## [s19a]— Levels of autonomy + human-in/on/out-of-the-loop
-
-[On the slide— an eyebrow pill "AGENT". On the left a staircase of 5 levels with Russian names and an English gloss in parentheses (Operator → Collaborator → Consultant → Approver → Observer; level 5 in gold), on the right 4 frames, at the bottom a gold takeaway.]
 
 "The autonomy level of an agent is an **engineering design decision**, not a property of the model.
 
@@ -552,8 +532,6 @@ Next: where the data goes, hallucinations, bias and sycophancy, AGI forecasts."
 ---
 
 ## [s23]— Consumer vs enterprise: where your data goes
-
-[On the slide— a bridge label at the top under the title, two columns: consumer (data → training) vs corporate (data ≠ training) + Samsung incident + EU AI Act fines.]
 
 "From the general frame of section four— to the first concrete risk that you and I are about to break down. Where does your data physically go when you write a request into a cloud AI service?
 
@@ -650,8 +628,6 @@ Three main takeaways.
 ---
 
 ## [s29]— Semester map: 17 lectures, 3 modules + exam
-
-[On the slide— a horizontal timeline of 4 color blocks: 3 content modules + a separate "Exam" block; the block width is proportional to the number of lectures; gold highlight on the current lecture 1.1; the checkpoints Midterm1/Midterm2/Midterm3 at the module boundaries.]
 
 "The course— seventeen lectures in three content modules, plus a concluding exam. Today you and I are at the first session of the first module.
 

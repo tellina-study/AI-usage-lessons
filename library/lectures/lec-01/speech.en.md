@@ -537,7 +537,7 @@ Two hundred PDFs and a table. Q1: yes— the user sets the task. Q2: yes— open
 
 Thirty seconds— turn to your neighbor. Name an AI tool you've used in the last month. Run it through the two questions. Which corner did you land in?
 
-AI works where the task and the implementation type matched. Most of the rolled-back pilots didn't ask these two questions; they chose the tool by fashion. In seminar one— you apply the quadrant to your own case."
+AI works where the task and the implementation type matched. Most of the rolled-back pilots didn't ask these two questions; they chose the tool by fashion. Apply this quadrant to your own case."
 
 ---
 
@@ -701,11 +701,11 @@ What's good to ask: clarifications on the implementation types; where to place y
 
 Who'll start?
 
-[If there are no questions: "I'll answer the most frequent one. Can you use AI right now? You can. The checklist already gives a tool; in seminar one you'll try it on your own case."]
+I'll answer the most frequent one. Can you use AI right now? You can. The checklist already gives a tool.
 
 If anything remains unclear after the session— my contacts were on the bio card slide at the start of the lecture, feel free to write.
 
-Thank you for your attention. See you at the seminar."
+Thank you for your attention."
 
 ---
 

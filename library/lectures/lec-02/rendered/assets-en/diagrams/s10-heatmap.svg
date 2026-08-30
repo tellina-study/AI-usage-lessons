@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700">
+<rect width="900" height="700" fill="#FFFFFF"/>
+<text x="450.0" y="40" text-anchor="middle" font-family="Arial" font-size="22" font-weight="bold" fill="#21295C">Cosine similarity — 5 sentences</text>
+<text x="450.0" y="65" text-anchor="middle" font-family="Arial" font-size="14" fill="#1C7293" font-style="italic">Cosine = angle between vectors, [0, 1]; closer to 1 = more similar</text>
+<text x="260.0" y="120" text-anchor="middle" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">SSL</text>
+<text x="380.0" y="120" text-anchor="middle" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">HTTPS</text>
+<text x="500.0" y="120" text-anchor="middle" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">React comp.</text>
+<text x="620.0" y="120" text-anchor="middle" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">React app</text>
+<text x="740.0" y="120" text-anchor="middle" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">Borscht</text>
+<text x="190" y="180.0" text-anchor="end" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">SSL</text>
+<rect x="200" y="130" width="118" height="88" fill="#21295C" stroke="#FFFFFF" stroke-width="2"/>
+<text x="259.0" y="180.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">1.00</text>
+<rect x="320" y="130" width="118" height="88" fill="#F0AB00" stroke="#FFFFFF" stroke-width="2"/>
+<text x="379.0" y="180.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">0.85</text>
+<rect x="440" y="130" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="499.0" y="180.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.18</text>
+<rect x="560" y="130" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="619.0" y="180.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.20</text>
+<rect x="680" y="130" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="739.0" y="180.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.08</text>
+<text x="190" y="270.0" text-anchor="end" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">HTTPS</text>
+<rect x="200" y="220" width="118" height="88" fill="#F0AB00" stroke="#FFFFFF" stroke-width="2"/>
+<text x="259.0" y="270.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">0.85</text>
+<rect x="320" y="220" width="118" height="88" fill="#21295C" stroke="#FFFFFF" stroke-width="2"/>
+<text x="379.0" y="270.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">1.00</text>
+<rect x="440" y="220" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="499.0" y="270.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.22</text>
+<rect x="560" y="220" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="619.0" y="270.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.19</text>
+<rect x="680" y="220" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="739.0" y="270.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.07</text>
+<text x="190" y="360.0" text-anchor="end" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">React comp.</text>
+<rect x="200" y="310" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="259.0" y="360.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.18</text>
+<rect x="320" y="310" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="379.0" y="360.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.22</text>
+<rect x="440" y="310" width="118" height="88" fill="#21295C" stroke="#FFFFFF" stroke-width="2"/>
+<text x="499.0" y="360.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">1.00</text>
+<rect x="560" y="310" width="118" height="88" fill="#F0AB00" stroke="#FFFFFF" stroke-width="2"/>
+<text x="619.0" y="360.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">0.78</text>
+<rect x="680" y="310" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="739.0" y="360.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.12</text>
+<text x="190" y="450.0" text-anchor="end" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">React app</text>
+<rect x="200" y="400" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="259.0" y="450.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.20</text>
+<rect x="320" y="400" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="379.0" y="450.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.19</text>
+<rect x="440" y="400" width="118" height="88" fill="#F0AB00" stroke="#FFFFFF" stroke-width="2"/>
+<text x="499.0" y="450.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">0.78</text>
+<rect x="560" y="400" width="118" height="88" fill="#21295C" stroke="#FFFFFF" stroke-width="2"/>
+<text x="619.0" y="450.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">1.00</text>
+<rect x="680" y="400" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="739.0" y="450.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.10</text>
+<text x="190" y="540.0" text-anchor="end" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">Borscht</text>
+<rect x="200" y="490" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="259.0" y="540.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.08</text>
+<rect x="320" y="490" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="379.0" y="540.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.07</text>
+<rect x="440" y="490" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="499.0" y="540.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.12</text>
+<rect x="560" y="490" width="118" height="88" fill="#E3ECF3" stroke="#FFFFFF" stroke-width="2"/>
+<text x="619.0" y="540.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">0.10</text>
+<rect x="680" y="490" width="118" height="88" fill="#21295C" stroke="#FFFFFF" stroke-width="2"/>
+<text x="739.0" y="540.0" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#FFFFFF">1.00</text>
+</svg>

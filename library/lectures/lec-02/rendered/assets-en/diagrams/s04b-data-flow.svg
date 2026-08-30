@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="500" viewBox="0 0 1280 500">
+<rect width="1280" height="500" fill="#FFFFFF"/>
+
+<!-- Title -->
+<text x="640" y="32" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#21295C">Data flow in an LLM: words -> tokens -> vectors -> ... -> words</text>
+<text x="640" y="58" text-anchor="middle" font-family="Arial" font-size="13" fill="#1C7293" font-style="italic">A word exists only at the boundaries. Inside — only vectors.</text>
+
+<!-- 7-stage pipeline, horizontal -->
+<!-- Layout: 7 stages, each ~150px wide, gap ~25px, starting at x=20 -->
+
+<!-- Stage 1: Text input (slate, represents "human") -->
+<rect x="20" y="100" width="155" height="100" rx="12" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5"/>
+<text x="97" y="135" text-anchor="middle" font-family="Arial" font-size="15" font-weight="bold" fill="#21295C">1. Text</text>
+<text x="97" y="160" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-style="italic">"Hello, world"</text>
+<text x="97" y="183" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293">words</text>
+
+<!-- Arrow 1 (points RIGHT: tail left, head right) -->
+<polygon points="180,143 215,143 215,135 240,150 215,165 215,157 180,157" fill="#065A82"/>
+<text x="210" y="118" text-anchor="middle" font-family="Arial" font-size="10" fill="#065A82" font-weight="bold">tokenize</text>
+
+<!-- Stage 2: Tokens (mid blue) -->
+<rect x="245" y="100" width="155" height="100" rx="12" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5"/>
+<text x="322" y="135" text-anchor="middle" font-family="Arial" font-size="15" font-weight="bold" fill="#21295C">2. Tokens</text>
+<text x="322" y="160" text-anchor="middle" font-family="monospace" font-size="11" fill="#21295C">[Hel][lo][,][ world]</text>
+<text x="322" y="183" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293">id from vocabulary</text>
+
+<!-- Arrow 2 (right) -->
+<polygon points="405,143 440,143 440,135 465,150 440,165 440,157 405,157" fill="#065A82"/>
+<text x="435" y="118" text-anchor="middle" font-family="Arial" font-size="10" fill="#065A82" font-weight="bold">embed</text>
+
+<!-- Stage 3: Vectors input -->
+<rect x="470" y="100" width="155" height="100" rx="12" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5"/>
+<text x="547" y="135" text-anchor="middle" font-family="Arial" font-size="15" font-weight="bold" fill="#21295C">3. Vectors in</text>
+<text x="547" y="160" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C">vec₁, vec₂, vec₃, vec₄</text>
+<text x="547" y="183" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293">numeric</text>
+
+<!-- Arrow 3 INTO LLM (right) -->
+<polygon points="630,143 665,143 665,135 690,150 665,165 665,157 630,157" fill="#065A82"/>
+
+<!-- Stage 4: LLM (BIG, GOLD outline, central) -->
+<rect x="695" y="80" width="170" height="140" rx="12" fill="#FEF5E0" stroke="#F0AB00" stroke-width="3"/>
+<text x="780" y="115" text-anchor="middle" font-family="Arial" font-size="17" font-weight="bold" fill="#21295C">4. LLM</text>
+<text x="780" y="143" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C">attention + forward</text>
+<text x="780" y="165" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C" font-style="italic">"thinks" in vectors</text>
+<text x="780" y="195" text-anchor="middle" font-family="Arial" font-size="10" fill="#1C7293">Section 3</text>
+
+<!-- Arrow 4 (right) -->
+<polygon points="870,143 905,143 905,135 930,150 905,165 905,157 870,157" fill="#065A82"/>
+
+<!-- Stage 5: Distribution -->
+<rect x="935" y="100" width="155" height="100" rx="12" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5"/>
+<text x="1012" y="135" text-anchor="middle" font-family="Arial" font-size="15" font-weight="bold" fill="#21295C">5. Distri-</text>
+<text x="1012" y="150" text-anchor="middle" font-family="Arial" font-size="15" font-weight="bold" fill="#21295C">bution</text>
+<text x="1012" y="172" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C">p(token | context)</text>
+<text x="1012" y="190" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293">probabilities</text>
+
+<!-- Arrow 5 (right) -->
+<polygon points="1095,143 1130,143 1130,135 1155,150 1130,165 1130,157 1095,157" fill="#065A82"/>
+<text x="1125" y="118" text-anchor="middle" font-family="Arial" font-size="10" fill="#065A82" font-weight="bold">sample</text>
+
+<!-- Stage 6: Chosen token -->
+<rect x="1160" y="100" width="100" height="100" rx="12" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5"/>
+<text x="1210" y="135" text-anchor="middle" font-family="Arial" font-size="15" font-weight="bold" fill="#21295C">6. Token</text>
+<text x="1210" y="160" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C">[Greet]</text>
+<text x="1210" y="183" text-anchor="middle" font-family="Arial" font-size="10" fill="#1C7293">one is chosen</text>
+
+<!-- Curved arrow back to Stage 7 (Text output) BELOW -->
+<path d="M 1210,210 Q 1210,260 1080,280" stroke="#065A82" stroke-width="2" fill="none"/>
+<polygon points="1080,280 1100,272 1100,288" fill="#065A82"/>
+<text x="1140" y="248" text-anchor="middle" font-family="Arial" font-size="10" fill="#065A82" font-weight="bold">de-tokenize</text>
+
+<!-- Stage 7: Text output -->
+<rect x="925" y="265" width="155" height="100" rx="12" fill="#F4F7FA" stroke="#1C7293" stroke-width="1.5"/>
+<text x="1002" y="300" text-anchor="middle" font-family="Arial" font-size="15" font-weight="bold" fill="#21295C">7. Text</text>
+<text x="1002" y="325" text-anchor="middle" font-family="Arial" font-size="12" fill="#21295C" font-style="italic">"Greetings"</text>
+<text x="1002" y="348" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293">words back</text>
+
+<!-- Bottom annotations: Sections coverage -->
+<rect x="240" y="410" width="170" height="44" rx="6" fill="#FEF5E0" stroke="#F0AB00" stroke-width="1.5"/>
+<text x="325" y="430" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#21295C">Section 1</text>
+<text x="325" y="448" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C">tokenization (2 + 7)</text>
+
+<rect x="470" y="410" width="155" height="44" rx="6" fill="#FEF5E0" stroke="#F0AB00" stroke-width="1.5"/>
+<text x="547" y="430" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#21295C">Section 2</text>
+<text x="547" y="448" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C">embeddings (3)</text>
+
+<rect x="695" y="410" width="170" height="44" rx="6" fill="#FEF5E0" stroke="#F0AB00" stroke-width="1.5"/>
+<text x="780" y="430" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#21295C">Section 3</text>
+<text x="780" y="448" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C">attention (4)</text>
+
+<rect x="900" y="410" width="220" height="44" rx="6" fill="#FEF5E0" stroke="#F0AB00" stroke-width="1.5"/>
+<text x="1010" y="430" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#21295C">Section 4</text>
+<text x="1010" y="448" text-anchor="middle" font-family="Arial" font-size="11" fill="#21295C">sampling (5 + 6)</text>
+
+<!-- Legend caption -->
+<text x="640" y="487" text-anchor="middle" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">Today's lecture — a detailed walk-through of each of the 4 sections</text>
+
+</svg>

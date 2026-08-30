@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+<rect width="500" height="500" fill="#FFFFFF"/>
+
+<!-- Title -->
+<text x="250" y="32" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">5 sentences in a 2D projection</text>
+<text x="250" y="54" text-anchor="middle" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">PCA: 384-dim -> 2D, clusters visualize semantics</text>
+
+<!-- Axes -->
+<line x1="60" y1="430" x2="460" y2="430" stroke="#1C7293" stroke-width="1.5"/>
+<line x1="60" y1="430" x2="60" y2="80" stroke="#1C7293" stroke-width="1.5"/>
+<polygon points="460,430 450,425 450,435" fill="#1C7293"/>
+<polygon points="60,80 55,90 65,90" fill="#1C7293"/>
+<text x="455" y="450" text-anchor="end" font-family="Arial" font-size="11" fill="#1C7293" font-style="italic">PC1</text>
+<text x="50" y="78" text-anchor="end" font-family="Arial" font-size="11" fill="#1C7293" font-style="italic">PC2</text>
+
+<!-- Cluster 1: Security (SSL + HTTPS) — top-left, close together -->
+<!-- SSL -->
+<circle cx="130" cy="170" r="14" fill="#065A82" stroke="#FFFFFF" stroke-width="2.5"/>
+<text x="130" y="174" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">1</text>
+<text x="155" y="160" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">SSL</text>
+<text x="155" y="178" font-family="Arial" font-size="10" fill="#1C7293" font-style="italic">"How to set up SSL"</text>
+
+<!-- HTTPS -->
+<circle cx="170" cy="220" r="14" fill="#065A82" stroke="#FFFFFF" stroke-width="2.5"/>
+<text x="170" y="224" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">2</text>
+<text x="195" y="210" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">HTTPS</text>
+<text x="195" y="228" font-family="Arial" font-size="10" fill="#1C7293" font-style="italic">"HTTPS certificate"</text>
+
+<!-- Connection line 1-2 (close, GOLD) -->
+<line x1="130" y1="170" x2="170" y2="220" stroke="#F0AB00" stroke-width="3" stroke-dasharray="0"/>
+<text x="105" y="260" font-family="Arial" font-size="11" fill="#F0AB00" font-weight="bold">cos ≈ 0.85</text>
+
+<!-- Cluster 2: React (3+4) — middle-right -->
+<!-- React-comp -->
+<circle cx="350" cy="200" r="14" fill="#1C7293" stroke="#FFFFFF" stroke-width="2.5"/>
+<text x="350" y="204" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">3</text>
+<text x="375" y="190" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">React-comp</text>
+<text x="375" y="208" font-family="Arial" font-size="10" fill="#1C7293" font-style="italic">"Deploy React comp."</text>
+
+<!-- React-prilo -->
+<circle cx="370" cy="270" r="14" fill="#1C7293" stroke="#FFFFFF" stroke-width="2.5"/>
+<text x="370" y="274" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">4</text>
+<text x="390" y="260" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">React-app</text>
+<text x="390" y="278" font-family="Arial" font-size="10" fill="#1C7293" font-style="italic">"Build React"</text>
+
+<!-- Connection line 3-4 (close, GOLD) -->
+<line x1="350" y1="200" x2="370" y2="270" stroke="#F0AB00" stroke-width="3"/>
+<text x="320" y="312" font-family="Arial" font-size="11" fill="#F0AB00" font-weight="bold">cos ≈ 0.78</text>
+
+<!-- Cluster 3: Borsch — far bottom-right (isolated) -->
+<circle cx="230" cy="380" r="14" fill="#028090" stroke="#FFFFFF" stroke-width="2.5"/>
+<text x="230" y="384" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">5</text>
+<text x="255" y="372" font-family="Arial" font-size="12" fill="#21295C" font-weight="bold">Borscht</text>
+<text x="255" y="390" font-family="Arial" font-size="10" fill="#1C7293" font-style="italic">"Borscht recipe"</text>
+
+<!-- Dashed lines from Borsch to clusters (far) -->
+<line x1="230" y1="380" x2="150" y2="195" stroke="#A6B5C2" stroke-width="1" stroke-dasharray="5,4"/>
+<line x1="230" y1="380" x2="360" y2="235" stroke="#A6B5C2" stroke-width="1" stroke-dasharray="5,4"/>
+<text x="115" y="320" font-family="Arial" font-size="10" fill="#6B7685" font-style="italic">cos &lt; 0.15</text>
+
+<!-- Cluster labels with rounded rectangles -->
+<rect x="75" y="100" width="140" height="22" rx="11" fill="#F4F7FA" stroke="#065A82" stroke-width="1"/>
+<text x="145" y="116" text-anchor="middle" font-family="Arial" font-size="11" fill="#065A82" font-weight="bold">cluster: security</text>
+
+<rect x="310" y="140" width="120" height="22" rx="11" fill="#F4F7FA" stroke="#1C7293" stroke-width="1"/>
+<text x="370" y="156" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293" font-weight="bold">cluster: React</text>
+
+<rect x="180" y="410" width="115" height="22" rx="11" fill="#F4F7FA" stroke="#028090" stroke-width="1"/>
+<text x="237" y="426" text-anchor="middle" font-family="Arial" font-size="11" fill="#028090" font-weight="bold">cluster: food</text>
+
+<!-- Caption -->
+<text x="250" y="478" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293" font-style="italic">Close points = close meaning. Lines — pairs with cos &gt; 0.7.</text>
+
+</svg>

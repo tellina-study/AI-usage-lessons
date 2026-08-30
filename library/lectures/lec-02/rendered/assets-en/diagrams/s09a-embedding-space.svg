@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="560" viewBox="0 0 640 560">
+<rect width="640" height="560" fill="#FFFFFF"/>
+
+<!-- Title -->
+<text x="320" y="32" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">The embedding space in a 2D projection</text>
+<text x="320" y="54" text-anchor="middle" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">Real dimensionality is 1536-12288; here PCA for intuition</text>
+
+<!-- Axes with semantic labels -->
+<line x1="60" y1="490" x2="600" y2="490" stroke="#1C7293" stroke-width="1.5"/>
+<line x1="60" y1="490" x2="60" y2="80" stroke="#1C7293" stroke-width="1.5"/>
+<polygon points="600,490 590,485 590,495" fill="#1C7293"/>
+<polygon points="60,80 55,90 65,90" fill="#1C7293"/>
+
+<!-- Axis labels -->
+<text x="600" y="512" text-anchor="end" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">dimension 1 (~animate/inanimate)</text>
+<text x="80" y="78" text-anchor="start" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">dimension 2 (~abstract)</text>
+
+<!-- Grid lines (subtle) -->
+<line x1="60" y1="290" x2="600" y2="290" stroke="#E5EAF0" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="330" y1="80" x2="330" y2="490" stroke="#E5EAF0" stroke-width="1" stroke-dasharray="3,3"/>
+
+<!-- Cluster 1: Animals (top-left, "living, concrete") -->
+<g>
+  <circle cx="155" cy="180" r="12" fill="#065A82" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="178" y="184" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">cat</text>
+  <circle cx="120" cy="220" r="12" fill="#065A82" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="100" y="252" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">dog</text>
+  <circle cx="175" cy="240" r="12" fill="#065A82" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="195" y="244" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">tiger</text>
+
+  <ellipse cx="155" cy="215" rx="80" ry="55" fill="none" stroke="#065A82" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <rect x="55" y="105" width="120" height="22" rx="11" fill="#F4F7FA" stroke="#065A82" stroke-width="1"/>
+  <text x="115" y="121" text-anchor="middle" font-family="Arial" font-size="11" fill="#065A82" font-weight="bold">cluster: animals</text>
+</g>
+
+<!-- Cluster 2: Vehicles (middle-right, "non-living, concrete") -->
+<g>
+  <circle cx="430" cy="280" r="12" fill="#1C7293" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="450" y="284" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">car</text>
+  <circle cx="475" cy="320" r="12" fill="#1C7293" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="495" y="324" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">auto</text>
+  <circle cx="420" cy="335" r="12" fill="#1C7293" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="335" y="358" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">motorcycle</text>
+
+  <ellipse cx="450" cy="312" rx="75" ry="50" fill="none" stroke="#1C7293" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <rect x="370" y="210" width="120" height="22" rx="11" fill="#F4F7FA" stroke="#1C7293" stroke-width="1"/>
+  <text x="430" y="226" text-anchor="middle" font-family="Arial" font-size="11" fill="#1C7293" font-weight="bold">cluster: vehicles</text>
+</g>
+
+<!-- Cluster 3: Programming (bottom-right, "non-living, abstract") -->
+<g>
+  <circle cx="395" cy="430" r="12" fill="#028090" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="415" y="434" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">Python</text>
+  <circle cx="475" cy="445" r="12" fill="#028090" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="495" y="449" font-family="Arial" font-size="13" fill="#21295C" font-weight="bold">JavaScript</text>
+
+  <ellipse cx="445" cy="437" rx="80" ry="35" fill="none" stroke="#028090" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <rect x="380" y="380" width="125" height="22" rx="11" fill="#F4F7FA" stroke="#028090" stroke-width="1"/>
+  <text x="442" y="396" text-anchor="middle" font-family="Arial" font-size="11" fill="#028090" font-weight="bold">cluster: prog. languages</text>
+</g>
+
+<!-- Caption -->
+<text x="320" y="540" text-anchor="middle" font-family="Arial" font-size="12" fill="#1C7293" font-style="italic">Coordinates are learned: tokens in similar contexts -> close vectors</text>
+
+</svg>

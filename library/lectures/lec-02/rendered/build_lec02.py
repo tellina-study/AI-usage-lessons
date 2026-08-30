@@ -105,6 +105,7 @@ GOLD_TINT = RGBColor(0xFE, 0xF5, 0xE0)
 TEAL_TINT = RGBColor(0xE6, 0xF2, 0xF4)
 SOFT_GREY = RGBColor(0xE5, 0xEA, 0xF0)
 DARK_GREY = RGBColor(0x4A, 0x55, 0x6B)
+SLATE_PN  = RGBColor(0x5B, 0x66, 0x78)   # page-number muted ink
 
 # === Constants ===
 SLIDE_W_IN = 13.333
@@ -164,6 +165,7 @@ def text_box(slide, x, y, w, h, text, *,
     r.font.name = font; r.font.size = Pt(size)
     r.font.bold = bold; r.font.italic = italic
     r.font.color.rgb = color
+    shrink_refs_in_frame(tf)
     return tb
 
 
@@ -191,6 +193,7 @@ def text_runs(slide, x, y, w, h, runs, *,
         r.font.bold = cfg.get("bold", False)
         r.font.italic = cfg.get("italic", False)
         r.font.color.rgb = cfg.get("color", DEEP)
+    shrink_refs_in_frame(tf)
     return tb
 
 
@@ -309,9 +312,28 @@ def right_arrow(slide, x, y, w=0.6, h=0.4, fill=MID):
 
 
 def speaker_notes(slide, text):
-    notes = slide.notes_slide
-    tf = notes.notes_text_frame
-    tf.text = text
+    """Write notes as readable PARAGRAPHS: blank-line-separated blocks each
+    become one notes-paragraph, single newlines inside a block collapse to
+    spaces. An «Источники:» block keeps its hard line-breaks (one [N] per
+    line). Mirrors lec-04 _helpers.speaker_notes so the notes-PDF renders the
+    source list cleanly."""
+    tf = slide.notes_slide.notes_text_frame
+    tf.clear()
+    blocks = [b.strip() for b in re.split(r'\n\s*\n', text.strip()) if b.strip()]
+    if not blocks:
+        blocks = [""]
+    for i, block in enumerate(blocks):
+        if block.lstrip().startswith("Источники:"):
+            lines = [ln.rstrip() for ln in block.split("\n")]
+            para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+            para.text = lines[0]
+            for ln in lines[1:]:
+                sub = tf.add_paragraph()
+                sub.text = ln
+            continue
+        one = re.sub(r'\s*\n\s*', ' ', block)
+        para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        para.text = one
 
 
 # ============================================================
@@ -327,6 +349,305 @@ def load_notes(slide_id):
     notes = notes_match.group(1).strip() if notes_match else ""
     notes = re.sub(r'\n+---\s*$', '', notes)
     return notes.strip()
+
+
+# ============================================================
+# Reference system (ported from lec-04 _helpers.py) — issue #170:
+# small superscript muted [N] markers at claims + a bottom clickable
+# numbered source list. URLs come ONLY from the Лекция-2 reference registry
+# (notes/research/lecture-2/reference-registry.md). Volatile sources carry
+# [VFY-day-of] in the speaker-notes «Источники:» block only.
+# ============================================================
+URLS = {
+    # --- Канонические первичные статьи (verified 2026-08-30, exact author+title) ---
+    "vaswani": "https://arxiv.org/abs/1706.03762",
+    "sennrich_bpe": "https://arxiv.org/abs/1508.07909",
+    "mikolov_w2v": "https://arxiv.org/abs/1301.3781",
+    "holtzman_topp": "https://arxiv.org/abs/1904.09751",
+    "liu_lost_middle": "https://arxiv.org/abs/2307.03172",
+    "lewis_rag": "https://arxiv.org/abs/2005.11401",
+    "yao_react": "https://arxiv.org/abs/2210.03629",
+    "counting_tok": "https://arxiv.org/abs/2410.19730",
+    # --- Vendor / tooling docs ---
+    "tiktoken": "https://github.com/openai/tiktoken",
+    "openai_embeddings": "https://platform.openai.com/docs/guides/embeddings",
+    "mcp": "https://www.anthropic.com/news/model-context-protocol",
+    "hf_playground": "https://huggingface.co/playground",
+    "mistral_7b": "https://mistral.ai/news/announcing-mistral-7b",
+    # --- Книги / общеучебные ---
+    "pearl_why": "http://bayes.cs.ucla.edu/WHY/",
+}
+
+# SLIDE_REFS entry: (num, short_name, urlkey, gloss[, volatile])
+# gloss = one phrase: what the source says / why authoritative.
+# volatile → «[VFY-day-of]» appended in notes only.
+SLIDE_REFS = {
+    "s06": [
+        ("1", "Sennrich et al. (2016) — NMT of Rare Words / BPE", "sennrich_bpe",
+         "BPE — компромисс: словарь из частых подпоследовательностей, не букв и не слов"),
+    ],
+    "s07": [
+        ("1", "Counting Ability of LLMs & Impact of Tokenization (2024)", "counting_tok",
+         "GPT-4 без калькулятора: 59%/4%/0% на 3-/4-/5-значном умножении — тот же tokenizer-cut механизм",
+         True),
+    ],
+    "s09": [
+        ("1", "OpenAI — Embeddings API", "openai_embeddings",
+         "публичные эмбеддинги: text-embedding-3-small 1536, large 3072 измерения",
+         True),
+        ("2", "Mikolov et al. (2013) — word2vec", "mikolov_w2v",
+         "исторический контекст: геометрическая близость = смысловая близость"),
+    ],
+    "s10": [
+        ("1", "воспроизводимо: all-MiniLM-L6-v2 / text-embedding-3-small",
+         "openai_embeddings",
+         "числа illustrative; cosine близость — статистика употребления, не семантический справочник",
+         True),
+    ],
+    "s12": [
+        ("1", "Lewis et al. (2020) — RAG", "lewis_rag",
+         "эмбеддинг ловит смысл, а не строку: основа semantic search / RAG"),
+    ],
+    "s14": [
+        ("1", "Vaswani et al. (2017) — Attention Is All You Need", "vaswani",
+         "attention выдаёт распределение весов на токены контекста (Σ=1); 32–128 голов на слой"),
+    ],
+    "s16": [
+        ("1", "Anthropic — контекстное окно моделей Claude", "mcp",
+         "рост окна 4k→200k→1M; порядок важнее точной цифры", True),
+    ],
+    "s17": [
+        ("1", "Liu et al. (2023) — Lost in the Middle", "liu_lost_middle",
+         "U-shape: точность проседает в середине окна; важное — в начало/конец промпта"),
+    ],
+    "s19": [
+        ("1", "Holtzman et al. (2019) — nucleus sampling (top-p)", "holtzman_topp",
+         "температура и top-p управляют формой распределения при сэмплинге"),
+    ],
+    "s22": [
+        ("1", "Mistral AI — Mistral 7B", "mistral_7b",
+         "локальные open-weight модели 1–13B vs cloud 200B+", True),
+    ],
+    "s26": [
+        ("1", "Pearl (2018) — The Book of Why", "pearl_why",
+         "attention ловит ассоциацию, не причинность (3 уровня причинной лестницы)"),
+    ],
+    "s27": [
+        ("1", "Hugging Face — Inference Playground", "hf_playground",
+         "домашнее задание: пронаблюдать эффект температуры; fallback Together.ai / Ollama",
+         True),
+    ],
+    "s28": [
+        ("1", "Lewis et al. (2020) — RAG", "lewis_rag",
+         "как AI выходит за пределы чата: retrieval-augmented generation"),
+        ("2", "Anthropic — Model Context Protocol (25 ноя 2024)", "mcp",
+         "открытый стандарт подключения инструментов к LLM"),
+        ("3", "Yao et al. (2022) — ReAct", "yao_react",
+         "agent loop: act → observe → reflect", True),
+    ],
+}
+
+_AMAIN = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
+_REF_RE = re.compile(r'\[\d+(?:\s*[,–—-]\s*\d+)*\]')
+
+
+def _run_props(src_run):
+    f = src_run.font
+    sz = f.size
+    return {
+        "name": f.name,
+        "size_pt": (sz.pt if sz is not None else None),
+        "bold": f.bold,
+        "italic": f.italic,
+        "color": (f.color.rgb if (f.color and f.color.type is not None) else None),
+    }
+
+
+def _clone_run_after(anchor_r, props, text, *, ref=False,
+                     ref_frac=0.52, ref_color=LIGHT):
+    new_r = etree.SubElement(anchor_r.getparent(), _AMAIN + "r")
+    anchor_r.addnext(new_r)
+    rpr = etree.SubElement(new_r, _AMAIN + "rPr")
+    base = props["size_pt"] or 16.0
+    if ref:
+        rpr.set("sz", str(int(round(base * ref_frac * 100))))
+        rpr.set("baseline", "30000")
+        rpr.set("b", "0")
+        rpr.set("i", "1")
+    else:
+        if props["size_pt"] is not None:
+            rpr.set("sz", str(int(round(base * 100))))
+        if props["bold"] is not None:
+            rpr.set("b", "1" if props["bold"] else "0")
+        if props["italic"] is not None:
+            rpr.set("i", "1" if props["italic"] else "0")
+    if props["name"]:
+        for tag in ("latin", "cs", "ea"):
+            el = etree.SubElement(rpr, _AMAIN + tag)
+            el.set("typeface", props["name"])
+    col = ref_color if ref else props["color"]
+    if col is not None:
+        fill = etree.SubElement(rpr, _AMAIN + "solidFill")
+        clr = etree.SubElement(fill, _AMAIN + "srgbClr")
+        clr.set("val", str(col))
+    t = etree.SubElement(new_r, _AMAIN + "t")
+    t.text = text
+    return new_r
+
+
+def shrink_refs_in_frame(text_frame, *, ref_frac=0.52, ref_color=LIGHT):
+    """Split every [N] marker inside the frame into a small superscript muted
+    run. Non-destructive to surrounding text formatting. Applied automatically
+    by text_box / text_runs so baked-in [N] markers shrink without rewriting
+    every call site."""
+    for para in text_frame.paragraphs:
+        for run in list(para.runs):
+            txt = run.text
+            if not txt or "[" not in txt:
+                continue
+            matches = list(_REF_RE.finditer(txt))
+            if not matches:
+                continue
+            props = _run_props(run)
+            run.text = txt[:matches[0].start()]
+            anchor = run._r
+            for i, m in enumerate(matches):
+                anchor = _clone_run_after(anchor, props, m.group(),
+                                          ref=True, ref_frac=ref_frac,
+                                          ref_color=ref_color)
+                nxt = matches[i + 1].start() if i + 1 < len(matches) else len(txt)
+                between = txt[m.end():nxt]
+                if between:
+                    anchor = _clone_run_after(anchor, props, between, ref=False)
+    return text_frame
+
+
+def ref_list(slide, entries, *, y=7.10, x=0.55, w=12.3, h=0.34,
+             size=8.5, color=LIGHT, line_spacing=1.02):
+    """Bottom numbered clickable source list. entries: (num, name, url).
+    Renders «[N] name» where name is a clickable hyperlink. Muted, italic,
+    small — reads as attribution, never a text-wall. Kept to 1 visual line;
+    entries separated by «   ·   »."""
+    tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
+    tf = tb.text_frame
+    tf.margin_left = Inches(0.0); tf.margin_right = Inches(0.0)
+    tf.margin_top = Inches(0.0); tf.margin_bottom = Inches(0.0)
+    tf.word_wrap = True
+    tf.vertical_anchor = MSO_ANCHOR.TOP
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.LEFT
+    p.line_spacing = line_spacing
+    for i, (num, name, url) in enumerate(entries):
+        rm = p.add_run()
+        rm.text = f"[{num}] "
+        rm.font.name = FONT_BODY; rm.font.size = Pt(size)
+        rm.font.bold = True; rm.font.italic = True
+        rm.font.color.rgb = MID
+        rn = p.add_run()
+        rn.text = name
+        rn.font.name = FONT_BODY; rn.font.size = Pt(size)
+        rn.font.italic = True
+        rn.font.color.rgb = color
+        if url:
+            try:
+                rn.hyperlink.address = url
+            except Exception:
+                pass
+        if i < len(entries) - 1:
+            rs = p.add_run()
+            rs.text = "   ·   "
+            rs.font.name = FONT_BODY; rs.font.size = Pt(size)
+            rs.font.italic = True
+            rs.font.color.rgb = color
+    return tb
+
+
+def link_run(paragraph, text, url, *, size=11, color=MID, bold=False,
+             italic=False, font=FONT_BODY):
+    """Add a single clickable run to an existing paragraph."""
+    r = paragraph.add_run()
+    r.text = text
+    r.font.name = font; r.font.size = Pt(size)
+    r.font.bold = bold; r.font.italic = italic
+    r.font.color.rgb = color
+    if url:
+        try:
+            r.hyperlink.address = url
+        except Exception:
+            pass
+    return r
+
+
+def _resolve_refs(sid):
+    out = []
+    for entry in SLIDE_REFS.get(sid, []):
+        num, name, urlkey, gloss = entry[0], entry[1], entry[2], entry[3]
+        volatile = len(entry) > 4 and entry[4]
+        out.append((num, name, URLS.get(urlkey, ""), gloss, volatile))
+    return out
+
+
+def refs_of_slide(slide, sid, *, y=7.12, size=8.5):
+    """Bottom clickable [N] list for a display slide, sourced from SLIDE_REFS.
+    Skips silently if the slide has no registry entry."""
+    resolved = _resolve_refs(sid)
+    if not resolved:
+        return None
+    entries = [(num, name, url) for (num, name, url, gloss, vol) in resolved]
+    sz = size if len(entries) <= 2 else 8.0
+    return ref_list(slide, entries, y=y, size=sz)
+
+
+def notes_sources_block(sid):
+    """Build the «Источники:» block for the speaker notes: numbered [N] +
+    FULL URL + one gloss phrase; volatile → [VFY-day-of]."""
+    resolved = _resolve_refs(sid)
+    if not resolved:
+        return ""
+    lines = ["Источники:"]
+    for (num, name, url, gloss, vol) in resolved:
+        vfy = " [VFY-day-of]" if vol else ""
+        lines.append(f"[{num}] {name} — {gloss}. {url}{vfy}")
+    return "\n".join(lines)
+
+
+def _attach_notes_ref(body, sid):
+    """Tie the visible [N] markers into the notes narrative: if the notes text
+    already names the source in author-year form but has no [N] marker yet,
+    append the numbered «Источники:» block. Notes narratives are already
+    connected — we only add the numbered source list at the end (per task 2)."""
+    block = notes_sources_block(sid)
+    return f"{body}\n\n{block}" if block else body
+
+
+def notes_with_sources(slide, sid):
+    """Write speaker notes (paragraph-formatted) with the «Источники:» block
+    appended. Single call replaces speaker_notes(slide, load_notes(sid))."""
+    speaker_notes(slide, _attach_notes_ref(load_notes(sid), sid))
+
+
+def page_number(slide, n, total=None, *, color=SLATE_PN):
+    """Small muted page-number stamp in the bottom-right corner («N / TOTAL»),
+    10pt italic, so it never overlaps the left-aligned ref-list (x=0.55) nor
+    the roadmap bar. Applied to every slide by main() so all slides carry it
+    without touching per-slide builders."""
+    txt = f"{n} / {total}" if total else str(n)
+    tb = slide.shapes.add_textbox(Inches(12.33), Inches(7.16), Inches(0.95),
+                                  Inches(0.28))
+    tf = tb.text_frame
+    tf.margin_left = Inches(0.0); tf.margin_right = Inches(0.0)
+    tf.margin_top = Inches(0.0); tf.margin_bottom = Inches(0.0)
+    tf.word_wrap = False
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.RIGHT
+    p.line_spacing = 1.0
+    r = p.add_run()
+    r.text = txt
+    r.font.name = FONT_BODY
+    r.font.size = Pt(10)
+    r.font.italic = True
+    r.font.color.rgb = color
+    return tb
 
 
 # ============================================================
@@ -781,7 +1102,7 @@ def build_s06(p):
     slide_title(s, "BPE — компромисс между алфавитом и словарём", size=26)
     # v1.5 explanatory line per user feedback #3
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.62,
-             text="Словарь не из всех слов (как лемматизация) и не из всех букв (как character-level) — а из частых подпоследовательностей.",
+             text="Словарь не из всех слов (как лемматизация) и не из всех букв (как character-level) — а из частых подпоследовательностей.[1]",
              size=15, italic=True, color=MID, line_spacing=1.25)
     # Sub-line 2: original technical detail
     text_box(s, x=0.55, y=2.12, w=12.3, h=0.30,
@@ -829,10 +1150,8 @@ def build_s06(p):
     gold_callout(s, 0.55, 6.4, 12.3, 0.65,
                  "BPE-словарь строится один раз до обучения. В inference — lookup готовых правил, не runtime-вычисление.",
                  size=15)
-    # Footer caption
-    text_box(s, x=0.55, y=7.10, w=12.3, h=0.3,
-             text="Sennrich et al. (2016). Альтернативы: WordPiece (BERT), SentencePiece (Llama 2, T5).",
-             size=12, italic=True, color=LIGHT)
+    # Clickable numbered source list (replaces the plain Sennrich caption)
+    refs_of_slide(s, "s06")
     speaker_notes(s, load_notes("s06"))
 
 
@@ -873,18 +1192,20 @@ def build_s07(p):
         text_box(s, x=rx + 0.25, y=y + 0.55, w=rw - 0.5, h=0.75,
                  text=body, size=14, color=DEEP, line_spacing=1.25)
 
-    # Gold callout — expanded 2-point (letters + numbers), compact
-    gy = 5.95
-    gh = 1.30
+    # Gold callout — expanded 2-point (letters + numbers), compact.
+    # Nudged up slightly (5.95→5.86, 1.30→1.18) to clear the bottom ref-list.
+    gy = 5.86
+    gh = 1.18
     filled_rect(s, 0.55, gy, 12.3, gh, GOLD_TINT, stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.10)
-    text_box(s, x=0.80, y=gy + 0.12, w=11.8, h=0.55,
+    text_box(s, x=0.80, y=gy + 0.10, w=11.8, h=0.50,
              text="Буквы: внешний инструмент (Python, regex) или посимвольный запрос. "
                   "Топ-модели 2026 сами вызывают код вместо одного прохода.",
-             size=14, bold=True, color=DEEP, line_spacing=1.25)
-    text_box(s, x=0.80, y=gy + 0.68, w=11.8, h=0.55,
+             size=14, bold=True, color=DEEP, line_spacing=1.22)
+    text_box(s, x=0.80, y=gy + 0.60, w=11.8, h=0.50,
              text="Числа: тоже режутся непредсказуемо (1234→12+34, но 55688→556+88) → GPT-4: 59% точности на 3-знач. "
-                  "умножении, 4% на 4-знач., 0% на 5-знач. без калькулятора (arXiv 2410.19730).",
-             size=14, bold=True, color=DEEP, line_spacing=1.25)
+                  "умножении, 4% на 4-знач., 0% на 5-знач. без калькулятора.[1]",
+             size=14, bold=True, color=DEEP, line_spacing=1.22)
+    refs_of_slide(s, "s07")
     speaker_notes(s, load_notes("s07"))
 
 
@@ -939,14 +1260,15 @@ def build_s09(p):
     add_image(s, ASSETS / "diagrams/s09-token-to-vector.png",
               x=0.75, y=1.70, w=11.9, h=3.80)
 
-    # Bottom: 2 callouts side-by-side — v1.3 taller (1.55→1.90), bigger fonts
+    # Bottom: 2 callouts side-by-side. Nudged up (5.85→5.68, 1.55→1.42) to
+    # clear the bottom ref-list.
     bw = 6.0
-    by = 5.85
-    bh = 1.55
+    by = 5.68
+    bh = 1.42
     # Left — dimensions
     ocean_box(s, 0.55, by, bw, bh)
     text_box(s, x=0.75, y=by + 0.10, w=bw - 0.4, h=0.45,
-             text="Размерности (ориентир)",
+             text="Размерности (ориентир)[1]",
              size=15, bold=True, color=MID)
     rows_dim = [
         ("text-embedding-3-small", "1536 dim"),
@@ -954,17 +1276,18 @@ def build_s09(p):
         ("Внутренний эмбеддинг flagship LLM", "тысячи dim"),
     ]
     for i, (name, val) in enumerate(rows_dim):
-        y = by + 0.55 + i * 0.32
-        text_box(s, x=0.85, y=y, w=bw * 0.65, h=0.32,
+        y = by + 0.52 + i * 0.28
+        text_box(s, x=0.85, y=y, w=bw * 0.65, h=0.28,
                  text=name, size=13, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=0.85 + bw * 0.62, y=y, w=bw * 0.32, h=0.32,
+        text_box(s, x=0.85 + bw * 0.62, y=y, w=bw * 0.32, h=0.28,
                  text=val, size=13, bold=True, color=TEAL,
                  align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
 
     # Right — gold callout: "близость в пространстве = смысл"
     gold_callout(s, 7.0, by, bw, bh,
-                 "Геометрическая близость векторов = семантическая близость токенов.\n«Кот» близко к «собаке» — выучилось из контекстов корпуса.",
+                 "Геометрическая близость векторов = семантическая близость токенов.[2]\n«Кот» близко к «собаке» — выучилось из контекстов корпуса.",
                  size=15)
+    refs_of_slide(s, "s09")
     speaker_notes(s, load_notes("s09"))
 
 
@@ -992,13 +1315,11 @@ def build_s10(p):
 
     # Gold callout — cosine definition
     gold_callout(s, 0.55, 6.50, 12.3, 0.55,
-                 "Cosine similarity — мера угла между векторами; диапазон [−1, 1], ближе к 1 — более похожи.",
+                 "Cosine similarity — мера угла между векторами; диапазон [−1, 1], ближе к 1 — более похожи. Числа illustrative.[1]",
                  size=14)
 
-    # Footer source caption
-    text_box(s, x=0.55, y=7.15, w=12.3, h=0.30,
-             text="Числа illustrative; воспроизводимы на sentence-transformers/all-MiniLM-L6-v2 (384-dim) или OpenAI text-embedding-3-small (1536-dim).",
-             size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    # Clickable numbered source list (replaces the plain reproducibility caption)
+    refs_of_slide(s, "s10")
     speaker_notes(s, load_notes("s10"))
 
 
@@ -1092,8 +1413,8 @@ def build_s12(p):
          "«клубника» и strawberry → близкие векторы → корректный ответ на любом языке."),
     ]
     cy = ly + 0.60
-    ch = 1.35
-    cgap = 0.12
+    ch = 1.28
+    cgap = 0.10
     for i, (icon, head, body) in enumerate(cards):
         y = cy + i * (ch + cgap)
         ocean_box(s, rx, y, rw, ch, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.2)
@@ -1108,10 +1429,12 @@ def build_s12(p):
         text_box(s, x=rx + 1.05, y=y + 0.55, w=rw - 1.20, h=0.75,
                  text=body, size=12, color=DEEP, line_spacing=1.30)
 
-    # Gold callout snizu
-    gold_callout(s, 0.55, 7.10, 12.3, 0.35,
-                 "Семантическая близость на уровне предложений — основа того, что LLM «понимает» переформулировки.",
+    # Gold callout snizu — nudged up (7.10→6.74) after tightening right cards,
+    # so the bottom ref-list has a clear row.
+    gold_callout(s, 0.55, 6.74, 12.3, 0.35,
+                 "Семантическая близость на уровне предложений — основа того, что LLM «понимает» переформулировки.[1]",
                  size=12)
+    refs_of_slide(s, "s12", y=7.16)
     speaker_notes(s, load_notes("s12"))
 
 
@@ -1151,7 +1474,7 @@ def build_s14(p):
     s = blank(p)
     slide_title(s, "Внимание выдаёт распределение весов на все токены контекста (сумма = 1)", size=24)
     text_box(s, x=0.55, y=1.50, w=12.3, h=0.4,
-             text="Какие токены сейчас важны для предсказания следующего",
+             text="Какие токены сейчас важны для предсказания следующего[1]",
              size=15, italic=True, color=MID)
 
     # Left: bar chart distribution — DOMINANT, занимает большую часть слайда
@@ -1190,10 +1513,11 @@ def build_s14(p):
              text="Метафора:\nфонарик в тёмной\nкомнате — модель\n«подсвечивает» одни\nтокены ярче других.",
              size=11, italic=True, color=DEEP, line_spacing=1.30, anchor=MSO_ANCHOR.MIDDLE)
 
-    # Caption mid-bottom
-    text_box(s, x=0.55, y=7.20, w=12.3, h=0.25,
-             text="Без формул. Multi-head, Q/K/V — доп. чтение (Vaswani et al. 2017).",
+    # Caption mid-bottom — kept (methodological note), refs on a separate row
+    text_box(s, x=0.55, y=6.92, w=12.3, h=0.25,
+             text="Без формул. Multi-head, Q/K/V — дополнительное чтение.",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s14")
     speaker_notes(s, load_notes("s14"))
 
 
@@ -1324,10 +1648,14 @@ def build_s16(p):
              size=44, bold=True, color=WHITE,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
-    # Gold callout
-    gold_callout(s, 0.55, 6.70, 12.3, 0.70,
-                 "Стоимость внимания растёт квадратично от длины. 1M ≈ 16× дороже 100k — production-pricing с batching; чистая N²-теория дала бы 100×.",
-                 size=15)
+    # Gold callout — nudged up (6.70→6.55, 0.70→0.55) to clear the ref-list.
+    # "1M ≈ 16×" here matches the speaker-notes ("в шестнадцать раз дороже") —
+    # visible/notes in sync (P1 s16 resolved: 16× production-pricing, N²-теория
+    # 100× as the caveat, identical in both layers).
+    gold_callout(s, 0.55, 6.55, 12.3, 0.55,
+                 "Стоимость внимания растёт квадратично от длины. 1M ≈ 16× дороже 100k — production-pricing с batching; чистая N²-теория дала бы 100×.[1]",
+                 size=14)
+    refs_of_slide(s, "s16")
     speaker_notes(s, load_notes("s16"))
 
 
@@ -1336,7 +1664,7 @@ def build_s17(p):
     s = blank(p)
     slide_title(s, "Большое контекстное окно ≠ хорошее использование контекста", size=26)
     text_box(s, x=0.55, y=1.45, w=12.3, h=0.4,
-             text="Lost-in-the-middle effect — модель забывает середину",
+             text="Lost-in-the-middle effect — модель забывает середину[1]",
              size=15, italic=True, color=MID)
 
     # U-shape chart
@@ -1375,10 +1703,11 @@ def build_s17(p):
              text="Liu et al. 2023.\nLost in the Middle.",
              size=11, italic=True, color=LIGHT, line_spacing=1.20)
 
-    # Gold callout bottom
-    gold_callout(s, 0.55, 6.70, 12.3, 0.55,
+    # Gold callout bottom — nudged up (6.70→6.56, 0.55→0.50) to clear the ref-list
+    gold_callout(s, 0.55, 6.56, 12.3, 0.50,
                  "Инженерный вывод: важное помещайте в начало или в конец промпта, не в середину.",
-                 size=15)
+                 size=14)
+    refs_of_slide(s, "s17")
     speaker_notes(s, load_notes("s17"))
 
 
@@ -1442,9 +1771,11 @@ def build_s19(p):
              text="T = 0 (argmax)  ·  T = 1.0 (стандарт)  ·  T = 2.0 (хаос)",
              size=18, italic=True, color=MID)
 
-    # 3 distributions side-by-side — v1.3 enlarged (4.55→5.00, chart 2.20→2.55, font 15→16)
-    card_y = 1.90
-    card_h = 5.00
+    # 3 distributions side-by-side. Cards kept near full height (5.00→4.92) so
+    # the middle card's 4-line body still fits; the teal bottom-line + ref-list
+    # are made compact to share the freed bottom strip.
+    card_y = 1.88
+    card_h = 4.92
     card_w = 4.10
     gap = 0.10
     start_x = 0.55
@@ -1474,15 +1805,16 @@ def build_s19(p):
         img = ASSETS / f"charts/{img_name}"
         if img.exists():
             add_image(s, img, x=x + 0.3, y=card_y + 0.85, w=card_w - 0.6, h=2.55)
-        # Body
-        text_box(s, x=x + 0.2, y=card_y + 3.55, w=card_w - 0.4, h=1.40,
-                 text=body, size=16, color=DEEP, italic=True,
-                 align=PP_ALIGN.CENTER, line_spacing=1.35)
+        # Body — 14pt so the middle card's 4-line body fits inside the card
+        text_box(s, x=x + 0.2, y=card_y + 3.40, w=card_w - 0.4, h=1.45,
+                 text=body, size=14, color=DEEP, italic=True,
+                 align=PP_ALIGN.CENTER, line_spacing=1.24)
 
-    # Bottom-line — single teal callout
-    teal_callout(s, 0.55, 7.00, 12.3, 0.40,
-                 "Альтернативные ручки: top-p (nucleus) — отрезает редкие токены по Σ; top-k — по числу кандидатов. Достаточно T для start.",
-                 size=14)
+    # Bottom-line — compact teal callout on the freed bottom strip
+    teal_callout(s, 0.55, 6.86, 12.3, 0.30,
+                 "Альтернативные ручки: top-p (nucleus) — отрезает редкие токены по Σ; top-k — по числу кандидатов. Достаточно T для start.[1]",
+                 size=12)
+    refs_of_slide(s, "s19", y=7.20)
     speaker_notes(s, load_notes("s19"))
 
 
@@ -1622,9 +1954,9 @@ def build_s22(p):
              text="Архитектурно — тот же конвейер. Различия — в размере и среде.",
              size=16, italic=True, color=MID)
 
-    # Two columns — v1.3 taller (4.50→5.20)
+    # Two columns — trimmed 5.20→4.95 to free a bottom row for the ref-list
     col_w = 6.0
-    col_h = 5.20
+    col_h = 4.95
     col_y = 2.00
     left_x = 0.55
     right_x = 6.85
@@ -1638,7 +1970,7 @@ def build_s22(p):
              text="Размер: 1–13B параметров",
              size=16, bold=True, color=DEEP)
     text_box(s, x=left_x + 0.3, y=col_y + 1.35, w=col_w - 0.6, h=1.20,
-             text="• Qwen 2.5 1.5B  · Llama 3.2 1B\n• Llama 3.1 8B  · Mistral 7B",
+             text="• Qwen 2.5 1.5B  · Llama 3.2 1B\n• Llama 3.1 8B  · Mistral 7B[1]",
              size=15, color=DEEP, line_spacing=1.45, font=FONT_MONO)
     local_pts = [
         ("Приватность", "запросы не уходят провайдеру", TEAL),
@@ -1647,7 +1979,7 @@ def build_s22(p):
         ("Цена", "0 за токен (своё железо)", GOLD),
     ]
     for i, (k, v, col) in enumerate(local_pts):
-        py = col_y + 2.85 + i * 0.58
+        py = col_y + 2.80 + i * 0.52
         filled_rect(s, left_x + 0.3, py + 0.16, 0.26, 0.26, col, radius=True, radius_adj=0.5)
         text_box(s, x=left_x + 0.70, y=py, w=col_w * 0.32, h=0.50,
                  text=k, size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
@@ -1672,13 +2004,14 @@ def build_s22(p):
         ("Цена", "оплата за токены, RU ≈ 2× EN", LIGHT),
     ]
     for i, (k, v, col) in enumerate(cloud_pts):
-        py = col_y + 2.85 + i * 0.58
+        py = col_y + 2.80 + i * 0.52
         filled_rect(s, right_x + 0.3, py + 0.16, 0.26, 0.26, col, radius=True, radius_adj=0.5)
         text_box(s, x=right_x + 0.70, y=py, w=col_w * 0.32, h=0.50,
                  text=k, size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
         text_box(s, x=right_x + col_w * 0.45, y=py, w=col_w * 0.55, h=0.50,
                  text=v, size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
+    refs_of_slide(s, "s22")
     speaker_notes(s, load_notes("s22"))
 
 
@@ -1899,10 +2232,9 @@ def build_s26(p):
              text="ИИ считает корреляции в данных, не строит каузальный граф",
              size=16, italic=True, color=MID)
 
-    # 2 columns — v1.8 (#207): grew to fill space freed by removed gold
-    # callout ("Инженерный вывод..." — forbidden §-reference removed).
+    # 2 columns — trimmed 5.65→5.15 to free a bottom row for the ref-list.
     col_w = 6.0
-    col_h = 5.65
+    col_h = 5.15
     col_y = 1.95
     left_x = 0.55
     right_x = 6.85
@@ -1922,10 +2254,10 @@ def build_s26(p):
              text="Модель причинности — строит механизмы.",
              size=18, italic=True, color=DEEP)
 
-    text_box(s, x=left_x + 0.3, y=col_y + 3.40, w=col_w - 0.6, h=2.10,
+    text_box(s, x=left_x + 0.3, y=col_y + 3.35, w=col_w - 0.6, h=1.60,
              text="Опирается на физическую интуицию, доменные знания, знание механизмов мира. "
                   "Для причинных выводов нужен именно этот опыт — не статистика.",
-             size=17, italic=True, color=DEEP, line_spacing=1.32)
+             size=16, italic=True, color=DEEP, line_spacing=1.28)
 
     # AI
     ocean_box(s, right_x, col_y, col_w, col_h)
@@ -1939,14 +2271,15 @@ def build_s26(p):
              size=18, bold=True, italic=True, color=MID,
              font=FONT_MONO, line_spacing=1.25)
     text_box(s, x=right_x + 0.3, y=col_y + 2.45, w=col_w - 0.6, h=0.55,
-             text="Статистическая корреляция, не причинность.",
+             text="Статистическая корреляция, не причинность.[1]",
              size=18, italic=True, color=DEEP)
 
-    text_box(s, x=right_x + 0.3, y=col_y + 3.40, w=col_w - 0.6, h=2.10,
+    text_box(s, x=right_x + 0.3, y=col_y + 3.35, w=col_w - 0.6, h=1.60,
              text="Замечает паттерн «X и Y часто соседствуют» в обучающих данных. "
                   "Для причинных выводов — привлекайте эксперта предметной области или причинные методы.",
-             size=17, italic=True, color=DEEP, line_spacing=1.32)
+             size=16, italic=True, color=DEEP, line_spacing=1.28)
 
+    refs_of_slide(s, "s26")
     speaker_notes(s, load_notes("s26"))
 
 
@@ -2039,12 +2372,13 @@ def build_s28(p):
              text="Все 4 концепции надстраиваются над одним проходом inference",
              size=16, italic=True, color=MID)
 
-    # 2×2 grid — v1.9: raised + tightened to eliminate row-2 overflow (see docstring)
+    # 2×2 grid — trimmed (cell_h 2.68→2.48, gap 0.16→0.14) to free a bottom row
+    # for the clickable ref-list. Row2 bottom = 1.95+2.48+0.14+2.48 = 7.05".
     grid_x = 0.55
     grid_y = 1.95
     cell_w = 6.0
-    cell_h = 2.68
-    gap = 0.16
+    cell_h = 2.48
+    gap = 0.14
 
     # v1.8 (#209): removed unjustified gold highlight on RAG card — all 4
     # concepts are equally weighted (no data-driven reason for RAG alone to
@@ -2052,16 +2386,16 @@ def build_s28(p):
     # across same-tier cards". All 4 now render as plain Ocean rounded box.
     concepts = [
         # (icon, title, sub, body)
-        ("search-check", "RAG",
+        ("search-check", "RAG[1]",
          "Retrieval-Augmented Generation",
          "близость эмбеддингов + LLM → ответ из вашей базы"),
         ("workflow", "Инструменты / Вызов функций",
          "структурированный JSON",
          "LLM генерирует вызов → выполняет внешняя система → результат возвращается"),
-        ("arrow-right-left", "MCP",
+        ("arrow-right-left", "MCP[2]",
          "Model Context Protocol",
          "Открытый стандарт подключения инструментов (Anthropic, 2024)"),
-        ("repeat-2", "Цикл агента",
+        ("repeat-2", "Цикл агента[3]",
          "действуй → наблюдай → корректируй",
          "Модель решает действие, видит результат, корректирует план"),
     ]
@@ -2084,9 +2418,10 @@ def build_s28(p):
         # Body — v1.9 (P0-1): font 16→15pt + box height 1.00→1.28 so bottom-row
         # cards ("...инструментов (Anthropic, 2024)" / "...корректирует план")
         # no longer overflow the card / slide edge.
-        text_box(s, x=x + 0.30, y=y + 1.58, w=cell_w - 0.55, h=1.02,
-                 text=body, size=15, color=DEEP, line_spacing=1.28)
+        text_box(s, x=x + 0.30, y=y + 1.58, w=cell_w - 0.55, h=0.85,
+                 text=body, size=15, color=DEEP, line_spacing=1.24)
 
+    refs_of_slide(s, "s28")
     speaker_notes(s, load_notes("s28"))
 
 
@@ -2385,6 +2720,11 @@ def main():
         except Exception as e:
             print(f"  {slide_ids[i]} FAIL: {type(e).__name__}: {e}")
             raise
+    # Deck-wide page numbers «N / TOTAL» (muted, bottom-right corner) — applied
+    # to every slide after all builders so no per-slide builder needs touching.
+    total = len(builders)
+    for i, slide in enumerate(p.slides):
+        page_number(slide, i + 1, total)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     p.save(str(OUT))
     print(f"\nSaved: {OUT}  ({OUT.stat().st_size // 1024} KB)")

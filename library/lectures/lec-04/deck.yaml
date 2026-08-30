@@ -1,43 +1,50 @@
 # library/lectures/lec-04/deck.yaml  —  PART 1 of 2
 #
-# Deck-структура Лекции 4 «AI в разработке программного обеспечения» (32 слайда).
+# Deck-структура Лекции 4 «AI в жизненном цикле разработки ПО (SDLC)» (41 слайд — v4.1: +слайд-фундамент s05, keystone→s06, дивайдеры без тег-плашек).
 #
-# Source: chapter v1.1 finalized (~22300 слов, 3 части) +
-# plan v2-final (USER GATE 0 approved 2026-05-16, Q1–Q5).
-# Issue #99 · Branch: issue-99-lec-04-software-production
+# Source: chapter v4 methodology-first (~34.5k, 5 частей) +
+# plan v4-methodology-first §4 (послайдовая карта s01–s41 (v4.1: s05 foundations, s06 keystone-цикл).
+# Issue #170 · Branch: hc/lesson4-498d0d8c
 #
-# Slide-IDs s01–s32 нумерация неизменна (cascade-tracking lock, plan §4 +
-# GATE 0 Q4). [Решение #101, 2026-05-17 — owner GATE B] slide-count LOCK=32
-# → 35: добавлены 3 раздела-дивайдера suffix-ID s04a/s24a/s28a (cascade-safe,
-# НЕ renumber: chapter [for-slide-sNN] s01–s32 финализирован GATE A).
-# s01 = METR perception-gap hook (GATE-0 Q1 LOCKED).
+# ┌─ RE-SPINE (v4, owner redirect #264): ось «фазы SDLC» СОХРАНЕНА, но внутри ──┐
+# │ каждой фазы ВЕДЁТ методическая ПРАКТИКА/дисциплина (кто предписывает +      │
+# │ почему + человеко-владеемый артефакт). ИНСТРУМЕНТЫ — компактный ВТОРИЧНЫЙ   │
+# │ блок «чем делают сегодня» с суждением «устойчивый паттерн / хайп[VFY]».     │
+# │ НЕ вендор-каталог. Keystone s06 = цикл ФАЗ лекции (Требования→…→Документация→,           │
+# │ артефактов спека→ADR→план→PR→инцидент). Архитектура переписана (#259):      │
+# │ необходимость + ADR/fitness/C4. Харнес добавлен (#262). TDD-дисциплина      │
+# │ (#263). Синтез-матрица reframed «фаза × практика × человек» (#264).         │
+# │ 7 section-dividers: s08(Р1) s12(Р2) s16(Р3) s22(Р4) s25(Р5) s32(Р6) s35(Р7)│
+# │ Р0 s01–s08 = открытие (s05 сводка практик, s06 keystone-цикл), без дивайдера.                                       │
+# └───────────────────────────────────────────────────────────────────────────┘
 #
 # ┌─ SPLIT: deck.yaml >600 строк (Document Size Limit, waiver НЕТ) → разбит ──┐
 # │ deck.yaml      (ЭТОТ ФАЙЛ) — deck/palette/motif/typography/glossary_lock  │
-# │                + slides s01..s13 вкл. s04a (через конец Раздела 2).       │
-# │ deck-part2.yaml — slides s14..s32 + s24a/s28a + totals + ai_failure +     │
+# │                + ai_failure + slides s01..s21 (через конец Раздела 3).    │
+# │ deck-part2.yaml — slides s22..s40 + totals + ai_failure_judgment +        │
 # │                verify_day_of_items + fact_check_items.                    │
 # │ Loader (rendered build-скрипт) читает ОБЕ части. Кросс-ссылка внизу.      │
 # └────────────────────────────────────────────────────────────────────────┘
 #
-# Phase 5 (структура): deck.yaml + slides/*.md из finalized главы; рендер PPTX —
-# следующая фаза. Speaker-notes маркеры [for-slide-sNN] s01–s32 в chapter*.
+# Phase 5 (структура): deck.yaml + slides/*.md из finalized главы v4; рендер PPTX —
+# Phase 6 (следующая фаза). Speaker-notes маркеры [for-slide-sNN] в chapter* (v4.1 сдвиг +1 от s06).
 
 deck:
   lecture_number: 4
-  title: "Лекция 4. AI в разработке программного обеспечения"
+  title: "Лекция 4. AI в жизненном цикле разработки ПО (SDLC)"
   audience: "3 курс ИУ6, инженеры-разработчики (универсально, без локального binding в контенте)"
   duration_min: 75
-  central_question: "AI пишет код всё лучше — где он реально ускоряет, где замедляет или вредит, и что в работе инженера НЕ делегируется?"
+  central_question: "AI пишет код всё лучше — но что делает AI-разработку надёжной? Не инструмент, а инженерная дисциплина по фазам SDLC: какой человеко-владеемый артефакт и какая проверка нужны на каждой фазе, где методики разных игроков сходятся — и что не делегируется инструменту ни в одной фазе?"
   learning_outcomes: [LO1, LO4, LO7]
   language: ru
-  status: finalized
-  version: v3.4
-  source: chapter v1.3 finalized (~23700 слов, 3 части)
-  plan: notes/lecture-4-software-review/final/plan-v2-final.md (v2-final §4)
-  total_slides: 36          # 32 (s01–s32 нумерация неизменна) + 4 suffix-ID: 3 дивайдера s04a/s24a/s28a (#101) + s22a curl-slop (#103)
-  curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3)"
+  status: draft-for-gate-b
+  version: v4.0
+  source: "chapter v4 methodology-first (~34.5k, 5 частей)"
+  plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
+  total_slides: 41          # v4.1: s01–s41; 7 section-dividers s09/s13/s17/s23/s26/s33/s36 (сдвиг +1); s05 foundations, s06 keystone
+  curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3); L4 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
+  axis: "методико-first: фаза SDLC × ведущая практика (методика: артефакт + кто предписывает + почему); инструмент — вторичная иллюстрация"
 
 palette:
   primary_deep: "#21295C"      # Ocean deep — text on light bg, assertions
@@ -71,286 +78,346 @@ typography:
     mega_stat: 80
 
 glossary_lock:
-  # Канонические термины — из glossary.yaml (locked 2026-05-16, chapter v1.1).
+  # Канонические термины — из glossary.yaml (locked chapter v1.1, синхронизировано с re-spine v4).
   # designer/critic enforce no drift; alias только 1× при первом упоминании.
   # forbidden_anglicisms: пайплайн→конвейер, фоллбэк→запасной вариант,
-  # эдж-кейс→краевой случай, инсайт→вывод/наблюдение.
-  - "лестница автономности (A автодополнение / B мелкие задачи / C кодинг-агент / D оркестратор+трекер)"
+  # эдж-кейс→краевой случай, инсайт→вывод/наблюдение, деплой→развёртывание.
+  - "фаза SDLC (стадия жизненного цикла со своими входом / выходом / артефактом)"
+  - "методика vs инструмент (несущая дихотомия v4: методика определяет, инструмент исполняет)"
+  - "человеко-владеемый артефакт (материальный результат фазы, за который отвечает человек и который версионируется)"
+  - "git-loop дисциплины (цепочка версионируемых артефактов спека→ADR→план→PR→инцидент)"
+  - "разрыв восприятия (perception gap — ощущение скорости ↔ измеренный факт)"
+  - "лестница автономности (A автодополнение / B мелкие задачи / C кодинг-агент / D оркестратор) — демотированная линза"
   - автодополнение
   - кодинг-агент
   - оркестратор
+  - "склонность доверять автомату (automation bias — ложная уверенность)"
+  - "существенная vs привнесённая сложность (Brooks: essential / accidental)"
   - "«почти правильный» код"
-  - 70/80%-проблема
-  - "perception-gap (разрыв ощущение↔измеренный факт)"
-  - "SWE-bench (Verified / Pro)"
+  - 70%-проблема
+  - "spec-driven development (разработка от спецификации)"
+  - "интервьюирующий LLM (interrogatory LLM)"
+  - "prompt-and-pray (антипаттерн: расплывчатый промпт → невысказанные допущения)"
+  - "ADR (Architecture Decision Record — решили X, потому что Y, отвергли Z)"
+  - "fitness-функция (автоматическая архитектурная проверка на каждом коммите)"
+  - "C4 / архитектура-как-код (машиночитаемое описание архитектуры)"
+  - "отравленный контекст (poisoned context — AI копирует плохие примеры кодбазы)"
+  - "harness (харнес — детерминированный каркас проверок вокруг недетерминированной модели)"
+  - "AGENTS.md (постоянный слой инструкций/конвенций, который агент читает каждую сессию)"
+  - "context-engineering (управление контекстом: JIT / компакция / context-rot)"
+  - "explore → plan → code → commit (дисциплина цикла работы)"
+  - "SWE-bench (Verified публичный / Pro приватный контаминация-устойчивый)"
   - "TDD (разработка через тестирование, тест-первым)"
-  - spec-driven development
-  - trunk-based development
+  - "mutation-тестирование (mutation score — доля убитых искусственных дефектов)"
   - quality-gate
-  - mutation-тестирование
-  - SAST / DAST / SCA
-  - secret-scanning
+  - "SAST / DAST / SCA / secret-scanning"
   - "supply-chain (цепочка поставок ПО)"
-  - "slopsquatting (галлюцинация имени пакета)"
-  - prompt injection (инъекция в промпт)
-  - "vibe-coding (антипаттерн: без тестов/спеки/гейтов)"
-  - accidental vs essential complexity (Brooks)
-  - confused-deputy
-  - docs-as-code
-  - "AGENTS.md / CLAUDE.md (машиночитаемый контекст агента)"
-  - "accountability (ответственность, не делегируется)"
+  - "slopsquatting (регистрация воспроизводимо-галлюцинируемого имени пакета)"
+  - "prompt injection (инъекция в промпт)"
+  - "Lethal Trifecta (доступ к секретам + недоверенный контент + канал утечки)"
+  - "risk-triad Böckeler (probability × impact × detectability)"
   - "least-privilege (принцип наименьших привилегий)"
+  - "egress-контроль (ограничение, куда агент отправляет данные)"
+  - "cognitive debt (когнитивный долг — генерация обгоняет понимание)"
+  - "accountability (ответственность, не делегируется ни в одной фазе)"
+  - "триангуляция (DORA / GitClear / METR — сходимость независимых методов)"
+
+ai_failure:
+  # AI-Failure & Judgment Content Rule (ENFORCED): ≥30% strict-in, waiver НЕДОСТУПЕН для L4.
+  # Целиком-in-bucket слайды (провал+урок / лимит / «когда не AI» / сравнение с альтернативой):
+  strict_in_slides: [s07, s11, s13, s15, s20, s21, s24, s27, s29, s30, s31, s33, s34, s37, s38, s39]
+  count: 16
+  share_by_slides: "16/40 = 40% по слайдам (буфер +10 пп над порогом 30%). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s20/s21-Р3 · s24-Р4 · s27/s29/s30/s31-Р5 · s33/s34-Р6 · s37/s38/s39-Р7 — single-artifact concentration отсутствует."
 
 # ─────────────────────────────────────────────────────────────────────────
-# Порядок предъявления (plan §4, арка §2.2): s01..s32 + 3 suffix-ID дивайдера.
-# Р0 s01–s04 · Р1 [s04a] s05–s09 · Р2 s10–s13 · Р3 s14–s17 · Р4a s18–s20 ·
-# Р4b s21–s24 · Р5 [s24a] s25–s28 · Р6 [s28a] s29–s32.
-# 6 дивайдеров на 6 контент-разделов: s04a(Р1) s10(Р2) s14(Р3) s18(Р4)
-# s24a(Р5) s28a(Р6). Р0 = открытие, без дивайдера. Решение #101.
-# ЭТОТ ФАЙЛ содержит slides s01..s13 (вкл. s04a). Продолжение — deck-part2.yaml.
+# Порядок предъявления (plan v4 §4): фазы SDLC, внутри — практика ведёт.
+# Р0 s01–s07 (введение + методическая рамка) · Р1 [s08] s09–s11 (требования) ·
+# Р2 [s12] s13–s15 (архитектура) · Р3 [s16] s17–s21 (реализация) ·
+# Р4 [s22] s23–s24 (тестирование) · Р5 [s25] s26–s31 (ревью+безопасность) ·
+# Р6 [s32] s33–s34 (доставка+ops+доки) · Р7 [s35] s36–s40 (обобщение).
 # ─────────────────────────────────────────────────────────────────────────
+
 slides:
-  # ─── Раздел 0. Открытие + recap Л3 + ЦВ (8 мин, s01–s04) ───
+  # ─── Раздел 0. Введение и методическая рамка (s01–s07) ───
   - id: s01
     file: slides/s01-metr-perception-gap-hook.md
-    type: case_study
-    section: "Раздел 0. Открытие"
+    type: hero_cover
+    section: "Раздел 0. Введение и методическая рамка"
     duration_min: 3
-    assertion: "16 экспертов с AI работали на 19% дольше — а были уверены, что AI их ускоряет: ощущение продуктивности — гипотеза, не данные"
-    learning_goal: "Hook (GATE0-Q1): perception-gap на чистом RCT; рамкирование тезиса лекции"
+    assertion: "16 опытных разработчиков с AI работали на 19% дольше — а были уверены, что AI их ускоряет: ощущение продуктивности — гипотеза, не данные, поэтому надёжность даёт дисциплина, а не ощущение"
+    learning_goal: "Hook: разрыв восприятия на чистом эксперименте; обоснование методико-first оси лекции"
     learning_outcomes: [LO7]
     chapter_ref: "§0.1 [for-slide-s01]"
-    references: [metr-2025]
-    in_bucket: false   # hook; раскрытие/урок — s17 (partial→out, plan §5)
-    visual:
-      pattern: case_study_contrast
-      primary: "Слева — assertion + 3 числа METR RCT (прогноз −24% ускорение → пост-факт вера −20% → измеренный факт +19% времени) в Ocean rounded box. Справа — inline-gloss perception-gap (разрыв ощущение↔измеренный факт). Gold highlight — контраст «вера −20% vs факт +19%» (ошибка на знак)."
     interaction: open_question
+    verify_day_of: true
+    hero_required: true
 
   - id: s02
     file: slides/s02-cover-roadmap.md
     type: cover
-    section: "Раздел 0. Открытие"
+    section: "Раздел 0. Введение и методическая рамка"
     duration_min: 0.5
-    assertion: "Лекция 4. AI в разработке программного обеспечения"
-    learning_goal: "Cover + roadmap 0–6; gold-маркер «Раздел 0»"
+    assertion: "Лекция 4. AI в жизненном цикле разработки ПО"
+    learning_goal: "Cover + roadmap разделов 0–7; превью git-loop дисциплины"
     learning_outcomes: [LO1, LO4, LO7]
-    chapter_ref: "§0.2 [for-slide-s02]"
-    references: []
-    in_bucket: false
-    visual:
-      pattern: cover_distinct
-      primary: "Hero-cover: крупная outline «04» (Primary mid контур). Справа — title 36pt bold deep, под ним 16pt italic light: курс · 75 мин. Внизу — roadmap-bar из 7 карточек (0 Открытие / 1 A+B / 2 C / 3 D / 4 Не только код / 5 Методологии / 6 Фреймворк), текущая (0) gold. БЕЗ Ocean rounded box (motif принадлежит content)."
+    chapter_ref: "§0.1 [for-slide-s02]"
     interaction: none
+    verify_day_of: false
 
   - id: s03
-    file: slides/s03-recap-lec3-ladder.md
-    type: matrix
-    section: "Раздел 0. Открытие"
-    duration_min: 2.5
-    keystone: true
-    assertion: "Лестница автономности A→D — четыре уровня того, насколько AI ведёт разработку сам: от подсказки строки до агента, который сам доводит задачу из трекера до PR"
-    learning_goal: "KEYSTONE — несущая ось лекции: студент впервые видит сами 4 уровня + линза анализа (что делает AI / кто решает / живой пример)"
-    learning_outcomes: [LO1, LO7]
-    chapter_ref: "§0.2, §0.4 [for-slide-s03]"
-    references: []
-    in_bucket: false
-    visual:
-      pattern: ladder_matrix
-      subtype: schema_matrix
-      primary: "KEYSTONE-матрица в Ocean rounded box: 4 строки A/B/C/D × 3 колонки «что делает AI · кто принимает решение · живой пример». A — автодополняет строку в потоке (Copilot-Tab); B — пишет функцию/фикс по запросу в чате; C — кодинг-агент берёт многофайловую задачу, гоняет тесты, итерирует; D — оркестратор берёт issue из трекера и доводит до PR сам. Буква-бейдж эскалирует по цвету (Light→Mid→Deep) = монотонный рост автономии. Л3-связь = 1 строка в подзаголовке словами (не §-код, не таблица-мэппинг). Gold — несущая ось «чем ниже — тем больше решений у AI». course-scaffold-атрибуция → ТОЛЬКО speaker notes; 0 §/disclaimer на видимом слое."
+    file: slides/s03-bridge-lec3.md
+    type: assertion_visual
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 2
+    assertion: "Из Лекций 1–3 переносим готовый аппарат выбора архитектуры; Лекция 4 берёт одну индустрию и показывает, какая дисциплина делает AI надёжным по фазам"
+    learning_goal: "Мост из Модуля 1: что переносим и не переобъясняем"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.2 [for-slide-s03]"
     interaction: none
+    verify_day_of: false
 
   - id: s04
     file: slides/s04-central-question.md
     type: assertion_visual
-    section: "Раздел 0. Открытие"
+    section: "Раздел 0. Введение и методическая рамка"
     duration_min: 2.5
-    assertion: "Центральный вопрос: где AI ускоряет, где вредит — и что не делегируется; ответ — назвать уровень A–D, конфигурацию и точку, где человек обязателен"
-    learning_goal: "ЦВ крупно + рамка ответа + 5 якорей «где человек обязателен» именами по смыслу"
+    assertion: "Центральный вопрос — не «какой инструмент лучший», а «какая дисциплина делает AI-разработку надёжной по фазам»: инструмент вторичен, практика первична"
+    learning_goal: "Центральный вопрос (§0.3) методико-first; цели через практику, не инструмент"
     learning_outcomes: [LO1, LO4, LO7]
     chapter_ref: "§0.3 [for-slide-s04]"
-    references: []
-    in_bucket: false
-    visual:
-      pattern: central_question_plus_anchors
-      primary: "ЦВ крупно (22pt bold deep) в gold Ocean rounded box. Рамка ответа (teal callout): «не AI хорош/плох, а назвать уровень A–D, конфигурацию, точку где человек обязателен». 5 якорей «где человек обязателен» — именами по смыслу: «почти правильный» код · merge и ревью · деструктив на prod · безопасность кода · что строить (essential). Gold callout — «главное — то, что НЕ делегируется». БЕЗ «возвращаемся N раз», БЕЗ §-кодов, БЕЗ course-scaffold disclaimer-футера (атрибуция → speaker notes s03)."
     interaction: none
-
-  # ─── Раздел 1. Уровни A+B: автодополнение и мелкие задачи (11 мин, s05–s09) ───
-  - id: s04a
-    file: slides/s04a-section1-divider-levels-a-b.md
-    type: section_divider
-    section: "Раздел 1. Уровни A и B: автодополнение и мелкие задачи"
-    duration_min: 0.3
-    assertion: "Раздел 1 — уровни A и B: AI дописывает строку в потоке и пишет фрагмент по запросу; человек видит каждый кусок кода"
-    learning_goal: "Section divider раздела 1 + одно-фразовое «что такое уровни A и B»"
-    learning_outcomes: [LO1]
-    chapter_ref: "§1 (структурный divider — раздел-вступление; глава не правится, [for-slide] не вводится)"
-    references: []
-    in_bucket: false
-    partial_out_strict_in: true   # структурный divider — не failure/judgment
-    # [Решение #101, 2026-05-17 — owner GATE B] suffix-ID, cascade-safe:
-    # открывает Раздел 1, в последовательности между s04 и s05.
-    # Нумерация s01–s32 неизменна, chapter [for-slide-sNN] не затронут.
-    visual:
-      pattern: section_divider_with_roadmap
-      primary: "Шаблон section_divider лекции (единый с s10/s14/s18/s24a/s28a): гигантская декоративная «1» справа soft-outline, РАЗДЕЛ 1 + подзаголовок «Уровни A и B: автодополнение и мелкие задачи» + 1 нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 1."
-      narrative_bridge: "Начинаем снизу лестницы. A — AI дописывает строку прямо в потоке набора; B — пишет функцию или фикс по запросу в чате. На обоих человек видит каждый фрагмент кода — это AI, который уже стоит в каждой IDE."
-    interaction: none
+    verify_day_of: false
 
   - id: s05
-    file: slides/s05-unified-level-pattern.md
+    file: slides/s05-keystone-git-loop.md
     type: assertion_visual
-    section: "Раздел 1. Уровни A и B"
-    duration_min: 1.5
-    assertion: "Цена ошибки растёт вместе с автономией A→D: тот же провал на уровне D стоит несравнимо дороже, чем на A — поэтому точка обязательного человека смещается и ужесточается"
-    learning_goal: "Несущий контентный принцип (слот переиспользован, НЕ renumber; бывш. «единый паттерн» свёрнут в s03): радиус поражения растёт по A→D → гейт под выросшую цену ошибки. Ранний посев → собирается в матрице s29"
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 3
+    keystone: true
+    assertion: "AI-разработка как дисциплина — это цикл человеко-владеемых артефактов спека→ADR→план→PR→инцидент, каждым владеет человек; на этом скелете сходятся методики разных игроков"
+    learning_goal: "KEYSTONE — git-loop дисциплины (диаграмма-цепочка артефактов) + определение фазы (вход/выход/артефакт) + неравномерность фаз; сходимость методик = 1 подпись"
     learning_outcomes: [LO1, LO7]
-    chapter_ref: "§1.1 [for-slide-s05]"
-    references: []
-    in_bucket: true   # judgment/limits-якорь «цена ошибки растёт A→D» — strict-in (Решение #100 ЗАКРЫТО; methodology-critic v3 re-QA 2026-05-17 подтвердил пересчёт 14→15)
-    visual:
-      pattern: blast_radius_along_ladder
-      primary: "4 столбца A→D в Ocean rounded box: растущая blast-radius-плашка (bottom-aligned, высота ↑ монотонно A→D — A одна строка, B функция/фикс, C много файлов, D прод-данные/необратимое). Под каждым — что задевает ошибка + где человек контролирует (A каждый токен → D только вход/выход). D = gold-апекс. Gold callout: «тот же провал на D дороже, чем на A; поднимать автономию — только под требование + гейт под цену ошибки». НЕ meta, НЕ защита таксономии — контентный мост в Раздел 1."
+    chapter_ref: "§0.6 [for-slide-s05]"
     interaction: none
+    verify_day_of: false
 
   - id: s06
-    file: slides/s06-level-a-autocomplete.md
-    type: case_study
-    section: "Раздел 1. Уровни A и B"
-    duration_min: 2.5
-    assertion: "Уровень A (автодополнение): +56% в лаборатории, +7–22% в поле, −19% на знакомом легаси — самый безопасный уровень безопасен только пока человек реально читает"
-    learning_goal: "Спуск на 1-ю ступень лестницы с s03: что это / где уже стоит / в чём ловушка + лаб/поле/легаси-контраст (БЕЗ scaffold-рамки, БЕЗ «не вводим нового»)"
+    file: slides/s06-autonomy-ladder-lens.md
+    type: assertion_visual
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 2
+    assertion: "Лестница автономности A→D — вспомогательная линза (не несущая ось); и уровень автономии — свойство режима, а не бренда: один продукт живёт сразу на нескольких уровнях"
+    learning_goal: "A→D демотированная линза + режим ≠ бренд одной строкой (границы B↔C / C↔D компактно)"
     learning_outcomes: [LO1, LO7]
-    chapter_ref: "§1.2 [for-slide-s06]"
-    references: [peng-2023-copilot, mit-genai-2024]
-    in_bucket: false
-    visual:
-      pattern: stat_contrast_plus_practice
-      primary: "Слева — 3 контекста-эффекта в Ocean rounded box: лаборатория ~+56% (изолированная новая задача) · поле +7–22% (Microsoft/Accenture) · знакомое легаси −19% (METR, разбор далее). Справа — где уже стоит / в чём ловушка: стоит в IDE почти каждого инженера · человек читает и принимает сам · ловушка = жать «принять» не читая · цена = клоны/уязвимые паттерны молча. Gold — «−19% на знакомом легаси» (контекст-зависимость). Footer 12pt italic — источники + caveat «лабораторные числа подавать как лабораторные». Подаётся как новое (что/где/ловушка), НЕ как слот scaffold-грида."
+    chapter_ref: "§0.7 [for-slide-s06]"
     interaction: none
+    verify_day_of: false
 
   - id: s07
-    file: slides/s07-level-b-small-tasks.md
+    file: slides/s07-tool-secondary-thesis.md
     type: assertion_visual
-    section: "Раздел 1. Уровни A и B"
-    duration_min: 2
-    assertion: "Уровень B: человек проверяет после, а не во время — это и есть граница A↔B и первое реальное делегирование в лестнице"
-    learning_goal: "Граница A↔B как РАЗЛИЧЕНИЕ (A=строка-в-потоке/человек каждый токен; B=задача-фрагмент/человек-ревью-после) + что эта граница меняет на практике (НЕ оправдание классификации)"
-    learning_outcomes: [LO1, LO7]
-    chapter_ref: "§1.3 [for-slide-s07]"
-    references: []
-    in_bucket: false
-    visual:
-      pattern: boundary_contrast
-      primary: "2 колонки в Ocean rounded box, parallel structure: A — единица работы «строка-в-потоке», человек в цикле на каждом токене, ревью в момент написания vs B — единица «задача-фрагмент» (функция/фикс), человек в цикле ПОСЛЕ, ревью отдельным шагом. Снизу — что эта граница меняет на практике: защита «я видел каждую строку» на B не работает · ревью = отдельный шаг, легко пропустить · появляется «почти правильный» код (разберём следующим). Gold — «человек проверяет после, а не во время». Граница подаётся как различение, НЕ как scaffold-рамка/оправдание классификации."
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 2.5
+    assertion: "Инструмент вторичен — методика определяет, инструмент исполняет; «внедрили AI-инструмент» ≠ «внедрили AI-дисциплину», и первое без второго умножает беспорядок"
+    learning_goal: "[SI] Ведущий тезис v4: методика определяет, инструмент исполняет + провал «инструмент вместо практики»"
+    learning_outcomes: [LO7, LO1]
+    chapter_ref: "§0.8, §0.9 [for-slide-s07]"
+    in_bucket: true
     interaction: none
+    verify_day_of: false
 
+  # ─── Раздел 1. Требования — первый артефакт, ещё до кода (s08–s11) ───
   - id: s08
-    file: slides/s08-almost-right-code.md
-    type: case_study
-    section: "Раздел 1. Уровни A и B"
-    duration_min: 3
-    assertion: "«Почти правильный» код дороже явно неправильного: 66% разработчиков назвали его топ-фрустрацией; он перемещает работу с написания на отладку чужой логики"
-    learning_goal: "70/80%-проблема + «почти правильный» (66%) — структурный, не временный разрыв; ЦВ-возврат 1"
-    learning_outcomes: [LO1, LO7]
-    chapter_ref: "§1.4, §1.6 [for-slide-s08]"
-    references: [osmani-2024-70pct, stackoverflow-2025]
-    in_bucket: true   # ограничение + критерий «человек обязателен» + альтернатива
-    visual:
-      pattern: problem_plus_lesson
-      primary: "Слева — 70/80%-проблема в Ocean rounded box: первые 70–80% быстро (типовое, было в обучении) vs последние 20–30% так же трудны (специфика системы, не было и быть не могло) — разрыв структурный. Справа — «почти правильный»: 66% SO-2025 топ-фрустрация; дороже явно неверного (компилируется, проходит счастливый путь, ломается в проде). Урок-плашка: ревью + тест ДО доверия. Gold — «66%». Footer 12pt italic — источники + caveat «опрос, направление стабильно»."
-    interaction: think_pause
+    file: slides/s08-divider-requirements.md
+    type: section_divider
+    section: "Раздел 1. Требования — первый артефакт"
+    duration_min: 0.5
+    assertion: "Требования · spec-driven — фаза, где ведущее не код, а спецификация, которую человек написал, прочитал и принял"
+    learning_goal: "Section divider раздела 1 (требования): смысл фазы одной строкой"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1 (структурный divider)"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
 
   - id: s09
-    file: slides/s09-structure-constraints-tests.md
+    file: slides/s09-spec-driven-practice.md
     type: assertion_visual
-    section: "Раздел 1. Уровни A и B"
-    duration_min: 2
-    assertion: "Паттерн structure + constraints + tests — это TDD, применённый к постановке задачи для LLM: машина ловит «почти правильное», а не глаза в проде"
-    learning_goal: "Canon-паттерн промпта для кода + мост к TDD (s25); антипаттерн vibe-coding teaser"
+    section: "Раздел 1. Требования — первый артефакт"
+    duration_min: 3
+    assertion: "Требования — первый артефакт, ещё до кода: практика spec-driven ставит между намерением и кодом человеко-ревьюируемую спеку; три голоса индустрии сходятся, что спека — центральный артефакт"
+    learning_goal: "Практика spec-driven как дисциплина; визуал git-дерева со spec-файлами; Grove «~10-20%» как риторика, не измерение"
     learning_outcomes: [LO1, LO7]
-    chapter_ref: "§1.5 [for-slide-s09]"
-    references: []
-    in_bucket: false
-    visual:
-      pattern: three_component_cards
-      primary: "3 карточки-компонента в Ocean rounded box: Structure (сигнатуры/типы/контракт — сужает пространство правдоподобно-неверного) · Constraints (чего нельзя, какие инварианты — модель не выведет сама) · Tests (исполняемая спецификация — не подвержена ни «почти правильному», ни perception-gap). Под ними — мост-плашка: «это TDD на постановке задачи; антипаттерн — vibe-coding (без структуры/ограничений/теста/гейта), строгое определение s25». Gold — слово «Tests» / «исполняемая спецификация»."
+    chapter_ref: "§1.1 [for-slide-s08]"
+    references: [openai-model-spec, grove-new-code, fowler-intent]
     interaction: none
+    verify_day_of: true
 
-  # ─── Раздел 2. Уровень C: кодинг-агент (10 мин, s10–s13) ───
   - id: s10
-    file: slides/s10-section2-divider-level-c.md
-    type: section_divider
-    section: "Раздел 2. Уровень C: кодинг-агент"
-    duration_min: 1
-    assertion: "Раздел 2 — уровень C: кодинг-агент ведёт многошаговую разработку сам, человек ревьюит PR и решает о слиянии"
-    learning_goal: "Section divider раздела 2 + одно-фразовое «что такое уровень C»"
-    learning_outcomes: [LO1]
-    chapter_ref: "§2.1 [for-slide-s10]"
-    references: []
-    in_bucket: false
-    partial_out_strict_in: true   # структурный divider — не failure/judgment
-    visual:
-      pattern: section_divider_with_roadmap
-      primary: "Шаблон section_divider лекции (единый с s14/s18/s25/s29): гигантская декоративная «2» справа soft-outline, РАЗДЕЛ 2 + подзаголовок «Уровень C: кодинг-агент» + 1 нарративная строка-мост слева, roadmap-bar 7 карточек, gold-маркер Раздел 2."
-      narrative_bridge: "На A и B человек видел каждый фрагмент. Уровень C — AI сам планирует, правит много файлов, гоняет тесты; человек видит только итог — pull request."
+    file: slides/s10-requirements-methodics.md
+    type: assertion_visual
+    section: "Раздел 1. Требования — первый артефакт"
+    duration_min: 2.5
+    assertion: "Методики дают три рекомендации, как дисциплинированно писать спеку: малые изолированно-тестируемые единицы, интервьюирующий LLM, спека-как-проверка — инструменты исполняют их и вторичны"
+    learning_goal: "Рекомендации методик (Spec-Kit-метод, interrogatory LLM, deliberative alignment); вендоры вторичным рядом"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§1.2 [for-slide-s09]"
+    references: [spec-kit, openai-deliberative-alignment, fowler-intent]
     interaction: none
+    verify_day_of: true
 
   - id: s11
-    file: slides/s11-coding-agent-cycle.md
-    type: process
-    section: "Раздел 2. Уровень C: кодинг-агент"
-    duration_min: 2.5
-    assertion: "Кодинг-агент — это цикл plan → act → check → iterate Лекции 3, применённый к коду; check как самооценка агента — иллюзия контроля"
-    learning_goal: "Что делает агент C = многофайл/тесты/итерация = цикл Л3 (мини-напоминание термина)"
-    learning_outcomes: [LO1, LO7]
-    chapter_ref: "§2.1 [for-slide-s11]"
-    references: [yao-2022-react]
-    in_bucket: false
-    visual:
-      pattern: cycle_4_steps
-      subtype: schema_cycle
-      primary: "Замкнутый цикл 4 шага (plan → act → check → iterate) со стрелками по часовой и явной стрелкой возврата iterate→plan + меткой «повторяется». Под каждым шагом — его режим отказа: близорукий plan (не видит накопленную стоимость/время) / падающий или зацикленный act / check как самооценка («тесты прошли», не прогнав) / iterate без внешнего лимита. Шаг check — gold-акцент: «самооценка агента ≠ контроль (callback Л3 §4.3)». Рамка §1.1 для C — строка-плашка."
-    interaction: none
-
-  - id: s12
-    file: slides/s12-swe-bench-verified-vs-pro.md
-    type: comparison
-    section: "Раздел 2. Уровень C: кодинг-агент"
+    file: slides/s11-prompt-and-pray.md
+    type: case_study
+    section: "Раздел 1. Требования — первый артефакт"
     duration_min: 3
-    assertion: "Один класс систем: ~88% на знакомом публичном коде, ~64% на честном незнакомом — доверие к агенту обратно пропорционально незнакомости и критичности кода"
-    learning_goal: "Знакомый vs незнакомый код: SWE-bench Verified↔Pro разрыв + критерий доверия (LO7)"
-    learning_outcomes: [LO1, LO7]
-    chapter_ref: "§2.2 [for-slide-s12]"
-    references: [swe-bench-verified, swe-bench-pro]
-    in_bucket: true   # ограничение + правило выбора (вклад в LO7)
-    visual:
-      pattern: stat_pair_plus_criterion
-      subtype: schema_matrix
-      primary: "Inline-define SWE-bench (бенчмарк: реальная issue из open-source трекера, доля задач, где патч проходит тесты проекта). 2 крупные метрики в Ocean rounded box: Verified ~88,7% (~500 отвалидированных задач, публичный код) vs Pro ~64,3% (приватные кодбазы, контаминация-резистентно). Разрыв ~24 п.п. Критерий-плашка: «незнакомее/критичнее код → ниже фактическая надёжность → строже человеческий gate». Gold — разрыв ~24 п.п. / «~64%». Footer 12pt italic — caveat «числа [VFY-day-of], лидер меняется еженедельно»."
+    assertion: "prompt-and-pray — не «плохой инструмент», а пропуск дисциплины: модель молча достраивает требования дефолтами; корень провала — существенная сложность намерения (Brooks), которая не делегируется"
+    learning_goal: "[SI] Провал prompt-and-pray + ироничная иллюстрация; урок human-intent = существенная сложность; overclaim «спека=истина»"
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§1.3, §1.4 [for-slide-s10]"
+    references: [grove-new-code, emperors-new-code]
+    in_bucket: true
+    visual_brief_note: "Ироничная тематическая иллюстрация (#258) — найти CC/встраиваемую в Phase 6."
     interaction: none
+    verify_day_of: false
+
+  # ─── Раздел 2. Архитектура — до кода, и ею надо управлять (s12–s15) ───
+  - id: s12
+    file: slides/s12-divider-architecture.md
+    type: section_divider
+    section: "Раздел 2. Архитектура — до кода, и ею надо управлять"
+    duration_min: 0.5
+    assertion: "Архитектура · после требований — архитектура, не сразу код; несущее — человеческая практика, ею надо управлять с AI, а не делегировать её AI"
+    learning_goal: "Section divider раздела 2 (архитектура): смысл фазы одной строкой"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2 (структурный divider)"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
 
   - id: s13
-    file: slides/s13-review-merge-gate.md
-    type: case_study
-    section: "Раздел 2. Уровень C: кодинг-агент"
-    duration_min: 3.5
-    assertion: "«Зелёные тесты» — необходимое, но не достаточное: 211M строк GitClear показывают клоны↑ рефакторинг↓ churn↑ — скорость ≠ качество; merge не делегируется"
-    learning_goal: "Антипаттерн «принять PR не читая» + GitClear + критерий «merge — accountability»; ЦВ-возврат 2"
+    file: slides/s13-architecture-necessity.md
+    type: assertion_visual
+    section: "Раздел 2. Архитектура — до кода, и ею надо управлять"
+    duration_min: 3
+    assertion: "После требований — архитектура, а не сразу код: «решить, что строить» — существенная сложность (Brooks); пропуск фазы даёт эрозию и когнитивный долг"
+    learning_goal: "[SI] Необходимость архитектуры после требований (не код); Brooks essential complexity; пропуск фазы → эрозия"
     learning_outcomes: [LO1, LO7]
-    chapter_ref: "§2.3, §2.4 [for-slide-s13]"
-    references: [gitclear-2025]
-    in_bucket: true   # антипаттерн + урок + не-AI альтернатива
-    visual:
-      pattern: failure_metrics_plus_lesson
-      primary: "Слева — антипаттерн в Ocean rounded box: «merge по зелёным тестам без чтения» = уровень C, деградировавший до D без решения о повышении автономии. Справа — GitClear 211M строк: клоны 8,3→12,3% · рефакторинг 24,1→9,5% · churn 5,5→7,9% (скорость↑ качество↓). Урок-плашка: обязательное человеческое ревью PR + метрики дублирования/churn в CI как gate; merge = решение об ответственности, не делегируется. Gold — связка «скорость ≠ качество». Footer 12pt italic — источник + caveat «корреляция во времени, направление стабильно»."
-    interaction: poll
+    chapter_ref: "§2.1 [for-slide-s12]"
+    references: [brooks-no-silver-bullet]
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s14
+    file: slides/s14-architecture-approaches.md
+    type: schema_matrix
+    section: "Раздел 2. Архитектура — до кода, и ею надо управлять"
+    duration_min: 3
+    assertion: "Управлять архитектурой с AI можно четырьмя практиками: ADR (durable-контекст), fitness-функции (надзор на каждом коммите), C4/архитектура-как-код (машиночитаемая), эволюционная архитектура — инструменты вторичны"
+    learning_goal: "Подходы управлять архитектурой (ADR/fitness-функции/C4/эволюционная); вендоры вторично"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2 [for-slide-s14]"
+    references: [nygard-adr, ford-fitness-functions, brown-c4]
+    interaction: none
+    verify_day_of: false
+
+  - id: s15
+    file: slides/s15-poisoned-context.md
+    type: case_study
+    section: "Раздел 2. Архитектура — до кода, и ею надо управлять"
+    duration_min: 3
+    assertion: "Отравленный контекст: AI копирует плохие примеры кодбазы и усиливает их — но так работает, когда архитектура не описана и нет процесса управления ею; альтернатива — ADR + fitness-функции"
+    learning_goal: "[SI] Отравленный контекст + оговорка #261 «когда архитектура не описана и нет управления» (мост к s14)"
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§2.3 [for-slide-s13]"
+    references: [bockeler-thoughtworks]
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  # ─── Раздел 3. Реализация — дисциплина + харнес (s16–s21) ───
+  - id: s16
+    file: slides/s16-divider-implementation.md
+    type: section_divider
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 0.5
+    assertion: "Реализация · сильная фаза при трёх практиках: малые проверяемые единицы, постоянный слой памяти в репозитории, детерминированный харнес вокруг модели"
+    learning_goal: "Section divider раздела 3 (реализация): смысл фазы одной строкой"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3 (структурный divider)"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s17
+    file: slides/s17-small-units-cycle.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Дисциплина работы — дробить задачу на малые проверяемые единицы и вести её циклом explore → plan → code → commit; две философии (в редакторе / асинхронно) — вторично"
+    learning_goal: "Ведущее: малые проверяемые единицы + цикл explore→plan→code→commit (дисциплина работы)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.1 [for-slide-s17]"
+    references: [anthropic-sdlc, osmani-70-percent]
+    interaction: none
+    verify_day_of: true
+
+  - id: s18
+    file: slides/s18-persistent-memory-layer.md
+    type: schema_architecture
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Постоянный слой инструкций и памяти в репозитории (AGENTS.md, память, context-engineering) — то, что агент читает каждую сессию: контекст живёт в репо, а не в мимолётных промптах"
+    learning_goal: "Ведущее: постоянный слой инструкций/памяти (AGENTS.md конвенции/guardrails, память, context-eng JIT/компакция/context-rot)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.2 [for-slide-s18]"
+    references: [anthropic-context-engineering, agents-md]
+    interaction: none
+    verify_day_of: false
+
+  - id: s19
+    file: slides/s19-harness-gate.md
+    type: schema_pipeline
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Харнес — детерминированный каркас-гейт вокруг недетерминированной модели (линтеры, структурные тесты, гейты, least-privilege, sandbox): агент буксует → сигнал → фидбек; честно — харнес сам не проверяет поведение"
+    learning_goal: "Ведущее: детерминированный каркас-гейт вокруг недетерминированной модели (harness engineering Böckeler)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3 [for-slide-s19]"
+    references: [bockeler-thoughtworks]
+    interaction: none
+    verify_day_of: false
+
+  - id: s20
+    file: slides/s20-70-percent-problem.md
+    type: case_study
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "70%-проблема: AI доводит до «почти правильно» быстро, но последние 30% — понимание — не ускоряет; «почти правильный» код проходит беглый взгляд и ломается на краевом случае"
+    learning_goal: "[SI] Провал: 70%-проблема (Osmani) + «почти правильно» (SO 66%) + knowledge paradox"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.4 [for-slide-s18]"
+    references: [osmani-70-percent, stackoverflow-2025]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+
+  - id: s21
+    file: slides/s21-anti-hype-benchmarks.md
+    type: case_study
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Бенчмарк-число бывает истинным и вводящим в заблуждение: Devin 13,86% — 79 из 570 (только 25% бенча с контаминацией); OpenAI «70% больше PR» — без знаменателя; бренд/бенчмарк ≠ дисциплина"
+    learning_goal: "[SI] Anti-hype: Devin 13,86% (79/570), Cursor признаёт слабость, OpenAI «70% more PRs» без знаменателя"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.5 [for-slide-s19]"
+    references: [devin-cognition, swe-bench-pro, openai-swe-bench, cursor]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
 
 # ─────────────────────────────────────────────────────────────────────────
-# КОНЕЦ PART 1. Слайды s14..s32 + s24a/s28a + totals + ai_failure_judgment +
-# verify_day_of_items + fact_check_items → deck-part2.yaml.
-# Loader (rendered build-скрипт) загружает: deck.yaml (этот) + deck-part2.yaml,
-# объединяет ключ `slides`, валидирует totals из part 2.
+# Продолжение — deck-part2.yaml: slides s22..s40 + totals + ai_failure_judgment
+# + verify_day_of_items + fact_check_items. Loader читает ОБЕ части.
 # ─────────────────────────────────────────────────────────────────────────

@@ -386,9 +386,113 @@ _Пока не обнаружено._
 
 При обнаружении новой limitation — добавить запись по шаблону, обновить дату «Last update» ниже, упомянуть в commit message: `Add MCP limitation #X (server) — see notes/mcp-limitations.md`.
 
+### [#171-1] `notes_pages_pdf.py` pairs page N с natural-sorted md — ломается на decks с непоследовательным build-order (lec-03)
+
+- **Tool:** `tools/presentation-build/notes_pages_pdf.py` — техника/gotcha, не баг.
+- **Symptom:** notes-PDF спаривает изображение слайда N (из `lec-NN.pdf`, build-order) с нотами N-го md в **natural-sort** порядке (`slide_md_by_index`). Если презентация рендерится НЕ в natural-sort порядке — ноты уезжают. Лекция 3 build_v3.py рендерит s15 ДО s14 и s23 поздно (после s25/s25b/s25a) по педагогическим причинам → на 6 страницах notes-PDF пары «картинка sX + ноты sY» были неверны (page 20: image s15 + notes s14 и т.д.).
+- **Root cause:** `slide_md_by_index` предполагает natural-sort = build-order (верно для монотонных decks lec-01/02/04, неверно для lec-03).
+- **Severity:** P1 (тихая рассинхронизация — ноты не того слайда; не видно без проверки хедеров «слайд N / M» против картинки).
+- **Workaround:** тонкий per-lecture wrapper, monkeypatching `slide_md_by_index` явным build-order списком (тем же `sids`, что в build-скрипте). Пример: `library/lectures/lec-03/rendered/make_notes_pdf.py` — импортирует `notes_pages_pdf as N`, ставит `N.slide_md_by_index = _md_by_index` (по BUILD_ORDER), затем `N.build(LECDIR, dpi=150)`. Проверка: хедер каждой страницы «SNN · слайд K / 40» должен совпасть с позицией slide в build-order.
+- **Status:** active (workaround рабочий; долгосрочно — добавить в notes_pages_pdf опциональный `--order` / чтение build-order из deck.yaml).
+- **First seen in:** #171 (lec-03 reference-system + notes-PDF, 2026-08-30).
+
+### [#171-2] Anchor-driven post-hoc [N] injection в готовый deck без baked-in маркеров (техника)
+
+- **Tool:** `python-pptx` (build-скрипт) — техника, не баг.
+- **Контекст:** нужно добавить надстрочные [N]-ref-маркеры на 26 слайдов, у которых body-текст НЕ содержал [N] (в отличие от lec-04, где [N] baked-in при авторинге). Переписывать 26 builder'ов вручную — рискованно.
+- **Приём (reusable):** registry `ANCHORS[sid] = [(ref_nums, anchor_substr), …]`, где `anchor_substr` — verbatim фрагмент существующего run. Post-build pass (`inject_ref_markers`) обходит `slide.shapes`→text_frame→paragraphs→runs, находит run, содержащий anchor, и делает `run.text = run.text.replace(anchor, anchor + f"[{ref_nums}]", 1)`. Затем `shrink_refs_in_frame` (#170-3) уменьшает маркеры в надстрочные муты. Меняются ТОЛЬКО [N] — ноль изменений в словах visible-контента (подтверждено diff old↔new visible text: 40/40 слайдов идентичны после strip [N]+ref-list+pageno). Скрипт репортит любой unmatched anchor.
+- **Аналогично для нот:** `NOTES_ANCHORS` + `patch_notes.py` вставляет [N] в `## Speaker notes` body .md + аппендит блок «Источники:». ВАЖНО: оперировать только над секцией Speaker notes (не над frontmatter/Title/Body) — иначе маркер уедет в `assertion:` frontmatter (случилось однажды, откачено). Split по `md.find("## Speaker notes")`, не по `md.find("Источники:")`.
+- **Status:** working-pattern (reusable для любого deck без baked-in [N]).
+- **First seen in:** #171 (lec-03, 2026-08-30).
+
 ---
 
-**Last update:** 2026-08-11 (#156 — добавлен [#156-1] build_lecNN.py `add_image()` height-only branch bug: silently ignores `h`, embeds native-size picture).
+**Last update:** 2026-08-30 (notes-PDF rewrite — добавлен [#170-4b]: `notes_pages_pdf.py` переписан по owner-спеке — ноты/заголовки читаются из PPTX (URL вернулись), матч слайд↔нота позиционный, футер = номер страницы, continuation без «продолжение»; supersedes match-по-.md из [#170-4]/[#170-4a]/[#171-1]. Ранее: #171 — [#171-1] build-order mismatch + wrapper, [#171-2] anchor-driven [N]-инъекция; #170 — [#170-4] notes-pages PDF builder, [#170-3] надстрочные [N] через run-split lxml).
+
+### [#170-4] Reusable «notes-pages PDF» builder (портрет: слайд сверху + ноты снизу) на pymupdf — техника
+
+- **Tool:** `tools/presentation-build/notes_pages_pdf.py` (pymupdf/fitz; не MCP) — техника, а не баг.
+- **Контекст:** нужен «раздаточный» портретный PDF, где каждая страница = один
+  слайд (картинкой) + его speaker notes читаемым текстом снизу, с поддержкой
+  кириллицы и БЕЗ обрезки длинных нот. Переиспользуемо для lec-01..NN.
+- **Приём (reusable):**
+  1. **Slide-image source (fallback):** сперва `rendered/lec-NN.pdf` постранично
+     (`page.get_pixmap(dpi=…)`, страница i = слайд i+1); если PDF нет —
+     `rendered/snapshots/slide-*.png` (sorted). Это переживает и «без снапшотов»,
+     и «без PDF».
+  2. **Slide↔notes matching:** тем же ключом, что и deck-build — по префиксу
+     `sNN` из `slides/sNN-*.md`, секция `## Speaker notes` (тот же regex, что
+     `_helpers.load_notes`). Индекс слайда N ↔ `slides/sNN-*.md`.
+  3. **Кириллица:** встроенный `helv`/base-14 у pymupdf НЕ содержит кириллицу —
+     обязательно грузить TTF (`pymupdf.Font(fontfile=…)` + `page.insert_font`).
+     Авто-дискавери по `/home/harness/.local/lo-sysroot/usr/share/fonts` и др.,
+     кандидаты DejaVuSans/LiberationSans/NotoSans (regular+Bold).
+  4. **Word-wrap по реальным метрикам:** `font.text_length(s, size)` для точного
+     переноса (не эвристика по числу символов); есть hard-break для длинного
+     одиночного слова/URL.
+  5. **Overflow без обрезки:** если ноты не влезают в остаток страницы —
+     continuation-страница с компактным повтором хедера («SNN · заметки
+     (продолжение) · слайд N / M»), картинка не повторяется. Никакого клиппинга.
+- **Проверка не-обрезки (reusable):** извлечь последние ~8 слов нот каждого слайда
+  и убедиться, что они присутствуют в тексте PDF-страниц этого слайда
+  (`page.get_text()` по диапазону страниц). На lec-04: 41/41 PASS.
+- **Результат lec-04:** 41 слайд → 70 страниц (41 + 29 continuation), кириллица
+  ок, s10 (355 слов, самые длинные) и s30 не обрезаны.
+- **Severity:** N/A (техника). **Status:** working-pattern (reusable, аргумент —
+  папка лекции: `python3 tools/presentation-build/notes_pages_pdf.py library/lectures/lec-NN`).
+- **First seen in:** #170 lec-04 notes-pages deliverable (2026-08-30).
+
+### [#170-4a] `notes_pages_pdf.py` — slide↔notes matching по числовому префиксу ломается на letter-suffix слайдах / gap-нумерации
+
+- **Tool:** `tools/presentation-build/notes_pages_pdf.py` (`slide_md_by_index`) — reusable notes-pages PDF builder.
+- **Symptom:** Для deck'ов с **letter-suffix слайдами** (s02a, s04a, s04b, s08a…) и/или **пропусками в нумерации** (нет s11 / s27) каждая нота PDF-страницы N привязывалась к `slides/sN*.md` по **числовому** значению префикса, а не по **позиции слайда в колоде**. Результат: PDF-страница показывает картинку слайда s16 (21-й по порядку), но снизу печатались ноты **s21** (числовой 21). Тихая рассинхронизация нот на большинстве страниц (визуально «ноты не про тот слайд»), без ошибки.
+- **Root cause:** `slide_md_by_index` строила `{int(prefix): file}`. Для lec-04 это работало **случайно** (s01–s41 без пропусков и суффиксов → числовой == позиционный). Для lec-02 (35 слайдов, но 8 letter-variant + пропуски s11/s27) числовой ≠ позиционный.
+- **Severity:** P1 (тихая рассинхронизация; deliverable выглядит готовым, но ноты не те).
+- **Workaround / fix:** маппить PDF-страницу N (1-based) → **N-й md в natural-sorted порядке** (`s(\d+)([a-z]*)` → `(int, suffix)`, чтобы s02 < s02a < s03 < s04 < s04a). Это = фактический build-order колоды и backward-compatible с чисто числовыми деками. Исправлено в `slide_md_by_index` (issue #156-lec02 ref-pass, 2026-08-30). Проверка: извлечь последние ~8 слов нот каждого слайда и убедиться, что они присутствуют в тексте PDF (lec-02: 35/35 PASS после фикса; до фикса 8 dividers мисматчились).
+- **Status:** fixed-in-tool (2026-08-30).
+- **First seen in:** lec-02 refs + notes-PDF deliverable (2026-08-30).
+
+### [#170-4b] `notes_pages_pdf.py` переписан по owner-спеке: ноты/заголовки из PPTX (не .md), позиционный матч, футер=номер страницы, continuation без «продолжение»
+
+- **Tool:** `tools/presentation-build/notes_pages_pdf.py` — reusable notes-pages PDF builder (rewrite, supersedes матч-по-.md из [#170-4]/[#170-4a]).
+- **Контекст:** owner review 5 пунктов — (1) убрать «lec-NN · SNN» из футера; (2) футер = номер страницы документа «N / total»; (3) хедер ~9-10pt muted = «‹полное название лекции› · ‹название слайда› · слайд N» (без «S01»-аббревиатур); (4) continuation-страницы БЕЗ слова «продолжение» (тот же хедер, продолжение нот, без картинки); (5) вернуть URL референсов в ноты.
+- **Ключевые приёмы (reusable):**
+  1. **Ноты — из `rendered/lec-NN.pptx`** через python-pptx `slide.notes_slide.notes_text_frame.text` в порядке презентации, НЕ из `slides/*.md`. Это даёт ПОЛНУЮ ноту: нарратив + inline `[N]` + блок «Источники:» с URL. Блок «Источники:» существует ТОЛЬКО в pptx (аппендится из ref-registry при build, не пишется обратно в .md) — поэтому notes-PDF из .md имели 0 URL. Решает пункт 5 разом.
+  2. **Матч слайд↔нота — чисто позиционный:** PDF-страница i (из `lec-NN.pdf`) ↔ pptx-слайд i, оба в порядке презентации. Удалена вся хрупкая логика match-по-имени (`slide_md_by_index`/`_slide_natkey`/BUILD_ORDER-обёртки из [#171-1]) — decks с letter-suffix/непоследовательным build-order больше не рассинхронизируются в принципе.
+  3. **Название лекции** — `deck.yaml` → `deck.title` (мини-скан YAML, без PyYAML-зависимости).
+  4. **Название слайда** — title-placeholder слайда если есть, иначе верхний/крупнейший текстовый блок (первая строка); pure-number/tiny-глифы (большая «04» на обложке, page-маркеры) отфильтрованы.
+  5. **Хедер: eliding ТОЛЬКО середины (slide-title).** При переполнении строки эллипсис ставится в slide-title, а `‹lecture title› ·` префикс и `· слайд N` суффикс сохраняются целиком. Иначе длинный lecture-title съедал «слайд N» (наблюдалось до фикса — «слайд N» пропадал за «…»).
+  6. **Continuation-страница: тот же хедер, картинка не повторяется, слова «продолжение» НЕТ.** Пагинация считается в PASS-1 (без растеризации) → известно total_pages для футера; PASS-2 рендерит и штампует футер inline. (NB: держать список `pymupdf.Page` для отложенного футер-прохода НЕЛЬЗЯ — в этой сборке pymupdf у Page теряется живой doc-handle → `AttributeError: NoneType.is_pdf` в `insert_text`. Отсюда двухпроходная схема.)
+- **Проверка (программная):** на 4 лекциях — URL>0 (lec-01/02/03/04 = 58/15/45/90), футер без «lec-NN·»/«·SNN» (0), «заметки (продолжение)»-лейблов 0, tail-нот присутствуют whitespace-insensitive 36/35/40/41 = 100% (длинные URL hard-wrap'ятся mid-token — при проверке коллапсить пробелы). ВНИМАНИЕ: слово «продолжение» встречается в самом тексте нот («правдоподобное продолжение», «продолжение обучения») — не путать со scaffold-лейблом; проверять именно «заметки (продолжение)»/«(продолжение».
+- **Результат:** lec-01 36→54 стр, lec-02 35→57, lec-03 40→67, lec-04 41→72.
+- **Severity:** N/A (техника). **Status:** working-pattern (rewrite, аргумент — папка лекции).
+- **First seen in:** notes-PDF owner-spec rewrite (2026-08-30).
+
+### [#170-3] Мелкие надстрочные [N]-ref-маркеры: post-hoc run-split через lxml (обход #54-2/#55-3 inline-runs)
+
+- **Tool:** `python-pptx` (прямой build-скрипт, не MCP) — техника, а не баг.
+- **Контекст:** нужно, чтобы [N]-ссылочные маркеры внутри готового body-текста
+  были «существенно меньше» основного (≈50–55%), надстрочными и приглушёнными,
+  БЕЗ переписывания сотни `text_box`/`text_runs`-вызовов с baked-in `[N]`.
+  MCP `format_runs` для inline-эмфазиса ломает paragraph (#54-2), а строить
+  каждый run вручную — неподъёмно при масштабе.
+- **Приём (reusable):** после построения text_frame пройтись по `paragraphs`→
+  `runs`, найти `[\d+(?:[,–-]\d+)*]` в тексте run'а, разрезать run: хвост-текст
+  остаётся, а маркер вставляется НОВЫМ `<a:r>` сразу после через lxml
+  (`etree.SubElement(anchor_r.getparent(), qn a:r)` + `anchor_r.addnext(new_r)`),
+  с `rPr`:
+  - `sz = round(base_pt * 0.52 * 100)` (сотые pt),
+  - `baseline="30000"` (30% надстрочность),
+  - `<a:solidFill><a:srgbClr val="1C7293"/>` (muted), `i="1"`.
+  Клонировать шрифт (`latin/cs/ea typeface`) и цвет исходного run'а для
+  «между-маркерного» текста. Проверено: 13.5pt-body → маркер `sz=702` (7.02pt)
+  с `baseline=30000` рендерится LibreOffice→PDF корректно как мелкий надстрочный.
+- **Где применено:** `library/lectures/lec-04/rendered/_helpers.py`
+  (`shrink_refs_in_frame`, авто-вызов в `text_box`/`text_runs`; `gold_callout`/
+  `teal_callout` покрыты транзитивно). Позволяет одной правкой хелпера
+  «уменьшить все [N]» на 41-слайдовом deck.
+- **Severity:** N/A (техника). **Status:** working-pattern.
+- **First seen in:** #170 lec-04 v4.1 ref-completion (2026-08-30).
 
 ### [#157-1] Render toolchain (libreoffice/pdftoppm/rsvg) отсутствует в PATH — есть standalone bundle в /tmp/claude-999/local
 
@@ -555,3 +659,55 @@ _Пока не обнаружено._
 - **Audit result (2026-08-11):** confirmed via `grep -A20 "^def add_image"` across all `library/lectures/lec-*/rendered/build_lec*.py` — **13 of 14** lecture build scripts still carry the buggy version (lec-01, lec-04 through lec-13, lec-15, lec-17). Only lec-02 is fixed. None of these were in scope for issue #156; flagging for a future dedicated fix/backport pass.
 - **Status:** active (fixed in lec-02's copy only; other 13 lectures' copies not yet checked/patched).
 - **First seen in:** #156 (lec-02 polish pass, s01 hook redesign, 2026-08-11).
+
+### [#170-1] LibreOffice PDF export `Io Class:Abort/NotExists` from a corrupted default profile — needs isolated UserInstallation
+
+- **Tool:** portable LibreOffice headless (`--convert-to pdf`) in the Visual Loop.
+- **Symptom:** After several successful conversions in one session, `soffice
+  --headless --convert-to pdf --outdir snapshots lec-NN.pptx` starts failing with
+  `Error: Please verify input parameters... (SfxBaseModel::impl_store ... failed:
+  0x11b Io Class:Abort Code:27)` and later `0x302 Io Class:NotExists Code:2` — the
+  PDF is never written, and `render.sh` silently produces no PNGs (exit swallowed).
+  The pptx itself is valid (opens fine; `python-pptx` counts all slides).
+- **Root cause:** the shared default LibreOffice user profile (under the overridden
+  `$HOME=/tmp/claude-999`) gets into a locked/corrupted state across repeated
+  headless invocations; the store step then aborts on the output path.
+- **Severity:** P1 (blocks the entire generate→inspect loop until diagnosed; the
+  silent-no-output failure mode makes it look like "nothing rendered").
+- **Workaround:** pass a per-lecture isolated profile and a fresh scratch outdir on
+  every convert:
+  ```bash
+  soffice --headless -env:UserInstallation=file:///tmp/claude-999/loprofile_lecNN \
+    --convert-to pdf --outdir /tmp/claude-999/lecNN-snap lec-NN.pptx
+  ```
+  Then render pages with pymupdf. Codified in `/tmp/claude-999/lec04-build/render.sh`.
+- **Related (image blank):** LibreOffice renders 8-bit **colormap/palette PNGs**
+  (e.g. arXiv/blog og:image) as a **blank** picture even though `python-pptx`
+  embeds them correctly. Convert acquired heroes to clean **RGB** and downsize
+  (<200 KB) with Pillow before `add_picture` — fixes both the blank render and
+  the `Io:Abort` (oversized 5 MB media pushed the store step over the edge).
+- **Status:** active (workaround reliable, verified end-to-end 2026 lec-04 v3 render).
+- **First seen in:** #170 (lec-04 SDLC re-spine, 37-slide render).
+
+### [#170-2] Render script sets `HOME=/tmp/claude-999` for LibreOffice → drops user-site → pymupdf ImportError
+
+- **Tool:** `render.sh` pipeline (portable `soffice` PDF export + `pymupdf` PDF→PNG).
+- **Symptom:** After `export HOME=/tmp/claude-999` (needed so LibreOffice writes
+  its profile into scratch, not real home), the subsequent `python3` step that
+  uses `pymupdf` fails with `ModuleNotFoundError: No module named 'pymupdf'`,
+  even though the same interpreter imports it fine without the `HOME` override.
+- **Root cause:** same mechanism as [#sem03-render-1] — Python derives its
+  user-site-packages path from `$HOME` (`~/.local/lib/python3.X/site-packages`);
+  in this harness `pymupdf`/`python-pptx` live under the *account* dir
+  `/home/harness/harness-control-data/accounts/256/claude-code-...
+  /.local/lib/python3.12/site-packages`, which is dropped once `$HOME` is
+  overridden.
+- **Severity:** P1 (silent — the render.sh here swallowed the traceback and
+  produced 0 PNGs, looking like "nothing rendered").
+- **Workaround:** in `render.sh`, in addition to `HOME`, `export PYTHONPATH=`
+  pointing at the account's real `.local/lib/python3.12/site-packages` before the
+  pymupdf step. Do NOT chain `python3 build_lecNN.py` in the same `HOME`-overridden
+  shell (build with plain `$HOME` first, then render). Codified in
+  `library/lectures/lec-04/rendered/render.sh`.
+- **Status:** active (workaround reliable, verified lec-04 v4 40-slide render 2026-08-30).
+- **First seen in:** #170 (lec-04 v4 methodology-first render).

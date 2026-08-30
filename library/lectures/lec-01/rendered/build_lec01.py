@@ -66,7 +66,7 @@ DARK_GREY = RGBColor(0x4A, 0x55, 0x6B)
 # === Constants ===
 SLIDE_W_IN = 13.333
 SLIDE_H_IN = 7.5
-ROOT = Path("/home/harness/harness-projects/256/lessons-3bb49d40/library/lectures/lec-01")
+ROOT = Path(__file__).resolve().parents[1]      # library/lectures/lec-01 (worktree-relative)
 ASSETS = ROOT / "rendered/assets"
 SLIDES_DIR = ROOT / "slides"
 OUT = ROOT / "rendered/lec-01.pptx"
@@ -104,6 +104,91 @@ def disable_shadow(shp):
     etree.SubElement(sppr, "{http://schemas.openxmlformats.org/drawingml/2006/main}effectLst")
 
 
+# ============================================================
+# Reference system (ported from lec-04 _helpers.py, issue #170).
+# Small superscript muted [N] markers inside body text + a bottom clickable
+# numbered source list + «Источники:» block in speaker notes. All URLs come
+# ONLY from URLS (reference-registry.md); volatile → [VFY-day-of] in notes.
+# ============================================================
+_REF_RE = re.compile(r'\[\d+(?:\s*[,–—-]\s*\d+)*\]')
+_AMAIN = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
+
+
+def _run_props(src_run):
+    f = src_run.font
+    sz = f.size
+    return {
+        "name": f.name,
+        "size_pt": (sz.pt if sz is not None else None),
+        "bold": f.bold,
+        "italic": f.italic,
+        "color": (f.color.rgb if (f.color and f.color.type is not None) else None),
+    }
+
+
+def _clone_run_after(anchor_r, props, text, *, ref=False,
+                     ref_frac=0.52, ref_color=None):
+    """Insert a new <a:r> right after anchor_r with cloned props (or a small
+    superscript muted variant when ref=True)."""
+    if ref_color is None:
+        ref_color = LIGHT
+    new_r = etree.SubElement(anchor_r.getparent(), _AMAIN + "r")
+    anchor_r.addnext(new_r)
+    rpr = etree.SubElement(new_r, _AMAIN + "rPr")
+    base = props["size_pt"] or 16.0
+    if ref:
+        rpr.set("sz", str(int(round(base * ref_frac * 100))))
+        rpr.set("baseline", "30000")
+        rpr.set("b", "0")
+        rpr.set("i", "1")
+    else:
+        if props["size_pt"] is not None:
+            rpr.set("sz", str(int(round(base * 100))))
+        if props["bold"] is not None:
+            rpr.set("b", "1" if props["bold"] else "0")
+        if props["italic"] is not None:
+            rpr.set("i", "1" if props["italic"] else "0")
+    if props["name"]:
+        for tag in ("latin", "cs", "ea"):
+            el = etree.SubElement(rpr, _AMAIN + tag)
+            el.set("typeface", props["name"])
+    col = ref_color if ref else props["color"]
+    if col is not None:
+        fill = etree.SubElement(rpr, _AMAIN + "solidFill")
+        clr = etree.SubElement(fill, _AMAIN + "srgbClr")
+        clr.set("val", str(col))
+    t = etree.SubElement(new_r, _AMAIN + "t")
+    t.text = text
+    return new_r
+
+
+def shrink_refs_in_frame(text_frame, *, ref_frac=0.52, ref_color=None):
+    """Split every [N] marker inside the frame into a small superscript muted
+    run. Non-destructive to surrounding text formatting."""
+    if ref_color is None:
+        ref_color = LIGHT
+    for para in text_frame.paragraphs:
+        for run in list(para.runs):
+            txt = run.text
+            if not txt or "[" not in txt:
+                continue
+            matches = list(_REF_RE.finditer(txt))
+            if not matches:
+                continue
+            props = _run_props(run)
+            run.text = txt[:matches[0].start()]
+            anchor = run._r
+            for i, m in enumerate(matches):
+                anchor = _clone_run_after(anchor, props, m.group(),
+                                          ref=True, ref_frac=ref_frac,
+                                          ref_color=ref_color)
+                nxt = matches[i + 1].start() if i + 1 < len(matches) else len(txt)
+                between = txt[m.end():nxt]
+                if between:
+                    anchor = _clone_run_after(anchor, props, between, ref=False)
+    return text_frame
+
+
 def text_box(slide, x, y, w, h, text, *,
              size=16, bold=False, italic=False, color=DEEP,
              align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP,
@@ -122,6 +207,7 @@ def text_box(slide, x, y, w, h, text, *,
     r.font.name = font; r.font.size = Pt(size)
     r.font.bold = bold; r.font.italic = italic
     r.font.color.rgb = color
+    shrink_refs_in_frame(tf)
     return tb
 
 
@@ -149,6 +235,7 @@ def text_runs(slide, x, y, w, h, runs, *,
         r.font.bold = cfg.get("bold", False)
         r.font.italic = cfg.get("italic", False)
         r.font.color.rgb = cfg.get("color", DEEP)
+    shrink_refs_in_frame(tf)
     return tb
 
 
@@ -241,9 +328,26 @@ def gold_callout(slide, x, y, w, h, text, *, size=15, bold=True):
 
 
 def speaker_notes(slide, text):
-    notes = slide.notes_slide
-    tf = notes.notes_text_frame
-    tf.text = text
+    """Write notes as readable PARAGRAPHS (lec-04 pattern): split on blank
+    lines → one notes-paragraph each; the «Источники:» block keeps its own
+    hard line breaks so each [N] URL sits on its own line."""
+    tf = slide.notes_slide.notes_text_frame
+    tf.clear()
+    blocks = [b.strip() for b in re.split(r'\n\s*\n', text.strip()) if b.strip()]
+    if not blocks:
+        blocks = [""]
+    for i, block in enumerate(blocks):
+        if block.lstrip().startswith("Источники:"):
+            lines = [ln.rstrip() for ln in block.split("\n")]
+            para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+            para.text = lines[0]
+            for ln in lines[1:]:
+                sub = tf.add_paragraph()
+                sub.text = ln
+            continue
+        one = re.sub(r'\s*\n\s*', ' ', block)
+        para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        para.text = one
 
 
 def eyebrow_pill(slide, text):
@@ -279,6 +383,472 @@ def load_notes(slide_id):
     # Strip any trailing horizontal rule
     notes = re.sub(r'\n+---\s*$', '', notes)
     return notes.strip()
+
+
+# ============================================================
+# Canonical URL registry (issue #170) — keyed by short id.
+# Source: notes/research/lecture-1/reference-registry.md §URLS.
+# Only URLs from that map are used. Volatile ones get [VFY-day-of] in notes.
+# Флаг 1: github_octoverse URL is canonical, but the «46% кода» claim is NOT
+# confirmed by that report → the claim carries [VFY] in the s08 notes and the
+# ref is NOT presented as proof of the 46% figure specifically.
+# ============================================================
+URLS = {
+    # --- s00b / s08 macro-context ---
+    "gartner_2024": "https://www.gartner.com/en/newsroom/press-releases/2024-10-03-gartner-says-generative-ai-will-require-80-percent-of-engineering-workforce-to-upskill-through-2027",
+    "cnews_vedomosti": "https://www.vedomosti.ru/technology/articles/2026/03/24/1184974-biznes-svernul-ili-otlozhil-9-iz-10-proektov-po-vnedreniyu-generativnogo-ii",
+    # --- s01 demo ---
+    "yolov8": "https://docs.ultralytics.com/models/yolov8/",
+    "mediapipe": "https://ai.google.dev/edge/mediapipe/solutions/guide",
+    # --- s06 / s07 / s12 definitions & history ---
+    "aima": "https://aima.cs.berkeley.edu/",
+    "iso_22989": "https://www.iso.org/standard/74296.html",
+    "mitchell": "https://www.cs.cmu.edu/~tom/mlbook.html",
+    "mccorduck": "https://www.google.com/books/edition/Machines_Who_Think/dPGij4vsHKgC",
+    "mcculloch_pitts": "https://doi.org/10.1007/BF02478259",
+    "vaswani": "https://arxiv.org/abs/1706.03762",
+    "dhar": "https://doi.org/10.1145/3664804",
+    "goodfellow": "https://www.deeplearningbook.org/",
+    # --- s08 scale ---
+    "so_2025": "https://survey.stackoverflow.co/2025",
+    "openai_wau": "https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/",
+    "github_octoverse": "https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/",
+    "gvr": "https://www.grandviewresearch.com/industry-analysis/artificial-intelligence-ai-market",
+    # --- s09 breakthroughs ---
+    "mistral_7b": "https://mistral.ai/news/announcing-mistral-7b",
+    "deepseek_r1": "https://arxiv.org/abs/2501.12948",
+    "semianalysis": "https://semianalysis.com/2025/01/31/deepseek-debates/",
+    "bloomberg_deepseek": "https://www.bloomberg.com/news/articles/2025-01-27/asml-sinks-as-china-ai-startup-triggers-panic-in-tech-stocks",
+    "openclaw": "https://github.com/openclaw/openclaw",
+    "llamacpp": "https://github.com/ggml-org/llama.cpp",
+    # --- s11 / s13 / s16 / s18 / s20 / s21 agents ---
+    "anthropic_agents": "https://www.anthropic.com/research/building-effective-agents",
+    "weng": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+    "mcp": "https://www.anthropic.com/news/model-context-protocol",
+    "react": "https://arxiv.org/abs/2210.03629",
+    "autonomy_levels": "https://arxiv.org/abs/2506.12469",
+    "google_agents_wp": "https://www.kaggle.com/whitepaper-agents",
+    "ng_patterns": "https://www.deeplearning.ai/the-batch/how-agents-can-improve-llm-performance/",
+    # --- s15 model ---
+    "kreuzberger": "https://arxiv.org/abs/2205.02302",
+    "alphafold": "https://doi.org/10.1038/s41586-021-03819-2",
+    # --- s17 chat ---
+    "vciom": "https://wciom.ru/analytical-reviews/analiticheskii-obzor/neiroseti-v-nashei-zhizni",
+    "dam": "https://arxiv.org/abs/2406.16937",
+    # --- s20 application ---
+    "google_translate": "https://blog.google/products-and-platforms/products/translate/fun-facts-google-translate-20-years/",
+    # --- s22 / s23 boundaries & governance ---
+    "nist_rmf": "https://www.nist.gov/itl/ai-risk-management-framework",
+    "nist_600": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+    "eu_ai_act": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng",
+    "bloomberg_samsung": "https://www.bloomberg.com/news/articles/2023-05-02/samsung-bans-chatgpt-and-other-generative-ai-use-by-staff-after-leak",
+    "openai_terms": "https://openai.com/enterprise-privacy/",
+    # --- s24 hallucinations ---
+    "huang": "https://arxiv.org/abs/2311.05232",
+    "ji": "https://doi.org/10.1145/3571730",
+    "vectara": "https://github.com/vectara/hallucination-leaderboard",
+    "cybsafe": "https://www.staysafeonline.org/articles/oh-behave-the-annual-cybersecurity-attitudes-and-behaviors-report-2025",
+    # --- s25 bias/sycophancy ---
+    "sycophancy": "https://openai.com/index/sycophancy-in-gpt-4o/",
+    "reward_misspec": "https://arxiv.org/abs/2201.03544",
+    # --- s26 AGI ---
+    "searle": "https://doi.org/10.1017/S0140525X00005756",
+    "bostrom": "https://global.oup.com/academic/product/superintelligence-9780199678112",
+}
+
+
+# ============================================================
+# Per-slide source registry — drives BOTH the bottom clickable [N] list AND
+# the «Источники:» block in the speaker notes, so slide-[N] and notes-[N] can
+# never diverge. Entry: (num, short_name, urlkey, gloss[, volatile]).
+# volatile → «[VFY-day-of]» appended in notes only.
+# ============================================================
+SLIDE_REFS = {
+    "s00b": [
+        ("1", "Gartner — пресс-релиз (окт 2024)", "gartner_2024",
+         "80% инженерных работников должны осваивать GenAI к 2027", True),
+        ("2", "Vedomosti / Intellectual Analytics (мар 2026)", "cnews_vedomosti",
+         "9 из 10 корпоративных GenAI-пилотов в РФ свёрнуты/отложены (n=50 крупных орг.)", True),
+    ],
+    "s01": [
+        ("1", "Ultralytics — YOLOv8 (2023)", "yolov8",
+         "narrow-модель детекции; локальный inference ~30 fps на CPU без интернета"),
+        ("2", "Google — MediaPipe", "mediapipe",
+         "on-device real-time ML pipelines — класс локальных narrow-решений"),
+    ],
+    "s06": [
+        ("1", "Russell & Norvig — AIMA, 4-е изд. (2021)", "aima",
+         "4 определения по 2 осям (думать/действовать × человекоподобно/рационально)"),
+        ("2", "ISO/IEC 22989:2022", "iso_22989",
+         "AI-система = engineered system для человеко-заданных целей; опора EU AI Act"),
+        ("3", "Mitchell — Machine Learning (1997)", "mitchell",
+         "функциональное определение: поведение из обученной модели = AI"),
+        ("4", "Searle — Chinese Room (1980) / Turing (1950)", "searle",
+         "AI Effect + возражение Сёрла: поведение на бенчмарке ≠ понимание"),
+    ],
+    "s06a": [
+        ("1", "McCulloch & Pitts (1943)", "mcculloch_pitts",
+         "формальный нейрон как логический элемент — на 13 лет раньше термина «AI»"),
+    ],
+    "s07": [
+        ("1", "Vaswani et al. — Attention Is All You Need (2017)", "vaswani",
+         "Трансформер + self-attention; >160K цитирований (май 2026) — точка перелома", True),
+        ("2", "McCorduck — Machines Who Think (2004)", "mccorduck",
+         "AI Effect через исторические примеры остывания задач до «просто функции»"),
+        ("3", "Dhar — Paradigm Shifts in AI, CACM (2024)", "dhar",
+         "смена парадигм AI как рамка для чтения таймлайна"),
+    ],
+    "s08": [
+        ("1", "Stack Overflow — Developer Survey 2025", "so_2025",
+         "n=49k+/177 стран; 51% профи ежедневно, 84% используют/планируют, 46% не доверяют коду"),
+        ("2", "OpenAI — ChatGPT WAU (фев 2026)", "openai_wau",
+         "~900M weekly active users — AI как инфраструктура", True),
+        ("3", "GitHub — Octoverse 2025", "github_octoverse",
+         "adoption Copilot; ВНИМАНИЕ: «46% кода» этим отчётом НЕ подтверждается [VFY]", True),
+        ("4", "Grand View Research (2026)", "gvr",
+         "AI-рынок $390.9B (2025) → $539.5B (2026), CAGR 30.6%", True),
+        ("5", "Vedomosti / Intellectual Analytics (мар 2026)", "cnews_vedomosti",
+         "контр-факт: ~9 из 10 пилотов РФ не доходят до прода (n=50)", True),
+        ("6", "Gartner — пресс-релиз (окт 2024)", "gartner_2024",
+         "80% инженеров осваивают GenAI к 2027", True),
+    ],
+    "s09": [
+        ("1", "Mistral AI — Announcing Mistral 7B (сен 2023)", "mistral_7b",
+         "Apache 2.0, обходит Llama-2 13B — малая команда уровня лидеров"),
+        ("2", "DeepSeek-R1 — тех.отчёт (янв 2025)", "deepseek_r1",
+         "reasoning уровня o1; 97.3% MATH-500; спорная себестоимость"),
+        ("3", "SemiAnalysis — DeepSeek cost analysis (2025)", "semianalysis",
+         "полная инфра $1.3–1.6B vs marginal train run V3 $5.6M — разные числа", True),
+        ("4", "Bloomberg — Nvidia $589B drop (27 янв 2025)", "bloomberg_deepseek",
+         "крупнейшая однодневная потеря капитализации в истории", True),
+        ("5", "Steinberger — OpenClaw (GitHub)", "openclaw",
+         "соло open-source агент, 100K★ за квартал; rename-churn", True),
+        ("6", "Gerganov — llama.cpp / ggml.ai", "llamacpp",
+         "соло→HF (фев 2026), 100K+★ быстрее PyTorch/TensorFlow", True),
+    ],
+    "s11": [
+        ("1", "Anthropic — Building Effective Agents (2024)", "anthropic_agents",
+         "слоистая эскалация: простейшее решение → наращивать при необходимости"),
+        ("2", "Weng — LLM Powered Autonomous Agents (2023)", "weng",
+         "Agent = LLM + Memory + Planning + Tool Use — верх слоистой модели"),
+    ],
+    "s12": [
+        ("1", "Russell & Norvig — AIMA (2021)", "aima",
+         "классификация AI-систем как рабочий язык курса"),
+        ("2", "Goodfellow, Bengio, Courville — Deep Learning (2016)", "goodfellow",
+         "модальности и типы задач в терминах DL"),
+    ],
+    "s13": [
+        ("1", "Anthropic — Building Effective Agents (2024)", "anthropic_agents",
+         "распределение контроля разработчик↔пользователь по мере делегирования"),
+    ],
+    "s15": [
+        ("1", "Kreuzberger et al. — MLOps (2023)", "kreuzberger",
+         "pre/post-processing вокруг модели — ответственность разработчика"),
+        ("2", "Jumper et al. — AlphaFold, Nature (2021)", "alphafold",
+         "канонический пример модели-прогноза; Нобель по химии 2024"),
+    ],
+    "s16": [
+        ("1", "Anthropic — Building Effective Agents (2024)", "anthropic_agents",
+         "системный промпт как инженерный рычаг; контекст собирается заново каждый шаг"),
+    ],
+    "s17": [
+        ("1", "ВЦИОМ — «Нейросети в жизни россиян» (окт 2025)", "vciom",
+         "проникновение AI-чатов в РФ; 51% пользуются раз в неделю+", True),
+        ("2", "Dam et al. — Survey on LLM-based AI Chatbots (2024)", "dam",
+         "таксономия LLM-чатов; чистые чаты редки в проде (расширены до агентов)"),
+    ],
+    "s18": [
+        ("1", "Weng — LLM Powered Autonomous Agents (2023)", "weng",
+         "Agent = LLM + Memory + Planning + Tool Use"),
+        ("2", "Anthropic — Building Effective Agents (2024)", "anthropic_agents",
+         "оркестратор + инструменты + внешняя память как слой над чатом"),
+        ("3", "Anthropic — Model Context Protocol (2024)", "mcp",
+         "стандарт подключения инструментов/данных к агенту"),
+    ],
+    "s19": [
+        ("1", "Yao et al. — ReAct (2022)", "react",
+         "Reasoning+Acting: план→действие→наблюдение→рефлексия с явным инструментом на шаге"),
+    ],
+    "s19a": [
+        ("1", "Feng, McDonald, Zhang — Levels of Autonomy (2025)", "autonomy_levels",
+         "5 уровней по роли пользователя: operator→collaborator→consultant→approver→observer"),
+    ],
+    "s20": [
+        ("1", "Google — Translate at 20 (2026)", "google_translate",
+         "1B+ польз./мес, ~1T слов/мес across Translate/Search/Lens — AI как функция", True),
+        ("2", "Anthropic — Building Effective Agents (2024)", "anthropic_agents",
+         "приложение как внешний слой: промпты скрыты, детерминированный UI"),
+    ],
+    "s21": [
+        ("1", "Anthropic — Building Effective Agents (2024)", "anthropic_agents",
+         "выбор типа реализации по 2 осям: взаимодействие × инструменты"),
+        ("2", "Google — AI Agents Whitepaper (2024)", "google_agents_wp",
+         "Model + Tools + Orchestration Layer — рамка квадранта"),
+        ("3", "Ng — Four Agentic Design Patterns (2024)", "ng_patterns",
+         "паттерны Reflection/Tool Use/Planning/Multi-Agent — когда нужен агент"),
+    ],
+    "s22": [
+        ("1", "NIST — AI RMF 1.0 (2023)", "nist_rmf",
+         "рамка управления рисками AI — граница ответственности инженера"),
+        ("2", "NIST — Generative AI Profile 600-1 (2024)", "nist_600",
+         "профиль рисков GenAI"),
+        ("3", "EU AI Act — Reg. (EU) 2024/1689", "eu_ai_act",
+         "регуляторная рамка; штрафы до 35M€/7%"),
+    ],
+    "s23": [
+        ("1", "Bloomberg — Samsung bans ChatGPT (май 2023)", "bloomberg_samsung",
+         "3 утечки за месяц → запрет внешнего GenAI; данные в consumer-датасете"),
+        ("2", "OpenAI — Enterprise Privacy / data usage (2025)", "openai_terms",
+         "consumer = обучение по умолчанию; API с мар 2023 не обучается на данных"),
+        ("3", "EU AI Act — Reg. (EU) 2024/1689", "eu_ai_act",
+         "штрафы: стандарт до 15M€/3%, верх до 35M€/7%"),
+    ],
+    "s24": [
+        ("1", "Huang et al. — Survey on Hallucination in LLMs (2023)", "huang",
+         "галлюцинация = уверенное порождение неверного, неотличимого от верного"),
+        ("2", "Ji et al. — Survey of Hallucination in NLG (2023)", "ji",
+         "таксономия галлюцинаций в генерации"),
+        ("3", "Vectara — HHEM Leaderboard", "vectara",
+         "диапазон <1% (суммаризация) → 10–15% (reasoning) — цифра зависит от задачи", True),
+        ("4", "CybSafe / NCA — Oh Behave! (2024–25)", "cybsafe",
+         "n=7000/7 стран: ~38% делятся конфиденциальным без ведома работодателя"),
+    ],
+    "s25": [
+        ("1", "OpenAI — Sycophancy in GPT-4o postmortem (2025)", "sycophancy",
+         "релиз 25 апр → откат 28 апр → разбор 29 апр; RLHF-переоценка приятных ответов"),
+        ("2", "Pan et al. — Reward Misspecification (2022)", "reward_misspec",
+         "reward hacking — общая природа: модель отражает данные/разметку"),
+    ],
+    "s26": [
+        ("1", "Searle — Minds, Brains, and Programs (1980)", "searle",
+         "Chinese Room: бенчмарк-эквивалентность ≠ понимание; narrow vs general"),
+        ("2", "Bostrom — Superintelligence (2014)", "bostrom",
+         "рамка долгосрочных AGI/ASI-сценариев для критического чтения прогнозов"),
+    ],
+}
+
+
+# ============================================================
+# Inline [N] injection into speaker notes — attach the marker right after the
+# already-named textual attribution in each note (the notes name sources in
+# words: «по бенчмарку Vectara», «Feng, McDonald, Zhang 2025» …). ORDER
+# matters: longer/earlier phrases first. Each entry: (phrase, "[N]").
+# The marker is inserted AFTER the first occurrence of phrase in the note body.
+# ============================================================
+NOTES_INLINE = {
+    "s00b": [
+        ("Gartner", "[1]"),
+        ("пилот", "[2]"),
+    ],
+    "s01": [
+        ("YOLOv8", "[1]"),
+    ],
+    "s06": [
+        ("Russell & Norvig", "[1]"),
+        ("ISO/IEC 22989", "[2]"),
+        ("Mitchell", "[3]"),
+        ("Сёрла", "[4]"),
+    ],
+    "s06a": [
+        ("Уолтер Питтс", "[1]"),
+    ],
+    "s07": [
+        ("Трансформер", "[1]"),
+        ("AI Effect", "[2]"),
+    ],
+    "s08": [
+        ("девятисот миллионов еженедельно активных пользователей", "[2]"),
+        ("до сорока шести процентов кода написано AI", "[3] [VFY]"),
+        ("Stack Overflow Developer Survey 2025", "[1]"),
+        ("Grand View Research, 2026", "[4]"),
+        ("Intellectual Analytics", "[5]"),
+    ],
+    "s09": [
+        ("Mistral 7B превзошёл Llama-2 13B", "[1]"),
+        ("MATH-500", "[2]"),
+        ("SemiAnalysis", "[3]"),
+        ("капитализация Nvidia упала на пятьсот восемьдесят девять миллиардов", "[4]"),
+        ("OpenClaw", "[5]"),
+        ("llama.cpp", "[6]"),
+    ],
+    "s11": [
+        ("слоист", "[1]"),
+        ("Agent", "[2]"),
+    ],
+    "s12": [
+        ("классификаци", "[1]"),
+    ],
+    "s13": [
+        ("контрол", "[1]"),
+    ],
+    "s15": [
+        ("AlphaFold", "[2]"),
+    ],
+    "s16": [
+        ("системный промпт", "[1]"),
+    ],
+    "s17": [
+        ("ВЦИОМ", "[1]"),
+        ("расширен до агента", "[2]"),
+    ],
+    "s18": [
+        ("оркестратор", "[2]"),
+    ],
+    "s19": [
+        ("последовательность вызов", "[1]"),
+    ],
+    "s19a": [
+        ("Фэн, Макдональд и Чжан", "[1]"),
+    ],
+    "s20": [
+        ("Google", "[1]"),
+    ],
+    "s21": [
+        ("Два диагностических вопроса", "[1] [2] [3]"),
+    ],
+    "s22": [
+        ("границ", "[1] [2] [3]"),
+    ],
+    "s23": [
+        ("Samsung", "[1]"),
+        ("Enterprise", "[2]"),
+        ("EU AI Act", "[3]"),
+    ],
+    "s24": [
+        ("Vectara Hughes Hallucination Evaluation Model", "[3]"),
+        ("CybSafe", "[4]"),
+    ],
+    "s25": [
+        ("апрель 2025", "[1]"),
+        ("разметк", "[2]"),
+    ],
+    "s26": [
+        ("narrow AI", "[1]"),
+        ("Anthropic", "[2]"),
+    ],
+}
+
+
+def _resolve_refs(sid):
+    out = []
+    for entry in SLIDE_REFS.get(sid, []):
+        num, name, urlkey, gloss = entry[0], entry[1], entry[2], entry[3]
+        volatile = len(entry) > 4 and entry[4]
+        out.append((num, name, URLS.get(urlkey, ""), gloss, volatile))
+    return out
+
+
+def ref_list(slide, entries, *, y=6.95, x=0.55, w=12.25, h=0.50,
+             size=8.5, color=LIGHT, line_spacing=1.02):
+    """Bottom numbered CLICKABLE source list. entries: (num, name, url).
+    Renders «[N] name» where name is a hyperlink. Muted, italic, small."""
+    tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
+    tf = tb.text_frame
+    tf.margin_left = Inches(0.0); tf.margin_right = Inches(0.0)
+    tf.margin_top = Inches(0.0); tf.margin_bottom = Inches(0.0)
+    tf.word_wrap = True
+    tf.vertical_anchor = MSO_ANCHOR.TOP
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.LEFT
+    p.line_spacing = line_spacing
+    for i, (num, name, url) in enumerate(entries):
+        rm = p.add_run()
+        rm.text = f"[{num}] "
+        rm.font.name = FONT_BODY; rm.font.size = Pt(size)
+        rm.font.bold = True; rm.font.italic = True
+        rm.font.color.rgb = MID
+        rn = p.add_run()
+        rn.text = name
+        rn.font.name = FONT_BODY; rn.font.size = Pt(size)
+        rn.font.italic = True
+        rn.font.color.rgb = color
+        if url:
+            try:
+                rn.hyperlink.address = url
+            except Exception:
+                pass
+        if i < len(entries) - 1:
+            rs = p.add_run()
+            rs.text = "   ·   "
+            rs.font.name = FONT_BODY; rs.font.size = Pt(size)
+            rs.font.italic = True
+            rs.font.color.rgb = color
+    return tb
+
+
+def refs_of_slide(slide, sid, *, y=None, size=8.5):
+    """Bottom clickable [N] list for a display slide, sourced from SLIDE_REFS.
+    Rendered in a uniform footer band (y≈7.10) opened by nudging each slide's
+    bottom callout/takeaway up (see build_sNN). Skips if no registry entry."""
+    resolved = _resolve_refs(sid)
+    if not resolved:
+        return None
+    entries = [(num, name, url) for (num, name, url, gloss, vol) in resolved]
+    yy = y if y is not None else 7.06
+    sz = size if len(entries) <= 4 else 7.6
+    return ref_list(slide, entries, y=yy, size=sz, h=0.32)
+
+
+def page_number(slide, n, total=None, *, color=SLATE):
+    """Small muted page-number stamp in the bottom-right corner («N / TOTAL»).
+    Applied to every slide by the assembler so all slides carry it."""
+    txt = f"{n} / {total}" if total else str(n)
+    tb = slide.shapes.add_textbox(Inches(12.33), Inches(7.16), Inches(0.95),
+                                  Inches(0.28))
+    tf = tb.text_frame
+    tf.margin_left = Inches(0.0); tf.margin_right = Inches(0.0)
+    tf.margin_top = Inches(0.0); tf.margin_bottom = Inches(0.0)
+    tf.word_wrap = False
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.RIGHT
+    p.line_spacing = 1.0
+    r = p.add_run()
+    r.text = txt
+    r.font.name = FONT_BODY
+    r.font.size = Pt(10)
+    r.font.italic = True
+    r.font.color.rgb = color
+    return tb
+
+
+def notes_sources_block(sid):
+    """Build the «Источники:» text block for the speaker notes: numbered [N] +
+    FULL URL + one gloss phrase; volatile → [VFY-day-of]. "" if no entry."""
+    resolved = _resolve_refs(sid)
+    if not resolved:
+        return ""
+    lines = ["Источники:"]
+    for (num, name, url, gloss, vol) in resolved:
+        vfy = " [VFY-day-of]" if vol else ""
+        lines.append(f"[{num}] {name} — {gloss}. {url}{vfy}")
+    return "\n".join(lines)
+
+
+def _inject_inline_refs(sid, body):
+    """Insert inline [N] markers after the named textual attributions in the
+    note body (NOTES_INLINE map). Idempotent-ish: inserts after the FIRST
+    occurrence of each phrase that does not already carry the marker."""
+    for phrase, marker in NOTES_INLINE.get(sid, []):
+        idx = body.find(phrase)
+        if idx < 0:
+            continue
+        end = idx + len(phrase)
+        # skip if the marker already immediately follows
+        if body[end:end + len(marker) + 1].strip().startswith(marker):
+            continue
+        body = body[:end] + " " + marker + body[end:]
+    return body
+
+
+def notes_with_sources(slide, sid):
+    """Write speaker notes (paragraph-formatted) with inline [N] injected at
+    named attributions AND the «Источники:» block appended. Single call
+    replaces speaker_notes(slide, load_notes(sid))."""
+    body = _inject_inline_refs(sid, load_notes(sid))
+    block = notes_sources_block(sid)
+    text = f"{body}\n\n{block}" if block else body
+    speaker_notes(slide, text)
 
 
 # ============================================================
@@ -428,6 +998,7 @@ def build_s01(p):
         {"text": ".", "size": 15, "color": DEEP},
         {"newpara": True, "text": "Без интернета", "size": 15, "color": TEAL, "bold": True},
         {"text": "  ·  обучена в 2023.", "size": 15, "color": DEEP},
+        {"text": " [2]", "size": 15, "color": DEEP},
     ], line_spacing=1.35)
     # Right column — Ocean rounded box framing the YOLO mock screenshot
     box_x, box_y, box_w, box_h = 6.55, 0.55, 6.3, 4.4
@@ -439,9 +1010,10 @@ def build_s01(p):
     img_y = box_y + (box_h - img_h) / 2.0
     add_image(s, ASSETS / "illustrations/s01-yolo-mock.png", img_x, img_y, img_w, img_h)
     text_box(s, x=box_x, y=box_y + box_h + 0.05, w=box_w, h=0.4,
-             text="Кадр модели в момент демо: 2 человека в боксах. YOLOv8 (Ultralytics, 2023).",
+             text="Кадр модели в момент демо: 2 человека в боксах. YOLOv8 (Ultralytics, 2023). [1]",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s01"))
+    refs_of_slide(s, "s01")
+    notes_with_sources(s, "s01")
 
 
 def build_s00a(p):
@@ -498,7 +1070,7 @@ def build_s00b(p):
              size=18, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.10)
     text_box(s, x=fun_x, y=bot_y + blk_h + 0.15, w=fun_w, h=0.5,
-             text="Иллюстрация принципа (Gartner, McKinsey подтверждают похожие цифры).",
+             text="Иллюстрация принципа (Gartner, McKinsey подтверждают похожие цифры). [1]",
              size=11, italic=True, color=LIGHT, align=PP_ALIGN.CENTER, line_spacing=1.30)
     # Right: takeaway + central question
     right_x = 6.3
@@ -508,7 +1080,7 @@ def build_s00b(p):
              text="Главная мысль курса",
              size=14, bold=True, color=TEAL)
     text_box(s, x=right_x + 0.3, y=fun_y + 0.5, w=right_w - 0.6, h=1.6,
-             text="Завтра — почти везде.\nСегодня — почти никто.\nКурс — про этот разрыв.",
+             text="Завтра — почти везде.\nСегодня — почти никто.\nКурс — про этот разрыв. [2]",
              size=22, bold=True, color=DEEP, line_spacing=1.30)
     text_box(s, x=right_x + 0.3, y=fun_y + 2.4, w=right_w - 0.6, h=0.45,
              text="Центральный вопрос курса",
@@ -516,7 +1088,8 @@ def build_s00b(p):
     text_box(s, x=right_x + 0.3, y=fun_y + 2.85, w=right_w - 0.6, h=1.6,
              text="Где AI работает,\nгде — нет,\nи как это понять?",
              size=24, bold=True, color=DEEP, line_spacing=1.25)
-    speaker_notes(s, load_notes("s00b"))
+    refs_of_slide(s, "s00b")
+    notes_with_sources(s, "s00b")
 
 
 def build_s02(p):
@@ -738,19 +1311,19 @@ def build_s06(p):
     cards = [
         ("Russell & Norvig (AIMA, 2021)",
          "«AI = система, мыслящая как человек, мыслящая рационально, действующая как человек или действующая рационально (4 квадранта по 2 осям).»",
-         "Russell & Norvig, AIMA, 4-е изд., 2021",
+         "Russell & Norvig, AIMA, 4-е изд., 2021 [1]",
          MID),
         ("ISO/IEC 22989:2022",
          "«AI-система — это engineered system, которая генерирует выходы (рекомендации, прогнозы, решения) для целей, заданных человеком.»",
-         "Международный стандарт ISO/IEC 22989:2022 — опора EU AI Act",
+         "Международный стандарт ISO/IEC 22989:2022 — опора EU AI Act [2]",
          LIGHT),
         ("Через обучение (Mitchell, 1997)",
          "«Программа улучшается с опытом E на задаче T по метрике P. Если поведение возникает из обученной модели — это AI.»",
-         "Mitchell, Machine Learning, 1997",
+         "Mitchell, Machine Learning, 1997 [3]",
          MID),
         ("Через бенчмарки и AGI",
          "«AI = то, что проходит тест Тьюринга или решает бенчмарк на уровне человека.» Возражение Сёрла: поведение ≠ понимание.",
-         "Тьюринг 1950 / Searle 1980 — Chinese Room",
+         "Тьюринг 1950 / Searle 1980 — Chinese Room [4]",
          LIGHT),
     ]
     grid_x = 0.55
@@ -774,10 +1347,11 @@ def build_s06(p):
         text_box(s, x=x + 0.25, y=y + cell_h - 0.40, w=cell_w - 0.5, h=0.32,
                  text=src, size=11, italic=True, color=SLATE)
     # AI Effect callout at bottom (gold accent, ≥1×/slide rule)
-    gold_callout(s, 0.55, 6.85, 12.25, 0.55,
+    gold_callout(s, 0.55, 6.42, 12.25, 0.55,
                  "AI Effect (Tesler):  «AI is whatever hasn't been done yet».  Как только техника начинает работать, её перестают называть AI.",
                  size=13)
-    speaker_notes(s, load_notes("s06"))
+    refs_of_slide(s, "s06")
+    notes_with_sources(s, "s06")
 
 
 def build_s06a(p):
@@ -834,7 +1408,7 @@ def build_s06a(p):
     text_box(s, x=left_x, y=anchor_y + 0.28, w=anchor_w, h=0.9, text="1943",
              size=46, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
     text_box(s, x=left_x + 0.24, y=anchor_y + 1.28, w=anchor_w - 0.48, h=0.95,
-             text="Мак-Каллок и Питтс:\nформальный нейрон\nкак логический элемент",
+             text="Мак-Каллок и Питтс [1]:\nформальный нейрон\nкак логический элемент",
              size=11.5, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.22)
     ocean_box(s, right_x, anchor_y, anchor_w, anchor_h, stroke=MID)
     text_box(s, x=right_x, y=anchor_y + 0.28, w=anchor_w, h=0.9, text="1956",
@@ -852,10 +1426,11 @@ def build_s06a(p):
     gold_callout(s, 0.55, 5.30, 12.25, 0.95,
                  "Формальный нейрон не решал прикладных задач, но предвосхитил коннекционистскую традицию — линию мысли, из которой десятилетия спустя вырастут нейросети и Трансформер.",
                  size=13)
-    text_box(s, x=0.55, y=6.55, w=12.25, h=0.5,
+    text_box(s, x=0.55, y=6.48, w=12.25, h=0.5,
              text="Идея «нейросети» на теоретическом уровне старше самого термина «искусственный интеллект».",
              size=14, italic=True, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
-    speaker_notes(s, load_notes("s06a"))
+    refs_of_slide(s, "s06a")
+    notes_with_sources(s, "s06a")
 
 
 def build_s07(p):
@@ -892,7 +1467,7 @@ def build_s07(p):
       7 co-authors + 160K+ citations) unchanged — content contract preserved.
     """
     s = blank(p)
-    slide_title(s, "70 лет AI: открытия, зимы, точка перелома 2017.", size=28)
+    slide_title(s, "70 лет AI: открытия, зимы, точка перелома 2017. [2] [3]", size=28)
 
     def tint(color_tuple, factor=0.90):
         r = int(color_tuple[0] + (255 - color_tuple[0]) * factor)
@@ -996,12 +1571,13 @@ def build_s07(p):
     # Vaswani-2017 deep-dive callout — unchanged content (all 7 co-authors +
     # 160K+ citations), repositioned for the new panel geometry.
     # Bands occupy: 1.72 + 3×1.48 + 2×0.15 = 6.46. Callout starts at 6.66.
-    gold_callout(s, 0.55, 6.66, 12.25, 0.72,
+    gold_callout(s, 0.55, 6.26, 12.25, 0.72,
                  "★ 2017 — Vaswani и 7 соавторов (Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, Polosukhin) "
                  "вводят механизм self-attention — основу всех современных LLM. "
-                 "На май 2026 у статьи свыше 160 000 цитирований.",
+                 "На май 2026 у статьи свыше 160 000 цитирований. [1]",
                  size=12.5)
-    speaker_notes(s, load_notes("s07"))
+    refs_of_slide(s, "s07")
+    notes_with_sources(s, "s07")
 
 
 def build_s07a(p):
@@ -1024,10 +1600,10 @@ def build_s08(p):
     s = blank(p)
     slide_title(s, "AI стал инфраструктурой за 3 года: 900M пользователей, 51% разработчиков ежедневно, 46% Copilot-кода.", size=22)
     metrics = [
-        ("900M", "WAU", "ChatGPT, февраль 2026", "OpenAI", MID, "lucide-users-2-blue.png"),
-        ("51%", "ежедневно", "Stack Overflow Dev Survey 2025", "n=49k+, 177 стран", LIGHT, "lucide-code-blue.png"),
-        ("46%", "кода у Copilot", "GitHub Octoverse 2025", "Java — 61%", MID, "lucide-github.png"),
-        ("$390.9B→$539.5B", "AI-рынок 2025→2026", "Grand View Research, 2026", "Statista (software-only): ~$244–260B", LIGHT, "lucide-dollar-sign-blue.png"),
+        ("900M", "WAU", "ChatGPT, февраль 2026 [2]", "OpenAI", MID, "lucide-users-2-blue.png"),
+        ("51%", "ежедневно", "Stack Overflow Dev Survey 2025 [1]", "n=49k+, 177 стран", LIGHT, "lucide-code-blue.png"),
+        ("46%", "кода у Copilot", "GitHub Octoverse 2025 [3]", "Java — 61%", MID, "lucide-github.png"),
+        ("$390.9B→$539.5B", "AI-рынок 2025→2026", "Grand View Research, 2026 [4]", "Statista (software-only): ~$244–260B", LIGHT, "lucide-dollar-sign-blue.png"),
     ]
     grid_y = 2.0
     cell_w = 6.05
@@ -1055,9 +1631,10 @@ def build_s08(p):
                  text=src2, size=10, italic=True, color=SLATE)
     # Counter-fact gold strip
     gold_callout(s, 0.55, 6.05, 12.25, 0.90,
-                 "Контр-факт: ~90% AI-пилотов в РФ не доходят до прода. CNews / Vedomosti / Intellectual Analytics, март 2026.",
+                 "Контр-факт: ~90% AI-пилотов в РФ не доходят до прода. CNews / Vedomosti / Intellectual Analytics, март 2026. [5]",
                  size=14)
-    speaker_notes(s, load_notes("s08"))
+    refs_of_slide(s, "s08")
+    notes_with_sources(s, "s08")
 
 
 def build_s09(p):
@@ -1076,16 +1653,16 @@ def build_s09(p):
     episodes = [
         ("сентябрь\n2023", "Mistral 7B",
             "Apache 2.0\nобходит Llama-2 13B",
-            "Mistral AI (FR)", MID, False),
+            "Mistral AI (FR) [1]", MID, False),
         ("январь\n2025", "DeepSeek R1",
             "$589B\nNvidia drop за день",
-            "DeepSeek (CN)", GOLD, True),
+            "DeepSeek (CN) [2, 3, 4]", GOLD, True),
         ("ноябрь\n2025", "OpenClaw",
             "100K★ stars\nза квартал",
-            "P. Steinberger", MID, False),
+            "P. Steinberger [5]", MID, False),
         ("февраль\n2026", "llama.cpp",
             "100K+★ на GitHub\nбыстрее PyTorch",
-            "G. Gerganov / ggml.ai", LIGHT, False),
+            "G. Gerganov / ggml.ai [6]", LIGHT, False),
     ]
     card_y = 2.05
     card_w = 2.95
@@ -1112,10 +1689,11 @@ def build_s09(p):
         text_box(s, x=x, y=card_y + card_h - 0.55, w=card_w, h=0.4, text=org,
                  size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
     # Bottom takeaway
-    gold_callout(s, 0.55, 6.50, 12.25, 0.55,
+    gold_callout(s, 0.55, 6.42, 12.25, 0.55,
                  "Не отчаивайтесь: серьёзные прорывы делают разные команды. Курс — про устойчивые концепты, переживающие смену поколений моделей.",
                  size=13)
-    speaker_notes(s, load_notes("s09"))
+    refs_of_slide(s, "s09")
+    notes_with_sources(s, "s09")
 
 
 def build_s10(p):
@@ -1192,12 +1770,13 @@ def build_s11(p):
              text="включает предыдущий",
              size=18, bold=True, color=DEEP)
     text_box(s, x=0.55, y=3.40, w=4.6, h=2.6,
-             text="Не четыре альтернативные технологии, а четыре способа реализации одной задачи. Каждое следующее обёртывание добавляет способности — и сложность, стоимость, потенциал ошибок.",
+             text="Не четыре альтернативные технологии, а четыре способа реализации одной задачи. [1] Каждое следующее обёртывание добавляет способности — и сложность, стоимость, потенциал ошибок. [2]",
              size=13, color=DEEP, line_spacing=1.40)
     gold_callout(s, 0.55, 6.10, 4.6, 0.85,
                  "Выбор слоя — инженерное решение, не альтернатива.",
                  size=12)
-    speaker_notes(s, load_notes("s11"))
+    refs_of_slide(s, "s11")
+    notes_with_sources(s, "s11")
 
 
 def build_s12(p):
@@ -1211,7 +1790,7 @@ def build_s12(p):
       readability, not a callback accent competing for attention.
     """
     s = blank(p)
-    slide_title(s, "Классификация AI-систем — две оси: тип задачи × модальность.", size=26)
+    slide_title(s, "Классификация AI-систем [1] — две оси: тип задачи × модальность. [2]", size=26)
     matrix_x, matrix_y = 0.55, 1.65
     matrix_w, matrix_h = 12.25, 5.05
     ocean_box(s, matrix_x, matrix_y, matrix_w, matrix_h)
@@ -1297,10 +1876,11 @@ def build_s12(p):
                  size=12, bold=False, color=WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
     # Bottom note — Gold reserved for the ≥1×/slide highlight rule (YOLO example, not cell color)
-    gold_callout(s, 0.55, 6.85, 12.25, 0.50,
+    gold_callout(s, 0.55, 6.47, 12.25, 0.50,
                  "YOLO — детекция объектов из демо в начале лекции. Подход к обучению и архитектура — позже в курсе.",
                  size=12)
-    speaker_notes(s, load_notes("s12"))
+    refs_of_slide(s, "s12")
+    notes_with_sources(s, "s12")
 
 
 def build_s13(p):
@@ -1398,10 +1978,11 @@ def build_s13(p):
              text="Извлечь поля из входящего PDF-договора:\n• дата подписания\n• контрагент\n• сумма\n• срок действия\n\nи положить в таблицу.",
              size=13, color=DEEP, line_spacing=1.40)
     # Bottom takeaway
-    gold_callout(s, 0.55, 6.55, 12.25, 0.55,
-                 "Распределение контроля — инженерное решение, а не достоинство одного способа над другим.",
+    gold_callout(s, 0.55, 6.42, 12.25, 0.55,
+                 "Распределение контроля — инженерное решение, а не достоинство одного способа над другим. [1]",
                  size=13)
-    speaker_notes(s, load_notes("s13"))
+    refs_of_slide(s, "s13")
+    notes_with_sources(s, "s13")
 
 
 # build_s14 (mini-divider «Разберём подробнее») deleted under Fix-17, 2026-05-13.
@@ -1480,7 +2061,7 @@ def build_s15(p):
         ("YOLOv8", "детекция на изображениях"),
         ("Whisper", "распознавание речи"),
         ("Stable Diffusion", "генерация изображений"),
-        ("AlphaFold", "прогноз структур белков"),
+        ("AlphaFold", "прогноз структур белков [2]"),
     ]
     ex_y = 5.05
     ex_w = 2.8
@@ -1494,10 +2075,11 @@ def build_s15(p):
                  size=15, bold=True, color=MID, align=PP_ALIGN.CENTER)
         text_box(s, x=x, y=ex_y + 0.62, w=ex_w, h=0.58, text=role,
                  size=11, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.25)
-    gold_callout(s, 0.55, 6.55, 12.25, 0.55,
-                 "Препроцессинг и постпроцессинг — ответственность разработчика. YOLO = 50 строк; рабочая система с YOLO = сотни строк.",
+    gold_callout(s, 0.55, 6.42, 12.25, 0.55,
+                 "Препроцессинг и постпроцессинг — ответственность разработчика. [1] YOLO = 50 строк; рабочая система с YOLO = сотни строк.",
                  size=12)
-    speaker_notes(s, load_notes("s15"))
+    refs_of_slide(s, "s15")
+    notes_with_sources(s, "s15")
 
 
 def build_s16(p):
@@ -1676,7 +2258,7 @@ def build_s16(p):
                  "Контроль через системный промпт.\n"
                  "Промпт задаёт роль, ограничения, формат. Один и тот же "
                  "чат настраивается под разные сценарии — это инженерный "
-                 "рычаг разработчика.",
+                 "рычаг разработчика. [1]",
                  size=12)
     gold_callout(s, cb_x, sysprompt_y + 1.95, cb_w, 1.85,
                  "Ограничение — контекстное окно.\n"
@@ -1686,11 +2268,12 @@ def build_s16(p):
                  size=12)
 
     # ─── Bottom takeaway — issue #153 fix #12: «а не магия» tail removed ───
-    text_box(s, x=0.55, y=7.05, w=12.25, h=0.35,
+    text_box(s, x=0.55, y=6.62, w=12.25, h=0.35,
              text="Чат — это конвейер «собрать → подать → дописать → показать».",
              size=13, italic=True, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
 
-    speaker_notes(s, load_notes("s16"))
+    refs_of_slide(s, "s16")
+    notes_with_sources(s, "s16")
 
 
 def build_s17(p):
@@ -1744,15 +2327,16 @@ def build_s17(p):
              text="Чистые чаты почти не используются в промышленной эксплуатации.",
              size=16, bold=True, color=DEEP, line_spacing=1.25)
     text_box(s, x=disc_x + 0.30, y=disc_y + 2.35, w=disc_w - 0.6, h=2.0,
-             text="Почти везде они расширены до агентов — хотя бы для "
+             text="Почти везде они расширены до агентов [1] [2] — хотя бы для "
                   "долгосрочной памяти и поиска по корпоративной базе (RAG).\n\n"
                   "Архитектуру агента разберём на следующем слайде.",
              size=12, color=DEEP, line_spacing=1.40)
     # issue #153 fix #13: «Возвращаемся к...» removed — direct statement instead.
-    gold_callout(s, 0.55, 6.75, 12.25, 0.50,
+    gold_callout(s, 0.55, 6.47, 12.25, 0.50,
                  "Выбор чата — точка на шкале взаимодействия, не единственно верный вариант.",
                  size=13)
-    speaker_notes(s, load_notes("s17"))
+    refs_of_slide(s, "s17")
+    notes_with_sources(s, "s17")
 
 
 def build_s18(p):
@@ -1779,7 +2363,7 @@ def build_s18(p):
     """
     s = blank(p)
     eyebrow_pill(s, "АГЕНТ")
-    slide_title(s, "Агент = чат + оркестратор + внешняя память + инструменты.", size=26, y=0.85)
+    slide_title(s, "Агент = чат + оркестратор + внешняя память + инструменты. [1] [2] [3]", size=26, y=0.85)
 
     # ─── USER actor (left) ───
     # issue #155 QA fix #189: USER cluster was vertically offset below the
@@ -1951,10 +2535,11 @@ def build_s18(p):
     text_box(s, x=mem_x + stage_w / 2 + conn_label_dx, y=conn_label_y, w=stage_w / 2, h=0.20,
              text="использует", size=8.5, italic=True, color=LIGHT, align=PP_ALIGN.LEFT)
 
-    text_box(s, x=0.55, y=7.05, w=12.25, h=0.35,
+    text_box(s, x=0.55, y=6.62, w=12.25, h=0.35,
              text="ReAct (Reasoning + Acting) — Yao et al. 2022 (arXiv:2210.03629)",
              size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s18"))
+    refs_of_slide(s, "s18")
+    notes_with_sources(s, "s18")
 
 
 def build_s19(p):
@@ -2034,10 +2619,11 @@ def build_s19(p):
                  size=tool_size, italic=True, color=TEAL,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     # Bottom takeaway
-    gold_callout(s, 0.55, 6.80, 12.25, 0.55,
-                 "Агент = последовательность вызовов инструментов, оркестрируемая LLM.",
+    gold_callout(s, 0.55, 6.42, 12.25, 0.55,
+                 "Агент = последовательность вызовов инструментов, оркестрируемая LLM. [1]",
                  size=13)
-    speaker_notes(s, load_notes("s19"))
+    refs_of_slide(s, "s19")
+    notes_with_sources(s, "s19")
 
 
 def build_s19a(p):
@@ -2054,7 +2640,7 @@ def build_s19a(p):
     lx, ly, lw, lh = 0.55, 1.85, 6.30, 5.05
     ocean_box(s, lx, ly, lw, lh)
     text_box(s, x=lx + 0.25, y=ly + 0.20, w=lw - 0.5, h=0.4,
-             text="5 уровней автономии (Feng / McDonald / Zhang, 2025)",
+             text="5 уровней автономии (Feng / McDonald / Zhang, 2025) [1]",
              size=13, bold=True, color=DEEP)
     # issue #153 QA fix #1 (Russification, presentation-critic P1): level names
     # were bare English terms — Russian primary label + English gloss in
@@ -2123,10 +2709,11 @@ def build_s19a(p):
         text_box(s, x=rx + 0.40, y=fy + 0.42, w=rw - 0.80, h=0.45,
                  text=desc, size=11, color=DEEP, line_spacing=1.30)
     # Bottom takeaway
-    gold_callout(s, 0.55, 6.80, 12.25, 0.55,
+    gold_callout(s, 0.55, 6.42, 12.25, 0.55,
                  "Уровень автономии — выбор продукта, не свойство модели. На семинарах будем выбирать осознанно.",
                  size=12)
-    speaker_notes(s, load_notes("s19a"))
+    refs_of_slide(s, "s19a")
+    notes_with_sources(s, "s19a")
 
 
 def build_s20(p):
@@ -2151,7 +2738,7 @@ def build_s20(p):
         {"text": "слов переведено / месяц", "size": 13, "color": DEEP},
     ], line_spacing=1.0)
     text_box(s, x=mt_x + 0.3, y=mt_y + mt_h - 0.38, w=mt_w - 0.6, h=0.3,
-             text="в Google Translate, Search, Lens и Circle to Search (Google Blog, апрель 2026)",
+             text="в Google Translate, Search, Lens и Circle to Search (Google Blog, апрель 2026) [1]",
              size=10, italic=True, color=LIGHT)
     # 6 logo grid
     logos = [
@@ -2182,10 +2769,11 @@ def build_s20(p):
                  size=13, bold=True, color=DEEP)
         text_box(s, x=x + 1.15, y=y + 0.70, w=cell_w - 1.3, h=0.55, text=role,
                  size=10, italic=True, color=SLATE, line_spacing=1.30)
-    gold_callout(s, 0.55, 6.55, 12.25, 0.50,
-                 "AI как функция, а не продукт. Большинство студентов уже ежедневно пользуются всеми шестью.",
+    gold_callout(s, 0.55, 6.47, 12.25, 0.50,
+                 "AI как функция, а не продукт. Большинство студентов уже ежедневно пользуются всеми шестью. [2]",
                  size=12)
-    speaker_notes(s, load_notes("s20"))
+    refs_of_slide(s, "s20")
+    notes_with_sources(s, "s20")
 
 
 def build_s21(p):
@@ -2199,7 +2787,7 @@ def build_s21(p):
     Bottom takeaway («Подумайте 30 секунд…») removed.
     """
     s = blank(p)
-    slide_title(s, "Чек-лист «Какой тип AI выбрать»: 2 вопроса + квадрант 2×2.", size=24)
+    slide_title(s, "Чек-лист «Какой тип AI выбрать»: 2 вопроса + квадрант 2×2. [1] [2] [3]", size=24)
     # Quadrant area — large, centred. Shrunk vertically to leave room for Q2
     # markers + title + caption ABOVE slide bottom (7.5).
     quad_x, quad_y = 3.40, 1.65
@@ -2296,7 +2884,8 @@ def build_s21(p):
         text_box(s, x=cx + 0.20, y=cy + 1.10, w=cw_ - 0.4, h=0.85, text=sub,
                  size=12, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.30)
     # Fix-16: bottom takeaway («Подумайте 30 секунд…») REMOVED.
-    speaker_notes(s, load_notes("s21"))
+    refs_of_slide(s, "s21")
+    notes_with_sources(s, "s21")
 
 
 def build_s22(p):
@@ -2311,8 +2900,9 @@ def build_s22(p):
     # Fix-19: sub_marker removed — gold-filled active card is sole navigation indicator.
     nav_slide(s, here_idx=4,
               title="Раздел 4 · Границы AI — ваша зона ответственности",
-              frame_phrase="Куда уходят данные · ошибки AI · «не умеет» — тоже ваше.")
-    speaker_notes(s, load_notes("s22"))
+              frame_phrase="Куда уходят данные · ошибки AI · «не умеет» — тоже ваше. [1] [2] [3]")
+    refs_of_slide(s, "s22")
+    notes_with_sources(s, "s22")
 
 
 def build_s23(p):
@@ -2337,7 +2927,7 @@ def build_s23(p):
              size=13, italic=True, color=TEAL, align=PP_ALIGN.LEFT)
     # Single outer container wrapping the whole composition (fix #194)
     outer_x, outer_y = 0.55, 1.85
-    outer_w, outer_h = SLIDE_W_IN - 2 * 0.55, 5.30
+    outer_w, outer_h = SLIDE_W_IN - 2 * 0.55, 5.05   # -0.25 to open ref-list footer band
     ocean_box(s, outer_x, outer_y, outer_w, outer_h, fill=WHITE, stroke=LIGHT, stroke_pt=1.5)
     pad = 0.25
     # Two columns (inside outer container)
@@ -2365,7 +2955,7 @@ def build_s23(p):
     ex_ = cx_ + col_w + 0.30
     ocean_box(s, ex_, col_y, col_w, col_h, fill=TEAL_TINT, stroke=TEAL)
     text_box(s, x=ex_ + 0.25, y=col_y + 0.18, w=col_w - 0.5, h=0.40,
-             text="КОРПОРАТИВНЫЕ ТАРИФЫ / API",
+             text="КОРПОРАТИВНЫЕ ТАРИФЫ / API [2]",
              size=14, bold=True, color=TEAL)
     text_box(s, x=ex_ + 0.25, y=col_y + 0.60, w=col_w - 0.5, h=0.45,
              text="данные ≠ обучение",
@@ -2386,7 +2976,7 @@ def build_s23(p):
     s_x = outer_x + pad
     filled_rect(s, s_x, bot_y, s_w, bot_h, GOLD_TINT, stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.12)
     text_box(s, x=s_x + 0.20, y=bot_y + 0.10, w=s_w - 0.4, h=0.35,
-             text="Samsung 2023 — канонический инцидент", size=13, bold=True, color=DEEP)
+             text="Samsung 2023 — канонический инцидент [1]", size=13, bold=True, color=DEEP)
     text_box(s, x=s_x + 0.20, y=bot_y + 0.48, w=s_w - 0.4, h=bot_h - 0.55,
              text="3 эпизода за месяц (март–апрель): код, транскрипт совещания, тестовые последовательности → попали в датасет OpenAI. Самсунг ввёл запрет внешнего GenAI.",
              size=11, color=DEEP, line_spacing=1.28)
@@ -2395,18 +2985,19 @@ def build_s23(p):
     eu_w = outer_x + outer_w - pad - eu_x
     filled_rect(s, eu_x, bot_y, eu_w, bot_h, MID, radius=True, radius_adj=0.12)
     text_box(s, x=eu_x + 0.20, y=bot_y + 0.10, w=eu_w - 0.4, h=0.35,
-             text="EU AI Act — штрафы", size=13, bold=True, color=WHITE)
+             text="EU AI Act — штрафы [3]", size=13, bold=True, color=WHITE)
     text_box(s, x=eu_x + 0.20, y=bot_y + 0.48, w=eu_w - 0.4, h=0.33,
              text="до 15M € / 3% оборота", size=12, color=WHITE, bold=True)
     text_box(s, x=eu_x + 0.20, y=bot_y + 0.82, w=eu_w - 0.4, h=bot_h - 0.90,
              text="до 35M € / 7% — за запрещённые практики", size=11, color=GOLD, bold=True, line_spacing=1.15)
-    speaker_notes(s, load_notes("s23"))
+    refs_of_slide(s, "s23")
+    notes_with_sources(s, "s23")
 
 
 def build_s24(p):
     """Hallucinations — fake DOI prompt + Vectara HHEM range + AI knows all."""
     s = blank(p)
-    slide_title(s, "Галлюцинации — неотъемлемое свойство AI.", size=28)
+    slide_title(s, "Галлюцинации — неотъемлемое свойство AI. [1] [2]", size=28)
     # Left: prompt + 3 fake DOIs
     px, py, pw, ph = 0.55, 1.95, 7.5, 4.5
     ocean_box(s, px, py, pw, ph)
@@ -2437,7 +3028,7 @@ def build_s24(p):
     rx, ry_, rw, rh = px + pw + 0.35, 1.95, 4.4, 3.2
     ocean_box(s, rx, ry_, rw, rh, fill=TEAL_TINT, stroke=TEAL)
     text_box(s, x=rx + 0.25, y=ry_ + 0.20, w=rw - 0.5, h=0.4,
-             text="Vectara HHEM (2025-26)", size=13, bold=True, color=TEAL)
+             text="Vectara HHEM (2025-26) [3]", size=13, bold=True, color=TEAL)
     text_box(s, x=rx + 0.25, y=ry_ + 0.65, w=rw - 0.5, h=0.4,
              text="процент галлюцинаций", size=11, italic=True, color=LIGHT)
     # Range bar
@@ -2453,9 +3044,10 @@ def build_s24(p):
              size=10, italic=True, color=SLATE)
     # Anti-pattern callout below
     gold_callout(s, rx, ry_ + rh + 0.20, rw, 1.10,
-                 "Анти-паттерн: «AI знает всё». Любой ответ AI по фактическому вопросу — гипотеза для проверки.",
+                 "Анти-паттерн: «AI знает всё». Любой ответ AI по фактическому вопросу — гипотеза для проверки. [4]",
                  size=12)
-    speaker_notes(s, load_notes("s24"))
+    refs_of_slide(s, "s24")
+    notes_with_sources(s, "s24")
 
 
 def build_s25(p):
@@ -2502,7 +3094,7 @@ def build_s25(p):
     tl_h = 1.0
     ocean_box(s, 0.55, tl_y, 12.25, tl_h, fill=WHITE, stroke=GOLD, stroke_pt=2.0)
     text_box(s, x=0.75, y=tl_y + 0.10, w=11.85, h=0.4,
-             text="GPT-4o: лесть (sycophancy) — апрель 2025", size=13, bold=True, color=DEEP)
+             text="GPT-4o: лесть (sycophancy) — апрель 2025 [1]", size=13, bold=True, color=DEEP)
     text_runs(s, 0.75, tl_y + 0.50, 11.85, 0.4, [
         {"text": "25 апр", "size": 14, "bold": True, "color": MID},
         {"text": " — релиз обновления   →   ", "size": 12, "color": DEEP},
@@ -2512,16 +3104,17 @@ def build_s25(p):
         {"text": " — разбор причин", "size": 12, "color": DEEP},
     ])
     # Bottom takeaway
-    text_box(s, x=0.55, y=6.65, w=12.25, h=0.4,
-             text="Общая причина: модель отражает данные, на которых обучена.",
+    text_box(s, x=0.55, y=6.57, w=12.25, h=0.4,
+             text="Общая причина: модель отражает данные, на которых обучена. [2]",
              size=13, italic=True, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s25"))
+    refs_of_slide(s, "s25")
+    notes_with_sources(s, "s25")
 
 
 def build_s26(p):
     """4 speakers AGI table (renamed from old build_s27 in v3.1)."""
     s = blank(p)
-    slide_title(s, "Прогнозы AGI — 4 спикера, 4 разных стимула.", size=26)
+    slide_title(s, "Прогнозы AGI — 4 спикера, 4 разных стимула. [1] [2]", size=26)
     # Table
     tx, ty, tw = 0.55, 1.95, 12.25
     rh_head = 0.5
@@ -2570,7 +3163,8 @@ def build_s26(p):
             cur_x += w
     # issue #155 fix #196: closing callout removed — slide ends with the
     # table, conclusion stays only in speaker notes.
-    speaker_notes(s, load_notes("s26"))
+    refs_of_slide(s, "s26")
+    notes_with_sources(s, "s26")
 
 
 def build_s27(p):
@@ -2847,8 +3441,12 @@ def main():
     p = setup_pres()
     for build in BUILDERS:
         build(p)
+    # Stamp a muted «N / TOTAL» page number on every slide (bottom-right).
+    total = len(p.slides)
+    for i, slide in enumerate(p.slides, start=1):
+        page_number(slide, i, total)
     p.save(str(OUT))
-    print(f"Saved {OUT} with {len(BUILDERS)} slides.")
+    print(f"Saved {OUT} with {len(BUILDERS)} slides (page numbers 1..{total}).")
 
 
 if __name__ == "__main__":

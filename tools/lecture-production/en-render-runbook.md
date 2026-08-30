@@ -46,6 +46,21 @@ per-language switch, so the path is: translate sources, duplicate the builder, r
 - **Do NOT translate inert docstrings/comments** — only strings that render. A blind
   "translate every Cyrillic line" wastes effort and can corrupt logic.
 
+### Heavy-builder variant (lec-04 lesson — check this!)
+
+Some builders are **thicker** than lec-01: visible slide text lives in Python modules
+(`slides_band*.py`, `_helpers.py`, `SLIDE_REFS` dicts) — NOT only in md. Repointing
+`SLIDES_DIR` alone then yields a **Russian** deck. Translate the full band/helper module set too.
+
+**Charts with baked-in Cyrillic (CRITICAL — invisible to the XML scan).** If the deck embeds
+chart PNGs generated with Russian labels (look for a `gen_charts*.py` / `assets/charts/`),
+the text is **rasterized into the image** — `grep` over slide XML will NOT catch it and the deck
+passes the text scan while showing Russian charts. You MUST duplicate the chart generator
+(`gen_charts_en.py`), translate its titles/axes/legends/labels, output `assets/charts-en/`, and
+repoint the builder to it. **Visually inspect every chart slide** in the EN render.
+
+Toolchain note: `lo-portable-env.sh` may expose the binary as `soffice` (not `libreoffice`).
+
 ### Render + verify
 
 7. Render `lec-NN-en.pptx`, convert → `lec-NN-en.pdf` (libreoffice), optional PNG via pdftoppm.
@@ -53,6 +68,8 @@ per-language switch, so the path is: translate sources, duplicate the builder, r
    `ppt/notesSlides/` → **must be 0**. Sample 6-8 high-risk slides (matrices, quadrants,
    timelines, dense metric cards) for overflow; fix only egregious clips (near-zero expected —
    English absorbs into fixed-geometry boxes). Full 36-slide QA not required.
+   **Also visually check every chart/image slide** — rasterized Cyrillic in chart PNGs passes the
+   text grep (see Heavy-builder variant above).
 9. **Do NOT `git commit`.** Leave `snapshots-en/` PNGs untracked (regenerable; repo convention).
 
 ### Report back (return value)

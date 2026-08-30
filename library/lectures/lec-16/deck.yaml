@@ -1,0 +1,590 @@
+# library/lectures/lec-16/deck.yaml
+#
+# Deck-структура Лекции 16 «AI в нефтегазовой отрасли и добыче ресурсов».
+#
+# Phase 5+6+8.6 multi-artifact pipeline. Issue #144.
+# Source: plan-v2 + chapter v2.1 (5 parts, ~32k слов) + owner Phase 8.6 feedback v3.
+#
+# v3 changes (Phase 8.6, 2026-05-27 owner feedback):
+#   - DELETED s03 about (Item 2)
+#   - DELETED s41 Q&A title slide (Item 7)
+#   - Lecture-map → «План лекции» (Item 3) + neutralized Q2 highlight
+#   - Keystone axis labels updated: «Данные» → «Доступность данных»;
+#     «Физика» → «Определённость процессов» (Item 4)
+#   - Section dividers + mini-matrix с highlighted current quadrant (Item 5)
+#   - Q4 renamed «Энергопереход» → «Новые опоры (CCS + EGS)» (Item 6)
+#   - s41 closing hero clarified, single message (Item 8)
+#   - NEW s42 normal Q&A slide (Item 9)
+#   - Hero s01 re-acquired AI-explicit (Item 1)
+#
+# Final structure (42 slides):
+#   - cover (s02), План лекции (s03), keystone (s04), normal Q&A (s42)
+#   - Section dividers: s05 (Q1), s13 (Q3), s21 (Q2), s28 (Q4), s34 (Russia)
+#   - Hero на s01 (AI-explicit, ≥40% area) + s41 (MethaneSAT global methane map, ≥40% area)
+
+deck:
+  lecture_number: 16
+  title: "AI в нефтегазовой отрасли и добыче ресурсов"
+  audience: "студенты-инженеры 3 курса (универсальная, не отраслевые специалисты)"
+  duration_min: 75
+  central_question: "В каком квадранте матрицы данные × физика AI становится мультипликатором классических методов, а где он либо essential, либо опасен — на материале 10 documented failures индустрии 2014-2026?"
+  learning_outcomes: [LO1, LO2, LO3, LO7]
+  language: ru
+  status: draft
+  version: v3
+  source: "chapter v2.1 multi-part (chapter.md + chapter-part2.md + chapter-part3.md + chapter-part4.md + chapter-part5.md, ~32k слов) + Phase 8.6 owner feedback"
+  plan: "notes/lecture-16-review/2026-05-27-phase1-plan/plan-v2.md"
+  keystone_axis: "Матрица доступность данных × определённость процессов (2×2 quadrants): Q1 зрелое производство, Q2 метановая MRV, Q3 разведка фронтиров, Q4 новые опоры (CCS + EGS)"
+
+# Slide structure (42 slides, v3 after Phase 8.6):
+#
+# Section 0 — Введение + keystone: s01-s04 (4 slides; was 5, deleted s03 about)
+# Section 1 — Q1 mainstream production: s05-s12 (8 slides; s05 = Q1 divider, was s06)
+# Section 2 — Q3 frontier exploration: s13-s19 (7 slides; unchanged)
+# Section 3 — Q2 methane MRV: s20-s27 (8 slides; unchanged)
+# Section 4 — Q4 «Новые опоры (CCS + EGS)»: s28-s33 (6 slides; unchanged)
+# Section 5 — Россия: s34-s36 (3 slides; unchanged)
+# Section 6 — Cross-cutting risks: s37-s38 (2 slides; unchanged)
+# Section 7 — Closing + Q&A: s39-s42 (4 slides; s41 = closing hero «Спутник потерян — карта осталась»,
+#                                       s42 = NEW normal Q&A slide)
+
+palette:
+  primary_deep: "#21295C"
+  primary_mid: "#065A82"
+  primary_light: "#1C7293"
+  secondary_teal: "#028090"
+  surface_light: "#F4F7FA"
+  highlight_gold: "#F0AB00"
+  background: "#FFFFFF"
+
+visual_motif: "Ocean rounded box (radius 12pt, surface #F4F7FA, stroke #1C7293 1.5pt)"
+
+media_share_target: 0.74  # 31/42 = 74%
+hero_required: [s01, s42]
+
+chapter_refs:
+  primary: "library/lectures/lec-16/chapter.md"
+  parts: 5
+
+brand_allowlist:
+  companies:
+    - SLB
+    - Halliburton
+    - Baker Hughes
+    - NVIDIA
+    - AMD
+    - HPE Cray
+    - Microsoft Azure
+    - AWS
+    - Google Cloud
+    - Aramco
+    - ADNOC
+    - BP
+    - Shell
+    - ExxonMobil
+    - Chevron
+    - ConocoPhillips
+    - Repsol
+    - Eni
+    - Equinor
+    - TotalEnergies
+    - Aker BP
+    - Pioneer
+    - Bridger Photonics
+    - SeekOps
+    - Project Canary
+    - Газпром нефть
+    - Роснефть
+    - Башнефть
+    - Татнефть
+    - ЛУКОЙЛ
+    - Сургутнефтегаз
+    - Sberbank
+    - Cognitive Technologies
+    - Cognite
+    - C3.ai
+    - AIQ
+    - G42
+    - Presight
+    - Yokogawa
+    - Idemitsu
+    - Honeywell
+    - AspenTech
+    - Emerson
+    - ABB
+    - Ambyint
+    - OspreyData
+    - Mesquite
+    - Nabors
+    - Precision Drilling
+    - NOV
+    - Schlumberger
+    - Beyond Limits
+    - IBM
+    - EDF
+    - Harvard
+    - NASA
+    - NOAA
+    - Planet Labs
+    - GHGSat
+    - Carbon Mapper
+    - Teledyne FLIR
+    - Opgal
+    - Rebellion Photonics
+    - Picarro
+    - LI-COR
+    - Northern Lights
+    - Aker Carbon Capture
+    - Fervo Energy
+    - Eavor
+    - Sage Geosystems
+    - Quaise Energy
+    - DARPA
+    - Zscaler
+    - Dragos
+    - Claroty
+    - Nozomi Networks
+    - Devon Energy
+    - SpaceX
+    - Falcon 9
+    - DOE
+    - MIT
+    - Stanford
+    - KAUST
+    - Princeton
+    - JPL
+    - Groq
+    - Anthropic
+    - OpenAI
+  products:
+    - Eclipse
+    - INTERSECT
+    - Petrel
+    - Delfi
+    - Lumi
+    - METABRAIN
+    - Aspen Mtell
+    - aspenONE
+    - DeltaV
+    - Ability Genix
+    - OpreX
+    - PACE-X
+    - AlphaAutomation
+    - NOVOS
+    - FlexRig
+    - Cognite Data Fusion
+    - Discovery 6
+    - HPC6
+    - HPC5
+    - MethaneSAT
+    - Tanager-1
+    - OGI
+    - OGMP
+    - FLIR GFx320
+    - EyeCGas
+    - InfinityRL
+    - Avocet
+    - DecisionSpace
+    - Digital Field
+    - Cognitive Geologist
+    - Cognitive Geo
+    - Cognitive Agro Pilot
+    - Cognitive Pilot
+    - Watson
+    - Kalimba
+    - Roxar
+    - MOVEit
+    - Charlotte
+    - Wellbore Insights
+    - Falcon
+  standards:
+    - SIL3
+    - SIL4
+    - OGMP 2.0
+    - EU 2024/1787
+    - Subpart W
+    - EPA Method 21
+    - ISA-84
+    - IEC 61511
+    - GHGRP
+    - ATEX
+    - LDAR
+    - MRV
+
+slides:
+
+  # ===== Section 0 — Введение + keystone (4 slides) =====
+
+  - id: s01
+    file: slides/s01-hook-permian-viirs.md
+    type: hero_cover
+    duration_min: 2
+    assertion: "Hero hook про AI в нефтегазе — AI-explicit image (re-acquired Item 1)."
+    learning_goal: "Эмоциональный hook + предъявить scale AI-задачи в нефтегазе"
+    failure_bucket: partial
+    media_tier: 2
+    visual_source: "AI-explicit hero image (re-acquired Phase 8.6 Item 1)"
+
+  - id: s02
+    file: slides/s02-cover.md
+    type: cover
+    duration_min: 1
+    assertion: "Лекция 16: AI в нефтегазовой отрасли. Шесть разделов через матрицу доступность данных × определённость процессов."
+    learning_goal: "Контекст лекции + LO + название курса"
+
+  - id: s03
+    file: slides/s03-lecture-map.md
+    type: lecture_map
+    duration_min: 1
+    assertion: "Шесть разделов: keystone-матрица → Q1 mainstream → Q3 frontier → Q2 methane → Q4 новые опоры → Россия → синтез."
+    learning_goal: "Навигация + 5 must-know терминов inline gloss; все 7 cards одной яркости (план, не «вы здесь»)"
+
+  - id: s04
+    file: slides/s04-keystone-matrix.md
+    type: keystone
+    duration_min: 3
+    assertion: "Матрица «доступность данных × определённость процессов» даёт 4 квадранта. В каждом — свой профиль AI и своя стратегия применения."
+    learning_goal: "Keystone ось 2×2 + inline definitions «доступность данных» + «определённость процессов»"
+    failure_bucket: partial
+    media_tier: self_render
+
+  # ===== Section 1 — Q1 mainstream production (8 slides) =====
+
+  - id: s05
+    file: slides/s05-q1-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Q1: зрелое производство — AI как мультипликатор классических методов."
+    learning_goal: "Section break Q1 + tag «3 working cases · 2 структурных провала» + mini-matrix"
+    failure_bucket: partial
+
+  - id: s06
+    file: slides/s06-86-percent-pilot-stuck.md
+    type: failure_case
+    duration_min: 2
+    assertion: "86% AI-проектов в энергетике застряли в пилоте. Это не «AI плохой» — это статистическая норма отрасли."
+    learning_goal: "Failure case: pilot purgatory + 5 структурных причин"
+    failure_bucket: strict_in
+    media_tier: self_render
+
+  - id: s07
+    file: slides/s07-aspen-alert-fatigue.md
+    type: failure_case
+    duration_min: 2
+    assertion: "«Усталость операторов от ложных тревог устранена» — это маркетинг. На нефтепереработке Aspen Mtell даёт 100-500 алертов в день; plant-wide пилоты тихо закрываются."
+    learning_goal: "Failure case: alert fatigue + refinery plant-wide stagnation"
+    failure_bucket: strict_in
+    media_tier: 3
+
+  - id: s08
+    file: slides/s08-ambyint-infinityrl.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "Ambyint InfinityRL: +15% production на 200 скважинах Permian. RL поверх классического штангового насоса — augmentation, не замена."
+    learning_goal: "Working case: узкая ML-задача с verifiable baseline"
+    media_tier: 3
+
+  - id: s09
+    file: slides/s09-q1-vendor-landscape.md
+    type: vendor_landscape
+    duration_min: 2
+    assertion: "6 вендоров Q1 в трёх группах: ML-стартапы (Ambyint, OspreyData), enterprise (SLB Avocet, Halliburton), refinery (Honeywell UOP, AspenTech). Mode ≠ brand — важно различать."
+    learning_goal: "Vendor landscape + LO3 mode vs brand"
+    media_tier: 3
+
+  - id: s10
+    file: slides/s10-rosneft-digital-field.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "Роснефть Digital Field на Башнефть Илишевское: +1 Mt/год нефти, ~1 млрд ₽/год эффект, 23 продукта (10 коммерциализованных). Российский Q1 в санкционном режиме."
+    learning_goal: "Russian Q1 case preview + sanctions context"
+    media_tier: 3
+
+  - id: s11
+    file: slides/s11-cognite-c3ai-decline.md
+    type: failure_case
+    duration_min: 1
+    assertion: "Cognite — IPO postpone 2023 ($94M ARR vs $2-3B cancelled). C3.ai — нефтегазовая вертикаль уменьшается в FY25. Чистые узкоспециализированные AI-вендоры в нефтегазе теряют долю."
+    learning_goal: "Failure case: pure-play vendor distress"
+    failure_bucket: strict_in
+    media_tier: self_render
+
+  - id: s12
+    file: slides/s12-q1-no-ai-criteria.md
+    type: criteria_list
+    duration_min: 1
+    assertion: "Когда AI НЕ нужен в Q1 — 6 структурных критериев: зрелый пласт + Eclipse, stripper wells <10 bopd, custody transfer, BOP/SIS, frontier без аналогов, EU compliance reporting."
+    learning_goal: "LO2 criteria 6 visible bullets"
+    failure_bucket: strict_in
+
+  # ===== Section 2 — Q3 frontier exploration =====
+
+  - id: s13
+    file: slides/s13-q3-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Q3: разведка фронтиров — сначала физика, AI как augmentation поверх симуляторов."
+    learning_goal: "Section break Q3 + tag «3 working cases · 2 провала» + mini-matrix Q3 highlighted"
+
+  - id: s14
+    file: slides/s14-hpc-eni-aramco.md
+    type: comparison_case
+    duration_min: 3
+    assertion: "HPC-гонка Q3: Eni HPC6 — 606 PFLOPS Top500 #5 за $104M. Aramco METABRAIN — 250B параметров на 90 годах данных, $1,8B realized в 2024 (= 0,41% выручки)."
+    learning_goal: "HPC landscape Q3 + base value $1.8B / $436B"
+    media_tier: 3
+
+  - id: s15
+    file: slides/s15-slb-lumi.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "SLB Lumi (сентябрь 2024) — отраслевая foundation model на NVIDIA Grace Hopper. Anchor customers: Aker BP, Shell, Azule. Mode «отраслевая foundation model» ≠ brand «Lumi»."
+    learning_goal: "Q3 vendor + mode vs brand"
+    media_tier: 3
+
+  - id: s16
+    file: slides/s16-exxonmobil-discovery6.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "ExxonMobil Discovery 6 — 4 032 NVIDIA Grace Hopper. 4D-сейсмика месяцы → недели. Stabroek Block Гайана: $1B+ unlock на 6 FPSO."
+    learning_goal: "Q3 HPC + Stabroek case"
+    media_tier: 3
+
+  - id: s17
+    file: slides/s17-bp-beyond-limits-failure.md
+    type: failure_case
+    duration_min: 2
+    assertion: "BP + Beyond Limits ($20M Series B 2017, vendor pivot 2023). 7 лет публичных результатов нет. «Cognitive AI имитирует геолога» — anthropomorphic overpromise."
+    learning_goal: "Failure 1 Q3 + 3 урока: vendor concentration + cognitive marketing + anthropomorphic"
+    failure_bucket: strict_in
+    media_tier: 5
+
+  - id: s18
+    file: slides/s18-ibm-repsol-failure.md
+    type: failure_case
+    duration_min: 2
+    assertion: "IBM Watson + Repsol Kalimba (2014-2022, тихое сворачивание). 30 лет exploration data «analyzed» — конкретных результатов нет. General-purpose cognitive не scaled в narrow domain."
+    learning_goal: "Failure 2 Q3 + параллель Watson Health $5B → $1B 2022"
+    failure_bucket: strict_in
+    media_tier: 5
+
+  - id: s19
+    file: slides/s19-q3-alternatives.md
+    type: alternatives_list
+    duration_min: 2
+    assertion: "Альтернатива Q3: Eclipse / INTERSECT / CMG (IMEX, STARS, GEM) / OpenFOAM. Senior геофизик + классическая интерпретация — остаётся essential. AI augmentation поверх, не replacement."
+    learning_goal: "LO3 alternative Q3 + frontier без analog criterion"
+    failure_bucket: strict_in
+
+  # ===== Section 3 — Q2 methane MRV =====
+
+  - id: s20
+    file: slides/s20-methane-alphabet.md
+    type: glossary
+    duration_min: 1
+    assertion: "Перед погружением в Q2 — 6 терминов: MRV, OGI, LDAR, OGMP 2.0, SIL/SIS, bopd/ESP."
+    learning_goal: "Alphabet helper для Q2 (P1.7 fix)"
+
+  - id: s21
+    file: slides/s21-q2-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Q2: метановая MRV — AI необходим + единичная уязвимость спутника как инфраструктуры."
+    learning_goal: "Section break Q2 + tag «4 working systems · 2 провала · regulatory pressure» + mini-matrix Q2 highlighted"
+
+  - id: s22
+    file: slides/s22-methanesat-permian.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "MethaneSAT (4 марта 2024) — первый NGO-владелец спутника. Permian Basin: 410 т/ч метана = на 50% выше оценки EPA."
+    learning_goal: "Q2 working case + open data flagship результат"
+    media_tier: 1
+
+  - id: s23
+    file: slides/s23-methanesat-loss.md
+    type: failure_case
+    duration_min: 2
+    assertion: "20 июня 2025 — потеря связи с MethaneSAT после 15,5 месяцев работы (26% от designed lifetime). Single satellite = catastrophic single point of failure для regulatory MRV."
+    learning_goal: "Failure 1 Q2 + 4 урока: SPOF + hardware reliability + regulator constraint + AI зависит от upstream data"
+    failure_bucket: strict_in
+    media_tier: 3
+
+  - id: s24
+    file: slides/s24-post-methanesat-players.md
+    type: vendor_landscape
+    duration_min: 2
+    assertion: "После MethaneSAT loss: Carbon Mapper Tanager-1 (август 2024), GHGSat 13-satellite constellation (середина 2025), Bridger Photonics aerial LiDAR (4× точнее ground OGI)."
+    learning_goal: "Q2 vendor landscape post-loss"
+    media_tier: 3
+
+  - id: s25
+    file: slides/s25-4x-discrepancy.md
+    type: failure_case
+    duration_min: 2
+    assertion: "MethaneSAT измерил ~15 Mt/год; EPA inventory ~4 Mt/год — фактор разрыва 4×. Stanford 2024 aerial: ~7 Mt = фактор 2. Это structural methodological gap, не «AI ошибается»."
+    learning_goal: "Failure 2 Q2 + 4× discrepancy crisis"
+    failure_bucket: strict_in
+    media_tier: self_render
+
+  - id: s26
+    file: slides/s26-eu-vs-epa-regulation.md
+    type: comparison_case
+    duration_min: 2
+    assertion: "EU 2024/1787 (август 2024) — до 20% оборотного штрафа + OGMP Level 4/5 + LDAR deadline 5 мая 2025. US EPA Subpart W — proposed delay до 2034. Регуляторика — главный driver Q2."
+    learning_goal: "LO7 регуляторика как driver + EU vs US asymmetry"
+    media_tier: self_render
+
+  - id: s27
+    file: slides/s27-q2-alternatives.md
+    type: alternatives_list
+    duration_min: 2
+    assertion: "Альтернатива Q2: hand-held OGI (FLIR GFx320, Opgal EyeCGas) + portable Picarro / LI-COR. Когда AI не нужен — OGMP Level 5 (прямое измерение) + custody transfer metering."
+    learning_goal: "LO3 alternative Q2 + 2 criteria"
+    failure_bucket: strict_in
+    media_tier: 1
+
+  # ===== Section 4 — Q4 «Новые опоры (CCS + EGS)» =====
+
+  - id: s28
+    file: slides/s28-q4-divider.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Q4: новые опоры (CCS + EGS) — AI и физика буксуют вместе. Самый честный квадрант."
+    learning_goal: "Section break Q4 + tag «2 working pilots · 2 структурных провала» + mini-matrix Q4 highlighted"
+
+  - id: s29
+    file: slides/s29-northern-lights-ccs.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "Northern Lights CCS — 1,5 Mt CO₂/год Эугарден, Норвегия. vs IEA target 7,6 Gt/год к 2050 = 0,02% от needed scale. 190× scale-up gap."
+    learning_goal: "Q4 working pilot + 190× scale-up gap base"
+    media_tier: 3
+
+  - id: s30
+    file: slides/s30-fervo-egs.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "Fervo Energy EGS — IPO 12 мая 2026, привлечено $1,89 млрд, оценка $7,7 млрд. Driver: AI data centers тянут спрос на 24/7 clean baseload. US EGS potential 150 GW vs current 3,7 GW = 40× growth ceiling."
+    learning_goal: "Q4 working pilot 2 + AI data centers cycle"
+    media_tier: 3
+
+  - id: s31
+    file: slides/s31-ccs-scale-gap-hallucination.md
+    type: failure_case
+    duration_min: 2
+    assertion: "CCS 190× scale-up gap к 2050 — engineering reality vs policy targets. AI plume migration на 100 лет hallucinate легко. Gartner 2027: 40% agentic AI проектов будут отменены."
+    learning_goal: "Failure 1 Q4 + LLM hallucination long horizon"
+    failure_bucket: strict_in
+    media_tier: self_render
+
+  - id: s32
+    file: slides/s32-refinery-q4-stagnation.md
+    type: failure_case
+    duration_min: 2
+    assertion: "Refinery plant-wide stagnation в Q4 frame: multi-physics (mass + energy + reaction + corrosion) ломает ML-суррогаты на edge cases. Yokogawa Idemitsu single-column success → plant-wide пилот тихо закрыт."
+    learning_goal: "Failure 2 Q4 + multi-physics surrogate gap"
+    failure_bucket: strict_in
+    media_tier: 3
+
+  - id: s33
+    file: slides/s33-q4-alternatives-sis.md
+    type: alternatives_list
+    duration_min: 1
+    assertion: "Альтернатива Q4: classical APC (Honeywell Profit Controller, Emerson DeltaV) + SIS (SIL3/SIL4 по IEC 61511). ML не сертифицируется под SIL3/SIL4. 3oo2 voting + periodic proof tests."
+    learning_goal: "LO3 alternative Q4 + SIS deterministic"
+    failure_bucket: strict_in
+
+  # ===== Section 5 — Россия =====
+
+  - id: s34
+    file: slides/s34-russia-divider.md
+    type: section_divider
+    duration_min: 1
+    assertion: "Россия — санкции, инсорсинг, вертикальная интеграция. По 4 квадрантам keystone-матрицы."
+    learning_goal: "Section break Russia + mini-matrix без highlight (Russia spans all 4 quadrants)"
+
+  - id: s35
+    file: slides/s35-gazprom-cognitive-geo.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "Газпром нефть Cognitive Geologist — геология 3-4 месяца → минуты. Ямал 2024: first oil из нового поля. Cut twofold время до first oil + 40% projects к 2030."
+    learning_goal: "Russia Q3 case + AIQ partnership"
+    media_tier: 3
+
+  - id: s36
+    file: slides/s36-rosneft-detail-other-noc.md
+    type: case_with_chart
+    duration_min: 2
+    assertion: "Роснефть Digital Field детально: 23 продукта (10 коммерциализованных), +1 Mt/год, ~1 млрд ₽/год. Татнефть, ЛУКОЙЛ, Сургутнефтегаз — public info ограничена."
+    learning_goal: "Russia Q1 deep-dive + ограничения public info"
+    media_tier: 3
+
+  # ===== Section 6 — Cross-cutting =====
+
+  - id: s37
+    file: slides/s37-cyber-935-percent.md
+    type: failure_case
+    duration_min: 2
+    assertion: "Ransomware-атаки на нефтегаз: +935% между апрелем 2024 и апрелем 2025 (Zscaler). Colonial Pipeline 2021 — VPN без MFA. Безопасность — phase 1, не phase 4."
+    learning_goal: "Cross-cutting failure: cyber + Colonial canonical"
+    failure_bucket: strict_in
+    media_tier: 1
+
+  - id: s38
+    file: slides/s38-2020-crash-deepwater.md
+    type: failure_case
+    duration_min: 2
+    assertion: "2020 oil crash — 107 000 рабочих мест за 6 месяцев (9,7% индустрии). Industry cyclicality > AI hype cycle. Deepwater Horizon 2010 — alarm bypass + 11 deaths + $60 млрд = 20% годовой выручки BP."
+    learning_goal: "Cross-cutting failure: cyclicality + Deepwater Horizon anchor"
+    failure_bucket: strict_in
+    media_tier: 3
+
+  # ===== Section 7 — Closing =====
+
+  - id: s39
+    file: slides/s39-synthesis-matrix.md
+    type: keystone_synthesis
+    duration_min: 1.5
+    assertion: "4-квадрантный синтез + 10 documented failures. Когда AI работает: Q1 multiplier + Q2 essential. Когда осторожно: Q3 augmentation. Когда опасно: Q4 long-horizon + safety-critical SIS."
+    learning_goal: "Synthesis: возврат к keystone + 10 failures recap"
+    failure_bucket: strict_in
+    media_tier: self_render
+
+  - id: s40
+    file: slides/s40-three-cornerstones.md
+    type: framework
+    duration_min: 1
+    assertion: "3 cornerstone концепта для Лекции 17: (1) AI judgment как структурная задача; (2) альтернатива-как-исходный уровень; (3) industry cyclicality > AI hype cycle."
+    learning_goal: "Bridge к Лекции 17 — systematization"
+
+  - id: s41
+    file: slides/s41-hero-methanesat-map.md
+    type: hero_closing
+    duration_min: 1
+    assertion: "Спутник потерян — карта осталась. Когда AI в нефтегазе работает, провалы дают шаблон для следующего раза."
+    learning_goal: "Closing hero — single clarified message (Item 8 owner feedback): 10 documented провалов → 3 переносимых cornerstone оси"
+    media_tier: 1
+    visual_source: "EDF / MethaneSAT data via Google Earth Engine, февраль 2026"
+
+  - id: s42
+    file: slides/s42-qa-normal.md
+    type: qa
+    duration_min: 10
+    assertion: "Q&A — 3 starter prompts из chapter §8 backup для обсуждения."
+    learning_goal: "Normal Q&A slide после closing (Item 9 owner feedback)"
+
+# Mandates carry-forward
+mandates:
+  hero_s01: "AI-explicit hero image (re-acquired Phase 8.6 Item 1) — ≥40% area, attribution visible. Tier-1/2 source preferred (Aramco METABRAIN visualization / Cognite digital twin / SLB Lumi UI / NVIDIA Omniverse oil-and-gas)"
+  hero_s41: "MethaneSAT global methane map EDF/Google февраль 2026, ≥40% area, attribution visible (EDF / Google Earth Engine февраль 2026); закрывающий слайд с single clarified message"
+  russification: "deep latin-token scan ≥0 unique tokens outside brand-allowlist"
+  anonymization: "0 named educational institutions; «студенты-инженеры 3 курса (универсальная)»"
+  media_coverage: "≥31/42 slides с media (real photos + charts + diagrams), target 74%"
+  palette: "Ocean Gradient + Teal secondary + Gold ≥1× per slide + Ocean rounded box motif"
+  numbers_density: "Max 3 striking numbers per visible body slide (P1.8 rule)"
+  baseline_mandate: "Каждое measurable claim в visible body — с inline base / counterfactual"
+  failure_bucket_target: "strict_in ≥15/42 (≥36%)"
+  mini_matrix_dividers: "Section dividers s05/s13/s21/s28 — mini-matrix (~120-150px) с current quadrant Gold-highlighted + muted others; s34 (Russia) — mini-matrix БЕЗ highlight (Russia spans all 4)"
+
+# Iteration tracking
+iteration_log: "rendered/iteration-log.md"

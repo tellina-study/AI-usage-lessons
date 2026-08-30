@@ -139,6 +139,36 @@ Issues and tasks are tracked at: `https://github.com/orgs/tellina-study/projects
 
 ---
 
+## Bilingual Production Rule (ENFORCED — фундаментальное, issue #172, 2026-08-30)
+
+**Источник:** Owner explicit decision (2026-08-30) — курс публикуется публично на **русском И английском** (сайт `tellina-study/publishing`, сессия `cao-course-site`). Владелец выбрал **полный ре-рендер деков на EN** (не только комментарии).
+
+**Правило.** Каждая лекция производится в **двух языках — RU и EN**. RU — source of truth и дефолт; EN — полноценный дубликат, а не машинный подстрочник.
+
+**Обязательные EN-артефакты на лекцию:**
+- `speech.en.md` — перевод комментариев/речи.
+- `deck.en.yaml` + `slides-en/sNN-*.md` — перевод структуры и текста слайдов.
+- `rendered/lec-NN-en.pptx` / `rendered/lec-NN-en.pdf` / `rendered/lec-NN-notes-en.pdf` — ре-рендер EN-дека (тот же визуальный QA-цикл, что и RU).
+- `chapter.en.md` (+ `chapter-partN.en.md`) — когда/если публикуется глава (опционально, по решению владельца).
+
+**Naming convention.** RU остаётся без суффикса. EN — суффикс `.en` для `.md`/`.yaml`, `-en` для rendered-бинарников, каталог `slides-en/` для per-slide EN. Не смешивать RU и EN в одном файле.
+
+**Терминология — glossary lock (ENFORCED).** До массового перевода фиксируется единый EN-глоссарий терминов курса (anti-drift на 16 лекций). Переводчики обязаны следовать ему; расхождение термина между лекциями → REVISE.
+
+**Anti-anglicism scope.** Russification / anti-anglicism mandate (§ ниже) применяется **только к RU-артефактам**. Для EN-артефактов английский — целевой язык, deep-latin-scan к ним НЕ применяется. Наоборот: EN-артефакт не должен содержать непереведённых русских фрагментов (mirror-check).
+
+**Counter-check (mandatory):** лекция имеет только RU-артефакты (нет `speech.en.md` / EN-дека) ИЛИ EN-дек содержит русский непереведённый текст → **REVISE**, не «доделаем потом». `consistency-checker` проверяет RU↔EN parity; `fact-checker` — что цифры/факты не потеряны при переводе.
+
+**Применимость:** все существующие лекции (backlog, issue #172) + все будущие. Введение (L1–L3) — EN обязателен так же (это публичный контент, не waiver-able).
+
+**Enforcement points:**
+- `tools/lecture-production/README.md` §1 — EN-артефакты в списке финальных + bilingual DoD.
+- `templates/lecture-outline.md` — EN-трек в плане лекции.
+- Phase gating: EN производится после approve RU-версии (RU — source), отдельной фазой с USER GATE.
+- Pre-USER-GATE: RU↔EN parity check (нет пропущенных слайдов/секций; нет непереведённых фрагментов).
+
+---
+
 ## Orchestration Rule (ENFORCED)
 
 Claude Code acts as **planner and orchestrator only**. It MUST NOT make implementation changes directly. ALL implementation work MUST be delegated to subagents (Agent tool with appropriate prompts).

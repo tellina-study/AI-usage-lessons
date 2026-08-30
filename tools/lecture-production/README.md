@@ -15,7 +15,16 @@ library/lectures/lec-NN/
   chapter-part3.md        ← при ≥30k обычно 3 части по 6 500–8 500 слов; >1200 строк суммарно — split продолжать
   rendered/lec-NN.pptx    ← презентация со speaker notes для студентов                    [DERIVED from chapter]
   speech.md               ← речь лектора ~4-6k слов (conversational)                       [DERIVED from chapter + slides]
+
+  # ─── EN-дубликаты (ENFORCED bilingual, CLAUDE.md § Bilingual Production, issue #172) ───
+  speech.en.md            ← EN-перевод комментариев/речи
+  deck.en.yaml            ← EN-структура дека
+  slides-en/sNN-*.md      ← EN per-slide content
+  rendered/lec-NN-en.pptx ← ре-рендер EN-дека (+ lec-NN-en.pdf, lec-NN-notes-en.pdf)
+  chapter.en.md           ← EN-глава (опционально, когда публикуется)
 ```
+
+**Bilingual (ENFORCED):** каждая лекция производится в RU **и** EN. RU — source of truth и дефолт (без суффикса); EN — суффикс `.en`/`-en`, каталог `slides-en/`. EN производится отдельной фазой **после** approve RU. Anti-anglicism/Russification применяется только к RU; для EN — mirror-check (нет непереведённых русских фрагментов). `consistency-checker` проверяет RU↔EN parity. Полное правило + naming — CLAUDE.md § «Bilingual Production Rule (ENFORCED)».
 
 **Source of truth:** `chapter.md`. Slides и speech derive из неё. При conflict — fix slides/speech, не chapter (если chapter сам не ошибается).
 

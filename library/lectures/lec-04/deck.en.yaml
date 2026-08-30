@@ -1,0 +1,425 @@
+# library/lectures/lec-04/deck.en.yaml  —  PART 1 of 2  (English twin, issue #172 Ph3)
+#
+# Deck structure of Lecture 4 "AI across the software development lifecycle (SDLC)" (41 slides — v4.1: +foundations slide s05, keystone→s06, dividers without tag plates).
+#
+# This is the ENGLISH source-of-truth twin of deck.yaml. It is documentation, NOT read at render time.
+# The render-authoritative sources are slides-en/*.md (notes) + build_lec04_en.py (visible strings).
+#
+# Source: chapter v4 methodology-first (~34.5k, 5 parts) +
+# plan v4-methodology-first §4 (per-slide map s01–s41 (v4.1: s05 foundations, s06 keystone cycle).
+# Issue #170 · Branch: hc/lesson4-498d0d8c
+#
+# ┌─ RE-SPINE (v4, owner redirect #264): the "SDLC phases" axis is PRESERVED, but ──┐
+# │ within each phase the methodological PRACTICE/discipline LEADS (who prescribes + │
+# │ why + human-owned artifact). TOOLS are a compact SECONDARY block "what people    │
+# │ build with today" carrying the judgment "durable pattern / hype[VFY]".           │
+# │ NOT a vendor catalog. Keystone s06 = the lecture's PHASE cycle (Requirements→…→   │
+# │ Documentation→, artifacts spec→ADR→plan→PR→incident). Architecture rewritten      │
+# │ (#259): necessity + ADR/fitness/C4. Harness added (#262). TDD discipline (#263).  │
+# │ Synthesis matrix reframed "phase × practice × human" (#264).                      │
+# │ 7 section dividers: s08(S1) s12(S2) s16(S3) s22(S4) s25(S5) s32(S6) s35(S7)        │
+# │ S0 s01–s08 = opening (s05 practice summary, s06 keystone cycle), no divider.       │
+# └───────────────────────────────────────────────────────────────────────────┘
+#
+# ┌─ SPLIT: deck.yaml >600 lines (Document Size Limit, no waiver) → split ──┐
+# │ deck.en.yaml   (THIS FILE) — deck/palette/motif/typography/glossary_lock │
+# │                + ai_failure + slides s01..s21 (through the end of Section 3). │
+# │ deck-part2.en.yaml — slides s22..s40 + totals + ai_failure_judgment +     │
+# │                verify_day_of_items + fact_check_items.                     │
+# │ Loader (rendered build script) reads BOTH parts. Cross-link at the bottom. │
+# └────────────────────────────────────────────────────────────────────────┘
+#
+# Phase 5 (structure): deck.yaml + slides/*.md from the finalized chapter v4; PPTX render —
+# Phase 6 (next phase). Speaker-notes markers [for-slide-sNN] in chapter* (v4.1 shift +1 from s06).
+
+deck:
+  lecture_number: 4
+  title: "Lecture 4. AI across the software development lifecycle (SDLC)"
+  audience: "3rd-year IU6 students, software engineers (universal, no local binding in the content)"
+  duration_min: 75
+  central_question: "AI writes code better and better — but what makes AI development reliable? Not the tool, but engineering discipline by SDLC phase: which human-owned artifact and which check are needed at each phase, where the methods of different players converge — and what is not delegated to the tool in any phase?"
+  learning_outcomes: [LO1, LO4, LO7]
+  language: en
+  status: draft-for-gate-b
+  version: v4.0
+  source: "chapter v4 methodology-first (~34.5k, 5 parts)"
+  plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
+  total_slides: 41          # v4.1: s01–s41; 7 section dividers s09/s13/s17/s23/s26/s33/s36 (shift +1); s05 foundations, s06 keystone
+  curriculum_level: "Module 1, first industry lecture (after the overview lectures L1–L3); L4 = strict-in ≥30% mandatory, waiver UNAVAILABLE"
+  deck_parts: [deck.en.yaml, deck-part2.en.yaml]   # split >600 lines; loader reads both
+  axis: "methodology-first: SDLC phase × leading practice (method: artifact + who prescribes + why); the tool is a secondary illustration"
+
+palette:
+  primary_deep: "#21295C"      # Ocean deep — text on light bg, assertions
+  primary_mid: "#065A82"       # Ocean mid — headings, accents, primary chart series
+  primary_light: "#1C7293"     # Ocean light — icons, borders, motif strokes
+  teal: "#028090"              # secondary accent — chart contrast, secondary icons
+  gold: "#F0AB00"              # highlight — wow-stat, ≥1× per slide
+  surface: "#F4F7FA"           # motif rounded box background
+  background: "#FFFFFF"        # default slide background
+
+motif:
+  type: ocean_rounded_box
+  radius_pt: 12
+  stroke: "#1C7293"
+  stroke_pt: 1.5
+  surface: "#F4F7FA"
+  padding_pt: 16
+  cast_shadow: false
+
+typography:
+  heading_font: "Inter"
+  mono_font: "JetBrains Mono"
+  fallback_heading: "Arial"
+  sizes:
+    cover_title: 36
+    cover_hero: 60
+    slide_assertion: 28
+    sub_heading: 20
+    body: 16
+    caption: 12
+    mega_stat: 80
+
+glossary_lock:
+  # Canonical terms — from glossary.yaml (locked chapter v1.1, synced with re-spine v4).
+  # designer/critic enforce no drift; alias only 1× at first mention.
+  # forbidden anglicisms (RU-side) do not apply to the EN deck.
+  - "SDLC phase (a lifecycle stage with its own input / output / artifact)"
+  - "method vs tool (the load-bearing v4 dichotomy: the method decides, the tool executes)"
+  - "human-owned artifact (the tangible result of a phase, which a human is accountable for and which is versioned)"
+  - "git loop of discipline (the chain of versioned artifacts spec→ADR→plan→PR→incident)"
+  - "perception gap (sense of speed ↔ measured fact)"
+  - "autonomy ladder (A autocomplete / B small tasks / C coding agent / D orchestrator) — a demoted lens"
+  - autocomplete
+  - coding agent
+  - orchestrator
+  - "automation bias (a false confidence in the automated system)"
+  - "essential vs accidental complexity (Brooks)"
+  - "\"almost-correct\" code"
+  - the 70% problem
+  - "spec-driven development"
+  - "interrogatory LLM"
+  - "prompt-and-pray (anti-pattern: a vague prompt → unstated assumptions)"
+  - "ADR (Architecture Decision Record — we decided X because Y, we rejected Z)"
+  - "fitness function (an automatic architectural check on every commit)"
+  - "C4 / architecture-as-code (a machine-readable description of the architecture)"
+  - "poisoned context (AI copies bad examples from the codebase)"
+  - "harness (a deterministic scaffold of checks around a non-deterministic model)"
+  - "AGENTS.md (a persistent layer of instructions/conventions the agent reads every session)"
+  - "context engineering (managing context: JIT / compaction / context rot)"
+  - "explore → plan → code → commit (the discipline of the work cycle)"
+  - "SWE-bench (Verified public / Pro private, contamination-resistant)"
+  - "TDD (test-driven development, test-first)"
+  - "mutation testing (mutation score — the share of killed artificial defects)"
+  - quality gate
+  - "SAST / DAST / SCA / secret scanning"
+  - "supply chain (the software supply chain)"
+  - "slopsquatting (registering a reproducibly-hallucinated package name)"
+  - "prompt injection"
+  - "lethal trifecta (access to secrets + untrusted content + exfiltration channel)"
+  - "risk triad (Böckeler: probability × impact × detectability)"
+  - "least privilege"
+  - "egress control (limiting where the agent sends data)"
+  - "cognitive debt (generation outruns understanding)"
+  - "accountability (not delegated in any phase)"
+  - "triangulation (DORA / GitClear / METR — the convergence of independent methods)"
+
+ai_failure:
+  # AI-Failure & Judgment Content Rule (ENFORCED): ≥30% strict-in, waiver UNAVAILABLE for L4.
+  # Fully in-bucket slides (failure+lesson / limitation / "when not AI" / comparison with an alternative):
+  strict_in_slides: [s07, s11, s13, s15, s20, s21, s24, s27, s29, s30, s31, s33, s34, s37, s38, s39]
+  count: 16
+  share_by_slides: "16/40 = 40% by slides (buffer +10 pp over the 30% threshold). partial→out (Decision #78): s01 hook, s02 cover, s03 bridge, s04 central question, s05 keystone (load-bearing axis = course-scaffold), s06 demoted lens A→D, s08/s12/s16/s22/s25/s32/s35 dividers, s09/s10 requirements practice+recommendations (partial-upside), s14 architecture approaches (upside), s17/s18/s19 implementation practices (upside), s23 TDD practice (upside), s26 review practice (upside), s28 security practice (upside), s32 divider, s36 matrix (packaging), s40 bridge+Q&A. Clusters distributed across the 7 sections: s07-S0 · s11-S1 · s13/s15-S2 · s20/s21-S3 · s24-S4 · s27/s29/s30/s31-S5 · s33/s34-S6 · s37/s38/s39-S7 — no single-artifact concentration."
+
+# ─────────────────────────────────────────────────────────────────────────
+# Presentation order (plan v4 §4): SDLC phases, with practice leading inside each.
+# S0 s01–s07 (intro + methodological frame) · S1 [s08] s09–s11 (requirements) ·
+# S2 [s12] s13–s15 (architecture) · S3 [s16] s17–s21 (implementation) ·
+# S4 [s22] s23–s24 (testing) · S5 [s25] s26–s31 (review+security) ·
+# S6 [s32] s33–s34 (delivery+ops+docs) · S7 [s35] s36–s40 (synthesis).
+# ─────────────────────────────────────────────────────────────────────────
+
+slides:
+  # ─── Section 0. Introduction and methodological frame (s01–s07) ───
+  - id: s01
+    file: slides-en/s01-metr-perception-gap-hook.md
+    type: hero_cover
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 3
+    assertion: "16 experienced developers with AI worked 19% longer — yet were sure AI was speeding them up: the feeling of productivity is a hypothesis, not data, so reliability comes from discipline, not from a feeling"
+    learning_goal: "Hook: the perception gap in a clean experiment; justification of the lecture's methodology-first axis"
+    learning_outcomes: [LO7]
+    chapter_ref: "§0.1 [for-slide-s01]"
+    interaction: open_question
+    verify_day_of: true
+    hero_required: true
+
+  - id: s02
+    file: slides-en/s02-cover-roadmap.md
+    type: cover
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 0.5
+    assertion: "Lecture 4. AI across the software development lifecycle"
+    learning_goal: "Cover + roadmap of sections 0–7; preview of the git loop of discipline"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§0.1 [for-slide-s02]"
+    interaction: none
+    verify_day_of: false
+
+  - id: s03
+    file: slides-en/s03-bridge-lec3.md
+    type: assertion_visual
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 2
+    assertion: "From Lectures 1–3 we carry over the ready-made apparatus for choosing an architecture; Lecture 4 takes one industry and shows which discipline makes AI reliable by phase"
+    learning_goal: "Bridge from Module 1: what we carry over and do not re-explain"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.2 [for-slide-s03]"
+    interaction: none
+    verify_day_of: false
+
+  - id: s04
+    file: slides-en/s04-central-question.md
+    type: assertion_visual
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 2.5
+    assertion: "The central question is not \"which tool is best\" but \"which discipline makes AI development reliable by phase\": the tool is secondary, the practice is primary"
+    learning_goal: "The central question (§0.3) methodology-first; goals through practice, not the tool"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§0.3 [for-slide-s04]"
+    interaction: none
+    verify_day_of: false
+
+  - id: s05
+    file: slides-en/s05-keystone-git-loop.md
+    type: assertion_visual
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 3
+    keystone: true
+    assertion: "AI development as a discipline is a cycle of human-owned artifacts spec→ADR→plan→PR→incident, each owned by a human; the methods of different players converge on this skeleton"
+    learning_goal: "KEYSTONE — the git loop of discipline (artifact-chain diagram) + the definition of a phase (input/output/artifact) + the uneven maturity of phases; convergence of methods = 1 caption"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§0.6 [for-slide-s05]"
+    interaction: none
+    verify_day_of: false
+
+  - id: s06
+    file: slides-en/s06-autonomy-ladder-lens.md
+    type: assertion_visual
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 2
+    assertion: "The autonomy ladder A→D is an auxiliary lens (not the load-bearing axis); and the level of autonomy is a property of the mode, not the brand: one product lives at several levels at once"
+    learning_goal: "A→D demoted lens + mode ≠ brand in one line (the B↔C / C↔D boundaries compactly)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§0.7 [for-slide-s06]"
+    interaction: none
+    verify_day_of: false
+
+  - id: s07
+    file: slides-en/s07-tool-secondary-thesis.md
+    type: assertion_visual
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 2.5
+    assertion: "The tool is secondary — the method decides, the tool executes; \"we adopted an AI tool\" ≠ \"we adopted an AI discipline\", and the first without the second multiplies the mess"
+    learning_goal: "[SI] The leading v4 thesis: the method decides, the tool executes + the failure \"tool instead of practice\""
+    learning_outcomes: [LO7, LO1]
+    chapter_ref: "§0.8, §0.9 [for-slide-s07]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  # ─── Section 1. Requirements — the first artifact, before any code (s08–s11) ───
+  - id: s08
+    file: slides-en/s08-divider-requirements.md
+    type: section_divider
+    section: "Section 1. Requirements — the first artifact"
+    duration_min: 0.5
+    assertion: "Requirements · spec-driven — the phase where what leads is not code but the specification a human wrote, read, and accepted"
+    learning_goal: "Section divider for section 1 (requirements): the point of the phase in one line"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1 (structural divider)"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s09
+    file: slides-en/s09-spec-driven-practice.md
+    type: assertion_visual
+    section: "Section 1. Requirements — the first artifact"
+    duration_min: 3
+    assertion: "Requirements are the first artifact, before any code: the spec-driven practice puts a human-reviewable spec between intent and code; three industry voices converge that the spec is the central artifact"
+    learning_goal: "The spec-driven practice as a discipline; visual of the git tree with spec files; Grove's \"~10-20%\" as rhetoric, not measurement"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.1 [for-slide-s08]"
+    references: [openai-model-spec, grove-new-code, fowler-intent]
+    interaction: none
+    verify_day_of: true
+
+  - id: s10
+    file: slides-en/s10-requirements-methodics.md
+    type: assertion_visual
+    section: "Section 1. Requirements — the first artifact"
+    duration_min: 2.5
+    assertion: "The methods give three recommendations for writing a spec with discipline: small independently-testable units, an interrogatory LLM, spec-as-check — tools execute them and are secondary"
+    learning_goal: "Recommendations from the methods (Spec-Kit method, interrogatory LLM, deliberative alignment); vendors as a secondary row"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§1.2 [for-slide-s09]"
+    references: [spec-kit, openai-deliberative-alignment, fowler-intent]
+    interaction: none
+    verify_day_of: true
+
+  - id: s11
+    file: slides-en/s11-prompt-and-pray.md
+    type: case_study
+    section: "Section 1. Requirements — the first artifact"
+    duration_min: 3
+    assertion: "prompt-and-pray is not a \"bad tool\" but a skipped discipline: the model silently fills in the requirements with defaults; the root of the failure is the essential complexity of intent (Brooks), which is not delegated"
+    learning_goal: "[SI] The prompt-and-pray failure + an ironic illustration; the lesson human-intent = essential complexity; the overclaim \"spec=truth\""
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§1.3, §1.4 [for-slide-s10]"
+    references: [grove-new-code, emperors-new-code]
+    in_bucket: true
+    visual_brief_note: "An ironic thematic illustration (#258) — find a CC/embeddable one in Phase 6."
+    interaction: none
+    verify_day_of: false
+
+  # ─── Section 2. Architecture — before code, and it must be managed (s12–s15) ───
+  - id: s12
+    file: slides-en/s12-divider-architecture.md
+    type: section_divider
+    section: "Section 2. Architecture — before code, and it must be managed"
+    duration_min: 0.5
+    assertion: "Architecture · after requirements comes architecture, not code straight away; what is load-bearing is a human practice that must be managed with AI, not delegated to AI"
+    learning_goal: "Section divider for section 2 (architecture): the point of the phase in one line"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2 (structural divider)"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s13
+    file: slides-en/s13-architecture-necessity.md
+    type: assertion_visual
+    section: "Section 2. Architecture — before code, and it must be managed"
+    duration_min: 3
+    assertion: "After requirements comes architecture, not code straight away: \"deciding what to build\" is essential complexity (Brooks); skipping the phase yields erosion and cognitive debt"
+    learning_goal: "[SI] The necessity of architecture after requirements (not code); Brooks essential complexity; skipping the phase → erosion"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.1 [for-slide-s12]"
+    references: [brooks-no-silver-bullet]
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s14
+    file: slides-en/s14-architecture-approaches.md
+    type: schema_matrix
+    section: "Section 2. Architecture — before code, and it must be managed"
+    duration_min: 3
+    assertion: "Architecture can be managed with AI through four practices: ADR (durable context), fitness functions (oversight on every commit), C4/architecture-as-code (machine-readable), evolutionary architecture — tools are secondary"
+    learning_goal: "Approaches to managing architecture (ADR/fitness functions/C4/evolutionary); vendors secondary"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2 [for-slide-s14]"
+    references: [nygard-adr, ford-fitness-functions, brown-c4]
+    interaction: none
+    verify_day_of: false
+
+  - id: s15
+    file: slides-en/s15-poisoned-context.md
+    type: case_study
+    section: "Section 2. Architecture — before code, and it must be managed"
+    duration_min: 3
+    assertion: "Poisoned context: AI copies bad examples from the codebase and amplifies them — but this happens when the architecture is undescribed and there is no process to manage it; the alternative is ADR + fitness functions"
+    learning_goal: "[SI] Poisoned context + the caveat #261 \"when the architecture is undescribed and unmanaged\" (bridge to s14)"
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§2.3 [for-slide-s13]"
+    references: [bockeler-thoughtworks]
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  # ─── Section 3. Implementation — discipline + harness (s16–s21) ───
+  - id: s16
+    file: slides-en/s16-divider-implementation.md
+    type: section_divider
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 0.5
+    assertion: "Implementation · a strong phase with three practices: small verifiable units, a persistent memory layer in the repository, a deterministic harness around the model"
+    learning_goal: "Section divider for section 3 (implementation): the point of the phase in one line"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3 (structural divider)"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s17
+    file: slides-en/s17-small-units-cycle.md
+    type: assertion_visual
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "The discipline of work is to break the task into small verifiable units and run it through the cycle explore → plan → code → commit; the two philosophies (in the editor / asynchronously) are secondary"
+    learning_goal: "What leads: small verifiable units + the cycle explore→plan→code→commit (the discipline of work)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.1 [for-slide-s17]"
+    references: [anthropic-sdlc, osmani-70-percent]
+    interaction: none
+    verify_day_of: true
+
+  - id: s18
+    file: slides-en/s18-persistent-memory-layer.md
+    type: schema_architecture
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "A persistent layer of instructions and memory in the repository (AGENTS.md, memory, context engineering) — what the agent reads every session: context lives in the repo, not in fleeting prompts"
+    learning_goal: "What leads: the persistent instructions/memory layer (AGENTS.md conventions/guardrails, memory, context-eng JIT/compaction/context-rot)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.2 [for-slide-s18]"
+    references: [anthropic-context-engineering, agents-md]
+    interaction: none
+    verify_day_of: false
+
+  - id: s19
+    file: slides-en/s19-harness-gate.md
+    type: schema_pipeline
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "The harness is a deterministic scaffold-gate around a non-deterministic model (linters, structural tests, gates, least-privilege, sandbox): the agent stalls → signal → feedback; honestly — the harness itself does not check behavior"
+    learning_goal: "What leads: a deterministic scaffold-gate around a non-deterministic model (harness engineering, Böckeler)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3 [for-slide-s19]"
+    references: [bockeler-thoughtworks]
+    interaction: none
+    verify_day_of: false
+
+  - id: s20
+    file: slides-en/s20-70-percent-problem.md
+    type: case_study
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "The 70% problem: AI gets you to \"almost right\" quickly, but the last 30% — understanding — it does not speed up; \"almost-correct\" code passes a quick glance and breaks on an edge case"
+    learning_goal: "[SI] Failure: the 70% problem (Osmani) + \"almost right\" (SO 66%) + the knowledge paradox"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.4 [for-slide-s18]"
+    references: [osmani-70-percent, stackoverflow-2025]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+
+  - id: s21
+    file: slides-en/s21-anti-hype-benchmarks.md
+    type: case_study
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "A benchmark number can be both true and misleading: Devin 13.86% — 79 of 570 (only 25% of the bench, with contamination); OpenAI \"70% more PRs\" — with no denominator; brand/benchmark ≠ discipline"
+    learning_goal: "[SI] Anti-hype: Devin 13.86% (79/570), Cursor admits weakness, OpenAI \"70% more PRs\" with no denominator"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.5 [for-slide-s19]"
+    references: [devin-cognition, swe-bench-pro, openai-swe-bench, cursor]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+
+# ─────────────────────────────────────────────────────────────────────────
+# Continued — deck-part2.en.yaml: slides s22..s40 + totals + ai_failure_judgment
+# + verify_day_of_items + fact_check_items. The loader reads BOTH parts.
+# ─────────────────────────────────────────────────────────────────────────

@@ -3441,12 +3441,12 @@ def main():
     p = setup_pres()
     for build in BUILDERS:
         build(p)
-    # Stamp a muted «N / TOTAL» page number on every slide (bottom-right).
+    # Footer-less render for publication (issue #176): the muted «N / TOTAL»
+    # page-number stamp is intentionally disabled. The ref-list source band
+    # (refs_of_slide) is unaffected — it is rendered per-slide inside builders.
     total = len(p.slides)
-    for i, slide in enumerate(p.slides, start=1):
-        page_number(slide, i, total)
     p.save(str(OUT))
-    print(f"Saved {OUT} with {len(BUILDERS)} slides (page numbers 1..{total}).")
+    print(f"Saved {OUT} with {len(BUILDERS)} slides (footer-less, page numbers disabled).")
 
 
 if __name__ == "__main__":

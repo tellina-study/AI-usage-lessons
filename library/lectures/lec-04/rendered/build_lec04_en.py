@@ -50,9 +50,10 @@ def main():
     for fn in builders:
         fn(p)
 
+    # Footer-less render for publication (issue #176): the muted «N / TOTAL»
+    # page-number stamp is intentionally disabled. Ref-list / footer band
+    # (left-aligned, x=0.55) and roadmap bar are unaffected.
     total = len(builders)
-    for i, slide in enumerate(p.slides, start=1):
-        page_number(slide, i, total)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
     assert n == 41, f"expected 41 slides, got {n}"

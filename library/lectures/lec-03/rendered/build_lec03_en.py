@@ -2430,8 +2430,10 @@ def main():
         # (baked into slides/*.md by patch_notes.py — single source of truth,
         # so slide-[N] и notes-[N] не расходятся; builder's speaker_notes(
         # load_notes(sid)) picks it up). Nothing to do here.
-        # (4) muted page number «N / 40» bottom-right on every slide
-        R.page_number(slide, idx + 1, total)
+        # (4) footer-less render for publication (issue #176): the muted page
+        # number «N / 40» bottom-right is intentionally disabled. Ref-list and
+        # folded caveat (steps 1-3 above) are unaffected.
+        # R.page_number(slide, idx + 1, total)
 
     # verification print — any anchor that failed to match
     missed = [(sid, a) for sid, rep in inject_report.items()

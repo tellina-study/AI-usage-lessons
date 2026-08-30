@@ -2724,11 +2724,9 @@ def main():
         except Exception as e:
             print(f"  {slide_ids[i]} FAIL: {type(e).__name__}: {e}")
             raise
-    # Deck-wide page numbers «N / TOTAL» (muted, bottom-right corner) — applied
-    # to every slide after all builders so no per-slide builder needs touching.
+    # Footer-less render for publication (issue #176): deck-wide «N / TOTAL»
+    # page-number stamping is intentionally disabled.
     total = len(builders)
-    for i, slide in enumerate(p.slides):
-        page_number(slide, i + 1, total)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     p.save(str(OUT))
     print(f"\nSaved: {OUT}  ({OUT.stat().st_size // 1024} KB)")

@@ -21,8 +21,8 @@ source: chapter v3.3 + deck v3.4 (36 slides, issue #153 21-fix polish + issue #1
 
 Cross-artifact sync with deck v3.4 after issue #155 Round 2 batch 1 (10 copy fixes + section-divider audit #177). 15 targeted edits + 2 new sections (36 slides instead of 34).
 
-- **[Structure]** Added section **[s05c]** — new section divider "Section 1 — What is AI" before the start of the first content section (0.5 min). Previously section 1 started without an explicit divider right after the lecturer's bio card.
-- **[Structure]** Added section **[s07a]** — new section divider "Section 2 — Where we are now" before the section on the scale of AI and the breakthroughs (0.5 min). Now all 5 content sections of the lecture open with an explicit divider carrying the bridge phrase "Section N of five" — previously dividers appeared only before sections 3/4/5.
+- **** Added section **[s05c]** — new section divider "Section 1 — What is AI" before the start of the first content section (0.5 min). Previously section 1 started without an explicit divider right after the lecturer's bio card.
+- **** Added section **[s07a]** — new section divider "Section 2 — Where we are now" before the section on the scale of AI and the breakthroughs (0.5 min). Now all 5 content sections of the lecture open with an explicit divider carrying the bridge phrase "Section N of five" — previously dividers appeared only before sections 3/4/5.
 - **[s02]** The lecture title in the line was synced with the slide rename (#171): "Introduction — AI around us" → "What is AI? History, classification, general concepts".
 - **[s02a]** Section title "Lecture map" → "Lecture plan" (#173); mention of block 0 "opening" → "introduction" (#172).
 - **[s05a]** The lecturer's line was fully rewritten for the new bio card (#174): real name and role ("architect, technical and product leader"), 20+ years in IT, 10+ projects, real companies (Yandex, MTS, Magnit, Sibur), Telegram/Email contacts. The old duh-style "who I am and why this matters to me" with the abstract "1 phrase about the role" placeholder was removed.
@@ -47,12 +47,12 @@ Cross-artifact sync with deck v3.4 after issue #155 Round 2 batch 1 (10 copy fix
 
 Polish Round Pattern — full resync of speech.md with the finalized chapter.md v3.3 and deck.yaml/slides v3.3 after the 21-fix polish round (issue #153). Not point edits — the whole file was reassembled to match the new order and content of the slides.
 
-- **[Structure]** Removed sections [s03] and [s04] (icebreaker poll about AI use in Russia) — the poll moved to seminar 1 and no longer appears in the lecture.
-- **[Structure]** Removed section [s05b] in its old form ("Main question of the course" as a separate slide after the bio card) — the content moved to the new s00b, which now comes **before** the title slide (s02).
-- **[Structure]** Added section **[s00a]** — a short welcome (~0.5 min) before the title: what the course is, what it is about, what it is not.
-- **[Structure]** Added section **[s00b]** — the course hook (~1 min): the adoption funnel 100%→10% + the course's main question "not can you, but should you and where". This is now the first substantive statement of the lecture, before the title.
-- **[Structure]** Added section **[s06a]** — the prehistory of 1943 (McCulloch — Pitts), a fact-bridge between "what is AI" (s06) and the seventy-year timeline (s07): the idea of a neural network is 13 years older than the term "AI" itself.
-- **[Structure]** Added section **[s29a]** — the grade formula (100 = 10 attendance + 30 exam + 3×20 midterms), right after the semester map.
+- **** Removed sections [s03] and [s04] (icebreaker poll about AI use in Russia) — the poll moved to seminar 1 and no longer appears in the lecture.
+- **** Removed section [s05b] in its old form ("Main question of the course" as a separate slide after the bio card) — the content moved to the new s00b, which now comes **before** the title slide (s02).
+- **** Added section **[s00a]** — a short welcome (~0.5 min) before the title: what the course is, what it is about, what it is not.
+- **** Added section **[s00b]** — the course hook (~1 min): the adoption funnel 100%→10% + the course's main question "not can you, but should you and where". This is now the first substantive statement of the lecture, before the title.
+- **** Added section **[s06a]** — the prehistory of 1943 (McCulloch — Pitts), a fact-bridge between "what is AI" (s06) and the seventy-year timeline (s07): the idea of a neural network is 13 years older than the term "AI" itself.
+- **** Added section **[s29a]** — the grade formula (100 = 10 attendance + 30 exam + 3×20 midterms), right after the semester map.
 - **[s02a]** Rewritten for the new visual — a timeline-roadmap (the same pattern as the semester map s29), rather than section cards jumbled together.
 - **[s08]** The market figure was updated: "$244–390B" → "390.9 billion dollars in 2025 → 539.5 billion in 2026 (Grand View Research)", with a footnote about Statista's narrower software-only estimate.
 - **[s09]** The fourth episode was fully rewritten: Kimi K2.5 → Georgi Gerganov / llama.cpp / ggml.ai (solo project → joining Hugging Face on February 20, 2026 → 100,000+ stars on GitHub in March 2026, faster than PyTorch and TensorFlow). The lesson is about the infrastructure layer, not about a product. The flat lecture numbers "lectures four, five, eight" were replaced with a topic-based phrasing.
@@ -135,17 +135,13 @@ Full rewrite for the structure of deck v3.1 after 23 edits by the user at USER G
 
 ---
 
-## [s01 · 3 min] — Real-time identification of people
+## [s01] — Real-time identification of people
 
 [I turn on the laptop, the projector shows a live frame from the webcam. On the faces in the room — bounding boxes. The "N people detected" counter updates.]
 
 "Hello. Before I say a single word about AI — look at the projector.
 
-[3-second pause, let the audience look around]
-
-What you see is a laptop. An ordinary laptop. Running on it is a computer vision model. It was trained in twenty twenty-three. It sees you for the first time — there are none of your photos in its training set. And it runs locally. [pause] No internet. No cloud. No subscription. No sending data to anyone whatsoever.
-
-[lower your voice]
+What you see is a laptop. An ordinary laptop. Running on it is a computer vision model. It was trained in twenty twenty-three. It sees you for the first time — there are none of your photos in its training set. And it runs locally. No internet. No cloud. No subscription. No sending data to anyone whatsoever.
 
 This is AI. Not magic, not a threat, not "the future that will arrive" — but a tool that works right now, on a single laptop, in this room.
 
@@ -159,7 +155,7 @@ Today, over seventy-five minutes, you and I will walk through the main archetype
 
 ---
 
-## [s00a · 0.5 min] — Welcome
+## [s00a] — Welcome
 
 [On the slide — a large course title, a tinted background, without the decorative "01" and without the Ocean rounded box.]
 
@@ -171,17 +167,13 @@ The course is not about training models from scratch. It is about how to compete
 
 ---
 
-## [s00b · 1 min] — The main question of the course
+## [s00b] — The main question of the course
 
 [On the slide — a funnel 100% → 10% on the left (gold endpoint), the main idea of the course and the course's central question on the right.]
 
 "The question "can AI be applied" is no longer interesting. It can. Nine hundred million people use ChatGPT every week. It has long been infrastructure.
 
-[point at the funnel]
-
 But the question "should you and where" is open. Look at the funnel on the left: about ninety percent of corporate AI pilots in Russia do not reach production deployment. Similar figures — on other markets too, per McKinsey and Gartner.
-
-[pause]
 
 Mass adoption and mass failure at the same time — the central engineering problem of the course. That is why the main question is not "can you", but **"where AI works, where it doesn't, and how to figure that out in advance"**. This is a diagnostic question, not a triumphant one. You and I will return to it every lecture of the course."
 
@@ -189,7 +181,7 @@ Mass adoption and mass failure at the same time — the central engineering prob
 
 ---
 
-## [s02 · 30 sec] — Cover
+## [s02] — Cover
 
 [On the slide — a large "01" figure, a title, a subtitle.]
 
@@ -197,11 +189,9 @@ Mass adoption and mass failure at the same time — the central engineering prob
 
 This is the first of seventeen lectures of the course. Today — the general map. Later we'll descend into the details."
 
-[Pause 2 seconds. Move to s02a.]
-
 ---
 
-## [s02a · 30 sec] — Lecture plan
+## [s02a] — Lecture plan
 
 [On the slide — a horizontal timeline of 5 color blocks, the same visual pattern as the semester map s29; the current section (0) is highlighted in gold.]
 
@@ -211,15 +201,13 @@ This is the first of seventeen lectures of the course. Today — the general map
 
 ---
 
-## [s05a · 1 min] — Who I am and why this matters to me
+## [s05a] — Who I am and why this matters to me
 
 [On the slide — the instructor's portrait and name on the left, on the right a specialization heading and 3 cards: experience, expertise, companies.]
 
 "Briefly about myself.
 
 I am an architect, a technical and product leader in IT — more than twenty years, more than ten completed projects.
-
-[point at the companies card]
 
 I've worked with Yandex (leading Russian internet/search-and-services company), MTS (major Russian telecom operator), Magnit (large Russian grocery-retail chain), Sibur (largest Russian petrochemicals producer). Different industries, and in each, AI was applied in its own way. That is why I'm interested not in a conversation about "artificial intelligence in general", but in the engineering boundary: where AI saves time, and where it's a demonstration that falls apart in production.
 
@@ -231,7 +219,7 @@ Questions outside the lecture — the contacts are on the slide."
 
 ---
 
-## [s05c · 0.5 min] — Section 1. What is AI
+## [s05c] — Section 1. What is AI
 
 [On the slide — a divider: a large "Section 1", the title "What is AI", the 1-phrase frame "Definitions, history, classification", a roadmap bar at the bottom with the current section highlighted in gold.]
 
@@ -243,7 +231,7 @@ The structure of the section is short but dense: first — why there are many de
 
 ---
 
-## [s06 · 1.5 min] — What is AI: why there are many definitions
+## [s06] — What is AI: why there are many definitions
 
 [On the slide — a 2×2 grid of 4 approaches + an AI Effect callout at the bottom.]
 
@@ -269,21 +257,15 @@ Don't pick one approach as the right one — all four are working."
 
 ---
 
-## [s06a · 1 min] — Prehistory: 1943
+## [s06a] — Prehistory: 1943
 
 [On the slide — a compact fact slide: 1943 (McCulloch — Pitts) vs 1956 (Dartmouth), gold accent on "13 years".]
 
 "Before we walk through the history of AI — one fact-bridge.
 
-[point at 1943]
-
 Even before the term "artificial intelligence" appeared, the neurophysiologist Warren McCulloch and the logician Walter Pitts formalized the neuron as a logical element: a network of such simple binary elements can theoretically compute any logical function. The paper came out in nineteen forty-three.
 
-[point at the gap, "13 years"]
-
 That is thirteen years earlier than the Dartmouth conference of fifty-six, where the term "artificial intelligence" would appear for the first time.
-
-[pause]
 
 The formal neuron didn't solve applied tasks, but it anticipated the connectionist tradition — a line of thought from which neural networks and architectures like the Transformer would grow.
 
@@ -293,7 +275,7 @@ Keep this in mind: the idea of a neural network is older than the term "artifici
 
 ---
 
-## [s07 · 4 min] — Seventy years of AI: discoveries, winters, the 2017 turning point
+## [s07] — Seventy years of AI: discoveries, winters, the 2017 turning point
 
 [On the slide — a horizontal line 1950 → 2026, three groups, a gold point on 2017, a callout at the bottom about the Vaswani paper.]
 
@@ -306,8 +288,6 @@ Keep this in mind: the idea of a neural network is older than the term "artifici
 [second group]
 
 **Two winters and breakthroughs, seventy-four — twenty twelve.** Seventy-four — eighty — the first AI winter: after the Lighthill report and the DARPA cuts, the field loses money. Eighty-seven — ninety-three — the second winter: the market for AI machines collapses, expert systems turn out to be brittle. Ninety-seven — IBM's Deep Blue defeats Kasparov: two hundred million positions per second by brute-force search. Twenty twelve — AlexNet wins ImageNet by a sharp margin: deep convolutional networks on GPUs beat hand-crafted features.
-
-[point at the "Winters and breakthroughs" panel]
 
 Note the caption under this panel: resources leave when promises don't come true. That's exactly how both winters worked — not because of a lack of ideas, but because of the gap between what was promised and what actually worked. The lesson: when promises massively fail to come true, the field loses resources. Today's wave is the fourth, and so far it avoids a winter, because part of the promises do come true. But not all of them will. Distinguish what works now from what is promised for twenty thirty.
 
@@ -333,9 +313,7 @@ We'll break down the mechanics of the Transformer later, when we look at how mod
 
 ---
 
-## [s07a · 0.5 min] — Section 2. Where we are now
-
-[On the slide — a divider: a large "Section 2", the title "Where we are now", the 1-phrase frame "AI as infrastructure, breakthroughs 2023–2026", a roadmap bar at the bottom with the current section highlighted in gold.]
+## [s07a] — Section 2. Where we are now
 
 "Section two of five. We've figured out what AI is. Next — where it is now, in twenty-six.
 
@@ -345,7 +323,7 @@ First — the scale in figures, then — breakthroughs from teams that were not 
 
 ---
 
-## [s08 · 3 min] — AI became infrastructure in 3 years
+## [s08] — AI became infrastructure in 3 years
 
 [On the slide — a grid of 4 metrics: 900M / 51% / 46% / $390.9B→$539.5B + a gold counter-fact "90% rollbacks".]
 
@@ -358,8 +336,6 @@ ChatGPT — about nine hundred million weekly active users as of February twenty
 Stack Overflow Developer Survey twenty-five, forty-nine thousand developers from one hundred seventy-seven countries — eighty-four percent use or plan to use AI; fifty-one percent turn to AI daily.
 
 GitHub Copilot — among regular users, AI writes up to forty-six percent of lines of code, and for Java — sixty-one.
-
-[point at the market figure]
 
 The size of the AI market. Per Grand View Research of twenty-six — three hundred ninety point nine billion dollars in twenty-five, with a forecast of growth to five hundred thirty-nine and a half billion in twenty-six. Per the narrow software-only Statista — lower, around two hundred forty-four to two hundred sixty billion. The spread comes from what you count as the AI market: models, infrastructure, embedded AI, integration. If you compare AI market figures — first compare the methodologies.
 
@@ -375,7 +351,7 @@ The lecture context. AI is already infrastructure with mass adoption and mass fa
 
 ---
 
-## [s09 · 3 min] — The space is open: four breakthroughs 2023–2026
+## [s09] — The space is open: four breakthroughs 2023–2026
 
 [On the slide — four cards horizontally in Ocean rounded boxes: Mistral 7B / DeepSeek R1 (gold) / OpenClaw / llama.cpp-ggml.ai.]
 
@@ -397,8 +373,6 @@ The lecture context. AI is already infrastructure with mass adoption and mass fa
 
 **The story of Georgi Gerganov, llama.cpp and ggml.ai.** A solo project grew into a small team. On February twentieth, instead of venture funding, it joined Hugging Face for support — keeping its autonomy.
 
-[pause]
-
 In March, llama.cpp crossed **one hundred thousand stars on GitHub** — faster than PyTorch or TensorFlow.
 
 The lesson here is a different one. Not "one person released a product", but **one person built an infrastructure layer on which the entire open ecosystem rests** — the foundation that makes it possible to run large models on an ordinary laptop.
@@ -411,17 +385,15 @@ In parallel, Russian tools are developing too: YandexGPT, GigaChat, T-Bank Talis
 
 ---
 
-## [s10 · 30 sec] — Section 3. Four ways to implement
+## [s10] — Section 3. Four ways to implement
 
 [On the slide — a divider with a large "Section 3", a marker "You are here — 3 of 5", the 1-phrase frame.]
 
 "Section three of five. You and I are in the largest section of today's lecture, twenty-three minutes. Four ways to implement systems with AI: model, chat, agent, application. And most importantly — a simple tool for choosing among them."
 
-[Short pause. Move to s11.]
-
 ---
 
-## [s11 · 1.5 min] — Ways to implement with AI: not alternatives, but layers
+## [s11] — Ways to implement with AI: not alternatives, but layers
 
 [On the slide — four concentric layers (model → chat → agent → application).]
 
@@ -443,7 +415,7 @@ Don't choose "between" the levels as if they were alternatives. Each next wrappi
 
 ---
 
-## [s12 · 1.5 min] — Classification: task × modality
+## [s12] — Classification: task × modality
 
 [On the slide — a 2D matrix: X-axis task, Y-axis modality, filled with concrete examples.]
 
@@ -454,8 +426,6 @@ The X-axis — the **task type**. What the system produces. Five types: classifi
 The Y-axis — the **modality**. What kind of data it works with. Text, image, audio-video, structured data.
 
 These two axes are enough for our course. The technical depth — the architecture of a neural network — later, in the lecture on how large models are built.
-
-[point at the Forecasting × Text cell]
 
 One cell deserves attention — forecasting on text, where GPT-4o and Claude sit. At first glance it's strange: isn't that generation? In essence — the same phenomenon. A language model generates text by predicting the next token — the same semantics as in "Generation".
 
@@ -469,17 +439,13 @@ When discussing each implementation type, you and I will ask: what task and what
 
 ---
 
-## [s13 · 3.5 min] — One task, three ways: the control quadrant
+## [s13] — One task, three ways: the control quadrant
 
 [On the slide — a 2×2 quadrant on top, the task on the right. Three points on the diagonal: Model in the bottom-left, Chat in the center, Agent in the top-right (gold), with a short caption under each point.]
 
 "So the layered model isn't just theory, let's run it on one task through three ways of solving it.
 
-[point at the task on the right]
-
 The task: extract fields from an incoming PDF contract and put them into a table. Signing date, counterparty, amount, term of validity. Five or six fields. A familiar engineering task.
-
-[point at the quadrant axes]
 
 The axes of the quadrant. Horizontally — **delegation from the user**: how much the user hands the whole task over to the AI. Vertically — **the developer's control**: how rigid a framework they build around the AI. The more the user delegates, the more framework is needed.
 
@@ -513,7 +479,7 @@ Next, you and I will break down each of the four types in more detail: model, ch
 
 ---
 
-## [s15 · 3 min] — Model: input → preprocessing → model → postprocessing → output
+## [s15] — Model: input → preprocessing → model → postprocessing → output
 
 [On the slide — an eyebrow pill "MODEL", on top a schema of 5 blocks horizontally in a common frame "This is already an application", at the bottom 4 examples of models.]
 
@@ -526,8 +492,6 @@ A model is a trained neural network that takes an input and returns an output. W
 An important detail: **a model is not a system, but a component**. In production operation there is always wrapping around it. Five blocks horizontally.
 
 Raw input — a frame from a camera, text, an audio signal. Preprocessing — resizing, normalization, tokenization. Model — the actual output of the prediction. Postprocessing — filtering, formatting, for example cutting off extra boxes or normalizing probabilities. Output — an action, JSON, a class label.
-
-[point at the outer frame]
 
 Note — this whole five-block pipeline is enclosed in a common frame with the caption "This is already an application". This is not a visual accident: the model by itself is only one block within the whole. Preprocessing and postprocessing are the responsibility of the **system developer**, not the model itself. This is critical for budget estimation. A YOLO detector by itself — fifty lines of code. But a working system — hundreds of lines: reading the video stream, resizing, normalization, NMS, packaging for the plant's MES system. An estimate based on the model's own volume of work is understated by tens of times.
 
@@ -543,7 +507,7 @@ When it's wrong: a one-off request; a task that requires dialogue; a task that c
 
 ---
 
-## [s16 · 2 min] — How a chat works: the dialog cycle
+## [s16] — How a chat works: the dialog cycle
 
 [On the slide — an eyebrow pill "CHAT", a compact dialog-cycle schema: USER on the left in two roles, in the middle Message and Response, on the right a large LLM block, on top the System prompt with a gold arrow down, under the Response a growing history block with the caption "the whole text anew at each step".]
 
@@ -585,7 +549,7 @@ A chat is a pipeline of "assemble → feed → append → show"."
 
 ---
 
-## [s17 · 2 min] — Chat: model + interface + dialog memory
+## [s17] — Chat: model + interface + dialog memory
 
 [On the slide — an eyebrow pill "CHAT", on the left a corporate-chat case, on the right a gold-tinted card with a production disclaimer.]
 
@@ -607,7 +571,7 @@ The prompt. The minimal formula: **prompt = role + task + context**. In detail �
 
 ---
 
-## [s18 · 1.5 min] — Agent architecture: plan, action, observation, reflection
+## [s18] — Agent architecture: plan, action, observation, reflection
 
 [On the slide — an eyebrow pill "AGENT". A linear ReAct pipeline: Plan → Action → Observation → Reflection, with labeled connectors to the Tools and Memory, a gold loop-back arrow "continue" and a branch "stop → result to user".]
 
@@ -621,11 +585,7 @@ The prompt. The minimal formula: **prompt = role + task + context**. In detail �
 
 **Third — tools.** Calling an API, files, code, web search. Each tool is a function with a description.
 
-[point at the pipeline]
-
 Look at the schema — a linear cycle, the base model is called **ReAct**. **Plan** — an action plan is formulated. **Action** — a tool is called; the connector at the bottom shows the access to the tools. **Observation** — the result is written to memory; the connector shows the access to memory. **Reflection** — the goal is achieved or the next step is needed.
-
-[point at the gold loop-back]
 
 This gold arrow on top is the return loop: if the goal is not achieved, the reflection sends it back to the plan. And if it is achieved — the other branch: stop, the result to the user.
 
@@ -635,13 +595,11 @@ Lilian Weng's formula: **Agent = LLM + Memory + Planning + Tool Use**. Products 
 
 ---
 
-## [s19 · 1.5 min] — Agent at work: 200 PDFs — a sequence of steps
+## [s19] — Agent at work: 200 PDFs — a sequence of steps
 
 [On the slide — an eyebrow pill "AGENT". On the left the case "200 PDFs", on the right 7 numbered steps indicating the tool at each, gold highlight on step 7 (orchestrator loop).]
 
 "A concrete case. Two hundred PDF reports; from each, extract the date, the counterparty, the amount, and assemble a summary table. A multi-step task with tools. Neither a model fits — there's no such specialized one — nor a chat — it's uncomfortable to copy two hundred files. The agent is the natural choice.
-
-[point at the right panel]
 
 Look at the right part. Seven steps, at each — an explicit tool. The agent doesn't "think" the whole path itself; at each step it decides which tool is needed now.
 
@@ -653,7 +611,7 @@ Each step is an explicit tool call. This is exactly what an "agent" is: a chat p
 
 ---
 
-## [s19a · 1.5 min] — Levels of autonomy + human-in/on/out-of-the-loop
+## [s19a] — Levels of autonomy + human-in/on/out-of-the-loop
 
 [On the slide — an eyebrow pill "AGENT". On the left a staircase of 5 levels with Russian names and an English gloss in parentheses (Operator → Collaborator → Consultant → Approver → Observer; level 5 in gold), on the right 4 frames, at the bottom a gold takeaway.]
 
@@ -683,7 +641,7 @@ The main point: **the autonomy level is a product choice, not a property of the 
 
 ---
 
-## [s20 · 1.5 min] — Applications: AI packaged into a product interface
+## [s20] — Applications: AI packaged into a product interface
 
 [On the slide — Google Translate metrics + a grid of 6 logos: Translate / Notion AI / YandexGPT in Search / Grammarly / Yandex Maps / Adobe Firefly.]
 
@@ -701,9 +659,7 @@ The case: once a week, translate a block of technical documentation. No model is
 
 ---
 
-## [s21 · 3 min] — Checklist "Which type of AI to choose": 2 questions + quadrant
-
-[On the slide — a large 2×2 quadrant in the center. On the left, vertically — Question 1 with YES/NO markers as axis labels. At the bottom, horizontally — Question 2 with NO/YES markers. The quadrant corners: Model / Application (automation) / Chat / Agent. 3 worked examples inside the quadrant. A gold callout.]
+## [s21] — Checklist "Which type of AI to choose": 2 questions + quadrant
 
 "The culmination of the section — a practical tool. Two diagnostic questions, whose answers unambiguously determine the implementation type. Note: the axes of the quadrant are not separate questions, but **divisions of the scale**.
 
@@ -731,7 +687,7 @@ Two hundred PDFs and a table. Q1: yes — the user sets the task. Q2: yes — op
 
 [think-pair-share]
 
-Thirty seconds — turn to your neighbor. Name an AI tool you've used in the last month. Run it through the two questions. Which corner did you land in? [pause 30 sec]
+Thirty seconds — turn to your neighbor. Name an AI tool you've used in the last month. Run it through the two questions. Which corner did you land in?
 
 AI works where the task and the implementation type matched. Most of the rolled-back pilots didn't ask these two questions; they chose the tool by fashion. In seminar one — you apply the quadrant to your own case."
 
@@ -739,7 +695,7 @@ AI works where the task and the implementation type matched. Most of the rolled-
 
 ---
 
-## [s22 · 1 min] — Section 4. The boundaries of AI — your zone of responsibility
+## [s22] — Section 4. The boundaries of AI — your zone of responsibility
 
 [On the slide — a divider for section 4 + title + the 1-phrase frame + roadmap bar.]
 
@@ -753,13 +709,11 @@ Next: where the data goes, hallucinations, bias and sycophancy, AGI forecasts."
 
 ---
 
-## [s23 · 3 min] — Consumer vs enterprise: where your data goes
+## [s23] — Consumer vs enterprise: where your data goes
 
 [On the slide — a bridge label at the top under the title, two columns: consumer (data → training) vs corporate (data ≠ training) + Samsung incident + EU AI Act fines.]
 
 "From the general frame of section four — to the first concrete risk that you and I are about to break down. Where does your data physically go when you write a request into a cloud AI service?
-
-[pause]
 
 Your text — and often the attached files, images too — is sent to the provider's servers. What happens to it next — depends on the tier.
 
@@ -787,29 +741,21 @@ In the European Union, the EU AI Act: the standard level of fines is up to fifte
 
 ---
 
-## [s24 · 3 min] — Hallucinations — an inherent property of AI
-
-[On the slide — a prompt + 3 fake DOIs + Vectara HHEM range + a gold callout "AI knows everything".]
+## [s24] — Hallucinations — an inherent property of AI
 
 "A hallucination in the context of an LLM is the confident production of factually incorrect information in a form indistinguishable from the correct one. The model does not "know" that it's telling an untruth; for it, this is simply a statistically plausible continuation of the sequence of tokens.
 
 A simple experiment you can repeat today. Ask a chat: "name three scientific articles from twenty twenty-four on the topic [a narrow topic, for example — the seismic resistance of small-diameter underground pipelines] with authors and DOIs".
 
-[point at the example with three fake DOIs]
-
 With significant probability you'll get three convincing-looking references, in which the author names may be mixed up or invented, the journals are real but there are no such articles in them, and the DOIs are syntactically correct but don't resolve. Verification takes a minute: you open doi.org, paste it, and see whether it resolves or not. Without verification — it looks credible.
-
-[point at the Vectara HHEM range]
 
 Per the Vectara Hughes Hallucination Evaluation Model benchmark, the range of current models is very wide: from less than one percent on the standard summarization task (Gemini 2.0 Flash) to ten-fifteen percent on reasoning tasks. This means: speaking of a "hallucination percentage of an LLM" in general is incorrect. The figure depends heavily on the task and the benchmark.
 
 [think-pair-share retrieval exercise]
 
-Now a short exercise. I have here two AI answers to one and the same factual question. In each — one correct and one planted detail. Thirty seconds in pairs: which part is the fake? What did you check first? [pause 30 sec]
+Now a short exercise. I have here two AI answers to one and the same factual question. In each — one correct and one planted detail. Thirty seconds in pairs: which part is the fake? What did you check first?
 
 [after feedback from a couple of students]
-
-[point at the gold callout]
 
 **Anti-pattern number one: "AI knows everything".** Any AI answer to a factual question is a hypothesis that requires verification. Especially — links, figures, quotes, legal norms, medical recommendations. This does not mean "don't use AI for facts". It means "verify what AI gives out as a fact". A critical reading attitude is not an extra precaution, but a part of the standard working process.
 
@@ -819,7 +765,7 @@ We'll return to hallucinations in the lectures on specific industries — medici
 
 ---
 
-## [s25 · 2.5 min] — Bias, sycophancy, drift: three manifestations of one nature
+## [s25] — Bias, sycophancy, drift: three manifestations of one nature
 
 [On the slide — 3 cards with Russian and English names + a GPT-4o timeline 25 → 28 → 29 April 2025.]
 
@@ -843,7 +789,7 @@ The case — April twenty-five. On April twenty-fifth, OpenAI rolled out an upda
 
 [mini-poll]
 
-In your professional field, which is more dangerous — bias, sycophancy, or drift? Hands: bias — [pause] sycophancy — [pause] drift — [pause]
+In your professional field, which is more dangerous — bias, sycophancy, or drift? Hands: bias — sycophancy — drift —
 
 All three — one nature. The model doesn't know the truth, it reproduces the regularities of the data."
 
@@ -851,7 +797,7 @@ All three — one nature. The model doesn't know the truth, it reproduces the re
 
 ---
 
-## [s26 · 2.5 min] — AGI forecasts: 4 speakers, 4 material interests
+## [s26] — AGI forecasts: 4 speakers, 4 material interests
 
 [On the slide — a 4×4 table: Speaker | Affiliation | Forecast | Material interest.]
 
@@ -877,7 +823,7 @@ When reading a top executive's interview, ask the question: "what decision does 
 
 ---
 
-## [s27 · 30 sec] — Section 5. What to take home
+## [s27] — Section 5. What to take home
 
 [On the slide — a divider for section 5 + a marker "You are here — 5 of 5".]
 
@@ -887,7 +833,7 @@ When reading a top executive's interview, ask the question: "what decision does 
 
 ---
 
-## [s28 · 1 min] — What we've covered: three main takeaways
+## [s28] — What we've covered: three main takeaways
 
 [On the slide — 3 takeaway cards.]
 
@@ -907,7 +853,7 @@ Three main takeaways.
 
 ---
 
-## [s29 · 1.5 min] — Semester map: 17 lectures, 3 modules + exam
+## [s29] — Semester map: 17 lectures, 3 modules + exam
 
 [On the slide — a horizontal timeline of 4 color blocks: 3 content modules + a separate "Exam" block; the block width is proportional to the number of lectures; gold highlight on the current lecture 1.1; the checkpoints Midterm1/Midterm2/Midterm3 at the module boundaries.]
 
@@ -921,8 +867,6 @@ Three main takeaways.
 
 **Module three — infrastructure, science, extraction, plus synthesis, six lectures.** Logistics, telecom and cybersecurity, science, oil-and-gas, medicine, systematization of knowledge. **Midterm three — the final one.**
 
-[point at the fourth block]
-
 And as a separate block — not a module, but the final assessment — **the exam**.
 
 Today — the formula "prompt = role + task + context". Later — PARTS, chain-of-thought, few-shot. By the end of the course, prompting will become an engineering discipline."
@@ -931,7 +875,7 @@ Today — the formula "prompt = role + task + context". Later — PARTS, chain-o
 
 ---
 
-## [s29a · 0.5 min] — Semester grade
+## [s29a] — Semester grade
 
 [On the slide — the title "Semester grade", below it a single formula line: 100 = 10 (attendance) + 30 (exam) + 3×20 (Midterm1/Midterm2/Midterm3).]
 
@@ -943,7 +887,7 @@ One hundred points add up gradually: ten — attendance, thirty — the exam, th
 
 ---
 
-## [s30 · 1 min] — Lecture 2: How modern large models work
+## [s30] — Lecture 2: How modern large models work
 
 [On the slide — the title "Lecture 2" + a 2×2 grid of 4 concepts in Russian (with the English in parentheses) + the 1-phrase frame at the bottom.]
 
@@ -965,7 +909,7 @@ These four concepts explain the behavior of all modern LLMs — from ChatGPT to 
 
 ---
 
-## [s31 · 2 min] — Questions?
+## [s31] — Questions?
 
 [On the slide — a large "Questions?" in the center + a thank-you composition.]
 
@@ -973,7 +917,7 @@ These four concepts explain the behavior of all modern LLMs — from ChatGPT to 
 
 What's good to ask: clarifications on the implementation types; where to place your tool by the checklist; boundaries — if you've had an experience with hallucinations or a leak; the semester plan.
 
-Who'll start? [pause]
+Who'll start?
 
 [If there are no questions: "I'll answer the most frequent one. Can you use AI right now? You can. The checklist already gives a tool; in seminar one you'll try it on your own case."]
 

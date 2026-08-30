@@ -2,7 +2,7 @@
 name: glossary-ru-en
 issue: 172
 status: locked
-terms_count: 123
+terms_count: 156
 ---
 
 # RU→EN Terminology Glossary (course "AI-usage-lessons")
@@ -122,6 +122,33 @@ This is a **lock of the load-bearing terms**, not an exhaustive thesaurus.
 | спецификация (спека) | specification (spec) | spec-driven → spec-driven. |
 | дисциплина (инженерная) | discipline | L4 "practice, not tool" axis. |
 | зима AI | AI winter | |
+| радиус разрушения / масштаб поражения | blast radius | Locked (heavy use L14/L17). |
+| канареечный деплой / канарейка | canary (release / deployment) | L14/L17. |
+| откат | rollback | L17. |
+| поэтапное раскатывание | staged rollout | L15/L17. |
+| привязка к вендору | vendor lock-in | L17. |
+| усиление (не замена) | augmentation (not replacement) | Course framing, L17. |
+| парадокс автоматизации | automation paradox | L15/L17. |
+| склонность доверять автомату | automation bias | L15/L17. |
+| инъекция в промпт | prompt injection | L14/L17; keep EN term. |
+| матрица ошибок | confusion matrix | Metrics cluster L5/L7. |
+| ошибка первого / второго рода | type I / type II error | |
+| точность (accuracy) | accuracy | RU «точность» is ambiguous — disambiguate by context. |
+| точность (precision) vs полнота | precision vs recall | The other sense of «точность». |
+| чувствительность | sensitivity | L7 (= recall in medical). |
+| специфичность | specificity | L7. |
+| положительная прогностическая ценность | positive predictive value (PPV) | L7. |
+| распространённость | prevalence | L7. |
+| скрининг | screening | L7. |
+| аварийный выключатель | kill switch | L5. |
+| суррогатная модель | surrogate model | L6 CAE. |
+| оптимизация топологии | topology optimization | L6. |
+| генеративный дизайн | generative design | L6. |
+| метод конечных элементов | finite element analysis (FEA) | L6. |
+| экипировка / оснастка агента | harness (agent harness) | L3 keystone; keep EN term. |
+| разрыв восприятия | perception gap | L4 keystone; source introduces the EN term. |
+| рубежный контроль (РК) | midterm (RK1/2/3 → Midterm 1/2/3) | Course assessment. |
+| посещаемость | attendance | Course assessment. |
 
 ## Part B — Proper nouns (companies / organizations / sources)
 
@@ -158,3 +185,8 @@ On first use: transliteration + inline gloss. Latin-script brands kept as-is.
 | Сколково | Skolkovo | Russian innovation hub / tech park near Moscow |
 | Cognitive Pilot | Cognitive Pilot | Russian agri-autonomy firm (Sber/Cognitive Tech JV); keep as-is |
 | CNews / Vedomosti / Intellectual Analytics | CNews / Vedomosti / Intellectual Analytics | Russian business/IT media & analytics sources; keep as-is |
+| Росздравнадзор | Roszdravnadzor | Russian medical-devices/healthcare regulator (L7) |
+| Ростехнадзор | Rostekhnadzor | Russian industrial-safety regulator (L6) |
+| ЕСКД | ESKD | Unified System of Design Documentation (Russian eng-drawing standard, L6) |
+| АСКОН | ASCON | Russian CAD/PLM vendor (Kompas-3D), L6 |
+| Третье Мнение | Third Opinion | Russian medical-imaging AI vendor (translate name; L7) |

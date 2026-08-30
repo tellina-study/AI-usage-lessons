@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400" viewBox="0 0 1000 400">
+<rect width="1000" height="400" fill="#FFFFFF"/>
+<rect x="50" y="140" width="180" height="120" fill="#065A82" rx="10"/>
+<text x="140" y="195" text-anchor="middle" font-family="Courier New, monospace" font-size="32" font-weight="bold" fill="#FFFFFF">[cat]</text>
+<text x="140" y="225" text-anchor="middle" font-family="Arial" font-size="15" fill="#FFFFFF">id = 47284</text>
+<path d="M 240 200 L 380 200" stroke="#065A82" stroke-width="3" fill="none" marker-end="url(#a-end)"/>
+<defs><marker id="a-end" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#065A82"/></marker></defs>
+<text x="310" y="190" text-anchor="middle" font-family="Arial" font-size="16" font-style="italic" fill="#1C7293">lookup in</text>
+<text x="310" y="215" text-anchor="middle" font-family="Arial" font-size="16" font-style="italic" fill="#1C7293">embedding table</text>
+<rect x="400" y="140" width="540" height="120" fill="#F4F7FA" stroke="#1C7293" stroke-width="2" rx="10"/>
+<text x="670" y="180" text-anchor="middle" font-family="Courier New, monospace" font-size="20" fill="#21295C">[ 0.21, -0.45, 0.88, ..., 0.13 ]</text>
+<text x="670" y="220" text-anchor="middle" font-family="Arial" font-size="14" fill="#1C7293" font-style="italic">several hundred to several thousand dimensions</text>
+<text x="670" y="245" text-anchor="middle" font-family="Arial" font-size="14" fill="#1C7293" font-style="italic">learned during training, fixed at inference</text>
+<text x="500" y="50" text-anchor="middle" font-family="Arial" font-size="22" font-weight="bold" fill="#21295C">Embedding: id -> learned vector</text>
+<rect x="200" y="310" width="600" height="55" fill="#FEF5E0" stroke="#F0AB00" stroke-width="2" rx="8"/>
+<text x="500" y="345" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#21295C">Geometric closeness = semantic closeness</text>
+</svg>

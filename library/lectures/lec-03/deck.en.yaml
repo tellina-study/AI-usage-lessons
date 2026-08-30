@@ -1,0 +1,471 @@
+# library/lectures/lec-03/deck.en.yaml  —  EN translation (issue #172, Phase 3)
+#
+# English deck structure for Lecture 3 "AI system architectures: agents, RAG, API"
+# (v4, 40 slides). Translated from deck.yaml + deck-part2.yaml + deck-part3.yaml.
+# The RU builder reads the 3-part deck.yaml for validation; this consolidated EN
+# file mirrors the student-visible metadata for the EN render (build_lec03_en.py).
+#
+# v4 order (40 slides):
+#   R0: s01 s02 s02a s03 s04
+#   R1: s04a(div) s05 s05a s05b s06 s08 s08a
+#   R2: s09(div) s10 s11 s12 s13
+#   R3: s13a(div) s13b s15 s14 s16
+#   R4: s18(div) s19 s21 s22 s22b s22c s22d s22e s25 s25b s23
+#   R5: s25a(div) s26 s27 s27b s29 s30 s31
+
+deck:
+  lecture_number: 3
+  title: "Lecture 3. AI system architectures: agents, RAG, API"
+  audience: "3rd-year engineering students (universal)"
+  duration_min: 88
+  central_question: "I have a task and access to an LLM. Which architecture should I choose — and when is the right answer \"not AI\"?"
+  learning_outcomes: [LO7, LO4]
+  language: en
+  status: final
+  version: v4.0-en
+  source: chapter v2.0 finalized (~31000 words, 5 parts)
+  total_slides: 40
+  curriculum_level: introductory
+
+palette:
+  primary_deep: "#21295C"
+  primary_mid: "#065A82"
+  primary_light: "#1C7293"
+  teal: "#028090"
+  gold: "#F0AB00"
+  surface: "#F4F7FA"
+  background: "#FFFFFF"
+
+motif:
+  type: ocean_rounded_box
+  radius_pt: 12
+  stroke: "#1C7293"
+  stroke_pt: 1.5
+  surface: "#F4F7FA"
+  padding_pt: 16
+  cast_shadow: false
+
+typography:
+  heading_font: "Inter"
+  mono_font: "JetBrains Mono"
+  fallback_heading: "Arial"
+  sizes:
+    cover_title: 46
+    slide_assertion: 27
+    sub_heading: 20
+    body: 16
+    caption: 12
+    mega_stat: 120
+
+glossary_lock:
+  - AI system architecture
+  - prompt
+  - few-shot (examples in the prompt)
+  - role in the prompt (tone, not accuracy)
+  - Chain-of-thought (step-by-step reasoning)
+  - faithfulness (faithfulness of the reasoning)
+  - delimiters
+  - context engineering
+  - context rot (degradation on long context)
+  - RAG (Retrieval-Augmented Generation)
+  - retrieval (finding the relevant)
+  - grounding (relying on a source)
+  - observability
+  - golden set (reference evaluation set)
+  - fine-tuning
+  - PEFT (LoRA/QLoRA)
+  - distillation (a standalone technique, NOT a kind of fine-tuning)
+  - catastrophic forgetting
+  - structured output
+  - tool use / function calling
+  - prompt caching
+  - MCP (Model Context Protocol)
+  - agent (plan → act → check → iterate)
+  - workflow (predefined paths)
+  - harness (the agent's equipment)
+  - skill / subagent
+  - presence paradox
+  - prompt injection
+  - least-privilege
+  - ZDR (Zero Data Retention)
+  - BAA (Business Associate Agreement)
+
+# ─────────────────────────────────────────────────────────────────────────
+# Section 0. Opening
+# ─────────────────────────────────────────────────────────────────────────
+slides:
+  - id: s01
+    file: slides-en/s01-air-canada-hook.md
+    type: hero_cover
+    section: "Section 0. Opening"
+    duration_min: 3
+    assertion: "A chatbot made up a policy — the company pays: the wrong architecture choice for the task"
+    learning_outcomes: [LO7]
+    chapter_ref: "§Introduction [for-slide-s01]"
+    hero: "assets/screenshots/s01-aircanada.jpg (Wikimedia CC-BY-SA), ≥40% area"
+
+  - id: s02
+    file: slides-en/s02-cover-roadmap.md
+    type: cover
+    section: "Section 0. Opening"
+    duration_min: 0.5
+    assertion: "Lecture 3. AI system architectures: agents, RAG, API"
+    chapter_ref: "§Introduction [for-slide-s02]"
+
+  - id: s02a
+    file: slides-en/s02a-lecture-map.md
+    type: assertion_visual
+    section: "Section 0. Opening"
+    duration_min: 1
+    assertion: "The lecture route — six sections, one load-bearing line of architecture choice"
+    chapter_ref: "§Introduction + Chapter map"
+
+  - id: s03
+    file: slides-en/s03-recap-lec2-bridge.md
+    type: assertion_visual
+    section: "Section 0. Opening"
+    duration_min: 1.5
+    assertion: "Four wrappers are built around a single model call — RAG stands on Lecture 2's embeddings"
+    chapter_ref: "§Introduction [for-slide-s03]"
+
+  - id: s04
+    file: slides-en/s04-central-question-ladder.md
+    type: assertion_visual
+    section: "Section 0. Opening"
+    duration_min: 3
+    assertion: "The answer to \"which architecture?\" is a ladder of 6 rungs; climb only for a requirement"
+    chapter_ref: "§Introduction [for-slide-s04]"
+
+  # ─── Section 1. The prompt and its limits ───
+  - id: s04a
+    file: slides-en/s04a-section1-divider-prompt.md
+    type: section_divider
+    section: "Section 1. The prompt and its limits"
+    duration_min: 0.3
+    assertion: "Section 1 — what a single call with a good prompt can do, and where its ceiling is"
+    chapter_ref: "§1 [for-slide-s05]"
+
+  - id: s05
+    file: slides-en/s05-default-one-call.md
+    type: assertion_visual
+    section: "Section 1. The prompt and its limits"
+    duration_min: 2
+    assertion: "The default is a single call; the model knows only what's in the prompt plus its weights"
+    chapter_ref: "§1.1 [for-slide-s05]"
+
+  - id: s05a
+    file: slides-en/s05a-roles-in-prompt.md
+    type: assertion_visual
+    section: "Section 1. The prompt and its limits"
+    duration_min: 2
+    assertion: "A role in the prompt tunes tone — not accuracy (the \"persona=accuracy\" myth is refuted)"
+    chapter_ref: "§1.2 [for-slide-s05a]"
+    references: [zheng-2024-personas, arxiv-2605-29420]
+
+  - id: s05b
+    file: slides-en/s05b-prompt-structure.md
+    type: assertion_visual
+    section: "Section 1. The prompt and its limits"
+    duration_min: 1.5
+    assertion: "Prompt structure: separate the instruction, the context, the data (parallel to structured output)"
+    chapter_ref: "§1.3 [for-slide-s05b]"
+
+  - id: s06
+    file: slides-en/s06-chain-of-thought.md
+    type: case_study
+    section: "Section 1. The prompt and its limits"
+    duration_min: 2.5
+    assertion: "Chain-of-thought helps — but it can't be audited (unfaithfulness as a class property)"
+    chapter_ref: "§1.4, §1.5 [for-slide-s06]"
+    references: [wei-2022-cot, anthropic-2025-reasoning-faithfulness]
+    verify_day_of: true
+
+  - id: s08
+    file: slides-en/s08-context-engineering.md
+    type: assertion_visual
+    section: "Section 1. The prompt and its limits"
+    duration_min: 2.5
+    assertion: "Minimal high-signal context is an engineering requirement (context rot = lost in the middle, L2)"
+    chapter_ref: "§1.6 [for-slide-s08]"
+    references: [anthropic-2025-context-engineering, chroma-2025-context-rot]
+
+  - id: s08a
+    file: slides-en/s08a-prompt-cheatsheet.md
+    type: summary
+    section: "Section 1. The prompt and its limits"
+    duration_min: 1.5
+    assertion: "Cheat sheet: how to build a prompt — 8 points, the compact form of Section 1"
+    chapter_ref: "§1.8 [for-slide-s08a]"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Section 2. RAG
+  # ─────────────────────────────────────────────────────────────────────
+  - id: s09
+    file: slides-en/s09-section2-divider-rag.md
+    type: section_divider
+    section: "Section 2. RAG"
+    duration_min: 1
+    assertion: "Section 2 — RAG: retrieval-augmented generation on top of Lecture 2's embeddings"
+    chapter_ref: "§2.1 [for-slide-s09]"
+
+  - id: s10
+    file: slides-en/s10-rag-principle.md
+    type: process
+    section: "Section 2. RAG"
+    duration_min: 3
+    assertion: "RAG = indexing → retrieval → grounded generation; \"I don't know\" is a correct answer, a made-up one is a defect"
+    chapter_ref: "§2.1 [for-slide-s10]"
+    references: [lewis-2020-rag]
+    subtype: schema_pipeline
+
+  - id: s11
+    file: slides-en/s11-when-rag-right.md
+    type: assertion_visual
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "RAG is justified given a strong signal on the features — and no blockers, with a \"when not\""
+    chapter_ref: "§2.2 [for-slide-s11]"
+    references: [u-niah-2025]
+
+  - id: s12
+    file: slides-en/s12-when-not-rag.md
+    type: comparison
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "When RAG is not needed: fits the window → full-context; fixed policy → lookup; live data via API/MCP → the tool directly"
+    chapter_ref: "§2.3 [for-slide-s12]"
+    subtype: schema_matrix
+
+  - id: s13
+    file: slides-en/s13-rag-fails-air-canada.md
+    type: case_study
+    section: "Section 2. RAG"
+    duration_min: 3
+    assertion: "\"Returned something ≠ returned the right thing\": RAG without observability quietly degrades; Air Canada — a grounding failure"
+    chapter_ref: "§2.4, §2.5 [for-slide-s13]"
+    references: [barnett-2024-rag-failures, mccarthy-tetrault-2024]
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Section 3. Fine-tune
+  # ─────────────────────────────────────────────────────────────────────
+  - id: s13a
+    file: slides-en/s13a-section3-divider-finetune.md
+    type: section_divider
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 0.3
+    assertion: "Section 3 — fine-tuning against the prompt and RAG: the problem isn't knowledge, but the model's behavior"
+    chapter_ref: "§3 [for-slide-s14]"
+
+  - id: s13b
+    file: slides-en/s13b-what-is-fine-tuning.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 1.5
+    assertion: "Fine-tuning changes THE WEIGHTS THEMSELVES; in practice it's almost always LoRA/PEFT, not full-FT"
+    chapter_ref: "§3.1 [for-slide-s14]"
+    subtype: schema_pipeline
+
+  - id: s15
+    file: slides-en/s15-peft-not-full-ft.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2
+    assertion: "PEFT (LoRA/QLoRA) is almost always better than full-FT; 98.4% of PEFT-tagged models are LoRA"
+    chapter_ref: "§3.2 [for-slide-s15]"
+    references: [hf-peft-2026]
+
+  - id: s14
+    file: slides-en/s14-fine-tuning-narrowed.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2.5
+    assertion: "Fine-tuning narrowed to behavior; knowledge→RAG, behavior→PEFT, deterministic→code. A hybrid is the norm"
+    chapter_ref: "§3.1, §3.3, §3.5 [for-slide-s14]"
+    subtype: schema_matrix
+
+  - id: s16
+    file: slides-en/s16-catastrophic-forgetting.md
+    type: case_study
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2.5
+    assertion: "Narrow aggressive fine-tuning breaks general abilities; without an eval loop and versions — a \"don't do it\" criterion"
+    chapter_ref: "§3.4 [for-slide-s16]"
+    references: [luo-2023-catastrophic-forgetting]
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Section 4. Agents
+  # ─────────────────────────────────────────────────────────────────────
+  - id: s18
+    file: slides-en/s18-section4-divider-api.md
+    type: section_divider
+    section: "Section 4. Agents"
+    duration_min: 1
+    assertion: "Section 4 — Agents: the loop, the equipment, memory, tool access — and where all of it breaks"
+    chapter_ref: "§4 [for-slide-s18]"
+
+  - id: s19
+    file: slides-en/s19-api-layer.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "The model becomes a system component: structured output / function calling / prompt caching + MCP"
+    chapter_ref: "§4.1 [for-slide-s18, s19, s20]"
+    subtype: schema_matrix
+
+  - id: s21
+    file: slides-en/s21-agent-loop.md
+    type: process
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "An agent = a loop plan → act → check → iterate; every step is a place of failure; check must not be self-assessment"
+    chapter_ref: "§4.2 [for-slide-s21]"
+    references: [yao-2022-react]
+    subtype: schema_cycle
+
+  - id: s22
+    file: slides-en/s22-workflow-vs-agent.md
+    type: comparison
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "A predictable task → workflow; unpredictable AND the value justifies it → agent. Nesting is the norm"
+    chapter_ref: "§4.3 [for-slide-s22, s22a]"
+    subtype: schema_matrix
+
+  - id: s22b
+    file: slides-en/s22b-agent-equipment.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "Each equipment slot of the agent is a trade-off, not a default upgrade"
+    chapter_ref: "§4.4 [for-slide-s22b]"
+    references: [agent-harness-registry]
+
+  - id: s22c
+    file: slides-en/s22c-agent-memory.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "The agent's memory is the same scale-of-knowledge question as RAG, but for the agent's own history"
+    chapter_ref: "§4.5 [for-slide-s22c]"
+    references: [agent-harness-registry]
+
+  - id: s22d
+    file: slides-en/s22d-memory-failure.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "\"An agent that remembers\" is not always better: Letta Tier D and even a 17% tail on the best system"
+    chapter_ref: "§4.6 [for-slide-s22d]"
+    references: [agent-harness-registry]
+
+  - id: s22e
+    file: slides-en/s22e-operational-layer.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "An instruction file for the agent is not a \"magic vaccine\": presence paradox + Honest Lying"
+    chapter_ref: "§4.7 [for-slide-s22e]"
+    references: [gloaguen-2026-presence-paradox, dixit-2026-honest-lying]
+
+  - id: s25
+    file: slides-en/s25-tool-attacks.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3.5
+    assertion: "Skills, subagents, access — and the trust boundary: injection × broad privileges = catastrophe"
+    chapter_ref: "§4.8 [for-slide-s23, s24, s25]"
+    references: [willison-2025-prompt-injection, nyt-v-openai-2025, anthropic-2026-data-retention]
+    verify_day_of: true
+
+  - id: s25b
+    file: slides-en/s25b-coding-agents.md
+    type: comparison
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "Real coding agents — through the equipment frame: Claude Code / Aider / Cursor / OpenHands"
+    chapter_ref: "§4.9 [for-slide-s25b]"
+    references: [agent-harness-registry]
+
+  - id: s23
+    file: slides-en/s23-agent-failures.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "An agent burned $4,200 in 63h in a loop (a retry script would have done it for free); 5×99%≈95%; multi-agent fragility"
+    chapter_ref: "§4.10 [for-slide-s23a]"
+    references: [jain-2026-agent-loop, mindstudio-2025-reliability, cognition-2025-multiagent]
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Section 5. The decision framework
+  # ─────────────────────────────────────────────────────────────────────
+  - id: s25a
+    file: slides-en/s25a-section5-divider-framework.md
+    type: section_divider
+    section: "Section 5. The decision framework"
+    duration_min: 0.3
+    assertion: "Section 5 — gather all the architectures and their failures into one choice tool"
+    chapter_ref: "§5 [for-slide-s26]"
+
+  - id: s26
+    file: slides-en/s26-complexity-ladder.md
+    type: process
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "The complexity ladder: stay on the bottom rung, climb only for a requirement; the bottom is code without AI"
+    chapter_ref: "§5.1 [for-slide-s26]"
+    subtype: schema_layered
+
+  - id: s27
+    file: slides-en/s27-decision-matrix.md
+    type: process
+    section: "Section 5. The decision framework"
+    duration_min: 3
+    assertion: "The decision plan — a route of 8 questions top to bottom; deterministic+verifiable → code, STOP"
+    chapter_ref: "§5.2 [for-slide-s27]"
+    subtype: schema_pipeline
+
+  - id: s27b
+    file: slides-en/s27b-agent-starter-kit.md
+    type: assertion_visual
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "The agent starter kit — a thin default + justified triggers for adding complexity"
+    chapter_ref: "§5.2b [for-slide-s27a]"
+    references: [agent-harness-registry]
+
+  - id: s29
+    file: slides-en/s29-human-validator-nanda.md
+    type: assertion_visual
+    section: "Section 5. The decision framework"
+    duration_min: 1.5
+    assertion: "The agent acts — the human checks the result and the facts; ~95% of pilots with no ROI — it's about integration"
+    chapter_ref: "§5.4 [for-slide-s29]"
+    references: [mit-nanda-2025]
+    verify_day_of: true
+
+  - id: s30
+    file: slides-en/s30-bridge-homework-qa.md
+    type: hero_closing
+    section: "Section 5. The decision framework"
+    duration_min: 1.5
+    assertion: "Next — industries, starting with software development; this frame is the base of Lectures 4–17"
+    chapter_ref: "§5.5 [for-slide-s30]"
+    hero: "assets/screenshots/s30-coding.jpg (Wikimedia CC-BY-SA), ≥40% area"
+
+  - id: s31
+    file: slides-en/s31-qa.md
+    type: qa_minimal
+    section: "Section 5. The decision framework"
+    duration_min: 5
+    assertion: "Q&A"
+    chapter_ref: "§5.5 [for-slide-s30]"
+
+# ─── Validation ───
+totals:
+  slides: 40
+  duration_min_total: 88
+
+ai_failure_judgment:
+  in_bucket_slides: [s01, s05a, s06, s08, s12, s13, s14, s16, s22, s22d, s22e, s23, s25, s27, s29]
+  count: 15
+  share_by_slides: "15/40 ≈ 38% by slides"

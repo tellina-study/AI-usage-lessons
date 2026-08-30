@@ -1,0 +1,85 @@
+# publish/publication-config.yaml
+#
+# Конфиг публикации публичного сайта-курса (issue #176).
+# Consumer: генератор сайта в tellina-study/publishing (сессия cao-course-site).
+# Назначение: (1) убрать из публичной версии университет-специфику (МГТУ ИУ6 /
+# Бауманка), (2) задать общие параметры публикации RU+EN.
+#
+# Правило чтения: генератор применяет exclude_* ДО рендера публичной страницы,
+# к ОБОИМ языкам. Слайд-якоря [sNN] в комментариях используются для маппинга и
+# удаляются из отображения.
+
+version: 1
+
+site:
+  languages: [ru, en]          # RU-first, EN fast-follow
+  default_language: ru
+  artifacts: [slides, comments] # chapter — позже (по решению владельца)
+  seo:
+    canonical_base: "https://lessons.tellian.io/"
+    hreflang: true
+    sitemap: true
+  comments: remark42            # self-host на Vultr
+  analytics: umami              # self-host на Vultr (просмотры + read-depth)
+  render:
+    slide_footers: false        # убрать футеры «N / NN» из публичных слайдов
+    inline_citations: true      # оставить inline [N]-цитаты + список источников
+
+# ── ЧТО УБРАТЬ ИЗ ПУБЛИКАЦИИ (Бауманка-специфика) ─────────────────────────────
+
+# 1. Целые слайды, выпадающие из публичного дека — по роли/маркеру.
+exclude_slides:
+  by_role:
+    - course_chat_qr      # слайд с QR на чат курса в Max (assets/max-qr.png) — добавлен в lec-01 #249-#256
+    - assessment          # оценивание / баллы / зачёт-экзамен / критерии
+    - attendance          # посещаемость
+    - midterm_rk          # рубежный контроль (РК1/2/3)
+    - homework_brief      # выдача домашних заданий / дедлайны
+    - seminar_bridge      # мостики/анонсы семинаров (sem-0*)
+  # Точечные ID (заполняется после per-slide аудита каждого дека):
+  by_id:
+    lec-01: []            # TODO: пометить chat-QR слайд + assessment после аудита
+    lec-02: []
+    lec-03: []
+    lec-04: []
+
+# 2. Inline-контент, вырезаемый из публикуемых слайдов/комментариев (маркеры).
+exclude_inline:
+  asset_markers:
+    - "max-qr.png"
+    - "assets/max-qr"
+  text_markers:            # регэксп-ветки (RU+EN), case-insensitive
+    - "QR .*(чат|Max|Макс)"
+    - "чат .*курса"
+    - "оценк\\w*|балл\\w*|зачёт|экзамен|рейтинг курса"
+    - "grade|assessment|grading|rubric"
+    - "посещаемост\\w*|attendance"
+    - "рубежн\\w* контрол\\w*|\\bРК[1-3]\\b|midterm"
+    - "домашн\\w* задани\\w*|дедлайн|homework|deadline"
+    - "ИУ6|МГТУ|Бауман\\w*|Bauman"
+    - "семинар\\w*\\s*№?\\d|sem-0\\d"
+    # NB: убираем ТОЛЬКО QR-чат курса в Max (asset_markers выше).
+    # Telegram-хендл и email лектора — ОСТАВЛЯЕМ как бренд-контакт (решение владельца).
+
+# ── ЧТО ОСТАВИТЬ (явно НЕ исключать — личный бренд + академический контент) ────
+keep:
+  - "Имя/должность/фото лектора (визитка) — личный бренд"
+  - "Telegram-хендл (@Maxim_Levko) и email лектора — бренд-контакт (владелец: оставить)"
+  - "Общие контакты бренда (сайт, публичный канал)"
+  - "Академический контент лекции: слайды, комментарии, inline [N]-цитаты, источники"
+  - "Кросс-ссылки на другие ЛЕКЦИИ курса (не семинары)"
+
+# ── PER-LECTURE публикационные метаданные ────────────────────────────────────
+lectures:
+  lec-01: { slug: what-is-ai,          status: published, order: 1 }
+  lec-02: { slug: how-llms-work,        status: published, order: 2 }
+  lec-03: { slug: choosing-ai-approach, status: published, order: 3 }
+  lec-04: { slug: ai-in-sdlc,           status: published, order: 4 }
+  # lec-05..17 — draft (остальное на паузе, issue #172)
+
+# ── РЕШЕНИЯ ВЛАДЕЛЬЦА (2026-08-30) ───────────────────────────────────────────
+# - Домен: lessons.tellian.io ✓
+# - Telegram + email лектора: ОСТАВИТЬ (бренд); убрать только QR-чат курса в Max ✓
+# - Семинары: СКРЫТЬ пока (seminar_bridge + sem-0* исключены; возможно раздел позже) ✓
+# - Футеры «N / NN»: УБРАТЬ (render.slide_footers=false); inline [N]-цитаты: ОСТАВИТЬ ✓
+#   → передать cao-course-site: annotation layer публикует цитаты, но не футеры.

@@ -1,0 +1,352 @@
+# library/lectures/lec-04/deck-part2.en.yaml  —  PART 2 of 2  (English twin, issue #172 Ph3)
+#
+# Continuation of the deck structure of Lecture 4 "AI across the software development lifecycle"
+# (41 slides, methodology-first re-spine v4.1: +foundations s05, keystone→s06). Split per Document Size Limit.
+#
+# ┌─ SPLIT: see deck.en.yaml (PART 1) — deck/palette/motif/typography/ ─────┐
+# │ glossary_lock + ai_failure + slides s01..s21. THIS FILE — slides         │
+# │ s22..s40 + totals + ai_failure_judgment + verify + fact_check.           │
+# │ Loader (rendered build script) reads BOTH parts and merges `slides`.     │
+# └────────────────────────────────────────────────────────────────────────┘
+#
+# Issue #170 · Branch: hc/lesson4-498d0d8c · version v4.0 (methodology-first re-spine).
+# Presentation order — see deck.en.yaml PART 1 (s21 → s22 → ..).
+
+slides:
+  # ─── Section 4. Testing — TDD as a discipline (s22–s24) ───
+  - id: s22
+    file: slides-en/s22-divider-testing.md
+    type: section_divider
+    section: "Section 4. Testing — TDD as a discipline"
+    duration_min: 0.5
+    assertion: "Testing · TDD discipline — the test as an executable specification; a strong phase in the right role, but with the trap \"green tests ≠ working code\""
+    learning_goal: "Section divider for section 4 (testing): the test as a machine-verifiable criterion"
+    learning_outcomes: [LO1]
+    chapter_ref: "§4 (structural divider)"
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "The section_divider template (unified). A giant \"4\" on the right, soft-outline, SECTION 4 + subtitle \"Testing — TDD as a discipline\", a narrative bridge line on the left, roadmap bar of 8 cards (current 4 gold), tag \"strong in the right role · 1 failure\". NO timings."
+    interaction: none
+
+  - id: s23
+    file: slides-en/s23-tdd-discipline.md
+    type: assertion_visual
+    section: "Section 4. Testing — TDD as a discipline"
+    duration_min: 3
+    assertion: "TDD-as-approach: the test is an executable specification, red-green-refactor with human ownership; the check is not outsourced to the model; nuance — the value is in the structure, not the ritual (TDD-first for an agent = ~3× tokens with no gain)"
+    learning_goal: "The TDD practice as an approach + the nuance structure≠ritual (Böckeler ~3× tokens); tools secondary"
+    learning_outcomes: [LO7, LO1]
+    chapter_ref: "§4.1, §4.2 [for-slide-s22]"
+    references: [willison-testing, fowler-testing, bockeler-thoughtworks, dora-report]
+    interaction: none
+
+  - id: s24
+    file: slides-en/s24-all-green-mutation.md
+    type: case_study
+    section: "Section 4. Testing — TDD as a discipline"
+    duration_min: 3
+    assertion: "\"all green\" lies: an LLM readily reports \"all tests green\" while they fail — the gate is a deterministic run, not the model's report; coverage↑ mutation↓ (Meta 32/5.3% vs 2.4/15%)"
+    learning_goal: "[SI] Failure: \"all green\" lies (Fowler); coverage↑(32/5.3%) mutation↓(2.4/15%, Meta); incident→regression test"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.3 [for-slide-s24]"
+    references: [fowler-testing, willison-testing, meta-testgen]
+    in_bucket: true
+    verify_day_of: true
+
+  # ─── Section 5. Review + Security — the discipline of skepticism (s25–s31) ───
+  - id: s25
+    file: slides-en/s25-divider-review-security.md
+    type: section_divider
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 0.5
+    assertion: "Review + Security · a second critical look at AI's output; counterintuitively — AI code must be reviewed MORE, not less"
+    learning_goal: "Section divider for section 5 (review+security): the discipline of skepticism in one line"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5 (structural divider)"
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "The section_divider template (unified). A giant \"5\" on the right, soft-outline, SECTION 5 + subtitle \"Review + Security — the discipline of skepticism\", a narrative bridge line on the left, roadmap bar of 8 cards (current 5 gold), tag \"strong in capability · 4 failures\". NO timings."
+    interaction: none
+
+  - id: s26
+    file: slides-en/s26-review-practice.md
+    type: assertion_visual
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 3
+    assertion: "The review practice is not \"which AI reviewer is best\" but two human practices: adversarial review with fresh context (not the one who wrote it) + retained human accountability; AI review = assist, not gate"
+    learning_goal: "The review practice: adversarial fresh-context + accountability; tools secondary; judgment assist/gate"
+    learning_outcomes: [LO7, LO1]
+    chapter_ref: "§5.2 [for-slide-s26]"
+    references: [willison-testing, osmani-70-percent]
+    interaction: none
+
+  - id: s27
+    file: slides-en/s27-review-failure-curl.md
+    type: case_study
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 3
+    assertion: "Review failure: complacency toward AI code (Radar Hold) + curl-slop as a DDoS on maintainers — the asymmetry \"generate a fake in seconds / refute it in hours\"; AI review ~19% F1 against the human baseline"
+    learning_goal: "[SI] Review failure: complacency (Radar Hold) + AI-review ~19% F1 vs human + curl valid-rate >15%→<5%"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§5.3 [for-slide-s27]"
+    references: [thoughtworks-radar, stenberg-curl, codecrash]
+    in_bucket: true
+    verify_day_of: true
+
+  - id: s28
+    file: slides-en/s28-security-practice.md
+    type: assertion_visual
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 3
+    assertion: "The security practice is the architectural breaking of the lethal trifecta (untrusted content + secrets + exfiltration channel) with four controls: least-privilege, sandbox, egress allowlist, a mandatory SAST/supply-chain gate"
+    learning_goal: "The security practice: least-privilege/sandbox/SAST gate/lethal trifecta; tools secondary"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§5.4 [for-slide-s28]"
+    references: [fowler-lethal-trifecta, github-agentic-workflows]
+    verify_day_of: true
+
+  - id: s29
+    file: slides-en/s29-vulnerable-false-confidence.md
+    type: case_study
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 3
+    assertion: "The systemic risk is not \"AI sometimes writes vulnerable code\" but \"vulnerable code + heightened confidence that it is safe\": Stanford — people introduce vulnerabilities more often and more confidently; NYU ~40% (1689 programs / 89 MITRE scenarios)"
+    learning_goal: "[SI] Security failure: Stanford insecure+overconfident + NYU ~40% (1689/89 MITRE Top-25 CWE)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§5.5 [for-slide-s27]"
+    references: [stanford-perry, nyu-asleep-keyboard]
+    in_bucket: true
+    verify_day_of: true
+
+  - id: s30
+    file: slides-en/s30-slopsquatting-camoleak.md
+    type: case_study
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 3
+    assertion: "Supply chain is a separate class: slopsquatting (registering a reproducibly-hallucinated package; 20% of 576k samples, 43% reproducibility) + CamoLeak (prompt injection, CVSS 9.6) — cured by architecture, not by a \"better model\""
+    learning_goal: "[SI] Security failure: slopsquatting (576k, 43%) + CamoLeak CVSS 9.6 (supply-chain/prompt-injection class)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§5.6 [for-slide-s28]"
+    references: [larson-slopsquatting, legit-camoleak]
+    in_bucket: true
+    verify_day_of: true
+
+  - id: s31
+    file: slides-en/s31-replit-culmination.md
+    type: case_study
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 3
+    assertion: "The Replit agent, during a code freeze, wiped the prod DB, lied, and rated itself 95/100 — level-D security does not live in the prompt, it lives outside the agent; accountability is not delegated"
+    learning_goal: "[SI] Culmination: Replit by failure mode + class (Kiro, PocketOS 9 sec); accountability is not delegated"
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§5.7 [for-slide-s29]"
+    references: [replit-incident, fortune-replit, ai-incident-db]
+    in_bucket: true
+    verify_day_of: false
+
+  # ─── Section 6. Delivery · Operations · Documentation (s32–s34) ───
+  - id: s32
+    file: slides-en/s32-divider-delivery-ops-docs.md
+    type: section_divider
+    section: "Section 6. Delivery · Operations · Documentation"
+    duration_min: 0.5
+    assertion: "Delivery + Operations + Documentation · three phases where the input is a state of the real world that is not in the text; the practice leads, the tool consumes"
+    learning_goal: "Section divider for section 6: the point of the phases in one line"
+    learning_outcomes: [LO1]
+    chapter_ref: "§6 (structural divider)"
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "The section_divider template (unified). A giant \"6\" on the right, soft-outline, SECTION 6 + subtitle \"Delivery · Operations · Documentation\", a narrative bridge line on the left, roadmap bar of 8 cards (current 6 gold), tag \"two thin phases + a bright spot · 3 failures\". NO timings."
+    interaction: none
+
+  - id: s33
+    file: slides-en/s33-cicd-ops.md
+    type: case_study
+    section: "Section 6. Delivery · Operations · Documentation"
+    duration_min: 3
+    assertion: "Delivery — DORA-first: first a mature pipeline, then scale AI (\"AI amplifies what is already there\") + a hard human prod gate; AI consumes pipelines but does not own them; DORA — both halves (+throughput / -7.2% stability)"
+    learning_goal: "[SI] CI/CD+Ops practices: DORA-first + prod gate; the DORA pair, both halves; operations — the weakest phase"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§6.1 [for-slide-s33]"
+    references: [dora-report, osmani-70-percent]
+    in_bucket: true
+    verify_day_of: true
+
+  - id: s34
+    file: slides-en/s34-docs-bright-spot.md
+    type: case_study
+    section: "Section 6. Delivery · Operations · Documentation"
+    duration_min: 3
+    assertion: "Documentation is the only bright spot (DORA +7.5%, but ONLY paired with -7.2% stability); the practice is docs-as-context (code=truth), the generation pace ≤ the pace of understanding; the failure is cognitive debt"
+    learning_goal: "[SI] Docs-as-context (code=truth) + cognitive-debt failure; DORA +7.5% paired with -7.2% stability"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§6.2 [for-slide-s34]"
+    references: [dora-report, thoughtworks-radar, bockeler-thoughtworks]
+    in_bucket: true
+    verify_day_of: true
+
+  # ─── Section 7. Synthesis — discipline by phase (s35–s40) ───
+  - id: s35
+    file: slides-en/s35-divider-synthesis.md
+    type: section_divider
+    section: "Section 7. Synthesis — discipline by phase"
+    duration_min: 0.5
+    assertion: "Synthesis · we assemble the decision apparatus: the matrix \"phase × leading practice × where the human is\", triangulation, the risk triad, the checklist"
+    learning_goal: "Section divider for section 7 (synthesis): folding into a decision apparatus"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§7 (structural divider)"
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "The section_divider template (unified). A giant \"7\" on the right, soft-outline, SECTION 7 + subtitle \"Synthesis — discipline by phase\", a narrative bridge line on the left, roadmap bar of 8 cards (current 7 gold), tag \"the decision apparatus\". NO timings."
+    interaction: none
+
+  - id: s36
+    file: slides-en/s36-synthesis-matrix.md
+    type: schema_matrix
+    section: "Section 7. Synthesis — discipline by phase"
+    duration_min: 3
+    assertion: "The lecture's matrix: phase × leading practice × failure mode × where the human is mandatory; the vendor is the last, secondary, swappable column — eliminating the vendor catalog"
+    learning_goal: "SYNTHESIS matrix reframed (#264): phase × leading practice × where the human is; vendor as a secondary column"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§7.1 [for-slide-s36]"
+    references: []
+    verify_day_of: true
+
+  - id: s37
+    file: slides-en/s37-triangulation.md
+    type: case_study
+    section: "Section 7. Synthesis — discipline by phase"
+    duration_min: 3
+    assertion: "Triangulation of three independent methods (DORA / GitClear / METR): individual AI gains ≠ systemic quality; the strength is in the convergence of independent methods → the method matters more than the tool"
+    learning_goal: "[SI] Triangulation DORA(\"amplifies what is already there\")/GitClear/METR → the method matters more than the tool"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§7.2 [for-slide-s37]"
+    references: [dora-report, gitclear, metr-study]
+    in_bucket: true
+    verify_day_of: true
+
+  - id: s38
+    file: slides-en/s38-risk-triad.md
+    type: schema_quadrant
+    section: "Section 7. Synthesis — discipline by phase"
+    duration_min: 3
+    assertion: "The risk triad (Böckeler) — a compact criterion for \"when AI yes / no\": probability × impact × detectability; vibe coding is admissible only at low × low × high, otherwise — discipline"
+    learning_goal: "[SI] The risk triad (Böckeler) (probability×impact×detectability) as the deciding practice"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§7.3 [for-slide-s38]"
+    references: [bockeler-thoughtworks]
+    in_bucket: true
+    verify_day_of: false
+
+  - id: s39
+    file: slides-en/s39-checklist.md
+    type: assertion_visual
+    section: "Section 7. Synthesis — discipline by phase"
+    duration_min: 3
+    assertion: "A checklist \"when AI yes / when no\" by phase — the distribution of the burden of proof; irreversibility/impact — the veto axis; Anthropic -17% (quiz 50% vs 67%, n=52) — when the goal is \"to learn\", delegating generation hurts"
+    learning_goal: "[SI] Checklist §7.4 (LO4 entry) + Anthropic -17% junior; a task without timing/methodology"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§7.4, §7.5 [for-slide-s39]"
+    references: [anthropic-skill-formation]
+    in_bucket: true
+    verify_day_of: true
+
+  - id: s40
+    file: slides-en/s40-bridge-qa.md
+    type: hero_closing
+    section: "Section 7. Synthesis — discipline by phase"
+    duration_min: 3
+    assertion: "AI changes the cost of writing code, but not the cost of understanding what to build and who is accountable; the phase-centric map + triangulation + the risk triad — a lens for every industry: the method transfers, not the list of tools"
+    learning_goal: "Bridge to Seminar 4 + Q&A + conclusion; HERO closing (closes the emotional arc / bridges to the industry lectures)"
+    learning_outcomes: [LO1, LO4, LO7]
+    chapter_ref: "§7.6, Conclusion [for-slide-s40]"
+    references: [anthropic-skill-formation]
+    interaction: think_pause
+    verify_day_of: false
+    hero_required: true
+
+# ─────────────────────────────────────────────────────────────────────────
+# Validation
+# ─────────────────────────────────────────────────────────────────────────
+totals:
+  slides: 41                    # s01–s41 (v4.1: +foundations s05, keystone→s06, dividers without tag plates)
+  base_slides_locked: "s01–s41 (v4.1). s01 = METR hook (hero). s05 = practice summary (2 lists with links). s06 = keystone phase cycle (Requirements→Architecture→Implementation→Testing→Review+Security→Delivery/Operations→Documentation→). 7 section dividers: s09(S1) s13(S2) s17(S3) s23(S4) s26(S5) s33(S6) s36(S7) — without tag plates. Hero required = s01 + s41."
+  slide_times_sum_min: 82.5     # Σ per-slide duration_min below; active part ~74 + Q&A buffer
+  total_min: 75                 # active ~71 + ~4 Q&A buffer (s40)
+  note: >
+    Plan v4 §4: 40 slides ≈ 75 min. Section budgets: S0 s01–s07 · S1 [s08]
+    s09–s11 · S2 [s12] s13–s15 · S3 [s16] s17–s21 · S4 [s22] s23–s24 · S5 [s25]
+    s26–s31 · S6 [s32] s33–s34 · S7 [s35] s36–s40. Gain vs v3 (37): architecture
+    split (+2: s13/s14), harness as a separate slide (+1: s18/s19 separated), method
+    recommendations (+1: s10); compensated by compressing the vendor blocks (tools secondary).
+    Q&A merged into s40 (hero closing). Final per-minute calibration — at the render phase.
+
+# Per-slide duration_min (plan v4 §4):
+#   S0: s01=3 s02=0.5 s03=2 s04=2.5 s05=3 s06=2 s07=2.5 (=15.5) ·
+#   S1: [s08=0.5] s09=3 s10=2.5 s11=3 (=9) ·
+#   S2: [s12=0.5] s13=3 s14=3 s15=3 (=9.5) ·
+#   S3: [s16=0.5] s17=3 s18=3 s19=3 s20=3 s21=3 (=15.5) ·
+#   S4: [s22=0.5] s23=3 s24=3 (=6.5) ·
+#   S5: [s25=0.5] s26=3 s27=3 s28=3 s29=3 s30=3 s31=3 (=18.5) ·
+#   S6: [s32=0.5] s33=3 s34=3 (=6.5) ·
+#   S7: [s35=0.5] s36=3 s37=3 s38=3 s39=3 s40=3 (=15.5)
+#   Σ per-slide ≈ 96.5 of discussion; active display ~74. Re-balancing — at the render phase.
+
+ai_failure_judgment:
+  # plan v4 §4/§6 — strict-in slides (solid IN-bucket: failure/limitation/criterion/
+  # alternative carried by connected prose). L4 threshold = 30%, waiver UNAVAILABLE.
+  # methodology-critic Phase 7 recomputes strict-in by words per-part AND by speech minutes separately.
+  in_bucket_slides: [s07, s11, s13, s15, s20, s21, s24, s27, s29, s30, s31, s33, s34, s37, s38, s39]
+  count: 16
+  share_by_slides: "16/40 = 40% by slides (buffer +10 pp over the 30% threshold). Clusters distributed across the 7 sections — no single-artifact concentration: s07-S0 · s11-S1 · s13/s15-S2 · s20/s21-S3 · s24-S4 · s27/s29/s30/s31-S5 · s33/s34-S6 · s37/s38/s39-S7."
+  partial_out: [s01, s02, s03, s04, s05, s06, s08, s09, s10, s12, s14, s16, s17, s18, s19, s22, s23, s25, s26, s28, s32, s35, s36, s40]
+  note: >
+    The speaker notes of the 16 in-bucket slides carry failure/judgment as connected
+    student-facing prose (failure/limitation + lesson + alternative/criterion). Partial→out (plan
+    §6, Decision #78): s01 hook, s02 cover, s03 bridge, s04 central question, s05 keystone (load-bearing
+    axis = course-scaffold), s06 demoted lens A→D, s08/s12/s16/s22/s25/s32/s35
+    structural dividers, s09/s10 requirements practice+recommendations (partial-upside),
+    s14 architecture approaches (upside), s17/s18/s19 implementation practices (upside), s23
+    TDD practice (upside — the nuance structure≠ritual carries partial failure, but strict-#78
+    partial→out), s26 review practice (upside), s28 security practice (upside),
+    s36 matrix (packaging of already-proven facts), s40 bridge+Q&A. chapter strict-in
+    (P1 ~35.7% / P2 ~35.7% / P3 ~39% / P4 ~52% / P5 ~39.4%) unaffected. Holistic
+    ≥30% in slides held with a ~10 pp margin.
+
+verify_day_of_items:
+  - s01_metr_reversal              # METR -19% / +19% + late-2025/2026 reversal update
+  - s09_grove_model_spec_status    # Grove "~10-20%" rhetoric; Model Spec clause-IDs; Fowler intent
+  - s10_requirements_methodics     # Spec-Kit namespace /speckit.*; deliberative alignment; plan-mode statuses
+  - s17_cycle_leaders              # explore-plan-code-commit phrasing; Cursor/Junie/Windsurf versions (secondary)
+  - s18_context_rot_memory_demo    # context rot 18 models; memory demo 172k vs 334k (cookbook demo, volatile); AGENTS.md adoption
+  - s20_so2025_gitclear_numbers    # SO-2025 66% · GitClear clones 8.3→12.3% / refactoring ~25→<10% / churn 3.3→5.7%
+  - s21_swe_bench_numbers          # SWE-bench Verified ~88% / Pro ~64% + Devin 13.86% (79/570) + Cursor/OpenAI
+  - s23_test_vendor_status         # Böckeler TDD-in-agent-loop ~3× tokens; Q /test languages; Qodo F1; Anthropic Stop-hook
+  - s24_meta_coverage_mutation     # Meta coverage 32% vs 5.3% of classes; mutation 2.4% vs 15%
+  - s27_ai_review_f1_curl          # ~19% F1 SWR-Bench · CodeCrash -23% · curl valid-rate >15%→<5% + timeline
+  - s28_security_vendor_status     # Big Sleep/OSS-Fuzz cases · GitHub SAST · /security-review
+  - s29_nyu_stanford_percentages   # NYU ~40% of 1689/89 MITRE Top-25 CWE · Stanford insecure+overconfident
+  - s30_slopsquatting_camoleak     # slopsquatting ~20% of 576k / 43% reproducibility · CamoLeak CVE-2025-59145 CVSS 9.6
+  - s33_dora_docs_stability        # DORA +throughput / -7.2% stability (2nd year) + AWS Q Ops
+  - s34_dora_docs_cognitive_debt   # DORA +7.5% docs (paired with -7.2%); Confluence AI features
+  - s36_matrix_vendor_names        # vendor names/statuses in the matrix (practices durable, vendor column volatile)
+  - s37_dora_gitclear_metr         # DORA/GitClear/METR percentages (directions durable)
+  - s39_anthropic_junior_17        # Anthropic -17% (quiz 50% vs 67%, RCT n=52; speed-up not significant)
+
+fact_check_items:
+  - s09_grove_10_20_percent        # Grove "~10-20% of value" — rhetoric, secondary transcripts, NOT a measurement
+  - s11_prompt_and_pray_intent     # "the bottleneck = human intent" (Grove/spec-driven attribution); Emperor's New Code
+  - s20_gitclear_211m              # GitClear 211M lines: clones 8.3→12.3% / refactoring ~25→<10% / churn 3.3→5.7% (correlation, not RCT)
+  - s21_devin_openai_swe_bench     # Devin 13.86% (79/570 = 25% of bench, contamination) · OpenAI 59% test-flaw / "70% PRs" with no denominator
+  - s24_meta_coverage_mutation     # Meta 32% vs 5.3% of classes; mutation 2.4% vs 15% (LLM generation vs narrow targeted method)
+  - s27_nyu_curl_slop_rates        # curl valid-rate >15%→<5% / volume grew several-fold / suspension+return HackerOne March 2026; AI-review ~19% F1
+  - s29_nyu_1689_89                # NYU 1689 programs / 89 MITRE Top-25 CWE scenarios / ~40%; Stanford randomized
+  - s30_camoleak_cve               # CamoLeak CVE-2025-59145, CVSS 9.6, image-proxy exfiltration; slopsquatting 576k/20%/43%
+  - s31_replit_kiro_pocketos       # Replit 95/100 + 1200+/1190+ figures + rollback worked; Kiro 13h; PocketOS 9 sec
+  - s33_dora_2024_stability        # DORA +7.5% docs / -7.2% stability; stability 2nd year negative (2024/2025)
+  - s37_gitclear_dora_correlation  # GitClear correlation not RCT; DORA throughput+ paired with stability-; METR n=16
+  - s39_anthropic_rct_52           # Anthropic RCT n=52, quiz 50% vs 67%, speed-up not significant (Shen & Tamkin 2026)

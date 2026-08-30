@@ -31,6 +31,16 @@
 - Volatile числа/доли/«лидер»/benchmark → `[VFY-day-of]` (на видимом слое только направление): 
 - Каждый plan §-named speech-narrative имеет слайд ИЛИ явное owner-обоснование устного якоря (Phase-5 check): 
 
+## Двуязычие RU/EN (ENFORCED — issue #172, CLAUDE.md § Bilingual Production)
+
+Лекция производится в двух языках. RU — source of truth. EN-дубликаты обязательны:
+- [ ] `speech.en.md` — перевод комментариев
+- [ ] `deck.en.yaml` + `slides-en/sNN-*.md` — перевод слайдов
+- [ ] `rendered/lec-NN-en.{pptx,pdf}` + `lec-NN-notes-en.pdf` — ре-рендер EN-дека
+- [ ] Glossary-lock терминов соблюдён; RU↔EN parity (consistency-checker); нет непереведённых русских фрагментов в EN
+
+EN производится отдельной фазой после approve RU-версии.
+
 ## Outline
 ### Part 1 — 
 ### Part 2 — 

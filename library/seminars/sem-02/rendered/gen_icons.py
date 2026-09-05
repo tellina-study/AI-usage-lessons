@@ -122,6 +122,29 @@ REQUESTS = [
     ("message-square-quote", "1C7293", 72),
     ("cable", "065A82", 96),
     ("folder-search", "065A82", 96),
+    # issue #182 v3 rebuild (42-slide) additions -- s16 timeline, s17 device
+    # cards, s02 case-list @64px already covered above, misc new icon-scenes
+    ("smartphone", "21295C", 64), ("smartphone", "065A82", 96), ("smartphone", "F0AB00", 64),
+    ("flag-triangle-right", "F0AB00", 64), ("flag-triangle-right", "065A82", 64),
+    ("calendar-days", "1C7293", 64), ("calendar-days", "065A82", 96),
+    ("layers", "1C7293", 72),
+    ("cpu", "065A82", 96),
+    ("route", "028090", 64),
+    ("git-fork", "028090", 64),
+    ("landmark", "065A82", 96),
+    # case3_schema() muted state (8A939E) + newly-colored state icons at 64px
+    ("mail", "8A939E", 64), ("mail", "065A82", 64),
+    ("sparkles", "8A939E", 64), ("sparkles", "065A82", 64),
+    ("file-text", "8A939E", 64),
+    ("database", "8A939E", 64), ("database", "028090", 64),
+    ("layers", "8A939E", 64), ("layers", "028090", 64),
+    ("search", "8A939E", 64), ("search", "028090", 64),
+    ("file-code", "8A939E", 64), ("file-code", "028090", 64),
+    ("route", "F0AB00", 64),
+    ("cable", "F0AB00", 64),
+    ("list-checks", "F0AB00", 64),
+    ("circle-check", "F0AB00", 96),
+    ("lock", "21295C", 96),
 ]
 
 

@@ -1041,3 +1041,73 @@ all remaining 23 untouched slides re-snapshotted from the same native
 rebuild so `snapshots/` stays internally consistent with the current
 `lec-02.pptx`/`lec-02.pdf` (spot-checked 2 untouched slides — p-02 cover,
 p-22 U-shape chart — for regression; both clean, no content drift).
+
+---
+
+## v2.0.2 — финальная ревизия по сводке 3 QA-критиков (issue #183, 2026-09-05)
+
+Brief: 16 пунктов (3×P1 + 8×P2 + 3 notes-фикса + deck.yaml sync + notes-pdf).
+Rebuild: python-pptx full rebuild ([#71-1]); convert — канонический
+`source /home/harness/.local/lo-portable-env.sh` → `soffice` + `pdftoppm -r 100`.
+
+### Iter 1 — правки применены, перерендер 12 затронутых + 3 регрессионных стр.
+
+- (a) осмотрено: s02, s02a, s06, s07, s09, s18, s19, s28, s34, s37, s39, s42
+  + регрессия s01/s22/s38.
+- (b) найдено 4 замечания:
+  1. **s06** — `widest` лёг на нижнюю грань колонки (col_h 2.2 мала после
+     ужатия) + слишком пустой низ слайда.
+  2. **s18** — новая caption-строка «В декодере токен видит только
+     предыдущие…» подрезана gold callout (3 строки не влезли в h0.65).
+  3. **s34** — «Действительно локальные — до ~30B» всё ещё переносится
+     (DejaVu шире Arial): 14pt/3.6" мало.
+  4. **s37** — стат-подпись «заявка производителя vs защищённый» 9.5pt ниже
+     гайдового минимума.
+  Плюс полировка: s07 — после подтяжки строки карточка риска стала короче
+  левой колонки (выровнена вертикальным центрированием y1.65→2.1);
+  s19-chart — датолейблы с точкой вместо запятой (несоответствие «0,7» s18).
+- (c) чек-лист: s19 5-sec PASS (Q/K/V-тезис читается первым), s37 5-sec PASS
+  (87.6 vs 57 контраст), s18 треугольник засерён — FAIL по caption-clip.
+
+### Iter 2 — фиксы: s06 col_h 2.45 + callout/caption вниз; s18 таблица
+th 3.95, caption y5.62 h0.8; s34 title 13.5pt/w3.75 (одна строка ✓);
+s37 подпись 10.5pt; s07 карточка отцентрована; s19-chart перегенерен с
+formatter «,». Перерендер стр. 9/10/22/23/37/41 — все фиксы легли чисто.
+
+### Iter 3 — финальный accept
+
+- s37 2-строчный title сверен со старым snapshot — было так же в v2.0
+  (не регрессия).
+- Projector-check 50%: минимумы — 11.5pt italic caption s18 (вторичный слой),
+  10.5pt стат-подпись s37; тезисы/заголовки ≥12.5pt. PASS.
+- 5-Second Test по всем 12 перерендеренным PNG — PASS (main message =
+  assertion).
+- Артефакт: лёгкая полоса-тень над gold callout s19 — известный
+  LibreOffice-преюю артефакт [#54-render] (пустой effectLst игнорируется),
+  в реальном PowerPoint отсутствует; зазумлен и подтверждён как тень.
+
+### Compliance (финальный pptx, 46 слайдов)
+
+- Anti-leak grep (visible + notes; тайминги/методология/LO/§/«→ sNN»/
+  «Лектору»/M-метки вне s02a+s38): **0 hits** (проверено скриптом по
+  извлечённому тексту pptx, не self-report по source).
+- Deep latin-scan visible: 214 occurrences / 131 unique (было 218/132) —
+  остаток тот же brand/glossary/API-литералы; «inference» в visible = 0.
+- Notes: 150–300 слов на слайд подтверждено для всех правленых (181–267);
+  «три механизма» (s35a), примеры T=0/T=1.5 (s27), словесные указатели
+  места в методичке без §-номеров (s17/s23) — в pptx.
+- `lec-02-notes.pdf` перегенерирован: 46 слайдов / 48 страниц.
+
+### Отклонения от brief (repor­ted, не self-approved)
+
+1. Глосса vLLM дана как «открытый инференс-сервер» (brief давал
+   «inference-сервер») — согласовано с item 6 (russification) той же ревизии.
+2. s02a notes: «конвейера inference» → «инференса» (та же категория, что
+   item 6, но слайд в item 6 не назван).
+3. deck.yaml s42: убрано «контакты лектора внизу справа» (item 1 называет
+   только slides/s42-qa.md, но иначе воспроизводится deck↔render расхождение,
+   которое item 15 велит устранять).
+4. НЕ правилось (вне modify-list, остаётся для оркестратора): 2× «inference»
+   в notes s04b/s12; frame-фразы дивайдеров в deck.yaml короче источников
+   (batch-2 deviation 3); section-имя «Раздел 4. Сэмплинг» в deck.yaml vs
+   «…и генерация» в источниках.

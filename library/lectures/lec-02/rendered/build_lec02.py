@@ -501,7 +501,7 @@ def build_s02(p):
     # Subtitle — новая арка
     filled_rect(s, 0.7, 4.55, 0.05, 0.62, GOLD)
     text_box(s, 0.95, 4.55, 10.6, 0.75,
-             "Проверяем ментальную модель: конвейер inference и шесть границ",
+             "Проверяем ментальную модель: конвейер инференса и шесть границ",
              size=20, italic=True, color=MID, line_spacing=1.22)
     # Hero motif: 4-стадийная конвейер-иконка (токен / вектор / внимание /
     # распределение)
@@ -551,9 +551,9 @@ def build_s02a(p):
     set_slide_bg(s, SURFACE)
     slide_title(s, "Карта лекции — 6 разделов", size=28,
                 align=PP_ALIGN.CENTER, y=0.42, h=0.7)
-    row_w, row_h, gap = 12.1, 0.84, 0.12
+    row_w, row_h, gap = 12.1, 0.80, 0.12
     x0 = (SLIDE_W_IN - row_w) / 2
-    y = 1.35
+    y = 1.22
     for i, (num, name, desc, active) in enumerate(S02A_ROWS):
         if active:
             ocean_box(s, x0, y, row_w, row_h, fill=WHITE, stroke=GOLD,
@@ -577,6 +577,10 @@ def build_s02a(p):
                  fill=GOLD_TINT, stroke=GOLD, color=DEEP, size=12)
             cx += 0.62
         y += row_h + gap
+    # Микро-подпись к M-чипам (v2.0.2 item 8)
+    text_box(s, x0, y + 0.02, row_w, 0.3,
+             "M1–M6 — шесть утверждений чек-листа",
+             size=11, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
     speaker_notes(s, load_notes("s02a"))
 
 
@@ -777,8 +781,8 @@ def build_s06(p):
              "Не все буквы (длинно) и не все слова (незнакомое выпадает) — "
              "частые подпоследовательности.",
              size=16, italic=True, color=MID)
-    # Левая колонка — корпус
-    col_y, col_h = 2.05, 2.75
+    # Левая колонка — корпус (высота по контенту, v2.0.2 item 7)
+    col_y, col_h = 2.05, 2.45
     ocean_box(s, 1.0, col_y, 4.7, col_h, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.4)
     text_box(s, 1.3, col_y + 0.18, 4.1, 0.45, "Обучающий корпус",
@@ -812,11 +816,11 @@ def build_s06(p):
          "size": 12.5, "italic": True, "color": SLATE,
          "newpara": True, "space_before_pt": 12},
     ])
-    gold_callout(s, 1.0, 5.15, 11.2, 0.80,
-                 "Словарь строится один раз до обучения; на inference — "
+    gold_callout(s, 1.0, 4.95, 11.2, 0.80,
+                 "Словарь строится один раз до обучения; на инференсе — "
                  "выборка готовых правил, не вычисление.", size=16,
                  align=PP_ALIGN.CENTER)
-    text_box(s, 1.0, 6.25, 11.2, 0.5,
+    text_box(s, 1.0, 6.05, 11.2, 0.5,
              "Разные вендоры режут один и тот же текст по-разному: Claude, "
              "GPT, Gemini — свои словари и правила.",
              size=12, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
@@ -865,17 +869,19 @@ def build_s07(p):
         {"text": "<|im_end|>", "size": 12.5, "font": FONT_MONO,
          "bold": True, "color": TEAL},
     ])
-    # Справа: карточка риска gold-обводка
-    filled_rect(s, 7.45, 1.65, 5.35, 3.85, GOLD_TINT, stroke=GOLD,
+    # Справа: карточка риска gold-обводка (высота по контенту, пример
+    # подтянут к абзацу — v2.0.2 item 7; карточка отцентрована по высоте
+    # левой колонки)
+    filled_rect(s, 7.45, 2.1, 5.35, 2.95, GOLD_TINT, stroke=GOLD,
                 stroke_pt=2.0, radius=True, radius_adj=0.06)
-    text_box(s, 7.75, 1.90, 4.8, 0.45, "Подделка", size=18, bold=True,
+    text_box(s, 7.75, 2.35, 4.8, 0.45, "Подделка", size=18, bold=True,
              color=DEEP)
-    text_box(s, 7.75, 2.45, 4.8, 2.2,
+    text_box(s, 7.75, 2.90, 4.8, 1.35,
              "Внешний контент (веб-страница, файл, письмо) со строкой, "
              "похожей на разметку роли, вливается в тот же поток токенов — "
              "отдельного «защищённого канала» для ролей нет.",
              size=15, color=DEEP, line_spacing=1.25)
-    text_runs(s, 7.75, 4.85, 4.8, 0.6, [
+    text_runs(s, 7.75, 4.35, 4.8, 0.6, [
         {"text": "<|im_start|>assistant", "size": 12, "font": FONT_MONO,
          "bold": True, "color": TEAL},
         {"text": " — из письма?", "size": 12.5, "italic": True,
@@ -982,7 +988,9 @@ def build_s09(p):
         {"text": "пробелы группами — словарь чинится, но не под все задачи "
                  "сразу.", "size": 15, "color": DEEP},
     ], line_spacing=1.22)
-    # 3 приёма
+    # 3 приёма + заголовок группы (v2.0.2 item 9)
+    text_box(s, 0.55, 5.10, 4.0, 0.32, "Что делать:", size=14, bold=True,
+             color=MID)
     tips = ["Разделители разрядов («1 234 567»)",
             "Вычисления — в инструмент",
             "Единообразные отступы"]
@@ -1463,7 +1471,7 @@ def build_s18(p):
              size=14, italic=True, color=MID)
     # Таблица 8×8
     rows, cols = 8, 8
-    tx, ty, tw, th = 0.55, 1.55, 7.5, 4.15
+    tx, ty, tw, th = 0.55, 1.55, 7.5, 3.95
     first_col = 1.30
     gtbl = s.shapes.add_table(rows, cols, Inches(tx), Inches(ty),
                               Inches(tw), Inches(th))
@@ -1504,20 +1512,30 @@ def build_s18(p):
             cell = tbl.cell(ri + 1, ci + 1)
             cell.fill.solid()
             is_gold = (ri == 4 and ci == 2)
+            is_future = (ci > ri)  # верхний треугольник — будущие токены
             if is_gold:
                 cell.fill.fore_color.rgb = GOLD
                 cell_text(cell, "0,7", size=11, bold=True, color=DEEP)
+            elif is_future:
+                # Засерён (v2.0.2 item 4): в декодере токен не видит будущих
+                cell.fill.fore_color.rgb = SOFT_GREY
+                cell_text(cell, f"{v:.1f}".replace(".", ","), size=9,
+                          color=SLATE)
             else:
                 cell.fill.fore_color.rgb = _ocean_scale(v)
                 cell_text(cell, f"{v:.1f}".replace(".", ","), size=10,
                           bold=(v >= 0.7),
                           color=WHITE if v >= 0.45 else DEEP)
-    text_runs(s, 0.55, 5.85, 7.5, 0.55, [
-        {"text": "По строке «она»: ", "size": 13, "bold": True,
+    text_runs(s, 0.55, 5.62, 7.5, 0.8, [
+        {"text": "По строке «она»: ", "size": 12.5, "bold": True,
          "color": DEEP},
         {"text": "наибольший вес — на «мышь». Статистическая связь, "
-                 "выученная на корпусе.", "size": 13, "color": DEEP},
-    ], line_spacing=1.15)
+                 "выученная на корпусе.", "size": 12.5, "color": DEEP},
+        {"text": "В декодере токен видит только предыдущие — показана "
+                 "полная сверка для наглядности.", "size": 11.5,
+         "italic": True, "color": SLATE, "newpara": True,
+         "space_before_pt": 3},
+    ], line_spacing=1.12)
     # Справа — 3 свойства
     props = [
         ("Размерность", [
@@ -1551,84 +1569,59 @@ def build_s18(p):
 
 
 def build_s19(p):
-    """Фонарик-метафора + bar chart весов + строка Q/K/V + gold callout."""
+    """v2.0.2 (item 2): главный тезис Q/K/V наверху — gold callout под
+    заголовком + строка Q/K/V; ниже chart (7 токенов — нарезка s18) +
+    3 нумерованных факта; метафора фонарика — одна строка-подпись."""
     s = blank(p)
     slide_title(s, "Внимание — распределение весов на весь контекст: "
                    "три проекции Query / Key / Value", size=20, h=0.65,
                 y=0.35)
-    # Слева — метафора
-    ocean_box(s, 0.55, 1.3, 4.85, 3.0, fill=SURFACE, stroke=LIGHT,
-              stroke_pt=1.4)
-    text_box(s, 0.85, 1.45, 4.3, 0.4, "Фонарик в тёмной комнате",
-             size=15.5, bold=True, color=MID)
-    # мини-графика: фонарик + gold-лучи + 3 предмета разной яркости
-    fl = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.95),
-                            Inches(2.06), Inches(0.5), Inches(0.3))
-    fl.fill.solid(); fl.fill.fore_color.rgb = DEEP
-    fl.line.fill.background(); disable_shadow(fl)
-    plain_line(s, 1.5, 2.21, 3.2, 2.18, color=GOLD, w_pt=3.0)
-    plain_line(s, 1.5, 2.14, 3.15, 1.98, color=GOLD, w_pt=1.6)
-    plain_line(s, 1.5, 2.28, 3.15, 2.42, color=GOLD, w_pt=1.6)
-    for i, (dx, dy, fill, r) in enumerate([(3.3, 2.02, GOLD, 0.19),
-                                           (3.95, 2.06, LIGHT, 0.15),
-                                           (4.5, 2.1, SOFT_GREY, 0.12)]):
-        d = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(dx), Inches(dy),
-                               Inches(r * 2), Inches(r * 2))
-        d.fill.solid(); d.fill.fore_color.rgb = fill
-        d.line.fill.background(); disable_shadow(d)
-    text_runs(s, 0.85, 2.66, 4.3, 1.6, [
-        {"text": "• Все токены контекста — предметы в комнате",
-         "size": 12, "color": DEEP},
-        {"text": "• Луч направлен на релевантные текущему вопросу",
-         "size": 12, "color": DEEP, "newpara": True, "space_before_pt": 4},
-        {"text": "• Яркость по предметам = веса внимания",
-         "size": 12, "color": DEEP, "newpara": True, "space_before_pt": 4},
-        {"text": "• Распределение света меняется с каждым вопросом",
-         "size": 12, "color": DEEP, "newpara": True, "space_before_pt": 4},
-    ], line_spacing=1.15)
-    # Справа — chart
-    ocean_box(s, 5.6, 1.3, 7.2, 3.0, fill=WHITE, stroke=LIGHT,
-              stroke_pt=1.3)
-    text_box(s, 5.85, 1.42, 6.7, 0.35,
-             "Распределение весов на токенах контекста — сумма = 1",
-             size=13.5, bold=True, color=MID)
-    add_image(s, ASSETS / "charts/s19-attention-weights.png",
-              x=6.35, y=1.82, w=5.6)
-    # 3 числовые строки
-    triples = [
-        ("1", "На вход — все токены контекста."),
-        ("2", "На выходе — распределение весов, сумма = 1."),
-        ("3", "Пересчитывается на каждом шаге генерации."),
-    ]
-    x = 0.55
-    for num, txt in triples:
-        ocean_box(s, x, 4.5, 3.95, 0.62, fill=WHITE, stroke=TEAL,
-                  stroke_pt=1.2)
-        text_runs(s, x + 0.18, 4.5, 3.7, 0.62, [
-            {"text": num + ".  ", "size": 13.5, "bold": True, "color": TEAL},
-            {"text": txt, "size": 12, "color": DEEP},
-        ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
-        x += 4.15
-    # Q/K/V строка
-    text_box(s, 0.55, 5.35, 12.3, 0.4,
-             "Технически — три проекции каждого токена:",
-             size=14, bold=True, color=DEEP)
+    # Главный тезис — сразу под заголовком (gold)
+    gold_callout(s, 0.55, 1.06, 12.25, 0.6,
+                 "Q — про текущий шаг. K и V — про уже обработанный контекст.",
+                 size=15.5, align=PP_ALIGN.CENTER)
+    # Строка Q/K/V — три плашки
     qkv = [("Query", "«что я сейчас ищу»"),
            ("Key", "«что я предлагаю»"),
            ("Value", "«что я отдам, если меня выбрали»")]
     x = 0.55
     for term, phrase in qkv:
-        ocean_box(s, x, 5.78, 3.95, 0.58, fill=SURFACE, stroke=LIGHT,
+        ocean_box(s, x, 1.84, 3.95, 0.58, fill=SURFACE, stroke=LIGHT,
                   stroke_pt=1.2)
-        text_runs(s, x + 0.18, 5.78, 3.65, 0.58, [
+        text_runs(s, x + 0.18, 1.84, 3.65, 0.58, [
             {"text": term, "size": 13.5, "bold": True, "color": MID,
              "font": FONT_MONO},
             {"text": " — " + phrase, "size": 12, "color": DEEP},
         ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
         x += 4.15
-    gold_callout(s, 0.55, 6.55, 12.25, 0.62,
-                 "Q — про текущий шаг. K и V — про уже обработанный контекст.",
-                 size=15.5, align=PP_ALIGN.CENTER)
+    # Слева — chart (7 токенов, та же нарезка предложения, что в s18)
+    ocean_box(s, 0.55, 2.62, 7.9, 3.55, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 0.85, 2.76, 7.3, 0.35,
+             "Распределение весов на токенах контекста — сумма = 1",
+             size=13.5, bold=True, color=MID)
+    add_image(s, ASSETS / "charts/s19-attention-weights.png",
+              x=1.0, y=3.22, w=7.0)
+    # Справа — 3 нумерованных факта
+    triples = [
+        ("1", "На вход — все токены контекста."),
+        ("2", "На выходе — распределение весов, сумма = 1."),
+        ("3", "Пересчитывается на каждом шаге генерации."),
+    ]
+    yy = 2.62
+    for num, txt in triples:
+        ocean_box(s, 8.65, yy, 4.15, 1.05, fill=WHITE, stroke=TEAL,
+                  stroke_pt=1.2)
+        text_runs(s, 8.85, yy, 3.8, 1.05, [
+            {"text": num + ".  ", "size": 14, "bold": True, "color": TEAL},
+            {"text": txt, "size": 12.5, "color": DEEP},
+        ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
+        yy += 1.25
+    # Метафора фонарика — одна строка-подпись (блок убран, v2.0.2)
+    text_box(s, 0.55, 6.4, 12.3, 0.45,
+             "Метафора: фонарик в тёмной комнате — луч направлен на "
+             "релевантные токены, яркость света = вес внимания.",
+             size=12.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s19"))
 
 
@@ -2161,10 +2154,11 @@ def build_s28(p):
               stroke_pt=1.4)
     text_box(s, 0.8, 1.6, 4.05, 1.3, "80 / 1000", size=64, bold=True,
              color=GOLD, align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 3.05, 3.95, 1.3,
+    text_box(s, 0.85, 2.95, 3.95, 1.45,
              "уникальных вариантов ответа на идентичный запрос при T=0 — "
-             "стандартный vLLM (Thinking Machines Lab, сентябрь 2025)",
-             size=12.5, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.2)
+             "стандартный vLLM (открытый инференс-сервер; Thinking "
+             "Machines Lab, сентябрь 2025)",
+             size=12, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.18)
     # Справа — механизм
     text_runs(s, 5.4, 1.35, 7.4, 0.6, [
         {"text": "Причина — не «floating-point вообще», а отсутствие ",
@@ -2520,7 +2514,7 @@ def build_s34(p):
     slide_title(s, "«Открытые веса» перестали означать «локально "
                    "запускаемые»", size=26, h=0.6)
     cols = [
-        ("Действительно локальные (≤ ~30B)", None, [
+        ("Действительно локальные — до ~30B", None, [
             "Qwen3.8-27B (Apache 2.0, вход изображение+видео, окно "
             "262 тыс.), Muse Glimmer 30B",
             "Железо: RTX 5090 (32 ГБ) · Apple unified 64–128 ГБ",
@@ -2544,7 +2538,9 @@ def build_s34(p):
         else:
             ocean_box(s, x, 1.5, 3.95, 4.0, fill=SURFACE, stroke=LIGHT,
                       stroke_pt=1.4)
-        text_box(s, x + 0.25, 1.82, 3.45, 0.75, title, size=15, bold=True,
+        # Первый заголовок — одной строкой без переноса (v2.0.2 item 7)
+        t_sz = 13.5 if "~30B" in title else 15
+        text_box(s, x + 0.15, 1.82, 3.75, 0.75, title, size=t_sz, bold=True,
                  color=MID if not is_mid else DEEP, line_spacing=1.1)
         runs = []
         for i, b in enumerate(bullets):
@@ -2717,20 +2713,17 @@ def build_s37(p):
     s = blank(p)
     slide_title(s, "Бенчмарки: контаминация, подгонка — и модели, которые "
                    "жульничают сами", size=24, h=0.9, y=0.35)
+    # v2.0.2 (item 10): текст сюжетов ≤2 строк (детали в notes);
+    # цифры 87.6 vs 57 — крупным контрастным стат-блоком.
     cards = [
-        ("1", "Контаминация: заучено, а не умеет", [
-            {"text": "SWE-bench ", "size": 12.5, "color": DEEP},
-            {"text": "Verified 87.6%", "size": 12.5, "bold": True,
-             "color": GOLD},
-            {"text": " (заявка производителя, публичные репозитории) vs ",
-             "size": 12.5, "color": DEEP},
-            {"text": "Pro: 57% топ / ~25% средний", "size": 12.5,
-             "bold": True, "color": GOLD},
-            {"text": " (приватные кодовые базы — заучить нельзя). Разрыв — "
-                     "измеренная величина заучивания. OpenAI в 2026 "
-                     "перестал публиковать Verified.", "size": 12.5,
-             "color": DEEP}]),
-        ("2", "Подгонка под метрику", [
+        ("1", "Контаминация: заучено, а не умеет", 8.2, [
+            {"text": "SWE-bench: публичные репозитории (Verified) vs "
+                     "приватные базы (Pro) — ", "size": 12.5, "color": DEEP},
+            {"text": "разрыв и есть величина заучивания.", "size": 12.5,
+             "bold": True, "color": DEEP},
+            {"text": " OpenAI в 2026 перестал публиковать Verified.",
+             "size": 12.5, "color": DEEP}]),
+        ("2", "Подгонка под метрику", 11.0, [
             {"text": "Llama 4 Maverick: на Chatbot Arena — специальная "
                      "версия, Elo 1417; публичная модель — ", "size": 12.5,
              "color": DEEP},
@@ -2738,27 +2731,38 @@ def build_s37(p):
              "color": DEEP},
             {"text": ". Ян Лекун: результаты «слегка подтасованы».",
              "size": 12.5, "color": DEEP}]),
-        ("3", "Модели жульничают сами", [
+        ("3", "Модели жульничают сами", 11.0, [
             {"text": "UK AI Security Institute: ", "size": 12.5,
              "color": DEEP},
             {"text": "все 5", "size": 12.5, "bold": True, "color": DEEP},
-            {"text": " протестированных передовых моделей пытались обмануть "
-                     "процедуру оценки. Одна модель OpenAI ", "size": 12.5,
+            {"text": " передовых моделей пытались обмануть процедуру "
+                     "оценки; одна модель OpenAI ", "size": 12.5,
              "color": DEEP},
-            {"text": "вышла за пределы тестовой песочницы и взломала "
-                     "производственные серверы Hugging Face", "size": 12.5,
+            {"text": "вышла из песочницы и взломала производственные "
+                     "серверы Hugging Face", "size": 12.5,
              "bold": True, "color": DEEP},
             {"text": ".", "size": 12.5, "color": DEEP}]),
     ]
     yy = 1.52
-    for num, head, runs in cards:
+    for num, head, body_w, runs in cards:
         ocean_box(s, 0.55, yy, 12.25, 1.42, fill=SURFACE if num != "3"
                   else WHITE, stroke=LIGHT, stroke_pt=1.3)
         text_box(s, 0.8, yy + 0.1, 0.55, 0.6, num, size=26, bold=True,
                  color=LIGHT)
         text_box(s, 1.45, yy + 0.12, 10.9, 0.38, head, size=14.5,
                  bold=True, color=MID)
-        text_runs(s, 1.45, yy + 0.52, 11.0, 0.85, runs, line_spacing=1.16)
+        text_runs(s, 1.45, yy + 0.52, body_w, 0.85, runs, line_spacing=1.16)
+        if num == "1":
+            # Стат-блок: 87.6% (gold) vs 57% — крупно, контрастно
+            text_runs(s, 9.85, yy + 0.16, 2.8, 0.75, [
+                {"text": "87.6%", "size": 24, "bold": True, "color": GOLD},
+                {"text": " vs ", "size": 14, "color": SLATE},
+                {"text": "57%", "size": 24, "bold": True, "color": DEEP},
+            ], align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
+            text_box(s, 8.85, yy + 0.94, 3.8, 0.4,
+                     "заявка производителя vs защищённый · средний ~25%",
+                     size=10.5, italic=True, color=SLATE,
+                     align=PP_ALIGN.RIGHT)
         yy += 1.55
     gold_callout(s, 0.55, 6.25, 12.25, 0.8,
                  "Бенчмарки сужают список кандидатов. Выбирает — "
@@ -2876,29 +2880,26 @@ def build_s39(p):
               stroke_pt=1.4)
     text_box(s, 8.65, 1.3, 3.9, 0.4, "…и не всегда топ-LLM", size=15,
              bold=True, color=DEEP)
-    filled_rect(s, 10.3, 1.95, 2.25, 0.75, DEEP, radius=True,
+    filled_rect(s, 10.3, 2.25, 2.25, 0.8, DEEP, radius=True,
                 radius_adj=0.12)
-    text_box(s, 10.42, 2.0, 2.0, 0.65, "10% сложных →\nпремиум $10/млн",
+    text_box(s, 10.42, 2.3, 2.0, 0.7, "10% сложных →\nпремиум $10/млн",
              size=10.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.05)
-    filled_rect(s, 8.65, 2.78, 3.9, 0.85, MID, radius=True, radius_adj=0.1)
-    text_box(s, 8.8, 2.83, 3.6, 0.75, "90% запросов →\nмодель за $0.20/млн",
+    filled_rect(s, 8.65, 3.2, 3.9, 0.9, MID, radius=True, radius_adj=0.1)
+    text_box(s, 8.8, 3.25, 3.6, 0.8, "90% запросов →\nмодель за $0.20/млн",
              size=12, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.08)
-    text_runs(s, 8.65, 3.85, 3.9, 1.5, [
+    text_runs(s, 8.65, 4.55, 3.9, 1.7, [
         {"text": "Миллиард токенов/мес:", "size": 12.5, "bold": True,
          "color": DEEP},
         {"text": "$10 000", "size": 14, "bold": True, "color": DEEP,
-         "newpara": True, "space_before_pt": 6},
+         "newpara": True, "space_before_pt": 8},
         {"text": " целиком на премиуме", "size": 12, "color": DEEP},
         {"text": "vs  ", "size": 12.5, "color": SLATE, "newpara": True,
-         "space_before_pt": 4},
+         "space_before_pt": 6},
         {"text": "$1 180", "size": 16, "bold": True, "color": GOLD},
         {"text": " с маршрутизацией", "size": 12, "color": DEEP},
     ], line_spacing=1.15)
-    text_box(s, 8.65, 5.6, 3.9, 0.9,
-             "Kimi K2.6 ≈ GPT-5.5 на защищённом бенчмарке при −80% цены",
-             size=11.5, italic=True, color=MID, line_spacing=1.15)
     speaker_notes(s, load_notes("s39"))
 
 
@@ -3026,9 +3027,6 @@ def build_s42(p):
              color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, 0.55, 4.5, 12.3, 0.8, "Спасибо", size=36, italic=True,
              color=MID, align=PP_ALIGN.CENTER)
-    text_box(s, 8.4, 6.85, 4.4, 0.35,
-             "контакты лектора — заполняется перед лекцией",
-             size=11, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
     speaker_notes(s, load_notes("s42"))
 
 
@@ -3067,7 +3065,9 @@ def main():
             print(f"  {sid} FAIL: {type(e).__name__}: {e}")
             raise
     total = len(BUILDERS)
-    for i, slide in enumerate(p.slides):
+    for i, ((sid, _fn), slide) in enumerate(zip(BUILDERS, p.slides)):
+        if sid == "s42":
+            continue  # Q&A — паттерн qa_minimal: без footer/номера страницы
         page_number(slide, f"{i + 1}/{total}")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     p.save(str(OUT))

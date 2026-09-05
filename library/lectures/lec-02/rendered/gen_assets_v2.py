@@ -126,11 +126,13 @@ def _quickchart(cfg, out_name, w, h):
 
 
 def gen_s19_chart():
-    """Веса внимания на 8 токенов (сумма = 1), лидер «мышь» gold."""
-    labels = ["Кот", "съел", "мышь", "потому", "что", "она", "была",
+    """Веса внимания на 7 токенов — та же нарезка предложения, что в
+    матрице s18 («потому что» единым токеном); сумма = 1, «мышь» gold.
+    (v2.0.2 item 5: унификация токенизации s18↔s19.)"""
+    labels = ["Кот", "съел", "мышь", "потому что", "она", "была",
               "голодна"]
-    vals = [0.04, 0.05, 0.40, 0.03, 0.03, 0.10, 0.14, 0.21]
-    colors = ["#065A82"] * 8
+    vals = [0.04, 0.05, 0.40, 0.06, 0.10, 0.14, 0.21]
+    colors = ["#065A82"] * 7
     colors[2] = "#F0AB00"
     cfg = {
         "type": "bar",
@@ -141,7 +143,8 @@ def gen_s19_chart():
                 "legend": {"display": False},
                 "datalabels": {"anchor": "end", "align": "end",
                                "color": "#21295C",
-                               "font": {"size": 22, "weight": "bold"}},
+                               "font": {"size": 22, "weight": "bold"},
+                               "formatter": "___FMT___"},
             },
             "scales": {
                 "y": {"min": 0, "max": 0.5,
@@ -153,7 +156,18 @@ def gen_s19_chart():
             },
         },
     }
-    _quickchart(cfg, "charts/s19-attention-weights.png", 980, 420)
+    body = json.dumps({
+        "chart": json.dumps(cfg).replace('"___FMT___"',
+            "function(v){return v.toString().replace('.',',');}"),
+        "width": 980, "height": 400, "format": "png",
+        "backgroundColor": "white", "version": "4",
+    }).encode()
+    req = urllib.request.Request("https://quickchart.io/chart", data=body,
+                                 headers={"Content-Type": "application/json"})
+    out = ASSETS / "charts/s19-attention-weights.png"
+    with urllib.request.urlopen(req, timeout=60) as r:
+        out.write_bytes(r.read())
+    print("s19 chart:", out, out.stat().st_size, "bytes")
 
 
 def gen_s25_chart():

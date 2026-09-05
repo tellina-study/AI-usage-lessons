@@ -373,8 +373,14 @@ def quote_block(slide, x, y, w, h, text, *, size=15, role_icon=None):
     return
 
 
-def ladder_row(slide, y, active_step, ch=1.55):
-    """3-step architecture ladder used across s16/s17/s18 (progressive reveal)."""
+def ladder_row(slide, y, active_step, ch=1.55, caption="ступени архитектуры"):
+    """3-step architecture ladder used across s16/s17/s18/s20/s22/s24
+    (progressive reveal). `caption` is a small grey italic axis-label
+    printed above the strip so it reads distinctly from the calls_ladder_row
+    ход-strip below (issue #182 polish v2, критика #3)."""
+    if caption:
+        text_box(slide, 0.55, y - 0.28, 6.0, 0.24, text=caption, size=10.5,
+                 italic=True, color=SLATE, align=PP_ALIGN.LEFT)
     labels = ["Разовый вызов", "RAG", "Агент"]
     n = 3
     gap = 0.3
@@ -398,8 +404,15 @@ def ladder_row(slide, y, active_step, ch=1.55):
             disable_shadow(arrow)
 
 
-def calls_ladder_row(slide, y, active_step):
-    """3-step ход indicator for the calls trilogy (s29/s31/s33, issue #182 renumber)."""
+def calls_ladder_row(slide, y, active_step, caption="ходы разбора кейса"):
+    """3-step ход indicator for the calls trilogy (s29/s31/s33, issue #182
+    renumber). No arrows between boxes -- these are sequential discussion
+    beats, not an architecture progression, so the strip must look visually
+    distinct from ladder_row's arrowed steps (issue #182 polish v2,
+    критика #3)."""
+    if caption:
+        text_box(slide, 0.55, y - 0.28, 6.0, 0.24, text=caption, size=10.5,
+                 italic=True, color=SLATE, align=PP_ALIGN.LEFT)
     labels = ["Облачный frontier?", "Персональные данные", "Шаблон полей → локальная модель"]
     n = 3
     gap = 0.3
@@ -416,13 +429,6 @@ def calls_ladder_row(slide, y, active_step):
         text_box(slide, cx + 0.12, y, cw - 0.24, ch, text=f"Ход {i+1}: {lbl}", size=12.5,
                  bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.1)
-        if i < n - 1:
-            ax = cx + cw + 0.04
-            arrow = slide.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(ax),
-                Inches(y + ch / 2 - 0.11), Inches(gap - 0.08), Inches(0.22))
-            arrow.fill.solid(); arrow.fill.fore_color.rgb = TEAL
-            arrow.line.fill.background()
-            disable_shadow(arrow)
 
 
 # ============================================================

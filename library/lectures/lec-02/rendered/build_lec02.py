@@ -1248,9 +1248,15 @@ def build_s12(p):
                  "порядок — тысячи", "size": 12.5, "italic": True,
          "color": SLATE, "newpara": True, "space_before_pt": 8},
     ], line_spacing=1.2)
-    gold_callout(s, 0.55, 5.55, 12.25, 0.90,
+    gold_callout(s, 0.55, 5.55, 12.25, 0.62,
                  "«Геометрическая близость = смысловая близость»",
-                 size=18, align=PP_ALIGN.CENTER)
+                 size=17, align=PP_ALIGN.CENTER)
+    text_runs(s, 0.55, 6.28, 12.25, 0.5, [
+        {"text": "Что делать: ", "size": 13, "bold": True, "color": TEAL},
+        {"text": "опечатка или другой регистр — уже другой токен и другой "
+                 "вектор; нормализуйте вход до эмбеддинга.", "size": 13,
+         "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.15)
     speaker_notes(s, load_notes("s12"))
 
 
@@ -1389,12 +1395,16 @@ def build_s14(p):
     ]
     y = 1.65
     for title, runs in facts:
-        ocean_box(s, 7.5, y, 5.3, 1.55, fill=SURFACE, stroke=LIGHT,
+        ocean_box(s, 7.5, y, 5.3, 1.42, fill=SURFACE, stroke=LIGHT,
                   stroke_pt=1.3)
         text_box(s, 7.75, y + 0.12, 4.8, 0.4, title, size=14.5, bold=True,
                  color=MID)
-        text_runs(s, 7.75, y + 0.55, 4.8, 0.9, runs, line_spacing=1.2)
-        y += 1.73
+        text_runs(s, 7.75, y + 0.52, 4.8, 0.85, runs, line_spacing=1.18)
+        y += 1.56
+    gold_callout(s, 7.5, y + 0.08, 5.3, 1.0,
+                 "Что делать: близость измерима расстоянием — фильтрация "
+                 "и кластеризация без разметки и без LLM возможны прямо "
+                 "на векторах, дёшево.", size=12.5, align=PP_ALIGN.LEFT)
     speaker_notes(s, load_notes("s14"))
 
 
@@ -1547,13 +1557,20 @@ def build_s17(p):
         text_box(s, 4.7, y + 0.55, 7.8, 0.9, body, size=13.5, color=DEEP,
                  line_spacing=1.2)
         y += 1.75
-    gold_callout(s, 4.4, 5.15, 8.4, 0.95,
+    gold_callout(s, 4.4, 5.15, 8.4, 0.72,
                  "Семантическая близость на уровне предложений — основа "
-                 "«понимания» переформулировок.", size=15.5)
-    text_box(s, 4.4, 6.35, 8.4, 0.55,
+                 "«понимания» переформулировок.", size=14.5)
+    text_runs(s, 4.4, 5.97, 8.4, 0.75, [
+        {"text": "Что делать: ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "одна embedding-модель и индекс обслуживают поиск, "
+                 "кластеризацию и RAG сразу — смена модели означает "
+                 "переиндексацию всего хранилища; выбирайте как "
+                 "инфраструктурное решение.", "size": 12.5, "color": DEEP},
+    ], line_spacing=1.15)
+    text_box(s, 4.4, 6.85, 8.4, 0.45,
              "Выбор embedding-модели под задачу (MTEB, матрёшечные "
              "представления) — материал для самостоятельного чтения.",
-             size=12, italic=True, color=LIGHT)
+             size=11.5, italic=True, color=LIGHT)
     speaker_notes(s, load_notes("s17"))
 
 
@@ -2056,10 +2073,16 @@ def build_s23(p):
              "(RoPE / YaRN) — отдельная инженерная работа.",
              size=12, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
              line_spacing=1.15)
-    gold_callout(s, 0.55, 5.9, 12.25, 0.85,
+    gold_callout(s, 0.55, 5.9, 12.25, 0.68,
                  "Платите за то, что кладёте в окно, а не за то, что окно "
                  "вмещает: 900 тыс. токенов входа по $10/млн ≈ $9 за один "
-                 "вызов.", size=15, align=PP_ALIGN.CENTER)
+                 "вызов.", size=13.5, align=PP_ALIGN.CENTER)
+    text_runs(s, 0.55, 6.63, 12.25, 0.55, [
+        {"text": "Что делать: ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "выбирайте модель по эффективному окну задачи (бенчмарки "
+                 "без лексических подсказок), не по маркетинговому "
+                 "максимуму.", "size": 12.5, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.12)
     speaker_notes(s, load_notes("s23"))
 
 
@@ -2255,13 +2278,18 @@ def build_s27(p):
         {"text": " — по числу кандидатов. Основная ручка — температура; "
                  "эти две — тонкая настройка.", "size": 13, "color": DEEP},
     ], align=PP_ALIGN.CENTER)
-    ocean_box(s, 2.15, 5.9, 9.0, 0.7, fill=WHITE, stroke=TEAL,
+    ocean_box(s, 2.15, 5.85, 9.0, 0.62, fill=WHITE, stroke=TEAL,
               stroke_pt=1.4)
-    text_runs(s, 2.35, 5.9, 8.6, 0.7, [
-        {"text": "Живой прогон: ", "size": 14, "bold": True, "color": TEAL},
+    text_runs(s, 2.35, 5.85, 8.6, 0.62, [
+        {"text": "Живой прогон: ", "size": 13, "bold": True, "color": TEAL},
         {"text": "один и тот же запрос — 10 раз при T=0 и 10 раз при T=1.5.",
-         "size": 14, "color": DEEP},
+         "size": 13, "color": DEEP},
     ], anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    text_runs(s, 0.55, 6.58, 12.3, 0.5, [
+        {"text": "Что делать: ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "T под задачу — 0–0.3 для кода и классификации, 0.7+ для "
+                 "генерации текста.", "size": 12.5, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.1)
     speaker_notes(s, load_notes("s27"))
 
 
@@ -2406,10 +2434,16 @@ def build_s29(p):
         text_box(s, x + 0.25, 4.62, 5.5, 0.72, desc, size=11.5, color=DEEP,
                  line_spacing=1.15)
         x += 6.25
-    gold_callout(s, 0.55, 5.75, 12.25, 0.8,
+    gold_callout(s, 0.55, 5.75, 12.25, 0.65,
                  "Заучивайте оси — случайность, длина, глубина, формат; "
                  "имена параметров сверяйте с документацией текущего месяца.",
-                 size=15, align=PP_ALIGN.CENTER)
+                 size=13.5, align=PP_ALIGN.CENTER)
+    text_runs(s, 0.55, 6.47, 12.25, 0.5, [
+        {"text": "Что делать: ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "начинайте с temperature и effort — остальное "
+                 "(top_p/top_k/verbosity) — тонкая настройка поверх.",
+         "size": 12.5, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.1)
     speaker_notes(s, load_notes("s29"))
 
 
@@ -2672,12 +2706,16 @@ def build_s34(p):
                          "space_before_pt": 8})
         text_runs(s, x + 0.25, 2.7, 3.45, 2.6, runs, line_spacing=1.2)
         x += 4.15
-    text_box(s, 0.55, 5.85, 12.25, 0.7,
+    text_box(s, 0.55, 5.85, 12.25, 0.55,
              "Причины локального выбора прежние: приватность данных · "
-             "отсутствие платы за токен на объёмах · независимость от сети. "
-             "Решение — по данным и объёмам, не по идеологии.",
-             size=13.5, italic=True, color=MID, align=PP_ALIGN.CENTER,
-             line_spacing=1.2)
+             "отсутствие платы за токен на объёмах · независимость от сети.",
+             size=12.5, italic=True, color=MID, align=PP_ALIGN.CENTER,
+             line_spacing=1.15)
+    gold_callout(s, 1.4, 6.45, 10.55, 0.72,
+                 "Что делать: задача умещается в ~30B и данные нельзя "
+                 "выпускать за периметр — берите локальную модель; нужно "
+                 "флагманское качество — берите закрытый API.",
+                 size=13, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s34"))
 
 
@@ -2802,31 +2840,35 @@ def build_s36(p):
                          "space_before_pt": 6})
         text_runs(s, x + 0.25, 2.12, 5.5, 1.7, runs, line_spacing=1.18)
     # IMO экспонат
-    filled_rect(s, 0.55, 4.1, 12.25, 1.05, GOLD_TINT, stroke=GOLD,
+    filled_rect(s, 0.55, 4.05, 12.25, 0.92, GOLD_TINT, stroke=GOLD,
                 stroke_pt=1.8, radius=True, radius_adj=0.12)
-    text_box(s, 0.85, 4.2, 11.7, 0.45,
+    text_box(s, 0.85, 4.13, 11.7, 0.4,
              "IMO 2026: шесть моделей — абсолютные 42/42. Из 666 "
-             "участников-людей — семеро.", size=15.5, bold=True, color=DEEP,
+             "участников-людей — семеро.", size=14.5, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 4.67, 11.7, 0.4,
+    text_box(s, 0.85, 4.55, 11.7, 0.38,
              "Те же системы ошибаются в подсчёте букв слова cranberry — "
              "«рваный интеллект» как рабочая характеристика.",
-             size=12, italic=True, color=MID, align=PP_ALIGN.CENTER)
+             size=11, italic=True, color=MID, align=PP_ALIGN.CENTER)
     # Ценовая шкала
-    filled_rect(s, 1.0, 5.82, 11.3, 0.2, SOFT_GREY, radius=True,
+    filled_rect(s, 1.0, 5.55, 11.3, 0.2, SOFT_GREY, radius=True,
                 radius_adj=0.5)
-    filled_rect(s, 1.0, 5.82, 2.3, 0.2, LIGHT, radius=True, radius_adj=0.5)
-    filled_rect(s, 10.0, 5.82, 2.3, 0.2, DEEP, radius=True, radius_adj=0.5)
-    text_box(s, 1.0, 5.45, 4.5, 0.35, "пол рынка $0.03–0.2 / млн токенов",
-             size=12.5, bold=True, color=MID)
-    text_box(s, 8.3, 5.45, 4.0, 0.35, "премиум $10 вход / $50 выход",
-             size=12.5, bold=True, color=DEEP, align=PP_ALIGN.RIGHT)
-    text_runs(s, 0.55, 6.3, 12.3, 0.45, [
+    filled_rect(s, 1.0, 5.55, 2.3, 0.2, LIGHT, radius=True, radius_adj=0.5)
+    filled_rect(s, 10.0, 5.55, 2.3, 0.2, DEEP, radius=True, radius_adj=0.5)
+    text_box(s, 1.0, 5.20, 4.5, 0.32, "пол рынка $0.03–0.2 / млн токенов",
+             size=12, bold=True, color=MID)
+    text_box(s, 8.3, 5.20, 4.0, 0.32, "премиум $10 вход / $50 выход",
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.RIGHT)
+    text_runs(s, 0.55, 5.98, 12.3, 0.4, [
         {"text": "Kimi K2.6 ≈ GPT-5.5 на защищённом SWE-bench Pro — ",
-         "size": 14, "bold": True, "color": DEEP},
-        {"text": "при цене на ~80% ниже", "size": 14, "bold": True,
+         "size": 13, "bold": True, "color": DEEP},
+        {"text": "при цене на ~80% ниже", "size": 13, "bold": True,
          "color": GOLD},
     ], align=PP_ALIGN.CENTER)
+    gold_callout(s, 0.55, 6.55, 12.25, 0.68,
+                 "Что делать: пересматривайте выбор модели регулярно — "
+                 "ландшафт живёт месяцами, а не годами.",
+                 size=13, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s36"))
 
 

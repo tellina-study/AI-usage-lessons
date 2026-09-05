@@ -3,7 +3,7 @@ lecture: 2
 title: "Лекция 2. Как работают современные большие модели — Часть 3"
 part: 3
 parts: 3
-version: v2.0
+version: v2.1
 status: draft
 cross_ref: "Часть 1 — chapter.md (введение, чек-лист M1–M6, Разделы 1–2); Часть 2 — chapter-part2.md (Разделы 3–4)"
 ---

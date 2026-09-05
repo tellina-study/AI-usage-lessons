@@ -3,7 +3,7 @@ lecture: 2
 title: "Лекция 2. Как работают современные большие модели — Часть 2"
 part: 2
 parts: 3
-version: v2.0
+version: v2.1
 status: draft
 ---
 

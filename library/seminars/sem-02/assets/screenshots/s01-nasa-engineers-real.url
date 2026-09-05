@@ -1,0 +1,14 @@
+https://commons.wikimedia.org/wiki/File:Worker_checks_laptop_for_CubeSat_software_issues_in_the_SSPF.jpg
+Author: NASA / Cory Huston
+License: Public domain (NASA work, U.S. government, not protected by copyright)
+Direct: https://upload.wikimedia.org/wikipedia/commons/1/18/Worker_checks_laptop_for_CubeSat_software_issues_in_the_SSPF.jpg
+Used on: s01 (hero cover) — real engineers troubleshooting a CubeSat's software/hardware
+integration in NASA's Space Systems Processing Facility (SSPF), July 2021. Chosen over
+s01-iou-bbox-real.jpg (kept, unused) because: (a) IoU bbox photo is a labeled diagram
+(annotated "ground-truth"/"predicted" arrows), not a clean photo suitable for text overlay,
+and (b) it thematically continues Lecture 1's YOLO/detection thread rather than this
+seminar's topic (engineering decision funnel: code vs AI vs RAG vs agent vs API). The NASA
+photo shows a real, unstaged moment of engineers at a genuine workplace resolving a
+technical (software) problem together — a closer match to "инженерное рабочее место /
+момент обсуждения задачи" than a detection-accuracy diagram. See iteration-log.md for full
+6-tier acquisition attempt log (searches tried, why each alternative was rejected).

@@ -734,26 +734,36 @@ def build_s04(p):
     """Case 1 setup -- v3: THREE cards (was 2). Two identical-format document
     cards + a NEW third card showing "целевая таблица в 1С" with the SAME
     columns, so the structural match source->target is visually obvious
-    (per s04-case1-setup.md exact wording). Real photo of a document pile
-    kept as a wide illustrative strip above the three cards (6-tier
-    acquisition, unchanged from prior session)."""
+    (per s04-case1-setup.md exact wording).
+
+    Iter (issue #182 raw-quote pivot): quote replaced with the FULL ~560-char
+    raw client message (verbatim from s04-case1-setup.md `## Visual --
+    цитата`) -- the point is students must fish the signal (3 people, ~400
+    invoices/month, 2 samples, deadline) out of the noise (Oleg's vacation,
+    Dima/mobile release, warehouse tangent, budget review) themselves,
+    instead of getting a pre-filtered one-liner. The photo strip is DROPPED
+    on this slide (explicitly allowed by owner brief) to make room -- the
+    quote itself is now the dominant visual element, sender label ("Марина,
+    и.о. продакта") added so it reads like a real forwarded message."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Документы поставщиков", size=27, y=0.35, h=0.55)
-    quote_block(s, 0.55, 0.95, 12.23, 0.95,
-                "«Три человека, около 400 накладных в месяц, всё руками в 1С — можно автоматом?»",
-                size=14)
+    slide_title(s, "Документы поставщиков", size=26, y=0.25, h=0.5)
+    text_box(s, 0.55, 0.72, 12.23, 0.28, text="Марина, и.о. продакта по фин.процессам",
+             size=12.5, italic=True, color=SLATE)
+    quote_block(s, 0.55, 1.0, 12.23, 2.55,
+                "«Привет! Пишет Марина, временно за продакта по фин.процессам, пока Олег "
+                "в отпуске. Бухгалтерия реально тонет: три человека руками забивают "
+                "накладные поставщиков в 1С, около 400 штук в месяц, к концу квартала "
+                "завал и ошибки в суммах. Приложила два примера накладных за прошлую "
+                "неделю — форматы вроде одинаковые. Можно это как-то автоматом сделать? "
+                "Заодно спроси у Димы, когда освободится после релиза мобилки — хотела "
+                "обсудить с ним ещё и склад, но это отдельная история. По срокам — "
+                "прикидка хотя бы до пятницы была бы супер, у нас на этой неделе ревью "
+                "бюджета».",
+                size=14.5)
 
-    photo_y, photo_h = 2.0, 1.55
-    ocean_box(s, 0.55, photo_y, 12.23, photo_h, fill=SURFACE, stroke=LIGHT)
-    img_path = SHOTS / "s04-documents-pile-real.jpg"
-    if img_path.exists():
-        pad = 0.1
-        add_image_coverfit(s, img_path, 0.55 + pad, photo_y + pad,
-                            12.23 - 2 * pad, photo_h - 2 * pad)
-
-    cards_y = photo_y + photo_h + 0.22
-    ch = 2.65
+    cards_y = 1.0 + 2.55 + 0.2
+    ch = 2.15
     gap = 0.22
     n = 3
     cw = (12.23 - gap * (n - 1)) / n
@@ -767,11 +777,11 @@ def build_s04(p):
         cx = 0.55 + i * (cw + gap)
         ocean_box(s, cx, cards_y, cw, ch, stroke=accent if accent == GOLD else LIGHT,
                   stroke_pt=1.8 if accent == GOLD else 1.5)
-        text_box(s, cx + 0.16, cards_y + 0.12, cw - 0.32, 0.4,
-                 text=title, size=12.5, bold=True, color=MID if accent != GOLD else DEEP,
-                 line_spacing=1.1)
-        row_h = 0.4
-        table_y = cards_y + 0.58
+        text_box(s, cx + 0.16, cards_y + 0.1, cw - 0.32, 0.34,
+                 text=title, size=12, bold=True, color=MID if accent != GOLD else DEEP,
+                 line_spacing=1.05)
+        row_h = 0.33
+        table_y = cards_y + 0.48
         col_w = (cw - 0.32) / len(cols)
         for ci, colname in enumerate(cols):
             hx = cx + 0.16 + ci * col_w
@@ -781,7 +791,7 @@ def build_s04(p):
                      bold=True, color=DEEP if accent == GOLD else WHITE,
                      align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.95)
         for r in range(2):
-            ry = table_y + row_h * (r + 1) + 0.03 * (r + 1)
+            ry = table_y + row_h * (r + 1) + 0.025 * (r + 1)
             for ci in range(len(cols)):
                 hx = cx + 0.16 + ci * col_w
                 filled_rect(s, hx, ry, col_w - 0.04, row_h, SURFACE, stroke=SOFT_GREY, stroke_pt=0.7)
@@ -798,18 +808,35 @@ def build_s04(p):
 
 
 def build_s05(p):
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~600-char raw colleague message (verbatim from s05-case1-intro2.md
+    `## Visual -- цитата`) -- signal (ZIP mixes acts-of-reconciliation,
+    contracts, invoices; only invoices needed) buried in noise (4.2GB size
+    apology, mail server limits, month-close tangent). 4-format grid shrunk
+    (ch 2.15->1.75, row_h 0.36->0.3) and the standalone caption line dropped
+    (redundant with quote's own "нужны только накладные, остальное можно
+    игнорировать") to make room for the now-much-taller quote box."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Документы поставщиков", size=28)
-    quote_block(s, 0.55, 1.15, 12.23, 1.0,
-                "«Прислали ZIP на 4,2 ГБ — внутри и сканы актов сверки, и договоры, "
-                "нужны только накладные»", size=14)
+    slide_title(s, "Документы поставщиков", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.55,
+                "«Коллеги, выгрузила архив, как просили — вот ссылка на файлообменник, "
+                "ZIP получился на 4,2 ГБ, извините, что так долго собирала, почта у нас "
+                "опять письма режет после 20 МБ. Внутри вперемешку: и сканы актов "
+                "сверки с поставщиками, и сами договоры, и накладные — я их особо не "
+                "сортировала, как было в папке за год, так и заархивировала. Нужны "
+                "вам, как понимаю, только накладные, остальное можно игнорировать. "
+                "Кстати, отдельно от этого — завтра у нас закрытие месяца, если "
+                "что-то понадобится досчитать по кассе, я буду занята примерно до "
+                "обеда. Скажите, если архив не открылся или что-то не так с "
+                "кодировкой».",
+                size=14)
 
-    grid_y = 2.4
+    grid_y = 0.78 + 2.55 + 0.2
     gap = 0.22
     n = 4
     cw = (12.23 - gap * (n - 1)) / n
-    ch = 2.15
+    ch = 1.75
     variants = [
         ("A", ["Дата", "№ накл.", "Сумма"]),
         ("Б", ["Date", "Invoice#", "Total"]),
@@ -819,10 +846,10 @@ def build_s05(p):
     for i, (label, cols) in enumerate(variants):
         cx = 0.55 + i * (cw + gap)
         ocean_box(s, cx, grid_y, cw, ch, stroke=TEAL)
-        text_box(s, cx + 0.14, grid_y + 0.12, cw - 0.28, 0.3,
-                 text=f"Поставщик {label}", size=11.5, bold=True, color=MID)
-        row_h = 0.36
-        table_y = grid_y + 0.52
+        text_box(s, cx + 0.14, grid_y + 0.1, cw - 0.28, 0.28,
+                 text=f"Поставщик {label}", size=11, bold=True, color=MID)
+        row_h = 0.3
+        table_y = grid_y + 0.44
         col_w = (cw - 0.28) / len(cols)
         for ci, colname in enumerate(cols):
             hx = cx + 0.14 + ci * col_w
@@ -834,13 +861,11 @@ def build_s05(p):
         for ci in range(len(cols)):
             hx = cx + 0.14 + ci * col_w
             filled_rect(s, hx, ry, col_w - 0.03, row_h, SURFACE, stroke=SOFT_GREY, stroke_pt=0.7)
-    text_box(s, 0.55, grid_y + ch + 0.1, 12.23, 0.35,
-             text="Форматы разъехались — разные колонки, разные форматы дат, один документ на английском",
-             size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
 
-    q_y = grid_y + ch + 0.55
-    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, q_y, 11.6, 0.85, text="Меняет ли это ваш ответ?", size=22, bold=True,
+    q_y = grid_y + ch + 0.22
+    q_h = 7.35 - q_y
+    ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, q_h, text="Меняет ли это ваш ответ?", size=20, bold=True,
              color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s05"))
 
@@ -900,35 +925,44 @@ def build_s06(p):
 
 
 def build_s07(p):
-    """Iter-2 fix: scene + question boxes enlarged to close ~1.6in of dead
-    space at the bottom of the slide (visual mass balance)."""
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~610-char raw colleague message (verbatim from s07-quickfire-logs.md
+    `## Visual -- цитата`) -- signal (40GB prod logs, phones/emails/one
+    leaked name mixed in, contractor needs structure/timing/errors not
+    people's data, Friday deadline) buried in noise (informal tone,
+    "подрядчик по перфомансу", "спринт начинается"). The 4-icon decorative
+    scene is COLLAPSED to a single compact icon + one-line callout (priority
+    (a) in the brief: shrink decorative details first) to make room for the
+    now-dominant quote box."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Персоналка в логах", size=28)
-    quote_block(s, 0.55, 1.15, 12.23, 1.05,
-                "«40 ГБ логов за квартал — подрядчик ждёт архив в пятницу»",
-                size=16)
+    slide_title(s, "Персоналка в логах", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.6,
+                "«Слушай, у нас подрядчик по перфомансу просит логи прода за квартал "
+                "для анализа — говорят, без них не смогут найти, почему просадки на "
+                "пиках. Я выгрузил, получилось около 40 ГБ, архив уже лежит на "
+                "сервере. Но там внутри вперемешку и номера телефонов, и почты "
+                "клиентов, и один раз даже видел фразу типа «передайте это Ивану из "
+                "бухгалтерии» — видимо, из тела какого-то запроса залогировалось. "
+                "Подрядчику нужна сама механика — структура запросов, тайминги, коды "
+                "ошибок — а не данные людей, это же нельзя просто так отдавать. Они "
+                "ждут архив в пятницу, у них спринт начинается, так что руками "
+                "перебирать некогда совсем».",
+                size=14)
 
-    scene_y = 2.5
-    scene_h = 2.9
+    scene_y = 0.78 + 2.6 + 0.2
+    scene_h = 1.15
     ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "file-text", "065A82", 96, 0.95, scene_y + 0.55, 0.95)
-    icon(s, "phone", "028090", 64, 2.25, scene_y + 0.8, 0.55)
-    icon(s, "mail", "065A82", 96, 3.1, scene_y + 0.75, 0.6)
-    icon(s, "user-round", "F0AB00", 64, 3.95, scene_y + 0.8, 0.55)
-    multipara_box(s, 4.9, scene_y + 0.6, 7.0, 1.9, [
-        {"text": "Одна строка лога — телефон, email и фраза «передайте это Ивану "
-                 "из бухгалтерии»", "size": 17, "bold": True, "color": DEEP,
-         "line_spacing": 1.3, "space_after": 10},
-        {"text": "Подрядчику нужны структура запросов, тайминги, ошибки — не данные людей",
-         "size": 14, "color": SLATE, "line_spacing": 1.3},
-    ])
+    icon(s, "file-text", "065A82", 96, 0.9, scene_y + (scene_h - 0.7) / 2, 0.7)
+    text_box(s, 1.85, scene_y, 10.6, scene_h,
+             text="Подрядчику нужны структура запросов, тайминги, ошибки — не данные людей",
+             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
 
-    q_y = scene_y + scene_h + 0.3
-    q_h = 7.15 - q_y
+    q_y = scene_y + scene_h + 0.22
+    q_h = 7.35 - q_y
     ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
     text_box(s, 0.85, q_y, 11.6, q_h, text="Как максимально быстро и дёшево очистить?",
-             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+             size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s07"))
 
 
@@ -1028,67 +1062,87 @@ def build_s10(p):
 
 
 def build_s11(p):
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~645-char raw colleague message (verbatim from s11-case2-setup.md
+    `## Visual -- цитата`) -- signal (12 operators, ~300 tickets/day,
+    10:00-13:00 peak) buried in noise (Sveta's onboarding complaint --
+    explicitly flagged in the quote itself as "отдельная тема" -- and the
+    soft quarterly-review non-deadline). Photo DROPPED on this slide
+    (explicitly allowed by brief priority (b)) -- the quote is now the
+    dominant element, full width, with a compact facts strip + gold
+    question below it instead of the former photo+sidebar layout."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Помощник поддержки", size=28)
-    quote_block(s, 0.55, 1.1, 12.23, 1.35,
-                "«Сделайте нам ИИ-помощника для операторов — подсказки по тикетам, "
-                "поиск похожих обращений»", size=16)
+    slide_title(s, "Помощник поддержки", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.75,
+                "«Привет, давно хотели это обсудить с командой поддержки. Идея "
+                "простая: сделать ИИ-помощника для операторов — подсказки ответов "
+                "на тикеты, поиск похожих обращений в истории, чтобы не рыться "
+                "каждый раз вручную. У нас на линии 12 операторов, поток около 300 "
+                "тикетов в день, с явным пиком с 10:00 до 13:00 — после обеда обычно "
+                "спокойнее. Руководитель поддержки, Света, давно жалуется, что "
+                "новичков долго вводить в курс — сейчас на это уходит недели три, и "
+                "это отдельная тема, надо бы отдельно посмотреть на онбординг. Если "
+                "получится сделать помощника — было бы здорово успеть показать на "
+                "квартальном ревью, но это не жёсткий дедлайн, скорее ориентир».",
+                size=14)
 
-    photo_x, photo_y, photo_w, photo_h = 0.55, 2.65, 4.3, 3.95
-    ocean_box(s, photo_x, photo_y, photo_w, photo_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    img_path = SHOTS / "s11-support-headset-real.jpg"
-    if img_path.exists():
-        pad = 0.12
-        add_image_coverfit(s, img_path, photo_x + pad, photo_y + pad,
-                            photo_w - 2 * pad, photo_h - 2 * pad)
-
-    rx = photo_x + photo_w + 0.3
-    rw = 12.23 - photo_w - 0.3
-    ocean_box(s, rx, photo_y, rw, 1.65, fill=SURFACE, stroke=LIGHT)
-    text_box(s, rx + 0.2, photo_y + 0.16, rw - 0.4, 1.35,
+    fact_y = 0.78 + 2.75 + 0.2
+    fact_h = 1.1
+    ocean_box(s, 0.55, fact_y, 12.23, fact_h, fill=SURFACE, stroke=LIGHT)
+    icon(s, "phone", "065A82", 96, 0.9, fact_y + (fact_h - 0.65) / 2, 0.65)
+    text_box(s, 1.85, fact_y, 10.6, fact_h,
              text="12 операторов на линии, около 300 тикетов в день, пик 10:00-13:00",
              size=15.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
 
-    q_y = photo_y + 1.95
-    q_h = photo_h - 1.95
-    ocean_box(s, rx, q_y, rw, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
-    text_box(s, rx + 0.2, q_y, rw - 0.4, q_h, text="Где должен жить этот помощник?",
-             size=24, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
-    speaker_notes(s, load_notes("s11",
-                  extra="(Фото: FiveOne51 · Wikimedia Commons · CC BY-SA 3.0)"))
+    q_y = fact_y + fact_h + 0.22
+    q_h = 7.35 - q_y
+    ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    text_box(s, 0.85, q_y, 11.6, q_h, text="Где должен жить этот помощник?",
+             size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
+    speaker_notes(s, load_notes("s11"))
 
 
 def build_s12(p):
-    """Iter-2 fix: fact box was 3.4in tall with ~1in of actual content
-    vertically centered (large dead margin top/bottom) -- shrunk box,
-    enlarged icon + text, and added a supporting detail line to use the
-    freed space productively instead of leaving it centered in a void."""
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~545-char raw IT-director message (verbatim from s12-case2-intro2.md
+    `## Visual -- цитата`) -- signal (no open API, no customization, vendor
+    unresponsive, 4-year-old system, 2 years left on contract) buried in
+    noise (HR/facility tickets tangent, "IT landscape review next quarter"
+    tangent explicitly flagged in the quote as "отдельный процесс"). Role
+    label ("ИТ-директор") added above the quote per brief item 2. Fact box
+    below shrunk to a single-line callout (was a 3-paragraph card) since the
+    now-full quote already carries all 3 facts verbatim."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Помощник поддержки", size=28)
-    quote_block(s, 0.55, 1.05, 12.23, 1.15,
-                "«Открытого API нет, кастомизаций нет — вендор и на письма не отвечает»",
-                size=15, role_icon="briefcase")
+    slide_title(s, "Помощник поддержки", size=26, y=0.25, h=0.45)
+    text_box(s, 0.55, 0.72, 12.23, 0.28, text="ИТ-директор", size=12.5, italic=True, color=SLATE)
+    quote_block(s, 0.55, 1.0, 12.23, 2.5,
+                "«Слышал про идею с помощником для поддержки, хочу сразу обрисовать "
+                "картину. У нас коробочный helpdesk, открытого API нет, кастомизаций "
+                "нет — мы писали вендору ещё в марте с вопросом про интеграцию, "
+                "ответа так и не получили. Систему купили 4 года назад, на ней же "
+                "висят тикеты от HR и от фасилити-менеджмента, так что трогать её "
+                "надо аккуратно. Контракт с вендором ещё на 2 года, продлевать "
+                "раньше срока смысла нет. В следующем квартале, кстати, будем "
+                "пересматривать весь ландшафт ИТ-систем — но это отдельный процесс, "
+                "и вас туда пока звать рано».",
+                size=14, role_icon="briefcase")
 
-    q_y = 2.45
-    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, q_y, 11.6, 0.85, text="Что делаем?", size=24, bold=True,
-             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-
-    fact_y = q_y + 1.1
-    fact_h = 3.4
+    fact_y = 1.0 + 2.5 + 0.2
+    fact_h = 1.1
     ocean_box(s, 0.55, fact_y, 12.23, fact_h, fill=SURFACE, stroke=LIGHT)
-    icon(s, "lock", "21295C", 96, 0.85, fact_y + 0.35, 0.85)
-    multipara_box(s, 1.95, fact_y + 0.35, 10.4, fact_h - 0.6, [
-        {"text": "Коробочный helpdesk — систему купили 4 года назад", "size": 20, "bold": True,
-         "color": DEEP, "line_spacing": 1.28, "space_after": 12},
-        {"text": "На ней же тикеты HR и фасилити, контракт с вендором ещё на 2 года — "
-                 "нет открытого API, нет кастомизаций, вендор не отвечает даже на письма",
-         "size": 15, "color": SLATE, "line_spacing": 1.35, "space_after": 12},
-        {"text": "Компания написала вендору с вопросом об интеграции — ответа так и не получила",
-         "size": 13, "italic": True, "color": SLATE, "line_spacing": 1.3},
-    ])
+    icon(s, "lock", "21295C", 96, 0.9, fact_y + (fact_h - 0.65) / 2, 0.65)
+    text_box(s, 1.85, fact_y, 10.6, fact_h,
+             text="Коробочный helpdesk 4 года без открытого API — контракт с вендором "
+                  "ещё на 2 года",
+             size=15.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+
+    q_y = fact_y + fact_h + 0.22
+    q_h = 7.35 - q_y
+    ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, q_h, text="Что делаем?", size=20, bold=True,
+             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s12"))
 
 
@@ -1131,33 +1185,45 @@ def build_s13(p):
 
 
 def build_s14(p):
-    """Iter-2 fix: scene + question boxes enlarged (was ~1.8in dead space
-    at bottom)."""
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~690-char raw message (verbatim from s14-quickfire-product-descriptions.md
+    `## Visual -- цитата`, the longest of all 13 raw quotes in this deck) --
+    signal (12 000 SKUs, one overloaded outsourced copywriter, competitor's
+    separate-app UX, end-of-month deadline) buried in noise (investor demo
+    tangent, homepage banners tangent explicitly flagged in the quote as "к
+    другому разговору"). The 3-icon decorative scene is COLLAPSED to a single
+    compact icon + one-line callout (priority (a): shrink decorative details
+    first) to make room for the now-dominant quote box."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Описания товаров", size=28)
-    quote_block(s, 0.55, 1.15, 12.23, 1.1,
-                "«Маркетинг просит отдельный ИИ-сервис для генерации описаний товаров»",
-                size=16.5)
+    slide_title(s, "Описания товаров", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.85,
+                "«Ребята, у нас на прошлой неделе руководитель был на конференции "
+                "ритейла, увидел там у одного из конкурентов классный сервис для "
+                "генерации описаний товаров — с виду прямо как отдельное приложение, "
+                "зашёл, вбил характеристики, получил готовый текст под карточку. "
+                "Хочет, чтобы у нас было что-то похожее, желательно к концу месяца, "
+                "у нас как раз намечается демо для инвесторов. Каталог большой — "
+                "около 12 000 товарных позиций, сейчас описания пишет один "
+                "копирайтер на аутсорсе, по мере поступления новых товаров, и она, "
+                "кстати, уже жаловалась, что не успевает и просила доплату за "
+                "срочность. Ах да, отдельно нужно бы ещё обновить баннеры на "
+                "главной странице сайта, но это к другому разговору».",
+                size=13.5)
 
-    scene_y = 2.55
-    scene_h = 2.85
+    scene_y = 0.78 + 2.85 + 0.18
+    scene_h = 1.05
     ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "store", "065A82", 96, 0.95, scene_y + (scene_h - 1.1) / 2, 1.1)
-    icon(s, "arrow-right", "F0AB00", 64, 2.35, scene_y + (scene_h - 0.6) / 2, 0.6)
-    icon(s, "sparkles", "065A82", 96, 3.25, scene_y + (scene_h - 1.1) / 2, 1.1)
-    multipara_box(s, 4.7, scene_y + (scene_h - 1.6) / 2, 7.1, 1.6, [
-        {"text": "12 000 товарных позиций, сейчас описания пишет один копирайтер на аутсорсе",
-         "size": 16.5, "bold": True, "color": DEEP, "line_spacing": 1.3, "space_after": 10},
-        {"text": "Новый отдельный инструмент: логин, вкладка, форма ввода характеристик товара",
-         "size": 14, "color": SLATE, "line_spacing": 1.3},
-    ])
+    icon(s, "store", "065A82", 96, 0.9, scene_y + (scene_h - 0.65) / 2, 0.65)
+    text_box(s, 1.8, scene_y, 10.6, scene_h,
+             text="12 000 товарных позиций, сейчас описания пишет один копирайтер на аутсорсе",
+             size=14.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
-    q_y = scene_y + scene_h + 0.3
-    q_h = 7.15 - q_y
+    q_y = scene_y + scene_h + 0.2
+    q_h = 7.35 - q_y
     ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
     text_box(s, 0.85, q_y, 11.6, q_h, text="Отдельный сервис — хорошая идея?",
-             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+             size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s14"))
 
 
@@ -1423,16 +1489,30 @@ def build_s20(p):
 def build_s21(p):
     """Case 3 setup -- v3: NO ladder_row (v3 drops all ladder/ход strips
     everywhere; the case3_schema mutation on s22/s24/s26 IS the progression
-    indicator now). Iter-2 fix: photo + right column enlarged to close
-    ~1.75in of dead space below the photo row."""
+    indicator now).
+
+    Iter (issue #182 raw-quote pivot): quote replaced with the FULL ~420-char
+    raw colleague message (verbatim from s21-case3-setup.md `## Visual --
+    цитата`, the SHORTEST of the 13 raw quotes) -- signal (Zoom transcripts
+    pile up unread, protocol written by hand by "Настя-проджект" in 30-40
+    min, ~15 meetings/week, some in English, quarter-end audit deadline)
+    still has noise to filter (Nastya's other workload tangent). Full-width
+    quote now sits above; photo NARROWED (6.9in->4.3in, brief priority (b))
+    to free vertical room, facts strip narrowed to match, on one row."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Протоколы встреч", size=28)
-    quote_block(s, 0.55, 1.1, 12.23, 1.2,
-                "«После каждого созвона транскрипт приходит письмом, нужен протокол: "
-                "решения, поручения, сроки»", size=15)
+    slide_title(s, "Протоколы встреч", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.0,
+                "«Коллеги, у нас после каждого созвона Zoom кладёт транскрипт в "
+                "письмо — я их складываю в папку, но руки не доходят. Протокол "
+                "по-прежнему пишет Настя-проджект руками, минут по 30-40, а у неё и "
+                "так спринт-отчёты и онбординг двух новых. Встреч штук 15 в неделю, "
+                "часть на английском с подрядчиком. Можно из транскрипта автоматом "
+                "делать протокол — решения, поручения, сроки? В идеале до конца "
+                "квартала, у нас аудит процессов».",
+                size=14.5)
 
-    photo_x, photo_y, photo_w, photo_h = 0.55, 2.55, 6.9, 4.6
+    photo_x, photo_y, photo_w, photo_h = 0.55, 0.78 + 2.0 + 0.2, 4.3, 3.85
     ocean_box(s, photo_x, photo_y, photo_w, photo_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
     img_path = SHOTS / "s20-meeting-room-real.jpg"
     if img_path.exists():
@@ -1442,16 +1522,16 @@ def build_s21(p):
 
     rx = photo_x + photo_w + 0.3
     rw = 12.23 - photo_w - 0.3
-    ocean_box(s, rx, photo_y, rw, 2.55, fill=SURFACE, stroke=LIGHT)
-    text_box(s, rx + 0.2, photo_y + 0.18, rw - 0.4, 2.19,
+    ocean_box(s, rx, photo_y, rw, 1.75, fill=SURFACE, stroke=LIGHT)
+    text_box(s, rx + 0.2, photo_y + 0.16, rw - 0.4, 1.43,
              text="Около 15 встреч в неделю, протокол сейчас пишет проджект вручную",
-             size=15.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
 
-    q_y = photo_y + 2.85
-    q_h = photo_h - 2.85
+    q_y = photo_y + 2.05
+    q_h = photo_h - 2.05
     ocean_box(s, rx, q_y, rw, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
     text_box(s, rx + 0.2, q_y, rw - 0.4, q_h, text="Какая архитектура нужна?",
-             size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+             size=19, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
     speaker_notes(s, load_notes("s21",
                   extra="(Фото: Amtec Photos · Wikimedia Commons · CC BY 2.0)"))
 
@@ -1491,24 +1571,42 @@ def build_s22(p):
 
 
 def build_s23(p):
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~620-char raw colleague message (verbatim from s23-case3-intro2.md
+    `## Visual -- цитата`) -- signal (a month later, nobody can find which
+    protocol covered a May decision, protocols pile up in a shared folder,
+    hard to search by topic alone) buried in noise (vacation-schedule
+    tangent explicitly flagged in the quote as "не по делу"). Mid icon-strip
+    shrunk to a single compact row (priority (a)) to make room for the
+    now-dominant quote box."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Протоколы встреч", size=28)
-    quote_block(s, 0.55, 1.15, 12.23, 1.2,
-                "«На планёрке спросили: что мы решали по подрядчику X в мае?»",
-                size=15.5)
+    slide_title(s, "Протоколы встреч", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.6,
+                "«Народ, было на планёрке сегодня — уже неловко даже пересказывать. "
+                "Обсуждали бюджет на следующий квартал, и тут кто-то из финансов "
+                "спрашивает: „А что мы вообще решали по подрядчику X ещё в мае, у "
+                "нас там были какие-то договорённости про скидку?“ И повисла пауза "
+                "— никто с ходу не вспомнил, в каком это было протоколе. Протоколы "
+                "у нас копятся в общей папке на диске, названы более-менее по датам, "
+                "но искать по ним руками — то ещё удовольствие, особенно если "
+                "помнишь только примерную тему, а не точную дату созвона. Кстати, по "
+                "ходу дела там же обсуждали ещё отпускной график на лето, но это уже "
+                "другая история, не по делу».",
+                size=14)
 
-    mid_y = 2.75
-    mid_h = 1.55
+    mid_y = 0.78 + 2.6 + 0.2
+    mid_h = 1.1
     ocean_box(s, 0.55, mid_y, 12.23, mid_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    icon(s, "folder-search", "065A82", 96, 0.95, mid_y + (mid_h - 0.9) / 2, 0.9)
-    text_box(s, 2.15, mid_y, 10.2, mid_h,
+    icon(s, "folder-search", "065A82", 96, 0.9, mid_y + (mid_h - 0.65) / 2, 0.65)
+    text_box(s, 1.85, mid_y, 10.6, mid_h,
              text="Прошёл месяц — накопились десятки протоколов с разных встреч, по разным проектам",
-             size=16, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
-    q_y = mid_y + mid_h + 0.3
-    ocean_box(s, 0.55, q_y, 12.23, 1.15, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
-    text_box(s, 0.85, q_y, 11.6, 1.15, text="Меняет ли это архитектуру?", size=24,
+    q_y = mid_y + mid_h + 0.2
+    q_h = 7.35 - q_y
+    ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    text_box(s, 0.85, q_y, 11.6, q_h, text="Меняет ли это архитектуру?", size=20,
              bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s23"))
 
@@ -1542,26 +1640,45 @@ def build_s24(p):
 
 
 def build_s25(p):
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~655-char raw colleague message (verbatim from s25-case3-intro3.md
+    `## Visual -- цитата`) -- signal (search across protocols works, but
+    action items are still copy-pasted by hand into the task tracker, ~50%
+    of May's action items have no assignee yet) buried in noise (task-tracker
+    tag-color tangent explicitly flagged in the quote as a question "не к
+    вам, а к админу инструмента"). Mid icon-strip shrunk to a single compact
+    row (priority (a)) to make room for the now-dominant quote box."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Протоколы встреч", size=28)
-    quote_block(s, 0.55, 1.15, 12.23, 1.2,
-                "«Поручения из протоколов мы всё равно руками переносим в таск-трекер...»",
-                size=15.5)
+    slide_title(s, "Протоколы встреч", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.75,
+                "«Слушайте, спасибо большое за поиск по протоколам, реально экономит "
+                "время, особенно перед ретро. Но вот что заметила: поручения из "
+                "протоколов мы всё равно руками переносим в таск-трекер — открываем "
+                "протокол, читаем, что там нашла система, и одно за другим заводим "
+                "карточки, проставляем исполнителя и срок. Причём я специально "
+                "прошлась по майским протоколам вчера вечером, и получилось, что "
+                "примерно половина поручений так и висит без исполнителя — просто "
+                "руки не дошли перенести. Отдельно ещё хотела спросить, можно ли "
+                "поменять цвет тегов в самом таск-трекере, а то команда путается в "
+                "приоритетах, но это, наверное, вопрос не к вам, а к админу "
+                "инструмента».",
+                size=14)
 
-    mid_y = 2.65
-    mid_h = 1.4
+    mid_y = 0.78 + 2.75 + 0.18
+    mid_h = 1.1
     ocean_box(s, 0.55, mid_y, 12.23, mid_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    icon(s, "list-checks", "065A82", 96, 0.95, mid_y + (mid_h - 0.7) / 2, 0.7)
-    text_box(s, 2.0, mid_y, 10.3, mid_h,
+    icon(s, "list-checks", "065A82", 96, 0.9, mid_y + (mid_h - 0.65) / 2, 0.65)
+    text_box(s, 1.85, mid_y, 10.6, mid_h,
              text="Половина поручений из майских протоколов до сих пор без исполнителя — "
                   "руки до переноса просто не доходят",
-             size=14.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
+             size=14, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
-    q_y = mid_y + mid_h + 0.3
-    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, q_y, 11.6, 0.85, text="Меняет ли это архитектуру ещё раз?",
-             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    q_y = mid_y + mid_h + 0.2
+    q_h = 7.35 - q_y
+    ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, q_h, text="Меняет ли это архитектуру ещё раз?",
+             size=19, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s25"))
 
 
@@ -1594,33 +1711,43 @@ def build_s26(p):
 
 
 def build_s27(p):
-    """Quickfire setup with icon-scene. Iter-2 fix: enlarged scene + question
-    boxes to close dead space at bottom."""
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~650-char raw colleague message (verbatim from s27-quickfire-digest.md
+    `## Visual -- цитата`) -- signal (weekly digest of team chat + email,
+    one coherent message not a concatenation, delivered Fridays by 17:00)
+    buried in noise (messenger-migration tangent explicitly flagged in the
+    quote as "не срочное"). 4-icon decorative scene COLLAPSED to a 2-icon
+    compact strip (priority (a)) to make room for the now-dominant quote box."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Дайджест по чатам и почте", size=27)
-    quote_block(s, 0.55, 1.15, 12.23, 1.05,
-                "«Нужен еженедельный дайджест по рабочим чатам и почте команды»", size=15.5)
+    slide_title(s, "Дайджест по чатам и почте", size=25, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.75, 12.23, 2.7,
+                "«Привет, обсуждали на планёрке — хотим еженедельный дайджест по "
+                "рабочим чатам и почте команды: что обсуждали, что решили за неделю, "
+                "коротко, одним сообщением, чтобы не перечитывать всю переписку "
+                "заново по вечерам в пятницу. Нужен по пятницам к 17:00 — чтобы "
+                "руководитель успел прочитать перед выходными, а не разгребал всё в "
+                "понедельник утром вперемешку с новой почтой. Источников несколько: "
+                "рабочий чат команды и почта, надо свести в одно связное сообщение, а "
+                "не просто склеить куски подряд. Кстати, отдельно от этого — хотели "
+                "ещё обсудить, стоит ли переезжать с текущего чата на другой "
+                "мессенджер, но это дело не срочное, как-нибудь в другой раз».",
+                size=14)
 
-    scene_y = 2.55
-    scene_h = 2.85
+    scene_y = 0.75 + 2.7 + 0.18
+    scene_h = 1.1
     ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "message-square-quote", "065A82", 96, 0.95, scene_y + 0.7, 0.9)
-    icon(s, "mail", "028090", 96, 2.35, scene_y + 0.7, 0.9)
-    icon(s, "arrow-right", "F0AB00", 64, 3.6, scene_y + 0.9, 0.55)
-    icon(s, "file-text", "065A82", 96, 4.5, scene_y + 0.7, 0.9)
-    multipara_box(s, 5.85, scene_y + (scene_h - 1.6) / 2, 6.1, 1.6, [
-        {"text": "Что обсуждали, что решили за неделю", "size": 17.5, "bold": True,
-         "color": DEEP, "line_spacing": 1.25, "space_after": 10},
-        {"text": "Дайджест нужен по пятницам, к 17:00", "size": 14.5, "color": SLATE,
-         "line_spacing": 1.28},
-    ])
+    icon(s, "message-square-quote", "065A82", 96, 0.9, scene_y + (scene_h - 0.65) / 2, 0.65)
+    icon(s, "mail", "028090", 96, 1.75, scene_y + (scene_h - 0.65) / 2, 0.65)
+    text_box(s, 2.75, scene_y, 9.7, scene_h,
+             text="Из чата и почты — одно связное сообщение, по пятницам к 17:00",
+             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
-    q_y = scene_y + scene_h + 0.3
-    q_h = 7.15 - q_y
+    q_y = scene_y + scene_h + 0.2
+    q_h = 7.35 - q_y
     ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
     text_box(s, 0.85, q_y, 11.6, q_h, text="Какая архитектура здесь нужна?",
-             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+             size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s27"))
 
 
@@ -1701,35 +1828,45 @@ def build_s30(p):
 
 
 def build_s31(p):
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~600-char raw message (verbatim from s31-case4-setup.md `## Visual --
+    цитата`) -- signal (per-call card: need/objections/agreements, 8
+    managers, 15-20 calls/day each, recordings sit unexported in the phone
+    system) buried in noise (CRM dedup tangent explicitly flagged in the
+    quote as "отдельная головная боль"). Photo DROPPED on this slide
+    (explicitly allowed by brief priority (b), same treatment as s11) -- the
+    quote is now the dominant element, full width, with a compact facts
+    strip + gold question below it instead of the former photo+sidebar."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Звонки продаж", size=28)
-    quote_block(s, 0.55, 1.1, 12.23, 1.3,
-                "«Хочу карточку по каждому звонку — потребность, возражения, договорённости»",
-                size=15.5, role_icon="briefcase")
+    slide_title(s, "Звонки продаж", size=26, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.78, 12.23, 2.6,
+                "«Привет! Тут у нас родилась идея на стратегической сессии — хочу по "
+                "каждому звонку менеджера получать карточку: какая потребность у "
+                "клиента, какие возражения прозвучали, какие договорённости "
+                "достигли. А то перед следующим звонком с тем же клиентом менеджеры "
+                "перематывают запись туда-сюда, ищут, на чём остановились в прошлый "
+                "раз. В отделе у меня 8 менеджеров, у каждого по 15-20 звонков в "
+                "день, записи сейчас просто лежат в телефонии, никуда не "
+                "выгружаются. Вся история клиента у нас в CRM, но её тоже давно пора "
+                "почистить от дублей контактов — но это отдельная головная боль, "
+                "обсудим как-нибудь потом».",
+                size=14, role_icon="briefcase")
 
-    photo_x, photo_y, photo_w, photo_h = 0.55, 2.6, 4.6, 3.95
-    ocean_box(s, photo_x, photo_y, photo_w, photo_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    img_path = SHOTS / "s29-office-phonecall-real.jpg"
-    if img_path.exists():
-        pad = 0.12
-        add_image_coverfit(s, img_path, photo_x + pad, photo_y + pad,
-                            photo_w - 2 * pad, photo_h - 2 * pad)
-
-    rx = photo_x + photo_w + 0.3
-    rw = 12.23 - photo_w - 0.3
-    ocean_box(s, rx, photo_y, rw, 1.85, fill=SURFACE, stroke=LIGHT)
-    text_box(s, rx + 0.2, photo_y + 0.16, rw - 0.4, 1.55,
+    fact_y = 0.78 + 2.6 + 0.2
+    fact_h = 1.1
+    ocean_box(s, 0.55, fact_y, 12.23, fact_h, fill=SURFACE, stroke=LIGHT)
+    icon(s, "phone", "065A82", 96, 0.9, fact_y + (fact_h - 0.65) / 2, 0.65)
+    text_box(s, 1.85, fact_y, 10.6, fact_h,
              text="8 менеджеров, по 15-20 звонков в день, записи лежат в телефонии",
-             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+             size=15.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
 
-    q_y = photo_y + 2.15
-    q_h = photo_h - 2.15
-    ocean_box(s, rx, q_y, rw, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
-    text_box(s, rx + 0.2, q_y, rw - 0.4, q_h, text="Как это построить?",
+    q_y = fact_y + fact_h + 0.2
+    q_h = 7.35 - q_y
+    ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    text_box(s, 0.85, q_y, 11.6, q_h, text="Как это построить?",
              size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
-    speaker_notes(s, load_notes("s31",
-                  extra="(Фото: OddibeKerfeld · Wikimedia Commons · CC BY-SA 3.0)"))
+    speaker_notes(s, load_notes("s31"))
 
 
 def build_s32(p):
@@ -1784,31 +1921,60 @@ def build_s32(p):
 
 
 def build_s33(p):
+    """Iter (issue #182 raw-quote pivot): BOTH quotes replaced with the FULL
+    raw messages (verbatim from s33-case4-intro2.md `## Visual -- цитата
+    (CTO)` / `(РОП)`) -- CTO ~600 chars (signal: no GPU server, no budget
+    this year, cloud API is the only option if the model is heavy; noise:
+    lawyer-in-the-budget-meeting tangent, next-year-maybe aside), РОП ~480
+    chars (signal: 5 CRM fields per call, auto-filled, feeds a Monday report;
+    noise: "я не технарь" framing, tone-analysis explicitly rejected). Each
+    column is narrower (~5.97in) than full-width slides, so BOTH boxes made
+    the SAME height (max of the two estimates, with margin) so the pair
+    reads as a balanced pair rather than mismatched cards; role label kept
+    below each per existing pattern, repositioned under the new taller
+    boxes. Quote font kept >=13pt per brief floor for narrow columns."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Звонки продаж", size=28)
+    slide_title(s, "Звонки продаж", size=26, y=0.25, h=0.45)
 
-    grid_y = 1.5
+    grid_y = 0.85
     gap = 0.3
     cw = (12.23 - gap) / 2
-    ch = 2.5
+    ch = 4.85
     quote_block(s, 0.55, grid_y, cw, ch,
-                "«GPU-сервера у нас нет, и бюджета на него в этом году нет»",
-                size=16, role_icon="briefcase")
-    text_box(s, 0.55 + 0.24, grid_y + ch - 0.4, cw - 0.48, 0.3, text="— CTO",
+                "«Коллеги, разговор случился на еженедельном созвоне по бюджету — "
+                "туда же, кстати, пригласили и юриста, который на прошлой неделе "
+                "смотрел демо прототипа. Хочу сразу обозначить ограничение по "
+                "инфраструктуре: GPU-сервера у нас нет, и бюджета на него в этом "
+                "году тоже нет — приоритеты на квартал уже утверждены финансовым "
+                "директором, туда попали миграция на новую почтовую систему и "
+                "обновление парка ноутбуков в поддержке. Если модель тяжёлая, "
+                "придётся идти через облачный API, но там свои вопросы по данным, мы "
+                "их уже обсуждали. В следующем году, может, вернёмся к разговору про "
+                "свой сервер, но не сейчас».",
+                size=13, role_icon="briefcase")
+    text_box(s, 0.55 + 0.24, grid_y + ch - 0.32, cw - 0.48, 0.28, text="— CTO",
              size=12, italic=True, color=SLATE)
 
     rx = 0.55 + cw + gap
     quote_block(s, rx, grid_y, cw, ch,
-                "«Мне не беседа нужна — пять полей в CRM по каждому звонку»",
-                size=16, role_icon="user-round")
-    text_box(s, rx + 0.24, grid_y + ch - 0.4, cw - 0.48, 0.3,
+                "«Меня, честно говоря, весь этот разговор про модели и облака не "
+                "очень касается — я не технарь. Мне для работы нужно простое: пять "
+                "полей в CRM по каждому звонку — потребность, возражения, "
+                "договорённости, следующий шаг, оценка вероятности сделки. Не "
+                "пересказ разговора целиком, не анализ тона голоса менеджера, "
+                "ничего такого. Просто эти пять полей должны заполняться сами, "
+                "чтобы я видел их у себя в отчёте по отделу, который я и так каждый "
+                "понедельник собираю руками из заметок ребят».",
+                size=13, role_icon="user-round")
+    text_box(s, rx + 0.24, grid_y + ch - 0.32, cw - 0.48, 0.28,
              text="— руководитель отдела продаж", size=12, italic=True, color=SLATE)
 
-    q_y = grid_y + ch + 0.3
-    ocean_box(s, 0.55, q_y, 12.23, 0.9, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, q_y, 11.6, 0.9, text="Меняет ли это архитектуру ещё раз?",
-             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    q_y = grid_y + ch + 0.18
+    q_h = 7.35 - q_y
+    ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, q_h, text="Меняет ли это архитектуру ещё раз?",
+             size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s33"))
 
 
@@ -2041,35 +2207,43 @@ def build_s39(p):
 
 
 def build_s40(p):
-    """Reserve quickfire setup with icon-scene. Iter-2 fix: enlarged scene +
-    question boxes to close dead space at bottom (consistent with s07/s14/
-    s27 fixes)."""
+    """Iter (issue #182 raw-quote pivot): quote replaced with the FULL
+    ~545-char raw colleague message (verbatim from s40-reserve-dedup-setup.md
+    `## Visual -- цитата`) -- signal (feed clutter, ~10 near-duplicate
+    headlines per event, merge into one card, 100+ sources, tight infra
+    budget) buried in noise (new-sources-API-integration tangent explicitly
+    flagged in the quote as "другой разговор"). 4-icon decorative scene
+    COLLAPSED to a 2-icon compact strip (priority (a)) to make room for the
+    now-dominant quote box."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Дедупликация новостей", size=28)
-    quote_block(s, 0.55, 1.15, 12.23, 1.05,
-                "«Поток новостей из многих источников — нужно склеивать одинаковые "
-                "в одну карточку»", size=15)
+    slide_title(s, "Дедупликация новостей", size=25, y=0.25, h=0.45)
+    quote_block(s, 0.55, 0.75, 12.23, 2.6,
+                "«Привет! Пользователи жалуются в поддержку, что лента забита — по "
+                "одному и тому же событию видят десять почти одинаковых заголовков "
+                "подряд от разных изданий, которые просто пересказывают одну новость "
+                "своими словами. Хотим это как-то склеивать в одну карточку, чтобы не "
+                "мозолило глаза. У нас источников уже больше сотни, подключаем ещё "
+                "несколько в этом месяце, но это уже другой разговор с их API. Нужно "
+                "понять, какая технология сюда подойдёт, желательно не сильно "
+                "раздувая расходы на инфраструктуру, бюджет на новые фичи в этом "
+                "квартале скромный».",
+                size=14.5)
 
-    scene_y = 2.55
-    scene_h = 2.85
+    scene_y = 0.75 + 2.6 + 0.16
+    scene_h = 1.05
     ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "message-square-quote", "065A82", 96, 0.95, scene_y + 0.65, 0.9)
-    icon(s, "message-square-quote", "1C7293", 72, 2.15, scene_y + 0.95, 0.75)
-    icon(s, "arrow-right", "F0AB00", 64, 3.25, scene_y + 1.05, 0.55)
-    icon(s, "layers", "065A82", 96, 4.15, scene_y + 0.65, 0.9)
-    multipara_box(s, 5.5, scene_y + (scene_h - 1.55) / 2, 6.4, 1.55, [
-        {"text": "Десять почти одинаковых заголовков от разных изданий", "size": 17,
-         "bold": True, "color": DEEP, "line_spacing": 1.28, "space_after": 10},
-        {"text": "→ одна объединённая карточка события", "size": 14, "color": SLATE,
-         "line_spacing": 1.28},
-    ])
+    icon(s, "message-square-quote", "065A82", 96, 0.9, scene_y + (scene_h - 0.65) / 2, 0.65)
+    icon(s, "layers", "028090", 64, 1.75, scene_y + (scene_h - 0.65) / 2, 0.65)
+    text_box(s, 2.75, scene_y, 9.7, scene_h,
+             text="Десять почти одинаковых заголовков → одна объединённая карточка события",
+             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
-    q_y = scene_y + scene_h + 0.3
-    q_h = 7.15 - q_y
+    q_y = scene_y + scene_h + 0.2
+    q_h = 7.35 - q_y
     ocean_box(s, 0.55, q_y, 12.23, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
     text_box(s, 0.85, q_y, 11.6, q_h, text="Какая технология нужна?",
-             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+             size=20, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s40"))
 
 

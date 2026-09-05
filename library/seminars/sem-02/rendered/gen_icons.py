@@ -102,6 +102,26 @@ REQUESTS = [
     ("zap", "F0AB00", 96),
     ("banknote", "065A82", 96),
     ("sparkles", "21295C", 64),
+    # issue #182 -- 41-slide rebuild additions (s02 case list @64px, quote
+    # role-icons, s24/s30/s31 icon-scene additions)
+    ("file-text", "065A82", 64),
+    ("shield-alert", "065A82", 64),
+    ("monitor", "065A82", 64),
+    ("store", "065A82", 64),
+    ("list-checks", "065A82", 64),
+    ("mail", "065A82", 64),
+    ("phone", "065A82", 64),
+    ("user-round", "F0AB00", 64),
+    ("briefcase", "028090", 64),
+    ("check-circle-2", "028090", 96),
+    ("workflow", "21295C", 64),
+    ("mail", "028090", 96),
+    ("scale", "028090", 64),
+    ("shield-alert", "21295C", 96),
+    ("user-round", "028090", 64),
+    ("message-square-quote", "1C7293", 72),
+    ("cable", "065A82", 96),
+    ("folder-search", "065A82", 96),
 ]
 
 

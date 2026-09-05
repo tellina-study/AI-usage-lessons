@@ -1,12 +1,17 @@
 """
-Build script for Семинар 2 — «Воронка решений: когда ИИ, каким и на чём».
+Build script for Семинар 2 — «Когда ИИ, каким и на чём».
+
+REWRITTEN for issue #182 (41-slide case-centric pivot). Replaces the OLD
+31-slide "воронка решений" build (mini_funnel motif, worksheet framing).
+See rendered/iteration-log.md "v2 rebuild" section for full delta notes.
 
 Ocean Gradient v3 design system, matched to library/seminars/sem-01 patterns
 (reused helpers: text_box, ocean_box, icon, chip, filled_rect, multipara_box,
-dashed_box, speaker_notes). Runs idempotently — re-running rebuilds sem-02.pptx
-from scratch.
+dashed_box, speaker_notes, quote_block, negative_card, positive_card,
+footer_note, ladder_row, calls_ladder_row). Runs idempotently — re-running
+rebuilds sem-02.pptx from scratch.
 
-Source-of-truth: deck.yaml + slides/*.md (31 slides).
+Source-of-truth: deck.yaml + slides/*.md (41 slides, s01..s41).
 Canvas: 13.333" x 7.5" (16:9).
 
 Toolchain notes (this environment — no apt/sudo, no system libreoffice, no
@@ -17,8 +22,13 @@ PowerPoint MCP):
   - PPTX->PDF via portable LibreOffice; PDF->PNG via pymupdf (fitz).
 
 Gotcha (see notes/mcp-limitations.md [#sem01-render-1]): literal "\\n" inside a
-single python-pptx text run does not reliably line-break under LibreOffice —
+single python-pptx text run does not reliably line-break under LibreOffice --
 always use multipara_box (tf.add_paragraph() per line) for multi-line text.
+
+IMPORTANT (issue #182): the `mini_funnel` motif is REMOVED ENTIRELY. Section
+dividers (s03/s10/s19/s28) show ONLY a big case number + title + a short
+choice-tag chip -- no funnel widget, no "воронка решений" caption anywhere.
+The word "воронка" must not appear anywhere in this file's visible strings.
 """
 import re
 import sys
@@ -61,16 +71,10 @@ FONT_HEAD = "Arial"
 FONT_BODY = "Arial"
 FONT_MONO = "Courier New"
 
-FUNNEL_STEPS = [
-    "ИИ или обычный код?",
-    "Встроить или делать своё?",
-    "Разовый вызов, RAG или агент?",
-    "Внешний API или локальный инференс?",
-]
-
 
 # ============================================================
-# Helpers (ported from library/seminars/sem-01/rendered/build_sem01.py)
+# Helpers (ported from library/seminars/sem-01/rendered/build_sem01.py
+# and the pre-pivot build_sem02.py; mini_funnel + FUNNEL_STEPS removed)
 # ============================================================
 
 def setup_pres():
@@ -97,7 +101,7 @@ def disable_shadow(shp):
         sppr.remove(el)
     etree.SubElement(sppr, ns + "effectLst")
     # python-pptx autoshapes carry a <p:style> with <a:effectRef idx="2">
-    # pointing at the theme's shadow effect — LibreOffice's PDF export applies
+    # pointing at the theme's shadow effect -- LibreOffice's PDF export applies
     # this theme effect even when spPr has an explicit empty <a:effectLst/>.
     # Removing <p:style> entirely is the reliable fix (see notes/mcp-limitations.md).
     pns = "{http://schemas.openxmlformats.org/presentationml/2006/main}"
@@ -130,7 +134,7 @@ def text_box(slide, x, y, w, h, text, *,
 def multipara_box(slide, x, y, w, h, paragraphs, *,
                    anchor=MSO_ANCHOR.TOP, align=PP_ALIGN.LEFT):
     """Each item in `paragraphs` is a dict of text_box-style kwargs.
-    Uses tf.add_paragraph() per line — literal \\n in one run does not
+    Uses tf.add_paragraph() per line -- literal \\n in one run does not
     line-break reliably under LibreOffice (notes/mcp-limitations.md #sem01-render-1)."""
     tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     tf = tb.text_frame
@@ -245,7 +249,7 @@ def icon(slide, name, color_hex, size_px, x, y, w_in):
 
 def add_image_coverfit(slide, path, x, y, w, h):
     """Full-bleed / hero image helper: fills the (x,y,w,h) box exactly like
-    CSS `object-fit: cover` — no stretch distortion (see notes/mcp-limitations.md
+    CSS `object-fit: cover` -- no stretch distortion (see notes/mcp-limitations.md
     [#73-render-1]: passing both width= and height= to add_picture() stretches
     non-proportionally). Reads real pixel size via Pillow, sizes the picture by
     the constraining dimension, then crops the overflow off-slide via
@@ -307,37 +311,16 @@ def load_notes(slide_id):
     if not files:
         return ""
     md = files[0].read_text(encoding="utf-8")
-    # NB: '\n## ' (2 hashes + space) does NOT match '### Self-check' — the
+    # NB: '\n## ' (2 hashes + space) does NOT match '### Self-check' -- the
     # Self-check subsection is INSIDE '## Speaker notes' and must be kept
-    # verbatim in the PPTX notes (orchestrator check 2026-09-05: earlier
+    # verbatim in the PPTX notes (orchestrator finding, pre-pivot deck: earlier
     # truncation at '### Self-check' silently dropped tails on 22/31 slides).
+    # This is the FIXED regex per the task brief -- do not reintroduce the
+    # '### Self-check' alternative into the lookahead.
     m = re.search(r"## Speaker notes\s*\n(.*?)(?=\n## |\Z)", md, re.DOTALL)
     notes = m.group(1).strip() if m else ""
     notes = re.sub(r"\n+---\s*$", "", notes)
     return notes.strip()
-
-
-def mini_funnel(slide, x, y, w, h, active_idx):
-    """Compact 4-step funnel-progress widget for section dividers + s02 keystone.
-    active_idx: 0-3 for step highlight, or None for s26 (all equal, no highlight)."""
-    n = 4
-    gap = 0.14
-    step_h = (h - gap * (n - 1)) / n
-    max_w = w
-    min_w = w * 0.5
-    for i in range(n):
-        sw = max_w - (max_w - min_w) * (i / (n - 1))
-        sx = x + (w - sw) / 2
-        sy = y + i * (step_h + gap)
-        is_active = (active_idx is not None and i == active_idx)
-        fill = GOLD if is_active else SURFACE
-        stroke = GOLD if is_active else LIGHT
-        txt_color = DEEP if is_active else SLATE
-        filled_rect(slide, sx, sy, sw, step_h, fill, stroke=stroke, stroke_pt=1.4,
-                    radius=True, radius_adj=0.3)
-        text_box(slide, sx + 0.12, sy, sw - 0.24, step_h, text=FUNNEL_STEPS[i],
-                 size=10, bold=is_active, color=txt_color, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
 
 
 def negative_card(slide, x, y, w, h, title, body_paras, *, icon_name="x-circle"):
@@ -367,53 +350,122 @@ def footer_note(slide, text, *, y=7.02):
               line_spacing=1.15)
 
 
-def quote_block(slide, x, y, w, h, text, *, size=15):
+def quote_block(slide, x, y, w, h, text, *, size=15, role_icon=None):
+    """Ocean-bordered quote card with a decorative quote-mark icon.
+    issue #182 extension: optional `role_icon` (Lucide icon name, e.g.
+    "briefcase" / "scale" / "user-round") adds a small role-badge in the
+    top-right corner so it's clear WHO is speaking (owner-requested polish
+    for character quotes on s12/s30/s32)."""
     ocean_box(slide, x, y, w, h, fill=SURFACE, stroke=LIGHT)
     pad = 0.24
     icon(slide, "quote", "1C7293", 64, x + pad, y + pad - 0.05, 0.32)
-    text_box(slide, x + pad, y + pad + 0.32, w - 2 * pad, h - pad * 2 - 0.32,
+    text_w = w - 2 * pad - (0.5 if role_icon else 0)
+    text_box(slide, x + pad, y + pad + 0.32, text_w, h - pad * 2 - 0.32,
              text=text, size=size, italic=True, color=DEEP, line_spacing=1.28,
              anchor=MSO_ANCHOR.TOP)
+    if role_icon:
+        badge_sz = 0.5
+        bx = x + w - pad - badge_sz
+        by = y + pad - 0.05
+        filled_rect(slide, bx, by, badge_sz, badge_sz, SURFACE, stroke=TEAL,
+                    stroke_pt=1.3, radius=True, radius_adj=0.5)
+        icon(slide, role_icon, "028090", 64, bx + 0.09, by + 0.09, badge_sz - 0.18)
+    return
+
+
+def ladder_row(slide, y, active_step, ch=1.55):
+    """3-step architecture ladder used across s16/s17/s18 (progressive reveal)."""
+    labels = ["Разовый вызов", "RAG", "Агент"]
+    n = 3
+    gap = 0.3
+    cw = (12.23 - gap * (n - 1)) / n
+    for i, lbl in enumerate(labels):
+        cx = 0.55 + i * (cw + gap)
+        is_done = (i < active_step)
+        is_now = (i == active_step - 1)
+        fill = GOLD if is_now else (SURFACE if not is_done else SOFT_GREY)
+        stroke = GOLD if is_now else LIGHT
+        filled_rect(slide, cx, y, cw, ch, fill, stroke=stroke, stroke_pt=1.5,
+                    radius=True, radius_adj=0.12)
+        text_box(slide, cx, y + 0.18, cw, 0.5, text=lbl, size=15.5, bold=True,
+                 color=DEEP, align=PP_ALIGN.CENTER)
+        if i < n - 1:
+            ax = cx + cw + 0.04
+            arrow = slide.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(ax),
+                Inches(y + ch / 2 - 0.11), Inches(gap - 0.08), Inches(0.22))
+            arrow.fill.solid(); arrow.fill.fore_color.rgb = TEAL
+            arrow.line.fill.background()
+            disable_shadow(arrow)
+
+
+def calls_ladder_row(slide, y, active_step):
+    """3-step ход indicator for the calls trilogy (s29/s31/s33, issue #182 renumber)."""
+    labels = ["Облачный frontier?", "Персональные данные", "Шаблон полей → локальная модель"]
+    n = 3
+    gap = 0.3
+    cw = (12.23 - gap * (n - 1)) / n
+    ch = 1.0
+    for i, lbl in enumerate(labels):
+        cx = 0.55 + i * (cw + gap)
+        is_now = (i == active_step - 1)
+        is_done = (i < active_step - 1)
+        fill = GOLD if is_now else (SOFT_GREY if is_done else SURFACE)
+        stroke = GOLD if is_now else LIGHT
+        filled_rect(slide, cx, y, cw, ch, fill, stroke=stroke, stroke_pt=1.5,
+                    radius=True, radius_adj=0.15)
+        text_box(slide, cx + 0.12, y, cw - 0.24, ch, text=f"Ход {i+1}: {lbl}", size=12.5,
+                 bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.1)
+        if i < n - 1:
+            ax = cx + cw + 0.04
+            arrow = slide.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(ax),
+                Inches(y + ch / 2 - 0.11), Inches(gap - 0.08), Inches(0.22))
+            arrow.fill.solid(); arrow.fill.fore_color.rgb = TEAL
+            arrow.line.fill.background()
+            disable_shadow(arrow)
 
 
 # ============================================================
-# Section-divider builder (s05 / s10 / s15 / s21)
+# Section-divider builder (s03 / s10 / s19 / s28) -- NO mini_funnel (issue #182)
 # ============================================================
 
-def build_divider(p, sid, number, title, frame_phrase, active_idx):
+def build_divider(p, sid, number, title, choice_tag):
+    """Plain section divider: big case number + title + a single choice-tag
+    chip. NO funnel widget anywhere (issue #182 explicitly removes it)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     # Big background number, upper-left, kept clear of the title band below it
-    text_box(s, -0.1, -0.65, 4.6, 3.6, text=number, size=280, bold=True,
+    text_box(s, -0.1, -0.65, 6.0, 3.6, text=number, size=280, bold=True,
              color=SOFT_GREY, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.BOTTOM,
              line_spacing=0.9)
-    # Title + frame phrase, mid-left, clear of the number's descender
-    text_box(s, 0.6, 3.05, 7.1, 1.4, text=title, size=36, bold=True, color=DEEP,
+    # Small gold marker dot next to the case number -- a case-index accent,
+    # not decorative filler (gold-presence requirement, every slide >=1 touch)
+    filled_rect(s, 2.15, 1.75, 0.22, 0.22, GOLD, radius=True, radius_adj=0.5)
+    # Title, mid-left, clear of the number's descender
+    text_box(s, 0.6, 3.2, 11.6, 1.5, text=title, size=40, bold=True, color=DEEP,
              line_spacing=1.1)
-    gold_callout(s, 0.6, 4.55, 6.75, 1.1, frame_phrase, size=15)
-    # Mini funnel progress, right
-    mini_funnel(s, 8.15, 1.15, 4.6, 4.85, active_idx)
-    text_box(s, 8.15, 6.15, 4.6, 0.3, text="воронка решений", size=11, italic=True,
-             color=SLATE, align=PP_ALIGN.CENTER)
+    # Small choice-tag chip underneath -- a label of the choice type, not a
+    # spoiler of the verdict/lesson (post-pre-gate P1 fix pattern, kept)
+    chip(s, 0.62, 4.85, 5.2, 0.55, choice_tag, fill=MID, size=15)
     speaker_notes(s, load_notes(sid))
     return s
 
 
 # ============================================================
-# Slide builders — s01..s29 (+ reserves s28a/s28b)
+# Slide builders -- s01..s41 (case-centric structure, issue #182)
 # ============================================================
 
 def build_s01(p):
-    """Hero cover — full-bleed real photo (source-of-truth: visual.pattern =
-    hero_cover_real_photo). Real NASA/Wikimedia photo of engineers at work,
-    darkened bottom third for legibility, title + subtitle only (no icons,
-    no decorative shapes — source explicitly forbids them)."""
+    """Hero cover -- full-bleed real photo (source-of-truth: visual.pattern =
+    hero_cover_real_photo). Kept from the pre-pivot deck almost verbatim
+    (same NASA/Wikimedia photo, same layout) -- only the subtitle text is
+    re-verified against the new s01-hero-cover.md wording (no "воронка")."""
     s = blank(p)
     set_slide_bg(s, DEEP)
     img_path = SHOTS / "s01-nasa-engineers-real.jpg"
     if img_path.exists():
         add_image_coverfit(s, img_path, 0, 0, SLIDE_W_IN, SLIDE_H_IN)
-    # darken bottom third for text legibility (same recipe as build_s29)
+    # darken bottom third for text legibility
     overlay = filled_rect(s, 0, 4.6, SLIDE_W_IN, 2.9, DEEP)
     overlay.fill.fore_color.rgb = DEEP
     try:
@@ -426,214 +478,129 @@ def build_s01(p):
     text_box(s, 0.6, 4.85, 7.6, 0.45, text="СЕМИНАР 2", size=16, bold=True,
              color=GOLD, align=PP_ALIGN.LEFT)
     multipara_box(s, 0.6, 5.3, 12.1, 1.35, [
-        {"text": "Воронка решений: когда ИИ, каким и на чём", "size": 34, "bold": True,
+        {"text": "Когда ИИ, каким и на чём", "size": 34, "bold": True,
          "color": WHITE, "line_spacing": 1.12},
     ])
     text_box(s, 0.6, 6.35, 11.6, 0.7,
-             text="Четыре выбора, которые инженер проходит прежде, чем открыть редактор кода",
-             size=16, italic=True, color=RGBColor(0xC8, 0xD2, 0xDF), line_spacing=1.3)
+             text="Семь реальных рабочих ситуаций — и в каждой решение, которое инженер "
+                  "принимает раньше, чем открывает редактор кода",
+             size=15, italic=True, color=RGBColor(0xC8, 0xD2, 0xDF), line_spacing=1.28)
     text_box(s, 0.6, 7.1, 11.6, 0.32, text="NASA / Cory Huston · Wikimedia Commons · общественное достояние",
              size=10.5, italic=True, color=RGBColor(0xC8, 0xD2, 0xDF))
     speaker_notes(s, load_notes("s01"))
 
 
 def build_s02(p):
+    """Plain list of seven cases -- NO funnel, NO numbered choice-type
+    (issue #182: deck.yaml explicit "s02 is now a plain list of seven cases,
+    no funnel")."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Воронка из четырёх выборов", size=30)
+    slide_title(s, "Сегодня — семь кейсов", size=30)
     text_box(s, 0.55, 1.15, 12.23, 0.55,
-             text="Правильный ответ зависит от вводных, которых в постановке почти никогда нет",
+             text="В каждом — решение, которое инженер принимает раньше, чем открывает редактор кода",
              size=15.5, italic=True, color=MID, line_spacing=1.2)
 
-    # Vertical funnel ladder, left ~55%
-    fx, fy, fw = 0.6, 2.05, 6.7
-    top_h = 0.7
-    filled_rect(s, fx + 1.0, fy, fw - 2.0, top_h, DEEP, radius=True, radius_adj=0.12)
-    text_box(s, fx + 1.0, fy, fw - 2.0, top_h, text="Задача от заказчика", size=14.5,
-             bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-
-    steps = [
-        ("1", "ИИ или обычный код?", LIGHT, 6.5),
-        ("2", "Встроить в существующее приложение или делать своё?", MID, 5.4),
-        ("3", "Разовый вызов модели, RAG или агент?", TEAL, 4.3),
-        ("4", "Внешний API или локальный инференс?", DEEP, 3.3),
+    cases = [
+        ("file-text", "Документы поставщиков"),
+        ("shield-alert", "Персоналка в логах"),
+        ("monitor", "Помощник поддержки"),
+        ("store", "Описания товаров"),
+        ("list-checks", "Протоколы встреч"),
+        ("mail", "Дайджест по чатам"),
+        ("phone", "Звонки продаж"),
     ]
-    sy = fy + top_h + 0.22
-    step_h = 0.92
-    gap = 0.16
-    for num, label, col, sw in steps:
-        sx = fx + (fw - sw) / 2
-        filled_rect(s, sx, sy, sw, step_h, col, radius=True, radius_adj=0.10)
-        badge = filled_rect(s, sx + 0.14, sy + (step_h - 0.4) / 2, 0.4, 0.4, GOLD,
-                             radius=True, radius_adj=0.5)
-        text_box(s, sx + 0.14, sy + (step_h - 0.4) / 2, 0.4, 0.4, text=num, size=15,
-                 bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, sx + 0.68, sy, sw - 0.85, step_h, text=label, size=13.5, bold=True,
-                 color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
-        sy += step_h + gap
+    grid_y = 2.05
+    row_h = 0.6
+    gap = 0.1
+    col_gap = 0.35
+    col_w = (12.23 - col_gap) / 2
+    for i, (ic, label) in enumerate(cases):
+        col = i // 4
+        row = i % 4
+        cx = 0.55 + col * (col_w + col_gap)
+        cy = grid_y + row * (row_h + gap)
+        ocean_box(s, cx, cy, col_w, row_h)
+        icon(s, ic, "065A82", 64, cx + 0.16, cy + (row_h - 0.36) / 2, 0.36)
+        text_box(s, cx + 0.65, cy, col_w - 0.8, row_h, text=label, size=15,
+                 bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
 
-    # Right column — thesis card
-    rx = 7.65
-    ocean_box(s, rx, 2.05, 5.15, 4.35, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "compass", "065A82", 96, rx + 0.28, 2.3, 0.55)
-    text_box(s, rx + 0.28, 3.0, 4.6, 1.1,
-             text="Ни один выбор не решается «по умолчанию» — он решается заново для каждой задачи",
-             size=16, bold=True, color=DEEP, line_spacing=1.25)
-    gold_callout(s, rx + 0.28, 4.25, 4.6, 1.05,
-                 "Главный навык — не помнить схему, а вовремя задать вопрос, который изменит ответ",
-                 size=13.5)
-    text_box(s, rx + 0.28, 5.55, 4.6, 0.75,
-             text="Сегодня — 7 постановок, почти в каждой ответ поменяется хотя бы раз",
-             size=12.5, italic=True, color=SLATE, line_spacing=1.25)
+    footer_y = grid_y + 4 * (row_h + gap) + 0.15
+    ocean_box(s, 0.55, footer_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, footer_y, 11.6, 0.85,
+             text="В каждом кейсе появится деталь, которой не было в первой постановке",
+             size=16.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s02"))
 
 
 def build_s03(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    slide_title(s, "RAG одним потоком", size=28)
-    text_box(s, 0.55, 1.05, 9.5, 0.5,
-             text="Нужен, когда база знаний большая и меняется — и не помещается в один запрос",
-             size=15, italic=True, color=MID, line_spacing=1.2)
-    chip(s, 11.15, 1.0, 1.65, 0.42, "Лекция 3 →", fill=TEAL, size=11.5)
-
-    steps = [
-        ("search", "Вопрос пользователя"),
-        ("database", "Поиск фрагментов\nв базе знаний"),
-        ("layers", "Фрагменты →\nв контекст модели"),
-        ("sparkles", "Модель генерирует\nответ"),
-    ]
-    grid_y = 2.35
-    grid_h = 2.9
-    n = 4
-    gap_arrow = 0.55
-    cw = (12.23 - gap_arrow * (n - 1)) / n
-    for i, (ic, lbl) in enumerate(steps):
-        cx = 0.55 + i * (cw + gap_arrow)
-        ocean_box(s, cx, grid_y, cw, grid_h)
-        icon(s, ic, "065A82", 96, cx + (cw - 0.6) / 2, grid_y + 0.35, 0.6)
-        lines = lbl.split("\n")
-        paras = [{"text": ln, "size": 13.5, "bold": True, "color": DEEP,
-                  "align": PP_ALIGN.CENTER, "line_spacing": 1.15} for ln in lines]
-        multipara_box(s, cx + 0.12, grid_y + 1.15, cw - 0.24, 1.6, paras, align=PP_ALIGN.CENTER)
-        chip(s, cx + 0.14, grid_y + grid_h - 0.5, 0.34, 0.34, str(i + 1), fill=GOLD,
-             color=DEEP, size=13)
-        if i < n - 1:
-            ax = cx + cw + 0.06
-            arrow = s.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(ax),
-                Inches(grid_y + grid_h / 2 - 0.16), Inches(gap_arrow - 0.12), Inches(0.32))
-            arrow.fill.solid(); arrow.fill.fore_color.rgb = TEAL
-            arrow.line.fill.background()
-            disable_shadow(arrow)
-
-    ocean_box(s, 0.55, 5.55, 12.23, 1.05, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, 5.55, 11.6, 1.05,
-             text="Когда нужен: база большая и меняется",
-             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s03"))
+    build_divider(p, "s03", "1", "Документы поставщиков", "ИИ или обычный код?")
 
 
 def build_s04(p):
+    """Case 1 setup -- two identical-format document cards + real photo of a
+    document pile (6-tier acquisition, see iteration-log.md)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Агент циклом", size=28)
-    text_box(s, 0.55, 1.05, 9.5, 0.5,
-             text="Нужен, когда несколько шагов и действия во внешних системах",
-             size=15, italic=True, color=MID, line_spacing=1.2)
-    chip(s, 11.15, 1.0, 1.65, 0.42, "Лекция 3 →", fill=TEAL, size=11.5)
+    slide_title(s, "Документы поставщиков", size=28)
+    quote_block(s, 0.55, 1.1, 12.23, 1.15,
+                "«Бухгалтерия тонет. Вот два примера — можно это автоматом разбирать?»",
+                size=15.5)
 
-    # Circular 4-step layout using 4 corner cards + center loop icon
-    cx0, cy0, r_w = 6.67, 3.75, 4.7
-    positions = [
-        (cx0 - r_w / 2 - 1.55, 2.0, "git-fork", "Строит план"),
-        (cx0 + r_w / 2 - 1.55, 2.0, "wrench", "Вызывает внешний\nинструмент (API,\nпоиск, код)"),
-        (cx0 + r_w / 2 - 1.55, 3.9, "circle-check", "Проверяет\nрезультат вызова"),
-        (cx0 - r_w / 2 - 1.55, 3.9, "route", "Решает, что\nделать дальше"),
-    ]
-    card_w, card_h = 3.1, 1.6
-    for i, (cx, cy, ic, lbl) in enumerate(positions):
-        ocean_box(s, cx, cy, card_w, card_h)
-        icon(s, ic, "065A82", 96, cx + 0.16, cy + 0.16, 0.44)
-        chip(s, cx + card_w - 0.48, cy + 0.14, 0.32, 0.32, str(i + 1), fill=GOLD,
-             color=DEEP, size=11.5)
-        lines = lbl.split("\n")
-        paras = [{"text": ln, "size": 12, "bold": True, "color": DEEP,
-                  "line_spacing": 1.1} for ln in lines]
-        multipara_box(s, cx + 0.16, cy + 0.68, card_w - 0.32, card_h - 0.78, paras)
+    # Left: real photo of a document pile (honest 6-tier acquisition)
+    photo_x, photo_y, photo_w, photo_h = 0.55, 2.4, 4.15, 3.85
+    ocean_box(s, photo_x, photo_y, photo_w, photo_h, fill=SURFACE, stroke=LIGHT)
+    img_path = SHOTS / "s04-documents-pile-real.jpg"
+    if img_path.exists():
+        pad = 0.12
+        add_image_coverfit(s, img_path, photo_x + pad, photo_y + pad,
+                            photo_w - 2 * pad, photo_h - 2 * pad - 0.32)
+    text_box(s, photo_x + 0.12, photo_y + photo_h - 0.32, photo_w - 0.24, 0.28,
+             text="Pizarros · Wikimedia Commons · CC BY-SA 3.0", size=9.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER)
 
-    # Center loop badge
-    loop_sz = 1.0
-    lcx = cx0 - loop_sz / 2
-    lcy = 2.0 + card_h + 0.05
-    filled_rect(s, lcx, lcy, loop_sz, loop_sz, TEAL, radius=True, radius_adj=0.5)
-    icon(s, "repeat", "FFFFFF", 48, lcx + 0.2, lcy + 0.2, 0.6)
-    text_box(s, cx0 - 1.1, lcy + loop_sz + 0.04, 2.2, 0.3, text="цикл повторяется",
-             size=10, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    # Right: two identical-format document cards (mini tables)
+    rx = photo_x + photo_w + 0.3
+    rw = 12.23 - photo_w - 0.3
+    ch = 1.85
+    docs = [("A", ["Дата", "№ накладной", "Позиция", "Сумма"]),
+            ("Б", ["Дата", "№ накладной", "Позиция", "Сумма"])]
+    for i, (label, cols) in enumerate(docs):
+        cy = photo_y + i * (ch + 0.25)
+        ocean_box(s, rx, cy, rw, ch)
+        text_box(s, rx + 0.2, cy + 0.14, rw - 0.4, 0.32,
+                 text=f"Документ поставщика {label}", size=13, bold=True, color=MID)
+        table_y = cy + 0.55
+        row_h = 0.38
+        table_w = rw - 0.4
+        col_w = table_w / len(cols)
+        for ci, colname in enumerate(cols):
+            hx = rx + 0.2 + ci * col_w
+            filled_rect(s, hx, table_y, col_w - 0.04, row_h, MID, radius=False)
+            text_box(s, hx, table_y, col_w - 0.04, row_h, text=colname, size=10,
+                     bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        ry = table_y + row_h + 0.03
+        for ci in range(len(cols)):
+            hx = rx + 0.2 + ci * col_w
+            filled_rect(s, hx, ry, col_w - 0.04, row_h, SURFACE, stroke=SOFT_GREY, stroke_pt=0.8)
+            text_box(s, hx, ry, col_w - 0.04, row_h, text="24.03.2026" if ci == 0 else "—",
+                     size=9.5, color=SLATE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
-    ocean_box(s, 0.55, 5.95, 12.23, 1.05, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, 5.95, 11.6, 1.05,
-             text="Когда нужен: несколько шагов и действия во внешних системах",
-             size=16.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    q_y = photo_y + photo_h + 0.2
+    ocean_box(s, 0.55, q_y, 12.23, 0.8, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.8, text="Что предложите?", size=22, bold=True,
+             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s04"))
 
 
 def build_s05(p):
-    build_divider(p, "s05", "1", "ИИ или обычный код?",
-                  "Полный кейс · блиц-кейс · два случая из жизни", 0)
-
-
-def build_s06(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Документы поставщиков", size=28)
-    quote_block(s, 0.55, 1.15, 12.23, 1.55,
-                "«Вот два примера входящих документов от двух наших поставщиков за "
-                "последний месяц. Форматы почти идентичные. Напишите нам автоматическое "
-                "извлечение данных из таких документов».", size=15)
+    quote_block(s, 0.55, 1.15, 12.23, 1.0,
+                "«Попросили архив — прислали за три года, сорок поставщиков»", size=15)
 
-    grid_y = 2.75
-    gap = 0.3
-    cw = (12.23 - gap) / 2
-    ch = 2.55
-    docs = [("A", ["Дата", "№ накладной", "Позиция", "Сумма"]),
-            ("Б", ["Дата", "№ накладной", "Позиция", "Сумма"])]
-    for i, (label, cols) in enumerate(docs):
-        cx = 0.55 + i * (cw + gap)
-        ocean_box(s, cx, grid_y, cw, ch)
-        text_box(s, cx + 0.22, grid_y + 0.16, cw - 0.44, 0.35,
-                 text=f"Документ поставщика {label}", size=13.5, bold=True, color=MID)
-        table_y = grid_y + 0.65
-        row_h = 0.42
-        table_w = cw - 0.44
-        col_w = table_w / len(cols)
-        for ci, colname in enumerate(cols):
-            hx = cx + 0.22 + ci * col_w
-            filled_rect(s, hx, table_y, col_w - 0.04, row_h, MID, radius=False)
-            text_box(s, hx, table_y, col_w - 0.04, row_h, text=colname, size=10.5,
-                     bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        for r in range(2):
-            ry = table_y + row_h * (r + 1) + 0.03 * r
-            for ci in range(len(cols)):
-                hx = cx + 0.22 + ci * col_w
-                filled_rect(s, hx, ry, col_w - 0.04, row_h, SURFACE, stroke=SOFT_GREY, stroke_pt=0.8)
-                text_box(s, hx, ry, col_w - 0.04, row_h, text="24.03.2026" if ci == 0 else "—",
-                         size=10, color=SLATE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.55, 5.75, 12.23, 0.4, text="Одинаковые колонки, одинаковый формат дат",
-             size=12.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    ocean_box(s, 0.55, 6.3, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, 6.3, 11.6, 0.85, text="Нужен ли здесь ИИ?", size=22, bold=True,
-             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s06"))
-
-
-def build_s07(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    slide_title(s, "Полный корпус — три года, все поставщики", size=25)
-    quote_block(s, 0.55, 1.05, 12.23, 1.0,
-                "«Запросили полный корпус: три года, все поставщики».", size=15)
-
-    grid_y = 2.25
+    grid_y = 2.4
     gap = 0.22
     n = 4
     cw = (12.23 - gap * (n - 1)) / n
@@ -662,48 +629,94 @@ def build_s07(p):
         for ci in range(len(cols)):
             hx = cx + 0.14 + ci * col_w
             filled_rect(s, hx, ry, col_w - 0.03, row_h, SURFACE, stroke=SOFT_GREY, stroke_pt=0.7)
-    text_box(s, 0.55, grid_y + ch + 0.1, 12.23, 0.35, text="Форматы разъехались — разные колонки, разные форматы дат",
+    text_box(s, 0.55, grid_y + ch + 0.1, 12.23, 0.35,
+             text="Форматы разъехались — разные колонки, разные форматы дат, один документ на английском",
              size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
 
     q_y = grid_y + ch + 0.55
-    ocean_box(s, 0.55, q_y, 12.23, 0.65, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, q_y, 11.6, 0.65, text="Кто передумал? Почему?", size=18, bold=True,
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Меняет ли это ваш ответ?", size=22, bold=True,
              color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s05"))
 
-    verdict_y = q_y + 0.8
-    verdict_h = 7.15 - verdict_y
+
+def build_s06(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Документы поставщиков — разбор", size=26)
+
+    verdict_y = 1.3
+    verdict_h = 2.6
     ocean_box(s, 0.55, verdict_y, 12.23, verdict_h, fill=SURFACE, stroke=MID, stroke_pt=1.6)
-    icon(s, "workflow", "065A82", 96, 0.8, verdict_y + (verdict_h - 0.5) / 2, 0.5)
-    multipara_box(s, 1.5, verdict_y + 0.12, 10.9, verdict_h - 0.24, [
-        {"text": "Гибрид: LLM-извлечение по вариативному входу + жёсткая валидация кодом на выходе",
-         "size": 15.5, "bold": True, "color": DEEP, "line_spacing": 1.2},
-        {"text": "Урок: два примера — не выборка", "size": 13, "italic": True, "color": GOLD,
-         "bold": True, "space_after": 2},
+    icon(s, "workflow", "065A82", 96, 0.85, verdict_y + (verdict_h - 0.5) / 2, 0.5)
+    multipara_box(s, 1.55, verdict_y + 0.2, 10.9, verdict_h - 0.4, [
+        {"text": "Гибрид: LLM-извлечение по вариативному входу + жёсткая валидация "
+                 "кодом на выходе", "size": 17, "bold": True, "color": DEEP,
+         "line_spacing": 1.25, "space_after": 8},
+        {"text": "Документ (любой формат) → LLM извлекает поля → код проверяет "
+                 "типы/обязательные значения/диапазоны → данные в 1С", "size": 13.5,
+         "color": SLATE, "line_spacing": 1.3},
     ], anchor=MSO_ANCHOR.MIDDLE)
+
+    lesson_y = verdict_y + verdict_h + 0.3
+    ocean_box(s, 0.55, lesson_y, 12.23, 1.15, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, lesson_y, 11.6, 1.15,
+             text="Два примера — не выборка. Просите представление полного объёма данных",
+             size=18, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+
+    footer_note(s, "Держите в голове риск из Лекции 1: модель на форматах, которые "
+                    "видела, тихо деградирует на новых — тот же механизм, что distribution shift",
+                y=6.65)
+    speaker_notes(s, load_notes("s06"))
+
+
+def build_s07(p):
+    """Quickfire setup with icon-scene (issue #182: s07/s14/s25/s39 all get
+    2-3 thematic icons in composition, not just a text quote+question)."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Персоналка в логах", size=28)
+    quote_block(s, 0.55, 1.1, 12.23, 1.0,
+                "«Нужно вычистить персональные данные из логов перед передачей подрядчику»",
+                size=15)
+
+    scene_y = 2.35
+    scene_h = 2.35
+    ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    icon(s, "file-text", "065A82", 96, 0.95, scene_y + 0.35, 0.85)
+    icon(s, "phone", "028090", 64, 2.15, scene_y + 0.55, 0.5)
+    icon(s, "mail", "065A82", 96, 2.95, scene_y + 0.5, 0.55)
+    icon(s, "user-round", "F0AB00", 64, 3.75, scene_y + 0.55, 0.5)
+    multipara_box(s, 4.7, scene_y + 0.35, 7.3, 1.7, [
+        {"text": "Одна строка лога — телефон, email и фраза «передайте это Ивану "
+                 "из бухгалтерии»", "size": 16, "bold": True, "color": DEEP,
+         "line_spacing": 1.25, "space_after": 6},
+        {"text": "Подрядчику нужны структура запросов, тайминги, ошибки — не данные людей",
+         "size": 13, "color": SLATE, "line_spacing": 1.25},
+    ])
+
+    q_y = scene_y + scene_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Одна технология на всё, или нет?",
+             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s07"))
 
 
 def build_s08(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Персоналка в логах", size=28)
-    quote_block(s, 0.55, 1.1, 12.23, 1.0,
-                "«Нужно вычистить персональные данные из логов приложения перед "
-                "передачей их внешнему подрядчику на анализ производительности».", size=14.5)
-    ocean_box(s, 0.55, 2.35, 12.23, 0.65, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.3)
-    text_box(s, 0.85, 2.35, 11.6, 0.65, text="Одна технология на всё, или нет?",
-             size=18, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    slide_title(s, "Персоналка в логах — разбор", size=26)
 
-    grid_y = 3.25
+    grid_y = 1.5
     gap = 0.3
     cw = (12.23 - gap) / 2
-    ch = 2.65
+    ch = 2.9
     ocean_box(s, 0.55, grid_y, cw, ch, stroke=TEAL)
     icon(s, "hash", "028090", 96, 0.55 + 0.25, grid_y + 0.22, 0.55)
     text_box(s, 0.55 + 0.95, grid_y + 0.22, cw - 1.2, 0.55, text="Regex", size=17,
              bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.55 + 0.25, grid_y + 1.0, cw - 0.5, 1.5,
-             text="Телефоны, email — чёткий формат, дёшево и надёжно",
+    text_box(s, 0.55 + 0.25, grid_y + 1.0, cw - 0.5, 1.7,
+             text="Телефоны, email — чёткий формат, дёшево и надёжно вычищает обычный regex",
              size=14.5, color=DEEP, line_spacing=1.3)
 
     rx = 0.55 + cw + gap
@@ -711,15 +724,15 @@ def build_s08(p):
     icon(s, "search", "065A82", 96, rx + 0.25, grid_y + 0.22, 0.55)
     text_box(s, rx + 0.95, grid_y + 0.22, cw - 1.2, 0.55, text="NER / LLM", size=17,
              bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, rx + 0.25, grid_y + 1.0, cw - 0.5, 1.5,
+    text_box(s, rx + 0.25, grid_y + 1.0, cw - 0.5, 1.7,
              text="Имена людей, косвенные упоминания в свободном тексте — нужен контекст",
              size=14.5, color=DEEP, line_spacing=1.3)
 
-    footer_y = grid_y + ch + 0.25
-    ocean_box(s, 0.55, footer_y, 12.23, 0.75, fill=SURFACE, stroke=LIGHT)
-    text_box(s, 0.85, footer_y, 11.6, 0.75,
-             text="Ответ — гибрид, и граница проходит внутри одной задачи",
-             size=15.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    footer_y = grid_y + ch + 0.3
+    ocean_box(s, 0.55, footer_y, 12.23, 1.0, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, footer_y, 11.6, 1.0,
+             text="Граница между regex и моделью проходит внутри одной задачи, не между задачами",
+             size=16.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
     speaker_notes(s, load_notes("s08"))
 
 
@@ -764,44 +777,79 @@ def build_s09(p):
 
 
 def build_s10(p):
-    build_divider(p, "s10", "2", "Встроить или делать своё?",
-                  "Полный кейс без единственного ответа · блиц-кейс · случаи из жизни",
-                  1)
+    build_divider(p, "s10", "2", "Помощник поддержки", "Встроить или своё?")
 
 
 def build_s11(p):
+    """Case 2 setup -- real photo of a support operator with headset
+    (6-tier acquisition, see iteration-log.md)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Помощник поддержки", size=28)
-    quote_block(s, 0.55, 1.3, 12.23, 1.7,
-                "«Сделайте нам ИИ-помощника для операторов техподдержки — подсказки "
-                "ответов на тикеты, поиск похожих обращений в истории».", size=17)
+    quote_block(s, 0.55, 1.1, 12.23, 1.35,
+                "«Сделайте нам ИИ-помощника для операторов — подсказки по тикетам, "
+                "поиск похожих обращений»", size=16)
 
-    # Ocean box wraps the icon + supporting line to fill the middle mass
-    mid_y = 3.3
-    mid_h = 1.55
-    ocean_box(s, 0.55, mid_y, 12.23, mid_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    icon(s, "monitor", "065A82", 96, 0.95, mid_y + (mid_h - 0.9) / 2, 0.9)
-    text_box(s, 2.15, mid_y, 10.2, mid_h,
-             text="Операторы весь рабочий день живут в интерфейсе helpdesk-системы",
-             size=16, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+    photo_x, photo_y, photo_w, photo_h = 0.55, 2.65, 4.3, 3.95
+    ocean_box(s, photo_x, photo_y, photo_w, photo_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    img_path = SHOTS / "s11-support-headset-real.jpg"
+    if img_path.exists():
+        pad = 0.12
+        add_image_coverfit(s, img_path, photo_x + pad, photo_y + pad,
+                            photo_w - 2 * pad, photo_h - 2 * pad - 0.3)
+    text_box(s, photo_x + 0.12, photo_y + photo_h - 0.3, photo_w - 0.24, 0.26,
+             text="FiveOne51 · Wikimedia Commons · CC BY-SA 3.0", size=9.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER)
 
-    q_y = mid_y + mid_h + 0.3
-    ocean_box(s, 0.55, q_y, 12.23, 1.35, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
-    text_box(s, 0.85, q_y, 11.6, 1.35, text="Где должен жить этот помощник?", size=26,
-             bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    rx = photo_x + photo_w + 0.3
+    rw = 12.23 - photo_w - 0.3
+    ocean_box(s, rx, photo_y, rw, 1.65, fill=SURFACE, stroke=LIGHT)
+    text_box(s, rx + 0.2, photo_y + 0.16, rw - 0.4, 1.35,
+             text="Операторы весь рабочий день живут в одном и том же интерфейсе "
+                  "helpdesk-системы",
+             size=15.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+
+    q_y = photo_y + 1.95
+    q_h = photo_h - 1.95
+    ocean_box(s, rx, q_y, rw, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    text_box(s, rx + 0.2, q_y, rw - 0.4, q_h, text="Где должен жить этот помощник?",
+             size=24, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
     speaker_notes(s, load_notes("s11"))
 
 
 def build_s12(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Закрытый вендор", size=28)
-    quote_block(s, 0.55, 1.05, 12.23, 1.0,
-                "«У вендора вашей helpdesk-системы нет открытого API и нет возможности "
-                "кастомизации».", size=14)
+    slide_title(s, "Помощник поддержки", size=28)
+    quote_block(s, 0.55, 1.05, 12.23, 1.15,
+                "«Открытого API нет, кастомизаций нет — вендор и на письма не отвечает»",
+                size=15, role_icon="briefcase")
 
-    grid_y = 2.25
+    q_y = 2.45
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Что делаем?", size=24, bold=True,
+             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+
+    fact_y = q_y + 1.1
+    fact_h = 3.4
+    ocean_box(s, 0.55, fact_y, 12.23, fact_h, fill=SURFACE, stroke=LIGHT)
+    icon(s, "lock", "21295C", 64, 0.85, fact_y + (fact_h - 0.5) / 2, 0.5)
+    multipara_box(s, 1.6, fact_y + 0.25, 10.8, fact_h - 0.5, [
+        {"text": "Коробочный helpdesk — закрытый вендор", "size": 18, "bold": True,
+         "color": DEEP, "line_spacing": 1.25, "space_after": 8},
+        {"text": "Нет открытого API, нет возможности кастомизации, вендор не отвечает "
+                 "даже на письма об интеграции", "size": 14, "color": SLATE,
+         "line_spacing": 1.3},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s12"))
+
+
+def build_s13(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Помощник поддержки — разбор", size=26)
+
+    grid_y = 1.4
     gap = 0.28
     cw = (12.23 - gap * 2) / 3
     ch = 3.9
@@ -831,19 +879,43 @@ def build_s12(p):
     ocean_box(s, 0.55, footer_y, 12.23, 0.6, fill=SURFACE, stroke=LIGHT)
     text_box(s, 0.85, footer_y, 11.6, 0.6, text="Единственно верного ответа нет",
              size=15, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s12"))
+    speaker_notes(s, load_notes("s13"))
 
 
-def build_s13(p):
+def build_s14(p):
+    """Quickfire setup with icon-scene (issue #182 extension)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Описания товаров", size=28)
-    quote_block(s, 0.55, 1.2, 12.23, 1.2,
-                "«Маркетинг просит отдельный ИИ-сервис для генерации описаний товаров».",
+    quote_block(s, 0.55, 1.1, 12.23, 1.05,
+                "«Маркетинг просит отдельный ИИ-сервис для генерации описаний товаров»",
                 size=16)
 
-    row_y = 2.85
-    row_h = 1.9
+    scene_y = 2.35
+    scene_h = 2.1
+    ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    icon(s, "store", "065A82", 96, 0.95, scene_y + (scene_h - 0.85) / 2, 0.85)
+    icon(s, "arrow-right", "F0AB00", 64, 2.15, scene_y + (scene_h - 0.5) / 2, 0.5)
+    icon(s, "sparkles", "065A82", 96, 3.05, scene_y + (scene_h - 0.85) / 2, 0.85)
+    text_box(s, 4.2, scene_y, 7.6, scene_h,
+             text="Новый отдельный инструмент: логин, вкладка, форма ввода характеристик "
+                  "товара → готовое описание",
+             size=15.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+
+    q_y = scene_y + scene_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Отдельный сервис — хорошая идея?",
+             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s14"))
+
+
+def build_s15(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Описания товаров — разбор", size=27)
+
+    row_y = 1.55
+    row_h = 2.0
     ocean_box(s, 0.55, row_y, 12.23, row_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
     icon(s, "store", "065A82", 96, 0.9, row_y + (row_h - 0.85) / 2, 0.85)
     icon(s, "arrow-right", "F0AB00", 64, 2.15, row_y + (row_h - 0.5) / 2, 0.5)
@@ -855,15 +927,15 @@ def build_s13(p):
          "size": 15, "color": DEEP, "line_spacing": 1.3},
     ], anchor=MSO_ANCHOR.MIDDLE)
 
-    fn_y = row_y + row_h + 0.4
-    ocean_box(s, 0.55, fn_y, 12.23, 1.15, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, fn_y, 11.6, 1.15,
-             text="Отдельный продукт — не отдельный продукт: второй логин и вкладка убивают использование",
-             size=16, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
-    speaker_notes(s, load_notes("s13"))
+    fn_y = row_y + row_h + 0.35
+    ocean_box(s, 0.55, fn_y, 12.23, 1.2, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, fn_y, 11.6, 1.2,
+             text="Отдельный продукт — второй логин и вкладка, цена, о которой не подумали",
+             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+    speaker_notes(s, load_notes("s15"))
 
 
-def build_s14(p):
+def build_s16(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Из жизни: Kite vs GitHub Copilot", size=26)
@@ -903,74 +975,175 @@ def build_s14(p):
              text="Humane AI Pin — привлечено ~$241 млн, продан за $116 млн · Rabbit R1 — "
                   "~100 000 устройств, активно пользуются ~5%",
              size=12, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
-    speaker_notes(s, load_notes("s14"))
-
-
-def build_s15(p):
-    build_divider(p, "s15", "3", "Разовый вызов, RAG или агент?",
-                  "Кейс-лестница из трёх ступеней · блиц-кейс · случаи из жизни", 2)
-
-
-def build_s16(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    slide_title(s, "Протоколы встреч", size=28)
-    ocean_box(s, 0.55, 1.25, 12.23, 2.1, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "file-text", "065A82", 96, 0.9, 1.6, 0.8)
-    icon(s, "arrow-right", "F0AB00", 64, 2.05, 1.85, 0.5)
-    icon(s, "list-checks", "065A82", 96, 2.85, 1.6, 0.8)
-    multipara_box(s, 4.0, 1.55, 8.5, 1.7, [
-        {"text": "Транскрипт встречи → структурированный протокол", "size": 18, "bold": True,
-         "color": DEEP, "line_spacing": 1.2, "space_after": 6},
-        {"text": "Какие решения приняты, какие поручения даны, какие сроки", "size": 13.5,
-         "color": SLATE, "line_spacing": 1.25, "space_after": 6},
-        {"text": "У вас есть полный транскрипт одной встречи целиком", "size": 13.5,
-         "bold": True, "italic": True, "color": MID, "line_spacing": 1.25},
-    ])
-    v_y = 3.65
-    ocean_box(s, 0.55, v_y, 12.23, 1.0, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, v_y, 11.6, 1.0,
-             text="Один разовый вызов модели — RAG и агент были бы избыточным усложнением",
-             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-
-    # ladder-position indicator (step 1 of 3), reused/extended by s17/s18
-    lad_y = 4.95
-    ladder_row(s, lad_y, 1)
     speaker_notes(s, load_notes("s16"))
 
 
-def ladder_row(slide, y, active_step, ch=1.55):
-    """3-step architecture ladder used across s16/s17/s18 (progressive reveal)."""
-    labels = ["Разовый вызов", "RAG", "Агент"]
-    n = 3
-    gap = 0.3
-    cw = (12.23 - gap * (n - 1)) / n
-    for i, lbl in enumerate(labels):
-        cx = 0.55 + i * (cw + gap)
-        is_done = (i < active_step)
-        is_now = (i == active_step - 1)
-        fill = GOLD if is_now else (SURFACE if not is_done else SOFT_GREY)
-        stroke = GOLD if is_now else LIGHT
-        filled_rect(slide, cx, y, cw, ch, fill, stroke=stroke, stroke_pt=1.5,
-                    radius=True, radius_adj=0.12)
-        text_box(slide, cx, y + 0.18, cw, 0.5, text=lbl, size=15.5, bold=True,
-                 color=DEEP, align=PP_ALIGN.CENTER)
+def build_s17(p):
+    """RAG schema -- now its own standalone slide positioned BEFORE case 3
+    (issue #182), ported from the pre-pivot build_s03 RAG-schema drawing
+    almost verbatim."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Два слова про RAG", size=28)
+    text_box(s, 0.55, 1.05, 9.5, 0.5,
+             text="Поиск по базе знаний подкладывает нужные фрагменты в контекст модели",
+             size=15, italic=True, color=MID, line_spacing=1.2)
+    chip(s, 11.15, 1.0, 1.65, 0.42, "Лекция 3 →", fill=TEAL, size=11.5)
+
+    steps = [
+        ("search", "Вопрос пользователя"),
+        ("database", "Поиск фрагментов\nв базе знаний"),
+        ("layers", "Фрагменты →\nв контекст модели"),
+        ("sparkles", "Модель генерирует\nответ"),
+    ]
+    grid_y = 2.35
+    grid_h = 2.9
+    n = 4
+    gap_arrow = 0.55
+    cw = (12.23 - gap_arrow * (n - 1)) / n
+    for i, (ic, lbl) in enumerate(steps):
+        cx = 0.55 + i * (cw + gap_arrow)
+        ocean_box(s, cx, grid_y, cw, grid_h)
+        icon(s, ic, "065A82", 96, cx + (cw - 0.6) / 2, grid_y + 0.35, 0.6)
+        lines = lbl.split("\n")
+        paras = [{"text": ln, "size": 13.5, "bold": True, "color": DEEP,
+                  "align": PP_ALIGN.CENTER, "line_spacing": 1.15} for ln in lines]
+        multipara_box(s, cx + 0.12, grid_y + 1.15, cw - 0.24, 1.6, paras, align=PP_ALIGN.CENTER)
+        chip(s, cx + 0.14, grid_y + grid_h - 0.5, 0.34, 0.34, str(i + 1), fill=GOLD,
+             color=DEEP, size=13)
         if i < n - 1:
-            ax = cx + cw + 0.04
-            arrow = slide.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(ax),
-                Inches(y + ch / 2 - 0.11), Inches(gap - 0.08), Inches(0.22))
+            ax = cx + cw + 0.06
+            arrow = s.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(ax),
+                Inches(grid_y + grid_h / 2 - 0.16), Inches(gap_arrow - 0.12), Inches(0.32))
             arrow.fill.solid(); arrow.fill.fore_color.rgb = TEAL
             arrow.line.fill.background()
             disable_shadow(arrow)
 
+    ocean_box(s, 0.55, 5.55, 12.23, 1.05, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, 5.55, 11.6, 1.05,
+             text="Когда нужен: база большая, меняется, весь объём не помещается в один запрос",
+             size=16.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s17"))
 
-def build_s17(p):
+
+def build_s18(p):
+    """Agent schema -- now its own standalone slide positioned BEFORE case 3
+    (issue #182), ported from the pre-pivot build_s04 agent-schema drawing
+    almost verbatim."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "База протоколов растёт", size=26, y=0.35, h=0.6)
+    slide_title(s, "Два слова про агента", size=28)
+    text_box(s, 0.55, 1.05, 9.5, 0.5,
+             text="Модель работает циклом с внешними инструментами, а не одним вызовом",
+             size=15, italic=True, color=MID, line_spacing=1.2)
+    chip(s, 11.15, 1.0, 1.65, 0.42, "Лекция 3 →", fill=TEAL, size=11.5)
+
+    # Circular 4-step layout using 4 corner cards + center loop icon
+    cx0, cy0, r_w = 6.67, 3.75, 4.7
+    positions = [
+        (cx0 - r_w / 2 - 1.55, 2.0, "git-fork", "Строит план"),
+        (cx0 + r_w / 2 - 1.55, 2.0, "wrench", "Вызывает внешний\nинструмент (API,\nпоиск, код)"),
+        (cx0 + r_w / 2 - 1.55, 3.9, "circle-check", "Проверяет\nрезультат вызова"),
+        (cx0 - r_w / 2 - 1.55, 3.9, "route", "Решает, что\nделать дальше"),
+    ]
+    card_w, card_h = 3.1, 1.6
+    for i, (cx, cy, ic, lbl) in enumerate(positions):
+        ocean_box(s, cx, cy, card_w, card_h)
+        icon(s, ic, "065A82", 96, cx + 0.16, cy + 0.16, 0.44)
+        chip(s, cx + card_w - 0.48, cy + 0.14, 0.32, 0.32, str(i + 1), fill=GOLD,
+             color=DEEP, size=11.5)
+        lines = lbl.split("\n")
+        paras = [{"text": ln, "size": 12, "bold": True, "color": DEEP,
+                  "line_spacing": 1.1} for ln in lines]
+        multipara_box(s, cx + 0.16, cy + 0.68, card_w - 0.32, card_h - 0.78, paras)
+
+    # Center loop badge
+    loop_sz = 1.0
+    lcx = cx0 - loop_sz / 2
+    lcy = 2.0 + card_h + 0.05
+    filled_rect(s, lcx, lcy, loop_sz, loop_sz, TEAL, radius=True, radius_adj=0.5)
+    icon(s, "repeat", "FFFFFF", 48, lcx + 0.2, lcy + 0.2, 0.6)
+    text_box(s, cx0 - 1.1, lcy + loop_sz + 0.04, 2.2, 0.3, text="цикл повторяется",
+             size=10, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+
+    ocean_box(s, 0.55, 5.95, 12.23, 1.05, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, 5.95, 11.6, 1.05,
+             text="Когда нужен: несколько шагов и действия во внешних системах",
+             size=16.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s18"))
+
+
+def build_s19(p):
+    build_divider(p, "s19", "3", "Протоколы встреч", "Разовый вызов, RAG или агент?")
+
+
+def build_s20(p):
+    """Case 3 setup -- real photo of a work meeting (6-tier acquisition,
+    see iteration-log.md)."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Протоколы встреч", size=27, y=0.4, h=0.6)
+    quote_block(s, 0.55, 1.0, 12.23, 1.05,
+                "«После каждой встречи кто-то полчаса пишет протокол руками. "
+                "Транскрипты есть — сделаем автоматом?»", size=14)
+
+    photo_x, photo_y, photo_w, photo_h = 0.55, 2.2, 6.9, 3.35
+    ocean_box(s, photo_x, photo_y, photo_w, photo_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    img_path = SHOTS / "s20-meeting-room-real.jpg"
+    if img_path.exists():
+        pad = 0.12
+        add_image_coverfit(s, img_path, photo_x + pad, photo_y + pad,
+                            photo_w - 2 * pad, photo_h - 2 * pad - 0.3)
+    text_box(s, photo_x + 0.12, photo_y + photo_h - 0.3, photo_w - 0.24, 0.26,
+             text="Amtec Photos · Wikimedia Commons · CC BY 2.0", size=9.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER)
+
+    rx = photo_x + photo_w + 0.3
+    rw = 12.23 - photo_w - 0.3
+    ocean_box(s, rx, photo_y, rw, 1.9, fill=SURFACE, stroke=LIGHT)
+    text_box(s, rx + 0.18, photo_y + 0.14, rw - 0.36, 1.62,
+             text="Транскрипт одной встречи целиком → структурированные решения, "
+                  "поручения и сроки",
+             size=14, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
+
+    q_y = photo_y + 2.2
+    q_h = photo_h - 2.2
+    ocean_box(s, rx, q_y, rw, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    text_box(s, rx + 0.18, q_y, rw - 0.36, q_h, text="Какая архитектура?",
+             size=19, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+
+    ladder_row(s, photo_y + photo_h + 0.25, 1, ch=0.85)
+    speaker_notes(s, load_notes("s20"))
+
+
+def build_s21(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Протоколы встреч", size=28)
+    quote_block(s, 0.55, 1.2, 12.23, 1.2,
+                "«А можно искать — что мы решали по проекту X за полгода?»", size=16)
+
+    mid_y = 2.75
+    mid_h = 1.55
+    ocean_box(s, 0.55, mid_y, 12.23, mid_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
+    icon(s, "folder-search", "065A82", 96, 0.95, mid_y + (mid_h - 0.9) / 2, 0.9)
+    text_box(s, 2.15, mid_y, 10.2, mid_h,
+             text="Прошёл месяц — накопились десятки протоколов с разных встреч, по разным проектам",
+             size=16, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+
+    q_y = mid_y + mid_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 1.15, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    text_box(s, 0.85, q_y, 11.6, 1.15, text="Меняет ли это архитектуру?", size=24,
+             bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s21"))
+
+
+def build_s22(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Протоколы встреч — разбор 1", size=26, y=0.35, h=0.6)
     quote_block(s, 0.55, 0.95, 12.23, 0.85,
-                "«Теперь хотим спрашивать: что мы решали по проекту X за последние полгода?»",
-                size=13.5)
+                "«Растущий и меняющийся архив — вот когда нужен RAG»", size=13.5)
 
     # growing stack illustration
     stack_y = 2.0
@@ -995,60 +1168,103 @@ def build_s17(p):
          "line_spacing": 1.15},
     ])
 
-    q_y = 3.6
-    ocean_box(s, 0.55, q_y, 12.23, 0.55, fill=SURFACE, stroke=LIGHT)
-    text_box(s, 0.85, q_y, 11.6, 0.55, text="Кто передумал? Почему?", size=15.5, bold=True,
-             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-
-    v_y = q_y + 0.68
+    v_y = 3.6
     ocean_box(s, 0.55, v_y, 12.23, 0.65, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
     text_box(s, 0.85, v_y, 11.6, 0.65, text="Теперь обоснован RAG",
-             size=16, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
-    ladder_row(s, v_y + 0.82, 2, ch=1.05)
-    speaker_notes(s, load_notes("s17"))
+    ladder_row(s, v_y + 0.85, 2, ch=1.15)
+    speaker_notes(s, load_notes("s22"))
 
 
-def build_s18(p):
+def build_s23(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Поручения — сами в таск-трекер", size=27)
-    quote_block(s, 0.55, 1.05, 12.23, 0.9,
-                "«И пусть поручения из протокола сами автоматически раскладываются "
-                "по задачам в таск-трекере».", size=13.5)
+    slide_title(s, "Протоколы встреч", size=28)
+    quote_block(s, 0.55, 1.15, 12.23, 1.2,
+                "«Поручения из протоколов мы всё равно руками переносим в таск-трекер...»",
+                size=15.5)
 
-    ill_y = 2.15
-    ocean_box(s, 0.55, ill_y, 12.23, 1.35, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "file-text", "065A82", 96, 0.9, ill_y + 0.35, 0.65)
-    icon(s, "arrow-right", "F0AB00", 64, 1.95, ill_y + 0.5, 0.45)
-    icon(s, "list-checks", "065A82", 96, 2.75, ill_y + 0.35, 0.65)
-    text_box(s, 3.8, ill_y + 0.25, 8.7, 0.9,
-             text="создать задачу → назначить исполнителя → проверить срок",
-             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+    mid_y = 2.65
+    mid_h = 1.4
+    ocean_box(s, 0.55, mid_y, 12.23, mid_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
+    icon(s, "list-checks", "065A82", 96, 0.95, mid_y + (mid_h - 0.7) / 2, 0.7)
+    text_box(s, 2.0, mid_y, 10.3, mid_h,
+             text="Система находит поручения в тексте протокола, но кто-то вручную "
+                  "открывает таск-трекер и заводит задачи одну за другой",
+             size=14.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
 
-    v_y = 3.75
-    ocean_box(s, 0.55, v_y, 12.23, 1.35, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
-    multipara_box(s, 0.85, v_y + 0.16, 11.6, 1.05, [
-        {"text": "Архитектурный выбор двигают конкретные новые требования", "size": 17,
-         "bold": True, "color": DEEP, "line_spacing": 1.2, "space_after": 4},
-        {"text": "Начинайте с простейшего варианта и усложняйте только тогда, когда простой "
-                 "закрыть требование не может", "size": 13, "italic": True, "color": DEEP,
-         "line_spacing": 1.2},
+    q_y = mid_y + mid_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Меняет ли это архитектуру ещё раз?",
+             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s23"))
+
+
+def build_s24(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Протоколы встреч — разбор 2", size=26)
+
+    ill_y = 1.4
+    ill_h = 1.6
+    ocean_box(s, 0.55, ill_y, 12.23, ill_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    icon(s, "file-text", "065A82", 96, 0.9, ill_y + 0.5, 0.6)
+    icon(s, "arrow-right", "F0AB00", 64, 1.95, ill_y + 0.65, 0.45)
+    icon(s, "cable", "065A82", 96, 2.75, ill_y + 0.5, 0.6)
+    icon(s, "arrow-right", "F0AB00", 64, 3.75, ill_y + 0.65, 0.45)
+    icon(s, "check-circle-2", "028090", 96, 4.55, ill_y + 0.5, 0.6)
+    text_box(s, 5.55, ill_y, 6.7, ill_h,
+             text="извлечь поручение → вызвать API таск-трекера → создать задачу и проверить",
+             size=13.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+
+    v_y = ill_y + ill_h + 0.3
+    ocean_box(s, 0.55, v_y, 12.23, 1.3, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    icon(s, "workflow", "21295C", 64, 0.85, v_y + 0.35, 0.6)
+    text_box(s, 1.65, v_y + 0.14, 10.8, 1.0,
+             text="Действие во внешней системе — нужен workflow или агент. Начинайте с "
+                  "простейшего, усложняйте только когда требование не закрыть иначе",
+             size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
+
+    ladder_row(s, v_y + 1.5, 3, ch=1.0)
+    speaker_notes(s, load_notes("s24"))
+
+
+def build_s25(p):
+    """Quickfire setup with icon-scene (issue #182 extension)."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Дайджест по чатам и почте", size=27)
+    quote_block(s, 0.55, 1.1, 12.23, 1.0,
+                "«Нужен еженедельный дайджест по рабочим чатам и почте команды»", size=15)
+
+    scene_y = 2.35
+    scene_h = 2.35
+    ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    icon(s, "message-square-quote", "065A82", 96, 0.95, scene_y + 0.45, 0.7)
+    icon(s, "mail", "028090", 96, 2.1, scene_y + 0.45, 0.7)
+    icon(s, "arrow-right", "F0AB00", 64, 3.15, scene_y + 0.6, 0.5)
+    icon(s, "file-text", "065A82", 96, 4.0, scene_y + 0.45, 0.7)
+    multipara_box(s, 5.15, scene_y + 0.4, 6.8, 1.55, [
+        {"text": "Что обсуждали, что решили за неделю", "size": 16.5, "bold": True,
+         "color": DEEP, "line_spacing": 1.2, "space_after": 6},
+        {"text": "Коротко, одним сообщением по пятницам", "size": 13.5, "color": SLATE,
+         "line_spacing": 1.25},
     ])
 
-    ladder_row(s, 5.35, 3)
-    speaker_notes(s, load_notes("s18"))
+    q_y = scene_y + scene_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Какая архитектура здесь нужна?",
+             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s25"))
 
 
-def build_s19(p):
+def build_s26(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Еженедельный дайджест", size=28)
-    quote_block(s, 0.55, 1.1, 12.23, 1.0,
-                "«Нужен еженедельный дайджест по рабочим чатам и почте команды — "
-                "что обсуждали, что решили».", size=14.5)
+    slide_title(s, "Дайджест — разбор", size=28)
 
-    grid_y = 2.35
+    grid_y = 1.5
     gap = 0.3
     cw = (12.23 - gap) / 2
     ch = 1.95
@@ -1068,12 +1284,12 @@ def build_s19(p):
 
     footer_y = grid_y + ch + 0.35
     ocean_box(s, 0.55, footer_y, 12.23, 1.15, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, 0.85, footer_y, 11.6, 1.15, text="RAG ≠ «у нас много источников»",
+    text_box(s, 0.85, footer_y, 11.6, 1.15, text="Много источников — не то же самое, что RAG",
              size=20, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s19"))
+    speaker_notes(s, load_notes("s26"))
 
 
-def build_s20(p):
+def build_s27(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Из жизни: фреймворк и класс задач для агента", size=23)
@@ -1107,81 +1323,90 @@ def build_s20(p):
              text="Прямые вызовы API иногда дают больше контроля, чем абстракция, которая "
                   "должна была его упростить",
              size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
-    speaker_notes(s, load_notes("s20"))
+    speaker_notes(s, load_notes("s27"))
 
 
-def build_s21(p):
-    build_divider(p, "s21", "4", "Внешний API или локальный инференс?",
-                  "Кейс-трёхходовка · случаи из жизни", 3)
+def build_s28(p):
+    build_divider(p, "s28", "4", "Звонки продаж", "Внешний API или локально?")
 
 
-def build_s22(p):
+def build_s29(p):
+    """Case 4 setup -- real photo of an office phone call, deliberately
+    different subject/composition from s11 (6-tier acquisition, see
+    iteration-log.md)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Саммаризация звонков продаж", size=27)
-    ocean_box(s, 0.55, 1.35, 12.23, 2.4, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
-    icon(s, "phone", "065A82", 96, 0.9, 1.75, 0.85)
-    icon(s, "arrow-right", "F0AB00", 64, 2.15, 2.0, 0.5)
-    icon(s, "file-text", "065A82", 96, 2.95, 1.75, 0.85)
-    multipara_box(s, 4.1, 1.75, 8.3, 1.7, [
-        {"text": "Записи звонков менеджеров по продажам →", "size": 17, "bold": True,
-         "color": DEEP, "line_spacing": 1.2, "space_after": 6},
-        {"text": "карточка звонка: выявленная потребность клиента, возражения, договорённости",
-         "size": 14, "color": SLATE, "line_spacing": 1.3},
-    ])
+    slide_title(s, "Звонки продаж", size=28)
+    quote_block(s, 0.55, 1.1, 12.23, 1.3,
+                "«Хочу карточку по каждому звонку — потребность, возражения, договорённости»",
+                size=15.5, role_icon="briefcase")
 
-    v_y = 4.15
-    ocean_box(s, 0.55, v_y, 12.23, 1.15, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
-    text_box(s, 0.85, v_y, 11.6, 1.15, text="Какая архитектура? Где считать?",
-             size=24, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    photo_x, photo_y, photo_w, photo_h = 0.55, 2.6, 4.6, 3.95
+    ocean_box(s, photo_x, photo_y, photo_w, photo_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    img_path = SHOTS / "s29-office-phonecall-real.jpg"
+    if img_path.exists():
+        pad = 0.12
+        add_image_coverfit(s, img_path, photo_x + pad, photo_y + pad,
+                            photo_w - 2 * pad, photo_h - 2 * pad - 0.3)
+    text_box(s, photo_x + 0.12, photo_y + photo_h - 0.3, photo_w - 0.24, 0.26,
+             text="OddibeKerfeld · Wikimedia Commons · CC BY-SA 3.0", size=9.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER)
 
-    # 3-step calls ladder position indicator (step 1 of 3)
-    calls_ladder_row(s, 5.75, 1)
-    speaker_notes(s, load_notes("s22"))
+    rx = photo_x + photo_w + 0.3
+    rw = 12.23 - photo_w - 0.3
+    ocean_box(s, rx, photo_y, rw, 1.85, fill=SURFACE, stroke=LIGHT)
+    text_box(s, rx + 0.2, photo_y + 0.16, rw - 0.4, 1.55,
+             text="Запись обычного свободного разговора менеджера с клиентом, без структуры",
+             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
 
-
-def calls_ladder_row(slide, y, active_step):
-    """3-step ход indicator for the calls trilogy (s22/s23/s24)."""
-    labels = ["Облачный frontier?", "Персональные данные", "Шаблон полей → локальная модель"]
-    n = 3
-    gap = 0.3
-    cw = (12.23 - gap * (n - 1)) / n
-    ch = 1.0
-    for i, lbl in enumerate(labels):
-        cx = 0.55 + i * (cw + gap)
-        is_now = (i == active_step - 1)
-        is_done = (i < active_step - 1)
-        fill = GOLD if is_now else (SOFT_GREY if is_done else SURFACE)
-        stroke = GOLD if is_now else LIGHT
-        filled_rect(slide, cx, y, cw, ch, fill, stroke=stroke, stroke_pt=1.5,
-                    radius=True, radius_adj=0.15)
-        text_box(slide, cx + 0.12, y, cw - 0.24, ch, text=f"Ход {i+1}: {lbl}", size=12.5,
-                 bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.1)
-        if i < n - 1:
-            ax = cx + cw + 0.04
-            arrow = slide.shapes.add_shape(MSO_SHAPE.RIGHT_ARROW, Inches(ax),
-                Inches(y + ch / 2 - 0.11), Inches(gap - 0.08), Inches(0.22))
-            arrow.fill.solid(); arrow.fill.fore_color.rgb = TEAL
-            arrow.line.fill.background()
-            disable_shadow(arrow)
+    q_y = photo_y + 2.15
+    q_h = photo_h - 2.15
+    ocean_box(s, rx, q_y, rw, q_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
+    text_box(s, rx + 0.2, q_y, rw - 0.4, q_h, text="Какая архитектура, где считать?",
+             size=19, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
+    speaker_notes(s, load_notes("s29"))
 
 
-def build_s23(p):
+def build_s30(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Персональные данные в звонках", size=26)
-    quote_block(s, 0.55, 1.15, 12.23, 1.5,
-                "«Мы прослушали несколько реальных звонков внимательно. Клиенты в "
-                "разговоре иногда диктуют номера телефонов, адреса доставки, а в паре "
-                "случаев — паспортные данные для оформления договора».", size=14)
+    slide_title(s, "Звонки продаж", size=28)
+    quote_block(s, 0.55, 1.2, 12.23, 1.4,
+                "«Стоп. Клиенты диктуют телефоны, адреса, иногда паспортные данные»",
+                size=16, role_icon="scale")
 
-    reg_y = 2.95
-    ocean_box(s, 0.55, reg_y, 12.23, 2.15, fill=NEG_TINT, stroke=NEG_LINE, stroke_pt=1.5)
+    mid_y = 2.9
+    mid_h = 1.4
+    ocean_box(s, 0.55, mid_y, 12.23, mid_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
+    icon(s, "shield-alert", "21295C", 96, 0.95, mid_y + (mid_h - 0.7) / 2, 0.7)
+    text_box(s, 2.0, mid_y, 10.3, mid_h,
+             text="Никто из инженеров не думал об этом заранее — все слушали только про "
+                  "потребности и возражения",
+             size=15, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
+
+    q_y = mid_y + mid_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Кто передумал?", size=24,
+             bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s30"))
+
+
+def build_s31(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Звонки продаж — разбор 1", size=26)
+    text_box(s, 0.55, 1.05, 12.23, 0.5,
+             text="Персональные данные меняют расчёт — и цена ошибки не абстрактная",
+             size=14.5, italic=True, color=MID)
+
+    reg_y = 1.75
+    reg_h = 2.6
+    ocean_box(s, 0.55, reg_y, 12.23, reg_h, fill=NEG_TINT, stroke=NEG_LINE, stroke_pt=1.5)
     icon(s, "shield-alert", "21295C", 64, 0.85, reg_y + 0.25, 0.5)
     text_box(s, 1.5, reg_y + 0.2, 10.9, 0.5,
-             text="ФЗ № 420-ФЗ (с 30.05.2025)", size=17, bold=True, color=DEEP)
-    multipara_box(s, 1.5, reg_y + 0.75, 10.9, 1.3, [
+             text="420-ФЗ (принят 30.11.2024, вступил в силу 30.05.2025)", size=17,
+             bold=True, color=DEEP)
+    multipara_box(s, 1.5, reg_y + 0.85, 10.9, 1.5, [
         {"text": "Повторная утечка персональных данных — оборотный штраф 1-3% годовой выручки",
          "size": 14, "bold": True, "color": DEEP, "line_spacing": 1.25, "space_after": 4},
         {"text": "(минимум 20 млн, максимум 500 млн ₽)", "size": 12.5, "color": SLATE,
@@ -1190,32 +1415,60 @@ def build_s23(p):
          "italic": True, "color": DEEP, "line_spacing": 1.2},
     ])
 
-    q_y = reg_y + 2.4
-    ocean_box(s, 0.55, q_y, 12.23, 0.6, fill=SURFACE, stroke=LIGHT)
-    text_box(s, 0.85, q_y, 11.6, 0.6, text="Кто передумал? Почему?", size=16, bold=True,
-             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    calls_ladder_row(s, q_y + 0.75, 2)
-    speaker_notes(s, load_notes("s23"))
+    fn_y = reg_y + reg_h + 0.3
+    ocean_box(s, 0.55, fn_y, 12.23, 0.9, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, fn_y, 11.6, 0.9,
+             text="Тот же организационный вопрос, что был в кейсе про логи — только ставки выше",
+             size=15.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
+    speaker_notes(s, load_notes("s31"))
 
 
-def build_s24(p):
+def build_s32(p):
+    """Two quote cards side by side, both with role-icons (issue #182
+    extension -- CTO briefcase, РОП user-round)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Задача сузилась до шаблона", size=28)
-    quote_block(s, 0.55, 1.1, 12.23, 1.15,
-                "«Давайте посмотрим на задачу трезво: на выходе нам нужна не свободная "
-                "беседа, а структурированная выжимка по фиксированному шаблону из "
-                "нескольких полей».", size=13.5)
+    slide_title(s, "Звонки продаж", size=28)
 
-    v_y = 2.5
-    ocean_box(s, 0.55, v_y, 12.23, 1.3, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.5)
-    icon(s, "cpu", "21295C", 64, 0.85, v_y + 0.35, 0.6)
-    text_box(s, 1.65, v_y + 0.14, 10.8, 1.0,
+    grid_y = 1.5
+    gap = 0.3
+    cw = (12.23 - gap) / 2
+    ch = 2.5
+    quote_block(s, 0.55, grid_y, cw, ch,
+                "«GPU-сервера у нас нет, и бюджета на него в этом году нет»",
+                size=16, role_icon="briefcase")
+    text_box(s, 0.55 + 0.24, grid_y + ch - 0.4, cw - 0.48, 0.3, text="— CTO",
+             size=12, italic=True, color=SLATE)
+
+    rx = 0.55 + cw + gap
+    quote_block(s, rx, grid_y, cw, ch,
+                "«Мне не беседа нужна — пять полей в CRM по каждому звонку»",
+                size=16, role_icon="user-round")
+    text_box(s, rx + 0.24, grid_y + ch - 0.4, cw - 0.48, 0.3,
+             text="— руководитель отдела продаж", size=12, italic=True, color=SLATE)
+
+    q_y = grid_y + ch + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.9, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.9, text="Меняет ли это архитектуру ещё раз?",
+             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s32"))
+
+
+def build_s33(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Звонки продаж — разбор 2", size=27)
+
+    v_y = 1.4
+    v_h = 1.4
+    ocean_box(s, 0.55, v_y, 12.23, v_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    icon(s, "cpu", "21295C", 64, 0.85, v_y + (v_h - 0.6) / 2, 0.6)
+    text_box(s, 1.65, v_y + 0.14, 10.8, v_h - 0.28,
              text="Небольшая локальная модель (7-8 млрд параметров) справляется — "
                   "данные не покидают периметр компании",
              size=15.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
-    grid_y = 4.05
+    grid_y = v_y + v_h + 0.35
     gap = 0.3
     cw = (12.23 - gap) / 2
     ch = 1.85
@@ -1229,10 +1482,10 @@ def build_s24(p):
              size=14.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
 
     calls_ladder_row(s, grid_y + ch + 0.25, 3)
-    speaker_notes(s, load_notes("s24"))
+    speaker_notes(s, load_notes("s33"))
 
 
-def build_s25(p):
+def build_s34(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Из жизни: утечка и малые модели в проде", size=24)
@@ -1266,105 +1519,82 @@ def build_s25(p):
              text="Frontier-модели — сотни миллиардов параметров, доступны только через облако. "
                   "Малые модели уже работают локально в проде",
              size=16, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
-    speaker_notes(s, load_notes("s25"))
+    speaker_notes(s, load_notes("s34"))
 
 
-def build_s26(p):
+def build_s35(p):
+    """Open invitation -- NO worksheet, NO numbered steps (source explicitly
+    calls for a simple illustration + open invitation, issue #182 replaces
+    the old s26 4-step worksheet-with-mini_funnel entirely)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Разберите вашу задачу", size=28)
+    slide_title(s, "Ваши задачи", size=30, align=PP_ALIGN.LEFT)
 
-    # Left: mini funnel, no highlight (all equal)
-    mini_funnel(s, 0.55, 1.4, 4.6, 4.6, None)
+    ill_y = 1.6
+    ill_h = 3.5
+    ocean_box(s, 0.55, ill_y, 12.23, ill_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    icon(s, "hand", "F0AB00", 96, 4.9, ill_y + 0.5, 1.2)
+    icon(s, "users", "065A82", 96, 6.6, ill_y + 0.5, 1.2)
+    text_box(s, 0.9, ill_y + 2.1, 11.5, 1.1,
+             text="У кого есть похожая задача с работы — там, где стоял вопрос, нужен ли ИИ, и какой?",
+             size=20, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.3)
 
-    # Right: 4 numbered steps
-    steps = [
-        "Какой выбор воронки здесь стоит острее всего?",
-        "Каких вводных не хватает, чтобы сделать этот выбор обоснованно?",
-        "Что было на самом деле — изменило ли это выбор?",
-        "Какие риски у выбранного решения (лексика Лекции 1)?",
-    ]
-    sx = 5.6
-    sw = 7.15
-    sy = 1.4
-    sh = 1.0
-    gap = 0.14
-    for i, text in enumerate(steps):
-        ocean_box(s, sx, sy, sw, sh)
-        chip(s, sx + 0.16, sy + (sh - 0.42) / 2, 0.42, 0.42, str(i + 1), fill=GOLD,
-             color=DEEP, size=15)
-        text_box(s, sx + 0.75, sy, sw - 0.95, sh, text=text, size=13.5, bold=True,
-                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
-        sy += sh + gap
-
-    inv_y = sy + 0.1
-    ocean_box(s, sx, inv_y, sw, 0.75, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
-    text_box(s, sx + 0.2, inv_y, sw - 0.4, 0.75,
-             text="Кто может поделиться реальной задачей со своей работы?",
-             size=13.5, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+    q_y = ill_y + ill_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.9, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.9,
+             text="Достаточно сформулировать в двух-трёх предложениях, как её принёс бы заказчик",
+             size=15.5, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.2)
-    speaker_notes(s, load_notes("s26"))
+    speaker_notes(s, load_notes("s35"))
 
 
-def build_s27(p):
+def build_s36(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Памятка «Воронка решений + красные флаги»", size=24)
+    slide_title(s, "Что унести", size=28)
+    text_box(s, 0.55, 1.15, 12.23, 0.5,
+             text="Семь уроков, по одному на кейс — ничего нового, только компиляция",
+             size=15, italic=True, color=MID)
 
-    gap = 0.3
-    lw = 5.6
-    rw = 12.23 - lw - gap
-    ly = 1.35
-    lh = 5.5
-
-    ocean_box(s, 0.55, ly, lw, lh, stroke=MID, stroke_pt=1.6)
-    text_box(s, 0.55 + 0.22, ly + 0.16, lw - 0.44, 0.4,
-             text="Четыре вопроса воронки", size=15.5, bold=True, color=MID)
-    qs = [
-        "Нужен ли здесь ИИ вообще, или задачу лучше решает обычный код?",
-        "Встраиваем в существующее приложение или делаем своё?",
-        "Если своё — разовый вызов модели, RAG или агент?",
-        "Внешний API или локальный инференс?",
+    lessons = [
+        ("file-text", "Документы поставщиков", "Два примера — не выборка"),
+        ("shield-alert", "Персоналка в логах", "Граница regex/модель — внутри задачи"),
+        ("monitor", "Помощник поддержки", "Организационное ограничение решает не хуже техники"),
+        ("store", "Описания товаров", "Встроенность бьёт отдельный продукт"),
+        ("list-checks", "Протоколы встреч", "Архитектуру двигают требования, не мода"),
+        ("mail", "Дайджест", "Много источников ≠ RAG"),
+        ("phone", "Звонки продаж", "Сложно для человека ≠ сложно для модели"),
     ]
-    qy = ly + 0.7
-    qh = (lh - 0.85) / 4
-    for i, q in enumerate(qs):
-        chip(s, 0.55 + 0.22, qy + 0.06, 0.36, 0.36, str(i + 1), fill=MID, size=13)
-        text_box(s, 0.55 + 0.7, qy, lw - 0.9, qh, text=q, size=12.5, color=DEEP,
-                 line_spacing=1.2, anchor=MSO_ANCHOR.MIDDLE)
-        qy += qh
-
-    rx = 0.55 + lw + gap
-    ocean_box(s, rx, ly, rw, lh, fill=SURFACE, stroke=GOLD, stroke_pt=1.6)
-    text_box(s, rx + 0.22, ly + 0.16, rw - 0.44, 0.4,
-             text="Красный флаг на каждый вопрос", size=15.5, bold=True, color=GOLD)
-    flags = [
-        "Выбор по 2-3 показанным примерам без запроса на весь объём данных",
-        "Vendor-KPI без знаменателя — цифра эффекта без базы расчёта",
-        "Отдельный продукт там, где нужна кнопка в существующем интерфейсе",
-        "RAG или агент выбраны потому что модно, а не по новому требованию",
-        "Чувствительность данных не проверена до архитектурного выбора",
-        "«Сложно для человека» принято за «сложно для модели» без проверки",
-    ]
-    fy = ly + 0.68
-    fh = (lh - 0.83) / 6
-    for i, flag in enumerate(flags):
-        icon(s, "alert-triangle", "F0AB00", 64, rx + 0.2, fy + (fh - 0.28) / 2, 0.28)
-        text_box(s, rx + 0.58, fy, rw - 0.78, fh, text=flag, size=10.8, color=DEEP,
-                 line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
-        fy += fh
-    speaker_notes(s, load_notes("s27"))
+    grid_y = 1.85
+    row_h = 0.65
+    gap = 0.06
+    for i, (ic, case, lesson) in enumerate(lessons):
+        ry = grid_y + i * (row_h + gap)
+        ocean_box(s, 0.55, ry, 12.23, row_h)
+        icon(s, ic, "065A82", 64, 0.75, ry + (row_h - 0.34) / 2, 0.34)
+        text_box(s, 1.3, ry, 3.5, row_h, text=case, size=13.5, bold=True, color=MID,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+        # Gold separator dot between case name and lesson -- visual bullet,
+        # consistent per-row styling (gold-presence requirement)
+        filled_rect(s, 4.72, ry + row_h / 2 - 0.05, 0.1, 0.1, GOLD, radius=True,
+                    radius_adj=0.5)
+        text_box(s, 4.95, ry, 7.6, row_h, text=lesson, size=13.5, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+    speaker_notes(s, load_notes("s36"))
 
 
-def build_s28(p):
+def build_s37(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Домашнее чтение (необязательное)", size=27)
+    slide_title(s, "Домашнее чтение", size=28)
+    text_box(s, 0.55, 1.15, 12.23, 0.45,
+             text="Необязательно, но по каждой истории будет что обсудить",
+             size=15, italic=True, color=MID)
 
-    grid_y = 1.5
+    grid_y = 1.75
     gap = 0.28
     cw = (12.23 - gap * 2) / 3
-    ch = 5.15
+    ch = 4.9
     cards = [
         ("handshake", "Сага Klarna, 2023-2025",
          "AI-ассистент поддержки: от впечатляющего старта до признания «мы зашли слишком "
@@ -1390,13 +1620,13 @@ def build_s28(p):
                  color=MID, align=PP_ALIGN.CENTER, line_spacing=1.2)
         text_box(s, cx + 0.2, grid_y + 2.15, cw - 0.4, ch - 2.35, text=desc, size=12.5,
                  color=DEEP, line_spacing=1.32)
-    footer_note(s, "Ссылки — в брифе семинара. Klarna — редкий случай, когда одна компания "
-                   "прошла все четыре выбора воронки на одном продукте", y=6.9)
-    speaker_notes(s, load_notes("s28"))
+    footer_note(s, "Если сегодня останется время — часть этого разберём вживую",
+                y=6.85)
+    speaker_notes(s, load_notes("s37"))
 
 
-def build_s28a(p):
-    """Reserve slide — no visible 'reserve' marker (per task brief)."""
+def build_s38(p):
+    """Reserve slide -- no visible 'reserve' marker (per task brief)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Klarna, 2023-2025: одна история — четыре развилки", size=22)
@@ -1406,7 +1636,7 @@ def build_s28a(p):
          "оптимизация по стоимости уронила качество"),
         ("2", "Встроить или своё", "Ассистент в существующем канале поддержки, внешний "
          "API (OpenAI) — не отдельный продукт"),
-        ("3", "Паттерн", "Чат-ассистент с эскалацией к человеку, не автономный агент"),
+        ("3", "Архитектура", "Чат-ассистент с эскалацией к человеку, не автономный агент"),
         ("4", "Инференс", "Внешний облачный API с клиентскими данными поддержки"),
     ]
     ry = 1.3
@@ -1433,16 +1663,44 @@ def build_s28a(p):
     text_box(s, 0.85, quote_y, 11.6, 0.85,
              text="«We went too far» — CEO Себастьян Семятковски, Bloomberg, май 2025",
              size=15, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s28a"))
+    speaker_notes(s, load_notes("s38"))
 
 
-def build_s28b(p):
+def build_s39(p):
+    """Reserve quickfire setup with icon-scene (issue #182 extension applies
+    to s39 too -- it's in the "quickfire setup, no verdict yet" family)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Дедупликация новостей", size=28)
     quote_block(s, 0.55, 1.1, 12.23, 1.0,
-                "«Поток новостей из многих источников — нужно склеивать сообщения об "
-                "одном и том же событии в одну карточку».", size=14.5)
+                "«Поток новостей из многих источников — нужно склеивать одинаковые "
+                "в одну карточку»", size=14.5)
+
+    scene_y = 2.35
+    scene_h = 2.35
+    ocean_box(s, 0.55, scene_y, 12.23, scene_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.6)
+    icon(s, "message-square-quote", "065A82", 96, 0.95, scene_y + 0.35, 0.7)
+    icon(s, "message-square-quote", "1C7293", 72, 2.05, scene_y + 0.75, 0.55)
+    icon(s, "arrow-right", "F0AB00", 64, 3.0, scene_y + 0.85, 0.5)
+    icon(s, "layers", "065A82", 96, 3.85, scene_y + 0.35, 0.7)
+    multipara_box(s, 5.0, scene_y + 0.4, 6.9, 1.55, [
+        {"text": "Десять почти одинаковых заголовков от разных изданий", "size": 16,
+         "bold": True, "color": DEEP, "line_spacing": 1.25, "space_after": 6},
+        {"text": "→ одна объединённая карточка события", "size": 13.5, "color": SLATE,
+         "line_spacing": 1.25},
+    ])
+
+    q_y = scene_y + scene_h + 0.3
+    ocean_box(s, 0.55, q_y, 12.23, 0.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.4)
+    text_box(s, 0.85, q_y, 11.6, 0.85, text="Какая технология нужна?",
+             size=22, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s39"))
+
+
+def build_s40(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Дедупликация — разбор", size=28)
 
     grid_y = 2.35
     gap = 0.3
@@ -1467,10 +1725,14 @@ def build_s28b(p):
     text_box(s, 0.85, footer_y, 11.6, 1.15,
              text="Сначала дешёвый детерминированный фильтр — ИИ на то, что он не взял",
              size=18, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s28b"))
+    speaker_notes(s, load_notes("s40"))
 
 
-def build_s29(p):
+def build_s41(p):
+    """Hero closing -- full-bleed real photo. Kept from the pre-pivot deck
+    almost verbatim (same NVIDIA GPU Wikimedia photo, same layout) -- only
+    the headline text is re-verified against the new s41-hero-closing.md
+    wording (no "воронка")."""
     s = blank(p)
     set_slide_bg(s, DEEP)
     img_path = SHOTS / "s-closing-gpu-real.jpg"
@@ -1495,7 +1757,7 @@ def build_s29(p):
     text_box(s, 0.6, 6.95, 11.6, 0.35,
              text="Wikimedia Commons · CC BY 2.0", size=10.5, italic=True,
              color=RGBColor(0xC8, 0xD2, 0xDF))
-    speaker_notes(s, load_notes("s29"))
+    speaker_notes(s, load_notes("s41"))
 
 
 # ============================================================
@@ -1510,7 +1772,10 @@ BUILDERS = [
     ("s17", build_s17), ("s18", build_s18), ("s19", build_s19), ("s20", build_s20),
     ("s21", build_s21), ("s22", build_s22), ("s23", build_s23), ("s24", build_s24),
     ("s25", build_s25), ("s26", build_s26), ("s27", build_s27), ("s28", build_s28),
-    ("s28a", build_s28a), ("s28b", build_s28b), ("s29", build_s29),
+    ("s29", build_s29), ("s30", build_s30), ("s31", build_s31), ("s32", build_s32),
+    ("s33", build_s33), ("s34", build_s34), ("s35", build_s35), ("s36", build_s36),
+    ("s37", build_s37), ("s38", build_s38), ("s39", build_s39), ("s40", build_s40),
+    ("s41", build_s41),
 ]
 
 

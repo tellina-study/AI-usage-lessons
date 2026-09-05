@@ -236,6 +236,25 @@ slides:
     visual:
       pattern: three_reading_cards
 
+  # резерв — показываются только при остатке времени (лестница резерва, guide part2)
+  - id: s28a
+    file: slides/s28a-reserve-klarna.md
+    type: case_study
+    assertion: "Klarna, 2023-2025: одна история — четыре развилки"
+    learning_goal: "Резерв: применить всю воронку целиком к одному длинному публичному кейсу вместо разбора нового материала"
+    visual:
+      pattern: four_row_funnel_case
+      reserve: true
+
+  - id: s28b
+    file: slides/s28b-reserve-dedup.md
+    type: case_study
+    assertion: "Дедупликация новостей — интуиция тянет к LLM, но 90% случаев закрывает дешёвый фильтр"
+    learning_goal: "Резерв: возврат к вопросу раздела 1 (дешёвый детерминированный фильтр + ИИ на остаток) на новом материале"
+    visual:
+      pattern: two_card_setup_vs_split_verdict
+      reserve: true
+
   - id: s29
     file: slides/s29-hero-closing.md
     type: hero_closing

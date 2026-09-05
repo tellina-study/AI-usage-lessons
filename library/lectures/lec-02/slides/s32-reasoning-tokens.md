@@ -2,7 +2,7 @@
 id: s32
 type: assertion_visual
 section: "Раздел 4. Сэмплинг и генерация"
-duration_min: 3
+duration_min: 3.5
 assertion: "Reasoning-токены не видны, но тарифицируются как output — по самой дорогой ставке, с раздуванием 3–10×"
 learning_goal: "Reasoning-токены: тот же цикл + невидимая платная часть; adaptive/effort вместо ручных бюджетов; summarized thinking"
 learning_outcomes: [LO4, LO6]

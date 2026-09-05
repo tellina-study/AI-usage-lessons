@@ -2,7 +2,7 @@
 id: s11
 type: comparison
 section: "Раздел 1. Токенизация"
-duration_min: 1.5
+duration_min: 2
 assertion: "Один и тот же текст по-русски стоит ≈2× дороже английского; o200k сократил разрыв на треть, но не убрал"
 learning_goal: "Стоимость языков + динамика 2024–2026 + следствия для chunking/max_tokens"
 learning_outcomes: [LO6]

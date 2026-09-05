@@ -2,7 +2,7 @@
 id: s05
 type: assertion_visual
 section: "Раздел 1. Токенизация"
-duration_min: 1.5
+duration_min: 2
 assertion: "Токен — id из словаря модели. Не буква и не слово; статистически частая подпоследовательность"
 learning_goal: "Фиксация точного определения токена (темп ×2 — аудитория знает приблизительно)"
 learning_outcomes: [LO1]

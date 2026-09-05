@@ -2,7 +2,7 @@
 id: s15
 type: case_study
 section: "Раздел 2. Эмбеддинги"
-duration_min: 2.5
+duration_min: 3
 assertion: "Высокое сходство значит «об одном и том же» — не «с одинаковым смыслом»: similarity ≠ релевантность"
 learning_goal: "Heatmap сходств (KEEP-ядро) + failure-граница: «настроить SSL» ↔ «отключить SSL» — близкие векторы, противоположный смысл; мост к Лекции 3"
 learning_outcomes: [LO1, LO6]

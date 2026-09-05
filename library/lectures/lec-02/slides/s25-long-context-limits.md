@@ -2,7 +2,7 @@
 id: s25
 type: case_study
 section: "Раздел 3. Механизм внимания"
-duration_min: 3
+duration_min: 3.5
 assertion: "Поиск дословной вставки почти решён — но без лексических совпадений 11 из 13 моделей теряют больше половины своей точности уже на 32 тысячах токенов"
 learning_goal: "Актуализация lost-in-the-middle: needle решён, NoLiMa вскрывает границу; формула «1M окна ≠ 1M рассуждения»"
 learning_outcomes: [LO6]

@@ -195,16 +195,18 @@ def gen_s25_chart():
                               "position": "end"},
                 }}},
             },
+            # Шрифты: канвас 980px показан на слайде в 4.6" →
+            # 1px ≈ 0.338pt; минимум 11pt (projector sub-label) ⇒ ≥33px.
             "scales": {
                 "y": {"min": 0, "max": 100,
                       "title": {"display": True,
-                                "text": "% от базовой точности модели",
-                                "color": "#1C7293", "font": {"size": 18}},
-                      "ticks": {"color": "#1C7293", "font": {"size": 16}},
+                                "text": ["% от базовой", "точности модели"],
+                                "color": "#1C7293", "font": {"size": 33}},
+                      "ticks": {"color": "#1C7293", "font": {"size": 33}},
                       "grid": {"color": "#E5EAF0"}},
                 "x": {"title": {"display": True,
                                 "text": "13 моделей · контекст 32 тыс. токенов",
-                                "color": "#1C7293", "font": {"size": 18}},
+                                "color": "#1C7293", "font": {"size": 33}},
                       "grid": {"display": False}},
             },
         },

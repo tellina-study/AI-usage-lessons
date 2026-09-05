@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="640" viewBox="0 0 1400 640">
+  <!-- Panel divider -->
+  <line x1="700" y1="40" x2="700" y2="600" stroke="#1C7293" stroke-width="3" stroke-dasharray="14 10"/>
+
+  <!-- ===== LEFT PANEL: confident face, "Да." ===== -->
+  <g>
+    <circle cx="330" cy="260" r="175" fill="#F4F7FA" stroke="#1C7293" stroke-width="6"/>
+    <!-- confident face: flat, calm eyes + straight mouth -->
+    <circle cx="260" cy="230" r="16" fill="#21295C"/>
+    <circle cx="400" cy="230" r="16" fill="#21295C"/>
+    <path d="M250 320 Q330 360 410 320" stroke="#21295C" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <!-- eyebrows: level, sure of itself -->
+    <path d="M225 195 L295 195" stroke="#21295C" stroke-width="8" stroke-linecap="round"/>
+    <path d="M365 195 L435 195" stroke="#21295C" stroke-width="8" stroke-linecap="round"/>
+    <!-- small T=0 badge on chest -->
+    <rect x="255" y="455" width="150" height="60" rx="14" fill="#065A82"/>
+    <text x="330" y="497" font-family="DejaVu Sans" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">T=0</text>
+  </g>
+
+  <!-- ===== RIGHT PANEL: puzzled/surprised face, gold accent ===== -->
+  <g>
+    <circle cx="1070" cy="260" r="175" fill="#FEF5E0" stroke="#F0AB00" stroke-width="6"/>
+    <!-- puzzled face: raised eyebrows + open mouth -->
+    <circle cx="1000" cy="225" r="18" fill="#21295C"/>
+    <circle cx="1140" cy="225" r="18" fill="#21295C"/>
+    <ellipse cx="1070" cy="330" rx="34" ry="26" fill="#21295C"/>
+    <!-- one eyebrow raised -->
+    <path d="M965 175 Q1000 155 1035 180" stroke="#21295C" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M1105 180 L1175 195" stroke="#21295C" stroke-width="8" stroke-linecap="round"/>
+    <!-- sweat-drop style surprise mark -->
+    <path d="M1195 165 q14 26 0 40 q-14 -14 0 -40 z" fill="#1C7293"/>
+    <!-- gold question mark above -->
+    <text x="1070" y="90" font-family="DejaVu Sans" font-size="80" font-weight="bold" fill="#F0AB00" text-anchor="middle">?</text>
+  </g>
+</svg>

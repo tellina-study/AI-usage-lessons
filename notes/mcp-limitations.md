@@ -738,3 +738,12 @@ _Пока не обнаружено._
 - **Severity:** P2 (silent visual corruption; obvious on inspect).
 - **Workaround:** use only solid `fill="#rrggbb"` (+ opacity) in SVGs destined for PyMuPDF rasterization; emulate gradients with stacked semi-transparent solids if needed. Text, paths, strokes, dash arrays render fine.
 - **First seen in:** #183 (lec-02 v2.0 batch 1, s01 hero «чёрный ящик с трещинами», 2026-09-05).
+
+### [#183-2] QuickChart v4 — annotation line `label` не рендерится
+
+- **Tool:** QuickChart POST `/chart` (`"version": "4"`), плагин chartjs-plugin-annotation (`options.plugins.annotation.annotations.<id>`).
+- **Symptom:** сама annotation-линия (`type: "line"`, `borderDash`, `borderColor`) рендерится корректно, но вложенный `label` (`{"enabled": true, "content": "...", ...}`) молча не появляется на PNG — ни ошибки, ни текста.
+- **Root cause (предположительно):** в annotation-плагине v2 (Chart.js v4) синтаксис метки сменился с `enabled` на `display` + иная структура; QuickChart молча игнорирует нераспознанные ключи. Вариант с `display: true` не проверялся (обход оказался проще).
+- **Severity:** P3 (косметика; линия работает).
+- **Workaround:** накладывать подпись текстовым слоем python-pptx поверх вставленного PNG (lec-02 s25: «11 из 13 — ниже 50%» gold-текст на белом поле чарта).
+- **First seen in:** #183 (lec-02 v2.0 batch 2, s25 NoLiMa chart, 2026-09-05).

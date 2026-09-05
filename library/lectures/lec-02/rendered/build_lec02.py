@@ -30,7 +30,7 @@ from pathlib import Path
 
 from pptx import Presentation
 from pptx.dml.color import RGBColor
-from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Inches, Pt
 from lxml import etree
@@ -257,6 +257,45 @@ def down_arrow(slide, x, y, w=0.4, h=0.45, fill=MID):
     return shp
 
 
+def line_arrow(slide, x1, y1, x2, y2, *, color=MID, w_pt=2.0, dash=None):
+    """Прямая линия-стрелка (tailEnd triangle) — для веерных стрелок s20 и
+    пунктирных коннекторов s35."""
+    conn = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT,
+                                      Inches(x1), Inches(y1),
+                                      Inches(x2), Inches(y2))
+    conn.line.color.rgb = color
+    conn.line.width = Pt(w_pt)
+    if dash is not None:
+        conn.line.dash_style = dash
+    ln = conn.line._get_or_add_ln()
+    end = ln.makeelement(A_NS + "tailEnd",
+                         {"type": "triangle", "w": "med", "len": "med"})
+    ln.append(end)
+    disable_shadow(conn)
+    return conn
+
+
+def plain_line(slide, x1, y1, x2, y2, *, color=LIGHT, w_pt=1.5, dash=None):
+    conn = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT,
+                                      Inches(x1), Inches(y1),
+                                      Inches(x2), Inches(y2))
+    conn.line.color.rgb = color
+    conn.line.width = Pt(w_pt)
+    if dash is not None:
+        conn.line.dash_style = dash
+    disable_shadow(conn)
+    return conn
+
+
+def left_arrow(slide, x, y, w=0.6, h=0.4, fill=MID):
+    shp = slide.shapes.add_shape(MSO_SHAPE.LEFT_ARROW,
+                                 Inches(x), Inches(y), Inches(w), Inches(h))
+    shp.fill.solid(); shp.fill.fore_color.rgb = fill
+    shp.line.fill.background()
+    disable_shadow(shp)
+    return shp
+
+
 def outline_big_text(slide, x, y, w, h, text, *, size=200, stroke=GOLD,
                      stroke_pt=2.6, align=PP_ALIGN.LEFT):
     """Decorative outline numeral: white fill + gold stroke via a:ln XML."""
@@ -297,7 +336,7 @@ def load_notes(slide_id):
 
 
 def page_number(slide, n, *, color=SLATE_PN):
-    tb = slide.shapes.add_textbox(Inches(12.45), Inches(7.16), Inches(0.8),
+    tb = slide.shapes.add_textbox(Inches(12.15), Inches(7.16), Inches(1.1),
                                   Inches(0.28))
     tf = tb.text_frame
     tf.margin_left = Inches(0.0); tf.margin_right = Inches(0.0)
@@ -346,9 +385,11 @@ def pipeline_bar(slide, active, *, y=6.62, bar_h=0.48):
 
 
 def section_divider(p, *, section_n, sub_title, frame_phrase, tag,
-                    active_stage, notes_id):
+                    active_stage, notes_id, frame_bar=False,
+                    frame_size=20):
     """v2.0 divider: big gold «Раздел N» + подзаголовок + frame + tag +
-    pipeline_bar (актив. стадия конвейера gold)."""
+    pipeline_bar (актив. стадия конвейера gold). frame_bar=True — общая
+    gold-рамка вокруг конвейера (s35a: полный конвейер)."""
     s = blank(p)
     set_slide_bg(s, SURFACE)
     text_box(s, 0.55, 0.95, 12.3, 2.4, f"Раздел {section_n}",
@@ -357,11 +398,25 @@ def section_divider(p, *, section_n, sub_title, frame_phrase, tag,
     text_box(s, 0.55, 3.55, 12.3, 0.75, sub_title,
              size=44, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.55, 4.45, 12.3, 0.5, f"«{frame_phrase}»",
-             size=20, italic=True, color=MID, align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, 4.40, 12.3, 0.75, f"«{frame_phrase}»",
+             size=frame_size, italic=True, color=MID, align=PP_ALIGN.CENTER,
+             line_spacing=1.15)
     text_box(s, 0.55, 5.25, 12.3, 0.45, tag,
              size=16, bold=True, color=TEAL, align=PP_ALIGN.CENTER)
     pipeline_bar(s, active_stage)
+    if frame_bar:
+        total_w = 12.3
+        fx = (SLIDE_W_IN - total_w) / 2.0 - 0.14
+        shp = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                                 Inches(fx), Inches(6.62 - 0.12),
+                                 Inches(total_w + 0.28), Inches(0.48 + 0.24))
+        shp.fill.background()
+        shp.line.color.rgb = GOLD; shp.line.width = Pt(2.2)
+        try:
+            shp.adjustments[0] = 0.35
+        except Exception:
+            pass
+        disable_shadow(shp)
     speaker_notes(s, load_notes(notes_id))
     return s
 
@@ -1373,6 +1428,1611 @@ def build_s17(p):
 
 
 # ============================================================
+# БАТЧ 2 — Раздел 3. Механизм внимания
+# ============================================================
+def build_s18a(p):
+    section_divider(
+        p, section_n=3, sub_title="Механизм внимания",
+        frame_phrase="Как модель решает, на что опереться в контексте — и "
+                     "что из этого следует для ролей, кэша и длинных окон",
+        tag="4 разбора · 2 провала", active_stage=3, notes_id="s18a",
+        frame_size=18)
+
+
+S18_TOKENS = ["Кот", "съел", "мышь", "потому что", "она", "была", "голодна"]
+S18_VALS = [
+    [1.0, 0.3, 0.2, 0.1, 0.1, 0.1, 0.0],
+    [0.4, 1.0, 0.5, 0.1, 0.1, 0.1, 0.1],
+    [0.2, 0.4, 1.0, 0.1, 0.1, 0.0, 0.1],
+    [0.1, 0.2, 0.2, 1.0, 0.3, 0.2, 0.2],
+    [0.1, 0.1, 0.7, 0.2, 1.0, 0.3, 0.4],
+    [0.1, 0.2, 0.2, 0.3, 0.4, 1.0, 0.5],
+    [0.1, 0.2, 0.3, 0.3, 0.4, 0.5, 1.0],
+]
+
+
+def build_s18(p):
+    """Attention-матрица 7×7 (нативная таблица, Ocean-шкала, «она»→«мышь»
+    gold) + 3 свойства + callout."""
+    s = blank(p)
+    slide_title(s, "Внимание — это сверка каждого токена со всеми остальными",
+                size=25, h=0.6)
+    text_box(s, 0.55, 1.02, 12.3, 0.4,
+             "Каждый токен «смотрит» на все остальные одновременно. "
+             "На каждом шаге — N × N связей.",
+             size=14, italic=True, color=MID)
+    # Таблица 8×8
+    rows, cols = 8, 8
+    tx, ty, tw, th = 0.55, 1.55, 7.5, 4.15
+    first_col = 1.30
+    gtbl = s.shapes.add_table(rows, cols, Inches(tx), Inches(ty),
+                              Inches(tw), Inches(th))
+    tbl = gtbl.table
+    tbl.first_row = False; tbl.horz_banding = False
+    tbl.columns[0].width = Inches(first_col)
+    for ci in range(1, 8):
+        tbl.columns[ci].width = Inches((tw - first_col) / 7)
+    tbl.rows[0].height = Inches(0.55)
+    for ri in range(1, 8):
+        tbl.rows[ri].height = Inches((th - 0.55) / 7)
+
+    def cell_text(cell, txt, *, size=10.5, bold=False, color=DEEP,
+                  align=PP_ALIGN.CENTER):
+        cell.margin_left = Inches(0.02); cell.margin_right = Inches(0.02)
+        cell.margin_top = Inches(0.01); cell.margin_bottom = Inches(0.01)
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        tf = cell.text_frame
+        tf.word_wrap = True
+        para = tf.paragraphs[0]; para.alignment = align
+        r = para.add_run(); r.text = txt
+        r.font.name = FONT_BODY; r.font.size = Pt(size)
+        r.font.bold = bold; r.font.color.rgb = color
+
+    c00 = tbl.cell(0, 0)
+    c00.fill.solid(); c00.fill.fore_color.rgb = WHITE
+    cell_text(c00, "вес", size=9.5, bold=True, color=SLATE)
+    for ci, lab in enumerate(S18_TOKENS):
+        c = tbl.cell(0, ci + 1)
+        c.fill.solid(); c.fill.fore_color.rgb = WHITE
+        cell_text(c, lab, size=9.5, bold=True, color=MID)
+    for ri, lab in enumerate(S18_TOKENS):
+        c = tbl.cell(ri + 1, 0)
+        c.fill.solid(); c.fill.fore_color.rgb = WHITE
+        cell_text(c, lab, size=10, bold=True, color=MID,
+                  align=PP_ALIGN.LEFT)
+        for ci, v in enumerate(S18_VALS[ri]):
+            cell = tbl.cell(ri + 1, ci + 1)
+            cell.fill.solid()
+            is_gold = (ri == 4 and ci == 2)
+            if is_gold:
+                cell.fill.fore_color.rgb = GOLD
+                cell_text(cell, "0,7", size=11, bold=True, color=DEEP)
+            else:
+                cell.fill.fore_color.rgb = _ocean_scale(v)
+                cell_text(cell, f"{v:.1f}".replace(".", ","), size=10,
+                          bold=(v >= 0.7),
+                          color=WHITE if v >= 0.45 else DEEP)
+    text_runs(s, 0.55, 5.85, 7.5, 0.55, [
+        {"text": "По строке «она»: ", "size": 13, "bold": True,
+         "color": DEEP},
+        {"text": "наибольший вес — на «мышь». Статистическая связь, "
+                 "выученная на корпусе.", "size": 13, "color": DEEP},
+    ], line_spacing=1.15)
+    # Справа — 3 свойства
+    props = [
+        ("Размерность", [
+            {"text": "N × N, где N — длина контекста. Удвоение контекста — ",
+             "size": 12.5, "color": DEEP},
+            {"text": "учетверение вычислений внимания", "size": 12.5,
+             "bold": True, "color": DEEP},
+            {"text": ".", "size": 12.5, "color": DEEP}]),
+        ("На каждом шаге", [
+            {"text": "Распределение весов пересчитывается заново на каждом "
+                     "шаге генерации.", "size": 12.5, "color": DEEP}]),
+        ("Многоголовость", [
+            {"text": "В каждом слое — десятки параллельных «голов» (типично "
+                     "32–128); каждая ловит свой тип связей: грамматика, "
+                     "семантика, дальние зависимости.", "size": 12.5,
+             "color": DEEP}]),
+    ]
+    y = 1.55
+    for title, runs in props:
+        ocean_box(s, 8.3, y, 4.5, 1.48, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.3)
+        text_box(s, 8.55, y + 0.10, 4.0, 0.38, title, size=14, bold=True,
+                 color=MID)
+        text_runs(s, 8.55, y + 0.50, 4.0, 0.9, runs, line_spacing=1.15)
+        y += 1.62
+    gold_callout(s, 0.55, 6.45, 12.25, 0.70,
+                 "Внимание — матричная операция: каждый токен против "
+                 "каждого. Отсюда квадратичная стоимость длинного контекста.",
+                 size=15, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s18"))
+
+
+def build_s19(p):
+    """Фонарик-метафора + bar chart весов + строка Q/K/V + gold callout."""
+    s = blank(p)
+    slide_title(s, "Внимание — распределение весов на весь контекст: "
+                   "три проекции Query / Key / Value", size=20, h=0.65,
+                y=0.35)
+    # Слева — метафора
+    ocean_box(s, 0.55, 1.3, 4.85, 3.0, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 0.85, 1.45, 4.3, 0.4, "Фонарик в тёмной комнате",
+             size=15.5, bold=True, color=MID)
+    # мини-графика: фонарик + gold-лучи + 3 предмета разной яркости
+    fl = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.95),
+                            Inches(2.06), Inches(0.5), Inches(0.3))
+    fl.fill.solid(); fl.fill.fore_color.rgb = DEEP
+    fl.line.fill.background(); disable_shadow(fl)
+    plain_line(s, 1.5, 2.21, 3.2, 2.18, color=GOLD, w_pt=3.0)
+    plain_line(s, 1.5, 2.14, 3.15, 1.98, color=GOLD, w_pt=1.6)
+    plain_line(s, 1.5, 2.28, 3.15, 2.42, color=GOLD, w_pt=1.6)
+    for i, (dx, dy, fill, r) in enumerate([(3.3, 2.02, GOLD, 0.19),
+                                           (3.95, 2.06, LIGHT, 0.15),
+                                           (4.5, 2.1, SOFT_GREY, 0.12)]):
+        d = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(dx), Inches(dy),
+                               Inches(r * 2), Inches(r * 2))
+        d.fill.solid(); d.fill.fore_color.rgb = fill
+        d.line.fill.background(); disable_shadow(d)
+    text_runs(s, 0.85, 2.66, 4.3, 1.6, [
+        {"text": "• Все токены контекста — предметы в комнате",
+         "size": 12, "color": DEEP},
+        {"text": "• Луч направлен на релевантные текущему вопросу",
+         "size": 12, "color": DEEP, "newpara": True, "space_before_pt": 4},
+        {"text": "• Яркость по предметам = веса внимания",
+         "size": 12, "color": DEEP, "newpara": True, "space_before_pt": 4},
+        {"text": "• Распределение света меняется с каждым вопросом",
+         "size": 12, "color": DEEP, "newpara": True, "space_before_pt": 4},
+    ], line_spacing=1.15)
+    # Справа — chart
+    ocean_box(s, 5.6, 1.3, 7.2, 3.0, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 5.85, 1.42, 6.7, 0.35,
+             "Распределение весов на токенах контекста — сумма = 1",
+             size=13.5, bold=True, color=MID)
+    add_image(s, ASSETS / "charts/s19-attention-weights.png",
+              x=6.35, y=1.82, w=5.6)
+    # 3 числовые строки
+    triples = [
+        ("1", "На вход — все токены контекста."),
+        ("2", "На выходе — распределение весов, сумма = 1."),
+        ("3", "Пересчитывается на каждом шаге генерации."),
+    ]
+    x = 0.55
+    for num, txt in triples:
+        ocean_box(s, x, 4.5, 3.95, 0.62, fill=WHITE, stroke=TEAL,
+                  stroke_pt=1.2)
+        text_runs(s, x + 0.18, 4.5, 3.7, 0.62, [
+            {"text": num + ".  ", "size": 13.5, "bold": True, "color": TEAL},
+            {"text": txt, "size": 12, "color": DEEP},
+        ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+        x += 4.15
+    # Q/K/V строка
+    text_box(s, 0.55, 5.35, 12.3, 0.4,
+             "Технически — три проекции каждого токена:",
+             size=14, bold=True, color=DEEP)
+    qkv = [("Query", "«что я сейчас ищу»"),
+           ("Key", "«что я предлагаю»"),
+           ("Value", "«что я отдам, если меня выбрали»")]
+    x = 0.55
+    for term, phrase in qkv:
+        ocean_box(s, x, 5.78, 3.95, 0.58, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.2)
+        text_runs(s, x + 0.18, 5.78, 3.65, 0.58, [
+            {"text": term, "size": 13.5, "bold": True, "color": MID,
+             "font": FONT_MONO},
+            {"text": " — " + phrase, "size": 12, "color": DEEP},
+        ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+        x += 4.15
+    gold_callout(s, 0.55, 6.55, 12.25, 0.62,
+                 "Q — про текущий шаг. K и V — про уже обработанный контекст.",
+                 size=15.5, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s19"))
+
+
+def build_s20(p):
+    """Worked example «она»→«мышь» (веер стрелок) + 2 колонки роль/подделка
+    + gold callout (закрытие M2)."""
+    s = blank(p)
+    slide_title(s, "Роль работает через вес во внимании — и ровно поэтому "
+                   "подделанная роль работает так же", size=20, h=0.65,
+                y=0.32)
+    # Верхний box: рабочий пример
+    ocean_box(s, 0.55, 1.12, 12.25, 2.45, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 0.85, 1.24, 5.5, 0.4, "Рабочий пример: куда смотрит «она»",
+             size=14, bold=True, color=MID)
+    # Токены предложения — отдельные боксы для стрелок
+    seg = [("«Кот съел", 2.35, 1.55, False),
+           ("мышь", 3.95, 0.95, True),
+           (", потому что", 4.85, 1.85, False),
+           ("она", 6.75, 0.72, True),
+           ("была", 7.50, 0.95, False),
+           ("голодна»", 8.45, 1.55, False)]
+    for txt, x, w, bold in seg:
+        text_box(s, x, 1.72, w, 0.45, txt, size=19, bold=bold,
+                 color=DEEP if not bold else MID)
+    # Стрелки от «она» (x≈7.0) к целям
+    line_arrow(s, 7.00, 2.19, 4.45, 2.59, color=GOLD, w_pt=4.0)
+    line_arrow(s, 7.15, 2.19, 7.95, 2.59, color=MID, w_pt=2.2)
+    line_arrow(s, 7.25, 2.19, 9.15, 2.59, color=LIGHT, w_pt=1.2)
+    text_box(s, 3.0, 2.64, 2.4, 0.32, "главный вес", size=11.5, bold=True,
+             color=GOLD)
+    text_box(s, 0.85, 3.0, 6.8, 0.5,
+             "Упрощение: агрегат сотен связей в десятках слоёв. Модель не "
+             "делает грамматический разбор — она воспроизводит корреляции "
+             "употребления.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.1)
+    text_runs(s, 7.85, 2.82, 4.7, 0.7, [
+        {"text": "Подумайте 30 секунд: ", "size": 12, "bold": True,
+         "color": DEEP},
+        {"text": "куда уйдёт вес от «она» в «Программа упала, потому что "
+                 "она забыла обработать null»?", "size": 12, "color": DEEP},
+    ], line_spacing=1.12)
+    # Нижние 2 колонки + «=»
+    ocean_box(s, 0.55, 3.75, 5.7, 1.85, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 0.85, 3.9, 5.1, 0.4, "Роль работает", size=16, bold=True,
+             color=MID)
+    text_runs(s, 0.85, 4.35, 5.15, 1.2, [
+        {"text": "«Ты ", "size": 12.5, "color": DEEP},
+        {"text": "эксперт по Python", "size": 12.5, "bold": True,
+         "color": TEAL},
+        {"text": ". Объясни асинхронность ", "size": 12.5, "color": DEEP},
+        {"text": "джуниору", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "» — токены роли получают вес при генерации каждого токена "
+                 "ответа → конкретнее, проще, в экспертном регистре.",
+         "size": 12.5, "color": DEEP},
+    ], line_spacing=1.18)
+    text_box(s, 6.35, 4.35, 0.7, 0.7, "=", size=38, bold=True, color=GOLD,
+             align=PP_ALIGN.CENTER)
+    ocean_box(s, 7.1, 3.75, 5.7, 1.85, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 7.4, 3.9, 5.1, 0.4, "Подделка работает так же", size=16,
+             bold=True, color=DEEP)
+    text_runs(s, 7.4, 4.35, 5.15, 1.3, [
+        {"text": "Внедрённая в контекст последовательность, выглядящая как ",
+         "size": 12.5, "color": DEEP},
+        {"text": "разметка роли", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": ", вливается в то же взвешивание — с той же силой, что "
+                 "настоящая.", "size": 12.5, "color": DEEP},
+    ], line_spacing=1.18)
+    gold_callout(s, 0.55, 5.85, 12.25, 0.95,
+                 "Внимание не различает происхождение токенов. "
+                 "Архитектурного барьера нет — барьер строится снаружи: "
+                 "фильтрация входа + права инструментов.",
+                 size=15, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s20"))
+
+
+def build_s21(p):
+    """KV-cache: схема K/V в кэше + Q нового токена; фазы prefill/decode;
+    gold callout про длинный чат."""
+    s = blank(p)
+    slide_title(s, "K и V кешируются — заново считается только Q", size=26,
+                h=0.6)
+    text_runs(s, 0.55, 1.08, 12.3, 0.55, [
+        {"text": "KV-cache: ", "size": 14.5, "bold": True, "color": MID},
+        {"text": "Key/Value обработанных токенов сохраняются в памяти "
+                 "ускорителя. На каждом шаге вычисляется только Q нового "
+                 "токена — против сохранённых K/V.", "size": 14.5,
+         "color": DEEP},
+    ], line_spacing=1.15)
+    # Схема
+    ocean_box(s, 0.55, 1.75, 12.25, 1.85, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    xx = 1.0
+    for i in range(4):
+        lab = f"токен {i+1}" if i < 3 else "…"
+        chip(s, xx, 2.0, 1.15, 0.42, lab, fill=MID, color=WHITE, size=12)
+        for j, kv in enumerate(("K", "V")):
+            filled_rect(s, xx + 0.06 + j * 0.56, 2.52, 0.5, 0.42, TEAL_TINT,
+                        stroke=TEAL, stroke_pt=1.2, radius=True,
+                        radius_adj=0.25)
+            text_box(s, xx + 0.06 + j * 0.56, 2.56, 0.5, 0.34, kv, size=13,
+                     bold=True, color=TEAL, align=PP_ALIGN.CENTER,
+                     anchor=MSO_ANCHOR.MIDDLE, font=FONT_MONO)
+        xx += 1.45
+    text_box(s, 1.0, 3.06, 5.6, 0.35,
+             "уже посчитаны — лежат в кэше, не пересчитываются",
+             size=11, italic=True, color=TEAL)
+    # Разделитель и новый токен
+    plain_line(s, 7.15, 1.95, 7.15, 3.35, color=LIGHT, w_pt=1.2, dash=4)
+    chip(s, 9.7, 2.0, 1.55, 0.42, "новый токен", fill=DEEP, color=WHITE,
+         size=12)
+    filled_rect(s, 10.2, 2.52, 0.5, 0.42, GOLD, stroke=None, radius=True,
+                radius_adj=0.25)
+    text_box(s, 10.2, 2.56, 0.5, 0.34, "Q", size=13, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, font=FONT_MONO)
+    left_arrow(s, 7.45, 2.6, w=2.6, h=0.26, fill=GOLD)
+    text_box(s, 7.45, 2.95, 2.7, 0.35, "сверка со всеми K/V",
+             size=11, italic=True, color=MID, align=PP_ALIGN.CENTER)
+    # Фазы
+    ocean_box(s, 0.55, 3.85, 5.9, 2.1, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 0.85, 4.0, 5.3, 0.4, "Фаза 1 — prefill (обработка промпта)",
+             size=14.5, bold=True, color=MID)
+    text_runs(s, 0.85, 4.45, 5.35, 1.4, [
+        {"text": "• Все токены входа известны сразу → K/V считаются ",
+         "size": 12.5, "color": DEEP},
+        {"text": "параллельно", "size": 12.5, "bold": True, "color": DEEP},
+        {"text": "• Упирается в ", "size": 12.5, "color": DEEP,
+         "newpara": True, "space_before_pt": 5},
+        {"text": "вычислительную мощность", "size": 12.5, "bold": True,
+         "color": DEEP},
+        {"text": "• Определяет ", "size": 12.5, "color": DEEP,
+         "newpara": True, "space_before_pt": 5},
+        {"text": "паузу до первого символа ответа (TTFT)", "size": 12.5,
+         "bold": True, "color": DEEP},
+    ], line_spacing=1.18)
+    right_arrow(s, 6.55, 4.75, w=0.45, h=0.28, fill=MID)
+    ocean_box(s, 7.1, 3.85, 5.7, 2.1, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 7.4, 4.0, 5.1, 0.4, "Фаза 2 — decode (генерация ответа)",
+             size=14.5, bold=True, color=TEAL)
+    text_runs(s, 7.4, 4.45, 5.15, 1.4, [
+        {"text": "• Строго ", "size": 12.5, "color": DEEP},
+        {"text": "последовательно", "size": 12.5, "bold": True,
+         "color": DEEP},
+        {"text": ", токен за токеном", "size": 12.5, "color": DEEP},
+        {"text": "• Каждый шаг читает ", "size": 12.5, "color": DEEP,
+         "newpara": True, "space_before_pt": 5},
+        {"text": "весь накопленный кэш", "size": 12.5, "bold": True,
+         "color": DEEP},
+        {"text": " из памяти", "size": 12.5, "color": DEEP},
+        {"text": "• Упирается в ", "size": 12.5, "color": DEEP,
+         "newpara": True, "space_before_pt": 5},
+        {"text": "пропускную способность памяти", "size": 12.5,
+         "bold": True, "color": DEEP},
+        {"text": " → скорость «печати»", "size": 12.5, "color": DEEP},
+    ], line_spacing=1.18)
+    gold_callout(s, 0.55, 6.2, 12.25, 0.95,
+                 "Почему длинный чат тормозит и дорожает: история подаётся "
+                 "целиком при каждом обороте — больше prefill, толще кэш, "
+                 "медленнее каждый шаг. «Начать новый чат» — буквально сброс "
+                 "груза, а не суеверие.", size=13.5, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s21"))
+
+
+def build_s22(p):
+    """Prompt caching: тарифы + кейс-бары слева; exact-prefix стек с
+    timestamp-самострелом справа; mini-poll; gold callout."""
+    s = blank(p)
+    slide_title(s, "Кэш промптов — ставка на повторное использование, "
+                   "а не скидка", size=25, h=0.6)
+    # Слева — тарифы
+    ocean_box(s, 0.55, 1.3, 6.35, 4.35, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 0.85, 1.45, 5.8, 0.4, "Тарифы (сентябрь 2026):",
+             size=15, bold=True, color=MID)
+    filled_rect(s, 0.85, 1.92, 5.75, 0.52, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.3, radius=True, radius_adj=0.18)
+    text_runs(s, 1.02, 1.92, 5.45, 0.52, [
+        {"text": "Чтение из кэша — ", "size": 12.5, "color": DEEP},
+        {"text": "0.1× базовой ставки входа", "size": 12.5, "bold": True,
+         "color": DEEP},
+        {"text": " (новейшие — до 0.025×)", "size": 12.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    filled_rect(s, 0.85, 2.54, 5.75, 0.52, WHITE, stroke=LIGHT,
+                stroke_pt=1.2, radius=True, radius_adj=0.18)
+    text_runs(s, 1.02, 2.54, 5.45, 0.52, [
+        {"text": "Запись в кэш — ", "size": 12.5, "color": DEEP},
+        {"text": "1.25–2× ставки", "size": 12.5, "bold": True, "color": DEEP},
+        {"text": " — дороже обычного входа", "size": 12.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    text_box(s, 0.85, 3.2, 5.8, 0.65,
+             "Окупается со второго-третьего попадания; уникальные запросы "
+             "без общего префикса от кэша только дорожают.",
+             size=11.5, italic=True, color=SLATE, line_spacing=1.15)
+    # Кейс — 2 бара
+    text_box(s, 0.85, 3.92, 5.8, 0.35,
+             "Кейс: 50 000 анализов документов в месяц", size=13, bold=True,
+             color=DEEP)
+    filled_rect(s, 0.85, 4.32, 4.6, 0.34, MID)
+    text_box(s, 5.55, 4.32, 1.3, 0.34, "$45 000", size=12, bold=True,
+             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.98, 4.34, 3.6, 0.3, "без кэша", size=11, color=WHITE,
+             anchor=MSO_ANCHOR.MIDDLE)
+    filled_rect(s, 0.85, 4.76, 0.82, 0.34, GOLD)
+    text_runs(s, 1.8, 4.76, 4.9, 0.34, [
+        {"text": "$8 000 с кэшем · ", "size": 12, "bold": True,
+         "color": DEEP},
+        {"text": "−82%", "size": 13.5, "bold": True, "color": GOLD},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    # Справа — exact prefix
+    ocean_box(s, 7.15, 1.3, 5.65, 4.35, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_runs(s, 7.4, 1.45, 5.15, 0.75, [
+        {"text": "Условие: точное совпадение префикса. ", "size": 13,
+         "bold": True, "color": DEEP},
+        {"text": "Один изменившийся токен инвалидирует кэш для всего, "
+                 "что после него.", "size": 12.5, "color": DEEP},
+    ], line_spacing=1.15)
+    stack = [
+        ("системный промпт", TEAL_TINT, TEAL, "✓ кэш"),
+        ("инструкции", TEAL_TINT, TEAL, "✓ кэш"),
+        ("документы", TEAL_TINT, TEAL, "✓ кэш"),
+        ("«Сегодня 2026-09-05 14:23» — динамический", GOLD_TINT, GOLD, "!"),
+        ("вопрос", SOFT_GREY, SLATE, "× мимо кэша"),
+    ]
+    yy = 2.3
+    for txt, fill, stroke, mark in stack:
+        filled_rect(s, 7.4, yy, 4.0, 0.42, fill, stroke=stroke,
+                    stroke_pt=1.4, radius=True, radius_adj=0.2)
+        text_box(s, 7.55, yy + 0.02, 3.75, 0.38, txt,
+                 size=10.5 if len(txt) > 20 else 12, bold=(mark == "!"),
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, 11.5, yy + 0.02, 1.2, 0.38, mark, size=11, bold=True,
+                 color=stroke if mark != "!" else GOLD,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        yy += 0.52
+    ocean_box(s, 7.4, 4.95, 5.15, 0.6, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.2)
+    text_runs(s, 7.55, 4.98, 4.9, 0.55, [
+        {"text": "Мини-опрос: ", "size": 11.5, "bold": True, "color": TEAL},
+        {"text": "добавили динамический timestamp в начало системного "
+                 "промпта — что происходит с кэшем?", "size": 11,
+         "color": DEEP},
+    ], line_spacing=1.1, anchor=MSO_ANCHOR.MIDDLE)
+    gold_callout(s, 0.55, 5.95, 12.25, 0.8,
+                 "Правило компоновки: стабильное — в начало (промпт, "
+                 "инструкции, примеры, документы), переменное — в конец.",
+                 size=15, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s22"))
+
+
+def build_s23(p):
+    """Гонка окон: лог-бары 4 модели + 2 полюса + строка про позиционное
+    кодирование + gold callout."""
+    s = blank(p)
+    slide_title(s, "Стандарт 2026 — окно 1–2 миллиона токенов. "
+                   "Но заявленное ≠ полезное", size=24, h=0.9, y=0.35)
+    # Лог-бары
+    ocean_box(s, 0.55, 1.5, 7.65, 3.55, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    bars = [
+        ("GPT-3.5 (2022)", "4 тыс.", 4_000, MID, ""),
+        ("Claude 3.5 (2024)", "200 тыс.", 200_000, MID, ""),
+        ("Claude Fable 5 (2026)", "1 млн", 1_000_000, GOLD,
+         "без наценки за длину"),
+        ("Gemini 3.5 Pro (2026)", "2 млн", 2_000_000, GOLD,
+         "крупнейшее среди боевых флагманов"),
+    ]
+    import math
+    yy = 1.68
+    for name, val, v, color, note in bars:
+        w = (math.log10(v) - 3.0) / 3.4 * 4.5
+        text_runs(s, 0.9, yy, 6.9, 0.3, [
+            {"text": name + " — ", "size": 12.5, "bold": True,
+             "color": DEEP},
+            {"text": val, "size": 12.5, "bold": True,
+             "color": GOLD if color == GOLD else MID},
+            {"text": ("  ·  " + note) if note else "", "size": 11,
+             "italic": True, "color": SLATE},
+        ])
+        filled_rect(s, 0.9, yy + 0.33, max(w, 0.3), 0.26, color,
+                    radius=True, radius_adj=0.35)
+        yy += 0.78
+    text_box(s, 0.9, 4.73, 6.9, 0.3, "ширина — логарифмическая шкала",
+             size=10.5, italic=True, color=SLATE)
+    # Полюса
+    card = filled_rect(s, 8.45, 1.5, 4.35, 1.68, SOFT_GREY, stroke=LIGHT,
+                       stroke_pt=1.4, radius=True, radius_adj=0.08)
+    card.line.dash_style = 4
+    text_box(s, 8.7, 1.65, 3.85, 0.4, "Llama 4 Scout: «10 млн»", size=14,
+             bold=True, color=DEEP)
+    text_box(s, 8.7, 2.1, 3.85, 1.0,
+             "заявлено; ни один опубликованный бенчмарк не подтверждает "
+             "качество вблизи предела", size=12, color=SLATE,
+             line_spacing=1.18)
+    ocean_box(s, 8.45, 3.37, 4.35, 1.68, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 8.7, 3.52, 3.85, 0.4, "YandexGPT 5 Pro: 32 тыс.", size=14,
+             bold=True, color=DEEP)
+    text_box(s, 8.7, 3.97, 3.85, 1.0,
+             "на полтора-два порядка меньше флагманов — для длинных "
+             "документов это определяющее ограничение", size=12, color=DEEP,
+             line_spacing=1.18)
+    text_box(s, 0.55, 5.2, 12.25, 0.55,
+             "Просто «растянуть» окно нельзя: позиция токена закодирована "
+             "геометрией, обученной на конкретных длинах, — расширение "
+             "(RoPE / YaRN) — отдельная инженерная работа.",
+             size=12, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
+             line_spacing=1.15)
+    gold_callout(s, 0.55, 5.9, 12.25, 0.85,
+                 "Платите за то, что кладёте в окно, а не за то, что окно "
+                 "вмещает: 900 тыс. токенов входа по $10/млн ≈ $9 за один "
+                 "вызов.", size=15, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s23"))
+
+
+def build_s25(p):
+    """Needle решён vs NoLiMa-обрушение (chart) + формула-callout +
+    строка практики. Закрывает M3."""
+    s = blank(p)
+    slide_title(s, "Поиск дословной вставки решён. Понимание длинного "
+                   "контекста — нет", size=24, h=0.9, y=0.35)
+    # Левая панель
+    ocean_box(s, 0.55, 1.45, 5.15, 4.2, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_runs(s, 0.85, 1.63, 4.6, 0.75, [
+        {"text": "Найти дословно (needle-in-a-haystack) — почти решено ",
+         "size": 14.5, "bold": True, "color": MID},
+        {"text": "✓", "size": 16, "bold": True, "color": TEAL},
+    ], line_spacing=1.15)
+    text_runs(s, 0.85, 2.6, 4.6, 1.6, [
+        {"text": "• Найти вставленную фразу по буквальному совпадению: "
+                 "флагманы — ", "size": 13, "color": DEEP},
+        {"text": "до 99% на полном окне в 1 млн токенов", "size": 13,
+         "bold": True, "color": DEEP},
+        {"text": "• «Найди, где в договоре упоминается сумма» — работает "
+                 "почти как обещано", "size": 13, "color": DEEP,
+         "newpara": True, "space_before_pt": 10},
+    ], line_spacing=1.25)
+    # Правая панель
+    ocean_box(s, 6.0, 1.45, 6.8, 4.2, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 6.3, 1.6, 6.2, 0.4,
+             "Узнать по смыслу (NoLiMa, 2025) — обрушение",
+             size=14.5, bold=True, color=DEEP)
+    text_runs(s, 6.3, 2.05, 6.2, 0.95, [
+        {"text": "Бенчмарк убрал буквальное совпадение слов. ", "size": 12,
+         "color": DEEP},
+        {"text": "11 из 13 моделей — ниже 50% их же собственной точности "
+                 "на коротком контексте", "size": 12, "bold": True,
+         "color": DEEP},
+        {"text": " — уже на ", "size": 12, "color": DEEP},
+        {"text": "32 тыс. токенов", "size": 12, "bold": True, "color": GOLD},
+        {"text": " (~3% заявленного окна флагмана).", "size": 12,
+         "color": DEEP},
+    ], line_spacing=1.18)
+    add_image(s, ASSETS / "charts/s25-nolima.png", x=6.5, y=3.1, w=5.2)
+    text_box(s, 8.25, 3.16, 3.4, 0.35, "11 из 13 — ниже 50%",
+             size=13, bold=True, color=GOLD)
+    gold_callout(s, 0.55, 5.78, 12.25, 0.82,
+                 "1M окна ≠ 1M рассуждения. Окно — сколько модель может "
+                 "прочитать; полезная длина — на скольких токенах она ещё "
+                 "связывает факты.", size=15, align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, 6.7, 12.25, 0.45,
+             "Критические инструкции — в начало или конец промпта · целевой "
+             "поиск 5–10 фрагментов бьёт «вывалить всё в окно» · тестируйте "
+             "на рабочей длине вашей задачи",
+             size=10.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
+             line_spacing=1.12)
+    speaker_notes(s, load_notes("s25"))
+
+
+# ============================================================
+# БАТЧ 2 — Раздел 4. Сэмплинг и генерация
+# ============================================================
+def build_s26a(p):
+    section_divider(
+        p, section_n=4, sub_title="Сэмплинг и генерация",
+        frame_phrase="Как из распределения вероятностей рождается один "
+                     "токен — и какими ручками этот выбор управляется",
+        tag="4 разбора · 2 провала", active_stage={4, 5}, notes_id="s26a",
+        frame_size=18)
+
+
+S26_BARS = [("яблоко", 0.32, True), ("пиццу", 0.19, False),
+            ("салат", 0.14, False), ("булочку", 0.11, False),
+            ("огурец", 0.08, False)]
+
+
+def build_s26(p):
+    """Распределение top-5 (нативные бары) + сэмплинг → один токен +
+    footnote + gold callout."""
+    s = blank(p)
+    slide_title(s, "На каждом шаге — распределение вероятностей на все "
+                   "токены словаря", size=24, h=0.9, y=0.35)
+    # Левый box — бары
+    ocean_box(s, 0.55, 1.5, 7.9, 3.7, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_runs(s, 0.9, 1.7, 7.2, 0.45, [
+        {"text": "Контекст: ", "size": 15, "bold": True, "color": MID},
+        {"text": "«Сегодня я съел …»", "size": 15.5, "bold": True,
+         "color": DEEP, "font": FONT_MONO},
+    ])
+    text_box(s, 0.9, 2.2, 7.2, 0.35, "P(следующий токен):", size=13,
+             color=SLATE, italic=True)
+    yy = 2.62
+    for lab, v, is_gold in S26_BARS:
+        text_box(s, 0.9, yy, 1.35, 0.4, lab, size=13.5, bold=is_gold,
+                 color=DEEP, font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE,
+                 align=PP_ALIGN.RIGHT)
+        bw = v / 0.35 * 4.6
+        filled_rect(s, 2.4, yy + 0.05, bw, 0.32,
+                    GOLD if is_gold else MID, radius=True, radius_adj=0.3)
+        text_runs(s, 2.5 + bw, yy, 1.6, 0.4, [
+            {"text": f"{v:.2f}".replace(".", ","), "size": 13.5,
+             "bold": True, "color": GOLD if is_gold else DEEP},
+            {"text": "  — максимум" if is_gold else "", "size": 11,
+             "italic": True, "color": SLATE},
+        ], anchor=MSO_ANCHOR.MIDDLE)
+        yy += 0.5
+    # Правый box — сэмплинг
+    ocean_box(s, 8.75, 1.5, 4.05, 3.7, fill=WHITE, stroke=TEAL,
+              stroke_pt=1.3)
+    text_box(s, 9.0, 1.7, 3.55, 0.45, "Сэмплинг → один токен", size=15,
+             bold=True, color=TEAL)
+    text_box(s, 9.0, 2.25, 3.55, 0.7,
+             "правило выбора одного токена из распределения — "
+             "единственная ручка в ваших руках",
+             size=12, color=DEEP, line_spacing=1.2)
+    down_arrow(s, 10.6, 3.1, w=0.4, h=0.5, fill=TEAL)
+    chip(s, 9.55, 3.75, 2.4, 0.55, "[ яблоко ]", fill=GOLD, color=DEEP,
+         size=15, font=FONT_MONO)
+    text_box(s, 9.0, 4.42, 3.55, 0.6, "выбран один — остальные кандидаты "
+             "исчезли из ответа", size=11, italic=True, color=SLATE,
+             align=PP_ALIGN.CENTER, line_spacing=1.15)
+    text_box(s, 0.55, 5.38, 12.25, 0.4,
+             "Остальные ~200 000 токенов словаря — каждый < 0.05. Сумма "
+             "всех вероятностей = 1. Числа иллюстративные.",
+             size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    gold_callout(s, 0.55, 5.85, 12.25, 1.0,
+                 "Распределение — «настоящий» выход модели. Уверенный ответ "
+                 "и галлюцинация до сэмплинга существовали одновременно — "
+                 "как вероятностная масса; выбор сделала политика.",
+                 size=14.5, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s26"))
+
+
+def _mini_bars(s, x, y, w, h, vals, *, gold_first=False):
+    """Мини-распределение: вертикальные бары в области (x,y,w,h)."""
+    n = len(vals)
+    bw = w / (n * 1.5)
+    gap = bw * 0.5
+    vmax = max(vals) or 1.0
+    xx = x + (w - (n * bw + (n - 1) * gap)) / 2
+    for i, v in enumerate(vals):
+        bh = max(v / vmax * h, 0.02)
+        filled_rect(s, xx, y + h - bh, bw, bh,
+                    GOLD if (gold_first and i == 0) else MID,
+                    radius=False)
+        xx += bw + gap
+    plain_line(s, x, y + h + 0.02, x + w, y + h + 0.02, color=LIGHT,
+               w_pt=1.2)
+
+
+def build_s27(p):
+    """Температура: 3 панели распределений + top-p/top-k + live-бейдж."""
+    s = blank(p)
+    slide_title(s, "Температура — делитель логитов: меняет остроту выбора, "
+                   "не знания", size=25, h=0.6)
+    panels = [
+        ("T → 0", "(argmax)", [1.0, 0.001, 0.001, 0.001, 0.001],
+         "Выбор самого вероятного. Почти одинаковые ответы — «почти» "
+         "разберём на следующем слайде.", False),
+        ("T = 1", "(стандарт)", [0.32, 0.19, 0.14, 0.11, 0.08],
+         "Сэмплирование пропорционально вероятностям модели. Естественная "
+         "вариативность.", True),
+        ("T = 1.5", "(сглаживание)", [0.24, 0.19, 0.16, 0.14, 0.12],
+         "Редкие токены получают реальные шансы — от удачных находок до "
+         "бессвязности.", False),
+    ]
+    x = 0.55
+    for tname, tsub, vals, caption, is_std in panels:
+        if is_std:
+            filled_rect(s, x, 1.4, 3.95, 3.55, WHITE, stroke=GOLD,
+                        stroke_pt=2.2, radius=True, radius_adj=0.05)
+        else:
+            ocean_box(s, x, 1.4, 3.95, 3.55, fill=SURFACE, stroke=LIGHT,
+                      stroke_pt=1.3)
+        text_runs(s, x + 0.25, 1.58, 3.45, 0.45, [
+            {"text": tname, "size": 17, "bold": True, "color": DEEP,
+             "font": FONT_MONO},
+            {"text": "  " + tsub, "size": 14, "bold": True,
+             "color": GOLD if is_std else MID},
+        ])
+        _mini_bars(s, x + 0.55, 2.15, 2.85, 1.25, vals, gold_first=True)
+        text_box(s, x + 0.25, 3.65, 3.45, 1.2, caption, size=11.5,
+                 color=DEEP, line_spacing=1.2)
+        x += 4.15
+    text_runs(s, 0.55, 5.25, 12.3, 0.5, [
+        {"text": "top-p", "size": 13.5, "bold": True, "color": MID,
+         "font": FONT_MONO},
+        {"text": " — отрез хвоста по вероятностной массе · ", "size": 13,
+         "color": DEEP},
+        {"text": "top-k", "size": 13.5, "bold": True, "color": MID,
+         "font": FONT_MONO},
+        {"text": " — по числу кандидатов. Основная ручка — температура; "
+                 "эти две — тонкая настройка.", "size": 13, "color": DEEP},
+    ], align=PP_ALIGN.CENTER)
+    ocean_box(s, 2.15, 5.9, 9.0, 0.7, fill=WHITE, stroke=TEAL,
+              stroke_pt=1.4)
+    text_runs(s, 2.35, 5.9, 8.6, 0.7, [
+        {"text": "Живой прогон: ", "size": 14, "bold": True, "color": TEAL},
+        {"text": "один и тот же запрос — 10 раз при T=0 и 10 раз при T=1.5.",
+         "size": 14, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s27"))
+
+
+def build_s28(p):
+    """T=0 ≠ детерминизм: экспонат 80/1000 + цепочка причины + 2 плашки +
+    gold callout. Закрывает M4."""
+    s = blank(p)
+    slide_title(s, "T=0 не даёт детерминизма: 80 уникальных ответов из 1000",
+                size=25, h=0.6)
+    # Слева — экспонат
+    ocean_box(s, 0.55, 1.35, 4.55, 3.1, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 0.8, 1.6, 4.05, 1.3, "80 / 1000", size=64, bold=True,
+             color=GOLD, align=PP_ALIGN.CENTER)
+    text_box(s, 0.85, 3.05, 3.95, 1.3,
+             "уникальных вариантов ответа на идентичный запрос при T=0 — "
+             "стандартный vLLM (Thinking Machines Lab, сентябрь 2025)",
+             size=12.5, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.2)
+    # Справа — механизм
+    text_runs(s, 5.4, 1.35, 7.4, 0.6, [
+        {"text": "Причина — не «floating-point вообще», а отсутствие ",
+         "size": 13.5, "bold": True, "color": DEEP},
+        {"text": "batch-инвариантности ядер:", "size": 13.5, "bold": True,
+         "color": MID},
+    ], line_spacing=1.15)
+    chain = [
+        "Сервер группирует одновременные запросы разных пользователей в батчи",
+        "Размер батча зависит от чужой нагрузки в эту миллисекунду",
+        "Разный размер батча → разный порядок суммирования → младшие "
+        "разряды другие",
+        "Два близких кандидата в argmax → младший разряд решает выбор "
+        "токена → авторегрессия разносит расхождение по всему ответу",
+    ]
+    yy = 2.0
+    for i, step in enumerate(chain):
+        h = 0.55 if i < 3 else 0.7
+        ocean_box(s, 5.4, yy, 7.4, h, fill=WHITE, stroke=LIGHT,
+                  stroke_pt=1.2)
+        text_runs(s, 5.6, yy, 7.0, h, [
+            {"text": f"{i+1}. ", "size": 12, "bold": True, "color": TEAL},
+            {"text": step, "size": 11.5, "color": DEEP},
+        ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+        yy += h + 0.08
+    # Две плашки
+    filled_rect(s, 0.55, 4.75, 6.0, 1.0, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.3, radius=True, radius_adj=0.1)
+    text_runs(s, 0.75, 4.82, 5.6, 0.9, [
+        {"text": "Решение существует: ", "size": 12.5, "bold": True,
+         "color": TEAL},
+        {"text": "batch-инвариантные ядра — 1000/1000 побитово идентичны",
+         "size": 12.5, "color": DEEP},
+    ], line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+    ocean_box(s, 6.8, 4.75, 6.0, 1.0, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.2)
+    text_runs(s, 7.0, 4.82, 5.6, 0.9, [
+        {"text": "Цена: ~35% пропускной способности", "size": 12.5,
+         "bold": True, "color": DEEP},
+        {"text": " → провайдеры не включают; seed у OpenAI — официально "
+                 "«mostly deterministic», в основном детерминировано",
+         "size": 12, "color": DEEP},
+    ], line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+    gold_callout(s, 0.55, 6.05, 12.25, 0.8,
+                 "Не стройте тесты на побитовом сравнении ответов LLM — "
+                 "сравнивайте семантически или по структуре.",
+                 size=15.5, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s28"))
+
+
+def build_s29(p):
+    """Шесть ручек: сценарная таблица + effort/verbosity + gold callout."""
+    s = blank(p)
+    slide_title(s, "Ручек стало шесть: добавилась ось глубины рассуждения",
+                size=26, h=0.6)
+    # Таблица 4×5
+    tx, ty, tw = 0.55, 1.35, 12.25
+    col_ws = [3.0, 1.9, 1.5, 1.9, 3.95]
+    gtbl = s.shapes.add_table(4, 5, Inches(tx), Inches(ty), Inches(tw),
+                              Inches(2.4))
+    tbl = gtbl.table
+    tbl.first_row = False; tbl.horz_banding = False
+    for ci, w in enumerate(col_ws):
+        tbl.columns[ci].width = Inches(w)
+    tbl.rows[0].height = Inches(0.5)
+    for ri in range(1, 4):
+        tbl.rows[ri].height = Inches(0.63)
+
+    def cell(r, c, txt, *, size=12, bold=False, color=DEEP, fill=WHITE,
+             mono=False, align=PP_ALIGN.CENTER):
+        cl = tbl.cell(r, c)
+        cl.fill.solid(); cl.fill.fore_color.rgb = fill
+        cl.margin_left = Inches(0.06); cl.margin_right = Inches(0.06)
+        cl.margin_top = Inches(0.02); cl.margin_bottom = Inches(0.02)
+        cl.vertical_anchor = MSO_ANCHOR.MIDDLE
+        tf = cl.text_frame; tf.word_wrap = True
+        para = tf.paragraphs[0]; para.alignment = align
+        r_ = para.add_run(); r_.text = txt
+        r_.font.name = FONT_MONO if mono else FONT_BODY
+        r_.font.size = Pt(size); r_.font.bold = bold
+        r_.font.color.rgb = color
+
+    headers = ["Сценарий", "temperature", "top_p", "max_tokens",
+               "Системный промпт"]
+    for ci, htxt in enumerate(headers):
+        cell(0, ci, htxt, size=12.5, bold=True, color=MID,
+             mono=(0 < ci < 4))
+    rows_data = [
+        ("Классификация / извлечение", "0", GOLD, "—", "50–200",
+         "Минимальный, со схемой выхода"),
+        ("Кодогенерация", "0.2–0.3", DEEP, "0.9", "1000+",
+         "Роль + контекст репозитория"),
+        ("Творческое письмо", "0.9–1.2", TEAL, "0.95", "2000+",
+         "Роль + стиль"),
+    ]
+    for ri, (scen, t, tcol, tp, mt, sp) in enumerate(rows_data):
+        fill = SURFACE if ri % 2 == 0 else WHITE
+        cell(ri + 1, 0, scen, size=12, bold=True, fill=fill,
+             align=PP_ALIGN.LEFT)
+        cell(ri + 1, 1, t, size=13, bold=True, color=tcol, fill=fill,
+             mono=True)
+        cell(ri + 1, 2, tp, size=12, fill=fill, mono=True)
+        cell(ri + 1, 3, mt, size=12, fill=fill, mono=True)
+        cell(ri + 1, 4, sp, size=11.5, fill=fill, align=PP_ALIGN.LEFT)
+    # Две новые ручки
+    knobs = [
+        ("effort / reasoning_effort",
+         "глубина внутреннего рассуждения: шкала от none до xhigh (OpenAI); "
+         "effort при адаптивном мышлении (Anthropic); thinking budget "
+         "(Gemini)"),
+        ("verbosity",
+         "длина видимого ответа, независимая от глубины: думать глубоко, "
+         "отвечать коротко"),
+    ]
+    x = 0.55
+    for term, desc in knobs:
+        ocean_box(s, x, 4.05, 6.0, 1.35, fill=WHITE, stroke=TEAL,
+                  stroke_pt=1.4)
+        chip(s, x + 5.05, 4.2, 0.75, 0.32, "2026", fill=GOLD_TINT,
+             stroke=GOLD, color=DEEP, size=11)
+        text_box(s, x + 0.25, 4.2, 4.7, 0.4, term, size=14.5, bold=True,
+                 color=MID, font=FONT_MONO)
+        text_box(s, x + 0.25, 4.62, 5.5, 0.72, desc, size=11.5, color=DEEP,
+                 line_spacing=1.15)
+        x += 6.25
+    gold_callout(s, 0.55, 5.75, 12.25, 0.8,
+                 "Заучивайте оси — случайность, длина, глубина, формат; "
+                 "имена параметров сверяйте с документацией текущего месяца.",
+                 size=15, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s29"))
+
+
+def build_s30(p):
+    """Constrained decoding: механика маскирования + ограничения +
+    retrieval-пауза."""
+    s = blank(p)
+    slide_title(s, "Structured outputs: невалидные токены обнуляются прямо "
+                   "в распределении", size=23, h=0.9, y=0.35)
+    # Слева — механика
+    ocean_box(s, 0.55, 1.5, 6.9, 4.25, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_runs(s, 0.85, 1.65, 6.3, 1.0, [
+        {"text": "Constrained decoding (ограниченное декодирование): ",
+         "size": 13, "bold": True, "color": MID},
+        {"text": "на каждом шаге система вычисляет, какие токены оставляют "
+                 "вывод валидным относительно JSON-схемы, — и обнуляет "
+                 "вероятности всех остальных. Модель физически не может "
+                 "нарушить схему.", "size": 13, "color": DEEP},
+    ], line_spacing=1.2)
+    # мини-схема маскирования: 5 баров, 2 погашены
+    vals = [(0.32, True), (0.19, False), (0.14, True), (0.11, False),
+            (0.08, True)]
+    xx = 1.45
+    for v, valid in vals:
+        bh = v / 0.35 * 1.0
+        filled_rect(s, xx, 2.95 + (1.0 - bh), 0.6, bh,
+                    MID if valid else SOFT_GREY, radius=False)
+        if not valid:
+            text_box(s, xx + 0.08, 2.82 + (1.0 - bh) - 0.28, 0.5, 0.35, "×",
+                     size=17, bold=True, color=SLATE, align=PP_ALIGN.CENTER)
+        xx += 1.0
+    plain_line(s, 1.25, 3.98, 6.45, 3.98, color=LIGHT, w_pt=1.2)
+    text_box(s, 1.25, 4.04, 5.4, 0.3,
+             "серые нарушают JSON-схему → вероятность 0",
+             size=11, italic=True, color=SLATE)
+    text_runs(s, 0.85, 4.48, 6.3, 1.1, [
+        {"text": "Просьба «ответь строго в JSON» → ~80% валидных\n",
+         "size": 13, "color": DEEP},
+        {"text": "Strict mode → ", "size": 13.5, "bold": True,
+         "color": DEEP, "newpara": True, "space_before_pt": 4},
+        {"text": "100%", "size": 15, "bold": True, "color": GOLD},
+        {"text": " — гарантия встроена в сэмплинг, а не проверяется "
+                 "постфактум", "size": 12.5, "color": DEEP},
+    ], line_spacing=1.18)
+    # Справа — ограничения
+    ocean_box(s, 7.75, 1.5, 5.05, 4.25, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_box(s, 8.0, 1.65, 4.55, 0.4,
+             "Ограничения — свойства компиляции", size=14, bold=True,
+             color=MID)
+    limits = [
+        "Рекурсия через $ref — нет (дерево → плоский список с parent_id)",
+        "Глубина вложенности — ≤ 5",
+        "Первый запрос с новой схемой платит за компиляцию грамматики — "
+        "до 10 с",
+        "Гарантирован синтаксис, не смысл: валидировать значения "
+        "по-прежнему вам",
+    ]
+    yy = 2.15
+    for lim in limits:
+        filled_rect(s, 8.0, yy, 4.55, 0.76, SURFACE, stroke=LIGHT,
+                    stroke_pt=1.0, radius=True, radius_adj=0.12)
+        text_box(s, 8.15, yy + 0.04, 4.25, 0.68, lim, size=11, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+        yy += 0.87
+    ocean_box(s, 2.65, 6.05, 8.0, 0.65, fill=WHITE, stroke=TEAL,
+              stroke_pt=1.4)
+    text_runs(s, 2.85, 6.05, 7.6, 0.65, [
+        {"text": "Вопрос залу: ", "size": 14, "bold": True, "color": TEAL},
+        {"text": "почему именно 100%, а не 99.9?", "size": 14,
+         "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s30"))
+
+
+def build_s31(p):
+    """Авторегрессионный цикл: 5 шагов + возврат + stop-условие."""
+    s = blank(p)
+    slide_title(s, "Предсказали токен → дописали в контекст → предсказываем "
+                   "следующий", size=25, h=0.6)
+    steps = [
+        ("1 · Текущий контекст",
+         "системный промпт + история + запрос + уже сгенерированная часть "
+         "ответа", False),
+        ("2 · Прямой проход",
+         "токенизация → эмбеддинги → все слои внимания", True),
+        ("3 · Распределение",
+         "вероятности на все ~200 тыс. токенов словаря", False),
+        ("4 · Сэмплинг",
+         "один токен — по правилам температуры / top-p / схемы", False),
+        ("5 · Токен дописан",
+         "дописан в контекст — и цикл повторяется", False),
+    ]
+    bw, gap = 2.32, 0.24
+    x0 = (SLIDE_W_IN - bw * 5 - gap * 4) / 2
+    y0, bh = 2.35, 1.8
+    for i, (head, desc, is_gold) in enumerate(steps):
+        x = x0 + i * (bw + gap)
+        if is_gold:
+            filled_rect(s, x, y0, bw, bh, GOLD_TINT, stroke=GOLD,
+                        stroke_pt=2.0, radius=True, radius_adj=0.08)
+        else:
+            ocean_box(s, x, y0, bw, bh, fill=SURFACE, stroke=LIGHT,
+                      stroke_pt=1.3)
+        text_box(s, x + 0.15, y0 + 0.12, bw - 0.3, 0.65, head, size=13,
+                 bold=True, color=DEEP, line_spacing=1.08)
+        text_box(s, x + 0.15, y0 + 0.78, bw - 0.3, 0.95, desc, size=10.5,
+                 color=MID if not is_gold else DEEP, line_spacing=1.14)
+        if i < 4:
+            right_arrow(s, x + bw + 0.02, y0 + bh / 2 - 0.09, w=gap - 0.04,
+                        h=0.18, fill=MID)
+    chip(s, x0 - 0.15, y0 - 0.42, 0.9, 0.32, "вход", fill=GOLD, color=DEEP,
+         size=11.5)
+    # Возврат
+    plain_line(s, x0 + 4 * (bw + gap) + bw / 2, y0 + bh,
+               x0 + 4 * (bw + gap) + bw / 2, y0 + bh + 0.35, color=LIGHT,
+               w_pt=2.0)
+    left_arrow(s, x0 + bw / 2, y0 + bh + 0.28, w=4 * (bw + gap), h=0.2,
+               fill=LIGHT)
+    plain_line(s, x0 + bw / 2, y0 + bh, x0 + bw / 2, y0 + bh + 0.30,
+               color=LIGHT, w_pt=2.0)
+    text_box(s, x0 + 3.0, y0 + bh + 0.52, 6.0, 0.35,
+             "возврат к шагу 1 — цикл повторяется", size=12, italic=True,
+             color=MID, align=PP_ALIGN.CENTER)
+    text_runs(s, 0.55, 5.55, 12.3, 0.45, [
+        {"text": "До специального ", "size": 13.5, "color": DEEP},
+        {"text": "стоп-токена", "size": 13.5, "bold": True, "color": DEEP},
+        {"text": " или до ", "size": 13.5, "color": DEEP},
+        {"text": "max_tokens", "size": 13.5, "bold": True, "color": DEEP,
+         "font": FONT_MONO},
+        {"text": " — обрыв мгновенный, хоть на середине JSON-поля.",
+         "size": 13.5, "color": DEEP},
+    ], align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, 6.15, 12.3, 0.7,
+             "Каждый шаг — без состояния: вся «память» живёт в контексте, "
+             "который подаётся целиком (KV-cache делает повторную подачу "
+             "дешёвой, не отменяя её логически).",
+             size=12.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
+             line_spacing=1.2)
+    speaker_notes(s, load_notes("s31"))
+
+
+def build_s32(p):
+    """Reasoning-токены: раздвоенный выход + ценовые бары + границы +
+    gold callout. Закрывает M5."""
+    s = blank(p)
+    slide_title(s, "Reasoning-токены не видны — но тарифицируются как output",
+                size=25, h=0.6)
+    # Верх — раздвоенный выход
+    ocean_box(s, 0.55, 1.3, 12.25, 2.25, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    filled_rect(s, 0.95, 1.9, 2.7, 0.75, MID, radius=True, radius_adj=0.12)
+    text_box(s, 1.0, 1.95, 2.6, 0.65, "авторегрессионный\nцикл  ⟲",
+             size=11.5, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    line_arrow(s, 3.7, 2.1, 4.4, 1.8, color=TEAL, w_pt=2.2)
+    line_arrow(s, 3.7, 2.45, 4.4, 2.8, color=SLATE, w_pt=2.2)
+    filled_rect(s, 4.5, 1.55, 4.6, 0.5, TEAL, radius=True, radius_adj=0.2)
+    text_box(s, 4.65, 1.58, 4.3, 0.44, "видимый ответ", size=12.5,
+             bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+    filled_rect(s, 4.5, 2.55, 7.7, 0.62, SOFT_GREY, radius=True,
+                radius_adj=0.14)
+    text_box(s, 4.7, 2.55, 6.2, 0.62,
+             "черновик «для себя» — в ответ не попадает, в счёт попадает",
+             size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.1)
+    text_box(s, 11.05, 2.5, 1.15, 0.72, "×3–10", size=19, bold=True,
+             color=GOLD, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    text_box(s, 4.5, 3.24, 8.2, 0.3,
+             "по ставке output-токенов, с учётом в max_tokens — без "
+             "естественного потолка", size=11, italic=True, color=SLATE)
+    # Низ слева — ценовые бары
+    ocean_box(s, 0.55, 3.75, 5.95, 2.2, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    pb = [("o4-mini", 1, MID), ("o3", 5, MID), ("o3-pro", 18, GOLD)]
+    yy = 3.95
+    for lab, v, color in pb:
+        text_box(s, 0.8, yy, 1.05, 0.32, lab, size=11.5, bold=True,
+                 color=DEEP, font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE)
+        bw = v / 18 * 3.6
+        filled_rect(s, 1.95, yy + 0.04, max(bw, 0.18), 0.24, color,
+                    radius=True, radius_adj=0.35)
+        text_box(s, 2.05 + max(bw, 0.18), yy, 0.9, 0.32, f"{v}×",
+                 size=12, bold=True, color=GOLD if color == GOLD else DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        yy += 0.42
+    text_runs(s, 0.8, 5.28, 5.5, 0.6, [
+        {"text": "o3-pro: 3.6× дороже o3, 18× дороже o4-mini", "size": 11.5,
+         "bold": True, "color": DEEP},
+        {"text": " — при сопоставимой длине видимых ответов; разницу делает "
+                 "объём рассуждения.", "size": 11, "color": SLATE},
+    ], line_spacing=1.12)
+    # Низ справа — 2 границы
+    borders = [
+        ("Управление:", " адаптивное мышление / effort вместо ручных "
+         "бюджетов — удобно, но стоимость запроса стала менее "
+         "предсказуемой"),
+        ("«Ход рассуждений» в интерфейсе — пересказ", " (summarized), не "
+         "сырые токены: строить аудит решений на «показанных мыслях» "
+         "нельзя"),
+    ]
+    yy = 3.75
+    for head, rest in borders:
+        ocean_box(s, 6.75, yy, 6.05, 1.02, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.2)
+        text_runs(s, 6.95, yy + 0.06, 5.65, 0.9, [
+            {"text": head, "size": 12, "bold": True, "color": MID},
+            {"text": rest, "size": 11.5, "color": DEEP},
+        ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+        yy += 1.18
+    gold_callout(s, 0.55, 6.15, 12.25, 0.85,
+                 "Закладывайте в бюджет невидимую часть 2–5× видимого "
+                 "ответа — и сверяйте по полю usage в ответе API, где "
+                 "reasoning-токены видны как строка расхода.",
+                 size=14, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s32"))
+
+
+def build_s34(p):
+    """Local vs cloud 2026: три категории; средняя — категориальная
+    новость (gold)."""
+    s = blank(p)
+    slide_title(s, "«Открытые веса» перестали означать «локально "
+                   "запускаемые»", size=26, h=0.6)
+    cols = [
+        ("Действительно локальные (≤ ~30B)", None, [
+            "Qwen3.8-27B (Apache 2.0, вход изображение+видео, окно "
+            "262 тыс.), Muse Glimmer 30B",
+            "Железо: RTX 5090 (32 ГБ) · Apple unified 64–128 ГБ",
+            "Лимит — объём памяти, не вычисления"]),
+        ("Открытые, но облачные гиганты", "открытая ≠ локальная", [
+            "Kimi K3 — 2.8 трлн параметров, крупнейшая открытая модель",
+            "DeepSeek V4-Pro — 1.6 трлн",
+            "На потребительское железо не помещаются ни в каком виде"]),
+        ("Закрытые API", None, [
+            "Флагманское качество — по-прежнему здесь",
+            "Плата за токен, данные через провайдера"]),
+    ]
+    x = 0.55
+    for title, badge, bullets in cols:
+        is_mid = badge is not None
+        if is_mid:
+            filled_rect(s, x, 1.5, 3.95, 4.0, WHITE, stroke=GOLD,
+                        stroke_pt=2.2, radius=True, radius_adj=0.05)
+            chip(s, x + 0.55, 1.28, 2.85, 0.4, badge, fill=GOLD, color=DEEP,
+                 size=13)
+        else:
+            ocean_box(s, x, 1.5, 3.95, 4.0, fill=SURFACE, stroke=LIGHT,
+                      stroke_pt=1.4)
+        text_box(s, x + 0.25, 1.82, 3.45, 0.75, title, size=15, bold=True,
+                 color=MID if not is_mid else DEEP, line_spacing=1.1)
+        runs = []
+        for i, b in enumerate(bullets):
+            bold = b.startswith(("Лимит", "На потребительское"))
+            runs.append({"text": "• " + b, "size": 12.5, "color": DEEP,
+                         "bold": bold, "newpara": i > 0,
+                         "space_before_pt": 8})
+        text_runs(s, x + 0.25, 2.7, 3.45, 2.6, runs, line_spacing=1.2)
+        x += 4.15
+    text_box(s, 0.55, 5.85, 12.25, 0.7,
+             "Причины локального выбора прежние: приватность данных · "
+             "отсутствие платы за токен на объёмах · независимость от сети. "
+             "Решение — по данным и объёмам, не по идеологии.",
+             size=13.5, italic=True, color=MID, align=PP_ALIGN.CENTER,
+             line_spacing=1.2)
+    speaker_notes(s, load_notes("s34"))
+
+
+# ============================================================
+# БАТЧ 2 — Раздел 5. Финал
+# ============================================================
+def build_s35a(p):
+    section_divider(
+        p, section_n=5, sub_title="Финал",
+        frame_phrase="Конвейер собран целиком: карта моделей 2026, цена "
+                     "доверия бенчмаркам — и шесть утверждений заново",
+        tag="4 разбора · 2 провала", active_stage=set(range(7)),
+        notes_id="s35a", frame_bar=True, frame_size=18)
+
+
+def build_s35(p):
+    """Recap: конвейер 4 стадий + 4 плашки-наложения + gold callout."""
+    s = blank(p)
+    slide_title(s, "Новые темы не добавили стадий — они встроились в "
+                   "существующие", size=25, h=0.6)
+    stages = ["Токенизация", "Эмбеддинги", "Внимание", "Сэмплинг"]
+    bw, gap, y0, bh = 2.28, 0.3, 3.3, 0.85
+    x0 = 0.62
+    centers = []
+    for i, st in enumerate(stages):
+        x = x0 + i * (bw + gap)
+        centers.append(x + bw / 2)
+        ocean_box(s, x, y0, bw, bh, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.5)
+        text_box(s, x, y0 + 0.08, bw, bh - 0.16, st, size=14.5, bold=True,
+                 color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        if i < 3:
+            right_arrow(s, x + bw + 0.03, y0 + bh / 2 - 0.09, w=gap - 0.06,
+                        h=0.18, fill=MID)
+    rx = x0 + 4 * (bw + gap)
+    filled_rect(s, rx, y0 + 0.08, 1.85, bh - 0.16, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.8, radius=True, radius_adj=0.15)
+    text_runs(s, rx, y0 + 0.12, 1.85, bh - 0.24, [
+        {"text": "следующий", "size": 12, "bold": True, "color": DEEP,
+         "align": PP_ALIGN.CENTER},
+        {"text": "токен", "size": 12, "bold": True, "color": DEEP,
+         "newpara": True, "align": PP_ALIGN.CENTER},
+    ], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    right_arrow(s, rx - gap + 0.03, y0 + bh / 2 - 0.09, w=gap - 0.06,
+                h=0.18, fill=MID)
+    # loop назад
+    plain_line(s, rx + 0.92, y0 + bh - 0.08, rx + 0.92, y0 + bh + 0.32,
+               color=LIGHT, w_pt=1.8)
+    left_arrow(s, centers[0], y0 + bh + 0.26, w=rx + 0.92 - centers[0],
+               h=0.16, fill=LIGHT)
+    text_box(s, 4.2, y0 + bh + 0.46, 5.0, 0.3, "⟲ цикл — токен дописан в "
+             "контекст", size=11, italic=True, color=MID,
+             align=PP_ALIGN.CENTER)
+    # Плашки-наложения: 2 сверху, 2 снизу
+    overlays_top = [
+        (0, 0.62, 3.35, "Chat-шаблоны", " — препроцессор токенизации"),
+        (2, 4.9, 4.5, "KV-cache", " — внутри внимания; prompt caching — "
+         "надстройка над ним на границе запросов"),
+    ]
+    for stage_i, px, pw, head, rest in overlays_top:
+        filled_rect(s, px, 1.55, pw, 0.95, TEAL_TINT, stroke=GOLD,
+                    stroke_pt=1.5, radius=True, radius_adj=0.1)
+        text_runs(s, px + 0.18, 1.60, pw - 0.36, 0.85, [
+            {"text": head, "size": 12.5, "bold": True, "color": DEEP},
+            {"text": rest, "size": 11.5, "color": DEEP},
+        ], line_spacing=1.12, anchor=MSO_ANCHOR.MIDDLE)
+        plain_line(s, px + pw / 2, 2.5, centers[stage_i], y0, color=TEAL,
+                   w_pt=1.4, dash=4)
+    overlays_bottom = [
+        (3, 7.6, 4.0, "Structured outputs", " — фильтр на стадии сэмплинга",
+         centers[3]),
+        (None, 2.9, 4.3, "Reasoning-токены", " — тот же цикл; часть выхода "
+         "помечена «черновик»", centers[0] + 1.0),
+    ]
+    for stage_i, px, pw, head, rest, tx_ in overlays_bottom:
+        filled_rect(s, px, 5.0, pw, 0.95, TEAL_TINT, stroke=GOLD,
+                    stroke_pt=1.5, radius=True, radius_adj=0.1)
+        text_runs(s, px + 0.18, 5.05, pw - 0.36, 0.85, [
+            {"text": head, "size": 12.5, "bold": True, "color": DEEP},
+            {"text": rest, "size": 11.5, "color": DEEP},
+        ], line_spacing=1.12, anchor=MSO_ANCHOR.MIDDLE)
+        plain_line(s, px + pw / 2, 5.0,
+                   tx_ if stage_i is None else centers[stage_i],
+                   y0 + bh + (0.3 if stage_i is None else 0),
+                   color=TEAL, w_pt=1.4, dash=4)
+    gold_callout(s, 0.55, 6.25, 12.25, 0.85,
+                 "Конвейер — диагностическое дерево: по симптому почти "
+                 "всегда угадывается стадия-виновник. Спрашивайте: «на какой "
+                 "стадии это происходит?»", size=14.5, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s35"))
+
+
+def build_s36(p):
+    """Ландшафт 2026: 2 лагеря + IMO-экспонат + ценовая шкала."""
+    s = blank(p)
+    slide_title(s, "Сентябрь 2026: качество сблизилось — цены разошлись на "
+                   "три порядка", size=24, h=0.9, y=0.35)
+    # Колонки
+    frontier = [
+        "OpenAI: GPT-5.6 — Luna → Terra → Sol",
+        "Anthropic: Claude Fable 5 · Opus 5",
+        "Google: Gemini 3.5 Pro (окно 2 млн, Deep Think)",
+        "xAI: Grok 4.3",
+    ]
+    open_w = [
+        "DeepSeek V4 (Pro 1.6 трлн / Flash 284 млрд)",
+        "Qwen 3.8-Max — первая открытая из линейки Max",
+        "Kimi K2.6 (1 трлн) · Kimi K3 (2.8 трлн — крупнейшая открытая)",
+    ]
+    for x, title, items in [(0.55, "Передний край (закрытые веса)",
+                             frontier),
+                            (6.8, "Открытые веса", open_w)]:
+        ocean_box(s, x, 1.5, 6.0, 2.4, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.4)
+        text_box(s, x + 0.25, 1.65, 5.5, 0.4, title, size=15, bold=True,
+                 color=MID)
+        runs = []
+        for i, it in enumerate(items):
+            bold = "крупнейшая открытая" in it
+            runs.append({"text": "• " + it, "size": 12.5, "color": DEEP,
+                         "bold": bold, "newpara": i > 0,
+                         "space_before_pt": 6})
+        text_runs(s, x + 0.25, 2.12, 5.5, 1.7, runs, line_spacing=1.18)
+    # IMO экспонат
+    filled_rect(s, 0.55, 4.1, 12.25, 1.05, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.8, radius=True, radius_adj=0.12)
+    text_box(s, 0.85, 4.2, 11.7, 0.45,
+             "IMO 2026: шесть моделей — абсолютные 42/42. Из 666 "
+             "участников-людей — семеро.", size=15.5, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER)
+    text_box(s, 0.85, 4.67, 11.7, 0.4,
+             "Те же системы ошибаются в подсчёте букв слова cranberry — "
+             "«рваный интеллект» как рабочая характеристика.",
+             size=12, italic=True, color=MID, align=PP_ALIGN.CENTER)
+    # Ценовая шкала
+    filled_rect(s, 1.0, 5.82, 11.3, 0.2, SOFT_GREY, radius=True,
+                radius_adj=0.5)
+    filled_rect(s, 1.0, 5.82, 2.3, 0.2, LIGHT, radius=True, radius_adj=0.5)
+    filled_rect(s, 10.0, 5.82, 2.3, 0.2, DEEP, radius=True, radius_adj=0.5)
+    text_box(s, 1.0, 5.45, 4.5, 0.35, "пол рынка $0.03–0.2 / млн токенов",
+             size=12.5, bold=True, color=MID)
+    text_box(s, 8.3, 5.45, 4.0, 0.35, "премиум $10 вход / $50 выход",
+             size=12.5, bold=True, color=DEEP, align=PP_ALIGN.RIGHT)
+    text_runs(s, 0.55, 6.3, 12.3, 0.45, [
+        {"text": "Kimi K2.6 ≈ GPT-5.5 на защищённом SWE-bench Pro — ",
+         "size": 14, "bold": True, "color": DEEP},
+        {"text": "при цене на ~80% ниже", "size": 14, "bold": True,
+         "color": GOLD},
+    ], align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s36"))
+
+
+def build_s37(p):
+    """Бенчмарки: 3 сюжета-карточки + gold callout. Закрывает M6."""
+    s = blank(p)
+    slide_title(s, "Бенчмарки: контаминация, подгонка — и модели, которые "
+                   "жульничают сами", size=24, h=0.9, y=0.35)
+    cards = [
+        ("1", "Контаминация: заучено, а не умеет", [
+            {"text": "SWE-bench ", "size": 12.5, "color": DEEP},
+            {"text": "Verified 87.6%", "size": 12.5, "bold": True,
+             "color": GOLD},
+            {"text": " (заявка производителя, публичные репозитории) vs ",
+             "size": 12.5, "color": DEEP},
+            {"text": "Pro: 57% топ / ~25% средний", "size": 12.5,
+             "bold": True, "color": GOLD},
+            {"text": " (приватные кодовые базы — заучить нельзя). Разрыв — "
+                     "измеренная величина заучивания. OpenAI в 2026 "
+                     "перестал публиковать Verified.", "size": 12.5,
+             "color": DEEP}]),
+        ("2", "Подгонка под метрику", [
+            {"text": "Llama 4 Maverick: на Chatbot Arena — специальная "
+                     "версия, Elo 1417; публичная модель — ", "size": 12.5,
+             "color": DEEP},
+            {"text": "места 32–35", "size": 12.5, "bold": True,
+             "color": DEEP},
+            {"text": ". Ян Лекун: результаты «слегка подтасованы».",
+             "size": 12.5, "color": DEEP}]),
+        ("3", "Модели жульничают сами", [
+            {"text": "UK AI Security Institute: ", "size": 12.5,
+             "color": DEEP},
+            {"text": "все 5", "size": 12.5, "bold": True, "color": DEEP},
+            {"text": " протестированных передовых моделей пытались обмануть "
+                     "процедуру оценки. Одна модель OpenAI ", "size": 12.5,
+             "color": DEEP},
+            {"text": "вышла за пределы тестовой песочницы и взломала "
+                     "производственные серверы Hugging Face", "size": 12.5,
+             "bold": True, "color": DEEP},
+            {"text": ".", "size": 12.5, "color": DEEP}]),
+    ]
+    yy = 1.52
+    for num, head, runs in cards:
+        ocean_box(s, 0.55, yy, 12.25, 1.42, fill=SURFACE if num != "3"
+                  else WHITE, stroke=LIGHT, stroke_pt=1.3)
+        text_box(s, 0.8, yy + 0.1, 0.55, 0.6, num, size=26, bold=True,
+                 color=LIGHT)
+        text_box(s, 1.45, yy + 0.12, 10.9, 0.38, head, size=14.5,
+                 bold=True, color=MID)
+        text_runs(s, 1.45, yy + 0.52, 11.0, 0.85, runs, line_spacing=1.16)
+        yy += 1.55
+    gold_callout(s, 0.55, 6.25, 12.25, 0.8,
+                 "Бенчмарки сужают список кандидатов. Выбирает — "
+                 "собственный оценочный набор: 30–50 примеров из ваших "
+                 "реальных задач.", size=15, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s37"))
+
+
+S38_ROWS = [
+    ("M1", "«Модели научились считать буквы»",
+     "Модель видит токены, не буквы; strawberry починили точечным патчем — "
+     "cranberry не работает"),
+    ("M2", "«Роль system защищена архитектурно»",
+     "Роль — токены chat-шаблона в общем потоке; внимание не различает "
+     "происхождения токенов"),
+    ("M3", "«Окно 1M = работа со всем объёмом»",
+     "Окно — ёмкость приёма, не понимания: без лексических совпадений 11 из "
+     "13 моделей теряют >50% своей точности уже на 32K"),
+    ("M4", "«T=0 даёт детерминированный ответ»",
+     "Ядра не batch-инвариантны: чужая нагрузка меняет размер батча — 80 "
+     "уникальных ответов из 1000"),
+    ("M5", "«Невидимые reasoning-токены не оплачиваются»",
+     "Тарифицируются как output; 3–10× видимого ответа; o3-pro в 18× "
+     "дороже o4-mini"),
+    ("M6", "«Бенчмарки — надёжный способ выбрать модель»",
+     "Контаминация (87.6% vs 57%), подгонка витрин, жульничество моделей; "
+     "выбирает свой оценочный набор"),
+]
+
+
+def build_s38(p):
+    """Payoff: таблица M1–M6 с механизмами + gold callout. Перекличка с s01."""
+    s = blank(p)
+    slide_title(s, "Шесть утверждений — теперь по строке механизма на каждое",
+                size=26, h=0.6)
+    tx, ty, tw = 0.55, 1.3, 12.25
+    gtbl = s.shapes.add_table(7, 3, Inches(tx), Inches(ty), Inches(tw),
+                              Inches(4.45))
+    tbl = gtbl.table
+    tbl.first_row = False; tbl.horz_banding = False
+    for ci, w in enumerate([0.75, 4.35, 7.15]):
+        tbl.columns[ci].width = Inches(w)
+    tbl.rows[0].height = Inches(0.4)
+    for ri in range(1, 7):
+        tbl.rows[ri].height = Inches(0.67)
+
+    def cell(r, c, txt, *, size=11.5, bold=False, color=DEEP, fill=WHITE,
+             align=PP_ALIGN.LEFT, italic=False):
+        cl = tbl.cell(r, c)
+        cl.fill.solid(); cl.fill.fore_color.rgb = fill
+        cl.margin_left = Inches(0.07); cl.margin_right = Inches(0.05)
+        cl.margin_top = Inches(0.02); cl.margin_bottom = Inches(0.02)
+        cl.vertical_anchor = MSO_ANCHOR.MIDDLE
+        tf = cl.text_frame; tf.word_wrap = True
+        para = tf.paragraphs[0]; para.alignment = align
+        para.line_spacing = 1.08
+        r_ = para.add_run(); r_.text = txt
+        r_.font.name = FONT_BODY; r_.font.size = Pt(size)
+        r_.font.bold = bold; r_.font.italic = italic
+        r_.font.color.rgb = color
+
+    cell(0, 0, "№", size=12, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    cell(0, 1, "Утверждение — все ложны", size=12, bold=True, color=MID)
+    cell(0, 2, "Механизм", size=12, bold=True, color=MID)
+    for ri, (m, stmt, mech) in enumerate(S38_ROWS):
+        cell(ri + 1, 0, m, size=12.5, bold=True, fill=GOLD_TINT,
+             align=PP_ALIGN.CENTER)
+        cell(ri + 1, 1, stmt, size=11, italic=True,
+             fill=WHITE if ri % 2 else SURFACE)
+        cell(ri + 1, 2, mech, size=11,
+             fill=WHITE if ri % 2 else SURFACE)
+    gold_callout(s, 0.55, 6.0, 12.25, 0.85,
+                 "Точная ментальная модель — это знание границ. Каждое "
+                 "утверждение — правда соседней области, растянутая за свою "
+                 "границу.", size=15, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s38"))
+
+
+def build_s39(p):
+    """Decision tree «когда не LLM» + лестница эскалации."""
+    s = blank(p)
+    slide_title(s, "Когда не LLM — и когда не топ-LLM", size=26, h=0.6)
+    text_box(s, 0.55, 1.15, 7.5, 0.4, "Когда LLM — не тот инструмент:",
+             size=15, bold=True, color=MID)
+    branches = [
+        ("Классификация на фиксированных категориях с тысячами размеченных "
+         "примеров", "классический ML: дешевле, быстрее, воспроизводимо — "
+         "а LLM ещё и недетерминирована при T=0"),
+        ("Объяснимость перед регулятором", "прозрачные классические методы"),
+        ("Отклик < 100 мс (антифрод, устройства без сети)",
+         "специализированная малая модель"),
+        ("Точные посимвольные и арифметические операции", "код, не модель"),
+    ]
+    yy = 1.62
+    for cond, ans in branches:
+        ocean_box(s, 0.55, yy, 7.6, 0.92, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.2)
+        text_runs(s, 0.75, yy + 0.05, 7.2, 0.84, [
+            {"text": cond, "size": 12, "bold": True, "color": DEEP},
+            {"text": "  →  ", "size": 12.5, "bold": True, "color": MID},
+            {"text": ans, "size": 12, "color": TEAL, "bold": True},
+        ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+        yy += 1.02
+    filled_rect(s, 0.55, yy, 7.6, 0.85, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.4, radius=True, radius_adj=0.1)
+    text_runs(s, 0.75, yy + 0.04, 7.2, 0.77, [
+        {"text": "Иначе", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": " — обработка языка, гибкие форматы, многошаговое "
+                 "рассуждение, генерация → ", "size": 12, "color": DEEP},
+        {"text": "LLM применима и часто оптимальна", "size": 12,
+         "bold": True, "color": DEEP},
+    ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+    # Справа — лестница
+    ocean_box(s, 8.4, 1.15, 4.4, 5.55, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 8.65, 1.3, 3.9, 0.4, "…и не всегда топ-LLM", size=15,
+             bold=True, color=DEEP)
+    filled_rect(s, 10.3, 1.95, 2.25, 0.75, DEEP, radius=True,
+                radius_adj=0.12)
+    text_box(s, 10.42, 2.0, 2.0, 0.65, "10% сложных →\nпремиум $10/млн",
+             size=10.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.05)
+    filled_rect(s, 8.65, 2.78, 3.9, 0.85, MID, radius=True, radius_adj=0.1)
+    text_box(s, 8.8, 2.83, 3.6, 0.75, "90% запросов →\nмодель за $0.20/млн",
+             size=12, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.08)
+    text_runs(s, 8.65, 3.85, 3.9, 1.5, [
+        {"text": "Миллиард токенов/мес:", "size": 12.5, "bold": True,
+         "color": DEEP},
+        {"text": "$10 000", "size": 14, "bold": True, "color": DEEP,
+         "newpara": True, "space_before_pt": 6},
+        {"text": " целиком на премиуме", "size": 12, "color": DEEP},
+        {"text": "vs  ", "size": 12.5, "color": SLATE, "newpara": True,
+         "space_before_pt": 4},
+        {"text": "$1 180", "size": 16, "bold": True, "color": GOLD},
+        {"text": " с маршрутизацией", "size": 12, "color": DEEP},
+    ], line_spacing=1.15)
+    text_box(s, 8.65, 5.6, 3.9, 0.9,
+             "Kimi K2.6 ≈ GPT-5.5 на защищённом бенчмарке при −80% цены",
+             size=11.5, italic=True, color=MID, line_spacing=1.15)
+    speaker_notes(s, load_notes("s39"))
+
+
+def build_s40(p):
+    """Корреляция ≠ причинность: человек vs модель + gold callout."""
+    s = blank(p)
+    slide_title(s, "Внимание усваивает корреляцию, не причинность", size=26,
+                h=0.6)
+    # Человек
+    ocean_box(s, 0.55, 1.45, 5.95, 3.55, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 0.85, 1.62, 5.35, 0.4, "Человек", size=16.5, bold=True,
+             color=MID)
+    text_runs(s, 0.85, 2.1, 5.35, 0.85, [
+        {"text": "«X произошло, потому что Y»", "size": 14, "bold": True,
+         "color": DEEP},
+        {"text": " — модель механизмов мира", "size": 13.5, "color": DEEP},
+    ], line_spacing=1.2)
+    hlevels = [("ассоциация", "✓"), ("вмешательство", "✓"),
+               ("контрфактуальность", "✓")]
+    yy = 3.0
+    for lab, mark in hlevels:
+        filled_rect(s, 0.85, yy, 5.35, 0.52, TEAL_TINT, stroke=TEAL,
+                    stroke_pt=1.2, radius=True, radius_adj=0.2)
+        text_runs(s, 1.05, yy, 5.0, 0.52, [
+            {"text": mark + "  ", "size": 13, "bold": True, "color": TEAL},
+            {"text": lab, "size": 13, "bold": True, "color": DEEP},
+        ], anchor=MSO_ANCHOR.MIDDLE)
+        yy += 0.62
+    # Модель
+    ocean_box(s, 6.85, 1.45, 5.95, 3.55, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, 7.15, 1.62, 5.35, 0.4, "Модель (через внимание)",
+             size=16.5, bold=True, color=DEEP)
+    text_runs(s, 7.15, 2.1, 5.35, 0.85, [
+        {"text": "«X следует за Y в текстах»", "size": 14, "bold": True,
+         "color": DEEP},
+        {"text": " — «потому что» для модели — частотный паттерн, не "
+                 "указание на механизм мира", "size": 12.5, "color": DEEP},
+    ], line_spacing=1.18)
+    mlevels = [
+        ("ассоциация — сильна", "✓", TEAL_TINT, TEAL, TEAL),
+        ("вмешательство — только похожие на описанные в корпусе", "~",
+         WHITE, LIGHT, MID),
+        ("контрфактуальность — систематически нет", "×", SOFT_GREY, SLATE,
+         SLATE),
+    ]
+    yy = 3.0
+    for lab, mark, fill, stroke, mcol in mlevels:
+        filled_rect(s, 7.15, yy, 5.35, 0.52, fill, stroke=stroke,
+                    stroke_pt=1.2, radius=True, radius_adj=0.2)
+        text_runs(s, 7.35, yy, 5.0, 0.52, [
+            {"text": mark + "  ", "size": 13, "bold": True, "color": mcol},
+            {"text": lab, "size": 11.5, "bold": True, "color": DEEP},
+        ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+        yy += 0.62
+    gold_callout(s, 0.55, 5.35, 12.25, 0.95,
+                 "Там, где от модели ждут каузальных выводов, человек в "
+                 "контуре — архитектурное требование, а не вежливая "
+                 "оговорка.", size=15.5, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s40"))
+
+
+def build_s41(p):
+    """Мост к Лекции 3: hero-иллюстрация (свой flat Ocean мост, ≥40%
+    площади) + 4 карточки-концепта с якорями."""
+    s = blank(p)
+    text_runs(s, 0.55, 0.35, 12.3, 0.7, [
+        {"text": "Лекция 3: ", "size": 27, "bold": True, "color": GOLD},
+        {"text": "как модель выходит за пределы контекста", "size": 27,
+         "bold": True, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    # Hero: 9.9" × 5.11" ≈ 51% площади слайда, фоновый слой (как s01)
+    hero_w = 9.9
+    add_image(s, ASSETS / "illustrations/s41-bridge-lec3.png",
+              x=(SLIDE_W_IN - hero_w) / 2, y=1.35, w=hero_w)
+    cards = [
+        ("s41-search", "RAG",
+         "Семантический поиск по вашей базе → найденные фрагменты в "
+         "контекст.",
+         "Якорь: сходство ≠ релевантность — главная причина разочарований "
+         "наивного поиска.", TEAL),
+        ("s41-settings", "Инструменты / вызов функций",
+         "Модель генерирует структурированный вызов → внешняя система "
+         "исполняет.",
+         "Якорь: надёжность формата вызова обеспечивают structured outputs.",
+         TEAL),
+        ("s41-plug", "MCP",
+         "Открытый протокол подключения инструментов.",
+         "Якорь: стабильный префикс с описаниями инструментов → кэш "
+         "промптов, экономика агента.", GOLD),
+        ("s41-refresh-cw", "Агентный цикл",
+         "Действие → наблюдение → коррекция.",
+         "Якорь: агент читает внешний контент — спуфинг ролей превращается "
+         "в prompt injection; невидимые токены рассуждения умножаются на "
+         "число шагов.", TEAL),
+    ]
+    card_w, card_h = 5.05, 2.3
+    gap_x, gap_y = 1.55, 0.55
+    x0 = (SLIDE_W_IN - card_w * 2 - gap_x) / 2
+    y0 = 1.65
+    for i, (icon, title, body, anchor, acol) in enumerate(cards):
+        col, row = i % 2, i // 2
+        x = x0 + col * (card_w + gap_x)
+        y = y0 + row * (card_h + gap_y)
+        ocean_box(s, x, y, card_w, card_h, fill=WHITE, stroke=LIGHT,
+                  stroke_pt=1.5)
+        add_image(s, ASSETS / f"icons/{icon}.png", x=x + 0.22, y=y + 0.18,
+                  w=0.42)
+        text_box(s, x + 0.78, y + 0.16, card_w - 0.95, 0.45, title,
+                 size=15.5, bold=True, color=DEEP)
+        text_box(s, x + 0.25, y + 0.68, card_w - 0.5, 0.62, body, size=12,
+                 color=DEEP, line_spacing=1.15)
+        text_box(s, x + 0.25, y + 1.32, card_w - 0.5, 0.92, anchor,
+                 size=10.5, italic=True,
+                 color=acol if acol == GOLD else TEAL, line_spacing=1.15)
+    speaker_notes(s, load_notes("s41"))
+
+
+def build_s42(p):
+    """Q&A minimal (паттерн Lec-1 s31): surface-фон, Q&A 140pt, Спасибо."""
+    s = blank(p)
+    set_slide_bg(s, SURFACE)
+    text_box(s, 0.55, 1.7, 12.3, 2.6, "Q&A", size=140, bold=True,
+             color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.55, 4.5, 12.3, 0.8, "Спасибо", size=36, italic=True,
+             color=MID, align=PP_ALIGN.CENTER)
+    text_box(s, 8.4, 6.85, 4.4, 0.35,
+             "контакты лектора — заполняется перед лекцией",
+             size=11, italic=True, color=SLATE, align=PP_ALIGN.RIGHT)
+    speaker_notes(s, load_notes("s42"))
+
+
+# ============================================================
 # Build (батч 1 = 20 слайдов; батч 2 добавит s18a…s42)
 # ============================================================
 BUILDERS = [
@@ -1383,12 +3043,22 @@ BUILDERS = [
     ("s10", build_s10), ("s11", build_s11),
     ("s12a", build_s12a), ("s12", build_s12), ("s13", build_s13),
     ("s14", build_s14), ("s15", build_s15), ("s17", build_s17),
+    # батч 2 — Разделы 3–5
+    ("s18a", build_s18a), ("s18", build_s18), ("s19", build_s19),
+    ("s20", build_s20), ("s21", build_s21), ("s22", build_s22),
+    ("s23", build_s23), ("s25", build_s25),
+    ("s26a", build_s26a), ("s26", build_s26), ("s27", build_s27),
+    ("s28", build_s28), ("s29", build_s29), ("s30", build_s30),
+    ("s31", build_s31), ("s32", build_s32), ("s34", build_s34),
+    ("s35a", build_s35a), ("s35", build_s35), ("s36", build_s36),
+    ("s37", build_s37), ("s38", build_s38), ("s39", build_s39),
+    ("s40", build_s40), ("s41", build_s41), ("s42", build_s42),
 ]
 
 
 def main():
     p = setup_pres()
-    print(f"Building {len(BUILDERS)} slides (batch 1)…")
+    print(f"Building {len(BUILDERS)} slides (full deck v2.0)…")
     for sid, fn in BUILDERS:
         try:
             fn(p)
@@ -1396,8 +3066,9 @@ def main():
         except Exception as e:
             print(f"  {sid} FAIL: {type(e).__name__}: {e}")
             raise
+    total = len(BUILDERS)
     for i, slide in enumerate(p.slides):
-        page_number(slide, i + 1)
+        page_number(slide, f"{i + 1}/{total}")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     p.save(str(OUT))
     print(f"\nSaved: {OUT}  ({OUT.stat().st_size // 1024} KB)")

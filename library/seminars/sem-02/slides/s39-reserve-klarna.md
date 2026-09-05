@@ -1,5 +1,5 @@
 ---
-id: s38
+id: s39
 type: case_study
 reserve: true
 assertion: "Klarna, 2023-2025: одна история — четыре развилки"

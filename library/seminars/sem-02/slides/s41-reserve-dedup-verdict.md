@@ -1,5 +1,5 @@
 ---
-id: s40
+id: s41
 type: case_study
 reserve: true
 assertion: "Fuzzy-matching закрывает ~90% случаев дешевле и предсказуемее. LLM — на остаток"

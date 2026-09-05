@@ -1,5 +1,5 @@
 ---
-id: s41
+id: s42
 type: hero_closing
 assertion: "Сегодня вы решали, что строить. Лекция 2 — как модель устроена внутри"
 learning_goal: "Bridge к Лекции 2; emotional payoff"
@@ -7,7 +7,7 @@ learning_outcomes: [LO1]
 references: []
 visual:
   pattern: hero_closing_bridge_photo
-  backup: assets/screenshots/s41-*.jpg
+  backup: assets/screenshots/s42-*.jpg
 ---
 
 # Сегодня вы решали, что строить

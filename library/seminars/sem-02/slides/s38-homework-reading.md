@@ -1,5 +1,5 @@
 ---
-id: s37
+id: s38
 type: summary
 assertion: "Домашнее чтение: Klarna, NYC MyCity, бонус Tahoe за $1"
 learning_goal: "Необязательное чтение, закрывающее несколько выборов на одном длинном примере"

@@ -171,3 +171,70 @@ anglicism profile не регрессировал. **Открытый пункт
 PNG-инспекшн (Anthropic vision-loop principle) не выполнен из-за
 недоступности LibreOffice в этой sandbox-сессии — рекомендуется как
 follow-up перед финальным sign-off. Не закоммичено (по инструкции).
+
+---
+
+## v5 (issue #185) — 40→51 расширение под 100 мин (2026-09-06)
+
+**База:** deck v4 (40 слайдов) + chapter v3.0 (5 частей) + образец Лекции 2 v2.
+**Spec:** `notes/lecture-3-rework/deck-v5-inventory-draft.md` (§3 ordered-list).
+
+### Счёт слайдов — важное расхождение
+Spec §9 указывал «54» — это **арифметическая ошибка** (дважды посчитаны
+дивайдеры). Финализированный ordered-list §3 содержит ровно **51 слайд**
+(46 content + 5 внутрираздельных дивайдеров, cover+map вводят Р0). Реализован
+51 слайд; `build_v3.py main()` — `assert len == 51`. Задачный бриф просил
+«assert 54» на основе §9; следую authoritative-таблице §3 = 51.
+
+### NEW-слайды (14 builder'ов)
+s01 (переделан в мем-хук «магическая пилюля»), s01b (Air Canada вынесен
+отдельно), s05c (протокольные роли + STI), s07 (CoT faithfulness — split из
+s06), s17 (FT-критерии — split из s14), s19b (экономика агента), s20 (MCP),
+s22a_multi (мульти-агент p^n), s23b (каталог 10 классов провалов таблицей),
+s23c (deep-dive 4 класса), s24 (data-security/ZDR), s28 (итоги-таблица),
+s14 (переделан → дистилляция как отдельная техника), s30 (мост SDLC×AI).
+
+### Divider-образы (6-tier acquisition, все Tier 1 Wikimedia)
+- s04a нож (Chef's_knife) · s09 библиотека (George_Peabody_Library) ·
+  s13a пульт (DiGiCo_S21_Mixing_Console) · s18 робот-рука
+  (Factory_Automation_Robotics) · s25a кокпит (Cockpit_Convair_Coronado).
+- `build_section_divider` расширен параметром `image_src`/`image_caption`/`tag`
+  (giant white номер поверх фото + tag-чип «X разборов · Y провалов» БЕЗ минут).
+- Attribution: `rendered/assets/web/attribution.md` (honest per-image log).
+
+### Визуальный цикл (min 3 итерации на NEW/changed/divider)
+- **Iter 1:** первичный рендер 51 слайда. Найдено: s01 timing «за 100 минут» в
+  gold-callout (P0 — timing в visible); s01b callout overlap с ref-строкой;
+  s14 pipeline 3-й бокс overflow за грань ocean-box; s22a_multi gold-подпись
+  клипается gold-callout'ом; s24 bullets overlap summary-строкой.
+- **Iter 2:** timing удалён; s14 геометрия (bw 3.30→3.05, gap 1.35→1.05,
+  arrow 1.23→0.90) — 3 бокса вписались; s22a_multi (box lh 3.10→3.28, bar
+  spacing 0.96→0.86, callout 5.02→5.22) — подпись не клипается; s24 (bullet
+  spacing 0.66→0.56) — no overlap; s01b callout 6.06→5.98/h1.00→0.90.
+- **Iter 3:** russification-pass + re-inspect — все NEW-слайды pass 5-Second
+  Test (главный message = assertion), mass balance OK, gold ≥1×, «Что делать»
+  callout на всех содержательных.
+
+### Russification
+- deep_latin_scan на visible: 342 unique — из них brand (Air Canada, MCP, RAG,
+  PEFT, LoRA, QLoRA, MIT, Letta, Cognition, ZDR, CoT, AI) + glossed
+  (fine-tuning, workflow, faithfulness, grounding, retrieval — glossary-locked)
+  + английские source/case-имена (Anthropic verbatim quote на s22a_multi —
+  намеренно EN) + pre-existing v4 термины.
+- Русифицированы MY new-slide анлицизмы: self-rationale→самообъяснение,
+  command injection→внедрение команд, path traversal→обход пути, hard cap→
+  жёсткий потолок, kill-switch→аварийный стоп, hard boundary→жёсткая граница,
+  supply chain→цепочка поставок, owns вывод→вывод принадлежит компании,
+  Downstream→следующий агент, «system prompts are not security controls»→
+  «системный промпт — не средство контроля безопасности».
+
+### Compliance greps (visible layer)
+- Timing grep (`N мин|Тайминг|⏱`): **0 hits**.
+- Methodology/scaffold grep (`методическ|Лектору|LO[1-9]|§[0-9]|[for-slide|
+  [VFY|→ sNN`): **0 hits** в visible body.
+- `[VFY-day-of]` в speaker notes — только на source-citation строках (baked
+  patch_notes.py, v4-конвенция) + s31 контакты (spec-requested); НЕ в narrative.
+
+### Финал
+- `rendered/lec-03.pptx` — 51 слайд, `assert len==51` pass, all ref anchors OK.
+- Speaker notes 150-300 слов на всех NEW-слайдах (trim-pass для >300).

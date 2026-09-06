@@ -28,6 +28,30 @@ slides:
     subtype: schema_matrix
     changed_in_v4: "MERGED старые s19 (API) + s20 (MCP); плотный слайд — проверен 5-Second"
 
+  - id: s19b
+    file: slides/s19b-agent-economics.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Экономика: агент ×N токенов vs chat, мульти-агент ещё ×15; кэш из ориентира → необходимость"
+    learning_goal: "Стоимость цикла относительно chat-turn; prompt caching как необходимость"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.1 [for-slide-s19]"
+    new_in_v5: "#185 — экономика агента отдельным слайдом"
+    verify_day_of: true
+
+  - id: s20
+    file: slides/s20-mcp.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "MCP N×M→N+M; ~11% каталога реально запускаемо; удобство подключения ≠ безопасность"
+    learning_goal: "MCP adoption + поворот доверия (CVE/path traversal)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.1 [for-slide-s20]"
+    new_in_v5: "#185 — MCP отдельным слайдом (adoption + security-поворот)"
+    verify_day_of: true
+
   - id: s21
     file: slides/s21-agent-loop.md
     type: process
@@ -49,6 +73,18 @@ slides:
     chapter_ref: "§4.3 [for-slide-s22, s22a]"
     subtype: schema_matrix
     changed_in_v4: "#231 — добавлена идея вложенности (agent содержит workflow и наоборот)"
+
+  - id: s22a_multi
+    file: slides/s22a_multi-multi-agent.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "Мульти-агент по умолчанию НЕ апгрейд: p^n (95%×10=60%); рой 17,2× vs координатор 4,4×"
+    learning_goal: "Математика p^n + топология + критерий «когда НЕ мульти-агент» (failure/judgment)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3 [for-slide-s22a-multi]"
+    new_in_v5: "#185 — мульти-агент p^n отдельным слайдом"
+    verify_day_of: true
 
   - id: s22b
     file: slides/s22b-agent-equipment.md
@@ -106,6 +142,18 @@ slides:
     changed_in_v4: "NEW/MERGED §4.8; P1 — безопасность GOLD блоком равного веса; GitHub MCP heist + ZDR-факты здесь"
     verify_day_of: true
 
+  - id: s24
+    file: slides/s24-data-security.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 2
+    assertion: "Карта данных по фиче: ZDR НЕ покрывает third-party/MCP; least-privilege обязателен"
+    learning_goal: "Data-security: границы ZDR + litigation hold (NYT v OpenAI) (failure/judgment)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.8 [for-slide-s24]"
+    new_in_v5: "#185 — data-security/ZDR отдельным слайдом (retention, не injection)"
+    verify_day_of: true
+
   - id: s25b
     file: slides/s25b-coding-agents.md
     type: comparison
@@ -127,6 +175,29 @@ slides:
     chapter_ref: "§4.10 [for-slide-s23a]"
     references: [jain-2026-agent-loop, mindstudio-2025-reliability, cognition-2025-multiagent]
     changed_in_v4: "#233 — база сравнения retry-скрипта к $4200; #232 — «правильно»→«более подходящая»; 4-й класс (injection) → s25"
+
+  - id: s23b
+    file: slides/s23b-failure-catalog.md
+    type: case_study
+    section: "Раздел 4. Агенты"
+    duration_min: 3
+    assertion: "Каталог 10 КЛАССОВ провалов таблицей: класс→кейс→урок (188 из 344 — агент сломал сам)"
+    learning_goal: "Учебная единица — КЛАСС провала, не кейс (failure/judgment ядро)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.10 [for-slide-s23b]"
+    new_in_v5: "#185 — каталог классов провалов таблицей"
+
+  - id: s23c
+    file: slides/s23c-failure-deepdive.md
+    type: case_study
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Deep-dive классов: PocketOS 9 сек, runaway $48k/$1,3M, slopsquatting 19,7%, каскад 61%"
+    learning_goal: "4 класса крупным планом с базой сравнения + альтернатива (failure/judgment)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.10 [for-slide-s23c]"
+    new_in_v5: "#185 — deep-dive кейсов классов с базой"
+    verify_day_of: true
 
   # ─────────────────────────────────────────────────────────────────────
   # Раздел 5. Фреймворк (~16.5 мин)
@@ -171,6 +242,17 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §5.2b"
 
+  - id: s28
+    file: slides/s28-summary-table.md
+    type: summary
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 3
+    assertion: "Итоги-таблица «механизм → граница → что делать» по всем архитектурам + «не ИИ»"
+    learning_goal: "Сводная таблица (паттерн Лекции 2 s38), keystone-итог"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.3 [for-slide-s28]"
+    new_in_v5: "#185 — итоги-таблица механизм→граница→что делать"
+
   - id: s29
     file: slides/s29-human-validator-nanda.md
     type: assertion_visual
@@ -188,11 +270,12 @@ slides:
     type: hero_closing
     section: "Раздел 5. Фреймворк решения"
     duration_min: 1.5
-    assertion: "Дальше — отрасли, начинаем с разработки ПО; эта рамка — база Лекций 4–17"
-    learning_goal: "Мост к Лекции 4 «AI в разработке ПО» + ДЗ Семинар 3; hero-фото"
+    assertion: "Дальше — отрасли, старт с разработки ПО; ось SDLC×AI; рамка = база Л4–17"
+    learning_goal: "Мост-якоря SDLC×AI (4 бокса) к Лекции 4"
     chapter_ref: "§5.5 [for-slide-s30]"
     hero: "assets/screenshots/s30-coding.jpg (Wikimedia CC-BY-SA), ≥40% площади"
     changed_in_v4: "#238 — убран recap-заполнитель; тизер Л4 (точное название); hero-фото разработки"
+    changed_in_v5: "#185 — мост-якоря SDLC×AI (4 бокса) к Лекции 4"
 
   - id: s31
     file: slides/s31-qa.md
@@ -205,8 +288,9 @@ slides:
     changed_in_v4: "#239 — стиль dedicated Q&A Лекции 1 («Q&A» + «Спасибо» + контакты)"
 
 # ─── Validation ───
+# NB: by_section ниже — v4-раскладка; актуализируется в russification/polish-проходе v5.
 totals:
-  slides: 40
+  slides: 51
   by_section:
     "Раздел 0. Открытие": [s01, s02, s02a, s03, s04]          # 5
     "Раздел 1. Промпт": [s04a, s05, s05a, s05b, s06, s08, s08a]  # 7

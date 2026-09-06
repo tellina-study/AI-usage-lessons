@@ -93,16 +93,28 @@ slides:
     order_note: "#226 — PEFT сразу после определения, до критериев"
     changed_in_v4: "добавлен LoRA-adoption baseline 98.4% с обязательной оговоркой (доля среди PEFT-тегированных)"
 
+  - id: s17
+    file: slides/s17-finetune-criteria.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "FT сузился до поведения: знание→RAG, поведение→PEFT, детерминированное→код; гибрид — норма"
+    learning_goal: "Критерии «что куда» + гибрид как норма 2026 (failure/judgment)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.3, §3.5 [for-slide-s17]"
+    new_in_v5: "#185 — FT-критерии вернулись отдельным слайдом (был merged в s14)"
+
   - id: s14
     file: slides/s14-fine-tuning-narrowed.md
     type: assertion_visual
     section: "Раздел 3. Fine-tune vs промпт vs RAG"
     duration_min: 2.5
-    assertion: "Fine-tuning сузился до поведения; знание→RAG, поведение→PEFT, детерминированное→код. Гибрид — норма"
-    learning_goal: "MERGED: FT сузился (§3.1/§3.3) + критерии-таблица (§3.5)"
+    assertion: "Дистилляция = отдельная техника (teacher FT + student distill), НЕ вид fine-tuning"
+    learning_goal: "Дистилляция как отдельная compression-техника (критерии перенесены на s17)"
     chapter_ref: "§3.1, §3.3, §3.5 [for-slide-s14]"
     subtype: schema_matrix
     changed_in_v4: "MERGED старые s14+s17; P0 #227 — дистилляция = «fine-tune teacher + дистилляция student, две отдельные техники», НЕ вид fine-tuning"
+    changed_in_v5: "#185 — s14 сфокусирован на дистилляции; критерии → s17"
 
   - id: s16
     file: slides/s16-catastrophic-forgetting.md

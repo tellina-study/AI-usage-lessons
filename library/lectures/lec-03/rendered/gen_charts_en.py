@@ -1,4 +1,4 @@
-"""EN chart generator for Лекция 3 (issue #172 Ф3).
+"""EN chart generator for Lecture 3 (issue #172, EN track).
 
 Regenerates the 3 charts with baked-in Cyrillic into English, matching the
 original Ocean-palette visual style. Outputs to assets/charts-en/.

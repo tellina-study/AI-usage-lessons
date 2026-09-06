@@ -46,8 +46,11 @@ lectures:
     learning_outcomes: [LO7, LO4]
     repo_dir: lec-03
     status: produced
-    issue: 87
-    updated_at: "2026-05-17"
+    issue: 185
+    updated_at: "2026-09-06"
+    version: v6.3
+    bilingual: true
+    notes: "v3 rework (issue #185): classic-base-first, 55 слайдов + 15 мемов, глава 44k, речь v3.1, EN-дубликат"
 
   - number: 4
     title: "AI в разработке программного обеспечения"

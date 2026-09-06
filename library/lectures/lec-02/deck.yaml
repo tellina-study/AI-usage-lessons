@@ -1,30 +1,131 @@
 # library/lectures/lec-02/deck.yaml
 #
-# Deck-структура Лекции 2 v1.8 (35 слайдов).
-# v1.5 (Phase 8.8): s01 hook redesign + new s04b/s09a/s13a + s11 removed +
-# s12 reformulated. Net: 33 − 1 (s11) + 3 (s04b/s09a/s13a) = 35.
-# v1.6 (Phase 8.9): «Открытие» → «Введение» + dedicated s29 Q&A slide → 36.
-# v1.7 (Phase 11): section slide counts corrected (Раздел 1 — 6 слайдов, Раздел 3 — 6 слайдов).
-# v1.8 (issue #156 polish): s01 hook replaced (human attention, not tokenization);
-#   s03/s07/s13a/s24/s25/s26/s28/s29 revisions (§-reference cleanup, gold-highlight
-#   rebalance, Q&A redesign to match Lec-1 pattern, decision-tree overflow fix);
-#   s27-homework REMOVED (deferred — no longer part of this deck). Net: 36 − 1 = 35.
-# Source: chapter v1.2 (status=reviewed, ~11400 слов).
-# Plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1).
+# Deck-структура Лекции 2 v3.0 (47 слайдов, 100 минут) — issue #183, rework round 2.
+#
+# Changelog v2.0 → v3.0 (spec: notes/lecture-2-review/final/rework-round2.md):
+# - Тайминг 90 → 100 мин (owner-решение #183 round 2); 46 → 47 слайдов.
+# - s07 (chat-шаблоны/роли протокола/STI) УДАЛЁН — тема перенесена в Лекцию 3
+#   (промптинг); §1.3 главы сжат до абзаца-упоминания.
+# - Перестановка Раздела 3: s18 → s19 → s21 (KV-cache) → s22 (prompt caching) →
+#   s20 (эффект роли) → s23 (окна) → s25 (NoLiMa). KV-cache теперь сразу после
+#   Q/K/V; s20 без спуфинга (контрастный пример GIL + оговорка Zheng et al.).
+# - НОВЫЙ Раздел 5 «Виды и размеры моделей»: s33a (divider NEW) + s33
+#   (классификация по размеру NEW) + s34 (перенос из Р4, ось «место запуска») +
+#   s36 + s37 (перенос из Финала). Финал стал Разделом 6.
+# - Арка «чек-лист 6 заблуждений» снята полностью: s01 — мем-хук про T=0
+#   (двухпанельный, без чек-листа и hands_poll); s02a — карта 7 разделов без
+#   чипов-меток; s04 — 7 промис-чипов без кодов; s38 — «Подведём итоги»
+#   (таблица «механизм → граница → что делать» на 9 строк) вместо «вернёмся
+#   к чек-листу». Блок misconceptions_map удалён из deck.yaml целиком
+#   (rework-round2: арка снята, внутренний трекинг заблуждений не ведётся).
+# - s22: mini-poll снят (интерактива нет), схема трёх запросов.
+# - s23: «стандарт 1–2M» исправлен → «фронтир-стандарт до 1M»; 2M — единичная
+#   модель (Gemini 3.5 Pro); 10M — маркетинг (Scout).
+# - Мем-иллюстрации (свои flat-рисунки, Ocean-палитра): s01 (главный мем T=0),
+#   6 дивайдеров (нож/карта/фонарик/кости/матрёшка/пазл), s31 («горшочек, не
+#   вари!»), s14 (усиление иллюстративности пространства).
+# - Content-правки: s08 «гонка патчей» (GPT-5.2→5.5→5.6), s09 (направление
+#   нарезки, авто-роутинг в инструменты), s10 (акцент «на что влияет»),
+#   s13 (карточка 2 — «Представление данных внутри модели»), s27 (формула
+#   argmax/P^(1/T)), s28 (вывод: гарантированного детерминизма нет), s29
+#   (таблица параметров, строка «заучивайте оси» убрана), s30 (конечный
+#   автомат), s31 (стоп-условия + вырожденные циклы), s35 (recap-фрейм).
+#
+# СЧЁТ СЛАЙДОВ: spec-таблица заявляет «48 слайдов», фактический построчный
+# состав = 47 (46 старых − s07 + s33a + s33; Р0:6, Р1:7, Р2:6, Р3:8, Р4:8,
+# Р5:5, Р6:7). Канонично — 47 (та же конвенция, что в v2.0: документируем
+# расхождение spec-числа с построчным счётом).
+# ТАЙМИНГ: секционные суммы duration_min = spec-таблице 9/15/11/21/20/12/12,
+# итого ровно 100; Q&A входит в Раздел 6 (спека: «12 мин, включая Q&A»).
+# Отдельных буферов нет — переходы учтены внутри duration_min слайдов.
+#
+# Source: chapter v2.3 (3 части; параллельная правка под этот же spec).
+# Plan: notes/lecture-2-review/final/rework-round2.md (+ plan-v3.md v3.1 как база).
+#
+# Changelog v3.1 → v3.2 (issue #183, round 4 — owner: «вижу только 1 мем
+# (пират) и 1 хорошую иллюстрацию (кости) — замени все остальные и докинь»):
+# - Все видимые подписи-источники под картинками убраны deck-wide (source
+#   attribution живёт только в rendered/assets/web/attribution.md).
+# - s05a (divider): скриншот ChatGPT/strawberry → мем Surprised Pikachu
+#   («модель уверенно отвечает неправильно»).
+# - s08: тот же скриншот (inline) → мем Expanding Brain 4-панели (гонка
+#   патчей, свой текст поверх шаблона).
+# - s10: скриншот GPT Playground (SolidGoldMagikarp) убран — мелкий,
+#   нечитаемый; заменён на официальный артворк Magikarp (прямая отсылка).
+# - s12a (divider): word2vec-диаграмма (Jay Alammar) → мем Pam «They're the
+#   same picture» (The Office) — «разные слова, одна суть» для embeddings.
+# - s14: убран мелкий декоративный мок «звёздная карта» (дублировал scatter).
+# - s18a (divider): титульная страница arXiv-статьи Attention Is All You
+#   Need → стоковое фото театрального прожектора («луч высвечивает одно,
+#   вокруг темнота» — буквальная метафора attention).
+# - s26a (divider): фото костей (Wikimedia) оставлено без изменений
+#   (owner-одобрено v3.1), убрана только подпись-источник.
+# - s31: гравюра Otto Ubbelohde (1909) → кадр из мультфильма «Горшочек
+#   каши» (Союзмультфильм, 1984) — узнаваемее для русскоязычной аудитории;
+#   слот увеличен (1.55"→1.85" эквивалент по высоте).
+# - s33a (divider): матрёшка (Wikimedia) оставлена без изменений
+#   (owner-одобрено v3.1), убрана только подпись-источник.
+# - s35a (divider): «This is fine» (owner: «не к месту») → мем Pepe Silvia /
+#   conspiracy board (It's Always Sunny) — «весь конвейер собран воедино».
+# - s01, s28 (мем «Well yes, but actually no») — НЕ тронуты, owner-одобрено.
+#
+# Changelog v3.2 → v3.3 (issue #183, round 5 — owner: «пройди все 47 слайдов,
+# на content-слайды без образа добавь узнаваемый визуал, +8-12 новых образов»):
+# - s15 (similarity ≠ релевантность): добавлен мем Spider-Man Pointing at
+#   Spider-Man в свободную зону справа под легендой шкалы — метафора «похожи
+#   ≠ об одном».
+# - s25 (long-context limits): добавлено реальное фото иголки в стоге сена
+#   (Wikimedia, CC-BY-SA) — буквальная метафора-якорь needle-in-a-haystack,
+#   2-й образ на уже media-rich слайде (был ucurve+nolima charts).
+# - s39 (когда не LLM): добавлен мем Two Buttons (crop верхней панели,
+#   подписи «LLM» / «обычный код») в свободную зону правой колонки —
+#   метафора трудного выбора инструмента.
+# - s40 (корреляция ≠ причинность): добавлен xkcd #552 «Correlation» под
+#   gold callout — прямая отсылка к классическому «corr ≠ causation».
+# - Media-rich slide count: 15 → 18 (+3 net new: s15, s39, s40; s25 gained
+#   2nd image).
+# - Geometry-анализ показал s09/s11/s21/s22/s27/s30/s32/s37 плотными (<0.5"
+#   свободного места до footer) — НЕ форсировал вставку, пропущены с
+#   документированной причиной в iteration-log.md.
+# - s33a chonk chart: 4-я попытка (продолжение v3.2) не дала результата —
+#   матрёшка остаётся без изменений (per brief fallback).
+# - Все новые образы БЕЗ подписи-источника на слайде (deck-wide правило);
+#   атрибуция в assets/web/attribution.md § v3.3-active.
+#
+# Changelog v3.3 round 2 (issue #183 — оркестратор отклонил round-1:
+# «образы-марки в пустых контейнерах» + «отказ 'нет места' опровергнут»):
+# - Группа A (увеличены round-1 вставки): s15 Spider-Man ~1.5"→3.0" (подпись
+#   перерисована 52px), s25 иголка ~0.9"→2.5" (умеренный кроп, иголка видна,
+#   текст сужен до 2.7"), s39 Two Buttons ~0.9"→2.3" (этикетки 52/38px,
+#   лестница сдвинута вверх), s40 xkcd #552 2.7"→4.5" (2x-версия 918x371,
+#   callout сужен до 7.55", комикс справа).
+# - Группа B (новые образы на «плотные» слайды — место нашлось сжатием
+#   наименее ценных элементов): s09 Math Lady «[123][456][78]?» (~2.4",
+#   колонки выше на 0.4"), s11 Always Has Been «русский токен дороже?»
+#   (~2.76", верхний бокс расширен, gold-бокс ниже), s22 Stonks (~1.65",
+#   бары кейса укорочены пропорционально), s30 Gandalf «НЕВАЛИДНЫЙ ТОКЕН НЕ
+#   ПРОЙДЁТ» (~2.87", «Вопрос залу» сдвинут влево), s32 Джокер жжёт деньги
+#   (кадр The Dark Knight, YouTube maxres, кроп бейджа/леттербокса, ~1.9"
+#   над «×3–10»), s37 Press X to Doubt (~2.28", текст карточки 2 сужен).
+# - Media-rich slide count: 18 → 24 (+6 net new: s09, s11, s22, s30, s32,
+#   s37). Скипы s21/s27 подтверждены оркестратором.
+# - Новые ассеты: mathlady-tokens.jpg, gandalf-token.jpg,
+#   joker-burning-money.jpg, pressx-template.jpg, needle-haystack-crop.jpg,
+#   xkcd-552-correlation-2x.png; оверлеи — gen_memes_v33_r2.py.
 
 deck:
   lecture_number: 2
   title: "Лекция 2. Как работают современные большие модели"
-  audience: "3 курс ИУ6 МГТУ Баумана, инженеры-разработчики (универсально)"
-  duration_min: 75
-  central_question: "Что происходит внутри LLM между моим запросом и ответом — и какие из этих внутренних механизмов меняют, как я её использую?"
+  audience: "3 курс, универсальная аудитория; опытные пользователи LLM, многие ежедневно пишут код с ассистентами"
+  duration_min: 100
+  central_question: "Рассмотреть, как работает языковая модель, — и разобраться с важными деталями, которые меняют то, как вы строите промпты, агентов и решения."
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v1.8
-  source: chapter v1.2 (status=reviewed, ~11400 слов)
-  plan: notes/lecture-2-review/final/plan-v2-final.md (v2.1)
-  total_slides: 35
+  version: v3.3
+  source: "chapter v2.3 (3 части)"
+  plan: "notes/lecture-2-review/final/rework-round2.md"
+  total_slides: 47
   curriculum_level: introductory
 
 palette:
@@ -59,7 +160,10 @@ typography:
     mega_stat: 80
 
 glossary_lock:
-  # 17 canonical terms — preserved from chapter v1.1; designer/critic enforce no drift.
+  # v3 core — 25 терминов (chat-шаблон/специальный токен ушли в Лекцию 3 вместе
+  # с s07; остальное без изменений). Designer/critic enforce no drift.
+  # Advanced-optional (chapter-only, без обязательного recall): prefill/decode, RoPE,
+  # YaRN, TTFT, speculative decoding, MRL (matryoshka), adaptive thinking / effort, MoE.
   - токен
   - токенизация
   - BPE (Byte-Pair Encoding)
@@ -77,101 +181,108 @@ glossary_lock:
   - авторегрессионный
   - распределение вероятностей
   - слепота к буквам
+  - KV-cache
+  - prompt caching
+  - reasoning-токены (thinking)
+  - constrained decoding
+  - batch-инвариантность
+  - jagged intelligence («рваный интеллект»)
+  - glitch-токен
+  - mixture-of-experts (MoE, гиганты)
 
 slides:
-  # ─── Раздел 0. Введение (8 мин, 4 слайда: s01-s04) ───
+  # ─── Раздел 0. Введение (6 слайдов, 9.0 мин) ───
   - id: s01
-    file: slides/s01-live-tokenizer-demo.md
+    file: slides/s01-checklist-hook.md
     type: hook
     section: "Раздел 0. Введение"
-    duration_min: 2
-    assertion: "Ваш мозг ежесекундно выбирает, что важно, а что — фон"
-    learning_goal: "Открывающий эмоциональный hook про человеческое внимание — мостик к Разделу 3 «Механизм внимания» (s13a)"
-    learning_outcomes: [LO1]
-    chapter_ref: "§1.1 [for-slide-s01]"
+    duration_min: 2.5
+    assertion: "temperature=0 — значит, ответ всегда одинаковый? Да. → Но нет."
+    learning_goal: "Мем-хук: двухпанельный мем про temperature=0, без чек-листа и голосования — заманить вопросом, ответ раскроется в разделе про сэмплинг"
+    learning_outcomes: [LO7]
+    chapter_ref: "§Введение [for-slide-s01]"
     visual:
-      pattern: distracted_character_illustration
-      primary: "v1.8 (issue #156): персонаж, которого одновременно тянут в 3 стороны (уведомление, посторонняя мысль, задача) — иллюстрация человеческого внимания. Bridge-строка внизу к механизму внимания в Разделе 3 (s13a). Заменяет v1.5 token-rainbow hook."
-      backup: "custom flat-illustration SVG (Ocean palette), не заимствует конкретную авторскую графику"
+      pattern: two_panel_meme_poster
+      primary: "Афиша-мем на перемену (свой flat-рисунок, Ocean-палитра, hero ≥40% площади): панель 1 — крупный вопрос «temperature=0 — значит, ответ всегда одинаковый?» + уверенный персонаж, под ним крупно «Да.»; панель 2 — тот же персонаж с сомнением, поверх gold «→ Но нет.». Внизу мелко: «почему — сегодня». Без чек-листов, без интерактива."
 
   - id: s02
-    file: slides/s02-cover-roadmap.md
+    file: slides/s02-cover.md
     type: cover
     section: "Раздел 0. Введение"
     duration_min: 0.5
     assertion: "Лекция 2. Как работают современные большие модели"
-    learning_goal: "Cover — title + lecture number + subtitle + pictogram"
+    learning_goal: "Cover — title + lecture number + subtitle под новую структуру (7 разделов)"
     learning_outcomes: [LO1, LO4, LO6, LO7]
     chapter_ref: "§Введение [for-slide-s02]"
     visual:
       pattern: cover_clean
-      primary: "Большая «02» в outline gold, title 48pt, lecture tag, под ним subtitle с 4 этапами + hero motif (4-стадийный pipeline иконка). v1.4: bottom roadmap_bar убран — карта переехала на отдельный s02a."
+      primary: "Большая «02» в outline gold, title, subtitle «Конвейер инференса — и границы, которые меняют инженерные решения» + hero motif (4-стадийная конвейер-иконка). Без roadmap-bar (карта — s02a)."
 
   - id: s02a
     file: slides/s02a-lecture-map.md
     type: roadmap
     section: "Раздел 0. Введение"
     duration_min: 0.5
-    assertion: "Карта лекции — 6 разделов"
-    learning_goal: "Общая карта: что будет, в каком порядке"
+    assertion: "Карта лекции — 7 разделов"
+    learning_goal: "Карта маршрута по конвейеру инференса + новый раздел «Виды и размеры моделей»"
     learning_outcomes: [LO1]
-    chapter_ref: "§Карта главы"
+    chapter_ref: "§Карта главы [for-slide-s02a]"
     visual:
-      pattern: lecture_roadmap_6_sections
-      primary: "6 пронумерованных горизонтальных карточек по разделам (0 Введение / 1 Токенизация / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал) с короткими описаниями. Активный раздел (Раздел 0) подсвечен gold-обводкой карточки, без минут."
+      pattern: lecture_roadmap_7_sections
+      primary: "7 горизонтальных карточек (0 Введение / 1 Токенизация / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Виды и размеры моделей / 6 Финал) с однострочными описаниями; активный Раздел 0 — gold-обводка. Без чипов, без минут, без ссылок на утверждения чек-листа."
 
   - id: s03
     file: slides/s03-recap-lec1.md
     type: assertion_visual
     section: "Раздел 0. Введение"
     duration_min: 1.5
-    assertion: 'Сегодня углубляем слой «модель» из четырёх слоёв Лекции 1'
-    learning_goal: "Recap Лекции 1 §3.2 + bridge к внутренностям модели"
+    assertion: "Объект сегодня — слой «модель» из четырёх слоёв Лекции 1"
+    learning_goal: "Объект рассмотрения (слой «модель» в 4-слойной картине Lec-1) + bridge к внутренностям инференса"
     learning_outcomes: [LO1]
     chapter_ref: "§Введение [for-slide-s03]"
     visual:
       pattern: layers_recap_with_zoom
-      primary: "Слева — маленькая копия nested layers из Lec-1 (модель → чат → агент → приложение) с подсветкой нижнего слоя «Модель» в gold. Справа — bullet-bridge «что мы знаем: модель = stateless inference (Lec-1 §3.2)» → «что узнаем сегодня: что внутри inference»."
+      primary: "Слева — nested layers из Lec-1 (модель → чат → агент → приложение), нижний слой «Модель» в gold. Справа — 2 строки: «Слой „модель“: stateless-инференс» → «Сегодня: разбираем, что внутри этого инференса»."
 
   - id: s04
     file: slides/s04-central-question.md
     type: assertion_visual
     section: "Раздел 0. Введение"
-    duration_min: 1
-    assertion: "Главный вопрос: что внутри LLM меняет то, как мы её используем?"
-    learning_goal: "Центральный вопрос + 3 промиса-якоря (callback к Lec-1 §5.3)"
+    duration_min: 1.5
+    assertion: "Цель лекции: рассмотреть, как работает языковая модель, — и разобраться с деталями, которые меняют инженерные решения"
+    learning_goal: "Цель лекции + промисы лекции по новой 7-разделной структуре"
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§Введение [for-slide-s04]"
     visual:
       pattern: central_question_with_promises
-      primary: "Центральный вопрос крупно (32pt bold #21295C). Снизу — 3 промиса-якоря в Ocean rounded boxes: (1) почему промпт с ролью лучше (→ Раздел 3), (2) почему AI плохо считает буквы (→ Раздел 1), (3) почему один запрос даёт разные ответы (→ Раздел 4). 3-я промиса с gold-маркером «payoff в s24»."
+      primary: "Цель лекции крупно (28–32pt bold #21295C). Под ней — 7 компактных промис-чипов (по разделу лекции, без M-кодов): «почему исправленный strawberry ничего не доказывает», «почему промпт с ролью реально меняет ответ», «что на деле умеет окно 1M», «почему T=0 не даёт одинаковых ответов», «сколько стоят невидимые токены», «маленькая модель / гигант — по какому критерию выбирать», «чем заменить веру в бенчмарки». Gold-маркер на «важными деталями»."
 
-  # ─── Раздел 1. Токенизация (11.5 мин, 6 слайдов: s04a divider + s04b + s05-s08) ───
-  - id: s04a
-    file: slides/s04a-section1-tokens.md
+  - id: s04b
+    file: slides/s04b-keystone-pipeline.md
+    type: assertion_visual
+    section: "Раздел 0. Введение"
+    duration_min: 2.5
+    assertion: "Поток данных в LLM: слова → токены → векторы → LLM → векторы → токены → слова"
+    learning_goal: "Keystone: 7-стадийный inference-конвейер целиком до первого погружения; повторяется прогрессом на всех дивайдерах"
+    learning_outcomes: [LO1]
+    chapter_ref: "§Введение [for-slide-s04b]"
+    visual:
+      pattern: pipeline_7_stages_horizontal
+      primary: "Горизонтальный 7-стадийный конвейер: Текст → Токены → Векторы → LLM (gold center) → Распределение → Токен → Текст; под каждой стадией короткая подпись. Петля авторегрессии: стрелка от [Токен] назад ко входу с подписью «токены генерируются по одному; каждый добавляется ко входу». Под конвейером — 4 подкарточки Раздел 1/2/3/4 со стадиями, которые они разбирают. Gold callout: «слова — только на границах; внутри — векторы»."
+
+  # ─── Раздел 1. Токенизация (7 слайдов, 15.0 мин; s07 удалён → Лекция 3) ───
+  - id: s05a
+    file: slides/s05a-section1-divider.md
     type: section_divider
     section: "Раздел 1. Токенизация"
     duration_min: 0.5
     assertion: "Раздел 1 — Токенизация: как модель видит ваш текст"
-    learning_goal: "Section divider раздела 1 — переход к токенам"
+    learning_goal: "Divider: вход в стадию 1 конвейера"
     learning_outcomes: [LO1]
-    chapter_ref: "§1 [for-slide-s04a]"
+    chapter_ref: "§1"
     visual:
-      pattern: section_divider_with_roadmap
-      primary: "Большое «Раздел 1» по центру (140pt gold). Под ним — «Токенизация». Frame-фраза «Как модель видит ваш текст». Внизу — roadmap-bar (6 секций) с gold-маркером на «1 Токены»."
-
-  - id: s04b
-    file: slides/s04b-data-flow.md
-    type: assertion_visual
-    section: "Раздел 1. Токенизация"
-    duration_min: 1
-    assertion: "Поток данных в LLM: слова → токены → векторы → LLM → векторы → токены → слова"
-    learning_goal: "Roadmap всего inference-конвейера перед детальным разбором каждого этапа"
-    learning_outcomes: [LO1]
-    chapter_ref: "§1 [for-slide-s04b]"
-    visual:
-      pattern: pipeline_7_stages_horizontal
-      primary: "v1.5 NEW: горизонтальный 7-stage pipeline: Текст → Токены → Векторы → LLM (gold center) → Распределение → Токен → Текст. Под каждой стадией — короткая подпись. Под pipeline — 4 sub-cards Раздел 1/2/3/4 указывают какие стадии будем разбирать."
+      pattern: section_divider_pipeline_progress
+      primary: "v3.2: Большое «Раздел 1» (140pt gold), под ним «Токенизация», frame-фраза «Как модель видит ваш текст», tag «3 разбора · 3 провала». Внизу — мини-конвейер из s04b со стадией «Токены» в gold-подсветке. Справа — мем Surprised Pikachu («модель уверенно отвечает неправильно — она видит куски, не буквы»), без подписи-источника."
 
   - id: s05
     file: slides/s05-what-is-token.md
@@ -179,393 +290,569 @@ slides:
     section: "Раздел 1. Токенизация"
     duration_min: 2
     assertion: "Токен — id из словаря модели. Не буква и не слово; статистически частая подпоследовательность"
-    learning_goal: "Базовое определение токена + ориентир «1 токен ≈ символы»"
+    learning_goal: "Фиксация точного определения токена (темп ×2 — аудитория знает приблизительно)"
     learning_outcomes: [LO1]
     chapter_ref: "§1.1 [for-slide-s05]"
     visual:
       pattern: token_examples_3_cases
-      primary: "3 примера разметки: cat → [cat] (1 токен / 1 id), tokenization → [token][ization], клубника → [к][луб][ника]. Внизу gold-callout: «в среднем 1 токен ≈ 4 символа EN ≈ 2 RU». Inline poll-prompt: «как разрезалось бы слово сильнее?»"
+      primary: "3 примера разметки: cat → [cat], tokenization → [token][ization], клубника → [к][луб][ника] (o200k_base). Gold callout: «1 токен ≈ 4 символа EN ≈ 2 RU». Caption: словарь и модель — два разных артефакта."
 
   - id: s06
     file: slides/s06-bpe-compromise.md
     type: comparison
     section: "Раздел 1. Токенизация"
-    duration_min: 2
+    duration_min: 2.5
     assertion: "BPE — компромисс между алфавитом и словарём; словарь строится один раз перед обучением"
-    learning_goal: "Что такое BPE + ключевая инженерная деталь «build once, lookup at inference»"
+    learning_goal: "BPE + инженерная деталь «строится один раз / выборка на инференсе» + вендоры считают текст по-разному"
     learning_outcomes: [LO1, LO6]
     chapter_ref: "§1.2 [for-slide-s06]"
     visual:
       pattern: before_after_no_iteration
-      primary: "Two columns Before/After: Before — обучающий корпус «low / lower / newest / widest»; After — BPE-словарь «low / er / new / est / wid». Без пошаговой итерации. Внизу — gold callout: «BPE-словарь строится один раз до обучения; в inference — lookup готовых правил»."
+      primary: "Две колонки: обучающий корпус «low / lower / newest / widest» → BPE-словарь «low / er / new / est / wid». Gold callout: «словарь строится один раз до обучения; на инференсе — выборка готовых правил». Caption: разные вендоры режут один текст по-разному."
 
-  - id: s07
-    file: slides/s07-why-ai-cant-count-letters.md
+  - id: s08
+    file: slides/s08-strawberry-2026.md
     type: case_study
     section: "Раздел 1. Токенизация"
     duration_min: 3
-    assertion: 'AI ошибается в «сколько r в strawberry» — потому что слова не из букв, а из 2-3 токенов'
-    learning_goal: "Слепота к буквам — структурное ограничение + retrieval moment"
+    assertion: "Гонка патчей: strawberry починили в апреле, cranberry — только в июле; класс задачи остаётся проблемным"
+    learning_goal: "Механизм слепоты к буквам (быстро — мем знаком) + диагноз 2026: точечные патчи вместо навыка + jagged intelligence"
     learning_outcomes: [LO6, LO7]
-    chapter_ref: "§1.3 [for-slide-s07]"
+    chapter_ref: "§1.4 [for-slide-s08]"
     visual:
-      pattern: case_split_with_consequences
-      primary: "Слева — strawberry → [st][raw][berry] (3 токена в o200k_base; модель видит 3, не 10 букв). Справа — 3 практических следствия в motif cards: (a) подсчёт символов, (b) опечатки → другие токены, (c) регистр и пробелы — разные id. Gold callout: «для побитово-точных операций — внешний инструмент, не LLM»."
-    interaction: retrieval_live_attempt
+      pattern: case_split_with_timeline
+      primary: "v3.2: Слева компактно — механизм: strawberry → [st][raw][berry], модель видит 3 токена, не 10 букв; под текстом — мем Expanding Brain (4 панели, свой текст поверх шаблона: GPT-5.2→5.5→5.6→StrawberryBench). Справа — временная шкала гонки патчей: GPT-5.2 (дек 2025) strawberry ✗; GPT-5.5 (апр 2026) strawberry ✓ / cranberry ✗; GPT-5.6 (июль 2026) cranberry ✓ (gold); StrawberryBench — 847 вопросов, 7 уровней. Внизу callout «рваный интеллект» + строка «Что делать»: тестируйте cranberry своей предметки; вирусное прохождение ≠ навык."
+    interaction: retrieval_live_attempt   # cranberry на актуальных моделях, live
     verify_day_of: true
 
-  - id: s08
-    file: slides/s08-cross-language-cost.md
+  - id: s09
+    file: slides/s09-numbers-and-code.md
+    type: comparison
+    section: "Раздел 1. Токенизация"
+    duration_min: 2.5
+    assertion: "Токенизатор режет по частоте, а не по структуре: числа — чанками по 3 цифры, код — целыми отступами"
+    learning_goal: "Числа и код как второй/третий случай расхождения нарезки со структурой; формат compact comparison (не case-study, чтобы не дублировать s08)"
+    learning_outcomes: [LO6]
+    chapter_ref: "§1.5 [for-slide-s09]"
+    visual:
+      pattern: two_column_compare
+      primary: "Строка-мотивация: числа и код — самые частые «нетекстовые» входы. Колонка «Числа»: 1000000 → [100][000][0] — чанки слева направо ≠ разряды (справа налево); right-to-left нарезка улучшает арифметику, спецсхемы до +33% (gold). Колонка «Код»: GPT-2 — 16 токенов на отступ; GPT-4 — пробелы группами. Внизу блок «Что делать»: разделители разрядов, вычисления в инструмент, единообразные отступы + строка про авто-роутинг счёта в code interpreter у готовых чат-продуктов. В нижней половине колонки «Код» — мем Math Lady с подписью-недоумением «[123][456][78]?» (~2.4 дюйма, v3.3 r2)."
+
+  - id: s10
+    file: slides/s10-glitch-tokens.md
+    type: assertion_visual
+    section: "Раздел 1. Токенизация"
+    duration_min: 2.5
+    assertion: "Порядка 4% словаря — glitch-токены: словарь строится отдельно от модели, и часть записей остаётся недообученной"
+    learning_goal: "Glitch-токены: от анекдота SolidGoldMagikarp к системному свойству конвейера (GlitchMiner 2026)"
+    learning_outcomes: [LO6]
+    chapter_ref: "§1.6 [for-slide-s10]"
+    visual:
+      pattern: anecdote_to_mechanism
+      primary: "v3.2: Слева — компактная story-карточка: SolidGoldMagikarp (2023) + официальный артворк покемона Magikarp (прямая отсылка к имени, средним размером — заменяет убранный мелкий скриншот Playground) + одна строка механизма: корпус словаря ≠ корпус модели → эмбеддинг у случайной инициализации. Центр/справа — расширенный блок «На что влияет на практике»: сбои парсинга экзотических строк, прод-риски (логи, user-generated ID), диагностика плейсхолдером, санитизация входа. Факт-карточка GlitchMiner (AAAI 2026): «порядка 4% словаря» (gold), воспроизводится в Llama, Qwen, Gemma, Phi-3, Mistral. Footer: системная особенность конвейера, не баг версии."
+
+  - id: s11
+    file: slides/s11-language-cost.md
     type: comparison
     section: "Раздел 1. Токенизация"
     duration_min: 2
-    assertion: "Один и тот же текст по-русски стоит в 2× дороже, чем по-английски"
-    learning_goal: "Cross-language unfairness в токенизации + инженерное следствие для batch"
+    assertion: "Один и тот же текст по-русски стоит ≈2× дороже английского; o200k сократил разрыв на треть, но не убрал"
+    learning_goal: "Стоимость языков + динамика 2024–2026 + следствия для chunking/max_tokens"
     learning_outcomes: [LO6]
-    chapter_ref: "§1.4 [for-slide-s08]"
+    chapter_ref: "§1.7 [for-slide-s11]"
     visual:
       pattern: bar_chart_tokens_per_char
-      primary: "Bar chart токены/символ для 4 языков: EN ~0.25, RU ~0.5, ZH ~0.8, Code (Python) ~0.4. RU bar выделен gold. Внизу — gold callout: «API-стоимость RU ≈ 2× EN. Batch на английском, если допустимо»."
+      primary: "Bar chart токены/символ: EN ~0.25, RU ~0.5 (gold), ZH ~0.8, Python ~0.4. Строка динамики: o200k_base — примерно −35% нелатинским, разрыв сокращается, но не исчезает. Внизу — блок «Что делать»: калибруйте лимиты в токенах на своём языке (фрагменты, max_tokens, окно); пакетная обработка — оцените перевод на английский (≈2× дешевле). В нижней половине правого бокса — мем Always Has Been: «русский токен дороже?» / «always has been» (~2.8 дюйма, v3.3 r2)."
 
-  # ─── Раздел 2. Эмбеддинги (11.5 мин, 5 слайдов: s08a divider + s09-s12) ───
-  - id: s08a
-    file: slides/s08a-section2-embeddings.md
+  # ─── Раздел 2. Эмбеддинги (6 слайдов, 11.0 мин) ───
+  - id: s12a
+    file: slides/s12a-section2-divider.md
     type: section_divider
     section: "Раздел 2. Эмбеддинги"
     duration_min: 0.5
     assertion: "Раздел 2 — Эмбеддинги: пространство смыслов"
-    learning_goal: "Section divider раздела 2 — переход к векторам"
+    learning_goal: "Divider: вход в стадию 2 конвейера"
     learning_outcomes: [LO1]
-    chapter_ref: "§2 [for-slide-s08a]"
+    chapter_ref: "§2"
     visual:
-      pattern: section_divider_with_roadmap
-      primary: "Большое «Раздел 2» по центру (140pt gold). Под ним — «Эмбеддинги». Frame-фраза «Пространство смыслов». Внизу — roadmap-bar (6 секций) с gold-маркером на «2 Эмбеддинги»."
-
-  - id: s09
-    file: slides/s09-what-is-embedding.md
-    type: assertion_visual
-    section: "Раздел 2. Эмбеддинги"
-    duration_min: 2
-    assertion: "Каждому токену в памяти модели сопоставлен вектор; он выучен на тренировке и затем фиксирован"
-    learning_goal: "Что такое эмбеддинг + lookup из learned embedding table"
-    learning_outcomes: [LO1]
-    chapter_ref: "§2.1 [for-slide-s09]"
-    visual:
-      pattern: token_to_vector_lookup
-      primary: "Схема: [кот] → стрелка lookup → вектор [0.21, -0.45, 0.88, ..., 0.13] (5 размерностей с многоточием). Mini-callout справа: «text-embedding-3-small 1536 dim; text-embedding-3-large 3072 dim; внутренний эмбеддинг GPT-4 — тысячи измерений [FACT-CHECK]»."
-
-  - id: s09a
-    file: slides/s09a-embedding-space.md
-    type: assertion_visual
-    section: "Раздел 2. Эмбеддинги"
-    duration_min: 1.5
-    assertion: "Пространство эмбеддингов — это сотни-тысячи измерений; близкие по смыслу токены лежат рядом"
-    learning_goal: "Что такое пространство эмбеддингов: размерность, как координаты выучиваются, проекция в 2D для интуиции"
-    learning_outcomes: [LO1]
-    chapter_ref: "§2.1 [for-slide-s09a]"
-    visual:
-      pattern: embedding_space_2d_concept
-      primary: "v1.5 NEW: 2D scatter (PCA-style) — 3 кластера: животные {кот/собака/тигр}, транспорт {машина/авто/мотоцикл}, языки прог {Python/JavaScript}. Подписи осей как «измерение 1/2 ≈ живое/абстрактное». Справа 3 fact-cards: размерность (1536-3072), обучение (similar contexts → close vectors), проекция (PCA/t-SNE)."
-
-  - id: s10
-    file: slides/s10-sentence-similarity.md
-    type: case_study
-    section: "Раздел 2. Эмбеддинги"
-    duration_min: 3
-    assertion: "Близость в пространстве эмбеддингов = семантическая близость; в 2026 это работает на уровне предложений"
-    learning_goal: "Sentence similarity на современных embeddings + cosine как мера"
-    learning_outcomes: [LO1]
-    chapter_ref: "§2.2 [for-slide-s10]"
-    visual:
-      pattern: similarity_heatmap_5x5
-      primary: "Heatmap 5×5 cosine similarity для 5 предложений: (1) Как настроить SSL, (2) Установка HTTPS-сертификата, (3) Деплой React-компонента, (4) Сборка React-приложения, (5) Рецепт борща. Видны кластеры: 1↔2 ~0.85, 3↔4 ~0.78, борщ vs техническое ~0.05-0.15. Cells цветовая шкала Ocean (тёмный = высокое сходство)."
-
-  # v1.5: s11 (3 uses of embeddings — similarity/clustering/search) REMOVED.
-  # User feedback round 4 #5: «убрать, будем на следующей лекции разбирать».
-  # Deferred to Лекция 3 (RAG).
+      pattern: section_divider_pipeline_progress
+      primary: "v3.2: Большое «Раздел 2» (140pt gold), под ним «Эмбеддинги», frame-фраза «Пространство смыслов — и граница похожести», tag «4 разбора · 1 провал». Внизу — мини-конвейер со стадией «Векторы» в gold-подсветке. Справа — мем Pam «They're the same picture» (The Office) — «разные слова, одна суть», прямая иллюстрация к теме similarity/embeddings, без подписи-источника."
 
   - id: s12
-    file: slides/s12-semantic-vs-fulltext.md
+    file: slides/s12-what-is-embedding.md
     type: assertion_visual
     section: "Раздел 2. Эмбеддинги"
-    duration_min: 2
-    assertion: "Эмбеддинги — фундамент понимания LLM: модель работает в пространстве векторов, не строк"
-    learning_goal: "Reformulation: эмбеддинги как фундамент LLM-понимания + обратное преобразование вектор→токен→слово"
+    duration_min: 1.5
+    assertion: "Каждому токену сопоставлен вектор из входной таблицы; он выучен на тренировке и затем фиксирован"
+    learning_goal: "Эмбеддинг как выборка из входной таблицы — подготовка к «трём жизням» (s13)"
     learning_outcomes: [LO1]
-    chapter_ref: "§2.4 [for-slide-s12]"
+    chapter_ref: "§2.1 [for-slide-s12]"
     visual:
-      pattern: vertical_pipeline_plus_3_examples
-      primary: "v1.5 REFORMULATED: слева — вертикальная схема в обе стороны (слова → токены → векторы → LLM gold center → векторы → токены → слова), справа — 3 motif cards с иконками (перефразирования / синонимы / cross-lang) объясняющие, что даёт эмбеддингам «понимание». Gold callout: «семантическая близость на уровне предложений — основа понимания»."
+      pattern: token_to_vector_lookup
+      primary: "Схема: [кот] → выборка из входной таблицы → вектор [0.21, −0.45, 0.88, …, 0.13]. Mini-callout размерностей: text-embedding-3-small 1536 / -large 3072; внутренние размерности флагманов не публикуются, порядок — тысячи. Gold callout: «геометрическая близость = смысловая близость». Строка действия: опечатка/другой регистр — другой токен и вектор, нормализуйте вход до эмбеддинга."
 
-  # ─── Раздел 3. Механизм внимания (18 мин, 6 слайдов: s13 divider + s13a + s14-s17) ───
   - id: s13
-    file: slides/s13-section-divider-attention.md
-    type: section_divider
-    section: "Раздел 3. Механизм внимания"
-    duration_min: 0.5
-    assertion: "Раздел 3 — Механизм внимания: как модель решает, что важно сейчас"
-    learning_goal: "Single section divider лекции (для самого плотного раздела)"
-    learning_outcomes: [LO1]
-    chapter_ref: "§3 [for-slide-s13]"
-    visual:
-      pattern: section_divider_with_roadmap
-      primary: "Большое «Раздел 3» по центру слайда (mega 120pt в outline gold). Под ним мелким — «Механизм внимания». Внизу — roadmap-bar (5 карточек) с gold-маркером «Вы здесь — Раздел 3»."
-
-  - id: s13a
-    file: slides/s13a-attention-matrix.md
+    file: slides/s13-three-lives.md
     type: assertion_visual
-    section: "Раздел 3. Механизм внимания"
-    duration_min: 2
-    assertion: "Внимание — это сверка каждого токена со всеми остальными"
-    learning_goal: "Attention как матричная операция, не линейная — основа понимания multi-head + квадратичной стоимости"
-    learning_outcomes: [LO1]
-    chapter_ref: "§3.1 [for-slide-s13a]"
+    section: "Раздел 2. Эмбеддинги"
+    duration_min: 3
+    assertion: "Эмбеддинги — не только внутренность инференса: поиск и RAG работают на отдельной embedding-модели"
+    learning_goal: "Три жизни эмбеддинга от практики поиска (term-lock «три жизни»); какая «жизнь» работает в RAG; переиндексация не привязана к чат-LLM"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§2.2 [for-slide-s13]"
     visual:
-      pattern: attention_matrix_7x7_heatmap
-      primary: "v1.5 NEW: слева — 7×7 attention matrix для предложения «Кот съел мышь, потому что она была голодна», cell «она→мышь» подсвечена gold (0.7). Цвет cell кодирует weight (#21295C dark = high, #E3ECF3 light = low). Справа — 3 fact-cards: размерность (N×N, quadratic cost), пересчёт на каждом шаге, multi-head параллельность."
+      pattern: three_lives_cards
+      primary: "Строка-тезис: поиск и RAG работают на третьей жизни термина. 3 вертикальные карточки: (1) Входная таблица — внутри инференса, статическая; (2) Представление данных внутри модели — векторы, которые модель пересчитывает по ходу чтения контекста, после слоёв внимания; (3) Векторы для поиска — самостоятельный инструмент (gold-обводка, «это и есть ваш поиск/RAG»): отдельная embedding-модель. Внизу gold callout: «обновили чат-LLM → переиндексировать базу НЕ надо»."
 
   - id: s14
-    file: slides/s14-what-is-attention.md
+    file: slides/s14-embedding-space.md
     type: assertion_visual
-    section: "Раздел 3. Механизм внимания"
-    duration_min: 3
-    assertion: "Attention выдаёт распределение весов на все токены контекста (сумма = 1) — какие токены важны сейчас"
-    learning_goal: "Базовое определение attention через метафору фонарика + 3 факта"
+    section: "Раздел 2. Эмбеддинги"
+    duration_min: 1.5
+    assertion: "Пространство эмбеддингов — сотни-тысячи измерений; близкие по смыслу токены лежат рядом"
+    learning_goal: "Интуиция пространства: размерность, выучивание координат, 2D-проекция + оговорка про сравнения, а не абсолюты"
     learning_outcomes: [LO1]
-    chapter_ref: "§3.1 [for-slide-s14]"
+    chapter_ref: "§2.1–2.3 [for-slide-s14]"
     visual:
-      pattern: flashlight_metaphor_plus_bar
-      primary: "Слева — метафора «фонарик в тёмной комнате»: луч света падает на несколько предметов (= токенов) с разной яркостью. Справа — bar chart distribution весов на 8 токенов контекста, сумма = 1. Высота bar = «толщина стрелки» = вес внимания. Один bar gold (самый высокий вес)."
+      pattern: embedding_space_2d_concept
+      primary: "v3.2: Слева — 2D scatter (PCA-style) с подписанными осями-признаками; 2 кластера + выброс (те же тексты, что в heatmap s15): кластер SSL, кластер React, выброс «Рецепт борща». Подпись: «каждая из 1536+ осей — выученный признак; здесь показаны две». (Декоративный мок «звёздная карта» убран — дублировал сам scatter.) Справа — 3 факт-карточки: размерность (1536–3072, gold), обучение, проекция + gold callout действия."
 
   - id: s15
-    file: slides/s15-worked-example-role-effect.md
+    file: slides/s15-similarity-boundary.md
     type: case_study
-    section: "Раздел 3. Механизм внимания"
-    duration_min: 5
-    assertion: "Role-токены получают повышенный вес в attention — это объясняет, почему промпт с ролью работает лучше"
-    learning_goal: "Worked example (Part A) + role-effect (Part B) — первое из 3 «почему»"
-    learning_outcomes: [LO7]
-    chapter_ref: "§3.2 [for-slide-s15]"
+    section: "Раздел 2. Эмбеддинги"
+    duration_min: 3
+    assertion: "Высокое сходство значит «об одном и том же» — не «с одинаковым смыслом»: similarity ≠ релевантность"
+    learning_goal: "Heatmap сходств (KEEP-ядро) + failure-граница: «настроить SSL» ↔ «отключить SSL» — близкие векторы, противоположный смысл; мост к Лекции 3"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§2.4 [for-slide-s15] (heatmap — §2.3)"
     visual:
-      pattern: two_part_attention_example
-      primary: "Part A (вверху): предложение «Кот съел мышь, потому что она была голодна» с стрелками от «она» к «мышь» (толстая), «была» (средняя), «голодна» (тонкая). Disclaimer мелким: «упрощение — реальный attention map содержит сотни связей». Part B (внизу): 2 колонки side-by-side — без роли «Объясни асинхронность» (короткий контекст) vs с ролью «Ты эксперт по Python. Объясни асинхронность джуниору.» (role-токены подсвечены ярче). Gold callout: «Первый из трёх вопросов «почему» из начала лекции»."
-    interaction: retrieval_think_pause
-
-  - id: s16
-    file: slides/s16-context-window.md
-    type: assertion_visual
-    section: "Раздел 3. Механизм внимания"
-    duration_min: 2
-    assertion: "Контекстное окно — физический предел того, сколько модель видит одновременно"
-    learning_goal: "Эволюция context window + квадратичная стоимость attention"
-    learning_outcomes: [LO6]
-    chapter_ref: "§3.3 [for-slide-s16]"
-    visual:
-      pattern: bar_chart_3_points_timeline
-      primary: "Bar chart 3 точки на временной оси: GPT-3.5 (2022) 4k, Claude 3.5 (2024) 200k, Claude 4.7 (2026) 1M. Каждый bar выше следующего (логарифмическая шкала). Bar 1M подсвечен gold. Gold callout: «стоимость attention растёт квадратично от длины. 1M ≈ 16× дороже 100k»."
-    verify_day_of: true
+      pattern: heatmap_plus_failure_pair
+      primary: "Слева — heatmap 5×5 cosine similarity (SSL/HTTPS ~0.85, React-пара ~0.78, борщ 0.05–0.15), шкала Ocean. Справа — failure-карточка: «Как настроить SSL» ↔ «Как отключить SSL» — очень высокое сходство (gold-обводка), противоположный практический смысл. Под легендой шкалы — мем Spider-Man Pointing at Spider-Man («похожи» — не факт что «об одном»), метафора similarity ≠ релевантность (v3.3). Callout: similarity — сигнал кандидатов; релевантность — отдельная задача (реранкер, гибрид, фильтры)."
 
   - id: s17
-    file: slides/s17-long-context-fails.md
-    type: case_study
-    section: "Раздел 3. Механизм внимания"
-    duration_min: 2
-    assertion: "Большое контекстное окно ≠ хорошее использование контекста"
-    learning_goal: "Lost-in-the-middle effect + инженерный вывод (расположение важного)"
-    learning_outcomes: [LO6]
-    chapter_ref: "§3.4 [for-slide-s17]"
+    file: slides/s17-embeddings-foundation.md
+    type: assertion_visual
+    section: "Раздел 2. Эмбеддинги"
+    duration_min: 1.5
+    assertion: "Эмбеддинги — фундамент понимания LLM: модель работает в пространстве векторов, не строк"
+    learning_goal: "Сборка раздела: путь туда-обратно + что даёт «понимание»; одна строка-указатель на выбор embedding-моделей (chapter-only)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.5 [for-slide-s17] (+§2.6 chapter-only)"
     visual:
-      pattern: u_shape_accuracy_curve
-      primary: "U-shape кривая: accuracy (Y, 0-100%) vs позиция факта в 100k контексте (X, начало→середина→конец). 70-80% в начале, провал до 30% в середине, 70-80% в конце. Источник: Liu et al. 2023 (arXiv:2307.03172). Gold callout: «инженерный вывод: важное — в начало или в конец промпта, не в середину»."
+      pattern: vertical_pipeline_plus_3_examples
+      primary: "Слева — вертикальная схема в обе стороны (слова → токены → векторы → LLM gold center → векторы → токены → слова). Справа — 2 карточки: перефразирования и синонимы / межъязыковая близость. Gold callout: «семантическая близость на уровне предложений — основа понимания». Строка действия: одна embedding-модель/индекс обслуживают поиск+кластеризацию+RAG. Caption: выбор embedding-модели (MTEB, матрёшечные представления) — в главе."
 
-  # ─── Раздел 4. Сэмплинг (13.5 мин, 6 слайдов: s17a divider + s18-s22) ───
-  - id: s17a
-    file: slides/s17a-section4-sampling.md
+  # ─── Раздел 3. Механизм внимания (8 слайдов, 21.0 мин) ───
+  # Порядок v3.0: s18 → s19 → s21 (KV-cache сразу после Q/K/V) → s22 → s20 → s23 → s25
+  - id: s18a
+    file: slides/s18a-section3-attention.md
     type: section_divider
-    section: "Раздел 4. Сэмплинг"
+    section: "Раздел 3. Механизм внимания"
     duration_min: 0.5
-    assertion: "Раздел 4 — Сэмплинг: от распределения к токену"
-    learning_goal: "Section divider раздела 4 — переход к выбору токена"
-    learning_outcomes: [LO1, LO4]
-    chapter_ref: "§4 [for-slide-s17a]"
+    assertion: "Раздел 3 — Механизм внимания: как модель решает, на что опереться в контексте"
+    learning_goal: "Section divider раздела 3 — переход к третьей стадии конвейера"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3 (chapter-part2.md) [for-slide-s18]"
     visual:
-      pattern: section_divider_with_roadmap
-      primary: "Большое «Раздел 4» по центру (140pt gold). Под ним — «Сэмплинг». Frame-фраза «От распределения к токену». Внизу — roadmap-bar (6 секций) с gold-маркером на «4 Сэмплинг»."
+      pattern: section_divider_pipeline_progress
+      primary: "v3.2: Большое «Раздел 3» (140pt gold), под ним «Механизм внимания», frame-фраза, tag «4 разбора · 2 провала». Внизу — мини-конвейер со стадией «LLM/Внимание» в gold-подсветке. Справа — стоковое фото театрального прожектора (луч высвечивает подиум, вокруг темнота) — буквальная иллюстрация attention, без подписи-источника."
 
   - id: s18
-    file: slides/s18-distribution.md
+    file: slides/s18-attention-matrix.md
     type: assertion_visual
-    section: "Раздел 4. Сэмплинг"
-    duration_min: 2.5
-    assertion: "На каждом шаге модель выдаёт распределение вероятностей на ВСЕ токены словаря — затем выбирает один"
-    learning_goal: "Что такое распределение вероятностей + connection к сэмплингу"
+    section: "Раздел 3. Механизм внимания"
+    duration_min: 2
+    assertion: "Внимание — это сверка каждого токена со всеми остальными: N × N на каждом шаге"
+    learning_goal: "Внимание как матричная операция — основа квадратичной стоимости и multi-head; на что влияет распределение весов"
     learning_outcomes: [LO1]
-    chapter_ref: "§4.1 [for-slide-s18]"
+    chapter_ref: "§3.1 (chapter-part2.md) [for-slide-s18]"
     visual:
-      pattern: bar_chart_top_candidates
-      primary: "Bar chart top-5 кандидатов после фразы «Сегодня я съел ...»: яблоко 0.32, пиццу 0.19, салат 0.14, булочку 0.11, огурец 0.08. Стрелка показывает «выбор» одного токена (яблоко выделен gold). Footnote мелким: «остальные ~200 тысяч токенов словаря — каждый < 0.05; сумма всех = 1»."
+      pattern: attention_matrix_7x7_heatmap
+      primary: "Слева 60% — 7×7 heatmap-матрица внимания для «Кот съел мышь, потому что он был голоден», ячейка «он»→«Кот» в gold (согласование по роду); верхний треугольник засерён. Справа 40% — 3 свойства: N×N и квадратичность; пересчёт на каждом шаге; multi-head. Callout «на что влияет распределение весов»: веса определяют, чьи Value попадут в представление текущего токена → напрямую влияет на следующее предсказание."
 
   - id: s19
-    file: slides/s19-temperature.md
-    type: case_study
-    section: "Раздел 4. Сэмплинг"
-    duration_min: 3
-    assertion: 'Температура — насколько «острым» будет выбор. T=0: argmax. T=1: стандарт. T=2: хаос'
-    learning_goal: "Температура (главное) + краткий top-p/top-k — 3-е из 3 «почему»"
-    learning_outcomes: [LO4, LO7]
-    chapter_ref: "§4.2 [for-slide-s19]"
-    visual:
-      pattern: three_distributions_by_temperature
-      primary: "3 копии distribution из s18 с разной T: (a) T=0 — все вероятность на яблоко (детерминизм), (b) T=0.7 — умеренное распределение (стандарт), (c) T=2.0 — почти плоское распределение (хаос). Внизу — bottom-line text про top-p (nucleus) и top-k как альтернативные ручки. Gold callout: «третий из трёх вопросов «почему» из начала лекции»."
-    interaction: live_comparison
-
-  - id: s20
-    file: slides/s20-four-api-knobs.md
-    type: summary
-    section: "Раздел 4. Сэмплинг"
+    file: slides/s19-what-is-attention.md
+    type: assertion_visual
+    section: "Раздел 3. Механизм внимания"
     duration_min: 2
-    assertion: "4 параметра под задачу: temperature, top_p, max_tokens, system prompt"
-    learning_goal: "LO4 teaching slide — 4 ручки API под 4 сценария"
-    learning_outcomes: [LO4]
-    chapter_ref: "§4.3 [for-slide-s20]"
+    assertion: "Внимание выдаёт распределение весов на все токены контекста — технически через три проекции Query/Key/Value"
+    learning_goal: "Определение внимания через метафору фонарика + Q/K/V на конкретном примере нашего предложения (подготовка к KV-cache)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3.1 (chapter-part2.md) [for-slide-s19]"
     visual:
-      pattern: matrix_4x5_scenarios
-      primary: "Таблица 5 столбцов × 5 строк: заголовок (Сценарий | T | top_p | max_tokens | system_prompt) + 4 сценария: Классификация (T=0, —, 50-200, минимальный со схемой), Кодогенерация (T=0.2-0.3, 0.9, 1000+, роль+контекст репо), Чат-объяснение (T=0.7, 0.9, 500-1000, роль+аудитория), Творческое письмо (T=0.9-1.2, 0.95, 2000+, роль+стиль). Cells цветовое кодирование по T (от gold для T=0 deterministic до teal для T=1.2 creative)."
+      pattern: qkv_worked_example_plus_bars
+      primary: "Сверху gold callout «Q — про текущий шаг. K и V — про уже обработанный контекст» + три плашки Query/Key/Value. Ниже worked-пример: Q(«он») = «ищу: кто мог быть голоден», K(«Кот») = «я — одушевлённый субъект», V(«Кот») = содержимое, которое вольётся в представление «он». Справа — bar chart весов на 7 токенов (лидер «Кот» gold, согласовано с s18). Внизу — метафора фонарика одной строкой."
 
   - id: s21
-    file: slides/s21-autoregressive-loop.md
-    type: process
-    section: "Раздел 4. Сэмплинг"
-    duration_min: 2
-    assertion: "Loop: предсказали токен → добавили в контекст → предсказываем следующий"
-    learning_goal: "Авторегрессионная генерация + connection к Lec-1 §3.2 stateless"
-    learning_outcomes: [LO1]
-    chapter_ref: "§4.4 [for-slide-s21]"
+    file: slides/s21-kv-cache.md
+    type: assertion_visual
+    section: "Раздел 3. Механизм внимания"
+    duration_min: 4
+    assertion: "K и V контекста кешируются, заново считается только Q — отсюда две фазы генерации и «длинный чат тормозит»"
+    learning_goal: "KV-cache как центральная оптимизация инференса; асимметрия prefill/decode и её наблюдаемые следствия"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§3.3 (chapter-part2.md) [for-slide-s21]"
     visual:
-      pattern: cycle_5_steps
-      primary: "Замкнутый цикл 5 шагов с MSO_SHAPE.RIGHT_ARROW между ними: (1) Текущий контекст → (2) Forward pass через слои (= всё, что было в s05-s17) → (3) Distribution → (4) Сэмплинг → (5) Новый токен добавлен → возврат к (1). Stop condition: «токен конца ответа или max_tokens». Один шаг выделен gold (forward pass — компонент, который мы изучили)."
+      pattern: two_phase_schema_plus_vendors
+      primary: "Верх — схема KV-cache: токены контекста с плашками K/V (teal, «в кэше»), новый токен с Q (gold). Середина — две фазы: Prefill (параллельно, compute) vs Decode (последовательно, память). Низ — таблица вендоров: OpenAI — авто; Gemini — implicit; DeepSeek — авто-дисковый; Anthropic — явный (cache_control). Gold callout: кэш делает повторную подачу истории дешёвой и быстрой; «тормозит и дорожает» — когда кэш не срабатывает."
+    verify_day_of: true
 
   - id: s22
-    file: slides/s22-local-vs-cloud.md
+    file: slides/s22-prompt-caching-economics.md
     type: assertion_visual
-    section: "Раздел 4. Сэмплинг"
-    duration_min: 1
-    assertion: "Inference loop одинаков локально и в облаке — но размер модели определяет качество"
-    learning_goal: "Cross-cutting frame 1: Local vs cloud (callback Lec-1 §4.2 без повтора)"
-    learning_outcomes: [LO1, LO6]
-    chapter_ref: "§4.5 [for-slide-s22]"
+    section: "Раздел 3. Механизм внимания"
+    duration_min: 3.5
+    assertion: "Кэш промптов — ставка на повторное использование: чтение 0.1× ставки, запись дороже входа, один изменившийся токен инвалидирует всё после него"
+    learning_goal: "Экономика prompt caching на схеме трёх последовательных запросов: запись → cache hit → cache miss; правило «стабильное — в начало»"
+    learning_outcomes: [LO4, LO6]
+    chapter_ref: "§3.4 (chapter-part2.md) [for-slide-s22]"
     visual:
-      pattern: two_column_compare
-      primary: "2 Ocean rounded boxes side-by-side: Local (Ollama, llama.cpp) — Qwen 2.5 1.5B, Llama 3.2 1B, Llama 3.1 8B; приватность; медленнее на consumer; ограниченный контекст. Cloud (OpenAI, Anthropic, Yandex, GigaChat) — 200B+; 200-500ms; оплата за токены; данные через API. Sub-caption: «callback Lec-1 §4.2 — глубже про trade-off там»."
+      pattern: three_requests_schema
+      primary: "Слева 55% — схема ТРЁХ запросов: Запрос 1 «префикс пишется в кэш» (запись 1.25–2×, teal), Запрос 2 «тот же префикс → cache hit» (чтение 0.1×, gold), Запрос 3 «строка добавлена в начало → префикс не совпал → cache miss» (полная цена). Мини-кейс $45 000 → $8 000 (−82%). Справа 45% — схема точного префикса: новая строка рушит кэш всех блоков после неё. Gold callout «Стабильное — в начало, переменное — в конец». Без интерактива. Справа от баров кейса — мем Stonks (~1.65 дюйма) как эмоциональный якорь экономии −82% (v3.3 r2)."
+    verify_day_of: true
 
-  # ─── Раздел 5. Заключение (7 слайдов: s22a divider + s23-s26, s28-s29; s27 removed v1.8) ───
-  - id: s22a
-    file: slides/s22a-section5-final.md
-    type: section_divider
-    section: "Раздел 5. Финал"
-    duration_min: 0.5
-    assertion: "Раздел 5 — Финал: закрытие 3 «почему» + мост к Лекции 3"
-    learning_goal: "Section divider раздела 5 — переход к финалу лекции"
-    learning_outcomes: [LO1, LO6, LO7]
-    chapter_ref: "§5 [for-slide-s22a]"
+  - id: s20
+    file: slides/s20-worked-example-role-effect.md
+    type: case_study
+    section: "Раздел 3. Механизм внимания"
+    duration_min: 3
+    assertion: "Роль работает через вес во внимании: role-токены смещают распределение, но не повышают фактическое качество"
+    learning_goal: "Worked example + полный механизм эффекта роли; контрастный пример с/без роли + исследовательская оговорка о границах эффекта"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.2 (chapter-part2.md) [for-slide-s20] [FACT-CHECK: Zheng et al., EMNLP 2024 Findings, «When \"A Helpful Assistant\" Is Not Really Helpful»]"
     visual:
-      pattern: section_divider_with_roadmap
-      primary: "Большое «Раздел 5» по центру (140pt gold). Под ним — «Финал». Frame-фраза «Закрытие 3 «почему» + мост к Лекции 3». Внизу — roadmap-bar (6 секций) с gold-маркером на «5 Финал»."
+      pattern: two_part_attention_example
+      primary: "Верх — пример «Кот съел мышь, потому что он был голоден», стрелки от «он» к «Кот» (gold, согласовано с s18/s19). Низ — контраст: «Объясни GIL» vs «Ты — опытный Python-разработчик. Объясни GIL» (role-токены teal); стрелка «role-токены получают вес → смещают распределение». Research-callout: «систематические проверки показывают: роль меняет тон, стиль и отбор содержания, но не повышает фактическое качество». Gold callout: роль — инструмент управления стилем/фокусом, не усилитель ума."
+    interaction: retrieval_think_pause   # «Программа упала, потому что он…» — куда уйдёт вес?
 
   - id: s23
-    file: slides/s23-recap-bridge-pipeline.md
+    file: slides/s23-context-window-race.md
     type: assertion_visual
-    section: "Раздел 5. Заключение"
-    duration_min: 1
-    assertion: "4 этапа inference сложились в pipeline"
-    learning_goal: "Final recap — LO1 закрытие"
-    learning_outcomes: [LO1]
-    chapter_ref: "§5.1 [for-slide-s23]"
+    section: "Раздел 3. Механизм внимания"
+    duration_min: 2.5
+    assertion: "Фронтир-стандарт 2026 — окно до 1 миллиона токенов; но «заявленное окно» и «полезное окно» — разные величины"
+    learning_goal: "Состояние гонки контекстных окон 2026: стандарт (до 1M), единичный полюс 2M, маркетинговый полюс 10M, контраст снизу; почему окно конечно"
+    learning_outcomes: [LO6]
+    chapter_ref: "§3.5 (chapter-part2.md) [for-slide-s23]"
     visual:
-      pattern: pipeline_4_stages
-      primary: "Горизонтальный pipeline из 4 стадий с MSO_SHAPE.RIGHT_ARROW: Токенизация → Эмбеддинг → Attention → Сэмплинг. Под каждой стадией — одна строка определения. Все 4 boxes в Ocean rounded motif. Финальная стрелка справа от Сэмплинга — «следующий токен» с gold подсветкой."
-
-  - id: s24
-    file: slides/s24-three-whys-payoff.md
-    type: summary
-    section: "Раздел 5. Заключение"
-    duration_min: 2
-    assertion: "Ответы на вопросы из начала лекции"
-    learning_goal: "Payoff — LO7 явный, обоснование 3 «почему» через механизм"
-    learning_outcomes: [LO7]
-    chapter_ref: "§5.2 [for-slide-s24]"
-    visual:
-      pattern: 3_takeaway_cards
-      primary: "3 Ocean rounded boxes: (1) Промпт с ролью лучше — role-токены получают высокий вес в attention (s15). (2) AI плохо считает буквы — токенизатор объединяет буквы в токены (s05-s07). (3) Один запрос — разные ответы — сэмплинг из distribution при T > 0 (s18-s19). Gold-маркер «payoff Лекции 1 §5.3» сверху."
+      pattern: bar_chart_timeline_plus_poles
+      primary: "Bar chart (лог-шкала): GPT-3.5 (2022) 4K → Claude 3.5 (2024) 200K → фронтир-стандарт до 1M — Fable 5, GPT-5.6, Gemini 3.1 Pro и др. (gold). Отдельно — единичный полюс Gemini 3.5 Pro 2M (не стандарт, одна модель). Контрасты: Llama 4 Scout «10M — заявлено, без бенчмарков, маркетинг» (штриховка); YandexGPT 5 Pro 32K. Внизу строка про позиционное кодирование. Gold callout «платите за то, что кладёте в окно»."
+    verify_day_of: true
 
   - id: s25
-    file: slides/s25-ml-vs-llm-decision-tree.md
-    type: summary
-    section: "Раздел 5. Заключение"
-    duration_min: 1.5
-    assertion: "LLM — не всегда правильный инструмент. Decision tree: когда не LLM"
-    learning_goal: "Cross-cutting frame 2: ML vs LLM (расширяет Lec-1 §1.4)"
+    file: slides/s25-long-context-limits.md
+    type: case_study
+    section: "Раздел 3. Механизм внимания"
+    duration_min: 3.5
+    assertion: "Поиск дословной вставки почти решён — но без лексических совпадений 11 из 13 моделей теряют больше половины своей точности уже на 32 тысячах токенов"
+    learning_goal: "Актуализация lost-in-the-middle: needle решён, NoLiMa вскрывает границу; формула «1M окна ≠ 1M рассуждения»"
     learning_outcomes: [LO6]
-    chapter_ref: "§5.3 [for-slide-s25]"
+    chapter_ref: "§3.7 (chapter-part2.md) [for-slide-s25]"
     visual:
-      pattern: decision_tree_3_branches
-      primary: "Decision tree с корнем «Когда не LLM?» и 3 ветками: (1) Классификация на фиксированном наборе категорий → классический ML (logistic regression, XGBoost). (2) Нужна интерпретируемость (regulated industry) → правила/decision trees. (3) Время отклика < 100ms критично → специализированная маленькая модель. Иначе → LLM подходит. Каждая ветка — мини-карточка с иконкой."
+      pattern: two_tier_solved_vs_unsolved
+      primary: "ДВА ЯРУСА (верх/низ). Верх «Забывание победили»: U-кривая lost-in-the-middle (2023) → плоская линия (2026) на needle-retrieval, 99% на 1M (teal галочка); рядом реальное фото иголки в стоге сена (Wikimedia, буквальная метафора-якорь needle-in-a-haystack, v3.3). Низ «Работу со смыслом — нет»: NoLiMa-панель, 13 баров-моделей, 11 ниже пунктира «50% собственной базовой точности», подпись «без лексических совпадений качество падает ниже 50% от базового уже на 32K (11 из 13 моделей)» (gold). Внизу gold callout-формула «1M окна ≠ 1M рассуждения»."
+
+  # ─── Раздел 4. Сэмплинг и генерация (8 слайдов, 20.0 мин; s34 → Раздел 5) ───
+  - id: s26a
+    file: slides/s26a-section4-sampling.md
+    type: section_divider
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 0.5
+    assertion: "Раздел 4 — Сэмплинг и генерация: как из распределения вероятностей рождается один токен"
+    learning_goal: "Section divider раздела 4 — переход к четвёртой стадии конвейера"
+    learning_outcomes: [LO1, LO4]
+    chapter_ref: "§4 (chapter-part2.md) [for-slide-s26]"
+    visual:
+      pattern: section_divider_pipeline_progress
+      primary: "Большое «Раздел 4» (140pt gold), под ним «Сэмплинг и генерация», frame-фраза, tag «4 разбора · 2 провала». Внизу — мини-конвейер со стадией «Сэмплинг» в gold-подсветке. Справа — фото пары казино-костей (Wikimedia, owner-одобрено v3.1) — visual metaphor случайности/сэмплинга; v3.2: подпись-источник убрана (осталась в attribution.md)."
 
   - id: s26
-    file: slides/s26-attention-vs-causality.md
+    file: slides/s26-distribution.md
     type: assertion_visual
-    section: "Раздел 5. Заключение"
-    duration_min: 1
-    assertion: "Attention статистически смотрит на токены — не понимает причинности"
-    learning_goal: "Cross-cutting frame 3: Human vs AI (callback Lec-1 §4.8 Pearl)"
-    learning_outcomes: [LO6]
-    chapter_ref: "§5.4 [for-slide-s26]"
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 2.5
+    assertion: "На каждом шаге модель выдаёт распределение вероятностей на ВСЕ токены словаря — затем выбирает один"
+    learning_goal: "Распределение вероятностей как «настоящий» выход модели; сэмплинг как правило выбора"
+    learning_outcomes: [LO1]
+    chapter_ref: "§4.1 (chapter-part2.md) [for-slide-s26]"
     visual:
-      pattern: human_vs_ai_side_by_side
-      primary: "2 Ocean rounded boxes side-by-side, выросли на всю высоту после удаления gold callout (issue #156 #207): Человек — «X произошло, потому что Y» — модель причинности (Pearl уровни 2-3). AI — «X следует за Y в данных» — статистическая корреляция (Pearl уровень 1). Инженерный вывод про causal-методы перенесён в конец правой колонки."
+      pattern: bar_chart_top_candidates
+      primary: "Bar chart top-5 после «Сегодня я съел …»: яблоко 0.32 (gold), пиццу 0.19, салат 0.14, булочку 0.11; footnote: остальные ~200 тысяч токенов — длинный хвост, сумма = 1. Callout: до сэмплинга уверенный ответ и галлюцинация существуют одновременно как вероятностная масса."
+
+  - id: s27
+    file: slides/s27-temperature.md
+    type: case_study
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 2.5
+    assertion: "Температура — делитель логитов: она меняет остроту выбора, но не знания модели"
+    learning_goal: "Точная механика temperature — формула T=0⇒argmax, P^(1/T) при T>0 — и почему T влияет, хотя порядок токенов не меняется; top-p/top-k вторым эшелоном"
+    learning_outcomes: [LO4, LO7]
+    chapter_ref: "§4.2 (chapter-part2.md) [for-slide-s27]"
+    visual:
+      pattern: formula_plus_three_distributions
+      primary: "Верх — явная формула: «T=0 ⇒ выбор = argmax P(токен)»; «T>0 ⇒ сэмплинг из P^(1/T)-образного распределения (логиты делятся на T до softmax)». Ниже 3 версии распределения из s26: T→0 (argmax), T=1 (gold, стандарт), T=1.5 (сглажено). Callout «почему T влияет, а порядок не меняется»: выбор — случайная выборка пропорционально вероятностям; T перекраивает сами вероятности. Строка top-p/top-k. Бейдж живого демо."
+    interaction: live_comparison
 
   - id: s28
-    file: slides/s28-bridge-qa.md
-    type: summary
-    section: "Раздел 5. Заключение"
-    duration_min: 1.5
-    assertion: 'Лекция 3: «Агенты, RAG, API: как AI выходит за пределы чата»'
-    learning_goal: "Мост к Лекции 3"
-    learning_outcomes: [LO1]
-    chapter_ref: "§5.5 [for-slide-s28]"
+    file: slides/s28-t0-not-deterministic.md
+    type: case_study
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 3.5
+    assertion: "T=0 не даёт детерминизма: на стандартном vLLM — 80 уникальных ответов из 1000 одинаковых запросов"
+    learning_goal: "Механизм недетерминизма при T=0 (batch-инвариантность, не «floating-point вообще»); цена решения и следствия для тестов"
+    learning_outcomes: [LO4, LO6]
+    chapter_ref: "§4.3 (chapter-part2.md) [for-slide-s28]"
     visual:
-      pattern: 4_concepts_preview
-      primary: "4 Ocean rounded boxes с иконками — концепты Лекции 3: (1) RAG — embedding similarity + LLM, ответ из вашей базы. (2) Tools / Function calling — LLM генерирует структурированный JSON, выполняет внешняя система. (3) MCP — открытый стандарт подключения инструментов (Anthropic, 2024). (4) Agent loop — act → observe → reflect."
+      pattern: mechanism_chain_schema
+      primary: "Слева 45% — крупная цифра «80 / 1000» (gold, 96pt) с подписью «уникальных ответов при T=0, стандартный vLLM». Справа 55% — цепочка причины: чужой трафик → размер батча → порядок суммирования float → младший разряд → другой argmax → авторегрессия разносит. Плашки: «решение существует: batch-invariant kernels, 1000/1000 побитово» и «цена ~35% пропускной способности → выключено по умолчанию». Gold callout: «получить гарантированно детерминированный ответ от облачной LLM сегодня нельзя — стройте процессы с учётом этого»."
 
   - id: s29
-    file: slides/s29-qa.md
-    type: qa_minimal
-    section: "Раздел 5. Заключение"
+    file: slides/s29-api-knobs-six.md
+    type: summary
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 2.5
+    assertion: "К классическим ручкам «случайность + длина» добавилась ось «глубина рассуждения + многословие»"
+    learning_goal: "Табличный формат «параметр — диапазон — на что влияет — типичное значение» для всех 5 ключевых ручек; урок эволюции API на примере budget_tokens"
+    learning_outcomes: [LO4]
+    chapter_ref: "§4.4 (chapter-part2.md) [for-slide-s29]"
+    visual:
+      pattern: parameters_table
+      primary: "Таблица «параметр — диапазон — на что влияет — типичное значение»: temperature (0–2, детерминизм↔хаос), top_p (0.1–1, ширина хвоста), max_tokens (жёсткий обрыв), effort/reasoning_effort (none→xhigh, глубина мышления/цена, gold), verbosity (low→high, длина ответа). Строка «заучивайте оси» убрана. (budget_tokens/ошибка 400 — только в speaker notes.)"
+    verify_day_of: true
+
+  - id: s30
+    file: slides/s30-structured-outputs.md
+    type: assertion_visual
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 2.5
+    assertion: "Structured outputs — не уговоры, а механика: невалидные токены обнуляются прямо в распределении — отсюда честные 100% схемы"
+    learning_goal: "Constrained decoding как ручка формата; из механизма следуют и гарантия, и ограничения (рекурсия, глубина, компиляция)"
+    learning_outcomes: [LO4]
+    chapter_ref: "§4.5 (chapter-part2.md) [for-slide-s30]"
+    visual:
+      pattern: masking_schema_plus_limits
+      primary: "Схема: JSON-схема компилируется в КОНЕЧНЫЙ АВТОМАТ над токенами → на каждом шаге автомат отслеживает состояние префикса и МАСКИРУЕТ (обнуляет) невалидные токены → выбор только из валидных (gold: 100% vs ~80% у просьбы) — выход валиден по построению, не проверен постфактум. Карточка ограничений: $ref-рекурсии нет, глубина ≤5, компиляция при первом запросе. Callout: гарантированный синтаксис ≠ осмысленность полей. Внизу справа — Gandalf «НЕВАЛИДНЫЙ ТОКЕН НЕ ПРОЙДЁТ» (~2.9 дюйма) — метафора маскирования; «Вопрос залу» сдвинут влево (v3.3 r2)."
+    interaction: retrieval_pause   # «почему 100%, а не 99.9%?»
+
+  - id: s31
+    file: slides/s31-autoregressive-loop.md
+    type: process
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 2.5
+    assertion: "Цикл: предсказали токен → дописали в контекст → предсказываем следующий"
+    learning_goal: "Авторегрессионный цикл как сборка всех стадий конвейера в единый процесс"
+    learning_outcomes: [LO1]
+    chapter_ref: "§4.6 (chapter-part2.md) [for-slide-s31]"
+    visual:
+      pattern: cycle_5_steps_plus_stop
+      primary: "v3.2: Замкнутый цикл 5 шагов с явной loop-стрелкой и точкой входа: контекст → прямой проход (gold) → распределение → сэмплинг → токен в контекст → повтор. Стоп-условия явно: как останавливается (стоп-токен, max_tokens) и как ломается — вырожденные циклы повторов; кадр из мультфильма «Горшочек каши» (Союзмультфильм, 1984, момент «не вари!») — узнаваемее для русскоязычной аудитории, чем гравюра Ubbelohde 1909; слот увеличен. Практика: repetition/frequency penalty, max_tokens как страховка. Caption: max_tokens обрывает мгновенно, хоть на середине JSON-поля."
+
+  - id: s32
+    file: slides/s32-reasoning-tokens.md
+    type: assertion_visual
+    section: "Раздел 4. Сэмплинг и генерация"
+    duration_min: 3.5
+    assertion: "Reasoning-токены не видны, но тарифицируются как output — по самой дорогой ставке, с раздуванием 3–10×"
+    learning_goal: "Reasoning-токены: тот же цикл + невидимая платная часть; adaptive/effort вместо ручных бюджетов; summarized thinking"
+    learning_outcomes: [LO4, LO6]
+    chapter_ref: "§4.7 (chapter-part2.md) [for-slide-s32]"
+    visual:
+      pattern: forked_output_billing_schema
+      primary: "Раздвоенный выход авторегрессионного цикла: видимый ответ (teal) и черновик «для себя» (серый) — в ответ не попадает, в счёт попадает (×3–10 gold), оба потока — по ставке output. Факт-карточка: o3-pro = 3.6× o3 = 18× o4-mini при сопоставимой длине видимых ответов. Карточки границ: показанные «мысли» — пересказ (summarized); управление ушло в adaptive/effort. Callout: закладывайте невидимую часть 2–5× видимого ответа. В правом верхнем углу верхнего контейнера, над «×3–10», — кадр The Dark Knight: Джокер жжёт гору денег (~1.9 дюйма, v3.3 r2 — «невидимые токены жгут бюджет»)."
+
+  # ─── Раздел 5. Виды и размеры моделей (5 слайдов, 12.0 мин) — НОВЫЙ ───
+  - id: s33a
+    file: slides/s33a-section5-models.md
+    type: section_divider
+    section: "Раздел 5. Виды и размеры моделей"
+    duration_min: 0.5
+    assertion: "Раздел 5 — Виды и размеры моделей: на чём запускаются и что умеют"
+    learning_goal: "Section divider раздела 5 — новый раздел курса: классификация моделей по размеру и месту запуска, ландшафт 2026, критика бенчмарков"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§5.x (chapter-part3.md) [for-slide-s33a]"
+    visual:
+      pattern: section_divider_pipeline_progress
+      primary: "Большое «Раздел 5» (140pt gold), под ним «Виды и размеры моделей», caption «На чём запускаются модели разных размеров — и что каждый класс умеет», tag «4 разбора». Внизу — мини-конвейер, вся лента в приглушённой gold-подсветке (раздел логически «над» конвейером — классификация моделей, исполняющих конвейер). Справа — фото русской матрёшки (Wikimedia, owner-одобрено v3.1) — visual metaphor вложенности размеров; v3.2: подпись-источник убрана (осталась в attribution.md)."
+
+  - id: s33
+    file: slides/s33-size-classes.md
+    type: assertion_visual
+    section: "Раздел 5. Виды и размеры моделей"
+    duration_min: 3
+    assertion: "Четыре класса по размеру — от ноутбука до кластера: чем крупнее модель, тем меньше форматов ввода она пропускает мимо, но тем дороже и недоступнее локально"
+    learning_goal: "Классификация моделей по размеру параметров: малые/средние/большие/гиганты-MoE — на чём запускаются, примеры конкретных моделей, мультимодальность по классам"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§5.x (chapter-part3.md) [for-slide-s33]"
+    visual:
+      pattern: four_column_size_matrix
+      primary: "4-колоночная матрица в Ocean rounded boxes (иконка сверху каждого столбца — ноутбук/видеокарта/сервер/облако): Малые ≤8–10B (Qwen3.8-4B/8B, Llama-класс; ноутбук/смартфон; обычно text-only или базовый vision) / Средние ~30B (Muse Glimmer 30B; одна GPU 24–32 ГБ; часто vision) / Большие 70B+ (мульти-GPU/сервер; как правило полная мультимодальность) / Гиганты-MoE 400B+ (gold-обводка; DeepSeek V4-Pro 1.6T, Kimi K3 2.8T; только облако/кластер; полная мультимодальность, топ качество). Gold callout: лимитирующий фактор — память, не вычисления."
+    verify_day_of: true
+
+  - id: s34
+    file: slides/s34-local-vs-cloud.md
+    type: comparison
+    section: "Раздел 5. Виды и размеры моделей"
+    duration_min: 2.5
+    assertion: "Цикл один и тот же локально и в облаке — а «открытые веса» перестали означать «локально запускаемые»"
+    learning_goal: "Классификация по месту запуска (не по размеру — см. предыдущий слайд): подросший локальный полюс, три категории вместо двух"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§4.9 (chapter-part2.md) [for-slide-s34]"
+    visual:
+      pattern: three_category_compare
+      primary: "3 карточки: Закрытые API (флагманы) / Открытые-но-облачные гиганты (Kimi K3 2.8T, DeepSeek V4 1.6T — на потребительское железо не помещаются, gold-обводка) / Действительно локальные ≤~30B (Qwen3.8-27B Apache 2.0 262K, Muse Glimmer 30B; RTX 5090 32GB, Apple unified 64–128GB). Callout: лимит — память, не вычисления. Gold callout действия: задача ≤~30B и данные нельзя выпускать за периметр → локальная модель; нужно флагманское качество → закрытый API."
+    verify_day_of: true
+
+  - id: s36
+    file: slides/s36-model-landscape-2026.md
+    type: summary
+    section: "Раздел 5. Виды и размеры моделей"
+    duration_min: 3
+    assertion: "Ландшафт сентября 2026: передний край и открытые веса сблизились по качеству — и разошлись по цене на три порядка"
+    learning_goal: "Карта моделей на сентябрь 2026: frontier vs открытые веса, сила (IMO), разброс цен, скорость устаревания"
+    learning_outcomes: [LO6]
+    chapter_ref: "§5.2 (chapter-part3.md) [for-slide-s36]"
+    visual:
+      pattern: landscape_two_columns_plus_stats
+      primary: "2 колонки: Frontier (GPT-5.6 Luna/Terra/Sol, Fable 5 / Opus 5, Gemini 3.5 Pro, Grok 4.3) vs Открытые веса (DeepSeek V4, Qwen 3.8-Max, Kimi K2.6/K3 2.8T). Мега-факт: IMO 2026 — 6 моделей 42/42 vs 7 из 666 людей (gold). Строка цен: пол $0.03–0.2/M ↔ премиум $10/$50; Kimi K2.6 ≈ GPT-5.5 на SWE-bench Pro при −80% цены. Строка действия: пересматривайте выбор модели регулярно."
+    verify_day_of: true
+
+  - id: s37
+    file: slides/s37-benchmarks-distrust.md
+    type: case_study
+    section: "Раздел 5. Виды и размеры моделей"
+    duration_min: 3
+    assertion: "Цифры бенчмарков — не измерение, а маркетинговая поверхность: контаминация, подгонка и жульничество самих моделей"
+    learning_goal: "Три механизма искажения бенчмарков на кейсах 2026; правило собственного оценочного набора"
+    learning_outcomes: [LO6]
+    chapter_ref: "§5.3 (chapter-part3.md) [for-slide-s37]"
+    visual:
+      pattern: four_distortions_cards
+      primary: "3 карточки-сюжета: (1) Контаминация — Verified 87.6% vs Pro 57% топ / ~25% среднее (gold); (2) Подгонка — Llama 4 Maverick: Arena-версия Elo 1417 → публичная на местах 32–35, признание Лекуна; (3) Модели жульничают — AISI: все 5; модель OpenAI вышла из песочницы и взломала прод Hugging Face. Callout: 30–50 собственных примеров скажут больше любого рейтинга. В правой трети карточки 2 — мем Press X to Doubt (L.A. Noire, ~2.3 дюйма) — реакция на витринные лидерборд-результаты (v3.3 r2)."
+
+  # ─── Раздел 6. Финал (7 слайдов, 12.0 мин, включая Q&A) ───
+  - id: s35a
+    file: slides/s35a-section5-final.md
+    type: section_divider
+    section: "Раздел 6. Финал"
+    duration_min: 0.5
+    assertion: "Раздел 6 — Финал: конвейер собран целиком — сборка, итоги и решение, когда LLM не тот инструмент"
+    learning_goal: "Section divider раздела 6 — конвейер и виды моделей пройдены полностью, переход к сборке и финалу"
+    learning_outcomes: [LO1, LO6, LO7]
+    chapter_ref: "§5 (chapter-part3.md) [for-slide-s35]"
+    visual:
+      pattern: section_divider_pipeline_progress
+      primary: "v3.2: Большое «Раздел 6» (140pt gold), под ним «Финал», caption «Конвейер собран целиком: сводка механизмов и границ — и решение, когда LLM не тот инструмент», tag «6 разборов». Внизу — мини-конвейер, ВСЕ стадии подсвечены (пройдены), объединяющая gold-рамка. Справа — мем Pepe Silvia / conspiracy board (It's Always Sunny) — «весь конвейер собран воедино» (заменяет «This is fine», owner: «не к месту»), без подписи-источника."
+
+  - id: s35
+    file: slides/s35-pipeline-recap.md
+    type: assertion_visual
+    section: "Раздел 6. Финал"
     duration_min: 2
-    assertion: 'Q&A'
+    assertion: "Мы рассмотрели, как работает модель, — соберём картину: новые темы не добавили стадий, они встроились в существующие"
+    learning_goal: "Recap-сборка конвейера с наложением новых слоёв (KV-cache → внимание, thinking → цикл, схема → сэмплинг, glitch-токены → токенизация); диагностическое дерево"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.1 (chapter-part3.md) [for-slide-s35]"
+    visual:
+      pattern: pipeline_4_stages_annotated
+      primary: "Горизонтальный конвейер 4 стадий (Токенизация → Эмбеддинги → Внимание → Сэмплинг → «следующий токен» gold, loop-стрелка). Плашки-наложения новых тем с пунктиром к стадиям: glitch-токены → токенизация; KV-cache → внутри внимания, prompt caching — надстройка; structured outputs → фильтр сэмплинга; reasoning-токены → тот же цикл, часть выхода «черновик». Callout: конвейер = диагностическое дерево — «на какой стадии это происходит?»"
+
+  - id: s38
+    file: slides/s38-checklist-payoff.md
+    type: summary
+    section: "Раздел 6. Финал"
+    duration_min: 3
+    assertion: "Подведём итоги: по каждому механизму — граница и что с ней делать на практике"
+    learning_goal: "Сводная таблица «механизм → граница → что делать» по всем разобранным темам лекции; самопроверка"
+    learning_outcomes: [LO7]
+    chapter_ref: "§5.4 (chapter-part3.md) [for-slide-s38]"
+    visual:
+      pattern: summary_table_mechanism_boundary_action
+      primary: "Сводная таблица «механизм → граница → что делать» по рассмотренным темам: токены, внимание/роль, KV-cache и кэш промптов, сэмплинг/детерминизм, окна, reasoning, бенчмарки, размеры моделей. Без M-кодов, без чек-листа, без переклички с s01. Строки компактные, ≤2 строки в ячейке. Внизу gold callout «Знать инструмент — значит знать его границы»."
+
+  - id: s39
+    file: slides/s39-ml-vs-llm-decision-tree.md
+    type: summary
+    section: "Раздел 6. Финал"
+    duration_min: 1.5
+    assertion: "LLM — не всегда правильный инструмент; а когда правильный — не всегда нужна топовая"
+    learning_goal: "Дерево решений «когда не LLM» + новый уровень 2026: лестница эскалации внутри класса LLM"
+    learning_outcomes: [LO6]
+    chapter_ref: "§5.5 (chapter-part3.md) [for-slide-s39]"
+    visual:
+      pattern: decision_tree_plus_ladder
+      primary: "Decision tree: фиксированные категории → классический ML; объяснимость → правила; отклик <100 мс → малая модель; посимвольное/арифметика → код. Плюс лестница эскалации: 90% в дешёвую, 10% в премиум (пример: $10 000 → $1 180 на 1B токенов, gold). Внизу правой колонки — мем Two Buttons («LLM» / «обычный код»), метафора трудного выбора инструмента (v3.3)."
+
+  - id: s40
+    file: slides/s40-attention-vs-causality.md
+    type: assertion_visual
+    section: "Раздел 6. Финал"
+    duration_min: 1.5
+    assertion: "Внимание — взвешивание по статистике совместной встречаемости: корреляция, не причинность"
+    learning_goal: "Механистическое основание тезиса Лекции 1 о трёх уровнях причинности; человек в контуре как архитектурное требование"
+    learning_outcomes: [LO6]
+    chapter_ref: "§5.6 (chapter-part3.md) [for-slide-s40]"
+    visual:
+      pattern: human_vs_ai_side_by_side
+      primary: "2 колонки: Человек — «X произошло, потому что Y» (модель причинности, уровни Перла 2–3) vs Модель — «X следует за Y в данных» (статистика, уровень 1). Gold callout: человек в контуре — архитектурное требование. Под callout — xkcd #552 «Correlation», прямая отсылка к corr ≠ causation (v3.3). (Разбор инцидента — только в speaker notes.)"
+
+  - id: s41
+    file: slides/s41-bridge-lecture3.md
+    type: summary
+    section: "Раздел 6. Финал"
+    duration_min: 2
+    assertion: "Лекция 3 — как модель выходит за пределы контекста: RAG, инструменты, MCP, агентный цикл"
+    learning_goal: "Мост к Лекции 3 с якорями из этой лекции (роль = токены с весом внимания → injection, граница similarity → RAG, кэш → экономика агента, thinking → бюджет)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.7 (chapter-part3.md) [for-slide-s41]"
+    visual:
+      pattern: 4_concepts_preview_with_anchors
+      primary: "4 Ocean rounded boxes 2×2 с иконками — концепты Лекции 3: RAG / Инструменты / MCP / Агентный цикл; у каждого тонкая строка-якорь из сегодняшней лекции (teal, курсив): «сходство ≠ релевантность», «structured outputs гарантируют формат вызова», «стабильный префикс → кэш», «инструкции — те же токены с весом внимания → prompt injection; невидимые токены × число шагов». Gold на заголовке-мосте."
+
+  - id: s42
+    file: slides/s42-qa.md
+    type: qa_minimal
+    section: "Раздел 6. Финал"
+    duration_min: 1.5
+    assertion: "Q&A"
     learning_goal: "Открытый Q&A без backup-провокаций"
     learning_outcomes: []
     chapter_ref: "—"
     visual:
       pattern: qa_minimal
-      primary: "v1.8 (#210): redesigned to match Lec-1 s31 pattern exactly — surface-tint фон `#F4F7FA`, большое «Q&A» 140pt по центру в `#21295C`, под ним «Спасибо» 36pt italic. Внизу справа — заглушка контактов лектора. Без footer, без roadmap-bar — фокус на диалоге."
+      primary: "Паттерн Lec-1 s31: surface-tint фон #F4F7FA, большое «Q&A» 140pt по центру #21295C, под ним «Спасибо» 36pt italic. Без footer (включая номер страницы), без roadmap-bar."
 
 # ─── Validation ───
 totals:
-  slides: 35
-  # v1.8 (issue #156): 35 = 36 v1.7 − 1 (s27-homework removed, deferred out of this deck)
-  slide_times_sum_min: 60.0     # 62 v1.7 − 2 (s27 duration_min removed)
-  retrieval_moments_min: 6       # s07/s15/s19 — s05 retrieval moment removed v1.5
-  transitions_buffer_min: 2.0    # absorbed by additions (was 4.5)
-  qa_buffer_min: 5
-  total_min: 73                  # 60 + 6 + 2 + 5 (was 75; homework block removed, no longer timed in this deck)
+  slides: 47
+  # По разделам (построчная сумма duration_min, = spec-таблице rework-round2):
+  # Р0 — 6 слайдов: 2.5+0.5+0.5+1.5+1.5+2.5           =  9.0
+  # Р1 — 7 слайдов: 0.5+2+2.5+3+2.5+2.5+2             = 15.0
+  # Р2 — 6 слайдов: 0.5+1.5+3+1.5+3+1.5               = 11.0
+  # Р3 — 8 слайдов: 0.5+2+2+4+3.5+3+2.5+3.5           = 21.0
+  # Р4 — 8 слайдов: 0.5+2.5+2.5+3.5+2.5+2.5+2.5+3.5   = 20.0
+  # Р5 — 5 слайдов: 0.5+3+2.5+3+3                     = 12.0
+  # Р6 — 7 слайдов: 0.5+2+3+1.5+1.5+2+1.5             = 12.0 (вкл. Q&A: s42)
+  # Итого 9+15+11+21+20+12+12 = 100.0 — ровно deck.duration_min.
+  # Отдельных буферов нет — переходы и Q&A учтены внутри duration_min слайдов.
+  slide_times_sum_min: 100.0
+  transitions_buffer_min: 0
+  qa_buffer_min: 0
+  total_min: 100                # 100.0 + 0 + 0
 
 interaction_summary:
-  - s01: human-attention hook (2 мин total)
-  - s07: live attempt 1 мин ("сколько 'r' в strawberry?") — VERIFY-DAY-OF
-  - s15: think pause 30 sec ("Программа упала, потому что она...")
-  - s19: live comparison T=0 vs T=1.5
+  # v3.0: s01 hands_poll снят (мем-хук без интерактива); s22 mini_poll снят.
+  - s08: retrieval_live_attempt — cranberry на актуальных моделях [VFY-day-of]
+  - s20: retrieval_think_pause («Программа упала, потому что он…» — куда уйдёт вес?)
+  - s27: live_comparison T=0 vs T=1.5
+  - s30: retrieval_pause («почему 100%, а не 99.9%?»)
 
 verify_day_of_items:
-  - s07_strawberry_test       # pre-test top-3 models work
-  - s16_context_window_3pts   # GPT-3.5 4k, Claude 3.5 200k, Claude 4.7 1M
+  - s08_strawberry_cranberry   # гонка патчей: GPT-5.6 чинит cranberry — проверить на актуальных моделях
+  - s21_kv_cache_vendors       # автокэш по вендорам: OpenAI авто / Gemini implicit / DeepSeek дисковый / Anthropic cache_control
+  - s22_prompt_caching_rates   # ставки чтения/записи кэша (0.1× / 0.025× / 1.25–2×)
+  - s23_context_windows        # окна: фронтир до 1M; Gemini 3.5 Pro 2M; Scout 10M; YandexGPT 32K
+  - s29_api_params             # имена/диапазоны effort/verbosity, статус budget_tokens
+  - s33_size_classes           # актуальные примеры моделей по классам размеров
+  - s34_local_vs_cloud         # категории local/cloud, актуальные локальные модели
+  - s36_model_landscape        # релизы после 1 сентября 2026, цены

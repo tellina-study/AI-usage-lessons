@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="640" viewBox="0 0 1240 640">
+  <!-- Мост от конвейера Лекции 2 (левый берег) к миру агентов Лекции 3 (правый) -->
+  <!-- левый берег -->
+  <rect x="0" y="430" width="330" height="210" rx="18" fill="#b8c9db"/>
+  <!-- конвейер на левом берегу: 4 блока-стадии -->
+  <g fill="#8aa3bd">
+    <rect x="30"  y="360" width="60" height="44" rx="8"/>
+    <rect x="102" y="360" width="60" height="44" rx="8"/>
+    <rect x="174" y="360" width="60" height="44" rx="8"/>
+  </g>
+  <rect x="246" y="360" width="60" height="44" rx="8" fill="#F0AB00"/>
+  <!-- правый берег -->
+  <rect x="910" y="430" width="330" height="210" rx="18" fill="#b8c9db"/>
+  <!-- агентный граф на правом берегу -->
+  <g stroke="#8aa3bd" stroke-width="7" fill="none">
+    <line x1="990" y1="330" x2="1080" y2="390"/>
+    <line x1="1080" y1="390" x2="1170" y2="330"/>
+    <line x1="1080" y1="390" x2="1080" y2="300"/>
+  </g>
+  <circle cx="990"  cy="330" r="30" fill="#b9cbdd"/>
+  <circle cx="1170" cy="330" r="30" fill="#b9cbdd"/>
+  <circle cx="1080" cy="300" r="26" fill="#b9cbdd"/>
+  <circle cx="1080" cy="390" r="36" fill="#F0AB00"/>
+  <!-- пролёт моста -->
+  <rect x="290" y="470" width="660" height="26" fill="#8aa3bd"/>
+  <!-- центральный пилон -->
+  <rect x="601" y="150" width="38" height="420" rx="10" fill="#b8c9db"/>
+  <!-- ванты (gold) -->
+  <g stroke="#F0AB00" stroke-width="8" fill="none" stroke-linecap="round">
+    <line x1="620" y1="170" x2="330" y2="470"/>
+    <line x1="620" y1="240" x2="430" y2="470"/>
+    <line x1="620" y1="310" x2="520" y2="470"/>
+    <line x1="620" y1="170" x2="910" y2="470"/>
+    <line x1="620" y1="240" x2="810" y2="470"/>
+    <line x1="620" y1="310" x2="720" y2="470"/>
+  </g>
+  <!-- поток по мосту: стрелка слева направо -->
+  <path d="M400 508 l360 0 l0 -16 l60 30 l-60 30 l0 -16 l-360 0 z" fill="#f4f7fa" opacity="0.9"/>
+</svg>

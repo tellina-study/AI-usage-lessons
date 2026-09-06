@@ -729,3 +729,21 @@ _Пока не обнаружено._
 - **Root cause:** a no-root portable install exists at `/home/harness/.local/{libreoffice-portable,lo-sysroot}` with its own env wrapper; nothing is on `PATH`/`LD_LIBRARY_PATH` by default.
 - **Workaround:** `source /home/harness/.local/lo-portable-env.sh` in the same shell before any convert/raster — it exports `LD_LIBRARY_PATH` (Xinerama etc.), `FONTCONFIG_FILE`, and prepends `$LO_HOME/program` + `$LO_SYSROOT/usr/bin` (gives `soffice` 26.2 + `pdftoppm` 24.02) to `PATH`. Then combine with the [#170-1] isolated-`$HOME`/profile workaround for repeated converts.
 - **First seen in:** #172 (lec-01 EN render, 2026-08-30).
+
+### [#183-1] PyMuPDF SVG import ignores `<linearGradient>` — gradient fill renders BLACK
+
+- **Tool:** `pymupdf` (`pymupdf.open("file.svg")` → `get_pixmap()`), used as SVG→PNG fallback when `rsvg-convert` is absent (lec-02 v2.0 batch-1 hero illustration).
+- **Symptom:** a `<rect fill="url(#gradId)">` referencing a `<linearGradient>` in `<defs>` renders with a solid **black** fill (unresolved paint → default), silently: no warning, file converts "successfully". A deliberately muted background illustration came out as a heavy black block.
+- **Root cause:** MuPDF's SVG parser has partial SVG support; gradient paints on shapes are not resolved.
+- **Severity:** P2 (silent visual corruption; obvious on inspect).
+- **Workaround:** use only solid `fill="#rrggbb"` (+ opacity) in SVGs destined for PyMuPDF rasterization; emulate gradients with stacked semi-transparent solids if needed. Text, paths, strokes, dash arrays render fine.
+- **First seen in:** #183 (lec-02 v2.0 batch 1, s01 hero «чёрный ящик с трещинами», 2026-09-05).
+
+### [#183-2] QuickChart v4 — annotation line `label` не рендерится
+
+- **Tool:** QuickChart POST `/chart` (`"version": "4"`), плагин chartjs-plugin-annotation (`options.plugins.annotation.annotations.<id>`).
+- **Symptom:** сама annotation-линия (`type: "line"`, `borderDash`, `borderColor`) рендерится корректно, но вложенный `label` (`{"enabled": true, "content": "...", ...}`) молча не появляется на PNG — ни ошибки, ни текста.
+- **Root cause (предположительно):** в annotation-плагине v2 (Chart.js v4) синтаксис метки сменился с `enabled` на `display` + иная структура; QuickChart молча игнорирует нераспознанные ключи. Вариант с `display: true` не проверялся (обход оказался проще).
+- **Severity:** P3 (косметика; линия работает).
+- **Workaround:** накладывать подпись текстовым слоем python-pptx поверх вставленного PNG (lec-02 s25: «11 из 13 — ниже 50%» gold-текст на белом поле чарта).
+- **First seen in:** #183 (lec-02 v2.0 batch 2, s25 NoLiMa chart, 2026-09-05).

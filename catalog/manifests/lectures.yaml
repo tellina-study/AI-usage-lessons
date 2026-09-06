@@ -37,7 +37,8 @@ lectures:
     repo_dir: lec-02
     status: produced
     repo_title_note: "в репо производилась как «Как работают современные большие модели»"
-    updated_at: "2026-05-16"
+    note: "v2/v3 переработка под опытную аудиторию: 100 мин, 47 слайдов, issue #183"
+    updated_at: "2026-09-06"
 
   - number: 3
     title: "Архитектуры AI-систем: агенты, RAG, API"

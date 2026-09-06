@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <!-- Toкенизация: нож режет слово на куски -->
+  <rect x="30" y="150" width="300" height="70" rx="10" fill="#F4F7FA" stroke="#1C7293" stroke-width="4"/>
+  <text x="70" y="197" font-family="DejaVu Sans Mono" font-size="34" font-weight="bold" fill="#21295C">клуб</text>
+  <line x1="150" y1="150" x2="150" y2="220" stroke="#F0AB00" stroke-width="4" stroke-dasharray="6 6"/>
+  <text x="185" y="197" font-family="DejaVu Sans Mono" font-size="34" font-weight="bold" fill="#065A82">ни</text>
+  <line x1="235" y1="150" x2="235" y2="220" stroke="#F0AB00" stroke-width="4" stroke-dasharray="6 6"/>
+  <text x="255" y="197" font-family="DejaVu Sans Mono" font-size="34" font-weight="bold" fill="#028090">ка</text>
+  <!-- нож сверху -->
+  <g transform="rotate(-18 235 90)">
+    <polygon points="150,60 300,80 300,100 170,100" fill="#1C7293"/>
+    <rect x="120" y="72" width="40" height="24" rx="6" fill="#21295C"/>
+  </g>
+</svg>

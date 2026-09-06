@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <!-- Сэмплинг: кости/рулетка — случайный выбор из распределения -->
+  <rect x="50" y="70" width="110" height="110" rx="18" fill="#F4F7FA" stroke="#1C7293" stroke-width="4" transform="rotate(-12 105 125)"/>
+  <g transform="rotate(-12 105 125)">
+    <circle cx="80" cy="100" r="8" fill="#065A82"/>
+    <circle cx="130" cy="100" r="8" fill="#065A82"/>
+    <circle cx="80" cy="150" r="8" fill="#065A82"/>
+    <circle cx="130" cy="150" r="8" fill="#065A82"/>
+    <circle cx="105" cy="125" r="8" fill="#F0AB00"/>
+  </g>
+  <rect x="190" y="150" width="110" height="110" rx="18" fill="#F4F7FA" stroke="#028090" stroke-width="4" transform="rotate(14 245 205)"/>
+  <g transform="rotate(14 245 205)">
+    <circle cx="215" cy="175" r="8" fill="#028090"/>
+    <circle cx="275" cy="175" r="8" fill="#028090"/>
+    <circle cx="245" cy="205" r="8" fill="#028090"/>
+    <circle cx="215" cy="235" r="8" fill="#028090"/>
+    <circle cx="275" cy="235" r="8" fill="#028090"/>
+  </g>
+</svg>

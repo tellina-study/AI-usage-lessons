@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="300" viewBox="0 0 360 300">
+  <!-- «звёздная карта»: облако точек-звёзд, близость = похожесть смысла -->
+  <rect x="4" y="4" width="352" height="292" rx="18" fill="#21295C"/>
+  <!-- созвездие 1 (кластер) -->
+  <g fill="#F4F7FA">
+    <circle cx="80" cy="80" r="7"/>
+    <circle cx="120" cy="60" r="5"/>
+    <circle cx="110" cy="105" r="6"/>
+    <circle cx="150" cy="90" r="4"/>
+  </g>
+  <path d="M80 80 L120 60 L150 90 L110 105 Z" stroke="#1C7293" stroke-width="2" fill="none" opacity="0.8"/>
+  <!-- созвездие 2 (кластер) -->
+  <g fill="#F4F7FA">
+    <circle cx="95" cy="215" r="6"/>
+    <circle cx="140" cy="235" r="7"/>
+    <circle cx="130" cy="190" r="4"/>
+  </g>
+  <path d="M95 215 L130 190 L140 235" stroke="#028090" stroke-width="2" fill="none" opacity="0.85"/>
+  <!-- одинокая gold-звезда (выброс) -->
+  <g>
+    <circle cx="285" cy="140" r="9" fill="#F0AB00"/>
+    <path d="M285 118 L285 105 M285 162 L285 175 M263 140 L250 140 M307 140 L320 140" stroke="#F0AB00" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- мелкие фоновые звёзды -->
+  <g fill="#1C7293">
+    <circle cx="220" cy="60" r="3"/>
+    <circle cx="250" cy="230" r="3"/>
+    <circle cx="190" cy="160" r="2.5"/>
+    <circle cx="60" cy="155" r="2.5"/>
+    <circle cx="310" cy="70" r="2.5"/>
+  </g>
+  <text x="180" y="282" font-family="DejaVu Sans" font-size="17" fill="#F4F7FA" text-anchor="middle" font-style="italic">рядом на карте = близко по смыслу</text>
+</svg>

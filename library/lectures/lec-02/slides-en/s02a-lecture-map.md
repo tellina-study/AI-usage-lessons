@@ -1,40 +1,41 @@
 ---
 id: s02a
 type: roadmap
+section: "Section 0. Introduction"
 duration_min: 0.5
-assertion: "Lecture map — 6 sections"
-learning_goal: "Общая карта: что будет, в каком порядке"
+assertion: "Lecture map — 7 sections"
+learning_goal: "Route map across the inference pipeline + new section 'Model types and sizes'"
 learning_outcomes: [LO1]
-references: []
-visual:
-  pattern: lecture_roadmap_6_sections
-  primary: "6 пронумерованных горизонтальных карточек по разделам (0 Введение / 1 Токенизация / 2 Эмбеддинги / 3 Внимание / 4 Сэмплинг / 5 Финал) с короткими описаниями. Активный раздел (Раздел 0) подсвечен gold-обводкой карточки — без текстового маркера, без минут."
+chapter_ref: "§Карта главы [for-slide-s02a]"
+visual_brief: "7 horizontal cards (0 Introduction / 1 Tokenization / 2 Embeddings / 3 Attention / 4 Sampling / 5 Model types and sizes / 6 Wrap-up) with one-line descriptions; active Section 0 — gold outline. No chips, no minutes, no references to checklist assertions."
 ---
 
-# Lecture map — 6 sections
+# Visible content
 
-## Assertion
+## Title bar
+"Lecture map — 7 sections"
 
-Lecture map — 6 sections.
+## Body
+[7 horizontal cards, top to bottom; active card (Section 0) — gold outline]
 
-## Visual
+**0. Introduction** — the frame and the pipeline as a whole *(active, gold outline)*
 
-Six numbered horizontal cards by section with short captions: 0. Introduction; 1. Tokenization; 2. Embeddings; 3. Attention; 4. Sampling; 5. Wrap-up. Under each — a short one-phrase description, no minutes. The active section (Section 0) is highlighted with a gold card outline — no text marker.
+**1. Tokenization** — how the model sees your text
+
+**2. Embeddings** — the space of meaning and the boundary of similarity
+
+**3. Attention mechanism** — what matters right now: roles, caching, long context
+
+**4. Sampling** — from distribution to token: temperature, determinism, invisible tokens
+
+**5. Model types and sizes** — what models run on, multimodality, the 2026 landscape
+
+**6. Wrap-up** — assembling the pipeline, recap of the mechanisms
 
 ## Speaker notes
 
-Before we dive into the mechanics of large models — a short route map. The lecture has six sections, and each answers its own question.
+A quick route map before we dive in. The lecture follows the inference pipeline: the order of sections mirrors the order of stages every one of your requests passes through.
 
-Section 0, where we are now, is the introduction: what a token is, a brief recap of Lecture 1, and the central question we are here for.
+Section 1 — tokenization: how the model sees text, why a "fixed" strawberry answer proves nothing, where number-chunking and glitch tokens come from. Section 2 — embeddings: the space of meaning, three different things that all get called "embedding," and the boundary where semantic similarity stops meaning usefulness. Section 3 — the attention mechanism: why a role-based prompt genuinely changes the answer; where caching economics comes from; what a one-million-token window can actually do. Section 4 — sampling: temperature, the reason T=0 doesn't give you determinism, structured output, and the invisible reasoning tokens you're paying for. Section 5 — new in this version of the course: model types and sizes — what a small model runs on versus a giant, what each class can do in terms of multimodality, and the landscape of specific models as of September 2026. Section 6 — wrap-up: the pipeline as a whole and a recap of the mechanisms we covered.
 
-Section 1 is tokenization. How the model "sees" your text. What a token is, how BPE works, why "strawberry" is split into three parts, and why Russian text costs the model twice as much as English.
-
-Section 2 is embeddings. The space of meanings: how words turn into vectors, what semantic similarity is, and how semantic search and the bridge to RAG come out of this math.
-
-Section 3 is attention. How the model decides which tokens to look at right now. We take the attention mechanism apart on a concrete example and understand why a prompt with the role "you are an expert" really does change the answer.
-
-Section 4 is sampling. From a probability distribution to a single token. Temperature, top-p, top-k, max_tokens — the four API knobs you will turn every time you call an LLM.
-
-Section 5 is the wrap-up. Closing the three "whys" posed in the central question. Comparing ML and LLM as two paradigms, the Human vs AI differences, the homework for the seminar, and the preview of Lecture 3.
-
-Keep this map in your head — it will help you not get lost in the details. After each section we will stop and pin down the main point.
+Keep the map in mind — it will keep you from getting lost in the details.

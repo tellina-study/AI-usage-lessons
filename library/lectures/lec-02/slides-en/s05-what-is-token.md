@@ -1,40 +1,39 @@
 ---
 id: s05
 type: assertion_visual
-section: "Раздел 1. Токенизация"
+section: "Section 1. Tokenization"
 duration_min: 2
-assertion: "A token is an id from the model's vocabulary. Not a letter and not a word; a statistically frequent subsequence"
-learning_goal: "Базовое определение токена + ориентир «1 токен ≈ символы»"
+assertion: "A token is an ID from the model's vocabulary. Not a letter, not a word; a statistically frequent subsequence"
+learning_goal: "Pin down the precise definition of a token (pace ×2 — the audience already knows it roughly)"
 learning_outcomes: [LO1]
 chapter_ref: "§1.1 [for-slide-s05]"
-visual_brief: "3 tokenization examples: cat -> [cat] (1 token / 1 id), tokenization -> [token][ization], strawberry -> [st][raw][berry]. Bottom gold callout: 'on average 1 token ~ 4 characters in EN ~ 2 in RU'. Inline poll-prompt: 'how would a longer word split?'"
-interaction: inline_poll
+visual_brief: "3 markup examples: cat → [cat], hyperparameter → [hyper][param][eter], tokenization → [token][ization] (o200k_base). Gold callout: '1 token ≈ 4 characters in English'. Caption: vocabulary and model are two separate artifacts."
 ---
 
 # Visible content
 
 ## Title bar
-"What a token is"
+"A token is an ID from the model's vocabulary — not a letter, not a word"
 
 ## Body
-[3 примера разметки в Ocean rounded boxes, расположенных вертикально]
+[3 markup examples in Ocean rounded boxes, stacked vertically]
 
-**Example 1.** `cat` → `[cat]` → **1 token / 1 id**
+**`cat`** → `[cat]` → **1 token**
 
-**Example 2.** `tokenization` → `[token][ization]` → **2 tokens**
+**`hyperparameter`** → `[hyper][param][eter]` → **3 tokens**
 
-**Example 3.** `strawberry` → `[st][raw][berry]` → **3 tokens** (in `o200k_base`)
+**`tokenization`** → `[token][ization]` → **2 tokens** (o200k_base)
 
-[Gold callout по центру нижней трети]
-"On average: 1 token ≈ 4 characters in EN ≈ 2 characters in RU"
+[Gold callout]
+"On average: 1 token ≈ 4 characters in English (≈ 2 characters in Russian)"
 
-[Caption мелким]
-*For Russian, inference costs roughly twice as much — we will return to this two slides from now.*
+[Small caption]
+*Vocabulary and model are two separate artifacts: the vocabulary is built before the model is trained, by a separate algorithm on its own corpus.*
 
 ## Speaker notes
 
-The main fact of the first section: an LLM sees your request not as letters and not as words, but as tokens. A token is an identifier, an integer from the model's vocabulary; that vocabulary is fixed at training time and does not change at the moment of use. When you type "Today I ate an apple" into the chat, your text is first cut into tokens, each token becomes a number — an id from the vocabulary — and from then on the model works only with that sequence of numbers. For convenience we write tokens in square brackets, but in the model's memory they are always numbers.
+The precise definition. A token is an identifier, an integer from the model's vocabulary; the vocabulary is fixed at training time and doesn't change at inference. A token is not a letter and not a word — it's a statistically frequent subsequence of characters, learned from a corpus. The common English word `cat` makes it into the vocabulary whole; `hyperparameter` splits into three tokens; `tokenization` splits into two, in that same o200k_base vocabulary. Vocabulary sizes for current models run in the hundreds of thousands of entries: around 200,000 for the GPT-4o family and newer, around 100,000 for earlier generations, 128,256 for Llama 3 and newer. A working cost estimate: one token is roughly four characters of English text and roughly two characters of Russian text.
 
-On the slide there are three examples illustrating the main observation. The short common English word `cat` enters the vocabulary as a single token. The word `tokenization` breaks into two tokens: the shared stem `[token]` and the frequent suffix `[ization]`. The common word `strawberry`, tested on the GPT-4o tokenizer `o200k_base`, is cut into three tokens `[st][raw][berry]` — not into ten letters. The pattern is simple: the more often a subsequence appeared in the training corpus, the higher the chance it enters the vocabulary whole; rare subsequences, or ones specific to other languages, are split more finely.
+One clarification that often gets lost: the vocabulary and the model are two separate artifacts. The vocabulary is built by a separate algorithm on its own corpus before the model is trained; the model then learns to work with that vocabulary on its own corpus. This decoupling is the source of a whole class of effects we'll come back to in this section.
 
-From this follows a practical rule of thumb engineers use when estimating API cost: on average one token corresponds to about four characters of English text or about two characters of Russian. This is not an exact formula but an order of magnitude, and it is enough for most budgeting estimates. A useful exercise: try to guess how many tokens a short Russian word such as `silnee` (a transliteration of a common adverb) splits into — one, two, or three? Your intuition may be wrong: for Russian even a short word often comes out as 2-3 tokens. You can check the exact answer on the Tiktokenizer service. A small consequence important for practice: on numbers, tokenization behaves unpredictably. The string `1234567` may be cut as `[123][4567]`, `[12][345][67]`, or in some other way — depending on which digit subsequences were frequent in the corpus. For arithmetic this means: pure LLM inference is a poor calculator; the right pattern is an external tool, a Code Interpreter or a Python sandbox.
+And the answer to the reasonable question "why not just work character by character": length economics. A character-level representation lengthens the input three to five times over, and attention cost grows quadratically with length — a four-times-longer input means a sixteen-times-more-expensive attention layer. Tokenization, with all its artifacts, is a deliberately chosen trade-off, not an oversight that will get "fixed in the next version."

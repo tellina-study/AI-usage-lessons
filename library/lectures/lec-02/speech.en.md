@@ -1,7 +1,7 @@
 ---
 lecture: 2
 title: "Lecture 2. How Modern Large Models Work"
-length_words: ~8800
+length_words: ~11000
 length_min: 100
 status: draft
 version: v3.0-en
@@ -244,7 +244,7 @@ Moving to section 3 — the densest part of the lecture.
 
 ### [s18a · 0.5 min]
 
-Section three of six — The attention mechanism, the densest part of the lecture. Everything grows out of this: why chat gets cached, why the role changes the answer, what a million-token window can actually do. We'll go through the attention matrix, the KV cache, caching economics, role, and the window race.
+Section three of six — The attention mechanism, the densest part of the lecture. Everything grows out of this: why chat gets cached, why the role changes the answer, what a million-token window can actually do. We'll go through the attention matrix, the KV-cache, caching economics, role, and the window race.
 
 ### [s18 · 2 min]
 
@@ -272,13 +272,13 @@ One thing is worth remembering: Query is about the current step, while Key and V
 
 ### [s21 · 4 min]
 
-Recall the observation from the last slide: Query is about the current step, Key and Value are about the already-processed context. Generation is autoregressive: tokens come out one at a time, and a naive implementation would recompute K and V for every token from scratch at every step — but they don't change. This gives us the central optimization of all large-model inference: the KV cache — the Key and Value vectors of already-computed tokens are stored in accelerator memory, and at each step only the Q of the new token gets computed.
+Recall the observation from the last slide: Query is about the current step, Key and Value are about the already-processed context. Generation is autoregressive: tokens come out one at a time, and a naive implementation would recompute K and V for every token from scratch at every step — but they don't change. This gives us the central optimization of all large-model inference: the KV-cache — the Key and Value vectors of already-computed tokens are stored in accelerator memory, and at each step only the Q of the new token gets computed.
 
 Out of the cache comes an asymmetry between two phases. Prefill — processing the input prompt: all tokens are known at once, their K/V get computed in parallel; this phase is compute-bound and determines the delay before the first character of the answer. Decode — generation: strictly sequential, and at every step you have to read the entire accumulated cache from memory; this phase is memory-bandwidth-bound and determines typing speed.
 
 [tone shift: warning]
 
-The precise wording of the conclusion matters here, because it easily gets distorted into the folk wisdom "new task, new chat." As long as the KV cache is working — that is, the history matches what's already been computed — resubmitting that history is cheap and fast: that's the entire point of the cache existing. "Slow and expensive" isn't a property of long chats in general — it happens specifically when the cache misses: when the context changes near the start, when the session has expired, when the provider has evicted your cache from memory to make room for someone else's load.
+The precise wording of the conclusion matters here, because it easily gets distorted into the folk wisdom "new task, new chat." As long as the KV-cache is working — that is, the history matches what's already been computed — resubmitting that history is cheap and fast: that's the entire point of the cache existing. "Slow and expensive" isn't a property of long chats in general — it happens specifically when the cache misses: when the context changes near the start, when the session has expired, when the provider has evicted your cache from memory to make room for someone else's load.
 
 Cache implementation differs by provider, and that directly affects what we have to do by hand. At OpenAI and at DeepSeek, the cache kicks in automatically; DeepSeek's is even disk-backed. Google Gemini has implicit caching, also on by default. Anthropic's cache is explicit: you need to place a `cache_control` marker yourself — as of when this lecture was prepared. The practical takeaway: if you're on Anthropic and you're not seeing savings, check whether the marker is placed where it needs to be; for the other three, check the cache-hit-rate metrics in the API response.
 
@@ -286,7 +286,7 @@ Scale of the effect: at context lengths of hundreds of thousands of tokens, one 
 
 ### [s22 · 3.5 min]
 
-The KV cache lives inside a single generation. Providers took the next step: if two different requests share an identical prefix — the same system prompt, instructions, documents — its K/V can be reused across requests. This is prompt caching, and since 2025–2026 it's been the single biggest lever for optimizing the cost of LLM workloads.
+The KV-cache lives inside a single generation. Providers took the next step: if two different requests share an identical prefix — the same system prompt, instructions, documents — its K/V can be reused across requests. This is prompt caching, and since 2025–2026 it's been the single biggest lever for optimizing the cost of LLM workloads.
 
 Let's trace the mechanics through three consecutive requests — it's easier to see this way than through isolated numbers.
 
@@ -436,7 +436,7 @@ And a final boundary: syntax is guaranteed, meaningfulness of the field values i
 
 Let's close the pipeline into a loop — this is the core of the whole picture. Autoregressive generation: the current context runs through a forward pass — tokenization, embeddings, and every attention layer; the output is a probability distribution over the next token; sampling picks one token; the token gets appended to the context; the cycle repeats until a special stop token or the max_tokens limit.
 
-Every step is stateless: all "memory" lives in the context, which gets fed in whole each time, with the caveat that the KV cache makes resubmitting it cheap without making it logically unnecessary.
+Every step is stateless: all "memory" lives in the context, which gets fed in whole each time, with the caveat that the KV-cache makes resubmitting it cheap without making it logically unnecessary.
 
 The loop can stop correctly — or it can break. Correct stopping is a stop token or the max_tokens limit; a limit-triggered cutoff is instant, even mid-JSON-field. The failure mode is a degenerate repetition loop: the model gets stuck on one token or a short phrase and generates a wall of repeated text instead of meaningful continuation.
 
@@ -540,7 +540,7 @@ Let's put the diagram back together. The inference pipeline — four stages, clo
 
 [pause 2 sec]
 
-It's important to note: today's new topics didn't add stages — they slotted into the existing ones. Glitch tokens are a property of the vocabulary at the tokenization stage. The KV cache lives inside the attention stage, and prompt caching is a layer built on top of it. Structured outputs is a filter at the sampling stage. Reasoning tokens are the same loop, with part of its output labeled "draft."
+It's important to note: today's new topics didn't add stages — they slotted into the existing ones. Glitch tokens are a property of the vocabulary at the tokenization stage. The KV-cache lives inside the attention stage, and prompt caching is a layer built on top of it. Structured outputs is a filter at the sampling stage. Reasoning tokens are the same loop, with part of its output labeled "draft."
 
 And the most compact way to carry this diagram home: the pipeline works as a diagnostic tree. The model "doesn't see" something obvious in the text — that's tokenization. Search brings back topically similar junk — that's embeddings and the boundary of similarity. Chat is slow and expensive — that's attention, its window, and its cache. Identical requests give different answers, JSON breaks — that's sampling and its knobs. Getting into the habit of asking "which pipeline stage is this happening at?" turns this lecture from a reference sheet into a working debugging tool.
 
@@ -548,7 +548,7 @@ And the most compact way to carry this diagram home: the pipeline works as a dia
 
 Let's sum up. Over the last hour and a half we walked the inference pipeline from text to answer, and at every stage — alongside the mechanism — we saw its limit.
 
-Tokenization: the model doesn't see letters, it sees tokens; a viral fix on one word doesn't transfer to the whole task class. Attention and role: a role shifts the style and focus of the answer, but doesn't improve factual quality. Cache: the KV cache and prompt caching only save money on a matching prefix. Context window: the number on a model's spec sheet is intake capacity, not a guarantee of quality reasoning across the whole length.
+Tokenization: the model doesn't see letters, it sees tokens; a viral fix on one word doesn't transfer to the whole task class. Attention and role: a role shifts the style and focus of the answer, but doesn't improve factual quality. Cache: the KV-cache and prompt caching only save money on a matching prefix. Context window: the number on a model's spec sheet is intake capacity, not a guarantee of quality reasoning across the whole length.
 
 Determinism: zero temperature doesn't give bit-for-bit reproducibility, because compute kernels change their summation order depending on other people's load on the server. Reasoning tokens are billed as output and have no built-in ceiling on volume. Structured output guarantees validity by construction, but not substantive quality. Benchmarks can't be taken at face value. And model sizes: open weights have long stopped being synonymous with "runnable locally."
 

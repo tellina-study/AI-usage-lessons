@@ -1886,3 +1886,117 @@ round-1 подписи 24–34px давали ~8–9pt на слайде пос�
 - Media-rich slide count: 18 → **24** (+6: s09, s11, s22, s30, s32, s37).
 - Итог по брифу: 4 увеличенных + 6 новых = **10 итоговых образов** (цель
   ≥9), включая опциональный s22.
+
+---
+
+## EN render (issue #188, 2026-09-06)
+
+**Scope:** full English re-render of the approved RU v3.0 deck (47
+slides). Structural port of `build_lec02.py` -> `build_lec02_en.py`
+(same layout/shape/color/coordinate calls throughout), visible strings
+replaced with the finished translations in `slides-en/*.md` /
+`deck.en.yaml` (used verbatim, no re-translation). `SLIDES_DIR` points
+at `slides-en/`, `OUT` at `rendered/lec-02-en.pptx`. Per brief: EN
+render is footer-less — `main()` no longer calls `page_number()` at
+all (RU builder untouched).
+
+### Base build
+
+- `python3 build_lec02_en.py`: 47/47 slides OK on first full pass (no
+  exceptions) — all layout/shape helper calls ported cleanly since
+  they're structurally identical to the RU builder.
+- Assets referenced with `-en` suffix that did not yet exist on first
+  run (add_image silently no-ops on missing files, per its own
+  docstring) — generated in a second pass, see below.
+
+### EN-specific content decisions (per brief, verified against slides-en)
+
+- **s05**: 3 markup examples per slides-en are `cat` / `hyperparameter`
+  / `tokenization` (not a literal port of RU's cat/tokenization/
+  клубника set) — implemented as given.
+- **s11**: Russian stays the cross-lingual comparison SUBJECT (content,
+  not translated away) — chart labels EN/Russian/Chinese/Python code,
+  gold bar on Russian.
+- **s17**: "клубника" and strawberry kept as the cross-lingual-proximity
+  example per slides-en verbatim — this is the ONE intentional Cyrillic
+  token in the entire EN deck (confirmed by scan, see Verification
+  below).
+- **s18/s19/s20**: EN sentence "The cat ate the mouse because it was
+  hungry" (9 tokens, not RU's 7) — attention resolves "it"->"cat" via
+  semantic/thematic-role plausibility (the actor is the plausible
+  bearer of hunger), NOT RU's grammatical-gender agreement trick.
+  Rebuilt the s18 matrix as 10x10 (was hardcoded 8x8 for RU's 7
+  tokens), gold cell moved to row "it" (index 6) / col "cat" (index 1)
+  = 0.7. Reused `_ocean_scale` unchanged.
+- **s15**: EN phrases "How to configure SSL" / "Installing an HTTPS
+  certificate" / "Deploying a React component" / "Building a React
+  app" / "Borscht recipe", exact 5x5 values from slides-en (0.85 SSL
+  pair, 0.78 React pair, 0.05-0.15 Borscht outlier) — table values kept
+  as plain decimals (`f"{v:.2f}"`, no RU comma-decimal substitution).
+
+### Asset regeneration — new `-en` files (old RU files untouched)
+
+**Memes with RU text baked into pixels (via PIL `draw_meme_text`) — regenerated**, new script `gen_memes_en.py` (technique/font/stroke-conventions ported from `gen_memes_v33_r2.py`):
+
+| Old RU asset | New EN asset | Slide |
+|---|---|---|
+| `surprised-pikachu-tokenize.jpg` | `surprised-pikachu-tokenize-en.jpg` | s05a |
+| `expanding-brain-strawberry.jpg` | `expanding-brain-strawberry-en.jpg` | s08 |
+| `always-has-been-ru-cost.jpg` | `always-has-been-ru-cost-en.jpg` | s11 |
+| `gandalf-token.jpg` | `gandalf-token-en.jpg` | s30 (RU caption "НЕВАЛИДНЫЙ ТОКЕН НЕ ПРОЙДЁТ" — this is Russian, not English as the brief speculated; regenerated to "INVALID TOKEN SHALL NOT PASS") |
+| `twobuttons-llm-vs-code-toponly.jpg` | `twobuttons-llm-vs-code-toponly-en.jpg` | s39 |
+| `spiderman-similarity.jpg` | `spiderman-similarity-en.jpg` | s15 |
+
+**Charts with RU axis/legend labels — regenerated**, new script `gen_charts_en2.py` (QuickChart, same Ocean-palette hexes/DPI/sizing as `gen_assets_v2.py`/`gen_assets_v3.py`):
+
+| Old RU chart | New EN chart | Slide |
+|---|---|---|
+| `s11-tokens-per-char-v2.png` | `s11-tokens-per-char-v2-en.png` | s11 |
+| `s19-attention-weights.png` | `s19-attention-weights-en.png` | s19 (regenerated for the 9-token EN sentence, cat leader 0.40) |
+| `s25-ucurve.png` | `s25-ucurve-en.png` | s25 top tier |
+| `s25-nolima.png` | `s25-nolima-en.png` | s25 bottom tier |
+
+**Reused unchanged with justification** (bare template / no baked text / already English):
+
+| Asset | Slide | Justification |
+|---|---|---|
+| `well-yes-actually-no-template.jpg` | s01, s28 | Caption is a `text_box` overlay in python-pptx, not baked into pixels — EN builder just passes an EN string; same image file works for both languages |
+| `mathlady-tokens.jpg` | s09 | Baked overlay is `[123][456][78]?` — symbols only, no RU words; reused as-is |
+| `pam-same-picture.jpg` | s12a | Template's own caption "They're the same picture" is already English (part of the original meme format); no RU text baked in |
+| `spotlight-clean.jpg` | s18a | Bare stock photo, no text baked in |
+| `dice-wikimedia.jpg` | s26a | Bare stock photo, no text baked in |
+| `matryoshka-wikimedia.jpg` | s33a | Bare stock photo, no text baked in |
+| `pepe-silvia.jpg` | s35a | Bare template frame, no text baked in |
+| `needle-haystack-crop.jpg` | s25 | Bare crop, no text baked in |
+| `gorshochek-1984-crop.jpg` | s31 | Bare crop from the cartoon, no text baked in |
+| `joker-burning-money.jpg` | s32 | Bare crop, no text baked in |
+| `pressx-template.jpg` | s37 | Template's own "X to Doubt" label is already English |
+| `xkcd-552-correlation-2x.png` | s40 | Original xkcd comic is already in English |
+| `stonks-template.png` | s22 | "STONKS" is part of the bare template, no other text baked in |
+
+### Visual loop (2 full passes over all 47 slides, per brief's reduced minimum for a translation-render)
+
+**Pass 1** (`snapshots-en/iter1-*`): read all 47 PNGs. Found and logged 4 title/overflow issues where EN text (15-30% longer than RU) broke the RU-tuned box widths:
+
+- **s19** (Q/K/V slide): title "Attention is a weight distribution over the whole context: three projections, Query / Key / Value" wrapped to 2 lines and visually crowded the gold callout directly below it. Fix: shortened to "Attention returns a weight distribution: three projections, Query / Key / Value", size 20->20 (kept), h 0.65->0.55, y 0.35->0.32.
+- **s20** (role/attention worked example): sentence token boxes "The cat"/"ate the mouse,"/etc. were sized for RU's shorter words — "The cat" (bold, gold-arrow target) wrapped to 2 lines inside a 1.05"-wide box. Fix: widened all 6 segment boxes and shifted x-positions to fit the longer EN words; re-picked arrow origin/target coordinates from the new "it" position (x=7.00 vs RU's x=6.55).
+- **s25** (two-tier verbatim-retrieval/NoLiMa slide): title "Verbatim-insertion retrieval is nearly solved. Understanding long context is not" wrapped to 2 lines and the wrapped second line ("...is not") visually clipped behind the top-tier Ocean box. Fix: shortened to "Verbatim retrieval is nearly solved. Understanding long context is not", size 24->23, h 0.62->0.5, y 0.32->0.30.
+- **s27** (temperature slide): title "Temperature is a divisor on the logits: it changes the sharpness of the choice, not the knowledge" wrapped to 2 lines and the second line was fully clipped off-canvas (title box h=0.55 too short for 2 lines at size 25). Fix: shortened to "Temperature is a divisor on the logits: sharpness of choice, not knowledge", size 25->23, h 0.55->0.5.
+
+Also found and fixed 2 typographic-consistency issues (straight `\"quotes\"` instead of curly `“quotes”` in s03/s04's title and body text — inconsistent with the curly quotes used everywhere else in the EN deck): fixed both occurrences (`Today's object — the "model" layer...` title, and `The "model" layer:` body run in build_s03).
+
+**Pass 2** (`snapshots-en/iter2-*`, after fixes): re-inspected all 47 PNGs, confirmed all 4 overflow fixes render correctly on one line with no clipping, confirmed the curly-quote fix. No further issues found.
+
+**Final pass** (`snapshots-en/final-*`, after full clean rebuild): re-rendered once more to lock in the fixed file set as the delivered snapshots (final-slide-01.png … final-slide-47.png); spot-re-verified s04 (curly quotes) and s19/s20/s25/s27 (the 4 overflow fixes) render identically to Pass 2.
+
+### Verification
+
+- **Cyrillic-residue scan** (visible text + speaker notes, all 47 slides): exactly **1 hit**, both in visible body and in speaker notes — `"клубника"` on s17 (cross-lingual proximity example, intentional per slides-en verbatim). No unjustified Cyrillic found.
+- **Anti-leak grep** (`[VERIFY-DAY-OF]`, `[FACT-CHECK`, `LO[1-9]`, `§[0-9]`) over extracted visible text + speaker notes (1179 lines): **0 hits** — confirms `load_notes()`'s VFY-day-of/FACT-CHECK strip regex was ported correctly into the EN builder.
+- Additional scan for EN-equivalent scaffold markers (`lecturer:`, `you are here`, timing-minute patterns): **0 hits**.
+
+### Notes PDF
+
+- `tools/presentation-build/notes_pages_pdf.py` derives all filenames from `lecture_dir.name` and hardcodes a few RU literals in the header/fallback vocabulary (`"слайд {N}"`, `"(без заголовка)"`, `"(нет заметок для этого слайда)"`, `"Источники:"` block-detection) — same class of RU-only design as flagged in [#171-1] for lec-03's build-order mismatch, but here the issue is language, not ordering.
+- Wrote `make_notes_pdf_en.py`: builds a scratch temp directory mirroring the lecture folder, symlinks `lec-02-en.pptx`/`lec-02-en.pdf` under the bare `lec-02.pptx`/`lec-02.pdf` names the tool expects, writes an EN-titled `deck.yaml` (title sourced from `deck.en.yaml`), and runs a source-patched copy of the tool (RU literals replaced with EN equivalents: `"slide {N}"`, `"(no title)"`, `"(no notes for this slide)"`, `Sources:`/`Источники:` both recognized as reference-block starts) via `importlib`. Positional slide<->notes matching, pagination, and footer numbering are 100% the tool's own unmodified logic — only the display-string vocabulary is patched.
+- Output: `rendered/lec-02-notes-en.pdf`, 59 pages (47 slides + 12 notes-continuation pages), verified by rendering page 1 (full-length notes, correct EN header "Lecture 2. How Modern Large Language Models Work · temperature=0 means the answer is alw… · slide 1") and a continuation page (same header repeated, no RU "продолжение" label, footer "11 / 59").

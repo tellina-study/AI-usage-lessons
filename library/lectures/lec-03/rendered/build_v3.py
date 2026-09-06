@@ -775,10 +775,10 @@ def build_s05(p):
         text_box(s, lx + 0.56, by, lw - 0.84, 0.62, b,
                  size=13, color=DEEP, line_spacing=1.12)
         by += 0.56
-    # Right — реальный интернет-мем «Expanding brain» (imgflip, #185): эскалация
-    # архитектуры как абсурд — один вызов → RAG → петли/инструменты → мульти-
-    # агентная оркестрация. Русские подписи вжжены в шаблон. Заменил flat-башню
-    # коробок «оркестрация/петли/поиск/векторное хранилище».
+    # Right — реальный интернет-мем «Gru's Plan» (imgflip, #185; замена
+    # Expanding Brain — owner: «мем с мозгом был уже»): эскалация архитектуры
+    # «на всякий случай» с абсурдной развязкой в 4-й панели — задача была на
+    # три строки обычного кода. Русские подписи вжжены в шаблон.
     _s05_overengineering_meme(s, 6.95, 2.02, 5.85, 3.62)
     gold_callout(s, 0.55, 5.92, 12.25, 0.92,
                  "Не усложняй архитектуру без причины, выраженной в требованиях задачи. Это распределение бремени доказательства, а не примитивизм.",
@@ -787,23 +787,23 @@ def build_s05(p):
 
 
 def _s05_overengineering_meme(s, x, y, w, h):
-    """Реальный интернет-мем «Expanding brain» (imgflip blank + русские подписи):
-    эскалация архитектуры как абсурд. Заголовок «оверинжиниринг» + сам мем в
-    Ocean-рамке. Мем несёт тезис «не усложняй без причины» без атрибуции на
-    слайде (attribution.md)."""
+    """Реальный интернет-мем «Gru's Plan» (imgflip blank + русские подписи):
+    эскалация архитектуры «на всякий случай» с абсурдной развязкой в 4-й
+    панели. Заголовок «оверинжиниринг» + сам мем в Ocean-рамке. Мем несёт
+    тезис «не усложняй без причины» без атрибуции на слайде (attribution.md)."""
     ocean_box(s, x, y, w, h)
     chip(s, x + 0.28, y + 0.22, w - 0.56, 0.46, "«НА ВСЯКИЙ СЛУЧАЙ» — ЭСКАЛАЦИЯ",
          fill=LIGHT, color=WHITE, size=13.5)
-    # brain meme (composite 1042x992, near-square) вписан по ширине бокса
+    # Gru's Plan (composite 700x449, landscape 1.56) вписан по ширине бокса
     from PIL import Image as _I
-    _im = _I.open(WEB / "s05-brain-ru.png"); _r = _im.size[0] / _im.size[1]; _im.close()
+    _im = _I.open(WEB / "s05-gru-ru.png"); _r = _im.size[0] / _im.size[1]; _im.close()
     img_w = w - 0.56
     img_h = img_w / _r
     if img_h > h - 0.86:
         img_h = h - 0.86
         img_w = img_h * _r
     img_x = x + (w - img_w) / 2
-    add_image(s, WEB / "s05-brain-ru.png", img_x, y + 0.80, img_w, img_h)
+    add_image(s, WEB / "s05-gru-ru.png", img_x, y + 0.82, img_w, img_h)
 
 
 def build_s05a(p):
@@ -813,34 +813,47 @@ def build_s05a(p):
     s = blank(p)
     slide_title(s, "Роль в промпте настраивает тон — не точность.", size=26)
     text_box(s, 0.55, 1.16, 12.25, 0.42,
-             "«Ты — опытный юрист» сдвигает внимание модели (механизм — Лекция 2) в сторону текста, похожего на ответ такой роли, — но это про стиль, не про факты.",
+             "«Ты — опытный юрист» сдвигает внимание модели в сторону текста такой роли — но это про стиль, не про факты.",
              size=13.5, italic=True, color=MID, line_spacing=1.15)
-    # left — the myth (crossed out) vs measured reality
-    lx, ly, lw, lh = 0.55, 1.86, 6.35, 3.95
-    ocean_box(s, lx, ly, lw, lh)
+    # #185 re-layout: минимум текста + мем. Левая треть — миф + один факт
+    # эксперимента; центр — крупный мем «Change my mind»; справа — что роль
+    # делает реально. Gold-вывод широкой полосой под всеми тремя.
+    ly = 1.78
+    mx, mw = 5.20, 4.05
+    mem_h = mw / 1.335                 # ≈3.03
+    col_h = mem_h + 0.10              # карточки под высоту мема (mass balance)
+    # LEFT — миф + один результат (сжато)
+    lx, lw = 0.55, 4.35
+    ocean_box(s, lx, ly, lw, col_h)
     text_box(s, lx + 0.28, ly + 0.22, lw - 0.56, 0.36, "Расхожий миф",
              size=15, bold=True, color=LIGHT)
-    text_box(s, lx + 0.28, ly + 0.62, lw - 0.56, 0.70,
-             "«Напишу роль эксперта — и модель будет точнее отвечать по фактам»",
-             size=15, italic=True, color=SLATE, line_spacing=1.16)
-    connector(s, lx + 0.28, ly + 1.42, lx + lw - 0.28, ly + 1.42, LIGHT, 1.0)
-    text_box(s, lx + 0.28, ly + 1.56, lw - 0.56, 0.40, "Что показал эксперимент",
+    text_box(s, lx + 0.28, ly + 0.62, lw - 0.56, 0.80,
+             "«Роль эксперта в промпте — и модель точнее по фактам»",
+             size=15, italic=True, color=SLATE, line_spacing=1.18)
+    connector(s, lx + 0.28, ly + 1.58, lx + lw - 0.28, ly + 1.58, LIGHT, 1.0)
+    text_box(s, lx + 0.28, ly + 1.74, lw - 0.56, 0.36, "Эксперимент",
              size=15, bold=True, color=MID)
-    text_box(s, lx + 0.28, ly + 1.98, lw - 0.56, 1.80,
-             "162 персоны · 6 типов отношений · 8 доменов · 2410 вопросов фактического QA · 4 семейства LLM. Персоны НЕ повысили точность ответа по сравнению с ответом без персоны вообще.",
-             size=14, color=DEEP, line_spacing=1.22)
-    # right — verdict + what role really does
-    rx, rw = 7.15, 5.65
-    ocean_box(s, rx, ly, rw, 1.75, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "user-round", rx + 0.28, ly + 0.26, 0.52, "teal")
-    text_box(s, rx + 0.94, ly + 0.24, rw - 1.15, 0.5, "На что роль влияет реально",
+    text_box(s, lx + 0.28, ly + 2.14, lw - 0.56, 0.90,
+             "162 персоны, 2410 вопросов —\nперсоны НЕ повысили точность.",
+             size=15.5, bold=True, color=DEEP, line_spacing=1.26)
+    # CENTER — крупный мем «Change my mind» (свой полноценный слот)
+    my = ly
+    ocean_box(s, mx - 0.14, my - 0.10, mw + 0.28, mem_h + 0.20)
+    add_image(s, WEB / "s05a-changemymind-ru.png", mx, my, mw, mem_h)
+    # RIGHT — что роль делает реально (высота под мем)
+    rx, rw = 9.55, 3.25
+    ocean_box(s, rx, ly, rw, col_h, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "user-round", rx + 0.26, ly + 0.24, 0.48, "teal")
+    text_box(s, rx + 0.86, ly + 0.24, rw - 1.05, 0.48, "Роль влияет на:",
              size=15, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, rx + 0.28, ly + 0.92, rw - 0.56, 0.75,
-             "на тон и глубину изложения — насколько формально и подробно, а не верен ли факт (эффект модель-специфичен).",
-             size=13.5, color=DEEP, line_spacing=1.18)
-    gold_callout(s, rx, ly + 1.95, rw, 2.00,
-                 "Нужна фактическая точность? Инструмент — не формулировка роли, а грамотный контекст и, при необходимости, RAG (опора на проверяемый источник). Это ещё один пункт «магической пилюли», опровергнутый измерением.",
-                 size=13.5)
+    text_box(s, rx + 0.26, ly + 0.94, rw - 0.52, 1.20,
+             "тон и глубину изложения — насколько формально и подробно, а не на верность факта.",
+             size=14.5, color=DEEP, line_spacing=1.24)
+    # gold-вывод широкой полосой под тремя колонками (минимум текста)
+    gy = ly + col_h + 0.16
+    gold_callout(s, 0.55, gy, 12.25, 6.90 - gy,
+                 "Нужна точность? Инструмент — не роль, а контекст и RAG (проверяемый источник). Ещё один пункт «магической пилюли», опровергнутый измерением.",
+                 size=15)
     footer(s, "Zheng, Pei, Logeswaran, Lee, Jurgens · Findings of EMNLP 2024 (arXiv:2311.10054) + arXiv:2605.29420 (2026).")
     speaker_notes(s, load_notes("s05a"))
 
@@ -1181,12 +1194,13 @@ def build_s12(p):
          "тариф, цена, пункт регламента, правило",
          "→ детерминированная таблица соответствий / статическая страница",
          False),
-        ("cable", "Данные доступны live через API / MCP",
+        ("cable", "Данные доступны в реальном времени через API / MCP",
          "во внутреннем сервисе, базе, поиске другой системы",
          "→ вызвать инструмент напрямую; RAG-индекс поверх — лишний, более хрупкий и более устаревающий слой",
          True),
     ]
-    cw, chh = 4.00, 3.05
+    # #185: карточки чуть ниже → открыт ряд под реальный мем «Roll Safe».
+    cw, chh = 4.00, 2.62
     cy = 1.78
     x = 0.55
     for i, (nm, t, tag, alt, isgold) in enumerate(cols):
@@ -1206,10 +1220,21 @@ def build_s12(p):
                  line_spacing=1.08)
         text_box(s, x + 0.24, cy + 1.15, cw - 0.48, 0.40, tag,
                  size=12, italic=True, color=LIGHT)
-        text_box(s, x + 0.24, cy + 1.58, cw - 0.48, chh - 1.75, alt,
-                 size=13, bold=True, color=DEEP, line_spacing=1.18)
+        text_box(s, x + 0.24, cy + 1.58, cw - 0.48, chh - 1.72, alt,
+                 size=13, bold=True, color=DEEP, line_spacing=1.14)
         x += cw + 0.32
-    gold_callout(s, 0.55, 5.20, 12.25, 1.05,
+    # #185: реальный интернет-мем «Roll Safe» — «не нужен RAG, если корпус
+    # влезает в контекст» (первый из трёх блокеров, самый частый анти-паттерн).
+    rmw, rmh = 2.15, 1.21
+    rmx, rmy = 0.55, 4.50
+    filled_rect(s, rmx - 0.05, rmy - 0.05, rmw + 0.10, rmh + 0.10, WHITE,
+                stroke=LIGHT, stroke_pt=1.2, radius=True, radius_adj=0.05)
+    add_image(s, WEB / "s12-rollsafe-ru.png", rmx, rmy, rmw, rmh)
+    text_box(s, rmx + rmw + 0.36, rmy + 0.02, 9.05, rmh,
+             "Частый анти-паттерн — ставить RAG-инфраструктуру там, где весь корпус спокойно помещается в контекстное окно и меняется редко.",
+             size=13.5, bold=True, color=MID, line_spacing=1.24,
+             anchor=MSO_ANCHOR.MIDDLE)
+    gold_callout(s, 0.55, 5.78, 12.25, 1.02,
                  "RAG избыточен, если выполнен ЛЮБОЙ из трёх: (а) корпус влезает в окно и стабилен, (б) задача сводится к фиксированному значению, (в) знание уже доступно напрямую и живьём через инструмент. «Прямой вызов вернёт данные на момент запроса; RAG-индекс — на момент последней индексации.»",
                  size=13.5)
     speaker_notes(s, load_notes("s12"))
@@ -1713,9 +1738,16 @@ def build_s22c(p):
         circle(s, 7.24, sy + 0.86 + i * 0.44 + 0.05, 0.11, TEAL)
         text_box(s, 7.46, sy + 0.86 + i * 0.44, 5.1, 0.42, m,
                  size=12.5, color=DEEP, line_spacing=1.08)
-    gold_callout(s, 0.55, 4.42, 12.25, 1.50,
+    gold_callout(s, 0.55, 4.42, 9.05, 1.90,
                  "Тот же вопрос масштаба знания, что решает RAG для корпуса документов, здесь встаёт для памяти самого агента. Не ставьте граф-базу знаний агенту с короткими несвязанными сессиями — это тот же технический долг без требования, что RAG для десяти статей.",
-                 size=15)
+                 size=14.5)
+    # #185: реальный интернет-мем «Tuxedo Winnie the Pooh» — плоский файл-лог
+    # vs граф-база знаний памяти (тот же спектр, что на схеме слева-сверху).
+    pmw, pmh = 3.00, 2.19
+    pmx, pmy = 9.80, 4.42
+    filled_rect(s, pmx - 0.05, pmy - 0.05, pmw + 0.10, pmh + 0.10, WHITE,
+                stroke=LIGHT, stroke_pt=1.2, radius=True, radius_adj=0.04)
+    add_image(s, WEB / "s22c-pooh-ru.png", pmx, pmy, pmw, pmh)
     footer(s, "Источник: публичный реестр agent-harness-registry (workain lab, независимая проверка).")
     speaker_notes(s, load_notes("s22c"))
 
@@ -1819,9 +1851,16 @@ def build_s22e(p):
                  size=11.5, italic=True, color=(DEEP if isgold else SLATE),
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
         x += cw + 0.13
-    gold_callout(s, 0.55, 5.30, 12.25, 0.90,
+    gold_callout(s, 0.55, 5.30, 9.05, 1.42,
                  "Полезен, когда заполняет реальный пробел; бесполезен, когда дублирует доступное модели; может навредить, когда самоавторская память закрепляет ошибку. Тот же паттерн, что роль в промпте: «добавить X → станет вернее» не подтверждается измерением.",
                  size=13.5)
+    # #185: реальный интернет-мем «This is fine» — «файл-инструкция всё
+    # починит», пока агент-система буквально горит (presence paradox).
+    fmw, fmh = 3.00, 1.46
+    fmx, fmy = 9.80, 5.30
+    filled_rect(s, fmx - 0.05, fmy - 0.05, fmw + 0.10, fmh + 0.10, WHITE,
+                stroke=LIGHT, stroke_pt=1.2, radius=True, radius_adj=0.05)
+    add_image(s, WEB / "s22e-thisisfine-ru.png", fmx, fmy, fmw, fmh)
     speaker_notes(s, load_notes("s22e"))
 
 
@@ -2698,9 +2737,16 @@ def build_s05c(p):
         {"text": "5,18%→32,05%", "size": 14, "bold": True, "color": TEAL},
         {"text": " (Llama-4 до 88,3%).", "size": 12, "color": DEEP},
     ], line_spacing=1.14)
-    gold_callout(s, 0.55, 4.92, 12.25, 0.96,
+    gold_callout(s, 0.55, 4.92, 9.35, 1.58,
                  "Что делать: не проектируйте защиту в расчёте «система важнее пользователя всегда». Экранируйте спецтокены во ВХОДЯЩЕМ внешнем контенте и проверяйте chat-шаблон у локальных моделей — чужой шаблон тихо ломает приоритет.",
                  size=13.5)
+    # #185: реальный интернет-мем «Is this a pigeon?» — протокольную роль
+    # system принимают за надёжную границу (а это лишь склонность, не гарантия).
+    gmw, gmh = 2.66, 1.78
+    gmx, gmy = 10.05, 4.92
+    filled_rect(s, gmx - 0.05, gmy - 0.05, gmw + 0.10, gmh + 0.10, WHITE,
+                stroke=LIGHT, stroke_pt=1.2, radius=True, radius_adj=0.05)
+    add_image(s, WEB / "s05c-pigeon-ru.png", gmx, gmy, gmw, gmh)
     footer(s, "Полный разбор инъекции в промпт как класса атак агента — в разделе про агенты (безопасность).")
     speaker_notes(s, load_notes("s05c"))
 
@@ -2843,9 +2889,16 @@ def build_s19b(p):
              0.56, mult, fill=(GOLD if col is TEAL else col),
              color=(DEEP if col is TEAL else WHITE), size=15)
         by += row_h
-    gold_callout(s, 0.55, 5.40, 12.25, 1.02,
+    gold_callout(s, 0.55, 5.28, 9.35, 1.42,
                  "Что делать: считайте бюджет ДО выбора архитектуры. Кэш промптов (не пересчитывать неизменный префикс) в агенте — уже не «приятный ориентир», а необходимость: без него ×N-стоимость цикла становится неподъёмной.",
                  size=13.5)
+    # #185: реальный интернет-мем «Batman slap» — «агент — просто чат подороже»
+    # → пощёчина: это другой порядок цены, а не «чат подороже».
+    bmw, bmh = 1.85, 1.79
+    bmx, bmy = 10.55, 5.05
+    filled_rect(s, bmx - 0.05, bmy - 0.05, bmw + 0.10, bmh + 0.10, WHITE,
+                stroke=LIGHT, stroke_pt=1.2, radius=True, radius_adj=0.05)
+    add_image(s, WEB / "s19b-batman-ru.png", bmx, bmy, bmw, bmh)
     footer(s, "Множители — порядок величины (Anthropic, 2025), не точный тариф; абсолютная цена зависит от модели и задачи.")
     speaker_notes(s, load_notes("s19b"))
 
@@ -3116,9 +3169,16 @@ def build_s24(p):
     text_box(s, rx + 0.28, ly + 2.14, rw - 0.56, 0.86,
              "Данные, покинувшие ваш периметр, живут по правилам, на которые вы не влияете.",
              size=13, bold=True, color=MID, line_spacing=1.16)
-    gold_callout(s, 0.55, 5.06, 12.25, 1.02,
+    gold_callout(s, 0.55, 5.06, 9.05, 1.62,
                  "Что делать: составьте карту данных по каждой функции до боевой эксплуатации — какие данные, через какое звено, с какой политикой хранения, какие звенья сторонние. Регулируемые/чувствительные данные — только с ZDR/BAA или локально (on-prem).",
                  size=13)
+    # #185: реальный интернет-мем «Always has been» — «данные вне ZDR?» / «так
+    # было всегда»: то, что покидает периметр, вне вашей политики хранения.
+    amw, amh = 3.00, 1.69
+    amx, amy = 9.80, 5.06
+    filled_rect(s, amx - 0.05, amy - 0.05, amw + 0.10, amh + 0.10, WHITE,
+                stroke=LIGHT, stroke_pt=1.2, radius=True, radius_adj=0.04)
+    add_image(s, WEB / "s24-alwayshasbeen-ru.png", amx, amy, amw, amh)
     speaker_notes(s, load_notes("s24"))
 
 

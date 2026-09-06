@@ -1,7 +1,7 @@
 ---
 lecture: 2
 title: "Лекция 2. Как работают современные большие модели"
-length_words: ~9800
+length_words: ~8800
 length_min: 100
 status: draft
 version: v3.0

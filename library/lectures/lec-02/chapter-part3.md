@@ -305,34 +305,35 @@ Seed управляет генератором случайности сэмпл
 49. corelab.tech (2026). Best GPU for Local LLMs — RTX 5090 32GB, RTX 3090 24GB, Apple unified 64–128GB.
 50. datanorth.ai / explainx.ai (2026). Qwen3.8-Max и Qwen3.8-27B — открытые веса, Apache 2.0, 262K контекст.
 51. codersera / explainx.ai (2026). Meta Llama 4 и Muse Glimmer 30B — Apache 2.0, мультимодальность.
-77. Zheng, M. et al. (2024). When "A Helpful Assistant" Is Not Really Helpful: Personas in System Prompts Do Not Improve Performances of Large Language Models. EMNLP 2024 Findings. [FACT-CHECK: атрибуция из owner-указания к §3.2, в research-файлах не верифицирована — проверить название/авторов/выводы перед лекцией.]
+52. Zheng, M., Pei, J., Logeswaran, L., Lee, M., Jurgens, D. (2024). When "A Helpful Assistant" Is Not Really Helpful: Personas in System Prompts Do Not Improve Performances of Large Language Models. Findings of ACL: EMNLP 2024. arXiv:2311.10054. aclanthology.org/2024.findings-emnlp.888.
+53. Luz de Araujo, P.H., Röttger, P., Hovy, D., Roth, B. (2025). Principled Personas: Defining and Measuring the Intended Effects of Persona Prompting on Task Performance. EMNLP 2025. arXiv:2508.19764.
 
 **Часть 3 (Раздел 5).**
-52. OpenAI (2026). GPT-5.6 launch — семейство Luna/Terra/Sol, окно 1.05M. openai.com/index/gpt-5-6.
-53. Wikipedia / OpenAI (2026). GPT-5.5 — релиз апрель 2026, окно 1M.
-54. Anthropic (2026). Introducing Claude Opus 5. anthropic.com/news.
-55. Introl / Sitepoint (2026). DeepSeek V4 — V4-Pro 1.6T, V4-Flash 284B.
-56. miraflow.ai (2026). Kimi K2.6 explained — 58.6% SWE-bench Pro наравне с GPT-5.5 при цене ~80% ниже.
-57. SCMP (2026). Moonshot AI unveils world's largest open-source model — Kimi K3, 2.8T параметров.
-58. felloai / WaveSpeed (2026). Grok 4.3 и статус Grok 5.
-59. developersdigest.tech (2026). Gemini 3.5 Pro developer guide — окно 2M.
-60. Maths Society (2026). 2026 IMO Results — 7 из 666 людей с 42/42; команды-победители.
-61. Digital Applied (2026). Four AIs scored perfect 42/42 on IMO 2026 — шесть моделей с абсолютным баллом.
-62. CloudZero / BenchLM (2026). LLM API pricing comparison — цены Qwen3.7 Flash, GPT-5.6 Luna/Terra/Sol, Sonnet 5, Gemini 3.1 Pro, Fable 5.
-63. Morph (2026). SWE-bench Pro leaderboard — 57% топ / ~25% среднее; Verified 87.6% (Opus 4.7); отказ OpenAI от публикации Verified; независимые воспроизведения −4–8 пунктов.
-64. UC Strategies (2026). AI Benchmarks Are a Game Now — Llama 4 Maverick Arena (Elo 1417 → места 32–35), признание Лекуна; контаминация MMLU/GSM8K.
-65. Help Net Security (2026). AI models cheat then fail to admit it — отчёт AISI 21 июля 2026: все 5 моделей.
-66. The Hacker News / CNN (2026). OpenAI says its AI models escaped sandbox — взлом производственных серверов Hugging Face, июль 2026.
-67. Hostinger (2026). Vibe coding statistics — 46% AI-кода у пользователей Copilot (рост с ~10% в 2023).
-68. Pearl, J. (2018). The Book of Why. Basic Books — три уровня причинности.
-69. Anthropic (2024). Model Context Protocol. anthropic.com/news/model-context-protocol.
-70. Wikipedia (2026). GPT-5.2 — релиз 11.12.2025; полный вывод из ChatGPT 12.06.2026; каденция GPT-5.4 (март) / GPT-5.5 (апрель) / GPT-5.6 (июль).
-71. layer3labs (2026). DeepSeek R2 Explained — задержка релиза, провал обучения на альтернативном ускорителе [вторичный источник].
-72. The AI Map / Leader Menu (2026). Жалобы на деградацию качества — разбор 6800 сессий, ускоренное исчерпание лимитов [вторичные источники, без подтверждения вендора].
-73. Цифровой Атлас / AXIMA AI / AppleInsider.ru (2026). GigaChat vs YandexGPT — линейки 2026, тарифы 0.40–3.00 ₽/1000 токенов, 152-ФЗ.
-74. arXiv 2412.15204 (2024). LongBench v2 — 503 задачи длинного контекста, 6 категорий.
-75. LMSYS / Yotta Labs (2025–2026). SGLang: детерминированный inference в экосистеме PyTorch; использование крупными операторами [вторичный источник].
-76. millionminer / corelab.tech (2026). Бюджетные GPU для локальных LLM — RTX 5060 Ti, Arc B580, AMD RX 9070 XT (ROCm), 45+ токенов/с на 70B.
+54. OpenAI (2026). GPT-5.6 launch — семейство Luna/Terra/Sol, окно 1.05M. openai.com/index/gpt-5-6.
+55. Wikipedia / OpenAI (2026). GPT-5.5 — релиз апрель 2026, окно 1M.
+56. Anthropic (2026). Introducing Claude Opus 5. anthropic.com/news.
+57. Introl / Sitepoint (2026). DeepSeek V4 — V4-Pro 1.6T, V4-Flash 284B.
+58. miraflow.ai (2026). Kimi K2.6 explained — 58.6% SWE-bench Pro наравне с GPT-5.5 при цене ~80% ниже.
+59. SCMP (2026). Moonshot AI unveils world's largest open-source model — Kimi K3, 2.8T параметров.
+60. felloai / WaveSpeed (2026). Grok 4.3 и статус Grok 5.
+61. developersdigest.tech (2026). Gemini 3.5 Pro developer guide — окно 2M.
+62. Maths Society (2026). 2026 IMO Results — 7 из 666 людей с 42/42; команды-победители.
+63. Digital Applied (2026). Four AIs scored perfect 42/42 on IMO 2026 — шесть моделей с абсолютным баллом.
+64. CloudZero / BenchLM (2026). LLM API pricing comparison — цены Qwen3.7 Flash, GPT-5.6 Luna/Terra/Sol, Sonnet 5, Gemini 3.1 Pro, Fable 5.
+65. Morph (2026). SWE-bench Pro leaderboard — 57% топ / ~25% среднее; Verified 87.6% (Opus 4.7); отказ OpenAI от публикации Verified; независимые воспроизведения −4–8 пунктов.
+66. UC Strategies (2026). AI Benchmarks Are a Game Now — Llama 4 Maverick Arena (Elo 1417 → места 32–35), признание Лекуна; контаминация MMLU/GSM8K.
+67. Help Net Security (2026). AI models cheat then fail to admit it — отчёт AISI 21 июля 2026: все 5 моделей.
+68. The Hacker News / CNN (2026). OpenAI says its AI models escaped sandbox — взлом производственных серверов Hugging Face, июль 2026.
+69. Hostinger (2026). Vibe coding statistics — 46% AI-кода у пользователей Copilot (рост с ~10% в 2023).
+70. Pearl, J. (2018). The Book of Why. Basic Books — три уровня причинности.
+71. Anthropic (2024). Model Context Protocol. anthropic.com/news/model-context-protocol.
+72. Wikipedia (2026). GPT-5.2 — релиз 11.12.2025; полный вывод из ChatGPT 12.06.2026; каденция GPT-5.4 (март) / GPT-5.5 (апрель) / GPT-5.6 (июль).
+73. layer3labs (2026). DeepSeek R2 Explained — задержка релиза, провал обучения на альтернативном ускорителе [вторичный источник].
+74. The AI Map / Leader Menu (2026). Жалобы на деградацию качества — разбор 6800 сессий, ускоренное исчерпание лимитов [вторичные источники, без подтверждения вендора].
+75. Цифровой Атлас / AXIMA AI / AppleInsider.ru (2026). GigaChat vs YandexGPT — линейки 2026, тарифы 0.40–3.00 ₽/1000 токенов, 152-ФЗ.
+76. arXiv 2412.15204 (2024). LongBench v2 — 503 задачи длинного контекста, 6 категорий.
+77. LMSYS / Yotta Labs (2025–2026). SGLang: детерминированный inference в экосистеме PyTorch; использование крупными операторами [вторичный источник].
+78. millionminer / corelab.tech (2026). Бюджетные GPU для локальных LLM — RTX 5060 Ti, Arc B580, AMD RX 9070 XT (ROCm), 45+ токенов/с на 70B.
 
 ---
 

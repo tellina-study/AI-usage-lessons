@@ -6,7 +6,7 @@ status: draft
 version: v2.3
 duration_min: 100
 parts: 3
-references_count: 77
+references_count: 78
 lo: [LO1, LO4, LO6, LO7]
 strict_in_self_estimate: "~35% (распределённо: Р1 — гонка патчей strawberry/cranberry, glitch-токены, числа; Р2 — similarity ≠ релевантность; Р3 — NoLiMa/окно ≠ рассуждение, экономика кэша как ограничение; Р4 — недетерминизм при T=0, цена reasoning-токенов, ограничения structured outputs; Р5 — бенчмарк-скандалы, когда не LLM)"
 slide_map:

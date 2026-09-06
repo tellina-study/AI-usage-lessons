@@ -984,7 +984,7 @@ def build_s09(p):
              "Числа и код — самые частые «нетекстовые» входы: от их нарезки "
              "зависят арифметика модели и ваш бюджет токенов.",
              size=14.5, italic=True, color=MID)
-    col_y, col_h = 1.62, 3.30
+    col_y, col_h = 1.62, 3.70
     # Колонка «Числа»
     ocean_box(s, 0.55, col_y, 6.0, col_h, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.4)
@@ -1024,8 +1024,12 @@ def build_s09(p):
         {"text": "пробелы группами — словарь чинится, но не под все задачи "
                  "сразу.", "size": 15, "color": DEEP},
     ], line_spacing=1.22)
+    # v3.3 r2 (#183): Math Lady — недоумение «[123][456][78]?» от нарезки
+    # числа токенизатором, в свободной нижней половине колонки «Код».
+    _place_image_contain(s, ASSETS / "web/mathlady-tokens.jpg",
+                         7.3, 3.62, 5.0, 1.58)
     # 3 приёма + заголовок группы (v2.0.2 item 9)
-    text_box(s, 0.55, 5.10, 4.0, 0.32, "Что делать:", size=14, bold=True,
+    text_box(s, 0.55, 5.44, 4.0, 0.32, "Что делать:", size=14, bold=True,
              color=MID)
     tips = ["Разделители разрядов («1 234 567»)",
             "Вычисления — в инструмент",
@@ -1034,12 +1038,12 @@ def build_s09(p):
     x0 = (SLIDE_W_IN - tip_w * 3 - gap * 2) / 2
     for i, t in enumerate(tips):
         x = x0 + i * (tip_w + gap)
-        ocean_box(s, x, 5.45, tip_w, 0.75, fill=WHITE, stroke=TEAL,
+        ocean_box(s, x, 5.78, tip_w, 0.75, fill=WHITE, stroke=TEAL,
                   stroke_pt=1.3)
-        text_box(s, x + 0.15, 5.51, tip_w - 0.3, 0.62, t, size=13,
+        text_box(s, x + 0.15, 5.84, tip_w - 0.3, 0.62, t, size=13,
                  bold=True, color=DEEP, align=PP_ALIGN.CENTER,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
-    text_box(s, 0.55, 6.35, 12.25, 0.55,
+    text_box(s, 0.55, 6.66, 12.25, 0.55,
              "Готовые чат-продукты уже сами уводят счёт во встроенные "
              "инструменты (code interpreter); звать инструмент самому — "
              "нестандартные случаи и свои приложения поверх API.",
@@ -1147,10 +1151,11 @@ def build_s11(p):
     text_box(s, box_x + 0.2, box_y + 0.28 + img_w * 560 / 980 + 0.06,
              img_w, 0.35, "словари GPT-семейства",
              size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    # Справа — динамика
-    ocean_box(s, 8.15, 1.7, 4.65, 2.2, fill=SURFACE, stroke=LIGHT,
+    # Справа — динамика (v3.3 r2 #183: бокс расширен вниз — в нижнюю
+    # половину встал мем Always Has Been «русский токен дороже?»)
+    ocean_box(s, 8.15, 1.7, 4.65, 3.15, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.3)
-    text_runs(s, 8.4, 1.9, 4.15, 1.8, [
+    text_runs(s, 8.4, 1.9, 4.15, 1.1, [
         {"text": "Переход на o200k_base:", "size": 15, "bold": True,
          "color": MID},
         {"text": "примерно ", "size": 15, "color": DEEP, "newpara": True,
@@ -1159,11 +1164,13 @@ def build_s11(p):
         {"text": " нелатинским языкам — разрыв сокращается, но не исчезает.",
          "size": 15, "color": DEEP},
     ], line_spacing=1.25)
+    _place_image_contain(s, ASSETS / "web/always-has-been-ru-cost.jpg",
+                         8.35, 3.22, 4.25, 1.55)
     # Блок «Что делать» (v2.1 #183): калибровка на своём языке + когда
     # выгоден перевод на английский
-    filled_rect(s, 8.15, 4.15, 4.65, 2.35, GOLD_TINT, stroke=GOLD,
+    filled_rect(s, 8.15, 5.05, 4.65, 2.35, GOLD_TINT, stroke=GOLD,
                 stroke_pt=1.2, radius=True, radius_adj=0.08)
-    text_runs(s, 8.38, 4.32, 4.2, 2.05, [
+    text_runs(s, 8.38, 5.22, 4.2, 2.05, [
         {"text": "Что делать:", "size": 14, "bold": True, "color": MID},
         {"text": "•  Калибруйте лимиты в токенах на своём языке: фрагменты "
                  "для поиска, max_tokens, бюджет окна.", "size": 12.5,
@@ -1484,10 +1491,11 @@ def build_s15(p):
             hot = (v in (0.85, 0.78))
             cell_text(cell, f"{v:.2f}".replace(".", ","), size=12,
                       bold=(v >= 0.7), color=txt_color)
-    # Справа — failure-карточка gold
-    filled_rect(s, 8.05, 1.7, 4.75, 2.6, GOLD_TINT, stroke=GOLD,
+    # Справа — failure-карточка gold (v3.3 r2: компактнее — освобождаем
+    # вертикаль под увеличенный мем)
+    filled_rect(s, 8.05, 1.7, 4.75, 1.68, GOLD_TINT, stroke=GOLD,
                 stroke_pt=2.2, radius=True, radius_adj=0.07)
-    text_runs(s, 8.35, 1.95, 4.2, 2.1, [
+    text_runs(s, 8.35, 1.84, 4.2, 1.45, [
         {"text": "«Как настроить SSL»", "size": 15.5, "bold": True,
          "color": DEEP},
         {"text": "  ↔", "size": 15.5, "bold": True, "color": MID},
@@ -1498,8 +1506,15 @@ def build_s15(p):
          "space_before_pt": 10},
     ], line_spacing=1.2)
     # Мини-легенда шкалы
-    text_box(s, 8.05, 4.5, 4.75, 0.35, "шкала: 0 — светлое · 1 — тёмное",
+    text_box(s, 8.05, 3.44, 4.75, 0.35, "шкала: 0 — светлое · 1 — тёмное",
              size=11, italic=True, color=SLATE)
+    # v3.3 r2 (#183): Spider-Man pointing at Spider-Man — «похожи»
+    # ≠ «об одном» (метафора similarity ≠ релевантность). Увеличен с ~1.5"
+    # до ~3.0" ширины (round-1 вставка была «маркой в пустом контейнере»).
+    ocean_box(s, 8.05, 3.82, 4.75, 2.42, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.3)
+    _place_image_contain(s, ASSETS / "web/spiderman-similarity.jpg",
+                         8.13, 3.89, 4.59, 2.28)
     gold_callout(s, 0.55, 6.3, 12.25, 0.8,
                  "Similarity — сигнал кандидатов; релевантность — отдельная "
                  "задача: реранкер, гибрид, фильтры.",
@@ -2013,17 +2028,21 @@ def build_s22(p):
     text_box(s, 0.85, 4.12, 5.8, 0.35,
              "Кейс: 50 000 анализов документов в месяц", size=13, bold=True,
              color=DEEP)
-    filled_rect(s, 0.85, 4.50, 4.6, 0.32, MID)
-    text_box(s, 5.55, 4.50, 1.3, 0.32, "$45 000", size=12, bold=True,
+    # v3.3 r2 (#183): бары укорочены (пропорции сохранены) — справа встал
+    # Stonks (~1.65") как эмоциональный якорь экономии −82%.
+    filled_rect(s, 0.85, 4.50, 3.1, 0.32, MID)
+    text_box(s, 4.05, 4.50, 1.1, 0.32, "$45 000", size=12, bold=True,
              color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.98, 4.52, 3.6, 0.28, "без кэша", size=11, color=WHITE,
+    text_box(s, 0.98, 4.52, 2.9, 0.28, "без кэша", size=11, color=WHITE,
              anchor=MSO_ANCHOR.MIDDLE)
-    filled_rect(s, 0.85, 4.92, 0.82, 0.32, GOLD)
-    text_runs(s, 1.8, 4.92, 4.9, 0.32, [
+    filled_rect(s, 0.85, 4.92, 0.55, 0.32, GOLD)
+    text_runs(s, 1.5, 4.92, 3.6, 0.32, [
         {"text": "$8 000 с кэшем · ", "size": 12, "bold": True,
          "color": DEEP},
         {"text": "−82%", "size": 13.5, "bold": True, "color": GOLD},
     ], anchor=MSO_ANCHOR.MIDDLE)
+    _place_image_contain(s, ASSETS / "web/stonks-template.png",
+                         5.15, 4.35, 1.65, 1.25)
     # Справа — exact prefix (иллюстрирует запрос 3)
     ocean_box(s, 7.15, 1.3, 5.65, 4.35, fill=WHITE, stroke=LIGHT,
               stroke_pt=1.4)
@@ -2151,13 +2170,22 @@ def build_s25(p):
          "size": 13, "color": DEEP},
     ])
     add_image(s, ASSETS / "charts/s25-ucurve.png", x=0.85, y=1.56, w=6.2)
-    text_runs(s, 7.35, 1.72, 5.15, 1.6, [
-        {"text": "U-кривая 2023 распрямилась: ", "size": 12.5,
+    # v3.3 r2 (#183): текст сужен до ~2.7" — освобождает правый фланг под
+    # полноразмерное фото иголки в стоге сена (round-1 тумбнейл ~0.9"
+    # выглядел как баг рендера).
+    text_runs(s, 7.3, 1.62, 2.72, 1.75, [
+        {"text": "U-кривая 2023 распрямилась: ", "size": 12,
          "color": DEEP},
         {"text": "single-needle — до 99% на полном окне 1 млн",
-         "size": 12.5, "bold": True, "color": DEEP},
-        {"text": " (Gemini Deep Think).", "size": 12.5, "color": DEEP},
-    ], line_spacing=1.2)
+         "size": 12, "bold": True, "color": DEEP},
+        {"text": " (Gemini Deep Think).", "size": 12, "color": DEEP},
+    ], line_spacing=1.18)
+    # Реальное фото иголки в стоге сена — буквальная метафора-якорь
+    # needle-in-a-haystack, полный кадр без агрессивного кропа, ~2.5" ширины.
+    ocean_box(s, 10.08, 1.52, 2.68, 1.86, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.2)
+    _place_image_contain(s, ASSETS / "web/needle-haystack-crop.jpg",
+                         10.15, 1.58, 2.54, 1.74)
     # ── НИЖНИЙ ЯРУС: работу со смыслом — нет
     ocean_box(s, 0.55, 3.58, 12.25, 2.85, fill=WHITE, stroke=LIGHT,
               stroke_pt=1.4)
@@ -2576,13 +2604,17 @@ def build_s30(p):
         text_box(s, 8.15, yy + 0.04, 4.25, 0.68, lim, size=11, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
         yy += 0.87
-    ocean_box(s, 2.65, 6.05, 8.0, 0.65, fill=WHITE, stroke=TEAL,
+    # v3.3 r2 (#183): «Вопрос залу» сдвинут влево, правый фланг — Gandalf
+    # «НЕВАЛИДНЫЙ ТОКЕН НЕ ПРОЙДЁТ» (прямая метафора маскирования).
+    ocean_box(s, 0.55, 6.15, 8.6, 0.65, fill=WHITE, stroke=TEAL,
               stroke_pt=1.4)
-    text_runs(s, 2.85, 6.05, 7.6, 0.65, [
+    text_runs(s, 0.75, 6.15, 8.2, 0.65, [
         {"text": "Вопрос залу: ", "size": 14, "bold": True, "color": TEAL},
         {"text": "почему именно 100%, а не 99.9?", "size": 14,
          "color": DEEP},
     ], anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    _place_image_contain(s, ASSETS / "web/gandalf-token.jpg",
+                         9.4, 5.92, 3.2, 1.40)
     speaker_notes(s, load_notes("s30"))
 
 
@@ -2708,6 +2740,11 @@ def build_s32(p):
              line_spacing=1.1)
     text_box(s, 11.05, 2.5, 1.15, 0.72, "×3–10", size=19, bold=True,
              color=GOLD, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    # v3.3 r2 (#183): Джокер жжёт гору денег (The Dark Knight) — прямое
+    # усиление тезиса «невидимые токены жгут бюджет», в пустом правом
+    # верхнем углу контейнера, ровно над «×3–10».
+    _place_image_contain(s, ASSETS / "web/joker-burning-money.jpg",
+                         10.42, 1.42, 2.3, 1.07)
     text_box(s, 4.5, 3.24, 8.2, 0.3,
              "по ставке output-токенов, с учётом в max_tokens — без "
              "естественного потолка", size=11, italic=True, color=SLATE)
@@ -3084,7 +3121,7 @@ def build_s37(p):
              "bold": True, "color": DEEP},
             {"text": " OpenAI в 2026 перестал публиковать Verified.",
              "size": 12.5, "color": DEEP}]),
-        ("2", "Подгонка под метрику", 11.0, [
+        ("2", "Подгонка под метрику", 8.1, [
             {"text": "Llama 4 Maverick: на Chatbot Arena — специальная "
                      "версия, Elo 1417; публичная модель — ", "size": 12.5,
              "color": DEEP},
@@ -3124,6 +3161,11 @@ def build_s37(p):
                      "заявка производителя vs защищённый · средний ~25%",
                      size=10.5, italic=True, color=SLATE,
                      align=PP_ALIGN.RIGHT)
+        if num == "2":
+            # v3.3 r2 (#183): Press X to Doubt (L.A. Noire) — реакция на
+            # витринные лидерборд-результаты, в правой трети карточки.
+            _place_image_contain(s, ASSETS / "web/pressx-template.jpg",
+                                 10.15, yy + 0.07, 2.35, 1.28)
         yy += 1.55
     gold_callout(s, 0.55, 6.25, 12.25, 0.8,
                  "Бенчмарки сужают список кандидатов. Выбирает — "
@@ -3252,16 +3294,18 @@ def build_s39(p):
               stroke_pt=1.4)
     text_box(s, 8.65, 1.3, 3.9, 0.4, "…и не всегда топ-LLM", size=15,
              bold=True, color=DEEP)
-    filled_rect(s, 10.3, 2.25, 2.25, 0.8, DEEP, radius=True,
+    # v3.3 r2 (#183): лестница сдвинута вверх на ~0.4" — освобождает низ
+    # колонки под увеличенный мем Two Buttons (~2.3" вместо ~0.9").
+    filled_rect(s, 10.3, 1.85, 2.25, 0.8, DEEP, radius=True,
                 radius_adj=0.12)
-    text_box(s, 10.42, 2.3, 2.0, 0.7, "10% сложных →\nпремиум $10/млн",
+    text_box(s, 10.42, 1.9, 2.0, 0.7, "10% сложных →\nпремиум $10/млн",
              size=10.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.05)
-    filled_rect(s, 8.65, 3.2, 3.9, 0.9, MID, radius=True, radius_adj=0.1)
-    text_box(s, 8.8, 3.25, 3.6, 0.8, "90% запросов →\nмодель за $0.20/млн",
+    filled_rect(s, 8.65, 2.8, 3.9, 0.9, MID, radius=True, radius_adj=0.1)
+    text_box(s, 8.8, 2.85, 3.6, 0.8, "90% запросов →\nмодель за $0.20/млн",
              size=12, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.08)
-    text_runs(s, 8.65, 4.55, 3.9, 1.7, [
+    text_runs(s, 8.65, 3.9, 3.9, 1.2, [
         {"text": "Миллиард токенов/мес:", "size": 12.5, "bold": True,
          "color": DEEP},
         {"text": "$10 000", "size": 14, "bold": True, "color": DEEP,
@@ -3272,6 +3316,11 @@ def build_s39(p):
         {"text": "$1 180", "size": 16, "bold": True, "color": GOLD},
         {"text": " с маршрутизацией", "size": 12, "color": DEEP},
     ], line_spacing=1.15)
+    # v3.3 r2 (#183): Two Buttons — трудный выбор LLM vs обычный код (crop
+    # верхней панели с обеими кнопками). Увеличен до ~2.3" ширины, этикетки
+    # перерисованы крупнее (52px/38px) — читаемы с проектора.
+    _place_image_contain(s, ASSETS / "web/twobuttons-llm-vs-code-toponly.jpg",
+                         8.65, 5.08, 3.9, 1.52)
     speaker_notes(s, load_notes("s39"))
 
 
@@ -3328,10 +3377,17 @@ def build_s40(p):
             {"text": lab, "size": 11.5, "bold": True, "color": DEEP},
         ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
         yy += 0.62
-    gold_callout(s, 0.55, 5.35, 12.25, 0.95,
+    # v3.3 r2 (#183): callout сужен до ~7.5" — правый фланг отдан
+    # увеличенному xkcd #552 (4.5" ширины, 3 панели читаемы с проектора;
+    # используется 2x-вариант 918x371 для чёткости).
+    gold_callout(s, 0.55, 5.5, 7.55, 1.35,
                  "Там, где от модели ждут каузальных выводов, человек в "
                  "контуре — архитектурное требование, а не вежливая "
                  "оговорка.", size=15.5, align=PP_ALIGN.CENTER)
+    xk_w = 4.5
+    xk_h = xk_w * 371 / 918
+    _place_image_contain(s, ASSETS / "web/xkcd-552-correlation-2x.png",
+                         8.25, 5.38, xk_w, xk_h)
     speaker_notes(s, load_notes("s40"))
 
 

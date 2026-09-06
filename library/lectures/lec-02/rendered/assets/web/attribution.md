@@ -1,4 +1,4 @@
-# Атрибуция веб-изображений — Лекция 2 v3.2 (issue #183, round 4)
+# Атрибуция веб-изображений — Лекция 2 v3.3 (issue #183, round 5)
 
 Непубличная презентация (внутренний курс МГТУ). Требование по правам —
 только эта таблица с указанием источника; на слайдах подписи-источники
@@ -65,3 +65,79 @@
 - **s10 (glitch-токены)** — Magikarp: пробовал (1) официальный PNG с прозрачным фоном через pngkey — получил JPEG с белым фоном (не строго transparent PNG, но визуально идентично на белом слайде); достаточно для встраивания, доп. попытки поиска чистого alpha-PNG не потребовались (quality приемлема).
 - **s33a (матрёшка → chonk chart)** — пробовал WebSearch «chonk chart meme cat scale template» — нашёл описания формата (посты, товары на Etsy/Redbubble), но НЕ нашёл прямую ссылку на чистое изображение шаблона с лицензией, пригодной для скачивания через curl (все результаты — маркетплейсы мерча, не raw image URLs). Решение: оставил матрёшку (owner уже одобрил в v3.1) — убрал только подпись-источник, как и остальные unchanged-слайды.
 - **s31 (горшочек)** — 2 YouTube-видео с мультфильмом найдены; thumbnail с video ID `o6m9Ae5zTCI` дал качественный `maxresdefault.jpg` (1280×720) с чётким кадром героини у горшочка; video ID `8KH0RVWNv88` дал только low-res `120×90` (thumbnail не сгенерирован в maxres) — использован первый.
+
+## v3.3 update (round 5, issue #183) — owner-мандат «+8–12 новых образов на
+## контентные слайды без образа; иконки в ocean-box не считаются»
+
+Прошёл все 47 слайдов деки, сверил assertion каждого слайда с фактическим
+наличием узнаваемого образа (не иконка). Добавлено **4 новых образа** на
+слайды, где нашлось честное свободное место без потери читаемости
+(s15, s25 — второй образ, s39, s40); остальные кандидаты из брифа (s09, s11,
+s21, s22, s27, s30, s32, s37) оказались плотными слайдами без свободной зоны
+— пропущены с логированием причины в `iteration-log.md` (не насиловал
+плотные схемы ради формального числа).
+
+### v3.3-active (новые файлы, используются в рендере)
+
+| Локальный файл | Слайд | Описание | URL источника | Дата скачивания | Лицензия / статус |
+|---|---|---|---|---|---|
+| `spiderman-similarity.jpg` (свой текст поверх `spiderman-pointing-template.jpg`) | s15 (content) | Мем-шаблон Spider-Man Pointing at Spider-Man (два человека-паука указывают друг на друга) — метафора «похожи ≠ об одном» для similarity ≠ релевантность | https://imgflip.com/memetemplate/114923726/Spiderman-Pointing-At-Spiderman (image src: `https://i.imgflip.com/1wf7pq.jpg`) | 2026-09-06 | Imgflip meme template — fair use, образовательный некоммерческий контекст |
+| `needle-haystack-wikimedia.jpg` (уменьшенная копия `needle-haystack-wikimedia-full.jpg`, оригинал 4951×3451) | s25 (content) | Реальное фото иголки в стоге сена — буквальная метафора-якорь needle-in-a-haystack (поиск дословной вставки) | https://commons.wikimedia.org/wiki/File:Needle_in_haystack4.jpg (full: `https://upload.wikimedia.org/wikipedia/commons/5/5a/Needle_in_haystack4.jpg`) | 2026-09-06 | Wikimedia Commons, CC-BY-SA 4.0 |
+| `twobuttons-llm-vs-code-toponly.jpg` (crop верхней панели `twobuttons-llm-vs-code.jpg`, свой текст поверх `twobuttons-template.jpg`) | s39 (content) | Мем-шаблон Two Buttons (потный человек между двумя красными кнопками) — «LLM» / «обычный код», метафора трудного выбора инструмента | https://imgflip.com/memetemplate/119139696/Two-Buttons (image src: `https://i.imgflip.com/1g8my4.jpg`) | 2026-09-06 | Imgflip meme template — fair use, образовательный некоммерческий контекст |
+| `xkcd-552-correlation.png` | s40 (content) | xkcd #552 «Correlation» — классический трёхпанельный комикс про corr ≠ causation, прямое попадание в тезис «внимание = корреляция, не причинность» | https://xkcd.com/552/ (image: `https://imgs.xkcd.com/comics/correlation.png`) | 2026-09-06 | xkcd — CC-BY-NC 2.5, образовательное некоммерческое использование |
+
+### v3.3 — попытки, не давшие результата (не встроены в деку)
+
+Скачаны и сгенерированы, но **не встроены** — на целевых слайдах не нашлось
+честного свободного места без урезания существующего контента (см. детальный
+geometry-анализ в `iteration-log.md` per slide):
+
+- `always-has-been-template.png` (Astronaut Always Has Been, https://imgflip.com/memetemplate/255177692) + производный `always-has-been-ru-cost.jpg` — кандидат для s11 (стоимость русского токена). s11 плотный: chart-box + 2 текстовых блока справа заполняют слайд почти до footer (~0.6" свободного места на всю ширину — недостаточно для читаемого 16:9 мема).
+- `gandalf-template.jpg` (You Shall Not Pass, https://imgflip.com/memetemplate/38607795) — кандидат для s30 (structured outputs — маскирование невалидных токенов). Слайд заполнен до ~0.4" от footer, свободного места нет.
+- `stonks-template.png` (https://imgflip.com/memetemplate/186821996) — кандидат для s22 (экономика prompt caching). Обе колонки + gold callout заполняют слайд до ~0.35" от footer.
+- `drake-template.jpg` (Drake Hotline Bling, image src `https://i.imgflip.com/30b1gx.jpg`) — кандидат для s27 (температура T=0 vs сэмплинг). 3 панели + 2 callout-строки заполняют слайд до ~0.4" от footer.
+
+### v3.3 — s33a chonk chart, попытка #4 (продолжение v3.2 попытки #1)
+
+Три дополнительных попытки в этом раунде (итого 4 с учётом v3.2):
+1. WebSearch «chonk chart meme original cat scale image "a heckin chonker" template download» — только описания/историю мема (Know Your Meme, Etsy-мерч), без raw image URL.
+2. WebFetch `knowyourmeme.com/memes/chonk-oh-lawd-he-comin` напрямую — единственная найденная «image URL» оказалась placeholder blank GIF (`blank-b3f96f160b75b1b49b426754ba188fe8.gif`), не реальный чарт.
+3. WebSearch по прямым CDN-паттернам (`pbs.twimg.com`, `i.imgur.com` + названия категорий чарта) — 0 прямых ссылок на изображение, только вторичные упоминания.
+4. Проверил альтернативу — ветеринарная «Body Condition Score» шкала (Wikimedia/vet sources) — это **другой артефакт** (клинический scoring chart 1-9, без юмористических категорий «Fine Boi/Heckin Chonker/Oh Lawd»), не соответствует брифу «chonk chart meme».
+
+Итог: chonk chart остаётся ненайденным за 4 задокументированные попытки.
+Матрёшка (`matryoshka-wikimedia.jpg`) остаётся на s33a без изменений — per
+brief §9 «если не выйдет — оставь матрёшку без подписи».
+
+## v3.3 round 2 (issue #183 — увеличение round-1 вставок + образы Группы B)
+
+Оркестратор отклонил round 1: (A) 4 вставленных образа — «марки в пустых
+контейнерах»; (B) отказ «нет места» опровергнут для s09/s11/s22/s30/s32/s37.
+Round 2: образы Группы A увеличены до 2.3–4.5" (подписи перерисованы крупнее
+в `gen_memes_v33_r2.py`), образы Группы B вставлены со сжатием наименее
+ценных элементов слайдов. Скипы s21/s27 подтверждены оркестратором.
+
+### v3.3-r2-active (новые файлы, используются в рендере)
+
+| Локальный файл | Слайд | Описание | URL источника | Дата скачивания | Лицензия / статус |
+|---|---|---|---|---|---|
+| `mathlady-template.jpg` → `mathlady-tokens.jpg` (свой текст «[123][456][78]?» поверх) | s09 (content) | Мем Math Lady / Confused Lady (4 панели с формулами) — недоумение от нарезки числа токенизатором | https://knowyourmeme.com/memes/math-lady-confused-lady (image: `https://i.kym-cdn.com/entries/icons/original/000/021/464/14608107_1180665285312703_1558693314_n.jpg`) | 2026-09-06 | KYM CDN — fair use, образовательный некоммерческий контекст |
+| `pressx-template.jpg` | s37 (content) | Мем Press X to Doubt (L.A. Noire, детектив Коул Фелпс + промпт «X Doubt») — реакция на витринные лидерборд-результаты | https://imgflip.com/memetemplate/110733816/LA-Noire-Press-X-To-Doubt (image: `https://i.imgflip.com/1txerc.jpg`) | 2026-09-06 | Imgflip template — fair use, образовательный некоммерческий контекст |
+| `joker-burning-money-yt.jpg` → `joker-burning-money.jpg` (кроп леттербокса + бейджа «1080p») | s32 (content) | Кадр The Dark Knight (2008): Джокер поджигает гору денег — «невидимые токены жгут бюджет» | https://www.youtube.com/watch?v=gtXbJ_savbo (thumbnail: `https://i.ytimg.com/vi/gtXbJ_savbo/maxresdefault.jpg`) | 2026-09-06 | YouTube thumbnail (tier 4) — fair use, образовательный некоммерческий контекст |
+| `xkcd-552-correlation-2x.png` | s40 (content) | xkcd #552 «Correlation» в 2x-разрешении (918×371) — замена 1x-версии под увеличенную вставку 4.5" | https://xkcd.com/552/ (image: `https://imgs.xkcd.com/comics/correlation_2x.png`) | 2026-09-06 | xkcd — CC-BY-NC 2.5, образовательное некоммерческое использование |
+| `needle-haystack-crop.jpg` (умеренный кроп `needle-haystack-wikimedia.jpg`) | s25 (content) | Умеренный кроп фото иголки в стоге (930×656 из 1200×836) — иголка занимает ~30% ширины кадра, контекст стога сохранён | см. `needle-haystack-wikimedia.jpg` (Wikimedia Commons) | 2026-09-06 (кроп) | Wikimedia Commons, CC-BY-SA 4.0 |
+| `twobuttons-template.jpg` (повторное скачивание — отсутствовал локально) | s39 (via `twobuttons-llm-vs-code-toponly.jpg`) | Шаблон Two Buttons для регенерации этикеток крупнее (52px/38px) | https://imgflip.com/memetemplate/119139696/Two-Buttons (image: `https://i.imgflip.com/1g8my4.jpg`) | 2026-09-06 | Imgflip template — fair use |
+
+### Ранее скачанные (v3.3 round 1), теперь ВСТРОЕНЫ в деку
+
+- `always-has-been-ru-cost.jpg` → **s11** (подписи перерисованы крупнее: 54/48px).
+- `gandalf-template.jpg` → **s30** как `gandalf-token.jpg` (добавлена подпись «НЕВАЛИДНЫЙ ТОКЕН НЕ ПРОЙДЁТ», 54px).
+- `stonks-template.png` → **s22** (без оверлея, как есть).
+- `drake-template.jpg` — остаётся НЕ встроенным (скип s27 подтверждён оркестратором).
+- `always-has-been-template.png` — шаблон-источник для `always-has-been-ru-cost.jpg`.
+
+### v3.3 r2 — попытки, не давшие результата
+
+- **Math Lady, попытка 1:** `https://i.imgflip.com/1fyz5c.jpg` (из брифа) — 404/пусто; успех со 2-й попытки через KYM CDN (см. выше).
+- **Press X to Doubt, попытка 1:** `https://i.imgflip.com/1ii4oc.jpg` (из брифа) — оказался ДРУГИМ мемом (Trump Bill Signing, 1866×1529); заменён корректным `1txerc.jpg` через imgflip-страницу шаблона.
+- **Burning money, попытки 1-3 (не встроены):** Wikimedia Commons поиск «burning money» дал (1) `burning-money-wikimedia.jpg` (May Day 2017 NYC, CC-BY 2.0) — тёмная толпа, деньги не читаются; (2) «Burning fake money.JPG» — женщина у таза, деньги не читаются; (3) «Burning Paper Money.jpg» — пламя в темноте без опознаваемых денег. Решение: tier-4 YouTube thumbnail сцены Джокера (выше) — иконический и однозначно читаемый кадр. Файл `burning-money-wikimedia.jpg` оставлен в assets как артефакт поиска, в деке НЕ используется.

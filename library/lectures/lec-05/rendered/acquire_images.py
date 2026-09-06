@@ -30,6 +30,11 @@ TARGETS = {
     "s48-amazon": "File:Amazon Go in Seattle, December 2016.jpg",
     "s13a-ibm": "File:IBM logo.svg",
     "s47-mit": "File:MIT Dome night1 Edit.jpg",
+    # GATE-B fix (2026-09-06): s49 closing hero — was schematic-only (P0,
+    # presentation-critic + iteration-log admitted gap). "Человек в центре
+    # петли" metaphor -> real NASA Mission Control photo (humans exercising
+    # judgment over a live, highly automated operation). Public domain.
+    "s49-missioncontrol": "File:Apollo 16, Mission Control - Flickr - NASA on The Commons.jpg",
 }
 
 

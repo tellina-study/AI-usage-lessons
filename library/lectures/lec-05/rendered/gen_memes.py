@@ -216,14 +216,17 @@ def s36_disaster_girl():
 
 
 # ============================================================
-# s44 — Sad Pablo Escobar (Управление: жду обещанный ROI от AI-пилота)
+# s44 — Sad Pablo Escobar (Управление: жду обещанный ROI от ИИ-пилота)
+# GATE-B fix: caption baked "AI-пилота" (Latin) into the raster image itself
+# — the AI->ИИ cascade over build-script text/markdown does not touch text
+# already burned into a PNG, so this needed a separate regenerate.
 # ============================================================
 def s44_sad_pablo():
     overlay("sad-pablo.jpg", "s44-sad-pablo.jpg", [
         (0.5, 0.08, "жду ROI", 32,
          dict(fill=WHITE, stroke_fill=BLACK, stroke_width=5, anchor="mm",
               max_width=760)),
-        (0.5, 0.90, "от AI-пилота", 32,
+        (0.5, 0.90, "от ИИ-пилота", 32,
          dict(fill=WHITE, stroke_fill=BLACK, stroke_width=5, anchor="mm",
               max_width=760)),
     ])
@@ -240,25 +243,62 @@ def s09_bernie():
              band_frac=0.30, size=32)
 
 
+# s16 — Bernie asking, GATE-B replacement meme (Design section lost its
+# only non-serious-case meme when the s19 clown was removed for tonal
+# reasons — this restores >=1 tasteful content meme in Раздел 2). Distinct
+# caption from s09's use of the same template (no joke duplication): here
+# it is the "линтер, не замена живому тесту" plea from s16's own claim.
+def s16_bernie():
+    top_band("bernie-asking.jpg", "s16-bernie.jpg",
+             "я снова прошу: эвристики — линтер, а не тест на живом пользователе",
+             band_frac=0.30, size=28)
+
+
 # s12 — Surprised Pikachu (синт-панель: 7/7! реальные: 3/7)
 def s12_pikachu():
+    """The stock imgflip Surprised-Pikachu template has a genuine ~40%-tall
+    BLANK WHITE band above the face (not cropped/stretched — verified against
+    the raw template pixels). GATE-B fix: crop that oversized band down to a
+    normal top-caption strip, then set BLACK text (not white+stroke, which is
+    invisible on white) sized to actually fill the strip; add a matching
+    bottom white band (instead of overlaying near the frame edge, which
+    clipped) so both captions are fully legible and nothing touches the
+    image border. Net effect: correct 1:1-ish aspect (no stretch happens
+    downstream either — add_image() in _helpers.py already preserves aspect;
+    the *visual* stretch students perceived was actually the oversized blank
+    band + illegible caption reading as "broken")."""
     im = Image.open(TPL / "surprised-pikachu.jpg").convert("RGB")
     w, h = im.size
-    draw = ImageDraw.Draw(im)
-    meme_text(draw, (w * 0.5, h * 0.07),
-              "синт-панель сказала «7 из 7 задач»", 30, fill=WHITE,
-              stroke_fill=BLACK, stroke_width=5, anchor="mm", max_width=w * 0.92)
-    meme_text(draw, (w * 0.5, h * 0.9),
-              "реальные — 3 из 7", 30, fill=WHITE, stroke_fill=BLACK,
-              stroke_width=5, anchor="mm", max_width=w * 0.7)
-    im.save(OUT / "s12-pikachu.jpg", quality=92)
-    print("OK s12-pikachu.jpg", im.size)
+    # crop the excess blank white area: keep a slim ~14% top strip instead
+    # of the stock ~40% band (face starts at y=0.40h per pixel-scan).
+    face_top = int(h * 0.40)
+    keep_band = int(h * 0.16)
+    cropped = im.crop((0, face_top - keep_band, w, h))
+    cw, ch = cropped.size
+    # add a bottom white band of matching height for the second caption so
+    # text never overlays the character's face and never touches the edge.
+    bottom_band = int(ch * 0.16)
+    canvas = Image.new("RGB", (cw, ch + bottom_band), WHITE)
+    canvas.paste(cropped, (0, 0))
+    draw = ImageDraw.Draw(canvas)
+    # top caption: BLACK text (band is white — white+stroke was illegible)
+    meme_text(draw, (cw * 0.5, keep_band * 0.5),
+              "синт-панель: «7 из 7 задач»", 34, fill=BLACK,
+              stroke_fill=None, stroke_width=0, anchor="mm",
+              max_width=cw * 0.92)
+    # bottom caption: BLACK text on the new white band, fully inside frame
+    meme_text(draw, (cw * 0.5, ch + bottom_band * 0.5),
+              "реальные люди: 3 из 7", 34, fill=BLACK,
+              stroke_fill=None, stroke_width=0, anchor="mm",
+              max_width=cw * 0.92)
+    canvas.save(OUT / "s12-pikachu.jpg", quality=92)
+    print("OK s12-pikachu.jpg", canvas.size)
 
 
-# s18 — Is This A Pigeon (AI: «это доступный интерфейс?» — WCAG 29%)
+# s18 — Is This A Pigeon (ИИ: «это доступный интерфейс?» — WCAG 29%)
 def s18_pigeon():
     overlay("is-this-a-pigeon.jpg", "s18-pigeon.jpg", [
-        (0.28, 0.07, "AI-генератор интерфейса", 27,
+        (0.28, 0.07, "ИИ-генератор интерфейса", 27,
          dict(fill=WHITE, stroke_fill=BLACK, stroke_width=5, anchor="mm",
               max_width=460)),
         (0.62, 0.86, "это доступный интерфейс?", 30,
@@ -337,6 +377,7 @@ if __name__ == "__main__":
     s44_sad_pablo()
     # content slides
     s09_bernie()
+    s16_bernie()
     s12_pikachu()
     s18_pigeon()
     s19_clown()

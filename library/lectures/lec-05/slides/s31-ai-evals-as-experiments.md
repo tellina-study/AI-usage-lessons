@@ -4,7 +4,7 @@ type: process
 section: "Раздел 4. Measure / Experiment"
 duration_min: 2.5
 assertion: "Evals — «юнит-тесты для агента»: pass@k стремится к 100%, pass^k обваливается к 0% при одинаковой базовой вероятности"
-learning_goal: "AI: evals как эксперименты для агента — 3-уровневая рамка Хусейна, pass@k vs pass^k, LLM-as-judge"
+learning_goal: "ИИ: evals как эксперименты для агента — 3-уровневая рамка Хусейна, pass@k vs pass^k, LLM-as-judge"
 learning_outcomes: [LO1, LO2]
 chapter_ref: "§4.3 [for-slide-s31]"
 interaction: none
@@ -15,7 +15,7 @@ meme_or_visual: >
   A/B), последняя ступень помечена «только когда продукт зрел». Рядом — расходящийся график
   двух линий: pass@k стремится к верху, pass^k обваливается к низу — визуализирует расхождение
   при одинаковой базовой вероятности.
-source: "Hamel Husain framework; Anthropic 'Demystifying evals for AI agents' (9 Jan 2026)"
+source: "Hamel Husain framework; Anthropic 'Demystifying evals for ИИ agents' (9 Jan 2026)"
 ---
 
 # Visible content

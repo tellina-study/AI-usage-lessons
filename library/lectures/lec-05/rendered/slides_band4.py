@@ -39,7 +39,7 @@ def s44b(p):
              "инициативами."),
             ("Ментальная модель",
              "Воронка портфеля: много идей на входе, немного профинансированных "
-             "на выходе. У AI-продукта новая переменная — стоимость каждого "
+             "на выходе. У ИИ-продукта новая переменная — стоимость каждого "
              "запроса против его ценности."),
         ])
 
@@ -65,7 +65,7 @@ def s45(p):
                  color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     # right: unit economics
     ocean_box(s, 6.85, 1.60, 5.95, 1.85, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.10, y=1.75, w=5.45, h=0.4, text="Unit-экономика AI-продукта",
+    text_box(s, x=7.10, y=1.75, w=5.45, h=0.4, text="Unit-экономика ИИ-продукта",
              size=14, bold=True, color=TEAL)
     text_box(s, x=7.10, y=2.25, w=5.45, h=1.1,
              text="Новая переменная — стоимость на запрос против ценности на "
@@ -157,9 +157,9 @@ def s47(p):
     # right: 4 questions
     ocean_box(s, 8.15, 1.60, 4.65, 3.80, fill=SURFACE, stroke=MID, stroke_pt=1.5)
     text_box(s, x=8.40, y=1.75, w=4.15, h=0.5,
-             text="4 вопроса к любой громкой цифре провала AI",
+             text="4 вопроса к любой громкой цифре провала ИИ",
              size=13, bold=True, color=MID, line_spacing=1.1)
-    qs = ["1. Каков денаминатор?", "2. Что считается «провалом»?",
+    qs = ["1. Каков знаменатель?", "2. Что считается «провалом»?",
           "3. Каков конфликт интересов автора?",
           "4. Прослеживается ли к первоисточнику с методологией?"]
     for i, qq in enumerate(qs):
@@ -168,7 +168,7 @@ def s47(p):
     gold_callout(
         s, 0.55, 5.55, 12.25, 0.62,
         "BCG: 60% компаний не отслеживают ни одного финансового KPI, "
-        "привязанного к ценности AI — вот почему цифры провалов так легко "
+        "привязанного к ценности ИИ — вот почему цифры провалов так легко "
         "раздуваются.",
         size=12, bold=True)
     notes_with_sources(s, "s47")
@@ -189,7 +189,7 @@ def s48(p):
     text_box(s, x=8.10, y=1.62, w=4.45, h=1.65,
              text="Just Walk Out (Amazon), с 2018: 700/1000 транзакций — "
                   "ручная проверка (14× выше цели 50/1000). 6 лет маркетинга "
-                  "«автономный AI» без раскрытия масштаба труда (скрытая "
+                  "«автономный ИИ» без раскрытия масштаба труда (скрытая "
                   "человеческая стоимость).",
              size=11.5, bold=True, color=DEEP, line_spacing=1.15,
              anchor=MSO_ANCHOR.MIDDLE)
@@ -204,7 +204,7 @@ def s48(p):
     y0 = 3.65
     # header
     filled_rect(s, 0.55, y0, 12.25, 0.42, MID, radius=True, radius_adj=0.05)
-    text_box(s, x=0.55, y=y0, w=12.25, h=0.42, text="Фаза × что AI меняет × что остаётся из классики",
+    text_box(s, x=0.55, y=y0, w=12.25, h=0.42, text="Фаза × что ИИ меняет × что остаётся из классики",
              size=12, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE)
     for i, (ph, ai, cl) in enumerate(phases):
@@ -226,55 +226,48 @@ def s49(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Сборка бесплатна — дефицит теперь: суждение, а не исполнение",
-                size=22, w=12.3, h=0.85)
-    # HERO >=40%: closed gold loop with a person at center
-    import math
-    cx, cy, r = 3.35, 3.20, 1.62
-    steps = ["Исследование", "Дизайн", "Сборка", "Измерение", "Поддержка",
-             "Управление"]
-    centers = []
-    for i in range(6):
-        ang = math.pi / 2 - i * (2 * math.pi / 6)
-        centers.append((cx + r * math.cos(ang), cy - r * math.sin(ang)))
-    for i in range(6):
-        x1, y1 = centers[i]
-        x2, y2 = centers[(i + 1) % 6]
-        connector(s, x1, y1, x2, y2, color=GOLD, width=3.0)
-    for i, (nx, ny) in enumerate(centers):
-        circle(s, nx - 0.26, ny - 0.26, 0.52, GOLD, stroke=WHITE, stroke_pt=1.6)
-        text_box(s, x=nx - 0.85, y=ny + 0.28, w=1.7, h=0.34, text=steps[i],
-                 size=9, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    circle(s, cx - 0.55, cy - 0.55, 1.10, GOLD_TINT, stroke=GOLD, stroke_pt=2.2)
-    icon(s, "users", cx - 0.35, cy - 0.35, 0.70, "gold")
-    text_box(s, x=cx - 1.0, y=cy + 0.60, w=2.0, h=0.35, text="человек в центре",
-             size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    # right: checklist
-    ocean_box(s, 6.35, 1.55, 6.45, 3.65, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
-    text_box(s, x=6.60, y=1.68, w=5.95, h=0.4,
-             text="Чек-лист «прежде чем делать фазу AI-first»", size=14,
-             bold=True, color=MID)
-    checks = [
-        "1. Классика на месте?", "2. Стоит ли доверие цены?",
-        "3. Есть эталонный набор и eval?", "4. Есть guardrail-метрика?",
-        "5. Поэтапная раскатка + откат?", "6. Гарантирована эскалация к человеку?",
-        "7. Кто отвечает?", "8. Данные безопасны?",
-    ]
-    for i, c in enumerate(checks):
-        col_i = i % 2
-        row_i = i // 2
-        x = 6.60 + col_i * 3.0
-        y = 2.25 + row_i * 0.68
-        icon(s, "circle-check", x, y, 0.30, "teal")
-        text_box(s, x=x + 0.40, y=y - 0.02, w=2.6, h=0.5, text=c, size=11.5,
-                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    text_box(s, x=6.60, y=4.95, w=5.95, h=0.35,
-             text="Парный семинар: та же петля на учебном AI-продукте",
-             size=11.5, italic=True, color=SLATE)
+                size=20, w=12.3, h=0.62, y=0.22)
+    # GATE-B fix (P0 #3): closing hero was schematic-only (hexagon loop —
+    # already shown 3x on s03/s05/s43, so repeating it here would ALSO be a
+    # cross-slide redundancy violation). Replaced with a REAL photo hero
+    # (>=40% area) via 6-tier acquisition: NASA Mission Control (Apollo 16),
+    # public domain, Wikimedia Commons Tier 2 — humans exercising judgment
+    # over a live, highly-automated operation is a direct, non-metaphorical
+    # match for "человек в центре петли, суждение — дефицитный ресурс".
+    # Cropped to a 12.25x3.55in banner (~43.5% of slide area) — see
+    # assets/screenshots/s49-missioncontrol-crop.png + .url sidecar for the
+    # source photo + acquisition log.
+    photo_in_box(s, "s49-missioncontrol-crop.png", 0.55, 0.92, 12.25, 3.55,
+                 pad=0.09)
+    text_box(s, x=0.70, y=4.50, w=9.0, h=0.28,
+             text="Центр управления NASA, Apollo 16 — люди принимают решение, "
+                  "пока автоматика работает",
+             size=10.5, italic=True, color=SLATE)
     gold_callout(
-        s, 0.55, 5.35, 12.25, 0.80,
+        s, 0.55, 4.82, 12.25, 0.62,
         "Когда исполнение почти бесплатно, дефицитный ресурс — суждение: "
         "отличить сигнал от шума и удержать намерение и ответственность на "
         "человеке.",
-        size=13.5, bold=True)
+        size=12.5, bold=True)
+    # compact 8-question checklist below the keystone statement (2 rows x 4)
+    checks = [
+        "1. Классика на месте?", "2. Стоит ли доверие цены?",
+        "3. Есть эталонный набор и eval?", "4. Есть guardrail-метрика?",
+        "5. Поэтапная раскатка + откат?", "6. Эскалация к человеку гарантирована?",
+        "7. Кто отвечает?", "8. Данные безопасны?",
+    ]
+    chip(s, 0.55, 5.56, 5.4, 0.32, "Чек-лист «прежде чем делать фазу AI-first»",
+         fill=GOLD, color=DEEP, size=10.5)
+    cw2, gap2 = 2.98, 0.12
+    x0, y0 = 0.55, 5.98
+    for i, c in enumerate(checks):
+        col_i = i % 4
+        row_i = i // 4
+        x = x0 + col_i * (cw2 + gap2)
+        y = y0 + row_i * 0.55
+        icon(s, "circle-check", x, y, 0.24, "teal")
+        text_box(s, x=x + 0.30, y=y - 0.03, w=cw2 - 0.30, h=0.50, text=c,
+                 size=9.2, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=0.95)
     notes_with_sources(s, "s49")
     return s

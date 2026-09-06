@@ -23,7 +23,7 @@ from pptx.util import Inches, Pt
 def s28(p):
     return build_section_divider(
         p, here_idx=4,
-        subtitle="Измерение — стрелка, которой AI снизил доверие",
+        subtitle="Измерение — стрелка, которой ИИ снизил доверие",
         bridge="Измерение — то место, где «выглядит хорошо» бьёт по продукту "
                "сильнее всего. Формальную дисциплину продуктового эксперимента "
                "многие видят впервые.",
@@ -94,28 +94,41 @@ def s30(p):
     set_slide_bg(s, WHITE)
     slide_title(s, "Три вопроса ловят все восемь ловушек эксперимента",
                 size=22, w=12.3, h=0.85)
+    # GATE-B fix #11: (a) explicit sub-cluster grouping label per card (до
+    # теста / интерпретация / эффект) so the 3-question structure reads
+    # without the lecturer; (b) one extra gloss clause per jargon term (SRM /
+    # peeking / Twyman) so a first-time reader can follow the visible layer
+    # alone, not just the speaker notes.
     cards = [
-        ("shield-alert", "Настроен ли тест правильно?",
-         "SRM (перекос групп), размер выборки заранее"),
-        ("search", "Правильно ли читаю результат?",
-         "peeking: 2 подглядки ≈2× ложных срабатываний"),
-        ("triangle-alert", "Реален ли сам эффект?",
-         "закон Тваймана: слишком красивая цифра обычно неверна"),
+        ("до теста", "shield-alert", "Настроен ли тест правильно?",
+         "SRM (перекос групп) — доли пользователей в группах не совпали с "
+         "планом; размер выборки должен быть зафиксирован заранее, а не "
+         "подогнан под результат"),
+        ("интерпретация", "search", "Правильно ли читаю результат?",
+         "peeking (подглядывание) — досрочная проверка результата: 2 "
+         "подглядки ≈2× ложных срабатываний, поэтому решение принимается "
+         "только на заранее заданный размер выборки"),
+        ("эффект", "triangle-alert", "Реален ли сам эффект?",
+         "закон Тваймана: слишком красивая или неожиданная цифра обычно "
+         "означает ошибку измерения, а не реальный эффект — сначала "
+         "перепроверь методологию, потом радуйся результату"),
     ]
     cw, gap = 3.95, 0.20
-    x0, y0 = 0.55, 1.60
-    for i, (ic, head, body) in enumerate(cards):
+    x0, y0 = 0.55, 1.75
+    for i, (grp, ic, head, body) in enumerate(cards):
         x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 2.55)
-        chip(s, x + 0.24, y0 + 0.22, 0.5, 0.4, str(i + 1), fill=GOLD,
+        chip(s, x + 0.24, y0 - 0.32, cw - 0.48, 0.28, grp.upper(),
+             fill=TEAL_TINT, color=TEAL, size=9.5)
+        ocean_box(s, x, y0, cw, 2.85)
+        chip(s, x + 0.24, y0 + 0.20, 0.5, 0.4, str(i + 1), fill=GOLD,
              color=DEEP, size=15)
-        icon(s, ic, x + cw - 0.85, y0 + 0.20, 0.55, "mid")
-        text_box(s, x=x + 0.24, y=y0 + 0.85, w=cw - 0.48, h=0.75, text=head,
-                 size=14, bold=True, color=DEEP, line_spacing=1.05)
-        text_box(s, x=x + 0.24, y=y0 + 1.65, w=cw - 0.48, h=0.8, text=body,
-                 size=11.5, italic=True, color=SLATE, line_spacing=1.12)
+        icon(s, ic, x + cw - 0.85, y0 + 0.18, 0.55, "mid")
+        text_box(s, x=x + 0.24, y=y0 + 0.80, w=cw - 0.48, h=0.65, text=head,
+                 size=13.5, bold=True, color=DEEP, line_spacing=1.05)
+        text_box(s, x=x + 0.24, y=y0 + 1.45, w=cw - 0.48, h=1.30, text=body,
+                 size=10, italic=True, color=SLATE, line_spacing=1.14)
     gold_callout(
-        s, 0.55, 4.45, 12.25, 1.45,
+        s, 0.55, 4.80, 12.25, 1.15,
         "A/B (измерение) — это не то же, что feature flag (раскатка): первое "
         "проверяет эффект, второе управляет доступом. И осторожнее с легендами: "
         "тест Bing ≈$100 млн прироста выручки (Kohavi/Thomke, HBR 2017) — это "
@@ -289,7 +302,7 @@ def s35(p):
         text_box(s, x=x, y=y, w=w, h=0.62, text=txt, size=12.5, bold=True,
                  color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, x=0.55, y=1.65, w=7.0, h=0.4,
-             text="Measure = стрелка, которой AI снизил доверие",
+             text="Измерение = стрелка, которой ИИ снизил доверие",
              size=13.5, bold=True, color=MID, align=PP_ALIGN.CENTER)
     ocean_box(s, 7.85, 1.65, 4.95, 3.35, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
     text_box(s, x=8.10, y=1.85, w=4.5, h=3.0,
@@ -333,7 +346,7 @@ def s36b(p):
              "вещи. Разрыв закрывают процессом, а не только чистым кодом."),
             ("Ментальная модель",
              "Заранее договариваемся, сколько сбоев допустимо (бюджет на "
-             "ошибки). С AI сложнее: модель может «тихо деградировать», пока "
+             "ошибки). С ИИ сложнее: модель может «тихо деградировать», пока "
              "графики ещё зелёные."),
         ])
 
@@ -388,9 +401,15 @@ def s38(p):
     set_slide_bg(s, WHITE)
     slide_title(s, "Трейсинг ловит дрейф галлюцинаций там, где инфра-мониторинг молчит",
                 size=20, w=12.3, h=0.85)
+    # caption sits ABOVE the icon row with its own clear band (GATE-B fix:
+    # was positioned to overlap the magnifier-icon row below it).
+    text_box(s, x=0.65, y=1.30, w=11.5, h=0.35,
+             text="Трейсинг (камера над каждым узлом): LangSmith · Langfuse · "
+                  "Arize Phoenix · Helicone",
+             size=12, italic=True, color=SLATE)
     # request path with cameras
     path = ["промпт", "поиск", "инструменты", "ответ"]
-    x0, y0 = 0.65, 2.40
+    x0, y0 = 0.65, 2.55
     cw, gap = 2.55, 0.55
     for i, node in enumerate(path):
         x = x0 + i * (cw + gap)
@@ -401,10 +420,6 @@ def s38(p):
         if i < 3:
             right_arrow(s, x + cw + 0.05, y0 + 0.35, gap - 0.10, 0.25,
                         fill=LIGHT)
-    text_box(s, x=0.65, y=1.70, w=11.5, h=0.35,
-             text="Трейсинг (камера над каждым узлом): LangSmith · Langfuse · "
-                  "Arize Phoenix · Helicone",
-             size=12, italic=True, color=SLATE)
     # LLMOps card + PII warning
     ocean_box(s, 0.55, 3.75, 7.55, 1.15, fill=SURFACE, stroke=MID, stroke_pt=1.4)
     text_box(s, x=0.80, y=3.85, w=7.05, h=0.95,
@@ -456,7 +471,7 @@ def s39(p):
     gold_callout(
         s, 4.15, 5.20, 8.65, 0.70,
         "Что остаётся: эскалация к человеку, ответственность, инцидент-"
-        "дисциплина — усилены автономностью AI, не отменены ею.",
+        "дисциплина — усилены автономностью ИИ, не отменены ею.",
         size=12.5, bold=True)
     notes_with_sources(s, "s39")
     return s
@@ -573,9 +588,12 @@ def s43(p):
     set_slide_bg(s, WHITE)
     slide_title(s, "Эксплуатация — точка, где петля физически замыкается",
                 size=22, w=12.3, h=0.85)
-    # loop with highlighted return arrow
+    # loop with highlighted return arrow. GATE-B fix: cy/r shrunk (3.55->3.00,
+    # 1.75->1.45) so the bottom "Измерение" node + its label fully clear the
+    # gold callout starting at y=5.10 (was overlapping/hidden — same class of
+    # bug already fixed on s49's hexagon: shrink+raise the loop).
     import math
-    cx, cy, r = 3.75, 3.55, 1.75
+    cx, cy, r = 3.65, 3.00, 1.45
     steps = ["Исследование", "Дизайн", "Сборка", "Измерение", "Поддержка",
              "Управление"]
     centers = []
@@ -597,7 +615,7 @@ def s43(p):
     # right
     ocean_box(s, 6.35, 1.65, 6.45, 3.05, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
     text_box(s, x=6.60, y=1.82, w=5.95, h=2.7,
-             text="Support → Product замыкает петлю.\n\nСигнал из эксплуатации "
+             text="Поддержка → Продукт замыкает петлю.\n\nСигнал из эксплуатации"
                   "(дрейф, инцидент, жалоба) обновляет reference dataset "
                   "(эталонный набор) и guardrail — а при глубоком сигнале "
                   "возвращает к самому намерению: что мы строим и для кого.",

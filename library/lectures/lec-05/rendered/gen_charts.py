@@ -88,17 +88,59 @@ def c_passk():
 
 
 # ── s40: Zillow writedown range $304-408M ──
+# GATE-B fix (student-simulator P1): a single shared axis previously plotted
+# 356 (million-scale) and 80 (thousand-scale) as if directly comparable bar
+# lengths -> a skimming reader could misread "$80M vs $304M" (they are 3
+# orders of magnitude apart: $304-408M total vs $80K per home). Fixed by
+# giving each bar its OWN independent x-axis (two side-by-side panels) so
+# the bar lengths can never imply a false shared-scale comparison; each
+# panel's unit is in its own title, not a shared footnote easy to skim past.
 def c_zillow():
-    fig, ax = plt.subplots(figsize=(5.4, 3.2))
-    bars = ax.barh(["списания\nZillow Offers", "≈ убыток\nна 1 дом"],
-                   [356, 80], color=[GOLD, LIGHT], height=0.5, zorder=3)
-    ax.bar_label(bars, labels=["$304–408 млн", "≈$80 тыс."], fontsize=14,
-                 fontweight="bold", color=DEEP, padding=6)
-    ax.set_xlim(0, 470)
-    ax.set_xlabel("US$ (млн — верхний бар; тыс. — нижний)", fontsize=10)
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.grid(axis="x", color=GREY, linewidth=0.7, zorder=0)
-    ax.tick_params(labelsize=10.5)
+    # GATE-B fix v2: bar_label text for panel 1 ("$304-408 млн") was landing
+    # visually next to panel 2's y-tick label ("≈ убыток на 1 дом") even with
+    # wspace set, because the label's data-space anchor (bar end + padding)
+    # sits close to axis 1's right spine while axis 2's y-tick labels sit
+    # just left of axis 2's left spine — with only "wspace" between them,
+    # there wasn't enough physical gap once the two symmetric labels grew
+    # toward each other. Fixed by (a) giving each axis much more xlim
+    # headroom beyond its own bar so the label doesn't hug the right edge,
+    # and (b) a wide explicit wspace via GridSpec so the panels themselves
+    # are physically farther apart.
+    fig = plt.figure(figsize=(8.4, 3.2))
+    gs = fig.add_gridspec(1, 2, wspace=0.85, left=0.14, right=0.97,
+                          top=0.84, bottom=0.20)
+    ax1 = fig.add_subplot(gs[0, 0])
+    ax2 = fig.add_subplot(gs[0, 1])
+
+    b1 = ax1.barh(["Списания\nZillow Offers"], [356], color=GOLD, height=0.5,
+                  zorder=3)
+    ax1.bar_label(b1, labels=["$304–408 млн"], fontsize=12.5,
+                  fontweight="bold", color=DEEP, padding=6)
+    ax1.set_xlim(0, 760)
+    ax1.set_title("Общее списание, $ МЛН", fontsize=11, fontweight="bold",
+                  color=DEEP, pad=10)
+    ax1.spines[["top", "right"]].set_visible(False)
+    ax1.grid(axis="x", color=GREY, linewidth=0.7, zorder=0)
+    ax1.tick_params(labelsize=10.5)
+    ax1.set_xticks([0, 200, 400])
+
+    # independent (unrelated) axis scale for the per-home figure — a shared
+    # scale with panel 1 would squash this bar to ~17% length and invite the
+    # same false "similar magnitude" read the fix is meant to prevent.
+    b2 = ax2.barh(["≈ убыток\nна 1 дом"], [80], color=LIGHT, height=0.5,
+                  zorder=3)
+    ax2.bar_label(b2, labels=["≈$80 тыс."], fontsize=12.5, fontweight="bold",
+                  color=DEEP, padding=6)
+    ax2.set_xlim(0, 170)
+    ax2.set_title("На один дом, $ ТЫС.", fontsize=11, fontweight="bold",
+                  color=DEEP, pad=10)
+    ax2.spines[["top", "right"]].set_visible(False)
+    ax2.grid(axis="x", color=GREY, linewidth=0.7, zorder=0)
+    ax2.tick_params(labelsize=10.5)
+    ax2.set_xticks([0, 50, 100])
+    fig.text(0.5, 0.03, "Разные единицы и разные шкалы — МЛН слева, ТЫС. "
+              "справа (длины баров НЕ сравнивать напрямую)", ha="center",
+              fontsize=9, color=SLATE, style="italic")
     save(fig, "c-zillow.png")
 
 

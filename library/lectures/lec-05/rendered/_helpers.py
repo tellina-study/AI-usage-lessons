@@ -329,7 +329,12 @@ def chip(slide, x, y, w, h, text, *, fill=MID, stroke=None, color=WHITE,
     return shp
 
 
-def connector(slide, x1, y1, x2, y2, color=LIGHT, width=2.0, dash=None):
+def connector(slide, x1, y1, x2, y2, color=LIGHT, width=2.0, dash=None,
+              arrow_end=False, arrow_len="med", arrow_w="med"):
+    """arrow_end=True adds a tailEnd arrowhead at (x2,y2) — used for
+    schema_cycle diagrams that need an explicit read direction (e.g. s03
+    GATE-B fix: the loop nodes had connecting lines but no arrowheads, so a
+    student could not tell the ring had a direction of travel)."""
     cn = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT,
                                     Inches(x1), Inches(y1), Inches(x2), Inches(y2))
     cn.line.color.rgb = color
@@ -339,6 +344,12 @@ def connector(slide, x1, y1, x2, y2, color=LIGHT, width=2.0, dash=None):
         pd = etree.SubElement(
             ln, "{http://schemas.openxmlformats.org/drawingml/2006/main}prstDash")
         pd.set("val", dash)
+    if arrow_end:
+        ln = cn.line._get_or_add_ln()
+        tail = etree.SubElement(ln, _AMAIN + "tailEnd")
+        tail.set("type", "triangle")
+        tail.set("w", arrow_w)
+        tail.set("len", arrow_len)
     return cn
 
 
@@ -717,8 +728,11 @@ def build_section_divider(p, here_idx, subtitle, bridge, sid, tag=None,
             icon(s, icon_name, 9.55, 1.35, 1.6, "light")
     text_box(s, x=0.75, y=1.55, w=7.3, h=0.55,
              text=f"РАЗДЕЛ {here_idx}", size=20, bold=True, color=TEAL)
-    filled_rect(s, 0.78, 2.18, 0.70, 0.05, fill=GOLD)
-    text_box(s, x=0.75, y=2.55, w=7.3, h=1.75, text=subtitle,
+    # GATE-B fix: removed the decorative gold accent-line under "РАЗДЕЛ N"
+    # (named course anti-pattern — decorative underline, no semantic value).
+    # The subtitle now simply follows with a bit more top space; the gold
+    # chip/tag below still carries this divider's ≥1x gold requirement.
+    text_box(s, x=0.75, y=2.62, w=7.3, h=1.75, text=subtitle,
              size=30, bold=True, color=DEEP, line_spacing=1.08)
     if tag:
         chip(s, 0.78, 4.20, 3.6, 0.42, tag, fill=GOLD, color=DEEP, size=12.5)

@@ -34,38 +34,42 @@ def s01(p):
     set_slide_bg(s, WHITE)
     slide_title(
         s, "Сборка почти бесплатна. Почему тогда почти никто не извлекает из этого пользу?",
-        size=22, w=12.2, h=0.95, y=0.34)
+        size=21, w=12.2, h=0.80, y=0.30)
 
-    # HERO >=40% area: LEFT = two-fact metaphor (clock + funnel), RIGHT = real
-    # This-Is-Fine meme resolving the paradox (Directive 2: s01 hook meme).
-    hx, hy = 0.55, 1.45
-    hw, hh = 7.35, 3.55
-    ocean_box(s, hx, hy, hw, hh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
-    icon(s, "clock", hx + 0.55, hy + 0.45, 1.15, "mid")
-    text_box(s, x=hx + 1.95, y=hy + 0.55, w=hw - 2.3, h=0.9,
-             text="Недели работы → часы", size=16, bold=True, color=MID,
-             line_spacing=1.05, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=hx + 1.95, y=hy + 1.30, w=hw - 2.3, h=0.4,
-             text="внутренний опыт Anthropic", size=11, italic=True,
+    # GATE-B fix: hero meme was only ~16.5% of slide area (4.65x3.55 in a
+    # split layout) — under the 40% hero mandate. Rebuilt as a dominant
+    # right-side hero (7.65x5.30 = ~40.5% of the 13.333x7.5 canvas) with the
+    # two-fact metaphor compressed into a narrow left column instead of a
+    # second equal-weight box, so the meme is unambiguously the hero, not a
+    # co-equal panel.
+    lx, lw = 0.55, 4.35
+    fact_h = 1.62
+    ocean_box(s, lx, 1.30, lw, fact_h, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
+    icon(s, "clock", lx + 0.24, 1.30 + 0.20, 0.80, "mid")
+    text_box(s, x=lx + 1.18, y=1.30 + 0.16, w=lw - 1.40, h=0.75,
+             text="Недели работы → часы", size=14, bold=True, color=MID,
+             line_spacing=1.02, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=lx + 1.18, y=1.30 + fact_h - 0.42, w=lw - 1.40, h=0.34,
+             text="внутренний опыт Anthropic", size=10.5, italic=True,
              color=SLATE)
-    connector(s, hx + 0.3, hy + 1.90, hx + hw - 0.3, hy + 1.90,
-              color=SOFT_GREY, width=1.5, dash="dash")
-    icon(s, "funnel", hx + 0.55, hy + 2.10, 1.15, "teal")
-    text_box(s, x=hx + 1.95, y=hy + 2.20, w=hw - 2.3, h=0.9,
-             text="~95% пилотов — ноль отдачи", size=16, bold=True,
-             color=TEAL, line_spacing=1.05, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=hx + 1.95, y=hy + 2.95, w=hw - 2.3, h=0.4,
-             text="MIT, лето 2025", size=11, italic=True, color=SLATE)
-    # right: real meme (This Is Fine) — the paradox in one image
-    from _helpers import meme_in_box
-    meme_in_box(s, "s01-this-is-fine.jpg", 8.15, 1.45, 4.65, 3.55, pad=0.16)
-
+    ocean_box(s, lx, 1.30 + fact_h + 0.16, lw, fact_h, fill=SURFACE,
+              stroke=LIGHT, stroke_pt=1.5)
+    icon(s, "funnel", lx + 0.24, 1.30 + fact_h + 0.16 + 0.20, 0.80, "teal")
+    text_box(s, x=lx + 1.18, y=1.30 + fact_h + 0.16 + 0.16, w=lw - 1.40, h=0.75,
+             text="~95% пилотов — ноль отдачи", size=14, bold=True,
+             color=TEAL, line_spacing=1.02, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=lx + 1.18, y=1.30 + 2 * fact_h + 0.16 - 0.42, w=lw - 1.40,
+             h=0.34, text="MIT, лето 2025", size=10.5, italic=True, color=SLATE)
     gold_callout(
-        s, 0.55, 5.20, 12.25, 0.95,
+        s, lx, 1.30 + 2 * fact_h + 0.16 + 0.18, lw, 2.14,
         "Оба факта правдивы одновременно: сборка стала почти бесплатной, а "
-        "превращение сборки в ценность — нет. Как это возможно? Держите "
-        "вопрос — мы вернёмся к нему в конце лекции.",
-        size=14, bold=True)
+        "превращение сборки в ценность — нет. Держите вопрос — вернёмся к "
+        "нему в конце лекции.",
+        size=13, bold=True)
+    # right: real meme (This Is Fine) — the paradox in one image, now the
+    # unambiguous hero (>=40% slide area)
+    from _helpers import meme_in_box
+    meme_in_box(s, "s01-this-is-fine.jpg", 5.15, 1.30, 7.65, 5.30, pad=0.18)
     notes_with_sources(s, "s01")
     return s
 
@@ -112,7 +116,7 @@ def s02(p):
              text="AI-продукт: полный жизненный цикл — от намерения до эксплуатации",
              size=30, bold=True, color=DEEP, line_spacing=1.05)
     text_box(s, x=6.58, y=4.35, w=6.30, h=0.6,
-             text="Курс «Осознанное применение AI» · инженеры-студенты 3 курса",
+             text="Курс «Осознанное применение ИИ» · инженеры-студенты 3 курса",
              size=14, italic=True, color=LIGHT)
     gold_callout(
         s, 6.55, 5.05, 6.35, 0.78,
@@ -143,10 +147,33 @@ def s03(p):
         ("headphones", "5. Поддержка", "живёт 24/7"),
         ("scale", "6. Управление", "куда вкладывать"),
     ]
-    for i, (ic, name, desc) in enumerate(steps):
+    centers = []
+    for i in range(6):
         ang = math.pi / 2 - i * (2 * math.pi / 6)
-        nx = cx + r * math.cos(ang)
-        ny = cy - r * math.sin(ang)
+        centers.append((cx + r * math.cos(ang), cy - r * math.sin(ang)))
+    # GATE-B fix: connecting arcs BEHIND the boxes so the 6 nodes read as ONE
+    # loop (previously floating disconnected boxes — directly contradicted
+    # the slide's own claim "петля, а не список"). Arrowheads on every edge
+    # show explicit direction of travel (schema_cycle checklist: explicit
+    # start + continue). Edge into node 0 is gold — marks the return/restart.
+    for i in range(6):
+        x1, y1 = centers[i]
+        x2, y2 = centers[(i + 1) % 6]
+        # shrink the segment toward the box edges so the line doesn't run
+        # underneath the box interior (visually cleaner "hop" between boxes)
+        dx, dy = x2 - x1, y2 - y1
+        dist = math.hypot(dx, dy)
+        ux, uy = dx / dist, dy / dist
+        pad = 0.62
+        sx1, sy1 = x1 + ux * pad, y1 + uy * pad
+        sx2, sy2 = x2 - ux * pad, y2 - uy * pad
+        is_return = (i == 5)  # Управление(5) -> Исследование(0)
+        connector(s, sx1, sy1, sx2, sy2,
+                  color=(GOLD if is_return else LIGHT),
+                  width=(2.6 if is_return else 2.0),
+                  arrow_end=True)
+    for i, (ic, name, desc) in enumerate(steps):
+        nx, ny = centers[i]
         ocean_box(s, nx - 0.70, ny - 0.48, 1.40, 0.96, fill=SURFACE,
                   stroke=MID, stroke_pt=1.3)
         icon(s, ic, nx - 0.24, ny - 0.42, 0.48, "mid")
@@ -205,9 +232,9 @@ def s04(p):
 
     ocean_box(s, 0.55, 4.35, 12.25, 1.65)
     text_box(s, x=0.85, y=4.48, w=11.65, h=1.4,
-             text="Когда AI сделал сборку почти бесплатной — что стало "
+             text="Когда ИИ сделал сборку почти бесплатной — что стало "
                   "настоящим узким местом продукта, и на каждой фазе цикла: "
-                  "какая классическая дисциплина остаётся, что AI ускоряет, "
+                  "какая классическая дисциплина остаётся, что ИИ ускоряет, "
                   "и где AI-first ломается?",
              size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.18)
@@ -278,7 +305,7 @@ def s05(p):
 def s06(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "AI меняет стоимость и доверие каждой стрелки петли — но не одинаково",
+    slide_title(s, "ИИ меняет стоимость и доверие каждой стрелки петли — но не одинаково",
                 size=21, w=12.3, h=0.85)
 
     rows = [
@@ -302,7 +329,7 @@ def s06(p):
     gold_callout(
         s, 0.55, 4.85, 12.25, 0.95,
         "Мета-паттерн, повторяется в каждом из 6 разделов: у каждой стрелки "
-        "есть классическая дисциплина — AI её не отменяет, а меняет её "
+        "есть классическая дисциплина — ИИ её не отменяет, а меняет её "
         "стоимость и требуемую степень проверки.",
         size=13.5, bold=True)
 
@@ -347,7 +374,7 @@ def s07b(p):
              "боль реального человека. «Я бы таким пользовался» — не факт."),
             ("Ментальная модель",
              "Внутри офиса нет фактов — факты снаружи. Записываете гипотезу, "
-             "выходите к людям, проверяете. AI ускоряет сбор, но не заменяет "
+             "выходите к людям, проверяете. ИИ ускоряет сбор, но не заменяет "
              "разговор с настоящим человеком."),
         ])
 
@@ -464,7 +491,7 @@ def s09(p):
 
 
 # ============================================================
-# s10 - AI: discovery tools 2025-26
+# s10 - ИИ: discovery tools 2025-26
 # ============================================================
 def s10(p):
     s = blank(p)
@@ -516,7 +543,7 @@ def s10(p):
 
 
 # ============================================================
-# s11 - AI LIMITS: synthetic sycophancy, live-interview criteria
+# s11 - ИИ LIMITS: synthetic sycophancy, live-interview criteria
 # ============================================================
 def s11(p):
     s = blank(p)
@@ -552,9 +579,9 @@ def s11(p):
 
     gold_callout(
         s, 0.55, 5.10, 12.25, 0.95,
-        "AI-резюме теряет 20-40% деталей интервью (Torres), если пропущен "
+        "ИИ-резюме теряет 20-40% деталей интервью (Torres), если пропущен "
         "шаг «сначала по отдельности» — прослеживаемый до конкретного шага "
-        "сбой, не расплывчатое «AI иногда ошибается».",
+        "сбой, не расплывчатое «ИИ иногда ошибается».",
         size=13, bold=True)
     notes_with_sources(s, "s11")
     return s
@@ -697,7 +724,7 @@ def s13(p):
     filled_rect(s, rx, 3.30, rw, 1.55, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
                 radius=True, radius_adj=0.07)
     text_box(s, x=rx + 0.24, y=3.45, w=rw - 0.48, h=1.25,
-             text="База: ~712 судебных решений по миру с AI-галлюцинированными "
+             text="База: ~712 судебных решений по миру с ИИ-галлюцинированными "
                   "цитатами, ~90% — в 2025 году",
              size=12, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
 

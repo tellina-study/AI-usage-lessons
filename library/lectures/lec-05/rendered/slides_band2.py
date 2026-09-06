@@ -131,6 +131,24 @@ def s16(p):
         "проблемы до траты денег на исследование — но не заменяют тест на "
         "живом пользователе.",
         size=12.5, bold=True)
+    # GATE-B fix #10: Design section (Раздел 2) dropped to 0 content memes
+    # once s19's clown meme was removed for tonal reasons (case = a minor's
+    # death). This restores exactly 1 tasteful meme in the section, reusing
+    # the Bernie template with a caption specific to THIS slide's own claim
+    # (distinct from s09's use of the same template — no joke duplication).
+    # Portrait meme (0.77 aspect) inside a wide box would render tiny if
+    # centered by preserve_aspect alone — box built narrow-left/text-right
+    # instead so the image actually fills its allotted height.
+    mx, my, mw, mh = 7.55, 5.15, 5.25, 1.75
+    ocean_box(s, mx, my, mw, mh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
+    from _helpers import add_image, MEMES
+    add_image(s, MEMES / "s16-bernie.jpg", mx + 0.14, my + 0.10, w=None,
+              h=mh - 0.20, preserve_aspect=True)
+    text_box(s, x=mx + 1.75, y=my + 0.16, w=mw - 1.95, h=mh - 0.32,
+             text="«Я снова прошу»: эвристики ловят типовые проблемы, но не "
+                  "заменяют проверку на живом пользователе.",
+             size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.2)
     notes_with_sources(s, "s16")
     return s
 
@@ -138,9 +156,9 @@ def s16(p):
 def s17(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "AI для дивергенции, человек для конвергенции",
+    slide_title(s, "ИИ для дивергенции, человек для конвергенции",
                 size=24, w=12.2, h=0.85)
-    # funnel: 2-4 AI directions -> 1 human-refined
+    # funnel: 2-4 ИИ directions -> 1 human-refined
     ocean_box(s, 0.55, 1.60, 6.55, 3.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
     text_box(s, x=0.80, y=1.72, w=6.0, h=0.4, text="Генерация направлений",
              size=13.5, bold=True, color=MID)
@@ -172,7 +190,7 @@ def s17(p):
     gold_callout(
         s, 0.55, 4.85, 12.25, 1.05,
         "Конвергенция требует суждения о конкретном контексте, которого нет в "
-        "обучающих данных: AI расширяет пространство вариантов, а выбор и "
+        "обучающих данных: ИИ расширяет пространство вариантов, а выбор и "
         "проверку на живом пользователе оставляем человеку.",
         size=13, bold=True)
     notes_with_sources(s, "s17")
@@ -193,7 +211,7 @@ def s18(p):
     meme_in_box(s, "s18-pigeon.jpg", 5.65, 1.55, 3.55, 3.55, pad=0.12)
     ocean_box(s, 9.45, 1.55, 3.35, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.4)
     text_box(s, x=9.68, y=1.70, w=2.9, h=1.4,
-             text="21 880 оценок WCAG на AI-интерфейсах:\n\n• контраст 26,8%\n"
+             text="21 880 оценок WCAG на ИИ-интерфейсах:\n\n• контраст 26,8%\n"
                   "• использование цвета 19,2%",
              size=11.5, color=DEEP, line_spacing=1.2)
     text_box(s, x=9.68, y=3.35, w=2.9, h=1.6,
@@ -214,8 +232,19 @@ def s19(p):
     set_slide_bg(s, WHITE)
     slide_title(s, "Защита появилась почти через два года после запуска — уже после трагедии",
                 size=21, w=12.3, h=0.85)
-    # left: clown meme (retrofit)
-    meme_in_box(s, "s19-clown.jpg", 0.55, 1.55, 3.75, 4.30, pad=0.14)
+    # GATE-B fix: the clown-applying-makeup meme was removed — this case
+    # involves a minor's death and a meme reads as flippant next to it (owner
+    # + student-simulator flag). Replaced with a sober icon panel (shield +
+    # the "retrofit" concept stated plainly, no joke format) — same visual
+    # weight/footprint as before, no meme anywhere on this slide.
+    ocean_box(s, 0.55, 1.55, 3.75, 4.30, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.5)
+    icon(s, "shield-alert", 1.55, 2.05, 1.75, "light")
+    text_box(s, x=0.85, y=4.05, w=3.15, h=1.5,
+             text="Защита уязвимых пользователей добавлена ретрофитом — "
+                  "после трагедии, а не в исходном дизайн-брифе.",
+             size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             line_spacing=1.2)
     # right: real logo + timeline + facts
     photo_in_box(s, "s19-characterai-real-source.png", 4.55, 1.55, 3.15, 1.45,
                  pad=0.20)
@@ -224,7 +253,7 @@ def s19(p):
              size=14, bold=True, color=MID)
     text_box(s, x=8.15, y=2.02, w=4.4, h=0.9,
              text="14-летний пользователь погиб после месяцев общения с "
-                  "AI-персонажем (02.2024).",
+                  "ИИ-персонажем (02.2024).",
              size=12, color=DEEP, line_spacing=1.15)
     # timeline strip
     stages = ["Запуск", "Трагедия\n02.2024", "Иск\n10.2024", "Защита\n11.2025"]
@@ -274,7 +303,7 @@ def s20(p):
     text_box(s, x=7.85, y=1.85, w=4.7, h=0.55, text="$365 000",
              size=24, bold=True, color=DEEP)
     text_box(s, x=7.10, y=2.55, w=5.5, h=0.5,
-             text="EEOC, 9 авг. 2023 — первое урегулирование по AI-дискриминации",
+             text="EEOC, 9 авг. 2023 — первое урегулирование по ИИ-дискриминации",
              size=11.5, italic=True, color=SLATE, line_spacing=1.1)
     gold_callout(
         s, 6.85, 3.35, 5.95, 1.60,
@@ -293,7 +322,7 @@ def s21(p):
     return build_section_divider(
         p, here_idx=3,
         subtitle="Сборка и запуск — схлопнутая стрелка",
-        bridge="Здесь AI меняет больше всего — стоимость самого написания "
+        bridge="Здесь ИИ меняет больше всего — стоимость самого написания "
                "кода. Но раздел начинается не с этого факта, а с классической "
                "дисциплины релиза: как выкатывать безопасно и когда "
                "остановиться.",
@@ -306,7 +335,7 @@ def s21b(p):
         p, "s21b", title="Сборка и запуск простыми словами", icon_name="sliders-horizontal",
         cards=[
             ("Что это",
-             "Артефакт становится работающим продуктом у пользователей. AI "
+             "Артефакт становится работающим продуктом у пользователей. ИИ "
              "сделал само написание кода почти бесплатным."),
             ("Зачем механика запуска",
              "Раз строить дёшево — цена ошибки теперь не «написать», а "
@@ -460,7 +489,7 @@ def s25(p):
     text_box(s, x=7.60, y=1.75, w=5.0, h=0.4, text="Проблема 70%",
              size=14, bold=True, color=TEAL)
     text_box(s, x=7.60, y=2.30, w=5.0, h=2.4,
-             text="Опытный разработчик переосмысливает AI-вывод и тратит время "
+             text="Опытный разработчик переосмысливает ИИ-вывод и тратит время "
                   "на переделку.\n\nНовичок отправляет «карточный домик кода», "
                   "который выглядит правдоподобно, но рассыпается под "
                   "нагрузкой.",

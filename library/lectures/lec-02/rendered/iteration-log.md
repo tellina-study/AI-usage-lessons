@@ -1397,3 +1397,206 @@ deck.yaml проверен — дублирующего content-summary поля
   превышает CLAUDE.md «Document Size Limit» (600 строк). Не моя правка
   ввела превышение (было 1298 до этого раунда), но рекомендую
   оркестратору split на iteration-log-partN.md в следующем цикле.
+
+---
+
+## v3.2 (issue #183, round 4) — «мемы, а не скриншоты/диаграммы»
+
+Owner-фидбек (дословно): «я просил мемы и иллюстрации, но вижу только 1 мем
+(пират) и 1 хорошую иллюстрацию (кости)! замени все остальные и докинь. это
+именно иллюстрирующие мемы или иллюстрации должны быть — яркий образ,
+цепляющий за суть рассказа».
+
+### s05a (divider, Раздел 1) — iter 1
+
+- Inspected: v3.1 скриншот ChatGPT/strawberry в белом Ocean box — не мем,
+  скриншот диалога (owner: провал).
+- Changed: заменил на мем-шаблон Surprised Pikachu (imgflip, 1704×2102,
+  пустая белая полоса верх ~27% высоты) — наложил через PIL текст «модель
+  уверенно отвечает неправильно — она видит куски, не буквы» (DejaVuSans-
+  Bold, чёрный на белом, без обводки — фон уже белый).
+- Re-render: snapshots/s-07.png — читается чётко, эмоция Pikachu усиливает
+  тезис.
+- 5-Second Test: PASS — «AI уверенно ошибается» считывается мгновенно.
+- Projector 50%: PASS.
+- Verdict: accept (1 итерация — простая замена, паттерн уже проверен на
+  s01 с тем же приёмом «текст поверх пустого поля шаблона»).
+
+### s08 («Гонка патчей») — iter 1-2
+
+- Iter 1: заменил inline-скриншот (тот же strawberry-crop) на мем Expanding
+  Brain (imgflip, 4 панели) с текстом по панелям: GPT-5.2→5.5→5.6→
+  StrawberryBench. Первый прогон — текст на панелях мелкий на 150dpi
+  снэпшоте (font size=34, meme_h=2.05").
+- Inspected iter 1: crop зум показал панельный текст читаемым только при
+  увеличении — 50%-zoom projector testFAIL.
+- Iter 2 changed: увеличил meme_h 2.05→2.35", font size 34→40 в PIL-
+  оверлее, сжал левый mechanism-блок (col_h 3.85→1.25) чтобы освободить
+  вертикальное место без коллизии с gold_callout (y=5.62).
+- Re-render: snapshots/s-10.png — текст на панелях чётко читается.
+- 5-Second Test: PASS — узнаваемый формат мема усиливает «эскалацию» гонки
+  патчей параллельно timeline справа.
+- Verdict: accept (2 итерации).
+
+### s10 (glitch-токены) — iter 1-2
+
+- Iter 1: убрал скриншот GPT Playground (owner: «слишком мелко, ничего не
+  добавляет») совсем; вставил официальный артворк Magikarp (Ken Sugimori)
+  средним размером (magi_h=1.30") — прямая отсылка к имени токена.
+- Inspected iter 1: текст «инициализации.» внизу left-box обрезан нижней
+  границей rounded box (текст трёхстрочный вместо ожидаемых двух).
+- Iter 2 changed: сократил формулировку описания (1 предложение вместо 2),
+  уменьшил magi_h 1.30→1.20", сжал шрифты механизм-строки 10.5→10pt,
+  пересчитал vertical layout — итог текст полностью в границах box (запас
+  0.06" до низа).
+- Re-render: snapshots/s-12.png — чисто, без clipping.
+- 5-Second Test: PASS — узнаваемый покемон считывается мгновенно как
+  «SolidGoldMagikarp — это про покемона».
+- Verdict: accept (2 итерации).
+
+### s12a (divider, Раздел 2) — iter 1
+
+- Inspected: v3.1 word2vec-диаграмма (king-man+woman=queen) — научная
+  иллюстрация, не мем (owner explicit: не считается).
+- Changed: заменил на мем Pam «They're the same picture» (The Office) —
+  прямая метафора «разные слова (SSL/HTTPS), одна суть» для embeddings/
+  similarity, тема раздела.
+- Re-render: snapshots/s-14.png — Pam-мем занимает divider box чисто, без
+  доп. подписи (текст мема встроен в саму картинку шаблона).
+- 5-Second Test: PASS.
+- Verdict: accept (1 итерация — готовый шаблон без PIL-overlay нужен).
+
+### s14 (эмбеддинги-scatter) — iter 1
+
+- Inspected: маленький декоративный мок «звёздная карта»
+  (illustrations/s14-space.png, свой flat-рисунок из v3.0) в правом верхнем
+  углу scatter-box — примитивные фигуры (круги+звезда), НЕ media-rich,
+  дублирует сам scatter снизу.
+- Changed: удалил `add_image` вызов и комментарий целиком.
+- Re-render: snapshots/s-17.png — чисто, gap не образовался (scatter уже
+  занимал весь box, мок был decorative overlay поверх).
+- Verdict: accept (1 итерация — чистое удаление).
+
+### s18a (divider, Раздел 3) — iter 1
+
+- Inspected: v3.1 титульная страница arXiv-статьи «Attention Is All You
+  Need» — текстовый документ, нечитаемый на слайде, не иллюстрация и не
+  мем (owner: «что-то фонариком высвечивают, а вокруг другое»).
+- Changed: заменил на стоковую иллюстрацию театрального прожектора (3 луча
+  света на подиум в тёмной комнате, imgflip Spotlight template) — буквальная
+  метафора attention.
+- Re-render: snapshots/s-20.png — яркий, контрастный образ, хорошо читается
+  на 50%-zoom.
+- 5-Second Test: PASS — «луч выделяет одно из темноты» = attention
+  считывается сразу, даже без объяснения.
+- Verdict: accept (1 итерация).
+
+### s26a (divider, Раздел 4) — iter 1
+
+- Inspected: фото костей (Wikimedia) — owner одобрил КАРТИНКУ в v3.1,
+  только подпись-источник снизу требует удаления по deck-wide правилу.
+- Changed: убрал kwarg `illus_caption` из вызова `section_divider()`.
+  Картинка не тронута.
+- Re-render: snapshots/s-28.png — divider чист, без caption-строки внизу
+  картинки; вертикальное место не пересчитывалось (`section_divider()`
+  уже условно не резервирует место под caption когда параметр None).
+- Verdict: accept (1 итерация).
+
+### s31 (горшочек/стоп-условия) — iter 1-2
+
+- Iter 1: заменил гравюру Otto Ubbelohde (1909, статичная, малоузнаваемая
+  для современной аудитории) на кадр из советского мультфильма «Горшочек
+  каши» (Союзмультфильм, 1984) — YouTube maxres thumbnail, кроп pillarbox
+  (убрал чёрные полосы по бокам 1280×720 → 1040×720). Увеличил слот
+  1.55"→1.60" по высоте.
+- Inspected iter 1: caption "«Горшочек каши» — Гримм, 1909" оставался под
+  картинкой (устаревшая атрибуция) — needs removal per deck-wide caption
+  rule.
+- Iter 2 changed: убрал text_box с caption целиком; скорректировал
+  gsh_h 1.60→1.50 + добавил vertical padding (+0.08) чтобы кадр не упирался
+  в нижнюю границу ocean_box.
+- Re-render: snapshots/s-34.png — кадр героини с горшочком читается чётко,
+  без caption, в границах box.
+- 5-Second Test: PASS — для русскоязычной аудитории МГТУ узнаваемость выше,
+  чем немецкая гравюра 1909 года.
+- Verdict: accept (2 итерации).
+
+### s33a (divider, Раздел 5) — iter 1
+
+- Inspected: матрёшка (Wikimedia) — owner одобрил в v3.1; пробовал
+  альтернативу chonk chart (см. attribution.md «попытки и компромиссы») —
+  не нашёл чистого скачиваемого шаблона с лицензией.
+- Changed: убрал только `illus_caption` kwarg. Картинка не тронута.
+- Re-render: snapshots/s-36.png — чисто.
+- Verdict: accept (1 итерация — matryoshka остаётся как fallback per
+  brief §9 «если не выйдет — оставь матрёшку без подписи»).
+
+### s35a (divider, Раздел 6, «Финал») — iter 1
+
+- Inspected: v3.1 «This is fine» (K.C. Green) — owner explicit: «не к
+  месту» (комикс про игнорирование катастрофы, не про «сборку конвейера
+  воедино»).
+- Changed: заменил на мем Pepe Silvia / conspiracy board (It's Always
+  Sunny) — «Charlie связывает все нити воедино» = прямая метафора «весь
+  конвейер лекции собран целиком» (тезис слайда).
+- Re-render: snapshots/s-41.png — Charlie Day у доски с нитями считывается
+  как «всё связано» мгновенно.
+- 5-Second Test: PASS.
+- Verdict: accept (1 итерация).
+
+### Deck-wide caption removal
+
+- Механика: `section_divider()` уже условный на `illus_caption` (см.
+  build_lec02.py ~line 450: `if illus_caption:` — блок с text_box не
+  выполняется когда None/omitted). Для s08/s31 (inline `add_image`, не через
+  `section_divider`) — убрал сами вызовы `text_box(...)` с caption целиком
+  (не просто обнулил текст).
+- Verification grep (после rebuild): `Wikimedia|скриншот|CC-BY|Уббелоде|
+  Otto|imgflip|arXiv|LessWrong|Alammar|LobeHub|Aardman|forum|
+  community\.openai|Commons|источник` на извлечённом visible PPTX тексте —
+  **0 hits** (см. финальный отчёт). 3 false-positive hits на "источник" в
+  speaker notes (не visible body, естественное русское слово «источник
+  ошибок», не атрибуция) — не в scope этого grep (grep требовался только
+  для visible body).
+
+### Финальная верификация (после всех правок)
+
+- Full rebuild: 47/47 slides OK. PPTX 2253 KB, PDF пересобран.
+- Notes-PDF regenerated: 63 страницы (47 + continuations).
+- Anti-leak grep (visible + notes): 0 hits на
+  `\[VERIFY-DAY-OF\]|\[FACT-CHECK|LO[1-9]|§[0-9]|→ s[0-9]+|\(s[0-9][0-9]\)|
+  Лектору|Вы здесь`.
+- Caption-leak grep (visible): 0 hits (см. выше); 3 false-positive на
+  notes (не visible, не атрибуция).
+- Deep latin-token scan (visible, без artefact `[slide N]` markers):
+  219 occurrences / 140 unique tokens — все pre-existing термины
+  (модели/API-параметры/примеры BPE «low/lower/newest/widest» — учебный
+  материал, не англицизм-drift) и не связаны с новыми правками этого
+  раунда. Проверено: мем-этикетки на английском («They're the same
+  picture», «Corporate needs you...») НЕ извлекаются как PPTX text (они
+  часть растрового изображения, не text_frame) — 0 влияния на текстовый
+  scan; это ожидаемо и допустимо per brief §8 (мем-этикетка = whitelisted
+  формат, не body-контент).
+- Snapshots: все 47 sNN.png (и legacy s-NN.png) перерендерены (150dpi).
+- deck.yaml: version v3.1 → v3.2, changelog добавлен, visual.primary
+  обновлён для 9 затронутых слайдов (s05a, s08, s10, s12a, s14, s18a,
+  s26a, s31, s33a, s35a).
+- attribution.md: добавлена секция v3.2-active (9 новых/переиспользуемых
+  файлов), старые словарные записи перемещены в v3.1-historical (не
+  удалены — historical trail), добавлена секция «попытки и компромиссы»
+  round 4.
+
+### s05a (divider, Раздел 1) — iter 2 (orchestrator verification pass)
+
+- Inspected: snapshots/s-07.png — при контрастной инспекции вверху
+  Pikachu-мема виден слабый след замазанного оригинального imgflip-текста
+  (JPEG-ghost: пиксели 254 vs 255, физически почти невидимо, но
+  проявляется при агрессивной цветокоррекции/автоконтрасте).
+- Root cause: верхняя полоса скачанного шаблона не была идеально белой —
+  imgflip отдаёт превью с полупрозрачно замазанным текстом прошлых мемов.
+- Changed: залил rows 0-610 шаблона (`surprised-pikachu-template.jpg`) и
+  rows 0-185 готового мема (`surprised-pikachu-tokenize.jpg`) чистым
+  `#FFFFFF` через PIL; верифицировано numpy: top-band min=255 в обоих.
+- Re-render: full rebuild pptx → PDF → все 47 snapshots (s-NN.png) +
+  notes-PDF (63 стр). Инспекция s-07.png: верх мема чистый. PASS.
+- Verdict: accept.

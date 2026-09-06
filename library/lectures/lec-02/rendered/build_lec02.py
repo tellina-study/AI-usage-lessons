@@ -787,14 +787,16 @@ def build_s04b(p):
 # Раздел 1 — Токенизация
 # ============================================================
 def build_s05a(p):
+    """v3.2 (#183 round 4, owner-фидбек: «вижу только 1 мем и 1 хорошую
+    иллюстрацию — замени скриншоты/диаграммы на узнаваемые мемы»):
+    Surprised Pikachu вместо скриншота диалога ChatGPT про strawberry —
+    прямая иллюстрация тезиса «модель уверенно отвечает неправильно»."""
     section_divider(
         p, section_n=1, sub_title="Токенизация",
         frame_phrase="Как модель видит ваш текст",
         tag="3 разбора · 3 провала", active_stage=1, notes_id="s05a",
         passed={0},
-        illus=ASSETS / "web/strawberry-openai-crop.jpg",
-        illus_caption="Реальный диалог: ChatGPT о «strawberry» — "
-                      "скриншот, OpenAI Community, 2024")
+        illus=ASSETS / "web/surprised-pikachu-tokenize.jpg")
 
 
 def token_chips_runs(pairs):
@@ -893,45 +895,40 @@ def build_s06(p):
 
 
 def build_s08(p):
-    """v3.0 «Гонка патчей»: механизм слева + временная шкала патчей
-    GPT-5.2 → GPT-5.5 → GPT-5.6 + StrawberryBench + callout."""
+    """v3.2 (#183 round 4, owner-фидбек: заменить скриншот на мем):
+    механизм слева (компактно) + Expanding Brain мем (4 панели, свой
+    текст поверх шаблона) вместо скриншота диалога + временная шкала
+    патчей GPT-5.2 → GPT-5.5 → GPT-5.6 + StrawberryBench + callout."""
     s = blank(p)
     slide_title(s, "Гонка патчей: strawberry починили в апреле, "
                    "cranberry — только в июле", size=24)
-    # Слева — механизм
-    ocean_box(s, 0.55, 1.62, 5.0, 3.85, fill=SURFACE, stroke=LIGHT,
+    # Слева — механизм (компактно, освобождает место мему снизу)
+    ocean_box(s, 0.55, 1.62, 5.0, 1.25, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.4)
-    text_box(s, 0.85, 1.80, 4.4, 0.4, "Механизм — слепота к буквам",
-             size=14.5, bold=True, color=MID)
-    text_runs(s, 0.85, 2.28, 4.4, 0.95, [
-        {"text": "strawberry", "size": 15, "font": FONT_MONO, "color": DEEP},
-        {"text": "  →", "size": 15, "color": SLATE},
-        {"text": "[st]", "size": 15, "font": FONT_MONO, "bold": True,
-         "color": MID, "newpara": True, "space_before_pt": 6},
-        {"text": "[raw]", "size": 15, "font": FONT_MONO, "bold": True,
-         "color": TEAL},
-        {"text": "[berry]", "size": 15, "font": FONT_MONO, "bold": True,
-         "color": LIGHT},
-    ])
-    text_runs(s, 0.85, 3.32, 4.4, 0.4, [
-        {"text": "Модель видит ", "size": 15, "color": DEEP},
-        {"text": "3 токена", "size": 15, "bold": True, "color": DEEP},
-        {"text": ", не 10 букв.", "size": 15, "color": DEEP},
-    ])
-    # Реальный скриншот: ChatGPT про strawberry (тот же кейс, что и
-    # дивайдер s05a) — визуальное доказательство описанного механизма.
-    # Используем tight-crop (1179×600, только ключевой обмен репликами).
-    shot_w = 2.4
-    shot_h = shot_w * 600 / 1179
-    shot_x = 0.85 + (4.4 - shot_w) / 2
-    shot_y = 3.75
-    ocean_box(s, shot_x - 0.06, shot_y - 0.06, shot_w + 0.12, shot_h + 0.12,
-              fill=RGBColor(0x11, 0x14, 0x18), stroke=TEAL, stroke_pt=1.2)
-    add_image(s, ASSETS / "web/strawberry-openai-crop.jpg",
-              x=shot_x, y=shot_y, w=shot_w)
-    text_box(s, 0.85, shot_y + shot_h + 0.14, 4.4, 0.26,
-             "скриншот: ChatGPT, форум OpenAI, 2024",
-             size=9, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    text_box(s, 0.85, 1.74, 4.4, 0.36, "Механизм — слепота к буквам",
+             size=14, bold=True, color=MID)
+    text_runs(s, 0.85, 2.10, 4.4, 0.7, [
+        {"text": "strawberry", "size": 13.5, "font": FONT_MONO,
+         "color": DEEP},
+        {"text": " → ", "size": 13.5, "color": SLATE},
+        {"text": "[st][raw][berry]", "size": 12.5, "font": FONT_MONO,
+         "bold": True, "color": MID},
+        {"text": "  Модель видит ", "size": 13, "color": DEEP},
+        {"text": "3 токена", "size": 13, "bold": True, "color": DEEP},
+        {"text": ", не 10 букв.", "size": 13, "color": DEEP},
+    ], line_spacing=1.15)
+    # Expanding Brain мем (imgflip-шаблон, свой текст поверх через PIL) —
+    # та же гонка патчей, что и в шкале справа, но как узнаваемый образ.
+    # v3.2 iter2: увеличен (было h=2.05) — текст на панелях мема мелкий
+    # на 50%-zoom projector test, поднял readability.
+    meme_h = 2.35
+    meme_w = meme_h * 804 / 992
+    meme_x = 0.55 + (5.0 - meme_w) / 2
+    meme_y = 3.05
+    ocean_box(s, meme_x - 0.10, meme_y - 0.10, meme_w + 0.20,
+              meme_h + 0.20, fill=WHITE, stroke=TEAL, stroke_pt=1.3)
+    add_image(s, ASSETS / "web/expanding-brain-strawberry.jpg",
+              x=meme_x, y=meme_y, h=meme_h)
     # Справа — временная шкала гонки патчей (4 карточки вдоль оси)
     cards = [
         ("GPT-5.2 · дек 2025", "strawberry ✗ — «в strawberry две r»",
@@ -1052,36 +1049,36 @@ def build_s09(p):
 
 
 def build_s10(p):
-    """Glitch-токены: story / механизм / факт + блок «Что на практике»
-    (v2.1 #183: диагностика + санитизация) + footer-строка."""
+    """v3.2 (#183 round 4, owner: скриншот Playground «слишком мелко,
+    ничего не добавляет» — убрать совсем): story / механизм + прямая
+    отсылка-иллюстрация Magikarp (покемон) СРЕДНИМ размером + факт +
+    блок «Что на практике» (v2.1 #183: диагностика + санитизация)."""
     s = blank(p)
     slide_title(s, "Порядка 4% словаря — glitch-токены", size=26, y=0.42,
                 h=0.6)
     col_y, col_h = 1.18, 3.42
-    # Слева — story + механизм компактно (v3.0: анекдот свёрнут)
+    # Слева — story + механизм + Magikarp-иллюстрация (v3.2: заменяет
+    # мелкий нечитаемый скриншот Playground)
     ocean_box(s, 0.55, col_y, 3.95, col_h, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.4)
     text_box(s, 0.8, col_y + 0.14, 3.45, 0.4, "SolidGoldMagikarp (2023)",
              size=13, bold=True, color=MID, font=FONT_MONO)
-    text_box(s, 0.8, col_y + 0.56, 3.45, 0.65,
+    text_box(s, 0.8, col_y + 0.54, 3.45, 0.62,
              "Юзернейм с Reddit в словаре GPT — модель не могла его "
-             "повторить.", size=11.5, color=DEEP, line_spacing=1.12)
-    # Реальный скриншот того же корпуса исследований (glitch-токен
-    # «petertodd» — LessWrong, тот же автор/серия постов).
-    shot2_w = 2.5
-    shot2_h = shot2_w * 359 / 1157
-    shot2_x = 0.8 + (3.45 - shot2_w) / 2
-    shot2_y = col_y + 1.24
-    ocean_box(s, shot2_x - 0.06, shot2_y - 0.06, shot2_w + 0.12,
-              shot2_h + 0.12, fill=WHITE, stroke=TEAL, stroke_pt=1.1)
-    add_image(s, ASSETS / "web/solidgoldmagikarp-1.png",
-              x=shot2_x, y=shot2_y, w=shot2_w)
-    text_runs(s, 0.8, shot2_y + shot2_h + 0.20, 3.45, 0.9, [
-        {"text": "Механизм: ", "size": 11, "bold": True, "color": TEAL},
+             "повторить (имя токена — отсылка к покемону Magikarp).",
+             size=10.5, color=DEEP, line_spacing=1.1)
+    magi_h = 1.20
+    magi_w = magi_h * 820 / 669
+    magi_x = 0.8 + (3.45 - magi_w) / 2
+    magi_y = col_y + 1.24
+    add_image(s, ASSETS / "web/magikarp-clean.png",
+              x=magi_x, y=magi_y, h=magi_h)
+    text_runs(s, 0.8, magi_y + magi_h + 0.10, 3.45, 0.62, [
+        {"text": "Механизм: ", "size": 10, "bold": True, "color": TEAL},
         {"text": "корпус словаря ≠ корпус модели → эмбеддинг токена "
-                 "остаётся у случайной инициализации.", "size": 11,
+                 "остаётся у случайной инициализации.", "size": 10,
          "color": DEEP},
-    ], line_spacing=1.12)
+    ], line_spacing=1.1)
     # Центр — «На что влияет» (v3.0: главный блок)
     ocean_box(s, 4.7, col_y, 3.95, col_h, fill=WHITE, stroke=TEAL,
               stroke_pt=1.4)
@@ -1183,14 +1180,15 @@ def build_s11(p):
 # Раздел 2 — Эмбеддинги
 # ============================================================
 def build_s12a(p):
+    """v3.2 (#183 round 4): Pam «They're the same picture» вместо
+    word2vec-диаграммы — узнаваемый мем про «разные слова, один смысл»,
+    прямая отсылка к теме раздела (similarity/embeddings)."""
     section_divider(
         p, section_n=2, sub_title="Эмбеддинги",
         frame_phrase="Пространство смыслов — и граница похожести",
         tag="4 разбора · 1 провал", active_stage=2, notes_id="s12a",
         passed={0, 1},
-        illus=ASSETS / "web/word2vec-king-analogy-arrows.png",
-        illus_caption="Классика word2vec: king − man + woman ≈ queen "
-                      "(Jay Alammar, illustrated word2vec)")
+        illus=ASSETS / "web/pam-same-picture.jpg")
 
 
 def build_s12(p):
@@ -1371,10 +1369,8 @@ def build_s14(p):
              bold=True, color=DEEP, align=PP_ALIGN.CENTER)
     text_box(s, 5.05, 4.62, 2.3, 0.4, "выброс — другая область",
              size=10, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    # v3.0: иллюстративность пространства — «звёздная карта» (свой flat
-    # рисунок, поддерживает scatter, не заменяет его)
-    add_image(s, ASSETS / "illustrations/s14-space.png",
-              x=5.25, y=2.35, w=1.70)
+    # v3.2 (#183 round 4): «звёздная карта»-мок убран — дублировала
+    # scatter ниже, owner-мандат «замени/убери мелкие декоративные мокапы».
     # Справа — 3 факт-карточки
     facts = [
         ("Размерность", [
@@ -1577,6 +1573,9 @@ def build_s17(p):
 # БАТЧ 2 — Раздел 3. Механизм внимания
 # ============================================================
 def build_s18a(p):
+    """v3.2 (#183 round 4): луч прожектора вместо титульной страницы
+    arXiv-статьи — «луч высвечивает одно, вокруг темнота» = буквальная
+    иллюстрация внимания (attention — что модель выделяет из контекста)."""
     section_divider(
         p, section_n=3, sub_title="Механизм внимания",
         frame_phrase="Как модель решает, на что опереться в контексте — и "
@@ -1584,9 +1583,7 @@ def build_s18a(p):
         tag="4 разбора · 2 провала", active_stage=3, notes_id="s18a",
         passed={0, 1, 2},
         frame_size=18,
-        illus=ASSETS / "web/attention-paper-title.png",
-        illus_caption="Статья, давшая механизму имя: Vaswani et al., "
-                      "«Attention Is All You Need», 2017 (arXiv:1706.03762)")
+        illus=ASSETS / "web/spotlight-clean.jpg")
 
 
 # v3.0: пример «Кот съел мышь, потому что ОН был голоден» — вес от «он»
@@ -2201,9 +2198,7 @@ def build_s26a(p):
         tag="4 разбора · 2 провала", active_stage={4, 5}, notes_id="s26a",
         passed={0, 1, 2, 3},
         frame_size=18,
-        illus=ASSETS / "web/dice-wikimedia.jpg",
-        illus_caption="Казино-кости Caesars Palace — Wikimedia Commons, "
-                      "CC-BY-SA")
+        illus=ASSETS / "web/dice-wikimedia.jpg")
 
 
 S26_BARS = [("яблоко", 0.32, True), ("пиццу", 0.19, False),
@@ -2664,18 +2659,17 @@ def build_s31(p):
              "Вырожденный цикл повторов: модель «зацикливается» на одном "
              "токене или фразе и генерирует полотно повторов вместо "
              "остановки.", size=12, color=DEEP, line_spacing=1.15)
-    # Реальная иллюстрация: «Горшочек каши» / «Sweet Porridge» (братья
-    # Гримм) — Otto Ubbelohde, 1909, общественное достояние. Каша,
-    # заполняющая деревню, — метафора цикла без стоп-условия.
-    gsh_w = 1.55
-    gsh_h = gsh_w * 324 / 640
-    gsh_x = 10.55
-    gsh_y = 4.30 + (1.1 - gsh_h) / 2
-    add_image(s, ASSETS / "web/gorshochek-ubbelohde-1909.jpg",
-              x=gsh_x, y=gsh_y, w=gsh_w)
-    text_box(s, gsh_x - 0.12, gsh_y + gsh_h + 0.03, gsh_w + 0.24, 0.28,
-             "«Горшочек каши» — Гримм, 1909", size=7.5, italic=True,
-             color=LIGHT, align=PP_ALIGN.CENTER)
+    # v3.2 (#183 round 4, owner: заменить гравюру на узнаваемый образ для
+    # русскоязычной аудитории): кадр из советского мультфильма «Горшочек
+    # каши» (Союзмультфильм, 1984) — момент «горшочек, не вари!», прямая
+    # метафора цикла без стоп-условия. Слот увеличен (было 1.55", стало
+    # 1.85") — так лицо героини и горшок читаемы на превью.
+    gsh_h = 1.50
+    gsh_w = gsh_h * 1040 / 720
+    gsh_x = 12.55 - gsh_w
+    gsh_y = 4.30 + (1.5 - gsh_h) / 2 + 0.08
+    add_image(s, ASSETS / "web/gorshochek-1984-crop.jpg",
+              x=gsh_x, y=gsh_y, h=gsh_h)
     gold_callout(s, 0.55, 6.05, 12.25, 0.68,
                  "Практика: repetition_penalty / frequency_penalty снижают "
                  "вероятность буквальных повторов; max_tokens — страховка "
@@ -2778,9 +2772,7 @@ def build_s33a(p):
                      "каждый класс умеет",
         tag="4 разбора", active_stage=set(), notes_id="s33a",
         bar_muted=True, frame_size=18,
-        illus=ASSETS / "web/matryoshka-wikimedia.jpg",
-        illus_caption="Русская матрёшка — Wikimedia Commons, CC-BY-SA "
-                      "3.0 / GFDL")
+        illus=ASSETS / "web/matryoshka-wikimedia.jpg")
 
 
 S33_COLS = [
@@ -2909,15 +2901,17 @@ def build_s34(p):
 # v3.0 — Раздел 6. Финал (было «Раздел 5»)
 # ============================================================
 def build_s35a(p):
+    """v3.2 (#183 round 4, owner: «"This is fine" не к месту»): Pepe
+    Silvia / conspiracy board (It's Always Sunny) — узнаваемый образ
+    «собираю все нити воедино», подходит к теме «конвейер собран
+    целиком»."""
     section_divider(
         p, section_n=6, sub_title="Финал",
         frame_phrase="Конвейер собран целиком: сводка механизмов и границ — "
                      "и решение, когда LLM не тот инструмент",
         tag="6 разборов", active_stage=set(range(7)),
         notes_id="s35a", frame_bar=True, frame_size=18,
-        illus=ASSETS / "web/this-is-fine-meme-fb.jpg",
-        illus_caption="«This is fine» — K.C. Green, комикс Gunshow #648, "
-                      "2013")
+        illus=ASSETS / "web/pepe-silvia.jpg")
 
 
 def build_s35(p):

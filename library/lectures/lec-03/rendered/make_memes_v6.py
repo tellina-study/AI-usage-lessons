@@ -322,10 +322,69 @@ def make_always_has_been():
     return out
 
 
+# ------------------------------------------------------------------
+# s14 — STAR WARS YODA — учитель→ученик: большая дообученная модель
+#       передаёт умение маленькой (дистилляция). Чистый шаблон без baked-in.
+#       Верхняя полоса (тёмное небо) + нижняя (одежда) — outline-подписи.
+# ------------------------------------------------------------------
+def make_yoda():
+    img = Image.open(SRC / "yoda.jpg").convert("RGB")
+    W, H = img.size            # 620x713
+    d = ImageDraw.Draw(img)
+    outline_block(d, "учитель — большая дообученная модель",
+                  (10, 6, W - 20, int(H * 0.16)), font(34),
+                  align="center", valign="top", ow=3)
+    outline_block(d, "передаёт умение маленькому ученику",
+                  (10, int(H * 0.83), W - 20, int(H * 0.16)), font(34),
+                  align="center", valign="bottom", ow=3)
+    out = WEB / "s14-yoda-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s27b — TWO GUYS ON A BUS — грустный (пере-усложнённый агент) vs довольный
+#        (тонкий агент по умолчанию, смотрит на закат). Чистый шаблон.
+#        Подпись у грустного (лево-низ) + у довольного (право-центр).
+# ------------------------------------------------------------------
+def make_two_guys_bus():
+    img = Image.open(SRC / "two-guys-bus.jpg").convert("RGB")
+    W, H = img.size            # 762x675
+    d = ImageDraw.Draw(img)
+    # грустный (лево) — усложнил на всякий случай
+    outline_block(d, "усложнил на всякий случай",
+                  (6, int(H * 0.60), int(W * 0.36), int(H * 0.30)),
+                  font(26), align="center", valign="center", ow=3, line_h=1.06)
+    # довольный (право) — начал с тонкого агента
+    outline_block(d, "начал с тонкого агента",
+                  (int(W * 0.60), int(H * 0.04), int(W * 0.38), int(H * 0.26)),
+                  font(26), align="center", valign="center", ow=3, line_h=1.06)
+    out = WEB / "s27b-bus-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s31 — WAITING SKELETON — «жду ваши вопросы». Чистый шаблон, лёгкий финал.
+#        Верхняя полоса (небо/трава) — одна outline-подпись.
+# ------------------------------------------------------------------
+def make_skeleton():
+    img = Image.open(SRC / "waiting-skeleton.jpg").convert("RGB")
+    W, H = img.size            # 298x403
+    d = ImageDraw.Draw(img)
+    outline_block(d, "жду ваши вопросы",
+                  (6, 4, W - 12, int(H * 0.20)), font(28),
+                  align="center", valign="top", ow=3, line_h=1.04)
+    out = WEB / "s31-skeleton-ru.png"
+    img.save(out)
+    return out
+
+
 ALL = [
     make_gru, make_change_my_mind, make_pigeon, make_pooh, make_pooh_memory,
     make_roll_safe, make_doge, make_batman, make_this_is_fine,
     make_always_has_been,
+    make_yoda, make_two_guys_bus, make_skeleton,
 ]
 
 if __name__ == "__main__":

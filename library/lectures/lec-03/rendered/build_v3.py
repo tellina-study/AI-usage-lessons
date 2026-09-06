@@ -1302,62 +1302,70 @@ def build_s14(p):
     text_box(s, 0.55, 1.12, 12.25, 0.44,
              "Дообучение (fine-tuning) меняет поведение модели. Дистилляция — сжатие: перенос умений большой модели в маленькую. Их часто путают, но это две таксономически разные операции, работающие в связке.",
              size=13.5, italic=True, color=MID, line_spacing=1.14)
-    # pipeline: teacher (FT) -> distill -> student
+    # pipeline: teacher (FT) -> distill -> student  (сжат влево — правая
+    # колонка отдана под реальный мем «Yoda» учитель→ученик)
     sy, sh = 1.90, 2.48
-    ocean_box(s, 0.55, sy, 12.25, sh)
-    bw, bh = 3.05, 1.50
+    ocean_box(s, 0.55, sy, 8.55, sh)
+    bw, bh = 2.05, 1.50
     by = sy + 0.56
     t1x = 0.85
     arr1 = t1x + bw
-    t2x = arr1 + 1.05
+    t2x = arr1 + 0.80
     arr2 = t2x + bw
-    t3x = arr2 + 1.05
+    t3x = arr2 + 0.80
     # teacher — big, fine-tuned
     filled_rect(s, t1x, by, bw, bh, TEAL_TINT, stroke=TEAL, stroke_pt=1.5,
                 radius=True, radius_adj=0.08)
-    icon(s, "cpu", t1x + bw / 2 - 0.24, by + 0.14, 0.44, "teal")
-    text_box(s, t1x + 0.12, by + 0.66, bw - 0.24, 0.36, "Учитель (большая)",
+    icon(s, "cpu", t1x + bw / 2 - 0.20, by + 0.12, 0.38, "teal")
+    text_box(s, t1x + 0.08, by + 0.58, bw - 0.16, 0.30, "Учитель",
              size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, t1x + 0.14, by + 1.02, bw - 0.28, 0.40,
-             "дообучена под задачу", size=11.5, italic=True,
-             color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.02)
-    text_box(s, arr1 - 0.10, by - 0.40, 1.25, 0.30, "дистилляция",
-             size=12, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    right_arrow(s, arr1 + 0.08, by + bh / 2 - 0.19, 0.90, 0.38, fill=MID)
+    text_box(s, t1x + 0.10, by + 0.90, bw - 0.20, 0.52,
+             "большая, дообучена под задачу", size=10.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.04)
+    text_box(s, arr1 - 0.32, by - 0.40, 1.25, 0.30, "дистилляция",
+             size=11, bold=True, color=MID, align=PP_ALIGN.CENTER)
+    right_arrow(s, arr1 + 0.06, by + bh / 2 - 0.17, 0.68, 0.34, fill=MID)
     # student — small, cheaper (gold anchor)
     filled_rect(s, t2x, by + 0.20, bw, bh - 0.40, GOLD_TINT, stroke=GOLD,
                 stroke_pt=2.0, radius=True, radius_adj=0.08)
-    icon(s, "cpu", t2x + bw / 2 - 0.19, by + 0.30, 0.36, "gold")
-    text_box(s, t2x + 0.12, by + 0.70, bw - 0.24, 0.36, "Ученик (маленькая)",
+    icon(s, "cpu", t2x + bw / 2 - 0.17, by + 0.28, 0.32, "gold")
+    text_box(s, t2x + 0.08, by + 0.66, bw - 0.16, 0.30, "Ученик",
              size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, t2x + 0.14, by + 1.04, bw - 0.28, 0.34,
-             "дешевле · быстрее · то же качество на узкой задаче", size=11,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.0)
-    text_box(s, arr2 - 0.10, by - 0.40, 1.25, 0.30, "в бой →",
-             size=12, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    right_arrow(s, arr2 + 0.08, by + bh / 2 - 0.19, 0.90, 0.38, fill=LIGHT)
+    text_box(s, t2x + 0.10, by + 0.96, bw - 0.20, 0.44,
+             "маленькая, дешевле и быстрее", size=10.5,
+             italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.04)
+    text_box(s, arr2 - 0.32, by - 0.40, 1.25, 0.30, "в бой →",
+             size=11, bold=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    right_arrow(s, arr2 + 0.06, by + bh / 2 - 0.17, 0.68, 0.34, fill=LIGHT)
     filled_rect(s, t3x, by, bw, bh, SURFACE, stroke=LIGHT, stroke_pt=1.5,
                 radius=True, radius_adj=0.08)
-    icon(s, "target", t3x + bw / 2 - 0.24, by + 0.14, 0.44, "mid")
-    text_box(s, t3x + 0.12, by + 0.66, bw - 0.24, 0.36, "В бой",
+    icon(s, "target", t3x + bw / 2 - 0.20, by + 0.12, 0.38, "mid")
+    text_box(s, t3x + 0.08, by + 0.58, bw - 0.16, 0.30, "В бой",
              size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, t3x + 0.14, by + 1.02, bw - 0.28, 0.40,
-             "снижены стоимость и задержка на узкой задаче", size=11.5,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.02)
-    # contrast strip
+    text_box(s, t3x + 0.10, by + 0.90, bw - 0.20, 0.52,
+             "ниже стоимость и задержка", size=10.5,
+             italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.04)
+    # #185: реальный интернет-мем «Yoda» — учитель (большая дообученная
+    # модель) передаёт умение маленькому ученику (дистилляция). Правая колонка,
+    # во всю высоту схемы + контраст-плашек.
+    ymx, ymy, ymw, ymh = 9.35, 1.90, 3.45, 4.08
+    ocean_box(s, ymx, ymy, ymw, ymh)
+    add_image(s, WEB / "s14-yoda-ru.png", ymx + 0.14, ymy + 0.14,
+              ymw - 0.28, ymh - 0.28)
+    # contrast strip (сужен влево — правая колонка отдана под мем)
     cy, ch = 4.56, 1.42
-    ocean_box(s, 0.55, cy, 6.05, ch)
-    text_box(s, 0.83, cy + 0.16, 5.55, 0.34, "Дообучение отвечает на:",
-             size=14, bold=True, color=MID)
-    text_box(s, 0.83, cy + 0.54, 5.55, 0.78,
-             "«как модель себя ведёт» — тон, формат, следование политике. Меняет ВЕСА под поведение.",
-             size=12.5, color=DEEP, line_spacing=1.18)
-    ocean_box(s, 6.75, cy, 6.05, ch, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, 7.03, cy + 0.16, 5.55, 0.34, "Дистилляция отвечает на:",
-             size=14, bold=True, color=TEAL)
-    text_box(s, 7.03, cy + 0.54, 5.55, 0.78,
-             "«как сделать модель дешевле» — тот же навык в меньшей модели. Это сжатие, а не смена поведения.",
-             size=12.5, color=DEEP, line_spacing=1.18)
+    ocean_box(s, 0.55, cy, 4.20, ch)
+    text_box(s, 0.78, cy + 0.14, 3.80, 0.34, "Дообучение отвечает на:",
+             size=13, bold=True, color=MID)
+    text_box(s, 0.78, cy + 0.50, 3.80, 0.86,
+             "«как модель себя ведёт» — тон, формат, политика. Меняет ВЕСА под поведение.",
+             size=12, color=DEEP, line_spacing=1.16)
+    ocean_box(s, 4.90, cy, 4.20, ch, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, 5.13, cy + 0.14, 3.80, 0.34, "Дистилляция отвечает на:",
+             size=13, bold=True, color=TEAL)
+    text_box(s, 5.13, cy + 0.50, 3.80, 0.86,
+             "«как сделать модель дешевле» — тот же навык в меньшей модели. Это сжатие, не смена поведения.",
+             size=12, color=DEEP, line_spacing=1.16)
     gold_callout(s, 0.55, 6.14, 12.25, 0.78,
                  "Что делать: не пишите «дистилляция — это дообучение». В связке они идут так: сначала дообучить учителя (teacher) под задачу, потом дистиллировать в ученика (student) ради цены. Критерии «что куда» — на следующем слайде.",
                  size=13)
@@ -1389,24 +1397,30 @@ def build_s15(p):
     text_box(s, lx, ly + lh - 0.02, lw, 0.3,
              "адаптеры — мегабайты vs гигабайты", size=11, italic=True,
              color=LIGHT, align=PP_ALIGN.CENTER)
-    # right — 3 reasons
-    rx, rw = 5.80, 7.0
+    # right — 3 reasons (компактнее — освобождаем правую колонку под мем)
+    rx, rw = 5.80, 3.55
     reasons = [
-        ("1. Дешевле и быстрее", "обучаются миллионы параметров вместо миллиардов; QLoRA — на одном GPU", False),
+        ("1. Дешевле и быстрее", "миллионы параметров вместо миллиардов; QLoRA — на одном GPU", False),
         ("2. Модульность", "адаптеры мегабайты vs гигабайты; одна база — много специализаций", False),
-        ("3. ↓ Риск катастрофического забывания", "база заморожена, физически не переписывается под новый сигнал — архитектурный аргумент", True),
+        ("3. ↓ Риск забывания", "база заморожена, физически не переписывается под новый сигнал", True),
     ]
     yy = 2.10
     for t, b, isgold in reasons:
         if isgold:
-            ocean_box(s, rx, yy, rw, 1.10, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+            ocean_box(s, rx, yy, rw, 1.02, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
         else:
-            ocean_box(s, rx, yy, rw, 0.92)
-        text_box(s, rx + 0.24, yy + 0.10, rw - 0.48, 0.34, t,
-                 size=15, bold=True, color=(DEEP if isgold else MID))
-        text_box(s, rx + 0.24, yy + 0.44, rw - 0.48, (0.60 if isgold else 0.44), b,
-                 size=12.5, color=DEEP, line_spacing=1.12)
-        yy += (1.24 if isgold else 1.06)
+            ocean_box(s, rx, yy, rw, 0.98)
+        text_box(s, rx + 0.22, yy + 0.10, rw - 0.44, 0.34, t,
+                 size=14, bold=True, color=(DEEP if isgold else MID))
+        text_box(s, rx + 0.22, yy + 0.44, rw - 0.44, (0.52 if isgold else 0.48), b,
+                 size=12, color=DEEP, line_spacing=1.10)
+        yy += (1.14 if isgold else 1.10)
+    # #185: реальный интернет-мем «Buff Doge vs Cheems» — PEFT (сильный,
+    # спокойный выбор) vs полное дообучение (дорогой, слабый). Правая колонка.
+    dmx, dmy, dmw, dmh = 9.55, 2.10, 3.25, 3.15
+    ocean_box(s, dmx, dmy, dmw, dmh)
+    add_image(s, WEB / "s15-doge-ru.png", dmx + 0.12, dmy + 0.12,
+              dmw - 0.24, dmh - 0.24)
     # LoRA-adoption baseline (§3.2) с ОБЯЗАТЕЛЬНОЙ оговоркой на видимом слое
     # (Baseline Mandate): доля среди тегированных PEFT, не среди всего FT.
     by2 = 5.50
@@ -2205,32 +2219,38 @@ def build_s27b(p):
         "минимальный набор навыков",
         "минимальный MCP-доступ",
     ]):
-        circle(s, lx + 0.30, ly + 1.06 + i * 0.52 + 0.06, 0.12, TEAL)
-        text_box(s, lx + 0.56, ly + 1.06 + i * 0.52, lw - 0.84, 0.48, t,
+        circle(s, lx + 0.30, ly + 1.02 + i * 0.48 + 0.06, 0.12, TEAL)
+        text_box(s, lx + 0.56, ly + 1.02 + i * 0.48, lw - 0.84, 0.44, t,
                  size=14, color=DEEP, line_spacing=1.1)
-    text_box(s, lx + 0.28, ly + lh - 0.72, lw - 0.56, 0.62,
+    text_box(s, lx + 0.28, ly + lh - 0.62, lw - 0.56, 0.56,
              "Бремя доказательства — на усложнении, а не на простоте.",
              size=12, italic=True, color=DEEP, line_spacing=1.14)
-    # right — 3 justified triggers
-    rx, rw = 5.30, 7.50
+    # right — 3 justified triggers (сужены — крайняя правая колонка под мем)
+    rx, rw = 5.30, 4.30
     triggers = [
         ("brain-circuit", "Память-бэкенд — когда:",
-         "история переросла контекст ИЛИ нужен структурированный поиск по фактам (не «последние N сообщений»). Тот же критерий, что переход промпт→RAG."),
+         "история переросла контекст ИЛИ нужен поиск по фактам. Тот же критерий, что промпт→RAG."),
         ("users", "Субагенты — когда:",
-         "подзадача требует отдельного окна (не засорять контекст) ИЛИ изоляции недоверенной работы (наименьшие привилегии)."),
+         "подзадача требует отдельного окна ИЛИ изоляции недоверенной работы (наименьшие привилегии)."),
         ("cable", "Больше MCP-доступа — когда:",
-         "конкретная задача требует конкретного инструмента — не «на всякий случай». Каждое подключение — новая граница доверия."),
+         "конкретная задача требует конкретного инструмента — не «на всякий случай». Каждое подключение — граница доверия."),
     ]
     ty2 = 1.86
     th = 1.24
     for ic, t, b in triggers:
         ocean_box(s, rx, ty2, rw, th)
-        icon(s, ic, rx + 0.24, ty2 + 0.22, 0.46, "mid")
-        text_box(s, rx + 0.84, ty2 + 0.18, rw - 1.05, 0.36, t,
-                 size=14.5, bold=True, color=MID)
-        text_box(s, rx + 0.84, ty2 + 0.54, rw - 1.05, 0.66, b,
-                 size=12, color=DEEP, line_spacing=1.16)
+        icon(s, ic, rx + 0.22, ty2 + 0.20, 0.42, "mid")
+        text_box(s, rx + 0.76, ty2 + 0.16, rw - 0.94, 0.36, t,
+                 size=13.5, bold=True, color=MID)
+        text_box(s, rx + 0.76, ty2 + 0.50, rw - 0.94, 0.68, b,
+                 size=11.5, color=DEEP, line_spacing=1.12)
         ty2 += th + 0.16
+    # #185: реальный интернет-мем «Two guys on a bus» — грустный (усложнил
+    # на всякий случай) vs довольный (начал с тонкого агента). Крайняя правая.
+    bmx, bmy, bmw, bmh = 9.75, 2.35, 3.05, 3.10
+    ocean_box(s, bmx, bmy, bmw, bmh)
+    add_image(s, WEB / "s27b-bus-ru.png", bmx + 0.12, bmy + 0.12,
+              bmw - 0.24, bmh - 0.24)
     gold_callout(s, 0.55, 6.06, 12.25, 0.82,
                  "Тот же принцип, что лестница архитектур — применённый к оснастке одного агента: presence paradox показал, что даже файл-инструкция «как ритуал» не работает. Усложняй под конкретный проверяемый триггер.",
                  size=13)
@@ -3240,11 +3260,17 @@ def build_s31(p):
     лекцией). Белый фон, без footer и roadmap-bar."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    text_box(s, x=0.55, y=2.05, w=12.25, h=2.30, text="Q&A",
+    # #185: реальный интернет-мем «Waiting Skeleton» — «жду ваши вопросы».
+    # Левая колонка; текст Q&A смещён вправо, чтобы мем не наложился.
+    kmx, kmy, kmw, kmh = 0.85, 1.55, 3.25, 4.40
+    ocean_box(s, kmx, kmy, kmw, kmh)
+    add_image(s, WEB / "s31-skeleton-ru.png", kmx + 0.14, kmy + 0.14,
+              kmw - 0.28, kmh - 0.28)
+    text_box(s, x=4.35, y=2.05, w=8.45, h=2.30, text="Q&A",
              size=120, bold=True, color=DEEP,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.0)
-    text_box(s, x=0.55, y=4.55, w=12.25, h=0.78,
+    text_box(s, x=4.35, y=4.55, w=8.45, h=0.78,
              text="Спасибо", size=36, bold=False, color=MID,
              align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.2)

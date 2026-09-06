@@ -5,6 +5,23 @@
 (включая мемы). Английские baked-in подписи мем-шаблонов обрезаны/перекрыты
 русскими подписями в мем-стиле.
 
+## v6.2 — мемы в §3 (Дообучение) и §5 (Фреймворк) (issue #185, owner: «ни один раздел без мема»)
+
+Owner-требование: закрыть §3 и §5 — до этого мемы стояли в §1/§2/§4, но §3
+(плотные схема/таблица-слайды) и финал §5 оставались без мема. Добавлено 4 мема
+(2 в §3 + 2 в §5), под каждый — сокращён текст соседних блоков, чтобы мем занял
+собственный слот без наложения. Blank-шаблоны — из imgflip API (id-подтверждены),
+русские подписи через PIL (`make_memes_v6.py`). Все шаблоны — ДРУГИЕ, не из уже
+использованных (Drake / Gru / Change My Mind / Pigeon / Distracted / Roll Safe /
+Batman / Tuxedo Pooh / This Is Fine / Always Has Been / пират).
+
+| локальный файл (композит) | слайд | раздел | мем-шаблон (imgflip id) | тезис | blank-источник | лицензия |
+|---|---|---|---|---|---|---|
+| `s15-doge-ru.png` (из `memes-src/buff-doge-cheems.png`) | s15 | §3 | Buff Doge vs Cheems (id 247375501) | PEFT/LoRA — дёшево, модульно, ниже риск забывания vs полное дообучение всех весов в 2026 — почти никогда | `https://i.imgflip.com/43a45p.png` (2026-09-06) | Imgflip meme template — fair use, образовательный некоммерческий контекст |
+| `s14-yoda-ru.png` (из `memes-src/yoda.jpg`) | s14 | §3 | Star Wars Yoda (id 14371066) | дистилляция: учитель (большая дообученная модель) передаёт умение маленькому ученику | `https://i.imgflip.com/8k0sa.jpg` (2026-09-06) | Imgflip meme template — fair use, образовательный контекст |
+| `s27b-bus-ru.png` (из `memes-src/two-guys-bus.jpg`) | s27b | §5 | Two Guys on a Bus (id 354700819) | усложнил на всякий случай (грустный) vs начал с тонкого агента (довольный) — начни просто | `https://i.imgflip.com/5v6gwj.jpg` (2026-09-06) | Imgflip meme template — fair use, образовательный контекст |
+| `s31-skeleton-ru.png` (из `memes-src/waiting-skeleton.jpg`) | s31 | §5 | Waiting Skeleton (id 4087833) | «жду ваши вопросы» — лёгкий финал Q&A | `https://i.imgflip.com/2fm6x.jpg` (2026-09-06) | Imgflip meme template — fair use, образовательный контекст |
+
 ## v6.1 — мемы по всему деку (issue #185, owner: «а где мемы по тексту? почему только там где явно просил?»)
 
 Owner-фидбек: мемы распределить по содержательным текстовым слайдам, а не только
@@ -26,10 +43,9 @@ id-подтверждены. Русские подписи наложены че
 | `s22e-thisisfine-ru.png` (из `memes-src/this-is-fine.jpg`) | s22e | This Is Fine (id 55311130) | «файл-инструкция всё починит», пока агент-система горит (presence paradox) | `https://i.imgflip.com/wxica.jpg` (2026-09-06) | Imgflip meme template — fair use, образовательный контекст |
 | `s24-alwayshasbeen-ru.png` (из `memes-src/always-has-been.png`) | s24 | Always Has Been (id 252600902) | данные, покинувшие периметр (вне ZDR), «так было всегда» вне вашей политики | `https://i.imgflip.com/46e43q.png` (2026-09-06) | Imgflip meme template — fair use, образовательный контекст |
 
-Дополнительно сгенерированные, но НЕ размещённые композиты (нет чистого слота на
-плотных схема/таблица-слайдах §3; blank оставлены для traceability):
-`s11-pooh-ru.png` (Tuxedo Pooh для RAG-провенанса), `s15-doge-ru.png` (Buff Doge
-vs Cheems: PEFT vs полное дообучение). Blank-шаблоны — в `memes-src/`.
+Дополнительно сгенерированные, но НЕ размещённые композиты: `s11-pooh-ru.png`
+(Tuxedo Pooh для RAG-провенанса — нет чистого слота на плотном s11). Blank-шаблоны
+— в `memes-src/`. Прим.: `s15-doge-ru.png` теперь РАЗМЕЩЁН на s15 (см. §v6.2 выше).
 
 ## v6 — реальные интернет-мемы (первый мем-пасс, issue #185)
 

@@ -516,54 +516,27 @@ def _pill_figure(s, cx, cy, scale, body_col, ok=True):
 
 
 def build_s01(p):
-    """hero_cover / meme-hook — «Магическая пилюля» (issue #185). Двухпанельная
-    афиша (свой flat-рисунок, Ocean-палитра, ≥40%): ОБЕЩАНИЕ («попроси
-    экспертом / усложни промпт → модель точнее») vs РЕАЛЬНОСТЬ (миф). Заманивает
-    вопросом; ответ раскрывается по лекции. Air Canada — отдельно на s01b."""
+    """hero_cover / meme-hook — «Магическая пилюля» (issue #185). Реальный
+    интернет-мем Drake (imgflip) с русскими подписями: reject = усложнять
+    промпт ради точности, approve = выбрать архитектуру под задачу. Мем несёт
+    тезис; ответ раскрывается по лекции. Air Canada — отдельно на s01b."""
     s = blank(p)
     set_slide_bg(s, SURFACE)
     # top ribbon (минимум текста — постановка одной строкой)
     text_box(s, 0.55, 0.40, 12.25, 0.44, "МИФ ПРО AI-СИСТЕМЫ",
              size=15, bold=True, color=TEAL, align=PP_ALIGN.CENTER)
-    text_box(s, 0.55, 0.86, 12.25, 0.80,
+    text_box(s, 0.55, 0.86, 12.25, 0.92,
              "«Магическая пилюля»: модель ответит точнее, если попросить её экспертом и усложнить промпт.",
              size=25, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              line_spacing=1.06)
-    # 2-panel «meme» poster (hero ≥40%): left = ОБЕЩАНИЕ, right = РЕАЛЬНОСТЬ.
-    # Визуал несёт тезис: пилюля целая (ждём чуда) → пилюля разбита (не работает).
-    py, ph = 1.98, 4.10
-    pw = 6.05
-    # LEFT panel — the promise (пилюля целая, «до»)
-    ocean_box(s, 0.55, py, pw, ph, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.5)
-    chip(s, 0.85, py + 0.26, 3.9, 0.46, "ЧЕГО ЖДЁМ", fill=GOLD, color=DEEP,
-         size=14)
-    # giant intact pill icon (по центру панели)
-    filled_rect(s, 2.30, py + 1.18, 2.55, 1.02, MID, radius=True,
-                radius_adj=0.5)
-    filled_rect(s, 3.575, py + 1.18, 1.275, 1.02, TEAL, radius=True,
-                radius_adj=0.5)
-    filled_rect(s, 3.55, py + 1.18, 0.05, 1.02, WHITE)
-    text_box(s, 0.85, py + 2.58, pw - 0.60, 1.30,
-             "«Ты — эксперт-юрист, рассуждай шаг за шагом…»\n→ и модель станет точнее.",
-             size=17, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             line_spacing=1.20)
-    # RIGHT panel — the reality (пилюля разбита, «после»)
-    ocean_box(s, 6.75, py, pw, ph, fill=SURFACE, stroke=LIGHT, stroke_pt=2.0)
-    chip(s, 7.05, py + 0.26, 3.9, 0.46, "ЧТО ПРОИСХОДИТ", fill=LIGHT,
-         color=WHITE, size=14)
-    # broken pill (two halves apart) + crack + разлетевшиеся осколки
-    filled_rect(s, 8.15, py + 1.18, 1.15, 1.02, SLATE, radius=True,
-                radius_adj=0.5)
-    filled_rect(s, 9.75, py + 1.18, 1.15, 1.02, SLATE, radius=True,
-                radius_adj=0.5)
-    connector(s, 9.40, py + 0.98, 9.62, py + 2.34, GOLD, 3.5)
-    circle(s, 9.30, py + 0.86, 0.14, GOLD)
-    circle(s, 9.78, py + 2.30, 0.11, GOLD)
-    text_box(s, 7.05, py + 2.58, pw - 0.60, 1.30,
-             "Точность не меняется. Меняется только тон ответа.",
-             size=17, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             line_spacing=1.20)
-    gold_callout(s, 0.55, 6.30, 12.25, 0.78,
+    # real Drake meme (hero ≥40%) в Ocean-рамке по центру: наверху отвергаем
+    # «усложнять промпт ради точности», внизу принимаем «выбор архитектуры».
+    my, mh = 2.06, 4.06
+    mw = 4.94
+    mx = (13.33 - mw) / 2
+    ocean_box(s, mx - 0.16, my - 0.14, mw + 0.32, mh + 0.28)
+    add_image(s, WEB / "s01-drake-ru.png", mx, my, mw, mh)
+    gold_callout(s, 0.55, 6.34, 12.25, 0.74,
                  "Откуда на самом деле берётся надёжность AI-системы — разбираем всю лекцию.",
                  size=15, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s01"))
@@ -593,26 +566,26 @@ def build_s02(p):
     # v4 (#212): cover теперь чистый — roadmap вынесен в отдельный
     # lecture-map слайд s02a (паттерн Л1/Л2). Cover без roadmap-bar.
     # #185/#313: атрибуция курса «3 курс ИУ6 · Модуль 1…» снята с cover.
-    # #185/#313: иллюстрация-мем на cover (левый нижний угол) — «магическая
-    # пилюля»: пилюля-обещание, к которой ведёт эта лекция.
-    _cover_pill_meme(s, 0.75, 6.20)
+    # #185/#313: тематический интернет-мем на cover (левый нижний угол) —
+    # реальный кадр-мем «well yes, but actually no» (пират-жест): «хотелось бы
+    # магической пилюли — но нет». Компактный, не спорит с mega-«03».
+    _cover_pirate_meme(s, 0.75, 6.06)
     speaker_notes(s, load_notes("s02"))
 
 
-def _cover_pill_meme(s, x, y):
-    """Small flat Ocean-palette «meme» motif for the cover: перечёркнутая
-    «магическая пилюля» — намёк на тезис лекции (надёжность ≠ формулировка).
-    Компактный: занимает левый нижний угол, не спорит с mega-«03»."""
-    # pill (две половинки в Ocean-цветах)
-    filled_rect(s, x, y, 0.62, 0.30, MID, radius=True, radius_adj=0.5)
-    filled_rect(s, x + 0.31, y, 0.31, 0.30, TEAL, radius=True, radius_adj=0.5)
-    filled_rect(s, x + 0.30, y, 0.03, 0.30, WHITE)
-    # перечёркнута (gold) — «пилюли не существует»
-    connector(s, x - 0.05, y + 0.36, x + 0.67, y - 0.06, GOLD, 3.0)
-    text_box(s, x + 0.78, y - 0.08, 5.6, 0.46,
+def _cover_pirate_meme(s, x, y):
+    """Small real internet-meme motif for the cover: пират-жест «well yes, but
+    actually no» (imgflip; английская подпись обрезана) + русская подпись рядом
+    — намёк на тезис лекции: «магической пилюли» не существует. Компактный:
+    левый нижний угол, не спорит с mega-«03». Атрибуция — только attribution.md."""
+    mw = 2.10
+    mh = mw * (755 / 1600)      # сохранить пропорции кропа
+    ocean_box(s, x - 0.08, y - 0.08, mw + 0.16, mh + 0.16)
+    add_image(s, WEB / "cover-pirate-crop.png", x, y, mw, mh)
+    text_box(s, x + mw + 0.28, y - 0.06, 5.4, mh + 0.16,
              "«магической пилюли» не существует",
-             size=13.5, italic=True, bold=True, color=MID,
-             anchor=MSO_ANCHOR.MIDDLE)
+             size=14, italic=True, bold=True, color=MID,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
 
 
 def build_s02a(p):
@@ -785,7 +758,7 @@ def build_s05(p):
              size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.12)
     # Left — anchor block
-    lx, ly, lw, lh = 0.55, 2.02, 5.55, 3.62
+    lx, ly, lw, lh = 0.55, 2.02, 6.15, 3.62
     ocean_box(s, lx, ly, lw, lh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     icon(s, "target", lx + 0.28, ly + 0.24, 0.58, "teal")
     text_box(s, lx + 0.28, ly + 0.94, lw - 0.56, 0.6,
@@ -802,11 +775,11 @@ def build_s05(p):
         text_box(s, lx + 0.56, by, lw - 0.84, 0.62, b,
                  size=13, color=DEEP, line_spacing=1.12)
         by += 0.56
-    # Right — meme «не усложняй без причины» (#185/#318: заменил два текст-блока
-    # «Добавляешь RAG →…» / «Добавляешь инструменты →…»). Flat Ocean-мем:
-    # простая линия vs гора наверченных коробок — «оверинжиниринг».
-    rx, rw = 6.30, 6.50
-    _s05_overengineering_meme(s, rx, 2.02, rw, 3.62)
+    # Right — реальный интернет-мем «Expanding brain» (imgflip, #185): эскалация
+    # архитектуры как абсурд — один вызов → RAG → петли/инструменты → мульти-
+    # агентная оркестрация. Русские подписи вжжены в шаблон. Заменил flat-башню
+    # коробок «оркестрация/петли/поиск/векторное хранилище».
+    _s05_overengineering_meme(s, 6.95, 2.02, 5.85, 3.62)
     gold_callout(s, 0.55, 5.92, 12.25, 0.92,
                  "Не усложняй архитектуру без причины, выраженной в требованиях задачи. Это распределение бремени доказательства, а не примитивизм.",
                  size=15)
@@ -814,51 +787,23 @@ def build_s05(p):
 
 
 def _s05_overengineering_meme(s, x, y, w, h):
-    """Flat Ocean «meme»: слева задача → простая линия (спокойное лицо),
-    справа та же задача → башня из наверченных коробок (перегруз). Несёт тезис
-    «не усложняй без причины» визуально, без внешней картинки/атрибуции."""
+    """Реальный интернет-мем «Expanding brain» (imgflip blank + русские подписи):
+    эскалация архитектуры как абсурд. Заголовок «оверинжиниринг» + сам мем в
+    Ocean-рамке. Мем несёт тезис «не усложняй без причины» без атрибуции на
+    слайде (attribution.md)."""
     ocean_box(s, x, y, w, h)
-    midx = x + w / 2
-    # разделитель
-    connector(s, midx, y + 0.30, midx, y + h - 0.30, SOFT_GREY, 1.2)
-    # LEFT — «достаточно»
-    chip(s, x + 0.30, y + 0.24, 2.0, 0.44, "ДОСТАТОЧНО", fill=TEAL, color=WHITE,
-         size=12.5)
-    circle(s, x + 1.15, y + 1.20, 0.66, TEAL)          # спокойное «лицо»
-    circle(s, x + 1.30, y + 1.32, 0.10, WHITE)
-    circle(s, x + 1.62, y + 1.32, 0.10, WHITE)
-    connector(s, x + 1.30, y + 1.70, x + 1.66, y + 1.70, WHITE, 2.0)
-    filled_rect(s, x + 0.55, y + 2.30, 2.30, 0.52, TEAL_TINT, stroke=TEAL,
-                stroke_pt=1.5, radius=True, radius_adj=0.3)
-    text_box(s, x + 0.55, y + 2.32, 2.30, 0.48, "один вызов",
-             size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x + 0.30, y + 3.00, w / 2 - 0.50, 0.52,
-             "минимум стоимости, задержки, риска",
-             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
-             line_spacing=1.06)
-    # RIGHT — «на всякий случай» (перегруз): кривая башня коробок
-    chip(s, midx + 0.30, y + 0.24, 2.7, 0.44, "«НА ВСЯКИЙ СЛУЧАЙ»", fill=LIGHT,
-         color=WHITE, size=11.5)
-    tower = [
-        (midx + 0.85, y + 2.28, 1.9, 0.44, "векторное хранилище"),
-        (midx + 1.05, y + 1.82, 1.7, 0.42, "поиск + метрики"),
-        (midx + 0.70, y + 1.38, 2.0, 0.42, "петли + инструменты"),
-        (midx + 1.15, y + 0.96, 1.5, 0.40, "оркестрация"),
-    ]
-    for i, (bx, by2, bw2, bh2, lbl) in enumerate(tower):
-        filled_rect(s, bx, by2, bw2, bh2, MID if i % 2 == 0 else LIGHT,
-                    radius=True, radius_adj=0.12)
-        text_box(s, bx, by2, bw2, bh2, lbl, size=9.5, bold=True, color=WHITE,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    # gold «!» — башня вот-вот рухнет
-    circle(s, midx + 2.55, y + 0.82, 0.42, GOLD)
-    text_box(s, midx + 2.55, y + 0.82, 0.42, 0.42, "!", size=22, bold=True,
-             color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, midx + 0.30, y + 3.00, w / 2 - 0.50, 0.52,
-             "каждый слой — новая точка отказа",
-             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
-             line_spacing=1.06)
+    chip(s, x + 0.28, y + 0.22, w - 0.56, 0.46, "«НА ВСЯКИЙ СЛУЧАЙ» — ЭСКАЛАЦИЯ",
+         fill=LIGHT, color=WHITE, size=13.5)
+    # brain meme (composite 1042x992, near-square) вписан по ширине бокса
+    from PIL import Image as _I
+    _im = _I.open(WEB / "s05-brain-ru.png"); _r = _im.size[0] / _im.size[1]; _im.close()
+    img_w = w - 0.56
+    img_h = img_w / _r
+    if img_h > h - 0.86:
+        img_h = h - 0.86
+        img_w = img_h * _r
+    img_x = x + (w - img_w) / 2
+    add_image(s, WEB / "s05-brain-ru.png", img_x, y + 0.80, img_w, img_h)
 
 
 def build_s05a(p):
@@ -990,47 +935,33 @@ def build_s06(p):
     text_box(s, 0.55, fy, 12.25, 0.34,
              "Но проговорённое рассуждение не обязано отражать реальную причину ответа (низкая верность объяснения):",
              size=14, bold=True, color=DEEP)
-    st_y = fy + 0.46
-    # left — meme «рассуждение вслух ≠ реальная причина» (#185/#319: заменил
-    # текст-блок-комментарий про CoT-текст). Flat Ocean-мем: то, что модель
-    # ГОВОРИТ (аккуратная цепочка), и то, ПОЧЕМУ она так ответила (скрытый ящик),
-    # — не одно и то же; аудировать нечего.
-    _s06_faithfulness_meme(s, 0.55, st_y, 5.15, 1.55)
-    # rule callout right
-    gold_callout(s, 5.90, st_y, 6.90, 1.55,
-                 "Контроль на самообъяснении модели — не контроль. Человек-валидатор проверяет РЕЗУЛЬТАТ и факты против внешнего источника, а не правдоподобность текста. И это же — почему шаг проверки в цикле агента (Раздел 4) не должен быть самооценкой модели.",
-                 size=13.5)
+    st_y = fy + 0.42
+    # #185/#319: правый текст-блок «Контроль на самообъяснении…» УБРАН
+    # полностью — тезис несёт реальный интернет-мем «Distracted boyfriend»
+    # (imgflip): модель отвлеклась на красивое объяснение вслух и упустила
+    # реальную причину ответа. Русские подписи вжжены в шаблон.
+    mh = 2.64
+    mw = mh * (1200 / 800)
+    mx = 0.55
+    ocean_box(s, mx - 0.12, st_y - 0.10, mw + 0.24, mh + 0.20)
+    add_image(s, WEB / "s06-distracted-ru.png", mx, st_y, mw, mh)
+    # короткий вывод справа (замена убранного текст-блока); gold-акцент на глаголе
+    rx = mx + mw + 0.44
+    rw = 13.33 - rx - 0.55
+    gh = 1.72
+    gy = st_y + (mh - gh) / 2
+    filled_rect(s, rx, gy, rw, gh, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
+                radius=True, radius_adj=0.10)
+    text_runs(s, rx + 0.34, gy + 0.14, rw - 0.68, gh - 0.28, [
+        {"text": "Проверяй результат", "size": 21, "bold": True, "color": DEEP},
+        {"text": ", а не самообъяснение модели.", "size": 21, "bold": True,
+         "color": DEEP},
+        {"text": "Сверяй факты с внешним источником — правдоподобный текст рассуждения ничего не подтверждает.",
+         "size": 15, "bold": False, "color": DEEP, "newpara": True,
+         "space_before": 8},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.18)
     footer(s, "Anthropic, апрель 2025 · верность падает на трудных задачах · перепроверить ко дню лекции.")
     speaker_notes(s, load_notes("s06"))
-
-
-def _s06_faithfulness_meme(s, x, y, w, h):
-    """Flat Ocean «meme»: слева — то, что модель ГОВОРИТ (аккуратная «цепочка
-    рассуждений» в облачке), справа — то, ПОЧЕМУ она так ответила (чёрный ящик
-    с «?»). Между ними gold-«≠». Тезис: рассуждение вслух ≠ реальная причина,
-    аудировать нечего."""
-    ocean_box(s, x, y, w, h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    # left — «что модель говорит» (аккуратная цепочка)
-    text_box(s, x + 0.16, y + 0.12, 1.85, 0.30, "говорит:",
-             size=11, bold=True, color=MID)
-    for i in range(3):
-        cyy = y + 0.48 + i * 0.32
-        circle(s, x + 0.28, cyy, 0.13, TEAL)
-        filled_rect(s, x + 0.52, cyy, 1.35, 0.20, TEAL_TINT, stroke=TEAL,
-                    stroke_pt=1.0, radius=True, radius_adj=0.4)
-    # «≠» gold в центре
-    circle(s, x + 2.30, y + h / 2 - 0.28, 0.56, GOLD)
-    text_box(s, x + 2.30, y + h / 2 - 0.28, 0.56, 0.56, "≠", size=26, bold=True,
-             color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    # right — «почему на самом деле» (чёрный ящик)
-    text_box(s, x + 3.10, y + 0.12, 1.9, 0.30, "почему на деле:",
-             size=11, bold=True, color=MID)
-    filled_rect(s, x + 3.35, y + 0.52, 1.45, 0.82, DEEP, radius=True,
-                radius_adj=0.10)
-    text_box(s, x + 3.35, y + 0.52, 1.45, 0.82, "?", size=30, bold=True,
-             color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x + 3.10, y + 1.34, 1.95, 0.20, "скрыто — не аудировать",
-             size=9.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
 
 
 def build_s08(p):

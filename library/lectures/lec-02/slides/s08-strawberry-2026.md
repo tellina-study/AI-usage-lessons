@@ -7,7 +7,7 @@ assertion: "Гонка патчей: strawberry починили в апреле
 learning_goal: "Механизм слепоты к буквам (быстро — мем знаком) + диагноз 2026: точечные патчи вместо навыка + jagged intelligence"
 learning_outcomes: [LO6, LO7]
 chapter_ref: "§1.4 [for-slide-s08]"
-visual_brief: "Слева компактно — механизм: strawberry → [st][raw][berry], модель видит 3 токена, не 10 букв. Справа — временная шкала гонки патчей: GPT-5.2 (дек 2025) strawberry ✗; GPT-5.5 (апр 2026) strawberry ✓ / cranberry ✗; GPT-5.6 (июль 2026) cranberry ✓ (gold) [VFY-day-of]; StrawberryBench — 847 вопросов, 7 уровней. Внизу callout с объяснением: «рваный интеллект» — уровень навыка задаётся данными обучения, а не «общим умом»: модель берёт олимпиадное золото и проваливает подсчёт букв. Под ним строка «Что делать»: тестируйте cranberry своей предметки; вирусное прохождение ≠ навык."
+visual_brief: "Слева компактно — механизм: strawberry → [st][raw][berry], модель видит 3 токена, не 10 букв. v3.1 (#183 round 3): под механизмом — реальный скриншот ChatGPT (форум OpenAI, 2024, «There are two 'r' characters in the word 'strawberry'») с мелкой подписью-атрибуцией «скриншот: ChatGPT, форум OpenAI, 2024». Справа — временная шкала гонки патчей: GPT-5.2 (дек 2025) strawberry ✗; GPT-5.5 (апр 2026) strawberry ✓ / cranberry ✗; GPT-5.6 (июль 2026) cranberry ✓ (gold) [VFY-day-of]; StrawberryBench — 847 вопросов, 7 уровней. Внизу callout с объяснением: «рваный интеллект» — уровень навыка задаётся данными обучения, а не «общим умом»: модель берёт олимпиадное золото и проваливает подсчёт букв. Под ним строка «Что делать»: тестируйте cranberry своей предметки; вирусное прохождение ≠ навык."
 interaction: retrieval_live_attempt
 verify_day_of: true
 ---

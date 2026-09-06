@@ -51,7 +51,7 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v3.0
+  version: v3.1
   source: "chapter v2.3 (3 части)"
   plan: "notes/lecture-2-review/final/rework-round2.md"
   total_slides: 47

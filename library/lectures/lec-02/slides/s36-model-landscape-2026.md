@@ -7,7 +7,7 @@ assertion: "Ландшафт сентября 2026: передний край и
 learning_goal: "Карта моделей на сентябрь 2026: frontier vs открытые веса, сила (IMO), разброс цен, скорость устаревания"
 learning_outcomes: [LO6]
 chapter_ref: "§5.2 (chapter-part3.md) [for-slide-s36]"
-visual_brief: "Две колонки-лагеря в Ocean rounded boxes: «Передний край (закрытые)» — GPT-5.6 (Luna/Terra/Sol), Claude Fable 5 / Opus 5, Gemini 3.5 Pro, Grok 4.3; «Открытые веса» — DeepSeek V4, Qwen 3.8-Max, Kimi K2.6 / K3 (2.8T — крупнейшая открытая). Под колонками полоса-экспонат IMO 2026: «6 моделей — 42/42 vs 7 из 666 людей» (gold). Внизу ценовая шкала-градиент: floor $0.03–0.2/M … премиум $10/$50/M, с меткой-парой «Kimi K2.6 ≈ GPT-5.5 на SWE-bench Pro при цене −80%» (gold)."
+visual_brief: "Две колонки-лагеря в Ocean rounded boxes: «Передний край (закрытые)» — GPT-5.6 (Luna/Terra/Sol), Claude Fable 5 / Opus 5, Gemini 3.5 Pro, Grok 4.3; «Открытые веса» — DeepSeek V4, Qwen 3.8-Max, Kimi K2.6 / K3 (2.8T — крупнейшая открытая). v3.1 (#183 round 3): перед каждой строкой (кроме Kimi) — реальный логотип компании (LobeHub icons-static-svg, recolor в Ocean palette) как визуальный якорь. Под колонками полоса-экспонат IMO 2026: «6 моделей — 42/42 vs 7 из 666 людей» (gold). Внизу ценовая шкала-градиент: floor $0.03–0.2/M … премиум $10/$50/M, с меткой-парой «Kimi K2.6 ≈ GPT-5.5 на SWE-bench Pro при цене −80%» (gold)."
 verify_day_of: true
 ---
 

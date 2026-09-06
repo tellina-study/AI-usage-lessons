@@ -415,29 +415,46 @@ def pipeline_bar(slide, active, *, y=6.62, bar_h=0.48, passed=frozenset(),
 
 def section_divider(p, *, section_n, sub_title, frame_phrase, tag,
                     active_stage, notes_id, frame_bar=False,
-                    frame_size=20, illus=None, illus_w=1.5,
+                    frame_size=20, illus=None, illus_caption=None,
                     passed=frozenset(), bar_muted=False):
-    """v3.0 divider: big gold «Раздел N» + подзаголовок + frame + tag +
-    pipeline_bar (актив. стадия конвейера gold). frame_bar=True — общая
-    gold-рамка вокруг конвейера (s35a: полный конвейер). illus — путь к
-    маленькой тематической иллюстрации (угловое размещение, не
-    доминирует; spec п.6 rework-round2)."""
+    """v3.1 divider (#183 round 3, owner-мандат: «в заголовке каждого
+    раздела должен быть мем или интересная картинка!»): 2-колоночная
+    композиция — слева текстовый блок (номер раздела + подзаголовок +
+    frame_phrase + tag), справа реальное фото/мем в Ocean rounded box,
+    ЗАМЕТНОЕ (~35-38% площади слайда), единый паттерн на всех 6
+    дивайдерах. pipeline_bar на всю ширину внизу, без изменений."""
     s = blank(p)
     set_slide_bg(s, SURFACE)
+    # --- Левая колонка: текст (ширина ~6.35", x=0.55..6.9) ---
+    text_col_w = 6.35
+    text_box(s, 0.55, 0.75, text_col_w, 1.9, f"Раздел {section_n}",
+             size=92, bold=True, color=GOLD,
+             align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+    text_box(s, 0.55, 2.62, text_col_w, 1.05, sub_title,
+             size=33, bold=True, color=DEEP,
+             align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP, line_spacing=1.08)
+    text_box(s, 0.55, 3.80, text_col_w, 1.35, f"«{frame_phrase}»",
+             size=frame_size, italic=True, color=MID, align=PP_ALIGN.LEFT,
+             line_spacing=1.2)
+    text_box(s, 0.55, 5.30, text_col_w, 0.45, tag,
+             size=16, bold=True, color=TEAL, align=PP_ALIGN.LEFT)
+    # --- Правая колонка: реальное фото/мем в Ocean rounded box
+    #     (~5.4×4.55" ≈ 24.6 кв.дюйма ≈ 25% площади слайда — owner-мандат
+    #     «≥25-30%, не декоративная малютка в углу») ---
     if illus is not None:
-        add_image(s, illus, x=SLIDE_W_IN - illus_w - 0.55, y=0.45,
-                  w=illus_w)
-    text_box(s, 0.55, 0.95, 12.3, 2.4, f"Раздел {section_n}",
-             size=140, bold=True, color=GOLD,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    text_box(s, 0.55, 3.55, 12.3, 0.75, sub_title,
-             size=44, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.55, 4.40, 12.3, 0.75, f"«{frame_phrase}»",
-             size=frame_size, italic=True, color=MID, align=PP_ALIGN.CENTER,
-             line_spacing=1.15)
-    text_box(s, 0.55, 5.25, 12.3, 0.45, tag,
-             size=16, bold=True, color=TEAL, align=PP_ALIGN.CENTER)
+        img_x, img_y = 7.25, 0.85
+        img_w, img_h = 5.55, 4.55
+        ocean_box(s, img_x, img_y, img_w, img_h, fill=WHITE, stroke=LIGHT,
+                  stroke_pt=1.5)
+        pad = 0.16
+        cap_h = 0.52 if illus_caption else 0
+        _place_image_contain(s, illus, img_x + pad, img_y + pad,
+                             img_w - 2 * pad, img_h - 2 * pad - cap_h)
+        if illus_caption:
+            text_box(s, img_x + pad, img_y + img_h - cap_h - 0.04,
+                     img_w - 2 * pad, cap_h, illus_caption, size=9.5,
+                     italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
+                     line_spacing=1.05)
     pipeline_bar(s, active_stage, passed=passed, muted_gold=bar_muted)
     if frame_bar:
         total_w = 12.3
@@ -456,36 +473,62 @@ def section_divider(p, *, section_n, sub_title, frame_phrase, tag,
     return s
 
 
+def _place_image_contain(slide, path, x, y, w, h):
+    """Вписывает изображение в box (x,y,w,h) с сохранением пропорций
+    (contain — не crop, не stretch), центрируя по обеим осям. Обходит
+    #73-render-1 (add_picture с обоими w/h стрейчит непропорционально)."""
+    if not Path(path).exists():
+        return
+    from PIL import Image as PILImage
+    with PILImage.open(str(path)) as im:
+        iw, ih = im.size
+    box_ratio = w / h
+    img_ratio = iw / ih
+    if img_ratio > box_ratio:
+        # шире бокса относительно — вписываем по ширине
+        draw_w = w
+        draw_h = w / img_ratio
+        draw_x = x
+        draw_y = y + (h - draw_h) / 2
+    else:
+        draw_h = h
+        draw_w = h * img_ratio
+        draw_y = y
+        draw_x = x + (w - draw_w) / 2
+    add_image(slide, path, x=draw_x, y=draw_y, w=draw_w)
+
+
 # ============================================================
 # Раздел 0
 # ============================================================
 def build_s01(p):
-    """v3.0 мем-хук (#183 round 2): двухпанельный мем про T=0 — вопрос
-    сверху, слева уверенный персонаж + «Да.», справа озадаченный + gold
-    «→ Но нет.»; hero-иллюстрация ≥40% площади; без чек-листа, без
-    интерактива, без hands_poll."""
+    """v3.1 мем-хук (#183 round 3, owner-мандат «вставь нормальные мемы и
+    картинки из интернета»): реальный узнаваемый мем-шаблон «Well yes, but
+    actually no» (imgflip, кадр из «Пираты! Банда неудачников», Aardman) —
+    наш вопрос про T=0 в пустом верхнем поле шаблона, встроенная надпись
+    мема снизу отвечает буквально на вопрос курса; hero ≥40% площади."""
     s = blank(p)
-    # Вопрос — крупно сверху (афиша на перемену)
-    text_box(s, 0.55, 0.42, 12.23, 0.95,
-             "temperature=0 — значит, ответ всегда одинаковый?",
-             size=32, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE)
-    # Hero: собственный двухпанельный flat-мем (2240×1024)
-    hero_w = 10.1                     # 10.1 × 4.62" ≈ 46.6 кв.дюйма ≈ 47%
-    hero_h = hero_w * 1024 / 2240     # ≈ 4.62
+    # Hero: реальный мем-шаблон 1600×1218 (ratio 1.31), пустой верх ~21%
+    # высоты — кладём туда свой вопрос текстовым слоем поверх картинки.
+    hero_w = 7.6
+    hero_h = hero_w * 1218 / 1600     # ≈ 5.79" (≈44% площади слайда)
     hx = (SLIDE_W_IN - hero_w) / 2
-    hy = 1.62
-    add_image(s, ASSETS / "illustrations/s01-t0-meme.png",
+    hy = 0.55
+    add_image(s, ASSETS / "web/well-yes-actually-no-template.jpg",
               x=hx, y=hy, w=hero_w)
-    # Подписи панелей под лицами
-    text_box(s, hx + 0.55, hy + hero_h - 1.05, 2.9, 0.9, "Да.",
-             size=44, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    text_box(s, hx + hero_w / 2 + 0.55, hy + hero_h - 1.15, 3.6, 1.0,
-             "→ Но нет.", size=48, bold=True, color=GOLD,
+    # Пустая белая полоса шаблона ≈ 0..21% высоты картинки
+    blank_band_h = hero_h * 0.205
+    text_box(s, hx + 0.35, hy + 0.10, hero_w - 0.7, blank_band_h - 0.15,
+             "temperature=0 — значит, ответ всегда одинаковый?",
+             size=27, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+    # Встроенная в мем подпись «Well yes, but actually no» уже отвечает на
+    # вопрос буквально — дополнительно подписываем расшифровку снизу.
+    text_box(s, 0.55, hy + hero_h + 0.10, 12.23, 0.5,
+             "Да, формально детерминирован. Но нет — на практике нет. "
+             "Почему — сегодня.",
+             size=16, italic=True, bold=True, color=GOLD,
              align=PP_ALIGN.CENTER)
-    # Мелкая подпись внизу
-    text_box(s, 0.55, 6.72, 12.23, 0.4, "почему — сегодня",
-             size=15, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s01"))
 
 
@@ -749,7 +792,9 @@ def build_s05a(p):
         frame_phrase="Как модель видит ваш текст",
         tag="3 разбора · 3 провала", active_stage=1, notes_id="s05a",
         passed={0},
-        illus=ASSETS / "illustrations/s05a-tokenize-knife.png")
+        illus=ASSETS / "web/strawberry-openai-crop.jpg",
+        illus_caption="Реальный диалог: ChatGPT о «strawberry» — "
+                      "скриншот, OpenAI Community, 2024")
 
 
 def token_chips_runs(pairs):
@@ -856,27 +901,37 @@ def build_s08(p):
     # Слева — механизм
     ocean_box(s, 0.55, 1.62, 5.0, 3.85, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.4)
-    text_box(s, 0.85, 1.84, 4.4, 0.45, "Механизм — слепота к буквам",
+    text_box(s, 0.85, 1.80, 4.4, 0.4, "Механизм — слепота к буквам",
              size=14.5, bold=True, color=MID)
-    text_runs(s, 0.85, 2.42, 4.4, 1.0, [
-        {"text": "strawberry", "size": 16, "font": FONT_MONO, "color": DEEP},
-        {"text": "  →", "size": 16, "color": SLATE},
-        {"text": "[st]", "size": 16, "font": FONT_MONO, "bold": True,
-         "color": MID, "newpara": True, "space_before_pt": 8},
-        {"text": "[raw]", "size": 16, "font": FONT_MONO, "bold": True,
+    text_runs(s, 0.85, 2.28, 4.4, 0.95, [
+        {"text": "strawberry", "size": 15, "font": FONT_MONO, "color": DEEP},
+        {"text": "  →", "size": 15, "color": SLATE},
+        {"text": "[st]", "size": 15, "font": FONT_MONO, "bold": True,
+         "color": MID, "newpara": True, "space_before_pt": 6},
+        {"text": "[raw]", "size": 15, "font": FONT_MONO, "bold": True,
          "color": TEAL},
-        {"text": "[berry]", "size": 16, "font": FONT_MONO, "bold": True,
+        {"text": "[berry]", "size": 15, "font": FONT_MONO, "bold": True,
          "color": LIGHT},
     ])
-    text_runs(s, 0.85, 3.62, 4.4, 0.9, [
-        {"text": "Модель видит ", "size": 16, "color": DEEP},
-        {"text": "3 токена", "size": 16, "bold": True, "color": DEEP},
-        {"text": ", не 10 букв.", "size": 16, "color": DEEP},
+    text_runs(s, 0.85, 3.32, 4.4, 0.4, [
+        {"text": "Модель видит ", "size": 15, "color": DEEP},
+        {"text": "3 токена", "size": 15, "bold": True, "color": DEEP},
+        {"text": ", не 10 букв.", "size": 15, "color": DEEP},
     ])
-    text_box(s, 0.85, 4.55, 4.4, 0.8,
-             "Каждый вирусный кейс патчится точечно; класс задач остаётся "
-             "проблемным.", size=12, italic=True, color=SLATE,
-             line_spacing=1.15)
+    # Реальный скриншот: ChatGPT про strawberry (тот же кейс, что и
+    # дивайдер s05a) — визуальное доказательство описанного механизма.
+    # Используем tight-crop (1179×600, только ключевой обмен репликами).
+    shot_w = 2.4
+    shot_h = shot_w * 600 / 1179
+    shot_x = 0.85 + (4.4 - shot_w) / 2
+    shot_y = 3.75
+    ocean_box(s, shot_x - 0.06, shot_y - 0.06, shot_w + 0.12, shot_h + 0.12,
+              fill=RGBColor(0x11, 0x14, 0x18), stroke=TEAL, stroke_pt=1.2)
+    add_image(s, ASSETS / "web/strawberry-openai-crop.jpg",
+              x=shot_x, y=shot_y, w=shot_w)
+    text_box(s, 0.85, shot_y + shot_h + 0.14, 4.4, 0.26,
+             "скриншот: ChatGPT, форум OpenAI, 2024",
+             size=9, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
     # Справа — временная шкала гонки патчей (4 карточки вдоль оси)
     cards = [
         ("GPT-5.2 · дек 2025", "strawberry ✗ — «в strawberry две r»",
@@ -1006,17 +1061,27 @@ def build_s10(p):
     # Слева — story + механизм компактно (v3.0: анекдот свёрнут)
     ocean_box(s, 0.55, col_y, 3.95, col_h, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.4)
-    text_box(s, 0.8, col_y + 0.16, 3.45, 0.75, "SolidGoldMagikarp (2023)",
-             size=14, bold=True, color=MID, font=FONT_MONO)
-    text_box(s, 0.8, col_y + 0.88, 3.45, 1.0,
+    text_box(s, 0.8, col_y + 0.14, 3.45, 0.4, "SolidGoldMagikarp (2023)",
+             size=13, bold=True, color=MID, font=FONT_MONO)
+    text_box(s, 0.8, col_y + 0.56, 3.45, 0.65,
              "Юзернейм с Reddit в словаре GPT — модель не могла его "
-             "повторить.", size=12.5, color=DEEP, line_spacing=1.18)
-    text_runs(s, 0.8, col_y + 1.95, 3.45, 1.4, [
-        {"text": "Механизм: ", "size": 12.5, "bold": True, "color": TEAL},
+             "повторить.", size=11.5, color=DEEP, line_spacing=1.12)
+    # Реальный скриншот того же корпуса исследований (glitch-токен
+    # «petertodd» — LessWrong, тот же автор/серия постов).
+    shot2_w = 2.5
+    shot2_h = shot2_w * 359 / 1157
+    shot2_x = 0.8 + (3.45 - shot2_w) / 2
+    shot2_y = col_y + 1.24
+    ocean_box(s, shot2_x - 0.06, shot2_y - 0.06, shot2_w + 0.12,
+              shot2_h + 0.12, fill=WHITE, stroke=TEAL, stroke_pt=1.1)
+    add_image(s, ASSETS / "web/solidgoldmagikarp-1.png",
+              x=shot2_x, y=shot2_y, w=shot2_w)
+    text_runs(s, 0.8, shot2_y + shot2_h + 0.20, 3.45, 0.9, [
+        {"text": "Механизм: ", "size": 11, "bold": True, "color": TEAL},
         {"text": "корпус словаря ≠ корпус модели → эмбеддинг токена "
-                 "остаётся у случайной инициализации — вектор «ничего не "
-                 "значит».", "size": 12.5, "color": DEEP},
-    ], line_spacing=1.18)
+                 "остаётся у случайной инициализации.", "size": 11,
+         "color": DEEP},
+    ], line_spacing=1.12)
     # Центр — «На что влияет» (v3.0: главный блок)
     ocean_box(s, 4.7, col_y, 3.95, col_h, fill=WHITE, stroke=TEAL,
               stroke_pt=1.4)
@@ -1123,7 +1188,9 @@ def build_s12a(p):
         frame_phrase="Пространство смыслов — и граница похожести",
         tag="4 разбора · 1 провал", active_stage=2, notes_id="s12a",
         passed={0, 1},
-        illus=ASSETS / "illustrations/s12a-meaning-map.png")
+        illus=ASSETS / "web/word2vec-king-analogy-arrows.png",
+        illus_caption="Классика word2vec: king − man + woman ≈ queen "
+                      "(Jay Alammar, illustrated word2vec)")
 
 
 def build_s12(p):
@@ -1517,7 +1584,9 @@ def build_s18a(p):
         tag="4 разбора · 2 провала", active_stage=3, notes_id="s18a",
         passed={0, 1, 2},
         frame_size=18,
-        illus=ASSETS / "illustrations/s18a-flashlight.png")
+        illus=ASSETS / "web/attention-paper-title.png",
+        illus_caption="Статья, давшая механизму имя: Vaswani et al., "
+                      "«Attention Is All You Need», 2017 (arXiv:1706.03762)")
 
 
 # v3.0: пример «Кот съел мышь, потому что ОН был голоден» — вес от «он»
@@ -1788,14 +1857,22 @@ def build_s20(p):
                  "распределение следующих токенов: конкретнее, в экспертном "
                  "регистре.", "size": 12.5, "color": DEEP},
     ], line_spacing=1.15)
-    # Research-оговорка (Zheng et al., EMNLP 2024 Findings — в notes)
-    ocean_box(s, 0.55, 5.12, 12.25, 0.72, fill=TEAL_TINT, stroke=TEAL,
+    # Research-оговорка (fact-check fix, 2026-09-06): Zheng et al. измеряли
+    # ТОЛЬКО фактическую точность (2410 вопросов, 162 роли) — про
+    # тон/стиль в их статье вывода нет. Разделяем на 2 отдельные строки:
+    # (1) точная цитата с цифрами, (2) наблюдение курса про тон/стиль —
+    # без привязки к Zheng et al.
+    ocean_box(s, 0.55, 5.05, 12.25, 0.82, fill=TEAL_TINT, stroke=TEAL,
               stroke_pt=1.3)
-    text_box(s, 0.85, 5.18, 11.7, 0.6,
-             "Систематические проверки показывают: роль меняет тон, стиль "
-             "и отбор содержания — но не повышает фактическое качество "
-             "ответов.", size=13.5, bold=True, color=DEEP,
-             anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    text_box(s, 0.85, 5.11, 11.7, 0.36,
+             "Zheng et al. (2024, EMNLP Findings; 2410 вопросов, 162 роли): "
+             "персона/роль в промпте не повышает точность факта — эффект "
+             "конкретной роли непредсказуем.",
+             size=12.5, bold=True, color=DEEP, line_spacing=1.1)
+    text_box(s, 0.85, 5.50, 11.7, 0.32,
+             "Отдельно от этого исследования — по наблюдениям курса: роль "
+             "ощутимо меняет тон, стиль и отбор содержания ответа.",
+             size=11.5, italic=True, color=TEAL, line_spacing=1.05)
     gold_callout(s, 0.55, 6.0, 12.25, 0.95,
                  "Роль — инструмент управления стилем и фокусом, а не "
                  "«усилитель ума». Нужен ответ по вашим данным — дайте "
@@ -2124,7 +2201,9 @@ def build_s26a(p):
         tag="4 разбора · 2 провала", active_stage={4, 5}, notes_id="s26a",
         passed={0, 1, 2, 3},
         frame_size=18,
-        illus=ASSETS / "illustrations/s26a-dice.png")
+        illus=ASSETS / "web/dice-wikimedia.jpg",
+        illus_caption="Казино-кости Caesars Palace — Wikimedia Commons, "
+                      "CC-BY-SA")
 
 
 S26_BARS = [("яблоко", 0.32, True), ("пиццу", 0.19, False),
@@ -2289,16 +2368,30 @@ def build_s28(p):
     s = blank(p)
     slide_title(s, "T=0 не даёт детерминизма: 80 уникальных ответов из 1000",
                 size=25, h=0.6)
-    # Слева — экспонат
-    ocean_box(s, 0.55, 1.35, 4.55, 3.1, fill=SURFACE, stroke=LIGHT,
+    # Слева — экспонат (высота под контент, освобождает место мему снизу)
+    ocean_box(s, 0.55, 1.35, 4.55, 2.15, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.4)
-    text_box(s, 0.8, 1.6, 4.05, 1.3, "80 / 1000", size=64, bold=True,
+    text_box(s, 0.8, 1.48, 4.05, 0.85, "80 / 1000", size=48, bold=True,
              color=GOLD, align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 2.95, 3.95, 1.45,
+    text_box(s, 0.85, 2.28, 3.95, 1.15,
              "уникальных вариантов ответа на идентичный запрос при T=0 — "
              "стандартный vLLM (открытый инференс-сервер; Thinking "
              "Machines Lab, сентябрь 2025)",
-             size=12, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.18)
+             size=11, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.12)
+    # Реальный мем «Well yes, but actually no» — тот же шаблон, что s01,
+    # другой текст: T=0 звучит как гарантия детерминизма, но нет. Помещаем
+    # в зазор между экспонатом (низ 3.50) и рядом плашек (верх 4.75).
+    meme_h = 1.08
+    meme_w = meme_h * 1600 / 1218
+    meme_x = 0.55 + (4.55 - meme_w) / 2
+    meme_y = 3.60
+    add_image(s, ASSETS / "web/well-yes-actually-no-template.jpg",
+              x=meme_x, y=meme_y, h=meme_h)
+    band_h = meme_h * 0.205
+    text_box(s, meme_x + 0.08, meme_y + 0.02, meme_w - 0.16, band_h - 0.03,
+             "T=0 = детерминизм?", size=10, bold=True, color=DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=0.95)
     # Справа — механизм
     text_runs(s, 5.4, 1.35, 7.4, 0.6, [
         {"text": "Причина — не «floating-point вообще», а отсутствие ",
@@ -2567,13 +2660,22 @@ def build_s31(p):
               stroke_pt=1.4)
     text_box(s, 7.1, 4.27, 4.0, 0.38, "Как цикл ломается",
              size=14, bold=True, color=DEEP)
-    text_box(s, 7.1, 4.68, 4.05, 1.1,
+    text_box(s, 7.1, 4.68, 3.05, 1.1,
              "Вырожденный цикл повторов: модель «зацикливается» на одном "
              "токене или фразе и генерирует полотно повторов вместо "
-             "остановки.", size=12.5, color=DEEP, line_spacing=1.18)
-    # Мем «горшочек, не вари!» — угловое размещение (свой рисунок)
-    add_image(s, ASSETS / "illustrations/s31-gorshochek.png",
-              x=11.30, y=4.28, w=1.35)
+             "остановки.", size=12, color=DEEP, line_spacing=1.15)
+    # Реальная иллюстрация: «Горшочек каши» / «Sweet Porridge» (братья
+    # Гримм) — Otto Ubbelohde, 1909, общественное достояние. Каша,
+    # заполняющая деревню, — метафора цикла без стоп-условия.
+    gsh_w = 1.55
+    gsh_h = gsh_w * 324 / 640
+    gsh_x = 10.55
+    gsh_y = 4.30 + (1.1 - gsh_h) / 2
+    add_image(s, ASSETS / "web/gorshochek-ubbelohde-1909.jpg",
+              x=gsh_x, y=gsh_y, w=gsh_w)
+    text_box(s, gsh_x - 0.12, gsh_y + gsh_h + 0.03, gsh_w + 0.24, 0.28,
+             "«Горшочек каши» — Гримм, 1909", size=7.5, italic=True,
+             color=LIGHT, align=PP_ALIGN.CENTER)
     gold_callout(s, 0.55, 6.05, 12.25, 0.68,
                  "Практика: repetition_penalty / frequency_penalty снижают "
                  "вероятность буквальных повторов; max_tokens — страховка "
@@ -2676,7 +2778,9 @@ def build_s33a(p):
                      "каждый класс умеет",
         tag="4 разбора", active_stage=set(), notes_id="s33a",
         bar_muted=True, frame_size=18,
-        illus=ASSETS / "illustrations/s33a-matryoshka.png")
+        illus=ASSETS / "web/matryoshka-wikimedia.jpg",
+        illus_caption="Русская матрёшка — Wikimedia Commons, CC-BY-SA "
+                      "3.0 / GFDL")
 
 
 S33_COLS = [
@@ -2691,6 +2795,7 @@ S33_COLS = [
         ("Мультимодальность: ", "часто есть vision"),
     ]),
     ("s33-server", "Большие — 70B+", False, [
+        ("Примеры: ", "модели Llama-класса 70B, Qwen3.5-397B-A17B"),
         ("Железо: ", "мульти-GPU / сервер"),
         ("Мультимодальность: ", "как правило полная (текст + изображение, "
          "иногда аудио)"),
@@ -2810,7 +2915,9 @@ def build_s35a(p):
                      "и решение, когда LLM не тот инструмент",
         tag="6 разборов", active_stage=set(range(7)),
         notes_id="s35a", frame_bar=True, frame_size=18,
-        illus=ASSETS / "illustrations/s35a-puzzle.png")
+        illus=ASSETS / "web/this-is-fine-meme-fb.jpg",
+        illus_caption="«This is fine» — K.C. Green, комикс Gunshow #648, "
+                      "2013")
 
 
 def build_s35(p):
@@ -2900,17 +3007,19 @@ def build_s36(p):
     s = blank(p)
     slide_title(s, "Сентябрь 2026: качество сблизилось — цены разошлись на "
                    "три порядка", size=24, h=0.9, y=0.35)
-    # Колонки
+    # Колонки — реальные логотипы компаний (LobeHub icons-static-svg,
+    # recolor в Ocean palette) как визуальный якорь перед каждой строкой.
     frontier = [
-        "OpenAI: GPT-5.6 — Luna → Terra → Sol",
-        "Anthropic: Claude Fable 5 · Opus 5",
-        "Google: Gemini 3.5 Pro (окно 2 млн, Deep Think)",
-        "xAI: Grok 4.3",
+        ("openai", "OpenAI: GPT-5.6 — Luna → Terra → Sol"),
+        ("anthropic", "Anthropic: Claude Fable 5 · Opus 5"),
+        ("google", "Google: Gemini 3.5 Pro (окно 2 млн, Deep Think)"),
+        ("xai", "xAI: Grok 4.3"),
     ]
     open_w = [
-        "DeepSeek V4 (Pro 1.6 трлн / Flash 284 млрд)",
-        "Qwen 3.8-Max — первая открытая из линейки Max",
-        "Kimi K2.6 (1 трлн) · Kimi K3 (2.8 трлн — крупнейшая открытая)",
+        ("deepseek", "DeepSeek V4 (Pro 1.6 трлн / Flash 284 млрд)"),
+        ("qwen", "Qwen 3.8-Max — первая открытая из линейки Max"),
+        (None, "Kimi K2.6 (1 трлн) · Kimi K3 (2.8 трлн — крупнейшая "
+               "открытая)"),
     ]
     for x, title, items in [(0.55, "Передний край (закрытые веса)",
                              frontier),
@@ -2919,13 +3028,20 @@ def build_s36(p):
                   stroke_pt=1.4)
         text_box(s, x + 0.25, 1.65, 5.5, 0.4, title, size=15, bold=True,
                  color=MID)
-        runs = []
-        for i, it in enumerate(items):
+        row_y = 2.14
+        row_h = 1.7 / len(items)
+        for logo, it in items:
             bold = "крупнейшая открытая" in it
-            runs.append({"text": "• " + it, "size": 12.5, "color": DEEP,
-                         "bold": bold, "newpara": i > 0,
-                         "space_before_pt": 6})
-        text_runs(s, x + 0.25, 2.12, 5.5, 1.7, runs, line_spacing=1.18)
+            if logo:
+                add_image(s, ASSETS / f"icons/logos-web/{logo}.png",
+                          x=x + 0.25, y=row_y + row_h / 2 - 0.14, h=0.28)
+                tx0 = x + 0.62
+            else:
+                tx0 = x + 0.25
+            text_box(s, tx0, row_y, x + 5.75 - tx0, row_h, it, size=12.5,
+                     bold=bold, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                     line_spacing=1.1)
+            row_y += row_h
     # IMO экспонат
     filled_rect(s, 0.55, 4.05, 12.25, 0.92, GOLD_TINT, stroke=GOLD,
                 stroke_pt=1.8, radius=True, radius_adj=0.12)
@@ -3226,58 +3342,63 @@ def build_s40(p):
 
 
 def build_s41(p):
-    """Мост к Лекции 3: hero-иллюстрация (свой flat Ocean мост, ≥40%
-    площади) + 4 карточки-концепта с якорями."""
+    """Мост к Лекции 3 (v3.1, #183 round 3 — fix композиции): мост теперь
+    ГОРИЗОНТАЛЬНОЙ ПОЛОСОЙ под заголовком, ПОЛНОСТЬЮ читаемый (арка +
+    тросы + опоры), НЕ перекрыт карточками — раньше карточки лежали
+    поверх моста, виден был только обрубок вертикальной полосы. Картинка
+    предварительно обрезана по контенту (убрано пустое верхнее поле PNG:
+    784/1024 исходной высоты), поэтому силуэт моста заполняет всю полосу
+    без потерь. 4 карточки-концепта — компактный 2×2 grid ниже полосы."""
     s = blank(p)
-    text_runs(s, 0.55, 0.35, 12.3, 0.7, [
-        {"text": "Лекция 3: ", "size": 27, "bold": True, "color": GOLD},
-        {"text": "как модель выходит за пределы контекста", "size": 27,
+    text_runs(s, 0.55, 0.30, 12.3, 0.55, [
+        {"text": "Лекция 3: ", "size": 24, "bold": True, "color": GOLD},
+        {"text": "как модель выходит за пределы контекста", "size": 24,
          "bold": True, "color": DEEP},
     ], anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    # Hero: 9.9" × 5.11" ≈ 51% площади слайда, фоновый слой (как s01)
-    hero_w = 9.9
-    add_image(s, ASSETS / "illustrations/s41-bridge-lec3.png",
-              x=(SLIDE_W_IN - hero_w) / 2, y=1.35, w=hero_w)
+    # Hero-полоса: мост, обрезанный по контенту (1984×784) — читается
+    # целиком: арка, тросы, обе опоры, конечные узлы слева/справа.
+    bridge_w = 7.4
+    bridge_h = bridge_w * 784 / 1984
+    bridge_x = (SLIDE_W_IN - bridge_w) / 2
+    bridge_y = 0.90
+    add_image(s, ASSETS / "illustrations/s41-bridge-lec3-crop.png",
+              x=bridge_x, y=bridge_y, w=bridge_w)
     cards = [
         ("s41-search", "RAG",
          "Семантический поиск по вашей базе → найденные фрагменты в "
          "контекст.",
-         "Якорь: сходство ≠ релевантность — главная причина разочарований "
-         "наивного поиска.", TEAL),
+         "Якорь: сходство ≠ релевантность.", TEAL),
         ("s41-settings", "Инструменты / вызов функций",
          "Модель генерирует структурированный вызов → внешняя система "
          "исполняет.",
-         "Якорь: надёжность формата вызова обеспечивают structured outputs.",
-         TEAL),
+         "Якорь: надёжность формата даёт structured outputs.", TEAL),
         ("s41-plug", "MCP",
          "Открытый протокол подключения инструментов.",
-         "Якорь: стабильный префикс с описаниями инструментов → кэш "
-         "промптов, экономика агента.", GOLD),
+         "Якорь: стабильный префикс → кэш промптов, экономика агента.",
+         GOLD),
         ("s41-refresh-cw", "Агентный цикл",
          "Действие → наблюдение → коррекция.",
-         "Якорь: инструкции для модели — те же токены с весом внимания; "
-         "агент читает внешний контент → prompt injection; невидимые "
-         "токены рассуждения умножаются на число шагов.", TEAL),
+         "Якорь: агент читает внешний контент → prompt injection.", TEAL),
     ]
-    card_w, card_h = 5.05, 2.3
-    gap_x, gap_y = 1.55, 0.55
+    card_w, card_h = 5.75, 1.62
+    gap_x, gap_y = 0.75, 0.14
     x0 = (SLIDE_W_IN - card_w * 2 - gap_x) / 2
-    y0 = 1.65
+    y0 = bridge_y + bridge_h + 0.14
     for i, (icon, title, body, anchor, acol) in enumerate(cards):
         col, row = i % 2, i // 2
         x = x0 + col * (card_w + gap_x)
         y = y0 + row * (card_h + gap_y)
         ocean_box(s, x, y, card_w, card_h, fill=WHITE, stroke=LIGHT,
-                  stroke_pt=1.5)
-        add_image(s, ASSETS / f"icons/{icon}.png", x=x + 0.22, y=y + 0.18,
-                  w=0.42)
-        text_box(s, x + 0.78, y + 0.16, card_w - 0.95, 0.45, title,
-                 size=15.5, bold=True, color=DEEP)
-        text_box(s, x + 0.25, y + 0.68, card_w - 0.5, 0.62, body, size=12,
-                 color=DEEP, line_spacing=1.15)
-        text_box(s, x + 0.25, y + 1.32, card_w - 0.5, 0.92, anchor,
-                 size=10.5, italic=True,
-                 color=acol if acol == GOLD else TEAL, line_spacing=1.15)
+                  stroke_pt=1.4)
+        add_image(s, ASSETS / f"icons/{icon}.png", x=x + 0.18, y=y + 0.14,
+                  w=0.34)
+        text_box(s, x + 0.62, y + 0.11, card_w - 0.78, 0.36, title,
+                 size=13.5, bold=True, color=DEEP)
+        text_box(s, x + 0.22, y + 0.50, card_w - 0.44, 0.55, body, size=10.5,
+                 color=DEEP, line_spacing=1.08)
+        text_box(s, x + 0.22, y + 1.06, card_w - 0.44, 0.50, anchor,
+                 size=9.5, italic=True,
+                 color=acol if acol == GOLD else TEAL, line_spacing=1.08)
     speaker_notes(s, load_notes("s41"))
 
 
@@ -3334,10 +3455,9 @@ def main():
         except Exception as e:
             print(f"  {sid} FAIL: {type(e).__name__}: {e}")
             raise
-    # Знаменатель — число НУМЕРУЕМЫХ слайдов (47 − s42 = 46): s42 (Q&A)
-    # без footer, и он последний — позиция i+1 совпадает с номером в
-    # нумеруемой последовательности.
-    num_total = sum(1 for sid, _fn in BUILDERS if sid != "s42")
+    # Знаменатель — общее число слайдов в деке (47, включая s42 Q&A),
+    # даже хотя сам s42 идёт без footer/номера (паттерн qa_minimal).
+    num_total = len(BUILDERS)
     for i, ((sid, _fn), slide) in enumerate(zip(BUILDERS, p.slides)):
         if sid == "s42":
             continue  # Q&A — паттерн qa_minimal: без footer/номера страницы

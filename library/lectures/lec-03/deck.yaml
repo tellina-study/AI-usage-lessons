@@ -18,9 +18,9 @@
 # (дважды посчитаны дивайдеры). Финализированный ordered-list §3 = 51 слайд;
 # это authoritative-число. builders/sids в build_v3.py содержат 51 (assert 51).
 #
-# v5b order (56 слайдов) — WP8 (#185): +5 «классическая база» слайдов, по
-# одному на раздел, сразу после дивайдера, перед AI-частью:
-#   R0: s01(мем) s01b(air-canada) s02 s02a s03 s04
+# v5b order (55 слайдов) — WP8 (#185): +5 «классическая база» слайдов, по
+# одному на раздел, сразу после дивайдера, перед AI-частью; s01b снят (#312):
+#   R0: s01(мем) s02 s02a s03 s04
 #   R1: s04a(div) [s-classic-prompt] s05 s05a s05c s05b s06 s07 s08 s08a
 #   R2: s09(div) [s-classic-rag] s10 s11 s12 s13
 #   R3: s13a(div) [s-classic-ft] s13b s15 s17 s14 s16
@@ -39,7 +39,7 @@ deck:
   status: final
   version: v5b.0
   source: chapter v3.0 finalized (5 частей) + WP8 classic-base-first (#185)
-  total_slides: 56
+  total_slides: 55
   curriculum_level: introductory
   deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]
 
@@ -155,24 +155,12 @@ slides:
     type: hero_cover
     section: "Раздел 0. Открытие"
     duration_min: 3
-    assertion: "«Магическая пилюля»: главный миф — что модель точнее, если попросить экспертом и усложнить промпт"
+    assertion: "«Магическая пилюля»: миф — что модель точнее, если попросить экспертом и усложнить промпт"
     learning_goal: "Мем-хук (2-панельная афиша «магической пилюли», свой flat-рисунок, ≥40%)"
     learning_outcomes: [LO7]
     chapter_ref: "§Введение [for-slide-s01]"
-    hero: "мем-афиша ОБЕЩАНИЕ vs РЕАЛЬНОСТЬ (свой рисунок Ocean-палитра, ≥40%)"
-    changed_in_v5: "#185 — s01 стал мем-хуком; Air Canada вынесен на s01b"
-
-  - id: s01b
-    file: slides/s01b-air-canada-case.md
-    type: case_study
-    section: "Раздел 0. Открытие"
-    duration_min: 2.5
-    assertion: "Air Canada: чат-бот выдумал политику — платит компания (неправильная архитектура)"
-    learning_goal: "Первый разбор класса «неправильная архитектура под задачу»"
-    learning_outcomes: [LO7]
-    chapter_ref: "§Введение [for-slide-s01]"
-    hero: "assets/screenshots/s01-aircanada.jpg (Wikimedia CC-BY-SA), ≥40% площади"
-    new_in_v5: "#185 — Air Canada отдельным слайдом-кейсом сразу после мем-хука"
+    hero: "мем-афиша ЧЕГО ЖДЁМ vs ЧТО ПРОИСХОДИТ (свой рисунок Ocean-палитра, ≥40%)"
+    changed_in_v5: "#185 — s01 стал мем-хуком; s01b снят (#312), Air Canada — кейс §2 (s13)"
 
   - id: s02
     file: slides/s02-cover-roadmap.md

@@ -315,9 +315,9 @@ slides:
 # by_section — v5-раскладка (issue #185), 51 слайд, актуализирована в polish-проходе v5.
 # Порядок соответствует сборке build_v3.py; PNG s-01…s-51 идут в этом порядке.
 totals:
-  slides: 56
+  slides: 55
   by_section:
-    "Раздел 0. Открытие": [s01, s01b, s02, s02a, s03, s04]                        # 6
+    "Раздел 0. Открытие": [s01, s02, s02a, s03, s04]                             # 5 (s01b снят #312)
     "Раздел 1. Промпт": [s04a, s-classic-prompt, s05, s05a, s05c, s05b, s06, s07, s08, s08a]  # div + classic + 8
     "Раздел 2. RAG": [s09, s-classic-rag, s10, s11, s12, s13]                     # div + classic + 4
     "Раздел 3. Fine-tune": [s13a, s-classic-ft, s13b, s15, s17, s14, s16]         # div + classic + 5
@@ -325,7 +325,8 @@ totals:
     "Раздел 5. Фреймворк": [s25a, s-classic-framework, s26, s27, s27b, s28, s29, s30, s31]  # div + classic + 7
   duration_min_total: 98
   note: >
-    v5b (issue #185 WP8): 51→56 слайдов. +5 «классическая база с нуля» (по
+    v5b (issue #185): s01b снят (#312) — Air Canada остаётся кейсом §2 (s13);
+    56→55 слайдов. WP8: +5 «классическая база с нуля» (по
     одному на §1–§5, сразу после дивайдера, перед AI-частью): s-classic-prompt
     (§1.0 точная спецификация/ТЗ/контракт), s-classic-rag (§2.0 инвертированный
     индекс/BM25), s-classic-ft (§3.0 train/test split/transfer learning),

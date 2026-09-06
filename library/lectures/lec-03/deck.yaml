@@ -18,14 +18,15 @@
 # (дважды посчитаны дивайдеры). Финализированный ordered-list §3 = 51 слайд;
 # это authoritative-число. builders/sids в build_v3.py содержат 51 (assert 51).
 #
-# v5 order (51 слайд):
+# v5b order (56 слайдов) — WP8 (#185): +5 «классическая база» слайдов, по
+# одному на раздел, сразу после дивайдера, перед AI-частью:
 #   R0: s01(мем) s01b(air-canada) s02 s02a s03 s04
-#   R1: s04a(div) s05 s05a s05c s05b s06 s07 s08 s08a
-#   R2: s09(div) s10 s11 s12 s13
-#   R3: s13a(div) s13b s15 s17 s14 s16
-#   R4: s18(div) s19 s19b s20 s21 s22 s22a_multi s22b s22c s22d s22e
-#        s25 s24 s25b s23 s23b s23c
-#   R5: s25a(div) s26 s27 s27b s28 s29 s30 s31
+#   R1: s04a(div) [s-classic-prompt] s05 s05a s05c s05b s06 s07 s08 s08a
+#   R2: s09(div) [s-classic-rag] s10 s11 s12 s13
+#   R3: s13a(div) [s-classic-ft] s13b s15 s17 s14 s16
+#   R4: s18(div) [s-classic-agents] s19 s19b s20 s21 s22 s22a_multi s22b
+#        s22c s22d s22e s25 s24 s25b s23 s23b s23c
+#   R5: s25a(div) [s-classic-framework] s26 s27 s27b s28 s29 s30 s31
 
 deck:
   lecture_number: 3
@@ -36,9 +37,9 @@ deck:
   learning_outcomes: [LO7, LO4]
   language: ru
   status: final
-  version: v5.0
-  source: chapter v3.0 finalized (5 частей)
-  total_slides: 51
+  version: v5b.0
+  source: chapter v3.0 finalized (5 частей) + WP8 classic-base-first (#185)
+  total_slides: 56
   curriculum_level: introductory
   deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]
 
@@ -137,7 +138,13 @@ cut_order:
     - s22c        # память → строка на s22b
     - s25b        # coding-агенты → в материалы/speech
     - s16         # forgetting → короткий inline на s14
-  invariant: "strict-in доля (failure/judgment) не падает <30% холистически; NEW-слайды s07/s22a_multi/s23b/s23c/s24 — strict-in, режутся последними. s05c НЕ режется (перенос #184)."
+  classic_base_compression:  # WP8 (#185): +5 слайдов классической базы, +~10 мин
+    # При сжатии (90/75 мин) классбаза-слайды режутся как отдельные слайды,
+    # НО сама база НЕ пропускается — сворачивается в одну строку на дивайдере
+    # раздела (напр. s04a tag: «база: точная спецификация / ТЗ → промпт»).
+    slides: [s-classic-prompt, s-classic-rag, s-classic-ft, s-classic-agents, s-classic-framework]
+    rule: "cut slide → fold base into a single line on the section divider; never drop the base entirely"
+  invariant: "strict-in доля (failure/judgment) не падает <30% холистически; NEW-слайды s07/s22a_multi/s23b/s23c/s24 — strict-in, режутся последними. s05c НЕ режется (перенос #184). Классбаза-слайды режутся, но база остаётся строкой на дивайдере (WP8)."
 
 # ─────────────────────────────────────────────────────────────────────────
 # Раздел 0. Открытие (~8 мин)
@@ -215,6 +222,18 @@ slides:
     duration_min: 0.3
     assertion: "Раздел 1 — что умеет один вызов с хорошим промптом и где его потолок"
     chapter_ref: "§1 [for-slide-s05]"
+
+  - id: s-classic-prompt
+    file: slides/s-classic-prompt-base.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "До промпта задачу ставили точной спецификацией и детерминированной программой; промпт — постановка задачи вероятностной системе на естественном языке"
+    learning_goal: "Классическая база §1.0: точная постановка задачи как точка отсчёта промпта"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.0 [for-slide-s-classic-prompt]"
+    subtype: classic_base
+    new_in_v5b: "#185 WP8 — классическая база раздела 1 (после дивайдера s04a, перед s05); режется при сжатии, но база не пропускается"
 
   - id: s05
     file: slides/s05-default-one-call.md

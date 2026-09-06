@@ -2394,10 +2394,193 @@ def build_s25a(p):
 
 
 # ============================================================
-# v5 new builders (issue #185) — 100-мин расширение 40→54.
-# NO renumber; new suffix/mid IDs: s01b s05c s07 s17 s19b s20
-# s22a_multi s23b s23c s24.
+# v5b classic-base-first (issue #185 WP8) — 51→56 слайдов.
+# По одному «классическая база с нуля» слайду на каждый содержательный
+# раздел (§1–§5), вставляется сразу после дивайдера раздела, перед AI-
+# частью. Общий шаблон: 3 карточки классической базы + gold «что оставить
+# из классики» + мост к AI-части. NO renumber (мнемонические id
+# s-classic-*). Schema §5.5: 3-column tile, mass-balanced, single-line names.
 # ============================================================
+
+def build_classic_base(p, sid, *, title, intro, cards, keep_text, bridge):
+    """Shared «классическая база» slide: title + intro line + 3 tile cards
+    (icon + bold single-line name + body) + gold «что оставить» callout +
+    teal-tint bridge strip. `cards` = list of 3 (icon_name, name, body)."""
+    s = blank(p)
+    slide_title(s, title, size=26)
+    text_box(s, 0.55, 1.14, 12.25, 0.60, intro,
+             size=14, italic=True, color=MID, line_spacing=1.14)
+    # 3 tile cards — equal mass, full width. Name может занимать 2 строки;
+    # body — до 5 строк, всё внутри карточки (нет overflow под gold-плашку).
+    n = len(cards)
+    gap = 0.24
+    x0 = 0.55
+    total_w = 12.25
+    cw = (total_w - gap * (n - 1)) / n
+    cy, chh = 1.86, 2.80
+    for i, (ic, name, body) in enumerate(cards):
+        x = x0 + i * (cw + gap)
+        ocean_box(s, x, cy, cw, chh)
+        icon(s, ic, x + 0.28, cy + 0.24, 0.54, "mid")
+        text_box(s, x + 0.28, cy + 0.92, cw - 0.56, 0.72, name,
+                 size=15.5, bold=True, color=MID, line_spacing=1.04)
+        text_box(s, x + 0.28, cy + 1.66, cw - 0.56, chh - 1.80, body,
+                 size=12, color=DEEP, line_spacing=1.14)
+    # gold «что оставить из классики»
+    ky, kh = 4.80, 1.36
+    filled_rect(s, 0.55, ky, 12.25, kh, GOLD_TINT, stroke=GOLD, stroke_pt=1.75,
+                radius=True, radius_adj=0.06)
+    text_box(s, 0.83, ky + 0.11, 2.4, 0.30, "ЧТО ОСТАВИТЬ",
+             size=12, bold=True, color=GOLD)
+    text_box(s, 0.83, ky + 0.44, 11.6, kh - 0.54, keep_text,
+             size=13.5, bold=True, color=DEEP, line_spacing=1.14)
+    # teal-tint bridge strip к AI-части
+    by, bh = 6.26, 0.80
+    filled_rect(s, 0.55, by, 12.25, bh, TEAL_TINT, stroke=TEAL, stroke_pt=1.5,
+                radius=True, radius_adj=0.10)
+    text_runs(s, 0.83, by + 0.11, 11.6, bh - 0.20, [
+        {"text": "Мост: ", "size": 12, "bold": True, "color": TEAL},
+        {"text": bridge, "size": 12, "color": DEEP},
+    ], line_spacing=1.12, align=PP_ALIGN.LEFT)
+    speaker_notes(s, load_notes(sid))
+    return s
+
+
+def build_s_classic_prompt(p):
+    """§1.0 — классическая база раздела 1: точная постановка задачи."""
+    build_classic_base(
+        p, "s-classic-prompt",
+        title="Как задачу ставили до промпта — и что это меняет.",
+        intro="До больших моделей «заставить систему сделать нужное» означало не пожелание на "
+              "естественном языке, а точную спецификацию и детерминированную программу.",
+        cards=[
+            ("file-text", "Точная спецификация / ТЗ",
+             "Пред- и постусловия, инварианты, критерии приёмки (Z-нотация, TLA+, Design by "
+             "Contract). Результат детерминирован и проверяем."),
+            ("git-fork", "Императив vs декларатив",
+             "«Как сделать» (алгоритм по шагам) против «что получить» (SQL/Prolog описывает "
+             "результат, движок решает как)."),
+            ("braces", "Контракт интерфейса",
+             "Точное соглашение вход/выход (сигнатуры типов, OpenAPI, Protobuf). Единственный "
+             "корректный смысл и способ его проверить."),
+        ],
+        keep_text="Дисциплину точной постановки: точный промпт — то же ТЗ на естественном языке. "
+                  "Для детерминированного и верифицируемого (арифметика, валидация по схеме, "
+                  "маршрутизация по правилам) — классический код, а не промпт.",
+        bridge="промпт — постановка задачи вероятностной системе на естественном языке; отсюда и "
+               "сила (не нужно специфицировать неподъёмное), и граница (нет единственного смысла, "
+               "нет детерминизма).",
+    )
+
+
+def build_s_classic_rag(p):
+    """§2.0 — классическая база раздела 2: классический информационный поиск."""
+    build_classic_base(
+        p, "s-classic-rag",
+        title="Как искали в тексте до эмбеддингов.",
+        intro="Буква R в RAG — retrieval, поиск: дисциплина с полувековой историей. Именно её "
+              "устройство определяет, где RAG работает, а где ломается.",
+        cards=[
+            ("book-open", "Инвертированный индекс",
+             "Для каждого слова — список документов, где оно встречается (машинный каталог). "
+             "Фундамент Lucene, Elasticsearch, PostgreSQL full-text."),
+            ("route", "Булев поиск",
+             "Запрос как логическое выражение («ошибка AND аутентификация NOT tomcat»): точный, "
+             "предсказуемый, объяснимый отбор."),
+            ("list-ordered", "TF-IDF → BM25",
+             "Ранжирование по важности слова (реже в коллекции — сильнее сигнал). BM25 (Okapi) — "
+             "дешёвая объяснимая линия, которую многие не обгоняют."),
+        ],
+        keep_text="Классика точна на кодах и идентификаторах, где смысл-поиск размывает. Лучший "
+                  "RAG-2026 — гибрид BM25 + плотные векторы, лексические фильтры по метаданным, "
+                  "дисциплина ранжирования (реранкер) и наблюдаемость: recall/precision на "
+                  "эталонном наборе (golden set).",
+        bridge="семантический поиск на эмбеддингах (Лекция 2) добавляет поверх классики смысловое "
+               "совпадение вместо лексического — но не заменяет её. RAG расширяет классический "
+               "поиск, а не отменяет его.",
+    )
+
+
+def build_s_classic_ft(p):
+    """§3.0 — классическая база раздела 3: классическое машинное обучение."""
+    build_classic_base(
+        p, "s-classic-ft",
+        title="Как решали задачу ML до больших моделей.",
+        intro="Дообучение большой модели — не экзотика новой эпохи, а прямое продолжение "
+              "классической схемы transfer learning. Восстановим её с нуля.",
+        cards=[
+            ("database", "Выборка + эталон",
+             "Размеченный набор «вход → правильный ответ» (ground truth, эталонная разметка); "
+             "модель учится его воспроизводить и обобщать на новые данные."),
+            ("scale", "Train / val / test split",
+             "Три непересекающиеся части: на train учат, на validation подбирают, на test меряют "
+             "один раз. Правило: нельзя тестировать на обучающих данных."),
+            ("git-branch", "Transfer learning (перенос обучения)",
+             "Взять предобученную на большом корпусе модель и дёшево дообучить под свою узкую "
+             "задачу: быстрее и точнее, чем с нуля («предобучение → дообучение»)."),
+        ],
+        keep_text="Eval-наборы (golden set) — без них catastrophic forgetting не виден; "
+                  "версионирование данных и весов для отката; train/test-дисциплину против утечки; "
+                  "мониторинг дрейфа. LoRA удешевила шаг дообучения, но не дисциплину вокруг него.",
+        bridge="PEFT/LoRA — тот же transfer learning, доведённый до предела дешевизны и поверх "
+               "несравнимо более крупной модели. Идея не новая — новыми стали масштаб базовой "
+               "модели и стоимость шага.",
+    )
+
+
+def build_s_classic_agents(p):
+    """§4.0 — классическая база раздела 4: классическая автоматизация."""
+    build_classic_base(
+        p, "s-classic-agents",
+        title="Управляемая автоматизация была задолго до агентов.",
+        intro="«Агент» звучит как изобретение эпохи больших моделей, но управляемая автоматизация "
+              "процессов — зрелая дисциплина. Без неё не оценить, что агент добавляет, а что ломает.",
+        cards=[
+            ("waypoints", "Конечный автомат",
+             "Набор состояний и правил перехода по событиям («создана → в обработке → закрыта»). "
+             "Возможные переходы видны, невозможные исключены конструктивно."),
+            ("git-branch", "Workflow-движки",
+             "Исполняют заранее описанный процесс по фиксированной схеме: BPMN, DAG-оркестраторы "
+             "(Airflow), RPA. Порядок шагов определён заранее, а не на лету."),
+            ("route", "Управляющий цикл",
+             "plan → act → check как контур обратной связи (теория управления, АСУ); военный "
+             "аналог — OODA-петля. Не одно действие, а цикл с коррекцией."),
+        ],
+        keep_text="Детерминированные workflow где можно; идемпотентность (повтор шага не ломает "
+                  "состояние); принцип наименьших привилегий (least-privilege) для инструментов; "
+                  "лимиты и аудит цикла. Практики надёжности контура никуда не деваются.",
+        bridge="LLM-агент — тот же управляющий цикл plan→act→check, но шаги в нём генерирует модель "
+               "недетерминированно, а не выбирает фиксированное правило автомата. Отсюда и гибкость, "
+               "и провалы раздела.",
+    )
+
+
+def build_s_classic_framework(p):
+    """§5.0 — классическая база раздела 5: классический выбор технологии."""
+    build_classic_base(
+        p, "s-classic-framework",
+        title="Как инженер выбирал технологию до AI-хайпа.",
+        intro="Сам выбор архитектуры — не новая AI-процедура, а прямое применение классических "
+              "принципов инженерного решения. На них и стоят лестница и чек-лист раздела.",
+        cards=[
+            ("clipboard-list", "От требования, не от инструмента",
+             "Требования-инжиниринг: сначала фиксируют, что система обязана делать, потом "
+             "подбирают инструмент. Build-vs-buy: строить своё или взять готовое."),
+            ("scale", "KISS + YAGNI",
+             "Выбирай простейшее решение, закрывающее требование; не закладывай мощность «на "
+             "будущее», пока конкретное требование её не потребует."),
+            ("milestone", "Наименьшая мощность",
+             "Из заметок W3C (Бернерс-Ли и Мендельсон): бери наименее мощный из достаточных "
+             "инструментов — его проще анализировать, проверять и сопровождать."),
+        ],
+        keep_text="Простейшая достаточная архитектура по умолчанию, а бремя доказательства — на "
+                  "том, кто хочет её усложнить. В AI-эпоху принцип не отменяется, а дорожает: лишняя "
+                  "ступень добавляет недетерминизм, стоимость токенов, задержку, поверхность атаки.",
+        bridge="лестница архитектур (код → один вызов → RAG → workflow → агент → мульти-агент) — тот "
+               "же принцип наименьшей мощности по AI-архитектурам: оставайся на нижней достаточной "
+               "ступени, поднимайся только под требование.",
+    )
+
 
 def build_s01b(p):
     """case_study — Air Canada как первый разбор класса «неправильная
@@ -3019,36 +3202,43 @@ def main():
     #   R4: s18(div) s19 s19b s20 s21 s22 s22a_multi s22b s22c s22d
     #        s22e s25 s24 s25b s23 s23b s23c
     #   R5: s25a(div) s26 s27 s27b s28 s29 s30 s31
+    # v5b (issue #185 WP8): +5 «классическая база» слайдов — по одному на
+    # раздел §1–§5, сразу ПОСЛЕ дивайдера раздела, ПЕРЕД AI-частью. 51→56.
     builders = [
         # R0 — Открытие (6)
         build_s01, build_s01b, build_s02, build_s02a, build_s03, build_s04,
-        # R1 — Промпт (div + 8)
-        build_s04a, build_s05, build_s05a, build_s05c, build_s05b, build_s06,
-        build_s07, build_s08, build_s08a,
-        # R2 — RAG (div + 4)
-        build_s09, build_s10, build_s11, build_s12, build_s13,
-        # R3 — Fine-tune (div + 5)
-        build_s13a, build_s13b, build_s15, build_s17, build_s14, build_s16,
-        # R4 — Агенты (div + 16)
-        build_s18, build_s19, build_s19b, build_s20, build_s21, build_s22,
-        build_s22a_multi, build_s22b, build_s22c, build_s22d, build_s22e,
-        build_s25, build_s24, build_s25b, build_s23, build_s23b, build_s23c,
-        # R5 — Фреймворк (div + 7)
-        build_s25a, build_s26, build_s27, build_s27b, build_s28, build_s29,
-        build_s30, build_s31,
+        # R1 — Промпт (div + classic-base + 8)
+        build_s04a, build_s_classic_prompt, build_s05, build_s05a, build_s05c,
+        build_s05b, build_s06, build_s07, build_s08, build_s08a,
+        # R2 — RAG (div + classic-base + 4)
+        build_s09, build_s_classic_rag, build_s10, build_s11, build_s12, build_s13,
+        # R3 — Fine-tune (div + classic-base + 5)
+        build_s13a, build_s_classic_ft, build_s13b, build_s15, build_s17,
+        build_s14, build_s16,
+        # R4 — Агенты (div + classic-base + 16)
+        build_s18, build_s_classic_agents, build_s19, build_s19b, build_s20,
+        build_s21, build_s22, build_s22a_multi, build_s22b, build_s22c,
+        build_s22d, build_s22e, build_s25, build_s24, build_s25b, build_s23,
+        build_s23b, build_s23c,
+        # R5 — Фреймворк (div + classic-base + 7)
+        build_s25a, build_s_classic_framework, build_s26, build_s27, build_s27b,
+        build_s28, build_s29, build_s30, build_s31,
     ]
-    # sid list — MUST match `builders` order 1:1 (display order, 51 slides).
+    # sid list — MUST match `builders` order 1:1 (display order, 56 slides).
     sids = [
         "s01", "s01b", "s02", "s02a", "s03", "s04",
-        "s04a", "s05", "s05a", "s05c", "s05b", "s06", "s07", "s08", "s08a",
-        "s09", "s10", "s11", "s12", "s13",
-        "s13a", "s13b", "s15", "s17", "s14", "s16",
-        "s18", "s19", "s19b", "s20", "s21", "s22", "s22a_multi", "s22b",
-        "s22c", "s22d", "s22e", "s25", "s24", "s25b", "s23", "s23b", "s23c",
-        "s25a", "s26", "s27", "s27b", "s28", "s29", "s30", "s31",
+        "s04a", "s-classic-prompt", "s05", "s05a", "s05c", "s05b", "s06",
+        "s07", "s08", "s08a",
+        "s09", "s-classic-rag", "s10", "s11", "s12", "s13",
+        "s13a", "s-classic-ft", "s13b", "s15", "s17", "s14", "s16",
+        "s18", "s-classic-agents", "s19", "s19b", "s20", "s21", "s22",
+        "s22a_multi", "s22b", "s22c", "s22d", "s22e", "s25", "s24", "s25b",
+        "s23", "s23b", "s23c",
+        "s25a", "s-classic-framework", "s26", "s27", "s27b", "s28", "s29",
+        "s30", "s31",
     ]
-    assert len(builders) == 51, f"expected 51 builders, got {len(builders)}"
-    assert len(sids) == 51, f"expected 51 sids, got {len(sids)}"
+    assert len(builders) == 56, f"expected 56 builders, got {len(builders)}"
+    assert len(sids) == 56, f"expected 56 sids, got {len(sids)}"
 
     total = len(builders)
     inject_report = {}

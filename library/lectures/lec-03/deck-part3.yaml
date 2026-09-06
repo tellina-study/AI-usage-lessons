@@ -17,6 +17,18 @@ slides:
     chapter_ref: "§4 [for-slide-s18]"
     changed_in_v4: "заголовок «Агенты» (без «+безопасность»); безопасность внутри раздела на s25"
 
+  - id: s-classic-agents
+    file: slides/s-classic-agents-base.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 2
+    assertion: "Классическая автоматизация: конечный автомат, workflow-движки (BPMN/DAG/RPA), управляющий цикл plan→act→check (OODA); агент = тот же цикл, но шаги генерирует LLM недетерминированно"
+    learning_goal: "Классическая база §4.0: классическая автоматизация и оркестрация как фундамент агента"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.0 [for-slide-s-classic-agents]"
+    subtype: classic_base
+    new_in_v5b: "#185 WP8 — классическая база раздела 4 (после дивайдера s18, перед s19)"
+
   - id: s19
     file: slides/s19-api-layer.md
     type: assertion_visual
@@ -210,6 +222,18 @@ slides:
     assertion: "Раздел 5 — собрать все архитектуры и их провалы в один инструмент выбора"
     chapter_ref: "§5 [for-slide-s26]"
 
+  - id: s-classic-framework
+    file: slides/s-classic-framework-base.md
+    type: assertion_visual
+    section: "Раздел 5. Фреймворк решения"
+    duration_min: 2
+    assertion: "Классический выбор технологии: от требования, а не от инструмента; build-vs-buy, KISS, YAGNI, принцип наименьшей мощности; лестница архитектур — тот же принцип «простейшее, что работает»"
+    learning_goal: "Классическая база §5.0: классическая дисциплина выбора технологии как фундамент фреймворка"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.0 [for-slide-s-classic-framework]"
+    subtype: classic_base
+    new_in_v5b: "#185 WP8 — классическая база раздела 5 (после дивайдера s25a, перед s26)"
+
   - id: s26
     file: slides/s26-complexity-ladder.md
     type: process
@@ -291,17 +315,25 @@ slides:
 # by_section — v5-раскладка (issue #185), 51 слайд, актуализирована в polish-проходе v5.
 # Порядок соответствует сборке build_v3.py; PNG s-01…s-51 идут в этом порядке.
 totals:
-  slides: 51
+  slides: 56
   by_section:
     "Раздел 0. Открытие": [s01, s01b, s02, s02a, s03, s04]                        # 6
-    "Раздел 1. Промпт": [s04a, s05, s05a, s05c, s05b, s06, s07, s08, s08a]        # div + 8
-    "Раздел 2. RAG": [s09, s10, s11, s12, s13]                                    # div + 4
-    "Раздел 3. Fine-tune": [s13a, s13b, s15, s17, s14, s16]                       # div + 5
-    "Раздел 4. Агенты": [s18, s19, s19b, s20, s21, s22, s22a_multi, s22b, s22c, s22d, s22e, s25, s24, s25b, s23, s23b, s23c]  # div + 16
-    "Раздел 5. Фреймворк": [s25a, s26, s27, s27b, s28, s29, s30, s31]             # div + 7
-  duration_min_total: 88
+    "Раздел 1. Промпт": [s04a, s-classic-prompt, s05, s05a, s05c, s05b, s06, s07, s08, s08a]  # div + classic + 8
+    "Раздел 2. RAG": [s09, s-classic-rag, s10, s11, s12, s13]                     # div + classic + 4
+    "Раздел 3. Fine-tune": [s13a, s-classic-ft, s13b, s15, s17, s14, s16]         # div + classic + 5
+    "Раздел 4. Агенты": [s18, s-classic-agents, s19, s19b, s20, s21, s22, s22a_multi, s22b, s22c, s22d, s22e, s25, s24, s25b, s23, s23b, s23c]  # div + classic + 16
+    "Раздел 5. Фреймворк": [s25a, s-classic-framework, s26, s27, s27b, s28, s29, s30, s31]  # div + classic + 7
+  duration_min_total: 98
   note: >
-    v5 (issue #185): 40→51 слайдов. Добавлены: s01b (Air Canada hook), s05c
+    v5b (issue #185 WP8): 51→56 слайдов. +5 «классическая база с нуля» (по
+    одному на §1–§5, сразу после дивайдера, перед AI-частью): s-classic-prompt
+    (§1.0 точная спецификация/ТЗ/контракт), s-classic-rag (§2.0 инвертированный
+    индекс/BM25), s-classic-ft (§3.0 train/test split/transfer learning),
+    s-classic-agents (§4.0 конечный автомат/workflow/OODA), s-classic-framework
+    (§5.0 KISS/YAGNI/least power). Каждый — 3 карточки базы + gold «что оставить
+    из классики» + мост к AI-части. Режутся при сжатии, база сворачивается в
+    строку на дивайдере (см. cut_order.classic_base_compression в deck.yaml).
+    ── v5 (issue #185): 40→51 слайдов. Добавлены: s01b (Air Canada hook), s05c
     (протокольные роли/STI), s07 (faithfulness dedicated), s17 (знание vs
     поведение), s19b (экономика агента), s20 (MCP-security), s22a_multi
     (мульти-агент p^n), s24 (data-security/ZDR), s23b/s23c (каталог провалов

@@ -602,3 +602,49 @@ per orchestrator's pipeline, then USER GATE per plan v2 §4 (единая фин
 
 **Продолжение лога (v4.2+) — см. `iteration-log-part2.md`** (файл достиг
 лимита 600 строк, CLAUDE.md § Document Size Limit).
+
+---
+
+## v5 consolidated QA-polish pass (issue #185, 2026-09-06)
+
+Единый батч-полиш по 4 QA-критикам (presentation-critic REVISE P0 russification + 3× APPROVE-WITH-POLISH). Все правки — в build_v3.py (visible) + slides/*.md (notes).
+
+### P0 — Russification видимого слоя
+- Deep-latin-scan (deep_latin_scan.py) до: **648 occ / 328 unique**; после: **463 occ**.
+- Body narrative-residual (parens+cite-footers stripped, keep-list applied): **32 unique / 50 occ** — все легитимны: acronym-компаунды (MCP-/RAG-/AI-/GPT-/CoT-), verbatim Anthropic-цитата, author/case-имена (Dixit/Kamal/Oates/Moffatt), file/repo (claude-code/issue), glossed-1× термины. Untranslated narrative anglicisms → 0.
+- Cyrillic-транслит (block A) — все заменены 1:1: апгрейд→улучшение/не даёт прироста ×4; дефолт→по умолчанию ×2; продакшен/в прод/прод-БД→боевая эксплуатация/боевая БД/в бой ×6; чит-шит→шпаргалка; латентность→задержка ×5; парсинг→разбор; бэкапы→резервные копии; ревью→проверка; сэмплов→примеров; хопов→переходов ×2.
+- Glossed англотермины (block B) → РУ-канон с англ. в скобках 1×: fine-tuning→дообучение; workflow→сценарий; retrieval→поиск; grounding→опора на источник; forgetting→забывание; subagent→субагент; skills→навыки; structured output→структурированный вывод; prompt caching→кэш промптов; least-privilege→наименьшие привилегии; human-in-the-loop→человек в контуре; allowlist→белый список; deny-by-default→запрет по умолчанию; over-privilege→избыток прав; zero-click→без клика; full-context→полный контекст; lookup→таблица соответствий; few-shot→примеры в промпте; single-shot→одиночный вызов; live-eval→независимая проверка; coding-агенты→агенты для кода; heist→утечка/ограбление; third-party→сторонний; lossy→сжатие с потерями.
+- **Keystone-лестница (s04/s26) ступени 4-6**: Multi-agent/Agent/Workflow → Мульти-агент / Агент / Сценарий — RU-primary с англ.-глоссой; студент видит 3× (s-06, s-45, s-48) — все RU.
+- Цикл plan→act→check→iterate (s21/s06/s26): RU-глосса «план→действие→проверка→повтор» primary, ReAct-имя сохранён в скобках.
+- s22c память (mem0/Cognee/Graphiti/Zep): бренды keep, связки русифицированы (память между сессиями / память на графе знаний / временной граф / граф-база знаний).
+- s25 правила безопасности: Навык/Субагент/MCP-доступ; Наименьшие привилегии/Человек в контуре на запись/Белый список/запрет по умолчанию.
+- Keep-list соблюдён: бренды, аббревиатуры, case-имена, ChatML `<|im_start|>`, citation-титулы в [N]-футерах, ReAct.
+
+### P1 — Layout (fix + re-render + visual-verify PNG)
+- **s29 (PNG s-49):** вводный курсив укорочен до 2 строк + dims сдвинуты (ly+1.42→1.52) → нет overlap с «Степень автономности». Donut c29-nanda.png перегенерён: убраны нечитаемые «5»/«95», центр-подпись «пилоты GenAI»; big «~95%» несёт число. VISUAL-CONFIRMED.
+- **s07 (PNG s-13):** bar-step 1.02→0.92, subtitle укорочен (0.66→0.58h, 12→11.5pt) → подпись «GPQA ниже MMLU» больше не подрезана рамкой. VISUAL-CONFIRMED.
+- **s27 flowchart (PNG s-46):** убраны клиппящиеся «нет ↓» (заменены тонким down-connector'ом); vg 0.085→0.10; легенда «да→результат / нет→ниже» в subtitle; 8-й пункт унифицирован с рядами 1-7 (gold-box + «8»-круг). VISUAL-CONFIRMED.
+- **s05c (PNG s-10):** разгружен — ChatML/Jinja/Anthropic-top-level detail-line свёрнута в 1 строку; IH-Challenge 84,1→94,1% перенесён в notes (63,8% приоритет + ASR-скачок 5,18→32,05% оставлены как 2 якоря). VISUAL-CONFIRMED.
+
+### P1 — Consistency
+- **RAG-2026 на видимый слой (D-P1-1):** добавлена teal-полоса на s10 (=PNG s-17): «agentic (агентный) RAG по умолчанию · гибридный поиск (BM25+плотные векторы) · реранкер · каскад промахов 5,7%→1,9% (Contextual Retrieval)». VISUAL-CONFIRMED.
+- **s05c forward-ref (D-P1-2):** в speaker notes s05c добавлен мост «полный разбор инъекции как класса атак — в разделе про агенты (безопасность)».
+
+### P1 — Reader
+- **s23b (PNG s-42):** class-names русифицированы/глоссированы; lesson-колонка inline-раскрывает slopsquatting («выдуманное имя пакета → атакующий его регистрирует; не доверять без реестра»), rug-pull («подмена версии»), zero-click, наименьшие привилегии.
+
+### P2
+- s06→s07 дубль faithfulness: числа 25%/39% УБРАНЫ с s06 (=PNG s-12; заменены качественной карточкой + forward «прямое измерение — на следующем слайде»), оставлены только на s07. VISUAL-CONFIRMED.
+- MCP двойное определение: s20 (=PNG s-30) свёрнут — «MCP — стандарт подключения (уже разобран выше)»; полное N×M→N+M/USB-C определение остаётся 1× на s19(=s-28).
+- s07 «два из пяти = 25%» (D-P2-1): в notes s07 → «Claude 3.7 — примерно в одном из четырёх — 25%, DeepSeek R1 — почти в двух из пяти — 39%».
+- s30 footer «в главе методички» → «см. источники» (×2: s19+s20).
+- s19b (D-P2-2): «×несколько» → «≈50×» (симметрия с ×15). VISUAL-CONFIRMED.
+- s05c notes drift «чат-шаблон» → «chat-шаблон» (D-P2-3).
+- by_section metadata в deck-part3.yaml актуализирован под v5 (51 слайд, 6 разделов).
+
+### Жёсткие правила — без регрессий
+- timing (N мин) / методология / LO-коды / §X / →sNN / [VERIFY] в visible+notes: **все 0** (grep подтверждён).
+- Slide count: **51** (assert OK). Ocean-палитра + rounded box + gold сохранены. Cover/дивайдеры/hero не тронуты.
+
+### НЕ сделано (report to orchestrator)
+- s25/s14 дистилляция consolidation (student P2 «избыточно на 60-й минуте»): НЕ тронуто — консолидация/удаление слайда = структурное design-решение, требует owner-approval (см. финальный отчёт PROPOSED).

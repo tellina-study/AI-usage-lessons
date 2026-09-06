@@ -288,23 +288,26 @@ slides:
     changed_in_v4: "#239 — стиль dedicated Q&A Лекции 1 («Q&A» + «Спасибо» + контакты)"
 
 # ─── Validation ───
-# NB: by_section ниже — v4-раскладка; актуализируется в russification/polish-проходе v5.
+# by_section — v5-раскладка (issue #185), 51 слайд, актуализирована в polish-проходе v5.
+# Порядок соответствует сборке build_v3.py; PNG s-01…s-51 идут в этом порядке.
 totals:
   slides: 51
   by_section:
-    "Раздел 0. Открытие": [s01, s02, s02a, s03, s04]          # 5
-    "Раздел 1. Промпт": [s04a, s05, s05a, s05b, s06, s08, s08a]  # 7
-    "Раздел 2. RAG": [s09, s10, s11, s12, s13]                # 5
-    "Раздел 3. Fine-tune": [s13a, s13b, s15, s14, s16]        # 5
-    "Раздел 4. Агенты": [s18, s19, s21, s22, s22b, s22c, s22d, s22e, s25, s25b, s23]  # 11
-    "Раздел 5. Фреймворк": [s25a, s26, s27, s27b, s29, s30, s31]  # 7
+    "Раздел 0. Открытие": [s01, s01b, s02, s02a, s03, s04]                        # 6
+    "Раздел 1. Промпт": [s04a, s05, s05a, s05c, s05b, s06, s07, s08, s08a]        # div + 8
+    "Раздел 2. RAG": [s09, s10, s11, s12, s13]                                    # div + 4
+    "Раздел 3. Fine-tune": [s13a, s13b, s15, s17, s14, s16]                       # div + 5
+    "Раздел 4. Агенты": [s18, s19, s19b, s20, s21, s22, s22a_multi, s22b, s22c, s22d, s22e, s25, s24, s25b, s23, s23b, s23c]  # div + 16
+    "Раздел 5. Фреймворк": [s25a, s26, s27, s27b, s28, s29, s30, s31]             # div + 7
   duration_min_total: 88
   note: >
-    v4 (issue #157): 36→40 слайдов. R0 +1 (lecture-map s02a). R1 +3 (роли s05a,
-    структура s05b, чит-шит s08a) − s07 merged в s06. R3 −1 (s14+s17 merged).
-    R4: 9→11 content (+s22b/s22c/s22d/s22e/s25b, s19 merged API+MCP, s24/s23a
-    убраны, s25 стал skills+security). R5 +1 (s27b starter kit) − s28 (checklist
-    заменён flowchart s27).
+    v5 (issue #185): 40→51 слайдов. Добавлены: s01b (Air Canada hook), s05c
+    (протокольные роли/STI), s07 (faithfulness dedicated), s17 (знание vs
+    поведение), s19b (экономика агента), s20 (MCP-security), s22a_multi
+    (мульти-агент p^n), s24 (data-security/ZDR), s23b/s23c (каталог провалов
+    классами + deep-dive), s28 (итоги-таблица). s06 остаётся CoT worked-example
+    (числа faithfulness перенесены на s07). Полиш v5: deck-wide русификация
+    видимого слоя + layout-фиксы (s07/s10/s27/s29/s05c overlap-clipping).
 
 ai_failure_judgment:
   # strict-in слайды (failure / limitation / criterion «не ИИ» / альтернатива)

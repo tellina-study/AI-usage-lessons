@@ -1,35 +1,33 @@
 ---
 id: s03
 type: assertion_visual
-section: "Раздел 0. Введение"
+section: "Section 0. Introduction"
 duration_min: 1.5
-assertion: "Today we go deeper into the \"model\" layer of Lecture 1's four layers"
-learning_goal: "Recap Лекции 1 §3.2 + bridge к внутренностям модели"
+assertion: "Today's object is the 'model' layer from Lecture 1's four layers"
+learning_goal: "Object of study (the 'model' layer in Lec-1's 4-layer picture) + bridge to the internals of inference"
 learning_outcomes: [LO1]
 chapter_ref: "§Введение [for-slide-s03]"
-visual_brief: "Слева — маленькая копия nested layers из Lec-1 (модель → чат → агент → приложение) с подсветкой нижнего слоя «Модель» в gold. Справа — bridge: «что знаем» (модель = stateless inference из Lec-1 §3.2) → «что узнаем сегодня» (что внутри inference)."
+visual_brief: "Left — nested layers from Lec-1 (model → chat → agent → application), bottom layer 'Model' in gold. Right — 2 lines: 'The \"model\" layer: stateless inference' → 'Today: we take apart what's inside that inference'."
 ---
 
 # Visible content
 
 ## Title bar
-"Today we go deeper into the \"model\" layer of Lecture 1's four layers"
+"Today's object — the 'model' layer from Lecture 1's four layers"
 
 ## Body
-[Слева — nested layers иконка из Лекции 1: 4 концентрических Ocean rounded box, выровненных по нижней границе. Снизу вверх: Модель → Чат → Агент → Приложение. Нижний слой «Модель» выделен gold-обводкой]
+[Left — nested layers from Lecture 1: 4 concentric Ocean rounded boxes, bottom-aligned. Bottom to top: Model → Chat → Agent → Application. Bottom layer "Model" — gold outline]
 
-[Справа — bridge-блок в 2 строки]
+[Right — 2 lines in rounded boxes]
 
-**What we know:**
-The model is stateless inference: data in → prediction out, no memory between calls.
+**The "model" layer:** stateless inference — input goes in, a prediction comes out, no memory between calls.
 
-**What we learn today:**
-What is inside inference. 4 stages: tokenization → embedding → attention → sampling.
+**Today:** we take apart what happens inside that inference — and where its design changes engineering decisions.
 
 ## Speaker notes
 
-To keep our bearings, let's go back to Lecture 1 for one minute. In that lecture we built a layered picture of how AI works inside a product: the model at the bottom, the chat loop above it, the agent loop above the chat, and the application on top, into which all of this is packaged. Lecture 1 described the bottom layer, the model, as a stateless function: data in, prediction out, and no memory between two calls. With that description we can talk about **where** the model sits in a larger system, but we set aside the question — **what exactly** happens inside that stateless function when you type "Today I ate an apple" into the chat and get a reply.
+Today's object of conversation is the "model" layer. Lecture 1 gave us a layered picture: at the bottom, the model; above it, the chat loop with a system prompt and history; above chat, the agent loop; on top, the application. There, the model was described as stateless inference: input goes in, a prediction comes out, no memory between calls. From that same lecture we already have the context window as a constraint, the distinction between local and cloud models, and Pearl's three levels of causation — all of that is taken as known today and used without re-deriving it.
 
-Today we carefully open that black box. The main content of the lecture is the four internal stages your request passes through between the moment it is sent and the moment the answer arrives. Those four stages: tokenization (how the model cuts text into units it can work with), embedding (how each unit is mapped to a numeric representation of meaning), the attention mechanism (how the model decides what to rely on in the current context), and sampling (how a single concrete token is chosen from a probability distribution).
+With that description we can already talk about where the model sits in the larger system. But the question of what exactly happens inside that function between request and answer — Lecture 1 deliberately left that a black box. Today we open that box, and everything that happens in this lecture happens inside a single layer, the bottom one. Chat, agents, RAG, and applications are built on top of it and are discussed in Lecture 3 and beyond.
 
-In Lecture 1 the model was called a "black box of stateless inference." Today we stop keeping it black. After this lecture, inside that box there will no longer be four unknowns, but four distinct stages, each with a clear role — and with concrete engineering consequences for how you will set tasks for the model.
+We're chasing boundaries: the places where the model's internal design changes how you build prompts, agents, and decisions. Every mechanism in this lecture was chosen because it has an observable engineering consequence — in cost, speed, quality, or reproducibility.

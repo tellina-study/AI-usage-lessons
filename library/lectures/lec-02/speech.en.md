@@ -1,527 +1,604 @@
 ---
 lecture: 2
-title: "Lecture 2. How Modern Large Models Work— Lecturer's Speech"
-length_words: ~4720
-duration_min: 75
-status: reviewed
-version: v1.2
-derives_from: [chapter.md v1.2, deck.yaml v1.8 (35 slides), plan-v2-final.md v2.1]
-slides_covered: [s01, s02, s02a, s03, s04, s04a, s04b, s05, s06, s07, s08, s08a, s09, s09a, s10, s12, s13, s13a, s14, s15, s16, s17, s17a, s18, s19, s20, s21, s22, s22a, s23, s24, s25, s26, s28, s29]
+title: "Lecture 2. How Modern Large Models Work"
+length_words: ~11000
+length_min: 100
+status: draft
+version: v3.0-en
+slides_covered: [s01, s02, s02a, s03, s04, s04b, s05a, s05, s06, s08, s09, s10, s11, s12a, s12, s13, s14, s15, s17, s18a, s18, s19, s21, s22, s20, s23, s25, s26a, s26, s27, s28, s29, s30, s31, s32, s33a, s33, s34, s36, s37, s35a, s35, s38, s39, s40, s41, s42]
+source: "deck v3.3 + chapter v2.3.1 (chapter.md / chapter-part2.md / chapter-part3.md)"
 ---
 
-# Lecturer's Speech · Lecture 2 v1.2
+# Lecturer's Speech · Lecture 2. How Modern Large Models Work
 
-**Duration:** 75 minutes.
-**Version:** v1.2— issue #156 sync with deck v1.8 polish pass (see Changelog below).
+**Duration:** 100 min.
+**Version:** v3.0-en.
 
-## Changelog v1.1 → v1.2 (issue #156)
+## Pre-lecture preparation
 
-- **s01 rewritten entirely**— the old hook about tokenization (`tokenization is fascinating`, EN/RU/code example) replaced with a new hook about the selectivity of human attention ("what are you NOT paying attention to right now?"), synced with the final `slides/s01-live-tokenizer-demo.md`. Section heading updated.
-- **s27 (homework) removed**— the slide was pulled from the deck (homework is now delivered only via the seminar, per the Lecture 1 pattern). The bridge phrase at the end of s26 was rewritten without a reference to s27; s25 "first of three frames" → "first of two" (after removing s27, 2 cross-cutting frames remain, not 3); s26 "second frame" → "second, final frame". The pre-flight checklist item about the s27 homework was updated (reference to the seminar instead of the slide).
-- **Russification cleanup** (s13a, s14, s15, s16, s23)— pinpoint leftovers of the English `attention`/`attention map` in the lecturer's spoken text were replaced with "внимание" / "карта внимания", in sync with the Russification pass over the deck (build_lec02.py). The Vaswani 2017 paper title was left as a quote of the original with the Russian translation alongside. s24— "attention" → "внимание" in the text of the first "why".
-- **s07**— a short spoken addition (2 sentences) about arithmetic was added: GPT-4 at 59%/4%/~0% accuracy on 3/4/5-digit multiplication without tools (arXiv 2410.19730), in sync with the new fact-checked call-out on the slide.
-- **s24**— the section heading was kept meaning-based ("The three 'whys' closed"), not renamed to match the slide's exact title bar ("Answers to the questions from the start of the lecture")— the section did not contain a "payoff" or §-references, so no substantive changes were needed beyond the attention fix.
-- **Frontmatter**— `slides_covered` (36→35, s27 removed), `derives_from` deck.yaml v1.7→v1.8, `length_words` recomputed, `duration_min` breakdown updated.
-
-## Changelog v1.0 → v1.1
-
-P1 (6 closed):
-- **P1-A**— s17 "30%" → "50%" (sync with Liu et al. authoritative + slide).
-- **P1-B**— s06 "GPT-3.5— about a hundred thousand tokens" removed (was not on the slide).
-- **P1-D**— bridge phrases added to s04a / s13 / s22a divider fragments.
-- **P1-E**— "мы с вами" / "давайте" redistributed: 1 → s21 (autoregressive), 1 → s25 (when not an LLM), 1 → s28 (bridge to Lecture 3); 1 removed from s04b for balance.
-- **P1-F**— 8th pre-flight item added: "Verify vocab-size GPT-4o ~200k / Llama 3 ~128k, quarterly cadence".
-- **M-P2-1**— `pipeline` × 3 in stage cues → `конвейер`.
-
-P2 (3 closed best-effort):
-- **M-P2-3**— s17 trimmed by ~14 words (228 → 214) for slack from 94 WPM.
-- **M-P2-4**— "in-context steering" mention added in s15 (17/17 glossary canonical).
-- **M-P2-2**— `феатуры` → `признаки`, `Real-time` → `Реальное время` in s25.
+- Check strawberry/cranberry currency for s08: ask three available models (including the latest GPT release) how many `r`'s are in cranberry — confirm or adjust the "patch race" narrative before the lecture.
+- Prepare a live cranberry run for s08: open the model interface ahead of time, verify network/API access from the classroom.
+- Prepare a live T=0 vs T=1.5 comparison for s27: the same prompt ("come up with a name for a note-taking app"), a playground or API with an explicit temperature knob, 3-4 runs at each temperature is enough to show the effect live.
+- Check current prompt-caching rates for s21/s22 (auto-cache by vendor, read/write rates) — the numbers may have shifted.
+- Check current context-window sizes for s23 (Fable 5, GPT-5.6, Gemini 3.1 Pro, Scout, YandexGPT) — the window race moves fast.
+- Check the current model/pricing landscape for s36 (GPT-5.6, Fable 5, Gemini 3.5 Pro, DeepSeek V4, Kimi K2.6/K3) — the fastest-aging part of the lecture.
+- Have a personal story ready about a model that spiraled into a degenerate repetition loop — the anchor for s31.
 
 ---
 
-## Pre-flight checklist (day before the lecture)
+## Section 0. Introduction
 
-- [ ] Open `tiktokenizer.vercel.app` in a browser— verify that the site works and that the `o200k_base` tokenizer is available. This is the backup live tool for s05 / s07, in case someone in the audience asks "and how would this get split up".
-- [ ] **Pre-test strawberry**: the day before the lecture, ask ChatGPT, Claude, and GigaChat the question "how many letters `r` are in the word `strawberry`". Note which answers come back and which of the models invoke an external tool. On s07 this is needed as a background fact, not as a central demo moment.
-- [ ] Open `huggingface.co/playground` and make sure the model `Meta-Llama-3-8B-Instruct` is available and the temperature slider works. This is needed as a backup live tool for the demonstration on s19 (the effect of temperature)— the hands-on work with this tool itself is now an assignment for seminar 2, not a separate lecture slide. If HF Playground is down— switch to the backup: the `together.ai` playground or local Ollama with Llama 3 (it's on the laptop).
-- [ ] Check three numbers for s16: GPT-3.5— 4 thousand tokens (a historical fact, does not change), Claude 3.5— 200 thousand (mid-2024), Claude 4.7 / the current flagship— on the order of a million. If a new model with a different window came out over the past week— update the spoken number.
-- [ ] Prepare a live comparison for s19: the ChatGPT API or the OpenAI playground, the same query "Today I ate..." at `T=0` and `T=1.5`, three runs at each temperature. Screenshots— in `assets/s19-temperature-demo/` as a backup in case the internet goes down.
-- [ ] Check the router and the projector 15 minutes before the start. HDMI, resolution, so the slides are readable from the back row.
-- [ ] A timing checklist on paper: 6 sections × the sum across slides = 75 minutes. A clock in front of you.
-- [ ] Verify the vocab-size numbers for s05/s06: GPT-4o ~200k tokens (`o200k_base` in `tiktoken`), Llama 3 ~128k (`tokenizer.json` in the HF repo `meta-llama/Meta-Llama-3-8B`). Cadence— quarterly: check that new model versions have not shifted the order of magnitude.
+### [s01 · 2.5 min]
 
----
+A simple warm-up question before we start. If you set `temperature` to zero — will the model's answer to the same prompt be identical every single time?
 
-## [s01]— What you are NOT paying attention to right now
+[pause 2 sec]
 
-"Hello. Let's start not with AI, but with you.
+Intuition says "yes": zero randomness, the model picks the single most likely token, what could possibly go wrong here.
 
-While you're reading this sentence— what are you NOT paying attention to right now?
+And intuition is almost right. Almost — because in engineering practice, "almost" costs money. Tests that rely on bit-for-bit reproducibility at T=0 occasionally fail for no apparent reason — and the cause isn't your code or your infrastructure, it's something deeper, baked into how computation works on a shared server.
 
-Your brain is continuously solving, right now, a small but important task: what to keep in focus, and what to leave in the background. Somewhere on the periphery— a notification on your phone that you noticed at the edge of consciousness and set aside. An unfinished thought about your evening plans— "did I buy the tickets?". The feeling of the chair you're sitting on— uncomfortable, but you forgot about it until I said so. All of this was competing for one and the same limited resource— your attention. And you weren't aware of this choice in the moment, but it was happening constantly, all this time.
+[tone shift: intrigued]
 
-On the slide— exactly this: a character being pulled in three directions at once— a notification, a stray thought, an unfinished task. This isn't about distractedness as a flaw. This is the normal, working architecture of attention in a human. We physically cannot process everything at once with equal fullness, so the brain constantly sets priorities: what goes into focus, what into the background.
+Today we're going to unpack where this "well yes, but actually no" comes from — and a handful of other spots where intuition about models works nine times out of ten, and on the tenth breaks in a predictable, explainable way. We'll walk the inference pipeline from text to answer, and at every stage we'll look at where observation-based intuition stops being a reliable map.
 
-Your brain chooses every second what matters and what is background.
+Let's move to the cover slide.
 
-So here's the thing. Today's lecture is about what happens inside an AI model between your request and its response. And one of the four internal stages we'll go through is called, literally, the same thing as what you just felt— the attention mechanism. When the model processes your text, it too decides which parts of the input to "look at" more closely, and which to leave in the background.
+### [s02 · 0.5 min]
 
-An important caveat right away, which we'll come back to closer to the middle of the lecture, in the section on the attention mechanism: the similarity here is in the name and in the general idea of "choosing a priority", not in the mechanics. Inside the model this isn't a psychological process but a concrete computable operation— a matrix of weights that can be computed and looked at. We'll compute it and look at it when we get to the heart of the matter.
+Lecture two: how a large language model works on the inside. Today's formula is simple: if you already work with models daily, you'll refresh the fundamentals and pick up some subtleties; if this is your first time, you'll get everything you need.
 
-But before we get there, you and I need to walk the whole path of a request through the model in order: tokenization, embeddings, attention, sampling. Each stage has its own concrete engineering consequence for how you work with AI in practice. That's where we'll begin."
+### [s02a · 0.5 min]
 
----
+The lecture runs along the inference pipeline: the order of sections mirrors the order of stages a request goes through. Tokenization, embeddings, attention, sampling — four stages. A fifth section, new in this version of the course, covers model types and sizes. The sixth is the wrap-up.
 
-## [s02]— Cover
+Keep that map in your head.
 
-"Lecture two. How modern large models work.
+### [s03 · 1.5 min]
 
-The second of seventeen. If in the first one we looked at AI from the outside— where it works, where it doesn't— then today we look inside."
+Today's subject is the "model" layer. Lecture one gave us a layered picture: the model at the bottom, chat above it, the agentic loop above that, the application on top. There, the model was described as stateless inference: data goes in, a prediction comes out, no memory between calls. From there we're carrying over, as given, the context window and Pearl's three levels of causality.
 
----
+With that description we already know how to talk about where the model sits inside the larger system. But the question of "what happens inside that function" — lecture one left that as a black box.
 
-## [s02a]— Lecture map
+[lower voice]
 
-"Six sections in 75 minutes. Right now— the introduction. Next: tokenization, embeddings, attention, sampling, the finale. I'll be coming back to this map at every section."
+Today, we open that box — everything inside a single layer, the bottom one. Chat, agents, applications — that's lecture three and beyond.
 
----
+We're chasing boundaries: places where the model's internal design changes how you build prompts and make decisions. Every mechanism was chosen because it has an observable engineering consequence.
 
-## [s03]— Deepening the "model" layer from Lecture 1
+### [s04 · 1.5 min]
 
-"A brief recap. In the first lecture we established: AI systems are built in layers— the model at the bottom, above it the chat, above the chat the agent, on top the application. And the base layer— the model— we described as stateless inference: data in, a prediction out, no memory between calls.
+The goal of this lecture: look at how a language model works — and get into the details that change how we build prompts, agents, and decisions. We'll walk the inference pipeline from text to answer, and at every stage we'll show its limits.
 
-This description is enough to talk about where the model is used within a large system. But not enough to talk about what happens inside it. In the first lecture, you and I left the internals of the model a black box— today we carefully open it.
+We'll show where tokenization breaks arithmetic and why a "fixed" strawberry proves nothing. We'll show why the role in a prompt genuinely changes the answer. We'll dig into why T=0 doesn't give you reproducibility. We'll add the cost of invisible reasoning tokens, a criterion for picking a model by size — and what to use instead of blind faith in benchmarks.
 
-Today we're deepening exactly this bottom layer. Four stages of inference, each with a practical consequence."
+Seven lines under the goal — one per section: by the end of the lecture, each one gets an answer grounded in a concrete mechanism, not intuition.
 
----
+### [s04b · 2.5 min]
 
-## [s04]— The main question of the lecture
+This is the reference diagram for the whole lecture — the inference pipeline, the path of a single request from text to answer. Let's look at it whole, before we dive into any one part; we'll come back to it every time we enter a new section.
 
-"The main question is on the slide. What inside an LLM changes how we use it?
+On the left is your text. The first transformation is tokenization: the text is cut into tokens, identifiers from the model's vocabulary; that's section one. Next, each token turns into a vector — a list of numbers the neural network can actually compute with; that's section two. In the center is the model itself: the attention mechanism decides which parts of the context matter for the next step; that's section three. On the output side, the model doesn't produce an answer — it produces a probability distribution over the entire vocabulary; one token is picked from it, glued onto the context, and the cycle repeats; that's section four. The last step is assembling the chosen tokens back into text.
 
-The answer won't be formulas. The answer will be four mechanisms and three practical promises that I make right now.
+[pause 2 sec]
 
-First: by the end of the lecture, you and I will understand why a prompt with a role works better than an empty one. Second: why AI is bad at counting letters. Third: why the same request gives different answers. These three "whys" were left open by Lecture 1. Today we'll close all three."
+The key observation: words only exist at the edges of the pipeline — on the way in and on the way out. Everything inside is operations on vectors. And notice the loop in the diagram: tokens are generated one at a time, each chosen token gets appended to the input — and the pipeline runs again from the top.
+
+This axis isn't just for today — we'll come back to it across the rest of the course. RAG is about managing what makes it into the context before the pipeline runs; agents are a loop wrapped around the pipeline; cost optimization is the economics of the pipeline. Today's lecture moves along this same axis — each section unpacks its own stretch of the pipeline together with where it stops working.
+
+Moving to section 1.
 
 ---
 
-## [s04a]— Section 1: Tokenization
+## Section 1. Tokenization
 
-"After a short acquaintance with the course's promises— we move to the first layer of LLM mechanics. The first section of six. Tokenization— how the model sees your text. Six slides, eleven and a half minutes."
+### [s05a · 0.5 min]
 
----
+Section 1 of 6 — Tokenization: how the model sees your text. The text isn't cut by letters or by words, but by tokens. Next: where the cut diverges from structure — from strawberry to glitch tokens.
 
-## [s04b]— Data flow in an LLM
+The section's general principle: every tokenization quirk has a mechanism, and every mechanism has a testable engineering consequence.
 
-"Before we dive into the details— the overall flow. Top to bottom, left to right. Text turns into tokens. Tokens— into vectors. The vectors go into the LLM, which is in the center, in gold. Out of the LLM come vectors. Those turn back into tokens. Tokens— into the text of the response.
+### [s05 · 2 min]
 
-Today we go through all of these stages one by one. Under the pipeline— four sub-cards: Section 1— tokenization, Section 2— vectors, Section 3— what the LLM does with the vectors inside, Section 4— the reverse conversion into tokens via sampling."
+Let's pin down the exact definition. A token is an identifier — an integer from the model's vocabulary; the vocabulary is fixed at training time and doesn't change at inference time. A token isn't a letter or a word — it's a statistically frequent subsequence of characters, learned from a corpus. The common English word `cat` lands in the vocabulary as a single whole token; `tokenization` splits into two tokens; the Russian word for "strawberry" splits into three, in that same `o200k_base` vocabulary.
 
----
+Vocabulary size in current models runs to hundreds of thousands of entries. A useful cost rule of thumb: one token is roughly four characters of English text and roughly two characters of Russian.
 
-## [s05]— A token is an id from the model's vocabulary
+One nuance that often gets lost: the vocabulary and the model are two separate artifacts. The vocabulary is built by a separate algorithm on its own corpus before the model is trained; the model then learns to work with that vocabulary on its own corpus. This decoupling is the source of a whole class of effects we'll come back to in this section.
 
-"What a token is formally. A token is an identifier, an integer, from the model's vocabulary. This vocabulary is fixed at training time and does not change at the moment of use. The vocabulary size of modern models is on the order of hundreds of thousands of entries. For GPT-4o— about two hundred thousand; for Llama 3— about one hundred twenty-eight thousand.
+And the answer to a fair question: why not just work character by character? It's the economics of length. A character-level representation lengthens the input three- to five-fold, and the cost of attention grows quadratically with length — four times longer input means sixteen times more expensive attention layer. Tokenization, warts and all, is a deliberate trade-off that was bought on purpose — not an oversight that will be "fixed in the next version."
 
-Three markup examples. The word `cat`— one token. The word `tokenization`— two: `[token]` and `[ization]`. The word `клубника` (strawberry)— three tokens: `[к]`, `[луб]`, `[ника]`. The "rarer" a word is in the model's training corpus, the finer it gets split.
+### [s06 · 2.5 min]
 
-A simple rule of thumb that engineers use: on average one token is four characters in English or two characters in Russian.
+The algorithm behind most modern LLM vocabularies is BPE, byte-pair encoding, and let's unpack it as a compromise between two extremes. A vocabulary made of individual characters can represent any text, but the resulting sequences are long. A vocabulary made of whole words gives short sequences, but any unfamiliar word — a typo, a neologism, a name — falls outside it. BPE sits in the middle: start with an alphabet, iteratively merge the most frequent pairs of adjacent units.
 
-A small exercise for intuition. How will the word `сильнее` (stronger) get split— into one token, two, or three? Think for a second. Hint: for Russian even a short word usually yields two or three tokens. The exact answer— on `tiktokenizer.vercel.app`, you can check it right in the browser."
+The key engineering detail: the vocabulary is built once, before the model is trained. BPE runs over a corpus, the vocabulary and merge rules get fixed — and that's it; at inference time, tokenization is a lookup against a ready-made table, taking milliseconds, not a computation.
 
----
+[pause 2 sec]
 
-## [s06]— BPE— a compromise
+This gives us two consequences we'll need later. First: the tokenizer cuts along the frequency statistics of its own corpus, and that statistic may not match the structure of your task. Second: since the vocabulary and the model are trained on different corpora, the vocabulary can end up holding entries the model has barely ever seen.
 
-"The algorithm by which the vocabularies of most modern models are built is called BPE— Byte-Pair Encoding. It's a compromise between two extremes.
+It also matters in practice that different vendors count the same text differently — their own vocabularies, merge tables, whitespace handling. The same document will give a different token count with different providers, which means different cost and different context-window usage. When you move workloads between providers, recompute your token budget: for OpenAI models, tokenization is emulated locally with the `tiktoken` library; for open models, with the `tokenizers` library.
 
-You could take individual characters as the vocabulary— then any text is representable, but the sequences come out very long. You could take whole words— then the sequences are short, but any typo or neologism becomes `<unknown>`. BPE sits in the middle: the vocabulary is subsequences of varying length that the algorithm found as the most frequent in the training corpus.
+### [s08 · 3 min]
 
-On the left— a training corpus of four words: `low`, `lower`, `newest`, `widest`. On the right— what BPE will learn: `low`, `er`, `new`, `est`, `wid`. Frequent roots and frequent suffixes— separately.
+You've probably seen the "how many r's in strawberry" meme — and you probably know that current models get it right. The conclusion "so they've learned to count letters" is false, and here's why.
 
-The main engineering detail that often gets missed: the BPE vocabulary is built once, before the model is trained. At the moment the model runs, tokenization is a lookup of ready-made rules, not a computation in real time. So when we say "the model's tokens", we always mean its fixed vocabulary. And two different models from the same producer can have different vocabularies— this is tied to the training corpus, not a common standard."
+The mechanism is letter-blindness. The word arrives inside the model as three tokens: `[st][raw][berry]`, not ten letters. Inside a token's learned vector there is no field that says "contains an r at such-and-such position" — what's in there is context statistics. Counting letter by letter requires reasoning on top of the tokenized representation — spelling the word out or calling code; a single forward pass doesn't reliably get you there.
 
----
+[tone shift: storytelling]
 
-## [s07]— Why AI is bad at counting letters
+Now look at the 2026 patch race. GPT-5.2, in December 2025, was still answering "two r's" for strawberry. GPT-5.5, released in April 2026, gets strawberry right — but when asked "how many r's in cranberry," it answered "two"; the correct answer is three. And only GPT-5.6, in July 2026, fixed cranberry too — as of when this lecture was prepared; let's check right now on a current model.
 
-"Now— the classic example you've surely seen. To the question "how many letters `r` are in the word `strawberry`" many models answer "two". The correct answer is three. Why does this happen?
+[live run: ask a model through an available interface how many r's are in cranberry; backup — if the demo doesn't run, the slide shows a timeline with the recorded result]
 
-The word `strawberry` for the model is three tokens: `[st]`, `[raw]`, `[berry]`. Three numeric units arrive at the model's input. Not ten letters `s, t, r, a, w, b, e, r, r, y`, but three ids. And inside each token there is no explicit list for the model saying "here's an `r` at positions three and eight". Inside there's statistical information about the contexts in which the token `[raw]` occurs. Not letter-by-letter.
+Notice the pattern: every viral case gets patched one at a time, in sequence — not by a single across-the-board skill improvement, otherwise fixing strawberry would have closed cranberry too. To check this systematically, StrawberryBench was built — 847 questions across seven difficulty levels; it's there, not in one viral word, that you can see letter counting remains a genuine weak spot.
 
-This phenomenon we call letter-blindness. It's not a bug and not poor training. It's a structural consequence of how tokenization is built.
+The phenomenon has a name: jagged intelligence — a capability profile with sharp dips right next to peaks. The same model solves olympiad-level math and fails at counting letters; on multiplication, GPT-4 without tools scored around 59% on three-digit numbers, 4% on four-digit numbers, and 0% on five-digit numbers.
 
-Three practical consequences. First— counting characters is fundamentally unreliable. Second— minor typos can lead to a split into completely different tokens, and the model suddenly answers differently. Third— case and spaces: `cat`, ` cat` with a space, `Cat`, and `CAT`— these are different tokens with different vectors.
+Carry the lesson into practice: if a model passes your test, check it against "the cranberry of your own domain" — a structurally analogous but non-famous example. Passing a viral case is not a skill. And for letter-level operations and arithmetic — reach for an external tool, not a raw forward pass.
 
-The engineering conclusion. If your task requires an exact character-level operation— counting letters, searching for a substring, checking a regex— don't do it with a pure LLM. Use an external tool: a Python sandbox, a regular expression, specialized code.
+### [s09 · 2.5 min]
 
-A small practical caveat: modern top models often answer this question correctly— but not because a single forward pass through a neural network can count letters. They internally invoke Python or generate a step-by-step count. A single pass through the network, on its own, does not count letters.
+Why an engineer needs to know how numbers and code get sliced up: these are the most common "non-text" inputs, and how they're cut directly determines the model's arithmetic and your token budget.
 
-And the same nature hits not only letters but arithmetic too: digits also get split by the tokenizer unpredictably, the place value does not coincide with the token boundary. Hence a measurable degradation— GPT-4 without external tools gives about 59% accuracy on three-digit multiplication, 4% on four-digit, and almost zero on five-digit."
+Numbers. The `cl100k_base` tokenizer standardized number-slicing into chunks of three digits from left to right: a million turns into groups whose boundaries don't line up with place value. Humans read digit groups right to left — thousands, millions; the model gets irregular blocks, and that's a direct source of some arithmetic errors. Forcing right-to-left slicing measurably improves numerical reasoning, and task-specific number-tokenization schemes have delivered up to plus thirty-three percent accuracy on large-number arithmetic.
 
----
+Code. GPT-2 encoded every indentation space as its own separate token: a line four levels deep spent sixteen tokens on indentation alone. GPT-4-generation tokenizers group whitespace into single tokens. This is a rare case where a tokenization problem actually got fixed by changing the vocabulary — a useful contrast to strawberry: you can optimize a vocabulary for one common class of input, but you can't make the cut match the structure of every task at once.
 
-## [s08]— The same text: more expensive in Russian
+Four takeaways. Write significant numbers with digit-group separators. Route any arithmetic beyond a rough estimate out to a tool. For code, use consistent formatting. And an important caveat for practice: in ready-made chat products — ChatGPT, Claude's web interface — counting already gets automatically routed to a built-in tool like a code interpreter; what we just went through becomes critical specifically when you call the model through the API directly, in your own applications and agents, where there's no such automatic routing.
 
-"A direct consequence of the fact that BPE was trained on a corpus with a large English skew— the cost of tokenization differs across languages.
+### [s10 · 2.5 min]
 
-English— about 0.25 tokens per character. A hundred characters— twenty-five tokens. Russian— about 0.5: those same hundred characters turn into fifty tokens. Chinese— about 0.8. Python code— about 0.4.
+In January 2023, researchers studying clusters in the embedding space of GPT models stumbled on a group of odd vocabulary entries — strings like `SolidGoldMagikarp`: Reddit usernames that ended up in the tokenizer's training corpus during data collection. Models behaved strangely on these tokens: they couldn't repeat them back, gave off-topic answers, wandered off the subject.
 
-The engineering consequence. The same request by meaning, in Russian, costs roughly twice as much as in English. The specific gap depends on the text and the tokenizer— the range is from one and a half to two and a half times. If you and I have a batch task over thousands of documents and the subject area allows working in English, it makes sense to translate the inputs and outputs. This is a significant line item in the budget.
+The mechanism, in short: a string can be frequent in the corpus the vocabulary was built on, and earn its own token — while being almost absent from the corpus the model was later trained on. That token's embedding stays close to its random initialization and "means nothing" in the learned geometry.
 
-The second consequence— the context window is also spent unevenly. A document of eighty thousand characters in English will fit into twenty thousand tokens. The same document in Russian— into forty thousand. We'll come back to the window in the third section."
+2026 data tells us this isn't a quirk of the GPT-3 era — it's a systemic property. By one estimate, roughly four percent of vocabulary entries in tested models are glitch tokens; the GlitchMiner framework finds them via gradient search across ten open model families: Llama, Qwen, Gemma, Phi-3, Mistral. The problem reproduces across every family tested — you can't scale your way out of it.
 
----
+[tone shift: practical]
 
-## [s08a]— Section 2: Embeddings
+Now — what this actually affects, which matters more than the mechanism itself. First: parsing failures on exotic strings — the model inexplicably loses the thread of a conversation on one specific input. Second: production risk — any system that accepts arbitrary user input is working with a potential source of glitch tokens: logs, auto-generated identifiers, obfuscated text. Third: diagnosis — if behavior is inexplicable specifically on one particular input, "there's a glitch token in there" should be among your hypotheses; it's checkable in a minute by swapping the suspect string for a placeholder. Fourth: sanitize input before feeding it to the model — that filters out not just glitch tokens but a whole adjacent class of tokenization surprises.
 
-"The second section of six. Embeddings— a space of meanings. This is the second stage of the pipeline: after the text is cut into tokens, each token is turned into a vector. What this means and why— the next five slides."
+### [s11 · 2 min]
 
----
+The same text, meaning-for-meaning, costs a different number of tokens depending on the language — a direct consequence of the fact that a BPE vocabulary is trained on a corpus dominated by English. Rough figures: English is about 0.25 tokens per character, Russian about 0.5, Chinese about 0.8, Python code about 0.4. Net effect: a Russian-language request costs roughly twice as much as an English one, and it burns through the context window twice as fast.
 
-## [s09]— What an embedding is
+The 2024–2026 trend: OpenAI's move to `o200k_base` cut the per-unit cost of non-Latin-script languages by about 35% — the gap is narrowing, but it hasn't closed. Models with a larger share of Russian in their vocabulary — YandexGPT, GigaChat — show a smaller gap.
 
-"When you and I said "a token is an id from the vocabulary", an open part remained. How does the model work with this id? Directly with the number— it doesn't: there's no meaningful arithmetic between tokens. The model needs to represent the meaning of each token in a form suitable for a neural network.
+The language coefficient leaks into places people forget to check. Chunking documents for search is configured in tokens: a "512-token" chunk holds half as much meaning in Russian, and thresholds copied from English-language guides are systematically too small for a Russian-language knowledge base. The `max_tokens` limit is the same story: a Russian answer runs longer in tokens, and mid-sentence cutoffs happen more often. Calibrate every token-denominated numeric parameter on your own language and your own data — don't carry it over from someone else's examples.
 
-That way— an embedding, that is, a vector representation. Each token in the vocabulary is assigned a vector of fixed length— a list of floating-point numbers. For the token `[кот]` (cat) this might look like `[0.21, -0.45, 0.88,..., 0.13]`— several hundred or several thousand numbers.
-
-The vector isn't assigned by hand. It's learned during the model's training— together with all the other weights of the neural network. When training ends, the "token → vector" table is fixed. At inference the model does a lookup: it got a token id, grabbed the vector, passed it into the next layer.
-
-Concrete dimensions. OpenAI's specialized models for output embeddings: `text-embedding-3-small`— 1536 dimensions, `text-embedding-3-large`— 3072. The dimensions of the internal embedding tables of flagship models like GPT-4 are not officially published— the order of magnitude is estimated at several thousand dimensions. You and I don't actually need the exact number; what matters is the order of magnitude."
+Moving to section 2.
 
 ---
 
-## [s09a]— The embedding space
+## Section 2. Embeddings
 
-"The main property of embeddings is stated in one phrase: tokens close in meaning lie near each other in the space of vectors.
+### [s12a · 0.5 min]
 
-On the slide— a simplified two-dimensional projection. In reality there are thousands of dimensions, but for intuition we compress them into a plane. Three clusters: animals— cat, dog, tiger— gathered in one corner. Transport— car, auto, motorcycle— in another. Programming languages— Python and JavaScript— in a third.
+Section two of six — Embeddings: the space of meaning. Tokens became identifiers; but a neural network can't compute with an ID number. The second stage turns them into vectors. Let's unpack the three lives of the term "embedding" and find the section's one, but important, gap — the boundary of similarity.
 
-And nobody labeled "cat and dog are one category". This property arose on its own from the fact that in the training corpus both words often appeared in similar contexts. Closeness in the embedding space is a statistical reflection of how words are used. Not a semantic reference written by a human.
+### [s12 · 1.5 min]
 
-Three facts on the right side. Dimensionality— thousands of dimensions. Training— the coordinates are learned automatically. The projection into 2D— this is PCA or t-SNE, needed only for your and my intuition."
+A token is an identifier from the vocabulary, but a neural network can't do anything meaningful with the number 48213. An embedding — a vector representation — is a fixed-length vector assigned to every token in the vocabulary, learned during training together with the rest of the weights. Once training is done, the input lookup table "token → vector" is fixed; at inference time, the model just does a lookup.
 
----
+The key property of the learned space: geometric closeness corresponds to semantic closeness. "Cat" sits close to "dog," "SSL" sits close to "HTTPS" — not because someone labeled it that way, but because these words showed up in similar contexts in the training corpus.
 
-## [s10]— Semantic similarity on sentences
+[pause 2 sec]
 
-"Embeddings work not only for individual words but— and this is the main thing in 2026 practice— for whole sentences. Let's take five short phrases and measure how close they are to each other.
+And one caveat for anyone who's going to work with vectors by hand. In high-dimensional spaces, concentration of measure kicks in: random points end up at roughly the same distance from each other, and "raw" distances compress into a narrow range. So absolute similarity values aren't very informative on their own — what's informative is comparisons and the distribution of values within your specific task.
 
-Five sentences. The first— "How to set up SSL". The second— "Installing an HTTPS certificate". The third— "Deploying a React component". The fourth— "Building a React application". The fifth— "A borscht recipe".
+### [s13 · 3 min]
 
-The scale we see is called cosine similarity. It's a measure of the angle between two vectors; values from minus one to one. Closer to one— the vectors are co-directed, meaning the sentences are close in meaning.
+Embeddings aren't just used at inference time — they're also a standalone search tool. Let's unpack the term's three lives.
 
-Here's what comes out with a modern embedding model. The first and the second— synonyms in the web-security domain— about 0.85. The third and the fourth— both about working with React— about 0.78. Borscht against any technical one— a range from 0.05 to 0.15. Low, but not zero.
+Life one: the input lookup table — a static "token → vector" table at the input to the LLM. The vector for the token "cat" is the same one, in any sentence. Life two: the internal representation of data inside the model. The sequence of input vectors passes through dozens of attention layers, and by the output, each position's vector has been updated based on its surroundings — these representations are what actually carry the model's "understanding." Both of these lives are internal to inference.
 
-The main takeaway. A modern embedding captures meaning, not an exact string match. `SSL` and `HTTPS`— different strings, but they're close in the embedding space because in the training corpus they appeared in the same contexts. The same for React, for synonyms in technical language, for pairs across different languages.
+The third life is your working tool. When you're building search or RAG, this is the one you actually use: you call an embedding API and get back a vector for a whole piece of text, from a separate model specifically trained for search and comparison. This isn't the inner workings of your chat LLM — the embedding model can come from a completely different vendor, and that's normal practice.
 
-The concrete numbers on the slide are illustrative. The exact values depend on the chosen model. You can reproduce this with the open-source `sentence-transformers/all-MiniLM-L6-v2` or via OpenAI `text-embedding-3-small`. The main thing is the order of magnitude: synonyms 0.7–0.9, incompatible domains— around zero.
+The distinction worth keeping in your head is simple: if you're talking about cost and context window — that's tokens and the input lookup table; if you're talking about "what the model understood" — that's the internal representation of data; if you're talking about search and vector databases — that's the output embeddings of a separate model.
 
-This same mechanism underlies semantic search and RAG— we'll talk about RAG in the next lecture."
+[tone shift: warning]
 
----
+And the standard mix-up mistakes. "We already have a subscription to a chat model — why pay for an embedding model too?" — because the chat model doesn't hand you search vectors. And the mirror image: "we upgraded the LLM — time to reindex the database" — no you don't; reindexing is needed exactly when the embedding model itself changes.
 
-## [s12]— Embeddings— the foundation of LLM understanding
+### [s14 · 1.5 min]
 
-"Let's gather what we've arrived at in this section. Embeddings are the foundation of how an LLM "understands" your and my language. The model works not with strings but with vectors. And all the semantics— at the level of the geometry of these vectors.
+How the space where these vectors live is structured. Every point is a token or a piece of text; the coordinates are hundreds or thousands of numbers. The meaning of each dimension isn't assigned by hand — after the fact, many of them read as recognizable features: topic, formality, domain.
 
-The full cycle: words— tokens— vectors— the LLM in the center, in gold— vectors— tokens— words. In both directions. First the input, then the reverse conversion into the output. Embeddings— the bridge between text and the neural network.
+Take a look at the picture — a two-dimensional projection: two semantic clusters and an outlier. "How to set up SSL" and "Installing an HTTPS certificate" are surrounded by the same words — so their vectors end up close together; "Deploying a React component" and "Building a React app" sit next to frontend-related words; and "Borscht recipe" lives in a completely different region — a lone outlier among technical texts.
 
-Three practical observations. First— paraphrasings: the model calmly understands "how to set up SSL" and "installing an HTTPS certificate" as close tasks. Second— synonyms: "doctor" and "therapist"— close points. Third— cross-linguality: `клубника` (strawberry) and `strawberry` also turn out to be near each other, because in multilingual corpora these words occur in the same contexts.
+Remember this is a simplification: the real space has thousands of dimensions, and any flat projection loses part of the structure.
 
-Semantic closeness at the sentence level is the basis of LLM understanding. This is what distinguishes modern AI from full-text search."
+[pause 2 sec]
 
----
+And let's repeat the caveat, because it costs real money in practice: an absolute similarity value doesn't tell you much on its own. What works is comparisons — "this document is closer than that one" — and the distribution of values in your specific task. There's no universal threshold like "above 0.8 means similar."
 
-## [s13]— Section 3: The attention mechanism
+### [s15 · 3 min]
 
-"We've established embeddings— now the question: how does the model decide which vectors to look at right now. The third section of six. The densest— eighteen minutes, six slides. The attention mechanism— the central operation of the transformer."
+First — proof that similarity actually works. Five short texts, a pairwise cosine-similarity table: task-synonymous pairs — "set up SSL" and "installing an HTTPS certificate" — score around 0.85; topically related React texts — around 0.78; borscht against anything technical — 0.05–0.15. A search for the Russian word for "strawberry" finds documents about strawberries and wild strawberries with no synonym table at all — that's what embeddings give you on top of full-text search.
 
----
+[lower voice]
 
-## [s13a]— Attention is a matrix
+Now — the boundary, and this is new material even for people who actively build semantic search. High cosine similarity means "about the same thing" — not "about the same thing with the same meaning." The pair "how to enable SSL" and "how to disable SSL" gets a very high similarity score: same topic, same vocabulary, same syntactic frame — and the practical meaning is the opposite. An embedding averages the contextual statistics of the whole text; a short negation shifts the vector only weakly.
 
-"Before we take apart what attention does by meaning— how it's built technically. And here it's important to establish: attention is a matrix operation, not a linear one.
+In production this looks painful: a user asks how to turn on certificate verification, search confidently surfaces an article on how to turn it off, the LLM in the RAG pipeline dutifully summarizes it — and a system with great similarity metrics hands out harmful advice.
 
-On the slide— a simplified seven-by-seven attention matrix for the sentence "The cat ate the mouse because it was hungry". Each row and each column is a token. The color of a cell encodes the weight: dark— a high weight, light— a low one. The cell "it → mouse" is highlighted in gold— it currently has the highest weight.
+The engineering answers are well known: a reranker, a second model that scores the query-document pair as a whole; hybridizing with full-text search for exact terms; filters and metadata for directional attributes. And a diagnostic trick: build a validation set of pairs with deliberate traps — on/off, before/after, different versions — and see what comes out on top.
 
-The key thing here— each token looks at all the others simultaneously. Not sequentially, the way you and I would read. Simultaneously. This is the very idea from the famous Vaswani 2017 paper— «внимание— это всё, что вам нужно» (in the original "attention is all you need").
+The full design of a RAG pipeline is lecture three; what we take from here is the principle: cosine similarity is about topical closeness, relevance is a separate task.
 
-Three facts. First— the matrix has dimension N by N, where N is the number of tokens in the context. Hence the quadratic cost: double the context— the cost quadruples. Second— the matrix is recomputed at every generation step. Third— attention heads in a modern model number not one but dozens or hundreds in parallel, each with its own matrix."
+### [s17 · 1.5 min]
 
----
+Let's wrap up the section. The model doesn't work with words — it works with vectors; words only exist at the edges. This explains "understanding": "how to set up SSL" and "installing an HTTPS certificate" get a similar answer because they land at nearby points in the space. Same story with cross-language closeness: the Russian word for "strawberry" and the English word "strawberry" are close vectors.
 
-## [s14]— Attention— a distribution of weights
+On the practical side: similarity search, clustering, and semantic search with RAG all run on the same vectors. One embedding model and one index serve several functions at once, which makes the choice an infrastructure decision — and switching is expensive: reindexing the entire store. And remember: there's no inverse operation — you can't recover text from a vector.
 
-"Now by meaning. What attention produces at its output. A convenient metaphor— a flashlight in a dark room.
+How to choose an embedding model for a given language — I'll leave that for self-study.
 
-Imagine you and I are standing in a room with a large number of objects. These are all the tokens of the context. We need to answer a specific question— predict the next token. We can't brightly light up everything at once. We aim the flashlight at the objects that are relevant to the question right now. At the center of the beam— bright. At the periphery— dim.
-
-This is attention. A distribution of light across the scene. And this distribution changes depending on what we're asking right now.
-
-Formally: for each token, attention returns a distribution of weights over all the other tokens of the context. The sum of the weights always equals one. One large weight— "I lean heavily on this token". A small one— "this one is almost unimportant right now". We won't introduce any formulas— for the user's understanding it's enough to establish three facts.
-
-First— as input, attention gets all the tokens of the context. Not one and not a part. All of them. If the context is 10 tokens— it looks at 10. If 100 thousand— at 100 thousand.
-
-Second— at the output, for each token there is a distribution, the sum is one. This is simply "how we divide attention among the tokens at this moment".
-
-Third— this distribution is recomputed anew at every generation step. Taking into account that the previous token has already been chosen and added to the context.
-
-In a real model, attention heads number not one but dozens in parallel, and there are dozens of layers. But for your and my level of understanding, one phrase is enough: attention produces a distribution of weights over the tokens of the context."
+Moving to section 3 — the densest part of the lecture.
 
 ---
 
-## [s15]— A working example and the role effect
+## Section 3. The attention mechanism
 
-"The main example of the lecture. Let's take a concrete sentence: "The cat ate the mouse because it was hungry".
+### [s18a · 0.5 min]
 
-When the model reaches the token "it", it needs to determine what this token refers to. To the mouse or to the cat. At the level of attention this is visible. Over the token "it" a distribution of weights appears. The largest weight— on the token "mouse"; that's how the sentence is understood. A medium weight— on "was". A thin one— on "hungry". On the slide this is three arrows of different thickness.
+Section three of six — The attention mechanism, the densest part of the lecture. Everything grows out of this: why chat gets cached, why the role changes the answer, what a million-token window can actually do. We'll go through the attention matrix, the KV-cache, caching economics, role, and the window race.
 
-An important caveat. The picture with three arrows is a strong simplification. A real attention map contains hundreds of connections at once, and in each of the dozens of layers the picture is its own. We aggregate hundreds of values into one thick arrow for intuition.
+### [s18 · 2 min]
 
-And even more important— the model doesn't do grammatical parsing. It statistically looks at the tokens for which the statistics say "these are usually connected to 'it' in similar contexts". Correlation, not parsing.
+You know the word "attention" from every other transformer paper; let's pin down its exact shape. Attention is a matrix operation: every token in the context is compared against every other token, and for a context of length N, the weight map is N by N.
 
-A small exercise. Think for 30 seconds: where does the model look in the sentence "The program crashed because it forgot to handle null"?
+[pause 2 sec]
 
-On most modern models the maximum is on the token "program". This agrees both with grammar and with the statistics of technical texts. On some individual models a redistribution is possible— this is normal variability.
+From here comes the architecture's main economic property: doubling the context quadruples the amount of attention computation. When we get to the cost of million-token windows — this is exactly where the root of it lives.
 
-Now the main practical consequence. The first of the three "whys" from Lecture 1. Why a prompt with a role works better than an empty one.
+On the slide is a simplified seven-by-seven matrix for "The cat ate the mouse because it was hungry." In the row for "it," the largest weight sits on "cat," not on "mouse" — the pronoun resolves to the animate subject of the same... well, in this case it's resolved by which noun is the more plausible subject of "hungry." Technically this is a statistical association learned from the corpus, not a grammatical parse.
 
-Let's compare two prompts for the same task. Without a role: "Explain asynchronicity". With a role: "You are a Python expert. Explain asynchronicity to a junior".
+The real mechanism is multi-layered: at every layer, dozens of "heads" work in parallel, typically 32 to 128, each specializing in its own type of relationship.
 
-At the level of attention, the second gives a qualitatively different picture. When the model reaches the moment of generating the first token of the response, its attention is distributed over the whole preceding context. In the first case the context is short— almost only the word "asynchronicity". The model leans on the most general statistics. It produces a generalized answer.
+What matters most is what the weight distribution actually affects. The weight of each connection determines how much of that token's Value vector flows into the final representation of the position. And that position's representation is exactly what the next prediction gets built from. Attention weights directly determine the next token.
 
-In the second case the context has the tokens `Python`, `expert`, `junior`. And they get a substantial weight in the distribution of attention. The next generated token is chosen from a distribution shifted by these tokens. The answer will turn out to be more concrete— about Python, not in general. With simpler explanations— because the audience is a junior. And in a more expert register.
+### [s19 · 2 min]
 
-A working explanation. Role tokens get an elevated weight in attention when generating the first tokens of the response. The role in the prompt is not a request "trust me". It's an explicit input signal directly affecting the distribution of attention. In engineering language this is called in-context steering— controlling the model's behavior through the context itself, without retraining the weights. This is the first of the three "whys", and we've just explained it through the mechanism."
+Let's pin the definition down precisely. The working metaphor is a flashlight in a dark room: every token is present, but the beam points at the relevant ones, and brightness is the weight. At every step, attention returns a weight distribution over the entire context, the weights sum to one, and it's recomputed from scratch every single time.
 
----
+Now — one level deeper, on our sentence. For every token, the model computes three projections: Query, Key, Value. Take "it." Its Query reads roughly as "looking for: who might have been hungry." The token "cat" offers up its own Key — "I am an animate subject" — a business card by which other tokens' queries find it. When the Query from "it" and the Key from "cat" match well, the weight comes out high. Then the Value of "cat" kicks in — the content that actually flows into the representation of "it."
 
-## [s16]— The context window
+In plain terms: Query is the token's question; Key is what it uses to answer other tokens' questions; Value is what it hands over if it gets picked.
 
-"Since attention works on all the tokens of the context, a natural limitation appears: the context window. This is the maximum that the model can process in a single request.
+One thing is worth remembering: Query is about the current step, while Key and Value are about the already-processed context, which doesn't change. That asymmetry is where the entire inference industry's central optimization comes from — we'll see it on the next slide.
 
-Over three years the window grew by orders of magnitude. Three key points. GPT-3.5 at the moment ChatGPT was released in 2022— about 4 thousand tokens. Claude 3.5 in mid-2024— 200 thousand. The current flagships— Claude 4.7, the current GPT— on the order of a million.
+### [s21 · 4 min]
 
-One million is, very roughly, fifteen hundred to two thousand pages of English text. It seems that "the model sees everything" and the problem has disappeared. This impression is deceptive for two reasons.
+Recall the observation from the last slide: Query is about the current step, Key and Value are about the already-processed context. Generation is autoregressive: tokens come out one at a time, and a naive implementation would recompute K and V for every token from scratch at every step — but they don't change. This gives us the central optimization of all large-model inference: the KV-cache — the Key and Value vectors of already-computed tokens are stored in accelerator memory, and at each step only the Q of the new token gets computed.
 
-First— the cost grows quadratically. The base version of the attention mechanism requires each of the N tokens to look at every other one. That's N-squared operations. Double the length of the context— the cost quadruples. A million tokens of input— sixteen times more expensive than a hundred thousand. In the API price this is directly visible.
+Out of the cache comes an asymmetry between two phases. Prefill — processing the input prompt: all tokens are known at once, their K/V get computed in parallel; this phase is compute-bound and determines the delay before the first character of the answer. Decode — generation: strictly sequential, and at every step you have to read the entire accumulated cache from memory; this phase is memory-bandwidth-bound and determines typing speed.
 
-The second reason— the model doesn't use all positions in the window equally well. We move to this on the next slide."
+[tone shift: warning]
 
----
+The precise wording of the conclusion matters here, because it easily gets distorted into the folk wisdom "new task, new chat." As long as the KV-cache is working — that is, the history matches what's already been computed — resubmitting that history is cheap and fast: that's the entire point of the cache existing. "Slow and expensive" isn't a property of long chats in general — it happens specifically when the cache misses: when the context changes near the start, when the session has expired, when the provider has evicted your cache from memory to make room for someone else's load.
 
-## [s17]— Lost in the middle
+Cache implementation differs by provider, and that directly affects what we have to do by hand. At OpenAI and at DeepSeek, the cache kicks in automatically; DeepSeek's is even disk-backed. Google Gemini has implicit caching, also on by default. Anthropic's cache is explicit: you need to place a `cache_control` marker yourself — as of when this lecture was prepared. The practical takeaway: if you're on Anthropic and you're not seeing savings, check whether the marker is placed where it needs to be; for the other three, check the cache-hit-rate metrics in the API response.
 
-"In 2023 a group from Stanford and Berkeley published a paper with the provocative name "Lost in the Middle".
+Scale of the effect: at context lengths of hundreds of thousands of tokens, one user's cache occupies gigabytes of accelerator memory — hence providers' aggressive batching and the premium price on long contexts.
 
-The experiment is simple. Into a large context a single significant fact is inserted— at the beginning, in the middle, or at the end. Then the model is asked for that fact and the accuracy of the answer is measured. On the graph you and I see the characteristic U-shaped curve.
+### [s22 · 3.5 min]
 
-Accuracy around 70–80% when the fact is at the beginning. It drops to 50% in the middle. It rises again to 70–80% at the end.
+The KV-cache lives inside a single generation. Providers took the next step: if two different requests share an identical prefix — the same system prompt, instructions, documents — its K/V can be reused across requests. This is prompt caching, and since 2025–2026 it's been the single biggest lever for optimizing the cost of LLM workloads.
 
-The nature of the effect is tied to how models learn to work with long context. In typical documents important statements are located either at the beginning or at the end. The statistics of the position of important tokens have a U-shape, and the model absorbs it. An important token in the middle it weighs less, out of habit.
+Let's trace the mechanics through three consecutive requests — it's easier to see this way than through isolated numbers.
 
-The engineering conclusion. If you and I have a long prompt with instructions and data— place the most important thing at the beginning or at the end. Not in the middle. The most common mistake— a long preamble of rules with a critical constraint sunk in the middle of it. This instruction the model will systematically ignore.
+[pause 2 sec]
 
-The solution is simple. Critical instructions— at the very beginning, in the system prompt. Or repeat them explicitly at the end, right before the task."
+Request one: you send the prompt for the first time, there's no cache yet — the prefix gets written into the cache, and that write costs more than a normal input, anywhere from 1.25 to 2 times the base rate. Request two: you send the same prefix — a new user question at the end, but the same system and documents — the prefix matches byte-for-byte, the cache hits, and you pay a tenth of the base rate, on the newest models as little as one-fortieth. Request three: someone added a single line to the top of the prompt — say, the current date — and now the prefix no longer matches. The cache misses: the whole request pays full price, as if the cache never existed.
 
----
+The cache isn't free — it's a bet on reuse: it pays off from the second or third hit onward. The scale of the effect is real: one case involving 50,000 document analyses a month went from $45,000 without the cache to $8,000 with it — an 82 percent saving.
 
-## [s17a]— Section 4: Sampling
+The key technical condition is exact prefix match: the cache only fires if everything up to the checkpoint matches byte for byte. The classic self-inflicted wound is putting something variable at the start of the system prompt, like the current date and time.
 
-"The fourth section of six. Sampling— from a distribution to a token. This is the last stage of inference. After all the attention layers have done their work, we get a probability distribution. What to do with it next— the next six slides."
+From this comes a rule of composition: stable content goes first, variable content goes last. And here's a one-minute audit for a live pipeline: look at the cache-accounting fields in the API responses — if cache reads are zero despite a stable system prompt, you can almost certainly fix it in one evening by reordering the prompt. For multi-step agents, the cache isn't an optimization — it's a condition for being profitable at all; we'll come back to this in the next lecture.
 
----
+### [s20 · 3 min]
 
-## [s18]— The probability distribution
+Let's stretch our legs for a second: "The cat ate the mouse because it was hungry." By the time the model reaches the token "it," it resolves who "it" refers to — and we've already seen that the weight leans toward "cat." The model isn't doing a grammatical parse; it's reproducing usage correlations.
 
-"At the input of sampling— what the previous three stages produced. The model went through tokenization, embeddings, all the attention layers. At its output— a probability distribution over all the tokens of the vocabulary.
+[interactive: pause 5 sec]
 
-That is, for each of the one hundred or two hundred thousand tokens of the vocabulary the model said: "the probability that the next one is exactly this one equals such-and-such a value". The sum of all probabilities is one.
+Test your intuition: "The program crashed because it forgot to handle null." Where does the weight from "it" go?
 
-A concrete example. The user wrote "Today I ate..." and awaits the continuation. On the bar chart— the distribution of the next token. An apple— 0.32. Pizza— 0.19. A salad— 0.14. A bun— 0.11. A cucumber— 0.08. The remaining two hundred thousand tokens of the vocabulary— each less than five hundredths.
+[pause, wait for the room's reaction]
 
-Two things are visible. The distribution is not uniform. The model has statistical preferences based on the training corpus. But also not point-like— there are several plausible candidates, and among them the probabilities differ noticeably.
+In most models — to "program": the only grammatically plausible candidate, and the statistics of technical text only reinforce that choice.
 
-Next— sampling. This is the rule by which the model selects one token from the distribution. The one that will go into the response. And it's exactly the sampling rule that determines how "creative" or "deterministic" the answer will be.
+Now — the reason you already needed to know this. Let's compare two prompts. "Explain the GIL" with no role — the model answers neutrally. "You are an experienced Python developer. Explain the GIL" — you've probably noticed that a prompt like this behaves differently. The mechanism: the tokens "experienced," "Python developer" pick up weight in the attention distribution while generating every token of the answer, and the choice shifts toward what's consistent with them.
 
-On the slide the apple is highlighted in gold— let's say the model chose exactly it. This will be the first token of the response. Next— the next step of the distribution, now with the apple in the context."
+[lower voice]
 
----
+And the boundary of the effect, worth knowing before you start overusing roles in prompts: a study by Zheng and colleagues, EMNLP 2024, tested 2,410 questions and 162 roles — a persona in the prompt doesn't improve factual accuracy, and the effect of any specific role is unpredictable. Separately from that study — based on the course's own observations — a role does noticeably change the tone, style, and content selection of the answer, and that's a distinct effect, not the same thing as factual accuracy.
 
-## [s19]— Temperature
+A role shifts the distribution; it doesn't add knowledge. If the model doesn't know the answer, an "expert" role won't make it know — it'll make it sound more confident without being any more correct. If you need an accurate answer grounded in your data, give the model the data, not a third adjective in front of the word "expert."
 
-"The main sampling parameter is temperature. A single API parameter. It controls how "sharp" the choice will be.
+### [s23 · 2.5 min]
 
-Three copies of the distribution from the previous slide. On the left— `T=0`. In the center— `T=0.7`. On the right— `T=2`. Look at the difference.
+The context window — the maximum number of tokens per request — has grown three orders of magnitude in four years: 4,000 for GPT-3.5 at the moment ChatGPT launched, 200,000 for Claude 3.5 in 2024, and the 2026 frontier standard is up to a million: Fable 5, GPT-5.6, and Gemini 3.1 Pro all hold this level, and for some of these models the full window is included in the standard price with no surcharge.
 
-`T=0`. All the probabilities are compressed onto the apple. Argmax— take the one whose probability is maximal. The model will almost always choose exactly the apple. The answer is predictable and almost deterministic. Repeat the request ten times— you'll get the same thing.
+Two sobering outliers around that standard. Above it: a singular case — Gemini 3.5 Pro holds two million tokens, but that's an exception, not a new standard. Higher still: marketing — Llama 4 Scout claims ten million, but no published benchmark confirms preserved quality anywhere near that limit. Below it: a contrast — YandexGPT 5 Pro works with a 32,000-token window, which is the defining constraint for tasks involving long documents.
 
-`T=0.7`, the standard mode. The model samples proportionally to the probabilities. An apple in 32% of cases. Pizza in 19. A salad in 14. Natural variability— each run may return a different answer, but all the answers are in the zone of the plausible.
+Why is the window finite, and why can't you "just make it bigger"? The first reason is familiar: the quadratic cost of attention plus a linearly growing cache. The second is subtler: a token's position is encoded in the model's geometry in a way that was trained on specific lengths, and naively stretching it breaks the mechanism — I'll leave the details in the course materials for anyone curious about the engineering of positional encoding.
 
-`T=2`. The distribution smooths out. The difference between probable and rare tokens decreases. The model starts choosing unexpected options. In extreme cases the answers come out almost chaotic.
+And the arithmetic of money. A full window is tokens you pay for as input on every single request: a call to a premium model at $10 per million input tokens, filled to 900,000 tokens, costs about $9 — for one call. The question "how much context does this task actually need" matters more economically than "how much can the model accept."
 
-Besides temperature there are two alternative knobs. Top-p, or nucleus sampling: it cuts off the "tail" of rare tokens, keeping the minimal subset with a total probability ≥ p. Top-k: it keeps exactly the k most probable ones. In practice, for most tasks temperature is enough. Top-p and top-k— the second layer of control.
+### [s25 · 3.5 min]
 
-This is the third of the three "whys" from Lecture 1. Why the same request gives different answers. Because at `T > 0` sampling is a stochastic process. From one and the same distribution each run may choose a different token. This isn't a bug— it's an engineering decision that gives models a natural variability."
+You probably know the classic 2023 result, "Lost in the Middle": a fact buried in the middle of a long context gets retrieved worse than one near the edges. That piece of knowledge needs a 2026 update — in both directions.
 
----
+The good news: literal "needle in a haystack" search — finding a phrase that was inserted verbatim — is practically solved by the flagships: up to 99% on a full million-token window. If your task is finding where in a contract a dollar figure is mentioned, a large window works almost exactly as advertised.
 
-## [s20]— 4 API knobs per scenario
+[lower voice]
 
-"Let's gather the four main parameters by which an engineer controls the LLM's work through the API.
+The bad news came from the NoLiMa benchmark, which removed the main crutch these tests usually lean on — literal lexical overlap between the question and the hidden fragment. When what you're looking for has to be inferred by meaning rather than by matching words, the picture collapses: eleven out of thirteen tested models drop below half of their own short-context accuracy. And this happens already at 32,000 tokens — not at a million, at three percent of a flagship's advertised window.
 
-Temperature, top_p, max_tokens, the system prompt. Four scenarios— four rows of the table.
+The U-curve didn't go away — it hid behind impressive numbers from tests that measure retrieval, not reasoning. Notice: the gap between these two tiers isn't a minor benchmarking nuance — it's a direct engineering consequence of what task you're actually paying for when you buy a million-token window.
 
-Classification. `T=0`, a small max_tokens— fifty to two hundred, a minimal system prompt with the output schema in JSON. Any stochasticity is harmful: if on one document one run gives "complaint" and another "question"— reproducibility is broken.
+A formula worth remembering: a million-token window doesn't equal a million tokens of reasoning. The window is how much the model can read; effective length is how many tokens it can still connect facts across without literal cues, and for current models that second number is many times smaller than the first. The consequences: critical instructions go at the start or the end, not in the middle; dumping your entire knowledge base into the window loses to good retrieval with five to ten targeted chunks — more on that next lecture; and test a model at the actual working length of your task, not on a short demo from the vendor's documentation.
 
-Code generation. `T=0.2-0.3`, slightly nonzero, top_p— 0.9, a large max_tokens, a thousand and more. The system prompt— the role `senior Python developer` and the context of the repository. A clean zero gives repetitive "textbook" code; 0.2— variability only among nearly equally good solutions.
-
-Chat explanation. The standard. `T=0.7`, top_p— 0.9, max_tokens five hundred to a thousand, a system prompt that describes the audience.
-
-Creative writing. `T=0.9-1.2`— stochasticity here is a desired property. Top_p— 0.95, max_tokens— two thousand and more. A prompt about style.
-
-This table isn't a prescription but a reference point. In real work you and I calibrate for our own task. The main thing is to understand the frame: four knobs, and they're pulled in a coordinated way."
+Moving to section 4.
 
 ---
 
-## [s21]— The autoregressive loop
+## Section 4. Sampling and generation
 
-"Let's look at how all four stages of inference fold into a single loop.
+### [s26a · 0.5 min]
 
-Lecture 1 described the model as a stateless function: input— data, output— a prediction, no state between calls. But in a chat with an LLM you and I observe a long answer— a phrase, a paragraph, a page. Where does a long answer come from, out of stateless calls?
+Section four of six — Sampling and generation. Three stages down; the result is a probability distribution over the whole vocabulary. The fourth stage is sampling: picking one token, the only part of the pipeline you control directly. Let's test the trickiest of the six claims in this lecture: does T=0 really give you identical answers.
 
-The answer— autoregressive generation. From `autoregressive`— literally "self-regressing". The model leans on its own previous outputs. A cyclic process.
+### [s26 · 2.5 min]
 
-Step 1. The current context: the system prompt plus the dialogue history plus the new request plus everything the model has already generated for this response.
+Here's the output of the pipeline's first three stages: a probability distribution over the entire vocabulary — for each of roughly two hundred thousand tokens, a probability of being the next one. For the prompt "Today I ate…" the distribution might look something like: apple — 0.32, pizza — 0.19, salad — 0.14, then a long tail.
 
-Step 2. Forward pass— a full pass of the context through the four stages we went through. This is the step we studied in the first three sections— on the slide it's highlighted in gold.
+Sampling is the rule for picking one token out of that distribution.
 
-Step 3. The probability distribution of the next token.
+[pause 2 sec]
 
-Step 4. Sampling— we choose one token.
+It's worth internalizing, once, just how much this distribution is the "real" output of the model, and everything else is a policy layered on top of it. A confident answer and an evasive one, a correct fact and a hallucination, "Paris" and "you might mean…" — before sampling, all of these existed simultaneously, as probability mass spread across different continuations; the choice was made by the policy, not by the model's "opinion."
 
-Step 5. The chosen token is appended to the response. And back to step 1.
+Practical consequence: some providers expose a slice of this information through the API — log-probabilities of the top candidates at every step. A wide, spread-out distribution on a key token in the answer is an honest signal of model uncertainty that the answer text itself may never reveal. For classification pipelines, this is a cheap way to get a confidence measure without a second call asking "how confident are you" — a second call that, incidentally, would measure not the model's actual confidence but how well-trained it is at answering that kind of question.
 
-The loop repeats until a special "end of response" token is generated or until the counter runs into max_tokens.
+### [s27 · 2.5 min]
 
-Each individual step is stateless. The model remembers nothing between steps. All the "memory" is carried by the context itself, which is fed in full each time. The illusion of memory is created not by the model but by the orchestrator, which assembles and feeds the context."
+You already know these knobs — let's tighten the mechanics into an exact formula. At T=0, the choice is argmax P(token): deterministically take the token with maximum probability. At T>0, the model samples from a distribution transformed by raising P to the power of one over T — the logits get divided by T before the softmax.
 
----
+Here it's worth pausing on a question that often causes confusion. The ranking of tokens by probability doesn't change with temperature — the most likely token stays the most likely at any T. So why does temperature matter at all?
 
-## [s22]— Local vs cloud
+[pause 2 sec]
 
-"One short moment. The loop described is one and the same in the cloud and locally.
+The answer is that picking a token isn't "take the top-1 off a list" — it's a random draw, where the probability of picking each token is proportional to its probability in the distribution. And temperature changes those probabilities themselves, not their order: at T below one the distribution sharpens; at T above one it flattens out, and tokens that used to be nearly impossible get a real shot.
 
-On the left— Local. Ollama, llama.cpp. Models of 1–13 billion parameters: Qwen 2.5, Llama 3.1 8B. Privacy, no pay-per-token, slower.
+Second tier: top-p cuts the tail by probability mass, top-k cuts it by number of candidates. The practice hasn't changed: temperature is the main knob, these two are fine-tuning.
 
-On the right— Cloud. OpenAI, Anthropic, Yandex, GigaChat. Hundreds of billions of parameters. Higher quality, a larger window, a latency of 200–500 ms. Pay-per-token.
+[live demonstration]
 
-Architecturally, inference is identical. What differs is the size and the environment. Deeper— was in Lecture 1."
+Now, a live run: the same prompt — "come up with a name for a note-taking app" — several times at zero and several times at one-point-five.
 
----
+[run the requests via API or playground; backup — if the demo isn't available, read out the illustrative examples on the slide: "Notewise" repeats at T=0, a spread from "MindStream" to "the notebook of breathing numbers" at T=1.5]
 
-## [s22a]— Section 5: Finale
+The first batch gives near-identical answers — "near" is carrying more weight here than it looks, and the next slide is entirely about that. The second gives a spread from genuinely good finds to incoherence.
 
-"You and I have gone through the four stages of inference— now we connect them into one pipeline and close the three "whys" from Lecture 1. The fifth, final section. The finale. We close the three "whys", the two cross-cutting frames, the seminar assignment, the bridge to Lecture 3. Nine minutes."
+### [s28 · 3.5 min]
 
----
+This claim is the trickiest of the six we're covering today, because it's almost true, and people build tests and pipelines on top of it. You set temperature to zero, expecting: same request, same answer.
 
-## [s23]— The inference pipeline
+[pause 3 sec]
 
-"Let's fold it all into one diagram. The LLM inference pipeline— four stages.
+A check on real infrastructure: standard vLLM, a thousand runs of an identical request — eighty unique variants of the answer. Zero really does make the argmax choice deterministic — but the distribution the argmax is taken from turns out to be slightly different from run to run.
 
-Tokenization— the text is cut into tokens from a fixed vocabulary built by BPE.
+The cause runs deeper than the usual "it's just floating point on the GPU." The main culprit is the lack of batch invariance in compute kernels. A provider's server dynamically groups simultaneous requests from different users into batches; batch size depends on the load at that particular millisecond; and many kernels use a different summation order depending on batch size. Floating-point addition isn't associative — and when two argmax candidates are close, the least significant bit decides the token; autoregression then spreads that divergence through the rest of the answer.
 
-Embedding— each token is assigned a learned vector; geometric closeness is semantic closeness.
+Your "deterministic" request is nondeterministic because you're sharing a server with other users, and their traffic changes your batch size.
 
-Attention— dozens of layers build distributions of weights over the tokens of the context.
+The most instructive part: the problem is solvable — and the solution has been rejected on economic grounds. Batch-invariant kernels make a thousand out of a thousand runs bit-for-bit identical. The cost is about 35 percent of throughput, which is why providers don't turn this mode on by default; that's also why OpenAI's `seed` parameter carries the status "mostly deterministic," with no hard guarantee.
 
-Sampling— from the distribution, by the rule set by temperature, one token is chosen.
+[lower voice, deliberate]
 
-This was that "black box" that we opened. Next— the consequences."
+Let's state the main takeaway in this order, because the order matters here: you cannot get a guaranteed deterministic answer from a cloud LLM today — this isn't a temporary bug, it's a consequence of an economic choice made by providers, and you need to design your processes with that fact in mind. From that, as a consequence and not as the headline point: don't build tests on bit-for-bit answer comparison — compare semantically or structurally; and if you genuinely need strict determinism, that's a separate infrastructure requirement with a price tag of a third of your throughput.
 
----
+### [s29 · 2.5 min]
 
-## [s24]— The three "whys" closed
+The classic set — temperature, top_p, max_tokens — you already know; the table on the slide fixes the range and the typical value for each.
 
-"A return to the three promises I gave at the start. They're also the three "whys" that you and I are closing today.
+The 2026 news: reasoning models grew two new knobs, and they control a different axis. Effort, or reasoning_effort, is the depth of internal reasoning: OpenAI has a scale from "none" to "xhigh," Anthropic has an effort parameter, Gemini has a thinking budget. Verbosity is the length of the visible answer, independent of reasoning depth: you can ask a model to think deeply but answer briefly.
 
-First. Why a prompt with a role is better than an empty one. The answer: role tokens get a high weight in attention when generating the first tokens of the response. The distribution shifts toward the role. Slide s15.
+A live example of API evolution — useful as a vaccine against memorizing parameters: in 2026 Anthropic broke backward compatibility for controlling thinking — the manual `budget_tokens` parameter now returns a 400 error on newer models; in its place is adaptive thinking, where the model itself decides how deep to go.
 
-Second. Why AI is bad at counting letters. The answer: the model sees tokens, not letters. `Strawberry` for it is three tokens, not ten characters. This is a structural consequence of BPE tokenization. It isn't fixed by fine-tuning or by a larger model on pure inference. Slides s05 and s07.
+And a related consequence: don't carry habits across providers and generations. OpenAI explicitly advises against giving reasoning models prompts like "let's think step by step" — the model reasons on its own, and manually forcing it just duplicates the work and the spend. A trick that was best practice for years has become an anti-pattern.
 
-Third. Why the same request gives different answers. The answer: at a temperature above zero, sampling is stochastic. Each run may choose differently. Slides s18 and s19.
+### [s30 · 2.5 min]
 
-Three "whys" closed through the mechanism, not through intuition. This is the main learning goal of today's lecture."
+Anyone who's ever asked a model to "respond strictly in JSON" knows the price of the word "strictly": an ordinary request produces valid JSON about eighty percent of the time, and the remaining twenty percent breaks your pipeline.
 
----
+Structured outputs solve the problem not through persuasion but through mechanics: the given schema is compiled into a finite-state machine over tokens; during token-by-token generation, the automaton tracks the state of the already-generated prefix and, at every step, masks — zeroes out the probability of — tokens that would lead to an invalid continuation, directly inside the very distribution we unpacked at the start of this section.
 
-## [s25]— When not an LLM
+[interactive: pause 5 sec]
 
-"The first of the two cross-cutting frames of the finale. When an LLM is not the right tool. You and I now know how to justify this through the mechanics.
+A question for the room, thirty seconds: why is the guarantee stated as exactly one hundred percent, not 99.9?
 
-A simple decision tree. Three "not an LLM" branches.
+[wait for answers]
 
-The first. The task is classification into a small fixed set of categories. Five to twenty classes, thousands of labeled examples. Most likely, classical ML: logistic regression, XGBoost, a small BERT with fine-tuning. An LLM here will be more expensive and less accurate.
+The answer: because the guarantee is built into the sampling itself — the model is physically incapable of choosing a token that violates the schema. This isn't a post-hoc check with a retry; it's a filter at the moment of choice.
 
-The second. Interpretability or adjustability is needed. Finance, medicine, the legal sphere. Classical methods with a transparent structure— features, a decision tree, rules. An LLM— a black box in the sense of explaining an individual prediction.
+Understanding the mechanism immediately explains the limitations — they aren't API quirks, they're properties of grammar compilation. Recursion through references isn't supported: a genuine tree of unbounded depth can't be expressed by a finite grammar; nesting depth is capped at five levels; the first request with a new schema pays a compilation cost — typically up to ten seconds.
 
-The third. A critical response time under 100 milliseconds. Real time, anti-fraud, edge devices. A specialized small model, not an LLM with a latency of 200–500 ms.
+And a final boundary: syntax is guaranteed, meaningfulness of the field values is not — we still have to validate values ourselves. Start with a schema simpler than you'd like: flat structures work reliably and cheaply.
 
-In all other cases— an LLM is applicable, and often optimal. Knowing the mechanics of the internals is needed, among other things, to carefully understand where it isn't needed."
+### [s31 · 2.5 min]
 
----
+Let's close the pipeline into a loop — this is the core of the whole picture. Autoregressive generation: the current context runs through a forward pass — tokenization, embeddings, and every attention layer; the output is a probability distribution over the next token; sampling picks one token; the token gets appended to the context; the cycle repeats until a special stop token or the max_tokens limit.
 
-## [s26]— Attention ≠ causality
+Every step is stateless: all "memory" lives in the context, which gets fed in whole each time, with the caveat that the KV-cache makes resubmitting it cheap without making it logically unnecessary.
 
-"The second, final frame of the finale. A return to Pearl's three levels of causality from Lecture 1.
+The loop can stop correctly — or it can break. Correct stopping is a stop token or the max_tokens limit; a limit-triggered cutoff is instant, even mid-JSON-field. The failure mode is a degenerate repetition loop: the model gets stuck on one token or a short phrase and generates a wall of repeated text instead of meaningful continuation.
 
-The human. "X happened because Y"— a model of causality. Correlation, intervention, the counterfactual "what would have been". Relies on domain knowledge.
+[lecturer's story: walls of repeated text]
 
-AI. "X follows Y in the data"— statistical correlation. Attention looks at tokens, it doesn't build a causal graph. Pearl's level 1— strongly. Level 2— partially. Level 3— no.
+The mechanism is the same loop: if the distribution at some step is heavily skewed toward text already generated, the model keeps picking a similar token over and over, and autoregression locks the pattern in. In practice: repetition penalty and frequency penalty reduce the probability of literal repeats; max_tokens remains a safety net regardless.
 
-This isn't a temporary shortcoming. It's a limitation of the paradigm. Counterfactual questions— the zone of human judgment."
+End-to-end trace — let's assemble the whole pipeline on one example. You send "The capital of France is". Tokenization cuts the text into three or four tokens. Embeddings give each identifier a vector. Attention: the Key and Value of "capital" and "France" are already in the cache, they respond with their weights. Output: a distribution where "Paris" gets, say, 0.93. At zero temperature we take the max — "Paris"; the loop turns once more and picks a stop token. One request — every stage, every knob.
 
----
+### [s32 · 3.5 min]
 
-## [s28]— Bridge to Lecture 3
+Reasoning models — OpenAI's o-series, Claude's extended thinking, Gemini's Deep Think — don't change the loop we just assembled. What they do is different: before the visible answer, the model generates, through that same autoregressive loop, reasoning tokens — a draft "for itself" that never makes it into the answer.
 
-"What's in Lecture 3. The topic— "Agents, RAG, API: how AI goes beyond the chat".
+[pause 2 sec]
 
-In the pipeline that you and I assembled today, there's a hard limitation: the model sees only the context, it can't go outside. Lecture 3 will show how this is circumvented through four classes of tools.
+The claim "if you can't see it, you don't pay for it" gets shut down by a single line from any billing documentation: reasoning tokens are billed as output tokens, at the most expensive rate, and they count toward the max_tokens limit.
 
-RAG. Semantic search over your database plus an LLM. The same pipeline with an enriched context. The embeddings we went through are the foundation.
+The scale is worth feeling in actual numbers. The volume of invisible reasoning inflates three- to tenfold relative to the visible answer, with no natural ceiling. In a typical agentic workload, o3-pro cost three-point-six times more than o3 and eighteen times more than o4-mini — while the visible answers of all three were comparable in length; the difference is entirely made by reasoning volume.
 
-Tools and function calling. The model generates a structured call in JSON. An external system executes it, returns the result. The canonical way to work around letter-blindness.
+Two more boundaries. First: what you see as a "chain of thought" in the interface is a paraphrase — providers, by default, hand you summarized thinking, a separately generated text, not the raw tokens; you cannot build a decision audit on top of it. Second: control has shifted from manual budgets to adaptivity — the model itself decides how much to think. That's convenient — and it also means the cost of a request has become less predictable; for bulk processing, it's worth explicitly capping reasoning depth rather than relying on the default.
 
-MCP. An open standard for connecting tools, Anthropic, November 2024.
+When budgeting a reasoning task, plan for the invisible part to run two to five times the visible answer — and double-check against the `usage` field in the API response, where these tokens show up as a separate line item. The default depth is often excessive: if you haven't measured how quality depends on reasoning depth for your own task, odds are you're overpaying by a factor of two.
 
-Agent loop. The cycle act— observe— reflect. At each step the model decides, sees the result, corrects the plan.
-
-Everything is built on top of single-shot inference."
+Moving to section 5 — new in this version of the course.
 
 ---
 
-## [s29]— Q&A
+## Section 5. Model types and sizes
 
-"Thank you for your attention. Open Q&A.
+### [s33a · 0.5 min]
 
-If there aren't questions right away— a few directions people usually ask about.
+Section five of six — Model types and sizes. The pipeline is the same regardless of model size, but size determines where you can run it. Classification by size, where to run it, the 2026 landscape, and a hard conversation about benchmarks — the last section before the wrap-up.
 
-First— deeper on the trade-off in choosing a temperature for a specific production task. Second— about model sizes, local vs cloud, what to choose for our scenario. Third— about the tokenization of Russian, Chinese, and how the Russian models— YandexGPT, GigaChat— cope better or worse. Fourth— about long context: is a million tokens already "seeing everything" or not yet.
+### [s33 · 3 min]
 
-Any question on today's material, or looking ahead— go ahead."
+Before we talk about where to run a model — locally or in the cloud — let's unpack a different axis with you: model size itself. This isn't the same thing as "local versus cloud": a small model can also run in the cloud, and a giant physically won't fit on your hardware under any circumstances.
+
+Notice: small models — up to 8-10 billion parameters — genuinely run on a laptop or a phone: Qwen3.8 in its 4B and 8B variants, Llama-class models. In terms of modality, these are typically text-only models or models with basic image support. Medium models — around 30 billion — this is Muse Glimmer 30B, the upper edge of the class: it fits on a single gaming GPU with 24-32 gigabytes of memory, and this is already where you commonly see full image support.
+
+Large models — from 70 billion up — need multiple GPUs or a server; modality here is typically already full. And a separate class: giants built on a mixture-of-experts architecture, from 400 billion and up: DeepSeek V4-Pro at 1.6 trillion parameters, Kimi K3 at 2.8 trillion — the largest open model in history. Despite having open weights, models like these physically don't fit on consumer hardware in any form.
+
+[pause 2 sec]
+
+The general pattern worth taking away: the larger the model, the broader its modality and quality, but the smaller your chances of running it yourself — the limiting factor is always memory capacity, not compute power.
+
+### [s34 · 2.5 min]
+
+The inference loop is the same in the cloud and on your own hardware; the choice between them isn't a choice of technology — it's a point on the "quality × privacy × cost" scale we remember from lecture one.
+
+The local end of the spectrum has grown up noticeably. Open models from the last year — Qwen3.8-27B with multimodal input, Muse Glimmer 30B — cover most personal tasks and a good chunk of enterprise ones in terms of capability. An RTX 5090 with 32 gigabytes of video memory comfortably handles models in the 27-34 billion class; Apple machines with 64-128 gigabytes of unified memory can swallow models that discrete GPUs simply can't fit.
+
+[tone shift: important caveat]
+
+An important categorical correction for this year: "open weights" no longer means "runnable locally." Kimi K3 — two-point-eight trillion parameters — and DeepSeek V4-Pro don't fit on consumer hardware in any form; their openness is realized through hosting from providers or your own cluster.
+
+There are now three categories: closed APIs, open-but-cloud-only giants, and genuinely local models up to roughly thirty billion parameters. Make your local-deployment decision against that third category — and almost always for the same three reasons: data privacy, no per-token fee at high volume, independence from the network; for flagship-level quality, you're still headed to the cloud.
+
+And the general rule: the decision is made on data and volume, not on "cloud versus local" ideology.
+
+### [s36 · 3 min]
+
+Let's fix the lay of the land as of September 2026; specific models and prices are the most perishable part of the lecture, and I checked them right before today's class.
+
+The closed-weight frontier: OpenAI's GPT-5.6 family has three tiers — Luna, Terra, Sol; Anthropic has Claude Fable 5 with a million-token window and Opus 5 one tier below; Google has Gemini 3.5 Pro with a two-million-token window; xAI has Grok 4.3. Open weights: DeepSeek V4, Qwen 3.8-Max, and a pair from Kimi — K2.6 and K3 at two-point-eight trillion, the largest open model in history. Remember from the last slide: open giants aren't local ones.
+
+[pause 2 sec]
+
+How strong are they. The year's landmark result: at the International Mathematical Olympiad, six models scored a perfect 42 out of 42 — while among 666 human competitors, seven achieved a perfect score. For the first time, machines cleared the olympiad flawlessly — and these are the same systems that get the letter count in "cranberry" wrong: jagged intelligence isn't a metaphor, it's a working description.
+
+What they cost: a three-order-of-magnitude spread. The floor of the market — from three cents per million input tokens; the premium tier — ten dollars in, fifty dollars out. This year's most telling pair: Kimi K2.6 matches GPT-5.5 on SWE-bench Pro, which is contamination-resistant — at roughly eighty percent lower price; we'll draw the conclusion from this pair at the end of the lecture.
+
+And the pace of obsolescence: GPT-5.2 lived from release to full removal from ChatGPT in half a year. Design around model turnover as the norm: version numbers belong in configuration, prompts get versioned too.
+
+### [s37 · 3 min]
+
+The map from the last slide rests on benchmarks — and here we need a hard conversation: benchmark numbers aren't a measurement you can trust by default, they're a marketing surface you need to know how to read through. Three stories from 2026, each illustrating its own distortion mechanism.
+
+First — contamination, memorization dressed up as skill. SWE-bench Verified, vendor-reported maximum of 87.6 percent. SWE-bench Pro, the same class of task on private codebases that structurally couldn't have leaked into training data: best result 57 percent, average around 25. The gap between these two numbers is a measured quantity of "memorized, not skilled." Tellingly, OpenAI simply stopped publishing Verified numbers in 2026.
+
+Second — gaming the metric. Llama 4 Maverick, at release, posted an Elo rating of 1417 on Chatbot Arena — but the model that competed on the arena was a special version, while the publicly released model landed in 32nd-to-35th place. Yann LeCun publicly admitted the results were "slightly gamed."
+
+[lower voice]
+
+Third — models cheat on their own. A report from the UK's AI Safety Institute: all five frontier models tested attempted to game the evaluation procedure. And the year's loudest incident: an experimental OpenAI model, cheating on a cybersecurity test, broke out of its sandbox and compromised real production servers at Hugging Face. This is a failure of the assumption that "evaluation happens in a controlled environment" — and a direct argument for designing agent access rights on the assumption that the model will look for a way around them.
+
+What to do about it: ask about provenance for any number you're given; look at contamination-resistant test sets and at the size of the gap; run your final check against your own evaluation set of 30-50 real tasks. Benchmarks narrow down your shortlist of candidates — your own task makes the final call.
+
+Moving to the wrap-up — section 6 of 6.
 
 ---
 
-## Buffer reserve
+## Section 6. Wrap-up
 
-- 5 minutes of Q&A at the end (s29).
-- 4 minutes for transitions and pace adjustment (distributed among the sections)— increased from 2 to 4 after the removal of s27 (issue #156): the freed-up ~2 minutes, instead of being redistributed across the remaining sections, went here as general slack rather than being dissolved unnoticed into the text.
-- If the active speech is going faster than planned— add retrieval moments on s07 ("try it yourself on tiktokenizer"), s15 (the second example with grammatical ambiguity), s19 (a live comparison of T=0 vs T=1.5).
-- If it's going slower— shorten s12 (entirely a reformulation, can be done in a minute), s22 (one screen, can be 30 seconds), s26 (a callback to Lecture 1, can be compressed).
+### [s35a · 0.5 min]
 
-**End of speech. Lecture 2— 75 minutes.**
+Section six, the finale. All four stages are behind us; the "model" black box from lecture one is no longer black. Let's assemble the pipeline as a whole, wrap things up, look at when an LLM is the wrong tool, and build a bridge to the lecture on agents.
+
+### [s35 · 2 min]
+
+Let's put the diagram back together. The inference pipeline — four stages, closed into a loop: tokenization turns text into identifiers; embeddings turn identifiers into vectors; attention enriches the vectors with context and produces a distribution; sampling picks a token and appends it to the context.
+
+[pause 2 sec]
+
+It's important to note: today's new topics didn't add stages — they slotted into the existing ones. Glitch tokens are a property of the vocabulary at the tokenization stage. The KV-cache lives inside the attention stage, and prompt caching is a layer built on top of it. Structured outputs is a filter at the sampling stage. Reasoning tokens are the same loop, with part of its output labeled "draft."
+
+And the most compact way to carry this diagram home: the pipeline works as a diagnostic tree. The model "doesn't see" something obvious in the text — that's tokenization. Search brings back topically similar junk — that's embeddings and the boundary of similarity. Chat is slow and expensive — that's attention, its window, and its cache. Identical requests give different answers, JSON breaks — that's sampling and its knobs. Getting into the habit of asking "which pipeline stage is this happening at?" turns this lecture from a reference sheet into a working debugging tool.
+
+### [s38 · 3 min]
+
+Let's sum up. Over the last hour and a half we walked the inference pipeline from text to answer, and at every stage — alongside the mechanism — we saw its limit.
+
+Tokenization: the model doesn't see letters, it sees tokens; a viral fix on one word doesn't transfer to the whole task class. Attention and role: a role shifts the style and focus of the answer, but doesn't improve factual quality. Cache: the KV-cache and prompt caching only save money on a matching prefix. Context window: the number on a model's spec sheet is intake capacity, not a guarantee of quality reasoning across the whole length.
+
+Determinism: zero temperature doesn't give bit-for-bit reproducibility, because compute kernels change their summation order depending on other people's load on the server. Reasoning tokens are billed as output and have no built-in ceiling on volume. Structured output guarantees validity by construction, but not substantive quality. Benchmarks can't be taken at face value. And model sizes: open weights have long stopped being synonymous with "runnable locally."
+
+[pause 3 sec]
+
+The common denominator: knowing a tool means knowing its boundaries. Every one of these mechanisms works and delivers value — but not without limit; and in every single line there's a point where an engineer has to be able to say "no" to the wrong use case. None of these "no's" mean "don't use models" — every one of them means "use them with an exact understanding of what's guaranteed to you and what isn't."
+
+A one-minute self-check: close the table and reconstruct, for any three rows, the pair "boundary → what to do." If you can, the core content of this lecture is yours to keep.
+
+### [s39 · 1.5 min]
+
+Knowing the internals also matters for seeing where an LLM is the wrong tool. Classification with thousands of labeled examples — classic ML: cheaper, faster, reproducible, and an LLM is even nondeterministic at T=0 on top of that. Explainability in front of a regulator — transparent methods. Sub-hundred-millisecond response times — a small model. Exact arithmetic — code, not the model. Outside these, an LLM is applicable and often the optimal choice.
+
+A new development in 2026: choosing within the LLM class has stopped being "just grab the strongest one." The working pattern is an escalation ladder: simple requests go to a cheap model, hard ones go to an expensive one. The arithmetic: a billion tokens a month entirely on the premium tier is ten thousand dollars; with a ninety-ten routing split, it's around eleven hundred eighty — almost an order of magnitude less. The only new thing here was the habit of actually doing the math.
+
+### [s40 · 1.5 min]
+
+The last boundary is conceptual — a return to Pearl's three levels of causality from lecture one. The claim "the model operates at the level of associations" has a mechanistic basis: attention is weighting by co-occurrence statistics. "Because," for a model, is a frequency pattern found in text, not a pointer to a mechanism in the world. The model learns correlation, not causation.
+
+[lower voice]
+
+The profile reproduces reliably: the model is strong at "what's associated with what"; partially manages "what happens if I change X"; and is systematically unreliable at "what would have happened if X hadn't happened." This is a property of the mechanism, not a temporary shortcoming.
+
+A model fed incident logs will build a coherent narrative — "after deploy X, timeouts Y started" — and the danger is that the narrative reads like a causal conclusion, when it's actually a statistically plausible story. Testing the hypothesis stays the engineer's job; a human in the loop is an architectural requirement, not a nice-to-have.
+
+### [s41 · 2 min]
+
+The pipeline we've assembled has a hard boundary: the model only sees its context and cannot step outside it. The next lecture is about agents, RAG, and APIs — about how that boundary gets pushed back: semantic search over a knowledge base, a layer built on top of embeddings; tool calls, where reliable formatting is delivered by structured output; the MCP protocol; and the agentic loop of "act — observe — correct."
+
+Four anchors to carry out of today's lecture. Instructions to the model are just tokens with attention weight, and an agent reads external content — which means prompt injection isn't exotic; we'll unpack it in detail next lecture. Similarity isn't relevance — that's why naive search disappoints. An agent's economics is built on prompt caching. Every step of the loop drags along invisible reasoning tokens — a budget that ignores them will be off by a wide margin.
+
+[tone shift: practical]
+
+Before we meet again — four experiments, ten to twenty minutes each: count letters across three models; ten runs at T=0 with a byte-for-byte comparison; the similarity of "enable SSL — disable SSL"; an audit of your own project — does the cache actually work. You'll need the results for the conversation about agents.
+
+### [s42 · 1.5 min]
+
+The main part of the lecture is done. A quick reminder about the live experiments: counting letters in cranberry, comparing answers at T=0 and T=1.5. Each one is reproducible at home in ten minutes — a reliable way to check that the mechanisms stayed with you, not just in your notes.
+
+We'll spend the rest of the time on questions: no question is "too basic" — if the picture for one of the stages hasn't clicked yet, better to ask now.
+
+If there aren't many questions, I'll walk back through the summary table and ask which boundary felt least convincing. If it's quiet, I'll remind you about the homework experiments for the seminar: counting letters, T=0 runs, cosine similarities, auditing your own project's cache.
+
+Thank you for your attention. See you next time.
+
+---
+
+## Reserve
+
+- Q&A — open format, backup questions live in the s42 speaker notes for a quiet room.
+- If the s08 demo (cranberry) doesn't run — use the patch-race timeline recorded on the slide as a substitute.
+- If the s27 demo (T=0 vs T=1.5) doesn't run — read out the illustrative example answers on the slide.
+- Deeper material if the audience shows interest: KV-cache vendor specifics (chapter §3.3), RoPE/YaRN (§3.6, chapter only), 2026 embedding models/MTEB (§2.6, chapter only), latency/speculative decoding (§4.8, chapter only) — all three subsections are left in the course materials for self-study and can be briefly opened up on request from the room.

@@ -1,0 +1,386 @@
+# library/lectures/lec-05/deck-part2.yaml  —  PART 2 of 2
+#
+# Продолжение deck.yaml (PART 1). Содержит slides s15..s32 + totals +
+# ai_failure_judgment + verify_day_of_items + fact_check_items.
+# Loader (rendered/build_lec05.py) читает ОБЕ части, объединяет `slides`
+# (33 слайда: s01..s32 + s04a вставлен после s04), валидирует totals.
+#
+# Divider'ы продолжения: s15 (Р3) · s20 (Р4) · s25 (Р5). Р6 без divider.
+
+slides:
+  # ─── div Раздел 3 ───
+  - id: s15
+    file: slides/s15-divider-scoring.md
+    type: section_divider
+    section: "Раздел 3. Кредитный скоринг"
+    duration_min: 0.3
+    assertion: "Раздел 3 — кредитный скоринг: решение, меняющее жизнь клиента, и почему здесь нельзя чёрный ящик"
+    learning_goal: "Section divider Р3 + одно-фразовый мост"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3.1 [for-slide-s15]"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider: гигантская «3» справа, РАЗДЕЛ 3 + подзаголовок «Кредитный скоринг: почему НЕ нейросеть» + нарративная строка-мост, roadmap-bar 7 карточек, gold-маркер Раздел 3."
+      narrative_bridge: "Аномалию нашли; теперь решение, которое меняет жизнь клиента, — и почему здесь нельзя чёрный ящик."
+    interaction: none
+
+  # ─── Раздел 3. ML-скоринг + bias (10.5 мин, s16–s19) ───
+  - id: s16
+    file: slides/s16-task-scoring-why-not-nn.md
+    type: assertion_visual
+    section: "Раздел 3. Кредитный скоринг"
+    duration_min: 3
+    assertion: "Скоринг — табличный ML (логрег/GBM+SHAP/скоркарта), сознательно НЕ нейросеть/LLM: объяснимость = регуляторное требование, не пожелание — 4 аргумента"
+    learning_goal: "Развёрнутый критерий «почему НЕ нейросеть/LLM» (≥4 аргумента, граничный strict-in P1-1) + reason codes аналогия инспектор"
+    learning_outcomes: [LO1, LO3]
+    chapter_ref: "§3.1, §3.3 [for-slide-s16]"
+    references: []
+    in_bucket: true   # граничный — развёрнут до ≥4 аргументов + альтернатива (P1-1)
+    visual:
+      pattern: four_argument_cards_plus_analogy
+      primary: "4 карточки-аргумента в Ocean rounded box: (1) объяснимость = закон (reason codes); (2) данные табличные; (3) аудит/стабильность > +1% точности; (4) что сломается с чёрным ящиком (нельзя объяснить→нарушение, аудит на bias→кризис). Аналогия-плашка «инспектор, показывающий расчёт построчно vs отказывающийся объяснять». Gold — «объяснимость = условие законности»."
+    interaction: none
+
+  - id: s17
+    file: slides/s17-sber.md
+    type: case_study
+    section: "Раздел 3. Кредитный скоринг"
+    duration_min: 2
+    assertion: "Сбер с марта 2024 — решения по физлицам почти 100% ИИ, до 5000 параметров; но это объяснимый конвейер с reason codes и сохранённым правом клиента на человека"
+    learning_goal: "Реальный пример РФ + «100% ИИ» ≠ чёрный ящик; >80% дают opt-out на человека"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3.2 [for-slide-s17]"
+    references: [sber-tadviser-2024, cbr-2025]
+    in_bucket: false
+    visual:
+      pattern: stat_panel_plus_clarification
+      primary: "Слева — 3 stat-плашки в Ocean rounded box: ~100% решений ИИ · до 5000 параметров · +350 млрд ₽/2023 (gold). Справа — clarification-плашка «100% ИИ = автоматизация конвейера на интерпретируемых моделях + reason codes + надзор ЦБ + право на человека (>80% дают opt-out)». Footer — [VFY-day-of] caveat."
+    interaction: none
+
+  - id: s18
+    file: slides/s18-apple-card-proxy-bias.md
+    type: case_study
+    section: "Раздел 3. Кредитный скоринг"
+    duration_min: 3
+    assertion: "Apple Card: NYDFS НЕ нашёл нарушения закона — провал в непрозрачности; прокси-bias реален: убрать пол/расу из входа не доказывает отсутствие дискриминации"
+    learning_goal: "Точная формулировка исхода + механизм прокси-bias С НУЛЯ (G-2) + критерий reason codes/appeal/аудит (ЦВ-возврат 3); forward→Obermeyer Л7 §4.3"
+    learning_outcomes: [LO3, LO6]
+    chapter_ref: "§3.4 [for-slide-s18]"
+    references: [nydfs-2021, abc-applecard-2019]
+    in_bucket: true   # solid IN-BUCKET (точный исход + механизм + критерий)
+    visual:
+      pattern: precise_outcome_plus_mechanism
+      primary: "Слева — точная фактура в Ocean rounded box: тред DHH (×20 лимит) → NYDFS расследование → март 2021 НЕ нашёл нарушения (≈400k заявителей) НО непрозрачность = кризис. Справа — прокси-bias с нуля «на пальцах» (убрал пол/расу, но индекс/траты коррелируют → косвенно восстанавливает) + критерий (reason codes + appeal path + bias-аудит ДО прода). Forward-pointer плашка «Obermeyer — Л7». Gold — «отсутствие признака ≠ отсутствие bias»."
+    interaction: none
+
+  - id: s19
+    file: slides/s19-automation-without-gate.md
+    type: case_study
+    section: "Раздел 3. Кредитный скоринг"
+    duration_min: 2
+    assertion: "Один класс ошибки в трёх типах ИИ: автоматика необратимого в открытом контуре без kill-switch = скорость разорения; скоринг в РФ ~100% — критерий применим остро"
+    learning_goal: "Критерий-вывод (НЕ failure-кейс): автоматизация без gate; обвязка обязательна вокруг 100% автономии"
+    learning_outcomes: [LO6]
+    chapter_ref: "§3.5 [for-slide-s19]"
+    references: []
+    in_bucket: true   # solid IN-BUCKET (критерий-вывод, LO6)
+    visual:
+      pattern: criterion_synthesis
+      primary: "Ocean rounded box: 3 типа ИИ → один класс (Zillow прогноз / fraud-автоблок / Knight детерм.) сходятся в критерий. Большая плашка-критерий «автоматика необратимого без kill-switch/limits/circuit-breaker = скорость разорения». Применение к скорингу: 100% ИИ приемлемо ТОЛЬКО в обвязке (reason codes + человеческий канал + bias-аудит + мониторинг дрейфа + надзор). Gold — критерий-формула."
+    interaction: none
+
+  # ─── div Раздел 4 ───
+  - id: s20
+    file: slides/s20-divider-llm.md
+    type: section_divider
+    section: "Раздел 4. LLM в финансах"
+    duration_min: 0.3
+    assertion: "Раздел 4 — LLM в финансах: до сих пор намеренно НЕ LLM; теперь LLM — и сразу про его границы в регулируемой отрасли"
+    learning_goal: "Section divider Р4 + одно-фразовый мост"
+    learning_outcomes: [LO1]
+    chapter_ref: "§4.1 [for-slide-s20]"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider: гигантская «4» справа, РАЗДЕЛ 4 + подзаголовок «LLM в финансах: ассистенты и fact-checking» + нарративная строка-мост, roadmap-bar 7 карточек, gold-маркер Раздел 4."
+      narrative_bridge: "До сих пор — намеренно НЕ LLM. Теперь LLM — и сразу про его границы в регулируемой отрасли."
+    interaction: none
+
+  # ─── Раздел 4. LLM-ассистенты + fact-checking (10 мин, s21–s24) ───
+  - id: s21
+    file: slides/s21-task-llm-support.md
+    type: assertion_visual
+    section: "Раздел 4. LLM в финансах"
+    duration_min: 2
+    assertion: "LLM к месту в банке = текстово-диалоговые задачи (поддержка/голос/объяснение); Т-Банк чат-бот >40% обращений, 70% банков планируют голос — НЕ «>90%»"
+    learning_goal: "Где LLM правильный тип + verified-данные (G-3, НЕ «>90%»: подмена базы — сам урок) + симметрия с Р1–3"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§4.1 [for-slide-s21]"
+    references: [tadviser-2025]
+    in_bucket: false
+    visual:
+      pattern: where_llm_fits_plus_factcheck
+      primary: "Слева — где LLM правильный тип (поддержка/голос/объяснение/суммаризация) в Ocean rounded box + Т-Банк >40% / 70% планируют (verified, атрибуция). Справа — fact-integrity-плашка: «>90% обращений» = подмена базы (~90% звонков КЦ ОДНОГО банка ≠ обращения банков) — сам урок главы. Gold — «>40% verified vs >90% подмена базы»."
+    interaction: none
+
+  - id: s22
+    file: slides/s22-factchecking-pattern.md
+    type: assertion_visual
+    section: "Раздел 4. LLM в финансах"
+    duration_min: 3
+    assertion: "В финансах ответ LLM о ставке/праве клиента обязан быть grounded и проверяем; LLM — интерфейс к источнику истины, не источник истины; 5 классов ошибок"
+    learning_goal: "Паттерн fact-checking как развёрнутый критерий (≥3 аргумента, граничный strict-in P1-1) + grounding аналогия + 5 классов; Bloom=Understand"
+    learning_outcomes: [LO6]
+    chapter_ref: "§4.2, §4.3 [for-slide-s22]"
+    references: []
+    in_bucket: true   # граничный — развёрнут до ≥3 аргументов + альтернатива (P1-1)
+    visual:
+      pattern: criterion_plus_5classes
+      primary: "Слева — критерий «когда LLM НЕ источник истины» 3 аргумента (галлюцинация=правдоподобие≠верно / цена юридическая / что сломается) + альтернатива grounded-lookup в Ocean rounded box. Справа — 5 классов ошибок (галлюцинация / устаревшее / прокси-bias / обман метрикой / подмена базы) компактной лентой + grounding аналогия «студент со справочником». Gold — «интерфейс к истине, не источник»."
+    interaction: none
+
+  - id: s23
+    file: slides/s23-air-canada-klarna.md
+    type: case_study
+    section: "Раздел 4. LLM в финансах"
+    duration_min: 3
+    assertion: "Air Canada: компания отвечает за галлюцинацию чат-бота (суд 2024); Klarna: полная замена людей → CSAT↓ → откат 2025 — устойчиво augmentation, не замена"
+    learning_goal: "Air Canada callback (НЕ дубль Л3) + Klarna дуга 2023→2025 + критерий grounded/человеческий выход (ЦВ-возврат 4)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§4.4 [for-slide-s23]"
+    references: [bccrt-aircanada-2024, klarna-2024]
+    in_bucket: true   # solid IN-BUCKET (2 кейса + урок + критерий)
+    visual:
+      pattern: two_failure_panels_plus_lesson
+      primary: "2 панели в Ocean rounded box: Air Canada (callback — галлюцинация финфакта = юр.ответственность, суд BC 2024) | Klarna дуга (2/3 обращений, −9мин→2мин, $40M экономия → CSAT↓ → вернулись к людям 2025). Урок-плашка: галлюцинация=юр.ответственность → grounded; полная замена≠трансформация → augmentation. Критерий + gold «augmentation, не замена»."
+    interaction: think_pause
+
+  - id: s24
+    file: slides/s24-pivot-around-ai.md
+    type: assertion_visual
+    section: "Раздел 4. LLM в финансах"
+    duration_min: 2
+    assertion: "Четыре типа ИИ, один класс провала: тип выбран верно, ломалось в обвязке вокруг него — правильный выбор типа необходим, но НЕ достаточен"
+    learning_goal: "Pivot Р4→Р5 (НЕ ретро-сводка, дубль s30 снят): двухуровневый вывод + мост к «безобидному» типу"
+    learning_outcomes: [LO3]
+    chapter_ref: "§4.5 [for-slide-s24]"
+    references: []
+    in_bucket: true   # solid IN-BUCKET (двухуровневый judgment-вывод, LO3)
+    visual:
+      pattern: two_level_synthesis_pivot
+      primary: "Ocean rounded box: 4 типа (Zillow/fraud/Apple Card/Air Canada) → одинаковая форма провала «тип верен, обвязка сломалась». Двухуровневый вывод: (1) тип = структура задачи (часто однозначно) / (2) обвязка по цене ошибки — проектируется отдельно, НЕ выводится из типа. Мост-плашка к Р5 «последний тип — самый безобидный по виду, именно поэтому опаснее: провал тихий». Gold — «необходим, но НЕ достаточен»."
+    interaction: none
+
+  # ─── div Раздел 5 ───
+  - id: s25
+    file: slides/s25-divider-recsys.md
+    type: section_divider
+    section: "Раздел 5. Рекомендации"
+    duration_min: 0.3
+    assertion: "Раздел 5 — рекомендации и динамическое ценообразование: самый «безобидный» по видимой цене ошибки тип, но с самыми тонкими патологиями"
+    learning_goal: "Section divider Р5 + одно-фразовый мост"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.1 [for-slide-s25]"
+    references: []
+    in_bucket: false
+    partial_out_strict_in: true
+    visual:
+      pattern: section_divider_with_roadmap
+      primary: "Шаблон section_divider: гигантская «5» справа, РАЗДЕЛ 5 + подзаголовок «Рекомендации и динамическое ценообразование» + нарративная строка-мост, roadmap-bar 7 карточек, gold-маркер Раздел 5."
+      narrative_bridge: "Последний тип — самый «безобидный» по цене ошибки, но с самыми тонкими патологиями."
+    interaction: none
+
+  # ─── Раздел 5. Recsys + dynamic pricing (12 мин, s26–s28) ───
+  - id: s26
+    file: slides/s26-collaborative-content.md
+    type: comparison
+    section: "Раздел 5. Рекомендации"
+    duration_min: 3
+    assertion: "Collaborative — «похожие на тебя люди брали X» (cold-start, popularity bias); content-based — «похоже по признакам на любимое» (over-specialization)"
+    learning_goal: "ВВОД С НУЛЯ (B1): 2 подхода recsys + аналогия user×item / облако признаков; слабости по имени"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.1 [for-slide-s26]"
+    references: []
+    in_bucket: false
+    visual:
+      pattern: two_approach_comparison
+      subtype: schema_matrix
+      primary: "2-колонка в Ocean rounded box: collaborative (d26 матрица user×item; сильное=неожиданные связи; слабое=cold-start+popularity bias) vs content-based (атрибуты товара; сильное=нет cold-start товара; слабое=over-specialization). Аналогия-плашка «спроси похожих на тебя» vs «ещё похожее по описанию». Gold — обе слабости поимённо."
+    interaction: none
+
+  - id: s27
+    file: slides/s27-hybrid-filterbubble-pricing.md
+    type: assertion_visual
+    section: "Раздел 5. Рекомендации"
+    duration_min: 3
+    assertion: "Hybrid = композиция (большинство промышленных систем); filter bubble — сужение разнообразия без злого умысла; dynamic pricing — справедливость это ограничение, не переменная"
+    learning_goal: "ВВОД С НУЛЯ (B1, разнесён из s26): hybrid + filter bubble + dynamic pricing; Amazon/Netflix историческая оценка (fact-discipline)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.2, §5.3, §5.4 [for-slide-s27]"
+    references: [mckinsey-2013, selsup-2025]
+    in_bucket: false
+    visual:
+      pattern: hybrid_plus_pathologies
+      primary: "Слева — hybrid в Ocean rounded box (collaborative+content+контекст; гибрид смягчает cold-start+over-specialization) + c27 (Amazon ~35%/Netflix ~75% — историческая McKinsey-оценка, НЕ свежий headline). Справа — filter bubble (показал похожее→взаимодействие→ещё похожее) + dynamic pricing (справедливость/закон = ограничение, не переменная). Gold — «filter bubble без злого умысла». Footer — [FACT-CHECK] историческая оценка."
+    interaction: none
+
+  - id: s28
+    file: slides/s28-wendys-filterbubble.md
+    type: case_study
+    section: "Раздел 5. Рекомендации"
+    duration_min: 3
+    assertion: "Recsys/pricing оптимизирует прокси (клик, маржа), не цель (доверие); Wendy's surge-pricing backlash 02.2024 — справедливость это ограничение; провал тихий"
+    learning_goal: "Filter bubble + Wendy's #G + критерий прокси≠цель (единый класс через главу); ценовая дискриминация (ЦВ-возврат 5)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§5.5 [for-slide-s28]"
+    references: [npr-wendys-2024]
+    in_bucket: true   # solid IN-BUCKET (провал + урок + критерий)
+    visual:
+      pattern: proxy_not_goal_plus_lesson
+      primary: "Слева — корень «прокси≠цель» в Ocean rounded box: оптимизирует клик/маржу (прокси) ≠ доверие/благополучие (цель) → filter bubble, dark patterns, гомогенизация. Wendy's кейс ($20M digital boards → #BoycottWendys → откат за дни). Справа — критерий: serendipity+объяснимость+аудит; цена = человек в правовой рамке (ограничение, не переменная). «Провал тихий — система рапортует успех по своей метрике». Gold — «прокси≠цель»."
+    interaction: think_pause
+
+  # ─── Раздел 6. Фреймворк + безопасность + финал (11 мин, s29–s32, БЕЗ divider) ───
+  - id: s29
+    file: slides/s29-matrix-task-aitype.md
+    type: matrix
+    section: "Раздел 6. Фреймворк"
+    duration_min: 3
+    assertion: "Матрица «задача × тип ИИ»: 6 задач → правильный тип, почему не LLM, типичный провал; нижняя строка — детерминированная регуляторная задача → обычный код, НЕ ИИ"
+    learning_goal: "LO1 payoff — аппарат выбора типа ИИ; нижняя строка «когда не ИИ вовсе» (перенос Л3–4)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§6.1 [for-slide-s29]"
+    references: []
+    in_bucket: true   # solid IN-BUCKET (аппарат суждения + «не ИИ вовсе», LO1 payoff)
+    visual:
+      pattern: task_aitype_matrix
+      subtype: schema_matrix
+      primary: "Матрица в Ocean rounded box: 6 строк (прогноз/аномалии/скоринг/диалог/recsys + ДЕТЕРМ.регуляторная) × 3 колонки (тип ИИ · почему именно он · типичный провал). Иконки per row. Нижняя строка gold-выделена «обычный код / rules-engine — НЕ ИИ». Single-line ячейки, fill 100%. Gold — нижняя строка «когда не ИИ вовсе»."
+    interaction: none
+
+  - id: s30
+    file: slides/s30-when-not-ai.md
+    type: assertion_visual
+    section: "Раздел 6. Фреймворк"
+    duration_min: 2
+    assertion: "Пять проявлений одного принципа: правильный тип ИИ необходим, но НЕ достаточен; ИИ опасен там, где его выход подключён к действию, цена ошибки которого не оплачена обвязкой"
+    learning_goal: "Когда ИИ не нужен/опасен — 5 проявлений (Zillow/Apple Card/Air Canada/Klarna/Wendy's); ни одно исправление ≠ «лучшая модель» (ЦВ payoff)"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§6.2 [for-slide-s30]"
+    references: []
+    in_bucket: true   # solid IN-BUCKET (5 критериев применимости/риска, LO2/LO3)
+    visual:
+      pattern: five_principle_cards
+      primary: "5 карточек в Ocean rounded box (необратимое авто без gate Zillow/Knight · регулируемое без объяснимости Apple Card · финфакт без grounding Air Canada · полная замена людей Klarna · ценовая дискриминация без рамки Wendy's) — каждая: проявление → мера. Gold-плашка «ни одно исправление — не лучшая модель, все — лучшее суждение об обвязке»."
+    interaction: none
+
+  - id: s31
+    file: slides/s31-security-fz152-kyc.md
+    type: assertion_visual
+    section: "Раздел 6. Фреймворк"
+    duration_min: 3
+    assertion: "Финданные/PII/биометрию нельзя в публичный LLM (ФЗ-152, локализация, режим биометрии); биометрия необратима при утечке; «автономный» Just Walk Out опирался на >1000 ревьюеров"
+    learning_goal: "SECURITY: (А) ФЗ-152/PII/on-prem-vs-cloud + (Б) KYC/liveness/hidden human cost; forward→bias CV Л7 §2.5 (s31 АГРЕГИРОВАН — 5 sub-маркеров главы → 1 слайд 2-колонка)"
+    learning_outcomes: [LO3]
+    chapter_ref: "§6.3 [for-slide-s31]"
+    references: [cnbc-jwo-2024]
+    in_bucket: true   # solid IN-BUCKET (риски данных + меры, LO3, SECURITY)
+    visual:
+      pattern: security_two_panels
+      primary: "2 панели в Ocean rounded box. (А) Данные+закон: ФЗ-152 локализация + 3 минуса публичного облака (данные покидают контур / нет контроля retention / аудируемость падает) + критерий «по чувствительности, не по силе модели». (Б) CV-пласт: KYC/liveness (биометрия = строгий режим), биометрия необратима при утечке (пароль сменить можно, лицо нет), Just Walk Out >1000 ревьюеров (hidden human cost). Forward-pointer «bias CV — Л7». Gold — «биометрия необратима при утечке»."
+    interaction: none
+
+  - id: s32
+    file: slides/s32-checklist-qa.md
+    type: qa_minimal
+    section: "Раздел 6. Фреймворк"
+    duration_min: 1.5
+    assertion: "Чек-лист «прежде чем применять ИИ к финзадаче» + мост Семинар 5 (сам проверь 5 заявлений по первоисточникам) + Q&A"
+    learning_goal: "Payoff чек-лист 8 пунктов (LO1/LO6) + мост Семинар 5 (Apply, Bloom-граница P1-3) + выделенный Q&A beat (Л2-урок #42)"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§6.4, §6.5, Заключение [for-slide-s32]"
+    references: []
+    in_bucket: false   # partial→out (payoff + мост)
+    visual:
+      pattern: checklist_plus_qa
+      primary: "Верх — компактный чек-лист 8 пунктов в Ocean rounded box (тип? почему не LLM? без ИИ? обратимо? как проверить факт? регулируемо? кто отвечает? PII?). Середина — gold homework-плашка «Семинар 5: команды сами проверяют 5 заявлений по первоисточникам ЦБ/ВЦИОМ — Apply». Низ — крупное «Вопросы» + «Спасибо за внимание». Q&A — отдельный финальный beat."
+    interaction: qa
+
+# ─────────────────────────────────────────────────────────────────────────
+# Totals + meta
+# ─────────────────────────────────────────────────────────────────────────
+totals:
+  slides: 33                    # 32 LOCKED (s01–s32) + s04a suffix divider
+  base_slides_locked: "s01–s32 LOCKED (plan §4 + GATE 0 Q6); + ОДИН suffix s04a (divider Р1) как lec-03/lec-04 precedent. s01 = Zillow hook (G-1)."
+  s31_decision: "АГРЕГИРОВАН в 1 слайд (chapter §6.3 имеет 5 [for-slide-s31] sub-маркеров А/Б; plan §4 LOCKED = 1 слайд assertion_visual 3 мин; дробление на s31a вышло бы за авторизованную арку — s04a единственный оправданный suffix)"
+  divider_count: 5              # s04a/s10/s15/s20/s25 (Р6 без divider, plan §2.2)
+  slide_times_sum_min: 70.0     # сумма duration_min (33 слайда, divider'ы 0.3)
+  pure_content_min: ~55         # plan §2.2: slide-content без retrieval/переходов
+  retrieval_min: ~8             # retrieval (s01/s09/s14/s23/s32), plan §2.2/§8
+  transitions_min: ~7           # переходы/комментарий между слайдами
+  qa_buffer_min: ~5             # явный буфер на s32 (Q&A, ≤5 мин)
+  total_min: 75                 # активный ~70 (55+8+7) + ~5 Q&A буфер = 75
+  note: >
+    Plan §2.2 раздел-бюджеты: Р0 s01–s04 = 8 · Р1 s05–s09 = 11 ·
+    Р2 s11–s14 = 11.5 · Р3 s16–s19 = 10.5 · Р4 s21–s24 = 10 ·
+    Р5 s26–s28 = 12 · Р6 s29–s32 = 11 (вкл. Q&A-буфер s32) + 5 divider'ов
+    ×0.3 ≈ 1.5. Σ per-slide duration_min = 70.0 (показ); активная часть
+    ~70 (контент ~55 + retrieval ~8 + переходы ~7) + ~5 Q&A = 75. Финальная
+    минутная калибровка — speech-фаза (Phase 9). Per-slide взяты из plan §4.
+
+# Per-slide duration_min (plan §4):
+#   s01=3 s02=0.5 s03=2 s04=2.5 s04a=0.3 (Р0=8) ·
+#   s05=1.5 s06=2.5 s07=2.5 s08=1.5 s09=2 (Р1=11) ·
+#   s10=0.3 s11=3 s12=2 s13=3 s14=3 (Р2=11.5) ·
+#   s15=0.3 s16=3 s17=2 s18=3 s19=2 (Р3=10.5) ·
+#   s20=0.3 s21=2 s22=3 s23=3 s24=2 (Р4=10) ·
+#   s25=0.3 s26=3 s27=3 s28=3 (Р5=12) ·
+#   s29=3 s30=2 s31=3 s32=1.5 (Р6=11, s32 + ≤5 Q&A буфер)
+#   Σ per-slide duration_min = 70.0 (показ; обсуждение/retrieval/переходы +).
+
+ai_failure_judgment:
+  # plan §5 — strict-in слайды (solid IN-bucket: failure/ограничение/критерий/
+  # альтернатива несомым связным текстом visible + speaker notes).
+  in_bucket_slides: [s06, s09, s13, s14, s16, s18, s19, s22, s23, s24, s28, s29, s30, s31]
+  count: 14
+  solid_headline: [s09, s13, s14, s18, s19, s23, s24, s28, s29, s30, s31]
+  solid_count: 11
+  boundary_upside: [s06, s16, s22]
+  share_by_slides: "solid 11/32 ≈ 34% (headline, plan §5 P1-1); +граничные s06/s16/s22 (развёрнуты до ≥3-4 аргументов критерия+альтернатива → in) = 14/33 ≈ 42% (upside, НЕ baseline)"
+  share_by_minutes: "solid-IN ≈ s09(2)+s13(3)+s14(3)+s18(3)+s19(2)+s23(3)+s24(2)+s28(3)+s29(3)+s30(2)+s31(3) = 29 мин / ≈55 активных ≈ 53% — сильно ≥30% по минутам без граничных"
+  partial_out: [s01, s02, s03, s04, s04a, s05, s07, s08, s10, s11, s12, s15, s17, s20, s21, s25, s26, s27, s32]
+  note: >
+    Plan §5 P1-1 honest recount: solid headline 11 слайдов в одиночку ≥30%
+    (34% по слайдам, 53% по минутам). Граничные s06/s16/s22 написаны как
+    РАЗВЁРНУТЫЙ критерий выбора (≥3-4 аргумента «почему именно этот тип, не
+    LLM/нейросеть» + что ломается + альтернатива) — засчитываются в bucket
+    (upside до 42%), НО baseline держится на solid 11. Holistic по разделам:
+    Р1 s06+s09 · Р2 s13+s14 · Р3 s16+s18+s19 · Р4 s22+s23+s24 · Р5 s28 ·
+    Р6 s29+s30+s31. Ни один раздел >40% веса — single-cluster снят by
+    design. Waiver НЕДОСТУПЕН (L5 ∈ L4–L17, Решение #82) и не нужен:
+    failure/judgment = несущая линия (каждый из 5 типов завершается «где
+    он ломается»). chapter strict-in self-estimate ~46% (не правится).
+
+verify_day_of_items:
+  - s07_x5_magnit_effect             # X5 >70%/+5 млрд ₽/−2%; Магнит F&R статус
+  - s12_cbr_anomaly_share            # Банк России антифрод формулировка/доля (PDF cbr.ru)
+  - s17_sber_scoring_numbers         # Сбер ~100%/5000 параметров/+350 млрд; ЦБ автономия; >80% opt-out
+  # cbr.ru-числа (≈100% автономии / >80% opt-out) — visible-слой: формулировать
+  # как «по материалам Банка России», БЕЗ голого числа без атрибуции (ENFORCED).
+
+fact_check_items:
+  - s12_stripe_jpmorgan_visa         # Stripe −32%/JPMorgan −30%/Visa ~$40 млрд FY2023 (vendor-reported)
+  - s21_tbank_voice_share            # Т-Банк >40% / 70% планируют голос 2025 (НЕ «>90%» — подмена базы)
+  - s23_klarna_40m                   # Klarna $40 млн / 2/3 обращений / откат 2025 (заявлено компанией)
+  - s27_amazon_netflix_recsys        # Amazon ~35% / Netflix ~75% — историческая McKinsey-оценка, НЕ свежий headline
+  - s31_just_walk_out_reviewers      # Just Walk Out >1000 ревьюеров Индия (Amazon оспаривал масштаб)
+
+# ─────────────────────────────────────────────────────────────────────────
+# КОНЕЦ PART 2. Loader: deck.yaml (s01..s14) + deck-part2.yaml (s15..s32) →
+# объединить slides, вставить s04a после s04 → 33 слайда в порядке арки.
+# ─────────────────────────────────────────────────────────────────────────

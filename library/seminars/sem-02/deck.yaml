@@ -1,333 +1,355 @@
 deck:
   seminar_number: 2
-  title: "Семинар 2 — классифицируй и не ошибись"
-  audience: "студенты 3 курса, направление 09.03.01, группа 1 — семинар идёт ПОСЛЕ Лекции 1 в тот же день (закрепление, не введение)"
-  duration_min: 76
-  format: "разбор+опрос_дискуссия"
-  central_question: "Как за 60 секунд определить тип AI-решения и распознать, когда оно подводит?"
-  learning_outcomes: [LO1, LO6, LO7]
-  lo_note: "Закрепляет LO1 (классификация/выбор типа AI), LO6 (каталог типовых ошибок AI), LO7 (обоснованная критическая проверка) из Лекции 1."
+  title: "Семинар 2. Когда ИИ, каким и на чём"
+  audience: "студенты-инженеры (практикующие, многие/все работают в ИТ, активно пользуются AI-чатами и вайбкодят) — семинар идёт после Лекции 1, до Лекций 2-3"
+  format: "разбор_дискуссия"
+  central_question: "Семь реальных кейсов — и в каждом ответ меняют вводные, которых не было в первой постановке"
+  learning_outcomes: [LO1, LO7]
+  lo_note: "Закрепляет LO1 (выбор типа AI-решения под задачу) и LO7 (обоснованная критическая проверка) из Лекции 1 — на уровне применения к реалистичным инженерным постановкам, а не повторения определений."
   language: ru
+  pivot_note: "issue #182 — деck полностью заменяет пре-пивотный вариант (структура «воронка решений» с явным фреймворком, worksheet'ами и искусственными кейсами), возвращённый владельцем курса на REVISE. Новая структура — кейс-центричная: семь реалистичных кейсов, каждый со своим выбором; фреймворк не выпячивается, вопросники и памятки-процедуры убраны. Механика занятия — открытое обсуждение всей аудиторией (plenary), без малых групп и без формального подсчёта ответов."
+  revision_note_v3: "issue #182 — третья ревизия (v2→v3) по 23 замечаниям владельца курса (GATE B REVISE). Ключевые изменения: расширенный реалистичный шум в каждой постановке и вводной; замена негативного кейса Epic Sepsis Model → CNET (арифметическая ошибка вместо повторного использования); подробный разбор NER/slovnet в quickfire логов; Kite/Copilot переведены в хронологический таймлайн + новый отдельный слайд про standalone-устройства (Humane AI Pin, Rabbit R1); схема-расширение v1→v2→v3 в кейсе 3 (приглушённые старые блоки + цветные новые) вместо ladder-полосы; замена «RAG и агент в проде» на Morgan Stanley (позитив) + Replit (негатив), Octomind сведён к футеру; объединённый слайд юрист+правовая карта на 3 юрисдикции (РФ/ЕС/США) вместо одной 420-ФЗ карточки; расширенный разбор локальной модели — T-lite/T-pro, 4-bit квантование, LoRA; замена JetBrains → Apple Intelligence + Google Gemini Nano; убраны все ladder-полосы («Разовый вызов → RAG → Агент», «Ход 1/2/3») по всей деке; заголовки убрали «из жизни», divider-слайды называются по теме выбора, а не по номеру кейса. 41 → 42 слайда."
+  source_of_truth: "library/seminars/sem-02/brief.md + facilitator-guide.md + facilitator-guide-part2.md"
 
 slides:
   - id: s01
     file: slides/s01-hero-cover.md
     type: hero_cover
-    assertion: "Классифицируй и не ошибись — тип AI, чек-лист и провалы"
-    learning_goal: "Emotional hook + hero-иллюстрация: реальное фото bounding-box детекции, продолжает тему Лекции 1"
+    assertion: "Семинар 2. Когда ИИ, каким и на чём"
+    learning_goal: "Emotional hook + hero-иллюстрация: сегодня разбираем реальные инженерные решения, а не схему"
     visual:
       pattern: hero_cover_real_photo
-      backup: assets/screenshots/s01-iou-bbox-real.jpg
+      backup: assets/screenshots/s01-*.jpg
 
   - id: s02
-    file: slides/s02-recap.md
+    file: slides/s02-four-choices.md
     type: assertion_visual
-    assertion: "Две оси и один чек-лист — язык, который вы уже знаете"
-    learning_goal: "Визуальный recap оси задача×модальность и чек-листа 2 вопроса + квадрант"
+    assertion: "Сегодня — четыре выбора, семь кейсов"
+    learning_goal: "Обзор занятия простым списком: четыре типа выбора + состав кейсов, без схемы-процедуры"
     visual:
-      pattern: dual_panel_recap
+      pattern: four_choices_list_plus_seven_cases
 
   - id: s03
-    file: slides/s03-tools-roster.md
-    type: poll_reveal
-    assertion: "Шесть инструментов — один и тот же вопрос: модель, чат, агент или приложение?"
-    learning_goal: "Recap механики голосования + roster 6 инструментов раздела 2"
+    file: slides/s03-case1-divider.md
+    type: section_divider
+    assertion: "ИИ или обычный код?"
+    learning_goal: "Visual divider — переход в кейс 1, тема выбора вместо номера кейса"
     visual:
-      pattern: vote_mechanic_plus_roster_list
+      pattern: section_divider_plain
 
   - id: s04
-    file: slides/s04-tools-1-2-q.md
-    type: poll_reveal
-    assertion: "Модель, чат, агент или приложение — инструменты 1 и 2"
-    learning_goal: "Постановка для инструментов 1-2 (YOLO-детектор, AI-чат) — голосование до ответа"
+    file: slides/s04-case1-setup.md
+    type: case_study
+    assertion: "Бухгалтерия тонет в накладных поставщиков — можно автоматом?"
+    learning_goal: "Постановка кейса 1 — живая реплика продакта с шумом, два примера + целевая таблица 1С"
     visual:
-      pattern: vote_two_cards_no_answer
+      pattern: three_document_cards_plus_question
 
   - id: s05
-    file: slides/s05-tools-1-2-a.md
-    type: poll_reveal
-    assertion: "Один проход без диалога — модель. Диалог без инструментов — чат"
-    learning_goal: "Раскрытие ответов для инструментов 1-2 (YOLO-детектор, AI-чат)"
+    file: slides/s05-case1-intro2.md
+    type: case_study
+    assertion: "Прислали ZIP на 4,2 ГБ — и форматы разъехались"
+    learning_goal: "Вводная-факт без выводов — только новая деталь и вопрос"
     visual:
-      pattern: reveal_two_cards
+      pattern: scattered_formats_cards_plus_question
 
   - id: s06
-    file: slides/s06-copilot-pair-q.md
-    type: poll_reveal
-    assertion: "Один и тот же продукт, два режима использования — что это?"
-    learning_goal: "Постановка ключевого момента раздела 2 (пара GitHub Copilot inline/Agent) — голосование до ответа"
+    file: slides/s06-case1-verdict.md
+    type: case_study
+    assertion: "Гибрид: LLM извлекает, код проверяет. Изучайте данные, не верьте на слово"
+    learning_goal: "Разбор кейса 1 — LLM-извлечение + жёсткая валидация кодом; урок про размер выборки"
     visual:
-      pattern: vote_shared_brand_two_modes
+      pattern: hybrid_pipeline_illustration
 
   - id: s07
-    file: slides/s07-copilot-pair-a.md
-    type: poll_reveal
-    assertion: "Один инструмент — два режима — два разных типа"
-    learning_goal: "Ключевой момент раздела 2 — раскрытие ответа для пары GitHub Copilot inline/Agent"
+    file: slides/s07-quickfire-logs.md
+    type: case_study
+    assertion: "Персоналка в логах — как максимально быстро и дёшево очистить?"
+    learning_goal: "Quickfire постановка с шумом — вопрос про скорость и цену"
     visual:
-      pattern: vertical_pair_with_connector
+      pattern: single_card_plus_question
 
   - id: s08
-    file: slides/s08-tools-5-6-q.md
-    type: poll_reveal
-    assertion: "Модель, чат, агент или приложение — инструменты 5 и 6"
-    learning_goal: "Постановка для инструментов 5-6 (YandexGPT, 200-PDF агент) — голосование до ответа"
+    file: slides/s08-quickfire-logs-verdict.md
+    type: case_study
+    assertion: "Regex для телефонов и email, компактный NER для имён в свободном тексте"
+    learning_goal: "Разбор quickfire — граница между детерминированным методом и малой моделью проходит внутри одной задачи"
     visual:
-      pattern: vote_two_cards_no_answer
+      pattern: two_column_split_verdict
 
   - id: s09
-    file: slides/s09-tools-5-6-a.md
-    type: poll_reveal
-    assertion: "AI «под капотом» — приложение. Самостоятельная работа с файлами — агент"
-    learning_goal: "Раскрытие ответов для инструментов 5-6 (YandexGPT, 200-PDF агент)"
+    file: slides/s09-cnet-ramp.md
+    type: case_study
+    assertion: "Когда нужна была формула — и когда ИИ закрыл нерешаемое"
+    learning_goal: "Арифметическая ошибка LLM там, где нужна детерминированная формула, vs замена ручной обработки с мизерным покрытием"
     visual:
-      pattern: reveal_two_cards
+      pattern: two_card_contrast_negative_positive
 
   - id: s10
-    file: slides/s10-scenarios-intro.md
-    type: assertion_visual
-    assertion: "Четыре инженерных сценария — чек-лист под давлением времени"
-    learning_goal: "Методика раздела 3 (ЯДРО ЗАНЯТИЯ)"
+    file: slides/s10-case2-divider.md
+    type: section_divider
+    assertion: "Встроить или делать своё?"
+    learning_goal: "Visual divider — переход в кейс 2, тема выбора вместо номера кейса"
     visual:
-      pattern: process_4_step_strip
+      pattern: section_divider_plain
 
   - id: s11
-    file: slides/s11-scenario-1-q.md
-    type: quadrant
-    assertion: "Фоновый скрипт проверки орфографии — куда его отнести?"
-    learning_goal: "Сценарий 1/4 — постановка (голосование до ответа), самый чистый случай квадранта"
+    file: slides/s11-case2-setup.md
+    type: case_study
+    assertion: "ИИ-помощник для операторов техподдержки — подсказки ответов, поиск похожих обращений"
+    learning_goal: "Постановка кейса 2 — живая реплика с шумом, операторы живут в helpdesk весь день"
     visual:
-      pattern: schema_quadrant_neutral
+      pattern: single_card_plus_question
 
   - id: s12
-    file: slides/s12-scenario-1-a.md
-    type: quadrant
-    assertion: "Фоновый скрипт проверки орфографии — разминка"
-    learning_goal: "Сценарий 1/4 — раскрытие ответа: самый чистый случай (Модель)"
+    file: slides/s12-case2-intro2.md
+    type: case_study
+    assertion: "Коробочный helpdesk без открытого API — систему купили 4 года назад"
+    learning_goal: "Вводная — реплика ИТ-директора с шумом, без выводов, только факт и вопрос"
     visual:
-      pattern: schema_quadrant
+      pattern: fact_card_plus_question
 
   - id: s13
-    file: slides/s13-scenario-2-q.md
-    type: quadrant
-    assertion: "Ночной скрипт: баг-репорты → критичность → очереди Jira — куда его отнести?"
-    learning_goal: "Сценарий 2/4 — постановка (голосование до ответа), наименее очевидный угол"
+    file: slides/s13-case2-verdict.md
+    type: case_study
+    assertion: "Сбоку, смена вендора или пересмотр задачи — единственно верного ответа нет"
+    learning_goal: "Разбор кейса 2 — 3 варианта с ценой каждого, намеренная неоднозначность + когда какой выбирают на практике"
     visual:
-      pattern: schema_quadrant_neutral
+      pattern: three_option_cards_with_cost
 
   - id: s14
-    file: slides/s14-scenario-2-a.md
-    type: quadrant
-    assertion: "Ночной скрипт: баг-репорты → критичность → очереди Jira"
-    learning_goal: "Сценарий 2/4 — раскрытие ответа: наименее очевидный угол (Приложение в автоматизации)"
+    file: slides/s14-quickfire-product-descriptions.md
+    type: case_study
+    assertion: "Отдельный ИИ-сервис для описаний товаров — хорошая идея?"
+    learning_goal: "Quickfire постановка с шумом — только вопрос"
     visual:
-      pattern: schema_quadrant
+      pattern: single_card_plus_question
 
   - id: s15
-    file: slides/s15-scenario-3-q.md
-    type: quadrant
-    assertion: "AI-ассистент в IDE: inline-подсказка следующей строки — куда его отнести?"
-    learning_goal: "Сценарий 3/4 — постановка (голосование до ответа), тот же паттерн, что Copilot inline"
+    file: slides/s15-quickfire-product-verdict.md
+    type: case_study
+    assertion: "Кнопка в существующей админке каталога, а не отдельный сервис"
+    learning_goal: "Разбор quickfire — встроенность побеждает отдельный продукт; когда отдельный сервис оправдан"
     visual:
-      pattern: schema_quadrant_neutral
+      pattern: single_card_verdict
 
   - id: s16
-    file: slides/s16-scenario-3-a.md
-    type: quadrant
-    assertion: "AI-ассистент в IDE: inline-подсказка следующей строки"
-    learning_goal: "Сценарий 3/4 — раскрытие ответа: тот же паттерн, что Copilot inline (Приложение)"
+    file: slides/s16-kite-vs-copilot.md
+    type: case_study
+    assertion: "17 месяцев на одном рынке — Kite закрылся, Copilot дошёл до 90% Fortune 100"
+    learning_goal: "Коммерческая цена архитектурного выбора встроить или своё, показанная хронологией"
     visual:
-      pattern: schema_quadrant
+      pattern: timeline_horizontal
 
   - id: s17
-    file: slides/s17-scenario-4-q.md
-    type: quadrant
-    assertion: "Coding-агент: находит баг, правит код, коммитит — куда его отнести?"
-    learning_goal: "Сценарий 4/4 — постановка (голосование до ответа), пара со сценарием 3"
+    file: slides/s17-standalone-devices.md
+    type: case_study
+    assertion: "Отдельное устройство против фичи в телефоне"
+    learning_goal: "Тот же организационный урок на другом масштабе — устройство конкурирует с привычкой не переключаться"
     visual:
-      pattern: schema_quadrant_neutral
+      pattern: two_device_cards_plus_photo
 
   - id: s18
-    file: slides/s18-scenario-4-a.md
-    type: quadrant
-    assertion: "Coding-агент: находит баг, правит код, коммитит"
-    learning_goal: "Сценарий 4/4 — раскрытие ответа: пара со сценарием 3 (Агент)"
+    file: slides/s18-case3-divider.md
+    type: section_divider
+    assertion: "Разовый вызов, RAG или агент?"
+    learning_goal: "Visual divider — переход в кейс 3, тема выбора вместо номера кейса"
     visual:
-      pattern: schema_quadrant
+      pattern: section_divider_plain
 
   - id: s19
-    file: slides/s19-where-not-needed.md
-    type: reflection_question
-    assertion: "Где обычный код справился бы не хуже — и что делать при сбое AI?"
-    learning_goal: "Обязательный вопрос всем классом — AI-Failure/Judgment content"
+    file: slides/s19-rag-schema.md
+    type: assertion_visual
+    assertion: "RAG одним потоком: вопрос → поиск по базе → фрагменты в контекст → ответ"
+    learning_goal: "Интуиция RAG за один абзац перед кейсом, где она понадобится"
     visual:
-      pattern: two_column_criteria
+      pattern: horizontal_flow_4_steps
 
   - id: s20
-    file: slides/s20-hallucination-intro.md
+    file: slides/s20-agent-schema.md
     type: assertion_visual
-    assertion: "Один точный факт, одна убедительная выдумка — какая деталь подложена?"
-    learning_goal: "Механика раздела 4 + честная маркировка + связка с Семинаром 1"
+    assertion: "Агент циклом: план → инструмент → проверка → дальше"
+    learning_goal: "Интуиция агента за один абзац перед кейсом, где она понадобится"
     visual:
-      pattern: mechanic_plus_disclosure_plus_callback
+      pattern: circular_flow_4_steps
 
   - id: s21
-    file: slides/s21-round-1-python-q.md
-    type: comparison
-    assertion: "Когда вышел первый стабильный релиз Python и кто его автор?"
-    learning_goal: "Раунд 1/3 — постановка вопроса (голосование до ответа)"
+    file: slides/s21-case3-setup.md
+    type: case_study
+    assertion: "После созвона транскрипт приходит письмом — нужен протокол: решения, поручения, сроки"
+    learning_goal: "Постановка кейса 3 — живая реплика с шумом, транскрипт целиком помещается"
     visual:
-      pattern: side_by_side_symmetric_cards_no_reveal
+      pattern: single_card_plus_question
 
   - id: s22
-    file: slides/s22-round-1-python-a.md
-    type: comparison
-    assertion: "Вариант Б — подделка: конференция CWI, которой не было"
-    learning_goal: "Раунд 1/3 — раскрытие ответа: факт утоплен в выдуманном контексте"
+    file: slides/s22-case3-verdict1.md
+    type: case_study
+    assertion: "Схема v1: письмо с транскриптом → вызов модели с шаблоном → протокол"
+    learning_goal: "Разбор постановки — один разовый вызов, ни хранилища, ни цикла"
     visual:
-      pattern: side_by_side_symmetric_cards_plus_reveal
+      pattern: schema_v1_single_call
 
   - id: s23
-    file: slides/s23-round-2-http2-q.md
-    type: comparison
-    assertion: "Что такое HTTP/2 и чем он принципиально отличается от HTTP/1.1?"
-    learning_goal: "Раунд 2/3 — постановка вопроса (голосование до ответа)"
+    file: slides/s23-case3-intro2.md
+    type: case_study
+    assertion: "Протоколы копятся в общей папке — что мы решали по подрядчику X в мае?"
+    learning_goal: "Вводная-поиск — реплика без выводов, только факт и вопрос"
     visual:
-      pattern: side_by_side_symmetric_cards_no_reveal
+      pattern: fact_card_plus_question
 
   - id: s24
-    file: slides/s24-round-2-http2-a.md
-    type: comparison
-    assertion: "Вариант Б — подделка: HTTP/2 работает поверх TCP, не UDP"
-    learning_goal: "Раунд 2/3 — раскрытие ответа: реальный факт смешан с придуманным утверждением"
+    file: slides/s24-case3-verdict2.md
+    type: case_study
+    assertion: "Схема v2: растущий архив требует RAG — поиск по базе поверх разового вызова"
+    learning_goal: "Разбор вводной 1 — рост базы обосновывает RAG, схема видимо расширяет schema v1"
     visual:
-      pattern: side_by_side_symmetric_cards_plus_reveal
+      pattern: schema_v2_expansion
 
   - id: s25
-    file: slides/s25-round-3-btree-q.md
-    type: comparison
-    assertion: "Какая структура лежит в основе B-дерева и какова сложность поиска?"
-    learning_goal: "Раунд 3/3 — постановка вопроса (голосование до ответа)"
+    file: slides/s25-case3-intro3.md
+    type: case_study
+    assertion: "Половина поручений из майских протоколов до сих пор без исполнителя"
+    learning_goal: "Вводная-поручения — реплика без выводов, только факт и вопрос"
     visual:
-      pattern: stacked_symmetric_cards_no_reveal
+      pattern: fact_card_plus_question
 
   - id: s26
-    file: slides/s26-round-3-btree-a.md
-    type: comparison
-    assertion: "Вариант Б — подделка: происхождение буквы «B» реально спорно"
-    learning_goal: "Раунд 3/3 — раскрытие ответа: ложная уверенность без единственно верного ответа"
+    file: slides/s26-case3-verdict3.md
+    type: case_study
+    assertion: "Схема v3: действие во внешней системе — нужен агент поверх RAG"
+    learning_goal: "Разбор вводной 2 — действие во внешней системе обосновывает агента; итоговый урок"
     visual:
-      pattern: stacked_symmetric_cards_plus_reveal
+      pattern: schema_v3_expansion
 
   - id: s27
-    file: slides/s27-hallucination-reflection.md
-    type: reflection_question
-    assertion: "Три маски галлюцинации — какая была самой незаметной?"
-    learning_goal: "Закрывающая рефлексия раздела 4"
+    file: slides/s27-quickfire-digest.md
+    type: case_study
+    assertion: "Дайджест по чатам и почте — какая архитектура нужна?"
+    learning_goal: "Quickfire постановка с шумом — только вопрос"
     visual:
-      pattern: three_pattern_recap_plus_question
+      pattern: single_card_plus_question
 
   - id: s28
-    file: slides/s28-failures-intro.md
-    type: assertion_visual
-    assertion: "Bias / sycophancy / distribution shift — та же тройка, новые примеры"
-    learning_goal: "Recap определений + честная маркировка авторских виньеток"
+    file: slides/s28-quickfire-digest-verdict.md
+    type: case_study
+    assertion: "Агент нужен — обход источников; RAG не нужен — нет произвольного запроса к большой базе"
+    learning_goal: "Разбор quickfire — частая ошибка: RAG путают с «много источников»"
     visual:
-      pattern: three_concepts_with_note
+      pattern: two_column_needed_not_needed
 
   - id: s29
-    file: slides/s29-vignette-1-bias-q.md
+    file: slides/s29-rag-agent-in-prod.md
     type: case_study
-    assertion: "Скрининг резюме DevOps-инженеров занижает кандидатов без диплома — почему?"
-    learning_goal: "Виньетка 1/4 — постановка (голосование до ответа)"
+    assertion: "RAG и агент в проде: Morgan Stanley — успех; Replit — провал"
+    learning_goal: "Успешный RAG в масштабе vs агент, нарушивший прямую инструкцию в проде"
     visual:
-      pattern: story_no_answer
+      pattern: two_card_contrast_negative_positive
 
   - id: s30
-    file: slides/s30-vignette-1-bias-a.md
-    type: case_study
-    assertion: "Скрининг резюме DevOps-инженеров занижает кандидатов без диплома"
-    learning_goal: "Виньетка 1/4 — раскрытие ответа: bias"
+    file: slides/s30-case4-divider.md
+    type: section_divider
+    assertion: "Внешний API или локальный инференс?"
+    learning_goal: "Visual divider — переход в кейс 4, тема выбора вместо номера кейса"
     visual:
-      pattern: wide_story_bottom_answer
+      pattern: section_divider_plain
 
   - id: s31
-    file: slides/s31-vignette-2-sycophancy-q.md
+    file: slides/s31-case4-setup.md
     type: case_study
-    assertion: "AI хвалит код с необработанным пустым массивом — почему?"
-    learning_goal: "Виньетка 2/4 — постановка (голосование до ответа)"
+    assertion: "Карточка звонка: потребность, возражения, договорённости — как это построить?"
+    learning_goal: "Постановка кейса 4 — живая реплика с шумом"
     visual:
-      pattern: story_no_answer
+      pattern: single_card_plus_question
 
   - id: s32
-    file: slides/s32-vignette-2-sycophancy-a.md
+    file: slides/s32-legal-map.md
     type: case_study
-    assertion: "AI хвалит код с необработанным пустым массивом"
-    learning_goal: "Виньетка 2/4 — раскрытие ответа: sycophancy"
+    assertion: "Персональные данные в записях — и правовая карта трёх юрисдикций"
+    learning_goal: "Реплика юриста с контекстом появления + карта регулирования РФ/ЕС/США"
     visual:
-      pattern: left_answer_right_story
+      pattern: quote_card_plus_three_jurisdiction_cards
 
   - id: s33
-    file: slides/s33-vignette-3-shift-q.md
+    file: slides/s33-case4-intro2.md
     type: case_study
-    assertion: "Классификатор обращений тихо деградирует на новой линейке продуктов — почему?"
-    learning_goal: "Виньетка 3/4 — постановка (голосование до ответа)"
+    assertion: "Нет GPU-сервера и бюджета. Нужны пять полей в CRM, не беседа"
+    learning_goal: "Вводная 2 — две реплики с фоновым шумом, без выводов"
     visual:
-      pattern: story_no_answer
+      pattern: two_quote_cards_plus_question
 
   - id: s34
-    file: slides/s34-vignette-3-shift-a.md
+    file: slides/s34-case4-verdict.md
     type: case_study
-    assertion: "Классификатор обращений тихо деградирует на новой линейке продуктов"
-    learning_goal: "Виньетка 3/4 — раскрытие ответа: distribution shift"
+    assertion: "Задача сузилась до шаблона — локальная модель 7-8 млрд параметров справляется"
+    learning_goal: "Разбор вводной 2 — что именно раскопал инженер про малые модели; двойной урок сложности и чувствительности"
     visual:
-      pattern: wide_story_bottom_answer
+      pattern: single_card_plus_dual_lesson
 
   - id: s35
-    file: slides/s35-vignette-4-ambiguous-q.md
+    file: slides/s35-samsung-apple-gemini.md
     type: case_study
-    assertion: "Стажёр спрашивает про «любимую» библиотеку логирования — и получает согласие"
-    learning_goal: "Виньетка 4/4 — постановка (голосование до ответа), намеренно пограничная"
+    assertion: "19 дней от разрешения ChatGPT до трёх утечек в Samsung. Малые модели уже в кармане"
+    learning_goal: "Негативный пример утечки + позитивный пример on-device моделей у половины аудитории"
     visual:
-      pattern: dashed_gold_border_story_no_answer
+      pattern: two_card_contrast_negative_positive
 
   - id: s36
-    file: slides/s36-vignette-4-ambiguous-a.md
-    type: case_study
-    assertion: "Оба ответа верны — sycophancy и distribution shift объясняют одно и то же поведение"
-    learning_goal: "Виньетка 4/4 — раскрытие: намеренно пограничная (sycophancy + distribution shift), без единственного правильного ответа"
+    file: slides/s36-your-task.md
+    type: assertion_visual
+    assertion: "У кого есть похожая задача с работы?"
+    learning_goal: "Открытое приглашение перенести метод занятия на реальную задачу аудитории — без worksheet"
     visual:
-      pattern: dashed_gold_border_dual_answer
+      pattern: open_invitation_illustration
 
   - id: s37
-    file: slides/s37-closing-reflection.md
-    type: reflection_question
-    assertion: "Что опаснее в вашей будущей профессиональной области?"
-    learning_goal: "Закрывающая рефлексия раздела 5"
+    file: slides/s37-lessons.md
+    type: summary
+    assertion: "Что унести: уроки семи кейсов"
+    learning_goal: "Итоговая компиляция — по одной строке-уроку на кейс, прослеживаемо к разборам"
     visual:
-      pattern: three_colored_tiles_question
+      pattern: seven_lesson_lines
 
   - id: s38
-    file: slides/s38-bridge-lec2.md
-    type: assertion_visual
-    assertion: "Сегодня — снаружи. Дальше — заглянем внутрь модели"
-    learning_goal: "Лёгкий мостик к Лекции 2, без раскрытия темы заранее"
-    visual:
-      pattern: hook_card_plus_tag_row
-
-  - id: s39
-    file: slides/s39-handout-memo.md
+    file: slides/s38-homework-reading.md
     type: summary
-    assertion: "Как выбрать тип AI за 60 секунд"
-    learning_goal: "Итоговая памятка на вынос — компиляция без нового материала"
+    assertion: "Домашнее чтение: Klarna, NYC MyCity, бонус Tahoe за $1"
+    learning_goal: "Необязательное чтение, закрывающее несколько выборов на одном длинном примере"
     visual:
-      pattern: two_column_cheatsheet
+      pattern: three_reading_cards
+
+  # резерв — показываются только при остатке времени (лестница резерва, guide part2)
+  - id: s39
+    file: slides/s39-reserve-klarna.md
+    type: case_study
+    reserve: true
+    assertion: "Klarna, 2023-2025: одна история — четыре развилки"
+    learning_goal: "Резерв: применить все четыре типа выборов целиком к одному длинному публичному кейсу"
+    visual:
+      pattern: four_row_case_breakdown
 
   - id: s40
-    file: slides/s40-hero-closing.md
+    file: slides/s40-reserve-dedup-setup.md
+    type: case_study
+    reserve: true
+    assertion: "Дедупликация новостей — нужно склеивать сообщения об одном событии в одну карточку"
+    learning_goal: "Резервный quickfire — постановка и вопрос"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s41
+    file: slides/s41-reserve-dedup-verdict.md
+    type: case_study
+    reserve: true
+    assertion: "Fuzzy-matching закрывает ~90% случаев дешевле и предсказуемее. LLM — на остаток"
+    learning_goal: "Резерв: возврат к границе regex/модель на новом материале"
+    visual:
+      pattern: two_card_setup_vs_split_verdict
+
+  - id: s42
+    file: slides/s42-hero-closing.md
     type: hero_closing
-    assertion: "От классификации снаружи — к тому, что внутри"
-    learning_goal: "Bridge к Лекции 2; emotional payoff; реальное фото GPU"
+    assertion: "Сегодня вы решали, что строить. Лекция 2 — как модель устроена внутри"
+    learning_goal: "Bridge к Лекции 2; emotional payoff"
     visual:
       pattern: hero_closing_bridge_photo
-      backup: assets/screenshots/s-closing-gpu-real.jpg
+      backup: assets/screenshots/s42-*.jpg

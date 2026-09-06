@@ -72,6 +72,8 @@ MULTI-AGENT
 ### 5.2. Процесс выбора и «когда не ИИ вовсе»
 
 [for-slide-s27]
+Сразу зафиксируем иерархию инструментов этого раздела, чтобы четыре родственных аппарата не читались как четыре равноправных. **Канонический рабочий инструмент — восьмишаговый чек-лист §5.3**; именно его вы прикладываете к задаче на практике. Остальные три — вспомогательные линзы к нему: таблица осей ниже — справка для проверки на каждом шаге, маршрут вопросов §5.2 — его обоснование и развёртка, стартовый комплект §5.2b — его применение к оснастке одного агента. Не «какой из четырёх выбрать», а «один primary (чек-лист) и три supporting к нему».
+
 Лестница говорит «не поднимайся без нужды», но не говорит, **по каким осям** мерить нужду. Это даёт процесс выбора — последовательность вопросов с ветвлениями, которую вы проходите сверху вниз для конкретной задачи. Ниже — компактная таблица осей для справки, но основной способ пользоваться разделом — не таблица, а маршрут вопросов, изложенный следом.
 
 Оси (каждая встречалась в §1–§4 как критерий): объём внешнего знания · частота изменения знания · потребность в свежести и провенансе · стоимость · латентность · аудируемость и детерминизм · риск недетерминизма и петель.
@@ -280,8 +282,8 @@ MULTI-AGENT
 - **Anthropic.** (2025-06-13). *Multi-Agent Research System.* Контрапункт по мульти-агентам; ~4×/~15× токенов. `[VFY quarterly]` (§4.3, Deep-dive box 4)
 - **Cognition (Walden Yan).** (2025-06-12). *Don't Build Multi-Agents.* cognition.ai/blog. Хрупкость параллельных субагентов. (§4.3, §4.10, Deep-dive box 4)
 - **workain lab.** (2026, running registry). *agent-harness-registry.* github.com/workain/agent-harness-registry. Публичный реестр AI-agent harness equipment; независимое live-eval тестирование. (§4.4–§4.10, §5.2b)
-- **Gloaguen, T., et al.** (2026). *Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?* arXiv:2602.11988 («presence paradox»). RCT: файл-инструкция сам по себе не даёт значимого прироста успешности задач, кроме LLM-generated файлов в репозиториях без другой документации. (§4.7, §5.2b)
-- **Dixit, V., Kamal, A., Oates, T.** (2026). *Honest Lying.* arXiv:2605.29463. Self-authored память может закреплять неверные убеждения. (§4.7, Deep-dive box 4)
+- **Gloaguen, T., et al.** (2026). *Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?* arXiv:2602.11988 («presence paradox»). RCT: файл-инструкция сам по себе не даёт значимого прироста успешности задач, кроме LLM-generated файлов в репозиториях без другой документации. `[VFY-day-of]` (§4.7, §5.2b)
+- **Dixit, V., Kamal, A., Oates, T.** (2026). *Honest Lying.* arXiv:2605.29463. Self-authored память может закреплять неверные убеждения. `[VFY-day-of]` (§4.7, Deep-dive box 4)
 - **GitHub issue anthropics/claude-code#51735.** Реальный кейс: письменная запись о прошлой ошибке не предотвратила повторение через 25 дней. (§4.7)
 - **Anthropic.** (2026, live doc). *API and Data Retention.* platform.claude.com/docs. Границы ZDR; не покрывает third-party/Files/Batch/MCP-connector. `[VFY quarterly, re-verify day-of]` (§4.8)
 - **Bloomberg Law; National Law Review.** (2025-11). NYT v. OpenAI: суд обязал сохранять/выдать логи ChatGPT. (§4.8)
@@ -306,8 +308,9 @@ MULTI-AGENT
 - **arXiv:2605.27123.** (2026). *Rethinking Agentic RAG: Toward LLM-Driven Logical Retrieval Beyond Embeddings.* Прямая атака на «эмбеддинг = релевантность». (§2.2)
 - **arXiv:2605.05242.** (2026). *Beyond Semantic Similarity: Rethinking Retrieval for Agentic Search via Direct Corpus Interaction.* Заголовок повторяет якорь курса. (§2.2)
 - **Anthropic.** (2024). *Introducing Contextual Retrieval.* anthropic.com/engineering/contextual-retrieval. Baseline промахов top-20 = 5,7% → 1,9% с contextual embeddings + BM25 + реранкинг (−67%). (§2.4)
-- **Zhan, J., et al.** (2026). *ChatInject: Faking Role Tags in Tool Outputs.* ICLR 2026. arXiv:2509.22830. ASR injection 5,18% → 32,05% (InjecAgent), до 88,3% на Llama-4; prompt-based защиты неэффективны. `[VFY yearly]` (§4.8)
-- **Cloud Security Alliance.** (2026). *Indirect Prompt Injection in the Wild 2026.* labs.cloudsecurityalliance.org. IPI >55% инцидентов; +32% рост вредоносного IPI-контента (ноя-2025→фев-2026); «от PoC к живой эксплуатации». `[VFY — running]` (§4.8)
+- **Zhan, J., et al.** (2026). *Abusing Chat Templates for Prompt Injection in LLM Agents* (ChatInject). ICLR 2026. arXiv:2509.22830. Средний ASR injection: AgentDojo 5,18% → 32,05%; InjecAgent 15,13% → 45,90% (multi-turn 52,33%); до 88,3% на Llama-4 (InjecAgent); prompt-based защиты неэффективны. `[VFY yearly]` (§4.8)
+- **Sysdig.** (2026). *Comprehensive Guide to Prompt Injection Attacks in 2026.* sysdig.com/learn-cloud-native/prompt-injection. IPI — >55% всех наблюдаемых инцидентов prompt injection; multi-hop-атаки через агенты/инструменты +70% год-к-году; три условия структурного риска агента. `[VFY — running]` (§4.8)
+- **Cloud Security Alliance.** (2026). *Indirect Prompt Injection in the Wild 2026.* labs.cloudsecurityalliance.org. +32% рост вредоносного IPI-контента (ноя-2025→фев-2026); «от PoC к живой эксплуатации». `[VFY — running]` (§4.8)
 - **EchoLeak / Microsoft.** *CVE-2025-32711* (арXiv:2509.10540). Первый zero-click prompt-injection эксплойт в продакшн ИИ-системе (M365 Copilot); «смертельная тройка» (приватные данные + недоверенный контент + канал наружу). (§4.8, §4.10)
 - **Zenity; Euronews.** (2026-04-28). *PocketOS: AI Agent Deleted a Company's Entire Database in 9 Seconds.* zenity.io/blog. Cursor/Claude удалил Railway-том + бэкапы; «system prompts are not security controls, IAM necessary but not sufficient». (§4.10)
 - **The Hacker News; Snyk.** (2025-09). *First Malicious MCP Server Found: postmark-mcp.* thehackernews.com. Rug-pull MCP-сервера: BCC всех писем атакующему; 1 643 загрузки, до ~1 500 организаций. (§4.8, §4.10)

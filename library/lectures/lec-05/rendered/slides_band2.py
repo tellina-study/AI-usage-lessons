@@ -9,7 +9,8 @@ assets/screenshots. Sources -> speaker notes only.
 from _helpers import (
     blank, set_slide_bg, text_box, text_runs, ocean_box, filled_rect,
     right_arrow, circle, chip, connector, icon, slide_title,
-    gold_callout, teal_callout, notes_with_sources, build_section_divider,
+    gold_callout, teal_callout, notes_with_sources, refs_of_slide,
+    build_section_divider,
     eli5_overview, meme_in_box, photo_in_box, add_image,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
@@ -85,7 +86,7 @@ def s15(p):
             "Правильное\nрешение")
     right_arrow(s, 5.05, 2.90, 0.55, 0.28, fill=LIGHT)
     text_box(s, x=9.35, y=2.85, w=3.4, h=1.3,
-             text="Double Diamond\n(Design Council UK)\n\nDesign Thinking — "
+             text="Double Diamond [1]\n(Design Council UK)\n\nDesign Thinking — "
                   "его 5-шаговая версия того же каркаса",
              size=12, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
     gold_callout(
@@ -94,6 +95,7 @@ def s15(p):
         "— перепрыгнуть первый алмаз. Дешёвый прототип нужен именно для того, "
         "чтобы это вскрыть до траты денег на разработку.",
         size=14, bold=True)
+    refs_of_slide(s, "s15")
     notes_with_sources(s, "s15")
     return s
 
@@ -112,7 +114,7 @@ def s16(p):
     ]
     ocean_box(s, 0.55, 1.55, 6.75, 5.35)
     icon(s, "circle-check", 0.80, 1.75, 0.55, "mid")
-    text_box(s, x=1.55, y=1.80, w=5.6, h=0.4, text="Топ-5 из 10 эвристик",
+    text_box(s, x=1.55, y=1.80, w=5.6, h=0.4, text="Топ-5 из 10 эвристик [1]",
              size=15, bold=True, color=MID)
     for i, h in enumerate(heur):
         y = 2.45 + i * 0.50
@@ -141,7 +143,7 @@ def s16(p):
         s, 7.55, 1.55, 5.25, 1.05,
         "Метафора: эвристики — как линтер для интерфейса. Ловят типовые "
         "проблемы до траты денег на исследование — но не заменяют тест на "
-        "живом пользователе.",
+        "живом пользователе [2].",
         size=12.5, bold=True)
     # GATE-B fix #10: Design section (Раздел 2) dropped to 0 content memes
     # once s19's clown meme was removed for tonal reasons (case = a minor's
@@ -155,6 +157,7 @@ def s16(p):
                   "заменяют проверку на живом пользователе.",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              line_spacing=1.15)
+    refs_of_slide(s, "s16")
     notes_with_sources(s, "s16")
     return s
 
@@ -186,7 +189,7 @@ def s17(p):
     text_box(s, x=7.60, y=1.72, w=5.0, h=0.4, text="Инструменты 2025–26",
              size=13.5, bold=True, color=TEAL)
     text_box(s, x=7.60, y=2.20, w=5.0, h=0.5,
-             text="v0 (Vercel) · Figma Make · Google Stitch · bolt.new",
+             text="v0 (Vercel) · Figma Make [1] · Google Stitch [2] · bolt.new",
              size=12.5, color=DEEP, line_spacing=1.15)
     text_box(s, x=7.60, y=2.95, w=5.0, h=1.5,
              text="• 2–4 направления за минуты (было — день ручного "
@@ -199,6 +202,7 @@ def s17(p):
         "обучающих данных: ИИ расширяет пространство вариантов, а выбор и "
         "проверку на живом пользователе оставляем человеку.",
         size=13, bold=True)
+    refs_of_slide(s, "s17")
     notes_with_sources(s, "s17")
     return s
 
@@ -206,7 +210,7 @@ def s17(p):
 def s18(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "29% соответствие WCAG на 21 880 оценках — платформа важнее промпта",
+    slide_title(s, "29% соответствие WCAG на 21 880 оценках — платформа важнее промпта [1]",
                 size=21, w=12.3, h=0.85)
     # left: real WCAG donut chart
     ocean_box(s, 0.55, 1.55, 4.85, 3.55, fill=SURFACE, stroke=LIGHT,
@@ -229,6 +233,7 @@ def s18(p):
         "Дизайн для НЕДЕТЕРМИНИРОВАННОГО вывода: тот же ввод → разный вывод → "
         "ломает эвристику консистентности; нужны человеко-контрольные точки.",
         size=13, bold=True)
+    refs_of_slide(s, "s18")
     notes_with_sources(s, "s18")
     return s
 
@@ -259,7 +264,7 @@ def s19(p):
              size=14, bold=True, color=MID)
     text_box(s, x=8.15, y=2.02, w=4.4, h=0.9,
              text="14-летний пользователь погиб после месяцев общения с "
-                  "ИИ-персонажем (02.2024).",
+                  "ИИ-персонажем (02.2024) [1].",
              size=12, color=DEEP, line_spacing=1.15)
     # timeline strip
     stages = ["Запуск", "Трагедия\n02.2024", "Иск\n10.2024", "Защита\n11.2025"]
@@ -267,7 +272,8 @@ def s19(p):
     for i, (st, x) in enumerate(zip(stages, xs)):
         col = GOLD if i == 3 else LIGHT
         circle(s, x, 3.55, 0.30, col, stroke=WHITE, stroke_pt=1.5)
-        text_box(s, x=x - 0.55, y=3.95, w=1.40, h=0.5, text=st, size=10,
+        st_lbl = f"{st} [2]" if i == 3 else st
+        text_box(s, x=x - 0.55, y=3.95, w=1.40, h=0.5, text=st_lbl, size=10,
                  bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=0.9)
         if i < 3:
             connector(s, x + 0.30, 3.70, xs[i + 1], 3.70, color=SOFT_GREY,
@@ -278,6 +284,7 @@ def s19(p):
         "MVP оптимизировал вовлечённость без вопроса «кто может пострадать». "
         "Критерий: защита уязвимых — в MVP, а не патчем после трагедии.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s19")
     notes_with_sources(s, "s19")
     return s
 
@@ -306,7 +313,7 @@ def s20(p):
     ocean_box(s, 6.85, 1.60, 5.95, 1.55, fill=GOLD_TINT, stroke=GOLD,
               stroke_pt=1.8)
     icon(s, "scale", 7.10, 1.85, 0.6, "gold")
-    text_box(s, x=7.85, y=1.85, w=4.7, h=0.55, text="$365 000",
+    text_box(s, x=7.85, y=1.85, w=4.7, h=0.55, text="$365 000 [1]",
              size=24, bold=True, color=DEEP)
     text_box(s, x=7.10, y=2.55, w=5.5, h=0.5,
              text="EEOC, 9 авг. 2023 — первое урегулирование по ИИ-дискриминации",
@@ -317,6 +324,7 @@ def s20(p):
         "ЗАЛОЖИЛ конкретное вредное правило. Критерий: автоматизация решения о "
         "людях → аудит признаков на дискриминацию ДО релиза.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s20")
     notes_with_sources(s, "s20")
     return s
 
@@ -383,8 +391,8 @@ def s22(p):
     icon(s, "scale", 1.80, 3.95, 0.55, "gold")
     text_box(s, x=2.55, y=3.78, w=9.0, h=1.05,
              text="НОВОЕ здесь — чьё и по каким критериям решение они "
-                  "обслуживают: MVP (Райс) = обучение, не отгрузка. "
-                  "Stage-Gate go/kill (Купер) — «воронка, не туннель»: пороги "
+                  "обслуживают: MVP (Райс) [1] = обучение, не отгрузка. "
+                  "Stage-Gate go/kill (Купер) [2] — «воронка, не туннель»: пороги "
                   "провала записаны числом заранее.",
              size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.15)
@@ -393,6 +401,7 @@ def s22(p):
         "Общий смысл: скорость запуска покупается ограниченным «радиусом "
         "поражения» — сколько пользователей задето, если новое окажется плохим.",
         size=13, bold=True)
+    refs_of_slide(s, "s22")
     notes_with_sources(s, "s22")
     return s
 
@@ -400,7 +409,7 @@ def s22(p):
 def s23(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "+200% кода на инженера — но лишь 16% PR получили содержательное ревью",
+    slide_title(s, "+200% кода на инженера — но лишь 16% PR получили содержательное ревью [1]",
                 size=20, w=12.3, h=0.85)
     # left: real contrast chart
     ocean_box(s, 0.55, 1.55, 6.15, 3.55, fill=SURFACE, stroke=LIGHT,
@@ -422,6 +431,7 @@ def s23(p):
         "намерения на входе и качество суждения на выходе — узкое место теперь "
         "ревью, а не написание.",
         size=13, bold=True)
+    refs_of_slide(s, "s23")
     notes_with_sources(s, "s23")
     return s
 
@@ -454,7 +464,7 @@ def s24(p):
     # grew height 3.05->3.50 so both right-column elements end at y=5.05.
     ocean_box(s, 7.75, 1.55, 5.05, 3.50, fill=SURFACE, stroke=TEAL,
               stroke_pt=1.5)
-    text_box(s, x=8.00, y=1.70, w=4.6, h=0.9, text="CC/CD против привычного CI/CD",
+    text_box(s, x=8.00, y=1.70, w=4.6, h=0.9, text="CC/CD против привычного CI/CD [1]",
              size=14, bold=True, color=TEAL, line_spacing=1.1)
     text_box(s, x=8.00, y=2.55, w=4.6, h=2.3,
              text="CC/CD — Continuous Calibration/Development (непрерывная "
@@ -467,6 +477,7 @@ def s24(p):
         "агентность»: автономию агент заслуживает трассами исполнения, а не "
         "сразу по умолчанию.",
         size=13, bold=True)
+    refs_of_slide(s, "s24")
     notes_with_sources(s, "s24")
     return s
 
@@ -495,7 +506,7 @@ def s25(p):
              size=12, italic=True, color=SLATE, line_spacing=1.12)
     # right: 70% problem
     ocean_box(s, 7.35, 1.60, 5.45, 3.40, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.60, y=1.75, w=5.0, h=0.4, text="Проблема 70%",
+    text_box(s, x=7.60, y=1.75, w=5.0, h=0.4, text="Проблема 70% [1]",
              size=14, bold=True, color=TEAL)
     text_box(s, x=7.60, y=2.30, w=5.0, h=2.4,
              text="Опытный разработчик переосмысливает ИИ-вывод и тратит время "
@@ -508,6 +519,7 @@ def s25(p):
         "Отгрузка без eval-гейта или плана отката — это не скорость, это "
         "отложенная цена: ревью не масштабируется вместе с генерацией.",
         size=13, bold=True)
+    refs_of_slide(s, "s25")
     notes_with_sources(s, "s25")
     return s
 
@@ -526,7 +538,7 @@ def s26(p):
     text_box(s, x=7.90, y=1.62, w=4.65, h=0.34, text="Google AI Overviews, май 2024",
              size=13, bold=True, color=MID)
     text_box(s, x=7.90, y=2.00, w=4.65, h=0.85,
-             text="Раскатан на 100% поиска США одним шагом. Без eval-гейта. "
+             text="Раскатан на 100% поиска США одним шагом [1]. Без eval-гейта. "
                   "Отключить пользователю нельзя.",
              size=11.5, color=DEEP, line_spacing=1.15)
     # staged bar
@@ -546,9 +558,10 @@ def s26(p):
     gold_callout(
         s, 4.35, 4.65, 8.45, 1.20,
         "На 1% трафика паттерн («ешьте камни» — сатира The Onion; «клей на "
-        "пиццу» — шутка на Reddit) всплыл бы за дни во внутреннем мониторинге. "
-        "Вместо этого — публичное осмеяние сразу на 100% аудитории.",
+        "пиццу» — шутка на Reddit) всплыл бы за дни во внутреннем мониторинге "
+        "[2]. Вместо этого — публичное осмеяние сразу на 100% аудитории.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s26")
     notes_with_sources(s, "s26")
     return s
 
@@ -556,7 +569,7 @@ def s26(p):
 def s27(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "2,5–3 года на 0,7% сети — и решение остановиться было правильным",
+    slide_title(s, "2,5–3 года на 0,7% сети — и решение остановиться было правильным [1]",
                 size=20, w=12.3, h=0.85)
     # left: real logo + tiny segment
     photo_in_box(s, "s27-mcdonalds-real-source.png", 0.55, 1.60, 3.05, 1.55,
@@ -573,7 +586,7 @@ def s27(p):
     text_box(s, x=4.15, y=1.75, w=8.4, h=0.4, text="McDonald's × IBM — голосовой приём заказов",
              size=14, bold=True, color=MID)
     text_box(s, x=4.15, y=2.30, w=8.4, h=2.2,
-             text="• 2,5–3 года пилота на 0,7% сети\n\n"
+             text="• 2,5–3 года пилота на 0,7% сети [2]\n\n"
                   "• Вирусные провалы: бекон в мороженом, 9 чаёв вместо одного\n\n"
                   "• Закрыт июнь 2024 — цель (голосовая автоматизация) "
                   "осталась, вендорский подход убит",
@@ -584,5 +597,6 @@ def s27(p):
         "всех; здесь пилот был долгим — и его сигнал использовали правильно, "
         "приняв дисциплинированное решение «убить», а не масштабировать провал.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s27")
     notes_with_sources(s, "s27")
     return s

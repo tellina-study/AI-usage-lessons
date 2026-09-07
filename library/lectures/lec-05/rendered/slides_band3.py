@@ -7,7 +7,8 @@ NO timing / NO methodology / NO English phase labels / NO photo-attribution.
 from _helpers import (
     blank, set_slide_bg, text_box, text_runs, ocean_box, filled_rect,
     right_arrow, circle, chip, connector, icon, slide_title,
-    gold_callout, teal_callout, notes_with_sources, build_section_divider,
+    gold_callout, teal_callout, notes_with_sources, refs_of_slide,
+    build_section_divider,
     eli5_overview, meme_in_box, photo_in_box, add_image,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
@@ -70,7 +71,7 @@ def s29(p):
     # right: OEC
     ocean_box(s, 6.15, 1.60, 6.65, 3.05, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
     text_box(s, x=6.40, y=1.75, w=6.2, h=0.4,
-             text="OEC — метрика, о значении которой договорились заранее",
+             text="OEC — метрика, о значении которой договорились заранее [1]",
              size=13.5, bold=True, color=TEAL, line_spacing=1.05)
     text_box(s, x=6.40, y=2.55, w=6.2, h=1.9,
              text="Контролируемый эксперимент (Кохави): гипотеза с механизмом "
@@ -83,8 +84,9 @@ def s29(p):
         s, 0.55, 4.85, 12.25, 0.95,
         "Только случайное деление групп даёт причинность: разница между "
         "Control и Treatment вызвана вашим изменением, а не сезоном, рекламой "
-        "или везением.",
+        "или везением [2].",
         size=13, bold=True)
+    refs_of_slide(s, "s29")
     notes_with_sources(s, "s29")
     return s
 
@@ -101,15 +103,15 @@ def s30(p):
     # alone, not just the speaker notes.
     cards = [
         ("до теста", "shield-alert", "Настроен ли тест правильно?",
-         "SRM (перекос групп) — доли пользователей в группах не совпали с "
+         "SRM (перекос групп) [1] — доли пользователей в группах не совпали с "
          "планом; размер выборки должен быть зафиксирован заранее, а не "
          "подогнан под результат"),
         ("интерпретация", "search", "Правильно ли читаю результат?",
-         "peeking (подглядывание) — досрочная проверка результата: 2 "
+         "peeking (подглядывание) [2] — досрочная проверка результата: 2 "
          "подглядки ≈2× ложных срабатываний, поэтому решение принимается "
          "только на заранее заданный размер выборки"),
         ("эффект", "triangle-alert", "Реален ли сам эффект?",
-         "закон Тваймана: слишком красивая или неожиданная цифра обычно "
+         "закон Тваймана [3]: слишком красивая или неожиданная цифра обычно "
          "означает ошибку измерения, а не реальный эффект — сначала "
          "перепроверь методологию, потом радуйся результату"),
     ]
@@ -134,6 +136,7 @@ def s30(p):
         "тест Bing ≈$100 млн прироста выручки (Kohavi/Thomke, HBR 2017) — это "
         "НЕ «кнопка за $300 млн» (отдельный кейс юзабилити).",
         size=13, bold=True)
+    refs_of_slide(s, "s30")
     notes_with_sources(s, "s30")
     return s
 
@@ -149,7 +152,7 @@ def s31(p):
              size=13.5, bold=True, color=MID)
     ladder = [
         ("1", "Unit-тесты — быстрые, детерминированные", LIGHT),
-        ("2", "Человек + LLM-as-judge (модель-судья)", MID),
+        ("2", "Человек + LLM-as-judge (модель-судья) [2]", MID),
         ("3", "A/B — только когда продукт зрел", GOLD),
     ]
     for i, (n, txt, col) in enumerate(ladder):
@@ -167,10 +170,11 @@ def s31(p):
               preserve_aspect=True)
     gold_callout(
         s, 0.55, 5.10, 12.25, 0.90,
-        "pass@k = хотя бы 1 успех из k; pass^k = ВСЕ k успешны. "
+        "pass@k = хотя бы 1 успех из k; pass^k = ВСЕ k успешны [1]. "
         "Промышленная надёжность почти всегда требует pass^k — «юнит-тесты для "
         "агента», где вероятностный вывод ломает привычный «прошёл/не прошёл».",
         size=13, bold=True)
+    refs_of_slide(s, "s31")
     notes_with_sources(s, "s31")
     return s
 
@@ -184,7 +188,7 @@ def s32(p):
     icon(s, "repeat", 2.85, 2.00, 1.1, "teal")
     text_box(s, x=0.85, y=3.25, w=5.25, h=1.5,
              text="RL-агент в гонке набрал на 20% больше очков людей — кружа в "
-                  "лагуне и собирая бонусы, никогда не пересекая финиш. "
+                  "лагуне и собирая бонусы, никогда не пересекая финиш [1]. "
                   "Оптимизировал прокси, а не реальную цель.",
              size=12.5, color=DEEP, line_spacing=1.18)
     ocean_box(s, 6.65, 1.60, 6.15, 3.30, fill=GOLD_TINT, stroke=GOLD,
@@ -195,7 +199,7 @@ def s32(p):
              size=14, bold=True, color=DEEP, line_spacing=1.12)
     text_box(s, x=6.90, y=2.85, w=5.65, h=1.9,
              text="Anthropic: модель обобщила от угодливости к прямому "
-                  "редактированию собственной функции вознаграждения.\n\n"
+                  "редактированию собственной функции вознаграждения [2].\n\n"
                   "Что остаётся: OEC-дисциплина, guardrail-метрики, закон "
                   "Тваймана — подозрительно идеальный балл теперь скорее баг, "
                   "чем прорыв.",
@@ -205,6 +209,7 @@ def s32(p):
         "Взлом награды (reward hacking): модель находит способ «выиграть» прокси-метрику, не "
         "достигая задуманного результата — поэтому мера и цель нельзя путать.",
         size=13, bold=True)
+    refs_of_slide(s, "s32")
     notes_with_sources(s, "s32")
     return s
 
@@ -224,7 +229,7 @@ def s33(p):
     ocean_box(s, 7.95, 1.55, 4.85, 1.15, fill=SURFACE, stroke=MID, stroke_pt=1.4)
     text_box(s, x=8.20, y=1.62, w=4.35, h=0.95,
              text="Facebook MSI, январь 2018: love/haha/wow/sad/angry — все "
-                  "×5 выше лайка (не только гнев).",
+                  "×5 выше лайка (не только гнев) [1].",
              size=12, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
     reacts = ["love", "haha", "wow", "sad", "angry"]
     for i, r in enumerate(reacts):
@@ -238,9 +243,10 @@ def s33(p):
         s, 5.15, 3.95, 7.65, 1.90,
         "Прокси вовлечённости без guardrail на дезинформацию скрывал вред ~2 "
         "года: внутренний guardrail (корреляция гнев ↔ дезинформация) "
-        "подтверждён к 2019, вес обнулён в сентябре 2019. Урок: guardrail-"
+        "подтверждён к 2019, вес обнулён в сентябре 2019 [2]. Урок: guardrail-"
         "метрику надо измерять с первого дня, а не когда вред уже случился.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s33")
     notes_with_sources(s, "s33")
     return s
 
@@ -254,7 +260,7 @@ def s34(p):
     ocean_box(s, 0.55, 1.60, 6.05, 2.85, fill=SURFACE, stroke=MID, stroke_pt=1.5)
     text_box(s, x=0.80, y=1.72, w=5.5, h=0.4, text="Медицина", size=14,
              bold=True, color=MID)
-    chip(s, 0.80, 2.20, 2.4, 0.5, "86,5% MedQA", fill=GOLD, color=DEEP,
+    chip(s, 0.80, 2.20, 2.4, 0.5, "86,5% MedQA [1]", fill=GOLD, color=DEEP,
          size=15)
     text_box(s, x=0.80, y=2.90, w=5.5, h=1.4,
              text="Med-PaLM 2 хорош на бенчмарке вопросов-ответов — но "
@@ -266,13 +272,13 @@ def s34(p):
              bold=True, color=TEAL)
     text_box(s, x=7.00, y=2.20, w=5.5, h=0.9,
              text="Stanford RegLab: Lexis+ 17% галлюцинаций, Westlaw 33% — на "
-                  "реальных юридических запросах.",
+                  "реальных юридических запросах [3].",
              size=12.5, color=DEEP, line_spacing=1.18)
     filled_rect(s, 7.00, 3.20, 5.55, 0.95, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
                 radius=True, radius_adj=0.07)
     text_box(s, x=7.25, y=3.30, w=5.1, h=0.75,
              text="Дело Mata v. Avianca (фейковые цитаты) = ChatGPT, НЕ Harvey "
-                  "— частая ошибка атрибуции.",
+                  "[2] — частая ошибка атрибуции.",
              size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.12)
     gold_callout(
@@ -281,6 +287,7 @@ def s34(p):
         "задачи именно этого бенчмарка. Альтернатива: состязательные evals на "
         "реальных краевых случаях того домена, где продукт будет работать.",
         size=13, bold=True)
+    refs_of_slide(s, "s34")
     notes_with_sources(s, "s34")
     return s
 
@@ -376,7 +383,7 @@ def s37(p):
                         fill=LIGHT)
     text_box(s, x=0.55, y=3.05, w=11.0, h=0.5,
              text="Error budget = «1 − SLO». Пример: 99,9% → 1000 ошибок на "
-                  "1 млн запросов за 4 недели. Изменения — ≈70% всех сбоев.",
+                  "1 млн запросов за 4 недели. Изменения — ≈70% всех сбоев [1].",
              size=12.5, color=DEEP, line_spacing=1.15)
     # struck-through 200
     filled_rect(s, 0.55, 3.75, 12.25, 1.10, SOFT_GREY, stroke=LIGHT,
@@ -394,6 +401,7 @@ def s37(p):
         "это можете знать. Новое здесь: в проде теперь недетерминированная "
         "модель (следующий слайд).",
         size=13, bold=True)
+    refs_of_slide(s, "s37")
     notes_with_sources(s, "s37")
     return s
 
@@ -407,7 +415,7 @@ def s38(p):
     # was positioned to overlap the magnifier-icon row below it).
     text_box(s, x=0.65, y=1.30, w=11.5, h=0.35,
              text="Трейсинг (камера над каждым узлом): LangSmith · Langfuse · "
-                  "Arize Phoenix · Helicone",
+                  "Arize Phoenix · Helicone [1]",
              size=12, italic=True, color=SLATE)
     # request path with cameras
     path = ["промпт", "поиск", "инструменты", "ответ"]
@@ -427,7 +435,7 @@ def s38(p):
     text_box(s, x=0.80, y=3.85, w=7.05, h=0.95,
              text="LLMOps/AgentOps: дрейф данных vs дрейф концепта · runtime "
                   "guardrails · circuit breaker (предохранитель). Guardian "
-                  "Agents (категория Gartner) — агенты, следящие за агентами.",
+                  "Agents (категория Gartner) [2] — агенты, следящие за агентами.",
              size=12, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
     filled_rect(s, 8.30, 3.75, 4.50, 1.15, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
                 radius=True, radius_adj=0.08)
@@ -442,6 +450,7 @@ def s38(p):
         "Инфраструктурный мониторинг видит «сервис жив»; трейсинг видит «ответы "
         "деградируют»: дрейф галлюцинаций, сбои поиска, регрессию промптов.",
         size=13, bold=True)
+    refs_of_slide(s, "s38")
     notes_with_sources(s, "s38")
     return s
 
@@ -501,8 +510,8 @@ def s40(p):
               preserve_aspect=True)
     text_box(s, x=4.15, y=4.45, w=8.35, h=0.85,
              text="Zillow Offers, ноябрь 2021: 9680 домов куплено, 3032 "
-                  "продано · ~2000 уволенных (~25% штата) · ≈$80 тыс. убытка на "
-                  "объект.",
+                  "продано · ~2000 уволенных (~25% штата) [1] · ≈$80 тыс. "
+                  "убытка на объект [2].",
              size=12, color=DEEP, line_spacing=1.15)
     gold_callout(
         s, 0.55, 5.55, 12.25, 0.62,
@@ -510,6 +519,7 @@ def s40(p):
         "точности предсказания в реальном времени с автоматическим "
         "предохранителем (circuit breaker), который отключает её при дрейфе.",
         size=12, bold=True)
+    refs_of_slide(s, "s40")
     notes_with_sources(s, "s40")
     return s
 
@@ -535,14 +545,15 @@ def s41(p):
              size=13.5, bold=True, color=DEEP)
     text_box(s, x=6.60, y=4.10, w=5.95, h=1.2,
              text="Бот некорректно сообщил о ретроактивной скидке. Трибунал — "
-                  "$812,02 CAD: компания отвечает за ответ бота как за любой "
-                  "другой контент сайта.",
+                  "$812,02 CAD [1]: компания отвечает за ответ бота как за любой "
+                  "другой контент сайта [2].",
              size=12, color=DEEP, line_spacing=1.15)
     gold_callout(
         s, 0.55, 5.55, 12.25, 0.62,
         "Ты владеешь каждым ответом бота — не больше, но и ни на грамм меньше "
         "ответственности, чем за любой другой контент сайта.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s41")
     notes_with_sources(s, "s41")
     return s
 
@@ -559,8 +570,8 @@ def s42(p):
     add_image(s, CHARTS / "c-klarna.png", 0.80, 3.10, 5.25, 2.05,
               preserve_aspect=True)
     text_box(s, x=3.25, y=1.72, w=3.05, h=1.0,
-             text="Klarna: политика «только ИИ» откатилась (05.2025) — но "
-                  "автоматизация выросла до 853 чел.-эквивалентов (усиление "
+             text="Klarna: политика «только ИИ» откатилась (05.2025) [1] — но "
+                  "автоматизация выросла до 853 чел.-эквивалентов [2] (усиление "
                   "людей, не замена).",
              size=11.5, color=DEEP, line_spacing=1.15)
     # right: NYC 10/10
@@ -575,7 +586,7 @@ def s42(p):
         y = 2.25 + row_i * 0.70
         icon(s, "user-x", x, y, 0.48, "gold")
     text_box(s, x=6.80, y=3.70, w=5.75, h=0.85,
-             text="10 из 10 журналистов — один и тот же незаконный совет. Мэр "
+             text="10 из 10 журналистов — один и тот же незаконный совет [3]. Мэр "
                   "не отозвал бот сразу.",
              size=12.5, bold=True, color=DEEP, line_spacing=1.15)
     gold_callout(
@@ -583,6 +594,7 @@ def s42(p):
         "Урок не «ИИ не работает», а «метрика пропускной способности без "
         "гарантированной эскалации к человеку — неверный дизайн».",
         size=12.5, bold=True)
+    refs_of_slide(s, "s42")
     notes_with_sources(s, "s42")
     return s
 

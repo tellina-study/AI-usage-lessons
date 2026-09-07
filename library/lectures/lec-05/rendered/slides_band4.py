@@ -6,7 +6,8 @@ s49 = hero payoff (>=40% area, замкнутая петля с человеко
 from _helpers import (
     blank, set_slide_bg, text_box, text_runs, ocean_box, filled_rect,
     right_arrow, circle, chip, connector, icon, slide_title,
-    gold_callout, teal_callout, notes_with_sources, build_section_divider,
+    gold_callout, teal_callout, notes_with_sources, refs_of_slide,
+    build_section_divider,
     eli5_overview, meme_in_box, photo_in_box, add_image,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
@@ -114,7 +115,7 @@ def s46(p):
              size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
     text_box(s, x=0.80, y=4.85, w=5.9, h=0.3,
-             text="Deloitte: 75% — модель должна измениться · 42% низкий/нулевой ROI",
+             text="Deloitte: 75% — модель должна измениться · 42% низкий/нулевой ROI [1]",
              size=11, italic=True, color=SLATE)
     # right: maturity scale
     ocean_box(s, 7.15, 1.60, 5.65, 3.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
@@ -133,7 +134,7 @@ def s46(p):
              size=11.5, bold=True, color=DEEP)
     text_box(s, x=7.40, y=3.95, w=5.15, h=1.1,
              text="Операторы → оркестраторы. Сбер сам ставит себя на "
-                  "уровень 3 из 5 — сигнал против хайпа: даже крупный игрок не "
+                  "уровень 3 из 5 [2] — сигнал против хайпа: даже крупный игрок не "
                   "заявляет вершину шкалы.",
              size=12, color=DEEP, line_spacing=1.18)
     gold_callout(
@@ -141,6 +142,7 @@ def s46(p):
         "Пять независимых источников сходятся в одном: выигрывает не тот, у "
         "кого лучше модель, а тот, кто перестроил команды и управление под неё.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s46")
     notes_with_sources(s, "s46")
     return s
 
@@ -156,7 +158,7 @@ def s47(p):
     slimmer bottom row. Facts unchanged."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "60% исследовали → 20% пилот → 5% успех: это 25% среди дошедших, не «95% провал»",
+    slide_title(s, "60% исследовали → 20% пилот → 5% успех: это 25% среди дошедших, не «95% провал» [1]",
                 size=18, w=12.3, h=0.72, y=0.28)
     # TOP: the funnel chart is now the dominant visual — full-width, tall
     ocean_box(s, 0.55, 1.20, 12.25, 3.15, fill=SURFACE, stroke=GOLD,
@@ -167,7 +169,7 @@ def s47(p):
     gold_callout(
         s, 0.55, 4.50, 12.25, 0.72,
         "«95% провал» — заголовок, который не переживает калибровку: успех "
-        "среди дошедших до пилота — 25%, не 5%.",
+        "среди дошедших до пилота — 25%, не 5% [2, 3].",
         size=14, bold=True, align=PP_ALIGN.CENTER)
     # BOTTOM ROW: MIT source photo (small) + 4-question checklist + BCG note
     photo_in_box(s, "s47-mit-real-source.png", 0.55, 5.35, 2.55, 1.55, pad=0.12)
@@ -176,7 +178,7 @@ def s47(p):
              text="4 вопроса к любой громкой цифре провала ИИ",
              size=11.5, bold=True, color=MID, line_spacing=1.0)
     qs = ["1. Каков знаменатель?", "2. Что считается «провалом»?",
-          "3. Каков конфликт интересов автора?",
+          "3. Каков конфликт интересов автора? [3]",
           "4. Прослеживается ли к первоисточнику?"]
     for i, qq in enumerate(qs):
         text_box(s, x=3.48, y=5.82 + i * 0.27, w=4.9, h=0.26, text=qq,
@@ -185,10 +187,11 @@ def s47(p):
                 radius=True, radius_adj=0.08)
     text_box(s, x=8.95, y=5.45, w=3.65, h=1.35,
              text="BCG: 60% компаний не отслеживают ни одного финансового "
-                  "KPI, привязанного к ценности ИИ — вот почему цифры "
+                  "KPI, привязанного к ценности ИИ [5] — вот почему цифры "
                   "провалов так легко раздуваются.",
              size=10.5, bold=True, color=DEEP, line_spacing=1.15,
              anchor=MSO_ANCHOR.MIDDLE)
+    refs_of_slide(s, "s47")
     notes_with_sources(s, "s47")
     return s
 
@@ -206,9 +209,9 @@ def s48(p):
     ocean_box(s, 7.85, 1.50, 4.95, 1.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.6)
     text_box(s, x=8.10, y=1.62, w=4.45, h=1.65,
              text="Just Walk Out (Amazon), с 2018: 700/1000 транзакций — "
-                  "ручная проверка (14× выше цели 50/1000). 6 лет маркетинга "
+                  "ручная проверка (14× выше цели 50/1000) [1]. 6 лет маркетинга "
                   "«автономный ИИ» без раскрытия масштаба труда (скрытая "
-                  "человеческая стоимость).",
+                  "человеческая стоимость) [2].",
              size=11.5, bold=True, color=DEEP, line_spacing=1.15,
              anchor=MSO_ANCHOR.MIDDLE)
     # bottom: 6-phase summary matrix
@@ -236,6 +239,7 @@ def s48(p):
                  size=9, color=TEAL, align=PP_ALIGN.CENTER, line_spacing=0.95)
         text_box(s, x=x + 0.08, y=y0 + 1.42, w=cw - 0.16, h=0.34, text=cl,
                  size=9, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=0.95)
+    refs_of_slide(s, "s48")
     notes_with_sources(s, "s48")
     return s
 

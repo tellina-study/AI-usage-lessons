@@ -54,16 +54,102 @@ FONT_MONO = "DejaVu Sans Mono"
 
 
 # ============================================================
-# lec-05: no heavy clickable-URL registry (lec-04 pattern) — this deck uses
-# simple inline muted source captions via src() at the point of the claim,
-# sourced from each slide's `source:` frontmatter. Kept simple by design.
+# Canonical URL registry (ПРАВКА 1, issue #189 rebuild) — flat map keyed
+# by short id, ported from lec-04's pattern. Source: notes/research/
+# lecture-5-pdlc/*.md dossiers (11 files) + chapter-part4.md «Источники».
+# Only URLs actually located in the dossiers are used — no invented URLs.
+# Volatile ([VFY-day-of] / [FACT-CHECK]) sources are still linked; the
+# caveat lives in SLIDE_REFS (volatile=True) and surfaces in speaker notes.
 # ============================================================
-URLS = {}
+URLS = {
+    # --- Классика: discovery / design / experiment / SRE ---
+    "blank_custdev": "https://innovation.ucsd.edu/startup/startup-toolkit/Steve-Blank-CustDev.pdf",
+    "mom_test": "https://www.sachinrekhi.com/p/the-mom-test-rob-fitzpatrick",
+    "torres_ost": "https://www.producttalk.org/opportunity-solution-trees/",
+    "torres_cdh": "https://www.producttalk.org/continuous-discovery-habits/",
+    "torres_ai_anti_synth": "https://cieden.com/podcast/teresa-torres-on-continuous-discovery-in-b2b-and-ai",
+    "double_diamond": "https://www.designcouncil.org.uk/resources/the-double-diamond/",
+    "nielsen_heuristics": "https://blog.uxtweak.com/usability-heuristics/",
+    "nielsen_history": "https://www.uxtigers.com/post/usability-heuristics-history",
+    "nielsen_not_user": "https://medium.com/hippo-digital/you-are-not-the-user-but-what-about-when-you-are-35abe4006b8",
+    "lean_startup_vanity": "https://effectivesoftwaredesign.com/2021/03/23/lean-startup-principles-vanity-metrics-and-actionable-metrics/",
+    "stage_gate_story": "https://www.stage-gate.com/about/our-story-2/",
+    "kohavi_oec": "https://www.linkedin.com/pulse/overall-evaluation-criterion-oec-ronny-kohavi",
+    "kohavi_bing_ab": "https://en.wikipedia.org/wiki/A/B_testing",
+    "exp_platform": "https://exp-platform.com/",
+    "srm_microsoft": "https://www.microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/",
+    "gopractice_peeking": "https://gopractice.io/data/peeking-problem/",
+    "sre_error_budget": "https://sre.google/workbook/error-budget-policy/",
+    "heart_google": "https://research.google/pubs/measuring-the-user-experience-on-a-large-scale-user-centered-metrics-for-web-applications/",
+    "northstar_amplitude": "https://amplitude.com/blog/good-bad-north-star-metric",
+    "aarrr_inc": "https://www.inc.com/walter-chen/aarrr-dave-mcclure-s-pirate-metrics-and-the-only-five-numbers-that-matter.html",
+    # --- AI-эра: инструменты / evals / governance ---
+    "anthropic_agentic_2026": "https://resources.anthropic.com/2026-agentic-coding-trends-report",
+    "bain_ai_pdlc": "https://www.bain.com/insights/the-rise-of-the-ai-development-life-cycle/",
+    "reganti_badam_ccdc": "https://www.lennysnewsletter.com/p/why-your-ai-product-needs-a-different",
+    "deepmind_specgaming": "https://deepmind.google/blog/specification-gaming-the-flip-side-of-ai-ingenuity/",
+    "anthropic_sycophancy_subterfuge": "https://arxiv.org/abs/2406.10162",
+    "mtbench_arxiv": "https://arxiv.org/abs/2306.05685",
+    "nng_synthetic_users": "https://www.nngroup.com/articles/synthetic-users/",
+    "nng_ai_hallucinations": "https://www.nngroup.com/articles/ai-hallucinations/",
+    "nng_state_of_ux_2026": "https://www.nngroup.com/articles/state-of-ux-2026/",
+    "perplexity_deep_research": "https://www.secondtalent.com/resources/perplexity-deep-research-review/",
+    "dovetail_ai": "https://listenlabs.ai/articles/dovetail-ai-qualitative-analysis/",
+    "figma_make": "https://www.figma.com/resource-library/ai-design-tools/",
+    "google_stitch": "https://www.banani.co/blog/galileo-ai-features-and-alternatives",
+    "wcag_acm": "https://dl.acm.org/doi/10.1145/3800424.3800430",
+    "gartner_guardian_agents": "https://thehackernews.com/2026/03/5-learnings-from-first-ever-gartner.html",
+    "gartner_guardian_forecast": "https://www.gartner.com/en/newsroom/press-releases/2025-06-11-gartner-predicts-that-guardian-agents-will-capture-10-15-percent-of-the-agentic-ai-market-by-2030",
+    "deloitte_2026_tech_leadership": "https://www.deloitte.com/us/en/about/press-room/2026-global-technology-leadership-study-release.html",
+    "sber_ai_pdlc_role": "https://rabota.sber.ru/search/lider-ai-pdlc-4548579/",
+    "llmops_observability": "https://www.confident-ai.com/knowledge-base/compare/top-7-llm-observability-tools",
+    "llmops_langsmith_langfuse": "https://www.digitalapplied.com/blog/agent-observability-platforms-langsmith-langfuse-arize-2026",
+    "osmani_70": "https://addyo.substack.com/p/the-70-problem-hard-truths-about-ai-assisted-coding",
+    # --- Провалы (13 кейсов) ---
+    "nng_synthetic_drone": "https://www.nngroup.com/articles/synthetic-users/",
+    "fortune_deloitte_australia": "https://fortune.com/2025/10/07/deloitte-ai-australia-government-report-hallucinations-technology-290000-refund",
+    "science_maha_deloitte": "https://www.science.org/content/article/trump-officials-downplay-fake-citations-high-profile-report-children-s-health",
+    "damien_charlotin_db": "https://www.damiencharlotin.com/hallucinations/",
+    "ibm_watson_statnews": "https://www.statnews.com/2018/07/25/ibm-watson-recommended-unsafe-incorrect-treatments/",
+    "ibm_watson_ieee": "https://spectrum.ieee.org/how-ibm-watson-overpromised-and-underdelivered-on-ai-health-care",
+    "wapo_characterai": "https://www.washingtonpost.com/nation/2024/10/24/character-ai-lawsuit-suicide/",
+    "cbs_characterai_settle": "https://www.cbsnews.com/news/google-settle-lawsuit-florida-teens-suicide-character-ai-chatbot/",
+    "eeoc_itutorgroup": "https://www.eeoc.gov/newsroom/itutorgroup-pay-365000-settle-eeoc-discriminatory-hiring-suit",
+    "forbes_google_overviews": "https://www.forbes.com/sites/roberthart/2024/05/31/google-restricts-ai-search-tool-after-nonsensical-answers-told-people-to-eat-rocks-and-put-glue-on-pizza/",
+    "androidpolice_google_overviews": "https://www.androidpolice.com/google-pizza-glue-loop-ai-overviews/",
+    "cnbc_mcdonalds_ibm": "https://www.cnbc.com/2024/06/17/mcdonalds-to-end-ibm-ai-drive-thru-test.html",
+    "nrn_mcdonalds_ibm": "https://www.nrn.com/quick-service/mcdonald-s-is-ending-its-ai-drive-thru-test-with-ibm",
+    "techdirt_facebook_msi": "https://www.techdirt.com/2021/10/28/let-me-rewrite-that-you-washington-post-misinforms-you-about-how-facebook-weighted-emoji-reactions/",
+    "house_facebook_files": "https://docs.house.gov/meetings/IF/IF16/20211201/114268/HHRG-117-IF16-20211201-SD012.pdf",
+    "medpalm2_nature": "https://www.nature.com/articles/s41591-024-03423-7",
+    "mata_v_avianca_wiki": "https://en.wikipedia.org/wiki/Mata_v._Avianca,_Inc.",
+    "stanford_reglab": "https://onlinelibrary.wiley.com/doi/full/10.1111/jels.12413",
+    "geekwire_zillow": "https://www.geekwire.com/2021/ibuying-algorithms-failed-zillow-says-business-worlds-love-affair-ai/",
+    "sec_zillow_10k": "https://www.sec.gov/Archives/edgar/data/1617640/000161764022000013/z-20211231.htm",
+    "canlii_air_canada": "https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html",
+    "aba_air_canada": "https://www.americanbar.org/groups/business_law/resources/business-law-today/2024-february/bc-tribunal-confirms-companies-remain-liable-information-provided-ai-chatbot/",
+    "openai_klarna": "https://openai.com/index/klarna/",
+    "bloomberg_klarna": "https://www.bloomberg.com/news/articles/2025-05-08/klarna-turns-from-ai-to-real-person-customer-service",
+    "fortune_klarna_853": "https://fortune.com/2025/10/10/klarna-ceo-sebastian-siemiatkowski-halved-workforce-says-tech-ceos-sugarcoating-ai-impact-on-jobs-mass-unemployment-warning/",
+    "themarkup_nyc_mycity": "https://themarkup.org/artificial-intelligence/2024/03/29/nycs-ai-chatbot-tells-businesses-to-break-the-law",
+    "mit_nanda_pdf": "https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf",
+    "fortune_mit_nanda": "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/",
+    "80000h_mit_nanda": "https://80000hours.org/podcast/episodes/ai-workplace-mit-study/",
+    "newmr_mit_nanda": "https://newmr.org/blog/myth-number-2-mit-showed-that-95-of-ai-pilots-fail/",
+    "rand_ai_failure_causes": "https://www.rand.org/pubs/research_reports/RRA2680-1.html",
+    "gartner_io_stall_2026": "https://www.gartner.com/en/newsroom/press-releases/2026-04-07-gartner-says-artificial-intelligence-projects-in-infrastructure-and-operations-stall-ahead-of-meaningful-roi-returns",
+    "martech_gartner_40pct": "https://martech.org/gartner-40-of-agentic-ai-projects-will-fail-making-humans-indispensable/",
+    "bcg_ai_impact_gap": "https://www.bcg.com/publications/2025/closing-the-ai-impact-gap",
+    "business_standard_jwo": "https://www.business-standard.com/companies/news/amazon-s-just-walk-out-checkout-tech-was-powered-by-1-000-indian-workers-124040400463_1.html",
+    "retaildive_jwo": "https://www.retaildive.com/news/amazon-removes-just-walk-out-tech-amazon-fresh-stores-dash-carts/712150",
+}
 
 
 def refs_of(slide, keys, y=6.70, **kw):
-    """Unused in lec-05 (kept for signature compat with ported code)."""
-    return None
+    """Convenience: build the bottom numbered ref list from a list of
+    (num, name, urlkey) tuples, resolving urlkey via URLS."""
+    entries = [(num, name, URLS.get(k, "")) for (num, name, k) in keys]
+    return ref_list(slide, entries, y=y, **kw)
 
 def setup_pres():
     p = Presentation()
@@ -653,17 +739,349 @@ def _frontmatter_source(sid):
     return line
 
 
+# ============================================================
+# ПРАВКА 1 (issue #189 rebuild) — per-slide source registry, ported
+# verbatim from lec-04's mechanism. ONE definition per display-slide id
+# drives BOTH:
+#   • the bottom clickable [N] list on the slide (refs_of_slide), and
+#   • the «Источники:» block appended to the speaker notes (notes_sources_block).
+# So slide-[N] and notes-[N] can never diverge. Entry:
+#   (num:str, short_name:str, urlkey:str, gloss:str[, volatile:bool])
+# gloss = one phrase: what the source says / why authoritative.
+# volatile → «[VFY-day-of]» appended in notes only.
+# URLs resolved ONLY via URLS (notes/research/lecture-5-pdlc/*.md +
+# chapter-part4.md «Источники»). No invented URLs.
+# ============================================================
+SLIDE_REFS = {
+    "s01": [
+        ("1", "Anthropic — 2026 Agentic Coding Trends Report",
+         "anthropic_agentic_2026",
+         "внутренний опыт: недели → часы; секондари-триангулировано (PDF не "
+         "парсится напрямую)", True),
+        ("2", "MIT NANDA — «The GenAI Divide» (июль 2025, v0.1)",
+         "mit_nanda_pdf",
+         "«95% пилотов — ноль отдачи»: неревьюированный препринт, требует "
+         "калибровки (см. s47)", True),
+    ],
+    "s08": [
+        ("1", "Blank — Customer Development (Four Steps to the Epiphany)",
+         "blank_custdev",
+         "4-шаговая методология; «внутри офиса нет фактов»"),
+    ],
+    "s09": [
+        ("1", "Fitzpatrick — The Mom Test", "mom_test",
+         "3 правила интервью: о жизни/о прошлом/обязательством, не мнением"),
+    ],
+    "s10": [
+        ("1", "Perplexity Deep Research — обзор для продукт-исследований",
+         "perplexity_deep_research",
+         "desk research: часы → минуты; необходимость проверки источника"),
+        ("2", "Dovetail — AI-синтез интервью", "dovetail_ai",
+         "кластеризация болей в масштабе; ограничения AI-суммаризации"),
+        ("3", "NN/g — практический опрос 2026", "nng_state_of_ux_2026",
+         "97% исследователей используют ИИ, ~8% доверяют ИИ-персонам как "
+         "данным", True),
+    ],
+    "s11": [
+        ("1", "Torres — Continuous Discovery Habits / anti-synthetic",
+         "torres_ai_anti_synth",
+         "контрарная к хайпу позиция: против синтетических интервью и "
+         "one-click AI-деревьев"),
+    ],
+    "s12": [
+        ("1", "NN/g (Rosala & Moran) — Synthetic Users",
+         "nng_synthetic_users",
+         "3/7 реальных vs 7/7 синтетических на одной и той же задаче "
+         "(drone-delivery)", True),
+    ],
+    "s13": [
+        ("1", "Fortune (7 окт. 2025) — Deloitte Australia A$440k",
+         "fortune_deloitte_australia",
+         "сфабрикованные цитаты и несуществующие ссылки в отчёте "
+         "правительству"),
+        ("2", "Damien Charlotin — AI Hallucination Cases Database",
+         "damien_charlotin_db",
+         "~712 задокументированных судебных дел с ИИ-галлюцинациями "
+         "по миру", True),
+    ],
+    "s13a": [
+        ("1", "STAT News — утечка внутренних документов IBM Watson",
+         "ibm_watson_statnews",
+         "«небезопасные и некорректные» рекомендации по онкологии (25 июля "
+         "2018)"),
+        ("2", "IEEE Spectrum — как Watson переобещал и недодал",
+         "ibm_watson_ieee",
+         "обучен на гипотетических кейсах горстки онкологов MSK, не на "
+         "реальных исходах"),
+    ],
+    "s15": [
+        ("1", "UK Design Council — The Double Diamond", "double_diamond",
+         "Discover→Define→Develop→Deliver: два цикла дивергенции/конвергенции"),
+    ],
+    "s16": [
+        ("1", "Nielsen — 10 usability heuristics", "nielsen_heuristics",
+         "полный список 10 эвристик с примерами (1994, ред. 2020)"),
+        ("2", "Nielsen — «you are not the user»", "nielsen_not_user",
+         "предостережение об атипичности инсайдеров-дизайнеров"),
+    ],
+    "s17": [
+        ("1", "Figma — AI-инструменты дизайна 2026", "figma_make",
+         "Figma Make, v0, Stitch, bolt.new — 2-4 направления за минуты",
+         True),
+        ("2", "Google Stitch (ex-Galileo AI)", "google_stitch",
+         "приобретение Google, май 2025 — быстро меняющийся ландшафт "
+         "инструментов", True),
+    ],
+    "s18": [
+        ("1", "ACM Web4All 2026 — Generated Inaccessible", "wcag_acm",
+         "21 880 оценок WCAG на ИИ-интерфейсах, 29,0% соответствие "
+         "(контраст 26,8%, цвет 19,2%)", True),
+    ],
+    "s19": [
+        ("1", "Washington Post (24 окт. 2024)", "wapo_characterai",
+         "гибель 14-летнего пользователя после месяцев общения с "
+         "ИИ-персонажем"),
+        ("2", "CBS News (янв. 2026) — урегулирование", "cbs_characterai_settle",
+         "Character.AI/Google — защита добавлена ретрофитом после "
+         "трагедии"),
+    ],
+    "s20": [
+        ("1", "EEOC (9 авг. 2023) — iTutorGroup", "eeoc_itutorgroup",
+         "первое урегулирование по ИИ-дискриминации: $365 000, автоотказ "
+         "по возрасту"),
+    ],
+    "s22": [
+        ("1", "Ries — Lean Startup / MVP", "lean_startup_vanity",
+         "MVP как обучающий инструмент, не урезанная отгрузка; риск "
+         "vanity-метрик"),
+        ("2", "Stage-Gate — история метода", "stage_gate_story",
+         "go/kill-гейт: «воронка, не туннель», пороги провала заданы "
+         "заранее"),
+    ],
+    "s23": [
+        ("1", "Anthropic — 2026 Agentic Coding Trends Report",
+         "anthropic_agentic_2026",
+         "+200% кода на инженера год к году; лишь ~16% PR получают "
+         "содержательное человеческое ревью до слияния", True),
+    ],
+    "s24": [
+        ("1", "Reganti & Badam — CC/CD framework", "reganti_badam_ccdc",
+         "Continuous Calibration/Development; лестница агентности "
+         "(Copilot→Cursor); «не готовы давать высокую агентность»"),
+    ],
+    "s25": [
+        ("1", "Osmani — The 70% Problem", "osmani_70",
+         "AI доводит команды до ~70% пути; «карточный домик кода» — "
+         "новичок не может закрыть оставшиеся 30%"),
+    ],
+    "s26": [
+        ("1", "Forbes (31 мая 2024) — Google AI Overviews",
+         "forbes_google_overviews",
+         "полная раскатка на 100% поиска США одним шагом, без "
+         "canary-этапов"),
+        ("2", "AndroidPolice — «клей на пиццу» / «есть камни»",
+         "androidpolice_google_overviews",
+         "вирусные инциденты сразу на всю аудиторию, реактивные "
+         "пост-релизные фиксы"),
+    ],
+    "s27": [
+        ("1", "CNBC (17 июня 2024) — McDonald's × IBM", "cnbc_mcdonalds_ibm",
+         "решение остановить пилот после 2,5-3 лет на 0,7% сети "
+         "(~100 из ~13 786 ресторанов)"),
+        ("2", "Nation's Restaurant News — детали закрытия пилота",
+         "nrn_mcdonalds_ibm",
+         "деактивация к 26 июля 2024; цель осталась, вендорский подход "
+         "убит"),
+    ],
+    "s29": [
+        ("1", "Kohavi — Overall Evaluation Criterion (OEC)", "kohavi_oec",
+         "метрика, о значении и направлении которой договорились ДО "
+         "теста; учебная ловушка «время на сайте поддержки»"),
+        ("2", "Wikipedia — A/B testing (Bing 2012)", "kohavi_bing_ab",
+         "рекламный заголовок: +12% выручки (~$100 млн), независимо от "
+         "материалов Кохави"),
+    ],
+    "s30": [
+        ("1", "Microsoft Research — Sample Ratio Mismatch (KDD 2019)",
+         "srm_microsoft",
+         "«fever is a symptom»: SRM — симптом проблем с качеством данных, "
+         "проверяется до анализа эффекта"),
+        ("2", "GoPractice — проблема подглядывания (peeking)",
+         "gopractice_peeking",
+         "2 подглядки ≈2× ложных срабатываний; фикс — pre-registered "
+         "sample size"),
+        ("3", "exp-platform.com — Кохави, Твайман", "exp_platform",
+         "«любая цифра, которая выглядит интересно, обычно неверна» — "
+         "перепроверить методологию раньше, чем радоваться"),
+    ],
+    "s31": [
+        ("1", "Anthropic — Demystifying evals for AI agents (9 янв. 2026)",
+         "anthropic_agentic_2026",
+         "pass@k (хотя бы 1 успех) vs pass^k (все успешны); промышленная "
+         "надёжность требует pass^k", True),
+        ("2", "Zheng, Chiang et al. — MT-Bench (NeurIPS 2023)",
+         "mtbench_arxiv",
+         "LLM-судья ~85% согласия с экспертами — сопоставимо с ~81% "
+         "согласия человек-человек"),
+    ],
+    "s32": [
+        ("1", "DeepMind — Specification gaming (21 апр. 2020)",
+         "deepmind_specgaming",
+         "CoastRunners: RL-агент набрал на 20% больше очков людей, кружа "
+         "в лагуне, не финишируя — закон Гудхарта"),
+        ("2", "Anthropic — Sycophancy to Subterfuge (arXiv:2406.10162)",
+         "anthropic_sycophancy_subterfuge",
+         "модель обобщила от угодливости к прямому редактированию "
+         "собственной функции вознаграждения"),
+    ],
+    "s33": [
+        ("1", "Techdirt (28 окт. 2021) — коррекция «Facebook Files»",
+         "techdirt_facebook_msi",
+         "все 5 реакций (love/haha/wow/sad/angry) взвешены ×5 одинаково — "
+         "не только «гнев», вопреки растиражированной версии"),
+        ("2", "House E&C Committee — документы Haugen", "house_facebook_files",
+         "внутренний guardrail (корреляция гнев↔дезинформация) "
+         "подтверждён к 2019, вес обнулён в сентябре 2019"),
+    ],
+    "s34": [
+        ("1", "Med-PaLM 2 — Nature Medicine 2024 (arXiv:2305.09617)",
+         "medpalm2_nature",
+         "86,5% на бенчмарке MedQA — не то же самое, что клиническая "
+         "безопасность в проде"),
+        ("2", "Wikipedia — Mata v. Avianca", "mata_v_avianca_wiki",
+         "фейковые цитаты = ChatGPT, НЕ Harvey — частая ошибка атрибуции; "
+         "санкция $5000 (S.D.N.Y., 22 июня 2023)"),
+        ("3", "Stanford RegLab — J. Empirical Legal Studies",
+         "stanford_reglab",
+         "Lexis+ 17% / Westlaw 33% / GPT-4 88% галлюцинаций на реальных "
+         "юридических запросах"),
+    ],
+    "s37": [
+        ("1", "Google SRE — Error Budget Policy", "sre_error_budget",
+         "SLI/SLO/error budget = «1 − SLO»; изменения — ≈70% всех сбоев"),
+    ],
+    "s38": [
+        ("1", "Confident AI — обзор LLMOps observability 2026",
+         "llmops_observability",
+         "LangSmith / Langfuse / Arize Phoenix / Helicone — трейсинг ловит "
+         "дрейф там, где инфра-мониторинг молчит", True),
+        ("2", "Gartner Market Guide for Guardian Agents (25 фев. 2026)",
+         "gartner_guardian_agents",
+         "определение категории; adoption 70%/23%", True),
+    ],
+    "s40": [
+        ("1", "GeekWire (нояб. 2021) — Zillow Offers", "geekwire_zillow",
+         "$304-408 млн списаний, ~2000 уволенных (~25% штата), "
+         "≈$80 тыс. убытка на объект"),
+        ("2", "SEC 10-K FY2021 — Zillow Group", "sec_zillow_10k",
+         "официальная финансовая отчётность, подтверждающая масштаб "
+         "списаний"),
+    ],
+    "s41": [
+        ("1", "CanLII — Moffatt v. Air Canada, 2024 BCCRT 149",
+         "canlii_air_canada",
+         "трибунал: компания отвечает за ответ бота как за любой другой "
+         "контент сайта; $812,02 CAD (14 фев. 2024)"),
+        ("2", "American Bar Association — комментарий к делу",
+         "aba_air_canada",
+         "юридический разбор: «bot as a separate legal entity» отклонён "
+         "одной фразой"),
+    ],
+    "s42": [
+        ("1", "Bloomberg (8 мая 2025) — Klarna", "bloomberg_klarna",
+         "разворот политики «только ИИ» к найму людей обратно"),
+        ("2", "Fortune (10 окт. 2025) — 853 FTE", "fortune_klarna_853",
+         "автоматизация выросла до 853 чел.-эквивалентов — усиление "
+         "людей, не замена; точная цифра всплывает позже в Q3-отчётности "
+         "Klarna (18 нояб. 2025) — сверить перед публикацией", True),
+        ("3", "The Markup (29 марта 2024) — NYC MyCity", "themarkup_nyc_mycity",
+         "гос-чатбот дал 10 из 10 журналистов один и тот же незаконный "
+         "совет"),
+    ],
+    "s46": [
+        ("1", "Deloitte — 2026 Global Technology Leadership Study",
+         "deloitte_2026_tech_leadership",
+         "75% — операционная модель должна измениться; 42% низкий/нулевой "
+         "ROI; 81% уверены при внутреннем противоречии", True),
+        ("2", "Sber — вакансия «Лидер AI PDLC»", "sber_ai_pdlc_role",
+         "организационная реальность роли, не только концепт в whitepaper",
+         True),
+    ],
+    "s47": [
+        ("1", "MIT NANDA — «The GenAI Divide» (июль 2025, v0.1)",
+         "mit_nanda_pdf",
+         "неревьюированный препринт: воронка 60%→20%→5% — это 25% среди "
+         "дошедших до пилота, не «95% провал»", True),
+        ("2", "Fortune (18 авг. 2025) — медиа-искажение MIT-отчёта",
+         "fortune_mit_nanda",
+         "как заголовок «95% провал» разошёлся без калибровки "
+         "знаменателя"),
+        ("3", "NewMR — Myth #2", "newmr_mit_nanda",
+         "разбор конфликта интересов и знаменателя в цитировании "
+         "MIT-отчёта"),
+        ("4", "Gartner (7 апр. 2026, 782 I&O-лидеров)",
+         "gartner_io_stall_2026",
+         "28% ИИ-кейсов в I&O полностью успешны; 20% — провал", True),
+        ("5", "BCG — Closing the AI Impact Gap",
+         "bcg_ai_impact_gap",
+         "60% компаний не отслеживают ни одного финансового KPI, "
+         "привязанного к ценности ИИ; publish-дата на сайте BCG "
+         "расходится с датой в research-досье — см. owner follow-up",
+         True),
+    ],
+    "s48": [
+        ("1", "Business Standard (апр. 2024) — Just Walk Out",
+         "business_standard_jwo",
+         "700 из 1000 транзакций требовали ручной проверки индийскими "
+         "работниками — против цели 50/1000"),
+        ("2", "Retail Dive — демонтаж Just Walk Out", "retaildive_jwo",
+         "технология снята с Amazon Fresh; 27 из 44 магазинов теряют "
+         "функцию"),
+    ],
+}
+
+
+def _resolve_refs(sid):
+    out = []
+    for entry in SLIDE_REFS.get(sid, []):
+        num, name, urlkey, gloss = entry[0], entry[1], entry[2], entry[3]
+        volatile = len(entry) > 4 and entry[4]
+        out.append((num, name, URLS.get(urlkey, ""), gloss, volatile))
+    return out
+
+
 def refs_of_slide(slide, sid, *, y=None, size=8.5):
-    """No-op in lec-05 (no clickable bottom ref-list); kept for call-site
-    compatibility with the ported lec-04 slide-builder pattern."""
-    return None
+    """Bottom clickable [N] list for a display slide, sourced from
+    SLIDE_REFS. Skips silently if the slide has no registry entry."""
+    resolved = _resolve_refs(sid)
+    if not resolved:
+        return None
+    entries = [(num, name, url) for (num, name, url, gloss, vol) in resolved]
+    yy = y if y is not None else (7.06 if len(entries) <= 2 else 7.02)
+    sz = size if len(entries) <= 4 else 8.0
+    return ref_list(slide, entries, y=yy, size=sz)
+
+
+def notes_sources_block(sid):
+    """Build the «Источники:» text block for the speaker notes of a display
+    slide: numbered [N] + FULL URL + one gloss phrase; volatile → [VFY-day-of].
+    Returns "" when the slide has no registry entry."""
+    resolved = _resolve_refs(sid)
+    if not resolved:
+        return ""
+    lines = ["Источники:"]
+    for (num, name, url, gloss, vol) in resolved:
+        vfy = " [VFY-day-of]" if vol else ""
+        lines.append(f"[{num}] {name} — {gloss}. {url}{vfy}")
+    return "\n".join(lines)
 
 
 def notes_with_sources(slide, sid):
-    """Speaker notes + a plain 'Источник:' line from frontmatter, if any."""
+    """Write speaker notes (paragraph-formatted) with the «Источники:» block
+    appended. Single call replaces speaker_notes(slide, load_notes(sid))."""
     body = load_notes(sid)
-    src_line = _frontmatter_source(sid)
-    text = f"{body}\n\nИсточник: {src_line}" if src_line else body
+    block = notes_sources_block(sid)
+    text = f"{body}\n\n{block}" if block else body
     speaker_notes(slide, text)
 
 

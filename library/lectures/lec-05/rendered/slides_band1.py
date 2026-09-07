@@ -47,7 +47,7 @@ def s01(p):
     ocean_box(s, lx, 1.30, lw, fact_h, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
     icon(s, "clock", lx + 0.24, 1.30 + 0.20, 0.80, "mid")
     text_box(s, x=lx + 1.18, y=1.30 + 0.16, w=lw - 1.40, h=0.75,
-             text="Недели работы → часы", size=14, bold=True, color=MID,
+             text="Недели работы → часы [1]", size=14, bold=True, color=MID,
              line_spacing=1.02, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, x=lx + 1.18, y=1.30 + fact_h - 0.42, w=lw - 1.40, h=0.34,
              text="внутренний опыт Anthropic", size=10.5, italic=True,
@@ -56,7 +56,7 @@ def s01(p):
               stroke=LIGHT, stroke_pt=1.5)
     icon(s, "funnel", lx + 0.24, 1.30 + fact_h + 0.16 + 0.20, 0.80, "teal")
     text_box(s, x=lx + 1.18, y=1.30 + fact_h + 0.16 + 0.16, w=lw - 1.40, h=0.75,
-             text="~95% пилотов — ноль отдачи", size=14, bold=True,
+             text="~95% пилотов — ноль отдачи [2]", size=14, bold=True,
              color=TEAL, line_spacing=1.02, anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, x=lx + 1.18, y=1.30 + 2 * fact_h + 0.16 - 0.42, w=lw - 1.40,
              h=0.34, text="MIT, лето 2025", size=10.5, italic=True, color=SLATE)
@@ -74,6 +74,7 @@ def s01(p):
     from _helpers import meme_in_box
     meme_in_box(s, "s01-spiderman-pointing.jpg", 5.15, 1.30, 7.65, 5.30,
                 pad=0.18)
+    refs_of_slide(s, "s01")
     notes_with_sources(s, "s01")
     return s
 
@@ -438,7 +439,7 @@ def s08(p):
             right_arrow(s, x + cw + 0.02, y0 + 0.55, gap - 0.04, 0.26,
                         fill=LIGHT)
     text_box(s, x=0.55, y=y0 + 1.45, w=12.25, h=0.35,
-             text="Стив Бланк — методология Customer Development",
+             text="Стив Бланк — методология Customer Development [1]",
              size=12.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
 
     # falsifiable-hypothesis card
@@ -458,6 +459,7 @@ def s08(p):
         "двигатель едет. Сначала понять, что проверяем и у кого — потом, как "
         "быстро крутить цикл.",
         size=13, bold=True)
+    refs_of_slide(s, "s08")
     notes_with_sources(s, "s08")
     return s
 
@@ -468,7 +470,7 @@ def s08(p):
 def s09(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Даже мать соврёт — если вопрос сконструирован неправильно",
+    slide_title(s, "Даже мать соврёт — если вопрос сконструирован неправильно [1]",
                 size=23, w=12.2, h=0.85)
 
     rules = [
@@ -514,6 +516,7 @@ def s09(p):
         "гипотезы; количественное отвечает «сколько» в масштабе и проверяет "
         "уже существующую гипотезу — не иерархия, а разделение труда.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s09")
     notes_with_sources(s, "s09")
     return s
 
@@ -529,9 +532,9 @@ def s10(p):
 
     blocks = [
         ("file-search", "Desk research (кабинетное исследование)",
-         "Perplexity Deep Research: 2 часа → ~30 минут"),
+         "Perplexity Deep Research: 2 часа → ~30 минут [1]"),
         ("layout-list", "Синтез интервью",
-         "Dovetail — кластеризация болей в масштабе"),
+         "Dovetail — кластеризация болей в масштабе [2]"),
         ("database", "Reference dataset (эталонный набор)",
          "курируемая коллекция «запрос → правильный ответ»"),
     ]
@@ -553,7 +556,7 @@ def s10(p):
     gold_callout(
         s, 0.55, 3.90, 12.25, 0.72,
         "97% исследователей используют ИИ — лишь ~8% доверяют ИИ-персонам "
-        "как данным",
+        "как данным [3]",
         size=14.5, bold=True, align=PP_ALIGN.CENTER)
 
     filled_rect(s, 0.55, 4.85, 12.25, 1.35, SOFT_GREY, stroke=LIGHT,
@@ -566,6 +569,7 @@ def s10(p):
                   "доказательство для решения «продолжать/остановить».",
              size=12.5, color=DEEP, line_spacing=1.15,
              anchor=MSO_ANCHOR.MIDDLE)
+    refs_of_slide(s, "s10")
     notes_with_sources(s, "s10")
     return s
 
@@ -607,10 +611,11 @@ def s11(p):
 
     gold_callout(
         s, 0.55, 5.10, 12.25, 0.95,
-        "ИИ-резюме теряет 20-40% деталей интервью (Torres), если пропущен "
+        "ИИ-резюме теряет 20-40% деталей интервью (Torres) [1], если пропущен "
         "шаг «сначала по отдельности» — прослеживаемый до конкретного шага "
         "сбой, не расплывчатое «ИИ иногда ошибается».",
         size=13, bold=True)
+    refs_of_slide(s, "s11")
     notes_with_sources(s, "s11")
     return s
 
@@ -622,7 +627,7 @@ def s12(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Одна и та же задача: реальные люди — 3 из 7, синтетическая панель — 7 из 7",
+        s, "Одна и та же задача: реальные люди — 3 из 7, синтетическая панель — 7 из 7 [1]",
         size=20, w=12.2, h=0.85)
 
     # LEFT: real meme (Trade Offer — GATE-B fix, replaces Surprised Pikachu:
@@ -665,6 +670,7 @@ def s12(p):
         "прогона. Альтернатива: до-исследовательская роль + реальное "
         "тестирование 5-8 участников.",
         size=13, bold=True)
+    refs_of_slide(s, "s12")
     notes_with_sources(s, "s12")
     return s
 
@@ -690,7 +696,7 @@ def s13a(p):
              text="0 пациентов", size=22, bold=True, color=TEAL,
              align=PP_ALIGN.CENTER)
     text_box(s, x=lx + 0.25, y=3.55, w=5.05, h=0.45,
-             text="MD Anderson: партнёрство закрыто (2016)", size=11.5,
+             text="MD Anderson: партнёрство закрыто (2016) [1]", size=11.5,
              italic=True, color=SLATE, align=PP_ALIGN.CENTER)
 
     rx, rw = 6.35, 6.45
@@ -698,9 +704,9 @@ def s13a(p):
              text="IBM Watson for Oncology, с 2012", size=14, bold=True,
              color=MID)
     bullets = [
-        "Внутренние документы: рекомендации «небезопасные и некорректные»",
+        "Внутренние документы: рекомендации «небезопасные и некорректные» [1]",
         "Обучен на гипотетических кейсах горстки онкологов MSK — не на "
-        "реальных исходах",
+        "реальных исходах [2]",
     ]
     for i, b in enumerate(bullets):
         y = 2.05 + i * 0.95
@@ -716,6 +722,7 @@ def s13a(p):
         "доказательных клинических руководствах с прозрачной "
         "трассируемостью источника.",
         size=13, bold=True)
+    refs_of_slide(s, "s13a")
     notes_with_sources(s, "s13a")
     return s
 
@@ -735,7 +742,7 @@ def s13(p):
     text_box(s, x=lx + 1.00, y=1.78, w=lw - 1.2, h=0.55,
              text="Deloitte Australia, 2025", size=15, bold=True, color=MID)
     facts = [
-        "Ссылки на несуществующие статьи + сфабрикованная цитата суда",
+        "Ссылки на несуществующие статьи + сфабрикованная цитата суда [1]",
         "Подготовлен через Azure OpenAI без человеческой верификации цитат",
     ]
     for i, f in enumerate(facts):
@@ -755,7 +762,7 @@ def s13(p):
                 radius=True, radius_adj=0.07)
     text_box(s, x=rx + 0.24, y=3.45, w=rw - 0.48, h=1.25,
              text="База: ~712 судебных решений по миру с ИИ-галлюцинированными "
-                  "цитатами, ~90% — в 2025 году",
+                  "цитатами, ~90% — в 2025 году [2]",
              size=12, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
 
     gold_callout(
@@ -764,5 +771,6 @@ def s13(p):
         "не источник фактов. Критерий: итоговый документ внешнему заказчику "
         "требует 100% проверки каждой ссылки, не выборочной.",
         size=12.5, bold=True)
+    refs_of_slide(s, "s13")
     notes_with_sources(s, "s13")
     return s

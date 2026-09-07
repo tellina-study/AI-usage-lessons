@@ -1,7 +1,7 @@
 # library/lectures/lec-05/deck.yaml  —  PART 1 of 2
 #
 # Deck-структура Лекции 5 «AI-продукт: полный жизненный цикл — от намерения до эксплуатации»
-# (~50 слайдов: s01–s49 + s13a IBM Watson — cascade-safe suffix-ID).
+# (56 слайдов: s01–s49 + s13a IBM Watson — cascade-safe suffix-ID + 6× sNNb ELI5 overviews).
 #
 # Source: chapter.md + chapter-part2/3/4.md (≥30k слов, 4 части) +
 # notes/lecture-5-review/pdlc/final/plan-final.md §4 (slide list s01–s49 + s13a).
@@ -39,7 +39,7 @@ deck:
   version: v1.0
   source: "chapter.md + chapter-part2/3/4.md (≥30k слов, 4 части)"
   plan: "notes/lecture-5-review/pdlc/final/plan-final.md §4"
-  total_slides: 50          # s01–s49 + s13a (IBM Watson, cascade-safe suffix)
+  total_slides: 56          # s01–s49 + s13a (IBM Watson, cascade-safe suffix) + 6× sNNb ELI5 overviews
   curriculum_level: "Отраслевая лекция (после Л4 SDLC); L5 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "фазы петли продукта (discover→build→measure→learn→decide); каждая фаза = база→AI→ограничения→провал"
@@ -119,14 +119,17 @@ ai_failure_judgment:
   strict_in_slides: [s12, s13, s13a, s19, s20, s26, s27, s33, s34, s40, s41, s42, s47, s48]
   count: 14   # 13 канонических провалов плана + s13a IBM Watson (доп. Discovery-провал #3, added post-plan per course-curator LO3 sign-off note)
   share_by_minutes: "≈34.5 / ≈92 активных мин ≈ 37.5% (buffer над порогом 30%; honest recount v3 плана: 13 канонических провалов = 31.5 мин / 92 = 34%; +s13a IBM Watson добавляет ещё ~3 мин provisional к Discovery-кластеру, итог указан как диапазон 34-37.5%, точный пересчёт — Phase 7 methodology-critic по факту duration_min слайдов)."
-  partial_out: [s01, s02, s03, s04, s06, s07, s08, s09, s10, s11, s14, s15, s16, s17, s18, s21, s22, s23, s24, s25, s28, s29, s30, s31, s32, s35, s36, s37, s38, s39, s43, s44, s45, s46, s49]
+  partial_out: [s01, s02, s03, s04, s06, s07, s07b, s08, s09, s10, s11, s14, s14b, s15, s16, s17, s18, s21, s21b, s22, s23, s24, s25, s28, s28b, s29, s30, s31, s32, s35, s36, s36b, s37, s38, s39, s43, s44, s44b, s45, s46, s49]
   note: >
     s05/s06 — keystone-ось (course-scaffold), НЕ strict-in по Решению #78. Upside-слайды-ограничения
     (s11, s18, s25, s32, s39) — критерий без собственного on-point кейса — partial→out (v1 lesson: не
-    padding'овать зачётом граничных). Холистичность: каждый из 6 разделов несёт ≥2 on-point провала —
-    Р1: s12/s13/s13a (3) · Р2: s19/s20 (2) · Р3: s26/s27 (2) · Р4: s33/s34 (2) · Р5: s40/s41/s42 (3) ·
-    Р6: s47/s48 (2). Single-artifact concentration отсутствует. chapter target ≥40% (per-part word count,
-    methodology-critic Phase 3); slides/speech target ≥30% по минутам (Phase 7/10).
+    padding'овать зачётом граничных). 6× sNNb ELI5-обзоры (s07b/s14b/s21b/s28b/s36b/s44b, Phase 5
+    post-plan addition) — методический recap фазы простыми словами, без собственного on-point
+    кейса — partial→out, не входят в strict_in_slides. Холистичность: каждый из 6 разделов несёт
+    ≥2 on-point провала — Р1: s12/s13/s13a (3) · Р2: s19/s20 (2) · Р3: s26/s27 (2) · Р4: s33/s34 (2) ·
+    Р5: s40/s41/s42 (3) · Р6: s47/s48 (2). Single-artifact concentration отсутствует. chapter target
+    ≥40% (per-part word count, methodology-critic Phase 3); slides/speech target ≥30% по минутам
+    (Phase 7/10).
 
 # ─────────────────────────────────────────────────────────────────────────
 # Порядок предъявления (plan-final §4): фазы петли продукта, каждая
@@ -232,6 +235,19 @@ slides:
     partial_out_strict_in: true
     interaction: none
     verify_day_of: false
+
+  - id: s07b
+    file: slides/s07b-discovery-eli5.md
+    type: eli5_overview
+    section: "Раздел 1. Discovery / исследование"
+    duration_min: 1.5
+    assertion: "Исследование простыми словами: прежде чем строить, надо выйти наружу и узнать, у кого и какая проблема на самом деле — своя догадка почти всегда обманывает"
+    learning_goal: "ELI5-обзор фазы исследования: зачем она, ментальная модель «наружу за фактами»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1 [for-slide-s07b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
 
   - id: s08
     file: slides/s08-base-customer-development.md
@@ -339,6 +355,19 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s14b
+    file: slides/s14b-design-eli5.md
+    type: eli5_overview
+    section: "Раздел 2. Design / прототип"
+    duration_min: 1.5
+    assertion: "Дизайн простыми словами: превратить гипотезу в дешёвый черновик, который можно показать человеку и выбросить — сначала правильная проблема, потом правильное решение"
+    learning_goal: "ELI5-обзор фазы дизайна: зачем прототип, ментальная модель «два ромба»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 [for-slide-s14b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
   - id: s15
     file: slides/s15-base-double-diamond.md
     type: process
@@ -430,6 +459,19 @@ slides:
     partial_out_strict_in: true
     interaction: none
     verify_day_of: false
+
+  - id: s21b
+    file: slides/s21b-build-launch-eli5.md
+    type: eli5_overview
+    section: "Раздел 3. Build / Launch"
+    duration_min: 1.5
+    assertion: "Сборка и запуск простыми словами: написать код теперь почти бесплатно, поэтому главным стал не «написать», а «безопасно выкатить и вовремя остановить»"
+    learning_goal: "ELI5-обзор фазы сборки и запуска: зачем механика релиза, ментальная модель «кран, а не рубильник»"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3.1 [for-slide-s21b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
 
   - id: s22
     file: slides/s22-base-mvp-release-mechanics.md

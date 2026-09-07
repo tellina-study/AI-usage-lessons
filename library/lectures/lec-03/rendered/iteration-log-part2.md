@@ -171,3 +171,155 @@ anglicism profile не регрессировал. **Открытый пункт
 PNG-инспекшн (Anthropic vision-loop principle) не выполнен из-за
 недоступности LibreOffice в этой sandbox-сессии — рекомендуется как
 follow-up перед финальным sign-off. Не закоммичено (по инструкции).
+
+---
+
+## v5 (issue #185) — 40→51 расширение под 100 мин (2026-09-06)
+
+**База:** deck v4 (40 слайдов) + chapter v3.0 (5 частей) + образец Лекции 2 v2.
+**Spec:** `notes/lecture-3-rework/deck-v5-inventory-draft.md` (§3 ordered-list).
+
+### Счёт слайдов — важное расхождение
+Spec §9 указывал «54» — это **арифметическая ошибка** (дважды посчитаны
+дивайдеры). Финализированный ordered-list §3 содержит ровно **51 слайд**
+(46 content + 5 внутрираздельных дивайдеров, cover+map вводят Р0). Реализован
+51 слайд; `build_v3.py main()` — `assert len == 51`. Задачный бриф просил
+«assert 54» на основе §9; следую authoritative-таблице §3 = 51.
+
+### NEW-слайды (14 builder'ов)
+s01 (переделан в мем-хук «магическая пилюля»), s01b (Air Canada вынесен
+отдельно), s05c (протокольные роли + STI), s07 (CoT faithfulness — split из
+s06), s17 (FT-критерии — split из s14), s19b (экономика агента), s20 (MCP),
+s22a_multi (мульти-агент p^n), s23b (каталог 10 классов провалов таблицей),
+s23c (deep-dive 4 класса), s24 (data-security/ZDR), s28 (итоги-таблица),
+s14 (переделан → дистилляция как отдельная техника), s30 (мост SDLC×AI).
+
+### Divider-образы (6-tier acquisition, все Tier 1 Wikimedia)
+- s04a нож (Chef's_knife) · s09 библиотека (George_Peabody_Library) ·
+  s13a пульт (DiGiCo_S21_Mixing_Console) · s18 робот-рука
+  (Factory_Automation_Robotics) · s25a кокпит (Cockpit_Convair_Coronado).
+- `build_section_divider` расширен параметром `image_src`/`image_caption`/`tag`
+  (giant white номер поверх фото + tag-чип «X разборов · Y провалов» БЕЗ минут).
+- Attribution: `rendered/assets/web/attribution.md` (honest per-image log).
+
+### Визуальный цикл (min 3 итерации на NEW/changed/divider)
+- **Iter 1:** первичный рендер 51 слайда. Найдено: s01 timing «за 100 минут» в
+  gold-callout (P0 — timing в visible); s01b callout overlap с ref-строкой;
+  s14 pipeline 3-й бокс overflow за грань ocean-box; s22a_multi gold-подпись
+  клипается gold-callout'ом; s24 bullets overlap summary-строкой.
+- **Iter 2:** timing удалён; s14 геометрия (bw 3.30→3.05, gap 1.35→1.05,
+  arrow 1.23→0.90) — 3 бокса вписались; s22a_multi (box lh 3.10→3.28, bar
+  spacing 0.96→0.86, callout 5.02→5.22) — подпись не клипается; s24 (bullet
+  spacing 0.66→0.56) — no overlap; s01b callout 6.06→5.98/h1.00→0.90.
+- **Iter 3:** russification-pass + re-inspect — все NEW-слайды pass 5-Second
+  Test (главный message = assertion), mass balance OK, gold ≥1×, «Что делать»
+  callout на всех содержательных.
+
+### Russification
+- deep_latin_scan на visible: 342 unique — из них brand (Air Canada, MCP, RAG,
+  PEFT, LoRA, QLoRA, MIT, Letta, Cognition, ZDR, CoT, AI) + glossed
+  (fine-tuning, workflow, faithfulness, grounding, retrieval — glossary-locked)
+  + английские source/case-имена (Anthropic verbatim quote на s22a_multi —
+  намеренно EN) + pre-existing v4 термины.
+- Русифицированы MY new-slide анлицизмы: self-rationale→самообъяснение,
+  command injection→внедрение команд, path traversal→обход пути, hard cap→
+  жёсткий потолок, kill-switch→аварийный стоп, hard boundary→жёсткая граница,
+  supply chain→цепочка поставок, owns вывод→вывод принадлежит компании,
+  Downstream→следующий агент, «system prompts are not security controls»→
+  «системный промпт — не средство контроля безопасности».
+
+### Compliance greps (visible layer)
+- Timing grep (`N мин|Тайминг|⏱`): **0 hits**.
+- Methodology/scaffold grep (`методическ|Лектору|LO[1-9]|§[0-9]|[for-slide|
+  [VFY|→ sNN`): **0 hits** в visible body.
+- `[VFY-day-of]` в speaker notes — только на source-citation строках (baked
+  patch_notes.py, v4-конвенция) + s31 контакты (spec-requested); НЕ в narrative.
+
+### Финал
+- `rendered/lec-03.pptx` — 51 слайд, `assert len==51` pass, all ref anchors OK.
+- Speaker notes 150-300 слов на всех NEW-слайдах (trim-pass для >300).
+
+---
+
+## v6 — issue #185 R-round (10 owner-комментариев #311-319 + правило)
+
+Дек 56→55. Все правки к текущему деку (owner видел /51, применены к /56→/55).
+
+### Правило #1 — БЕЗ превосходных форм (везде)
+- Visible layer: 5 истинных суперлативов нейтрализованы в `build_v3.py`
+  («ГЛАВНЫЙ МИФ»→«МИФ»; «тот самый поиск»→«тот же»; «не засорять главный»→
+  «основной»; «не бери самый оснащённый»→«максимально оснащённый»; «Лучший
+  RAG-2026»→«Сильный»). Плюс 14 сравнительных «лучше»/«улучшение» переведены
+  нейтрально (предпочтительнее / вернее / выигрыш / докрутить), т.к. owner-grep
+  `лучш` их ловит. **Independent PPTX-check: visible superlative (broad incl
+  улучш) = 0.**
+- Speaker notes: 2 fork-прохода → 0 суперлативов (broad+exact) в rendered notes.
+  **Independent PPTX notes-check = 0.**
+
+### #311 s01 — минимум текста + мем
+- Убран верхний «ГЛАВНЫЙ»; текст сокращён; мем усилен: целая пилюля «ЧЕГО ЖДЁМ»
+  vs разбитая «ЧТО ПРОИСХОДИТ» (+трещина, осколки) + «Точность не меняется.
+  Меняется только тон ответа». Прямо показывает «это не так».
+
+### #312 s01b — снесён
+- Удалён из `builders`/`sids`/deck.yaml/deck-part3.yaml; `assert 56→55`; убран
+  s01b-спецкейс в ref-loop. Air Canada остаётся кейсом §2 (s13, стр.21). Дек 55.
+  `refs_lec03.py` s01b-записи — dead code (не в loop, harmless).
+
+### #313 cover s02 — атрибуция курса снята + мем
+- Убрано «3 курс ИУ6 · Модуль 1…». Добавлен flat-мем `_cover_pill_meme`:
+  перечёркнутая пилюля + «"магической пилюли" не существует».
+
+### #2/#317 атрибуции фото — сняты со всех
+- Дивайдеры s04a/s09/s13a/s18/s25a: `image_caption=None` (само изображение
+  оставлено). Hero s30: убран DEEP-бар + «Фото:…Wikimedia·CC-BY-SA».
+  `assets/web/attribution.md` СОХРАНЁН (legal). **Independent PPTX-check:
+  «Фото:|Wikimedia|CC-BY» в visible = 0.**
+
+### #314/#315 s02a lecture-map
+- Раздел 4 «Агенты» больше НЕ подсвечен (GOLD→MID, все карточки равнозначны).
+  Gold-акцент перенесён на несущую линию (маркер перед подзаголовком).
+- Раздел 0 нейтрализован: «Air Canada: неправильная архитектура…» → «постановка
+  задачи: откуда берётся надёжность».
+
+### #316 s03 — облегчён
+- Тяжёлая схема «4 обвязки + hub» снята. Теперь лёгкое напоминание 2 понятий
+  Лекции 2: одиночный вызов (single-shot) + семантический поиск на эмбеддингах.
+  Два recap-бокса + gold-callout. Обвязки раскрываются по разделам.
+
+### #318 s05 — мем вместо правых блоков
+- Убраны «Добавляешь RAG →…» / «Добавляешь инструменты →…». Левая часть (один
+  вызов + что знает модель) сохранена. Справа flat-мем `_s05_overengineering_meme`:
+  «ДОСТАТОЧНО» (спокойное лицо + один вызов) vs «НА ВСЯКИЙ СЛУЧАЙ» (кривая башня
+  наверченных коробок + gold «!»). Anchor [1] на нижнем gold-callout сохранён.
+
+### #319 s06 — мем вместо текст-комментария
+- Убран текст-блок «CoT-текст — это сгенерированная аргументация…». Мем
+  `_s06_faithfulness_meme`: «говорит:» (аккуратная цепочка) ≠ «почему на деле:»
+  (чёрный ящик «?», «скрыто — не аудировать»). Intro-anchor [2] и top-band [1]
+  сохранены; правый gold-callout сохранён.
+
+### Мемы (созданы)
+- Все 4 (cover, s01-усиление, s05, s06) — чистые flat Ocean-иллюстрации через
+  python-pptx shapes (стиль существующего s01-мема). Реальные мемы (imgflip
+  доступен) НЕ использованы: атрибуции запрещены (#317), а flat-стиль держит
+  бренд-консистентность и самодостаточность. Несут тезис слайда, не украшение.
+
+### Russification (не регрессировать)
+- Pre-existing транслит в notes (латентность/дефолт/апгрейд/продакшен) вычищен
+  fork-проходом: латентность→задержка, дефолт→выбор по умолчанию, апгрейд→
+  выигрыш, продакшен→промышленная эксплуатация. **Rendered notes translit = 0;
+  visible translit = 0.** (Остатки в `## Body`/frontmatter source-md — не
+  рендерятся, exempt.)
+
+### Compliance (independent PPTX-grep, rendered layer)
+- Superlative (broad): visible 0 / notes 0.
+- Photo-attr / course-attr: visible 0.
+- Timing / methodology / LO / §-ref / forward-ref / day-of markers: visible 0.
+- Translit (продакшен/апгрейд/дефолт/латентност): visible 0 / notes 0.
+- Gold ≥1×: все content-слайды (s31 Q&A — намеренно минимальный, как было).
+
+### Build / render
+- `/usr/bin/python3 build_v3.py` → «all ref anchors matched OK», 55 slides.
+- Render 55 pages / 55 PNGs; визуальный цикл (≥3 прохода) на s01/cover/s02a/s03/
+  s05/s06 + дивайдеры s04a/s09/s18 + hero s30 — overflow/читаемость OK.

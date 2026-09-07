@@ -16,6 +16,18 @@ slides:
     assertion: "Раздел 2 — RAG: поиск-дополненная генерация поверх эмбеддингов Лекции 2"
     chapter_ref: "§2.1 [for-slide-s09]"
 
+  - id: s-classic-rag
+    file: slides/s-classic-rag-base.md
+    type: assertion_visual
+    section: "Раздел 2. RAG"
+    duration_min: 2
+    assertion: "Буква R в RAG — retrieval: инвертированный индекс, булев поиск, TF-IDF, BM25; RAG добавляет семантический слой поверх, классика не исчезает"
+    learning_goal: "Классическая база §2.0: классический информационный поиск как фундамент RAG"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.0 [for-slide-s-classic-rag]"
+    subtype: classic_base
+    new_in_v5b: "#185 WP8 — классическая база раздела 2 (после дивайдера s09, перед s10)"
+
   - id: s10
     file: slides/s10-rag-principle.md
     type: process
@@ -70,6 +82,18 @@ slides:
     assertion: "Раздел 3 — fine-tuning против промпта и RAG: проблема не в знании, а в поведении модели"
     chapter_ref: "§3 [for-slide-s14]"
 
+  - id: s-classic-ft
+    file: slides/s-classic-ft-base.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2
+    assertion: "Классическое ML: обучающая выборка, эталонная разметка, train/val/test split, transfer learning; PEFT/LoRA — тот же transfer learning, дешёвый, поверх pre-trained"
+    learning_goal: "Классическая база §3.0: классическое ML как фундамент дообучения"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.0 [for-slide-s-classic-ft]"
+    subtype: classic_base
+    new_in_v5b: "#185 WP8 — классическая база раздела 3 (после дивайдера s13a, перед s13b)"
+
   - id: s13b
     file: slides/s13b-what-is-fine-tuning.md
     type: assertion_visual
@@ -93,16 +117,28 @@ slides:
     order_note: "#226 — PEFT сразу после определения, до критериев"
     changed_in_v4: "добавлен LoRA-adoption baseline 98.4% с обязательной оговоркой (доля среди PEFT-тегированных)"
 
+  - id: s17
+    file: slides/s17-finetune-criteria.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "FT сузился до поведения: знание→RAG, поведение→PEFT, детерминированное→код; гибрид — норма"
+    learning_goal: "Критерии «что куда» + гибрид как норма 2026 (failure/judgment)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.3, §3.5 [for-slide-s17]"
+    new_in_v5: "#185 — FT-критерии вернулись отдельным слайдом (был merged в s14)"
+
   - id: s14
     file: slides/s14-fine-tuning-narrowed.md
     type: assertion_visual
     section: "Раздел 3. Fine-tune vs промпт vs RAG"
     duration_min: 2.5
-    assertion: "Fine-tuning сузился до поведения; знание→RAG, поведение→PEFT, детерминированное→код. Гибрид — норма"
-    learning_goal: "MERGED: FT сузился (§3.1/§3.3) + критерии-таблица (§3.5)"
+    assertion: "Дистилляция = отдельная техника (teacher FT + student distill), НЕ вид fine-tuning"
+    learning_goal: "Дистилляция как отдельная compression-техника (критерии перенесены на s17)"
     chapter_ref: "§3.1, §3.3, §3.5 [for-slide-s14]"
     subtype: schema_matrix
     changed_in_v4: "MERGED старые s14+s17; P0 #227 — дистилляция = «fine-tune teacher + дистилляция student, две отдельные техники», НЕ вид fine-tuning"
+    changed_in_v5: "#185 — s14 сфокусирован на дистилляции; критерии → s17"
 
   - id: s16
     file: slides/s16-catastrophic-forgetting.md

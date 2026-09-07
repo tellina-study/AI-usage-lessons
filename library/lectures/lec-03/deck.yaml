@@ -1,40 +1,45 @@
 # library/lectures/lec-03/deck.yaml  —  PART 1 of 3
 #
-# Deck-структура Лекции 3 «Архитектуры AI-систем: агенты, RAG, API» (v4, 40 слайдов).
+# Deck-структура Лекции 3 «Архитектуры AI-систем: агенты, RAG, API» (v5, 51 слайд).
 #
-# Source: chapter v2.0 finalized (~31000 слов, 5 частей) + issue #157 review
-# (29 точечных owner-комментариев + стратегический пивот «анатомия агента» —
-# Раздел 4 вырос до ~половины лекции на основе agent-harness-registry).
+# Source: chapter v3.0 finalized (5 частей) + issue #185 rework
+# (deck-v5-inventory-draft §3 — 100-мин расширение 40→51 по образцу Лекции 2 v2).
 #
-# ┌─ SPLIT: deck.yaml >600 строк → 3 части (v4). ──────────────────────────┐
+# ┌─ SPLIT: deck.yaml >600 строк → 3 части (v4/v5). ────────────────────────┐
 # │ deck.yaml       (ЭТОТ ФАЙЛ) — deck/palette/motif/typography/glossary +   │
 # │                 slides s01..s08a (Разделы 0-1).                          │
 # │ deck-part2.yaml — slides s09..s16 (Разделы 2-3).                         │
 # │ deck-part3.yaml — slides s18..s31 (Разделы 4-5) + totals + метрики.      │
-# │ Loader (rendered/build_v3.py) читает все 3 части; builder list —         │
-# │ authoritative source of render order.                                    │
+# │ Loader (rendered/build_v3.py) читает все 3 части; builder list в main()  │
+# │ — authoritative source of render order (v5: 51 слайд).                   │
 # └──────────────────────────────────────────────────────────────────────────┘
 #
-# v4 order (40 слайдов):
-#   R0: s01 s02 s02a s03 s04
-#   R1: s04a(div) s05 s05a s05b s06 s08 s08a
-#   R2: s09(div) s10 s11 s12 s13
-#   R3: s13a(div) s13b s15 s14 s16
-#   R4: s18(div) s19 s21 s22 s22b s22c s22d s22e s25 s25b s23
-#   R5: s25a(div) s26 s27 s27b s29 s30 s31
+# ПРИМЕЧАНИЕ по счёту: spec §9 указывал «54» — это арифметическая ошибка
+# (дважды посчитаны дивайдеры). Финализированный ordered-list §3 = 51 слайд;
+# это authoritative-число. builders/sids в build_v3.py содержат 51 (assert 51).
+#
+# v5b order (55 слайдов) — WP8 (#185): +5 «классическая база» слайдов, по
+# одному на раздел, сразу после дивайдера, перед AI-частью; s01b снят (#312):
+#   R0: s01(мем) s02 s02a s03 s04
+#   R1: s04a(div) [s-classic-prompt] s05 s05a s05c s05b s06 s07 s08 s08a
+#   R2: s09(div) [s-classic-rag] s10 s11 s12 s13
+#   R3: s13a(div) [s-classic-ft] s13b s15 s17 s14 s16
+#   R4: s18(div) [s-classic-agents] s19 s19b s20 s21 s22 s22a_multi s22b
+#        s22c s22d s22e s25 s24 s25b s23 s23b s23c
+#   R5: s25a(div) [s-classic-framework] s26 s27 s27b s28 s29 s30 s31
 
 deck:
   lecture_number: 3
   title: "Лекция 3. Архитектуры AI-систем: агенты, RAG, API"
   audience: "3 курс ИУ6, инженеры-разработчики (универсально)"
-  duration_min: 88
+  duration_min: 100
   central_question: "У меня есть задача и доступ к LLM. Какую архитектуру выбрать — и когда правильный ответ «не ИИ»?"
   learning_outcomes: [LO7, LO4]
   language: ru
   status: final
-  version: v4.0
-  source: chapter v2.0 finalized (~31000 слов, 5 частей)
-  total_slides: 40
+  version: v5b.0
+  source: chapter v3.0 finalized (5 частей) + WP8 classic-base-first (#185)
+  total_slides: 55
   curriculum_level: introductory
   deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]
 
@@ -101,6 +106,45 @@ glossary_lock:
   - least-privilege (принцип наименьших привилегий)
   - ZDR (Zero Data Retention)
   - BAA (Business Associate Agreement)
+  # v5 (issue #185) — новые термины:
+  - протокольные роли system/user/assistant (разметка «кто говорит»)
+  - chat-шаблон (chat template — сборка списка ролей в плоский поток токенов)
+  - спецтокен разметки (ChatML `<|im_start|>` / Llama 4)
+  - STI / role spoofing (подделка роли; Special Token Injection)
+  - instruction hierarchy (выученный приоритет системной роли, не гарантия)
+  - agentic RAG (адаптивный RAG как дефолт 2026)
+  - реранкер (reranker — переупорядочивание кандидатов retrieval)
+  - гибрид (RAG для знания + PEFT для поведения — норма 2026)
+  - мульти-агент (p^n: надёжности перемножаются)
+  - slopsquatting (регистрация галлюцинированных имён пакетов)
+  - rug-pull (подмена доверенного MCP-сервера/пакета)
+  - runaway-стоимость (петля без критерия успеха и бюджета)
+
+# ─────────────────────────────────────────────────────────────────────────
+# Cut-order (сжатие 100 → 90 → 75 мин) — из spec §8. Дивайдеры и keystone
+# (s01 s04 s26 s28) не режутся. s05c несокращаем (перенос #184).
+# ─────────────────────────────────────────────────────────────────────────
+cut_order:
+  to_90_min:  # снять ~10 мин
+    - s23c   # deep-dive кейсов → таблица s23b несёт классы; кейсы в speech
+    - s08a   # чит-шит промпта → в раздатку
+    - s17    # FT-критерии → обратный merge в s14
+    - s27b   # стартовый комплект → в speech/материалы
+    - s19b   # экономика → ключевые числа строкой в s19/s20
+    - s24    # data-map → свернуть в s25 (security-блок)
+  to_75_min:  # снять ещё ~15 мин
+    - s22a_multi  # p^n строкой в s22
+    - s07         # обратно merge в s06
+    - s22c        # память → строка на s22b
+    - s25b        # coding-агенты → в материалы/speech
+    - s16         # forgetting → короткий inline на s14
+  classic_base_compression:  # WP8 (#185): +5 слайдов классической базы, +~10 мин
+    # При сжатии (90/75 мин) классбаза-слайды режутся как отдельные слайды,
+    # НО сама база НЕ пропускается — сворачивается в одну строку на дивайдере
+    # раздела (напр. s04a tag: «база: точная спецификация / ТЗ → промпт»).
+    slides: [s-classic-prompt, s-classic-rag, s-classic-ft, s-classic-agents, s-classic-framework]
+    rule: "cut slide → fold base into a single line on the section divider; never drop the base entirely"
+  invariant: "strict-in доля (failure/judgment) не падает <30% холистически; NEW-слайды s07/s22a_multi/s23b/s23c/s24 — strict-in, режутся последними. s05c НЕ режется (перенос #184). Классбаза-слайды режутся, но база остаётся строкой на дивайдере (WP8)."
 
 # ─────────────────────────────────────────────────────────────────────────
 # Раздел 0. Открытие (~8 мин)
@@ -111,12 +155,12 @@ slides:
     type: hero_cover
     section: "Раздел 0. Открытие"
     duration_min: 3
-    assertion: "Чат-бот выдумал политику — платит компания: неправильный выбор архитектуры под задачу"
-    learning_goal: "Hook + hero-фото Air Canada; рамкирование тезиса лекции"
+    assertion: "«Магическая пилюля»: миф — что модель точнее, если попросить экспертом и усложнить промпт"
+    learning_goal: "Мем-хук (2-панельная афиша «магической пилюли», свой flat-рисунок, ≥40%)"
     learning_outcomes: [LO7]
     chapter_ref: "§Введение [for-slide-s01]"
-    hero: "assets/screenshots/s01-aircanada.jpg (Wikimedia CC-BY-SA), ≥40% площади"
-    changed_in_v4: "#211 — убраны блоки «что выбрали/что нужно»; добавлена hero-фото"
+    hero: "мем-афиша ЧЕГО ЖДЁМ vs ЧТО ПРОИСХОДИТ (свой рисунок Ocean-палитра, ≥40%)"
+    changed_in_v5: "#185 — s01 стал мем-хуком; s01b снят (#312), Air Canada — кейс §2 (s13)"
 
   - id: s02
     file: slides/s02-cover-roadmap.md
@@ -167,6 +211,18 @@ slides:
     assertion: "Раздел 1 — что умеет один вызов с хорошим промптом и где его потолок"
     chapter_ref: "§1 [for-slide-s05]"
 
+  - id: s-classic-prompt
+    file: slides/s-classic-prompt-base.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "До промпта задачу ставили точной спецификацией и детерминированной программой; промпт — постановка задачи вероятностной системе на естественном языке"
+    learning_goal: "Классическая база §1.0: точная постановка задачи как точка отсчёта промпта"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.0 [for-slide-s-classic-prompt]"
+    subtype: classic_base
+    new_in_v5b: "#185 WP8 — классическая база раздела 1 (после дивайдера s04a, перед s05); режется при сжатии, но база не пропускается"
+
   - id: s05
     file: slides/s05-default-one-call.md
     type: assertion_visual
@@ -188,6 +244,19 @@ slides:
     references: [zheng-2024-personas, arxiv-2605-29420]
     new_in_v4: "новый слайд §1.2"
 
+  - id: s05c
+    file: slides/s05c-protocol-roles.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 3
+    assertion: "Протокольные роли system/user/assistant ≠ роль-персона; приоритет system — склонность (~63,8%), не граница; STI подделывает роль"
+    learning_goal: "Второе значение «роли»: chat-шаблон + STI/ChatInject + защита (перенос #184)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.2 [for-slide-s05c]"
+    references: [openai-instruction-hierarchy, chatinject-iclr2026, geng-2025-ih]
+    new_in_v5: "#185/#184 — перенос из Лекции 2: протокольные роли + STI"
+    verify_day_of: true
+
   - id: s05b
     file: slides/s05b-prompt-structure.md
     type: assertion_visual
@@ -202,12 +271,24 @@ slides:
     file: slides/s06-chain-of-thought.md
     type: case_study
     section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Chain-of-thought помогает на цепочечных задачах — не тумблер «лучше»"
+    learning_goal: "CoT worked-example (faithfulness вынесен обратно на s07)"
+    chapter_ref: "§1.4 [for-slide-s06]"
+    references: [wei-2022-cot]
+    changed_in_v5: "#185 — faithfulness разделён обратно на s07 (был merged в v4)"
+
+  - id: s07
+    file: slides/s07-cot-faithfulness.md
+    type: case_study
+    section: "Раздел 1. Промпт и его границы"
     duration_min: 2.5
-    assertion: "Chain-of-thought помогает — но его нельзя аудировать (unfaithfulness как свойство класса)"
-    learning_goal: "CoT worked-example + предел faithfulness (MERGED s06+s07)"
-    chapter_ref: "§1.4, §1.5 [for-slide-s06]"
-    references: [wei-2022-cot, anthropic-2025-reasoning-faithfulness]
-    changed_in_v4: "#219 — слиты CoT worked-example и faithfulness limit; callback на check-шаг и человека-валидатора"
+    assertion: "CoT нельзя аудировать: faithfulness Claude 3.7 ~25% / R1 ~39%; проверяй результат, не самообъяснение"
+    learning_goal: "Предел CoT: рассуждение — не журнал аудита (failure/judgment)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§1.5 [for-slide-s07]"
+    references: [anthropic-2025-reasoning-faithfulness]
+    new_in_v5: "#185 — faithfulness вернулся отдельным слайдом под 100 мин"
     verify_day_of: true
 
   - id: s08

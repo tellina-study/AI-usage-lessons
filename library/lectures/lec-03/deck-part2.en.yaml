@@ -1,0 +1,202 @@
+# library/lectures/lec-03/deck-part2.en.yaml  —  EN translation (issue #172), PART 2 of 2
+#
+# Continuation of the English deck for Lecture 3 (v6.3-en, 55 slides).
+# THIS FILE — slides s22b..s31 (rest of Section 4 + Section 5) + totals + metrics.
+# Header / palette / motif / glossary and slides s01..s22a_multi are in deck.en.yaml.
+# Split because the single file exceeded the 600-line doc-size limit.
+# Render target rendered/build_lec03_en.py reads both parts.
+
+slides:
+  - id: s22b
+    file: slides-en/s22b-agent-equipment.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "Each equipment slot of the agent is a trade-off, not a default upgrade"
+    chapter_ref: "§4.4 [for-slide-s22b]"
+    references: [agent-harness-registry]
+
+  - id: s22c
+    file: slides-en/s22c-agent-memory.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "The agent's memory is the same scale-of-knowledge question as RAG, but for the agent's own history"
+    chapter_ref: "§4.5 [for-slide-s22c]"
+    references: [agent-harness-registry]
+
+  - id: s22d
+    file: slides-en/s22d-memory-failure.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "\"An agent that remembers\" is not always better: Letta Tier D and even a 17% tail on the best system"
+    chapter_ref: "§4.6 [for-slide-s22d]"
+    references: [agent-harness-registry]
+
+  - id: s22e
+    file: slides-en/s22e-operational-layer.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "An instruction file for the agent is not a \"magic vaccine\": presence paradox + Honest Lying"
+    chapter_ref: "§4.7 [for-slide-s22e]"
+    references: [gloaguen-2026-presence-paradox, dixit-2026-honest-lying]
+
+  - id: s25
+    file: slides-en/s25-tool-attacks.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3.5
+    assertion: "Skills, subagents, access — and the trust boundary: injection x broad privileges = catastrophe"
+    chapter_ref: "§4.8 [for-slide-s23, s24, s25]"
+    references: [willison-2025-prompt-injection, nyt-v-openai-2025, anthropic-2026-data-retention]
+    verify_day_of: true
+
+  - id: s24
+    file: slides-en/s24-data-security.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2
+    assertion: "A data map by feature: ZDR does NOT cover third-party/MCP; least-privilege is mandatory"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.8 [for-slide-s24]"
+    verify_day_of: true
+
+  - id: s25b
+    file: slides-en/s25b-coding-agents.md
+    type: comparison
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "Real coding agents — through the equipment frame: Claude Code / Aider / Cursor / OpenHands"
+    chapter_ref: "§4.9 [for-slide-s25b]"
+    references: [agent-harness-registry]
+
+  - id: s23
+    file: slides-en/s23-agent-failures.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "An agent burned $4,200 in 63h in a loop (a retry script would have done it for free); 5x99%~95%; multi-agent fragility"
+    chapter_ref: "§4.10 [for-slide-s23a]"
+    references: [jain-2026-agent-loop, mindstudio-2025-reliability, cognition-2025-multiagent]
+
+  - id: s23b
+    file: slides-en/s23b-failure-catalog.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "A catalog of 10 CLASSES of failures as a table: class -> case -> lesson (188 of 344 — the agent broke it itself)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.10 [for-slide-s23b]"
+
+  - id: s23c
+    file: slides-en/s23c-failure-deepdive.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "Deep-dive of the classes: PocketOS 9 sec, runaway $48k/$1.3M, slopsquatting 19.7%, cascade 61%"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.10 [for-slide-s23c]"
+    verify_day_of: true
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Section 5. The decision framework
+  # ─────────────────────────────────────────────────────────────────────
+  - id: s25a
+    file: slides-en/s25a-section5-divider-framework.md
+    type: section_divider
+    section: "Section 5. The decision framework"
+    duration_min: 0.3
+    assertion: "Section 5 — gather all the architectures and their failures into one choice tool"
+    chapter_ref: "§5 [for-slide-s26]"
+
+  - id: s-classic-framework
+    file: slides-en/s-classic-framework-base.md
+    type: assertion_visual
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "Classical technology choice: from the requirement, not the tool; build-vs-buy, KISS, YAGNI, the principle of least power; the architecture ladder is the same \"simplest that works\" principle"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.0 [for-slide-s-classic-framework]"
+    subtype: classic_base
+
+  - id: s26
+    file: slides-en/s26-complexity-ladder.md
+    type: process
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "The complexity ladder: stay on the bottom rung, climb only for a requirement; the bottom is code without AI"
+    chapter_ref: "§5.1 [for-slide-s26]"
+    subtype: schema_layered
+
+  - id: s27
+    file: slides-en/s27-decision-matrix.md
+    type: process
+    section: "Section 5. The decision framework"
+    duration_min: 3
+    assertion: "The decision plan — a route of 8 questions top to bottom; deterministic+verifiable -> code, STOP"
+    chapter_ref: "§5.2 [for-slide-s27]"
+    subtype: schema_pipeline
+
+  - id: s27b
+    file: slides-en/s27b-agent-starter-kit.md
+    type: assertion_visual
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "The agent starter kit — a thin default + justified triggers for adding complexity"
+    chapter_ref: "§5.2b [for-slide-s27a]"
+    references: [agent-harness-registry]
+
+  - id: s28
+    file: slides-en/s28-summary-table.md
+    type: summary
+    section: "Section 5. The decision framework"
+    duration_min: 3
+    assertion: "Summary table \"mechanism -> boundary -> what to do\" across all architectures + \"not AI\""
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.3 [for-slide-s28]"
+
+  - id: s29
+    file: slides-en/s29-human-validator-nanda.md
+    type: assertion_visual
+    section: "Section 5. The decision framework"
+    duration_min: 1.5
+    assertion: "The agent acts — the human checks the result and the facts; ~95% of pilots with no ROI — it's about integration"
+    chapter_ref: "§5.4 [for-slide-s29]"
+    references: [mit-nanda-2025]
+    verify_day_of: true
+
+  - id: s30
+    file: slides-en/s30-bridge-homework-qa.md
+    type: hero_closing
+    section: "Section 5. The decision framework"
+    duration_min: 1.5
+    assertion: "Next — industries, starting with software development; the SDLCxAI axis; this frame is the base of Lectures 4–17"
+    chapter_ref: "§5.5 [for-slide-s30]"
+
+  - id: s31
+    file: slides-en/s31-qa.md
+    type: qa_minimal
+    section: "Section 5. The decision framework"
+    duration_min: 5
+    assertion: "Q&A"
+    chapter_ref: "§5.5 [for-slide-s30]"
+
+# ─── Validation ───
+totals:
+  slides: 55
+  by_section:
+    "Section 0. Opening": [s01, s02, s02a, s03, s04]
+    "Section 1. The prompt": [s04a, s-classic-prompt, s05, s05a, s05c, s05b, s06, s07, s08, s08a]
+    "Section 2. RAG": [s09, s-classic-rag, s10, s11, s12, s13]
+    "Section 3. Fine-tune": [s13a, s-classic-ft, s13b, s15, s17, s14, s16]
+    "Section 4. Agents": [s18, s-classic-agents, s19, s19b, s20, s21, s22, s22a_multi, s22b, s22c, s22d, s22e, s25, s24, s25b, s23, s23b, s23c]
+    "Section 5. The decision framework": [s25a, s-classic-framework, s26, s27, s27b, s28, s29, s30, s31]
+  duration_min_total: 98
+
+ai_failure_judgment:
+  in_bucket_slides: [s01, s05a, s06, s07, s08, s12, s13, s16, s17, s22, s22a_multi, s22d, s22e, s20, s24, s25, s23, s23b, s23c, s27, s29]
+  count: 21
+  share_by_slides: "21/55 ~ 38% by slides"
+

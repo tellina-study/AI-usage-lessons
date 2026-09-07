@@ -3,14 +3,18 @@
 # Сгенерирован оркестратором после USER GATE A (chapter v1.1 finalized, 2026-05-16).
 # Обновлён Phase 4 restructure (chapter v2.0, 2026-08-09, issue #157): добавлены
 # skill / subagent / harness / presence paradox (новый §4 «Агенты» на agent-harness-registry).
-# Источник канона: plan-v2-final.md §6 + §7 inline-required + chapter v2.0.
+# Обновлён v3 (chapter v3.0, 2026-09-06, issue #185): перенос ролей протокола из Л2 (#184)
+# + фактура 2026 — добавлены chat-шаблон / протокольные роли / спецтокен / STI /
+# instruction hierarchy / agentic RAG / гибридный поиск / реранкер / slopsquatting /
+# rug-pull / runaway-стоимость / мульти-агентная система / лестница выбора.
+# Источник канона: plan-v2-final.md §6 + §7 inline-required + chapter v2.0/v3.0.
 # Правило: critics MAY flag inconsistency, MAY NOT propose rename без USER approval.
 # consistency-checker сверяет slides/*.md и speech.md по этому файлу (terminology-only mode).
-# Issue: #87, #157.
+# Issue: #87, #157, #185.
 
 lecture: 3
-locked_at: "2026-08-09"
-source: "notes/lecture-3-review/final/plan-v2-final.md §6/§7; chapter v2.0 (issue #157 restructure)"
+locked_at: "2026-09-06"
+source: "notes/lecture-3-review/final/plan-v2-final.md §6/§7; chapter v3.0 (issue #185 rework); notes/lecture-3-rework/research/"
 
 terms:
   - canonical: "архитектура AI-системы"
@@ -81,7 +85,59 @@ terms:
   - canonical: "prompt injection (инъекция в промпт)"
     aliases: []
     forbidden: []
-    note: "inline-define при первом упоминании (§4.1), формальный разбор §4.7"
+    note: "inline-define при первом упоминании (§4.1), формальный разбор §4.8"
+  - canonical: "протокольные роли (system / user / assistant)"
+    aliases: ["роли протокола"]
+    forbidden: []
+    note: "inline-define §1.2 — структура диалога через спецтокены chat-шаблона; ЯВНО отличать от «роли-персоны» в тексте промпта (тон, не точность)"
+  - canonical: "chat-шаблон (chat template)"
+    aliases: []
+    forbidden: ["чат-темплейт"]
+    note: "inline-define §1.2 — правило сборки плоского потока токенов из {role, content}; Jinja в tokenizer_config.json"
+  - canonical: "специальный токен (спецтокен разметки)"
+    aliases: ["спецтокен"]
+    forbidden: []
+    note: "inline-define §1.2 — служебная запись словаря (ChatML <|im_start|>/<|im_end|>); имя роли — строка после спецтокена"
+  - canonical: "Special Token Injection (STI, подделка роли)"
+    aliases: ["role spoofing"]
+    forbidden: []
+    note: "inline-define §1.2 — частный случай prompt injection: разметка роли во внешнем контенте; связка с §4.8"
+  - canonical: "instruction hierarchy (приоритет ролей)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §1.2 — выученный приоритет system над user; соблюдается частично, не гарантия"
+  - canonical: "agentic RAG (агентный RAG)"
+    aliases: ["adaptive RAG"]
+    forbidden: []
+    note: "inline-define §2.1 — дефолт 2026; модель сама решает, когда и что искать"
+  - canonical: "гибридный поиск (BM25 + плотные векторы)"
+    aliases: ["hybrid search"]
+    forbidden: []
+    note: "inline-define §2.1 — слияние лексического и семантического поиска (RRF)"
+  - canonical: "реранкер (переранжирование результатов)"
+    aliases: ["reranker"]
+    forbidden: []
+    note: "inline-define §2.1"
+  - canonical: "slopsquatting (галлюцинированные пакеты)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §4.10 — supply-chain-класс: модель предлагает несуществующий пакет, атакующий его регистрирует"
+  - canonical: "rug-pull (подмена MCP-сервера)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §4.1/§4.8 — доверенный сервер обновляется вредоносной версией"
+  - canonical: "runaway-стоимость (неконтролируемый расход)"
+    aliases: ["cost runaway"]
+    forbidden: []
+    note: "inline-define §4.1 — защита: hard cap / budget gate"
+  - canonical: "мульти-агентная система"
+    aliases: ["multi-agent"]
+    forbidden: []
+    note: "inline-define §4.3 — надёжность как p^n; топология критична; дефолт — один агент"
+  - canonical: "лестница выбора (Prompt → RAG → Fine-tune → Distill)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §3.1b/§5.1 — порядок как бремя доказательства"
   - canonical: "least-privilege (принцип наименьших привилегий)"
     aliases: []
     forbidden: []

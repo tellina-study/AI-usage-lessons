@@ -1,0 +1,166 @@
+# library/lectures/lec-05/glossary.en.yaml
+# Glossary LOCK (EN) — Lecture 5 "AI Product: the full lifecycle — from intent to operation".
+# English twin of glossary.yaml (issue #172, bilingual production rule). Canonical EN term per
+# concept; translators/producers of speech.en.md, deck.en.yaml, slides-en/*.md MUST use these
+# exact forms — no drift across artifacts. consistency-checker sverifies slides-en/*.md,
+# deck.en.yaml/deck-part2.en.yaml and speech.en.md against this file (terminology-only mode).
+# Issue: #189 / #172.
+
+lecture: 5
+locked_at: "2026-09-07"
+source: "glossary.yaml (RU lock, locked_at 2026-09-06) — direct EN twin, 1:1 concept mapping"
+
+terms:
+  - canonical: "feedback loop (discover→build→measure→learn→decide)"
+    aliases: ["product loop"]
+    forbidden: []
+    note: "course-scaffold keystone axis, NOT strict-in (partial→out). Three independent origins: PDCA/PDSA (Shewhart/Deming), OODA (Boyd), BML (Ries)."
+  - canonical: "PDCA/PDSA (Plan-Do-Check/Study-Act)"
+    aliases: []
+    forbidden: []
+  - canonical: "OODA (Observe-Orient-Decide-Act)"
+    aliases: []
+    forbidden: []
+  - canonical: "BML (Build-Measure-Learn)"
+    aliases: []
+    forbidden: []
+  - canonical: "cost/trust asymmetry"
+    aliases: []
+    forbidden: []
+    note: "course-scaffold, NOT strict-in (course axis, not a failure). s06 keystone."
+  - canonical: "Customer Development (Blank)"
+    aliases: []
+    forbidden: []
+    note: "inline-define §1.1: 4 steps discovery/validation/creation/building"
+  - canonical: "The Mom Test (Fitzpatrick)"
+    aliases: []
+    forbidden: []
+    note: "3 interview rules; inline-define §1.2"
+  - canonical: "falsifiable hypothesis (belief → test → date)"
+    aliases: []
+    forbidden: []
+    note: "cross-chapter device, introduced §1.3, reused in sections 3/4/5"
+  - canonical: "JTBD (Jobs-to-be-Done)"
+    aliases: []
+    forbidden: []
+  - canonical: "continuous discovery (Torres)"
+    aliases: []
+    forbidden: []
+  - canonical: "reference dataset"
+    aliases: []
+    forbidden: []
+    note: "20-100 curated examples; introduced in Section 1, reused in Sections 3/4"
+  - canonical: "Double Diamond / Design Thinking"
+    aliases: []
+    forbidden: []
+    note: "Double Diamond is the single load-bearing framework (reader-P1); Design Thinking mentioned as its 5-step version"
+  - canonical: "Nielsen heuristics"
+    aliases: []
+    forbidden: []
+    note: "top-5 of 10; metaphor \"a linter for UX\" (one metaphor, reader-P1)"
+  - canonical: "design system"
+    aliases: []
+    forbidden: []
+    note: "guardrail for AI UI generation"
+  - canonical: "MVP (Minimum Viable Product)"
+    aliases: []
+    forbidden: []
+  - canonical: "feature flag"
+    aliases: []
+    forbidden: []
+  - canonical: "canary release"
+    aliases: []
+    forbidden: []
+  - canonical: "blue-green / staged rollout"
+    aliases: []
+    forbidden: []
+  - canonical: "rollback"
+    aliases: []
+    forbidden: []
+  - canonical: "Stage-Gate go/kill"
+    aliases: []
+    forbidden: []
+    note: "\"a funnel, not a tunnel\" (Cooper)"
+  - canonical: "CC/CD (Continuous Calibration/Development) vs CI/CD"
+    aliases: []
+    forbidden: []
+    note: "Reganti & Badam; contrasted with familiar CI/CD"
+  - canonical: "agency ladder"
+    aliases: []
+    forbidden: []
+    note: "Copilot/Cursor: completions → blocks → PRs"
+  - canonical: "eval (offline/online eval) / LLM-as-judge"
+    aliases: []
+    forbidden: []
+    note: "\"a unit test for the agent\"; offline+online layers, not alternatives"
+  - canonical: "pass@k vs pass^k"
+    aliases: []
+    forbidden: []
+    note: "inline-define §4.3: at least 1 success out of k vs all k successful"
+  - canonical: "OEC (Overall Evaluation Criterion)"
+    aliases: []
+    forbidden: []
+  - canonical: "guardrail metric"
+    aliases: []
+    forbidden: []
+    note: "monitored, NOT optimized"
+  - canonical: "peeking / p-hacking"
+    aliases: []
+    forbidden: []
+  - canonical: "SRM (Sample Ratio Mismatch)"
+    aliases: []
+    forbidden: []
+  - canonical: "Twyman's law"
+    aliases: []
+    forbidden: []
+  - canonical: "SLI / SLO / error budget"
+    aliases: []
+    forbidden: []
+    note: "error budget = \"1 minus SLO\""
+  - canonical: "observability"
+    aliases: []
+    forbidden: []
+  - canonical: "incident / postmortem / runbook"
+    aliases: []
+    forbidden: []
+  - canonical: "LLMOps / AgentOps"
+    aliases: []
+    forbidden: []
+  - canonical: "model drift / silent drift"
+    aliases: []
+    forbidden: []
+    note: "silent drift — trust falls before the dashboard does; power-users notice first"
+  - canonical: "Goodhart's law / reward hacking"
+    aliases: []
+    forbidden: []
+  - canonical: "guardrails / policy-as-code"
+    aliases: []
+    forbidden: []
+  - canonical: "Guardian Agent (Gartner category)"
+    aliases: []
+    forbidden: ["Guardian Agents as a Sber product"]
+    note: "Market Guide 02.2026; Sber analog GigaCowork [VFY-day-of], NOT a confirmed product name"
+  - canonical: "maturity 0-5 (Sber)"
+    aliases: []
+    forbidden: []
+    note: "Sber rates itself at Level 3, not Level 5 — anti-hype signal"
+  - canonical: "operators→orchestrators"
+    aliases: []
+    forbidden: []
+    note: "Deloitte operating-model shift"
+  - canonical: "hidden human cost"
+    aliases: []
+    forbidden: []
+    note: "\"Wizard-of-Oz AI\"; Just Walk Out"
+  - canonical: "portfolio governance"
+    aliases: []
+    forbidden: []
+  - canonical: "unit economics"
+    aliases: []
+    forbidden: []
+    note: "cost per request vs value per request"
+
+notes:
+  - "Anti-anglicism mandate is RU-only (bilingual rule, CLAUDE.md § Bilingual Production Rule); it does NOT apply to EN artifacts. For EN, English is the target language — no RU-side forbidden-anglicism table applies here."
+  - "Mirror-check applies instead: EN artifacts must contain 0 untranslated Russian fragments (proper nouns / quoted RU source titles excluded and must be listed explicitly by any pre-gate scan)."
+  - "Deep latin-token scan (RU-only concern) does not apply to this file; N/A for EN."

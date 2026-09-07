@@ -1,0 +1,563 @@
+# library/lectures/lec-05/deck.en.yaml  —  PART 1 of 2  (English twin, issue #172)
+#
+# Deck structure of Lecture 5 "AI Product: the full lifecycle — from intent to operation"
+# (56 slides: s01–s49 + s13a IBM Watson — cascade-safe suffix ID + 6× sNNb ELI5 overviews).
+#
+# This is the ENGLISH source-of-truth twin of deck.yaml. RU is the source of truth (bilingual
+# rule, CLAUDE.md § Bilingual Production Rule); this file is a full faithful duplicate, not a
+# machine gloss. It is documentation, NOT read at render time (EN render is a later phase).
+#
+# Source: chapter.md + chapter-part2/3/4.md (≥30k words RU, 4 parts) +
+# notes/lecture-5-review/pdlc/final/plan-final.md §4 (slide list s01–s49 + s13a).
+# Issue #189 / #172 · Branch: hc/pldlc-lesson5-c5cc1586
+#
+# ┌─ STRUCTURAL PRINCIPLE (owner v3 full-rewrite, 2026-09-06): each of 6 sections = ──┐
+# │ ① intro + CLASSICAL BASE (process from scratch) → ② what AI adds (capabilities +  │
+# │ best practices + tools 2025-26) → ③ AI limitations + what stays from the classic → │
+# │ ④ an on-point failure for that phase. 13 failures total, distributed by phase      │
+# │ (not clustered). Keystone s05 (loop PDCA/OODA/BML) + s06 (cost/trust asymmetry).   │
+# └─────────────────────────────────────────────────────────────────────────────────┘
+#
+# ┌─ SPLIT: deck.yaml >600 lines (Document Size Limit, no waiver) → split ────────┐
+# │ deck.en.yaml   (THIS FILE) — deck/palette/motif/typography/glossary_lock      │
+# │                + ai_failure_judgment (top-level share) + slides s01..s27      │
+# │                (Section 0 "Introduction" through the end of Section 3         │
+# │                "Build/Launch").                                               │
+# │ deck-part2.en.yaml — slides s28..s49 (Section 4 Measure/Experiment through    │
+# │                Section 6 Governance/finale) + totals + verify_day_of_items +  │
+# │                fact_check_items.                                              │
+# │ Loader (rendered build script) reads BOTH parts. Cross-link at the bottom.    │
+# └─────────────────────────────────────────────────────────────────────────────┘
+#
+# ⚠ EN RENDER STATUS: text structure only (deck.en.yaml + slides-en/*.md). PPTX render is a
+# later phase. DO NOT RENDER in this phase.
+
+deck:
+  lecture_number: 5
+  title: "Lecture 5. AI Product: the full lifecycle — from intent to operation"
+  audience: "3rd-year engineering students, universal, no local binding"
+  duration_min: 100
+  central_question: "Now that AI made assembly almost free — what became the product's real bottleneck, and on every phase of the loop: which classical discipline stays, what does AI speed up, and where does AI-first break?"
+  learning_outcomes: [LO1, LO2, LO3, LO6]
+  language: en
+  status: draft-for-gate-b
+  version: v1.0
+  source: "chapter.md + chapter-part2/3/4.md (≥30k words RU, 4 parts) — EN twin"
+  plan: "notes/lecture-5-review/pdlc/final/plan-final.md §4"
+  total_slides: 56          # s01–s49 + s13a (IBM Watson, cascade-safe suffix) + 6× sNNb ELI5 overviews
+  curriculum_level: "Industry lecture (after Lecture 4 SDLC); L5 = strict-in ≥30% mandatory, waiver UNAVAILABLE"
+  deck_parts: [deck.en.yaml, deck-part2.en.yaml]   # split >600 lines; loader reads both
+  axis: "phases of the product loop (discover→build→measure→learn→decide); each phase = base→AI→limitations→failure"
+  glossary_lock: glossary.en.yaml
+
+palette:
+  primary_deep: "#21295C"      # Ocean deep — text on light bg, assertions
+  primary_mid: "#065A82"       # Ocean mid — headings, accents, primary chart series
+  primary_light: "#1C7293"     # Ocean light — icons, borders, motif strokes
+  teal: "#028090"              # secondary accent — chart contrast, secondary icons
+  gold: "#F0AB00"              # highlight — wow-stat, ≥1× per slide
+  surface: "#F4F7FA"           # motif rounded box background
+  background: "#FFFFFF"        # default slide background
+
+motif:
+  type: ocean_rounded_box
+  radius_pt: 12
+  stroke: "#1C7293"
+  stroke_pt: 1.5
+  surface: "#F4F7FA"
+  padding_pt: 16
+  cast_shadow: false
+
+typography:
+  heading_font: "Inter"
+  mono_font: "JetBrains Mono"
+  fallback_heading: "Arial"
+  sizes:
+    cover_title: 36
+    cover_hero: 60
+    slide_assertion: 28
+    sub_heading: 20
+    body: 16
+    caption: 12
+    mega_stat: 80
+
+glossary_lock:
+  # Canonical terms — from glossary.en.yaml (lecture-5 EN lock). Full list there;
+  # designer/critic enforce no drift; alias only 1× at first mention.
+  ref: "library/lectures/lec-05/glossary.en.yaml"
+  headline_terms:
+    - "feedback loop (discover→build→measure→learn→decide)"
+    - "cost/trust asymmetry"
+    - "Customer Development (Blank)"
+    - "The Mom Test (Fitzpatrick)"
+    - "falsifiable hypothesis (belief→test→date)"
+    - "reference dataset"
+    - "Double Diamond"
+    - "Nielsen heuristics"
+    - "feature flag / canary / staged rollout / rollback"
+    - "Stage-Gate go/kill"
+    - "CC/CD vs CI/CD"
+    - "agency ladder"
+    - "eval / offline-online eval / LLM-as-judge"
+    - "pass@k vs pass^k"
+    - "OEC / guardrail metric"
+    - "SLI/SLO/error budget"
+    - "LLMOps/AgentOps"
+    - "model drift / silent drift"
+    - "Goodhart's law / reward hacking"
+    - "Guardian Agent (Gartner)"
+    - "maturity 0-5"
+    - "operators→orchestrators"
+    - "hidden human cost"
+
+# ─────────────────────────────────────────────────────────────────────────
+# NO MEME DUPLICATION RULE (owner rule slides-meme-forward-minimal-text):
+# s01 hook meme/visual is UNIQUE — not repeated on any divider or s02 cover.
+# Cover (s02) meme + every section divider (s07/s14/s21/s28/s36/s44) each
+# specify their OWN distinct, evergreen meme concept resolving to that
+# slide's claim (never decorative, never a copy of s01 or of each other).
+# ─────────────────────────────────────────────────────────────────────────
+
+ai_failure_judgment:
+  # AI-Failure & Judgment Content Rule (ENFORCED): ≥30% strict-in by MINUTES (not by slides), waiver UNAVAILABLE.
+  # 13 solid IN-BUCKET slides (case+lesson+criterion+alternative, on-point to its own phase):
+  strict_in_slides: [s12, s13, s13a, s19, s20, s26, s27, s33, s34, s40, s41, s42, s47, s48]
+  count: 14   # 13 canonical plan failures + s13a IBM Watson (additional Discovery failure #3, added post-plan per course-curator LO3 sign-off note)
+  share_by_minutes: "≈34.5 / ≈92 active min ≈ 37.5% (buffer above the 30% threshold; honest recount of the v3 plan: 13 canonical failures = 31.5 min / 92 = 34%; +s13a IBM Watson adds ≈3 more provisional minutes to the Discovery cluster, the result is stated as a 34-37.5% range, exact recount — Phase 7 methodology-critic against actual slide duration_min)."
+  partial_out: [s01, s02, s03, s04, s06, s07, s07b, s08, s09, s10, s11, s14, s14b, s15, s16, s17, s18, s21, s21b, s22, s23, s24, s25, s28, s28b, s29, s30, s31, s32, s35, s36, s36b, s37, s38, s39, s43, s44, s44b, s45, s46, s49]
+  note: >
+    s05/s06 — the keystone axis (course-scaffold), NOT strict-in per Decision #78. Upside limitation
+    slides (s11, s18, s25, s32, s39) — a criterion without its own on-point case — partial→out (v1
+    lesson: don't pad the count with borderline slides). 6× sNNb ELI5 overviews (s07b/s14b/s21b/
+    s28b/s36b/s44b, Phase 5 post-plan addition) — a methodical recap of the phase in plain terms,
+    with no on-point case of its own — partial→out, not part of strict_in_slides. Holistic
+    distribution: each of the 6 sections carries ≥2 on-point failures — S1: s12/s13/s13a (3) ·
+    S2: s19/s20 (2) · S3: s26/s27 (2) · S4: s33/s34 (2) · S5: s40/s41/s42 (3) · S6: s47/s48 (2).
+    No single-artifact concentration. chapter target ≥40% (per-part word count, methodology-critic
+    Phase 3); slides/speech target ≥30% by minutes (Phase 7/10).
+
+# ─────────────────────────────────────────────────────────────────────────
+# Presentation order (plan-final §4): phases of the product loop, each
+# base→AI→limitations→failure. S0 s01-s06 (intro+keystone) ·
+# S1 [s07] s08-s13a (Discovery) · S2 [s14] s15-s20 (Design) ·
+# S3 [s21] s22-s27 (Build/Launch) · continued in deck-part2.en.yaml:
+# S4 [s28] s29-s35 (Measure/Experiment) · S5 [s36] s37-s43 (Support/Operate) ·
+# S6 [s44] s45-s49 (Governance/finale).
+# ─────────────────────────────────────────────────────────────────────────
+
+slides:
+  # ─── Section 0. Introduction + keystone (s01–s06) ───
+  - id: s01
+    file: slides-en/s01-hook-paradox.md
+    type: hero_cover
+    section: "Section 0. Introduction and keystone"
+    duration_min: 3
+    assertion: "Anthropic: weeks of work → hours; MIT: ~95% of pilots reportedly yield zero return — assembly is nearly free, but turning assembly into value is not; the paradox is the subject of the whole lecture"
+    learning_goal: "Hook paradox: two facts are true at once; payoff at s47"
+    learning_outcomes: [LO6]
+    chapter_ref: "§0.1 [for-slide-s01]"
+    interaction: open_question
+    verify_day_of: true
+    hero_required: true
+    partial_out_strict_in: true
+
+  - id: s02
+    file: slides-en/s02-cover-roadmap.md
+    type: cover
+    section: "Section 0. Introduction and keystone"
+    duration_min: 0.5
+    assertion: "Lecture 5. AI Product: the full lifecycle — from intent to operation"
+    learning_goal: "Cover + roadmap of the loop's 6 sections; unique meme (not a duplicate of s01)"
+    learning_outcomes: [LO1, LO2, LO3, LO6]
+    chapter_ref: "§0.2 [for-slide-s02]"
+    interaction: none
+    verify_day_of: false
+    hero_required: true
+
+  - id: s03
+    file: slides-en/s03-lecture-map-loop.md
+    type: process
+    section: "Section 0. Introduction and keystone"
+    duration_min: 1
+    assertion: "The lecture's six sections are six arrows of one loop: discover → build → measure → learn → decide → back to discover"
+    learning_goal: "Lecture-map = the loop, 6 sections on the arrows"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.2, §0.4 [for-slide-s03]"
+    interaction: none
+    verify_day_of: false
+
+  - id: s04
+    file: slides-en/s04-bridge-lec4-central-question.md
+    type: comparison
+    section: "Section 0. Introduction and keystone"
+    duration_min: 2
+    assertion: "The code loop (Lecture 4) lives inside the product loop: code is one step of the loop — now cheap — not the whole path from intent to operation"
+    learning_goal: "Bridge from Lecture 4 + the chapter's central question"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.2, §0.3 [for-slide-s03, s04]"
+    interaction: none
+    verify_day_of: false
+
+  - id: s05
+    file: slides-en/s05-keystone-loop.md
+    type: assertion_visual
+    section: "Section 0. Introduction and keystone"
+    duration_min: 2
+    keystone: true
+    assertion: "A statistician (Deming, PDCA), a fighter pilot (Boyd, OODA) and an entrepreneur (Ries, BML) independently drew the same blueprint: a product is a discover→build→measure→learn→decide loop"
+    learning_goal: "KEYSTONE — the feedback loop, 3 independent primary sources + the single/double-loop nuance"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0.4 [for-slide-s05]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s06
+    file: slides-en/s06-keystone2-asymmetry.md
+    type: assertion_visual
+    section: "Section 0. Introduction and keystone"
+    duration_min: 1.5
+    keystone: true
+    assertion: "AI changes the cost and trust of every arrow of the loop asymmetrically: Build → near zero; Measure/Learn — trust falls; Observe/Orient — faster, but more fragile"
+    learning_goal: "KEYSTONE-2 — cost/trust asymmetry + the meta-pattern \"the classic stays on every arrow\""
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§0.5, §0.6, §0.7 [for-slide-s06]"
+    interaction: think_pause
+    verify_day_of: false
+    partial_out_strict_in: true
+    axis_slide: true   # ENFORCED: the lecture's load-bearing axis, NOT strict-in (Decision #78)
+
+  # ─── Section 1. Discovery (s07–s13a) ───
+  - id: s07
+    file: slides-en/s07-divider-discovery.md
+    type: section_divider
+    section: "Section 1. Discovery"
+    duration_min: 0.3
+    assertion: "Discovery: intent and research — where does the hypothesis of what to build even come from"
+    learning_goal: "Section divider S1: the meaning of the phase in one line, tag \"3 failures\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§Section 1 (structural divider) [for-slide-s07]"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s07b
+    file: slides-en/s07b-discovery-eli5.md
+    type: eli5_overview
+    section: "Section 1. Discovery"
+    duration_min: 1.5
+    assertion: "Discovery in plain terms: before you build, you must go outside and learn who actually has what problem — your own guess almost always fools you"
+    learning_goal: "ELI5 overview of the discovery phase: why it exists, the mental model \"go outside for facts\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1 [for-slide-s07b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s08
+    file: slides-en/s08-base-customer-development.md
+    type: process
+    section: "Section 1. Discovery"
+    duration_min: 2.5
+    assertion: "Customer Development (Blank): \"there are no facts inside the building\" — 4 steps discovery→validation→creation→building, each hypothesis-first, each ending with a decision to continue or pivot"
+    learning_goal: "BASE: Customer Development + the falsifiable hypothesis (device, introduced here)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1, §1.3 [for-slide-s08, s09]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s09
+    file: slides-en/s09-base2-mom-test.md
+    type: assertion_visual
+    section: "Section 1. Discovery"
+    duration_min: 2.5
+    assertion: "The Mom Test (Fitzpatrick): even your mother will lie about the quality of your idea if the question is built wrong — 3 rules fix the construction of the question, not the honesty of the person"
+    learning_goal: "BASE-2: The Mom Test's 3 rules + bad/good question + qual vs quant"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.2, §1.4 [for-slide-s09, s10]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s10
+    file: slides-en/s10-ai-discovery-tools.md
+    type: process
+    section: "Section 1. Discovery"
+    duration_min: 2.5
+    assertion: "AI compresses desk research and interview synthesis from hours to minutes (Perplexity Deep Research ≈−50% time) — but every citation needs verification, and the reference dataset stays a draft until audited"
+    learning_goal: "AI: capabilities + tools of Discovery 2025-26 (desk research, synthesis, reference dataset, synthetic users as pre-research)"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§1.5 [for-slide-s11]"
+    interaction: none
+    verify_day_of: true
+    partial_out_strict_in: true
+
+  - id: s11
+    file: slides-en/s11-ai-limits-discovery.md
+    type: assertion_visual
+    section: "Section 1. Discovery"
+    duration_min: 2
+    assertion: "AI synthesis can lose 20-40% of interview detail (Torres) and cannot produce real disagreement — a live interview with a real past and a real commitment has no AI substitute"
+    learning_goal: "AI limitations + what stays: 3 criteria for \"when a live interview is strictly better\""
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§1.6 [for-slide-s12]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s12
+    file: slides-en/s12-failure-synthetic-users.md
+    type: case_study
+    section: "Section 1. Discovery"
+    duration_min: 3
+    assertion: "A synthetic panel reported 7 of 7 tasks completed; real users — 3 of 7: the panel cannot produce disagreement, so it cannot validate an idea"
+    learning_goal: "On-point failure #1: synthetic users, NN/g (LO2/LO6)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§1.7 [for-slide-s13]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s13
+    file: slides-en/s13-failure-fabricated-research.md
+    type: case_study
+    section: "Section 1. Discovery"
+    duration_min: 2
+    assertion: "Deloitte delivered a A$440,000 report to the Australian government with fabricated quotes and nonexistent sources — an unverified AI draft accepted as finished research"
+    learning_goal: "On-point failure #2: Deloitte Australia's fabricated research (LO6)"
+    learning_outcomes: [LO6]
+    chapter_ref: "§1.8 [for-slide-s13]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s13a
+    file: slides-en/s13a-failure-ibm-watson.md
+    type: case_study
+    section: "Section 1. Discovery"
+    duration_min: 2.5
+    assertion: "IBM Watson for Oncology: $62 million spent — without a single treated patient; trained on hypothetical cases from a handful of doctors, not on real outcomes"
+    learning_goal: "On-point failure #3: IBM Watson for Oncology (LO2/LO6) — high-stakes discovery on unverified data"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§1.9 [for-slide-s13a]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+    note: "cascade-safe suffix ID (s13a) — Discovery's 3rd failure, added per course-curator LO3 sign-off; does not shift the s14+ numbering"
+
+  # ─── Section 2. Design / prototype (s14–s20) ───
+  - id: s14
+    file: slides-en/s14-divider-design.md
+    type: section_divider
+    section: "Section 2. Design / prototype"
+    duration_min: 0.3
+    assertion: "Design: how a hypothesis becomes an artifact you can show a human — prototyping and safety-by-design"
+    learning_goal: "Section divider S2: the meaning of the phase in one line, tag \"2 failures\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§Section 2 (structural divider) [for-slide-s14]"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s14b
+    file: slides-en/s14b-design-eli5.md
+    type: eli5_overview
+    section: "Section 2. Design / prototype"
+    duration_min: 1.5
+    assertion: "Design in plain terms: turn a hypothesis into a cheap draft you can show a person and throw away — first the right problem, then the right solution"
+    learning_goal: "ELI5 overview of the design phase: why prototype, the mental model \"two diamonds\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 [for-slide-s14b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s15
+    file: slides-en/s15-base-double-diamond.md
+    type: process
+    section: "Section 2. Design / prototype"
+    duration_min: 2
+    assertion: "Double Diamond: two divergence-convergence cycles — first the right problem (Discover→Define), then the right solution (Develop→Deliver); the most common mistake is converging before the problem is validated"
+    learning_goal: "BASE: Double Diamond as the single load-bearing framework (Design Thinking = its 5-step version)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.1 [for-slide-s15]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s16
+    file: slides-en/s16-base2-heuristics-design-system.md
+    type: assertion_visual
+    section: "Section 2. Design / prototype"
+    duration_min: 2
+    assertion: "Nielsen's heuristics are \"a linter for UX\": the top-5 of an expert review catch problems before money is spent on research; a design system is a guardrail that keeps generation inside brand bounds"
+    learning_goal: "BASE-2: top-5 Nielsen heuristics + design system + fidelity spectrum + usability testing"
+    learning_outcomes: [LO1]
+    chapter_ref: "§2.2, §2.3 [for-slide-s16]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s17
+    file: slides-en/s17-ai-design-tools.md
+    type: process
+    section: "Section 2. Design / prototype"
+    duration_min: 2.5
+    assertion: "v0, Figma Make, Google Stitch generate 2-4 directions in minutes — best practice: AI for divergence, human for convergence"
+    learning_goal: "AI: capabilities + tools of Design 2025-26"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§2.4 [for-slide-s17]"
+    interaction: none
+    verify_day_of: true
+    partial_out_strict_in: true
+
+  - id: s18
+    file: slides-en/s18-ai-limits-nondeterministic-ux.md
+    type: assertion_visual
+    section: "Section 2. Design / prototype"
+    duration_min: 2.5
+    assertion: "29% WCAG conformance across 21,880 evaluations of AI-generated interfaces — the platform determines accessibility more than the prompt does; non-deterministic output demands new UX patterns"
+    learning_goal: "AI limitations: AI slop/homogenization, the WCAG gap, designing for non-deterministic output, LO3"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§2.5 [for-slide-s18]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s19
+    file: slides-en/s19-failure-character-ai.md
+    type: case_study
+    section: "Section 2. Design / prototype"
+    duration_min: 2.5
+    assertion: "Character.AI's safety features appeared only after a lawsuit over a teenager's death — almost two years after launch: safety-by-design belongs in the MVP, not as a patch after tragedy"
+    learning_goal: "On-point failure #3 (S2): Character.AI (LO3/LO6)"
+    learning_outcomes: [LO3, LO6]
+    chapter_ref: "§2.6 [for-slide-s19]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s20
+    file: slides-en/s20-failure-itutorgroup.md
+    type: case_study
+    section: "Section 2. Design / prototype"
+    duration_min: 2
+    assertion: "iTutorGroup hardcoded auto-rejection of candidates 55+/60+ years old — found by accident; EEOC: the first-ever AI discrimination settlement, $365,000"
+    learning_goal: "On-point failure #4 (S2): iTutorGroup (LO2/LO6) — contrast with s19: here a harmful criterion was built in"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§2.7 [for-slide-s20]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  # ─── Section 3. Build / Launch (s21–s27) ───
+  - id: s21
+    file: slides-en/s21-divider-build-launch.md
+    type: section_divider
+    section: "Section 3. Build / Launch"
+    duration_min: 0.3
+    assertion: "Build / Launch: the collapsed arrow — this is exactly where AI changes the most, the cost of writing the code itself"
+    learning_goal: "Section divider S3: the meaning of the phase in one line, tag \"2 failures\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§Section 3 (structural divider) [for-slide-s21]"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s21b
+    file: slides-en/s21b-build-launch-eli5.md
+    type: eli5_overview
+    section: "Section 3. Build / Launch"
+    duration_min: 1.5
+    assertion: "Build and launch in plain terms: writing code is now nearly free, so what matters most is no longer \"write it\" but \"ship it safely and stop it in time\""
+    learning_goal: "ELI5 overview of the build-and-launch phase: why release mechanics matter, the mental model \"a valve, not a switch\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§3.1 [for-slide-s21b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s22
+    file: slides-en/s22-base-mvp-release-mechanics.md
+    type: process
+    section: "Section 3. Build / Launch"
+    duration_min: 2.5
+    assertion: "You know feature flags/canary/rollback from engineering rollout — but here the same mechanics serve a product go/kill gate, a business decision to kill, not just a technical flag"
+    learning_goal: "BASE: MVP/BML + release mechanics + Stage-Gate go/kill; explicit callout for the stronger half"
+    learning_outcomes: [LO1]
+    chapter_ref: "§3.1, §3.2 [for-slide-s22]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s23
+    file: slides-en/s23-ai-build-review-bottleneck.md
+    type: assertion_visual
+    section: "Section 3. Build / Launch"
+    duration_min: 2.5
+    assertion: "Build → near zero (Anthropic); code volume +200% a year per engineer, yet only ~16% of PRs got substantive human review — the bottleneck shifted to review"
+    learning_goal: "AI trait: Build→≈0 + the bottleneck shift into review; what to keep from the classic"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§3.3 [for-slide-s23]"
+    interaction: none
+    verify_day_of: true
+    partial_out_strict_in: true
+
+  - id: s24
+    file: slides-en/s24-ai-launch-control-transfer.md
+    type: process
+    section: "Section 3. Build / Launch"
+    duration_min: 2
+    assertion: "CC/CD versus the familiar CI/CD: a release is versioned by its level of agency, not its feature set — the agency ladder (Copilot/Cursor) earns autonomy in stages, not all at once"
+    learning_goal: "AI: launch as a transfer of control — CC/CD vs CI/CD, the agency ladder"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.4 [for-slide-s24]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s25
+    file: slides-en/s25-ai-limits-review-not-scaling.md
+    type: assertion_visual
+    section: "Section 3. Build / Launch"
+    duration_min: 1.5
+    assertion: "Review doesn't scale alongside generation — an asymmetry between the cost of generating and the cost of verifying; shipping without an eval gate or a rollback plan isn't speed, it's a deferred cost"
+    learning_goal: "AI limitations of Build/Launch: why review is a structural bottleneck, not a temporary staffing shortage"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§3.5 [for-slide-s25]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s26
+    file: slides-en/s26-failure-google-ai-overviews.md
+    type: case_study
+    section: "Section 3. Build / Launch"
+    duration_min: 2.5
+    assertion: "Google shipped AI Overviews to 100% of US search in one step, skipping the usual canary rollout of 1%→10%→25%→50%→100% — and got \"eat rocks\" / \"glue on pizza\" within days"
+    learning_goal: "On-point failure #5: Google AI Overviews (LO2/LO6)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§3.6 [for-slide-s26]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s27
+    file: slides-en/s27-failure-mcdonalds-drive-thru.md
+    type: case_study
+    section: "Section 3. Build / Launch"
+    duration_min: 2
+    assertion: "McDonald's kept AI order-taking on 0.7% of the chain's restaurants for 2.5-3 years and still killed the pilot — the correct Stage-Gate decision was to kill, not scale, a failure"
+    learning_goal: "Failure/positive on-point #6: McDonald's × IBM drive-thru — an exemplary kill decision (LO2/LO6)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§3.7 [for-slide-s27]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+# ─────────────────────────────────────────────────────────────────────────
+# Continued — deck-part2.en.yaml: slides s28..s49 (Section 4 Measure/Experiment
+# through Section 6 Governance/finale) + totals + verify_day_of_items +
+# fact_check_items. Loader reads BOTH parts.
+# ─────────────────────────────────────────────────────────────────────────

@@ -1,0 +1,408 @@
+# library/lectures/lec-05/deck-part2.en.yaml  —  PART 2 of 2  (English twin, issue #172)
+#
+# Continuation of the deck structure of Lecture 5 "AI Product: the full lifecycle — from intent
+# to operation" (56 slides). Split per Document Size Limit. English twin of deck-part2.yaml.
+#
+# ┌─ SPLIT: see deck.en.yaml (PART 1) — deck/palette/motif/typography/       ─┐
+# │ glossary_lock + ai_failure_judgment (top-level share) + slides s01..s27.  │
+# │ THIS FILE — slides s28..s49 + totals + verify_day_of_items +              │
+# │ fact_check_items.                                                         │
+# │ Loader (rendered build script) reads BOTH parts and merges `slides`.      │
+# └────────────────────────────────────────────────────────────────────────┘
+#
+# Issue #189 / #172 · Branch: hc/pldlc-lesson5-c5cc1586 · version v1.0
+# Presentation order — see deck.en.yaml PART 1 (s27 → s28 → ..).
+#
+# ⚠ EN RENDER STATUS: text structure only. DO NOT RENDER.
+
+slides:
+  # ─── Section 4. Measure / Experiment (s28–s35) ───
+  - id: s28
+    file: slides-en/s28-divider-measure-experiment.md
+    type: section_divider
+    section: "Section 4. Measure / Experiment"
+    duration_min: 0.3
+    assertion: "Measure / Experiment: the loop's arrow where AI lowered trust, not cost"
+    learning_goal: "Section divider S4: the meaning of the phase in one line, tag \"2 failures\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§Section 4 (structural divider) [for-slide-s28]"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s28b
+    file: slides-en/s28b-measure-eli5.md
+    type: eli5_overview
+    section: "Section 4. Measure / Experiment"
+    duration_min: 1.5
+    assertion: "Measurement in plain terms: find out whether your change caused the result, not coincidence — the only honest way is to compare two randomized groups"
+    learning_goal: "ELI5 overview of the measurement phase: why experiment, the mental model \"two identical groups\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§4.1 [for-slide-s28b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s29
+    file: slides-en/s29-base-controlled-experiment-oec.md
+    type: process
+    section: "Section 4. Measure / Experiment"
+    duration_min: 2.5
+    assertion: "Randomization is the only way to know a change caused the result rather than merely coincided with it; the OEC is the metric the team agreed matters — decided in advance, not after"
+    learning_goal: "BASE: the controlled experiment + OEC + guardrail metrics; Kohavi's teaching example (time-on-site)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§4.1 [for-slide-s29]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s30
+    file: slides-en/s30-base2-experiment-traps.md
+    type: assertion_visual
+    section: "Section 4. Measure / Experiment"
+    duration_min: 2.5
+    assertion: "Eight experiment traps — three questions in the right order: is the test set up correctly (SRM)? am I reading the result correctly (peeking)? is the effect itself real (Twyman)?"
+    learning_goal: "BASE-2: traps grouped into 3 sub-clusters (top-3 per slide); A/B ≠ feature flag; Bing ≈$100M (not \"the $300M button\")"
+    learning_outcomes: [LO1]
+    chapter_ref: "§4.2 [for-slide-s30]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s31
+    file: slides-en/s31-ai-evals-as-experiments.md
+    type: process
+    section: "Section 4. Measure / Experiment"
+    duration_min: 2.5
+    assertion: "Evals are \"unit tests for the agent\": a ladder unit→judge→A/B; pass@k trends toward 100%, pass^k collapses toward 0% at the same base probability — probabilistic output breaks pass/fail"
+    learning_goal: "AI: evals as experiments for the agent — Hussain's 3-layer framework, pass@k vs pass^k, LLM-as-judge"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§4.3 [for-slide-s31]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s32
+    file: slides-en/s32-ai-limits-goodhart.md
+    type: assertion_visual
+    section: "Section 4. Measure / Experiment"
+    duration_min: 2
+    assertion: "Goodhart's law: when a measure becomes a target, it ceases to be a good measure — the model finds a way to \"win\" the proxy metric without achieving the intended outcome"
+    learning_goal: "AI limitations: Goodhart's law/reward hacking + what stays (the controlled experiment, guardrails, Twyman), LO6"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§4.4 [for-slide-s32]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s33
+    file: slides-en/s33-failure-facebook-msi.md
+    type: case_study
+    section: "Section 4. Measure / Experiment"
+    duration_min: 2.5
+    assertion: "Facebook weighted all 5 emoji reactions 5× higher than a like for \"meaningful interactions\" — an engagement proxy without a misinformation guardrail hid the harm for almost 2 years"
+    learning_goal: "On-point failure #7: Facebook MSI, corrected version (all reactions ×5, not only anger) (LO2/LO6)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§4.5 [for-slide-s33]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s34
+    file: slides-en/s34-failure-benchmark-not-reality.md
+    type: case_study
+    section: "Section 4. Measure / Experiment"
+    duration_min: 2
+    assertion: "Med-PaLM 2 scored 86.5% on MedQA — but clinical safety needs a separate adversarial set; Lexis+ 17%, Westlaw 33% hallucinations — \"passed the benchmark\" ≠ \"safe in production\""
+    learning_goal: "On-point failure #8: benchmark ≠ reality (medical + legal AI, corrected attribution: ChatGPT, not Harvey) (LO6)"
+    learning_outcomes: [LO6]
+    chapter_ref: "§4.6 [for-slide-s34]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s35
+    file: slides-en/s35-synthesis-section4.md
+    type: assertion_visual
+    section: "Section 4. Measure / Experiment"
+    duration_min: 1.5
+    assertion: "Measure is the arrow where AI lowered trust: the classic A/B stays, but evals and guardrail metrics are now mandatory on top; the central skill is telling signal from noise"
+    learning_goal: "Synthesis S4 (LO1) — bridge into Support: the same skill in operation = noticing drift before the dashboard does"
+    learning_outcomes: [LO1]
+    chapter_ref: "§4.7 [for-slide-s35]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  # ─── Section 5. Support / Operate (s36–s43) ───
+  - id: s36
+    file: slides-en/s36-divider-support-operate.md
+    type: section_divider
+    section: "Section 5. Support / Operate"
+    duration_min: 0.3
+    assertion: "Support / Operate: the product as an orchestra — what happens once the product is already live 24/7"
+    learning_goal: "Section divider S5: the meaning of the phase in one line, tag \"3 failures\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§Section 5 (structural divider) [for-slide-s36]"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s36b
+    file: slides-en/s36b-support-eli5.md
+    type: eli5_overview
+    section: "Section 5. Support / Operate"
+    duration_min: 1.5
+    assertion: "Support in plain terms: between \"it works on my machine\" and \"it reliably works for millions, 24/7\" lies a gap, and it's closed by process, not just code quality"
+    learning_goal: "ELI5 overview of the support phase: why operations matter, the mental model \"a budget for errors\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.1 [for-slide-s36b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s37
+    file: slides-en/s37-base-sre-support-ops.md
+    type: process
+    section: "Section 5. Support / Operate"
+    duration_min: 2.5
+    assertion: "SLI→SLO→error budget (\"1 minus SLO\"): changes cause roughly 70% of outages; but an SLI of \"share of successful 200 responses\" says nothing about whether the model is hallucinating"
+    learning_goal: "BASE: SRE + support-ops; explicit callout \"what's new here — a non-deterministic model in production\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.1 [for-slide-s37]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s38
+    file: slides-en/s38-ai-llmops-agentops.md
+    type: process
+    section: "Section 5. Support / Operate"
+    duration_min: 2.5
+    assertion: "Tracing catches what infrastructure monitoring misses: hallucination drift, retrieval failures, prompt regressions; Guardian Agents (a Gartner category) are agents that watch agents"
+    learning_goal: "AI: LLMOps/AgentOps — tracing, drift monitoring, runtime guardrails, circuit breaker, LO3 emphasis (what must never go to external tracing)"
+    learning_outcomes: [LO1, LO3]
+    chapter_ref: "§5.2 [for-slide-s38]"
+    interaction: none
+    verify_day_of: true
+    partial_out_strict_in: true
+
+  - id: s39
+    file: slides-en/s39-ai-limits-silent-drift.md
+    type: assertion_visual
+    section: "Section 5. Support / Operate"
+    duration_min: 2
+    assertion: "Silent drift: trust falls before the dashboards move — power users notice a regression even when the aggregated metrics still look green"
+    learning_goal: "AI limitations: silent drift + governance drift + what stays (escalation, accountability), LO3"
+    learning_outcomes: [LO2, LO3]
+    chapter_ref: "§5.3 [for-slide-s39]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s40
+    file: slides-en/s40-failure-zillow-drift.md
+    type: case_study
+    section: "Section 5. Support / Operate"
+    duration_min: 2.5
+    assertion: "Zillow had no runtime circuit breaker on prediction-accuracy drift — $304-408M in write-downs, ~2,000 laid off, ≈$80k loss per home"
+    learning_goal: "On-point failure #9: Zillow drift — a capital-committing model with no circuit breaker (LO2/LO3/LO6)"
+    learning_outcomes: [LO2, LO3, LO6]
+    chapter_ref: "§5.4 [for-slide-s40]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s41
+    file: slides-en/s41-failure-air-canada.md
+    type: case_study
+    section: "Section 5. Support / Operate"
+    duration_min: 2
+    assertion: "The tribunal rejected the defense that \"the bot is a separate legal entity\": the company is responsible for the bot's answer exactly as it is for a static page on its site"
+    learning_goal: "On-point failure #10: Air Canada — the principle of accountability for every bot answer (LO3/LO6)"
+    learning_outcomes: [LO3, LO6]
+    chapter_ref: "§5.5 [for-slide-s41]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s42
+    file: slides-en/s42-failure-klarna-nyc-mycity.md
+    type: case_study
+    section: "Section 5. Support / Operate"
+    duration_min: 2.5
+    assertion: "Klarna rolled back its \"no humans\" policy as automation grew to a 853-FTE equivalent; 10 out of 10 journalists got the same unlawful advice from New York City's bot"
+    learning_goal: "On-point failure #11: Klarna + NYC MyCity (+Chevy inline) — guaranteed escalation + deterministic guardrails (LO2/LO6)"
+    learning_outcomes: [LO2, LO6]
+    chapter_ref: "§5.6 [for-slide-s42]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s43
+    file: slides-en/s43-synthesis-section5.md
+    type: assertion_visual
+    section: "Section 5. Support / Operate"
+    duration_min: 1.5
+    assertion: "Operation is the point where the loop physically closes: the signal from support converts into an update of the reference dataset/guardrails and back into intent"
+    learning_goal: "Synthesis S5 (LO1) — keystone callback: the signal from operation changes intent"
+    learning_outcomes: [LO1]
+    chapter_ref: "§5.7 [for-slide-s43]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  # ─── Section 6. Governance / ROI / finale (s44–s49) ───
+  - id: s44
+    file: slides-en/s44-divider-governance-roi.md
+    type: section_divider
+    section: "Section 6. Governance / ROI / finale"
+    duration_min: 0.3
+    assertion: "Governance / ROI / when not to: the capstone assembles the whole loop and answers the hook paradox"
+    learning_goal: "Section divider S6: the meaning of the phase in one line, tag \"payoff\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§Section 6 (structural divider) [for-slide-s44]"
+    partial_out_strict_in: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s44b
+    file: slides-en/s44b-governance-eli5.md
+    type: eli5_overview
+    section: "Section 6. Governance / ROI / finale"
+    duration_min: 1.5
+    assertion: "Governance in plain terms: deciding where to put money among many initiatives, and honestly counting whether the AI product returns more value than it costs"
+    learning_goal: "ELI5 overview of the governance phase: why governance matters, the mental model \"a capital funnel + cost per request\""
+    learning_outcomes: [LO1]
+    chapter_ref: "§6.1 [for-slide-s44b]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s45
+    file: slides-en/s45-base-portfolio-governance.md
+    type: assertion_visual
+    section: "Section 6. Governance / ROI / finale"
+    duration_min: 2
+    assertion: "Portfolio governance is the same Stage-Gate go/kill, raised to the level of capital across many initiatives; for an AI product, unit economics gains a new variable — cost per request"
+    learning_goal: "BASE: portfolio governance + unit economics + an operational financial KPI (a support-triage example)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§6.1 [for-slide-s45]"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s46
+    file: slides-en/s46-ai-operating-model.md
+    type: process
+    section: "Section 6. Governance / ROI / finale"
+    duration_min: 2
+    assertion: "Five independent sources (Deloitte, Sber, Gartner, McKinsey, Forrester) converge: the bottleneck shifted from technology to the operating model — the winner is whoever rebuilt teams and governance"
+    learning_goal: "AI: the operating model — operators→orchestrators, maturity 0-5 (Sber at Level 3, not 5), IDP economics, agentwashing"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§6.2 [for-slide-s46]"
+    interaction: none
+    verify_day_of: true
+    partial_out_strict_in: true
+
+  - id: s47
+    file: slides-en/s47-failure-macro-reality.md
+    type: case_study
+    section: "Section 6. Governance / ROI / finale"
+    duration_min: 3
+    assertion: "Payoff of the s01 hook: MIT's \"95% of pilots — 0 profit\" is actually 60→20→5 — success among those who reached a pilot is 25%, not 5%; hype numbers (RAND 80.3%, Sber v1) do not survive calibration"
+    learning_goal: "On-point failure #12: macro reality of MIT/RAND/Gartner/S&P/BCG — 4 questions to ask of any loud statistic (LO6)"
+    learning_outcomes: [LO6]
+    chapter_ref: "§6.3 [for-slide-s47]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+
+  - id: s48
+    file: slides-en/s48-failure-just-walk-out-matrix.md
+    type: matrix
+    section: "Section 6. Governance / ROI / finale"
+    duration_min: 2.5
+    assertion: "Just Walk Out: 700 of 1,000 transactions needed manual review against a target of 50 of 1,000 — the claimed autonomy diverged from operational reality by a factor of 14"
+    learning_goal: "On-point failure #13: Just Walk Out (hidden human cost) + a summary matrix \"phase × cost × trust × what stays\" (LO1/LO2)"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§6.4 [for-slide-s48]"
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+
+  - id: s49
+    file: slides-en/s49-keystone-payoff-checklist-qa.md
+    type: summary
+    section: "Section 6. Governance / ROI / finale"
+    duration_min: 2.5
+    assertion: "When assembly is free, the scarce resource is not execution but judgment: telling signal from noise and keeping intent and accountability with the human"
+    learning_goal: "Keystone payoff + \"before you go AI-first\" checklist + bridge to Lecture 6/seminar + Q&A"
+    learning_outcomes: [LO1, LO6]
+    chapter_ref: "§6.5, §6.6 [for-slide-s49]"
+    interaction: qa_minimal
+    verify_day_of: false
+    hero_required: true
+    partial_out_strict_in: true
+
+# ─────────────────────────────────────────────────────────────────────────
+# Validation
+# ─────────────────────────────────────────────────────────────────────────
+totals:
+  slides: 56                    # s01–s49 + s13a + 6× sNNb ELI5 (s07b/s14b/s21b/s28b/s36b/s44b)
+  base_slides_locked: "s01–s49 + s13a + s07b/s14b/s21b/s28b/s36b/s44b (ELI5 overviews). Hero required = s01 + s49. 6 section dividers: s07(S1) s14(S2) s21(S3) s28(S4) s36(S5) s44(S6), each followed by its own sNNb ELI5 overview."
+  slide_times_sum_min: 107.3    # sum of per-slide duration_min below (table sum; was 98.3 pre-ELI5, +6×1.5=9.0)
+  total_min: 100                # active ~92 + ~8 Q&A buffer (partly within s49); ELI5 slides absorbed within section budgets, target duration_min unchanged
+  note: >
+    Plan-final §4: ~49-50 slides ≈ 100 min + 6 ELI5 overviews (Phase 5 post-plan
+    addition, +1.5 min each). Section budgets: S0 s01-s06 (10) ·
+    S1 [s07] s07b s08-s13a (17.5) · S2 [s14] s14b s15-s20 (15.3) ·
+    S3 [s21] s21b s22-s27 (14.8) · S4 [s28] s28b s29-s35 (17.3) ·
+    S5 [s36] s36b s37-s43 (17.3) · S6 [s44] s44b s45-s49 (13.8) ·
+    Q&A buffer embedded in s49. Cut order (plan §4a, if timing needs trimming
+    at render phase): s16 (heuristics — compress to 1 slide) → s25 (AI limits
+    build — move to speaker notes) → s43 (S5 synthesis) → s30 (traps — top-3
+    instead of 6) → s45 (governance base — compress). DO NOT cut: keystone
+    (s05/s06), each section's base (its first slide), on-point failures (hold
+    ≥30%).
+
+# Per-slide duration_min (plan-final §4, distributed per slide; ELI5 sNNb — Phase 5 addition, +1.5 each):
+#   S0: s01=3 s02=0.5 s03=1 s04=2 s05=2 s06=1.5 (=10) ·
+#   S1: [s07=0.3] s07b=1.5 s08=2.5 s09=2.5 s10=2.5 s11=2 s12=3 s13=2 s13a=2.5 (=18.8) ·
+#   S2: [s14=0.3] s14b=1.5 s15=2 s16=2 s17=2.5 s18=2.5 s19=2.5 s20=2 (=15.3) ·
+#   S3: [s21=0.3] s21b=1.5 s22=2.5 s23=2.5 s24=2 s25=1.5 s26=2.5 s27=2 (=14.8) ·
+#   S4: [s28=0.3] s28b=1.5 s29=2.5 s30=2.5 s31=2.5 s32=2 s33=2.5 s34=2 s35=1.5 (=17.3) ·
+#   S5: [s36=0.3] s36b=1.5 s37=2.5 s38=2.5 s39=2 s40=2.5 s41=2 s42=2.5 s43=1.5 (=17.3) ·
+#   S6: [s44=0.3] s44b=1.5 s45=2 s46=2 s47=3 s48=2.5 s49=2.5 (=13.8)
+#   Σ per-slide ≈ 107.3 discussion (10+18.8+15.3+14.8+17.3+17.3+13.8); active
+#   presentation ~92 + Q&A buffer unchanged (ELI5 overviews absorbed within
+#   existing section time budgets, not additive to total_min). Final minute
+#   calibration — at the render phase (Phase 6).
+
+ai_failure_judgment_part2_note: >
+  The full ai_failure_judgment specification (strict_in_slides, count, share_by_minutes,
+  partial_out, note) lives in deck.en.yaml (PART 1) as a top-level key — the single source
+  of truth for both parts. Not duplicated here to avoid drift.
+
+verify_day_of_items:
+  - s01_anthropic_pr_metrics        # Anthropic weeks→hours PR metrics
+  - s10_perplexity_deep_research    # Perplexity Deep Research versions/Opus-model binding
+  - s17_design_tools_versions       # v0/Figma Make/Google Stitch/bolt.new versions 2025-26
+  - s23_anthropic_200pct_16pct      # Anthropic 2026 Agentic Coding Trends Report — 200%/16% + PR-review product March 2026
+  - s34_stanford_reglab_percentages # Lexis+ 17% / Westlaw 33% — reconfirm on render day
+  - s38_guardian_agents_sber        # Guardian Agents Gartner Market Guide 02.2026; GigaCowork status
+  - s46_deloitte_sber_gartner       # Deloitte 75%/42%/81%; Sber maturity/IDP economics; Gartner 5-stage curve
+  - s47_gartner_sp_bcg_numbers      # Gartner 782/28%/3400+/40%; S&P 17%→42%; BCG 60%/25%; Sber v1→v2 numbers
+
+fact_check_items:
+  - s10_reference_dataset_synth_users_split   # 97% use / 8% trust synthetic users
+  - s12_nng_synthetic_users_7of7_3of7          # NN/g 3/7 vs 7/7, drone "game-changer"
+  - s13_deloitte_charlotin_712_90pct           # Damien Charlotin DB 712 cases / ~90% 2025
+  - s18_wcag_29pct_21880                       # WCAG 29.0% / 21,880 evaluations; contrast 26.8% / color 19.2%
+  - s26_google_ai_overviews_sources            # eat rocks (Onion) / glue on pizza (Reddit 11-year-old comment)
+  - s30_peeking_2x_5x_12x                      # 2 peeks ≈2×, 5 ≈3.2×, continuous ~12× FP
+  - s31_llm_judge_85pct_60pct_safety           # MT-Bench 85%/81% agreement; <60% on safety categories
+  - s33_facebook_msi_all_reactions_5x          # CORRECTED: all reactions ×5, not only "anger" (Techdirt correction)
+  - s34_stanford_reglab_88pct_17pct_33pct      # GPT-4 raw 88% / Lexis+ 17% / Westlaw 33%
+  - s38_model_variance_15pct_70pct             # up to 15% accuracy variance between runs, gap up to 70%
+  - s42_klarna_853_fte_10of10_nyc              # Klarna 853 FTE; NYC MyCity 10/10 journalists

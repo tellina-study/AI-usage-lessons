@@ -63,10 +63,10 @@ lectures:
     module: 1
     learning_outcomes: [LO1, LO2, LO3, LO6]
     repo_dir: lec-05
-    status: in_production
+    status: produced
     issue: 189
-    updated_at: "2026-09-06"
-    note: "Слот Л5 переориентирован с finance/retail на AI-PDLC (owner 2026-09-06, issue #189). Прежняя finance/retail-версия (produced) сохранена в library/lectures/_archive/lec-05-finance-retail — реслотирование = отдельный follow-up. LO3 переинтерпретирован под governance/guardrails/drift (course-curator sign-off — GATE-0 blocker)."
+    updated_at: "2026-09-07"
+    note: "Слот Л5 переориентирован с finance/retail на AI-PDLC (owner 2026-09-06, issue #189); produced 2026-09-07 — RU+EN (глава ~30k + дек 56 сл. + речь ~8.7k), все QA пройдены, референсы [N] восстановлены. Прежняя finance/retail-версия сохранена в library/lectures/_archive/lec-05-finance-retail (реслот — follow-up #191). LO3 переинтерпретирован под governance/guardrails/drift (course-curator sign-off)."
 
   - number: 6
     title: "AI в инженерном проектировании и CAD/CAM"

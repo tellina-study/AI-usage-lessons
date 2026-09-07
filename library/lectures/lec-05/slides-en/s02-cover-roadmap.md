@@ -1,38 +1,39 @@
 ---
 id: s02
 type: cover
-section: "Section 0. Opening"
+section: "Section 0. Introduction and keystone"
 duration_min: 0.5
-assertion: "Lecture 5. AI in the financial sector and retail"
-learning_goal: "Cover + roadmap 0–6; gold marker «Section 0»"
-chapter_ref: "§0.2"
-visual_brief: "Hero cover: large outline «05» + title + roadmap-bar 7 cards, current (0) gold. NO Ocean rounded box."
+assertion: "Lecture 5. AI Product: the full lifecycle — from intent to operation"
+learning_goal: "Cover + roadmap of the loop's 6 sections; unique meme (not a duplicate of s01)"
+learning_outcomes: [LO1, LO2, LO3, LO6]
+chapter_ref: "§0.2 [for-slide-s02]"
 interaction: none
 verify_day_of: false
+hero_required: true
+meme_or_visual: >
+  A meme concept DIFFERENT from s01: a stylized circular loop (6 nodes on a circle, corresponding
+  to the 6 sections), with a small decorative "intent → operation" icon in the center (a light
+  bulb on the left, a gear on the right, joined by an arc). Evergreen — a geometric metaphor of
+  the cycle, independent of specific tools/screenshots. Roadmap bar at the bottom — ONLY here and
+  on the dividers (never on content slides).
 ---
 
 # Visible content
 
 ## Title bar
-(none — cover)
+Lecture 5. AI Product: the full lifecycle — from intent to operation
 
 ## Body
-[Right — giant decorative «05», soft-outline]
+[A circular loop icon in the center, 6 nodes]
 
-[Left — LECTURE 5, teal]
-**LECTURE 5**
+*Course "Deliberate Use of AI" · 3rd-year engineering students*
 
-[Title, 36pt bold deep]
-**AI in the financial sector and retail**
+[Roadmap bar at the bottom — 6 loop cards]
 
-[Subtitle, 18pt mid]
-*For which task — which type of AI, why exactly that one, and where it breaks*
-
-[Bottom — roadmap-bar: 7 cards]
-0 Opening *(gold marker — current)* · 1 Forecasting · 2 Anomalies · 3 Scoring · 4 LLM · 5 Recommendations · 6 Framework
+0 Introduction · 1 Discovery · 2 Design · 3 Build/Launch · 4 Measure · 5 Support/Operate · 6 Governance
 
 ## Speaker notes
 
-This is the course's second industry lecture. In Lecture 4 we examined how artificial intelligence enters software development — there it was essentially a single type of AI, a generative coder model, but examined in depth up the ladder of autonomy. Today the picture is fundamentally different. Finance and retail are the industries with the deepest and most varied AI adoption, and here a whole palette of different types works for different tasks: demand forecasting, fraud detection, credit scoring, recommendations, computer vision at the checkout. Most of the value comes from something other than a language model.
+Lecture 4 walked through the lifecycle of code. Today's lecture is a zoom-out: code is one phase — now sharply cheaper — inside a much wider product lifecycle. You're technically strong and write code with AI assistants daily, but most of the product disciplines — customer development, design thinking, product experiments, operations by the reliability-engineering model — you're likely seeing for the first time. So each of today's six sections starts not with AI but with the classical base: where the discipline came from and what problem it solves without a single mention of artificial intelligence. Only after that do we ask what AI changes and where it breaks.
 
-The lecture is built as a route through six substantive sections. After the opening we will go through time-series forecasting, anomaly detection, credit scoring, language models in finance, recommender systems and dynamic pricing, and finish by assembling everything into a single framework for choosing the type of AI and for data safety. The bar of sections at the bottom is our map: on each divider you will see where we are on the route. The through-line of the lecture is one: a different task requires a different type of AI, a language model is not a universal hammer, and the value of an engineer is not in the ability to launch AI, but in the ability to choose the right type for the task and to understand in advance exactly where that type breaks and who is responsible for it.
+The roadmap is simple: six sections are six arrows of one loop. Discovery — where the hypothesis comes from. Design — how a hypothesis becomes an artifact. Build and Launch — how an artifact becomes a working product in production. Measure — how to check whether it actually worked. Support and Operate — what happens once a product lives 24/7. And Governance — how an organization decides what to invest capital in at all. At the end we'll assemble everything into a single matrix and checklist that you can run any unfamiliar AI initiative through.

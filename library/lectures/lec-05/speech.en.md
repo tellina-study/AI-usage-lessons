@@ -1,597 +1,389 @@
 ---
 lecture: 5
-title: "Lecture 5. AI in the Financial Sector and Retail"
-length_words: ~5800
-length_min: 75
-status: finalized
-version: v2
-derived_from: "chapter v2 finalized (3 части, ~22650 слов) + deck v2 (33 слайда LOCKED: s01–s32 + s04a) + plan v2-final (USER GATE 0)"
-slides_covered: [s01, s02, s03, s04, s04a, s05, s06, s07, s08, s09, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31, s32]
-issue: 100
+title: "Lecture 5. The AI Product: The Full Lifecycle — From Intent to Operation"
+length_words: "~8,700 spoken (part 1 ~5,700 + part 2 ~3,900), mirroring the RU original"
+length_min: 100
+status: draft
+version: v1.0
+parts: 2
+derived_from: "English translation of speech.md + speech-part2.md (RU v1.0), source of truth chapter.md + chapter-part2/3/4.md + deck.yaml + deck-part2.yaml + slides/s01..s49b"
+issue: 189
+slides_covered_part1: [s01, s02, s03, s04, s05, s06, s07, s07b, s08, s09, s10, s11, s12, s13, s13a, s14, s14b, s15, s16, s17, s18, s19, s20, s21, s21b, s22, s23, s24, s25, s26, s27]
+slides_covered_part2: [s28, s28b, s29, s30, s31, s32, s33, s34, s35, s36, s36b, s37, s38, s39, s40, s41, s42, s43, s44, s44b, s45, s46, s47, s48, s49]
+translation:
+  - "Full faithful spoken-register English duplicate of the RU speech (not a machine gloss). Terminology per the EN lock in the task brief and per lec-05 glossary.yaml canon. RU is source of truth; this file mirrors it section-by-section, same slide anchors, same argument order, same numbers/baselines/fact-integrity corrections."
+  - "Keystone terms preserved: feedback loop; cost/trust asymmetry; Customer Development (Blank); The Mom Test; falsifiable hypothesis (belief→test→date); reference dataset; Design Thinking / Double Diamond; Nielsen heuristics; design system; MVP / Build-Measure-Learn; feature flag / canary / rollback / Stage-Gate; CC/CD vs CI/CD; agency ladder; eval / LLM-as-judge / pass@k vs pass^k; OEC; guardrail metric; peeking / SRM; SLI/SLO/error budget; incident/postmortem; LLMOps/AgentOps; model drift / silent drift; Goodhart's law / reward hacking; guardrails / policy-as-code; Guardian Agent (Gartner category); maturity 0-5; operators→orchestrators; hidden human cost."
+  - "Numbers, dates, brand names, and study attributions preserved verbatim, including all fact-integrity corrections carried from the RU source (MSI all five reactions weighted ×5, not anger alone; Bing headline test ≈$100M annual US revenue, not the unrelated '$300M button' usability finding; Mata v. Avianca fake citations are ChatGPT, not Harvey AI; Med-PaLM 'chemo for headache' claim does not trace to a primary source; Guardian Agents is a Gartner analyst category, not a confirmed Sberbank product name). US spelling throughout. Uses 'AI' (not 'ИИ')."
 changelog:
-  - "v1 (2026-05-17): первый draft Phase 9 — устная развёртка chapter v2 по 33 слайдам deck v2. ЦВ символьно из §0.3/s04; 5 точек возврата (s09/s14/s18/s23/s28); failure-нить Zillow→fraud-FP→Apple Card→Air Canada/Klarna→Wendy's, Knight = callback; 5 divider bridge phrases; pre-flight verify-day-of по cbr/Сбер/X5/vendor. (Самооценка v1 ОШИБОЧНО заявляла «все 33 ≤95 / max s28=94.7 PROVEN PASS» — скрипт v1 использовал non-greedy `«…»` извлечение, обрывавшее многоабзацные блоки и занижавшее WPM. Реальные v1-числа были выше; см. v2.)"
-  - "v2 (2026-05-17, Phase 11 единая ревизия по 3 отчётам Phase 10): [P1-1 methodology] WPM-trim 6 фрагментов, которые по корректной методике (greedy, многоабзацные блоки целиком) превышали 95: s28 (Phase10-методика 100.3), s29 (98.0), s32 (97.3), s09 (96.0), s23 (96.0), s14 (95.7). Срезан только filler/упрощены предложения; критерии, 5 точек возврата, альтернативы, аналогии, Knight/Opendoor-callback'и НЕ тронуты. Пост-trim (официальная методика greedy-strip-cue): ВСЕ 33 фрагмента ≤95, max = s28 91.3 WPM (strict keep-cue max = s32 94.7). [P1-2] секция самооценки переписана честно — без «PROVEN PASS», реальные пофрагментные числа. [P2 fact] s17 «с марта 2024»→«в феврале–марте 2024 года» (паритет с chapter §3.2). [P2 meth] «мы с вами» честно = 8 (не 10); Σ slide-duration = 69.0 мин (per-slide), ≈70 по deck-totals, активный темп + Q&A-буфер = 75 мин. ЦВ s04 без изменений (устная запятая-нормализация, лексемы/порядок идентичны §0.3 — consistency D1 = опционально, оставлено как есть)."
+  - "v1.0: first English translation of speech.md + speech-part2.md v1.0, produced under the bilingual production rule (issue #172). Split identically to the RU original: speech.en.md (Section 0 keystone + Sections 1-3, s01-s27) + speech-part2.en.md (Sections 4-6, s28-s49)."
 ---
 
-# Lecturer's Speech · Lecture 5 "AI in the Financial Sector and Retail"
+# Lecturer's Speech · Lecture 5 "The AI Product: The Full Lifecycle — From Intent to Operation"
 
-**Duration:** 75 min (Σ per-slide ≈ 69 min active + ~6 Q&A buffer; ≈70 by deck totals).
-**Version:** v2 (Phase 11 revision based on 3 Phase 10 reports; status=draft, finalized by the orchestrator after GATE C).
-**Source of truth:** chapter v2 finalized. This is an oral unfolding, not a reading of the chapter and not speaker notes.
+**Duration:** ~100 min (92 active minutes + ~8 min Q&A buffer on s49).
+**Parts:** `speech.en.md` (this file) — Section 0 (keystone) + Sections 1-3 (Discovery, Design, Build/Launch), slides s01-s27. `speech-part2.en.md` — Sections 4-6 (Measure, Support/Operate, Governance) + payoff + Q&A, slides s28-s49.
+**Source of truth:** `chapter.md` + `chapter-part2/3/4.md` (the book is the source of truth), cross-checked against the speaker notes of slides s01-s49b. This is a spoken unfolding for the lecturer, not a reading of the chapter.
+**Format:** conversational English, direct address, rhetorical questions, pauses and emphasis marked inline in square brackets where useful. Methodological / pedagogical asides are allowed in this speech (unlike the visible slide layer) — they help the lecturer hold the thread.
 
 ## Preparation before the lecture
 
-- Check the projector and slide order: 33 slides. Dividers — s04a / s10 / s15 / s20 / s25. These are the oral cue points for "moving on to section N of five."
-- `[VERIFY-DAY-OF]` Open cbr.ru, find the Consultation Paper "AI Application in the Financial Market: Current Status" (`Consultation_Paper_20112025.pdf`). Verify the oral phrasings of s12 (anti-fraud is widely applied), s17 (scoring autonomy at SIB ≈100%, over 80% offer opt-out to a human). If the Central Bank has released a new edition — update the phrasing orally, do not change the direction. On the visible layer — only "per Bank of Russia materials," no bare number without attribution.
-- `[VERIFY-DAY-OF]` Sber: check TAdviser/Interfax for fresh operational numbers — ~100% of retail decisions by AI, up to 5000 parameters, +350 billion ₽/2023. These are the bank's claims, February–March 2024. Phrase as "per the bank's claims"; update the number orally if there is a newer one.
-- `[VERIFY-DAY-OF]` X5: check TAdviser for the status of demand forecasting — >70% accuracy, +5 billion ₽, −2% write-offs. Magnit F&R: a pilot after the departure of SAP/Blue Yonder, status 2025–2026. Phrase as claimed by the company.
-- `[FACT-CHECK]` Vendor numbers for s12: Stripe Radar fraud reduction ~32% while approving >99% (stripe.com/radar); JPMorgan −30% false positives; Visa prevented ~$40 billion in FY2023 (≈80 million transactions, per Reuters/CNBC reports, July 2024). These are vendor claims — deliver them with attribution, not as an independent fact.
-- `[FACT-CHECK]` s21: T-Bank chatbot >40% of inquiries; ~70% of banks planned voice by 2025 (TAdviser, 2025). Do NOT deliver the figure ">90% of banks' inquiries" as a fact — only as a teaching example of base substitution (class 5).
-- `[FACT-CHECK]` s23: Klarna ~$40 million savings, two-thirds of inquiries, −resolution time from ~11 to <2 min — claimed by the company in 2024; the rollback to humans and the CEO's words — in indirect speech (Bloomberg/Entrepreneur/CX Dive, 2025), without verbatim quotes.
-- `[FACT-CHECK]` s27: Amazon ~35% / Netflix ~75% — a historical estimate of a single origin (McKinsey ~2013), NOT a fresh headline. Deliver as "a historically cited estimate."
-- `[FACT-CHECK]` s31: Just Walk Out relied on over 1000 reviewers in India (CNBC/Axios, April 2024); Amazon disputed the interpretation of the scale — name both sides.
-- Run through aloud with a stopwatch the dense fragments — s11, s13, s14, s16, s22, s23, s26, s27, s28, s29. If the time-box is exceeded, remove one sentence of explanation, do NOT speed up speech and do NOT cut the return points, criteria, and alternatives.
-- Clock: 5 return points of the central question — s09, s14, s18, s23, s28. If falling behind — cut explanations, not the return points.
-- Note the interactives: s01 (open question, 30 sec), s09 (pause-think, 30 sec), s14 (poll, 20 sec), s23 (pause-think, 30 sec), s28 (pause-think, 30 sec).
+- Order of the 56 slides: 6 dividers (s07/s14/s21/s28/s36/s44), 6 ELI5 overviews right after each divider (s07b/s14b/s21b/s28b/s36b/s44b), 2 keystones (s05/s06), 2 syntheses (s35/s43), the finale s49 with the checklist and Q&A.
+- Re-verify `[VFY-day-of]` before the day of the lecture: Anthropic PR metrics (s01, s23), design tools v0/Figma Make/Stitch (s17), Anthropic 200%/16% (s23), Stanford RegLab (s34), Guardian Agents/GigaCowork (s38), Deloitte/Sber/Gartner (s46, s47).
+- The meta-pattern repeats six times: the classic discipline → what AI adds → where AI is limited → a failure from this phase. By the third section you can name it out loud: "you're recognizing the pattern — that recognition is the method."
+- The keystone cost/trust asymmetry as the connective thread: Build → almost zero; Measure/Learn → trust drops; Observe/Orient → faster but more exposed. Return to the formula in one sentence at the close of every section.
+- 13 on-point failures across 6 sections, no section skipped, no failure force-fitted — a substantive answer to the "here comes AI-doom again" skepticism.
+- Backup if the projector fails: narrate by the six arrows of the loop; every number and case is spoken aloud in the speech itself.
 
 ---
 
-## [s01 · 3 min] — Hook: the collapse of Zillow
+## [s01] — Hook: the paradox
 
-"Let's begin not with excitement and not with a warning, but with one date and one number.
+"Let's not start with a definition. Let's start with a paradox.
 
-[lower voice] November 2021. Zillow — the largest real estate listings platform in the US — is shutting down an entire line of business. It was called Zillow Offers. The idea was beautiful. A computer model forecasts how much a particular house will cost. Based on the forecast, Zillow itself, automatically, buys that house, does cosmetic repairs, and resells it for more. This is called iBuying — the algorithmic purchasing of housing. Remove the human appraiser, scale to thousands of houses in dozens of cities at once.
+Anthropic describes its own internal experience like this: tasks that used to take weeks of writing and reviewing code now take hours. An agent writes the implementation, passes the tests — and the code is nearly free.
 
-[pause 2 sec] In practice, the model systematically overvalued houses. The company bought at higher prices than it could sell for. The outcome in three numbers. Inventory write-down — more than three hundred million dollars in a single quarter. Cumulative losses of the line — an estimated half a billion and above. About twenty-five percent of the staff was laid off, around two thousand people. The stock fell by about a quarter in the days after the announcement.
+At the same time, in the summer of 2025, a research group at MIT Media Lab published a report that the media picked up under the headline: 'ninety-five percent of organizations get zero return from generative AI.'
 
-[pause] An entire line of a large public company shut down because of the errors of a single predictive model.
+Both facts are true at once. And at first glance they contradict each other. Building is nearly free — and almost nobody is extracting value from it. How is that even possible?
 
-And here let's ask together the question we will be answering the whole lecture. What type of AI was this — and why did an ordinary model error turn into a loss of business rather than a minor inaccuracy? Let me say right away: this was not ChatGPT. Not "artificial intelligence that can do everything." This was a predictive model estimating a number — a price — from tabular and geographic data. A language model was not applied here and could not be.
+I won't resolve the paradox right now — that's the payoff of the lecture, we'll come back to it at the end, with numbers. But let's fix the shape of it right away, because it holds up everything that follows: **building has become nearly free, and turning that build into real value has not.**
 
-[address the room] Thirty seconds, think to yourselves. Here is a model error. When does it cost near zero, and when — half a billion dollars? What distinguishes one case from the other? [pause 30 sec]
+We're going to walk the entire product lifecycle — from intent, through discovery, design, build, measurement, operation — and at every phase we'll ask the same question: what did AI make cheap here, and what stayed expensive and human?
 
-Hold your answer in your head. We will return to Zillow in detail — and check whether it matched."
-
-[Transition to s02.]
+[Pause, thirty seconds] Think about it: if building became almost free — what became the real bottleneck of a product? Hold on to your answer, we'll come back to it more than once."
 
 ---
 
-## [s02 · 0.5 min] — Cover and map
+## [s02] — Cover and roadmap
 
-"Lecture five. AI in the financial sector and retail. This is the course's second industry topic. In Lecture 4 we took software development — one type of AI, but in depth. Today — a palette of types. Seven blocks on the map below: discovery, forecasting, anomalies, scoring, LLM, recommendations, and assembly into an apparatus."
+"Lecture five. The AI product: the full lifecycle — from intent to operation.
 
-[Transition to s03.]
+Lecture four dissected the lifecycle of code. Today we zoom out: code is one phase — now dramatically cheaper — inside a much wider product lifecycle.
 
----
+Let's be honest about you specifically: you're technically strong, you write code with AI assistants every day. But most product disciplines — customer development, design thinking, product experimentation, operations run like reliability engineering — you're most likely seeing for the first time. So each of today's six sections opens not with AI, but with the classical foundation: where the discipline came from and what problem it solves, without a single mention of artificial intelligence. Only after that do we ask what AI changes and where it breaks.
 
-## [s03 · 2 min] — KEYSTONE: the palette of five types
-
-"Remember this picture — it holds the whole lecture together.
-
-In Lecture 4, in software development, we essentially examined one type of AI — a generative coder model — but in depth, along the ladder of autonomy. In finance and retail the picture is different. Here a whole palette of different types of AI works for different tasks, and most of the value comes not from a language model at all.
-
-Here are the five types we will go through. Demand forecasting — that's one. Fraud detection — that's two. Credit scoring — that's three. Language assistants in support — that's four. Recommendations and pricing — that's five. And as a sixth layer, a cross-cutting illustration, computer vision will run through — the cashierless checkout, biometrics at the bank entrance.
-
-[pause] These are structurally different types of AI. And applying a language model everywhere would be an engineering error. Remember the phrase, it runs through the whole lecture: the LLM is not a universal hammer.
-
-And one more honest caveat. Four concepts we will be introducing right today, from scratch: type I and type II errors, the confusion matrix, the mechanism of proxy bias, and distribution shift. It's normal that they're new — we'll break each one down in plain terms when we get there."
-
-[Transition to s04.]
+This isn't academic politeness. An engineer who only knows 'how to build fast,' but doesn't know why customer discovery or A/B testing exists, risks making a decision that's technically flawless — and pointless or dangerous from a product standpoint. The very structure of this lecture — foundation, then AI, then limits, then failure — applies the course's own thesis to itself: to judge whether AI belongs somewhere, you first have to know what existed before it."
 
 ---
 
-## [s04 · 2.5 min] — The central question and the unified pattern
+## [s03] — Lecture map = the loop
 
-"Here is the central question of the whole lecture. Write it down — we will return to it five times, at the end of each section.
+"Here's the map of today's lecture — and it's not drawn as a list, it's drawn as a circle. Six sections aren't six independent topics; they're six arrows of one loop. Discovery — where the hypothesis comes from. Design — how the hypothesis becomes an artifact. Build and Launch — how the artifact becomes a working product in production. Measure — how you verify whether it actually worked. Support and Operate — what happens when the product is live twenty-four seven. And Governance — how the organization decides where to put its capital.
 
-[lower voice, read slowly] Finance and retail are the industries of maximum AI adoption. For which task — which type of AI, why exactly it and not an LLM everywhere, and where does this type break?
-
-[pause 2 sec] Note: the question has two halves. The first — "which type and why exactly it." The second — "where it breaks." Both are mandatory, and the second is more important.
-
-To examine the five types uniformly, we will take one frame — a unified card pattern. Five steps. Step one — what the task is. Step two — which type of AI and why exactly it, and not a language model. Step three — a real example, ours and the world's. Step four — where it breaks, a documented failure. Step five — the alternative and the criterion: under what condition this type is inapplicable.
-
-An important caveat. This "card pattern" is not an industry standard and not a term from a textbook. It's a way to organize the material, our working construct for the lecture — like the ladder of autonomy last time. You are not required to understand everything at once. Each type goes by the same scheme, and by the end the scheme will become your tool of choice."
-
-[Transition to s04a.]
+The key point: the last arrow loops back into the first. Signal from operations and governance decisions changes what we investigate next in Discovery. This is a closed cycle, not a one-time linear process — and at the end of the lecture we'll come back to this same circle, but with a full understanding of what happens on every arrow."
 
 ---
 
-## [s04a · 0.3 min] — Divider: Section 1
+## [s04] — Bridge from Lecture 4 + the central question
 
-"**Section one of five.** Time series forecasting. Let's begin with the most widespread task of retail — and right away with a type of AI that is NOT a language model."
+"Lecture four showed: software development with AI is an engineering discipline built around a loop of human-owned artifacts. A spec turns into an architecture decision, that becomes a plan, the plan becomes a pull request, and operation produces an incident record that loops back as a new requirement into the spec. That loop lives inside a single phase of the product lifecycle — Build, which we'll dissect in Section 3.
 
-[Transition to s05.]
+Today's lecture goes up one level. The product as a whole runs its own loop, and the decision to go back to the start or kill the product is made not by an engineering criterion, but a product one: did the hypothesis about user value hold up?
 
----
+The difference in scale matters. Lecture four answered 'how do I write the code I'm accountable for' — its unit of work was a pull request, a commit. This lecture answers 'where does the confidence to write that code even come from in the first place' — its unit of work is a hypothesis, an experiment, a release decision. Code is just one step, and now the cheapest one.
 
-## [s05 · 1.5 min] — Series forecasting: why not an LLM
+That gives us the central question of the lecture, the one we'll return to in every section. Write it down, it's load-bearing:
 
-"Time series forecasting is the prediction of future values of a number that is measured regularly over time. How much milk will be bought next Tuesday. What the cash inflow will be next month. The key word is series: a sequence of numbers over time that has trend, seasonality, and noise.
+*Now that AI has made building nearly free — what became the real bottleneck of a product, and at every phase of the cycle: which classical discipline still stands, what does AI speed up, and where does AI-first break?*
 
-The type of AI — classical statistics and tabular learning: the ARIMA family, gradient boosting. Not a generative model and not an LLM.
-
-[pause] Why not an LLM? A language model predicts the next token of text. Series forecasting is the next number in a sequence with trend and seasonality. A language model has no internal notion of "sales seasonality" — it has seen texts about sales, not your series. Remember the intuition: for a series of numbers over time you need a tool that can handle a series of numbers over time. The right type of AI is determined by the structure of the task, not by the trendiness of the tool."
-
-[Transition to s06.]
+Hold this question as a lens: not 'can AI be applied here' — you almost always can — but 'where did the bottleneck move when this arrow got cheaper.'"
 
 ---
 
-## [s06 · 2.5 min] — The forecasting task: the criterion in full
+## [s05] — KEYSTONE: the feedback loop
 
-"In retail, demand forecasting is the foundation of the entire operational chain: how much to order, how much to keep on the shelf, when to launch a promotion. An error in one direction — an empty shelf and a lost sale. In the other — an overflowing warehouse and the write-off of expired goods. In finance the analogue is forecasting cash inflow and forecasting customer churn.
+"This is the key slide of the lecture — the whole logic that follows depends on it. Hold it in your head through all six sections.
 
-It is important for us to understand the selection criterion in full — three arguments.
+The load-bearing idea: **a product is a feedback loop. Discover, build, measure, learn, decide, discover again.** And this is a shape that at least three people arrived at independently, from completely different fields, with no contact with one another.
 
-First — the structure of the data. These are tabular series: date, product, quantity, price, features. Models for series are designed to extract trend and seasonality. To turn a series into text for a language model means losing exactly the structure that must be used.
+Walter Shewhart and W. Edwards Deming, quality-control statisticians, formulated the PDCA cycle — plan, do, check, act — back in 1939 and the 1950s. John Boyd, a military fighter pilot, formulated the OODA loop in the 1970s — observe, orient, decide, act — as a model of who wins a dogfight: not the pilot with the faster plane, but the one who cycles through this loop faster. Eric Ries, an entrepreneur, formulated Build-Measure-Learn — build a minimally sufficient product, measure the market's reaction, learn — as a way to avoid spending months on a feature nobody wants.
 
-Second — measurability. A forecast needs a numerical error metric and a confidence interval, because the purchasing decision is built on these numbers. Classical models provide this out of the box. A language model does not.
+A statistician, a fighter pilot, and an entrepreneur drew, in essence, the same blueprint, without coordinating with each other — a compelling argument that the feedback loop isn't a trendy methodology, it's a structural property of any system that learns under uncertainty.
 
-Third — what will break. Take an LLM — and you get a plausible number without justified uncertainty. The purchasing decision still has to be made, and the cost of a systematic error is multiplied by volume. Remember the mechanism — it is exactly what ruined Zillow.
+There's a nuance to the same shape — the single loop and the double loop. A single loop corrects an error relative to a fixed goal, like a thermostat. A double loop goes deeper: it questions the goal itself. Hold this in mind — it foreshadows a failure from Section 4: training a model on human feedback is a mechanized single loop, and reward-function hacking is exactly its failure mode.
 
-And the cross-cutting theme — data security. If the data contains citizens' personal data — the personal data law applies to it. Sending such series to a public cloud is both the wrong type of AI and a risk of violating localization. The right type here is also safer: a tabular model is deployed on your own infrastructure."
-
-[Transition to s07.]
+That's exactly why AI cannot 'cancel' the loop. It can change how much each arrow of the loop costs and how much you can trust it — but not the underlying necessity of observing reality, interpreting it, and deciding."
 
 ---
 
-## [s07 · 2.5 min] — Example: X5 and Magnit
+## [s06] — KEYSTONE-2: the cost/trust asymmetry
 
-"A real example, our country. X5 — that's "Pyaterochka," "Perekrestok" — has been developing its own demand-forecasting algorithms since 2019. According to the company, forecast accuracy exceeds seventy percent. By the end of 2023 ML tools brought, per the company's claim, about five billion rubles of additional revenue and reduced write-offs of expired goods by about two percent.
+"The second half of the keystone — the central analytical instrument of the lecture: **AI changes the cost and the trust of every arrow of the loop asymmetrically, not uniformly.**
 
-Why does this matter to an engineer in essence? A forecast is not an end in itself. It is connected to the decision about purchasing and restocking the shelf. Accuracy converts directly into money: fewer write-offs, fewer lost sales.
+Three cases. The 'build' arrow — cost has nearly collapsed to zero: writing code, a design draft, a first research prototype are orders of magnitude cheaper and faster than five years ago. We'll dig into this in Section 3.
 
-[pause] The second example is especially instructive. Magnit (a large Russian grocery-retail chain) until 2022 used the forecasting-and-logistics systems of foreign vendors — of the SAP, Blue Yonder class. After they left the market, the company is building its own demand-forecasting and auto-ordering system. The pilot started at a distribution center.
+The 'measure' and 'learn' arrows — cost stayed the same, but trust in the result dropped: the measurement instrument itself became probabilistic and vulnerable to metric manipulation. Section 4 will unpack this in detail.
 
-The conclusion for us: the departure of foreign vendors made import substitution of forecasting systems not a theoretical but a direct engineering task of our industry. This is the context in which you will work. And note: neither X5 nor Magnit solves this task with a language model. They build specialized forecasting systems, because the type of AI is dictated by the task."
+The 'observe' and 'orient' arrows — got faster, but more exposed to attack: the speed of observing a system in production went up, but the very ability to react quickly turns into a vulnerability if the observed data can be poisoned. We'll open this up in Section 5.
 
-[Transition to s08.]
+From here comes the meta-pattern that will repeat in every one of today's six sections, literally on the same template: **every phase of the product lifecycle has a classical discipline, and AI does not cancel it.** AI changes how much that discipline costs and how much you can trust it without verification — but it does not remove the need for the discipline itself. Customer Development doesn't get replaced by 'ask the model what the user thinks.' A product experiment doesn't get replaced by 'the model predicted the metric would go up.' SRE-style operations doesn't get replaced by 'the agent will figure it out.'
 
----
+In every section we'll ask one question: what does the classical discipline make reliable, what does AI speed up — and at what point does speed become a trap, because trust doesn't keep pace with it.
 
-## [s08 · 1.5 min] — How it works: the merchandiser
-
-"Let's look at the mechanics in plain terms, without formulas.
-
-Imagine a sales chart for one product over two years. The eye almost immediately sees three things. An upward slope — the trend. A regular comb, where every Saturday there's a peak and a hump toward December — seasonality. A small trembling around it — noise. The model does the same numerically: it decomposes the history into trend, seasonality, and noise and extends the regularity into the future.
-
-An analogy, remember it. A forecasting model is like an experienced merchandiser who, looking at the history, says: "toward the weekend take more, before New Year — much more." Only for millions of "store and product" pairs at once.
-
-[lower voice] And here a vulnerability is built in. A forecast extends the patterns of the past. As long as tomorrow resembles yesterday — it works beautifully. But if the world changes qualitatively, the model confidently extrapolates patterns that no longer exist. It doesn't understand that the world has changed. Remember — this is the key to the next slide."
-
-[Transition to s09.]
+[Pause, twenty seconds] On which arrow of your most recent task did speed outrun your actual trust in the result? Hold on to your answer, it'll be useful at the end."
 
 ---
 
-## [s09 · 2 min] — The Zillow failure: return point 1
+# SECTION 1. DISCOVERY
 
-"The central question returns for the first time. We unpack Zillow.
+## [s07] — Divider: Section 1
 
-The model forecast the price of a house, and per the forecast Zillow automatically bought up housing. In 2020–2021 the market went through a pandemic shock. The model, trained on a stable market, systematically overvalued. Half a billion in losses.
+"Moving to the first arrow of the loop — Discovery. This is the phase where the hypothesis about what to build even comes from. Most strong engineers have informal experience 'asking friends' — but almost nobody has run into the discipline that explains why that experience systematically lies to you.
 
-Let's introduce a term from scratch. **Distribution shift** — when the data in reality stops resembling the training data. In one phrase: the model learned on one world, works in another.
+Two classical foundations in this section: a methodology for finding a business model, and a technique for a single conversation. Then — what AI adds, where it's limited, and three failures that show three facets of the same mistake: a synthetic source mistaken for a verified fact."
 
-[pause] But shift by itself does not ruin you — models drift constantly. What ruined you was what the output is connected to. The key concept: **asymmetry of the cost of error**. The same error in a recommendation costs near zero; in the auto-purchase of a house — tens of thousands, irreversible.
+## [s07b] — ELI5: Discovery in plain terms
 
-[lower voice] Callback. Knight Capital in 2012 lost four hundred forty million in forty-five minutes — automation placed orders without control. An ordinary algorithm, not ML. The class of error is the same: automation of the irreversible without a kill switch.
+"Before we get into the formal methods — let's break discovery down to basics.
 
-The lesson we take away. The type of AI was chosen correctly — a forecast is a forecast. The error was the decision about where to connect the output: irreversible, automatically, without a switch. The competitor Opendoor survived the same period on the same type — thanks to conservative wrapping. The same AI, different judgment — bankruptcy or survival.
+Discovery is the first arrow of the loop. At this point you're not building anything yet. Your only job is to figure out whether it's even worth building something, and for whom. Sounds simple, but this is exactly where most products fail: the team falls in love with its own idea and builds it without ever checking whether there's a real problem that idea actually solves.
 
-[address the room] Thirty seconds to yourselves: where else is an irreversible auto-action on a forecast dangerous? [pause 30 sec]"
+The key mental model for this section: **there are no facts inside the office.** Everything you think about your users while sitting at your desk is a hypothesis, not knowledge. Facts live outside, with real people.
 
-[Transition to s10.]
+AI can help a lot — summarizing interviews, pulling together desk research in minutes instead of hours. But it cannot talk to a real person on your behalf, and it cannot produce real disagreement. Next — two classical techniques that keep a conversation honest, and three real failures where discovery got replaced by a plausible-sounding invention."
+
+## [s08] — FOUNDATION: Customer Development
+
+"Let's start with the classic — you have to start here, not with an AI tool, because without this frame any AI tool just speeds up the mistake.
+
+Customer Development is Steve Blank's methodology, from 2003. The central idea sounds like an aphorism, memorize it word for word: **'there are no facts inside the building, so get outside.'** A startup, in Blank's terms, is not a smaller copy of a big company — it's a temporary organization in search of a repeatable business model under extreme uncertainty. You can't write the plan in advance, because it depends on answers only customers know.
+
+The method is four sequential steps, each ending in an explicit decision to continue or pivot. Discovery — turn the founders' hypotheses into facts by going out to real people; the step is explicitly hypothesis-first: you write down what you believe before you walk out the door. Validation — can you sell this not just to the first enthusiasts, but to a wider circle. Creation and Company Building — generate demand at scale and shift the organization from search mode into execution mode.
+
+Blank's canonical example: the founders wrote a forty-page business plan and only then held their first conversation with a customer — every important decision made on zero evidence. The Lean LaunchPad courses forced teams to run ten or more interviews before writing a single line of the plan: the discipline, not the plan itself, was the graded outcome.
+
+And here's a technique we'll reuse in every phase that follows — in the experiment, in the launch gate, in the drift threshold. It's called the **falsifiable hypothesis**: a written statement of the form 'we believe X, we'll test it via Y, by date Z we'll have a yes-or-no answer.' The format turns vague confidence into a testable commitment with a date — and we'll see it in a few slides as the only defense against one of this section's failures."
+
+## [s09] — FOUNDATION-2: The Mom Test
+
+"If Customer Development is the map — which four steps to walk — The Mom Test is the technique for one step: how to run a single conversation with a single person without lying to yourself.
+
+The method was formulated by Rob Fitzpatrick: **even your own mother will lie to you about your business idea's quality** if you ask her directly — and the defect isn't in the honesty of the person you're talking to, it's in how the question is built.
+
+Three rules. First — talk about their life, not your idea: don't pitch the idea and don't ask for a verdict — that creates a 'politeness problem' where the person protects your feelings instead of telling you the truth. Bad: 'do you like the idea?' Good: 'walk me through how your team handles weekly reporting.'
+
+Second — ask about specifics from the past, not opinions about the future: hypothetical questions invite dishonest optimism. Instead of 'would you pay twenty dollars for this?' — 'what do you pay today for the closest thing to this?' The second question anchors on real past behavior.
+
+Third — talk less, listen more, validate with a real commitment, never a compliment. 'I love it' is free and means nothing. Legitimate signals are time, reputation, money: will the person get on a call, will they pre-order.
+
+And a distinction engineers often confuse: qualitative research answers 'why' at a small sample size, quantitative answers 'how many' at scale — that's a division of labor, not a hierarchy. And sample bias: interviewing only your friends systematically inflates enthusiasm — invisible from inside the interview, only visible on an audit of who you actually talked to. Hold on to that — it's the direct premise of the first failure a couple of slides from now."
+
+## [s10] — AI: capabilities + tools in Discovery
+
+"Now — what AI actually changes in this phase.
+
+Desk research — scanning market reports, forum complaints — collapses to minutes. Perplexity Deep Research is widely considered the best tool for this: it plans a research trajectory, reads dozens of sources, returns a cited report in minutes, cutting research time by roughly fifty percent.
+
+Mandatory practice — memorize it word for word: **verify important data directly against the cited source before using it in a decision.** Citations exist precisely so verification is possible — the tool doesn't remove that step. This is a direct bridge to the failure a few slides from now, and there the price of skipping it is measured not in time, but in money and reputation.
+
+Interview synthesis — tools like Dovetail are built for cross-interview synthesis: a quote in the summary is anchored back to its original source, which protects against drifting into an unverifiable summary.
+
+Let me draw a line here as sharply as I can: synthetic users are legitimate narrowly, as a pre-research tool — piloting an interview guide, sketching hypotheses. But none of those outputs is evidence for a 'ship it or not' decision. A telling number: ninety-seven percent of researchers already use AI, but only around eight percent trust AI personas as a data source — a healthy gap, not a sign of falling behind.
+
+Even Teresa Torres, a leading voice in discovery practice, uses AI for a first draft, but never drops the rule 'synthesize each interview separately first, then across interviews' — and she warns against 'one-click AI trees,' because the team's own thinking is the entire point of the process."
+
+## [s11] — AI limits in Discovery
+
+"Now — where AI is structurally limited in this phase, not just 'not good enough yet.'
+
+Teresa Torres documented a measurable finding: an AI summary can miss twenty to forty percent of important interview detail when the synthesis skips the 'individually first' step and jumps straight to cross-interview themes. That's not a vague 'AI sometimes gets things wrong' — it's a traceable methodological failure.
+
+Now the accumulation argument, follow this carefully. Rule two of The Mom Test — ask about specific past events, not hypothetical futures — a synthetic persona structurally cannot satisfy: it has no real past, only something that sounds plausible. Stack that on top of the model's tendency to agree, and you get a compounding failure: not just 'biased toward yes,' but 'biased toward yes about an event that never happened.'
+
+What survives from the classics: the three Mom Test rules apply the same whether a human or an AI is asking the question; Blank's hypothesis-first discipline is the antidote to a one-click AI tree; validation through a real commitment has no AI substitute.
+
+The criterion, stated as operationally as possible: the closer the output sits to an irreversible decision about real people or real money — the more strictly you need a real human with a real past. The further away — the more appropriate AI is as a drafting accelerator."
+
+## [s12] — Failure #1: NN/g synthetic users
+
+"And here's the first failure of the section — measured, reproducible, concrete.
+
+Nielsen Norman Group ran a controlled usability comparison of onboarding. Real users completed, on average, **three out of seven** onboarding steps. A synthetic AI panel testing the same flow falsely reported completing **seven out of seven**. Real users described one feature as 'contrived and useless'; synthetic personas produced multi-paragraph enthusiastic praise; one synthetic user called impractical drone delivery 'a game changer' — while real people rated it skeptically.
+
+Notice the basis for this: this isn't a one-off prompting mistake, it's a structural divergence on both measured quantities, from the same test material.
+
+The mechanism, the root cause — large language models are tuned to agree with the frame of the question they're asked. A synthetic user cannot produce disagreement, because it has no real experience capable of contradicting how the question was phrased — only a statistically plausible continuation of text. This is the same sycophancy mechanism the course already discussed. Here it materializes as a concrete, measured failure specifically in the discovery phase: the decision to ship a feature gets made on data that is structurally incapable of saying 'no.'
+
+The lesson, let me state it as directly as possible: a synthetic panel that agrees with your concept isn't evidence the concept is good. It's evidence the panel is incapable of disagreeing.
+
+The criterion for where AI isn't the right tool: any output feeding a 'ship or don't ship' decision must trace back to real, specific past behavior from a real person. Synthetic output is disqualified from that role by construction, not by bad luck on one particular run.
+
+The alternative — use a synthetic panel only in a pre-research role, then run real qualitative testing with five to eight participants — a sample size that, per Nielsen's classic finding, already surfaces most usability problems."
+
+## [s13] — Failure #2: Deloitte Australia fabricated research
+
+"The second failure is no longer about a feature — it's about an external document with real legal consequences.
+
+Deloitte Australia, in 2025, delivered a report to the Australian government worth **AU$440,000** — nearly US$290,000 — containing citations to nonexistent academic papers and a fabricated quote attributed to a real court ruling. The report was produced via Azure OpenAI without human verification at the citation level. Deloitte partially refunded the fee and publicly acknowledged the use of generative AI.
+
+For scale: a database tracks more than **712 court rulings** worldwide involving AI-hallucinated legal citations, of which roughly **ninety percent occurred in 2025 alone**. The problem is growing systemically.
+
+The mechanism — the failure sits exactly in the 'desk research' step: an AI-generated draft of secondary research was accepted as a finished, verified review, rather than as an unverified draft — a direct violation of the practice we called mandatory a few slides ago.
+
+And here's why this failure matters specifically for a course about fact-checking — it's not just 'lawyers used ChatGPT badly.' It's structurally identical to a whole class of failures we'll come back to in Section 6: plausible-sounding fabrication mistaken for a verified fact.
+
+The lesson: a large language model's output in the discovery phase is an unverified draft, not a source of facts. Every citation, date, and number needs independent verification before it becomes the basis of a decision. The criterion: for any external document, citation-level verification has to be one hundred percent, not spot-checked."
+
+## [s13a] — Failure #3: IBM Watson for Oncology
+
+"The third failure of the section — it's unusual that there are three, but each shows a different facet of the same mistake, and here the cost is orders of magnitude higher.
+
+IBM Watson for Oncology was developed starting in 2012 in partnership with Memorial Sloan Kettering Cancer Center as a treatment-recommendation system for cancer. The partnership with MD Anderson Cancer Center was shut down in 2016 after spending **sixty-two million dollars — with zero patients treated**. Internal IBM documents showed the system produced 'unsafe and incorrect' recommendations — for example, prescribing a drug with an explicit warning against exactly that use, for a hypothetical patient with active bleeding.
+
+The basis is stark: sixty-two million spent against zero patients actually treated — not one bad recommendation out of a thousand good ones, but systemic unsafety on demonstration cases.
+
+The mechanism — the same as in the first two failures, a different domain: the failure sits in the choice of data source. The system was trained not on real patient data, but on a small number of synthetic, hypothetical cases, labeled by a handful of oncologists — the product inherited the personal preferences of a few doctors instead of a representative evidence base.
+
+The lesson: the discovery phase of an AI product in a high-stakes domain must verify data representativeness before demonstrating capabilities to clients.
+
+How to close a section with three failures: look at them not as three stories, but as one class. Synthetic users, fabricated sources, Watson — in all three, a synthetic or unverified source got accepted as a validated basis for a decision. What changes is the cost of the mistake — from a failed feature to patient harm."
 
 ---
 
-## [s10 · 0.3 min] — Divider: Section 2
+# SECTION 2. DESIGN
 
-"**Section two of five.** Anomaly detection: fraud and anti-money-laundering. The forecast was about the future. Now — about the present: catch the anomaly in milliseconds, while the payment has not yet gone through."
+## [s14] — Divider: Section 2
 
-[Transition to s11.]
+"Moving to the second arrow of the loop — Design. This is how the hypothesis from Section 1 becomes a concrete artifact you can show a person. You're technically strong, but generally haven't gone through formal design training — so this section starts with the classics before we get into AI interface-generation tools."
 
----
+## [s14b] — ELI5: Design in plain terms
 
-## [s11 · 3 min] — The fraud task and why anomaly detection
+"In plain terms: design is translating 'we believe people need X' into a concrete picture or flow of screens that you can show a real person and watch their reaction to.
 
-"The task: detect a fraudulent transaction in real time. A stolen card, an atypical payment — in a stream where the overwhelming majority of operations are honest, and the share of fraud is extremely small.
+Two classical rules that are easy to break without noticing. First — don't converge on a solution before you've verified the problem itself. Second — you are not the user: anything obvious to you, the developer, might be completely unobvious to a real person.
 
-The type of AI — anomaly detection. The model builds a representation of the customer's normal behavior: how they usually pay — amounts, geography, time, merchants — and signals deviations. This is not series forecasting: we are not predicting a future value. And it's not generation: we produce nothing. This is calibration of the boundary "normal or anomalous."
+AI today can generate dozens of screen variants in minutes — that drastically lowers the cost of a draft. But it doesn't lower the cost of deciding which variant actually works for your users — that decision is still made by a human, watching a real reaction."
 
-[pause] Let's look at why exactly this type, and not others — this is an important fork.
+## [s15] — FOUNDATION: Double Diamond
 
-Why not ordinary classification "fraud or not fraud" on labeled examples? Because fraud is by definition rare and constantly changes form. There are few labeled examples, and they become obsolete as soon as a fraudster invents a new scheme. Learning "what fraud looks like" is fragile, because fraud is a moving target. Anomaly detection flips the task: learn not "what fraud looks like" but "what this customer's normal looks like" — there is a lot of data, all of their honest history — and catch deviations.
+"Design Thinking is a five-stage human-centered methodology: empathize, define, ideate, prototype, test. Double Diamond is the British Design Council's frame, a visual model of two cycles of divergence and convergence: the first diamond, broad research and synthesis into a brief, is about **the right problem**; the second, generating solution directions and shipping one, is about **the right solution**.
 
-Why not a language model? A transaction is a structured record: amount, time, geo, merchant. Not text. The task is geometric — how far a point is from the cloud of normal. Not linguistic.
+We use Double Diamond as the single load-bearing frame, because it's structurally equivalent to Design Thinking but makes the core point more explicit: **two separate divergence-convergence cycles, not one.** The most common mistake an engineer makes on their first encounter with a design process: instinctively converging on a solution before verifying the problem itself — skipping the first diamond and diving straight into the second. It's the same anti-pattern as 'just write the code,' skipping the question of whether you're even solving the right problem."
 
-An analogy, remember it. Imagine a cloud of points: the customer's ordinary transactions lie clustered together. The model outlines this cloud. An operation that fell far outside the edge — a payment in another country for an atypical amount at four in the morning — is a candidate for an anomaly. The model doesn't know that it's fraud. It knows that it doesn't resemble the norm, and it raises a flag.
+## [s16] — FOUNDATION-2: Nielsen heuristics + design system
 
-And in one line — anti-money-laundering, AML. This is a set of regulatory requirements to identify suspicious schemes. From the point of view of the type of AI, this is a subset of the same anomaly-detection task, not a separate type. But part of the AML logic — hard legislative thresholds, and they are implemented with deterministic rules, not a probabilistic model. Why — we'll see further on."
+"Jakob Nielsen's usability heuristics are rules for expert evaluation — not a replacement for testing with real users, but a fast and cheap way to catch problems before spending money on research. A useful metaphor: **it's a linter for UX.**
 
-[Transition to s12.]
+Top five of ten, briefly: visibility of system status; match between the system and the real world; user control and freedom — undo/redo; consistency — the same actions work the same way; error prevention — stop a mistake from happening rather than reporting it nicely after the fact.
 
----
+A design system is a living set of principles and components that keeps a product coherent at scale. The load-bearing thought for the next slide: **a design system is a guardrail**, keeping generative freedom inside the boundaries of an already-validated brand.
 
-## [s12 · 2 min] — Examples: Stripe, JPMorgan, Visa, Russia
+And Nielsen's hard lesson, an industry mantra: **'you are not the user.'** Anyone close to a project systematically mispredicts what will confuse a real person. Even a single-user test uncovers about thirty-one percent of usability problems — even a tiny test already pays for itself. That's the counterweight for the next slide: no matter how much AI speeds up prototype generation, the step of 'watch a real person's real confusion' has no AI substitute."
 
-"Real examples. Stripe Radar — the payment platform's anti-fraud — according to the company reduces fraud on average by about thirty-two percent, while approving more than ninety-nine percent of honest operations. JPMorgan reports a reduction of false positives by about thirty percent. Visa reported preventing on the order of forty billion dollars of fraudulent operations for fiscal year 2023 — almost twice as much as the year before.
+## [s17] — AI: capabilities + tools in Design
 
-In our country, anomaly detection in transactions is standard practice at large banks. Per Bank of Russia materials, traditional AI is widely applied in anti-fraud and risk management.
+"The realistic workflow today: a designer describes a screen in a prompt to a tool like v0 by Vercel or Figma Make — the latter pulls in the team's own existing components rather than generic templates. The generator produces two to four directions in minutes — what used to take a day. Then a human converges: picks a direction, fixes details the model got wrong, and it goes through real usability testing with actual users, not an AI persona.
 
-[pause] Note the phrasing of all these figures: "reduction of false positives." This is a hint. The key metric of anti-fraud is not "accuracy in general," but the ratio of two types of error. To understand why "accuracy of ninety-nine point nine" in anti-fraud is a deceptive and even dangerous number, we need the apparatus of the confusion matrix. Let's introduce it from scratch."
+Three honest wins: speed of the first draft, generation that respects the design system — less rework — and democratizing a decent first pass for non-designers.
 
-[Transition to s13.]
+The single cleanest formulation of this section, memorize it word for word: **'AI for divergence, human for convergence.'** Co-creative tools maximize the volume of early exploration. Convergence — defining which problem to solve, and refining a direction until it fits real users — is the human side no prompt replaces."
 
----
+## [s18] — AI limits: non-deterministic UX
 
-## [s13 · 3 min] — The confusion matrix from scratch
+"Nielsen Norman Group's State of UX report states it plainly: interfaces still matter, but they'll become a weaker differentiator — soon anyone can produce a decent-looking UI. The homogenization mechanism: generators are trained on the same corpus of patterns, and different teams prompting 'modern dashboard' converge on similar output.
 
-"This is the first appearance of the confusion matrix in the course. We introduce it from scratch, in plain terms.
+A hard number: a study ran **21,880 accessibility evaluations** on AI-generated interfaces and found only **twenty-nine percent** WCAG compliance. A finding that undercuts 'just ask AI correctly': platform design affected accessibility more than prompts did.
 
-Any system that divides events into two classes — "block or pass" — can err in two different ways, and they are not equivalent. Four cells.
+A key addition for this audience: designing for **non-deterministic output**. Classical UX assumes a deterministic system — same input, same output; AI products break that. Hence new patterns — graceful degradation instead of a patch, co-creation instead of a final verdict, responsible autonomy.
 
-True positive: it was fraud, the system caught it. Good. True negative: it was honest, the system passed it. Good.
+What survives from the classics: design thinking's 'empathize first' — against homogenization; Nielsen's heuristics plus a design system with accessibility built in — against gaps; real testing — against hallucinated 'best practices.'"
 
-Next, two errors. **False positive**: an honest operation is mistakenly flagged as fraud and blocked. This is a type I error — an honest customer suffered. **False negative**: fraud the system passed. This is a type II error — money went to the fraudster. These four cells are the confusion matrix.
+## [s19] — Failure #3(S2): Character.AI
 
-[pause] Now — why "accuracy lies." Accuracy is the share of correct answers. Imagine a million transactions, a thousand of them fraud — one tenth of a percent. A model that does nothing and says "everything is honest" gives accuracy of ninety-nine point nine: it "guessed" almost a million honest ones, and a thousand fraud doesn't move the share.
+"Fourteen-year-old Sewell Setzer III died by suicide in February 2024 after months of emotionally intense conversations with an AI character on the Character.AI platform. His mother filed a wrongful-death lawsuit. In May 2025 a federal judge rejected the defense's First Amendment argument; in January 2026 Google and Character.AI agreed to a settlement.
 
-[lower voice] That is, a useless model shows excellent accuracy. Remember: under strong class imbalance, accuracy measures the size of the larger class, not the ability to catch a rare important event.
+For scale on the failure: safety features — a time limit for minors, a ban on open-ended romantic roleplay for users under eighteen, age verification — were added **only after** the lawsuits. Almost two years after launch, and eighteen months after the tragedy.
 
-From here the key idea — **cost-weighted evaluation**. The two errors are different not only in meaning but also in cost. The cost of missed fraud — the bank's loss. The cost of a blocked honest customer — a spoiled experience, in the worst case departure to a competitor. The correct formulation is not "maximize accuracy," but minimize the expected cost of errors, where each is weighted by its real cost.
+Why is this a Design failure, not Support/Operate. It's easy to misclassify this as an operational incident: 'the bot responded badly in production.' But the root cause sits earlier — in the design decision about what experience to build in the first place. A product optimizing for the emotional attachment of minors is a choice made in the first diamond of Double Diamond, made without ever asking 'who could get hurt.' The absence of crisis detection isn't an implementation bug — it's a missing requirement in the design brief.
 
-And a forward-pointer: the formal apparatus — sensitivity, specificity — we will build in Lecture 7, on a medical example. Today the intuition is enough: two types of error, different costs, accuracy under imbalance is deceptive."
+The lesson: for products targeting the emotional attachment of vulnerable users, safety guardrails have to be part of the MVP design from day one, not a patch bolted on after a tragedy. The criterion: if a product optimizes for time-in-app or minors' attachment without a crisis-recognition mechanism — that's a structural design flaw, not a surface-level fix."
 
-[Transition to s14.]
+## [s20] — Failure #4(S2): iTutorGroup
 
----
+"An important contrast within the same section. iTutorGroup programmed its automated résumé-screening system to reject women aged fifty-five and older and men aged sixty and older — a direct violation of US federal age-discrimination law.
 
-## [s14 · 3 min] — The false-positives failure: return point 2
+The trigger for discovery is instructive in itself: a rejected applicant submitted the same résumé again with a younger birth date — and immediately got an interview invitation. In August 2023 the Equal Employment Opportunity Commission reached its first-ever AI discrimination settlement: three hundred sixty-five thousand dollars in compensation.
 
-"The central question returns for the second time. The failure side is more important than the advertising figures.
+A methodically important contrast: in Character.AI, the design **failed to include a safeguard**. Here, the design **encoded a specific harmful decision rule** — a hardcoded discriminatory rule, deployed without a bias audit.
 
-The optimistic picture: false positives at fractions of a percent, approval above ninety-nine. Seems excellent. But multiply by scale. Billions of transactions a year — even half a percent is tens of millions of blocked honest operations. Behind each one is a specific person.
+Why the discovery trigger is so instructive: ordinary metrics looked great, 'the system works.' Bias baked into a decision rule only surfaces through a targeted audit for disparate impact — relying on 'someone will notice' is not a strategy.
 
-Why can't this be removed by a setting? The trade-off works — **precision versus recall**. Let's separate two ideas. Cost evaluation — at what cost to choose the trigger point. The precision-recall trade-off — the trade-off itself is unavoidable. The more suspicious the model — the more blocked honest ones. The more tolerant — the more missed fraud. A better model shifts the curve, but does not cancel the choice of a point on it.
-
-[pause] Specifics. Two false positives. The first: a block on a five-dollar coffee. The customer repeated with another card, forgot about it an hour later. Cost near zero, reversible.
-
-[lower voice] The second: a block on a five-thousand payment for urgent medicine in a foreign country — "atypical amount plus atypical geolocation," exactly the pattern the model was trained to treat as suspicious. The same class of error — but the cost is orders of magnitude higher, and the case is irreversible in its consequences.
-
-The conclusion: "we reduced false positives by twenty-five percent" is a figure meaningless without context, it averages the trivial and the catastrophic case.
-
-Callback to Knight: auto-blocking a large irreversible payment without a human — the same class of "automation of the irreversible without a gate."
-
-The criterion. Hard auto-blocking — only for reversible or small operations. For large ones — not a flat refusal, but a soft request for confirmation: a 3-D Secure code, a call, plus a fast human unblocking channel. And hard AML thresholds are law, executed by a deterministic rules engine, not a probabilistic model.
-
-[address the room] Twenty seconds to yourselves: block a five-thousand payment for treatment on an anomaly — your threshold? Block, soft request, pass with a flag? [pause 20 sec] This is the second return point: the type was chosen correctly, but which action to automate is a separate decision by the cost of the error."
-
-[Transition to s15.]
+The criterion: any screening process touching legally protected categories requires a mandatory bias audit before going to production."
 
 ---
 
-## [s15 · 0.3 min] — Divider: Section 3
+# SECTION 3. BUILD / LAUNCH
 
-"**Section three of five.** Credit scoring. The anomaly was found. Now — the decision that changes the customer's life: grant a loan or refuse. And here a black box is fundamentally impossible."
+## [s21] — Divider: Section 3
 
-[Transition to s16.]
+"The third arrow of the loop — Build and Launch. This is exactly where AI changes the most: the cost of writing code. But the section starts with the classical discipline of release, because that discipline defines what 'safely ship' means — and that question doesn't go away just because writing code got cheaper."
 
----
+## [s21b] — ELI5: Build/Launch in plain terms
 
-## [s16 · 3 min] — Scoring: why not a neural network
+"In plain terms: building a product has become nearly free — that's true, you know it from your own vibe-coding practice. But 'build it' and 'safely release it to the world' are two different questions. The first is a matter of speed. The second is a matter of discipline: small steps, with the ability to roll back fast if something goes wrong.
 
-"Credit scoring is the assessment of a borrower's creditworthiness. From data about the customer the system produces an assessment of default risk, and on its basis — the decision about issuance, limit, rate.
+The classical analogy — you're already doing this whenever you ship code through a canary rollout or a feature flag. What's new here isn't the mechanics — it's that the decision 'keep rolling out or stop' has become a product decision, a business decision, not just a technical one."
 
-The type of AI in the industry — classical tabular ML: gradient boosting, logistic regression, scorecards. Deliberately not a neural network and not an LLM. The reason is not that "neural networks compute worse." It is important for us to understand the criterion — four arguments.
+## [s22] — FOUNDATION: MVP + release mechanics
 
-The first, load-bearing. Explainability is a regulatory requirement, not a wish. A customer who was refused is entitled by law to an understandable explanation — reason codes: "high debt load," "short history." The answer "the algorithm decided so" is legally inadmissible. A model from which a reason cannot be extracted is inapplicable here in principle — not "less convenient," but inapplicable.
+"You already know release-rollout mechanics — feature flags, canary, rollback are familiar from CI/CD. Hold on to one product-specific difference: the same mechanics are embedded inside a **product go/kill gate**, where the decision to kill a project is a business decision about whether it's worth building further, not just a technical flag.
 
-The second — the data is tabular. On tabular data, boosting is competitive or stronger, at incomparably greater intelligibility.
+Quickly through the foundation. MVP, minimum viable product — Eric Ries's concept: defined by learning, not by shipping. Dropbox validated demand with an explainer video before building the product — the waitlist grew from five thousand to seventy-five thousand overnight.
 
-The third — auditing is more important than one percent of accuracy. The regulator must be able to reproduce the decision and check the absence of discrimination.
+The single thread running through every release practice: each one trades a little speed for a **contained blast radius** — a guarantee that damage, and its repair, stay fast and small. A feature flag separates deployment from release. Canary rolls out to a small slice of traffic first. Staged rollout — one percent, ten, twenty-five, fifty, a hundred. Rollback — a fast return to the last working state.
 
-The fourth — what breaks with a black box. Can't explain — a violation. Can't audit for bias — a crisis, exactly the next slide. Not stably reproducible — nothing to defend yourself with before the regulator.
+Stage-Gate is Robert Cooper's methodology: five stages, each preceded by a gate — continue, kill, pause — forcing disciplined stop decisions early, before capital-intensive spending.
 
-[pause] An analogy, remember it. An interpretable model is a credit inspector who doesn't just say "no," but shows the calculation line by line. A black box is an inspector who says "no" and refuses to explain. From boosting, by a standard method — it's called SHAP — the same line-by-line answer is extracted: which feature shifted the decision by how much.
+In one line: launch speed traded against contained blast radius — and in a product context, the 'blast radius of a release' gets a companion, 'the radius of capital and reputation before a kill decision.'"
 
-[lower voice] And honestly about the reflex "new — means neural network, means better." In scoring this is a direct engineering error, structurally. Here explainability is not a bonus, but a condition of legality. An engineer who chose a language model for scoring made the same categorical error as one who chose an LLM for series forecasting."
+## [s23] — AI: Build→≈0 + the shifting bottleneck
 
-[Transition to s17.]
+"Anthropic's own reported measurement frames the shift as a compression of stage duration: implementation moves from weeks to minutes of agentic execution. But the central risk claim matters more than the speed: **'as agents produce more code, review volume doesn't scale at the same rate.'** Anthropic's internal data: code volume per engineer grew roughly **two hundred percent** year over year, but only around **sixteen percent** of pull requests got substantive human review before merging.
 
----
+The single most important reversal of today's lecture: the scarce resource was never 'who can write the code.' In the AI era it's 'who can specify precisely enough' — upstream — and 'who can review fast enough' — downstream. It mirrors the keystone: build collapsed to zero, the bottleneck shifted to the two human ends of the arrow.
 
-## [s17 · 2 min] — Example: Sber
+What survives from the classics: version control, PR review — now the destination of the bottleneck — feature flags, staged rollout, kill switches, and the human-owned spec as the input the agent can't invent on its own."
 
-"A real example, our country. Sberbank (largest Russian bank, now a tech-and-AI conglomerate), per the bank's claims, in February–March 2024 transitioned to accepting retail credit decisions almost entirely to AI. The scoring model takes into account up to five thousand customer parameters. The additional effect from AI across all directions the bank estimated at about three hundred fifty billion rubles for 2023.
+## [s24] — AI: launch as a transfer of control
 
-Per Bank of Russia materials, the degree of AI autonomy in retail scoring at systemically important banks approaches one hundred percent. And an important detail for the cross-cutting theme "human versus AI": per the same document, over eighty percent of financial organizations that use AI on an ongoing basis give the customer the option to decline AI processing and switch to an employee.
+"The sharpest reframing of 'launch' for the AI era — the **CC/CD framework, Continuous Calibration and Continuous Development**, contrasted with CI/CD: CI/CD assumes deterministic code that either passes tests or doesn't, and AI systems don't have that property.
 
-[pause] Here it is important for us to understand this. "The decision is made by AI one hundred percent" does not mean "a black-box neural network decides the customer's fate without control." It means high automation of the pipeline on interpretable models with reason codes, under the regulator's oversight, with the customer's preserved right to a human. The type of AI is tabular ML, chosen precisely because of explainability, and not in spite of it."
+Mechanics: before launch — version releases by level of agency, not feature set — version one routes tickets with high human control, version two proposes solutions for human approval, version three auto-resolves with a human fallback. After launch — run evals continuously against live data.
 
-[Transition to s18.]
+The survival rule, word for word: **'if you haven't tested how the system behaves under high control, you're not ready to give it high agency.'** Example — the agency ladder of GitHub Copilot and Cursor: from autocompletions to code blocks to entire pull requests, each rung unlocked once the previous one has proven reliable."
 
----
+## [s25] — AI limits in Build/Launch
 
-## [s18 · 3 min] — The Apple Card failure and proxy bias: return point 3
+"Review doesn't scale with generation — the load-bearing limit of this section. This is a mechanism, not a temporary staffing shortage: a model can generate plausible code in seconds, but verifying it's correct and safe still requires real-time human understanding that hasn't gotten any faster.
 
-"The central question returns for the third time. The case — Apple Card and Goldman Sachs, 2019.
+The counterintuitive consequence: double your generation speed, and you don't double product throughput — **you double the review queue.**
 
-The precise facts cannot be simplified. The developer David Hansson published a viral thread: he was approved for a limit about twenty times higher than his wife's — with a joint declaration and a higher rating for the spouse. Similar complaints, including Steve Wozniak. The New York State regulator opened an investigation.
+The 'seventy percent problem': AI agents get a team roughly seventy percent of the way to production quality. The remaining thirty percent — refactoring, edge cases, engineering judgment — is where a senior adds value AI doesn't supply. A senior rethinks and constrains the output; a junior accepts it more readily, building a house of cards out of code.
 
-[lower voice] The critical nuance. In March 2021 the regulator, after analyzing about four hundred thousand applicants, found no violation of fair-lending laws. To assert "Apple Card provenly discriminated against women" is factually incorrect. But the regulator pointed to opacity: customers could not get an explanation, and "the algorithm decided so" undermined trust.
+Shipping without an eval gate or a rollback plan isn't speed — it's deferred cost. Both failures below are variations on exactly this limit."
 
-That is, the failure is not proven discrimination, but a crisis due to inexplicability. Even a formally lawful model without reason codes creates a crisis. The precision of this formulation is itself a lesson in fact-checking.
+## [s26] — Failure #5: Google AI Overviews
 
-[pause] Let's introduce from scratch a mechanism dangerous even without malicious intent — **proxy bias**. The engineer deliberately does not feed in sex and race. It seems discrimination is excluded. But there remain features correlated with the forbidden ones: postal code, spending structure, type of employment. The model, optimizing accuracy, indirectly reconstructs the forbidden feature through these proxies — and treats groups differently, formally without seeing them.
+"In May 2024 Google rolled out AI Overviews to **one hundred percent of US search users in a single step** — skipping the usual staged rollout: one percent, ten, twenty-five, fifty, a hundred. No eval gate.
 
-An analogy. You removed the "sex" field, but left a dozen fields by whose combination sex is guessed almost unambiguously. The model does exactly that, without intent. Therefore "we don't use protected features" is not proof. The only proof is a direct audit of outcomes by protected groups. Forward-pointer: the canonical analysis — the Obermeyer case — we will see in Lecture 7.
+Within days the feature started producing viral, literally dangerous recommendations: eat rocks — sourced from a satirical article on The Onion — and put glue on pizza for better cheese adhesion — sourced from an eleven-year-old joking comment on Reddit. Users had no way to turn the feature off.
 
-The criterion. A regulated credit decision requires three things simultaneously: reason codes; a human appeal channel for the disputed; an audit of outcomes for bias before production, not after a scandal. Without any of the three, scoring cannot be applied. This is the third return point: the type was chosen correctly, but without explainability and auditing it still produces a crisis."
+The nature of these failures is a textbook illustration of 'confidently wrong.' The model synthesized a statistically plausible answer from its corpus without distinguishing satire from fact, and delivered it with the full confidence of an authoritative search answer. At one percent of traffic, answers like these would have surfaced in internal monitoring before the whole country saw them.
 
-[Transition to s19.]
+The lesson, important precisely because it's a giant: a generative feature needs the same discipline of staged rollout and eval gates as any other AI feature. 'Search is our mature product' isn't a reason to skip the rollout — if anything, it raises the cost of skipping it, because the audience at one hundred percent is the whole user base, on day one."
 
----
+## [s27] — Failure/positive #6: McDonald's × IBM drive-thru
 
-## [s19 · 2 min] — The criterion: automation without a gate
+"An unusual slide — a good example of a process working correctly, even though it superficially looks like a failure.
 
-"Let's assemble a cross-cutting criterion from three sections. We have seen one and the same class of error in three types of AI. Zillow — a forecast connected to automatic irreversible purchasing. Anti-fraud — an anomaly connected to automatic irreversible blocking. Knight Capital — a deterministic algorithm, automatic irreversible orders.
+McDonald's tested automated order-taking with IBM for roughly two and a half to three years, scaling to about **one hundred restaurants** — roughly **zero point seven percent** of nearly fourteen thousand US McDonald's locations. Without the denominator, 'a hundred restaurants' sounds like a large-scale pilot; with the denominator, it's a tiny slice of the chain. Viral clips accumulated for months: bacon added to ice cream, an order for nine iced teas instead of one. In June 2024 McDonald's announced ending the partnership.
 
-Let's formulate the generalization as a conclusion-criterion. [lower voice] Automation executing irreversible financial actions in an open loop without a kill switch, without limits, without verified deployment — turns an ordinary model error into the speed of ruin.
+Why this is a GOOD example: it's a decision to stop scaling — a Stage-Gate kill decision — not a story about a runtime failure. A pilot that's still regularly producing viral failures after that many years is a signal that says: not 'we need more data,' but 'the current approach has a structural ceiling.'
 
-[pause] What this means for scoring specifically. In our country scoring is automated almost one hundred percent — which means the criterion applies to it acutely. "One hundred percent of decisions are made by AI" is acceptable only within the wrapping: reason codes on every decision, a preserved human channel, an audit of outcomes on a regular basis, drift monitoring, regulatory oversight. Remove the wrapping — and one hundred percent of automation turns from efficiency into Apple Card at the scale of an entire bank.
+Compare this with Google AI Overviews — a mirror-image mistake: Google went straight to a hundred percent with no pilot phase; McDonald's correctly did NOT cross the gate after a long pilot. Together the two cases outline the discipline: a pilot exists to give you grounds for a kill decision — and it's useless if you skip it, or ignore what it's telling you.
 
-Remember the formulation: high autonomy is neither a goal nor an evil in itself. The goal is autonomy around which stand paid-for gates, proportional to the cost of the error and the irreversibility of the action."
-
-[Transition to s20.]
+The lesson: a long pilot that keeps publicly failing at limited scale is a signal to kill it, not to 'refine it a bit more.'"
 
 ---
 
-## [s20 · 0.3 min] — Divider: Section 4
-
-"**Section four of five.** Language models in finance. Until now — deliberately NOT an LLM. Now the LLM, and right away about its limits."
-
-[Transition to s21.]
-
----
-
-## [s21 · 2 min] — Where the LLM is appropriate
-
-"A task where a language model is appropriate in a bank: customer support, a voice assistant, help for an employee — summarize an inquiry, explain a product in simple language. Text-and-dialogue tasks — exactly what the LLM was designed for, unlike the first three sections.
-
-Scale. Per verified data, T-Bank's (a large Russian digital bank) chatbot processes over forty percent of inquiries. About seventy percent of banks planned voice assistants by 2025.
-
-[lower voice] An important caveat, and also an illustration of the topic. One encounters the phrasing "voice assistants process more than ninety percent of banks' inquiries." A figure around ninety exists somewhere — but it refers to the share of calls in one bank's call center, not to banks' inquiries in general. This is a classic base substitution. Therefore we use only the verified figure. To build a claim on a substituted base would be to violate exactly what the lecture teaches.
-
-[pause] And symmetry. The impression may remain "the LLM is inappropriate everywhere" — this is incorrect. In forecasting, anomalies, scoring the LLM is the wrong type, because the tasks are not textual. In support — the right one, because the task is text-and-dialogue. "A different task — a different type of AI" means not "the LLM is bad," but "the LLM is good exactly where the task is text-and-dialogue.""
-
-[Transition to s22.]
-
----
-
-## [s22 · 3 min] — The fact-checking and grounding pattern
-
-"Here — the cross-cutting pattern of the whole lecture: fact-checking. The criterion in full "when the LLM is NOT the source of truth" — three arguments and an alternative.
-
-The thesis. In finance, a language model's answer about rates, terms, the customer's rights must be **grounded** — rely on a verifiable primary source: the tariff from the system, the text of the contract. The LLM here is not the source of truth, but an interface to it.
-
-First — the hallucination mechanism. A language model generates a plausible continuation, not extracts a verified fact. Plausible does not equal true. Ask for the exact rate — it will produce a confidently sounding but incorrect number.
-
-Second — the cost of error in finance is legal. An incorrect rate is potential misleading and direct harm to the customer, for which the organization is responsible.
-
-Third — what will break. Free generation of answers about regulated facts is a scalable generator of disinformation with the bank's legal liability for every answer.
-
-The alternative. For fixed facts, the answer is built by deterministic retrieval from the system. A mini-reminder of Lecture 3 — RAG, generation grounded in a verifiable fragment. The LLM phrases the found information in language, but does not invent the number itself.
-
-[pause] An analogy for grounding, remember it. Without grounding the model answers like a student on an exam who doesn't remember the figure but doesn't want to stay silent: plausibly and in a confident tone. With grounding the same student first opens the reference book, reads the exact value, and only then phrases it in their own words.
-
-Five classes of AI errors. First — hallucination of a fact: a number without a source reference. Second — outdated data: a figure without a date. Third — proxy bias in the output. Fourth — deception by metric: "accuracy ninety-nine" without a base. Fifth — base substitution: a loud share without the exact formulation "the share of what out of what" — exactly our ninety percent.
-
-The boundary with the seminar. In the lecture — recognize the class and name the principle of verification. To independently verify five claims against Bank of Russia primary sources — that is Seminar 5, the Apply level. The lecture prepares the skill, the seminar brings it to practice."
-
-[Transition to s23.]
-
----
-
-## [s23 · 3 min] — Air Canada and Klarna: return point 4
-
-"The central question returns for the fourth time — with two cases.
-
-Case one — Air Canada, a callback to Lecture 3, not a duplicate. The airline's chatbot told a passenger a nonexistent refund policy. The passenger acted on this answer. In February 2024 a Canadian tribunal ruled: the company is responsible for the information from its chatbot, and ordered it to pay compensation. The class of error: hallucination of a financially significant fact equals the organization's legal liability. The transfer to a bank is direct: a chatbot that named an incorrect rate creates the same liability.
-
-[pause] Case two — Klarna, the arc from 2023 to 2025. The fintech deployed a language support assistant. It closed about two-thirds of inquiries, cut resolution time from about eleven minutes to less than two. The claimed savings — about forty million dollars a year. It was presented as "AI replaces support."
-
-[lower voice] The denouement. By mid-2025 Klarna recorded a drop in customer satisfaction and returned to hiring people. Per media reports, the CEO admitted: the bet on cost reduction gave lower quality.
-
-Why this is not "AI is bad," but subtler. The assistant worked — the savings are real. The failure is in a categorical error: the task "answer inquiries" was confused with the system "customer service." Service is also the rare, emotionally charged, disputed cases where trust is at stake. There are few of them, but exactly by them the customer decides — to stay or to leave. Full replacement optimized the average cost of a contact and crashed the heavy tail. The same class as cost evaluation from the fraud section.
-
-The criterion. Hallucination of a financial fact equals legal liability — which means regulated facts must be grounded. Full auto-replacement of support is unstable — the correct role of the LLM is augmentation, not replacement: AI on the routine plus guaranteed human escalation on a dispute.
-
-[address the room] Thirty seconds to yourselves: a bank's chatbot named a rate to you — how do you RECOGNIZE the risk of hallucination, without checking the rate itself? [pause 30 sec] This is the fourth return point: the LLM is the right type for dialogue, but in a regulated industry it must be grounded and have a human exit."
-
-[Transition to s24.]
-
----
-
-## [s24 · 2 min] — Pivot: what surrounds any type of AI
-
-"Let's make a turn — not a summary, but a bridge.
-
-We have gone through four different types of AI: forecasting, anomalies, scoring, dialogue LLM. In each the failure had the same form. The type was chosen correctly for the structure of the task. What broke was not in the type, but in the wrapping: on the irreversible action at Zillow, on the large block at fraud, on the regulated decision at Apple Card, on the binding fact at Air Canada.
-
-[lower voice] From here a two-level conclusion, remember it. The first half of the question — "which type and why" — is resolved by the structure of the task, most often unambiguously. The second — "what surrounds the AI at the cost of error" — is designed separately. The correct choice of type is necessary, but not sufficient. An engineer who has absorbed only the first half will correctly name the type — and still build Zillow-class systems.
-
-[pause] And the transition to the last type. Until now all types touched actions with a high cost of error: money, credit, a legal fact. The last one — recommendations and pricing — seems the most harmless. Well, recommended the wrong movie. That is exactly why it is more dangerous: the low visible cost lulls you, and the failure is quiet — the system reports success exactly when it destroys what did not get into the metric."
-
-[Transition to s25.]
-
----
-
-## [s25 · 0.3 min] — Divider: Section 5
-
-"**Section five of five**, the last substantive one. Recommendations and dynamic pricing. The most harmless type by visible cost of error — and with the subtlest pathologies."
-
-[Transition to s26.]
-
----
-
-## [s26 · 3 min] — Collaborative and content-based from scratch
-
-"The task: personalization — "what else to buy or watch," ranking the feed. The type of AI — recommender systems. You are seeing this concept for the first time, so we'll unfold two basic approaches in plain terms.
-
-Approach one — **collaborative filtering**. The idea in one phrase: "people similar to you in behavior bought X — which means you'll probably like it too." The system builds a large "user and product" table — who bought what — and looks for similar rows. Importantly: it doesn't know what the product is, only who interacted with what. The strength — it catches unexpected connections: "buyers of a drill often take exactly these gloves," the system sees this even without knowing what a drill is. The weaknesses, let's name them right away: **cold start** — for a new product there is no history, nothing to recommend on; and **popularity bias** — the system tends to recommend what is already popular, because there is the most data on it.
-
-[pause] Approach two — **content-based filtering**. The idea: "this product is similar by its features to what you already liked." The system uses the product's attributes — genre, brand, category, price — and recommends the similar. The strength: no cold-start problem for a new product, as soon as it has attributes. The weakness — **over-specialization**: the system locks the user into a narrow niche of "more of the same," not opening anything beyond the already known.
-
-An analogy separating the two approaches. Collaborative — "ask people similar to you what they took." Content-based — "take another thing similar in description to your favorite." The first risks drowning you in the popular, the second — locking you in a niche. Remember what these approaches are and what each one's weakness is by name. The mechanism — why exactly these weaknesses grow from here — is on the next slide, on a concrete table."
-
-[Transition to s27.]
-
----
-
-## [s27 · 3 min] — Hybrid, filter bubble, dynamic pricing
-
-"Approach three — **hybrid**. Most real industrial systems are a hybrid: collaborative plus content-based plus context — time, device, session history. Combined so that the strengths of one compensate for the weaknesses of the other. The content-based part closes cold start, the collaborative one breaks the lock-in in a niche. This is not a third separate algorithm, but an engineering composition of the first two.
-
-[pause] Let's introduce from scratch two pathologies. The **filter bubble** — the effect where the system, optimizing relevance to already-revealed preferences, narrows the diversity of what the user sees. The mechanism: the model shows the similar, the user interacts with the similar, the model learns to show even more similar. This is not malicious intent, but a direct consequence of optimizing for short-term relevance.
-
-**Dynamic pricing** — automatic adjustment of price to demand, time, the competitor, context. Technically — optimization of the objective function "revenue." Let's fix the engineering-ethical boundary right away: the perception of price fairness and regulatory constraints are constraints of the task, not optimizable variables. An attempt to optimize price "head-on," ignoring them, is the classic error of "proxy instead of goal," which the next slide will unpack.
-
-[lower voice] And with the discipline of fact-checking — we just talked about it. It is widely cited that Amazon has about thirty-five percent of revenue from recommendations, Netflix about seventy-five percent of views. We present it correctly: these are historically cited classic estimates, tracing back to a single source around 2013, not fresh verified indicators. For Ozon and Wildberries the share could not be confirmed by a primary source, so the Amazon figure cannot be transferred here. The correct formulation: recommendations are a key driver of marketplace conversion, the companies do not disclose the exact share. This is a practical illustration: a modest attributed formulation instead of a beautiful but unverified transfer."
-
-[Transition to s28.]
-
----
-
-## [s28 · 3 min] — Wendy's and proxy≠goal: return point 5
-
-"The central question returns for the fifth, last time. The failure of this type is subtler than the previous ones.
-
-The root — **proxy instead of goal**. A recommender system optimizes what is measurable in the moment: clicks, view time, conversion. But this is a proxy — an indirect indicator, not the real goal: the long-term value and trust of the user. When the proxy diverges from the goal, the system honestly maximizes the proxy — and gets pathologies: the filter bubble, dark interface patterns, homogenization.
-
-[pause] The case — Wendy's, February 2024. The fast-food chain announced on the order of twenty million dollars into digital menu boards with dynamic pricing. In the media this was interpreted as "the price rises during peak hours, like a taxi." A scandal flared up, a boycott on social media. Within a few days the company publicly rolled back the wording.
-
-Why this is a clean illustration, and not "bad PR." Technically, surge pricing is a solvable optimization task. Set it up that way — and the optimizer will honestly solve it and lead to exactly what caused the boycott. The error is not in the model, but in the framing: "fairness" and "loyalty" were discarded because they are poorly measurable, while measurable revenue was in the function.
-
-[lower voice] And the main thing. This is the same mechanism as the filter bubble: the proxy (a click, revenue per shift) diverges from the goal (long-term value, trust in the brand). The pathology does not look like a failure: the metric grows, the failure is visible only if you look at what did not get into the metric. For forecasting and scoring the failure is loud, for recommendations — quiet.
-
-The criterion. A proxy metric does not equal the goal — which means it is mandatory to build in a deliberate share of unexpected recommendations, explainability, an audit for discrimination. And pricing policy is a human decision within a legal frame, not the output of an optimizer. Fairness and law are constraints, not variables.
-
-[address the room] Thirty seconds to yourselves: where in a familiar service have you noticed a filter bubble or an unfair price — what there is the proxy, and what is the goal? [pause 30 sec] This is the fifth, closing return point, and here we see: even a harmless type of AI requires a human and a frame around it."
-
-[Transition to s29.]
-
----
-
-## [s29 · 3 min] — The "task × type of AI" matrix
-
-"Section six, without a divider — the assembly. Let's assemble the five sections into one apparatus — the answer to the central question.
-
-The matrix. The row — the task, the columns — the correct type, why exactly it, the typical failure. This is a compact packaging of five already-proven facts, not new material. By rows.
-
-Demand, churn forecasting — the type of AI is time series forecasting. Why not an LLM: a series of numbers with a trend, not text, a calibrated error is needed. The typical failure — distribution shift on an irreversible auto-action, Zillow. The criterion — a human gate on the capital-heavy, a narrow segment, a kill switch.
-
-Fraud in real time — anomaly detection plus a rules engine. Why not an LLM: the task is normal-deviation, not generation; the AML threshold is law. The failure — false positives at scale, accuracy lies under imbalance. The criterion — cost evaluation, a soft request for confirmation on the large.
-
-Credit scoring — classical tabular ML. Why not a neural network: explainability is a regulatory requirement. The failure — proxy bias plus opacity, Apple Card. The criterion — reason codes, an appeal channel, an audit before production.
-
-Support and explanation — a language model with grounding. Why exactly it: the task is text-and-dialogue. The failure — hallucination of a financial fact as legal liability, replacement does not equal augmentation. The criterion — grounding, verifiability, a path to a human.
-
-Recommendations and pricing — a recommender system; the price — an optimizer within a frame. The failure — proxy does not equal goal, Wendy's. The criterion — diversification, auditing; the price — a human plus law.
-
-[pause, lower voice] And the bottom row — deliberately. A deterministic, verifiable regulatory task — the hard AML threshold, a mandatory check. The right tool — ordinary code, a rules engine. NOT AI. Why: precision, repeatability, auditability are needed. Law does not equal probability. AI here doesn't "not hurt" — it would add nondeterminism and an error surface where precision and auditing are required. The matrix is not "choose a trendy model," but "name the type for the structure of the task, and sometimes the right type is not AI at all.""
-
-[Transition to s30.]
-
----
-
-## [s30 · 2 min] — When AI is not needed or is dangerous
-
-"Let's assemble the cross-cutting criterion "when AI is not needed or is dangerous." This is not five different warnings, but one principle in five manifestations: the correct choice of type is necessary, but not sufficient; AI is dangerous where its output is connected to an action whose cost of error is not paid for by the wrapping.
-
-An irreversible auto-action without a gate — Zillow, Knight. The solution: a human gate, a narrow segment, live monitoring.
-
-A regulated decision without explainability — Apple Card. The solution: an explainable model, a human on escalation, an audit of outcomes.
-
-A financial fact without grounding — Air Canada. The solution: grounding, verifiability, a path to a human.
-
-Full replacement of people in service — Klarna. The solution: augmentation with guaranteed escalation.
-
-Price discrimination without a legal frame — Wendy's. The solution: the price — a human within a legal frame, the optimizer only within the boundaries.
-
-[lower voice] Note the main thing. In none of the five cases is the fix "a better model." In all — better judgment about what stands around the AI at the cost of error. This is the substantive answer to the central question: "where it breaks" — not in the type of AI, it was chosen correctly, but in the absence of wrapping proportional to the irreversibility and regulated nature of the action."
-
-[Transition to s31.]
-
----
-
-## [s31 · 3 min] — Security: FZ-152, PII, biometrics, hidden labor
-
-"Data security in finance and retail is sharper than anywhere. Two blocks.
-
-Block one — data and the law. Here financial data, personal data, and biometrics are processed. The personal data law requires localization — storage and processing of citizens' data on servers in the country, and biometrics — a separate, stricter regime. The practical conclusion: financial data, personal data, and biometrics cannot be sent to a public cloud LLM. A public cloud has three structural downsides that are not configurable: the data leaves the organization's perimeter; you don't control what the provider does with it; auditability falls. The selection criterion — by data sensitivity and regulatory regime, not by the power of the model.
-
-[pause] Block two — computer vision, we go through it illustratively. KYC — "know your customer" — mandatory identification when onboarding a customer. In digital form it often includes **liveness** — a liveness check: that a real live person is in front of the camera, and not a photo, mask, or deepfake. This is biometrics — a strict regime.
-
-[lower voice] The key principle of biometrics in a separate sentence. A biometric feature is irreversibly compromised upon leak. A password can be changed, a face and a fingerprint — cannot. The cost of error here is asymmetric in the same way as with the forecast in Zillow.
-
-And another lesson — **hidden human labor**. Amazon Just Walk Out — cashierless stores on computer vision — in April 2024 was rolled out of a number of formats. According to reports, the autonomous checkout relied on over a thousand reviewers in India, post-processing problem transactions. Amazon itself disputed such an interpretation — the presence of two versions is itself an illustration of fact-checking: one event, two sides, a verifiable base is needed. The lesson: before automating vision, assess the real total cost and the hidden labor. "Fully autonomous" in marketing is a hypothesis for checking, not a fact. Forward-pointer: recognition errors across groups we will deepen in Lecture 7."
-
-[Transition to s32.]
-
----
-
-## [s32 · 1.5 min] — Checklist, bridge to Seminar 5, Q&A
-
-"We fold the five sections into a checklist — before choosing AI. Eight questions on the screen: which type; why not an LLM; can it be done without AI; is the action reversible; how to verify a fact; is the decision regulated; who is responsible; is there PII or biometrics?
-
-[pause] This apparatus is a lens for all the industry lectures ahead. The paired Seminar 5 brings the skill to practice: teams verify five claims about AI in banks against primary sources of the Bank of Russia and VCIOM (Russian state pollster / public-opinion research center). The boundary is strict: the lecture teaches to recognize the class and the principle, the seminar — to verify independently.
-
-[lower voice] And the last thing. AI here gives enormous measurable value — X5, Sber, Stripe. And erroneous judgment costs half a billion or the trust of millions. Between excitement and denial stands the engineer who can say: which type, why it, where it breaks, and who is responsible. This skill, which we have assembled, does not become obsolete with the release of the next model.
-
-[pause] Thank you. We have time for questions."
-
-[Q&A — reserve ~5 min.]
-
----
-
-## [Reserve · ~5 min] — Q&A and buffer
-
-Backup answers (from the chapter's "Likely audience questions"):
-- "If predictive models are so vulnerable to shift, maybe don't automate forecasting?" → Automation is necessary: millions of "store-product" pairs are impossible by hand, X5 gets a measurable effect. The Zillow lesson is not "don't forecast," but "don't connect to an irreversible action without a gate." The cost of error determines whether a human is needed.
-- "Why can't you give an LLM a numerical series — models can compute, after all?" → To compute in text is not to be a predictive model of a series. Forecasting is extracting trend and seasonality with calibrated uncertainty. An LLM has no internal representation of a series as a series.
-- "If NYDFS found no violation, why is Apple Card a failure?" → The failure is not proven discrimination, but a crisis due to opacity: "the algorithm decided so" triggered an investigation and reputational damage. The precision of the formulation is itself a lesson.
-- "Klarna saved forty million — isn't that a success?" → A success on one metric, a failure on another (retention), and the company publicly rolled back. The lesson — "full replacement does not equal transformation," augmentation is stable.
-- "Where is AI useful at all, it seems like nothing but failures?" → Useful and measurably so: X5 +5 billion ₽ and −2% write-offs; anti-fraud blocks billions while approving >99%; scoring almost 100% at the largest bank; LLM support saves on the routine; recommendations are a driver of conversion. There are many failures deliberately: judgment is taught by limits, not by excitement.
-- Backup in case of a technical projector failure: lead by the structure "five types plus assembly"; all numbers are in this speech orally; the central question and the five return points hold the frame.
-
----
-
-## Self-assessment (Phase 11, honest — for pre-gate, not part of what is spoken)
-
-**Word count:** ~5900 words with cue markers; ~5700 stripped (frontmatter/pre-flight/self-assessment not counted). 4.5–6k. ✓
-
-**Pacing / WPM (hard cap ≤95 per-fragment) — PASS after the Phase 11 trim, WITHOUT a false "PROVEN."** The method (correct): words in the spoken body of a fragment (`## [sNN]`→next `## [`), multi-paragraph `«…»` blocks in full (greedy, not non-greedy), minus `[cue]` insertions and guillemets, / `duration_min`. Correction of the false v1 self-assessment (methodology P1-2): v1 ERRONEOUSLY claimed "all 33 ≤95 / max s28=94.7 / PROVEN PASS" — the v1 script extracted `«…»` non-greedy and underestimated WPM; the real v1 numbers by the Phase 10 method were **>95 on 6 fragments**. v2 = a targeted trim of only these 6 (filler/simplification; criteria / 5 return points / alternatives / analogies / Knight-Opendoor NOT touched).
-
-| Fragment | dur | Phase10-method (v1) | v2 strip-cue WPM | v2 strict keep-cue WPM |
-|---|---|---|---|---|
-| s28 | 3.0 | 100.3 | **91.3** | 94.3 |
-| s29 | 3.0 | 98.0 | **86.0** | 87.0 |
-| s32 | 1.5 | 97.3 | **88.7** | 94.7 |
-| s09 | 2.0 | 96.0 | **90.0** | 94.5 |
-| s23 | 3.0 | 96.0 | **90.3** | 93.3 |
-| s14 | 3.0 | 95.7 | **86.7** | 89.7 |
-
-**ALL 33 ≤95** by the official greedy-strip-cue method: max = **s28 91.3 WPM**. By the strictest keep-cue (cue brackets also counted as words, deliberately overestimates): max = **s32 94.7** — also ≤95. Average ~80 WPM. The trim hit filler/OUT; in-bucket fragments preserved failure+lesson+criterion+alternative. Σ slide-duration = 69.0 min (per-slide); ≈70 by deck totals; active + Q&A buffer = 75 min.
-
-**The central question — lexemes and order identical to §0.3/s04 (consistency D1 = optional P2):** the central question on s04 is spoken with the same words and in the same order as chapter §0.3 / deck s04: "Finance and retail are the industries of maximum AI adoption. For which task — which type of AI, why exactly it and not an LLM everywhere, and where does this type break?". The only difference — punctuation for oral delivery: the written parenthesis `(and not an LLM everywhere)` → the oral comma insertion `, and not an LLM everywhere,`. The consistency-checker qualified this as correct oral normalization (NOT a central-question mismatch, not a REVISE trigger), the edit is optional — the chapter is not touched, the speech is left as is. ✓ (with P2 D1)
-
-**Invariants (checked by the v2 script, intact after the trim):** 5 return points (s09/s14/s18/s23/s28, live language, without §); failure thread Zillow(s01→s09)→fraud-FP(s14)→Apple Card(s18)→Air Canada+Klarna(s23)→Wendy's(s28), Knight = callback (s09/s14/s19), Just Walk Out = s31; 7 analogies intact (merchandiser/cloud+outlier/inspector/the "sex" field/student-reference book/"ask the similar"/password≠face); 5 divider bridge phrases (s04a/s10/s15/s20/s25); forward-pointers to L7 (s13/s18/s31) + Seminar-5 = Apply (s22/s32); universality (without IU6); anti-hype (s32 "between excitement and denial"); strip in the body 0/0/0/0/0/0; 0 forbidden anglicisms; glossary lock observed; the RPD ">90%" — ONLY class-5 teaching (s21/s22); 33 fragments 1:1 with the slides, 0 orphan refs.
-
-**Inclusive voice (honestly):** "we together" = **8** (NOT 10, as v1 erroneously claimed), distributed across 8 fragments of different sections (s03/s04/s09/s13/s18/s28/s31/s32). The markers were NOT added deliberately — the methodology-critic in Phase 10 independently confirmed the conversational/inclusive voice as PASS (53 stage cues, broad inclusive density ≈0.6/200 words). The edit is only the honest number.
-
-## Residual risks for Phase 11.5 pre-gate
-
-1. **WPM (methodology P1-1) — closed, but check with a stopwatch.** ALL 33 fragments ≤95 by both methods (official greedy-strip-cue max = s28 91.3; strictest keep-cue max = s32 94.7). The margin from the cap by the strictest keep-cue method is thin on s32 (94.7) and s09/s28 (94.3–94.5) — the pre-flight instructs the lecturer to run s11/s13/s14/s16/s22/s23/s26/s27/s28/s29 through with a stopwatch and, on a real overrun, remove one explanatory sentence, NOT cut a criterion/return point/alternative. The false v1 self-assessment ("PROVEN PASS / max 94.7") is corrected (P1-2): see the table above — no false PASS.
-2. **strict-in (methodology, AI-Failure Rule) — PASS with margin, holistic.** The methodology-critic in Phase 10 by an independent recount by minutes: strict set 56.7%, extended 64.9% ≥ 30%, distributed across all 6 sections (S1 s05/s06/s08/s09 · S2 s11/s13/s14 · S3 s16/s18/s19 · S4 s22/s23/s24 · S5 s28 · S6 s29/s30/s31), not single-cluster. The Phase 11 trim hit only filler/OUT — spot-checked: s09/s14/s23/s28 preserved failure+lesson+criterion+alternative; s29 preserved all 6 matrix rows + the bottom "not AI"; s32 preserved the Seminar-5 boundary + anti-hype. L5 ∈ L4–L17 → owner waiver unavailable and unneeded.
-3. **Fact-checker — APPROVE-CLEAN, 0 P0/P1.** All numbers = chapter v2 (Zillow $300M/quarter+$500M+/~2000/−25%; X5 >70%/+5 billion ₽/−2%; Sber ~100%/5000/+350 billion; Stripe ~32%/>99%; JPMorgan −30%; Visa ~$40 billion FY2023; Klarna ~$40M/2/3/−11→<2 min; Amazon ~35%/Netflix ~75% historical McKinsey ~2013; Just Walk Out >1000 + Amazon disputed). P2-1 closed: s17 "since March 2024" → "in February–March 2024" (parity with §3.2). The RPD ">90%" — ONLY class-5 teaching (s21/s22). verify-day-of items in pre-flight synchronized with deck-part2.
-4. **Consistency — APPROVE-WITH-POLISH, 0 P0/P1.** One speech fragment per slide (33:33:33); the central question lexemes/order identical to §0.3 (D1 = optional oral punctuation, left as is per instruction); 5 return points, failure thread, Knight-callback discipline, forward-pointers, Seminar-5 Bloom boundary, glossary lock, 0 forbidden anglicisms in the body — all intact after the trim.
-
-The content is committed by the orchestrator (Phase 11). status=draft remains — the orchestrator finalizes after USER GATE C.
+*Continued in `speech-part2.en.md`: Section 4 (Measure/Experiment, s28-s35), Section 5 (Support/Operate, s36-s43), Section 6 (Governance/finale, s44-s49), the keystone payoff, checklist, Q&A.*

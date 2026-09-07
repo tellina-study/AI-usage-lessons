@@ -1,0 +1,190 @@
+# library/lectures/lec-05/deck.en.yaml
+# EN render of Lecture 5 deck (issue #172 F3). Single file, all 33 slides.
+# Loader (build_lec05_en.py) validates slide order/count; visible content is
+# hardcoded in the builder. Assertions here are the EN-translated slide theses.
+
+deck:
+  lecture_number: 5
+  title: Lecture 5. AI in the financial sector and retail
+  audience: 3rd-year students (universal, no local binding in content)
+  duration_min: 75
+  central_question: Finance and retail are the industries of maximal AI adoption. For which task — which type of AI, why exactly it (rather than an LLM everywhere), and where does this type break?
+  learning_outcomes:
+  - LO1
+  - LO2
+  - LO3
+  - LO6
+  language: en
+  status: finalized
+  version: v2-en
+  source: 'EN render of RU deck v2 (issue #172 F3)'
+  total_slides: 33
+  curriculum_level: Module 1, second industry lecture (after L4 software; L1–L3 overview)
+slides:
+- id: s01
+  file: slides-en/s01-zillow-hook.md
+  type: case_study
+  section: Section 0. Opening
+  assertion: 'An algorithmic home-price forecast shut down an entire Zillow line of business: $500M+ in write-downs, ~2000 laid off, stock −25% — an ordinary model error became a business loss'
+- id: s02
+  file: slides-en/s02-cover-roadmap.md
+  type: cover
+  section: Section 0. Opening
+  assertion: Lecture 5. AI in the financial sector and retail
+- id: s03
+  file: slides-en/s03-recap-palette.md
+  type: comparison
+  section: Section 0. Opening
+  assertion: L4 showed one type of AI in depth; finance and retail require a palette of 5 types for a palette of tasks — the LLM is not a universal hammer
+- id: s04
+  file: slides-en/s04-central-question.md
+  type: assertion_visual
+  section: Section 0. Opening
+  assertion: 'Central question: for which task — which type of AI, why exactly that one (rather than an LLM everywhere), and where does that type break?'
+- id: s04a
+  file: slides-en/s04a-divider-forecasting.md
+  type: section_divider
+  section: Section 1. Time-series forecasting
+  assertion: 'Section 1 — time-series forecasting: the most common task in retail, and immediately a type of AI that is NOT an LLM'
+- id: s05
+  file: slides-en/s05-pattern-why-not-llm.md
+  type: assertion_visual
+  section: Section 1. Time-series forecasting
+  assertion: A series forecast predicts the next NUMBER with trend and seasonality; an LLM predicts the next TOKEN OF TEXT — these are structurally different tasks
+- id: s06
+  file: slides-en/s06-task-forecast-criterion.md
+  type: assertion_visual
+  section: Section 1. Time-series forecasting
+  assertion: 'Forecasting demand/cash-flow/churn requires a tabular model with a measurable error — 3 arguments why not an LLM: data structure, calibration, what breaks'
+- id: s07
+  file: slides-en/s07-x5-magnit.md
+  type: case_study
+  section: Section 1. Time-series forecasting
+  assertion: 'X5: accuracy >70%, +5 billion ₽, −2% write-offs; Magnit builds its own F&R after the departure of SAP/Blue Yonder — forecasting is dictated by the task, neither adopted an LLM'
+- id: s08
+  file: slides-en/s08-how-it-works.md
+  type: process
+  section: Section 1. Time-series forecasting
+  assertion: 'Forecasting decomposes history into trend + seasonality + noise and extends the patterns of the past — hence the built-in vulnerability: strong as long as tomorrow resembles yesterday'
+- id: s09
+  file: slides-en/s09-zillow-payoff.md
+  type: case_study
+  section: Section 1. Time-series forecasting
+  assertion: 'Zillow: distribution shift × irreversible auto-action without a circuit breaker = loss of the line of business; Opendoor survived on the same type of AI — it is not the model that decides, but the harness'
+- id: s10
+  file: slides-en/s10-divider-anomaly.md
+  type: section_divider
+  section: Section 2. Anomaly detection
+  assertion: 'Section 2 — anomaly detection: forecasting is about the future, now about the present — catch an anomaly in milliseconds'
+- id: s11
+  file: slides-en/s11-task-fraud-realtime.md
+  type: assertion_visual
+  section: Section 2. Anomaly detection
+  assertion: Fraud is rare and drifts — learn «what a customer's normal looks like» (anomaly detection), not «what fraud looks like»; this is not series forecasting, not generation, not an LLM
+- id: s12
+  file: slides-en/s12-fraud-examples.md
+  type: case_study
+  section: Section 2. Anomaly detection
+  assertion: Stripe Radar −32% fraud at approval >99%, JPMorgan −30% false positives, Visa prevented ~$40 billion (FY2023) — anti-fraud dictates the «norm/deviation» type
+- id: s13
+  file: slides-en/s13-confusion-matrix.md
+  type: comparison
+  section: Section 2. Anomaly detection
+  assertion: FP = an honest customer blocked, FN = fraud missed; «accuracy 99.9%» under imbalance is deceptive — measure FP and FN separately and in money (cost-sensitive)
+- id: s14
+  file: slides-en/s14-false-positives.md
+  type: case_study
+  section: Section 2. Anomaly detection
+  assertion: $5 for coffee and $5000 for treatment — two FPs with costs different by orders of magnitude; precision↔recall — a trade-off, not a task of «both to zero»; large/irreversible → not a hard block
+- id: s15
+  file: slides-en/s15-divider-scoring.md
+  type: section_divider
+  section: Section 3. Credit scoring
+  assertion: 'Section 3 — credit scoring: a decision that changes the customer''s life, and why a black box is not allowed here'
+- id: s16
+  file: slides-en/s16-task-scoring-why-not-nn.md
+  type: assertion_visual
+  section: Section 3. Credit scoring
+  assertion: 'Scoring — tabular ML (logreg/GBM+SHAP/scorecard), deliberately NOT a neural network/LLM: explainability = a regulatory requirement, not a wish — 4 arguments'
+- id: s17
+  file: slides-en/s17-sber.md
+  type: case_study
+  section: Section 3. Credit scoring
+  assertion: Sber, since March 2024 — decisions on individuals are almost 100% AI, up to 5000 parameters; but it is an explainable pipeline with reason codes and a preserved client right to a human
+- id: s18
+  file: slides-en/s18-apple-card-proxy-bias.md
+  type: case_study
+  section: Section 3. Credit scoring
+  assertion: 'Apple Card: NYDFS did NOT find a violation of law — the failure was in opacity; proxy bias is real: removing sex/race from the input does not prove the absence of discrimination'
+- id: s19
+  file: slides-en/s19-automation-without-gate.md
+  type: case_study
+  section: Section 3. Credit scoring
+  assertion: 'One class of error across three AI types: automation of the irreversible in an open loop without a kill switch = the speed of ruin; scoring in Russia ~100% — the criterion applies acutely'
+- id: s20
+  file: slides-en/s20-divider-llm.md
+  type: section_divider
+  section: Section 4. LLM in finance
+  assertion: 'Section 4 — LLM in finance: up to now deliberately NOT an LLM; now an LLM — and immediately about its limits in a regulated industry'
+- id: s21
+  file: slides-en/s21-task-llm-support.md
+  type: assertion_visual
+  section: Section 4. LLM in finance
+  assertion: An LLM fits in a bank = text-and-dialogue tasks (support/voice/explanation); T-Bank chatbot >40% of inquiries, 70% of banks planned voice — NOT «>90%»
+- id: s22
+  file: slides-en/s22-factchecking-pattern.md
+  type: assertion_visual
+  section: Section 4. LLM in finance
+  assertion: In finance, an LLM answer about a rate/a client's right must be grounded and verifiable; the LLM is an interface to the source of truth, not the source of truth; 5 classes of error
+- id: s23
+  file: slides-en/s23-air-canada-klarna.md
+  type: case_study
+  section: Section 4. LLM in finance
+  assertion: 'Air Canada: the company is liable for its chatbot''s hallucination (court 2024); Klarna: full replacement of people → CSAT↓ → rollback 2025 — augmentation is durable, not replacement'
+- id: s24
+  file: slides-en/s24-pivot-around-ai.md
+  type: assertion_visual
+  section: Section 4. LLM in finance
+  assertion: 'Four AI types, one class of failure: the type was chosen correctly, it broke in the harness around it — the right type choice is necessary but NOT sufficient'
+- id: s25
+  file: slides-en/s25-divider-recsys.md
+  type: section_divider
+  section: Section 5. Recommendations
+  assertion: 'Section 5 — recommendations and dynamic pricing: the most «harmless» type by visible cost of error, but with the subtlest pathologies'
+- id: s26
+  file: slides-en/s26-collaborative-content.md
+  type: comparison
+  section: Section 5. Recommendations
+  assertion: Collaborative — «people similar to you took X» (cold-start, popularity bias); content-based — «similar by features to your favorite» (over-specialization)
+- id: s27
+  file: slides-en/s27-hybrid-filterbubble-pricing.md
+  type: assertion_visual
+  section: Section 5. Recommendations
+  assertion: Hybrid = composition (most industrial systems); filter bubble — a narrowing of diversity without malicious intent; dynamic pricing — fairness is a constraint, not a variable
+- id: s28
+  file: slides-en/s28-wendys-filterbubble.md
+  type: case_study
+  section: Section 5. Recommendations
+  assertion: Recsys/pricing optimizes a proxy (click, margin), not the goal (trust); Wendy's surge-pricing backlash 02.2024 — fairness is a constraint; the failure is quiet
+- id: s29
+  file: slides-en/s29-matrix-task-aitype.md
+  type: matrix
+  section: Section 6. Framework
+  assertion: 'The matrix «task × AI type»: 6 tasks → the right type, why not an LLM, the typical failure; the bottom row — a deterministic regulatory task → ordinary code, NOT AI'
+- id: s30
+  file: slides-en/s30-when-not-ai.md
+  type: assertion_visual
+  section: Section 6. Framework
+  assertion: 'Five manifestations of one principle: the right AI type is necessary but NOT sufficient; AI is dangerous where its output is wired to an action whose cost of error is not paid for by a harness'
+- id: s31
+  file: slides-en/s31-security-fz152-kyc.md
+  type: assertion_visual
+  section: Section 6. Framework
+  assertion: Financial data/PII/biometrics must not go into a public LLM (Federal Law 152-FZ, localization, biometrics regime); biometrics are irreversible on leak; the «autonomous» Just Walk Out relied on >1000 reviewers
+- id: s32
+  file: slides-en/s32-checklist-qa.md
+  type: qa_minimal
+  section: Section 6. Framework
+  assertion: The checklist «before applying AI to a financial task» + a bridge to Seminar 5 (verify 5 claims yourself against primary sources) + Q&A
+totals:
+  slides: 33

@@ -457,28 +457,39 @@ def eli5_overview(p, sid, *, title, cards, icon_name, icon_variant="mid"):
     """«Для чайников» section-overview slide (Directive 3): big left icon +
     3 plain-language cards (Что это / Зачем / Ментальная модель). Dual-audience:
     plain for weaker students, skimmable for the strong majority. Gold accent on
-    the first card's label + a gold chip «простыми словами»."""
+    the first card's label + a gold chip «простыми словами».
+
+    GATE-B fix (audit 2026-09-07): the template used to stop at y~5.65,
+    leaving a ~25-30% empty band at the bottom on all 7 ELI5 instances. Both
+    the left icon tile and the 3 right-column cards now stretch down to
+    y~6.85 (card height 1.18->1.55in, gap 0.20->0.25in; icon tile height
+    3.95->5.15in with the icon + chip re-centred within the taller tile) so
+    the template fills the same footprint the content-slide gold_callout
+    convention uses elsewhere in the deck — no dead space below either
+    column."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, title, size=26, w=12.0, h=0.85)
-    # left hero icon in a soft tile
-    filled_rect(s, 0.55, 1.70, 2.75, 3.95, SURFACE, stroke=LIGHT, stroke_pt=1.5,
-                radius=True, radius_adj=0.06)
-    icon(s, icon_name, 1.35, 2.55, 1.15, icon_variant)
-    chip(s, 0.85, 4.55, 2.15, 0.44, "простыми словами", fill=GOLD, color=DEEP,
-         size=11.5)
-    # 3 cards on the right
+    # left hero icon in a soft tile — stretched to match the new card-column
+    # height (y0=1.70 .. ~6.85 = 5.15in tall)
+    tile_h = 5.15
+    filled_rect(s, 0.55, 1.70, 2.75, tile_h, SURFACE, stroke=LIGHT,
+                stroke_pt=1.5, radius=True, radius_adj=0.06)
+    icon(s, icon_name, 1.35, 1.70 + tile_h * 0.36, 1.15, icon_variant)
+    chip(s, 0.85, 1.70 + tile_h - 0.60, 2.15, 0.44, "простыми словами",
+         fill=GOLD, color=DEEP, size=11.5)
+    # 3 cards on the right — grown to fill the same vertical span
     cx, cw = 3.65, 9.15
-    ch, gap = 1.18, 0.20
+    ch, gap = 1.55, 0.25
     y0 = 1.70
     for i, (label, body) in enumerate(cards):
         y = y0 + i * (ch + gap)
         lab_col = GOLD if i == 0 else MID
         ocean_box(s, cx, y, cw, ch, fill=SURFACE, stroke=LIGHT, stroke_pt=1.4)
-        text_box(s, x=cx + 0.28, y=y + 0.13, w=cw - 0.56, h=0.32, text=label,
-                 size=14, bold=True, color=lab_col)
-        text_box(s, x=cx + 0.28, y=y + 0.48, w=cw - 0.56, h=ch - 0.58,
-                 text=body, size=12.5, color=DEEP, line_spacing=1.12)
+        text_box(s, x=cx + 0.28, y=y + 0.16, w=cw - 0.56, h=0.34, text=label,
+                 size=15, bold=True, color=lab_col)
+        text_box(s, x=cx + 0.28, y=y + 0.56, w=cw - 0.56, h=ch - 0.72,
+                 text=body, size=13.5, color=DEEP, line_spacing=1.22)
     notes_with_sources(s, sid)
     return s
 

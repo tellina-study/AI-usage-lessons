@@ -214,8 +214,10 @@ def s33(p):
     set_slide_bg(s, WHITE)
     slide_title(s, "Все 5 реакций взвешены одинаково ×5 — не только «гнев»",
                 size=21, w=12.3, h=0.85)
-    # left: change-my-mind meme
-    meme_in_box(s, "s33-change-my-mind.jpg", 0.55, 1.55, 4.35, 3.05, pad=0.12)
+    # left: "They're The Same Picture" meme — GATE-B fix, replaces Change My
+    # Mind (debate-provocation format mismatched a settled factual finding;
+    # see arc-meme-layout-audit.md)
+    meme_in_box(s, "s33-same-picture.jpg", 0.55, 1.55, 4.35, 3.05, pad=0.12)
     # right: 5 equal reactions + timeline + real logo
     photo_in_box(s, "s33-facebook-real-source.png", 5.15, 1.55, 2.55, 1.15,
                  pad=0.18)
@@ -449,8 +451,10 @@ def s39(p):
     set_slide_bg(s, WHITE)
     slide_title(s, "Дашборды остаются зелёными, пока доверие уже падает недели",
                 size=21, w=12.3, h=0.85)
-    # left: harold meme
-    meme_in_box(s, "s39-harold.jpg", 0.55, 1.55, 3.35, 4.20, pad=0.14)
+    # left: Gru's Plan meme — GATE-B fix, replaces Hide the Pain Harold
+    # (needed an extra inferential step; Gru's 4-panel escalation-then-twist
+    # is a direct structural match, see arc-meme-layout-audit.md)
+    meme_in_box(s, "s39-grus-plan.jpg", 0.55, 1.55, 3.35, 4.20, pad=0.14)
     # right: silent drift + governance drift
     ocean_box(s, 4.15, 1.60, 8.65, 1.75, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
     icon(s, "monitor-smartphone", 4.40, 1.90, 0.6, "teal")

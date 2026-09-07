@@ -471,3 +471,116 @@ tag).
   but NOT in the original 13-item fix list and not part of the AI->ИИ
   cascade (these are different English words, not "AI"), so left untouched
   to avoid scope creep; flagged here for a future pass.
+
+## 2026-09-07 — Arc/meme/layout audit fix pass (consolidated)
+
+Source: `notes/lecture-5-review/pdlc/2026-09-07-arc-meme-layout-audit.md`
+(full vision-inspection audit of all 56 rendered PNGs). This pass finally
+executes fix #13 from the entry above (previously skipped as "optional") —
+owner escalated the cross-lecture-uniqueness rule to hard/mandatory this
+round, so partial "keep the weak ones" was no longer acceptable.
+
+**A. Memes — 5 replacements, cross-lecture uniqueness enforced:**
+1. **s01 hook:** `this-is-fine.jpg` → `spiderman-pointing.jpg`
+   (Spider-Man-pointing-at-Spider-Man, imgflip id `1tkjq9`). Lec-2 collision
+   removed; new caption ("сборка почти бесплатна" / "ценность — ноль у
+   95%") maps directly onto the *two-simultaneous-truths* paradox structure,
+   which This-Is-Fine's denial-of-disaster framing never fit. Hero box
+   unchanged (7.65x5.30in = ~40.5% area).
+2. **s12 (synthetic users, "7/7 vs 3/7"):** `surprised-pikachu.jpg` →
+   `trade-offer.jpg` (imgflip id `54hjww`). Lec-2 collision removed; "I
+   receive: 7/7 synth-panel yes / you receive: 3/7 real yes — the one that
+   decides" is a direct offer/counter-offer structure, sharper than
+   Pikachu's shock-affect mismatch.
+3. **s21 divider (Build/Launch):** `expanding-brain.jpg` →
+   `anakin-padme.jpg` (4-panel, imgflip id `5c7lwq`). Lec-2 collision
+   removed; "...ведь так?" escalating-disbelief format fits "code is cheap
+   now — does that mean the PRODUCT just happens? ...right?" better than
+   the brain-size-escalation joke did.
+4. **s33 (Facebook MSI, "all 5 reactions ×5"):** `change-my-mind.jpg` →
+   `they-are-same-picture.jpg` (imgflip id `2za3u1`, "Corporate needs you to
+   find the differences" / Pam "they're the same picture"). Fixes the
+   format/content mismatch flagged by both the audit and student-simulator:
+   the claim is a settled factual reveal, not a debate provocation.
+5. **s39 (silent drift):** `hide-the-pain-harold.jpg` → `grus-plan.jpg`
+   (4-panel, imgflip id `26jxvz`). Fixes the extra-inferential-step problem:
+   Gru's escalation-then-twist structure ("dashboard green / still green /
+   green a month / trust's been dropping for weeks — dashboard never
+   noticed") is a direct structural match, no "hidden suffering" metaphor
+   needed. **Explicitly did NOT reuse This-Is-Fine here** despite the prior
+   audit's own suggestion to relocate it — owner's hard rule this round
+   forbids reusing any Lec-2 template anywhere in Lec-5, including
+   relocations.
+6. **s16 Bernie enlarged:** was ~165x220px in a 2000x1125 canvas (<10% of
+   slide area, confirmed smallest meme in the deck). Restructured the whole
+   slide (design-system card moved bottom-left under the heuristics list;
+   gold_callout + meme now stacked in a dedicated right column) so Bernie
+   gets a tall box sized to its own 0.77 portrait aspect (4.55x3.60in) —
+   comparable footprint to Drake/Disaster-Girl's own share of their slides.
+7. **Deleted unused spare `assets/memes/s09-bernie.jpg`** (generator
+   function `s09_bernie()` was never wired into any slide — build map only
+   ever called `s16-bernie.jpg`).
+8. **Verified zero collisions, zero internal repeats** in the final
+   15-meme inventory (see per-fix status table in the delivery summary).
+
+**B. Layout — systemic + isolated fixes:**
+9. **ELI5 template (`_helpers.py::eli5_overview`) — systemic fix, cascades
+   to all 7 instances** (s07b/s14b/s21b/s28b/s36b/s44b, i.e. slide# 08, 17,
+   25, 33, 42, 51). Root cause: card height 1.18in + gap 0.20in stopped at
+   y≈5.65, leaving ~25-30% of the slide blank below both columns. Grew card
+   height to 1.55in + gap to 0.25in (total column height 5.15in, landing at
+   y≈6.85) and stretched the left icon tile to match — icon/chip
+   re-centred within the taller tile. Verified against all 7 instances
+   post-rebuild (not just the 2 sampled in the brief).
+10. **s04 (central-thesis "Цикл продукта" box)** — upper-left quadrant
+    (~45-50% of the outer box) was blank; "Цикл продукта" was NAMED but
+    never SHOWN. Added a compact 6-node mini-loop (small-scale reuse of the
+    s03 icon-loop geometry, r=0.72in) in the empty space + a "6 фаз" gold
+    chip clear of any node. This is the lecture's highest-stakes bridge
+    slide (central-question payload) — now the loop is visually present,
+    not just captioned.
+11. **s16 heuristics slide** — same restructure as meme fix #6 above also
+    closed this slide's own bottom-void share (left ocean box grew
+    1.55→5.35in height; design-system card relocated into the reclaimed
+    space instead of floating with dead space below it).
+12. **s15 Double Diamond text overlap** — "Расширяем/Сужаем" labels were
+    centred INSIDE the diamond near its narrow top/bottom vertices, where a
+    2-line centred label doesn't fit the shape's actual width at that
+    height. Moved both labels OUTSIDE the diamond as side annotations
+    (above the top vertex, below the bottom vertex); the diamond itself now
+    carries only the domain label (Правильная проблема / Правильное
+    решение) via a MIDDLE-anchored box spanning its full height.
+13. **s24 (launch control-transfer v1/v2/v3 stack) sidebar misalign** — the
+    CC/CD-vs-CI/CD sidebar box (y=1.55..4.60) stopped 0.45in short of the
+    v1/v2/v3 stack's own bottom edge (y=2.35..5.05). Grew sidebar height
+    3.05→3.50in so both right-column elements now bottom-align at y≈5.05.
+14. **s45/portfolio-funnel label wrap** ("профинансированы" wrapping
+    mid-word as "профинансиро-ваны") — widened the bottom funnel box
+    1.4→2.3in AND shortened the label to "профинансировано" AND dropped its
+    font size 11.5→10.5pt; now fits on one line without breaking the
+    funnel's visual taper logic.
+
+**C. ARC emphasis (P2):**
+15. **s47 (MIT-95%-debunk, the payoff of s01's own hook stat)** — was
+    visually undersold: the 60→20→5 funnel chart occupied only ~1/3 of the
+    slide, competing equally with a MIT campus stock photo and a
+    4-question sidebar. Rebuilt so the funnel is the unambiguous dominant
+    visual (full-width top band, ~46% of slide area, gold-bordered) with
+    the debunk statement directly under it in its own callout; MIT photo +
+    4-question checklist + BCG note demoted to a slimmer 3-column bottom
+    row. **Facts unchanged** — same 60/20/5 numbers, same 4 questions, same
+    BCG citation, only visual weighting changed.
+
+**Verification:** full rebuild (`build_lec05.py`, assert-56-slides passes)
++ full `render.sh` (all 56 PNGs) after the meme-swap batch and again after
+the layout batch. Visually inspected on the actual rendered PNGs (not
+build-success alone): s01, s12(13), s16(19), s21(24 divider), s24(28),
+s33(38), s39(45), s04, s15(18), s45/47(52/54), plus 2 ELI5 instances not
+in the original sample (s08, s17, s25, s51) to confirms the systemic fix
+cascades cleanly. Deep-latin-scan re-run on the full rebuilt pptx's visible
+text: 195 occurrences / 147 unique tokens outside the brand allowlist —
+**identical set, before vs after** (verified via set-diff, not just count)
+— confirms zero new anglicisms introduced by this pass. The 147 pre-existing
+tokens (guardrail, evals, MVP, SLO, Stage-Gate, love/haha/wow/sad/angry
+reaction names, etc.) are a known pre-existing gap outside this audit's
+scope (not flagged by the arc/meme/layout audit) and are not addressed here.

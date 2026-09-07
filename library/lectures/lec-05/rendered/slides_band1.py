@@ -66,10 +66,14 @@ def s01(p):
         "превращение сборки в ценность — нет. Держите вопрос — вернёмся к "
         "нему в конце лекции.",
         size=13, bold=True)
-    # right: real meme (This Is Fine) — the paradox in one image, now the
-    # unambiguous hero (>=40% slide area)
+    # right: real meme (Spider-Man Pointing at Spider-Man — GATE-B fix,
+    # replaces This-Is-Fine: lec-2 collision + tonal mismatch, see
+    # notes/lecture-5-review/pdlc/2026-09-07-arc-meme-layout-audit.md) — two
+    # simultaneously-true facts pointing at each other, the unambiguous hero
+    # (>=40% slide area)
     from _helpers import meme_in_box
-    meme_in_box(s, "s01-this-is-fine.jpg", 5.15, 1.30, 7.65, 5.30, pad=0.18)
+    meme_in_box(s, "s01-spiderman-pointing.jpg", 5.15, 1.30, 7.65, 5.30,
+                pad=0.18)
     notes_with_sources(s, "s01")
     return s
 
@@ -214,6 +218,30 @@ def s04(p):
               stroke_pt=1.6)
     text_box(s, x=0.80, y=1.62, w=6.0, h=0.35, text="Цикл продукта (Лекция 5)",
              size=13, bold=True, color=MID)
+    # GATE-B fix (audit 2026-09-07): the upper-left quadrant of this box used
+    # to be ~45-50% blank — "Цикл продукта" was only NAMED, never SHOWN. Add
+    # a compact 6-node mini-loop (small-scale reuse of the s03 icon-loop
+    # pattern) so the thesis box's own hero content — the loop itself — is
+    # visible here, not just in the caption line below it. This is the
+    # lecture's highest-stakes bridge slide (central-question payload).
+    import math
+    mcx, mcy, mr = 2.55, 2.85, 0.72
+    mnodes = ["search", "pencil", "hammer", "ruler", "headphones", "scale"]
+    mcenters = []
+    for i in range(6):
+        ang = math.pi / 2 - i * (2 * math.pi / 6)
+        mcenters.append((mcx + mr * math.cos(ang), mcy - mr * math.sin(ang)))
+    for i in range(6):
+        x1, y1 = mcenters[i]
+        x2, y2 = mcenters[(i + 1) % 6]
+        connector(s, x1, y1, x2, y2,
+                  color=(GOLD if i == 5 else LIGHT),
+                  width=(2.0 if i == 5 else 1.4), arrow_end=True)
+    for i, ic in enumerate(mnodes):
+        nx, ny = mcenters[i]
+        circle(s, nx - 0.22, ny - 0.22, 0.44, WHITE, stroke=MID, stroke_pt=1.2)
+        icon(s, ic, nx - 0.14, ny - 0.14, 0.28, "mid")
+    chip(s, 4.55, 2.62, 1.05, 0.42, "6 фаз", fill=GOLD, color=DEEP, size=12)
     icon(s, "layers", 0.85, 3.75, 0.5, "teal")
     text_box(s, x=1.50, y=3.75, w=6.05, h=0.55,
              text="исследование → дизайн → сборка/запуск → измерение → "
@@ -597,9 +625,11 @@ def s12(p):
         s, "Одна и та же задача: реальные люди — 3 из 7, синтетическая панель — 7 из 7",
         size=20, w=12.2, h=0.85)
 
-    # LEFT: real meme (Surprised Pikachu) — the false 7/7 in one image
+    # LEFT: real meme (Trade Offer — GATE-B fix, replaces Surprised Pikachu:
+    # lec-2 collision + weak affect-fit, see arc-meme-layout-audit.md) — the
+    # false 7/7 "offer" vs the 3/7 that actually decides
     from _helpers import meme_in_box
-    meme_in_box(s, "s12-pikachu.jpg", 0.55, 1.55, 4.55, 3.15, pad=0.14)
+    meme_in_box(s, "s12-trade-offer.jpg", 0.55, 1.55, 4.55, 3.15, pad=0.14)
 
     # RIGHT: split comparison 3/7 vs 7/7
     rx, rw = 5.35, 7.45

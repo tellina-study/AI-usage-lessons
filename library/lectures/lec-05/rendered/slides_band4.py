@@ -53,15 +53,22 @@ def s45(p):
     ocean_box(s, 0.55, 1.60, 6.05, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.5)
     text_box(s, x=0.80, y=1.72, w=5.5, h=0.4, text="Воронка портфеля",
              size=13.5, bold=True, color=MID)
-    widths = [5.35, 4.0, 2.6, 1.4]
-    labels = ["много инициатив", "гейт 1", "гейт 2", "профинансированы"]
+    # GATE-B fix (audit 2026-09-07): "профинансированы" was wrapping
+    # mid-word ("профинансиро-ваны") because the bottom funnel box was
+    # narrower than the label needed at this font size. Widened the box
+    # (1.7->2.3in) AND shortened the label ("профинансированы" ->
+    # "профинансировано") AND dropped its font size slightly so it now
+    # fits on one line without truncating any funnel-taper visual logic.
+    widths = [5.35, 4.0, 2.6, 2.3]
+    labels = ["много инициатив", "гейт 1", "гейт 2", "профинансировано"]
+    sizes = [11.5, 11.5, 11.5, 10.5]
     cols = [LIGHT, MID, TEAL, GOLD]
-    for i, (w, lb, col) in enumerate(zip(widths, labels, cols)):
+    for i, (w, lb, col, sz) in enumerate(zip(widths, labels, cols, sizes)):
         y = 2.25 + i * 0.68
         x = 0.80 + (5.5 - w) / 2
         filled_rect(s, x, y, w, 0.52, SURFACE, stroke=col, stroke_pt=1.6,
                     radius=True, radius_adj=0.10)
-        text_box(s, x=x, y=y, w=w, h=0.52, text=lb, size=11.5, bold=True,
+        text_box(s, x=x, y=y, w=w, h=0.52, text=lb, size=sz, bold=True,
                  color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     # right: unit economics
     ocean_box(s, 6.85, 1.60, 5.95, 1.85, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
@@ -139,38 +146,49 @@ def s46(p):
 
 
 def s47(p):
+    """GATE-B fix (audit 2026-09-07): this is the single most important
+    payoff of the s01 hook's own headline stat ("~95% pilots return nothing")
+    — but the funnel chart previously occupied only ~1/3 of the slide,
+    competing equally with a MIT campus stock photo and a 4-question
+    sidebar. Rebuilt so the 60->20->5 funnel is the unambiguous visual
+    dominant (wide top band, ~46% of slide area) with the debunk statement
+    directly under it; MIT photo + 4-question checklist demoted to a
+    slimmer bottom row. Facts unchanged."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "60% исследовали → 20% пилот → 5% успех: это 25% среди дошедших, не «95% провал»",
-                size=18, w=12.3, h=0.85)
-    # left: real MIT funnel chart + logo
-    photo_in_box(s, "s47-mit-real-source.png", 0.55, 1.60, 2.75, 1.55, pad=0.14)
-    ocean_box(s, 0.55, 3.30, 2.75, 2.10, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.6)
-    text_box(s, x=0.70, y=3.45, w=2.45, h=1.85,
-             text="«95% провал» — заголовок, который не переживает "
-                  "калибровку: успех среди дошедших до пилота — 25%, не 5%.",
-             size=12, bold=True, color=DEEP, line_spacing=1.18,
-             anchor=MSO_ANCHOR.MIDDLE)
-    ocean_box(s, 3.55, 1.60, 4.35, 3.80, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
-    add_image(s, CHARTS / "c-mit-funnel.png", 3.75, 2.30, 3.95, 2.45,
+                size=18, w=12.3, h=0.72, y=0.28)
+    # TOP: the funnel chart is now the dominant visual — full-width, tall
+    ocean_box(s, 0.55, 1.20, 12.25, 3.15, fill=SURFACE, stroke=GOLD,
+              stroke_pt=2.0)
+    add_image(s, CHARTS / "c-mit-funnel.png", 1.35, 1.40, 10.65, 2.75,
               preserve_aspect=True)
-    # right: 4 questions
-    ocean_box(s, 8.15, 1.60, 4.65, 3.80, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=8.40, y=1.75, w=4.15, h=0.5,
+    # debunk statement directly under the funnel — the payoff stated in words
+    gold_callout(
+        s, 0.55, 4.50, 12.25, 0.72,
+        "«95% провал» — заголовок, который не переживает калибровку: успех "
+        "среди дошедших до пилота — 25%, не 5%.",
+        size=14, bold=True, align=PP_ALIGN.CENTER)
+    # BOTTOM ROW: MIT source photo (small) + 4-question checklist + BCG note
+    photo_in_box(s, "s47-mit-real-source.png", 0.55, 5.35, 2.55, 1.55, pad=0.12)
+    ocean_box(s, 3.25, 5.35, 5.35, 1.55, fill=SURFACE, stroke=MID, stroke_pt=1.4)
+    text_box(s, x=3.48, y=5.45, w=4.9, h=0.32,
              text="4 вопроса к любой громкой цифре провала ИИ",
-             size=13, bold=True, color=MID, line_spacing=1.1)
+             size=11.5, bold=True, color=MID, line_spacing=1.0)
     qs = ["1. Каков знаменатель?", "2. Что считается «провалом»?",
           "3. Каков конфликт интересов автора?",
-          "4. Прослеживается ли к первоисточнику с методологией?"]
+          "4. Прослеживается ли к первоисточнику?"]
     for i, qq in enumerate(qs):
-        text_box(s, x=8.40, y=2.45 + i * 0.66, w=4.15, h=0.62, text=qq,
-                 size=12.5, color=DEEP, line_spacing=1.1)
-    gold_callout(
-        s, 0.55, 5.55, 12.25, 0.62,
-        "BCG: 60% компаний не отслеживают ни одного финансового KPI, "
-        "привязанного к ценности ИИ — вот почему цифры провалов так легко "
-        "раздуваются.",
-        size=12, bold=True)
+        text_box(s, x=3.48, y=5.82 + i * 0.27, w=4.9, h=0.26, text=qq,
+                 size=10, color=DEEP, line_spacing=1.0)
+    filled_rect(s, 8.75, 5.35, 4.05, 1.55, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
+                radius=True, radius_adj=0.08)
+    text_box(s, x=8.95, y=5.45, w=3.65, h=1.35,
+             text="BCG: 60% компаний не отслеживают ни одного финансового "
+                  "KPI, привязанного к ценности ИИ — вот почему цифры "
+                  "провалов так легко раздуваются.",
+             size=10.5, bold=True, color=DEEP, line_spacing=1.15,
+             anchor=MSO_ANCHOR.MIDDLE)
     notes_with_sources(s, "s47")
     return s
 

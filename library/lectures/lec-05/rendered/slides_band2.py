@@ -55,30 +55,34 @@ def s15(p):
     set_slide_bg(s, WHITE)
     slide_title(s, "Два алмаза: сначала правильная проблема, потом правильное решение",
                 size=22, w=12.2, h=0.85)
-    # two diamonds
-    def diamond(cx, top_lbl, bot_lbl, col):
+    # two diamonds — GATE-B fix (audit 2026-09-07): "Расширяем/Сужаем" labels
+    # used to sit CENTRED INSIDE the diamond near its narrow top/bottom
+    # vertices, where 2 lines of centred text don't actually fit the shape's
+    # width at that height and visually overlap/crowd the outline. Moved
+    # OUTSIDE the diamond as side annotations (above the top vertex, below
+    # the bottom vertex) — the diamond itself now carries only the domain
+    # label (Проблема/Решение), never overlapping text.
+    def diamond(cx, top_lbl, bot_lbl, col, domain_lbl):
         y0, dw, dh = 2.05, 2.7, 2.0
-        pts = [(cx, y0), (cx + dw / 2, y0 + dh / 2), (cx, y0 + dh),
-               (cx - dw / 2, y0 + dh / 2)]
-        # draw as a rounded box tilted look — approximate with a filled diamond
         sh = s.shapes.add_shape(MSO_SHAPE.DIAMOND, Inches(cx - dw / 2),
                                 Inches(y0), Inches(dw), Inches(dh))
         sh.fill.solid(); sh.fill.fore_color.rgb = SURFACE
         sh.line.color.rgb = col; sh.line.width = Pt(1.8)
         from _helpers import disable_shadow
         disable_shadow(sh)
-        text_box(s, x=cx - dw / 2 + 0.2, y=y0 + 0.30, w=dw - 0.4, h=0.4,
+        text_box(s, x=cx - dw / 2 - 0.5, y=y0 + dh / 2 - 0.35, w=dw + 1.0,
+                 h=0.7, text=domain_lbl, size=13.5, bold=True, color=col,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=cx - dw / 2 - 0.35, y=y0 - 0.62, w=dw + 0.7, h=0.55,
                  text=top_lbl, size=12.5, bold=True, color=col,
-                 align=PP_ALIGN.CENTER)
-        text_box(s, x=cx - dw / 2 + 0.2, y=y0 + dh - 0.70, w=dw - 0.4, h=0.4,
-                 text=bot_lbl, size=12.5, bold=True, color=DEEP,
-                 align=PP_ALIGN.CENTER)
-    diamond(3.35, "Расширяем\nпроблему", "Сужаем:\nодна проблема", MID)
-    diamond(7.65, "Расширяем\nрешение", "Сужаем:\nодно решение", TEAL)
-    text_box(s, x=1.90, y=1.62, w=3.0, h=0.35, text="Правильная проблема",
-             size=13, bold=True, color=MID, align=PP_ALIGN.CENTER)
-    text_box(s, x=6.20, y=1.62, w=3.0, h=0.35, text="Правильное решение",
-             size=13, bold=True, color=TEAL, align=PP_ALIGN.CENTER)
+                 align=PP_ALIGN.CENTER, line_spacing=1.05)
+        text_box(s, x=cx - dw / 2 - 0.35, y=y0 + dh + 0.08, w=dw + 0.7,
+                 h=0.55, text=bot_lbl, size=12.5, bold=True, color=DEEP,
+                 align=PP_ALIGN.CENTER, line_spacing=1.05)
+    diamond(3.35, "Расширяем проблему", "Сужаем: одна проблема", MID,
+            "Правильная\nпроблема")
+    diamond(7.65, "Расширяем решение", "Сужаем: одно решение", TEAL,
+            "Правильное\nрешение")
     right_arrow(s, 5.05, 2.90, 0.55, 0.28, fill=LIGHT)
     text_box(s, x=9.35, y=2.85, w=3.4, h=1.3,
              text="Double Diamond\n(Design Council UK)\n\nDesign Thinking — "
@@ -106,7 +110,7 @@ def s16(p):
         "Консистентность",
         "Предотвращение ошибок",
     ]
-    ocean_box(s, 0.55, 1.55, 6.75, 3.55)
+    ocean_box(s, 0.55, 1.55, 6.75, 5.35)
     icon(s, "circle-check", 0.80, 1.75, 0.55, "mid")
     text_box(s, x=1.55, y=1.80, w=5.6, h=0.4, text="Топ-5 из 10 эвристик",
              size=15, bold=True, color=MID)
@@ -115,18 +119,26 @@ def s16(p):
         chip(s, 0.80, y, 0.42, 0.34, str(i + 1), fill=GOLD, color=DEEP, size=12)
         text_box(s, x=1.40, y=y - 0.02, w=5.6, h=0.4, text=h, size=13,
                  color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    # right: design system as guardrail
-    ocean_box(s, 7.55, 1.55, 5.25, 1.90, fill=SURFACE, stroke=TEAL,
+    # design system as guardrail — moved bottom-left under the heuristics
+    # list (GATE-B fix, audit 2026-09-07: left ocean box grew to fill the
+    # slide height, closing this slide's own share of the deck-wide
+    # bottom-void pattern)
+    ocean_box(s, 0.55, 5.20, 6.75, 1.55, fill=SURFACE, stroke=TEAL,
               stroke_pt=1.6)
-    icon(s, "shield-check", 7.80, 1.78, 0.55, "teal")
-    text_box(s, x=8.50, y=1.82, w=4.1, h=0.4, text="Дизайн-система = guardrail",
+    icon(s, "shield-check", 0.80, 5.42, 0.55, "teal")
+    text_box(s, x=1.55, y=5.44, w=5.6, h=0.4, text="Дизайн-система = guardrail",
              size=14, bold=True, color=TEAL)
-    text_box(s, x=7.80, y=2.45, w=4.8, h=0.9,
+    text_box(s, x=0.80, y=6.05, w=6.25, h=0.6,
              text="Удерживает генеративную свободу в рамках "
                   "провалидированного бренда.",
              size=12.5, color=DEEP, line_spacing=1.15)
+    # right column: gold callout on top, ENLARGED Bernie meme below (GATE-B
+    # fix, audit 2026-09-07: Bernie previously rendered at <10% slide area,
+    # well under the 30-55% band Drake/Disaster-Girl/Distracted-Boyfriend
+    # use). Portrait meme (0.77 aspect) now gets a tall dedicated box sized
+    # to its own aspect ratio instead of competing with side text for width.
     gold_callout(
-        s, 7.55, 3.65, 5.25, 1.45,
+        s, 7.55, 1.55, 5.25, 1.05,
         "Метафора: эвристики — как линтер для интерфейса. Ловят типовые "
         "проблемы до траты денег на исследование — но не заменяют тест на "
         "живом пользователе.",
@@ -136,19 +148,13 @@ def s16(p):
     # death). This restores exactly 1 tasteful meme in the section, reusing
     # the Bernie template with a caption specific to THIS slide's own claim
     # (distinct from s09's use of the same template — no joke duplication).
-    # Portrait meme (0.77 aspect) inside a wide box would render tiny if
-    # centered by preserve_aspect alone — box built narrow-left/text-right
-    # instead so the image actually fills its allotted height.
-    mx, my, mw, mh = 7.55, 5.15, 5.25, 1.75
-    ocean_box(s, mx, my, mw, mh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
-    from _helpers import add_image, MEMES
-    add_image(s, MEMES / "s16-bernie.jpg", mx + 0.14, my + 0.10, w=None,
-              h=mh - 0.20, preserve_aspect=True)
-    text_box(s, x=mx + 1.75, y=my + 0.16, w=mw - 1.95, h=mh - 0.32,
+    mx, my, mw, mh = 7.90, 2.80, 4.55, 3.60
+    meme_in_box(s, "s16-bernie.jpg", mx, my, mw, mh, pad=0.12)
+    text_box(s, x=7.55, y=my + mh + 0.12, w=5.25, h=0.65,
              text="«Я снова прошу»: эвристики ловят типовые проблемы, но не "
                   "заменяют проверку на живом пользователе.",
-             size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.2)
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             line_spacing=1.15)
     notes_with_sources(s, "s16")
     return s
 
@@ -327,7 +333,7 @@ def s21(p):
                "дисциплины релиза: как выкатывать безопасно и когда "
                "остановиться.",
         sid="s21", tag="2 базы · 2 провала",
-        meme_name="s21-expanding-brain.jpg")
+        meme_name="s21-anakin-padme.jpg")
 
 
 def s21b(p):
@@ -442,12 +448,15 @@ def s24(p):
                  bold=True, color=DEEP)
         text_box(s, x=1.80, y=y + 0.46, w=w - 1.2, h=0.3, text=sub, size=10.5,
                  italic=True, color=SLATE)
-    # right explainer
-    ocean_box(s, 7.75, 1.55, 5.05, 3.05, fill=SURFACE, stroke=TEAL,
+    # right explainer — GATE-B fix (audit 2026-09-07): box now bottom-aligns
+    # with the v1/v2/v3 stack's own bottom edge (stack spans y=2.35..5.05;
+    # box was y=1.55..4.60, leaving a visible 0.45in gap vs the stack) —
+    # grew height 3.05->3.50 so both right-column elements end at y=5.05.
+    ocean_box(s, 7.75, 1.55, 5.05, 3.50, fill=SURFACE, stroke=TEAL,
               stroke_pt=1.5)
     text_box(s, x=8.00, y=1.70, w=4.6, h=0.9, text="CC/CD против привычного CI/CD",
              size=14, bold=True, color=TEAL, line_spacing=1.1)
-    text_box(s, x=8.00, y=2.55, w=4.6, h=1.9,
+    text_box(s, x=8.00, y=2.55, w=4.6, h=2.3,
              text="CC/CD — Continuous Calibration/Development (непрерывная "
                   "калибровка). Релиз версионируется по уровню агентности, а "
                   "не по набору функций. Лестница агентности: Copilot, Cursor.",

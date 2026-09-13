@@ -20,7 +20,7 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: en
   status: draft
-  version: v3.3
+  version: v3.4
   source: "chapter v2.3 (3 parts)"
   plan: "notes/lecture-2-review/final/rework-round2.md"
   total_slides: 47
@@ -367,7 +367,7 @@ slides:
     chapter_ref: "§3.1 (chapter-part2.md) [for-slide-s18]"
     visual:
       pattern: attention_matrix_7x7_heatmap
-      primary: "Left 60% — a 7×7 attention-matrix heatmap for 'The cat ate the mouse because it was hungry,' the cell 'it'→'cat' in gold (gender agreement); the upper triangle grayed out. Right 40% — 3 properties: N×N and quadratic cost; recomputed at every step; multi-head. Callout 'what the weight distribution affects': the weights determine whose Value ends up in the current token's representation → directly affects the next prediction."
+      primary: "Left 60% — a 7×7 attention-matrix heatmap for 'The cat ate the mouse because it was hungry,' the cell 'it'→'cat' in gold (gender agreement); the upper triangle grayed out. Right 40% — 3 properties: N×N and quadratic cost; recomputed at every step; multi-head. Callout 'what the weight distribution affects': the weights determine whose Value ends up in the current token's representation → directly affects the next prediction; footnote at the bottom — 2025-26 sparse/linear models cut compute, N×N remains the baseline."
 
   - id: s19
     file: slides-en/s19-what-is-attention.md
@@ -435,7 +435,7 @@ slides:
     chapter_ref: "§3.5 (chapter-part2.md) [for-slide-s23]"
     visual:
       pattern: bar_chart_timeline_plus_poles
-      primary: "Bar chart (log scale): GPT-3.5 (2022) 4K → Claude 3.5 (2024) 200K → frontier standard up to 1M — Fable 5, GPT-5.6, Gemini 3.1 Pro and others (gold). Separately — a single outlier, Gemini 3.5 Pro at 2M (not the standard, one model). Contrasts: Llama 4 Scout '10M — advertised, no benchmarks, marketing' (hatched), YandexGPT 5 Pro 32K. Below, a line on positional encoding. Gold callout: 'you pay for whatever you put in the window.'"
+      primary: "Bar chart (log scale): GPT-3.5 (2022) 4K → Claude 3.5 (2024) 200K → frontier standard up to 1M — Fable 5, GPT-5.6, Gemini 3.1 Pro and others (gold). Separately — a single outlier, Gemini 3.5 Pro at 2M (not the standard, one model). Contrasts: Llama 4 Scout '10M — advertised, no benchmarks, marketing' (hatched), YandexGPT 5 Pro 32K. Below, a line on positional encoding. Gold callout: 'you pay for whatever you put in the window'; fact about 32TB KV-cache at 10M tokens (physical ceiling)."
     verify_day_of: true
 
   - id: s25

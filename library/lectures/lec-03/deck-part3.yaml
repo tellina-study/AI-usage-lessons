@@ -80,11 +80,39 @@ slides:
     type: comparison
     section: "Раздел 4. Агенты"
     duration_min: 2.5
-    assertion: "Предсказуемая задача → workflow; непредсказуемая И ценность оправдывает → агент. Вложенность — норма"
-    learning_goal: "Workflow vs Agent + вложенность workflow↔agent (§4.3)"
-    chapter_ref: "§4.3 [for-slide-s22, s22a]"
+    assertion: "Workflow — не примитив: пять паттернов вокруг предсказуемого (prompt chaining / routing / parallelization / orchestrator-workers / evaluator-optimizer)"
+    learning_goal: "Пять паттернов workflow (Anthropic Building Effective Agents) — что/когда (§4.3)"
+    chapter_ref: "§4.3 [for-slide-s22]"
     subtype: schema_matrix
-    changed_in_v4: "#231 — добавлена идея вложенности (agent содержит workflow и наоборот)"
+    changed_in_v4: "#196 WAVE 3 — REFRAME из «workflow vs agent» в «Когда workflow: пять паттернов»; diagram slide, no meme"
+
+  - id: s-agent-frameworks
+    file: slides/s-agent-frameworks-overview.md
+    type: comparison_table
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Фреймворк агента — абстракционный налог; берут под требование. LangGraph / CrewAI / AG2 / OpenAI Agents SDK / Claude Agent SDK / smolagents / LlamaIndex / Pydantic AI — и «ни одного: обычный код»"
+    learning_goal: "Обзор фреймворков агентов по схеме ядро-абстракция · под что · один минус (§4.3c)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3c [for-slide-agent-frameworks-intro, agent-frameworks-list, agent-frameworks-none]"
+    subtype: comparison_table
+    references: [anthropic-agents, langgraph]
+    verify_day_of: true
+    new_in_v4: "#196 WAVE 3 — agent frameworks (comparison-table, no meme; versions [VFY-day-of])"
+
+  - id: s-agent-when
+    file: slides/s-agent-when-judgment.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Агент — под открытую непредсказуемую задачу; предсказуемая → workflow; мульти-агент только под триггер. p^n: 0,95^10≈60%, 0,95^20≈36%; τ-bench 61%→25% pass@1→pass@8"
+    learning_goal: "Судейство: когда агент, когда workflow, когда мульти-агент (§4.3 + reliability)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3 [for-slide-s22, s22a-multi, agent-reliability]"
+    subtype: meme_forward
+    references: [tau-bench, anthropic-multiagent]
+    verify_day_of: true
+    new_in_v4: "#196 WAVE 3 — agent-vs-workflow judgment (meme-forward failure/limitation)"
 
   - id: s22a_multi
     file: slides/s22a_multi-multi-agent.md
@@ -109,16 +137,8 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §4.4 — карта экипировки; рифма с лестницей"
 
-  - id: s22c
-    file: slides/s22c-agent-memory.md
-    type: assertion_visual
-    section: "Раздел 4. Агенты"
-    duration_min: 2.5
-    assertion: "Память агента — тот же вопрос масштаба знания, что RAG, но для истории самого агента"
-    learning_goal: "Память: плоский файл → mem0/Cognee/Graphiti-Zep; callback RAG (§4.5)"
-    chapter_ref: "§4.5 [for-slide-s22c]"
-    references: [agent-harness-registry]
-    new_in_v4: "новый слайд §4.5"
+  # s22c (память = RAG-scale) CUT — #196 WAVE 3 (owner-confirmed); RAG-callback
+  # достаточен, дек не тянет отдельный слайд памяти-спектра.
 
   - id: s22d
     file: slides/s22d-memory-failure.md
@@ -131,16 +151,9 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §4.6; freshness-оговорка Letta v0.6.7 vs v0.16.8 на видимом слое"
 
-  - id: s22e
-    file: slides/s22e-operational-layer.md
-    type: assertion_visual
-    section: "Раздел 4. Агенты"
-    duration_min: 2.5
-    assertion: "Файл-инструкция агенту — не «магическая прививка»: presence paradox + Honest Lying"
-    learning_goal: "Операционный слой: presence paradox + Honest Lying + claude-code#51735 (§4.7)"
-    chapter_ref: "§4.7 [for-slide-s22e]"
-    references: [gloaguen-2026-presence-paradox, dixit-2026-honest-lying]
-    new_in_v4: "новый слайд §4.7"
+  # s22e (presence paradox / файл-инструкция musing) CUT — #196 WAVE 3
+  # (owner-confirmed); «странные рассуждения про подумать прежде чем
+  # действовать» — musing, дек чище без него.
 
   - id: s25
     file: slides/s25-tool-attacks.md
@@ -315,15 +328,15 @@ slides:
 # by_section — v5-раскладка (issue #185), 51 слайд, актуализирована в polish-проходе v5.
 # Порядок соответствует сборке build_v3.py; PNG s-01…s-51 идут в этом порядке.
 totals:
-  slides: 55
+  slides: 67
   by_section:
     "Раздел 0. Открытие": [s01, s02, s02a, s03, s04]                             # 5 (s01b снят #312)
-    "Раздел 1. Промпт": [s04a, s-classic-prompt, s05, s05a, s05c, s05b, s06, s07, s08, s08a]  # div + classic + 8
-    "Раздел 2. RAG": [s09, s-classic-rag, s10, s11, s12, s13]                     # div + classic + 4
-    "Раздел 3. Fine-tune": [s13a, s-classic-ft, s13b, s15, s17, s14, s16]         # div + classic + 5
-    "Раздел 4. Агенты": [s18, s-classic-agents, s19, s19b, s20, s21, s22, s22a_multi, s22b, s22c, s22d, s22e, s25, s24, s25b, s23, s23b, s23c]  # div + classic + 16
+    "Раздел 1. Промпт": [s04a, s-classic-prompt, s05, s05c, s05b, s-fmt, s06, s07, s08, s08a, s-task-assistant, s-task-tone, s-task-research, s-task-extract]  # WAVE 1 #196: div + classic + 12 (s05a removed, +s-fmt +4 задачи)
+    "Раздел 2. RAG": [s09, s-classic-rag, s10, s-rag-hybrid, s-rag-stack, s-rag-elastic, s-rag-chunk1, s-rag-chunk2, s-rag-design, s11, s12, s13]  # WAVE 2 #196: div + classic + 10 (+6 RAG deepening между s10 и s11)
+    "Раздел 3. Fine-tune": [s13a, s-classic-ft, s13b, s-ft-cost, s15, s17, s14, s16, s-ft-eval]  # WAVE 3 #196: div + classic + 7 (+s-ft-cost после s13b, +s-ft-eval в конце §3)
+    "Раздел 4. Агенты": [s18, s-classic-agents, s19, s19b, s20, s21, s22, s-agent-frameworks, s-agent-when, s22a_multi, s22b, s22d, s25, s24, s25b, s23, s23b, s23c]  # WAVE 3 #196: CUT s22c/s22e, ADD frameworks+when; div + classic + 16
     "Раздел 5. Фреймворк": [s25a, s-classic-framework, s26, s27, s27b, s28, s29, s30, s31]  # div + classic + 7
-  duration_min_total: 98
+  duration_min_total: 102
   note: >
     v5b (issue #185): s01b снят (#312) — Air Canada остаётся кейсом §2 (s13);
     56→55 слайдов. WP8: +5 «классическая база с нуля» (по
@@ -344,16 +357,23 @@ totals:
 
 ai_failure_judgment:
   # strict-in слайды (failure / limitation / criterion «не ИИ» / альтернатива)
-  in_bucket_slides: [s01, s05a, s06, s08, s12, s13, s14, s16, s22, s22d, s22e, s23, s25, s27, s29]
-  count: 15
-  share_by_slides: "15/40 ≈ 38% по слайдам"
+  in_bucket_slides: [s01, s06, s08, s-fmt, s-task-tone, s-task-research, s-rag-elastic, s-rag-chunk2, s12, s13, s14, s16, s-ft-cost, s-ft-eval, s22, s-agent-frameworks, s-agent-when, s22d, s23, s25, s27, s29]
+  count: 22
+  share_by_slides: "22/67 ≈ 32,8% по слайдам (WAVE 3 §3/§4: s-ft-cost «когда НЕ Full-FT / не тренировать вовсе» + s-ft-eval «бенчмарки вводят в заблуждение, разрыв lab→prod 37%» + s-agent-frameworks «когда ни одного фреймворка» + s-agent-when «когда НЕ агент/мульти-агент, p^n коллапс»)"
   note: >
-    Failure/judgment: Air Canada (s01), миф роли (s05a), unfaithfulness (s06),
-    context rot (s08), когда НЕ RAG (s12), провал RAG+Air Canada (s13),
-    критерии+forgetting (s14/s16), workflow vs agent разумный выбор (s22),
-    провал памяти (s22d), presence paradox (s22e), провалы агентов (s23),
-    безопасность+injection (s25), нижняя плашка «код без ИИ» (s27), NANDA (s29).
-    Curriculum L1-L3 introductory — owner waiver на strict-in ≥30% доступен.
+    Failure/judgment strict-in: Air Canada (s01), unfaithfulness (s06),
+    context rot (s08), reasoning-tax формата (s-fmt), детекторы <80% (s-task-tone),
+    фабрикация цитат (s-task-research), когда НЕ вектор-БД (s-rag-elastic),
+    не карго-культи semantic + тихий провал таблиц (s-rag-chunk2), когда НЕ RAG
+    (s12), провал RAG+Air Canada (s13), дистилляция ≠ FT (s14), catastrophic
+    forgetting (s16), когда НЕ Full-FT / не тренировать (s-ft-cost), бенчмарки
+    вводят в заблуждение + разрыв lab→prod 37% (s-ft-eval), когда workflow не
+    агент (s22), когда «ни одного фреймворка» (s-agent-frameworks), когда НЕ
+    агент/мульти-агент p^n (s-agent-when), провал памяти (s22d), провалы агентов
+    (s23), injection+безопасность (s25), нижняя плашка «код без ИИ» (s27),
+    NANDA ~95% (s29). CUT s22e (presence paradox) — но добавлено 5 новых strict-in.
+    Curriculum L1-L3 introductory — owner waiver на strict-in ≥30% доступен;
+    здесь порог 32,8% превышен и без waiver.
 
 verify_day_of_items:
   - s06_cot_faithfulness_percentages     # Claude 3.7 ~25% / DeepSeek R1 ~39%
@@ -362,6 +382,10 @@ verify_day_of_items:
   - s22d_letta_freshness                  # Letta v0.6.7 vs v0.16.8
   - s25_retention_zdr_boundary            # граница ZDR / retention статус
   - s25b_stars_counts                     # Aider ~47k / OpenHands ~80k stars
+  - s-ft-cost_dollar_gpu_hours            # $61–92M / 30,8M H100-ч / <$10 — движутся
+  - s-ft-eval_contamination_pct           # MMLU ~29% / GSM8K→GSM1k −13 п.п. / разрыв ~37%
+  - s-agent-frameworks_versions           # rename-churn 2026 (AutoGen→AG2, версии SDK)
+  - s-agent-when_tau_bench                # τ-bench 61%→25%; токен-множители 4×/15×
 
 open_questions:
   - openhands_openclaw: >

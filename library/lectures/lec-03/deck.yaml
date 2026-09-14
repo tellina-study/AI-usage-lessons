@@ -37,9 +37,9 @@ deck:
   learning_outcomes: [LO7, LO4]
   language: ru
   status: final
-  version: v5b.0
-  source: chapter v3.0 finalized (5 частей) + WP8 classic-base-first (#185)
-  total_slides: 55
+  version: v6.1
+  source: chapter v4.0 finalized + WAVE 1 §1 + WAVE 2 §2 RAG + WAVE 3 §3/§4 rework (#196)
+  total_slides: 67
   curriculum_level: introductory
   deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]
 
@@ -233,16 +233,8 @@ slides:
     chapter_ref: "§1.1 [for-slide-s05]"
     changed_in_v4: "добавлена явная строка «модель знает только промпт + веса»"
 
-  - id: s05a
-    file: slides/s05a-roles-in-prompt.md
-    type: assertion_visual
-    section: "Раздел 1. Промпт и его границы"
-    duration_min: 2
-    assertion: "Роль в промпте настраивает тон — не точность (миф «персона=точность» опровергнут)"
-    learning_goal: "Роли в промпте: failure/judgment — опровержение мифа"
-    chapter_ref: "§1.2 [for-slide-s05a]"
-    references: [zheng-2024-personas, arxiv-2605-29420]
-    new_in_v4: "новый слайд §1.2"
+  # s05a REMOVED (WAVE 1 #196): слайд «роль = тон, не точность» убран; тезис
+  # «персона ≠ точность» сжат в главу §1.2 и держится на s05c.
 
   - id: s05c
     file: slides/s05c-protocol-roles.md
@@ -266,6 +258,18 @@ slides:
     learning_goal: "Разделители + разделение вход; связь с prompt injection"
     chapter_ref: "§1.3 [for-slide-s05b]"
     new_in_v4: "новый слайд §1.3"
+
+  - id: s-fmt
+    file: slides/s-fmt-prompt-format.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Формат входа frontier-модели терпят; принуждение формата выхода на рассуждающей задаче стоит качества (reasoning tax: GSM8K 76,6%→49,3%)"
+    learning_goal: "Форматы Markdown/XML/JSON: вход vs выход — разные проблемы; матрица формат→задача"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.9 [for-slide-prompt-format-intro]"
+    subtype: format_matrix
+    new_in_v4: "WAVE 1 #196 — новый слайд §1.9 (форматы промпта)"
 
   - id: s06
     file: slides/s06-chain-of-thought.md
@@ -310,6 +314,56 @@ slides:
     learning_goal: "8-пунктовый чек-лист построения промпта (§1.8)"
     chapter_ref: "§1.8 [for-slide-s08a]"
     new_in_v4: "новый слайд §1.8"
+
+  # WAVE 1 (#196) — 4 типовые задачи (§1.10): как §1 переходит в выбор
+  # архитектуры (мост к §2–§4). Постановка → архитектура → on-point провал.
+  - id: s-task-assistant
+    file: slides/s-task-assistant.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Ассистент с инструментами — мини-лестница one-shot → tool-use → агент; провал — прыжок сразу к агенту ($4 200-петля §4)"
+    learning_goal: "Типовая задача 1: лестница §1.1 на одном классе; on-point провал — избыточный агент"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.10 [for-slide-task-assistant]"
+    subtype: task_case
+    new_in_v4: "WAVE 1 #196 — новый слайд §1.10 (ассистент с инструментами)"
+
+  - id: s-task-tone
+    file: slides/s-task-tone.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Текст в заданном тоне — few-shot по 3–5 образцам; граница — детекторам нельзя верить (часть <80%, +30% ложных на не-нейтивах)"
+    learning_goal: "Типовая задача 2: few-shot style transfer; on-point провал — ненадёжность детекторов"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§1.10 [for-slide-task-tone]"
+    subtype: task_case
+    new_in_v4: "WAVE 1 #196 — новый слайд §1.10 (текст заданным тоном)"
+
+  - id: s-task-research
+    file: slides/s-task-research.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Deep research — агентный RAG + верификация цитат; провал — фабрикация цитат (3–13% URL; deep research хуже поиска: 10,7% vs 4,8%)"
+    learning_goal: "Типовая задача 3: агентный RAG + citation-verify; on-point провал — фейковые цитаты, связка с baseline"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§1.10 [for-slide-task-research]"
+    subtype: task_case
+    new_in_v4: "WAVE 1 #196 — новый слайд §1.10 (deep research)"
+
+  - id: s-task-extract
+    file: slides/s-task-extract.md
+    type: assertion_visual
+    section: "Раздел 1. Промпт и его границы"
+    duration_min: 2
+    assertion: "Извлечение в JSON — единственный класс, где принуждение формата выхода помогает; constrained decoding даёт ~100% соответствия схеме"
+    learning_goal: "Типовая задача 4: constrained decoding / JSON mode; когда JSON помогает vs reasoning tax"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.9 [for-slide-prompt-format-json] · §1.10 [for-slide-task-summary]"
+    subtype: task_case
+    new_in_v4: "WAVE 1 #196 — новый слайд §1.10 (структурированное извлечение)"
 
 # ─────────────────────────────────────────────────────────────────────────
 # КОНЕЦ PART 1. Слайды s09..s16 → deck-part2.yaml; s18..s31 → deck-part3.yaml.

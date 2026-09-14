@@ -39,6 +39,85 @@ slides:
     references: [lewis-2020-rag]
     subtype: schema_pipeline
 
+  # ── WAVE 2 (#196) — RAG deepening: 6 слайдов между s10 и s11 ──
+  - id: s-rag-hybrid
+    file: slides/s-rag-hybrid-base.md
+    type: process
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "Гибридный поиск = BM25 + плотные векторы, слитые по рангам (RRF), плюс cross-encoder reranking; берут под измеренный разрыв, не по умолчанию"
+    learning_goal: "Устройство гибридного retrieval — дефолт продакшена (§2.6)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.6 [for-slide-rag-hybrid-rrf]"
+    references: [denser-2026-hybrid, anthropic-2024-contextual]
+    subtype: schema_pipeline
+    new_in_v4: "#196 WAVE 2 — RAG deepening"
+
+  - id: s-rag-stack
+    file: slides/s-rag-stack-base.md
+    type: comparison
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "Векторный движок под масштаб: pgvector ~50M, Milvus 100M+; обвязки (LlamaIndex/LangGraph) под агентную сложность, не по умолчанию"
+    learning_goal: "Каталог векторных БД и обвязок 2026 (§2.7)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.7 [for-slide-rag-vectordb]"
+    references: [firecrawl-2026-vectordb, tigerdata-2025-pgvector]
+    subtype: schema_matrix
+    new_in_v4: "#196 WAVE 2 — RAG deepening"
+
+  - id: s-rag-elastic
+    file: slides/s-rag-elastic-base.md
+    type: assertion_visual
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "Три яруса: BM25 хватает / встроенный гибрид Elastic-OpenSearch хватает / выделенная векторная БД только при 100M+, multi-vector или latency-SLA"
+    learning_goal: "Граница решения «нужна ли выделенная векторная БД» (§2.8)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.8 [for-slide-rag-need-vectordb]"
+    references: [pureinsights-2026-hybrid, bigdata-2026-es-os]
+    subtype: meme_forward
+    new_in_v4: "#196 WAVE 2 — RAG deepening (anti-hype)"
+
+  - id: s-rag-chunk1
+    file: slides/s-rag-chunk1-base.md
+    type: comparison
+    section: "Раздел 2. RAG"
+    duration_min: 2
+    assertion: "Стратегии чанкирования от простой к сложной (fixed/recursive/sentence-window/semantic/parent-document/late/contextual); правильного дефолта нет — подбирают под корпус"
+    learning_goal: "Стратегии чанкирования и когда какую (§2.9)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.9 [for-slide-rag-chunk-strategies]"
+    references: [firecrawl-2026-chunking, anthropic-2024-contextual]
+    subtype: schema_matrix
+    new_in_v4: "#196 WAVE 2 — RAG deepening"
+
+  - id: s-rag-chunk2
+    file: slides/s-rag-chunk2-base.md
+    type: case_study
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "Исследования эффекта чанкирования расходятся: recursive-512 69% vs semantic 54%; не карго-культить semantic; тихий провал retrieval — таблицы"
+    learning_goal: "Как выбрать стратегию + тихий провал таблиц (§2.10)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.10 [for-slide-rag-chunk-studies]"
+    references: [firecrawl-2026-chunking, anthropic-2024-contextual]
+    subtype: meme_forward
+    new_in_v4: "#196 WAVE 2 — RAG deepening (failure)"
+
+  - id: s-rag-design
+    file: slides/s-rag-design-base.md
+    type: process
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "POC→прод — другая архитектура: двойной конвейер (ingestion — первое горло), свежесть, полный re-embed при смене модели, eval; каунтерфактуал «<200k токенов — RAG не нужен»"
+    learning_goal: "Как меняется системный дизайн поиска на масштабе (§2.11)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.11 [for-slide-rag-design-pipeline]"
+    references: [redis-2026-rag-scale, futureagi-2026-metrics]
+    subtype: checklist_schema
+    new_in_v4: "#196 WAVE 2 — RAG deepening"
+
   - id: s11
     file: slides/s11-when-rag-right.md
     type: assertion_visual
@@ -105,6 +184,19 @@ slides:
     subtype: schema_pipeline
     changed_in_v4: "#225 — добавлена строка «на практике почти всегда LoRA/PEFT»"
 
+  - id: s-ft-cost
+    file: slides/s-ft-cost-comparison.md
+    type: comparison_table
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "Тренировка дёшева и дешевеет; выбор — Full-FT / LoRA / QLoRA / не тренировать. LoRA — дефолт: <1% параметров, <$10, дешевле претрейна на ~7 порядков"
+    learning_goal: "Количественная ось стоимости обучения: деньги · данные · компьют · итерации · trainable-параметры (§3.6)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.6 [for-slide-ft-cost-table, ft-cost-baselines, ft-cost-when]"
+    subtype: comparison_table
+    references: [thinkingmachines-lora, qlora-paper]
+    new_in_v4: "#196 WAVE 3 — training economics (comparison-table, no meme)"
+
   - id: s15
     file: slides/s15-peft-not-full-ft.md
     type: assertion_visual
@@ -149,6 +241,19 @@ slides:
     learning_goal: "Провал catastrophic forgetting (§3.4)"
     chapter_ref: "§3.4 [for-slide-s16]"
     references: [luo-2023-catastrophic-forgetting]
+
+  - id: s-ft-eval
+    file: slides/s-ft-eval-measure.md
+    type: assertion_visual
+    section: "Раздел 3. Fine-tune vs промпт vs RAG"
+    duration_min: 2.5
+    assertion: "Оценка обучения дороже самого обучения и не решена: бенчмарки вводят в заблуждение (MMLU ~29%, GSM8K→GSM1k −13 п.п.); разрыв lab→prod ~37% — прирост на бенчмарке гипотеза, не результат"
+    learning_goal: "Как измерять результат обучения + границы пяти методов оценки (§3.7)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.7 [for-slide-ft-eval-benchmarks, ft-eval-heldout, ft-eval-human, ft-eval-gap]"
+    subtype: meme_forward
+    references: [benchmark-contamination, gsm1k]
+    new_in_v4: "#196 WAVE 3 — training evaluation (meme-forward failure/limitation)"
 
 # ─────────────────────────────────────────────────────────────────────────
 # КОНЕЦ PART 2. Слайды s18..s31 (Разделы 4-5) + totals → deck-part3.yaml.

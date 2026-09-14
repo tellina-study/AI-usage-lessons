@@ -323,3 +323,114 @@ s14 (переделан → дистилляция как отдельная т�
 - `/usr/bin/python3 build_v3.py` → «all ref anchors matched OK», 55 slides.
 - Render 55 pages / 55 PNGs; визуальный цикл (≥3 прохода) на s01/cover/s02a/s03/
   s05/s06 + дивайдеры s04a/s09/s18 + hero s30 — overflow/читаемость OK.
+
+---
+
+## WAVE 2 (issue #196) — §2 RAG deepening: +6 слайдов (59 → 65)
+
+Вставка ПОСЛЕ s10 (принцип RAG), ПЕРЕД s11 (когда RAG правильный). Новый порядок §2:
+s09(div) → s-classic-rag → s10 → **s-rag-hybrid → s-rag-stack → s-rag-elastic →
+s-rag-chunk1 → s-rag-chunk2 → s-rag-design** → s11 → s12 → s13.
+Источник — глава §2.6–§2.11 (chapter-part7.md), каждое число С БАЗОЙ.
+
+### Media plan (kind per slide)
+- s-rag-hybrid (#23): schema-pipeline (BM25 + плотные векторы → RRF → cross-encoder), не мем.
+- s-rag-stack (#24): comparison-matrix 5 движков + обвязки, не мем.
+- s-rag-elastic (#25): meme-forward (Woman Yelling at Cat — судьба «нужна ли вектор-БД») + 3-ярусная граница.
+- s-rag-chunk1 (#26): schema-matrix 6 стратегий + Contextual-полоса, не мем.
+- s-rag-chunk2 (#27): meme-forward (Disaster Girl — anti-cargo-cult) + конфликтующие замеры + тихий провал таблиц.
+- s-rag-design (#28): checklist/schema (пайплайн ingest→index + 4 карточки + каунтерфактуал), не мем.
+
+### Новые мем-шаблоны (fresh, не переиспользованы)
+- Woman Yelling at a Cat — imgflip id 188390779 → `s-rag-elastic-cat-ru.png`.
+- Disaster Girl — imgflip id 97984 → `s-rag-chunk2-disaster-ru.png`.
+Blank в `assets/web/memes-src/` (+ .url), русские подписи через PIL, attribution.md обновлён.
+
+### Visual loop (≥3 итерации на каждый новый слайд)
+- Iter 1: rendered w2-23..28. Inspected fill-rate/overflow/mass-balance/contrast.
+  - (a) все 6 читаются, схемы/таблицы/мемы на месте, refs [N] сматчены.
+  - (b) найдено: s26 «(следующий слайд про eval)» = soft forward-ref; s28 title «POC» =
+    непереведённый акроним; `ops` ×3 (stack/elastic/design) = переводимый англицизм;
+    s23 reranker-box текст касался нижней грани.
+- Iter 2: (a) fix forward-ref → «метрики качества retrieval»; POC → «Прототип → продакшн»;
+  ops → «эксплуатация» (×3); anchor s-rag-stack[2] обновлён под новый текст.
+  (b) re-render 24/25/26/28 — чисто; anchors matched.
+- Iter 3: (a) s23 reranker body укорочен («пару вместе», line_spacing 1.10→1.08, +«кандидатам»)
+  → появился нижний зазор бокса. (b) re-render 23 — clean.
+
+### 5-Second Test (после iter ≥3)
+- s23: read = «гибрид = 2 ретривера → RRF → реранкер, приросты с базой» = assertion PASS.
+- s24: read = «движок под масштаб; pgvector ~50M, Milvus 100M+» = assertion PASS.
+- s25: read = «3 яруса: BM25 / встроенный гибрид / выделенная БД» = assertion PASS.
+- s26: read = «стратегии чанкирования, дефолта нет» = assertion PASS.
+- s27: read = «не карго-культи semantic; таблицы — тихий провал» = assertion PASS.
+- s28: read = «прод — другая архитектура; <200k → RAG не нужен» = assertion PASS.
+
+### Checklists
+- Matrix/Grid (s24, s26): fill ≥75%, icons per row/tile, single-line headers, color-coding, ≥12pt — PASS.
+- Process/Pipeline (s23, s28): RIGHT_ARROW-шейпы, ≤5 stages, owner-подписи (ingest gold=горло) — PASS.
+- Meme-forward (s25, s27): мем несёт тезис суждения, ≈43-45% ширины, mass-balance — PASS.
+
+### Anti-leak / russification
+- Leak grep (visible body 6 слайдов): 0 timing/методология/LO/§X.X/→sNN/[VERIFY] после iter 2.
+- Deep latin scan: остаток — brand/product names (Qdrant/Weaviate/Milvus/FAISS/pgvector/
+  Postgres/LlamaIndex/RAGAS/ELSER…), established RAG-glossary (BM25/retrieval/embedding/
+  dense/sparse/cross-encoder) + English source-titles в bottom refs (exempt). Narrative
+  англ-лексика вроде «ops»/«POC» русифицирована.
+
+### Counts / build
+- 59 → 65. assert 65 (builders+sids). deck.yaml total_slides 65; deck-part2.yaml +6 spec;
+  deck-part3 totals.slides 65 + by_section RAG list + ai_failure 18/65.
+- Build: «deck spec OK — 65 slides» + «all ref anchors matched OK» + «saved … 65 slides».
+- refs_lec03.py: +9 URLs, +6 SLIDE_REFS, +6 ANCHORS (все 12 новых [N] matched).
+
+---
+
+## WAVE 3 (#196) — §3/§4 deepening (65 → 67 FINAL)
+
+### Scope
+- §3 (+2): s-ft-cost (§3.6, comparison-table, no meme) после s13b; s-ft-eval
+  (§3.7, meme-forward + границы) в конце §3.
+- §4 (net 0): CUT s22c (память=RAG-scale) + s22e (presence-paradox musing);
+  TRIM s19 (убран L2-recap structured output/function calling/prompt caching —
+  оставлен L3: модель-как-компонент + tool use + MCP N×M→N+M + поворот доверия);
+  REFRAME s22 → «Когда workflow: пять паттернов» (chaining/routing/parallel/
+  orchestrator-workers/evaluator-optimizer, diagram, no meme); ADD
+  s-agent-frameworks (§4.3c, comparison-table, no meme) + s-agent-when
+  (meme-forward judgment) после s22a_multi по брифу.
+- §5: s28 итог-таблица 9 → 12 строк (+гибрид+reranking, векторная БД, чанкинг,
+  измерение обучения, агент-vs-workflow); font 11→9.5pt, читается без overflow.
+
+### Мемы (2 fresh, ни один из 23 занятых)
+- s-ft-eval: Left Exit 12 Off Ramp (imgflip 124822590) — «строгая оценка vs
+  красивое число на бенчмарке».
+- s-agent-when: Clown Applying Makeup (imgflip 141136560) — эскалация агентов
+  без триггера → 0,95²⁰ ≈ 36% надёжности (p^n).
+- attribution.md: WAVE 3 блок добавлен.
+
+### Visual loop (мин 3 итерации на changed-слайдах)
+- iter1: build+render+inspect 7 PNG (s-ft-cost/eval/s19/s22/frameworks/when/s28)
+  — все чистые с первого прохода (table fill, gold-highlight, meme-thesis,
+  refs [N]).
+- iter2: s22 card-body/«когда»-strip tight overlap (card 3 Parallelization) →
+  body 10→9.5pt, height 1.12→1.08, title y-nudge; re-render — зазор чистый.
+- iter3: latin-scan → russify «риск adoption» → «риск при внедрении»;
+  «Human eval» → «Оценка людьми (human)»; «rubric» → «разметка». Consistency:
+  workflow/faithfulness/eval/harness/reranking уже в approved Wave1/2 деке —
+  конвенция сохранена, не введена новая.
+
+### Counts / build
+- 65 → 67 (assert 67). deck.yaml version v6.1 + total_slides 67;
+  deck-part2 (+s-ft-cost, +s-ft-eval); deck-part3 (+s-agent-frameworks,
+  +s-agent-when; CUT s22c/s22e; totals.slides 67; by_section §3=9/§4=18;
+  ai_failure_judgment 22/67 ≈ 32,8% strict-in — порог ≥30% превышен без waiver).
+- Build: «deck spec OK — 67 slides» + «all ref anchors matched OK» +
+  «saved … 67 slides».
+- refs_lec03.py: +6 URLs (thinkingmachines_lora, gsm1k, benchmark_contamination,
+  langgraph, tau_bench, anthropic_multiagent), +4 SLIDE_REFS новых, ANCHORS+
+  NOTES_ANCHORS для 4 новых + переписаны для trimmed s19 / reframed s22;
+  patch_notes.py: все markers matched (2/2 × 4 new, 1/1 × s19/s22).
+- Cuts verified: build_s22c/s22e не в main() builders/sids; s22c/s22e не
+  рендерятся (67 страниц, не 69). Dead builder-функции оставлены (harmless).
+- Anti-leak grep 7 changed-слайдов: 0 timing(«мин.»=«минимум» false-pos)/
+  методология/LO/§X.X/→sNN/[VERIFY].

@@ -648,3 +648,31 @@ per orchestrator's pipeline, then USER GATE per plan v2 §4 (единая фин
 
 ### НЕ сделано (report to orchestrator)
 - s25/s14 дистилляция consolidation (student P2 «избыточно на 60-й минуте»): НЕ тронуто — консолидация/удаление слайда = структурное design-решение, требует owner-approval (см. финальный отчёт PROPOSED).
+
+---
+
+## WAVE 1 (issue #196) — §1 rework + classic reframe · 2026-09-14
+
+### A. Reframe 5 classic slides «как было до» → «что это»
+- s-classic-prompt/rag/ft/agents/framework: заголовок+lead переписаны в plain overview понятия (без ностальгии «до промпта»). Base content (3 карточки + keep + bridge) сохранён.
+- Fix: reframed-заголовки длиннее — 2-строчный title наезжал на intro (classic-agents «…OODA.»). Кегль title 26→23, intro опущена 1.14→1.44, карточки cy 1.86→2.04 / chh 2.80→2.64. Все 5 без overflow (проверено PNG 07/21/27/34/52).
+
+### B. §1 rework
+- REMOVED s05a (роль=тон); из builders/sids/deck.yaml/refs. Функция-строитель осталась dead-code (мем Change-My-Mind freed).
+- KEEP+strengthen s05c (протокольные роли/STI) — не тронут, рендерится (PNG 09).
+- NEW s-fmt (§1.9) форматы MD/XML/JSON: матрица формат→задача (gold anti-pattern «JSON на reasoning») + мем Two Buttons + gold callout с базой GSM8K 76,6%→49,3%.
+- NEW 4 типовые задачи (§1.10): _task_scaffold (kicker/title + мем слева + постановка→архитектура→провал справа). lead_in только на 1-й.
+  - Fix iter1: kicker наезжал на lead-in → lead_in вынесен в scaffold-параметр; убраны designer-subtitle на задачах 2-4 (No Extra Content Rule).
+  - Fix iter2: постановка-бокс overflow (research/extract 3-строчные statement) → statement сокращены до 2 строк + ph 1.06→1.16.
+
+### Memes — 5 fresh templates (imgflip, ни один не переиспользован)
+- s-fmt: Two Buttons / Daily Struggle (87743020)
+- s-task-assistant: One Does Not Simply (61579)
+- s-task-tone: Futurama Fry / Not Sure If (61520) — NEW download
+- s-task-research: Panik-Kalm-Panik (226297822)
+- s-task-extract: Trade Offer (309868304) — baked-in EN перекрыт RU
+
+### Counts / build
+- 55 → 59 (assert обновлён). deck.yaml total_slides 59, deck-part3 totals.slides 59.
+- Build: «deck spec OK — 59 slides» + «all ref anchors matched OK» + «saved … 59 slides».
+- Anti-leak grep на visible layer changed-slides: 0 timing/методология/LO/§X/→sNN/[VERIFY]; «как было до»/«до промпта» = 0.

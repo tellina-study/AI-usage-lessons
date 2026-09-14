@@ -1061,6 +1061,194 @@ def build_s08a(p):
     speaker_notes(s, load_notes("s08a"))
 
 
+# ============================================================
+# WAVE 1 (#196) — §1 NEW: форматы промпта + 4 типовые задачи.
+# Meme-forward: минимум текста, мем несёт тезис. Из главы §1.9 / §1.10.
+# ============================================================
+
+def build_s_fmt(p):
+    """NEW (§1.9) — форматы промпта Markdown/XML/JSON: вход vs выход — разные
+    проблемы. Meme-forward (Two Buttons — дилемма формата выхода). Слева
+    компактная матрица формат→задача, справа мем + reasoning-tax якорь."""
+    s = blank(p)
+    slide_title(s, "Формат промпта: вход терпим, выход — с ценой.", size=26)
+    text_box(s, 0.55, 1.16, 12.25, 0.44,
+             "Терпимость к формату ВХОДА и цена принуждения формата ВЫХОДА — две разные проблемы. Их постоянно смешивают.",
+             size=13.5, italic=True, color=MID, line_spacing=1.14)
+    # LEFT — compact формат→задача матрица (4 строки, минимум текста)
+    lx, ly, lw = 0.55, 1.82, 7.05
+    rows = [
+        ("code", "Markdown", "простой запрос, инструкции", "GPT/Gemini · вход терпим", MID),
+        ("braces", "XML-теги", "длинный контекст, много блоков", "Claude · разграничить блоки", LIGHT),
+        ("database", "JSON + схема", "извлечение, классификация, код", "constrained decoding → ~100%", TEAL),
+        ("triangle-alert", "JSON на reasoning", "не применять к «подумай и реши»", "reasoning tax", GOLD),
+    ]
+    rh, rgap = 0.86, 0.14
+    ry = ly
+    for ic, fmt, task, note, col in rows:
+        isgold = (col == GOLD)
+        if isgold:
+            ocean_box(s, lx, ry, lw, rh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, lx, ry, lw, rh)
+        filled_rect(s, lx + 0.20, ry + 0.19, 0.50, rh - 0.38, col, radius=True,
+                    radius_adj=0.22)
+        icon(s, ic, lx + 0.28, ry + rh / 2 - 0.17, 0.34, "white" if not isgold else "white")
+        text_box(s, lx + 0.86, ry + 0.10, 2.35, 0.66, fmt,
+                 size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+        text_box(s, lx + 3.05, ry + 0.09, lw - 3.25, 0.36, task,
+                 size=12, color=DEEP, line_spacing=1.02)
+        text_box(s, lx + 3.05, ry + 0.47, lw - 3.25, 0.34, note,
+                 size=11.5, italic=True, color=(DEEP if isgold else SLATE))
+        ry += rh + rgap
+    # RIGHT — Two Buttons meme (дилемма формата выхода) + reasoning-tax anchor
+    mx, my, mw = 7.95, 1.82, 3.10
+    mh = mw * (908 / 600)
+    if mh > 3.55:
+        mh = 3.55
+        mw = mh * (600 / 908)
+    mx = 7.95 + (4.85 - mw) / 2
+    ocean_box(s, 7.90, 1.78, 4.95, 3.66)
+    add_image(s, WEB / "s-fmt-twobuttons-ru.png", mx, 1.92, mw, mh)
+    gold_callout(s, 0.55, 5.72, 12.25, 1.06,
+                 "Не принуждай структуру ВЫХОДА на рассуждающих задачах: GSM8K падает 76,6% → 49,3% (та же модель, только требование JSON). Митигация — двухходовка «сначала свободно рассуждать, потом переформатировать» (+6,8 п.п.).",
+                 size=14)
+    speaker_notes(s, load_notes("s-fmt"))
+
+
+def _task_scaffold(s, *, kicker, title, meme_path, meme_ar, statement,
+                   arch_icon, arch_label, arch_body, caveat, lead_in=None):
+    """Shared layout для 4 типовых задач: kicker + assertion сверху; слева
+    мем (несёт тезис), справа постановка → архитектура → on-point провал.
+    lead_in (только у 1-й задачи) идёт отдельной строкой над kicker."""
+    ky = 0.40
+    if lead_in:
+        text_box(s, 0.55, 0.34, 12.25, 0.32, lead_in, size=13, italic=True,
+                 color=MID)
+        ky = 0.74
+    text_box(s, 0.55, ky, 12.25, 0.34, kicker, size=13, bold=True, color=TEAL)
+    text_box(s, 0.55, ky + 0.38, 12.25, 0.82, title, size=24, bold=True,
+             color=DEEP, line_spacing=1.06)
+    # LEFT — мем (несёт тезис), ≈45% ширины
+    mx0, my0, mw0 = 0.55, 1.98, 5.55
+    mh0 = 4.24
+    ocean_box(s, mx0, my0, mw0, mh0)
+    iw = mw0 - 0.48
+    ih = iw / meme_ar
+    if ih > mh0 - 0.48:
+        ih = mh0 - 0.48
+        iw = ih * meme_ar
+    ix = mx0 + (mw0 - iw) / 2
+    iy = my0 + (mh0 - ih) / 2
+    add_image(s, meme_path, ix, iy, iw, ih)
+    # RIGHT — постановка → архитектура → провал
+    rx, rw = 6.45, 6.35
+    # постановка
+    ph = 1.16
+    ocean_box(s, rx, my0, rw, ph)
+    text_box(s, rx + 0.26, my0 + 0.13, rw - 0.52, 0.30, "Постановка",
+             size=12.5, bold=True, color=LIGHT)
+    text_box(s, rx + 0.26, my0 + 0.46, rw - 0.52, 0.62, statement,
+             size=13, color=DEEP, line_spacing=1.12)
+    # архитектура
+    ay = my0 + ph + 0.14
+    ah = 1.60
+    ocean_box(s, rx, ay, rw, ah, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, arch_icon, rx + 0.26, ay + 0.18, 0.42, "teal")
+    text_box(s, rx + 0.82, ay + 0.18, rw - 1.05, 0.42, arch_label,
+             size=14.5, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.02)
+    text_box(s, rx + 0.26, ay + 0.68, rw - 0.52, ah - 0.78, arch_body,
+             size=12.5, color=DEEP, line_spacing=1.14)
+    # провал / граница — gold
+    gy = ay + ah + 0.14
+    gold_callout(s, rx, gy, rw, my0 + mh0 - gy,
+                 caveat, size=13)
+
+
+def build_s_task_assistant(p):
+    """NEW (§1.10 класс 1) — ассистент с инструментами: one-shot → tool-use →
+    агент. Провал — прыжок сразу к агенту. Мем One Does Not Simply."""
+    s = blank(p)
+    _task_scaffold(
+        s,
+        lead_in="Как это выглядит на реальных задачах — четыре типовых класса.",
+        kicker="ТИПОВАЯ ЗАДАЧА · 1",
+        title="Ассистент с инструментами: поднимайся по мини-лестнице.",
+        meme_path=WEB / "s-task-assistant-simply-ru.png",
+        meme_ar=568 / 335,
+        statement="Пользователь просит не «текст», а «сделай»: узнать во внешней системе и/или совершить действие.",
+        arch_icon="route",
+        arch_label="One-shot → tool-use → агент",
+        arch_body="Знает ответ, действие не нужно → один вызов. Нужен доступ, шаги известны заранее → tool-use в коде. Шаги неизвестны, есть чем проверить прогресс → агент.",
+        caveat="Провал: прыжок сразу к агенту там, где хватило бы одного вызова инструмента, — это ровно петля на $4 200 (Раздел 4), где предсказуемую синхронизацию отдали агенту вместо retry-скрипта.",
+    )
+    footer(s, "Подниматься по мини-лестнице только под требование задачи — не потому, что «агент звучит мощнее».")
+    speaker_notes(s, load_notes("s-task-assistant"))
+
+
+def build_s_task_tone(p):
+    """NEW (§1.10 класс 2) — текст заданным тоном / «как человек»: few-shot
+    style. Граница — детекторы <80%, +30% ложных на не-нейтивах. Мем Fry."""
+    s = blank(p)
+    _task_scaffold(
+        s,
+        kicker="ТИПОВАЯ ЗАДАЧА · 2",
+        title="Текст в заданном тоне: few-shot по образцам.",
+        meme_path=WEB / "s-task-tone-fry-ru.png",
+        meme_ar=552 / 414,
+        statement="Нужен текст в определённом голосе, стиле, регистре: бренд-письмо, ответ поддержки, черновик «как человек».",
+        arch_icon="message-circle",
+        arch_label="Few-shot style transfer",
+        arch_body="3–5 образцов авторского текста в примерах → генерация в том же стиле. Модели копируют публичных персон, но буксуют на индивидуальном стиле рядового автора.",
+        caveat="Провал суждения: AI-детекторам нельзя верить как доказательству. Часть детекторов даёт точность ниже 80%, тексты не-нейтивов флагаются как ИИ до +30% чаще, точность падает после перефразирования.",
+    )
+    footer(s, "Детектору нельзя доверять ни как «щиту» (доказать ИИ), ни как «мечу» (гарантированно спрятать ИИ).")
+    speaker_notes(s, load_notes("s-task-tone"))
+
+
+def build_s_task_research(p):
+    """NEW (§1.10 класс 3) — исследовательская задача / deep research: RAG +
+    агентная петля + верификация цитат. Провал — фабрикация цитат 3–13%.
+    Мем Panik-Kalm-Panik."""
+    s = blank(p)
+    _task_scaffold(
+        s,
+        kicker="ТИПОВАЯ ЗАДАЧА · 3",
+        title="Deep research: RAG + петля + проверка цитат.",
+        meme_path=WEB / "s-task-research-panik-ru.png",
+        meme_ar=640 / 881,
+        statement="«Собери и сопоставь информацию по вопросу, дай отчёт со ссылками» — как Deep Research, Perplexity, Claude Research.",
+        arch_icon="book-open",
+        arch_label="Агентный RAG + верификация цитат",
+        arch_body="Петля: уточнить интент → план → поиск и чтение → синтез → самокритика → привязка к URL. Строить самому — та же связка retrieval + агентная петля + шаг проверки источников.",
+        caveat="Провал: агенты ФАБРИКУЮТ цитаты. 3–13% URL сфабрикованы; deep research хуже обычного поиска (10,7% против 4,8% фейковых цитат на запрос — агент генерирует их кратно больше). Число без базы — красный флаг, а не факт.",
+    )
+    footer(s, "Любую метрику из ИИ-ресёрча перепроверяй по резолвящемуся первоисточнику — это замыкает раздел на дисциплину базы.")
+    speaker_notes(s, load_notes("s-task-research"))
+
+
+def build_s_task_extract(p):
+    """NEW (§1.10 класс 4) — структурированное извлечение в JSON: constrained
+    decoding / JSON mode ~100% схемы. Когда JSON помогает. Мем Trade Offer."""
+    s = blank(p)
+    _task_scaffold(
+        s,
+        kicker="ТИПОВАЯ ЗАДАЧА · 4",
+        title="Извлечение в JSON: строгая схема помогает.",
+        meme_path=WEB / "s-task-extract-trade-ru.png",
+        meme_ar=607 / 794,
+        statement="Из текста достать поля по фиксированной структуре (сущности, атрибуты, класс) — вход для кода, не для чтения.",
+        arch_icon="braces",
+        arch_label="Constrained decoding / JSON mode",
+        arch_body="Ограничение сэмплинга только допустимыми по грамматике токенами даёт близкое к 100% соответствие схеме. JSON — интерфейс между моделью и кодом, а не формат для размышления.",
+        caveat="Граница: тот же JSON на «подумай и реши» роняет качество (reasoning tax из разбора форматов). Применяй строгую схему на стыке с кодом — извлечение, классификация, function calling; не насилуй им рассуждение.",
+    )
+    footer(s, "Извлечение и классификация — единственный класс, где принуждение формата выхода надёжно помогает.")
+    speaker_notes(s, load_notes("s-task-extract"))
+
+
 def build_s09(p):
     """section_divider — Раздел 2 RAG."""
     build_section_divider(
@@ -1126,6 +1314,352 @@ def build_s10(p):
         {"text": " (Contextual Retrieval).", "size": 12.5, "color": DEEP},
     ], line_spacing=1.1)
     speaker_notes(s, load_notes("s10"))
+
+
+# ============================================================
+# WAVE 2 (issue #196) — §2 RAG deepening: 6 new slides between s10 и s11.
+# Порядок: s-rag-hybrid → s-rag-stack → s-rag-elastic → s-rag-chunk1 →
+# s-rag-chunk2 → s-rag-design. Источник — глава §2.6–§2.11 (chapter-part7).
+# Каждое число — с базой. Мем только там, где несёт тезис суждения
+# (s-rag-elastic, s-rag-chunk2); схемные слайды — чистые диаграммы/таблицы.
+# ============================================================
+
+def build_s_rag_hybrid(p):
+    """schema_pipeline — гибридный поиск: BM25 + плотные векторы → RRF-слияние
+    → cross-encoder reranking. Две ступени retrieval'а как диаграмма (не мем).
+    Измеренные приросты С БАЗОЙ внизу. Schema §5.5 Process/Pipeline."""
+    s = blank(p)
+    slide_title(s, "Гибридный поиск: две ступени, слитые по рангам.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.44,
+             "BM25 ловит точные слова, векторы — смысл. Их сливают по рангам (RRF), потом уточняют реранкером. Гибрид не бесплатен — берут под измеренный разрыв.",
+             size=13.5, italic=True, color=MID, line_spacing=1.14)
+    # ── Stage-1: два ретривера → RRF → реранкер (горизонтальный пайплайн) ──
+    py = 1.86
+    # два источника-ретривера (левый столбец)
+    rw, rh = 3.05, 1.16
+    r1y, r2y = py, py + rh + 0.24
+    ocean_box(s, 0.55, r1y, rw, rh)
+    icon(s, "list-ordered", 0.78, r1y + 0.20, 0.40, "mid")
+    text_box(s, 1.34, r1y + 0.16, rw - 0.90, 0.34, "BM25", size=15, bold=True, color=MID)
+    text_box(s, 0.78, r1y + 0.58, rw - 0.46, 0.50,
+             "разреженный, лексика: коды, ID, редкие термины",
+             size=11.5, color=DEEP, line_spacing=1.06)
+    ocean_box(s, 0.55, r2y, rw, rh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "brain-circuit", 0.78, r2y + 0.20, 0.40, "teal")
+    text_box(s, 1.34, r2y + 0.16, rw - 0.90, 0.34, "Плотные векторы", size=15, bold=True, color=TEAL)
+    text_box(s, 0.78, r2y + 0.58, rw - 0.46, 0.50,
+             "смысл: перифраза, синоним; размывается на редких токенах",
+             size=11.5, color=DEEP, line_spacing=1.06)
+    # стрелки в RRF-узел
+    mid_y = py + rh + 0.12
+    right_arrow(s, 0.55 + rw + 0.05, r1y + rh / 2 - 0.14, 0.55, 0.28, fill=LIGHT)
+    right_arrow(s, 0.55 + rw + 0.05, r2y + rh / 2 - 0.14, 0.55, 0.28, fill=LIGHT)
+    # RRF-узел (слияние по рангам)
+    fx, fw = 4.28, 3.05
+    ocean_box(s, fx, py + 0.30, fw, rh + 0.30)
+    icon(s, "git-merge", fx + fw / 2 - 0.22, py + 0.44, 0.44, "mid")
+    text_box(s, fx + 0.14, py + 0.98, fw - 0.28, 0.34, "Слияние RRF",
+             size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+    text_box(s, fx + 0.16, py + 1.34, fw - 0.32, 0.62,
+             "score = Σ 1 / (k + ранг),  k ≈ 60",
+             size=12.5, bold=True, color=MID, align=PP_ALIGN.CENTER,
+             font=FONT_MONO, line_spacing=1.06)
+    # стрелка в реранкер
+    right_arrow(s, fx + fw + 0.05, mid_y + 0.05, 0.55, 0.28, fill=LIGHT)
+    # реранкер (cross-encoder) — gold, вторая ступень
+    kx, kw = 7.98, 4.82
+    ocean_box(s, kx, py + 0.30, kw, rh + 0.30, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    icon(s, "check-check", kx + 0.24, py + 0.48, 0.44, "gold")
+    text_box(s, kx + 0.80, py + 0.44, kw - 1.0, 0.34, "Реранкер (cross-encoder)",
+             size=15, bold=True, color=DEEP)
+    text_box(s, kx + 0.24, py + 0.92, kw - 0.48, 0.74,
+             "bi-encoder кодирует запрос и документ раздельно (быстро, грубо); cross-encoder гоняет пару вместе (точнее, дорого) — только по top-50…100 кандидатам.",
+             size=11.5, color=DEEP, line_spacing=1.08)
+    # ── измеренные приросты С БАЗОЙ (3 плитки) ──
+    dy, dh = 4.30, 1.30
+    deltas = [
+        ("WANDS · NDCG", "0,7497", "гибрид vs BM25 0,6983 / вектор 0,6953 → ~7,4% (скромно)", MID),
+        ("Финтекст+таблицы · Recall@5", "0,816", "гибрид+реранк vs dense-only 0,587 (+0,229)", TEAL),
+        ("Anthropic · доля промахов", "5,7 → 1,9%", "+контекст+BM25 → 2,9%; +реранк → 1,9% (−67%)", DEEP),
+    ]
+    dw = (12.25 - 0.24 * 2) / 3
+    dx = 0.55
+    for label, num, base, col in deltas:
+        ocean_box(s, dx, dy, dw, dh)
+        text_box(s, dx + 0.20, dy + 0.14, dw - 0.40, 0.30, label,
+                 size=11.5, bold=True, color=col)
+        text_box(s, dx + 0.20, dy + 0.42, dw - 0.40, 0.42, num,
+                 size=22, bold=True, color=GOLD)
+        text_box(s, dx + 0.20, dy + 0.86, dw - 0.40, 0.40, base,
+                 size=10.5, color=DEEP, line_spacing=1.06)
+        dx += dw + 0.24
+    gold_callout(s, 0.55, 5.78, 12.25, 0.86,
+                 "Выигрыш гибрида зависит от корпуса: крупные приросты — там, где лексика ИЛИ смысл ломается по отдельности (жаргон, таблицы, перекрёстные ссылки). На чистой прозе разрыв мал — сначала измерь на своих запросах, потом усложняй.",
+                 size=13)
+    speaker_notes(s, load_notes("s-rag-hybrid"))
+
+
+def build_s_rag_stack(p):
+    """schema_matrix — векторные БД + обвязки. Таблица движков «брать когда» +
+    потолок, снизу — обвязки (LlamaIndex/LangGraph) и правило «фреймворк не
+    нужен для простого RAG». Comparison matrix (не мем). Schema §5.5 Matrix."""
+    s = blank(p)
+    slide_title(s, "Где живут векторы: движок выбирают под масштаб.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Под-каталог движков большой, а правильный выбор для большинства систем — скучный. Потолки движутся — сверяться в день лекции.",
+             size=13.5, italic=True, color=MID, line_spacing=1.12)
+    # ── матрица движков: 5 строк × [движок | брать когда | потолок] ──
+    hx, hy, hw = 0.55, 1.72, 12.25
+    col_a, col_b, col_c = 2.65, 6.30, hw - 2.65 - 6.30
+    # header
+    filled_rect(s, hx, hy, hw, 0.42, MID, radius=True, radius_adj=0.10)
+    text_box(s, hx + 0.20, hy + 0.07, col_a - 0.30, 0.30, "Движок",
+             size=12.5, bold=True, color=WHITE)
+    text_box(s, hx + col_a + 0.10, hy + 0.07, col_b - 0.20, 0.30, "Брать когда",
+             size=12.5, bold=True, color=WHITE)
+    text_box(s, hx + col_a + col_b + 0.10, hy + 0.07, col_c - 0.20, 0.30, "Ориентир потолка",
+             size=12.5, bold=True, color=WHITE)
+    rows = [
+        ("database", "pgvector", "у вас уже есть Postgres, нужна одна система и транзакции", "~50M векторов; за ~50–100M деградирует", MID),
+        ("boxes", "Qdrant", "нужен целевой движок без большой платформы, sparse + multi-vector", "крупный узел + кластер", LIGHT),
+        ("layers", "Weaviate", "нужен встроенный гибрид (vector+BM25+фильтры) из коробки", "средне-крупный", LIGHT),
+        ("package", "Milvus", "100M+ / миллиарды векторов, тяжёлое горизонтальное масштабирование", "миллиарды (нужна эксплуатация)", TEAL),
+        ("git-branch", "FAISS · Chroma · LanceDB", "FAISS — библиотека (persistence на вас); Chroma/LanceDB — прототип/edge", "от прототипа до embedded", LIGHT),
+    ]
+    ry = hy + 0.42
+    rh = 0.74
+    for i, (ic, name, when, ceil, col) in enumerate(rows):
+        bg = SURFACE if i % 2 == 0 else WHITE
+        filled_rect(s, hx, ry, hw, rh, bg, stroke=SOFT_GREY, stroke_pt=0.75)
+        filled_rect(s, hx + 0.14, ry + 0.16, 0.42, rh - 0.32, col, radius=True, radius_adj=0.22)
+        icon(s, ic, hx + 0.20, ry + rh / 2 - 0.15, 0.30, "white")
+        text_box(s, hx + 0.68, ry + 0.10, col_a - 0.72, rh - 0.16, name,
+                 size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+        text_box(s, hx + col_a + 0.10, ry + 0.08, col_b - 0.24, rh - 0.14, when,
+                 size=11.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+        text_box(s, hx + col_a + col_b + 0.10, ry + 0.08, col_c - 0.24, rh - 0.14, ceil,
+                 size=11, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.06)
+        ry += rh
+    # ── обвязки: LlamaIndex + LangGraph + правило «фреймворк не нужен» ──
+    oy = ry + 0.16
+    ow_box = (12.25 - 0.24) / 2
+    ocean_box(s, hx, oy, ow_box, 1.02, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, hx + 0.22, oy + 0.12, ow_box - 0.44, 0.30, "Обвязки дополняют, не конкурируют",
+             size=12.5, bold=True, color=TEAL)
+    text_box(s, hx + 0.22, oy + 0.44, ow_box - 0.44, 0.54,
+             "LlamaIndex — ingestion + retrieval по грязным документам; LangGraph — оркестрация (checkpointing, human-in-the-loop).",
+             size=11.5, color=DEEP, line_spacing=1.10)
+    gx = hx + ow_box + 0.24
+    gold_callout(s, gx, oy, ow_box, 1.02,
+                 "Для простого RAG-эндпоинта (retrieve → generate) фреймворк не нужен: несколько сотен строк своей склейки против version churn. Обвязку добавляют под агентную сложность, а не по умолчанию.",
+                 size=11.5)
+    speaker_notes(s, load_notes("s-rag-stack"))
+
+
+def build_s_rag_elastic(p):
+    """meme_forward — «а нужна ли мне выделенная векторная БД». Слева мем
+    (Woman Yelling at Cat — несёт тезис суждения), справа 3-ярусная граница
+    решения + Elastic vs OpenSearch. Anti-hype."""
+    s = blank(p)
+    slide_title(s, "Нужна ли выделенная векторная БД: три яруса.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Прежде чем ставить выделенную БД — вопрос «а не хватит ли того, что уже есть». Elastic и OpenSearch нативно дают RRF-гибрид.",
+             size=13.5, italic=True, color=MID, line_spacing=1.12)
+    # LEFT — мем (несёт тезис суждения), ≈43% ширины
+    mx0, my0, mw0 = 0.55, 1.78, 5.30
+    mh0 = 3.68
+    ocean_box(s, mx0, my0, mw0, mh0)
+    ar = 680 / 438
+    iw = mw0 - 0.44
+    ih = iw / ar
+    if ih > mh0 - 0.44:
+        ih = mh0 - 0.44
+        iw = ih * ar
+    ix = mx0 + (mw0 - iw) / 2
+    iy = my0 + (mh0 - ih) / 2
+    add_image(s, WEB / "s-rag-elastic-cat-ru.png", ix, iy, iw, ih)
+    # RIGHT — 3-ярусная граница решения
+    rx, rw = 6.20, 6.60
+    tiers = [
+        ("1", "BM25 хватает", "общий словарь, код/логи/ID, курированные базы; переиндексация дёшева и наблюдаема", MID),
+        ("2", "Встроенный гибрид Elastic/OpenSearch хватает", "уже эксплуатируете один, масштаб млн–десятки млн; ELSER даёт смысл без GPU-сервиса эмбеддингов", TEAL),
+        ("3", "Выделенная векторная БД нужна", "100M+ / multi-vector / latency-SLA горячего пути / развязать эксплуатацию от кластера логов", DEEP),
+    ]
+    ty = 1.78
+    th = 1.14
+    for num, title, body, col in tiers:
+        isgold = (num == "3")
+        if isgold:
+            ocean_box(s, rx, ty, rw, th, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, rx, ty, rw, th)
+        circle(s, rx + 0.22, ty + th / 2 - 0.23, 0.46, col)
+        text_box(s, rx + 0.22, ty + th / 2 - 0.23, 0.46, 0.46, num,
+                 size=18, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, rx + 0.82, ty + 0.13, rw - 1.02, 0.34, title,
+                 size=13.5, bold=True, color=(DEEP if not isgold else DEEP))
+        text_box(s, rx + 0.82, ty + 0.48, rw - 1.02, th - 0.56, body,
+                 size=11.5, color=DEEP, line_spacing=1.10)
+        ty += th + 0.12
+    gold_callout(s, 0.55, 5.72, 12.25, 0.92,
+                 "Огромная доля RAG-систем никогда не превышает несколько миллионов чанков — на этом масштабе pgvector или гибрид Elastic/OpenSearch скучный правильный ответ, а выделенная векторная БД часто преждевременная оптимизация.",
+                 size=13)
+    speaker_notes(s, load_notes("s-rag-elastic"))
+
+
+def build_s_rag_chunk1(p):
+    """schema_matrix — стратегии чанкирования от простой к сложной: что и когда.
+    Диаграмма-матрица (не мем). Schema §5.5 Matrix/Grid."""
+    s = blank(p)
+    slide_title(s, "Чанкирование: как режешь — то и можно найти.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Из трёх шагов RAG чанкирование недооценивают чаще всего, а рычаг высокий. Стратегии — от простой к сложной; усложнять только под требование.",
+             size=13.5, italic=True, color=MID, line_spacing=1.12)
+    # 6 плиток в сетке 3×2 + 7-я (Contextual) как gold-полоса
+    cards = [
+        ("scale", "Fixed-size", "резать каждые N токенов — грубо, но сильная базовая линия", MID),
+        ("git-fork", "Recursive / character", "по иерархии разделителей (абзац→предложение) — прагматичный дефолт", TEAL),
+        ("layers", "Sentence-window", "эмбеддить предложение, возвращать окно соседних для контекста", LIGHT),
+        ("git-merge", "Semantic", "граница по смене темы — интуитивно, но часто не окупается", LIGHT),
+        ("boxes", "Parent-document", "маленькие чанки для точности, больший родитель — для генерации", MID),
+        ("brain-circuit", "Late chunking", "эмбеддить весь документ, потом пулить — чанк контекст-осведомлён", LIGHT),
+    ]
+    cw = (12.25 - 0.22 * 2) / 3
+    chh = 1.42
+    x0, y0 = 0.55, 1.70
+    for i, (ic, name, body, col) in enumerate(cards):
+        r, c = divmod(i, 3)
+        x = x0 + c * (cw + 0.22)
+        y = y0 + r * (chh + 0.18)
+        ocean_box(s, x, y, cw, chh)
+        icon(s, ic, x + 0.20, y + 0.18, 0.38, "mid")
+        text_box(s, x + 0.70, y + 0.16, cw - 0.86, 0.42, name,
+                 size=13.5, bold=True, color=col, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+        text_box(s, x + 0.22, y + 0.66, cw - 0.44, chh - 0.76, body,
+                 size=11, color=DEEP, line_spacing=1.10)
+    # 7-я: Contextual Retrieval — gold-полоса
+    gy = y0 + 2 * (chh + 0.18)
+    filled_rect(s, 0.55, gy, 12.25, 0.92, GOLD_TINT, stroke=GOLD, stroke_pt=1.75,
+                radius=True, radius_adj=0.08)
+    icon(s, "file-text", 0.78, gy + 0.24, 0.44, "gold")
+    text_box(s, 1.36, gy + 0.13, 3.6, 0.34, "Contextual Retrieval",
+             size=13.5, bold=True, color=DEEP)
+    text_box(s, 1.36, gy + 0.47, 11.2, 0.40,
+             "LLM дописывает 50–100 токенов документ-уровневого контекста к каждому чанку до эмбеддинга и BM25 (см. каскад промахов 5,7% → 1,9%).",
+             size=11.5, color=DEEP, line_spacing=1.08)
+    gold_callout(s, 0.55, gy + 1.06, 12.25, 0.74,
+                 "Ни у размера, ни у стратегии нет правильного значения по умолчанию — их подбирают под корпус. Подбор без метрики качества retrieval — вслепую.",
+                 size=13)
+    speaker_notes(s, load_notes("s-rag-chunk1"))
+
+
+def build_s_rag_chunk2(p):
+    """meme_forward — как выбрать стратегию + тихий провал. Слева мем (Disaster
+    Girl — anti-cargo-cult, несёт тезис), справа конфликтующие замеры С БАЗОЙ +
+    тихий провал (таблицы). Failure-линия."""
+    s = blank(p)
+    slide_title(s, "Не карго-культи semantic chunking.", size=26)
+    text_box(s, 0.55, 1.14, 12.25, 0.44,
+             "Исследования эффекта чанкирования открыто расходятся — и это само по себе урок: «умный» chunking доменно-специфичен, простой recursive fixed-size часто сильнее и дешевле.",
+             size=13.5, italic=True, color=MID, line_spacing=1.14)
+    # LEFT — мем (несёт тезис), ≈45%
+    mx0, my0, mw0 = 0.55, 1.98, 5.55
+    mh0 = 4.24
+    ocean_box(s, mx0, my0, mw0, mh0)
+    ar = 500 / 375
+    iw = mw0 - 0.48
+    ih = iw / ar
+    if ih > mh0 - 0.48:
+        ih = mh0 - 0.48
+        iw = ih * ar
+    ix = mx0 + (mw0 - iw) / 2
+    iy = my0 + (mh0 - ih) / 2
+    add_image(s, WEB / "s-rag-chunk2-disaster-ru.png", ix, iy, iw, ih)
+    # RIGHT — конфликтующие замеры С БАЗОЙ
+    rx, rw = 6.45, 6.35
+    studies = [
+        ("recursive-512 vs semantic", "69% vs 54%", "Feb-2026, 7 стратегий на 50 статьях: recursive 512-token №1; semantic дал ~43-токенные фрагменты", TEAL),
+        ("клиника (узкий домен)", "87% vs 13%", "MDPI ноя-2025: adaptive/topic-boundary vs fixed-size (p=0,001) — реальный, но узкодоменный", MID),
+        ("NAACL 2025 Findings", "≈ или хуже", "«издержки не оправданы стабильным приростом»: fixed 200-word на уровне semantic или лучше", DEEP),
+    ]
+    sy = my0
+    sh = 1.02
+    for label, num, body, col in studies:
+        ocean_box(s, rx, sy, rw, sh)
+        text_box(s, rx + 0.22, sy + 0.11, rw - 2.0, 0.30, label,
+                 size=11.5, bold=True, color=col)
+        text_box(s, rx + rw - 1.9, sy + 0.08, 1.8, 0.36, num,
+                 size=17, bold=True, color=GOLD, align=PP_ALIGN.RIGHT)
+        text_box(s, rx + 0.22, sy + 0.44, rw - 0.44, sh - 0.52, body,
+                 size=11, color=DEEP, line_spacing=1.08)
+        sy += sh + 0.12
+    # тихий провал — таблицы (gold)
+    gy = sy + 0.02
+    gold_callout(s, rx, gy, rw, my0 + mh0 - gy,
+                 "Тихий провал retrieval — таблицы: расплющивание в текст рушит связи строк/столбцов без единой ошибки, ответ портится тихо. Лечить как структурированные объекты, а не расплющивать.",
+                 size=12.5)
+    footer(s, "Дефолт — recursive fixed-size (дёшев и силён); усложнять стратегию только под измеренный на своём корпусе разрыв.")
+    speaker_notes(s, load_notes("s-rag-chunk2"))
+
+
+def build_s_rag_design(p):
+    """checklist_schema — как меняется системный дизайн: пайплайн ingest→index,
+    freshness, re-embed, eval, каунтерфактуал «<200k → RAG не нужен». Чистая
+    схема-чеклист (не мем)."""
+    s = blank(p)
+    slide_title(s, "Прототип → продакшн — это другая архитектура, не подкрутка.", size=24)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Прототип работает на 1000 документов; ломается на миллионах векторов и тысячах запросов. Что добавляется при переходе в продакшн.",
+             size=13.5, italic=True, color=MID, line_spacing=1.12)
+    # пайплайн ingest → chunk → embed → index (первое бутылочное горло)
+    py = 1.74
+    stages = ["ingest", "chunk", "embed", "index"]
+    sw = 2.30
+    gap = 0.42
+    x = 0.55
+    for i, st in enumerate(stages):
+        isfirst = (i == 0)
+        if isfirst:
+            filled_rect(s, x, py, sw, 0.70, GOLD_TINT, stroke=GOLD, stroke_pt=2.0,
+                        radius=True, radius_adj=0.12)
+        else:
+            filled_rect(s, x, py, sw, 0.70, SURFACE, stroke=LIGHT, stroke_pt=1.5,
+                        radius=True, radius_adj=0.12)
+        text_box(s, x + 0.10, py + 0.10, sw - 0.20, 0.30, st,
+                 size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+        text_box(s, x + 0.10, py + 0.40, sw - 0.20, 0.26,
+                 ("первое бутылочное горло" if isfirst else ""),
+                 size=10, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+        if i < len(stages) - 1:
+            right_arrow(s, x + sw + 0.03, py + 0.21, gap - 0.10, 0.28, fill=LIGHT)
+        x += sw + gap
+    # 4 карточки: freshness / re-embed / eval / cost
+    cards = [
+        ("route", "Свежесть", "батч → устаревание; CDC → субминута ценой ×3 к эксплуатации. Индекс отстал → retrieval деградирует невидимо.", MID),
+        ("git-branch", "Смена модели", "новая embedding-модель = пере-эмбеддить ВСЕ векторы (старые/новые несравнимы) — миграция, не строка конфига.", TEAL),
+        ("check-check", "Eval", "метки: recall@k ~0,8, nDCG; LLM-судья: RAGAS faithfulness/context-precision/recall. Обе группы + сверять с людьми.", LIGHT),
+        ("scale", "Стоимость", "семантическое кэширование ~69% экономии LLM (vs без кэша). SLA <50 мс толкают расходы вверх.", MID),
+    ]
+    cy = 2.72
+    chh = 1.62
+    cw = (12.25 - 0.22 * 3) / 4
+    x = 0.55
+    for ic, name, body, col in cards:
+        ocean_box(s, x, cy, cw, chh)
+        icon(s, ic, x + 0.18, cy + 0.16, 0.36, "mid")
+        text_box(s, x + 0.62, cy + 0.15, cw - 0.76, 0.36, name,
+                 size=13, bold=True, color=col, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x + 0.20, cy + 0.60, cw - 0.40, chh - 0.70, body,
+                 size=10.5, color=DEEP, line_spacing=1.10)
+        x += cw + 0.22
+    # каунтерфактуал — gold-полоса «под ~200k токенов RAG не нужен»
+    gold_callout(s, 0.55, 4.56, 12.25, 1.02,
+                 "Каунтерфактуал: база знаний под ~200k токенов целиком кладётся в промпт с кэшированием (до ~90% сокращения стоимости) — retrieval пропускается вовсе. Длинный контекст + кэш — легитимная альтернатива RAG на малом масштабе.",
+                 size=13.5)
+    footer(s, "Первый вопрос перед всей инфраструктурой — «а нужен ли RAG вообще, или корпус мал и стабилен настолько, что его хватает положить в окно».")
+    speaker_notes(s, load_notes("s-rag-design"))
 
 
 def build_s11(p):
@@ -1466,6 +2000,112 @@ def build_s16(p):
     speaker_notes(s, load_notes("s16"))
 
 
+def build_s_ft_cost(p):
+    """WAVE 3 (§3.6) — comparison-table: претрейн / Full-FT / LoRA / QLoRA /
+    промпт+RAG по осям стоимость·данные·компьют·итерации·trainable-параметры.
+    Comparison-table slide — БЕЗ мема. Каждое число с базой; тезис —
+    «тренировка дёшева, дорогой остаётся eval (§3.7)»."""
+    s = blank(p)
+    slide_title(s, "Тренировка дёшева и дешевеет — вопрос лишь какой вариант.", size=24)
+    text_box(s, 0.55, 1.10, 12.25, 0.44,
+             "Пять вариантов на базе класса 7B. Претрейн с нуля — только как масштаб-ориентир: никто в зале не тренирует модель с нуля, реальный выбор идёт между Full-FT, LoRA, QLoRA и «вообще не тренировать».",
+             size=12.5, italic=True, color=MID, line_spacing=1.14)
+    # comparison table
+    ocean_box(s, 0.40, 1.66, 12.55, 3.98)
+    tx, ty = 0.52, 1.76
+    headers = ["Ось", "Претрейн с нуля", "Full-FT", "LoRA", "QLoRA", "Промпт / RAG"]
+    col_w = [2.55, 2.28, 1.86, 1.98, 1.90, 1.74]
+    rows = [
+        ("Обучаемые параметры", "100% (с нуля)", "100% весов", "~0,13% (r=4)", "как LoRA", "0% — веса не меняются"),
+        ("$ за прогон", "$61–92M (405B)", "~$200–300", "<$10 (7B)", "≈ LoRA", "$0 тренировки"),
+        ("Компьют", "30,8M H100-ч", "часы–дни", "24 GPU-ч (65B)", "≈ LoRA", "нет"),
+        ("Объём данных (мин.)", "триллионы токенов", "тысячи–десятки тыс.", "~1000 (пол); 5k+", "как LoRA", "0 (few-shot 3–20)"),
+        ("VRAM (65–70B)", "кластер", "много-узловой", "80 ГБ+", "65B на 48 ГБ", "только инференс"),
+        ("Скорость итерации", "месяцы", "медленно (LR)", "быстро", "быстро", "мгновенно"),
+    ]
+    gold_col = 3  # LoRA column highlighted (дефолт-выбор)
+    hh = 0.42
+    rh = (3.98 - 0.20 - hh) / len(rows)
+    cx = tx
+    for j, hd in enumerate(headers):
+        isg = (j == gold_col)
+        filled_rect(s, cx, ty, col_w[j], hh, (GOLD if isg else MID), radius=False)
+        text_box(s, cx + 0.08, ty, col_w[j] - 0.16, hh, hd,
+                 size=11, bold=True, color=(DEEP if isg else WHITE),
+                 anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER, line_spacing=1.0)
+        cx += col_w[j]
+    yy = ty + hh
+    for ri, row in enumerate(rows):
+        bgrow = WHITE if ri % 2 == 0 else SURFACE
+        cx = tx
+        for j, cc in enumerate(row):
+            isg = (j == gold_col)
+            filled_rect(s, cx, yy, col_w[j], rh,
+                        (GOLD_TINT if isg else bgrow),
+                        stroke=(GOLD if isg else SOFT_GREY),
+                        stroke_pt=(1.5 if isg else 0.5))
+            text_box(s, cx + 0.08, yy, col_w[j] - 0.16, rh, cc,
+                     size=10, bold=(j == 0 or isg), color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, align=(PP_ALIGN.LEFT if j == 0 else PP_ALIGN.CENTER),
+                     line_spacing=1.0)
+            cx += col_w[j]
+        yy += rh
+    gold_callout(s, 0.55, 5.78, 12.25, 0.98,
+                 "LoRA/QLoRA — дефолт: <1% обучаемых параметров, полезный 7B-LoRA <$10 — дешевле фронтир-претрейна на ~7 порядков ($61–92M). Full-FT оправдан только когда датасет превышает ёмкость LoRA (большие корпуса); для узкой поведенческой адаптации он не покупает ничего сверх LoRA, а добавляет стоимость и риск забывания.",
+                 size=12)
+    footer(s, "Порядки величины, класс 7B если не указано; конкретные $ и часы движутся — важен порядок, не точная цифра.")
+    speaker_notes(s, load_notes("s-ft-cost"))
+
+
+def build_s_ft_eval(p):
+    """WAVE 3 (§3.7) — meme-forward judgment: «оценка сложнее обучения» +
+    границы. 5 методов оценки (бенчмарк/held-out/LLM-судья/human/task-метрики)
+    по схеме «масштаб · валидность»; контаминация + разрыв lab→prod ~37%.
+    Мем Left Exit — «строгая оценка vs красивое число на бенчмарке»."""
+    s = blank(p)
+    slide_title(s, "Оценка обучения дороже самого обучения — и не решена.", size=24)
+    text_box(s, 0.55, 1.10, 8.45, 0.66,
+             "Полезный 7B-LoRA стоит <$10 — а строгая оценка того же адаптера — $300–1200 человеко-труда за один раунд и всё равно может не предсказать продакшн. Бюджетная строка — eval, не тренировка.",
+             size=12.5, italic=True, color=MID, line_spacing=1.16)
+    # LEFT — 5 eval methods (scale vs validity), each with «ломается»
+    lx, ly, lw = 0.55, 1.90, 8.45
+    methods = [
+        ("Публичный бенчмарк", "дёшево, масштабно", "контаминация: MMLU ~29% items, GSM8K→GSM1k −13 п.п. — число без проверки на утечку", MID),
+        ("Held-out тест-сет", "highest-ROI, строишь ДО тренировки", "ломается при утечке в трейн / малом объёме / дрейфе от продакшна", GOLD),
+        ("LLM-как-судья", "масштабирует rubric дёшево", "position / self-enhancement bias; ранги плывут до 14 позиций между бенчмарками", MID),
+        ("Оценка людьми (human)", "эталон для субъективного качества", "$300–1200 за раунд; κ<0,4 = двусмысленная разметка", TEAL),
+        ("Task-метрики (BLEU/ROUGE)", "дёшево для закрытых форматов", "на открытой генерации r≈0,25–0,52 с людьми — награждают n-gram, не смысл", MID),
+    ]
+    rh = 0.72
+    yy = ly
+    for nm, good, bad, col in methods:
+        isg = (col == GOLD)
+        if isg:
+            ocean_box(s, lx, yy, lw, rh - 0.06, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, lx, yy, lw, rh - 0.06)
+        filled_rect(s, lx + 0.14, yy + 0.12, 0.10, rh - 0.30, col)
+        text_box(s, lx + 0.34, yy + 0.06, 2.85, rh - 0.14, nm,
+                 size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.02)
+        text_box(s, lx + 3.24, yy + 0.05, 2.05, rh - 0.14, good,
+                 size=10.5, italic=True, color=(MID if not isg else DEEP),
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+        text_box(s, lx + 5.34, yy + 0.05, lw - 5.48, rh - 0.14, "ломается: " + bad,
+                 size=10, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.04)
+        yy += rh
+    # RIGHT — Left Exit meme (thesis carrier)
+    mmx, mmy, mmw = 9.20, 1.90, 3.60
+    mmh = mmw * (767 / 804)
+    ocean_box(s, mmx, mmy, mmw, mmh + 0.02)
+    add_image(s, WEB / "s-ft-eval-leftexit-ru.png", mmx + 0.10, mmy + 0.10,
+              mmw - 0.20, mmh - 0.18)
+    gold_callout(s, 0.55, 5.66, 12.25, 1.10,
+                 "Ни один метод не самодостаточен: дешёвые (бенчмарк, BLEU) — худшая валидность; валидные (held-out-эксперт, human, A/B) — дорогие. Измеренный разрыв lab→prod ~37% (2025) — механика, не аномалия: прирост на бенчмарке — это гипотеза, а не результат; подтверждают только held-out-clean + A/B на реальном трафике.",
+                 size=12)
+    speaker_notes(s, load_notes("s-ft-eval"))
+
+
 def build_s18(p):
     """section_divider — Раздел 4 «Агенты» (заголовок БЕЗ «+безопасность»;
     контент безопасности внутри раздела, на s25)."""
@@ -1478,75 +2118,73 @@ def build_s18(p):
 
 
 def build_s19(p):
-    """MERGED (§4.1) — API-механика (structured output / function calling /
-    prompt caching) СВЕРХУ + MCP (N×M→N+M, USB-C, приятие, поворот доверия)
-    СНИЗУ. Плотный слайд — компактные карточки, отдельная проверка 5-Second."""
+    """TRIM (§4.1, WAVE 3) — убран L2-recap (structured output / function
+    calling / prompt caching — уже разобрано в Лекции 2). Остаётся L3-точка:
+    модель-как-компонент + tool use + MCP N×M→N+M + поворот доверия."""
     s = blank(p)
-    slide_title(s, "Модель становится компонентом системы: API + MCP.", size=24)
-    # TOP — 3 API mechanism cards (compact)
-    cards = [
-        ("boxes", "Структурированный вывод", "выход строго по схеме (JSON), не текст для разбора", "встраиваемая"),
-        ("terminal", "Вызов инструментов", "модель формулирует «вызови X»; исполняет ваш код, не модель", "активная"),
-        ("database", "Кэш промптов", "не пересчитывать неизменный префикс при каждом запросе", "экономичная"),
-    ]
-    cw, chh = 4.00, 2.02
-    cy = 1.12
-    x = 0.55
-    for nm, t, body, tag in cards:
-        ocean_box(s, x, cy, cw, chh)
-        filled_rect(s, x + 0.22, cy + 0.22, 0.56, 0.56, MID, radius=True, radius_adj=0.18)
-        icon(s, nm, x + 0.28, cy + 0.28, 0.44, "white")
-        text_box(s, x + 0.90, cy + 0.24, cw - 1.05, 0.52, t,
-                 size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-        text_box(s, x + 0.24, cy + 0.90, cw - 0.48, 0.72, body,
-                 size=12.5, color=DEEP, line_spacing=1.14)
-        chip(s, x + 0.24, cy + chh - 0.46, cw - 0.48, 0.34, tag,
-             fill=TEAL, color=WHITE, size=12)
-        x += cw + 0.13
-    # BOTTOM — MCP
-    my = 3.36
-    ocean_box(s, 0.55, my, 6.55, 2.55)
-    icon(s, "cable", 0.80, my + 0.20, 0.48, "mid")
-    text_runs(s, 1.40, my + 0.22, 5.5, 0.5, [
-        {"text": "MCP", "size": 18, "bold": True, "color": MID},
-        {"text": "  — «USB-C для инструментов LLM»", "size": 14, "color": DEEP},
+    slide_title(s, "Модель становится компонентом системы.", size=25)
+    text_box(s, 0.55, 1.12, 12.25, 0.62,
+             "В Л2 модель была собеседником в окне чата. Здесь она — вызываемый компонент: получает запрос через API, формулирует «вызови инструмент X», а исполняет ваш код система, не модель. Это сдвиг от «поговорить» к «встроить».",
+             size=13.5, color=DEEP, line_spacing=1.18)
+    # LEFT — model-as-component + tool use (L3-specific point)
+    lx, ly, lw, lh = 0.55, 2.00, 6.05, 2.55
+    ocean_box(s, lx, ly, lw, lh)
+    icon(s, "terminal", lx + 0.24, ly + 0.20, 0.48, "mid")
+    text_box(s, lx + 0.86, ly + 0.22, lw - 1.05, 0.42,
+             "Модель как компонент + tool use", size=15, bold=True, color=MID,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+    text_box(s, lx + 0.26, ly + 0.80, lw - 0.52, 0.72,
+             "Модель решает «нужен инструмент» и формулирует вызов; исполняет — ваш код. Модель не выходит наружу сама — она возвращает намерение, а система выполняет и возвращает результат в контекст.",
+             size=12.5, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.26, ly + lh - 0.66, lw - 0.52, 0.50, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.5, radius=True, radius_adj=0.10)
+    text_box(s, lx + 0.44, ly + lh - 0.62, lw - 0.86, 0.44,
+             "Отсюда и цикл агента (следующий слайд): модель в петле «reason → вызвать инструмент → прочитать результат».",
+             size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.06)
+    # RIGHT — MCP N×M -> N+M
+    rx, rw = 6.75, 6.05
+    ocean_box(s, rx, ly, rw, lh)
+    icon(s, "cable", rx + 0.24, ly + 0.20, 0.48, "mid")
+    text_runs(s, rx + 0.86, ly + 0.22, rw - 1.05, 0.42, [
+        {"text": "MCP", "size": 17, "bold": True, "color": MID},
+        {"text": "  — «USB-C для инструментов LLM»", "size": 13.5, "color": DEEP},
     ], anchor=MSO_ANCHOR.MIDDLE)
-    text_runs(s, 0.80, my + 0.82, 6.0, 0.5, [
-        {"text": "N×M", "size": 20, "bold": True, "color": LIGHT},
-        {"text": " несовместимых интеграций → ", "size": 13, "color": DEEP},
-        {"text": "N+M", "size": 20, "bold": True, "color": TEAL},
+    text_runs(s, rx + 0.26, ly + 0.86, rw - 0.52, 0.44, [
+        {"text": "N×M", "size": 22, "bold": True, "color": LIGHT},
+        {"text": " несовместимых интеграций → ", "size": 14, "color": DEEP},
+        {"text": "N+M", "size": 22, "bold": True, "color": TEAL},
     ], anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.80, my + 1.36, 6.0, 0.32,
-             "инструмент один раз = MCP-сервер; модель один раз = MCP-клиент",
-             size=11.5, italic=True, color=SLATE)
+    text_box(s, rx + 0.26, ly + 1.42, rw - 0.52, 0.34,
+             "инструмент один раз = MCP-сервер; модель один раз = MCP-клиент. Подключение стало операцией на минуты.",
+             size=11.5, italic=True, color=SLATE, line_spacing=1.10)
     tl = [("Anthropic", "11/2024", "logo-anthropic"),
           ("OpenAI", "03/2025", "logo-openai"),
           ("Google", "04/2025", "logo-gemini")]
-    tx0 = 0.80
+    tx0 = rx + 0.26
     for i, (nm, dt, lg) in enumerate(tl):
-        ex = tx0 + i * 2.0
-        add_image(s, ICONS / f"{lg}.png", ex, my + 1.82, 0.34, 0.34)
-        text_box(s, ex + 0.42, my + 1.78, 1.5, 0.26, nm, size=11.5, bold=True, color=DEEP)
-        text_box(s, ex + 0.42, my + 2.02, 1.5, 0.24, dt, size=11.5, bold=True, italic=True, color=LIGHT)
+        ex = tx0 + i * 1.92
+        add_image(s, ICONS / f"{lg}.png", ex, ly + 1.92, 0.32, 0.32)
+        text_box(s, ex + 0.40, ly + 1.88, 1.5, 0.24, nm, size=11, bold=True, color=DEEP)
+        text_box(s, ex + 0.40, ly + 2.10, 1.5, 0.24, dt, size=11, bold=True, italic=True, color=LIGHT)
         if i < 2:
-            text_box(s, ex + 1.72, my + 1.82, 0.22, 0.3, "→", size=13, bold=True, color=LIGHT)
-    # trust warning — P1 fix (issue #157 review): 3 bullets -> 2 most load-bearing
-    # (root cause: code/access; concrete attack vector: prompt injection carrier).
-    # Retention-policy point dropped here — it's covered on s25's ZDR block.
-    ocean_box(s, 7.25, my, 5.55, 2.55, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_box(s, 7.52, my + 0.18, 5.1, 0.72,
-             "Стандартизация подключения ≠ безопасность подключаемого — и усугубляет проблему доверия.",
-             size=13.5, bold=True, color=TEAL, line_spacing=1.14)
+            text_box(s, ex + 1.66, ly + 1.92, 0.22, 0.3, "→", size=13, bold=True, color=LIGHT)
+    # BOTTOM — trust turn (2 load-bearing points)
+    ty2, th = 4.70, 1.14
+    ocean_box(s, 0.55, ty2, 12.25, th, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "shield-alert", 0.80, ty2 + 0.20, 0.44, "teal")
+    text_box(s, 1.40, ty2 + 0.16, 11.1, 0.40,
+             "Поворот доверия: стандартизация подключения ≠ безопасность подключаемого — и усугубляет проблему доверия.",
+             size=13.5, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
     for i, w in enumerate([
-        "код в вашем окружении / доступ к данным",
-        "описание попадает в контекст — носитель инъекции в промпт"]):
-        circle(s, 7.54, my + 1.06 + i * 0.52 + 0.05, 0.11, TEAL)
-        text_box(s, 7.76, my + 1.06 + i * 0.52, 5.0, 0.48, w,
-                 size=12.5, color=DEEP, line_spacing=1.10)
-    gold_callout(s, 0.55, 6.06, 12.25, 0.80,
-                 "Ни один механизм не делает модель надёжнее — правило лестницы не отменяется. Удобство подключения — не аргумент за подключение.",
-                 size=13.5)
-    footer(s, "Актуальные цифры экономии и масштаб экосистемы MCP — см. источники.")
+        "MCP-сервер = чужой код в вашем окружении и доступ к данным",
+        "описание сервера попадает в контекст — носитель инъекции в промпт"]):
+        circle(s, 0.84 + i * 6.15, ty2 + 0.74 + 0.05, 0.11, TEAL)
+        text_box(s, 1.06 + i * 6.15, ty2 + 0.66, 5.85, 0.44, w,
+                 size=12, color=DEEP, line_spacing=1.08, anchor=MSO_ANCHOR.MIDDLE)
+    gold_callout(s, 0.55, 6.00, 12.25, 0.78,
+                 "Модель-компонент и MCP делают подключение удобным, но ни один механизм не делает модель надёжнее — правило лестницы не отменяется. Удобство подключения — не аргумент за подключение.",
+                 size=13)
+    footer(s, "Масштаб экосистемы MCP и хронология поддержки вендорами — см. источники.")
     speaker_notes(s, load_notes("s19"))
 
 
@@ -1626,59 +2264,55 @@ def build_s21(p):
 
 
 def build_s22(p):
-    """schema_matrix / comparison — Workflow vs Agent (2 columns)."""
+    """REFRAME (§4.3, WAVE 3) — «Когда workflow: пять паттернов». Workflow не
+    примитив: у него развитая палитра паттернов (Anthropic, Building Effective
+    Agents). Diagram/matrix slide — БЕЗ мема. Каждый паттерн — что/когда."""
     s = blank(p)
-    slide_title(s, "Сценарий (workflow) vs агент.", size=27)
-    text_box(s, 0.55, 1.16, 12.25, 0.4,
-             "Предсказуемая задача → сценарий; непредсказуемая И ценность оправдывает кратный рост → агент.",
-             size=14.5, italic=True, color=MID)
-    cy, chh = 1.78, 2.75
-    cw = 6.05
-    # workflow
-    ocean_box(s, 0.55, cy, cw, chh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "git-fork", 0.83, cy + 0.22, 0.50, "teal")
-    text_box(s, 1.45, cy + 0.24, cw - 0.9, 0.5, "Сценарий  (workflow)",
-             size=17, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0.83, cy + 0.85, cw - 0.56, 0.45,
-             "LLM и инструменты по предопределённым в коде путям",
-             size=13, bold=True, color=DEEP, line_spacing=1.12)
-    for i, t in enumerate(["последовательность шагов известна заранее",
-                           "предсказуемо, аудируемо",
-                           "большинство надёжных боевых систем — это сценарий (workflow)"]):
-        circle(s, 0.83, cy + 1.40 + i * 0.43 + 0.06, 0.11, TEAL)
-        text_box(s, 1.06, cy + 1.40 + i * 0.43, cw - 1.3, 0.42, t,
-                 size=12.5, color=DEEP, line_spacing=1.05)
-    # agent
-    rx = 6.75
-    ocean_box(s, rx, cy, cw, chh)
-    icon(s, "bot", rx + 0.28, cy + 0.22, 0.50, "mid")
-    text_box(s, rx + 0.90, cy + 0.24, cw - 0.9, 0.5, "Агент",
-             size=17, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, rx + 0.28, cy + 0.85, cw - 0.56, 0.45,
-             "LLM динамически определяет собственный процесс",
-             size=13, bold=True, color=DEEP, line_spacing=1.12)
-    for i, t in enumerate(["последовательность заранее не зафиксирована",
-                           "кратно больше токенов, чем чат",
-                           "ниже аудируемость, выше риск петель"]):
-        circle(s, rx + 0.28, cy + 1.40 + i * 0.43 + 0.06, 0.11, MID)
-        text_box(s, rx + 0.51, cy + 1.40 + i * 0.43, cw - 1.3, 0.42, t,
-                 size=12.5, color=DEEP, line_spacing=1.05)
-    # diagnostic question
-    ocean_box(s, 0.55, 4.70, 12.25, 1.05, fill=SURFACE, stroke=LIGHT)
-    text_box(s, 0.85, 4.80, 11.65, 0.9,
-             "Могу ли я заранее, до запуска, выписать последовательность шагов?  да (даже с ветвлениями) → сценарий  ·  принципиально нет И ценность оправдывает кратные стоимость/риск → агент",
-             size=13.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.18)
-    # #231: вложенность workflow↔agent — норма, не третья архитектура.
-    ocean_box(s, 0.55, 5.90, 8.55, 0.98, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    text_box(s, 0.80, 5.98, 8.05, 0.82,
-             "Вложенность — норма: агент проверки кода вызывает сценарий «линтер→тесты→формат» как один шаг; сценарий обработки заявок делегирует мини-агенту разбор свободной жалобы. Динамика — только там, где нужна.",
-             size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
-    ocean_box(s, 9.30, 5.90, 3.50, 0.98, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.0)
-    text_box(s, 9.50, 5.98, 3.10, 0.82,
-             "Найди простейшее. «Лень формализовать» не делает задачу непредсказуемой.",
-             size=11.5, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.10)
+    slide_title(s, "Workflow — не примитив: пять паттернов вокруг предсказуемого.", size=23)
+    text_box(s, 0.55, 1.08, 12.25, 0.44,
+             "Прежде чем тянуться к динамическому агенту: большинство «нам нужен агент» закрываются одним из этих пяти паттернов. Все они — предопределённые в коде структуры, сохраняющие предсказуемость и аудируемость.",
+             size=12.5, italic=True, color=MID, line_spacing=1.14)
+    patterns = [
+        ("git-branch", "Prompt chaining", "фиксированная цепочка вызовов: выход одного — вход следующего; между шагами — детерминированная проверка (gate)", "задача чисто декомпозируется на известные подшаги", MID),
+        ("route", "Routing", "первый вызов классифицирует вход и направляет в один из заданных маршрутов (свой промпт/модель)", "входы разнородны, но классы известны", MID),
+        ("git-fork", "Parallelization", "независимые подзадачи параллельно, результаты агрегируются детерминированно (голосование, объединение)", "подзадачи независимы и известны заранее", TEAL),
+        ("waypoints", "Orchestrator-workers", "центральный вызов делит задачу динамически, но в заданных рамках, и раздаёт воркерам", "граница workflow↔агент: декомпозиция гибкая, контур фиксирован", MID),
+        ("check-check", "Evaluator-optimizer", "один вызов генерирует, другой оценивает по критериям; цикл до порога", "нужна встроенная проверка между шагами — против reliability compounding", GOLD),
+    ]
+    cw, chh = 2.42, 3.40
+    gap = 0.10
+    x0, y0 = 0.55, 1.66
+    for i, (ic, t, body, when, col) in enumerate(patterns):
+        x = x0 + i * (cw + gap)
+        isg = (col == GOLD)
+        if isg:
+            ocean_box(s, x, y0, cw, chh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, x, y0, cw, chh)
+        filled_rect(s, x + cw / 2 - 0.36, y0 + 0.22, 0.72, 0.72,
+                    (GOLD if isg else col), radius=True, radius_adj=0.18)
+        icon(s, ic, x + cw / 2 - 0.27, y0 + 0.31, 0.54, "white")
+        # number badge
+        circle(s, x + 0.14, y0 + 0.14, 0.34, (GOLD if isg else col))
+        text_box(s, x + 0.14, y0 + 0.14, 0.34, 0.34, str(i + 1),
+                 size=13, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x + 0.12, y0 + 1.02, cw - 0.24, 0.46, t,
+                 size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
+        text_box(s, x + 0.16, y0 + 1.48, cw - 0.32, 1.08, body,
+                 size=9.5, color=DEEP, line_spacing=1.08)
+        filled_rect(s, x + 0.14, y0 + chh - 0.78, cw - 0.28, 0.66,
+                    (GOLD_TINT if isg else SURFACE),
+                    stroke=(GOLD if isg else SOFT_GREY), stroke_pt=1.0,
+                    radius=True, radius_adj=0.10)
+        text_box(s, x + 0.24, y0 + chh - 0.76, cw - 0.48, 0.62,
+                 "когда: " + when, size=9.5, italic=True,
+                 color=(DEEP if isg else SLATE), anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.06)
+    gold_callout(s, 0.55, 5.22, 12.25, 1.02,
+                 "Все пять — предопределённые в коде структуры; динамический агент отличается тем, что сам решает, какую структуру построить под конкретный вход, и теряет предсказуемость, которую эти паттерны сохраняют. Найди простейшее: workflow — вокруг предсказуемого, агент — чтобы исследовать непредсказуемое.",
+                 size=12.5)
+    footer(s, "Пять паттернов workflow — Anthropic, Building Effective Agents; выбор агент vs workflow — на следующем слайде.")
     speaker_notes(s, load_notes("s22"))
 
 
@@ -2480,9 +3114,11 @@ def build_classic_base(p, sid, *, title, intro, cards, keep_text, bridge):
     (icon + bold single-line name + body) + gold «что оставить» callout +
     teal-tint bridge strip. `cards` = list of 3 (icon_name, name, body)."""
     s = blank(p)
-    slide_title(s, title, size=26)
-    text_box(s, 0.55, 1.14, 12.25, 0.60, intro,
-             size=14, italic=True, color=MID, line_spacing=1.14)
+    # WAVE 1 (#196): reframed titles могут занимать 2 строки — уменьшен кегль
+    # (26→23) и опущена intro, чтобы 2-строчный заголовок не наезжал на неё.
+    slide_title(s, title, size=23, h=1.10)
+    text_box(s, 0.55, 1.44, 12.25, 0.56, intro,
+             size=13.5, italic=True, color=MID, line_spacing=1.12)
     # 3 tile cards — equal mass, full width. Name может занимать 2 строки;
     # body — до 5 строк, всё внутри карточки (нет overflow под gold-плашку).
     n = len(cards)
@@ -2490,15 +3126,15 @@ def build_classic_base(p, sid, *, title, intro, cards, keep_text, bridge):
     x0 = 0.55
     total_w = 12.25
     cw = (total_w - gap * (n - 1)) / n
-    cy, chh = 1.86, 2.80
+    cy, chh = 2.04, 2.64
     for i, (ic, name, body) in enumerate(cards):
         x = x0 + i * (cw + gap)
         ocean_box(s, x, cy, cw, chh)
-        icon(s, ic, x + 0.28, cy + 0.24, 0.54, "mid")
-        text_box(s, x + 0.28, cy + 0.92, cw - 0.56, 0.72, name,
+        icon(s, ic, x + 0.26, cy + 0.20, 0.50, "mid")
+        text_box(s, x + 0.28, cy + 0.82, cw - 0.56, 0.66, name,
                  size=15.5, bold=True, color=MID, line_spacing=1.04)
-        text_box(s, x + 0.28, cy + 1.66, cw - 0.56, chh - 1.80, body,
-                 size=12, color=DEEP, line_spacing=1.14)
+        text_box(s, x + 0.28, cy + 1.52, cw - 0.56, chh - 1.62, body,
+                 size=11.5, color=DEEP, line_spacing=1.12)
     # gold «что оставить из классики»
     ky, kh = 4.80, 1.36
     filled_rect(s, 0.55, ky, 12.25, kh, GOLD_TINT, stroke=GOLD, stroke_pt=1.75,
@@ -2523,9 +3159,9 @@ def build_s_classic_prompt(p):
     """§1.0 — классическая база раздела 1: точная постановка задачи."""
     build_classic_base(
         p, "s-classic-prompt",
-        title="Как задачу ставили до промпта — и что это меняет.",
-        intro="До больших моделей «заставить систему сделать нужное» означало не пожелание на "
-              "естественном языке, а точную спецификацию и детерминированную программу.",
+        title="Что такое точная постановка задачи: спецификация и контракт.",
+        intro="Точная постановка — это описание нужного результата так, чтобы его можно было "
+              "проверить: спецификация, детерминированная программа, контракт интерфейса. Отсюда стартует раздел.",
         cards=[
             ("file-text", "Точная спецификация / ТЗ",
              "Пред- и постусловия, инварианты, критерии приёмки (Z-нотация, TLA+, Design by "
@@ -2550,9 +3186,9 @@ def build_s_classic_rag(p):
     """§2.0 — классическая база раздела 2: классический информационный поиск."""
     build_classic_base(
         p, "s-classic-rag",
-        title="Как искали в тексте до эмбеддингов.",
-        intro="Буква R в RAG — retrieval, поиск: дисциплина с полувековой историей. Именно её "
-              "устройство определяет, где RAG работает, а где ломается.",
+        title="Что такое классический поиск: инвертированный индекс и BM25.",
+        intro="Буква R в RAG — retrieval, поиск. Это инвертированный индекс, булев отбор и "
+              "ранжирование BM25. Их устройство определяет, где RAG работает, а где ломается.",
         cards=[
             ("book-open", "Инвертированный индекс",
              "Для каждого слова — список документов, где оно встречается (машинный каталог). "
@@ -2578,9 +3214,9 @@ def build_s_classic_ft(p):
     """§3.0 — классическая база раздела 3: классическое машинное обучение."""
     build_classic_base(
         p, "s-classic-ft",
-        title="Как решали задачу ML до больших моделей.",
-        intro="Дообучение большой модели — не экзотика новой эпохи, а прямое продолжение "
-              "классической схемы transfer learning. Восстановим её с нуля.",
+        title="Что такое обучение модели: train/val/test и transfer learning.",
+        intro="Обучение под задачу — это размеченная выборка с эталоном, разбиение train/val/test и "
+              "перенос обучения (transfer learning) поверх предобученной модели. На этом стоит дообучение.",
         cards=[
             ("database", "Выборка + эталон",
              "Размеченный набор «вход → правильный ответ» (ground truth, эталонная разметка); "
@@ -2605,9 +3241,9 @@ def build_s_classic_agents(p):
     """§4.0 — классическая база раздела 4: классическая автоматизация."""
     build_classic_base(
         p, "s-classic-agents",
-        title="Управляемая автоматизация была задолго до агентов.",
-        intro="«Агент» звучит как изобретение эпохи больших моделей, но управляемая автоматизация "
-              "процессов — зрелая дисциплина. Без неё не оценить, что агент добавляет, а что ломает.",
+        title="Что такое управляющий цикл: конечный автомат, workflow-движки, OODA.",
+        intro="Управляемая автоматизация — это конечный автомат состояний, workflow-движки по "
+              "фиксированной схеме и управляющий цикл plan→act→check (OODA). На этом стоит агент.",
         cards=[
             ("waypoints", "Конечный автомат",
              "Набор состояний и правил перехода по событиям («создана → в обработке → закрыта»). "
@@ -2632,9 +3268,9 @@ def build_s_classic_framework(p):
     """§5.0 — классическая база раздела 5: классический выбор технологии."""
     build_classic_base(
         p, "s-classic-framework",
-        title="Как инженер выбирал технологию до AI-хайпа.",
-        intro="Сам выбор архитектуры — не новая AI-процедура, а прямое применение классических "
-              "принципов инженерного решения. На них и стоят лестница и чек-лист раздела.",
+        title="Что такое дисциплина выбора: KISS, YAGNI, наименьшая мощность.",
+        intro="Дисциплина выбора — это отбор технологии от требования, а не от инструмента: KISS, "
+              "YAGNI и принцип наименьшей мощности. На них стоят лестница и чек-лист раздела.",
         cards=[
             ("clipboard-list", "От требования, не от инструмента",
              "Требования-инжиниринг: сначала фиксируют, что система обязана делать, потом "
@@ -3043,6 +3679,113 @@ def build_s22a_multi(p):
     speaker_notes(s, load_notes("s22a_multi"))
 
 
+def build_s_agent_frameworks(p):
+    """WAVE 3 (§4.3c) — comparison-table: обзор фреймворков агентов по схеме
+    «ядро-абстракция · под что · один честный минус» + строка «ни одного —
+    обычный код». Comparison-table slide — БЕЗ мема. Версии volatile →
+    [VFY-day-of] в notes, НЕ на видимом слое."""
+    s = blank(p)
+    slide_title(s, "Фреймворк агента — абстракционный налог; берут под требование.", size=23)
+    text_box(s, 0.55, 1.08, 12.25, 0.44,
+             "Anthropic: многие паттерны — несколько строк прямых вызовов API; фреймворки скрывают исходные промпты и усложняют отладку. Разбор по устойчивой схеме, а не по маркетингу.",
+             size=12.5, italic=True, color=MID, line_spacing=1.14)
+    ocean_box(s, 0.40, 1.62, 12.55, 4.06)
+    tx, ty = 0.52, 1.72
+    headers = ["Фреймворк", "Ядро-абстракция", "Под что лучше всего", "Один честный минус"]
+    col_w = [2.55, 3.15, 3.30, 3.30]
+    rows = [
+        ("LangGraph", "stateful-граф", "продакшн: control flow, состояние, HITL", "крутая кривая; для одного цикла — переинжиниринг", False),
+        ("CrewAI", "ролевые «экипажи»", "быстрый роль-декомпозируемый прототип", "роль маскирует, что реально происходит; хрупкость мульти-агента"),
+        ("AutoGen → AG2", "разговор агентов", "исследование разговорных паттернов", "rename-churn (AutoGen → AG2 / MS Agent) — риск при внедрении"),
+        ("OpenAI Agents SDK", "handoffs", "лёгкие handoff + tracing на OpenAI", "OpenAI-центричность; persistence/RAG приносишь сам"),
+        ("Claude Agent SDK", "тот же loop, что Claude Code", "coding / computer-use, длинные задачи", "Claude-центричность; тяжёлый harness vs голый API"),
+        ("smolagents", "code-агенты (пишут Python)", "минимальный читаемый агент", "исполнение кода = поверхность атаки (нужен sandbox)"),
+        ("LlamaIndex agents", "агент поверх RAG-стека", "агент над вашими документами/данными", "центр тяжести — retrieval, не оркестрация"),
+        ("Pydantic AI", "type-safe agent loop", "валидированные выходы, типовые контракты", "молод; type-safety ортогонален оркестрации"),
+        ("НИ ОДНОГО", "обычный код + прямые вызовы API", "детерминированные шаги, ≤ пары вызовов LLM", "требует дисциплины «не тянуться к фреймворку авансом»", True),
+    ]
+    hh = 0.40
+    rh = (4.06 - 0.20 - hh) / len(rows)
+    cx = tx
+    for j, hd in enumerate(headers):
+        filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
+        text_box(s, cx + 0.10, ty, col_w[j] - 0.20, hh, hd,
+                 size=11, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+        cx += col_w[j]
+    yy = ty + hh
+    for ri, row in enumerate(rows):
+        isg = len(row) == 5 and row[4]
+        c0, c1, c2, c3 = row[0], row[1], row[2], row[3]
+        bgrow = GOLD_TINT if isg else (WHITE if ri % 2 == 0 else SURFACE)
+        cx = tx
+        for j, cc in enumerate([c0, c1, c2, c3]):
+            filled_rect(s, cx, yy, col_w[j], rh, bgrow,
+                        stroke=(GOLD if isg else SOFT_GREY),
+                        stroke_pt=(1.5 if isg else 0.5))
+            text_box(s, cx + 0.10, yy, col_w[j] - 0.20, rh, cc,
+                     size=9.5, bold=(j == 0 or isg), color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+            cx += col_w[j]
+        yy += rh
+    gold_callout(s, 0.55, 5.80, 12.25, 0.86,
+                 "Нижняя строка — не для полноты: детерминированный путь + известные шаги + чувствительность к стоимости → обычный код, без агента и без фреймворка. Это правило лестницы на уровне выбора инструмента: сложность оснастки оплачивается требованием задачи, а не берётся авансом.",
+                 size=12)
+    speaker_notes(s, load_notes("s-agent-frameworks"))
+
+
+def build_s_agent_when(p):
+    """WAVE 3 — meme-forward judgment: когда агент vs workflow из агентов.
+    Открытая/непредсказуемая → агент; предсказуемая → workflow; мульти-агент
+    только под конкретный триггер. Надёжность p^n + токен-множители 4×/15×.
+    Мем Clown — эскалация агентов без триггера → 36% надёжности."""
+    s = blank(p)
+    slide_title(s, "Агент — под открытую задачу; мульти-агент — только под триггер.", size=23)
+    text_box(s, 0.55, 1.08, 8.45, 0.66,
+             "Предсказуемая задача (шаги известны заранее) → workflow. Открытая, непредсказуемая, где ценность оправдывает кратную цену → агент. Несколько агентов — только под конкретный триггер, не «на всякий случай».",
+             size=12.5, italic=True, color=MID, line_spacing=1.16)
+    # LEFT — decision ladder (3 rungs) + reliability p^n baseline
+    lx, ly, lw = 0.55, 1.92, 8.45
+    rungs = [
+        ("route", "Предсказуемо → workflow", "последовательность шагов известна заранее; предопределённые в коде пути", TEAL),
+        ("bot", "Непредсказуемо → агент", "шаги зависят от промежуточных результатов; цена оправдана ценностью задачи", MID),
+        ("users", "Мульти-агент → только под триггер", "широко параллельные независимые подзадачи высокой ценности; иначе +15× токенов зря", GOLD),
+    ]
+    ry = ly
+    for ic, t, sub, col in rungs:
+        isg = (col == GOLD)
+        rh = 1.14
+        if isg:
+            ocean_box(s, lx, ry, lw, rh - 0.06, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, lx, ry, lw, rh - 0.06)
+        filled_rect(s, lx + 0.22, ry + 0.22, 0.62, 0.62, col, radius=True, radius_adj=0.18)
+        icon(s, ic, lx + 0.30, ry + 0.30, 0.46, "white")
+        text_box(s, lx + 1.02, ry + 0.14, lw - 1.2, 0.42, t,
+                 size=14.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, lx + 1.02, ry + 0.56, lw - 1.2, 0.48, sub,
+                 size=11.5, color=DEEP, line_spacing=1.10)
+        ry += rh
+    # reliability baseline strip
+    ocean_box(s, lx, ry + 0.02, lw, 0.86, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_runs(s, lx + 0.24, ry + 0.10, lw - 0.48, 0.72, [
+        {"text": "Надёжность = pⁿ: ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "0,95¹⁰ ≈ 60%, 0,95²⁰ ≈ 36%. ", "size": 12.5, "color": DEEP},
+        {"text": "Замер τ-bench: ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "GPT-4o 61% pass@1 → 25% pass@8 — стабильно на всех восьми лишь в четверти случаев.",
+         "size": 12.5, "color": DEEP},
+    ], line_spacing=1.16)
+    # RIGHT — Clown meme (thesis carrier)
+    mmx, mmy, mmw = 9.20, 1.92, 3.60
+    mmh = mmw * (798 / 750)
+    ocean_box(s, mmx, mmy, mmw, min(mmh, 3.90) + 0.02)
+    add_image(s, WEB / "s-agent-when-clown-ru.png", mmx + 0.10, mmy + 0.08,
+              mmw - 0.20, min(mmh, 3.90) - 0.14)
+    gold_callout(s, 0.55, 6.06, 12.25, 0.84,
+                 "Начинай с одного сильного агента. Мульти-агент покупает качество, сжигая токены (4× одиночный, 15× мульти относительно чата), а не «магией координации» — если задача не embarrassingly-parallel и не quality-over-cost, это неверный инструмент.",
+                 size=12)
+    speaker_notes(s, load_notes("s-agent-when"))
+
+
 def build_s23b(p):
     """case_study (§4.10) — каталог 10 КЛАССОВ провалов агентов таблицей:
     класс → кейс/дата → урок. Учебная единица — КЛАСС, не кейс. База: 188 из
@@ -3208,28 +3951,31 @@ def build_s28(p):
     Нижняя строка — «не ИИ вовсе». Gold-итог."""
     s = blank(p)
     slide_title(s, "Итог: механизм → его граница → что делать.", size=25)
-    ocean_box(s, 0.40, 1.20, 12.55, 5.06)
-    tx, ty = 0.52, 1.30
+    ocean_box(s, 0.40, 1.12, 12.55, 5.16)
+    tx, ty = 0.52, 1.20
     headers = ["Механизм", "Где ломается (граница)", "Что делать"]
     col_w = [3.05, 4.55, 4.70]
     rows = [
-        ("Промпт / роль", "роль-персона меняет тон, не точность", "точность — через контекст и RAG, не через «ты — эксперт»"),
+        ("Промпт / роль", "роль-персона меняет тон, не точность", "точность — через контекст и RAG, не «ты — эксперт»"),
         ("Chain-of-thought", "faithfulness низкая (~25–39%)", "проверяй результат, не самообъяснение"),
         ("RAG", "«вернул» ≠ «вернул правильное»", "опора на источник + метрики поиска + «не знаю» как норма"),
-        ("Дообучение / PEFT", "меняет поведение, не знание; забывание", "PEFT + петля проверки + версионирование; знание → RAG"),
-        ("Агентный цикл", "план→действие→проверка→повтор — 4 места отказа", "проверка против внешнего критерия; жёсткий потолок на цикл"),
-        ("Экипировка / память", "каждый слот — компромисс, не выигрыш", "добавляй слот под требование, с проверкой"),
+        ("Гибрид + reranking", "чистый вектор пропускает точные совпадения", "BM25 + вектор + RRF + reranking под требование, не по умолчанию"),
+        ("Векторная БД", "выделенная нужна не всегда", "≤ неск. млн чанков → pgvector / гибрид Elastic; спец-БД — под масштаб"),
+        ("Чанкинг", "semantic по хайпу; таблицы тихо разъезжаются", "recursive-512 как дефолт; таблицы — структурой, не расплющиванием"),
+        ("Дообучение / PEFT", "меняет поведение, не знание; забывание", "PEFT + петля проверки + версии; знание → RAG"),
+        ("Измерение обучения", "тренировка дёшева, eval — дорог и не решён", "held-out-clean + A/B; прирост на бенчмарке — гипотеза, не результат"),
+        ("Агент vs workflow", "агент там, где хватило бы workflow", "предсказуемо → один из 5 паттернов workflow; открыто → агент"),
         ("Мульти-агент", "pⁿ: 95%×10 ≈ 60%; +15× токенов", "один сильный агент по умолчанию"),
         ("Безопасность", "инъекция × широкие права; ZDR не всё", "наименьшие привилегии + карта данных по функции"),
         ("«Не ИИ вовсе»", "детерминированное + верифицируемое", "обычный код — дешевле, предсказуемее, аудируем", True),
     ]
-    hh = 0.46
-    rh = (5.06 - 0.20 - hh) / len(rows)
+    hh = 0.40
+    rh = (5.16 - 0.16 - hh) / len(rows)
     cx = tx
     for j, hd in enumerate(headers):
         filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
         text_box(s, cx + 0.12, ty, col_w[j] - 0.24, hh, hd,
-                 size=12.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+                 size=11.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
         cx += col_w[j]
     yy = ty + hh
     for ri, row in enumerate(rows):
@@ -3242,11 +3988,11 @@ def build_s28(p):
                         stroke=(GOLD if isgold else SOFT_GREY),
                         stroke_pt=(1.5 if isgold else 0.5))
             text_box(s, cx + 0.12, yy, col_w[j] - 0.24, rh, cc,
-                     size=11, bold=(j == 0 or isgold), color=DEEP,
-                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+                     size=9.5, bold=(j == 0 or isgold), color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
             cx += col_w[j]
         yy += rh
-    gold_callout(s, 0.55, 6.36, 12.25, 0.72,
+    gold_callout(s, 0.55, 6.42, 12.25, 0.68,
                  "Знать инструмент — значит знать его границы. Выбор архитектуры = найти самую нижнюю ступень, которая закрывает требование задачи.",
                  size=13.5, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s28"))
@@ -3293,34 +4039,52 @@ def main():
               f"totals {spec['totals'].get('slides')}")
 
     p = setup_pres()
-    # v5 (issue #185) presentation order — 51 slides (authoritative ordered
-    # list per deck-v5-inventory-draft §3; §9's "54" double-counted dividers).
+    # presentation order (WAVE 3 #196 — 67 slides, FINAL). §1 WAVE1, §2 WAVE2,
+    # §3/§4 WAVE3 (+s-ft-cost +s-ft-eval; CUT s22c/s22e, +s-agent-frameworks
+    # +s-agent-when; s19 TRIM, s22 REFRAME).
     #   R0: s01(meme) s02 s02a s03 s04   (s01b снят — #185/#312)
-    #   R1: s04a(div) s05 s05a s05c s05b s06 s07 s08 s08a
-    #   R2: s09(div) s10 s11 s12 s13
-    #   R3: s13a(div) s13b s15 s17 s14 s16
-    #   R4: s18(div) s19 s19b s20 s21 s22 s22a_multi s22b s22c s22d
-    #        s22e s25 s24 s25b s23 s23b s23c
-    #   R5: s25a(div) s26 s27 s27b s28 s29 s30 s31
+    #   R1: s04a(div) s-classic-prompt s05 s05c s05b s-fmt s06 s07 s08 s08a
+    #        s-task-assistant s-task-tone s-task-research s-task-extract
+    #   R2: s09(div) s-classic-rag s10 s-rag-hybrid s-rag-stack s-rag-elastic
+    #        s-rag-chunk1 s-rag-chunk2 s-rag-design s11 s12 s13
+    #   R3: s13a(div) s-classic-ft s13b s-ft-cost s15 s17 s14 s16 s-ft-eval
+    #   R4: s18(div) s-classic-agents s19 s19b s20 s21 s22 s-agent-frameworks
+    #        s-agent-when s22a_multi s22b s22d s25 s24 s25b s23 s23b s23c
+    #   R5: s25a(div) s-classic-framework s26 s27 s27b s28 s29 s30 s31
     # v5b (issue #185 WP8): +5 «классическая база» слайдов — по одному на
     # раздел §1–§5, сразу ПОСЛЕ дивайдера раздела, ПЕРЕД AI-частью. 51→56.
     builders = [
         # R0 — Открытие (5) — s01b снят (#185/#312): хук уже на s01,
         # Air Canada остаётся кейсом §2 (s13).
         build_s01, build_s02, build_s02a, build_s03, build_s04,
-        # R1 — Промпт (div + classic-base + 8)
-        build_s04a, build_s_classic_prompt, build_s05, build_s05a, build_s05c,
-        build_s05b, build_s06, build_s07, build_s08, build_s08a,
-        # R2 — RAG (div + classic-base + 4)
-        build_s09, build_s_classic_rag, build_s10, build_s11, build_s12, build_s13,
-        # R3 — Fine-tune (div + classic-base + 5)
-        build_s13a, build_s_classic_ft, build_s13b, build_s15, build_s17,
-        build_s14, build_s16,
-        # R4 — Агенты (div + classic-base + 16)
+        # R1 — Промпт (div + classic-base + 12) — WAVE 1 (#196):
+        # s05a REMOVED; +s_fmt +4 типовые задачи. Порядок §1:
+        # div → classic → s05 → s05c → s05b → s-fmt → s06 → s07 → s08 → s08a →
+        # task-assistant → task-tone → task-research → task-extract.
+        build_s04a, build_s_classic_prompt, build_s05, build_s05c, build_s05b,
+        build_s_fmt, build_s06, build_s07, build_s08, build_s08a,
+        build_s_task_assistant, build_s_task_tone, build_s_task_research,
+        build_s_task_extract,
+        # R2 — RAG (div + classic-base + 10) — WAVE 2 (#196): +6 RAG-слайдов
+        # между s10 и s11: hybrid → stack → elastic → chunk1 → chunk2 → design.
+        build_s09, build_s_classic_rag, build_s10,
+        build_s_rag_hybrid, build_s_rag_stack, build_s_rag_elastic,
+        build_s_rag_chunk1, build_s_rag_chunk2, build_s_rag_design,
+        build_s11, build_s12, build_s13,
+        # R3 — Fine-tune (div + classic-base + 7) — WAVE 3 (#196): +s-ft-cost
+        # (после s13b), +s-ft-eval (в конце §3). Порядок §3:
+        # div → classic → s13b → s-ft-cost → s15 → s17 → s14 → s16 → s-ft-eval.
+        build_s13a, build_s_classic_ft, build_s13b, build_s_ft_cost, build_s15,
+        build_s17, build_s14, build_s16, build_s_ft_eval,
+        # R4 — Агенты (div + classic-base + 16) — WAVE 3 (#196): CUT s22c/s22e;
+        # ADD s-agent-frameworks + s-agent-when (после s22a_multi). s22 REFRAME,
+        # s19 TRIM. Порядок §4: div → classic → s19 → s19b → s20 → s21 → s22 →
+        # s-agent-frameworks → s-agent-when → s22a_multi → s22b → s22d → s25 →
+        # s24 → s25b → s23 → s23b → s23c.
         build_s18, build_s_classic_agents, build_s19, build_s19b, build_s20,
-        build_s21, build_s22, build_s22a_multi, build_s22b, build_s22c,
-        build_s22d, build_s22e, build_s25, build_s24, build_s25b, build_s23,
-        build_s23b, build_s23c,
+        build_s21, build_s22, build_s_agent_frameworks, build_s_agent_when,
+        build_s22a_multi, build_s22b, build_s22d, build_s25, build_s24,
+        build_s25b, build_s23, build_s23b, build_s23c,
         # R5 — Фреймворк (div + classic-base + 7)
         build_s25a, build_s_classic_framework, build_s26, build_s27, build_s27b,
         build_s28, build_s29, build_s30, build_s31,
@@ -3328,18 +4092,23 @@ def main():
     # sid list — MUST match `builders` order 1:1 (display order, 55 slides).
     sids = [
         "s01", "s02", "s02a", "s03", "s04",
-        "s04a", "s-classic-prompt", "s05", "s05a", "s05c", "s05b", "s06",
-        "s07", "s08", "s08a",
-        "s09", "s-classic-rag", "s10", "s11", "s12", "s13",
-        "s13a", "s-classic-ft", "s13b", "s15", "s17", "s14", "s16",
+        "s04a", "s-classic-prompt", "s05", "s05c", "s05b",
+        "s-fmt", "s06", "s07", "s08", "s08a",
+        "s-task-assistant", "s-task-tone", "s-task-research", "s-task-extract",
+        "s09", "s-classic-rag", "s10",
+        "s-rag-hybrid", "s-rag-stack", "s-rag-elastic",
+        "s-rag-chunk1", "s-rag-chunk2", "s-rag-design",
+        "s11", "s12", "s13",
+        "s13a", "s-classic-ft", "s13b", "s-ft-cost", "s15", "s17", "s14",
+        "s16", "s-ft-eval",
         "s18", "s-classic-agents", "s19", "s19b", "s20", "s21", "s22",
-        "s22a_multi", "s22b", "s22c", "s22d", "s22e", "s25", "s24", "s25b",
-        "s23", "s23b", "s23c",
+        "s-agent-frameworks", "s-agent-when", "s22a_multi", "s22b", "s22d",
+        "s25", "s24", "s25b", "s23", "s23b", "s23c",
         "s25a", "s-classic-framework", "s26", "s27", "s27b", "s28", "s29",
         "s30", "s31",
     ]
-    assert len(builders) == 55, f"expected 55 builders, got {len(builders)}"
-    assert len(sids) == 55, f"expected 55 sids, got {len(sids)}"
+    assert len(builders) == 67, f"expected 67 builders, got {len(builders)}"
+    assert len(sids) == 67, f"expected 67 sids, got {len(sids)}"
 
     total = len(builders)
     inject_report = {}

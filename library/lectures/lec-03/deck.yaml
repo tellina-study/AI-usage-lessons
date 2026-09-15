@@ -37,9 +37,9 @@ deck:
   learning_outcomes: [LO7, LO4]
   language: ru
   status: final
-  version: v6.2
+  version: v6.3
   source: chapter v5.0 finalized + WAVE D1 §1/§2 + WAVE D2 §3/§4 rework (#196)
-  total_slides: 70
+  total_slides: 67
   curriculum_level: introductory
   deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]
 
@@ -122,7 +122,8 @@ glossary_lock:
 
 # ─────────────────────────────────────────────────────────────────────────
 # Cut-order (сжатие 100 → 90 → 75 мин) — из spec §8. Дивайдеры и keystone
-# (s01 s04 s26 s28) не режутся. s05c несокращаем (перенос #184).
+# (s01 s04 s26) не режутся; s26-лестница — замыкающий keystone-синтез
+# (s28 удалён v6 D3 #20). s05c несокращаем (перенос #184).
 # ─────────────────────────────────────────────────────────────────────────
 cut_order:
   to_90_min:  # снять ~10 мин

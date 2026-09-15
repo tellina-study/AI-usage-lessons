@@ -284,16 +284,8 @@ slides:
     chapter_ref: "§5.1 [for-slide-s26]"
     subtype: schema_layered
 
-  - id: s27
-    file: slides/s27-decision-matrix.md
-    type: process
-    section: "Раздел 5. Фреймворк решения"
-    duration_min: 3
-    assertion: "План решения — маршрут 8 вопросов сверху вниз; детерминированное+верифицируемое → код, СТОП"
-    learning_goal: "Flowchart маршрут выбора + worked example + mini-apply (§5.2)"
-    chapter_ref: "§5.2 [for-slide-s27]"
-    subtype: schema_pipeline
-    changed_in_v4: "ЗАМЕНА 7×7 матрицы на flowchart с да/нет-ветвлениями (§5.2)"
+  # v6 D3 (#196, owner #20): s27 (План решения) УДАЛЁН из дека.
+  # Builder build_s27 остаётся в build_v3.py как dead-код (не вызывается).
 
   - id: s27b
     file: slides/s27b-agent-starter-kit.md
@@ -306,28 +298,10 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §5.2b"
 
-  - id: s28
-    file: slides/s28-summary-table.md
-    type: summary
-    section: "Раздел 5. Фреймворк решения"
-    duration_min: 3
-    assertion: "Итоги-таблица «механизм → граница → что делать» по всем архитектурам + «не ИИ»"
-    learning_goal: "Сводная таблица (паттерн Лекции 2 s38), keystone-итог"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§5.3 [for-slide-s28]"
-    new_in_v5: "#185 — итоги-таблица механизм→граница→что делать"
-
-  - id: s29
-    file: slides/s29-human-validator-nanda.md
-    type: assertion_visual
-    section: "Раздел 5. Фреймворк решения"
-    duration_min: 1.5
-    assertion: "Агент делает — человек проверяет результат и факты; ~95% пилотов без ROI — дело в интеграции"
-    learning_goal: "Человек-валидатор + 3 измерения + урок MIT NANDA (§5.4)"
-    chapter_ref: "§5.4 [for-slide-s29]"
-    references: [mit-nanda-2025]
-    changed_in_v4: "#237 — 3 измерения: степень автономности / область доверия / непрерывный мониторинг"
-    verify_day_of: true
+  # v6 D3 (#196, owner #20): s28 (Итоги-таблица) и s29 (человек-валидатор +
+  # NANDA ~95%) УДАЛЕНЫ из дека. Builders build_s28/build_s29 остаются в
+  # build_v3.py как dead-код (не вызываются). s26 (лестница) — замыкающий
+  # синтез/keystone раздела.
 
   - id: s30
     file: slides/s30-bridge-homework-qa.md
@@ -355,14 +329,14 @@ slides:
 # by_section — v5-раскладка (issue #185), 51 слайд, актуализирована в polish-проходе v5.
 # Порядок соответствует сборке build_v3.py; PNG s-01…s-51 идут в этом порядке.
 totals:
-  slides: 70
+  slides: 67
   by_section:
     "Раздел 0. Открытие": [s01, s02, s02a, s03, s04]                             # 5 (s01b снят #312)
     "Раздел 1. Промпт": [s04a, s-classic-prompt, s05, s05c, s05b, s-fmt, s06, s07, s08, s08a, s-task-assistant, s-task-tone, s-task-extract]  # v6 D1 #196: div + classic + 11 (s-task-research relocated→§2; s-task-extract FORMAL JSON-spec no meme)
     "Раздел 2. RAG": [s09, s-classic-rag, s10, s-rag-hybrid, s-rag-stack, s-rag-elastic, s-rag-chunk1, s-rag-chunk2, s-rag-chunk3, s-rag-design, s-rag-cases, s-rag-research, s11, s12, s13]  # v6 D1 #196: div + classic + 13 (+chunk3 +cases +research relocated)
     "Раздел 3. Fine-tune": [s13a, s-classic-ft, s13b, s-ft-cost, s15, s17, s14, s16, s-ft-eval]  # v6 D2 #196: div + classic + 7 (s-ft-cost REFRAME размер-функция, s14 REFRAME дистилляция=дообучение, s-ft-eval FORMAL 6 методов no meme)
     "Раздел 4. Агенты": [s18, s-classic-agents, s21, s19, s19b, s20, s-mcp-api, s22, s-agent-frameworks, s-agent-when, s22a_multi, s22b, s22d, s25, s24, s25b, s-agent-cases, s23b, s23c]  # v6 D2 #196: s21 MOVED после classic (#13); +s-mcp-api (#14); +s-agent-cases (#18); −s23 (#17); div + classic + 17
-    "Раздел 5. Фреймворк": [s25a, s-classic-framework, s26, s27, s27b, s28, s29, s30, s31]  # div + classic + 7
+    "Раздел 5. Фреймворк": [s25a, s-classic-framework, s26, s27b, s30, s31]  # v6 D3 #196 #20: −s27/s28/s29; s26 (лестница) — замыкающий синтез/keystone; div + classic + 4
   duration_min_total: 103
   note: >
     v5b (issue #185): s01b снят (#312) — Air Canada остаётся кейсом §2 (s13);
@@ -384,9 +358,9 @@ totals:
 
 ai_failure_judgment:
   # strict-in слайды (failure / limitation / criterion «не ИИ» / альтернатива)
-  in_bucket_slides: [s01, s06, s08, s-fmt, s-task-tone, s-rag-elastic, s-rag-chunk2, s-rag-chunk3, s-rag-cases, s-rag-research, s12, s13, s14, s16, s-ft-cost, s-ft-eval, s-mcp-api, s22, s-agent-frameworks, s-agent-when, s22d, s-agent-cases, s25, s27, s29]
-  count: 25
-  share_by_slides: "25/71 ≈ 35,2% по слайдам (v6 D2 §4: −s23 (redundant, #17); +s-mcp-api «~25% реестра непригодны / >56% MCP-задач провалено / когда прямой API безопаснее» + s-agent-cases «Air Canada юр.ответственность + Operator ~38% + ITBench ~14% + был бы лучше workflow» — оба strict-in judgment/limitation)"
+  in_bucket_slides: [s01, s06, s08, s-fmt, s-task-tone, s-rag-elastic, s-rag-chunk2, s-rag-chunk3, s-rag-cases, s-rag-research, s12, s13, s14, s16, s-ft-cost, s-ft-eval, s-mcp-api, s22, s-agent-frameworks, s-agent-when, s22d, s-agent-cases, s25]
+  count: 23
+  share_by_slides: "23/67 ≈ 34,3% по слайдам (v6 D3 §5: −s27/s28/s29 (owner #20); s27 и s29 были strict-in — bucket 25→23, доля 34,3% всё ещё ≥30%; s26-лестница остаётся замыкающим keystone-синтезом раздела)"
   note: >
     Failure/judgment strict-in: Air Canada (s01), unfaithfulness (s06),
     context rot (s08), reasoning-tax формата (s-fmt), детекторы <80% (s-task-tone),
@@ -401,10 +375,11 @@ ai_failure_judgment:
     фреймворка» + 5 общих минусов (s-agent-frameworks), когда НЕ агент/мульти-агент
     p^n (s-agent-when), провал памяти (s22d), типовые кейсы «был бы лучше
     workflow?» + Air Canada/Operator/ITBench (s-agent-cases),
-    injection+безопасность (s25), нижняя плашка «код без ИИ» (s27),
-    NANDA ~95% (s29). v6 D2: −s23 (redundant, #17); +s-mcp-api +s-agent-cases
-    strict-in. Curriculum L1-L3 introductory — owner waiver на strict-in ≥30%
-    доступен; здесь порог 35,2% превышен и без waiver.
+    injection+безопасность (s25). v6 D3 (#20): удалены s27/s28/s29;
+    s27 (нижняя плашка «код без ИИ») и s29 (NANDA ~95%) были strict-in —
+    bucket 25→23, доля 34,3% всё ещё ≥30%. Curriculum L1-L3 introductory —
+    owner waiver на strict-in ≥30% доступен; здесь порог 34,3% превышен и без
+    waiver.
 
 verify_day_of_items:
   - s06_cot_faithfulness_percentages     # Claude 3.7 ~25% / DeepSeek R1 ~39%

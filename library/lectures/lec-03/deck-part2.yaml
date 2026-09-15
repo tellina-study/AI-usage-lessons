@@ -105,6 +105,19 @@ slides:
     subtype: meme_forward
     new_in_v4: "#196 WAVE 2 — RAG deepening (failure)"
 
+  - id: s-rag-chunk3
+    file: slides/s-rag-chunk3-base.md
+    type: case_study
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "Тихий провал чанкирования: наивная нарезка расплющивает таблицу в «голый ряд цифр» без заголовков — система не падает, а тихо отвечает неверно"
+    learning_goal: "Углубление чанкирования (owner #7): worked example с таблицей (провал → фикс), анафора, взаимодействия с пайплайном (§2.10)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.10 [for-slide-rag-chunk-worked] · [for-slide-rag-chunk-fail]"
+    references: [anthropic-2024-contextual, firecrawl-2026-chunking]
+    subtype: schema
+    new_in_v6: "v6 D1 #196 — 3-й слайд чанкирования (worked table example, failure)"
+
   - id: s-rag-design
     file: slides/s-rag-design-base.md
     type: process
@@ -117,6 +130,32 @@ slides:
     references: [redis-2026-rag-scale, futureagi-2026-metrics]
     subtype: checklist_schema
     new_in_v4: "#196 WAVE 2 — RAG deepening"
+
+  - id: s-rag-cases
+    file: slides/s-rag-cases-base.md
+    type: case_study
+    section: "Раздел 2. RAG"
+    duration_min: 3
+    assertion: "«RAG» в вакууме не существует — есть RAG под поддержку/код/договоры/enterprise; retrieval-дизайн выводится из природы данных, 2 кейса — «RAG был не тем инструментом»"
+    learning_goal: "Типовые RAG-архетипы (owner #9): 5 реальных задач → retrieval-дизайн → провал → baseline"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.12 [for-slide-rag-cases-intro] · [for-slide-rag-case-support] · [for-slide-rag-case-code] · [for-slide-rag-case-legal] · [for-slide-rag-case-enterprise]"
+    references: [barnett-2024-7fail, stanford-legalai, sourcegraph-search]
+    subtype: schema
+    new_in_v6: "v6 D1 #196 — новый слайд §2.12 (типовые RAG-кейсы)"
+
+  - id: s-rag-research
+    file: slides/s-rag-research-base.md
+    type: case_study
+    section: "Раздел 2. RAG"
+    duration_min: 2.5
+    assertion: "Deep research — это RAG + агентная петля + верификация цитат, а не «большой промпт»; типовой провал — фабрикация 3–13% ссылок (хуже поиска: 10,7% vs 4,8%)"
+    learning_goal: "Deep research как RAG-кейс E (owner #2, relocated из §1): reasoning-LLM + агентный цикл RAG + citation-verify"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.12 [for-slide-rag-case-deepresearch] · §1.10 [for-slide-task-boundary]"
+    references: [anthropic-2024-multiagent, citation-fabrication-2604]
+    subtype: meme_forward
+    new_in_v6: "v6 D1 #196 — deep research relocated §1→§2 как RAG-кейс"
 
   - id: s11
     file: slides/s11-when-rag-right.md
@@ -189,13 +228,14 @@ slides:
     type: comparison_table
     section: "Раздел 3. Fine-tune vs промпт vs RAG"
     duration_min: 2.5
-    assertion: "Тренировка дёшева и дешевеет; выбор — Full-FT / LoRA / QLoRA / не тренировать. LoRA — дефолт: <1% параметров, <$10, дешевле претрейна на ~7 порядков"
-    learning_goal: "Количественная ось стоимости обучения: деньги · данные · компьют · итерации · trainable-параметры (§3.6)"
+    assertion: "Стоимость обучения — функция размера модели: Full-FT VRAM ≈ 16–20 Б × N (растёт линейно), LoRA ≈ база + ε (почти плоско). LoRA — дефолт: <$10, дешевле претрейна на ~7 порядков"
+    learning_goal: "Количественная ось стоимости обучения как функция размера модели: VRAM · $ · компьют · скорость по 7B/13B/70B/405B (§3.6)"
     learning_outcomes: [LO7, LO4]
-    chapter_ref: "§3.6 [for-slide-ft-cost-table, ft-cost-baselines, ft-cost-when]"
+    chapter_ref: "§3.6 [for-slide-ft-cost-law, ft-cost-table, ft-cost-baselines, ft-cost-when]"
     subtype: comparison_table
     references: [thinkingmachines-lora, qlora-paper]
     new_in_v4: "#196 WAVE 3 — training economics (comparison-table, no meme)"
+    changed_in_v6d2: "#196 WAVE D2 owner #10 — REFRAME как функция размера модели; QLoRA снята из колонок → нота; несущий закон VRAM 16–20 Б × N"
 
   - id: s15
     file: slides/s15-peft-not-full-ft.md
@@ -225,12 +265,13 @@ slides:
     type: assertion_visual
     section: "Раздел 3. Fine-tune vs промпт vs RAG"
     duration_min: 2.5
-    assertion: "Дистилляция = отдельная техника (teacher FT + student distill), НЕ вид fine-tuning"
-    learning_goal: "Дистилляция как отдельная compression-техника (критерии перенесены на s17)"
-    chapter_ref: "§3.1, §3.3, §3.5 [for-slide-s14]"
-    subtype: schema_matrix
-    changed_in_v4: "MERGED старые s14+s17; P0 #227 — дистилляция = «fine-tune teacher + дистилляция student, две отдельные техники», НЕ вид fine-tuning"
+    assertion: "Дистилляция — это дообучение маленькой student-модели; отличается ЦЕЛЬЮ (матчить распределение teacher, soft logits) и ДАННЫМИ (генерирует teacher), а не тем, что «не обучение». DistilBERT −40%/97%, Alpaca 52k/<$600"
+    learning_goal: "Дистилляция как дообучение малой модели: две оси отличия + потолок способностей (провал) (§3.3)"
+    chapter_ref: "§3.3, §3.5 [for-slide-s-distill]"
+    subtype: schema_pipeline
+    changed_in_v4: "MERGED старые s14+s17; критерии → s17"
     changed_in_v5: "#185 — s14 сфокусирован на дистилляции; критерии → s17"
+    changed_in_v6d2: "#196 WAVE D2 owner #11 — REFRAME: дистилляция ЕСТЬ дообучение малой модели (v5-глава §3.3); отличие — цель+данные, не «не обучение». +DistilBERT/Alpaca +потолок способностей. Yoda-мем оставлен (точная иллюстрация)"
 
   - id: s16
     file: slides/s16-catastrophic-forgetting.md
@@ -247,13 +288,14 @@ slides:
     type: assertion_visual
     section: "Раздел 3. Fine-tune vs промпт vs RAG"
     duration_min: 2.5
-    assertion: "Оценка обучения дороже самого обучения и не решена: бенчмарки вводят в заблуждение (MMLU ~29%, GSM8K→GSM1k −13 п.п.); разрыв lab→prod ~37% — прирост на бенчмарке гипотеза, не результат"
-    learning_goal: "Как измерять результат обучения + границы пяти методов оценки (§3.7)"
+    assertion: "Оценка обучения дороже самого обучения и не решена: ни один из ШЕСТИ методов не самодостаточен (MMLU ~29%, GSM8K→GSM1k −13 п.п., судья позиция 75%, human κ≥0,6 $300–1200, BLEU r≈0,25–0,52); разрыв lab→prod ~37% — прирост на бенчмарке гипотеза, не результат"
+    learning_goal: "Как работает каждый из шести методов оценки: как работает · когда валиден · когда ломается · стоимость (§3.7)"
     learning_outcomes: [LO7, LO4]
-    chapter_ref: "§3.7 [for-slide-ft-eval-benchmarks, ft-eval-heldout, ft-eval-human, ft-eval-gap]"
-    subtype: meme_forward
+    chapter_ref: "§3.7 [for-slide-ft-eval-benchmarks, ft-eval-heldout, ft-eval-judge, ft-eval-human, ft-eval-task, ft-eval-ab, ft-eval-gap]"
+    subtype: comparison_table
     references: [benchmark-contamination, gsm1k]
-    new_in_v4: "#196 WAVE 3 — training evaluation (meme-forward failure/limitation)"
+    new_in_v4: "#196 WAVE 3 — training evaluation"
+    changed_in_v6d2: "#196 WAVE D2 owner #12 — DROP LeftExit meme (formal how-to per §5.10); 5 методов → 6 (добавлены LLM-судья + A/B); схема «как работает · когда валиден · когда ломается · стоимость»"
 
 # ─────────────────────────────────────────────────────────────────────────
 # КОНЕЦ PART 2. Слайды s18..s31 (Разделы 4-5) + totals → deck-part3.yaml.

@@ -37,9 +37,9 @@ deck:
   learning_outcomes: [LO7, LO4]
   language: ru
   status: final
-  version: v6.1
-  source: chapter v4.0 finalized + WAVE 1 §1 + WAVE 2 §2 RAG + WAVE 3 §3/§4 rework (#196)
-  total_slides: 67
+  version: v6.2
+  source: chapter v5.0 finalized + WAVE D1 §1/§2 + WAVE D2 §3/§4 rework (#196)
+  total_slides: 70
   curriculum_level: introductory
   deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]
 
@@ -341,29 +341,20 @@ slides:
     subtype: task_case
     new_in_v4: "WAVE 1 #196 — новый слайд §1.10 (текст заданным тоном)"
 
-  - id: s-task-research
-    file: slides/s-task-research.md
-    type: assertion_visual
-    section: "Раздел 1. Промпт и его границы"
-    duration_min: 2
-    assertion: "Deep research — агентный RAG + верификация цитат; провал — фабрикация цитат (3–13% URL; deep research хуже поиска: 10,7% vs 4,8%)"
-    learning_goal: "Типовая задача 3: агентный RAG + citation-verify; on-point провал — фейковые цитаты, связка с baseline"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§1.10 [for-slide-task-research]"
-    subtype: task_case
-    new_in_v4: "WAVE 1 #196 — новый слайд §1.10 (deep research)"
+  # s-task-research RELOCATED to §2 (owner #2) — deep research это RAG+agent-
+  # задача; теперь s-rag-research (RAG-кейс E) в deck-part2.yaml.
 
   - id: s-task-extract
     file: slides/s-task-extract.md
     type: assertion_visual
     section: "Раздел 1. Промпт и его границы"
     duration_min: 2
-    assertion: "Извлечение в JSON — единственный класс, где принуждение формата выхода помогает; constrained decoding даёт ~100% соответствия схеме"
-    learning_goal: "Типовая задача 4: constrained decoding / JSON mode; когда JSON помогает vs reasoning tax"
+    assertion: "«Попросить JSON» ≠ «задать контракт»: два уровня контроля (промпт ~80% / декодер ~100%), три способа задать схему, инвариант «валидный JSON ≠ правильные данные»"
+    learning_goal: "Типовая задача 4 (формально, без мема): как правильно давать JSON-спеку в промпте — GOOD-vs-BAD, reasoning tax, деградация сложной схемы"
     learning_outcomes: [LO7]
-    chapter_ref: "§1.9 [for-slide-prompt-format-json] · §1.10 [for-slide-task-summary]"
+    chapter_ref: "§1.10 [for-slide-task-json-frame] · [for-slide-task-json-howto] · [for-slide-task-json-goodbad] · [for-slide-task-json-guarantee]"
     subtype: task_case
-    new_in_v4: "WAVE 1 #196 — новый слайд §1.10 (структурированное извлечение)"
+    changed_in_v6: "v6 D1 #196 — переписан из мема в формальную JSON-спеку (owner #3)"
 
 # ─────────────────────────────────────────────────────────────────────────
 # КОНЕЦ PART 1. Слайды s09..s16 → deck-part2.yaml; s18..s31 → deck-part3.yaml.

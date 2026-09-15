@@ -26,4 +26,4 @@ new_in_v4: "#196 WAVE 2 — RAG deepening (failure)"
 
 Источники:
 [1] firecrawl — chunking benchmark (recursive-512 69% vs semantic 54%) — 7 стратегий на 50 статьях; semantic дал ~43-токенные фрагменты. https://www.firecrawl.dev/blog/best-chunking-strategies-rag [VFY-day-of]
-[2] Anthropic — Contextual Retrieval (таблицы — тихий провал retrieval) — расплющивание таблицы рушит связи строк/столбцов без ошибки — лечить структурой. https://www.anthropic.com/engineering/contextual-retrieval
+[2] firecrawl — chunking eval (recall@k в изоляции может врать) — recall@k 91,9% при 54% end-to-end ответов — оценивать chunking и через end-to-end. https://www.firecrawl.dev/blog/best-chunking-strategies-rag [VFY-day-of]

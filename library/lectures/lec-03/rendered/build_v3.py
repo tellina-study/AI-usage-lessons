@@ -1245,7 +1245,7 @@ def build_s_task_extract(p):
     сложной схемы, «валидный JSON ≠ правильные данные»). Формальный how-to →
     без мема (§5.10 formal-vs-meme)."""
     s = blank(p)
-    text_box(s, 0.55, 0.34, 12.25, 0.30, "ТИПОВАЯ ЗАДАЧА · 4 · извлечение / классификация",
+    text_box(s, 0.55, 0.34, 12.25, 0.30, "ТИПОВАЯ ЗАДАЧА · 3 · извлечение / классификация",
              size=12.5, bold=True, color=TEAL)
     slide_title(s, "Как правильно задать JSON-спеку в промпте.",
                 y=0.66, h=0.62, size=25)
@@ -1294,7 +1294,7 @@ def build_s_task_extract(p):
     # BAD
     bh = 0.98
     ocean_box(s, rx, ry, rw, bh)
-    text_box(s, rx + 0.20, ry + 0.09, 1.4, 0.26, "BAD", size=12, bold=True, color=SLATE)
+    text_box(s, rx + 0.20, ry + 0.09, 1.8, 0.26, "ПЛОХО", size=12, bold=True, color=SLATE)
     text_box(s, rx + 0.20, ry + 0.37, rw - 0.40, 0.54,
              "«Извлеки данные и верни JSON» — нет схемы, имён полей, типов, enum; модель обернёт в markdown и придумает поля.",
              size=10.5, color=DEEP, line_spacing=1.06)
@@ -1302,7 +1302,7 @@ def build_s_task_extract(p):
     gy = ry + bh + 0.14
     gh = 1.78
     ocean_box(s, rx, gy, rw, gh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    text_box(s, rx + 0.20, gy + 0.09, 1.4, 0.26, "GOOD", size=12, bold=True, color=DEEP)
+    text_box(s, rx + 0.20, gy + 0.09, 1.8, 0.26, "ХОРОШО", size=12, bold=True, color=DEEP)
     text_box(s, rx + 0.20, gy + 0.35, rw - 0.40, gh - 0.44,
              '"rating": number   // 1-5, дробное; null если нет\n'
              '"sentiment": string // one of [positive,neutral,negative]\n'
@@ -1511,7 +1511,7 @@ def build_s_rag_stack(p):
         ("boxes", "Qdrant", "vector-native без большой платформы, sparse + multi-vector", "крупный узел + кластер", LIGHT),
         ("layers", "Weaviate", "vector-native со встроенным гибридом (vector+BM25+фильтры)", "средне-крупный", LIGHT),
         ("package", "Milvus", "vector-native: 100M+ / миллиарды, тяжёлое горизонтальное масштабирование", "миллиарды (нужна эксплуатация)", LIGHT),
-        ("git-branch", "FAISS · Chroma · LanceDB", "FAISS — библиотека (persistence на вас); Chroma/LanceDB — прототип/edge", "от прототипа до embedded", LIGHT),
+        ("git-branch", "FAISS · Chroma · LanceDB", "FAISS — библиотека (хранение на вас); Chroma/LanceDB — прототип/edge", "от прототипа до embedded", LIGHT),
     ]
     ry = hy + 0.40
     rh = 0.62
@@ -1673,21 +1673,21 @@ def build_s_rag_chunk2(p):
         ("NAACL 2025 Findings", "≈ или хуже", "«издержки не оправданы стабильным приростом»: fixed 200-word на уровне semantic или лучше", DEEP),
     ]
     sy = my0
-    sh = 1.02
+    sh = 0.98
     for label, num, body, col in studies:
         ocean_box(s, rx, sy, rw, sh)
         text_box(s, rx + 0.22, sy + 0.11, rw - 2.0, 0.30, label,
                  size=11.5, bold=True, color=col)
         text_box(s, rx + rw - 1.9, sy + 0.08, 1.8, 0.36, num,
                  size=17, bold=True, color=GOLD, align=PP_ALIGN.RIGHT)
-        text_box(s, rx + 0.22, sy + 0.44, rw - 0.44, sh - 0.52, body,
-                 size=11, color=DEEP, line_spacing=1.08)
-        sy += sh + 0.12
-    # вывод — как выбрать (gold)
-    gy = sy + 0.02
+        text_box(s, rx + 0.22, sy + 0.42, rw - 0.44, sh - 0.50, body,
+                 size=11, color=DEEP, line_spacing=1.06)
+        sy += sh + 0.10
+    # вывод — как выбрать (gold) — приподнят gap, укорочен текст (fix #1)
+    gy = sy + 0.08
     gold_callout(s, rx, gy, rw, my0 + mh0 - gy,
-                 "Один приём и выигрывает 74 пункта (клиника), и проигрывает 15 (общий корпус) — потому что разные корпуса, метрики и итоговый размер чанка. Дефолт — recursive fixed-size; усложнять стратегию только под измеренный на СВОИХ данных разрыв, а не по чужому бенчмарку.",
-                 size=12)
+                 "Один приём и выигрывает 74 пункта (клиника), и проигрывает 15 (общий корпус): корпуса, метрики и размер чанка разные. Дефолт — recursive fixed-size; усложнять только под разрыв, измеренный на СВОИХ данных.",
+                 size=11.5)
     footer(s, "Recall@k в изоляции может врать (91,9% recall при 54% ответов) — мерить и end-to-end accuracy; следующий слайд — как это ломается тихо.")
     speaker_notes(s, load_notes("s-rag-chunk2"))
 
@@ -1732,7 +1732,7 @@ def build_s_rag_chunk3(p):
              "«Модель X-500 | Напряжение 480 |\n Ток 8.5 | Момент 34»",
              size=11, bold=True, color=DEEP, font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
     text_box(s, ax + 0.22, ty + 1.58, half - 0.44, 0.64,
-             "Каждая строка самодостаточна; + parent-document для текста, + метаданные {модель, тип, версия}. Самый большой выигрыш дала не «умная» нарезка, а уважение структуры.",
+             "Каждая строка самодостаточна; + parent-document для текста, + метаданные {модель, тип, версия}. Основной выигрыш дало не «умную» нарезку, а уважение структуры.",
              size=10.5, color=DEEP, line_spacing=1.06)
     # ── ещё два тихих провала + взаимодействия с пайплайном ──
     fy = ty + thh + 0.14
@@ -1837,7 +1837,7 @@ def build_s_rag_cases(p):
     rows = [
         ("message-circle", "Поддержка / внутр. база", "kapa.ai, Stripe Assistant",
          "смысл. границы + гибрид + реранк; дельта-обновление",
-         "«backoff» ≈ «dead-letter» → неверная политика; гибрид ловит точный терм + порог отказа", MID),
+         "«откат-повтор» ≈ «очередь недоставленных» → неверная политика; гибрид ловит точный терм + порог отказа", MID),
         ("file-text", "Q&A по документации", "Vercel AI SDK docs-copilot",
          "нарезка по секциям; ответ с источником ИЛИ отказ; оценка в CI",
          "цитирует старую версию API / выдумывает параметр; свежесть + набор для оценки как воротца", LIGHT),
@@ -1920,7 +1920,7 @@ def build_s_rag_research(p):
              size=12.5, bold=True, color=DEEP)
     text_runs(s, rx + 0.24, py2 + 0.46, rw - 0.48, 0.90, [
         {"text": "3–13% URL сфабрикованы", "size": 11.5, "bold": True, "color": DEEP},
-        {"text": " (в retrieval-augmented режиме); DRACO: лучший результат ~65% качества цитат. Контринтуитивно: deep research хуже обычного поиска — ", "size": 11.5, "color": DEEP},
+        {"text": " (в retrieval-augmented режиме); DRACO: верхний результат ~65% качества цитат. Контринтуитивно: deep research хуже обычного поиска — ", "size": 11.5, "color": DEEP},
         {"text": "10,7% против 4,8%", "size": 11.5, "bold": True, "color": DEEP},
         {"text": " фейковых цитат на запрос, потому что генерирует их кратно больше.", "size": 11.5, "color": DEEP},
     ], line_spacing=1.10)
@@ -2437,18 +2437,18 @@ def build_s19(p):
         text_box(s, ex + 0.40, ly + 2.10, 1.5, 0.24, dt, size=11, bold=True, italic=True, color=LIGHT)
         if i < 2:
             text_box(s, ex + 1.66, ly + 1.92, 0.22, 0.3, "→", size=13, bold=True, color=LIGHT)
-    # BOTTOM — trust turn (2 load-bearing points)
+    # BOTTOM — что это меняет (MCP-как-концепт) + forward pointer на безопасность
     ty2, th = 4.70, 1.14
     ocean_box(s, 0.55, ty2, 12.25, th, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    icon(s, "shield-alert", 0.80, ty2 + 0.20, 0.44, "teal")
+    icon(s, "puzzle", 0.80, ty2 + 0.20, 0.44, "teal")
     text_box(s, 1.40, ty2 + 0.16, 11.1, 0.40,
-             "Поворот доверия: стандартизация подключения ≠ безопасность подключаемого — и усугубляет проблему доверия.",
+             "Что это меняет: модель встраивается через structured output и tool use, а MCP превращает N×M интеграций в N+M.",
              size=13.5, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
     for i, w in enumerate([
-        "MCP-сервер = чужой код в вашем окружении и доступ к данным",
-        "описание сервера попадает в контекст — носитель инъекции в промпт"]):
+        "structured output + tool use: модель возвращает намерение, код исполняет",
+        "MCP — стандарт подключения; его безопасность — на слайде про MCP"]):
         circle(s, 0.84 + i * 6.15, ty2 + 0.74 + 0.05, 0.11, TEAL)
-        text_box(s, 1.06 + i * 6.15, ty2 + 0.66, 5.85, 0.44, w,
+        text_box(s, 1.06 + i * 6.15, ty2 + 0.66, 5.70, 0.44, w,
                  size=12, color=DEEP, line_spacing=1.08, anchor=MSO_ANCHOR.MIDDLE)
     gold_callout(s, 0.55, 6.00, 12.25, 0.78,
                  "Модель-компонент и MCP делают подключение удобным, но ни один механизм не делает модель надёжнее — правило лестницы не отменяется. Удобство подключения — не аргумент за подключение.",
@@ -3940,20 +3940,21 @@ def build_s_mcp_api(p):
         text_box(s, 7.30, yy, 5.30, 0.42, it, size=10.5, color=DEEP,
                  line_spacing=1.06)
         yy += 0.46
-    # corrected stats strip
+    # corrected stats strip (fix #4: без повтора 43%/82% — только уникальные
+    # MCP-Universe цифры + краткая ссылка на слайд про безопасность MCP)
     ocean_box(s, 0.55, 5.42, 12.25, 0.66)
     stats = [
         ("~25%", "серверов реестра непригодны (пол, не потолок)"),
-        ("43,7%", "лучший результат на MCP-Universe (>56% задач провалено)"),
-        ("43%", "command injection у проверенных серверов"),
-        ("82%", "path traversal у 2 614 реализаций"),
+        ("43,7%", "верхний результат на MCP-Universe (>56% задач провалено)"),
+        ("+риск", "injection / path-traversal — см. слайд про MCP (поворот доверия)"),
     ]
     sx = 0.80
+    colw = 12.25 / 3
     for big, sub in stats:
-        text_box(s, sx, 5.50, 1.15, 0.30, big, size=17, bold=True, color=TEAL)
-        text_box(s, sx, 5.80, 2.95, 0.26, sub, size=8.5, color=DEEP,
+        text_box(s, sx, 5.50, 1.35, 0.30, big, size=17, bold=True, color=TEAL)
+        text_box(s, sx, 5.80, colw - 0.30, 0.26, sub, size=8.5, color=DEEP,
                  line_spacing=1.0)
-        sx += 3.06
+        sx += colw
     gold_callout(s, 0.55, 6.18, 12.25, 0.62,
                  "Правило: MCP — стандарт интероперабельности, а не апгрейд производительности. Пропустить MCP для одного агента с одним инструментом — правильное инженерное суждение, не срезанный угол (то же правило лестницы, §5.1).",
                  size=11.5)
@@ -3995,30 +3996,40 @@ def build_s22a_multi(p):
     filled_rect(s, lx + 0.24, pb + 0.04, lw - 0.48, 0.86, GOLD_TINT,
                 stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.08)
     text_box(s, lx + 0.40, pb + 0.10, lw - 0.78, 0.74,
-             "95% на шаг звучит надёжно — но 0,95¹⁰ ≈ 0,60. Больше агентов = больше шагов = ниже общая надёжность.",
+             "95% на шаг звучит надёжно — но 0,95¹⁰ ≈ 0,60, 0,95²⁰ ≈ 0,36. Больше агентов = больше шагов = ниже общая надёжность.",
              size=11.5, color=DEEP, line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
-    # RIGHT — topology + Anthropic quote
+    # RIGHT — τ-bench (замер pⁿ вживую) + топология Kim et al.
     rx, rw = 6.75, 6.05
     ocean_box(s, rx, ly, rw, 1.46, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     text_box(s, rx + 0.24, ly + 0.14, rw - 0.48, 0.36,
-             "Топология решает: координатор > рой", size=14, bold=True,
+             "τ-bench: pⁿ, измеренный вживую", size=14, bold=True,
              color=TEAL)
     text_runs(s, rx + 0.24, ly + 0.58, rw - 0.48, 0.80, [
-        {"text": "«Рой» равноправных агентов амплифицирует ошибки ", "size": 12,
-         "color": DEEP},
-        {"text": "17,2×", "size": 16, "bold": True, "color": TEAL},
-        {"text": ";  один координатор — только ", "size": 12, "color": DEEP},
-        {"text": "4,4×", "size": 16, "bold": True, "color": MID},
-        {"text": " (Zartis/Redis).", "size": 12, "color": DEEP},
+        {"text": "GPT-4o ", "size": 12, "color": DEEP},
+        {"text": "61%", "size": 16, "bold": True, "color": TEAL},
+        {"text": " pass@1 → ", "size": 12, "color": DEEP},
+        {"text": "25%", "size": 16, "bold": True, "color": MID},
+        {"text": " pass@8: стабильно на всех восьми прогонах лишь в четверти случаев.", "size": 12, "color": DEEP},
     ], line_spacing=1.18)
-    ocean_box(s, rx, ly + 1.58, rw, 1.70)
-    icon(s, "message-circle", rx + 0.24, ly + 1.76, 0.42, "mid")
-    text_box(s, rx + 0.24, ly + 2.24, rw - 0.48, 0.94,
-             "Anthropic дословно: «multi-agent works mainly because it helps spend enough tokens to solve the problem» — выигрыш от объёма токенов, не от «магии координации».",
-             size=12, italic=True, color=DEEP, line_spacing=1.16)
+    ocean_box(s, rx, ly + 1.58, rw, 0.98)
+    text_box(s, rx + 0.24, ly + 1.68, rw - 0.48, 0.30,
+             "Топология решает: координатор > рой", size=12.5, bold=True, color=DEEP)
+    text_runs(s, rx + 0.24, ly + 2.02, rw - 0.48, 0.48, [
+        {"text": "«Рой» равноправных агентов амплифицирует ошибки ", "size": 11,
+         "color": DEEP},
+        {"text": "17,2×", "size": 15, "bold": True, "color": TEAL},
+        {"text": ", один координатор — только ", "size": 11, "color": DEEP},
+        {"text": "4,4×", "size": 15, "bold": True, "color": MID},
+        {"text": " (Kim et al., 2512.08296).", "size": 11, "color": DEEP},
+    ], line_spacing=1.12)
+    ocean_box(s, rx, ly + 2.68, rw, 0.60)
+    icon(s, "message-circle", rx + 0.24, ly + 2.80, 0.34, "mid")
+    text_box(s, rx + 0.70, ly + 2.76, rw - 0.94, 0.46,
+             "Anthropic: выигрыш «because it helps spend enough tokens» — от объёма токенов, не от «магии координации».",
+             size=10.5, italic=True, color=DEEP, line_spacing=1.08)
     gold_callout(s, 0.55, 5.22, 12.25, 1.02,
-                 "Что делать: начинай с одного сильного агента. Мульти-агент — только если задача распадается на ШИРОКО параллельные независимые подзадачи высокой ценности; иначе +15× токенов и координационные издержки не окупятся.",
-                 size=13)
+                 "Что делать: начинай с одного сильного агента. Цена растёт кратно — одиночный ≈ 4× токенов чата, мульти ≈ 15×. Мульти-агент — только если задача распадается на ШИРОКО параллельные независимые подзадачи высокой ценности; иначе +15× токенов и координационные издержки не окупятся.",
+                 size=12.5)
     speaker_notes(s, load_notes("s22a_multi"))
 
 
@@ -4054,12 +4065,12 @@ def build_s_agent_frameworks(p):
     headers = ["Фреймворк", "Ядро-абстракция", "Под что подходит", "Один честный минус"]
     col_w = [2.55, 3.15, 3.30, 3.30]
     rows = [
-        ("LangGraph", "stateful-граф", "продакшн: control flow, состояние, HITL", "крутая кривая; для одного цикла — переинжиниринг", False),
+        ("LangGraph", "stateful-граф", "продакшн: поток управления, состояние, human-in-the-loop", "крутая кривая; для одного цикла — переинжиниринг", False),
         ("CrewAI", "ролевые «экипажи»", "быстрый роль-декомпозируемый прототип", "роль маскирует, что реально происходит; хрупкость мульти-агента"),
         ("AutoGen → AG2", "разговор агентов", "исследование разговорных паттернов", "частые переименования (AutoGen → AG2 / MS Agent) — риск при внедрении"),
-        ("OpenAI Agents SDK", "handoffs", "лёгкие handoff + tracing на OpenAI", "OpenAI-центричность; persistence/RAG приносишь сам"),
+        ("OpenAI Agents SDK", "handoffs (передача)", "лёгкая передача задач + трассировка на OpenAI", "OpenAI-центричность; сохранение состояния/RAG приносишь сам"),
         ("Claude Agent SDK", "тот же loop, что Claude Code", "coding / computer-use, длинные задачи", "Claude-центричность; тяжёлый harness vs голый API"),
-        ("smolagents", "code-агенты (пишут Python)", "минимальный читаемый агент", "исполнение кода = поверхность атаки (нужен sandbox)"),
+        ("smolagents", "code-агенты (пишут Python)", "минимальный читаемый агент", "исполнение кода = поверхность атаки (нужна песочница)"),
         ("LlamaIndex agents", "агент поверх RAG-стека", "агент над вашими документами/данными", "центр тяжести — retrieval, не оркестрация"),
         ("Pydantic AI", "type-safe agent loop", "валидированные выходы, типовые контракты", "молод; type-safety ортогонален оркестрации"),
         ("НИ ОДНОГО", "обычный код + прямые вызовы API", "детерминированные шаги, ≤ пары вызовов LLM", "требует дисциплины «не тянуться к фреймворку авансом»", True),
@@ -4126,33 +4137,29 @@ def build_s_agent_when(p):
         text_box(s, lx + 0.94, ry + 0.58, lw - 1.1, 0.50, sub,
                  size=10.5, color=DEEP, line_spacing=1.08)
         ry += rh
-    # reliability p^n strip under ladder
+    # pointer strip under ladder — детальные числа надёжности на следующем слайде
     ocean_box(s, lx, ry + 0.02, lw, 0.94, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     text_runs(s, lx + 0.22, ry + 0.10, lw - 0.44, 0.80, [
-        {"text": "Надёжность = pⁿ: ", "size": 12, "bold": True, "color": TEAL},
-        {"text": "0,95¹⁰ ≈ 60%, 0,95²⁰ ≈ 36%. Замер τ-bench: GPT-4o 61% pass@1 → 25% pass@8 — стабильно на всех восьми лишь в четверти случаев (pⁿ, измеренный вживую).",
+        {"text": "Почему «только под триггер»: ", "size": 12, "bold": True, "color": TEAL},
+        {"text": "надёжность цепочки падает как pⁿ — каждый лишний шаг перемножает вероятность успеха, а не усредняет. Числа и замеры — на следующем слайде.",
          "size": 11, "color": DEEP},
     ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
-    # RIGHT — topology + Cognition/Anthropic reconciliation
+    # RIGHT — Cognition/Anthropic reconciliation (концептуально, без чисел-множителей)
     rx, rw = 7.05, 5.75
     ocean_box(s, rx, ly, rw, 1.42, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
     text_box(s, rx + 0.22, ly + 0.10, rw - 0.44, 0.32,
              "Топология — не деталь: рой vs координатор", size=12.5, bold=True, color=DEEP)
-    text_runs(s, rx + 0.22, ly + 0.48, rw - 0.44, 0.86, [
-        {"text": "Децентрализованный «рой» равноправных агентов амплифицирует ошибки ", "size": 10.5, "color": DEEP},
-        {"text": "17,2×", "size": 15, "bold": True, "color": TEAL},
-        {"text": ", один координатор — только ", "size": 10.5, "color": DEEP},
-        {"text": "4,4×", "size": 15, "bold": True, "color": MID},
-        {"text": " (Kim et al., 2512.08296). Больше связей = быстрее коллапс.", "size": 10.5, "color": DEEP},
-    ], line_spacing=1.12)
+    text_box(s, rx + 0.22, ly + 0.48, rw - 0.44, 0.86,
+             "Децентрализованный «рой» равноправных агентов амплифицирует ошибки заметно сильнее, чем один координатор: больше связей = быстрее коллапс. Выбор топологии решает исход раньше выбора модели.",
+             size=10.5, color=DEEP, line_spacing=1.12)
     ocean_box(s, rx, ly + 1.52, rw, 1.66)
     text_box(s, rx + 0.22, ly + 1.62, rw - 0.44, 0.32,
              "Cognition vs Anthropic — примирение:", size=12.5, bold=True, color=MID)
     text_box(s, rx + 0.22, ly + 1.98, rw - 0.44, 1.14,
-             "Anthropic: мульти-агент выигрывает research-задачи. Cognition: «не стройте мульти-агентов». Противоречия нет: параллельте независимые ЧТЕНИЯ (поиск вширь), но не РЕШЕНИЯ с зависимостями — там субагенты принимают конфликтующие неявные выборы. Anthropic дословно: выигрыш «because it helps spend enough tokens», а не от магии координации.",
+             "Anthropic: мульти-агент выигрывает research-задачи. Cognition: «не стройте мульти-агентов». Противоречия нет: параллельте независимые ЧТЕНИЯ (поиск вширь), но не РЕШЕНИЯ с зависимостями — там субагенты принимают конфликтующие неявные выборы.",
              size=10, color=DEEP, line_spacing=1.10)
     gold_callout(s, 0.55, 6.06, 12.25, 0.84,
-                 "Начинай с одного сильного агента. Мульти-агент покупает качество, сжигая токены (одиночный ≈ 4× чата, мульти ≈ 15×) — если задача не распадается на широко-параллельные независимые чтения и ценность не оправдывает кратную цену, это неверный инструмент.",
+                 "Начинай с одного сильного агента. Мульти-агент оправдан, только если задача распадается на широко-параллельные независимые чтения и ценность оправдывает кратную цену; иначе это неверный инструмент.",
                  size=11.5)
     speaker_notes(s, load_notes("s-agent-when"))
 
@@ -4173,7 +4180,7 @@ def build_s_agent_cases(p):
         ("Coding-агент\n(Claude Code / Cursor)", "читать репо → план → правки → тесты → PR", "большие рефакторинги; тихие неверные правки; петля на «мигающих» тестах", "Нет — открытый поиск по коду требует агентности", TEAL),
         ("Клиентская поддержка\n(Air Canada · Klarna)", "классифицировать → достать политику → решить/эскалировать", "Air Canada: бот выдумал политику → трибунал взыскал. Klarna: «−700 агентов» → вернули людей", "Часто ДА для риск-части: детерминированная маршрутизация + guardrails", GOLD),
         ("ETL / data-pipeline", "заметить дрейф схемы → пропатчить → провалидировать → применить", "тихие плохие преобразования на масштабе; недетерминизм в аудируемом пайплайне", "В основном ДА: ствол детерминирован, агент — на край починки дрейфа", GOLD),
-        ("Research-агент\n(Deep Research)", "план под-вопросов → веером искать → синтез → цитаты", "взрыв стоимости ~15× токенов; галлюцинированные цитаты; поверхностная агентность", "Нет для открытого «вширь»; ДА если это фиксированный lookup", MID),
+        ("Research-агент\n(Deep Research)", "план под-вопросов → веером искать → синтез → цитаты", "взрыв стоимости ~15× токенов; галлюцинированные цитаты; поверхностная агентность", "Нет для открытого «вширь»; ДА если это фиксированный поиск по ключу", MID),
         ("Браузер / Operator", "скриншот/DOM → план UI-действия → клик → наблюдать", "OSWorld ~38% (1-е поколение); ~1 задача из 5 проваливается; Operator ЗАКРЫТ", "Для значимых действий (платежи) ДА — используй реальный API", MID),
         ("SRE / ops-агент\n(ITBench)", "телеметрия → гипотеза → дашборд → предложить фикс", "ITBench: ~14% SRE-сценариев решаются автономно — сузить поиск, не заменить человека", "Для ИСПРАВЛЕНИЯ ДА: workflow + подтверждение; агент — на расследование", MID),
     ]

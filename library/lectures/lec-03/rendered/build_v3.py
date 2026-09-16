@@ -1414,52 +1414,52 @@ def build_s_rag_hybrid(p):
     s = blank(p)
     slide_title(s, "«Гибрид» — три разных смысла на общей базе.", y=0.40, h=0.60, size=25)
     # ── recap sparse ↔ dense (grounds «гибрид чего с чем») ──
-    rcy = 1.06
+    rcy = 1.02
     hw = (12.25 - 0.20) / 2
-    ocean_box(s, 0.55, rcy, hw, 0.80)
-    text_runs(s, 0.75, rcy + 0.10, hw - 0.36, 0.62, [
-        {"text": "Разреженный (sparse): ", "size": 11.5, "bold": True, "color": MID},
-        {"text": "BM25 / SPLADE — измерение = слово, инвертированный индекс, интерпретируем, ловит точную лексику.", "size": 11.5, "color": DEEP},
-    ], line_spacing=1.06)
-    ocean_box(s, 0.75 + hw, rcy, hw, 0.80, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.75)
-    text_runs(s, 0.95 + hw, rcy + 0.10, hw - 0.36, 0.62, [
-        {"text": "Плотный (dense): ", "size": 11.5, "bold": True, "color": TEAL},
-        {"text": "эмбеддинги — все значения float, ANN-индекс, не интерпретируем, ловит смысл и перифразу.", "size": 11.5, "color": DEEP},
-    ], line_spacing=1.06)
+    ocean_box(s, 0.55, rcy, hw, 1.14)
+    text_runs(s, 0.75, rcy + 0.10, hw - 0.36, 0.96, [
+        {"text": "Разреженный (sparse) = классический лексический поиск: ", "size": 11.5, "bold": True, "color": MID},
+        {"text": "BM25 / TF-IDF (и learned-sparse SPLADE / ELSER) на инвертированном индексе; измерение = слово. «Разреженный вектор» — это лишь запись пословного поиска (во весь словарь, почти все нули); это НЕ поиск смысла по вектору.", "size": 11.5, "color": DEEP},
+    ], line_spacing=1.02)
+    ocean_box(s, 0.75 + hw, rcy, hw, 1.14, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.75)
+    text_runs(s, 0.95 + hw, rcy + 0.10, hw - 0.36, 0.96, [
+        {"text": "Плотный (dense) = семантический эмбеддинг (≠ разреженный): ", "size": 11.5, "bold": True, "color": TEAL},
+        {"text": "384–1024 значения float, ANN-индекс, не интерпретируем, ловит смысл и перифразу.", "size": 11.5, "color": DEEP},
+    ], line_spacing=1.02)
     # ── 3 смысла «гибрида» ──
-    ty = 1.98
+    ty = 2.24
     senses = [
-        ("(а) лексика + плотные", "BM25 + векторы, слиты по рангам (RRF) — базовый смысл слова «гибрид»", MID),
+        ("(а) лексика + смысл", "разреженный (лексика, BM25) + плотный (смысл, эмбеддинг), слиты по рангам (RRF) — базовый смысл слова «гибрид»", MID),
         ("(б) смысл + фильтры", "семантика + строгий отбор по метаданным (юрисдикция, дата) — ортогональный рычаг", TEAL),
-        ("(в) sparse + sparse-learned", "BM25 + SPLADE/ELSER — обе ветки разреженные, одна «умная»", LIGHT),
+        ("(в) две лексические ветви", "BM25 + SPLADE/ELSER — обе разреженные (классика + нейро-взвешенная), без dense-векторов смысла", LIGHT),
     ]
     sw = (12.25 - 0.24 * 2) / 3
     sx = 0.55
     for nm, body, col in senses:
-        ocean_box(s, sx, ty, sw, 0.94)
-        filled_rect(s, sx + 0.16, ty + 0.14, 0.10, 0.66, col, radius=True, radius_adj=0.4)
+        ocean_box(s, sx, ty, sw, 1.00)
+        filled_rect(s, sx + 0.16, ty + 0.14, 0.10, 0.72, col, radius=True, radius_adj=0.4)
         text_box(s, sx + 0.36, ty + 0.11, sw - 0.52, 0.30, nm,
                  size=11.5, bold=True, color=DEEP)
-        text_box(s, sx + 0.36, ty + 0.41, sw - 0.52, 0.48, body,
-                 size=10.5, color=DEEP, line_spacing=1.04)
+        text_box(s, sx + 0.36, ty + 0.41, sw - 0.52, 0.56, body,
+                 size=10.5, color=DEEP, line_spacing=1.03)
         sx += sw + 0.24
     # ── механика смысла (а): RRF-слияние + реранкер (сохранена) ──
-    py = 3.10
+    py = 3.36
     mw = (12.25 - 0.20) / 2
-    ocean_box(s, 0.55, py, mw, 1.14)
-    icon(s, "git-merge", 0.78, py + 0.18, 0.40, "mid")
-    text_box(s, 1.30, py + 0.16, mw - 1.0, 0.34, "Слияние RRF", size=14, bold=True, color=DEEP)
-    text_box(s, 0.78, py + 0.56, mw - 0.46, 0.50,
+    ocean_box(s, 0.55, py, mw, 1.02)
+    icon(s, "git-merge", 0.78, py + 0.16, 0.38, "mid")
+    text_box(s, 1.28, py + 0.14, mw - 1.0, 0.32, "Слияние RRF", size=14, bold=True, color=DEEP)
+    text_box(s, 0.78, py + 0.52, mw - 0.46, 0.46,
              "score = Σ 1 / (k + ранг), k ≈ 60 — объединяет два списка рангов без общей шкалы очков.",
-             size=11, color=DEEP, line_spacing=1.06, font=FONT_MONO)
-    ocean_box(s, 0.75 + mw, py, mw, 1.14, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    icon(s, "check-check", 0.98 + mw, py + 0.18, 0.40, "gold")
-    text_box(s, 1.50 + mw, py + 0.16, mw - 1.0, 0.34, "Реранкер (cross-encoder)", size=14, bold=True, color=DEEP)
-    text_box(s, 0.98 + mw, py + 0.56, mw - 0.46, 0.50,
+             size=11, color=DEEP, line_spacing=1.04, font=FONT_MONO)
+    ocean_box(s, 0.75 + mw, py, mw, 1.02, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    icon(s, "check-check", 0.98 + mw, py + 0.16, 0.38, "gold")
+    text_box(s, 1.48 + mw, py + 0.14, mw - 1.0, 0.32, "Реранкер (cross-encoder)", size=14, bold=True, color=DEEP)
+    text_box(s, 0.98 + mw, py + 0.52, mw - 0.46, 0.46,
              "bi-encoder кодирует раздельно (быстро); cross-encoder гоняет пару вместе (точнее, дорого) — только по top-50…100.",
-             size=11, color=DEEP, line_spacing=1.06)
+             size=11, color=DEEP, line_spacing=1.04)
     # ── приросты С БАЗОЙ (компактная строка) ──
-    dy = 4.40
+    dy = 4.46
     deltas = [
         ("WANDS · NDCG", "0,7497", "vs BM25 0,6983 / вектор 0,6953 → ~7,4% (скромно)"),
         ("Финтекст+таблицы · Recall@5", "0,816", "vs dense-only 0,587 (+0,229)"),

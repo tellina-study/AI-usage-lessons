@@ -2278,45 +2278,48 @@ def build_s16(p):
 
 
 def build_s_ft_cost(p):
-    """WAVE D2 (§3.6, owner #10) — REFRAME: стоимость как ФУНКЦИЯ РАЗМЕРА
-    МОДЕЛИ. Строки = методы (Full-FT / LoRA / претрейн), колонки = размер
-    (7B/13B/70B/405B). QLoRA снята из колонок → нота под таблицей. Несущий
-    закон VRAM: Full-FT ≈ 16–20 Б × N; LoRA ≈ база + ε. Comparison-table, без
-    мема. Каждое число с базой."""
+    """v6.4 (§3.6, owner-review) — REVERT to axes×methods comparison table с
+    ОТНОСИТЕЛЬНЫМИ параметрами (Full-FT = базлайн ×1). Строки = оси (параметры /
+    VRAM / $ / компьют / данные / итерации), колонки = 5 методов (претрейн /
+    Full-FT / LoRA / QLoRA / промпт+RAG). Comparison-table, без мема. Смысл —
+    порядок и характер роста, не точная цифра."""
     s = blank(p)
-    slide_title(s, "Стоимость обучения — функция размера модели: Full-FT растёт линейно, LoRA почти плоско.", size=21)
-    text_box(s, 0.55, 1.16, 12.25, 0.60,
-             "Несущий закон памяти: с оптимизатором Adam в смешанной точности на каждый ОБУЧАЕМЫЙ параметр нужно ≈16–20 байт (мастер-веса + градиент + два момента). Full-FT обучает все N параметров → VRAM ≈ 16–20 Б × N; LoRA замораживает базу и обучает ~0,1–1% → VRAM ≈ база в bf16 (2 Б × N) + ε.",
-             size=12.5, italic=True, color=MID, line_spacing=1.16)
-    # comparison table — rows = методы, cols = размер модели
-    ocean_box(s, 0.40, 1.86, 12.55, 3.70)
-    tx, ty = 0.52, 1.96
-    headers = ["Метод \\ размер модели", "7B/8B", "13–14B", "70B", "405B"]
-    col_w = [3.55, 2.10, 2.10, 2.10, 2.35]
-    # rows: (label, 7B, 13B, 70B, 405B, is_gold_row)
+    slide_title(s, "Стоимость обучения: важен порядок и характер роста, не точная цифра.", size=24)
+    text_box(s, 0.55, 1.10, 12.25, 0.46,
+             "Значения относительные: Full-FT взят за базлайн ×1 по VRAM / $ / компьюту, остальные — доли от него. Абсолютные $ и часы движутся; смысл — порядок и характер роста.",
+             size=12.5, italic=True, color=MID, line_spacing=1.14)
+    # comparison table — rows = оси, cols = методы
+    ocean_box(s, 0.40, 1.66, 12.55, 3.98)
+    tx, ty = 0.52, 1.76
+    headers = ["Ось", "Претрейн с нуля", "Full-FT", "LoRA", "QLoRA", "Промпт+RAG"]
+    col_w = [2.55, 2.28, 1.86, 1.98, 1.90, 1.74]
     rows = [
-        ("Full-FT — VRAM (16–20 Б × N)", "~88–160 ГБ\n(4–5× A100-40)", "~174 ГБ", "~860 ГБ\n(≈11× H100-80)", "тысячи ГБ,\nкластер", False),
-        ("LoRA — VRAM (база + ε)", "~20 ГБ\n(1× 24-ГБ)", "~35 ГБ", "~159 ГБ\n(2× 80-ГБ)", "сотни ГБ,\n≪ Full-FT", True),
-        ("Full-FT — $ / GPU-часы", "десятки $", "сотни $", "$1 785\n(32ч·11×H100)", "претрейн-класс", False),
-        ("LoRA — $ / GPU-часы", "~$3\n(3ч·1×5090)", "единицы–\nдесятки $", "~$20\n(10ч·1×H100)", "сотни $", True),
-        ("Претрейн с нуля — $", "~184k A100-ч", "—", "—", "30,8M H100-ч\n≈ $61–92M", False),
+        ("Обучаемые параметры", "100% (с нуля)", "100% весов", "~0,1–1%", "~0,1–1%", "0% — веса\nне меняются"),
+        ("VRAM (память)", "кластер", "×1 (базлайн)", "~×0,2", "~×0,05", "только\nинференс"),
+        ("$ за прогон", "×1000+", "×1 (базлайн)", "~×0,01", "~×0,01", "~0"),
+        ("Компьют (GPU-часы)", "×1000+", "×1 (базлайн)", "~×0,01", "~×0,01", "~0"),
+        ("Объём данных", "триллионы\nтокенов", "тысячи–\nдесятки тыс.", "тысячи–\nдесятки тыс.", "как LoRA", "few-shot\n(3–20)"),
+        ("Скорость итерации", "месяцы", "медленно", "быстро", "быстро", "мгновенно"),
     ]
-    hh = 0.44
-    rh = (3.70 - 0.20 - hh) / len(rows)
+    gold_col = 3  # LoRA column highlighted (дефолт-выбор)
+    hh = 0.42
+    rh = (3.98 - 0.20 - hh) / len(rows)
     cx = tx
     for j, hd in enumerate(headers):
-        filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
+        isg = (j == gold_col)
+        filled_rect(s, cx, ty, col_w[j], hh, (GOLD if isg else MID), radius=False)
         text_box(s, cx + 0.08, ty, col_w[j] - 0.16, hh, hd,
-                 size=10.5, bold=True, color=WHITE,
+                 size=11, bold=True, color=(DEEP if isg else WHITE),
                  anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER, line_spacing=1.0)
         cx += col_w[j]
     yy = ty + hh
     for ri, row in enumerate(rows):
-        isg = row[5]
-        bgrow = GOLD_TINT if isg else (WHITE if ri % 2 == 0 else SURFACE)
+        bgrow = WHITE if ri % 2 == 0 else SURFACE
         cx = tx
-        for j, cc in enumerate(row[:5]):
-            filled_rect(s, cx, yy, col_w[j], rh, bgrow,
+        for j, cc in enumerate(row):
+            isg = (j == gold_col)
+            filled_rect(s, cx, yy, col_w[j], rh,
+                        (GOLD_TINT if isg else bgrow),
                         stroke=(GOLD if isg else SOFT_GREY),
                         stroke_pt=(1.5 if isg else 0.5))
             text_box(s, cx + 0.08, yy, col_w[j] - 0.16, rh, cc,
@@ -2325,17 +2328,10 @@ def build_s_ft_cost(p):
                      line_spacing=1.0)
             cx += col_w[j]
         yy += rh
-    # QLoRA note-line (не колонка — модификатор)
-    ocean_box(s, 0.55, 5.66, 6.05, 1.06, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
-    text_runs(s, 0.78, 5.76, 5.6, 0.90, [
-        {"text": "Нота (не метод): QLoRA = «квантуй базу в 4 бита». ", "size": 11.5, "bold": True, "color": TEAL},
-        {"text": "Не меняет, что обучается (те же LoRA-адаптеры) — режет вес замороженной базы ×0,25: 65B влезает в одну 48-ГБ карту, 7B ужимается до ~5–8 ГБ.",
-         "size": 11, "color": DEEP},
-    ], line_spacing=1.14)
-    gold_callout(s, 6.75, 5.66, 6.05, 1.06,
-                 "LoRA — дефолт: 7B-LoRA <$10 — дешевле фронтир-претрейна ($61–92M) на ~7 порядков. Full-FT оправдан лишь когда датасет превышает ёмкость LoRA; для узкой поведенческой адаптации не покупает ничего сверх LoRA, а добавляет ×6–10 памяти и риск забывания.",
-                 size=11)
-    footer(s, "LoRA r=64, Adam, смешанная точность; конкретные $ и часы движутся — важен порядок и характер роста, не точная цифра.")
+    gold_callout(s, 0.55, 5.78, 12.25, 0.98,
+                 "LoRA — дефолт: обучает ~0,1–1% параметров, ~×0,01 по цене / компьюту и ~×0,2 по VRAM от Full-FT — 7B-LoRA <$10 — дешевле фронтир-претрейна ($61–92M) на ~7 порядков. Full-FT оправдан лишь когда датасет превышает ёмкость LoRA — иначе только ×5–6 памяти и риск забывания. QLoRA — тот же LoRA поверх 4-битной базы: 65B влезает в одну 48-ГБ карту.",
+                 size=12)
+    footer(s, "Относительные величины, Full-FT = базлайн ×1; конкретные $ и часы движутся — важен порядок и характер роста, не точная цифра.")
     speaker_notes(s, load_notes("s-ft-cost"))
 
 
@@ -2563,7 +2559,7 @@ def build_s22(p):
         ("route", "Routing", "первый вызов классифицирует вход и направляет в один из заданных маршрутов (свой промпт/модель)", "входы разнородны, но классы известны", MID),
         ("git-fork", "Parallelization", "независимые подзадачи параллельно, результаты агрегируются детерминированно (голосование, объединение)", "подзадачи независимы и известны заранее", TEAL),
         ("waypoints", "Orchestrator-workers", "центральный вызов делит задачу динамически, но в заданных рамках, и раздаёт воркерам", "граница workflow↔агент: декомпозиция гибкая, контур фиксирован", MID),
-        ("check-check", "Evaluator-optimizer", "один вызов генерирует, другой оценивает по критериям; цикл до порога", "нужна встроенная проверка между шагами — против reliability compounding", GOLD),
+        ("check-check", "Evaluator-optimizer", "один LLM генерирует ответ, второй (evaluator) оценивает по критериям и даёт обратную связь — петля «генератор ↔ критик» до прохождения порога", "есть чёткие критерии и черновик можно улучшать: напр. перевод — критик отмечает ошибки, генератор правит", GOLD),
     ]
     cw, chh = 2.42, 3.40
     gap = 0.10
@@ -2585,16 +2581,17 @@ def build_s22(p):
                  anchor=MSO_ANCHOR.MIDDLE)
         text_box(s, x + 0.12, y0 + 1.02, cw - 0.24, 0.46, t,
                  size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
-        text_box(s, x + 0.16, y0 + 1.48, cw - 0.32, 1.08, body,
-                 size=9.5, color=DEEP, line_spacing=1.08)
-        filled_rect(s, x + 0.14, y0 + chh - 0.78, cw - 0.28, 0.66,
+        text_box(s, x + 0.16, y0 + 1.44, cw - 0.32, (1.02 if isg else 1.08), body,
+                 size=(8.4 if isg else 9.5), color=DEEP, line_spacing=1.04)
+        kbh = 0.98 if isg else 0.66  # gold card needs a taller «когда» box (3 lines)
+        filled_rect(s, x + 0.14, y0 + chh - kbh - 0.10, cw - 0.28, kbh,
                     (GOLD_TINT if isg else SURFACE),
                     stroke=(GOLD if isg else SOFT_GREY), stroke_pt=1.0,
                     radius=True, radius_adj=0.10)
-        text_box(s, x + 0.24, y0 + chh - 0.76, cw - 0.48, 0.62,
-                 "когда: " + when, size=9.5, italic=True,
+        text_box(s, x + 0.22, y0 + chh - kbh - 0.08, cw - 0.44, kbh - 0.04,
+                 "когда: " + when, size=(8.4 if isg else 9.5), italic=True,
                  color=(DEEP if isg else SLATE), anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=1.06)
+                 line_spacing=1.04)
     gold_callout(s, 0.55, 5.22, 12.25, 1.02,
                  "Все пять — предопределённые в коде структуры; динамический агент отличается тем, что сам решает, какую структуру построить под конкретный вход, и теряет предсказуемость, которую эти паттерны сохраняют. Найди простейшее: workflow — вокруг предсказуемого, агент — чтобы исследовать непредсказуемое.",
                  size=12.5)
@@ -2690,12 +2687,12 @@ def build_s22d(p):
     """NEW (§4.6) — провал памяти (кейс): Letta Tier D + Anthropic Memory
     Tool Tier B 17%. Freshness-оговорка Letta на видимом слое."""
     s = blank(p)
-    slide_title(s, "«Агент, который помнит» — не всегда во благо.", size=25)
-    text_box(s, 0.55, 1.14, 12.25, 0.42,
-             "Наличие памяти интуитивно кажется чистым выигрышем. Независимая проверка показывает: иногда — драматически нет.",
-             size=13.5, italic=True, color=MID, line_spacing=1.15)
+    slide_title(s, "Специально организованная память агента — не всегда во благо.", size=24)
+    text_box(s, 0.55, 1.08, 12.25, 0.66,
+             "В пределах одной сессии агент «помнит» всегда — это контекст. Речь о ДОБАВЛЕННОМ постоянном слое памяти между сессиями (mem0 / Cognee / Letta / Memory Tool): наличие такого слоя интуитивно кажется чистым выигрышем. Независимая проверка показывает: иногда — драматически нет.",
+             size=12, italic=True, color=MID, line_spacing=1.14)
     # left — Letta case with numbers
-    lx, ly, lw, lh = 0.55, 1.86, 6.25, 4.05
+    lx, ly, lw, lh = 0.55, 1.92, 6.25, 3.99
     ocean_box(s, lx, ly, lw, lh)
     icon(s, "triangle-alert", lx + 0.26, ly + 0.22, 0.46, "mid")
     text_box(s, lx + 0.84, ly + 0.22, lw - 1.1, 0.42, "Letta — уровень D (Tier D)",
@@ -4179,16 +4176,16 @@ def build_s_agent_when(p):
     Cognition-vs-Anthropic примирены (параллелить чтения, не решения), 15× цена.
     Без мема."""
     s = blank(p)
-    slide_title(s, "Агент — под открытую задачу; мульти-агент — только под триггер, потому что надёжность падает как pⁿ.", size=19)
+    slide_title(s, "Агент — под открытую задачу; мульти-агент нужен только в трёх условиях.", size=20)
     text_box(s, 0.55, 1.22, 12.25, 0.40,
-             "Сверху вниз: предсказуемо → workflow; непредсказуемо и ценно → один агент; несколько агентов — только под конкретный триггер. Каждый лишний шаг перемножает вероятность успеха, а не усредняет.",
+             "Сверху вниз: предсказуемо → workflow; непредсказуемо и ценно → один агент; несколько агентов — только под конкретный кейс. Каждый лишний шаг перемножает вероятность успеха, а не усредняет.",
              size=12, italic=True, color=MID, line_spacing=1.12)
     # LEFT — 3-rung decision ladder (top-down)
     lx, ly, lw = 0.55, 1.74, 6.30
     rungs = [
         ("route", "1. Предсказуемо → workflow", "шаги известны заранее; предопределённые в коде пути, аудируемость", TEAL),
         ("bot", "2. Непредсказуемо → один агент", "шаги зависят от промежуточных результатов; цена оправдана ценностью", MID),
-        ("users", "3. Мульти-агент → только под триггер", "ШИРОКО параллельные независимые подзадачи высокой ценности; иначе зря", GOLD),
+        ("users", "3. Мульти-агент — под конкретный кейс", "нужен только в 3 условиях (справа); вне их — неверный инструмент", GOLD),
     ]
     ry = ly
     for ic, t, sub, col in rungs:
@@ -4201,33 +4198,46 @@ def build_s_agent_when(p):
         filled_rect(s, lx + 0.20, ry + 0.24, 0.58, 0.58, col, radius=True, radius_adj=0.18)
         icon(s, ic, lx + 0.28, ry + 0.32, 0.42, "white")
         text_box(s, lx + 0.94, ry + 0.16, lw - 1.1, 0.42, t,
-                 size=13.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+                 size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
         text_box(s, lx + 0.94, ry + 0.58, lw - 1.1, 0.50, sub,
                  size=10.5, color=DEEP, line_spacing=1.08)
         ry += rh
-    # pointer strip under ladder — детальные числа надёжности на следующем слайде
+    # pointer strip under ladder — вне кейсов мульти-агент неверен; числа на след. слайде
     ocean_box(s, lx, ry + 0.02, lw, 0.94, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
     text_runs(s, lx + 0.22, ry + 0.10, lw - 0.44, 0.80, [
-        {"text": "Почему «только под триггер»: ", "size": 12, "bold": True, "color": TEAL},
-        {"text": "надёжность цепочки падает как pⁿ — каждый лишний шаг перемножает вероятность успеха, а не усредняет. Числа и замеры — на следующем слайде.",
+        {"text": "Вне этих кейсов мульти-агент — неверный инструмент: ", "size": 11.5, "bold": True, "color": TEAL},
+        {"text": "надёжность падает как pⁿ (×15 токенов). Числа и замеры — на следующем слайде.",
          "size": 11, "color": DEEP},
     ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
-    # RIGHT — Cognition/Anthropic reconciliation (концептуально, без чисел-множителей)
+    # RIGHT — 3 named conditions where multi-agent IS warranted, each with example
     rx, rw = 7.05, 5.75
-    ocean_box(s, rx, ly, rw, 1.42, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    ocean_box(s, rx, ly, rw, 2.98, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
     text_box(s, rx + 0.22, ly + 0.10, rw - 0.44, 0.32,
-             "Топология — не деталь: рой vs координатор", size=12.5, bold=True, color=DEEP)
-    text_box(s, rx + 0.22, ly + 0.48, rw - 0.44, 0.86,
-             "Децентрализованный «рой» равноправных агентов амплифицирует ошибки заметно сильнее, чем один координатор: больше связей = быстрее коллапс. Выбор топологии решает исход раньше выбора модели.",
-             size=10.5, color=DEEP, line_spacing=1.12)
-    ocean_box(s, rx, ly + 1.52, rw, 1.66)
-    text_box(s, rx + 0.22, ly + 1.62, rw - 0.44, 0.32,
-             "Cognition vs Anthropic — примирение:", size=12.5, bold=True, color=MID)
-    text_box(s, rx + 0.22, ly + 1.98, rw - 0.44, 1.14,
-             "Anthropic: мульти-агент выигрывает research-задачи. Cognition: «не стройте мульти-агентов». Противоречия нет: параллельте независимые ЧТЕНИЯ (поиск вширь), но не РЕШЕНИЯ с зависимостями — там субагенты принимают конфликтующие неявные выборы.",
-             size=10, color=DEEP, line_spacing=1.10)
+             "Три условия, когда мульти-агент оправдан:", size=12.5, bold=True, color=DEEP)
+    conds = [
+        ("1. Широко-параллельные независимые ЧТЕНИЯ (не решения)",
+         "напр.: прочитать 100 источников параллельно и свести в отчёт (Anthropic research)."),
+        ("2. Независимые перспективы для кросс-проверки",
+         "напр.: 5 агентов независимо ищут → голосование."),
+        ("3. Изолированные под-домены с раздельными инструментами / правами",
+         "напр.: отдельный агент на биллинг, отдельный на инфраструктуру."),
+    ]
+    cy = ly + 0.50
+    for ct, ce in conds:
+        text_box(s, rx + 0.22, cy, rw - 0.44, 0.44, ct,
+                 size=10.5, bold=True, color=DEEP, line_spacing=1.02)
+        text_box(s, rx + 0.22, cy + 0.42, rw - 0.44, 0.40, ce,
+                 size=9.5, italic=True, color=SLATE, line_spacing=1.02)
+        cy += 0.80
+    # RIGHT bottom — Cognition/Anthropic reconciliation (compact)
+    ocean_box(s, rx, ly + 3.06, rw, 1.24)
+    text_box(s, rx + 0.22, ly + 3.12, rw - 0.44, 0.30,
+             "Cognition vs Anthropic — примирение:", size=11.5, bold=True, color=MID)
+    text_box(s, rx + 0.22, ly + 3.42, rw - 0.44, 0.86,
+             "Anthropic: мульти-агент выигрывает research-задачи. Cognition: «не стройте мульти-агентов». Противоречия нет: параллельте независимые ЧТЕНИЯ (поиск вширь), но не РЕШЕНИЯ с зависимостями. Топология: рой связей = быстрее коллапс.",
+             size=9, color=DEEP, line_spacing=1.04)
     gold_callout(s, 0.55, 6.06, 12.25, 0.84,
-                 "Начинай с одного сильного агента. Мульти-агент оправдан, только если задача распадается на широко-параллельные независимые чтения и ценность оправдывает кратную цену; иначе это неверный инструмент.",
+                 "Начинай с одного сильного агента. Мульти-агент оправдан только в трёх кейсах выше и когда ценность оправдывает кратную цену; иначе это неверный инструмент.",
                  size=11.5)
     speaker_notes(s, load_notes("s-agent-when"))
 

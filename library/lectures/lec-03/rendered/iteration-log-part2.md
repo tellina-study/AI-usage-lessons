@@ -434,3 +434,65 @@ Blank в `assets/web/memes-src/` (+ .url), русские подписи чер�
   рендерятся (67 страниц, не 69). Dead builder-функции оставлены (harmless).
 - Anti-leak grep 7 changed-слайдов: 0 timing(«мин.»=«минимум» false-pos)/
   методология/LO/§X.X/→sNN/[VERIFY].
+
+---
+
+## v6.4 owner-review — 4-slide revision (2026-09-16)
+
+Branch: issue-lec03-v4-deepen. Builder: build_v3.py. 4 slides touched: 37 (s-ft-cost),
+50 (s22), 52 (s-agent-when), 55 (s22d). Slide count unchanged at 67. Build: all ref
+anchors matched OK; both asserts (67 builders / 67 sids) pass.
+
+### Slide 37 (s-ft-cost) — REVERT to axes×methods with relative params
+- FIX: replaced the D2 by-model-size table (7B/13B/70B/405B columns) with the old
+  6-rows-×-5-methods form, RELATIVE values (Full-FT = базлайн ×1). Recovered structural
+  scaffold from `git show 1d98414:...build_v3.py` lines 2003–2062, then swapped row set +
+  values to relative ones per owner brief.
+- Iter 1: inspected PNG — table fits ocean box, no overflow, LoRA gold column clear,
+  gold_callout carries [1]+[2] markers. Multi-line cells wrap with slight continuation
+  indent (cosmetic, in-bounds).
+- Iter 2/3: re-inspected after rebuilds — stable, no overflow. 5-sec test PASS
+  (main message = "training cost is order-of-magnitude; LoRA is cheap default" = assertion).
+- Anchors: [1] "7B-LoRA <$10 — дешевле фронтир-претрейна ($61–92M) на ~7 порядков" and
+  [2] "65B влезает в одну 48-ГБ карту" both re-included verbatim in gold_callout; matched OK.
+- Notes rewritten (362w) to relative-params framing; dropped "функция размера модели"
+  / 7B/13B/70B/405B narrative. Источники [1][2] intact.
+
+### Slide 50 (s22) — evaluator-optimizer self-explanatory
+- FIX: 5th card body → generator↔critic loop wording; when → translation example.
+- Iter 1: PNG showed card-5 body (8.6pt) + "когда:" box overflowing (last lines clipped,
+  collided with card bottom).
+- Iter 2: dropped gold-card body to 8.4pt, trimmed body wording, enlarged gold-card
+  "когда:" box (kbh 0.98 vs 0.66) + 8.4pt. Re-inspected: all card-5 text in-bounds, box
+  contains full 4-line "когда:" text. Other 4 cards unchanged/clean.
+- Iter 3: final squint check PASS, no overflow.
+- Notes deepened 247w → 418w; all 5 patterns walked with WHAT+WHEN+concrete example;
+  evaluator-optimizer explained from scratch (generator↔critic, draft-translation loop).
+  Источник [1] intact.
+
+### Slide 52 (s-agent-when) — named 3 multi-agent conditions + examples
+- FIX: rung-3 label → "Мульти-агент — под конкретный кейс"; right side repurposed to a
+  gold box listing the 3 named conditions each with a concrete example; Cognition/Anthropic
+  box kept smaller; pointer strip states "вне этих кейсов … неверный инструмент (×15 токенов),
+  числа на следующем слайде".
+- Iter 1: PNG — 3 conditions visible, but Cognition box text overflowed (tail
+  "быстрее коллапс" clipped, overlapping gold callout).
+- Iter 2: recomputed right column to fit 1.74→6.06: conditions box 2.98 tall (spacing 0.80,
+  10.5/9.5pt), Cognition box ly+3.06 h1.24 at 9pt, text trimmed. Re-inspected: Cognition tail
+  fully in box, [2] marker inside; [1] marker on "ЧТЕНИЯ" visible; no overflow.
+- Iter 3: final check PASS.
+- Anchors [1] "параллельте независимые ЧТЕНИЯ" / [2] "быстрее коллапс" kept verbatim; matched.
+- Notes updated (412w) naming the 3 conditions + examples; anchors "магии координации",
+  "быстрее коллапс, а конкретные множители" intact; Источники [1][2] intact.
+
+### Slide 55 (s22d) — scope = specially-organized persistent memory
+- FIX: title → "Специально организованная память агента — не всегда во благо." (24pt);
+  subtitle → distinguishes in-session context ("помнит всегда") from added persistent
+  cross-session layer (mem0/Cognee/Letta/Memory Tool). Left/right case boxes nudged
+  (ly 1.86→1.92, lh 4.05→3.99) to clear 3-line subtitle. All failure data unchanged.
+- Iter 1: PNG — title one line, 3-line subtitle clears boxes, [1] marker after "нет",
+  both boxes clean, no overflow. (No further fix needed.)
+- Iter 2/3: re-inspected after neighbour rebuilds — stable. PASS.
+- Anchor [1] "Независимая проверка показывает: иногда — драматически нет" kept verbatim in
+  subtitle; matched. Notes (352w) got 3 scope-clarifying sentences up front;
+  "независимого реестра" anchor + Источник [1] intact.

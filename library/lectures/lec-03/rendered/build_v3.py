@@ -1549,9 +1549,9 @@ def build_s_rag_elastic(p):
     (Woman Yelling at Cat — несёт тезис суждения), справа 3-ярусная граница
     решения + Elastic vs OpenSearch. Anti-hype."""
     s = blank(p)
-    slide_title(s, "Когда выделенная векторная БД реально нужна.", size=25)
+    slide_title(s, "Что выбрать под свою ситуацию.", size=25)
     text_box(s, 0.55, 1.14, 12.25, 0.42,
-             "Раз Elastic/OpenSearch уже в ландшафте, решение сдвигается: не «какую вектор-БД», а «нужна ли выделенная вообще». Три яруса — снизу вверх, вверх поднимаемся только под требование.",
+             "Выбор в открытом поле — под свой масштаб и требования. Три яруса снизу вверх; поднимаешься на следующий, только когда предыдущего не хватает под конкретную нагрузку.",
              size=13, italic=True, color=MID, line_spacing=1.12)
     # LEFT — мем (несёт тезис суждения), ≈43% ширины
     mx0, my0, mw0 = 0.55, 1.78, 5.30
@@ -1569,9 +1569,9 @@ def build_s_rag_elastic(p):
     # RIGHT — 3-ярусная граница решения
     rx, rw = 6.20, 6.60
     tiers = [
-        ("1", "BM25 хватает", "общий словарь, код/логи/ID, курированные базы; переиндексация дёшева и наблюдаема", MID),
-        ("2", "Встроенный гибрид Elastic/OpenSearch хватает", "уже эксплуатируете один, масштаб млн–десятки млн; ELSER даёт смысл без GPU-сервиса эмбеддингов", TEAL),
-        ("3", "Выделенная векторная БД нужна", "100M+ / multi-vector / latency-SLA горячего пути / развязать эксплуатацию от кластера логов", DEEP),
+        ("1", "Хватает BM25", "общий словарь, код/логи/ID, курированные базы; переиндексация дёшева и наблюдаема — векторов и вектор-хранилища не нужно", MID),
+        ("2", "Хватает поискового движка с векторами", "нужен смысл поверх лексики на масштабе млн–десятки млн; Elastic/OpenSearch дают гибрид и ELSER без GPU-сервиса эмбеддингов", TEAL),
+        ("3", "Нужна выделенная векторная БД", "100M+ / multi-vector / latency-SLA горячего пути / развязать хранилище от эксплуатации кластера логов", DEEP),
     ]
     ty = 1.78
     th = 1.14
@@ -1761,55 +1761,60 @@ def build_s_rag_design(p):
     схема-чеклист (не мем)."""
     s = blank(p)
     slide_title(s, "Прототип → продакшн — это другая архитектура, не подкрутка.", size=24)
-    text_box(s, 0.55, 1.14, 12.25, 0.42,
-             "Прототип работает на 1000 документов; ломается на миллионах векторов и тысячах запросов. Что добавляется при переходе в продакшн.",
-             size=13.5, italic=True, color=MID, line_spacing=1.12)
-    # пайплайн ingest → chunk → embed → index (первое бутылочное горло)
-    py = 1.74
+    text_box(s, 0.55, 1.08, 12.25, 0.40,
+             "Прототип работает на 1000 документов; ломается на миллионах векторов и тысячах запросов. Проблемы — не только на индексации: и на запросе, и в эксплуатации.",
+             size=13, italic=True, color=MID, line_spacing=1.10)
+    # компактный пайплайн ingest → chunk → embed → index (индекс-сторона)
+    py = 1.58
     stages = ["ingest", "chunk", "embed", "index"]
-    sw = 2.30
-    gap = 0.42
-    x = 0.55
+    sw, gap, x = 1.66, 0.30, 3.05
+    ingest_x = x
     for i, st in enumerate(stages):
         isfirst = (i == 0)
-        if isfirst:
-            filled_rect(s, x, py, sw, 0.70, GOLD_TINT, stroke=GOLD, stroke_pt=2.0,
-                        radius=True, radius_adj=0.12)
-        else:
-            filled_rect(s, x, py, sw, 0.70, SURFACE, stroke=LIGHT, stroke_pt=1.5,
-                        radius=True, radius_adj=0.12)
-        text_box(s, x + 0.10, py + 0.10, sw - 0.20, 0.30, st,
-                 size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x + 0.10, py + 0.40, sw - 0.20, 0.26,
-                 ("первое бутылочное горло" if isfirst else ""),
-                 size=10, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+        fill = GOLD_TINT if isfirst else SURFACE
+        stroke = GOLD if isfirst else LIGHT
+        filled_rect(s, x, py, sw, 0.46, fill, stroke=stroke, stroke_pt=1.75,
+                    radius=True, radius_adj=0.16)
+        text_box(s, x + 0.06, py + 0.09, sw - 0.12, 0.28, st,
+                 size=12.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
         if i < len(stages) - 1:
-            right_arrow(s, x + sw + 0.03, py + 0.21, gap - 0.10, 0.28, fill=LIGHT)
+            right_arrow(s, x + sw + 0.02, py + 0.13, gap - 0.06, 0.22, fill=LIGHT)
         x += sw + gap
-    # 4 карточки: freshness / re-embed / eval / cost
-    cards = [
-        ("route", "Свежесть", "батч → устаревание; CDC → субминута ценой ×3 к эксплуатации. Индекс отстал → retrieval деградирует невидимо.", MID),
-        ("git-branch", "Смена модели", "новая embedding-модель = пере-эмбеддить ВСЕ векторы (старые/новые несравнимы) — миграция, не строка конфига.", TEAL),
-        ("check-check", "Оценка", "метки: recall@k ~0,8, nDCG; LLM-судья: RAGAS faithfulness/context-precision/recall. Обе группы + сверять с людьми.", LIGHT),
-        ("scale", "Стоимость", "семантическое кэширование ~69% экономии LLM (vs без кэша). SLA <50 мс толкают расходы вверх.", MID),
-    ]
-    cy = 2.72
-    chh = 1.62
+    text_box(s, ingest_x, py + 0.47, sw, 0.24, "первое горло",
+             size=9.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    # ── ряд 1: индекс-сторона (сборка/поддержка индекса) ──
     cw = (12.25 - 0.22 * 3) / 4
-    x = 0.55
-    for ic, name, body, col in cards:
-        ocean_box(s, x, cy, cw, chh)
-        icon(s, ic, x + 0.18, cy + 0.16, 0.36, "mid")
-        text_box(s, x + 0.62, cy + 0.15, cw - 0.76, 0.36, name,
-                 size=13, bold=True, color=col, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x + 0.20, cy + 0.60, cw - 0.40, chh - 0.70, body,
-                 size=10.5, color=DEEP, line_spacing=1.10)
-        x += cw + 0.22
+    r1 = [
+        ("route", "Свежесть", "батч → устаревание; CDC → субминута ценой ×3 эксплуатации; индекс отстал → тихая деградация.", MID),
+        ("git-branch", "Смена модели", "новый эмбеддер = пере-эмбеддить ВСЕ векторы (старые/новые несравнимы) — миграция.", TEAL),
+        ("check-check", "Оценка", "recall@k ~0,8, nDCG + LLM-судья RAGAS; без набора — деградация невидима.", LIGHT),
+        ("scale", "Стоимость сборки", "эмбеддинг + контекст к чанку; препроцессинг ~$1/1M токенов, разово на масштабе.", MID),
+    ]
+    def _row(cards, cy, chh, tint_label, label_col):
+        text_box(s, 0.55, cy - 0.24, 6.0, 0.24, tint_label,
+                 size=10.5, bold=True, color=label_col)
+        x = 0.55
+        for ic, name, body, col in cards:
+            ocean_box(s, x, cy, cw, chh)
+            icon(s, ic, x + 0.16, cy + 0.13, 0.32, "mid")
+            text_box(s, x + 0.56, cy + 0.12, cw - 0.68, 0.34, name,
+                     size=12, bold=True, color=col, anchor=MSO_ANCHOR.MIDDLE)
+            text_box(s, x + 0.18, cy + 0.52, cw - 0.36, chh - 0.60, body,
+                     size=10, color=DEEP, line_spacing=1.06)
+            x += cw + 0.22
+    _row(r1, 2.48, 1.28, "ИНДЕКС-СТОРОНА — сборка и поддержка", LIGHT)
+    # ── ряд 2: query-сторона + эксплуатация (owner-review: не только индексация) ──
+    r2 = [
+        ("target", "Качество на масштабе", "recall падает и дрейфует с ростом корпуса; «нашёл» ≠ «нашёл правильное».", TEAL),
+        ("sliders-horizontal", "Латентность / QPS", "конкурентные запросы + реранк на запросе; автоскейл опаздывает под пик.", MID),
+        ("terminal", "Наблюдаемость", "retrieval проваливается тихо, без ошибки — нужны метрики и трассировка запроса.", LIGHT),
+        ("shield-check", "Безопасность / доступ", "кто что вправе извлечь; PII в чанках; фильтр прав ДО поиска.", TEAL),
+    ]
+    _row(r2, 4.20, 1.28, "QUERY-СТОРОНА + ЭКСПЛУАТАЦИЯ", TEAL)
     # каунтерфактуал — gold-полоса «под ~200k токенов RAG не нужен»
-    gold_callout(s, 0.55, 4.56, 12.25, 1.02,
-                 "Каунтерфактуал: база знаний под ~200k токенов целиком кладётся в промпт с кэшированием (до ~90% сокращения стоимости) — retrieval пропускается вовсе. Длинный контекст + кэш — легитимная альтернатива RAG на малом масштабе.",
-                 size=13.5)
-    footer(s, "Первый вопрос перед всей инфраструктурой — «а нужен ли RAG вообще, или корпус мал и стабилен настолько, что его хватает положить в окно».")
+    gold_callout(s, 0.55, 5.68, 12.25, 0.86,
+                 "Каунтерфактуал: база под ~200k токенов целиком кладётся в промпт с кэшированием (до ~90% экономии) — retrieval пропускается вовсе. Первый вопрос перед всей инфраструктурой — «а нужен ли RAG вообще».",
+                 size=13)
     speaker_notes(s, load_notes("s-rag-design"))
 
 
@@ -1820,55 +1825,67 @@ def build_s_rag_cases(p):
     s = blank(p)
     slide_title(s, "«RAG» в вакууме не существует — есть RAG под задачу.",
                 y=0.40, h=0.58, size=24)
-    text_box(s, 0.55, 1.04, 12.25, 0.42,
-             "Пять реальных архетипов: retrieval-дизайн у них разный, потому что разная природа данных. Общий якорь — наивный dense-RAG промахивается ~40% времени; три приёма (контекст+гибрид+реранк) закрывают большую часть.",
-             size=12.5, italic=True, color=MID, line_spacing=1.10)
-    # ── таблица кейсов: 5 строк × [кейс+система | retrieval-дизайн | провал/baseline] ──
-    hx, hy, hw = 0.55, 1.66, 12.25
-    col_a, col_b = 3.30, 4.65
+    text_box(s, 0.55, 1.06, 12.25, 0.40,
+             "Пять архетипов, у каждого своя природа данных → свой retrieval-дизайн. Общий якорь: наивный dense-RAG промахивается ~40% запросов.",
+             size=13, italic=True, color=MID, line_spacing=1.10)
+    # ── таблица кейсов (упрощена, owner-review): одна короткая фраза на ячейку,
+    # крупнее шрифт, выше строки, «провал → чинит» разведены цветом. Каждый ряд
+    # читается за ~5 сек. Кейс+система | дизайн одной строкой | провал → как чинит ──
+    hx, hy, hw = 0.55, 1.62, 12.25
+    col_a, col_b = 3.05, 4.10
     col_c = hw - col_a - col_b
-    filled_rect(s, hx, hy, hw, 0.40, MID, radius=True, radius_adj=0.10)
-    text_box(s, hx + 0.18, hy + 0.07, col_a - 0.28, 0.28, "Кейс · реальная система",
-             size=11.5, bold=True, color=WHITE)
-    text_box(s, hx + col_a + 0.10, hy + 0.07, col_b - 0.20, 0.28, "Retrieval-дизайн",
-             size=11.5, bold=True, color=WHITE)
-    text_box(s, hx + col_a + col_b + 0.10, hy + 0.07, col_c - 0.20, 0.28, "Типовой провал → как чинит",
-             size=11.5, bold=True, color=WHITE)
+    filled_rect(s, hx, hy, hw, 0.42, MID, radius=True, radius_adj=0.10)
+    text_box(s, hx + 0.18, hy + 0.08, col_a - 0.28, 0.28, "Кейс · система",
+             size=12, bold=True, color=WHITE)
+    text_box(s, hx + col_a + 0.10, hy + 0.08, col_b - 0.20, 0.28, "Ключ дизайна",
+             size=12, bold=True, color=WHITE)
+    text_box(s, hx + col_a + col_b + 0.10, hy + 0.08, col_c - 0.20, 0.28, "Провал  →  чинит",
+             size=12, bold=True, color=WHITE)
+    # (icon, кейс, система, дизайн-одной-строкой, провал, чинит, цвет)
     rows = [
-        ("message-circle", "Поддержка / внутр. база", "kapa.ai, Stripe Assistant",
-         "смысл. границы + гибрид + реранк; дельта-обновление",
-         "«откат-повтор» ≈ «очередь недоставленных» → неверная политика; гибрид ловит точный терм + порог отказа", MID),
-        ("file-text", "Q&A по документации", "Vercel AI SDK docs-copilot",
-         "нарезка по секциям; ответ с источником ИЛИ отказ; оценка в CI",
-         "цитирует старую версию API / выдумывает параметр; свежесть + набор для оценки как воротца", LIGHT),
-        ("code", "Поиск по кодовой базе", "Cursor · Sourcegraph Cody",
-         "chunk по функции/классу; dense-индекс кода",
-         "dense «замыливает» имя символа, на 100k+ репо дорого → Cody УБРАЛ эмбеддинги, вернул лексический поиск", TEAL),
-        ("gavel", "Юридический / договоры", "LexisNexis · Westlaw",
-         "гибрид (BM25 обязателен для цитат) + фильтры по метаданным",
-         "17–33% галлюцинаций несмотря на «0%»; верификация цитат + человек-в-петле", DEEP),
-        ("boxes", "Enterprise: доки + таблицы", "Glean · eSapiens",
-         "роутер: числовой → Text-to-SQL; текст → dense+BM25+реранк",
-         "эмбеддит строки таблицы, не может сложить → неверные числа; роутинг + валидация SQL", LIGHT),
+        ("message-circle", "Поддержка / база", "kapa.ai · Stripe",
+         "гибрид + реранк",
+         "dense путает «backoff» и «dead-letter»",
+         "BM25 ловит точный код ошибки", MID),
+        ("file-text", "Q&A по докам", "Vercel docs-copilot",
+         "источник ИЛИ отказ",
+         "цитирует старую версию API",
+         "свежесть + оценка в CI", LIGHT),
+        ("code", "Поиск по коду", "Cursor · Cody",
+         "chunk по функции",
+         "dense замыливает имя символа",
+         "Cody убрал эмбеддинги → лексика", TEAL),
+        ("gavel", "Юридический", "LexisNexis · Westlaw",
+         "гибрид, BM25 для цитат",
+         "17–33% галлюцинаций при «0%»",
+         "верификация цитат + человек", DEEP),
+        ("boxes", "Корпоративный", "Glean · eSapiens",
+         "роутер к Text-to-SQL",
+         "эмбеддинг таблицы не суммирует",
+         "числовой вопрос → SQL", LIGHT),
     ]
-    ry = hy + 0.40
+    ry = hy + 0.42
     rh = 0.80
-    for i, (ic, name, sysname, design, fail, col) in enumerate(rows):
+    for i, (ic, name, sysname, design, fail, fix, col) in enumerate(rows):
         bg = SURFACE if i % 2 == 0 else WHITE
         filled_rect(s, hx, ry, hw, rh, bg, stroke=SOFT_GREY, stroke_pt=0.75)
-        filled_rect(s, hx + 0.12, ry + 0.14, 0.40, rh - 0.28, col, radius=True, radius_adj=0.22)
-        icon(s, ic, hx + 0.17, ry + rh / 2 - 0.14, 0.30, "white")
-        text_box(s, hx + 0.62, ry + 0.10, col_a - 0.68, 0.34, name,
-                 size=11.5, bold=True, color=DEEP, line_spacing=1.0)
-        text_box(s, hx + 0.62, ry + 0.44, col_a - 0.68, 0.30, sysname,
-                 size=9.5, italic=True, color=LIGHT, line_spacing=1.0)
-        text_box(s, hx + col_a + 0.10, ry + 0.08, col_b - 0.22, rh - 0.14, design,
-                 size=10, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.06)
-        text_box(s, hx + col_a + col_b + 0.10, ry + 0.08, col_c - 0.22, rh - 0.14, fail,
-                 size=10, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.06)
+        filled_rect(s, hx + 0.12, ry + 0.15, 0.42, rh - 0.30, col, radius=True, radius_adj=0.22)
+        icon(s, ic, hx + 0.18, ry + rh / 2 - 0.15, 0.30, "white")
+        text_box(s, hx + 0.66, ry + 0.12, col_a - 0.72, 0.32, name,
+                 size=12.5, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, hx + 0.66, ry + 0.46, col_a - 0.72, 0.26, sysname,
+                 size=10, italic=True, color=LIGHT, line_spacing=1.0)
+        text_box(s, hx + col_a + 0.12, ry + 0.06, col_b - 0.26, rh - 0.12, design,
+                 size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.04)
+        # провал (teal) → чинит (mid) — две короткие строки, разведены цветом
+        text_runs(s, hx + col_a + col_b + 0.12, ry + 0.08, col_c - 0.26, rh - 0.14, [
+            {"text": fail, "size": 11, "color": TEAL},
+            {"text": "→ " + fix, "size": 11, "bold": True, "color": MID,
+             "newpara": True, "space_before": 2},
+        ], line_spacing=1.06, anchor=MSO_ANCHOR.MIDDLE)
         ry += rh
     gold_callout(s, 0.55, ry + 0.14, 12.25, 0.72,
-                 "Два кейса — прямые «RAG был не тем инструментом»: Cody вернулся к классическому поиску по коду; агрегирующий вопрос по таблице → SQL, а не «найди похожие чанки». Retrieval-дизайн выводится из природы данных, а не копируется из чужого блога.",
+                 "Два кейса — прямые «RAG был не тем инструментом»: Cody вернул классический поиск по коду; агрегирующий вопрос по таблице → SQL, а не «похожие чанки». Retrieval-дизайн выводится из природы данных.",
                  size=12)
     speaker_notes(s, load_notes("s-rag-cases"))
 
@@ -3452,31 +3469,82 @@ def build_s_classic_prompt(p):
 
 
 def build_s_classic_rag(p):
-    """§2.0 — классическая база раздела 2: классический информационный поиск."""
-    build_classic_base(
-        p, "s-classic-rag",
-        title="Что такое классический поиск: инвертированный индекс и BM25.",
-        intro="Буква R в RAG — retrieval, поиск. Это инвертированный индекс, булев отбор и "
-              "ранжирование BM25. Их устройство определяет, где RAG работает, а где ломается.",
-        cards=[
-            ("book-open", "Лексический IR: инвертированный индекс",
-             "Для каждого СЛОВА — список документов, где оно встречается (машинный каталог). "
-             "Совпадение по буквальным словам. Хребет Lucene, Elasticsearch, PostgreSQL FTS."),
-            ("route", "Булев отбор",
-             "Запрос как логическое выражение («ошибка AND аутентификация NOT tomcat»): точный, "
-             "предсказуемый, объяснимый отбор — сила на кодах и идентификаторах."),
-            ("list-ordered", "TF-IDF → BM25 (~1994)",
-             "Ранжирование по важности слова (реже в коллекции — сильнее сигнал). BM25 (Okapi) — "
-             "дешёвая объяснимая линия, которую многие «умные» системы не обгоняют."),
-        ],
-        keep_text="Снимаем частую неточность: «семантический поиск построен на BM25» — НЕ так. "
-                  "Лексика (BM25, ~1994) и плотные векторы (DPR, 2018–2020) — две независимые ветки; "
-                  "их СЛИВАЮТ (fuse), а не наследуют. Сильный RAG-2026 возвращает классику поверх "
-                  "семантики: гибрид BM25 + векторы, фильтры по метаданным, реранкер, метрики на golden set.",
-        bridge="dense-семантика (Лекция 2) добавляет к классике недостающую ветку — смысл вместо "
-               "буквы («сломанный вход» ≈ «authentication failure»), — но классика не исчезает и "
-               "не «фундамент» под ней. RAG = объединение двух веток, не надстройка над одной.",
-    )
+    """§2.0 — классическая база раздела 2: классический информационный поиск.
+    Custom (owner-review): к трём понятиям добавлен блок «где какой поиск
+    работает» — тип запроса → лексический / семантический / гибрид."""
+    sid = "s-classic-rag"
+    s = blank(p)
+    slide_title(s, "Классический поиск: инвертированный индекс, BM25 и где он работает.",
+                size=23, h=1.02)
+    text_box(s, 0.55, 1.30, 12.25, 0.44,
+             "Буква R в RAG — retrieval, поиск: инвертированный индекс, булев отбор, ранжирование BM25. "
+             "Их устройство определяет, какой запрос каким поиском брать.",
+             size=13, italic=True, color=MID, line_spacing=1.10)
+    # ── ряд A: 3 компактные карточки-понятия ──
+    cards = [
+        ("book-open", "Инвертированный индекс",
+         "Для каждого СЛОВА — список документов, где оно есть (машинный каталог). "
+         "Хребет Lucene, Elasticsearch, PostgreSQL FTS."),
+        ("route", "Булев отбор",
+         "Запрос как логика («ошибка AND аутентификация NOT tomcat»): точный, "
+         "предсказуемый, объяснимый отбор."),
+        ("list-ordered", "TF-IDF → BM25 (~1994)",
+         "Ранжирование по важности слова (реже в коллекции — сильнее сигнал). "
+         "BM25 (Okapi) — дешёвая линия, которую «умные» системы не всегда обгоняют."),
+    ]
+    n = len(cards)
+    gap = 0.24
+    x0, total_w = 0.55, 12.25
+    cw = (total_w - gap * (n - 1)) / n
+    cy, chh = 1.86, 1.72
+    for i, (ic, name, body) in enumerate(cards):
+        x = x0 + i * (cw + gap)
+        ocean_box(s, x, cy, cw, chh)
+        icon(s, ic, x + 0.24, cy + 0.16, 0.40, "mid")
+        text_box(s, x + 0.74, cy + 0.16, cw - 0.94, 0.40, name,
+                 size=13.5, bold=True, color=MID, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x + 0.26, cy + 0.64, cw - 0.52, chh - 0.74, body,
+                 size=10.5, color=DEEP, line_spacing=1.08)
+    # ── ряд B: «где какой поиск работает» — тип запроса → поиск ──
+    my = cy + chh + 0.20
+    mh = 1.72
+    filled_rect(s, 0.55, my, 12.25, mh, SURFACE, stroke=LIGHT, stroke_pt=1.5,
+                radius=True, radius_adj=0.05)
+    text_box(s, 0.80, my + 0.11, 6.0, 0.30, "ГДЕ КАКОЙ ПОИСК РАБОТАЕТ",
+             size=12, bold=True, color=LIGHT)
+    maps = [
+        ("Лексический (BM25)", "точные термины, коды ошибок, ID, имена, номера — «ORA-00942» найдёт буквально", MID),
+        ("Семантический (эмбеддинги)", "перифраз и синонимы, смысл — «сломанный вход» ≈ «authentication failure»", TEAL),
+        ("Гибрид (BM25 + векторы)", "нужны оба сразу: точная лексика И смысл — дефолт сильного RAG-2026", GOLD),
+    ]
+    mw = (12.25 - 0.24 * 2 - 0.36) / 3
+    mx = 0.73
+    myy = my + 0.46
+    for title, body, col in maps:
+        card_h = mh - 0.60
+        ocean_box(s, mx, myy, mw, card_h,
+                  fill=(GOLD_TINT if col is GOLD else WHITE),
+                  stroke=col, stroke_pt=1.75)
+        filled_rect(s, mx + 0.14, myy + 0.14, 0.09, card_h - 0.28, col,
+                    radius=True, radius_adj=0.4)
+        text_box(s, mx + 0.34, myy + 0.13, mw - 0.50, 0.34, title,
+                 size=11.5, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, mx + 0.34, myy + 0.48, mw - 0.50, card_h - 0.58, body,
+                 size=10, color=DEEP, line_spacing=1.08)
+        mx += mw + 0.30
+    # ── bridge-строка: «семантика не заменяет классику, а сливается с ней» ──
+    by = my + mh + 0.16
+    bh = 0.86
+    filled_rect(s, 0.55, by, 12.25, bh, TEAL_TINT, stroke=TEAL, stroke_pt=1.5,
+                radius=True, radius_adj=0.06)
+    text_runs(s, 0.83, by + 0.10, 11.6, bh - 0.18, [
+        {"text": "Ключ: ", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": "«семантический поиск построен на BM25» — НЕ так. Лексика (BM25, ~1994) и плотные "
+                 "векторы (DPR, 2018–2020) — две независимые ветки; их СЛИВАЮТ (fuse), а не наследуют. "
+                 "RAG = объединение двух веток, а не надстройка над одной.",
+         "size": 12.5, "color": DEEP},
+    ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes(sid))
 
 
 def build_s_classic_ft(p):

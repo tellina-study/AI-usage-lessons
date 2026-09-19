@@ -275,6 +275,24 @@
 - **SWE-bench / контаминация.** arXiv:2506.17208; scale.com Pro. Verified ~88% / Pro ~64%; методологические дыры. `[VFY-day-of weekly]` (§3.5, Часть 3 Deep-dive box 3)
 - **GitClear.** (2025-02). gitclear.com. 211M строк; клоны 8,3→12,3%, рефакторинг ~25→<10%, churn↑. `[VFY-baseline: корреляция]` (§3.6 Часть 3, §7.2)
 
+**Skills, MCP-для-кодинга, git-конвенции, task-logging (§3.3b–3.3e, issue #162).**
+- **Anthropic.** code.claude.com/docs/en/skills. Формат SKILL.md, frontmatter-поля, Skills vs CLAUDE.md vs AGENTS.md, progressive disclosure. (§3.3b, Часть 3)
+- **Agent Skills open standard.** agentskills.io. Vendor-neutral подмножество полей SKILL.md. `[VFY-day-of: adoption по вендорам]` (§3.3b, Часть 3)
+- **OpenAI Codex.** developers.openai.com/codex/skills; developers.openai.com/codex/concepts/customization. Codex skills поверх open standard + custom instructions/AGENTS.md отдельно. (§3.3b, Часть 3)
+- **GitHub MCP server.** github.com/github/github-mcp-server. Toolsets, read-only флаг, token security guidance. `[VFY-day-of: набор toolset'ов]` (§3.3c, Часть 3)
+- **Playwright MCP server.** github.com/microsoft/playwright-mcp. Accessibility-дерево вместо скриншота; e2e из агентного цикла. (§3.3c, Часть 3)
+- **Lethal Trifecta — MCP как вектор.** arcjet.com/learn/lethal-trifecta; simonwillison.net/2025/Jun/16/the-lethal-trifecta. GitHub MCP инцидент-пример (issues → prompt injection → эксфильтрация через PR). (§3.3c, §5 Часть 4)
+- **Conventional Commits.** conventionalcommits.org/en/v1.0.0. Canonical spec: `<type>[scope]: description`, связь с semver. (§3.3d, Часть 3)
+- **Conventional Branch.** conventionalbranch.org (v1.1.0). Branch-типы + AI Agent Source Prefixes (`ai/`, `claude/`, `codex/`, `copilot/`, `cursor/`). `[VFY-day-of: adoption-темп]` (§3.3d, Часть 3)
+- **Git-workflow для агентных коммитов (practitioner).** buildmvpfast.com/blog/git-workflow-ai-assisted-development-agent-commits-2026. «5–10× коммитов», «не коммитить в общую ветку». `[VFY-day-of]` (§3.3d, Часть 3)
+- **PR-шаблон для агентных PR (practitioner + GitHub блог).** dev.to/jackm-singularity/ai-code-review-packet-make-agent-written-pull-requests-easy-to-trust-2c0g; github.blog/ai-and-ml/generative-ai/agent-pull-requests-are-everywhere-heres-how-to-review-them. Intent/Changed/Not changed/Validation/Risks/Follow-ups. (§3.3d, Часть 3)
+- **marimo.** marimo.io/features/vs-jupyter-alternative. Notebook как чистый Python-файл, версионируемый в git. (§3.3d, Часть 3)
+- **monorepo.tools/ai.** Монорепо + AI-агенты — схождение, не конфликт. (§3.3d, Часть 3)
+- **Osmani, A.** addyosmani.com/blog/ai-coding-workflow. «Commit early and often» — git-история как единственный лог задач (контрастный четвёртый паттерн). (§3.3d, §3.3e, Часть 3)
+- **Backlog.md.** github.com/MrLesk/Backlog.md (MIT). Паттерн (в): «each task = one context window = one PR»; CLI + MCP (`backlog://workflow/overview`). (§3.3e, Часть 3)
+- **Anthropic — TodoWrite/Task*.** code.claude.com/docs/en/agent-sdk/todo-tracking. Session-scoped, не файл на диске; жизненный цикл pending→in_progress→completed. `[VFY-day-of: версия перехода на Task*]` (§3.3e, Часть 3)
+- **Append-only changelog-паттерн.** streamkap.com/resources-and-guides/decision-traces-ai-agents. Паттерн (б): дописывать в `.changelog/CHANGELOG.md`. (§3.3e, Часть 3)
+
 **Архитектура и управление ею с AI (§2).**
 - **Nygard, M.** (2011). *Documenting Architecture Decisions.* cognitect.com/blog/2011/11/15 + adr.github.io. Канон ADR (5 секций, lightweight, immutable, в контроле версий). (§0.5, §2.2)
 - **Ford, N., Parsons, R., Kua, P.** *Building Evolutionary Architectures* + Thoughtworks Radar «architectural fitness function» / «how fitness functions help govern AI». thoughtworks.com/radar/techniques/architectural-fitness-function; evolutionaryarchitecture.com. Fitness-функции как объективный автоматический надзор (governance); 3 принципа эволюционной архитектуры. (§2.3, §2.5)

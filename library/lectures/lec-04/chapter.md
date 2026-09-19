@@ -2,11 +2,11 @@
 lecture: 4
 title: "Глава 4. AI в жизненном цикле разработки ПО (SDLC)"
 status: draft
-version: v4-draft
+version: v4.1-draft
 axis: "методико-first: фазы SDLC × ведущая практика (методика); инструмент вторичен"
 parts: 5
-length_words: "~34k (Ч1 §0+§1 ~8.9k · Ч2 §2 ~4.3k · Ч3 §3 ~4.5k · Ч4 §4+§5 ~8.3k · Ч5 §6+§7+Q&A+источники ~8.1k; ≥30k baseline выполнен)"
-references_count: 48
+length_words: "~39k (Ч1 §0+§1 ~8.8k · Ч2 §2 ~4.3k · Ч3 §3 ~8.9k [расширен issue #162: 3.3b Skills / 3.3c MCP-для-кодинга / 3.3d git-конвенции / 3.3e task-logging паттерны] · Ч4 §4+§5 ~8.3k · Ч5 §6+§7+Q&A+источники ~8.8k; ≥30k baseline с запасом)"
+references_count: 65
 strict_in_self_estimate: "измеренная консервативная (in-bucket = только целиком провал→урок→альтернатива / критерий-где-не-AI абзацы, partial→out по Решению #78): Ч1 ~35.7% · Ч2 ~35.7% · Ч3 ~39.0% · Ч4 ~52.0% (тяжёлый failure-кластер §5) · Ч5 ~39.4% (все части ≥35%). methodology-critic Phase 3 пересчитывает per-part И по минутам speech отдельно"
 lo: [LO1, LO4, LO7]
 slide_map: "Ч1 → s01–s11; Ч2 → s12–s15; Ч3 → s16–s21; Ч4 → s22–s31; Ч5 → s32–s40"
@@ -15,6 +15,20 @@ slide_map: "Ч1 → s01–s11; Ч2 → s12–s15; Ч3 → s16–s21; Ч4 → s22
 # Глава 4. AI в жизненном цикле разработки ПО (SDLC)
 
 ## Changelog
+
+### v4.1-draft (2026-09-19) — §3 расширен: механика Skills / MCP-для-кодинга / git-конвенций / task-logging паттернов (issue #162)
+
+Phase A расширения главы (issue #162): §3 «Реализация» дополнен четырьмя новыми подразделами **3.3b–3.3e** между §3.3 (harness engineering) и §3.4 (две философии), без renumbering остального §3 — cascade-safety для существующих `[for-slide-sNN]`-маркеров. Источник — `notes/research/lecture-4/coding-agent-mechanics.md` (5 блоков, с Confidence-пометками). Явное owner-решение: это **не** новые несущие практики, а конкретная операционная механика, реализующая практики (2) организация среды и (3) harness engineering — интро-блокквот §3 обновлён одной фразой, чтобы не разрушить формулировку «три практики».
+
+- **3.3b Skills** — on-demand компетенция агента vs always-on AGENTS.md/CLAUDE.md; progressive disclosure; формат SKILL.md (таблица полей); три способа вызова; vendor-neutral рамка (Agent Skills open standard, честно — подтверждено для Codex, не подтверждено для Cursor).
+- **3.3c MCP для кодинг-агента** — без повтора определения протокола из Л3; GitHub MCP toolsets + read-only флаг, Playwright MCP accessibility-дерево, filesystem MCP как класс; компактный мост к Lethal Trifecta (полный разбор — §5, Часть 4) с инженерным следствием read-only-by-default.
+- **3.3d Git-конвенции как контракт** — Conventional Commits (+ связь с semver, объём агентных коммитов как актив при машинной разбираемости), Conventional Branch (AI Agent Source Prefixes), PR-шаблон как agent-producible артефакт; честный подраздел «когда git не подходит» (Jupyter→marimo, монорепо-схождение, git-history-как-лог — неформализованный четвёртый паттерн).
+- **3.3e Task-logging паттерны** — growth-ladder-style без единственно правильного ответа: три паттерна (а/б/в) с self-referential примерами курса (`notes/research/lecture-N/`, `notes/decisions.md`, Backlog.md), таблица критериев выбора, контраст с session-scoped Claude Code TodoWrite/Task*, честный мост к «Honest Lying» (Л3) без пересказа, мост к Семинару 4.
+- **§3.4** дополнен одним компактным абзацем — ландшафт инструментов (agentic IDE класс, sub-agents как примитив).
+- **§2 (Часть 2)** — один forward-pointer «подробно MCP для кодинг-агента — §3.3c» вместо попытки объяснить MCP раньше по хронологии главы; остальной §2 не тронут.
+- **Self-check + Вероятные вопросы §3** дополнены (вопрос 3b; В7–В8) под новый материал.
+- **Источники** — 17 новых записей (кластер «Skills, MCP-для-кодинга, git-конвенции, task-logging»), `references_count` 48 → 65.
+- **Объём:** §3 (Часть 3) вырос с ~4,5k до ~8,9k слов; глава целиком ~34k → ~39k. `chapter-part3.md` остался в пределах Document Size Limit (255 строк из 600) — split на `chapter-part3b.md` не потребовался.
 
 ### v4-draft (2026-08-30) — методико-first re-spine: ведёт практика/дисциплина, инструмент вторичен
 
@@ -37,7 +51,7 @@ slide_map: "Ч1 → s01–s11; Ч2 → s12–s15; Ч3 → s16–s21; Ч4 → s22
 
 - **Часть 1 — `chapter.md`** (этот файл): **§0 Введение** (мотивация, что переносим из Л1–Л3, центральный вопрос, keystone git-loop дисциплины, дихотомия «методика vs инструмент», определения) · **§1 Требования** (spec-driven как дисциплина + провал prompt-and-pray).
 - **Часть 2 — `chapter-part2.md`**: **§2 Архитектура** (необходимость + ADR/fitness-функции/C4/эволюционная — управление архитектурой с AI).
-- **Часть 3 — `chapter-part3.md`**: **§3 Реализация** (дисциплина цикла + организация среды/AGENTS.md/память + harness engineering; 70%-проблема; anti-hype).
+- **Часть 3 — `chapter-part3.md`**: **§3 Реализация** (дисциплина цикла + организация среды/AGENTS.md/память + harness engineering; операционная механика — skills, MCP-для-кодинга, git-конвенции, task-logging паттерны; 70%-проблема; anti-hype).
 - **Часть 4 — `chapter-part4.md`**: **§4 Тестирование** (TDD-дисциплина) · **§5 Ревью + Безопасность** (тяжёлый failure-кластер: Stanford/NYU, slopsquatting, CamoLeak, Replit).
 - **Часть 5 — `chapter-part5.md`**: **§6 CI/CD + Эксплуатация + Документация** · **§7 Обобщение** (практика-матрица, триангуляция, risk-triad, чек-лист) · Q&A backup · Источники.
 

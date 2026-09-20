@@ -1,0 +1,7 @@
+=== git switch -c fix-form-field ===
+=== INPUT ===
+{"tool_input":{"command":"git commit -m \"fix: second form field\""}}
+=== current branch ===
+fix-form-field
+=== HOOK OUTPUT (stdout) ===
+=== hook exit code: 0 (empty stdout above = hook did not block; commit is allowed to proceed) ===

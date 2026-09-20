@@ -1,0 +1,14 @@
+$ git ls-tree -r --name-only 576be2b | sort   # commit 576be2b
+
+AGENTS.md
+CLAUDE.md
+.claude/settings.json
+.claude/skills/deploy/SKILL.md
+DECISIONS.md
+index.html
+package.json
+src/main.js
+src/validate.js
+tests/form.spec.ts
+
+# Комментарий: Ступень 4 (скиллы): + .claude/skills/deploy/SKILL.md. Также видно src/validate.js — слит из ветки fix-form-field (реальный коммит по сценарию хука, ступень 3).

@@ -1,0 +1,13 @@
+diff --git a/DECISIONS.md b/DECISIONS.md
+new file mode 100644
+index 0000000..1f479f9
+--- /dev/null
++++ b/DECISIONS.md
+@@ -0,0 +1,7 @@
++# Decisions
++
++Append-only log of why, in date order.
++
++## 2026-09-20 — не подключаем библиотеку валидации форм
++Форма — два поля (имя, email), хватает нативных `required`/`pattern` в `index.html`.
++Сторонняя библиотека — лишняя зависимость и лишние килобайты в сборке ради этого объёма.

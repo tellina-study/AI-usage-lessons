@@ -1,0 +1,90 @@
+==> build-deck/SKILL.md <==
+# build-deck
+
+Build/rebuild a PowerPoint (PPTX) presentation for a lecture using the repo-first pipeline + visual loop + 3 QA agents.
+
+## Role
+
+==> catalog-docs/SKILL.md <==
+# catalog-docs
+
+Catalog exported documents into structured manifests and create RDF triples in the ontology.
+
+## Role
+
+==> compile-wiki/SKILL.md <==
+# compile-wiki
+
+Compile and maintain the wiki knowledge base: index all sources, populate ontology, ingest into RAG, generate wiki pages.
+
+**Current Phase: 1 (Reindex)** — update this as phases are implemented.
+
+==> diagram-refresh/SKILL.md <==
+# diagram-refresh
+
+Refresh diagrams based on content changes and ontology relationships.
+
+## Role
+
+==> extract-links/SKILL.md <==
+# extract-links
+
+Extract cross-references and relationships between documents and create RDF triples in the ontology.
+
+## Role
+
+==> impact-check/SKILL.md <==
+# impact-check
+
+Analyze impact of recent changes across the knowledge base using ontology queries.
+
+## Role
+
+==> issue-from-change/SKILL.md <==
+# issue-from-change
+
+Detect document changes and create GitHub Issues with structured descriptions.
+
+## Role
+
+==> pre-user-gate/SKILL.md <==
+---
+name: pre-user-gate
+description: Pre-USER-GATE walkthrough — orchestrator self-review before presenting GATE to user. Reduces user feedback rounds.
+---
+
+
+==> publish-article/SKILL.md <==
+# publish-article
+
+Publish a bilingual blog article to tellian.io via WordPress.com REST API v1.1.
+
+## Trigger
+
+==> query-kb/SKILL.md <==
+# query-kb
+
+Search the knowledge base using 4-tier hybrid retrieval: wiki index → ontology SPARQL → RAG semantic search → grep fallback.
+
+## Role
+
+==> reflect/SKILL.md <==
+# reflect
+
+Run post-session reflection process.
+
+## When to Use
+
+==> sync-library/SKILL.md <==
+# sync-library
+
+Synchronize Google Drive working folder with local catalog exports.
+
+## Role
+
+==> update-lecture/SKILL.md <==
+# update-lecture
+
+Create or update a lecture document in Google Docs based on the course plan.
+
+## Role

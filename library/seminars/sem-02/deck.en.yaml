@@ -1,0 +1,355 @@
+deck:
+  seminar_number: 2
+  title: "Seminar 2. When AI, Which AI, and on What"
+  audience: "engineering students (practicing, many/most already work in IT, actively use AI chat tools and vibe-code) — this seminar runs after Lecture 1, before Lectures 2-3"
+  format: "discussion_breakdown"
+  central_question: "Seven real-world cases — and in each one, the answer changes as new inputs surface that weren't in the initial setup"
+  learning_outcomes: [LO1, LO7]
+  lo_note: "Reinforces LO1 (choosing the AI-solution type for a task) and LO7 (grounded critical verification) from Lecture 1 — at the level of applying them to realistic engineering setups, not repeating definitions."
+  language: en
+  pivot_note: "issue #182 — this deck fully replaces the pre-pivot version (a 'decision funnel' structure with an explicit framework, worksheets, and artificial cases), which the course owner sent back with a REVISE verdict. The new structure is case-centric: seven realistic cases, each with its own choice; the framework isn't foregrounded, and questionnaires and procedural cheat-sheets are removed. The session's mechanics are an open, whole-room (plenary) discussion, with no small groups and no formal tallying of answers."
+  revision_note_v3: "issue #182 — third revision (v2→v3) addressing 23 notes from the course owner (GATE B REVISE). Key changes: expanded realistic noise in every setup and intro line; replaced the negative case Epic Sepsis Model → CNET (an arithmetic error instead of reuse-without-adaptation); a detailed breakdown of NER/slovnet in the logs quickfire; Kite/Copilot moved into a chronological timeline + a new standalone slide on standalone devices (Humane AI Pin, Rabbit R1); an expanding v1→v2→v3 schema in case 3 (dimmed old blocks + colored new ones) instead of a ladder bar; replaced 'RAG and agent in production' with Morgan Stanley (positive) + Replit (negative), with Octomind reduced to a footer; a merged lawyer + legal-map slide covering 3 jurisdictions (RF/EU/US) instead of a single 420-FZ card; an expanded breakdown of the local model — T-lite/T-pro, 4-bit quantization, LoRA; replaced JetBrains → Apple Intelligence + Google Gemini Nano; removed all ladder bars ('One-off call → RAG → Agent', 'Move 1/2/3') across the whole deck; dropped 'from real life' from the titles, divider slides are named after the choice's topic rather than the case number. 41 → 42 slides."
+  source_of_truth: "library/seminars/sem-02/brief.md + facilitator-guide.md + facilitator-guide-part2.md"
+
+slides:
+  - id: s01
+    file: slides-en/s01-hero-cover.md
+    type: hero_cover
+    assertion: "Seminar 2. When AI, Which AI, and on What"
+    learning_goal: "Emotional hook + hero illustration: today we work through real engineering decisions, not a framework"
+    visual:
+      pattern: hero_cover_real_photo
+      backup: assets/screenshots/s01-*.jpg
+
+  - id: s02
+    file: slides-en/s02-four-choices.md
+    type: assertion_visual
+    assertion: "Today — four choices, seven cases"
+    learning_goal: "An overview of the session as a simple list: four choice types + the case lineup, no procedural framework"
+    visual:
+      pattern: four_choices_list_plus_seven_cases
+
+  - id: s03
+    file: slides-en/s03-case1-divider.md
+    type: section_divider
+    assertion: "AI or plain code?"
+    learning_goal: "Visual divider — transition into case 1, the choice's topic instead of the case number"
+    visual:
+      pattern: section_divider_plain
+
+  - id: s04
+    file: slides-en/s04-case1-setup.md
+    type: case_study
+    assertion: "Accounting is drowning in vendor invoices — can this be automated?"
+    learning_goal: "Setting up case 1 — a live line from the product manager with noise, two examples + a target 1C table"
+    visual:
+      pattern: three_document_cards_plus_question
+
+  - id: s05
+    file: slides-en/s05-case1-intro2.md
+    type: case_study
+    assertion: "They sent over a 4.2 GB ZIP — and the formats don't match"
+    learning_goal: "A fact-only intro with no conclusions — just a new detail and a question"
+    visual:
+      pattern: scattered_formats_cards_plus_question
+
+  - id: s06
+    file: slides-en/s06-case1-verdict.md
+    type: case_study
+    assertion: "Hybrid: the LLM extracts, code validates. Study the data, don't take anyone's word for it"
+    learning_goal: "Breaking down case 1 — LLM extraction + strict code validation; a lesson on sample size"
+    visual:
+      pattern: hybrid_pipeline_illustration
+
+  - id: s07
+    file: slides-en/s07-quickfire-logs.md
+    type: case_study
+    assertion: "Personal data in logs — how do you clean it up as fast and cheap as possible?"
+    learning_goal: "Quickfire setup with noise — a question about speed and cost"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s08
+    file: slides-en/s08-quickfire-logs-verdict.md
+    type: case_study
+    assertion: "Regex for phone numbers and emails, a compact NER model for names in free text"
+    learning_goal: "Breaking down the quickfire — the boundary between a deterministic method and a small model runs inside a single task"
+    visual:
+      pattern: two_column_split_verdict
+
+  - id: s09
+    file: slides-en/s09-cnet-ramp.md
+    type: case_study
+    assertion: "When a formula was needed — and when AI closed a gap nothing else could"
+    learning_goal: "An LLM arithmetic error where a deterministic formula was needed, vs. replacing manual processing that had negligible coverage"
+    visual:
+      pattern: two_card_contrast_negative_positive
+
+  - id: s10
+    file: slides-en/s10-case2-divider.md
+    type: section_divider
+    assertion: "Buy (build in) or build your own?"
+    learning_goal: "Visual divider — transition into case 2, the choice's topic instead of the case number"
+    visual:
+      pattern: section_divider_plain
+
+  - id: s11
+    file: slides-en/s11-case2-setup.md
+    type: case_study
+    assertion: "An AI assistant for support agents — suggested replies, search for similar tickets"
+    learning_goal: "Setting up case 2 — a live line with noise, agents live inside the helpdesk all day"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s12
+    file: slides-en/s12-case2-intro2.md
+    type: case_study
+    assertion: "An off-the-shelf helpdesk with no open API — the system was bought 4 years ago"
+    learning_goal: "Intro — a line from the IT director with noise, no conclusions, only a fact and a question"
+    visual:
+      pattern: fact_card_plus_question
+
+  - id: s13
+    file: slides-en/s13-case2-verdict.md
+    type: case_study
+    assertion: "Bolt it on the side, switch vendors, or rethink the task — there's no single right answer"
+    learning_goal: "Breaking down case 2 — 3 options with the cost of each, deliberate ambiguity + when each gets picked in practice"
+    visual:
+      pattern: three_option_cards_with_cost
+
+  - id: s14
+    file: slides-en/s14-quickfire-product-descriptions.md
+    type: case_study
+    assertion: "A standalone AI service for product descriptions — good idea?"
+    learning_goal: "Quickfire setup with noise — just the question"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s15
+    file: slides-en/s15-quickfire-product-verdict.md
+    type: case_study
+    assertion: "A button in the existing catalog admin panel, not a standalone service"
+    learning_goal: "Breaking down the quickfire — being built-in beats a standalone product; when a standalone service is justified"
+    visual:
+      pattern: single_card_verdict
+
+  - id: s16
+    file: slides-en/s16-kite-vs-copilot.md
+    type: case_study
+    assertion: "17 months in the same market — Kite shut down, Copilot reached 90% of the Fortune 100"
+    learning_goal: "The commercial cost of the built-in-vs-your-own architecture choice, shown as a timeline"
+    visual:
+      pattern: timeline_horizontal
+
+  - id: s17
+    file: slides-en/s17-standalone-devices.md
+    type: case_study
+    assertion: "A standalone device versus a feature in the phone"
+    learning_goal: "The same organizational lesson at a different scale — a device competes against the habit of not switching"
+    visual:
+      pattern: two_device_cards_plus_photo
+
+  - id: s18
+    file: slides-en/s18-case3-divider.md
+    type: section_divider
+    assertion: "A one-off call, RAG, or an agent?"
+    learning_goal: "Visual divider — transition into case 3, the choice's topic instead of the case number"
+    visual:
+      pattern: section_divider_plain
+
+  - id: s19
+    file: slides-en/s19-rag-schema.md
+    type: assertion_visual
+    assertion: "RAG in one flow: question → search over the base → snippets into context → answer"
+    learning_goal: "RAG intuition in one paragraph, right before the case that needs it"
+    visual:
+      pattern: horizontal_flow_4_steps
+
+  - id: s20
+    file: slides-en/s20-agent-schema.md
+    type: assertion_visual
+    assertion: "An agent as a loop: plan → tool → check → next"
+    learning_goal: "Agent intuition in one paragraph, right before the case that needs it"
+    visual:
+      pattern: circular_flow_4_steps
+
+  - id: s21
+    file: slides-en/s21-case3-setup.md
+    type: case_study
+    assertion: "After the call, the transcript arrives by email — we need minutes: decisions, action items, deadlines"
+    learning_goal: "Setting up case 3 — a live line with noise, the transcript fits in whole"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s22
+    file: slides-en/s22-case3-verdict1.md
+    type: case_study
+    assertion: "Schema v1: email with transcript → model call with a template → minutes"
+    learning_goal: "Breaking down the setup — one one-off call, no storage, no loop"
+    visual:
+      pattern: schema_v1_single_call
+
+  - id: s23
+    file: slides-en/s23-case3-intro2.md
+    type: case_study
+    assertion: "Minutes pile up in a shared folder — what did we decide about vendor X in May?"
+    learning_goal: "Search-related fact — a line with no conclusions, only a fact and a question"
+    visual:
+      pattern: fact_card_plus_question
+
+  - id: s24
+    file: slides-en/s24-case3-verdict2.md
+    type: case_study
+    assertion: "Schema v2: a growing archive calls for RAG — search over the base layered on the one-off call"
+    learning_goal: "Breaking down intro 1 — a growing base justifies RAG; the schema visibly extends schema v1"
+    visual:
+      pattern: schema_v2_expansion
+
+  - id: s25
+    file: slides-en/s25-case3-intro3.md
+    type: case_study
+    assertion: "Half the action items from May's minutes still have no owner"
+    learning_goal: "Action-items fact — a line with no conclusions, only a fact and a question"
+    visual:
+      pattern: fact_card_plus_question
+
+  - id: s26
+    file: slides-en/s26-case3-verdict3.md
+    type: case_study
+    assertion: "Schema v3: an action in an external system — you need an agent on top of RAG"
+    learning_goal: "Breaking down intro 2 — an action in an external system justifies an agent; the closing lesson"
+    visual:
+      pattern: schema_v3_expansion
+
+  - id: s27
+    file: slides-en/s27-quickfire-digest.md
+    type: case_study
+    assertion: "A digest of chats and email — what architecture does that need?"
+    learning_goal: "Quickfire setup with noise — just the question"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s28
+    file: slides-en/s28-quickfire-digest-verdict.md
+    type: case_study
+    assertion: "You need an agent — to go through the sources; you don't need RAG — no arbitrary query against a large base"
+    learning_goal: "Breaking down the quickfire — a common mistake: mistaking RAG for 'many sources'"
+    visual:
+      pattern: two_column_needed_not_needed
+
+  - id: s29
+    file: slides-en/s29-rag-agent-in-prod.md
+    type: case_study
+    assertion: "RAG and an agent in production: Morgan Stanley — success; Replit — failure"
+    learning_goal: "A RAG success at scale vs. an agent that broke a direct instruction in production"
+    visual:
+      pattern: two_card_contrast_negative_positive
+
+  - id: s30
+    file: slides-en/s30-case4-divider.md
+    type: section_divider
+    assertion: "External API or local inference?"
+    learning_goal: "Visual divider — transition into case 4, the choice's topic instead of the case number"
+    visual:
+      pattern: section_divider_plain
+
+  - id: s31
+    file: slides-en/s31-case4-setup.md
+    type: case_study
+    assertion: "A call card: need, objections, agreements — how do you build that?"
+    learning_goal: "Setting up case 4 — a live line with noise"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s32
+    file: slides-en/s32-legal-map.md
+    type: case_study
+    assertion: "Personal data in the recordings — and a legal map of three jurisdictions"
+    learning_goal: "A lawyer's line with context for why it came up + a map of RF/EU/US regulation"
+    visual:
+      pattern: quote_card_plus_three_jurisdiction_cards
+
+  - id: s33
+    file: slides-en/s33-case4-intro2.md
+    type: case_study
+    assertion: "No GPU server and no budget. We need five fields in the CRM, not a conversation"
+    learning_goal: "Intro 2 — two lines with background noise, no conclusions"
+    visual:
+      pattern: two_quote_cards_plus_question
+
+  - id: s34
+    file: slides-en/s34-case4-verdict.md
+    type: case_study
+    assertion: "The task narrowed down to a template — a local 7-8B-parameter model handles it"
+    learning_goal: "Breaking down intro 2 — exactly what the engineer dug up about small models; a double lesson on complexity and sensitivity"
+    visual:
+      pattern: single_card_plus_dual_lesson
+
+  - id: s35
+    file: slides-en/s35-samsung-apple-gemini.md
+    type: case_study
+    assertion: "19 days from allowing ChatGPT to three leaks at Samsung. Small models are already in your pocket"
+    learning_goal: "A negative leak example + a positive example of on-device models for half the room"
+    visual:
+      pattern: two_card_contrast_negative_positive
+
+  - id: s36
+    file: slides-en/s36-your-task.md
+    type: assertion_visual
+    assertion: "Does anyone here have a similar task from work?"
+    learning_goal: "An open invitation to carry the session's method over to a real task from the room — no worksheet"
+    visual:
+      pattern: open_invitation_illustration
+
+  - id: s37
+    file: slides-en/s37-lessons.md
+    type: summary
+    assertion: "What to take away: lessons from seven cases"
+    learning_goal: "A closing compilation — one lesson line per case, traceable back to the breakdowns"
+    visual:
+      pattern: seven_lesson_lines
+
+  - id: s38
+    file: slides-en/s38-homework-reading.md
+    type: summary
+    assertion: "Homework reading: Klarna, NYC MyCity, bonus — the $1 Tahoe"
+    learning_goal: "Optional reading covering several choices through one long example"
+    visual:
+      pattern: three_reading_cards
+
+  # reserve — shown only if time remains (reserve ladder, guide part2)
+  - id: s39
+    file: slides-en/s39-reserve-klarna.md
+    type: case_study
+    reserve: true
+    assertion: "Klarna, 2023-2025: one story — four forks in the road"
+    learning_goal: "Reserve: apply all four choice types in full to one long public case"
+    visual:
+      pattern: four_row_case_breakdown
+
+  - id: s40
+    file: slides-en/s40-reserve-dedup-setup.md
+    type: case_study
+    reserve: true
+    assertion: "News deduplication — you need to merge messages about the same event into one card"
+    learning_goal: "Reserve quickfire — setup and question"
+    visual:
+      pattern: single_card_plus_question
+
+  - id: s41
+    file: slides-en/s41-reserve-dedup-verdict.md
+    type: case_study
+    reserve: true
+    assertion: "Fuzzy matching handles ~90% of cases cheaper and more predictably. The LLM handles the rest"
+    learning_goal: "Reserve: back to the regex/model boundary on new material"
+    visual:
+      pattern: two_card_setup_vs_split_verdict
+
+  - id: s42
+    file: slides-en/s42-hero-closing.md
+    type: hero_closing
+    assertion: "Today you decided what to build. Lecture 2 — how the model is built inside"
+    learning_goal: "Bridge to Lecture 2; emotional payoff"
+    visual:
+      pattern: hero_closing_bridge_photo
+      backup: assets/screenshots/s42-*.jpg

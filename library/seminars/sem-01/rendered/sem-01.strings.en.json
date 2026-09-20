@@ -1,0 +1,3930 @@
+[
+  {
+    "key": "s01.body.001",
+    "slide": 1,
+    "where": "body",
+    "para": 1,
+    "ru": "Семинар 1 ",
+    "en": "Seminar 1 "
+  },
+  {
+    "key": "s01.body.002",
+    "slide": 1,
+    "where": "body",
+    "para": 1,
+    "ru": "З",
+    "en": "G"
+  },
+  {
+    "key": "s01.body.003",
+    "slide": 1,
+    "where": "body",
+    "para": 1,
+    "ru": "накомство",
+    "en": "etting to know you"
+  },
+  {
+    "key": "s01.body.004",
+    "slide": 1,
+    "where": "body",
+    "para": 2,
+    "ru": "Отраслевое применение систем искусственного интеллекта",
+    "en": "Industry Applications of Artificial Intelligence Systems"
+  },
+  {
+    "key": "s01.body.005",
+    "slide": 1,
+    "where": "body",
+    "para": 3,
+    "ru": "МГТУ им. Н.Э. Баумана",
+    "en": "Bauman Moscow State Technical University"
+  },
+  {
+    "key": "s01.body.006",
+    "slide": 1,
+    "where": "body",
+    "para": 4,
+    "ru": "Медицина",
+    "en": "Medicine"
+  },
+  {
+    "key": "s01.body.007",
+    "slide": 1,
+    "where": "body",
+    "para": 5,
+    "ru": "Финансы",
+    "en": "Finance"
+  },
+  {
+    "key": "s01.body.008",
+    "slide": 1,
+    "where": "body",
+    "para": 6,
+    "ru": "Транспорт",
+    "en": "Transport"
+  },
+  {
+    "key": "s01.body.009",
+    "slide": 1,
+    "where": "body",
+    "para": 7,
+    "ru": "Производство",
+    "en": "Manufacturing"
+  },
+  {
+    "key": "s01.body.010",
+    "slide": 1,
+    "where": "body",
+    "para": 8,
+    "ru": "Разработка / IT",
+    "en": "Development / IT"
+  },
+  {
+    "key": "s01.body.011",
+    "slide": 1,
+    "where": "body",
+    "para": 9,
+    "ru": "Логистика",
+    "en": "Logistics"
+  },
+  {
+    "key": "s01.body.012",
+    "slide": 1,
+    "where": "body",
+    "para": 10,
+    "ru": "Наука",
+    "en": "Science"
+  },
+  {
+    "key": "s01.body.013",
+    "slide": 1,
+    "where": "body",
+    "para": 11,
+    "ru": "Кибербезопасность",
+    "en": "Cybersecurity"
+  },
+  {
+    "key": "s01.body.014",
+    "slide": 1,
+    "where": "body",
+    "para": 12,
+    "ru": "Wikimedia Commons · CC / общественное достояние",
+    "en": "Wikimedia Commons · CC / public domain"
+  },
+  {
+    "key": "s01.notes.001",
+    "slide": 1,
+    "where": "notes",
+    "para": 1,
+    "ru": "Добро пожаловать на курс «Отраслевое применение систем искусственного интеллекта». Это первое занятие — и вы попадаете на него раньше, чем услышите хоть одну лекцию курса. Специально: прежде чем мы начнём системно разбирать, где и как AI применяется в разработке, финансах, медицине, промышленности и других отраслях, полезно честно зафиксировать, с чем вы приходите на курс уже сейчас.",
+    "en": "Welcome to the course “Industry Applications of Artificial Intelligence Systems.” This is the first session — and you're here before you've heard a single lecture in the course. That's deliberate: before we start systematically covering where and how AI is applied in software development, finance, medicine, manufacturing, and other industries, it's useful to honestly record where you stand with AI right now."
+  },
+  {
+    "key": "s01.notes.002",
+    "slide": 1,
+    "where": "notes",
+    "para": 2,
+    "ru": "Сегодня — знакомство. Мы познакомимся друг с другом и с форматом курса, вслух услышим истории всей группы о том, где AI реально помог, а где подвёл, и каждый честно зафиксирует свой текущий опыт использования AI — без оценки «правильно» или «неправильно». У кого-то за плечами месяцы ежедневной работы с нейросетями, у кого-то — пара случайных запросов. Это нормальная точка старта.",
+    "en": "Today is about getting acquainted. We'll meet each other and the course format, hear the whole group's stories out loud about where AI genuinely helped and where it let them down, and each of you will honestly record your current experience with AI — no judgment of “right” or “wrong.” Some of you have months of daily work with neural networks behind you; others have made a couple of random queries. Either is a normal starting point."
+  },
+  {
+    "key": "s01.notes.003",
+    "slide": 1,
+    "where": "notes",
+    "para": 3,
+    "ru": "К концу курса вы вернётесь к сегодняшнему опыту и сравните, что изменилось в том, как вы пользуетесь AI и насколько ему доверяете.",
+    "en": "By the end of the course, you'll come back to today's experience and compare what's changed in how you use AI and how much you trust it."
+  },
+  {
+    "key": "s02.body.001",
+    "slide": 2,
+    "where": "body",
+    "para": 1,
+    "ru": "Левко Максим",
+    "en": "Maxim Nikolaevich"
+  },
+  {
+    "key": "s02.body.002",
+    "slide": 2,
+    "where": "body",
+    "para": 2,
+    "ru": "Николаевич",
+    "en": "Levko"
+  },
+  {
+    "key": "s02.body.003",
+    "slide": 2,
+    "where": "body",
+    "para": 3,
+    "ru": "Telegram",
+    "en": "Telegram"
+  },
+  {
+    "key": "s02.body.004",
+    "slide": 2,
+    "where": "body",
+    "para": 4,
+    "ru": "@Maxim_Levko",
+    "en": "@Maxim_Levko"
+  },
+  {
+    "key": "s02.body.005",
+    "slide": 2,
+    "where": "body",
+    "para": 5,
+    "ru": "Email",
+    "en": "Email"
+  },
+  {
+    "key": "s02.body.006",
+    "slide": 2,
+    "where": "body",
+    "para": 6,
+    "ru": "Levko.maxim@gmail.com",
+    "en": "Levko.maxim@gmail.com"
+  },
+  {
+    "key": "s02.body.007",
+    "slide": 2,
+    "where": "body",
+    "para": 7,
+    "ru": "Энтузиаст и исследователь ИИ • Создатель систем на базе ИИ",
+    "en": "AI enthusiast and researcher • Builder of AI-based systems"
+  },
+  {
+    "key": "s02.body.008",
+    "slide": 2,
+    "where": "body",
+    "para": 8,
+    "ru": "Разрабатываю инновационные решения, автоматизирую процессы и внедряю передовые технологии искусственного интеллекта для решения реальных задач бизнеса и пользователей.",
+    "en": "I build innovative solutions, automate processes, and deploy leading-edge AI technologies to solve real business and user problems."
+  },
+  {
+    "key": "s02.body.009",
+    "slide": 2,
+    "where": "body",
+    "para": 9,
+    "ru": "Clarifian ",
+    "en": "Clarifian "
+  },
+  {
+    "key": "s02.body.010",
+    "slide": 2,
+    "where": "body",
+    "para": 9,
+    "ru": "clarifian.io",
+    "en": "clarifian.io"
+  },
+  {
+    "key": "s02.body.011",
+    "slide": 2,
+    "where": "body",
+    "para": 10,
+    "ru": "Автоматическое рисование диаграмм на базе ИИ. Превращайте текстовые описания и идеи в структурированные, понятные визуальные схемы и графики в один клик.",
+    "en": "AI-based automatic diagram drawing. Turn text descriptions and ideas into structured, clear visual diagrams and charts in one click."
+  },
+  {
+    "key": "s02.body.012",
+    "slide": 2,
+    "where": "body",
+    "para": 11,
+    "ru": "AI Mentor ",
+    "en": "AI Mentor "
+  },
+  {
+    "key": "s02.body.013",
+    "slide": 2,
+    "where": "body",
+    "para": 11,
+    "ru": "mentor.tellian.ru",
+    "en": "mentor.tellian.ru"
+  },
+  {
+    "key": "s02.body.014",
+    "slide": 2,
+    "where": "body",
+    "para": 12,
+    "ru": "Тестирование и менторинг на базе искусственного интеллекта. Персонализированное обучение, оценка навыков и интеллектуальная поддержка на пути развития.",
+    "en": "AI-based testing and mentoring. Personalized learning, skills assessment, and intelligent support along your development path."
+  },
+  {
+    "key": "s02.body.015",
+    "slide": 2,
+    "where": "body",
+    "para": 13,
+    "ru": "w4check.io",
+    "en": "w4check.io"
+  },
+  {
+    "key": "s02.body.016",
+    "slide": 2,
+    "where": "body",
+    "para": 14,
+    "ru": "Проверка надёжности контрагентов в криптовалютах.",
+    "en": "Reliability checks for crypto counterparties."
+  },
+  {
+    "key": "s02.body.017",
+    "slide": 2,
+    "where": "body",
+    "para": 15,
+    "ru": "workain.ai",
+    "en": "workain.ai"
+  },
+  {
+    "key": "s02.body.018",
+    "slide": 2,
+    "where": "body",
+    "para": 16,
+    "ru": "AI-автоматизация рабочих процессов и задач.",
+    "en": "AI automation of workflows and tasks."
+  },
+  {
+    "key": "s02.body.019",
+    "slide": 2,
+    "where": "body",
+    "para": 17,
+    "ru": "Блог · tellian.io",
+    "en": "Blog · tellian.io"
+  },
+  {
+    "key": "s02.body.020",
+    "slide": 2,
+    "where": "body",
+    "para": 18,
+    "ru": "Авторские материалы о технологиях, ИИ и разработке.",
+    "en": "Original writing on technology, AI, and software development."
+  },
+  {
+    "key": "s02.notes.001",
+    "slide": 2,
+    "where": "notes",
+    "para": 1,
+    "ru": "Для начала позвольте представиться, тут вы услышите про мою предпренимательскую сторону, а на лекции - индустриальный опыт",
+    "en": "Let me start by introducing myself — here you'll hear about my entrepreneurial side, and in the lecture, about my industry experience."
+  },
+  {
+    "key": "s03.body.001",
+    "slide": 3,
+    "where": "body",
+    "para": 1,
+    "ru": "17 лекций × 3 модуля — от основ к разбору AI по отраслям",
+    "en": "17 lectures × 3 modules — from fundamentals to AI by industry"
+  },
+  {
+    "key": "s03.body.002",
+    "slide": 3,
+    "where": "body",
+    "para": 2,
+    "ru": "Модуль 1",
+    "en": "Module 1"
+  },
+  {
+    "key": "s03.body.003",
+    "slide": 3,
+    "where": "body",
+    "para": 3,
+    "ru": "Основы и знакомые отрасли",
+    "en": "Fundamentals and familiar industries"
+  },
+  {
+    "key": "s03.body.004",
+    "slide": 3,
+    "where": "body",
+    "para": 4,
+    "ru": "Лекции 1–6",
+    "en": "Lectures 1–6"
+  },
+  {
+    "key": "s03.body.005",
+    "slide": 3,
+    "where": "body",
+    "para": 5,
+    "ru": "Модуль 2",
+    "en": "Module 2"
+  },
+  {
+    "key": "s03.body.006",
+    "slide": 3,
+    "where": "body",
+    "para": 6,
+    "ru": "Высокотехн. производство",
+    "en": "High-tech manufacturing"
+  },
+  {
+    "key": "s03.body.007",
+    "slide": 3,
+    "where": "body",
+    "para": 7,
+    "ru": "Лекции 7–12",
+    "en": "Lectures 7–12"
+  },
+  {
+    "key": "s03.body.008",
+    "slide": 3,
+    "where": "body",
+    "para": 8,
+    "ru": "Модуль 3",
+    "en": "Module 3"
+  },
+  {
+    "key": "s03.body.009",
+    "slide": 3,
+    "where": "body",
+    "para": 9,
+    "ru": "Инфоком, наука, добыча, синтез",
+    "en": "ICT, science, extraction, synthesis"
+  },
+  {
+    "key": "s03.body.010",
+    "slide": 3,
+    "where": "body",
+    "para": 10,
+    "ru": "Лекции 13–17",
+    "en": "Lectures 13–17"
+  },
+  {
+    "key": "s03.body.011",
+    "slide": 3,
+    "where": "body",
+    "para": 11,
+    "ru": "РК1 · С6",
+    "en": "MT1 · S6"
+  },
+  {
+    "key": "s03.body.012",
+    "slide": 3,
+    "where": "body",
+    "para": 12,
+    "ru": "РК2 · С12",
+    "en": "MT2 · S12"
+  },
+  {
+    "key": "s03.body.013",
+    "slide": 3,
+    "where": "body",
+    "para": 13,
+    "ru": "РК3 · С17",
+    "en": "MT3 · S17"
+  },
+  {
+    "key": "s03.body.014",
+    "slide": 3,
+    "where": "body",
+    "para": 14,
+    "ru": "Сегодня",
+    "en": "Today"
+  },
+  {
+    "key": "s03.body.015",
+    "slide": 3,
+    "where": "body",
+    "para": 15,
+    "ru": "Сквозные темы курса — в каждой лекции и семинаре",
+    "en": "Cross-cutting themes — in every lecture and seminar"
+  },
+  {
+    "key": "s03.body.016",
+    "slide": 3,
+    "where": "body",
+    "para": 16,
+    "ru": "Выбор инструмента",
+    "en": "Choosing a tool"
+  },
+  {
+    "key": "s03.body.017",
+    "slide": 3,
+    "where": "body",
+    "para": 17,
+    "ru": "не любой AI подходит для любой задачи",
+    "en": "not every AI fits every task"
+  },
+  {
+    "key": "s03.body.018",
+    "slide": 3,
+    "where": "body",
+    "para": 18,
+    "ru": "Типичные ошибки",
+    "en": "Common mistakes"
+  },
+  {
+    "key": "s03.body.019",
+    "slide": 3,
+    "where": "body",
+    "para": 19,
+    "ru": "и как их избежать",
+    "en": "and how to avoid them"
+  },
+  {
+    "key": "s03.body.020",
+    "slide": 3,
+    "where": "body",
+    "para": 20,
+    "ru": "Ответственность человек / AI",
+    "en": "Human / AI accountability"
+  },
+  {
+    "key": "s03.body.021",
+    "slide": 3,
+    "where": "body",
+    "para": 21,
+    "ru": "кто отвечает за результат",
+    "en": "who's responsible for the result"
+  },
+  {
+    "key": "s03.body.022",
+    "slide": 3,
+    "where": "body",
+    "para": 22,
+    "ru": "Инф. безопасность",
+    "en": "Info security"
+  },
+  {
+    "key": "s03.body.023",
+    "slide": 3,
+    "where": "body",
+    "para": 23,
+    "ru": "что можно и нельзя передавать AI",
+    "en": "what can and can't be shared with AI"
+  },
+  {
+    "key": "s03.notes.001",
+    "slide": 3,
+    "where": "notes",
+    "para": 1,
+    "ru": "Курс состоит из семнадцати лекций и семнадцати семинаров, разбитых на три модуля. Сегодняшний семинар идёт до первой лекции — поэтому на карте семестра нет отметки «вы здесь» на конкретной лекции, только маркер «сегодня» перед началом.",
+    "en": "The course consists of seventeen lectures and seventeen seminars, split into three modules. Today's seminar comes before the first lecture — so on the semester map there's no “you are here” marker on a specific lecture, just a “today” marker before the start."
+  },
+  {
+    "key": "s03.notes.002",
+    "slide": 3,
+    "where": "notes",
+    "para": 2,
+    "ru": "Модуль один — основы и знакомые отрасли, лекции с первой по восьмую: теоретический фундамент и разбор индустрий, с которыми вы чаще всего сталкиваетесь на практике — разработка ПО, финансы и ритейл, инженерное проектирование, медицина, креативные индустрии. Рубежный контроль один — на семинаре восьмой недели.",
+    "en": "Module one — fundamentals and familiar industries, lectures one through eight: the theoretical foundation and a look at the industries you encounter most often in practice — software development, finance and retail, engineering design, medicine, creative industries. Midterm one — at the seminar in week eight."
+  },
+  {
+    "key": "s03.notes.003",
+    "slide": 3,
+    "where": "notes",
+    "para": 3,
+    "ru": "Модуль два — высокотехнологичные отрасли материального производства, лекции с девятой по двенадцатую: авиакосмос и оборонка, сельское хозяйство, производство, автоматизация и цифровые двойники. Рубежный контроль два — на семинаре двенадцатой недели.",
+    "en": "Module two — high-tech industries in physical manufacturing, lectures nine through twelve: aerospace and defense, agriculture, manufacturing, automation and digital twins. Midterm two — at the seminar in week twelve."
+  },
+  {
+    "key": "s03.notes.004",
+    "slide": 3,
+    "where": "notes",
+    "para": 4,
+    "ru": "Модуль три — инфокоммуникации, наука, добыча, синтез, лекции с тринадцатой по семнадцатую: логистика, телеком и кибербезопасность, научные исследования, нефтегаз, и финальный синтез. Рубежный контроль три, итоговый, на семинаре семнадцатой недели.",
+    "en": "Module three — infocommunications, science, extraction, synthesis, lectures thirteen through seventeen: logistics, telecom and cybersecurity, scientific research, oil and gas, and the final synthesis. Midterm three, the final one, at the seminar in week seventeen."
+  },
+  {
+    "key": "s03.notes.005",
+    "slide": 3,
+    "where": "notes",
+    "para": 5,
+    "ru": "Отдельно от структуры — четыре сквозные темы, которые будут встречаться в каждой лекции и каждом семинаре вне зависимости от отрасли: выбор подходящего инструмента под задачу, типичные ошибки, распределение ответственности между человеком и AI, и информационная безопасность при работе с AI (что можно и нельзя передавать в модель). Это не разовая тема одного занятия, а линия, которая проходит через весь курс — поэтому на карте она нарисована отдельным уровнем, а не частью самой структуры лекций.",
+    "en": "Separate from the structure — four cross-cutting themes that will come up in every lecture and every seminar regardless of industry: choosing the right tool for the task, common mistakes, dividing accountability between human and AI, and information security when working with AI (what can and can't be shared with a model). This isn't a one-off topic for a single session, but a thread that runs through the entire course — which is why it's drawn as a separate tier on the map, not as part of the lecture structure itself."
+  },
+  {
+    "key": "s04.body.001",
+    "slide": 4,
+    "where": "body",
+    "para": 1,
+    "ru": "Рубежный контроль — тест дома, разбор на семинаре",
+    "en": "Midterms — test at home, review in the seminar"
+  },
+  {
+    "key": "s04.body.002",
+    "slide": 4,
+    "where": "body",
+    "para": 2,
+    "ru": "Дома",
+    "en": "At home"
+  },
+  {
+    "key": "s04.body.003",
+    "slide": 4,
+    "where": "body",
+    "para": 3,
+    "ru": "Тест на платформе AI-тестирования",
+    "en": "A test on an AI testing platform"
+  },
+  {
+    "key": "s04.body.004",
+    "slide": 4,
+    "where": "body",
+    "para": 4,
+    "ru": "На семинаре",
+    "en": "In the seminar"
+  },
+  {
+    "key": "s04.body.005",
+    "slide": 4,
+    "where": "body",
+    "para": 5,
+    "ru": "Разбор результатов и открытых вопросов — не сдача теста",
+    "en": "Review of results and open questions — not test-taking"
+  },
+  {
+    "key": "s04.body.006",
+    "slide": 4,
+    "where": "body",
+    "para": 6,
+    "ru": "РК · Семинар ",
+    "en": "Midterm · Seminar "
+  },
+  {
+    "key": "s04.body.007",
+    "slide": 4,
+    "where": "body",
+    "para": 6,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s04.body.008",
+    "slide": 4,
+    "where": "body",
+    "para": 7,
+    "ru": "РК · Семинар 12",
+    "en": "Midterm · Seminar 12"
+  },
+  {
+    "key": "s04.body.009",
+    "slide": 4,
+    "where": "body",
+    "para": 8,
+    "ru": "РК · Семинар 17",
+    "en": "Midterm · Seminar 17"
+  },
+  {
+    "key": "s04.body.010",
+    "slide": 4,
+    "where": "body",
+    "para": 9,
+    "ru": "Семинар РК — не сдача теста, а разбор того, что вызвало вопросы",
+    "en": "Midterm seminar: not test-taking — reviewing what raised questions"
+  },
+  {
+    "key": "s04.notes.001",
+    "slide": 4,
+    "where": "notes",
+    "para": 1,
+    "ru": "Механика рубежного контроля отличается от привычного формата «тест на паре». Тест проходится самостоятельно, дома, на системе тестирования с AI — платформу назовём отдельно, детали пока уточняются.",
+    "en": "Midterm mechanics differ from the usual “test during class” format. The test is taken independently, at home, on an AI-based testing system — we'll name the platform separately, details are still being finalized."
+  },
+  {
+    "key": "s04.notes.002",
+    "slide": 4,
+    "where": "notes",
+    "para": 2,
+    "ru": "Само время семинара в дни рубежного контроля — восьмого, двенадцатого и семнадцатого — не тратится на сдачу теста, а посвящено разбору результатов и вопросов, которые у вас возникли по итогам. Если тест показал, что какая-то тема осталась непонятной — именно на этом семинаре есть время разобрать её отдельно, с преподавателем и с группой.",
+    "en": "The seminar time itself, on midterm days — eighth, twelfth, and seventeenth — isn't spent taking the test; it's dedicated to reviewing results and the questions that came up for you. If the test showed that some topic remained unclear, that's exactly the seminar where there's time to go over it separately, with the instructor and with the group."
+  },
+  {
+    "key": "s04.notes.003",
+    "slide": 4,
+    "where": "notes",
+    "para": 3,
+    "ru": "Это отличается от классического формата, когда контрольная точка — это стресс на паре с ограничением по времени. Здесь стресс переносится на самостоятельную домашнюю работу, а очное время используется для того, что оно умеет лучше всего — живого разбора и вопросов.",
+    "en": "This differs from the classic format, where the checkpoint is a stress test during class with a time limit. Here, the stress moves to independent homework, and the in-person time is used for what it does best — live discussion and questions."
+  },
+  {
+    "key": "s05.body.001",
+    "slide": 5,
+    "where": "body",
+    "para": 1,
+    "ru": "Чат курса в MAX — всё важное в одном месте",
+    "en": "MAX course chat — everything important in one place"
+  },
+  {
+    "key": "s05.body.002",
+    "slide": 5,
+    "where": "body",
+    "para": 2,
+    "ru": "Чат группы: «Отраслевое использование ИИ 2026»",
+    "en": "Group chat: “Industrial Use of AI 2026”"
+  },
+  {
+    "key": "s05.body.003",
+    "slide": 5,
+    "where": "body",
+    "para": 3,
+    "ru": "Отсканируйте камерой телефона",
+    "en": "Scan with your phone's camera"
+  },
+  {
+    "key": "s05.body.004",
+    "slide": 5,
+    "where": "body",
+    "para": 4,
+    "ru": "max.ru/join/sHoHlhI4jvW_swcq5ZLowvz6G94m0IMhAwngxuxsEpI",
+    "en": "max.ru/join/sHoHlhI4jvW_swcq5ZLowvz6G94m0IMhAwngxuxsEpI"
+  },
+  {
+    "key": "s05.body.005",
+    "slide": 5,
+    "where": "body",
+    "para": 5,
+    "ru": "Объявления",
+    "en": "Announcements"
+  },
+  {
+    "key": "s05.body.006",
+    "slide": 5,
+    "where": "body",
+    "para": 6,
+    "ru": "Расписание, изменения, важные новости курса — в одном месте.",
+    "en": "Schedule, changes, and important course news — all in one place."
+  },
+  {
+    "key": "s05.body.007",
+    "slide": 5,
+    "where": "body",
+    "para": 7,
+    "ru": "Материалы лекций и семинаров",
+    "en": "Lecture and seminar materials"
+  },
+  {
+    "key": "s05.body.008",
+    "slide": 5,
+    "where": "body",
+    "para": 8,
+    "ru": "Слайды и материалы появляются в чате по мере проведения занятий.",
+    "en": "Slides and materials appear in the chat as sessions happen."
+  },
+  {
+    "key": "s05.body.009",
+    "slide": 5,
+    "where": "body",
+    "para": 9,
+    "ru": "Вопросы между занятиями",
+    "en": "Questions between sessions"
+  },
+  {
+    "key": "s05.body.010",
+    "slide": 5,
+    "where": "body",
+    "para": 10,
+    "ru": "Можно задать вопрос по курсу и получить ответ, не дожидаясь пары.",
+    "en": "You can ask a course question and get an answer without waiting for class."
+  },
+  {
+    "key": "s05.notes.001",
+    "slide": 5,
+    "where": "notes",
+    "para": 1,
+    "ru": "Всё общение по курсу — в чате в мессенджере MAX. Отсканируйте QR-код камерой телефона или перейдите по ссылке max.ru/join/sHoHlhI4jvW_swcq5ZLowvz6G94m0IMhAwngxuxsEpI и вступите в чат до первой лекции.",
+    "en": "All course communication happens in the MAX messenger chat. Scan the QR code with your phone's camera or follow the link max.ru/join/sHoHlhI4jvW_swcq5ZLowvz6G94m0IMhAwngxuxsEpI and join the chat before the first lecture."
+  },
+  {
+    "key": "s05.notes.002",
+    "slide": 5,
+    "where": "notes",
+    "para": 2,
+    "ru": "Что там будет. Во-первых, объявления: расписание, любые изменения, важные новости — всё публикуется в чате, отдельно письма ждать не нужно. Во-вторых, материалы: слайды лекций и семинаров я выкладываю туда по мере проведения занятий, так что всё собрано в одном месте. В-третьих, вопросы: если что-то непонятно между парами — спрашивайте в чате, не обязательно копить до семинара.",
+    "en": "What you'll find there. First, announcements: schedule, any changes, important news — all posted in the chat, so you won't need to wait for a separate email. Second, materials: I post the lecture and seminar slides there as sessions happen, so everything's collected in one place. Third, questions: if something's unclear between classes, ask in the chat — you don't have to save it up for the seminar."
+  },
+  {
+    "key": "s05.notes.003",
+    "slide": 5,
+    "where": "notes",
+    "para": 3,
+    "ru": "Пожалуйста, вступите сегодня — так вы точно не пропустите первое объявление.",
+    "en": "Please join today — that way you definitely won't miss the first announcement."
+  },
+  {
+    "key": "s06.body.001",
+    "slide": 6,
+    "where": "body",
+    "para": 1,
+    "ru": "Разминка: как вы используете AI?",
+    "en": "Warm-up: how do you use AI?"
+  },
+  {
+    "key": "s06.body.002",
+    "slide": 6,
+    "where": "body",
+    "para": 2,
+    "ru": "Какой AI-инструмент вы используете чаще всего?",
+    "en": "Which AI tool do you use most often?"
+  },
+  {
+    "key": "s06.body.003",
+    "slide": 6,
+    "where": "body",
+    "para": 3,
+    "ru": "ChatGPT · GigaChat/YandexGPT · Copilot/Claude/DeepSeek · не пользуюсь",
+    "en": "ChatGPT · GigaChat/YandexGPT · Copilot/Claude/DeepSeek · none"
+  },
+  {
+    "key": "s06.body.004",
+    "slide": 6,
+    "where": "body",
+    "para": 4,
+    "ru": "Как часто вы используете AI?",
+    "en": "How often do you use AI?"
+  },
+  {
+    "key": "s06.body.005",
+    "slide": 6,
+    "where": "body",
+    "para": 5,
+    "ru": "каждый день → неделя → месяц → реже → никогда",
+    "en": "every day → weekly → monthly → less often → never"
+  },
+  {
+    "key": "s06.body.006",
+    "slide": 6,
+    "where": "body",
+    "para": 6,
+    "ru": "Насколько вы доверяете точности AI?",
+    "en": "How much do you trust AI's accuracy?"
+  },
+  {
+    "key": "s06.body.007",
+    "slide": 6,
+    "where": "body",
+    "para": 7,
+    "ru": "шкала от 1 до 5",
+    "en": "a scale from 1 to 5"
+  },
+  {
+    "key": "s06.body.008",
+    "slide": 6,
+    "where": "body",
+    "para": 8,
+    "ru": "Был ли случай, когда AI явно подвёл?",
+    "en": "Has AI ever clearly let you down?"
+  },
+  {
+    "key": "s06.body.009",
+    "slide": 6,
+    "where": "body",
+    "para": 9,
+    "ru": "да · нет · не уверен(а)",
+    "en": "yes · no · not sure"
+  },
+  {
+    "key": "s06.body.010",
+    "slide": 6,
+    "where": "body",
+    "para": 10,
+    "ru": "Отвечаем вслух и обсуждаем — без камеры и подсчёта. Ваши ответы мы сравним с внешней статистикой в следующем блоке.",
+    "en": "We answer out loud and discuss — no camera, no counting. We'll compare your answers with outside statistics in the next block."
+  },
+  {
+    "key": "s06.notes.001",
+    "slide": 6,
+    "where": "notes",
+    "para": 1,
+    "ru": "Небольшая разминка перед статистикой — знакомимся с тем, как группа работает с AI. Формат простой: я задаю вопрос, отвечаете вслух, при желании поднимаете руку — это не голосование с камерой и подсчётом, а живой разговор, чтобы увидеть картину группы.",
+    "en": "A short warm-up before the statistics — getting a sense of how the group works with AI. Simple format: I ask a question, you answer out loud, and raise a hand if you'd like — this isn't a vote with a camera and a count, it's a live conversation, to get a picture of the group."
+  },
+  {
+    "key": "s06.notes.002",
+    "slide": 6,
+    "where": "notes",
+    "para": 2,
+    "ru": "Четыре вопроса. Первый — какой AI-инструмент вы используете чаще всего: ChatGPT, GigaChat или YandexGPT, GitHub Copilot / Claude / DeepSeek, или не пользуетесь вовсе. Второй — как часто: каждый день, несколько раз в неделю, реже, никогда. Третий — насколько доверяете точности AI по шкале от одного до пяти. Четвёртый — был ли случай, когда AI вас явно подвёл.",
+    "en": "Four questions. First — which AI tool you use most often: ChatGPT, GigaChat or YandexGPT, GitHub Copilot / Claude / DeepSeek, or none at all. Second — how often: every day, several times a week, less often, never. Third — how much you trust AI's accuracy, on a scale from one to five. Fourth — whether there's been a case where AI clearly let you down."
+  },
+  {
+    "key": "s06.notes.003",
+    "slide": 6,
+    "where": "notes",
+    "para": 3,
+    "ru": "Эти ответы понадобятся в следующем блоке — будем сравнивать вашу группу с внешними исследованиями: выше вы или ниже по доверию, чаще или реже пользуетесь.",
+    "en": "We'll need these answers in the next block — we'll compare your group with outside research: whether you're higher or lower on trust, whether you use AI more or less often."
+  },
+  {
+    "key": "s07.body.001",
+    "slide": 7,
+    "where": "body",
+    "para": 1,
+    "ru": "Используют чаще, доверяют меньше — и это не парадокс",
+    "en": "Used more, trusted less — and that's not a paradox"
+  },
+  {
+    "key": "s07.body.002",
+    "slide": 7,
+    "where": "body",
+    "para": 2,
+    "ru": "ИСПОЛЬЗОВАНИЕ",
+    "en": "USAGE"
+  },
+  {
+    "key": "s07.body.003",
+    "slide": 7,
+    "where": "body",
+    "para": 3,
+    "ru": "84%",
+    "en": "84%"
+  },
+  {
+    "key": "s07.body.004",
+    "slide": 7,
+    "where": "body",
+    "para": 4,
+    "ru": "используют или планируют использовать AI-инструменты",
+    "en": "use or plan to use AI tools"
+  },
+  {
+    "key": "s07.body.005",
+    "slide": 7,
+    "where": "body",
+    "para": 5,
+    "ru": "2024 → 2025:  76% → 84%  (+8 п.п.)",
+    "en": "2024 → 2025:  76% → 84%  (+8 pp)"
+  },
+  {
+    "key": "s07.body.006",
+    "slide": 7,
+    "where": "body",
+    "para": 6,
+    "ru": "ЧТО ИСПОЛЬЗУЮТ ЧАЩЕ ВСЕГО",
+    "en": "WHAT THEY USE MOST"
+  },
+  {
+    "key": "s07.body.007",
+    "slide": 7,
+    "where": "body",
+    "para": 7,
+    "ru": "ChatGPT",
+    "en": "ChatGPT"
+  },
+  {
+    "key": "s07.body.008",
+    "slide": 7,
+    "where": "body",
+    "para": 8,
+    "ru": "82%",
+    "en": "82%"
+  },
+  {
+    "key": "s07.body.009",
+    "slide": 7,
+    "where": "body",
+    "para": 9,
+    "ru": "GitHub Copilot",
+    "en": "GitHub Copilot"
+  },
+  {
+    "key": "s07.body.010",
+    "slide": 7,
+    "where": "body",
+    "para": 10,
+    "ru": "68%",
+    "en": "68%"
+  },
+  {
+    "key": "s07.body.011",
+    "slide": 7,
+    "where": "body",
+    "para": 11,
+    "ru": "Gemini",
+    "en": "Gemini"
+  },
+  {
+    "key": "s07.body.012",
+    "slide": 7,
+    "where": "body",
+    "para": 12,
+    "ru": "47%",
+    "en": "47%"
+  },
+  {
+    "key": "s07.body.013",
+    "slide": 7,
+    "where": "body",
+    "para": 13,
+    "ru": "Claude",
+    "en": "Claude"
+  },
+  {
+    "key": "s07.body.014",
+    "slide": 7,
+    "where": "body",
+    "para": 14,
+    "ru": "41%",
+    "en": "41%"
+  },
+  {
+    "key": "s07.body.015",
+    "slide": 7,
+    "where": "body",
+    "para": 15,
+    "ru": "% среди тех, кто пользуется AI",
+    "en": "% among those who use AI"
+  },
+  {
+    "key": "s07.body.016",
+    "slide": 7,
+    "where": "body",
+    "para": 16,
+    "ru": "ДОВЕРИЕ",
+    "en": "TRUST"
+  },
+  {
+    "key": "s07.body.017",
+    "slide": 7,
+    "where": "body",
+    "para": 17,
+    "ru": "29%",
+    "en": "29%"
+  },
+  {
+    "key": "s07.body.018",
+    "slide": 7,
+    "where": "body",
+    "para": 18,
+    "ru": "доверяют точности того, что выдаёт AI",
+    "en": "trust the accuracy of what AI produces"
+  },
+  {
+    "key": "s07.body.019",
+    "slide": 7,
+    "where": "body",
+    "para": 19,
+    "ru": "было 40% в 2024  (−11 п.п.)",
+    "en": "was 40% in 2024  (−11 pp)"
+  },
+  {
+    "key": "s07.body.020",
+    "slide": 7,
+    "where": "body",
+    "para": 20,
+    "ru": "46% явно не доверяют · лишь 3% доверяют полностью",
+    "en": "46% explicitly don't trust it · only 3% trust it fully"
+  },
+  {
+    "key": "s07.body.021",
+    "slide": 7,
+    "where": "body",
+    "para": 21,
+    "ru": "Россия · ВЦИОМ, 2026",
+    "en": "Russia · VCIOM, 2026"
+  },
+  {
+    "key": "s07.body.022",
+    "slide": 7,
+    "where": "body",
+    "para": 22,
+    "ru": "78% пользовались нейросетями за год (было 73%) · 58% — не реже раза в неделю (было 51%)",
+    "en": "78% used neural networks over the past year (was 73%) · 58% — at least once a week (was 51%)"
+  },
+  {
+    "key": "s07.body.023",
+    "slide": 7,
+    "where": "body",
+    "para": 23,
+    "ru": "64% верят в пользу AI, из них 67% — только в отдельных сферах · N=3209, 18+, 25–27.06.2026, ≤±1,7%",
+    "en": "64% believe AI is beneficial, 67% of them — only in certain areas · N=3209, 18+, 25–27.06.2026, ≤±1.7%"
+  },
+  {
+    "key": "s07.body.024",
+    "slide": 7,
+    "where": "body",
+    "para": 24,
+    "ru": "Источники: Stack Overflow Developer Survey 2025 (N=49 009, май–июнь 2025; самоотобранная онлайн-выборка) · ВЦИОМ «Нейросети в нашей жизни»",
+    "en": "Sources: Stack Overflow Developer Survey 2025 (N=49 009, May–June 2025; self-selected online sample) · VCIOM “Neural Networks in Our Lives”"
+  },
+  {
+    "key": "s07.notes.001",
+    "slide": 7,
+    "where": "notes",
+    "para": 1,
+    "ru": "Два независимых среза. Первый — Stack Overflow Developer Survey 2025, почти 49 тысяч разработчиков. Восемьдесят четыре процента используют или планируют использовать AI — рост с семидесяти шести процентов годом раньше. Чаще всего берут ChatGPT (82%) и GitHub Copilot (68%), заметно меньше — Gemini (47%) и Claude (41%). При этом доверяют точности вывода лишь двадцать девять процентов — падение с сорока; сорок шесть процентов прямо не доверяют, и только три процента доверяют полностью.",
+    "en": "The first source — the Stack Overflow Developer Survey 2025. Eighty-four percent of developers use or plan to use AI tools in development — up from seventy-six percent in 2024. At the same time, only twenty-nine percent trust the accuracy of what AI produces — down from forty percent a year earlier."
+  },
+  {
+    "key": "s07.notes.002",
+    "slide": 7,
+    "where": "notes",
+    "para": 2,
+    "ru": "Как так — пользуются чаще, а доверяют меньше? Это не парадокс, а признак зрелого использования: инструмент берут как черновик, который обязательно проверяют. Важна методология — это самоотобранный онлайн-опрос, аудитория смещена к англоязычным разработчикам.",
+    "en": "How is that possible — using a tool more, but trusting it less? It's not a paradox: the tool is used as a draft that always gets checked — a sign of mature use. An important methodological detail: this is a self-selected online survey — the respondents are people who came to the Stack Overflow site themselves, so the audience skews toward English-speaking developers."
+  },
+  {
+    "key": "s07.notes.003",
+    "slide": 7,
+    "where": "notes",
+    "para": 3,
+    "ru": "Второй срез — ВЦИОМ, репрезентативная выборка россиян. За год нейросетями пользовались семьдесят восемь процентов (было семьдесят три), еженедельно — пятьдесят восемь (было пятьдесят один). Здесь речь про население в целом, а не про инженеров.",
+    "en": "The second source — VCIOM, “Neural Networks in Our Lives.” In 2025, seventy-three percent of Russians had used neural networks over the past year, and fifty-one percent at least once a week; the 2026 figures grew to seventy-eight and fifty-eight percent. VCIOM surveys Russians in general, not just an engineering student audience."
+  },
+  {
+    "key": "s07.notes.004",
+    "slide": 7,
+    "where": "notes",
+    "para": 4,
+    "ru": "Сравните с вашими ответами из разминки: где ваша группа — выше или ниже по доверию, чаще или реже пользуется?",
+    "en": "Compare that with your own answers from the warm-up: where does your group stand — higher or lower on trust, using it more or less often?"
+  },
+  {
+    "key": "s08.body.001",
+    "slide": 8,
+    "where": "body",
+    "para": 1,
+    "ru": "У кого есть история — помогло или подвело?",
+    "en": "Who has a story — did it help or let you down?"
+  },
+  {
+    "key": "s08.body.002",
+    "slide": 8,
+    "where": "body",
+    "para": 2,
+    "ru": "Галлюцинация факта",
+    "en": "Hallucinated fact"
+  },
+  {
+    "key": "s08.body.003",
+    "slide": 8,
+    "where": "body",
+    "para": 3,
+    "ru": "Устаревшие данные",
+    "en": "Outdated data"
+  },
+  {
+    "key": "s08.body.004",
+    "slide": 8,
+    "where": "body",
+    "para": 4,
+    "ru": "Задача решена только",
+    "en": "A task solved only"
+  },
+  {
+    "key": "s08.body.005",
+    "slide": 8,
+    "where": "body",
+    "para": 5,
+    "ru": "внешне — вроде похоже,",
+    "en": "on the surface — looks right,"
+  },
+  {
+    "key": "s08.body.006",
+    "slide": 8,
+    "where": "body",
+    "para": 6,
+    "ru": "а копнёшь — нет",
+    "en": "dig in — it's not"
+  },
+  {
+    "key": "s08.body.007",
+    "slide": 8,
+    "where": "body",
+    "para": 7,
+    "ru": "Потеря контекста в диалоге",
+    "en": "Lost context in a conversation"
+  },
+  {
+    "key": "s08.body.008",
+    "slide": 8,
+    "where": "body",
+    "para": 8,
+    "ru": "Неуместный тон",
+    "en": "Mismatched tone"
+  },
+  {
+    "key": "s08.body.009",
+    "slide": 8,
+    "where": "body",
+    "para": 9,
+    "ru": "Ответ не под вашу",
+    "en": "Answer doesn't"
+  },
+  {
+    "key": "s08.body.010",
+    "slide": 8,
+    "where": "body",
+    "para": 10,
+    "ru": "конкретную ситуацию",
+    "en": "fit your situation"
+  },
+  {
+    "key": "s08.notes.001",
+    "slide": 8,
+    "where": "notes",
+    "para": 1,
+    "ru": "Теперь — открытый обмен опытом перед всей аудиторией. По очереди, по желанию или по вашему вызову, вы вслух расскажете один случай, когда AI реально помог, и один случай, когда AI подвёл или ошибся. Мы вместе, на доске, найдём общие закономерности в собранных историях.",
+    "en": "Now — an open exchange of experience in front of the whole audience. In turn, whether by volunteering or by my calling on you, you'll tell one story out loud where AI genuinely helped, and one where AI let you down or made a mistake. Together, on the board, we'll find common patterns in the stories we collect."
+  },
+  {
+    "key": "s08.notes.002",
+    "slide": 8,
+    "where": "notes",
+    "para": 2,
+    "ru": "У кого есть история, когда AI реально помог — поднимите руку. Если желающих не находится сразу — не страшно, я могу обратиться к кому-то из вас напрямую. Будем чередовать: одна история успеха, затем провал, снова успех — так удерживаем баланс и не даём разговору скатиться в одну тональность.",
+    "en": "Whoever has a story where AI genuinely helped — raise a hand. If no one volunteers right away, that's fine, I can call on someone directly. We'll alternate: one success story, then a failure, then a success again — that way we keep the balance and don't let the conversation slide into one tone."
+  },
+  {
+    "key": "s08.notes.003",
+    "slide": 8,
+    "where": "notes",
+    "para": 3,
+    "ru": "Шесть категорий провалов AI, которые встречаются чаще всего: галлюцинация факта — AI уверенно выдумывает несуществующий факт или источник; устаревшие данные — AI отвечает информацией, которая была верна на момент обучения, но устарела; задача, решённая только внешне — результат выглядит похожим на правильный, но при проверке оказывается, что суть не решена (это шире, чем просто код: тот же паттерн бывает и в тексте, и в расчёте); потеря контекста в длинном диалоге, когда AI забывает условия из начала разговора; неуместный тон или стиль ответа; и слишком общий совет — AI даёт правильный в целом, но неспецифичный ответ, который не учитывает вашу конкретную ситуацию. Когда рассказываете историю-провал — попробуйте сами предположить, к какой категории она относится, мы уточним вместе. Именно неудачные истории особенно ценны сегодня: они помогают увидеть реальные границы возможностей AI, а не только впечатляющие примеры. Этот же термин — галлюцинация — вернётся точным определением в блиц-квизе позже.",
+    "en": "Six categories of AI failure that come up most often: a hallucinated fact — AI confidently makes up a fact or source that doesn't exist; outdated data — AI answers with information that was correct at training time but is now stale; a task solved only on the surface — the result looks like the right answer, but on inspection the substance isn't actually solved (this is broader than just code: the same pattern shows up in text and in calculations too); losing context in a long conversation, where AI forgets the conditions set at the start; a mismatched tone or style in the response; and too-generic advice — AI gives an answer that's correct in general but nonspecific, and it doesn't account for your particular situation. When you tell a failure story, try to guess for yourself which category it belongs to — we'll pin it down together. Failure stories in particular are valuable today: they help reveal AI's real limits, not just its impressive examples. This same term — hallucination — will come back with a precise definition later, in the quickfire quiz."
+  },
+  {
+    "key": "s08.notes.004",
+    "slide": 8,
+    "where": "notes",
+    "para": 4,
+    "ru": "— Личные истории преподавателя (рассказать в этом блоке, по одной на категорию) —",
+    "en": "— Instructor's personal stories (to tell in this block, one per category) —"
+  },
+  {
+    "key": "s08.notes.005",
+    "slide": 8,
+    "where": "notes",
+    "para": 5,
+    "ru": "1. Галлюцинация факта. В прошлом году, когда я писал статью для конференции, модель выдала несколько ссылок на научные работы, которых не существует, — а часть ссылок вела на реальные статьи, но совсем по другой теме, чем она заявляла. Выглядело уверенно и правдоподобно, поэтому каждую ссылку пришлось проверять руками.",
+    "en": "1. Hallucinated fact. Last year, while I was writing an article for a conference, a model gave me several citations to research papers that don't exist — and some of the citations pointed to real papers, but on a completely different topic than claimed. It looked confident and plausible, so every citation had to be checked by hand."
+  },
+  {
+    "key": "s08.notes.006",
+    "slide": 8,
+    "where": "notes",
+    "para": 6,
+    "ru": "2. Устаревшие данные. В разработке это особенно заметно: модель тянет устаревшие версии библиотек и, хуже того, устаревшие подходы. Например, просишь компонент на React — а она пишет его на классах с componentWillMount вместо хуков; или предлагает moment.js, который давно не развивается, вместо date-fns или встроенного Temporal. Код формально рабочий, но подход — из позавчерашнего дня.",
+    "en": "2. Outdated data. This is especially noticeable in development: a model pulls in outdated library versions and, worse, outdated approaches. For example, you ask for a React component — and it writes it as a class with componentWillMount instead of hooks; or it suggests moment.js, which hasn't been actively developed in years, instead of date-fns or the built-in Temporal. The code is formally working, but the approach is from the day before yesterday."
+  },
+  {
+    "key": "s08.notes.007",
+    "slide": 8,
+    "where": "notes",
+    "para": 7,
+    "ru": "3. Задача решена только внешне. Так происходит почти с каждым продуктом, который я делаю: первый прототип от AI выглядит очень похоже на нужное — экран, кнопки, ответы, — но копнёшь внутрь, и часто оно либо не работает, либо имитирует работу (данные захардкожены, обработка ошибок нарисована, но не подключена). Снаружи готовый продукт, внутри декорация.",
+    "en": "3. A task solved only on the surface. This happens with almost every product I build: the first AI prototype looks a lot like what's needed — screen, buttons, responses — but dig in, and often it either doesn't work or fakes working (data is hardcoded, error handling is drawn but not wired up). A finished product on the outside, a stage set on the inside."
+  },
+  {
+    "key": "s08.notes.008",
+    "slide": 8,
+    "where": "notes",
+    "para": 8,
+    "ru": "4. Потеря контекста. В длинном диалоге по рефакторингу через пару десятков сообщений модель забывает то, о чём мы договорились в начале: скажем, я явно сказал «не тянем внешних зависимостей» и мы переименовали модуль — а через двадцать реплик она снова предлагает стороннюю библиотеку и старое имя, будто разговора не было. Контекст уехал за пределы окна, и условия приходится напоминать заново.",
+    "en": "4. Lost context. In a long refactoring conversation, after a couple dozen messages, the model forgets what we agreed on at the start: say, I explicitly said “no pulling in external dependencies” and we renamed a module — and twenty replies later it's suggesting a third-party library and the old name again, as if the conversation never happened. The context has drifted out of the window, and the conditions have to be restated."
+  },
+  {
+    "key": "s08.notes.009",
+    "slide": 8,
+    "where": "notes",
+    "para": 9,
+    "ru": "5. Неуместный тон. Пример прямо перед вами — эти лекции. Я готовлю их с активным участием AI, и до сих пор на слайдах и в заметках можно поймать странные обороты и тон, которые я не дочистил. Это честный пример того, что тон модели надо править вручную.",
+    "en": "5. Mismatched tone. The example is right in front of you — these lectures. I prepare them with heavy AI involvement, and there are still odd turns of phrase and tone on the slides and in the notes that I haven't cleaned up. This is an honest example that a model's tone has to be edited by hand."
+  },
+  {
+    "key": "s08.notes.010",
+    "slide": 8,
+    "where": "notes",
+    "para": 10,
+    "ru": "6. Ответ не под вашу ситуацию. У меня постоянно всплывает одна и та же история — параноидальная «информационная безопасность» модели на дев- и тест-стендах: она сопротивляется сохранить или показать логины и пароли тестовых пользователей, потому что «это небезопасно», хотя речь про заведомо тестовые учётки на локальном стенде, где это ровно то, что нужно. Совет правильный вообще — но не под мою конкретную ситуацию.",
+    "en": "6. An answer that doesn't fit your situation. The same story keeps coming up for me — a model's paranoid “information security” on dev and test environments: it resists saving or showing the logins and passwords for test users because “that's not secure,” even though we're talking about deliberately fake test accounts on a local environment, which is exactly where that's needed. The advice is correct in general — just not for my particular situation."
+  },
+  {
+    "key": "s09.body.001",
+    "slide": 9,
+    "where": "body",
+    "para": 1,
+    "ru": "Кто автор — художественный текст: AI или человек?",
+    "en": "Who wrote it — fiction: AI or human?"
+  },
+  {
+    "key": "s09.body.002",
+    "slide": 9,
+    "where": "body",
+    "para": 2,
+    "ru": "Текст A",
+    "en": "Text A"
+  },
+  {
+    "key": "s09.body.003",
+    "slide": 9,
+    "where": "body",
+    "para": 3,
+    "ru": "«Как это странно — он умер, а мы живем… Только я подозреваю, что каждый раз, когда мы ложимся спать, мы точно так же умираем. И солнце уходит навсегда, и заканчивается вся история. А потом небытие надоедает само себе, и мы просыпаемся. И мир возникает снова.»",
+    "en": "“How strange — he died, and we live on… Except I suspect that every time we go to sleep, we die in exactly the same way. And the sun goes away forever, and the whole of history ends. And then non-being gets bored with itself, and we wake up. And the world arises again.”"
+  },
+  {
+    "key": "s09.body.004",
+    "slide": 9,
+    "where": "body",
+    "para": 4,
+    "ru": "Текст B",
+    "en": "Text B"
+  },
+  {
+    "key": "s09.body.005",
+    "slide": 9,
+    "where": "body",
+    "para": 5,
+    "ru": "«Сон — это репетиция забвения, которую мы проходим каждую ночь, не замечая экзамена. Мы гасим свет и на несколько часов перестаём существовать для самих себя, а утром соглашаемся, что это был перерыв, а не отмена. Может быть, разница между сном и смертью — только в том, что после сна нас снова кто-то ждёт.»",
+    "en": "“Sleep is a rehearsal for oblivion that we go through every night without noticing the exam. We turn off the light and, for a few hours, stop existing for ourselves, and in the morning we agree that it was an intermission, not a cancellation. Maybe the only difference between sleep and death is that after sleep, someone is waiting for us again.”"
+  },
+  {
+    "key": "s09.notes.001",
+    "slide": 9,
+    "where": "notes",
+    "para": 1,
+    "ru": "Первая категория калибровочной игры — художественный текст. Два коротких фрагмента на тему сна и реальности, без подписи. Голосуем: какой написал человек, какой — AI.",
+    "en": "The first category in the calibration game — fiction. Two short fragments on the theme of sleep and reality, unlabeled. Let's vote: which one was written by a human, which by AI."
+  },
+  {
+    "key": "s09.notes.002",
+    "slide": 9,
+    "where": "notes",
+    "para": 2,
+    "ru": "Оба текста нарочно похожи по теме и по интонации — задача не в том, чтобы найти очевидную разницу в теме, а в том, чтобы услышать разницу в стиле, если она вообще заметна на таком коротком фрагменте.",
+    "en": "Both texts are deliberately similar in theme and tone — the point isn't to find an obvious difference in subject matter, but to hear a difference in style, if one is even noticeable in such a short fragment."
+  },
+  {
+    "key": "s09.notes.003",
+    "slide": 9,
+    "where": "notes",
+    "para": 3,
+    "ru": "После голосования — спросите одного-двух студентов, что натолкнуло их на выбор: ритм фразы, характерные обороты, узнаваемая интонация? В художественном тексте объективного измеримого критерия «кто лучше» нет — это категория про стиль и узнавание, не про производительность.",
+    "en": "After the vote — ask one or two students what tipped them off: the rhythm of the sentence, characteristic turns of phrase, a recognizable voice? For fiction, there's no objective, measurable criterion for “which is better” — this category is about style and recognition, not about productivity."
+  },
+  {
+    "key": "s10.body.001",
+    "slide": 10,
+    "where": "body",
+    "para": 1,
+    "ru": "Текст A — Пелевин, «Generation П». Текст B — AI",
+    "en": "Text A — Pelevin, “Generation P”. Text B — AI"
+  },
+  {
+    "key": "s10.body.002",
+    "slide": 10,
+    "where": "body",
+    "para": 2,
+    "ru": "Виктор Пелевин, «Generation П» (1999)",
+    "en": "Victor Pelevin, “Generation P” (1999)"
+  },
+  {
+    "key": "s10.body.003",
+    "slide": 10,
+    "where": "body",
+    "para": 3,
+    "ru": "«Как это странно — он умер, а мы живем… Только я подозреваю, что каждый раз, когда мы ложимся спать, мы точно так же умираем. И солнце уходит навсегда, и заканчивается вся история…»",
+    "en": "“How strange — he died, and we live on… Except I suspect that every time we go to sleep, we die in exactly the same way. And the sun goes away forever, and the whole of history ends…”"
+  },
+  {
+    "key": "s10.body.004",
+    "slide": 10,
+    "where": "body",
+    "para": 4,
+    "ru": "Сгенерировано AI по запросу в похожем стиле",
+    "en": "Generated by AI, prompted for a similar style"
+  },
+  {
+    "key": "s10.body.005",
+    "slide": 10,
+    "where": "body",
+    "para": 5,
+    "ru": "«Сон — это репетиция забвения, которую мы проходим каждую ночь, не замечая экзамена. Мы гасим свет и на несколько часов перестаём существовать для самих себя…»",
+    "en": "“Sleep is a rehearsal for oblivion that we go through every night without noticing the exam. We turn off the light and, for a few hours, stop existing for ourselves…”"
+  },
+  {
+    "key": "s10.body.006",
+    "slide": 10,
+    "where": "body",
+    "para": 6,
+    "ru": "Стиль можно приблизить, но короткий фрагмент не всегда выдаёт автора",
+    "en": "Style can be copied, but a short fragment doesn't always reveal the author"
+  },
+  {
+    "key": "s10.body.007",
+    "slide": 10,
+    "where": "body",
+    "para": 7,
+    "ru": "Длинное произведение: сюжет, композиция, развитие идеи — сложнее имитировать",
+    "en": "A long work: plot, composition, the development of an idea — harder to imitate"
+  },
+  {
+    "key": "s10.body.008",
+    "slide": 10,
+    "where": "body",
+    "para": 8,
+    "ru": "Короткий фрагмент: ритм фразы и интонацию AI имитирует всё убедительнее",
+    "en": "Short fragment: AI imitates sentence rhythm and tone more convincingly"
+  },
+  {
+    "key": "s10.notes.001",
+    "slide": 10,
+    "where": "notes",
+    "para": 1,
+    "ru": "Текст А — реальная цитата из романа Виктора Пелевина «Generation П», 1999 год. Текст Б сгенерирован AI по запросу приблизить похожий философско-рефлексивный стиль на тему сна и реальности.",
+    "en": "Text A is a real quote from Victor Pelevin's novel “Generation P,” 1999. Text B was generated by AI, prompted to approximate a similar philosophical-reflective style on the theme of sleep and reality."
+  },
+  {
+    "key": "s10.notes.002",
+    "slide": 10,
+    "where": "notes",
+    "para": 2,
+    "ru": "На таких коротких фрагментах современные модели действительно неплохо имитируют узнаваемую манеру письма — ритм фразы, характерные конструкции. Это не значит, что AI «пишет как Пелевин» в широком смысле — воспроизвести стиль на двух-трёх предложениях и написать целостное произведение с оригинальной мыслью — разные по сложности задачи. Урок этого раунда: короткий стилизованный фрагмент — ненадёжный тест для определения авторства, особенно в художественном тексте.",
+    "en": "On such short fragments, modern models really can do a decent job imitating a recognizable manner of writing — the rhythm of the sentence, characteristic constructions. That doesn't mean AI “writes like Pelevin” in any broad sense — reproducing style over two or three sentences and writing a whole work with an original idea are tasks of very different difficulty. The lesson of this round: a short stylized fragment is an unreliable test for determining authorship, especially in fiction."
+  },
+  {
+    "key": "s11.body.001",
+    "slide": 11,
+    "where": "body",
+    "para": 1,
+    "ru": "Кто автор — технический текст: AI или человек?",
+    "en": "Who wrote it — technical text: AI or human?"
+  },
+  {
+    "key": "s11.body.002",
+    "slide": 11,
+    "where": "body",
+    "para": 2,
+    "ru": "Текст A",
+    "en": "Text A"
+  },
+  {
+    "key": "s11.body.003",
+    "slide": 11,
+    "where": "body",
+    "para": 3,
+    "ru": "«Конструкция while в Python выполняет тело цикла до тех пор, пока условие остаётся истинным — в отличие от for, здесь нет встроенного перебора последовательности: интерпретатор просто проверяет условие перед каждой итерацией. Это удобно, когда число повторений заранее неизвестно и зависит от результата вычислений внутри самого цикла.»",
+    "en": "“The while construct in Python runs the loop body for as long as the condition stays true — unlike for, there's no built-in iteration over a sequence here: the interpreter simply checks the condition before every iteration. This is useful when the number of repetitions isn't known in advance and depends on the outcome of computations inside the loop itself.”"
+  },
+  {
+    "key": "s11.body.004",
+    "slide": 11,
+    "where": "body",
+    "para": 4,
+    "ru": "Текст B",
+    "en": "Text B"
+  },
+  {
+    "key": "s11.body.005",
+    "slide": 11,
+    "where": "body",
+    "para": 5,
+    "ru": "«Оператор for используется для перебора элементов последовательности — например, строки, кортежа или списка — или другого итерируемого объекта. Список выражений вычисляется один раз и должен вернуть итерируемый объект; затем набор операторов выполняется один раз для каждого элемента, в порядке, возвращённом итератором.»",
+    "en": "“The for statement is used to iterate over the items of a sequence — for example, a string, tuple, or list — or another iterable object. The list of expressions is evaluated once and must return an iterable object; the resulting set of statements is then executed once for each item, in the order returned by the iterator.”"
+  },
+  {
+    "key": "s11.notes.001",
+    "slide": 11,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вторая категория — технический текст, документация. Два фрагмента, объясняющих поведение конструкции языка программирования. Голосуем, какой писал человек, какой — AI.",
+    "en": "The second category — technical text, documentation. Two fragments explaining the behavior of a language construct. Let's vote: which was written by a human, which by AI."
+  },
+  {
+    "key": "s11.notes.002",
+    "slide": 11,
+    "where": "notes",
+    "para": 2,
+    "ru": "Здесь, помимо вопроса «кто автор», обсудим ещё один: в чём и насколько измеримо AI-версия отличается по практической продуктивности от официальной документации? Не только «кто написал», но и «что это значит для того, кто ищет ответ прямо сейчас».",
+    "en": "Beyond the question of “who's the author,” let's discuss another one: in what way, and how measurably, does the AI version differ in practical usefulness from official documentation? Not just “who wrote it,” but also “what it means for someone looking for an answer right now.”"
+  },
+  {
+    "key": "s11.notes.003",
+    "slide": 11,
+    "where": "notes",
+    "para": 3,
+    "ru": "После голосования спросите: какие признаки натолкнули на выбор — точность формулировок, характерная структура объяснения через сравнение с другими языками?",
+    "en": "After the vote, ask: what tipped you off — the precision of the wording, a characteristic structure that explains through comparison with other languages?"
+  },
+  {
+    "key": "s12.body.001",
+    "slide": 12,
+    "where": "body",
+    "para": 1,
+    "ru": "Текст A — AI, за секунды. Текст B — официальная документация Python",
+    "en": "Text A — AI, in seconds. Text B — official Python documentation"
+  },
+  {
+    "key": "s12.body.002",
+    "slide": 12,
+    "where": "body",
+    "para": 2,
+    "ru": "AI, по запросу объяснить while в похожем стиле",
+    "en": "AI, prompted to explain while in a similar style"
+  },
+  {
+    "key": "s12.body.003",
+    "slide": 12,
+    "where": "body",
+    "para": 3,
+    "ru": "«Конструкция while выполняет тело цикла, пока условие остаётся истинным — в отличие от for, здесь нет встроенного перебора последовательности.»",
+    "en": "“The while construct runs the loop body for as long as the condition stays true — unlike for, there's no built-in iteration over a sequence here.”"
+  },
+  {
+    "key": "s12.body.004",
+    "slide": 12,
+    "where": "body",
+    "para": 4,
+    "ru": "Переводы документации Python 3 (digitology.tech)",
+    "en": "Python 3 documentation translations (digitology.tech)"
+  },
+  {
+    "key": "s12.body.005",
+    "slide": 12,
+    "where": "body",
+    "para": 5,
+    "ru": "«Оператор for используется для перебора элементов последовательности — например, строки, кортежа или списка — или другого итерируемого объекта. Список выражений вычисляется один раз и должен вернуть итерируемый объект; затем набор операторов выполняется один раз для каждого элемента, в порядке, возвращённом итератором.»",
+    "en": "“The for statement is used to iterate over the items of a sequence — for example, a string, tuple, or list — or another iterable object. The list of expressions is evaluated once and must return an iterable object; the resulting set of statements is then executed once for each item, in the order returned by the iterator.”"
+  },
+  {
+    "key": "s12.body.006",
+    "slide": 12,
+    "where": "body",
+    "para": 6,
+    "ru": "AI-версия",
+    "en": "AI version"
+  },
+  {
+    "key": "s12.body.007",
+    "slide": 12,
+    "where": "body",
+    "para": 7,
+    "ru": "Быстрее и часто не менее точна для стандартных языковых конструкций · экономит время поиска",
+    "en": "Faster and often just as accurate for standard language constructs · saves search time"
+  },
+  {
+    "key": "s12.body.008",
+    "slide": 12,
+    "where": "body",
+    "para": 8,
+    "ru": "Официальная документация",
+    "en": "Official documentation"
+  },
+  {
+    "key": "s12.body.009",
+    "slide": 12,
+    "where": "body",
+    "para": 9,
+    "ru": "Пишется и поддерживается командой · стабильна годами",
+    "en": "Written and maintained by a team · stable for years"
+  },
+  {
+    "key": "s12.body.010",
+    "slide": 12,
+    "where": "body",
+    "para": 10,
+    "ru": "для технической документации важна не стилистика и не то, кто автор, а точность и скорость ответа — здесь AI особенно силён на типовых вопросах",
+    "en": "for technical documentation, what matters isn't style or who wrote it, but the accuracy and speed of the answer — AI is especially strong here on typical questions"
+  },
+  {
+    "key": "s12.notes.001",
+    "slide": 12,
+    "where": "notes",
+    "para": 1,
+    "ru": "Текст А сгенерирован AI по запросу объяснить `while` в документационном стиле. Текст Б — точная цитата из официального русского перевода документации Python 3 (портал «Переводы документации Python 3», digitology.tech), раздел «8.3. Оператор for».",
+    "en": "Text A was generated by AI, prompted to explain while in documentation style. Text B is an exact quote from the official Russian translation of the Python 3 documentation (“Python 3 Documentation Translations,” digitology.tech), section “8.3. The for Statement.”"
+  },
+  {
+    "key": "s12.notes.002",
+    "slide": 12,
+    "where": "notes",
+    "para": 2,
+    "ru": "Здесь важен не только вопрос авторства, а честное сравнение: официальная документация пишется и поддерживается командой, проходит ревью, стабильна годами. Но для стандартных языковых конструкций вроде `for` и `while` AI-версия часто не менее точна — а получаете вы её за секунды, без необходимости искать и читать документацию целиком.",
+    "en": "What matters here isn't just the question of authorship, but an honest comparison: official documentation is written and maintained by a team, goes through review, and is stable for years. But for standard language constructs like for and while, the AI version is often just as accurate — and you get it in seconds, without having to search for and read through the whole documentation."
+  },
+  {
+    "key": "s12.notes.003",
+    "slide": 12,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок: для технической документации на первый план выходит не то, кто автор, а точность и скорость получения ответа. На типовых, хорошо документированных вопросах — синтаксис языка, стандартные конструкции — AI особенно силён именно потому, что эта информация многократно и единообразно описана в его обучающих данных.",
+    "en": "Lesson: for technical documentation, what comes to the fore isn't who wrote it, but the accuracy and speed of getting an answer. On typical, well-documented questions — language syntax, standard constructs — AI is especially strong precisely because that information is described, repeatedly and consistently, in its training data."
+  },
+  {
+    "key": "s13.body.001",
+    "slide": 13,
+    "where": "body",
+    "para": 1,
+    "ru": "Кто автор — код: AI или человек?",
+    "en": "Who wrote it — code: AI or human?"
+  },
+  {
+    "key": "s13.body.002",
+    "slide": 13,
+    "where": "body",
+    "para": 2,
+    "ru": "Код A",
+    "en": "Code A"
+  },
+  {
+    "key": "s13.body.003",
+    "slide": 13,
+    "where": "body",
+    "para": 3,
+    "ru": "def prepare_method(self, method):",
+    "en": "def prepare_method(self, method):"
+  },
+  {
+    "key": "s13.body.004",
+    "slide": 13,
+    "where": "body",
+    "para": 4,
+    "ru": "    \"\"\"Prepares the given HTTP method.\"\"\"",
+    "en": "    \"\"\"Prepares the given HTTP method.\"\"\""
+  },
+  {
+    "key": "s13.body.005",
+    "slide": 13,
+    "where": "body",
+    "para": 5,
+    "ru": "    self.method = method",
+    "en": "    self.method = method"
+  },
+  {
+    "key": "s13.body.006",
+    "slide": 13,
+    "where": "body",
+    "para": 6,
+    "ru": "    if self.method is not None:",
+    "en": "    if self.method is not None:"
+  },
+  {
+    "key": "s13.body.007",
+    "slide": 13,
+    "where": "body",
+    "para": 7,
+    "ru": "        self.method = to_native_string(",
+    "en": "        self.method = to_native_string("
+  },
+  {
+    "key": "s13.body.008",
+    "slide": 13,
+    "where": "body",
+    "para": 8,
+    "ru": "            self.method.upper())",
+    "en": "            self.method.upper())"
+  },
+  {
+    "key": "s13.body.009",
+    "slide": 13,
+    "where": "body",
+    "para": 9,
+    "ru": "Код B",
+    "en": "Code B"
+  },
+  {
+    "key": "s13.body.010",
+    "slide": 13,
+    "where": "body",
+    "para": 10,
+    "ru": "def normalize_header_name(name):",
+    "en": "def normalize_header_name(name):"
+  },
+  {
+    "key": "s13.body.011",
+    "slide": 13,
+    "where": "body",
+    "para": 11,
+    "ru": "    \"\"\"Normalize an HTTP header name.\"\"\"",
+    "en": "    \"\"\"Normalize an HTTP header name.\"\"\""
+  },
+  {
+    "key": "s13.body.012",
+    "slide": 13,
+    "where": "body",
+    "para": 12,
+    "ru": "    if not name:",
+    "en": "    if not name:"
+  },
+  {
+    "key": "s13.body.013",
+    "slide": 13,
+    "where": "body",
+    "para": 13,
+    "ru": "        return name",
+    "en": "        return name"
+  },
+  {
+    "key": "s13.body.014",
+    "slide": 13,
+    "where": "body",
+    "para": 14,
+    "ru": "    return '-'.join(",
+    "en": "    return '-'.join("
+  },
+  {
+    "key": "s13.body.015",
+    "slide": 13,
+    "where": "body",
+    "para": 15,
+    "ru": "        part.capitalize() for part in name.split('-'))",
+    "en": "        part.capitalize() for part in name.split('-'))"
+  },
+  {
+    "key": "s13.notes.001",
+    "slide": 13,
+    "where": "notes",
+    "para": 1,
+    "ru": "Третья категория — код. Две маленькие функции, примерно одного масштаба. Голосуем: какую написал человек, какую — AI.",
+    "en": "The third category — code. Two small functions, roughly the same scale. Let's vote: which was written by a human, which by AI."
+  },
+  {
+    "key": "s13.notes.002",
+    "slide": 13,
+    "where": "notes",
+    "para": 2,
+    "ru": "Здесь тоже важен не только вопрос авторства: в чём измеримая разница в продуктивности между «получить функцию от AI» и «использовать проверенную библиотеку»? Обсудим это в разборе.",
+    "en": "Here too, it's not just about authorship: what's the measurable difference in productivity between “get a function from AI” and “use a proven library”? We'll discuss this in the reveal."
+  },
+  {
+    "key": "s13.notes.003",
+    "slide": 13,
+    "where": "notes",
+    "para": 3,
+    "ru": "После голосования спросите: что натолкнуло на выбор — стиль именования переменных, docstring, структура условной проверки?",
+    "en": "After the vote, ask: what tipped you off — the variable-naming style, the docstring, the structure of the conditional check?"
+  },
+  {
+    "key": "s14.body.001",
+    "slide": 14,
+    "where": "body",
+    "para": 1,
+    "ru": "Код A — библиотека requests, 10+ лет в проде. Код B — AI, 10-20 секунд",
+    "en": "Code A — the requests library, 10+ years in production. Code B — AI, 10-20 seconds"
+  },
+  {
+    "key": "s14.body.002",
+    "slide": 14,
+    "where": "body",
+    "para": 2,
+    "ru": "requests, github.com/psf/requests, MIT license",
+    "en": "requests, github.com/psf/requests, MIT license"
+  },
+  {
+    "key": "s14.body.003",
+    "slide": 14,
+    "where": "body",
+    "para": 3,
+    "ru": "def prepare_method(self, method):",
+    "en": "def prepare_method(self, method):"
+  },
+  {
+    "key": "s14.body.004",
+    "slide": 14,
+    "where": "body",
+    "para": 4,
+    "ru": "    \"\"\"Prepares the given HTTP method.\"\"\"",
+    "en": "    \"\"\"Prepares the given HTTP method.\"\"\""
+  },
+  {
+    "key": "s14.body.005",
+    "slide": 14,
+    "where": "body",
+    "para": 5,
+    "ru": "    self.method = method",
+    "en": "    self.method = method"
+  },
+  {
+    "key": "s14.body.006",
+    "slide": 14,
+    "where": "body",
+    "para": 6,
+    "ru": "    if self.method is not None:",
+    "en": "    if self.method is not None:"
+  },
+  {
+    "key": "s14.body.007",
+    "slide": 14,
+    "where": "body",
+    "para": 7,
+    "ru": "        self.method = to_native_string(",
+    "en": "        self.method = to_native_string("
+  },
+  {
+    "key": "s14.body.008",
+    "slide": 14,
+    "where": "body",
+    "para": 8,
+    "ru": "            self.method.upper())",
+    "en": "            self.method.upper())"
+  },
+  {
+    "key": "s14.body.009",
+    "slide": 14,
+    "where": "body",
+    "para": 9,
+    "ru": "AI, по запросу написать похожую функцию",
+    "en": "AI, prompted to write a similar function"
+  },
+  {
+    "key": "s14.body.010",
+    "slide": 14,
+    "where": "body",
+    "para": 10,
+    "ru": "def normalize_header_name(name):",
+    "en": "def normalize_header_name(name):"
+  },
+  {
+    "key": "s14.body.011",
+    "slide": 14,
+    "where": "body",
+    "para": 11,
+    "ru": "    \"\"\"Normalize an HTTP header name.\"\"\"",
+    "en": "    \"\"\"Normalize an HTTP header name.\"\"\""
+  },
+  {
+    "key": "s14.body.012",
+    "slide": 14,
+    "where": "body",
+    "para": 12,
+    "ru": "    if not name:",
+    "en": "    if not name:"
+  },
+  {
+    "key": "s14.body.013",
+    "slide": 14,
+    "where": "body",
+    "para": 13,
+    "ru": "        return name",
+    "en": "        return name"
+  },
+  {
+    "key": "s14.body.014",
+    "slide": 14,
+    "where": "body",
+    "para": 14,
+    "ru": "    return '-'.join(",
+    "en": "    return '-'.join("
+  },
+  {
+    "key": "s14.body.015",
+    "slide": 14,
+    "where": "body",
+    "para": 15,
+    "ru": "        part.capitalize() for part in name.split('-'))",
+    "en": "        part.capitalize() for part in name.split('-'))"
+  },
+  {
+    "key": "s14.body.016",
+    "slide": 14,
+    "where": "body",
+    "para": 16,
+    "ru": "requests",
+    "en": "requests"
+  },
+  {
+    "key": "s14.body.017",
+    "slide": 14,
+    "where": "body",
+    "para": 17,
+    "ru": "Используется в миллионах проектов · проверена на реальной нагрузке 10+ лет",
+    "en": "Used in millions of projects · battle-tested under real load for 10+ years"
+  },
+  {
+    "key": "s14.body.018",
+    "slide": 14,
+    "where": "body",
+    "para": 18,
+    "ru": "AI-версия",
+    "en": "AI version"
+  },
+  {
+    "key": "s14.body.019",
+    "slide": 14,
+    "where": "body",
+    "para": 19,
+    "ru": "Отлично подходит для типовых вспомогательных функций за секунды",
+    "en": "A great fit for typical helper functions in seconds"
+  },
+  {
+    "key": "s14.body.020",
+    "slide": 14,
+    "where": "body",
+    "para": 20,
+    "ru": "типовые задачи — AI, сложные и уникальные решения, от которых зависит стабильность системы, — человеку",
+    "en": "typical tasks — AI; complex and unique solutions that the system's stability depends on — a human"
+  },
+  {
+    "key": "s14.notes.001",
+    "slide": 14,
+    "where": "notes",
+    "para": 1,
+    "ru": "Код А — реальная функция из библиотеки `requests`, одной из самых используемых библиотек Python, с открытым исходным кодом на GitHub, лицензия MIT. Код Б сгенерирован AI по аналогичному запросу — написать небольшую функцию похожего масштаба.",
+    "en": "Code A is a real function from the requests library, one of the most-used Python libraries, open source on GitHub, MIT licensed. Code B was generated by AI on a similar prompt — write a small function of similar scope."
+  },
+  {
+    "key": "s14.notes.002",
+    "slide": 14,
+    "where": "notes",
+    "para": 2,
+    "ru": "Честное сравнение, без принижения любой из сторон: `requests` — код, который уже больше десяти лет работает в тысячах и миллионах реальных проектов, каждый скрытый баг за это время скорее всего найден и исправлен сообществом — это результат многолетней проверки на сложной нагруженной инфраструктуре. AI-версию вы получаете за 10–20 секунд — отличный вариант именно для таких типовых вспомогательных функций, boilerplate-кода, одноразовых скриптов.",
+    "en": "An honest comparison, without putting down either side: requests is code that's been running in thousands and millions of real projects for over ten years — every hidden bug has most likely been found and fixed by the community by now, the result of years of testing under complex, high-load infrastructure. You get the AI version in 10–20 seconds — a great option precisely for typical helper functions like this, boilerplate code, one-off scripts."
+  },
+  {
+    "key": "s14.notes.003",
+    "slide": 14,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок этого раунда — не «AI хуже», а разделение по типу задачи: типовые, вспомогательные задачи — AI, это быстрее и достаточно надёжно. Сложные и уникальные решения, архитектурные, высокоставочные, от которых зависит стабильность системы, — человеку, с его опытом и ответственностью за решение.",
+    "en": "This round's lesson isn't “AI is worse” — it's a split by task type: typical, helper tasks — AI, it's faster and reliable enough. Complex and unique solutions, architectural, high-stakes ones that a system's stability depends on — a human, with their experience and accountability for the decision."
+  },
+  {
+    "key": "s15.body.001",
+    "slide": 15,
+    "where": "body",
+    "para": 1,
+    "ru": "Кто автор — картина: AI или человек?",
+    "en": "Who made it — a painting: AI or human?"
+  },
+  {
+    "key": "s15.body.002",
+    "slide": 15,
+    "where": "body",
+    "para": 2,
+    "ru": "Изображение A",
+    "en": "Image A"
+  },
+  {
+    "key": "s15.body.003",
+    "slide": 15,
+    "where": "body",
+    "para": 3,
+    "ru": "Изображение B",
+    "en": "Image B"
+  },
+  {
+    "key": "s15.notes.001",
+    "slide": 15,
+    "where": "notes",
+    "para": 1,
+    "ru": "Четвёртая категория — изображение. Одна из двух карточек — реальная картина, вторая показывает стилизованный пример того, что мог бы сгенерировать AI по похожему запросу.",
+    "en": "The fourth category — an image. One of the two cards is a real painting, the other shows a stylized example of what AI might generate on a similar prompt."
+  },
+  {
+    "key": "s15.notes.002",
+    "slide": 15,
+    "where": "notes",
+    "para": 2,
+    "ru": "Эта категория — про стиль и восприятие, а не про измеримую продуктивность: современные модели генерации изображений действительно способны имитировать узнаваемые художественные стили за секунды, но вопрос не «что быстрее», а «что вы вообще видите и как это отличить».",
+    "en": "This category is about style and perception, not measurable productivity: modern image-generation models really can imitate recognizable artistic styles in seconds, but the question isn't “which is faster,” it's “what are you actually looking at, and how do you tell the difference.”"
+  },
+  {
+    "key": "s15.notes.003",
+    "slide": 15,
+    "where": "notes",
+    "para": 3,
+    "ru": "После голосования обсудите: какие визуальные признаки выдают руку человека — свет, композиция, мелкие несовершенства? Современные генеративные модели становятся всё убедительнее именно в стилизации под конкретных художников.",
+    "en": "After the vote, discuss: what visual cues give away the human hand — light, composition, small imperfections? Modern generative models are getting more and more convincing precisely at stylizing to match specific artists."
+  },
+  {
+    "key": "s16.body.001",
+    "slide": 16,
+    "where": "body",
+    "para": 1,
+    "ru": "Изображение B — Хосе Мария Веласко, 1875. AI сгенерирует похожее за секунды",
+    "en": "Image B — José María Velasco, 1875. AI would generate something similar in seconds"
+  },
+  {
+    "key": "s16.body.002",
+    "slide": 16,
+    "where": "body",
+    "para": 2,
+    "ru": "Хосе Мария Веласко,",
+    "en": "José María Velasco,"
+  },
+  {
+    "key": "s16.body.003",
+    "slide": 16,
+    "where": "body",
+    "para": 3,
+    "ru": "«Долина Мехико с горы Санта-Исабель», 1875",
+    "en": "“Valley of Mexico from the Santa Isabel Mountain,” 1875"
+  },
+  {
+    "key": "s16.body.004",
+    "slide": 16,
+    "where": "body",
+    "para": 4,
+    "ru": "общественное достояние · Wikimedia Commons",
+    "en": "public domain · Wikimedia Commons"
+  },
+  {
+    "key": "s16.notes.001",
+    "slide": 16,
+    "where": "notes",
+    "para": 1,
+    "ru": "Реальная картина — «Долина Мехико с горы Санта-Исабель», 1875 год, Хосе Мария Веласко — мексиканский художник-пейзажист XIX века, одна из самых известных панорам долины Мехико в истории латиноамериканской живописи, общественное достояние.",
+    "en": "The real painting is “Valley of Mexico from the Santa Isabel Mountain,” 1875, by José María Velasco — a 19th-century Mexican landscape painter, and one of the most famous panoramas of the Valley of Mexico in the history of Latin American painting, now in the public domain."
+  },
+  {
+    "key": "s16.notes.002",
+    "slide": 16,
+    "where": "notes",
+    "para": 2,
+    "ru": "По аналогичному текстовому запросу — «панорама долины, дальние горы, вулканы на горизонте, тёплый вечерний свет, стиль пейзажной живописи девятнадцатого века» — современная модель генерации изображений создаст похожую по духу композицию за несколько секунд. Мы не показываем здесь готовый сгенерированный файл — честно проговариваем это как гипотетический пример, а не выдаём собственное описание за реальный результат.",
+    "en": "On a similar text prompt — “a valley panorama, distant mountains, volcanoes on the horizon, warm evening light, 19th-century landscape painting style” — a modern image-generation model would produce a composition similar in spirit within a few seconds. We're not showing an actual generated file here — we're being upfront that this is a hypothetical example, not passing off our own description as a real result."
+  },
+  {
+    "key": "s16.notes.003",
+    "slide": 16,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок этого раунда: AI умеет имитировать узнаваемый стиль быстро и убедительно, но за скоростью нет истории создания, авторского замысла и подлинности момента — коммерческая или художественная ценность оригинала строится не только на визуальном сходстве. В отличие от технического текста или кода, здесь вопрос не про надёжность, а про этику и подлинность авторства.",
+    "en": "The lesson of this round: AI can imitate a recognizable style quickly and convincingly, but behind that speed there's no creation history, no artistic intent, no authenticity of the moment — the commercial or artistic value of the original isn't built on visual resemblance alone. Unlike technical text or code, the question here isn't about reliability, but about ethics and the authenticity of authorship."
+  },
+  {
+    "key": "s17.body.001",
+    "slide": 17,
+    "where": "body",
+    "para": 1,
+    "ru": "Кто автор — визуализация данных: AI или человек?",
+    "en": "Who made it — a data visualization: AI or human?"
+  },
+  {
+    "key": "s17.body.002",
+    "slide": 17,
+    "where": "body",
+    "para": 2,
+    "ru": "График A",
+    "en": "Chart A"
+  },
+  {
+    "key": "s17.body.003",
+    "slide": 17,
+    "where": "body",
+    "para": 3,
+    "ru": "График B",
+    "en": "Chart B"
+  },
+  {
+    "key": "s17.notes.001",
+    "slide": 17,
+    "where": "notes",
+    "para": 1,
+    "ru": "Пятая категория — визуализация данных. Два графика похожего формата — линия роста показателя по годам. Голосуем: какой сделан на основе реального исследования, какой сгенерирован по вымышленным данным.",
+    "en": "The fifth category — data visualization. Two charts of a similar format — a line showing a metric's growth over the years. Let's vote: which is based on real research, which is generated from fabricated data."
+  },
+  {
+    "key": "s17.notes.002",
+    "slide": 17,
+    "where": "notes",
+    "para": 2,
+    "ru": "Здесь снова акцент на измеримом выигрыше: не только «какой график красивее», а «какому из двух можно доверять и почему». Внешне два аккуратных line chart почти неотличимы — это специально: сама неотличимость и есть урок.",
+    "en": "Here again the focus is on the measurable payoff: not just “which chart looks nicer,” but “which of the two can you trust, and why.” On the surface, two neat line charts are almost indistinguishable — that's deliberate: the indistinguishability itself is the lesson."
+  },
+  {
+    "key": "s17.notes.003",
+    "slide": 17,
+    "where": "notes",
+    "para": 3,
+    "ru": "После голосования спросите: что вообще может отличить график с реальными данными от правдоподобно нарисованного — источник данных, подпись методологии, или ничего, если оформление одинаково аккуратное?",
+    "en": "After the vote, ask: what could actually tell apart a chart built on real data from a plausibly drawn one — the data source, a methodology note, or nothing at all, if the presentation is equally polished?"
+  },
+  {
+    "key": "s18.body.001",
+    "slide": 18,
+    "where": "body",
+    "para": 1,
+    "ru": "График A — AI, секунды. График B — Our World in Data, недели верификации",
+    "en": "Chart A — AI, seconds. Chart B — Our World in Data, weeks of verification"
+  },
+  {
+    "key": "s18.body.002",
+    "slide": 18,
+    "where": "body",
+    "para": 2,
+    "ru": "Сгенерировано через AI-инструмент на вымышленных данных",
+    "en": "Generated via an AI tool on fabricated data"
+  },
+  {
+    "key": "s18.body.003",
+    "slide": 18,
+    "where": "body",
+    "para": 3,
+    "ru": "Our World in Data · данные ITU / World Bank · CC-BY",
+    "en": "Our World in Data · ITU / World Bank data · CC-BY"
+  },
+  {
+    "key": "s18.body.004",
+    "slide": 18,
+    "where": "body",
+    "para": 4,
+    "ru": "AI-график",
+    "en": "AI chart"
+  },
+  {
+    "key": "s18.body.005",
+    "slide": 18,
+    "where": "body",
+    "para": 5,
+    "ru": "Решает задачу визуализации за секунды · здесь нет вопроса авторства или этики, как с картиной",
+    "en": "Solves the visualization task in seconds · no question of authorship or ethics here, unlike with the painting"
+  },
+  {
+    "key": "s18.body.006",
+    "slide": 18,
+    "where": "body",
+    "para": 6,
+    "ru": "Our World in Data",
+    "en": "Our World in Data"
+  },
+  {
+    "key": "s18.body.007",
+    "slide": 18,
+    "where": "body",
+    "para": 7,
+    "ru": "Исследовательская команда собирает и верифицирует источники неделями",
+    "en": "A research team collects and verifies sources over weeks"
+  },
+  {
+    "key": "s18.notes.001",
+    "slide": 18,
+    "where": "notes",
+    "para": 1,
+    "ru": "График А сгенерирован нами через AI-инструмент на правдоподобных, но вымышленных цифрах — специально для этой игры. График Б — реальные данные Our World in Data о доле населения, использующей интернет, Россия и мир, источник — International Telecommunication Union через World Bank, лицензия CC-BY.",
+    "en": "Chart A was generated by us via an AI tool on plausible but fabricated numbers — specifically for this game. Chart B is real Our World in Data data on the share of the population using the internet, Russia and the world, sourced from the International Telecommunication Union via the World Bank, CC-BY licensed."
+  },
+  {
+    "key": "s18.notes.002",
+    "slide": 18,
+    "where": "notes",
+    "para": 2,
+    "ru": "Честное сравнение: AI-инструмент решает задачу визуализации данных за секунды и делает это хорошо — в отличие от категории «картина», здесь нет вопроса подлинности или авторского замысла, визуализация — чисто техническая задача. Единственный вопрос, который имеет значение, — откуда взяты данные и насколько они верны. Our World in Data строится исследовательской командой, которая неделями собирает, сверяет и перепроверяет источники данных, прежде чем опубликовать график.",
+    "en": "An honest comparison: an AI tool solves the data-visualization task in seconds and does it well — unlike the “painting” category, there's no question of authenticity or artistic intent here; visualization is a purely technical task. The only question that matters is where the data came from and how reliable it is. Our World in Data is built by a research team that spends weeks collecting, cross-checking, and re-verifying data sources before publishing a chart."
+  },
+  {
+    "key": "s18.notes.003",
+    "slide": 18,
+    "where": "notes",
+    "para": 3,
+    "ru": "Это главный урок всей игры: чем аккуратнее визуальное оформление, тем меньше оно само по себе говорит о достоверности данных внутри. Форма и содержание — разные вопросы: AI отлично и быстро решает вопрос формы, но за проверку содержания — откуда данные и насколько они реальны — по-прежнему отвечает человек.",
+    "en": "This is the main lesson of the whole game: the neater the visual presentation, the less it says on its own about the reliability of the data inside it. Form and content are separate questions: AI solves the question of form excellently and quickly, but the question of content — where the data comes from and how real it is — is still a human's responsibility."
+  },
+  {
+    "key": "s19.body.001",
+    "slide": 19,
+    "where": "body",
+    "para": 1,
+    "ru": "Верно или неверно? Проверим интуицию про AI",
+    "en": "True or false? Let's check your intuition about AI"
+  },
+  {
+    "key": "s19.body.002",
+    "slide": 19,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s19.body.003",
+    "slide": 19,
+    "where": "body",
+    "para": 3,
+    "ru": "AI считает буквы в слове напрямую, как человек",
+    "en": "AI counts the letters in a word directly, the way a human does"
+  },
+  {
+    "key": "s19.body.004",
+    "slide": 19,
+    "where": "body",
+    "para": 4,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s19.body.005",
+    "slide": 19,
+    "where": "body",
+    "para": 5,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s19.body.006",
+    "slide": 19,
+    "where": "body",
+    "para": 6,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s19.body.007",
+    "slide": 19,
+    "where": "body",
+    "para": 7,
+    "ru": "AI всегда знает, что произошло в мире сегодня",
+    "en": "AI always knows what happened in the world today"
+  },
+  {
+    "key": "s19.body.008",
+    "slide": 19,
+    "where": "body",
+    "para": 8,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s19.body.009",
+    "slide": 19,
+    "where": "body",
+    "para": 9,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s19.body.010",
+    "slide": 19,
+    "where": "body",
+    "para": 10,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s19.body.011",
+    "slide": 19,
+    "where": "body",
+    "para": 11,
+    "ru": "AI иногда уверенно говорит неправду, не намереваясь обмануть",
+    "en": "AI can confidently state something false without meaning to deceive"
+  },
+  {
+    "key": "s19.body.012",
+    "slide": 19,
+    "where": "body",
+    "para": 12,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s19.body.013",
+    "slide": 19,
+    "where": "body",
+    "para": 13,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s19.body.014",
+    "slide": 19,
+    "where": "body",
+    "para": 14,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s19.body.015",
+    "slide": 19,
+    "where": "body",
+    "para": 15,
+    "ru": "AI-чат по умолчанию видит вашу личную почту и файлы",
+    "en": "An AI chat can see your personal email and files by default"
+  },
+  {
+    "key": "s19.body.016",
+    "slide": 19,
+    "where": "body",
+    "para": 16,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s19.body.017",
+    "slide": 19,
+    "where": "body",
+    "para": 17,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s19.body.018",
+    "slide": 19,
+    "where": "body",
+    "para": 18,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s19.body.019",
+    "slide": 19,
+    "where": "body",
+    "para": 19,
+    "ru": "AI всегда выдаёт ответ в соответствии с теми данными, которые в него заложили",
+    "en": "AI always gives an answer consistent with the data it was fed"
+  },
+  {
+    "key": "s19.body.020",
+    "slide": 19,
+    "where": "body",
+    "para": 20,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s19.body.021",
+    "slide": 19,
+    "where": "body",
+    "para": 21,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s19.body.022",
+    "slide": 19,
+    "where": "body",
+    "para": 22,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s19.body.023",
+    "slide": 19,
+    "where": "body",
+    "para": 23,
+    "ru": "Все AI-модели дают одинаковый ответ на один и тот же вопрос",
+    "en": "All AI models give the same answer to the same question"
+  },
+  {
+    "key": "s19.body.024",
+    "slide": 19,
+    "where": "body",
+    "para": 24,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s19.body.025",
+    "slide": 19,
+    "where": "body",
+    "para": 25,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s19.body.026",
+    "slide": 19,
+    "where": "body",
+    "para": 26,
+    "ru": "голосуем до объяснения",
+    "en": "vote before the explanation"
+  },
+  {
+    "key": "s19.notes.001",
+    "slide": 19,
+    "where": "notes",
+    "para": 1,
+    "ru": "Блиц-квиз: я зачитываю утверждение, вы голосуете поднятием руки — верно или неверно — прежде чем я дам ответ. На этом слайде ответов ещё нет; дальше правильные ответы открываются по одному, с коротким объяснением и уроком.",
+    "en": "Quickfire quiz: I read out a statement, you vote by raising a hand — true or false — before I give the answer. There are no answers yet on this slide; next, the correct answers are revealed one at a time, each with a short explanation and a lesson."
+  },
+  {
+    "key": "s20.body.001",
+    "slide": 20,
+    "where": "body",
+    "para": 1,
+    "ru": "Верно или неверно? Проверим интуицию про AI",
+    "en": "True or false? Let's check your intuition about AI"
+  },
+  {
+    "key": "s20.body.002",
+    "slide": 20,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s20.body.003",
+    "slide": 20,
+    "where": "body",
+    "para": 3,
+    "ru": "AI считает буквы в слове напрямую, как человек",
+    "en": "AI counts the letters in a word directly, the way a human does"
+  },
+  {
+    "key": "s20.body.004",
+    "slide": 20,
+    "where": "body",
+    "para": 4,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s20.body.005",
+    "slide": 20,
+    "where": "body",
+    "para": 5,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s20.body.006",
+    "slide": 20,
+    "where": "body",
+    "para": 6,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s20.body.007",
+    "slide": 20,
+    "where": "body",
+    "para": 7,
+    "ru": "AI всегда знает, что произошло в мире сегодня",
+    "en": "AI always knows what happened in the world today"
+  },
+  {
+    "key": "s20.body.008",
+    "slide": 20,
+    "where": "body",
+    "para": 8,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s20.body.009",
+    "slide": 20,
+    "where": "body",
+    "para": 9,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s20.body.010",
+    "slide": 20,
+    "where": "body",
+    "para": 10,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s20.body.011",
+    "slide": 20,
+    "where": "body",
+    "para": 11,
+    "ru": "AI иногда уверенно говорит неправду, не намереваясь обмануть",
+    "en": "AI can confidently state something false without meaning to deceive"
+  },
+  {
+    "key": "s20.body.012",
+    "slide": 20,
+    "where": "body",
+    "para": 12,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s20.body.013",
+    "slide": 20,
+    "where": "body",
+    "para": 13,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s20.body.014",
+    "slide": 20,
+    "where": "body",
+    "para": 14,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s20.body.015",
+    "slide": 20,
+    "where": "body",
+    "para": 15,
+    "ru": "AI-чат по умолчанию видит вашу личную почту и файлы",
+    "en": "An AI chat can see your personal email and files by default"
+  },
+  {
+    "key": "s20.body.016",
+    "slide": 20,
+    "where": "body",
+    "para": 16,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s20.body.017",
+    "slide": 20,
+    "where": "body",
+    "para": 17,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s20.body.018",
+    "slide": 20,
+    "where": "body",
+    "para": 18,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s20.body.019",
+    "slide": 20,
+    "where": "body",
+    "para": 19,
+    "ru": "AI всегда выдаёт ответ в соответствии с теми данными, которые в него заложили",
+    "en": "AI always gives an answer consistent with the data it was fed"
+  },
+  {
+    "key": "s20.body.020",
+    "slide": 20,
+    "where": "body",
+    "para": 20,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s20.body.021",
+    "slide": 20,
+    "where": "body",
+    "para": 21,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s20.body.022",
+    "slide": 20,
+    "where": "body",
+    "para": 22,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s20.body.023",
+    "slide": 20,
+    "where": "body",
+    "para": 23,
+    "ru": "Все AI-модели дают одинаковый ответ на один и тот же вопрос",
+    "en": "All AI models give the same answer to the same question"
+  },
+  {
+    "key": "s20.body.024",
+    "slide": 20,
+    "where": "body",
+    "para": 24,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s20.body.025",
+    "slide": 20,
+    "where": "body",
+    "para": 25,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s20.body.026",
+    "slide": 20,
+    "where": "body",
+    "para": 26,
+    "ru": "правильные ответы открываются по одному — вопрос 1 из 6",
+    "en": "correct answers reveal one at a time — question 1 of 6"
+  },
+  {
+    "key": "s20.notes.001",
+    "slide": 20,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вопрос 1: «AI считает буквы в слове напрямую, как человек» — НЕВЕРНО.",
+    "en": "Question 1: “AI counts the letters in a word directly, the way a human does” — FALSE."
+  },
+  {
+    "key": "s20.notes.002",
+    "slide": 20,
+    "where": "notes",
+    "para": 2,
+    "ru": "Модель не видит отдельные буквы. Перед обработкой текст разбивается на токены — куски из нескольких символов (иногда это целое слово, иногда часть слова или пара букв). Дальше модель работает уже с этими токенами, а не с буквами. Поэтому классический пример-провал — «сколько букв р в слове „характеристика“»: модель может ответить неверно, потому что она буквально не «считает буквы», а прикидывает ответ по статистике. Тот же корень у ошибок в подсчёте символов, переворачивании слов, задачах на анаграммы.",
+    "en": "The model doesn't see individual letters. Before processing, text is split into tokens — chunks of several characters (sometimes a whole word, sometimes part of a word or a couple of letters). From then on, the model works with these tokens, not letters. That's why the classic failure example is “how many letter r's are in the word 'characteristic'”: the model can get it wrong because it doesn't literally “count letters,” it estimates the answer statistically. The same root cause shows up in errors counting characters, reversing words, and anagram tasks."
+  },
+  {
+    "key": "s20.notes.003",
+    "slide": 20,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок: там, где важен точный посимвольный результат (подсчёт, маски, форматы), не доверяйте модели на слово — проверьте или поручите это обычному коду, а не LLM.",
+    "en": "Lesson: wherever an exact character-by-character result matters (counting, masks, formats), don't just trust the model's word for it — verify it, or hand it off to regular code instead of an LLM."
+  },
+  {
+    "key": "s21.body.001",
+    "slide": 21,
+    "where": "body",
+    "para": 1,
+    "ru": "Верно или неверно? Проверим интуицию про AI",
+    "en": "True or false? Let's check your intuition about AI"
+  },
+  {
+    "key": "s21.body.002",
+    "slide": 21,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s21.body.003",
+    "slide": 21,
+    "where": "body",
+    "para": 3,
+    "ru": "AI считает буквы в слове напрямую, как человек",
+    "en": "AI counts the letters in a word directly, the way a human does"
+  },
+  {
+    "key": "s21.body.004",
+    "slide": 21,
+    "where": "body",
+    "para": 4,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s21.body.005",
+    "slide": 21,
+    "where": "body",
+    "para": 5,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s21.body.006",
+    "slide": 21,
+    "where": "body",
+    "para": 6,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s21.body.007",
+    "slide": 21,
+    "where": "body",
+    "para": 7,
+    "ru": "AI всегда знает, что произошло в мире сегодня",
+    "en": "AI always knows what happened in the world today"
+  },
+  {
+    "key": "s21.body.008",
+    "slide": 21,
+    "where": "body",
+    "para": 8,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s21.body.009",
+    "slide": 21,
+    "where": "body",
+    "para": 9,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s21.body.010",
+    "slide": 21,
+    "where": "body",
+    "para": 10,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s21.body.011",
+    "slide": 21,
+    "where": "body",
+    "para": 11,
+    "ru": "AI иногда уверенно говорит неправду, не намереваясь обмануть",
+    "en": "AI can confidently state something false without meaning to deceive"
+  },
+  {
+    "key": "s21.body.012",
+    "slide": 21,
+    "where": "body",
+    "para": 12,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s21.body.013",
+    "slide": 21,
+    "where": "body",
+    "para": 13,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s21.body.014",
+    "slide": 21,
+    "where": "body",
+    "para": 14,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s21.body.015",
+    "slide": 21,
+    "where": "body",
+    "para": 15,
+    "ru": "AI-чат по умолчанию видит вашу личную почту и файлы",
+    "en": "An AI chat can see your personal email and files by default"
+  },
+  {
+    "key": "s21.body.016",
+    "slide": 21,
+    "where": "body",
+    "para": 16,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s21.body.017",
+    "slide": 21,
+    "where": "body",
+    "para": 17,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s21.body.018",
+    "slide": 21,
+    "where": "body",
+    "para": 18,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s21.body.019",
+    "slide": 21,
+    "where": "body",
+    "para": 19,
+    "ru": "AI всегда выдаёт ответ в соответствии с теми данными, которые в него заложили",
+    "en": "AI always gives an answer consistent with the data it was fed"
+  },
+  {
+    "key": "s21.body.020",
+    "slide": 21,
+    "where": "body",
+    "para": 20,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s21.body.021",
+    "slide": 21,
+    "where": "body",
+    "para": 21,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s21.body.022",
+    "slide": 21,
+    "where": "body",
+    "para": 22,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s21.body.023",
+    "slide": 21,
+    "where": "body",
+    "para": 23,
+    "ru": "Все AI-модели дают одинаковый ответ на один и тот же вопрос",
+    "en": "All AI models give the same answer to the same question"
+  },
+  {
+    "key": "s21.body.024",
+    "slide": 21,
+    "where": "body",
+    "para": 24,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s21.body.025",
+    "slide": 21,
+    "where": "body",
+    "para": 25,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s21.body.026",
+    "slide": 21,
+    "where": "body",
+    "para": 26,
+    "ru": "правильные ответы открываются по одному — вопрос 2 из 6",
+    "en": "correct answers reveal one at a time — question 2 of 6"
+  },
+  {
+    "key": "s21.notes.001",
+    "slide": 21,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вопрос 2: «AI всегда знает, что произошло в мире сегодня» — НЕВЕРНО.",
+    "en": "Question 2: “AI always knows what happened in the world today” — FALSE."
+  },
+  {
+    "key": "s21.notes.002",
+    "slide": 21,
+    "where": "notes",
+    "para": 2,
+    "ru": "У модели есть дата среза обучения: она знает мир примерно до этого момента и по умолчанию не в курсе того, что случилось позже — свежий релиз, новость, курс валют, вчерашний матч. Сам по себе чат не ходит в интернет. Чтобы ответ учитывал актуальные данные, нужен явный инструмент: веб-поиск, подключение к базе, загрузка свежего документа (это называют RAG). Без него уверенный ответ про «сегодня» — это в лучшем случае экстраполяция, в худшем — выдумка.",
+    "en": "The model has a training cutoff date: it knows the world roughly up to that point and, by default, has no idea what happened after — a fresh release, a news story, an exchange rate, yesterday's match. The chat itself doesn't browse the internet. For an answer to reflect current data, it needs an explicit tool: web search, a database connection, or a freshly uploaded document (this is called RAG). Without one, a confident answer about “today” is, at best, extrapolation — at worst, a fabrication."
+  },
+  {
+    "key": "s21.notes.003",
+    "slide": 21,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок: для всего, что зависит от свежести (цены, версии, события), либо включайте поиск, либо проверяйте дату — «уверенно» не значит «актуально».",
+    "en": "Lesson: for anything that depends on recency (prices, versions, events), either turn on search or check the date — “confident” doesn't mean “current.”"
+  },
+  {
+    "key": "s22.body.001",
+    "slide": 22,
+    "where": "body",
+    "para": 1,
+    "ru": "Верно или неверно? Проверим интуицию про AI",
+    "en": "True or false? Let's check your intuition about AI"
+  },
+  {
+    "key": "s22.body.002",
+    "slide": 22,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s22.body.003",
+    "slide": 22,
+    "where": "body",
+    "para": 3,
+    "ru": "AI считает буквы в слове напрямую, как человек",
+    "en": "AI counts the letters in a word directly, the way a human does"
+  },
+  {
+    "key": "s22.body.004",
+    "slide": 22,
+    "where": "body",
+    "para": 4,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s22.body.005",
+    "slide": 22,
+    "where": "body",
+    "para": 5,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s22.body.006",
+    "slide": 22,
+    "where": "body",
+    "para": 6,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s22.body.007",
+    "slide": 22,
+    "where": "body",
+    "para": 7,
+    "ru": "AI всегда знает, что произошло в мире сегодня",
+    "en": "AI always knows what happened in the world today"
+  },
+  {
+    "key": "s22.body.008",
+    "slide": 22,
+    "where": "body",
+    "para": 8,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s22.body.009",
+    "slide": 22,
+    "where": "body",
+    "para": 9,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s22.body.010",
+    "slide": 22,
+    "where": "body",
+    "para": 10,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s22.body.011",
+    "slide": 22,
+    "where": "body",
+    "para": 11,
+    "ru": "AI иногда уверенно говорит неправду, не намереваясь обмануть",
+    "en": "AI can confidently state something false without meaning to deceive"
+  },
+  {
+    "key": "s22.body.012",
+    "slide": 22,
+    "where": "body",
+    "para": 12,
+    "ru": "✓ верно",
+    "en": "✓ true"
+  },
+  {
+    "key": "s22.body.013",
+    "slide": 22,
+    "where": "body",
+    "para": 13,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s22.body.014",
+    "slide": 22,
+    "where": "body",
+    "para": 14,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s22.body.015",
+    "slide": 22,
+    "where": "body",
+    "para": 15,
+    "ru": "AI-чат по умолчанию видит вашу личную почту и файлы",
+    "en": "An AI chat can see your personal email and files by default"
+  },
+  {
+    "key": "s22.body.016",
+    "slide": 22,
+    "where": "body",
+    "para": 16,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s22.body.017",
+    "slide": 22,
+    "where": "body",
+    "para": 17,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s22.body.018",
+    "slide": 22,
+    "where": "body",
+    "para": 18,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s22.body.019",
+    "slide": 22,
+    "where": "body",
+    "para": 19,
+    "ru": "AI всегда выдаёт ответ в соответствии с теми данными, которые в него заложили",
+    "en": "AI always gives an answer consistent with the data it was fed"
+  },
+  {
+    "key": "s22.body.020",
+    "slide": 22,
+    "where": "body",
+    "para": 20,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s22.body.021",
+    "slide": 22,
+    "where": "body",
+    "para": 21,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s22.body.022",
+    "slide": 22,
+    "where": "body",
+    "para": 22,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s22.body.023",
+    "slide": 22,
+    "where": "body",
+    "para": 23,
+    "ru": "Все AI-модели дают одинаковый ответ на один и тот же вопрос",
+    "en": "All AI models give the same answer to the same question"
+  },
+  {
+    "key": "s22.body.024",
+    "slide": 22,
+    "where": "body",
+    "para": 24,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s22.body.025",
+    "slide": 22,
+    "where": "body",
+    "para": 25,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s22.body.026",
+    "slide": 22,
+    "where": "body",
+    "para": 26,
+    "ru": "правильные ответы открываются по одному — вопрос 3 из 6",
+    "en": "correct answers reveal one at a time — question 3 of 6"
+  },
+  {
+    "key": "s22.notes.001",
+    "slide": 22,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вопрос 3: «AI иногда уверенно говорит неправду, не намереваясь обмануть» — ВЕРНО.",
+    "en": "Question 3: “AI sometimes confidently says something untrue without intending to deceive” — TRUE."
+  },
+  {
+    "key": "s22.notes.002",
+    "slide": 22,
+    "where": "notes",
+    "para": 2,
+    "ru": "Это галлюцинация — мы уже называли её в блоке про провалы. Модель не «врёт» в человеческом смысле: у неё нет намерения обмануть, она просто достраивает наиболее правдоподобное продолжение и с той же интонацией уверенности выдаёт как факт, так и вымысел. Отсюда несуществующие ссылки, выдуманные цитаты, правдоподобные, но ложные детали. Ключевая ловушка именно в тоне: уверенность формулировки никак не связана с её правильностью.",
+    "en": "This is hallucination — we already named it in the block on failures. The model doesn't “lie” in the human sense: it has no intention to deceive, it simply constructs the most plausible continuation and delivers both fact and fiction with the same confident tone. Hence the nonexistent links, invented quotes, and plausible-but-false details. The key trap is exactly the tone: how confident a statement sounds has nothing to do with whether it's correct."
+  },
+  {
+    "key": "s22.notes.003",
+    "slide": 22,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок: тон — не индикатор истины. Любой проверяемый факт (ссылка, цифра, цитата, API) сверяйте с первоисточником, особенно когда ответ звучит гладко и уверенно.",
+    "en": "Lesson: tone isn't an indicator of truth. Check any verifiable fact (a link, a figure, a quote, an API) against the original source, especially when the answer sounds smooth and confident."
+  },
+  {
+    "key": "s23.body.001",
+    "slide": 23,
+    "where": "body",
+    "para": 1,
+    "ru": "Верно или неверно? Проверим интуицию про AI",
+    "en": "True or false? Let's check your intuition about AI"
+  },
+  {
+    "key": "s23.body.002",
+    "slide": 23,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s23.body.003",
+    "slide": 23,
+    "where": "body",
+    "para": 3,
+    "ru": "AI считает буквы в слове напрямую, как человек",
+    "en": "AI counts the letters in a word directly, the way a human does"
+  },
+  {
+    "key": "s23.body.004",
+    "slide": 23,
+    "where": "body",
+    "para": 4,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s23.body.005",
+    "slide": 23,
+    "where": "body",
+    "para": 5,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s23.body.006",
+    "slide": 23,
+    "where": "body",
+    "para": 6,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s23.body.007",
+    "slide": 23,
+    "where": "body",
+    "para": 7,
+    "ru": "AI всегда знает, что произошло в мире сегодня",
+    "en": "AI always knows what happened in the world today"
+  },
+  {
+    "key": "s23.body.008",
+    "slide": 23,
+    "where": "body",
+    "para": 8,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s23.body.009",
+    "slide": 23,
+    "where": "body",
+    "para": 9,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s23.body.010",
+    "slide": 23,
+    "where": "body",
+    "para": 10,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s23.body.011",
+    "slide": 23,
+    "where": "body",
+    "para": 11,
+    "ru": "AI иногда уверенно говорит неправду, не намереваясь обмануть",
+    "en": "AI can confidently state something false without meaning to deceive"
+  },
+  {
+    "key": "s23.body.012",
+    "slide": 23,
+    "where": "body",
+    "para": 12,
+    "ru": "✓ верно",
+    "en": "✓ true"
+  },
+  {
+    "key": "s23.body.013",
+    "slide": 23,
+    "where": "body",
+    "para": 13,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s23.body.014",
+    "slide": 23,
+    "where": "body",
+    "para": 14,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s23.body.015",
+    "slide": 23,
+    "where": "body",
+    "para": 15,
+    "ru": "AI-чат по умолчанию видит вашу личную почту и файлы",
+    "en": "An AI chat can see your personal email and files by default"
+  },
+  {
+    "key": "s23.body.016",
+    "slide": 23,
+    "where": "body",
+    "para": 16,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s23.body.017",
+    "slide": 23,
+    "where": "body",
+    "para": 17,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s23.body.018",
+    "slide": 23,
+    "where": "body",
+    "para": 18,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s23.body.019",
+    "slide": 23,
+    "where": "body",
+    "para": 19,
+    "ru": "AI всегда выдаёт ответ в соответствии с теми данными, которые в него заложили",
+    "en": "AI always gives an answer consistent with the data it was fed"
+  },
+  {
+    "key": "s23.body.020",
+    "slide": 23,
+    "where": "body",
+    "para": 20,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s23.body.021",
+    "slide": 23,
+    "where": "body",
+    "para": 21,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s23.body.022",
+    "slide": 23,
+    "where": "body",
+    "para": 22,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s23.body.023",
+    "slide": 23,
+    "where": "body",
+    "para": 23,
+    "ru": "Все AI-модели дают одинаковый ответ на один и тот же вопрос",
+    "en": "All AI models give the same answer to the same question"
+  },
+  {
+    "key": "s23.body.024",
+    "slide": 23,
+    "where": "body",
+    "para": 24,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s23.body.025",
+    "slide": 23,
+    "where": "body",
+    "para": 25,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s23.body.026",
+    "slide": 23,
+    "where": "body",
+    "para": 26,
+    "ru": "правильные ответы открываются по одному — вопрос 4 из 6",
+    "en": "correct answers reveal one at a time — question 4 of 6"
+  },
+  {
+    "key": "s23.notes.001",
+    "slide": 23,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вопрос 4: «AI-чат по умолчанию видит вашу личную почту и файлы» — НЕВЕРНО.",
+    "en": "Question 4: “An AI chat can see your personal email and files by default” — FALSE."
+  },
+  {
+    "key": "s23.notes.002",
+    "slide": 23,
+    "where": "notes",
+    "para": 2,
+    "ru": "Обычный чат видит только то, что вы сами прислали в диалоге. Он не читает вашу почту, диск или файлы на компьютере, пока вы явно не подключите такую интеграцию или не загрузите документ. Доступ появляется только там, где вы его осознанно дали, — и вот об этом уже стоит думать: что именно вы вставляете в промпт и какие интеграции включаете, особенно с рабочими данными.",
+    "en": "A regular chat only sees what you've sent it yourself in the conversation. It doesn't read your email, drive, or files on your computer unless you explicitly connect such an integration or upload a document. Access only exists where you've consciously granted it — and that's exactly what's worth thinking about: what you put into a prompt and which integrations you turn on, especially with work data."
+  },
+  {
+    "key": "s23.notes.003",
+    "slide": 23,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок: паниковать про «он всё видит» не нужно, но и вставлять секреты/персональные данные в чат по привычке — тоже; доступ определяете вы, значит вы и отвечаете за то, что даёте.",
+    "en": "Lesson: no need to panic that “it sees everything,” but don't make a habit of pasting secrets or personal data into the chat either — you control the access, so you're responsible for what you grant."
+  },
+  {
+    "key": "s24.body.001",
+    "slide": 24,
+    "where": "body",
+    "para": 1,
+    "ru": "Верно или неверно? Проверим интуицию про AI",
+    "en": "True or false? Let's check your intuition about AI"
+  },
+  {
+    "key": "s24.body.002",
+    "slide": 24,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s24.body.003",
+    "slide": 24,
+    "where": "body",
+    "para": 3,
+    "ru": "AI считает буквы в слове напрямую, как человек",
+    "en": "AI counts the letters in a word directly, the way a human does"
+  },
+  {
+    "key": "s24.body.004",
+    "slide": 24,
+    "where": "body",
+    "para": 4,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s24.body.005",
+    "slide": 24,
+    "where": "body",
+    "para": 5,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s24.body.006",
+    "slide": 24,
+    "where": "body",
+    "para": 6,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s24.body.007",
+    "slide": 24,
+    "where": "body",
+    "para": 7,
+    "ru": "AI всегда знает, что произошло в мире сегодня",
+    "en": "AI always knows what happened in the world today"
+  },
+  {
+    "key": "s24.body.008",
+    "slide": 24,
+    "where": "body",
+    "para": 8,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s24.body.009",
+    "slide": 24,
+    "where": "body",
+    "para": 9,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s24.body.010",
+    "slide": 24,
+    "where": "body",
+    "para": 10,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s24.body.011",
+    "slide": 24,
+    "where": "body",
+    "para": 11,
+    "ru": "AI иногда уверенно говорит неправду, не намереваясь обмануть",
+    "en": "AI can confidently state something false without meaning to deceive"
+  },
+  {
+    "key": "s24.body.012",
+    "slide": 24,
+    "where": "body",
+    "para": 12,
+    "ru": "✓ верно",
+    "en": "✓ true"
+  },
+  {
+    "key": "s24.body.013",
+    "slide": 24,
+    "where": "body",
+    "para": 13,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s24.body.014",
+    "slide": 24,
+    "where": "body",
+    "para": 14,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s24.body.015",
+    "slide": 24,
+    "where": "body",
+    "para": 15,
+    "ru": "AI-чат по умолчанию видит вашу личную почту и файлы",
+    "en": "An AI chat can see your personal email and files by default"
+  },
+  {
+    "key": "s24.body.016",
+    "slide": 24,
+    "where": "body",
+    "para": 16,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s24.body.017",
+    "slide": 24,
+    "where": "body",
+    "para": 17,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s24.body.018",
+    "slide": 24,
+    "where": "body",
+    "para": 18,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s24.body.019",
+    "slide": 24,
+    "where": "body",
+    "para": 19,
+    "ru": "AI всегда выдаёт ответ в соответствии с теми данными, которые в него заложили",
+    "en": "AI always gives an answer consistent with the data it was fed"
+  },
+  {
+    "key": "s24.body.020",
+    "slide": 24,
+    "where": "body",
+    "para": 20,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s24.body.021",
+    "slide": 24,
+    "where": "body",
+    "para": 21,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s24.body.022",
+    "slide": 24,
+    "where": "body",
+    "para": 22,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s24.body.023",
+    "slide": 24,
+    "where": "body",
+    "para": 23,
+    "ru": "Все AI-модели дают одинаковый ответ на один и тот же вопрос",
+    "en": "All AI models give the same answer to the same question"
+  },
+  {
+    "key": "s24.body.024",
+    "slide": 24,
+    "where": "body",
+    "para": 24,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s24.body.025",
+    "slide": 24,
+    "where": "body",
+    "para": 25,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s24.body.026",
+    "slide": 24,
+    "where": "body",
+    "para": 26,
+    "ru": "правильные ответы открываются по одному — вопрос 5 из 6",
+    "en": "correct answers reveal one at a time — question 5 of 6"
+  },
+  {
+    "key": "s24.notes.001",
+    "slide": 24,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вопрос 5: «AI всегда выдаёт ответ в соответствии с данными, которые в него заложили» — НЕВЕРНО.",
+    "en": "Question 5: “AI always gives an answer consistent with the data it was fed” — FALSE."
+  },
+  {
+    "key": "s24.notes.002",
+    "slide": 24,
+    "where": "notes",
+    "para": 2,
+    "ru": "Обучающие данные формируют «характер» модели и её систематические искажения, но ответ не выводится из них жёстко и однозначно. Во-первых, модель не ищет готовый кусок текста в выборке, а генерирует продолжение по выученным статистическим закономерностям — поэтому возможны и обобщения на новые случаи, и галлюцинации. Во-вторых, из-за случайности сэмплирования (temperature) один и тот же вопрос при разных запусках даёт разные ответы. В-третьих, поведение сильно правится уже после предобучения — дообучением и настройкой под диалог (RLHF), так что финальный ответ отражает не только «сырые» тренировочные данные.",
+    "en": "Training data shapes the model's “character” and its systematic biases, but the answer isn't derived from it rigidly and unambiguously. First, the model doesn't look up a ready-made chunk of text in the training set — it generates a continuation based on learned statistical patterns, which is why both generalization to new cases and hallucinations are possible. Second, because of the randomness of sampling (temperature), the same question can get different answers on different runs. Third, behavior is heavily adjusted after pretraining — through fine-tuning and dialogue tuning (RLHF) — so the final answer reflects more than just the “raw” training data."
+  },
+  {
+    "key": "s24.notes.003",
+    "slide": 24,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок: не думайте о модели как о поисковике по базе. Это вероятностный генератор — отсюда и гибкость, и невоспроизводимость, и необходимость проверки.",
+    "en": "Lesson: don't think of the model as a database search engine. It's a probabilistic generator — hence the flexibility, the non-reproducibility, and the need to verify it."
+  },
+  {
+    "key": "s25.body.001",
+    "slide": 25,
+    "where": "body",
+    "para": 1,
+    "ru": "Верно или неверно? Проверим интуицию про AI",
+    "en": "True or false? Let's check your intuition about AI"
+  },
+  {
+    "key": "s25.body.002",
+    "slide": 25,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s25.body.003",
+    "slide": 25,
+    "where": "body",
+    "para": 3,
+    "ru": "AI считает буквы в слове напрямую, как человек",
+    "en": "AI counts the letters in a word directly, the way a human does"
+  },
+  {
+    "key": "s25.body.004",
+    "slide": 25,
+    "where": "body",
+    "para": 4,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s25.body.005",
+    "slide": 25,
+    "where": "body",
+    "para": 5,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s25.body.006",
+    "slide": 25,
+    "where": "body",
+    "para": 6,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s25.body.007",
+    "slide": 25,
+    "where": "body",
+    "para": 7,
+    "ru": "AI всегда знает, что произошло в мире сегодня",
+    "en": "AI always knows what happened in the world today"
+  },
+  {
+    "key": "s25.body.008",
+    "slide": 25,
+    "where": "body",
+    "para": 8,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s25.body.009",
+    "slide": 25,
+    "where": "body",
+    "para": 9,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s25.body.010",
+    "slide": 25,
+    "where": "body",
+    "para": 10,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s25.body.011",
+    "slide": 25,
+    "where": "body",
+    "para": 11,
+    "ru": "AI иногда уверенно говорит неправду, не намереваясь обмануть",
+    "en": "AI can confidently state something false without meaning to deceive"
+  },
+  {
+    "key": "s25.body.012",
+    "slide": 25,
+    "where": "body",
+    "para": 12,
+    "ru": "✓ верно",
+    "en": "✓ true"
+  },
+  {
+    "key": "s25.body.013",
+    "slide": 25,
+    "where": "body",
+    "para": 13,
+    "ru": "неверно",
+    "en": "false"
+  },
+  {
+    "key": "s25.body.014",
+    "slide": 25,
+    "where": "body",
+    "para": 14,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s25.body.015",
+    "slide": 25,
+    "where": "body",
+    "para": 15,
+    "ru": "AI-чат по умолчанию видит вашу личную почту и файлы",
+    "en": "An AI chat can see your personal email and files by default"
+  },
+  {
+    "key": "s25.body.016",
+    "slide": 25,
+    "where": "body",
+    "para": 16,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s25.body.017",
+    "slide": 25,
+    "where": "body",
+    "para": 17,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s25.body.018",
+    "slide": 25,
+    "where": "body",
+    "para": 18,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s25.body.019",
+    "slide": 25,
+    "where": "body",
+    "para": 19,
+    "ru": "AI всегда выдаёт ответ в соответствии с теми данными, которые в него заложили",
+    "en": "AI always gives an answer consistent with the data it was fed"
+  },
+  {
+    "key": "s25.body.020",
+    "slide": 25,
+    "where": "body",
+    "para": 20,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s25.body.021",
+    "slide": 25,
+    "where": "body",
+    "para": 21,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s25.body.022",
+    "slide": 25,
+    "where": "body",
+    "para": 22,
+    "ru": "6",
+    "en": "6"
+  },
+  {
+    "key": "s25.body.023",
+    "slide": 25,
+    "where": "body",
+    "para": 23,
+    "ru": "Все AI-модели дают одинаковый ответ на один и тот же вопрос",
+    "en": "All AI models give the same answer to the same question"
+  },
+  {
+    "key": "s25.body.024",
+    "slide": 25,
+    "where": "body",
+    "para": 24,
+    "ru": "верно",
+    "en": "true"
+  },
+  {
+    "key": "s25.body.025",
+    "slide": 25,
+    "where": "body",
+    "para": 25,
+    "ru": "✓ неверно",
+    "en": "✓ false"
+  },
+  {
+    "key": "s25.body.026",
+    "slide": 25,
+    "where": "body",
+    "para": 26,
+    "ru": "правильные ответы открываются по одному — вопрос 6 из 6",
+    "en": "correct answers reveal one at a time — question 6 of 6"
+  },
+  {
+    "key": "s25.notes.001",
+    "slide": 25,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вопрос 6: «Все AI-модели дают одинаковый ответ на один и тот же вопрос» — НЕВЕРНО.",
+    "en": "Question 6: “All AI models give the same answer to the same question” — FALSE."
+  },
+  {
+    "key": "s25.notes.002",
+    "slide": 25,
+    "where": "notes",
+    "para": 2,
+    "ru": "Разные модели обучены по-разному и отвечают по-разному; более того, даже одна и та же модель при повторных запусках может дать разные по содержанию ответы (см. предыдущий пункт про случайность генерации). Это не баг, а свойство технологии. Практический плюс: если по важному вопросу задать его двум-трём разным моделям и ответы сходятся — это слабый, но полезный сигнал; если расходятся — повод копать глубже и идти к первоисточнику.",
+    "en": "Different models are trained differently and answer differently; moreover, even the same model can give answers that differ in substance on repeated runs (see the previous point on the randomness of generation). This isn't a bug, it's a property of the technology. The practical upside: if you ask two or three different models an important question and the answers agree, that's a weak but useful signal; if they disagree, that's a reason to dig deeper and go to the original source."
+  },
+  {
+    "key": "s25.notes.003",
+    "slide": 25,
+    "where": "notes",
+    "para": 3,
+    "ru": "Урок: для значимых решений сверяйтесь с несколькими источниками и, по возможности, с несколькими моделями — единственный ответ единственной модели не является истиной в последней инстанции.",
+    "en": "Lesson: for significant decisions, cross-check with several sources and, where possible, several models — a single answer from a single model isn't the final word."
+  },
+  {
+    "key": "s26.body.001",
+    "slide": 26,
+    "where": "body",
+    "para": 1,
+    "ru": "Памятка «AI reality-check» — 5 пунктов на неделю вперёд",
+    "en": "The “AI reality-check” memo — 5 points to carry into the next week"
+  },
+  {
+    "key": "s26.body.002",
+    "slide": 26,
+    "where": "body",
+    "para": 2,
+    "ru": "1",
+    "en": "1"
+  },
+  {
+    "key": "s26.body.003",
+    "slide": 26,
+    "where": "body",
+    "para": 3,
+    "ru": "Уверенный тон ответа AI не означает, что ответ фактически верен",
+    "en": "A confident tone in an AI's answer doesn't mean the answer is factually correct"
+  },
+  {
+    "key": "s26.body.004",
+    "slide": 26,
+    "where": "body",
+    "para": 4,
+    "ru": "2",
+    "en": "2"
+  },
+  {
+    "key": "s26.body.005",
+    "slide": 26,
+    "where": "body",
+    "para": 5,
+    "ru": "AI не знает о событиях после даты среза обучения без веб-поиска",
+    "en": "AI doesn't know about events after its training cutoff date without web search"
+  },
+  {
+    "key": "s26.body.006",
+    "slide": 26,
+    "where": "body",
+    "para": 6,
+    "ru": "3",
+    "en": "3"
+  },
+  {
+    "key": "s26.body.007",
+    "slide": 26,
+    "where": "body",
+    "para": 7,
+    "ru": "Ответ AI не выводится однозначно из тренировочных данных — из-за случайности генерации один и тот же вопрос может дать разные ответы",
+    "en": "An AI's answer isn't derived unambiguously from its training data — because generation is random, the same question can get different answers"
+  },
+  {
+    "key": "s26.body.008",
+    "slide": 26,
+    "where": "body",
+    "para": 8,
+    "ru": "4",
+    "en": "4"
+  },
+  {
+    "key": "s26.body.009",
+    "slide": 26,
+    "where": "body",
+    "para": 9,
+    "ru": "AI видит текст не буквами, а токенами — поэтому иногда путается в побуквенных задачах вроде подсчёта букв в слове",
+    "en": "AI sees text as tokens, not letters — which is why it sometimes trips up on letter-by-letter tasks like counting letters in a word"
+  },
+  {
+    "key": "s26.body.010",
+    "slide": 26,
+    "where": "body",
+    "para": 10,
+    "ru": "5",
+    "en": "5"
+  },
+  {
+    "key": "s26.body.011",
+    "slide": 26,
+    "where": "body",
+    "para": 11,
+    "ru": "Разные AI-модели могут давать разные ответы — сверка с несколькими источниками разумна",
+    "en": "Different AI models can give different answers — cross-checking with several sources is sensible"
+  },
+  {
+    "key": "s26.notes.001",
+    "slide": 26,
+    "where": "notes",
+    "para": 1,
+    "ru": "Вот памятка «AI reality-check» — пять пунктов, которые пригодятся вам уже на этой неделе, составлены на основе сегодняшнего квиза.",
+    "en": "Here's the “AI reality-check” memo — five points that will come in handy this very week, drawn from today's quiz."
+  },
+  {
+    "key": "s26.notes.002",
+    "slide": 26,
+    "where": "notes",
+    "para": 2,
+    "ru": "Первое: уверенный тон ответа AI не означает, что ответ фактически верен. Второе: AI не знает о событиях после даты среза обучения без доступа к веб-поиску. Третье: ответ AI не выводится однозначно из тренировочных данных — модель не «ищет» готовый кусок текста в обучающей выборке, а генерирует продолжение на основе статистических закономерностей, и из-за случайности сэмплирования один и тот же вопрос может дать разные ответы. Четвёртое: AI видит текст не буквами, а токенами — кусками из нескольких символов, поэтому в задачах, требующих побуквенного счёта (например, сколько букв «р» в слове), модель может ошибаться, хотя в целом прекрасно работает с языком. Пятое: разные AI-модели могут давать разные ответы на один и тот же вопрос — сверка с несколькими источниками разумна для важных решений.",
+    "en": "First: a confident tone in an AI's answer doesn't mean the answer is factually correct. Second: AI doesn't know about events after its training cutoff date without access to web search. Third: an AI's answer isn't derived unambiguously from its training data — the model doesn't “look up” a ready-made chunk of text in the training set, it generates a continuation based on statistical patterns, and because sampling is random, the same question can get different answers. Fourth: AI sees text not as letters, but as tokens — chunks of several characters — so on tasks that require counting letter by letter (say, how many “r”s are in a word), the model can make mistakes, even though overall it works with language extremely well. Fifth: different AI models can give different answers to the same question — cross-checking with several sources is sensible for important decisions."
+  },
+  {
+    "key": "s26.notes.003",
+    "slide": 26,
+    "where": "notes",
+    "para": 3,
+    "ru": "Возьмите с собой этот лист. Эти пять пунктов пригодятся вам не только в этом курсе, а в любой работе с AI-инструментами.",
+    "en": "Take this sheet with you. These five points will be useful not only in this course, but in any work with AI tools."
+  },
+  {
+    "key": "s27.body.001",
+    "slide": 27,
+    "where": "body",
+    "para": 1,
+    "ru": "Медицина",
+    "en": "Medicine"
+  },
+  {
+    "key": "s27.body.002",
+    "slide": 27,
+    "where": "body",
+    "para": 2,
+    "ru": "Финансы",
+    "en": "Finance"
+  },
+  {
+    "key": "s27.body.003",
+    "slide": 27,
+    "where": "body",
+    "para": 3,
+    "ru": "Транспорт",
+    "en": "Transport"
+  },
+  {
+    "key": "s27.body.004",
+    "slide": 27,
+    "where": "body",
+    "para": 4,
+    "ru": "Производство",
+    "en": "Manufacturing"
+  },
+  {
+    "key": "s27.body.005",
+    "slide": 27,
+    "where": "body",
+    "para": 5,
+    "ru": "Разработка / IT",
+    "en": "Development / IT"
+  },
+  {
+    "key": "s27.body.006",
+    "slide": 27,
+    "where": "body",
+    "para": 6,
+    "ru": "Логистика",
+    "en": "Logistics"
+  },
+  {
+    "key": "s27.body.007",
+    "slide": 27,
+    "where": "body",
+    "para": 7,
+    "ru": "Наука",
+    "en": "Science"
+  },
+  {
+    "key": "s27.body.008",
+    "slide": 27,
+    "where": "body",
+    "para": 8,
+    "ru": "Кибербезопасность",
+    "en": "Cybersecurity"
+  },
+  {
+    "key": "s27.body.009",
+    "slide": 27,
+    "where": "body",
+    "para": 9,
+    "ru": "Wikimedia Commons · CC / общественное достояние",
+    "en": "Wikimedia Commons · CC / public domain"
+  },
+  {
+    "key": "s27.body.010",
+    "slide": 27,
+    "where": "body",
+    "para": 10,
+    "ru": "СПАСИБО",
+    "en": "THANK YOU"
+  },
+  {
+    "key": "s27.body.011",
+    "slide": 27,
+    "where": "body",
+    "para": 11,
+    "ru": "От сегодняшнего среза — к системному разбору AI по отраслям",
+    "en": "From today's snapshot to a systematic look at AI by industry"
+  },
+  {
+    "key": "s27.notes.001",
+    "slide": 27,
+    "where": "notes",
+    "para": 1,
+    "ru": "Спасибо за сегодняшнее занятие. Сегодня вы честно зафиксировали свой опыт использования AI: что получилось, что не получилось, и с чем вы приходите на этот курс.",
+    "en": "Thank you for today's session. Today you honestly recorded your experience with AI: what worked, what didn't, and what you're bringing into this course."
+  },
+  {
+    "key": "s27.notes.002",
+    "slide": 27,
+    "where": "notes",
+    "para": 2,
+    "ru": "Дальше — лекция один и весь курс, где мы системно, отрасль за отраслью, разберём, как AI реально применяется в разработке, финансах, медицине, промышленности, креативных индустриях и других сферах: какие инструменты работают, где границы применимости, и как выбирать подходящий инструмент под задачу. Всё, что вы сегодня рассказали — истории успеха и провала, — не единичные случаи, а узнаваемые закономерности, к которым мы будем возвращаться на протяжении курса.",
+    "en": "Next up — Lecture 1 and the whole course, where we'll systematically break down, industry by industry, how AI is actually applied in development, finance, medicine, manufacturing, creative industries, and other fields: which tools work, where the limits of applicability are, and how to choose the right tool for the task. Everything you shared today — success stories and failures alike — isn't a set of one-off cases, but recognizable patterns we'll keep coming back to throughout the course."
+  },
+  {
+    "key": "s27.notes.003",
+    "slide": 27,
+    "where": "notes",
+    "para": 3,
+    "ru": "Если остались вопросы — самое время задать их сейчас, до того как начнётся системная часть курса. Контакты — телеграм-канал курса и телеграм преподавателя — появятся здесь отдельно. До встречи на следующем занятии.",
+    "en": "If you still have questions — now's the time to ask, before the systematic part of the course begins. Contacts — the course Telegram channel and the instructor's Telegram — will appear here separately. See you at the next session."
+  }
+]

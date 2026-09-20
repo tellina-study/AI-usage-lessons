@@ -31,6 +31,8 @@ import importlib.util
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
+from chrome import T, set_lang
+
 # ---- canvas / scale ----
 DPI = 96
 PX = lambda inch: inch * DPI            # inches -> px
@@ -373,7 +375,7 @@ def k_cover(s, sp):
     txt(s, 1.0, 4.3, 11.3, 1.5, sp["sub"], size=19, color=SURF, ls=1.2, label="cover.sub")
 
 def k_map(s, sp):
-    titlebar(s, "Карта занятия", sp["title"])
+    titlebar(s, T("map_title"), sp["title"])
     y = 1.55
     for name, desc in sp["blocks"]:
         box(s, 0.6, y, 12.13, 1.15, fill=SURF, stroke=LIGHT)
@@ -382,7 +384,7 @@ def k_map(s, sp):
         txt(s, 0.95, y + 0.6, 11.6, 0.5, desc, size=14, color=SLATE, label="map.desc")
         y += 1.32
     txt(s, 0.6, y + 0.02, 12.1, 0.5,
-        "Каждый кейс: контекст → решение и схема → усложнение из практики → разбор с примером",
+        T("map_sub"),
         size=13.5, color=MID, bold=True, label="map.footer")
 
 def k_divider(s, sp):
@@ -460,7 +462,7 @@ def k_concept(s, sp):
                     fill=GTINT, stroke=GOLD, color=DEEP, label="concept.definition",
                     max_h=1.30)
     lab_y = 1.35 + def_h + 0.12
-    txt(s, 0.6, lab_y, 5.0, 0.4, "Как работает", size=14, color=MID, bold=True, label="concept.howlabel")
+    txt(s, 0.6, lab_y, 5.0, 0.4, T("concept_how"), size=14, color=MID, bold=True, label="concept.howlabel")
     steps_y = lab_y + 0.40
     note = sp.get("note")
     note_sz, note_top, note_h = _concept_note_fit(s, note)
@@ -507,11 +509,11 @@ def k_complication(s, sp):
             label="complication.ask")
 
 def k_resolution(s, sp):
-    titlebar(s, sp["kicker"], "Разбор · как реализовать")
+    titlebar(s, sp["kicker"], T("resolution_bar"))
     sol_h = callout(s, 0.6, 1.33, 12.13, 0.9, sp["solution"], size=15, fill=DEEP,
                     stroke=None, color=WHITE, label="resolution.solution", floor=11.0, max_h=1.35)
     lab_y = 1.33 + sol_h + 0.13
-    txt(s, 0.6, lab_y, 11.6, 0.34, "Как реализовать", size=14, color=MID, bold=True, label="resolution.howlabel")
+    txt(s, 0.6, lab_y, 11.6, 0.34, T("resolution_how"), size=14, color=MID, bold=True, label="resolution.howlabel")
     steps = sp.get("howto", sp.get("lesson", []))
     ex = sp["example"]
     ex_y = 4.98
@@ -565,12 +567,12 @@ def k_variants(s, sp):
 
 def k_structured(s, sp):
     titlebar(s, sp["kicker"], sp["title"])
-    txt(s, 0.6, 1.3, 6.0, 0.4, "Задаём схему ответа", size=14, color=MID, bold=True, label="structured.schemalabel")
+    txt(s, 0.6, 1.3, 6.0, 0.4, T("structured_schema"), size=14, color=MID, bold=True, label="structured.schemalabel")
     codeblock(s, 0.6, 1.7, 6.0, 3.0, sp["schema_code"], label="structured.schema")
-    txt(s, 6.85, 1.3, 5.9, 0.4, "Что получаем", size=14, color=MID, bold=True, label="structured.getlabel")
+    txt(s, 6.85, 1.3, 5.9, 0.4, T("structured_get"), size=14, color=MID, bold=True, label="structured.getlabel")
     box(s, 6.85, 1.7, 5.88, 1.55, fill=POS_T, stroke=TEAL)
     txt(s, 7.05, 1.85, 5.5, 1.3, sp["sample"], size=13, color=SLATE, ls=1.15, mono=True, label="structured.sample")
-    excard(s, 6.85, 3.4, 5.88, 1.3, "neg", "Где упираемся", sp["limitation"])
+    excard(s, 6.85, 3.4, 5.88, 1.3, "neg", T("structured_limit"), sp["limitation"])
     callout(s, 0.6, 4.95, 12.13, 1.2, sp["takeaway"], size=15, label="structured.takeaway",
             floor=11.0, max_h=7.32 - 4.95)
 
@@ -616,11 +618,11 @@ def k_distribution(s, sp):
             floor=11.0, max_h=7.32 - 5.95)
 
 def k_breakdown(s, sp):
-    titlebar(s, sp["kicker"], sp.get("title", "Разбор · компоненты и комментарии"))
+    titlebar(s, sp["kicker"], sp.get("title", T("breakdown_bar")))
     colw = 5.96
     bx_y, bx_h = 1.4, 5.5
-    txt(s, 0.6, 1.02, colw, 0.34, "Ключевые компоненты", size=14, color=MID, bold=True, label="breakdown.complabel")
-    txt(s, 6.77, 1.02, colw, 0.34, "Ключевые комментарии по теме", size=14, color=MID, bold=True, label="breakdown.commlabel")
+    txt(s, 0.6, 1.02, colw, 0.34, T("breakdown_comp"), size=14, color=MID, bold=True, label="breakdown.complabel")
+    txt(s, 6.77, 1.02, colw, 0.34, T("breakdown_comm"), size=14, color=MID, bold=True, label="breakdown.commlabel")
     box(s, 0.6, bx_y, colw, bx_h, fill=SURF, stroke=LIGHT)
     box(s, 6.77, bx_y, colw, bx_h, fill=GTINT, stroke=GOLD)
     comps = sp["components"]
@@ -655,7 +657,7 @@ def k_finale(s, sp):
 
 def k_closing(s, sp):
     box(s, 0, 0, 13.333, 7.5, fill=DEEP, stroke=None, radius=False)
-    txt(s, 0.7, 0.85, 12, 0.9, "Что унести", size=30, color=GOLD, bold=True, label="closing.title")
+    txt(s, 0.7, 0.85, 12, 0.9, T("closing_title"), size=30, color=GOLD, bold=True, label="closing.title")
     txt(s, 0.9, 2.0, 11.6, 3.2, [(t, 18, SURF, False) for t in sp["takeaways"]],
         bullet=True, ls=1.2, label="closing.takeaways")
     txt(s, 0.9, 5.7, 11.6, 0.9, sp["bridge"], size=16, color=GOLD, bold=True, ls=1.15, label="closing.bridge")
@@ -687,9 +689,12 @@ def draw_overflow_marks(s):
 
 def render_seminar(sem):
     dir_ = sem["dir"]
+    lang = sem.get("lang", "ru")
+    set_lang(lang)
+    name = dir_ + (f"-{lang}" if lang != "ru" else "")
     root = Path("library/seminars") / dir_
     out = root / "rendered"
-    png_dir = out / "png"
+    png_dir = out / ("png" if lang == "ru" else f"png-{lang}")
     png_dir.mkdir(parents=True, exist_ok=True)
     imgs = []
     overflow_report = []
@@ -705,18 +710,21 @@ def render_seminar(sem):
             for (label, *_rest) in s.overflows:
                 overflow_report.append((sid, sp["kind"], label))
     # combined PDF
-    pdf_path = out / f"{dir_}-preview.pdf"
+    pdf_path = out / f"{name}-preview.pdf"
     if imgs:
         imgs[0].save(str(pdf_path), save_all=True, append_images=imgs[1:])
     return len(imgs), overflow_report, png_dir, pdf_path
 
 
 if __name__ == "__main__":
+    import sys
     here = Path(__file__).parent
     results = {}
-    for spec_file in ["spec_sem03.py", "spec_sem04.py"]:
-        p = here / spec_file
-        st = importlib.util.spec_from_file_location(spec_file[:-3], p)
+    # Same convention as build_cases_deck.py: spec files may be named on the
+    # command line so one seminar can be re-rendered on its own.
+    for spec_file in sys.argv[1:] or ["spec_sem03.py", "spec_sem04.py"]:
+        p = here / Path(spec_file).name
+        st = importlib.util.spec_from_file_location(p.stem, p)
         m = importlib.util.module_from_spec(st); st.loader.exec_module(m)
         n, overflows, png_dir, pdf_path = render_seminar(m.SEMINAR)
         results[m.SEMINAR["dir"]] = (n, overflows, png_dir, pdf_path)

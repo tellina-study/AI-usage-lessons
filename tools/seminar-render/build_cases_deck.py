@@ -16,6 +16,8 @@ from pptx.enum.shapes import MSO_SHAPE
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Inches, Pt
 
+from chrome import T, set_lang
+
 # === Ocean Gradient v3 palette (LOCKED) ===
 DEEP  = RGBColor(0x21, 0x29, 0x5C)
 MID   = RGBColor(0x06, 0x5A, 0x82)
@@ -230,7 +232,7 @@ def k_cover(s, sp):
     txt(s, 1.0, 4.3, 11.3, 1.5, sp["sub"], size=19, color=SURF, ls=1.2)
 
 def k_map(s, sp):
-    titlebar(s, "Карта занятия", sp["title"])
+    titlebar(s, T("map_title"), sp["title"])
     y = 1.55
     for name, desc in sp["blocks"]:
         box(s, 0.6, y, 12.13, 1.15, fill=SURF, stroke=LIGHT)
@@ -239,7 +241,7 @@ def k_map(s, sp):
         txt(s, 0.95, y + 0.6, 11.6, 0.5, desc, size=14, color=SLATE)
         y += 1.32
     txt(s, 0.6, y + 0.02, 12.1, 0.5,
-        "Каждый кейс: контекст → решение и схема → усложнение из практики → разбор с примером",
+        T("map_sub"),
         size=13.5, color=MID, bold=True)
 
 def k_divider(s, sp):
@@ -325,7 +327,7 @@ def k_concept(s, sp):
     def_h = callout(s, 0.6, 1.35, 12.13, 0.95, sp["definition"], size=15,
                     fill=GTINT, stroke=GOLD, color=DEEP, max_h=1.30)
     lab_y = 1.35 + def_h + 0.12
-    txt(s, 0.6, lab_y, 5.0, 0.4, "Как работает", size=14, color=MID, bold=True)
+    txt(s, 0.6, lab_y, 5.0, 0.4, T("concept_how"), size=14, color=MID, bold=True)
     steps_y = lab_y + 0.40
     # bottom note auto-fits; note_top bounds where steps / mini-scheme may end
     note = sp.get("note")
@@ -378,12 +380,12 @@ def k_complication(s, sp):
     notes(s, sp.get("notes", ""))
 
 def k_resolution(s, sp):
-    titlebar(s, sp["kicker"], "Разбор · как реализовать")
+    titlebar(s, sp["kicker"], T("resolution_bar"))
     # solution auto-fits (font step, then grow); label + howto shift by its height
     sol_h = callout(s, 0.6, 1.33, 12.13, 0.9, sp["solution"], size=15, fill=DEEP,
                     stroke=None, color=WHITE, floor=11.0, max_h=1.35)
     lab_y = 1.33 + sol_h + 0.13
-    txt(s, 0.6, lab_y, 11.6, 0.34, "Как реализовать", size=14, color=MID, bold=True)
+    txt(s, 0.6, lab_y, 11.6, 0.34, T("resolution_how"), size=14, color=MID, bold=True)
     steps = sp.get("howto", sp.get("lesson", []))
     ex = sp["example"]
     ex_y = 4.98
@@ -442,12 +444,12 @@ def k_variants(s, sp):
 
 def k_structured(s, sp):
     titlebar(s, sp["kicker"], sp["title"])
-    txt(s, 0.6, 1.3, 6.0, 0.4, "Задаём схему ответа", size=14, color=MID, bold=True)
+    txt(s, 0.6, 1.3, 6.0, 0.4, T("structured_schema"), size=14, color=MID, bold=True)
     codeblock(s, 0.6, 1.7, 6.0, 3.0, sp["schema_code"])
-    txt(s, 6.85, 1.3, 5.9, 0.4, "Что получаем", size=14, color=MID, bold=True)
+    txt(s, 6.85, 1.3, 5.9, 0.4, T("structured_get"), size=14, color=MID, bold=True)
     box(s, 6.85, 1.7, 5.88, 1.55, fill=POS_T, stroke=TEAL)
     txt(s, 7.05, 1.85, 5.5, 1.3, sp["sample"], size=13, color=SLATE, ls=1.15, mono=True)
-    excard(s, 6.85, 3.4, 5.88, 1.3, "neg", "Где упираемся", sp["limitation"])
+    excard(s, 6.85, 3.4, 5.88, 1.3, "neg", T("structured_limit"), sp["limitation"])
     callout(s, 0.6, 4.95, 12.13, 1.2, sp["takeaway"], size=15, floor=11.0, max_h=7.32 - 4.95)
     notes(s, sp.get("notes", ""))
 
@@ -501,12 +503,12 @@ def k_breakdown(s, sp):
     sp: components (list[(name, role)] or list[str]), comments (list[str]).
     Шрифт компонентов авто-уменьшается при >4 элементах, интервалы ужимаются
     при >5, низ последнего элемента гарантированно ≤ 6.9″."""
-    titlebar(s, sp["kicker"], sp.get("title", "Разбор · компоненты и комментарии"))
+    titlebar(s, sp["kicker"], sp.get("title", T("breakdown_bar")))
     # Две колонки на всю рабочую высоту: слева компоненты, справа комментарии
     colw = 5.96
     bx_y, bx_h = 1.4, 5.5   # низ боксов = 6.9″
-    txt(s, 0.6, 1.02, colw, 0.34, "Ключевые компоненты", size=14, color=MID, bold=True)
-    txt(s, 6.77, 1.02, colw, 0.34, "Ключевые комментарии по теме", size=14, color=MID, bold=True)
+    txt(s, 0.6, 1.02, colw, 0.34, T("breakdown_comp"), size=14, color=MID, bold=True)
+    txt(s, 6.77, 1.02, colw, 0.34, T("breakdown_comm"), size=14, color=MID, bold=True)
     box(s, 0.6, bx_y, colw, bx_h, fill=SURF, stroke=LIGHT)
     box(s, 6.77, bx_y, colw, bx_h, fill=GTINT, stroke=GOLD)
     comps = sp["components"]
@@ -543,7 +545,7 @@ def k_finale(s, sp):
 
 def k_closing(s, sp):
     box(s, 0, 0, 13.333, 7.5, fill=DEEP, stroke=None, radius=False)
-    txt(s, 0.7, 0.85, 12, 0.9, "Что унести", size=30, color=GOLD, bold=True)
+    txt(s, 0.7, 0.85, 12, 0.9, T("closing_title"), size=30, color=GOLD, bold=True)
     txt(s, 0.9, 2.0, 11.6, 3.2, [(t, 18, SURF, False) for t in sp["takeaways"]],
         bullet=True, ls=1.2)
     txt(s, 0.9, 5.7, 11.6, 0.9, sp["bridge"], size=16, color=GOLD, bold=True, ls=1.15)
@@ -555,16 +557,27 @@ KIND = {"cover": k_cover, "map": k_map, "divider": k_divider, "context": k_conte
         "finale": k_finale, "closing": k_closing}
 
 def build(sem):
+    """Render one seminar spec to pptx + deck yaml + per-slide md stubs.
+
+    `lang` on the spec (default "ru") picks the output names: the RU deck keeps
+    deck.yaml / slides/ / <dir>.pptx, a translated one writes deck.<lang>.yaml /
+    slides-<lang>/ / <dir>-<lang>.pptx, matching publish/publication-config.yaml.
+    """
+    lang = sem.get("lang", "ru")
+    set_lang(lang)
+    en = lang != "ru"
     root = Path("library/seminars") / sem["dir"]
-    sld = root / "slides"
+    sld = root / (f"slides-{lang}" if en else "slides")
     if sld.exists():
         for f in sld.glob("*.md"): f.unlink()
     sld.mkdir(parents=True, exist_ok=True)
     prs = Presentation(); prs.slide_width = Inches(13.333); prs.slide_height = Inches(7.5)
     blank = prs.slide_layouts[6]
+    spec_file = sem.get("spec_file", f"spec_{sem['dir'].replace('-', '')}.py")
     deck = ["deck:", f"  seminar_number: {sem['number']}", f"  title: \"{sem['title']}\"",
-            "  format: \"разбор_кейсов\"", f"  central_question: \"{sem['central']}\"",
-            f"  learning_outcomes: {sem['lo']}", "  language: ru",
+            f"  format: \"{'case_walkthrough' if en else 'разбор_кейсов'}\"",
+            f"  central_question: \"{sem['central']}\"",
+            f"  learning_outcomes: {sem['lo']}", f"  language: {lang}",
             "  visual_style: \"matched to sem-02 (Ocean rounded boxes, schema pipelines, example cards)\"",
             "  render: \"tools/seminar-render/build_cases_deck.py\"", "slides:"]
     for i, sp in enumerate(sem["slides"], 1):
@@ -572,22 +585,29 @@ def build(sem):
         KIND[sp["kind"]](slide, sp)
         label = sp.get("title") or sp.get("kicker") or sp["kind"]
         fname = f"{sid}-{sp['kind']}.md"
-        deck += [f"  - id: {sid}", f"    file: slides/{fname}",
+        deck += [f"  - id: {sid}", f"    file: {sld.name}/{fname}",
                  f"    type: {sp['kind']}", f"    assertion: \"{label}\""]
+        pointer = (f"(See tools/seminar-render/{spec_file} — slide {sid}. Rendered from the spec.)"
+                   if en else
+                   f"(См. tools/seminar-render/{spec_file} — слайд {sid}. Рендер из спека.)")
         (sld / fname).write_text(
             f"---\nid: {sid}\ntype: {sp['kind']}\nassertion: \"{label}\"\n---\n\n"
-            f"# {label}\n\n(См. tools/seminar-render/spec_{sem['dir'].replace('-','')}.py — "
-            f"слайд {sid}. Рендер из спека.)\n", encoding="utf-8")
-    (root / "deck.yaml").write_text("\n".join(deck) + "\n", encoding="utf-8")
+            f"# {label}\n\n{pointer}\n", encoding="utf-8")
+    (root / (f"deck.{lang}.yaml" if en else "deck.yaml")).write_text(
+        "\n".join(deck) + "\n", encoding="utf-8")
     out = root / "rendered"; out.mkdir(exist_ok=True)
-    prs.save(str(out / f"{sem['dir']}.pptx"))
-    print(f"{sem['dir']}: {len(sem['slides'])} slides -> {out / (sem['dir']+'.pptx')}")
+    name = sem["dir"] + (f"-{lang}" if en else "")
+    prs.save(str(out / f"{name}.pptx"))
+    print(f"{name}: {len(sem['slides'])} slides -> {out / (name + '.pptx')}")
 
 if __name__ == "__main__":
     import importlib.util
+    import sys
     here = Path(__file__).parent
-    for spec_file in ["spec_sem03.py", "spec_sem04.py"]:
-        p = here / spec_file
-        st = importlib.util.spec_from_file_location(spec_file[:-3], p)
+    # Spec files may be named on the command line: rendering one seminar must
+    # not rebuild its neighbours (they can be mid-revision in another session).
+    for spec_file in sys.argv[1:] or ["spec_sem03.py", "spec_sem04.py"]:
+        p = here / Path(spec_file).name
+        st = importlib.util.spec_from_file_location(p.stem, p)
         m = importlib.util.module_from_spec(st); st.loader.exec_module(m)
         build(m.SEMINAR)

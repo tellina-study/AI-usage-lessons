@@ -244,6 +244,84 @@ def s34(p):
 
 
 # ============================================================
+# s35b — docs tooling on practice: Confluence AI / AWS Q /doc /
+# code-first skill alternative [#162 r2]
+# ============================================================
+def s35b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Инструментарий документации: вход — код, выход — пересказ сказанного",
+        size=20, w=12.3, h=0.78)
+
+    colw = 6.05
+    gap = 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.42
+    boxh = 4.06
+
+    # --- LEFT: SaaS vendor layer ---
+    ocean_box(s, lx, top, colw, boxh, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "bot", lx + 0.22, top + 0.16, 0.44, "mid")
+    text_box(s, x=lx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="SaaS-вендорский слой", size=13, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.66, w=colw - 0.48, h=0.30,
+             text="Confluence AI (Atlassian Intelligence)", size=11.5,
+             bold=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 0.98, w=colw - 0.48, h=1.10,
+             text="Суммаризация длинного треда в выжимку; генерация/"
+                  "трансформация черновика из промпта; Q&A-поиск по базе "
+                  "знаний (RAG-подобный паттерн поверх корпоративной базы).",
+             size=11, color=DEEP, line_spacing=1.20)
+    filled_rect(s, lx + 0.24, top + 2.10, colw - 0.48, 0.02, SOFT_GREY)
+    text_box(s, x=lx + 0.24, y=top + 2.26, w=colw - 0.48, h=0.30,
+             text="AWS Q Developer /doc", size=11.5, bold=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 2.58, w=colw - 0.48, h=1.42,
+             text="Агент анализирует кодовую базу, а не пересказывает "
+                  "промпт. Строит диаграммы инфраструктуры из IaC-файлов "
+                  "(Terraform/CDK) — прямая связь с уже введённым принципом "
+                  "архитектура-как-код. Замкнутый цикл: код изменился → "
+                  "предложен дифф в документации.",
+             size=11, color=DEEP, line_spacing=1.20)
+
+    # --- RIGHT: code-first alternative ---
+    ocean_box(s, rx, top, colw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "file-code", rx + 0.22, top + 0.16, 0.44, "teal")
+    text_box(s, x=rx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Код-ориентированная альтернатива", size=13, bold=True,
+             color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 0.66, w=colw - 0.48, h=1.36,
+             text="Вместо отдельного SaaS — сам кодинг-агент через "
+                  "установленный skill («Code Documentation Skill», "
+                  "«README Generator»): анализирует структуру проекта, "
+                  "зависимости, код-паттерны, генерирует README/ADR/"
+                  "inline-комментарии.",
+             size=11, color=DEEP, line_spacing=1.20)
+    filled_rect(s, rx + 0.24, top + 2.10, colw - 0.48, 1.62, SOFT_GREY,
+                stroke=SLATE, stroke_pt=0.75, radius=True, radius_adj=0.06)
+    icon(s, "graduation-cap", rx + 0.42, top + 2.24, 0.38, "teal")
+    text_box(s, x=rx + 0.90, y=top + 2.26, w=colw - 1.28, h=0.30,
+             text="Честная оговорка", size=11, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.42, y=top + 2.62, w=colw - 0.84, h=1.00,
+             text="community-паттерн, не единый официальный skill из "
+                  "репозитория Anthropic. Онбординг-документация — хороший "
+                  "кандидат в skill по уже введённым эвристикам: "
+                  "повторяющаяся инструкция + нужен progressive disclosure.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.16)
+
+    gold_callout(
+        s, 0.55, top + boxh + 0.14, 12.25, 0.60,
+        "Вендор-специфичный слой — иллюстрация механики текущего "
+        "2026-стека, не рекомендация одного вендора: тот же паттерн "
+        "доступен через skill поверх уже используемого агента, без SaaS.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s35b")
+    notes_with_sources(s, "s35b")
+    return s
+
+
+# ============================================================
 # s35 — section divider Раздел 7 (Обобщение)
 # ============================================================
 def s35(p):

@@ -761,3 +761,99 @@ def s10(p):
     refs_of_slide(s, "s11")
     notes_with_sources(s, "s11")
     return s
+
+
+# ============================================================
+# s11b — requirements visualization (Mermaid User Journey + Gherkin
+# bridge; honest boundary — story mapping NOT code-as-DSL) [#162 r2]
+# ============================================================
+def s11b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Визуализация требований — тот же принцип архитектура-как-код",
+        size=22, w=12.4, h=0.82)
+
+    colw = 6.05
+    gap = 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.44
+    boxh = 3.34
+
+    # --- LEFT: Mermaid User Journey ---
+    ocean_box(s, lx, top, colw, boxh, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "route", lx + 0.22, top + 0.16, 0.44, "mid")
+    text_box(s, x=lx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Mermaid User Journey", size=13, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="Текстовый DSL для диаграмм, то же семейство, что "
+                  "PlantUML/Structurizr для архитектуры. Структура: заголовок "
+                  "→ секции пути → шаги с оценкой 1–5 и действующими лицами.",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "title Бронирование переговорки",
+            "section Поиск",
+            "  Открыть календарь: 4: Инженер",
+            "  Найти свободный слот: 2: Инженер"]):
+        text_box(s, x=lx + 0.36, y=top + 1.84 + i * 0.225, w=colw - 0.72, h=0.22,
+                 text=line, size=9.5, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=lx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="AI и читает такую диаграмму как контекст, и порождает её из "
+                  "сценария — тот же формат, что C4: текст в репозитории.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- RIGHT: Gherkin bridge ---
+    ocean_box(s, rx, top, colw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "file-code", rx + 0.22, top + 0.16, 0.44, "teal")
+    text_box(s, x=rx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Мост к Gherkin — исполняемая спецификация", size=13,
+             bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="Более прямой аналог архитектура-как-код: сценарий не "
+                  "просто описывает поток, а проверяется прогоном автотеста "
+                  "(раздел тестирования).",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "Given переговорка свободна",
+            "When инженер бронирует слот",
+            "Then бронь подтверждена"]):
+        text_box(s, x=rx + 0.36, y=top + 1.90 + i * 0.255, w=colw - 0.72, h=0.24,
+                 text=line, size=10, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="Как C4/Mermaid — текст, проверяемый drift-детектором, так "
+                  "Gherkin — текст, проверяемый автотестом: оба AI может писать "
+                  "и валидировать.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- contrast strip: honest boundary (story mapping) ---
+    cy = top + boxh + 0.12
+    filled_rect(s, 0.55, cy, 12.25, 0.62, SOFT_GREY, stroke=SLATE,
+                stroke_pt=0.75, radius=True, radius_adj=0.10)
+    icon(s, "circle-slash", 0.72, cy + 0.10, 0.40, "teal")
+    text_runs(s, 1.28, cy + 0.07, 11.35, 0.48, [
+        {"text": "Честная граница: ", "size": 10.5, "bold": True, "color": SLATE},
+        {"text": "story mapping (раскладка активностей по колонкам, Miro/"
+                 "FigJam) — важная практика, но это воркшоп-техника "
+                 "фасилитации, не code-as-DSL. Путь к дисциплинированному "
+                 "требованию здесь лежит через людей в комнате, а не через "
+                 "версионируемый текст.",
+         "size": 10, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, cy + 0.74, 12.25, 0.58,
+        "Не отдельная новая категория инструментов — тот же ход, что "
+        "архитектура-как-код: артефакт текстом, а не картинкой, чтобы AI мог "
+        "его читать и порождать наравне с человеком.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+
+    refs_of_slide(s, "s11b")
+    notes_with_sources(s, "s11b")
+    return s

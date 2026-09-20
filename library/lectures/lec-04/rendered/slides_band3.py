@@ -251,6 +251,184 @@ def s24(p):
 
 
 # ============================================================
+# s25b — BDD + trunk-based (2 compact secondary methodologies) [#162 r2]
+# ============================================================
+def s25b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Ещё две методики, ложащиеся на AI: BDD (язык бизнеса) и "
+           "trunk-based (высокий темп коммитов)",
+        size=19, w=12.3, h=0.82)
+
+    colw = 6.05
+    gap = 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.46
+    boxh = 3.98
+
+    # --- LEFT: BDD ---
+    ocean_box(s, lx, top, colw, boxh, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "check-check", lx + 0.22, top + 0.16, 0.44, "mid")
+    text_box(s, x=lx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="BDD — тест до кода на языке бизнеса", size=13, bold=True,
+             color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.64, w=colw - 0.48, h=1.20,
+             text="Тот же принцип «тест до кода», что TDD, но читаем "
+                  "нетехническим стейкхолдером. Три практики: Discovery "
+                  "(разговоры вокруг примеров) → Formulation (примеры → "
+                  "сценарии) → Automation (сценарии как тесты). Формат — "
+                  "Given-When-Then (Gherkin) — та же структура, что в "
+                  "примере с переговоркой из визуализации требований.",
+             size=10, color=DEEP, line_spacing=1.13)
+    text_box(s, x=lx + 0.24, y=top + 1.92, w=colw - 0.48, h=1.10,
+             text="Кто пишет в 2026: агент генерирует Gherkin-сценарии из "
+                  "критериев приёмки (включая краевые и security-случаи), "
+                  "человек ревьюит. Риск без правил: расплывчатые Then-шаги, "
+                  "сценарии, завязанные на UI. Контроль — явный гайдлайн как "
+                  "контекст агенту.",
+             size=10.5, color=DEEP, line_spacing=1.15)
+    filled_rect(s, lx + 0.24, top + 3.08, colw - 0.48, 0.72, SOFT_GREY,
+                stroke=SLATE, stroke_pt=0.75, radius=True, radius_adj=0.08)
+    text_box(s, x=lx + 0.40, y=top + 3.14, w=colw - 0.80, h=0.60,
+             text="Честно: BDD-фреймворки — ~27% OSS-выборки (68% в Ruby), не "
+                  "мейнстрим большинства экосистем. Уместен рядом с "
+                  "нетехническим стейкхолдером, иначе часто избыточен.",
+             size=10, italic=True, color=SLATE, line_spacing=1.12,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    # --- RIGHT: trunk-based ---
+    ocean_box(s, rx, top, colw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "git-merge", rx + 0.22, top + 0.16, 0.44, "teal")
+    text_box(s, x=rx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Trunk-based — короткоживущая ветка", size=13, bold=True,
+             color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 0.64, w=colw - 0.48, h=1.20,
+             text="Короткоживущая ветка (<24 часа, DORA), не long-lived. "
+                  "Причина: git автоматически разрешает текстовые конфликты, "
+                  "но не семантические — ветка агента компилируется против "
+                  "допущения, которое основная ветка уже перестала "
+                  "поддерживать.",
+             size=10.5, color=DEEP, line_spacing=1.15)
+    text_box(s, x=rx + 0.24, y=top + 1.92, w=colw - 0.48, h=1.10,
+             text="Feature-флаги разрывают связь «когда смержено» и «когда "
+                  "пользователь видит фичу» — раскатка отдельно от "
+                  "интеграции. Связь с уже введёнными git-конвенциями: те "
+                  "отвечают «как называется ветка», trunk-based — «сколько "
+                  "она живёт».",
+             size=10.5, color=DEEP, line_spacing=1.15)
+    filled_rect(s, rx + 0.24, top + 3.08, colw - 0.48, 0.72, SOFT_GREY,
+                stroke=SLATE, stroke_pt=0.75, radius=True, radius_adj=0.08)
+    text_box(s, x=rx + 0.40, y=top + 3.14, w=colw - 0.80, h=0.60,
+             text="AI Agent Source Prefix обретает смысл именно здесь: "
+                  "ветка живёт часами — префикс сигналит ревьюеру частое "
+                  "ревью маленьких diff.",
+             size=10, italic=True, color=SLATE, line_spacing=1.12,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, top + boxh + 0.14, 12.25, 0.58,
+        "Обе методики вторичны к уже названным практикам (TDD, "
+        "git-конвенции) — не новая ось дисциплины, а расширение той же: "
+        "спецификация до кода + короткий цикл интеграции.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s25b")
+    notes_with_sources(s, "s25b")
+    return s
+
+
+# ============================================================
+# s25c — test tooling matrix: API / DB / visual-regression [#162 r2]
+# ============================================================
+def s25c(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Тестовый инструментарий за пределами Playwright — три слоя, один принцип",
+        size=20, w=12.3, h=0.78)
+
+    cols = [
+        ("terminal", "(а) API — Postman AI", MID),
+        ("database", "(б) БД — Testcontainers", MID),
+        ("scan-search", "(в) Visual-regression", MID),
+    ]
+    rows = [
+        ("Что проверяет",
+         ["API-контракт — естественный язык вместо кликов",
+          "Реальное состояние данных на одноразовой БД",
+          "Визуальное поведение — не съехала ли кнопка"]),
+        ("AI-механика",
+         ["CI-агент прогоняет тесты на каждый PR",
+          "Skill даёт процедуру Docker Compose, не «анализ» БД",
+          "AI снижает ложные срабатывания при сравнении"]),
+        ("Честная оговорка",
+         ["Фичи марта/июня 2026 — вендор не верифицирован",
+          "Зрелость: низкая «анализ», высокая «знает конвенции»",
+          "Вендорские цифры эффективности — самозаявлены, не проверены"]),
+    ]
+    examples = ["AI Engineer (Postman)", "testcontainers-docker skill",
+                "Chromatic / Percy / Applitools"]
+    x0 = 0.55
+    total = 12.25
+    gap = 0.16
+    cw = (total - gap * 2) / 3
+    top = 1.36
+    hh = 0.58
+    for i, (ic, name, col) in enumerate(cols):
+        x = x0 + i * (cw + gap)
+        filled_rect(s, x, top, cw, hh, col, radius=True, radius_adj=0.12)
+        icon(s, ic, x + 0.14, top + 0.08, 0.40, "white")
+        text_box(s, x=x + 0.62, y=top + 0.05, w=cw - 0.72, h=hh - 0.10,
+                 text=name, size=11, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.98)
+    row_h = [1.00, 1.00, 1.00]
+    ry = top + hh + 0.10
+    for r, (label, cells) in enumerate(rows):
+        rh = row_h[r]
+        for i in range(3):
+            x = x0 + i * (cw + gap)
+            fill = SURFACE if r % 2 == 0 else WHITE
+            filled_rect(s, x, ry, cw, rh, fill, stroke=SOFT_GREY, stroke_pt=1.0,
+                        radius=True, radius_adj=0.06)
+            if i == 0:
+                text_box(s, x=x + 0.14, y=ry + 0.06, w=cw - 0.28, h=0.24,
+                         text=label.upper(), size=12, bold=True, color=LIGHT)
+                tb_y = ry + 0.32
+                tb_h = rh - 0.38
+            else:
+                tb_y = ry + 0.08
+                tb_h = rh - 0.16
+            text_box(s, x=x + 0.14, y=tb_y, w=cw - 0.28, h=tb_h,
+                     text=cells[i], size=14, color=DEEP, line_spacing=1.06)
+        ry += rh + 0.07
+
+    ey = ry + 0.02
+    text_runs(s, x0, ey, total, 0.32, [
+        {"text": "Пример:  ", "size": 11.5, "bold": True, "color": SLATE},
+        {"text": examples[0], "size": 11, "italic": True, "color": MID,
+         "font": "DejaVu Sans Mono"},
+        {"text": "   ·   ", "size": 11, "color": SLATE},
+        {"text": examples[1], "size": 11, "italic": True, "color": TEAL,
+         "font": "DejaVu Sans Mono"},
+        {"text": "   ·   ", "size": 11, "color": SLATE},
+        {"text": examples[2], "size": 11, "italic": True, "color": MID,
+         "font": "DejaVu Sans Mono"},
+    ])
+    ry = ey + 0.32
+
+    gold_callout(
+        s, 0.55, ry + 0.10, 12.25, 0.62,
+        "Устойчивый паттерн — декомпозиция проверки на слои (API/БД/визуал) + "
+        "реальная эфемерная зависимость вместо мока; переживёт любой бренд. "
+        "Хайп — вендорские цифры как повод считать вопрос закрытым.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s25c")
+    notes_with_sources(s, "s25c")
+    return s
+
+
+# ============================================================
 # s25 — section divider Раздел 5 (Ревью + Безопасность)
 # ============================================================
 def s25(p):

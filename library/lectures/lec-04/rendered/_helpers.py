@@ -126,6 +126,20 @@ URLS = {
     "conventional_branch": "https://conventionalbranch.org/",
     "backlog_md": "https://github.com/MrLesk/Backlog.md",
     "claude_task_tools": "https://code.claude.com/docs/en/best-practices",
+    # --- added for s11b/s20f/s25b/s25c/s35b (#162 round 2) ---
+    "mermaid_user_journey": "https://mermaid.js.org/syntax/userJourney.html",
+    "cucumber_bdd": "https://cucumber.io/docs/bdd/",
+    "git_worktree_docs": "https://git-scm.com/docs/git-worktree",
+    "claude_worktree_docs": "https://code.claude.com/docs/en/best-practices",
+    "automationpanda_gherkin_ai": "https://automationpanda.com/",
+    "software303_bdd_adoption": "https://303software.com/",
+    "trunk_based_dev": "https://trunkbaseddevelopment.com/",
+    "daniellopes_semantic_conflicts": "https://journal.daniellopes.dev/",
+    "postman_ai_blog": "https://blog.postman.com/",
+    "testcontainers": "https://testcontainers.com/",
+    "saucelabs_visual_regression": "https://saucelabs.com/resources/blog",
+    "eesel_confluence_ai": "https://www.eesel.ai/",
+    "aws_q_doc": "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/software-dev-doc-generation.html",
 }
 
 
@@ -921,6 +935,52 @@ SLIDE_REFS = {
          "anthropic_skill_arxiv", "RCT n=52: квиз 50% с AI против 67% без (~−17 п.п.) "
          "при делегировании генерации; кто спрашивал концепции — деградации нет",
          True),
+    ],
+    # --- added for s11b/s20f/s25b/s25c/s35b (#162 round 2) ---
+    "s11b": [
+        ("1", "Mermaid — User Journey синтаксис", "mermaid_user_journey",
+         "диаграмма описывается текстом (DSL), не мышью — то же семейство, что "
+         "PlantUML/Structurizr в §2.4"),
+        ("2", "Cucumber — BDD/Gherkin документация", "cucumber_bdd",
+         "Given-When-Then — сценарий, проверяемый прогоном автотеста, а не только "
+         "описывающий поток"),
+    ],
+    "s20f": [
+        ("1", "Git — официальная документация worktree", "git_worktree_docs",
+         "отдельная рабочая директория со своей веткой, но общим .git-хранилищем "
+         "объектов с основной копией"),
+        ("2", "Claude Code — docs, best practices", "claude_worktree_docs",
+         "изоляция принудительная: инструмент блокирует правки вне назначенного "
+         "worktree", True),
+    ],
+    "s25b": [
+        ("1", "Cucumber — BDD документация", "cucumber_bdd",
+         "три практики цикла: Discovery / Formulation / Automation"),
+        ("2", "303software.com — BDD adoption 2025", "software303_bdd_adoption",
+         "BDD-фреймворки ~27% OSS-выборки (68% в Ruby) — не мейнстрим большинства "
+         "экосистем", True),
+        ("3", "trunkbaseddevelopment.com", "trunk_based_dev",
+         "короткоживущая ветка — меньше 24 часов; DORA фиксирует как "
+         "high-performance-практику"),
+    ],
+    "s25c": [
+        ("1", "Postman — блог, AI-native платформа", "postman_ai_blog",
+         "Agent Mode + AI Engineer (запуск 2026-06) — CI-интегрированный агент "
+         "прогона API/QA-тестов на PR", True),
+        ("2", "Testcontainers — официальный сайт", "testcontainers",
+         "реальный сервис в Docker на эфемерном порту на время прогона, "
+         "уничтожается после"),
+        ("3", "Sauce Labs — блог о visual regression", "saucelabs_visual_regression",
+         "функциональный тест проверяет поведение, visual regression — что "
+         "поведение корректно ПОКАЗАНО", True),
+    ],
+    "s35b": [
+        ("1", "eesel.ai — независимый гайд по Confluence AI", "eesel_confluence_ai",
+         "суммаризация + генерация контента + Q&A-поиск по базе знаний "
+         "(RAG-паттерн)", True),
+        ("2", "AWS — документация Amazon Q Developer /doc", "aws_q_doc",
+         "вход — кодовая база, не пересказ промпта; может строить диаграммы из "
+         "IaC-файлов", True),
     ],
 }
 

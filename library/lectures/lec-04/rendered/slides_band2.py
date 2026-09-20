@@ -979,6 +979,92 @@ def s20e(p):
 
 
 # ============================================================
+# s20f — git worktree (self-referential Lec-2 incident) [#162 r2]
+# ============================================================
+def s20f(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Git worktree: как курс сам потерял 2 часа на общей рабочей копии",
+        size=21, w=12.3, h=0.82)
+
+    lx, lw = 0.55, 6.05
+    rx, rw = 6.85, 5.95
+    top, boxh = 1.52, 4.02
+
+    # --- LEFT: problem + documented incident ---
+    ocean_box(s, lx, top, lw, boxh)
+    icon(s, "triangle-alert", lx + 0.24, top + 0.14, 0.5, "mid")
+    text_box(s, x=lx + 0.88, y=top + 0.18, w=lw - 1.10, h=0.40,
+             text="Общая рабочая копия = общий риск", size=13, bold=True,
+             color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.66, w=lw - 0.48, h=1.10,
+             text="Несколько параллельных агентных сессий (или несколько "
+                  "задач одного разработчика) над одним репозиторием: "
+                  "незакоммиченные правки одной сессии видит — и может "
+                  "испортить — другая.",
+             size=11.5, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.24, top + 1.82, lw - 0.48, 1.28, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.4, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.46, y=top + 1.94, w=lw - 0.92, h=1.04,
+             text="Не гипотетическая практика: работа над Лекцией 2 потеряла "
+                  "~2 часа на восстановление после конфликта параллельных "
+                  "сессий с общим `.git`. После этого курс ввёл обязательную "
+                  "изоляцию через worktree — и проблема больше не "
+                  "повторялась.",
+             size=11.5, bold=True, color=DEEP, line_spacing=1.16,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=lx + 0.24, y=top + 3.24, w=lw - 0.48, h=0.68,
+             text="Изоляция Claude Code — принудительная, не соглашение: "
+                  "инструмент блокирует правки вне назначенного worktree, "
+                  "параллельные сессии физически не могут задеть чужие файлы.",
+             size=10.5, color=DEEP, line_spacing=1.14)
+
+    # --- RIGHT: mechanism + commands + honest caveat ---
+    ocean_box(s, rx, top, rw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "git-branch", rx + 0.24, top + 0.14, 0.5, "teal")
+    text_box(s, x=rx + 0.88, y=top + 0.18, w=rw - 1.10, h=0.40,
+             text="git worktree — отдельная директория, общая история",
+             size=12.5, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 0.66, w=rw - 0.48, h=0.90,
+             text="Механизм самого git: отдельная рабочая директория со "
+                  "своей веткой, но с общим `.git`-хранилищем объектов "
+                  "основной копии.",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.24, top + 1.60, rw - 0.48, 0.78, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "git worktree add --detach /tmp/wt <commit>",
+            "cd /tmp/wt && git checkout -b phase-X-Y"]):
+        text_box(s, x=rx + 0.36, y=top + 1.68 + i * 0.28, w=rw - 0.72, h=0.26,
+                 text=line, size=10, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 2.52, w=rw - 0.48, h=0.74,
+             text="Дешевле отдельного клонирования — делит объектный граф, "
+                  "не дублирует историю; создание worktree — операция поверх "
+                  "уже существующей истории.",
+             size=10.5, color=DEEP, line_spacing=1.14)
+    filled_rect(s, rx + 0.24, top + 3.30, rw - 0.48, 0.62, SOFT_GREY,
+                stroke=SLATE, stroke_pt=0.75, radius=True, radius_adj=0.10)
+    text_box(s, x=rx + 0.40, y=top + 3.36, w=rw - 0.80, h=0.52,
+             text="Честно: конкретное число рекомендуемых параллельных "
+                  "worktree (3–5 vs 4–8) — блог-консенсус, не вендорская "
+                  "норма.",
+             size=10, italic=True, color=SLATE, line_spacing=1.10,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Механика worktree устойчива вне зависимости от AI-агента; "
+        "специфика агентного контекста — несколько параллельных сессий "
+        "делают проблему общей копии особенно частой и дорогой.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s20f")
+    notes_with_sources(s, "s20f")
+    return s
+
+
+# ============================================================
 # s20 — 70% problem (curve + 3 numbers) [in-bucket]
 # ============================================================
 def s20(p):

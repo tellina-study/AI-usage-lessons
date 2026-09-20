@@ -54,6 +54,35 @@ slides:
     in_bucket: true
     verify_day_of: true
 
+  - id: s25b
+    file: slides/s25b-bdd-trunk-based.md
+    type: assertion_visual
+    section: "Раздел 4. Тестирование — TDD как дисциплина"
+    duration_min: 3
+    assertion: "TDD — не единственная методика, ложащаяся на AI: BDD повторяет принцип «тест до кода» на языке бизнеса, а trunk-based делает высокий throughput агентных коммитов управляемым — обе вторичны к уже названным практикам"
+    learning_goal: "Компактно: BDD (Given-When-Then, честная доля adoption) + trunk-based (short-lived-ветки против семантического дрейфа) — обе методики вторичны к TDD/git-конвенциям"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.4 [for-slide-s25b]"
+    references: [cucumber-bdd, trunk-based-dev]
+    verify_day_of: true
+    interaction: none
+    # NEW (#162 round 2): inserted after s24 (all-green-mutation) and before
+    # s25c/s25 (test tooling matrix / divider Раздел 5).
+
+  - id: s25c
+    file: slides/s25c-test-tooling-matrix.md
+    type: schema_matrix
+    section: "Раздел 4. Тестирование — TDD как дисциплина"
+    duration_min: 3
+    assertion: "Playwright не покрывает всё: API-контракт, реальная БД и визуальное поведение компонента — три соседние категории тестирования с той же структурой «тест как исполняемый гейт», не новым принципом"
+    learning_goal: "Три категории тестового инструментария за пределами e2e (API/БД/visual-regression) через уже введённый принцип детерминированного гейта; устойчивый паттерн vs вендорский хайп"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.5 [for-slide-s25c]"
+    references: [postman-ai-blog, testcontainers, saucelabs-visual-regression]
+    verify_day_of: true
+    interaction: none
+    # NEW (#162 round 2): inserted after s25b, before s25 (divider Раздел 5).
+
   # ─── Раздел 5. Ревью + Безопасность — дисциплина скепсиса (s25–s31) ───
   - id: s25
     file: slides/s25-divider-review-security.md
@@ -188,6 +217,21 @@ slides:
     in_bucket: true
     verify_day_of: true
 
+  - id: s35b
+    file: slides/s35b-docs-tooling.md
+    type: assertion_visual
+    section: "Раздел 6. Доставка · Эксплуатация · Документация"
+    duration_min: 3
+    assertion: "Инструментарий документации механически повторяет тезис «светлого пятачка»: AI пересказывает то, что уже есть в коде или треде, — что видно и в SaaS-слое (Confluence AI, AWS Q /doc), и в code-first альтернативе через установленный skill без привязки к вендору"
+    learning_goal: "Как выглядит docs-as-context на практике: 3 способности Confluence AI, AWS Q /doc (вход — код, не промпт), code-ориентированная альтернатива через skill"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§6.3 [for-slide-s35b]"
+    references: [eesel-confluence-ai, aws-q-doc]
+    verify_day_of: true
+    interaction: none
+    # NEW (#162 round 2): inserted after s34 (docs-bright-spot) and before
+    # s35 (divider Раздел 7).
+
   # ─── Раздел 7. Обобщение — дисциплина по фазам (s35–s40) ───
   - id: s35
     file: slides/s35-divider-synthesis.md
@@ -273,28 +317,33 @@ slides:
 # Validation
 # ─────────────────────────────────────────────────────────────────────────
 totals:
-  slides: 45                    # v4.2 (#162): +s20b/s20c/s20d/s20e (Skills·MCP·git-конвенции·task-logging) между s20 и s21; было 41 (v4.1: +foundations s05, keystone→s06, дивайдеры без тег-плашек)
-  base_slides_locked: "s01–s41 (v4.1) core + s20b/s20c/s20d/s20e (issue #162, v4.2) — не исчерпывающий список без учёта этой вставки. s01 = METR hook (hero). s05 = сводка практик (2 списка со ссылками). s06 = keystone-цикл фаз (Требования→Архитектура→Реализация→Тестирование→Ревью+Безоп→Доставка/Эксп→Документация→). 7 section-dividers: s09(Р1) s13(Р2) s17(Р3) s23(Р4) s26(Р5) s33(Р6) s36(Р7) — без тег-плашек. s20b-e (Skills / MCP для кодинг-агента / git-конвенции / слой логирования задач) вставлены между s20 и s21 в Разделе 3. Hero required = s01 + s41."
-  slide_times_sum_min: 94.5     # Σ per-slide duration_min ниже (было 82.5, +12 за s20b/c/d/e); активная часть ~74 + буфер Q&A
+  slides: 50                    # v4.3 (#162 round 2): +s11b/s20f/s25b/s25c/s35b (requirements-viz·git-worktree·BDD-trunk-based·test-tooling·docs-tooling); было 45 (v4.2: +s20b/s20c/s20d/s20e Skills·MCP·git-конвенции·task-logging между s20 и s21; было 41, v4.1: +foundations s05, keystone→s06, дивайдеры без тег-плашек)
+  base_slides_locked: "s01–s41 (v4.1) core + s20b/s20c/s20d/s20e (issue #162, v4.2) + s11b/s20f/s25b/s25c/s35b (issue #162, v4.3 round 2) — не исчерпывающий список без учёта этой вставки. s01 = METR hook (hero). s05 = сводка практик (2 списка со ссылками). s06 = keystone-цикл фаз (Требования→Архитектура→Реализация→Тестирование→Ревью+Безоп→Доставка/Эксп→Документация→). 7 section-dividers: s09(Р1) s13(Р2) s17(Р3) s23(Р4) s26(Р5) s33(Р6) s36(Р7) — без тег-плашек. s20b-e (Skills / MCP для кодинг-агента / git-конвенции / слой логирования задач) вставлены между s20 и s21 в Разделе 3. s11b (визуализация требований) между s10/s11; s20f (git worktree) между s20e/s21; s25b/s25c (BDD+trunk-based / тестовый инструментарий) между s24/s25(divider); s35b (инструментарий документации) между s34/s35(divider). Hero required = s01 + s41."
+  slide_times_sum_min: 109.5    # Σ per-slide duration_min ниже (было 94.5, +15 за s11b/s20f/s25b/s25c/s35b × 3 мин); активная часть ~74 + буфер Q&A
   total_min: 75                 # активный ~71 + ~4 Q&A буфер (s40)
   note: >
-    Plan v4 §4: 40 слайдов ≈ 75 мин. Раздел-бюджеты: Р0 s01–s07 · Р1 [s08]
-    s09–s11 · Р2 [s12] s13–s15 · Р3 [s16] s17–s21 + s20b-e (issue #162) · Р4 [s22] s23–s24 · Р5 [s25]
-    s26–s31 · Р6 [s32] s33–s34 · Р7 [s35] s36–s40. Прирост vs v3 (37): архитектура
-    split (+2: s13/s14), харнес отдельным слайдом (+1: s18/s19 разведены), методики-
-    рекомендации (+1: s10); компенсируется сжатием вендор-блоков (инструменты вторичны).
-    Q&A merged в s40 (hero closing). Финальная минутная калибровка — на рендер-фазе.
+    Plan v4 §4: 40 слайдов ≈ 75 мин (базовая калибровка; +9 слайдов issue #162
+    round 1+2 — минутный бюджет не пересчитан заново, см. slide_times_sum_min
+    как Σ per-slide, не как рекомендуемый тайминг лекции). Раздел-бюджеты: Р0
+    s01–s07 · Р1 [s08] s09–s11 + s11b (issue #162 r2) · Р2 [s12] s13–s15 ·
+    Р3 [s16] s17–s21 + s20b-e (issue #162 r1) + s20f (issue #162 r2) ·
+    Р4 [s22] s23–s24 + s25b-c (issue #162 r2) · Р5 [s25] s26–s31 ·
+    Р6 [s32] s33–s34 + s35b (issue #162 r2) · Р7 [s35] s36–s40. Прирост vs v3
+    (37): архитектура split (+2: s13/s14), харнес отдельным слайдом (+1:
+    s18/s19 разведены), методики-рекомендации (+1: s10); компенсируется
+    сжатием вендор-блоков (инструменты вторичны). Q&A merged в s40 (hero
+    closing). Финальная минутная калибровка — на рендер-фазе.
 
-# Per-slide duration_min (plan v4 §4):
+# Per-slide duration_min (plan v4 §4, +issue #162 round 1+2):
 #   Р0: s01=3 s02=0.5 s03=2 s04=2.5 s05=3 s06=2 s07=2.5 (=15.5) ·
-#   Р1: [s08=0.5] s09=3 s10=2.5 s11=3 (=9) ·
+#   Р1: [s08=0.5] s09=3 s10=2.5 s11b=3 s11=3 (=12) ·
 #   Р2: [s12=0.5] s13=3 s14=3 s15=3 (=9.5) ·
-#   Р3: [s16=0.5] s17=3 s18=3 s19=3 s20=3 s20b=3 s20c=3 s20d=3 s20e=3 s21=3 (=27.5) ·
-#   Р4: [s22=0.5] s23=3 s24=3 (=6.5) ·
+#   Р3: [s16=0.5] s17=3 s18=3 s19=3 s20=3 s20b=3 s20c=3 s20d=3 s20e=3 s20f=3 s21=3 (=30.5) ·
+#   Р4: [s22=0.5] s23=3 s24=3 s25b=3 s25c=3 (=12.5) ·
 #   Р5: [s25=0.5] s26=3 s27=3 s28=3 s29=3 s30=3 s31=3 (=18.5) ·
-#   Р6: [s32=0.5] s33=3 s34=3 (=6.5) ·
+#   Р6: [s32=0.5] s33=3 s34=3 s35b=3 (=9.5) ·
 #   Р7: [s35=0.5] s36=3 s37=3 s38=3 s39=3 s40=3 (=15.5)
-#   Σ per-slide ≈ 108.5 обсуждения; активный показ ~74. Пере-балансировка — рендер-фаза.
+#   Σ per-slide ≈ 123.5 обсуждения; активный показ ~74. Пере-балансировка — рендер-фаза.
 
 ai_failure_judgment:
   # plan v4 §4/§6 — strict-in слайды (solid IN-bucket: провал/ограничение/критерий/

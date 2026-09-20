@@ -321,3 +321,114 @@ s31/s39/s40 — чисто.
 - Overflow @150dpi: s04/s05/s08/s10/s14/s15/s16/s19/s22/s28/s31/s37/s38/s39/s40
   — чисто. s40 нижний список опущен y=7.14 чтобы не тесниться под 3-строчным
   callout'ом.
+
+## v4.3 — issue #162 round 2: +5 slides s11b/s20f/s25b/s25c/s35b (45 → 50)
+
+**Задача:** построить 5 новых content-слайдов из новых подразделов главы
+(round 2, commit `3033408`): §1.2b (визуализация требований), §3.3f (git
+worktree), §4.4 (BDD + trunk-based), §4.5 (тестовый инструментарий), §6.3
+(инструментарий документации). §3.4-extension остался chapter-only (компактный
+абзац, слайда не требует).
+
+### Insertion points (resolved via band-file sid tracing, NOT ls-sort)
+
+`deck.yaml`/`deck-part2.yaml` id-labels в этом регионе деки имеют
+pre-existing off-by-one drift относительно реальных display-позиций
+(задокументировано ранее в notes/mcp-limitations.md); разрешалось трассировкой
+`load_notes`/`refs_of_slide` sid-строк внутри самих band-функций (сид
+== filename-префикс == реальная позиция после +4 сдвига #162 round 1 для
+позиций ≥21), а не по буквальным id/file-полям deck.yaml:
+
+- **s11b** — между `b1.s10` (content: requirements-methodics, sid `s11`) и
+  `b2.s11` (content: prompt-and-pray, sid `s12`). Band: `slides_band1.py`
+  (append).
+- **s20f** — между `b2.s20e` (task-logging, sid `s20e`) и `b2.s20`
+  (70-percent-problem, sid `s21`). Band: `slides_band2.py`.
+- **s25b, s25c** — между `b3.s24` (all-green-mutation, sid `s25`) и `b3.s25`
+  (divider Раздел 5, sid `s26`). Band: `slides_band3.py` (не band2, как
+  предполагала первичная наводка в брифе — проверено трассировкой).
+- **s35b** — между `b4.s34` (docs-bright-spot, sid `s35`) и `b4.s35` (divider
+  Раздел 7, sid `s36`). Band: `slides_band4.py`.
+
+`build_lec04_v4.py`: 5 новых элементов вставлены в список `builders` в
+соответствующих точках; `assert len(builders) == 50`; `assert n == 50`.
+`page_number()` авто-применяется ко всем 50 через assembler.
+
+### Новые URL + SLIDE_REFS (`_helpers.py`)
+
+14 новых `urlkey` (mermaid_user_journey, cucumber_bdd, git_worktree_docs,
+claude_worktree_docs, automationpanda_gherkin_ai, software303_bdd_adoption,
+trunk_based_dev, daniellopes_semantic_conflicts, postman_ai_blog,
+testcontainers, saucelabs_visual_regression, eesel_confluence_ai, aws_q_doc) +
+5 новых `SLIDE_REFS` entries (`s11b`, `s20f`, `s25b`, `s25c`, `s35b`), каждый
+2–3 источника с gloss-фразой; volatile-источники (2026 фичи Postman, Confluence
+AI, AWS Q, BDD-adoption survey) помечены → `[VFY-day-of]` только в нотах.
+
+### Визуальные решения по слайду
+
+- **s11b** (assertion_visual) — два Ocean-box (Mermaid User Journey сниппет /
+  Gherkin Given-When-Then сниппет, моноширинным шрифтом) + контрастная строка
+  «честная граница» (story mapping НЕ code-as-DSL, icon `circle-slash`) + gold.
+- **s20f** (case_study, self-referential инцидент Лекции 2) — левый box
+  «проблема + документированный инцидент» (teal-strip «~2 часа»), правый box
+  «механизм + 2 команды кодом + честная оговорка про число worktree». Iter 1:
+  Runglish-цитата «Лекция 2 production... wasted... eliminated» из CLAUDE.md
+  замечена deep-scan-style пересмотром → переписана чистым русским (убрано
+  «production»/«wasted»/«Phase 8.5» — внутренний process-маркер, не для
+  студента).
+- **s25b** (assertion_visual, 2 компактных блока) — BDD слева / trunk-based
+  справа, каждый с honest-caveat стрипом (adoption 27%/68%; AI Agent Source
+  Prefix).
+- **s25c** (schema_matrix 3×3, по проверенному паттерну s20e) — iter 1: labels
+  11.5pt / cell 12.5pt. Iter 2: **font bump до Schema Readability Checklist
+  минимумов** (label ≥12pt, cell ≥14pt, тот же fix что s20e уже проходил) +
+  row_h 0.92→1.00 для запаса. 3 строки visible-слоя (Что проверяет /
+  AI-механика / Честная оговорка) — держит ≤4 строки на слайде per риск из
+  брифа.
+- **s35b** (assertion_visual) — iter 1: левый box (Confluence AI / AWS Q /doc
+  двумя абзацами) имел заметный visual-mass-gap (~30% пустого пространства
+  между абзацами, т.к. box height был больше факт. высоты текста — Visual Mass
+  Balance anti-pattern). Iter 2: добавлены sub-заголовки + тонкий divider +
+  font 10.5→11, правый box получил icon+label «Честная оговорка»
+  (graduation-cap) вместо голого текстового блока — оба box теперь
+  сбалансированы.
+
+### Designer-extras + Russification sweep
+
+- Pre-render grep (5 новых .md, visible body, strip frontmatter): 0 хитов на
+  `§[0-9]\.[0-9]`, `→ sNN`, `см\. sNN`, `\[VERIFY-DAY-OF\]`, `\[FACT-CHECK\]`,
+  `LO[1-9]`, timing-паттерны, методологические мета-комментарии. Найдено и
+  исправлено: `§2.4`/`§3.3d`/`§4.1–4.2`/`§3.3d`/`§3.3b` протекли в Body у
+  s11b/s25b/s35b на первом драфте (forward section-refs) → убраны/
+  перефразированы без номера раздела.
+- `deep_latin_scan.py` на извлечённом PPTX-тексте (5 новых слайдов
+  отдельно): 14–28 unique tokens/слайд — исключительно brand/product names
+  (Mermaid, Gherkin, Cucumber, Postman, Testcontainers, Docker, Chromatic,
+  Percy, Applitools, Confluence, AWS, DORA), established untranslated
+  glossary-термины (architecture-as-code, worktree, trunk-based, skill —
+  используются так же в самой главе и в уже-approved s20e/s24), literal
+  git/Gherkin/Mermaid syntax keywords (title/section/Given/When/Then/add/
+  detach/commit/checkout) и URL-фрагменты. Тот же порядок величины, что
+  baseline уже-approved слайдов (s24: 24 unique, s20e: 34 unique) — deep scan
+  не нашёл настоящих непереведённых content-слов.
+
+### Speaker notes word-count gate
+
+Iter 1 (raw draft) превысил 300 слов на 3/5 слайдов (s25b=336, s25c=349,
+s35b=377 excl. «Источники:»). Iter 2: все 5 подрезаны до диапазона
+[150,300] (финал: s11b=296, s20f=296, s25b=300, s25c=297, s35b=298),
+подтверждено извлечением из PPTX notes_text_frame (не из .md — чтобы поймать
+то же, что реально попадёт на слайд через `notes_with_sources`).
+
+### Итоги round 2
+
+- **50 слайдов** (было 45), `deck.yaml`/`deck-part2.yaml`/`build_lec04_v4.py`
+  синхронизированы (`total_slides`, `totals.slides`,
+  `totals.slide_times_sum_min` 94.5→109.5, per-slide duration_min таблица).
+- Pre-existing gap: сумма id-записей в deck.yaml+deck-part2.yaml (49) на 1
+  меньше `total_slides`/`totals.slides` (50) — тот же gap (44 vs 45) уже
+  существовал ДО round 2 (не связан с этой правкой, не устранялся по
+  инструкции брифа «не чини старый дрейф»).
+- Минимум 3 итерации на риск-слайд (s25c: iter1 build → iter2 font-bump →
+  iter3 final confirm @150dpi); s35b тоже получил 2 содержательных visual-fix
+  итерации (mass-balance) + final confirm.

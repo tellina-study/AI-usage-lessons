@@ -1,0 +1,282 @@
+# library/lectures/lec-03/deck-part3.en.yaml  —  EN translation (issue #172), PART 3 of 3
+#
+# Continuation of the English deck for Lecture 3 (v6.3-en, 67 slides).
+# THIS FILE — slides s18..s31 (Section 4. Agents + Section 5. The decision
+# framework) + totals + metrics. Header / palette / motif / glossary and
+# slides s01..s-task-extract (Section 0 + Section 1) are in deck.en.yaml;
+# slides s09..s16 (Section 2 + Section 3) are in deck-part2.en.yaml.
+#
+# ORDER NOTE (#204): s21 sits BEFORE s19/s19b/s20 here, because that is the
+# order the deck actually renders in (rendered/build_lec03_en.py, ported from
+# the RU build_v3.py sid list, which is the source of truth for v6.4). The RU
+# deck-part3.yaml still lists those four in the old order and so disagrees with
+# its own render at positions 45-48; that desync is deliberately NOT mirrored
+# here, since a spec that contradicts its artifact mis-maps commentary to
+# slides for anyone reading it positionally. Worth fixing on the RU side too.
+
+# ─────────────────────────────────────────────────────────────────────────
+# Section 4. Agents
+# ─────────────────────────────────────────────────────────────────────────
+slides:
+  - id: s18
+    file: slides-en/s18-section4-divider-api.md
+    type: section_divider
+    section: "Section 4. Agents"
+    duration_min: 1
+    assertion: "Section 4 — Agents: the loop, the equipment, memory, tool access — and where all of it breaks"
+    chapter_ref: "§4 [for-slide-s18]"
+
+  - id: s-classic-agents
+    file: slides-en/s-classic-agents-base.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2
+    assertion: "Classical automation: finite-state machine, workflow engines (BPMN/DAG/RPA), a control loop plan->act->check (OODA); an agent = the same loop, but the LLM generates the steps non-deterministically"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.0 [for-slide-s-classic-agents]"
+    subtype: classic_base
+
+  - id: s21
+    file: slides-en/s21-agent-loop.md
+    type: process
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "An agent = a loop plan -> act -> check -> iterate; every step is a place of failure; check must not be self-assessment"
+    chapter_ref: "§4.2 [for-slide-s21]"
+    references: [yao-2022-react]
+    subtype: schema_cycle
+
+  - id: s19
+    file: slides-en/s19-api-layer.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "The model becomes a system component: structured output / function calling / prompt caching + MCP"
+    chapter_ref: "§4.1 [for-slide-s18, s19, s20]"
+    subtype: schema_matrix
+
+  - id: s19b
+    file: slides-en/s19b-agent-economics.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "Economics: an agent is xN tokens vs chat, multi-agent another x15; caching goes from a guideline to a necessity"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.1 [for-slide-s19]"
+    verify_day_of: true
+
+  - id: s20
+    file: slides-en/s20-mcp.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "MCP NxM -> N+M; ~11% of the catalog is actually runnable; ease of connection != security"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.1 [for-slide-s20]"
+    verify_day_of: true
+
+  - id: s-mcp-api
+    file: slides-en/s-mcp-api-decision.md
+    type: comparison_table
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "MCP or a direct API -- not alternatives: MCP is a thin discovery/portability layer ON TOP of REST; NxM -> N+M pays off only when N,M>=2-3; ~25% of the registry are unusable, 43.7% top MCP-Universe"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.1b [for-slide-mcp-api]"
+    subtype: comparison_table
+    references: [mcp-universe, anthropic-mcp-donate]
+    verify_day_of: true
+
+  - id: s22
+    file: slides-en/s22-workflow-vs-agent.md
+    type: comparison
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "A workflow is not a primitive: five patterns for the predictable (prompt chaining / routing / parallelization / orchestrator-workers / evaluator-optimizer)"
+    chapter_ref: "§4.3 [for-slide-s22]"
+    subtype: schema_matrix
+
+  - id: s-agent-frameworks
+    file: slides-en/s-agent-frameworks-overview.md
+    type: comparison_table
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "An agent framework is an abstraction tax; adopted for a requirement. LangGraph / CrewAI / AG2 / OpenAI Agents SDK / Claude Agent SDK / smolagents / LlamaIndex / Pydantic AI -- and \"none: plain code\""
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3c [for-slide-agent-frameworks-cons, agent-frameworks-intro, agent-frameworks-list, agent-frameworks-none]"
+    subtype: comparison_table
+    references: [anthropic-agents, langgraph]
+    verify_day_of: true
+
+  - id: s-agent-when
+    file: slides-en/s-agent-when-judgment.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "An agent fits an open, unpredictable task; a predictable one -> workflow; multi-agent only under a trigger. p^n: 0.95^10~60%, 0.95^20~36%; tau-bench 61% -> 25% pass@1 -> pass@8"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3 [for-slide-s22, s22a-multi, agent-reliability]"
+    subtype: assertion_visual
+    references: [tau-bench, anthropic-multiagent]
+    verify_day_of: true
+
+  - id: s22a_multi
+    file: slides-en/s22a_multi-multi-agent.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "Multi-agent by default is NOT an upgrade: p^n (95%x10=60%); swarm 17.2x vs coordinator 4.4x"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3 [for-slide-s22a-multi]"
+    verify_day_of: true
+
+  - id: s22b
+    file: slides-en/s22b-agent-equipment.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "Each equipment slot of the agent is a trade-off, not a default upgrade"
+    chapter_ref: "§4.4 [for-slide-s22b]"
+    references: [agent-harness-registry]
+
+  - id: s22d
+    file: slides-en/s22d-memory-failure.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "\"An agent that remembers\" is not always better: Letta Tier D and even a 17% tail on the best system"
+    chapter_ref: "§4.6 [for-slide-s22d]"
+    references: [agent-harness-registry]
+
+  - id: s25
+    file: slides-en/s25-tool-attacks.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3.5
+    assertion: "Skills, subagents, access — and the trust boundary: injection x broad privileges = catastrophe"
+    chapter_ref: "§4.8 [for-slide-s23, s24, s25]"
+    references: [willison-2025-prompt-injection, nyt-v-openai-2025, anthropic-2026-data-retention]
+    verify_day_of: true
+
+  - id: s24
+    file: slides-en/s24-data-security.md
+    type: assertion_visual
+    section: "Section 4. Agents"
+    duration_min: 2
+    assertion: "A data map by feature: ZDR does NOT cover third-party/MCP; least-privilege is mandatory"
+    learning_outcomes: [LO7]
+    chapter_ref: "§4.8 [for-slide-s24]"
+    verify_day_of: true
+
+  - id: s25b
+    file: slides-en/s25b-coding-agents.md
+    type: comparison
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "Real coding agents — through the equipment frame: Claude Code / Aider / Cursor / OpenHands"
+    chapter_ref: "§4.9 [for-slide-s25b]"
+    references: [agent-harness-registry]
+
+  - id: s-agent-cases
+    file: slides-en/s-agent-cases-typical.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "Six typical agentic tasks on one schema (coding / support at Air Canada+Klarna / ETL / research / browser-Operator / SRE ITBench): task -> loop shape -> where it breaks -> would a workflow be better?"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.9b [for-slide-agent-cases]"
+    subtype: case_study
+    references: [aircanada-mccarthy, itbench]
+    verify_day_of: true
+
+  - id: s23b
+    file: slides-en/s23b-failure-catalog.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 3
+    assertion: "A catalog of 10 CLASSES of failures as a table: class -> case -> lesson (188 of 344 — the agent broke it itself)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.10 [for-slide-s23b]"
+
+  - id: s23c
+    file: slides-en/s23c-failure-deepdive.md
+    type: case_study
+    section: "Section 4. Agents"
+    duration_min: 2.5
+    assertion: "Deep-dive of the classes: PocketOS 9 sec, runaway $48k/$1.3M, slopsquatting 19.7%, cascade 61%"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.10 [for-slide-s23c]"
+    verify_day_of: true
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Section 5. The decision framework
+  # ─────────────────────────────────────────────────────────────────────
+
+  - id: s25a
+    file: slides-en/s25a-section5-divider-framework.md
+    type: section_divider
+    section: "Section 5. The decision framework"
+    duration_min: 0.3
+    assertion: "Section 5 — gather all the architectures and their failures into one choice tool"
+    chapter_ref: "§5 [for-slide-s26]"
+
+  - id: s-classic-framework
+    file: slides-en/s-classic-framework-base.md
+    type: assertion_visual
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "Classical technology choice: from the requirement, not the tool; build-vs-buy, KISS, YAGNI, the principle of least power; the architecture ladder is the same \"simplest that works\" principle"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§5.0 [for-slide-s-classic-framework]"
+    subtype: classic_base
+
+  - id: s26
+    file: slides-en/s26-complexity-ladder.md
+    type: process
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "The complexity ladder: stay on the bottom rung, climb only for a requirement; the bottom is code without AI"
+    chapter_ref: "§5.1 [for-slide-s26]"
+    subtype: schema_layered
+
+  - id: s27b
+    file: slides-en/s27b-agent-starter-kit.md
+    type: assertion_visual
+    section: "Section 5. The decision framework"
+    duration_min: 2
+    assertion: "The agent starter kit — a thin default + justified triggers for adding complexity"
+    chapter_ref: "§5.2b [for-slide-s27a]"
+    references: [agent-harness-registry]
+
+  - id: s30
+    file: slides-en/s30-bridge-homework-qa.md
+    type: hero_closing
+    section: "Section 5. The decision framework"
+    duration_min: 1.5
+    assertion: "Next — industries, starting with software development; the SDLCxAI axis; this frame is the base of Lectures 4–17"
+    chapter_ref: "§5.5 [for-slide-s30]"
+
+  - id: s31
+    file: slides-en/s31-qa.md
+    type: qa_minimal
+    section: "Section 5. The decision framework"
+    duration_min: 5
+    assertion: "Q&A"
+    chapter_ref: "§5.5 [for-slide-s30]"
+
+# ─── Validation ───
+totals:
+  slides: 67
+  by_section:
+    "Section 0. Opening": [s01, s02, s02a, s03, s04]
+    "Section 1. The prompt": [s04a, s-classic-prompt, s05, s05c, s05b, s-fmt, s06, s07, s08, s08a, s-task-assistant, s-task-tone, s-task-extract]
+    "Section 2. RAG": [s09, s-classic-rag, s10, s-rag-hybrid, s-rag-stack, s-rag-elastic, s-rag-chunk1, s-rag-chunk2, s-rag-chunk3, s-rag-design, s-rag-cases, s-rag-research, s11, s12, s13]
+    "Section 3. Fine-tune": [s13a, s-classic-ft, s13b, s-ft-cost, s15, s17, s14, s16, s-ft-eval]
+    "Section 4. Agents": [s18, s-classic-agents, s21, s19, s19b, s20, s-mcp-api, s22, s-agent-frameworks, s-agent-when, s22a_multi, s22b, s22d, s25, s24, s25b, s-agent-cases, s23b, s23c]
+    "Section 5. The decision framework": [s25a, s-classic-framework, s26, s27b, s30, s31]
+  duration_min_total: 103
+
+ai_failure_judgment:
+  in_bucket_slides: [s01, s06, s08, s-fmt, s-task-tone, s-rag-elastic, s-rag-chunk2, s-rag-chunk3, s-rag-cases, s-rag-research, s12, s13, s14, s16, s-ft-cost, s-ft-eval, s-mcp-api, s22, s-agent-frameworks, s-agent-when, s22d, s-agent-cases, s25]
+  count: 23
+  share_by_slides: "23/67 ~ 34.3% by slides"

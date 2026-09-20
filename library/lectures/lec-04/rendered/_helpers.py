@@ -117,6 +117,15 @@ URLS = {
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
     "anthropic_ctx_eng": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "willison_vibe_code": "https://simonwillison.net/2025/Oct/7/vibe-engineering/",
+    # --- added for s20b–s20e (Skills / MCP / git-конвенции / task-logging, #162) ---
+    "agent_skills_std": "https://agentskills.io/",
+    "claude_skills_docs": "https://code.claude.com/docs/en/skills",
+    "github_mcp_server": "https://github.com/github/github-mcp-server",
+    "playwright_mcp": "https://github.com/microsoft/playwright-mcp",
+    "conventional_commits": "https://www.conventionalcommits.org/en/v1.0.0/",
+    "conventional_branch": "https://conventionalbranch.org/",
+    "backlog_md": "https://github.com/MrLesk/Backlog.md",
+    "claude_task_tools": "https://code.claude.com/docs/en/best-practices",
 }
 
 
@@ -774,6 +783,35 @@ SLIDE_REFS = {
          "«отревьюй — или это не разработка»; три слоя контроля"),
         ("3", "Thoughtworks — fitness function", "fitness_fn",
          "инвариант-нарушение → добавить fitness-функцию обратно в каркас"),
+    ],
+    "s20b": [
+        ("1", "Agent Skills — открытый стандарт", "agent_skills_std",
+         "формат SKILL.md работает в нескольких AI-инструментах, не один вендор"),
+        ("2", "Claude Docs — Skills", "claude_skills_docs",
+         "тело skill'а загружается только при использовании — progressive disclosure",
+         True),
+    ],
+    "s20c": [
+        ("1", "GitHub MCP server", "github_mcp_server",
+         "toolsets выборочно; явный read-only режим — write пропускается",
+         True),
+        ("2", "Playwright MCP server (Microsoft)", "playwright_mcp",
+         "accessibility-дерево вместо скриншота; генерирует e2e-тест", True),
+        ("3", "Willison — the lethal trifecta", "lethal_trifecta",
+         "один MCP-сервер часто закрывает 2 из 3 углов трифекты одним подключением"),
+    ],
+    "s20d": [
+        ("1", "Conventional Commits v1.0.0", "conventional_commits",
+         "<type>[scope]: <описание>; fix→PATCH, feat→MINOR, BREAKING CHANGE→MAJOR"),
+        ("2", "Conventional Branch v1.1.0", "conventional_branch",
+         "AI Agent Source Prefixes: ai/, claude/, codex/, copilot/, cursor/", True),
+    ],
+    "s20e": [
+        ("1", "Backlog.md — открытый проект", "backlog_md",
+         "«каждая задача = одно контекстное окно = один pull request»"),
+        ("2", "Claude Docs — best practices (Task-инструменты)", "claude_task_tools",
+         "TaskCreate/TaskUpdate/TaskGet/TaskList — session-scoped live-прогресс",
+         True),
     ],
     "s21": [
         ("1", "Osmani — The 70% Problem", "osmani_70",

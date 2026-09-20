@@ -1,6 +1,6 @@
 # library/lectures/lec-04/deck.yaml  —  PART 1 of 2
 #
-# Deck-структура Лекции 4 «AI в жизненном цикле разработки ПО (SDLC)» (41 слайд — v4.1: +слайд-фундамент s05, keystone→s06, дивайдеры без тег-плашек).
+# Deck-структура Лекции 4 «AI в жизненном цикле разработки ПО (SDLC)» (45 слайдов — v4.2 #162: +s20b/s20c/s20d/s20e Skills·MCP·git-конвенции·task-logging; v4.1: +слайд-фундамент s05, keystone→s06, дивайдеры без тег-плашек).
 #
 # Source: chapter v4 methodology-first (~34.5k, 5 частей) +
 # plan v4-methodology-first §4 (послайдовая карта s01–s41 (v4.1: s05 foundations, s06 keystone-цикл).
@@ -41,7 +41,7 @@ deck:
   version: v4.0
   source: "chapter v4 methodology-first (~34.5k, 5 частей)"
   plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
-  total_slides: 41          # v4.1: s01–s41; 7 section-dividers s09/s13/s17/s23/s26/s33/s36 (сдвиг +1); s05 foundations, s06 keystone
+  total_slides: 45          # v4.2 (#162): +4 slides s20b/s20c/s20d/s20e (Skills·MCP·git-конвенции·task-logging) между s20 и s21; было 41 (v4.1: s01–s41; 7 section-dividers s09/s13/s17/s23/s26/s33/s36 сдвиг +1; s05 foundations, s06 keystone)
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3); L4 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "методико-first: фаза SDLC × ведущая практика (методика: артефакт + кто предписывает + почему); инструмент — вторичная иллюстрация"
@@ -338,7 +338,7 @@ slides:
 
   # ─── Раздел 3. Реализация — дисциплина + харнес (s16–s21) ───
   - id: s16
-    file: slides/s16-divider-implementation.md
+    file: slides/s16-poisoned-context.md
     type: section_divider
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 0.5
@@ -351,7 +351,7 @@ slides:
     verify_day_of: false
 
   - id: s17
-    file: slides/s17-small-units-cycle.md
+    file: slides/s17-divider-implementation.md
     type: assertion_visual
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -364,7 +364,7 @@ slides:
     verify_day_of: true
 
   - id: s18
-    file: slides/s18-persistent-memory-layer.md
+    file: slides/s18-small-units-cycle.md
     type: schema_architecture
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -377,7 +377,7 @@ slides:
     verify_day_of: false
 
   - id: s19
-    file: slides/s19-harness-gate.md
+    file: slides/s19-persistent-memory-layer.md
     type: schema_pipeline
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -390,7 +390,7 @@ slides:
     verify_day_of: false
 
   - id: s20
-    file: slides/s20-70-percent-problem.md
+    file: slides/s20-harness-gate.md
     type: case_study
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -403,8 +403,60 @@ slides:
     interaction: none
     verify_day_of: true
 
+  - id: s20b
+    file: slides/s20b-skills.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Skill — процедура, которую агент подгружает on-demand, а не всегда: AGENTS.md держит короткое и частое, skill — длинное и редкое, цена которого равна нулю, пока не вызван"
+    learning_goal: "Ведущее: skills как progressive disclosure инструкций (on-demand слой поверх постоянного AGENTS.md) + честная кросс-вендорная калибровка"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3b [for-slide-s20b]"
+    references: [agent-skills-std, claude-skills-docs]
+    interaction: none
+    verify_day_of: true
+
+  - id: s20c
+    file: slides/s20c-mcp-coding-agent.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "MCP убирает человека-моста между агентом и внешними системами (issue-трекер, браузер, деплой): сервер публикует инструменты, агент вызывает их как встроенные — но тот же канал закрывает сразу два угла Lethal Trifecta"
+    learning_goal: "Ведущее: MCP расширяет агента за пределы файловой системы (GitHub / Playwright / filesystem MCP) + мост к security (Lethal Trifecta через один сервер)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3c [for-slide-s20c]"
+    references: [github-mcp-server, playwright-mcp, willison-lethal-trifecta]
+    interaction: none
+    verify_day_of: true
+
+  - id: s20d
+    file: slides/s20d-git-conventions.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "То, что не записано в steering-файле, агент не знает и угадывает заново каждую сессию — это касается и git: Conventional Commits + Conventional Branch (с AI Agent Source Prefixes) + структурный PR-шаблон превращают объём агентных коммитов из шума в машинно-читаемый сигнал"
+    learning_goal: "Ведущее: git-конвенции (commit/branch/PR) — часть контракта с агентом на уровень выше команд сборки; специфика масштаба — агент коммитит систематически и на порядок больше"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3d [for-slide-s20d]"
+    references: [conventional-commits, conventional-branch]
+    interaction: none
+    verify_day_of: true
+
+  - id: s20e
+    file: slides/s20e-task-logging-layer.md
+    type: schema_matrix
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Нет единственно правильного паттерна логирования задач — выбор составной: solo/команда × длительность задачи × нужда в аудит-следе; встроенный TodoWrite/Task* — session-scoped прогресс, не замена персистентному файловому логу"
+    learning_goal: "Ведущее: критерии выбора между 3 файловыми паттернами логирования задач (папка-на-задачу / единый лог / плоская папка) — методика без единственного правильного ответа, как growth-ladder в Лекции 3"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3e [for-slide-s20e]"
+    references: [backlog-md, claude-task-tools]
+    interaction: none
+    verify_day_of: true
+
   - id: s21
-    file: slides/s21-anti-hype-benchmarks.md
+    file: slides/s21-70-percent-problem.md
     type: case_study
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3

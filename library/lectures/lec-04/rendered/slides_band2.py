@@ -631,6 +631,354 @@ def s19(p):
 
 
 # ============================================================
+# s20b — Skills (AGENTS.md vs SKILL.md comparison + honest cross-vendor limit)
+# ============================================================
+def s20b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Skill — процедура по требованию: агент подгружает её только когда релевантна",
+        size=22, w=12.2, h=0.85)
+
+    # left: two comparison cards AGENTS.md vs SKILL.md
+    lx, lw = 0.55, 5.85
+    cardh = 1.72
+    ocean_box(s, lx, 1.55, lw, cardh)
+    icon(s, "sliders-horizontal", lx + 0.24, 1.70, 0.5, "mid")
+    text_box(s, x=lx + 0.88, y=1.70, w=lw - 1.10, h=0.38,
+             text="AGENTS.md / CLAUDE.md", size=13.5, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=2.22, w=lw - 0.48, h=0.98,
+             text="Всегда в контексте, каждый ход. Короткое и частое: команды "
+                  "сборки, тесты, стиль.",
+             size=11, color=DEEP, line_spacing=1.16)
+    ocean_box(s, lx, 3.42, lw, cardh, fill=TEAL_TINT, stroke=TEAL)
+    icon(s, "wrench", lx + 0.24, 3.57, 0.5, "teal")
+    text_box(s, x=lx + 0.88, y=3.57, w=lw - 1.10, h=0.38,
+             text="SKILL.md", size=13.5, bold=True, color=TEAL)
+    text_box(s, x=lx + 0.24, y=4.09, w=lw - 0.48, h=0.98,
+             text="Только когда вызван (вручную или моделью). Длинное и "
+                  "редкое: процедура, справочник раз в месяц.",
+             size=11, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx, y=5.22, w=lw, h=0.42,
+             text="Разница — не в содержании, а в режиме загрузки: постоянно "
+                  "в контексте против по требованию (поэтапная выдача "
+                  "информации).",
+             size=10, italic=True, color=SLATE, line_spacing=1.12,
+             align=PP_ALIGN.CENTER)
+
+    # right: 3 signals + 3 ways to call + honest limit
+    rx, rw = 6.65, 6.15
+    ocean_box(s, rx, 1.55, rw, 1.72)
+    text_box(s, x=rx + 0.24, y=1.65, w=rw - 0.48, h=0.32,
+             text="Когда выносить из AGENTS.md в «skill»", size=12.5, bold=True,
+             color=MID)
+    text_box(s, x=rx + 0.24, y=2.00, w=rw - 0.48, h=1.20,
+             text="• повторяющаяся ручная инструкция в чат\n"
+                  "• секция разрослась в многошаговую процедуру\n"
+                  "• большой справочник, нужный редко",
+             size=11, color=DEEP, line_spacing=1.24)
+    chips_y = 3.42
+    ways = ["слэш-команда", "автовызов моделью", "составной вызов"]
+    cw = (rw - 0.20 * 2) / 3
+    cxx = rx
+    for w_ in ways:
+        chip(s, cxx, chips_y, cw, 0.46, w_, fill=TEAL, color=WHITE, size=10)
+        cxx += cw + 0.20
+
+    filled_rect(s, rx, 4.10, rw, 1.42, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+                radius=True, radius_adj=0.06)
+    text_runs(s, rx + 0.24, 4.20, rw - 0.48, 1.24, [
+        {"text": "Кросс-вендорность частичная. ", "size": 12, "bold": True,
+         "color": DEEP},
+        {"text": "Формат открыт (Agent Skills standard), подтверждён у Codex "
+                 "CLI отдельно от AGENTS.md. У Cursor эквивалента «skill по "
+                 "требованию» не подтверждено — там свой слой, который "
+                 "всегда активен (Cursor rules).",
+         "size": 10.5, "color": DEEP, "line_spacing": 1.14},
+    ])
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "«Skill» стоит почти ничего, пока не вызван — цена появляется в момент "
+        "использования, а не в каждом ходе диалога.",
+        size=13, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s20b")
+    notes_with_sources(s, "s20b")
+    return s
+
+
+# ============================================================
+# s20c — MCP for coding agent (agent centre + 3 servers + Lethal Trifecta bridge)
+# ============================================================
+def s20c(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "MCP убирает человека-мост между агентом и системами вне репозитория",
+        size=21, w=12.3, h=0.85)
+
+    # top: agent + 3 MCP server cards
+    ay = 1.55
+    ah = 1.66
+    # agent centre-left small box
+    agx, agw = 0.55, 2.35
+    ocean_box(s, agx, ay, agw, ah)
+    icon(s, "bot", agx + agw / 2 - 0.32, ay + 0.16, 0.64, "mid")
+    text_box(s, x=agx + 0.06, y=ay + 0.88, w=agw - 0.12, h=0.30,
+             text="АГЕНТ", size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+    text_box(s, x=agx + 0.06, y=ay + 1.16, w=agw - 0.12, h=0.44,
+             text="встроенно: файлы + шелл", size=9.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.05)
+
+    cards = [
+        ("boxes", "GitHub MCP", "issues / PR / CI по toolsets; явный "
+         "режим только для чтения — запись пропускается, даже если она "
+         "запрошена"),
+        ("scan-search", "Playwright MCP", "accessibility-дерево вместо "
+         "скриншота; кликает, заполняет формы, генерирует тест"),
+        ("link", "Filesystem MCP", "класс серверов: доступ к директориям "
+         "ВНЕ рабочей копии — соседний репо, общий диск"),
+    ]
+    cx0 = agx + agw + 0.55
+    ctotal = 13.333 - 0.55 - cx0
+    cgap = 0.18
+    ccw = (ctotal - cgap * 2) / 3
+    # single connector rail ABOVE the cards (clear of all body text), agent → cards
+    rail_y = ay - 0.14
+    connector(s, agx + agw / 2, ay, agx + agw / 2, rail_y, color=TEAL,
+              width=1.6, dash="dash")
+    connector(s, agx + agw / 2, rail_y, cx0 + 2 * (ccw + cgap) + ccw / 2, rail_y,
+              color=TEAL, width=1.6, dash="dash")
+    for i, (ic, name, body) in enumerate(cards):
+        x = cx0 + i * (ccw + cgap)
+        ocean_box(s, x, ay, ccw, ah)
+        icon(s, ic, x + 0.18, ay + 0.14, 0.42, "teal")
+        text_box(s, x=x + 0.70, y=ay + 0.16, w=ccw - 0.86, h=0.36,
+                 text=name, size=12, bold=True, color=MID)
+        text_box(s, x=x + 0.18, y=ay + 0.58, w=ccw - 0.36, h=1.02,
+                 text=body, size=9.3, color=DEEP, line_spacing=1.10)
+        connector(s, x + ccw / 2, rail_y, x + ccw / 2, ay, color=TEAL,
+                  width=1.6, dash="dash")
+
+    text_box(s, x=agx, y=ay + ah + 0.10, w=12.25, h=0.42,
+             text="Сервер публикует список инструментов при подключении — "
+                  "агент вызывает их тем же циклом, что и встроенные.",
+             size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+
+    # bottom: security bridge (Lethal Trifecta)
+    by = 3.72
+    filled_rect(s, 0.55, by, 12.25, 1.62, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+                radius=True, radius_adj=0.05)
+    icon(s, "shield-alert", 0.79, by + 0.14, 0.46, "light")
+    text_runs(s, 1.38, by + 0.12, 11.20, 1.38, [
+        {"text": "Мост к безопасности: один MCP-сервер закрывает 2 угла "
+                 "Lethal Trifecta одним подключением — ",
+         "size": 12, "bold": True, "color": DEEP},
+        {"text": "доступ к данным и канал действия наружу; третий угол "
+                 "(недоверенный контент) прилетает через тот же сервер, "
+                 "когда агент читает чужой issue.\n", "size": 11.5,
+         "color": DEEP, "newpara": True, "space_before": 4},
+        {"text": "Задокументированный случай: инструкции prompt injection "
+                 "в публичных issues GitHub MCP server эксфильтровали "
+                 "данные через создаваемые PR.",
+         "size": 10.5, "italic": True, "color": SLATE, "newpara": True,
+         "space_before": 4},
+    ])
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "MCP только для чтения по умолчанию там, где запись не нужна; "
+        "доступ на запись — осознанное решение о безопасности, а не "
+        "настройка по умолчанию.",
+        size=13, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s20c")
+    notes_with_sources(s, "s20c")
+    return s
+
+
+# ============================================================
+# s20d — Git conventions as contract (commit / branch / PR cards)
+# ============================================================
+def s20d(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Git-конвенции — часть контракта с агентом: незаписанное агент не знает",
+        size=21, w=12.3, h=0.85)
+
+    # 3 cards: commit / branch / PR
+    cy = 1.55
+    ch = 2.52
+    cols = [
+        ("git-compare", "Commit",
+         "Conventional Commits", MID,
+         "<type>[scope]: <описание>. feat/fix обязательны по спеке. "
+         "fix→PATCH, feat→MINOR, BREAKING CHANGE→MAJOR. Атрибуция агенту — "
+         "отдельный футер Co-Authored-By."),
+        ("git-branch", "Branch", "Conventional Branch", TEAL,
+         "<type>/<описание>, строчные+дефисы. AI Agent Source Prefixes "
+         "(v1.1.0): ai/ · claude/ · codex/ · copilot/ · cursor/ — сигнал "
+         "ревьюеру до открытия диффа."),
+        ("git-pull-request", "PR", "Фиксированная структура", MID,
+         "Intent → Changed → Not changed → Validation → Risks → "
+         "Follow-ups. Каждый агентный PR — одинаковая форма "
+         "доказательства."),
+    ]
+    x0 = 0.55
+    total = 12.25
+    gap = 0.20
+    cw = (total - gap * 2) / 3
+    for i, (ic, tag, head, col, body) in enumerate(cols):
+        x = x0 + i * (cw + gap)
+        ocean_box(s, x, cy, cw, ch)
+        chip(s, x + 0.20, cy + 0.18, 1.15, 0.36, tag, fill=col, color=WHITE,
+             size=11)
+        icon(s, ic, x + cw - 0.66, cy + 0.16, 0.42, "mid" if col == MID else "teal")
+        text_box(s, x=x + 0.20, y=cy + 0.68, w=cw - 0.40, h=0.36,
+                 text=head, size=12.5, bold=True, color=DEEP)
+        text_box(s, x=x + 0.20, y=cy + 1.06, w=cw - 0.40, h=1.36,
+                 text=body, size=10, color=DEEP, line_spacing=1.14)
+
+    # scale callout: why this is not cosmetic
+    sy = cy + ch + 0.18
+    filled_rect(s, 0.55, sy, 12.25, 0.92, TEAL_TINT, stroke=TEAL, stroke_pt=1.5,
+                radius=True, radius_adj=0.08)
+    text_runs(s, 0.79, sy + 0.10, 11.75, 0.74, [
+        {"text": "Масштаб, не косметика. ", "size": 12, "bold": True,
+         "color": TEAL},
+        {"text": "Агент коммитит систематически и на порядок больше "
+                 "человека — структура превращает объём в актив "
+                 "(auto-changelog, auto-semver по типам коммитов), а не в "
+                 "шум.", "size": 11, "color": DEEP, "line_spacing": 1.14},
+    ])
+    text_box(s, x=0.55, y=sy + 1.02, w=12.25, h=0.40,
+             text="Честная граница: агент никогда не коммитит напрямую в общую "
+                  "ветку — каждая задача получает свою feature-ветку (то же "
+                  "правило, что курс предъявляет к людям).",
+             size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
+             line_spacing=1.08)
+
+    gold_callout(
+        s, 0.55, sy + 1.50, 12.25, 0.62,
+        "Конвенция, которая нигде не записана, не работает: агент должен "
+        "УВИДЕТЬ правило именования в AGENTS.md, прежде чем сможет следовать.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s20d")
+    notes_with_sources(s, "s20d")
+    return s
+
+
+# ============================================================
+# s20e — Task logging layer: 3 patterns matrix (schema_matrix)
+# ПРАВКА (issue #162, student-simulator QA 2026-09-19): 5-строчная матрица
+# не проходила 5-секундный тест (слишком плотно для visible-слоя). Сокращено
+# до 3 самых контрастных критериев (Solo vs команда / Длительность задачи /
+# Аудит-след) + компактная строка примеров (1 токен на колонку). Полная
+# 5-строчная таблица остаётся в главе §3.3e и в speaker notes (не тронуты).
+# ============================================================
+def s20e(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Три паттерна логирования задач — выбор составной, не единственно верный",
+        size=21, w=12.3, h=0.82)
+
+    cols = [
+        ("file-stack", "(а) Папка + файлы", MID),
+        ("list-ordered", "(б) Единый лог", MID),
+        ("clipboard-list", "(в) Плоская папка", MID),
+    ]
+    rows = [
+        ("Solo vs команда",
+         ["Solo/малая — не конфликтует, плодит директории",
+          "Команда — общая хронология, частые git-конфликты",
+          "Команда среднего размера — конфликтов меньше, чем (б)"]),
+        ("Длительность задачи",
+         ["Долгоживущая, сложная",
+          "Короткие, частые",
+          "«1 окно контекста = 1 PR» (Backlog.md)"]),
+        ("Аудит-след",
+         ["Детальный — промежуточные шаги мышления",
+          "Хронологический — «что и когда»",
+          "Частичный — итог + структурированные поля"]),
+    ]
+    examples = ["notes/research/*.md", "notes/decisions.md", "Backlog.md"]
+    x0 = 0.55
+    total = 12.25
+    gap = 0.16
+    cw = (total - gap * 2) / 3
+    top = 1.46
+    hh = 0.62
+    for i, (ic, name, col) in enumerate(cols):
+        x = x0 + i * (cw + gap)
+        filled_rect(s, x, top, cw, hh, col, radius=True, radius_adj=0.12)
+        icon(s, ic, x + 0.14, top + 0.10, 0.42, "white")
+        text_box(s, x=x + 0.64, y=top + 0.06, w=cw - 0.74, h=hh - 0.10,
+                 text=name, size=11.5, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.98)
+    # only 3 criterion rows now — bigger, easier to scan in 5 sec;
+    # font bumped to Schema Readability Checklist minimums (label ≥12pt,
+    # cell content ≥14pt) on 2nd visual-loop iteration.
+    row_h = [1.00, 0.80, 0.96]
+    ry = top + hh + 0.10
+    for r, (label, cells) in enumerate(rows):
+        rh = row_h[r]
+        for i in range(3):
+            x = x0 + i * (cw + gap)
+            fill = SURFACE if r % 2 == 0 else WHITE
+            filled_rect(s, x, ry, cw, rh, fill, stroke=SOFT_GREY, stroke_pt=1.0,
+                        radius=True, radius_adj=0.06)
+            if i == 0:
+                text_box(s, x=x + 0.14, y=ry + 0.05, w=cw - 0.28, h=0.24,
+                         text=label.upper(), size=12, bold=True, color=LIGHT)
+                tb_y = ry + 0.32
+                tb_h = rh - 0.38
+            else:
+                tb_y = ry + 0.08
+                tb_h = rh - 0.16
+            text_box(s, x=x + 0.14, y=tb_y, w=cw - 0.28, h=tb_h,
+                     text=cells[i], size=14, color=DEEP, line_spacing=1.06)
+        ry += rh + 0.07
+
+    # compact example line — one token per column, not a full sentence
+    ey = ry + 0.02
+    text_runs(s, x0, ey, total, 0.34, [
+        {"text": "Пример:  ", "size": 12, "bold": True, "color": SLATE},
+        {"text": examples[0], "size": 12, "italic": True, "color": MID,
+         "font": "DejaVu Sans Mono"},
+        {"text": "   ·   ", "size": 12, "color": SLATE},
+        {"text": examples[1], "size": 12, "italic": True, "color": TEAL,
+         "font": "DejaVu Sans Mono"},
+        {"text": "   ·   ", "size": 12, "color": SLATE},
+        {"text": examples[2], "size": 12, "italic": True, "color": MID,
+         "font": "DejaVu Sans Mono"},
+    ])
+    ry = ey + 0.34
+
+    # NOT-a-file-pattern contrast row
+    ny = ry + 0.06
+    filled_rect(s, x0, ny, total, 0.58, SOFT_GREY, stroke=SLATE, stroke_pt=0.75,
+                radius=True, radius_adj=0.10)
+    text_runs(s, x0 + 0.18, ny + 0.05, total - 0.36, 0.48, [
+        {"text": "НЕ файловый паттерн (контраст): ", "size": 10.5, "bold": True,
+         "color": SLATE},
+        {"text": "TodoWrite/Task* — session-scoped, не персистентный "
+                 "аудит-след · git-commit-история как единственный лог — "
+                 "валидный, но неформализованный четвёртый паттерн.",
+         "size": 10, "italic": True, "color": SLATE, "line_spacing": 1.06},
+    ])
+
+    gold_callout(
+        s, 0.55, ny + 0.68, 12.25, 0.58,
+        "Критерий составной: кто работает + как долго живёт задача + зачем "
+        "аудит-след — не выбор по умолчанию.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s20e")
+    notes_with_sources(s, "s20e")
+    return s
+
+
+# ============================================================
 # s20 — 70% problem (curve + 3 numbers) [in-bucket]
 # ============================================================
 def s20(p):

@@ -356,6 +356,13 @@ def speaker_notes(slide, text):
 def load_notes(slide_id):
     files = list(SLIDES_DIR.glob(f"{slide_id}-*.md"))
     if not files:
+        # fallback: exact "{sid}.md" — the task slides carry no dash suffix, and
+        # without this they render with empty speaker notes (same fix as RU
+        # build_v3.py; the site publishes these notes as the commentary).
+        exact = SLIDES_DIR / f"{slide_id}.md"
+        if exact.exists():
+            files = [exact]
+    if not files:
         return ""
     md = files[0].read_text(encoding="utf-8")
     m = re.search(r'## Speaker notes\s*\n(.*?)(?=\n## |\n---\s*\n## |\Z)',
@@ -3277,6 +3284,1197 @@ def build_s31(p):
 # ============================================================
 # Main
 # ============================================================
+
+# ---- ported for v6.4 parity (#204), group A ----
+def build_s_fmt(p):
+    """NEW (§1.9) — prompt formats Markdown/XML/JSON: input vs output — different
+    problems. Meme-forward (Two Buttons — the output-format dilemma). Left is a
+    compact format→task matrix, right is the meme + reasoning-tax anchor."""
+    s = blank(p)
+    slide_title(s, "Prompt format: the input forgives, the output pays.", size=26)
+    text_box(s, 0.55, 1.16, 12.25, 0.44,
+             "Tolerance to INPUT format and the cost of forcing OUTPUT format are two different problems. They are constantly conflated.",
+             size=13.5, italic=True, color=MID, line_spacing=1.14)
+    # LEFT — compact format→task matrix (4 rows, minimum text)
+    lx, ly, lw = 0.55, 1.82, 7.05
+    rows = [
+        ("code", "Markdown", "simple requests, instructions", "GPT/Gemini · input is forgiving", MID),
+        ("braces", "XML tags", "long context, many blocks", "Claude · to separate blocks", LIGHT),
+        ("database", "JSON + schema", "extraction, classification, code", "constrained decoding → ~100%", TEAL),
+        ("triangle-alert", "JSON on reasoning", "don't apply to “think and decide”", "reasoning tax", GOLD),
+    ]
+    rh, rgap = 0.86, 0.14
+    ry = ly
+    for ic, fmt, task, note, col in rows:
+        isgold = (col == GOLD)
+        if isgold:
+            ocean_box(s, lx, ry, lw, rh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, lx, ry, lw, rh)
+        filled_rect(s, lx + 0.20, ry + 0.19, 0.50, rh - 0.38, col, radius=True,
+                    radius_adj=0.22)
+        icon(s, ic, lx + 0.28, ry + rh / 2 - 0.17, 0.34, "white" if not isgold else "white")
+        text_box(s, lx + 0.86, ry + 0.10, 2.35, 0.66, fmt,
+                 size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+        text_box(s, lx + 3.05, ry + 0.09, lw - 3.25, 0.36, task,
+                 size=12, color=DEEP, line_spacing=1.02)
+        text_box(s, lx + 3.05, ry + 0.47, lw - 3.25, 0.34, note,
+                 size=11.5, italic=True, color=(DEEP if isgold else SLATE))
+        ry += rh + rgap
+    # RIGHT — Two Buttons meme (output-format dilemma) + reasoning-tax anchor
+    mx, my, mw = 7.95, 1.82, 3.10
+    mh = mw * (908 / 600)
+    if mh > 3.55:
+        mh = 3.55
+        mw = mh * (600 / 908)
+    mx = 7.95 + (4.85 - mw) / 2
+    ocean_box(s, 7.90, 1.78, 4.95, 3.66)
+    add_image(s, WEB / "s-fmt-twobuttons-en.png", mx, 1.92, mw, mh)
+    gold_callout(s, 0.55, 5.72, 12.25, 1.06,
+                 "Don't force the OUTPUT's structure on reasoning tasks: GSM8K drops 76.6% → 49.3% (same model, only the JSON requirement changes). The mitigation is a two-step “reason freely first, then reformat” (+6.8 pp).",
+                 size=14)
+    speaker_notes(s, load_notes("s-fmt"))
+
+
+def _task_scaffold(s, *, kicker, title, meme_path, meme_ar, statement,
+                   arch_icon, arch_label, arch_body, caveat, lead_in=None,
+                   params=None, valid=None):
+    """Shared layout for task patterns (owner #3 — make it more formal): kicker +
+    assertion at the top; left a meme (carries the judgment thesis), right
+    setup → method/architecture → (parameters · validation) → typical failure.
+    lead_in (only on the 1st task) goes on its own line above the kicker."""
+    ky = 0.40
+    if lead_in:
+        text_box(s, 0.55, 0.34, 12.25, 0.32, lead_in, size=13, italic=True,
+                 color=MID)
+        ky = 0.74
+    text_box(s, 0.55, ky, 12.25, 0.34, kicker, size=13, bold=True, color=TEAL)
+    text_box(s, 0.55, ky + 0.38, 12.25, 0.82, title, size=24, bold=True,
+             color=DEEP, line_spacing=1.06)
+    # LEFT — meme (carries the thesis), ≈45% of the width
+    mx0, my0, mw0 = 0.55, 1.98, 5.55
+    mh0 = 4.24
+    ocean_box(s, mx0, my0, mw0, mh0)
+    iw = mw0 - 0.48
+    ih = iw / meme_ar
+    if ih > mh0 - 0.48:
+        ih = mh0 - 0.48
+        iw = ih * meme_ar
+    ix = mx0 + (mw0 - iw) / 2
+    iy = my0 + (mh0 - ih) / 2
+    add_image(s, meme_path, ix, iy, iw, ih)
+    # RIGHT — setup → method → (parameters · validation) → failure
+    rx, rw = 6.45, 6.35
+    # setup
+    ph = 0.90
+    ocean_box(s, rx, my0, rw, ph)
+    text_box(s, rx + 0.26, my0 + 0.09, rw - 0.52, 0.26, "Setup",
+             size=12, bold=True, color=LIGHT)
+    text_box(s, rx + 0.26, my0 + 0.36, rw - 0.52, 0.50, statement,
+             size=12, color=DEEP, line_spacing=1.06)
+    # method / architecture
+    ay = my0 + ph + 0.12
+    ah = 1.24
+    ocean_box(s, rx, ay, rw, ah, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, arch_icon, rx + 0.26, ay + 0.15, 0.36, "teal")
+    text_box(s, rx + 0.74, ay + 0.13, rw - 1.0, 0.38, arch_label,
+             size=13, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.0)
+    text_box(s, rx + 0.26, ay + 0.54, rw - 0.52, ah - 0.62, arch_body,
+             size=11, color=DEEP, line_spacing=1.06)
+    # parameters · validation (owner #3 — a formal recipe)
+    py = ay + ah + 0.12
+    pvh = 1.02
+    ocean_box(s, rx, py, rw, pvh)
+    if params:
+        text_runs(s, rx + 0.24, py + 0.09, rw - 0.48, 0.44, [
+            {"text": "Parameters: ", "size": 10.5, "bold": True, "color": MID},
+            {"text": params, "size": 10.5, "color": DEEP},
+        ], line_spacing=1.02)
+    if valid:
+        text_runs(s, rx + 0.24, py + 0.54, rw - 0.48, 0.44, [
+            {"text": "Validation: ", "size": 10.5, "bold": True, "color": MID},
+            {"text": valid, "size": 10.5, "color": DEEP},
+        ], line_spacing=1.02)
+    # typical failure / boundary — gold
+    gy = py + pvh + 0.12
+    gold_callout(s, rx, gy, rw, my0 + mh0 - gy,
+                 caveat, size=11.5)
+
+
+def build_s_task_assistant(p):
+    """NEW (§1.10 class 1) — an assistant with tools: one-shot → tool-use →
+    agent. The failure — jumping straight to an agent. Meme: One Does Not Simply."""
+    s = blank(p)
+    _task_scaffold(
+        s,
+        lead_in="What this looks like on real tasks — task patterns at the prompt level.",
+        kicker="TASK PATTERN · 1 · edge case",
+        title="An assistant with tools: climb the mini-ladder.",
+        meme_path=WEB / "s-task-assistant-simply-en.png",
+        meme_ar=568 / 335,
+        statement="The user isn't asking for “text” — they're asking you to “do something”: look something up in an external system and/or take an action.",
+        arch_icon="route",
+        arch_label="One-shot → tool-use → agent",
+        arch_body="Knows the answer, no action needed → a single call. Access is needed, steps are known → a tool call in code. Steps are unknown, there's a way to check progress → a ReAct loop.",
+        params="tool granularity, tool_choice, an iteration limit and token budget, strict input schemas.",
+        valid="check the call's arguments BEFORE hitting the system; the answer relies on tool results, not on memory.",
+        caveat="Typical failure: jumping straight to an agent where a single call would have been enough — the same $4,200 loop (Section 4), where a predictable sync job was handed to an agent instead of a retry script.",
+    )
+    footer(s, "Climb the mini-ladder only when the task requires it — not because “an agent sounds more powerful.”")
+    speaker_notes(s, load_notes("s-task-assistant"))
+
+
+def build_s_task_tone(p):
+    """NEW (§1.10 class 2) — text in a given tone / “like a human”: few-shot
+    style. The boundary — detectors <80%, +30% false positives on non-native
+    writers. Meme: Fry."""
+    s = blank(p)
+    _task_scaffold(
+        s,
+        kicker="TASK PATTERN · 2 · prompt level",
+        title="Text in a given tone: few-shot from samples.",
+        meme_path=WEB / "s-task-tone-fry-en.png",
+        meme_ar=552 / 414,
+        statement="You need text in a specific voice, style, or register: a brand-voice email, a support reply, a draft that reads “like a human wrote it.”",
+        arch_icon="message-circle",
+        arch_label="Persona prompt + few-shot style",
+        arch_body="A persona role (tone, not facts) + a short style guide + 3–5 samples of the manner as examples → generation in the same style.",
+        params="formality, emotional coloring, persona, number and quality of samples, explicit prohibitions (no bureaucratic phrasing / no emoji).",
+        valid="style is weakly formalizable → an LLM judge on tone + checks against markers (phrase length, vocabulary) + spot-check human review.",
+        caveat="Judgment failure: detectors can't be trusted as evidence — some give accuracy below 80%, non-native writers' texts get flagged as AI up to +30% more often.",
+    )
+    footer(s, "A detector can't be trusted either as a “shield” (prove it's AI) or as a “sword” (reliably hide that it's AI).")
+    speaker_notes(s, load_notes("s-task-tone"))
+
+
+# NB: build_s_task_research was removed from §1 (owner #2) — deep research is
+# a RAG+agent task; it was RELOCATED to §2 as build_s_rag_research (RAG case E).
+
+
+def build_s_task_extract(p):
+    """NEW FORMAL (§1.10 class 4, owner #3) — extraction into JSON as a
+    TECHNIQUE, no meme. Shows HOW to give a JSON spec in a prompt: two levels
+    of control → three ways to specify a schema → GOOD-vs-BAD → nuances
+    (reasoning tax, degradation on a complex schema, “valid JSON ≠ correct
+    data”). Formal how-to → no meme (§5.10 formal-vs-meme)."""
+    s = blank(p)
+    text_box(s, 0.55, 0.34, 12.25, 0.30, "TASK PATTERN · 3 · extraction / classification",
+             size=12.5, bold=True, color=TEAL)
+    slide_title(s, "How to specify a JSON spec in a prompt correctly.",
+             y=0.66, h=0.62, size=25)
+    text_box(s, 0.55, 1.30, 12.25, 0.34,
+             "“Asking for JSON” ≠ “specifying a contract”. There are two levels of control with different guarantees, and three ways to describe a schema.",
+             size=13, italic=True, color=MID, line_spacing=1.10)
+    # ── LEFT: two levels of control + three ways to specify a schema ──
+    lx, lw = 0.55, 5.95
+    # two levels of control
+    ly = 1.78
+    ocean_box(s, lx, ly, lw, 1.58)
+    text_box(s, lx + 0.22, ly + 0.11, lw - 0.44, 0.28, "Two levels of control",
+             size=13, bold=True, color=DEEP)
+    text_runs(s, lx + 0.22, ly + 0.44, lw - 0.44, 0.44, [
+        {"text": "Prompt level ", "size": 11.5, "bold": True, "color": MID},
+        {"text": "(“return JSON matching this schema”) — ", "size": 11.5, "color": DEEP},
+        {"text": "≈80% validity", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": ", guarantees nothing strictly.", "size": 11.5, "color": DEEP},
+    ], line_spacing=1.08)
+    text_runs(s, lx + 0.22, ly + 0.90, lw - 0.44, 0.60, [
+        {"text": "Decoder ", "size": 11.5, "bold": True, "color": TEAL},
+        {"text": "(structured outputs / constrained decoding) — schema → grammar, disallowed tokens get masked → ", "size": 11.5, "color": DEEP},
+        {"text": "~100% schema compliance.", "size": 11.5, "bold": True, "color": DEEP},
+    ], line_spacing=1.08)
+    # three ways to specify a schema
+    sy = ly + 1.72
+    ocean_box(s, lx, sy, lw, 2.10, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, lx + 0.22, sy + 0.11, lw - 0.44, 0.28, "Three ways to describe the shape",
+             size=13, bold=True, color=TEAL)
+    ways = [
+        ("Example object", "clear to the model; does NOT express types/enums — flat structures, a prototype"),
+        ("JSON Schema", "types, enums, required, nesting; goes straight into the API, but verbose + degrades on complex ones"),
+        ("A code type (TS / Pydantic)", "compact + type-safe; needs a converter to JSON Schema"),
+    ]
+    wy = sy + 0.46
+    for nm, body in ways:
+        circle(s, lx + 0.24, wy + 0.05, 0.14, TEAL)
+        text_box(s, lx + 0.50, wy - 0.02, lw - 0.72, 0.24, nm,
+                 size=11.5, bold=True, color=DEEP)
+        text_box(s, lx + 0.50, wy + 0.21, lw - 0.72, 0.30, body,
+                 size=10.5, color=DEEP, line_spacing=1.02)
+        wy += 0.55
+    # ── RIGHT: compact GOOD-vs-BAD example ──
+    rx, rw = 6.72, 6.08
+    ry = 1.78
+    # BAD
+    bh = 0.98
+    ocean_box(s, rx, ry, rw, bh)
+    text_box(s, rx + 0.20, ry + 0.09, 1.8, 0.26, "BAD", size=12, bold=True, color=SLATE)
+    text_box(s, rx + 0.20, ry + 0.37, rw - 0.40, 0.54,
+             "“Extract the data and return JSON” — no schema, field names, types, or enums; the model wraps it in markdown and invents fields.",
+             size=10.5, color=DEEP, line_spacing=1.06)
+    # GOOD
+    gy = ry + bh + 0.14
+    gh = 1.78
+    ocean_box(s, rx, gy, rw, gh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, rx + 0.20, gy + 0.09, 1.8, 0.26, "GOOD", size=12, bold=True, color=DEEP)
+    text_box(s, rx + 0.20, gy + 0.35, rw - 0.40, gh - 0.44,
+             '"rating": number   // 1-5, fractional; null if none\n'
+             '"sentiment": string // one of [positive,neutral,negative]\n'
+             '"pros": string[]   // [] if none\n'
+             '+ few-shot “input → expected JSON”, schema AT THE END,\n'
+             '“Return ONLY JSON, no markdown.”',
+             size=10.5, color=DEEP, font=FONT_MONO, line_spacing=1.14)
+    # nuances — 2 tiles
+    ny = gy + gh + 0.14
+    nw = (rw - 0.16) / 2
+    nuances = [
+        ("Reasoning tax", "don't reason inside JSON: “first think freely → then reformat” as a separate step"),
+        ("Complex schema ↓", "extraction accuracy ~87%→70%→56%: split it up, keep nesting shallow"),
+    ]
+    nx = rx
+    for nm, body in nuances:
+        ocean_box(s, nx, ny, nw, 0.86, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.5)
+        text_box(s, nx + 0.16, ny + 0.09, nw - 0.32, 0.26, nm,
+                 size=11, bold=True, color=TEAL)
+        text_box(s, nx + 0.16, ny + 0.35, nw - 0.32, 0.46, body,
+                 size=10, color=DEEP, line_spacing=1.04)
+        nx += nw + 0.16
+    # gold invariant at the bottom
+    gold_callout(s, 0.55, 6.42, 12.25, 0.68,
+                 "Valid JSON ≠ correct data: the grammar guarantees the shape, not the truth of the values — every JSON payload still gets validated in code. A strict schema reliably helps with extraction / classification / function calling; on “think it through and decide” — it's a reasoning tax.",
+                 size=12.5)
+    speaker_notes(s, load_notes("s-task-extract"))
+
+
+# ---- ported for v6.4 parity (#204), group B1 ----
+def build_s_rag_hybrid(p):
+    """schema — "hybrid" unpacked into 3 senses (owner #5) on top of a recap
+    sparse↔dense; then RRF fusion + reranker (mechanics preserved) and gains
+    WITH A BASELINE. Not a meme. Schema §5.5."""
+    s = blank(p)
+    slide_title(s, "\"Hybrid\" — three different senses on common ground.", y=0.40, h=0.60, size=25)
+    # ── recap sparse ↔ dense (grounds "hybrid of what with what") ──
+    rcy = 1.02
+    hw = (12.25 - 0.20) / 2
+    ocean_box(s, 0.55, rcy, hw, 1.14)
+    text_runs(s, 0.75, rcy + 0.10, hw - 0.36, 0.96, [
+        {"text": "Sparse = classical lexical search: ", "size": 11.5, "bold": True, "color": MID},
+        {"text": "BM25 / TF-IDF (plus learned-sparse SPLADE / ELSER) on an inverted index; the unit is the word. A \"sparse vector\" is just a way of writing word-level search (as long as the whole vocabulary, almost all zeros); it is NOT searching by the meaning of a vector.", "size": 11.5, "color": DEEP},
+    ], line_spacing=1.02)
+    ocean_box(s, 0.75 + hw, rcy, hw, 1.14, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.75)
+    text_runs(s, 0.95 + hw, rcy + 0.10, hw - 0.36, 0.96, [
+        {"text": "Dense = semantic embedding (≠ sparse): ", "size": 11.5, "bold": True, "color": TEAL},
+        {"text": "384–1024 float values, ANN index, not interpretable, catches meaning and paraphrase.", "size": 11.5, "color": DEEP},
+    ], line_spacing=1.02)
+    # ── 3 senses of "hybrid" ──
+    ty = 2.24
+    senses = [
+        ("(a) lexical + semantic", "sparse (lexical, BM25) + dense (semantic, embedding), merged by rank (RRF) — the basic sense of the word \"hybrid\"", MID),
+        ("(b) semantic + filters", "semantics + strict metadata filtering (jurisdiction, date) — an orthogonal lever", TEAL),
+        ("(c) two lexical branches", "BM25 + SPLADE/ELSER — both sparse (classical + neural-weighted), no semantic dense vectors here", LIGHT),
+    ]
+    sw = (12.25 - 0.24 * 2) / 3
+    sx = 0.55
+    for nm, body, col in senses:
+        ocean_box(s, sx, ty, sw, 1.00)
+        filled_rect(s, sx + 0.16, ty + 0.14, 0.10, 0.72, col, radius=True, radius_adj=0.4)
+        text_box(s, sx + 0.36, ty + 0.11, sw - 0.52, 0.30, nm,
+                 size=11.5, bold=True, color=DEEP)
+        text_box(s, sx + 0.36, ty + 0.41, sw - 0.52, 0.56, body,
+                 size=10.5, color=DEEP, line_spacing=1.03)
+        sx += sw + 0.24
+    # ── mechanics of sense (a): RRF fusion + reranker (preserved) ──
+    py = 3.36
+    mw = (12.25 - 0.20) / 2
+    ocean_box(s, 0.55, py, mw, 1.02)
+    icon(s, "git-merge", 0.78, py + 0.16, 0.38, "mid")
+    text_box(s, 1.28, py + 0.14, mw - 1.0, 0.32, "RRF fusion", size=14, bold=True, color=DEEP)
+    text_box(s, 0.78, py + 0.52, mw - 0.46, 0.46,
+             "score = Σ 1 / (k + rank), k ≈ 60 — merges two rank lists with no common score scale.",
+             size=11, color=DEEP, line_spacing=1.04, font=FONT_MONO)
+    ocean_box(s, 0.75 + mw, py, mw, 1.02, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    icon(s, "check-check", 0.98 + mw, py + 0.16, 0.38, "gold")
+    text_box(s, 1.48 + mw, py + 0.14, mw - 1.0, 0.32, "Reranker (cross-encoder)", size=14, bold=True, color=DEEP)
+    text_box(s, 0.98 + mw, py + 0.52, mw - 0.46, 0.46,
+             "bi-encoder encodes separately (fast); cross-encoder runs the pair together (more accurate, expensive) — only on the top-50…100.",
+             size=11, color=DEEP, line_spacing=1.04)
+    # ── gains WITH A BASELINE (compact row) ──
+    dy = 4.46
+    deltas = [
+        ("WANDS · NDCG", "0.7497", "vs BM25 0.6983 / vector 0.6953 → ~7.4% (modest)"),
+        ("Financial text+tables · Recall@5", "0.816", "vs dense-only 0.587 (+0.229)"),
+        ("Anthropic · miss rate", "5.7→1.9%", "+context+BM25 → 2.9%; +rerank → 1.9% (−67%)"),
+    ]
+    dw = (12.25 - 0.24 * 2) / 3
+    dx = 0.55
+    for label, num, base in deltas:
+        ocean_box(s, dx, dy, dw, 1.10)
+        text_box(s, dx + 0.18, dy + 0.11, dw - 0.36, 0.28, label,
+                 size=10.5, bold=True, color=MID, line_spacing=1.0)
+        text_box(s, dx + 0.18, dy + 0.37, dw - 0.36, 0.36, num,
+                 size=19, bold=True, color=GOLD)
+        text_box(s, dx + 0.18, dy + 0.75, dw - 0.36, 0.30, base,
+                 size=9.5, color=DEEP, line_spacing=1.02)
+        dx += dw + 0.24
+    gold_callout(s, 0.55, 5.72, 12.25, 0.90,
+                 "The hybrid's payoff depends on the corpus: the large gains show up where lexical OR semantic matching breaks down on its own (jargon, tables, cross-references). On clean prose the gap is small — measure on your own queries first, then add complexity.",
+                 size=12.5)
+    speaker_notes(s, load_notes("s-rag-hybrid"))
+
+
+def build_s_rag_stack(p):
+    """schema_matrix — vector databases + frameworks. An engine table "take when" +
+    ceiling, below — frameworks (LlamaIndex/LangGraph) and the rule "no framework
+    needed for simple RAG". Comparison matrix (not a meme). Schema §5.5 Matrix."""
+    s = blank(p)
+    slide_title(s, "Where vectors live: two categories of engines.", y=0.40, h=0.58, size=25)
+    text_runs(s, 0.55, 1.02, 12.25, 0.52, [
+        {"text": "Elastic and OpenSearch are also full-fledged vector stores", "size": 12.5, "bold": True, "color": DEEP},
+        {"text": " (dense_vector + HNSW / k-NN plugin): it's more honest to place them on the axis ", "size": 12.5, "color": DEEP},
+        {"text": "\"a search engine that also does vectors\"", "size": 12.5, "bold": True, "color": TEAL},
+        {"text": " vs vector-native (Qdrant / Milvus / Weaviate). Both are vector databases; origin is what tells them apart. Ceilings keep moving — check on the day of the lecture.", "size": 12.5, "color": DEEP},
+    ], line_spacing=1.08)
+    # ── engine matrix: 6 rows × [engine | take when | ceiling] ──
+    hx, hy, hw = 0.55, 1.80, 12.25
+    col_a, col_b, col_c = 2.85, 6.10, hw - 2.85 - 6.10
+    # header
+    filled_rect(s, hx, hy, hw, 0.40, MID, radius=True, radius_adj=0.10)
+    text_box(s, hx + 0.20, hy + 0.07, col_a - 0.30, 0.28, "Engine",
+             size=12, bold=True, color=WHITE)
+    text_box(s, hx + col_a + 0.10, hy + 0.07, col_b - 0.20, 0.28, "Take when",
+             size=12, bold=True, color=WHITE)
+    text_box(s, hx + col_a + col_b + 0.10, hy + 0.07, col_c - 0.20, 0.28, "Ceiling, roughly",
+             size=12, bold=True, color=WHITE)
+    rows = [
+        ("database", "pgvector", "you already have Postgres, need one system and transactions", "~50M vectors; degrades past ~50–100M", MID),
+        ("target", "Elastic / OpenSearch", "search-engine-first: you already run a cluster, need a native BM25+kNN hybrid", "millions–tens of millions; ELSER without GPU", TEAL),
+        ("boxes", "Qdrant", "vector-native without a big platform, sparse + multi-vector", "large node + cluster", LIGHT),
+        ("layers", "Weaviate", "vector-native with a built-in hybrid (vector+BM25+filters)", "medium-large", LIGHT),
+        ("package", "Milvus", "vector-native: 100M+ / billions, heavy horizontal scaling", "billions (needs operations)", LIGHT),
+        ("git-branch", "FAISS · Chroma · LanceDB", "FAISS is a library (storage is on you); Chroma/LanceDB — prototype/edge", "from prototype to embedded", LIGHT),
+    ]
+    ry = hy + 0.40
+    rh = 0.62
+    for i, (ic, name, when, ceil, col) in enumerate(rows):
+        bg = SURFACE if i % 2 == 0 else WHITE
+        filled_rect(s, hx, ry, hw, rh, bg, stroke=SOFT_GREY, stroke_pt=0.75)
+        filled_rect(s, hx + 0.14, ry + 0.16, 0.42, rh - 0.32, col, radius=True, radius_adj=0.22)
+        icon(s, ic, hx + 0.20, ry + rh / 2 - 0.15, 0.30, "white")
+        text_box(s, hx + 0.68, ry + 0.10, col_a - 0.72, rh - 0.16, name,
+                 size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+        text_box(s, hx + col_a + 0.10, ry + 0.08, col_b - 0.24, rh - 0.14, when,
+                 size=11.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+        text_box(s, hx + col_a + col_b + 0.10, ry + 0.08, col_c - 0.24, rh - 0.14, ceil,
+                 size=11, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.06)
+        ry += rh
+    # ── frameworks: LlamaIndex + LangGraph + the "no framework needed" rule ──
+    oy = ry + 0.12
+    obh = 0.86
+    ow_box = (12.25 - 0.24) / 2
+    ocean_box(s, hx, oy, ow_box, obh, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_box(s, hx + 0.22, oy + 0.09, ow_box - 0.44, 0.28, "Frameworks complement, don't compete",
+             size=12, bold=True, color=TEAL)
+    text_box(s, hx + 0.22, oy + 0.38, ow_box - 0.44, 0.46,
+             "LlamaIndex — ingestion + retrieval over messy documents; LangGraph — orchestration (checkpointing, human-in-the-loop).",
+             size=11, color=DEEP, line_spacing=1.06)
+    gx = hx + ow_box + 0.24
+    gold_callout(s, gx, oy, ow_box, obh,
+                 "For a simple RAG endpoint (retrieve → generate) no framework is needed: a few hundred lines of your own glue code beat frequent version churn. A framework gets added for agentic complexity, not by default.",
+                 size=11)
+    speaker_notes(s, load_notes("s-rag-stack"))
+
+
+def build_s_rag_elastic(p):
+    """meme_forward — "do I even need a dedicated vector database". Left, a meme
+    (Woman Yelling at Cat — carries the judgment thesis), right — a 3-tier
+    decision boundary + Elastic vs OpenSearch. Anti-hype."""
+    s = blank(p)
+    slide_title(s, "What to choose for your situation.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "A choice made in the open — for your scale and your requirements. Three tiers from the bottom up; you move up to the next one only when the previous one isn't enough for the actual workload.",
+             size=13, italic=True, color=MID, line_spacing=1.12)
+    # LEFT — meme (carries the judgment thesis), ≈43% of the width
+    mx0, my0, mw0 = 0.55, 1.78, 5.30
+    mh0 = 3.68
+    ocean_box(s, mx0, my0, mw0, mh0)
+    ar = 680 / 438
+    iw = mw0 - 0.44
+    ih = iw / ar
+    if ih > mh0 - 0.44:
+        ih = mh0 - 0.44
+        iw = ih * ar
+    ix = mx0 + (mw0 - iw) / 2
+    iy = my0 + (mh0 - ih) / 2
+    add_image(s, WEB / "s-rag-elastic-cat-en.png", ix, iy, iw, ih)
+    # RIGHT — 3-tier decision boundary
+    rx, rw = 6.20, 6.60
+    tiers = [
+        ("1", "Plain BM25 is enough", "shared vocabulary, code/logs/IDs, curated knowledge bases; reindexing is cheap and observable — no vectors or vector store needed", MID),
+        ("2", "A search engine with vectors is enough", "need meaning on top of lexical matching at a scale of millions–tens of millions; Elastic/OpenSearch give a hybrid and ELSER without a GPU embedding service", TEAL),
+        ("3", "Need a dedicated vector database", "100M+ / multi-vector / a latency SLA on the hot path / decoupling the vector store from operating a logging cluster", DEEP),
+    ]
+    ty = 1.78
+    th = 1.14
+    for num, title, body, col in tiers:
+        isgold = (num == "3")
+        if isgold:
+            ocean_box(s, rx, ty, rw, th, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, rx, ty, rw, th)
+        circle(s, rx + 0.22, ty + th / 2 - 0.23, 0.46, col)
+        text_box(s, rx + 0.22, ty + th / 2 - 0.23, 0.46, 0.46, num,
+                 size=18, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, rx + 0.82, ty + 0.13, rw - 1.02, 0.34, title,
+                 size=13.5, bold=True, color=(DEEP if not isgold else DEEP))
+        text_box(s, rx + 0.82, ty + 0.48, rw - 1.02, th - 0.56, body,
+                 size=11.5, color=DEEP, line_spacing=1.10)
+        ty += th + 0.12
+    gold_callout(s, 0.55, 5.72, 12.25, 0.92,
+                 "A huge share of RAG systems never exceed a few million chunks — at that scale, pgvector or the Elastic/OpenSearch hybrid is the boring right answer, and a dedicated vector database is often a premature optimization.",
+                 size=13)
+    speaker_notes(s, load_notes("s-rag-elastic"))
+
+
+# ---- ported for v6.4 parity (#204), group B2 ----
+def build_s_rag_chunk1(p):
+    """schema_matrix — chunking strategies from simple to complex: what and when.
+    Matrix diagram (not a meme). Schema §5.5 Matrix/Grid."""
+    s = blank(p)
+    slide_title(s, "Chunking: how you cut is what you can find.", size=25)
+    text_box(s, 0.55, 1.14, 12.25, 0.42,
+             "Of the three RAG steps, chunking is the most underrated, and its leverage is high. Strategies go from simple to complex; add complexity only when the corpus demands it.",
+             size=13.5, italic=True, color=MID, line_spacing=1.12)
+    # 6 tiles in a 3×2 grid + a 7th (Contextual) as a gold band
+    cards = [
+        ("scale", "Fixed-size", "cut every N tokens — crude, but a strong baseline", MID),
+        ("git-fork", "Recursive / character", "by a hierarchy of separators (paragraph→sentence) — the pragmatic default", TEAL),
+        ("layers", "Sentence-window", "embed the sentence, return a window of neighbors for context", LIGHT),
+        ("git-merge", "Semantic", "boundary at a topic shift — intuitive, but often doesn't pay off", LIGHT),
+        ("boxes", "Parent-document", "small chunks for precision, a larger parent for generation", MID),
+        ("brain-circuit", "Late chunking", "embed the whole document, then pool — the chunk stays context-aware", LIGHT),
+    ]
+    cw = (12.25 - 0.22 * 2) / 3
+    chh = 1.42
+    x0, y0 = 0.55, 1.70
+    for i, (ic, name, body, col) in enumerate(cards):
+        r, c = divmod(i, 3)
+        x = x0 + c * (cw + 0.22)
+        y = y0 + r * (chh + 0.18)
+        ocean_box(s, x, y, cw, chh)
+        icon(s, ic, x + 0.20, y + 0.18, 0.38, "mid")
+        text_box(s, x + 0.70, y + 0.16, cw - 0.86, 0.42, name,
+                 size=13.5, bold=True, color=col, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.0)
+        text_box(s, x + 0.22, y + 0.66, cw - 0.44, chh - 0.76, body,
+                 size=11, color=DEEP, line_spacing=1.10)
+    # 7th: Contextual Retrieval — gold band
+    gy = y0 + 2 * (chh + 0.18)
+    filled_rect(s, 0.55, gy, 12.25, 0.92, GOLD_TINT, stroke=GOLD, stroke_pt=1.75,
+                radius=True, radius_adj=0.08)
+    icon(s, "file-text", 0.78, gy + 0.24, 0.44, "gold")
+    text_box(s, 1.36, gy + 0.13, 3.6, 0.34, "Contextual Retrieval",
+             size=13.5, bold=True, color=DEEP)
+    text_box(s, 1.36, gy + 0.47, 11.2, 0.40,
+             "The LLM prepends 50–100 tokens of document-level context to each chunk before embedding and BM25 (see the miss cascade 5.7% → 1.9%).",
+             size=11.5, color=DEEP, line_spacing=1.08)
+    gold_callout(s, 0.55, gy + 1.06, 12.25, 0.74,
+                 "Neither chunk size nor strategy has a single correct default — you tune them to the corpus. Tuning without a retrieval-quality metric is flying blind.",
+                 size=13)
+    speaker_notes(s, load_notes("s-rag-chunk1"))
+
+
+def build_s_rag_chunk2(p):
+    """meme_forward — how to choose a strategy + the silent failure. Left, a meme
+    (Disaster Girl — anti-cargo-cult, carries the thesis); right, conflicting
+    measurements WITH A BASELINE + the silent failure (tables). Failure thread."""
+    s = blank(p)
+    slide_title(s, "Don't cargo-cult semantic chunking.", size=26)
+    text_box(s, 0.55, 1.14, 12.25, 0.44,
+             "Studies on the effect of chunking openly disagree — and that disagreement is itself a lesson: “smart” chunking is domain-specific, plain recursive fixed-size is often stronger and cheaper.",
+             size=13.5, italic=True, color=MID, line_spacing=1.14)
+    # LEFT — the meme (carries the thesis), ≈45%
+    mx0, my0, mw0 = 0.55, 1.98, 5.55
+    mh0 = 4.24
+    ocean_box(s, mx0, my0, mw0, mh0)
+    ar = 500 / 375
+    iw = mw0 - 0.48
+    ih = iw / ar
+    if ih > mh0 - 0.48:
+        ih = mh0 - 0.48
+        iw = ih * ar
+    ix = mx0 + (mw0 - iw) / 2
+    iy = my0 + (mh0 - ih) / 2
+    add_image(s, WEB / "s-rag-chunk2-disaster-ru.png", ix, iy, iw, ih)
+    # RIGHT — conflicting measurements WITH A BASELINE
+    rx, rw = 6.45, 6.35
+    studies = [
+        ("recursive-512 vs semantic", "69% vs 54%", "Feb-2026, 7 strategies on 50 papers: recursive 512-token is #1; semantic gave ~43-token fragments", TEAL),
+        ("clinical (narrow domain)", "87% vs 13%", "MDPI Nov-2025: adaptive/topic-boundary vs fixed-size (p=0.001) — real, but narrow-domain", MID),
+        ("NAACL 2025 Findings", "≈ or worse", "“cost isn't justified by a stable gain”: fixed 200-word matches or beats semantic", DEEP),
+    ]
+    sy = my0
+    sh = 0.98
+    for label, num, body, col in studies:
+        ocean_box(s, rx, sy, rw, sh)
+        text_box(s, rx + 0.22, sy + 0.11, rw - 2.0, 0.30, label,
+                 size=11.5, bold=True, color=col)
+        text_box(s, rx + rw - 1.9, sy + 0.08, 1.8, 0.36, num,
+                 size=17, bold=True, color=GOLD, align=PP_ALIGN.RIGHT)
+        text_box(s, rx + 0.22, sy + 0.42, rw - 0.44, sh - 0.50, body,
+                 size=11, color=DEEP, line_spacing=1.06)
+        sy += sh + 0.10
+    # takeaway — how to choose (gold) — gap raised, text shortened (fix #1)
+    gy = sy + 0.08
+    gold_callout(s, rx, gy, rw, my0 + mh0 - gy,
+                 "One technique wins by 74 points (clinical) and loses by 15 (general corpus): corpora, metrics, and chunk size all differ. Default to recursive fixed-size; add complexity only for a gap measured on YOUR OWN data.",
+                 size=11.5)
+    footer(s, "Recall@k in isolation can mislead (91.9% recall at 54% correct answers) — measure end-to-end accuracy too; the next slide shows how this breaks silently.")
+    speaker_notes(s, load_notes("s-rag-chunk2"))
+
+
+def build_s_rag_chunk3(p):
+    """NEW (owner #7) — silent chunking failures: a worked example with a table
+    (failure → fix), anaphora, pipeline interactions. Disaster thread
+    (failure content). Not a meme — the worked table example acts as the schema."""
+    s = blank(p)
+    slide_title(s, "Silent chunking failure: a bare row of numbers.", y=0.40, h=0.58, size=25)
+    text_box(s, 0.55, 1.04, 12.25, 0.44,
+             "Worked example — 300 PDF manuals with spec tables. The question “what's the tightening torque for model X-500?” — the answer sits in a table cell. A naive splitter cuts it on a byte boundary.",
+             size=12.5, italic=True, color=MID, line_spacing=1.10)
+    # ── BEFORE / AFTER worked table example ──
+    half = (12.25 - 0.24) / 2
+    ty, thh = 1.66, 2.30
+    # BEFORE — naive fixed-size flattened the table
+    ocean_box(s, 0.55, ty, half, thh)
+    text_box(s, 0.77, ty + 0.12, half - 0.44, 0.30, "Naive: RecursiveCharacter, 512 tokens",
+             size=12.5, bold=True, color=SLATE)
+    text_box(s, 0.77, ty + 0.46, half - 0.44, 0.44,
+             "The parser flattened the table into a stream; the splitter cuts on a byte at the 512 boundary:",
+             size=11, color=DEEP, line_spacing=1.06)
+    filled_rect(s, 0.77, ty + 0.96, half - 0.44, 0.52, SURFACE, stroke=SOFT_GREY, stroke_pt=1.0,
+                radius=True, radius_adj=0.08)
+    text_box(s, 0.92, ty + 1.04, half - 0.72, 0.38, "chunk: “12 / 480 / 8.5 / 34”",
+             size=12, bold=True, color=DEEP, font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.77, ty + 1.58, half - 0.44, 0.64,
+             "The “Model / Voltage / Current / Torque” headers went into a different chunk. The system does NOT crash: the embedding gets computed, retrieval “finds” it, an answer gets generated — and it's wrong.",
+             size=10.5, color=DEEP, line_spacing=1.06)
+    # AFTER — table-aware
+    ax = 0.79 + half
+    ocean_box(s, ax, ty, half, thh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, ax + 0.22, ty + 0.12, half - 0.44, 0.30, "Correct: table-aware + repeated headers",
+             size=12.5, bold=True, color=DEEP)
+    text_box(s, ax + 0.22, ty + 0.46, half - 0.44, 0.44,
+             "The table becomes its own chunk; if it's over the limit — split by row, repeating headers:",
+             size=11, color=DEEP, line_spacing=1.06)
+    filled_rect(s, ax + 0.22, ty + 0.96, half - 0.44, 0.52, WHITE, stroke=GOLD, stroke_pt=1.0,
+                radius=True, radius_adj=0.08)
+    text_box(s, ax + 0.37, ty + 1.02, half - 0.72, 0.44,
+             "“Model X-500 | Voltage 480 |\n Current 8.5 | Torque 34”",
+             size=11, bold=True, color=DEEP, font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+    text_box(s, ax + 0.22, ty + 1.58, half - 0.44, 0.64,
+             "Each row is self-contained; + parent-document for the text, + metadata {model, type, version}. The main win came not from a “smart” split but from respecting structure.",
+             size=10.5, color=DEEP, line_spacing=1.06)
+    # ── two more silent failures + pipeline interactions ──
+    fy = ty + thh + 0.14
+    fails = [
+        ("triangle-alert", "Anaphora / broken references", "“it”, “this city”, “this policy” lose their antecedent at a cut → the chunk embeds ambiguously (fix with parent-doc / contextual prepending)."),
+        ("git-branch", "Changing embedders = re-chunking", "chunk size is tied to the model's window; change embedders → re-chunk the whole corpus, not “a line in a config”."),
+        ("sliders-horizontal", "Evaluating chunking is k-sensitive", "smaller chunks need a larger k; when you change the split, recheck the optimal k (Anthropic measured top-5/10/20)."),
+    ]
+    fw = (12.25 - 0.22 * 2) / 3
+    fx = 0.55
+    for ic, nm, body in fails:
+        ocean_box(s, fx, fy, fw, 1.28, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.5)
+        icon(s, ic, fx + 0.16, fy + 0.14, 0.32, "teal")
+        text_box(s, fx + 0.56, fy + 0.13, fw - 0.72, 0.38, nm,
+                 size=11.5, bold=True, color=TEAL, line_spacing=1.0)
+        text_box(s, fx + 0.18, fy + 0.56, fw - 0.36, 0.66, body,
+                 size=10, color=DEEP, line_spacing=1.06)
+        fx += fw + 0.22
+    footer(s, "Check: 20–30 questions whose answers live in tables, and manually confirm that top-k returns a chunk WITH headers, not a “bare row of numbers”; measure recall@k on table questions separately.")
+    speaker_notes(s, load_notes("s-rag-chunk3"))
+
+
+def build_s_rag_design(p):
+    """checklist_schema — how system design changes: the ingest→index pipeline,
+    freshness, re-embed, eval, the counterfactual “<200k → you don't need RAG”.
+    A clean checklist schema (not a meme)."""
+    s = blank(p)
+    slide_title(s, "Prototype → production — a different architecture, not a tweak.", size=24)
+    text_box(s, 0.55, 1.08, 12.25, 0.40,
+             "A prototype works on 1,000 documents; it breaks at millions of vectors and thousands of queries. The problems aren't just at indexing — they're at query time and in operations too.",
+             size=13, italic=True, color=MID, line_spacing=1.10)
+    # compact ingest → chunk → embed → index pipeline (index side)
+    py = 1.58
+    stages = ["ingest", "chunk", "embed", "index"]
+    sw, gap, x = 1.66, 0.30, 3.05
+    ingest_x = x
+    for i, st in enumerate(stages):
+        isfirst = (i == 0)
+        fill = GOLD_TINT if isfirst else SURFACE
+        stroke = GOLD if isfirst else LIGHT
+        filled_rect(s, x, py, sw, 0.46, fill, stroke=stroke, stroke_pt=1.75,
+                    radius=True, radius_adj=0.16)
+        text_box(s, x + 0.06, py + 0.09, sw - 0.12, 0.28, st,
+                 size=12.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+        if i < len(stages) - 1:
+            right_arrow(s, x + sw + 0.02, py + 0.13, gap - 0.06, 0.22, fill=LIGHT)
+        x += sw + gap
+    text_box(s, ingest_x, py + 0.47, sw, 0.24, "bottleneck",
+             size=9.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    # ── row 1: index side (building/maintaining the index) ──
+    cw = (12.25 - 0.22 * 3) / 4
+    r1 = [
+        ("route", "Freshness", "batch → staleness; CDC → sub-minute at the cost of ×3 operational complexity; a stale index → silent degradation.", MID),
+        ("git-branch", "Model change", "a new embedder means re-embedding ALL vectors (old/new aren't comparable) — a migration.", TEAL),
+        ("check-check", "Evaluation", "recall@k ~0.8, nDCG + an LLM judge (RAGAS); without a labeled set — degradation is invisible.", LIGHT),
+        ("scale", "Build cost", "embedding + context per chunk; preprocessing ~$1/1M tokens, a one-time cost at scale.", MID),
+    ]
+    def _row(cards, cy, chh, tint_label, label_col):
+        text_box(s, 0.55, cy - 0.24, 6.0, 0.24, tint_label,
+                 size=10.5, bold=True, color=label_col)
+        x = 0.55
+        for ic, name, body, col in cards:
+            ocean_box(s, x, cy, cw, chh)
+            icon(s, ic, x + 0.16, cy + 0.13, 0.32, "mid")
+            text_box(s, x + 0.56, cy + 0.12, cw - 0.68, 0.34, name,
+                     size=12, bold=True, color=col, anchor=MSO_ANCHOR.MIDDLE)
+            text_box(s, x + 0.18, cy + 0.52, cw - 0.36, chh - 0.60, body,
+                     size=10, color=DEEP, line_spacing=1.06)
+            x += cw + 0.22
+    _row(r1, 2.48, 1.28, "INDEX SIDE — building and maintaining", LIGHT)
+    # ── row 2: query side + operations (owner review: not just indexing) ──
+    r2 = [
+        ("target", "Quality at scale", "recall falls and drifts as the corpus grows; “found” ≠ “found the right thing”.", TEAL),
+        ("sliders-horizontal", "Latency / QPS", "concurrent queries + a reranker on every query; autoscaling lags behind a spike.", MID),
+        ("terminal", "Observability", "retrieval fails silently, with no error — needs metrics and request tracing.", LIGHT),
+        ("shield-check", "Security / access", "who's allowed to retrieve what; PII in chunks; the permissions filter BEFORE search.", TEAL),
+    ]
+    _row(r2, 4.20, 1.28, "QUERY SIDE + OPERATIONS", TEAL)
+    # counterfactual — gold band “under ~200k tokens you don't need RAG”
+    gold_callout(s, 0.55, 5.68, 12.25, 0.86,
+                 "Counterfactual: a base under ~200k tokens goes entirely into the prompt with caching (up to ~90% savings) — retrieval is skipped altogether. The first question before any of this infrastructure — “do we even need RAG”.",
+                 size=13)
+    speaker_notes(s, load_notes("s-rag-design"))
+
+
+# ---- ported for v6.4 parity (#204), group B3 ----
+def build_s_rag_cases(p):
+    """NEW (owner #9) — typical RAG archetypes: task → retrieval design →
+    typical failure → baseline, anchored to real systems. A formal
+    case overview (not a meme). Schema §5.5 Matrix."""
+    s = blank(p)
+    slide_title(s, "“RAG” doesn't exist in a vacuum — there is RAG for a task.",
+                y=0.40, h=0.58, size=24)
+    text_box(s, 0.55, 1.06, 12.25, 0.40,
+             "Five archetypes, each with its own nature of data → its own retrieval design. Shared anchor: naive dense RAG misses ~40% of queries.",
+             size=13, italic=True, color=MID, line_spacing=1.10)
+    # ── case table (simplified per owner review): one short phrase per cell,
+    # larger font, taller rows, “failure → fix” split by color. Each row
+    # reads in ~5 sec. Case+system | design in one line | failure → how it's fixed ──
+    hx, hy, hw = 0.55, 1.62, 12.25
+    col_a, col_b = 3.05, 4.10
+    col_c = hw - col_a - col_b
+    filled_rect(s, hx, hy, hw, 0.42, MID, radius=True, radius_adj=0.10)
+    text_box(s, hx + 0.18, hy + 0.08, col_a - 0.28, 0.28, "Case · system",
+             size=12, bold=True, color=WHITE)
+    text_box(s, hx + col_a + 0.10, hy + 0.08, col_b - 0.20, 0.28, "Design key",
+             size=12, bold=True, color=WHITE)
+    text_box(s, hx + col_a + col_b + 0.10, hy + 0.08, col_c - 0.20, 0.28, "Failure  →  fix",
+             size=12, bold=True, color=WHITE)
+    # (icon, case, system, one-line design, failure, fix, color)
+    rows = [
+        ("message-circle", "Support / knowledge base", "kapa.ai · Stripe",
+         "hybrid + rerank",
+         "dense confuses “backoff” and “dead-letter”",
+         "BM25 catches the exact error code", MID),
+        ("file-text", "Q&A over docs", "Vercel docs-copilot",
+         "source OR refuse",
+         "cites a stale API version",
+         "freshness + eval in CI", LIGHT),
+        ("code", "Code search", "Cursor · Cody",
+         "chunk per function",
+         "dense blurs a symbol name",
+         "Cody removed embeddings → lexical", TEAL),
+        ("gavel", "Legal", "LexisNexis · Westlaw",
+         "hybrid, BM25 for citations",
+         "17–33% hallucinations despite “0%”",
+         "citation verification + human", DEEP),
+        ("boxes", "Enterprise", "Glean · eSapiens",
+         "router to Text-to-SQL",
+         "embedding a table doesn't sum it",
+         "numeric question → SQL", LIGHT),
+    ]
+    ry = hy + 0.42
+    rh = 0.80
+    for i, (ic, name, sysname, design, fail, fix, col) in enumerate(rows):
+        bg = SURFACE if i % 2 == 0 else WHITE
+        filled_rect(s, hx, ry, hw, rh, bg, stroke=SOFT_GREY, stroke_pt=0.75)
+        filled_rect(s, hx + 0.12, ry + 0.15, 0.42, rh - 0.30, col, radius=True, radius_adj=0.22)
+        icon(s, ic, hx + 0.18, ry + rh / 2 - 0.15, 0.30, "white")
+        text_box(s, hx + 0.66, ry + 0.12, col_a - 0.72, 0.32, name,
+                 size=12.5, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, hx + 0.66, ry + 0.46, col_a - 0.72, 0.26, sysname,
+                 size=10, italic=True, color=LIGHT, line_spacing=1.0)
+        text_box(s, hx + col_a + 0.12, ry + 0.06, col_b - 0.26, rh - 0.12, design,
+                 size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.04)
+        # failure (teal) → fix (mid) — two short lines, split by color
+        text_runs(s, hx + col_a + col_b + 0.12, ry + 0.08, col_c - 0.26, rh - 0.14, [
+            {"text": fail, "size": 11, "color": TEAL},
+            {"text": "→ " + fix, "size": 11, "bold": True, "color": MID,
+             "newpara": True, "space_before": 2},
+        ], line_spacing=1.06, anchor=MSO_ANCHOR.MIDDLE)
+        ry += rh
+    gold_callout(s, 0.55, ry + 0.14, 12.25, 0.72,
+                 "Two cases are direct “RAG was the wrong tool”: Cody went back to classic code search; an aggregating question over a table → SQL, not “similar chunks”. Retrieval design follows from the nature of the data.",
+                 size=12)
+    speaker_notes(s, load_notes("s-rag-cases"))
+
+
+def build_s_rag_research(p):
+    """RELOCATED from §1 (owner #2) — deep research as RAG case E: reasoning LLM
+    + agentic RAG loop + citation verification. Failure — citation fabrication
+    3–13%. Panik-Kalm-Panik meme (carries the judgment thesis “a number with no
+    baseline is a red flag”)."""
+    s = blank(p)
+    text_box(s, 0.55, 0.34, 12.25, 0.30, "TYPICAL RAG CASE · deep research",
+             size=12.5, bold=True, color=TEAL)
+    slide_title(s, "Deep research is RAG + a loop, not a “big prompt”.",
+                y=0.66, h=0.60, size=24)
+    text_box(s, 0.55, 1.30, 12.25, 0.34,
+             "The defining component is retrieval and orchestration, which is why this case lives here, not in prompting. Like OpenAI Deep Research, Perplexity, Claude Research.",
+             size=12.5, italic=True, color=MID, line_spacing=1.08)
+    # LEFT — meme (carries the judgment thesis)
+    mx0, my0, mw0 = 0.55, 1.80, 4.55
+    mh0 = 4.42
+    ocean_box(s, mx0, my0, mw0, mh0)
+    ar = 640 / 881
+    iw = mw0 - 0.44
+    ih = iw / ar
+    if ih > mh0 - 0.44:
+        ih = mh0 - 0.44
+        iw = ih * ar
+    ix = mx0 + (mw0 - iw) / 2
+    iy = my0 + (mh0 - ih) / 2
+    add_image(s, WEB / "s-task-research-panik-en.png", ix, iy, iw, ih)
+    # RIGHT — architectural pattern (agentic loop) + failure
+    rx, rw = 5.40, 7.40
+    # pattern loop
+    ph = 1.62
+    ocean_box(s, rx, my0, rw, ph, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "route", rx + 0.24, my0 + 0.16, 0.38, "teal")
+    text_box(s, rx + 0.74, my0 + 0.15, rw - 1.0, 0.34, "Reasoning LLM + agentic RAG loop",
+             size=13.5, bold=True, color=TEAL, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, rx + 0.24, my0 + 0.56, rw - 0.48, 0.44,
+             "plan sub-questions → (search → read → refine the reasoning) × N → synthesize → verify citations",
+             size=12, bold=True, color=DEEP, font=FONT_MONO, line_spacing=1.10)
+    text_box(s, rx + 0.24, my0 + 1.06, rw - 0.48, 0.48,
+             "Reasoning steers the search, findings refine the reasoning — a closed loop (agentic RAG), unlike static retrieve-top-k → generate.",
+             size=11, color=DEEP, line_spacing=1.08)
+    # failure — citation fabrication with a baseline
+    py2 = my0 + ph + 0.14
+    fh = 1.44
+    ocean_box(s, rx, py2, rw, fh)
+    text_box(s, rx + 0.24, py2 + 0.12, rw - 0.48, 0.30, "Typical failure — citation fabrication",
+             size=12.5, bold=True, color=DEEP)
+    text_runs(s, rx + 0.24, py2 + 0.46, rw - 0.48, 0.90, [
+        {"text": "3–13% of URLs are fabricated", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " (in retrieval-augmented mode); DRACO: the top result is ~65% citation quality. Counterintuitively: deep research is worse than plain search — ", "size": 11.5, "color": DEEP},
+        {"text": "10.7% versus 4.8%", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " of fake citations per query, because it generates far more of them.", "size": 11.5, "color": DEEP},
+    ], line_spacing=1.10)
+    gold_callout(s, rx, py2 + fh + 0.14, rw, my0 + mh0 - (py2 + fh + 0.14),
+                 "Against a human analyst — faster and cheaper, BUT without a verification layer 3–13% of the citations are false. Recheck any number from AI research against a resolving primary source; treat a number with no baseline as a red flag, not a fact.",
+                 size=12)
+    speaker_notes(s, load_notes("s-rag-research"))
+
+
+# ---- ported for v6.4 parity (#204), group C1 ----
+def build_s_ft_cost(p):
+    """v6.4 (§3.6, owner-review) — REVERT to axes×methods comparison table with
+    RELATIVE parameters (Full-FT = baseline ×1). Rows = axes (parameters /
+    VRAM / $ / compute / data / iterations), columns = 5 methods (pretraining /
+    Full-FT / LoRA / QLoRA / prompt+RAG). Comparison table, no meme. The point
+    is the order of magnitude and growth shape, not the exact figure."""
+    s = blank(p)
+    slide_title(s, "Training cost: order of magnitude and growth shape matter, not the exact figure.", size=24)
+    text_box(s, 0.55, 1.10, 12.25, 0.46,
+             "Values are relative: Full-FT is taken as baseline ×1 on VRAM / $ / compute, the rest are fractions of it. Absolute $ and hours keep moving; what matters is the order of magnitude and growth shape.",
+             size=12.5, italic=True, color=MID, line_spacing=1.14)
+    # comparison table — rows = axes, cols = methods
+    ocean_box(s, 0.40, 1.66, 12.55, 3.98)
+    tx, ty = 0.52, 1.76
+    headers = ["Axis", "Pretraining from scratch", "Full-FT", "LoRA", "QLoRA", "Prompt+RAG"]
+    col_w = [2.55, 2.28, 1.86, 1.98, 1.90, 1.74]
+    rows = [
+        ("Trainable parameters", "100% (from scratch)", "100% of weights", "~0.1–1%", "~0.1–1%", "0% — weights\nunchanged"),
+        ("VRAM (memory)", "cluster", "×1 (baseline)", "~×0.2", "~×0.05", "inference\nonly"),
+        ("$ per run", "×1000+", "×1 (baseline)", "~×0.01", "~×0.01", "~0"),
+        ("Compute (GPU-hours)", "×1000+", "×1 (baseline)", "~×0.01", "~×0.01", "~0"),
+        ("Data volume", "trillions\nof tokens", "thousands–\ntens of thousands", "thousands–\ntens of thousands", "like LoRA", "few-shot\n(3–20)"),
+        ("Iteration speed", "months", "slow", "fast", "fast", "instant"),
+    ]
+    gold_col = 3  # LoRA column highlighted (default choice)
+    hh = 0.42
+    rh = (3.98 - 0.20 - hh) / len(rows)
+    cx = tx
+    for j, hd in enumerate(headers):
+        isg = (j == gold_col)
+        filled_rect(s, cx, ty, col_w[j], hh, (GOLD if isg else MID), radius=False)
+        text_box(s, cx + 0.08, ty, col_w[j] - 0.16, hh, hd,
+                 size=11, bold=True, color=(DEEP if isg else WHITE),
+                 anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER, line_spacing=1.0)
+        cx += col_w[j]
+    yy = ty + hh
+    for ri, row in enumerate(rows):
+        bgrow = WHITE if ri % 2 == 0 else SURFACE
+        cx = tx
+        for j, cc in enumerate(row):
+            isg = (j == gold_col)
+            filled_rect(s, cx, yy, col_w[j], rh,
+                        (GOLD_TINT if isg else bgrow),
+                        stroke=(GOLD if isg else SOFT_GREY),
+                        stroke_pt=(1.5 if isg else 0.5))
+            text_box(s, cx + 0.08, yy, col_w[j] - 0.16, rh, cc,
+                     size=9.5, bold=(j == 0 or isg), color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, align=(PP_ALIGN.LEFT if j == 0 else PP_ALIGN.CENTER),
+                     line_spacing=1.0)
+            cx += col_w[j]
+        yy += rh
+    gold_callout(s, 0.55, 5.78, 12.25, 0.98,
+                 "LoRA is the default: trains ~0.1–1% of parameters, ~×0.01 the price / compute and ~×0.2 the VRAM of Full-FT — a 7B LoRA run costs <$10 — ~7 orders of magnitude cheaper than frontier pretraining ($61–92M). Full-FT is justified only when the dataset exceeds LoRA's capacity — otherwise it's just ×5–6 the memory and forgetting risk. QLoRA is the same LoRA on top of a 4-bit base: 65B fits on a single 48 GB card.",
+                 size=12)
+    footer(s, "Relative values, Full-FT = baseline ×1; specific $ and hours keep moving — what matters is the order of magnitude and growth shape, not the exact figure.")
+    speaker_notes(s, load_notes("s-ft-cost"))
+
+
+def build_s_ft_eval(p):
+    """WAVE D2 (§3.7, owner #12) — FORMAL how-each-works, NO meme (drop
+    LeftExit). Six evaluation methods in a table by the scheme "how it works ·
+    when valid · when it breaks · cost". Every number carries a base (MMLU
+    ~29%, GSM1k −13, position 75% / >80% agreement, κ≥0.6 $300–1200, BLEU
+    r≈0.25–0.52). Lab→prod gap ~37%."""
+    s = blank(p)
+    slide_title(s, "Evaluating a fine-tune costs more than training it — and none of the six methods is self-sufficient.", size=20)
+    text_box(s, 0.55, 1.22, 12.25, 0.44,
+             "A useful 7B LoRA costs <$10 — while a rigorous evaluation of that same adapter is $300–1200 of human labor per round, and it can still fail to predict production. Every method follows the scheme \"how it works · when valid · when it breaks · cost\".",
+             size=12, italic=True, color=MID, line_spacing=1.14)
+    # 6-method table
+    ocean_box(s, 0.40, 1.74, 12.55, 3.92)
+    tx, ty = 0.52, 1.84
+    headers = ["Method", "How it works", "When it breaks (number)", "Cost"]
+    col_w = [2.55, 3.55, 4.15, 2.05]
+    # rows: (method, how, breaks, cost, is_gold_highlight)
+    rows = [
+        ("Public benchmark", "accuracy on a fixed Q&A set (MMLU/GSM8K/HELM)", "contamination: MMLU ~29% of questions; GSM8K→GSM1k −13 pp — memory, not reasoning", "low (deceptively)", False),
+        ("Held-out test set", "frozen BEFORE training, run every version against it", "leakage into the training set / small volume / drift from production", "upfront labor,\n≈0 to re-run", True),
+        ("LLM-as-judge", "a strong model judges; pairwise > pointwise", ">80% agreement with humans (= human-human), BUT position bias up to 75%, self-enhancement +10–25%", "cents + bias control", False),
+        ("Human evaluation", "rubric scale + ≥2–3 annotators + κ agreement", "κ≥0.6 required (otherwise rewrite the rubric); expensive, doesn't scale", "$300–1200\nper round", False),
+        ("Task metrics (BLEU/ROUGE)", "n-gram overlap with the reference", "on open generation r≈0.25–0.52 with humans — rewards the n-gram, not the meaning", "near zero", False),
+        ("A/B / online", "canary 1–5% + guardrail metrics on live traffic", "no traffic before production; ×4 samples due to non-determinism", "engineering + risk", False),
+    ]
+    hh = 0.40
+    rh = (3.92 - 0.20 - hh) / len(rows)
+    cx = tx
+    for j, hd in enumerate(headers):
+        filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
+        text_box(s, cx + 0.10, ty, col_w[j] - 0.20, hh, hd,
+                 size=11, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+        cx += col_w[j]
+    yy = ty + hh
+    for ri, row in enumerate(rows):
+        isg = row[4]
+        bgrow = (GOLD_TINT if isg else (WHITE if ri % 2 == 0 else SURFACE))
+        cx = tx
+        for j, cc in enumerate(row[:4]):
+            filled_rect(s, cx, yy, col_w[j], rh, bgrow,
+                        stroke=(GOLD if isg else SOFT_GREY),
+                        stroke_pt=(1.5 if isg else 0.5))
+            text_box(s, cx + 0.10, yy, col_w[j] - 0.20, rh, cc,
+                     size=9, bold=(j == 0 or isg), color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+            cx += col_w[j]
+        yy += rh
+    gold_callout(s, 0.55, 5.76, 12.25, 1.02,
+                 "No single method is self-sufficient: the cheap ones (benchmark, BLEU) have low validity; the valid ones (expert held-out, human evaluation, A/B) are expensive. The held-out test set gives the highest return, and you build it BEFORE training. The lab→production gap ~37% is mechanics, not an anomaly: a benchmark gain is a hypothesis, not a result; only a clean held-out set + A/B on real traffic confirm it.",
+                 size=11.5)
+    speaker_notes(s, load_notes("s-ft-eval"))
+
+
+def build_s_mcp_api(p):
+    """WAVE D2 (§4.1b, owner #14) — FORMAL decision table: MCP or a direct API.
+    Base frame: MCP is a thin discovery/portability layer ON TOP of REST (not
+    a replacement); N×M→N+M pays off only when N,M≥2–3. "Take MCP / take a
+    direct API" table. Corrected stats: ~25% of the registry unusable, 43.7%
+    best on MCP-Universe, injection 43%, path traversal 82%. No meme."""
+    s = blank(p)
+    slide_title(s, "MCP or a direct API — these are not alternatives: MCP pays off as a fleet, below the threshold it's an extra layer.", size=19)
+    # base frame — MCP on top of REST
+    ocean_box(s, 0.55, 1.30, 12.25, 0.98, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    icon(s, "layers", 0.78, 1.48, 0.42, "teal")
+    text_runs(s, 1.36, 1.40, 11.20, 0.82, [
+        {"text": "Base: REST/gRPC is the transport that does the work (hits the database, calls the service). ",
+         "size": 12, "color": DEEP},
+        {"text": "MCP is a thin standard layer ON TOP", "size": 12, "bold": True, "color": TEAL},
+        {"text": ", letting an agent discover (`tools/list`) and call tools at runtime. In most deployments an MCP server WRAPS an already-existing REST API rather than replacing it. Threshold: the payoff N+M < N×M materializes only when N, M ≥ 2–3.",
+         "size": 12, "color": DEEP},
+    ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+    # decision table — 2 columns
+    ty0 = 2.44
+    ocean_box(s, 0.55, ty0, 6.05, 2.82, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, 0.78, ty0 + 0.12, 5.6, 0.34, "Take MCP when…",
+             size=13.5, bold=True, color=DEEP)
+    mcp_when = [
+        "many agents × many tools (N, M ≥ 2–3)",
+        "you need runtime tool discovery (the catalog changes)",
+        "you need portability across model vendors / hosts",
+        "servers are reused by other teams / third parties",
+        "you're ready to run a security review of every server",
+    ]
+    yy = ty0 + 0.52
+    for it in mcp_when:
+        icon(s, "check-check", 0.82, yy + 0.02, 0.22, "mid")
+        text_box(s, 1.14, yy, 5.30, 0.42, it, size=10.5, color=DEEP,
+                 line_spacing=1.06)
+        yy += 0.46
+    ocean_box(s, 6.75, ty0, 6.05, 2.82)
+    text_box(s, 6.98, ty0 + 0.12, 5.6, 0.34, "Take a direct API / function calling when…",
+             size=13.5, bold=True, color=MID)
+    api_when = [
+        "one app, one or two known tools (N+M ≥ N×M)",
+        "the tool set is fixed at build time",
+        "you're locked into one model, one stack",
+        "the integration is private, a single consumer",
+        "you need a small auditable locked-down surface NOW",
+    ]
+    yy = ty0 + 0.52
+    for it in api_when:
+        icon(s, "circle-slash", 6.98, yy + 0.02, 0.22, "light")
+        text_box(s, 7.30, yy, 5.30, 0.42, it, size=10.5, color=DEEP,
+                 line_spacing=1.06)
+        yy += 0.46
+    # corrected stats strip (fix #4: no repeat of 43%/82% — only the unique
+    # MCP-Universe numbers + a short pointer to the MCP security slide)
+    ocean_box(s, 0.55, 5.42, 12.25, 0.66)
+    stats = [
+        ("~25%", "of registry servers are unusable (a floor, not a ceiling)"),
+        ("43.7%", "top result on MCP-Universe (>56% of tasks fail)"),
+        ("+risk", "injection / path traversal — see the slide on MCP (the trust pivot)"),
+    ]
+    sx = 0.80
+    colw = 12.25 / 3
+    for big, sub in stats:
+        text_box(s, sx, 5.50, 1.35, 0.30, big, size=17, bold=True, color=TEAL)
+        text_box(s, sx, 5.80, colw - 0.30, 0.26, sub, size=8.5, color=DEEP,
+                 line_spacing=1.0)
+        sx += colw
+    gold_callout(s, 0.55, 6.18, 12.25, 0.62,
+                 "Rule: MCP is an interoperability standard, not a performance upgrade. Skipping MCP for a single agent with a single tool is the correct engineering judgment, not a cut corner (the same ladder rule, §5.1).",
+                 size=11.5)
+    footer(s, "MCP-Universe (arXiv:2508.14704); DEV/theopslog audit 2026; Endor Labs / Practical DevSecOps 2026 — the ecosystem's numbers keep moving.")
+    speaker_notes(s, load_notes("s-mcp-api"))
+
+
+# ---- ported for v6.4 parity (#204), group C2 ----
+def build_s_agent_frameworks(p):
+    """WAVE 3 (§4.3c) — comparison-table: overview of agent frameworks on the
+    schema "core abstraction · what it's for · one honest drawback" + a "none —
+    plain code" row. Comparison-table slide — NO meme. Volatile versions →
+    [VFY-day-of] in notes, NOT on the visible layer."""
+    s = blank(p)
+    slide_title(s, "An agent framework is an abstraction tax; all of them share five drawbacks.", size=21, w=12.4)
+    text_box(s, 0.55, 1.00, 12.25, 0.34,
+             "Anthropic: many patterns are a few lines of direct API calls; frameworks hide the underlying prompts and make debugging harder. First, the five drawbacks shared by ALL of them, then the breakdown by schema.",
+             size=11, italic=True, color=MID, line_spacing=1.06)
+    # SHARED CONS band (owner #15) — 5 drawbacks shared by all frameworks
+    ocean_box(s, 0.40, 1.42, 12.55, 0.72, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    cons = [
+        ("triangle-alert", "Customization", "debt beyond the \"happy path\""),
+        ("eye-off", "Transparency", "hides the actual prompts and control flow"),
+        ("lock", "Lock-in", "vendor SDKs tie you to their ecosystem"),
+        ("git-pull-request", "Version churn", "breaking API changes (LangChain)"),
+        ("sliders-horizontal", "Overhead", "CrewAI +18% tokens vs LangGraph"),
+    ]
+    ccw = 12.55 / 5
+    for i, (ic, t, sub) in enumerate(cons):
+        cxx = 0.40 + i * ccw
+        icon(s, ic, cxx + 0.12, 1.52, 0.26, "gold")
+        text_box(s, cxx + 0.44, 1.49, ccw - 0.50, 0.28, t,
+                 size=11, bold=True, color=DEEP)
+        text_box(s, cxx + 0.12, 1.78, ccw - 0.22, 0.32, sub,
+                 size=8.5, color=DEEP, line_spacing=1.0)
+    ocean_box(s, 0.40, 2.24, 12.55, 3.44)
+    tx, ty = 0.52, 2.32
+    headers = ["Framework", "Core abstraction", "What it fits", "One honest drawback"]
+    col_w = [2.55, 3.15, 3.30, 3.30]
+    rows = [
+        ("LangGraph", "stateful graph", "production: control flow, state, human-in-the-loop", "steep curve; over-engineering for a single loop", False),
+        ("CrewAI", "role-based \"crews\"", "fast, role-decomposable prototyping", "the role masks what is actually happening; multi-agent fragility"),
+        ("AutoGen → AG2", "agent conversation", "researching conversational patterns", "frequent renames (AutoGen → AG2 / MS Agent) — adoption risk"),
+        ("OpenAI Agents SDK", "handoffs", "lightweight task handoff + tracing on OpenAI", "OpenAI-centric; you bring your own state persistence/RAG"),
+        ("Claude Agent SDK", "the same loop as Claude Code", "coding / computer-use, long-running tasks", "Claude-centric; heavy harness vs the bare API"),
+        ("smolagents", "code agents (write Python)", "a minimal, readable agent", "code execution = attack surface (needs a sandbox)"),
+        ("LlamaIndex agents", "an agent on top of a RAG stack", "an agent over your own documents/data", "the center of gravity is retrieval, not orchestration"),
+        ("Pydantic AI", "type-safe agent loop", "validated outputs, typed contracts", "young; type-safety is orthogonal to orchestration"),
+        ("NONE", "plain code + direct API calls", "deterministic steps, ≤ a couple of LLM calls", "requires the discipline to not reach for a framework in advance", True),
+    ]
+    hh = 0.36
+    rh = (3.44 - 0.16 - hh) / len(rows)
+    cx = tx
+    for j, hd in enumerate(headers):
+        filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
+        text_box(s, cx + 0.10, ty, col_w[j] - 0.20, hh, hd,
+                 size=10.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+        cx += col_w[j]
+    yy = ty + hh
+    for ri, row in enumerate(rows):
+        isg = len(row) == 5 and row[4]
+        c0, c1, c2, c3 = row[0], row[1], row[2], row[3]
+        bgrow = GOLD_TINT if isg else (WHITE if ri % 2 == 0 else SURFACE)
+        cx = tx
+        for j, cc in enumerate([c0, c1, c2, c3]):
+            filled_rect(s, cx, yy, col_w[j], rh, bgrow,
+                        stroke=(GOLD if isg else SOFT_GREY),
+                        stroke_pt=(1.5 if isg else 0.5))
+            text_box(s, cx + 0.10, yy, col_w[j] - 0.20, rh, cc,
+                     size=8.5, bold=(j == 0 or isg), color=DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+            cx += col_w[j]
+        yy += rh
+    gold_callout(s, 0.55, 5.78, 12.25, 0.90,
+                 "The five drawbacks above apply to EVERY row. The bottom row isn't there for completeness: a deterministic path + known steps + cost sensitivity → plain code, without an agent and without a framework. The ladder rule at the tool-choice level: tooling complexity is paid for by the demands of the task, not taken on in advance.",
+                 size=11.5)
+    speaker_notes(s, load_notes("s-agent-frameworks"))
+
+
+def build_s_agent_when(p):
+    """WAVE D2 (§4.3, owner #16) — FORMAL top-down decision framework (drop
+    clown meme). p^n compounding (0.95^10≈60%, ^20≈36%), τ-bench 61%→25%,
+    decentralized 17.2× vs coordinator 4.4× (Kim et al. 2512.08296),
+    Cognition-vs-Anthropic reconciled (parallelize reads, not decisions), 15× cost.
+    No meme."""
+    s = blank(p)
+    slide_title(s, "An agent fits an open task; multi-agent is only needed under three conditions.", size=20)
+    text_box(s, 0.55, 1.22, 12.25, 0.40,
+             "Top-down: predictable → workflow; unpredictable and valuable → a single agent; several agents — only for a specific case. Every extra step multiplies the probability of success, it doesn't average it.",
+             size=12, italic=True, color=MID, line_spacing=1.12)
+    # LEFT — 3-rung decision ladder (top-down)
+    lx, ly, lw = 0.55, 1.74, 6.30
+    rungs = [
+        ("route", "1. Predictable → workflow", "steps known in advance; paths predefined in code, auditability", TEAL),
+        ("bot", "2. Unpredictable → a single agent", "steps depend on intermediate results; the cost is justified by the value", MID),
+        ("users", "3. Multi-agent — for a specific case", "needed only under 3 conditions (right); outside them — the wrong tool", GOLD),
+    ]
+    ry = ly
+    for ic, t, sub, col in rungs:
+        isg = (col == GOLD)
+        rh = 1.16
+        if isg:
+            ocean_box(s, lx, ry, lw, rh - 0.06, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+        else:
+            ocean_box(s, lx, ry, lw, rh - 0.06)
+        filled_rect(s, lx + 0.20, ry + 0.24, 0.58, 0.58, col, radius=True, radius_adj=0.18)
+        icon(s, ic, lx + 0.28, ry + 0.32, 0.42, "white")
+        text_box(s, lx + 0.94, ry + 0.16, lw - 1.1, 0.42, t,
+                 size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, lx + 0.94, ry + 0.58, lw - 1.1, 0.50, sub,
+                 size=10.5, color=DEEP, line_spacing=1.08)
+        ry += rh
+    # pointer strip under ladder — outside the cases multi-agent is wrong; numbers on next slide
+    ocean_box(s, lx, ry + 0.02, lw, 0.94, fill=TEAL_TINT, stroke=TEAL, stroke_pt=2.0)
+    text_runs(s, lx + 0.22, ry + 0.10, lw - 0.44, 0.80, [
+        {"text": "Outside these cases, multi-agent is the wrong tool: ", "size": 11.5, "bold": True, "color": TEAL},
+        {"text": "reliability drops as pⁿ (×15 tokens). Numbers and measurements — on the next slide.",
+         "size": 11, "color": DEEP},
+    ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+    # RIGHT — 3 named conditions where multi-agent IS warranted, each with example
+    rx, rw = 7.05, 5.75
+    ocean_box(s, rx, ly, rw, 2.98, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, rx + 0.22, ly + 0.10, rw - 0.44, 0.32,
+             "Three conditions under which multi-agent is justified:", size=12.5, bold=True, color=DEEP)
+    conds = [
+        ("1. Widely-parallel independent READS (not decisions)",
+         "e.g.: read 100 sources in parallel and roll them into a report (Anthropic research)."),
+        ("2. Independent perspectives for cross-checking",
+         "e.g.: 5 agents search independently → majority vote."),
+        ("3. Isolated sub-domains with separate tools / permissions",
+         "e.g.: a separate agent for billing, a separate one for infrastructure."),
+    ]
+    cy = ly + 0.50
+    for ct, ce in conds:
+        text_box(s, rx + 0.22, cy, rw - 0.44, 0.44, ct,
+                 size=10.5, bold=True, color=DEEP, line_spacing=1.02)
+        text_box(s, rx + 0.22, cy + 0.42, rw - 0.44, 0.40, ce,
+                 size=9.5, italic=True, color=SLATE, line_spacing=1.02)
+        cy += 0.80
+    # RIGHT bottom — Cognition/Anthropic reconciliation (compact)
+    ocean_box(s, rx, ly + 3.06, rw, 1.24)
+    text_box(s, rx + 0.22, ly + 3.12, rw - 0.44, 0.30,
+             "Cognition vs Anthropic — reconciliation:", size=11.5, bold=True, color=MID)
+    text_box(s, rx + 0.22, ly + 3.42, rw - 0.44, 0.86,
+             "Anthropic: multi-agent wins research tasks. Cognition: \"don't build multi-agents.\" There's no contradiction: parallelize independent READS (broad search), but not DECISIONS with dependencies. Topology: more connections = faster collapse.",
+             size=9, color=DEEP, line_spacing=1.04)
+    gold_callout(s, 0.55, 6.06, 12.25, 0.84,
+                 "Start with one strong agent. Multi-agent is justified only in the three cases above and when the value justifies the multiple-fold cost; otherwise it's the wrong tool.",
+                 size=11.5)
+    speaker_notes(s, load_notes("s-agent-when"))
+
+
+def build_s_agent_cases(p):
+    """WAVE D2 (§4.9b, owner #18) — FORMAL case-table: six typical agentic
+    tasks on one schema "task · loop shape · where it breaks · would a
+    workflow be better?". Real anchors (Air Canada, Klarna, Operator OSWorld
+    ~38%, ITBench ~14%). No meme. Invented details are marked "illustrative"."""
+    s = blank(p)
+    slide_title(s, "Six typical agentic tasks on one schema: where an agent is justified, and where part of the task should be rolled back into a workflow.", size=18)
+    ocean_box(s, 0.40, 1.42, 12.55, 4.62)
+    tx, ty = 0.52, 1.52
+    headers = ["Task", "Loop shape", "Where it breaks (number / case)", "Better as a workflow?"]
+    col_w = [2.75, 3.45, 4.15, 2.15]
+    # (task, loop, breaks, workflow-verdict, verdict_color)
+    rows = [
+        ("Coding agent\n(Claude Code / Cursor)", "read the repo → plan → edit → test → PR", "large refactors; silent bad edits; looping on \"flaky\" tests", "No — open-ended code search requires agency", TEAL),
+        ("Customer support\n(Air Canada · Klarna)", "classify → fetch policy → resolve/escalate", "Air Canada: the bot invented a policy → the tribunal made it pay. Klarna: \"−700 agents\" → brought people back", "Often YES for the risk part: deterministic routing + guardrails", GOLD),
+        ("ETL / data pipeline", "spot schema drift → patch → validate → apply", "silent bad transforms at scale; nondeterminism in an auditable pipeline", "Mostly YES: the trunk is deterministic, the agent is on the edge of the drift fix", GOLD),
+        ("Research agent\n(Deep Research)", "plan sub-questions → fan out to search → synthesize → cite", "cost blow-up ~15× tokens; hallucinated citations; superficial agency", "No for open-ended breadth; YES if it's a fixed keyed lookup", MID),
+        ("Browser / Operator", "screenshot/DOM → plan a UI action → click → observe", "OSWorld ~38% (1st generation); ~1 in 5 tasks fails; Operator DISCONTINUED", "For consequential actions (payments) YES — use a real API", MID),
+        ("SRE / ops agent\n(ITBench)", "telemetry → hypothesis → dashboard → propose a fix", "ITBench: ~14% of SRE scenarios resolved autonomously — narrow the search, don't replace the person", "For the FIX itself YES: workflow + confirmation; agent — on the investigation", MID),
+    ]
+    hh = 0.40
+    rh = (4.62 - 0.20 - hh) / len(rows)
+    cx = tx
+    for j, hd in enumerate(headers):
+        filled_rect(s, cx, ty, col_w[j], hh, MID, radius=False)
+        text_box(s, cx + 0.10, ty, col_w[j] - 0.20, hh, hd,
+                 size=10.5, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+        cx += col_w[j]
+    yy = ty + hh
+    for ri, row in enumerate(rows):
+        vcol = row[4]
+        isg = (vcol == GOLD)
+        bgrow = (GOLD_TINT if isg else (WHITE if ri % 2 == 0 else SURFACE))
+        cx = tx
+        for j, cc in enumerate(row[:4]):
+            filled_rect(s, cx, yy, col_w[j], rh, bgrow,
+                        stroke=(GOLD if isg else SOFT_GREY),
+                        stroke_pt=(1.2 if isg else 0.5))
+            # verdict column colored
+            tcol = DEEP
+            if j == 3:
+                tcol = (DEEP if isg else vcol)
+            text_box(s, cx + 0.10, yy, col_w[j] - 0.20, rh, cc,
+                     size=8.5, bold=(j == 0 or (j == 3 and isg)), color=tcol,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+            cx += col_w[j]
+        yy += rh
+    gold_callout(s, 0.55, 6.14, 12.25, 0.72,
+                 "Cross-cutting principle: an agent — for the adaptive EDGE (open-ended search, drift fixes, investigation), a workflow-with-gates — for the TRUNK and for consequential actions. The Operator (~38%) and ITBench (~14%) numbers mean \"narrow the search space,\" not \"replace the person.\"",
+                 size=11.5)
+    footer(s, "§4.9b; OSWorld / WebArena / ITBench — verify day-of. Individual figures/details are illustrative; the classes and anchors (Air Canada, Klarna, Operator) are real.")
+    speaker_notes(s, load_notes("s-agent-cases"))
+
 def main():
     # U-9: 2-part deck spec — loader reads deck.yaml + deck-part2.yaml,
     # validates 36-slide order + cascade lock (s01–s30 not renumbered).
@@ -3299,42 +4497,77 @@ def main():
     #   R5: s25a(div) s26 s27 s27b s28 s29 s30 s31
     # v5b (issue #185 WP8): +5 "classical baseline" slides — one per
     # section §1–§5, right AFTER the section divider, BEFORE the AI part. 51→56.
+    # Display order and slide ids are taken verbatim from the RU build
+    # (rendered/build_v3.py), which is the source of truth for v6.4:
+    # 19 slides added, and s05a/s22c/s22e/s23/s27/s28/s29 dropped from the
+    # running order. Their builders stay defined but uncalled, as in RU.
     builders = [
-        # R0 — Opening (5) — s01b removed (#185/#312): the hook is already on s01,
-        # Air Canada remains a §2 case (s13).
+        # R0 — Открытие (5) — s01b снят (#185/#312): хук уже на s01,
+        # Air Canada остаётся кейсом §2 (s13).
         build_s01, build_s02, build_s02a, build_s03, build_s04,
-        # R1 — Prompt (div + classic-base + 8)
-        build_s04a, build_s_classic_prompt, build_s05, build_s05a, build_s05c,
-        build_s05b, build_s06, build_s07, build_s08, build_s08a,
-        # R2 — RAG (div + classic-base + 4)
-        build_s09, build_s_classic_rag, build_s10, build_s11, build_s12, build_s13,
-        # R3 — Fine-tune (div + classic-base + 5)
-        build_s13a, build_s_classic_ft, build_s13b, build_s15, build_s17,
-        build_s14, build_s16,
-        # R4 — Agents (div + classic-base + 16)
-        build_s18, build_s_classic_agents, build_s19, build_s19b, build_s20,
-        build_s21, build_s22, build_s22a_multi, build_s22b, build_s22c,
-        build_s22d, build_s22e, build_s25, build_s24, build_s25b, build_s23,
-        build_s23b, build_s23c,
-        # R5 — Framework (div + classic-base + 7)
-        build_s25a, build_s_classic_framework, build_s26, build_s27, build_s27b,
-        build_s28, build_s29, build_s30, build_s31,
+        # R1 — Промпт (div + classic-base + 12) — v6 D1 (#196):
+        # s-task-research RELOCATED to §2; §1 = 13 slides. Порядок §1:
+        # div → classic → s05 → s05c → s05b → s-fmt → s06 → s07 → s08 → s08a →
+        # task-assistant → task-tone → task-extract(FORMAL JSON-spec, no meme).
+        build_s04a, build_s_classic_prompt, build_s05, build_s05c, build_s05b,
+        build_s_fmt, build_s06, build_s07, build_s08, build_s08a,
+        build_s_task_assistant, build_s_task_tone,
+        build_s_task_extract,
+        # R2 — RAG (div + classic-base + 13) — v6 D1 (#196): +chunk3 +cases
+        # +research (relocated). Порядок §2: div → classic → s10 → hybrid →
+        # stack → elastic → chunk1 → chunk2 → chunk3 → design → cases →
+        # research → s11 → s12 → s13.
+        build_s09, build_s_classic_rag, build_s10,
+        build_s_rag_hybrid, build_s_rag_stack, build_s_rag_elastic,
+        build_s_rag_chunk1, build_s_rag_chunk2, build_s_rag_chunk3,
+        build_s_rag_design, build_s_rag_cases, build_s_rag_research,
+        build_s11, build_s12, build_s13,
+        # R3 — Fine-tune (div + classic-base + 7) — WAVE 3 (#196): +s-ft-cost
+        # (после s13b), +s-ft-eval (в конце §3). Порядок §3:
+        # div → classic → s13b → s-ft-cost → s15 → s17 → s14 → s16 → s-ft-eval.
+        # v6 D2 (#196): s-ft-cost REFRAME (функция размера), s14 REFRAME
+        # (дистилляция = дообучение малой), s-ft-eval FORMAL 6 методов (no meme).
+        build_s13a, build_s_classic_ft, build_s13b, build_s_ft_cost, build_s15,
+        build_s17, build_s14, build_s16, build_s_ft_eval,
+        # R4 — Агенты (div + classic-base + 17) — v6 D2 (#196): #13 MOVE s21
+        # сразу после classic (петля следует за классическим управляющим
+        # циклом); #14 ADD s-mcp-api после s20; #17 REMOVE s23 (redundant с
+        # s23b/s23c); #18 ADD s-agent-cases перед каталогом провалов. Порядок §4:
+        # div → classic → s21 → s19 → s19b → s20 → s-mcp-api → s22 →
+        # s-agent-frameworks → s-agent-when → s22a_multi → s22b → s22d → s25 →
+        # s24 → s25b → s-agent-cases → s23b → s23c.
+        build_s18, build_s_classic_agents, build_s21, build_s19, build_s19b,
+        build_s20, build_s_mcp_api, build_s22, build_s_agent_frameworks,
+        build_s_agent_when, build_s22a_multi, build_s22b, build_s22d, build_s25,
+        build_s24, build_s25b, build_s_agent_cases, build_s23b, build_s23c,
+        # R5 — Фреймворк (div + classic-base + 4) — v6 D3 (#196): #20 REMOVE
+        # s27 (План решения), s28 (Итоги-таблица), s29 (человек-валидатор):
+        # s26 (лестница) остаётся как замыкающий синтез/keystone. Порядок §5:
+        # div → classic-framework → s26 → s27b → s30 → s31.
+        build_s25a, build_s_classic_framework, build_s26, build_s27b,
+        build_s30, build_s31,
     ]
     # sid list — MUST match `builders` order 1:1 (display order, 55 slides).
     sids = [
         "s01", "s02", "s02a", "s03", "s04",
-        "s04a", "s-classic-prompt", "s05", "s05a", "s05c", "s05b", "s06",
-        "s07", "s08", "s08a",
-        "s09", "s-classic-rag", "s10", "s11", "s12", "s13",
-        "s13a", "s-classic-ft", "s13b", "s15", "s17", "s14", "s16",
-        "s18", "s-classic-agents", "s19", "s19b", "s20", "s21", "s22",
-        "s22a_multi", "s22b", "s22c", "s22d", "s22e", "s25", "s24", "s25b",
-        "s23", "s23b", "s23c",
-        "s25a", "s-classic-framework", "s26", "s27", "s27b", "s28", "s29",
+        "s04a", "s-classic-prompt", "s05", "s05c", "s05b",
+        "s-fmt", "s06", "s07", "s08", "s08a",
+        "s-task-assistant", "s-task-tone", "s-task-extract",
+        "s09", "s-classic-rag", "s10",
+        "s-rag-hybrid", "s-rag-stack", "s-rag-elastic",
+        "s-rag-chunk1", "s-rag-chunk2", "s-rag-chunk3", "s-rag-design",
+        "s-rag-cases", "s-rag-research",
+        "s11", "s12", "s13",
+        "s13a", "s-classic-ft", "s13b", "s-ft-cost", "s15", "s17", "s14",
+        "s16", "s-ft-eval",
+        "s18", "s-classic-agents", "s21", "s19", "s19b", "s20", "s-mcp-api",
+        "s22", "s-agent-frameworks", "s-agent-when", "s22a_multi", "s22b",
+        "s22d", "s25", "s24", "s25b", "s-agent-cases", "s23b", "s23c",
+        "s25a", "s-classic-framework", "s26", "s27b",
         "s30", "s31",
     ]
-    assert len(builders) == 55, f"expected 55 builders, got {len(builders)}"
-    assert len(sids) == 55, f"expected 55 sids, got {len(sids)}"
+    assert len(builders) == 67, f"expected 67 builders, got {len(builders)}"
+    assert len(sids) == 67, f"expected 67 sids, got {len(sids)}"
 
     total = len(builders)
     inject_report = {}

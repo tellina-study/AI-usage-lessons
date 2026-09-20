@@ -9,6 +9,7 @@
 - [§6. Доставка, эксплуатация и документация](#6-доставка-эксплуатация-и-документация)
   - [6.1. CI/CD и эксплуатация: две тонкие фазы](#61-cicd-и-эксплуатация-две-тонкие-фазы)
   - [6.2. Документация: светлый пятачок — и его цена](#62-документация-светлый-пятачок--и-его-цена)
+  - [6.3. Инструментарий документации: как это выглядит на практике](#63-инструментарий-документации-как-это-выглядит-на-практике)
   - [Self-check (§6)](#self-check-6)
 - [§7. Обобщение и фреймворк решения](#7-обобщение-и-фреймворк-решения)
   - [7.1. Синтез: матрица «фаза × ведущая практика × где человек обязателен»](#71-синтез-матрица-фаза--ведущая-практика--где-человек-обязателен)
@@ -62,6 +63,18 @@
 
 [for-slide-s34]
 **Провал фазы документации (in-bucket: провал → урок → альтернатива) — когнитивный долг и галлюцинации онбординга.** У документации есть свой режим отказа. Первый — **когнитивный долг** (codebase cognitive debt, Thoughtworks Radar, кольцо **Hold**): «растущий разрыв между реализацией системы и разделяемым пониманием команды». Механизм: генерация обгоняет понимание — AI пишет и код, и его документацию быстрее, чем команда успевает **понять**, что происходит, и накапливается система, которую никто целиком не держит в голове. Это прямая связь с ADR (§2.6, Часть 2): человеко-написанное обоснование «почему» — то, что когнитивный долг размывает. Второй режим — **онбординг-документация галлюцинирует setup/deploy** (Бёкелер): AI-объяснения незнакомого кода помогают понять логику, но выдумывают шаги установки/развёртывания, которых нет; «AI не может волшебно заменить хорошо документированную и автоматизированную настройку». Урок: документация-как-контекст (для человека и агента) — да; документация-как-истина (вместо проверки кода и реального запуска) — нет. Правильная альтернатива: машиночитаемый контекст (`AGENTS.md`/`CLAUDE.md`) как де-факто стандарт для агента — полезен; но код остаётся источником истины, а темп генерации ограничивается ради сохранения разделяемого понимания. Критерий: если документация начинает **опережать** понимание команды, это не прогресс, а накопление долга; инвестируйте в понимание, не только в объём генерации.
+
+### 6.3. Инструментарий документации: как это выглядит на практике
+
+§6.2 назвал вендоров — Confluence AI, AWS Q `/doc`, JetBrains — но не механику. Разберём, что конкретно происходит внутри каждого инструмента, и code-first альтернативу, которая для этого курса ближе всего к практике.
+
+**Confluence AI (Atlassian Intelligence).** Общий AI-слой над продуктами Atlassian (в части материалов называется Rovo) даёт три конкретные способности. **Суммаризация** — длинный проектный документ или тред обсуждения сворачивается в краткую выжимку, не требуя прочитать каждое слово; применимо к длинным тредам ревью решений. **Генерация и трансформация контента** — черновик страницы из промпта или переформулировка существующего текста в другом тоне/формате. **Q&A-поиск по базе знаний** — вопрос на естественном языке в строке поиска вместо ключевых слов, ответ собирается из разрозненных страниц Confluence (RAG-подобный паттерн — поиск + генерация, Лекция 3 — поверх корпоративного knowledge base), включая расшифровку внутреннего жаргона компании (eesel.ai, 2026, independent practitioner guide). `[VFY-day-of: Confluence AI / Rovo брендинг и набор фич]`
+
+**AWS Q Developer `/doc`.** Это зрелая, задокументированная функция (анонс декабрь 2024, обновления апрель 2025) — не свежий эксперимент. Команда `/doc` в чате Amazon Q (VS Code/IntelliJ) запускает агента, который анализирует **кодовую базу** и генерирует документацию из неё — вход именно код, а не пересказ промпта. Уважает `.gitignore`, не документируя явно исключённое. Может **создавать диаграммы инфраструктуры**, если проект содержит IaC-файлы (Terraform, CloudFormation, AWS CDK) — прямая связь с architecture-as-code (§2.4, Часть 2): агент читает уже существующий код-как-инфраструктуру и **выводит** из него диаграмму, а не выдумывает архитектуру по описанию. Может ревьюить новый код и предлагать обновления документации — замкнутый цикл «код изменился → `/doc` предлагает дифф в документации», снижающий риск устаревания (тот же провал, что §1.5, Часть 1, разбирает для спеки — только применительно к README). Генерирует README напрямую, с итеративным улучшением через несколько прогонов (docs.aws.amazon.com/amazonq, primary). Это конкретный пример тезиса §6.2: вход — реальный код, выход — пересказ того, что уже есть, без необходимости придумывать намерение.
+
+**Код-ориентированная альтернатива — сам кодинг-агент.** Вместо отдельного вендорского SaaS ту же задачу решает кодинг-агент, которым студент уже пользуется, через установленный **skill** — мы видели этот паттерн в §3.3b (Часть 3): устанавливаемый skill вроде «Code Documentation Skill» или «README Generator» анализирует структуру проекта, зависимости и код-паттерны и генерирует README/ADR/inline-комментарии по best practices (community-маркетплейсы GLINCKER, s2005, awesomeskill.ai). Честная оговорка: это **community-паттерн**, не единый официальный skill из `anthropics/skills` — конкретно «readme-generator» в официальном репозитории Anthropic не подтверждён как включённый по умолчанию, и формулировка здесь явно разделяет «паттерн существует и работает» от «это встроенная фича из коробки». Онбординг-документация — хороший **кандидат в skill** именно по обеим эвристикам §3.3b: «вы копируете одну и ту же инструкцию в чат раз за разом» (новому разработчику/агенту объясняют одно и то же) и «нужен progressive disclosure» (справочный материал большой и нужен не на каждом шаге, только при онбординге). Это не новая идея, а применение уже введённого критерия к конкретному кейсу документации.
+
+**Суждение (устойчивый паттерн / вендорский хайп).** Устойчивый паттерн — сам факт §6.2: документация как привнесённая сложность (§0.4), где вход обычно уже существует (код, тред обсуждения, решение), и AI пересказывает уже сказанное, а не выдумывает намерение, — это и делает документацию «светлым пятачком», а не конкретная реализация. Вендор-специфичный слой — сами продукты (Confluence AI/Rovo, AWS Q `/doc`) — иллюстрация механики на текущем 2026-стеке, не рекомендация одного вендора: тот же паттерн доступен и через установленный skill поверх уже используемого кодинг-агента, без привязки к SaaS.
 
 ### Deep-dive box: почему тонкий трио — не «недоделка», а карта, и DORA 7 capabilities
 
@@ -313,6 +326,14 @@
 - **Meta TestGen-LLM.** arXiv:2501.12862; сравнение coverage vs mutation (arXiv:2506.02954): 32% vs 5,3% классов, mutation 2,4% vs 15%. `[VFY-baseline]` (§4.3)
 - **Fowler / Willison.** martinfowler.com/articles/202508-ai-thoughts; simonwillison.net/2025/Mar/11. «All green» лжёт; «не видел, как работает — не работает». (§4.3)
 - **AWS Q /test; Qodo.** aws.amazon.com blogs /test; qodo.ai. (§4.2)
+- **Cucumber.** cucumber.io/docs/bdd/. Каноническое определение BDD, три практики (Discovery/Formulation/Automation), Gherkin Given-When-Then. (§4.4)
+- **Knight, A. (Automation Panda).** (2026-04-27). automationpanda.com/2026/04/27/bdd-gherkin-guidelines-for-ai-coding-and-testing; github.com/AutomationPanda/gherkin-guidelines-for-ai. AI-генерация Gherkin, проблемы качества, gherkin-guidelines.md паттерн. (§4.4)
+- **303software.** (2025). *BDD & Cucumber Reality Check 2025.* 303software.com/insights/behavior-driven-development-cucumber-testing-2025-reality. Adoption 27%/68% OSS, разрыв tool-vs-methodology. `[VFY-day-of]` (§4.4)
+- **Trunk-based + AI (practitioner).** journal.daniellopes.dev/p/trunk-based-development-vs-feature-branches-ai. «Half the agent's assumptions are wrong by the time you merge»; текстовые vs семантические конфликты. (§4.4)
+- **Flagsmith / Harness.io.** flagsmith.com/blog/trunk-based-development; harness.io/harness-devops-academy/trunk-based-development. Feature-флаги + DORA-связка short-lived-branch. (§4.4)
+- **Postman.** blog.postman.com/new-capabilities-march-2026; blog.postman.com/testing-apis-with-postman-agent-mode-a-practical-guide. AI-native платформа март 2026, Agent Mode, AI Engineer (июнь 2026). `[VFY-day-of]` (§4.5)
+- **Testcontainers.** java.testcontainers.org; devblogs.microsoft.com/ise/testing-with-testcontainers. Эфемерная БД в контейнере; skill-паттерн для агента. (§4.5)
+- **Visual regression 2026.** saucelabs.com/resources/blog/comparing-the-20-best-visual-testing-tools-of-2026; percy.io/blog/visual-regression-testing-tools. Chromatic/Percy/Applitools, self-reported вендорские цифры. `[VFY-day-of]` (§4.5)
 
 **Ревью и безопасность.**
 - **Zeng et al.** arXiv:2509.01494 — эффективность AI-ревью ~19% F1 (SWR-Bench). **CodeCrash** arXiv:2504.14119 — вводящие в заблуждение комментарии дают −23,2% деградацию output-prediction reasoning (CRUXEVAL/LIVECODEBENCH), НЕ code-review F1. `[VFY-baseline: ~19% F1 vs human-review]` (§5.3)
@@ -328,7 +349,9 @@
 **Доставка, эксплуатация, документация.**
 - **Anthropic AI-Native SDLC.** claude.com/blog/the-ai-native-sdlc-playbook; code.claude.com/docs/best-practices. Git-loop, headless -p, hooks-as-gates, least-privilege, human prod-gate. `[VFY-day-of]` (§3.3, §5, §6.1)
 - **AWS Q Operational Investigations.** aws.amazon.com — CloudWatch RCA. `[VFY-day-of GA]` (§6.1)
-- **Atlassian Confluence AI / Rovo.** atlassian.com/software/jira/ai. (§1.2, §5.2, §6.2)
+- **Atlassian Confluence AI / Rovo.** atlassian.com/software/jira/ai; eesel.ai/blog/confluence-ai; eesel.ai/blog/atlassian-intelligence-confluence-ai-features. Суммаризация, генерация, Q&A-поиск. `[VFY-day-of]` (§1.2, §5.2, §6.2, §6.3)
+- **AWS Q Developer /doc.** docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/doc-generation.html; aws.amazon.com/blogs/devops/simplifying-code-documentation-with-amazon-q-developer. Анализ кодовой базы, диаграммы из IaC, feedback loop. (§6.3)
+- **Community README-generator skills.** github.com/GLINCKER/claude-code-marketplace (skills/documentation/readme-generator); github.com/anthropics/skills (сверка «из коробки»). Code Documentation Skill / README Generator — community-паттерн, не официальный skill. (§6.3)
 - **DORA 2024/2025.** dora.dev/research/2024; cloud.google.com announcing-2025-dora-report. +7,5% docs / −7,2% stability; «amplifies what's already there»; 7 capabilities. `[VFY-day-of]` (§1 Deep-dive box 1, §6.2, §7.2)
 
 **Обучение и навык.**
@@ -338,7 +361,7 @@
 - **Russell, S., Norvig, P.** (2021). *Artificial Intelligence: A Modern Approach,* 4th ed. Pearson — общеучебный референс по агентам.
 - **Лекция 3 (этот курс), §4.2 / §4.7 / §5.1 / §5.2** (`library/lectures/lec-03/chapter*.md`) — цикл агента plan→act→check→iterate, prompt injection, лестница сложности, «когда не ИИ вовсе». Пререквизит, не переобъясняется.
 
-**references_count: 48** (консолидировано из пяти ресёрч-файлов, включая методико-first `methodics-as-practice.md` + `harness-and-architecture-practices.md`: OpenAI Model Spec/Grove, Nygard ADR, Ford fitness-функции/эволюционная архитектура, Brown C4, agents.md, Böckeler harness/context-engineering; полный список с confidence — в research `sources.md`).
+**references_count: 58** (консолидировано из шести ресёрч-файлов, включая методико-first `methodics-as-practice.md` + `harness-and-architecture-practices.md` + `methodology-and-tooling-expansion.md` (issue #162, round 2: BDD/trunk-based/тест-инструментарий/docs-инструментарий): OpenAI Model Spec/Grove, Nygard ADR, Ford fitness-функции/эволюционная архитектура, Brown C4, agents.md, Böckeler harness/context-engineering, Cucumber/Automation Panda/303software, Postman/Testcontainers/visual-regression, eesel.ai/AWS Q docs; полный список с confidence — в research `sources.md`).
 
 ---
 

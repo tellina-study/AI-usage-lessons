@@ -59,11 +59,11 @@ slides:
   - id: s13
     file: slides-en/s13-complication.md
     type: complication
-    assertion: ""Visa" and "Mastercard": close by vector, not the same thing"
+    assertion: "\"Visa\" and \"Mastercard\": close by vector, not the same thing"
   - id: s14
     file: slides-en/s14-scheme.md
     type: scheme
-    assertion: "Hybrid "similarity + structural keys""
+    assertion: "Hybrid \"similarity + structural keys\""
   - id: s15
     file: slides-en/s15-breakdown.md
     type: breakdown
@@ -79,7 +79,7 @@ slides:
   - id: s18
     file: slides-en/s18-context.md
     type: context
-    assertion: "Extract "who pays whom, how much, and when""
+    assertion: "Extract \"who pays whom, how much, and when\""
   - id: s19
     file: slides-en/s19-concept.md
     type: concept
@@ -87,7 +87,7 @@ slides:
   - id: s20
     file: slides-en/s20-complication.md
     type: complication
-    assertion: ""...if it provides the guarantee" -- who is "it"?"
+    assertion: "\"...if it provides the guarantee\" -- who is \"it\"?"
   - id: s21
     file: slides-en/s21-scheme.md
     type: scheme
@@ -103,7 +103,7 @@ slides:
   - id: s24
     file: slides-en/s24-context.md
     type: context
-    assertion: ""It answers inaccurately -- make it better""
+    assertion: "\"It answers inaccurately -- make it better\""
   - id: s25
     file: slides-en/s25-concept.md
     type: concept
@@ -111,7 +111,7 @@ slides:
   - id: s26
     file: slides-en/s26-complication.md
     type: complication
-    assertion: ""You are an experienced lawyer" doesn't move the metric"
+    assertion: "\"You are an experienced lawyer\" doesn't move the metric"
   - id: s27
     file: slides-en/s27-breakdown.md
     type: breakdown
@@ -131,7 +131,7 @@ slides:
   - id: s31
     file: slides-en/s31-variants.md
     type: variants
-    assertion: "One prompt, three temperatures: an axis of spread, not of "flair""
+    assertion: "One prompt, three temperatures: an axis of spread, not of \"flair\""
   - id: s32
     file: slides-en/s32-concept.md
     type: concept

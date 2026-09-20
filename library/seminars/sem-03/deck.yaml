@@ -1,237 +1,182 @@
 deck:
   seminar_number: 3
-  title: "Семинар 3 — Смысл, фокус, случайность: три механизма внутри модели"
-  audience: "студенты 3 курса, направление 09.03.01, группа 1 — семинар идёт ПОСЛЕ Лекции 2 в тот же день (закрепление, не введение)"
-  duration_min: 76
-  format: "разбор+опрос_дискуссия+индивидуальное_предсказание"
-  central_question: "Эмбеддинги, внимание, сэмплинг — насколько точно вы умеете предсказать, что сделает модель, прежде чем она это сделает?"
+  title: "Семинар 3 — Три механизма модели в системном дизайне"
+  format: "разбор_кейсов"
+  central_question: "Три механизма в шести задачах системного дизайна: строим, правим, дорабатываем."
   learning_outcomes: [LO1, LO4, LO6, LO7]
-  lo_note: "Закрепляет LO1 (четырёхэтапный конвейер inference), LO4 (подбор параметров сэмплинга под сценарий), LO6 (ограничения LLM-инференса), LO7 (обоснование трёх «почему» через механизм) из Лекции 2."
   language: ru
-
+  visual_style: "matched to sem-02 (Ocean rounded boxes, schema pipelines, example cards)"
+  render: "tools/seminar-render/build_cases_deck.py"
 slides:
   - id: s01
-    file: slides/s01-hero-cover.md
-    type: hero_cover
-    assertion: "Смысл, фокус, случайность — три механизма внутри модели"
-    learning_goal: "Emotional hook + hero-иллюстрация: реальная t-SNE визуализация embedding-пространства, foreshadow keystone-оси Блока 1"
-    visual:
-      pattern: hero_cover_real_photo
-      backup: assets/screenshots/s01-tsne-embedding-real.png
-
+    file: slides/s01-cover.md
+    type: cover
+    assertion: "Три механизма модели в системном дизайне"
   - id: s02
-    file: slides/s02-recap-pipeline.md
-    type: assertion_visual
-    assertion: "Четыре этапа конвейера — сегодня фокус на трёх последних"
-    learning_goal: "Мостик от Семинара 2 + визуальный recap 4-этапного конвейера inference (токенизация → эмбеддинг → внимание → сэмплинг)"
-    visual:
-      pattern: process_4_step_strip
-
+    file: slides/s02-map.md
+    type: map
+    assertion: "Три блока, шесть задач"
   - id: s03
-    file: slides/s03-block1-intro.md
-    type: assertion_visual
-    assertion: "Cosine similarity — угол между векторами смысла"
-    learning_goal: "Recap SSL/HTTPS/React/борщ пример + постановка Блока 1"
-    visual:
-      pattern: recap_card_plus_intro
-
+    file: slides/s03-divider.md
+    type: divider
+    assertion: "Эмбеддинги: сравнение и группировка по смыслу"
   - id: s04
-    file: slides/s04-omonyms-q.md
-    type: poll_reveal
-    assertion: "«Мышь» и «ключ» — одно слово, два смысла. Близко или далеко?"
-    learning_goal: "Пары А (мышь) + Б (ключ) вместе — постановка (голосование до ответа)"
-    visual:
-      pattern: vote_two_cards_no_answer
-
+    file: slides/s04-context.md
+    type: context
+    assertion: "Какую embedding-модель взять под свой корпус"
   - id: s05
-    file: slides/s05-omonyms-a.md
-    type: poll_reveal
-    assertion: "Слово совпало — смысл разошёлся. Низкая семантическая близость несмотря на 100% лексическое совпадение"
-    learning_goal: "Раскрытие ответов для пар А (мышь) + Б (ключ)"
-    visual:
-      pattern: reveal_two_cards
-
+    file: slides/s05-concept.md
+    type: concept
+    assertion: "Как выбирать: сначала eval, потом всё остальное"
   - id: s06
-    file: slides/s06-paraphrases-q.md
-    type: poll_reveal
-    assertion: "«Продакшн-сервер» и «бэкенд» — разные слова. Близко или далеко?"
-    learning_goal: "Пары В (сервер/бэкенд) + Г (баг/дефект) вместе — постановка (голосование до ответа)"
-    visual:
-      pattern: vote_two_cards_no_answer
-
+    file: slides/s06-variants.md
+    type: variants
+    assertion: "Три оси выбора — каждая проверяется тем же eval"
   - id: s07
-    file: slides/s07-paraphrases-a.md
-    type: poll_reveal
-    assertion: "Слова разные — смысл совпал. Зеркальная ситуация парам А/Б"
-    learning_goal: "Раскрытие ответов для пар В (сервер/бэкенд) + Г (баг/дефект)"
-    visual:
-      pattern: reveal_two_cards
-
+    file: slides/s07-complication.md
+    type: complication
+    assertion: "Лидер бенчмарка проседает именно на русском домене"
   - id: s08
-    file: slides/s08-strawberry-search-q.md
-    type: poll_reveal
-    assertion: "Пять документов, запрос «клубника» — кто их найдёт?"
-    learning_goal: "Упражнение «клубника» — 5 документов-кандидатов, таблица-предсказание (постановка, голосование до ответа)"
-    visual:
-      pattern: five_row_prediction_table_no_answer
-
+    file: slides/s08-scheme.md
+    type: scheme
+    assertion: "Пайплайн выбора: лидерборд → eval → метрики → выбор"
   - id: s09
-    file: slides/s09-strawberry-search-a.md
-    type: poll_reveal
-    assertion: "Общий корень — не то же самое, что общий смысл"
-    learning_goal: "Раскрытие ответов упражнения «клубника», документ-ловушка 4 разобран явно"
-    visual:
-      pattern: five_row_prediction_table_reveal
-
+    file: slides/s09-breakdown.md
+    type: breakdown
+    assertion: "Кейс 1.1 · Разбор"
   - id: s10
-    file: slides/s10-block1-reflection.md
-    type: reflection_question
-    assertion: "Когда полнотекстовый поиск лучше семантического?"
-    learning_goal: "Worked-example юридического поиска по договорам + обязательный вопрос всем классом — AI-Failure/Judgment content, decision tree §5.3 связка"
-    visual:
-      pattern: worked_example_top_question_bottom
-
+    file: slides/s10-resolution.md
+    type: resolution
+    assertion: "Кейс 1.1"
   - id: s11
-    file: slides/s11-block2-intro.md
-    type: assertion_visual
-    assertion: "Фонарик в тёмной комнате — внимание распределяет вес между токенами"
-    learning_goal: "Recap метафоры фонарика + пример «Кот съел мышь» — постановка Блока 2 (ЯДРО ЗАНЯТИЯ)"
-    visual:
-      pattern: recap_card_plus_intro
-
+    file: slides/s11-context.md
+    type: context
+    assertion: "Схлопнуть дубли в потоке тикетов поддержки"
   - id: s12
-    file: slides/s12-winograd-1-q.md
-    type: comparison
-    assertion: "Трофей не влез в чемодан, потому что он был слишком большой — кто «он»?"
-    learning_goal: "Winograd Schema, вариант 1/2 — постановка (голосование до ответа), разминочный раунд"
-    visual:
-      pattern: story_no_answer
-
+    file: slides/s12-concept.md
+    type: concept
+    assertion: "Как устроен дедуп — и зачем структурный гейт"
   - id: s13
-    file: slides/s13-winograd-1-a.md
-    type: comparison
-    assertion: "«Он» = трофей — большой предмет не влезает в вместилище"
-    learning_goal: "Winograd Schema, вариант 1/2 — раскрытие ответа + академическая атрибуция (Levesque/Davis/Morgenstern)"
-    visual:
-      pattern: story_reveal_with_weight_viz
-
+    file: slides/s13-complication.md
+    type: complication
+    assertion: "«Visa» и «Mastercard»: похоже по вектору, но не одно и то же"
   - id: s14
-    file: slides/s14-winograd-2-q.md
-    type: comparison
-    assertion: "Трофей не влез в чемодан, потому что он был слишком маленький — кто «он» теперь?"
-    learning_goal: "Winograd Schema, вариант 2/2 — постановка (голосование до ответа), ключевой момент раздела"
-    visual:
-      pattern: story_no_answer
-
+    file: slides/s14-scheme.md
+    type: scheme
+    assertion: "Гибрид «близость + структурные ключи»"
   - id: s15
-    file: slides/s15-winograd-2-a.md
-    type: comparison
-    assertion: "Одна грамматика — разный ответ. Смена слова переворачивает референт"
-    learning_goal: "Winograd Schema, вариант 2/2 — раскрытие ответа + обязательная связка «мировые знания, не только синтаксис»"
-    visual:
-      pattern: story_reveal_with_weight_viz
-
+    file: slides/s15-breakdown.md
+    type: breakdown
+    assertion: "Кейс 1.2 · Разбор"
   - id: s16
-    file: slides/s16-coref-tech-q.md
-    type: comparison
-    assertion: "Менеджер поругал стажёра, потому что он не проверил тесты — кто «он»?"
-    learning_goal: "Техническая кореференция — постановка (голосование до ответа)"
-    visual:
-      pattern: story_no_answer
-
+    file: slides/s16-resolution.md
+    type: resolution
+    assertion: "Кейс 1.2"
   - id: s17
-    file: slides/s17-coref-tech-a.md
-    type: comparison
-    assertion: "«Он» = стажёр — вес внимания на «стажёр» и «коммит»"
-    learning_goal: "Техническая кореференция — раскрытие ответа через attention-вес"
-    visual:
-      pattern: story_reveal_with_weight_viz
-
+    file: slides/s17-divider.md
+    type: divider
+    assertion: "Внимание: что модель понимает в тексте"
   - id: s18
-    file: slides/s18-coref-ambiguous-q.md
-    type: comparison
-    assertion: "Пилот сказал диспетчеру, что он ошибся в расчётах — кто «он»?"
-    learning_goal: "Намеренно неоднозначный случай без единственного ответа — постановка (голосование до ответа)"
-    visual:
-      pattern: dashed_gold_border_story_no_answer
-
+    file: slides/s18-context.md
+    type: context
+    assertion: "Извлечь «кто, кому, сколько и когда платит»"
   - id: s19
-    file: slides/s19-coref-ambiguous-a.md
-    type: comparison
-    assertion: "Оба прочтения разумны — распределение вероятностей, а не единственный ответ"
-    learning_goal: "Намеренно неоднозначный случай — раскрытие: оба ответа валидны, честная неопределённость"
-    visual:
-      pattern: dashed_gold_border_dual_answer
-
+    file: slides/s19-concept.md
+    type: concept
+    assertion: "Значение + span-обоснование + гейт уверенности"
   - id: s20
-    file: slides/s20-block2-reflection.md
-    type: reflection_question
-    assertion: "Уверенный ответ — это понимание или статистически надёжное угадывание?"
-    learning_goal: "Документированный провал WinoBias (Zhao et al., 2018) + закрывающая рефлексия Блока 2 — связка с уровнями причинности Перла (Лекция 1)"
-    visual:
-      pattern: worked_example_top_question_bottom
-
+    file: slides/s20-complication.md
+    type: complication
+    assertion: "«…если он предоставит гарантию» — кто «он»?"
   - id: s21
-    file: slides/s21-block3-intro.md
-    type: assertion_visual
-    assertion: "Четыре ручки API — предсказуемость против разнообразия"
-    learning_goal: "Recap таблицы 4 параметров API — постановка Блока 3"
-    visual:
-      pattern: recap_card_plus_intro
-
+    file: slides/s21-scheme.md
+    type: scheme
+    assertion: "LLM-извлечение с верификацией критичных полей"
   - id: s22
-    file: slides/s22-homework-debrief.md
-    type: case_study
-    assertion: "T=0 / T=0.7 / T=1.5 — что изменилось в вашем эксперименте?"
-    learning_goal: "Визуальный промпт для разбора ДЗ — единственный компонент занятия с реальными данными студентов"
-    visual:
-      pattern: three_column_debrief_prompt
-
+    file: slides/s22-breakdown.md
+    type: breakdown
+    assertion: "Кейс 2.1 · Разбор"
   - id: s23
-    file: slides/s23-temperature-guess-q.md
-    type: poll_reveal
-    assertion: "Три ответа на один промпт — какой температуре какой соответствует?"
-    learning_goal: "Игра «угадай температуру» — постановка (голосование до ответа), 3 illustrative-ответа"
-    visual:
-      pattern: three_text_samples_no_answer
-
+    file: slides/s23-resolution.md
+    type: resolution
+    assertion: "Кейс 2.1"
   - id: s24
-    file: slides/s24-temperature-guess-a.md
-    type: poll_reveal
-    assertion: "Повторяемость (низкая T) → естественная вариативность (средняя T) → распад связности (высокая T)"
-    learning_goal: "Игра «угадай температуру» — раскрытие ответов с явными признаками"
-    visual:
-      pattern: three_text_samples_reveal
-
+    file: slides/s24-context.md
+    type: context
+    assertion: "«Отвечает неточно — сделайте качественнее»"
   - id: s25
-    file: slides/s25-block3-reflection.md
-    type: reflection_question
-    assertion: "Когда стохастичность ответа — риск, а не удобство?"
-    learning_goal: "Worked-example банковский чат-бот (regex+Luhn вместо LLM) + закрывающая рефлексия Блока 3 + обязательная оговорка про T=0 и побитовую воспроизводимость"
-    visual:
-      pattern: worked_example_top_question_bottom
-
+    file: slides/s25-concept.md
+    type: concept
+    assertion: "Сначала метрика и базлайн, потом изменения"
   - id: s26
-    file: slides/s26-bridge-lec3.md
-    type: assertion_visual
-    assertion: "Сегодня — три механизма поодиночке. Дальше — модель выходит за пределы цикла"
-    learning_goal: "Лёгкий мостик к Лекции 3 (RAG/tools/MCP/agent loop), без раскрытия механики заранее"
-    visual:
-      pattern: hook_card_plus_tag_row
-
+    file: slides/s26-complication.md
+    type: complication
+    assertion: "«Ты — опытный юрист» на метрике не двигается"
   - id: s27
-    file: slides/s27-handout-memo.md
-    type: summary
-    assertion: "Три механизма внутри модели — что помнить"
-    learning_goal: "Итоговая памятка на вынос — компиляция без нового материала"
-    visual:
-      pattern: three_column_cheatsheet
-
+    file: slides/s27-breakdown.md
+    type: breakdown
+    assertion: "Кейс 2.2 · Разбор"
   - id: s28
-    file: slides/s28-hero-closing.md
-    type: hero_closing
-    assertion: "От механизмов внутри — к тому, что снаружи"
-    learning_goal: "Bridge к Лекции 3; emotional payoff; реальное фото промышленного робота-манипулятора"
-    visual:
-      pattern: hero_closing_bridge_photo
-      backup: assets/screenshots/s-closing-industrial-robots-real.jpg
+    file: slides/s28-resolution.md
+    type: resolution
+    assertion: "Кейс 2.2"
+  - id: s29
+    file: slides/s29-divider.md
+    type: divider
+    assertion: "Сэмплинг и токенизация: как модель порождает и видит текст"
+  - id: s30
+    file: slides/s30-context.md
+    type: context
+    assertion: "Карточки товара: описание и структурные параметры"
+  - id: s31
+    file: slides/s31-variants.md
+    type: variants
+    assertion: "Один промпт, три температуры: ось разброса, не «цветистости»"
+  - id: s32
+    file: slides/s32-concept.md
+    type: concept
+    assertion: "Температура задаёт разброс; схема задаёт форму, не истину"
+  - id: s33
+    file: slides/s33-complication.md
+    type: complication
+    assertion: "Регламентные поля: ни одна температура не спасает"
+  - id: s34
+    file: slides/s34-scheme.md
+    type: scheme
+    assertion: "Пайплайн с тремя ветками: два запуска + подстановка"
+  - id: s35
+    file: slides/s35-breakdown.md
+    type: breakdown
+    assertion: "Кейс 3.1 · Разбор"
+  - id: s36
+    file: slides/s36-resolution.md
+    type: resolution
+    assertion: "Кейс 3.1"
+  - id: s37
+    file: slides/s37-context.md
+    type: context
+    assertion: "Посимвольные фичи: пароль, карта, лимит, подсчёт"
+  - id: s38
+    file: slides/s38-concept.md
+    type: concept
+    assertion: "Почему модель структурно не считает символы"
+  - id: s39
+    file: slides/s39-complication.md
+    type: complication
+    assertion: "Патч ≠ навык: strawberry чинят, cranberry ломается"
+  - id: s40
+    file: slides/s40-scheme.md
+    type: scheme
+    assertion: "Детерминированное — коду, смысловое — модели"
+  - id: s41
+    file: slides/s41-breakdown.md
+    type: breakdown
+    assertion: "Кейс 3.2 · Разбор"
+  - id: s42
+    file: slides/s42-resolution.md
+    type: resolution
+    assertion: "Кейс 3.2"
+  - id: s43
+    file: slides/s43-closing.md
+    type: closing
+    assertion: "closing"

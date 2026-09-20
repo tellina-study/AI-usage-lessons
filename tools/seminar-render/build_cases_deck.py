@@ -555,16 +555,26 @@ KIND = {"cover": k_cover, "map": k_map, "divider": k_divider, "context": k_conte
         "finale": k_finale, "closing": k_closing}
 
 def build(sem):
+    """Render one seminar spec to pptx + deck yaml + per-slide md stubs.
+
+    `lang` on the spec (default "ru") picks the output names: the RU deck keeps
+    deck.yaml / slides/ / <dir>.pptx, a translated one writes deck.<lang>.yaml /
+    slides-<lang>/ / <dir>-<lang>.pptx, matching publish/publication-config.yaml.
+    """
+    lang = sem.get("lang", "ru")
+    en = lang != "ru"
     root = Path("library/seminars") / sem["dir"]
-    sld = root / "slides"
+    sld = root / (f"slides-{lang}" if en else "slides")
     if sld.exists():
         for f in sld.glob("*.md"): f.unlink()
     sld.mkdir(parents=True, exist_ok=True)
     prs = Presentation(); prs.slide_width = Inches(13.333); prs.slide_height = Inches(7.5)
     blank = prs.slide_layouts[6]
+    spec_file = sem.get("spec_file", f"spec_{sem['dir'].replace('-', '')}.py")
     deck = ["deck:", f"  seminar_number: {sem['number']}", f"  title: \"{sem['title']}\"",
-            "  format: \"разбор_кейсов\"", f"  central_question: \"{sem['central']}\"",
-            f"  learning_outcomes: {sem['lo']}", "  language: ru",
+            f"  format: \"{'case_walkthrough' if en else 'разбор_кейсов'}\"",
+            f"  central_question: \"{sem['central']}\"",
+            f"  learning_outcomes: {sem['lo']}", f"  language: {lang}",
             "  visual_style: \"matched to sem-02 (Ocean rounded boxes, schema pipelines, example cards)\"",
             "  render: \"tools/seminar-render/build_cases_deck.py\"", "slides:"]
     for i, sp in enumerate(sem["slides"], 1):
@@ -572,22 +582,29 @@ def build(sem):
         KIND[sp["kind"]](slide, sp)
         label = sp.get("title") or sp.get("kicker") or sp["kind"]
         fname = f"{sid}-{sp['kind']}.md"
-        deck += [f"  - id: {sid}", f"    file: slides/{fname}",
+        deck += [f"  - id: {sid}", f"    file: {sld.name}/{fname}",
                  f"    type: {sp['kind']}", f"    assertion: \"{label}\""]
+        pointer = (f"(See tools/seminar-render/{spec_file} — slide {sid}. Rendered from the spec.)"
+                   if en else
+                   f"(См. tools/seminar-render/{spec_file} — слайд {sid}. Рендер из спека.)")
         (sld / fname).write_text(
             f"---\nid: {sid}\ntype: {sp['kind']}\nassertion: \"{label}\"\n---\n\n"
-            f"# {label}\n\n(См. tools/seminar-render/spec_{sem['dir'].replace('-','')}.py — "
-            f"слайд {sid}. Рендер из спека.)\n", encoding="utf-8")
-    (root / "deck.yaml").write_text("\n".join(deck) + "\n", encoding="utf-8")
+            f"# {label}\n\n{pointer}\n", encoding="utf-8")
+    (root / (f"deck.{lang}.yaml" if en else "deck.yaml")).write_text(
+        "\n".join(deck) + "\n", encoding="utf-8")
     out = root / "rendered"; out.mkdir(exist_ok=True)
-    prs.save(str(out / f"{sem['dir']}.pptx"))
-    print(f"{sem['dir']}: {len(sem['slides'])} slides -> {out / (sem['dir']+'.pptx')}")
+    name = sem["dir"] + (f"-{lang}" if en else "")
+    prs.save(str(out / f"{name}.pptx"))
+    print(f"{name}: {len(sem['slides'])} slides -> {out / (name + '.pptx')}")
 
 if __name__ == "__main__":
     import importlib.util
+    import sys
     here = Path(__file__).parent
-    for spec_file in ["spec_sem03.py", "spec_sem04.py"]:
-        p = here / spec_file
-        st = importlib.util.spec_from_file_location(spec_file[:-3], p)
+    # Spec files may be named on the command line: rendering one seminar must
+    # not rebuild its neighbours (they can be mid-revision in another session).
+    for spec_file in sys.argv[1:] or ["spec_sem03.py", "spec_sem04.py"]:
+        p = here / Path(spec_file).name
+        st = importlib.util.spec_from_file_location(p.stem, p)
         m = importlib.util.module_from_spec(st); st.loader.exec_module(m)
         build(m.SEMINAR)

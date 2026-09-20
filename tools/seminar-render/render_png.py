@@ -687,9 +687,11 @@ def draw_overflow_marks(s):
 
 def render_seminar(sem):
     dir_ = sem["dir"]
+    lang = sem.get("lang", "ru")
+    name = dir_ + (f"-{lang}" if lang != "ru" else "")
     root = Path("library/seminars") / dir_
     out = root / "rendered"
-    png_dir = out / "png"
+    png_dir = out / ("png" if lang == "ru" else f"png-{lang}")
     png_dir.mkdir(parents=True, exist_ok=True)
     imgs = []
     overflow_report = []
@@ -705,18 +707,21 @@ def render_seminar(sem):
             for (label, *_rest) in s.overflows:
                 overflow_report.append((sid, sp["kind"], label))
     # combined PDF
-    pdf_path = out / f"{dir_}-preview.pdf"
+    pdf_path = out / f"{name}-preview.pdf"
     if imgs:
         imgs[0].save(str(pdf_path), save_all=True, append_images=imgs[1:])
     return len(imgs), overflow_report, png_dir, pdf_path
 
 
 if __name__ == "__main__":
+    import sys
     here = Path(__file__).parent
     results = {}
-    for spec_file in ["spec_sem03.py", "spec_sem04.py"]:
-        p = here / spec_file
-        st = importlib.util.spec_from_file_location(spec_file[:-3], p)
+    # Same convention as build_cases_deck.py: spec files may be named on the
+    # command line so one seminar can be re-rendered on its own.
+    for spec_file in sys.argv[1:] or ["spec_sem03.py", "spec_sem04.py"]:
+        p = here / Path(spec_file).name
+        st = importlib.util.spec_from_file_location(p.stem, p)
         m = importlib.util.module_from_spec(st); st.loader.exec_module(m)
         n, overflows, png_dir, pdf_path = render_seminar(m.SEMINAR)
         results[m.SEMINAR["dir"]] = (n, overflows, png_dir, pdf_path)

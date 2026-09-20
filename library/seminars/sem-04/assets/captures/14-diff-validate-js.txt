@@ -1,0 +1,14 @@
+diff --git a/src/validate.js b/src/validate.js
+index b2a06f5..4fbfb4b 100644
+--- a/src/validate.js
++++ b/src/validate.js
+@@ -6,3 +6,9 @@ export function isFormValid(form) {
+ export function showValidationErrors(form) {
+   form.reportValidity();
+ }
++
++// email regex дополнен: раньше пропускал "a@b" без точки в домене (issue: заказчик
++// прислал тестовую заявку с опечаткой в домене, форма её приняла).
++export function isValidEmail(value) {
++  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
++}

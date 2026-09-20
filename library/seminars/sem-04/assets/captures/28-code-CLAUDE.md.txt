@@ -1,0 +1,16 @@
+# CLAUDE.md
+
+signup-landing: статический лендинг с формой заявки на демо-урок. Готово = `npm run build`
+завершается кодом 0, `npx playwright test` зелёный, форма реально отправляет заявку на проде.
+
+## Safety / scope boundaries
+
+- Никогда не запускать деплой на прод без явного запроса.
+
+## Build, test, verify
+
+- Build: `npm run build`
+- Test: `npx playwright test`
+- Run locally: `npm run dev`
+- To verify a change actually works (not just compiles): открыть `dist/index.html` после сборки,
+  вручную отправить форму с заполненными и с пустыми полями.

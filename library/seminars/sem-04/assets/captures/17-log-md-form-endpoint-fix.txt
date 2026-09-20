@@ -1,0 +1,18 @@
+# Log — form-endpoint-fix
+
+## 2026-09-20T12:44:36+00:00 (после коммита `d82fc80`, ступень 6: `diff-reviewer.md`)
+`git switch -c form-endpoint-fix` — ветка создана от текущего `main` (включает
+`src/validate.js` из ранее слитой `fix-form-field`, `.mcp.json`, `deploy/SKILL.md`,
+`diff-reviewer.md`).
+
+## 2026-09-20T12:44:42+00:00
+Правка `src/validate.js`: добавлена функция `isValidEmail`, ужесточён regex —
+`^[^@\s]+@[^@\s]+\.[^@\s]+$` вместо отсутствовавшей ранее проверки точки в домене
+(тестовая заявка заказчика с опечаткой в домене раньше проходила форму). Коммит
+`cf58408` — `git commit -m "fix: tighten email validation regex (missing dot in domain
+was accepted)"`.
+
+## 2026-09-20T12:44:46+00:00 (после следующего коммита на `main`, ступень 7: `Tasks/` scaffolding)
+`git switch main && git merge form-endpoint-fix --no-edit` — `main` не уходил вперёд
+параллельно, поэтому это fast-forward merge (не отдельный merge-commit): `main` просто
+указывает на `cf58408`. Конфликтов не было.

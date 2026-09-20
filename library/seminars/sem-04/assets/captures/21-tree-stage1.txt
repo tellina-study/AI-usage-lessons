@@ -1,0 +1,10 @@
+$ git ls-tree -r --name-only 04df4a3 | sort   # commit 04df4a3
+
+AGENTS.md
+CLAUDE.md
+index.html
+package.json
+src/main.js
+tests/form.spec.ts
+
+# Комментарий: Ступень 1 (файл инструкций): + CLAUDE.md, + AGENTS.md (симлинк на CLAUDE.md). git init выполнен, ветка main.

@@ -1,0 +1,16 @@
+$ git ls-tree -r --name-only d82fc80 | sort   # commit d82fc80
+
+AGENTS.md
+.claude/agents/diff-reviewer.md
+CLAUDE.md
+.claude/settings.json
+.claude/skills/deploy/SKILL.md
+DECISIONS.md
+index.html
+.mcp.json
+package.json
+src/main.js
+src/validate.js
+tests/form.spec.ts
+
+# Комментарий: Ступень 6 (субагенты): + .claude/agents/diff-reviewer.md (независимый ревьюер diff'ов).

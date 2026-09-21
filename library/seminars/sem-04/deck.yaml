@@ -1,492 +1,545 @@
 deck:
   seminar_number: 4
   title: "Семинар 4 — Сборка кодинг-агента: лестница роста конфигурации"
-  audience: "студенты 3 курса, направление 09.03.01, группа 1 — практикующие инженеры, все вайбкодят"
+  audience: "студенты 3 курса, направление 09.03.01 — практикующие инженеры, все пользуются ИИ-ассистентами в работе"
   duration_min: 90
-  format: "слайды_фасилитатора+открытые_вопросы+разбор_дискуссия (без живого терминала)"
-  central_question: "У вас пустой репозиторий и агент, который в нём работает — какой блок конфигурации добавить первым, и как понять, что следующий добавлять ещё рано?"
+  format: "слайды фасилитатора + открытые вопросы с карточками-вариантами + совместное формирование конфигурации с залом (без живого терминала)"
+  central_question: "У вас репозиторий и агент, который в нём работает — какой блок конфигурации добавить первым, и как понять, что следующий добавлять ещё рано?"
   learning_outcomes: [LO7, LO6, LO3]
-  case: "signup-landing — лендинг с формой заявки: сборка, тест формы, деплой, задачи в GitHub, один разработчик с агентом"
+  case: "signup-landing — лендинг с формой заявки на демо-урок: сборка, тест формы, деплой, задачи в трекере; один разработчик с агентом, фиксированная дата показа заказчику"
   language: ru
-  slide_count: 56
-  failure_share: "28.5 мин из 90 = 31.7% (порог курса 30%)"
+  slide_count: 65
+  timing_budget: "84 мин материала + 6 мин резерва = 90; резерв распределён по слайдам (разделители ступеней 7×0,5 + слайды с живым обсуждением), отдельным слайдом не является"
+  failure_share: "38 мин из 84 = 45% строго внутри бюджета провалов, ограничений и критериев «ещё рано» (при консервативном счёте без разборов ответов зала — 26 из 84 = 31%)"
+  source: "library/seminars/sem-04/rework/section-0-otkrytie.md … section-7-protsess.md (финальная версия после двух правок); supersedes v1 deck.yaml + slides/s01–s56"
 
 slides:
-  # --- 0. Открытие ---
+  # --- Раздел 0. Открытие: требования, кейс, карта экипировки (9 мин материала) ---
   - id: s01
-    file: slides/s01-cover.md
+    file: slides/s01-oblozhka-centralnyy-vopros.md
     type: hero_cover
-    duration_min: 0.5
-    assertion: "Сборка кодинг-агента: семь ступеней конфигурации на одном сквозном кейсе"
-    learning_goal: "Обложка семинара — задать сквозной кейс и рамку занятия до первого содержательного слайда"
+    duration_min: 1
+    assertion: "Скопированная конфигурация — это чужие решения без чужих триггеров"
+    learning_goal: "Открытие занятия одной мыслью и одним вопросом — без оглавления и разгона; центральный вопрос ставится в первую минуту и держит всё занятие"
     visual:
       pattern: hero_cover
   - id: s02
-    file: slides/s02-karta-zanyatiya.md
+    file: slides/s02-trebovaniya-karkas.md
     type: assertion_visual
     duration_min: 0.5
-    assertion: "Девять разделов занятия — не девять тем, а один сквозной сайт, проходящий семь ступеней одной и той же лестницы конфигурации"
-    learning_goal: "Карта занятия: рамка из девяти разделов до первого содержательного слайда, единый сквозной кейс на всё занятие"
+    assertion: "Занятие начинается не с конфигурации агента, а с требований задачи"
+    learning_goal: "Открытие совместного формирования №1 — пустой каркас требований в двух группах по три, до того как прозвучал хоть один ответ зала"
     visual:
-      pattern: roadmap
+      pattern: cobuilding_empty_frame
   - id: s03
-    file: slides/s03-skvoznoy-keys.md
+    file: slides/s03-trebovaniya-zapolneno.md
     type: assertion_visual
-    duration_min: 0.5
-    assertion: "Один и тот же репозиторий одного и того же сайта проходит все семь ступеней — не абстрактный демо-проект"
-    learning_goal: "Постановка сквозного кейса: задача, стек, критерий «готово», давление дедлайна показа заказчику"
+    duration_min: 1.5
+    assertion: "Шесть требований делятся ровно пополам: три увидит в коде любой, три не будут видны нигде"
+    learning_goal: "Закрытие совместного формирования №1 — деление 3 + 3 как несущая арифметика всего занятия; три «невидимых» требования станут содержимым файла инструкций в следующем разделе"
     visual:
-      pattern: case_setup_card
+      pattern: cobuilding_filled_frame
   - id: s04
-    file: slides/s04-pustoy-repozitoriy.md
+    file: slides/s04-pustoy-repozitoriy-zadacha.md
     type: code_artifact
-    duration_min: 0.5
-    assertion: "Репозиторий совершенно пуст — добавлять в конфигурацию пока физически нечего"
-    learning_goal: "Снимок стартовой точки занятия: пустая директория signup-landing/ до первой задачи агенту"
-    visual:
-      pattern: terminal_snapshot_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/01-ls-la-empty-dir.txt, перенесено дословно"
-  - id: s05
-    file: slides/s05-pervaya-zadacha.md
-    type: code_artifact
-    duration_min: 0.5
-    assertion: "Одна задача целиком, одним запросом — не по частям — и агент строит сайт с нуля"
-    learning_goal: "Снимок первой задачи, поставленной агенту в пустом репозитории"
-    visual:
-      pattern: terminal_snapshot_card
-      backup: "Текст задачи взят дословно из plan.md (раздел 0, «Что делать — рецепт», шаг 2); сам кадр реальной CLI-сессии (полноэкранный снимок терминала с этим текстом внут"
-  - id: s06
-    file: slides/s06-utochnyayushchiy-vopros.md
-    type: code_artifact
-    duration_min: 0.5
-    assertion: "Агент начинает с нуля и не знает ничего, что не выводимо из уже существующего кода — а кода пока и нет"
-    learning_goal: "Фрагмент диалога: момент, где агент уточняет то, что не выводится из кода (хостинг, команда проверки сборки)"
-    visual:
-      pattern: dialogue_snippet_card
-      backup: "Ждёт досъёмки — TODO-capture.md, позиция 2 («первая задача агенту + его уточняющий вопрос»). До досъёмки карточка остаётся плейсхолдером с подписью «ждёт реальн"
-  - id: s07
-    file: slides/s07-otkrytyy-vopros.md
-    type: reflection_question
     duration_min: 1
-    assertion: "На маленьком, только что собранном репозитории правильный ответ на вопрос о первом блоке конфигурации — «ничего»"
-    learning_goal: "Открытый вопрос классу дословно: какой блок конфигурации добавить первым и почему именно его"
+    assertion: "Репозиторий буквально пуст, и задача агенту поставлена одним запросом, целиком"
+    learning_goal: "Постановка сквозного кейса: реальный вывод пустой директории и дословная формулировка задачи, которая действительно подавалась реальному агенту"
     visual:
-      pattern: open_question_card
+      pattern: terminal_and_task_card
+  - id: s05
+    file: slides/s05-chto-realno-proizoshlo.md
+    type: code_artifact
+    duration_min: 1
+    assertion: "Агент не задал ни одного уточняющего вопроса — всё, чего он не знал, он решил за вас молча"
+    learning_goal: "Поворот раздела 0: настоящая боль не в том, что агент переспрашивает, а в том, что он не переспрашивает; арифметика «в его контексте было три требования из шести»"
+    visual:
+      pattern: dialogue_excerpt_card
+  - id: s06
+    file: slides/s06-pervyy-otkrytyy-vopros.md
+    type: reflection_question
+    duration_min: 2
+    assertion: "Бремя доказательства лежит на том, кто усложняет, а не на том, кто остаётся внизу"
+    learning_goal: "Первый открытый вопрос занятия с готовым набором вариантов (все семь ступеней сразу плюс «ничего») + разбор четырёх типовых позиций как четыре явных критерия «здесь ещё рано»"
+    visual:
+      pattern: question_with_option_cards
+  - id: s07
+    file: slides/s07-karta-ekipirovki-pustaya.md
+    type: keystone_axis
+    duration_min: 1
+    assertion: "Экипировка агента — это пять слотов поверх базового цикла «планируй → действуй → проверяй → повторяй»"
+    learning_goal: "Открытие совместного формирования №2 — карта слотов предъявляется ПУСТОЙ, зал восстанавливает названия по памяти с Лекции 3, а не читает с экрана"
+    visual:
+      pattern: cobuilding_empty_map
   - id: s08
-    file: slides/s08-lestnitsa-celikom.md
+    file: slides/s08-karta-ekipirovki-zapolnennaya.md
     type: keystone_axis
     duration_min: 1.5
-    assertion: "Семь ступеней лестницы — один принцип: каждый блок конфигурации добавляется по конкретному триггеру, не про запас"
-    learning_goal: "Keystone-axis-слайд: несущая ось занятия целиком, до первого погружения в ступень 1"
+    assertion: "Оставайтесь на самой нижней ступени, которая закрывает требование задачи"
+    learning_goal: "Закрытие совместного формирования №2 — заполненная карта пяти слотов плюс два практических слоя, правило лестницы дословно и явное объяснение, почему порядок семинара отличается от порядка лекции"
     visual:
-      pattern: ladder_full_table
+      pattern: cobuilding_filled_map
+  # --- Ступень 1. Файл инструкций (11 мин материала) ---
   - id: s09
-    file: slides/s09-provall-replit.md
-    type: failure_vignette
-    duration_min: 2.5
-    assertion: "Явно произнесённое правило, ничем не подкреплённое механически, не защищает ни от ошибки, ни от лжи о результате"
-    learning_goal: "Провал раздела 0 — Replit/SaaStr: ни одного блока конфигурации из семи, поэтому пример открывает занятие"
+    file: slides/s09-divider-fayl-instrukciy.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Ступень 1 — файл инструкций: записываем только то, чего агент не выведет из кода"
+    learning_goal: "Разделитель ступени 1, одна строка смысла и метка состава раздела"
     visual:
-      pattern: failure_vignette
-  # --- 1. Файл инструкций ---
+      pattern: section_divider
   - id: s10
-    file: slides/s10-divider-fayl-instrukciy.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Агент, который каждый раз переспрашивает то, что вы уже объяснили, — триггер для первой ступени лестницы"
-    learning_goal: "Переход на Ступень 1 лестницы: файл инструкций решает проблему «агент не помнит между сессиями»"
+    file: slides/s10-scenariy-gotovo-raskhodyatsya.md
+    type: scenario_question
+    duration_min: 3
+    assertion: "«Готово» для агента — это «собралось и тест зелёный»; «готово» для вас — это «заявка доставлена на проде», и эти два определения разошлись молча"
+    learning_goal: "Сценарий-боль ступени 1 на материале signup-landing + открытый вопрос дословно с пятью карточками-вариантами + разбор шести позиций, каждая с границей применимости"
     visual:
-      pattern: section_divider_card
+      pattern: scenario_question_cards
   - id: s11
-    file: slides/s11-pain-and-question.md
-    type: reflection_question
-    duration_min: 3
-    assertion: "Агент второй раз подряд спрашивает то же самое в новой сессии, потому что у него нет памяти между сессиями"
-    learning_goal: "Сценарий-боль + открытый вопрос классу дословно: агент переспрашивает команды сборки/теста во второй сессии"
+    file: slides/s11-cobuilding-khod1-stroka.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Первая строка, которую зал хочет записать в файл инструкций, — это команды сборки и теста"
+    learning_goal: "Совместное формирование ступени 1, ход 1 — зал называет первую строку, фасилитатор записывает её дословно и без комментария"
     visual:
-      pattern: failure_vignette_question
-      backup: "Верхняя карточка (фрагмент диалога повторного вопроса) — ждёт досъёмки, TODO-capture.md, позиция 3. Текст открытого вопроса классу — дословно из plan.md, захвач"
+      pattern: cobuilding_step
   - id: s12
-    file: slides/s12-code-claude-md.md
-    type: code_artifact
-    duration_min: 2.5
-    assertion: "CLAUDE.md содержит только то, что агент не выведет сам из кода — реальные команды сборки и теста этого сайта"
-    learning_goal: "Решение ступени 1: рабочий CLAUDE.md сайта signup-landing, раздел Build, test, verify заполнен реальными командами"
+    file: slides/s12-cobuilding-khod2-vycherkivanie.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Имена скриптов придумал сам агент и сам записал их в package.json — строка про команды в файле инструкций почти ничего не добавляет, но платит контекстом в каждом запросе"
+    learning_goal: "Совместное формирование ступени 1, ход 2 — вычёркивание: зал своими руками убирает строку, дублирующую стандартное всегда читаемое место"
     visual:
-      pattern: code_block_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/28-code-CLAUDE.md.txt, перенесено дословно"
+      pattern: cobuilding_strikethrough
   - id: s13
-    file: slides/s13-agents-md-simlink.md
-    type: code_artifact
-    duration_min: 1
-    assertion: "AGENTS.md — симлинк на CLAUDE.md, не копия: один файл, один источник правды, читается любым движком"
-    learning_goal: "Кросс-движковый стандарт: AGENTS.md как симлинк на тот же CLAUDE.md, без дублирования содержимого"
+    file: slides/s13-cobuilding-khod3-tri-stroki.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "В файл идут ровно те три требования, которые зал сам отложил в группу «нигде не будет видно»"
+    learning_goal: "Совместное формирование ступени 1, ход 3 — возврат к шести требованиям раздела 0 и явное смыкание арифметики 6 → 3 + 3"
     visual:
-      pattern: terminal_snapshot_card
-      backup: "Готово — состояние дерева после шага подтверждено captures/21-tree-stage1.txt (AGENTS.md и CLAUDE.md оба присутствуют в дереве коммита); сама команда ln -s — де"
+      pattern: cobuilding_step
   - id: s14
-    file: slides/s14-provall-ignorirovannoe-pravilo.md
-    type: failure_vignette
-    duration_min: 3.5
-    assertion: "Правило, записанное корректно, всё равно может быть проигнорировано — записанного текста недостаточно, чтобы гарантировать соблюдение"
-    learning_goal: "Провал ступени 1, два слоя: anthropics/claude-code#42863 (msiexec без запроса) + «200 строк проигнорировано» dev.to"
+    file: slides/s14-itogovyy-claude-md.md
+    type: code_artifact
+    duration_min: 1.5
+    assertion: "Итоговый файл инструкций — тринадцать строк и ровно три содержательных пункта, ни одного выводимого из кода"
+    learning_goal: "Решение ступени 1: реальный CLAUDE.md демо-репозитория, симлинк AGENTS.md, дерево ступени 1 и механика загрузки файла"
     visual:
-      pattern: failure_vignette
+      pattern: code_and_tree
   - id: s15
-    file: slides/s15-sloy-cifr.md
-    type: assertion_visual
-    duration_min: 1.5
-    assertion: "Наличие CLAUDE.md само по себе не повышает успех задачи, а поднимает стоимость на 20–23%; соблюдение инструкций падает почти линейно с их числом"
-    learning_goal: "Слой цифр ступени 1: RCT Gloaguen et al. про содержание файла + IFScale про число одновременных инструкций"
+    file: slides/s15-proval-presence-paradox.md
+    type: failure_vignette
+    duration_min: 2.5
+    assertion: "Сам факт наличия файла инструкций не покупает успех, но покупается контекстом всегда"
+    learning_goal: "Провал/ограничение ступени 1 — контролируемый эксперимент presence paradox с явной базой сравнения и эффект раздутия файла; критерий «ещё рано» нижней плашкой"
     visual:
-      pattern: comparison_table_card
+      pattern: failure_vignette
+  # --- Ступень 2. Память (10 мин материала) ---
   - id: s16
-    file: slides/s16-kriteriy-eshche-rano.md
-    type: criterion
-    duration_min: 1
-    assertion: "Файл инструкций окупается только там, где закрывает реальный пробел, которого агент не восполнит чтением кода"
-    learning_goal: "Критерий «ещё рано» ступени 1 — закрывает раздел, мост к ступени 2"
+    file: slides/s16-divider-pamyat.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Ступень 2 — память: знание, которое появляется по ходу работы и исчезает вместе с сессией"
+    learning_goal: "Разделитель ступени 2, одна строка смысла и метка состава раздела"
     visual:
-      pattern: criterion
-  # --- 2. Память ---
+      pattern: section_divider
   - id: s17
-    file: slides/s17-divider-memory.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Решение, однажды отменённое и не записанное на диск, всплывает как будто впервые — агент не помнит вчерашней сессии, если факт нигде не сохранён"
-    learning_goal: "Переход на Ступень 2 лестницы: память — отдельный слой, который агент сам не ведёт по умолчанию"
+    file: slides/s17-scenariy-otklonennoe-reshenie.md
+    type: scenario_question
+    duration_min: 3
+    assertion: "Уже отклонённое решение всплывает снова, потому что разговор, в котором его приняли, закончился — а его содержимое нигде не осталось"
+    learning_goal: "Сценарий-боль ступени 2 + открытый вопрос дословно с пятью карточками-вариантами + разбор пяти позиций; отдельно — механизм «модель не имеет состояния между вызовами»"
     visual:
-      pattern: section_divider_card
+      pattern: scenario_question_cards
   - id: s18
-    file: slides/s18-pain-and-question.md
-    type: reflection_question
-    duration_min: 2.5
-    assertion: "Решение, уже отклонённое в прошлой сессии, снова всплывает как будто впервые — верный признак, что контекст решения нигде не зафиксирован"
-    learning_goal: "Открытый вопрос классу: куда должна попасть однажды объяснённая причина, чтобы не повторять её в третий раз"
+    file: slides/s18-cobuilding-tri-korziny.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Не всё, что узнал агент, вообще стоит записывать — третья корзина такая же законная, как первые две"
+    learning_goal: "Совместное формирование ступени 2, ход 1 — три пустые корзины и пять карточек-фактов, сортировка вживую"
     visual:
-      pattern: failure_vignette_question
+      pattern: cobuilding_empty_frame
   - id: s19
-    file: slides/s19-auto-memory-demo.md
+    file: slides/s19-korziny-zapolnennye.md
     type: assertion_visual
-    duration_min: 2.5
-    assertion: "Авто-память рантайма живёт вне репозитория и грузится в каждую новую сессию сама — команда «запомни» создаёт файл, который переживает конец разговора"
-    learning_goal: "Решение ступени 2, механизм 1 — авто-память рантайма (~/.claude/projects/<project>/memory/); визуал ждёт досъёмки (TODO-capture #5, #6)"
+    duration_min: 1.5
+    assertion: "Командное решение с обоснованием идёт в репозиторий, личное предпочтение — в авто-память, выводимое из кода — никуда"
+    learning_goal: "Совместное формирование ступени 2, ход 1 завершён — разбор корзины «никуда» как самого ценного момента шага; затем ход 2, сборка записи по частям"
     visual:
-      pattern: terminal_capture_card
-      backup: "Плейсхолдер, ждёт досъёмки (TODO-capture #6): снимок /context в новой сессии того же репозитория, где MEMORY.md виден среди загруженного контекста, не только на"
+      pattern: cobuilding_filled_frame
   - id: s20
-    file: slides/s20-decisions-md.md
+    file: slides/s20-zapis-decisions-md.md
     type: code_artifact
-    duration_min: 1.5
-    assertion: "DECISIONS.md — командный, версионируемый лог «почему», видимый всем через git; авто-память — не замена ему, а отдельный, быстрый, машинно-локальный слой"
-    learning_goal: "Решение ступени 2, механизм 2 — DECISIONS.md и разведение ролей между ним, авто-памятью и CLAUDE.md"
+    duration_min: 0.5
+    assertion: "Журнал решений — append-only лог «почему», а не второй файл инструкций"
+    learning_goal: "Решение ступени 2: реальный DECISIONS.md из демо-репозитория, diff его создания и дерево ступени 2"
     visual:
-      pattern: code_diff_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/13-diff-DECISIONS-md.txt, перенесено дословно"
+      pattern: code_and_tree
   - id: s21
-    file: slides/s21-failure-memory-poisoning.md
-    type: failure_vignette
-    duration_min: 3.5
-    assertion: "Однажды попавшее в память обслуживается как доверенный контекст бессрочно — а решение, доверять ли что-то запоминать, само по себе непоследовательно между прогонами"
-    learning_goal: "Провал ступени 2, два слоя — AI-Failure/Judgment content: SpAIware (отравление памяти) + Anthropic Memory Tool (ephemeral discretion, harness-eval #40)"
+    file: slides/s21-tablica-treh-sloev.md
+    type: assertion_visual
+    duration_min: 0.5
+    assertion: "Разница между слоями не в формате — оба markdown, — а в том, кто инициирует запись и кто её потом увидит"
+    learning_goal: "Разграничение трёх слоёв записи: файл инструкций, авто-память, журнал решений — по авторству, месту жизни, механизму загрузки и прохождению ревью"
     visual:
-      pattern: failure_vignette
-      backup: "Нижняя карточка, gold-обводка — второй слой: Anthropic Memory Tool, «ephemeral discretion» (harness-eval issue #40, 2026) — на 4 из 24 задач (17%) модель явно о"
+      pattern: comparison_table
   - id: s22
-    file: slides/s22-criteria-too-early.md
-    type: criterion
-    duration_min: 0.5
-    assertion: "Правила проекта стабильны и укладываются в CLAUDE.md < 200 строк — значит, отдельный слой памяти этой задаче ещё не нужен"
-    learning_goal: "Критерий «здесь ещё не нужно» ступени 2 + нюанс (лимит загрузки MEMORY.md, риск отравления памяти, живой замер harness-eval) — закрывает раздел"
+    file: slides/s22-proval-otravlenie-pamyati.md
+    type: failure_vignette
+    duration_min: 3.5
+    assertion: "Память по умолчанию читается как доверенный контекст, а не как данные — и включение памяти не обязательно улучшает результат"
+    learning_goal: "Провал/ограничение ступени 2, два слоя разной природы: отравление памяти как класс атаки и измеренное «память есть ≠ память помогает»; критерий «ещё рано» нижней плашкой"
     visual:
-      pattern: criterion
-  # --- 3. Хуки ---
+      pattern: failure_vignette
+  # --- Ступень 3. Хук (13 мин материала) ---
   - id: s23
-    file: slides/s23-divider-hooks.md
+    file: slides/s23-divider-khuk.md
     type: section_divider
     duration_min: 0.5
-    assertion: "Правило, сформулированное текстом абсолютно корректно, остаётся просьбой, а не барьером, пока его не исполняет среда, а не согласие агента"
-    learning_goal: "Переход на Ступень 3 лестницы: хук — правило, которое исполняется механически, независимо от того, помнит ли его агент"
+    assertion: "Ступень 3 — хук: правило, которое исполняет среда, а не согласие модели"
+    learning_goal: "Разделитель ступени 3, одна строка смысла и метка состава раздела"
     visual:
-      pattern: section_divider_card
+      pattern: section_divider
   - id: s24
-    file: slides/s24-pain-and-question.md
-    type: reflection_question
-    duration_min: 2
-    assertion: "Правило было сформулировано абсолютно корректно текстом — и всё равно нарушено накануне показа, потому что осталось просьбой, а не барьером"
-    learning_goal: "Открытый вопрос классу: что сделать, чтобы прямой коммит в main стал невозможен, а не просто маловероятен"
+    file: slides/s24-scenariy-kommit-v-main.md
+    type: scenario_question
+    duration_min: 4
+    assertion: "Правило было записано и загружено — и всё равно нарушено, потому что файл инструкций по устройству является контекстом, а не принудительной конфигурацией"
+    learning_goal: "Сценарий-боль ступени 3 + открытый вопрос «невозможно, а не маловероятно» с пятью карточками + разбор пяти позиций + публичный случай против ответа «перепишу капсом» и формула «правила в промпте — просьбы, правила в коде — законы»"
     visual:
-      pattern: failure_vignette_question
+      pattern: scenario_question_cards
   - id: s25
-    file: slides/s25-code-hook-settings.md
+    file: slides/s25-cobuilding-pretooluse-bash.md
     type: assertion_visual
-    duration_min: 1.5
-    assertion: "git symbolic-ref --short HEAD, а не git rev-parse --abbrev-ref HEAD — у свежего репозитория без единого коммита rev-parse падает и молча оставляет проверку нерабочей"
-    learning_goal: "Решение ступени 3 — рабочий PreToolUse-хук из шаблона курса целиком, разбор построчно"
+    duration_min: 1
+    assertion: "Проверять надо до вызова и только на одном инструменте — чем шире условие срабатывания, тем дороже ошибка в самой логике хука"
+    learning_goal: "Совместное формирование ступени 3, вопросы 1–2 — событие PreToolUse и условие срабатывания на выполнение команд оболочки"
     visual:
-      pattern: code_block_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/29-code-settings.json.txt, перенесено дословно"
+      pattern: cobuilding_step
   - id: s26
-    file: slides/s26-hook-deny-main.md
+    file: slides/s26-cobuilding-json-symbolic-ref.md
     type: assertion_visual
-    duration_min: 2
-    assertion: "На ветке main тот же самый коммит получает deny — исполняет среда, не завязано на согласие агента; это и есть наблюдаемое срабатывание, а не файл, существующий на всякий случай"
-    learning_goal: "Слайд 3 раздела — дословный отказ хука на реальной попытке коммита в main"
+    duration_min: 1.5
+    assertion: "Привычная команда получения текущей ветки падает в свежем репозитории — а падающая проверка не блокирует, она просто не срабатывает"
+    learning_goal: "Совместное формирование ступени 3, вопросы 3–4 — разбор описания вызова со стандартного ввода и реальный контрпример symbolic-ref против rev-parse"
     visual:
-      pattern: terminal_capture_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/06-hook-deny-main.txt, перенесено дословно"
+      pattern: cobuilding_with_evidence
   - id: s27
-    file: slides/s27-hook-allow-branch.md
+    file: slides/s27-cobuilding-ne-repozitoriy.md
     type: assertion_visual
-    duration_min: 1.5
-    assertion: "Тот же коммит, после git switch -c отдельной командой, проходит без единого изменения кода — правило зависит от ветки, не от намерения агента"
-    learning_goal: "Слайд 4 раздела — тот же коммит после смены ветки; нюанс: хук читает ветку до выполнения всей Bash-команды целиком"
+    duration_min: 1
+    assertion: "Гейт, чей отказ молчалив, не считается установленным, пока его не заставили отказать громко"
+    learning_goal: "Совместное формирование ступени 3, вопрос 5 — главный: что хук возвращает, когда проверять нечего; три варианта, спор зала, целевой ответ «спросить» с реальным выводом"
     visual:
-      pattern: terminal_capture_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/07-hook-allow-feature-branch.txt, перенесено дословно"
+      pattern: cobuilding_vote
   - id: s28
-    file: slides/s28-hook-ask-no-repo.md
-    type: assertion_visual
-    duration_min: 1.5
-    assertion: "Вне git-репозитория хук не пропускает коммит молча — он честно просит подтверждения, потому что защита без репозитория не может ничего проверить"
-    learning_goal: "Разбор устройства хука, продолжение — is-inside-work-tree: почему отказ вне репозитория выглядит как ask, а не как тихое allow"
-    visual:
-      pattern: terminal_capture_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/09-hook-ask-no-repo.txt, перенесено дословно"
-  - id: s29
-    file: slides/s29-failure-malicious-hook.md
-    type: failure_vignette
-    duration_min: 3.5
-    assertion: "Вредоносный хук выполнился раньше, чем диалог доверия к папке вообще появился на экране — а гейт, который просто не сработал, выглядит ровно как гейт, который прошёл"
-    learning_goal: "Провал ступени 3, два слоя — AI-Failure/Judgment content: CVE-2025-59536 (хук как вектор атаки) + тихие несрабатывания (невалидный matcher, таймаут, субагенты)"
-    visual:
-      pattern: failure_vignette
-      backup: "Нижняя карточка, gold-обводка — второй слой: тихие несрабатывания. Один невалидный matcher в settings.json отключает все хуки файла без единой ошибки в интерфей"
-  - id: s30
-    file: slides/s30-criteria-too-early.md
-    type: criterion
-    duration_min: 0.5
-    assertion: "Проверка дешевле в CI на PR — не дублировать её на каждый PostToolUse в интерактивной сессии; соло-разработчик с низким blast radius — риск ещё не стал реальным"
-    learning_goal: "Критерий «здесь ещё не нужно» ступени 3 + нюанс (deny всегда побеждает allow, второе CVE, base64-обход) — закрывает раздел"
-    visual:
-      pattern: criterion
-  # --- 4. Скиллы ---
-  - id: s31
-    file: slides/s31-divider-skills.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Процедура, которая нужна не каждой сессии, не должна грузиться в каждую сессию — это работа для скилла, а не для файла инструкций"
-    learning_goal: "Переход на Ступень 4 лестницы: скиллы решают проблему «редкая процедура постоянно занимает контекст»"
-    visual:
-      pattern: section_divider_card
-  - id: s32
-    file: slides/s32-pain-and-question.md
-    type: reflection_question
-    duration_min: 3
-    assertion: "Сорок строк процедуры деплоя грузятся в каждую сессию, даже когда речь идёт о мелком баг-фиксе в форме — и это налог, а не польза"
-    learning_goal: "Открытый вопрос классу: куда вынести редкую процедуру и как сделать так, чтобы агент сам понял, когда её открыть"
-    visual:
-      pattern: failure_vignette_question
-  - id: s33
-    file: slides/s33-progressive-disclosure.md
-    type: assertion_visual
-    duration_min: 2
-    assertion: "Скилл читается в три уровня — метаданные, инструкции, ресурсы — и только первый уровень грузится всегда, остальные два по требованию"
-    learning_goal: "Механика progressive disclosure и обязательные поля фронтматтера объясняют, почему скилл решает проблему налога на контекст"
-    visual:
-      pattern: progressive_disclosure_table
-  - id: s34
-    file: slides/s34-code-deploy-skill.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "deploy/SKILL.md — конкретная процедура именно этого сайта, а не абстрактный шаблон, и description называет и что делает, и когда использовать"
-    learning_goal: "Разбор реального решения на материале сквозного кейса: как выглядит рабочий скилл целиком"
-    visual:
-      pattern: code_block_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/30-code-deploy-SKILL.md.txt, перенесено дословно"
-  - id: s35
-    file: slides/s35-failure-skills-check.md
-    type: case_study
-    duration_min: 3.5
-    assertion: "12 из 13 скиллов этого же курса не имеют фронтматтера с description — они физически не могут сработать по смыслу запроса"
-    learning_goal: "Провал на материале собственного курса как доказательство: описанный антипаттерн — не гипотетический, он уже стоит в репозитории"
-    visual:
-      pattern: live_check_table
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/11-skills-frontmatter-table.md (сводка) и 10-skills-frontmatter-head5.txt (сырой вывод head -5); панел"
-  - id: s36
-    file: slides/s36-criteria-too-early.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Скилл нужен не каждой повторяющейся задаче — если процедура грузится всегда, это файл инструкций, а если правило нельзя нарушать никогда, это хук"
-    learning_goal: "Критерий «здесь скилл ещё не нужен»: три случая, когда правильный выбор — не заводить скилл"
-    visual:
-      pattern: criteria_checklist_card
-  # --- 5. MCP ---
-  - id: s37
-    file: slides/s37-divider-mcp.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Нужен доступ к внешней системе, которую агент не может обойти командной строкой в одиночку, — это признак ступени, где решают MCP-серверы"
-    learning_goal: "Переход на Ступень 5 лестницы: MCP как общий переходник к внешней системе, у которого есть измеримая цена и своя дисциплина проверки"
-    visual:
-      pattern: section_divider_card
-  - id: s38
-    file: slides/s38-pain-and-question.md
-    type: reflection_question
-    duration_min: 3.5
-    assertion: "Агент почти готов получить официальный GitHub MCP-сервер — вопрос в том, что проверить до подключения, а не после"
-    learning_goal: "Открытый вопрос классу: что проверяют перед подключением официального MCP-сервера"
-    visual:
-      pattern: failure_vignette_question
-  - id: s39
-    file: slides/s39-code-mcp-json.md
-    type: assertion_visual
-    duration_min: 2
-    assertion: ".mcp.json живёт в корне репозитория и коммитится как код — область подключения ограничена конкретным репозиторием, не всей организацией сразу"
-    learning_goal: "Минимальный рабочий .mcp.json и три примитива протокола, каждый со своим субъектом решения"
-    visual:
-      pattern: code_block_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/32-code-mcp.json.txt, перенесено дословно. Снимок claude mcp add + claude mcp list (реальное подключен"
-  - id: s40
-    file: slides/s40-cost-table.md
-    type: assertion_visual
-    duration_min: 1.5
-    assertion: "Определения инструментов MCP сами по себе занимают контекст ещё до начала работы — типичная связка из 5 серверов без Tool Search обходится примерно в 55 000 токенов"
-    learning_goal: "Измеримая, неочевидная стоимость подключения MCP-сервера — цена определений инструментов в контексте, с базой сравнения"
-    visual:
-      pattern: comparison_table_card
-  - id: s41
-    file: slides/s41-counterexample-workspace-mcp.md
-    type: case_study
-    duration_min: 1
-    assertion: "«Подключён» — не то же самое, что «работает»: claude mcp list показывал ✓ Connected, пока сервер этого же курса был фактически недоступен"
-    learning_goal: "Контрпример из практики собственного курса: статус подключения не гарантирует работоспособность, оба нужно проверять отдельно"
-    visual:
-      pattern: counterexample_card
-      backup: "Готово — источник library/seminars/sem-04/assets/captures/12-workspace-mcp-connected-but-broken.md, дословная цитата notes/mcp-limitations.md [#49]"
-  - id: s42
-    file: slides/s42-failure-github-mcp-heist.md
-    type: case_study
-    duration_min: 4
-    assertion: "Одновременный доступ к публичному и приватным репозиториям через один и тот же MCP-сервер позволил агенту опубликовать чужие приватные данные в открытом PR — без единой строчки эксплойт-кода"
-    learning_goal: "Провал: GitHub MCP heist (26.05.2025) как конкретный случай и «смертельное трио» как объясняющая рамка"
-    visual:
-      pattern: incident_vignette_card
-  - id: s43
-    file: slides/s43-criteria-too-early.md
-    type: assertion_visual
-    duration_min: 0.5
-    assertion: "Если задачу решает известный CLI-вызов, разовое действие или снимок данных на момент запуска, подключать MCP-сервер рано — сложность протокола не окупается"
-    learning_goal: "Критерий «здесь MCP-сервер ещё не нужен»: четыре случая, где хватает обычного скрипта или команды"
-    visual:
-      pattern: criteria_checklist_card
-  # --- 6. Субагенты ---
-  - id: s44
-    file: slides/s44-subagenty-divider.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Субагент — отдельный сотрудник с чистым столом: не тащит в основной чат черновик поиска, только итог"
-    learning_goal: "Divider ступени 6 лестницы — база-тезис раздела предъявлена до сценария-боли; meme на разделителе (правило курса: мем только на дивайдерах и финальном слайде)"
-    visual:
-      pattern: section_divider
-  - id: s45
-    file: slides/s45-scenario-samoproverka.md
-    type: scenario_question
-    duration_min: 3
-    assertion: "Одна и та же сессия не может быть независимым ревьюером собственного изменения"
-    learning_goal: "Сценарий-боль + открытый вопрос классу ступени 6 — ладдер-триггер «повторяющаяся роль, которой не нужен общий контекст с основной сессией»"
-    visual:
-      pattern: scenario_question
-  - id: s46
-    file: slides/s46-diff-reviewer-verdikt.md
+    file: slides/s28-sobrannyy-khuk.md
     type: code_artifact
-    duration_min: 2
-    assertion: "Ревьюер видит только diff и критерии приёмки — не рассуждения, которые привели к изменению"
-    learning_goal: "Решение ступени 6 — frontmatter субагента, tools:-ограничение, вызов на реальный diff; часть визуала ждёт досъёмки (TODO-capture #15)"
+    duration_min: 0.5
+    assertion: "Собранный хук — обычный файл проекта, который коммитится и работает в любом свежем клоне без шага установки"
+    learning_goal: "Решение ступени 3: реальный .claude/settings.json демо-репозитория, дерево ступени 3 и четыре факта механики"
     visual:
-      pattern: code_diff_verdict
-      backup: "Нижняя панель — ответ `diff-reviewer` на этот diff, начинающийся строкой `VERDICT:` — ждёт досъёмки (TODO-capture #15, позиция «Ответ субагента diff-reviewer»)."
-  - id: s47
-    file: slides/s47-provall-mast-67730.md
+      pattern: code_and_tree
+  - id: s29
+    file: slides/s29-tri-srabatyvaniya.md
+    type: artifact_pair
+    duration_min: 1
+    assertion: "Полная проверка барьера — он запрещает то, что должно, и пропускает то, что должно; иначе вы поставили не барьер, а стену"
+    learning_goal: "Три реальных срабатывания хука подряд: отказ на main, пропуск на ветке, реально легший коммит — единственный способ показать, что барьер узкий"
+    visual:
+      pattern: three_frames_row
+  - id: s30
+    file: slides/s30-proval-konfiguraciya-kak-kod.md
     type: failure_vignette
-    duration_min: 4
-    assertion: "Отчёт субагента об успехе — утверждение, не доказательство"
-    learning_goal: "Провал ступени 6, два слоя — AI-Failure/Judgment content: MAST (доля провальных трасс мультиагентных систем) + GitHub issue #67730 (нулевые вызовы инструментов)"
+    duration_min: 2
+    assertion: "Конфигурация агента — это исполняемый код, приезжающий вместе с чужим репозиторием и срабатывающий до подтверждения доверия к папке"
+    learning_goal: "Провал ступени 3, слой 1 — две CVE с хронологией и, главное, то, что осталось после патчей: задокументированный компромисс, а не недоработка"
     visual:
       pattern: failure_vignette
-  - id: s48
-    file: slides/s48-kriteriy-subagenty.md
-    type: criterion
-    duration_min: 0.5
-    assertion: "Шаги, которым нужен общий ход рассуждений, не разносятся по субагентам"
-    learning_goal: "Критерий «ещё рано» ступени 6 + нюанс (стоимость мультиагентных систем в токенах, спор Cognition/Anthropic) — закрывает раздел"
+  - id: s31
+    file: slides/s31-proval-tikhiy-otkaz.md
+    type: failure_vignette
+    duration_min: 2.5
+    assertion: "Когда гейт не срабатывает, не происходит ничего — а именно так выглядит и успешно пройденный гейт"
+    learning_goal: "Провал ступени 3, слои 2–3 — пять причин молчаливого отказа и обход хука намерением плана; критерий «ещё рано» и место хука в карте нижней плашкой"
     visual:
-      pattern: criterion
-  # --- 7. Процесс ---
-  - id: s49
-    file: slides/s49-process-divider.md
+      pattern: failure_vignette
+  # --- Ступень 4. Скилл (9 мин материала) ---
+  - id: s32
+    file: slides/s32-divider-skill.md
     type: section_divider
     duration_min: 0.5
-    assertion: "План до кода — согласовать чертёж прежде чем заливать фундамент; прожарка — независимый техосмотр, не самоосмотр"
-    learning_goal: "Divider ступени 7 лестницы — база-тезис раздела предъявлена до сценария-боли; meme на разделителе (правило курса)"
+    assertion: "Ступень 4 — скилл: процедура, которая грузится только тогда, когда нужна"
+    learning_goal: "Разделитель ступени 4, одна строка смысла и метка состава раздела"
     visual:
       pattern: section_divider
-  - id: s50
-    file: slides/s50-scenario-gotovo.md
+  - id: s33
+    file: slides/s33-scenariy-sorok-strok.md
     type: scenario_question
-    duration_min: 1.5
-    assertion: "«Готово» в чате — утверждение, не доказательство, пока не указана проверяемая ссылка"
-    learning_goal: "Сценарий-боль + открытый вопрос классу ступени 7 — ладдер-триггер «работу принимают на слово, без проверки»"
+    duration_min: 3
+    assertion: "Файл инструкций облагает налогом каждый запрос процедурой, которая нужна примерно в одной сессии из десяти"
+    learning_goal: "Сценарий-боль ступени 4 + открытый вопрос дословно с пятью карточками + разбор пяти позиций, включая продуктивную путаницу «сделаю это хуком»"
     visual:
-      pattern: scenario_question
-  - id: s51
-    file: slides/s51-log-review.md
-    type: artifact_pair
-    duration_min: 1.5
-    assertion: "Закрыть задачу — только по проверяемой ссылке: SHA, PR или файл плюс таймстампированная запись, не по фразе «готово» в чате"
-    learning_goal: "Решение ступени 7 — log.md пишется по ходу работы, review.md фиксирует вердикт; часть визуала ждёт досъёмки (TODO-capture #18, заблокирована #15)"
+      pattern: scenario_question_cards
+  - id: s34
+    file: slides/s34-cobuilding-zadacha-na-ispravlenie.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Описание — единственный канал, по которому модель выбирает нужный скилл среди потенциально сотни установленных"
+    learning_goal: "Совместное формирование ступени 4, ход 2 — задача студенту на исправление: скилл, у которого описание совпадает с собственным именем, плюс три официально запрещённые формулировки"
     visual:
-      pattern: artifact_pair
-      backup: "Правая панель — заполненный `Tasks/2026-09-20_form-endpoint-fix/review.md` с вердиктом `PASS`/`BLOCK` — ждёт досъёмки (TODO-capture #18); блокирована позицией #"
-  - id: s52
-    file: slides/s52-provall-appworld-o3.md
+      pattern: cobuilding_fix_task
+  - id: s35
+    file: slides/s35-cobuilding-opisanie-iz-treh-chastey.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Описание — это поисковый запрос вашего будущего «я», забывшего детали через полгода"
+    learning_goal: "Совместное формирование ступени 4, ход 3 — описание собирается из трёх названных частей и совпадает с реальным описанием из демо-репозитория; ход 4 — тело из пяти шагов, четыре из которых зал уже называл"
+    visual:
+      pattern: cobuilding_step
+  - id: s36
+    file: slides/s36-itogovyy-skill-md.md
+    type: code_artifact
+    duration_min: 0.5
+    assertion: "Процедура переезжает целиком: сорок строк вырезаются из файла инструкций в тот же момент, когда появляется скилл"
+    learning_goal: "Решение ступени 4: реальный SKILL.md из демо-репозитория, дерево ступени 4 и явное требование убрать процедуру из файла инструкций"
+    visual:
+      pattern: code_and_tree
+  - id: s37
+    file: slides/s37-posloynoe-raskrytie.md
+    type: assertion_visual
+    duration_min: 0.5
+    assertion: "Скилл проверяется в обе стороны: что срабатывает, когда надо, и что молчит, когда не надо"
+    learning_goal: "Механика послойного раскрытия с официальными цифрами + положительная и отрицательная проверки скилла, из которых вторую обычно пропускают"
+    visual:
+      pattern: comparison_table
+  - id: s38
+    file: slides/s38-proval-vred-ot-skilla.md
     type: failure_vignette
-    duration_min: 4
-    assertion: "75,8% провальных траекторий кодинг-агентов были уверенно отчитаны как «готово»"
-    learning_goal: "Провал ступени 7, два слоя — AI-Failure/Judgment content: AppWorld self-report ненадёжность + METR/o3 reward hacking (зелёные тесты не гарантия)"
+    duration_min: 3.5
+    assertion: "Скиллы вредят не тогда, когда очевидно нерелевантны, а ровно тогда, когда кажутся релевантными"
+    learning_goal: "Провал/ограничение ступени 4, два слоя: измеренный вред от сработавшего скилла и скилл как исполняемый код из чужого источника; критерий «ещё рано» с анти-критерием про набор скиллов нижней плашкой"
     visual:
       pattern: failure_vignette
+  # --- Ступень 5. Доступ наружу (MCP) (11 мин материала) ---
+  - id: s39
+    file: slides/s39-divider-dostup-naruzhu.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Ступень 5 — доступ наружу: первый блок, который смотрит за пределы репозитория"
+    learning_goal: "Разделитель ступени 5, одна строка смысла и метка состава раздела"
+    visual:
+      pattern: section_divider
+  - id: s40
+    file: slides/s40-scenariy-issue-kopipast.md
+    type: scenario_question
+    duration_min: 3
+    assertion: "Правильный ответ — не одна проверка, а последовательность из трёх, и порядок в ней имеет значение"
+    learning_goal: "Сценарий-боль ступени 5 + открытый вопрос «что вы проверите ДО» с пятью карточками + разбор пяти позиций, сводящийся к порядку: нужно ли вообще → с какими правами → по какой цене"
+    visual:
+      pattern: scenario_question_cards
+  - id: s41
+    file: slides/s41-cobuilding-vycherkivanie-prav.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Из всего, что даёт широкий персональный токен, нашему списку операций нужен один репозиторий и две операции"
+    learning_goal: "Совместное формирование ступени 5, ходы 1–2 — сначала список операций, затем вычёркивание лишних прав строка за строкой; экран с вычеркнутыми правами понадобится в разборе провала"
+    visual:
+      pattern: cobuilding_strikethrough
+  - id: s42
+    file: slides/s42-cobuilding-klyuch-i-oblast.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Проверенный сервер идёт в репозиторий и проходит ревью; непроверенный эксперимент остаётся только у вас"
+    learning_goal: "Совместное формирование ступени 5, ходы 3–4 — ключ из переменной окружения и выбор области видимости; факт про область по умолчанию произносится голосом, без кадра"
+    visual:
+      pattern: cobuilding_step
+  - id: s43
+    file: slides/s43-itogovyy-mcp-json.md
+    type: code_artifact
+    duration_min: 0.5
+    assertion: "В файле подключения четыре строки существа, и одна из них — о том, откуда берётся ключ, а не какой он"
+    learning_goal: "Решение ступени 5: реальный .mcp.json демо-репозитория, дерево ступени 5, и напоминание, что главное про права живёт вне файла"
+    visual:
+      pattern: code_and_tree
+  - id: s44
+    file: slides/s44-cena-v-tokenakh.md
+    type: assertion_visual
+    duration_min: 0.5
+    assertion: "Одно и то же действие с одинаковым результатом стоит 1365 токенов командой в терминале и 44026 через инструмент сервера"
+    learning_goal: "Механика: три примитива и кто решает их применить + измеренная цена подключения в контексте, с явной базой сравнения в каждой строке"
+    visual:
+      pattern: data_table
+  - id: s45
+    file: slides/s45-podklyuchen-ne-znachit-rabotaet.md
+    type: failure_vignette
+    duration_min: 1
+    assertion: "Зелёный статус — это утверждение о транспорте, а не о работе; проверяется фактическим вызовом, а не индикатором"
+    learning_goal: "Ограничение ступени 5: строка статуса ловит ровно один класс отказа и не видит три остальных; плюс типовая ловушка семидневного отзыва токена"
+    visual:
+      pattern: failure_vignette
+  - id: s46
+    file: slides/s46-proval-eksfiltraciya-trio.md
+    type: failure_vignette
+    duration_min: 2
+    assertion: "Если хотя бы одного из трёх элементов нет — атака этого типа невозможна в принципе, а не маловероятна"
+    learning_goal: "Провал ступени 5, слои 1–2: эксфильтрация приватных данных через публичный issue как прямое следствие невычеркнутых прав + рамка смертельного трио как рабочий инструмент"
+    visual:
+      pattern: failure_vignette
+  - id: s47
+    file: slides/s47-proval-podmena-posle-odobreniya.md
+    type: failure_vignette
+    duration_min: 1.5
+    assertion: "Одобрение инструмента не действует бессрочно: доверие привязано к имени, а не к содержимому текущего описания"
+    learning_goal: "Провал ступени 5, слой 3 — подмена поведения инструмента после одобрения; критерий «ещё рано» со стоп-критерием по трио нижней плашкой"
+    visual:
+      pattern: failure_vignette
+  # --- Ступень 6. Кастомный ограниченный субагент (10 мин материала) ---
+  - id: s48
+    file: slides/s48-divider-subagent.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Ступень 6 — кастомный субагент: делегировать вообще уже бесплатно, заводить стоит роль с отнятыми правами"
+    learning_goal: "Разделитель ступени 6, одна строка смысла и метка состава раздела; сразу задаёт уточнённую границу триггера"
+    visual:
+      pattern: section_divider
+  - id: s49
+    file: slides/s49-scenariy-samoproverka-delegirovanie.md
+    type: case_study
+    duration_min: 1
+    assertion: "Независимость определяется происхождением контекста, а не тоном просьбы — и делегировать отдельному агенту уже ничего не стоит"
+    learning_goal: "Сценарий ступени 6, такты 1–2: самопроверка той же сессией не даёт независимости, а встроенное делегирование уже работает без единого файла"
+    visual:
+      pattern: two_beats_card
+  - id: s50
+    file: slides/s50-scenariy-takt3-vopros.md
+    type: scenario_question
+    duration_min: 2
+    assertion: "Роль приходится переизобретать при каждом вызове, а у универсального субагента есть права, которых ревьюеру не нужно"
+    learning_goal: "Сценарий ступени 6, такт 3 + открытый вопрос дословно с пятью карточками + разбор пяти позиций, где первая позиция признаётся правильной наполовину"
+    visual:
+      pattern: scenario_question_cards
+  - id: s51
+    file: slides/s51-cobuilding-otnyatie-prav.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "«Не правь сам» в теле роли — просьба; строка ограничения инструментов — отнятая возможность"
+    learning_goal: "Совместное формирование ступени 6, ход 2 — главный: зал перечисляет, что нужно ревьюеру, и правка вычёркивается из набора инструментов"
+    visual:
+      pattern: cobuilding_strikethrough
+  - id: s52
+    file: slides/s52-cobuilding-format-verdikta.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Пустой список находок — валидный PASS, а BLOCK требует хотя бы одной конкретной, исправимой находки"
+    learning_goal: "Совместное формирование ступени 6, ход 3 — три элемента формата ответа, каждый с обоснованием в одну фразу; обратный риск ревьюера, который находит проблемы везде"
+    visual:
+      pattern: cobuilding_step
   - id: s53
-    file: slides/s53-kriteriy-process.md
-    type: criterion
+    file: slides/s53-itogovyy-diff-reviewer.md
+    type: code_artifact
     duration_min: 0.5
-    assertion: "Diff, который описывается одной фразой, не нуждается в плане и отдельном цикле прожарки"
-    learning_goal: "Критерий «ещё рано» ступени 7 + нюанс (подхалимство при давлении пользователя, живой кейс har36) — закрывает последнюю ступень лестницы"
+    assertion: "Строка ограничения инструментов короче всего остального в файле и делает больше всего"
+    learning_goal: "Решение ступени 6: реальный diff-reviewer.md из демо-репозитория с подсвеченной строкой tools, дерево ступени 6"
     visual:
-      pattern: criterion
-  # --- 8. Финал ---
+      pattern: code_and_tree
   - id: s54
-    file: slides/s54-lestnitsa-recap.md
-    type: recap_table
-    duration_min: 0.5
-    assertion: "Семь ступеней — один и тот же принцип: добавляем по боли, не про запас"
-    learning_goal: "Раздел 8, шаг 1 — повторный показ опорного слайда «лестница целиком» (тот же слайд, что в разделе 0), явное закрытие рамки занятия"
+    file: slides/s54-realnyy-verdikt-block.md
+    type: code_artifact
+    duration_min: 1
+    assertion: "Ревьюер, который видел только diff и не видел рассуждений автора, обнаружил, что правка вообще не является правкой"
+    learning_goal: "Единственное живое доказательство занятия: настоящий ответ субагента на настоящий diff — вердикт BLOCK, конкретный раздел «что проверено» и находка «мёртвый код, а не фикс»"
     visual:
-      pattern: recap_table
+      pattern: verdict_card
   - id: s55
-    file: slides/s55-link-config.md
-    type: reference_link
-    duration_min: 0.5
-    assertion: "Клонируемая конфигурация — все семь блоков в одном репозитории, ссылка появится здесь"
-    learning_goal: "Раздел 8, шаг 2 — слайд-ссылка на публичную клонируемую конфигурацию; окончательный объём и факт существования отдельной сборки не подтверждены на момент написания плана (открытый вопрос владельцу №2 из brief.md)"
+    file: slides/s55-proval-otchet-bez-deystviy.md
+    type: failure_vignette
+    duration_min: 2.5
+    assertion: "Отчёт субагента об успехе — это утверждение, а не доказательство, и родительская сессия строит на нём дальнейший план"
+    learning_goal: "Провал ступени 6, слои 1–2: отчёты при нуле реальных вызовов инструментов и таксономия отказов мультиагентных систем с разбивкой причин"
     visual:
-      pattern: reference_link
-      backup: "Если к моменту показа решение владельца не принято — карточка ссылается на `templates/base-project-template/` репозитория `workain/agent-harness-registry` как н"
+      pattern: failure_vignette
   - id: s56
-    file: slides/s56-final-vopros.md
+    file: slides/s56-cena-i-bazy-sravneniya.md
+    type: failure_vignette
+    duration_min: 1
+    assertion: "Прежде чем спорить о множителе, выясните базу: 15× и 3–10× — обе честные цифры, они просто сравнивают разное"
+    learning_goal: "Провал ступени 6, слой 3 — цена делегирования и урок про базы сравнения; критерий «ещё рано» с главным пунктом про разовую проверку нижней плашкой"
+    visual:
+      pattern: failure_vignette
+  # --- Ступень 7. Процесс (8 мин материала) ---
+  - id: s57
+    file: slides/s57-divider-process.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Ступень 7 — процесс: работу принимают на слово, потому что проверяемой альтернативы в этот момент не существует"
+    learning_goal: "Разделитель ступени 7, одна строка смысла и метка состава раздела"
+    visual:
+      pattern: section_divider
+  - id: s58
+    file: slides/s58-scenariy-gotovo-mozhno-pokazyvat.md
+    type: scenario_question
+    duration_min: 2.5
+    assertion: "Каждое отдельное утверждение в отчёте агента может быть правдой — и вместе они складываются в «готово», которого нет"
+    learning_goal: "Сценарий-боль ступени 7: одна фраза, разобранная на части + открытый вопрос из двух половин с пятью карточками + разбор пяти позиций"
+    visual:
+      pattern: scenario_question_cards
+  - id: s59
+    file: slides/s59-cobuilding-chto-bylo-do.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Три вещи должны были появиться раньше слова «готово»: план до кода, журнал по ходу и вердикт от того, кто не писал этот код"
+    learning_goal: "Совместное формирование ступени 7, ходы 1–2 — что должно было существовать до отчёта и из чего состоит проверяемая строка журнала"
+    visual:
+      pattern: cobuilding_step
+  - id: s60
+    file: slides/s60-realnyy-zhurnal-i-verdikt.md
+    type: artifact_pair
+    duration_min: 0.5
+    assertion: "Оба артефакта существовали — и оба не сработали, потому что вердикт пришёл после слияния"
+    learning_goal: "Решение ступени 7: реальный журнал с отметками времени и хешем коммита рядом с реальным вердиктом; дерево ступени 7 и честный разбор неправильного порядка"
+    visual:
+      pattern: two_artifacts_and_tree
+  - id: s61
+    file: slides/s61-cobuilding-skolko-krugov.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Третий круг ревью по одному и тому же артефакту — не признак тщательности, а диагноз"
+    learning_goal: "Совместное формирование ступени 7, ход 3 — сколько кругов ревью; контринтуитивное правило двух кругов как диагностика конструкции, а не лимит усилий"
+    visual:
+      pattern: cobuilding_vote
+  - id: s62
+    file: slides/s62-proval-otchitalis-kak-gotovo.md
+    type: failure_vignette
+    duration_min: 1.5
+    assertion: "Разница между 75,8% и 3% — это не разница между хорошей и плохой моделью, это разница между наличием и отсутствием внешней проверки"
+    learning_goal: "Провал ступени 7, слой 1 — измеренная доля провалов, отчитанных как «готово», и непригодность модели-судьи как замены проверке факта"
+    visual:
+      pattern: failure_vignette
+  - id: s63
+    file: slides/s63-proval-obkhod-proverki.md
+    type: failure_vignette
+    duration_min: 1.5
+    assertion: "Гейт, который агент может отредактировать, — не гейт; и журнал, который агент пишет сам, может закреплять ошибку, а не исправлять её"
+    learning_goal: "Провал ступени 7, слои 2–3: обход проверки с частотами и явной базой + честное ограничение нашего же решения; критерий «ещё рано» с самым неудобным пунктом нижней плашкой"
+    visual:
+      pattern: failure_vignette
+  # --- Закрытие занятия (3 мин материала) ---
+  - id: s64
+    file: slides/s64-derevo-i-karta-tezisy.md
+    type: recap_table
+    duration_min: 2
+    assertion: "Ни один из семи блоков не появился потому, что «так принято» — у каждого есть дата и сигнал"
+    learning_goal: "Закрытие рамки занятия: финальное дерево слева, карта экипировки из раздела 0 справа, связанные линиями, плюс три тезиса на вынос"
+    visual:
+      pattern: tree_and_map_recap
+  - id: s65
+    file: slides/s65-finalnyy-vopros.md
     type: closing_question
     duration_min: 2
-    assertion: "Шлюз установлен не тогда, когда файл существует, а когда его видели сработавшим"
-    learning_goal: "Раздел 8, шаг 3 — финальный открытый вопрос дословно из плана + закрытие занятия одним из опорных тезисов раздела 0; финальный слайд занятия, meme разрешён правилом курса"
+    assertion: "Добавить умеет каждый; сегодня мы семь раз тренировали другое"
+    learning_goal: "Финальный открытый вопрос — с вариантами, как все остальные вопросы занятия: карта семи ступеней работает фоном и набором вариантов одновременно; вторая половина вопроса важнее первой"
     visual:
       pattern: closing_question

@@ -1,389 +1,246 @@
-# Iteration log — Семинар 4 «Сборка кодинг-агента: лестница роста конфигурации»
+# Iteration log — Семинар 4 v2 (issue #201, раунд 2)
 
-Full-deck build (56 slides), direct `python-pptx` (no PowerPoint MCP available in this
-environment). Given the scale (56 slides vs. the 3-iteration-per-slide pilot spec written for a
-6-slide pilot), the visual loop was run as **whole-deck passes** — the realistic equivalent used
-in every sem-01..04/lec-01..N production to date: Iteration 1 = full build, Iteration 2 =
-systematic visual-mass/overflow/gold-coverage sweep with fixes, Iteration 3 = targeted fixes on
-individual slides found in Iteration 2 + final gates (deep-latin-scan, hero-check). Every slide
-was visually inspected in Iteration 2 or 3 (or both); ~45 of 56 were opened as rendered PNGs and
-read for spacing/overflow/contrast/gold issues; the remainder share identical builder functions
-with slides that were inspected (e.g. all `terminal_capture_card` hook-output slides share one
-factory, `_hook_capture_slide`, and one representative was checked at 150dpi).
+Полная пересборка с нуля, 65 слайдов, `library/seminars/sem-04/rendered/build_sem04.py`
+(direct python-pptx, no PowerPoint MCP — see `notes/mcp-limitations.md` [#54-1/#54-2/#54-3]).
 
-## Iteration 1 — full build
+Работа велась синхронно, инструментами Bash/Read/Write/Edit, без делегирования.
+Toolchain: `tools/presentation-build/render-bootstrap.sh` (уже установлен на хосте) +
+`tools/presentation-build/pptx_to_png.sh` для конвертации PPTX → PDF → PNG (150dpi).
 
-- Wrote `build_sem04.py`: generic Ocean-palette helpers (`ocean_box`, `gradient_rect`,
-  `terminal_card`/`code_card`, `table_card`, `gold_callout`, `hint_bar`, `chip`,
-  `placeholder_badge`) + pattern-level builders (`build_section_divider`,
-  `build_section_divider_lite`, `build_failure_vignette`, `build_criterion`,
-  `build_reflection_question`) + 56 per-slide `build_sNN` functions, one per `deck.yaml` entry.
-- Icons: 48 Lucide icon names not already in the shared sem-02/sem-03 Ocean-palette icon
-  library were downloaded fresh (`cdn.jsdelivr.net/npm/lucide-static`), recoloured to 8
-  palette hex variants via `sed` on the SVG, rasterised at 64/96/128px via `rsvg-convert` — into
-  `library/seminars/sem-04/rendered/assets/icons/{svg,rendered}/`. 1200 PNGs generated.
-- Real content sources: every `code_artifact`/`terminal_snapshot_card`/`terminal_capture_card`
-  slide's visible text was transcribed **verbatim** from the already-quoted content inside the
-  authored `slides/sNN-*.md` files (which themselves quote `assets/captures/*.txt` dословно —
-  confirmed against the raw capture files for s01 hero data, s13 tree, s35 table). Nothing was
-  invented.
-- s01 hero: full-bleed 3-stop Ocean gradient (DEEP→MID→LIGHT, 45°) + a generated growth-diagram
-  built from the **real** 7-stage `git ls-tree` snapshots (`captures/21..27-tree-stage*.txt`) —
-  actual filenames added per stage (CLAUDE.md, DECISIONS.md, .claude/settings.json,
-  skills/deploy/, .mcp.json, agents/diff-reviewer.md, Tasks/), last node gold-highlighted.
-- First render: 9 slides (s01–s09) to validate helpers before scaling to all 56; then all 56.
+## Архитектурные решения v2 (в ответ на owner-замечания к v1)
 
-## Iteration 2 — whole-deck sweep (visual mass, overflow, gold coverage)
+1. **Один общий builder для всех 7 дивайдеров ступеней** — `build_stage_divider(p, slide_id, *,
+   stage_num, title, meaning, tag)`, единственная функция, вызываемая для s09/s16/s23/s32/s39/s48/s57.
+   Рисует 7-ступенчатую полосу лестницы (текущая — gold, пройденные — светлее, будущие — тёмные),
+   декоративный крупный номер, заголовок, строку смысла, gold-plate тег (авто-перенос на 2 строки
+   для длинных тегов — см. итерацию 1 ниже) и иконку в правом нижнем углу. Никакой bespoke-логики
+   по отдельным дивайдерам — устраняет класс бага из v1 («рассинхронизация двух дивайдеров»).
+2. **Hero ≥40% площади с первой итерации** на s01 и s65 — общая 8-ступенчатая «лестница роста»
+   (`build_growth_staircase` / `build_growth_staircase_bare`), построенная на реальных 7 стадиях
+   демо-репозитория (`git ls-tree` по коммитам, captures/21-27). s01 — без подписей ступеней
+   (имена появятся только в конце занятия), s65 — с подписями (закрывает эмоциональную дугу).
+   Площадь: 12.23×3.35–3.4in ≈ 41% слайда на обоих слайдах.
+3. **0 самореференции курса** в видимом тексте — проверено grep по `Занят|Семинар|Курс|Лекци`
+   после каждого прохода; единственные совпадения — заголовок обложки «СЕМИНАР 4» (легитимная
+   идентификация) и assertion s02, взятый дословно из source `deck.yaml`.
+4. **Deep-latin-scan перед завершением** — `tools/presentation-build/deep_latin_scan.py` на
+   извлечённом видимом тексте PPTX и на speaker notes. 182 unique-токена вне brand allowlist на
+   visible body — все являются либо командами/путями файлов/JSON-ключами из реальных захватов
+   (`git`, `npm`, `CLAUDE.md`, `DECISIONS.md`, `PreToolUse`, …), либо дословными цитатами,
+   явно требуемыми content-спецификацией слайда (официальная позиция разработчика движка,
+   антипаттерны описаний скиллов «Helps with documents» и т.д.). 0 нарративных англицизмов.
+   На speaker notes — 35 unique-токенов, тот же характер (код/CLI/бренды).
 
-Findings, all fixed:
+## Источники контента
 
-1. **Text overflow in dense `code_card`/`terminal_card` blocks** — the naive
-   `size × line_spacing / 72` estimate undercounted actual rendered line height (LibreOffice
-   renders `line_spacing` as a multiple of the font's *single-line* height, not the point size
-   directly, plus the 2pt `space_after` per line). Slides s12, s20, s25, s34, s39, s46 (×2
-   panels), s51 all overflowed their code-card boxes on first render. Fixed by adding
-   `size=`/`line_spacing=` params to `terminal_card`/`code_card` and re-tuning each dense block
-   (10.5–11.5pt, 1.1–1.22 spacing) plus enlarging boxes where content genuinely needed more
-   room (s25's 17-line hook JSON: box grown from 4.2" → 5.05", font 13→10.5pt).
-2. **Visual Mass Balance — 30%+ empty bottom** on question-type slides that had no
-   `option_cards` (s06 already OK via placeholder text, but s11/s45/s50 left the bottom third
-   empty). Added a reusable `hint_bar()` helper (Lucide `hand` icon + "Открытый вопрос классу —
-   два-три голоса из зала, затем разбор") and applied it to `build_reflection_question`'s
-   no-option-cards branch, plus s45/s50 directly.
-3. **`build_criterion`'s default base/nuance card** always stretched to fill remaining vertical
-   space regardless of content length — s16 (single bullet, no nuance originally) rendered ~70%
-   empty white box. Fixed two ways: (a) added a nuance/bridge line to s16 (content-accurate,
-   drawn from the slide's own speaker notes, not invented), (b) rewrote the card's height
-   calculation to size to content (with a divider line between base/nuance) instead of always
-   reaching y=7.0.
-4. **Gold accent missing** (ENFORCED: ≥1× per slide) on s04, s05, s09, s12, s27, s36, s41(false
-   positive — was already present), s43, s54, s55 — 9 real misses. Fixed per-slide: s04 gold
-   callout tying the empty-repo screenshot back to the keystone table's "ступень 0"; s05 four
-   outline chips (stack + form fields), last one gold; s09 gold callout under the single-card
-   failure vignette; s12 recoloured the `## Build, test, verify` heading gold (the one section
-   that actually matters on that slide); s27 recoloured the `fix-form-field` branch name gold
-   (the fact the slide is proving); s36/s43 gold-dashed emphasis card on the most load-bearing
-   of the 3/4 criterion cards; s54 gold row-highlight on the final ladder row (closes the loop
-   with s01/s08's gold "ступень 7"); s55 the whole reference card recoloured gold-dashed.
-5. **`s08`/keystone table**: header said "Раздел 0 · Keystone" (English) — fixed to "Раздел 0 ·
-   Опорный слайд". Table's first column header "Ступень" wrapped to two lines in a too-narrow
-   column — shortened to "№".
-6. **`TODO-capture` file references leaking onto visible slides** (s06, s11, s19×2, s46, s51) —
-   the orchestrator brief was explicit that these belong in this log, not on the rendered
-   slide. Found and removed all 6 occurrences; replaced with a clean "Ждёт реальной сессии
-   Claude Code" label with no internal doc reference. See § TODO-capture below for the full,
-   correct positional log.
-7. **Stray trailing `)`** on s51's placeholder text (copy-paste artifact) — removed.
+Все 65 слайдов построены по `library/seminars/sem-04/deck.yaml` + `library/seminars/sem-04/slides/sNN-*.md`
+(секции Assertion / Visual / Speaker notes из каждого файла, дословно). Реальные захваты команд
+(`ls -la`, `git symbolic-ref` vs `rev-parse`, вывод хука, дерево репозитория по стадиям, вердикт
+ревьюера) взяты как литеральные блоки из тех же `.md`-файлов (frontmatter `visual.backup`
+указывает путь captures/*.txt — сами файлы уже транскрибированы в тело slides/*.md, отдельно
+их не открывали). Семь позиций без реального захвата (`[ДОСЪЁМКА: ...]` только во frontmatter,
+никогда на видимом слайде): s10, s14 (финальный текст — зафиксирован, не менялся), s21, s24, s42,
+s59, s60 (правая панель s60 восстановлена из реального вердикта capture 34, уже использованного
+на s54 — не выдумана). Для всех семи — слайд построен из текстового/карточного макета без
+имитации терминала, как явно указано в самих `.md`.
 
-## Iteration 3 — targeted re-fixes + gates
+s14 отдельно: бралось текущее содержимое `slides/s14-itogovyy-claude-md.md` как финальное (per
+инструкция) — код-блок 13 строк без `Build:/Test:/Run locally:` перенесён 1:1.
 
-- Re-verified all Iteration-2 fixes by re-render (s04, s05, s08, s09, s12, s16, s20, s22, s25,
-  s27, s34, s36, s39, s41, s43, s45, s46, s50, s51, s54, s55, s56 opened again at 150dpi).
-- **Russification pass** (see § below) — ran `tools/presentation-build/deep_latin_scan.py`
-  against the extracted PPTX visible text *and* the rendered speaker notes, found and fixed 4
-  genuine narrative-prose anglicisms; documented the (large) residual code/filename/quote
-  population honestly rather than reporting a fabricated "0 hits".
-- **Hero check** — see § Hero (s01/s56) below.
-- **Schema Readability spot-check** — s08 (opорный table), s33 (progressive-disclosure table),
-  s35 (matrix), s54 (recap table): headers single-line, ≥12pt body/≥14pt header font satisfied
-  (body 10.8–13pt depending on density, all ≥10.5pt which is the floor this dense a
-  code/table-heavy deck can sustain at 150dpi — flagged as a judgment call, see § Known
-  deviations), fill rate on s35 100% (13/13 rows), gold marks the one standout row on s08/s33/s35/s54.
-- **5-Second Test spot-check** (5 slides, cold read of PNG only):
-  - s08 (keystone table): "seven steps, each with a trigger + too-early criterion" — PASS,
-    matches assertion.
-  - s25 (hook JSON): main visual is the code block; assertion is about `symbolic-ref` vs
-    `rev-parse` — the specific line isn't visually singled out inside the code block (no
-    highlight on that one line). Read at low zoom, the takeaway is "here is the hook", not the
-    `symbolic-ref` nuance specifically. **Borderline FAIL** — logged as a known deviation below,
-    not silently accepted.
-  - s35 (skills matrix): "1 of 13 skills has description" — PASS, large gold number does the
-    job.
-  - s42 (GitHub MCP heist): "simultaneous access to public+private repos leaked private data" —
-    PASS.
-  - s54 (recap table): "seven steps, one principle" — PASS, gold row + footer line reinforce it.
+## Общая цепочка визуальных итераций (по всей колоде, не по одному слайду)
 
-## Known deviations / escalation candidates (reported, not silently fixed)
+Дизайн велся helper-first: единый набор low-level примитивов (`ocean_box`, `filled_rect`,
+`gold_callout`, `table_card`, `option_row`, `numbered_card`, `basket_row`, `failure_card`,
+`criterion_plate`, `terminal_card`/`code_card`, `cobuilding_map`, `two_basket_frame`) был
+построен один раз и переиспользован во всех паттернах (`scenario_question`, `cobuilding_step`,
+`cobuilding_strikethrough`, `code_and_tree`, `failure_vignette`, `comparison_table`,
+`three_frames_row`, `verdict_card`, …), поэтому системные баги правились централизованно —
+одно исправление снимало проблему сразу на N слайдах.
 
-- **s25 5-Second Test borderline** (see above): the assertion highlights one specific command
-  choice (`git symbolic-ref --short HEAD` over `git rev-parse --abbrev-ref HEAD`) but the code
-  block doesn't visually call out that one line beyond its existing gold/teal colour banding
-  (which marks the `ask`/`deny` branches, not the branch-detection line itself). A stronger fix
-  would isolate that one line in its own small highlighted panel next to the full code block.
-  Not applied — would have meant restructuring the whole slide inside an already-tight time
-  budget for a 56-slide single-session build; flagging for the next revision pass rather than
-  leaving unlogged.
-- **Body font sizes down to 10.5pt** on the densest `code_card` blocks (s25, s39, s46, s51) —
-  below the README's preferred ≥12pt body / ≥14pt axis floor. This is a direct consequence of
-  transcribing real, un-abridgeable JSON/markdown/diff content verbatim (per brief: "не
-  переписывай") into a 16:9 canvas; abbreviating the code would violate the verbatim-transcript
-  requirement instead. Flagging as a deliberate trade-off, not an oversight — worth an explicit
-  owner call on whether 2-panel/2-slide splits are preferred over 10.5pt code panels for the
-  densest hooks/skills/log content in a future pass.
+### Итерация 1 — первый полный рендер (65 слайдов)
 
-## TODO-capture — 11 positions, exact handling per slide
+- Build → `pptx_to_png.sh` → 65 PNG @ 150dpi.
+- Найдено визуально: divider-тег (`chip()`) обрезался/вылезал за рамку на длинных tag-строках
+  (s09 «3 хода… · 1 контролируемый эксперимент» переползал через границу pill).
+  **Фикс:** заменён `chip()` на выделенный wrap-able pill (`filled_rect` + `text_box`
+  word_wrap=True, авто-высота 1 vs 2 строки по длине тега) в `build_stage_divider`.
+- Найдено: severe overlap строк в reveal-таблицах на нескольких `scenario_question` слайдах
+  (s10, s17) — строки таблицы физически накладывались друг на друга (нечитаемо).
+  **Root cause:** вертикальный бюджет над таблицей не был рассчитан — верхние блоки съедали
+  почти всё место, таблице оставалось ~0.1-0.15in на 5 строк.
+  **Фикс:** пересчитан вертикальный бюджет вручную для s10/s17 (компактнее верхние блоки,
+  таблица получает ≥2.0in на 5 строк).
 
-Per `assets/captures/TODO-capture.md`, 11 of 18 planned capture positions require a live,
-interactive Claude Code session this build session does not have. Nothing was drawn as a fake
-terminal/UI (explicitly forbidden). Each slide below shows only what is genuinely already real
-(the task text, the file content, the known command) with an honest dashed-gold "Ждёт реальной
-сессии Claude Code" placeholder for the part that is missing — no TODO-capture.md path or
-position number appears on the rendered slide itself (moved here per orchestrator instruction):
+### Итерация 2 — систематизация проверки overflow
 
-| Slide | TODO-capture position(s) | What's shown instead |
-|---|---|---|
-| s06 | #2 (первая задача агенту + уточняющий вопрос) | Real fact ("агент создаёт index.html, src/main.js, package.json, tests/form.spec.ts") + honest placeholder for the actual dialogue text |
-| s11 | #3 (повторный вопрос до CLAUDE.md) | Real scenario description (from plan.md) + honest placeholder for the literal dialogue |
-| s19 | #5 (`/memory`), #6 (`/context`) | Real fact (file name `feedback_native-form-validation.md`, what `/context` should show) + two honest placeholders |
-| s46 | #15 (ответ diff-reviewer) | Real `diff-reviewer.md` file + real diff (`src/validate.js`) both shown in full; only the subagent's actual verdict text is a placeholder |
-| s51 | #18 (заполненный review.md), blocked by #15 | Real `log.md` (real timestamps, real commit `cf58408`) shown in full; `review.md` placeholder explicitly notes it is blocked on #15's real verdict |
+Вместо продолжения ручного визуального прохода по всем 65 PNG (дорого), в `table_card`,
+`option_row`, `numbered_card`, `failure_card`, `criterion_plate`, `basket_row` добавлен
+дешёвый программный диагностический хелпер `_fits()` — оценивает по ширине/шрифту, сколько
+строк реально нужно тексту, и печатает `OVERFLOW WARNING` при постройке, если бокс тесен.
+Это превратило «визуально пролистать 65 PNG» в «прочитать вывод одного build-прогона».
 
-Positions #10 (`/skills`), #11/#12 (`claude mcp add`/`list`, `/mcp`), #16 (`plan mode on`) do not
-appear as their own slides needing a placeholder — #10's underlying data (13-skill frontmatter
-audit) was already captured via `head -5` and is shown in full on s35/s34; #11/#12/#16 are
-referenced only in speaker notes / recipe text, not as a dedicated visual slide, so no
-placeholder was needed there.
+Найдено и исправлено этим проходом: s30, s47 (failure_card body без места под 2 строки текста —
+высота карточки увеличена, следующие элементы сдвинуты), s51 (table_card с **отрицательной**
+высотой из-за накопленной ошибки в вертикальном стекинге — полностью пересчитан layout).
 
-## Hero images — s01 + s56 decision (ENFORCED §5.9 reasoning)
+### Итерация 3 — центрирование многострочных подписей (`option_row`, `cobuilding_map`)
 
-- **s01 (hero_cover):** No real-world photo exists for this narrative — "empty repo → 7 config
-  blocks" is an abstract technical progression with no company/product/incident to photograph
-  (6-tier acquisition tiers 1–6 all fail structurally: no article, no Wikipedia entity, no press
-  release, no video, no archived page, no image-search result is *about* this specific
-  demo repo). Per README §5.7/§5.9, the accepted fallback for a topic with no real-image
-  candidate is a **custom data-viz hero**, not a stylized mock. Built one from the **real**
-  7-stage `git ls-tree` snapshots (`captures/21..27-tree-stage*.txt`) — genuine file/directory
-  names added at each stage, not invented placeholders — full-bleed, ≥40% of slide area (the
-  growth band + gradient background together cover the whole slide). Attribution line
-  ("Источник: captures/21–27") is present per the Russification/attribution convention.
-- **s56 (closing slide, `closing_question` type):** deck.yaml does **not** declare this as
-  `hero_closing`, and the slide's own authored content brief explicitly calls for a **right-third**
-  illustration mirroring s01's tree (not a ≥40% full hero). Decision: **did not** force a full
-  hero here. Reasoning: (1) this is one seminar's closing slide, not lecture-course-final s39 —
-  the §5.9 rule as written targets "s01+s39 of each lecture deck"; sem-04 is one of 17 seminars,
-  not itself a course final; (2) the slide's own design brief (authored by the prior planning
-  session, already reviewed) explicitly specifies a modest corner callback, not a full hero, and
-  expanding it unilaterally would be exactly the kind of designer-added content the "No Extra
-  Content Rule" forbids; (3) the slide already closes the visual loop (same tree motif as s01,
-  now gold-dotted) without needing to re-litigate the whole canvas. Flagging this call explicitly
-  for the orchestrator rather than deciding silently, per the brief's own instruction.
+Визуальная проверка s10 после фикса итерации 1 показала: карточки-варианты («ответить» /
+«в чате») центрировались **некорректно построчно** — вторая строка сдвинута вправо относительно
+первой. **Root cause:** литеральный `\n` внутри одного run `text_box()` с `align=CENTER`
+не центрируется LibreOffice независимо по каждой визуальной строке (подтверждено эмпирически:
+тот же паттерн с `align=LEFT` рендерится нормально). **Фикс:** `option_row()` и label-рендер в
+`cobuilding_map()` переведены на `multipara_box()` (настоящие paragraph-объекты через
+`tf.add_paragraph()`), каждая строка — свой paragraph с собственным `align=CENTER`. Системный
+фикс — затронул 8 слайдов с `option_row` (s06, s10, s17, s24, s33, s40, s50, s58) и s07/s08/s64
+(`cobuilding_map`). Также попутно убран designer-added footer_note на s07 («…объясняет
+фасилитатор») — facilitator-инструкция, случайно видимая студентам (нарушение No-Timing/
+No-Methodology rule) — в v1-braif этого не было, добавлено по ошибке на раннем проходе.
 
-## Russification — actual scan results (not narrative "0 hits")
+### Итерация 4 — та же проверка для `terminal_card`/`code_card`
 
-Ran `tools/presentation-build/deep_latin_scan.py` against (a) the extracted PPTX visible text of
-the final 56-slide deck, (b) the rendered speaker notes.
+`_fits()` не покрывал `terminal_card`/`code_card` (другая внутренняя геометрия — заголовок,
+моноширинный шрифт, `space_after` построчно). Добавлена аналогичная диагностика прямо в
+`terminal_card()`. Первый прогон (мягкий допуск) поймал 5 реальных переполнений (s20, s28, s36,
+s53, s60 — «дерево ступени N» карточки, где 5-7 строк не помещались в отведённую высоту) —
+исправлены раздвижкой высоты + сдвигом последующих элементов вниз.
 
-- **Visible text:** 684 occurrences / 343 unique tokens outside the brand allowlist (final
-  count after fixes, re-verify before GATE — see note below).
-- **Speaker notes:** 372 occurrences / 233 unique before fixes → 232 unique after the
-  `adversarial`→`состязательной` render-time fix (3 occurrences removed).
+Визуальная проверка s14 **после** этого фикса всё равно показала overflow — блок кода `CLAUDE.md`
+целиком (19 строк) вылезал за рамку тёмной карточки, а дерево `дерево ступени 1` частично
+перекрывалось следующим элементом. Мягкий допуск диагностики (+0.1in tolerance, без запаса на
+реальный рендер шрифта) был недостаточен → диагностика ужесточена (+18% запас по высоте строки
+поверх номинального pt-размера — эмпирически калиброван по разнице между оценкой и реальным
+рендером LibreOffice/Consolas).
 
-**This deck is structurally different from a narrative lecture deck**: its core content on
-~30 of 56 slides is literal, verbatim technical material — real filenames (`CLAUDE.md`,
-`.mcp.json`, `DECISIONS.md`), real CLI commands (`git symbolic-ref --short HEAD`, `npm run
-build`), real JSON/YAML/diff snippets, and direct attributed quotes (CVE descriptions, a dev.to
-quote, a GitHub issue title, Alex Dunlop's "hook bloat" quote) — all required to be
-**verbatim, per the brief itself** ("перенесено дословно" appears in the visual spec of nearly
-every `code_artifact`/`terminal_capture_card` slide). Translating `git commit`, `.claude/
-settings.json`, or a quoted CVE description into Russian would falsify the artefact, not
-russify prose.
+С ужесточённой диагностикой повторный прогон дал более широкий список кандидатов; каждый
+визуально сверен с текущим рендером **до** правки (чтобы не чинить то, что не сломано):
+- **Подтверждённые реальные переполнения** (видимый обрезанный текст на PNG) — s14 (левый
+  code_card, 19 строк), s28 (левый code_card, 21 строка), s36 (левый code_card, 17 строк), s43
+  (левый code_card, 13 строк), s53 (левый code_card, 17 строк) — все увеличены по высоте, соседние
+  элементы (dashed-плашка, caption) сдвинуты вниз, финальный рендер подтверждён чистым.
+- **Ложные срабатывания** (визуально чисто, запас диагностики избыточен) — s05, s12, s20, s27,
+  s64 — оставлены без изменений после сверки с PNG.
 
-**Genuine narrative-prose anglicisms found and fixed** (4, all verified removed by re-scan):
-1. `adversarial` (×3, speaker notes, s45/s46 area) → `состязательной` — applied as a render-time
-   patch in `load_notes()` (regex substitution on the PPTX-bound copy only), **not** by editing
-   `slides/*.md` (source content is final per brief). Documented inline in the code with the
-   reasoning.
-2. `blast radius` (visible, s30 criterion bullet) → "зона поражения ошибки"
-3. `prompt injection` (×2, visible, s42) → "промпт-инъекцию" / "промпт-инъекция"
-4. `pull request` (visible, s42) → `PR` (matches the abbreviation already used throughout the
-   rest of the deck, e.g. s51/s53)
-5. `Branch protection` (visible, s24 option card) → "Защита ветки"
+### Итерация 5 — обнаружение и устранение дублирующегося мёртвого кода
 
-**Accepted as-is (reviewed, not anglicisms in the enforced sense):** `issue`/`GitHub Issues` (used
-throughout as the literal GitHub product-feature proper noun, same status as "Pull Request"/PR);
-`code freeze` (s09, immediately glossed inline: "code freeze — прямой запрет на изменения");
-direct attributed quotes in English (CVE text, dev.to quote, Alex Dunlop quote, "a gate is not
-installed..." template quote) — quoting a source verbatim and glossing it in the surrounding
-Russian sentence is the established pattern used identically elsewhere in this course (e.g.
-fair use, opt-out).
+При визуальной проверке s14 обнаружился код, использующий несуществующие в живой ветке хелперы
+(`title_size_for`, `move_tag`, `_equipment_map`, `rich_para`, `gold_callout_rich`) — не то, что
+реально рендерилось (визуально подтверждённый живой билдер использует `header()`,
+`cobuilding_map()`, `two_basket_frame()`). Диагностика (`grep -c "^def build_s"` +
+`uniq -c` по именам функций) показала: `build_s01`…`build_s08` определены **дважды** каждая
+(Python использует последнее определение — мёртвый код не исполнялся, но раздувал файл и
+запутывал структуру). Блок дублирования (строки ~654–1023, отдельный набор хелперов + первая
+копия s01-s08) удалён `sed`; после удаления — 0 дублирующихся `def`, синтаксис проверен
+(`ast.parse`), полный ребилд + ре-рендер подтвердили отсутствие визуальных изменений (ожидаемо,
+т.к. живые версии не менялись).
 
-**Note for the orchestrator/GATE reviewer:** the raw 343/232 unique-token counts are dominated by
-code/filenames/commands, not narrative anglicisms — do not read them at face value against the
-narrative-lecture threshold. A sample-based manual read of the top-50 hit list (done above) found
-exactly 5 real fixable items, now fixed. If a stricter reviewer wants a literal `unique −
-whitelist = ∅` pass, that would require either (a) extending `BRAND_ALLOWLIST` in
-`deep_latin_scan.py` with every filename/command token this deck legitimately uses verbatim
-(mechanical, ~150-token addition, not attempted here for time), or (b) accepting that a
-code/command-heavy technical seminar deck is a different content class than a narrative lecture
-deck for this metric's purposes.
+Точное происхождение дублирования не установлено (инструмент `Edit` дважды в сессии сообщал
+«file had been modified on disk since you last read it — … the file contains other changes not
+in your context», что указывает на конкурентную запись в тот же путь вне потока инструментов
+этой сессии). Зафиксировано как наблюдение для `notes/mcp-limitations.md` (см. ниже).
+
+### Итерация 6 — финальная проверка
+
+Финальный build (0 `OVERFLOW WARNING` кроме заведомо-ложных, сверенных визуально) → финальный
+рендер 65 PNG @ 150dpi → PDF скопирован в `rendered/sem-04.pdf` → snapshots синхронизированы под
+`sNN.png`. Deep-latin-scan (visible body + speaker notes) — чисто. Grep по
+`Лектору|Преподавателю|Вы здесь|VERIFY-DAY-OF|FACT-CHECK|методическ|педагогическ|мин\b` — 0
+совпадений в видимом теле. Speaker notes — 65/65 непустые, 58–478 слов (среднее 222).
+
+## Что нашлось нового для `notes/mcp-limitations.md`
+
+- **Литеральный `\n` внутри одного run `text_box()` с `align=CENTER` не центрируется построчно
+  в LibreOffice-рендере** (тот же паттерн с `align=LEFT` рендерится корректно). Обход: всегда
+  используемый в этом файле `multipara_box()` (настоящие paragraph-объекты через
+  `tf.add_paragraph()`), не литеральный `\n` в одном run, если нужен `align=CENTER` на нескольких
+  визуальных строках. Достойно записи как отдельный пункт (в дополнение к уже
+  задокументированному [#sem01-render-1] про `\n` и wrap).
+- **`terminal_card`/`code_card`-подобные хелперы с построчным layout нуждаются в диагностике
+  overflow с запасом ≥15-18% сверх номинального pt-based расчёта высоты строки** — LibreOffice
+  рендерит моноширинный (Consolas-фолбэк) текст выше, чем наивная оценка `size*line_spacing/72`.
 
 ## Deliverables
 
-- `library/seminars/sem-04/rendered/build_sem04.py` — build script (56 slide builders + shared
-  helpers).
-- `library/seminars/sem-04/rendered/sem-04.pptx`, `sem-04.pdf`.
-- `library/seminars/sem-04/rendered/snapshots/s01.png` … `s56.png` (150dpi).
-- `library/seminars/sem-04/rendered/assets/icons/{svg,rendered}/` — 1200 recoloured Lucide
-  icon PNGs (48 names × 8 colours × 3 sizes).
-- This file.
+- `library/seminars/sem-04/rendered/build_sem04.py` — 2601 строка, единственный источник
+  сборки (dead code от дублирования удалён).
+- `library/seminars/sem-04/rendered/sem-04.pptx` — 65 слайдов, 16:9 (13.333×7.5in).
+- `library/seminars/sem-04/rendered/sem-04.pdf`.
+- `library/seminars/sem-04/rendered/snapshots/s01.png` … `s65.png` (150dpi) + `sem-04.pdf` +
+  `sem-04-s-NN.png` (сырые файлы конвертации, дублируют `sNN.png` под другим именем).
+- Этот файл.
 
-## Escalations
+## Что не проверялось построчно на каждом из 65 слайдов
 
-None reached the hard iteration-cap (7) — every slide converged within 1–3 targeted fixes after
-the whole-deck Iteration-2 sweep. The two items flagged under § Known deviations are reported,
-not silently shipped, but neither blocked a slide from reaching an acceptable state.
+Учитывая масштаб (65 слайдов), визуальная построчная проверка «на глаз» была выполнена на
+представительной выборке (~35 слайдов: все 7 дивайдеров, все паттерны минимум по одному
+представителю, все слайды, где сработала автоматическая overflow-диагностика или где было
+подозрение на баг) — не на всех 65 поштучно. Остальные ~30 слайдов используют те же
+low-level примитивы (уже провалидированные на выборке) с содержимым, для которого overflow-
+диагностика (`_fits`/`terminal_card`-check) не сработала — риск необнаруженной визуальной
+проблемы на них оценивается как низкий, но не нулевой.
 
-## Post-acceptance fix — s56 (orchestrator independent visual sweep, 2026-09-21)
+## Итерация 7 — точечный фикс-проход по находкам 3 QA-агентов (2026-09-21, v2)
 
-Orchestrator's own independent PNG review (7 sampled slides, not trusting self-report) caught a
-real defect on s56 (`closing_question`, final slide of the seminar) that the Iteration-2 sweep
-had missed:
+Вход: `qa-reports/2026-09-21-v2/{presentation-critic,student-simulator,reader-rendered}.md`
+(1 P0 общий у двух критиков, 5 P1/P2 у отдельных). Остальные 59 слайдов не трогались (все три
+отчёта — APPROVE-WITH-POLISH / только этот единственный P0).
 
-1. **Duplicated title** — the second (bottom) box repeated the slide's own assertion/title text
-   verbatim (`«Шлюз установлен не тогда, когда файл существует, а когда его видели
-   сработавшим»`), the same duplicated-titles anti-pattern already fixed elsewhere in
-   Iteration 2, just not caught on this slide.
-2. **Visual Mass Balance violation** — the bottom box stopped at y=6.2in, leaving ~1.3in
-   (~17-20% of canvas height) of blank white space below it, unlike every other slide in the
-   deck which fills down to the standard y_end≈7.0 content floor (see `hint_bar()`).
+1. **s55 (P0, presentation-critic + student-simulator) — текстовый overlap.** Нижняя строка
+   тела `failure_card` («…перед заявлением о завершении») налезала на курсивную сноску под ней
+   («родительская сессия доверяет отчёту…») — тело реально заняло 3 визуальные строки против
+   ~2 по консервативной эвристике `_fits`. Фикс: высота карточки 1.75→2.15in, `body_size`
+   12→11.5pt, `reveal_table`/итоговый `text_box` сдвинуты вниз (3.75→4.2 / 5.75→6.18) для
+   сохранения зазора. Пересобрано, пересиято — зазор между блоками чистый, оверлапа нет.
+2. **s64 (P1, reader-simulator) — путаница двух систем нумерации.** Левое «финальное дерево»
+   нумеровало файлы 1–7 по ступеням семинара, правая «карта экипировки» — слоты 1–5 по порядку
+   лекции; одна и та же цифра (например «3») означала хук слева и скиллы справа. Фикс —
+   текстовое разграничение без изменения контента: слева `← N` → `· ступень N` (плюс заголовок
+   карточки `финальное дерево` → `финальное дерево · ступени семинара`), справа чипы `N` →
+   `слот N` (плюс заголовок `КАРТА ЭКИПИРОВКИ · ЗАПОЛНЕНА` → `КАРТА ЭКИПИРОВКИ · СЛОТЫ ЛЕКЦИИ,
+   ЗАПОЛНЕНА`). Все 12 строк дерева и оба заголовка проверены на fit в моноширинной сетке
+   `terminal_card` (расчёт chars-per-line) до рендера — переполнения нет.
+3. **s14 (P2, presentation-critic) — рассинхронизация заголовка и PNG.** Исходный `.md` уже
+   был исправлен на «восемнадцать строк» ранее, но литеральная строка в `build_s14()` (не
+   парсится из `.md`, дублируется вручную) всё ещё содержала «тринадцать». Однострочный фикс
+   текста в `header()`-вызове, пересобрано и пересиято — заголовок и код-блок (18 строк) теперь
+   согласованы.
+4. **s24 (P2, presentation-critic) — формат таблицы не как у соседей.** Визуально сверены все
+   7 `scenario_question`-слайдов: 3 из них (s10, s17, s58 в модифицированном виде) используют
+   3-колоночную таблицу «Вариант / Где работает / Почему ещё рано», 3 не используют таблицу
+   вовсе (s33, s40, s50 — `option_row` + сводка), s24 был единственным с 2-колоночной «Вариант /
+   Оценка» + отдельным gold-callout сбоку. Приведён к доминирующему 3-колоночному формату
+   (headers = `["Вариант", "Где работает", "Почему ещё рано"]`), содержимое взято из
+   `rework/section-3-khuk.md` §A.4 (там уже была расписана колонка «где это работает» —
+   контент не выдуман, а восстановлен из design-source), gold-callout со фразой «правила в
+   промпте — просьбы, правила в коде — законы» свёрнут в `why`-ячейку целевой (gold-highlighted)
+   строки вместо отдельного бокса — контент не потерян, просто не дублирует форму.
+5. **arXiv ID отсутствовали в рендере (P2, reader-simulator).** Сверка `rework/section-*.md`
+   показала 6 arXiv-цитат, присутствующих в design-source, но ни одна не попала в
+   `build_sem04.py` (литеральные python-строки не парсятся из `.md`, id просто не были
+   перенесены при первой сборке). Добавлены мелким шрифтом рядом с источником на всех 5
+   затронутых слайдах: s15 (`arXiv:2602.11988` — Gloaguen et al., в заголовке таблицы;
+   `arXiv:2507.11538` — IFScale, в подписи к «68%»), s38 (`arXiv:2608.11888` — SkillsBench, в
+   заголовке таблицы), s55 (`arXiv:2503.13657` — MAST, в заголовке таблицы), s62
+   (`arXiv:2606.09863` — ICML 2026, в заголовке таблицы), s63 (`arXiv:2605.29463` —
+   self-authored-memory эксперимент, инлайн в текст сноски). Каждое добавление проверено на fit
+   (chars-per-line расчёт) до рендера — переполнений нет.
+6. **s65 (P2, reader-simulator) — notes ссылались на несуществующую плашку.** Frontmatter
+   `visual.primary`/`visual.backup` слайда И `rework/section-7-protsess.md` §B.4 оба однозначно
+   описывают плашку-ссылку как часть замысла (статус решения — за владельцем курса; fallback —
+   публичный шаблон `workain/agent-harness-registry` с честной подписью «шаблон, не заполненная
+   сборка»), но плашка не была реализована в `build_s65()`. Добавлена: тёмная rounded-плашка под
+   финальной репликой, link-иконка (gold), текст с точным замыслом rework-файла. Notes не
+   менялись — теперь соответствуют факту.
 
-**Root cause:** the slide's own source brief (`slides/s56-final-vopros.md`) literally asks for
-"под вопросом — итоговая строка-закрытие (assertion)" — the original build followed that
-instruction to the letter, which produced a literal repeat of the header text. The brief also
-specifies only a small right-third illustration (not a full hero), so the bottom of the canvas
-was never claimed by anything.
+**Тулчейн-находка (не в `notes/mcp-limitations.md`, т.к. про хостовую среду, не про MCP):**
+в этой сессии `libreoffice`/`pdftoppm` не было на `$PATH` напрямую — понадобился
+`source /home/harness/.local/lo-portable-env.sh` (no-root portable LibreOffice + poppler-utils,
+см. `install-libreoffice-portable.sh`) перед `soffice --headless --convert-to pdf` +
+`pdftoppm -r 150 -png`. Без источника переменных `soffice` падает на
+`libXinerama.so.1: cannot open shared object file`.
 
-**Fix applied (this file's own no-extra-content constraint respected — no new content invented):**
-replaced the bottom box's content with the seminar's own closing/thank-you line, taken verbatim
-from this same slide file's `## Speaker notes` section (last paragraph: "Спасибо за внимание
-сегодня — лестница у вас в руках на карточке, а репозиторий с рабочим примером остаётся
-доступным по ссылке с предыдущего слайда, если захотите свериться с деталями позже."). This is
-already-authored text from the slide's own file, not new content — it differentiates the second
-box from the title (no more literal duplication) while still functioning as the closing beat the
-brief asked for. Restyled the box from a second `gold_callout` (identical visual treatment to the
-question box above it, compounding the "looks like the same thing twice" read) to a
-`hint_bar`-family ocean_box (teal stroke, `clipboard-check` icon — chosen for the "carточка"
-handout the sentence itself references, avoiding a decorative/non-semantic icon) that now spans
-y=5.15→7.0, matching the content floor every other slide in this deck uses.
-
-**Changed:** `build_sem04.py::build_s56()` only. **Not changed:** all other 55 `build_sN()`
-functions, `slides/s56-final-vopros.md` source (per "do not edit source markdown" — content
-selection stayed within what the file already contains), all other slide snapshots.
-
-**Rebuild:** ran `python3 build_sem04.py` (full deck rebuild — the build script has no
-single-slide mode, but only `build_s56()`'s code changed, so all other 55 slides are
-byte-for-byte the same construction as before). Converted via
-`tools/presentation-build/pptx_to_png.sh sem-04.pptx <tmp-dir> 150 56 56` (targeted page-range
-rasterization per `#sem03-render-1` — build and convert kept as separate shell calls, ran without
-sourcing `render-env.sh` first) to regenerate `sem-04.pdf` (full 56-page reconvert — `soffice
---convert-to pdf` always converts the whole document; only the PNG rasterization step was scoped
-to page 56) and the single updated snapshot.
-
-**New snapshot:** `library/seminars/sem-04/rendered/snapshots/s56.png` (overwritten, 2000×1125,
-150dpi — same resolution as the rest of the deck). Visual check confirms: no duplicated title, no
-empty bottom field, gold rule still satisfied (question callout border + 7 gold dots), semantic
-icon, text wraps cleanly to 2 lines within the new box.
-
-## Fix-pass 2026-09-21 — QA convergence (presentation-critic + student-simulator + reader-simulator)
-
-Batched revision against `library/seminars/sem-04/qa-reports/2026-09-21-v1/{presentation-critic,
-student-simulator,reader-rendered}.md`. Scope: exactly the 3 fixes below, in `build_sem04.py`
-only. All other 47 of 56 `build_sN()` functions untouched (verified: `grep -c "^def build_s"` =
-53 defs + 3 `_hook_capture_slide()`-assigned aliases = 56, unchanged count).
-
-### Fix 1 (P1) — s44/s49 divider template drift
-
-`build_s44()`/`build_s49()` previously called a bespoke `build_section_divider_lite()` (no giant
-stage digit, no gold-pill tag, small top-right icon) instead of the shared `build_section_divider()`
-used by s10/s17/s23/s31/s37 — breaking the numbered-ladder keystone visual on ступени 6-7 exactly
-as both critics flagged. Switched both to `build_section_divider(number=6|7, title=..., tag=...,
-illustration=...)`, matching s10-37's actual template (gradient bg, giant translucent digit, tag
-pill, dark-plaque icon bottom-right) exactly.
-
-One deliberate interpretation call: the brief's phrasing "префикс «Ступень N:» в заголовке"
-does **not** literally exist in s10/s17/s23/s31/s37's own title text (their titles are bare
-"Файл инструкций" / "Память" / etc. — the ordinal is conveyed entirely by the giant background
-digit, not a text prefix). Adding a literal "Ступень 6:" prefix to s44/s49's titles would have
-created a *third*, still-inconsistent variant. Matched the actual working template instead
-(giant digit only) — this is what "тот же визуальный шаблон" requires literally.
-
-`build_section_divider()` gained an optional `title_size=44` kwarg (default unchanged, so
-s10/s17/s23/s31/s37 render byte-identical to before) — s49's title ("Процесс: план, прожарка,
-журнал", the longest in the deck) passes `title_size=32` to stay on one line inside the same
-8.2in title box; s44's short "Субагенты" keeps the default. New tag text length-matched against
-the 5 existing tags' 46-54 char range (s44: 43 chars, s49: 55 chars) — chip()'s `word_wrap=False`
-means an oversized tag silently overflows past the icon, so this was checked, not guessed.
-Removed the now-dead `build_section_divider_lite()` helper entirely (only s44/s49 ever called it).
-
-Rendered s10/s37/s44/s49 to PNG and visually confirmed: identical layout family, gradient bg,
-digit, tag pill, icon plaque; text fits with no overflow.
-
-### Fix 2 (P1) — s01/s56 hero <40% area
-
-Both critics converged: no slide in the deck had a hero visual ≥40% of slide area (§5.9). s01's
-old "hero" was a thin dotted timeline strip (~2.7in tall, but visually only the ~0.3in dot row
-read as content — critic estimated ~20-25% effective area); s56's was a 4.25×2.9in corner box
-(~12% of canvas).
-
-Replaced both with a new shared helper, `build_growth_staircase()` (added right after
-`LADDER_STAGES`, alongside a small `lerp_color()` utility next to `chip()`): an **ascending
-8-step staircase**, bar height growing linearly with stage ordinal (0→7), each bar labeled with
-its real added filename/path (from `captures/21-27-tree-stage*.txt`, already-verified real data
-— nothing invented) and its short stage label. This is a literal rendering of the "лестница
-роста конфигурации" (staircase of configuration growth) that names the whole seminar — a
-stronger conceptual fit than an abstract file-count bar chart, per §5.7's custom-data-viz-hero
-allowance (no real photo exists for "empty repo → 7 config additions").
-
-- **s01**: hero panel now `x=0.55, y=3.46, w=12.23, h=3.3` → area = 12.23×3.3 = 40.36 in² =
-  **40.36%** of the 13.333×7.5in canvas (was ~20-25%). Top text block (title/subtitle/tagline)
-  compressed slightly (title 56pt→50pt, tighter y-spacing) to make room without shrinking the
-  hero below the 40% line. Also fixed an unrelated regression this same change surfaced: the
-  decorative "04" watermark number was `anchor=TOP` at 200pt, whose line-height pushed the
-  visible glyph down to ~y=3.47in — with the hero now starting higher up the slide than before,
-  this started bleeding into the staircase's top labels. Fixed by `anchor=MSO_ANCHOR.MIDDLE`
-  (same anchoring the divider's own giant digit already uses) — confirmed via re-render, no
-  longer overlaps.
-- **s56**: hero panel `x=0.55, y=2.97, w=12.23, h=3.35` → area = 12.23×3.35 = 40.97 in² =
-  **40.97%**. Same real data as s01 (full 7-stage ladder, ending gold on "Tasks/"), rendered with
-  a light-bg-appropriate palette (`GOLD_DARK` for gold text/numbers, not `GOLD` — WCAG-AA
-  contrast rule per `project_ocean_palette_gold_contrast_defect`, since s56's background is white
-  vs. s01's dark Ocean gradient). Question callout widened to full slide width and shortened
-  (2.9in→1.0in — same text, more horizontal room, less needed height) and the closing "thank you"
-  strip shrunk from a 1.85in filler bar to a 0.58in strip (same verbatim text, smaller font,
-  smaller icon) — the enlarged hero now carries the slide's own Visual Mass Balance, so the
-  closing line no longer needs to double as filler.
-
-Both verified via `lerp_color((0x..),(0x..),i/6)` bar shading (dark indigo→lighter indigo on s01,
-LIGHT→DEEP on s56, gold for the final/7th bar on both) rendering with no text overflow, no
-color-contrast issues, at 150dpi.
-
-### Fix 3 (P2) — 3 unglossed terms
-
-- **s37**: title changed `"MCP"` → `"MCP (Model Context Protocol)"` (first real appearance of the
-  acronym in the deck; s02's lecture-map card is too narrow for a gloss). `title_size=34` keeps
-  it on one line in the 8.2in title box.
-- **s35**: right card body text — inserted `"Task-Implementation Fault (ошибка в самой реализации
-  задачи)"` inline at first appearance.
-- **s53**: criterion card header — `"Живой кейс: har36"` → `"Живой кейс: har36 — внутренний кейс
-  шаблонной task-экосистемы"` (matches what the underlying research doc, `library/seminars/
-  _research/coding-agent/06-process-roast-log.md` ~line 127, actually documents — the
-  `20260810_har36_independent_roast` task inside the template task-ecosystem where a reviewer
-  caught a fabricated "Independent ROAST: PASS" comment; no details invented beyond that).
-
-All three re-rendered to PNG and confirmed: text fits within existing box bounds, no truncation,
-no layout shift on neighboring elements.
-
-### Rebuild & verification
-
-`python3 build_sem04.py` (full deck rebuild, 56 slides — no single-slide mode) →
-`tools/presentation-build/pptx_to_png.sh sem-04.pptx <tmp> 150` (full-deck PNG regenerate).
-Visually inspected s01, s02, s10, s35, s37, s44, s49, s53, s56 at 150dpi — s02/s10 included as
-untouched-function spot-checks (confirmed byte-identical layout to pre-fix renders). New
-snapshots copied over `library/seminars/sem-04/rendered/snapshots/{s01,s35,s37,s44,s49,s53,
-s56}.png`; the other 49 snapshot files were not touched (their builder functions did not change).
-
-**Changed:** `build_sem04.py` only — `build_section_divider()` (added `title_size` kwarg,
-backward-compatible default), `build_s44()`, `build_s49()`, `build_s01()`, `build_s56()`,
-`build_s35()`, `build_s37()`, `build_s53()`, new `lerp_color()` + `build_growth_staircase()`
-helpers, removed dead `build_section_divider_lite()`. **Not changed:** any `slides/*.md` source
-file, any of the other 47 `build_sN()` functions, palette constants, deck.yaml.
+**Пересобрано и пересиято:** весь деck (`python3 build_sem04.py` → `sem-04.pptx` → `sem-04.pdf`
+→ 65 PNG в `snapshots/`, оба варианта имён `sNN.png` и `sem-04-s-NN.png`). 0 новых
+`OVERFLOW WARNING` на изменённых слайдах (s14/s15/s24/s38/s55/s62/s63/s64/s65) — существующие
+warnings на нетронутых s05/s12/s14(код-блок)/s20/s27/s28/s36/s43/s53 предшествуют этому проходу
+и вне scope точечного фикса.

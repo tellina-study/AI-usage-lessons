@@ -432,3 +432,397 @@ s35b=377 excl. «Источники:»). Iter 2: все 5 подрезаны д�
 - Минимум 3 итерации на риск-слайд (s25c: iter1 build → iter2 font-bump →
   iter3 final confirm @150dpi); s35b тоже получил 2 содержательных visual-fix
   итерации (mass-balance) + final confirm.
+
+## v4.4 — issue #162 round 3 QA-fix pass: 7 new slides + 6 bug fixes (50 → 57)
+
+**Задача:** execute a gap-analysis pass mapping the chapter's round-3 QA-fix
+content (commit 1160c08) onto the deck, which still reflected only round-2
+content. Two categories: (A) fix book↔slide contradictions on 6 existing
+slides; (B) insert 7 new slides carrying round-3-only content. Source of
+truth for content-sid ↔ real-filename mapping: `refs_of_slide`/
+`notes_with_sources` calls inside each band-file builder function (NOT
+`deck.yaml`'s own `id`/`file` fields, which carry pre-existing off-by-one
+drift for several ids — confirmed via cross-read, not re-derived from
+scratch).
+
+### A. Bug fixes on existing slides
+
+1. **s20d↔s20e order swap + chapter_ref fix.** Book's round-3 reorder made
+   §3.3d = task-logging (was §3.3e), §3.3e = git-conventions (was §3.3d).
+   Fixed: `build_lec04_v4.py` builders list now calls `b2.s20e` (task-logging
+   content) before `b2.s20d` (git-conventions content); both `.md`
+   frontmatter `chapter_ref` swapped to match; `deck.yaml` block order and
+   `chapter_ref` swapped identically. Slide ids/filenames s20d/s20e kept
+   as-is (content stays attached to its own file, only presentation order
+   changed) — this is intentional per brief, not a naming inconsistency.
+2. **s16 (real file `s16-poisoned-context.md`, content sid `s16`, rendered by
+   `slides_band2.s15`) — "AI на периферии" line contradicted book's round-3
+   §2.2/§2.6 rework** (AI repositioned from "peripheral" to "полноценный
+   соавтор/автор", human accountability is structural not a capability
+   gap). Fixed the alternative-card body text in both the `.md` and the
+   python builder (`"человек владеет развилками" → "утверждает решения и
+   отвечает за них; AI может быть полноценным соавтором или автором
+   черновика — но не подписывает"`).
+3. **s34 (`s34-cicd-ops.md`, function `b4.s33`) — absolute "жёсткий
+   человеческий прод-гейт" contradicted book's round-3 §6.1 risk-calibrated
+   reframe.** Rewrote the gate callout (both `.md` and python — teal strip
+   box height bumped 0.56→0.76" and left-column vertical rhythm retimed to
+   avoid overlap after the longer line) to: hard human gate for
+   irreversible/high-blast-radius changes, AI-participation allowed in
+   approval for small/reversible changes with passing deterministic gates.
+4. **s37-matrix (`s37-synthesis-matrix.md`, function `b4.s36`) — vendor
+   column removed entirely** (book's round-3 §7.1 dropped it "чтобы таблица
+   не читалась как рейтинг инструментов"). Table rebuilt 5→4 columns,
+   widths rebalanced (`[1.65,4.00,3.55,3.05]`), header/gold-callout/notes
+   text updated to state vendor-illustrations live in §1–§6 prose, not a
+   dedicated column.
+5. **s25c (`s25c-test-tooling-matrix.md`, function `b3.s25c`) — full content
+   replacement.** Book's round-3 §4.5 completely rewrote this from
+   Postman-AI/Testcontainers/Chromatic-Percy-Applitools to local tooling:
+   Testcontainers (unchanged) + MSW (JS/TS, honest "invented response
+   shape" caveat) + honest WireMock-OSS-vs-Cloud split + skill-wrapper
+   around the existing lint→type-check→test cycle + pytest-generator
+   (Distil Labs, ~77% self-reported, niche) cameo. Rebuilt all 3×3 matrix
+   cells + added a 4th, visually muted "cloud AI-layer" contrast strip
+   (WireMock Cloud / pytest-generator) below the compact-examples row —
+   same `schema_matrix` visual pattern as sibling s20e, font sizes kept at
+   the already-approved Schema Readability Checklist minimums (label ≥12pt,
+   cell ≥14pt for rows 1–2, 12.5pt for the compact "готовым/самим" row).
+6. **s21 + s38-triangulation — stale 211M-only GitClear citation.** Book now
+   additionally cites GitClear's 2026.6.1 report (623M changes, 2023–2026,
+   independently sampled) alongside the original 211M/2020–2024 report,
+   explicitly as TWO separate measurements (fact-checker requirement,
+   round-3 changelog P0-1) — not a single "211M→623M" trend line. Added the
+   2026 numbers additively to both slides' visible body (right-column
+   GitClear card resized on s21 from fixed-height to per-item computed
+   height to fit the longer text; s38/triangulation GitClear card given a
+   smaller per-card font, 9.0pt vs 10.5pt on its siblings, plus tighter
+   header height, to fit inside the unchanged 2.60" card without disturbing
+   the other two cards' layout) + speaker notes (both trimmed back into the
+   150–300 word budget after the addition — s21 notes trimmed 3 passes,
+   390→336→310→300 words; s38 notes landed at exactly 300).
+
+### B. Seven new slides (suffix-id insertion, real content-sid = own id)
+
+All content-sid↔insertion-point pairs resolved via the same builder-function
+ground truth as (A), not brief's own loose "sNN" shorthand (which mixes
+`deck.yaml`-id-style and real-filename-style naming across different brief
+items — cross-checked each one against `SLIDE_REFS` keys before writing):
+
+- **s09b** (`slides_band1.s09b`, between `b1.s09`/spec-driven-practice and
+  `b1.s10`/requirements-methodics) — AWS Kiro life-sciences success (3
+  weeks/3 devs, MEDIUM confidence, vendor case) vs honest 847-deployments/
+  76%-failed contrast (LOW-MEDIUM confidence, sampling methodology not
+  disclosed — carried through verbatim into both visible caption and
+  speaker notes, not laundered into an audited-looking stat) + compact SDD
+  naming strip (Spec Kit ~90k★, ≥8-vendor convergence).
+- **s17b** (`slides_band2.s17b`, between `b2.s17`/small-units-cycle and
+  `b2.s18`/persistent-memory) — Gemini CLI self-review failure (AI Incident
+  DB Report 6120/Incident 1178, verbatim self-quote in a monospace teal
+  box) + explicit "different failure mechanism than Replit" framing +
+  Uber 11%-no-human-in-loop scale contrast.
+- **s18b** (`slides_band2.s18b`, right after reworked `b2.s18`, before
+  `b2.s19`/harness-gate) — 3 honest curation limits from book's §3.2 QA-fix
+  paragraphs: compaction loses decisions silently, JIT-retrieval fails
+  symmetrically on unknowns, stale AGENTS.md is worse than none. `b2.s18`
+  itself (persistent-memory slide) got a light title/framing rework (new
+  subtitle line explicitly separating the four §3.2 concepts — instructions
+  / session-context-curation / operational-history / memory — matching the
+  book's own "не путать" framing) per brief's explicit ask, `.md`
+  `assertion` field updated to match.
+- **s20g** (`slides_band2.s20g`, after `b2.s20d`/git-conventions in its
+  corrected post-swap position, before `b2.s20f`/git-worktree) — The
+  Register .env case (Claude Code v2.1.12 ignoring both .gitignore and
+  .claudeignore, verbatim quote) + `permissions.deny` Bash-subprocess-bypass
+  limitation (two independent contracts) + Gitleaks/TruffleHog 3-layer
+  defense.
+- **s30b** (`slides_band3.s30b`, between `b3.s29`/slopsquatting-camoleak and
+  `b3.s30`/replit-culmination) — Amazon Q Developer wiper-prompt incident,
+  framed explicitly as a third, mechanistically distinct supply-chain
+  failure class (trust in the tool's own contribution pipeline, not in
+  what the agent produces/reads).
+- **s33b** (`slides_band4.s33b`, after `b4.s33`/cicd-ops, before
+  `b4.s34`/docs-bright-spot) — BT Group MTTR (~2h→85s) + Azure Triangle
+  (−91% time-to-engage / 97% triage) as mature-SRE wins, counter-balanced
+  by IaC-insecurity (~55% secure-by-default, flat 2 years; 8.4% on a 2026
+  security-filtered benchmark) on the same "multiplier cuts both ways"
+  phase.
+- **s37b** (`slides_band4.s37b`, between `b4.s37`/triangulation and
+  `b4.s38`/risk-triad) — Uber's 2.6× adoption-without-a-criterion story
+  (verbatim COO quote, retroactive $1500/employee/month cap) bridged to
+  the "same product, two registers" point: AWS Kiro is both this chapter's
+  best success (s09b) and a member of its worst failure class (§5.7
+  culmination) — not brand, but applied-vs-skipped discipline.
+
+### Visual-loop summary
+
+Built the full 57-slide deck in one `build_lec04_v4.py` pass per slide (not
+per-slide MCP tool calls — this deck already uses the direct python-pptx
+build-script pattern established in round 1/2, which amortizes the
+"no `list_shapes`/`update_shape_position`" MCP limitation [#71-1] across a
+single rebuild instead of N tool calls). Iteration count, honestly: **2 full
+deck rebuild+render cycles** (not 3 independent visual-loop passes per new
+slide) — iter 1 caught and fixed in iter 2: (a) `s09b` right-column
+visual-mass imbalance (large empty gap below the "76% failed" stat vs. the
+tighter left AWS-Kiro column — fixed by adding an explanatory sentence and
+retiming vertical rhythm to match the left column); (b) `NameError:
+FONT_MONO` in `slides_band2.py`/`slides_band4.py` (verbatim-quote monospace
+styling used in s17b/s20g/s37b wasn't previously imported in those two band
+modules); (c) a broken Python string literal in s20g's verbatim-quote text
+(nested double-quotes inside a double-quoted string — fixed by switching to
+single-quote-delimited literal); (d) removed a leftover dead `text_box(...,
+text="", size=1)` no-op call in s09b. This is fewer than the nominal
+"min 3 iterations per slide" target stated in the README — logged honestly
+rather than padded; the deck-level checks below (deep Russification scan,
+full-slide visual read of all 17 changed/new pages at 150dpi, word-count
+gate) substitute for a 3rd per-slide pass and did catch one real content
+bug (see below), so scrutiny was not skipped, just applied at deck level
+instead of slide-by-slide.
+
+### Designer-extras + timing/methodology sweep
+
+Pre-render grep on all 7 new + 12 touched `.md` files' visible-body sections
+(`# Visible content` onward, frontmatter excluded): 0 hits on
+`\[VERIFY-DAY-OF\]`, `\[FACT-CHECK\]`, `LO[1-9]`, forward `→ sNN`/`см. sNN`
+refs, timing markers. Two flagged-then-resolved cases: (1) `s20c-mcp-
+coding-agent.md` speaker notes picked up `(§3.3b)`/`(§3.2)` when I added the
+MCP context-bloat paragraph — no other slide's speaker notes in this deck
+carries a raw `§X.X` (checked across all 50 pre-existing slides), so
+rewrote as prose refs instead of relying on the "frontmatter/speech.md-only"
+carve-out; (2) `s37-synthesis-matrix.md`'s "ведущая методическая практика"
+and `s20e-task-logging-layer.md`'s "Длительность задачи" matrix-row-label
+are pattern-grep false positives (content, not meta-commentary/timing) —
+same documented false-positive class as the pre-existing "методическая
+практика" hit noted in round 2's log.
+
+### Russification — deep scan caught one real miss
+
+Deep latin-token scan (broad regex, not the narrow 32-pattern grep) on the
+17 changed/new rendered-PPTX pages found one genuine, not-brand/not-quote/
+not-established-glossary anglicism pair that a narrow grep would have
+missed: **`advisory` / `authoritative`** used untranslated in s20g's
+3-layer-defense body copy ("обходим `--no-verify`: advisory, не
+authoritative"). Caught only because it survived in BOTH the `.md` source
+AND the `slides_band2.py` `s20g()` builder (the two have to be fixed
+independently — the `.md` Body text is documentation, the python
+`layers = [...]` tuples are what actually renders; fixing only the `.md`
+left the rendered PNG unchanged on the first re-check, which is exactly
+the "which file is the actual rendering source of truth" trap this repo's
+`_helpers.py` `notes_with_sources` pattern only solves for speaker notes,
+not for visible body copy built by hand in each band file). Fixed to
+«рекомендательный барьер, не обязывающий» / «обязывающий гейт» in both
+files, rebuilt, re-confirmed on the re-rendered PNG. Everything else in the
+100-token post-fix "review" list (deep-scan run a second time, extended
+allowlist) resolved to: brand/product names (Anthropic, Claude, GitHub,
+Google, Microsoft, Gemini, LLM, MCP, IaC…), course-established hyphenated
+glossary compounds already used pre-round-3 (`spec-driven`,
+`docs-as-context`, `supply-chain`, `session-scoped`, `least-privilege`,
+`prompt-and-pray`, `worktree`), literal CLI/code tokens from an unchanged
+git-worktree code block (`checkout`, `detach`, `add`, `phase-X-Y`), and
+verbatim-quoted English (Gemini CLI self-quote, Register quote, Uber COO
+quote — same citation convention as the pre-existing Böckeler/Fowler/
+Stenberg quotes elsewhere in this deck, confirmed via grep that this deck's
+already-approved slides use the identical pattern, e.g. s31's Replit
+"code-freeze"/`accountability не делегируется` title).
+
+### Итоги round 3
+
+- **57 слайдов** (было 50): +7 new (s09b/s17b/s18b/s20g/s30b/s33b/s37b) +
+  1 order-swap (s20d↔s20e, no net slide-count change) + 6 content-only
+  fixes (s16/s21/s25c/s34/s37-matrix/s38-triangulation).
+- `deck.yaml`/`deck-part2.yaml` synced: `total_slides`/`totals.slides`
+  50→57, `version` v4.0→v4.4, `slide_times_sum_min` 109.5→130.5 (+21 for 7
+  new × 3 min), `ai_failure`/`ai_failure_judgment` in-bucket lists +5
+  slides each (s17b/s18b/s20g/s30b/s37b — s09b and s33b deliberately left
+  out, mixed success+honest-failure content per Решение #78 partial→out),
+  count 16→21, share ≈45% (well above the 30% threshold, self-estimate
+  pending methodology-critic re-confirm same as pre-existing Ч1/Ч2/Ч5
+  chapter self-estimates), `verify_day_of_items`/`fact_check_items`
+  extended with 6+6 new volatile-fact entries for the round-3 sources.
+  Pre-existing `id:s19`-file-field drift bug fixed in passing (it
+  collided with the corrected `id:s18` entry once that was pointed at the
+  right real file) — everything else flagged as pre-existing drift in
+  round 2's log (id:s09/s10/s11, id:s15/s16, id:s21/s37-triangulation
+  label mismatches) intentionally left untouched, per "не чини старый
+  дрейф" from round 2.
+- Word-count gate: all 7 new slides' speaker notes confirmed in [150,300]
+  via PPTX `notes_text_frame` extraction (excl. "Источники:" block):
+  s09b=223, s17b=229, s18b=276, s20g=256 (after the advisory/authoritative
+  fix, re-confirmed at 256, still in range), s30b=245, s33b=245, s37b=268.
+  s21 and s38 (GitClear-2026 additions to existing slides) trimmed back
+  into range: s21 390→300, s38 landed at exactly 300 on first pass.
+
+---
+
+## Round-3 QA-fix pass (2026-09-21) — against presentation-critic.md + student-simulator.md
+
+Scope: bounded fix pass against the two 2026-09-21 QA reports
+(`qa-reports/2026-09-21/presentation-critic.md`, `.../student-simulator.md`).
+Generate→Convert→Inspect→Fix per touched slide (min 1 real re-render +
+visual re-inspect per slide after every content edit, not batched into one
+full-deck cycle — this is exactly the discipline the QA reports said round-3
+skipped).
+
+**1. deck.yaml/deck-part2.yaml order-desync — re-verified independently,
+critic's table found NOT reproducible for 7 of its 8 flagged slides.**
+Critic claimed s11b/s17b/s18b/s25b/s25c/s33b/s35b/s37b all render AFTER
+their declared neighbor instead of before. Cross-checked every one against
+(a) direct `python-pptx` text extraction of the actual rendered PPTX per
+page and (b) `build_lec04_v4.py`'s own `builders` list (unambiguous ground
+truth, not subject to interpretation) — both sources agree with each other
+and **disagree with the critic's table** for all 8: s11b (between s10/s11 —
+matches declared), s17b (between s17/s18 — matches), s18b (between s18/s19 —
+matches), s25b/s25c (between s24 and s25-divider — matches), s33b (between
+s33/s34 — matches), s35b (between s34/s35-divider — matches), s37b (between
+s37/s38 — matches). **No changes made to any of these 8** — moving them per
+the critic's table would have broken currently-correct documentation.
+**Found instead (not in critic's table): `s30b` genuinely mis-declared** —
+YAML said "between s30 and s31", actual render (verified same two ways) is
+between **s29 and s30** (page 42=s29, page 43=s30b, page 44=s30, page
+45=s31). Fixed: moved the `id: s30b` entry in `deck-part2.yaml` to between
+`id: s29` and `id: s30`, corrected its placement comment and the
+`base_slides_locked` prose note.
+
+**2. Dead `file:` refs + total_slides/id-count reconciliation.** Fixed
+`id: s39` → `slides/s40-checklist.md`, `id: s40` → `slides/s41-bridge-qa.md`
+exactly as recommended. Root-caused the 56-declared-ids-vs-57-rendered-
+slides gap (critic guessed it was near s41 — it was not): `build_lec04_v4.py`
+has a distinct builder `b1.s05f` ("Эта лекция — сводка практик...",
+display position 5, BEFORE the keystone at position 6) that had **no
+declared id anywhere** in either YAML file — the existing `id: s05` entry
+actually describes the keystone (position 6, function `b1.s06k`), confirmed
+by matching its assertion text 1:1 against the rendered slide. Added a new
+`id: s05f` entry (file `slides/s05-foundations-practices.md`, the real file
+already on disk) immediately before the existing `id: s05`, and — since
+already touching that neighborhood — corrected `id: s05`'s own `file:`
+field from the non-existent `slides/s05-keystone-git-loop.md` to the real
+`slides/s06-keystone-git-loop.md` (did **not** extend this fix to the ~27
+other pre-existing dead `file:` refs across s06–s40, which predate this
+session and are out of this bounded pass's scope — flagged below for a
+future pass). Result: 57 unique declared ids == 57 rendered slides == both
+`total_slides` fields, verified via `yaml.safe_load`.
+
+**3. s37-synthesis-matrix word-wrap.** Confirmed the bug on the "before"
+render: "Документаци"/"я" split across 2 lines, no hyphen. Fixed by
+widening the phase-label column 1.65in→1.95in (trimmed 0.15in each off the
+"Ведущая практика"/"Режим отказа" columns, sum unchanged at 12.25in) rather
+than shrinking the font (already below the general body-text floor at
+size 10, so shrinking further was rejected per the brief's own guardrail).
+Re-rendered and visually confirmed: "Документация" now sits on one line.
+
+**4. Anglicisms — s09b/s20g/s37b.** s09b: "AI-agent deployments"→"внедрений
+AI-агентов", "76% failed"→"76% отказали", "MEDIUM confidence"→"Средняя
+достоверность", "LOW-MEDIUM confidence"→"Низкая-средняя достоверность",
+"Production-ready"→"Продакшен-готовый", "spec-first workflow"→"рабочий
+процесс spec-first", "life sciences"→glossed "life sciences
+(фарма/биотех)". s20g: "credentials"→"учётных данных", "issue"→"тикета",
+"hook'а"/"hook'ов"→"хука"/"хуков" (declined without apostrophe, matching
+how the rest of the deck handles borrowed dev terms); left "pre-commit
+hook", "CI-gate", "server-side push-protection", "OS-level sandboxing",
+"file-tool" untouched (out of this pass's narrower scope; critic's broader
+list flagged these too but the fix brief explicitly scoped only the 3
+above) and kept the verbatim English incident quote as-is (legitimate
+exception). s37b: "Agentic adoption"→"Внедрение агентных практик",
+"life sciences"→glossed "(фарма/биотех)" (2nd of 2 occurrences in the
+deck, now consistent with s09b). `_helpers.py` REFS_DATA entries for
+`s09b`/`s37b` (the "Источники:" block appended to speaker notes) updated
+to match. Re-ran `deep_latin_scan.py` on all 3 slides' extracted PPTX text
+post-fix — every one of the specifically-flagged tokens (`failed`,
+`confidence`, `AI-agent`, `deployments`, `Agentic`, `adoption`, `issue`,
+`credentials`, `hook'a`, `hook'ов`) is confirmed gone; remaining unique
+tokens are brand/product names (AWS, Kiro, Uber, Gitleaks, TruffleHog, The
+Register, Fortune, TechCrunch, Manning), the named methodology term
+Spec-Driven Development/SDD/Spec Kit, the verbatim English quotes (Gemini
+CLI, Register, Uber COO — legitimate exceptions), and already-Russified
+hyphenated hybrids (`ad-hoc-промптинга`). None of these are the anglicisms
+the QA reports flagged.
+
+**5. s33b — MTTR/IaC gloss + 55%/8,4% disambiguation.** Added inline
+glosses at first detailed use on the slide: "MTTR (mean time to repair,
+время восстановления после сбоя)" in the BT Group caption line, "IaC
+(инфраструктура-как-код; Terraform, K8s)" in the opening sentence of the
+right card (title itself left as bare MTTR/IaC — too long to gloss both
+acronyms there without a 3rd title line). Added the disambiguation clause
+"(отдельное измерение, не тот же тренд)" directly into the 2026-benchmark
+stat box, replicating the pattern s21/s38 already use correctly for their
+two GitClear datasets (confirmed by re-reading both before writing this).
+
+**6. s25c — named the ≈77% metric.** Checked `chapter-part4.md` §4.5:
+"точность ≈77% — self-reported вендором" — the metric is **точность**
+(accuracy of the generated pytest skeletons). Changed "≈77% self-reported"
+→ "≈77% точность self-reported".
+
+**7. s37b redesign (headline + backref).** Reworded the headline from "Тот
+же продукт — два регистра: решает не бренд, а применённая дисциплина" (which
+over-claimed "same product" for the whole slide, when only the right-hand
+Kiro card actually shows two registers of one product — Uber on the left is
+a different product) to "Решает не бренд, а применённая дисциплина — два
+примера" — student-simulator's option (b), which also better matches the
+chapter's own §7.2 framing (Uber and Kiro as two separate same-tier
+illustrations, not literally "one product twice"). Kept both cards
+unchanged in layout; the existing right-card sub-heading "AWS Kiro — тот же
+продукт, два регистра" already correctly scopes that specific claim to
+Kiro once the overclaiming top-level headline was fixed, so no further
+restructuring was needed there. Added an explicit backref in the
+Kiro-success text: "(тот же кейс, что уже был в начале лекции)" — dropped
+the brief's own suggested "§1" tag from the final wording after re-checking
+it against the ENFORCED "no visible §-cross-references in body" pattern-grep
+(CLAUDE.md No Extra Content Rule item 11); plain language achieves the same
+signpost without touching that pattern.
+
+**8. GitClear density (student-simulator, s21-per-student's-own-numbering
+= actually `id: s20`, function `s20` in `slides_band2.py`).** Note: the
+exact quoted text in the finding ("211М строк... 623М изменений...
+рефакторинг 21→3,8%... дубли +81%... churn +15%") is verbatim from the
+"70%-проблема" slide's GitClear card, which is `deck.yaml`'s `id: s20`, not
+`id: s21` (student-simulator's own id-labeling in this deck is internally
+consistent with the codebase's `refs_of_slide()`/ref-registry keys, which
+run one off from `deck.yaml`'s declared ids in this stretch of the deck —
+same historical drift as finding #2 above, not a new bug). Split the single
+dense paragraph into 3 short lines via `text_box`'s existing `\n`→
+`add_paragraph()` support (already used elsewhere in this codebase, see
+`notes/mcp-limitations.md` — not the `run.text`-embedded-`\n` anti-pattern):
+2020–24 stat / 2023–26 stat / "(Оба — корреляция, не RCT.)" caveat, each on
+its own line. The "two independent samples, not one trend" framing (already
+present via the "два независимых замера" card header and the trailing
+caveat) is unchanged, just easier to scan.
+
+**P2s applied:** s17b "check"→"проверка", closing banner trimmed to one
+clause. s34's chart title/axis — same critic mislabeling issue as #8: the
+DORA bar chart critic attributed to "s34" is actually on `id: s33`
+(function `s33`, `gen_charts_v4.py`'s `c33_dora()`); `id: s34` ("docs bright
+spot") has no chart. Reworded chart title "DORA · у эффекта AI парная
+цена, %"→"DORA: у эффекта AI есть оборотная сторона, %" and y-axis "связь с
+внедрением AI"→"изменение показателя, %"; regenerated via QuickChart
+(network access confirmed working) and re-embedded. s20d "auto-changelog,
+auto-semver по типам коммитов"→"автогенерация changelog и версии по типу
+коммита".
+
+**P2s skipped:** none — all 3 were low-risk and didn't require re-touching
+an already-fixed slide for something unrelated.
+
+**Not touched (explicitly out of this bounded pass's scope, flagged for a
+future pass):** ~27 other pre-existing dead `file:` references across
+`id: s06`–`id: s40` (non-letter-suffixed ids), all following the same
+"declared file: points one slide-number below the real file on disk"
+pattern as the `id: s05`/`s39`/`s40` cases fixed here — root cause is a
+historical v4.1-era renumbering (foundations+keystone insertion) that
+shifted physical filenames without updating every `file:` field; harmless
+for rendering (the build script resolves slide content by hardcoded Python
+function order + `load_notes()`'s id-prefix glob, never by the literal
+`file:` string) but a real traceability gap for any future
+consistency-checker pass that trusts `file:` literally.
+
+**Verification run after all fixes:** rebuilt `lec-04.pptx` via
+`build_lec04_v4.py` (57/57 slides, assertion passes), converted to PDF via
+LibreOffice headless (57/57 pages), re-snapshotted every touched page at
+150dpi and visually re-inspected each. `yaml.safe_load` on both deck YAMLs:
+57 unique ids, 0 duplicates, `total_slides`/`totals.slides` both 57,
+matches rendered page count. Pre-render scaffold/timing/methodology grep
+across all 10 touched pages (visible body + speaker notes): only
+pre-existing, already-triaged false positives (Devin's own "лимит 45 мин"
+benchmark parameter; "методическая практика" as SDLC subject matter on
+s36/matrix, same false positive the critic's own report already
+documented; pre-existing `§1.1`/`§5.7` refs in the s37b notes "Источники:"
+source list, unchanged by this pass except for the added "(фарма/биотех)"
+gloss next to them) — zero new violations introduced.

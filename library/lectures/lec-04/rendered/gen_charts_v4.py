@@ -238,8 +238,8 @@ def c33_dora():
                 "plugins": {
                     "legend": {"display": False},
                     "title": {"display": True,
-                              "text": "DORA · у эффекта AI парная цена, %",
-                              "font": {"size": 23, "weight": "bold"},
+                              "text": "DORA: у эффекта AI есть оборотная сторона, %",
+                              "font": {"size": 21, "weight": "bold"},
                               "color": DEEP, "padding": 14},
                     "datalabels": {"anchor": "center", "align": "center",
                                    "color": "white",
@@ -247,7 +247,7 @@ def c33_dora():
                 },
                 "scales": {
                     "y": {"title": {"display": True,
-                                    "text": "связь с внедрением AI",
+                                    "text": "изменение показателя, %",
                                     "font": {"size": 17}, "color": DEEP},
                           "ticks": {"font": {"size": 18}},
                           "grid": {"color": GRID},

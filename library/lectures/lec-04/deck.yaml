@@ -38,10 +38,10 @@ deck:
   learning_outcomes: [LO1, LO4, LO7]
   language: ru
   status: draft-for-gate-b
-  version: v4.0
+  version: v4.4
   source: "chapter v4 methodology-first (~34.5k, 5 частей)"
   plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
-  total_slides: 50          # v4.3 (#162 round 2): +5 slides s11b/s20f/s25b/s25c/s35b (§1.2b requirements viz · §3.3f git worktree · §4.4 BDD/trunk-based · §4.5 test tooling · §6.3 docs tooling); было 45 (v4.2: +4 slides s20b/s20c/s20d/s20e Skills·MCP·git-конвенции·task-logging между s20 и s21; было 41, v4.1: s01–s41; 7 section-dividers s09/s13/s17/s23/s26/s33/s36 сдвиг +1; s05 foundations, s06 keystone)
+  total_slides: 57          # v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3); L4 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "методико-first: фаза SDLC × ведущая практика (методика: артефакт + кто предписывает + почему); инструмент — вторичная иллюстрация"
@@ -125,9 +125,9 @@ glossary_lock:
 ai_failure:
   # AI-Failure & Judgment Content Rule (ENFORCED): ≥30% strict-in, waiver НЕДОСТУПЕН для L4.
   # Целиком-in-bucket слайды (провал+урок / лимит / «когда не AI» / сравнение с альтернативой):
-  strict_in_slides: [s07, s11, s13, s15, s20, s21, s24, s27, s29, s30, s31, s33, s34, s37, s38, s39]
-  count: 16
-  share_by_slides: "16/40 = 40% по слайдам (буфер +10 пп над порогом 30%). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s20/s21-Р3 · s24-Р4 · s27/s29/s30/s31-Р5 · s33/s34-Р6 · s37/s38/s39-Р7 — single-artifact concentration отсутствует."
+  strict_in_slides: [s07, s11, s13, s15, s17b, s18b, s20, s20g, s21, s24, s27, s29, s30, s30b, s31, s33, s34, s37, s37b, s38, s39]
+  count: 21
+  share_by_slides: "21/47 ≈ 45% по слайдам (round-3 QA-fix: +5 in_bucket new slides s17b/s18b/s20g/s30b/s37b, denominator +7 new slides; buffer well above порога 30%; self-estimate, требует methodology-critic re-confirm). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s09b AWS Kiro/847 contrast (partial-upside, mixed success+honest-failure), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s33b BT Group/Azure vs IaC (partial-upside, mixed), s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g/s21-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7 — single-artifact concentration отсутствует."
 
 # ─────────────────────────────────────────────────────────────────────────
 # Порядок предъявления (plan v4 §4): фазы SDLC, внутри — практика ведёт.
@@ -188,8 +188,28 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s05f
+    file: slides/s05-foundations-practices.md
+    type: assertion_visual
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 3
+    assertion: "Эта лекция — сводка практик: современные подходы лидеров (Anthropic, OpenAI, GitHub, Google DORA, Thoughtworks, Willison) + проверенная временем классика (Brooks, Beck, Nygard, Ford/Parsons, Fowler, Brown)"
+    learning_goal: "Источники главы одним слайдом — 2 колонки (современные практики лидеров / классика) со ссылками; готовит keystone (s05, следующий слайд)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0 (обзор источников) [for-slide-s05f]"
+    interaction: none
+    verify_day_of: false
+    # ADDED (round-3 QA-fix, критик-cross-deck-finding #2): this slide (build
+    # function b1.s05f, actual display position s05, renders BEFORE keystone)
+    # had NO declared id anywhere in deck.yaml/deck-part2.yaml — the true root
+    # cause of the 56-declared-ids-vs-57-rendered-slides mismatch (not the s41
+    # tail, which turned out to be only a file: path issue — see s39/s40
+    # below). Verified via direct PPTX text extraction + build_lec04_v4.py
+    # source (b1.s05f is a distinct builder from b1.s06k, which is what the
+    # existing "id: s05" entry below actually describes — the keystone).
+
   - id: s05
-    file: slides/s05-keystone-git-loop.md
+    file: slides/s06-keystone-git-loop.md
     type: assertion_visual
     section: "Раздел 0. Введение и методическая рамка"
     duration_min: 3
@@ -265,6 +285,22 @@ slides:
     references: [spec-kit, openai-deliberative-alignment, fowler-intent]
     interaction: none
     verify_day_of: true
+
+  - id: s09b
+    file: slides/s09b-spec-driven-cases.md
+    type: case_study
+    section: "Раздел 1. Требования — первый артефакт"
+    duration_min: 3
+    assertion: "Дисциплина, применённая заранее, даёт измеримую разницу: там, где спека-first выстроена под понятный критерий, результат быстр и предсказуем; там, где AI внедряют без спецификации намерения, отказ — статистически ожидаемый исход, а не исключение"
+    learning_goal: "Контраст двух исходов дисциплины spec-driven на конкретных, честно промаркированных цифрах; SDD как названный термин отрасли"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.1 [for-slide-s08]"
+    references: [aws-kiro-lifesciences, sdd-terminology]
+    interaction: none
+    verify_day_of: true
+    # NEW (#162 round 3 QA-fix): inserted between s09 (spec-driven-practice)
+    # and s10 (requirements-methodics) — AWS Kiro success case (§1.1) vs
+    # honest 847-deployments/76%-failed contrast; SDD naming.
 
   - id: s11b
     file: slides/s11b-requirements-visualization.md
@@ -378,21 +414,53 @@ slides:
     interaction: none
     verify_day_of: true
 
+  - id: s17b
+    file: slides/s17b-gemini-cli-selfreview.md
+    type: case_study
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Пропущенный шаг саморевью стоит конкретно: Gemini CLI не проверил результат mkdir и на основе ложного допущения перезаписал файлы пользователя цепочкой move — цена не гипотетическая, а задокументированная"
+    learning_goal: "Cаморевью как обязательный шаг цикла (не факультативная привычка); цена пропущенного check на конкретном инциденте + контраст масштаба"
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§3.1 [for-slide-s16]"
+    references: [gemini-cli-incident]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+    # NEW (#162 round 3 QA-fix): inserted between s17 (small-units-cycle)
+    # and s18 (persistent-memory-layer) — Gemini CLI self-review incident.
+
   - id: s18
-    file: slides/s18-small-units-cycle.md
+    file: slides/s19-persistent-memory-layer.md
     type: schema_architecture
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
-    assertion: "Постоянный слой инструкций и памяти в репозитории (AGENTS.md, память, context-engineering) — то, что агент читает каждую сессию: контекст живёт в репо, а не в мимолётных промптах"
-    learning_goal: "Ведущее: постоянный слой инструкций/памяти (AGENTS.md конвенции/guardrails, память, context-eng JIT/компакция/context-rot)"
+    assertion: "Постоянный слой инструкций в репозитории (AGENTS.md) — то, что агент читает каждую сессию, и методологическая противоположность памяти: инструкции, курирование контекста сессии, операционная история и память (слот 1 карты Лекции 3) — четыре разных понятия, которые не путают"
+    learning_goal: "Ведущее: постоянный слой инструкций (AGENTS.md конвенции/guardrails) явно разведён с памятью и курированием контекста — round-3 rework §3.2"
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§3.2 [for-slide-s18]"
     references: [anthropic-context-engineering, agents-md]
     interaction: none
     verify_day_of: false
 
+  - id: s18b
+    file: slides/s18b-curation-limits.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Курирование не устраняет риск — оно меняет один риск на другой: компакция теряет решения молча, операционная история стареет тише инструкций, а несвежий AGENTS.md вреднее отсутствующего, потому что ему доверяют буквально"
+    learning_goal: "Три честных ограничения примитивов курирования контекста — не факультативная оговорка, а условие корректного применения практики"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.2 [for-slide-s17]"
+    references: [anthropic-context-engineering, agents-md]
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+    # NEW (#162 round 3 QA-fix): inserted right after reworked s18
+    # (persistent-memory/AGENTS.md), before s19 (harness-gate).
+
   - id: s19
-    file: slides/s19-persistent-memory-layer.md
+    file: slides/s20-harness-gate.md   # corrected #162 r3: was mis-pointing at s19-persistent-memory-layer.md (pre-existing drift, fixed while touching this region — content below already matched the real s20-harness-gate.md file)
     type: schema_pipeline
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -444,19 +512,10 @@ slides:
     interaction: none
     verify_day_of: true
 
-  - id: s20d
-    file: slides/s20d-git-conventions.md
-    type: assertion_visual
-    section: "Раздел 3. Реализация — дисциплина и харнес"
-    duration_min: 3
-    assertion: "То, что не записано в steering-файле, агент не знает и угадывает заново каждую сессию — это касается и git: Conventional Commits + Conventional Branch (с AI Agent Source Prefixes) + структурный PR-шаблон превращают объём агентных коммитов из шума в машинно-читаемый сигнал"
-    learning_goal: "Ведущее: git-конвенции (commit/branch/PR) — часть контракта с агентом на уровень выше команд сборки; специфика масштаба — агент коммитит систематически и на порядок больше"
-    learning_outcomes: [LO1, LO7]
-    chapter_ref: "§3.3d [for-slide-s20d]"
-    references: [conventional-commits, conventional-branch]
-    interaction: none
-    verify_day_of: true
-
+  # ORDER SWAP (#162 round 3 QA-fix): task-logging (s20e) now presents
+  # BEFORE git-conventions (s20d), matching book's round-3 §3.3d↔§3.3e
+  # reorder (§3.3d is now task-logging, §3.3e is now git-conventions).
+  # File/slide ids s20d/s20e are NOT renamed — only order + chapter_ref.
   - id: s20e
     file: slides/s20e-task-logging-layer.md
     type: schema_matrix
@@ -465,10 +524,39 @@ slides:
     assertion: "Нет единственно правильного паттерна логирования задач — выбор составной: solo/команда × длительность задачи × нужда в аудит-следе; встроенный TodoWrite/Task* — session-scoped прогресс, не замена персистентному файловому логу"
     learning_goal: "Ведущее: критерии выбора между 3 файловыми паттернами логирования задач (папка-на-задачу / единый лог / плоская папка) — методика без единственного правильного ответа, как growth-ladder в Лекции 3"
     learning_outcomes: [LO1, LO7]
-    chapter_ref: "§3.3e [for-slide-s20e]"
+    chapter_ref: "§3.3d [for-slide-s20e]"
     references: [backlog-md, claude-task-tools]
     interaction: none
     verify_day_of: true
+
+  - id: s20d
+    file: slides/s20d-git-conventions.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "То, что не записано в steering-файле, агент не знает и угадывает заново каждую сессию — это касается и git: Conventional Commits + Conventional Branch (с AI Agent Source Prefixes) + структурный PR-шаблон превращают объём агентных коммитов из шума в машинно-читаемый сигнал"
+    learning_goal: "Ведущее: git-конвенции (commit/branch/PR) — часть контракта с агентом на уровень выше команд сборки; специфика масштаба — агент коммитит систематически и на порядок больше"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3e [for-slide-s20d]"
+    references: [conventional-commits, conventional-branch]
+    interaction: none
+    verify_day_of: true
+
+  - id: s20g
+    file: slides/s20g-register-env-secrets.md
+    type: case_study
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "«Ignored by git» и «ignored by Claude Code» — две разные вещи, управляемые разными конфиг-файлами: Claude Code читал .env вопреки и .gitignore, и .claudeignore, а Bash-подпроцесс обходит даже явный deny-запрет на чтение"
+    learning_goal: "Секреты — отдельный, независимо настраиваемый контракт от git-конвенций; двухслойный предел (.claudeignore + permissions.deny) и трёхслойная защита сканерами"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3e [for-slide-s20g]"
+    references: [register-env-secrets, gitleaks, trufflehog]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+    # NEW (#162 round 3 QA-fix): inserted after git-conventions (s20d, in
+    # its corrected order), before s20f (git worktree).
 
   - id: s20f
     file: slides/s20f-git-worktree.md

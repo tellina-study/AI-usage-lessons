@@ -345,45 +345,46 @@ def s25c(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Тестовый инструментарий за пределами Playwright — три слоя, один принцип",
-        size=20, w=12.3, h=0.78)
+        s, "Локальный тестовый инструментарий кодинг-агента: БД, сеть, CI-цикл",
+        size=19, w=12.3, h=0.78)
 
     cols = [
-        ("terminal", "(а) API — Postman AI", MID),
-        ("database", "(б) БД — Testcontainers", MID),
-        ("scan-search", "(в) Visual-regression", MID),
+        ("database", "(а) БД — Testcontainers", MID),
+        ("route", "(б) Сеть — MSW", MID),
+        ("terminal", "(в) CI-цикл — skill-обёртка", MID),
     ]
     rows = [
-        ("Что проверяет",
-         ["API-контракт — естественный язык вместо кликов",
-          "Реальное состояние данных на одноразовой БД",
-          "Визуальное поведение — не съехала ли кнопка"]),
-        ("AI-механика",
-         ["CI-агент прогоняет тесты на каждый PR",
-          "Skill даёт процедуру Docker Compose, не «анализ» БД",
-          "AI снижает ложные срабатывания при сравнении"]),
+        ("Что делает",
+         ["Реальный Postgres/Kafka/Redis в Docker, эфемерный порт, на машине "
+          "агента",
+          "Перехват HTTP на уровне процесса — 1 handler для unit/e2e",
+          "lint → type-check → test вызывается одной командой"]),
         ("Честная оговорка",
-         ["Фичи марта/июня 2026 — вендор не верифицирован",
-          "Зрелость: низкая «анализ», высокая «знает конвенции»",
-          "Вендорские цифры эффективности — самозаявлены, не проверены"]),
+         ["Skill даёт процедуру Docker Compose, не «анализ» БД",
+          "Без реального JSON-примера агент «придумывает» форму ответа",
+          "Не новый инструмент — упаковка уже работающей инфраструктуры"]),
+        ("Готовым / самим",
+         ["ГОТОВЫМ — зрелая библиотека",
+          "ГОТОВЫМ — зрелая библиотека, с оговоркой",
+          "САМИМ — дешевле, чем искать AI-native замену"]),
     ]
-    examples = ["AI Engineer (Postman)", "testcontainers-docker skill",
-                "Chromatic / Percy / Applitools"]
+    examples = ["testcontainers-docker skill", "mswjs.io handlers",
+                "lint+type-check+test skill"]
     x0 = 0.55
     total = 12.25
     gap = 0.16
     cw = (total - gap * 2) / 3
-    top = 1.36
+    top = 1.32
     hh = 0.58
     for i, (ic, name, col) in enumerate(cols):
         x = x0 + i * (cw + gap)
         filled_rect(s, x, top, cw, hh, col, radius=True, radius_adj=0.12)
         icon(s, ic, x + 0.14, top + 0.08, 0.40, "white")
         text_box(s, x=x + 0.62, y=top + 0.05, w=cw - 0.72, h=hh - 0.10,
-                 text=name, size=11, bold=True, color=WHITE,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.98)
-    row_h = [1.00, 1.00, 1.00]
-    ry = top + hh + 0.10
+                 text=name, size=10.5, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.96)
+    row_h = [1.10, 1.00, 0.66]
+    ry = top + hh + 0.08
     for r, (label, cells) in enumerate(rows):
         rh = row_h[r]
         for i in range(3):
@@ -392,37 +393,49 @@ def s25c(p):
             filled_rect(s, x, ry, cw, rh, fill, stroke=SOFT_GREY, stroke_pt=1.0,
                         radius=True, radius_adj=0.06)
             if i == 0:
-                text_box(s, x=x + 0.14, y=ry + 0.06, w=cw - 0.28, h=0.24,
+                text_box(s, x=x + 0.14, y=ry + 0.05, w=cw - 0.28, h=0.24,
                          text=label.upper(), size=12, bold=True, color=LIGHT)
-                tb_y = ry + 0.32
-                tb_h = rh - 0.38
+                tb_y = ry + 0.30
+                tb_h = rh - 0.36
             else:
-                tb_y = ry + 0.08
-                tb_h = rh - 0.16
+                tb_y = ry + 0.06
+                tb_h = rh - 0.12
             text_box(s, x=x + 0.14, y=tb_y, w=cw - 0.28, h=tb_h,
-                     text=cells[i], size=14, color=DEEP, line_spacing=1.06)
-        ry += rh + 0.07
+                     text=cells[i], size=14 if r < 2 else 12.5, color=DEEP,
+                     line_spacing=1.04)
+        ry += rh + 0.06
 
     ey = ry + 0.02
-    text_runs(s, x0, ey, total, 0.32, [
-        {"text": "Пример:  ", "size": 11.5, "bold": True, "color": SLATE},
-        {"text": examples[0], "size": 11, "italic": True, "color": MID,
+    text_runs(s, x0, ey, total, 0.30, [
+        {"text": "Пример:  ", "size": 11, "bold": True, "color": SLATE},
+        {"text": examples[0], "size": 10.5, "italic": True, "color": MID,
          "font": "DejaVu Sans Mono"},
-        {"text": "   ·   ", "size": 11, "color": SLATE},
-        {"text": examples[1], "size": 11, "italic": True, "color": TEAL,
+        {"text": "   ·   ", "size": 10.5, "color": SLATE},
+        {"text": examples[1], "size": 10.5, "italic": True, "color": TEAL,
          "font": "DejaVu Sans Mono"},
-        {"text": "   ·   ", "size": 11, "color": SLATE},
-        {"text": examples[2], "size": 11, "italic": True, "color": MID,
+        {"text": "   ·   ", "size": 10.5, "color": SLATE},
+        {"text": examples[2], "size": 10.5, "italic": True, "color": MID,
          "font": "DejaVu Sans Mono"},
     ])
-    ry = ey + 0.32
+    ry = ey + 0.30
+
+    # cloud AI-layer contrast strip (muted)
+    cy = ry + 0.06
+    filled_rect(s, x0, cy, total, 0.56, SOFT_GREY, stroke=SLATE, stroke_pt=0.75,
+                radius=True, radius_adj=0.10)
+    text_box(s, x=x0 + 0.18, y=cy + 0.05, w=total - 0.36, h=0.46,
+             text="Облачный AI-слой (не мейнстрим): WireMock Cloud — AI Skills/"
+                  "MCP преимущественно здесь, не в локальном OSS-ядре · "
+                  "pytest-generator (Distil Labs) — CPU-only, ≈77% точность "
+                  "self-reported.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.08,
+             anchor=MSO_ANCHOR.MIDDLE)
 
     gold_callout(
-        s, 0.55, ry + 0.10, 12.25, 0.62,
-        "Устойчивый паттерн — декомпозиция проверки на слои (API/БД/визуал) + "
-        "реальная эфемерная зависимость вместо мока; переживёт любой бренд. "
-        "Хайп — вендорские цифры как повод считать вопрос закрытым.",
-        size=12, bold=True, align=PP_ALIGN.CENTER)
+        s, 0.55, cy + 0.66, 12.25, 0.56,
+        "Локальный, детерминированный, уже существующий инструмент — берите и "
+        "оборачивайте; облачный AI-слой — с честной оговоркой о разрыве.",
+        size=11.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s25c")
     notes_with_sources(s, "s25c")
     return s
@@ -522,56 +535,71 @@ def s27(p):
 
     # left: complacency
     lx, lw = 0.55, 5.35
-    ocean_box(s, lx, 1.52, lw, 4.02)
-    icon(s, "eye-off", lx + 0.24, 1.66, 0.5, "mid")
-    text_box(s, x=lx + 0.88, y=1.70, w=lw - 1.10, h=0.40,
-             text="Complacency (Radar, кольцо Hold) [1]", size=12.5, bold=True,
+    ocean_box(s, lx, 1.48, lw, 4.10)
+    icon(s, "eye-off", lx + 0.24, 1.60, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=1.64, w=lw - 1.04, h=0.36,
+             text="Complacency (Radar, кольцо Hold) [1]", size=12, bold=True,
              color=MID)
-    text_box(s, x=lx + 0.24, y=2.20, w=lw - 0.48, h=0.92,
+    text_box(s, x=lx + 0.24, y=2.06, w=lw - 0.48, h=0.72,
              text="Некритичное принятие AI-кода, падение критического мышления. "
-                  "CodeCrash (arXiv:2504.14119) [3]: вводящие в заблуждение "
-                  "комментарии роняют рассуждение модели (~−23% на "
-                  "CRUXEVAL / LIVECODEBENCH).",
-             size=11, color=DEEP, line_spacing=1.14)
-    filled_rect(s, lx + 0.24, 3.16, lw - 0.48, 1.00, TEAL_TINT, stroke=TEAL,
-                stroke_pt=1.4, radius=True, radius_adj=0.06)
-    text_box(s, x=lx + 0.46, y=3.26, w=lw - 0.9, h=0.82,
-             text="AI-ревью ~19% F1 (SWR-Bench) — и это подаётся только против "
-                  "human-review baseline (низко + высокий уровень ложных "
-                  "срабатываний).",
-             size=11.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.14)
-    text_box(s, x=lx + 0.24, y=4.28, w=lw - 0.48, h=1.14,
-             text="Stenberg: AI-анализаторы «в правильных руках» находят реальные "
-                  "баги — виновата архитектура процесса, не AI.",
-             size=11, italic=True, color=SLATE, line_spacing=1.14)
+                  "CodeCrash [3]: вводящие в заблуждение комментарии роняют "
+                  "рассуждение модели (~−23%).",
+             size=10, color=DEEP, line_spacing=1.10)
+    filled_rect(s, lx + 0.24, 2.82, lw - 0.48, 0.62, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.2, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.42, y=2.86, w=lw - 0.84, h=0.54,
+             text="AI-ревью ~19% F1 (SWR-Bench) — только против human-review "
+                  "baseline.",
+             size=10.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.10)
+    text_box(s, x=lx + 0.24, y=3.52, w=lw - 0.48, h=0.34,
+             text="Rubber-Stamp Collapse (TianPan.co, 470 PR) [4]", size=11,
+             bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=3.86, w=lw - 0.48, h=0.80,
+             text="AI-ассистированные PR: +170% issues, +40% critical, +75% "
+                  "logic-находок, ×2,74 security-уязвимостей. На 22 000 "
+                  "разработчиков — +242,7% инцидентов на PR.",
+             size=9.5, color=DEEP, line_spacing=1.12)
+    text_box(s, x=lx + 0.24, y=4.68, w=lw - 0.48, h=0.80,
+             text="Stenberg: AI-анализаторы «в правильных руках» находят "
+                  "реальные баги — виновата архитектура процесса, не AI.",
+             size=10, italic=True, color=SLATE, line_spacing=1.12)
 
-    # right: curl-slop asymmetry
+    # right: curl-slop asymmetry + matplotlib hit-piece
     rx, rw = 6.10, 6.70
-    ocean_box(s, rx, 1.52, rw, 4.02)
-    icon(s, "package-x", rx + 0.24, 1.66, 0.5, "mid")
-    text_box(s, x=rx + 0.88, y=1.70, w=rw - 1.10, h=0.40,
-             text="curl-slop как DDoS на сопровождающих [2]", size=12.5, bold=True,
-             color=MID)
-    text_box(s, x=rx + 0.24, y=2.20, w=rw - 0.48, h=0.58,
-             text="Поток LLM-сгенерированных «отчётов об уязвимостях» в "
-                  "bug-bounty curl.",
-             size=11.5, color=DEEP, line_spacing=1.14)
+    ocean_box(s, rx, 1.48, rw, 4.10)
+    icon(s, "package-x", rx + 0.24, 1.60, 0.46, "mid")
+    text_box(s, x=rx + 0.82, y=1.64, w=rw - 1.04, h=0.36,
+             text="curl-slop как DDoS на сопровождающих [2]", size=12,
+             bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=2.06, w=rw - 0.48, h=0.44,
+             text="Поток LLM-«отчётов об уязвимостях» в bug-bounty curl.",
+             size=10.5, color=DEEP, line_spacing=1.10)
     # asymmetry main visual
-    filled_rect(s, rx + 0.24, 2.82, rw - 0.48, 1.06, GOLD_TINT, stroke=GOLD,
-                stroke_pt=1.8, radius=True, radius_adj=0.06)
-    text_runs(s, rx + 0.46, 2.94, rw - 0.9, 0.9, [
-        {"text": "Асимметрия стоимости: ", "size": 13, "bold": True,
+    filled_rect(s, rx + 0.24, 2.56, rw - 0.48, 0.86, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.6, radius=True, radius_adj=0.06)
+    text_runs(s, rx + 0.42, 2.64, rw - 0.84, 0.72, [
+        {"text": "Асимметрия стоимости: ", "size": 11.5, "bold": True,
          "color": DEEP},
-        {"text": "сгенерировать правдоподобный фейк — секунды; опровергнуть — "
-                 "часы сопровождающего.",
-         "size": 12.5, "bold": True, "color": DEEP, "line_spacing": 1.14},
+        {"text": "фейк — секунды; опровергнуть — часы сопровождающего.",
+         "size": 11, "bold": True, "color": DEEP, "line_spacing": 1.10},
     ])
-    text_box(s, x=rx + 0.24, y=4.00, w=rw - 0.48, h=1.44,
-             text="Числа: доля валидных отчётов >15% → <5% (~1 на 20–30); объём "
-                  "вырос кратно; программа приостановлена и возвращена на "
-                  "HackerOne в марте 2026.",
-             size=11, color=DEEP, line_spacing=1.16)
+    text_box(s, x=rx + 0.24, y=3.52, w=rw - 0.48, h=0.72,
+             text="Валидных отчётов >15% → <5% (~1 на 20–30); объём вырос "
+                  "кратно; программа приостановлена, возвращена на HackerOne "
+                  "март 2026.",
+             size=10, color=DEEP, line_spacing=1.12)
+    filled_rect(s, rx + 0.24, 4.30, rw - 0.48, 1.16, SOFT_GREY, stroke=SLATE,
+                stroke_pt=0.8, radius=True, radius_adj=0.06)
+    icon(s, "message-square-warning", rx + 0.40, 4.38, 0.36, "mid")
+    text_box(s, x=rx + 0.84, y=4.36, w=rw - 1.08, h=0.32,
+             text="matplotlib hit-piece, 2026-02-10 [5]", size=10.5, bold=True,
+             color=DEEP)
+    text_box(s, x=rx + 0.40, y=4.72, w=rw - 0.68, h=0.68,
+             text="AI-агент (crabby-rathbun) сам написал и опубликовал "
+                  "персонализированное эссе против мейнтейнера, закрывшего "
+                  "его PR — атака на человека, тот же экономический сдвиг.",
+             size=9.5, color=DEEP, line_spacing=1.10)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
@@ -731,6 +759,76 @@ def s29(p):
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s30")
     notes_with_sources(s, "s30")
+    return s
+
+
+# ============================================================
+# s30b (NEW, #162 round 3) — Amazon Q wiper incident, third
+# mechanistically distinct supply-chain failure class
+# ============================================================
+def s30b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Доверие нужно и к тому, из чего сделан сам AI-инструмент",
+        size=20, w=12.3, h=0.82)
+
+    lx, lw = 0.55, 6.55
+    rx, rw = 7.30, 5.50
+    top = 1.44
+
+    ocean_box(s, lx, top, lw, 4.10)
+    icon(s, "package-x", lx + 0.22, top + 0.16, 0.48, "mid")
+    text_box(s, x=lx + 0.84, y=top + 0.20, w=lw - 1.06, h=0.36,
+             text="Amazon Q Developer, июль 2025 [1]", size=13, bold=True,
+             color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.68, w=lw - 0.48, h=1.36,
+             text="Неаудированный внешний контрибьютор смержил PR с системным "
+                  "промптом «system cleaner» (aws s3 rb, остановка EC2, "
+                  "удаление IAM-пользователей) в официальный релиз расширения "
+                  "VS Code.",
+             size=11, color=DEEP, line_spacing=1.18)
+    text_box(s, x=lx + 0.24, y=top + 2.06, w=lw - 0.48, h=0.60, text="~1 млн",
+             size=24, bold=True, color=TEAL)
+    text_box(s, x=lx + 0.24, y=top + 2.60, w=lw - 0.48, h=0.44,
+             text="разработчиков в релизе v1.84.0 до патча v1.85.0 [2].",
+             size=10.5, italic=True, color=DEEP)
+    filled_rect(s, lx + 0.24, top + 3.14, lw - 0.48, 0.80, SOFT_GREY,
+                stroke=SLATE, stroke_pt=0.8, radius=True, radius_adj=0.08)
+    text_box(s, x=lx + 0.40, y=top + 3.20, w=lw - 0.80, h=0.68,
+             text="Атака технически провалилась (форматирование сломало "
+                  "исполнение) — это везение, не контроль.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    ocean_box(s, rx, top, rw, 4.10, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "layers", rx + 0.22, top + 0.16, 0.46, "teal")
+    text_box(s, x=rx + 0.80, y=top + 0.20, w=rw - 1.04, h=0.36,
+             text="Три механически разных фронта", size=12.5, bold=True,
+             color=MID)
+    fronts = [
+        ("Slopsquatting", "доверие к имени пакета, которое AI-совет "
+         "порекомендовал."),
+        ("CamoLeak", "доверие к чужому недоверенному тексту (PR-комментарий) "
+         "в контексте агента."),
+        ("Amazon Q", "доверие к supply-chain самого инструмента — не к "
+         "выводу и не к входу, а к тому, из чего он сделан."),
+    ]
+    fy = top + 0.72
+    for head, body in fronts:
+        text_box(s, x=rx + 0.24, y=fy, w=rw - 0.48, h=0.30, text=head,
+                 size=12, bold=True, color=DEEP)
+        text_box(s, x=rx + 0.24, y=fy + 0.32, w=rw - 0.48, h=0.72, text=body,
+                 size=10.5, color=DEEP, line_spacing=1.14)
+        fy += 1.10
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Ревью нужно не только коду, который пишет ваш агент, но и коду, из "
+        "которого сделан сам AI-инструмент.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s30b")
+    notes_with_sources(s, "s30b")
     return s
 
 

@@ -140,6 +140,30 @@ URLS = {
     "saucelabs_visual_regression": "https://saucelabs.com/resources/blog",
     "eesel_confluence_ai": "https://www.eesel.ai/",
     "aws_q_doc": "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/software-dev-doc-generation.html",
+    # --- added for round-3 QA-fix pass (issue #162 round 3): s09b/s17b/s18b/
+    # s20g/s30b/s33b/s37b + s25c rebuild ---
+    "aws_kiro_lifesciences": "https://kiro.dev/docs/specs/feature-specs/",
+    "spec_kit_stars": "https://github.com/github/spec-kit",
+    "krishnan_sdd_manning": "https://www.manning.com/",
+    "gemini_cli_incident": "https://incidentdatabase.ai/cite/1178/",
+    "destefanis_skills_se": "https://arxiv.org/abs/2607.25032",
+    "register_env_secrets": "https://www.theregister.com/2026/01/28/",
+    "gitleaks": "https://github.com/gitleaks/gitleaks",
+    "trufflehog": "https://github.com/trufflesecurity/trufflehog",
+    "amazon_q_wiper": "https://www.bleepingcomputer.com/",
+    "aws_security_bulletin_q": "https://aws.amazon.com/security/security-bulletins/",
+    "matplotlib_hitpiece_register": "https://www.theregister.com/2026/02/",
+    "matplotlib_hitpiece_decrypt": "https://decrypt.co/",
+    "tianpan_rubber_stamp": "https://tianpan.co/",
+    "bt_group_incidentio": "https://incident.io/",
+    "azure_triangle_ms": "https://azure.microsoft.com/en-us/blog/",
+    "iac_insecurity_2026": "https://www.thoughtworks.com/radar",
+    "uber_claude_code": "https://www.fortune.com/",
+    "uber_techcrunch": "https://techcrunch.com/",
+    "aws_kiro_outage": "https://kiro.dev/docs/specs/feature-specs/",
+    "msw_docs": "https://mswjs.io/docs",
+    "wiremock_split": "https://wiremock.io/",
+    "pytest_generator_distil": "https://distillabs.ai/",
 }
 
 
@@ -804,6 +828,10 @@ SLIDE_REFS = {
         ("2", "Claude Docs — Skills", "claude_skills_docs",
          "тело skill'а загружается только при использовании — progressive disclosure",
          True),
+        ("3", "Destefanis — Authoring Agent Skills (arXiv:2607.25032)",
+         "destefanis_skills_se",
+         "SE-принципы дизайна skill: single-responsibility, высокая связность/"
+         "низкая связанность; единственный автор, препринт", True),
     ],
     "s20c": [
         ("1", "GitHub MCP server", "github_mcp_server",
@@ -871,6 +899,13 @@ SLIDE_REFS = {
          True),
         ("3", "CodeCrash", "codecrash",
          "вводящие в заблуждение комментарии роняют рассуждение модели (~−23%)"),
+        ("4", "Rubber-Stamp Collapse (TianPan.co)", "tianpan_rubber_stamp",
+         "470 PR CodeRabbit + телеметрия 22 000 разработчиков: +170% issues, "
+         "+242,7% инцидентов на PR", True),
+        ("5", "The Register / Decrypt — matplotlib hit-piece",
+         "matplotlib_hitpiece_register",
+         "PR #31132, AI-агент опубликовал эссе против мейнтейнера, отклонившего его PR",
+         True),
     ],
     "s29": [
         ("1", "Willison — the lethal trifecta", "lethal_trifecta",
@@ -964,15 +999,18 @@ SLIDE_REFS = {
          "high-performance-практику"),
     ],
     "s25c": [
-        ("1", "Postman — блог, AI-native платформа", "postman_ai_blog",
-         "Agent Mode + AI Engineer (запуск 2026-06) — CI-интегрированный агент "
-         "прогона API/QA-тестов на PR", True),
-        ("2", "Testcontainers — официальный сайт", "testcontainers",
+        ("1", "Testcontainers — официальный сайт", "testcontainers",
          "реальный сервис в Docker на эфемерном порту на время прогона, "
-         "уничтожается после"),
-        ("3", "Sauce Labs — блог о visual regression", "saucelabs_visual_regression",
-         "функциональный тест проверяет поведение, visual regression — что "
-         "поведение корректно ПОКАЗАНО", True),
+         "уничтожается после; единственная зависимость — локальный Docker daemon"),
+        ("2", "MSW (Mock Service Worker) — документация", "msw_docs",
+         "перехват HTTP на уровне сети в процессе; один handler для unit/"
+         "integration/e2e", True),
+        ("3", "WireMock — OSS vs Cloud", "wiremock_split",
+         "AI-фичи (Skills/MCP) преимущественно на платном WireMock Cloud, не "
+         "в локальном OSS-ядре", True),
+        ("4", "pytest-generator (Distil Labs)", "pytest_generator_distil",
+         "CPU-only локальная генерация тестов, ≈77% точность self-reported, "
+         "низкая adoption", True),
     ],
     "s35b": [
         ("1", "eesel.ai — независимый гайд по Confluence AI", "eesel_confluence_ai",
@@ -981,6 +1019,66 @@ SLIDE_REFS = {
         ("2", "AWS — документация Amazon Q Developer /doc", "aws_q_doc",
          "вход — кодовая база, не пересказ промпта; может строить диаграммы из "
          "IaC-файлов", True),
+    ],
+    # --- added for round-3 QA-fix pass (issue #162 round 3) ---
+    "s09b": [
+        ("1", "AWS Kiro — кейс life sciences (фарма/биотех)",
+         "aws_kiro_lifesciences",
+         "рабочий процесс spec-first, 3 недели / 3 разработчика до "
+         "продакшена — опубликованный вендором кейс, не независимо "
+         "аудирован", True),
+        ("2", "Хари Кришнан — «Spec-Driven Development», Manning",
+         "krishnan_sdd_manning",
+         "SDD/BDD/TDD как «стек высот» одной задачи, разная степень детализации"),
+    ],
+    "s17b": [
+        ("1", "AI Incident Database — Report 6120 / Incident 1178",
+         "gemini_cli_incident",
+         "Gemini CLI, июль 2025: mkdir без read-after-write → move перезаписал "
+         "файлы пользователя", True),
+    ],
+    "s18b": [
+        ("1", "Anthropic — context engineering", "anthropic_ctx_eng",
+         "компакция суммаризирует с потерями; JIT-retrieval не запросит то, о "
+         "чём не знает — курирование меняет один риск на другой", True),
+    ],
+    "s20g": [
+        ("1", "The Register — Claude Code читает .env вопреки .gitignore",
+         "register_env_secrets",
+         "«ignored by git» и «ignored by Claude Code» — два разных контракта, "
+         "минимум 4 открытых issue на дату публикации", True),
+        ("2", "Gitleaks — rule-first сканер секретов", "gitleaks",
+         "regex + энтропия, pre-commit hook, обходим --no-verify"),
+        ("3", "TruffleHog — verification-first сканер", "trufflehog",
+         "живой API-вызов подтверждает, что credential валиден прямо сейчас"),
+    ],
+    "s30b": [
+        ("1", "BleepingComputer — Amazon Q Developer wiper-промпт",
+         "amazon_q_wiper",
+         "неаудированный PR с системным промптом «system cleaner» в релизе "
+         "v1.84.0, ~1 млн разработчиков", True),
+        ("2", "AWS Security Bulletin AWS-2025-019", "aws_security_bulletin_q",
+         "форматирование промпта сломало исполнение — везение, не контроль", True),
+    ],
+    "s33b": [
+        ("1", "incident.io — кейс BT Group", "bt_group_incidentio",
+         "MTTR ~2ч → 85с (~97%) на зрелой SRE-практике, вендорский кейс-стади",
+         True),
+        ("2", "Microsoft Azure — «Triangle»", "azure_triangle_ms",
+         "time-to-engage −91%, точность триажа 97%, first-party источник", True),
+        ("3", "Индустриальные отчёты о безопасности кода, 2026",
+         "iac_insecurity_2026",
+         "IaC secure-by-default ~55% (2 года без сдвига); 8,4% на "
+         "security-filtered 2026-бенчмарке", True),
+    ],
+    "s37b": [
+        ("1", "Fortune / TechCrunch — Uber и Claude Code, 2026",
+         "uber_claude_code",
+         "32%→84% внедрение агентных практик за месяц, 70% кода от AI, "
+         "$500–2000/инженер/мес, потолок введён постфактум", True),
+        ("2", "AWS Kiro — тот же продукт, два регистра", "aws_kiro_outage",
+         "life sciences (фарма/биотех) успех (§1.1) и Kiro-инцидент декабрь "
+         "2025 (§5.7) — разница в применённой дисциплине, не в бренде", True),
     ],
 }
 

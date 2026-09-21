@@ -1,4 +1,13 @@
-"""Full 50-slide build of Лекция 4 v4.3 «AI в жизненном цикле разработки ПО».
+"""Full 57-slide build of Лекция 4 v4.4 «AI в жизненном цикле разработки ПО».
+
+v4.4 (issue #162 round 3 — QA-fix pass): +7 slides s09b/s17b/s18b/s20g/s30b/
+s33b/s37b (AWS Kiro vs 847-deployments contrast · Gemini CLI self-review ·
+curation honest limits · Register .env secrets · Amazon Q wiper supply-chain
+· BT Group/Azure Triangle vs IaC-insecurity · Uber adoption-without-criterion
++ Kiro dual-register bridge) + s20d/s20e ORDER SWAP (task-logging now
+presents before git-conventions, matching book's round-3 §3.3d↔§3.3e
+reorder) + content fixes on s16/s21/s25c/s34/s37-matrix/s38-triangulation +
+notes-only additions on s20b/s20c/s28. 50 → 57 slides.
 
 Methodology-first re-spine v4 (owner redirect #264) + edit pass v4.1
 (#265/#266/#267/#268/#269): NEW foundations slide s05 (2 practice lists со
@@ -78,40 +87,61 @@ def main():
     builders += [b1.s01, b1.s02, b1.s03, b1.s04, b1.s05f,   # s05 foundations
                  b1.s06k,                                    # s06 keystone
                  b1.s06, b1.s07, b1.s08, b1.s09]             # s07..s10
+    builders += [b1.s09b]                                    # NEW (r3): AWS Kiro vs 847-deployments
     # display s11–s20
     builders += [b1.s10,                                     # s11
-                 b1.s11b,                                    # NEW (#162 r2): §1.2b requirements viz
+                 b1.s11b,                                    # NEW (r2): §1.2b requirements viz
                  b2.s11, b2.s12, b2.s13, b2.s14, b2.s15,     # s12..s16
-                 b2.s16, b2.s17, b2.s18, b2.s19]             # s17..s20
-    # display s20b–s20e (NEW, #162): Skills · MCP · git-конвенции · task-logging
-    builders += [b2.s20b, b2.s20c, b2.s20d, b2.s20e,
-                 b2.s20f]                                    # NEW (#162 r2): §3.3f git worktree
+                 b2.s16, b2.s17]                              # s17..s18
+    builders += [b2.s17b]                                     # NEW (r3): Gemini CLI self-review
+    builders += [b2.s18]                                      # s19 (persistent-memory, reworked title/framing)
+    builders += [b2.s18b]                                     # NEW (r3): curation honest limits
+    builders += [b2.s19]                                      # s20 (harness-gate)
+    # display s20b/s20c/s20e/s20d/s20g/s20f (NEW #162): Skills · MCP ·
+    # task-logging · git-конвенции · secrets(Register) · git worktree.
+    # ORDER SWAP (r3 QA-fix): task-logging (s20e) now presents BEFORE
+    # git-conventions (s20d), matching book's round-3 §3.3d↔§3.3e reorder
+    # (§3.3d is now task-logging, §3.3e is now git-conventions). File/slide
+    # ids s20d/s20e themselves are NOT renamed — only presentation order.
+    builders += [b2.s20b, b2.s20c,
+                 b2.s20e,                                     # task-logging (now §3.3d) — presents first
+                 b2.s20d,                                     # git-conventions (now §3.3e) — presents second
+                 b2.s20g,                                     # NEW (r3): secrets/.env — Register case
+                 b2.s20f]                                     # git worktree
     # display s21–s30 (old "s21" comment kept as historical marker; actual
-    # display position is now s25 onward due to the +4 insert above)
-    builders += [b2.s20,                                     # 70%-проблема
+    # display position shifted further by r3 inserts above)
+    builders += [b2.s20,                                     # 70%-проблема (+2026 GitClear addition)
                  b3.s21, b3.s22, b3.s23, b3.s24,             # testing..review
-                 b3.s25b, b3.s25c,                            # NEW (#162 r2): §4.4 BDD/trunk-based · §4.5 test tooling
+                 b3.s25b, b3.s25c,                            # NEW (r2): §4.4 BDD/trunk-based · §4.5 test tooling (rebuilt r3)
                  b3.s25,
-                 b3.s26, b3.s27, b3.s28, b3.s29]             # review..security
-    # display s31–s41 (shifted +4 in final display order)
+                 b3.s26, b3.s27, b3.s28]                       # review..security(complacency)
+    builders += [b3.s29]                                       # security (vulnerable+false-confidence)
+    builders += [b3.s30b]                                      # NEW (r3): Amazon Q wiper (3rd supply-chain class)
+    # display s31–s41 (shifted further in final display order)
     builders += [b3.s30,
-                 b4.s31, b4.s32, b4.s33, b4.s34,
-                 b4.s35b,                                     # NEW (#162 r2): §6.3 docs tooling
+                 b4.s31, b4.s32]
+    builders += [b4.s33]                                       # cicd-ops (risk-calibrated gate fix)
+    builders += [b4.s33b]                                      # NEW (r3): BT Group/Azure Triangle vs IaC-insecurity
+    builders += [b4.s34,
+                 b4.s35b,                                     # NEW (r2): §6.3 docs tooling
                  b4.s35,
-                 b4.s36, b4.s37, b4.s38, b4.s39, b4.s40]
+                 b4.s36]                                        # synthesis matrix (vendor column removed)
+    builders += [b4.s37]                                       # triangulation (+2026 GitClear addition)
+    builders += [b4.s37b]                                      # NEW (r3): Uber + Kiro dual-register bridge
+    builders += [b4.s38, b4.s39, b4.s40]
 
-    assert len(builders) == 50, f"expected 50 builders, got {len(builders)}"
+    assert len(builders) == 57, f"expected 57 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
-    # Stamp a page number «N / 50» on every slide (bottom-right, muted). Done in
-    # the assembler so all 50 slides carry it without touching per-slide builders.
+    # Stamp a page number «N / 57» on every slide (bottom-right, muted). Done in
+    # the assembler so all 57 slides carry it without touching per-slide builders.
     total = len(builders)
     for i, slide in enumerate(p.slides, start=1):
         page_number(slide, i, total)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 50, f"expected 50 slides, got {n}"
+    assert n == 57, f"expected 57 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

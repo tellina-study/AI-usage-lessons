@@ -679,6 +679,87 @@ def s09(p):
 
 
 # ============================================================
+# s09b (NEW, #162 round 3) — AWS Kiro success vs 847-deployments
+# honest-failure contrast; SDD naming
+# ============================================================
+def s09b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Дисциплина заранее — быстрый результат; без неё отказ ожидаем, не случаен",
+        size=21, w=12.3, h=0.82)
+
+    colw, gap = 6.05, 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.44
+    boxh = 3.36
+
+    # left: AWS Kiro success
+    ocean_box(s, lx, top, colw, boxh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.8)
+    icon(s, "check-check", lx + 0.22, top + 0.16, 0.46, "gold")
+    text_box(s, x=lx + 0.82, y=top + 0.20, w=colw - 1.0, h=0.36,
+             text="AWS Kiro · life sciences (фарма/биотех, 2026)", size=12,
+             bold=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 0.68, w=colw - 0.48, h=0.92,
+             text="Продакшен-готовый агент для поиска терапевтических мишеней: "
+                  "рабочий процесс spec-first — спецификация → исполнение по "
+                  "вехам → верификация против спеки.",
+             size=11, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 1.62, w=colw - 0.48, h=0.60,
+             text="3 недели, 3 разработчика", size=22, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 2.24, w=colw - 0.48, h=0.34,
+             text="— не растянутый цикл ad-hoc-промптинга.", size=11,
+             italic=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 2.66, w=colw - 0.48, h=0.60,
+             text="Средняя достоверность — опубликованный вендором кейс-стади, "
+                  "не независимый аудит.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+
+    # right: 847-deployments honest-failure contrast
+    ocean_box(s, rx, top, colw, boxh)
+    icon(s, "circle-x", rx + 0.22, top + 0.16, 0.46, "mid")
+    text_box(s, x=rx + 0.82, y=top + 0.20, w=colw - 1.0, h=0.36,
+             text="847 задокументированных внедрений AI-агентов", size=12.5,
+             bold=True, color=DEEP, line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 0.68, w=colw - 0.48, h=0.60,
+             text="76% отказали за 90 дней", size=20, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 1.30, w=colw - 0.48, h=0.78,
+             text="Корневая причина по источнику — провал спецификации, не "
+                  "техническая неспособность модели.",
+             size=12, color=DEEP, line_spacing=1.24)
+    text_box(s, x=rx + 0.24, y=top + 2.10, w=colw - 0.48, h=0.56,
+             text="Намерение не было специфицировано настолько точно, чтобы "
+                  "его вообще можно было проверить.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.16)
+    text_box(s, x=rx + 0.24, y=top + 2.66, w=colw - 0.48, h=0.60,
+             text="Низкая-средняя достоверность — методология выборки не "
+                  "раскрыта; иллюстрация тезиса, не аудированная статистика.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+
+    # bottom: SDD naming strip
+    sy = top + boxh + 0.16
+    filled_rect(s, 0.55, sy, 12.25, 0.62, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+                radius=True, radius_adj=0.08)
+    text_runs(s, 0.79, sy + 0.08, 11.8, 0.48, [
+        {"text": "SDD (Spec-Driven Development) — ", "size": 12, "bold": True,
+         "color": DEEP},
+        {"text": "GitHub Spec Kit ~90 тыс. звёзд; к 2026 — минимум 8 крупных "
+                 "вендоров с собственным вариантом практики.",
+         "size": 11.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, sy + 0.78, 12.25, 0.60,
+        "Дисциплина заранее — не гарантия, а сдвиг вероятности: спецификация "
+        "намерения делает отказ исключением, а не статистически ожидаемым исходом.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s09b")
+    notes_with_sources(s, "s09b")
+    return s
+
+
+# ============================================================
 # s10 (display s11) — как вести требования: СТРУКТУРА + ПРОЦЕСС (ПРАВКА 6)
 # ============================================================
 def s10(p):

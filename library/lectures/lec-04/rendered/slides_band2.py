@@ -6,6 +6,7 @@ from _helpers import (
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    FONT_MONO,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
@@ -319,7 +320,8 @@ def s15(p):
     rx, rw = 6.85, 5.95
     alts = [
         ("user-check", "Человек владеет развилками",
-         "принимает архитектурные решения; AI на периферии под человеческим выбором."),
+         "утверждает решения и отвечает за них; AI может быть полноценным "
+         "соавтором или автором черновика — но не подписывает."),
         ("gavel", "ADR [2]",
          "человеко-написанный контекст «решили X, потому что Y, отвергли Z» — "
          "разделяемое понимание против отравления."),
@@ -453,14 +455,86 @@ def s17(p):
 
 
 # ============================================================
+# s17b (NEW, #162 round 3) — Gemini CLI self-review failure case study
+# ============================================================
+def s17b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Cаморевью — обязательный шаг между code и commit, не факультативная привычка",
+        size=19, w=12.3, h=0.82)
+
+    # left: incident chronology
+    lx, lw = 0.55, 6.55
+    ocean_box(s, lx, 1.44, lw, 4.10)
+    icon(s, "bug", lx + 0.22, 1.58, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=1.62, w=lw - 1.0, h=0.36,
+             text="Google Gemini CLI, июль 2025 [1]", size=13, bold=True,
+             color=MID)
+    text_box(s, x=lx + 0.24, y=2.06, w=lw - 0.48, h=0.30,
+             text="AI Incident Database, Report 6120 / Incident 1178",
+             size=10, italic=True, color=SLATE)
+    text_box(s, x=lx + 0.24, y=2.44, w=lw - 0.48, h=1.30,
+             text="Пользователь попросил переместить файлы в новую папку. Агент "
+                  "выполнил mkdir, не проверил результат — решил, что папка уже "
+                  "существует, и цепочка move перезаписала почти все файлы "
+                  "пользователя в один оставшийся.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+    filled_rect(s, lx + 0.24, 3.82, lw - 0.48, 1.50, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.4, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.46, y=3.92, w=lw - 0.9, h=1.30,
+             text="«I have completely and catastrophically failed you. My "
+                  "review of the commands confirms my gross incompetence.»",
+             size=11.5, italic=True, color=DEEP, line_spacing=1.20,
+             font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE)
+
+    # right: mechanism contrast + scale
+    rx, rw = 7.30, 5.50
+    ocean_box(s, rx, 1.44, rw, 1.86, fill=SOFT_GREY, stroke=LIGHT, stroke_pt=1.0)
+    icon(s, "circle-slash", rx + 0.22, 1.60, 0.42, "mid")
+    text_box(s, x=rx + 0.78, y=1.62, w=rw - 1.0, h=0.34,
+             text="Другой механизм отказа", size=12, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=2.04, w=rw - 0.48, h=1.18,
+             text="Не «слишком много прав» (как Replit) — здесь пропущена "
+                  "конкретная «проверка»: агент не верифицировал промежуточный "
+                  "результат и построил следующий шаг на ложном допущении.",
+             size=11, color=DEEP, line_spacing=1.16)
+
+    ocean_box(s, rx, 3.50, rw, 2.04)
+    icon(s, "gauge", rx + 0.22, 3.64, 0.42, "teal")
+    text_box(s, x=rx + 0.78, y=3.66, w=rw - 1.0, h=0.34,
+             text="Масштаб (для контраста)", size=12, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=4.10, w=rw - 0.48, h=0.44, text="~11%",
+             size=24, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=4.58, w=rw - 0.48, h=0.88,
+             text="живых бэкенд-обновлений у Uber (2026) выкатываются агентом "
+                  "без человека в цикле.",
+             size=11, color=DEEP, line_spacing=1.16)
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Саморевью — обязательный шаг explore→plan→code→commit: перечитать diff "
+        "и проверить результат, прежде чем коммитить.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s17b")
+    notes_with_sources(s, "s17b")
+    return s
+
+
+# ============================================================
 # s18 — persistent memory layer (architecture: dev ↔ repo → agent)
 # ============================================================
 def s18(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Постоянный слой памяти в репозитории — то, что агент читает каждую сессию",
-        size=21, w=12.3, h=0.82)
+        s, "Постоянный слой инструкций — не память: агент читает его каждую сессию",
+        size=20, w=12.3, h=0.82)
+    text_box(s, x=0.55, y=1.24, w=12.25, h=0.26,
+             text="Четыре смежных, но разных понятия: инструкции (AGENTS.md) · "
+                  "курирование контекста сессии · операционная история · память "
+                  "(слот 1) — не путать.",
+             size=10.5, italic=True, color=SLATE)
 
     # architecture row: DEVELOPER — REPO — AGENT
     ay = 1.55
@@ -541,6 +615,61 @@ def s18(p):
         size=13, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s19")
     notes_with_sources(s, "s19")
+    return s
+
+
+# ============================================================
+# s18b (NEW, #162 round 3) — honest curation limits: compaction loses
+# silently, JIT symmetric fail, stale AGENTS.md worse than none
+# ============================================================
+def s18b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Курирование не устраняет риск — оно меняет один риск на другой",
+        size=21, w=12.3, h=0.82)
+
+    cards = [
+        ("layers", "Компакция теряет молча",
+         "Суммаризация — с потерями: отклонённое решение («библиотеку X не "
+         "использовать») может исчезнуть из резюме без ошибки — агент "
+         "предложит именно то, от чего отказались."),
+        ("circle-help", "JIT не спросит о неизвестном",
+         "Агент подгружает то, о чём догадался спросить; то, о существовании "
+         "чего не знает, — не запросит никогда. Симметричный предел той же "
+         "техники."),
+        ("shield-alert", "Несвежий AGENTS.md вреднее отсутствующего",
+         "Отсутствие файла агент компенсирует вопросом; устаревшему — "
+         "доверяет буквально: устаревшая команда сборки, снятое ограничение, "
+         "которому агент следует."),
+    ]
+    cw, gap = 3.97, 0.17
+    x0 = 0.55
+    top = 1.44
+    for i, (ic, head, body) in enumerate(cards):
+        x = x0 + i * (cw + gap)
+        ocean_box(s, x, top, cw, 3.30)
+        icon(s, ic, x + 0.24, top + 0.20, 0.48, "mid")
+        text_box(s, x=x + 0.24, y=top + 0.82, w=cw - 0.48, h=0.62, text=head,
+                 size=13, bold=True, color=MID, line_spacing=1.06)
+        text_box(s, x=x + 0.24, y=top + 1.46, w=cw - 0.48, h=1.72, text=body,
+                 size=10.5, color=DEEP, line_spacing=1.18)
+
+    filled_rect(s, 0.55, 4.92, 12.25, 0.60, SOFT_GREY, stroke=LIGHT,
+                stroke_pt=1.0, radius=True, radius_adj=0.08)
+    text_box(s, x=0.79, y=4.99, w=11.8, h=0.46,
+             text="Ни одна техника курирования не устраняет риск — каждая "
+                  "меняет один риск на другой. Это предел самой техники.",
+             size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             align=PP_ALIGN.CENTER)
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Решение, которое нельзя терять молча, не доверяют компакции сессии — "
+        "его фиксируют в постоянном слое инструкций.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s18b")
+    notes_with_sources(s, "s18b")
     return s
 
 
@@ -848,8 +977,8 @@ def s20d(p):
          "color": TEAL},
         {"text": "Агент коммитит систематически и на порядок больше "
                  "человека — структура превращает объём в актив "
-                 "(auto-changelog, auto-semver по типам коммитов), а не в "
-                 "шум.", "size": 11, "color": DEEP, "line_spacing": 1.14},
+                 "(автогенерация changelog и версии по типу коммита), а не "
+                 "в шум.", "size": 11, "color": DEEP, "line_spacing": 1.14},
     ])
     text_box(s, x=0.55, y=sy + 1.02, w=12.25, h=0.40,
              text="Честная граница: агент никогда не коммитит напрямую в общую "
@@ -1065,6 +1194,87 @@ def s20f(p):
 
 
 # ============================================================
+# s20g (NEW, #162 round 3) — Register .env case + permissions.deny
+# Bash-bypass limit + Gitleaks/TruffleHog 3-layer defense
+# ============================================================
+def s20g(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Секреты — отдельный контракт: .gitignore не значит «агент тоже не прочитает»",
+        size=18.5, w=12.3, h=0.82)
+
+    lx, lw = 0.55, 6.55
+    rx, rw = 7.30, 5.50
+    top = 1.44
+
+    # --- LEFT: Register incident + permissions.deny limit ---
+    ocean_box(s, lx, top, lw, 1.98)
+    icon(s, "key", lx + 0.22, top + 0.14, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=top + 0.18, w=lw - 1.06, h=0.36,
+             text="The Register, 2026-01-28 [1]", size=12.5, bold=True,
+             color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.62, w=lw - 0.48, h=0.80,
+             text="Claude Code (v2.1.12) читал .env вопреки и .gitignore, и "
+                  ".claudeignore — предупреждает об учётных данных, но всё "
+                  "равно печатает содержимое. Минимум 4 открытых тикета.",
+             size=10.5, color=DEEP, line_spacing=1.14)
+    filled_rect(s, lx + 0.24, top + 1.44, lw - 0.48, 0.48, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.2, radius=True, radius_adj=0.10)
+    text_box(s, x=lx + 0.40, y=top + 1.49, w=lw - 0.80, h=0.38,
+             text='«"Ignored by git" and "ignored by Claude Code" are two '
+                  'different things.»',
+             size=9.5, italic=True, color=DEEP, font=FONT_MONO,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    ocean_box(s, lx, top + 2.14, lw, 1.90, fill=SOFT_GREY, stroke=LIGHT,
+              stroke_pt=1.0)
+    icon(s, "shield-alert", lx + 0.22, top + 2.28, 0.44, "mid")
+    text_box(s, x=lx + 0.80, y=top + 2.30, w=lw - 1.04, h=0.36,
+             text="permissions.deny не блокирует Bash", size=12, bold=True,
+             color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 2.72, w=lw - 0.48, h=1.20,
+             text="deny(Read(./.env)) блокирует встроенный file-tool — но "
+                  "`cat .env` через Bash обходит правило. Два независимых "
+                  "контракта: закрытие требует OS-level sandboxing.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+
+    # --- RIGHT: 3-layer defense ---
+    layers = [
+        ("1", "pre-commit hook (Gitleaks)", "локально, быстро — но обходим "
+         "--no-verify: рекомендательный барьер, не обязывающий."),
+        ("2", "CI-gate (Gitleaks + TruffleHog verified)", "на каждый PR — "
+         "обязывающий гейт: CI не обойти веткой мимо хука."),
+        ("3", "server-side push-protection", "на уровне git-хостинга — "
+         "устойчив даже к обходу клиентских хуков."),
+    ]
+    ocean_box(s, rx, top, rw, 4.10, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "lock", rx + 0.22, top + 0.16, 0.46, "teal")
+    text_box(s, x=rx + 0.82, y=top + 0.20, w=rw - 1.04, h=0.36,
+             text="3-слойная защита", size=13, bold=True, color=MID)
+    ly = top + 0.72
+    for num, head, body in layers:
+        circle(s, rx + 0.24, ly, 0.36, MID)
+        text_box(s, x=rx + 0.24, y=ly, w=0.36, h=0.36, text=num, size=13,
+                 bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=rx + 0.72, y=ly - 0.02, w=rw - 0.98, h=0.32, text=head,
+                 size=11.5, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, x=rx + 0.72, y=ly + 0.32, w=rw - 0.98, h=0.62, text=body,
+                 size=10, color=DEEP, line_spacing=1.14)
+        ly += 1.10
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "То, что коммитить, и то, что агенту разрешено читать, — два разных, "
+        "независимо настраиваемых контракта; закрытие одного не закрывает другой.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s20g")
+    notes_with_sources(s, "s20g")
+    return s
+
+
+# ============================================================
 # s20 — 70% problem (curve + 3 numbers) [in-bucket]
 # ============================================================
 def s20(p):
@@ -1110,22 +1320,27 @@ def s20(p):
     nums = [
         ("Stack Overflow 2025: 66%",
          "разработчиков назвали главной фрустрацией «решения почти правильные, но "
-         "не совсем»."),
-        ("GitClear · 211 млн строк, 2020–2024 [2]",
-         "клоны 8,3% → 12,3%; отрефакторенного ~25% → <10%; churn 3,3% → 5,7%. "
-         "(Корреляция, не RCT.)"),
+         "не совсем».", 0.82),
+        ("GitClear · два независимых замера [2]",
+         "211 млн строк (2020–24): клоны 8,3→12,3%, рефакторинг ~25→<10%, "
+         "churn 3,3→5,7%.\n"
+         "623 млн изменений (2023–26): рефакторинг 21→3,8% (−70%), дубли "
+         "40,3→73,0/млн строк (+81%), churn +15%.\n"
+         "(Оба — корреляция, не RCT.)",
+         1.30),
         ("Парадокс знания (Osmani) [1]",
          "seniors оспаривают вывод AI, juniors принимают («карточный домик») — AI "
-         "усиливает опытных больше."),
+         "усиливает опытных больше.", 0.72),
     ]
-    ny = 1.52
-    for i, (head, body) in enumerate(nums):
-        y = ny + i * 1.14
-        ocean_box(s, rx, y, rw, 1.02)
-        text_box(s, x=rx + 0.24, y=y + 0.10, w=rw - 0.48, h=0.32, text=head,
-                 size=12.5, bold=True, color=MID)
-        text_box(s, x=rx + 0.24, y=y + 0.42, w=rw - 0.48, h=0.56, text=body,
-                 size=11, color=DEEP, line_spacing=1.12)
+    ny = 1.48
+    for i, (head, body, bh) in enumerate(nums):
+        y = ny
+        ocean_box(s, rx, y, rw, 0.32 + bh)
+        text_box(s, x=rx + 0.24, y=y + 0.08, w=rw - 0.48, h=0.30, text=head,
+                 size=12, bold=True, color=MID)
+        text_box(s, x=rx + 0.24, y=y + 0.40, w=rw - 0.48, h=bh - 0.06,
+                 text=body, size=10, color=DEEP, line_spacing=1.10)
+        ny += 0.32 + bh + 0.10
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,

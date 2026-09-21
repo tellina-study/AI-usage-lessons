@@ -6,7 +6,7 @@ duration_min: 3
 assertion: "Нет единственно правильного паттерна логирования задач — выбор составной: solo/команда × длительность задачи × нужда в аудит-следе; встроенный TodoWrite/Task* — session-scoped прогресс, не замена персистентному файловому логу"
 learning_goal: "Ведущее: критерии выбора между 3 файловыми паттернами логирования задач (папка-на-задачу / единый лог / плоская папка) — методика без единственного правильного ответа, как growth-ladder в Лекции 3"
 learning_outcomes: [LO1, LO7]
-chapter_ref: "§3.3e [for-slide-s20e]"
+chapter_ref: "§3.3d [for-slide-s20e]"
 references: [backlog_md, claude_task_tools]
 verify_day_of: true
 visual_brief: >

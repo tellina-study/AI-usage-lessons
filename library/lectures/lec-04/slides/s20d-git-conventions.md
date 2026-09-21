@@ -6,7 +6,7 @@ duration_min: 3
 assertion: "То, что не записано в steering-файле, агент не знает и угадывает заново каждую сессию — это касается и git: Conventional Commits + Conventional Branch (с AI Agent Source Prefixes) + структурный PR-шаблон превращают объём агентных коммитов из шума в машинно-читаемый сигнал"
 learning_goal: "Ведущее: git-конвенции (commit/branch/PR) — часть контракта с агентом на уровень выше команд сборки; специфика масштаба — агент коммитит систематически и на порядок больше"
 learning_outcomes: [LO1, LO7]
-chapter_ref: "§3.3d [for-slide-s20d]"
+chapter_ref: "§3.3e [for-slide-s20d]"
 references: [conventional_commits, conventional_branch]
 verify_day_of: true
 visual_brief: >

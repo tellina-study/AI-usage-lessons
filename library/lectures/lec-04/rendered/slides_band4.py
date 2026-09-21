@@ -6,6 +6,7 @@ from _helpers import (
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    FONT_MONO,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
@@ -121,31 +122,34 @@ def s33(p):
     # left: DORA-first practice
     lx, lw = 0.55, 6.05
     ocean_box(s, lx, 1.52, lw, 4.02)
-    text_box(s, x=lx + 0.24, y=1.62, w=lw - 0.48, h=1.08,
+    text_box(s, x=lx + 0.24, y=1.60, w=lw - 0.48, h=0.98,
              text="Ведёт не инструмент, а порядок: сначала семь зрелых "
                   "delivery-способностей DORA — платформенная инженерия · "
                   "автотесты · контроль версий · быстрая обратная связь · "
                   "слабо-связанная архитектура · документация · малые порции — "
                   "потом масштабировать AI. «AI усиливает то, что уже есть».",
-             size=11, color=DEEP, line_spacing=1.14)
-    filled_rect(s, lx + 0.24, 2.80, lw - 0.48, 0.56, TEAL_TINT, stroke=TEAL,
+             size=10.5, color=DEEP, line_spacing=1.10)
+    filled_rect(s, lx + 0.24, 2.62, lw - 0.48, 0.76, TEAL_TINT, stroke=TEAL,
                 stroke_pt=1.4, radius=True, radius_adj=0.07)
-    text_box(s, x=lx + 0.46, y=2.87, w=lw - 0.9, h=0.44,
-             text="Внутри — жёсткий человеческий прод-гейт (выкатка необратима).",
-             size=11.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=lx + 0.24, y=3.46, w=lw - 0.48, h=0.74,
+    text_box(s, x=lx + 0.46, y=2.67, w=lw - 0.9, h=0.66,
+             text="Внутри — риск-калиброванный прод-гейт: необратимое — "
+                  "жёсткий человеческий гейт; мелкое обратимое с пройденными "
+                  "гейтами — AI может участвовать в согласовании.",
+             size=10.5, bold=True, color=DEEP, line_spacing=1.10,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=lx + 0.24, y=3.50, w=lw - 0.48, h=0.62,
              text="AI потребляет конвейеры, но не владеет ими — нет "
                   "«AI-CD-продукта»; агент вызывает gh / aws / gcloud как "
                   "ограниченный по правам пользователь.",
-             size=11, color=DEEP, line_spacing=1.12)
-    filled_rect(s, lx + 0.24, 4.30, lw - 0.48, 1.08, SOFT_GREY, stroke=LIGHT,
+             size=10.5, color=DEEP, line_spacing=1.10)
+    filled_rect(s, lx + 0.24, 4.20, lw - 0.48, 1.20, SOFT_GREY, stroke=LIGHT,
                 stroke_pt=1.0, radius=True, radius_adj=0.05)
-    icon(s, "wrench", lx + 0.42, 4.42, 0.44, "light")
-    text_box(s, x=lx + 1.00, y=4.36, w=lw - 1.3, h=0.98,
+    icon(s, "wrench", lx + 0.42, 4.34, 0.44, "teal")
+    text_box(s, x=lx + 1.00, y=4.26, w=lw - 1.3, h=1.06,
              text="Эксплуатация — слабейшая фаза цикла: нет системного и "
                   "рантайм-контекста; отчёт агента о состоянии ≠ источник истины "
                   "(эхо Replit).",
-             size=11, color=DEEP, line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+             size=10.5, color=DEEP, line_spacing=1.10, anchor=MSO_ANCHOR.MIDDLE)
 
     # right: DORA both halves chart + failure
     rx, rw = 6.85, 5.95
@@ -171,6 +175,84 @@ def s33(p):
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s34")
     notes_with_sources(s, "s34")
+    return s
+
+
+# ============================================================
+# s33b (NEW, #162 round 3) — BT Group/Azure Triangle copilot wins vs
+# IaC-insecurity — multiplier works both ways in the same phase
+# ============================================================
+def s33b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Множитель работает в обе стороны одной фазы: быстрый MTTR — и небезопасный IaC",
+        size=18.5, w=12.3, h=0.82)
+
+    lx, lw = 0.55, 6.05
+    rx, rw = 6.85, 5.95
+    top = 1.44
+
+    # left: where copilot works
+    ocean_box(s, lx, top, lw, 4.10, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.6)
+    icon(s, "gauge", lx + 0.22, top + 0.16, 0.46, "gold")
+    text_box(s, x=lx + 0.82, y=top + 0.20, w=lw - 1.04, h=0.36,
+             text="Где AI-копайлот работает", size=13, bold=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 0.70, w=lw - 0.48, h=0.34,
+             text="BT Group [1]", size=12, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 1.02, w=lw - 0.48, h=0.50,
+             text="MTTR ~2ч → 85с (~97% сокращения)", size=15, bold=True,
+             color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 1.54, w=lw - 0.48, h=0.50,
+             text="MTTR (mean time to repair, время восстановления после "
+                  "сбоя) — корреляция алертов + авто-устранение по runbook",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.08)
+    text_box(s, x=lx + 0.24, y=top + 2.10, w=lw - 0.48, h=0.34,
+             text="Microsoft Azure «Triangle» [2]", size=12, bold=True,
+             color=MID)
+    text_box(s, x=lx + 0.24, y=top + 2.42, w=lw - 0.48, h=0.50,
+             text="time-to-engage −91%, триаж 97%", size=15, bold=True,
+             color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 3.00, w=lw - 0.48, h=0.94,
+             text="Оба — поверх УЖЕ зрелой SRE-практики: множитель усиливает "
+                  "то, что уже хорошо работало.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.16)
+
+    # right: same multiplier, opposite side (IaC insecurity)
+    ocean_box(s, rx, top, rw, 4.10, fill=SOFT_GREY, stroke=LIGHT, stroke_pt=1.0)
+    icon(s, "shield-alert", rx + 0.22, top + 0.16, 0.46, "mid")
+    text_box(s, x=rx + 0.82, y=top + 0.20, w=rw - 1.04, h=0.36,
+             text="Тот же множитель, обратная сторона", size=13, bold=True,
+             color=DEEP)
+    text_box(s, x=rx + 0.24, y=top + 0.70, w=rw - 0.48, h=1.02,
+             text="AI-генерируемый IaC (инфраструктура-как-код; Terraform, "
+                  "K8s) небезопасен по умолчанию: лишь ~55% задач дают "
+                  "secure-by-default код — цифра почти не менялась 2 года [3].",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    text_box(s, x=rx + 0.24, y=top + 1.78, w=rw - 0.48, h=0.40,
+             text="(синтаксическая корректность >95%)", size=10, italic=True,
+             color=SLATE)
+    filled_rect(s, rx + 0.24, top + 2.30, rw - 0.48, 0.94, WHITE, stroke=LIGHT,
+                stroke_pt=1.2, radius=True, radius_adj=0.08)
+    text_box(s, x=rx + 0.44, y=top + 2.36, w=rw - 0.88, h=0.82,
+             text="2026-бенчмарк (отдельное измерение, не тот же тренд): 6 "
+                  "frontier-моделей прошли security-filtered IaC-задачи лишь "
+                  "в 8,4% случаев.",
+             size=10, bold=True, color=DEEP, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 0.24, y=top + 3.42, w=rw - 0.48, h=0.60,
+             text="Ограничение прав защищает от действий агента, но не от "
+                  "того, что сам артефакт небезопасен по содержанию.",
+             size=10, italic=True, color=SLATE, line_spacing=1.14)
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "AI усиливает то, что уже есть — в обе стороны одной фазы: зрелая "
+        "платформа получает быстрый MTTR, незрелый IaC-гейт получает "
+        "небезопасную инфраструктуру, которая выглядит рабочей.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s33b")
+    notes_with_sources(s, "s33b")
     return s
 
 
@@ -342,66 +424,58 @@ def s35(p):
 def s36(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Матрица лекции: ведёт практика, вендор — сменяемый столбец",
-                size=22, w=12.2, h=0.66)
+    slide_title(s, "Матрица лекции: ведёт практика — вендор-колонки нет вовсе",
+                size=21, w=12.2, h=0.66)
 
     headers = ["Фаза", "Ведущая практика", "Режим отказа",
-               "Где человек обязателен", "Вендор (вторично)"]
-    # column widths (sum ~12.25)
-    cws = [1.55, 3.15, 2.75, 2.65, 2.15]
+               "Где человек обязателен"]
+    # column widths (sum ~12.25) — rebalanced after vendor column removal.
+    # col0 widened 1.65->1.95 (round-3 QA-fix): "Документация" wrapped
+    # mid-word ("Документаци"/"я") at 1.65in; col1/col2 trimmed 0.15 each
+    # to compensate, sum unchanged.
+    cws = [1.95, 3.85, 3.40, 3.05]
     x0 = 0.55
     rows = [
         ("file-code", "Требования", "spec-driven: спека до кода",
-         "prompt-and-pray; «спека=истина»", "решить, что строить",
-         "Kiro, Spec-Kit, plan mode"),
+         "prompt-and-pray; «спека=истина»", "решить, что строить"),
         ("gavel", "Архитектура", "ADR + fitness + арх-как-код",
-         "отравленный контекст без управления", "выбор развилок под компромисс",
-         "нет продукта; Structurizr"),
+         "отравленный контекст без управления", "выбор развилок под компромисс"),
         ("code", "Реализация", "explore→plan→code→commit + харнес",
-         "70%-проблема; «почти правильный»", "ревью diff + merge",
-         "Cursor, Junie, Copilot"),
+         "70%-проблема; «почти правильный»", "ревью diff + merge"),
         ("flask-conical", "Тестирование", "TDD: тест-как-спека + детерм. гейт",
-         "«all green» лжёт; coverage≠дефекты", "что тест утверждает",
-         "AWS Q /test, Qodo"),
+         "«all green» лжёт; coverage≠дефекты", "что тест утверждает"),
         ("shield-check", "Ревью + Безоп.", "fresh-context; least-priv+SAST",
-         "благодушие; ложная уверенность", "второй проход + угрозы",
-         "Copilot review; Big Sleep"),
-        ("git-merge", "Доставка", "headless + прод-гейт (DORA-first)",
-         "AI потребляет, не владеет", "продакшен-гейт", "Actions; gh / CLI"),
+         "благодушие; ложная уверенность", "второй проход + угрозы"),
+        ("git-merge", "Доставка", "headless + риск-калибр. гейт (DORA-first)",
+         "AI потребляет, не владеет", "прод-гейт (жёсткий на необратимом)"),
         ("wrench", "Эксплуатация", "телеметрия + on-call",
-         "нет системного контекста", "владение моделью системы",
-         "AWS Q CloudWatch"),
+         "нет системного контекста", "владение моделью системы"),
         ("lightbulb", "Документация", "docs-as-context (код=истина)",
-         "когнитивный долг; галлюцинации", "темп ≤ темп понимания",
-         "Confluence AI, Q /doc"),
+         "когнитивный долг; галлюцинации", "темп ≤ темп понимания"),
     ]
     top = 1.18
     hh = 0.42
     # header
     cx = x0
     for j, htxt in enumerate(headers):
-        col = GOLD if j == 3 else (SOFT_GREY if j == 4 else MID)
-        txtcol = DEEP if j in (3, 4) else WHITE
+        col = GOLD if j == 3 else MID
+        txtcol = DEEP if j == 3 else WHITE
         filled_rect(s, cx, top, cws[j], hh, col, radius=True, radius_adj=0.10)
         text_box(s, x=cx + 0.06, y=top + 0.03, w=cws[j] - 0.12, h=hh - 0.06,
-                 text=htxt, size=10.5, bold=True, color=txtcol,
+                 text=htxt, size=11, bold=True, color=txtcol,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=0.95)
         cx += cws[j]
     # rows
-    rh = 0.485
-    ry = top + hh + 0.05
+    rh = 0.52
+    ry = top + hh + 0.06
     for r, row in enumerate(rows):
         ic = row[0]
         cells = row[1:]
         cx = x0
         fill = SURFACE if r % 2 == 0 else WHITE
-        for j in range(5):
-            cell_fill = fill
-            if j == 3:
-                cell_fill = GOLD_TINT
-            elif j == 4:
-                cell_fill = SOFT_GREY
+        for j in range(4):
+            cell_fill = GOLD_TINT if j == 3 else fill
             filled_rect(s, cx, ry, cws[j], rh, cell_fill, stroke=SOFT_GREY,
                         stroke_pt=0.8, radius=True, radius_adj=0.04)
             if j == 0:
@@ -411,19 +485,17 @@ def s36(p):
                          h=rh - 0.08, text=cells[j], size=10, bold=True,
                          color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.95)
             else:
-                col = SLATE if j == 4 else DEEP
-                sz = 9 if j == 4 else 9.3
-                text_box(s, x=cx + 0.08, y=ry + 0.03, w=cws[j] - 0.16,
-                         h=rh - 0.06, text=cells[j], size=sz,
-                         color=col, anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.96)
+                text_box(s, x=cx + 0.10, y=ry + 0.04, w=cws[j] - 0.20,
+                         h=rh - 0.08, text=cells[j], size=10.3,
+                         color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.98)
             cx += cws[j]
-        ry += rh + 0.03
+        ry += rh + 0.04
 
     gold_callout(
-        s, 0.55, 6.06, 12.25, 0.55,
-        "Заменится только столбец-иллюстрация. Ведущая практика, режим отказа и "
-        "точка человека устойчивы — держатся на характере сложности фазы [2]. Каждая "
-        "клетка выведена из разобранного раздела, не назначена. [1]",
+        s, 0.55, 6.20, 12.25, 0.55,
+        "Вендор-имена из §1–§6 сменяемы; практика, режим отказа и точка "
+        "человека здесь устойчивы — держатся на характере сложности фазы [2]. "
+        "Каждая клетка выведена из разобранного раздела, не назначена. [1]",
         size=11.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s37", y=7.08)
     notes_with_sources(s, "s37")
@@ -444,9 +516,10 @@ def s37(p):
         ("radar", "DORA (n ≈ 5000, системный) [1]",
          "~90% отчётов: throughput положительный, но связь AI со стабильностью "
          "негативна второй год подряд. Линза: «AI усиливает то, что уже есть»."),
-        ("git-compare", "GitClear (211 млн строк) [2]",
-         "рефакторинг ~25% → <10%; дубликаты 8,3% → 12,3%; churn вырос. Три "
-         "маркера накопления техдолга. (Корреляция, не RCT.)"),
+        ("git-compare", "GitClear — два замера [2]",
+         "211М строк (2020–24): рефакторинг ~25%→<10%, дубли 8,3%→12,3%. 623М "
+         "изменений (2023–26): рефакторинг 21%→3,8% (−70%), дубли +81%, churn "
+         "+15%. (Обе — корреляция, не RCT.)"),
         ("gauge", "METR (n = 16, эксперты, знакомый код) [3]",
          "задачи с AI заняли +19% времени, а верили в ускорение (~−20%) = разрыв "
          "восприятия. (На незнакомом коде эффект иной.)"),
@@ -454,14 +527,15 @@ def s37(p):
     cw, gap = 3.97, 0.17
     x0 = 0.55
     my = 1.52
+    body_sizes = [10.5, 9.0, 10.5]
     for i, (ic, head, body) in enumerate(methods):
         x = x0 + i * (cw + gap)
         ocean_box(s, x, my, cw, 2.60)
         icon(s, ic, x + 0.24, my + 0.22, 0.56, "teal" if i == 1 else "mid")
-        text_box(s, x=x + 0.24, y=my + 0.86, w=cw - 0.48, h=0.56, text=head,
-                 size=12, bold=True, color=MID, line_spacing=1.05)
-        text_box(s, x=x + 0.24, y=my + 1.44, w=cw - 0.48, h=1.06, text=body,
-                 size=10.5, color=DEEP, line_spacing=1.14)
+        text_box(s, x=x + 0.24, y=my + 0.86, w=cw - 0.48, h=0.46, text=head,
+                 size=11.5, bold=True, color=MID, line_spacing=1.0)
+        text_box(s, x=x + 0.24, y=my + 1.32, w=cw - 0.48, h=1.20, text=body,
+                 size=body_sizes[i], color=DEEP, line_spacing=1.12)
         # arrow down toward centre
         right_arrow(s, x + cw / 2 - 0.14, my + 2.62, 0.28, 0.22, fill=GOLD)
 
@@ -483,6 +557,82 @@ def s37(p):
         size=13, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s38")
     notes_with_sources(s, "s38")
+    return s
+
+
+# ============================================================
+# s37b (NEW, #162 round 3) — Uber adoption-without-criterion +
+# "same product, two registers" bridge (AWS Kiro success/failure)
+# ============================================================
+def s37b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Решает не бренд, а применённая дисциплина — два примера",
+        size=19, w=12.4, h=0.82)
+
+    lx, lw = 0.55, 6.05
+    rx, rw = 6.85, 5.95
+    top = 1.44
+
+    # left: Uber — scale without criterion
+    ocean_box(s, lx, top, lw, 4.10)
+    icon(s, "scale", lx + 0.22, top + 0.14, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=top + 0.18, w=lw - 1.04, h=0.36,
+             text="Uber, 2026 [1]", size=13, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.62, w=lw - 0.48, h=0.92,
+             text="Внедрение агентных практик 32% → 84% за месяц (2,6×); 95% "
+                  "инженеров ежемесячно; 70% закоммиченного кода — от AI; "
+                  "$500–2000/инженер/мес.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.24, top + 1.58, lw - 0.48, 1.10, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.2, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.40, y=top + 1.64, w=lw - 0.80, h=0.98,
+             text='COO Andrew Macdonald: «It\'s hard to draw a connection '
+                  'between... rising use of Claude Code and innovations '
+                  'meant to serve consumers... That link is not there yet.»',
+             size=9.5, italic=True, color=DEEP, line_spacing=1.14,
+             font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=lx + 0.24, y=top + 2.86, w=lw - 0.48, h=1.10,
+             text="Потолок $1500/сотрудник/мес введён постфактум — после "
+                  "того как годовой бюджет сгорел за 4 месяца.",
+             size=11, bold=True, color=DEEP, line_spacing=1.18)
+
+    # right: same product, two registers
+    ocean_box(s, rx, top, rw, 4.10, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "split", rx + 0.22, top + 0.14, 0.46, "teal")
+    text_box(s, x=rx + 0.82, y=top + 0.18, w=rw - 1.04, h=0.36,
+             text="AWS Kiro — тот же продукт, два регистра [2]", size=12,
+             bold=True, color=TEAL, line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 0.66, w=rw - 0.48, h=0.30,
+             text="Успех:", size=11.5, bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=top + 0.98, w=rw - 0.48, h=0.78,
+             text="life sciences (фарма/биотех) — спека-first дисциплина, "
+                  "гейты проверяемости заранее → продакшен за 3 недели "
+                  "(тот же кейс, что уже был в начале лекции).",
+             size=10, color=DEEP, line_spacing=1.14)
+    text_box(s, x=rx + 0.24, y=top + 1.80, w=rw - 0.48, h=0.30,
+             text="Провал:", size=11.5, bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=top + 2.12, w=rw - 0.48, h=0.94,
+             text="Kiro-инцидент, декабрь 2025 — агент автономно снёс и "
+                  "пересобрал окружение без одобрения → многочасовой "
+                  "простой.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.24, top + 3.14, rw - 0.48, 0.80, SOFT_GREY,
+                stroke=SLATE, stroke_pt=0.8, radius=True, radius_adj=0.08)
+    text_box(s, x=rx + 0.40, y=top + 3.20, w=rw - 0.80, h=0.68,
+             text="Разница — не бренд (продукт один и тот же), а применённая "
+                  "или пропущенная дисциплина.",
+             size=10, italic=True, color=SLATE, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Решение о масштабе AI — измеримое инженерное решение с критерием, "
+        "заданным заранее, а не культурная инерция без критерия.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s37b")
+    notes_with_sources(s, "s37b")
     return s
 
 

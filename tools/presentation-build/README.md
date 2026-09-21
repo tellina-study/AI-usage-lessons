@@ -388,6 +388,20 @@ python3 deep_latin_scan.py /tmp/pptx-visible.txt
 
 ---
 
+## 5.8b Acronym glossing (ENFORCED — [[feedback_acronym_glossing]])
+
+**Правило.** Каждая ключевая аббревиатура на слайде (MTTR, IaC, DORA, RCT, SDD, BDD, TDD, ADR, EARS, NFR и т.п.) должна быть раскрыта/пояснена на **первом видимом употреблении** — inline, в скобках, прямо на слайде. Пояснение только во frontmatter (`assertion:`, `chapter_ref`) или в speaker notes **не считается** — студент видит только visible body.
+
+**Как применять:**
+- Первое употребление в деке: "MTTR (mean time to repair, время восстановления после сбоя)".
+- Далее в том же деке — можно использовать без повтора глоссы (не на каждом слайде).
+- Не путать с базовыми, аудитории и так знакомыми терминами (API, HTTP, JSON, CI/CD, LLM — см. Audience Profile в CLAUDE.md: аудитория курса — практикующие инженеры, разжёвывать очевидное не нужно). Глоссировать именно domain-specific/менее очевидные акронимы.
+- presentation-critic должен проверять это отдельным пунктом наравне с anglicism-сканом — чистый `deep_latin_scan.py` **не ловит** голые акронимы (они не всегда triggers pattern/latin-token скана).
+
+**Cost-of-omission:** Лекция 4 round-3 (issue #162) — даже после полного presentation-critic + student-simulator прохода MTTR и IaC остались голыми акронимами на слайде (RU-гло́сса была только в frontmatter). Поймано вручную владельцем при просмотре, не автоматической проверкой.
+
+---
+
 ## 5.9 Hero images на s01 + s39 (ENFORCED — [[hero-images-required]])
 
 **Источник:** рефлексия Лекции 8 (#122), owner explicit запрос «не хватает броской иллюстрации на самом первом слайде и на завершающем, сделай и запиши себе как общее требования ко всем презам».

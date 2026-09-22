@@ -2,7 +2,7 @@
 # Usage: render.sh [page1 page2 ...]  (no pages = all 40)
 # Renders lec-04.pptx -> PDF (isolated profile) -> PNG @150dpi in snapshots/.
 set -e
-REND=/home/harness/harness-projects/256/.worktrees/folder-288/lesson4-498d0d8c/library/lectures/lec-04/rendered
+REND=/home/harness/harness-projects/256/.worktrees/folder-288/lesson4-de299d-0fac50ac/library/lectures/lec-04/rendered
 export LD_LIBRARY_PATH=/home/harness/.local/lo-sysroot/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 export HOME=/tmp/claude-999
 export PYTHONPATH=/home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/.local/lib/python3.12/site-packages:$PYTHONPATH

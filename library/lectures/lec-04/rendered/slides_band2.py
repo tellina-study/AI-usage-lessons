@@ -5,7 +5,7 @@ from _helpers import (
     gold_callout, teal_callout, footer, src, speaker_notes, load_notes, notes_with_sources, refs_of_slide,
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
-    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS, WEB,
     FONT_MONO,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
@@ -288,9 +288,10 @@ def s15(p):
     # left: poisoning cycle
     lx, lw = 0.55, 6.05
     ocean_box(s, lx, 2.14, lw, 3.42)
-    text_box(s, x=lx + 0.24, y=2.24, w=lw - 0.48, h=0.36,
+    text_box(s, x=lx + 0.24, y=2.24, w=lw - 1.00, h=0.36,
              text="Петля отравления (Böckeler 2026, Thoughtworks) [1]",
              size=12.5, bold=True, color=MID)
+    icon(s, "flame", lx + lw - 0.66, 2.20, 0.44, "gold")
     loop = [
         ("плохой дизайн", GOLD, True),
         ("AI копирует («как принято здесь»)", MID, False),
@@ -344,6 +345,9 @@ def s15(p):
         "AI видит паттерн и продолжает его — не отличает хороший пример от плохого. "
         "Чем хуже существующая архитектура, тем сильнее AI её закрепляет.",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: X, X Everywhere (Buzz/Woody) — "плохой паттерн везде",
+    # reinforcing the loop's own repetition. Bottom band, right of ref list.
+    add_image(s, WEB / "band-x-everywhere.png", 9.57, 6.40, 3.23, 0.64)
     refs_of_slide(s, "s16")
     notes_with_sources(s, "s16")
     return s
@@ -468,9 +472,14 @@ def s17b(p):
     lx, lw = 0.55, 6.55
     ocean_box(s, lx, 1.44, lw, 4.10)
     icon(s, "bug", lx + 0.22, 1.58, 0.46, "mid")
-    text_box(s, x=lx + 0.82, y=1.62, w=lw - 1.0, h=0.36,
+    text_box(s, x=lx + 0.82, y=1.62, w=lw - 1.60, h=0.36,
              text="Google Gemini CLI, июль 2025 [1]", size=13, bold=True,
              color=MID)
+    add_image(s, ASSETS / "logos" / "gemini-logo.png", lx + lw - 0.62, 1.56,
+              0.36, 0.36)
+    text_box(s, x=lx + lw - 0.90, y=1.94, w=0.92, h=0.16,
+             text="Google Gemini", size=6.5, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER)
     text_box(s, x=lx + 0.24, y=2.06, w=lw - 0.48, h=0.30,
              text="AI Incident Database, Report 6120 / Incident 1178",
              size=10, italic=True, color=SLATE)
@@ -613,6 +622,9 @@ def s18(p):
         "Контекст живёт в репозитории, а не в промпте. Устойчивый паттерн — "
         "курируемый постоянный слой; хайп — «наш AGENTS.md сам всё решит».",
         size=13, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: Monkey Puppet — the silent-failure mode of compaction
+    # (a rejected decision can vanish from the summary with no error).
+    add_image(s, WEB / "band-monkey-puppet.png", 9.92, 6.40, 2.88, 0.64)
     refs_of_slide(s, "s19")
     notes_with_sources(s, "s19")
     return s
@@ -1347,6 +1359,11 @@ def s20(p):
         "Альтернатива — малые проверяемые единицы + харнес + читать diff до "
         "accept; метрики дублирования и churn в CI как гейт. Merge — всегда человек.",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: Hide the Pain Harold (both panels — same face, same
+    # smile, the point is that NOTHING visibly changes) — "почти правильный
+    # код" looks fine right up until it doesn't.
+    add_image(s, WEB / "band-hide-the-pain-harold-merged.png", 8.01, 6.40,
+              4.79, 0.64)
     refs_of_slide(s, "s21")
     notes_with_sources(s, "s21")
     return s

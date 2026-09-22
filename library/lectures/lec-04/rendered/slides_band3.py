@@ -5,7 +5,7 @@ from _helpers import (
     gold_callout, teal_callout, footer, src, speaker_notes, load_notes, notes_with_sources, refs_of_slide,
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
-    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS, WEB,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
@@ -28,7 +28,8 @@ def s21(p):
     ocean_box(s, lx, 1.52, lw, 4.02)
     add_image(s, CHARTS / "c21-swe-bench.png", lx + 0.12, 1.66, lw - 0.24, 2.30)
     text_box(s, x=lx + 0.24, y=4.02, w=lw - 0.48, h=1.44,
-             text="Verified (~500 задач, публичный код) — топ ~88–89%. Pro "
+             text="SWE-bench (эталонный бенчмарк на реальных GitHub issues): "
+                  "Verified (~500 задач, публичный код) — топ ~88–89%. Pro "
                   "(приватные, контаминация-устойчивые) — лидер ~64%. Разрыв "
                   "~24 п.п.: доверие числу обратно пропорционально незнакомости и "
                   "критичности вашей задачи.",
@@ -72,6 +73,9 @@ def s21(p):
         "быть правдой и вводить в заблуждение; высокая цифра не отвечает на "
         "вопрос merge-гейта. Бренд/бенчмарк не заменяет дисциплину.",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: Mocking Spongebob — mocking-case echo of the vendor's own
+    # overclaim quoted above right ("frontier, 4х быстрее"). Bottom band.
+    add_image(s, WEB / "band-mocking-spongebob.png", 9.86, 6.40, 2.94, 0.64)
     refs_of_slide(s, "s22")
     notes_with_sources(s, "s22")
     return s
@@ -160,11 +164,12 @@ def s23(p):
              text="Важный нюанс — структура ≠ ритуал", size=12.5, bold=True,
              color=DEEP)
     text_box(s, x=rx + 0.24, y=3.36, w=rw - 0.48, h=0.80,
-             text="Ценность TDD — структура (спека-тест + гейт), а не ритуал "
+             text="Ценность TDD (test-driven development, разработка через "
+                  "тестирование) — структура (спека-тест + гейт), а не ритуал "
                   "форсить порядок агенту. Böckeler [2]: TDD-first в agent-loop — "
                   "отсутствие выигрыша + ~3× токенов («я перестала велеть "
                   "агентам писать тесты первыми»).",
-             size=11, color=DEEP, line_spacing=1.12)
+             size=10.5, color=DEEP, line_spacing=1.10)
     # Fowler tests-as-guardrails caption
     filled_rect(s, rx, 4.32, rw, 0.52, TEAL_TINT, stroke=TEAL, stroke_pt=1.2,
                 radius=True, radius_adj=0.07)
@@ -275,13 +280,14 @@ def s25b(p):
              text="BDD — тест до кода на языке бизнеса", size=13, bold=True,
              color=MID)
     text_box(s, x=lx + 0.24, y=top + 0.64, w=colw - 0.48, h=1.20,
-             text="Тот же принцип «тест до кода», что TDD, но читаем "
-                  "нетехническим стейкхолдером. Три практики: Discovery "
-                  "(разговоры вокруг примеров) → Formulation (примеры → "
-                  "сценарии) → Automation (сценарии как тесты). Формат — "
-                  "Given-When-Then (Gherkin) — та же структура, что в "
-                  "примере с переговоркой из визуализации требований.",
-             size=10, color=DEEP, line_spacing=1.13)
+             text="BDD (Behavior-Driven Development) — тот же принцип «тест "
+                  "до кода», что TDD, но читаем нетехническим стейкхолдером. "
+                  "Три практики: Discovery (разговоры вокруг примеров) → "
+                  "Formulation (примеры → сценарии) → Automation (сценарии "
+                  "как тесты). Формат — Given-When-Then (Gherkin) — та же "
+                  "структура, что в примере с переговоркой из визуализации "
+                  "требований.",
+             size=10, color=DEEP, line_spacing=1.10)
     text_box(s, x=lx + 0.24, y=top + 1.92, w=colw - 0.48, h=1.10,
              text="Кто пишет в 2026: агент генерирует Gherkin-сценарии из "
                   "критериев приёмки (включая краевые и security-случаи), "
@@ -569,9 +575,14 @@ def s27(p):
     rx, rw = 6.10, 6.70
     ocean_box(s, rx, 1.48, rw, 4.10)
     icon(s, "package-x", rx + 0.24, 1.60, 0.46, "mid")
-    text_box(s, x=rx + 0.82, y=1.64, w=rw - 1.04, h=0.36,
+    text_box(s, x=rx + 0.82, y=1.64, w=rw - 1.60, h=0.36,
              text="curl-slop как DDoS на сопровождающих [2]", size=12,
              bold=True, color=MID)
+    add_image(s, ASSETS / "logos" / "curl-logo.png", rx + rw - 0.62, 1.56,
+              0.44, 0.44)
+    text_box(s, x=rx + rw - 1.10, y=2.00, w=0.90, h=0.20,
+             text="curl — офиц. логотип", size=7, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER)
     text_box(s, x=rx + 0.24, y=2.06, w=rw - 0.48, h=0.44,
              text="Поток LLM-«отчётов об уязвимостях» в bug-bounty curl.",
              size=10.5, color=DEEP, line_spacing=1.10)
@@ -607,6 +618,9 @@ def s27(p):
         "процесса. Альтернатива: машинно-проверяемый барьер на входе "
         "(воспроизводимый PoC), а не ручной разбор каждого текста.",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: Evil Kermit — the inner temptation to skip reading the
+    # diff and rubber-stamp instead, direct callback to complacency (left).
+    add_image(s, WEB / "band-evil-kermit.png", 8.96, 6.40, 3.84, 0.64)
     refs_of_slide(s, "s28")
     notes_with_sources(s, "s28")
     return s
@@ -779,9 +793,14 @@ def s30b(p):
 
     ocean_box(s, lx, top, lw, 4.10)
     icon(s, "package-x", lx + 0.22, top + 0.16, 0.48, "mid")
-    text_box(s, x=lx + 0.84, y=top + 0.20, w=lw - 1.06, h=0.36,
+    text_box(s, x=lx + 0.84, y=top + 0.20, w=lw - 1.90, h=0.36,
              text="Amazon Q Developer, июль 2025 [1]", size=13, bold=True,
              color=MID)
+    add_image(s, ASSETS / "logos" / "aws-logo.png", lx + lw - 1.02, top + 0.16,
+              0.72, 0.43)
+    text_box(s, x=lx + lw - 1.10, y=top + 0.58, w=0.88, h=0.16,
+             text="AWS · Wikimedia", size=6.5, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER)
     text_box(s, x=lx + 0.24, y=top + 0.68, w=lw - 0.48, h=1.36,
              text="Неаудированный внешний контрибьютор смержил PR с системным "
                   "промптом «system cleaner» (aws s3 rb, остановка EC2, "
@@ -881,9 +900,14 @@ def s30(p):
     rx, rw = 6.85, 5.95
     ocean_box(s, rx, 1.52, rw, 4.02)
     icon(s, "shield-alert", rx + 0.24, 1.66, 0.5, "mid")
-    text_box(s, x=rx + 0.88, y=1.70, w=rw - 1.10, h=0.40,
+    text_box(s, x=rx + 0.88, y=1.66, w=rw - 1.95, h=0.56,
              text="CamoLeak (prompt injection в dev-агенте · Legit Security) [2]",
-             size=12.5, bold=True, color=MID, line_spacing=1.0)
+             size=11.5, bold=True, color=MID, line_spacing=1.05)
+    add_image(s, ASSETS / "logos" / "copilot-logo.png", rx + rw - 0.86,
+              1.62, 0.40, 0.40)
+    text_box(s, x=rx + rw - 1.02, y=2.03, w=0.72, h=0.16,
+             text="GitHub Copilot", size=6.5, italic=True,
+             color=LIGHT, align=PP_ALIGN.CENTER)
     text_box(s, x=rx + 0.24, y=2.20, w=rw - 0.48, h=1.24,
              text="Скрытые в невидимых markdown-комментариях PR инструкции "
                   "заставили GitHub Copilot Chat искать секреты (ключи AWS) и "
@@ -906,6 +930,9 @@ def s30(p):
         "хэш-пиннингом, allowlist реестров, проверка пакета до установки, SCA; "
         "least-privilege + изоляция + human-in-loop на запись + egress-контроль.",
         size=12, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: Domino Effect — one hallucinated package name cascading
+    # into a full exploit chain (slopsquatting, left column).
+    add_image(s, WEB / "band-domino-effect.png", 10.09, 6.40, 2.71, 0.64)
     refs_of_slide(s, "s31")
     notes_with_sources(s, "s31")
     return s

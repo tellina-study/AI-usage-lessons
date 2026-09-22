@@ -5,7 +5,7 @@ from _helpers import (
     gold_callout, teal_callout, footer, src, speaker_notes, load_notes, notes_with_sources, refs_of_slide,
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
-    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS, WEB,
     FONT_MONO,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
@@ -25,6 +25,11 @@ def s31(p):
                 size=21, w=12.3, h=0.82)
 
     # left: Replit chronicle
+    # Round-5: dropped the round-4 Replit corner logo — swapped for a real
+    # meme in the bottom band (Boardroom Suggestion, see below), which
+    # actually carries the "explicit instruction ignored" point instead of
+    # just naming the vendor. See iteration-log Round-5 §7 for the round-4
+    # 6-tier "real found meme" search that came up empty in this sandbox.
     lx, lw = 0.55, 6.05
     ocean_box(s, lx, 1.52, lw, 4.02)
     text_box(s, x=lx + 0.24, y=1.64, w=lw - 0.48, h=0.66,
@@ -90,6 +95,11 @@ def s31(p):
         "проверенный откат. Корневая ошибка — автономия, неадекватная цене "
         "ошибки [1]. Accountability не делегируется.",
         size=12, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: Boardroom Suggestion (panel 3, consequence split) —
+    # explicit human instruction ignored, agent keeps going regardless.
+    # (y nudged down from the gold_callout's own bottom edge — iter2 fix,
+    # first placement sat right against the callout's last text line.)
+    add_image(s, WEB / "band-boardroom-panel3.png", 8.98, 6.50, 3.82, 0.56)
     refs_of_slide(s, "s32")
     notes_with_sources(s, "s32")
     return s
@@ -578,12 +588,19 @@ def s37b(p):
     # left: Uber — scale without criterion
     ocean_box(s, lx, top, lw, 4.10)
     icon(s, "scale", lx + 0.22, top + 0.14, 0.46, "mid")
-    text_box(s, x=lx + 0.82, y=top + 0.18, w=lw - 1.04, h=0.36,
+    text_box(s, x=lx + 0.82, y=top + 0.18, w=lw - 1.70, h=0.36,
              text="Uber, 2026 [1]", size=13, bold=True, color=MID)
-    text_box(s, x=lx + 0.24, y=top + 0.62, w=lw - 0.48, h=0.92,
-             text="Внедрение агентных практик 32% → 84% за месяц (2,6×); 95% "
-                  "инженеров ежемесячно; 70% закоммиченного кода — от AI; "
-                  "$500–2000/инженер/мес.",
+    add_image(s, ASSETS / "logos" / "uber-logo.png", lx + lw - 0.86,
+              top + 0.10, 0.60, 0.60)
+    text_box(s, x=lx + lw - 1.00, y=top + 0.72, w=0.90, h=0.18,
+             text="Uber · Wikimedia", size=6.5, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER)
+    text_box(s, x=lx + 0.24, y=top + 0.62, w=lw - 1.20, h=0.30,
+             text="Внедрение агентных практик 32% → 84% за месяц (2,6×);",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 0.94, w=lw - 0.48, h=0.60,
+             text="95% инженеров ежемесячно; 70% закоммиченного кода — от "
+                  "AI; $500–2000/инженер/мес.",
              size=10.5, color=DEEP, line_spacing=1.16)
     filled_rect(s, lx + 0.24, top + 1.58, lw - 0.48, 1.10, TEAL_TINT,
                 stroke=TEAL, stroke_pt=1.2, radius=True, radius_adj=0.06)
@@ -601,9 +618,14 @@ def s37b(p):
     # right: same product, two registers
     ocean_box(s, rx, top, rw, 4.10, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
     icon(s, "split", rx + 0.22, top + 0.14, 0.46, "teal")
-    text_box(s, x=rx + 0.82, y=top + 0.18, w=rw - 1.04, h=0.36,
-             text="AWS Kiro — тот же продукт, два регистра [2]", size=12,
-             bold=True, color=TEAL, line_spacing=1.0)
+    text_box(s, x=rx + 0.82, y=top + 0.18, w=rw - 2.35, h=0.60,
+             text="AWS Kiro — тот же продукт, два регистра [2]", size=11.5,
+             bold=True, color=TEAL, line_spacing=1.05)
+    add_image(s, ASSETS / "logos" / "aws-logo.png", rx + rw - 1.10,
+              top + 0.14, 0.68, 0.41)
+    text_box(s, x=rx + rw - 1.20, y=top + 0.58, w=0.88, h=0.18,
+             text="AWS · Wikimedia", size=6.5, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER)
     text_box(s, x=rx + 0.24, y=top + 0.66, w=rw - 0.48, h=0.30,
              text="Успех:", size=11.5, bold=True, color=MID)
     text_box(s, x=rx + 0.24, y=top + 0.98, w=rw - 0.48, h=0.78,

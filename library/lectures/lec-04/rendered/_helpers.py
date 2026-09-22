@@ -43,6 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]      # library/lectures/lec-04
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts"
+WEB = ASSETS / "web"          # Round-5: meme composites (imgflip templates + RU captions)
 SLIDES_DIR = ROOT / "slides"
 FONT_HEAD = "DejaVu Sans"
 FONT_BODY = "DejaVu Sans"

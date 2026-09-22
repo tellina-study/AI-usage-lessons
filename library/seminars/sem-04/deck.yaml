@@ -1,20 +1,43 @@
+# Семинар 4 — финальная сборка v4, раскол на два семинара (REWORK-REQUIREMENTS-v4.md R4-0/R4-1/R4-3).
+# Раздел 0 (открытие, s01-s07) + Раздел 1 (файл инструкций, 3 кейса, s08-s26) собраны из
+# rework/section-0-otkrytie.md + rework/section-1-fayl-instrukciy.md.
+# Раздел 2 (память, 3 кейса, s27-s50) собран из rework/section-2-pamyat.md + part2 + part3.
+# Раздел 3 (закрытие, s51-s53) собран из rework/section-3-zakrytie.md.
+# Слайды старых ступеней 3-7 (хук/скилл/MCP/субагент/процесс, старые s25-s72) перенесены в
+# library/seminars/sem-05/slides/ — сырьё для отдельного производственного цикла Семинара 5,
+# без доработки в этом раунде (REWORK-REQUIREMENTS-v4.md R4-3).
+#
+# review-раунд (2026-09-22): четырёхсторонний ревью (methodology-critic APPROVE-WITH-POLISH,
+# presentation-critic APPROVE-WITH-POLISH, student-simulator, reader-simulator APPROVE-CLEAN)
+# дал 5 независимых P1-находок — по правилу проекта REVISE-раунд перед показом. Применены
+# Fix 1-7: (1) кейс 2.1 получил отдельные слайды проблема+исследование (было склеено с
+# вопросом, единственный кейс без исследования между проблемой и вопросом); (2) термин
+# "presence paradox" определён на s11 (использовался на s19/s25/s29 без определения);
+# (3) s53 (было s49) визуально переработан — больше не дублирует таблицу s51 (было s47);
+# (4) кейсы 2.2/2.3 получили собственные divider-слайды (s37, s44), как у остальных 4 кейсов;
+# (5) исправлены три overclaim (s52 "семь позиций" → "пять слотов", s01 "окончательно — в
+# конце занятия" → смягчено, формула "просьбы/законы" в кейсе 1.2 сделана безусловной);
+# (6) закрыты TODO learning_outcomes/failure_share; (7) companion-документы (handout/rubric/
+# plan/facilitator-guide) помечены как устаревшие (v3, требуют отдельной пересборки под v4).
+# Слайдов было 49, стало 53 (+2 Fix 1, +2 Fix 4). Детали — rework/*.md §Fix N +
+# rendered/iteration-log.md.
 deck:
   seminar_number: 4
   title: "Семинар 4 — Сборка кодинг-агента: лестница роста конфигурации"
   audience: "студенты 3 курса, направление 09.03.01 — практикующие инженеры, все пользуются ИИ-ассистентами в работе"
-  duration_min: 90
+  duration_min: 75  # material 73.0 (пересчитано после review-раунда Fix 1/Fix 4, было 71.0) + ~2 мин резерва (было 4 — сокращён, чтобы вместить рост; резерв не аллоцирован по конкретному слайду/разделу)
   format: "слайды фасилитатора + открытые вопросы с карточками-вариантами (вопрос и разбор — раздельные слайды, R3-4) + совместное формирование конфигурации с залом (без живого терминала)"
   central_question: "У вас репозиторий и агент, который в нём работает — какой блок конфигурации добавить первым, и как понять, что следующий добавлять ещё рано?"
-  learning_outcomes: [LO7, LO6, LO3]
-  case: "signup-landing — лендинг с формой заявки на демо-урок: сборка, тест формы, деплой, задачи в трекере; один разработчик с агентом, фиксированная дата показа заказчику"
+  learning_outcomes: [LO7, LO6, LO3]  # TODO: подтвердить у оркестратора после показа — LO7 (архитектурный выбор инструментов) точно остаётся; LO6 (критическое отношение к утверждениям об ИИ / честная сила доказательства) уместен — центральная тема всех 6 кейсов; LO3 менее очевиден для памяти/файла инструкций конкретно, финальное решение — отдельный шаг оркестратора после показа владельцу
+  case: "signup-landing — лендинг с формой заявки на демо-урок: сборка, тест формы, деплой, задачи в трекере; один разработчик с агентом, фиксированная дата показа заказчику. Занятие подробно разбирает 2 из 5 слотов харнесса (файл инструкций, память), по 3 кейса на каждый; остальные 3 слота + 2 практических слоя (хук, процесс) — Семинар 5."
   language: ru
-  slide_count: 72
-  timing_budget: "84 мин материала + 6 мин резерва = 90; резерв распределён по слайдам (разделители ступеней 7×0,5 + слайды с живым обсуждением), отдельным слайдом не является"
-  failure_share: "38 мин из 84 = 45% строго внутри бюджета провалов, ограничений и критериев «ещё рано» (при консервативном счёте без разборов ответов зала — 26 из 84 = 31%)"
-  source: "library/seminars/sem-04/rework/section-0-otkrytie.md … section-7-protsess.md (v3, раунд 3 — REWORK-REQUIREMENTS-v3.md: R3-1 сжатие раздела 0, R3-2 строка-мостик на слайде требований, R3-3 вопросы-рамки явного выбора, R3-4 разделение всех 8 вопросных слайдов на вопрос+разбор); supersedes v2 deck.yaml + slides/s01–s65 (65 слайдов, коммит be6f001)"
+  slide_count: 53
+  timing_budget: "73,0 мин материала (10 раздел 0 + 28 раздел 1 + 30,5 раздел 2 + 4,5 раздел 3 закрытие) + ~2 мин резерва = 75; резерв сокращён с 4 до ~2 мин после review-раунда, чтобы вместить рост раздела 2 (+2,0 мин: Fix 1 добавил проблема+исследование кейса 2.1 отдельными слайдами +1,0, Fix 4 добавил 2 divider'а кейсов 2.2/2.3 +1,0), без урезания провалов/критериев по содержанию — см. rework/section-2-pamyat-part3.md §D.2"
+  failure_share: "посчитано по каждому кейсу отдельно (доля research+answer_breakdown+failure_vignette+criteria_boundary слайдов от длительности кейса), не только в среднем: 1.1=59%, 1.2=65%, 1.3=61%, 2.1=54% (было 50% до Fix 1 — выросло, т.к. добавленный research-слайд s29 тоже входит в failure/evidence-бюджет), 2.2=61%, 2.3=62%. Все 6 кейсов индивидуально ≥30% с большим запасом (AI-Failure & Judgment Content Rule, strict-in). Агрегированная доля по всему занятию (сумма failure/evidence-минут всех 6 кейсов / 73,0 мин общего материала) ≈ 48% — заметно выше порога 30% и распределена холистически по всем 6 кейсам, не сконцентрирована в одном."
+  source: "library/seminars/sem-04/rework/section-0-otkrytie.md + section-1-fayl-instrukciy.md + section-2-pamyat.md + section-2-pamyat-part2.md + section-2-pamyat-part3.md + section-3-zakrytie.md (v4, review-раунд 2026-09-22 — Fix 1-7 после четырёхстороннего ревью). Supersedes v4 раунд 4 deck.yaml (49 слайдов, до review-раунда) и v3 deck.yaml (72 слайда, 90 мин, 7 ступеней)."
 
 slides:
-  # --- Раздел 0. Открытие: требования, кейс, карта экипировки (9.5 мин) ---
+  # --- Раздел 0. Открытие: требования, кейс, карта экипировки (10 мин) ---
   - id: s01
     file: slides/s01-oblozhka-centralnyy-vopros.md
     type: hero_cover
@@ -58,552 +81,387 @@ slides:
   - id: s06
     file: slides/s06-razbor-tonkiy-agent.md
     type: answer_breakdown
-    duration_min: 1.5
+    duration_min: 1
     assertion: "Бремя доказательства лежит на том, кто усложняет, а не на том, кто остаётся внизу"
     learning_goal: "Разбор четырёх типовых позиций первого вопроса как четыре явных критерия «здесь ещё рано» (R3-4, новый слайд) + целевой ответ «ничего» и определение тонкого агента из Лекции 3"
     visual:
       pattern: answer_breakdown_table
   - id: s07
-    file: slides/s07-karta-ekipirovki-pustaya.md
+    file: slides/s07-karta-ekipirovki-sokraschennaya.md
     type: keystone_axis
-    duration_min: 1
-    assertion: "Экипировка агента — это пять слотов поверх базового цикла «планируй → действуй → проверяй → повторяй»"
-    learning_goal: "Открытие совместного формирования №2 — карта слотов предъявляется ПУСТОЙ, зал восстанавливает названия по памяти с Лекции 3, а не читает с экрана"
+    duration_min: 3.5
+    assertion: "Из пяти слотов экипировки агента сегодня подробно разбираются два — инструкции-правила и память; остальные три и оба практических слоя — дальше, Семинаром 5"
+    learning_goal: "Единый слайд карты экипировки (R4-0, слиты бывшие два слайда v3 «пустая/заполненная») — co-building пяти слотов по памяти с Лекции 3, два акцентных в фокусе, честный scope-statement «сегодня два, дальше — Семинар 5», правило лестницы"
     visual:
-      pattern: cobuilding_empty_map
+      pattern: keystone_scope_map
+  # --- Раздел 1. Файл инструкций: 3 кейса — роль/репозиторий, базовые процессы, вложенные файлы (28 мин) ---
   - id: s08
-    file: slides/s08-karta-ekipirovki-zapolnennaya.md
-    type: keystone_axis
-    duration_min: 1.5
-    assertion: "Оставайтесь на самой нижней ступени, которая закрывает требование задачи"
-    learning_goal: "Закрытие совместного формирования №2 — заполненная карта пяти слотов плюс два практических слоя, правило лестницы дословно; объяснение «порядок семинара ≠ порядок лекции» вынесено в заметку фасилитатора, не обязательный текст (R3-1c)"
-    visual:
-      pattern: cobuilding_filled_map
-
-  # --- Ступень 1. Файл инструкций (11.5 мин) ---
-  - id: s09
-    file: slides/s09-divider-fayl-instrukciy.md
+    file: slides/s08-divider-fayl-instrukciy.md
     type: section_divider
     duration_min: 0.5
-    assertion: "Ступень 1 — файл инструкций: записываем только то, чего агент не выведет из кода"
-    learning_goal: "Разделитель ступени 1, одна строка смысла и метка состава раздела"
+    assertion: "Раздел 1 — файл инструкций: три отдельные развилки про один и тот же файл, в порядке, в котором реально растёт репозиторий"
+    learning_goal: "Разделитель раздела 1, обзор трёх кейсов без деталей — ориентирует зал на структуру раздела до первого кейса"
+    visual:
+      pattern: section_divider
+  - id: s09
+    file: slides/s09-divider-keys-1-1-rol-i-repozitoriy.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Кейс 1.1 — роль агента и общее описание репозитория: что писать в пустой файл, пока не случилось ни одной реальной сессии"
+    learning_goal: "Разделитель кейса 1.1, одна строка смысла — ориентирует зал на конкретную развилку до сценария"
     visual:
       pattern: section_divider
   - id: s10
-    file: slides/s10-scenariy-gotovo-raskhodyatsya.md
-    type: scenario_question
-    duration_min: 1.5
-    assertion: "«Готово» для агента — это «собралось и тест зелёный»; «готово» для вас — это «заявка доставлена на проде», и эти два определения разошлись молча"
-    learning_goal: "Сценарий-боль ступени 1 на материале signup-landing + открытый вопрос, переформулированный в рамку прямого выбора реализации (R3-3), с пятью карточками-вариантами. БЕЗ таблицы разбора (R3-4) — разбор на следующем слайде"
+    file: slides/s10-keys-1-1-problema-overview.md
+    type: problem_scenario
+    duration_min: 1.0
+    assertion: "Первый инстинкт — открыть пустой файл и начать с описания структуры репозитория; привычка сильная, но это ровно та фраза «так делают в хороших проектах», которую занятие проверяет впервые"
+    learning_goal: "Проблема кейса 1.1 — сценарий-развилка на входе в пустой CLAUDE.md плюс анекдот коллеги про устаревший overview, сжато под сокращённый бюджет кейса"
     visual:
-      pattern: scenario_question_cards
+      pattern: problem_scenario
   - id: s11
-    file: slides/s11-razbor-gotovo-raskhoditsya.md
+    file: slides/s11-keys-1-1-issledovanie.md
+    type: research_evidence
+    duration_min: 2.5
+    assertion: "Repository overview измеримо не помогает и стоит контекста — кроме единственного подтверждённого исключения: репозитория без другой документации вообще"
+    learning_goal: "Исследование кейса 1.1 — четыре источника разной силы доказательства плюс честная пометка пробела (AI-Failure & Judgment Content Rule)"
+    visual:
+      pattern: research_evidence
+  - id: s12
+    file: slides/s12-keys-1-1-vopros.md
+    type: reflection_question
+    duration_min: 1.0
+    assertion: "Перед пустым CLAUDE.md выбор из пяти вариантов — и «пока ничего» среди них не менее весомый вариант, чем остальные четыре"
+    learning_goal: "Открытый вопрос кейса 1.1 — слайд-вопрос с готовым набором вариантов, БЕЗ таблицы разбора и подсветки ответа (R3-4) — разбор на следующем слайде"
+    visual:
+      pattern: question_with_option_cards
+  - id: s13
+    file: slides/s13-keys-1-1-razbor.md
     type: answer_breakdown
-    duration_min: 1.5
-    assertion: "В файл инструкций идёт только невыводимое: критерий «готово», граница действий и способ проверки — и ничего, что агент допишет сам"
-    learning_goal: "Разбор шести позиций ответа зала, каждая с границей применимости (R3-4, новый слайд) — от «ответить в чате» до целевого «файл инструкций, но только с тем, чего агент не выведет из кода»"
+    duration_min: 2.5
+    assertion: "Правильный ответ на этом шаге — не какой текст написать, а пока никакой: файл остаётся пустым, потому что триггер ещё не сработал"
+    learning_goal: "Разбор кейса 1.1 — таблица пяти позиций + целевой ответ + критерий «здесь ещё рано», полностью без сокращений"
     visual:
       pattern: answer_breakdown_table
-  - id: s12
-    file: slides/s12-cobuilding-khod1-stroka.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Первая строка, которую зал хочет записать в файл инструкций, — это команды сборки и теста"
-    learning_goal: "Совместное формирование ступени 1, ход 1 — зал называет первую строку, фасилитатор записывает её дословно и без комментария"
-    visual:
-      pattern: cobuilding_step
-  - id: s13
-    file: slides/s13-cobuilding-khod2-vycherkivanie.md
-    type: assertion_visual
-    duration_min: 1.5
-    assertion: "Имена скриптов придумал сам агент и сам записал их в package.json — строка про команды в файле инструкций почти ничего не добавляет, но платит контекстом в каждом запросе"
-    learning_goal: "Совместное формирование ступени 1, ход 2 — вычёркивание: зал своими руками убирает строку, дублирующую стандартное всегда читаемое место"
-    visual:
-      pattern: cobuilding_strikethrough
   - id: s14
-    file: slides/s14-cobuilding-khod3-tri-stroki.md
+    file: slides/s14-keys-1-1-reshenie-pustoy-fayl.md
     type: assertion_visual
-    duration_min: 1.5
-    assertion: "В файл идут ровно те три требования, которые зал сам отложил в группу «нигде не будет видно»"
-    learning_goal: "Совместное формирование ступени 1, ход 3 — возврат к шести требованиям раздела 0 и явное смыкание арифметики 6 → 3 + 3"
+    duration_min: 1.0
+    assertion: "CLAUDE.md остаётся пустым — не из лени, а потому что нет сигнала; первый настоящий сигнал придёт через неделю"
+    learning_goal: "Решение кейса 1.1 — пустой файл как содержательный итог, мостик к кейсу 1.2, сжато под сокращённый бюджет"
     visual:
-      pattern: cobuilding_step
+      pattern: assertion_visual
   - id: s15
-    file: slides/s15-itogovyy-claude-md.md
-    type: code_artifact
-    duration_min: 1.5
-    assertion: "Итоговый файл инструкций — восемнадцать строк и ровно три содержательных пункта, ни одного выводимого из кода"
-    learning_goal: "Решение ступени 1: реальный CLAUDE.md демо-репозитория, симлинк AGENTS.md, дерево ступени 1 и механика загрузки файла"
-    visual:
-      pattern: code_and_tree
-  - id: s16
-    file: slides/s16-proval-presence-paradox.md
-    type: failure_vignette
-    duration_min: 2.5
-    assertion: "Сам факт наличия файла инструкций не покупает успех, но покупается контекстом всегда"
-    learning_goal: "Провал/ограничение ступени 1 — контролируемый эксперимент presence paradox с явной базой сравнения и эффект раздутия файла; критерий «ещё рано» нижней плашкой"
-    visual:
-      pattern: failure_vignette
-
-  # --- Ступень 2. Память (10.5 мин) ---
-  - id: s17
-    file: slides/s17-divider-pamyat.md
+    file: slides/s15-divider-keys-1-2-processy.md
     type: section_divider
     duration_min: 0.5
-    assertion: "Ступень 2 — память: знание, которое появляется по ходу работы и исчезает вместе с сессией"
-    learning_goal: "Разделитель ступени 2, одна строка смысла и метка состава раздела"
+    assertion: "Кейс 1.2 — базовые процессы: гейт-фраза и цикл «план → код → улучшение» на первой реальной боли проекта"
+    learning_goal: "Разделитель кейса 1.2, одна строка смысла — ориентирует зал на конкретную развилку до сценария"
     visual:
       pattern: section_divider
-  - id: s18
-    file: slides/s18-scenariy-otklonennoe-reshenie.md
-    type: scenario_question
-    duration_min: 1.5
-    assertion: "Уже отклонённое решение всплывает снова, потому что разговор, в котором его приняли, закончился — а его содержимое нигде не осталось"
-    learning_goal: "Сценарий-боль ступени 2 + открытый вопрос, переформулированный в рамку прямого выбора реализации (R3-3), с пятью карточками-вариантами. БЕЗ таблицы разбора (R3-4)"
+  - id: s16
+    file: slides/s16-keys-1-2-problema-gotovo-raskhoditsya.md
+    type: problem_scenario
+    duration_min: 1.0
+    assertion: "Заказчик пишет: заявка не пришла — тест зелёный, «готово» сказано, а тест проверяет только пустые поля; записанный текстовый гейт не изменил поведение при повторе"
+    learning_goal: "Проблема кейса 1.2 — «готово» расходится с реальностью, гейт записан и нарушен повторно, сжато под сокращённый бюджет"
     visual:
-      pattern: scenario_question_cards
+      pattern: problem_scenario
+  - id: s17
+    file: slides/s17-keys-1-2-issledovanie.md
+    type: research_evidence
+    duration_min: 3.5
+    assertion: "Текстовый гейт без тулинга не просто бесполезен, а вреден — регрессии выросли почти до 10%; self-repair с реальной проверкой работает, голая самокритика систематически вредит"
+    learning_goal: "Исследование кейса 1.2 — две мини-таблицы (гейты + цикл улучшения) плюс честная пометка пробела, полностью без сокращений"
+    visual:
+      pattern: research_evidence
+  - id: s18
+    file: slides/s18-keys-1-2-vopros.md
+    type: reflection_question
+    duration_min: 1.0
+    assertion: "Гейт-фраза уже есть и не сработала — выбор из пяти вариантов, что делать дальше, чтобы реально сработало в следующей сессии"
+    learning_goal: "Открытый вопрос кейса 1.2 — слайд-вопрос с готовым набором вариантов, БЕЗ таблицы разбора и подсветки ответа (R3-4) — разбор на следующем слайде"
+    visual:
+      pattern: question_with_option_cards
   - id: s19
-    file: slides/s19-razbor-oba-mekhanizma.md
+    file: slides/s19-keys-1-2-razbor.md
     type: answer_breakdown
-    duration_min: 1.5
-    assertion: "Командное решение с обоснованием идёт в DECISIONS.md, личное предпочтение — в авто-память, выводимое из кода — никуда"
-    learning_goal: "Разбор пяти позиций ответа зала (R3-4, новый слайд) + механизм «модель не имеет состояния между вызовами» + целевой ответ «оба механизма разом, с разделением ролей»"
+    duration_min: 3.0
+    assertion: "Честный ответ сегодня: мы всё равно запишем гейт текстом, потому что это лучше, чем ничего, но прямо скажем себе, что он ненадёжен"
+    learning_goal: "Разбор кейса 1.2 — таблица пяти позиций + двухчастный критерий «здесь ещё рано» (гейт и цикл улучшения), полностью без сокращений"
     visual:
       pattern: answer_breakdown_table
   - id: s20
-    file: slides/s20-cobuilding-tri-korziny.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Не всё, что узнал агент, вообще стоит записывать — третья корзина такая же законная, как первые две"
-    learning_goal: "Совместное формирование ступени 2, ход 1 — три пустые корзины и пять карточек-фактов, сортировка вживую"
+    file: slides/s20-keys-1-2-reshenie-itogovyy-claude-md.md
+    type: code_artifact
+    duration_min: 1.0
+    assertion: "Итоговый файл — тринадцать строк: критерий готово, гейт-предупреждение, честная оговорка предела; AGENTS.md — симлинк на тот же файл"
+    learning_goal: "Решение кейса 1.2 — реальный итоговый CLAUDE.md (пересъёмка без трёх лишних строк дублирования package.json), механика загрузки, симлинк AGENTS.md и острый край cp -R, сжато под сокращённый бюджет"
     visual:
-      pattern: cobuilding_empty_frame
+      pattern: code_artifact
   - id: s21
-    file: slides/s21-korziny-zapolnennye.md
-    type: assertion_visual
-    duration_min: 1.5
-    assertion: "Командное решение с обоснованием идёт в репозиторий, личное предпочтение — в авто-память, выводимое из кода — никуда"
-    learning_goal: "Совместное формирование ступени 2, ход 1 завершён — разбор корзины «никуда» как самого ценного момента шага; затем ход 2, сборка записи по частям"
+    file: slides/s21-divider-keys-1-3-vlozhennye-fayly.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Кейс 1.3 — вложенные AGENTS.md/CLAUDE.md по подпапкам: стоит ли дробить файл, когда репозиторий подрастёт"
+    learning_goal: "Разделитель кейса 1.3, одна строка смысла — ориентирует зал на конкретную развилку до сценария"
     visual:
-      pattern: cobuilding_filled_frame
+      pattern: section_divider
   - id: s22
-    file: slides/s22-zapis-decisions-md.md
-    type: code_artifact
-    duration_min: 0.5
-    assertion: "Журнал решений — append-only лог «почему», а не второй файл инструкций"
-    learning_goal: "Решение ступени 2: реальный DECISIONS.md из демо-репозитория, diff его создания и дерево ступени 2"
+    file: slides/s22-keys-1-3-problema-tests-claude-md.md
+    type: problem_scenario
+    duration_min: 1.0
+    assertion: "Разработчик выносит правила тестов в tests/CLAUDE.md и ждёт, что агент подхватит его сам, когда работает именно в этой папке — логично звучит, но стоит проверить, что там реально происходит с загрузкой"
+    learning_goal: "Проблема кейса 1.3 — сценарий выноса правил в подпапку, сжато под сокращённый бюджет"
     visual:
-      pattern: code_and_tree
+      pattern: problem_scenario
   - id: s23
-    file: slides/s23-tablica-treh-sloev.md
-    type: assertion_visual
-    duration_min: 0.5
-    assertion: "Разница между слоями не в формате — оба markdown, — а в том, кто инициирует запись и кто её потом увидит"
-    learning_goal: "Разграничение трёх слоёв записи: файл инструкций, авто-память, журнал решений — по авторству, месту жизни, механизму загрузки и прохождению ревью"
+    file: slides/s23-keys-1-3-issledovanie.md
+    type: research_evidence
+    duration_min: 3.0
+    assertion: "Вложенный файл грузится on-demand, только по факту чтения — не по факту нахождения в папке; контролируемое исследование не нашло пользы от разбиения, а практика показывает регулярные отказы вплоть до архитектурного предела"
+    learning_goal: "Исследование кейса 1.3 — механизм загрузки + эмпирическая таблица (контролируемое исследование + реальные issue), полностью без сокращений"
     visual:
-      pattern: comparison_table
+      pattern: research_evidence
   - id: s24
-    file: slides/s24-proval-otravlenie-pamyati.md
-    type: failure_vignette
-    duration_min: 3.5
-    assertion: "Память по умолчанию читается как доверенный контекст, а не как данные — и включение памяти не обязательно улучшает результат"
-    learning_goal: "Провал/ограничение ступени 2, два слоя разной природы: отравление памяти как класс атаки и измеренное «память есть ≠ память помогает»; критерий «ещё рано» нижней плашкой"
+    file: slides/s24-keys-1-3-vopros.md
+    type: reflection_question
+    duration_min: 1.0
+    assertion: "Как гарантировать, что агент реально прочитает конвенции из tests/CLAUDE.md — выбор из пяти вариантов"
+    learning_goal: "Открытый вопрос кейса 1.3 — слайд-вопрос с готовым набором вариантов, БЕЗ таблицы разбора и подсветки ответа (R3-4) — разбор на следующем слайде"
     visual:
-      pattern: failure_vignette
-
-  # --- Ступень 3. Хук (14 мин) ---
+      pattern: question_with_option_cards
   - id: s25
-    file: slides/s25-divider-khuk.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Ступень 3 — хук: правило, которое исполняет среда, а не согласие модели"
-    learning_goal: "Разделитель ступени 3, одна строка смысла и метка состава раздела"
+    file: slides/s25-keys-1-3-razbor.md
+    type: answer_breakdown
+    duration_min: 2.5
+    assertion: "Редкое сочетание: контролируемое исследование не нашло пользы даже там, где здравый смысл её обещал, а практика показывает регулярные отказы вплоть до архитектурного предела"
+    learning_goal: "Разбор кейса 1.3 — таблица пяти позиций + целевой ответ + критерий «здесь ещё рано», полностью без сокращений"
     visual:
-      pattern: section_divider
+      pattern: answer_breakdown_table
   - id: s26
-    file: slides/s26-scenariy-kommit-v-main.md
-    type: scenario_question
-    duration_min: 1.5
-    assertion: "Правило было записано и загружено — и всё равно нарушено, потому что файл инструкций по устройству является контекстом, а не принудительной конфигурацией"
-    learning_goal: "Сценарий-боль ступени 3 + открытый вопрос «невозможно, а не маловероятно», переформулированный в рамку прямого выбора реализации (R3-3), с пятью карточками. БЕЗ таблицы разбора, БЕЗ доказательства против «капсом», БЕЗ формулы (R3-4)"
+    file: slides/s26-keys-1-3-reshenie-most-k-pamyati.md
+    type: assertion_visual
+    duration_min: 1.0
+    assertion: "Репозиторий остаётся с одним корневым файлом; три кейса — три решения знания, известного заранее, но есть знание другого рода, которое появляется по ходу работы — это раздел второй, память"
+    learning_goal: "Решение кейса 1.3 + финальный мостик раздела 1 к разделу 2 (память) — итог трёх кейсов, сжато под сокращённый бюджет, мостик сохранён близко к дословному"
     visual:
-      pattern: scenario_question_cards
+      pattern: assertion_visual
+  # --- Раздел 2. Память: 3 кейса — плоский файл, вики-память, задачная память (30.5 мин) ---
   - id: s27
-    file: slides/s27-razbor-pravila-zakony.md
-    type: answer_breakdown
-    duration_min: 2.5
-    assertion: "Правила в промпте — это просьбы, правила в коде — это законы: хук делает нарушение невозможным, а не просто маловероятным"
-    learning_goal: "Разбор пяти позиций ответа зала (R3-4, новый слайд) + публичный случай anthropics/claude-code#42863 против ответа «перепишу капсом» + формула «правила в промпте — просьбы, правила в коде — законы» (перенесена из v1-раздела 1 как прямой ответ на прозвучавший вариант)"
-    visual:
-      pattern: answer_breakdown_table
-  - id: s28
-    file: slides/s28-cobuilding-pretooluse-bash.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Проверять надо до вызова и только на одном инструменте — чем шире условие срабатывания, тем дороже ошибка в самой логике хука"
-    learning_goal: "Совместное формирование ступени 3, вопросы 1–2 — событие PreToolUse и условие срабатывания на выполнение команд оболочки"
-    visual:
-      pattern: cobuilding_step
-  - id: s29
-    file: slides/s29-cobuilding-json-symbolic-ref.md
-    type: assertion_visual
-    duration_min: 1.5
-    assertion: "Привычная команда получения текущей ветки падает в свежем репозитории — а падающая проверка не блокирует, она просто не срабатывает"
-    learning_goal: "Совместное формирование ступени 3, вопросы 3–4 — разбор описания вызова со стандартного ввода и реальный контрпример symbolic-ref против rev-parse"
-    visual:
-      pattern: cobuilding_with_evidence
-  - id: s30
-    file: slides/s30-cobuilding-ne-repozitoriy.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Гейт, чей отказ молчалив, не считается установленным, пока его не заставили отказать громко"
-    learning_goal: "Совместное формирование ступени 3, вопрос 5 — главный: что хук возвращает, когда проверять нечего; три варианта, спор зала, целевой ответ «спросить» с реальным выводом"
-    visual:
-      pattern: cobuilding_vote
-  - id: s31
-    file: slides/s31-sobrannyy-khuk.md
-    type: code_artifact
-    duration_min: 0.5
-    assertion: "Собранный хук — обычный файл проекта, который коммитится и работает в любом свежем клоне без шага установки"
-    learning_goal: "Решение ступени 3: реальный .claude/settings.json демо-репозитория, дерево ступени 3 и четыре факта механики"
-    visual:
-      pattern: code_and_tree
-  - id: s32
-    file: slides/s32-tri-srabatyvaniya.md
-    type: artifact_pair
-    duration_min: 1
-    assertion: "Полная проверка барьера — он запрещает то, что должно, и пропускает то, что должно; иначе вы поставили не барьер, а стену"
-    learning_goal: "Три реальных срабатывания хука подряд: отказ на main, пропуск на ветке, реально легший коммит — единственный способ показать, что барьер узкий"
-    visual:
-      pattern: three_frames_row
-  - id: s33
-    file: slides/s33-proval-konfiguraciya-kak-kod.md
-    type: failure_vignette
-    duration_min: 2
-    assertion: "Конфигурация агента — это исполняемый код, приезжающий вместе с чужим репозиторием и срабатывающий до подтверждения доверия к папке"
-    learning_goal: "Провал ступени 3, слой 1 — две CVE с хронологией и, главное, то, что осталось после патчей: задокументированный компромисс, а не недоработка"
-    visual:
-      pattern: failure_vignette
-  - id: s34
-    file: slides/s34-proval-tikhiy-otkaz.md
-    type: failure_vignette
-    duration_min: 2.5
-    assertion: "Когда гейт не срабатывает, не происходит ничего — а именно так выглядит и успешно пройденный гейт"
-    learning_goal: "Провал ступени 3, слои 2–3 — пять причин молчаливого отказа и обход хука намерением плана; критерий «ещё рано» и место хука в карте нижней плашкой"
-    visual:
-      pattern: failure_vignette
-
-  # --- Ступень 4. Скилл (10 мин) ---
-  - id: s35
-    file: slides/s35-divider-skill.md
+    file: slides/s27-divider-pamyat-keys-2-1.md
     type: section_divider
     duration_min: 0.5
-    assertion: "Ступень 4 — скилл: процедура, которая грузится только тогда, когда нужна"
-    learning_goal: "Разделитель ступени 4, одна строка смысла и метка состава раздела"
+    assertion: "Раздел 2 — память: то, что агент помнит между сессиями, а не то, что вы написали ему заранее"
+    learning_goal: "Разделитель раздела 2 + тег кейса 2.1, одна строка смысла — переход от раздела 1 без пересказа всего обзора"
     visual:
       pattern: section_divider
-  - id: s36
-    file: slides/s36-scenariy-sorok-strok.md
-    type: scenario_question
-    duration_min: 1.5
-    assertion: "Файл инструкций облагает налогом каждый запрос процедурой, которая нужна примерно в одной сессии из десяти"
-    learning_goal: "Сценарий-боль ступени 4 + открытый вопрос, переформулированный в рамку прямого выбора реализации (R3-3), с пятью карточками. БЕЗ таблицы разбора (R3-4)"
+  - id: s28
+    file: slides/s28-keys-2-1-problema.md
+    type: problem_scenario
+    duration_min: 0.5
+    assertion: "Уже отклонённое решение всплывает снова, потому что разговор, в котором его приняли, закончился — а его содержимое нигде не осталось"
+    learning_goal: "Проблема кейса 2.1 — сценарий-боль (отклонённое решение всплывает снова) + точная диагностика (файл инструкций тут ни при чём, дело в устройстве модели), отдельным слайдом перед исследованием (структурный фикс R4-2: проблема → исследование → вопрос)"
     visual:
-      pattern: scenario_question_cards
-  - id: s37
-    file: slides/s37-razbor-skill-opisanie-trigger.md
+      pattern: problem_scenario
+  - id: s29
+    file: slides/s29-keys-2-1-issledovanie.md
+    type: research_evidence
+    duration_min: 1.0
+    assertion: "Presence paradox из кейса 1.1 применяется и здесь: то, что лежит в DECISIONS.md, стоит контекста в каждой сессии независимо от того, нужна ли эта конкретная запись сегодня"
+    learning_goal: "Короткая грунтовка перед вопросом кейса 2.1 — не новое исследование, а перенос уже знакомого механизма (Gloaguen et al., presence paradox, определён на слайде исследования кейса 1.1) на новый объект: append-only лог решений. Явная связка «мы это уже видели» вместо повторного независимого измерения"
+    visual:
+      pattern: research_evidence
+  - id: s30
+    file: slides/s30-keys-2-1-vopros.md
+    type: reflection_question
+    duration_min: 1.0
+    assertion: "Выберите, куда записать отклонённое решение — из карточек ниже — так, чтобы не объяснять его в третий раз"
+    learning_goal: "Открытый вопрос кейса 2.1 дословно с пятью карточками-вариантами — без таблицы разбора, разбор на следующем слайде; сценарий и диагностика уже показаны на предыдущем слайде, здесь — только вопрос (структурный фикс R4-2)"
+    visual:
+      pattern: question_with_option_cards
+  - id: s31
+    file: slides/s31-keys-2-1-razbor.md
     type: answer_breakdown
-    duration_min: 1.5
-    assertion: "Скилл — знание, которое агент сам подгружает по описанию-триггеру, состоящему из трёх частей: что делает, когда использовать, когда не использовать"
-    learning_goal: "Разбор пяти позиций ответа зала (R3-4, новый слайд), включая продуктивную путаницу «сделаю это хуком»; целевой ответ — скилл с описанием-триггером"
+    duration_min: 1.25
+    assertion: "Командное решение с обоснованием идёт в DECISIONS.md, личное предпочтение — в авто-память, выводимое из кода — никуда"
+    learning_goal: "Разбор пяти позиций ответа зала кейса 2.1 + целевой ответ «оба механизма разом, с разделением ролей» без сокращений"
     visual:
       pattern: answer_breakdown_table
-  - id: s38
-    file: slides/s38-cobuilding-zadacha-na-ispravlenie.md
+  - id: s32
+    file: slides/s32-keys-2-1-cobuilding-korziny.md
     type: assertion_visual
-    duration_min: 1
-    assertion: "Описание — единственный канал, по которому модель выбирает нужный скилл среди потенциально сотни установленных"
-    learning_goal: "Совместное формирование ступени 4, ход 2 — задача студенту на исправление: скилл, у которого описание совпадает с собственным именем, плюс три официально запрещённые формулировки"
+    duration_min: 1.75
+    assertion: "Не всё, что узнал агент, вообще стоит записывать — третья корзина такая же законная, как первые две"
+    learning_goal: "Совместное формирование кейса 2.1: сортировка пяти карточек-фактов по трём корзинам плюс сборка итоговой записи — сохранены обе ключевые карточки (src/main.js и упавший тест)"
     visual:
-      pattern: cobuilding_fix_task
-  - id: s39
-    file: slides/s39-cobuilding-opisanie-iz-treh-chastey.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Описание — это поисковый запрос вашего будущего «я», забывшего детали через полгода"
-    learning_goal: "Совместное формирование ступени 4, ход 3 — описание собирается из трёх названных частей и совпадает с реальным описанием из демо-репозитория; ход 4 — тело из пяти шагов, четыре из которых зал уже называл"
-    visual:
-      pattern: cobuilding_step
-  - id: s40
-    file: slides/s40-itogovyy-skill-md.md
+      pattern: cobuilding_baskets_and_record
+  - id: s33
+    file: slides/s33-keys-2-1-reshenie-decisions-md.md
     type: code_artifact
-    duration_min: 0.5
-    assertion: "Процедура переезжает целиком: сорок строк вырезаются из файла инструкций в тот же момент, когда появляется скилл"
-    learning_goal: "Решение ступени 4: реальный SKILL.md из демо-репозитория, дерево ступени 4 и явное требование убрать процедуру из файла инструкций"
+    duration_min: 0.75
+    assertion: "Два параллельных механизма, не один: авто-память живёт вне репозитория, DECISIONS.md — git-трекнутый лог «почему» внутри него"
+    learning_goal: "Конкретное решение кейса 2.1: реальный DECISIONS.md, дерево репозитория и diff его создания — оба механизма кратко"
     visual:
       pattern: code_and_tree
-  - id: s41
-    file: slides/s41-posloynoe-raskrytie.md
-    type: assertion_visual
-    duration_min: 0.5
-    assertion: "Скилл проверяется в обе стороны: что срабатывает, когда надо, и что молчит, когда не надо"
-    learning_goal: "Механика послойного раскрытия с официальными цифрами + положительная и отрицательная проверки скилла, из которых вторую обычно пропускают"
+  - id: s34
+    file: slides/s34-keys-2-1-tablica-treh-sloev.md
+    type: comparison_table
+    duration_min: 0.75
+    assertion: "Разница между слоями не в формате — оба markdown, — а в том, кто инициирует запись и кто её потом увидит"
+    learning_goal: "Таблица трёх слоёв записи: файл инструкций / авто-память / DECISIONS.md — по авторству, месту жизни, загрузке, ревью"
     visual:
       pattern: comparison_table
+  - id: s35
+    file: slides/s35-keys-2-1-proval-otravlenie-i-effektivnost.md
+    type: failure_vignette
+    duration_min: 3.0
+    assertion: "Память по умолчанию читается как доверенный контекст, а не как данные — и включение памяти не обязательно улучшает результат"
+    learning_goal: "Провал/ограничение кейса 2.1, два слоя разной природы: отравление памяти (SpAIware) и измеренное «память есть ≠ память помогает» — без сокращений"
+    visual:
+      pattern: failure_vignette
+  - id: s36
+    file: slides/s36-keys-2-1-kriteriy-i-granica.md
+    type: criteria_boundary
+    duration_min: 1.0
+    assertion: "Плоского файла достаточно, пока история решений влезает в контекст целиком и связей между записями ещё нет"
+    learning_goal: "Критерий «здесь ещё рано» для плоского файла + явная граница, когда DECISIONS.md перестаёт справляться — переход к кейсу 2.2"
+    visual:
+      pattern: criteria_checklist_and_boundary
+  - id: s37
+    file: slides/s37-divider-keys-2-2-struktura-viki.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Кейс 2.2 — структурированная вики-память: тот же журнал решений, но разросшийся настолько, что плоский лог перестал быть удобным"
+    learning_goal: "Разделитель кейса 2.2, одна строка смысла — ориентирует зал на конкретную развилку до сценария (структурный фикс Fix 4: у 2.2 должен быть свой divider, как у 1.1/1.2/1.3/2.1)"
+    visual:
+      pattern: section_divider
+  - id: s38
+    file: slides/s38-keys-2-2-scenariy-razroshiysya-log.md
+    type: problem_scenario
+    duration_min: 1.5
+    assertion: "Файл технически на месте, но пользоваться им дольше, чем не пользоваться — линейный лог не хранит связей между записями"
+    learning_goal: "Сценарий-боль кейса 2.2: разросшийся DECISIONS.md, потерянная связь между записью №3 и отменяющей её записью №31"
+    visual:
+      pattern: scenario_pain
+  - id: s39
+    file: slides/s39-keys-2-2-vopros.md
+    type: reflection_question
+    duration_min: 1.25
+    assertion: "Тридцать восемь записей и потерянная связь между двумя из них — повод выбрать, как реорганизовать журнал решений, а не заводить его заново"
+    learning_goal: "Открытый вопрос кейса 2.2 дословно + пять карточек-вариантов — без таблицы разбора, разбор на следующем слайде"
+    visual:
+      pattern: question_with_option_cards
+  - id: s40
+    file: slides/s40-keys-2-2-razbor.md
+    type: answer_breakdown
+    duration_min: 1.5
+    assertion: "Разбить на тематические файлы со сквозными ссылками — целевой ответ, но не бесплатный: структура сама создаёт новую нагрузку"
+    learning_goal: "Разбор пяти позиций ответа зала кейса 2.2 без сокращений + целевой ответ с явным списком издержек"
+    visual:
+      pattern: answer_breakdown_table
+  - id: s41
+    file: slides/s41-keys-2-2-reshenie-struktura-viki.md
+    type: code_artifact
+    duration_min: 1.0
+    assertion: "Запись явно ссылается на связанную запись — то, чего в плоском append-only логе не было в принципе"
+    learning_goal: "Решение кейса 2.2: структура тематических файлов со сквозными ссылками — пример явно помечен как иллюстративный, не захваченный"
+    visual:
+      pattern: code_structure_illustrative
   - id: s42
-    file: slides/s42-proval-vred-ot-skilla.md
+    file: slides/s42-keys-2-2-proval-letta-i-izderzhki.md
     type: failure_vignette
     duration_min: 3.5
-    assertion: "Скиллы вредят не тогда, когда очевидно нерелевантны, а ровно тогда, когда кажутся релевантными"
-    learning_goal: "Провал/ограничение ступени 4, два слоя: измеренный вред от сработавшего скилла и скилл как исполняемый код из чужого источника; критерий «ещё рано» с анти-критерием про набор скиллов нижней плашкой"
+    assertion: "Структура — не гарантированный выигрыш и не бесплатный апгрейд: простое файловое хранилище обошло графовую систему памяти, а сама структура добавляет свою собственную нагрузку"
+    learning_goal: "Провал/ограничение кейса 2.2 без сокращений: Letta-контрпример, staleness/duplication/maintenance, честная оговорка про свежесть непроверенных источников"
     visual:
       pattern: failure_vignette
-
-  # --- Ступень 5. Доступ наружу (MCP) (11.5 мин) ---
   - id: s43
-    file: slides/s43-divider-dostup-naruzhu.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Ступень 5 — доступ наружу: первый блок, который смотрит за пределы репозитория"
-    learning_goal: "Разделитель ступени 5, одна строка смысла и метка состава раздела"
+    file: slides/s43-keys-2-2-kriteriy-i-most.md
+    type: criteria_boundary
+    duration_min: 0.75
+    assertion: "Единиц-десятков тематических файлов, которые правят один-два человека, достаточно — полноценная система памяти требует замеров на своём масштабе, не общего совета"
+    learning_goal: "Критерий «ещё рано» для структуры кейса 2.2 + мостик к кейсу 2.3 — смена оси с «навсегда» на «одна задача»"
     visual:
-      pattern: section_divider
+      pattern: criteria_checklist_and_boundary
   - id: s44
-    file: slides/s44-scenariy-issue-kopipast.md
-    type: scenario_question
-    duration_min: 1.5
-    assertion: "Каждая сессия начинается с копипаста issue в чат и заканчивается копипастом ответа обратно — несколько раз в неделю"
-    learning_goal: "Сценарий-боль ступени 5 + открытый вопрос «что вы проверите ДО», переформулированный в рамку прямого выбора (R3-3), с пятью карточками. БЕЗ таблицы разбора и БЕЗ последовательности проверок (R3-4)"
+    file: slides/s44-divider-keys-2-3-operativnaya-pamyat.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Кейс 2.3 — операционная память: не «что решено навсегда», а «что происходит прямо сейчас в одной задаче»"
+    learning_goal: "Разделитель кейса 2.3, одна строка смысла — ориентирует зал на смену оси (навсегда → одна задача) до сценария (структурный фикс Fix 4: у 2.3 должен быть свой divider, как у 1.1/1.2/1.3/2.1/2.2)"
     visual:
-      pattern: scenario_question_cards
+      pattern: section_divider
   - id: s45
-    file: slides/s45-razbor-poryadok-proverok.md
-    type: answer_breakdown
-    duration_min: 1.5
-    assertion: "Правильный ответ — не одна проверка, а последовательность из трёх, и порядок в ней имеет значение"
-    learning_goal: "Разбор пяти позиций ответа зала (R3-4, новый слайд), сводящийся к порядку: нужно ли вообще → с какими правами → по какой цене"
+    file: slides/s45-keys-2-3-scenariy-vtoraya-sessiya.md
+    type: problem_scenario
+    duration_min: 1.0
+    assertion: "Вторая сессия многошаговой задачи начинается не с продолжения, а с повторного анализа с нуля — и с конфликта с уже принятыми по ходу мелкими решениями"
+    learning_goal: "Сценарий-боль кейса 2.3: вторая сессия визард-задачи начинается заново, повторяя сделанное и нарушая принятые по ходу договорённости"
     visual:
-      pattern: answer_breakdown_table
+      pattern: scenario_pain
   - id: s46
-    file: slides/s46-cobuilding-vycherkivanie-prav.md
-    type: assertion_visual
-    duration_min: 1.5
-    assertion: "Из всего, что даёт широкий персональный токен, нашему списку операций нужен один репозиторий и две операции"
-    learning_goal: "Совместное формирование ступени 5, ходы 1–2 — сначала список операций, затем вычёркивание лишних прав строка за строкой; экран с вычеркнутыми правами понадобится в разборе провала"
+    file: slides/s46-keys-2-3-vopros.md
+    type: reflection_question
+    duration_min: 1.25
+    assertion: "Агент после сжатия контекста или в новой сессии должен продолжить с того места, где остановился, а не начать заново"
+    learning_goal: "Открытый вопрос кейса 2.3 дословно + пять карточек-вариантов — без таблицы разбора, разбор на следующем слайде"
     visual:
-      pattern: cobuilding_strikethrough
+      pattern: question_with_option_cards
   - id: s47
-    file: slides/s47-cobuilding-klyuch-i-oblast.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Проверенный сервер идёт в репозиторий и проходит ревью; непроверенный эксперимент остаётся только у вас"
-    learning_goal: "Совместное формирование ступени 5, ходы 3–4 — ключ из переменной окружения и выбор области видимости; факт про область по умолчанию произносится голосом, без кадра"
+    file: slides/s47-keys-2-3-razbor.md
+    type: answer_breakdown
+    duration_min: 1.25
+    assertion: "Один файл на задачу — план, лог хода, результаты — целевой ответ для линейной задачи с одним агентом и одним разработчиком"
+    learning_goal: "Разбор пяти позиций ответа зала кейса 2.3 без сокращений + целевой ответ с явной оговоркой об упрощении до файла"
     visual:
-      pattern: cobuilding_step
+      pattern: answer_breakdown_table
   - id: s48
-    file: slides/s48-itogovyy-mcp-json.md
+    file: slides/s48-keys-2-3-reshenie-fayl-na-zadachu.md
     type: code_artifact
-    duration_min: 0.5
-    assertion: "В файле подключения четыре строки существа, и одна из них — о том, откуда берётся ключ, а не какой он"
-    learning_goal: "Решение ступени 5: реальный .mcp.json демо-репозитория, дерево ступени 5, и напоминание, что главное про права живёт вне файла"
+    duration_min: 1.0
+    assertion: "Файл задачи ссылается на журнал решений, а не дублирует его — и это осознанное упрощение паттерна, полностью раскрываемого в другом месте"
+    learning_goal: "Решение кейса 2.3: .tasks/active/signup-wizard.md с планом/логом/результатами, помечен иллюстративным, с явным упрощением до файла"
     visual:
-      pattern: code_and_tree
+      pattern: code_artifact_illustrative
   - id: s49
-    file: slides/s49-cena-v-tokenakh.md
-    type: assertion_visual
-    duration_min: 0.5
-    assertion: "Одно и то же действие с одинаковым результатом стоит 1365 токенов командой в терминале и 44026 через инструмент сервера"
-    learning_goal: "Механика: три примитива и кто решает их применить + измеренная цена подключения в контексте, с явной базой сравнения в каждой строке"
+    file: slides/s49-keys-2-3-proval-ustarevshiy-plan.md
+    type: failure_vignette
+    duration_min: 3.0
+    assertion: "Плохой план хуже отсутствия плана вообще — и это подтверждено количественно, а не только интуицией"
+    learning_goal: "Провал/ограничение кейса 2.3 без сокращений: устаревший план вреднее его отсутствия (13 п.п., 100% на 30 прогонах), Index Sickness (n=1, честная оговорка), нишевость практики"
     visual:
-      pattern: data_table
+      pattern: failure_vignette
   - id: s50
-    file: slides/s50-podklyuchen-ne-znachit-rabotaet.md
-    type: failure_vignette
-    duration_min: 1
-    assertion: "Зелёный статус — это утверждение о транспорте, а не о работе; проверяется фактическим вызовом, а не индикатором"
-    learning_goal: "Ограничение ступени 5: строка статуса ловит ровно один класс отказа и не видит три остальных; плюс типовая ловушка семидневного отзыва токена"
+    file: slides/s50-keys-2-3-kriteriy-fayl-vs-papka.md
+    type: criteria_boundary
+    duration_min: 1.0
+    assertion: "Одного файла на задачу достаточно, пока задача линейная и её ведёт один агент и один разработчик — иначе оправдан переход к папке"
+    learning_goal: "Критерий «файл vs папка» для операционной памяти задачи + честная оговорка про распространённость практики, закрывающая раздел"
     visual:
-      pattern: failure_vignette
+      pattern: criteria_checklist_and_boundary
+  # --- Раздел 3. Закрытие: синтез шести развилок, честный охват, финальный вопрос (4.5 мин) ---
   - id: s51
-    file: slides/s51-proval-eksfiltraciya-trio.md
-    type: failure_vignette
-    duration_min: 2
-    assertion: "Если хотя бы одного из трёх элементов нет — атака этого типа невозможна в принципе, а не маловероятна"
-    learning_goal: "Провал ступени 5, слои 1–2: эксфильтрация приватных данных через публичный issue как прямое следствие невычеркнутых прав + рамка смертельного трио как рабочий инструмент"
-    visual:
-      pattern: failure_vignette
-  - id: s52
-    file: slides/s52-proval-podmena-posle-odobreniya.md
-    type: failure_vignette
-    duration_min: 1.5
-    assertion: "Одобрение инструмента не действует бессрочно: доверие привязано к имени, а не к содержимому текущего описания"
-    learning_goal: "Провал ступени 5, слой 3 — подмена поведения инструмента после одобрения; критерий «ещё рано» со стоп-критерием по трио нижней плашкой"
-    visual:
-      pattern: failure_vignette
-
-  # --- Ступень 6. Кастомный ограниченный субагент (10.5 мин) ---
-  - id: s53
-    file: slides/s53-divider-subagent.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Ступень 6 — кастомный субагент: делегировать вообще уже бесплатно, заводить стоит роль с отнятыми правами"
-    learning_goal: "Разделитель ступени 6, одна строка смысла и метка состава раздела; сразу задаёт уточнённую границу триггера"
-    visual:
-      pattern: section_divider
-  - id: s54
-    file: slides/s54-scenariy-samoproverka-delegirovanie.md
-    type: case_study
-    duration_min: 1
-    assertion: "Независимость определяется происхождением контекста, а не тоном просьбы — и делегировать отдельному агенту уже ничего не стоит"
-    learning_goal: "Сценарий ступени 6, такты 1–2: самопроверка той же сессией не даёт независимости, а встроенное делегирование уже работает без единого файла"
-    visual:
-      pattern: two_beats_card
-  - id: s55
-    file: slides/s55-scenariy-takt3-vopros.md
-    type: scenario_question
-    duration_min: 1
-    assertion: "Роль приходится переизобретать при каждом вызове, а у универсального субагента есть права, которых ревьюеру не нужно"
-    learning_goal: "Сценарий ступени 6, такт 3 + открытый вопрос, переформулированный в рамку прямого выбора (R3-3), с пятью карточками. БЕЗ таблицы разбора (R3-4)"
-    visual:
-      pattern: scenario_question_cards
-  - id: s56
-    file: slides/s56-razbor-subagent-urezannye-prava.md
-    type: answer_breakdown
-    duration_min: 1
-    assertion: "Кастомный субагент решает обе проблемы сразу: имя и фиксированная роль исключают переизобретение, а отнятые права делают «не правь сам» механической гарантией, а не просьбой"
-    learning_goal: "Разбор пяти позиций ответа зала (R3-4, новый слайд), где первая позиция признаётся правильной наполовину; целевой ответ — кастомный субагент с урезанными правами"
-    visual:
-      pattern: answer_breakdown_table
-  - id: s57
-    file: slides/s57-cobuilding-otnyatie-prav.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "«Не правь сам» в теле роли — просьба; строка ограничения инструментов — отнятая возможность"
-    learning_goal: "Совместное формирование ступени 6, ход 2 — главный: зал перечисляет, что нужно ревьюеру, и правка вычёркивается из набора инструментов"
-    visual:
-      pattern: cobuilding_strikethrough
-  - id: s58
-    file: slides/s58-cobuilding-format-verdikta.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Пустой список находок — валидный PASS, а BLOCK требует хотя бы одной конкретной, исправимой находки"
-    learning_goal: "Совместное формирование ступени 6, ход 3 — три элемента формата ответа, каждый с обоснованием в одну фразу; обратный риск ревьюера, который находит проблемы везде"
-    visual:
-      pattern: cobuilding_step
-  - id: s59
-    file: slides/s59-itogovyy-diff-reviewer.md
-    type: code_artifact
-    duration_min: 0.5
-    assertion: "Строка ограничения инструментов короче всего остального в файле и делает больше всего"
-    learning_goal: "Решение ступени 6: реальный diff-reviewer.md из демо-репозитория с подсвеченной строкой tools, дерево ступени 6"
-    visual:
-      pattern: code_and_tree
-  - id: s60
-    file: slides/s60-realnyy-verdikt-block.md
-    type: code_artifact
-    duration_min: 1
-    assertion: "Ревьюер, который видел только diff и не видел рассуждений автора, обнаружил, что правка вообще не является правкой"
-    learning_goal: "Единственное живое доказательство занятия: настоящий ответ субагента на настоящий diff — вердикт BLOCK, конкретный раздел «что проверено» и находка «мёртвый код, а не фикс»"
-    visual:
-      pattern: verdict_card
-  - id: s61
-    file: slides/s61-proval-otchet-bez-deystviy.md
-    type: failure_vignette
-    duration_min: 2.5
-    assertion: "Отчёт субагента об успехе — это утверждение, а не доказательство, и родительская сессия строит на нём дальнейший план"
-    learning_goal: "Провал ступени 6, слои 1–2: отчёты при нуле реальных вызовов инструментов и таксономия отказов мультиагентных систем с разбивкой причин"
-    visual:
-      pattern: failure_vignette
-  - id: s62
-    file: slides/s62-cena-i-bazy-sravneniya.md
-    type: failure_vignette
-    duration_min: 1
-    assertion: "Прежде чем спорить о множителе, выясните базу: 15× и 3–10× — обе честные цифры, они просто сравнивают разное"
-    learning_goal: "Провал ступени 6, слой 3 — цена делегирования и урок про базы сравнения; критерий «ещё рано» с главным пунктом про разовую проверку нижней плашкой"
-    visual:
-      pattern: failure_vignette
-
-  # --- Ступень 7. Процесс (8.5 мин) ---
-  - id: s63
-    file: slides/s63-divider-process.md
-    type: section_divider
-    duration_min: 0.5
-    assertion: "Ступень 7 — процесс: работу принимают на слово, потому что проверяемой альтернативы в этот момент не существует"
-    learning_goal: "Разделитель ступени 7, одна строка смысла и метка состава раздела"
-    visual:
-      pattern: section_divider
-  - id: s64
-    file: slides/s64-scenariy-gotovo-mozhno-pokazyvat.md
-    type: scenario_question
-    duration_min: 1
-    assertion: "Каждое отдельное утверждение в отчёте агента может быть правдой — и вместе они складываются в «готово», которого нет"
-    learning_goal: "Сценарий-боль ступени 7: одна фраза, разобранная на части + открытый вопрос из двух половин, переформулированный в рамку прямого выбора (R3-3), с пятью карточками. БЕЗ таблицы разбора (R3-4)"
-    visual:
-      pattern: scenario_question_cards
-  - id: s65
-    file: slides/s65-razbor-ssylka-na-kommit-zhurnal.md
-    type: answer_breakdown
-    duration_min: 1.5
-    assertion: "Целевой ответ — не один артефакт, а два вместе: проверяемая ссылка на коммит и журнал, который вёлся по ходу работы, а не восстановлен по памяти"
-    learning_goal: "Разбор пяти позиций ответа зала (R3-4, новый слайд)"
-    visual:
-      pattern: answer_breakdown_table
-  - id: s66
-    file: slides/s66-cobuilding-chto-bylo-do.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Три вещи должны были появиться раньше слова «готово»: план до кода, журнал по ходу и вердикт от того, кто не писал этот код"
-    learning_goal: "Совместное формирование ступени 7, ходы 1–2 — что должно было существовать до отчёта и из чего состоит проверяемая строка журнала"
-    visual:
-      pattern: cobuilding_step
-  - id: s67
-    file: slides/s67-realnyy-zhurnal-i-verdikt.md
-    type: artifact_pair
-    duration_min: 0.5
-    assertion: "Оба артефакта существовали — и оба не сработали, потому что вердикт пришёл после слияния"
-    learning_goal: "Решение ступени 7: реальный журнал с отметками времени и хешем коммита рядом с реальным вердиктом; дерево ступени 7 и честный разбор неправильного порядка"
-    visual:
-      pattern: two_artifacts_and_tree
-  - id: s68
-    file: slides/s68-cobuilding-skolko-krugov.md
-    type: assertion_visual
-    duration_min: 1
-    assertion: "Третий круг ревью по одному и тому же артефакту — не признак тщательности, а диагноз"
-    learning_goal: "Совместное формирование ступени 7, ход 3 — сколько кругов ревью; контринтуитивное правило двух кругов как диагностика конструкции, а не лимит усилий"
-    visual:
-      pattern: cobuilding_vote
-  - id: s69
-    file: slides/s69-proval-otchitalis-kak-gotovo.md
-    type: failure_vignette
-    duration_min: 1.5
-    assertion: "Разница между 75,8% и 3% — это не разница между хорошей и плохой моделью, это разница между наличием и отсутствием внешней проверки"
-    learning_goal: "Провал ступени 7, слой 1 — измеренная доля провалов, отчитанных как «готово», и непригодность модели-судьи как замены проверке факта"
-    visual:
-      pattern: failure_vignette
-  - id: s70
-    file: slides/s70-proval-obkhod-proverki.md
-    type: failure_vignette
-    duration_min: 1.5
-    assertion: "Гейт, который агент может отредактировать, — не гейт; и журнал, который агент пишет сам, может закреплять ошибку, а не исправлять её"
-    learning_goal: "Провал ступени 7, слои 2–3: обход проверки с частотами и явной базой + честное ограничение нашего же решения; критерий «ещё рано» с самым неудобным пунктом нижней плашкой"
-    visual:
-      pattern: failure_vignette
-
-  # --- Закрытие занятия (4 мин) ---
-  - id: s71
-    file: slides/s71-derevo-i-karta-tezisy.md
+    file: slides/s51-shest-razvilok-odin-vopros.md
     type: recap_table
-    duration_min: 2
-    assertion: "Ни один из семи блоков не появился потому, что «так принято» — у каждого есть дата и сигнал"
-    learning_goal: "Закрытие рамки занятия: финальное дерево слева, карта экипировки из раздела 0 справа, связанные линиями, плюс три тезиса на вынос"
+    duration_min: 1.5
+    assertion: "Шесть развилок сегодняшнего занятия отвечали на один и тот же скрытый вопрос: текст-просьба или механическое принуждение"
+    learning_goal: "Синтез раздела 3, шаг 3.1 — впервые называет вслух общий скрытый вопрос, объединяющий три развилки раздела 1 (файл инструкций) и три развилки раздела 2 (память); слово «может» — единственный визуальный акцент, без цветового кодирования правильно/неправильно"
     visual:
-      pattern: tree_and_map_recap
-  - id: s72
-    file: slides/s72-finalnyy-vopros.md
+      pattern: recap_table
+  - id: s52
+    file: slides/s52-chestnyy-okhvat-dva-iz-pyati.md
+    type: scope_statement
+    duration_min: 1.5
+    assertion: "Сегодня закрыты два слота харнесса из пяти; остальные три плюс оба механических слоя (хук, процесс) — Семинар 5"
+    learning_goal: "Синтез раздела 3, шаг 3.2 — честный охват занятия называется прямо тем же ровным тоном, что scope-statement раздела 0; карта пяти слотов не пересобирается co-building'ом заново, показывается статичной итоговой версией"
+    visual:
+      pattern: scope_statement
+  - id: s53
+    file: slides/s53-finalnyy-vopros-perenos-na-svoy-repozitoriy.md
     type: closing_question
-    duration_min: 2
-    assertion: "Добавить умеет каждый; сегодня мы семь раз тренировали другое"
-    learning_goal: "Финальный открытый вопрос — с вариантами, как все остальные вопросы занятия: карта семи ступеней работает фоном и набором вариантов одновременно; вторая половина вопроса важнее первой"
+    duration_min: 1.5
+    assertion: "Перенесите шесть сегодняшних решений на свой репозиторий — и проверьте, какое из них держится только на просьбе текстом"
+    learning_goal: "Синтез раздела 3, шаг 3.3 — финальный открытый вопрос занятия, единственный без карточек-вариантов: у каждого в зале свой репозиторий и свой ответ, общего набора карточек не существует; ответы вслух не собираются"
     visual:
       pattern: closing_question

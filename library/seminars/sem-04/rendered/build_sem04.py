@@ -1,35 +1,22 @@
 """
-Build script for Семинар 4 v2 — «Сборка кодинг-агента: лестница роста конфигурации»
-(issue #201, раунд 2, полная пересборка на новом deck.yaml/slides, 65 слайдов).
+Build script for Семинар 4 v4 — «Сборка кодинг-агента: лестница роста конфигурации»
+(issue #201, раунд 4 — раскол на два семинара, 49 слайдов, полная пересборка).
 
-Source-of-truth: deck.yaml + slides/*.md (65 slides, rework/section-0..7). Direct
-python-pptx build (not PowerPoint MCP), per notes/mcp-limitations.md
-[#54-1/#54-2/#54-3]: MCP has no list_shapes, format_runs is buggy, no
-update_shape_position. Full-rebuild via python-pptx sidesteps all three.
+Source-of-truth: deck.yaml + slides/s01..s49-*.md (49 slides). Direct python-pptx
+build (not PowerPoint MCP), per notes/mcp-limitations.md [#54-1/#54-2/#54-3]:
+MCP has no list_shapes, format_runs is buggy, no update_shape_position.
 
 Canvas: 13.333" x 7.5" (16:9). Ocean Gradient v3 palette, LOCKED.
 
-No live terminal on this seminar — every "terminal snapshot" on these slides is
-either a *verbatim* transcription of a real captured command output
-(library/seminars/sem-04/assets/captures/*.txt, dated 2026-09-20/21) or, where
-no capture exists (7 positions flagged [ДОСЪЁМКА:...] in frontmatter
-visual.backup only, never on the visible slide), a text/card layout that does
-NOT imitate a terminal — exactly as each slide's own Visual section specifies.
-The 7 no-capture positions: s10, s14 (content is FINAL per fix-pass — used
-as-is), s21, s24, s42, s59, s60 (s60's review.md panel is derived from the
-real capture 34 verdict already used on s54 — not invented).
+v4 change over v3 (72 slides): deck.yaml split into two seminars (R4-0/R4-1/R4-3).
+Раздел 0 (открытие, s01-s07) + Раздел 1 (файл инструкций, 3 кейса, s08-s26) +
+Раздел 2 (память, 3 кейса, s27-s46) + Раздел 3 (закрытие, s47-s49). Stages
+3-7 (хук/скилл/MCP/субагент/процесс) moved to sem-05, out of scope here.
 
-v2 fixes over v1 (owner lessons from round 1, issue #201):
-  - ONE shared builder for all 7 stage dividers (build_stage_divider) from the
-    very start — v1 had a bespoke second function for two dividers that drifted.
-  - Hero on s01 AND s65 (not just s01) is >=40% of slide area from the first
-    render, not a later fix-pass.
-  - Zero self-reference to "курс"/"лекция N"/"семинар" as a course artefact in
-    VISIBLE text (mentions of "Лекция 3" as a content fact the audience
-    already attended are fine and appear in speaker notes / a few visible
-    facilitator asides that are part of the pedagogical script itself, per the
-    slides/*.md source — never a meta "as covered in this course" aside).
-  - Deep-latin-scan run before declaring done (see iteration-log.md).
+No live terminal — every "terminal snapshot" is either a verbatim transcription
+of a real captured command output (assets/captures/*.txt) or, where explicitly
+marked illustrative in the source .md, a text/card layout that does NOT imitate
+a terminal, exactly as each slide's own Visual section specifies.
 """
 import re
 from pathlib import Path
@@ -60,9 +47,7 @@ GOLD_DARK = RGBColor(0x8A, 0x62, 0x00)  # WCAG-safe dark-gold for text/icons on
                                          # WCAG AA on SURFACE/WHITE — known
                                          # palette defect, see
                                          # project_ocean_palette_gold_contrast_defect)
-DENY_RED_SAFE = RGBColor(0x8A, 0x2A, 0x2A)  # NOT a palette addition — used
-                                             # ONLY as icon-free text color for
-                                             # literal "deny"/blocked quotes
+GREY_FILL = RGBColor(0xE4, 0xE9, 0xEF)
 
 # === Constants ===
 SLIDE_W_IN = 13.333
@@ -80,7 +65,7 @@ FONT_MONO = "Consolas"
 
 
 # ============================================================
-# Generic low-level helpers
+# Generic low-level helpers (reused pattern from v3 build_sem04.py)
 # ============================================================
 
 def setup_pres():
@@ -102,22 +87,20 @@ def set_slide_bg(slide, color):
 
 def _fits(text, size, width_in, height_in, *, line_h_factor=1.28, char_w_factor=0.52,
           label=""):
-    """Cheap diagnostic (not pixel-perfect, deliberately conservative) — estimates
-    whether `text` at `size`pt fits in a box of width_in x height_in, and prints an
-    OVERFLOW WARNING if not. Used across the deck to catch text/box mismatches in
-    one build pass instead of eyeballing all 65 PNGs by hand."""
+    """Cheap diagnostic — estimates whether `text` at `size`pt fits in a box of
+    width_in x height_in, prints OVERFLOW WARNING if not. Not pixel-perfect,
+    deliberately conservative — catches box/text mismatches in one build pass."""
     if not text or width_in <= 0:
         return
     char_w = size * char_w_factor / 72.0
     chars_per_line = max(1, int(width_in / char_w))
-    # count words to allow wrap; approximate by splitting on existing newlines too
     lines_needed = 0
     for para in text.split("\n"):
         n = len(para)
-        lines_needed += max(1, -(-n // chars_per_line))  # ceil
+        lines_needed += max(1, -(-n // chars_per_line))
     line_h = size * line_h_factor / 72.0
     capacity = height_in / line_h if line_h > 0 else 0
-    if lines_needed > capacity + 0.15:  # small tolerance
+    if lines_needed > capacity + 0.15:
         print(f"OVERFLOW WARNING [{label}]: '{text[:40]}...' needs ~{lines_needed} "
               f"lines ({size}pt in {width_in:.2f}in) but box height {height_in:.2f}in "
               f"fits only ~{capacity:.1f}")
@@ -162,7 +145,10 @@ def text_box(slide, x, y, w, h, text, *,
 def multipara_box(slide, x, y, w, h, paragraphs, *,
                    anchor=MSO_ANCHOR.TOP, align=PP_ALIGN.LEFT):
     """Each item in `paragraphs` is a dict of text_box-style kwargs (+ optional
-    'strike': True)."""
+    'strike': True). Real paragraph objects (tf.add_paragraph()), not literal
+    '\\n' — needed for correct per-line CENTER alignment in LibreOffice render
+    (see notes/mcp-limitations.md — literal \\n + align=CENTER does not
+    center independently per visual line)."""
     tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     tf = tb.text_frame
     tf.margin_left = Inches(0.0); tf.margin_right = Inches(0.0)
@@ -264,32 +250,6 @@ def lerp_color(c_lo, c_hi, t):
     )
 
 
-def chip(slide, x, y, w, h, text, *, fill=MID, stroke=None, color=WHITE, size=13, bold=True):
-    shp = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
-                                 Inches(x), Inches(y), Inches(w), Inches(h))
-    try:
-        shp.adjustments[0] = 0.5
-    except Exception:
-        pass
-    shp.fill.solid(); shp.fill.fore_color.rgb = fill
-    if stroke is None:
-        shp.line.fill.background()
-    else:
-        shp.line.color.rgb = stroke
-        shp.line.width = Pt(1.2)
-    tf = shp.text_frame
-    tf.margin_left = Inches(0.05); tf.margin_right = Inches(0.05)
-    tf.margin_top = Inches(0.03); tf.margin_bottom = Inches(0.03)
-    tf.vertical_anchor = MSO_ANCHOR.MIDDLE
-    tf.word_wrap = False
-    p = tf.paragraphs[0]; p.alignment = PP_ALIGN.CENTER
-    r = p.add_run(); r.text = text
-    r.font.name = FONT_BODY; r.font.size = Pt(size)
-    r.font.bold = bold; r.font.color.rgb = color
-    disable_shadow(shp)
-    return shp
-
-
 def add_image(slide, path, x, y, w=None, h=None):
     path = Path(path)
     if not path.exists():
@@ -364,6 +324,26 @@ def header(slide, section_label, title, *, title_size=24, title_h=1.05):
     slide_title(slide, title, y=0.7, size=title_size, h=title_h)
 
 
+def auto_header(slide, section_label, title):
+    """header() with size/height picked from title length, returns the y
+    coordinate where slide content may safely start."""
+    n = len(title)
+    if n <= 65:
+        size, h = 22, 0.8
+    elif n <= 95:
+        size, h = 19, 0.95
+    elif n <= 125:
+        size, h = 16.5, 1.1
+    elif n <= 160:
+        size, h = 14.5, 1.3
+    elif n <= 200:
+        size, h = 13, 1.5
+    else:
+        size, h = 12, 1.7
+    header(slide, section_label, title, title_size=size, title_h=h)
+    return 0.7 + h + 0.18
+
+
 def footer_note(slide, text, *, y=7.02):
     text_box(slide, 0.55, y, 12.23, 0.38, text=text, size=11.5, italic=True,
              color=LIGHT, align=PP_ALIGN.LEFT)
@@ -397,8 +377,6 @@ def terminal_card(slide, x, y, w, h, lines, *, title=None, size=13, line_spacing
     line_h = size * line_spacing * 1.18 / 72.0  # +18% safety margin — empirically
                                                   # LibreOffice/Consolas render taller
                                                   # than the naive pt-based estimate
-                                                  # (caught a real overflow on s28 that
-                                                  # the unpadded formula missed)
     needed_h = est_lines * line_h + len(lines) * (2 / 72.0)
     avail_h = y + h - pad - ty
     if needed_h > avail_h:
@@ -510,8 +488,7 @@ def failure_card(slide, x, y, w, h, *, icon_name, header_text, body, gold=False,
                  text=footnote, size=10, italic=True, color=SLATE)
 
 
-def criterion_plate(slide, x, y, w, h, items, *, title="ЗДЕСЬ ЕЩЁ РАНО", gold_last=False,
-                     size=10.6):
+def criterion_plate(slide, x, y, w, h, items, *, title="ЗДЕСЬ ЕЩЁ РАНО", size=10.6):
     filled_rect(slide, x, y, w, h, RGBColor(0xEE, 0xF2, 0xF6), stroke=SOFT_GREY, stroke_pt=1.0,
                 radius=True, radius_adj=0.1)
     pad = 0.18
@@ -519,222 +496,38 @@ def criterion_plate(slide, x, y, w, h, items, *, title="ЗДЕСЬ ЕЩЁ РАН
              bold=True, color=SLATE)
     bullet = "  ·  "
     body = bullet.join(items)
-    color = DEEP
     _fits(body, size, w - 2 * pad, h - 0.33, label="criterion_plate")
-    if gold_last:
-        # render all but last normally, last one in gold-dark bold via multipara trick
-        paras = [{"text": bullet.join(items[:-1]) + bullet, "size": size, "color": SLATE,
-                   "line_spacing": 1.2}]
-        tb = text_box(slide, x + pad, y + 0.28, w - 2 * pad, h - 0.33, text="",
-                       size=size, color=SLATE)
-        tf = tb.text_frame
-        tf.word_wrap = True
-        p = tf.paragraphs[0]
-        r1 = p.add_run(); r1.text = bullet.join(items[:-1]) + bullet
-        r1.font.size = Pt(size); r1.font.color.rgb = SLATE; r1.font.name = FONT_BODY
-        r2 = p.add_run(); r2.text = items[-1]
-        r2.font.size = Pt(size); r2.font.color.rgb = GOLD_DARK; r2.font.bold = True
-        r2.font.name = FONT_BODY
-        return
     text_box(slide, x + pad, y + 0.28, w - 2 * pad, h - 0.33, text=body, size=size,
-             color=color, line_spacing=1.2)
+             color=DEEP, line_spacing=1.2)
 
 
-def placeholder_badge(slide, x, y, w, h, note):
-    dashed_box(slide, x, y, w, h, fill=SURFACE, stroke=GOLD_DARK, stroke_pt=1.4)
-    icon(slide, "clock", "8A6200", 64, x + (w - 0.4) / 2, y + 0.2, 0.4)
-    text_box(slide, x + 0.3, y + 0.72, w - 0.6, h - 0.9, text=note, size=11.5,
-             italic=True, color=GOLD_DARK, align=PP_ALIGN.CENTER, line_spacing=1.22)
-
-
-# ============================================================
-# Ladder motif (shared by s01 hero, s64 recap-tree, s07/s08 map)
-# ============================================================
-
-LADDER_STAGES = [
-    ("0", "signup-landing/", "пусто"),
-    ("1", "CLAUDE.md", "файл инструкций"),
-    ("2", "DECISIONS.md", "память"),
-    ("3", ".claude/settings.json", "хук"),
-    ("4", "skills/deploy/", "скилл"),
-    ("5", ".mcp.json", "MCP"),
-    ("6", "agents/diff-reviewer.md", "субагент"),
-    ("7", "Tasks/", "процесс"),
-]
-
-STAGE_TITLES = [
-    "файл инструкций", "память", "хук", "скилл",
-    "доступ наружу (MCP)", "субагент", "процесс",
-]
-
-
-def build_growth_staircase(slide, x, y, w, h, *, bar_lo, bar_hi, bar_gold,
-                            label_color, gold_label_color, number_color,
-                            gold_number_color, sublabel_color, baseline_color):
-    """8-step ascending staircase from the real captured tree stages
-    (captures/21-27-tree-stage*.txt) — shared hero motif for s01 and s65."""
-    n = len(LADDER_STAGES)
-    gap = 0.14
-    chip_w = (w - gap * (n - 1)) / n
-    bottom_reserve = 0.62
-    top_reserve = 0.34
-    baseline_y = y + h - bottom_reserve
-    bar_max_h = h - bottom_reserve - top_reserve
-    unit = bar_max_h / n
-    ln = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, Inches(x), Inches(baseline_y),
-                                     Inches(x + w), Inches(baseline_y))
-    ln.line.color.rgb = baseline_color; ln.line.width = Pt(1.4)
-    cx = x
-    for i, (num, fname, label) in enumerate(LADDER_STAGES):
-        last = (i == n - 1)
-        bar_h = max(0.14, (i + 1) * unit)
-        bar_y = baseline_y - bar_h
-        color = bar_gold if last else lerp_color(bar_lo, bar_hi, i / (n - 2))
-        filled_rect(slide, cx, bar_y, chip_w, bar_h, color, radius=True, radius_adj=0.14)
-        text_box(slide, cx - 0.07, bar_y - 0.32, chip_w + 0.14, 0.3, text=fname,
-                 size=9.3, bold=last, color=(gold_label_color if last else label_color),
-                 align=PP_ALIGN.CENTER, line_spacing=1.0)
-        text_box(slide, cx - 0.07, baseline_y + 0.05, chip_w + 0.14, 0.28, text=num,
-                 size=12.5, bold=True, color=(gold_number_color if last else number_color),
-                 align=PP_ALIGN.CENTER)
-        text_box(slide, cx - 0.1, baseline_y + 0.32, chip_w + 0.2, 0.3, text=label,
-                 size=8.5, italic=True, color=sublabel_color, align=PP_ALIGN.CENTER,
-                 line_spacing=1.0)
-        cx += chip_w + gap
-
-
-# ============================================================
-# Shared pattern-level builder — ONE function for ALL 7 stage dividers
-# ============================================================
-
-def build_stage_divider(p, slide_id, *, stage_num, title, meaning, tag):
-    """pattern: section_divider — single shared builder for s09/s16/s23/s32/
-    s39/s48/s57 (owner-mandated fix over v1, which had a second bespoke
-    function for two dividers that drifted from this one)."""
-    s = blank(p)
-    gradient_rect(s, 0, 0, SLIDE_W_IN, SLIDE_H_IN,
-                   [(0, DEEP), (55000, MID), (100000, LIGHT)])
-    # ladder strip at top: stage_num highlighted gold, earlier stages "passed",
-    # later stages dim — same 7-cell strip on every divider, never elsewhere.
-    strip_y = 0.55
-    n = 7
-    gap = 0.12
-    cw = (12.23 - gap * (n - 1)) / n
-    cx = 0.55
-    for i in range(n):
-        cur = (i + 1 == stage_num)
-        passed = (i + 1 < stage_num)
-        col = GOLD if cur else (RGBColor(0x5A, 0x6C, 0xA6) if passed else RGBColor(0x2C, 0x38, 0x72))
-        filled_rect(s, cx, strip_y, cw, 0.3, col, radius=True, radius_adj=0.35)
-        text_box(s, cx, strip_y, cw, 0.3, text=str(i + 1), size=11, bold=True,
-                 color=(DEEP if cur else RGBColor(0xC7, 0xD2, 0xE8)), align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        cx += cw + gap
-    text_box(s, 0.9, 2.15, 2.6, 2.0, text=str(stage_num), size=170, bold=True,
-             color=RGBColor(0x3A, 0x4A, 0x86), align=PP_ALIGN.LEFT,
-             anchor=MSO_ANCHOR.MIDDLE, font=FONT_HEAD)
-    text_box(s, 3.3, 2.15, 8.6, 1.25, text=title, size=40, bold=True, color=WHITE,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
-    text_box(s, 3.35, 3.42, 8.6, 0.85, text=meaning, size=17, italic=True,
-             color=RGBColor(0xCF, 0xDC, 0xEC), line_spacing=1.3)
-    tag_w = 6.55
-    tag_h = 1.0 if len(tag) > 55 else 0.6
-    filled_rect(s, 3.35, 4.35, tag_w, tag_h, RGBColor(0x0B, 0x14, 0x3A), stroke=GOLD,
-                stroke_pt=1.2, radius=True, radius_adj=0.28)
-    text_box(s, 3.35 + 0.28, 4.35, tag_w - 0.56, tag_h, text=tag.upper(), size=11.5, bold=True,
-             color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.25)
-    icon_x, icon_y, icon_w = 10.55, 5.15, 1.55
-    filled_rect(s, icon_x - 0.32, icon_y - 0.32, icon_w + 0.64, icon_w + 0.64,
-                RGBColor(0x0B, 0x14, 0x3A), radius=True, radius_adj=0.18)
-    icon(s, DIVIDER_ICON[stage_num], "F0AB00", 128, icon_x, icon_y, icon_w)
-    speaker_notes(s, load_notes(slide_id))
-    return s
-
-
-DIVIDER_ICON = {1: "file-text", 2: "database", 3: "shield-check", 4: "puzzle",
-                5: "network", 6: "user-round", 7: "clipboard-check"}
-
-
-def build_growth_staircase_bare(slide, x, y, w, h, *, bar_lo, bar_hi, bar_gold,
-                                 number_color, gold_number_color, baseline_color,
-                                 show_numbers=True):
-    """Unlabeled variant for s01 hero — bars only (+ optional ordinal), no
-    filenames/stage names ('семь ступеней лестницы, без подписей')."""
-    n = len(LADDER_STAGES)
-    gap = 0.16
-    chip_w = (w - gap * (n - 1)) / n
-    bottom_reserve = 0.3 if show_numbers else 0.05
-    baseline_y = y + h - bottom_reserve
-    bar_max_h = h - bottom_reserve - 0.1
-    unit = bar_max_h / n
-    ln = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, Inches(x), Inches(baseline_y),
-                                     Inches(x + w), Inches(baseline_y))
-    ln.line.color.rgb = baseline_color; ln.line.width = Pt(1.4)
-    cx = x
-    for i in range(n):
-        last = (i == n - 1)
-        bar_h = max(0.16, (i + 1) * unit)
-        bar_y = baseline_y - bar_h
-        color = bar_gold if last else lerp_color(bar_lo, bar_hi, i / (n - 2))
-        filled_rect(slide, cx, bar_y, chip_w, bar_h, color, radius=True, radius_adj=0.16)
-        if show_numbers:
-            text_box(slide, cx - 0.05, baseline_y + 0.03, chip_w + 0.1, 0.26, text=str(i),
-                     size=11.5, bold=last, color=(gold_number_color if last else number_color),
-                     align=PP_ALIGN.CENTER)
-        cx += chip_w + gap
-
-
-# ============================================================
-# Раздел 0 — Открытие (s01-s08)
-# ============================================================
-
-
-
-def build_s01(p):
-    s = blank(p)
-    gradient_rect(s, 0, 0, SLIDE_W_IN, SLIDE_H_IN,
-                   [(0, DEEP), (50000, MID), (100000, LIGHT)])
-    text_box(s, 8.9, 0.05, 4.2, 1.9, text="04", size=170, bold=True,
-             color=RGBColor(0x33, 0x42, 0x7C), align=PP_ALIGN.RIGHT, font=FONT_HEAD,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 0, 0.32, SLIDE_W_IN, 0.36, text="СЕМИНАР 4",
-             size=13, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
-    text_box(s, 0, 0.68, SLIDE_W_IN, 0.9, text="Сборка кодинг-агента",
-             size=44, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-    text_box(s, 1.0, 1.5, SLIDE_W_IN - 2.0, 0.4,
-             text="Семь ступеней конфигурации на одном сквозном кейсе",
-             size=15.5, italic=True, color=RGBColor(0xCF, 0xDC, 0xEC), align=PP_ALIGN.CENTER)
-
-    # Central question — the single textual block of the slide, verbatim.
-    q_y = 2.08
-    q_h = 1.15
-    filled_rect(s, 1.15, q_y, SLIDE_W_IN - 2.3, q_h, RGBColor(0x0B, 0x14, 0x3A),
-                stroke=GOLD, stroke_pt=1.8, radius=True, radius_adj=0.12)
-    text_box(s, 1.55, q_y + 0.1, SLIDE_W_IN - 3.1, q_h - 0.2,
-             text="«У вас репозиторий и агент, который в нём работает — какой блок "
-                  "конфигурации добавить первым, и как понять, что следующий добавлять "
-                  "ещё рано?»",
-             size=16.5, italic=True, bold=True, color=GOLD, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
-
-    # Hero: 8-stage growth staircase, UNLABELED — >=40% of slide area.
-    hero_x, hero_y, hero_w, hero_h = 0.55, 3.55, 12.23, 3.35  # 12.23*3.35=40.97in^2 ~= 41.0%
-    text_box(s, hero_x, hero_y - 0.34, 8.0, 0.28,
-             text="ПУСТАЯ ДИРЕКТОРИЯ  →  СЕМЬ ДОБАВЛЕНИЙ, ПОКА БЕЗ ИМЁН",
-             size=11.5, bold=True, color=RGBColor(0x9C, 0xAE, 0xC9))
-    build_growth_staircase_bare(s, hero_x, hero_y, hero_w, hero_h,
-        bar_lo=(0x3A, 0x4A, 0x86), bar_hi=(0x6B, 0x7F, 0xC2), bar_gold=GOLD,
-        number_color=RGBColor(0xB9, 0xC8, 0xDE), gold_number_color=GOLD,
-        baseline_color=RGBColor(0x4A, 0x5C, 0x96), show_numbers=True)
-    text_box(s, hero_x, hero_y + hero_h + 0.06, 12.0, 0.3,
-             text="Реальные 7 стадий демо-репозитория signup-landing/ (git ls-tree по коммитам) "
-                  "· источник: captures/21–27",
-             size=9.5, italic=True, color=RGBColor(0x8A, 0x9B, 0xC0))
-    speaker_notes(s, load_notes("s01"))
+def basket_row(slide, x, y, w, h, baskets, *, highlight_idx=None):
+    """baskets: list of (title, [items or empty])."""
+    n = len(baskets)
+    gap = 0.24
+    cw = (w - gap * (n - 1)) / n
+    for i, (title, items) in enumerate(baskets):
+        bx = x + i * (cw + gap)
+        hl = (highlight_idx == i)
+        box = dashed_box if hl else ocean_box
+        box(slide, bx, y, cw, h, fill=(GOLD_TINT if hl else SURFACE),
+            stroke=(GOLD_DARK if hl else LIGHT))
+        text_box(slide, bx + 0.16, y + 0.12, cw - 0.32, 0.34, text=title.upper(), size=12.5,
+                 bold=True, color=(GOLD_DARK if hl else MID), align=PP_ALIGN.CENTER)
+        iy = y + 0.55
+        ih = (h - 0.65) / max(len(items), 1)
+        for it in items:
+            filled_rect(slide, bx + 0.14, iy + 0.04, cw - 0.28, ih - 0.1,
+                        WHITE if hl else RGBColor(0xEC, 0xF0, 0xF5), stroke=SOFT_GREY,
+                        stroke_pt=0.9, radius=True, radius_adj=0.2)
+            _fits(it, 10.3, cw - 0.48, ih - 0.1, label="basket_row item")
+            text_box(slide, bx + 0.24, iy + 0.04, cw - 0.48, ih - 0.1, text=it, size=10.3,
+                     color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
+            iy += ih
 
 
 def two_basket_frame(slide, x, y, w, h, left_title, left_slots, right_title, right_slots, *,
-                      right_highlight=False, why=None):
+                      right_highlight=False):
     gap = 0.32
     col_w = (w - gap) / 2
     ocean_box(slide, x, y, w, h)
@@ -773,6 +566,309 @@ def two_basket_frame(slide, x, y, w, h, left_title, left_slots, right_title, rig
                          anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
 
 
+def slot_row5(slide, x, y, w, h, slots, *, accent_idx=()):
+    """5 numbered slots in one row — shared by s07 (co-built) and s48 (static
+    recap). accent_idx = tuple of gold-accented slot indices, rest muted grey."""
+    ocean_box(slide, x, y, w, h)
+    pad = 0.26
+    n = 5
+    gap = 0.18
+    cw = (w - 2 * pad - gap * (n - 1)) / n
+    top = y + pad
+    slot_h = h - 2 * pad
+    cx = x + pad
+    for i, (label, desc) in enumerate(slots):
+        gold = i in accent_idx
+        fill = GOLD_TINT if gold else GREY_FILL
+        stroke = GOLD_DARK if gold else SLATE
+        filled_rect(slide, cx, top, cw, slot_h, fill, stroke=stroke,
+                    stroke_pt=1.5 if gold else 1.1, radius=True, radius_adj=0.12)
+        text_box(slide, cx, top + 0.1, cw, 0.28, text=str(i + 1), size=13, bold=True,
+                 color=(GOLD_DARK if gold else SLATE), align=PP_ALIGN.CENTER)
+        paras = [{"text": ln, "size": 12.3, "bold": True,
+                   "color": (GOLD_DARK if gold else DEEP), "align": PP_ALIGN.CENTER,
+                   "line_spacing": 1.05} for ln in label.split("\n")]
+        multipara_box(slide, cx + 0.06, top + 0.42, cw - 0.12, 0.58, paras)
+        text_box(slide, cx + 0.07, top + 1.02, cw - 0.14, slot_h - 1.1, text=desc,
+                 size=9.2, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.08)
+        cx += cw + gap
+
+
+# ============================================================
+# Divider helpers — section-level (s08) and case-level (s09/s15/s21/s27)
+# ============================================================
+
+def strip_pills(slide, x, y, w, n, active_idx):
+    gap = 0.12
+    pw = (w - gap * (n - 1)) / n
+    cx = x
+    for i in range(n):
+        cur = (i == active_idx)
+        col = GOLD if cur else RGBColor(0x3E, 0x4C, 0x8A)
+        filled_rect(slide, cx, y, pw, 0.28, col, radius=True, radius_adj=0.4)
+        cx += pw + gap
+
+
+def divider_bg(s, *, icon_name=None):
+    gradient_rect(s, 0, 0, SLIDE_W_IN, SLIDE_H_IN,
+                   [(0, DEEP), (55000, MID), (100000, LIGHT)])
+    if icon_name:
+        icon_x, icon_y, icon_w = 10.85, 5.35, 1.35
+        filled_rect(s, icon_x - 0.3, icon_y - 0.3, icon_w + 0.6, icon_w + 0.6,
+                    RGBColor(0x0B, 0x14, 0x3A), radius=True, radius_adj=0.18)
+        icon(s, icon_name, "F0AB00", 128, icon_x, icon_y, icon_w)
+
+
+def divider_section(p, slide_id, *, title, case_lines, tag, active_idx, total,
+                     icon_name):
+    """pattern: section_divider, section-level overview (s08)."""
+    s = blank(p)
+    divider_bg(s, icon_name=icon_name)
+    strip_pills(s, 0.55, 0.55, 11.2, total, active_idx)
+    text_box(s, 0.85, 1.75, 10.5, 1.1, text=title, size=38, bold=True, color=WHITE,
+             line_spacing=1.05)
+    ly = 3.05
+    for line in case_lines:
+        filled_rect(s, 0.9, ly, 0.14, 0.14, GOLD, radius=True, radius_adj=0.5)
+        text_box(s, 1.2, ly - 0.12, 8.8, 0.42, text=line, size=16.5, color=RGBColor(0xE1, 0xE9, 0xF6))
+        ly += 0.56
+    tag_w = 5.6
+    filled_rect(s, 0.9, ly + 0.25, tag_w, 0.55, RGBColor(0x0B, 0x14, 0x3A), stroke=GOLD,
+                stroke_pt=1.2, radius=True, radius_adj=0.28)
+    text_box(s, 0.9 + 0.28, ly + 0.25, tag_w - 0.56, 0.55, text=tag.upper(), size=11.5,
+             bold=True, color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes(slide_id))
+    return s
+
+
+def divider_case(p, slide_id, *, title, meaning, tag, case_idx, case_total, icon_name):
+    """pattern: section_divider, case-level (s09/s15/s21) — 3-pill strip of
+    cases within the current раздел, current case gold, others muted."""
+    s = blank(p)
+    divider_bg(s, icon_name=icon_name)
+    strip_pills(s, 0.9, 0.6, 5.6, case_total, case_idx)
+    text_box(s, 0.9, 2.15, 9.8, 1.15, text=title, size=36, bold=True, color=WHITE,
+             line_spacing=1.05)
+    text_box(s, 0.95, 3.42, 9.6, 0.9, text=meaning, size=17, italic=True,
+             color=RGBColor(0xCF, 0xDC, 0xEC), line_spacing=1.3)
+    tag_w = 6.0
+    filled_rect(s, 0.95, 4.35, tag_w, 0.6, RGBColor(0x0B, 0x14, 0x3A), stroke=GOLD,
+                stroke_pt=1.2, radius=True, radius_adj=0.28)
+    text_box(s, 0.95 + 0.28, 4.35, tag_w - 0.56, 0.6, text=tag.upper(), size=11.5,
+             bold=True, color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes(slide_id))
+    return s
+
+
+def divider_section_and_case(p, slide_id, *, big_title, subtitle, meaning, tag, icon_name):
+    """pattern: section_divider — combined раздел+case divider (s27 only)."""
+    s = blank(p)
+    divider_bg(s, icon_name=icon_name)
+    text_box(s, 0.9, 1.55, 10.6, 0.9, text=big_title, size=36, bold=True, color=WHITE,
+             line_spacing=1.05)
+    text_box(s, 0.9, 2.42, 10.6, 0.7, text=subtitle, size=22, bold=True, color=GOLD,
+             line_spacing=1.05)
+    text_box(s, 0.95, 3.32, 9.9, 0.85, text=meaning, size=16.5, italic=True,
+             color=RGBColor(0xCF, 0xDC, 0xEC), line_spacing=1.3)
+    tag_w = 5.6
+    filled_rect(s, 0.95, 4.25, tag_w, 0.55, RGBColor(0x0B, 0x14, 0x3A), stroke=GOLD,
+                stroke_pt=1.2, radius=True, radius_adj=0.28)
+    text_box(s, 0.95 + 0.28, 4.25, tag_w - 0.56, 0.55, text=tag.upper(), size=11.5,
+             bold=True, color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes(slide_id))
+    return s
+
+
+# ============================================================
+# Reusable pattern-level slide builders
+# ============================================================
+
+def question_slide(p, slide_id, *, label, title, question, options, opt_h=1.5,
+                    note="разбор — на следующем слайде", scenario=None):
+    """pattern: reflection_question / question_with_option_cards — gold
+    question callout + N option cards + neutral note (no table, no highlight,
+    per R3-4)."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, label, title)
+    if scenario:
+        text_box(s, 0.55, y, 12.23, 0.85, text=scenario, size=12, italic=True,
+                 color=SLATE, line_spacing=1.22)
+        y += 0.95
+    qh = 1.3 if len(question) > 220 else (1.1 if len(question) > 140 else 0.85)
+    gold_callout(s, 0.55, y, 12.23, qh, question, size=14, anchor=MSO_ANCHOR.MIDDLE)
+    y += qh + 0.22
+    n = len(options)
+    gap = 0.16
+    cw = (12.23 - gap * (n - 1)) / n
+    cx = 0.55
+    for label_txt in options:
+        ocean_box(s, cx, y, cw, opt_h, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.1)
+        lines = label_txt.split("\n")
+        paras = [{"text": ln, "size": 12.5, "bold": True, "color": DEEP,
+                   "align": PP_ALIGN.CENTER, "line_spacing": 1.15} for ln in lines]
+        multipara_box(s, cx + 0.08, y, cw - 0.16, opt_h, paras, anchor=MSO_ANCHOR.MIDDLE)
+        cx += cw + gap
+    text_box(s, 0.55, y + opt_h + 0.16, 12.23, 0.35, text=note, size=12, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes(slide_id))
+    return s
+
+
+def answer_slide(p, slide_id, *, label, title, context_q, headers, rows, col_w,
+                  gold_rows, footer, table_h=3.9, header_size=10.3, cell_size=10.0,
+                  footer_h=0.95, footer_size=13.5):
+    """pattern: answer_breakdown — small context question + reveal table with
+    gold target row(s) + gold footer plate with the target answer / criterion."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, label, title)
+    text_box(s, 0.55, y, 12.23, 0.3, text=f"вопрос для контекста: «{context_q}»",
+             size=11.3, italic=True, color=SLATE)
+    y += 0.4
+    reveal_table(s, 0.55, y, 12.23, table_h, headers, rows, col_w,
+                 row_highlight={i: "gold" for i in gold_rows},
+                 header_size=header_size, cell_size=cell_size)
+    fy = y + table_h + 0.16
+    gold_callout(s, 0.55, fy, 12.23, footer_h, footer, size=footer_size,
+                 anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes(slide_id))
+    return s
+
+
+def criteria_slide(p, slide_id, *, label, title, items, boundary_text, extra_note=None):
+    """pattern: criteria_checklist_and_boundary — checklist + explicit
+    boundary/bridge text (shared by s34/s40/s46)."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, label, title)
+    n = len(items)
+    row_h = 0.56
+    ocean_box(s, 0.55, y, 12.23, n * row_h + 0.3)
+    iy = y + 0.18
+    for it in items:
+        filled_rect(s, 0.78, iy + 0.08, 0.22, 0.22, TEAL, radius=True, radius_adj=0.25)
+        _fits(it, 13.5, 11.3, row_h - 0.1, label="criteria_slide item")
+        text_box(s, 1.14, iy, 11.4, row_h - 0.08, text=it, size=13.5, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.18)
+        iy += row_h
+    by = y + n * row_h + 0.3 + 0.2
+    bh = 7.0 - by - (0.7 if extra_note else 0)
+    gold_callout(s, 0.55, by, 12.23, bh, boundary_text, size=13, anchor=MSO_ANCHOR.MIDDLE)
+    if extra_note:
+        text_box(s, 0.55, by + bh + 0.1, 12.23, 0.55, text=extra_note, size=11.3,
+                 italic=True, color=SLATE, line_spacing=1.2)
+    speaker_notes(s, load_notes(slide_id))
+    return s
+
+
+def scenario_pain_slide(p, slide_id, *, label, title, scenario, bottom_line, note=None):
+    """pattern: scenario_pain — a big narrative scenario block + one bold
+    pain-summary line (shared by s35/s41)."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, label, title)
+    sh = 7.0 - y - 1.15 - (0.35 if note else 0)
+    ocean_box(s, 0.55, y, 12.23, sh)
+    _fits(scenario, 14, 11.7, sh - 0.4, label="scenario_pain")
+    text_box(s, 0.9, y + 0.2, 11.5, sh - 0.4, text=scenario, size=14, color=DEEP,
+             line_spacing=1.32, anchor=MSO_ANCHOR.MIDDLE)
+    by = y + sh + 0.18
+    gold_callout(s, 0.55, by, 12.23, 0.85, bottom_line, size=15, anchor=MSO_ANCHOR.MIDDLE,
+                 align=PP_ALIGN.CENTER)
+    if note:
+        text_box(s, 0.55, by + 0.85 + 0.08, 12.23, 0.3, text=note, size=10.5,
+                 italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes(slide_id))
+    return s
+
+
+# ============================================================
+# Раздел 0 — Открытие (s01-s07)
+# ============================================================
+
+LADDER_STAGES = [
+    ("0", "signup-landing/", "пусто"),
+    ("1", "CLAUDE.md", "файл инструкций"),
+    ("2", "DECISIONS.md", "память"),
+    ("3", ".claude/settings.json", "хук"),
+    ("4", "skills/deploy/", "скилл"),
+    ("5", ".mcp.json", "MCP"),
+    ("6", "agents/diff-reviewer.md", "субагент"),
+    ("7", "Tasks/", "процесс"),
+]
+
+
+def build_growth_staircase_bare(slide, x, y, w, h, *, bar_lo, bar_hi, bar_gold,
+                                 number_color, gold_number_color, baseline_color,
+                                 show_numbers=True):
+    """Unlabeled ascending staircase — hero motif for s01 (bars only, no
+    filenames/stage names — 'семь ступеней лестницы, без подписей')."""
+    n = len(LADDER_STAGES)
+    gap = 0.16
+    chip_w = (w - gap * (n - 1)) / n
+    bottom_reserve = 0.3 if show_numbers else 0.05
+    baseline_y = y + h - bottom_reserve
+    bar_max_h = h - bottom_reserve - 0.1
+    unit = bar_max_h / n
+    ln = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, Inches(x), Inches(baseline_y),
+                                     Inches(x + w), Inches(baseline_y))
+    ln.line.color.rgb = baseline_color; ln.line.width = Pt(1.4)
+    cx = x
+    for i in range(n):
+        last = (i == n - 1)
+        bar_h = max(0.16, (i + 1) * unit)
+        bar_y = baseline_y - bar_h
+        color = bar_gold if last else lerp_color(bar_lo, bar_hi, i / (n - 2))
+        filled_rect(slide, cx, bar_y, chip_w, bar_h, color, radius=True, radius_adj=0.16)
+        if show_numbers:
+            text_box(slide, cx - 0.05, baseline_y + 0.03, chip_w + 0.1, 0.26, text=str(i),
+                     size=11.5, bold=last, color=(gold_number_color if last else number_color),
+                     align=PP_ALIGN.CENTER)
+        cx += chip_w + gap
+
+
+def build_s01(p):
+    s = blank(p)
+    gradient_rect(s, 0, 0, SLIDE_W_IN, SLIDE_H_IN,
+                   [(0, DEEP), (50000, MID), (100000, LIGHT)])
+    text_box(s, 8.9, 0.05, 4.2, 1.9, text="04", size=170, bold=True,
+             color=RGBColor(0x33, 0x42, 0x7C), align=PP_ALIGN.RIGHT, font=FONT_HEAD,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0, 0.32, SLIDE_W_IN, 0.36, text="СЕМИНАР 4",
+             size=13, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
+    text_box(s, 0, 0.68, SLIDE_W_IN, 0.9, text="Сборка кодинг-агента",
+             size=44, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+    text_box(s, 1.0, 1.5, SLIDE_W_IN - 2.0, 0.4,
+             text="Один сквозной кейс, две развилки харнесса на трёх реальных решениях",
+             size=15.5, italic=True, color=RGBColor(0xCF, 0xDC, 0xEC), align=PP_ALIGN.CENTER)
+
+    q_y = 2.08
+    q_h = 1.15
+    filled_rect(s, 1.15, q_y, SLIDE_W_IN - 2.3, q_h, RGBColor(0x0B, 0x14, 0x3A),
+                stroke=GOLD, stroke_pt=1.8, radius=True, radius_adj=0.12)
+    text_box(s, 1.55, q_y + 0.1, SLIDE_W_IN - 3.1, q_h - 0.2,
+             text="«У вас репозиторий и агент, который в нём работает — какой блок "
+                  "конфигурации добавить первым, и как понять, что следующий добавлять "
+                  "ещё рано?»",
+             size=16.5, italic=True, bold=True, color=GOLD, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
+
+    hero_x, hero_y, hero_w, hero_h = 0.55, 3.55, 12.23, 3.35  # ~41% of slide area
+    text_box(s, hero_x, hero_y - 0.34, 8.0, 0.28,
+             text="ПУСТАЯ ДИРЕКТОРИЯ  →  СЕМЬ ДОБАВЛЕНИЙ, ПОКА БЕЗ ИМЁН",
+             size=11.5, bold=True, color=RGBColor(0x9C, 0xAE, 0xC9))
+    build_growth_staircase_bare(s, hero_x, hero_y, hero_w, hero_h,
+        bar_lo=(0x3A, 0x4A, 0x86), bar_hi=(0x6B, 0x7F, 0xC2), bar_gold=GOLD,
+        number_color=RGBColor(0xB9, 0xC8, 0xDE), gold_number_color=GOLD,
+        baseline_color=RGBColor(0x4A, 0x5C, 0x96), show_numbers=True)
+    text_box(s, hero_x, hero_y + hero_h + 0.06, 12.0, 0.3,
+             text="Реальные 7 стадий демо-репозитория signup-landing/ (git ls-tree по коммитам) "
+                  "· источник: captures/21–27",
+             size=9.5, italic=True, color=RGBColor(0x8A, 0x9B, 0xC0))
+    speaker_notes(s, load_notes("s01"))
+
+
 def build_s02(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -784,17 +880,17 @@ def build_s02(p):
     gold_callout(s, 0.55, 5.5, 12.23, 1.3,
                  "«Заказчик просит лендинг с формой заявки на демо-урок. Одна страница, "
                  "два поля, кнопка. Назовите вслух: что вообще должно быть у этой задачи, "
-                 "чтобы вы могли сказать "
-                 "‘готово’ и показать её заказчику? Не как это устроено внутри — а что "
-                 "должно существовать.»", size=14.5)
+                 "чтобы вы могли сказать ‘готово’ и показать её заказчику? Не как это "
+                 "устроено внутри — а что должно существовать.»", size=14.5)
     speaker_notes(s, load_notes("s02"))
 
 
 def build_s03(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Раздел 0 · Требования", "Шесть требований делятся ровно пополам: три увидит в коде любой, три не будут видны нигде",
-           title_size=21)
+    header(s, "Раздел 0 · Открытие",
+           "Шесть требований делятся ровно пополам: три увидит в коде любой, три не "
+           "будут видны нигде", title_size=19)
     two_basket_frame(s, 0.55, 1.85, 12.23, 4.1, "видно в коде",
                       ["поля формы: имя и email, оба обязательные",
                        "чем собирается — сборка в статику",
@@ -813,9 +909,8 @@ def build_s04(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     header(s, "Раздел 0 · Сквозной кейс",
-           "Репозиторий буквально пуст, а агент не задал ни одного уточняющего вопроса — и то, "
-           "чего не знал, решил за вас молча",
-           title_size=16)
+           "Репозиторий буквально пуст, а агент не задал ни одного уточняющего вопроса — "
+           "и то, чего он не знал, решил за вас молча", title_size=15)
     half_w = 5.85
     y1 = 1.85
     h1 = 1.55
@@ -858,9 +953,8 @@ def build_s05(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     header(s, "Раздел 0 · Первый вопрос классу",
-           "Первый блок конфигурации выбирают из восьми вариантов на экране — и «ничего» среди "
-           "них не менее весомый вариант, чем остальные семь",
-           title_size=15)
+           "Первый блок конфигурации выбирают из восьми вариантов на экране — и «ничего» "
+           "среди них не менее весомый вариант, чем остальные семь", title_size=15)
     gold_callout(s, 0.55, 1.85, 12.23, 1.55,
                  "«Перед вами репозиторий, который агент только что собрал, и вам с этим же "
                  "агентом доделывать этот сайт дальше, неделями. Выберите, какой блок "
@@ -923,2055 +1017,1269 @@ def build_s06(p):
     speaker_notes(s, load_notes("s06"))
 
 
-def cobuilding_map(slide, x, y, w, h, *, slots, grey_slots, rule_text=None):
-    """5 numbered white slots + 2 grey practical-layer slots, shared by
-    s07 (empty) / s08 (filled)."""
-    ocean_box(slide, x, y, w, h)
-    pad = 0.26
-    n = 5
-    gap = 0.16
-    total_slots = n + len(grey_slots)
-    row_gap = 0.16
-    cw = (w - 2 * pad - row_gap * (total_slots - 1)) / total_slots
-    top = y + pad
-    slot_h = 1.55 if rule_text is None else 1.35
-    cx = x + pad
-    for i in range(n):
-        label, desc = slots[i] if slots[i] else (None, None)
-        fill = SURFACE if label else RGBColor(0xEE, 0xF1, 0xF5)
-        stroke = LIGHT if label else SOFT_GREY
-        filled_rect(slide, cx, top, cw, slot_h, fill, stroke=stroke, stroke_pt=1.2,
-                    radius=True, radius_adj=0.12)
-        text_box(slide, cx, top + 0.08, cw, 0.3, text=str(i + 1), size=13, bold=True,
-                 color=MID, align=PP_ALIGN.CENTER)
-        if label:
-            paras = [{"text": ln, "size": 11.5, "bold": True, "color": DEEP,
-                       "align": PP_ALIGN.CENTER, "line_spacing": 1.05} for ln in label.split("\n")]
-            multipara_box(slide, cx + 0.06, top + 0.4, cw - 0.12, 0.55, paras)
-            text_box(slide, cx + 0.06, top + 0.92, cw - 0.12, slot_h - 0.98, text=desc or "",
-                     size=8.8, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.05)
-        cx += cw + row_gap
-    for j, gslot in enumerate(grey_slots):
-        label, desc = gslot if gslot else (None, None)
-        fill = RGBColor(0xE4, 0xE9, 0xEF) if label else RGBColor(0xEE, 0xF1, 0xF5)
-        filled_rect(slide, cx, top, cw, slot_h, fill, stroke=SLATE, stroke_pt=1.0,
-                    radius=True, radius_adj=0.12)
-        if label:
-            text_box(slide, cx + 0.06, top + 0.2, cw - 0.12, 0.5, text=label, size=11.5,
-                     bold=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.05)
-            text_box(slide, cx + 0.06, top + 0.7, cw - 0.12, slot_h - 0.78, text=desc or "",
-                     size=8.8, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.05)
-        cx += cw + row_gap
-    if rule_text:
-        ry = top + slot_h + 0.2
-        gold_callout(slide, x + pad, ry, w - 2 * pad, y + h - pad - ry, rule_text, size=12.5,
-                     anchor=MSO_ANCHOR.MIDDLE)
-
-
 def build_s07(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Раздел 0 · Опорная карта", "Экипировка агента — это пять слотов поверх базового цикла «планируй → действуй → проверяй → повторяй»",
-           title_size=18)
-    cobuilding_map(s, 0.55, 1.95, 12.23, 4.85, slots=[None] * 5, grey_slots=[None, None])
-    speaker_notes(s, load_notes("s07"))
-
-
-def build_s08(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Раздел 0 · Правило лестницы", "Оставайтесь на самой нижней ступени, которая закрывает требование задачи",
-           title_size=20)
+    y = auto_header(s, "Раздел 0 · Опорная карта",
+        "Из пяти слотов экипировки агента сегодня подробно разбираются два — инструкции-"
+        "правила и память; остальные три и оба практических слоя — дальше, Семинаром 5")
     slots = [
         ("память", "что агент помнит между сессиями"),
         ("инструкции-\nправила", "файл-конвенция проекта + журнал задач"),
-        ("скиллы", "переиспользуемые процедуры"),
-        ("субагенты", "делегирование с отдельным окном"),
+        ("скиллы", "переиспользуемые процедуры под повторяющиеся задачи"),
+        ("субагенты", "делегирование с отдельным контекстным окном"),
         ("доступ\nнаружу (MCP)", "доступ к внешним системам"),
     ]
-    grey = [("хук", "усиление слота 2"), ("процесс", "операционализация «проверяй»")]
-    cobuilding_map(s, 0.55, 1.85, 12.23, 4.95, slots=slots, grey_slots=grey,
-                    rule_text="«Оставайтесь на самой нижней ступени, которая закрывает требование задачи. "
-                              "Поднимайтесь на следующую только тогда, когда можете назвать требование, которое "
-                              "текущая ступень не закрывает. Каждый подъём оплачивается новой стоимостью, новыми "
-                              "режимами отказа и новой поверхностью атаки.»")
-    speaker_notes(s, load_notes("s08"))
+    slot_h = 1.95
+    slot_row5(s, 0.55, y, 12.23, slot_h, slots, accent_idx=(0, 1))
+    y2 = y + slot_h + 0.2
+    text_box(s, 0.55, y2, 12.23, 0.55,
+             text="Сегодня подробно — два. Дальше, Семинар 5: скиллы, субагенты, доступ "
+                  "наружу + хук, процесс.",
+             size=14.5, italic=True, bold=True, color=MID, align=PP_ALIGN.CENTER,
+             line_spacing=1.2)
+    y3 = y2 + 0.6
+    gold_callout(s, 0.55, y3, 12.23, 7.0 - y3,
+                 "«Оставайтесь на самой нижней ступени, которая закрывает требование задачи. "
+                 "Поднимайтесь на следующую только тогда, когда можете назвать требование, "
+                 "которое текущая ступень не закрывает. Каждый подъём оплачивается новой "
+                 "стоимостью, новыми режимами отказа и новой поверхностью атаки.»",
+                 size=13, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s07"))
 
 
 # ============================================================
-# Ступень 1 — Файл инструкций (s09-s15)
+# Раздел 1 — Файл инструкций (s08-s26)
 # ============================================================
+
+def build_s08(p):
+    return divider_section(p, "s08",
+        title="Раздел 1 · файл инструкций",
+        case_lines=["Кейс 1.1 · роль агента и репозиторий",
+                    "Кейс 1.2 · базовые процессы: гейты и цикл улучшения",
+                    "Кейс 1.3 · вложенные файлы по подпапкам"],
+        tag="Один файл, три развилки", active_idx=1, total=4, icon_name="file-text")
 
 
 def build_s09(p):
-    build_stage_divider(p, "s09", stage_num=1, title="Ступень 1 · файл инструкций",
-        meaning="Записываем только то, чего агент не выведет из кода",
-        tag="3 хода совместного формирования · 1 контролируемый эксперимент")
-
-
-def scenario_top_text(text, *, h=1.55, size=14):
-    def render(s, y):
-        ocean_box(s, 0.55, y, 12.23, h)
-        text_box(s, 0.55 + 0.26, y + 0.16, 12.23 - 0.52, h - 0.32, text=text, size=size,
-                 color=DEEP, line_spacing=1.32, anchor=MSO_ANCHOR.MIDDLE)
-        return y + h + 0.2
-    return render
+    return divider_case(p, "s09",
+        title="Кейс 1.1 · роль агента и репозиторий",
+        meaning="Что писать в пустой файл, пока не случилось ни одной реальной сессии",
+        tag="1 контролируемый эксперимент · 1 честный пробел",
+        case_idx=0, case_total=3, icon_name="file-text")
 
 
 def build_s10(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 1 · Сценарий-боль",
-           "«Готово» для агента — это «собралось и тест зелёный»; «готово» для вас — «заявка "
-           "доставлена на проде», и эти два определения разошлись молча",
-           title_size=15)
-    y = 1.85
-    ocean_box(s, 0.55, y, 12.23, 1.05)
-    text_box(s, 0.81, y, 11.7, 1.05,
-             text="Новая сессия, неделю спустя. Заказчик: «отправил заявку с сайта — она не "
-                  "пришла». Агент читает код, правит обработчик отправки формы в src/main.js, "
-                  "запускает тест — тест зелёный — и отчитывается: «Готово, тест проходит».",
-             size=12.3, color=DEEP, line_spacing=1.24, anchor=MSO_ANCHOR.MIDDLE)
-    y += 1.05 + 0.12
-    dashed_box(s, 0.55, y, 12.23, 0.46, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.81, y, 11.7, 0.46,
-             text="а tests/form.spec.ts проверяет ровно одно — что форма НЕ отправляется с "
-                  "пустыми обязательными полями",
-             size=11.2, italic=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    y += 0.46 + 0.12
-    gold_callout(s, 0.55, y, 12.23, 1.2,
-                 "«Агент починил форму, прогнал тест, тест зелёный, агент говорит ‘готово’. А "
-                 "заявка на проде по-прежнему не доходит — потому что тест проверяет совсем "
-                 "другое. Выберите, куда записать критерий ‘готово’ в этом проекте — из карточек "
-                 "ниже — так, чтобы агент в следующей сессии не сделал ровно то же самое.»",
-                 size=12.3)
-    y += 1.2 + 0.16
-    option_row(s, 0.55, y, 12.23, 0.85,
-               ["ответить\nв чате", "README.md", "файл инструкций\nCLAUDE.md",
-                "комментарий\nв тесте", "переписать\nсам тест"], size=12)
-    y += 0.85 + 0.22
-    text_box(s, 0.55, y, 12.23, 0.4, text="разбор — на следующем слайде", size=12,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Кейс 1.1 · Роль и репозиторий",
+        "Первый инстинкт — открыть пустой файл и начать с описания структуры "
+        "репозитория; привычка сильная, но это ровно та фраза «так делают в хороших "
+        "проектах», которую занятие проверяет впервые")
+    half_w = 5.85
+    h1 = 2.1
+    terminal_card(s, 0.55, y, half_w, h1, [
+        ("index.html", CODE_FG), ("package.json", CODE_FG),
+        ("src/main.js", CODE_FG), ("tests/form.spec.ts", CODE_FG),
+    ], title="дерево на входе в кейс", size=12.5)
+    rx = 0.55 + half_w + 0.33
+    ocean_box(s, rx, y, half_w, h1)
+    text_box(s, rx + 0.2, y + 0.14, half_w - 0.4, h1 - 0.28,
+             text="Разработчик открывает пустой CLAUDE.md и по привычке тянется первым "
+                  "делом написать «Repository overview» — из чего собран сайт, где лежит "
+                  "форма, какая структура папок.",
+             size=13, color=DEEP, line_spacing=1.3)
+    y2 = y + h1 + 0.25
+    gold_callout(s, 0.55, y2, 12.23, 1.55,
+                 "«В одном из прошлых проектов раздел "
+                 "«Overview» пережил рефакторинг и два месяца спустя продолжал описывать "
+                 "структуру, которой больше не существовало — агент один раз отредактировал "
+                 "не тот файл, поверив описанию, а не факту.»",
+                 size=13.5, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s10"))
 
 
 def build_s11(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 1 · Разбор",
-           "В файл инструкций идёт только невыводимое: критерий «готово», граница действий и "
-           "способ проверки — и ничего, что агент допишет сам",
-           title_size=15)
-    y = 1.85
-    text_box(s, 0.55, y, 12.23, 0.3,
-             text="вопрос для контекста: «Куда записать критерий ‘готово’?»",
-             size=11, italic=True, color=SLATE)
-    y += 0.38
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+    y = auto_header(s, "Кейс 1.1 · Исследование",
+        "Repository overview измеримо не помогает и стоит контекста — кроме "
+        "единственного подтверждённого исключения: репозитория без другой документации "
+        "вообще")
+    headers = ["Источник", "Тезис", "Сила доказательства"]
     rows = [
-        ["«Отвечу агенту в чате ещё раз»", "Внутри одной сессии — полностью достаточно",
-         "Не переживает конец сессии: следующая начинается с пустого контекста. Вместо: "
-         "записать туда, что читается само, без вашего участия"],
-        ["«Напишу в README.md»", "README нужен людям, впервые открывшим репозиторий",
-         "README не подгружается в начало каждой сессии. README читает человек, если захочет; "
-         "файл инструкций читает агент, хочет он того или нет"],
-        ["«Заведу файл инструкций с полным описанием архитектуры»",
-         "Практически нигде: самый частый способ потратить контекст впустую",
-         "Агент выведет структуру кода сам за секунды. Раздел устареет при первом рефакторинге. "
-         "Контролируемый эксперимент: такие файлы подняли стоимость на 20–23% без прироста успеха"],
-        ["«Допишу комментарий в tests/form.spec.ts»", "Когда правило касается ровно этого файла",
-         "Агент откроет тест не в каждой задаче. Вместо: правило уровня проекта — в файл уровня проекта"],
-        ["«Пусть агент перепишет тест так, чтобы проверял доставку»",
-         "Правильный инженерный шаг — стоит сделать",
-         "Не закрывает задачу раздела: даже идеальный тест не скажет, чего делать нельзя. Не "
-         "«вместо», а вдобавок"],
-        ["«Заведу файл инструкций, но только с тем, чего агент не выведет из кода»",
-         "На этом шаге — именно то, что нужно",
-         "Не рано: сигнал сработал. Перестаёт работать, когда файл начинает расти без обрезки"],
+        ["Gloaguen et al., arXiv:2602.11988",
+         "«Repository overviews… are not helpful» — «шагов до первого релевантного файла» "
+         "не падает; cost +20–23% без прироста success",
+         "Сильное: контролируемый эксперимент с честным третьим плечом «файла нет вообще»"],
+        ["Та же работа, абляция",
+         "Удалили существующую документацию (README) — LLM-сгенерированный overview стал "
+         "полезен (+2,7%)",
+         "Подтверждает механизм: overview вреден потому, что дублирует то, что уже доступно "
+         "иначе"],
+        ["Lulla et al., arXiv:2601.20404",
+         "AGENTS.md с фокусом на недискаверабельные конвенции: −28,6% runtime, −16,6% "
+         "tokens (124 PR)",
+         "Умеренно-сильное «за» файл — но это НЕ про общее описание структуры"],
+        ["Shepard & Albrecht, arXiv:2606.20512",
+         "Статичное written-once guidance (28,3% resolve) хуже динамически "
+         "верифицированного (33,0%, p<0,001)",
+         "Косвенное — подтверждает логику «непроверенное статично хуже»"],
     ]
-    reveal_table(s, 0.55, y, 12.23, 6.95 - y, headers, rows, [0.26, 0.26, 0.48],
-                 row_highlight={5: "gold"}, header_size=9, cell_size=8.6)
+    table_h = 3.55
+    reveal_table(s, 0.55, y, 12.23, table_h, headers, rows, [0.2, 0.42, 0.38],
+                 row_highlight={0: "gold"}, header_size=10.3, cell_size=9.7)
+    y += table_h + 0.14
+    text_box(s, 0.55, y, 12.23, 0.4,
+             text="это явление называют presence paradox — сам факт присутствия текста в "
+                  "контексте создаёт свою стоимость независимо от того, использует ли его "
+                  "агент (термин используется дальше без повторного объяснения)",
+             size=10.8, italic=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.2)
+    y += 0.44
+    gold_callout(s, 0.55, y, 12.23, 7.0 - y,
+                 "«Прямых экспериментов с намеренно устаревшим или неверным repository "
+                 "overview не найдено — это пробел в исследованиях, не установленный факт. "
+                 "Анекдот коллеги — правдоподобный, но не измеренный случай.»",
+                 size=11.5, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s11"))
 
 
 def build_s12(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 1 · Совместное формирование, ход 1", "Первая строка, которую зал хочет записать в файл инструкций, — команды сборки и теста",
-           title_size=18)
-    terminal_card(s, 0.55, 1.95, 12.23, 2.4, [
-        ("# CLAUDE.md", CODE_MUTED, True),
-        ("", CODE_FG),
-        ("## …", CODE_MUTED),
-        ("", CODE_FG),
-        ("## …", CODE_MUTED),
-    ], title="пустой каркас")
-    gold_callout(s, 0.55, 4.55, 12.23, 0.95, "«Одну строку, которую точно надо записать. Кто?»",
-                 size=16, align=PP_ALIGN.CENTER)
-    text_box(s, 0.55, 5.7, 12.23, 0.4, text="строка вписывается на глазах у зала — без правки и без оценки",
-             size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s12"))
+    return question_slide(p, "s12", label="Кейс 1.1 · Вопрос",
+        title="Перед пустым CLAUDE.md выбор из пяти вариантов — и «пока ничего» среди "
+              "них не менее весомый вариант, чем остальные четыре",
+        question="«Перед вами пустой CLAUDE.md для signup-landing. Выберите, что из "
+                  "перечисленного вы включите в файл прямо сейчас, до первой реальной "
+                  "сессии агента — из карточек ниже.»",
+        options=["подробное описание\nструктуры репозитория", "список технологий\nи "
+                 "зависимостей", "инструкцию, где лежит\nформа и как её найти",
+                 "неочевидную конвенцию,\nкоторую агент не угадает сам",
+                 "пока ничего — до\nпервого реального сигнала"],
+        opt_h=1.75)
 
 
 def build_s13(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 1 · Совместное формирование, ход 2", "Имена скриптов придумал сам агент — строка про команды почти ничего не добавляет, но платит контекстом",
-           title_size=16)
-    half_w = 5.85
-    ocean_box(s, 0.55, 1.95, half_w, 1.7)
-    text_box(s, 0.55 + 0.2, 1.95 + 0.2, half_w - 0.4, 1.3,
-             text="build: npm run build\ntest: npx playwright test", size=15,
-             color=SLATE, line_spacing=1.4, strike=True, font=FONT_MONO)
-    rx = 0.55 + half_w + 0.33
-    terminal_card(s, rx, 1.95, half_w, 1.7, [
-        ("npm install", CODE_FG),
-        ("npm run build          # → dist/", CODE_FG),
-        ("npm run test:e2e       # playwright test", CODE_FG),
-    ], title="из финального ответа агента")
-    text_box(s, rx, 3.72, half_w, 0.3, text="имена скриптов придумал он сам", size=11,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    dashed_box(s, 0.55, 3.95, 12.23, 0.62, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.8, 3.95, 11.7, 0.62,
-             text="вместо неё остаётся: как проверить, что правка реально работает, а не только компилируется",
-             size=12.5, italic=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    gold_callout(s, 0.55, 4.75, 12.23, 0.85, "«Вычёркиваем? Оставляем?»", size=17, align=PP_ALIGN.CENTER)
-    footer_note(s, "Измеренная надбавка присутствия файла к стоимости и числу шагов — 20–23% относительно работы вовсе без файла", y=6.75)
-    speaker_notes(s, load_notes("s13"))
+    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+    rows = [
+        ["«Подробное описание структуры репозитория»",
+         "Почти нигде для агента — разве что документация для новых людей в команде",
+         "Агент выведет структуру сам за секунды; описание устареет при первом "
+         "рефакторинге. Эксперимент: +20–23% cost, без прироста success. Вместо: не писать"],
+        ["«Список технологий и зависимостей»",
+         "Когда версии критичны и не видны из package.json (редко)",
+         "В большинстве случаев тоже выводимо за секунды. Вместо: не писать, если версии "
+         "видны в манифесте"],
+        ["«Инструкция, где лежит форма и как её найти»",
+         "Почти нигде на таком маленьком репозитории",
+         "Четыре файла, вся структура на одном экране — находимость не проблема"],
+        ["«Неочевидная конвенция, которую агент не угадает сам»",
+         "Когда конвенция реально есть и реально невыводима",
+         "На этом шаге такой конвенции ещё нет — проект только начался. Появится — "
+         "записать её, и только её"],
+        ["«Пока ничего — до первого реального сигнала»",
+         "Здесь и сейчас",
+         "Целевой ответ. Перестаёт быть верным, когда появится конкретная невыводимая "
+         "вещь — не раньше"],
+    ]
+    return answer_slide(p, "s13", label="Кейс 1.1 · Разбор",
+        title="Правильный ответ на этом шаге — не какой текст написать, а пока никакой: "
+              "файл остаётся пустым, потому что триггер ещё не сработал",
+        context_q="Что включить в файл прямо сейчас?", headers=headers, rows=rows,
+        col_w=[0.24, 0.3, 0.46], gold_rows=[4],
+        footer="Всё, что агент выведет из кода за секунды, в файл не идёт никогда — не "
+               "«пока рано», а вообще. Общее описание роли/архитектуры оправданно только "
+               "там, где нет вообще другой документации; у signup-landing она будет — "
+               "значит, оснований нет.",
+        table_h=3.75, footer_h=1.05, footer_size=12)
 
 
 def build_s14(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 1 · Совместное формирование, ход 3", "В файл идут ровно те три требования, которые зал сам отложил в группу «нигде не будет видно»",
-           title_size=17)
-    half = 5.85
-    ocean_box(s, 0.55, 1.95, half, 4.0, fill=RGBColor(0xF4, 0xF6, 0xF9), stroke=SOFT_GREY)
-    text_box(s, 0.75, 2.1, half - 0.4, 0.3, text="ШЕСТЬ ТРЕБОВАНИЙ (раздел 0)", size=11, bold=True, color=SLATE)
-    items6 = ["поля формы: имя и email", "чем собирается", "чем проверяется",
-              "что считается «готово»", "чего агент не делает сам", "как убедиться руками"]
-    for i, it in enumerate(items6):
-        gold = i >= 3
-        ry = 2.5 + i * 0.55
-        filled_rect(s, 0.75, ry, half - 0.4, 0.46, GOLD_TINT if gold else SURFACE,
-                    stroke=GOLD_DARK if gold else SOFT_GREY, stroke_pt=1.2, radius=True, radius_adj=0.2)
-        text_box(s, 0.9, ry, half - 0.7, 0.46, text=it, size=11.5,
-                 color=GOLD_DARK if gold else SLATE, bold=gold, anchor=MSO_ANCHOR.MIDDLE)
-    rx = 0.55 + half + 0.33
-    numbered_card(s, rx, 1.95, half, 4.0, [
-        "определение «готово» — одна строка",
-        "граница действий: не выкладывать на прод без явного запроса",
-        "как убедиться руками, что заявка дошла",
-    ], size=13.5)
-    text_box(s, 0.55, 6.1, 12.23, 0.4, text="3 из 6", size=20, bold=True, color=GOLD_DARK, align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Кейс 1.1 · Решение",
+        "CLAUDE.md остаётся пустым — не из лени, а потому что нет сигнала; первый "
+        "настоящий сигнал придёт через неделю")
+    terminal_card(s, 0.55, y, 12.23, 2.35, [
+        ("index.html", CODE_FG), ("package.json", CODE_FG),
+        ("src/main.js", CODE_FG), ("tests/form.spec.ts", CODE_FG),
+        ("# CLAUDE.md — не создан", CODE_MUTED, True),
+    ], title="дерево репозитория — без изменений", size=13)
+    y2 = y + 2.35 + 0.25
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
+                 "«Файл пуст не потому, что мы ленивы, а потому что нет сигнала. Первый "
+                 "настоящий сигнал появится через неделю.»",
+                 size=17, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s14"))
 
 
 def build_s15(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 1 · Решение", "Итоговый файл инструкций — восемнадцать строк и ровно три содержательных пункта, ни одного выводимого из кода",
-           title_size=17)
-    left_w = 6.85
-    code_card(s, 0.55, 1.85, left_w, 4.85, [
-        ("# CLAUDE.md", CODE_FG, True),
-        ("", CODE_FG),
-        ("signup-landing: статический лендинг с формой", CODE_MUTED),
-        ("заявки на демо-урок.", CODE_MUTED),
-        ("", CODE_FG),
-        ("## Safety / scope boundaries", TEAL, True),
-        ("- Никогда не запускать деплой на прод без", GOLD),
-        ("  явного запроса — это касается и критерия", GOLD),
-        ("  «готово» ниже: сам критерий не повод", GOLD),
-        ("  инициировать деплой.", GOLD),
-        ("", CODE_FG),
-        ("## Definition of done", TEAL, True),
-        ("- npm run build код 0, npx playwright test", GOLD),
-        ("  зелёный, форма реально доставляет заявку —", GOLD),
-        ("  проверяется на уже задеплоенной версии.", GOLD),
-        ("", CODE_FG),
-        ("## Build, test, verify", TEAL, True),
-        ("- Открыть dist/index.html после сборки,", GOLD),
-        ("  вручную отправить форму с заполненными и", GOLD),
-        ("  с пустыми полями.", GOLD),
-    ], size=10.3, line_spacing=1.18)
-    rx = 0.55 + left_w + 0.3
-    rw = 12.23 - left_w - 0.3
-    terminal_card(s, rx, 1.85, rw, 2.35, [
-        ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG), ("index.html", CODE_FG),
-        ("package.json", CODE_FG), ("src/main.js", CODE_FG), ("tests/form.spec.ts", CODE_FG),
-    ], title="дерево ступени 1", size=11)
-    dashed_box(s, rx, 4.35, rw, 0.6, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, rx + 0.15, 4.35, rw - 0.3, 0.6,
-             text="ln -s CLAUDE.md AGENTS.md — один источник правды", size=11, italic=True,
-             color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    ocean_box(s, rx, 5.1, rw, 1.6, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, rx + 0.16, 5.22, rw - 0.32, 1.35,
-             text="грузится целиком в начало каждой сессии · уровни конкатенируются, "
-                  "а не перекрываются · @-импорты не экономят контекст · ориентир — до 200 строк",
-             size=10.5, color=DEEP, line_spacing=1.3)
-    speaker_notes(s, load_notes("s15"))
+    return divider_case(p, "s15",
+        title="Кейс 1.2 · базовые процессы",
+        meaning="Первая реальная боль — заявка не доходит, тест зелёный",
+        tag="4 препринта-консенсус · 1 контринтуитивный результат",
+        case_idx=1, case_total=3, icon_name="file-text")
 
 
 def build_s16(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 1 · Провал / ограничение", "Сам факт наличия файла инструкций не покупает успех, но покупается контекстом всегда",
-           title_size=18)
-    headers = ["Плечо (против «файла нет», arXiv:2602.11988)", "Эффект на успех", "Значимость"]
-    rows = [
-        ["файл сгенерирован моделью", "−0,5%", "незначимо (p=87%)"],
-        ["то же, другая связка модель/агент", "−2%", "незначимо (p=37%)"],
-        ["файл написан разработчиком", "+2,4%", "незначимо (p=21%)"],
-        ["стоимость и число шагов, любое плечо", "+20…23%", "значимо"],
-        ["файл от модели, репозитории без документации", "+2,7%", "подтверждённое исключение"],
-    ]
-    reveal_table(s, 0.55, 1.85, 12.23, 2.35, headers, rows, [0.48, 0.26, 0.26],
-                 row_highlight={3: "gold"}, header_size=10.5, cell_size=10.5)
-    hw = 5.85
-    failure_card(s, 0.55, 4.35, hw, 1.55, icon_name="quote",
-                 header_text="Позиция разработчика движка",
-                 body="«Bloated CLAUDE.md files cause Claude to ignore your actual instructions!»",
-                 body_size=12)
-    rx = 0.55 + hw + 0.33
-    dashed_box(s, rx, 4.35, hw, 1.55, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, rx + 0.2, 4.5, hw - 0.4, 0.7, text="68%", size=40, bold=True, color=GOLD_DARK)
-    text_box(s, rx + 0.2, 5.2, hw - 0.4, 0.62,
-             text="точность следования инструкциям при 500 одновременных инструкциях (база — "
-                  "малое число инструкций), IFScale, arXiv:2507.11538",
-             size=10.5, italic=True, color=DEEP, line_spacing=1.2)
-    criterion_plate(s, 0.55, 6.05, 12.23, 0.85, [
-        "задача поставлена полно и разово", "крошечный репозиторий",
-        "всё выводимое из кода в файл не идёт", "правило, недопустимое к нарушению — не сюда",
-        "процедура нужна не каждой сессии — это скилл"])
+    y = auto_header(s, "Кейс 1.2 · Базовые процессы",
+        "Заказчик пишет: заявка не пришла — тест зелёный, «готово» сказано, а тест "
+        "проверяет только пустые поля; записанный текстовый гейт не изменил поведение "
+        "при повторе")
+    bh = 1.85
+    ocean_box(s, 0.55, y, 12.23, bh)
+    text_box(s, 0.8, y + 0.14, 11.7, bh - 0.28,
+             text="Блок 1. Заказчик: «отправил заявку — она не пришла». Агент читает код, "
+                  "правит обработчик в src/main.js, прогоняет автотест — зелёный — "
+                  "отчитывается: «Готово». tests/form.spec.ts проверяет ровно одно: что "
+                  "форма не отправляется с пустыми полями. Про доставку он не знает "
+                  "ничего. Заказчик пишет снова: не доходит.",
+             size=13, color=DEEP, line_spacing=1.28)
+    y2 = y + bh + 0.2
+    ocean_box(s, 0.55, y2, 12.23, bh)
+    text_box(s, 0.8, y2 + 0.14, 11.7, bh - 0.28,
+             text="Блок 2. Команда записывает в CLAUDE.md текстовый гейт: «Всегда прогоняй "
+                  "тесты и вручную проверяй результат перед ‘готово’». Неделю спустя, "
+                  "новая сессия, другой баг: автотест зелёный — снова «готово», руками не "
+                  "проверено.",
+             size=13, color=DEEP, line_spacing=1.28)
+    y3 = y2 + bh + 0.18
+    gold_callout(s, 0.55, y3, 12.23, 7.0 - y3, "«Правило было. Поведение — нет.»",
+                 size=18, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s16"))
 
 
-# ============================================================
-# Ступень 2 — Память (s16-s22)
-# ============================================================
-
-
 def build_s17(p):
-    build_stage_divider(p, "s17", stage_num=2, title="Ступень 2 · память",
-        meaning="Знание, которое появляется по ходу работы и исчезает вместе с сессией",
-        tag="2 хода совместного формирования · 1 документированное отравление памяти · 3 замера против интуиции")
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    header(s, "Кейс 1.2 · Исследование",
+        "Текстовый гейт без тулинга не просто бесполезен, а вреден — регрессии выросли "
+        "почти до 10%; self-repair с реальной проверкой работает, голая самокритика "
+        "систематически вредит", title_size=13.5, title_h=0.62)
+    y = 0.7 + 0.62 + 0.14
+    text_box(s, 0.55, y, 12.23, 0.26, text="исследование — гейты", size=12, bold=True,
+             color=MID)
+    y += 0.3
+    h1_headers = ["Источник", "Тезис", "Сила"]
+    h1_rows = [
+        ["SWE-Gate/SpecBench/CapCode/Verification Horizon (4 препринта 2609–2606)",
+         "Согласие 4+ независимых 2026-препринтов: агенты систематически «обходят» "
+         "видимые тестовые гейты, разрыв растёт со сложностью задачи",
+         "Сильное — межисследовательский консенсус"],
+        ["TDAD, arXiv:2603.17973",
+         "Чисто процедурная инструкция «сначала пиши тесты» без тулинга увеличила "
+         "регрессии до 9,94% — хуже, чем вообще без инструкции",
+         "Сильное и контринтуитивное"],
+        ["Rethinking Agent-Generated Tests, arXiv:2602.07900",
+         "Манипуляция промптом ради частоты тестов — без значимого эффекта на resolution "
+         "rate (6 моделей, SWE-bench Verified)",
+         "Умеренное — нулевой результат"],
+        ["Agent Scaffolding Beats Model Upgrades",
+         "Архитектура харнесса (test-gated retries, CI-enforcement) даёт +20 п.п.; смена "
+         "модели — ~1 п.п.",
+         "Сильное — механизм против модели"],
+    ]
+    th1 = 2.5
+    reveal_table(s, 0.55, y, 12.23, th1, h1_headers, h1_rows, [0.32, 0.46, 0.22],
+                 row_highlight={1: "gold"}, header_size=9.5, cell_size=8.8)
+    y += th1 + 0.16
+    text_box(s, 0.55, y, 12.23, 0.26, text="исследование — цикл «улучшение»", size=12,
+             bold=True, color=MID)
+    y += 0.3
+    h2_headers = ["Источник", "Тезис", "Сила"]
+    h2_rows = [
+        ["Self-planning, arXiv:2303.06689",
+         "Планирование перед кодом: +25,4% pass@1 (HumanEval/MBPP, не repo-scale)",
+         "Умеренно-сильное «за»"],
+        ["LLMs Cannot Self-Correct, ICLR'24; CRITIC, 2305.11738",
+         "Самокоррекция без внешнего сигнала систематически ухудшает результат",
+         "Сильное «против» голого self-review"],
+        ["arXiv:2604.10508",
+         "Self-repair с внешним сигналом (реальный прогон теста/компилятора): "
+         "+4,9…+30 п.п.",
+         "Сильное «за» — с реальной проверкой"],
+    ]
+    th2 = 1.75
+    reveal_table(s, 0.55, y, 12.23, th2, h2_headers, h2_rows, [0.32, 0.46, 0.22],
+                 row_highlight={2: "gold"}, header_size=9.5, cell_size=8.8)
+    y += th2 + 0.14
+    gold_callout(s, 0.55, y, 12.23, 7.0 - y,
+                 "«Нет контролируемого эксперимента именно на изолированную фразу-гейт в "
+                 "CLAUDE.md — только best-practice наблюдения практиков.»",
+                 size=11, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s17"))
 
 
 def build_s18(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 2 · Сценарий-боль",
-           "Уже отклонённое решение всплывает снова, потому что разговор, в котором его "
-           "приняли, закончился — а его содержимое нигде не осталось",
-           title_size=15)
-    y = 1.85
-    ocean_box(s, 0.55, y, 12.23, 1.15)
-    text_box(s, 0.81, y, 11.7, 1.15,
-             text="Третья сессия за две недели. Заказчик прислал заявку с опечаткой в домене "
-                  "почты, и форма её приняла. Агент читает код и предлагает подключить стороннюю "
-                  "библиотеку валидации форм — ту самую, которую уже обсуждали и отклонили: "
-                  "хватает нативных required/pattern и двадцати строк собственного кода.",
-             size=11.6, color=DEEP, line_spacing=1.22, anchor=MSO_ANCHOR.MIDDLE)
-    y += 1.15 + 0.12
-    dashed_box(s, 0.55, y, 12.23, 0.42, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.81, y, 11.7, 0.42,
-             text="он предлагает её так, будто вопрос никогда не поднимался — для него он и не "
-                  "поднимался",
-             size=10.6, italic=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    y += 0.42 + 0.12
-    gold_callout(s, 0.55, y, 12.23, 1.15,
-                 "«Вы второй раз за две недели объясняете агенту, почему в этой форме нет "
-                 "сторонней библиотеки валидации — то самое решение, которое уже отклонили. "
-                 "Выберите, куда записать это решение — из карточек ниже — так, чтобы не "
-                 "объяснять его в третий раз, и обоснуйте, почему не в тот файл инструкций, "
-                 "который мы только что завели.»", size=11.8)
-    y += 1.15 + 0.16
-    option_row(s, 0.55, y, 12.23, 0.85,
-               ["дописать\nCLAUDE.md", "сказать «запомни\nэто»", "завести\nDECISIONS.md",
-                "поставить систему\nпамяти", "ничего — сам\nзапомнит"], size=11.3)
-    y += 0.85 + 0.22
-    text_box(s, 0.55, y, 12.23, 0.4, text="разбор — на следующем слайде", size=12,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s18"))
+    return question_slide(p, "s18", label="Кейс 1.2 · Вопрос",
+        title="Гейт-фраза уже есть и не сработала — выбор из пяти вариантов, что делать "
+              "дальше, чтобы реально сработало в следующей сессии",
+        question="«У вас гейт-фраза в CLAUDE.md уже есть, а поведение агента не "
+                  "изменилось — заявка снова не проверена руками. Выберите, что вы "
+                  "сделаете дальше — из карточек ниже — так, чтобы это реально сработало "
+                  "в следующей сессии.»",
+        options=["перепишу фразу\nкапсом / жёстче", "продублирую фразу\nвторым пунктом",
+                 "заведу отдельный\nфайл-чеклист рядом",
+                 "передам проверку\nмеханизму вне текста",
+                 "смирюсь — сработает\nне всегда, это норма"],
+        opt_h=1.75)
 
 
 def build_s19(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 2 · Разбор",
-           "Командное решение с обоснованием идёт в DECISIONS.md, личное предпочтение — в "
-           "авто-память, выводимое из кода — никуда",
-           title_size=16)
-    y = 1.8
-    text_box(s, 0.55, y, 12.23, 0.3,
-             text="вопрос для контекста: «Куда записать отклонённое решение?»",
-             size=11, italic=True, color=SLATE)
-    y += 0.38
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+    headers = ["Вариант", "Где работает", "Почему рано — и что вместо"]
     rows = [
-        ["«Допишу в CLAUDE.md»", "Механически сработает: файл читается каждую сессию",
-         "Смешивает два разных по природе слоя. На десятке решений файл выйдет за ориентир в "
-         "200 строк. Вместо: развести слои по авторству"],
-        ["«Ничего, агент сам запомнит»", "Нигде: это не настройка, которую забыли включить",
-         "Модель не имеет состояния между вызовами по конструкции: без записи на диск ничего не "
-         "переживает конец сессии"],
-        ["«Скажу агенту ‘запомни это’»", "Для личного предпочтения — идеально",
-         "Половина ответа. Уходит в авто-память: машинно-локальный слой без синхронизации и без "
-         "ревью. Для командного решения этого мало"],
-        ["«Заведу DECISIONS.md»", "Для командного решения с обоснованием — именно то, что нужно",
-         "Вторая половина ответа. Требует дисциплины: писать «почему», а не «что»"],
-        ["«Поставлю систему памяти (векторную/графовую)»",
-         "На десятках-сотнях записей, при потребности в поиске по смыслу",
-         "Рано на порядок: живые замеры показывают, что на малых корпусах простой файл "
-         "регулярно конкурентен со сложными системами"],
+        ["«Капсом / жёстче»", "Нигде системно",
+         "TDAD: усиление формулировки без тулинга не помогает и иногда вредит — "
+         "регрессии выросли до 9,94%. Формулировка — не механизм"],
+        ["«Продублирую вторым пунктом»", "Иногда чуть повышает шанс прочитать",
+         "Правило остаётся просьбой. Каждая лишняя строка стоит контекста в каждой "
+         "сессии (presence paradox, кейс 1.1)"],
+        ["«Отдельный файл-чеклист»", "Помогает человеку помнить, слабо помогает агенту",
+         "Тот же класс решения — снова текст, снова просьба, не обязательна к "
+         "построчному следованию"],
+        ["«Передам механизму вне текста»", "Системно работает: CI/harness-enforcement "
+         "даёт +20 п.п.",
+         "Верное направление — но сам механизм не тема сегодня, это Семинар 5. Сегодня "
+         "фиксируем: текст сам по себе ненадёжен"],
+        ["«Смирюсь, это нормально»", "Приемлемо для некритичных предпочтений",
+         "Для правила, чьё нарушение стоит дорого — «смирюсь» означает решение не решать"],
     ]
-    table_h = 3.85
-    reveal_table(s, 0.55, y, 12.23, table_h, headers, rows, [0.26, 0.28, 0.46],
-                 header_size=9.5, cell_size=9.3)
-    y += table_h + 0.16
-    gold_callout(s, 0.55, y, 12.23, 0.7,
-                 "целевой ответ — оба механизма разом, с разделением ролей", size=14.5)
-    speaker_notes(s, load_notes("s19"))
-
-
-def basket_row(slide, x, y, w, h, baskets, *, highlight_idx=None):
-    """baskets: list of (title, [items or empty])."""
-    n = len(baskets)
-    gap = 0.24
-    cw = (w - gap * (n - 1)) / n
-    for i, (title, items) in enumerate(baskets):
-        bx = x + i * (cw + gap)
-        hl = (highlight_idx == i)
-        box = dashed_box if hl else ocean_box
-        box(slide, bx, y, cw, h, fill=(GOLD_TINT if hl else SURFACE),
-            stroke=(GOLD_DARK if hl else LIGHT))
-        text_box(slide, bx + 0.16, y + 0.12, cw - 0.32, 0.34, text=title.upper(), size=12.5,
-                 bold=True, color=(GOLD_DARK if hl else MID), align=PP_ALIGN.CENTER)
-        iy = y + 0.55
-        ih = (h - 0.65) / max(len(items), 1)
-        for it in items:
-            filled_rect(slide, bx + 0.14, iy + 0.04, cw - 0.28, ih - 0.1,
-                        WHITE if hl else RGBColor(0xEC, 0xF0, 0xF5), stroke=SOFT_GREY,
-                        stroke_pt=0.9, radius=True, radius_adj=0.2)
-            _fits(it, 10.3, cw - 0.48, ih - 0.1, label="basket_row item")
-            text_box(slide, bx + 0.24, iy + 0.04, cw - 0.48, ih - 0.1, text=it, size=10.3,
-                     color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
-            iy += ih
-        if hl:
-            text_box(slide, bx + 0.16, y + h - 0.32, cw - 0.32, 0.28, text="это тоже ответ",
-                     size=10.5, italic=True, bold=True, color=GOLD_DARK, align=PP_ALIGN.CENTER)
+    # Fix 5 (review-раунд v4): формула «правила в промпте — просьбы, правила в коде —
+    # законы» сделана безусловной частью разбора (раньше звучала только в реакции на
+    # ответ «капсом» из зала) — вынесена первой фразой в footer, не спрятана в ветку.
+    return answer_slide(p, "s19", label="Кейс 1.2 · Разбор",
+        title="Честный ответ сегодня: мы всё равно запишем гейт текстом, потому что это "
+              "лучше, чем ничего, но прямо скажем себе, что он ненадёжен",
+        context_q="Гейт не сработал — что дальше?", headers=headers, rows=rows,
+        col_w=[0.22, 0.32, 0.46], gold_rows=[3],
+        footer="Правила в промпте — это просьбы, правила в коде — это законы: текстовый "
+               "гейт — просьба, и сегодня мы записываем именно просьбу. Приемлемый "
+               "первый шаг, пока нарушение редкое; нарушено дважды на критичном "
+               "действии — сигнал для эскалации к механическому уровню (Семинар 5). Цикл "
+               "«улучшение»: агент, смотрящий сам на свой код, — не делать так; агент, "
+               "прогоняющий реальную проверку, — делать так всегда.",
+        table_h=3.35, footer_h=1.7, footer_size=10.8)
 
 
 def build_s20(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 2 · Совместное формирование, ход 1", "Не всё, что узнал агент, вообще стоит записывать — третья корзина такая же законная, как первые две",
-           title_size=17)
-    basket_row(s, 0.55, 1.95, 12.23, 1.5,
-               [("авто-память", []), ("DECISIONS.md", []), ("никуда", [])])
-    facts = [
-        "«Не подключаем стороннюю библиотеку валидации — форма из двух полей»",
-        "«Разработчик просит отвечать коротко, без преамбул»",
-        "«Обработчик формы лежит в src/main.js»",
-        "«19 сентября тест упал из-за таймаута, увеличили ожидание»",
-        "«Своего бэкенда не делаем — заявка уходит на внешний сервис приёма форм»",
-    ]
-    numbered_card(s, 0.55, 3.65, 12.23, 2.65, facts, size=12.3)
-    text_box(s, 0.55, 6.45, 12.23, 0.4, text="В какую?", size=17, bold=True, color=MID,
-             align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Кейс 1.2 · Решение",
+        "Итоговый файл — тринадцать строк: критерий готово, гейт-предупреждение, "
+        "честная оговорка предела; AGENTS.md — симлинк на тот же файл")
+    half_w = 6.7
+    h1 = 4.55
+    terminal_card(s, 0.55, y, half_w, h1, [
+        ("# CLAUDE.md", TEAL, True),
+        ("", CODE_FG),
+        ("signup-landing: статический лендинг с формой заявки на демо-урок.", CODE_FG),
+        ("Готово = npm run build код 0, npx playwright test зелёный,", CODE_FG),
+        ("форма реально отправляет заявку на проде.", CODE_FG),
+        ("", CODE_FG),
+        ("## Safety / scope boundaries", TEAL, True),
+        ("- Никогда не запускать деплой на прод без явного запроса.", CODE_FG),
+        ("", CODE_FG),
+        ("## Build, test, verify", TEAL, True),
+        ("- To verify: открыть dist/index.html после сборки, вручную", CODE_FG),
+        ("  отправить форму с заполненными и с пустыми полями.", CODE_FG),
+    ], size=11, line_spacing=1.28)
+    rx = 0.55 + half_w + 0.3
+    rw = 12.23 - half_w - 0.3
+    numbered_card(s, rx, y, rw, h1, [
+        "Файл грузится в начало каждой сессии целиком (официальный ориентир — до 200 "
+        "строк, наш итог — 13)",
+        "@-импорты организуют файл, но не экономят контекст — импортированное всё равно "
+        "грузится целиком",
+        "AGENTS.md — симлинк на тот же файл (ln -s CLAUDE.md AGENTS.md). Острый край: "
+        "cp -R без -P на macOS разыменовывает симлинк во вторую копию молча — копировать "
+        "через cp -a / git clone / git archive",
+    ], size=12)
     speaker_notes(s, load_notes("s20"))
 
 
 def build_s21(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 2 · Совместное формирование, ход 1 завершён", "Командное решение с обоснованием — в репозиторий; личное предпочтение — в авто-память; выводимое — никуда",
-           title_size=15.5)
-    baskets = [
-        ("авто-память", ["отвечать коротко,\nбез преамбул — личное предпочтение"]),
-        ("DECISIONS.md", ["не подключаем библиотеку\nвалидации — командное решение",
-                           "своего бэкенда не делаем —\nрешение, неотличимое от недоделки"]),
-        ("никуда", ["обработчик формы в src/main.js —\nвыводимо из кода",
-                     "19 сент. тест упал из-за таймаута —\n«что», а не «почему»"]),
-    ]
-    basket_row(s, 0.55, 1.85, 12.23, 2.7, baskets, highlight_idx=2)
-    ocean_box(s, 0.55, 4.75, 12.23, 1.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.2)
-    text_box(s, 0.75, 4.88, 12.0, 0.3, text="ХОД 2 · ЗАПИСЬ СОБИРАЕТСЯ ПО ЧАСТЯМ", size=11,
-             bold=True, color=TEAL)
-    text_box(s, 0.75, 5.25, 12.0, 0.95, text="дата?  →  формулировка решения одной строкой?  →  причина?",
-             size=15, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s21"))
+    return divider_case(p, "s21",
+        title="Кейс 1.3 · вложенные файлы",
+        meaning="Месяц спустя репозиторий подрос — дробить файл или нет",
+        tag="1650 сессий · 5 задокументированных issue",
+        case_idx=2, case_total=3, icon_name="file-text")
 
 
 def build_s22(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 2 · Решение", "Журнал решений — append-only лог «почему», а не второй файл инструкций",
-           title_size=19)
-    left_w = 6.85
-    code_card(s, 0.55, 1.95, left_w, 3.0, [
-        ("# Decisions", CODE_FG, True),
-        ("", CODE_FG),
-        ("Append-only log of why, in date order.", GOLD),
-        ("", CODE_FG),
-        ("## 2026-09-20 — не подключаем библиотеку", TEAL, True),
-        ("   валидации форм", TEAL, True),
-        ("Форма — два поля (имя, email), хватает", CODE_MUTED),
-        ("нативных required/pattern в index.html.", CODE_MUTED),
-        ("Сторонняя библиотека — лишняя зависимость", CODE_MUTED),
-        ("и лишние килобайты в сборке ради этого объёма.", CODE_MUTED),
-    ], size=11.5)
-    rx = 0.55 + left_w + 0.3
-    rw = 12.23 - left_w - 0.3
-    terminal_card(s, rx, 1.95, rw, 2.65, [
-        ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG), ("DECISIONS.md", GOLD, True),
-        ("index.html", CODE_FG), ("package.json", CODE_FG), ("src/main.js", CODE_FG),
-        ("tests/form.spec.ts", CODE_FG),
-    ], title="дерево ступени 2", size=11)
-    dashed_box(s, rx, 4.75, rw, 0.7, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, rx + 0.16, 4.75, rw - 0.32, 0.7, text="diff создания файла — 7 добавленных строк",
-             size=11.5, italic=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
+    y = auto_header(s, "Кейс 1.3 · Вложенные файлы",
+        "Разработчик выносит правила тестов в tests/CLAUDE.md и ждёт, что агент "
+        "подхватит его сам, когда работает именно в этой папке — логично звучит, но "
+        "стоит проверить, что там реально происходит с загрузкой")
+    half_w = 5.85
+    h1 = 2.2
+    terminal_card(s, 0.55, y, half_w, h1, [
+        ("tests/", TEAL, True),
+        ("  form.spec.ts", CODE_FG),
+        ("  wizard.spec.ts", CODE_FG),
+        ("  page-objects/form.page.ts", CODE_FG),
+        ("  # своя конвенция именования + Page Object", CODE_MUTED),
+    ], title="месяц спустя: tests/ подрос", size=11.5)
+    rx = 0.55 + half_w + 0.33
+    ocean_box(s, rx, y, half_w, h1)
+    text_box(s, rx + 0.2, y + 0.14, half_w - 0.4, h1 - 0.28,
+             text="«Вынесу эти правила в отдельный tests/CLAUDE.md — короче, релевантнее "
+                  "контексту, корневой файл не разбухнет.» Кладёт файл в подпапку, ожидая "
+                  "автоматической подхватки.",
+             size=12.5, color=DEEP, line_spacing=1.28)
+    y2 = y + h1 + 0.3
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
+                 "«Логично звучит. Давайте проверим, что там на самом деле происходит с "
+                 "загрузкой.»", size=16, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s22"))
 
 
 def build_s23(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 2 · Три слоя записи", "Разница между слоями не в формате — оба markdown, — а в том, кто инициирует запись и кто её потом увидит",
-           title_size=17)
-    headers = ["", "Файл инструкций (ступень 1)", "Авто-память", "DECISIONS.md"]
+    y = auto_header(s, "Кейс 1.3 · Исследование",
+        "Вложенный файл грузится on-demand, только по факту чтения — не по факту "
+        "нахождения в папке; контролируемое исследование не нашло пользы от разбиения, "
+        "а практика показывает регулярные отказы вплоть до архитектурного предела")
+    mh = 0.95
+    ocean_box(s, 0.55, y, 12.23, mh)
+    text_box(s, 0.75, y + 0.1, 11.85, mh - 0.2,
+             text="Механизм (офиц. документация Claude Code): корневой и все родительские "
+                  "CLAUDE.md грузятся при старте сессии автоматически. Вложенные грузятся "
+                  "on-demand — только когда агент реально читает файл оттуда. /context — "
+                  "единственный надёжный способ проверить, что реально загружено.",
+             size=11.3, color=DEEP, line_spacing=1.22)
+    y += mh + 0.18
+    headers = ["Источник", "Тезис", "Сила"]
     rows = [
-        ["Кто автор", "вы, заранее", "агент, по ходу", "вы, в момент решения"],
-        ["Где живёт", "в репозитории, git", "вне репозитория, на машине", "в репозитории, git"],
-        ["Что грузится", "целиком, каждую сессию", "индекс: 200 строк / 25 КБ", "ничего автоматически"],
-        ["Код-ревью", "да", "нет", "да"],
-        ["Смена машины", "переживает", "не переживает", "переживает"],
-        ["Что туда идёт", "стабильные правила", "предпочтения, подходы", "решения и их «почему»"],
+        ["McMillan, arXiv:2605.10039 (1650 сессий Claude Code CLI)",
+         "Ни одна из 4 структурных переменных не дала значимого эффекта после "
+         "multiple-testing correction; для size/conflict — свидетельство ОТСУТСТВИЯ "
+         "эффекта",
+         "Сильное и контринтуитивное"],
+        ["Claude Code #2571", "Вложенный CLAUDE.md не подхватывается автоматически, "
+         "воспроизводимо; закрыт «not planned»", "Прямое наблюдение"],
+        ["Claude Code #6972", "Документация вводит в заблуждение — пользователи ждут "
+         "eager-загрузку, на деле on-demand", "Прямое наблюдение"],
+        ["Cursor, форум", "Сотрудник Cursor признал баг в nested-функциональности",
+         "Прямое, другой инструмент"],
+        ["Codex CLI #13288, #12115", "Ненадёжная подгрузка без явного --cd",
+         "Прямое, другой инструмент"],
+        ["GitHub Copilot CLI #3051", "Не баг, а документированный структурный предел: "
+         "discovery только вдоль прямого пути cwd→git-root", "Самое жёсткое: "
+         "архитектурное ограничение"],
     ]
-    reveal_table(s, 0.55, 1.85, 12.23, 3.85, headers, rows, [0.16, 0.3, 0.27, 0.27],
-                 row_highlight={0: "teal"}, header_size=11, cell_size=10.8)
-    ocean_box(s, 0.55, 5.85, 12.23, 0.95, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, 0.75, 5.97, 11.8, 0.75,
-             text="индекс памяти — только индекс · агент сам пропускает выводимое из кода · "
-                  "сжатие контекста переживают только файлы на диске",
-             size=11.5, color=DEEP, line_spacing=1.28, anchor=MSO_ANCHOR.MIDDLE)
+    th = 2.85
+    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.28, 0.46, 0.26],
+                 row_highlight={0: "gold", 5: "teal"}, header_size=9.3, cell_size=8.6)
     speaker_notes(s, load_notes("s23"))
 
 
 def build_s24(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 2 · Провал / ограничение", "Память по умолчанию читается как доверенный контекст, а не как данные",
-           title_size=18)
-    hw = 5.85
-    failure_card(s, 0.55, 1.85, hw, 2.05, icon_name="alert-triangle",
-                 header_text="Отравление памяти — SpAIware, сентябрь 2024",
-                 body="Внешний текст с вложенной инструкцией → долговременная память → активация "
-                      "в последующих сессиях, эксфильтрация переписки. Вектор закрыт в 1.2024.247; "
-                      "структурный принцип остался.", body_size=11)
-    rx = 0.55 + hw + 0.33
-    dashed_box(s, rx, 1.85, hw, 2.05, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, rx + 0.2, 1.98, hw - 0.4, 0.6, text="≈48%", size=32, bold=True, color=GOLD_DARK)
-    text_box(s, rx + 0.2, 2.55, hw - 0.4, 1.2,
-             text="всех последующих обращений к памяти захвачено (MemoryGraft, 2025; база — 0% "
-                  "до отравления). 5 подложенных документов управляют выводом в >90% случаев.",
-             size=10.8, italic=True, color=DEEP, line_spacing=1.22)
-    headers = ["Замер", "Значение", "База сравнения"]
-    rows = [
-        ["популярная система памяти на бенчмарке", "46,0% с памятью против 57,6% без", "та же система, память выключена"],
-        ["6 систем против «весь текст сессии в файл»", "проигрыш на 25–67 пунктов", "тот же плоский файл"],
-        ["дискреционность записи", "17% (4 из 24) — отказ записать факт", "те же 24 задачи"],
-    ]
-    reveal_table(s, 0.55, 4.1, 12.23, 1.85, headers, rows, [0.4, 0.3, 0.3], header_size=10, cell_size=9.8)
-    criterion_plate(s, 0.55, 6.1, 12.23, 0.8, [
-        "задача одноразовая", "весь контекст влезает в одно окно", "правила стабильны и укладываются в файл",
-        "факт выводим из кода"], size=10)
-    speaker_notes(s, load_notes("s24"))
-
-
-# ============================================================
-# Ступень 3 — Хук (s23-s31)
-# ============================================================
+    return question_slide(p, "s24", label="Кейс 1.3 · Вопрос",
+        title="Как гарантировать, что агент реально прочитает конвенции из "
+              "tests/CLAUDE.md — выбор из пяти вариантов",
+        question="«Выберите, как вы гарантируете, что агент реально прочитает конвенции "
+                  "из tests/CLAUDE.md, когда работает именно в этой папке — из карточек "
+                  "ниже.»",
+        options=["положу файл в tests/\nи доверюсь автозагрузке",
+                 "явно попрошу агента\nпрочитать файл в начале задачи",
+                 "продублирую содержимое\nв корневом CLAUDE.md",
+                 "проверю через /context,\nчто реально загружено",
+                 "объединю всё в один\nфайл в корне, пока не мешает"],
+        opt_h=1.75)
 
 
 def build_s25(p):
-    build_stage_divider(p, "s25", stage_num=3, title="Ступень 3 · хук",
-        meaning="Правило, которое исполняет среда, а не согласие модели",
-        tag="5 вопросов совместного формирования · 3 реальных срабатывания · 2 CVE · 5 причин молчаливого отказа")
+    headers = ["Вариант", "Где работает", "Почему рано — и что вместо"]
+    rows = [
+        ["«Доверюсь автозагрузке»", "Никогда гарантированно",
+         "Вложенные файлы грузятся on-demand, только по факту чтения. Задокументированные "
+         "отказы — системная категория: #2571, #6972, Cursor, Codex CLI, жёсткий предел "
+         "Copilot CLI #3051"],
+        ["«Явно попрошу прочитать в начале задачи»", "Работает, требует ручной "
+         "дисциплины каждый раз",
+         "Надёжнее автозагрузки, но перекладывает ответственность на человека — то, от "
+         "чего мы уходили в кейсе 1.1"],
+        ["«Продублирую в корневой»", "Работает всегда — корень грузится при старте",
+         "Снова presence paradox: продублированная строка стоит контекста в каждой "
+         "сессии, в любой папке"],
+        ["«Проверю через /context»", "Единственный надёжный способ узнать факт",
+         "Диагностика, не решение — проверяет, сработало ли, не гарантирует в следующий "
+         "раз"],
+        ["«Объединю в один файл в корне, пока не вырос»", "Здесь и сейчас — репозиторий "
+         "маленький",
+         "Целевой ответ. Исследование (1650 сессий) не нашло значимого эффекта ни у одной "
+         "структурной переменной"],
+    ]
+    return answer_slide(p, "s25", label="Кейс 1.3 · Разбор",
+        title="Редкое сочетание: контролируемое исследование не нашло пользы даже там, "
+              "где здравый смысл её обещал, а практика показывает регулярные отказы "
+              "вплоть до архитектурного предела",
+        context_q="Как гарантировать, что файл прочитан?", headers=headers, rows=rows,
+        col_w=[0.28, 0.28, 0.44], gold_rows=[4],
+        footer="Пока корневой файл помещается в разумный объём (до пятидесяти-семидесяти "
+               "строк), дробление по подпапкам не нужно никогда. Даже при росте объёма "
+               "дробить стоит только после того, как явно проверено — через /context или "
+               "наблюдаемое поведение, — что инструмент реально грузит вложенный файл.",
+        table_h=3.55, footer_h=1.3, footer_size=11.5)
 
 
 def build_s26(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Сценарий-боль",
-           "Правило было в файле инструкций — и агент всё равно его нарушил",
-           title_size=20, title_h=1.05)
-    y = 1.95
-    ocean_box(s, 0.55, y, 12.23, 1.3)
-    text_box(s, 0.81, y + 0.1, 11.7, 1.1,
-             text="Завтра показ сайта заказчику. Накануне в файл инструкций добавлена ещё одна "
-                  "строка — репозиторный этикет: «Перед показом правки идут через отдельную "
-                  "ветку, прямых коммитов в main нет.» Вечером, в спешке, агент правит валидацию "
-                  "формы и делает git commit прямо на main.",
-             size=11.2, color=DEEP, line_spacing=1.2, anchor=MSO_ANCHOR.MIDDLE)
-    y += 1.3 + 0.14
-    gold_callout(s, 0.55, y, 12.23, 1.15,
-                 "«Завтра показ. В файле инструкций написано: перед показом — только через "
-                 "отдельную ветку, никаких прямых коммитов в main. Агент только что закоммитил "
-                 "правку формы прямо в main. Текстом всё было сказано правильно. Выберите, как "
-                 "сделать нарушение этого правила НЕВОЗМОЖНЫМ, а не просто маловероятным, — из "
-                 "карточек ниже.»", size=11)
-    y += 1.15 + 0.16
-    option_row(s, 0.55, y, 12.23, 0.75,
-               ["переписать\nправило капсом", "проверять руками\nпосле коммита",
-                "защита ветки\nна сервере", "хук, который среда\nисполняет сама",
-                "забрать у агента\nдоступ к git"], size=10.6)
-    y += 0.75 + 0.18
-    text_box(s, 0.55, y, 12.23, 0.4, text="разбор, доказательство и формула — на следующем слайде",
-             size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Кейс 1.3 · Решение",
+        "Репозиторий остаётся с одним корневым файлом; три кейса — три решения знания, "
+        "известного заранее, но есть знание другого рода, которое появляется по ходу "
+        "работы — это раздел второй, память")
+    terminal_card(s, 0.55, y, 12.23, 2.65, [
+        ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG), ("index.html", CODE_FG),
+        ("package.json", CODE_FG), ("src/main.js", CODE_FG),
+        ("tests/form.spec.ts", CODE_FG),
+        ("# tests/CLAUDE.md — не появляется", CODE_MUTED, True),
+    ], title="дерево репозитория — без изменений", size=11)
+    y2 = y + 2.65 + 0.18
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
+                 "«Три кейса, один и тот же файл: мы решили, чего в него не писать "
+                 "заранее; написали то, что узнали на реальной боли; и решили не дробить "
+                 "его, пока это не доказанная польза. Всё это — знание, которое у вас уже "
+                 "было до работы, записанное заранее. Но есть знание другого рода: то, "
+                 "что появляется по ходу самой работы. Его нельзя записать заранее, "
+                 "потому что вы его ещё не знаете. Это раздел второй — память.»",
+                 size=13, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s26"))
 
 
+# ============================================================
+# Раздел 2 — Память (s27-s50, review-раунд: +s28/s29 Fix 1, +s37/s44 Fix 4)
+# ============================================================
+
 def build_s27(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Разбор",
-           "Правила в промпте — это просьбы, правила в коде — это законы: хук делает нарушение "
-           "невозможным, а не просто маловероятным",
-           title_size=14.5, title_h=1.1)
-    y = 1.9
-    text_box(s, 0.55, y, 12.23, 0.28,
-             text="вопрос для контекста: «Как сделать нарушение невозможным?»",
-             size=10.5, italic=True, color=SLATE)
-    y += 0.34
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
-    rows = [
-        ["«Перепишу правило капсом, добавлю ‘ВАЖНО’»",
-         "Нигде механически: эмфаза не создаёт барьера",
-         "Было бы разумно, если бы агент не заметил инструкцию — но это не так "
-         "(см. доказательство ниже)"],
-        ["«Буду проверять руками после каждого коммита»",
-         "Пока хватает дисциплины и коммитов немного",
-         "Не масштабируется: вы приставили себя сторожем к инструменту, который взяли, чтобы "
-         "не сторожить"],
-        ["«Включу защиту ветки на сервере»", "Работает, и это правда нужный слой",
-         "Не рано — но и не достаточно: обратной связи в момент действия нет. Не «вместо», а "
-         "вдобавок"],
-        ["«Заберу у агента доступ к git вообще»", "Когда вы готовы делать все коммиты руками",
-         "Снимает риск вместе с пользой — это отказ от задачи, а не её решение"],
-        ["«Поставлю хук, который блокирует коммит в main»", "Именно то, что нужно: исполняет среда",
-         "Не рано: правило уже нарушено, сигнал сработал. Ломается тихо — при невалидном "
-         "условии срабатывания или таймауте"],
-    ]
-    table_h = 2.75
-    reveal_table(s, 0.55, y, 12.23, table_h, headers, rows, [0.26, 0.26, 0.48],
-                 row_highlight={4: "gold"}, header_size=8.4, cell_size=8.2)
-    y += table_h + 0.14
-    dashed_box(s, 0.55, y, 12.23, 1.05, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.78, y + 0.08, 11.75, 0.9,
-             text="«‘Перепишу капсом’ исходит из того, что агент правило не заметил. Вот "
-                  "публично разобранный случай, где замечать было нечего: правило требовало "
-                  "явного подтверждения перед доступом к любому пути вне рабочей директории. "
-                  "Агент выполнил установочную команду с записью в системный каталог, "
-                  "регистрацией служб и правкой реестра — без подтверждения "
-                  "(anthropics/claude-code#42863, закрыт как ‘not planned’).»",
-             size=9.8, italic=True, color=GOLD_DARK, line_spacing=1.16)
-    y += 1.05 + 0.14
-    gold_callout(s, 0.55, y, 12.23, 0.6,
-                 "правила в промпте — это просьбы; правила в коде — это законы", size=13.5)
-    speaker_notes(s, load_notes("s27"))
+    return divider_section_and_case(p, "s27",
+        big_title="Раздел 2 · память",
+        subtitle="Кейс 2.1 · плоский файл",
+        meaning="Между сессиями агент не хранит ни бита — если это не лежит на диске",
+        tag="3 кейса по восходящей сложности", icon_name="database")
 
 
 def build_s28(p):
+    """pattern: problem_scenario — Fix 1 (review-раунд v4): проблема кейса 2.1,
+    выделена в отдельный слайд (раньше была склеена с вопросом на одном слайде,
+    нарушая обязательный паттерн проблема → исследование → вопрос → разбор)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Совместное формирование, вопросы 1–2", "Проверять надо до вызова и только на одном инструменте",
-           title_size=19)
-    numbered_card(s, 0.55, 1.95, 5.85, 2.6, [
-        "Проверять до или после?", "Вешаем на все инструменты или на один?"], size=14)
-    code_card(s, 0.55 + 5.85 + 0.33, 1.95, 12.23 - 5.85 - 0.33, 2.6, [
-        ("{", CODE_FG),
-        ('  "hooks": {', CODE_FG),
-        ('    "PreToolUse": [          // ← вопрос 1', GOLD),
-        ("      {", CODE_FG),
-        ('        "matcher": "Bash",   // ← вопрос 2', GOLD),
-        ("        …", CODE_MUTED),
-    ], size=11.5)
-    ocean_box(s, 0.55, 4.85, 12.23, 1.5, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, 0.75, 4.98, 11.8, 1.25,
-             text="в жизненном цикле агента задокументировано свыше 30 событий — от старта сессии "
-                  "до удаления рабочей копии; для старта нужны единицы. Чем шире условие срабатывания, "
-                  "тем дороже ошибка в самой логике хука.", size=13, color=DEEP, line_spacing=1.3,
-             anchor=MSO_ANCHOR.MIDDLE)
+    y = auto_header(s, "Кейс 2.1 · Плоский файл",
+        "Уже отклонённое решение всплывает снова, потому что разговор, в котором его "
+        "приняли, закончился — а его содержимое нигде не осталось")
+    sh = 2.0
+    ocean_box(s, 0.55, y, 12.23, sh)
+    text_box(s, 0.78, y + 0.14, 11.8, sh - 0.55,
+             text="Третья сессия за две недели. Заказчик прислал заявку с опечаткой в "
+                  "домене почты, форма её приняла. Разработчик просит доработать "
+                  "валидацию. Агент предлагает подключить стороннюю библиотеку валидации "
+                  "форм — ту самую, которую уже обсуждали и отклонили: форма из двух "
+                  "полей, хватает нативных required/pattern и двадцати строк своего кода.",
+             size=13, color=DEEP, line_spacing=1.28)
+    text_box(s, 0.78, y + sh - 0.4, 11.8, 0.34,
+             text="Агент предлагает её так, будто вопрос никогда не поднимался. Для него "
+                  "он и не поднимался.", size=11, italic=True, color=SLATE)
+    y += sh + 0.22
+    gold_callout(s, 0.55, y, 12.23, 7.0 - y,
+                 "«Агент не нарушил правило. В файле инструкций этого правила не было и "
+                 "не могло быть — решение родилось в разговоре, а разговор кончился. Это "
+                 "не «забыл»: модель не имеет состояния между вызовами.»",
+                 size=13.5, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s28"))
 
 
 def build_s29(p):
+    """pattern: research_evidence (short bridge) — Fix 1 (review-раунд v4): presence
+    paradox из кейса 1.1 (см. build_s11), перенесённый на DECISIONS.md. Не новое
+    измерение — явная связка «мы это уже видели»."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Совместное формирование, вопросы 3–4", "Привычная команда получения ветки падает в свежем репозитории",
-           title_size=17)
-    left_w = 5.85
-    numbered_card(s, 0.55, 1.95, left_w, 2.7, [
-        "Откуда хук узнает команду?  →  jq -r '.tool_input.command'",
-        "Как узнать ветку?  →  git symbolic-ref --short HEAD",
-    ], size=12)
-    rx = 0.55 + left_w + 0.33
-    rw = 12.23 - left_w - 0.33
-    terminal_card(s, rx, 1.95, rw, 2.7, [
-        ("$ git init -q -b main", TEAL, True),
-        ("$ git symbolic-ref --short HEAD", TEAL, True),
-        ("main", CODE_FG),
-        ("(exit code: 0)", CODE_MUTED),
-        ("", CODE_FG),
-        ("$ git rev-parse --abbrev-ref HEAD", CODE_MUTED, True),
-        ("fatal: ambiguous argument 'HEAD': unknown", DENY_RED_SAFE),
-        ("revision or path not in the working tree.", DENY_RED_SAFE),
-        ("(exit code: 128)", DENY_RED_SAFE, True),
-    ], size=10.3, line_spacing=1.24)
-    text_box(s, rx + 0.05, 1.95 + 2.7 + 0.08, rw - 0.1, 0.3,
-             text="rev-parse — команда, которую называет зал — перечёркнута после показа вывода",
-             size=10.5, italic=True, color=SLATE, strike=False)
-    ocean_box(s, 0.55, 4.95, 12.23, 1.4, fill=SURFACE, stroke=GOLD_DARK, stroke_pt=1.2)
-    text_box(s, 0.75, 5.06, 11.8, 1.18,
-             text="«Падение проверки — это не блокировка: это просто отсутствие блокировки. "
-                  "Внешне — ничего. Абсолютно то же самое ‘ничего’, которое вы видите, когда "
-                  "проверка прошла успешно.»", size=13.5, italic=True, color=DEEP,
-             line_spacing=1.32, anchor=MSO_ANCHOR.MIDDLE)
+    y = auto_header(s, "Кейс 2.1 · Исследование",
+        "Presence paradox из кейса 1.1 применяется и здесь: то, что лежит в "
+        "DECISIONS.md, стоит контекста в каждой сессии независимо от того, нужна ли эта "
+        "запись сегодня")
+    half_w = 5.85
+    h1 = 2.5
+    ocean_box(s, 0.55, y, half_w, h1)
+    text_box(s, 0.55 + 0.2, y + 0.14, half_w - 0.4, h1 - 0.28,
+             text="Кейс 1.1: Gloaguen et al. — сам факт присутствия текста в контексте "
+                  "создаёт стоимость (+20–23%), независимо от того, помогает ли он решить "
+                  "задачу. Мы назвали это presence paradox.",
+             size=12.5, color=DEEP, line_spacing=1.28)
+    rx = 0.55 + half_w + 0.33
+    filled_rect(s, rx, y, half_w, h1, SURFACE, stroke=GOLD, stroke_pt=1.4, radius=True,
+                radius_adj=0.06)
+    text_box(s, rx + 0.2, y + 0.14, half_w - 0.4, h1 - 0.28,
+             text="DECISIONS.md — не исключение. Каждая строка грузится в контекст в "
+                  "каждой следующей сессии, не только когда она реально нужна. Тридцать "
+                  "записей о разных темах — цена уже заметна, даже если задача касается "
+                  "только одной из них.",
+             size=12.5, color=DEEP, line_spacing=1.28)
+    y += h1 + 0.25
+    text_box(s, 0.55, y, 12.23, 0.6,
+             text="прямого измерения именно на журналах решений не проводилось — это "
+                  "перенос уже установленного механизма на новый объект, не отдельное "
+                  "новое исследование",
+             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.25)
+    y += 0.7
+    gold_callout(s, 0.55, y, 12.23, 7.0 - y,
+                 "если запись не бесплатна — точно ли туда идёт вообще всё, что можно "
+                 "туда положить?", size=14.5, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s29"))
 
 
 def build_s30(p):
+    """pattern: question_with_option_cards — Fix 1 (review-раунд v4): теперь только
+    вопрос+карточки; сценарий и диагностика переехали на build_s28, исследование —
+    на build_s29 (см. обязательный паттерн проблема → исследование → вопрос → разбор)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Совместное формирование, вопрос 5", "Гейт, чей отказ молчалив, не считается установленным, пока его не заставили отказать громко",
-           title_size=16)
-    gold_callout(s, 0.55, 1.85, 12.23, 0.85, "«А если это вообще ещё не git-репозиторий? Что должен вернуть хук?»",
-                 size=16, align=PP_ALIGN.CENTER)
-    option_row(s, 0.55, 2.9, 12.23, 0.75, ["разрешить молча", "заблокировать", "спросить человека"],
-               highlight_idx=2, size=14)
-    terminal_card(s, 0.55, 3.9, 12.23, 1.55, [
-        ("=== каталог: /tmp/no-repo-demo (git init НЕ выполнялся) ===", CODE_MUTED),
-        ('{"permissionDecision":"ask",', GOLD, True),
-        (' "permissionDecisionReason":"WARNING: branch-protection gate', GOLD),
-        ('  inactive — this is not a git repository yet (no .git found),', GOLD),
-        ('  so this hook cannot check anything…"}', GOLD),
-    ], size=11)
-    gold_callout(s, 0.55, 5.65, 12.23, 1.0,
-                 "гейт, чей отказ молчалив, не считается установленным, пока его не заставили "
-                 "отказать громко", size=15, align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Кейс 2.1 · Вопрос",
+        "Выберите, куда записать отклонённое решение — из карточек ниже — так, чтобы не "
+        "объяснять его в третий раз")
+    text_box(s, 0.55, y, 12.23, 0.35,
+             text="напоминание: отклонённая библиотека валидации всплыла снова — решение "
+                  "родилось в разговоре и нигде не осталось",
+             size=11, italic=True, color=SLATE)
+    y += 0.42
+    qh = 1.3
+    gold_callout(s, 0.55, y, 12.23, qh,
+                 "«Вы второй раз за две недели объясняете агенту, почему в этой форме "
+                 "нет сторонней библиотеки валидации. Выберите, куда записать это "
+                 "решение — из карточек ниже — так, чтобы не объяснять его в третий раз, "
+                 "и обоснуйте, почему не в тот файл инструкций, который мы только что "
+                 "завели.»", size=13, anchor=MSO_ANCHOR.MIDDLE)
+    y += qh + 0.2
+    opts = ["дописать\nв CLAUDE.md", "сказать агенту\n«запомни это»",
+            "завести\nDECISIONS.md", "поставить систему\nпамяти", "ничего — сам\nзапомнит"]
+    n = len(opts)
+    gap = 0.16
+    cw = (12.23 - gap * (n - 1)) / n
+    cx = 0.55
+    opt_h = 7.0 - y
+    for label in opts:
+        ocean_box(s, cx, y, cw, opt_h, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.1)
+        paras = [{"text": ln, "size": 12, "bold": True, "color": DEEP,
+                   "align": PP_ALIGN.CENTER, "line_spacing": 1.15} for ln in label.split("\n")]
+        multipara_box(s, cx + 0.08, y, cw - 0.16, opt_h, paras, anchor=MSO_ANCHOR.MIDDLE)
+        cx += cw + gap
     speaker_notes(s, load_notes("s30"))
 
 
 def build_s31(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Решение", "Собранный хук — обычный файл проекта, который коммитится и работает в любом свежем клоне",
-           title_size=17)
-    left_w = 6.85
-    code_card(s, 0.55, 1.85, left_w, 4.9, [
-        ("{", CODE_FG),
-        ('  "hooks": {', CODE_FG),
-        ('    "PreToolUse": [           // ← 1: до вызова', GOLD),
-        ("      {", CODE_FG),
-        ('        "matcher": "Bash",   // ← 2: только команды', GOLD),
-        ("        \"hooks\": [", CODE_FG),
-        ("          {", CODE_FG),
-        ('            "type": "command",', CODE_FG),
-        ("            \"command\": \"jq -r '.tool_input.command' |", CODE_MUTED),
-        ("              …", CODE_MUTED),
-        ("              grep -qE git\\\\s+commit   // ← 3: команда из JSON", GOLD),
-        ("              …git rev-parse --is-inside-work-tree… → ask  // ← 5", GOLD),
-        ("              branch=$(git symbolic-ref --short HEAD) // ← 4", GOLD),
-        ('              …[ "$branch" = "main" ] → deny…",', GOLD),
-        ('            "timeout": 10', CODE_FG),
-        ("          }", CODE_FG),
-        ("        ]", CODE_FG),
-        ("      }", CODE_FG),
-        ("    ]", CODE_FG),
-        ("  }", CODE_FG),
-        ("}", CODE_FG),
-    ], size=9.6, line_spacing=1.2)
-    rx = 0.55 + left_w + 0.3
-    rw = 12.23 - left_w - 0.3
-    terminal_card(s, rx, 1.9, rw, 1.95, [
-        ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG), ("DECISIONS.md", CODE_FG),
-        (".claude/settings.json", GOLD, True), ("index.html …", CODE_FG),
-    ], title="дерево ступени 3", size=10.8)
-    ocean_box(s, rx, 4.05, rw, 2.2, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, rx + 0.16, 4.18, rw - 0.32, 1.95,
-             text="это НЕ git-хук: версионируется и активен в любом свежем клоне · решение "
-                  "возвращается полем allow/deny/ask · код возврата 2 блокирует безусловно, "
-                  "даже поверх allow · списки хуков между уровнями объединяются, а не перекрываются",
-             size=11, color=DEEP, line_spacing=1.32)
-    speaker_notes(s, load_notes("s31"))
+    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+    rows = [
+        ["«Допишу в CLAUDE.md»", "Механически сработает: файл читается каждую сессию",
+         "Смешивает стабильные правила и растущий лог решений. На десятке решений файл "
+         "выйдет за ориентир в 200 строк. Вместо: развести слои по авторству"],
+        ["«Ничего, агент сам запомнит»", "Нигде: это не настройка, которую забыли "
+         "включить",
+         "Модель не имеет состояния между вызовами по конструкции. Вместо: решить, кто и "
+         "куда пишет"],
+        ["«Скажу агенту ‘запомни это’»", "Для личного предпочтения — идеально",
+         "Половина ответа. Уходит в авто-память: машинно-локальный слой без "
+         "синхронизации и код-ревью"],
+        ["«Заведу DECISIONS.md»", "Для командного решения с обоснованием — именно то, "
+         "что нужно",
+         "Вторая половина ответа. Требует писать «почему», а не «что»"],
+        ["«Поставлю систему памяти»", "На десятках-сотнях записей, нескольких "
+         "пользователях",
+         "Рано на порядок: на малых корпусах простой файл регулярно конкурентен со "
+         "сложными системами"],
+    ]
+    return answer_slide(p, "s31", label="Кейс 2.1 · Разбор",
+        title="Командное решение с обоснованием идёт в DECISIONS.md, личное предпочтение "
+              "— в авто-память, выводимое из кода — никуда",
+        context_q="Куда записать отклонённое решение — и почему не в файл инструкций?",
+        headers=headers, rows=rows, col_w=[0.24, 0.3, 0.46], gold_rows=[],
+        footer="целевой ответ — оба механизма разом, с разделением ролей",
+        table_h=3.7, footer_h=0.7, footer_size=15)
 
 
 def build_s32(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Три срабатывания подряд", "Полная проверка барьера — запрещает то, что должно, и пропускает то, что должно",
-           title_size=17)
-    gap = 0.24
-    cw = (12.23 - gap * 2) / 3
-    y, h = 2.15, 3.5
-    ocean_box(s, 0.55, y, cw, h)
-    text_box(s, 0.55 + 0.16, y + 0.16, cw - 0.32, 0.3, text="1 · ВЕТКА MAIN", size=12, bold=True, color=MID)
-    text_box(s, 0.55 + 0.2, y + 0.75, cw - 0.4, h - 1.3,
-             text="permissionDecision: deny\n\n«BLOCKED: direct commit to main/master. "
-                  "Create a feature branch first.»", size=13, color=DENY_RED_SAFE, bold=True,
-             line_spacing=1.4, anchor=MSO_ANCHOR.MIDDLE)
-    x2 = 0.55 + cw + gap
-    ocean_box(s, x2, y, cw, h)
-    text_box(s, x2 + 0.16, y + 0.16, cw - 0.32, 0.3, text="2 · ПОСЛЕ SWITCH -C", size=12, bold=True, color=MID)
-    text_box(s, x2 + 0.2, y + 0.75, cw - 0.4, h - 1.3,
-             text="=== HOOK OUTPUT (stdout) ===\n\n=== hook exit code: 0 (empty "
-                  "stdout = hook did not block) ===", size=12, color=CODE_MUTED, font=FONT_MONO,
-             line_spacing=1.35, anchor=MSO_ANCHOR.MIDDLE)
-    x3 = x2 + cw + gap
-    dashed_box(s, x3, y, cw, h, fill=GOLD_TINT, stroke=GOLD_DARK, stroke_pt=1.8)
-    text_box(s, x3 + 0.16, y + 0.16, cw - 0.32, 0.3, text="3 · КОММИТ РЕАЛЬНО ЛЁГ", size=12, bold=True, color=GOLD_DARK)
-    text_box(s, x3 + 0.2, y + 0.75, cw - 0.4, h - 1.55,
-             text="[fix-form-field a666b27] fix: second\nform field\n 1 file changed, 8 insertions(+)\n"
-                  " create mode 100644 src/validate.js", size=11.5, color=DEEP, font=FONT_MONO,
-             line_spacing=1.3, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x3 + 0.2, y + h - 0.55, cw - 0.4, 0.4, text="и это важнее первых двух", size=12.5,
-             italic=True, bold=True, color=GOLD_DARK)
-    text_box(s, 0.55, y + h + 0.35, 12.23, 0.5,
-             text="все три кадра — реальные захваченные выводы, ни один не нарисован",
-             size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Кейс 2.1 · Совместное формирование",
+        "Не всё, что узнал агент, вообще стоит записывать — третья корзина такая же "
+        "законная, как первые две")
+    bh = 2.7
+    basket_row(s, 0.55, y, 12.23, bh, [
+        ("авто-память", ["Разработчик просит отвечать\nкоротко, без преамбул"]),
+        ("DECISIONS.md", ["Не подключаем стороннюю библиотеку\nвалидации — форма из двух "
+                           "полей", "Своего бэкенда не делаем — заявка\nуходит на внешний "
+                           "сервис приёма форм"]),
+        ("никуда", ["Обработчик формы лежит\nв src/main.js",
+                     "19 сентября тест упал из-за\nтаймаута, увеличили ожидание"]),
+    ], highlight_idx=2)
+    y2 = y + bh + 0.25
+    terminal_card(s, 0.55, y2, 12.23, 7.0 - y2, [
+        ("## 2026-09-20 — не подключаем библиотеку валидации форм", TEAL, True),
+        ("Форма — два поля (имя, email), хватает нативных required/pattern в", CODE_FG),
+        ("index.html. Сторонняя библиотека — лишняя зависимость ради этого объёма.", CODE_FG),
+    ], title="собранная запись — реальный файл демо-репозитория", size=11.5)
     speaker_notes(s, load_notes("s32"))
 
 
 def build_s33(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Провал, слой 1", "Конфигурация агента — это исполняемый код, срабатывающий до подтверждения доверия к папке",
-           title_size=18)
-    ocean_box(s, 0.55, 1.85, 12.23, 1.7)
-    text_box(s, 0.8, 2.0, 5.5, 1.4,
-             text="CVE-2025-59536\n\n21.07.2025 обнаружено → 26.08.2025 патч → 29.08.2025 публикация",
-             size=13, bold=True, color=DEEP, line_spacing=1.3)
-    text_box(s, 6.5, 2.0, 5.5, 1.4,
-             text="вредоносный хук на событие старта сессии в чужом файле настроек срабатывает, как "
-                  "только жертва клонировала репозиторий и запустила агента",
-             size=11.3, italic=True, color=DEEP, line_spacing=1.28)
-    failure_card(s, 0.55, 3.7, 12.23, 1.35, icon_name="alert-octagon",
-                 header_text="CVE-2026-21852",
-                 body="подменённый базовый адрес API в чужом файле настроек перехватывал ключ "
-                      "пользователя в открытом виде — тоже до подтверждения доверия.", body_size=11.5)
-    dashed_box(s, 0.55, 5.2, 12.23, 1.7, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.8, 5.35, 11.7, 1.4,
-             text="Обе закрыты. Но официальная документация прямо перечисляет, что именно "
-                  "запускается ДО прохождения диалога доверия — и хуки в этом списке есть. Это "
-                  "осознанный задокументированный компромисс, а не недоработка.",
-             size=14.5, color=DEEP, line_spacing=1.36, anchor=MSO_ANCHOR.MIDDLE)
+    y = auto_header(s, "Кейс 2.1 · Решение",
+        "Два параллельных механизма, не один: авто-память живёт вне репозитория, "
+        "DECISIONS.md — git-трекнутый лог «почему» внутри него")
+    half_w = 6.7
+    h = 4.45
+    terminal_card(s, 0.55, y, half_w, h, [
+        ("# Decisions", TEAL, True),
+        ("", CODE_FG),
+        ("Append-only log of why, in date order.", CODE_MUTED),
+        ("", CODE_FG),
+        ("## 2026-09-20 — не подключаем библиотеку валидации форм", TEAL, True),
+        ("Форма — два поля (имя, email), хватает нативных required/pattern", CODE_FG),
+        ("в index.html. Сторонняя библиотека — лишняя зависимость и лишние", CODE_FG),
+        ("килобайты в сборке ради этого объёма.", CODE_FG),
+    ], title="DECISIONS.md — целиком", size=11)
+    rx = 0.55 + half_w + 0.3
+    rw = 12.23 - half_w - 0.3
+    th = 2.65
+    terminal_card(s, rx, y, rw, th, [
+        ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG),
+        ("DECISIONS.md", GOLD, True), ("index.html", CODE_FG),
+        ("package.json", CODE_FG), ("src/main.js", CODE_FG),
+        ("tests/form.spec.ts", CODE_FG),
+    ], title="дерево кейса 2.1", size=10.5)
+    ry2 = y + th + 0.2
+    ocean_box(s, rx, ry2, rw, h - th - 0.2)
+    text_box(s, rx + 0.18, ry2 + 0.12, rw - 0.36, h - th - 0.4,
+             text="diff создания файла: +DECISIONS.md (новый), git add + commit — "
+                  "команда, а не агент, решает, когда коммитить журнал решений.",
+             size=10.8, italic=True, color=SLATE, line_spacing=1.25)
     speaker_notes(s, load_notes("s33"))
 
 
 def build_s34(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 3 · Провал, слои 2–3", "Когда гейт не срабатывает, не происходит ничего — а именно так выглядит и успешно пройденный гейт",
-           title_size=16.5)
-    numbered_card(s, 0.55, 1.85, 12.23, 2.15, [
-        "одно невалидное условие срабатывания отключает ВСЕ хуки файла целиком",
-        "скрипт хука удалён, переименован или потерял право на выполнение",
-        "условие не совпало из-за регистра или незаякоренного шаблона",
-        "таймаут — это тихое «разрешить»",
-        "вызовы инструментов субагента не запускают хуки родительской сессии",
-    ], size=11.3)
-    headers = ["Обход намерением", "Механика"]
+    y = auto_header(s, "Кейс 2.1 · Три слоя",
+        "Разница между слоями не в формате — оба markdown, — а в том, кто инициирует "
+        "запись и кто её потом увидит")
+    headers = ["", "Файл инструкций", "Авто-память", "DECISIONS.md"]
     rows = [
-        ["git switch feature-x && git commit …", "получает отказ по СТАРОЙ ветке — хук читает ветку до выполнения всей команды"],
-        ["запрет на команду чтения секрета", "не мешает прочитать файл инструментом чтения шагом раньше"],
+        ["Кто автор", "вы, заранее", "агент, по ходу", "вы, в момент решения"],
+        ["Где живёт", "в репозитории, git", "вне репозитория, на этой машине",
+         "в репозитории, git"],
+        ["Что грузится", "целиком, каждую сессию", "индекс: первые 200 строк / 25 КБ",
+         "ничего автоматически"],
+        ["Проходит код-ревью", "да", "нет", "да"],
+        ["Переживает смену машины", "да", "нет", "да"],
+        ["Что туда идёт", "стабильные правила и границы", "предпочтения, подтверждённые "
+         "подходы", "решения и их «почему»"],
     ]
-    reveal_table(s, 0.55, 4.15, 12.23, 1.4, headers, rows, [0.4, 0.6], header_size=10.5, cell_size=10.5)
-    criterion_plate(s, 0.55, 5.7, 12.23, 1.15, [
-        "проверку дешевле сделать в сборке/линтере", "правило по сути не механизируемо",
-        "соло-разработчик с низким радиусом поражения",
-        "хук — не отдельный слот, а механическое усиление слоя правил"], size=10.5, gold_last=True)
+    th = 3.55
+    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.22, 0.26, 0.26, 0.26],
+                 header_size=11.5, cell_size=10.5)
+    y += th + 0.16
+    text_box(s, 0.55, y, 12.23, 0.75,
+             text="индекс памяти — только индекс  ·  агент сам пропускает выводимое из "
+                  "кода  ·  сжатие контекста переживают только файлы на диске",
+             size=12.5, italic=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.25)
     speaker_notes(s, load_notes("s34"))
 
 
-# ============================================================
-# Ступень 4 — Скилл (s32-s38)
-# ============================================================
-
-
 def build_s35(p):
-    build_stage_divider(p, "s35", stage_num=4, title="Ступень 4 · скилл",
-        meaning="Процедура, которая грузится только тогда, когда нужна",
-        tag="1 задача на исправление · 307 подтверждённых случаев вреда · аудит 3984 скиллов")
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, "Кейс 2.1 · Провал и эффективность",
+        "Память по умолчанию читается как доверенный контекст, а не как данные — и "
+        "включение памяти не обязательно улучшает результат")
+    half_w = 7.6
+    h1 = 2.15
+    failure_card(s, 0.55, y, half_w, h1, icon_name="alert-triangle",
+                 header_text="Отравление памяти — SpAIware (сентябрь 2024)",
+                 body="Внешний текст с вложенной инструкцией → долговременная память → "
+                      "активация в последующих сессиях, эксфильтрация переписки. Вектор "
+                      "закрыт в версии 1.2024.247; структурный принцип остался.",
+                 body_size=11.5, header_size=12.5)
+    rx = 0.55 + half_w + 0.28
+    rw = 12.23 - half_w - 0.28
+    ocean_box(s, rx, y, rw, h1)
+    text_box(s, rx + 0.18, y + 0.14, rw - 0.36, h1 - 0.28,
+             text="≈48% всех последующих обращений к памяти захвачено (MemoryGraft, "
+                  "2025; до отравления — 0%). В смежном эксперименте 5 подложенных "
+                  "документов управляют выводом в >90% случаев.",
+             size=11.5, color=DEEP, line_spacing=1.26)
+    y2 = y + h1 + 0.2
+    headers = ["Замер", "Значение", "База сравнения"]
+    rows = [
+        ["Популярная система памяти на бенчмарке долговременной памяти",
+         "46,0% с памятью против 57,6% без", "та же система, память выключена"],
+        ["Шесть систем памяти против «весь текст сессии в один файл»",
+         "проигрыш плоскому файлу на 25–67 пунктов", "тот же плоский файл"],
+        ["Дискреционность записи", "17% (4 задачи из 24) — модель отказалась записать "
+         "нужный факт", "те же 24 задачи"],
+    ]
+    th2 = 1.85
+    reveal_table(s, 0.55, y2, 12.23, th2, headers, rows, [0.42, 0.32, 0.26],
+                 row_highlight={0: "gold"}, header_size=10.3, cell_size=9.8)
+    speaker_notes(s, load_notes("s35"))
 
 
 def build_s36(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 4 · Сценарий-боль",
-           "Файл инструкций облагает налогом каждый запрос процедурой, которая нужна примерно "
-           "в одной сессии из десяти",
-           title_size=16)
-    y = 1.85
-    ocean_box(s, 0.55, y, 12.23, 1.1)
-    text_box(s, 0.8, y + 0.1, 6.3, 0.9, text="14 строк → 54 строки", size=20, bold=True,
-             color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 7.0, y + 0.1, 5.5, 0.9,
-             text="ориентир 200 · деплой ≈ 1 сессия из 10", size=13, italic=True, color=SLATE,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.3)
-    y += 1.1 + 0.14
-    numbered_card(s, 0.55, y, 12.23, 1.05, [
-        "собрать → прогнать тест формы → опубликовать → открыть прод-URL и отправить заявку "
-        "руками → записать в журнал, что задеплоено и когда"], size=12.5)
-    y += 1.05 + 0.14
-    gold_callout(s, 0.55, y, 12.23, 1.1,
-                 "«В файле инструкций накопилась процедура деплоя на сорок строк. Она нужна раз "
-                 "в две недели, а грузится в каждую сессию — даже когда вы правите отступы в "
-                 "вёрстке. Выберите, куда её вынести — из карточек ниже — так, чтобы агент сам "
-                 "понял, когда её открыть.»", size=11.8)
-    y += 1.1 + 0.16
-    option_row(s, 0.55, y, 12.23, 0.7,
-               ["оставить\nкак есть", "отдельный файл\n+ импорт",
-                "отдельный файл,\nнапоминать вручную",
-                "скилл с\nописанием-триггером", "хук"], size=10.6)
-    y += 0.7 + 0.16
-    text_box(s, 0.55, y, 12.23, 0.4, text="разбор — на следующем слайде", size=12,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s36"))
+    return criteria_slide(p, "s36", label="Кейс 2.1 · Критерий и граница",
+        title="Плоского файла достаточно, пока история решений влезает в контекст "
+              "целиком и связей между записями ещё нет",
+        items=[
+            "Задача одноразовая, второй сессии по этому контексту не будет.",
+            "Весь нужный контекст помещается в одно контекстное окно без потерь.",
+            "Правила проекта стабильны и укладываются в файл инструкций короче 200 строк.",
+            "Никто не повторяет вручную одну и ту же правку из сессии в сессию.",
+            "Нет нескольких участников, которым нужно делиться контекстом асинхронно.",
+            "Факт выводим из кода или истории изменений.",
+        ],
+        boundary_text="Плоский DECISIONS.md перестаёт справляться, когда записей "
+                       "набралось настолько много, что найти нужную линейным чтением "
+                       "дольше, чем переобъяснить решение заново, — и между записями "
+                       "появились связи, для которых в append-only логе физически "
+                       "некуда положить.")
 
 
 def build_s37(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 4 · Разбор",
-           "Скилл — знание, которое агент сам подгружает по описанию-триггеру, состоящему из "
-           "трёх частей: что делает, когда использовать, когда не использовать",
-           title_size=14.5, title_h=1.1)
-    y = 1.9
-    text_box(s, 0.55, y, 12.23, 0.3,
-             text="вопрос для контекста: «Куда вынести процедуру деплоя?»",
-             size=11, italic=True, color=SLATE)
-    y += 0.38
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
-    rows = [
-        ["«Оставлю в файле инструкций — вдруг понадобится»",
-         "Нигде: ровно тот антипаттерн, который ступень называет по имени",
-         "Постоянный налог на контекст независимо от релевантности. Вместо: вынести туда, что "
-         "грузится по требованию"],
-        ["«Вынесу в отдельный файл и сошлюсь импортом»", "Организационно: файл станет читаемее",
-         "Импорт не экономит контекст — импортированный файл всё равно грузится целиком при "
-         "старте. Налог не решён, он переехал"],
-        ["«Вынесу в файл и буду сам напоминать агенту его прочитать»", "Пока вы помните",
-         "Требует человека в каждом цикле. Вместо: отдать решение о релевантности модели, но по "
-         "явному описанию"],
-        ["«Сделаю это хуком»", "Там, где правило нельзя нарушить ни разу",
-         "Путаница механизмов, и полезная: хук — механика, которую исполняет среда; скилл — "
-         "знание, которое агент может учесть"],
-        ["«Заведу скилл с описанием, по которому он срабатывает»", "Именно то, что нужно",
-         "Не рано: файл инструкций уже платит за процедуру в девяти сессиях из десяти. "
-         "Ломается, если описание написано для человека, а не как триггер"],
-    ]
-    reveal_table(s, 0.55, y, 12.23, 6.95 - y, headers, rows, [0.26, 0.26, 0.48],
-                 row_highlight={4: "gold"}, header_size=9.3, cell_size=9)
-    speaker_notes(s, load_notes("s37"))
+    """pattern: section_divider — Fix 4 (review-раунд v4): кейс 2.2 получает свой
+    divider, по образцу кейсов 1.1/1.2/1.3/2.1 (у которых он уже был)."""
+    return divider_case(p, "s37",
+        title="Кейс 2.2 · структурированная вики-память",
+        meaning="Тот же DECISIONS.md, но разросшийся — плоский лог больше не хранит связей",
+        tag="1 контрпример структуре · 4 честных издержки",
+        case_idx=1, case_total=3, icon_name="git-branch")
 
 
 def build_s38(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 4 · Задача на исправление", "Описание — единственный канал, по которому модель выбирает нужный скилл среди потенциально сотни установленных",
-           title_size=16)
-    hw = 5.85
-    terminal_card(s, 0.55, 1.9, hw, 1.5, [
-        ("deploy: deploy", DENY_RED_SAFE, True),
-    ], title="фронтматтер", size=16)
-    text_box(s, 0.55, 3.5, hw, 0.35, text="система подставила имя файла вместо отсутствующего описания",
-             size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    rx = 0.55 + hw + 0.33
-    ocean_box(s, rx, 1.9, hw, 1.5)
-    multipara_box(s, rx + 0.2, 1.9 + 0.15, hw - 0.4, 1.2, [
-        {"text": "«Helps with documents»", "size": 13, "color": SLATE, "strike": True,
-         "align": PP_ALIGN.CENTER, "space_after": 6},
-        {"text": "«Processes data»", "size": 13, "color": SLATE, "strike": True,
-         "align": PP_ALIGN.CENTER, "space_after": 6},
-        {"text": "«Does stuff with files»", "size": 13, "color": SLATE, "strike": True,
-         "align": PP_ALIGN.CENTER},
-    ])
-    gold_callout(s, 0.55, 3.95, 12.23, 1.25,
-                 "«Перед вами скилл, чьё описание — его собственное имя. Описание — единственный "
-                 "канал, по которому модель выбирает нужный скилл среди потенциально сотни "
-                 "установленных. Что именно вы допишете, чтобы он начал срабатывать?»", size=12.5)
-    option_row(s, 0.55, 5.4, 12.23, 0.9, ["что делает", "когда\nиспользовать", "когда НЕ\nиспользовать"], size=14)
-    speaker_notes(s, load_notes("s38"))
+    return scenario_pain_slide(p, "s38", label="Кейс 2.2 · Вики-память",
+        title="Файл технически на месте, но пользоваться им дольше, чем не "
+              "пользоваться — линейный лог не хранит связей между записями",
+        scenario="Прошло четыре месяца. Новый разработчик в команде просит агента "
+                 "добавить капчу на форму: появился спам. Агент листает DECISIONS.md "
+                 "целиком (тридцать восемь записей) и предлагает решение, которое "
+                 "противоречит более раннему решению №14: «не добавляем сторонние "
+                 "виджеты в форму, см. запись №3». Агент нашёл запись №3, но не нашёл "
+                 "запись №31 — она отменяет часть решения №3 конкретно для случая "
+                 "антиспама, дописана двумя месяцами позже, в другом конце файла, без "
+                 "единой отсылки назад.",
+        bottom_line="Разработчик открывает файл сам и тратит на линейное чтение "
+                     "тридцати восьми записей больше времени, чем ушло бы на то, чтобы "
+                     "заново передумать вопрос с нуля.",
+        note="Пример иллюстративный — реального разросшегося DECISIONS.md на 38 "
+             "записей не захвачено.")
 
 
 def build_s39(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 4 · Совместное формирование, ход 3", "Описание — это поисковый запрос вашего будущего «я», забывшего детали через полгода",
-           title_size=16.5)
-    ocean_box(s, 0.55, 1.9, 12.23, 2.3)
-    paras = [
-        {"text": "[что делает] ", "size": 13, "bold": True, "color": MID, "space_after": 4},
-        {"text": "«Деплоит лендинг signup-landing на прод — сборка, smoke-тест формы, "
-                 "публикация, проверка прод-URL. ", "size": 13, "color": DEEP, "space_after": 4},
-        {"text": "[когда использовать] ", "size": 13, "bold": True, "color": TEAL, "space_after": 4},
-        {"text": "Используй, когда пользователь просит задеплоить, выкатить или опубликовать сайт — ",
-         "size": 13, "color": DEEP, "space_after": 4},
-        {"text": "[когда НЕ использовать] ", "size": 13, "bold": True, "color": GOLD_DARK, "space_after": 4},
-        {"text": "не для обычных правок кода без деплоя.»", "size": 13, "color": DEEP},
-    ]
-    # multipara_box treats each dict as its own paragraph; use one flowing paragraph via a single textbox instead
-    tb = s.shapes.add_textbox(Inches(0.75), Inches(2.05), Inches(11.8), Inches(1.7))
-    tf = tb.text_frame; tf.word_wrap = True
-    p0 = tf.paragraphs[0]; p0.line_spacing = 1.4
-    for cfg in paras:
-        r = p0.add_run(); r.text = cfg["text"]
-        r.font.size = Pt(cfg["size"]); r.font.bold = cfg.get("bold", False)
-        r.font.color.rgb = cfg["color"]; r.font.name = FONT_BODY
-    text_box(s, 0.75, 3.85, 11.8, 0.3, text="так и лежит в демо-репозитории, слово в слово",
-             size=10.5, italic=True, color=SLATE)
-    ocean_box(s, 0.55, 4.4, 12.23, 1.5, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, 0.75, 4.55, 11.8, 0.3, text="ТЕЛО СКИЛЛА · ПЯТЬ ШАГОВ", size=11, bold=True, color=TEAL)
-    text_box(s, 0.75, 4.9, 11.8, 0.9,
-             text="собрать → прогнать тест формы → опубликовать → открыть прод-URL и отправить "
-                  "заявку руками → записать в журнал, что задеплоено (единственный новый)",
-             size=12.5, color=DEEP, line_spacing=1.3)
-    speaker_notes(s, load_notes("s39"))
+    return question_slide(p, "s39", label="Кейс 2.2 · Вопрос",
+        title="Тридцать восемь записей и потерянная связь между двумя из них — повод "
+              "выбрать, как реорганизовать журнал решений, а не заводить его заново",
+        question="«DECISIONS.md разросся до тридцати восьми записей, и в нём уже есть "
+                  "решение, которое отменяет часть более раннего решения, — без единой "
+                  "ссылки между ними. Выберите, как реорганизовать этот файл — из "
+                  "карточек ниже — так, чтобы агент быстро находил нужное решение и "
+                  "видел связи между решениями. Обоснуйте выбор.»",
+        options=["оставить как есть —\nпросто грепать",
+                 "разбить на тематические\nфайлы со ссылками",
+                 "поставить графовую/\nвекторную систему памяти",
+                 "завести один общий\nSUMMARY.md, переписываемый целиком",
+                 "агент сам найдёт\nчерез поиск по репозиторию"],
+        opt_h=1.75)
 
 
 def build_s40(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 4 · Решение", "Процедура переезжает целиком: сорок строк вырезаются из файла инструкций в тот же момент",
-           title_size=17)
-    left_w = 6.85
-    code_card(s, 0.55, 1.85, left_w, 4.9, [
-        ("---", CODE_MUTED),
-        ("name: deploy", CODE_FG),
-        ("description: Деплоит лендинг signup-landing на", GOLD),
-        ("  прод — сборка, smoke-тест формы, публикация,", GOLD),
-        ("  проверка прод-URL. Используй, когда", GOLD),
-        ("  пользователь просит задеплоить, выкатить", GOLD),
-        ("  или опубликовать сайт — не для обычных", GOLD),
-        ("  правок кода без деплоя.", GOLD),
-        ("---", CODE_MUTED),
-        ("", CODE_FG),
-        ("# deploy", TEAL, True),
-        ("1. Собрать: npm run build (код 0).", CODE_FG),
-        ("2. Прогнать smoke-тест: npx playwright test.", CODE_FG),
-        ("3. Опубликовать: wrangler pages deploy dist", CODE_FG),
-        ("   --project-name signup-landing.", CODE_FG),
-        ("4. Открыть прод-URL, вручную отправить форму.", CODE_FG),
-        ("5. Записать в Tasks/<date>_<slug>/log.md.", CODE_FG),
-    ], size=10.6, line_spacing=1.24)
-    rx = 0.55 + left_w + 0.3
-    rw = 12.23 - left_w - 0.3
-    terminal_card(s, rx, 1.9, rw, 2.0, [
-        ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG), ("DECISIONS.md", CODE_FG),
-        (".claude/settings.json", CODE_FG), (".claude/skills/deploy/SKILL.md", GOLD, True),
-    ], title="дерево ступени 4", size=10.5)
-    dashed_box(s, rx, 4.1, rw, 2.15, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, rx + 0.18, 4.25, rw - 0.36, 1.85,
-             text="переехало, а не скопировалось:\n\nсорок строк вырезаются из файла "
-                  "инструкций в тот же момент, когда появляется скилл",
-             size=13, bold=True, color=GOLD_DARK, line_spacing=1.35)
-    speaker_notes(s, load_notes("s40"))
+    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+    rows = [
+        ["«Оставить как есть, просто грепать»", "Пока записей десятки и они "
+         "укладываются в контекст целиком",
+         "Деградация плоской памяти со временем задокументирована кросс-источниками "
+         "(~72 ч, −14 п.п.); наш файл уже перерос эту границу"],
+        ["«Разбить на тематические файлы со сквозными ссылками»", "Именно этот случай",
+         "Целевой ответ, но не бесплатный — структура сама создаёт новую нагрузку "
+         "(staleness, дублирование, поддержка)"],
+        ["«Поставлю графовую/векторную систему памяти»", "На больших "
+         "многопользовательских корпусах с семантическим поиском",
+         "Контрпример прямо про наш масштаб: файловое хранилище обошло graph-based "
+         "систему на LoCoMo. Рано на порядок"],
+        ["«Один общий SUMMARY.md, переписываемый целиком»", "Для совсем маленького "
+         "проекта",
+         "Переписывание целиком убивает append-only гарантию — история решения "
+         "невосстановима"],
+        ["«Агент сам найдёт через поиск по репозиторию»", "Для фактов, выводимых из "
+         "кода",
+         "Решения — не факты кода. «Сам найдёт» — то же заблуждение, что «сам "
+         "запомнит»"],
+    ]
+    return answer_slide(p, "s40", label="Кейс 2.2 · Разбор",
+        title="Разбить на тематические файлы со сквозными ссылками — целевой ответ, но "
+              "не бесплатный: структура сама создаёт новую нагрузку",
+        context_q="Как реорганизовать разросшийся журнал решений?", headers=headers,
+        rows=rows, col_w=[0.26, 0.28, 0.46], gold_rows=[1],
+        footer="целевой ответ — разбить на тематические файлы со сквозными ссылками, со "
+               "списком реальных издержек, а не как безусловный апгрейд",
+        table_h=3.65, footer_h=0.85, footer_size=13)
 
 
 def build_s41(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 4 · Три уровня и две проверки", "Скилл проверяется в обе стороны: что срабатывает, когда надо, и что молчит, когда не надо",
-           title_size=17)
-    headers = ["Уровень", "Когда грузится", "Стоимость", "Содержимое"]
-    rows = [
-        ["1. Метаданные", "всегда, при старте", "≈100 токенов", "имя + описание"],
-        ["2. Инструкции", "только при срабатывании", "<5000 токенов", "тело файла скилла"],
-        ["3. Ресурсы и код", "только при обращении", "0, пока не открыт", "вложенные файлы, скрипты"],
-    ]
-    reveal_table(s, 0.55, 1.85, 12.23, 1.95, headers, rows, [0.2, 0.28, 0.24, 0.28], header_size=11, cell_size=11)
-    hw = 5.85
-    failure_card(s, 0.55, 4.0, hw, 1.55, icon_name="check-circle-2",
-                 header_text="Положительная проверка",
-                 body="в новой сессии попросить «задеплой сайт» — скилл должен открыться сам",
-                 body_size=12)
-    rx = 0.55 + hw + 0.33
-    dashed_box(s, rx, 4.0, hw, 1.55, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, rx + 0.22, 4.12, hw - 0.44, 0.34, text="ОТРИЦАТЕЛЬНАЯ ПРОВЕРКА · эту обычно пропускают",
-             size=10.5, bold=True, color=GOLD_DARK)
-    text_box(s, rx + 0.22, 4.5, hw - 0.44, 0.95,
-             text="в новой сессии попросить починить мелкий баг в вёрстке — скилл открываться НЕ должен",
-             size=12, color=DEEP, line_spacing=1.28)
+    y = auto_header(s, "Кейс 2.2 · Решение",
+        "Запись явно ссылается на связанную запись — то, чего в плоском append-only "
+        "логе не было в принципе")
+    half_w = 5.0
+    h = 3.5
+    terminal_card(s, 0.55, y, half_w, h, [
+        ("memory/decisions/", TEAL, True),
+        ("  index.md        ← оглавление тем + ссылки", CODE_FG),
+        ("  validation.md   ← решения по валидации формы", CODE_FG),
+        ("  backend.md      ← решения о том, чего мы НЕ делаем", CODE_FG),
+        ("  deploy.md", CODE_FG),
+    ], size=11.5)
+    rx = 0.55 + half_w + 0.3
+    rw = 12.23 - half_w - 0.3
+    terminal_card(s, rx, y, rw, h, [
+        ("## 2026-09-20 — не подключаем библиотеку валидации форм", TEAL, True),
+        ("Форма — два поля, хватает нативных required/pattern.", CODE_FG),
+        ("См. также: 2026-11-30 (антиспам) — это решение НЕ", CODE_FG),
+        ("распространяется на защиту от спама, другой механизм.", CODE_FG),
+        ("", CODE_FG),
+        ("## 2026-11-30 — антиспам через honeypot-поле, без капчи", TEAL, True),
+        ("Отменяет часть решения от 2026-09-20 для случая антиспама.", CODE_FG),
+    ], title="validation.md — пример записи", size=10.3)
+    y2 = y + h + 0.2
+    text_box(s, 0.55, y2, 12.23, 7.0 - y2,
+             text="иллюстративный пример, не захваченный вживую — ждёт реальной сессии",
+             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s41"))
 
 
 def build_s42(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 4 · Провал / ограничение", "Скиллы вредят не тогда, когда очевидно нерелевантны, а ровно тогда, когда кажутся релевантными",
-           title_size=17)
-    headers = ["Замер (SkillsBench/SWE-Skills-Bench, arXiv:2608.11888)", "Значение"]
-    rows = [
-        ["подтверждённых случаев сбоя, вызванного скиллом", "307"],
-        ["функциональных провалов, из них 68,8% (86 из 125) — кажущиеся релевантными", "125"],
-        ["регрессий по стоимости, до +451% токенов", "182"],
-        ["падение доли успеха на задачах", "16 из 84"],
+    y = auto_header(s, "Кейс 2.2 · Провал и издержки",
+        "Структура — не гарантированный выигрыш и не бесплатный апгрейд: простое "
+        "файловое хранилище обошло графовую систему памяти, а сама структура добавляет "
+        "свою собственную нагрузку")
+    text_box(s, 0.55, y, 12.23, 0.5,
+             text="почти все источники ниже — свежие непроверенные препринты 2026 года; "
+                  "цифры — «заявлено в препринте», а не установленный факт",
+             size=10.8, italic=True, color=SLATE, line_spacing=1.2)
+    y += 0.55
+    headers = ["Система", "LoCoMo (долговременная память)"]
+    rows = [["Простое файловое хранилище (grep/чтение файлов)", "74,0%"],
+            ["Mem0 (graph-based)", "68,5%"]]
+    th = 1.5
+    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.72, 0.28],
+                 row_highlight={0: "gold"}, header_size=11.5, cell_size=13)
+    y += th + 0.14
+    text_box(s, 0.55, y, 12.23, 0.4,
+             text="объяснение авторов: модели тренированы на файловых операциях как на "
+                  "самом привычном инструменте", size=11, italic=True, color=SLATE)
+    y += 0.45
+    items = [
+        "Staleness — сводка в оглавлении расходится с содержимым тематического файла.",
+        "Duplication — устаревшие версии одного и того же факта накапливаются вместо "
+        "замены.",
+        "Отсутствие каскадного удаления — удалили факт в одном файле, производные "
+        "записи в других остались жить как верные.",
+        "Maintenance burden — кто-то должен реально ходить и поддерживать структуру "
+        "актуальной.",
     ]
-    reveal_table(s, 0.55, 1.82, 6.0, 2.15, headers, rows, [0.72, 0.28], header_size=9.3, cell_size=10,
-                 row_highlight={1: "gold"})
-    rx = 6.78
-    ocean_box(s, rx, 1.82, 6.0, 2.15, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, rx + 0.2, 1.95, 5.6, 1.9,
-             text="скилл как чужой код: аудит 3984 скиллов (5 фев 2026) — 36% с изъяном, 13,4% "
-                  "(534) критических; 76 подтверждённых нагрузок, 91% с инъекцией в промпт; "
-                  "февраль 2026 — первая координированная кампания, 30+ скиллов в волне.",
-             size=10.6, color=DEEP, line_spacing=1.28)
-    dashed_box(s, 0.55, 4.15, 12.23, 0.75, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, 4.15, 11.8, 0.75,
-             text="динамическая подстановка контекста: команда выполняется, а вывод попадает в "
-                  "контекст ДО того, как модель увидела сам скилл", size=12.5, italic=True,
-             color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    criterion_plate(s, 0.55, 5.1, 12.23, 1.75, [
-        "нужно каждой сессии — это файл инструкций", "процедура одноразовая — дешевле попросить подробно",
-        "правило недопустимо нарушить ни разу — это хук", "нужен изолированный бюджет контекста — субагент",
-        "количество скиллов — не сигнал качества, а сигнал будущей проблемы выбора"], size=10.3)
+    criterion_plate(s, 0.55, y, 12.23, 7.0 - y, items,
+                     title="ЧЕСТНО НАЗВАННЫЕ НЕДОСТАТКИ ВИКИ-ПАМЯТИ", size=11)
     speaker_notes(s, load_notes("s42"))
 
 
-# ============================================================
-# Ступень 5 — Доступ наружу / MCP (s39-s47)
-# ============================================================
-
-
 def build_s43(p):
-    build_stage_divider(p, "s43", stage_num=5, title="Ступень 5 · доступ наружу (MCP)",
-        meaning="Первый блок, который смотрит за пределы репозитория",
-        tag="4 хода совместного формирования · 7 замеров стоимости · 3 слоя провала · рамка смертельного трио")
+    return criteria_slide(p, "s43", label="Кейс 2.2 · Критерий и мост",
+        title="Единиц-десятков тематических файлов, которые правят один-два человека, "
+              "достаточно — полноценная система памяти требует замеров на своём "
+              "масштабе, не общего совета",
+        items=[
+            "Число тематических файлов — единицы-десятки, не сотни.",
+            "Поиск нужной записи — по имени темы или простому grep, а не по смысловой "
+            "близости.",
+            "Участников, одновременно правящих память, — один-два.",
+            "Никто не просил «найди решения, похожие по смыслу на…».",
+        ],
+        boundary_text="Смена оси: всё в этом и предыдущем кейсе — про решения, которые "
+                       "живут навсегда. Что происходит с памятью одной задачи, пока она "
+                       "ещё не закончена?")
 
 
 def build_s44(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Сценарий-боль",
-           "Каждая сессия начинается с копипаста issue в чат и заканчивается копипастом ответа "
-           "обратно — несколько раз в неделю",
-           title_size=16)
-    y = 1.85
-    ocean_box(s, 0.55, y, 12.23, 1.35)
-    text_box(s, 0.8, y + 0.12, 11.7, 1.1,
-             text="Сайт живёт третий месяц. Заказчик перестал писать в мессенджер и заводит "
-                  "задачи прямо в репозитории. Почти каждая сессия начинается одинаково: открыть "
-                  "браузер, скопировать текст задачи, вставить в чат — и скопировать результат "
-                  "обратно в комментарий. Несколько раз в неделю.",
-             size=12, color=DEEP, line_spacing=1.26, anchor=MSO_ANCHOR.MIDDLE)
-    y += 1.35 + 0.16
-    gold_callout(s, 0.55, y, 12.23, 1.15,
-                 "«Агенту теперь регулярно нужно смотреть открытые issue репозитория и готовить "
-                 "черновики правок по ним. Вы почти готовы подключить официальный сервер доступа "
-                 "к трекеру. Выберите, что вы проверите ДО того, как это сделать, — из карточек "
-                 "ниже, — и в каком порядке.»", size=12.3)
-    y += 1.15 + 0.18
-    option_row(s, 0.55, y, 12.23, 0.85,
-               ["ничего — сервер\nофициальный", "сколько токенов\nон добавит",
-                "какие права\nдаю токену", "не хватит ли\nобычной команды",
-                "сколько у сервера\nзвёзд"], size=11.3)
-    y += 0.85 + 0.2
-    text_box(s, 0.55, y, 12.23, 0.4,
-             text="разбор и порядок проверок — на следующем слайде", size=12,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s44"))
+    """pattern: section_divider — Fix 4 (review-раунд v4): кейс 2.3 получает свой
+    divider, по образцу кейсов 1.1/1.2/1.3/2.1/2.2 (у которых он уже есть)."""
+    return divider_case(p, "s44",
+        title="Кейс 2.3 · операционная память",
+        meaning="Смена оси: не решения навсегда, а ход одной задачи между её сессиями",
+        tag="21 120 траекторий · 1 кейс-стади n=1",
+        case_idx=2, case_total=3, icon_name="clipboard-check")
 
 
 def build_s45(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Разбор",
-           "Правильный ответ — не одна проверка, а последовательность из трёх, и порядок в ней "
-           "имеет значение",
-           title_size=17)
-    y = 1.75
-    text_box(s, 0.55, y, 12.23, 0.28,
-             text="вопрос для контекста: «Что вы проверите до подключения?»",
-             size=10.5, italic=True, color=SLATE)
-    y += 0.34
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
-    rows = [
-        ["«Ничего — сервер официальный, вендорский»",
-         "Как эвристика снижения риска — да; как единственная проверка — нигде",
-         "Официальность не иммунитет: у эталонного файлового сервера самого разработчика "
-         "протокола нашли две уязвимости выхода за пределы песочницы"],
-        ["«Посмотрю, сколько у сервера звёзд»",
-         "Нигде: популярность и безопасность не коррелируют",
-         "Сканирования находят проблемы у трети-двух третей случайных выборок. Вместо: смотреть "
-         "на права, а не на звёзды"],
-        ["«Посчитаю, сколько токенов это добавит»", "Всегда стоит: величина измеримая",
-         "Не рано — но это третий вопрос, а не первый: можно отлично оптимизировать стоимость "
-         "того, что вообще не следовало подключать"],
-        ["«Проверю, какие права даю токену»", "Всегда: главная из проверок",
-         "Не рано — но не отвечает на вопрос, нужно ли подключение вообще"],
-        ["«Спрошу, не хватит ли обычной команды в терминале»", "Именно то, с чего надо начинать",
-         "Не рано: это первый вопрос из трёх. Перестаёт хватать, когда доступ нужен регулярно, "
-         "из нескольких сессий, с сохранением состояния"],
-    ]
-    table_h = 2.95
-    reveal_table(s, 0.55, y, 12.23, table_h, headers, rows, [0.26, 0.28, 0.46],
-                 row_highlight={4: "gold"}, header_size=8.6, cell_size=8.4)
-    y += table_h + 0.16
-    text_box(s, 0.55, y, 12.23, 0.3, text="ПОСЛЕДОВАТЕЛЬНОСТЬ ИЗ ТРЁХ ПРОВЕРОК",
-             size=11, bold=True, color=TEAL, align=PP_ALIGN.CENTER)
-    y += 0.34
-    numbered_card(s, 0.55, y, 12.23, 1.3, [
-        "нужно ли подключение вообще", "с какими правами", "по какой цене в контексте"], size=13)
-    speaker_notes(s, load_notes("s45"))
+    return scenario_pain_slide(p, "s45", label="Кейс 2.3 · Задачная память",
+        title="Вторая сессия многошаговой задачи начинается не с продолжения, а с "
+              "повторного анализа с нуля — и с конфликта с уже принятыми по ходу "
+              "мелкими решениями",
+        scenario="Разработчик ставит агенту задачу на несколько сессий: разбить форму "
+                 "signup-landing на пошаговый визард (имя → email → подтверждение), "
+                 "сохранив всю текущую валидацию. Шесть шагов, первая сессия обрывается "
+                 "на середине, контекст сжимается. Вторая сессия: агент, не имея под "
+                 "рукой ничего, кроме кода и сжатой сводки, заново анализирует форму с "
+                 "нуля и предлагает план, который на треть повторяет уже сделанное и на "
+                 "треть противоречит мелким решениям, принятым по ходу первой сессии — "
+                 "например, переписать email-валидацию, которую договорились не трогать.",
+        bottom_line="Разработчик тратит начало второй сессии не на продолжение работы, "
+                     "а на то, чтобы заново объяснить, что уже сделано.")
 
 
 def build_s46(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Совместное формирование, ходы 1–2", "Из всего, что даёт широкий персональный токен, нашему списку операций нужен один репозиторий и две операции",
-           title_size=15)
-    hw = 5.85
-    numbered_card(s, 0.55, 1.9, hw, 2.6, [
-        "читать открытые issue", "писать комментарий к issue", "создавать черновик правки"], size=13)
-    rx = 0.55 + hw + 0.33
-    ocean_box(s, rx, 1.9, hw, 2.6)
-    items = [("все репозитории пользователя, включая приватные", True, True),
-             ("чтение и запись", True, False),
-             ("управление настройками", True, False),
-             ("удаление", True, False)]
-    iy = 2.1
-    for text, strike, emph in items:
-        text_box(s, rx + 0.2, iy, hw - 0.4, 0.5, text=text,
-                 size=13.5 if emph else 12.5, bold=emph, color=SLATE, strike=strike, line_spacing=1.15)
-        iy += 0.58
-    gold_callout(s, 0.55, 4.7, 12.23, 1.1,
-                 "остаётся: один репозиторий · чтение issue · создание черновика правки", size=15,
-                 align=PP_ALIGN.CENTER)
-    text_box(s, 0.55, 6.0, 12.23, 0.4, text="«Запомните вид этого экрана»", size=13, italic=True,
-             color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s46"))
+    return question_slide(p, "s46", label="Кейс 2.3 · Вопрос",
+        title="Агент после сжатия контекста или в новой сессии должен продолжить с "
+              "того места, где остановился, а не начать заново",
+        question="«Вторая сессия по одной и той же многошаговой задаче начинается с "
+                  "того, что агент заново анализирует форму с нуля — и предлагает "
+                  "переделать то, что уже решили не трогать. Выберите, куда и как "
+                  "записывать ход этой задачи — из карточек ниже — так, чтобы агент "
+                  "после сжатия контекста или в новой сессии продолжил с того места, "
+                  "где остановился. Обоснуйте выбор.»",
+        options=["надеяться на\nконтекстное окно",
+                 "записать план\nв DECISIONS.md",
+                 "завести один файл\nна задачу",
+                 "завести папку на задачу\nс файлом под каждый шаг",
+                 "попросить агента\n«продолжи с того места»"],
+        opt_h=1.75)
 
 
 def build_s47(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Совместное формирование, ходы 3–4", "Проверенный сервер идёт в репозиторий и проходит ревью; непроверенный эксперимент остаётся только у вас",
-           title_size=15)
-    hw = 5.85
-    ocean_box(s, 0.55, 1.95, hw, 1.9)
-    text_box(s, 0.75, 2.1, hw - 0.4, 0.4, text="«Где хранить ключ?»", size=13.5, bold=True, color=MID)
-    code_card(s, 0.55 + 0.2, 2.6, hw - 0.4, 1.1, [
-        ('"GITHUB_PERSONAL_ACCESS_TOKEN":', CODE_FG),
-        ('  "${GITHUB_PAT}"', GOLD),
-    ], size=12)
-    rx = 0.55 + hw + 0.33
-    option_row(s, rx, 1.95, hw, 1.9,
-               ["только у меня\nна этой машине", "в репозиторий,\nдля всех",
-                "глобально во всех\nмоих проектах"], size=11)
-    ocean_box(s, 0.55, 4.05, 12.23, 1.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, 0.75, 4.18, 11.8, 1.3,
-             text="в репозиторий — для проверенного сервера: подключение становится кодом, видно "
-                  "в ревью. Только у меня — для эксперимента: непроверенный сервер не коммитят в "
-                  "проект сразу.", size=12.5, color=DEEP, line_spacing=1.3)
-    dashed_box(s, 0.55, 5.8, 12.23, 0.95, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, 5.8, 11.8, 0.95,
-             text="область по умолчанию — личная, не проектная. Чтобы подключение стало кодом "
-                  "репозитория, область надо указать явно.", size=12.5, italic=True,
-             color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s47"))
+    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+    rows = [
+        ["«Не сжимать, не закрывать сессию»", "Для задачи, целиком укладывающейся в "
+         "одну короткую сессию",
+         "Контекстное окно конечно; на многошаговой задаче рано или поздно случится "
+         "сжатие или разрыв сессии — это отсутствие стратегии"],
+        ["«Записать план в DECISIONS.md»", "Никогда — не тот слой памяти",
+         "DECISIONS.md — про «почему» для решений, которые остаются в силе навсегда; "
+         "статус одной задачи туда не относится"],
+        ["«Один файл на задачу: план + лог хода + результаты»", "Ровно наш случай",
+         "Целевой ответ для этого масштаба"],
+        ["«Папка на задачу с файлом под каждый шаг»", "Параллельные подзадачи, "
+         "несколько субагентов, разросшийся лог",
+         "Оверинжиниринг для одной линейной задачи здесь и сейчас. Паттерн реально "
+         "масштабируется до папки"],
+        ["«Попросить ‘продолжи с того места’»", "Внутри одной непрерывной сессии, до "
+         "сжатия",
+         "После сжатия или в новой сессии буквально нечего продолжать — просьба "
+         "адресована памяти, которой не существует"],
+    ]
+    return answer_slide(p, "s47", label="Кейс 2.3 · Разбор",
+        title="Один файл на задачу — план, лог хода, результаты — целевой ответ для "
+              "линейной задачи с одним агентом и одним разработчиком",
+        context_q="Куда записывать ход многошаговой задачи?", headers=headers,
+        rows=rows, col_w=[0.26, 0.3, 0.44], gold_rows=[2],
+        footer="целевой ответ — один файл на задачу, с явным уточнением, что это "
+               "упрощённая версия паттерна, масштабируемого до папки",
+        table_h=3.65, footer_h=0.85, footer_size=12.5)
 
 
 def build_s48(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Решение", "В файле подключения четыре строки существа, и одна из них — о том, откуда берётся ключ, а не какой он",
-           title_size=17)
-    left_w = 6.85
-    code_card(s, 0.55, 1.85, left_w, 3.45, [
-        ("{", CODE_FG),
-        ('  "mcpServers": {', CODE_FG),
-        ('    "github": {', CODE_FG),
-        ('      "command": "npx",             // чем запускается', GOLD),
-        ('      "args": ["-y",', GOLD),
-        ('        "@modelcontextprotocol/server-github"],  // что', GOLD),
-        ('      "env": {', CODE_FG),
-        ('        "GITHUB_PERSONAL_ACCESS_TOKEN":', GOLD),
-        ('          "${GITHUB_PAT}"          // откуда ключ', GOLD),
-        ("      }", CODE_FG),
-        ("    }", CODE_FG),
-        ("  }", CODE_FG),
-        ("}", CODE_FG),
-    ], size=10.3, line_spacing=1.22)
-    dashed_box(s, 0.55, 5.45, left_w, 1.25, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, 5.45, left_w - 0.4, 1.25,
-             text="за пределами файла: какие права у ключа — один репозиторий, а не вся "
-                  "учётная запись. Этого в файле нет, и это самое важное.", size=11.5, italic=True,
-             color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
-    rx = 0.55 + left_w + 0.3
-    rw = 12.23 - left_w - 0.3
-    terminal_card(s, rx, 1.9, rw, 4.35, [
-        ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG), ("DECISIONS.md", CODE_FG),
-        (".claude/settings.json", CODE_FG), (".claude/skills/deploy/SKILL.md", CODE_FG),
-        (".mcp.json", GOLD, True), ("index.html …", CODE_FG),
-    ], title="дерево ступени 5 · первый блок, смотрящий наружу", size=11)
+    y = auto_header(s, "Кейс 2.3 · Решение",
+        "Файл задачи ссылается на журнал решений, а не дублирует его — и это осознанное "
+        "упрощение паттерна, полностью раскрываемого в другом месте")
+    terminal_card(s, 0.55, y, 12.23, 4.35, [
+        ("# Задача: разбить форму на пошаговый визард", TEAL, True),
+        ("", CODE_FG),
+        ("## План", TEAL, True),
+        ("1. [x] Разметка трёх шагов (имя / email / подтверждение)", CODE_FG),
+        ("2. [x] Перенос текущей валидации без изменений", CODE_FG),
+        ("3. [ ] Состояние текущего шага (JS)", CODE_FG),
+        ("4. [ ] Кнопки «назад»/«далее»", CODE_FG),
+        ("5. [ ] Тесты на переключение шагов", CODE_FG),
+        ("6. [ ] Ручная проверка полного прохождения", CODE_FG),
+        ("", CODE_FG),
+        ("## Лог хода", TEAL, True),
+        ("- 2026-09-20: шаги 1–2 закрыты. Договорились НЕ трогать email-", CODE_FG),
+        ("  валидацию — обсуждалась в DECISIONS.md (2026-09-20), тут перенос.", CODE_FG),
+        ("- 2026-09-22: начат шаг 3, не закончен — контекст сжат в середине.", CODE_FG),
+        ("", CODE_FG),
+        ("## Результаты (заполняется по завершении)", TEAL, True),
+        ("—", CODE_FG),
+    ], title=".tasks/active/signup-wizard.md", size=9.7, line_spacing=1.12)
+    y2 = y + 4.35 + 0.15
+    text_box(s, 0.55, y2, 12.23, 7.45 - y2,
+             text="иллюстративный пример, не захваченный вживую — ждёт реальной "
+                  "многошаговой сессии владельца · упрощение до файла — масштабируется "
+                  "до папки, подробнее за пределами этого занятия",
+             size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.2)
     speaker_notes(s, load_notes("s48"))
 
 
 def build_s49(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Цена в токенах", "Одно и то же действие стоит 1365 токенов командой в терминале и 44026 через инструмент сервера",
-           title_size=16)
-    headers = ["Примитив", "Кто инициирует", "Как выглядит"]
+    y = auto_header(s, "Кейс 2.3 · Провал",
+        "Плохой план хуже отсутствия плана вообще — и это подтверждено количественно, "
+        "а не только интуицией")
+    headers = ["Источник", "Результат"]
     rows = [
-        ["Инструменты", "модель — сама решает", "«прочитать открытые issue»"],
-        ["Ресурсы", "приложение — по явному упоминанию", "пользователь вставляет ссылку"],
-        ["Подсказки", "человек — явной командой", "выбор сценария из меню"],
+        ["Evaluating Plan Compliance, 21 120 траекторий, SWE-bench Verified/Pro",
+         "«bad plans hurt performance more than no plan at all»; комплаенс к плану "
+         "падает ~на 13 п.п. на сложном бенчмарке"],
+        ["Fresh Memory, Stale Plans, 30 контролируемых живых сценариев",
+         "без проверки актуальности плана исполнитель действовал по устаревшему плану "
+         "во всех 30 случаях (100%)"],
     ]
-    reveal_table(s, 0.55, 1.8, 12.23, 1.55, headers, rows, [0.2, 0.36, 0.44], header_size=10.5, cell_size=10.3)
-    headers2 = ["Замер", "Значение", "База сравнения"]
-    rows2 = [
-        ["связка из 5 серверов без поиска инструментов", "≈55 000 токенов определений", "без серверов — 0"],
-        ["то же, с поиском инструментов (по умолчанию)", "минус >85%", "та же связка без поиска"],
-        ["реалистичная связка 5 серверов", "26 224 = 13,1% окна 200К", "полное окно 200К"],
-        ["аудит 11 серверов (137 инструментов)", "22 945 токенов до сообщения", "пустая сессия"],
-        ["один крупный официальный сервер", "80 инструментов, 15 927 токенов", "остальные 10 серверов"],
-        ["медиана по выборке 3 875 серверов", "≈2 064 токена на сервер", "сервер не подключён"],
-        ["команда в терминале vs инструмент сервера", "1 365 против 44 026", "одинаковый результат"],
-    ]
-    reveal_table(s, 0.55, 3.45, 12.23, 3.4, headers2, rows2, [0.42, 0.28, 0.3], header_size=9.6, cell_size=9.4,
-                 row_highlight={0: "gold", 6: "gold"})
+    th1 = 1.9
+    reveal_table(s, 0.55, y, 12.23, th1, headers, rows, [0.42, 0.58],
+                 header_size=11, cell_size=10.3)
+    y += th1 + 0.18
+    failure_card(s, 0.55, y, 12.23, 1.85, icon_name="alert-octagon",
+                 header_text="Кейс-стади «Index Sickness» (n=1, честная оговорка)",
+                 body="Реальный проект, 391 сессия за месяц. Решение — физическое "
+                      "разделение baseline-инструкций и append-only лога сессии. "
+                      "Результат: объём AI-инструкций сократился ~на 75%, рецидивов не "
+                      "было за следующие ~150 сессий. n=1 action research одного "
+                      "автора, не контролируемый эксперимент.",
+                 body_size=12, header_size=13)
+    y += 1.85 + 0.18
+    text_box(s, 0.55, y, 12.23, 7.0 - y,
+             text="практика «файл/папка на задачу» пока не мейнстрим — 2853 реальных "
+                  "репозитория, доминируют статические context-файлы",
+             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.25)
     speaker_notes(s, load_notes("s49"))
 
 
 def build_s50(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Ограничение", "Зелёный статус — утверждение о транспорте, а не о работе; проверяется фактическим вызовом",
-           title_size=17)
-    hw = 5.85
-    failure_card(s, 0.55, 1.85, hw, 2.3, icon_name="check-circle-2",
-                 header_text="Что индикатор ловит честно",
-                 body="процесс не поднялся — «не удалось подключиться». Типичная причина: "
-                      "регрессия в незафиксированной транзитивной зависимости.", body_size=12)
-    rx = 0.55 + hw + 0.33
-    numbered_card(s, rx, 1.85, hw, 2.3, [
-        "сервер подключён, но инструментов не отдаёт",
-        "сервер отвечает «успех», но не делает заявленного",
-        "транспорт жив, а доступ отозван",
-    ], size=11)
-    dashed_box(s, 0.55, 4.35, 12.23, 1.55, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.8, 4.5, 11.7, 1.25,
-             text="ловушка авторизации: если приложение доступа в тестовом статусе, поставщик "
-                  "автоматически отзывает токен обновления через 7 дней неактивности. Все вызовы "
-                  "падают с ошибкой авторизации — а список серверов продолжает показывать «подключено».",
-             size=13, italic=True, color=GOLD_DARK, line_spacing=1.32, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s50"))
+    return criteria_slide(p, "s50", label="Кейс 2.3 · Критерий",
+        title="Одного файла на задачу достаточно, пока задача линейная и её ведёт один "
+              "агент и один разработчик — иначе оправдан переход к папке",
+        items=[
+            "Задача линейная: шаги идут по порядку, не параллельно.",
+            "Работает один агент (без субагентов/параллельных веток) и один "
+            "разработчик.",
+            "Лог хода помещается в разумный файл (сотни строк, не тысячи) без потери "
+            "читаемости.",
+            "Результатов и артефактов на выходе немного — не нужен отдельный файл на "
+            "каждый.",
+        ],
+        boundary_text="Если хотя бы половина пунктов неверна — переход к папке на "
+                       "задачу оправдан.",
+        extra_note="честная оговорка: паттерн «файл/папка на задачу» пока не мейнстрим "
+                    "(2853 реальных репозитория, доминируют статические context-файлы) "
+                    "— практику продвигают отдельные лидеры, это не общепринятая норма")
 
+
+# ============================================================
+# Раздел 3 — Закрытие (s51-s53)
+# ============================================================
 
 def build_s51(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Провал, слои 1–2", "Если хотя бы одного из трёх элементов нет — атака этого типа невозможна в принципе",
-           title_size=17)
-    ocean_box(s, 0.55, 1.8, 12.23, 1.65)
-    text_box(s, 0.8, 1.92, 11.7, 1.4,
-             text="26.05.2025 — публичный issue с вложенной инструкцией → агент читает issue в "
-                  "рамках обычной работы → широкий токен даёт доступ к приватным репозиториям → "
-                  "содержимое публикуется в автоматически созданном публичном черновике правки.",
-             size=12, color=DEEP, line_spacing=1.28, anchor=MSO_ANCHOR.MIDDLE)
-    dashed_box(s, 0.55, 3.55, 12.23, 0.55, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.8, 3.55, 11.7, 0.55,
-             text="CVE не присвоен — это не баг кода, а токсичный поток агента",
-             size=11.5, italic=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    gold_callout(s, 0.55, 4.25, 12.23, 2.35, "", size=1)  # background frame
-    text_box(s, 0.75, 4.4, 11.8, 0.35, text="«СМЕРТЕЛЬНОЕ ТРИО» (Саймон Уиллисон, 16.06.2025)",
-             size=12.5, bold=True, color=GOLD_DARK, align=PP_ALIGN.CENTER)
-    circ_labels = ["доступ к приватным\nданным", "обработка недоверенного\nвнешнего контента", "канал, по которому\nможно отправить наружу"]
-    gap = 0.3
-    cw = (11.0 - gap * 2) / 3
-    cx = 0.55 + (12.23 - (cw * 3 + gap * 2)) / 2
-    for lbl in circ_labels:
-        shp = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(cx), Inches(4.85), Inches(cw), Inches(1.15))
-        shp.fill.solid(); shp.fill.fore_color.rgb = RGBColor(0x0B, 0x14, 0x3A)
-        shp.line.color.rgb = GOLD; shp.line.width = Pt(1.6)
-        disable_shadow(shp)
-        tf = shp.text_frame; tf.word_wrap = True
-        tf.vertical_anchor = MSO_ANCHOR.MIDDLE
-        pp = tf.paragraphs[0]; pp.alignment = PP_ALIGN.CENTER
-        r = pp.add_run(); r.text = lbl
-        r.font.size = Pt(11); r.font.bold = True; r.font.color.rgb = WHITE; r.font.name = FONT_BODY
-        cx += cw + gap
-    text_box(s, 0.75, 6.15, 11.8, 0.35, text="не хватает хотя бы одного — атака невозможна в принципе",
-             size=12, italic=True, bold=True, color=GOLD_DARK, align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Раздел 3 · Синтез",
+        "Шесть развилок сегодняшнего занятия — три про файл инструкций, три про "
+        "память — отвечали на один и тот же скрытый вопрос")
+    headers = ["Кейс", "Развилка", "Что мы записали"]
+    rows = [
+        ["1.1", "Роль агента и общее описание репозитория",
+         "Ничего — до первого реального сигнала"],
+        ["1.2", "Базовые процессы: гейт «готово» + цикл улучшения",
+         "Гейт-фраза текстом в CLAUDE.md"],
+        ["1.3", "Вложенные файлы инструкций по подпапкам",
+         "Не дробим — один файл в корне"],
+        ["2.1", "Плоский файл памяти (DECISIONS.md)",
+         "Решение записано в файл + авто-память"],
+        ["2.2", "Структурированная вики-память",
+         "Тематические файлы со сквозными ссылками"],
+        ["2.3", "Операционная задачная память",
+         "Один файл на задачу: план + лог + результаты"],
+    ]
+    th = 3.65
+    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.1, 0.42, 0.48],
+                 header_size=12, cell_size=12.3)
+    y += th + 0.2
+    text_box(s, 0.55, y, 12.23, 7.0 - y,
+             text="Всё в правом столбце — текст, который агент читает и может учесть.",
+             size=19, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s51"))
 
 
 def build_s52(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 5 · Провал, слой 3", "Одобрение инструмента не действует бессрочно: доверие привязано к имени, а не к содержимому",
-           title_size=16)
-    ocean_box(s, 0.55, 1.82, 12.23, 1.25)
-    text_box(s, 0.8, 1.95, 11.7, 1.0,
-             text="в момент одобрения сервер отдаёт безобидный набор инструментов, пользователь "
-                  "одобряет  →  после одобрения то же имя инструмента, другое поведение. Большинство "
-                  "клиентов не перепроверяют определения инструмента при каждом вызове.",
-             size=12, color=DEEP, line_spacing=1.26, anchor=MSO_ANCHOR.MIDDLE)
-    failure_card(s, 0.55, 3.25, 12.23, 1.35, icon_name="alert-octagon",
-                 header_text="postmark-mcp, сентябрь 2025",
-                 body="вредоносный пакет несколько недель незаметно ставил скрытую копию каждого "
-                      "отправляемого письма на адрес атакующего. Никакого взлома — обновление уже "
-                      "одобренного инструмента.", body_size=11.5)
-    criterion_plate(s, 0.55, 4.75, 12.23, 2.1, [
-        "хватает обычной команды (1365 против 44026 токенов)",
-        "разовое или редкое действие, а не повторяющийся доступ",
-        "снимка данных достаточно", "доступ нужен только из этой сессии",
-        "не готовы поддерживать ещё один процесс с доступом к секретам",
-        "стоп-критерий: если подключение достраивает третий элемент трио — не подключайте"],
-        size=10.6, gold_last=True)
+    y = auto_header(s, "Раздел 3 · Охват",
+        "Сегодня закрыты подробно два слота харнесса из пяти; оставшиеся три плюс оба "
+        "механических слоя, которые превращают просьбу в барьер, — материал Семинара 5")
+    slots = [
+        ("память", "что агент помнит между сессиями"),
+        ("инструкции-\nправила", "файл-конвенция проекта + журнал задач"),
+        ("скиллы", "переиспользуемые процедуры под повторяющиеся задачи"),
+        ("субагенты", "делегирование с отдельным контекстным окном"),
+        ("доступ\nнаружу (MCP)", "доступ к внешним системам"),
+    ]
+    slot_h = 1.95
+    slot_row5(s, 0.55, y, 12.23, slot_h, slots, accent_idx=(0, 1))
+    y2 = y + slot_h + 0.25
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
+                 "Семинар 5: скиллы · субагенты · доступ наружу (MCP) + хук · процесс",
+                 size=16, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s52"))
 
 
-# ============================================================
-# Ступень 6 — Кастомный субагент (s48-s56)
-# ============================================================
-
-
 def build_s53(p):
-    build_stage_divider(p, "s53", stage_num=6, title="Ступень 6 · кастомный субагент",
-        meaning="Делегировать вообще — уже бесплатно; заводить стоит роль с отнятыми правами",
-        tag="3 хода совместного формирования · 1 настоящий вердикт BLOCK · таксономия отказов по 1600+ трассам")
-
-
-def build_s54(p):
+    """pattern: closing_question — Fix 3 (review-раунд v4): композиция намеренно
+    ОТЛИЧАЕТСЯ от build_s51 (полная таблица шести развилок), а не является её
+    уменьшенной копией с вырезанным столбцом. Здесь: тонкая строка-перечень БЕЗ
+    таблицы/рамки/столбца ответов + доминирующий крупный вопрос + подпись."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Такт 1 и такт 2", "Независимость определяется происхождением контекста, а не тоном просьбы",
-           title_size=17)
-    hw = 5.85
-    failure_card(s, 0.55, 1.9, hw, 3.1, icon_name="rotate-ccw",
-                 header_text="Такт 1 · самопроверка",
-                 body="Правка готова в src/validate.js. Перед выкаткой разработчик просит ТУ ЖЕ "
-                      "сессию перепроверить себя «максимально придирчиво». Она честно старается — "
-                      "и остаётся тем же контекстом рассуждений, той же цепочкой решений, тем же "
-                      "слепым пятном, которое эту правку и породило.", body_size=12)
-    rx = 0.55 + hw + 0.33
-    ocean_box(s, rx, 1.9, hw, 3.1, fill=SURFACE, stroke=TEAL, stroke_pt=1.2)
-    text_box(s, rx + 0.22, 1.9 + 0.18, hw - 0.44, 0.34, text="ТАКТ 2 · ОТДЕЛЬНЫЙ АГЕНТ",
-             size=12.5, bold=True, color=TEAL)
-    text_box(s, rx + 0.22, 1.9 + 0.58, hw - 0.44, 1.2,
-             text="Задача уходит в собственное контекстное окно, история рассуждений не видна, "
-                  "возвращается только итог.", size=12, color=DEEP, line_spacing=1.3)
-    dashed_box(s, rx + 0.16, 1.9 + 1.85, hw - 0.32, 1.05, fill=GOLD_TINT, stroke=GOLD_DARK, stroke_pt=1.6)
-    text_box(s, rx + 0.32, 1.9 + 1.85, hw - 0.64, 1.05,
-             text="это уже работает из коробки — заводить файл не нужно", size=13, bold=True,
-             color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER, line_spacing=1.3)
-    speaker_notes(s, load_notes("s54"))
-
-
-def build_s55(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Такт 3",
-           "Роль приходится переизобретать при каждом вызове, а у универсального субагента есть "
-           "права, которых ревьюеру не нужно",
-           title_size=15)
-    hw = 5.85
-    y = 1.85
-    failure_card(s, 0.55, y, hw, 1.7, icon_name="repeat",
-                 header_text="1. Роль собирается заново каждый раз",
-                 body="Что проверять, на что смотреть, в каком виде отвечать — вы пишете это в "
-                      "третий раз за неделю, каждый раз чуть иначе. Три вердикта несравнимы.",
-                 body_size=11.3)
-    rx = 0.55 + hw + 0.33
-    failure_card(s, rx, y, hw, 1.7, icon_name="alert-triangle",
-                 header_text="2. Полный набор инструментов — включая правку",
-                 body="Один раз субагент не просто нашёл проблему, а сам её поправил — "
-                      "по-своему. Разработчик узнал об этом из diff.",
-                 body_size=11.3)
-    y += 1.7 + 0.2
-    gold_callout(s, 0.55, y, 12.23, 1.2,
-                 "«Вы третий раз за неделю просите проверить правку отдельным агентом — и "
-                 "каждый раз заново пишете, что проверять и в каком виде ответить. А в прошлый "
-                 "раз проверяющий не просто нашёл проблему, а сам её поправил, по-своему. "
-                 "Делегировать вы уже умеете, это ничего не стоит и ничего не требует. Выберите, "
-                 "что теперь нужно завести — из карточек ниже — и обоснуйте зачем.»", size=11.6)
-    y += 1.2 + 0.18
-    option_row(s, 0.55, y, 12.23, 0.75,
-               ["ничего — делегирование\nуже есть", "писать запрос\nподробнее каждый раз",
-                "сохранить запрос\nв скилл", "кастомный субагент:\nимя + огранич. права",
-                "позвать\nколлегу"], size=10.4)
-    y += 0.75 + 0.18
-    text_box(s, 0.55, y, 12.23, 0.4, text="разбор — на следующем слайде", size=12,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s55"))
-
-
-def build_s56(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Разбор",
-           "Кастомный субагент решает обе проблемы сразу: имя и фиксированная роль исключают "
-           "переизобретение, а отнятые права делают «не правь сам» механической гарантией",
-           title_size=13.5, title_h=1.15)
-    y = 1.95
-    text_box(s, 0.55, y, 12.23, 0.3,
-             text="вопрос для контекста: «Что теперь нужно завести — и зачем?»",
-             size=11, italic=True, color=SLATE)
-    y += 0.38
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
-    rows = [
-        ["«Ничего не надо — делегирование уже есть»",
-         "Для разовой проверки — полностью достаточно (наполовину верно)",
-         "Ломается на двух вещах: роль приходится переизобретать каждый вызов, и у "
-         "универсального субагента есть права, которых ревьюеру не нужно"],
-        ["«Буду писать запрос подробнее каждый раз»", "Пока помните и формулируете одинаково",
-         "Формулировка каждый раз чуть другая — вердикты несравнимы между собой. И вопрос прав "
-         "не решён вовсе"],
-        ["«Сохраню этот запрос как скилл»",
-         "Когда нужно переиспользовать знание внутри той же сессии",
-         "Скилл подгружается в тот же контекст и выполняется той же сессией: изоляции он не "
-         "даёт — ни контекстной, ни по правам"],
-        ["«Позову коллегу»", "В команде, если коллега реально доступен",
-         "Наш разработчик работает один — решение, зависящее от наличия второго человека, здесь "
-         "не решение, а пожелание"],
-        ["«Заведу субагента с именем и урезанным набором инструментов»", "Именно то, что нужно",
-         "Не рано: роль повторилась трижды, и права уже сработали против вас. Перестаёт "
-         "работать, если «независимость» объявлена, но не проверена"],
-    ]
-    reveal_table(s, 0.55, y, 12.23, 6.95 - y, headers, rows, [0.26, 0.28, 0.46],
-                 row_highlight={4: "gold"}, header_size=8.8, cell_size=8.5)
-    speaker_notes(s, load_notes("s56"))
-
-
-def build_s57(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Совместное формирование, ход 2", "«Не правь сам» в теле роли — просьба; строка ограничения инструментов — отнятая возможность",
-           title_size=17)
-    numbered_card(s, 0.55, 1.85, 12.23, 1.1, [
-        "Какие инструменты нужны ревьюеру, чтобы найти проблему в правке?",
-        "А править файлы ему нужно?"], size=12.5)
-    items = [("чтение файлов ✓", False), ("поиск по содержимому ✓", False),
-             ("поиск файлов по именам ✓", False), ("правка файлов", True), ("запись файлов", True)]
-    ix = 0.55
-    iy = 3.1
-    for text, strike in items:
-        text_box(s, ix, iy, 12.23, 0.3, text=text, size=12.5, color=(SLATE if strike else DEEP),
-                 strike=strike, bold=not strike)
-        iy += 0.34
-    dashed_box(s, 0.55, iy + 0.08, 12.23, 0.5, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, iy + 0.08, 11.8, 0.5, text="остаётся: tools: Read, Grep, Glob",
-             size=15, bold=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE, font=FONT_MONO)
-    iy2 = iy + 0.08 + 0.5 + 0.18
-    table_card(s, 0.55, iy2, 12.23, max(1.05, 6.9 - iy2),
-               ["в теле роли: «ты не правишь код сам»", "строка tools: Read, Grep, Glob"],
-               [["просьба", "отнятая возможность"]], [0.5, 0.5], header_size=11.5, cell_size=13,
-               row_align=[PP_ALIGN.CENTER, PP_ALIGN.CENTER])
-    speaker_notes(s, load_notes("s57"))
-
-
-def build_s58(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Совместное формирование, ход 3", "Пустой список находок — валидный PASS, а BLOCK требует хотя бы одной конкретной находки",
-           title_size=16)
-    gold_callout(s, 0.55, 1.85, 12.23, 0.75,
-                 "«Что должно быть в ответе, чтобы вердикты трёх разных проверок можно было "
-                 "сравнить?»", size=14.5, align=PP_ALIGN.CENTER)
-    numbered_card(s, 0.55, 2.8, 12.23, 2.3, [
-        "Вердикт первой строкой — PASS или BLOCK",
-        "«Что проверено» конкретно — какие файлы прочитаны",
-        "Находки: что не так, где, почему важно"], size=14)
-    table_card(s, 0.55, 5.3, 12.23, 1.35,
-               ["пустой список находок", "BLOCK без конкретной исправимой находки"],
-               [["валидный PASS", "не BLOCK"]], [0.5, 0.5], header_size=12, cell_size=15,
-               row_align=[PP_ALIGN.CENTER, PP_ALIGN.CENTER])
-    speaker_notes(s, load_notes("s58"))
-
-
-def build_s59(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Решение", "Строка ограничения инструментов короче всего остального в файле и делает больше всего",
-           title_size=18)
-    left_w = 6.85
-    code_card(s, 0.55, 1.85, left_w, 4.7, [
-        ("---", CODE_MUTED),
-        ("name: diff-reviewer", CODE_FG),
-        ("description: Независимый ревьюер diff'ов. Видит", CODE_MUTED),
-        ("  только сам diff и критерии приёмки, не", CODE_MUTED),
-        ("  рассуждения автора. Используй перед мержем", CODE_MUTED),
-        ("  любого нетривиального изменения.", CODE_MUTED),
-        ("tools: Read, Grep, Glob", GOLD, True),
-        ("---", CODE_MUTED),
-        ("", CODE_FG),
-        ("# diff-reviewer", TEAL, True),
-        ("", CODE_FG),
-        ("Ты не правишь код сам — только находишь", CODE_FG),
-        ("проблемы. Начни ответ строкой:", CODE_FG),
-        ("VERDICT: PASS | BLOCK", CODE_FG),
-        ("", CODE_FG),
-        ("Затем: что проверено (конкретно), находки.", CODE_FG),
-        ("Пустой список находок — валидный PASS.", CODE_FG),
-    ], size=10.6, line_spacing=1.24)
-    text_box(s, 0.55, 6.62, left_w, 0.3, text="короче всего остального — и делает больше всего",
-             size=10.5, italic=True, color=GOLD_DARK, align=PP_ALIGN.CENTER)
-    rx = 0.55 + left_w + 0.3
-    rw = 12.23 - left_w - 0.3
-    terminal_card(s, rx, 1.9, rw, 1.95, [
-        ("AGENTS.md · CLAUDE.md · DECISIONS.md", CODE_FG),
-        (".claude/settings.json", CODE_FG),
-        (".claude/skills/deploy/SKILL.md", CODE_FG),
-        (".mcp.json", CODE_FG),
-        (".claude/agents/diff-reviewer.md", GOLD, True),
-    ], title="дерево ступени 6", size=10)
-    dashed_box(s, rx, 4.05, rw, 2.2, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, rx + 0.18, 4.2, rw - 0.36, 1.9,
-             text="вызовы инструментов субагента по сообщённому поведению не запускают хуки "
-                  "родительской сессии — без индикатора, что проверки были пропущены",
-             size=12, italic=True, color=GOLD_DARK, line_spacing=1.32)
-    speaker_notes(s, load_notes("s59"))
-
-
-def build_s60(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Живое доказательство", "Ревьюер, видевший только diff, обнаружил, что правка вообще не является правкой",
-           title_size=18)
-    dashed_box(s, 0.55, 1.82, 12.23, 0.75, fill=GOLD_TINT, stroke=GOLD_DARK, stroke_pt=2.0)
-    text_box(s, 0.75, 1.82, 11.8, 0.75, text="VERDICT: BLOCK", size=26, bold=True, color=GOLD_DARK,
-             anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    ocean_box(s, 0.55, 2.75, 12.23, 1.5)
-    text_box(s, 0.75, 2.85, 11.8, 0.3, text="ПРОВЕРЕНО", size=11.5, bold=True, color=TEAL)
-    text_box(s, 0.75, 3.15, 11.8, 1.0,
-             text="полный diff src/validate.js, итоговое содержимое файла, поиск использований "
-                  "isValidEmail по репозиторию (Grep), список файлов проекта (Glob), "
-                  "AGENTS.md/CLAUDE.md — специфичных требований к формату не найдено.",
-             size=11.3, color=DEEP, line_spacing=1.28)
-    dashed_box(s, 0.55, 4.45, 12.23, 1.9, fill=SURFACE, stroke=GOLD_DARK, stroke_pt=1.4)
-    text_box(s, 0.75, 4.58, 11.8, 0.3, text="НАХОДКА 1", size=11.5, bold=True, color=GOLD_DARK)
-    text_box(s, 0.75, 4.9, 11.8, 1.35,
-             text="«Функция добавлена, но нигде не подключена… isValidEmail нигде не используется "
-                  "(ни в этом файле, ни где-либо ещё). То есть фактическое поведение формы этим "
-                  "diff'ом не меняется… Diff добавляет мёртвый код, а не фикс.»",
-             size=13.5, italic=True, color=DEEP, line_spacing=1.34)
-    speaker_notes(s, load_notes("s60"))
-
-
-def build_s61(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Провал, слои 1–2", "Отчёт субагента об успехе — это утверждение, а не доказательство",
-           title_size=17)
-    failure_card(s, 0.55, 1.82, 12.23, 2.15, icon_name="alert-triangle",
-                 header_text="claude-code#67730 (2026) и #46727 (апрель 2026)",
-                 body="Субагенты возвращали полностью галлюцинированные результаты при НУЛЕ "
-                      "реальных вызовов инструментов — включая два выдуманных отчёта «обнаружена "
-                      "инъекция в промпт». Смежно: систематические галлюцинации вопреки явной "
-                      "инструкции подтверждать перед заявлением о завершении.", body_size=11.5,
-                 footnote="родительская сессия доверяет отчёту и строит на нём план — ошибка становится фундаментом")
-    headers = ["Категория причин (MAST, arXiv:2503.13657, 1600+ трасс, κ=0,88)", "Доля"]
-    rows = [
-        ["спецификация задачи и роли", "≈41,8%"],
-        ["рассогласование между агентами", "≈36,9%"],
-        ["верификация результата", "≈21,3%"],
-    ]
-    reveal_table(s, 0.55, 4.2, 12.23, 1.85, headers, rows, [0.75, 0.25], header_size=10.5, cell_size=12)
-    text_box(s, 0.55, 6.18, 12.23, 0.6,
-             text="κ=0,88 — шкала каппа Коэна от 0 до 1, чем ближе к 1, тем выше согласие экспертов; "
-                  "доля провальных трасс — 41–87%; ни одна категория не про «модель ошиблась в факте»",
-             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s61"))
-
-
-def build_s62(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 6 · Провал, слой 3", "Прежде чем спорить о множителе, выясните базу: 15× и 3–10× — обе честные цифры",
-           title_size=17)
-    hw = 5.85
-    ocean_box(s, 0.55, 1.85, hw, 1.75)
-    text_box(s, 0.55, 1.95, hw, 0.6, text="15×", size=34, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, 0.55, 2.65, hw, 0.85, text="июнь 2025 · база: обычный чат", size=12.5, italic=True,
-             color=SLATE, align=PP_ALIGN.CENTER)
-    rx = 0.55 + hw + 0.33
-    ocean_box(s, rx, 1.85, hw, 1.75)
-    text_box(s, rx, 1.95, hw, 0.6, text="3–10×", size=34, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, rx, 2.65, hw, 0.85, text="январь 2026 · база: одноагентное решение той же задачи",
-             size=12.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    text_box(s, 0.55, 3.75, 12.23, 0.4, text="разные базы, обе верны", size=14, bold=True,
-             italic=True, color=GOLD_DARK, align=PP_ALIGN.CENTER)
-    criterion_plate(s, 0.55, 4.35, 12.23, 2.5, [
-        "шаги зависимы, нужен общий контекст", "не резать по фазам одной цепочки решений",
-        "задача формулируется заново каждый раз — роли ещё нет", "«независимость» декларируется, но не проверяется",
-        "рутинная и дешёвая задача, где надбавка не окупается",
-        "главное: разовая проверка — делегируйте встроенным субагентом и не заводите файл"],
-        size=10.6, gold_last=True)
-    speaker_notes(s, load_notes("s62"))
-
-
-# ============================================================
-# Ступень 7 — Процесс (s57-s63)
-# ============================================================
-
-
-def build_s63(p):
-    build_stage_divider(p, "s63", stage_num=7, title="Ступень 7 · процесс",
-        meaning="Работу принимают на слово, потому что проверяемой альтернативы не существует",
-        tag="3 хода совместного формирования · 3 слоя провала · 1 честное ограничение нашего же решения")
-
-
-def build_s64(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 7 · Сценарий-боль",
-           "Каждое отдельное утверждение в отчёте агента может быть правдой — и вместе они "
-           "складываются в «готово», которого нет",
-           title_size=15)
-    y = 1.8
-    dashed_box(s, 0.55, y, 12.23, 0.75, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, y, 11.8, 0.75,
-             text="«Готово, форма отправляет заявку, все тесты прошли, можно показывать.»",
-             size=15, bold=True, italic=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE,
-             align=PP_ALIGN.CENTER)
-    y += 0.75 + 0.14
-    headers = ["«все тесты прошли»", "«форма отправляет заявку»", "«готово»"]
-    rows = [["какие именно, когда, с каким выводом?", "на проде или только локально?",
-             "по чьему критерию?"]]
-    reveal_table(s, 0.55, y, 12.23, 1.1, headers, rows, [0.34, 0.34, 0.32],
-                 header_size=11, cell_size=10.5)
-    y += 1.1 + 0.18
-    gold_callout(s, 0.55, y, 12.23, 1.2,
-                 "«Утро показа. Агент написал: ‘Готово, форма отправляет заявку, все тесты "
-                 "прошли, можно показывать’. Выберите, что из этого вы проверите ПРЯМО СЕЙЧАС, "
-                 "не читая переписку, — из карточек ниже, — и что для этого должно было "
-                 "существовать до того, как агент это написал.»", size=11.8)
-    y += 1.2 + 0.18
-    option_row(s, 0.55, y, 12.23, 0.7,
-               ["поверю — он явно\nзакончил", "прогоню тесты\nсам", "спрошу\n«ты уверен?»",
-                "открою прод и\nпроверю руками", "ссылка на коммит +\nжурнал по ходу"], size=10.3)
-    y += 0.7 + 0.16
-    text_box(s, 0.55, y, 12.23, 0.4, text="разбор — на следующем слайде", size=12,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s64"))
-
-
-def build_s65(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 7 · Разбор",
-           "Целевой ответ — не один артефакт, а два вместе: проверяемая ссылка на коммит и "
-           "журнал, который вёлся по ходу работы, а не восстановлен по памяти",
-           title_size=13.5, title_h=1.2)
-    y = 1.95
-    text_box(s, 0.55, y, 12.23, 0.3,
-             text="вопрос для контекста: «Что вы проверите прямо сейчас — и что должно было "
-                  "существовать до?»",
-             size=10.5, italic=True, color=SLATE)
-    y += 0.38
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
-    rows = [
-        ["«Поверю — он же явно закончил»", "Нигде как единственная проверка",
-         "Измерено: 75,8% провальных траекторий кодинг-агентов, оценивающих себя сами, "
-         "уверенно отчитаны как «готово». Вместо: проверять факт, а не тон"],
-        ["«Прогоню тесты сам ещё раз»", "Ловит прямое расхождение с заявлением — делать стоит",
-         "Не ловит два случая: тесты зелёные при неподключённой правке и подмену самого теста. "
-         "Не «вместо», а вдобавок"],
-        ["«Спрошу у него самого: ты уверен?»", "Нигде: иллюзия проверки",
-         "Самокоррекция без внешнего сигнала часто ухудшает точность; плюс подхалимство. "
-         "Вместо: спрашивать не модель, а систему"],
-        ["«Открою прод и отправлю заявку руками»",
-         "Всегда: ровно тот критерий «готово», который мы записали в разделе 1",
-         "Не рано — но не масштабируется: одну форму проверить руками можно, двадцать "
-         "изменений за неделю нет"],
-        ["«Ссылка на коммит плюс журнал, который вёлся по ходу»", "Именно то, что нужно",
-         "Не рано: работу уже принимают на слово. Перестаёт работать, если процесс раздувается "
-         "до состояния, когда его дешевле обойти, чем соблюсти"],
-    ]
-    reveal_table(s, 0.55, y, 12.23, 6.95 - y, headers, rows, [0.26, 0.28, 0.46],
-                 row_highlight={4: "gold"}, header_size=8.8, cell_size=8.5)
-    speaker_notes(s, load_notes("s65"))
-
-
-def build_s66(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 7 · Совместное формирование, ходы 1–2", "Три вещи должны были появиться раньше слова «готово»",
-           title_size=17)
-    baskets_y = 1.9
-    numbered_card(s, 0.55, baskets_y, 12.23, 2.15, [
-        "план — до кода. Согласованный до того, как что-то написано.",
-        "журнал — по ходу. Не восстановленный по памяти в конце.",
-        "вердикт — от того, кто не писал этот код. «А этот у нас уже есть, и он не пустой — BLOCK по нашей же правке».",
-    ], size=12.3)
-    ocean_box(s, 0.55, 4.3, 12.23, 1.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, 0.75, 4.42, 11.8, 0.3, text="ХОД 2 · ТРИ ЭЛЕМЕНТА СТРОКИ ЖУРНАЛА", size=11, bold=True, color=TEAL)
-    text_box(s, 0.75, 4.78, 11.8, 0.55, text="отметка времени  ·  конкретная выполненная команда  ·  её результат",
-             size=14.5, bold=True, color=DEEP)
-    text_box(s, 0.75, 5.35, 11.8, 0.35, text="«починил валидацию» — так проверить через неделю нечего",
-             size=12, italic=True, color=SLATE, strike=True)
-    speaker_notes(s, load_notes("s66"))
-
-
-def build_s67(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 7 · Решение", "Оба артефакта существовали — и оба не сработали, потому что вердикт пришёл после слияния",
-           title_size=17)
-    hw = 5.85
-    code_card(s, 0.55, 1.9, hw, 2.55, [
-        ("## 2026-09-20T12:44:42+00:00", TEAL, True),
-        ("Правка src/validate.js: добавлена функция", CODE_FG),
-        ("isValidEmail, ужесточён regex — проверка", CODE_FG),
-        ("точки в домене (заявка с опечаткой раньше", CODE_FG),
-        ("проходила форму).", CODE_FG),
-        ("Коммит cf58408 — git commit -m \"fix: tighten", GOLD),
-        ("email validation regex …\"", GOLD),
-    ], title="log.md", size=10.6, line_spacing=1.24)
-    rx = 0.55 + hw + 0.33
-    code_card(s, rx, 1.9, hw, 2.55, [
-        ("Предмет: diff src/validate.js", CODE_FG),
-        ("VERDICT: BLOCK", DENY_RED_SAFE, True),
-        ("Проверено: 5 конкретных действий", CODE_FG),
-        ("Находки: 3, первая блокирующая —", CODE_FG),
-        ("«Diff добавляет мёртвый код, а не фикс»", GOLD),
-    ], title="review.md", size=10.6, line_spacing=1.3)
-    dashed_box(s, 0.55, 4.65, 12.23, 0.75, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, 4.65, 11.8, 0.75, text="слияние в основную ветку произошло РАНЬШЕ вердикта — ровно так выглядит обойдённый процесс",
-             size=12.5, italic=True, bold=True, color=GOLD_DARK, anchor=MSO_ANCHOR.MIDDLE)
-    terminal_card(s, 0.55, 5.6, 12.23, 1.55, [
-        ("Tasks/README.md · Tasks/review.md.template", CODE_FG),
-        ("Tasks/2026-09-20_form-endpoint-fix/", GOLD, True),
-        ("  ├── log.md   ├── review.md", GOLD),
-    ], title="дерево ступени 7", size=10.5)
-    speaker_notes(s, load_notes("s67"))
-
-
-def build_s68(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 7 · Совместное формирование, ход 3", "Третий круг ревью по одному и тому же артефакту — не признак тщательности, а диагноз",
-           title_size=17)
-    gold_callout(s, 0.55, 1.85, 12.23, 0.75, "«Сколько кругов ревью?»", size=17, align=PP_ALIGN.CENTER)
-    option_row(s, 0.55, 2.85, 12.23, 0.7, ["один", "два", "до победного"], highlight_idx=1, size=15)
-    ocean_box(s, 0.55, 3.9, 12.23, 1.1, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, 0.75, 3.9, 11.8, 1.1, text="BLOCK  →  починка  →  узкая перепроверка только изменённого",
-             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    dashed_box(s, 0.55, 5.25, 12.23, 1.4, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, 5.38, 11.8, 1.15,
-             text="третий круг по одному и тому же артефакту — ДИАГНОЗ: слишком широкая "
-                  "ответственность, нет автопроверки, размытые критерии. Чинить надо так, чтобы "
-                  "четвёртый круг стал структурно невозможен.",
-             size=13, italic=True, color=GOLD_DARK, line_spacing=1.32, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s68"))
-
-
-def build_s69(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 7 · Провал, слой 1", "Разница между 75,8% и 3% — это разница между наличием и отсутствием внешней проверки",
-           title_size=16.5)
-    headers = ["Условия (ICML 2026, arXiv:2606.09863)", "Доля провалов, отчитанных как «готово»"]
-    rows = [
-        ["кодинг-агенты, оценивающие себя сами", "75,8%"],
-        ["однопользовательские домены другого бенчмарка", "45–48%"],
-        ["домен с двойным контролем", "3%"],
-        ["разброс между моделями", "13–79%"],
-    ]
-    reveal_table(s, 0.55, 1.85, 12.23, 2.25, headers, rows, [0.6, 0.4], header_size=11, cell_size=12,
-                 row_highlight={0: "gold", 2: "gold"})
-    ocean_box(s, 0.55, 4.25, 12.23, 0.85, fill=SURFACE, stroke=TEAL, stroke_pt=1.1)
-    text_box(s, 0.75, 4.25, 11.8, 0.85, text="75,8% ↔ 3%  =  разница между наличием и отсутствием внешней проверки",
-             size=13.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    dashed_box(s, 0.55, 5.25, 12.23, 1.4, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 0.75, 5.38, 11.8, 1.15,
-             text="ни одна из пяти проверенных конфигураций модели-судьи не превысила AUROC 0,65 "
-                  "(0,5 — случайное угадывание, 1,0 — идеальный судья). Верификация должна "
-                  "проверять ФАКТ — файл существует, команда выполнена, тест прошёл, — а не "
-                  "спрашивать другую модель, выглядит ли это завершённым.",
-             size=12.5, italic=True, color=GOLD_DARK, line_spacing=1.3, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s69"))
-
-
-def build_s70(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Ступень 7 · Провал, слои 2–3", "Гейт, который агент может отредактировать, — не гейт",
-           title_size=18)
-    numbered_card(s, 0.55, 1.8, 12.23, 1.4, [
-        "трассировка вызовов в поисках ответа проверяющей функции",
-        "перезапись функции замера времени",
-        "патч самой функции оценки, чтобы она засчитывала любое решение успешным",
-    ], size=11)
-    headers = ["Условия (METR, 5 июня 2025)", "Частота"]
-    rows = [["одна задача набора", "100% (21 из 21)"], ["в среднем по набору", "30,4% (39 из 128)"],
-            ["широкий набор других задач", "0,7%"]]
-    reveal_table(s, 0.55, 3.35, 6.0, 1.5, headers, rows, [0.62, 0.38], header_size=9.5, cell_size=10.5)
-    dashed_box(s, 6.78, 3.35, 6.0, 1.5, fill=GOLD_TINT, stroke=GOLD_DARK)
-    text_box(s, 6.98, 3.48, 5.6, 1.25,
-             text="гейт, который агент может отредактировать, — не гейт. Заметки, которые агент "
-                  "пишет сам, могут не исправлять ошибку, а закреплять её (эксперимент по "
-                  "самоавторской памяти, arXiv:2605.29463).", size=11.5, italic=True, color=GOLD_DARK,
-             line_spacing=1.28)
-    ocean_box(s, 0.55, 5.0, 12.23, 0.7, fill=SURFACE, stroke=TEAL, stroke_pt=1.0)
-    text_box(s, 0.75, 5.0, 11.8, 0.7,
-             text="claude-code#51735: документированный, признанный урок не предотвратил повторения той же ошибки через 25 дней",
-             size=11.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    criterion_plate(s, 0.55, 5.85, 12.23, 1.0, [
-        "гейт исполняется вне видимости агента", "самоавторские заметки — не прививка",
-        "проверка требует независимого от автора канала",
-        "41% (35 из 84) запросов на слияние спринта — чистая бухгалтерия"], size=10.3, gold_last=True)
-    speaker_notes(s, load_notes("s70"))
-
-
-# ============================================================
-# Закрытие занятия (s64-s65)
-# ============================================================
-
-
-def build_s71(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Закрытие", "Ни один из семи блоков не появился потому, что «так принято» — у каждого есть дата и сигнал",
-           title_size=17)
-    left_w = 5.5
-    terminal_card(s, 0.55, 1.85, left_w, 3.65, [
-        ("CLAUDE.md                 · ступень 1", GOLD),
-        ("AGENTS.md                 · ступень 1", GOLD),
-        ("DECISIONS.md               · ступень 2", GOLD),
-        (".claude/settings.json      · ступень 3", GOLD),
-        (".claude/skills/deploy/     · ступень 4", GOLD),
-        ("  SKILL.md", CODE_MUTED),
-        (".mcp.json                  · ступень 5", GOLD),
-        (".claude/agents/            · ступень 6", GOLD),
-        ("  diff-reviewer.md", CODE_MUTED),
-        ("Tasks/                     · ступень 7", GOLD),
-        ("index.html · package.json ·", CODE_MUTED),
-        ("src/ · tests/", CODE_MUTED),
-    ], title="финальное дерево · ступени семинара", size=10.2, line_spacing=1.25)
-    rx = 0.55 + left_w + 0.3
-    rw = 12.23 - left_w - 0.3
-    ocean_box(s, rx, 1.85, rw, 3.65)
-    text_box(s, rx + 0.2, 1.98, rw - 0.4, 0.28, text="КАРТА ЭКИПИРОВКИ · СЛОТЫ ЛЕКЦИИ, ЗАПОЛНЕНА",
-             size=10.5, bold=True, color=TEAL)
-    # NB (v2 fix — s64 dual-numbering readability, qa-reports/2026-09-21-v2):
-    # left tree numbers count SEMINAR STAGES (1-7, "· ступень N"); these map
-    # chips count LECTURE SLOTS (1-5, "слот N") — same digits, different axis.
-    # Prefixing both with their own word ("ступень" / "слот") disambiguates a
-    # skim-read without changing any content.
-    recap_items = [
-        ("слот 1", "память"), ("слот 2", "инструкции-правила"), ("слот 3", "скиллы"),
-        ("слот 4", "субагенты"), ("слот 5", "доступ наружу (MCP)"), ("хук", "усиление слота 2"),
-        ("процесс", "операционализация «проверяй»"),
-    ]
-    ry = 2.32
-    row_h = (3.65 - 0.47 - 0.1) / len(recap_items)
-    for num, label in recap_items:
-        grey = num in ("хук", "процесс")
-        chip_w = 0.95 if not grey else 0.9
-        num_size = 9.5 if not grey else 11
-        filled_rect(s, rx + 0.2, ry + 0.02, chip_w, row_h - 0.1,
-                    RGBColor(0xE4, 0xE9, 0xEF) if grey else MID, radius=True, radius_adj=0.3)
-        text_box(s, rx + 0.2, ry + 0.02, chip_w, row_h - 0.1, text=num, size=num_size, bold=True,
-                 color=SLATE if grey else WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, rx + 0.2 + chip_w + 0.16, ry, rw - 0.4 - chip_w - 0.16, row_h, text=label,
-                 size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-        ry += row_h
-    theses = [
-        "Правило, заявленное обязательным без механической проверки в том же изменении, тихо умрёт.",
-        "Барьер установлен не тогда, когда файл существует, а когда его видели сработавшим на реальном случае.",
-        "Конфигурация — не коллекция. Бремя доказательства лежит на том, кто добавляет, а не на том, кто остаётся внизу.",
-    ]
-    numbered_card(s, 0.55, 5.65, 12.23, 1.2, theses, size=10.8)
-    speaker_notes(s, load_notes("s71"))
-
-
-def build_s72(p):
-    s = blank(p)
-    gradient_rect(s, 0, 0, SLIDE_W_IN, SLIDE_H_IN, [(0, DEEP), (55000, MID), (100000, LIGHT)])
-    # Hero: same 7-stage ladder as opening (s01), now WITH names — closes the
-    # emotional arc; >=40% of slide area.
-    hero_x, hero_y, hero_w, hero_h = 0.55, 0.55, 12.23, 3.35  # ~41% area
-    build_growth_staircase(s, hero_x, hero_y, hero_w, hero_h,
-        bar_lo=(0x3A, 0x4A, 0x86), bar_hi=(0x6B, 0x7F, 0xC2), bar_gold=GOLD,
-        label_color=RGBColor(0xD8, 0xE2, 0xF0), gold_label_color=GOLD,
-        number_color=WHITE, gold_number_color=GOLD,
-        sublabel_color=RGBColor(0x9C, 0xAE, 0xC9), baseline_color=RGBColor(0x4A, 0x5C, 0x96))
-    q_y = hero_y + hero_h + 0.35
-    filled_rect(s, 0.75, q_y, SLIDE_W_IN - 1.5, 1.9, RGBColor(0x0B, 0x14, 0x3A),
-                stroke=GOLD, stroke_pt=1.6, radius=True, radius_adj=0.1)
-    tb = s.shapes.add_textbox(Inches(1.05), Inches(q_y + 0.16), Inches(SLIDE_W_IN - 2.1), Inches(1.6))
-    tf = tb.text_frame; tf.word_wrap = True; tf.vertical_anchor = MSO_ANCHOR.MIDDLE
-    pp = tf.paragraphs[0]; pp.line_spacing = 1.32; pp.alignment = PP_ALIGN.CENTER
-    r1 = pp.add_run()
-    r1.text = ("«У каждого из вас есть свой рабочий или учебный репозиторий. Покажите пальцем в "
-               "эту карту дважды. Первый раз — какая ступень там уже стоило бы появиться, судя "
-               "по боли, которая у вас реально была, а не про запас. Второй раз — ")
-    r1.font.size = Pt(14.5); r1.font.italic = True; r1.font.color.rgb = WHITE; r1.font.name = FONT_BODY
-    r2 = pp.add_run()
-    r2.text = "какая точно ещё рано.»"
-    r2.font.size = Pt(15.5); r2.font.italic = True; r2.font.bold = True; r2.font.color.rgb = GOLD
-    r2.font.name = FONT_BODY
-    text_box(s, 0.75, q_y + 1.95, SLIDE_W_IN - 1.5, 0.4,
-             text="Добавить умеет каждый; сегодня мы семь раз тренировали другое.",
-             size=13, italic=True, bold=True, color=RGBColor(0xCF, 0xDC, 0xEC),
-             align=PP_ALIGN.CENTER)
-    # v2 fix (qa-reports/2026-09-21-v2, P2 #6) — link badge, per rework/
-    # section-7-protsess.md §B.4: status open (dedicated clonable build is an
-    # owner decision, brief.md open question #2), so this points at the
-    # public base template instead, with the honest caption the source
-    # mandates ("шаблон, не заполненная сборка") rather than promising an
-    # artefact that doesn't exist yet.
-    badge_w, badge_h = 9.6, 0.62
-    badge_x, badge_y = (SLIDE_W_IN - badge_w) / 2, q_y + 2.42
-    filled_rect(s, badge_x, badge_y, badge_w, badge_h, RGBColor(0x0B, 0x14, 0x3A),
-                stroke=RGBColor(0x6B, 0x7F, 0xC2), stroke_pt=1.1, radius=True, radius_adj=0.35)
-    icon(s, "link", "F0AB00", 64, badge_x + 0.22, badge_y + (badge_h - 0.28) / 2, 0.28)
-    text_box(s, badge_x + 0.62, badge_y, badge_w - 0.84, badge_h,
-             text="workain/agent-harness-registry — шаблон, не заполненная сборка "
-                  "(отдельная клонируемая сборка курса — решение за владельцем)",
-             size=10.5, italic=True, color=RGBColor(0xCF, 0xDC, 0xEC), anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.2)
-    speaker_notes(s, load_notes("s72"))
+    y = auto_header(s, "Раздел 3 · Перенос",
+        "Перенесите шесть сегодняшних решений на свой репозиторий — и проверьте, какое "
+        "из них держится только на просьбе текстом")
+    # Тонкая строка-перечень кейсов — НЕ таблица, без рамки, без столбца ответов.
+    text_box(s, 0.55, y, 12.23, 0.55,
+             text="1.1  →  1.2  →  1.3  →  2.1  →  2.2  →  2.3",
+             size=15, color=MID, align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, y + 0.5, 12.23, 0.35,
+             text="роль и репозиторий · базовые процессы · вложенные файлы · плоский "
+                  "файл · вики-память · задачная память",
+             size=10, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    y2 = y + 1.05
+    # Крупный доминирующий вопрос — без карточек-вариантов, без таблицы под ним.
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2 - 0.55,
+                 "«По каждой развилке — то, что у вас уже принято, это просьба текстом, "
+                 "которую агент технически может обойти? Или нужен барьер?»",
+                 size=20, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, 7.0 - 0.5, 12.23, 0.4, text="«Не вслух. Не на бумаге. Себе.»",
+             size=13, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s53"))
 
 
 # ============================================================
 # Main
 # ============================================================
 
-
-# ============================================================
-# Main
-# ============================================================
-
-SLIDE_BUILDERS = [
-    build_s01, build_s02, build_s03, build_s04, build_s05, build_s06, build_s07, build_s08,
-    build_s09, build_s10, build_s11, build_s12, build_s13, build_s14, build_s15, build_s16,
-    build_s17, build_s18, build_s19, build_s20, build_s21, build_s22, build_s23, build_s24,
-    build_s25, build_s26, build_s27, build_s28, build_s29, build_s30, build_s31, build_s32,
-    build_s33, build_s34, build_s35, build_s36, build_s37, build_s38, build_s39, build_s40,
-    build_s41, build_s42, build_s43, build_s44, build_s45, build_s46, build_s47, build_s48,
-    build_s49, build_s50, build_s51, build_s52, build_s53, build_s54, build_s55, build_s56,
-    build_s57, build_s58, build_s59, build_s60, build_s61, build_s62, build_s63, build_s64,
-    build_s65, build_s66, build_s67, build_s68, build_s69, build_s70, build_s71, build_s72,
-]
+SEQ = [f"s{i:02d}" for i in range(1, 54)]
 
 
 def main():
     p = setup_pres()
-    for fn in SLIDE_BUILDERS:
-        print(f"--- {fn.__name__} ---")
+    for sid in SEQ:
+        fn = globals()[f"build_{sid}"]
         fn(p)
-    assert len(p.slides) == 72, f"expected 72 slides, got {len(p.slides)}"
-    OUT.parent.mkdir(parents=True, exist_ok=True)
     p.save(str(OUT))
-    print(f"Saved {OUT} with {len(p.slides)} slides")
+    print(f"Saved {OUT} — {len(p.slides)} slides")
 
 
 if __name__ == "__main__":
     main()
-

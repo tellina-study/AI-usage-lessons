@@ -1,17 +1,23 @@
 """
-Build script for Семинар 4 v4 — «Сборка кодинг-агента: лестница роста конфигурации»
-(issue #201, раунд 4 — раскол на два семинара, 49 слайдов, полная пересборка).
+Build script for Семинар 4 v5 — «Сборка кодинг-агента: день-0 база или жди сигнала»
+(issue #201, раунд 5 — смена оси + R5-1..R5-4, 52 слайда, полная пересборка).
 
-Source-of-truth: deck.yaml + slides/s01..s49-*.md (49 slides). Direct python-pptx
+Source-of-truth: deck.yaml + slides/s01..s52-*.md (52 slides). Direct python-pptx
 build (not PowerPoint MCP), per notes/mcp-limitations.md [#54-1/#54-2/#54-3]:
 MCP has no list_shapes, format_runs is buggy, no update_shape_position.
 
 Canvas: 13.333" x 7.5" (16:9). Ocean Gradient v3 palette, LOCKED.
 
-v4 change over v3 (72 slides): deck.yaml split into two seminars (R4-0/R4-1/R4-3).
-Раздел 0 (открытие, s01-s07) + Раздел 1 (файл инструкций, 3 кейса, s08-s26) +
-Раздел 2 (память, 3 кейса, s27-s46) + Раздел 3 (закрытие, s47-s49). Stages
-3-7 (хук/скилл/MCP/субагент/процесс) moved to sem-05, out of scope here.
+v5 change over v4 (53 slides): REWORK-REQUIREMENTS-v5.md.
+  R5-0 — новая ось «день-0 база vs жди сигнала» заменяет «тонкий агент: жди
+    триггер для всего» (переразгибала тезис Лекции 3).
+  R5-1 — визуальная унификация дивайдеров: macro (раздел, gold, шире, с
+    номерным значком) явно отличается от micro (кейс, teal, уже, без значка).
+  R5-2 — раздел 0 (s02-s04) переписан: задача заказчика → открытая дискуссия
+    → spec.md → сквозной кейс с новым поворотом (структура, не критерий).
+  R5-3 — во всех 6 кейсах вопрос звучит ДО исследования (было наоборот);
+    кейсы 2.2/2.3 получили новые отдельные research-слайды.
+  R5-4 — README-плашка кейса 1.1 поднята в заметный gold-блок разбора.
 
 No live terminal — every "terminal snapshot" is either a verbatim transcription
 of a real captured command output (assets/captures/*.txt) or, where explicitly
@@ -48,6 +54,7 @@ GOLD_DARK = RGBColor(0x8A, 0x62, 0x00)  # WCAG-safe dark-gold for text/icons on
                                          # palette defect, see
                                          # project_ocean_palette_gold_contrast_defect)
 GREY_FILL = RGBColor(0xE4, 0xE9, 0xEF)
+TEAL_TINT = RGBColor(0xE0, 0xF1, 0xF2)
 
 # === Constants ===
 SLIDE_W_IN = 13.333
@@ -65,7 +72,7 @@ FONT_MONO = "Consolas"
 
 
 # ============================================================
-# Generic low-level helpers (reused pattern from v3 build_sem04.py)
+# Generic low-level helpers (unchanged from v4)
 # ============================================================
 
 def setup_pres():
@@ -88,8 +95,7 @@ def set_slide_bg(slide, color):
 def _fits(text, size, width_in, height_in, *, line_h_factor=1.28, char_w_factor=0.52,
           label=""):
     """Cheap diagnostic — estimates whether `text` at `size`pt fits in a box of
-    width_in x height_in, prints OVERFLOW WARNING if not. Not pixel-perfect,
-    deliberately conservative — catches box/text mismatches in one build pass."""
+    width_in x height_in, prints OVERFLOW WARNING if not."""
     if not text or width_in <= 0:
         return
     char_w = size * char_w_factor / 72.0
@@ -147,8 +153,7 @@ def multipara_box(slide, x, y, w, h, paragraphs, *,
     """Each item in `paragraphs` is a dict of text_box-style kwargs (+ optional
     'strike': True). Real paragraph objects (tf.add_paragraph()), not literal
     '\\n' — needed for correct per-line CENTER alignment in LibreOffice render
-    (see notes/mcp-limitations.md — literal \\n + align=CENTER does not
-    center independently per visual line)."""
+    (see notes/mcp-limitations.md [#201-1])."""
     tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     tf = tb.text_frame
     tf.margin_left = Inches(0.0); tf.margin_right = Inches(0.0)
@@ -374,9 +379,7 @@ def terminal_card(slide, x, y, w, h, lines, *, title=None, size=13, line_spacing
         paras.append({"text": text, "size": size, "font": FONT_MONO, "color": color,
                        "bold": bold, "line_spacing": line_spacing, "space_after": 2})
         est_lines += max(1, -(-max(len(text), 1) // chars_per_line))
-    line_h = size * line_spacing * 1.18 / 72.0  # +18% safety margin — empirically
-                                                  # LibreOffice/Consolas render taller
-                                                  # than the naive pt-based estimate
+    line_h = size * line_spacing * 1.18 / 72.0  # +18% safety margin (see [#201-2])
     needed_h = est_lines * line_h + len(lines) * (2 / 72.0)
     avail_h = y + h - pad - ty
     if needed_h > avail_h:
@@ -410,7 +413,7 @@ def table_card(slide, x, y, w, h, headers, rows, col_w, *, row_highlight=None,
     for ri, row in enumerate(rows):
         ry = row_y0 + ri * row_h
         if row_highlight and ri in row_highlight:
-            tint = GOLD_TINT if row_highlight[ri] == "gold" else RGBColor(0xE4, 0xF1, 0xF2)
+            tint = GOLD_TINT if row_highlight[ri] == "gold" else TEAL_TINT
             filled_rect(slide, x + 0.06, ry, w - 0.12, row_h, tint)
         for ci, ctext in enumerate(row):
             cw = inner_w * col_w[ci]
@@ -567,7 +570,7 @@ def two_basket_frame(slide, x, y, w, h, left_title, left_slots, right_title, rig
 
 
 def slot_row5(slide, x, y, w, h, slots, *, accent_idx=()):
-    """5 numbered slots in one row — shared by s07 (co-built) and s48 (static
+    """5 numbered slots in one row — shared by s07 (co-built) and s51 (static
     recap). accent_idx = tuple of gold-accented slot indices, rest muted grey."""
     ocean_box(slide, x, y, w, h)
     pad = 0.26
@@ -595,17 +598,19 @@ def slot_row5(slide, x, y, w, h, slots, *, accent_idx=()):
 
 
 # ============================================================
-# Divider helpers — section-level (s08) and case-level (s09/s15/s21/s27)
+# Divider helpers — R5-1: macro (раздел, gold, wide) explicitly differs from
+# micro (кейс, teal, narrow, no badge). Hybrid combines both on one slide (s24).
 # ============================================================
 
-def strip_pills(slide, x, y, w, n, active_idx):
+def strip_pills(slide, x, y, w, n, active_idx, *, active_color=GOLD,
+                 inactive_color=RGBColor(0x3E, 0x4C, 0x8A), pill_h=0.28):
     gap = 0.12
     pw = (w - gap * (n - 1)) / n
     cx = x
     for i in range(n):
         cur = (i == active_idx)
-        col = GOLD if cur else RGBColor(0x3E, 0x4C, 0x8A)
-        filled_rect(slide, cx, y, pw, 0.28, col, radius=True, radius_adj=0.4)
+        col = active_color if cur else inactive_color
+        filled_rect(slide, cx, y, pw, pill_h, col, radius=True, radius_adj=0.4)
         cx += pw + gap
 
 
@@ -619,13 +624,29 @@ def divider_bg(s, *, icon_name=None):
         icon(s, icon_name, "F0AB00", 128, icon_x, icon_y, icon_w)
 
 
-def divider_section(p, slide_id, *, title, case_lines, tag, active_idx, total,
-                     icon_name):
-    """pattern: section_divider, section-level overview (s08)."""
+def divider_badge_macro(s, number):
+    """Gold circular badge with the раздел number — macro-level marker (R5-1),
+    the one visual element ONLY macro/hybrid dividers carry."""
+    cx, cy, r = 1.0, 1.55, 0.38
+    circ = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(cx - r), Inches(cy - r),
+                               Inches(2 * r), Inches(2 * r))
+    circ.fill.solid(); circ.fill.fore_color.rgb = GOLD
+    circ.line.fill.background()
+    disable_shadow(circ)
+    text_box(s, cx - r, cy - r, 2 * r, 2 * r, text=str(number), size=26, bold=True,
+             color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+
+
+def divider_section_macro(p, slide_id, *, title, case_lines, tag, active_idx, total,
+                           icon_name):
+    """pattern: section_divider_macro (R5-1) — раздел-уровень. Wide GOLD
+    4-segment progress-bar at top + gold numbered badge next to the title.
+    Visually heavier than case-level dividers (see divider_case_micro)."""
     s = blank(p)
     divider_bg(s, icon_name=icon_name)
-    strip_pills(s, 0.55, 0.55, 11.2, total, active_idx)
-    text_box(s, 0.85, 1.75, 10.5, 1.1, text=title, size=38, bold=True, color=WHITE,
+    strip_pills(s, 0.55, 0.45, 11.2, total, active_idx, active_color=GOLD)
+    divider_badge_macro(s, active_idx)
+    text_box(s, 1.65, 1.65, 9.7, 1.1, text=title, size=36, bold=True, color=WHITE,
              line_spacing=1.05)
     ly = 3.05
     for line in case_lines:
@@ -641,39 +662,64 @@ def divider_section(p, slide_id, *, title, case_lines, tag, active_idx, total,
     return s
 
 
-def divider_case(p, slide_id, *, title, meaning, tag, case_idx, case_total, icon_name):
-    """pattern: section_divider, case-level (s09/s15/s21) — 3-pill strip of
-    cases within the current раздел, current case gold, others muted."""
+def divider_case_micro(p, slide_id, *, title, meaning, tag, case_idx, case_total,
+                        icon_name):
+    """pattern: section_divider_micro (R5-1) — кейс-уровень. Narrow TEAL
+    3-segment progress-bar, no numbered badge, smaller title than macro —
+    visually lighter, marking a sub-level within the current раздел."""
     s = blank(p)
     divider_bg(s, icon_name=icon_name)
-    strip_pills(s, 0.9, 0.6, 5.6, case_total, case_idx)
-    text_box(s, 0.9, 2.15, 9.8, 1.15, text=title, size=36, bold=True, color=WHITE,
+    strip_pills(s, 0.9, 0.6, 4.6, case_total, case_idx, active_color=TEAL)
+    text_box(s, 0.9, 2.15, 9.8, 1.1, text=title, size=33, bold=True, color=WHITE,
              line_spacing=1.05)
-    text_box(s, 0.95, 3.42, 9.6, 0.9, text=meaning, size=17, italic=True,
+    text_box(s, 0.95, 3.38, 9.6, 0.9, text=meaning, size=16, italic=True,
              color=RGBColor(0xCF, 0xDC, 0xEC), line_spacing=1.3)
     tag_w = 6.0
-    filled_rect(s, 0.95, 4.35, tag_w, 0.6, RGBColor(0x0B, 0x14, 0x3A), stroke=GOLD,
+    filled_rect(s, 0.95, 4.32, tag_w, 0.55, RGBColor(0x0B, 0x14, 0x3A), stroke=TEAL,
                 stroke_pt=1.2, radius=True, radius_adj=0.28)
-    text_box(s, 0.95 + 0.28, 4.35, tag_w - 0.56, 0.6, text=tag.upper(), size=11.5,
-             bold=True, color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.95 + 0.28, 4.32, tag_w - 0.56, 0.55, text=tag.upper(), size=11,
+             bold=True, color=TEAL, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes(slide_id))
     return s
 
 
-def divider_section_and_case(p, slide_id, *, big_title, subtitle, meaning, tag, icon_name):
-    """pattern: section_divider — combined раздел+case divider (s27 only)."""
+def divider_hybrid(p, slide_id, *, big_title, subtitle, meaning, tag, icon_name,
+                    macro_idx, macro_total, micro_idx, micro_total, case_lines=None):
+    """pattern: section_divider_hybrid (R5-1, s24 only) — combined раздел+кейс
+    divider. Carries BOTH the macro badge+wide-gold-strip AND the narrower
+    teal case-strip, so both levels are legible on one slide.
+
+    `case_lines`, if given, renders the раздел-level three-case preview list
+    (same gold-bullet composition as `divider_section_macro`'s own
+    `case_lines`, e.g. s08) between `meaning` and the tag — Fix 3 (round-6
+    QA): s08 previews all three раздел-1 cases, s24 previously did not preview
+    раздел-2's three cases, an asymmetry between the two macro-level
+    dividers."""
     s = blank(p)
     divider_bg(s, icon_name=icon_name)
-    text_box(s, 0.9, 1.55, 10.6, 0.9, text=big_title, size=36, bold=True, color=WHITE,
+    strip_pills(s, 0.55, 0.42, 11.2, macro_total, macro_idx, active_color=GOLD)
+    divider_badge_macro(s, macro_idx)
+    strip_pills(s, 0.95, 0.84, 4.2, micro_total, micro_idx, active_color=TEAL,
+                pill_h=0.2)
+    text_box(s, 1.65, 1.58, 9.5, 0.85, text=big_title, size=32, bold=True, color=WHITE,
              line_spacing=1.05)
-    text_box(s, 0.9, 2.42, 10.6, 0.7, text=subtitle, size=22, bold=True, color=GOLD,
+    text_box(s, 1.65, 2.38, 9.5, 0.65, text=subtitle, size=19, bold=True, color=TEAL,
              line_spacing=1.05)
-    text_box(s, 0.95, 3.32, 9.9, 0.85, text=meaning, size=16.5, italic=True,
+    text_box(s, 0.95, 3.22, 9.9, 0.85, text=meaning, size=15, italic=True,
              color=RGBColor(0xCF, 0xDC, 0xEC), line_spacing=1.3)
+    tag_y = 4.15
+    if case_lines:
+        ly = 4.18
+        for line in case_lines:
+            filled_rect(s, 0.95, ly, 0.13, 0.13, GOLD, radius=True, radius_adj=0.5)
+            text_box(s, 1.24, ly - 0.11, 8.8, 0.38, text=line, size=14,
+                     color=RGBColor(0xE1, 0xE9, 0xF6))
+            ly += 0.44
+        tag_y = ly + 0.16
     tag_w = 5.6
-    filled_rect(s, 0.95, 4.25, tag_w, 0.55, RGBColor(0x0B, 0x14, 0x3A), stroke=GOLD,
+    filled_rect(s, 0.95, tag_y, tag_w, 0.55, RGBColor(0x0B, 0x14, 0x3A), stroke=GOLD,
                 stroke_pt=1.2, radius=True, radius_adj=0.28)
-    text_box(s, 0.95 + 0.28, 4.25, tag_w - 0.56, 0.55, text=tag.upper(), size=11.5,
+    text_box(s, 0.95 + 0.28, tag_y, tag_w - 0.56, 0.55, text=tag.upper(), size=11,
              bold=True, color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes(slide_id))
     return s
@@ -687,7 +733,7 @@ def question_slide(p, slide_id, *, label, title, question, options, opt_h=1.5,
                     note="разбор — на следующем слайде", scenario=None):
     """pattern: reflection_question / question_with_option_cards — gold
     question callout + N option cards + neutral note (no table, no highlight,
-    per R3-4)."""
+    no digit — R5-3: vote happens blind, research comes after)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, label, title)
@@ -738,7 +784,7 @@ def answer_slide(p, slide_id, *, label, title, context_q, headers, rows, col_w,
 
 def criteria_slide(p, slide_id, *, label, title, items, boundary_text, extra_note=None):
     """pattern: criteria_checklist_and_boundary — checklist + explicit
-    boundary/bridge text (shared by s34/s40/s46)."""
+    boundary/bridge text."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, label, title)
@@ -763,8 +809,9 @@ def criteria_slide(p, slide_id, *, label, title, items, boundary_text, extra_not
 
 
 def scenario_pain_slide(p, slide_id, *, label, title, scenario, bottom_line, note=None):
-    """pattern: scenario_pain — a big narrative scenario block + one bold
-    pain-summary line (shared by s35/s41)."""
+    """pattern: scenario_pain / problem_scenario — a big narrative scenario
+    block + one bold pain-summary line. NO question, NO cards (R5-3: those
+    live on the next slide)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, label, title)
@@ -840,21 +887,21 @@ def build_s01(p):
     text_box(s, 0, 0.68, SLIDE_W_IN, 0.9, text="Сборка кодинг-агента",
              size=44, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
     text_box(s, 1.0, 1.5, SLIDE_W_IN - 2.0, 0.4,
-             text="Один сквозной кейс, две развилки харнесса на трёх реальных решениях",
+             text="День-0 база или жди сигнала — шесть развилок одного сквозного кейса",
              size=15.5, italic=True, color=RGBColor(0xCF, 0xDC, 0xEC), align=PP_ALIGN.CENTER)
 
     q_y = 2.08
-    q_h = 1.15
-    filled_rect(s, 1.15, q_y, SLIDE_W_IN - 2.3, q_h, RGBColor(0x0B, 0x14, 0x3A),
+    q_h = 1.3
+    filled_rect(s, 1.0, q_y, SLIDE_W_IN - 2.0, q_h, RGBColor(0x0B, 0x14, 0x3A),
                 stroke=GOLD, stroke_pt=1.8, radius=True, radius_adj=0.12)
-    text_box(s, 1.55, q_y + 0.1, SLIDE_W_IN - 3.1, q_h - 0.2,
-             text="«У вас репозиторий и агент, который в нём работает — какой блок "
-                  "конфигурации добавить первым, и как понять, что следующий добавлять "
-                  "ещё рано?»",
-             size=16.5, italic=True, bold=True, color=GOLD, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.28)
+    text_box(s, 1.4, q_y + 0.1, SLIDE_W_IN - 2.8, q_h - 0.2,
+             text="«Что в конфигурации агента стоит закладывать сразу, на день 0, как "
+                  "базовую практику — а что нельзя знать заранее, потому что оно "
+                  "специфично для вашего проекта?»",
+             size=16, italic=True, bold=True, color=GOLD, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.26)
 
-    hero_x, hero_y, hero_w, hero_h = 0.55, 3.55, 12.23, 3.35  # ~41% of slide area
+    hero_x, hero_y, hero_w, hero_h = 0.55, 3.68, 12.23, 3.22  # ~41% of slide area
     text_box(s, hero_x, hero_y - 0.34, 8.0, 0.28,
              text="ПУСТАЯ ДИРЕКТОРИЯ  →  СЕМЬ ДОБАВЛЕНИЙ, ПОКА БЕЗ ИМЁН",
              size=11.5, bold=True, color=RGBColor(0x9C, 0xAE, 0xC9))
@@ -872,36 +919,52 @@ def build_s01(p):
 def build_s02(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Раздел 0 · Открытие",
-           "Часть требований видно, открыв редактор. Часть — нет, сколько угодно смотри в код",
-           title_size=18)
-    two_basket_frame(s, 0.55, 1.95, 12.23, 3.35, "видно в коде", [None, None, None],
-                      "нигде не будет видно", [None, None, None])
-    gold_callout(s, 0.55, 5.5, 12.23, 1.3,
-                 "«Заказчик просит лендинг с формой заявки на демо-урок. Одна страница, "
-                 "два поля, кнопка. Назовите вслух: что вообще должно быть у этой задачи, "
-                 "чтобы вы могли сказать ‘готово’ и показать её заказчику? Не как это "
-                 "устроено внутри — а что должно существовать.»", size=14.5)
+    y = auto_header(s, "Раздел 0 · Задача от заказчика",
+        "Заказчик формулирует задачу по-человечески, без единого слова о структуре, "
+        "критериях готовности или границах действий — и с этим текстом вы открываете "
+        "чат с агентом")
+    qh = 1.55
+    ocean_box(s, 0.55, y, 12.23, qh)
+    text_box(s, 0.85, y + 0.16, 11.6, qh - 0.32,
+             text="«Нужен лендинг с формой заявки на демо-урок: одна статическая страница, "
+                  "поля ‘имя’ и ‘email’, кнопка отправки. Своего бэкенда "
+                  "нет — присылайте заявку на наш сервис приёма форм.»",
+             size=16, italic=True, color=DEEP, line_spacing=1.32, anchor=MSO_ANCHOR.MIDDLE)
+    y2 = y + qh + 0.3
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2 - 0.4,
+                 "«Можем ли мы сразу дать эту задачу агенту — или сначала нужно "
+                 "зафиксировать требования?»", size=19, anchor=MSO_ANCHOR.MIDDLE,
+                 align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, 7.0 - 0.32, 12.23, 0.3, text="открытая дискуссия, не голосование",
+             size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s02"))
 
 
 def build_s03(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Раздел 0 · Открытие",
-           "Шесть требований делятся ровно пополам: три увидит в коде любой, три не "
-           "будут видны нигде", title_size=19)
-    two_basket_frame(s, 0.55, 1.85, 12.23, 4.1, "видно в коде",
-                      ["поля формы: имя и email, оба обязательные",
-                       "чем собирается — сборка в статику",
-                       "чем проверяется — тест: форма не отправляется с пустыми полями"],
-                      "нигде не будет видно",
-                      ["что считается «готово»",
-                       "чего агент не делает сам — деплой без явного запроса",
-                       "как убедиться руками, что заявка реально доставлена"],
-                      right_highlight=True)
-    text_box(s, 0.55, 6.15, 12.23, 0.4, text="3 + 3", size=22, bold=True, color=GOLD_DARK,
-             align=PP_ALIGN.CENTER)
+    y = auto_header(s, "Раздел 0 · spec.md",
+        "Требования — функциональные и нефункциональные — раскладываются и "
+        "записываются в spec.md до того, как агент увидел хоть строку задачи")
+    terminal_card(s, 0.55, y, 12.23, 3.4, [
+        ("# spec.md — signup-landing", TEAL, True),
+        ("", CODE_FG),
+        ("## Функциональные требования", TEAL, True),
+        ("- Статическая страница-лендинг, форма заявки на демо-урок", CODE_FG),
+        ("- Поля: имя (обязательное), email (обязательное)", CODE_FG),
+        ("- Кнопка отправки; без бэкенда — заявка уходит на внешний сервис", CODE_FG),
+        ("", CODE_FG),
+        ("## Нефункциональные требования", TEAL, True),
+        ("- Критерий приёмки: форма реально доставляет заявку — проверено", CODE_FG),
+        ("  на проде, а не только «тест зелёный»", CODE_FG),
+        ("- Граница действий: не деплоить на прод без явного запроса", CODE_FG),
+    ], size=11, line_spacing=1.24)
+    y2 = y + 3.4 + 0.2
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
+                 "«README.md и другие базовые артефакты создаются сейчас же, отдельно "
+                 "от spec.md. Спека — про требования к продукту. README — про устройство "
+                 "репозитория. Именно поэтому требования из spec.md потом не дублируются "
+                 "в файле инструкций агента.»", size=13, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s03"))
 
 
@@ -909,8 +972,8 @@ def build_s04(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     header(s, "Раздел 0 · Сквозной кейс",
-           "Репозиторий буквально пуст, а агент не задал ни одного уточняющего вопроса — "
-           "и то, чего он не знал, решил за вас молча", title_size=15)
+           "Репозиторий буквально пуст, а агент не задал ни одного уточняющего вопроса "
+           "— и то, чего spec.md не покрывает, структуру, решил за вас молча", title_size=14.5)
     half_w = 5.85
     y1 = 1.85
     h1 = 1.55
@@ -928,18 +991,24 @@ def build_s04(p):
              text="«собери лендинг с формой заявки на демо-урок: статическая HTML-страница, "
                   "сборка Vite (npm run build → dist/), поля формы — имя и email, тест на "
                   "Playwright, который проверяет, что форма не отправляется с пустыми "
-                  "обязательными полями (tests/form.spec.ts)»",
-             size=11, italic=True, color=DEEP, line_spacing=1.24)
+                  "обязательными полями (tests/form.spec.ts)» — по содержанию совпадает "
+                  "со spec.md",
+             size=10.3, italic=True, color=DEEP, line_spacing=1.22)
     y2 = y1 + h1 + 0.32
-    gold_callout(s, 0.55, y2, 12.23, 0.95,
+    gold_h = 1.05
+    gold_callout(s, 0.55, y2, 12.23, gold_h,
                  "«Уточняющий вопрос не задавался. Все параметры задачи… были однозначно "
-                 "выводимы из текста задачи, поэтому работа была начата сразу, без уточнений.»",
-                 size=13.5, anchor=MSO_ANCHOR.MIDDLE)
-    y3 = y2 + 0.95 + 0.22
-    h3 = 2.0
+                 "выводимы из текста задачи, поэтому работа была начата сразу, без уточнений.» "
+                 "Но о структуре — как назвать файлы, куда их положить, как разложить проект — "
+                 "агент не спросил тоже: spec.md по определению это не описывает, это "
+                 "устройство кода, а не требование к продукту.",
+                 size=13, anchor=MSO_ANCHOR.MIDDLE)
+    y3 = y2 + gold_h + 0.22
+    h3 = 2.25
     terminal_card(s, 0.55, y3, half_w, h3, [
         ("index.html", CODE_FG), ("src/main.js", CODE_FG),
         ("package.json", CODE_FG), ("tests/form.spec.ts", CODE_FG),
+        ("# + spec.md, README.md (раздел 0) — агент их не создавал", CODE_MUTED, True),
     ], title="что создал", size=12)
     terminal_card(s, rx, y3, half_w, h3, [
         ("npm install", CODE_FG),
@@ -952,27 +1021,33 @@ def build_s04(p):
 def build_s05(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Раздел 0 · Первый вопрос классу",
-           "Первый блок конфигурации выбирают из восьми вариантов на экране — и «ничего» "
-           "среди них не менее весомый вариант, чем остальные семь", title_size=15)
-    gold_callout(s, 0.55, 1.85, 12.23, 1.55,
-                 "«Перед вами репозиторий, который агент только что собрал, и вам с этим же "
-                 "агентом доделывать этот сайт дальше, неделями. Выберите, какой блок "
-                 "конфигурации вы добавите первым — из карточек ниже — так, чтобы он закрывал "
-                 "реальную боль, а не запас на будущее.»", size=14, anchor=MSO_ANCHOR.MIDDLE)
-    opts = ["файл\nинструкций", "память", "хук", "скилл", "MCP-\nдоступ", "субагент",
-            "процесс\nпроверки", "ничего"]
-    y2 = 3.7
-    n = len(opts)
-    gap = 0.16
-    cw = (12.23 - gap * (n - 1)) / n
-    cx = 0.55
-    for i, label in enumerate(opts):
-        ocean_box(s, cx, y2, cw, 1.55, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.1)
-        text_box(s, cx + 0.05, y2, cw - 0.1, 1.55, text=label, size=13, bold=True,
-                 color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
-        cx += cw + gap
-    text_box(s, 0.55, 5.55, 12.23, 0.4,
+    header(s, "Раздел 0 · Два режима",
+           "Настраивая нового агента в новом репозитории, каждый ближе к одному из двух "
+           "режимов", title_size=19)
+    text_box(s, 0.55, 1.75, 12.23, 0.3,
+             text="Прежде чем мы пойдём разбирать конкретные развилки — проверим на себе.",
+             size=12.5, italic=True, color=SLATE)
+    gold_callout(s, 0.55, 2.1, 12.23, 0.85,
+                 "«Когда вы настраиваете нового агента в новом репозитории — какой из "
+                 "двух режимов вам обычно ближе?»", size=15, anchor=MSO_ANCHOR.MIDDLE,
+                 align=PP_ALIGN.CENTER)
+    y2 = 3.2
+    half_w = 5.85
+    ocean_box(s, 0.55, y2, half_w, 3.0, fill=SURFACE, stroke=LIGHT)
+    text_box(s, 0.75, y2 + 0.15, half_w - 0.4, 0.4, text="A · «Закладываю базу сразу»",
+             size=15, bold=True, color=MID)
+    text_box(s, 0.75, y2 + 0.7, half_w - 0.4, 1.5,
+             text="гейт готовности («что считается сделано»)\n\nтрекинг задач и решений",
+             size=13, color=DEEP, line_spacing=1.4)
+    rx = 0.55 + half_w + 0.33
+    ocean_box(s, rx, y2, half_w, 3.0, fill=SURFACE, stroke=LIGHT)
+    text_box(s, rx + 0.2, y2 + 0.15, half_w - 0.4, 0.4, text="B · «Жду, пока не заболит»",
+             size=15, bold=True, color=MID)
+    text_box(s, rx + 0.2, y2 + 0.7, half_w - 0.4, 1.8,
+             text="обзор репозитория\n\nвложенные файлы конвенций\n\nсложная, "
+                  "многоуровневая память",
+             size=13, color=DEEP, line_spacing=1.4)
+    text_box(s, 0.55, y2 + 3.0 + 0.15, 12.23, 0.35,
              text="разбор — на следующем слайде", size=12, italic=True, color=SLATE,
              align=PP_ALIGN.CENTER)
     speaker_notes(s, load_notes("s05"))
@@ -981,39 +1056,25 @@ def build_s05(p):
 def build_s06(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    header(s, "Раздел 0 · Разбор первого вопроса",
-           "Бремя доказательства лежит на том, кто усложняет, а не на том, кто остаётся внизу",
-           title_size=19)
-    y = 1.75
-    text_box(s, 0.55, y, 12.23, 0.32,
-             text="вопрос для контекста: «Какой блок конфигурации добавить первым?»",
-             size=11.5, italic=True, color=SLATE)
-    y += 0.42
-    headers = ["Прозвучавший вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
-    rows = [
-        ["«Файл инструкций — так делают в хороших проектах»",
-         "Когда есть накопленное знание, которого нет в коде",
-         "«Так делают» — не триггер, а инерция. Вместо: дождаться сигнала. Через пятнадцать "
-         "минут этот ответ станет верным — но потому, что сработает конкретный сигнал"],
-        ["«Хук — поставлю защиту заранее, на будущее»",
-         "Когда риск конкретной команды уже стал реальным",
-         "Вы ещё не знаете, какие команды в этом проекте рискованны: защищаете гипотезу, а не "
-         "факт. Вместо: назвать команду и инцидент, от которого защищаетесь"],
-        ["«MCP — подключу к трекеру задач, пригодится»",
-         "Когда доступ наружу нужен повторно и из нескольких сессий",
-         "Самый дорогой из семи блоков — по контексту и по поверхности атаки. Вместо: обычная "
-         "команда в терминале, пока не доказано, что её не хватает"],
-        ["«Ничего»", "На нулевой ступени — всегда",
-         "Не рано: это и есть ответ. Перестаёт быть верным ровно тогда, когда появится первое "
-         "реальное расхождение между тем, что знаете вы, и тем, что знает агент"],
-    ]
-    table_h = 4.1
-    reveal_table(s, 0.55, y, 12.23, table_h, headers, rows, [0.26, 0.28, 0.46],
-                 row_highlight={3: "gold"}, header_size=10, cell_size=10)
-    y += table_h + 0.18
-    gold_callout(s, 0.55, y, 12.23, 0.65,
-                 "бремя доказательства лежит на том, кто усложняет, а не на том, кто остаётся внизу",
-                 size=15)
+    y = auto_header(s, "Раздел 0 · Разбор двух режимов",
+        "И то и другое — не ошибка, а привычка, которая права ровно наполовину: "
+        "специфичное для проекта ждёт сигнала, универсальная гигиена заводится сразу")
+    two_basket_frame(s, 0.55, y, 12.23, 3.0,
+                      "специфичное для проекта — ждать сигнала",
+                      ["обзор репозитория", "вложенные файлы конвенций",
+                       "сложная, многоуровневая память"],
+                      "универсальная гигиена — день 0",
+                      ["гейт готовности", "трекинг задач и решений"],
+                      right_highlight=True)
+    y2 = y + 3.0 + 0.25
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
+                 "«Это не то же самое, что "
+                 "‘начинайте с малого всегда’. Лекция 3 говорила про тонкого "
+                 "агента — про отказ от структурной сложности. Это по-прежнему верно и "
+                 "по-прежнему ждёт сигнала. Но универсальная гигиена — другая категория, "
+                 "и здесь "
+                 "‘жди боли’ — плохой совет. Сегодня — шесть развилок, ровно "
+                 "поровну.»", size=12.3, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s06"))
 
 
@@ -1040,20 +1101,21 @@ def build_s07(p):
              line_spacing=1.2)
     y3 = y2 + 0.6
     gold_callout(s, 0.55, y3, 12.23, 7.0 - y3,
-                 "«Оставайтесь на самой нижней ступени, которая закрывает требование задачи. "
-                 "Поднимайтесь на следующую только тогда, когда можете назвать требование, "
-                 "которое текущая ступень не закрывает. Каждый подъём оплачивается новой "
-                 "стоимостью, новыми режимами отказа и новой поверхностью атаки.»",
+                 "«Оставайтесь на самой нижней ступени, которая закрывает требование "
+                 "задачи. Поднимайтесь на следующую только тогда, когда можете назвать "
+                 "требование, которое текущая ступень не закрывает. Каждый подъём "
+                 "оплачивается новой стоимостью, новыми режимами отказа и новой "
+                 "поверхностью атаки.»",
                  size=13, anchor=MSO_ANCHOR.MIDDLE)
     speaker_notes(s, load_notes("s07"))
 
 
 # ============================================================
-# Раздел 1 — Файл инструкций (s08-s26)
+# Раздел 1 — Файл инструкций (s08-s23)
 # ============================================================
 
 def build_s08(p):
-    return divider_section(p, "s08",
+    return divider_section_macro(p, "s08",
         title="Раздел 1 · файл инструкций",
         case_lines=["Кейс 1.1 · роль агента и репозиторий",
                     "Кейс 1.2 · базовые процессы: гейты и цикл улучшения",
@@ -1062,10 +1124,10 @@ def build_s08(p):
 
 
 def build_s09(p):
-    return divider_case(p, "s09",
+    return divider_case_micro(p, "s09",
         title="Кейс 1.1 · роль агента и репозиторий",
         meaning="Что писать в пустой файл, пока не случилось ни одной реальной сессии",
-        tag="1 контролируемый эксперимент · 1 честный пробел",
+        tag="специфично для проекта · ждём сигнала",
         case_idx=0, case_total=3, icon_name="file-text")
 
 
@@ -1077,10 +1139,11 @@ def build_s10(p):
         "репозитория; привычка сильная, но это ровно та фраза «так делают в хороших "
         "проектах», которую занятие проверяет впервые")
     half_w = 5.85
-    h1 = 2.1
+    h1 = 2.3
     terminal_card(s, 0.55, y, half_w, h1, [
         ("index.html", CODE_FG), ("package.json", CODE_FG),
         ("src/main.js", CODE_FG), ("tests/form.spec.ts", CODE_FG),
+        ("# + spec.md, README.md (раздел 0) — здесь не показаны", CODE_MUTED, True),
     ], title="дерево на входе в кейс", size=12.5)
     rx = 0.55 + half_w + 0.33
     ocean_box(s, rx, y, half_w, h1)
@@ -1100,52 +1163,7 @@ def build_s10(p):
 
 
 def build_s11(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    y = auto_header(s, "Кейс 1.1 · Исследование",
-        "Repository overview измеримо не помогает и стоит контекста — кроме "
-        "единственного подтверждённого исключения: репозитория без другой документации "
-        "вообще")
-    headers = ["Источник", "Тезис", "Сила доказательства"]
-    rows = [
-        ["Gloaguen et al., arXiv:2602.11988",
-         "«Repository overviews… are not helpful» — «шагов до первого релевантного файла» "
-         "не падает; cost +20–23% без прироста success",
-         "Сильное: контролируемый эксперимент с честным третьим плечом «файла нет вообще»"],
-        ["Та же работа, абляция",
-         "Удалили существующую документацию (README) — LLM-сгенерированный overview стал "
-         "полезен (+2,7%)",
-         "Подтверждает механизм: overview вреден потому, что дублирует то, что уже доступно "
-         "иначе"],
-        ["Lulla et al., arXiv:2601.20404",
-         "AGENTS.md с фокусом на недискаверабельные конвенции: −28,6% runtime, −16,6% "
-         "tokens (124 PR)",
-         "Умеренно-сильное «за» файл — но это НЕ про общее описание структуры"],
-        ["Shepard & Albrecht, arXiv:2606.20512",
-         "Статичное written-once guidance (28,3% resolve) хуже динамически "
-         "верифицированного (33,0%, p<0,001)",
-         "Косвенное — подтверждает логику «непроверенное статично хуже»"],
-    ]
-    table_h = 3.55
-    reveal_table(s, 0.55, y, 12.23, table_h, headers, rows, [0.2, 0.42, 0.38],
-                 row_highlight={0: "gold"}, header_size=10.3, cell_size=9.7)
-    y += table_h + 0.14
-    text_box(s, 0.55, y, 12.23, 0.4,
-             text="это явление называют presence paradox — сам факт присутствия текста в "
-                  "контексте создаёт свою стоимость независимо от того, использует ли его "
-                  "агент (термин используется дальше без повторного объяснения)",
-             size=10.8, italic=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.2)
-    y += 0.44
-    gold_callout(s, 0.55, y, 12.23, 7.0 - y,
-                 "«Прямых экспериментов с намеренно устаревшим или неверным repository "
-                 "overview не найдено — это пробел в исследованиях, не установленный факт. "
-                 "Анекдот коллеги — правдоподобный, но не измеренный случай.»",
-                 size=11.5, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s11"))
-
-
-def build_s12(p):
-    return question_slide(p, "s12", label="Кейс 1.1 · Вопрос",
+    return question_slide(p, "s11", label="Кейс 1.1 · Вопрос",
         title="Перед пустым CLAUDE.md выбор из пяти вариантов — и «пока ничего» среди "
               "них не менее весомый вариант, чем остальные четыре",
         question="«Перед вами пустой CLAUDE.md для signup-landing. Выберите, что из "
@@ -1158,167 +1176,121 @@ def build_s12(p):
         opt_h=1.75)
 
 
-def build_s13(p):
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+def build_s12(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, "Кейс 1.1 · Исследование и разбор",
+        "Repository overview измеримо не помогает и стоит контекста — а структурированное "
+        "описание должно жить в README.md, не дублироваться в CLAUDE.md", )
+    headers = ["Источник", "Тезис", "Сила"]
     rows = [
-        ["«Подробное описание структуры репозитория»",
-         "Почти нигде для агента — разве что документация для новых людей в команде",
-         "Агент выведет структуру сам за секунды; описание устареет при первом "
-         "рефакторинге. Эксперимент: +20–23% cost, без прироста success. Вместо: не писать"],
-        ["«Список технологий и зависимостей»",
-         "Когда версии критичны и не видны из package.json (редко)",
-         "В большинстве случаев тоже выводимо за секунды. Вместо: не писать, если версии "
-         "видны в манифесте"],
-        ["«Инструкция, где лежит форма и как её найти»",
-         "Почти нигде на таком маленьком репозитории",
-         "Четыре файла, вся структура на одном экране — находимость не проблема"],
-        ["«Неочевидная конвенция, которую агент не угадает сам»",
-         "Когда конвенция реально есть и реально невыводима",
-         "На этом шаге такой конвенции ещё нет — проект только начался. Появится — "
-         "записать её, и только её"],
-        ["«Пока ничего — до первого реального сигнала»",
-         "Здесь и сейчас",
-         "Целевой ответ. Перестаёт быть верным, когда появится конкретная невыводимая "
-         "вещь — не раньше"],
+        ["Gloaguen et al., arXiv:2602.11988",
+         "«are not helpful» — шагов до файла не падает; cost +20–23% без прироста success",
+         "Сильное: контролируемый эксперимент"],
+        ["Та же работа, абляция",
+         "Убрали README — LLM-overview стал полезен (+2,7%)",
+         "Подтверждает механизм"],
+        ["Lulla et al., arXiv:2601.20404",
+         "AGENTS.md про недискаверабельные конвенции: −28,6% runtime (124 PR)",
+         "Умеренно «за» — не общее описание"],
+        ["Shepard & Albrecht, arXiv:2606.20512",
+         "Статичное guidance (28,3%) хуже верифицированного (33,0%, p<0,001)",
+         "Косвенное"],
     ]
-    return answer_slide(p, "s13", label="Кейс 1.1 · Разбор",
-        title="Правильный ответ на этом шаге — не какой текст написать, а пока никакой: "
-              "файл остаётся пустым, потому что триггер ещё не сработал",
-        context_q="Что включить в файл прямо сейчас?", headers=headers, rows=rows,
-        col_w=[0.24, 0.3, 0.46], gold_rows=[4],
-        footer="Всё, что агент выведет из кода за секунды, в файл не идёт никогда — не "
-               "«пока рано», а вообще. Общее описание роли/архитектуры оправданно только "
-               "там, где нет вообще другой документации; у signup-landing она будет — "
-               "значит, оснований нет.",
-        table_h=3.75, footer_h=1.05, footer_size=12)
+    th1 = 1.7
+    reveal_table(s, 0.55, y, 12.23, th1, headers, rows, [0.28, 0.5, 0.22],
+                 row_highlight={0: "gold"}, header_size=9.5, cell_size=9.0)
+    y += th1 + 0.12
+    headers2 = ["Вариант", "Где работает", "Почему рано — что вместо"]
+    rows2 = [
+        ["«Описание структуры»", "Почти нигде", "Агент выведет сам за секунды; устареет"],
+        ["«Список технологий»", "Версии критичны, не видны", "Обычно тоже выводимо"],
+        ["«Инструкция, где форма»", "Почти нигде на малом репо", "4 файла — весь экран"],
+        ["«Неочевидная конвенция»", "Когда реально есть", "Такой конвенции ещё нет"],
+        ["«Пока ничего — до сигнала»", "Здесь и сейчас", "ЦЕЛЕВОЙ ОТВЕТ"],
+    ]
+    th2 = 1.65
+    reveal_table(s, 0.55, y, 12.23, th2, headers2, rows2, [0.3, 0.28, 0.42],
+                 row_highlight={4: "gold"}, header_size=9.3, cell_size=8.8)
+    y += th2 + 0.22
+    gold_callout(s, 0.55, y, 12.23, 7.0 - y,
+                 "README, не AGENTS.md: структурированное описание должно существовать — "
+                 "но оно живёт в README.md (заведён в разделе 0), а не дублируется в "
+                 "CLAUDE.md. Именно поэтому «Repository overview» здесь не нужен — не "
+                 "потому что описание вообще не нужно, а потому что оно уже есть.",
+                 size=12, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s12"))
 
 
-def build_s14(p):
+def build_s13(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 1.1 · Решение",
-        "CLAUDE.md остаётся пустым — не из лени, а потому что нет сигнала; первый "
-        "настоящий сигнал придёт через неделю")
-    terminal_card(s, 0.55, y, 12.23, 2.35, [
+        "CLAUDE.md остаётся пустым для описания структуры репозитория — не из лени, а "
+        "потому что нет сигнала; часть его содержимого заводится сразу, на дне 0, как "
+        "дешёвая гигиена — это кейс 1.2")
+    terminal_card(s, 0.55, y, 12.23, 2.65, [
         ("index.html", CODE_FG), ("package.json", CODE_FG),
         ("src/main.js", CODE_FG), ("tests/form.spec.ts", CODE_FG),
         ("# CLAUDE.md — не создан", CODE_MUTED, True),
+        ("# + spec.md, README.md (раздел 0) — не в этом git-дереве", CODE_MUTED, True),
     ], title="дерево репозитория — без изменений", size=13)
-    y2 = y + 2.35 + 0.25
+    y2 = y + 2.65 + 0.25
     gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
-                 "«Файл пуст не потому, что мы ленивы, а потому что нет сигнала. Первый "
-                 "настоящий сигнал появится через неделю.»",
+                 "«Файл пуст не потому, что мы ленивы, а потому что для описания структуры "
+                 "репозитория нет сигнала. Но «пусто» не значит «навсегда»: часть содержимого "
+                 "CLAUDE.md мы заведём сразу, ещё на дне 0, как дешёвую гигиену — это "
+                 "следующий кейс.»",
                  size=17, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s14"))
+    speaker_notes(s, load_notes("s13"))
 
 
-def build_s15(p):
-    return divider_case(p, "s15",
+def build_s14(p):
+    return divider_case_micro(p, "s14",
         title="Кейс 1.2 · базовые процессы",
-        meaning="Первая реальная боль — заявка не доходит, тест зелёный",
-        tag="4 препринта-консенсус · 1 контринтуитивный результат",
+        meaning="Гейт-фраза и цикл «план → код → улучшение» — заведены с первого дня, и "
+                "всё равно подводят",
+        tag="универсальная гигиена · день 0",
         case_idx=1, case_total=3, icon_name="file-text")
 
 
-def build_s16(p):
+def build_s15(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 1.2 · Базовые процессы",
-        "Заказчик пишет: заявка не пришла — тест зелёный, «готово» сказано, а тест "
-        "проверяет только пустые поля; записанный текстовый гейт не изменил поведение "
-        "при повторе")
+        "Гейт готовности заведён с первого дня, вместе со spec.md — и всё равно «готово» "
+        "расходится с реальностью дважды подряд")
     bh = 1.85
     ocean_box(s, 0.55, y, 12.23, bh)
     text_box(s, 0.8, y + 0.14, 11.7, bh - 0.28,
-             text="Блок 1. Заказчик: «отправил заявку — она не пришла». Агент читает код, "
-                  "правит обработчик в src/main.js, прогоняет автотест — зелёный — "
-                  "отчитывается: «Готово». tests/form.spec.ts проверяет ровно одно: что "
-                  "форма не отправляется с пустыми полями. Про доставку он не знает "
-                  "ничего. Заказчик пишет снова: не доходит.",
+             text="Гейт готовности заводится не когда прижмёт, а сразу, на день 0, вместе "
+                  "со spec.md: «Всегда прогоняй тесты и вручную проверяй результат перед "
+                  "тем как сказать ‘готово’».",
              size=13, color=DEEP, line_spacing=1.28)
     y2 = y + bh + 0.2
     ocean_box(s, 0.55, y2, 12.23, bh)
     text_box(s, 0.8, y2 + 0.14, 11.7, bh - 0.28,
-             text="Блок 2. Команда записывает в CLAUDE.md текстовый гейт: «Всегда прогоняй "
-                  "тесты и вручную проверяй результат перед ‘готово’». Неделю спустя, "
-                  "новая сессия, другой баг: автотест зелёный — снова «готово», руками не "
-                  "проверено.",
-             size=13, color=DEEP, line_spacing=1.28)
+             text="Две недели спустя: заказчик — «заявка не пришла». Агент читает код, "
+                  "правит обработчик, прогоняет тест — зелёный — «Готово». Тест проверяет "
+                  "только пустые поля. Разработчик напоминает про гейт — агент проверяет "
+                  "руками, чинит. Неделю спустя, другой баг — то же самое: тест зелёный, "
+                  "руками не проверено.",
+             size=12.3, color=DEEP, line_spacing=1.26)
     y3 = y2 + bh + 0.18
-    gold_callout(s, 0.55, y3, 12.23, 7.0 - y3, "«Правило было. Поведение — нет.»",
-                 size=18, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s16"))
+    gold_callout(s, 0.55, y3, 12.23, 7.0 - y3, "«Гейт был. Заведён правильно, с первого "
+                 "дня. Поведение — нет.»",
+                 size=17, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+    speaker_notes(s, load_notes("s15"))
 
 
-def build_s17(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    header(s, "Кейс 1.2 · Исследование",
-        "Текстовый гейт без тулинга не просто бесполезен, а вреден — регрессии выросли "
-        "почти до 10%; self-repair с реальной проверкой работает, голая самокритика "
-        "систематически вредит", title_size=13.5, title_h=0.62)
-    y = 0.7 + 0.62 + 0.14
-    text_box(s, 0.55, y, 12.23, 0.26, text="исследование — гейты", size=12, bold=True,
-             color=MID)
-    y += 0.3
-    h1_headers = ["Источник", "Тезис", "Сила"]
-    h1_rows = [
-        ["SWE-Gate/SpecBench/CapCode/Verification Horizon (4 препринта 2609–2606)",
-         "Согласие 4+ независимых 2026-препринтов: агенты систематически «обходят» "
-         "видимые тестовые гейты, разрыв растёт со сложностью задачи",
-         "Сильное — межисследовательский консенсус"],
-        ["TDAD, arXiv:2603.17973",
-         "Чисто процедурная инструкция «сначала пиши тесты» без тулинга увеличила "
-         "регрессии до 9,94% — хуже, чем вообще без инструкции",
-         "Сильное и контринтуитивное"],
-        ["Rethinking Agent-Generated Tests, arXiv:2602.07900",
-         "Манипуляция промптом ради частоты тестов — без значимого эффекта на resolution "
-         "rate (6 моделей, SWE-bench Verified)",
-         "Умеренное — нулевой результат"],
-        ["Agent Scaffolding Beats Model Upgrades",
-         "Архитектура харнесса (test-gated retries, CI-enforcement) даёт +20 п.п.; смена "
-         "модели — ~1 п.п.",
-         "Сильное — механизм против модели"],
-    ]
-    th1 = 2.5
-    reveal_table(s, 0.55, y, 12.23, th1, h1_headers, h1_rows, [0.32, 0.46, 0.22],
-                 row_highlight={1: "gold"}, header_size=9.5, cell_size=8.8)
-    y += th1 + 0.16
-    text_box(s, 0.55, y, 12.23, 0.26, text="исследование — цикл «улучшение»", size=12,
-             bold=True, color=MID)
-    y += 0.3
-    h2_headers = ["Источник", "Тезис", "Сила"]
-    h2_rows = [
-        ["Self-planning, arXiv:2303.06689",
-         "Планирование перед кодом: +25,4% pass@1 (HumanEval/MBPP, не repo-scale)",
-         "Умеренно-сильное «за»"],
-        ["LLMs Cannot Self-Correct, ICLR'24; CRITIC, 2305.11738",
-         "Самокоррекция без внешнего сигнала систематически ухудшает результат",
-         "Сильное «против» голого self-review"],
-        ["arXiv:2604.10508",
-         "Self-repair с внешним сигналом (реальный прогон теста/компилятора): "
-         "+4,9…+30 п.п.",
-         "Сильное «за» — с реальной проверкой"],
-    ]
-    th2 = 1.75
-    reveal_table(s, 0.55, y, 12.23, th2, h2_headers, h2_rows, [0.32, 0.46, 0.22],
-                 row_highlight={2: "gold"}, header_size=9.5, cell_size=8.8)
-    y += th2 + 0.14
-    gold_callout(s, 0.55, y, 12.23, 7.0 - y,
-                 "«Нет контролируемого эксперимента именно на изолированную фразу-гейт в "
-                 "CLAUDE.md — только best-practice наблюдения практиков.»",
-                 size=11, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s17"))
-
-
-def build_s18(p):
-    return question_slide(p, "s18", label="Кейс 1.2 · Вопрос",
-        title="Гейт-фраза уже есть и не сработала — выбор из пяти вариантов, что делать "
-              "дальше, чтобы реально сработало в следующей сессии",
-        question="«У вас гейт-фраза в CLAUDE.md уже есть, а поведение агента не "
-                  "изменилось — заявка снова не проверена руками. Выберите, что вы "
-                  "сделаете дальше — из карточек ниже — так, чтобы это реально сработало "
-                  "в следующей сессии.»",
+def build_s16(p):
+    return question_slide(p, "s16", label="Кейс 1.2 · Вопрос",
+        title="Гейт-фраза уже есть с самого начала и не сработала — выбор из пяти "
+              "вариантов, что делать дальше",
+        question="«У вас гейт-фраза в CLAUDE.md есть с самого начала, а поведение агента "
+                  "всё равно расходится с ней второй раз подряд — заявка снова не "
+                  "проверена руками. Выберите, что вы сделаете дальше — из карточек "
+                  "ниже — так, чтобы это реально сработало в следующей сессии.»",
         options=["перепишу фразу\nкапсом / жёстче", "продублирую фразу\nвторым пунктом",
                  "заведу отдельный\nфайл-чеклист рядом",
                  "передам проверку\nмеханизму вне текста",
@@ -1326,50 +1298,76 @@ def build_s18(p):
         opt_h=1.75)
 
 
-def build_s19(p):
-    headers = ["Вариант", "Где работает", "Почему рано — и что вместо"]
-    rows = [
-        ["«Капсом / жёстче»", "Нигде системно",
-         "TDAD: усиление формулировки без тулинга не помогает и иногда вредит — "
-         "регрессии выросли до 9,94%. Формулировка — не механизм"],
-        ["«Продублирую вторым пунктом»", "Иногда чуть повышает шанс прочитать",
-         "Правило остаётся просьбой. Каждая лишняя строка стоит контекста в каждой "
-         "сессии (presence paradox, кейс 1.1)"],
-        ["«Отдельный файл-чеклист»", "Помогает человеку помнить, слабо помогает агенту",
-         "Тот же класс решения — снова текст, снова просьба, не обязательна к "
-         "построчному следованию"],
-        ["«Передам механизму вне текста»", "Системно работает: CI/harness-enforcement "
-         "даёт +20 п.п.",
-         "Верное направление — но сам механизм не тема сегодня, это Семинар 5. Сегодня "
-         "фиксируем: текст сам по себе ненадёжен"],
-        ["«Смирюсь, это нормально»", "Приемлемо для некритичных предпочтений",
-         "Для правила, чьё нарушение стоит дорого — «смирюсь» означает решение не решать"],
+def build_s17(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    header(s, "Кейс 1.2 · Исследование и разбор",
+        "Текстовый гейт без тулинга не просто бесполезен, а вреден — регрессии выросли "
+        "почти до 10%; правила в промпте — просьбы, правила в коде — законы",
+        title_size=13, title_h=0.68)
+    y = 0.7 + 0.68 + 0.1
+    h1_headers = ["Источник", "Тезис", "Сила"]
+    h1_rows = [
+        ["SWE-Gate/SpecBench/CapCode (4 препринта)",
+         "Согласие 4+ независимых исследований: агенты обходят видимые гейты",
+         "Сильное — консенсус"],
+        ["TDAD, arXiv:2603.17973",
+         "«Сначала пиши тесты» без тулинга — регрессии до 9,94%, хуже отсутствия",
+         "Сильное и контринтуитивное"],
+        ["Agent Scaffolding Beats Model Upgrades",
+         "Архитектура харнесса даёт +20 п.п.; смена модели — ~1 п.п.",
+         "Сильное — механизм против модели"],
     ]
-    # Fix 5 (review-раунд v4): формула «правила в промпте — просьбы, правила в коде —
-    # законы» сделана безусловной частью разбора (раньше звучала только в реакции на
-    # ответ «капсом» из зала) — вынесена первой фразой в footer, не спрятана в ветку.
-    return answer_slide(p, "s19", label="Кейс 1.2 · Разбор",
-        title="Честный ответ сегодня: мы всё равно запишем гейт текстом, потому что это "
-              "лучше, чем ничего, но прямо скажем себе, что он ненадёжен",
-        context_q="Гейт не сработал — что дальше?", headers=headers, rows=rows,
-        col_w=[0.22, 0.32, 0.46], gold_rows=[3],
-        footer="Правила в промпте — это просьбы, правила в коде — это законы: текстовый "
-               "гейт — просьба, и сегодня мы записываем именно просьбу. Приемлемый "
-               "первый шаг, пока нарушение редкое; нарушено дважды на критичном "
-               "действии — сигнал для эскалации к механическому уровню (Семинар 5). Цикл "
-               "«улучшение»: агент, смотрящий сам на свой код, — не делать так; агент, "
-               "прогоняющий реальную проверку, — делать так всегда.",
-        table_h=3.35, footer_h=1.7, footer_size=10.8)
+    th1 = 1.35
+    reveal_table(s, 0.55, y, 12.23, th1, h1_headers, h1_rows, [0.3, 0.48, 0.22],
+                 row_highlight={1: "gold"}, header_size=9.3, cell_size=8.7)
+    y += th1 + 0.1
+    h2_headers = ["Источник", "Тезис", "Сила"]
+    h2_rows = [
+        ["Self-planning, 2303.06689", "Планирование перед кодом: +25,4% pass@1",
+         "Умеренно-сильное «за»"],
+        ["LLMs Cannot Self-Correct, ICLR'24", "Самокоррекция без сигнала ухудшает",
+         "Сильное «против» self-review"],
+        ["arXiv:2604.10508", "Self-repair с реальной проверкой: +4,9…+30 п.п.",
+         "Сильное «за» — с проверкой"],
+    ]
+    th2 = 1.35
+    reveal_table(s, 0.55, y, 12.23, th2, h2_headers, h2_rows, [0.3, 0.48, 0.22],
+                 row_highlight={2: "gold"}, header_size=9.3, cell_size=8.7)
+    y += th2 + 0.1
+    headers3 = ["Вариант", "Где работает", "Почему рано — что вместо"]
+    rows3 = [
+        ["«Капсом / жёстче»", "Нигде системно", "TDAD: регрессии выросли до 9,94%"],
+        ["«Продублирую вторым пунктом»", "Иногда чуть повышает шанс прочитать",
+         "Presence paradox: лишняя строка стоит контекста"],
+        ["«Отдельный файл-чеклист»", "Помогает человеку, слабо — агенту",
+         "Тот же класс решения — снова текст, снова просьба"],
+        ["«Передам механизму вне текста»", "Системно работает: +20 п.п.",
+         "Верное направление — но не тема сегодня, Семинар 5"],
+        ["«Смирюсь, это нормально»", "Приемлемо для некритичных предпочтений",
+         "Для правила, чьё нарушение стоит дорого — решение не решать"],
+    ]
+    th3 = 1.95
+    reveal_table(s, 0.55, y, 12.23, th3, headers3, rows3, [0.28, 0.3, 0.42],
+                 header_size=9.0, cell_size=8.3)
+    y += th3 + 0.1
+    gold_callout(s, 0.55, y, 12.23, 7.3 - y,
+                 "Правила в промпте — просьбы, правила в коде — законы. Текстовый гейт — "
+                 "просьба, и сегодня мы записываем именно просьбу. Цикл «улучшение»: "
+                 "«посмотри на свой код» — не делать; «прогони реальную проверку» — "
+                 "делать всегда.",
+                 size=11, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s17"))
 
 
-def build_s20(p):
+def build_s18(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 1.2 · Решение",
         "Итоговый файл — тринадцать строк: критерий готово, гейт-предупреждение, "
         "честная оговорка предела; AGENTS.md — симлинк на тот же файл")
     half_w = 6.7
-    h1 = 4.55
+    h1 = 4.75
     terminal_card(s, 0.55, y, half_w, h1, [
         ("# CLAUDE.md", TEAL, True),
         ("", CODE_FG),
@@ -1389,30 +1387,29 @@ def build_s20(p):
     numbered_card(s, rx, y, rw, h1, [
         "Файл грузится в начало каждой сессии целиком (официальный ориентир — до 200 "
         "строк, наш итог — 13)",
-        "@-импорты организуют файл, но не экономят контекст — импортированное всё равно "
-        "грузится целиком",
+        "@-импорты организуют файл, но не экономят контекст",
         "AGENTS.md — симлинк на тот же файл (ln -s CLAUDE.md AGENTS.md). Острый край: "
         "cp -R без -P на macOS разыменовывает симлинк во вторую копию молча — копировать "
         "через cp -a / git clone / git archive",
     ], size=12)
-    speaker_notes(s, load_notes("s20"))
+    speaker_notes(s, load_notes("s18"))
 
 
-def build_s21(p):
-    return divider_case(p, "s21",
+def build_s19(p):
+    return divider_case_micro(p, "s19",
         title="Кейс 1.3 · вложенные файлы",
         meaning="Месяц спустя репозиторий подрос — дробить файл или нет",
-        tag="1650 сессий · 5 задокументированных issue",
+        tag="специфично для проекта · ждём сигнала",
         case_idx=2, case_total=3, icon_name="file-text")
 
 
-def build_s22(p):
+def build_s20(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 1.3 · Вложенные файлы",
-        "Разработчик выносит правила тестов в tests/CLAUDE.md и ждёт, что агент "
-        "подхватит его сам, когда работает именно в этой папке — логично звучит, но "
-        "стоит проверить, что там реально происходит с загрузкой")
+        "Разработчик выносит правила тестов в tests/CLAUDE.md и ждёт, что агент подхватит "
+        "его сам — логично звучит, но стоит проверить, что там реально происходит с "
+        "загрузкой")
     half_w = 5.85
     h1 = 2.2
     terminal_card(s, 0.55, y, half_w, h1, [
@@ -1433,52 +1430,11 @@ def build_s22(p):
     gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
                  "«Логично звучит. Давайте проверим, что там на самом деле происходит с "
                  "загрузкой.»", size=16, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s22"))
+    speaker_notes(s, load_notes("s20"))
 
 
-def build_s23(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    y = auto_header(s, "Кейс 1.3 · Исследование",
-        "Вложенный файл грузится on-demand, только по факту чтения — не по факту "
-        "нахождения в папке; контролируемое исследование не нашло пользы от разбиения, "
-        "а практика показывает регулярные отказы вплоть до архитектурного предела")
-    mh = 0.95
-    ocean_box(s, 0.55, y, 12.23, mh)
-    text_box(s, 0.75, y + 0.1, 11.85, mh - 0.2,
-             text="Механизм (офиц. документация Claude Code): корневой и все родительские "
-                  "CLAUDE.md грузятся при старте сессии автоматически. Вложенные грузятся "
-                  "on-demand — только когда агент реально читает файл оттуда. /context — "
-                  "единственный надёжный способ проверить, что реально загружено.",
-             size=11.3, color=DEEP, line_spacing=1.22)
-    y += mh + 0.18
-    headers = ["Источник", "Тезис", "Сила"]
-    rows = [
-        ["McMillan, arXiv:2605.10039 (1650 сессий Claude Code CLI)",
-         "Ни одна из 4 структурных переменных не дала значимого эффекта после "
-         "multiple-testing correction; для size/conflict — свидетельство ОТСУТСТВИЯ "
-         "эффекта",
-         "Сильное и контринтуитивное"],
-        ["Claude Code #2571", "Вложенный CLAUDE.md не подхватывается автоматически, "
-         "воспроизводимо; закрыт «not planned»", "Прямое наблюдение"],
-        ["Claude Code #6972", "Документация вводит в заблуждение — пользователи ждут "
-         "eager-загрузку, на деле on-demand", "Прямое наблюдение"],
-        ["Cursor, форум", "Сотрудник Cursor признал баг в nested-функциональности",
-         "Прямое, другой инструмент"],
-        ["Codex CLI #13288, #12115", "Ненадёжная подгрузка без явного --cd",
-         "Прямое, другой инструмент"],
-        ["GitHub Copilot CLI #3051", "Не баг, а документированный структурный предел: "
-         "discovery только вдоль прямого пути cwd→git-root", "Самое жёсткое: "
-         "архитектурное ограничение"],
-    ]
-    th = 2.85
-    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.28, 0.46, 0.26],
-                 row_highlight={0: "gold", 5: "teal"}, header_size=9.3, cell_size=8.6)
-    speaker_notes(s, load_notes("s23"))
-
-
-def build_s24(p):
-    return question_slide(p, "s24", label="Кейс 1.3 · Вопрос",
+def build_s21(p):
+    return question_slide(p, "s21", label="Кейс 1.3 · Вопрос",
         title="Как гарантировать, что агент реально прочитает конвенции из "
               "tests/CLAUDE.md — выбор из пяти вариантов",
         question="«Выберите, как вы гарантируете, что агент реально прочитает конвенции "
@@ -1492,112 +1448,149 @@ def build_s24(p):
         opt_h=1.75)
 
 
-def build_s25(p):
-    headers = ["Вариант", "Где работает", "Почему рано — и что вместо"]
+def build_s22(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, "Кейс 1.3 · Исследование и разбор",
+        "Вложенный файл грузится on-demand, только по факту чтения; контролируемое "
+        "исследование не нашло пользы от разбиения, а практика показывает регулярные "
+        "отказы")
+    mh = 0.6
+    ocean_box(s, 0.55, y, 12.23, mh)
+    text_box(s, 0.75, y + 0.08, 11.85, mh - 0.16,
+             text="Механизм: корневой CLAUDE.md грузится при старте сессии автоматически. "
+                  "Вложенные — только on-demand, по факту чтения. /context — единственный "
+                  "надёжный способ проверить.",
+             size=10.8, color=DEEP, line_spacing=1.18)
+    y += mh + 0.12
+    headers = ["Источник", "Тезис", "Сила"]
     rows = [
-        ["«Доверюсь автозагрузке»", "Никогда гарантированно",
-         "Вложенные файлы грузятся on-demand, только по факту чтения. Задокументированные "
-         "отказы — системная категория: #2571, #6972, Cursor, Codex CLI, жёсткий предел "
-         "Copilot CLI #3051"],
-        ["«Явно попрошу прочитать в начале задачи»", "Работает, требует ручной "
-         "дисциплины каждый раз",
-         "Надёжнее автозагрузки, но перекладывает ответственность на человека — то, от "
-         "чего мы уходили в кейсе 1.1"],
-        ["«Продублирую в корневой»", "Работает всегда — корень грузится при старте",
-         "Снова presence paradox: продублированная строка стоит контекста в каждой "
-         "сессии, в любой папке"],
-        ["«Проверю через /context»", "Единственный надёжный способ узнать факт",
-         "Диагностика, не решение — проверяет, сработало ли, не гарантирует в следующий "
-         "раз"],
-        ["«Объединю в один файл в корне, пока не вырос»", "Здесь и сейчас — репозиторий "
-         "маленький",
-         "Целевой ответ. Исследование (1650 сессий) не нашло значимого эффекта ни у одной "
-         "структурной переменной"],
+        ["McMillan, 2605.10039 (1650 сессий)",
+         "Ни одна из 4 структурных переменных не дала эффекта",
+         "Сильное и контринтуитивное"],
+        ["Claude Code #2571 / #6972", "Не подхватывается автоматически; документация "
+         "вводит в заблуждение", "Прямое наблюдение"],
+        ["Cursor / Codex CLI", "Баг nested-функциональности / ненадёжная подгрузка",
+         "Прямое, другие инструменты"],
+        ["GitHub Copilot CLI #3051", "Документированный структурный предел discovery",
+         "Самое жёсткое — архитектурный предел"],
     ]
-    return answer_slide(p, "s25", label="Кейс 1.3 · Разбор",
-        title="Редкое сочетание: контролируемое исследование не нашло пользы даже там, "
-              "где здравый смысл её обещал, а практика показывает регулярные отказы "
-              "вплоть до архитектурного предела",
-        context_q="Как гарантировать, что файл прочитан?", headers=headers, rows=rows,
-        col_w=[0.28, 0.28, 0.44], gold_rows=[4],
-        footer="Пока корневой файл помещается в разумный объём (до пятидесяти-семидесяти "
-               "строк), дробление по подпапкам не нужно никогда. Даже при росте объёма "
-               "дробить стоит только после того, как явно проверено — через /context или "
-               "наблюдаемое поведение, — что инструмент реально грузит вложенный файл.",
-        table_h=3.55, footer_h=1.3, footer_size=11.5)
+    th = 1.75
+    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.28, 0.46, 0.26],
+                 row_highlight={0: "gold", 3: "teal"}, header_size=9.5, cell_size=8.9)
+    y += th + 0.12
+    headers2 = ["Вариант", "Где работает", "Почему рано — что вместо"]
+    rows2 = [
+        ["«Доверюсь автозагрузке»", "Никогда гарантированно",
+         "Вложенные файлы грузятся on-demand. Задокументированные отказы — системная категория"],
+        ["«Явно попрошу прочитать»", "Работает, требует ручной дисциплины",
+         "Надёжнее автозагрузки, но перекладывает ответственность на человека"],
+        ["«Продублирую в корневой»", "Работает всегда — корень грузится при старте",
+         "Снова presence paradox: продублированная строка стоит контекста везде"],
+        ["«Проверю через /context»", "Единственный способ узнать факт",
+         "Диагностика, не решение"],
+        ["«Объединю в один файл в корне»", "Здесь и сейчас — репозиторий маленький",
+         "Целевой ответ. Исследование не нашло значимого эффекта ни у одной структурной переменной"],
+    ]
+    th2 = 1.82
+    reveal_table(s, 0.55, y, 12.23, th2, headers2, rows2, [0.25, 0.26, 0.49],
+                 row_highlight={4: "gold"}, header_size=9.0, cell_size=8.8)
+    y += th2 + 0.1
+    gold_callout(s, 0.55, y, 12.23, 7.3 - y,
+                 "Пока корневой файл помещается в разумный объём (до 50–70 строк), "
+                 "дробление не нужно никогда. Даже при росте — только после явной "
+                 "проверки через /context.",
+                 size=11.5, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s22"))
 
 
-def build_s26(p):
+def build_s23(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 1.3 · Решение",
         "Репозиторий остаётся с одним корневым файлом; три кейса — три решения знания, "
         "известного заранее, но есть знание другого рода, которое появляется по ходу "
         "работы — это раздел второй, память")
-    terminal_card(s, 0.55, y, 12.23, 2.65, [
+    terminal_card(s, 0.55, y, 12.23, 2.95, [
         ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG), ("index.html", CODE_FG),
         ("package.json", CODE_FG), ("src/main.js", CODE_FG),
         ("tests/form.spec.ts", CODE_FG),
         ("# tests/CLAUDE.md — не появляется", CODE_MUTED, True),
+        ("# + spec.md, README.md (раздел 0) — не в этом git-дереве", CODE_MUTED, True),
     ], title="дерево репозитория — без изменений", size=11)
-    y2 = y + 2.65 + 0.18
+    y2 = y + 2.95 + 0.18
     gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
                  "«Три кейса, один и тот же файл: мы решили, чего в него не писать "
-                 "заранее; написали то, что узнали на реальной боли; и решили не дробить "
-                 "его, пока это не доказанная польза. Всё это — знание, которое у вас уже "
-                 "было до работы, записанное заранее. Но есть знание другого рода: то, "
-                 "что появляется по ходу самой работы. Его нельзя записать заранее, "
-                 "потому что вы его ещё не знаете. Это раздел второй — память.»",
+                 "заранее; написали то, что узнали на реальной боли, даже когда завели "
+                 "гейт заранее; и решили не дробить его, пока это не доказанная польза. "
+                 "Но есть знание другого рода, которое появляется по ходу самой работы. "
+                 "Это раздел второй — память.»",
                  size=13, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s26"))
+    speaker_notes(s, load_notes("s23"))
 
 
 # ============================================================
-# Раздел 2 — Память (s27-s50, review-раунд: +s28/s29 Fix 1, +s37/s44 Fix 4)
+# Раздел 2 — Память (s24-s49)
 # ============================================================
 
-def build_s27(p):
-    return divider_section_and_case(p, "s27",
+def build_s24(p):
+    return divider_hybrid(p, "s24",
         big_title="Раздел 2 · память",
-        subtitle="Кейс 2.1 · плоский файл",
+        subtitle="Кейс 2.1 · плоский файл, день 0",
         meaning="Между сессиями агент не хранит ни бита — если это не лежит на диске",
-        tag="3 кейса по восходящей сложности", icon_name="database")
+        tag="универсальная гигиена · день 0",
+        icon_name="database", macro_idx=2, macro_total=4, micro_idx=0, micro_total=3,
+        case_lines=[
+            "Кейс 2.1 · плоский файл",
+            "Кейс 2.2 · структурированная вики-память",
+            "Кейс 2.3 · операционная память",
+        ])
 
 
-def build_s28(p):
-    """pattern: problem_scenario — Fix 1 (review-раунд v4): проблема кейса 2.1,
-    выделена в отдельный слайд (раньше была склеена с вопросом на одном слайде,
-    нарушая обязательный паттерн проблема → исследование → вопрос → разбор)."""
+def build_s25(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.1 · Плоский файл",
-        "Уже отклонённое решение всплывает снова, потому что разговор, в котором его "
-        "приняли, закончился — а его содержимое нигде не осталось")
+        "Файл DECISIONS.md заведён с первого дня — и нужной записи в нём всё равно нет, "
+        "потому что решение родилось в разговоре, а не за столом")
     sh = 2.0
     ocean_box(s, 0.55, y, 12.23, sh)
-    text_box(s, 0.78, y + 0.14, 11.8, sh - 0.55,
+    text_box(s, 0.78, y + 0.14, 11.8, sh - 0.28,
              text="Третья сессия за две недели. Заказчик прислал заявку с опечаткой в "
-                  "домене почты, форма её приняла. Разработчик просит доработать "
-                  "валидацию. Агент предлагает подключить стороннюю библиотеку валидации "
-                  "форм — ту самую, которую уже обсуждали и отклонили: форма из двух "
-                  "полей, хватает нативных required/pattern и двадцати строк своего кода.",
-             size=13, color=DEEP, line_spacing=1.28)
-    text_box(s, 0.78, y + sh - 0.4, 11.8, 0.34,
-             text="Агент предлагает её так, будто вопрос никогда не поднимался. Для него "
-                  "он и не поднимался.", size=11, italic=True, color=SLATE)
+                  "домене почты, форма её приняла. Агент предлагает подключить стороннюю "
+                  "библиотеку валидации форм — ту самую, которую уже обсуждали и "
+                  "отклонили: форма из двух полей, хватает нативных required/pattern.",
+             size=12.5, color=DEEP, line_spacing=1.26)
     y += sh + 0.22
     gold_callout(s, 0.55, y, 12.23, 7.0 - y,
-                 "«Агент не нарушил правило. В файле инструкций этого правила не было и "
-                 "не могло быть — решение родилось в разговоре, а разговор кончился. Это "
-                 "не «забыл»: модель не имеет состояния между вызовами.»",
-                 size=13.5, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s28"))
+                 "«Файл DECISIONS.md уже есть — заведён с первого дня, вместе со spec.md "
+                 "и README. И тем не менее нужной записи в нём нет: решение родилось не "
+                 "за столом, а на бегу, в потоке рабочего разговора. Завести практику — "
+                 "не то же самое, что воспользоваться ею в момент, когда это имеет "
+                 "значение.»",
+                 size=13, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s25"))
 
 
-def build_s29(p):
-    """pattern: research_evidence (short bridge) — Fix 1 (review-раунд v4): presence
-    paradox из кейса 1.1 (см. build_s11), перенесённый на DECISIONS.md. Не новое
-    измерение — явная связка «мы это уже видели»."""
+def build_s26(p):
+    return question_slide(p, "s26", label="Кейс 2.1 · Вопрос",
+        title="Выберите, куда записать отклонённое решение — из карточек ниже — так, "
+              "чтобы не объяснять его в третий раз",
+        scenario="напоминание: отклонённая библиотека валидации всплыла снова — решение "
+                 "родилось в разговоре и нигде не осталось, даже при уже заведённом "
+                 "DECISIONS.md",
+        question="«Вы второй раз за две недели объясняете агенту, почему в этой форме "
+                  "нет сторонней библиотеки валидации. Выберите, куда записать это "
+                  "решение — из карточек ниже — так, чтобы не объяснять его в третий раз, "
+                  "и обоснуйте, почему не в тот файл инструкций, который мы только что "
+                  "завели.»",
+        options=["дописать\nв CLAUDE.md", "сказать агенту\n«запомни это»",
+                 "записать в\nDECISIONS.md — он уже есть", "поставить систему\nпамяти",
+                 "ничего — сам\nзапомнит"],
+        opt_h=1.6)
+
+
+def build_s27(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.1 · Исследование",
@@ -1631,57 +1624,18 @@ def build_s29(p):
     gold_callout(s, 0.55, y, 12.23, 7.0 - y,
                  "если запись не бесплатна — точно ли туда идёт вообще всё, что можно "
                  "туда положить?", size=14.5, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s29"))
+    speaker_notes(s, load_notes("s27"))
 
 
-def build_s30(p):
-    """pattern: question_with_option_cards — Fix 1 (review-раунд v4): теперь только
-    вопрос+карточки; сценарий и диагностика переехали на build_s28, исследование —
-    на build_s29 (см. обязательный паттерн проблема → исследование → вопрос → разбор)."""
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    y = auto_header(s, "Кейс 2.1 · Вопрос",
-        "Выберите, куда записать отклонённое решение — из карточек ниже — так, чтобы не "
-        "объяснять его в третий раз")
-    text_box(s, 0.55, y, 12.23, 0.35,
-             text="напоминание: отклонённая библиотека валидации всплыла снова — решение "
-                  "родилось в разговоре и нигде не осталось",
-             size=11, italic=True, color=SLATE)
-    y += 0.42
-    qh = 1.3
-    gold_callout(s, 0.55, y, 12.23, qh,
-                 "«Вы второй раз за две недели объясняете агенту, почему в этой форме "
-                 "нет сторонней библиотеки валидации. Выберите, куда записать это "
-                 "решение — из карточек ниже — так, чтобы не объяснять его в третий раз, "
-                 "и обоснуйте, почему не в тот файл инструкций, который мы только что "
-                 "завели.»", size=13, anchor=MSO_ANCHOR.MIDDLE)
-    y += qh + 0.2
-    opts = ["дописать\nв CLAUDE.md", "сказать агенту\n«запомни это»",
-            "завести\nDECISIONS.md", "поставить систему\nпамяти", "ничего — сам\nзапомнит"]
-    n = len(opts)
-    gap = 0.16
-    cw = (12.23 - gap * (n - 1)) / n
-    cx = 0.55
-    opt_h = 7.0 - y
-    for label in opts:
-        ocean_box(s, cx, y, cw, opt_h, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.1)
-        paras = [{"text": ln, "size": 12, "bold": True, "color": DEEP,
-                   "align": PP_ALIGN.CENTER, "line_spacing": 1.15} for ln in label.split("\n")]
-        multipara_box(s, cx + 0.08, y, cw - 0.16, opt_h, paras, anchor=MSO_ANCHOR.MIDDLE)
-        cx += cw + gap
-    speaker_notes(s, load_notes("s30"))
-
-
-def build_s31(p):
+def build_s28(p):
     headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
     rows = [
         ["«Допишу в CLAUDE.md»", "Механически сработает: файл читается каждую сессию",
          "Смешивает стабильные правила и растущий лог решений. На десятке решений файл "
-         "выйдет за ориентир в 200 строк. Вместо: развести слои по авторству"],
+         "выйдет за ориентир в 200 строк"],
         ["«Ничего, агент сам запомнит»", "Нигде: это не настройка, которую забыли "
          "включить",
-         "Модель не имеет состояния между вызовами по конструкции. Вместо: решить, кто и "
-         "куда пишет"],
+         "Модель не имеет состояния между вызовами по конструкции"],
         ["«Скажу агенту ‘запомни это’»", "Для личного предпочтения — идеально",
          "Половина ответа. Уходит в авто-память: машинно-локальный слой без "
          "синхронизации и код-ревью"],
@@ -1693,7 +1647,7 @@ def build_s31(p):
          "Рано на порядок: на малых корпусах простой файл регулярно конкурентен со "
          "сложными системами"],
     ]
-    return answer_slide(p, "s31", label="Кейс 2.1 · Разбор",
+    return answer_slide(p, "s28", label="Кейс 2.1 · Разбор",
         title="Командное решение с обоснованием идёт в DECISIONS.md, личное предпочтение "
               "— в авто-память, выводимое из кода — никуда",
         context_q="Куда записать отклонённое решение — и почему не в файл инструкций?",
@@ -1702,7 +1656,7 @@ def build_s31(p):
         table_h=3.7, footer_h=0.7, footer_size=15)
 
 
-def build_s32(p):
+def build_s29(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.1 · Совместное формирование",
@@ -1723,15 +1677,14 @@ def build_s32(p):
         ("Форма — два поля (имя, email), хватает нативных required/pattern в", CODE_FG),
         ("index.html. Сторонняя библиотека — лишняя зависимость ради этого объёма.", CODE_FG),
     ], title="собранная запись — реальный файл демо-репозитория", size=11.5)
-    speaker_notes(s, load_notes("s32"))
+    speaker_notes(s, load_notes("s29"))
 
 
-def build_s33(p):
+def build_s30(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.1 · Решение",
-        "Два параллельных механизма, не один: авто-память живёт вне репозитория, "
-        "DECISIONS.md — git-трекнутый лог «почему» внутри него")
+        "Новое — не файл (он с нами с первого дня), а первая содержательная запись в нём")
     half_w = 6.7
     h = 4.45
     terminal_card(s, 0.55, y, half_w, h, [
@@ -1746,23 +1699,17 @@ def build_s33(p):
     ], title="DECISIONS.md — целиком", size=11)
     rx = 0.55 + half_w + 0.3
     rw = 12.23 - half_w - 0.3
-    th = 2.65
-    terminal_card(s, rx, y, rw, th, [
+    terminal_card(s, rx, y, rw, h, [
         ("AGENTS.md", CODE_FG), ("CLAUDE.md", CODE_FG),
         ("DECISIONS.md", GOLD, True), ("index.html", CODE_FG),
         ("package.json", CODE_FG), ("src/main.js", CODE_FG),
         ("tests/form.spec.ts", CODE_FG),
+        ("# + spec.md, README.md (раздел 0) — не в этом git-дереве", CODE_MUTED, True),
     ], title="дерево кейса 2.1", size=10.5)
-    ry2 = y + th + 0.2
-    ocean_box(s, rx, ry2, rw, h - th - 0.2)
-    text_box(s, rx + 0.18, ry2 + 0.12, rw - 0.36, h - th - 0.4,
-             text="diff создания файла: +DECISIONS.md (новый), git add + commit — "
-                  "команда, а не агент, решает, когда коммитить журнал решений.",
-             size=10.8, italic=True, color=SLATE, line_spacing=1.25)
-    speaker_notes(s, load_notes("s33"))
+    speaker_notes(s, load_notes("s30"))
 
 
-def build_s34(p):
+def build_s31(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.1 · Три слоя",
@@ -1788,10 +1735,10 @@ def build_s34(p):
              text="индекс памяти — только индекс  ·  агент сам пропускает выводимое из "
                   "кода  ·  сжатие контекста переживают только файлы на диске",
              size=12.5, italic=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.25)
-    speaker_notes(s, load_notes("s34"))
+    speaker_notes(s, load_notes("s31"))
 
 
-def build_s35(p):
+def build_s32(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.1 · Провал и эффективность",
@@ -1826,11 +1773,11 @@ def build_s35(p):
     th2 = 1.85
     reveal_table(s, 0.55, y2, 12.23, th2, headers, rows, [0.42, 0.32, 0.26],
                  row_highlight={0: "gold"}, header_size=10.3, cell_size=9.8)
-    speaker_notes(s, load_notes("s35"))
+    speaker_notes(s, load_notes("s32"))
 
 
-def build_s36(p):
-    return criteria_slide(p, "s36", label="Кейс 2.1 · Критерий и граница",
+def build_s33(p):
+    return criteria_slide(p, "s33", label="Кейс 2.1 · Критерий и граница",
         title="Плоского файла достаточно, пока история решений влезает в контекст "
               "целиком и связей между записями ещё нет",
         items=[
@@ -1848,18 +1795,16 @@ def build_s36(p):
                        "некуда положить.")
 
 
-def build_s37(p):
-    """pattern: section_divider — Fix 4 (review-раунд v4): кейс 2.2 получает свой
-    divider, по образцу кейсов 1.1/1.2/1.3/2.1 (у которых он уже был)."""
-    return divider_case(p, "s37",
+def build_s34(p):
+    return divider_case_micro(p, "s34",
         title="Кейс 2.2 · структурированная вики-память",
         meaning="Тот же DECISIONS.md, но разросшийся — плоский лог больше не хранит связей",
-        tag="1 контрпример структуре · 4 честных издержки",
+        tag="специфично для проекта · ждём сигнала",
         case_idx=1, case_total=3, icon_name="git-branch")
 
 
-def build_s38(p):
-    return scenario_pain_slide(p, "s38", label="Кейс 2.2 · Вики-память",
+def build_s35(p):
+    return scenario_pain_slide(p, "s35", label="Кейс 2.2 · Вики-память",
         title="Файл технически на месте, но пользоваться им дольше, чем не "
               "пользоваться — линейный лог не хранит связей между записями",
         scenario="Прошло четыре месяца. Новый разработчик в команде просит агента "
@@ -1877,15 +1822,15 @@ def build_s38(p):
              "записей не захвачено.")
 
 
-def build_s39(p):
-    return question_slide(p, "s39", label="Кейс 2.2 · Вопрос",
-        title="Тридцать восемь записей и потерянная связь между двумя из них — повод "
-              "выбрать, как реорганизовать журнал решений, а не заводить его заново",
-        question="«DECISIONS.md разросся до тридцати восьми записей, и в нём уже есть "
-                  "решение, которое отменяет часть более раннего решения, — без единой "
-                  "ссылки между ними. Выберите, как реорганизовать этот файл — из "
-                  "карточек ниже — так, чтобы агент быстро находил нужное решение и "
-                  "видел связи между решениями. Обоснуйте выбор.»",
+def build_s36(p):
+    return question_slide(p, "s36", label="Кейс 2.2 · Вопрос",
+        title="Разросшийся журнал решений и потерянная связь между двумя записями — "
+              "повод выбрать, как его реорганизовать, а не заводить заново",
+        question="«DECISIONS.md разросся, и в нём уже есть решение, которое отменяет "
+                  "часть более раннего решения, — без единой ссылки между ними. "
+                  "Выберите, как реорганизовать этот файл — из карточек ниже — так, "
+                  "чтобы агент быстро находил нужное решение и видел связи между "
+                  "решениями, а не листал линейный лог с начала. Обоснуйте выбор.»",
         options=["оставить как есть —\nпросто грепать",
                  "разбить на тематические\nфайлы со ссылками",
                  "поставить графовую/\nвекторную систему памяти",
@@ -1894,30 +1839,65 @@ def build_s39(p):
         opt_h=1.75)
 
 
-def build_s40(p):
+def build_s37(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, "Кейс 2.2 · Исследование",
+        "Плоская память деградирует со временем, а структура может окупаться именно "
+        "для агента там, где не окупается для человека — но «умнее» не значит «лучше»")
+    text_box(s, 0.55, y, 12.23, 0.5,
+             text="почти все источники ниже — свежие непроверенные препринты 2026 года; "
+                  "цифры — «заявлено в препринте», а не установленный факт",
+             size=10.8, italic=True, color=SLATE, line_spacing=1.2)
+    y += 0.58
+    ocean_box(s, 0.55, y, 12.23, 1.55)
+    text_box(s, 0.78, y + 0.12, 11.75, 1.31,
+             text="MEMTIER (arXiv:2605.03675): плоская память деградирует на горизонте "
+                  "порядка 72 часов работы — минус 14 п.п. успешности вызовов "
+                  "инструментов (насыщение контекста, temporal decay, semantic drift). "
+                  "Логика «raw sources → wiki → schema»: у человека вики умирает — "
+                  "поддержка дороже ценности; у агента стоимость правки полутора "
+                  "десятков файлов близка к нулю.",
+             size=11.3, color=DEEP, line_spacing=1.24)
+    y += 1.55 + 0.18
+    headers = ["Система", "LoCoMo (долговременная память)"]
+    rows = [["Простое файловое хранилище (grep/чтение файлов)", "74,0%"],
+            ["Mem0 (graph-based)", "68,5%"]]
+    th = 1.3
+    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.72, 0.28],
+                 row_highlight={0: "gold"}, header_size=11.5, cell_size=13)
+    y += th + 0.14
+    text_box(s, 0.55, y, 12.23, 7.0 - y,
+             text="Летта-контрпример: простое хранилище обошло графовую систему памяти "
+                  "— модели тренированы на файловых операциях как на самом привычном "
+                  "инструменте. Держите эту цифру в голове — она вернётся в разборе.",
+             size=11.5, italic=True, color=SLATE, line_spacing=1.25)
+    speaker_notes(s, load_notes("s37"))
+
+
+def build_s38(p):
     headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
     rows = [
         ["«Оставить как есть, просто грепать»", "Пока записей десятки и они "
          "укладываются в контекст целиком",
-         "Деградация плоской памяти со временем задокументирована кросс-источниками "
-         "(~72 ч, −14 п.п.); наш файл уже перерос эту границу"],
+         "Деградация плоской памяти со временем задокументирована (~72 ч, −14 п.п.); "
+         "наш файл уже перерос эту границу"],
         ["«Разбить на тематические файлы со сквозными ссылками»", "Именно этот случай",
          "Целевой ответ, но не бесплатный — структура сама создаёт новую нагрузку "
          "(staleness, дублирование, поддержка)"],
         ["«Поставлю графовую/векторную систему памяти»", "На больших "
          "многопользовательских корпусах с семантическим поиском",
          "Контрпример прямо про наш масштаб: файловое хранилище обошло graph-based "
-         "систему на LoCoMo. Рано на порядок"],
+         "систему на LoCoMo"],
         ["«Один общий SUMMARY.md, переписываемый целиком»", "Для совсем маленького "
          "проекта",
-         "Переписывание целиком убивает append-only гарантию — история решения "
-         "невосстановима"],
+         "Переписывание целиком убивает append-only гарантию"],
         ["«Агент сам найдёт через поиск по репозиторию»", "Для фактов, выводимых из "
          "кода",
          "Решения — не факты кода. «Сам найдёт» — то же заблуждение, что «сам "
          "запомнит»"],
     ]
-    return answer_slide(p, "s40", label="Кейс 2.2 · Разбор",
+    return answer_slide(p, "s38", label="Кейс 2.2 · Разбор",
         title="Разбить на тематические файлы со сквозными ссылками — целевой ответ, но "
               "не бесплатный: структура сама создаёт новую нагрузку",
         context_q="Как реорганизовать разросшийся журнал решений?", headers=headers,
@@ -1927,7 +1907,7 @@ def build_s40(p):
         table_h=3.65, footer_h=0.85, footer_size=13)
 
 
-def build_s41(p):
+def build_s39(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.2 · Решение",
@@ -1957,10 +1937,10 @@ def build_s41(p):
     text_box(s, 0.55, y2, 12.23, 7.0 - y2,
              text="иллюстративный пример, не захваченный вживую — ждёт реальной сессии",
              size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s41"))
+    speaker_notes(s, load_notes("s39"))
 
 
-def build_s42(p):
+def build_s40(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.2 · Провал и издержки",
@@ -1994,11 +1974,11 @@ def build_s42(p):
     ]
     criterion_plate(s, 0.55, y, 12.23, 7.0 - y, items,
                      title="ЧЕСТНО НАЗВАННЫЕ НЕДОСТАТКИ ВИКИ-ПАМЯТИ", size=11)
-    speaker_notes(s, load_notes("s42"))
+    speaker_notes(s, load_notes("s40"))
 
 
-def build_s43(p):
-    return criteria_slide(p, "s43", label="Кейс 2.2 · Критерий и мост",
+def build_s41(p):
+    return criteria_slide(p, "s41", label="Кейс 2.2 · Критерий и мост",
         title="Единиц-десятков тематических файлов, которые правят один-два человека, "
               "достаточно — полноценная система памяти требует замеров на своём "
               "масштабе, не общего совета",
@@ -2014,88 +1994,113 @@ def build_s43(p):
                        "ещё не закончена?")
 
 
-def build_s44(p):
-    """pattern: section_divider — Fix 4 (review-раунд v4): кейс 2.3 получает свой
-    divider, по образцу кейсов 1.1/1.2/1.3/2.1/2.2 (у которых он уже есть)."""
-    return divider_case(p, "s44",
+def build_s42(p):
+    return divider_case_micro(p, "s42",
         title="Кейс 2.3 · операционная память",
         meaning="Смена оси: не решения навсегда, а ход одной задачи между её сессиями",
-        tag="21 120 траекторий · 1 кейс-стади n=1",
+        tag="универсальная гигиена · день 0",
         case_idx=2, case_total=3, icon_name="clipboard-check")
 
 
-def build_s45(p):
-    return scenario_pain_slide(p, "s45", label="Кейс 2.3 · Задачная память",
-        title="Вторая сессия многошаговой задачи начинается не с продолжения, а с "
-              "повторного анализа с нуля — и с конфликта с уже принятыми по ходу "
-              "мелкими решениями",
-        scenario="Разработчик ставит агенту задачу на несколько сессий: разбить форму "
-                 "signup-landing на пошаговый визард (имя → email → подтверждение), "
-                 "сохранив всю текущую валидацию. Шесть шагов, первая сессия обрывается "
-                 "на середине, контекст сжимается. Вторая сессия: агент, не имея под "
-                 "рукой ничего, кроме кода и сжатой сводки, заново анализирует форму с "
-                 "нуля и предлагает план, который на треть повторяет уже сделанное и на "
-                 "треть противоречит мелким решениям, принятым по ходу первой сессии — "
-                 "например, переписать email-валидацию, которую договорились не трогать.",
-        bottom_line="Разработчик тратит начало второй сессии не на продолжение работы, "
-                     "а на то, чтобы заново объяснить, что уже сделано.")
+def build_s43(p):
+    return scenario_pain_slide(p, "s43", label="Кейс 2.3 · Задачная память",
+        title="Файл задачи существовал с самого начала, план в нём выглядит "
+              "актуальным — и всё равно вторая сессия предлагает переписать то, что "
+              "уже негласно решили не трогать",
+        scenario="Команда завела практику «файл на задачу» с первого дня работы над "
+                 "signup-landing — как и DECISIONS.md, это дешёвая гигиена, которую "
+                 "заводят сразу. Разработчик ставит агенту задачу на несколько сессий: "
+                 "разбить форму на пошаговый визард, сохранив всю текущую валидацию. По "
+                 "заведённой практике агент перед началом сам создаёт файл задачи с "
+                 "планом. Первая сессия закрывает первые шаги. По ходу — не по плану, а "
+                 "в разговоре — разработчик и агент договариваются не трогать "
+                 "email-валидацию. Договорённость мелкая, кажется не стоящей того, "
+                 "чтобы прерваться и записать её прямо в моменте. Сессия обрывается на "
+                 "середине следующего шага: контекст сжимается. Вторая сессия — файл на "
+                 "месте, выглядит актуальным и достоверным, но договорённость про "
+                 "email-валидацию в лог так и не попала. Агент предлагает переписать "
+                 "email-валидацию заново.",
+        bottom_line="«Файл был. Практика была. Не хватило одного: вписать мелкую "
+                     "договорённость в лог в момент, когда она прозвучала.»")
 
 
-def build_s46(p):
-    return question_slide(p, "s46", label="Кейс 2.3 · Вопрос",
-        title="Агент после сжатия контекста или в новой сессии должен продолжить с "
-              "того места, где остановился, а не начать заново",
-        question="«Вторая сессия по одной и той же многошаговой задаче начинается с "
-                  "того, что агент заново анализирует форму с нуля — и предлагает "
-                  "переделать то, что уже решили не трогать. Выберите, куда и как "
-                  "записывать ход этой задачи — из карточек ниже — так, чтобы агент "
-                  "после сжатия контекста или в новой сессии продолжил с того места, "
-                  "где остановился. Обоснуйте выбор.»",
+def build_s44(p):
+    return question_slide(p, "s44", label="Кейс 2.3 · Вопрос",
+        title="Файл задачи существовал с самого начала и всё равно ввёл в заблуждение "
+              "— выбор из пяти вариантов",
+        question="«Файл задачи существовал с самого начала, план в нём выглядит "
+                  "актуальным — первые шаги отмечены сделанными. И всё равно вторая "
+                  "сессия предлагает переписать то, что уже негласно решили не трогать. "
+                  "Выберите, что нужно сделать иначе — из карточек ниже — так, чтобы "
+                  "файл задачи не вводил в заблуждение, а реально отражал ход работы. "
+                  "Обоснуйте выбор.»",
         options=["надеяться на\nконтекстное окно",
                  "записать план\nв DECISIONS.md",
-                 "завести один файл\nна задачу",
+                 "дисциплинированно дописывать\nлог хода сразу",
                  "завести папку на задачу\nс файлом под каждый шаг",
                  "попросить агента\n«продолжи с того места»"],
         opt_h=1.75)
 
 
-def build_s47(p):
-    headers = ["Вариант", "Где это работает", "Почему здесь ещё рано — и что вместо"]
+def build_s45(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    y = auto_header(s, "Кейс 2.3 · Исследование",
+        "От Pokémon до recitation — практика структурированных заметок о ходе задачи "
+        "известна и работает; и она объясняет, почему наш файл всё равно подвёл")
+    ocean_box(s, 0.55, y, 12.23, 2.55)
+    text_box(s, 0.78, y + 0.14, 11.75, 2.27,
+             text="Anthropic, инженерный блог: «structured note-taking» — агент играет "
+                  "в Pokémon тысячи шагов подряд, ведя простые структурированные "
+                  "заметки, переживая сбросы контекста без потери прогресса. Manus, "
+                  "«recitation»: агент непрерывно переписывает todo.md в конец "
+                  "контекста — снижает уход от цели. metasphere-agents: файл на задачу "
+                  "в .tasks/active/, архивируется в .tasks/done/ по завершении.",
+             size=12, color=DEEP, line_spacing=1.28)
+    y2 = y + 2.55 + 0.2
+    gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
+                 "«Есть измерение на большом числе траекторий: план в среднем помогает. "
+                 "Но дословная цитата авторов — ‘плохой план вреднее отсутствия "
+                 "плана вообще’. Полную картину с цифрами покажу на слайде провала.»",
+                 size=13, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s45"))
+
+
+def build_s46(p):
+    headers = ["Вариант", "Где это работает", "Почему рано — и что вместо"]
     rows = [
         ["«Не сжимать, не закрывать сессию»", "Для задачи, целиком укладывающейся в "
          "одну короткую сессию",
          "Контекстное окно конечно; на многошаговой задаче рано или поздно случится "
          "сжатие или разрыв сессии — это отсутствие стратегии"],
         ["«Записать план в DECISIONS.md»", "Никогда — не тот слой памяти",
-         "DECISIONS.md — про «почему» для решений, которые остаются в силе навсегда; "
-         "статус одной задачи туда не относится"],
-        ["«Один файл на задачу: план + лог хода + результаты»", "Ровно наш случай",
+         "DECISIONS.md — про решения, которые остаются в силе навсегда; статус одной "
+         "задачи туда не относится"],
+        ["«Дисциплинированно дописывать лог хода сразу»", "Ровно наш случай",
          "Целевой ответ для этого масштаба"],
         ["«Папка на задачу с файлом под каждый шаг»", "Параллельные подзадачи, "
          "несколько субагентов, разросшийся лог",
-         "Оверинжиниринг для одной линейной задачи здесь и сейчас. Паттерн реально "
-         "масштабируется до папки"],
+         "Оверинжиниринг для одной линейной задачи здесь и сейчас"],
         ["«Попросить ‘продолжи с того места’»", "Внутри одной непрерывной сессии, до "
          "сжатия",
-         "После сжатия или в новой сессии буквально нечего продолжать — просьба "
-         "адресована памяти, которой не существует"],
+         "После сжатия или в новой сессии буквально нечего продолжать"],
     ]
-    return answer_slide(p, "s47", label="Кейс 2.3 · Разбор",
-        title="Один файл на задачу — план, лог хода, результаты — целевой ответ для "
-              "линейной задачи с одним агентом и одним разработчиком",
-        context_q="Куда записывать ход многошаговой задачи?", headers=headers,
+    return answer_slide(p, "s46", label="Кейс 2.3 · Разбор",
+        title="Дисциплина синхронной записи в уже существующий файл на задачу — "
+              "целевой ответ; файл задачи это не то же самое, что журнал решений",
+        context_q="Файл задачи ввёл в заблуждение — что сделать иначе?", headers=headers,
         rows=rows, col_w=[0.26, 0.3, 0.44], gold_rows=[2],
-        footer="целевой ответ — один файл на задачу, с явным уточнением, что это "
-               "упрощённая версия паттерна, масштабируемого до папки",
+        footer="целевой ответ — дисциплина синхронной записи в уже существующий файл, с "
+               "явной оговоркой об упрощении до файла",
         table_h=3.65, footer_h=0.85, footer_size=12.5)
 
 
-def build_s48(p):
+def build_s47(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.3 · Решение",
-        "Файл задачи ссылается на журнал решений, а не дублирует его — и это осознанное "
-        "упрощение паттерна, полностью раскрываемого в другом месте")
+        "Один и тот же файл, одна и та же практика — разница ровно в том, записали "
+        "вовремя или нет")
     terminal_card(s, 0.55, y, 12.23, 4.35, [
         ("# Задача: разбить форму на пошаговый визард", TEAL, True),
         ("", CODE_FG),
@@ -2121,10 +2126,10 @@ def build_s48(p):
                   "многошаговой сессии владельца · упрощение до файла — масштабируется "
                   "до папки, подробнее за пределами этого занятия",
              size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.2)
-    speaker_notes(s, load_notes("s48"))
+    speaker_notes(s, load_notes("s47"))
 
 
-def build_s49(p):
+def build_s48(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 2.3 · Провал",
@@ -2156,11 +2161,11 @@ def build_s49(p):
              text="практика «файл/папка на задачу» пока не мейнстрим — 2853 реальных "
                   "репозитория, доминируют статические context-файлы",
              size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.25)
-    speaker_notes(s, load_notes("s49"))
+    speaker_notes(s, load_notes("s48"))
 
 
-def build_s50(p):
-    return criteria_slide(p, "s50", label="Кейс 2.3 · Критерий",
+def build_s49(p):
+    return criteria_slide(p, "s49", label="Кейс 2.3 · Критерий",
         title="Одного файла на задачу достаточно, пока задача линейная и её ведёт один "
               "агент и один разработчик — иначе оправдан переход к папке",
         items=[
@@ -2180,41 +2185,44 @@ def build_s50(p):
 
 
 # ============================================================
-# Раздел 3 — Закрытие (s51-s53)
+# Раздел 3 — Закрытие (s50-s52)
 # ============================================================
 
-def build_s51(p):
+def build_s50(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Раздел 3 · Синтез",
-        "Шесть развилок сегодняшнего занятия — три про файл инструкций, три про "
-        "память — отвечали на один и тот же скрытый вопрос")
-    headers = ["Кейс", "Развилка", "Что мы записали"]
+        "Шесть развилок сегодняшнего занятия делились на два типа: специфичное для "
+        "проекта (ждать сигнала) и универсальная гигиена (заводить сразу, на день 0)")
+    headers = ["Кейс", "Развилка", "Что мы записали", "Когда"]
     rows = [
         ["1.1", "Роль агента и общее описание репозитория",
-         "Ничего — до первого реального сигнала"],
+         "Ничего — до первого реального сигнала", "по сигналу"],
         ["1.2", "Базовые процессы: гейт «готово» + цикл улучшения",
-         "Гейт-фраза текстом в CLAUDE.md"],
+         "Гейт-фраза текстом в CLAUDE.md", "сразу"],
         ["1.3", "Вложенные файлы инструкций по подпапкам",
-         "Не дробим — один файл в корне"],
+         "Не дробим — один файл в корне", "по сигналу"],
         ["2.1", "Плоский файл памяти (DECISIONS.md)",
-         "Решение записано в файл + авто-память"],
+         "Решение записано в файл + авто-память", "сразу"],
         ["2.2", "Структурированная вики-память",
-         "Тематические файлы со сквозными ссылками"],
+         "Тематические файлы со сквозными ссылками", "по сигналу"],
         ["2.3", "Операционная задачная память",
-         "Один файл на задачу: план + лог + результаты"],
+         "Один файл на задачу: план + лог + результаты", "сразу"],
     ]
     th = 3.65
-    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.1, 0.42, 0.48],
-                 header_size=12, cell_size=12.3)
+    reveal_table(s, 0.55, y, 12.23, th, headers, rows, [0.08, 0.37, 0.4, 0.15],
+                 row_highlight={0: "teal", 2: "teal", 4: "teal", 1: "gold", 3: "gold",
+                                5: "gold"},
+                 header_size=11.5, cell_size=11.3)
     y += th + 0.2
     text_box(s, 0.55, y, 12.23, 7.0 - y,
-             text="Всё в правом столбце — текст, который агент читает и может учесть.",
-             size=19, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    speaker_notes(s, load_notes("s51"))
+             text="Три развилки ждали реального сигнала. Три — не нуждались в сигнале "
+                  "вообще, их стоило завести сразу.",
+             size=17, bold=True, color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    speaker_notes(s, load_notes("s50"))
 
 
-def build_s52(p):
+def build_s51(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Раздел 3 · Охват",
@@ -2233,43 +2241,40 @@ def build_s52(p):
     gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
                  "Семинар 5: скиллы · субагенты · доступ наружу (MCP) + хук · процесс",
                  size=16, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s52"))
+    speaker_notes(s, load_notes("s51"))
 
 
-def build_s53(p):
-    """pattern: closing_question — Fix 3 (review-раунд v4): композиция намеренно
-    ОТЛИЧАЕТСЯ от build_s51 (полная таблица шести развилок), а не является её
-    уменьшенной копией с вырезанным столбцом. Здесь: тонкая строка-перечень БЕЗ
-    таблицы/рамки/столбца ответов + доминирующий крупный вопрос + подпись."""
+def build_s52(p):
+    """pattern: closing_question — composition deliberately DIFFERS from
+    build_s50 (full six-row table), not a shrunk copy of it. Thin arrow-list
+    line + dominant large question + tag-line."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Раздел 3 · Перенос",
         "Перенесите шесть сегодняшних решений на свой репозиторий — и проверьте, какое "
-        "из них держится только на просьбе текстом")
-    # Тонкая строка-перечень кейсов — НЕ таблица, без рамки, без столбца ответов.
-    text_box(s, 0.55, y, 12.23, 0.55,
+        "из них реально день-0-база, а какое вы отложили без причины или завели раньше "
+        "времени без сигнала")
+    text_box(s, 0.55, y, 12.23, 0.4,
              text="1.1  →  1.2  →  1.3  →  2.1  →  2.2  →  2.3",
-             size=15, color=MID, align=PP_ALIGN.CENTER)
-    text_box(s, 0.55, y + 0.5, 12.23, 0.35,
-             text="роль и репозиторий · базовые процессы · вложенные файлы · плоский "
-                  "файл · вики-память · задачная память",
-             size=10, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    y2 = y + 1.05
-    # Крупный доминирующий вопрос — без карточек-вариантов, без таблицы под ним.
+             size=14, color=MID, align=PP_ALIGN.CENTER)
+    y2 = y + 0.45
     gold_callout(s, 0.55, y2, 12.23, 7.0 - y2 - 0.55,
-                 "«По каждой развилке — то, что у вас уже принято, это просьба текстом, "
-                 "которую агент технически может обойти? Или нужен барьер?»",
-                 size=20, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
+                 "«По каждой развилке спросите: это действительно день-0-база — то, "
+                 "что стоило завести сразу, независимо от конкретики проекта? Или вы "
+                 "завели это раньше времени, без реального сигнала, просто по "
+                 "привычке? А может, наоборот — что-то из универсальной гигиены вы "
+                 "всё ещё откладываете без всякой причины?»",
+                 size=16.5, anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER)
     text_box(s, 0.55, 7.0 - 0.5, 12.23, 0.4, text="«Не вслух. Не на бумаге. Себе.»",
              size=13, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    speaker_notes(s, load_notes("s53"))
+    speaker_notes(s, load_notes("s52"))
 
 
 # ============================================================
 # Main
 # ============================================================
 
-SEQ = [f"s{i:02d}" for i in range(1, 54)]
+SEQ = [f"s{i:02d}" for i in range(1, 53)]
 
 
 def main():

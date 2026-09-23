@@ -1,0 +1,5842 @@
+[
+ {
+  "id": "s01.body.001",
+  "slide": "s01",
+  "where": "body",
+  "ru": "04",
+  "en": "04",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.002",
+  "slide": "s01",
+  "where": "body",
+  "ru": "СЕМИНАР 4",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s01.body.003",
+  "slide": "s01",
+  "where": "body",
+  "ru": "Сборка кодинг-агента",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s01.body.004",
+  "slide": "s01",
+  "where": "body",
+  "ru": "День-0 база или жди сигнала — шесть развилок одного сквозного кейса",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s01.body.005",
+  "slide": "s01",
+  "where": "body",
+  "ru": "«Что в конфигурации агента стоит закладывать сразу, на день 0, как базовую практику — а что нельзя знать заранее, потому что оно специфично для вашего проекта?»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s01.body.006",
+  "slide": "s01",
+  "where": "body",
+  "ru": "ПУСТАЯ ДИРЕКТОРИЯ  →  СЕМЬ ДОБАВЛЕНИЙ, ПОКА БЕЗ ИМЁН",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s01.body.007",
+  "slide": "s01",
+  "where": "body",
+  "ru": "0",
+  "en": "0",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.008",
+  "slide": "s01",
+  "where": "body",
+  "ru": "1",
+  "en": "1",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.009",
+  "slide": "s01",
+  "where": "body",
+  "ru": "2",
+  "en": "2",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.010",
+  "slide": "s01",
+  "where": "body",
+  "ru": "3",
+  "en": "3",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.011",
+  "slide": "s01",
+  "where": "body",
+  "ru": "4",
+  "en": "4",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.012",
+  "slide": "s01",
+  "where": "body",
+  "ru": "5",
+  "en": "5",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.013",
+  "slide": "s01",
+  "where": "body",
+  "ru": "6",
+  "en": "6",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.014",
+  "slide": "s01",
+  "where": "body",
+  "ru": "7",
+  "en": "7",
+  "passthrough": true
+ },
+ {
+  "id": "s01.body.015",
+  "slide": "s01",
+  "where": "body",
+  "ru": "Реальные 7 стадий демо-репозитория signup-landing/ (git ls-tree по коммитам) · источник: captures/21–27",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s02.body.001",
+  "slide": "s02",
+  "where": "body",
+  "ru": "РАЗДЕЛ 0 · ЗАДАЧА ОТ ЗАКАЗЧИКА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s02.body.002",
+  "slide": "s02",
+  "where": "body",
+  "ru": "Задача приходит в формулировке заказчика: что должно получиться — есть, устройства кода, критериев готовности и границ действий — нет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s02.body.003",
+  "slide": "s02",
+  "where": "body",
+  "ru": "«Нужен лендинг с формой заявки на демо-урок: одна статическая страница, поля ‘имя’ и ‘email’, кнопка отправки. Своего бэкенда нет — присылайте заявку на наш сервис приёма форм.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s02.body.004",
+  "slide": "s02",
+  "where": "body",
+  "ru": "«Отдаём эту формулировку агенту как есть — или сначала фиксируем требования?»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s02.body.005",
+  "slide": "s02",
+  "where": "body",
+  "ru": "открытая дискуссия, не голосование",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.001",
+  "slide": "s03",
+  "where": "body",
+  "ru": "РАЗДЕЛ 0 · SPEC.MD",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.002",
+  "slide": "s03",
+  "where": "body",
+  "ru": "Требования раскладываются на функциональные и нефункциональные и ложатся в spec.md первым коммитом; README описывает устройство репозитория и заводится тем же коммитом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.003",
+  "slide": "s03",
+  "where": "body",
+  "ru": "# spec.md — signup-landing",
+  "en": "# spec.md — signup-landing",
+  "passthrough": true
+ },
+ {
+  "id": "s03.body.004",
+  "slide": "s03",
+  "where": "body",
+  "ru": "## Функциональные требования",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.005",
+  "slide": "s03",
+  "where": "body",
+  "ru": "- Статическая страница-лендинг, форма заявки на демо-урок",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.006",
+  "slide": "s03",
+  "where": "body",
+  "ru": "- Поля: имя (обязательное), email (обязательное)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.007",
+  "slide": "s03",
+  "where": "body",
+  "ru": "- Кнопка отправки; без бэкенда — заявка уходит на внешний сервис",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.008",
+  "slide": "s03",
+  "where": "body",
+  "ru": "## Нефункциональные требования",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.009",
+  "slide": "s03",
+  "where": "body",
+  "ru": "- Критерий приёмки: форма реально доставляет заявку — проверено",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.010",
+  "slide": "s03",
+  "where": "body",
+  "ru": "  на проде, а не только «тест зелёный»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.011",
+  "slide": "s03",
+  "where": "body",
+  "ru": "- Граница действий: не деплоить на прод без явного запроса",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.012",
+  "slide": "s03",
+  "where": "body",
+  "ru": "иллюстративный пример, не захваченный артефакт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s03.body.013",
+  "slide": "s03",
+  "where": "body",
+  "ru": "«README.md заводится тем же коммитом, отдельно от spec.md. Спека — требования к продукту. README — устройство репозитория для того, кто в него зайдёт: человек или агент.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.001",
+  "slide": "s04",
+  "where": "body",
+  "ru": "РАЗДЕЛ 0 · СКВОЗНОЙ КЕЙС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.002",
+  "slide": "s04",
+  "where": "body",
+  "ru": "Агент собрал работающий прототип по спеке без единого уточняющего вопроса — и структуру репозитория при этом выбрал сам, потому что spec.md её не описывает",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.003",
+  "slide": "s04",
+  "where": "body",
+  "ru": "$ ls -la signup-landing/",
+  "en": "$ ls -la signup-landing/",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.004",
+  "slide": "s04",
+  "where": "body",
+  "ru": "total 8",
+  "en": "total 8",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.005",
+  "slide": "s04",
+  "where": "body",
+  "ru": "drwxr-xr-x 2 harness harness 4096 Sep 20 12:45 .",
+  "en": "drwxr-xr-x 2 harness harness 4096 Sep 20 12:45 .",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.006",
+  "slide": "s04",
+  "where": "body",
+  "ru": "drwxr-xr-x 3 harness harness 4096 Sep 20 12:45 ..",
+  "en": "drwxr-xr-x 3 harness harness 4096 Sep 20 12:45 ..",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.007",
+  "slide": "s04",
+  "where": "body",
+  "ru": "реальный вывод, не макет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.008",
+  "slide": "s04",
+  "where": "body",
+  "ru": "«собери лендинг с формой заявки на демо-урок: статическая HTML-страница, сборка Vite (npm run build → dist/), поля формы — имя и email, тест на Playwright, который проверяет, что форма не отправляется с пустыми обязательными полями (tests/form.spec.ts)» — по содержанию совпадает со spec.md",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.009",
+  "slide": "s04",
+  "where": "body",
+  "ru": "«Уточняющий вопрос не задавался. Все параметры задачи были однозначно выводимы из текста задачи, поэтому работа была начата сразу, без уточнений.»  — строка из захваченной сессии",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.010",
+  "slide": "s04",
+  "where": "body",
+  "ru": "создано агентом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.011",
+  "slide": "s04",
+  "where": "body",
+  "ru": "index.html",
+  "en": "index.html",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.012",
+  "slide": "s04",
+  "where": "body",
+  "ru": "src/main.js",
+  "en": "src/main.js",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.013",
+  "slide": "s04",
+  "where": "body",
+  "ru": "package.json",
+  "en": "package.json",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.014",
+  "slide": "s04",
+  "where": "body",
+  "ru": "tests/form.spec.ts",
+  "en": "tests/form.spec.ts",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.015",
+  "slide": "s04",
+  "where": "body",
+  "ru": "из финального ответа",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s04.body.016",
+  "slide": "s04",
+  "where": "body",
+  "ru": "npm install",
+  "en": "npm install",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.017",
+  "slide": "s04",
+  "where": "body",
+  "ru": "npm run build          # → dist/",
+  "en": "npm run build          # → dist/",
+  "passthrough": true
+ },
+ {
+  "id": "s04.body.018",
+  "slide": "s04",
+  "where": "body",
+  "ru": "npm run test:e2e       # playwright test",
+  "en": "npm run test:e2e       # playwright test",
+  "passthrough": true
+ },
+ {
+  "id": "s05.body.001",
+  "slide": "s05",
+  "where": "body",
+  "ru": "РАЗДЕЛ 0 · ДВА РЕЖИМА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.002",
+  "slide": "s05",
+  "where": "body",
+  "ru": "Настраивая агента в новом репозитории, каждый работает в одном из двух режимов — заложить базу сразу или дождаться реальной проблемы",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.003",
+  "slide": "s05",
+  "where": "body",
+  "ru": "Короткий срез по залу, прежде чем идти дальше.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.004",
+  "slide": "s05",
+  "where": "body",
+  "ru": "«Когда вы настраиваете нового агента в новом репозитории — какой из двух режимов вам обычно ближе?»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.005",
+  "slide": "s05",
+  "where": "body",
+  "ru": "A · «Закладываю базу сразу»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.006",
+  "slide": "s05",
+  "where": "body",
+  "ru": "гейт готовности («что считается сделано»)\n\nтрекинг задач и решений",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.007",
+  "slide": "s05",
+  "where": "body",
+  "ru": "B · «Жду, пока не заболит»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.008",
+  "slide": "s05",
+  "where": "body",
+  "ru": "обзор репозитория\n\nвложенные файлы конвенций\n\nсложная, многоуровневая память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s05.body.009",
+  "slide": "s05",
+  "where": "body",
+  "ru": "разбор — на следующем слайде",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.001",
+  "slide": "s06",
+  "where": "body",
+  "ru": "РАЗДЕЛ 0 · РАЗБОР ДВУХ РЕЖИМОВ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.002",
+  "slide": "s06",
+  "where": "body",
+  "ru": "Оба режима рабочие — вопрос в том, к какому типу решения они применяются: специфичное для проекта ждёт сигнала, универсальная гигиена заводится сразу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.003",
+  "slide": "s06",
+  "where": "body",
+  "ru": "СПЕЦИФИЧНОЕ ДЛЯ ПРОЕКТА — ЖДАТЬ СИГНАЛА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.004",
+  "slide": "s06",
+  "where": "body",
+  "ru": "УНИВЕРСАЛЬНАЯ ГИГИЕНА — ДЕНЬ 0",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.005",
+  "slide": "s06",
+  "where": "body",
+  "ru": "обзор репозитория",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.006",
+  "slide": "s06",
+  "where": "body",
+  "ru": "гейт готовности",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.007",
+  "slide": "s06",
+  "where": "body",
+  "ru": "вложенные файлы конвенций",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.008",
+  "slide": "s06",
+  "where": "body",
+  "ru": "трекинг задач и решений",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.009",
+  "slide": "s06",
+  "where": "body",
+  "ru": "сложная, многоуровневая память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s06.body.010",
+  "slide": "s06",
+  "where": "body",
+  "ru": "«Лекция 3 говорила про тонкого агента — про отказ от структурной сложности: субагентов, скиллов, внешнего доступа. Там сигнал нужен. Универсальная гигиена — другая категория: здесь ‘жди боли’ работает против вас.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.001",
+  "slide": "s07",
+  "where": "body",
+  "ru": "РАЗДЕЛ 0 · ЧТО ЗАВЕДЕНО В ПЕРВЫЙ ДЕНЬ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.002",
+  "slide": "s07",
+  "where": "body",
+  "ru": "Кроме спеки и README в репозиторий в тот же день кладётся ещё три вещи — ни одна из них не ждала сигнала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.003",
+  "slide": "s07",
+  "where": "body",
+  "ru": "Что заведено",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.004",
+  "slide": "s07",
+  "where": "body",
+  "ru": "Зачем именно сразу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.005",
+  "slide": "s07",
+  "where": "body",
+  "ru": "spec.md + README.md",
+  "en": "spec.md + README.md",
+  "passthrough": true
+ },
+ {
+  "id": "s07.body.006",
+  "slide": "s07",
+  "where": "body",
+  "ru": "что должно получиться и как устроен репозиторий — первым коммитом, до задачи агенту",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.007",
+  "slide": "s07",
+  "where": "body",
+  "ru": "CLAUDE.md",
+  "en": "CLAUDE.md",
+  "passthrough": true
+ },
+ {
+  "id": "s07.body.008",
+  "slide": "s07",
+  "where": "body",
+  "ru": "файл инструкций агенту. В первый день в нём одна строка: критерий «готово» и требование проверить результат руками. Описания устройства репозитория в нём нет — для него ещё нет причины",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.009",
+  "slide": "s07",
+  "where": "body",
+  "ru": "DECISIONS.md",
+  "en": "DECISIONS.md",
+  "passthrough": true
+ },
+ {
+  "id": "s07.body.010",
+  "slide": "s07",
+  "where": "body",
+  "ru": "журнал решений проекта: что решили и почему. Чтобы отклонённый вариант не пришлось разбирать заново через месяц",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.011",
+  "slide": "s07",
+  "where": "body",
+  "ru": "Практика файла-на-задачу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.012",
+  "slide": "s07",
+  "where": "body",
+  "ru": "на многошаговую задачу — отдельный файл с планом и отметками о ходе работы",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.013",
+  "slide": "s07",
+  "where": "body",
+  "ru": "Каждое из этого стоит сегодня одной строки. Цена отсутствия заранее неизвестна и обнаруживается задним числом: сигнала, по которому стало бы понятно, что пора, может не быть вовсе.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s07.body.014",
+  "slide": "s07",
+  "where": "body",
+  "ru": "Дальше все четыре встречаются в работе поимённо — каждое в своей развилке.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.001",
+  "slide": "s08",
+  "where": "body",
+  "ru": "РАЗДЕЛ 0 · ОПОРНАЯ КАРТА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.002",
+  "slide": "s08",
+  "where": "body",
+  "ru": "Конфигурация агента раскладывается на пять слотов; сегодняшний проект задействует два — инструкции-правила и память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.003",
+  "slide": "s08",
+  "where": "body",
+  "ru": "память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.004",
+  "slide": "s08",
+  "where": "body",
+  "ru": "что агент помнит между сессиями",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.005",
+  "slide": "s08",
+  "where": "body",
+  "ru": "инструкции-",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.006",
+  "slide": "s08",
+  "where": "body",
+  "ru": "правила",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.007",
+  "slide": "s08",
+  "where": "body",
+  "ru": "файл-конвенция проекта + журнал задач",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.008",
+  "slide": "s08",
+  "where": "body",
+  "ru": "скиллы",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.009",
+  "slide": "s08",
+  "where": "body",
+  "ru": "переиспользуемые процедуры под повторяющиеся задачи",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.010",
+  "slide": "s08",
+  "where": "body",
+  "ru": "субагенты",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.011",
+  "slide": "s08",
+  "where": "body",
+  "ru": "делегирование с отдельным контекстным окном",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.012",
+  "slide": "s08",
+  "where": "body",
+  "ru": "доступ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.013",
+  "slide": "s08",
+  "where": "body",
+  "ru": "наружу (MCP)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.014",
+  "slide": "s08",
+  "where": "body",
+  "ru": "доступ к внешним системам",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.015",
+  "slide": "s08",
+  "where": "body",
+  "ru": "Сегодня в работе — два. Скиллы, субагенты, доступ наружу и механические слои (хук, процесс) — Семинар 5.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s08.body.016",
+  "slide": "s08",
+  "where": "body",
+  "ru": "«Оставайтесь на самой нижней ступени, которая закрывает требование задачи. Поднимайтесь на следующую только тогда, когда можете назвать требование, которое текущая ступень не закрывает. Каждый подъём оплачивается новой стоимостью, новыми режимами отказа и новой поверхностью атаки.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s09.body.001",
+  "slide": "s09",
+  "where": "body",
+  "ru": "Раздел 1 · файл инструкций",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s09.body.002",
+  "slide": "s09",
+  "where": "body",
+  "ru": "Кейс 1.1 · роль агента и репозиторий",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s09.body.003",
+  "slide": "s09",
+  "where": "body",
+  "ru": "Кейс 1.2 · базовые процессы: гейты и цикл улучшения",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s09.body.004",
+  "slide": "s09",
+  "where": "body",
+  "ru": "Кейс 1.3 · вложенные файлы по подпапкам",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s09.body.005",
+  "slide": "s09",
+  "where": "body",
+  "ru": "ОДИН ФАЙЛ, ТРИ РАЗВИЛКИ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s10.body.001",
+  "slide": "s10",
+  "where": "body",
+  "ru": "Чем заполняется пустой файл инструкций",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s10.body.002",
+  "slide": "s10",
+  "where": "body",
+  "ru": "ПЕРВОЕ РЕШЕНИЕ ПО КОНФИГУРАЦИИ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s11.body.001",
+  "slide": "s11",
+  "where": "body",
+  "ru": "КЕЙС 1.1 · РОЛЬ И РЕПОЗИТОРИЙ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s11.body.002",
+  "slide": "s11",
+  "where": "body",
+  "ru": "Прототип собран, следующая сессия будет завтра — в CLAUDE.md уже есть строка гейта готовности, остальное пусто, а стандартный первый раздел такого файла называется «Repository overview»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s11.body.003",
+  "slide": "s11",
+  "where": "body",
+  "ru": "состояние репозитория",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s11.body.004",
+  "slide": "s11",
+  "where": "body",
+  "ru": "README.md",
+  "en": "README.md",
+  "passthrough": true
+ },
+ {
+  "id": "s11.body.005",
+  "slide": "s11",
+  "where": "body",
+  "ru": "spec.md",
+  "en": "spec.md",
+  "passthrough": true
+ },
+ {
+  "id": "s11.body.006",
+  "slide": "s11",
+  "where": "body",
+  "ru": "CLAUDE.md ← гейт есть, остальное пусто",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s11.body.007",
+  "slide": "s11",
+  "where": "body",
+  "ru": "Прототип работает, задач по нему ещё на несколько дней. Разработчик заводит CLAUDE.md, чтобы агент в следующих сессиях работал с проектом одинаково, и открывает файл — там одна строка, гейт готовности, остальное пусто.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s11.body.008",
+  "slide": "s11",
+  "where": "body",
+  "ru": "Первый раздел, с которого такой файл обычно начинается, — «Repository overview»: из чего собран сайт, где лежит форма, какая структура папок. Так устроено большинство файлов инструкций, которые можно открыть в публичных репозиториях.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.001",
+  "slide": "s12",
+  "where": "body",
+  "ru": "КЕЙС 1.1 · ВОПРОС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.002",
+  "slide": "s12",
+  "where": "body",
+  "ru": "Выбор из пяти вариантов: что из перечисленного попадёт в файл сейчас, перед следующей сессией",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.003",
+  "slide": "s12",
+  "where": "body",
+  "ru": "«Перед вами пустой CLAUDE.md репозитория signup-landing. Выберите из карточек, что попадёт в файл сейчас, перед следующей сессией агента.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.004",
+  "slide": "s12",
+  "where": "body",
+  "ru": "подробное описание",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.005",
+  "slide": "s12",
+  "where": "body",
+  "ru": "структуры репозитория",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.006",
+  "slide": "s12",
+  "where": "body",
+  "ru": "список технологий",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.007",
+  "slide": "s12",
+  "where": "body",
+  "ru": "и зависимостей",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.008",
+  "slide": "s12",
+  "where": "body",
+  "ru": "инструкцию, где лежит",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.009",
+  "slide": "s12",
+  "where": "body",
+  "ru": "форма и как её найти",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.010",
+  "slide": "s12",
+  "where": "body",
+  "ru": "неочевидную конвенцию,",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.011",
+  "slide": "s12",
+  "where": "body",
+  "ru": "которую агент не угадает сам",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.012",
+  "slide": "s12",
+  "where": "body",
+  "ru": "пока ничего — до",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s12.body.013",
+  "slide": "s12",
+  "where": "body",
+  "ru": "первого реального сигнала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.001",
+  "slide": "s13",
+  "where": "body",
+  "ru": "КЕЙС 1.1 · ИССЛЕДОВАНИЕ И РАЗБОР",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.002",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Repository overview измеримо не повышает успешность и стоит контекста — а структурированное описание, если оно нужно, живёт в README.md и не дублируется в CLAUDE.md",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.003",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Источник",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.004",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Тезис",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.005",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Сила",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.006",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Gloaguen et al., arXiv:2602.11988",
+  "en": "Gloaguen et al., arXiv:2602.11988",
+  "passthrough": true
+ },
+ {
+  "id": "s13.body.007",
+  "slide": "s13",
+  "where": "body",
+  "ru": "«are not helpful» — шагов до файла не падает; cost +20–23% без прироста success",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.008",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Сильное: контролируемый эксперимент",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.009",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Та же работа, абляция",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.010",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Убрали README — LLM-overview стал полезен (+2,7%)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.011",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Подтверждает механизм",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.012",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Lulla et al., arXiv:2601.20404",
+  "en": "Lulla et al., arXiv:2601.20404",
+  "passthrough": true
+ },
+ {
+  "id": "s13.body.013",
+  "slide": "s13",
+  "where": "body",
+  "ru": "AGENTS.md про недискаверабельные конвенции: −28,6% runtime (124 PR)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.014",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Умеренно «за» — не общее описание",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.015",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Shepard & Albrecht, arXiv:2606.20512",
+  "en": "Shepard & Albrecht, arXiv:2606.20512",
+  "passthrough": true
+ },
+ {
+  "id": "s13.body.016",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Статичное guidance (28,3%) хуже верифицированного (33,0%, p<0,001)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.017",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Косвенное",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.018",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Вариант",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.019",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Где работает",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.020",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Почему рано — что вместо",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.021",
+  "slide": "s13",
+  "where": "body",
+  "ru": "«Описание структуры»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.022",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Почти нигде",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.023",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Агент выведет сам за секунды; устареет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.024",
+  "slide": "s13",
+  "where": "body",
+  "ru": "«Список технологий»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.025",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Версии критичны, не видны",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.026",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Обычно тоже выводимо",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.027",
+  "slide": "s13",
+  "where": "body",
+  "ru": "«Инструкция, где форма»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.028",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Почти нигде на малом репо",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.029",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Шесть файлов — вся структура на одном экране",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.030",
+  "slide": "s13",
+  "where": "body",
+  "ru": "«Неочевидная конвенция»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.031",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Когда реально есть",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.032",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Такой конвенции ещё нет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.033",
+  "slide": "s13",
+  "where": "body",
+  "ru": "«Пока ничего — до сигнала»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.034",
+  "slide": "s13",
+  "where": "body",
+  "ru": "Здесь и сейчас",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.035",
+  "slide": "s13",
+  "where": "body",
+  "ru": "ЦЕЛЕВОЙ ОТВЕТ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s13.body.036",
+  "slide": "s13",
+  "where": "body",
+  "ru": "README, не AGENTS.md: структурированное описание репозитория должно существовать — этот кейс не отменяет потребность в нём, он называет место. Оно живёт в README.md, заведённом первым коммитом, а не дублируется в CLAUDE.md. Отдельный «Repository overview» в файле инструкций не нужен: описание уже есть, просто в другом файле.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s14.body.001",
+  "slide": "s14",
+  "where": "body",
+  "ru": "КЕЙС 1.1 · РЕШЕНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s14.body.002",
+  "slide": "s14",
+  "where": "body",
+  "ru": "Описания структуры репозитория в CLAUDE.md не появляется: сигнала для него нет — а первое содержимое у файла появится уже в следующем кейсе, и по другой причине",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s14.body.003",
+  "slide": "s14",
+  "where": "body",
+  "ru": "CLAUDE.md        ← заведён, по-прежнему пуст",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s14.body.004",
+  "slide": "s14",
+  "where": "body",
+  "ru": "«Описания структуры репозитория в файле нет: сигнала для него нет. Пусто — не навсегда: часть содержимого CLAUDE.md появится в нём уже на этой неделе, и по другой причине — не по сигналу, а как базовая практика.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s15.body.001",
+  "slide": "s15",
+  "where": "body",
+  "ru": "Кейс 1.2 · базовые процессы",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s15.body.002",
+  "slide": "s15",
+  "where": "body",
+  "ru": "Гейт готовности и цикл «план → код → улучшение» — то, что лежит в файле с первого дня",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s15.body.003",
+  "slide": "s15",
+  "where": "body",
+  "ru": "ГЕЙТ ГОТОВНОСТИ В ФАЙЛЕ ИНСТРУКЦИЙ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s16.body.001",
+  "slide": "s16",
+  "where": "body",
+  "ru": "КЕЙС 1.2 · БАЗОВЫЕ ПРОЦЕССЫ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s16.body.002",
+  "slide": "s16",
+  "where": "body",
+  "ru": "Гейт готовности лежит в CLAUDE.md с дня 0 — и дважды подряд «готово» прозвучало до того, как доставку заявки проверили руками",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s16.body.003",
+  "slide": "s16",
+  "where": "body",
+  "ru": "День 0: гейт готовности записан в CLAUDE.md тем же днём, что и spec.md — «Всегда прогоняй тесты и вручную проверяй результат перед тем как сказать ‘готово’».",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s16.body.004",
+  "slide": "s16",
+  "where": "body",
+  "ru": "Первая неделя: заказчик — «заявка не пришла». Агент читает код, правит обработчик, прогоняет тест — зелёный — «Готово». Тест проверяет только пустые поля. Разработчик напоминает про гейт — агент проверяет руками, чинит. Через два дня, другой баг — то же самое: тест зелёный, руками не проверено.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s16.body.005",
+  "slide": "s16",
+  "where": "body",
+  "ru": "«Гейт-фраза лежала в файле все эти дни и загружалась в начало каждой сессии. Оба раза «готово» прозвучало до ручной проверки.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.001",
+  "slide": "s17",
+  "where": "body",
+  "ru": "КЕЙС 1.2 · ВОПРОС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.002",
+  "slide": "s17",
+  "where": "body",
+  "ru": "Гейт-фраза уже есть с самого начала и не сработала — выбор из пяти вариантов, что делать дальше",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.003",
+  "slide": "s17",
+  "where": "body",
+  "ru": "«У вас гейт-фраза в CLAUDE.md есть с самого начала, а поведение агента всё равно расходится с ней второй раз подряд — заявка снова не проверена руками. Выберите, что вы сделаете дальше — из карточек ниже — так, чтобы это реально сработало в следующей сессии.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.004",
+  "slide": "s17",
+  "where": "body",
+  "ru": "перепишу фразу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.005",
+  "slide": "s17",
+  "where": "body",
+  "ru": "капсом / жёстче",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.006",
+  "slide": "s17",
+  "where": "body",
+  "ru": "продублирую фразу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.007",
+  "slide": "s17",
+  "where": "body",
+  "ru": "вторым пунктом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.008",
+  "slide": "s17",
+  "where": "body",
+  "ru": "заведу отдельный",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.009",
+  "slide": "s17",
+  "where": "body",
+  "ru": "файл-чеклист рядом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.010",
+  "slide": "s17",
+  "where": "body",
+  "ru": "передам проверку",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.011",
+  "slide": "s17",
+  "where": "body",
+  "ru": "механизму вне текста",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.012",
+  "slide": "s17",
+  "where": "body",
+  "ru": "смирюсь — сработает",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s17.body.013",
+  "slide": "s17",
+  "where": "body",
+  "ru": "не всегда, это норма",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.001",
+  "slide": "s18",
+  "where": "body",
+  "ru": "КЕЙС 1.2 · ИССЛЕДОВАНИЕ И РАЗБОР (1/2)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.002",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Текстовый гейт без тулинга не просто бесполезен, а вреден — регрессии выросли почти до 10%; ни один вариант, кроме передачи проверки механизму, не решает проблему системно",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.003",
+  "slide": "s18",
+  "where": "body",
+  "ru": "SWE-Gate/SpecBench/CapCode/Verif. Horizon (4 препринта)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.004",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Согласие 4+ независимых исследований: агенты обходят видимые гейты",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.005",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Сильное — консенсус",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.006",
+  "slide": "s18",
+  "where": "body",
+  "ru": "TDAD, arXiv:2603.17973",
+  "en": "TDAD, arXiv:2603.17973",
+  "passthrough": true
+ },
+ {
+  "id": "s18.body.007",
+  "slide": "s18",
+  "where": "body",
+  "ru": "«Сначала пиши тесты» без тулинга — регрессии до 9,94%, хуже отсутствия",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.008",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Сильное и контринтуитивное",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.009",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Rethinking Agent-Generated Tests",
+  "en": "Rethinking Agent-Generated Tests",
+  "passthrough": true
+ },
+ {
+  "id": "s18.body.010",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Манипуляция промптом ради частоты тестов — без значимого эффекта",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.011",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Умеренное — нулевой результат",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.012",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Agent Scaffolding Beats Model Upgrades",
+  "en": "Agent Scaffolding Beats Model Upgrades",
+  "passthrough": true
+ },
+ {
+  "id": "s18.body.013",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Архитектура харнесса даёт +20 п.п.; смена модели — ~1 п.п.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.014",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Сильное — механизм против модели",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.015",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Self-planning, 2303.06689",
+  "en": "Self-planning, 2303.06689",
+  "passthrough": true
+ },
+ {
+  "id": "s18.body.016",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Планирование перед кодом: +25,4% pass@1",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.017",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Умеренно-сильное «за»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.018",
+  "slide": "s18",
+  "where": "body",
+  "ru": "LLMs Cannot Self-Correct, ICLR'24",
+  "en": "LLMs Cannot Self-Correct, ICLR'24",
+  "passthrough": true
+ },
+ {
+  "id": "s18.body.019",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Самокоррекция без сигнала ухудшает",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.020",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Сильное «против» self-review",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.021",
+  "slide": "s18",
+  "where": "body",
+  "ru": "arXiv:2604.10508",
+  "en": "arXiv:2604.10508",
+  "passthrough": true
+ },
+ {
+  "id": "s18.body.022",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Self-repair с реальной проверкой: +4,9…+30 п.п.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.023",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Сильное «за» — с проверкой",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.024",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Честный пробел: нет контролируемого эксперимента именно на изолированную фразу-гейт в CLAUDE.md — только best-practice наблюдения практиков.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.025",
+  "slide": "s18",
+  "where": "body",
+  "ru": "«Капсом / жёстче»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.026",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Нигде системно",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.027",
+  "slide": "s18",
+  "where": "body",
+  "ru": "TDAD: регрессии выросли до 9,94%",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.028",
+  "slide": "s18",
+  "where": "body",
+  "ru": "«Продублирую вторым пунктом»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.029",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Иногда чуть повышает шанс прочитать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.030",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Presence paradox: лишняя строка стоит контекста",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.031",
+  "slide": "s18",
+  "where": "body",
+  "ru": "«Отдельный файл-чеклист»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.032",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Помогает человеку, слабо — агенту",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.033",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Тот же класс решения — снова текст, снова просьба",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.034",
+  "slide": "s18",
+  "where": "body",
+  "ru": "«Передам механизму вне текста»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.035",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Системно работает: +20 п.п.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.036",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Верное направление — механизм на следующем слайде",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.037",
+  "slide": "s18",
+  "where": "body",
+  "ru": "«Смирюсь, это нормально»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.038",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Приемлемо для некритичных предпочтений",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s18.body.039",
+  "slide": "s18",
+  "where": "body",
+  "ru": "Для правила, чьё нарушение стоит дорого — решение не решать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.001",
+  "slide": "s19",
+  "where": "body",
+  "ru": "КЕЙС 1.2 · ИССЛЕДОВАНИЕ И РАЗБОР (2/2)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.002",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Правила в промпте — просьбы, правила в коде — законы; текстовый гейт ловит честную ошибку, но не держится под давлением",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.003",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Правила в промпте — это просьбы, правила в коде — это законы. То, что мы написали, не стало законом от того, что мы записали его проактивно.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.004",
+  "slide": "s19",
+  "where": "body",
+  "ru": "МОЖНО ЛИ СЕГОДНЯ ОБОЙТИСЬ БЕЗ ХУКА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.005",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Что гейт даёт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.006",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Ловит честную ошибку — «никто не вспомнил», не «агент обошёл проверку». Сработал 1 раз из 3: когда про него напомнили вслух",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.007",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Чего не даёт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.008",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Не держится под давлением — срок, спешка. TDAD: усиление текста подняло регрессии до 9,94%; механизм даёт +20 п.п., модель — ~1 п.п.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.009",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Где граница",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.010",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Хук нужен, когда цена нарушения высокая и предсказуемая — названы конкретное действие, команда и ущерб",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.011",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Где мы в проекте",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.012",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Действие названо: «готово» без проверки, дважды подряд, цена — сорванная доставка к показу. Текста хватает ровно до этого места",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.013",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Зачем знать про хук, если сегодня его не ставим. Затем, чтобы не принять текстовый гейт за решение. Хук нужен не «для надёжности», а как ответ на названное действие с названной ценой: назвали — пора, не назвали — текста хватает.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s19.body.014",
+  "slide": "s19",
+  "where": "body",
+  "ru": "Цикл «улучшение»: «посмотри на свой код» — не делать никогда; «прогони реальную проверку и поправь по факту» — делать всегда.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.001",
+  "slide": "s20",
+  "where": "body",
+  "ru": "КЕЙС 1.2 · РЕШЕНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.002",
+  "slide": "s20",
+  "where": "body",
+  "ru": "Итоговый файл — тринадцать строк: критерий готово, гейт-предупреждение, честная оговорка предела; AGENTS.md — симлинк на тот же файл",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.003",
+  "slide": "s20",
+  "where": "body",
+  "ru": "# CLAUDE.md",
+  "en": "# CLAUDE.md",
+  "passthrough": true
+ },
+ {
+  "id": "s20.body.004",
+  "slide": "s20",
+  "where": "body",
+  "ru": "signup-landing: статический лендинг с формой заявки на демо-урок.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.005",
+  "slide": "s20",
+  "where": "body",
+  "ru": "Готово = npm run build код 0, npx playwright test зелёный,",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.006",
+  "slide": "s20",
+  "where": "body",
+  "ru": "форма реально отправляет заявку на проде.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.007",
+  "slide": "s20",
+  "where": "body",
+  "ru": "## Safety / scope boundaries",
+  "en": "## Safety / scope boundaries",
+  "passthrough": true
+ },
+ {
+  "id": "s20.body.008",
+  "slide": "s20",
+  "where": "body",
+  "ru": "- Никогда не запускать деплой на прод без явного запроса.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.009",
+  "slide": "s20",
+  "where": "body",
+  "ru": "## Build, test, verify",
+  "en": "## Build, test, verify",
+  "passthrough": true
+ },
+ {
+  "id": "s20.body.010",
+  "slide": "s20",
+  "where": "body",
+  "ru": "- To verify: открыть dist/index.html после сборки, вручную",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.011",
+  "slide": "s20",
+  "where": "body",
+  "ru": "  отправить форму с заполненными и с пустыми полями.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.012",
+  "slide": "s20",
+  "where": "body",
+  "ru": "Файл грузится в начало каждой сессии целиком (официальный ориентир — до 200 строк, наш итог — 13)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.013",
+  "slide": "s20",
+  "where": "body",
+  "ru": "@-импорты организуют файл, но не экономят контекст",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.014",
+  "slide": "s20",
+  "where": "body",
+  "ru": "AGENTS.md — симлинк на тот же файл (ln -s CLAUDE.md AGENTS.md). Острый край: cp -R без -P на macOS разыменовывает симлинк во вторую копию молча — копировать через cp -a / git clone / git archive",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s21.body.001",
+  "slide": "s21",
+  "where": "body",
+  "ru": "КЕЙС 1.2 · ЧТО ЕЩЁ ЗАВОДИТСЯ СРАЗУ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s21.body.002",
+  "slide": "s21",
+  "where": "body",
+  "ru": "Гейт — не единственная дешёвая база: ещё три практики заводятся в первый день и не ждут сигнала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s21.body.003",
+  "slide": "s21",
+  "where": "body",
+  "ru": "создай — прожарь — улучши — покажи и согласуй: черновик плана, фиксированный список вопросов (самая простая версия? допущения? преждевременная абстракция? владелец файла? не склеены ли риски?), правки, согласование до начала работы. Живой пример — команда курса: цикл записан в её файле инструкций как обязательный",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s21.body.004",
+  "slide": "s21",
+  "where": "body",
+  "ru": "журнал хода работы по задаче, в любом виде — файл на задачу, список шагов, простой лог. Форма не важна, важно, что он есть — всё, что живёт только в сессии, к следующей сессии недоступно (подробный разбор — раздел про память)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s21.body.005",
+  "slide": "s21",
+  "where": "body",
+  "ru": "правило записывается вместе с причиной — строка «почему» рядом с каждым правилом: какой случай его породил. Без причины правило читается как вкусовщина и снимается первым; с названной ценой — это готовый критерий, когда текст пора подпирать механизмом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s21.body.006",
+  "slide": "s21",
+  "where": "body",
+  "ru": "Ни одна из трёх не требует сигнала и не стоит почти ничего в первый день. Поэтому их и заводят сразу — вместе с гейтом, а не вместо него.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s22.body.001",
+  "slide": "s22",
+  "where": "body",
+  "ru": "Кейс 1.3 · вложенные файлы",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s22.body.002",
+  "slide": "s22",
+  "where": "body",
+  "ru": "Месяц спустя репозиторий подрос — дробить файл по подпапкам или нет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s22.body.003",
+  "slide": "s22",
+  "where": "body",
+  "ru": "ФОРМА ФАЙЛА, А НЕ СОДЕРЖИМОЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.001",
+  "slide": "s23",
+  "where": "body",
+  "ru": "КЕЙС 1.3 · ДВА КУСКА ЗНАНИЯ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.002",
+  "slide": "s23",
+  "where": "body",
+  "ru": "За месяц накопились два куска знания разной природы — конвенция целой папки и деталь про одну функцию, — и разработчик поступает с обоими одинаково: заводит вложенные файлы инструкций",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.003",
+  "slide": "s23",
+  "where": "body",
+  "ru": "Конвенция папки tests/ — как называются файлы проверок и что со страницей работают через объект страницы, а не через селекторы напрямую. Нужна всякий раз, когда трогают тесты.\n\nДеталь про одну функцию — submitForm() в src/main.js при таймауте повторяет запрос один раз, поэтому обработчик на сервере обязан быть идемпотентным. Нужна тому, кто правит эту функцию, и больше никому.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.004",
+  "slide": "s23",
+  "where": "body",
+  "ru": "что сделал разработчик",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.005",
+  "slide": "s23",
+  "where": "body",
+  "ru": "tests/CLAUDE.md     ← конвенция папки",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.006",
+  "slide": "s23",
+  "where": "body",
+  "ru": "src/CLAUDE.md       ← деталь про функцию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.007",
+  "slide": "s23",
+  "where": "body",
+  "ru": "«Вынесу каждое туда, где оно применяется —",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.008",
+  "slide": "s23",
+  "where": "body",
+  "ru": " короче, релевантнее контексту, корневой",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.009",
+  "slide": "s23",
+  "where": "body",
+  "ru": " файл не разбухнет.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s23.body.010",
+  "slide": "s23",
+  "where": "body",
+  "ru": "«Оба файла лежат в подпапках. Расчёт — что агент прочитает их сам, когда будет работать в этих папках.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.001",
+  "slide": "s24",
+  "where": "body",
+  "ru": "КЕЙС 1.3 · ВОПРОС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.002",
+  "slide": "s24",
+  "where": "body",
+  "ru": "Куда положить каждый из двух кусков знания, чтобы агент получил его тогда, когда оно нужно, и не платил за него в остальных сессиях",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.003",
+  "slide": "s24",
+  "where": "body",
+  "ru": "Два куска знания: конвенция для всей папки tests/ и деталь про одну функцию в src/main.js. Карточек можно выбрать несколько.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.004",
+  "slide": "s24",
+  "where": "body",
+  "ru": "«Выберите из карточек, куда положить каждый кусок, чтобы агент получил его тогда, когда оно нужно, и не платил за него в остальных сессиях.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.005",
+  "slide": "s24",
+  "where": "body",
+  "ru": "вложенный файл",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.006",
+  "slide": "s24",
+  "where": "body",
+  "ru": "инструкций в самой папке",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.007",
+  "slide": "s24",
+  "where": "body",
+  "ru": "правило с объявленным",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.008",
+  "slide": "s24",
+  "where": "body",
+  "ru": "шаблоном путей",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.009",
+  "slide": "s24",
+  "where": "body",
+  "ru": "комментарий",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.010",
+  "slide": "s24",
+  "where": "body",
+  "ru": "рядом с самим кодом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.011",
+  "slide": "s24",
+  "where": "body",
+  "ru": "отдельный документ +",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.012",
+  "slide": "s24",
+  "where": "body",
+  "ru": "указатель в корневом файле",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.013",
+  "slide": "s24",
+  "where": "body",
+  "ru": "дописать в",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s24.body.014",
+  "slide": "s24",
+  "where": "body",
+  "ru": "корневой файл инструкций",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.001",
+  "slide": "s25",
+  "where": "body",
+  "ru": "КЕЙС 1.3 · ИССЛЕДОВАНИЕ (1/2)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.002",
+  "slide": "s25",
+  "where": "body",
+  "ru": "«Куда положить» — это вопрос «дойдёт ли текст до агента и сколько он стоит»; у пяти каналов пять разных ответов, и три инструмента из четырёх независимо сошлись на объявленном шаблоне путей",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.003",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Канал",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.004",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Когда доходит",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.005",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Гарантия",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.006",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Цена контекста",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.007",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Корневой файл + @-импорты",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.008",
+  "slide": "s25",
+  "where": "body",
+  "ru": "при старте сессии",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.009",
+  "slide": "s25",
+  "where": "body",
+  "ru": "есть",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.010",
+  "slide": "s25",
+  "where": "body",
+  "ru": "платится всегда",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.011",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Правило с шаблоном путей",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.012",
+  "slide": "s25",
+  "where": "body",
+  "ru": "когда файл подходит под шаблон",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.013",
+  "slide": "s25",
+  "where": "body",
+  "ru": "условная — триггер явный",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.014",
+  "slide": "s25",
+  "where": "body",
+  "ru": "ноль до срабатывания",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.015",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Комментарий рядом с кодом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.016",
+  "slide": "s25",
+  "where": "body",
+  "ru": "когда агент открыл файл",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.017",
+  "slide": "s25",
+  "where": "body",
+  "ru": "следует из механизма",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.018",
+  "slide": "s25",
+  "where": "body",
+  "ru": "ноль сверх читаемого",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.019",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Вложенный файл в подпапке",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.020",
+  "slide": "s25",
+  "where": "body",
+  "ru": "если инструмент так умеет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.021",
+  "slide": "s25",
+  "where": "body",
+  "ru": "НЕТ ни в одном из 4 инструментов",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.022",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Отдельный документ без указателя",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.023",
+  "slide": "s25",
+  "where": "body",
+  "ru": "если агент догадается",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.024",
+  "slide": "s25",
+  "where": "body",
+  "ru": "нет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.025",
+  "slide": "s25",
+  "where": "body",
+  "ru": "ноль — и ноль доставки",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.026",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Инструмент",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.027",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Объявленный шаблон путей",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.028",
+  "slide": "s25",
+  "where": "body",
+  "ru": "«Просто положи файл в папку»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.029",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Claude Code",
+  "en": "Claude Code",
+  "passthrough": true
+ },
+ {
+  "id": "s25.body.030",
+  "slide": "s25",
+  "where": "body",
+  "ru": ".claude/rules/*.md, поле paths:",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.031",
+  "slide": "s25",
+  "where": "body",
+  "ru": "вложенный CLAUDE.md — #2571 закрыт «not planned»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.032",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Cursor",
+  "en": "Cursor",
+  "passthrough": true
+ },
+ {
+  "id": "s25.body.033",
+  "slide": "s25",
+  "where": "body",
+  "ru": ".cursor/rules/*.mdc, поле globs:",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.034",
+  "slide": "s25",
+  "where": "body",
+  "ru": "вложенные AGENTS.md — признанный баг",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.035",
+  "slide": "s25",
+  "where": "body",
+  "ru": "VS Code (Copilot)",
+  "en": "VS Code (Copilot)",
+  "passthrough": true
+ },
+ {
+  "id": "s25.body.036",
+  "slide": "s25",
+  "where": "body",
+  "ru": ".instructions.md, поле applyTo:",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.037",
+  "slide": "s25",
+  "where": "body",
+  "ru": "вложенные AGENTS.md — экспериментально, выключено по умолчанию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.038",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Copilot CLI",
+  "en": "Copilot CLI",
+  "passthrough": true
+ },
+ {
+  "id": "s25.body.039",
+  "slide": "s25",
+  "where": "body",
+  "ru": "—",
+  "en": "—",
+  "passthrough": true
+ },
+ {
+  "id": "s25.body.040",
+  "slide": "s25",
+  "where": "body",
+  "ru": "рекурсивного обнаружения нет вовсе — #3051",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s25.body.041",
+  "slide": "s25",
+  "where": "body",
+  "ru": "Обещание «агенты автоматически читают ближайший файл в дереве каталогов» даёт стандарт agents.md — описание типичного поведения, не требование к инструменту. Обещание не выполняется, потому что его никто и не давал.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.001",
+  "slide": "s26",
+  "where": "body",
+  "ru": "КЕЙС 1.3 · ИССЛЕДОВАНИЕ (2/2) И РАЗБОР",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.002",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Ни одно из двух контролируемых измерений не нашло, что распределение документации улучшает результат — канал выбирается по доставке и цене",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.003",
+  "slide": "s26",
+  "where": "body",
+  "ru": "McMillan, 2605.10039 (1650 сессий)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.004",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Ни одна из 4 структурных переменных не дала эффекта",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.005",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Khatri, 2607.27250 (288 прогонов)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.006",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Файл нет/каждый ход/раздельные документы — все в пределах 2 п.п., значимости нет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.007",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Сильное по замыслу, слабое по мощности",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.008",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Vasilopoulos, 2602.20478 (283 сессии)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.009",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Единственный построенный целиком свод: ядро + документы по требованию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.010",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Слабое — один человек, без контроля",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.011",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Он же, про режим отказа",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.012",
+  "slide": "s26",
+  "where": "body",
+  "ru": "«Агенты доверяют документации абсолютно» — устаревание главный режим отказа",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.013",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Прямое наблюдение владельца",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.014",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Честно про пробел: «не нашли эффекта» ≠ «эффекта нет»; гарантия комментария в коде выведена из механизма, не измерена; шаблон путей — тоже условная загрузка, не гарантия.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.015",
+  "slide": "s26",
+  "where": "body",
+  "ru": "«Вложенный файл в папке»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.016",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Нигде гарантированно",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.017",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Единственный вариант без гарантии во всех 4 инструментах",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.018",
+  "slide": "s26",
+  "where": "body",
+  "ru": "«Правило с шаблоном путей»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.019",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Когда у класса файлов есть конвенция",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.020",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Верно, но не у нас — конвенция tests/ помещается в 2 строки",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.021",
+  "slide": "s26",
+  "where": "body",
+  "ru": "«Комментарий рядом с кодом»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.022",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Всегда — для знания про код",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.023",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Часть целевого ответа — единственный канал, где доставка следует из механизма",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.024",
+  "slide": "s26",
+  "where": "body",
+  "ru": "«Документ + указатель в корне»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.025",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Когда документ есть и его поддерживают",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.026",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Часть целевого ответа — и ответ на «где живёт свод»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.027",
+  "slide": "s26",
+  "where": "body",
+  "ru": "«Дописать в корневой файл»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.028",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Когда знание нужно в каждой сессии",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.029",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Presence paradox: строка про tests/ стоит контекста и без тестов",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s26.body.030",
+  "slide": "s26",
+  "where": "body",
+  "ru": "Знание про функцию — в код. Про класс файлов — в правило с шаблоном путей. Про весь проект — в корень, коротко, указателями. Вложенный файл в подпапке — единственное место, куда знание класть не надо.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.001",
+  "slide": "s27",
+  "where": "body",
+  "ru": "КЕЙС 1.3 · РЕШЕНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.002",
+  "slide": "s27",
+  "where": "body",
+  "ru": "Корневой файл остался тем же, на тринадцать строк — деталь ушла комментарием к функции, конвенция тестов уже в самих тестах, ни одного вложенного файла инструкций не завелось",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.003",
+  "slide": "s27",
+  "where": "body",
+  "ru": "состояние репозитория, месяц 1",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.004",
+  "slide": "s27",
+  "where": "body",
+  "ru": "README.md · spec.md · DECISIONS.md",
+  "en": "README.md · spec.md · DECISIONS.md",
+  "passthrough": true
+ },
+ {
+  "id": "s27.body.005",
+  "slide": "s27",
+  "where": "body",
+  "ru": "CLAUDE.md              ← те же 13 строк, не выросли",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.006",
+  "slide": "s27",
+  "where": "body",
+  "ru": "AGENTS.md              → симлинк на CLAUDE.md",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.007",
+  "slide": "s27",
+  "where": "body",
+  "ru": "index.html · package.json",
+  "en": "index.html · package.json",
+  "passthrough": true
+ },
+ {
+  "id": "s27.body.008",
+  "slide": "s27",
+  "where": "body",
+  "ru": "src/main.js  ← комментарий к submitForm(): повтор при",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.009",
+  "slide": "s27",
+  "where": "body",
+  "ru": "               таймауте, обработчик обязан быть идемпотентным",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.010",
+  "slide": "s27",
+  "where": "body",
+  "ru": "tests/  form.spec.ts, delivery.spec.ts, page-objects/form.page.ts",
+  "en": "tests/  form.spec.ts, delivery.spec.ts, page-objects/form.page.ts",
+  "passthrough": true
+ },
+ {
+  "id": "s27.body.011",
+  "slide": "s27",
+  "where": "body",
+  "ru": "# tests/CLAUDE.md и src/CLAUDE.md — не появляются",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.012",
+  "slide": "s27",
+  "where": "body",
+  "ru": "Адрес",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.013",
+  "slide": "s27",
+  "where": "body",
+  "ru": "Когда включать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.014",
+  "slide": "s27",
+  "where": "body",
+  "ru": "Когда рано",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.015",
+  "slide": "s27",
+  "where": "body",
+  "ru": "Комментарий в коде",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.016",
+  "slide": "s27",
+  "where": "body",
+  "ru": "сразу, без сигнала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.017",
+  "slide": "s27",
+  "where": "body",
+  "ru": "никогда не рано",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.018",
+  "slide": "s27",
+  "where": "body",
+  "ru": "конвенция класса файлов не помещается в корень",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.019",
+  "slide": "s27",
+  "where": "body",
+  "ru": "пока конвенция в две строки",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.020",
+  "slide": "s27",
+  "where": "body",
+  "ru": "Указатель-свод в корне",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.021",
+  "slide": "s27",
+  "where": "body",
+  "ru": "документ уже есть и его есть кому поддерживать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.022",
+  "slide": "s27",
+  "where": "body",
+  "ru": "указатель без документа",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.023",
+  "slide": "s27",
+  "where": "body",
+  "ru": "никогда как единственная гарантия",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.024",
+  "slide": "s27",
+  "where": "body",
+  "ru": "всегда, пока /context не проверен",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s27.body.025",
+  "slide": "s27",
+  "where": "body",
+  "ru": "«Три развилки, один и тот же файл: решили, чего в него не писать заранее; записали гейт готовности, заведённый на дне 0; и решили, что у знания есть адрес — и вложенная папка им не является. Но есть знание другого рода: то, что появляется по ходу самой работы. Это раздел второй — память.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s28.body.001",
+  "slide": "s28",
+  "where": "body",
+  "ru": "Раздел 2 · память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s28.body.002",
+  "slide": "s28",
+  "where": "body",
+  "ru": "Кейс 2.1 · плоский файл",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s28.body.003",
+  "slide": "s28",
+  "where": "body",
+  "ru": "Между сессиями агент не хранит ни бита — если это не лежит на диске",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s28.body.004",
+  "slide": "s28",
+  "where": "body",
+  "ru": "Кейс 2.2 · структурированная вики-память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s28.body.005",
+  "slide": "s28",
+  "where": "body",
+  "ru": "Кейс 2.3 · операционная память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s28.body.006",
+  "slide": "s28",
+  "where": "body",
+  "ru": "ЖУРНАЛ РЕШЕНИЙ ПРОЕКТА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s29.body.001",
+  "slide": "s29",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · ПЛОСКИЙ ФАЙЛ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s29.body.002",
+  "slide": "s29",
+  "where": "body",
+  "ru": "Конец первой недели: отклонённое решение по валидации всплывает снова — DECISIONS.md заведён на дне 0, но записи об этом решении в нём нет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s29.body.003",
+  "slide": "s29",
+  "where": "body",
+  "ru": "Конец первой недели работы над signup-landing. Заказчик прислал заявку с опечаткой в домене почты, форма её приняла. Разработчик просит агента ужесточить проверку. Агент предлагает подключить стороннюю библиотеку валидации форм — ту самую, которую обсуждали и отклонили несколько дней назад: форма из двух полей, хватает нативных required/pattern.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s29.body.004",
+  "slide": "s29",
+  "where": "body",
+  "ru": "«DECISIONS.md заведён на дне 0, в тот же день, что spec.md и README. Записи про библиотеку валидации в нём нет: решение прозвучало в рабочем обсуждении и на диск не попало. Модель между вызовами не хранит ни бита — то, чего нет в файле, во второй сессии не существует.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.001",
+  "slide": "s30",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · ВОПРОС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.002",
+  "slide": "s30",
+  "where": "body",
+  "ru": "Выберите, куда записать отклонённое решение — из карточек ниже — так, чтобы не объяснять его в третий раз",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.003",
+  "slide": "s30",
+  "where": "body",
+  "ru": "напоминание: отклонённая библиотека валидации всплыла снова — решение родилось в разговоре и нигде не осталось, даже при уже заведённом DECISIONS.md",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.004",
+  "slide": "s30",
+  "where": "body",
+  "ru": "«Вы второй раз за две недели объясняете агенту, почему в этой форме нет сторонней библиотеки валидации. Выберите, куда записать это решение — из карточек ниже — так, чтобы не объяснять его в третий раз, и обоснуйте, почему не в тот файл инструкций, который мы только что завели.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.005",
+  "slide": "s30",
+  "where": "body",
+  "ru": "дописать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.006",
+  "slide": "s30",
+  "where": "body",
+  "ru": "в CLAUDE.md",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.007",
+  "slide": "s30",
+  "where": "body",
+  "ru": "сказать агенту",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.008",
+  "slide": "s30",
+  "where": "body",
+  "ru": "«запомни это»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.009",
+  "slide": "s30",
+  "where": "body",
+  "ru": "записать в",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.010",
+  "slide": "s30",
+  "where": "body",
+  "ru": "DECISIONS.md — он уже есть",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.011",
+  "slide": "s30",
+  "where": "body",
+  "ru": "поставить систему",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.012",
+  "slide": "s30",
+  "where": "body",
+  "ru": "памяти",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.013",
+  "slide": "s30",
+  "where": "body",
+  "ru": "ничего — сам",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s30.body.014",
+  "slide": "s30",
+  "where": "body",
+  "ru": "запомнит",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s31.body.001",
+  "slide": "s31",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · ИССЛЕДОВАНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s31.body.002",
+  "slide": "s31",
+  "where": "body",
+  "ru": "Presence paradox из кейса 1.1 применяется и здесь: то, что лежит в DECISIONS.md, стоит контекста в каждой сессии независимо от того, нужна ли эта запись сегодня",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s31.body.003",
+  "slide": "s31",
+  "where": "body",
+  "ru": "Кейс 1.1: Gloaguen et al. — сам факт присутствия текста в контексте создаёт стоимость (+20–23%), независимо от того, помогает ли он решить задачу. Мы назвали это presence paradox.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s31.body.004",
+  "slide": "s31",
+  "where": "body",
+  "ru": "DECISIONS.md — не исключение. Каждая строка грузится в контекст в каждой следующей сессии, не только когда она реально нужна. Тридцать записей о разных темах — цена уже заметна, даже если задача касается только одной из них.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s31.body.005",
+  "slide": "s31",
+  "where": "body",
+  "ru": "прямого измерения именно на журналах решений не проводилось — это перенос уже установленного механизма на новый объект, не отдельное новое исследование",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s31.body.006",
+  "slide": "s31",
+  "where": "body",
+  "ru": "если запись не бесплатна — точно ли туда идёт вообще всё, что можно туда положить?",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.001",
+  "slide": "s32",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · ЧЕТЫРЕ СЛОЯ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.002",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Разница между слоями не в формате, а в том, кто инициирует запись, кто её потом увидит и по какому механизму она вообще попадает в контекст",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.003",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Файл инстр.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.004",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Авто-память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.005",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Сложная система",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.006",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Кто автор",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.007",
+  "slide": "s32",
+  "where": "body",
+  "ru": "вы, заранее",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.008",
+  "slide": "s32",
+  "where": "body",
+  "ru": "агент, по ходу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.009",
+  "slide": "s32",
+  "where": "body",
+  "ru": "вы, в момент решения",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.010",
+  "slide": "s32",
+  "where": "body",
+  "ru": "сервис, сам",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.011",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Где живёт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.012",
+  "slide": "s32",
+  "where": "body",
+  "ru": "в репо, git",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.013",
+  "slide": "s32",
+  "where": "body",
+  "ru": "вне репо, на машине",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.014",
+  "slide": "s32",
+  "where": "body",
+  "ru": "вне репо, отдельно",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.015",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Что грузится",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.016",
+  "slide": "s32",
+  "where": "body",
+  "ru": "целиком, каждую сессию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.017",
+  "slide": "s32",
+  "where": "body",
+  "ru": "индекс: 200 строк / 25 КБ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.018",
+  "slide": "s32",
+  "where": "body",
+  "ru": "ничего автоматически",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.019",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Код-ревью",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.020",
+  "slide": "s32",
+  "where": "body",
+  "ru": "да",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.021",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Смена машины",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.022",
+  "slide": "s32",
+  "where": "body",
+  "ru": "да, если доступен",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.023",
+  "slide": "s32",
+  "where": "body",
+  "ru": "Что туда идёт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.024",
+  "slide": "s32",
+  "where": "body",
+  "ru": "стабильные правила",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.025",
+  "slide": "s32",
+  "where": "body",
+  "ru": "предпочтения, подходы",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.026",
+  "slide": "s32",
+  "where": "body",
+  "ru": "решения и «почему»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.027",
+  "slide": "s32",
+  "where": "body",
+  "ru": "что сервис счёл достойным",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s32.body.028",
+  "slide": "s32",
+  "where": "body",
+  "ru": "индекс памяти — только индекс  ·  агент сам пропускает выводимое из кода  ·  сжатие контекста переживают только файлы на диске  ·  усложнение слоя само по себе результата не улучшает",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.001",
+  "slide": "s33",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · РАЗБОР",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.002",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Командное решение с обоснованием идёт в DECISIONS.md, личное предпочтение — в авто-память, выводимое из кода — никуда",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.003",
+  "slide": "s33",
+  "where": "body",
+  "ru": "вопрос для контекста: «Куда записать отклонённое решение — и почему не в файл инструкций?»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.004",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Где это работает",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.005",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Почему здесь ещё рано — и что вместо",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.006",
+  "slide": "s33",
+  "where": "body",
+  "ru": "«Допишу в CLAUDE.md»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.007",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Механически сработает: файл читается каждую сессию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.008",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Смешивает стабильные правила и растущий лог решений. На десятке решений файл выйдет за ориентир в 200 строк",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.009",
+  "slide": "s33",
+  "where": "body",
+  "ru": "«Ничего, агент сам запомнит»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.010",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Нигде: это не настройка, которую забыли включить",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.011",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Модель не имеет состояния между вызовами по конструкции",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.012",
+  "slide": "s33",
+  "where": "body",
+  "ru": "«Скажу агенту ‘запомни это’»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.013",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Для личного предпочтения — идеально",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.014",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Половина ответа. Уходит в авто-память: машинно-локальный слой без синхронизации и код-ревью",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.015",
+  "slide": "s33",
+  "where": "body",
+  "ru": "«Запишу в DECISIONS.md — он уже есть»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.016",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Для командного решения с обоснованием — именно то, что нужно",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.017",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Вторая половина ответа. Дело не в создании, а в дисциплине: писать «почему», а не «что»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.018",
+  "slide": "s33",
+  "where": "body",
+  "ru": "«Поставлю систему памяти»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.019",
+  "slide": "s33",
+  "where": "body",
+  "ru": "На десятках-сотнях записей, нескольких пользователях",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.020",
+  "slide": "s33",
+  "where": "body",
+  "ru": "Рано на порядок: на малых корпусах простой файл регулярно конкурентен со сложными системами",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s33.body.021",
+  "slide": "s33",
+  "where": "body",
+  "ru": "целевой ответ — оба механизма разом, с разделением ролей",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.001",
+  "slide": "s34",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · СОВМЕСТНОЕ ФОРМИРОВАНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.002",
+  "slide": "s34",
+  "where": "body",
+  "ru": "Не всё, что узнал агент, вообще стоит записывать — третья корзина такая же законная, как первые две",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.003",
+  "slide": "s34",
+  "where": "body",
+  "ru": "АВТО-ПАМЯТЬ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.004",
+  "slide": "s34",
+  "where": "body",
+  "ru": "Разработчик просит отвечать\nкоротко, без преамбул",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.005",
+  "slide": "s34",
+  "where": "body",
+  "ru": "DECISIONS.MD",
+  "en": "DECISIONS.MD",
+  "passthrough": true
+ },
+ {
+  "id": "s34.body.006",
+  "slide": "s34",
+  "where": "body",
+  "ru": "Не подключаем стороннюю библиотеку\nвалидации — форма из двух полей",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.007",
+  "slide": "s34",
+  "where": "body",
+  "ru": "Своего бэкенда не делаем — заявка\nуходит на внешний сервис приёма форм",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.008",
+  "slide": "s34",
+  "where": "body",
+  "ru": "НИКУДА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.009",
+  "slide": "s34",
+  "where": "body",
+  "ru": "Обработчик формы лежит\nв src/main.js",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.010",
+  "slide": "s34",
+  "where": "body",
+  "ru": "24 сентября тест упал из-за\nтаймаута, увеличили ожидание",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.011",
+  "slide": "s34",
+  "where": "body",
+  "ru": "собранная запись — реальный файл демо-репозитория",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.012",
+  "slide": "s34",
+  "where": "body",
+  "ru": "## 2026-09-20 — не подключаем библиотеку валидации форм",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.013",
+  "slide": "s34",
+  "where": "body",
+  "ru": "Форма — два поля (имя, email), хватает нативных required/pattern в",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.014",
+  "slide": "s34",
+  "where": "body",
+  "ru": "index.html. Сторонняя библиотека — лишняя зависимость ради этого объёма.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.001",
+  "slide": "s35",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · РЕШЕНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.002",
+  "slide": "s35",
+  "where": "body",
+  "ru": "Новое — не файл (он заведён на дне 0), а первая содержательная запись в нём, датированная днём, когда решение записали",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.003",
+  "slide": "s35",
+  "where": "body",
+  "ru": "DECISIONS.md — целиком",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.004",
+  "slide": "s35",
+  "where": "body",
+  "ru": "# Decisions",
+  "en": "# Decisions",
+  "passthrough": true
+ },
+ {
+  "id": "s35.body.005",
+  "slide": "s35",
+  "where": "body",
+  "ru": "Append-only log of why, in date order.",
+  "en": "Append-only log of why, in date order.",
+  "passthrough": true
+ },
+ {
+  "id": "s35.body.006",
+  "slide": "s35",
+  "where": "body",
+  "ru": "## 2026-09-26 — сторонние виджеты в форму не добавляем",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.007",
+  "slide": "s35",
+  "where": "body",
+  "ru": "Форма — два поля (имя, email), хватает нативных required/pattern",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.008",
+  "slide": "s35",
+  "where": "body",
+  "ru": "в index.html. Сторонний виджет — лишняя зависимость и лишние",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.009",
+  "slide": "s35",
+  "where": "body",
+  "ru": "килобайты в сборке ради этого объёма.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.010",
+  "slide": "s35",
+  "where": "body",
+  "ru": "состояние репозитория, неделя 1",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s35.body.011",
+  "slide": "s35",
+  "where": "body",
+  "ru": "AGENTS.md",
+  "en": "AGENTS.md",
+  "passthrough": true
+ },
+ {
+  "id": "s36.body.001",
+  "slide": "s36",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · ПРОВАЛ И ЭФФЕКТИВНОСТЬ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.002",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Память по умолчанию читается как доверенный контекст, а не как данные — и включение памяти не обязательно улучшает результат",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.003",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Отравление памяти — SpAIware (сентябрь 2024)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.004",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Внешний текст с вложенной инструкцией → долговременная память → активация в последующих сессиях, эксфильтрация переписки. Вектор закрыт в версии 1.2024.247; структурный принцип остался.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.005",
+  "slide": "s36",
+  "where": "body",
+  "ru": "≈48% всех последующих обращений к памяти захвачено (MemoryGraft, 2025; до отравления — 0%). В смежном эксперименте 5 подложенных документов управляют выводом в >90% случаев.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.006",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Замер",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.007",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Значение",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.008",
+  "slide": "s36",
+  "where": "body",
+  "ru": "База сравнения",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.009",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Популярная система памяти на бенчмарке долговременной памяти",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.010",
+  "slide": "s36",
+  "where": "body",
+  "ru": "46,0% с памятью против 57,6% без",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.011",
+  "slide": "s36",
+  "where": "body",
+  "ru": "та же система, память выключена",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.012",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Шесть систем памяти против «весь текст сессии в один файл»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.013",
+  "slide": "s36",
+  "where": "body",
+  "ru": "проигрыш плоскому файлу на 25–67 пунктов",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.014",
+  "slide": "s36",
+  "where": "body",
+  "ru": "тот же плоский файл",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.015",
+  "slide": "s36",
+  "where": "body",
+  "ru": "Дискреционность записи",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.016",
+  "slide": "s36",
+  "where": "body",
+  "ru": "17% (4 задачи из 24) — модель отказалась записать нужный факт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s36.body.017",
+  "slide": "s36",
+  "where": "body",
+  "ru": "те же 24 задачи",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.001",
+  "slide": "s37",
+  "where": "body",
+  "ru": "КЕЙС 2.1 · КРИТЕРИЙ И ГРАНИЦА",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.002",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Плоского файла достаточно, пока история решений влезает в контекст целиком и связей между записями ещё нет",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.003",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Задача одноразовая, второй сессии по этому контексту не будет.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.004",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Весь нужный контекст помещается в одно контекстное окно без потерь.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.005",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Правила проекта стабильны и укладываются в файл инструкций короче 200 строк.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.006",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Никто не повторяет вручную одну и ту же правку из сессии в сессию.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.007",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Нет нескольких участников, которым нужно делиться контекстом асинхронно.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.008",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Факт выводим из кода или истории изменений.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s37.body.009",
+  "slide": "s37",
+  "where": "body",
+  "ru": "Плоский DECISIONS.md перестаёт справляться, когда записей набралось настолько много, что найти нужную линейным чтением дольше, чем переобъяснить решение заново, — и между записями появились связи, для которых в append-only логе физически некуда положить.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s38.body.001",
+  "slide": "s38",
+  "where": "body",
+  "ru": "Тот же DECISIONS.md, четыре месяца спустя",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s38.body.002",
+  "slide": "s38",
+  "where": "body",
+  "ru": "СТРУКТУРА ЖУРНАЛА РЕШЕНИЙ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s39.body.001",
+  "slide": "s39",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · ВИКИ-ПАМЯТЬ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s39.body.002",
+  "slide": "s39",
+  "where": "body",
+  "ru": "Четвёртый месяц: в DECISIONS.md двести записей, две из них относятся к одному вопросу — и ни одна не ссылается на другую",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s39.body.003",
+  "slide": "s39",
+  "where": "body",
+  "ru": "Четвёртый месяц работы над signup-landing. На форму пошёл спам; в команде к этому времени работает ещё один разработчик, который прежних обсуждений не застал, и он просит агента поставить защиту.\n\nАгент читает DECISIONS.md — двести записей — и отвечает по записи от 26 сентября: «сторонние виджеты в форму не добавляем». Значит, капча отпадает, и агент предлагает обсуждать вопрос заново.\n\nЗапись от 28 ноября — «антиспам делаем honeypot-полем, без капчи» — лежит на полторы сотни записей ниже, ближе к концу файла, и закрывает ровно этот случай. Ни сентябрьская запись не ссылается на ноябрьскую, ни ноябрьская на сентябрьскую.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s39.body.004",
+  "slide": "s39",
+  "where": "body",
+  "ru": "«Обе записи лежат в одном файле. В плоском append-only логе найти обе можно только линейным чтением всех двухсот.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s39.body.005",
+  "slide": "s39",
+  "where": "body",
+  "ru": "Пример иллюстративный — реального DECISIONS.md на 200 записей не захвачено.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.001",
+  "slide": "s40",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · ВОПРОС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.002",
+  "slide": "s40",
+  "where": "body",
+  "ru": "Разросшийся журнал решений и потерянная связь между двумя записями — повод выбрать, как его реорганизовать, а не заводить заново",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.003",
+  "slide": "s40",
+  "where": "body",
+  "ru": "«DECISIONS.md разросся, и в нём уже есть решение, которое отменяет часть более раннего решения, — без единой ссылки между ними. Выберите, как реорганизовать этот файл — из карточек ниже — так, чтобы агент быстро находил нужное решение и видел связи между решениями, а не листал линейный лог с начала. Обоснуйте выбор.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.004",
+  "slide": "s40",
+  "where": "body",
+  "ru": "оставить как есть —",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.005",
+  "slide": "s40",
+  "where": "body",
+  "ru": "просто грепать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.006",
+  "slide": "s40",
+  "where": "body",
+  "ru": "разбить на отдельные",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.007",
+  "slide": "s40",
+  "where": "body",
+  "ru": "файлы со ссылками",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.008",
+  "slide": "s40",
+  "where": "body",
+  "ru": "поставить графовую/",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.009",
+  "slide": "s40",
+  "where": "body",
+  "ru": "векторную систему памяти",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.010",
+  "slide": "s40",
+  "where": "body",
+  "ru": "завести один общий",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.011",
+  "slide": "s40",
+  "where": "body",
+  "ru": "SUMMARY.md, переписываемый целиком",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.012",
+  "slide": "s40",
+  "where": "body",
+  "ru": "агент сам найдёт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s40.body.013",
+  "slide": "s40",
+  "where": "body",
+  "ru": "через поиск по репозиторию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.001",
+  "slide": "s41",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · ИССЛЕДОВАНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.002",
+  "slide": "s41",
+  "where": "body",
+  "ru": "Плоская память деградирует со временем, а структура может окупаться именно для агента там, где не окупается для человека — но «умнее» не значит «лучше»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.003",
+  "slide": "s41",
+  "where": "body",
+  "ru": "почти все источники ниже — свежие непроверенные препринты 2026 года; цифры — «заявлено в препринте», а не установленный факт",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.004",
+  "slide": "s41",
+  "where": "body",
+  "ru": "MEMTIER (arXiv:2605.03675): плоская память деградирует на горизонте порядка 72 часов работы — минус 14 п.п. успешности вызовов инструментов (насыщение контекста, temporal decay, semantic drift). Логика «raw sources → wiki → schema»: у человека вики умирает — поддержка дороже ценности; у агента стоимость правки полутора десятков файлов близка к нулю.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.005",
+  "slide": "s41",
+  "where": "body",
+  "ru": "Система",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.006",
+  "slide": "s41",
+  "where": "body",
+  "ru": "LoCoMo (долговременная память)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.007",
+  "slide": "s41",
+  "where": "body",
+  "ru": "Файловое хранилище (авто-индекс + поиск по смыслу, не только grep)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.008",
+  "slide": "s41",
+  "where": "body",
+  "ru": "74,0%",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.009",
+  "slide": "s41",
+  "where": "body",
+  "ru": "Mem0 (graph-based)",
+  "en": "Mem0 (graph-based)",
+  "passthrough": true
+ },
+ {
+  "id": "s41.body.010",
+  "slide": "s41",
+  "where": "body",
+  "ru": "68,5%",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s41.body.011",
+  "slide": "s41",
+  "where": "body",
+  "ru": "Летта-контрпример: простое хранилище обошло графовую систему памяти — модели тренированы на файловых операциях как на самом привычном инструменте.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.001",
+  "slide": "s42",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · РАЗБОР",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.002",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Разбить на отдельные файлы (по одному на решение) со сквозными ссылками — целевой ответ, но не бесплатный: структура сама создаёт новую нагрузку",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.003",
+  "slide": "s42",
+  "where": "body",
+  "ru": "вопрос для контекста: «Как реорганизовать разросшийся журнал решений?»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.004",
+  "slide": "s42",
+  "where": "body",
+  "ru": "«Оставить как есть, просто грепать»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.005",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Пока записей десятки и они укладываются в контекст целиком",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.006",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Деградация плоской памяти со временем задокументирована (~72 ч, −14 п.п.); наш файл уже перерос эту границу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.007",
+  "slide": "s42",
+  "where": "body",
+  "ru": "«Разбить на отдельные файлы (по одному на решение) со сквозными ссылками»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.008",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Именно этот случай",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.009",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Целевой ответ, но не бесплатный — структура сама создаёт новую нагрузку (staleness, дублирование, поддержка)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.010",
+  "slide": "s42",
+  "where": "body",
+  "ru": "«Поставлю графовую/векторную систему памяти»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.011",
+  "slide": "s42",
+  "where": "body",
+  "ru": "На больших многопользовательских корпусах с семантическим поиском",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.012",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Контрпример прямо про наш масштаб: файловое хранилище обошло graph-based систему на LoCoMo",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.013",
+  "slide": "s42",
+  "where": "body",
+  "ru": "«Один общий SUMMARY.md, переписываемый целиком»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.014",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Для совсем маленького проекта",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.015",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Переписывание целиком убивает append-only гарантию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.016",
+  "slide": "s42",
+  "where": "body",
+  "ru": "«Агент сам найдёт через поиск по репозиторию»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.017",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Для фактов, выводимых из кода",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.018",
+  "slide": "s42",
+  "where": "body",
+  "ru": "Решения — не факты кода. «Сам найдёт» — то же заблуждение, что «сам запомнит»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s42.body.019",
+  "slide": "s42",
+  "where": "body",
+  "ru": "целевой ответ — разбить на отдельные файлы (по одному на решение) со сквозными ссылками, со списком реальных издержек, а не как безусловный апгрейд",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.001",
+  "slide": "s43",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · РЕШЕНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.002",
+  "slide": "s43",
+  "where": "body",
+  "ru": "Практика ADR: одно решение — один нумерованный файл, а связь между решениями — строка в разделе Status, которую инструмент проставляет сразу в обе стороны",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.003",
+  "slide": "s43",
+  "where": "body",
+  "ru": "doc/adr/",
+  "en": "doc/adr/",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.004",
+  "slide": "s43",
+  "where": "body",
+  "ru": "  0001-record-architecture-...md",
+  "en": "  0001-record-architecture-...md",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.005",
+  "slide": "s43",
+  "where": "body",
+  "ru": "  ...",
+  "en": "  ...",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.006",
+  "slide": "s43",
+  "where": "body",
+  "ru": "  0031-storonnie-vidzhety-...md",
+  "en": "  0031-storonnie-vidzhety-...md",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.007",
+  "slide": "s43",
+  "where": "body",
+  "ru": "  0187-antispam-honeypot-...md",
+  "en": "  0187-antispam-honeypot-...md",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.008",
+  "slide": "s43",
+  "where": "body",
+  "ru": "  README.md   ← adr generate toc",
+  "en": "  README.md   ← adr generate toc",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.009",
+  "slide": "s43",
+  "where": "body",
+  "ru": "ноябрьская запись — по шаблону adr-tools",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.010",
+  "slide": "s43",
+  "where": "body",
+  "ru": "# 187. Антиспам — honeypot-поле, без капчи",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.011",
+  "slide": "s43",
+  "where": "body",
+  "ru": "Date: 2026-11-28",
+  "en": "Date: 2026-11-28",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.012",
+  "slide": "s43",
+  "where": "body",
+  "ru": "## Status",
+  "en": "## Status",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.013",
+  "slide": "s43",
+  "where": "body",
+  "ru": "Accepted",
+  "en": "Accepted",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.014",
+  "slide": "s43",
+  "where": "body",
+  "ru": "Amends [31. Сторонние виджеты не добавляем]",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.015",
+  "slide": "s43",
+  "where": "body",
+  "ru": "## Context / Decision / Consequences",
+  "en": "## Context / Decision / Consequences",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.016",
+  "slide": "s43",
+  "where": "body",
+  "ru": "...",
+  "en": "...",
+  "passthrough": true
+ },
+ {
+  "id": "s43.body.017",
+  "slide": "s43",
+  "where": "body",
+  "ru": "adr new -l \"31:Amends:Amended by\" ... — и в файл 31 инструмент сам дописал встречную строку Amended by [187...]. Обе ссылки написал инструмент, а не автор записи.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.018",
+  "slide": "s43",
+  "where": "body",
+  "ru": "Источник практики: ADR — Майкл Найгард, 2011; adr-tools. Сила доказательства: задокументированная практика для людей (4500+ ADR в 750 проектах), но контролируемого измерения «ADR помогают агенту» нет. Содержимое записей иллюстративное, ждёт живой сессии.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.001",
+  "slide": "s44",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · КОНТРПРИМЕР: ЧТО ИМЕННО ИЗМЕРИЛИ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.002",
+  "slide": "s44",
+  "where": "body",
+  "ru": "Файловое хранилище обошло графовую память — но измеряли вопросы по длинному диалогу, а не поиск связанного решения в журнале проекта",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.003",
+  "slide": "s44",
+  "where": "body",
+  "ru": "LoCoMo — бенчмарк памяти в очень длинных диалогах (Maharana и др., 2024): переписка двух собеседников, до 35 сессий, ~300 реплик, ~9 тыс. токенов. Доля вопросов о фактах переписки с верным ответом.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.004",
+  "slide": "s44",
+  "where": "body",
+  "ru": "Файловое хранилище Letta (авто-индекс + поиск по смыслу, не только grep)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.005",
+  "slide": "s44",
+  "where": "body",
+  "ru": "Mem0, графовый вариант (число из публикации Mem0)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.006",
+  "slide": "s44",
+  "where": "body",
+  "ru": "объяснение авторов: модели тренированы на файловых операциях как на самом привычном инструменте",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.007",
+  "slide": "s44",
+  "where": "body",
+  "ru": "ЧЕГО ЭТОТ РЕЗУЛЬТАТ НЕ ГОВОРИТ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s44.body.008",
+  "slide": "s44",
+  "where": "body",
+  "ru": "Это не один прогон — числа из двух разных публикаций; авторы Letta сами называют такое сравнение «яблоки с апельсинами».  ·  «Файловое хранилище» — не «только grep»: файл индексируется, поиск по смыслу у агента был.  ·  Задача другая: измеряли вопросы о фактах переписки, а не поиск связанного решения в журнале решений проекта. Наш случай никто не мерил.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.001",
+  "slide": "s45",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · ЦЕНА СТРУКТУРЫ — НА НАШЕМ ЖЕ DOC/ADR/",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.002",
+  "slide": "s45",
+  "where": "body",
+  "ru": "Четыре издержки структуры — не общие категории, а конкретные файлы нашего же doc/adr/: сгенерированное оглавление, лишняя запись, осиротевшее обоснование и ручная сверка",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.003",
+  "slide": "s45",
+  "where": "body",
+  "ru": "Устаревание (staleness)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.004",
+  "slide": "s45",
+  "where": "body",
+  "ru": "README.md собран командой adr generate toc в октябре. Записи с 0188 по 0200 в него не попали, а выглядит он полным.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.005",
+  "slide": "s45",
+  "where": "body",
+  "ru": "Дублирование (duplication)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.006",
+  "slide": "s45",
+  "where": "body",
+  "ru": "Кто-то не нашёл 0187 и завёл 0193 «Пороги антиспама» про тот же honeypot. Обе Accepted, ссылки между ними нет.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.007",
+  "slide": "s45",
+  "where": "body",
+  "ru": "Нет каскадного удаления",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.008",
+  "slide": "s45",
+  "where": "body",
+  "ru": "0031 отменили — статус и ссылки перевелись. Но 0187 обоснована фразой «запрещено решением 31» и осталась Accepted.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.009",
+  "slide": "s45",
+  "where": "body",
+  "ru": "Нагрузка на поддержку",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.010",
+  "slide": "s45",
+  "where": "body",
+  "ru": "Двести решений — двести файлов: номер, дата, статус, ссылки, регенерация оглавления. Заметить дубль не делает никто.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s45.body.011",
+  "slide": "s45",
+  "where": "body",
+  "ru": "У человека эта нагрузка обычно убивает вики — наблюдение, не измерение. У агента правка полутора десятков файлов за проход стоит почти ноль — но это гипотеза о механизме. Структура — компромисс, не бесплатный апгрейд.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s46.body.001",
+  "slide": "s46",
+  "where": "body",
+  "ru": "КЕЙС 2.2 · КРИТЕРИЙ И МОСТ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s46.body.002",
+  "slide": "s46",
+  "where": "body",
+  "ru": "Единицы связей на запись и один-два человека, правящих память, — структуры достаточно; полноценная система памяти требует замеров на своём масштабе, не общего совета",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s46.body.003",
+  "slide": "s46",
+  "where": "body",
+  "ru": "Связей у записи — единицы, а не десятки: их видно в разделе Status.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s46.body.004",
+  "slide": "s46",
+  "where": "body",
+  "ru": "Поиск нужной записи — по номеру, названию файла или простому grep, а не по смысловой близости.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s46.body.005",
+  "slide": "s46",
+  "where": "body",
+  "ru": "Участников, одновременно правящих память, — один-два.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s46.body.006",
+  "slide": "s46",
+  "where": "body",
+  "ru": "Никто не просил «найди решения, похожие по смыслу на…».",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s46.body.007",
+  "slide": "s46",
+  "where": "body",
+  "ru": "Смена оси: всё в этом и предыдущем кейсе — про решения, которые живут навсегда. Что происходит с памятью одной задачи, пока она ещё не закончена?",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s47.body.001",
+  "slide": "s47",
+  "where": "body",
+  "ru": "Смена оси: не решения навсегда, а ход одной задачи между её сессиями",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s47.body.002",
+  "slide": "s47",
+  "where": "body",
+  "ru": "ПАМЯТЬ ОДНОЙ ЗАДАЧИ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s48.body.001",
+  "slide": "s48",
+  "where": "body",
+  "ru": "КЕЙС 2.3 · ЗАДАЧНАЯ ПАМЯТЬ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s48.body.002",
+  "slide": "s48",
+  "where": "body",
+  "ru": "Файл задачи заведён на дне 0 и план в нём отмечен по первым шагам — а договорённость о том, как делать следующий шаг, принятая по ходу первой сессии, в него не попала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s48.body.003",
+  "slide": "s48",
+  "where": "body",
+  "ru": "Практика «файл на задачу» заведена на дне 0, вместе с DECISIONS.md: на каждую многошаговую задачу — свой файл с планом и логом хода. Задача: разбить форму на пошаговый визард — имя, email, подтверждение, — сохранив всю текущую валидацию. Файл создан перед началом работы, план расписан на шесть шагов.\n\nПервая сессия закрывает шаги 1-2. По ходу шага 2 видно, что значения полей надо где-то держать между шагами, и в рабочем обсуждении — не в плане — выбирается способ: состояние визарда хранить одним объектом в sessionStorage, ключ signup-wizard. В лог хода выбранный способ не попадает. Сессия обрывается в середине шага 3 — контекст сжимается.\n\nВторая сессия. Агент открывает файл: план на месте, шаги 1-2 отмечены выполненными. Про sessionStorage в файле нет ни строки. Агент делает шаг 3 самым коротким способом — держит состояние в переменной модуля. Тесты шага 5 зелёные. Расхождение всплывает на шаге 6: перезагрузка страницы на третьем шаге очищает форму.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s48.body.004",
+  "slide": "s48",
+  "where": "body",
+  "ru": "«На входе во вторую сессию у агента есть ровно то, что лежит в файле: шесть шагов плана и две отметки о выполнении. Договорённость про хранение состояния осталась в контексте первой сессии, которого больше нет.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.001",
+  "slide": "s49",
+  "where": "body",
+  "ru": "КЕЙС 2.3 · ВОПРОС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.002",
+  "slide": "s49",
+  "where": "body",
+  "ru": "Файл задачи существовал с самого начала и всё равно ввёл в заблуждение — выбор из пяти вариантов",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.003",
+  "slide": "s49",
+  "where": "body",
+  "ru": "«Файл задачи существовал с самого начала, план в нём выглядит актуальным — первые шаги отмечены сделанными. И всё равно вторая сессия делает шаг 3 не так, как договорились в первой. Выберите, что нужно сделать иначе — из карточек ниже — так, чтобы файл задачи не вводил в заблуждение, а реально отражал ход работы. Обоснуйте выбор.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.004",
+  "slide": "s49",
+  "where": "body",
+  "ru": "надеяться на",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.005",
+  "slide": "s49",
+  "where": "body",
+  "ru": "контекстное окно",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.006",
+  "slide": "s49",
+  "where": "body",
+  "ru": "записать план",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.007",
+  "slide": "s49",
+  "where": "body",
+  "ru": "в DECISIONS.md",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.008",
+  "slide": "s49",
+  "where": "body",
+  "ru": "правило в CLAUDE.md:",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.009",
+  "slide": "s49",
+  "where": "body",
+  "ru": "договорённость — сразу в файл",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.010",
+  "slide": "s49",
+  "where": "body",
+  "ru": "завести папку на задачу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.011",
+  "slide": "s49",
+  "where": "body",
+  "ru": "с файлом под каждый шаг",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.012",
+  "slide": "s49",
+  "where": "body",
+  "ru": "попросить агента",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s49.body.013",
+  "slide": "s49",
+  "where": "body",
+  "ru": "«продолжи с того места»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s50.body.001",
+  "slide": "s50",
+  "where": "body",
+  "ru": "КЕЙС 2.3 · ИССЛЕДОВАНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s50.body.002",
+  "slide": "s50",
+  "where": "body",
+  "ru": "От Pokémon до recitation — практика структурированных заметок о ходе задачи известна и работает; и она объясняет, почему наш файл всё равно подвёл",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s50.body.003",
+  "slide": "s50",
+  "where": "body",
+  "ru": "Anthropic, инженерный блог: «structured note-taking» — агент играет в Pokémon тысячи шагов подряд, ведя простые структурированные заметки, переживая сбросы контекста без потери прогресса. Manus, «recitation»: агент непрерывно переписывает todo.md в конец контекста — снижает уход от цели. metasphere-agents: файл на задачу в .tasks/active/, архивируется в .tasks/done/ по завершении.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s50.body.004",
+  "slide": "s50",
+  "where": "body",
+  "ru": "«Есть измерение на большом числе траекторий: план в среднем помогает. Но дословная цитата авторов — ‘плохой план вреднее отсутствия плана вообще’. Полную картину с цифрами покажу на слайде провала.»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.001",
+  "slide": "s51",
+  "where": "body",
+  "ru": "КЕЙС 2.3 · РАЗБОР",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.002",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Целевой ответ — строка в CLAUDE.md, обязывающая агента дописывать договорённость в файл задачи в момент, когда она прозвучала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.003",
+  "slide": "s51",
+  "where": "body",
+  "ru": "вопрос для контекста: «Файл задачи ввёл в заблуждение — что сделать иначе?»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.004",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Почему рано — и что вместо",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.005",
+  "slide": "s51",
+  "where": "body",
+  "ru": "«Не сжимать, не закрывать сессию»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.006",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Для задачи, целиком укладывающейся в одну короткую сессию",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.007",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Контекстное окно конечно; на многошаговой задаче рано или поздно случится сжатие или разрыв сессии — это отсутствие стратегии",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.008",
+  "slide": "s51",
+  "where": "body",
+  "ru": "«Записать план в DECISIONS.md»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.009",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Никогда — не тот слой памяти",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.010",
+  "slide": "s51",
+  "where": "body",
+  "ru": "DECISIONS.md — про решения, которые остаются в силе навсегда; статус одной задачи туда не относится",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.011",
+  "slide": "s51",
+  "where": "body",
+  "ru": "«Правило в CLAUDE.md: договорённость — сразу в файл задачи»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.012",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Ровно наш случай — файл уже есть, не хватило строки в инструкциях",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.013",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Целевой ответ. Адресат — агент, который файл и так ведёт, не память разработчика",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.014",
+  "slide": "s51",
+  "where": "body",
+  "ru": "«Папка на задачу с файлом под каждый шаг»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.015",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Параллельные подзадачи, несколько субагентов, разросшийся лог",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.016",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Оверинжиниринг для одной линейной задачи здесь и сейчас",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.017",
+  "slide": "s51",
+  "where": "body",
+  "ru": "«Попросить ‘продолжи с того места’»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.018",
+  "slide": "s51",
+  "where": "body",
+  "ru": "Внутри одной непрерывной сессии, до сжатия",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.019",
+  "slide": "s51",
+  "where": "body",
+  "ru": "После сжатия или в новой сессии буквально нечего продолжать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s51.body.020",
+  "slide": "s51",
+  "where": "body",
+  "ru": "целевой ответ — строка в CLAUDE.md, адресованная агенту, с явной оговоркой об упрощении до файла",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.001",
+  "slide": "s52",
+  "where": "body",
+  "ru": "КЕЙС 2.3 · РЕШЕНИЕ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.002",
+  "slide": "s52",
+  "where": "body",
+  "ru": "Новое в этом кейсе — не файл, а три строки в CLAUDE.md: они говорят агенту, когда в этот файл писать",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.003",
+  "slide": "s52",
+  "where": "body",
+  "ru": "CLAUDE.md — добавлено",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.004",
+  "slide": "s52",
+  "where": "body",
+  "ru": "## Задачная память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.005",
+  "slide": "s52",
+  "where": "body",
+  "ru": "- файл .tasks/active/<задача>.md:",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.006",
+  "slide": "s52",
+  "where": "body",
+  "ru": "  план, лог хода, результаты",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.007",
+  "slide": "s52",
+  "where": "body",
+  "ru": "- договорённость дописывать в",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.008",
+  "slide": "s52",
+  "where": "body",
+  "ru": "  «Лог хода» сразу, тем же ответом",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.009",
+  "slide": "s52",
+  "where": "body",
+  "ru": "- в начале и в конце сессии сверять",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.010",
+  "slide": "s52",
+  "where": "body",
+  "ru": "  план с репозиторием, строка",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.011",
+  "slide": "s52",
+  "where": "body",
+  "ru": "  «Сверено: <дата>»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.012",
+  "slide": "s52",
+  "where": "body",
+  "ru": ".tasks/active/signup-wizard.md",
+  "en": ".tasks/active/signup-wizard.md",
+  "passthrough": true
+ },
+ {
+  "id": "s52.body.013",
+  "slide": "s52",
+  "where": "body",
+  "ru": "# Задача: разбить форму на пошаговый визард",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.014",
+  "slide": "s52",
+  "where": "body",
+  "ru": "## План",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.015",
+  "slide": "s52",
+  "where": "body",
+  "ru": "1. [x] Разметка трёх шагов",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.016",
+  "slide": "s52",
+  "where": "body",
+  "ru": "2. [x] Перенос текущей валидации",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.017",
+  "slide": "s52",
+  "where": "body",
+  "ru": "3. [ ] Состояние текущего шага (JS)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.018",
+  "slide": "s52",
+  "where": "body",
+  "ru": "## Лог хода",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.019",
+  "slide": "s52",
+  "where": "body",
+  "ru": "- 2027-01-26: шаги 1-2 закрыты. Состояние",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.020",
+  "slide": "s52",
+  "where": "body",
+  "ru": "  визарда — sessionStorage, ключ signup-",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.021",
+  "slide": "s52",
+  "where": "body",
+  "ru": "  wizard. Решено по ходу, в плане нет.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.022",
+  "slide": "s52",
+  "where": "body",
+  "ru": "- 2027-01-28: начат шаг 3 — контекст сжат.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.023",
+  "slide": "s52",
+  "where": "body",
+  "ru": "## Сверено",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.024",
+  "slide": "s52",
+  "where": "body",
+  "ru": "2027-01-28: план сверен, расхождений нет.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s52.body.025",
+  "slide": "s52",
+  "where": "body",
+  "ru": "иллюстративный пример, не захваченный вживую · правило в тексте — просьба, не закон · упрощение до файла — масштабируется до папки, подробнее за пределами этого занятия",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.001",
+  "slide": "s53",
+  "where": "body",
+  "ru": "КЕЙС 2.3 · ПРОВАЛ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.002",
+  "slide": "s53",
+  "where": "body",
+  "ru": "Плохой план хуже отсутствия плана вообще — и это подтверждено количественно, а не только интуицией",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.003",
+  "slide": "s53",
+  "where": "body",
+  "ru": "Результат",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.004",
+  "slide": "s53",
+  "where": "body",
+  "ru": "Evaluating Plan Compliance, 21 120 траекторий, SWE-bench Verified/Pro",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.005",
+  "slide": "s53",
+  "where": "body",
+  "ru": "«bad plans hurt performance more than no plan at all»; комплаенс к плану падает ~на 13 п.п. на сложном бенчмарке",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.006",
+  "slide": "s53",
+  "where": "body",
+  "ru": "Fresh Memory, Stale Plans, 30 контролируемых живых сценариев",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.007",
+  "slide": "s53",
+  "where": "body",
+  "ru": "без проверки актуальности плана исполнитель действовал по устаревшему плану во всех 30 случаях (100%)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.008",
+  "slide": "s53",
+  "where": "body",
+  "ru": "Кейс-стади «Index Sickness» (n=1, честная оговорка)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.009",
+  "slide": "s53",
+  "where": "body",
+  "ru": "Реальный проект, 391 сессия за месяц. Решение — физическое разделение baseline-инструкций и append-only лога сессии. Результат: объём AI-инструкций сократился ~на 75%, рецидивов не было за следующие ~150 сессий. n=1 action research одного автора, не контролируемый эксперимент.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s53.body.010",
+  "slide": "s53",
+  "where": "body",
+  "ru": "практика «файл/папка на задачу» пока не мейнстрим — 2853 реальных репозитория, доминируют статические context-файлы",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.001",
+  "slide": "s54",
+  "where": "body",
+  "ru": "КЕЙС 2.3 · КРИТЕРИЙ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.002",
+  "slide": "s54",
+  "where": "body",
+  "ru": "Одного файла на задачу достаточно, пока задача линейная и её ведёт один агент и один разработчик — иначе оправдан переход к папке",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.003",
+  "slide": "s54",
+  "where": "body",
+  "ru": "Задача линейная: шаги идут по порядку, не параллельно.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.004",
+  "slide": "s54",
+  "where": "body",
+  "ru": "Работает один агент (без субагентов/параллельных веток) и один разработчик.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.005",
+  "slide": "s54",
+  "where": "body",
+  "ru": "Лог хода помещается в разумный файл (сотни строк, не тысячи) без потери читаемости.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.006",
+  "slide": "s54",
+  "where": "body",
+  "ru": "Результатов и артефактов на выходе немного — не нужен отдельный файл на каждый.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.007",
+  "slide": "s54",
+  "where": "body",
+  "ru": "Если хотя бы половина пунктов неверна — переход к папке на задачу оправдан.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s54.body.008",
+  "slide": "s54",
+  "where": "body",
+  "ru": "честная оговорка: паттерн «файл/папка на задачу» пока не мейнстрим (2853 реальных репозитория, доминируют статические context-файлы) — практику продвигают отдельные лидеры, это не общепринятая норма",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.001",
+  "slide": "s55",
+  "where": "body",
+  "ru": "РАЗДЕЛ 3 · СИНТЕЗ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.002",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Шесть развилок сегодняшнего занятия делились на два типа: специфичное для проекта (ждать сигнала) и универсальная гигиена (заводить сразу, на день 0)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.003",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Кейс",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.004",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Развилка",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.005",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Что мы записали",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.006",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Когда",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.007",
+  "slide": "s55",
+  "where": "body",
+  "ru": "1.1",
+  "en": "1.1",
+  "passthrough": true
+ },
+ {
+  "id": "s55.body.008",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Роль агента и общее описание репозитория",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.009",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Ничего — до первого реального сигнала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.010",
+  "slide": "s55",
+  "where": "body",
+  "ru": "по сигналу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.011",
+  "slide": "s55",
+  "where": "body",
+  "ru": "1.2",
+  "en": "1.2",
+  "passthrough": true
+ },
+ {
+  "id": "s55.body.012",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Базовые процессы: гейт «готово» + цикл улучшения",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.013",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Гейт-фраза текстом в CLAUDE.md",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.014",
+  "slide": "s55",
+  "where": "body",
+  "ru": "сразу",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.015",
+  "slide": "s55",
+  "where": "body",
+  "ru": "1.3",
+  "en": "1.3",
+  "passthrough": true
+ },
+ {
+  "id": "s55.body.016",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Вложенные файлы инструкций по подпапкам",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.017",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Правило трёх адресов: функция → код, класс файлов → шаблон, проект → корень",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.018",
+  "slide": "s55",
+  "where": "body",
+  "ru": "2.1",
+  "en": "2.1",
+  "passthrough": true
+ },
+ {
+  "id": "s55.body.019",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Плоский файл памяти (DECISIONS.md)",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.020",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Решение записано в файл + авто-память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.021",
+  "slide": "s55",
+  "where": "body",
+  "ru": "2.2",
+  "en": "2.2",
+  "passthrough": true
+ },
+ {
+  "id": "s55.body.022",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Структурированная вики-память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.023",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Отдельные файлы (ADR) со сквозными ссылками",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.024",
+  "slide": "s55",
+  "where": "body",
+  "ru": "2.3",
+  "en": "2.3",
+  "passthrough": true
+ },
+ {
+  "id": "s55.body.025",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Операционная задачная память",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.026",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Один файл на задачу: план + лог + результаты",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s55.body.027",
+  "slide": "s55",
+  "where": "body",
+  "ru": "Три развилки ждали реального сигнала. Три — не нуждались в сигнале вообще, их стоило завести сразу.",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s56.body.001",
+  "slide": "s56",
+  "where": "body",
+  "ru": "РАЗДЕЛ 3 · ОХВАТ",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s56.body.002",
+  "slide": "s56",
+  "where": "body",
+  "ru": "Сегодня закрыты подробно два слота харнесса из пяти; оставшиеся три плюс оба механических слоя, которые превращают просьбу в барьер, — материал Семинара 5",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s56.body.003",
+  "slide": "s56",
+  "where": "body",
+  "ru": "Семинар 5: скиллы · субагенты · доступ наружу (MCP) + хук · процесс",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s57.body.001",
+  "slide": "s57",
+  "where": "body",
+  "ru": "РАЗДЕЛ 3 · ПЕРЕНОС",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s57.body.002",
+  "slide": "s57",
+  "where": "body",
+  "ru": "Перенесите шесть сегодняшних решений на свой репозиторий — и проверьте, какое из них реально день-0-база, а какое вы отложили без причины или завели раньше времени без сигнала",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s57.body.003",
+  "slide": "s57",
+  "where": "body",
+  "ru": "1.1  →  1.2  →  1.3  →  2.1  →  2.2  →  2.3",
+  "en": "1.1  →  1.2  →  1.3  →  2.1  →  2.2  →  2.3",
+  "passthrough": true
+ },
+ {
+  "id": "s57.body.004",
+  "slide": "s57",
+  "where": "body",
+  "ru": "«По каждой развилке спросите: это действительно день-0-база — то, что стоило завести сразу, независимо от конкретики проекта? Или вы завели это раньше времени, без реального сигнала, просто по привычке? А может, наоборот — что-то из универсальной гигиены вы всё ещё откладываете без всякой причины?»",
+  "en": "",
+  "passthrough": false
+ },
+ {
+  "id": "s57.body.005",
+  "slide": "s57",
+  "where": "body",
+  "ru": "«Не вслух. Не на бумаге. Себе.»",
+  "en": "",
+  "passthrough": false
+ }
+]

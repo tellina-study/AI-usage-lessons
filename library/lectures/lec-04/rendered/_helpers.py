@@ -132,6 +132,11 @@ URLS = {
     "cucumber_bdd": "https://cucumber.io/docs/bdd/",
     "git_worktree_docs": "https://git-scm.com/docs/git-worktree",
     "claude_worktree_docs": "https://code.claude.com/docs/en/best-practices",
+    # --- added for s20f (#162 round 6): two verified public cases ---
+    "cc_issue_60295_branch_swap":
+        "https://github.com/anthropics/claude-code/issues/60295",
+    "cc_issue_55724_lock_contention":
+        "https://github.com/anthropics/claude-code/issues/55724",
     "automationpanda_gherkin_ai": "https://automationpanda.com/",
     "software303_bdd_adoption": "https://303software.com/",
     "trunk_based_dev": "https://trunkbaseddevelopment.com/",
@@ -982,12 +987,21 @@ SLIDE_REFS = {
          "описывающий поток"),
     ],
     "s20f": [
-        ("1", "Git — официальная документация worktree", "git_worktree_docs",
+        ("1", "Git — документация worktree", "git_worktree_docs",
          "отдельная рабочая директория со своей веткой, но общим .git-хранилищем "
          "объектов с основной копией"),
         ("2", "Claude Code — docs, best practices", "claude_worktree_docs",
          "изоляция принудительная: инструмент блокирует правки вне назначенного "
          "worktree", True),
+        ("3", "claude-code #60295 — подмена ветки",
+         "cc_issue_60295_branch_swap",
+         "две сессии в одном рабочем каталоге: checkout одной незаметно "
+         "переключает рабочее дерево другой, reflog приложен; закрыт как "
+         "not planned"),
+        ("4", "claude-code #55724 — замок .git",
+         "cc_issue_55724_lock_contention",
+         "13 параллельных агентов: 5 закоммитили, 8 потеряли работу на "
+         "конкуренции за .git/index.lock; закрыт как дубликат"),
     ],
     "s25b": [
         ("1", "Cucumber — BDD документация", "cucumber_bdd",

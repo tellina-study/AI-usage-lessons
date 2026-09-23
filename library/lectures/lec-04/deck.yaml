@@ -125,9 +125,9 @@ glossary_lock:
 ai_failure:
   # AI-Failure & Judgment Content Rule (ENFORCED): ≥30% strict-in, waiver НЕДОСТУПЕН для L4.
   # Целиком-in-bucket слайды (провал+урок / лимит / «когда не AI» / сравнение с альтернативой):
-  strict_in_slides: [s07, s11, s13, s15, s17b, s18b, s20, s20g, s21, s24, s27, s29, s30, s30b, s31, s33, s34, s37, s37b, s38, s39]
-  count: 21
-  share_by_slides: "20/46 ≈ 43% по слайдам (round-6 block 3: −1 in_bucket слайд s21 anti-hype удалён вместе со слайдом, denominator −1; было 21/47 ≈ 45%; buffer well above порога 30%; self-estimate, требует methodology-critic re-confirm). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s09b AWS Kiro/847 contrast (partial-upside, mixed success+honest-failure), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s33b BT Group/Azure vs IaC (partial-upside, mixed), s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7 — single-artifact concentration отсутствует."
+  strict_in_slides: [s07, s11, s13, s15, s17b, s18b, s20, s20g, s24, s27, s29, s30, s30b, s31, s33, s34, s37, s37b, s38, s39]
+  count: 20
+  share_by_slides: "20/48 ≈ 42% по слайдам (round-6, сводный пересчёт: −1 in_bucket слайд s21 (anti-hype) удалён вместе со слайдом; +1 s14b и +1 s03b — оба out-of-bucket, поэтому знаменатель 47 → 48, числитель 21 → 20; было 21/47 ≈ 45%; buffer well above порога 30%; self-estimate, требует methodology-critic re-confirm). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s09b AWS Kiro/847 contrast (partial-upside, mixed success+honest-failure), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s33b BT Group/Azure vs IaC (partial-upside, mixed), s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7 — single-artifact concentration отсутствует."
 
 # ─────────────────────────────────────────────────────────────────────────
 # Порядок предъявления (plan v4 §4): фазы SDLC, внутри — практика ведёт.
@@ -291,19 +291,6 @@ slides:
     interaction: none
     verify_day_of: true
 
-  - id: s10
-    file: slides/s10-requirements-methodics.md
-    type: assertion_visual
-    section: "Раздел 1. Требования — первый артефакт"
-    duration_min: 2.5
-    assertion: "Методики дают три рекомендации, как дисциплинированно писать спеку: малые изолированно-тестируемые единицы, интервьюирующий LLM, спека-как-проверка — инструменты исполняют их и вторичны"
-    learning_goal: "Рекомендации методик (Spec-Kit-метод, interrogatory LLM, deliberative alignment); вендоры вторичным рядом"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§1.2 [for-slide-s09]"
-    references: [spec-kit, openai-deliberative-alignment, fowler-intent]
-    interaction: none
-    verify_day_of: true
-
   - id: s09b
     file: slides/s09b-spec-driven-cases.md
     type: case_study
@@ -319,6 +306,19 @@ slides:
     # NEW (#162 round 3 QA-fix): inserted between s09 (spec-driven-practice)
     # and s10 (requirements-methodics) — AWS Kiro success case (§1.1) vs
     # honest 847-deployments/76%-failed contrast; SDD naming.
+
+  - id: s10
+    file: slides/s10-requirements-methodics.md
+    type: assertion_visual
+    section: "Раздел 1. Требования — первый артефакт"
+    duration_min: 2.5
+    assertion: "Методики дают три рекомендации, как дисциплинированно писать спеку: малые изолированно-тестируемые единицы, интервьюирующий LLM, спека-как-проверка — инструменты исполняют их и вторичны"
+    learning_goal: "Рекомендации методик (Spec-Kit-метод, interrogatory LLM, deliberative alignment); вендоры вторичным рядом"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§1.2 [for-slide-s09]"
+    references: [spec-kit, openai-deliberative-alignment, fowler-intent]
+    interaction: none
+    verify_day_of: true
 
   - id: s11b
     file: slides/s11b-requirements-visualization.md
@@ -506,20 +506,6 @@ slides:
     interaction: none
     verify_day_of: false
 
-  - id: s20
-    file: slides/s20-harness-gate.md
-    type: case_study
-    section: "Раздел 3. Реализация — дисциплина и харнес"
-    duration_min: 3
-    assertion: "70%-проблема: AI доводит до «почти правильно» быстро, но последние 30% — понимание — не ускоряет; «почти правильный» код проходит беглый взгляд и ломается на краевом случае"
-    learning_goal: "[SI] Провал: 70%-проблема (Osmani) + «почти правильно» (SO 66%) + knowledge paradox"
-    learning_outcomes: [LO1, LO7]
-    chapter_ref: "§3.4 [for-slide-s18]"
-    references: [osmani-70-percent, stackoverflow-2025]
-    in_bucket: true
-    interaction: none
-    verify_day_of: true
-
   - id: s20b
     file: slides/s20b-skills.md
     type: assertion_visual
@@ -619,3 +605,17 @@ slides:
 # Продолжение — deck-part2.yaml: slides s22..s40 + totals + ai_failure_judgment
 # + verify_day_of_items + fact_check_items. Loader читает ОБЕ части.
 # ─────────────────────────────────────────────────────────────────────────
+  - id: s20
+    file: slides/s21-70-percent-problem.md
+    type: case_study
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "70%-проблема: AI доводит до «почти правильно» быстро, но последние 30% — понимание — не ускоряет; «почти правильный» код проходит беглый взгляд и ломается на краевом случае"
+    learning_goal: "[SI] Провал: 70%-проблема (Osmani) + «почти правильно» (SO 66%) + knowledge paradox"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.4 [for-slide-s18]"
+    references: [osmani-70-percent, stackoverflow-2025]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+

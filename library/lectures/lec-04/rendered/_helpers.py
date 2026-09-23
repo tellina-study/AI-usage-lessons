@@ -1004,7 +1004,7 @@ SLIDE_REFS = {
     "s11b": [
         ("1", "Mermaid — User Journey синтаксис", "mermaid_user_journey",
          "диаграмма описывается текстом (DSL), не мышью — то же семейство, что "
-         "PlantUML/Structurizr в §2.4"),
+         "PlantUML/Structurizr в разделе про архитектуру"),
         ("2", "Cucumber — BDD/Gherkin документация", "cucumber_bdd",
          "Given-When-Then — сценарий, проверяемый прогоном автотеста, а не только "
          "описывающий поток"),

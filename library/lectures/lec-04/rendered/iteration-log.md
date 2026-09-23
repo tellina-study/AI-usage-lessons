@@ -1,8 +1,15 @@
 # Лекция 4 v4 — iteration log (methodology-first re-spine, 40 slides)
 
-**Continued in `iteration-log-part2.md`** (this file is already over the
-CLAUDE.md 600-line doc-size limit) — see that file for Round-5 (real
-imgflip memes, replacing round-4's brand-logo-badge miss).
+**Continued in `iteration-log-part2.md` → `-part3.md` → `-part4.md`** (this
+file is already over the CLAUDE.md 600-line doc-size limit):
+
+| Файл | Что внутри |
+|---|---|
+| `iteration-log.md` (part 1, этот файл) | v4-переспина (40 слайдов), окружение/тулчейн, раунды 1–4 |
+| `iteration-log-part2.md` (part 2) | Round-5 (мемы) · Round-6 блок 1 (контекст/инструкции) |
+| `iteration-log-part3.md` (part 3) | Round-6 блок 2 (инструментарий) · блок 3 (тестирование) |
+| `iteration-log-part4.md` (part 4) | Round-6 блок 4 (ревью + доставка) · блок 5 (закрытие) |
+| `iteration-log-part5.md` (part 5) | Round-6 сборочный проход — слияние пяти веток + сквозная проверка колоды |
 
 Build: `python3 build_lec04_v4.py` → `lec-04.pptx` (40 slides).
 Render: `bash render.sh [pages]` → `lec-04.pdf` + `snapshots/slide-NN.png` @150dpi.

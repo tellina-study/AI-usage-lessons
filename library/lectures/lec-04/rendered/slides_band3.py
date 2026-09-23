@@ -15,70 +15,15 @@ SCR = ASSETS / "screenshots"
 
 
 # ============================================================
-# s21 — anti-hype benchmarks (SWE-bench gap chart + 3 overclaims) [in-bucket]
+# s21 — REMOVED (round 6, block 3). Display slide 32 «Бренд и бенчмарк-число ≠
+# инженерная дисциплина» (SWE-bench Verified/Pro разрыв + Devin/OpenAI/Cursor +
+# «пять вопросов к вендорскому числу») удалён по прямому указанию владельца
+# («слайд 32 — лишний, убрать»). Разрыв Verified/Pro введён в Лекции 3; вендор-
+# скепсис в этой лекции держат s20 (70%-проблема), s37 (триангуляция) и s38
+# (risk-triad, «вероятность растёт с незнакомостью задачи»). Chart
+# c21-swe-bench.png и meme band-mocking-spongebob.png оставлены в assets —
+# их использует EN-дек (slides_band3_en.py).
 # ============================================================
-def s21(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    slide_title(s, "Бренд и бенчмарк-число ≠ инженерная дисциплина",
-                size=25, w=12.0, h=0.82)
-
-    # left: SWE-bench gap chart
-    lx, lw = 0.55, 5.25
-    ocean_box(s, lx, 1.52, lw, 4.02)
-    add_image(s, CHARTS / "c21-swe-bench.png", lx + 0.12, 1.66, lw - 0.24, 2.30)
-    text_box(s, x=lx + 0.24, y=4.02, w=lw - 0.48, h=1.44,
-             text="SWE-bench (эталонный бенчмарк на реальных GitHub issues): "
-                  "Verified (~500 задач, публичный код) — топ ~88–89%. Pro "
-                  "(приватные, контаминация-устойчивые) — лидер ~64%. Разрыв "
-                  "~24 п.п.: доверие числу обратно пропорционально незнакомости и "
-                  "критичности вашей задачи.",
-             size=11, color=DEEP, line_spacing=1.16)
-
-    # right: 3 overclaims + 5 questions
-    rx, rw = 6.05, 6.75
-    over = [
-        ("Devin (Cognition): 13,86% [1]",
-         "vs база 1,96% — но только на 25% бенча (79 из 570 задач), признанная "
-         "контаминация, лимит 45 мин; независимо ~15% (3 из 20)."),
-        ("OpenAI: «~80% Verified» / «70% больше PR»",
-         "сам OpenAI: ~59% «провалов» — дефекты дизайна тестов, не модели; "
-         "«70% больше PR» — без знаменателя."),
-        ("Cursor: Composer «frontier, 4× быстрее»",
-         "собственный блог признаёт: GPT-5 и Sonnet 4.5 «оба превосходят» → "
-         "frontier-быстрый, не frontier-лучший."),
-    ]
-    oy = 1.52
-    for i, (head, body) in enumerate(over):
-        y = oy + i * 1.02
-        ocean_box(s, rx, y, rw, 0.90)
-        text_box(s, x=rx + 0.22, y=y + 0.08, w=rw - 0.44, h=0.32, text=head,
-                 size=12, bold=True, color=MID)
-        text_box(s, x=rx + 0.22, y=y + 0.40, w=rw - 0.44, h=0.48, text=body,
-                 size=10.5, color=DEEP, line_spacing=1.08)
-    # 5 questions strip
-    filled_rect(s, rx, 4.60, rw, 0.94, TEAL_TINT, stroke=TEAL, stroke_pt=1.4,
-                radius=True, radius_adj=0.06)
-    text_box(s, x=rx + 0.22, y=4.68, w=rw - 0.44, h=0.34,
-             text="Пять вопросов к любому вендорскому числу:", size=11.5,
-             bold=True, color=TEAL)
-    text_box(s, x=rx + 0.22, y=5.02, w=rw - 0.44, h=0.48,
-             text="1. Какой срез? 2. Контаминация? 3. База сравнения? "
-                  "4. Факт или маркетинг? 5. Что мелким шрифтом? [2]",
-             size=11, color=DEEP, line_spacing=1.1)
-
-    gold_callout(
-        s, 0.55, 5.72, 12.25, 0.62,
-        "Devin 13,86% — технически истинно ровно на четверти задач. Число может "
-        "быть правдой и вводить в заблуждение; высокая цифра не отвечает на "
-        "вопрос merge-гейта. Бренд/бенчмарк не заменяет дисциплину.",
-        size=12.5, bold=True, align=PP_ALIGN.CENTER)
-    # Round-5 meme: Mocking Spongebob — mocking-case echo of the vendor's own
-    # overclaim quoted above right ("frontier, 4х быстрее"). Bottom band.
-    add_image(s, WEB / "band-mocking-spongebob.png", 9.86, 6.40, 2.94, 0.64)
-    refs_of_slide(s, "s22")
-    notes_with_sources(s, "s22")
-    return s
 
 
 # ============================================================
@@ -103,41 +48,42 @@ def s23(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "TDD-как-подход: человек решает, что проверять; прогон — детерминированный",
-        size=22, w=12.2, h=0.82)
+        s, "TDD с кодинг-агентом: не ритуал «сначала тест», а пять шагов, "
+           "которые работают",
+        size=21, w=12.3, h=0.82)
 
     # left: red-green-refactor cycle
-    lx, lw = 0.55, 5.35
-    ocean_box(s, lx, 1.52, lw, 4.02)
-    text_box(s, x=lx + 0.24, y=1.64, w=lw - 0.48, h=0.34,
+    lx, lw = 0.55, 5.20
+    ocean_box(s, lx, 1.40, lw, 4.10)
+    text_box(s, x=lx + 0.24, y=1.50, w=lw - 0.48, h=0.34,
              text="Цикл red-green-refactor (Kent Beck, TDD) [1] — человек владеет "
-                  "спекой теста", size=12.5, bold=True, color=MID,
+                  "спекой теста", size=12, bold=True, color=MID,
              line_spacing=1.0)
     cyc = [
         ("red", "падающий тест выражает требование", GOLD, True),
         ("green", "код, который его проходит", MID, False),
         ("refactor", "улучшить, сохранив зелёный", TEAL, False),
     ]
-    cy0 = 2.06
+    cy0 = 1.96
     for i, (name, desc, col, start) in enumerate(cyc):
-        y = cy0 + i * 0.66
-        filled_rect(s, lx + 0.30, y, lw - 0.60, 0.54,
+        y = cy0 + i * 0.64
+        filled_rect(s, lx + 0.28, y, lw - 0.56, 0.54,
                     (GOLD_TINT if start else SURFACE),
                     stroke=col, stroke_pt=(1.8 if start else 1.2),
                     radius=True, radius_adj=0.10)
         if start:
-            circle(s, lx + 0.42, y + 0.15, 0.24, GOLD)
-        text_box(s, x=lx + (0.78 if start else 0.50), y=y + 0.04, w=1.6, h=0.46,
-                 text=name, size=12.5, bold=True, color=DEEP,
+            circle(s, lx + 0.40, y + 0.15, 0.24, GOLD)
+        text_box(s, x=lx + (0.76 if start else 0.48), y=y + 0.04, w=1.6, h=0.46,
+                 text=name, size=12, bold=True, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, font="DejaVu Sans Mono")
-        text_box(s, x=lx + 2.15, y=y + 0.04, w=lw - 2.5, h=0.46, text=desc,
+        text_box(s, x=lx + 2.10, y=y + 0.04, w=lw - 2.42, h=0.46, text=desc,
                  size=10.5, color=SLATE, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=lx + 0.30, y=4.04, w=lw - 0.60, h=0.16, text="↑ повторяется",
+    text_box(s, x=lx + 0.28, y=3.86, w=lw - 0.56, h=0.18, text="↑ повторяется",
              size=10.5, italic=True, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
     # role split
-    filled_rect(s, lx + 0.30, 4.30, lw - 0.60, 1.06, TEAL_TINT, stroke=TEAL,
+    filled_rect(s, lx + 0.28, 4.14, lw - 0.56, 1.20, TEAL_TINT, stroke=TEAL,
                 stroke_pt=1.4, radius=True, radius_adj=0.06)
-    text_runs(s, lx + 0.50, 4.40, lw - 1.0, 0.9, [
+    text_runs(s, lx + 0.46, 4.26, lw - 0.92, 0.98, [
         {"text": "AI пишет тесты быстро", "size": 11.5, "bold": True,
          "color": TEAL},
         {"text": " — объём (привнесённое). ", "size": 11.5, "color": DEEP},
@@ -146,52 +92,61 @@ def s23(p):
         {"text": " — существенное.", "size": 11.5, "color": DEEP},
     ])
 
-    # right: no-outsource + nuance + tools
-    rx, rw = 6.10, 6.70
-    ocean_box(s, rx, 1.52, rw, 1.28)
-    text_box(s, x=rx + 0.24, y=1.62, w=rw - 0.48, h=0.34,
-             text="Проверка не аутсорсится модели", size=12.5, bold=True,
-             color=MID)
-    text_box(s, x=rx + 0.24, y=1.96, w=rw - 0.48, h=0.80,
-             text="Willison / Fowler: «не видел, как работает — не работающая "
-                  "система». Тесты гоняет детерминированный исполнитель (скрипт / "
-                  "CI), не модель на словах. Инцидент → постоянный регресс-тест.",
-             size=11, color=DEEP, line_spacing=1.14)
-    # nuance (honest)
-    filled_rect(s, rx, 2.92, rw, 1.28, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
-                radius=True, radius_adj=0.05)
-    text_box(s, x=rx + 0.24, y=3.02, w=rw - 0.48, h=0.34,
-             text="Важный нюанс — структура ≠ ритуал", size=12.5, bold=True,
-             color=DEEP)
-    text_box(s, x=rx + 0.24, y=3.36, w=rw - 0.48, h=0.80,
-             text="Ценность TDD (test-driven development, разработка через "
-                  "тестирование) — структура (спека-тест + гейт), а не ритуал "
-                  "форсить порядок агенту. Böckeler [2]: TDD-first в agent-loop — "
-                  "отсутствие выигрыша + ~3× токенов («я перестала велеть "
-                  "агентам писать тесты первыми»).",
-             size=10.5, color=DEEP, line_spacing=1.10)
-    # Fowler tests-as-guardrails caption
-    filled_rect(s, rx, 4.32, rw, 0.52, TEAL_TINT, stroke=TEAL, stroke_pt=1.2,
-                radius=True, radius_adj=0.07)
-    text_runs(s, rx + 0.22, 4.39, rw - 0.44, 0.40, [
-        {"text": "Тесты-как-ограждения (Fowler) [3]: ", "size": 10.5, "bold": True,
-         "color": TEAL},
-        {"text": "тест форсит интерфейс, не связывая с реализацией — потому "
-                 "структура TDD ценна.", "size": 10.5, "color": DEEP},
-    ], anchor=MSO_ANCHOR.MIDDLE)
-    # tools row
-    filled_rect(s, rx, 4.96, rw, 0.52, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+    # right: what does NOT work → the recipe → tools
+    rx, rw = 6.02, 6.78
+    filled_rect(s, rx, 1.40, rw, 1.02, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
                 radius=True, radius_adj=0.06)
-    text_box(s, x=rx + 0.24, y=5.03, w=rw - 0.48, h=0.40,
+    text_box(s, x=rx + 0.22, y=1.46, w=rw - 0.44, h=0.28,
+             text="Что НЕ работает: приказать агенту писать тесты первыми",
+             size=12, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.22, y=1.75, w=rw - 0.44, h=0.62,
+             text="Böckeler [2]: в цикле агента это дало отсутствие выигрыша и "
+                  "примерно втрое больше токенов — «я перестала велеть агентам "
+                  "писать тесты первыми». Ценность несёт структура, а не порядок команд.",
+             size=10.5, color=DEEP, line_spacing=1.06)
+
+    ocean_box(s, rx, 2.50, rw, 2.58)
+    text_box(s, x=rx + 0.22, y=2.57, w=rw - 0.44, h=0.28,
+             text="Что работает вместо — рецепт из пяти шагов",
+             size=12.5, bold=True, color=MID)
+    recipe = [
+        ("1", "Человек формулирует, ЧТО тест обязан утверждать",
+         " — инвариант или критерий приёмки, до генерации кода."),
+        ("2", "Порядок генерации оставьте агенту",
+         " — тест и код вместе или код, а следом тест; форсить «сначала тест» не нужно."),
+        ("3", "Утверждения теста читает человек",
+         ": тест держится за поведение, а не за реализацию (Fowler [3])."),
+        ("4", "Прогон — только детерминированный исполнитель",
+         " (скрипт или CI с настоящим кодом возврата); «модель сказала: зелёные» — не прогон."),
+        ("5", "Гейт — по доле реально пойманных дефектов",
+         ", не по проценту покрытия. Каждый инцидент → постоянный регресс-тест."),
+    ]
+    sy = 2.90
+    for i, (num, lead, tail) in enumerate(recipe):
+        y = sy + i * 0.43
+        filled_rect(s, rx + 0.22, y + 0.03, 0.30, 0.30, TEAL,
+                    radius=True, radius_adj=0.28)
+        text_box(s, x=rx + 0.22, y=y + 0.05, w=0.30, h=0.28, text=num,
+                 size=11, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_runs(s, rx + 0.62, y, rw - 0.86, 0.44, [
+            {"text": lead, "size": 11, "bold": True, "color": DEEP},
+            {"text": tail, "size": 11, "color": DEEP},
+        ], line_spacing=1.06)
+
+    filled_rect(s, rx, 5.16, rw, 0.42, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+                radius=True, radius_adj=0.07)
+    text_box(s, x=rx + 0.22, y=5.21, w=rw - 0.44, h=0.34,
              text="Исполняют (вторично): AWS Q /test · Qodo · JetBrains Junie · "
                   "Anthropic (падающий тест → починка + Stop-hook как гейт).",
              size=10, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
-        "Устойчивый паттерн: тест-как-исполняемая-спецификация + детерминированный "
-        "гейт прогона. Хайп: «AI сам покрыл код тестами».",
-        size=13, bold=True, align=PP_ALIGN.CENTER)
+        "Инвариант не «тест написан первым», а «тест существует, утверждает "
+        "решённое человеком и прогнан машиной». Willison: «не видел, как "
+        "работает — не работающая система».",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s24")
     notes_with_sources(s, "s24")
     return s
@@ -262,82 +217,104 @@ def s25b(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Ещё две методики, ложащиеся на AI: BDD (язык бизнеса) и "
-           "trunk-based (высокий темп коммитов)",
+        s, "Ещё две методики на AI-цикл: BDD и trunk-based — что дают и чем "
+           "платите",
         size=19, w=12.3, h=0.82)
 
     colw = 6.05
     gap = 0.15
     lx = 0.55
     rx = lx + colw + gap
-    top = 1.46
-    boxh = 3.98
+    top = 1.24
+    boxh = 4.38
+
+    def example(x, text):
+        """One concrete micro-example per column — для тех, кто видит впервые."""
+        filled_rect(s, x + 0.20, top + 1.24, colw - 0.40, 0.32, SOFT_GREY,
+                    stroke=SLATE, stroke_pt=0.75, radius=True, radius_adj=0.16)
+        text_box(s, x=x + 0.34, y=top + 1.27, w=colw - 0.68, h=0.28, text=text,
+                 size=9.5, italic=True, color=SLATE, line_spacing=1.04,
+                 anchor=MSO_ANCHOR.MIDDLE)
+
+    def plus_minus(x, pros, cons, y_plus, y_minus, h_plus, h_minus):
+        """Explicit «+ что даёт» / «− чем платите» blocks inside one column."""
+        for (yy, hh, sign, label, items, tint, stroke_col, label_col) in (
+            (y_plus, h_plus, "+", "ЧТО ДАЁТ", pros, TEAL_TINT, TEAL, TEAL),
+            (y_minus, h_minus, "−", "ЧЕМ ПЛАТИТЕ", cons, GOLD_TINT, GOLD, DEEP),
+        ):
+            filled_rect(s, x + 0.20, yy, colw - 0.40, hh, tint,
+                        stroke=stroke_col, stroke_pt=1.4, radius=True,
+                        radius_adj=0.06)
+            text_runs(s, x + 0.36, yy + 0.06, colw - 0.72, 0.26, [
+                {"text": f"{sign}  ", "size": 14, "bold": True,
+                 "color": stroke_col},
+                {"text": label, "size": 11, "bold": True, "color": label_col},
+            ], line_spacing=1.0)
+            runs = []
+            for j, it in enumerate(items):
+                runs.append({"text": ("• " + it), "size": 10.5, "color": DEEP,
+                             "newpara": bool(j), "space_before": 4})
+            text_runs(s, x + 0.36, yy + 0.34, colw - 0.72, hh - 0.40, runs,
+                      line_spacing=1.10)
 
     # --- LEFT: BDD ---
     ocean_box(s, lx, top, colw, boxh, fill=SURFACE, stroke=MID, stroke_pt=1.6)
-    icon(s, "check-check", lx + 0.22, top + 0.16, 0.44, "mid")
-    text_box(s, x=lx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+    icon(s, "check-check", lx + 0.22, top + 0.14, 0.42, "mid")
+    text_box(s, x=lx + 0.78, y=top + 0.16, w=colw - 1.0, h=0.34,
              text="BDD — тест до кода на языке бизнеса", size=13, bold=True,
              color=MID)
-    text_box(s, x=lx + 0.24, y=top + 0.64, w=colw - 0.48, h=1.20,
-             text="BDD (Behavior-Driven Development) — тот же принцип «тест "
-                  "до кода», что TDD, но читаем нетехническим стейкхолдером. "
-                  "Три практики: Discovery (разговоры вокруг примеров) → "
-                  "Formulation (примеры → сценарии) → Automation (сценарии "
-                  "как тесты). Формат — Given-When-Then (Gherkin) — та же "
-                  "структура, что в примере с переговоркой из визуализации "
-                  "требований.",
-             size=10, color=DEEP, line_spacing=1.10)
-    text_box(s, x=lx + 0.24, y=top + 1.92, w=colw - 0.48, h=1.10,
-             text="Кто пишет в 2026: агент генерирует Gherkin-сценарии из "
-                  "критериев приёмки (включая краевые и security-случаи), "
-                  "человек ревьюит. Риск без правил: расплывчатые Then-шаги, "
-                  "сценарии, завязанные на UI. Контроль — явный гайдлайн как "
-                  "контекст агенту.",
-             size=10.5, color=DEEP, line_spacing=1.15)
-    filled_rect(s, lx + 0.24, top + 3.08, colw - 0.48, 0.72, SOFT_GREY,
-                stroke=SLATE, stroke_pt=0.75, radius=True, radius_adj=0.08)
-    text_box(s, x=lx + 0.40, y=top + 3.14, w=colw - 0.80, h=0.60,
-             text="Честно: BDD-фреймворки — ~27% OSS-выборки (68% в Ruby), не "
-                  "мейнстрим большинства экосистем. Уместен рядом с "
-                  "нетехническим стейкхолдером, иначе часто избыточен.",
-             size=10, italic=True, color=SLATE, line_spacing=1.12,
-             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=lx + 0.22, y=top + 0.54, w=colw - 0.44, h=0.68,
+             text="BDD (Behavior-Driven Development, разработка через "
+                  "поведение) — сценарий Given-When-Then, который читает и "
+                  "правит нетехнический заказчик. Цикл: обсудили примеры → "
+                  "записали сценарии → гоняем как тесты.",
+             size=10.5, color=DEEP, line_spacing=1.10)
+    example(lx, "Given слот свободен · When нажали «Забронировать» · Then "
+                "слот занят")
+    plus_minus(
+        lx,
+        ["Пробел в критериях приёмки виден до кода: сценарий читают те, кто "
+         "ставит задачу.",
+         "Агент генерирует сценарии из критериев приёмки — включая краевые "
+         "случаи и проверки безопасности; человек ревьюит."],
+        ["Лишний слой: ~27% проектов с открытым кодом, где есть тестовый "
+         "фреймворк (68% — Ruby).",
+         "Без гайдлайна сценарии от агента деградируют: расплывчатые "
+         "Then-шаги, привязка к интерфейсу.",
+         "Без нетехнического заказчика рядом — избыточен."],
+        top + 1.62, top + 2.92, 1.24, 1.44)
 
     # --- RIGHT: trunk-based ---
     ocean_box(s, rx, top, colw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
-    icon(s, "git-merge", rx + 0.22, top + 0.16, 0.44, "teal")
-    text_box(s, x=rx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+    icon(s, "git-merge", rx + 0.22, top + 0.14, 0.42, "teal")
+    text_box(s, x=rx + 0.78, y=top + 0.16, w=colw - 1.0, h=0.34,
              text="Trunk-based — короткоживущая ветка", size=13, bold=True,
              color=TEAL)
-    text_box(s, x=rx + 0.24, y=top + 0.64, w=colw - 0.48, h=1.20,
-             text="Короткоживущая ветка (<24 часа, DORA), не long-lived. "
-                  "Причина: git автоматически разрешает текстовые конфликты, "
-                  "но не семантические — ветка агента компилируется против "
-                  "допущения, которое основная ветка уже перестала "
-                  "поддерживать.",
-             size=10.5, color=DEEP, line_spacing=1.15)
-    text_box(s, x=rx + 0.24, y=top + 1.92, w=colw - 0.48, h=1.10,
-             text="Feature-флаги разрывают связь «когда смержено» и «когда "
-                  "пользователь видит фичу» — раскатка отдельно от "
-                  "интеграции. Связь с уже введёнными git-конвенциями: те "
-                  "отвечают «как называется ветка», trunk-based — «сколько "
-                  "она живёт».",
-             size=10.5, color=DEEP, line_spacing=1.15)
-    filled_rect(s, rx + 0.24, top + 3.08, colw - 0.48, 0.72, SOFT_GREY,
-                stroke=SLATE, stroke_pt=0.75, radius=True, radius_adj=0.08)
-    text_box(s, x=rx + 0.40, y=top + 3.14, w=colw - 0.80, h=0.60,
-             text="AI Agent Source Prefix обретает смысл именно здесь: "
-                  "ветка живёт часами — префикс сигналит ревьюеру частое "
-                  "ревью маленьких diff.",
-             size=10, italic=True, color=SLATE, line_spacing=1.12,
-             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 0.22, y=top + 0.54, w=colw - 0.44, h=0.68,
+             text="Trunk-based development — ветка живёт меньше суток (DORA) и "
+                  "вливается в основную. Git чинит текстовые конфликты, но не "
+                  "смысловые допущения ветки агента.",
+             size=10.5, color=DEEP, line_spacing=1.10)
+    example(rx, "Ветку claude/fix-auth создали утром — влили до обеда, "
+                "за флагом")
+    plus_minus(
+        rx,
+        ["Ветка агента не успевает разойтись с основной по смыслу — а "
+         "смысловой дрейф git не чинит.",
+         "Маленькие частые изменения: ревью успевает за темпом агентных "
+         "коммитов, префикс ветки агента осмыслен."],
+        ["Обязательны feature-флаги (включатели функций): без них слияние "
+         "незавершённой работы сразу показывает её пользователю.",
+         "Нужна страховочная сетка — реальное покрытие тестами и зелёный "
+         "детерминированный прогон; без неё частые вливания опаснее долгой "
+         "ветки."],
+        top + 1.62, top + 2.92, 1.24, 1.44)
 
     gold_callout(
-        s, 0.55, top + boxh + 0.14, 12.25, 0.58,
-        "Обе методики вторичны к уже названным практикам (TDD, "
-        "git-конвенции) — не новая ось дисциплины, а расширение той же: "
-        "спецификация до кода + короткий цикл интеграции.",
+        s, 0.55, top + boxh + 0.12, 12.25, 0.58,
+        "Обе — расширение уже названных практик, а не новая ось: BDD "
+        "оправдан там, где есть нетехнический заказчик; trunk-based — там, "
+        "где уже есть автоматические проверки и включатели функций.",
         size=12, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s25b")
     notes_with_sources(s, "s25b")
@@ -351,97 +328,100 @@ def s25c(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Локальный тестовый инструментарий кодинг-агента: БД, сеть, CI-цикл",
-        size=19, w=12.3, h=0.78)
+        s, "Локальный инструментарий агента: чем закрыть пять его слепых каналов",
+        size=20, w=12.3, h=0.78)
 
-    cols = [
-        ("database", "(а) БД — Testcontainers", MID),
-        ("route", "(б) Сеть — MSW", MID),
-        ("terminal", "(в) CI-цикл — skill-обёртка", MID),
+    # Five cards, 3 + 2 layout; the sixth cell carries the gold takeaway so the
+    # bottom row is not half-empty (visual mass balance).
+    cards = [
+        ("database", "Данные", "Testcontainers", MID,
+         "Поднимает настоящий Postgres / Kafka / Redis в Docker на временном "
+         "порту — на машине агента.",
+         "Агент проверяет запрос против воображаемой схемы: тест либо не "
+         "пишется, либо зелен на заглушке и красен в проде."),
+        ("route", "Сеть", "MSW", MID,
+         "Перехватывает HTTP внутри процесса: один обработчик и для модульных, "
+         "и для сквозных тестов. Вне JS — WireMock (открытый код).",
+         "Агент либо бьёт по настоящему API — нестабильно, платно, с "
+         "лимитами, — либо не тестирует сетевой код вовсе."),
+        ("monitor", "Интерфейс", "Playwright", TEAL,
+         "Даёт агенту браузер: не картинку, а дерево элементов страницы "
+         "(accessibility) — кликает, заполняет формы, порождает тест.",
+         "Агент никогда не видит настоящий интерфейс: отладка фронтенда идёт "
+         "вслепую и по сути бессмысленна."),
+        ("terminal", "Свои проверки", "skill-обёртка", MID,
+         "Упаковывает существующий в репозитории цикл «линтер → проверка типов "
+         "→ тесты» в один вызов.",
+         "Агент каждый раз угадывает команды проекта — и молча пропускает "
+         "проверку, о которой не знал."),
+        ("lock", "Закрытый контур", "pytest-generator", TEAL,
+         "Дообученная модель на 8 млрд параметров (~5 ГБ, есть версия для "
+         "процессора) пишет скелеты тестов на машине.",
+         "Любая AI-генерация тестов = отправка исходного кода во внешний "
+         "сервис: для закрытого контура это запрет."),
     ]
-    rows = [
-        ("Что делает",
-         ["Реальный Postgres/Kafka/Redis в Docker, эфемерный порт, на машине "
-          "агента",
-          "Перехват HTTP на уровне процесса — 1 handler для unit/e2e",
-          "lint → type-check → test вызывается одной командой"]),
-        ("Честная оговорка",
-         ["Skill даёт процедуру Docker Compose, не «анализ» БД",
-          "Без реального JSON-примера агент «придумывает» форму ответа",
-          "Не новый инструмент — упаковка уже работающей инфраструктуры"]),
-        ("Готовым / самим",
-         ["ГОТОВЫМ — зрелая библиотека",
-          "ГОТОВЫМ — зрелая библиотека, с оговоркой",
-          "САМИМ — дешевле, чем искать AI-native замену"]),
-    ]
-    examples = ["testcontainers-docker skill", "mswjs.io handlers",
-                "lint+type-check+test skill"]
+
     x0 = 0.55
     total = 12.25
     gap = 0.16
-    cw = (total - gap * 2) / 3
-    top = 1.32
-    hh = 0.58
-    for i, (ic, name, col) in enumerate(cols):
-        x = x0 + i * (cw + gap)
-        filled_rect(s, x, top, cw, hh, col, radius=True, radius_adj=0.12)
-        icon(s, ic, x + 0.14, top + 0.08, 0.40, "white")
-        text_box(s, x=x + 0.62, y=top + 0.05, w=cw - 0.72, h=hh - 0.10,
-                 text=name, size=10.5, bold=True, color=WHITE,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.96)
-    row_h = [1.10, 1.00, 0.66]
-    ry = top + hh + 0.08
-    for r, (label, cells) in enumerate(rows):
-        rh = row_h[r]
-        for i in range(3):
-            x = x0 + i * (cw + gap)
-            fill = SURFACE if r % 2 == 0 else WHITE
-            filled_rect(s, x, ry, cw, rh, fill, stroke=SOFT_GREY, stroke_pt=1.0,
-                        radius=True, radius_adj=0.06)
-            if i == 0:
-                text_box(s, x=x + 0.14, y=ry + 0.05, w=cw - 0.28, h=0.24,
-                         text=label.upper(), size=12, bold=True, color=LIGHT)
-                tb_y = ry + 0.30
-                tb_h = rh - 0.36
-            else:
-                tb_y = ry + 0.06
-                tb_h = rh - 0.12
-            text_box(s, x=x + 0.14, y=tb_y, w=cw - 0.28, h=tb_h,
-                     text=cells[i], size=14 if r < 2 else 12.5, color=DEEP,
-                     line_spacing=1.04)
-        ry += rh + 0.06
+    cw = (total - gap * 2) / 3           # 3.977
+    row_y = [1.20, 3.68]
+    ch = 2.42
 
-    ey = ry + 0.02
-    text_runs(s, x0, ey, total, 0.30, [
-        {"text": "Пример:  ", "size": 11, "bold": True, "color": SLATE},
-        {"text": examples[0], "size": 10.5, "italic": True, "color": MID,
-         "font": "DejaVu Sans Mono"},
-        {"text": "   ·   ", "size": 10.5, "color": SLATE},
-        {"text": examples[1], "size": 10.5, "italic": True, "color": TEAL,
-         "font": "DejaVu Sans Mono"},
-        {"text": "   ·   ", "size": 10.5, "color": SLATE},
-        {"text": examples[2], "size": 10.5, "italic": True, "color": MID,
-         "font": "DejaVu Sans Mono"},
-    ])
-    ry = ey + 0.30
+    for i, (ic, cat, tool, col, does, without) in enumerate(cards):
+        r, c = divmod(i, 3)
+        x = x0 + c * (cw + gap)
+        y = row_y[r]
+        # header plate
+        filled_rect(s, x, y, cw, 0.58, col, radius=True, radius_adj=0.12)
+        icon(s, ic, x + 0.13, y + 0.09, 0.40, "white")
+        text_box(s, x=x + 0.60, y=y + 0.04, w=cw - 0.72, h=0.22, text=cat,
+                 size=10, bold=True, color=WHITE)
+        text_box(s, x=x + 0.60, y=y + 0.25, w=cw - 0.72, h=0.28, text=tool,
+                 size=12.5, bold=True, color=WHITE, line_spacing=0.96)
+        # «что делает»
+        filled_rect(s, x, y + 0.62, cw, 0.84, SURFACE, stroke=SOFT_GREY,
+                    stroke_pt=1.0, radius=True, radius_adj=0.08)
+        text_box(s, x=x + 0.14, y=y + 0.66, w=cw - 0.28, h=0.18,
+                 text="ЧТО ДЕЛАЕТ", size=9, bold=True, color=LIGHT)
+        text_box(s, x=x + 0.14, y=y + 0.85, w=cw - 0.28, h=0.58, text=does,
+                 size=10.5, color=DEEP, line_spacing=1.06)
+        # «зачем нужен — что без него невозможно»
+        filled_rect(s, x, y + 1.50, cw, 0.92, GOLD_TINT, stroke=GOLD,
+                    stroke_pt=1.4, radius=True, radius_adj=0.07)
+        text_box(s, x=x + 0.14, y=y + 1.54, w=cw - 0.28, h=0.18,
+                 text="БЕЗ НЕГО НЕВОЗМОЖНО / ОЧЕНЬ ТРУДНО", size=9,
+                 bold=True, color=DEEP)
+        text_box(s, x=x + 0.14, y=y + 1.73, w=cw - 0.28, h=0.64, text=without,
+                 size=10.5, color=DEEP, line_spacing=1.06)
 
-    # cloud AI-layer contrast strip (muted)
-    cy = ry + 0.06
-    filled_rect(s, x0, cy, total, 0.56, SOFT_GREY, stroke=SLATE, stroke_pt=0.75,
-                radius=True, radius_adj=0.10)
-    text_box(s, x=x0 + 0.18, y=cy + 0.05, w=total - 0.36, h=0.46,
-             text="Облачный AI-слой (не мейнстрим): WireMock Cloud — AI Skills/"
-                  "MCP преимущественно здесь, не в локальном OSS-ядре · "
-                  "pytest-generator (Distil Labs) — CPU-only, ≈77% точность "
-                  "self-reported.",
+    # sixth cell — takeaway (balances the 3+2 grid instead of empty space)
+    tx = x0 + 2 * (cw + gap)
+    ty = row_y[1]
+    filled_rect(s, tx, ty, cw, ch, TEAL_TINT, stroke=TEAL, stroke_pt=1.6,
+                radius=True, radius_adj=0.07)
+    text_box(s, x=tx + 0.18, y=ty + 0.14, w=cw - 0.36, h=0.30,
+             text="Критерий выбора", size=12.5, bold=True, color=TEAL)
+    text_box(s, x=tx + 0.18, y=ty + 0.50, w=cw - 0.36, h=1.80,
+             text="Каждый инструмент закрывает ровно один канал, слепой для "
+                  "агента: данные, сеть, интерфейс, свои проверки, закрытый "
+                  "контур.\n\nЛокальное, детерминированное и уже "
+                  "работающее — берите и оборачивайте; писать самому имеет "
+                  "смысл только обёртку вокруг своего же цикла проверок.",
+             size=10.5, color=DEEP, line_spacing=1.10)
+
+    # honest-limits strip (muted, one line)
+    cy = row_y[1] + ch + 0.08
+    filled_rect(s, x0, cy, total, 0.48, SOFT_GREY, stroke=SLATE, stroke_pt=0.75,
+                radius=True, radius_adj=0.11)
+    text_box(s, x=x0 + 0.18, y=cy + 0.04, w=total - 0.36, h=0.40,
+             text="Честные ограничения: без настоящего примера ответа API мок "
+                  "MSW — догадка агента, а не контракт · AI-функции WireMock "
+                  "живут в платном WireMock Cloud, а не в локальном ядре с "
+                  "открытым кодом · pytest-generator — точность ≈77% заявлена "
+                  "вендором, независимо не проверена, распространённость низкая.",
              size=9.5, italic=True, color=SLATE, line_spacing=1.08,
              anchor=MSO_ANCHOR.MIDDLE)
-
-    gold_callout(
-        s, 0.55, cy + 0.66, 12.25, 0.56,
-        "Локальный, детерминированный, уже существующий инструмент — берите и "
-        "оборачивайте; облачный AI-слой — с честной оговоркой о разрыве.",
-        size=11.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s25c")
     notes_with_sources(s, "s25c")
     return s

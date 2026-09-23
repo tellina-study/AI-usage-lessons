@@ -34,8 +34,8 @@ slides:
     type: assertion_visual
     section: "Раздел 4. Тестирование — TDD как дисциплина"
     duration_min: 3
-    assertion: "TDD-как-подход: тест — исполняемая спецификация, red-green-refactor с человеческим владением; проверка не аутсорсится модели; нюанс — ценность в структуре, не в ритуале (TDD-first агенту = ~3× токенов без выигрыша)"
-    learning_goal: "Практика TDD как подход + нюанс структура≠ритуал (Böckeler ~3× токенов); инструменты вторично"
+    assertion: "TDD с агентом: форсить порядок «сначала тест» не работает (Böckeler: выигрыша нет, токенов ~3×) — работает рецепт из пяти шагов: человек формулирует, ЧТО тест утверждает; порядок генерации оставлен агенту; утверждения ревьюит человек; прогон — детерминированный исполнитель; гейт — по доле пойманных дефектов, не по покрытию"
+    learning_goal: "Round 6 block 3 (owner): не лозунг «структура ≠ ритуал», а конкретный работающий рецепт из 5 шагов вместо форсинга TDD-порядка агенту; инструменты вторично"
     learning_outcomes: [LO7, LO1]
     chapter_ref: "§4.1, §4.2 [for-slide-s22]"
     references: [willison-testing, fowler-testing, bockeler-thoughtworks, dora-report]
@@ -59,8 +59,8 @@ slides:
     type: assertion_visual
     section: "Раздел 4. Тестирование — TDD как дисциплина"
     duration_min: 3
-    assertion: "TDD — не единственная методика, ложащаяся на AI: BDD повторяет принцип «тест до кода» на языке бизнеса, а trunk-based делает высокий throughput агентных коммитов управляемым — обе вторичны к уже названным практикам"
-    learning_goal: "Компактно: BDD (Given-When-Then, честная доля adoption) + trunk-based (short-lived-ветки против семантического дрейфа) — обе методики вторичны к TDD/git-конвенциям"
+    assertion: "BDD и trunk-based разбираются балансом, а не описанием: BDD даёт общий язык с нетехническим заказчиком, но стоит лишнего слоя и вне Ruby не мейнстрим (~27%); trunk-based держит темп агентных коммитов, но требует включателей функций и реального покрытия тестами"
+    learning_goal: "Round 6 block 3 (owner): явные «+» и «−» каждой методики + микропример на каждую — для того, кто видит BDD/trunk-based впервые"
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§4.4 [for-slide-s25b]"
     references: [cucumber-bdd, trunk-based-dev]
@@ -74,8 +74,8 @@ slides:
     type: schema_matrix
     section: "Раздел 4. Тестирование — TDD как дисциплина"
     duration_min: 3
-    assertion: "Локальный инструментарий кодинг-агента для БД и сети — Testcontainers и MSW, зрелые и стабильные — плюс skill-обёртка вокруг уже существующего lint→type-check→test цикла; облачный AI-слой поверх них (WireMock Cloud) и нишевая локальная генерация тестов (pytest-generator) — направление, не мейнстрим"
-    learning_goal: "Три категории локального тестового инструментария (БД/сеть/CI-цикл) через уже введённый принцип детерминированного гейта; что брать готовым, что делать самому (round-3 QA-fix: §4.5 полностью переписан — было Postman/Chromatic/Percy/Applitools)"
+    assertion: "Локальный инструментарий закрывает пять каналов, в которых агент без инструмента слеп: данные (Testcontainers), сеть (MSW / WireMock OSS), интерфейс (Playwright), свои проверки (skill-обёртка), закрытый контур (локальная генерация тестов) — и для каждого названо, что именно без него сделать нельзя"
+    learning_goal: "Round 6 block 3 (owner): +Playwright и +локальная генерация тестов как 4-я и 5-я категории; строки переосмыслены с «честная оговорка / готовым-самим» на «что делает / что без него невозможно»"
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§4.5 [for-slide-s25c]"
     references: [testcontainers, msw, wiremock, pytest-generator-distil]
@@ -372,9 +372,9 @@ slides:
 # Validation
 # ─────────────────────────────────────────────────────────────────────────
 totals:
-  slides: 57                    # v4.4 (#162 round 3 QA-fix): +s09b/s17b/s18b/s20g/s30b/s33b/s37b; было 50 (v4.3 round 2: +s11b/s20f/s25b/s25c/s35b; было 45 v4.2: +s20b/s20c/s20d/s20e; было 41 v4.1)
+  slides: 56                    # v4.5 (#162 round 6, block 3): −1 (удалён anti-hype-слайд, display 32 / id s21); было 57 — v4.4 (#162 round 3 QA-fix): +s09b/s17b/s18b/s20g/s30b/s33b/s37b; было 50 (v4.3 round 2: +s11b/s20f/s25b/s25c/s35b; было 45 v4.2: +s20b/s20c/s20d/s20e; было 41 v4.1)
   base_slides_locked: "s01–s41 (v4.1) core + s20b/s20c/s20d/s20e (issue #162, v4.2) + s11b/s20f/s25b/s25c/s35b (issue #162, v4.3 round 2) + s09b/s17b/s18b/s20g/s30b/s33b/s37b (issue #162, v4.4 round 3 QA-fix) — не исчерпывающий список без учёта этой вставки. s01 = METR hook (hero). s05 = сводка практик (2 списка со ссылками). s06 = keystone-цикл фаз (Требования→Архитектура→Реализация→Тестирование→Ревью+Безоп→Доставка/Эксп→Документация→). 7 section-dividers: s09(Р1) s13(Р2) s17(Р3) s23(Р4) s26(Р5) s33(Р6) s36(Р7) — без тег-плашек. s20b/s20c/s20e/s20d/s20g/s20f (Skills / MCP / task-logging / git-конвенции / secrets-Register / git worktree — round-3: task-logging и git-конвенции ПОМЕНЯНЫ МЕСТАМИ) вставлены между s20 и s21 в Разделе 3. s09b (AWS Kiro vs 847-deployments) между s09/s10; s11b (визуализация требований) между s10/s11; s17b (Gemini CLI self-review) между s17/s18; s18b (curation honest limits) после reworked s18; s25b/s25c (BDD+trunk-based / тестовый инструментарий, round-3 rebuilt) между s24/s25(divider); s30b (Amazon Q wiper) между s29/s30; s33b (BT Group/Azure vs IaC) между s33/s34; s35b (инструментарий документации) между s34/s35(divider); s37b (Uber+Kiro dual-register) между s37/s38. Hero required = s01 + s41."
-  slide_times_sum_min: 130.5    # Σ per-slide duration_min ниже (было 109.5, +21 за 7 новых слайдов round 3 × 3 мин); активная часть ~74 + буфер Q&A
+  slide_times_sum_min: 127.5    # Σ per-slide duration_min ниже (round 6 block 3: −3 за удалённый s21; было 130.5); активная часть ~71 + буфер Q&A
   total_min: 75                 # активный ~71 + ~4 Q&A буфер (s40); Σ per-slide заметно выше — избыточный материал для гибкого cut-order, не рекомендуемый тайминг
   note: >
     Plan v4 §4: 40 слайдов ≈ 75 мин (базовая калибровка; +16 слайдов issue
@@ -395,7 +395,7 @@ totals:
 #   Р0: s01=3 s02=0.5 s03=2 s04=2.5 s05=3 s06=2 s07=2.5 (=15.5) ·
 #   Р1: [s08=0.5] s09=3 s10=2.5 s11b=3 s11=3 (=12) ·
 #   Р2: [s12=0.5] s13=3 s14=3 s15=3 (=9.5) ·
-#   Р3: [s16=0.5] s17=3 s18=3 s19=3 s20=3 s20b=3 s20c=3 s20d=3 s20e=3 s20f=3 s21=3 (=30.5) ·
+#   Р3: [s16=0.5] s17=3 s18=3 s19=3 s20=3 s20b=3 s20c=3 s20d=3 s20e=3 s20f=3 (=27.5; s21 удалён round 6 block 3) ·
 #   Р4: [s22=0.5] s23=3 s24=3 s25b=3 s25c=3 (=12.5) ·
 #   Р5: [s25=0.5] s26=3 s27=3 s28=3 s29=3 s30=3 s31=3 (=18.5) ·
 #   Р6: [s32=0.5] s33=3 s34=3 s35b=3 (=9.5) ·
@@ -406,9 +406,9 @@ ai_failure_judgment:
   # plan v4 §4/§6 — strict-in слайды (solid IN-bucket: провал/ограничение/критерий/
   # альтернатива несомым связным текстом). Порог L4 = 30%, waiver НЕДОСТУПЕН.
   # methodology-critic Phase 7 пересчитывает strict-in по словам per-part И минутам speech отдельно.
-  in_bucket_slides: [s07, s11, s13, s15, s17b, s18b, s20, s20g, s21, s24, s27, s29, s30, s30b, s31, s33, s34, s37, s37b, s38, s39]
-  count: 21
-  share_by_slides: "21/47 ≈ 45% по слайдам (round-3 QA-fix: +5 in_bucket new slides s17b/s18b/s20g/s30b/s37b, denominator +7 new slides; buffer well above порога 30%). Кластеры распределены по 7 разделам — single-artifact concentration отсутствует: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g/s21-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7."
+  in_bucket_slides: [s07, s11, s13, s15, s17b, s18b, s20, s20g, s24, s27, s29, s30, s30b, s31, s33, s34, s37, s37b, s38, s39]
+  count: 20
+  share_by_slides: "20/46 ≈ 43% по слайдам (round-6 block 3: удалён in_bucket слайд s21 anti-hype, denominator −1; было 21/47 ≈ 45%; buffer well above порога 30%). Кластеры распределены по 7 разделам — single-artifact concentration отсутствует: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7."
   partial_out: [s01, s02, s03, s04, s05f, s05, s06, s08, s09, s09b, s10, s12, s14, s16, s17, s18, s19, s22, s23, s25, s26, s28, s32, s33b, s35, s36, s40]
   note: >
     speaker notes 16 in-bucket слайдов несут failure/judgment связным студенческим
@@ -430,7 +430,6 @@ verify_day_of_items:
   - s17_cycle_leaders              # explore-plan-code-commit формулировка; Cursor/Junie/Windsurf версии (вторично)
   - s18_context_rot_memory_demo    # context rot 18 моделей; демо памяти 172k vs 334k (cookbook-демо, volatile); AGENTS.md adoption
   - s20_so2025_gitclear_numbers    # SO-2025 66% · GitClear клоны 8,3→12,3% / рефакторинг ~25→<10% / churn 3,3→5,7%
-  - s21_swe_bench_numbers          # SWE-bench Verified ~88% / Pro ~64% + Devin 13,86% (79/570) + Cursor/OpenAI
   - s23_test_vendor_status         # Böckeler TDD-in-agent-loop ~3× токенов; Q /test языки; Qodo F1; Anthropic Stop-hook
   - s24_meta_coverage_mutation     # Meta coverage 32% vs 5,3% классов; mutation 2,4% vs 15%
   - s27_ai_review_f1_curl          # ~19% F1 SWR-Bench · CodeCrash −23% · curl valid-rate >15%→<5% + хронология
@@ -453,7 +452,6 @@ fact_check_items:
   - s09_grove_10_20_percent        # Grove «~10-20% ценности» — риторика, вторичные транскрипты, НЕ измерение
   - s11_prompt_and_pray_intent     # «узкое место = human intent» (Grove/spec-driven атрибуция); Emperor's New Code
   - s20_gitclear_211m              # GitClear 211M строк: клоны 8,3→12,3% / рефакторинг ~25→<10% / churn 3,3→5,7% (корреляция, не RCT)
-  - s21_devin_openai_swe_bench     # Devin 13,86% (79/570 = 25% бенча, контаминация) · OpenAI 59% test-flaw / «70% PRs» без знаменателя
   - s24_meta_coverage_mutation     # Meta 32% vs 5,3% классов; mutation 2,4% vs 15% (LLM-генерация vs узко-целевой метод)
   - s27_nyu_curl_slop_rates        # curl valid-rate >15%→<5% / объём вырос кратно / приостановка+возврат HackerOne март 2026; AI-review ~19% F1
   - s29_nyu_1689_89                # NYU 1689 программ / 89 сценариев MITRE Top-25 CWE / ~40%; Stanford randomized

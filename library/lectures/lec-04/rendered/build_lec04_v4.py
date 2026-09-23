@@ -1,4 +1,12 @@
-"""Full 57-slide build of Лекция 4 v4.4 «AI в жизненном цикле разработки ПО».
+"""Full 56-slide build of Лекция 4 v4.5 «AI в жизненном цикле разработки ПО».
+
+v4.5 (issue #162 round 6, block 3 — кластер §4 «Тестирование»): display-слайд
+32 (anti-hype benchmarks, builder b3.s21) УДАЛЁН по прямому указанию владельца
+(«слайд 32 — лишний, убрать»); 57 → 56. Плюс переработаны три слайда раздела
+тестирования: TDD-слайд получил рецепт «что работает вместо форсинга порядка»,
+BDD/trunk-based — явную структуру «+ / −», локальный инструментарий расширен
+до 5 категорий (добавлены Playwright и локальная генерация тестов) с
+переосмыслением строк на «что делает / что без него невозможно».
 
 v4.4 (issue #162 round 3 — QA-fix pass): +7 slides s09b/s17b/s18b/s20g/s30b/
 s33b/s37b (AWS Kiro vs 847-deployments contrast · Gemini CLI self-review ·
@@ -111,7 +119,11 @@ def main():
     # display s21–s30 (old "s21" comment kept as historical marker; actual
     # display position shifted further by r3 inserts above)
     builders += [b2.s20,                                     # 70%-проблема (+2026 GitClear addition)
-                 b3.s21, b3.s22, b3.s23, b3.s24,             # testing..review
+                 # b3.s21 (anti-hype benchmarks) REMOVED — round 6 block 3
+                 # (owner: «слайд 32 — лишний, убрать»). SWE-bench Verified/Pro
+                 # разрыв введён в Лекции 3; вендор-скепсис держат s20 (70%-
+                 # проблема) и s37/s38 (триангуляция, risk-triad).
+                 b3.s22, b3.s23, b3.s24,                     # testing..review
                  b3.s25b, b3.s25c,                            # NEW (r2): §4.4 BDD/trunk-based · §4.5 test tooling (rebuilt r3)
                  b3.s25,
                  b3.s26, b3.s27, b3.s28]                       # review..security(complacency)
@@ -130,18 +142,18 @@ def main():
     builders += [b4.s37b]                                      # NEW (r3): Uber + Kiro dual-register bridge
     builders += [b4.s38, b4.s39, b4.s40]
 
-    assert len(builders) == 57, f"expected 57 builders, got {len(builders)}"
+    assert len(builders) == 56, f"expected 56 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
-    # Stamp a page number «N / 57» on every slide (bottom-right, muted). Done in
-    # the assembler so all 57 slides carry it without touching per-slide builders.
+    # Stamp a page number «N / 56» on every slide (bottom-right, muted). Done in
+    # the assembler so all 56 slides carry it without touching per-slide builders.
     total = len(builders)
     for i, slide in enumerate(p.slides, start=1):
         page_number(slide, i, total)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 57, f"expected 57 slides, got {n}"
+    assert n == 56, f"expected 56 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

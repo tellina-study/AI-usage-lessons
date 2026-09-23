@@ -83,8 +83,15 @@ def main():
     # (s20b..s20e) — they are new slides, not subject to the historical v4.1
     # -1 shift that the rest of the file's function names carry.
     builders = []
-    # display s01–s10
-    builders += [b1.s01, b1.s02, b1.s03, b1.s04, b1.s05f,   # s05 foundations
+    # display s01–s10 (+1 from v4.4: b1.s03b inserted, see below)
+    # v4.5 (#162 round 6, block 5): b1.s03b (общая статистика по отрасли —
+    # Stack Overflow 2025 / DORA 2025 adoption + trust gap) inserted between
+    # b1.s03 (мост из Модуля 1) and b1.s04 (центральный вопрос). Owner note:
+    # «и в начале презы надо добавить общую статистику по отрасли». Every
+    # display position from b1.s04 onward shifts +1 → 58 slides.
+    builders += [b1.s01, b1.s02, b1.s03,
+                 b1.s03b,                                    # NEW (r6 b5)
+                 b1.s04, b1.s05f,                            # s05 foundations
                  b1.s06k,                                    # s06 keystone
                  b1.s06, b1.s07, b1.s08, b1.s09]             # s07..s10
     builders += [b1.s09b]                                    # NEW (r3): AWS Kiro vs 847-deployments
@@ -130,7 +137,7 @@ def main():
     builders += [b4.s37b]                                      # NEW (r3): Uber + Kiro dual-register bridge
     builders += [b4.s38, b4.s39, b4.s40]
 
-    assert len(builders) == 57, f"expected 57 builders, got {len(builders)}"
+    assert len(builders) == 58, f"expected 58 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
@@ -141,7 +148,7 @@ def main():
         page_number(slide, i, total)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 57, f"expected 57 slides, got {n}"
+    assert n == 58, f"expected 58 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

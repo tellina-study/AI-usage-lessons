@@ -176,6 +176,87 @@ def s03(p):
 
 
 # ============================================================
+# s03b (NEW, #162 round 6 block 5) — общая статистика по отрасли.
+# Owner note: «и в начале презы надо добавить общую статистику по отрасли».
+# Ставится между s03 (мост из Модуля 1) и s04 (центральный вопрос): сначала
+# масштаб («внедрять или нет» индустрия закрыла), потом вопрос лекции («что
+# делает это надёжным»). Та же рамка, что в переформулированных s38/s39 —
+# спор «да или нет» снят, открыт вопрос цены и мер.
+# Источник рамки — chapter-part5 §7.4, абзац «Якорь для чек-листа: индустрия
+# использует то, чему всё меньше доверяет».
+# ============================================================
+def s03b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Вопрос «применять или нет» индустрия уже закрыла — открытым "
+           "остался вопрос надёжности",
+        size=21, w=12.3, h=0.82)
+
+    lx, lw = 0.55, 6.60
+    rx, rw = 7.35, 5.45
+    top = 1.42
+    boxh = 4.20
+
+    # --- LEFT: scale of adoption (chart + baselines) ---
+    ocean_box(s, lx, top, lw, boxh)
+    icon(s, "users", lx + 0.22, top + 0.12, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=top + 0.16, w=lw - 1.04, h=0.36,
+             text="Масштаб: почти вся отрасль уже внутри",
+             size=13, bold=True, color=MID)
+    add_image(s, CHARTS / "c03b-adoption.png", lx + 0.18, top + 0.60,
+              lw - 0.36, 2.16)
+    text_box(s, x=lx + 0.24, y=top + 2.90, w=lw - 0.48, h=0.62,
+             text="51% профессиональных разработчиков работают с AI-инструментами "
+                  "ежедневно; медиана времени работы с ними — около двух часов "
+                  "в день, примерно четверть рабочего дня.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 3.56, w=lw - 0.48, h=0.50,
+             text="Опросы разные: Stack Overflow спрашивает «используют или "
+                  "планируют» (более 49 000 человек из 177 стран), DORA — "
+                  "«используют» (более 5 000). Порядок величины совпадает.",
+             size=9, italic=True, color=SLATE, line_spacing=1.10)
+
+    # --- RIGHT: trust falls while adoption rises ---
+    ocean_box(s, rx, top, rw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "circle-help", rx + 0.22, top + 0.12, 0.46, "teal")
+    text_box(s, x=rx + 0.82, y=top + 0.16, w=rw - 1.04, h=0.36,
+             text="Доверие при этом падает", size=13, bold=True, color=TEAL)
+    filled_rect(s, rx + 0.20, top + 0.66, rw - 0.40, 1.32, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.8, radius=True, radius_adj=0.06)
+    text_box(s, x=rx + 0.38, y=top + 0.78, w=1.50, h=0.90, text="46%",
+             size=38, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 1.92, y=top + 0.80, w=rw - 2.30, h=1.06,
+             text="не доверяют точности того, что выдают AI-инструменты — "
+                  "против 31% годом ранее [1]",
+             size=11.5, bold=True, color=DEEP, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 0.24, y=top + 2.12, w=rw - 0.48, h=0.84,
+             text="Более 80% при этом отмечают рост личной эффективности — а "
+                  "высоко доверяют результату лишь 24% [2]. Ощущение пользы и "
+                  "доверие к выводу разошлись.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.20, top + 3.02, rw - 0.40, 0.98, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.4, radius=True, radius_adj=0.07)
+    text_box(s, x=rx + 0.40, y=top + 3.10, w=rw - 0.80, h=0.84,
+             text="Пользуются почти все — доверяют меньше половины. Спорить "
+                  "«включать ли AI» уже не о чем; инженерный вопрос — чем "
+                  "закрыть этот разрыв.",
+             size=10.5, bold=True, color=DEEP, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, 5.76, 12.25, 0.68,
+        "84–90% отрасли уже внутри, и доля растёт второй год подряд. Значит "
+        "полезный вопрос не «применять AI или нет», а какой ценой, с какими "
+        "рисками и какими мерами они закрываются — по фазам разработки.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s03b")
+    notes_with_sources(s, "s03b")
+    return s
+
+
+# ============================================================
 # s04 — central question (contrast two framings)
 # ============================================================
 def s04(p):

@@ -165,6 +165,11 @@ URLS = {
     "msw_docs": "https://mswjs.io/docs",
     "wiremock_split": "https://wiremock.io/",
     "pytest_generator_distil": "https://distillabs.ai/",
+    # --- added for s03b (industry-adoption intro slide, #162 round 6 block 5) ---
+    "so_survey_2025_ai": "https://survey.stackoverflow.co/2025/ai",
+    "so_survey_2025_press": (
+        "https://stackoverflow.co/company/press/archive/"
+        "stack-overflow-2025-developer-survey/"),
 }
 
 
@@ -681,6 +686,19 @@ SLIDE_REFS = {
          "metr", "рандомизированный контролируемый эксперимент, n=16, 246 задач; "
          "измеряли реальное время, а не ощущение"),
     ],
+    "s03b": [
+        ("1", "Stack Overflow — Developer Survey 2025, раздел AI",
+         "so_survey_2025_ai",
+         "84% используют или планируют использовать AI-инструменты против 76% "
+         "годом ранее; 51% профессиональных разработчиков — ежедневно; не "
+         "доверяют точности 46% против 31% годом ранее; n > 49 000 "
+         "разработчиков из 177 стран", True),
+        ("2", "DORA — State of AI-assisted Software Development 2025",
+         "dora_2025",
+         "90% используют AI в работе (+14 п.п. к 2024); медиана — около двух "
+         "часов в день; более 80% отмечают рост личной эффективности, при этом "
+         "высоко доверяют результату 24%; n > 5 000", True),
+    ],
     "s04": [
         ("1", "Fowler — Interrogatory LLM", "fowler_interrogatory",
          "узкое место разработки с AI — намерение, а не набор кода"),
@@ -1078,8 +1096,8 @@ SLIDE_REFS = {
          "32%→84% внедрение агентных практик за месяц, 70% кода от AI, "
          "$500–2000/инженер/мес, потолок введён постфактум", True),
         ("2", "AWS Kiro — тот же продукт, два регистра", "aws_kiro_outage",
-         "life sciences (фарма/биотех) успех (§1.1) и Kiro-инцидент декабрь "
-         "2025 (§5.7) — разница в применённой дисциплине, не в бренде", True),
+         "успех в фарме и биотехе и Kiro-инцидент декабря 2025 — разница в "
+         "применённой дисциплине, не в бренде", True),
     ],
 }
 

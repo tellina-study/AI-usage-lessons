@@ -41,7 +41,7 @@ deck:
   version: v4.4
   source: "chapter v4 methodology-first (~34.5k, 5 частей)"
   plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
-  total_slides: 57          # v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
+  total_slides: 58          # v4.5 (#162 round 6, block 5): +1 slide s03b (общая статистика по отрасли: Stack Overflow 2025 / DORA 2025 adoption + trust gap) вставлен между s03 и s04 — все display-позиции с s04 сдвинуты +1. ВНИМАНИЕ для assembly-прохода round 6: другие блоки этого же раунда правят свои слайды параллельно, итоговый total_slides считать после слияния всех блоков. Было 57 — v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3); L4 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "методико-first: фаза SDLC × ведущая практика (методика: артефакт + кто предписывает + почему); инструмент — вторичная иллюстрация"
@@ -175,6 +175,24 @@ slides:
     chapter_ref: "§0.2 [for-slide-s03]"
     interaction: none
     verify_day_of: false
+
+  # NEW (#162 round 6, block 5): общая статистика по отрасли перед центральным
+  # вопросом. Owner note: «и в начале презы надо добавить общую статистику по
+  # отрасли». Ставит масштаб («внедрять или нет» индустрия закрыла) до того,
+  # как задаётся вопрос лекции о надёжности; та же рамка, что в
+  # переформулированных s39/s40 (risk-triad и чек-лист).
+  - id: s03b
+    file: slides/s03b-industry-adoption.md
+    type: assertion_visual
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 2
+    assertion: "Спор «внедрять AI в разработку или нет» индустрия закрыла: 84–90% разработчиков уже пользуются AI-инструментами, и доля растёт второй год подряд — при этом доля не доверяющих точности выводов выросла с 31% до 46%, поэтому открыт не вопрос «да или нет», а вопрос цены, рисков и мер"
+    learning_goal: "Задать масштаб отрасли до разбора по фазам и переформулировать вопрос лекции как вопрос надёжности, а не выбора «использовать / не использовать»"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§7.4 (абзац «Якорь для чек-листа: индустрия использует то, чему всё меньше доверяет»)"
+    references: [so-survey-2025, dora-2025]
+    interaction: none
+    verify_day_of: true
 
   - id: s04
     file: slides/s04-central-question.md

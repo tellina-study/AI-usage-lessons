@@ -41,7 +41,7 @@ deck:
   version: v4.5
   source: "chapter v4 methodology-first (~34.5k, 5 частей)"
   plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
-  total_slides: 58          # v4.5 (#162 round 6 block 1): +1 slide s14b (конкретные артефакты четырёх архитектурных практик), вставлен между s14 и s15; ASSEMBLY NOTE — это единственная правка deck.yaml от блока 1, остальные блоки round-6 правят только содержимое существующих слайдов. Было 57: v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
+  total_slides: 57          # v4.5 (#162 round 6 — сводный проход блоков): +1 s14b (конкретные артефакты четырёх архитектурных практик, между s14 и s15, блок 1), −1 s21 (anti-hype-бенчмарки, display 32 — удалён по прямому указанию владельца, блок 3); остальные блоки round-6 правят только содержимое существующих слайдов. Было 57: v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3); L4 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "методико-first: фаза SDLC × ведущая практика (методика: артефакт + кто предписывает + почему); инструмент — вторичная иллюстрация"
@@ -127,7 +127,7 @@ ai_failure:
   # Целиком-in-bucket слайды (провал+урок / лимит / «когда не AI» / сравнение с альтернативой):
   strict_in_slides: [s07, s11, s13, s15, s17b, s18b, s20, s20g, s21, s24, s27, s29, s30, s30b, s31, s33, s34, s37, s37b, s38, s39]
   count: 21
-  share_by_slides: "21/47 ≈ 45% по слайдам (round-3 QA-fix: +5 in_bucket new slides s17b/s18b/s20g/s30b/s37b, denominator +7 new slides; buffer well above порога 30%; self-estimate, требует methodology-critic re-confirm). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s09b AWS Kiro/847 contrast (partial-upside, mixed success+honest-failure), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s33b BT Group/Azure vs IaC (partial-upside, mixed), s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g/s21-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7 — single-artifact concentration отсутствует."
+  share_by_slides: "20/46 ≈ 43% по слайдам (round-6 block 3: −1 in_bucket слайд s21 anti-hype удалён вместе со слайдом, denominator −1; было 21/47 ≈ 45%; buffer well above порога 30%; self-estimate, требует methodology-critic re-confirm). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s09b AWS Kiro/847 contrast (partial-upside, mixed success+honest-failure), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s33b BT Group/Azure vs IaC (partial-upside, mixed), s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7 — single-artifact concentration отсутствует."
 
 # ─────────────────────────────────────────────────────────────────────────
 # Порядок предъявления (plan v4 §4): фазы SDLC, внутри — практика ведёт.
@@ -589,19 +589,13 @@ slides:
     # NEW (#162 round 2): inserted between s20e (task-logging-layer) and
     # s21 (70-percent-problem/anti-hype).
 
-  - id: s21
-    file: slides/s21-70-percent-problem.md
-    type: case_study
-    section: "Раздел 3. Реализация — дисциплина и харнес"
-    duration_min: 3
-    assertion: "Бенчмарк-число бывает истинным и вводящим в заблуждение: Devin 13,86% — 79 из 570 (только 25% бенча с контаминацией); OpenAI «70% больше PR» — без знаменателя; бренд/бенчмарк ≠ дисциплина"
-    learning_goal: "[SI] Anti-hype: Devin 13,86% (79/570), Cursor признаёт слабость, OpenAI «70% more PRs» без знаменателя"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§3.5 [for-slide-s19]"
-    references: [devin-cognition, swe-bench-pro, openai-swe-bench, cursor]
-    in_bucket: true
-    interaction: none
-    verify_day_of: true
+  # УДАЛЁН (round 6, block 3): id s21 — anti-hype benchmarks (display-слайд 32,
+  # «Бренд и бенчмарк-число ≠ инженерная дисциплина»: SWE-bench Verified/Pro +
+  # Devin/OpenAI/Cursor + «пять вопросов к вендорскому числу»). Удалён по
+  # прямому указанию владельца («слайд 32 — лишний, убрать»). Разрыв
+  # Verified/Pro введён в Лекции 3; вендор-скепсис держат s20 (70%-проблема),
+  # s37 (триангуляция) и s38 (risk-triad). Builder b3.s21 и
+  # slides/s22-anti-hype-benchmarks.md удалены вместе с записью.
 
 # ─────────────────────────────────────────────────────────────────────────
 # Продолжение — deck-part2.yaml: slides s22..s40 + totals + ai_failure_judgment

@@ -868,12 +868,8 @@ SLIDE_REFS = {
          "рост клонов и churn, падение рефакторинга — маркеры техдолга (корреляция)",
          True),
     ],
-    "s22": [
-        ("1", "Devin (Cognition) — SWE-bench technical report", "devin",
-         "13,86% — только на 25% бенча, признанная контаминация, лимит 45 мин"),
-        ("2", "OpenAI — Model Spec", "model_spec",
-         "вендорские числа требуют базы сравнения и знания среза", True),
-    ],
+    # "s22" (anti-hype benchmarks) — запись удалена вместе со слайдом
+    # (round 6, block 3; см. slides_band3.py).
     "s24": [
         ("1", "Beck — TDD: By Example", "beck_tdd",
          "red-green-refactor; человек владеет спекой теста"),

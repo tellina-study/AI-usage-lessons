@@ -1,13 +1,30 @@
-"""Full 58-slide build of Лекция 4 v4.5 «AI в жизненном цикле разработки ПО».
+"""Full 57-slide build of Лекция 4 v4.5 «AI в жизненном цикле разработки ПО».
 
-v4.5 (issue #162 round 6, block 1 — owner review of the rendered deck):
-+1 slide b2.s14b (конкретные артефакты четырёх архитектурных практик:
-ADR-скелет · fitness-функции · Structurizr-C4 DSL · архитектурный гейт)
-сразу после матрицы b2.s14; b2.s18 переписан из schema_architecture в
-четыре явных УРОВНЯ контекста (+ определение JIT-извлечения + блок «что
-куда класть в репозитории»); b2.s18b перестроен в четыре предела,
-параллельные этим уровням; b2.s19 — расшифровка SAST и least-privilege
-на первом видимом употреблении. 57 → 58 slides.
+v4.5 (issue #162 round 6 — owner page-by-page review of the rendered deck).
+Пять тематических блоков правились параллельно в изолированных worktree и
+сведены в один сборочный проход. Итог по счётчику: 57 → 58 (блок 1) → 57
+(блок 3 удалил один слайд).
+
+  · block 1 «контекст/инструкции»: +1 slide b2.s14b (конкретные артефакты
+    четырёх архитектурных практик: ADR-скелет · fitness-функции ·
+    Structurizr-C4 DSL · архитектурный гейт) сразу после матрицы b2.s14;
+    b2.s18 переписан из schema_architecture в четыре явных УРОВНЯ контекста
+    (+ определение JIT-извлечения + блок «что куда класть в репозитории»);
+    b2.s18b перестроен в четыре предела, параллельные этим уровням; b2.s19 —
+    расшифровка SAST и least-privilege на первом видимом употреблении.
+  · block 2 «инструментарий»: переработаны b2.s20b (Skills — категории
+    навыков + граница применимости), b2.s20c (MCP уже API/CLI + цепочка
+    риск→смягчение), b2.s20e (три уровня логирования задач как прогрессия
+    сложности + четвёртый вариант «трекер»), b2.s20d (git-конвенции от
+    «зачем», а не от синтаксиса), b2.s20f (worktree — реальные инциденты
+    #60295/#55724 + двухпанельная схема). Счёт не менялся.
+  · block 3 «тестирование»: display-слайд 32 (anti-hype benchmarks, builder
+    b3.s21) УДАЛЁН по прямому указанию владельца («слайд 32 — лишний,
+    убрать»). Плюс переработаны три слайда раздела тестирования: TDD-слайд
+    получил рецепт «что работает вместо форсинга порядка», BDD/trunk-based —
+    явную структуру «+ / −», локальный инструментарий расширен до
+    5 категорий (добавлены Playwright и локальная генерация тестов) с
+    переосмыслением строк на «что делает / что без него невозможно».
 
 v4.4 (issue #162 round 3 — QA-fix pass): +7 slides s09b/s17b/s18b/s20g/s30b/
 s33b/s37b (AWS Kiro vs 847-deployments contrast · Gemini CLI self-review ·
@@ -122,7 +139,11 @@ def main():
     # display s21–s30 (old "s21" comment kept as historical marker; actual
     # display position shifted further by r3 inserts above)
     builders += [b2.s20,                                     # 70%-проблема (+2026 GitClear addition)
-                 b3.s21, b3.s22, b3.s23, b3.s24,             # testing..review
+                 # b3.s21 (anti-hype benchmarks) REMOVED — round 6 block 3
+                 # (owner: «слайд 32 — лишний, убрать»). SWE-bench Verified/Pro
+                 # разрыв введён в Лекции 3; вендор-скепсис держат s20 (70%-
+                 # проблема) и s37/s38 (триангуляция, risk-triad).
+                 b3.s22, b3.s23, b3.s24,                     # testing..review
                  b3.s25b, b3.s25c,                            # NEW (r2): §4.4 BDD/trunk-based · §4.5 test tooling (rebuilt r3)
                  b3.s25,
                  b3.s26, b3.s27, b3.s28]                       # review..security(complacency)
@@ -141,18 +162,18 @@ def main():
     builders += [b4.s37b]                                      # NEW (r3): Uber + Kiro dual-register bridge
     builders += [b4.s38, b4.s39, b4.s40]
 
-    assert len(builders) == 58, f"expected 58 builders, got {len(builders)}"
+    assert len(builders) == 57, f"expected 57 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
-    # Stamp a page number «N / 57» on every slide (bottom-right, muted). Done in
-    # the assembler so all 57 slides carry it without touching per-slide builders.
+    # Stamp a page number «N / 56» on every slide (bottom-right, muted). Done in
+    # the assembler so all 56 slides carry it without touching per-slide builders.
     total = len(builders)
     for i, slide in enumerate(p.slides, start=1):
         page_number(slide, i, total)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 58, f"expected 58 slides, got {n}"
+    assert n == 57, f"expected 57 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

@@ -1,4 +1,4 @@
-"""Full 41-slide build of Лекция 4 v4.1 «AI в жизненном цикле разработки ПО».
+"""Full 40-slide build of Лекция 4 v4.1 «AI в жизненном цикле разработки ПО».
 
 Methodology-first re-spine v4 (owner redirect #264) + edit pass v4.1
 (#265/#266/#267/#268/#269): NEW foundations slide s05 (2 practice lists со
@@ -60,14 +60,16 @@ def main():
                  b2.s16, b2.s17, b2.s18, b2.s19]             # s17..s20
     # display s21–s30
     builders += [b2.s20,                                     # s21
-                 b3.s21, b3.s22, b3.s23, b3.s24, b3.s25,     # s22..s26
+                 # b3.s21 (anti-hype benchmarks) removed in round 6 block 3
+                 # together with the main build — see build_lec04_v4.py.
+                 b3.s22, b3.s23, b3.s24, b3.s25,             # s22..s26
                  b3.s26, b3.s27, b3.s28, b3.s29]             # s27..s30
     # display s31–s41
     builders += [b3.s30,                                     # s31
                  b4.s31, b4.s32, b4.s33, b4.s34, b4.s35,     # s32..s36
                  b4.s36, b4.s37, b4.s38, b4.s39, b4.s40]     # s37..s41
 
-    assert len(builders) == 41, f"expected 41 builders, got {len(builders)}"
+    assert len(builders) == 40, f"expected 40 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
@@ -77,7 +79,7 @@ def main():
     #     page_number(slide, i, total)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 41, f"expected 41 slides, got {n}"
+    assert n == 40, f"expected 40 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

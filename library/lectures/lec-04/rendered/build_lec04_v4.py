@@ -1,4 +1,13 @@
-"""Full 57-slide build of Лекция 4 v4.4 «AI в жизненном цикле разработки ПО».
+"""Full 58-slide build of Лекция 4 v4.5 «AI в жизненном цикле разработки ПО».
+
+v4.5 (issue #162 round 6, block 1 — owner review of the rendered deck):
++1 slide b2.s14b (конкретные артефакты четырёх архитектурных практик:
+ADR-скелет · fitness-функции · Structurizr-C4 DSL · архитектурный гейт)
+сразу после матрицы b2.s14; b2.s18 переписан из schema_architecture в
+четыре явных УРОВНЯ контекста (+ определение JIT-извлечения + блок «что
+куда класть в репозитории»); b2.s18b перестроен в четыре предела,
+параллельные этим уровням; b2.s19 — расшифровка SAST и least-privilege
+на первом видимом употреблении. 57 → 58 slides.
 
 v4.4 (issue #162 round 3 — QA-fix pass): +7 slides s09b/s17b/s18b/s20g/s30b/
 s33b/s37b (AWS Kiro vs 847-deployments contrast · Gemini CLI self-review ·
@@ -91,7 +100,9 @@ def main():
     # display s11–s20
     builders += [b1.s10,                                     # s11
                  b1.s11b,                                    # NEW (r2): §1.2b requirements viz
-                 b2.s11, b2.s12, b2.s13, b2.s14, b2.s15,     # s12..s16
+                 b2.s11, b2.s12, b2.s13, b2.s14,             # s12..s15
+                 b2.s14b,                                     # NEW (r6 b1): конкретные артефакты 4 практик
+                 b2.s15,                                      # s16
                  b2.s16, b2.s17]                              # s17..s18
     builders += [b2.s17b]                                     # NEW (r3): Gemini CLI self-review
     builders += [b2.s18]                                      # s19 (persistent-memory, reworked title/framing)
@@ -130,7 +141,7 @@ def main():
     builders += [b4.s37b]                                      # NEW (r3): Uber + Kiro dual-register bridge
     builders += [b4.s38, b4.s39, b4.s40]
 
-    assert len(builders) == 57, f"expected 57 builders, got {len(builders)}"
+    assert len(builders) == 58, f"expected 58 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
@@ -141,7 +152,7 @@ def main():
         page_number(slide, i, total)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 57, f"expected 57 slides, got {n}"
+    assert n == 58, f"expected 58 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

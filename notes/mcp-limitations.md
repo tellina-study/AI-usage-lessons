@@ -541,6 +541,17 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
   Без `LOPROG` в LD_LIBRARY_PATH: `libreglo.so: cannot open shared object file`. Cyrillic рендерится (DejaVu доступен через /usr/share/fonts + local fc-cache). Inter/Arial отсутствуют → build использует fallback (DejaVu Sans через substitution) — визуально приемлемо.
 - **Status:** active (workaround рабочий, проверен end-to-end 2026-08-09).
 - **First seen in:** #157 (lec-03 полная пересборка, 2026-08-09).
+- **Update (2026-09-23, sem-04 раунд 6):** `/tmp/claude-999/local` bundle из исходной записи больше
+  не существует в окружении (проверено — путь отсутствует). Взамен есть постоянный (не в `/tmp`)
+  portable-инсталл: `source /home/harness/.local/lo-portable-env.sh` даёт рабочие `soffice`
+  (LibreOffice 26.2.4.2) и `pdftoppm` (poppler 24.02) без дополнительной возни с `LD_LIBRARY_PATH`
+  вручную — скрипт уже выставляет `LO_HOME`/`LO_SYSROOT`/`LD_LIBRARY_PATH`/`FONTCONFIG_FILE`/`PATH`
+  сам. Рабочая команда: `soffice --headless -env:UserInstallation=file:///tmp/<profile> --convert-to
+  pdf --outdir <dir> <file>.pptx`, затем `pdftoppm -r 150 -png <file>.pdf <outdir>/<prefix>`. Ни
+  один из двух путей (`/tmp/claude-999/local` или `/home/harness/.local/lo-portable-env.sh`)
+  гарантированно не присутствует в любом произвольном окружении — перед использованием проверять
+  `command -v soffice pdftoppm`, и если пусто — читать этот файл, а не считать инструмент
+  отсутствующим совсем.
 
 ### [#sem01-render-2] python-pptx `Presentation.save()` re-serializes every XML part, including untouched slides — raw byte-diff is NOT a valid "unchanged" check
 

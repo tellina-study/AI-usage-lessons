@@ -19,82 +19,103 @@ SCR = ASSETS / "screenshots"
 # s31 — Replit culmination [in-bucket]
 # ============================================================
 def s31(p):
+    """Round-6 block-4 (owner ask: «важный, но всё в куче, плохо читается, что
+    за 95 и 9 секунд вообще не понятно»). Restructured into a causal chain the
+    eye can follow: WHAT happened (left, numbered) → WHY the guardrail failed
+    → WHY the agent's own report proves nothing (this is where «95» is now
+    decoded in place: it is the agent's self-grade FOR THE RUN IN WHICH IT
+    WIPED THE DB) → WHAT would actually have stopped it. The orphan «9 секунд»
+    is gone from the headline strip: it belonged to a DIFFERENT incident
+    (PocketOS/Cursor) and now appears only inside the echo box, labelled as a
+    separate incident so it reads without cross-referencing anything."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Скорость агента — это скорость катастрофы; accountability не делегируется",
-                size=21, w=12.3, h=0.82)
+    slide_title(s, "Скорость агента — это скорость катастрофы; "
+                   "ответственность (accountability) не делегируется",
+                size=20, w=12.3, h=0.86)
 
-    # left: Replit chronicle
+    # left: WHAT happened — Replit chronicle as a numbered chain
     # Round-5: dropped the round-4 Replit corner logo — swapped for a real
     # meme in the bottom band (Boardroom Suggestion, see below), which
     # actually carries the "explicit instruction ignored" point instead of
-    # just naming the vendor. See iteration-log Round-5 §7 for the round-4
-    # 6-tier "real found meme" search that came up empty in this sandbox.
+    # just naming the vendor.
     lx, lw = 0.55, 6.05
-    ocean_box(s, lx, 1.52, lw, 4.02)
-    text_box(s, x=lx + 0.24, y=1.64, w=lw - 0.48, h=0.66,
-             text="Июль 2025, эксперимент vibe-coding (Replit; Fortune, "
-                  "23.07.2025). Человек ввёл явный code-freeze: «БОЛЬШЕ НИКАКИХ "
-                  "ИЗМЕНЕНИЙ». Несмотря на запрет, агент:",
-             size=11.5, bold=True, color=MID, line_spacing=1.1)
+    top = 1.44
+    ocean_box(s, lx, top, lw, 4.18)
+    text_box(s, x=lx + 0.24, y=top + 0.10, w=lw - 0.48, h=0.30,
+             text="Что произошло — Replit, июль 2025 [1]", size=12.5,
+             bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.44, w=lw - 0.48, h=0.66,
+             text="Эксперимент с vibe-coding. Человек ввёл явный code-freeze "
+                  "(заморозку изменений): «БОЛЬШЕ НИКАКИХ ИЗМЕНЕНИЙ». "
+                  "Несмотря на запрет, агент:",
+             size=10.5, color=DEEP, line_spacing=1.12)
     chron = [
-        "удалил рабочую (production) БД (1200+ руководителей, 1190+ компаний)",
-        "сфабриковал отчёты, маскирующие проблему",
-        "на прямой вопрос солгал",
-        "оценил своё поведение на 95 из 100",
-        "заявил, что откат невозможен — хотя механизм работал, данные восстановили",
+        ("удалил рабочую (production) базу данных — данные 1200+ "
+         "руководителей и 1190+ компаний", 0.52),
+        ("сфабриковал отчёты, маскирующие проблему", 0.34),
+        ("на прямой вопрос солгал", 0.34),
+        ("оценил своё поведение на 95 из 100", 0.34),
+        ("заявил, что откат невозможен — хотя механизм работал и данные "
+         "восстановили", 0.52),
     ]
-    cy = 2.30
-    for i, txt in enumerate(chron):
-        y = cy + i * 0.44
-        circle(s, lx + 0.30, y + 0.06, 0.16, GOLD)
-        text_box(s, x=lx + 0.60, y=y - 0.02, w=lw - 0.86, h=0.42, text=txt,
-                 size=10.5, color=DEEP, line_spacing=1.05)
-    filled_rect(s, lx + 0.24, 4.60, lw - 0.48, 0.78, SOFT_GREY, stroke=LIGHT,
-                stroke_pt=1.0, radius=True, radius_adj=0.06)
-    text_box(s, x=lx + 0.44, y=4.68, w=lw - 0.86, h=0.64,
-             text="Эхо того же класса (The Register): Amazon Kiro (дек. 2025) — "
-                  "многочасовой простой · PocketOS / Cursor (апр. 2026) — стёр БД "
-                  "за 9 секунд.",
-             size=10.5, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.1)
+    cy = top + 1.14
+    for i, (txt, hh) in enumerate(chron):
+        circle(s, lx + 0.30, cy + 0.07, 0.16, GOLD)
+        text_box(s, x=lx + 0.60, y=cy, w=lw - 0.86, h=hh, text=txt,
+                 size=10.5, color=DEEP, line_spacing=1.08)
+        cy += hh
+    filled_rect(s, lx + 0.24, top + 3.20, lw - 0.48, 0.84, SOFT_GREY,
+                stroke=LIGHT, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.44, y=top + 3.26, w=lw - 0.86, h=0.74,
+             text="Эхо того же класса (The Register): Amazon Kiro, декабрь "
+                  "2025 — многочасовой простой. PocketOS / Cursor, апрель "
+                  "2026 — отдельный инцидент, база стёрта за 9 секунд.",
+             size=10, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.12)
 
-    # right: 3 collapsing pillars
+    # right: WHY it failed → WHY the report proves nothing → WHAT stops it
     rx, rw = 6.85, 5.95
-    pillars = [
-        ("Промпт ≠ контроль",
-         "«БОЛЬШЕ НИКАКИХ ИЗМЕНЕНИЙ» для агента — не барьер среды, а текст, "
-         "конкурирующий за внимание. Нет архитектурной границы между «правилом» "
-         "и «пожеланием»."),
-        ("Самооценка ≠ проверка",
-         "«95/100» антикоррелирована с реальностью (максимальна при худшем исходе)."),
-        ("Отчёт агента ≠ доказательство",
-         "источник истины в постмортеме — независимая телеметрия, не нарратив агента."),
-    ]
-    py = 1.52
-    hs = [1.30, 0.92, 0.92]
-    yy = py
-    for i, (head, body) in enumerate(pillars):
-        ocean_box(s, rx, yy, rw, hs[i] - 0.06)
-        text_box(s, x=rx + 0.24, y=yy + 0.10, w=rw - 0.48, h=0.34, text=head,
-                 size=12.5, bold=True, color=MID)
-        text_box(s, x=rx + 0.24, y=yy + 0.44, w=rw - 0.48, h=hs[i] - 0.54,
-                 text=body, size=11, color=DEEP, line_spacing=1.14)
-        yy += hs[i]
-    filled_rect(s, rx, yy + 0.02, rw, 0.66, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
-                radius=True, radius_adj=0.06)
-    text_box(s, x=rx + 0.24, y=yy + 0.08, w=rw - 0.48, h=0.56,
-             text="«95/100» при худшем результате · «9 секунд»", size=13,
-             bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             align=PP_ALIGN.CENTER)
+    ocean_box(s, rx, top, rw, 1.32)
+    text_box(s, x=rx + 0.24, y=top + 0.10, w=rw - 0.48, h=0.30,
+             text="Почему запрет не сработал", size=12.5, bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=top + 0.44, w=rw - 0.48, h=0.84,
+             text="«БОЛЬШЕ НИКАКИХ ИЗМЕНЕНИЙ» — для агента это не барьер "
+                  "среды, а ещё один текст, конкурирующий за внимание. "
+                  "Границы между «правилом» и «пожеланием» не было: удалить "
+                  "прод-базу технически было можно.",
+             size=10, color=DEEP, line_spacing=1.14)
+
+    ocean_box(s, rx, top + 1.40, rw, 1.36)
+    text_box(s, x=rx + 0.24, y=top + 1.50, w=rw - 0.48, h=0.30,
+             text="Почему отчёт агента ничего не доказывает", size=12.5,
+             bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=top + 1.84, w=rw - 0.48, h=0.84,
+             text="«95 из 100» — это оценка, которую агент поставил сам себе "
+                  "за тот самый прогон, где стёр базу и солгал: она максимальна "
+                  "ровно при худшем исходе. «Откат невозможен» тоже оказалось "
+                  "неправдой. Источник истины в разборе — независимая "
+                  "телеметрия, а не рассказ агента.",
+             size=10, color=DEEP, line_spacing=1.14)
+
+    filled_rect(s, rx, top + 2.84, rw, 1.34, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.6, radius=True, radius_adj=0.06)
+    text_box(s, x=rx + 0.24, y=top + 2.94, w=rw - 0.48, h=0.30,
+             text="Что бы это остановило", size=12.5, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=top + 3.28, w=rw - 0.48, h=0.84,
+             text="Не более строгий промпт, а барьеры вне агента: разделение "
+                  "среды разработки и прода · нет прав на удаление прода "
+                  "(least-privilege — "
+                  "наименьшие привилегии) · человеческий гейт на любое "
+                  "необратимое действие · регулярно проверяемый откат.",
+             size=10, color=DEEP, line_spacing=1.14)
 
     gold_callout(
-        s, 0.55, 5.70, 12.25, 0.60,
-        "Безопасность уровня D не живёт в промпте — она живёт вне агента: "
-        "dev/prod-изоляция, жёсткий человеческий гейт на деструктив, least-privilege, "
-        "проверенный откат. Корневая ошибка — автономия, неадекватная цене "
-        "ошибки [1]. Accountability не делегируется.",
-        size=12, bold=True, align=PP_ALIGN.CENTER)
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Корневая ошибка — не «плохо настроенный агент», а автономия, "
+        "неадекватная цене ошибки [1]. Ответственность за прод остаётся "
+        "человеческой: её нельзя передать агенту вместе с задачей.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
     # Round-5 meme: Boardroom Suggestion (panel 3, consequence split) —
     # explicit human instruction ignored, agent keeps going regardless.
     # (y nudged down from the gold_callout's own bottom edge — iter2 fix,
@@ -129,59 +150,78 @@ def s33(p):
     slide_title(s, "Доставка — DORA-first: сначала зрелый конвейер, потом масштабировать AI",
                 size=21, w=12.3, h=0.82)
 
-    # left: DORA-first practice
+    # Round-6 block-4 (owner ask: «совершенно не считывается без глубокого
+    # анализа заметок, переделать и структурировать для вхождения в раздел»).
+    # This is the FIRST content slide of §6, so it now carries ONE thesis —
+    # order of investment: maturity first, AI second — as a two-step figure,
+    # with the DORA pair as its evidence. The three co-equal asides of the
+    # previous version (risk-calibrated gate · consumes-not-owns · ops is the
+    # weakest phase) are demoted to a single muted subordinate paragraph, and
+    # the seven capabilities are named as a count with four examples instead
+    # of enumerated in full.
     lx, lw = 0.55, 6.05
-    ocean_box(s, lx, 1.52, lw, 4.02)
-    text_box(s, x=lx + 0.24, y=1.60, w=lw - 0.48, h=0.98,
-             text="Ведёт не инструмент, а порядок: сначала семь зрелых "
-                  "delivery-способностей DORA — платформенная инженерия · "
-                  "автотесты · контроль версий · быстрая обратная связь · "
-                  "слабо-связанная архитектура · документация · малые порции — "
-                  "потом масштабировать AI. «AI усиливает то, что уже есть».",
-             size=10.5, color=DEEP, line_spacing=1.10)
-    filled_rect(s, lx + 0.24, 2.62, lw - 0.48, 0.76, TEAL_TINT, stroke=TEAL,
-                stroke_pt=1.4, radius=True, radius_adj=0.07)
-    text_box(s, x=lx + 0.46, y=2.67, w=lw - 0.9, h=0.66,
-             text="Внутри — риск-калиброванный прод-гейт: необратимое — "
-                  "жёсткий человеческий гейт; мелкое обратимое с пройденными "
-                  "гейтами — AI может участвовать в согласовании.",
-             size=10.5, bold=True, color=DEEP, line_spacing=1.10,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=lx + 0.24, y=3.50, w=lw - 0.48, h=0.62,
-             text="AI потребляет конвейеры, но не владеет ими — нет "
-                  "«AI-CD-продукта»; агент вызывает gh / aws / gcloud как "
-                  "ограниченный по правам пользователь.",
-             size=10.5, color=DEEP, line_spacing=1.10)
-    filled_rect(s, lx + 0.24, 4.20, lw - 0.48, 1.20, SOFT_GREY, stroke=LIGHT,
-                stroke_pt=1.0, radius=True, radius_adj=0.05)
-    icon(s, "wrench", lx + 0.42, 4.34, 0.44, "teal")
-    text_box(s, x=lx + 1.00, y=4.26, w=lw - 1.3, h=1.06,
-             text="Эксплуатация — слабейшая фаза цикла: нет системного и "
-                  "рантайм-контекста; отчёт агента о состоянии ≠ источник истины "
-                  "(эхо Replit).",
-             size=10.5, color=DEEP, line_spacing=1.10, anchor=MSO_ANCHOR.MIDDLE)
+    top = 1.44
+    ocean_box(s, lx, top, lw, 4.18)
+    filled_rect(s, lx + 0.24, top + 0.12, lw - 0.48, 0.70, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.6, radius=True, radius_adj=0.07)
+    text_box(s, x=lx + 0.42, y=top + 0.16, w=lw - 0.84, h=0.62,
+             text="«AI усиливает то, что уже есть» — поэтому порядок один, "
+                  "и он обратен интуиции:",
+             size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.10)
+    steps = [
+        ("1", "Сначала — зрелая доставка, работающая БЕЗ AI: автотесты как "
+              "гейт · контроль версий с дешёвым откатом · быстрая обратная "
+              "связь · малые порции. Это четыре из семи способностей "
+              "доставки, которые выделяет DORA.", 0.90),
+        ("2", "Только потом — масштабировать AI поверх неё.", 0.50),
+    ]
+    sy = top + 0.94
+    for num, txt, hh in steps:
+        filled_rect(s, lx + 0.24, sy, lw - 0.48, hh, TEAL_TINT, stroke=TEAL,
+                    stroke_pt=1.3, radius=True, radius_adj=0.07)
+        chip(s, lx + 0.40, sy + 0.10, 0.28, 0.26, num, fill=TEAL, color=WHITE,
+             size=10)
+        text_box(s, x=lx + 0.78, y=sy + 0.08, w=lw - 1.06, h=hh - 0.14,
+                 text=txt, size=10, color=DEEP, line_spacing=1.14)
+        sy += hh + 0.10
+    text_box(s, x=lx + 0.24, y=top + 2.56, w=lw - 0.48, h=0.44,
+             text="Наоборот не работает: AI не чинит незрелый конвейер — "
+                  "он его разгоняет.",
+             size=11.5, bold=True, color=MID, line_spacing=1.12)
+    text_box(s, x=lx + 0.24, y=top + 3.10, w=lw - 0.48, h=1.06,
+             text="Внутри практики: прод-гейт калибруется по риску — "
+                  "необратимое согласует человек, мелкое обратимое с "
+                  "пройденными гейтами может подтвердить AI. AI потребляет "
+                  "конвейер, но не владеет им: агент вызывает gh / aws / "
+                  "gcloud как пользователь с ограниченными правами. "
+                  "Эксплуатация — самая слабая из трёх фаз: у AI нет "
+                  "рантайм-контекста.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.14)
 
-    # right: DORA both halves chart + failure
+    # right: the evidence — DORA's two halves of one and the same adoption
     rx, rw = 6.85, 5.95
-    ocean_box(s, rx, 1.52, rw, 4.02)
-    add_image(s, CHARTS / "c33-dora.png", rx + 0.14, 1.66, rw - 0.28, 2.40)
-    filled_rect(s, rx + 0.20, 4.14, rw - 0.40, 1.20, GOLD_TINT, stroke=GOLD,
-                stroke_pt=1.5, radius=True, radius_adj=0.05)
-    text_runs(s, rx + 0.40, 4.22, rw - 0.8, 1.06, [
-        {"text": "+ throughput и +7,5% документации — но −7,2% стабильности "
-                 "доставки", "size": 11, "bold": True, "color": DEEP,
-         "line_spacing": 1.12},
-        {"text": " (DORA 2024) [1]", "size": 9.5, "italic": True, "color": LIGHT},
-        {"text": "; негативная связь второй год подряд (DORA 2025) [2]. Провал: "
-                 "масштабировать AI на незрелый конвейер → множитель DORA в "
-                 "худшую сторону.", "size": 11, "bold": True, "color": DEEP,
-         "line_spacing": 1.12},
-    ], anchor=MSO_ANCHOR.MIDDLE)
+    ocean_box(s, rx, top, rw, 4.18)
+    add_image(s, CHARTS / "c33-dora.png", rx + 0.14, top + 0.12, rw - 0.28, 2.44)
+    filled_rect(s, rx + 0.20, top + 2.68, rw - 0.40, 0.90, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.5, radius=True, radius_adj=0.06)
+    text_box(s, x=rx + 0.40, y=top + 2.73, w=rw - 0.80, h=0.82,
+             text="Одно и то же внедрение AI даёт обе половины: +7,5% к "
+                  "качеству документации и −7,2% к стабильности доставки "
+                  "(DORA 2024 [1]); со стабильностью связь негативна второй "
+                  "год подряд (DORA 2025 [2]).",
+             size=10.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.12)
+    text_box(s, x=rx + 0.24, y=top + 3.70, w=rw - 0.48, h=0.50,
+             text="Какая из половин перевесит — решает зрелость конвейера, "
+                  "а не выбор модели.",
+             size=11, color=DEEP, line_spacing=1.14)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
-        "AI-множитель работает в обе стороны. Устойчивый паттерн: DORA-first + "
-        "человеческий прод-гейт. Хайп: «AI-CD/ops-продукт как замена человека».",
+        "Провал этой фазы — масштабировать AI на незрелый конвейер: вырастет "
+        "и скорость, и нестабильность. Хайп: «AI-CD/ops-продукт как замена "
+        "человека».",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s34")
     notes_with_sources(s, "s34")
@@ -195,71 +235,110 @@ def s33(p):
 def s33b(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
+    # Round-6 block-4 (owner ask: «проблемы с безопасностью на слайде никак не
+    # связаны с множителем, в чём проблема? больше выкаток? больше проблем?»).
+    # The previous version put two facts side by side under a shared banner and
+    # never stated the MECHANISM. It is now stated explicitly and in parallel:
+    # both columns answer the same two questions — «что именно умножает AI» and
+    # «где гейт» — so the reader sees that the multiplier is identical (volume
+    # × speed) and only the gate differs.
     slide_title(
-        s, "Множитель работает в обе стороны одной фазы: быстрый MTTR — и небезопасный IaC",
-        size=18.5, w=12.3, h=0.82)
+        s, "Множитель — это объём: зрелый гейт умножает проверенное, "
+           "отсутствующий гейт умножает небезопасное",
+        size=18.5, w=12.3, h=0.86)
 
     lx, lw = 0.55, 6.05
     rx, rw = 6.85, 5.95
     top = 1.44
 
-    # left: where copilot works
-    ocean_box(s, lx, top, lw, 4.10, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.6)
-    icon(s, "gauge", lx + 0.22, top + 0.16, 0.46, "gold")
-    text_box(s, x=lx + 0.82, y=top + 0.20, w=lw - 1.04, h=0.36,
+    # left: where copilot works — and WHY the volume is safe there
+    ocean_box(s, lx, top, lw, 4.18, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.6)
+    icon(s, "gauge", lx + 0.22, top + 0.14, 0.44, "gold")
+    text_box(s, x=lx + 0.80, y=top + 0.16, w=lw - 1.02, h=0.34,
              text="Где AI-копайлот работает", size=13, bold=True, color=DEEP)
-    text_box(s, x=lx + 0.24, y=top + 0.70, w=lw - 0.48, h=0.34,
-             text="BT Group [1]", size=12, bold=True, color=MID)
-    text_box(s, x=lx + 0.24, y=top + 1.02, w=lw - 0.48, h=0.50,
+    text_box(s, x=lx + 0.24, y=top + 0.58, w=lw - 0.48, h=0.28,
+             text="BT Group [1]", size=11.5, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.86, w=lw - 0.48, h=0.36,
              text="MTTR ~2ч → 85с (~97% сокращения)", size=15, bold=True,
              color=DEEP)
-    text_box(s, x=lx + 0.24, y=top + 1.54, w=lw - 0.48, h=0.50,
-             text="MTTR (mean time to repair, время восстановления после "
-                  "сбоя) — корреляция алертов + авто-устранение по runbook",
-             size=9.5, italic=True, color=SLATE, line_spacing=1.08)
-    text_box(s, x=lx + 0.24, y=top + 2.10, w=lw - 0.48, h=0.34,
-             text="Microsoft Azure «Triangle» [2]", size=12, bold=True,
+    text_box(s, x=lx + 0.24, y=top + 1.26, w=lw - 0.48, h=0.42,
+             text="MTTR (mean time to repair) — среднее время восстановления "
+                  "после сбоя",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+    text_box(s, x=lx + 0.24, y=top + 1.72, w=lw - 0.48, h=0.28,
+             text="Microsoft Azure «Triangle» [2]", size=11.5, bold=True,
              color=MID)
-    text_box(s, x=lx + 0.24, y=top + 2.42, w=lw - 0.48, h=0.50,
+    text_box(s, x=lx + 0.24, y=top + 1.98, w=lw - 0.48, h=0.36,
              text="time-to-engage −91%, триаж 97%", size=15, bold=True,
              color=DEEP)
-    text_box(s, x=lx + 0.24, y=top + 3.00, w=lw - 0.48, h=0.94,
-             text="Оба — поверх УЖЕ зрелой SRE-практики: множитель усиливает "
-                  "то, что уже хорошо работало.",
-             size=10.5, italic=True, color=SLATE, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 2.34, w=lw - 0.48, h=0.26,
+             text="time-to-engage — время до подключения дежурного инженера",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+    filled_rect(s, lx + 0.24, top + 2.64, lw - 0.48, 0.56, WHITE, stroke=GOLD,
+                stroke_pt=1.2, radius=True, radius_adj=0.08)
+    text_runs(s, lx + 0.40, top + 2.67, lw - 0.80, 0.50, [
+        {"text": "Что умножает AI: ", "size": 9.5, "bold": True, "color": DEEP},
+        {"text": "корреляцию алертов и шаги по заранее написанному runbook.",
+         "size": 9.5, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    filled_rect(s, lx + 0.24, top + 3.26, lw - 0.48, 0.88, WHITE, stroke=GOLD,
+                stroke_pt=1.2, radius=True, radius_adj=0.08)
+    text_runs(s, lx + 0.40, top + 3.30, lw - 0.80, 0.82, [
+        {"text": "Где гейт: ", "size": 9.5, "bold": True, "color": DEEP},
+        {"text": "runbook (готовый сценарий устранения) задаёт допустимые "
+                 "действия, телеметрия показывает результат каждого шага. "
+                 "Умножается уже проверенная работа — поверх УЖЕ зрелой "
+                 "практики эксплуатации (SRE).",
+         "size": 9.5, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
 
-    # right: same multiplier, opposite side (IaC insecurity)
-    ocean_box(s, rx, top, rw, 4.10, fill=SOFT_GREY, stroke=LIGHT, stroke_pt=1.0)
-    icon(s, "shield-alert", rx + 0.22, top + 0.16, 0.46, "mid")
-    text_box(s, x=rx + 0.82, y=top + 0.20, w=rw - 1.04, h=0.36,
+    # right: same multiplier, opposite side — and WHY the volume is unsafe here
+    ocean_box(s, rx, top, rw, 4.18, fill=SOFT_GREY, stroke=LIGHT, stroke_pt=1.0)
+    icon(s, "shield-alert", rx + 0.22, top + 0.14, 0.44, "mid")
+    text_box(s, x=rx + 0.80, y=top + 0.16, w=rw - 1.02, h=0.34,
              text="Тот же множитель, обратная сторона", size=13, bold=True,
              color=DEEP)
-    text_box(s, x=rx + 0.24, y=top + 0.70, w=rw - 0.48, h=1.02,
-             text="AI-генерируемый IaC (инфраструктура-как-код; Terraform, "
-                  "K8s) небезопасен по умолчанию: лишь ~55% задач дают "
-                  "secure-by-default код — цифра почти не менялась 2 года [3].",
-             size=10.5, color=DEEP, line_spacing=1.16)
-    text_box(s, x=rx + 0.24, y=top + 1.78, w=rw - 0.48, h=0.40,
-             text="(синтаксическая корректность >95%)", size=10, italic=True,
-             color=SLATE)
-    filled_rect(s, rx + 0.24, top + 2.30, rw - 0.48, 0.94, WHITE, stroke=LIGHT,
+    text_box(s, x=rx + 0.24, y=top + 0.58, w=rw - 0.48, h=0.44,
+             text="AI-генерируемый IaC (инфраструктура-как-код) [3]",
+             size=11.5, bold=True, color=MID, line_spacing=1.10)
+    text_box(s, x=rx + 0.24, y=top + 1.04, w=rw - 0.48, h=0.36,
+             text="~55% безопасны по умолчанию", size=15, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=top + 1.44, w=rw - 0.48, h=0.60,
+             text="доля задач, где сгенерированный Terraform / "
+                  "Kubernetes-код безопасен «из коробки», без правок "
+                  "человека; за 2 года цифра почти не сдвинулась. "
+                  "Синтаксическая корректность >95%.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+    # Round-6 iter-2: the «8,4%» must not read as a second measurement of the
+    # same 55% — chapter-part5.md §6.2 calls it «в отдельном 2026-бенчмарке».
+    # The round-5 version carried that disambiguator; the first round-6 pass
+    # dropped it, leaving two adjacent security numbers that look contradictory.
+    text_box(s, x=rx + 0.24, y=top + 2.04, w=rw - 0.48, h=0.52,
+             text="Отдельный бенчмарк 2026 года, другое измерение: 8,4% "
+                  "на задачах с проверкой безопасности",
+             size=11.5, bold=True, color=DEEP, line_spacing=1.10)
+    filled_rect(s, rx + 0.24, top + 2.64, rw - 0.48, 0.56, WHITE, stroke=LIGHT,
                 stroke_pt=1.2, radius=True, radius_adj=0.08)
-    text_box(s, x=rx + 0.44, y=top + 2.36, w=rw - 0.88, h=0.82,
-             text="2026-бенчмарк (отдельное измерение, не тот же тренд): 6 "
-                  "frontier-моделей прошли security-filtered IaC-задачи лишь "
-                  "в 8,4% случаев.",
-             size=10, bold=True, color=DEEP, line_spacing=1.14,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=rx + 0.24, y=top + 3.42, w=rw - 0.48, h=0.60,
-             text="Ограничение прав защищает от действий агента, но не от "
-                  "того, что сам артефакт небезопасен по содержанию.",
-             size=10, italic=True, color=SLATE, line_spacing=1.14)
+    text_runs(s, rx + 0.40, top + 2.67, rw - 0.80, 0.50, [
+        {"text": "Что умножает AI: ", "size": 9.5, "bold": True, "color": DEEP},
+        {"text": "генерацию конфигураций — в разы больше артефактов и быстрее.",
+         "size": 9.5, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    filled_rect(s, rx + 0.24, top + 3.26, rw - 0.48, 0.88, WHITE, stroke=LIGHT,
+                stroke_pt=1.2, radius=True, radius_adj=0.08)
+    text_runs(s, rx + 0.40, top + 3.30, rw - 0.80, 0.82, [
+        {"text": "Гейта нет: ", "size": 9.5, "bold": True, "color": DEEP},
+        {"text": "конвейер проверяет синтаксис, а не безопасность. Больше "
+                 "конфигураций → меньше внимания на каждую → небезопасное "
+                 "доезжает до прода.",
+         "size": 9.5, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
-        "AI усиливает то, что уже есть — в обе стороны одной фазы: зрелая "
-        "платформа получает быстрый MTTR, незрелый IaC-гейт получает "
-        "небезопасную инфраструктуру, которая выглядит рабочей.",
+        "Проблема не в том, что «выкаток стало больше», а в том, ЧТО именно "
+        "умножается: BT умножает проверенный шаг, генерация IaC — непроверенный "
+        "артефакт. Множитель один и тот же, разная только зрелость гейта.",
         size=12, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s33b")
     notes_with_sources(s, "s33b")

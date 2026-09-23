@@ -113,6 +113,9 @@ URLS = {
     "cve_59145": "https://nvd.nist.gov/vuln/detail/CVE-2025-59145",
     "register_curl": "https://www.theregister.com/2026/01/21/curl_ends_bug_bounty/",
     "codecrash": "https://arxiv.org/abs/2504.14119",
+    # round-6 block-4: Xu, Medappa, Tunc, Vroegindeweij, Fransoo — OSS-панель
+    # до/после Copilot; прирост у периферии, нагрузка ревью на ядро.
+    "oss_review_burden": "https://arxiv.org/abs/2510.10165",
     "anthropic_skill_arxiv": "https://arxiv.org/abs/2601.20245",
     "adr_templates": "https://github.com/joelparkerhenderson/architecture-decision-record",
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
@@ -901,20 +904,25 @@ SLIDE_REFS = {
         ("3", "CodeCrash", "codecrash",
          "вводящие в заблуждение комментарии роняют рассуждение модели (~−23%)"),
         ("4", "Rubber-Stamp Collapse (TianPan.co)", "tianpan_rubber_stamp",
-         "470 PR CodeRabbit + телеметрия 22 000 разработчиков: +170% issues, "
+         "470 PR CodeRabbit + телеметрия 22 000 разработчиков: +170% замечаний, "
          "+242,7% инцидентов на PR", True),
-        ("5", "The Register / Decrypt — matplotlib hit-piece",
+        ("5", "The Register — matplotlib hit-piece",
          "matplotlib_hitpiece_register",
          "PR #31132, AI-агент опубликовал эссе против мейнтейнера, отклонившего его PR",
          True),
+        ("6", "Xu и др. — кто платит за ревью AI-кода (arXiv 2510.10165)",
+         "oss_review_burden",
+         "панель 2 755 репозиториев GitHub / 1 699 участников, 12 мес до и после "
+         "Copilot: периферия (75%) +43,5% коммитов и +17,7% PR, ядро (топ-25%) "
+         "−19% собственных коммитов и +6,5% ревью чужого кода, доработка PR +2,4%"),
     ],
     "s29": [
         ("1", "Willison — the lethal trifecta", "lethal_trifecta",
-         "смертельная триада: недоверенный контент × секреты × egress"),
+         "смертельная триада: недоверенный контент × секреты × канал наружу"),
         ("2", "Fowler — Exploring Gen AI", "fowler_genai",
          "разрыв триады — архитектурный, не «лучшей моделью»"),
         ("3", "Google — Big Sleep / OSS-Fuzz", "dora_google_2025",
-         "AI-поиск уязвимостей — curated-кейсы, не универсальный гейт", True),
+         "AI-поиск уязвимостей — отобранные кейсы, не универсальный гейт", True),
     ],
     "s30": [
         ("1", "Stanford — Perry et al. (CCS 2023)", "stanford_perry",
@@ -935,7 +943,8 @@ SLIDE_REFS = {
     ],
     "s34": [
         ("1", "Google — DORA 2024", "dora_2024",
-         "+throughput и +7,5% документации, но −7,2% стабильности доставки", True),
+         "рост пропускной способности и +7,5% документации, но −7,2% "
+         "стабильности доставки", True),
         ("2", "Google — DORA 2025", "dora_2025",
          "негативная связь AI со стабильностью второй год подряд", True),
     ],
@@ -1066,11 +1075,12 @@ SLIDE_REFS = {
          "MTTR ~2ч → 85с (~97%) на зрелой SRE-практике, вендорский кейс-стади",
          True),
         ("2", "Microsoft Azure — «Triangle»", "azure_triangle_ms",
-         "time-to-engage −91%, точность триажа 97%, first-party источник", True),
+         "время до подключения дежурного −91%, точность триажа 97%, "
+         "источник первой стороны (сама Microsoft)", True),
         ("3", "Индустриальные отчёты о безопасности кода, 2026",
          "iac_insecurity_2026",
-         "IaC secure-by-default ~55% (2 года без сдвига); 8,4% на "
-         "security-filtered 2026-бенчмарке", True),
+         "IaC безопасен по умолчанию лишь в ~55% задач (2 года без сдвига); "
+         "8,4% — отдельный 2026-бенчмарк с проверкой безопасности", True),
     ],
     "s37b": [
         ("1", "Fortune / TechCrunch — Uber и Claude Code, 2026",

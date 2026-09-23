@@ -12,7 +12,7 @@
   "slide": "s01",
   "where": "body",
   "ru": "СЕМИНАР 4",
-  "en": "",
+  "en": "SEMINAR 4",
   "passthrough": false
  },
  {
@@ -20,7 +20,7 @@
   "slide": "s01",
   "where": "body",
   "ru": "Сборка кодинг-агента",
-  "en": "",
+  "en": "Setting up a coding agent",
   "passthrough": false
  },
  {
@@ -28,7 +28,7 @@
   "slide": "s01",
   "where": "body",
   "ru": "День-0 база или жди сигнала — шесть развилок одного сквозного кейса",
-  "en": "",
+  "en": "Day-0 baseline or wait for a signal — six decision points in one running case",
   "passthrough": false
  },
  {
@@ -36,7 +36,7 @@
   "slide": "s01",
   "where": "body",
   "ru": "«Что в конфигурации агента стоит закладывать сразу, на день 0, как базовую практику — а что нельзя знать заранее, потому что оно специфично для вашего проекта?»",
-  "en": "",
+  "en": "\"What in an agent's configuration is worth putting in place right away, on day 0, as a baseline practice — and what cannot be known in advance, because it is specific to your project?\"",
   "passthrough": false
  },
  {
@@ -44,7 +44,7 @@
   "slide": "s01",
   "where": "body",
   "ru": "ПУСТАЯ ДИРЕКТОРИЯ  →  СЕМЬ ДОБАВЛЕНИЙ, ПОКА БЕЗ ИМЁН",
-  "en": "",
+  "en": "EMPTY DIRECTORY  →  SEVEN ADDITIONS, STILL UNNAMED",
   "passthrough": false
  },
  {
@@ -116,7 +116,7 @@
   "slide": "s01",
   "where": "body",
   "ru": "Реальные 7 стадий демо-репозитория signup-landing/ (git ls-tree по коммитам) · источник: captures/21–27",
-  "en": "",
+  "en": "The real 7 stages of the signup-landing/ demo repository (git ls-tree by commit) · source: captures/21–27",
   "passthrough": false
  },
  {
@@ -124,7 +124,7 @@
   "slide": "s02",
   "where": "body",
   "ru": "РАЗДЕЛ 0 · ЗАДАЧА ОТ ЗАКАЗЧИКА",
-  "en": "",
+  "en": "SECTION 0 · THE CLIENT'S REQUEST",
   "passthrough": false
  },
  {
@@ -132,7 +132,7 @@
   "slide": "s02",
   "where": "body",
   "ru": "Задача приходит в формулировке заказчика: что должно получиться — есть, устройства кода, критериев готовности и границ действий — нет",
-  "en": "",
+  "en": "The task arrives in the client's own wording: what the result should be is there; how the code is put together, what counts as done, and where the boundaries of action lie are not",
   "passthrough": false
  },
  {
@@ -140,7 +140,7 @@
   "slide": "s02",
   "where": "body",
   "ru": "«Нужен лендинг с формой заявки на демо-урок: одна статическая страница, поля ‘имя’ и ‘email’, кнопка отправки. Своего бэкенда нет — присылайте заявку на наш сервис приёма форм.»",
-  "en": "",
+  "en": "\"We need a landing page with a sign-up form for a demo lesson: a single static page, the fields 'name' and 'email', a submit button. We have no backend of our own — send the submission to our form-intake service.\"",
   "passthrough": false
  },
  {
@@ -148,7 +148,7 @@
   "slide": "s02",
   "where": "body",
   "ru": "«Отдаём эту формулировку агенту как есть — или сначала фиксируем требования?»",
-  "en": "",
+  "en": "\"Do we hand this wording to the agent as is — or do we pin down the requirements first?\"",
   "passthrough": false
  },
  {
@@ -156,7 +156,7 @@
   "slide": "s02",
   "where": "body",
   "ru": "открытая дискуссия, не голосование",
-  "en": "",
+  "en": "open discussion, not a vote",
   "passthrough": false
  },
  {
@@ -164,7 +164,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "РАЗДЕЛ 0 · SPEC.MD",
-  "en": "",
+  "en": "SECTION 0 · SPEC.MD",
   "passthrough": false
  },
  {
@@ -172,7 +172,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "Требования раскладываются на функциональные и нефункциональные и ложатся в spec.md первым коммитом; README описывает устройство репозитория и заводится тем же коммитом",
-  "en": "",
+  "en": "The requirements break down into functional and non-functional ones and go into spec.md in the first commit; README describes how the repository is put together and is set up in the same commit",
   "passthrough": false
  },
  {
@@ -188,7 +188,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "## Функциональные требования",
-  "en": "",
+  "en": "## Functional requirements",
   "passthrough": false
  },
  {
@@ -196,7 +196,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "- Статическая страница-лендинг, форма заявки на демо-урок",
-  "en": "",
+  "en": "- A static landing page, a sign-up form for a demo lesson",
   "passthrough": false
  },
  {
@@ -204,7 +204,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "- Поля: имя (обязательное), email (обязательное)",
-  "en": "",
+  "en": "- Fields: name (required), email (required)",
   "passthrough": false
  },
  {
@@ -212,7 +212,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "- Кнопка отправки; без бэкенда — заявка уходит на внешний сервис",
-  "en": "",
+  "en": "- A submit button; no backend — the submission goes to an external service",
   "passthrough": false
  },
  {
@@ -220,7 +220,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "## Нефункциональные требования",
-  "en": "",
+  "en": "## Non-functional requirements",
   "passthrough": false
  },
  {
@@ -228,7 +228,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "- Критерий приёмки: форма реально доставляет заявку — проверено",
-  "en": "",
+  "en": "- Acceptance criterion: the form actually delivers the submission — verified",
   "passthrough": false
  },
  {
@@ -236,7 +236,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "  на проде, а не только «тест зелёный»",
-  "en": "",
+  "en": "  in prod, not just \"the test is green\"",
   "passthrough": false
  },
  {
@@ -244,7 +244,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "- Граница действий: не деплоить на прод без явного запроса",
-  "en": "",
+  "en": "- Boundary of action: do not deploy to prod without an explicit request",
   "passthrough": false
  },
  {
@@ -252,7 +252,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "иллюстративный пример, не захваченный артефакт",
-  "en": "",
+  "en": "an illustrative example, not a captured artifact",
   "passthrough": false
  },
  {
@@ -260,7 +260,7 @@
   "slide": "s03",
   "where": "body",
   "ru": "«README.md заводится тем же коммитом, отдельно от spec.md. Спека — требования к продукту. README — устройство репозитория для того, кто в него зайдёт: человек или агент.»",
-  "en": "",
+  "en": "\"README.md is set up in the same commit, separately from the spec. The spec is the requirements on the product. The README is how the repository is put together, for whoever walks into it: a human or an agent.\"",
   "passthrough": false
  },
  {
@@ -268,7 +268,7 @@
   "slide": "s04",
   "where": "body",
   "ru": "РАЗДЕЛ 0 · СКВОЗНОЙ КЕЙС",
-  "en": "",
+  "en": "SECTION 0 · THE RUNNING CASE",
   "passthrough": false
  },
  {
@@ -276,7 +276,7 @@
   "slide": "s04",
   "where": "body",
   "ru": "Агент собрал работающий прототип по спеке без единого уточняющего вопроса — и структуру репозитория при этом выбрал сам, потому что spec.md её не описывает",
-  "en": "",
+  "en": "The agent built a working prototype from the spec without a single clarifying question — and chose the structure of the repository itself along the way, because spec.md does not describe it",
   "passthrough": false
  },
  {
@@ -316,7 +316,7 @@
   "slide": "s04",
   "where": "body",
   "ru": "реальный вывод, не макет",
-  "en": "",
+  "en": "real output, not a mock",
   "passthrough": false
  },
  {
@@ -324,7 +324,7 @@
   "slide": "s04",
   "where": "body",
   "ru": "«собери лендинг с формой заявки на демо-урок: статическая HTML-страница, сборка Vite (npm run build → dist/), поля формы — имя и email, тест на Playwright, который проверяет, что форма не отправляется с пустыми обязательными полями (tests/form.spec.ts)» — по содержанию совпадает со spec.md",
-  "en": "",
+  "en": "\"build a landing page with a sign-up form for a demo lesson: a static HTML page, a Vite build (npm run build → dist/), form fields — name and email, a Playwright test that checks that the form does not submit with empty required fields (tests/form.spec.ts)\" — matches spec.md in content",
   "passthrough": false
  },
  {
@@ -332,7 +332,7 @@
   "slide": "s04",
   "where": "body",
   "ru": "«Уточняющий вопрос не задавался. Все параметры задачи были однозначно выводимы из текста задачи, поэтому работа была начата сразу, без уточнений.»  — строка из захваченной сессии",
-  "en": "",
+  "en": "\"No clarifying question was asked. All the parameters of the task were unambiguously derivable from the text of the task, so work was begun immediately, without clarifications.\"  — a line from the captured session",
   "passthrough": false
  },
  {
@@ -340,7 +340,7 @@
   "slide": "s04",
   "where": "body",
   "ru": "создано агентом",
-  "en": "",
+  "en": "created by the agent",
   "passthrough": false
  },
  {
@@ -380,7 +380,7 @@
   "slide": "s04",
   "where": "body",
   "ru": "из финального ответа",
-  "en": "",
+  "en": "from the final answer",
   "passthrough": false
  },
  {
@@ -412,7 +412,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "РАЗДЕЛ 0 · ДВА РЕЖИМА",
-  "en": "",
+  "en": "SECTION 0 · TWO MODES",
   "passthrough": false
  },
  {
@@ -420,7 +420,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "Настраивая агента в новом репозитории, каждый работает в одном из двух режимов — заложить базу сразу или дождаться реальной проблемы",
-  "en": "",
+  "en": "When setting an agent up in a new repository, everyone works in one of two modes — put the baseline in place right away, or wait for a real problem",
   "passthrough": false
  },
  {
@@ -428,7 +428,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "Короткий срез по залу, прежде чем идти дальше.",
-  "en": "",
+  "en": "A quick read of the room before we go further.",
   "passthrough": false
  },
  {
@@ -436,7 +436,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "«Когда вы настраиваете нового агента в новом репозитории — какой из двух режимов вам обычно ближе?»",
-  "en": "",
+  "en": "\"When you set a new agent up in a new repository — which of the two modes is usually closer to you?\"",
   "passthrough": false
  },
  {
@@ -444,7 +444,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "A · «Закладываю базу сразу»",
-  "en": "",
+  "en": "A · \"I put the baseline in place right away\"",
   "passthrough": false
  },
  {
@@ -452,7 +452,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "гейт готовности («что считается сделано»)\n\nтрекинг задач и решений",
-  "en": "",
+  "en": "readiness gate (\"what counts as done\")\n\ntracking of tasks and decisions",
   "passthrough": false
  },
  {
@@ -460,7 +460,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "B · «Жду, пока не заболит»",
-  "en": "",
+  "en": "B · \"I wait until it hurts\"",
   "passthrough": false
  },
  {
@@ -468,7 +468,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "обзор репозитория\n\nвложенные файлы конвенций\n\nсложная, многоуровневая память",
-  "en": "",
+  "en": "repository overview\n\nnested convention files\n\ncomplex, multi-level memory",
   "passthrough": false
  },
  {
@@ -476,7 +476,7 @@
   "slide": "s05",
   "where": "body",
   "ru": "разбор — на следующем слайде",
-  "en": "",
+  "en": "the breakdown is on the next slide",
   "passthrough": false
  },
  {
@@ -484,7 +484,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "РАЗДЕЛ 0 · РАЗБОР ДВУХ РЕЖИМОВ",
-  "en": "",
+  "en": "SECTION 0 · BREAKDOWN OF THE TWO MODES",
   "passthrough": false
  },
  {
@@ -492,7 +492,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "Оба режима рабочие — вопрос в том, к какому типу решения они применяются: специфичное для проекта ждёт сигнала, универсальная гигиена заводится сразу",
-  "en": "",
+  "en": "Both modes work — the question is which type of decision they are applied to: what is specific to the project waits for a signal, universal hygiene is set up right away",
   "passthrough": false
  },
  {
@@ -500,7 +500,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "СПЕЦИФИЧНОЕ ДЛЯ ПРОЕКТА — ЖДАТЬ СИГНАЛА",
-  "en": "",
+  "en": "SPECIFIC TO THE PROJECT — WAIT FOR A SIGNAL",
   "passthrough": false
  },
  {
@@ -508,7 +508,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "УНИВЕРСАЛЬНАЯ ГИГИЕНА — ДЕНЬ 0",
-  "en": "",
+  "en": "UNIVERSAL HYGIENE — DAY 0",
   "passthrough": false
  },
  {
@@ -516,7 +516,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "обзор репозитория",
-  "en": "",
+  "en": "repository overview",
   "passthrough": false
  },
  {
@@ -524,7 +524,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "гейт готовности",
-  "en": "",
+  "en": "readiness gate",
   "passthrough": false
  },
  {
@@ -532,7 +532,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "вложенные файлы конвенций",
-  "en": "",
+  "en": "nested convention files",
   "passthrough": false
  },
  {
@@ -540,7 +540,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "трекинг задач и решений",
-  "en": "",
+  "en": "tracking of tasks and decisions",
   "passthrough": false
  },
  {
@@ -548,7 +548,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "сложная, многоуровневая память",
-  "en": "",
+  "en": "complex, multi-level memory",
   "passthrough": false
  },
  {
@@ -556,7 +556,7 @@
   "slide": "s06",
   "where": "body",
   "ru": "«Лекция 3 говорила про тонкого агента — про отказ от структурной сложности: субагентов, скиллов, внешнего доступа. Там сигнал нужен. Универсальная гигиена — другая категория: здесь ‘жди боли’ работает против вас.»",
-  "en": "",
+  "en": "\"Lecture 3 was about a thin agent — about refusing structural complexity: subagents, skills, external access. There a signal is required. Universal hygiene is a different category: here 'wait until it hurts' works against you.\"",
   "passthrough": false
  },
  {
@@ -564,7 +564,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "РАЗДЕЛ 0 · ЧТО ЗАВЕДЕНО В ПЕРВЫЙ ДЕНЬ",
-  "en": "",
+  "en": "SECTION 0 · WHAT IS SET UP ON THE FIRST DAY",
   "passthrough": false
  },
  {
@@ -572,7 +572,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "Кроме спеки и README в репозиторий в тот же день кладётся ещё три вещи — ни одна из них не ждала сигнала",
-  "en": "",
+  "en": "Besides the spec and the README, three more things go into the repository the same day — not one of them waited for a signal",
   "passthrough": false
  },
  {
@@ -580,7 +580,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "Что заведено",
-  "en": "",
+  "en": "What is set up",
   "passthrough": false
  },
  {
@@ -588,7 +588,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "Зачем именно сразу",
-  "en": "",
+  "en": "Why precisely right away",
   "passthrough": false
  },
  {
@@ -604,7 +604,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "что должно получиться и как устроен репозиторий — первым коммитом, до задачи агенту",
-  "en": "",
+  "en": "what the result should be and how the repository is put together — in the first commit, before the task goes to the agent",
   "passthrough": false
  },
  {
@@ -620,7 +620,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "файл инструкций агенту. В первый день в нём одна строка: критерий «готово» и требование проверить результат руками. Описания устройства репозитория в нём нет — для него ещё нет причины",
-  "en": "",
+  "en": "the instruction file for the agent. On the first day it holds one line: the \"done\" criterion and a manual check. No description of how the repository is put together — no reason yet",
   "passthrough": false
  },
  {
@@ -636,7 +636,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "журнал решений проекта: что решили и почему. Чтобы отклонённый вариант не пришлось разбирать заново через месяц",
-  "en": "",
+  "en": "the project's decision log: what was decided and why. So that a rejected option does not have to be worked through again a month later",
   "passthrough": false
  },
  {
@@ -644,7 +644,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "Практика файла-на-задачу",
-  "en": "",
+  "en": "The file-per-task practice",
   "passthrough": false
  },
  {
@@ -652,7 +652,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "на многошаговую задачу — отдельный файл с планом и отметками о ходе работы",
-  "en": "",
+  "en": "for a multi-step task — a separate file with the plan and notes on the progress of the work",
   "passthrough": false
  },
  {
@@ -660,7 +660,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "Каждое из этого стоит сегодня одной строки. Цена отсутствия заранее неизвестна и обнаруживается задним числом: сигнала, по которому стало бы понятно, что пора, может не быть вовсе.",
-  "en": "",
+  "en": "Each of these costs one line today. The cost of not having it cannot be known in advance and is discovered after the fact: the signal that would have made it clear that it is time may never come at all.",
   "passthrough": false
  },
  {
@@ -668,7 +668,7 @@
   "slide": "s07",
   "where": "body",
   "ru": "Дальше все четыре встречаются в работе поимённо — каждое в своей развилке.",
-  "en": "",
+  "en": "From here on all four are met by name in the work — each in its own decision point.",
   "passthrough": false
  },
  {
@@ -676,7 +676,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "РАЗДЕЛ 0 · ОПОРНАЯ КАРТА",
-  "en": "",
+  "en": "SECTION 0 · THE HARNESS MAP",
   "passthrough": false
  },
  {
@@ -684,7 +684,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "Конфигурация агента раскладывается на пять слотов; сегодняшний проект задействует два — инструкции-правила и память",
-  "en": "",
+  "en": "An agent's configuration breaks down into five slots; today's project puts two of them to work — instruction-rules and memory",
   "passthrough": false
  },
  {
@@ -692,7 +692,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "память",
-  "en": "",
+  "en": "memory",
   "passthrough": false
  },
  {
@@ -700,7 +700,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "что агент помнит между сессиями",
-  "en": "",
+  "en": "what the agent remembers between sessions",
   "passthrough": false
  },
  {
@@ -708,7 +708,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "инструкции-",
-  "en": "",
+  "en": "instruction-",
   "passthrough": false
  },
  {
@@ -716,7 +716,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "правила",
-  "en": "",
+  "en": "rules",
   "passthrough": false
  },
  {
@@ -724,7 +724,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "файл-конвенция проекта + журнал задач",
-  "en": "",
+  "en": "the project's convention file + a task log",
   "passthrough": false
  },
  {
@@ -732,7 +732,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "скиллы",
-  "en": "",
+  "en": "skills",
   "passthrough": false
  },
  {
@@ -740,7 +740,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "переиспользуемые процедуры под повторяющиеся задачи",
-  "en": "",
+  "en": "reusable procedures for repeating tasks",
   "passthrough": false
  },
  {
@@ -748,7 +748,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "субагенты",
-  "en": "",
+  "en": "subagents",
   "passthrough": false
  },
  {
@@ -756,7 +756,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "делегирование с отдельным контекстным окном",
-  "en": "",
+  "en": "delegation with its own context window",
   "passthrough": false
  },
  {
@@ -764,7 +764,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "доступ",
-  "en": "",
+  "en": "access to the",
   "passthrough": false
  },
  {
@@ -772,7 +772,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "наружу (MCP)",
-  "en": "",
+  "en": "outside (MCP)",
   "passthrough": false
  },
  {
@@ -780,7 +780,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "доступ к внешним системам",
-  "en": "",
+  "en": "access to external systems",
   "passthrough": false
  },
  {
@@ -788,7 +788,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "Сегодня в работе — два. Скиллы, субагенты, доступ наружу и механические слои (хук, процесс) — Семинар 5.",
-  "en": "",
+  "en": "Two are in play today. Skills, subagents, access to the outside and the mechanical layers (hook, process) — Seminar 5.",
   "passthrough": false
  },
  {
@@ -796,7 +796,7 @@
   "slide": "s08",
   "where": "body",
   "ru": "«Оставайтесь на самой нижней ступени, которая закрывает требование задачи. Поднимайтесь на следующую только тогда, когда можете назвать требование, которое текущая ступень не закрывает. Каждый подъём оплачивается новой стоимостью, новыми режимами отказа и новой поверхностью атаки.»",
-  "en": "",
+  "en": "\"Stay on the lowest rung that closes the requirements of the task. Climb to the next one only when you can name a requirement that the current rung does not close. Every climb is paid for with new cost, new failure modes, and a new attack surface.\"",
   "passthrough": false
  },
  {
@@ -804,7 +804,7 @@
   "slide": "s09",
   "where": "body",
   "ru": "Раздел 1 · файл инструкций",
-  "en": "",
+  "en": "Section 1 · the instruction file",
   "passthrough": false
  },
  {
@@ -812,7 +812,7 @@
   "slide": "s09",
   "where": "body",
   "ru": "Кейс 1.1 · роль агента и репозиторий",
-  "en": "",
+  "en": "Case 1.1 · the agent's role and the repository",
   "passthrough": false
  },
  {
@@ -820,7 +820,7 @@
   "slide": "s09",
   "where": "body",
   "ru": "Кейс 1.2 · базовые процессы: гейты и цикл улучшения",
-  "en": "",
+  "en": "Case 1.2 · the basic processes: gates and the improvement loop",
   "passthrough": false
  },
  {
@@ -828,7 +828,7 @@
   "slide": "s09",
   "where": "body",
   "ru": "Кейс 1.3 · вложенные файлы по подпапкам",
-  "en": "",
+  "en": "Case 1.3 · nested files per subfolder",
   "passthrough": false
  },
  {
@@ -836,7 +836,7 @@
   "slide": "s09",
   "where": "body",
   "ru": "ОДИН ФАЙЛ, ТРИ РАЗВИЛКИ",
-  "en": "",
+  "en": "ONE FILE, THREE DECISION POINTS",
   "passthrough": false
  },
  {
@@ -844,7 +844,7 @@
   "slide": "s10",
   "where": "body",
   "ru": "Чем заполняется пустой файл инструкций",
-  "en": "",
+  "en": "What an empty instruction file gets filled with",
   "passthrough": false
  },
  {
@@ -852,7 +852,7 @@
   "slide": "s10",
   "where": "body",
   "ru": "ПЕРВОЕ РЕШЕНИЕ ПО КОНФИГУРАЦИИ",
-  "en": "",
+  "en": "THE FIRST CONFIGURATION DECISION",
   "passthrough": false
  },
  {
@@ -860,7 +860,7 @@
   "slide": "s11",
   "where": "body",
   "ru": "КЕЙС 1.1 · РОЛЬ И РЕПОЗИТОРИЙ",
-  "en": "",
+  "en": "CASE 1.1 · ROLE AND REPOSITORY",
   "passthrough": false
  },
  {
@@ -868,7 +868,7 @@
   "slide": "s11",
   "where": "body",
   "ru": "Прототип собран, следующая сессия будет завтра — в CLAUDE.md уже есть строка гейта готовности, остальное пусто, а стандартный первый раздел такого файла называется «Repository overview»",
-  "en": "",
+  "en": "The prototype is built, the next session is tomorrow — CLAUDE.md already has the readiness-gate line in it and nothing else, and the standard first section of such a file is called \"Repository overview\"",
   "passthrough": false
  },
  {
@@ -876,7 +876,7 @@
   "slide": "s11",
   "where": "body",
   "ru": "состояние репозитория",
-  "en": "",
+  "en": "repository state",
   "passthrough": false
  },
  {
@@ -900,7 +900,7 @@
   "slide": "s11",
   "where": "body",
   "ru": "CLAUDE.md ← гейт есть, остальное пусто",
-  "en": "",
+  "en": "CLAUDE.md ← set up, has the gate line, nothing else",
   "passthrough": false
  },
  {
@@ -908,7 +908,7 @@
   "slide": "s11",
   "where": "body",
   "ru": "Прототип работает, задач по нему ещё на несколько дней. Разработчик заводит CLAUDE.md, чтобы агент в следующих сессиях работал с проектом одинаково, и открывает файл — там одна строка, гейт готовности, остальное пусто.",
-  "en": "",
+  "en": "The prototype works, and there are still several days of tasks on it. The developer sets up CLAUDE.md so the agent works with the project the same way in later sessions, and opens the file — there is one line in it, the readiness gate, the rest is empty.",
   "passthrough": false
  },
  {
@@ -916,7 +916,7 @@
   "slide": "s11",
   "where": "body",
   "ru": "Первый раздел, с которого такой файл обычно начинается, — «Repository overview»: из чего собран сайт, где лежит форма, какая структура папок. Так устроено большинство файлов инструкций, которые можно открыть в публичных репозиториях.",
-  "en": "",
+  "en": "The first section such a file usually starts with is \"Repository overview\": what the site is built from, where the form lives, what the folder structure is. That is how most of the instruction files you can open in public repositories are put together.",
   "passthrough": false
  },
  {
@@ -924,7 +924,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "КЕЙС 1.1 · ВОПРОС",
-  "en": "",
+  "en": "CASE 1.1 · QUESTION",
   "passthrough": false
  },
  {
@@ -932,7 +932,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "Выбор из пяти вариантов: что из перечисленного попадёт в файл сейчас, перед следующей сессией",
-  "en": "",
+  "en": "A choice among five options: which of the listed items goes into the file now, before the next session",
   "passthrough": false
  },
  {
@@ -940,7 +940,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "«Перед вами пустой CLAUDE.md репозитория signup-landing. Выберите из карточек, что попадёт в файл сейчас, перед следующей сессией агента.»",
-  "en": "",
+  "en": "\"In front of you is the empty CLAUDE.md of the signup-landing repository. Pick from the cards what goes into the file now, before the agent's next session.\"",
   "passthrough": false
  },
  {
@@ -948,7 +948,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "подробное описание",
-  "en": "",
+  "en": "a detailed description of",
   "passthrough": false
  },
  {
@@ -956,7 +956,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "структуры репозитория",
-  "en": "",
+  "en": "the repository structure",
   "passthrough": false
  },
  {
@@ -964,7 +964,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "список технологий",
-  "en": "",
+  "en": "a list of technologies",
   "passthrough": false
  },
  {
@@ -972,7 +972,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "и зависимостей",
-  "en": "",
+  "en": "and dependencies",
   "passthrough": false
  },
  {
@@ -980,7 +980,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "инструкцию, где лежит",
-  "en": "",
+  "en": "an instruction on where the form",
   "passthrough": false
  },
  {
@@ -988,7 +988,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "форма и как её найти",
-  "en": "",
+  "en": "lives and how to find it",
   "passthrough": false
  },
  {
@@ -996,7 +996,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "неочевидную конвенцию,",
-  "en": "",
+  "en": "a non-obvious convention",
   "passthrough": false
  },
  {
@@ -1004,7 +1004,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "которую агент не угадает сам",
-  "en": "",
+  "en": "the agent will not guess on its own",
   "passthrough": false
  },
  {
@@ -1012,7 +1012,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "пока ничего — до",
-  "en": "",
+  "en": "nothing yet — until",
   "passthrough": false
  },
  {
@@ -1020,7 +1020,7 @@
   "slide": "s12",
   "where": "body",
   "ru": "первого реального сигнала",
-  "en": "",
+  "en": "the first real signal",
   "passthrough": false
  },
  {
@@ -1028,7 +1028,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "КЕЙС 1.1 · ИССЛЕДОВАНИЕ И РАЗБОР",
-  "en": "",
+  "en": "CASE 1.1 · THE EVIDENCE AND BREAKDOWN",
   "passthrough": false
  },
  {
@@ -1036,7 +1036,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Repository overview измеримо не повышает успешность и стоит контекста — а структурированное описание, если оно нужно, живёт в README.md и не дублируется в CLAUDE.md",
-  "en": "",
+  "en": "A repository overview measurably does not raise the success rate and costs context — while a structured description, if it is needed, lives in README.md and is not duplicated in CLAUDE.md",
   "passthrough": false
  },
  {
@@ -1044,7 +1044,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Источник",
-  "en": "",
+  "en": "Source",
   "passthrough": false
  },
  {
@@ -1052,7 +1052,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Тезис",
-  "en": "",
+  "en": "Claim",
   "passthrough": false
  },
  {
@@ -1060,7 +1060,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Сила",
-  "en": "",
+  "en": "Strength",
   "passthrough": false
  },
  {
@@ -1076,7 +1076,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "«are not helpful» — шагов до файла не падает; cost +20–23% без прироста success",
-  "en": "",
+  "en": "\"are not helpful\" — steps to the file do not drop; cost +20–23% with no gain in success",
   "passthrough": false
  },
  {
@@ -1084,7 +1084,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Сильное: контролируемый эксперимент",
-  "en": "",
+  "en": "Strong: a controlled experiment",
   "passthrough": false
  },
  {
@@ -1092,7 +1092,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Та же работа, абляция",
-  "en": "",
+  "en": "The same work, ablation",
   "passthrough": false
  },
  {
@@ -1100,7 +1100,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Убрали README — LLM-overview стал полезен (+2,7%)",
-  "en": "",
+  "en": "Removed README — the LLM-overview became useful (+2.7%)",
   "passthrough": false
  },
  {
@@ -1108,7 +1108,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Подтверждает механизм",
-  "en": "",
+  "en": "Confirms the mechanism",
   "passthrough": false
  },
  {
@@ -1124,7 +1124,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "AGENTS.md про недискаверабельные конвенции: −28,6% runtime (124 PR)",
-  "en": "",
+  "en": "AGENTS.md on non-discoverable conventions: −28.6% runtime (124 PRs)",
   "passthrough": false
  },
  {
@@ -1132,7 +1132,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Умеренно «за» — не общее описание",
-  "en": "",
+  "en": "Moderate \"for\" the file, not structure",
   "passthrough": false
  },
  {
@@ -1148,7 +1148,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Статичное guidance (28,3%) хуже верифицированного (33,0%, p<0,001)",
-  "en": "",
+  "en": "Static guidance (28.3%) is worse than verified (33.0%, p<0.001)",
   "passthrough": false
  },
  {
@@ -1156,7 +1156,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Косвенное",
-  "en": "",
+  "en": "Indirect",
   "passthrough": false
  },
  {
@@ -1164,7 +1164,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Вариант",
-  "en": "",
+  "en": "Option",
   "passthrough": false
  },
  {
@@ -1172,7 +1172,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Где работает",
-  "en": "",
+  "en": "Where it works",
   "passthrough": false
  },
  {
@@ -1180,7 +1180,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Почему рано — что вместо",
-  "en": "",
+  "en": "Why too early — what instead",
   "passthrough": false
  },
  {
@@ -1188,7 +1188,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "«Описание структуры»",
-  "en": "",
+  "en": "\"Description of the structure\"",
   "passthrough": false
  },
  {
@@ -1196,7 +1196,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Почти нигде",
-  "en": "",
+  "en": "Almost nowhere",
   "passthrough": false
  },
  {
@@ -1204,7 +1204,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Агент выведет сам за секунды; устареет",
-  "en": "",
+  "en": "The agent derives it in seconds; goes stale",
   "passthrough": false
  },
  {
@@ -1212,7 +1212,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "«Список технологий»",
-  "en": "",
+  "en": "\"A list of technologies\"",
   "passthrough": false
  },
  {
@@ -1220,7 +1220,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Версии критичны, не видны",
-  "en": "",
+  "en": "Versions critical, not visible",
   "passthrough": false
  },
  {
@@ -1228,7 +1228,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Обычно тоже выводимо",
-  "en": "",
+  "en": "Usually derivable too",
   "passthrough": false
  },
  {
@@ -1236,7 +1236,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "«Инструкция, где форма»",
-  "en": "",
+  "en": "\"Instruction on where the form is\"",
   "passthrough": false
  },
  {
@@ -1244,7 +1244,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Почти нигде на малом репо",
-  "en": "",
+  "en": "Almost nowhere on a small repo",
   "passthrough": false
  },
  {
@@ -1252,7 +1252,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Шесть файлов — вся структура на одном экране",
-  "en": "",
+  "en": "Six files — the whole structure on one screen",
   "passthrough": false
  },
  {
@@ -1260,7 +1260,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "«Неочевидная конвенция»",
-  "en": "",
+  "en": "\"A non-obvious convention\"",
   "passthrough": false
  },
  {
@@ -1268,7 +1268,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Когда реально есть",
-  "en": "",
+  "en": "When one really exists",
   "passthrough": false
  },
  {
@@ -1276,7 +1276,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Такой конвенции ещё нет",
-  "en": "",
+  "en": "No such convention yet",
   "passthrough": false
  },
  {
@@ -1284,7 +1284,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "«Пока ничего — до сигнала»",
-  "en": "",
+  "en": "\"Nothing yet — until a signal\"",
   "passthrough": false
  },
  {
@@ -1292,7 +1292,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "Здесь и сейчас",
-  "en": "",
+  "en": "Here and now",
   "passthrough": false
  },
  {
@@ -1300,7 +1300,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "ЦЕЛЕВОЙ ОТВЕТ",
-  "en": "",
+  "en": "THE TARGET ANSWER",
   "passthrough": false
  },
  {
@@ -1308,7 +1308,7 @@
   "slide": "s13",
   "where": "body",
   "ru": "README, не AGENTS.md: структурированное описание репозитория должно существовать — этот кейс не отменяет потребность в нём, он называет место. Оно живёт в README.md, заведённом первым коммитом, а не дублируется в CLAUDE.md. Отдельный «Repository overview» в файле инструкций не нужен: описание уже есть, просто в другом файле.",
-  "en": "",
+  "en": "README, not AGENTS.md: a structured description of the repository must exist — this case does not cancel the need for one, it names the place. It lives in README.md, set up in the first commit, rather than being duplicated in CLAUDE.md. A separate \"Repository overview\" in the instruction file is not needed: the description already exists, just in a different file.",
   "passthrough": false
  },
  {
@@ -1316,7 +1316,7 @@
   "slide": "s14",
   "where": "body",
   "ru": "КЕЙС 1.1 · РЕШЕНИЕ",
-  "en": "",
+  "en": "CASE 1.1 · RESOLUTION",
   "passthrough": false
  },
  {
@@ -1324,7 +1324,7 @@
   "slide": "s14",
   "where": "body",
   "ru": "Описания структуры репозитория в CLAUDE.md не появляется: сигнала для него нет — а первое содержимое у файла появится уже в следующем кейсе, и по другой причине",
-  "en": "",
+  "en": "No description of the repository structure appears in CLAUDE.md: there is no signal for it — while the file's first content will appear as early as the next case, and for a different reason",
   "passthrough": false
  },
  {
@@ -1332,7 +1332,7 @@
   "slide": "s14",
   "where": "body",
   "ru": "CLAUDE.md        ← заведён, по-прежнему пуст",
-  "en": "",
+  "en": "CLAUDE.md        ← set up, still empty",
   "passthrough": false
  },
  {
@@ -1340,7 +1340,7 @@
   "slide": "s14",
   "where": "body",
   "ru": "«Описания структуры репозитория в файле нет: сигнала для него нет. Пусто — не навсегда: часть содержимого CLAUDE.md появится в нём уже на этой неделе, и по другой причине — не по сигналу, а как базовая практика.»",
-  "en": "",
+  "en": "\"The file has no description of the repository structure: there is no signal for it. Empty is not forever: part of CLAUDE.md's content will appear in it as early as this week, and for a different reason — not on a signal, but as a baseline practice.\"",
   "passthrough": false
  },
  {
@@ -1348,7 +1348,7 @@
   "slide": "s15",
   "where": "body",
   "ru": "Кейс 1.2 · базовые процессы",
-  "en": "",
+  "en": "Case 1.2 · the basic processes",
   "passthrough": false
  },
  {
@@ -1356,7 +1356,7 @@
   "slide": "s15",
   "where": "body",
   "ru": "Гейт готовности и цикл «план → код → улучшение» — то, что лежит в файле с первого дня",
-  "en": "",
+  "en": "The readiness gate and the \"plan → code → improvement\" loop — in the file since the first day",
   "passthrough": false
  },
  {
@@ -1364,7 +1364,7 @@
   "slide": "s15",
   "where": "body",
   "ru": "ГЕЙТ ГОТОВНОСТИ В ФАЙЛЕ ИНСТРУКЦИЙ",
-  "en": "",
+  "en": "THE READINESS GATE IN THE INSTRUCTION FILE",
   "passthrough": false
  },
  {
@@ -1372,7 +1372,7 @@
   "slide": "s16",
   "where": "body",
   "ru": "КЕЙС 1.2 · БАЗОВЫЕ ПРОЦЕССЫ",
-  "en": "",
+  "en": "CASE 1.2 · THE BASIC PROCESSES",
   "passthrough": false
  },
  {
@@ -1380,7 +1380,7 @@
   "slide": "s16",
   "where": "body",
   "ru": "Гейт готовности лежит в CLAUDE.md с дня 0 — и дважды подряд «готово» прозвучало до того, как доставку заявки проверили руками",
-  "en": "",
+  "en": "The readiness gate has been in CLAUDE.md since day 0 — and twice in a row \"done\" was said before the request delivery was checked by hand",
   "passthrough": false
  },
  {
@@ -1388,7 +1388,7 @@
   "slide": "s16",
   "where": "body",
   "ru": "День 0: гейт готовности записан в CLAUDE.md тем же днём, что и spec.md — «Всегда прогоняй тесты и вручную проверяй результат перед тем как сказать ‘готово’».",
-  "en": "",
+  "en": "Day 0: the readiness gate was written into CLAUDE.md the same day as spec.md — \"Always run the tests and manually verify the result before you say 'done'\".",
   "passthrough": false
  },
  {
@@ -1396,7 +1396,7 @@
   "slide": "s16",
   "where": "body",
   "ru": "Первая неделя: заказчик — «заявка не пришла». Агент читает код, правит обработчик, прогоняет тест — зелёный — «Готово». Тест проверяет только пустые поля. Разработчик напоминает про гейт — агент проверяет руками, чинит. Через два дня, другой баг — то же самое: тест зелёный, руками не проверено.",
-  "en": "",
+  "en": "First week: the client — \"the request never arrived\". The agent reads the code, fixes the handler, runs the test — green — \"Done\". The test only checks empty fields. The developer reminds it about the gate — the agent checks by hand, fixes it. Two days later, a different bug — the same thing: test green, nothing checked by hand.",
   "passthrough": false
  },
  {
@@ -1404,7 +1404,7 @@
   "slide": "s16",
   "where": "body",
   "ru": "«Гейт-фраза лежала в файле все эти дни и загружалась в начало каждой сессии. Оба раза «готово» прозвучало до ручной проверки.»",
-  "en": "",
+  "en": "\"The gate line had been in the file all those days and was loaded at the start of every session. Both times, 'done' was said before the manual check.\"",
   "passthrough": false
  },
  {
@@ -1412,7 +1412,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "КЕЙС 1.2 · ВОПРОС",
-  "en": "",
+  "en": "CASE 1.2 · THE QUESTION",
   "passthrough": false
  },
  {
@@ -1420,7 +1420,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "Гейт-фраза уже есть с самого начала и не сработала — выбор из пяти вариантов, что делать дальше",
-  "en": "",
+  "en": "The gate line has been there from the very start and did not work — five options for what to do next",
   "passthrough": false
  },
  {
@@ -1428,7 +1428,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "«У вас гейт-фраза в CLAUDE.md есть с самого начала, а поведение агента всё равно расходится с ней второй раз подряд — заявка снова не проверена руками. Выберите, что вы сделаете дальше — из карточек ниже — так, чтобы это реально сработало в следующей сессии.»",
-  "en": "",
+  "en": "\"You have had the gate line in CLAUDE.md from the very start, and the agent's behavior still diverges from it for the second time in a row — the request has again not been checked by hand. Pick what you will do next — from the cards below — so that it works in the next session.\"",
   "passthrough": false
  },
  {
@@ -1436,7 +1436,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "перепишу фразу",
-  "en": "",
+  "en": "I'll rewrite the line",
   "passthrough": false
  },
  {
@@ -1444,7 +1444,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "капсом / жёстче",
-  "en": "",
+  "en": "in caps / harsher",
   "passthrough": false
  },
  {
@@ -1452,7 +1452,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "продублирую фразу",
-  "en": "",
+  "en": "I'll duplicate the line",
   "passthrough": false
  },
  {
@@ -1460,7 +1460,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "вторым пунктом",
-  "en": "",
+  "en": "as a second bullet",
   "passthrough": false
  },
  {
@@ -1468,7 +1468,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "заведу отдельный",
-  "en": "",
+  "en": "I'll set up a separate",
   "passthrough": false
  },
  {
@@ -1476,7 +1476,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "файл-чеклист рядом",
-  "en": "",
+  "en": "checklist file next to it",
   "passthrough": false
  },
  {
@@ -1484,7 +1484,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "передам проверку",
-  "en": "",
+  "en": "I'll hand the check",
   "passthrough": false
  },
  {
@@ -1492,7 +1492,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "механизму вне текста",
-  "en": "",
+  "en": "to a mechanism outside the text",
   "passthrough": false
  },
  {
@@ -1500,7 +1500,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "смирюсь — сработает",
-  "en": "",
+  "en": "I'll live with it — it",
   "passthrough": false
  },
  {
@@ -1508,7 +1508,7 @@
   "slide": "s17",
   "where": "body",
   "ru": "не всегда, это норма",
-  "en": "",
+  "en": "won't always work, normal",
   "passthrough": false
  },
  {
@@ -1516,7 +1516,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "КЕЙС 1.2 · ИССЛЕДОВАНИЕ И РАЗБОР (1/2)",
-  "en": "",
+  "en": "CASE 1.2 · THE EVIDENCE AND BREAKDOWN (1/2)",
   "passthrough": false
  },
  {
@@ -1524,7 +1524,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Текстовый гейт без тулинга не просто бесполезен, а вреден — регрессии выросли почти до 10%; ни один вариант, кроме передачи проверки механизму, не решает проблему системно",
-  "en": "",
+  "en": "A textual gate with no tooling is not merely useless but harmful — regressions rose to almost 10%; no option but handing the check to a mechanism solves the problem systematically",
   "passthrough": false
  },
  {
@@ -1532,7 +1532,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "SWE-Gate/SpecBench/CapCode/Verif. Horizon (4 препринта)",
-  "en": "",
+  "en": "SWE-Gate/SpecBench/CapCode/Verif. Horizon (4 preprints)",
   "passthrough": false
  },
  {
@@ -1540,7 +1540,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Согласие 4+ независимых исследований: агенты обходят видимые гейты",
-  "en": "",
+  "en": "Agreement across 4+ independent studies: agents work around visible gates",
   "passthrough": false
  },
  {
@@ -1548,7 +1548,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Сильное — консенсус",
-  "en": "",
+  "en": "Strong — consensus",
   "passthrough": false
  },
  {
@@ -1564,7 +1564,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "«Сначала пиши тесты» без тулинга — регрессии до 9,94%, хуже отсутствия",
-  "en": "",
+  "en": "\"Write the tests first\" with no tooling — regressions up to 9.94%, worse than nothing",
   "passthrough": false
  },
  {
@@ -1572,7 +1572,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Сильное и контринтуитивное",
-  "en": "",
+  "en": "Strong and counterintuitive",
   "passthrough": false
  },
  {
@@ -1588,7 +1588,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Манипуляция промптом ради частоты тестов — без значимого эффекта",
-  "en": "",
+  "en": "Manipulating the prompt to raise test frequency — no significant effect",
   "passthrough": false
  },
  {
@@ -1596,7 +1596,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Умеренное — нулевой результат",
-  "en": "",
+  "en": "Moderate — a null result",
   "passthrough": false
  },
  {
@@ -1612,7 +1612,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Архитектура харнесса даёт +20 п.п.; смена модели — ~1 п.п.",
-  "en": "",
+  "en": "Harness architecture gives +20 pp; switching the model — ~1 pp",
   "passthrough": false
  },
  {
@@ -1620,7 +1620,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Сильное — механизм против модели",
-  "en": "",
+  "en": "Strong — mechanism vs. model",
   "passthrough": false
  },
  {
@@ -1636,7 +1636,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Планирование перед кодом: +25,4% pass@1",
-  "en": "",
+  "en": "Planning before code: +25.4% pass@1",
   "passthrough": false
  },
  {
@@ -1644,7 +1644,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Умеренно-сильное «за»",
-  "en": "",
+  "en": "Moderately strong \"in favor\"",
   "passthrough": false
  },
  {
@@ -1660,7 +1660,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Самокоррекция без сигнала ухудшает",
-  "en": "",
+  "en": "Self-correction with no signal makes it worse",
   "passthrough": false
  },
  {
@@ -1668,7 +1668,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Сильное «против» self-review",
-  "en": "",
+  "en": "Strong \"against\" bare self-review",
   "passthrough": false
  },
  {
@@ -1684,7 +1684,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Self-repair с реальной проверкой: +4,9…+30 п.п.",
-  "en": "",
+  "en": "Self-repair with a real check: +4.9…+30 pp",
   "passthrough": false
  },
  {
@@ -1692,7 +1692,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Сильное «за» — с проверкой",
-  "en": "",
+  "en": "Strong \"in favor\" — with a check",
   "passthrough": false
  },
  {
@@ -1700,7 +1700,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Честный пробел: нет контролируемого эксперимента именно на изолированную фразу-гейт в CLAUDE.md — только best-practice наблюдения практиков.",
-  "en": "",
+  "en": "An honest gap: there is no controlled experiment on an isolated gate line in CLAUDE.md specifically — only practitioners' best-practice observations.",
   "passthrough": false
  },
  {
@@ -1708,7 +1708,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "«Капсом / жёстче»",
-  "en": "",
+  "en": "\"In caps / harsher\"",
   "passthrough": false
  },
  {
@@ -1716,7 +1716,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Нигде системно",
-  "en": "",
+  "en": "Nowhere systematically",
   "passthrough": false
  },
  {
@@ -1724,7 +1724,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "TDAD: регрессии выросли до 9,94%",
-  "en": "",
+  "en": "TDAD: regressions rose to 9.94%",
   "passthrough": false
  },
  {
@@ -1732,7 +1732,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "«Продублирую вторым пунктом»",
-  "en": "",
+  "en": "\"I'll duplicate it as a second bullet\"",
   "passthrough": false
  },
  {
@@ -1740,7 +1740,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Иногда чуть повышает шанс прочитать",
-  "en": "",
+  "en": "Sometimes slightly raises the chance it is read",
   "passthrough": false
  },
  {
@@ -1748,7 +1748,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Presence paradox: лишняя строка стоит контекста",
-  "en": "",
+  "en": "Presence paradox: an extra line costs context",
   "passthrough": false
  },
  {
@@ -1756,7 +1756,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "«Отдельный файл-чеклист»",
-  "en": "",
+  "en": "\"A separate checklist file\"",
   "passthrough": false
  },
  {
@@ -1764,7 +1764,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Помогает человеку, слабо — агенту",
-  "en": "",
+  "en": "Helps the human, barely the agent",
   "passthrough": false
  },
  {
@@ -1772,7 +1772,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Тот же класс решения — снова текст, снова просьба",
-  "en": "",
+  "en": "The same class of solution — text again, a request again",
   "passthrough": false
  },
  {
@@ -1780,7 +1780,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "«Передам механизму вне текста»",
-  "en": "",
+  "en": "\"Hand it to a mechanism outside the text\"",
   "passthrough": false
  },
  {
@@ -1788,7 +1788,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Системно работает: +20 п.п.",
-  "en": "",
+  "en": "Works systematically: +20 pp",
   "passthrough": false
  },
  {
@@ -1796,7 +1796,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Верное направление — механизм на следующем слайде",
-  "en": "",
+  "en": "The right direction — the mechanism is on the next slide",
   "passthrough": false
  },
  {
@@ -1804,7 +1804,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "«Смирюсь, это нормально»",
-  "en": "",
+  "en": "\"I'll live with it, that's normal\"",
   "passthrough": false
  },
  {
@@ -1812,7 +1812,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Приемлемо для некритичных предпочтений",
-  "en": "",
+  "en": "Acceptable for non-critical preferences",
   "passthrough": false
  },
  {
@@ -1820,7 +1820,7 @@
   "slide": "s18",
   "where": "body",
   "ru": "Для правила, чьё нарушение стоит дорого — решение не решать",
-  "en": "",
+  "en": "For a rule whose violation is expensive — a decision not to decide",
   "passthrough": false
  },
  {
@@ -1828,7 +1828,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "КЕЙС 1.2 · ИССЛЕДОВАНИЕ И РАЗБОР (2/2)",
-  "en": "",
+  "en": "CASE 1.2 · THE EVIDENCE AND BREAKDOWN (2/2)",
   "passthrough": false
  },
  {
@@ -1836,7 +1836,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Правила в промпте — просьбы, правила в коде — законы; текстовый гейт ловит честную ошибку, но не держится под давлением",
-  "en": "",
+  "en": "Rules in a prompt — requests, rules in code — laws; a textual gate catches an honest mistake but does not hold under pressure",
   "passthrough": false
  },
  {
@@ -1844,7 +1844,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Правила в промпте — это просьбы, правила в коде — это законы. То, что мы написали, не стало законом от того, что мы записали его проактивно.",
-  "en": "",
+  "en": "Rules in the prompt are requests, rules in code are laws. What we wrote did not become a law just because we wrote it down proactively.",
   "passthrough": false
  },
  {
@@ -1852,7 +1852,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "МОЖНО ЛИ СЕГОДНЯ ОБОЙТИСЬ БЕЗ ХУКА",
-  "en": "",
+  "en": "CAN WE GET BY WITHOUT A HOOK TODAY",
   "passthrough": false
  },
  {
@@ -1860,7 +1860,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Что гейт даёт",
-  "en": "",
+  "en": "What the gate gives",
   "passthrough": false
  },
  {
@@ -1868,7 +1868,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Ловит честную ошибку — «никто не вспомнил», не «агент обошёл проверку». Сработал 1 раз из 3: когда про него напомнили вслух",
-  "en": "",
+  "en": "Catches the honest mistake — \"nobody remembered\", not \"the agent worked around the check\". Worked 1 time out of 3: when it was mentioned out loud",
   "passthrough": false
  },
  {
@@ -1876,7 +1876,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Чего не даёт",
-  "en": "",
+  "en": "What it does not give",
   "passthrough": false
  },
  {
@@ -1884,7 +1884,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Не держится под давлением — срок, спешка. TDAD: усиление текста подняло регрессии до 9,94%; механизм даёт +20 п.п., модель — ~1 п.п.",
-  "en": "",
+  "en": "Does not hold under pressure — a deadline, a rush. TDAD: strengthening the text raised regressions to 9.94%; the mechanism gives +20 pp, the model — ~1 pp",
   "passthrough": false
  },
  {
@@ -1892,7 +1892,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Где граница",
-  "en": "",
+  "en": "Where the boundary",
   "passthrough": false
  },
  {
@@ -1900,7 +1900,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Хук нужен, когда цена нарушения высокая и предсказуемая — названы конкретное действие, команда и ущерб",
-  "en": "",
+  "en": "A hook is needed when the cost of a violation is high and predictable — a concrete action, command and damage have been named",
   "passthrough": false
  },
  {
@@ -1908,7 +1908,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Где мы в проекте",
-  "en": "",
+  "en": "Where we are now",
   "passthrough": false
  },
  {
@@ -1916,7 +1916,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Действие названо: «готово» без проверки, дважды подряд, цена — сорванная доставка к показу. Текста хватает ровно до этого места",
-  "en": "",
+  "en": "The action is named: \"done\" with no check, twice in a row; the cost is a request lost before the demo. The text is enough up to exactly this point",
   "passthrough": false
  },
  {
@@ -1924,7 +1924,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Зачем знать про хук, если сегодня его не ставим. Затем, чтобы не принять текстовый гейт за решение. Хук нужен не «для надёжности», а как ответ на названное действие с названной ценой: назвали — пора, не назвали — текста хватает.",
-  "en": "",
+  "en": "Why know about the hook if we are not setting one up today. So as not to mistake a textual gate for a solution. A hook is needed not \"for reliability\" but as an answer to a named action with a named cost: named it — it is time; not named — the text is enough.",
   "passthrough": false
  },
  {
@@ -1932,7 +1932,7 @@
   "slide": "s19",
   "where": "body",
   "ru": "Цикл «улучшение»: «посмотри на свой код» — не делать никогда; «прогони реальную проверку и поправь по факту» — делать всегда.",
-  "en": "",
+  "en": "The \"improvement\" loop: \"look at your own code\" — never do that; \"run a real check and fix what it shows\" — always do that.",
   "passthrough": false
  },
  {
@@ -1940,7 +1940,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "КЕЙС 1.2 · РЕШЕНИЕ",
-  "en": "",
+  "en": "CASE 1.2 · THE SOLUTION",
   "passthrough": false
  },
  {
@@ -1948,7 +1948,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "Итоговый файл — тринадцать строк: критерий готово, гейт-предупреждение, честная оговорка предела; AGENTS.md — симлинк на тот же файл",
-  "en": "",
+  "en": "The final file is thirteen lines: the \"done\" criterion, the gate warning, an honest caveat about the limit; AGENTS.md is a symlink to the same file",
   "passthrough": false
  },
  {
@@ -1964,7 +1964,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "signup-landing: статический лендинг с формой заявки на демо-урок.",
-  "en": "",
+  "en": "signup-landing: a static landing page with a demo-lesson sign-up form.",
   "passthrough": false
  },
  {
@@ -1972,7 +1972,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "Готово = npm run build код 0, npx playwright test зелёный,",
-  "en": "",
+  "en": "Done = npm run build exit code 0, npx playwright test green,",
   "passthrough": false
  },
  {
@@ -1980,7 +1980,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "форма реально отправляет заявку на проде.",
-  "en": "",
+  "en": "the form really sends the request in production.",
   "passthrough": false
  },
  {
@@ -1996,7 +1996,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "- Никогда не запускать деплой на прод без явного запроса.",
-  "en": "",
+  "en": "- Never run a deploy to production without an explicit request.",
   "passthrough": false
  },
  {
@@ -2012,7 +2012,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "- To verify: открыть dist/index.html после сборки, вручную",
-  "en": "",
+  "en": "- To verify: open dist/index.html after the build and manually",
   "passthrough": false
  },
  {
@@ -2020,7 +2020,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "  отправить форму с заполненными и с пустыми полями.",
-  "en": "",
+  "en": "  submit the form with filled-in and with empty fields.",
   "passthrough": false
  },
  {
@@ -2028,7 +2028,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "Файл грузится в начало каждой сессии целиком (официальный ориентир — до 200 строк, наш итог — 13)",
-  "en": "",
+  "en": "The file is loaded in full at the start of every session (the official guideline is up to 200 lines, our result is 13)",
   "passthrough": false
  },
  {
@@ -2036,7 +2036,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "@-импорты организуют файл, но не экономят контекст",
-  "en": "",
+  "en": "@-imports organize the file but do not save context",
   "passthrough": false
  },
  {
@@ -2044,7 +2044,7 @@
   "slide": "s20",
   "where": "body",
   "ru": "AGENTS.md — симлинк на тот же файл (ln -s CLAUDE.md AGENTS.md). Острый край: cp -R без -P на macOS разыменовывает симлинк во вторую копию молча — копировать через cp -a / git clone / git archive",
-  "en": "",
+  "en": "AGENTS.md is a symlink to the same file (ln -s CLAUDE.md AGENTS.md). The sharp edge: cp -R without -P on macOS silently dereferences the symlink into a second copy — copy with cp -a / git clone / git archive",
   "passthrough": false
  },
  {
@@ -2052,7 +2052,7 @@
   "slide": "s21",
   "where": "body",
   "ru": "КЕЙС 1.2 · ЧТО ЕЩЁ ЗАВОДИТСЯ СРАЗУ",
-  "en": "",
+  "en": "CASE 1.2 · WHAT ELSE IS SET UP RIGHT AWAY",
   "passthrough": false
  },
  {
@@ -2060,7 +2060,7 @@
   "slide": "s21",
   "where": "body",
   "ru": "Гейт — не единственная дешёвая база: ещё три практики заводятся в первый день и не ждут сигнала",
-  "en": "",
+  "en": "The gate is not the only cheap baseline: three more day-0 practices do not wait for a signal",
   "passthrough": false
  },
  {
@@ -2068,7 +2068,7 @@
   "slide": "s21",
   "where": "body",
   "ru": "создай — прожарь — улучши — покажи и согласуй: черновик плана, фиксированный список вопросов (самая простая версия? допущения? преждевременная абстракция? владелец файла? не склеены ли риски?), правки, согласование до начала работы. Живой пример — команда курса: цикл записан в её файле инструкций как обязательный",
-  "en": "",
+  "en": "create - roast - improve - show it and get sign-off: a draft of the plan, a fixed list of questions (the simplest version that works? assumptions? a premature abstraction? an owner for the file? are risks bundled?), the edits, sign-off before the work begins. A live example — the course team: the loop is written into its instruction file as mandatory",
   "passthrough": false
  },
  {
@@ -2076,7 +2076,7 @@
   "slide": "s21",
   "where": "body",
   "ru": "журнал хода работы по задаче, в любом виде — файл на задачу, список шагов, простой лог. Форма не важна, важно, что он есть — всё, что живёт только в сессии, к следующей сессии недоступно (подробный разбор — раздел про память)",
-  "en": "",
+  "en": "a progress log for the task, in any form — a file per task, a list of steps, a plain log. The form does not matter, what matters is that it exists — everything that lives only in the session is gone by the next one (a detailed breakdown — the section on memory)",
   "passthrough": false
  },
  {
@@ -2084,7 +2084,7 @@
   "slide": "s21",
   "where": "body",
   "ru": "правило записывается вместе с причиной — строка «почему» рядом с каждым правилом: какой случай его породил. Без причины правило читается как вкусовщина и снимается первым; с названной ценой — это готовый критерий, когда текст пора подпирать механизмом",
-  "en": "",
+  "en": "a rule is written down together with its reason — a \"why\" line next to every rule: which case gave rise to it. With no reason a rule reads like a matter of taste and is dropped first; with a named cost it is a ready-made criterion for when the text needs a mechanism",
   "passthrough": false
  },
  {
@@ -2092,7 +2092,7 @@
   "slide": "s21",
   "where": "body",
   "ru": "Ни одна из трёх не требует сигнала и не стоит почти ничего в первый день. Поэтому их и заводят сразу — вместе с гейтом, а не вместо него.",
-  "en": "",
+  "en": "None of the three needs a signal and all cost almost nothing on day 0; set up right away — with the gate, not instead of it.",
   "passthrough": false
  },
  {
@@ -2100,7 +2100,7 @@
   "slide": "s22",
   "where": "body",
   "ru": "Кейс 1.3 · вложенные файлы",
-  "en": "",
+  "en": "Case 1.3 · nested files",
   "passthrough": false
  },
  {
@@ -2108,7 +2108,7 @@
   "slide": "s22",
   "where": "body",
   "ru": "Месяц спустя репозиторий подрос — дробить файл по подпапкам или нет",
-  "en": "",
+  "en": "A month later the repository has grown — split the file by subfolder or not",
   "passthrough": false
  },
  {
@@ -2116,7 +2116,7 @@
   "slide": "s22",
   "where": "body",
   "ru": "ФОРМА ФАЙЛА, А НЕ СОДЕРЖИМОЕ",
-  "en": "",
+  "en": "THE FILE'S FORM, NOT ITS CONTENT",
   "passthrough": false
  },
  {
@@ -2124,7 +2124,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "КЕЙС 1.3 · ДВА КУСКА ЗНАНИЯ",
-  "en": "",
+  "en": "CASE 1.3 · TWO PIECES OF KNOWLEDGE",
   "passthrough": false
  },
  {
@@ -2132,7 +2132,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "За месяц накопились два куска знания разной природы — конвенция целой папки и деталь про одну функцию, — и разработчик поступает с обоими одинаково: заводит вложенные файлы инструкций",
-  "en": "",
+  "en": "Over a month two pieces of knowledge of different kinds have piled up — a convention for a whole folder and a detail about one function — and the developer treats both the same way: he sets up nested instruction files",
   "passthrough": false
  },
  {
@@ -2140,7 +2140,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "Конвенция папки tests/ — как называются файлы проверок и что со страницей работают через объект страницы, а не через селекторы напрямую. Нужна всякий раз, когда трогают тесты.\n\nДеталь про одну функцию — submitForm() в src/main.js при таймауте повторяет запрос один раз, поэтому обработчик на сервере обязан быть идемпотентным. Нужна тому, кто правит эту функцию, и больше никому.",
-  "en": "",
+  "en": "The tests/ folder convention — how check files are named, and that the page is worked with through a page object rather than through selectors directly. Needed every single time someone touches the tests.\n\nA detail about one function — submitForm() in src/main.js retries the request once on timeout, so the handler on the server has to be idempotent. Needed by whoever edits this function, and by nobody else.",
   "passthrough": false
  },
  {
@@ -2148,7 +2148,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "что сделал разработчик",
-  "en": "",
+  "en": "what the developer did",
   "passthrough": false
  },
  {
@@ -2156,7 +2156,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "tests/CLAUDE.md     ← конвенция папки",
-  "en": "",
+  "en": "tests/CLAUDE.md     ← the folder convention",
   "passthrough": false
  },
  {
@@ -2164,7 +2164,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "src/CLAUDE.md       ← деталь про функцию",
-  "en": "",
+  "en": "src/CLAUDE.md       ← the detail about the function",
   "passthrough": false
  },
  {
@@ -2172,7 +2172,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "«Вынесу каждое туда, где оно применяется —",
-  "en": "",
+  "en": "\"I'll move each one to where it applies —",
   "passthrough": false
  },
  {
@@ -2180,7 +2180,7 @@
   "slide": "s23",
   "where": "body",
   "ru": " короче, релевантнее контексту, корневой",
-  "en": "",
+  "en": " shorter, more relevant to the context, and",
   "passthrough": false
  },
  {
@@ -2188,7 +2188,7 @@
   "slide": "s23",
   "where": "body",
   "ru": " файл не разбухнет.»",
-  "en": "",
+  "en": " the root file won't bloat.\"",
   "passthrough": false
  },
  {
@@ -2196,7 +2196,7 @@
   "slide": "s23",
   "where": "body",
   "ru": "«Оба файла лежат в подпапках. Расчёт — что агент прочитает их сам, когда будет работать в этих папках.»",
-  "en": "",
+  "en": "\"Both files sit in subfolders. The bet is that the agent will read them by itself when it works in those folders.\"",
   "passthrough": false
  },
  {
@@ -2204,7 +2204,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "КЕЙС 1.3 · ВОПРОС",
-  "en": "",
+  "en": "CASE 1.3 · QUESTION",
   "passthrough": false
  },
  {
@@ -2212,7 +2212,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "Куда положить каждый из двух кусков знания, чтобы агент получил его тогда, когда оно нужно, и не платил за него в остальных сессиях",
-  "en": "",
+  "en": "Where to put each of the two pieces of knowledge so that the agent gets it when it is needed and does not pay for it in the other sessions",
   "passthrough": false
  },
  {
@@ -2220,7 +2220,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "Два куска знания: конвенция для всей папки tests/ и деталь про одну функцию в src/main.js. Карточек можно выбрать несколько.",
-  "en": "",
+  "en": "Two pieces of knowledge: a convention for the whole tests/ folder and a detail about one function in src/main.js. More than one card may be picked.",
   "passthrough": false
  },
  {
@@ -2228,7 +2228,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "«Выберите из карточек, куда положить каждый кусок, чтобы агент получил его тогда, когда оно нужно, и не платил за него в остальных сессиях.»",
-  "en": "",
+  "en": "\"Pick from the cards where to put each piece, so that the agent gets it when it is needed and does not pay for it in the other sessions.\"",
   "passthrough": false
  },
  {
@@ -2236,7 +2236,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "вложенный файл",
-  "en": "",
+  "en": "a nested instruction",
   "passthrough": false
  },
  {
@@ -2244,7 +2244,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "инструкций в самой папке",
-  "en": "",
+  "en": "file in the folder itself",
   "passthrough": false
  },
  {
@@ -2252,7 +2252,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "правило с объявленным",
-  "en": "",
+  "en": "a rule with a declared",
   "passthrough": false
  },
  {
@@ -2260,7 +2260,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "шаблоном путей",
-  "en": "",
+  "en": "path pattern",
   "passthrough": false
  },
  {
@@ -2268,7 +2268,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "комментарий",
-  "en": "",
+  "en": "a comment",
   "passthrough": false
  },
  {
@@ -2276,7 +2276,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "рядом с самим кодом",
-  "en": "",
+  "en": "next to the code itself",
   "passthrough": false
  },
  {
@@ -2284,7 +2284,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "отдельный документ +",
-  "en": "",
+  "en": "a separate document +",
   "passthrough": false
  },
  {
@@ -2292,7 +2292,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "указатель в корневом файле",
-  "en": "",
+  "en": "a pointer in the root file",
   "passthrough": false
  },
  {
@@ -2300,7 +2300,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "дописать в",
-  "en": "",
+  "en": "append it to",
   "passthrough": false
  },
  {
@@ -2308,7 +2308,7 @@
   "slide": "s24",
   "where": "body",
   "ru": "корневой файл инструкций",
-  "en": "",
+  "en": "the root instruction file",
   "passthrough": false
  },
  {
@@ -2316,7 +2316,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "КЕЙС 1.3 · ИССЛЕДОВАНИЕ (1/2)",
-  "en": "",
+  "en": "CASE 1.3 · THE EVIDENCE (1/2)",
   "passthrough": false
  },
  {
@@ -2324,7 +2324,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "«Куда положить» — это вопрос «дойдёт ли текст до агента и сколько он стоит»; у пяти каналов пять разных ответов, и три инструмента из четырёх независимо сошлись на объявленном шаблоне путей",
-  "en": "",
+  "en": "\"Where to put it\" is the question \"will the text reach the agent and what does it cost\"; five channels give five different answers, and three tools out of four independently converged on a declared path pattern",
   "passthrough": false
  },
  {
@@ -2332,7 +2332,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Канал",
-  "en": "",
+  "en": "Channel",
   "passthrough": false
  },
  {
@@ -2340,7 +2340,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Когда доходит",
-  "en": "",
+  "en": "When it arrives",
   "passthrough": false
  },
  {
@@ -2348,7 +2348,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Гарантия",
-  "en": "",
+  "en": "Guarantee",
   "passthrough": false
  },
  {
@@ -2356,7 +2356,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Цена контекста",
-  "en": "",
+  "en": "Context cost",
   "passthrough": false
  },
  {
@@ -2364,7 +2364,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Корневой файл + @-импорты",
-  "en": "",
+  "en": "The root file + @-imports",
   "passthrough": false
  },
  {
@@ -2372,7 +2372,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "при старте сессии",
-  "en": "",
+  "en": "at the start of the session",
   "passthrough": false
  },
  {
@@ -2380,7 +2380,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "есть",
-  "en": "",
+  "en": "yes",
   "passthrough": false
  },
  {
@@ -2388,7 +2388,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "платится всегда",
-  "en": "",
+  "en": "paid always",
   "passthrough": false
  },
  {
@@ -2396,7 +2396,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Правило с шаблоном путей",
-  "en": "",
+  "en": "A rule with a path pattern",
   "passthrough": false
  },
  {
@@ -2404,7 +2404,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "когда файл подходит под шаблон",
-  "en": "",
+  "en": "when a file matches the pattern",
   "passthrough": false
  },
  {
@@ -2412,7 +2412,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "условная — триггер явный",
-  "en": "",
+  "en": "conditional — explicit trigger",
   "passthrough": false
  },
  {
@@ -2420,7 +2420,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "ноль до срабатывания",
-  "en": "",
+  "en": "zero until it fires",
   "passthrough": false
  },
  {
@@ -2428,7 +2428,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Комментарий рядом с кодом",
-  "en": "",
+  "en": "A comment next to the code",
   "passthrough": false
  },
  {
@@ -2436,7 +2436,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "когда агент открыл файл",
-  "en": "",
+  "en": "when the agent has opened the file",
   "passthrough": false
  },
  {
@@ -2444,7 +2444,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "следует из механизма",
-  "en": "",
+  "en": "follows from the mechanism",
   "passthrough": false
  },
  {
@@ -2452,7 +2452,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "ноль сверх читаемого",
-  "en": "",
+  "en": "zero beyond what is read",
   "passthrough": false
  },
  {
@@ -2460,7 +2460,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Вложенный файл в подпапке",
-  "en": "",
+  "en": "A nested file in a subfolder",
   "passthrough": false
  },
  {
@@ -2468,7 +2468,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "если инструмент так умеет",
-  "en": "",
+  "en": "if the tool can do that at all",
   "passthrough": false
  },
  {
@@ -2476,7 +2476,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "НЕТ ни в одном из 4 инструментов",
-  "en": "",
+  "en": "NO — in none of the 4 tools",
   "passthrough": false
  },
  {
@@ -2484,7 +2484,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Отдельный документ без указателя",
-  "en": "",
+  "en": "A separate document with no pointer",
   "passthrough": false
  },
  {
@@ -2492,7 +2492,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "если агент догадается",
-  "en": "",
+  "en": "if the agent thinks to go there",
   "passthrough": false
  },
  {
@@ -2500,7 +2500,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "нет",
-  "en": "",
+  "en": "no",
   "passthrough": false
  },
  {
@@ -2508,7 +2508,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "ноль — и ноль доставки",
-  "en": "",
+  "en": "zero — and zero delivery",
   "passthrough": false
  },
  {
@@ -2516,7 +2516,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Инструмент",
-  "en": "",
+  "en": "Tool",
   "passthrough": false
  },
  {
@@ -2524,7 +2524,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Объявленный шаблон путей",
-  "en": "",
+  "en": "A declared path pattern",
   "passthrough": false
  },
  {
@@ -2532,7 +2532,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "«Просто положи файл в папку»",
-  "en": "",
+  "en": "\"Just put a file in the folder\"",
   "passthrough": false
  },
  {
@@ -2548,7 +2548,7 @@
   "slide": "s25",
   "where": "body",
   "ru": ".claude/rules/*.md, поле paths:",
-  "en": "",
+  "en": ".claude/rules/*.md, the paths: field",
   "passthrough": false
  },
  {
@@ -2556,7 +2556,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "вложенный CLAUDE.md — #2571 закрыт «not planned»",
-  "en": "",
+  "en": "a nested CLAUDE.md — #2571 closed as \"not planned\"",
   "passthrough": false
  },
  {
@@ -2572,7 +2572,7 @@
   "slide": "s25",
   "where": "body",
   "ru": ".cursor/rules/*.mdc, поле globs:",
-  "en": "",
+  "en": ".cursor/rules/*.mdc, the globs: field",
   "passthrough": false
  },
  {
@@ -2580,7 +2580,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "вложенные AGENTS.md — признанный баг",
-  "en": "",
+  "en": "nested AGENTS.md — an acknowledged bug",
   "passthrough": false
  },
  {
@@ -2596,7 +2596,7 @@
   "slide": "s25",
   "where": "body",
   "ru": ".instructions.md, поле applyTo:",
-  "en": "",
+  "en": ".instructions.md, the applyTo: field",
   "passthrough": false
  },
  {
@@ -2604,7 +2604,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "вложенные AGENTS.md — экспериментально, выключено по умолчанию",
-  "en": "",
+  "en": "nested AGENTS.md — experimental, off by default",
   "passthrough": false
  },
  {
@@ -2628,7 +2628,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "рекурсивного обнаружения нет вовсе — #3051",
-  "en": "",
+  "en": "no recursive discovery at all — #3051",
   "passthrough": false
  },
  {
@@ -2636,7 +2636,7 @@
   "slide": "s25",
   "where": "body",
   "ru": "Обещание «агенты автоматически читают ближайший файл в дереве каталогов» даёт стандарт agents.md — описание типичного поведения, не требование к инструменту. Обещание не выполняется, потому что его никто и не давал.",
-  "en": "",
+  "en": "The promise that \"agents automatically read the nearest file in the directory tree\" comes from the agents.md standard — a description of typical behavior, not a requirement on the tool. The promise goes unmet because nobody ever made it.",
   "passthrough": false
  },
  {
@@ -2644,7 +2644,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "КЕЙС 1.3 · ИССЛЕДОВАНИЕ (2/2) И РАЗБОР",
-  "en": "",
+  "en": "CASE 1.3 · THE EVIDENCE (2/2) AND BREAKDOWN",
   "passthrough": false
  },
  {
@@ -2652,7 +2652,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Ни одно из двух контролируемых измерений не нашло, что распределение документации улучшает результат — канал выбирается по доставке и цене",
-  "en": "",
+  "en": "Neither of the two controlled measurements found that distributing documentation improves the result — the channel is chosen by delivery and cost",
   "passthrough": false
  },
  {
@@ -2660,7 +2660,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "McMillan, 2605.10039 (1650 сессий)",
-  "en": "",
+  "en": "McMillan, 2605.10039 (1650 sessions)",
   "passthrough": false
  },
  {
@@ -2668,7 +2668,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Ни одна из 4 структурных переменных не дала эффекта",
-  "en": "",
+  "en": "None of the 4 structural variables produced an effect",
   "passthrough": false
  },
  {
@@ -2676,7 +2676,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Khatri, 2607.27250 (288 прогонов)",
-  "en": "",
+  "en": "Khatri, 2607.27250 (288 runs)",
   "passthrough": false
  },
  {
@@ -2684,7 +2684,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Файл нет/каждый ход/раздельные документы — все в пределах 2 п.п., значимости нет",
-  "en": "",
+  "en": "No file/every turn/separate documents — all within 2 pp, no significance",
   "passthrough": false
  },
  {
@@ -2692,7 +2692,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Сильное по замыслу, слабое по мощности",
-  "en": "",
+  "en": "Strong in design, weak in power",
   "passthrough": false
  },
  {
@@ -2700,7 +2700,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Vasilopoulos, 2602.20478 (283 сессии)",
-  "en": "",
+  "en": "Vasilopoulos, 2602.20478 (283 sessions)",
   "passthrough": false
  },
  {
@@ -2708,7 +2708,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Единственный построенный целиком свод: ядро + документы по требованию",
-  "en": "",
+  "en": "The only corpus built out in full: a core + documents on demand",
   "passthrough": false
  },
  {
@@ -2716,7 +2716,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Слабое — один человек, без контроля",
-  "en": "",
+  "en": "Weak — one person, no control group",
   "passthrough": false
  },
  {
@@ -2724,7 +2724,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Он же, про режим отказа",
-  "en": "",
+  "en": "The same work, on the failure mode",
   "passthrough": false
  },
  {
@@ -2732,7 +2732,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "«Агенты доверяют документации абсолютно» — устаревание главный режим отказа",
-  "en": "",
+  "en": "\"Agents trust documentation absolutely\" — staleness the main failure mode",
   "passthrough": false
  },
  {
@@ -2740,7 +2740,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Прямое наблюдение владельца",
-  "en": "",
+  "en": "A direct observation by the owner",
   "passthrough": false
  },
  {
@@ -2748,7 +2748,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Честно про пробел: «не нашли эффекта» ≠ «эффекта нет»; гарантия комментария в коде выведена из механизма, не измерена; шаблон путей — тоже условная загрузка, не гарантия.",
-  "en": "",
+  "en": "Honest about the gap: \"no effect found\" is not \"there is no effect\"; the comment-in-code guarantee is derived from the mechanism, not measured; a path pattern is conditional loading too, not a guarantee.",
   "passthrough": false
  },
  {
@@ -2756,7 +2756,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "«Вложенный файл в папке»",
-  "en": "",
+  "en": "\"A nested file in the folder\"",
   "passthrough": false
  },
  {
@@ -2764,7 +2764,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Нигде гарантированно",
-  "en": "",
+  "en": "Nowhere with a guarantee",
   "passthrough": false
  },
  {
@@ -2772,7 +2772,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Единственный вариант без гарантии во всех 4 инструментах",
-  "en": "",
+  "en": "The only option with no guarantee in any of the 4 tools",
   "passthrough": false
  },
  {
@@ -2780,7 +2780,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "«Правило с шаблоном путей»",
-  "en": "",
+  "en": "\"A rule with a path pattern\"",
   "passthrough": false
  },
  {
@@ -2788,7 +2788,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Когда у класса файлов есть конвенция",
-  "en": "",
+  "en": "When a class of files has a convention",
   "passthrough": false
  },
  {
@@ -2796,7 +2796,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Верно, но не у нас — конвенция tests/ помещается в 2 строки",
-  "en": "",
+  "en": "Right mechanism, but not here — the tests/ convention fits in 2 lines",
   "passthrough": false
  },
  {
@@ -2804,7 +2804,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "«Комментарий рядом с кодом»",
-  "en": "",
+  "en": "\"A comment next to the code\"",
   "passthrough": false
  },
  {
@@ -2812,7 +2812,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Всегда — для знания про код",
-  "en": "",
+  "en": "Always — for knowledge about code",
   "passthrough": false
  },
  {
@@ -2820,7 +2820,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Часть целевого ответа — единственный канал, где доставка следует из механизма",
-  "en": "",
+  "en": "Part of the target answer — the only channel where delivery follows from the mechanism",
   "passthrough": false
  },
  {
@@ -2828,7 +2828,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "«Документ + указатель в корне»",
-  "en": "",
+  "en": "\"A document + a pointer in the root\"",
   "passthrough": false
  },
  {
@@ -2836,7 +2836,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Когда документ есть и его поддерживают",
-  "en": "",
+  "en": "When the document exists and is maintained",
   "passthrough": false
  },
  {
@@ -2844,7 +2844,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Часть целевого ответа — и ответ на «где живёт свод»",
-  "en": "",
+  "en": "Part of the target answer — and to \"where the corpus lives\"",
   "passthrough": false
  },
  {
@@ -2852,7 +2852,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "«Дописать в корневой файл»",
-  "en": "",
+  "en": "\"Append it to the root file\"",
   "passthrough": false
  },
  {
@@ -2860,7 +2860,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Когда знание нужно в каждой сессии",
-  "en": "",
+  "en": "When the knowledge is needed in every session",
   "passthrough": false
  },
  {
@@ -2868,7 +2868,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Presence paradox: строка про tests/ стоит контекста и без тестов",
-  "en": "",
+  "en": "Presence paradox: the tests/ line costs context even with no tests",
   "passthrough": false
  },
  {
@@ -2876,7 +2876,7 @@
   "slide": "s26",
   "where": "body",
   "ru": "Знание про функцию — в код. Про класс файлов — в правило с шаблоном путей. Про весь проект — в корень, коротко, указателями. Вложенный файл в подпапке — единственное место, куда знание класть не надо.",
-  "en": "",
+  "en": "Knowledge about a function — into the code. About a class of files — into a rule with a path pattern. About the whole project — into the root file, briefly, as pointers. A nested file in a subfolder is the one place not to put it.",
   "passthrough": false
  },
  {
@@ -2884,7 +2884,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "КЕЙС 1.3 · РЕШЕНИЕ",
-  "en": "",
+  "en": "CASE 1.3 · RESOLUTION",
   "passthrough": false
  },
  {
@@ -2892,7 +2892,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "Корневой файл остался тем же, на тринадцать строк — деталь ушла комментарием к функции, конвенция тестов уже в самих тестах, ни одного вложенного файла инструкций не завелось",
-  "en": "",
+  "en": "The root file stayed the same, thirteen lines long — the detail went off into a comment on the function, the test convention already sits in the tests, not a single nested instruction file got set up",
   "passthrough": false
  },
  {
@@ -2900,7 +2900,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "состояние репозитория, месяц 1",
-  "en": "",
+  "en": "repository state, month 1",
   "passthrough": false
  },
  {
@@ -2916,7 +2916,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "CLAUDE.md              ← те же 13 строк, не выросли",
-  "en": "",
+  "en": "CLAUDE.md              ← the same 13 lines, no growth",
   "passthrough": false
  },
  {
@@ -2924,7 +2924,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "AGENTS.md              → симлинк на CLAUDE.md",
-  "en": "",
+  "en": "AGENTS.md              → symlink to CLAUDE.md",
   "passthrough": false
  },
  {
@@ -2940,7 +2940,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "src/main.js  ← комментарий к submitForm(): повтор при",
-  "en": "",
+  "en": "src/main.js  ← comment on submitForm(): retry on",
   "passthrough": false
  },
  {
@@ -2948,7 +2948,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "               таймауте, обработчик обязан быть идемпотентным",
-  "en": "",
+  "en": "               timeout, the handler has to be idempotent",
   "passthrough": false
  },
  {
@@ -2964,7 +2964,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "# tests/CLAUDE.md и src/CLAUDE.md — не появляются",
-  "en": "",
+  "en": "# tests/CLAUDE.md and src/CLAUDE.md — never appear",
   "passthrough": false
  },
  {
@@ -2972,7 +2972,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "Адрес",
-  "en": "",
+  "en": "Address",
   "passthrough": false
  },
  {
@@ -2980,7 +2980,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "Когда включать",
-  "en": "",
+  "en": "When to switch it on",
   "passthrough": false
  },
  {
@@ -2988,7 +2988,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "Когда рано",
-  "en": "",
+  "en": "When it's too early",
   "passthrough": false
  },
  {
@@ -2996,7 +2996,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "Комментарий в коде",
-  "en": "",
+  "en": "A comment in the code",
   "passthrough": false
  },
  {
@@ -3004,7 +3004,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "сразу, без сигнала",
-  "en": "",
+  "en": "right away, with no signal",
   "passthrough": false
  },
  {
@@ -3012,7 +3012,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "никогда не рано",
-  "en": "",
+  "en": "never too early",
   "passthrough": false
  },
  {
@@ -3020,7 +3020,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "конвенция класса файлов не помещается в корень",
-  "en": "",
+  "en": "the class-of-files convention no longer fits in the root",
   "passthrough": false
  },
  {
@@ -3028,7 +3028,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "пока конвенция в две строки",
-  "en": "",
+  "en": "while the convention is two lines long",
   "passthrough": false
  },
  {
@@ -3036,7 +3036,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "Указатель-свод в корне",
-  "en": "",
+  "en": "A corpus pointer in the root file",
   "passthrough": false
  },
  {
@@ -3044,7 +3044,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "документ уже есть и его есть кому поддерживать",
-  "en": "",
+  "en": "the document exists and somebody maintains it",
   "passthrough": false
  },
  {
@@ -3052,7 +3052,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "указатель без документа",
-  "en": "",
+  "en": "a pointer with no document",
   "passthrough": false
  },
  {
@@ -3060,7 +3060,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "никогда как единственная гарантия",
-  "en": "",
+  "en": "never as the only guarantee",
   "passthrough": false
  },
  {
@@ -3068,7 +3068,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "всегда, пока /context не проверен",
-  "en": "",
+  "en": "always, until /context has been checked",
   "passthrough": false
  },
  {
@@ -3076,7 +3076,7 @@
   "slide": "s27",
   "where": "body",
   "ru": "«Три развилки, один и тот же файл: решили, чего в него не писать заранее; записали гейт готовности, заведённый на дне 0; и решили, что у знания есть адрес — и вложенная папка им не является. Но есть знание другого рода: то, что появляется по ходу самой работы. Это раздел второй — память.»",
-  "en": "",
+  "en": "\"Three decision points, one and the same file: we decided what not to write into it in advance; we wrote down the readiness gate set up on day 0; and we decided that knowledge has an address — and a nested folder is not one. But there is knowledge of another kind: it appears in the course of the work. That is section two — memory.\"",
   "passthrough": false
  },
  {
@@ -3084,7 +3084,7 @@
   "slide": "s28",
   "where": "body",
   "ru": "Раздел 2 · память",
-  "en": "",
+  "en": "Section 2 · memory",
   "passthrough": false
  },
  {
@@ -3092,7 +3092,7 @@
   "slide": "s28",
   "where": "body",
   "ru": "Кейс 2.1 · плоский файл",
-  "en": "",
+  "en": "Case 2.1 · flat file",
   "passthrough": false
  },
  {
@@ -3100,7 +3100,7 @@
   "slide": "s28",
   "where": "body",
   "ru": "Между сессиями агент не хранит ни бита — если это не лежит на диске",
-  "en": "",
+  "en": "Between sessions the agent stores not a single bit — unless it is on disk",
   "passthrough": false
  },
  {
@@ -3108,7 +3108,7 @@
   "slide": "s28",
   "where": "body",
   "ru": "Кейс 2.2 · структурированная вики-память",
-  "en": "",
+  "en": "Case 2.2 · structured wiki memory",
   "passthrough": false
  },
  {
@@ -3116,7 +3116,7 @@
   "slide": "s28",
   "where": "body",
   "ru": "Кейс 2.3 · операционная память",
-  "en": "",
+  "en": "Case 2.3 · working memory",
   "passthrough": false
  },
  {
@@ -3124,7 +3124,7 @@
   "slide": "s28",
   "where": "body",
   "ru": "ЖУРНАЛ РЕШЕНИЙ ПРОЕКТА",
-  "en": "",
+  "en": "THE PROJECT'S DECISION LOG",
   "passthrough": false
  },
  {
@@ -3132,7 +3132,7 @@
   "slide": "s29",
   "where": "body",
   "ru": "КЕЙС 2.1 · ПЛОСКИЙ ФАЙЛ",
-  "en": "",
+  "en": "CASE 2.1 · FLAT FILE",
   "passthrough": false
  },
  {
@@ -3140,7 +3140,7 @@
   "slide": "s29",
   "where": "body",
   "ru": "Конец первой недели: отклонённое решение по валидации всплывает снова — DECISIONS.md заведён на дне 0, но записи об этом решении в нём нет",
-  "en": "",
+  "en": "End of the first week: a rejected decision about validation resurfaces — DECISIONS.md was set up on day 0, but there is no entry about that decision in it",
   "passthrough": false
  },
  {
@@ -3148,7 +3148,7 @@
   "slide": "s29",
   "where": "body",
   "ru": "Конец первой недели работы над signup-landing. Заказчик прислал заявку с опечаткой в домене почты, форма её приняла. Разработчик просит агента ужесточить проверку. Агент предлагает подключить стороннюю библиотеку валидации форм — ту самую, которую обсуждали и отклонили несколько дней назад: форма из двух полей, хватает нативных required/pattern.",
-  "en": "",
+  "en": "End of the first week of work on signup-landing. The client sent in a request with a typo in the email domain, and the form accepted it. The developer asks the agent to tighten the check. The agent proposes pulling in a third-party form-validation library — the very one that was discussed and rejected a few days ago: the form has two fields, native required/pattern are enough.",
   "passthrough": false
  },
  {
@@ -3156,7 +3156,7 @@
   "slide": "s29",
   "where": "body",
   "ru": "«DECISIONS.md заведён на дне 0, в тот же день, что spec.md и README. Записи про библиотеку валидации в нём нет: решение прозвучало в рабочем обсуждении и на диск не попало. Модель между вызовами не хранит ни бита — то, чего нет в файле, во второй сессии не существует.»",
-  "en": "",
+  "en": "\"DECISIONS.md was set up on day 0, the same day as spec.md and the README. There is no entry about the validation library in it: the decision was voiced in a working discussion and never made it to disk. Between calls the model stores not a single bit — what is not in a file does not exist in the second session.\"",
   "passthrough": false
  },
  {
@@ -3164,7 +3164,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "КЕЙС 2.1 · ВОПРОС",
-  "en": "",
+  "en": "CASE 2.1 · QUESTION",
   "passthrough": false
  },
  {
@@ -3172,7 +3172,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "Выберите, куда записать отклонённое решение — из карточек ниже — так, чтобы не объяснять его в третий раз",
-  "en": "",
+  "en": "Choose where to write the rejected decision down — from the cards below — so that you do not explain it a third time",
   "passthrough": false
  },
  {
@@ -3180,7 +3180,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "напоминание: отклонённая библиотека валидации всплыла снова — решение родилось в разговоре и нигде не осталось, даже при уже заведённом DECISIONS.md",
-  "en": "",
+  "en": "reminder: the rejected validation library has resurfaced — the decision was born in conversation and was left nowhere, even with DECISIONS.md already set up",
   "passthrough": false
  },
  {
@@ -3188,7 +3188,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "«Вы второй раз за две недели объясняете агенту, почему в этой форме нет сторонней библиотеки валидации. Выберите, куда записать это решение — из карточек ниже — так, чтобы не объяснять его в третий раз, и обоснуйте, почему не в тот файл инструкций, который мы только что завели.»",
-  "en": "",
+  "en": "\"This is the second time in two weeks that you are explaining to the agent why there is no third-party validation library in this form. Choose where to write this decision down — from the cards below — so that you do not explain it a third time, and justify why not in the instruction file we have just set up.\"",
   "passthrough": false
  },
  {
@@ -3196,7 +3196,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "дописать",
-  "en": "",
+  "en": "add it to",
   "passthrough": false
  },
  {
@@ -3204,7 +3204,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "в CLAUDE.md",
-  "en": "",
+  "en": "CLAUDE.md",
   "passthrough": false
  },
  {
@@ -3212,7 +3212,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "сказать агенту",
-  "en": "",
+  "en": "tell the agent",
   "passthrough": false
  },
  {
@@ -3220,7 +3220,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "«запомни это»",
-  "en": "",
+  "en": "\"remember this\"",
   "passthrough": false
  },
  {
@@ -3228,7 +3228,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "записать в",
-  "en": "",
+  "en": "write it in",
   "passthrough": false
  },
  {
@@ -3236,7 +3236,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "DECISIONS.md — он уже есть",
-  "en": "",
+  "en": "DECISIONS.md — it already exists",
   "passthrough": false
  },
  {
@@ -3244,7 +3244,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "поставить систему",
-  "en": "",
+  "en": "install a memory",
   "passthrough": false
  },
  {
@@ -3252,7 +3252,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "памяти",
-  "en": "",
+  "en": "system",
   "passthrough": false
  },
  {
@@ -3260,7 +3260,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "ничего — сам",
-  "en": "",
+  "en": "nothing — it will",
   "passthrough": false
  },
  {
@@ -3268,7 +3268,7 @@
   "slide": "s30",
   "where": "body",
   "ru": "запомнит",
-  "en": "",
+  "en": "remember on its own",
   "passthrough": false
  },
  {
@@ -3276,7 +3276,7 @@
   "slide": "s31",
   "where": "body",
   "ru": "КЕЙС 2.1 · ИССЛЕДОВАНИЕ",
-  "en": "",
+  "en": "CASE 2.1 · THE EVIDENCE",
   "passthrough": false
  },
  {
@@ -3284,7 +3284,7 @@
   "slide": "s31",
   "where": "body",
   "ru": "Presence paradox из кейса 1.1 применяется и здесь: то, что лежит в DECISIONS.md, стоит контекста в каждой сессии независимо от того, нужна ли эта запись сегодня",
-  "en": "",
+  "en": "The presence paradox from case 1.1 applies here too: what sits in DECISIONS.md costs context in every session regardless of whether that entry is needed today",
   "passthrough": false
  },
  {
@@ -3292,7 +3292,7 @@
   "slide": "s31",
   "where": "body",
   "ru": "Кейс 1.1: Gloaguen et al. — сам факт присутствия текста в контексте создаёт стоимость (+20–23%), независимо от того, помогает ли он решить задачу. Мы назвали это presence paradox.",
-  "en": "",
+  "en": "Case 1.1: Gloaguen et al. — the mere fact that text is present in the context creates a cost (+20–23%), regardless of whether it helps solve the task. We called this the presence paradox.",
   "passthrough": false
  },
  {
@@ -3300,7 +3300,7 @@
   "slide": "s31",
   "where": "body",
   "ru": "DECISIONS.md — не исключение. Каждая строка грузится в контекст в каждой следующей сессии, не только когда она реально нужна. Тридцать записей о разных темах — цена уже заметна, даже если задача касается только одной из них.",
-  "en": "",
+  "en": "DECISIONS.md is no exception. Every line is loaded into the context in every session that follows, not only when it is actually needed. Thirty entries on different topics — the cost is already noticeable, even if the task touches only one of them.",
   "passthrough": false
  },
  {
@@ -3308,7 +3308,7 @@
   "slide": "s31",
   "where": "body",
   "ru": "прямого измерения именно на журналах решений не проводилось — это перенос уже установленного механизма на новый объект, не отдельное новое исследование",
-  "en": "",
+  "en": "no direct measurement on decision logs specifically has been carried out — this is a transfer of an already established mechanism to a new object, not a separate new study",
   "passthrough": false
  },
  {
@@ -3316,7 +3316,7 @@
   "slide": "s31",
   "where": "body",
   "ru": "если запись не бесплатна — точно ли туда идёт вообще всё, что можно туда положить?",
-  "en": "",
+  "en": "if an entry is not free — does everything that could be put there really belong there?",
   "passthrough": false
  },
  {
@@ -3324,7 +3324,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "КЕЙС 2.1 · ЧЕТЫРЕ СЛОЯ",
-  "en": "",
+  "en": "CASE 2.1 · FOUR LAYERS",
   "passthrough": false
  },
  {
@@ -3332,7 +3332,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Разница между слоями не в формате, а в том, кто инициирует запись, кто её потом увидит и по какому механизму она вообще попадает в контекст",
-  "en": "",
+  "en": "The difference between the layers is not in the format, but in who initiates the entry, who will see it afterwards and by what mechanism it gets into the context",
   "passthrough": false
  },
  {
@@ -3340,7 +3340,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Файл инстр.",
-  "en": "",
+  "en": "Instr. file",
   "passthrough": false
  },
  {
@@ -3348,7 +3348,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Авто-память",
-  "en": "",
+  "en": "Auto-memory",
   "passthrough": false
  },
  {
@@ -3356,7 +3356,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Сложная система",
-  "en": "",
+  "en": "Complex system",
   "passthrough": false
  },
  {
@@ -3364,7 +3364,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Кто автор",
-  "en": "",
+  "en": "Who writes it",
   "passthrough": false
  },
  {
@@ -3372,7 +3372,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "вы, заранее",
-  "en": "",
+  "en": "you, in advance",
   "passthrough": false
  },
  {
@@ -3380,7 +3380,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "агент, по ходу",
-  "en": "",
+  "en": "the agent, as it goes",
   "passthrough": false
  },
  {
@@ -3388,7 +3388,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "вы, в момент решения",
-  "en": "",
+  "en": "you, when the decision is made",
   "passthrough": false
  },
  {
@@ -3396,7 +3396,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "сервис, сам",
-  "en": "",
+  "en": "the service, itself",
   "passthrough": false
  },
  {
@@ -3404,7 +3404,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Где живёт",
-  "en": "",
+  "en": "Where it lives",
   "passthrough": false
  },
  {
@@ -3412,7 +3412,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "в репо, git",
-  "en": "",
+  "en": "in the repo, git",
   "passthrough": false
  },
  {
@@ -3420,7 +3420,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "вне репо, на машине",
-  "en": "",
+  "en": "outside repo, on the machine",
   "passthrough": false
  },
  {
@@ -3428,7 +3428,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "вне репо, отдельно",
-  "en": "",
+  "en": "outside the repo, separate",
   "passthrough": false
  },
  {
@@ -3436,7 +3436,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Что грузится",
-  "en": "",
+  "en": "What gets loaded",
   "passthrough": false
  },
  {
@@ -3444,7 +3444,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "целиком, каждую сессию",
-  "en": "",
+  "en": "all of it, every session",
   "passthrough": false
  },
  {
@@ -3452,7 +3452,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "индекс: 200 строк / 25 КБ",
-  "en": "",
+  "en": "index: 200 lines / 25 KB",
   "passthrough": false
  },
  {
@@ -3460,7 +3460,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "ничего автоматически",
-  "en": "",
+  "en": "nothing automatically",
   "passthrough": false
  },
  {
@@ -3468,7 +3468,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Код-ревью",
-  "en": "",
+  "en": "Code review",
   "passthrough": false
  },
  {
@@ -3476,7 +3476,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "да",
-  "en": "",
+  "en": "yes",
   "passthrough": false
  },
  {
@@ -3484,7 +3484,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Смена машины",
-  "en": "",
+  "en": "Change of machine",
   "passthrough": false
  },
  {
@@ -3492,7 +3492,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "да, если доступен",
-  "en": "",
+  "en": "yes, if reachable",
   "passthrough": false
  },
  {
@@ -3500,7 +3500,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "Что туда идёт",
-  "en": "",
+  "en": "What goes into it",
   "passthrough": false
  },
  {
@@ -3508,7 +3508,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "стабильные правила",
-  "en": "",
+  "en": "stable rules",
   "passthrough": false
  },
  {
@@ -3516,7 +3516,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "предпочтения, подходы",
-  "en": "",
+  "en": "preferences, approaches",
   "passthrough": false
  },
  {
@@ -3524,7 +3524,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "решения и «почему»",
-  "en": "",
+  "en": "decisions and the \"why\"",
   "passthrough": false
  },
  {
@@ -3532,7 +3532,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "что сервис счёл достойным",
-  "en": "",
+  "en": "what the service deemed worthy",
   "passthrough": false
  },
  {
@@ -3540,7 +3540,7 @@
   "slide": "s32",
   "where": "body",
   "ru": "индекс памяти — только индекс  ·  агент сам пропускает выводимое из кода  ·  сжатие контекста переживают только файлы на диске  ·  усложнение слоя само по себе результата не улучшает",
-  "en": "",
+  "en": "the memory index is only an index  ·  the agent itself skips what is derivable from the code  ·  only files on disk survive context compaction  ·  complicating the layer does not by itself improve the result",
   "passthrough": false
  },
  {
@@ -3548,7 +3548,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "КЕЙС 2.1 · РАЗБОР",
-  "en": "",
+  "en": "CASE 2.1 · BREAKDOWN",
   "passthrough": false
  },
  {
@@ -3556,7 +3556,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Командное решение с обоснованием идёт в DECISIONS.md, личное предпочтение — в авто-память, выводимое из кода — никуда",
-  "en": "",
+  "en": "A team decision with a justification goes into DECISIONS.md, a personal preference into auto-memory, what is derivable from the code nowhere",
   "passthrough": false
  },
  {
@@ -3564,7 +3564,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "вопрос для контекста: «Куда записать отклонённое решение — и почему не в файл инструкций?»",
-  "en": "",
+  "en": "the question, for context: \"Where to write the rejected decision down — and why not in the instruction file?\"",
   "passthrough": false
  },
  {
@@ -3572,7 +3572,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Где это работает",
-  "en": "",
+  "en": "Where it works",
   "passthrough": false
  },
  {
@@ -3580,7 +3580,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Почему здесь ещё рано — и что вместо",
-  "en": "",
+  "en": "Why it is too early here — and what instead",
   "passthrough": false
  },
  {
@@ -3588,7 +3588,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "«Допишу в CLAUDE.md»",
-  "en": "",
+  "en": "\"I'll add it to CLAUDE.md\"",
   "passthrough": false
  },
  {
@@ -3596,7 +3596,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Механически сработает: файл читается каждую сессию",
-  "en": "",
+  "en": "Mechanically it will work: the file is read every session",
   "passthrough": false
  },
  {
@@ -3604,7 +3604,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Смешивает стабильные правила и растущий лог решений. На десятке решений файл выйдет за ориентир в 200 строк",
-  "en": "",
+  "en": "Mixes stable rules with a growing log of decisions. At a dozen decisions the file goes past the 200-line guideline",
   "passthrough": false
  },
  {
@@ -3612,7 +3612,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "«Ничего, агент сам запомнит»",
-  "en": "",
+  "en": "\"Nothing, the agent will remember on its own\"",
   "passthrough": false
  },
  {
@@ -3620,7 +3620,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Нигде: это не настройка, которую забыли включить",
-  "en": "",
+  "en": "Nowhere: this is not a setting someone forgot to switch on",
   "passthrough": false
  },
  {
@@ -3628,7 +3628,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Модель не имеет состояния между вызовами по конструкции",
-  "en": "",
+  "en": "The model has no state between calls, by construction",
   "passthrough": false
  },
  {
@@ -3636,7 +3636,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "«Скажу агенту ‘запомни это’»",
-  "en": "",
+  "en": "\"I'll tell the agent 'remember this'\"",
   "passthrough": false
  },
  {
@@ -3644,7 +3644,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Для личного предпочтения — идеально",
-  "en": "",
+  "en": "For a personal preference — perfect",
   "passthrough": false
  },
  {
@@ -3652,7 +3652,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Половина ответа. Уходит в авто-память: машинно-локальный слой без синхронизации и код-ревью",
-  "en": "",
+  "en": "Half the answer. It goes into auto-memory: a machine-local layer with no sync and no code review",
   "passthrough": false
  },
  {
@@ -3660,7 +3660,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "«Запишу в DECISIONS.md — он уже есть»",
-  "en": "",
+  "en": "\"I'll write it in DECISIONS.md — it already exists\"",
   "passthrough": false
  },
  {
@@ -3668,7 +3668,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Для командного решения с обоснованием — именно то, что нужно",
-  "en": "",
+  "en": "For a team decision with a justification — exactly what is needed",
   "passthrough": false
  },
  {
@@ -3676,7 +3676,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Вторая половина ответа. Дело не в создании, а в дисциплине: писать «почему», а не «что»",
-  "en": "",
+  "en": "The second half of the answer. The point is not creating it but the discipline: writing \"why\", not \"what\"",
   "passthrough": false
  },
  {
@@ -3684,7 +3684,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "«Поставлю систему памяти»",
-  "en": "",
+  "en": "\"I'll install a memory system\"",
   "passthrough": false
  },
  {
@@ -3692,7 +3692,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "На десятках-сотнях записей, нескольких пользователях",
-  "en": "",
+  "en": "At dozens or hundreds of entries, several users",
   "passthrough": false
  },
  {
@@ -3700,7 +3700,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "Рано на порядок: на малых корпусах простой файл регулярно конкурентен со сложными системами",
-  "en": "",
+  "en": "An order of magnitude too early: on small corpora a simple file is regularly competitive with complex systems",
   "passthrough": false
  },
  {
@@ -3708,7 +3708,7 @@
   "slide": "s33",
   "where": "body",
   "ru": "целевой ответ — оба механизма разом, с разделением ролей",
-  "en": "",
+  "en": "the target answer — both mechanisms at once, with the roles split",
   "passthrough": false
  },
  {
@@ -3716,7 +3716,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "КЕЙС 2.1 · СОВМЕСТНОЕ ФОРМИРОВАНИЕ",
-  "en": "",
+  "en": "CASE 2.1 · CO-BUILDING",
   "passthrough": false
  },
  {
@@ -3724,7 +3724,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "Не всё, что узнал агент, вообще стоит записывать — третья корзина такая же законная, как первые две",
-  "en": "",
+  "en": "Not everything the agent learned is worth writing down at all — the third basket is just as legitimate as the first two",
   "passthrough": false
  },
  {
@@ -3732,7 +3732,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "АВТО-ПАМЯТЬ",
-  "en": "",
+  "en": "AUTO-MEMORY",
   "passthrough": false
  },
  {
@@ -3740,7 +3740,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "Разработчик просит отвечать\nкоротко, без преамбул",
-  "en": "",
+  "en": "The developer asks for short\nanswers, with no preamble",
   "passthrough": false
  },
  {
@@ -3756,7 +3756,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "Не подключаем стороннюю библиотеку\nвалидации — форма из двух полей",
-  "en": "",
+  "en": "We are not pulling in a third-party\nvalidation library — the form has two fields",
   "passthrough": false
  },
  {
@@ -3764,7 +3764,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "Своего бэкенда не делаем — заявка\nуходит на внешний сервис приёма форм",
-  "en": "",
+  "en": "We are not building our own backend —\nthe request goes to an external form service",
   "passthrough": false
  },
  {
@@ -3772,7 +3772,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "НИКУДА",
-  "en": "",
+  "en": "NOWHERE",
   "passthrough": false
  },
  {
@@ -3780,7 +3780,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "Обработчик формы лежит\nв src/main.js",
-  "en": "",
+  "en": "The form handler lives\nin src/main.js",
   "passthrough": false
  },
  {
@@ -3788,7 +3788,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "24 сентября тест упал из-за\nтаймаута, увеличили ожидание",
-  "en": "",
+  "en": "On September 24 a test failed because of\na timeout, we raised the wait",
   "passthrough": false
  },
  {
@@ -3796,7 +3796,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "собранная запись — реальный файл демо-репозитория",
-  "en": "",
+  "en": "the assembled entry — a real file from the demo repository",
   "passthrough": false
  },
  {
@@ -3804,7 +3804,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "## 2026-09-20 — не подключаем библиотеку валидации форм",
-  "en": "",
+  "en": "## 2026-09-20 — we are not pulling in a form-validation library",
   "passthrough": false
  },
  {
@@ -3812,7 +3812,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "Форма — два поля (имя, email), хватает нативных required/pattern в",
-  "en": "",
+  "en": "The form has two fields (name, email), the native required/pattern in",
   "passthrough": false
  },
  {
@@ -3820,7 +3820,7 @@
   "slide": "s34",
   "where": "body",
   "ru": "index.html. Сторонняя библиотека — лишняя зависимость ради этого объёма.",
-  "en": "",
+  "en": "index.html are enough. A third-party library is an extra dependency for this scope.",
   "passthrough": false
  },
  {
@@ -3828,7 +3828,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "КЕЙС 2.1 · РЕШЕНИЕ",
-  "en": "",
+  "en": "CASE 2.1 · THE SOLUTION",
   "passthrough": false
  },
  {
@@ -3836,7 +3836,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "Новое — не файл (он заведён на дне 0), а первая содержательная запись в нём, датированная днём, когда решение записали",
-  "en": "",
+  "en": "What is new is not the file (it was set up on day 0) but the first substantive entry in it, dated the day the decision was written down",
   "passthrough": false
  },
  {
@@ -3844,7 +3844,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "DECISIONS.md — целиком",
-  "en": "",
+  "en": "DECISIONS.md — in full",
   "passthrough": false
  },
  {
@@ -3868,7 +3868,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "## 2026-09-26 — сторонние виджеты в форму не добавляем",
-  "en": "",
+  "en": "## 2026-09-26 — no third-party widgets in the form",
   "passthrough": false
  },
  {
@@ -3876,7 +3876,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "Форма — два поля (имя, email), хватает нативных required/pattern",
-  "en": "",
+  "en": "The form has two fields (name, email), native required/pattern in",
   "passthrough": false
  },
  {
@@ -3884,7 +3884,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "в index.html. Сторонний виджет — лишняя зависимость и лишние",
-  "en": "",
+  "en": "index.html are enough. A third-party widget is an extra dependency",
   "passthrough": false
  },
  {
@@ -3892,7 +3892,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "килобайты в сборке ради этого объёма.",
-  "en": "",
+  "en": "and extra kilobytes in the bundle for this scope.",
   "passthrough": false
  },
  {
@@ -3900,7 +3900,7 @@
   "slide": "s35",
   "where": "body",
   "ru": "состояние репозитория, неделя 1",
-  "en": "",
+  "en": "state of the repository, week 1",
   "passthrough": false
  },
  {
@@ -3916,7 +3916,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "КЕЙС 2.1 · ПРОВАЛ И ЭФФЕКТИВНОСТЬ",
-  "en": "",
+  "en": "CASE 2.1 · FAILURE AND EFFECTIVENESS",
   "passthrough": false
  },
  {
@@ -3924,7 +3924,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Память по умолчанию читается как доверенный контекст, а не как данные — и включение памяти не обязательно улучшает результат",
-  "en": "",
+  "en": "By default memory is read as trusted context rather than as data — and turning memory on does not necessarily improve the result",
   "passthrough": false
  },
  {
@@ -3932,7 +3932,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Отравление памяти — SpAIware (сентябрь 2024)",
-  "en": "",
+  "en": "Memory poisoning — SpAIware (September 2024)",
   "passthrough": false
  },
  {
@@ -3940,7 +3940,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Внешний текст с вложенной инструкцией → долговременная память → активация в последующих сессиях, эксфильтрация переписки. Вектор закрыт в версии 1.2024.247; структурный принцип остался.",
-  "en": "",
+  "en": "External text with an embedded instruction → long-term memory → activation in later sessions, exfiltration of the conversation. The vector was closed in version 1.2024.247; the structural principle remained.",
   "passthrough": false
  },
  {
@@ -3948,7 +3948,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "≈48% всех последующих обращений к памяти захвачено (MemoryGraft, 2025; до отравления — 0%). В смежном эксперименте 5 подложенных документов управляют выводом в >90% случаев.",
-  "en": "",
+  "en": "≈48% of all subsequent memory retrievals captured (MemoryGraft, 2025; before poisoning — 0%). In an adjacent experiment 5 planted documents steer the output in >90% of cases.",
   "passthrough": false
  },
  {
@@ -3956,7 +3956,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Замер",
-  "en": "",
+  "en": "Measurement",
   "passthrough": false
  },
  {
@@ -3964,7 +3964,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Значение",
-  "en": "",
+  "en": "Value",
   "passthrough": false
  },
  {
@@ -3972,7 +3972,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "База сравнения",
-  "en": "",
+  "en": "Baseline for comparison",
   "passthrough": false
  },
  {
@@ -3980,7 +3980,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Популярная система памяти на бенчмарке долговременной памяти",
-  "en": "",
+  "en": "A popular memory system on a long-term memory benchmark",
   "passthrough": false
  },
  {
@@ -3988,7 +3988,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "46,0% с памятью против 57,6% без",
-  "en": "",
+  "en": "46.0% with memory versus 57.6% without",
   "passthrough": false
  },
  {
@@ -3996,7 +3996,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "та же система, память выключена",
-  "en": "",
+  "en": "the same system, memory switched off",
   "passthrough": false
  },
  {
@@ -4004,7 +4004,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Шесть систем памяти против «весь текст сессии в один файл»",
-  "en": "",
+  "en": "Six memory systems versus \"the whole session text in one file\"",
   "passthrough": false
  },
  {
@@ -4012,7 +4012,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "проигрыш плоскому файлу на 25–67 пунктов",
-  "en": "",
+  "en": "losing to the flat file by 25–67 points",
   "passthrough": false
  },
  {
@@ -4020,7 +4020,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "тот же плоский файл",
-  "en": "",
+  "en": "the same flat file",
   "passthrough": false
  },
  {
@@ -4028,7 +4028,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "Дискреционность записи",
-  "en": "",
+  "en": "Write discretion",
   "passthrough": false
  },
  {
@@ -4036,7 +4036,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "17% (4 задачи из 24) — модель отказалась записать нужный факт",
-  "en": "",
+  "en": "17% (4 tasks out of 24) — the model refused to write down the needed fact",
   "passthrough": false
  },
  {
@@ -4044,7 +4044,7 @@
   "slide": "s36",
   "where": "body",
   "ru": "те же 24 задачи",
-  "en": "",
+  "en": "the same 24 tasks",
   "passthrough": false
  },
  {
@@ -4052,7 +4052,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "КЕЙС 2.1 · КРИТЕРИЙ И ГРАНИЦА",
-  "en": "",
+  "en": "CASE 2.1 · CRITERION AND BOUNDARY",
   "passthrough": false
  },
  {
@@ -4060,7 +4060,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Плоского файла достаточно, пока история решений влезает в контекст целиком и связей между записями ещё нет",
-  "en": "",
+  "en": "A flat file is enough while the decision history fits into the context in full and there are no links between the entries yet",
   "passthrough": false
  },
  {
@@ -4068,7 +4068,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Задача одноразовая, второй сессии по этому контексту не будет.",
-  "en": "",
+  "en": "The task is one-off, there will be no second session on this context.",
   "passthrough": false
  },
  {
@@ -4076,7 +4076,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Весь нужный контекст помещается в одно контекстное окно без потерь.",
-  "en": "",
+  "en": "All the context you need fits into a single context window without loss.",
   "passthrough": false
  },
  {
@@ -4084,7 +4084,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Правила проекта стабильны и укладываются в файл инструкций короче 200 строк.",
-  "en": "",
+  "en": "The project's rules are stable and fit into an instruction file shorter than 200 lines.",
   "passthrough": false
  },
  {
@@ -4092,7 +4092,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Никто не повторяет вручную одну и ту же правку из сессии в сессию.",
-  "en": "",
+  "en": "Nobody is manually repeating the same edit from session to session.",
   "passthrough": false
  },
  {
@@ -4100,7 +4100,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Нет нескольких участников, которым нужно делиться контекстом асинхронно.",
-  "en": "",
+  "en": "There are not several participants who need to share context asynchronously.",
   "passthrough": false
  },
  {
@@ -4108,7 +4108,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Факт выводим из кода или истории изменений.",
-  "en": "",
+  "en": "The fact is derivable from the code or change history.",
   "passthrough": false
  },
  {
@@ -4116,7 +4116,7 @@
   "slide": "s37",
   "where": "body",
   "ru": "Плоский DECISIONS.md перестаёт справляться, когда записей набралось настолько много, что найти нужную линейным чтением дольше, чем переобъяснить решение заново, — и между записями появились связи, для которых в append-only логе физически некуда положить.",
-  "en": "",
+  "en": "A flat DECISIONS.md stops coping when there are so many entries that finding the one you need by reading linearly takes longer than re-explaining the decision from scratch — and links have appeared between the entries, for which there is physically nowhere to put them in an append-only log.",
   "passthrough": false
  },
  {
@@ -4124,7 +4124,7 @@
   "slide": "s38",
   "where": "body",
   "ru": "Тот же DECISIONS.md, четыре месяца спустя",
-  "en": "",
+  "en": "The same DECISIONS.md, four months later",
   "passthrough": false
  },
  {
@@ -4132,7 +4132,7 @@
   "slide": "s38",
   "where": "body",
   "ru": "СТРУКТУРА ЖУРНАЛА РЕШЕНИЙ",
-  "en": "",
+  "en": "THE STRUCTURE OF THE DECISION LOG",
   "passthrough": false
  },
  {
@@ -4140,7 +4140,7 @@
   "slide": "s39",
   "where": "body",
   "ru": "КЕЙС 2.2 · ВИКИ-ПАМЯТЬ",
-  "en": "",
+  "en": "CASE 2.2 · WIKI MEMORY",
   "passthrough": false
  },
  {
@@ -4148,7 +4148,7 @@
   "slide": "s39",
   "where": "body",
   "ru": "Четвёртый месяц: в DECISIONS.md двести записей, две из них относятся к одному вопросу — и ни одна не ссылается на другую",
-  "en": "",
+  "en": "Month four: two hundred records in DECISIONS.md, two of them about the same question — and neither one links to the other",
   "passthrough": false
  },
  {
@@ -4156,7 +4156,7 @@
   "slide": "s39",
   "where": "body",
   "ru": "Четвёртый месяц работы над signup-landing. На форму пошёл спам; в команде к этому времени работает ещё один разработчик, который прежних обсуждений не застал, и он просит агента поставить защиту.\n\nАгент читает DECISIONS.md — двести записей — и отвечает по записи от 26 сентября: «сторонние виджеты в форму не добавляем». Значит, капча отпадает, и агент предлагает обсуждать вопрос заново.\n\nЗапись от 28 ноября — «антиспам делаем honeypot-полем, без капчи» — лежит на полторы сотни записей ниже, ближе к концу файла, и закрывает ровно этот случай. Ни сентябрьская запись не ссылается на ноябрьскую, ни ноябрьская на сентябрьскую.",
-  "en": "",
+  "en": "Month four of work on signup-landing. The form started getting spam; by now there is a second developer on the team, someone who was not around for the earlier discussions, and they ask the agent to put protection in place.\n\nThe agent reads DECISIONS.md — two hundred records — and answers from the record of September 26: \"no third-party widgets in the form\". So a captcha is out, and the agent proposes reopening the question from scratch.\n\nThe record of November 28 — \"anti-spam is a honeypot field, no captcha\" — sits a hundred and fifty records further down, near the end of the file, and settles exactly this case. Neither does the September record link to the November one, nor the November one to the September one.",
   "passthrough": false
  },
  {
@@ -4164,7 +4164,7 @@
   "slide": "s39",
   "where": "body",
   "ru": "«Обе записи лежат в одном файле. В плоском append-only логе найти обе можно только линейным чтением всех двухсот.»",
-  "en": "",
+  "en": "\"Both records sit in the same file. In a flat append-only log, the only way to find both is to read all two hundred linearly.\"",
   "passthrough": false
  },
  {
@@ -4172,7 +4172,7 @@
   "slide": "s39",
   "where": "body",
   "ru": "Пример иллюстративный — реального DECISIONS.md на 200 записей не захвачено.",
-  "en": "",
+  "en": "The example is illustrative — no real 200-record DECISIONS.md has been captured.",
   "passthrough": false
  },
  {
@@ -4180,7 +4180,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "КЕЙС 2.2 · ВОПРОС",
-  "en": "",
+  "en": "CASE 2.2 · QUESTION",
   "passthrough": false
  },
  {
@@ -4188,7 +4188,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "Разросшийся журнал решений и потерянная связь между двумя записями — повод выбрать, как его реорганизовать, а не заводить заново",
-  "en": "",
+  "en": "A decision log that has outgrown itself and a lost link between two records is a reason to choose how to reorganize it, not to start a new one",
   "passthrough": false
  },
  {
@@ -4196,7 +4196,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "«DECISIONS.md разросся, и в нём уже есть решение, которое отменяет часть более раннего решения, — без единой ссылки между ними. Выберите, как реорганизовать этот файл — из карточек ниже — так, чтобы агент быстро находил нужное решение и видел связи между решениями, а не листал линейный лог с начала. Обоснуйте выбор.»",
-  "en": "",
+  "en": "\"DECISIONS.md has grown, and it already contains a decision that overrides part of an earlier decision — without a single link between them. Choose how to reorganize this file — from the cards below — so that the agent quickly finds the decision it needs and sees the links between decisions, instead of scrolling a linear log from the beginning. Justify your choice.\"",
   "passthrough": false
  },
  {
@@ -4204,7 +4204,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "оставить как есть —",
-  "en": "",
+  "en": "leave it as is —",
   "passthrough": false
  },
  {
@@ -4212,7 +4212,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "просто грепать",
-  "en": "",
+  "en": "just grep it",
   "passthrough": false
  },
  {
@@ -4220,7 +4220,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "разбить на отдельные",
-  "en": "",
+  "en": "split it into separate",
   "passthrough": false
  },
  {
@@ -4228,7 +4228,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "файлы со ссылками",
-  "en": "",
+  "en": "files with links",
   "passthrough": false
  },
  {
@@ -4236,7 +4236,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "поставить графовую/",
-  "en": "",
+  "en": "install a graph/",
   "passthrough": false
  },
  {
@@ -4244,7 +4244,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "векторную систему памяти",
-  "en": "",
+  "en": "vector memory system",
   "passthrough": false
  },
  {
@@ -4252,7 +4252,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "завести один общий",
-  "en": "",
+  "en": "set up one shared",
   "passthrough": false
  },
  {
@@ -4260,7 +4260,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "SUMMARY.md, переписываемый целиком",
-  "en": "",
+  "en": "SUMMARY.md, rewritten in full",
   "passthrough": false
  },
  {
@@ -4268,7 +4268,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "агент сам найдёт",
-  "en": "",
+  "en": "the agent will find it",
   "passthrough": false
  },
  {
@@ -4276,7 +4276,7 @@
   "slide": "s40",
   "where": "body",
   "ru": "через поиск по репозиторию",
-  "en": "",
+  "en": "by searching the repository",
   "passthrough": false
  },
  {
@@ -4284,7 +4284,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "КЕЙС 2.2 · ИССЛЕДОВАНИЕ",
-  "en": "",
+  "en": "CASE 2.2 · THE EVIDENCE",
   "passthrough": false
  },
  {
@@ -4292,7 +4292,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "Плоская память деградирует со временем, а структура может окупаться именно для агента там, где не окупается для человека — но «умнее» не значит «лучше»",
-  "en": "",
+  "en": "Flat memory degrades over time, and structure may pay off for an agent precisely where it does not pay off for a human — but \"smarter\" does not mean \"better\"",
   "passthrough": false
  },
  {
@@ -4300,7 +4300,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "почти все источники ниже — свежие непроверенные препринты 2026 года; цифры — «заявлено в препринте», а не установленный факт",
-  "en": "",
+  "en": "almost all the sources below are recent, non-peer-reviewed 2026 preprints; the numbers are \"claimed in a preprint\", not established fact",
   "passthrough": false
  },
  {
@@ -4308,7 +4308,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "MEMTIER (arXiv:2605.03675): плоская память деградирует на горизонте порядка 72 часов работы — минус 14 п.п. успешности вызовов инструментов (насыщение контекста, temporal decay, semantic drift). Логика «raw sources → wiki → schema»: у человека вики умирает — поддержка дороже ценности; у агента стоимость правки полутора десятков файлов близка к нулю.",
-  "en": "",
+  "en": "MEMTIER (arXiv:2605.03675): flat memory degrades over a horizon on the order of 72 hours of work — minus 14 pp in tool-call success (context saturation, temporal decay, semantic drift). The logic of \"raw sources → wiki → schema\": for a human the wiki dies — upkeep costs more than its value; for an agent the cost of editing a dozen and a half files is close to zero.",
   "passthrough": false
  },
  {
@@ -4316,7 +4316,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "Система",
-  "en": "",
+  "en": "System",
   "passthrough": false
  },
  {
@@ -4324,7 +4324,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "LoCoMo (долговременная память)",
-  "en": "",
+  "en": "LoCoMo (long-term memory)",
   "passthrough": false
  },
  {
@@ -4332,7 +4332,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "Файловое хранилище (авто-индекс + поиск по смыслу, не только grep)",
-  "en": "",
+  "en": "File store (auto-index + semantic search, not only grep)",
   "passthrough": false
  },
  {
@@ -4340,7 +4340,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "74,0%",
-  "en": "",
+  "en": "74.0%",
   "passthrough": false
  },
  {
@@ -4356,7 +4356,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "68,5%",
-  "en": "",
+  "en": "68.5%",
   "passthrough": false
  },
  {
@@ -4364,7 +4364,7 @@
   "slide": "s41",
   "where": "body",
   "ru": "Летта-контрпример: простое хранилище обошло графовую систему памяти — модели тренированы на файловых операциях как на самом привычном инструменте.",
-  "en": "",
+  "en": "The Letta counter-example: a simple store beat a graph-based memory system — models are trained on file operations as the most familiar tool there is.",
   "passthrough": false
  },
  {
@@ -4372,7 +4372,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "КЕЙС 2.2 · РАЗБОР",
-  "en": "",
+  "en": "CASE 2.2 · BREAKDOWN",
   "passthrough": false
  },
  {
@@ -4380,7 +4380,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Разбить на отдельные файлы (по одному на решение) со сквозными ссылками — целевой ответ, но не бесплатный: структура сама создаёт новую нагрузку",
-  "en": "",
+  "en": "Splitting it into separate files (one per decision) with cross-links is the target answer, but not a free one: structure itself creates a new load",
   "passthrough": false
  },
  {
@@ -4388,7 +4388,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "вопрос для контекста: «Как реорганизовать разросшийся журнал решений?»",
-  "en": "",
+  "en": "question for context: \"How do you reorganize a decision log that has outgrown itself?\"",
   "passthrough": false
  },
  {
@@ -4396,7 +4396,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "«Оставить как есть, просто грепать»",
-  "en": "",
+  "en": "\"Leave it as is, just grep it\"",
   "passthrough": false
  },
  {
@@ -4404,7 +4404,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Пока записей десятки и они укладываются в контекст целиком",
-  "en": "",
+  "en": "While there are dozens of records and they fit into the context in full",
   "passthrough": false
  },
  {
@@ -4412,7 +4412,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Деградация плоской памяти со временем задокументирована (~72 ч, −14 п.п.); наш файл уже перерос эту границу",
-  "en": "",
+  "en": "Flat memory degrading over time is documented (~72 h, −14 pp); our file has already outgrown that boundary",
   "passthrough": false
  },
  {
@@ -4420,7 +4420,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "«Разбить на отдельные файлы (по одному на решение) со сквозными ссылками»",
-  "en": "",
+  "en": "\"Split it into separate files (one per decision) with cross-links\"",
   "passthrough": false
  },
  {
@@ -4428,7 +4428,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Именно этот случай",
-  "en": "",
+  "en": "Exactly this case",
   "passthrough": false
  },
  {
@@ -4436,7 +4436,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Целевой ответ, но не бесплатный — структура сама создаёт новую нагрузку (staleness, дублирование, поддержка)",
-  "en": "",
+  "en": "The target answer, but not a free one — structure itself creates a new load (staleness, duplication, upkeep)",
   "passthrough": false
  },
  {
@@ -4444,7 +4444,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "«Поставлю графовую/векторную систему памяти»",
-  "en": "",
+  "en": "\"I'll install a graph/vector memory system\"",
   "passthrough": false
  },
  {
@@ -4452,7 +4452,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "На больших многопользовательских корпусах с семантическим поиском",
-  "en": "",
+  "en": "On large multi-user corpora with semantic search",
   "passthrough": false
  },
  {
@@ -4460,7 +4460,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Контрпример прямо про наш масштаб: файловое хранилище обошло graph-based систему на LoCoMo",
-  "en": "",
+  "en": "The counter-example is aimed right at our scale: a file store beat a graph-based system on LoCoMo",
   "passthrough": false
  },
  {
@@ -4468,7 +4468,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "«Один общий SUMMARY.md, переписываемый целиком»",
-  "en": "",
+  "en": "\"One shared SUMMARY.md, rewritten in full\"",
   "passthrough": false
  },
  {
@@ -4476,7 +4476,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Для совсем маленького проекта",
-  "en": "",
+  "en": "For a really small project",
   "passthrough": false
  },
  {
@@ -4484,7 +4484,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Переписывание целиком убивает append-only гарантию",
-  "en": "",
+  "en": "Rewriting in full kills the append-only guarantee",
   "passthrough": false
  },
  {
@@ -4492,7 +4492,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "«Агент сам найдёт через поиск по репозиторию»",
-  "en": "",
+  "en": "\"The agent will find it itself by searching\"",
   "passthrough": false
  },
  {
@@ -4500,7 +4500,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Для фактов, выводимых из кода",
-  "en": "",
+  "en": "For facts derivable from the code",
   "passthrough": false
  },
  {
@@ -4508,7 +4508,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "Решения — не факты кода. «Сам найдёт» — то же заблуждение, что «сам запомнит»",
-  "en": "",
+  "en": "Decisions are not facts about the code. \"It'll find it\" is the same fallacy as \"it'll remember\"",
   "passthrough": false
  },
  {
@@ -4516,7 +4516,7 @@
   "slide": "s42",
   "where": "body",
   "ru": "целевой ответ — разбить на отдельные файлы (по одному на решение) со сквозными ссылками, со списком реальных издержек, а не как безусловный апгрейд",
-  "en": "",
+  "en": "the target answer — split it into separate files (one per decision) with cross-links, with a list of the real costs rather than as an unconditional upgrade",
   "passthrough": false
  },
  {
@@ -4524,7 +4524,7 @@
   "slide": "s43",
   "where": "body",
   "ru": "КЕЙС 2.2 · РЕШЕНИЕ",
-  "en": "",
+  "en": "CASE 2.2 · RESOLUTION",
   "passthrough": false
  },
  {
@@ -4532,7 +4532,7 @@
   "slide": "s43",
   "where": "body",
   "ru": "Практика ADR: одно решение — один нумерованный файл, а связь между решениями — строка в разделе Status, которую инструмент проставляет сразу в обе стороны",
-  "en": "",
+  "en": "The ADR practice: one decision — one numbered file, and the link between decisions is a line in the Status section that the tool writes both ways at once",
   "passthrough": false
  },
  {
@@ -4588,7 +4588,7 @@
   "slide": "s43",
   "where": "body",
   "ru": "ноябрьская запись — по шаблону adr-tools",
-  "en": "",
+  "en": "the November record — per the adr-tools template",
   "passthrough": false
  },
  {
@@ -4596,7 +4596,7 @@
   "slide": "s43",
   "where": "body",
   "ru": "# 187. Антиспам — honeypot-поле, без капчи",
-  "en": "",
+  "en": "# 187. Anti-spam — a honeypot field, no captcha",
   "passthrough": false
  },
  {
@@ -4628,7 +4628,7 @@
   "slide": "s43",
   "where": "body",
   "ru": "Amends [31. Сторонние виджеты не добавляем]",
-  "en": "",
+  "en": "Amends [31. No third-party widgets in the form]",
   "passthrough": false
  },
  {
@@ -4652,7 +4652,7 @@
   "slide": "s43",
   "where": "body",
   "ru": "adr new -l \"31:Amends:Amended by\" ... — и в файл 31 инструмент сам дописал встречную строку Amended by [187...]. Обе ссылки написал инструмент, а не автор записи.",
-  "en": "",
+  "en": "adr new -l \"31:Amends:Amended by\" ... — and in file 31 the tool itself added the matching line Amended by [187...]. Both links were written by the tool, not by the author of the record.",
   "passthrough": false
  },
  {
@@ -4660,7 +4660,7 @@
   "slide": "s43",
   "where": "body",
   "ru": "Источник практики: ADR — Майкл Найгард, 2011; adr-tools. Сила доказательства: задокументированная практика для людей (4500+ ADR в 750 проектах), но контролируемого измерения «ADR помогают агенту» нет. Содержимое записей иллюстративное, ждёт живой сессии.",
-  "en": "",
+  "en": "Source of the practice: ADR — Michael Nygard, 2011; adr-tools. Strength of evidence: a documented practice for humans (4500+ ADRs in 750 projects), but there is no controlled measurement that \"ADRs help an agent\". The content of the records is illustrative, awaiting a live session.",
   "passthrough": false
  },
  {
@@ -4668,7 +4668,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "КЕЙС 2.2 · КОНТРПРИМЕР: ЧТО ИМЕННО ИЗМЕРИЛИ",
-  "en": "",
+  "en": "CASE 2.2 · COUNTER-EXAMPLE: WHAT EXACTLY WAS MEASURED",
   "passthrough": false
  },
  {
@@ -4676,7 +4676,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "Файловое хранилище обошло графовую память — но измеряли вопросы по длинному диалогу, а не поиск связанного решения в журнале проекта",
-  "en": "",
+  "en": "A file store beat graph memory — but what was measured was questions about a long conversation, not finding a related decision in a project log",
   "passthrough": false
  },
  {
@@ -4684,7 +4684,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "LoCoMo — бенчмарк памяти в очень длинных диалогах (Maharana и др., 2024): переписка двух собеседников, до 35 сессий, ~300 реплик, ~9 тыс. токенов. Доля вопросов о фактах переписки с верным ответом.",
-  "en": "",
+  "en": "LoCoMo — a benchmark for memory in very long dialogues (Maharana et al., 2024): a conversation of two interlocutors, up to 35 sessions, ~300 turns, ~9 thousand tokens. Share of questions about conversation facts answered correctly.",
   "passthrough": false
  },
  {
@@ -4692,7 +4692,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "Файловое хранилище Letta (авто-индекс + поиск по смыслу, не только grep)",
-  "en": "",
+  "en": "Letta file store (auto-index + semantic search, not only grep)",
   "passthrough": false
  },
  {
@@ -4700,7 +4700,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "Mem0, графовый вариант (число из публикации Mem0)",
-  "en": "",
+  "en": "Mem0, graph variant (number from Mem0's publication)",
   "passthrough": false
  },
  {
@@ -4708,7 +4708,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "объяснение авторов: модели тренированы на файловых операциях как на самом привычном инструменте",
-  "en": "",
+  "en": "the authors' explanation: models are trained on file operations as the most familiar tool there is",
   "passthrough": false
  },
  {
@@ -4716,7 +4716,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "ЧЕГО ЭТОТ РЕЗУЛЬТАТ НЕ ГОВОРИТ",
-  "en": "",
+  "en": "WHAT THIS RESULT DOES NOT SAY",
   "passthrough": false
  },
  {
@@ -4724,7 +4724,7 @@
   "slide": "s44",
   "where": "body",
   "ru": "Это не один прогон — числа из двух разных публикаций; авторы Letta сами называют такое сравнение «яблоки с апельсинами».  ·  «Файловое хранилище» — не «только grep»: файл индексируется, поиск по смыслу у агента был.  ·  Задача другая: измеряли вопросы о фактах переписки, а не поиск связанного решения в журнале решений проекта. Наш случай никто не мерил.",
-  "en": "",
+  "en": "This is not a single run — the numbers come from two different publications; Letta's own authors call such a comparison \"apples to oranges\".  ·  \"A file store\" is not \"only grep\": the file is indexed, the agent did have semantic search.  ·  The task is a different one: what was measured was questions about conversation facts, not finding a related decision in a project's decision log. Nobody has measured our case.",
   "passthrough": false
  },
  {
@@ -4732,7 +4732,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "КЕЙС 2.2 · ЦЕНА СТРУКТУРЫ — НА НАШЕМ ЖЕ DOC/ADR/",
-  "en": "",
+  "en": "CASE 2.2 · THE COST OF STRUCTURE — ON OUR OWN DOC/ADR/",
   "passthrough": false
  },
  {
@@ -4740,7 +4740,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "Четыре издержки структуры — не общие категории, а конкретные файлы нашего же doc/adr/: сгенерированное оглавление, лишняя запись, осиротевшее обоснование и ручная сверка",
-  "en": "",
+  "en": "Four costs of structure — not general categories but concrete files of our own doc/adr/: a generated table of contents, a redundant record, an orphaned rationale and a manual cross-check",
   "passthrough": false
  },
  {
@@ -4748,7 +4748,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "Устаревание (staleness)",
-  "en": "",
+  "en": "Staleness",
   "passthrough": false
  },
  {
@@ -4756,7 +4756,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "README.md собран командой adr generate toc в октябре. Записи с 0188 по 0200 в него не попали, а выглядит он полным.",
-  "en": "",
+  "en": "README.md was assembled by the adr generate toc command in October. Records 0188 through 0200 never made it in, yet it looks complete.",
   "passthrough": false
  },
  {
@@ -4764,7 +4764,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "Дублирование (duplication)",
-  "en": "",
+  "en": "Duplication",
   "passthrough": false
  },
  {
@@ -4772,7 +4772,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "Кто-то не нашёл 0187 и завёл 0193 «Пороги антиспама» про тот же honeypot. Обе Accepted, ссылки между ними нет.",
-  "en": "",
+  "en": "Someone did not find 0187 and set up 0193, \"Anti-spam thresholds\", about the same honeypot. Both Accepted, no link between them.",
   "passthrough": false
  },
  {
@@ -4780,7 +4780,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "Нет каскадного удаления",
-  "en": "",
+  "en": "No cascading delete",
   "passthrough": false
  },
  {
@@ -4788,7 +4788,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "0031 отменили — статус и ссылки перевелись. Но 0187 обоснована фразой «запрещено решением 31» и осталась Accepted.",
-  "en": "",
+  "en": "0031 was superseded — status and links were moved. But 0187 is justified by the phrase \"banned by decision 31\" and stayed Accepted.",
   "passthrough": false
  },
  {
@@ -4796,7 +4796,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "Нагрузка на поддержку",
-  "en": "",
+  "en": "Maintenance burden",
   "passthrough": false
  },
  {
@@ -4804,7 +4804,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "Двести решений — двести файлов: номер, дата, статус, ссылки, регенерация оглавления. Заметить дубль не делает никто.",
-  "en": "",
+  "en": "Two hundred decisions — two hundred files: number, date, status, links, regenerated table of contents. Noticing a duplicate is done by nobody.",
   "passthrough": false
  },
  {
@@ -4812,7 +4812,7 @@
   "slide": "s45",
   "where": "body",
   "ru": "У человека эта нагрузка обычно убивает вики — наблюдение, не измерение. У агента правка полутора десятков файлов за проход стоит почти ноль — но это гипотеза о механизме. Структура — компромисс, не бесплатный апгрейд.",
-  "en": "",
+  "en": "For a human this burden usually kills a wiki — an observation, not a measurement. For an agent, editing a dozen and a half files in a pass costs almost nothing — but that is a hypothesis about a mechanism. Structure is a trade-off, not a free upgrade.",
   "passthrough": false
  },
  {
@@ -4820,7 +4820,7 @@
   "slide": "s46",
   "where": "body",
   "ru": "КЕЙС 2.2 · КРИТЕРИЙ И МОСТ",
-  "en": "",
+  "en": "CASE 2.2 · CRITERION AND BRIDGE",
   "passthrough": false
  },
  {
@@ -4828,7 +4828,7 @@
   "slide": "s46",
   "where": "body",
   "ru": "Единицы связей на запись и один-два человека, правящих память, — структуры достаточно; полноценная система памяти требует замеров на своём масштабе, не общего совета",
-  "en": "",
+  "en": "A handful of links per record and one or two people editing the memory — the structure is enough; a full-blown memory system requires measurements at your own scale, not general advice",
   "passthrough": false
  },
  {
@@ -4836,7 +4836,7 @@
   "slide": "s46",
   "where": "body",
   "ru": "Связей у записи — единицы, а не десятки: их видно в разделе Status.",
-  "en": "",
+  "en": "A record has a handful of links, not dozens: you can see them in the Status section.",
   "passthrough": false
  },
  {
@@ -4844,7 +4844,7 @@
   "slide": "s46",
   "where": "body",
   "ru": "Поиск нужной записи — по номеру, названию файла или простому grep, а не по смысловой близости.",
-  "en": "",
+  "en": "You find the record you need by number, by file name or with a plain grep, not by semantic proximity.",
   "passthrough": false
  },
  {
@@ -4852,7 +4852,7 @@
   "slide": "s46",
   "where": "body",
   "ru": "Участников, одновременно правящих память, — один-два.",
-  "en": "",
+  "en": "One or two participants edit the memory at the same time.",
   "passthrough": false
  },
  {
@@ -4860,7 +4860,7 @@
   "slide": "s46",
   "where": "body",
   "ru": "Никто не просил «найди решения, похожие по смыслу на…».",
-  "en": "",
+  "en": "Nobody has asked to \"find decisions semantically similar to…\".",
   "passthrough": false
  },
  {
@@ -4868,7 +4868,7 @@
   "slide": "s46",
   "where": "body",
   "ru": "Смена оси: всё в этом и предыдущем кейсе — про решения, которые живут навсегда. Что происходит с памятью одной задачи, пока она ещё не закончена?",
-  "en": "",
+  "en": "A change of axis: everything in this case and the previous one is about decisions that live forever. What happens to the memory of a single task while it is not finished yet?",
   "passthrough": false
  },
  {
@@ -4876,7 +4876,7 @@
   "slide": "s47",
   "where": "body",
   "ru": "Смена оси: не решения навсегда, а ход одной задачи между её сессиями",
-  "en": "",
+  "en": "The axis shifts: not decisions for good, but one task's progress between its sessions",
   "passthrough": false
  },
  {
@@ -4884,7 +4884,7 @@
   "slide": "s47",
   "where": "body",
   "ru": "ПАМЯТЬ ОДНОЙ ЗАДАЧИ",
-  "en": "",
+  "en": "THE MEMORY OF ONE TASK",
   "passthrough": false
  },
  {
@@ -4892,7 +4892,7 @@
   "slide": "s48",
   "where": "body",
   "ru": "КЕЙС 2.3 · ЗАДАЧНАЯ ПАМЯТЬ",
-  "en": "",
+  "en": "CASE 2.3 · TASK MEMORY",
   "passthrough": false
  },
  {
@@ -4900,7 +4900,7 @@
   "slide": "s48",
   "where": "body",
   "ru": "Файл задачи заведён на дне 0 и план в нём отмечен по первым шагам — а договорённость о том, как делать следующий шаг, принятая по ходу первой сессии, в него не попала",
-  "en": "",
+  "en": "The task file was set up on day 0 and its plan is checked off for the first steps — but the agreement on how to do the next step, made in the middle of the first session, never made it into the file",
   "passthrough": false
  },
  {
@@ -4908,7 +4908,7 @@
   "slide": "s48",
   "where": "body",
   "ru": "Практика «файл на задачу» заведена на дне 0, вместе с DECISIONS.md: на каждую многошаговую задачу — свой файл с планом и логом хода. Задача: разбить форму на пошаговый визард — имя, email, подтверждение, — сохранив всю текущую валидацию. Файл создан перед началом работы, план расписан на шесть шагов.\n\nПервая сессия закрывает шаги 1-2. По ходу шага 2 видно, что значения полей надо где-то держать между шагами, и в рабочем обсуждении — не в плане — выбирается способ: состояние визарда хранить одним объектом в sessionStorage, ключ signup-wizard. В лог хода выбранный способ не попадает. Сессия обрывается в середине шага 3 — контекст сжимается.\n\nВторая сессия. Агент открывает файл: план на месте, шаги 1-2 отмечены выполненными. Про sessionStorage в файле нет ни строки. Агент делает шаг 3 самым коротким способом — держит состояние в переменной модуля. Тесты шага 5 зелёные. Расхождение всплывает на шаге 6: перезагрузка страницы на третьем шаге очищает форму.",
-  "en": "",
+  "en": "The file-per-task practice is set up on day 0, together with DECISIONS.md: every multi-step task gets its own file with a plan and a progress log. The task: split the form into a step-by-step wizard — name, email, confirmation — keeping all the current validation. The file is created before work starts, the plan is laid out in six steps.\n\nThe first session closes steps 1-2. Step 2 shows field values must be held somewhere between steps, and in the working discussion — not the plan — a way is chosen: hold the wizard state in one sessionStorage object, key signup-wizard. The choice never reaches the progress log. The session breaks off inside step 3 — the context is compacted.\n\nThe second session. The agent opens the file: the plan is there, steps 1-2 are checked off. Not a single line about sessionStorage in the file. The agent does step 3 the shortest way — holding the state in a module variable. Step 5's tests are green. The divergence surfaces at step 6: a reload on the third step clears the form.",
   "passthrough": false
  },
  {
@@ -4916,7 +4916,7 @@
   "slide": "s48",
   "where": "body",
   "ru": "«На входе во вторую сессию у агента есть ровно то, что лежит в файле: шесть шагов плана и две отметки о выполнении. Договорённость про хранение состояния осталась в контексте первой сессии, которого больше нет.»",
-  "en": "",
+  "en": "\"At the entry into the second session the agent has exactly what is in the file: six steps of a plan and two done marks. The agreement about storing the state stayed in the context of the first session, which no longer exists.\"",
   "passthrough": false
  },
  {
@@ -4924,7 +4924,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "КЕЙС 2.3 · ВОПРОС",
-  "en": "",
+  "en": "CASE 2.3 · QUESTION",
   "passthrough": false
  },
  {
@@ -4932,7 +4932,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "Файл задачи существовал с самого начала и всё равно ввёл в заблуждение — выбор из пяти вариантов",
-  "en": "",
+  "en": "The task file existed from the very start and still misled — a choice of five options",
   "passthrough": false
  },
  {
@@ -4940,7 +4940,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "«Файл задачи существовал с самого начала, план в нём выглядит актуальным — первые шаги отмечены сделанными. И всё равно вторая сессия делает шаг 3 не так, как договорились в первой. Выберите, что нужно сделать иначе — из карточек ниже — так, чтобы файл задачи не вводил в заблуждение, а реально отражал ход работы. Обоснуйте выбор.»",
-  "en": "",
+  "en": "\"The task file existed from the very start, and the plan in it looks current — the first steps are marked done. And the second session still does step 3 differently from what was agreed in the first. Choose what needs to be done differently — from the cards below — so that the task file does not mislead but actually reflects the progress of the work. Justify your choice.\"",
   "passthrough": false
  },
  {
@@ -4948,7 +4948,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "надеяться на",
-  "en": "",
+  "en": "rely on the",
   "passthrough": false
  },
  {
@@ -4956,7 +4956,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "контекстное окно",
-  "en": "",
+  "en": "context window",
   "passthrough": false
  },
  {
@@ -4964,7 +4964,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "записать план",
-  "en": "",
+  "en": "write the plan",
   "passthrough": false
  },
  {
@@ -4972,7 +4972,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "в DECISIONS.md",
-  "en": "",
+  "en": "into DECISIONS.md",
   "passthrough": false
  },
  {
@@ -4980,7 +4980,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "правило в CLAUDE.md:",
-  "en": "",
+  "en": "a rule in CLAUDE.md:",
   "passthrough": false
  },
  {
@@ -4988,7 +4988,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "договорённость — сразу в файл",
-  "en": "",
+  "en": "an agreement — right into the file",
   "passthrough": false
  },
  {
@@ -4996,7 +4996,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "завести папку на задачу",
-  "en": "",
+  "en": "set up a folder per task",
   "passthrough": false
  },
  {
@@ -5004,7 +5004,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "с файлом под каждый шаг",
-  "en": "",
+  "en": "with a file for each step",
   "passthrough": false
  },
  {
@@ -5012,7 +5012,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "попросить агента",
-  "en": "",
+  "en": "ask the agent",
   "passthrough": false
  },
  {
@@ -5020,7 +5020,7 @@
   "slide": "s49",
   "where": "body",
   "ru": "«продолжи с того места»",
-  "en": "",
+  "en": "\"continue from where we left off\"",
   "passthrough": false
  },
  {
@@ -5028,7 +5028,7 @@
   "slide": "s50",
   "where": "body",
   "ru": "КЕЙС 2.3 · ИССЛЕДОВАНИЕ",
-  "en": "",
+  "en": "CASE 2.3 · EVIDENCE",
   "passthrough": false
  },
  {
@@ -5036,7 +5036,7 @@
   "slide": "s50",
   "where": "body",
   "ru": "От Pokémon до recitation — практика структурированных заметок о ходе задачи известна и работает; и она объясняет, почему наш файл всё равно подвёл",
-  "en": "",
+  "en": "From Pokémon to recitation — the practice of structured notes on a task's progress is known and works; and it explains why our file let us down anyway",
   "passthrough": false
  },
  {
@@ -5044,7 +5044,7 @@
   "slide": "s50",
   "where": "body",
   "ru": "Anthropic, инженерный блог: «structured note-taking» — агент играет в Pokémon тысячи шагов подряд, ведя простые структурированные заметки, переживая сбросы контекста без потери прогресса. Manus, «recitation»: агент непрерывно переписывает todo.md в конец контекста — снижает уход от цели. metasphere-agents: файл на задачу в .tasks/active/, архивируется в .tasks/done/ по завершении.",
-  "en": "",
+  "en": "Anthropic, engineering blog: \"structured note-taking\" — an agent plays Pokémon for thousands of steps in a row, keeping simple structured notes, surviving context resets without losing progress. Manus, \"recitation\": the agent continuously rewrites todo.md to the end of the context — it reduces goal drift. metasphere-agents: a file per task in .tasks/active/, archived into .tasks/done/ on completion.",
   "passthrough": false
  },
  {
@@ -5052,7 +5052,7 @@
   "slide": "s50",
   "where": "body",
   "ru": "«Есть измерение на большом числе траекторий: план в среднем помогает. Но дословная цитата авторов — ‘плохой план вреднее отсутствия плана вообще’. Полную картину с цифрами покажу на слайде провала.»",
-  "en": "",
+  "en": "\"There is a measurement over a large number of trajectories: a plan helps on average. But the authors' verbatim quote is 'bad plans hurt performance more than no plan at all'. The full picture with figures is on the failure slide.\"",
   "passthrough": false
  },
  {
@@ -5060,7 +5060,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "КЕЙС 2.3 · РАЗБОР",
-  "en": "",
+  "en": "CASE 2.3 · BREAKDOWN",
   "passthrough": false
  },
  {
@@ -5068,7 +5068,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Целевой ответ — строка в CLAUDE.md, обязывающая агента дописывать договорённость в файл задачи в момент, когда она прозвучала",
-  "en": "",
+  "en": "The target answer is a line in CLAUDE.md obliging the agent to append an agreement to the task file at the moment it is made",
   "passthrough": false
  },
  {
@@ -5076,7 +5076,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "вопрос для контекста: «Файл задачи ввёл в заблуждение — что сделать иначе?»",
-  "en": "",
+  "en": "the question for context: \"The task file misled — what should be done differently?\"",
   "passthrough": false
  },
  {
@@ -5084,7 +5084,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Почему рано — и что вместо",
-  "en": "",
+  "en": "Why it's too early — and what instead",
   "passthrough": false
  },
  {
@@ -5092,7 +5092,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "«Не сжимать, не закрывать сессию»",
-  "en": "",
+  "en": "\"Never compact, never close the session\"",
   "passthrough": false
  },
  {
@@ -5100,7 +5100,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Для задачи, целиком укладывающейся в одну короткую сессию",
-  "en": "",
+  "en": "For a task that fits entirely into one short session",
   "passthrough": false
  },
  {
@@ -5108,7 +5108,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Контекстное окно конечно; на многошаговой задаче рано или поздно случится сжатие или разрыв сессии — это отсутствие стратегии",
-  "en": "",
+  "en": "The context window is finite; on a multi-step task compaction or a session break will happen sooner or later — that is the absence of a strategy",
   "passthrough": false
  },
  {
@@ -5116,7 +5116,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "«Записать план в DECISIONS.md»",
-  "en": "",
+  "en": "\"Write the plan into DECISIONS.md\"",
   "passthrough": false
  },
  {
@@ -5124,7 +5124,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Никогда — не тот слой памяти",
-  "en": "",
+  "en": "Never — the wrong layer of memory",
   "passthrough": false
  },
  {
@@ -5132,7 +5132,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "DECISIONS.md — про решения, которые остаются в силе навсегда; статус одной задачи туда не относится",
-  "en": "",
+  "en": "DECISIONS.md is about decisions that stay in force for good; the status of one task does not belong there",
   "passthrough": false
  },
  {
@@ -5140,7 +5140,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "«Правило в CLAUDE.md: договорённость — сразу в файл задачи»",
-  "en": "",
+  "en": "\"A rule in CLAUDE.md: an agreement goes straight into the task file\"",
   "passthrough": false
  },
  {
@@ -5148,7 +5148,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Ровно наш случай — файл уже есть, не хватило строки в инструкциях",
-  "en": "",
+  "en": "Exactly our case — the file exists, a line in the instructions was missing",
   "passthrough": false
  },
  {
@@ -5156,7 +5156,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Целевой ответ. Адресат — агент, который файл и так ведёт, не память разработчика",
-  "en": "",
+  "en": "The target answer. Addressed to the agent that keeps the file anyway, not the developer's memory",
   "passthrough": false
  },
  {
@@ -5164,7 +5164,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "«Папка на задачу с файлом под каждый шаг»",
-  "en": "",
+  "en": "\"A folder per task with a file for each step\"",
   "passthrough": false
  },
  {
@@ -5172,7 +5172,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Параллельные подзадачи, несколько субагентов, разросшийся лог",
-  "en": "",
+  "en": "Parallel subtasks, several subagents, a log that has grown",
   "passthrough": false
  },
  {
@@ -5180,7 +5180,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Оверинжиниринг для одной линейной задачи здесь и сейчас",
-  "en": "",
+  "en": "Over-engineering for one linear task here and now",
   "passthrough": false
  },
  {
@@ -5188,7 +5188,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "«Попросить ‘продолжи с того места’»",
-  "en": "",
+  "en": "\"Ask it to 'continue from where we left off'\"",
   "passthrough": false
  },
  {
@@ -5196,7 +5196,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "Внутри одной непрерывной сессии, до сжатия",
-  "en": "",
+  "en": "Inside one uninterrupted session, before compaction",
   "passthrough": false
  },
  {
@@ -5204,7 +5204,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "После сжатия или в новой сессии буквально нечего продолжать",
-  "en": "",
+  "en": "After compaction or in a new session there is literally nothing to continue",
   "passthrough": false
  },
  {
@@ -5212,7 +5212,7 @@
   "slide": "s51",
   "where": "body",
   "ru": "целевой ответ — строка в CLAUDE.md, адресованная агенту, с явной оговоркой об упрощении до файла",
-  "en": "",
+  "en": "the target answer — a line in CLAUDE.md addressed to the agent, with an explicit caveat about simplifying to a file",
   "passthrough": false
  },
  {
@@ -5220,7 +5220,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "КЕЙС 2.3 · РЕШЕНИЕ",
-  "en": "",
+  "en": "CASE 2.3 · SOLUTION",
   "passthrough": false
  },
  {
@@ -5228,7 +5228,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "Новое в этом кейсе — не файл, а три строки в CLAUDE.md: они говорят агенту, когда в этот файл писать",
-  "en": "",
+  "en": "What is new in this case is not the file but three lines in CLAUDE.md: they tell the agent when to write into that file",
   "passthrough": false
  },
  {
@@ -5236,7 +5236,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "CLAUDE.md — добавлено",
-  "en": "",
+  "en": "CLAUDE.md — added",
   "passthrough": false
  },
  {
@@ -5244,7 +5244,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "## Задачная память",
-  "en": "",
+  "en": "## Task memory",
   "passthrough": false
  },
  {
@@ -5252,7 +5252,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "- файл .tasks/active/<задача>.md:",
-  "en": "",
+  "en": "- file .tasks/active/<task>.md:",
   "passthrough": false
  },
  {
@@ -5260,7 +5260,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "  план, лог хода, результаты",
-  "en": "",
+  "en": "  plan, progress log, results",
   "passthrough": false
  },
  {
@@ -5268,7 +5268,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "- договорённость дописывать в",
-  "en": "",
+  "en": "- append an agreement into",
   "passthrough": false
  },
  {
@@ -5276,7 +5276,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "  «Лог хода» сразу, тем же ответом",
-  "en": "",
+  "en": "  \"Progress log\" right away, same reply",
   "passthrough": false
  },
  {
@@ -5284,7 +5284,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "- в начале и в конце сессии сверять",
-  "en": "",
+  "en": "- at the start and end of a session, reconcile",
   "passthrough": false
  },
  {
@@ -5292,7 +5292,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "  план с репозиторием, строка",
-  "en": "",
+  "en": "  the plan with the repository, line",
   "passthrough": false
  },
  {
@@ -5300,7 +5300,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "  «Сверено: <дата>»",
-  "en": "",
+  "en": "  \"Reconciled: <date>\"",
   "passthrough": false
  },
  {
@@ -5316,7 +5316,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "# Задача: разбить форму на пошаговый визард",
-  "en": "",
+  "en": "# Task: split the form into a step-by-step wizard",
   "passthrough": false
  },
  {
@@ -5324,7 +5324,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "## План",
-  "en": "",
+  "en": "## Plan",
   "passthrough": false
  },
  {
@@ -5332,7 +5332,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "1. [x] Разметка трёх шагов",
-  "en": "",
+  "en": "1. [x] Markup for the three steps",
   "passthrough": false
  },
  {
@@ -5340,7 +5340,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "2. [x] Перенос текущей валидации",
-  "en": "",
+  "en": "2. [x] Current validation moved over",
   "passthrough": false
  },
  {
@@ -5348,7 +5348,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "3. [ ] Состояние текущего шага (JS)",
-  "en": "",
+  "en": "3. [ ] State of the current step (JS)",
   "passthrough": false
  },
  {
@@ -5356,7 +5356,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "## Лог хода",
-  "en": "",
+  "en": "## Progress log",
   "passthrough": false
  },
  {
@@ -5364,7 +5364,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "- 2027-01-26: шаги 1-2 закрыты. Состояние",
-  "en": "",
+  "en": "- 2027-01-26: steps 1-2 closed. Wizard",
   "passthrough": false
  },
  {
@@ -5372,7 +5372,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "  визарда — sessionStorage, ключ signup-",
-  "en": "",
+  "en": "  state — sessionStorage, key signup-",
   "passthrough": false
  },
  {
@@ -5380,7 +5380,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "  wizard. Решено по ходу, в плане нет.",
-  "en": "",
+  "en": "  wizard. Decided along the way, not in the plan.",
   "passthrough": false
  },
  {
@@ -5388,7 +5388,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "- 2027-01-28: начат шаг 3 — контекст сжат.",
-  "en": "",
+  "en": "- 2027-01-28: step 3 started — context compacted.",
   "passthrough": false
  },
  {
@@ -5396,7 +5396,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "## Сверено",
-  "en": "",
+  "en": "## Reconciled",
   "passthrough": false
  },
  {
@@ -5404,7 +5404,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "2027-01-28: план сверен, расхождений нет.",
-  "en": "",
+  "en": "2027-01-28: plan reconciled, no divergences.",
   "passthrough": false
  },
  {
@@ -5412,7 +5412,7 @@
   "slide": "s52",
   "where": "body",
   "ru": "иллюстративный пример, не захваченный вживую · правило в тексте — просьба, не закон · упрощение до файла — масштабируется до папки, подробнее за пределами этого занятия",
-  "en": "",
+  "en": "an illustrative example, not captured live · a rule in text is a request, not a law · the simplification down to a file — it scales up to a folder, more beyond this session",
   "passthrough": false
  },
  {
@@ -5420,7 +5420,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "КЕЙС 2.3 · ПРОВАЛ",
-  "en": "",
+  "en": "CASE 2.3 · FAILURE",
   "passthrough": false
  },
  {
@@ -5428,7 +5428,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "Плохой план хуже отсутствия плана вообще — и это подтверждено количественно, а не только интуицией",
-  "en": "",
+  "en": "A bad plan is worse than no plan at all — and that is confirmed quantitatively, not just intuitively",
   "passthrough": false
  },
  {
@@ -5436,7 +5436,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "Результат",
-  "en": "",
+  "en": "Result",
   "passthrough": false
  },
  {
@@ -5444,7 +5444,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "Evaluating Plan Compliance, 21 120 траекторий, SWE-bench Verified/Pro",
-  "en": "",
+  "en": "Evaluating Plan Compliance, 21,120 trajectories, SWE-bench Verified/Pro",
   "passthrough": false
  },
  {
@@ -5452,7 +5452,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "«bad plans hurt performance more than no plan at all»; комплаенс к плану падает ~на 13 п.п. на сложном бенчмарке",
-  "en": "",
+  "en": "\"bad plans hurt performance more than no plan at all\"; compliance with the plan drops by ~13 pp on the harder benchmark",
   "passthrough": false
  },
  {
@@ -5460,7 +5460,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "Fresh Memory, Stale Plans, 30 контролируемых живых сценариев",
-  "en": "",
+  "en": "Fresh Memory, Stale Plans, 30 controlled live scenarios",
   "passthrough": false
  },
  {
@@ -5468,7 +5468,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "без проверки актуальности плана исполнитель действовал по устаревшему плану во всех 30 случаях (100%)",
-  "en": "",
+  "en": "with no check of whether the plan was current the executor acted on a stale plan in all 30 cases (100%)",
   "passthrough": false
  },
  {
@@ -5476,7 +5476,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "Кейс-стади «Index Sickness» (n=1, честная оговорка)",
-  "en": "",
+  "en": "The \"Index Sickness\" case study (n=1, an honest caveat)",
   "passthrough": false
  },
  {
@@ -5484,7 +5484,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "Реальный проект, 391 сессия за месяц. Решение — физическое разделение baseline-инструкций и append-only лога сессии. Результат: объём AI-инструкций сократился ~на 75%, рецидивов не было за следующие ~150 сессий. n=1 action research одного автора, не контролируемый эксперимент.",
-  "en": "",
+  "en": "A real project, 391 sessions in a month. The solution — physically separating the baseline instructions from an append-only session log. The result: the volume of AI instructions shrank by ~75%, no relapses over the next ~150 sessions. n=1 action research by a single author, not a controlled experiment.",
   "passthrough": false
  },
  {
@@ -5492,7 +5492,7 @@
   "slide": "s53",
   "where": "body",
   "ru": "практика «файл/папка на задачу» пока не мейнстрим — 2853 реальных репозитория, доминируют статические context-файлы",
-  "en": "",
+  "en": "the \"a file/a folder per task\" practice is not mainstream yet — 2,853 real repositories, dominated by static context files",
   "passthrough": false
  },
  {
@@ -5500,7 +5500,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "КЕЙС 2.3 · КРИТЕРИЙ",
-  "en": "",
+  "en": "CASE 2.3 · CRITERION",
   "passthrough": false
  },
  {
@@ -5508,7 +5508,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "Одного файла на задачу достаточно, пока задача линейная и её ведёт один агент и один разработчик — иначе оправдан переход к папке",
-  "en": "",
+  "en": "One file per task is enough as long as the task is linear and one agent and one developer are running it — otherwise moving to a folder is justified",
   "passthrough": false
  },
  {
@@ -5516,7 +5516,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "Задача линейная: шаги идут по порядку, не параллельно.",
-  "en": "",
+  "en": "The task is linear: the steps run in order, not in parallel.",
   "passthrough": false
  },
  {
@@ -5524,7 +5524,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "Работает один агент (без субагентов/параллельных веток) и один разработчик.",
-  "en": "",
+  "en": "One agent is working (no subagents / parallel branches) and one developer.",
   "passthrough": false
  },
  {
@@ -5532,7 +5532,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "Лог хода помещается в разумный файл (сотни строк, не тысячи) без потери читаемости.",
-  "en": "",
+  "en": "The progress log fits in a reasonable file (hundreds of lines, not thousands), still readable.",
   "passthrough": false
  },
  {
@@ -5540,7 +5540,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "Результатов и артефактов на выходе немного — не нужен отдельный файл на каждый.",
-  "en": "",
+  "en": "There are few results and output artifacts — no need for a separate file for each.",
   "passthrough": false
  },
  {
@@ -5548,7 +5548,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "Если хотя бы половина пунктов неверна — переход к папке на задачу оправдан.",
-  "en": "",
+  "en": "If at least half of these points are false, moving to a folder per task is justified.",
   "passthrough": false
  },
  {
@@ -5556,7 +5556,7 @@
   "slide": "s54",
   "where": "body",
   "ru": "честная оговорка: паттерн «файл/папка на задачу» пока не мейнстрим (2853 реальных репозитория, доминируют статические context-файлы) — практику продвигают отдельные лидеры, это не общепринятая норма",
-  "en": "",
+  "en": "an honest caveat: the \"a file/a folder per task\" pattern is not mainstream yet (2,853 real repositories, dominated by static context files) — individual leaders push the practice, it is not an accepted norm",
   "passthrough": false
  },
  {
@@ -5564,7 +5564,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "РАЗДЕЛ 3 · СИНТЕЗ",
-  "en": "",
+  "en": "SECTION 3 · SYNTHESIS",
   "passthrough": false
  },
  {
@@ -5572,7 +5572,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Шесть развилок сегодняшнего занятия делились на два типа: специфичное для проекта (ждать сигнала) и универсальная гигиена (заводить сразу, на день 0)",
-  "en": "",
+  "en": "The six decision points of today's session fell into two types: what is specific to the project (wait for a signal) and universal hygiene (set up right away, on day 0)",
   "passthrough": false
  },
  {
@@ -5580,7 +5580,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Кейс",
-  "en": "",
+  "en": "Case",
   "passthrough": false
  },
  {
@@ -5588,7 +5588,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Развилка",
-  "en": "",
+  "en": "Decision point",
   "passthrough": false
  },
  {
@@ -5596,7 +5596,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Что мы записали",
-  "en": "",
+  "en": "What we wrote down",
   "passthrough": false
  },
  {
@@ -5604,7 +5604,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Когда",
-  "en": "",
+  "en": "When",
   "passthrough": false
  },
  {
@@ -5620,7 +5620,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Роль агента и общее описание репозитория",
-  "en": "",
+  "en": "The agent's role and a general description of the repository",
   "passthrough": false
  },
  {
@@ -5628,7 +5628,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Ничего — до первого реального сигнала",
-  "en": "",
+  "en": "Nothing — until the first real signal",
   "passthrough": false
  },
  {
@@ -5636,7 +5636,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "по сигналу",
-  "en": "",
+  "en": "on a signal",
   "passthrough": false
  },
  {
@@ -5652,7 +5652,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Базовые процессы: гейт «готово» + цикл улучшения",
-  "en": "",
+  "en": "The basic processes: the \"done\" gate + the improvement loop",
   "passthrough": false
  },
  {
@@ -5660,7 +5660,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Гейт-фраза текстом в CLAUDE.md",
-  "en": "",
+  "en": "The gate line, as text, in CLAUDE.md",
   "passthrough": false
  },
  {
@@ -5668,7 +5668,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "сразу",
-  "en": "",
+  "en": "day 0",
   "passthrough": false
  },
  {
@@ -5684,7 +5684,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Вложенные файлы инструкций по подпапкам",
-  "en": "",
+  "en": "Nested instruction files across subfolders",
   "passthrough": false
  },
  {
@@ -5692,7 +5692,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Правило трёх адресов: функция → код, класс файлов → шаблон, проект → корень",
-  "en": "",
+  "en": "The rule of three addresses: function → code, class of files → pattern, project → root",
   "passthrough": false
  },
  {
@@ -5708,7 +5708,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Плоский файл памяти (DECISIONS.md)",
-  "en": "",
+  "en": "A flat memory file (DECISIONS.md)",
   "passthrough": false
  },
  {
@@ -5716,7 +5716,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Решение записано в файл + авто-память",
-  "en": "",
+  "en": "The decision written into the file + auto-memory",
   "passthrough": false
  },
  {
@@ -5732,7 +5732,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Структурированная вики-память",
-  "en": "",
+  "en": "Structured wiki memory",
   "passthrough": false
  },
  {
@@ -5740,7 +5740,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Отдельные файлы (ADR) со сквозными ссылками",
-  "en": "",
+  "en": "Separate files (ADRs) with cross-links",
   "passthrough": false
  },
  {
@@ -5756,7 +5756,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Операционная задачная память",
-  "en": "",
+  "en": "Working task memory",
   "passthrough": false
  },
  {
@@ -5764,7 +5764,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Один файл на задачу: план + лог + результаты",
-  "en": "",
+  "en": "One file per task: plan + log + results",
   "passthrough": false
  },
  {
@@ -5772,7 +5772,7 @@
   "slide": "s55",
   "where": "body",
   "ru": "Три развилки ждали реального сигнала. Три — не нуждались в сигнале вообще, их стоило завести сразу.",
-  "en": "",
+  "en": "Three decision points were waiting for a real signal. Three needed no signal at all — worth setting up right away.",
   "passthrough": false
  },
  {
@@ -5780,7 +5780,7 @@
   "slide": "s56",
   "where": "body",
   "ru": "РАЗДЕЛ 3 · ОХВАТ",
-  "en": "",
+  "en": "SECTION 3 · COVERAGE",
   "passthrough": false
  },
  {
@@ -5788,7 +5788,7 @@
   "slide": "s56",
   "where": "body",
   "ru": "Сегодня закрыты подробно два слота харнесса из пяти; оставшиеся три плюс оба механических слоя, которые превращают просьбу в барьер, — материал Семинара 5",
-  "en": "",
+  "en": "Two of the harness's five slots are closed in detail today; the remaining three plus both mechanical layers, which turn a request into a barrier, are the material of Seminar 5",
   "passthrough": false
  },
  {
@@ -5796,7 +5796,7 @@
   "slide": "s56",
   "where": "body",
   "ru": "Семинар 5: скиллы · субагенты · доступ наружу (MCP) + хук · процесс",
-  "en": "",
+  "en": "Seminar 5: skills · subagents · access to the outside (MCP) + hook · process",
   "passthrough": false
  },
  {
@@ -5804,7 +5804,7 @@
   "slide": "s57",
   "where": "body",
   "ru": "РАЗДЕЛ 3 · ПЕРЕНОС",
-  "en": "",
+  "en": "SECTION 3 · TRANSFER",
   "passthrough": false
  },
  {
@@ -5812,7 +5812,7 @@
   "slide": "s57",
   "where": "body",
   "ru": "Перенесите шесть сегодняшних решений на свой репозиторий — и проверьте, какое из них реально день-0-база, а какое вы отложили без причины или завели раньше времени без сигнала",
-  "en": "",
+  "en": "Transfer today's six decisions to your own repository — and check which of them really is a day-0 baseline and which you deferred for no reason or set up too early, with no signal",
   "passthrough": false
  },
  {
@@ -5828,7 +5828,7 @@
   "slide": "s57",
   "where": "body",
   "ru": "«По каждой развилке спросите: это действительно день-0-база — то, что стоило завести сразу, независимо от конкретики проекта? Или вы завели это раньше времени, без реального сигнала, просто по привычке? А может, наоборот — что-то из универсальной гигиены вы всё ещё откладываете без всякой причины?»",
-  "en": "",
+  "en": "\"For each decision point, ask: is this really a day-0 baseline — something that was worth setting up right away, regardless of the specifics of the project? Or did you set it up too early, with no real signal, simply out of habit? Or the other way around — is there something from the universal hygiene that you are still deferring for no reason at all?\"",
   "passthrough": false
  },
  {
@@ -5836,7 +5836,7 @@
   "slide": "s57",
   "where": "body",
   "ru": "«Не вслух. Не на бумаге. Себе.»",
-  "en": "",
+  "en": "\"Not aloud. Not on paper. To yourself.\"",
   "passthrough": false
  }
 ]

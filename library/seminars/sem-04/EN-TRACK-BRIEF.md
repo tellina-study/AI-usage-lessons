@@ -136,3 +136,60 @@ Final gate: `grep -c '[«»]'` must be 0 across `slides-en/` and `deck.en.yaml`.
 to an international reader (unlike `30.04.2026`, which self-disambiguates). Converting to
 ISO would not change the value, but the task brief says dates transfer exactly, so they do.
 Flagged to the operator rather than silently reformatted.
+
+---
+
+## Verification record (orchestrator-run, not subagent self-report)
+
+| Check | Result |
+|---|---|
+| EN slide count / order | **57**, 1:1 with RU; `ls slides` and `ls slides-en` are identical |
+| `deck.en.yaml` | parses; 57 slides; ids s01-s57 in RU order; `type`/`duration_min`/`visual.pattern` byte-identical to RU; every `file:` resolves |
+| Cyrillic in `slides-en/` + `deck.en.yaml` | **0** |
+| Cyrillic in rendered `ppt/slides` **and** `ppt/notesSlides` | **0** — no justified exception was needed (unlike lec-03's deliberate `[A-ZА-Я]` regex) |
+| Guillemets / curly quotes in EN artifacts | **0** (D5) |
+| Speaker notes present | 57/57 slides, ~11 900 words total |
+| `build_sem04_en.py --selftest` | PASS — identity table reproduces `sem-04.pptx` slide-for-slide (shape types, run texts, notes) |
+| EN build `OVERFLOW WARNING` count | **0** (same as the RU build) |
+| Off-canvas shapes / squeezed boxes vs RU | **0** |
+| RU artifacts unchanged | 118/118 sha256 match (`sem-04.pptx`, `sem-04.pdf`, `build_sem04.py`, `deck.yaml`, 57 snapshots, 57 RU slide files) |
+| Visual review | 13 slides opened and read at full size: s01, s08, s13, s19 (×2), s21 (×2), s32, s43, s48, s52, s55, s57 |
+
+### Layout defects found and fixed
+
+The geometry diff caught two defects the builder's own `_fits()` could **not** see, because
+they are caused by `auto_header()` changing the header's *height*, not by text overflowing
+its own box:
+
+- **s19** — the EN title crossed from the ≤125 bucket into the ≤160 one, adding 0.20in to the
+  header and pushing the bottom footer to 7.71in on a 7.5in canvas. Confirmed clipped in the
+  render. Fixed by shortening the title to 125 chars.
+- **s21** — same mechanism; the bottom gold callout was squeezed from 0.40in to 0.25in and its
+  text spilled outside the gold box. Fixed by shortening both the title (92 chars, ≤95 bucket)
+  and the callout itself (124 chars).
+
+Plus the two the builder did flag: an s13 evidence cell and the s48 scenario block.
+
+**Lesson for the next EN deck:** when a builder sizes a header from `len(title)`, an EN title
+that crosses a bucket boundary shifts every shape below it. Check RU↔EN shape geometry, not
+just the builder's own overflow warnings — a slide can be visibly broken with zero warnings.
+
+## Open items for the operator (not fixed here — all pre-existing RU issues)
+
+1. **`build_s31` is a revision behind `slides/s31-*.md`.** The builder still renders the v5
+   "presence paradox applies here too" slide, while the RU markdown has been rewritten to
+   "What loads itself, and what does not". The **RU deck has the same drift** — `sem-04.pptx`
+   does not match `slides/s31` either — so this is not a translation artifact. The EN slide was
+   translated from the builder (which is what renders). Someone should decide whether to
+   re-render s31 from the current markdown, in both languages.
+2. **s55 row 2.3** — the builder's cell and `slides/s55`'s table cell state the case-2.3 answer
+   differently in RU. Same pre-existing deck↔markdown mismatch; EN follows the builder.
+3. **s43's ADR filenames are transliterated Russian** (`0031-storonnie-vidzhety-...md`) and are
+   *rendered on the slide*, not just repo paths. Kept verbatim per the never-translate-filenames
+   rule, but on a public English slide they read as noise. An owner call: either rename them in
+   the RU deck too, or accept them as illustrative.
+4. **Dates stay `DD.MM.YYYY`** (D6). `11.02.2026` is ambiguous to an international reader.
+5. **`failure_share` arithmetic in `deck.yaml`** — case 2.3 computes to ≈65%, not the stated
+   ≈62%, and five of six case denominators disagree with the summed slide durations. Transferred
+   verbatim into `deck.en.yaml`; does not change the rule's conclusion (all six stay well above
+   the 30% threshold).

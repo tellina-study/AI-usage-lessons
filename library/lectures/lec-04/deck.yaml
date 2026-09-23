@@ -38,10 +38,10 @@ deck:
   learning_outcomes: [LO1, LO4, LO7]
   language: ru
   status: draft-for-gate-b
-  version: v4.4
+  version: v4.5
   source: "chapter v4 methodology-first (~34.5k, 5 частей)"
   plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
-  total_slides: 57          # v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
+  total_slides: 58          # v4.5 (#162 round 6 block 1): +1 slide s14b (конкретные артефакты четырёх архитектурных практик), вставлен между s14 и s15; ASSEMBLY NOTE — это единственная правка deck.yaml от блока 1, остальные блоки round-6 правят только содержимое существующих слайдов. Было 57: v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3); L4 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "методико-first: фаза SDLC × ведущая практика (методика: артефакт + кто предписывает + почему); инструмент — вторичная иллюстрация"
@@ -373,6 +373,22 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s14b
+    file: slides/s14b-architecture-artifacts.md
+    type: schema_matrix
+    section: "Раздел 2. Архитектура — до кода, и ею надо управлять"
+    duration_min: 3
+    assertion: "У каждой из четырёх практик управления архитектурой есть конкретный артефакт в репозитории и конкретный шаг сборки, который краснеет при нарушении: ADR-запись, тест-инвариант, текстовая модель C4 и конвейер, держащий три предыдущих вместе"
+    learning_goal: "Заземлить абстрактную матрицу четырёх практик (s14) на реальные файлы: ADR-скелет, fitness-функции, Structurizr-DSL, архитектурный гейт"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2–§2.5 [for-slide-s13], [for-slide-s14], [for-slide-s15]"
+    references: [nygard-adr, ford-fitness-functions, brown-c4, evolutionary-architectures]
+    interaction: none
+    verify_day_of: false
+    # NEW (#162 round 6 block 1): inserted right after s14 (матрица четырёх
+    # практик) — owner: «после него еще один слайд с примерами артефактов/
+    # инструкций по каждому типу, чтобы заземлить и пояснить».
+
   - id: s15
     file: slides/s15-poisoned-context.md
     type: case_study
@@ -432,11 +448,11 @@ slides:
 
   - id: s18
     file: slides/s19-persistent-memory-layer.md
-    type: schema_architecture
+    type: schema_layered
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
-    assertion: "Постоянный слой инструкций в репозитории (AGENTS.md) — то, что агент читает каждую сессию, и методологическая противоположность памяти: инструкции, курирование контекста сессии, операционная история и память (слот 1 карты Лекции 3) — четыре разных понятия, которые не путают"
-    learning_goal: "Ведущее: постоянный слой инструкций (AGENTS.md конвенции/guardrails) явно разведён с памятью и курированием контекста — round-3 rework §3.2"
+    assertion: "Контекст агента живёт на четырёх разных уровнях — постоянные инструкции, контекст одной сессии, операционная история задач и память (слот 1 карты Лекции 3), — и каждый ведут по-своему: инструкции пишут, сессию курируют, историю датируют, память настраивают и проверяют"
+    learning_goal: "Ведущее: четыре уровня контекста/памяти как явная структура (кто ведёт · срок жизни · пример из разработки) + явное определение JIT-извлечения + распределение контекста по артефактам репозитория — round-6 rework §3.2"
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§3.2 [for-slide-s18]"
     references: [anthropic-context-engineering, agents-md]
@@ -448,10 +464,10 @@ slides:
     type: assertion_visual
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
-    assertion: "Курирование не устраняет риск — оно меняет один риск на другой: компакция теряет решения молча, операционная история стареет тише инструкций, а несвежий AGENTS.md вреднее отсутствующего, потому что ему доверяют буквально"
-    learning_goal: "Три честных ограничения примитивов курирования контекста — не факультативная оговорка, а условие корректного применения практики"
+    assertion: "У каждого из четырёх уровней контекста свой предел: устаревшие инструкции хуже их отсутствия, компакция теряет решения молча, а JIT не спросит о неизвестном, операционная история стареет тише инструкций, память закрепляет ошибочный вывод — риск не исчезает, а меняется на другой"
+    learning_goal: "Честный предел КАЖДОГО уровня контекста, строго параллельно предыдущему слайду — не факультативная оговорка, а условие корректного применения практики"
     learning_outcomes: [LO1, LO7]
-    chapter_ref: "§3.2 [for-slide-s17]"
+    chapter_ref: "§3.2 [for-slide-s17], §3.3d (entrenchment)"
     references: [anthropic-context-engineering, agents-md]
     in_bucket: true
     interaction: none

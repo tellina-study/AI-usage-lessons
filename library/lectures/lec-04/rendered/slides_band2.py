@@ -267,6 +267,133 @@ def s14(p):
 
 
 # ============================================================
+# s14b (NEW, #162 round 6 block 1) — конкретный артефакт каждой из
+# четырёх практик p17: ADR-скелет · fitness-функции · C4-DSL · CI-гейт.
+# Заземляет абстрактную матрицу предыдущего слайда: те же 4 колонки,
+# те же иконки и цвета — но вместо описания практики её файл.
+# Источник: chapter-part2.md §2.2–§2.5.
+# ============================================================
+def s14b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Каждая практика — это конкретный файл в репозитории",
+        size=24, w=12.3, h=0.74)
+    text_box(s, x=0.55, y=1.18, w=12.25, h=0.26,
+             text="Те же четыре практики — но не описанием, а артефактом, "
+                  "который лежит в репозитории и проверяется сборкой.",
+             size=10.5, italic=True, color=SLATE)
+
+    cols = [
+        ("gavel", "ADR", MID, "docs/adr/0007-event-queue.md",
+         [
+             "# ADR-0007. Очередь вместо",
+             "# прямых вызовов склада",
+             "Статус: принято · 12.03.2026",
+             "Контекст: при отказе склада",
+             "  заказы теряются молча",
+             "Решение: заказы идут через",
+             "  очередь событий",
+             "Последствия: + переживаем",
+             "  отказ склада;",
+             "  − подтверждение 2 с",
+             "  вместо мгновенного",
+         ],
+         "Развилку выбрал и подписал человек — текст мог написать AI. "
+         "Запись неизменяема: устаревшую не правят, а заменяют новой [1]."),
+        ("shield-check", "Fitness-функция", TEAL,
+         "tests/architecture/test_layers.py",
+         [
+             "# инвариант 1: границы модулей",
+             "def test_payment_not_ui():",
+             "    assert not depends_on(",
+             "        \"payment\", \"ui\")",
+             "",
+             "# инвариант 2: бюджет 200 мс",
+             "def test_checkout_p95():",
+             "    assert p95(\"/checkout\") < 200",
+         ],
+         "Какой инвариант критичен — решает человек, это его определение "
+         "«хорошего». Нарушен на коммите — сборка красная [2]."),
+        ("layout-grid", "C4 / арх-как-код", MID,
+         "docs/architecture/workspace.dsl",
+         [
+             "workspace {",
+             " model {",
+             "  inzh = person \"Инженер\"",
+             "  app = softwareSystem \"Бронь\" {",
+             "    api = container \"API\"",
+             "    db  = container \"БД броней\"",
+             "  }",
+             "  inzh -> api \"бронирует\"",
+             " }",
+             "}",
+         ],
+         "Текст, а не картинка: изменения видны построчно и ревьюются вместе "
+         "с кодом; сверка модели с кодом ловит расхождение [3]."),
+        ("refresh-cw", "Эволюционная арх.", TEAL,
+         ".github/workflows/architecture.yml",
+         [
+             "# гейт: три практики вместе",
+             "- adr-lint docs/adr/",
+             "  # нет развилки без записи",
+             "- pytest tests/architecture",
+             "  # инварианты держатся",
+             "- structurizr-cli drift",
+             "  # модель и код совпадают",
+             "# красный шаг блокирует",
+             "# слияние изменений",
+         ],
+         "Своего артефакта нет — есть гейт, который держит три предыдущих "
+         "вместе на каждом изменении. Направление задаёт человек [4]."),
+    ]
+
+    x0 = 0.55
+    total = 12.25
+    gap = 0.14
+    cw = (total - gap * 3) / 4          # ≈2.96
+    top = 1.44
+    hh = 0.58
+    for i, (ic, name, col, path, lines, caption) in enumerate(cols):
+        x = x0 + i * (cw + gap)
+        # header plate — same colour/icon language as the matrix slide before
+        filled_rect(s, x, top, cw, hh, col, radius=True, radius_adj=0.12)
+        icon(s, ic, x + 0.13, top + 0.09, 0.40, "white")
+        text_box(s, x=x + 0.60, y=top + 0.06, w=cw - 0.70, h=hh - 0.08,
+                 text=name, size=12, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.98)
+        # file path — «это лежит вот здесь»
+        text_box(s, x=x + 0.04, y=top + hh + 0.09, w=cw - 0.08, h=0.22,
+                 text=path, size=8, color=LIGHT, font=FONT_MONO,
+                 line_spacing=1.0)
+        # the artefact itself
+        cy = top + hh + 0.36
+        chh = 2.22
+        filled_rect(s, x, cy, cw, chh, WHITE, stroke=SOFT_GREY, stroke_pt=1.1,
+                    radius=True, radius_adj=0.05)
+        for j, line in enumerate(lines):
+            text_box(s, x=x + 0.13, y=cy + 0.09 + j * 0.186, w=cw - 0.22,
+                     h=0.19, text=line, size=9, color=DEEP, font=FONT_MONO,
+                     line_spacing=1.0)
+        # what stays human / what breaks
+        ky = cy + chh + 0.10
+        filled_rect(s, x, ky, cw, 0.98, SURFACE, stroke=col, stroke_pt=1.2,
+                    radius=True, radius_adj=0.07)
+        text_box(s, x=x + 0.16, y=ky + 0.07, w=cw - 0.32, h=0.84,
+                 text=caption, size=9.5, color=DEEP, line_spacing=1.14)
+
+    gold_callout(
+        s, 0.55, 5.78, 12.25, 0.62,
+        "Практику видно по артефакту: если по ней нельзя показать файл в "
+        "репозитории и красный шаг сборки при нарушении — это ещё не практика, "
+        "а намерение.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s14b", y=7.06)
+    notes_with_sources(s, "s14b")
+    return s
+
+
+# ============================================================
 # s15 — poisoned context (cycle + caveat + alternative) [in-bucket]
 # ============================================================
 def s15(p):
@@ -531,97 +658,139 @@ def s17b(p):
 
 
 # ============================================================
-# s18 — persistent memory layer (architecture: dev ↔ repo → agent)
+# s18 — четыре уровня контекста агента (RESTRUCTURED, #162 round 6 block 1).
+# Было: schema_architecture «разработчик ↔ репозиторий → агент» + отдельный
+# блок курирования + плашка context rot — owner: «не понятно, надо
+# структурировать по уровням контекста/памяти и заземлить на разработку».
+# Стало: четыре явных УРОВНЯ (по §3.2 chapter-part3.md: инструкции ·
+# курирование сессии · операционная история · память-слот-1), у каждого —
+# кто ведёт, срок жизни и конкретный пример из разработки; плюс явное
+# определение JIT-извлечения и блок «что куда класть в репозитории».
 # ============================================================
 def s18(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Постоянный слой инструкций — не память: агент читает его каждую сессию",
-        size=20, w=12.3, h=0.82)
-    text_box(s, x=0.55, y=1.24, w=12.25, h=0.26,
-             text="Четыре смежных, но разных понятия: инструкции (AGENTS.md) · "
-                  "курирование контекста сессии · операционная история · память "
-                  "(слот 1) — не путать.",
+        s, "Четыре уровня контекста агента — каждый ведут по-своему",
+        size=23, w=12.3, h=0.74)
+    text_box(s, x=0.55, y=1.14, w=12.25, h=0.26,
+             text="Агент stateless: между запусками он не помнит ничего — всё, "
+                  "что он должен знать о проекте, лежит на одном из этих "
+                  "четырёх уровней.",
              size=10.5, italic=True, color=SLATE)
 
-    # architecture row: DEVELOPER — REPO — AGENT
-    ay = 1.55
-    ah = 1.60
-    # developer (human, curates)
-    dx, dw = 0.55, 2.70
-    ocean_box(s, dx, ay, dw, ah)
-    icon(s, "user-check", dx + dw / 2 - 0.32, ay + 0.22, 0.64, "teal")
-    text_box(s, x=dx + 0.1, y=ay + 0.94, w=dw - 0.2, h=0.34, text="РАЗРАБОТЧИК",
-             size=12.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, x=dx + 0.1, y=ay + 1.24, w=dw - 0.2, h=0.30, text="курирует слой",
-             size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    # repo (persistent layer)
-    rx2, rw2 = 4.10, 5.10
-    ocean_box(s, rx2, ay, rw2, ah, fill=SURFACE, stroke=MID, stroke_pt=1.8)
-    icon(s, "database", rx2 + 0.22, ay + 0.20, 0.5, "mid")
-    text_box(s, x=rx2 + 0.82, y=ay + 0.22, w=rw2 - 1.0, h=0.36,
-             text="РЕПОЗИТОРИЙ — постоянный слой", size=12.5, bold=True,
+    levels = [
+        ("file-stack", "mid", MID, "1", "Постоянные\nинструкции",
+         "человек · с репозиторием",
+         "Статичный файл в корне репозитория: агент перечитывает его каждую "
+         "сессию — именно потому, что памяти между запусками у него нет.",
+         [("AGENTS.md", True), (" (аналог — CLAUDE.md): «Тесты: pnpm test» — "
+                               "дословные команды сборки и тестов, стиль кода, "
+                               "запреты [1].", False)]),
+        ("scan-search", "teal", TEAL, "2", "Контекст\nодной сессии",
+         "человек+агент · одна сессия",
+         "Окно текущего диалога. Три примитива курирования: JIT-извлечение, "
+         "компакция, заметки. Больше контекста ≠ лучше [3].",
+         [("JIT-извлечение", True), (" — агент открывает нужный файл в тот "
+                                     "момент, когда задача его потребовала, а "
+                                     "не грузит весь репозиторий заранее.",
+                                     False)]),
+        ("clipboard-list", "mid", MID, "3", "Операционная\nистория задач",
+         "люди · между задачами",
+         "Прошлые инциденты и инструкции «как чинили» — извлекаемыми "
+         "документами, чтобы агент не изобретал их заново. Зрелого "
+         "стандарта нет.",
+         [("Разбор инцидента", True), (" с датой и статусом: «актуально» / "
+                                       "«устарело, см. коммит X» — иначе архив "
+                                       "стареет незаметно.", False)]),
+        ("database", "teal", TEAL, "4", "Память\n(слот 1)",
+         "система · проверяет человек",
+         "Отдельная система: сама решает, что удержать между сессиями. Её не "
+         "правят построчно — её организуют и проверяют.",
+         [("Mem0 · Cognee · Graphiti · Letta", True),
+          (" — настраивают правила отбора, а не редактируют содержимое.",
+           False)]),
+    ]
+
+    lx, lw = 0.55, 7.95
+    rh, rgap = 0.86, 0.06
+    ry0 = 1.44
+    wa, wb, wc = 1.85, 3.00, 2.60
+    for i, (ic, var, col, num, name, meta, what, example) in enumerate(levels):
+        y = ry0 + i * (rh + rgap)
+        filled_rect(s, lx, y, lw, rh, SURFACE if i % 2 == 0 else WHITE,
+                    stroke=col, stroke_pt=1.3, radius=True, radius_adj=0.06)
+        xa = lx + 0.14
+        icon(s, ic, xa, y + 0.13, 0.34, var)
+        text_box(s, x=xa + 0.44, y=y + 0.09, w=wa - 0.44, h=0.20,
+                 text=f"УРОВЕНЬ {num}", size=8, bold=True, color=LIGHT,
+                 line_spacing=1.0)
+        text_box(s, x=xa + 0.44, y=y + 0.27, w=wa - 0.44, h=0.38, text=name,
+                 size=10.5, bold=True, color=col, line_spacing=0.98)
+        text_box(s, x=xa, y=y + 0.62, w=wa, h=0.18, text=meta,
+                 size=8, italic=True, color=SLATE, line_spacing=1.0)
+        xb = lx + 0.14 + wa + 0.11
+        text_box(s, x=xb, y=y + 0.09, w=wb, h=rh - 0.16, text=what,
+                 size=9.5, color=DEEP, line_spacing=1.12)
+        xc = xb + wb + 0.11
+        text_runs(s, xc, y + 0.09, wc, rh - 0.16,
+                  [{"text": tx, "size": 9.5, "bold": bd,
+                    "color": (col if bd else DEEP), "line_spacing": 1.12}
+                   for tx, bd in example])
+
+    # honest limit band — почему курирование, а не накопление
+    by = ry0 + 4 * (rh + rgap) + 0.04
+    filled_rect(s, lx, by, lw, 0.56, TEAL_TINT, stroke=TEAL, stroke_pt=1.4,
+                radius=True, radius_adj=0.08)
+    text_box(s, x=lx + 0.20, y=by + 0.05, w=lw - 0.40, h=0.48,
+             text="Почему уровень 2 курируют, а не накапливают: точность "
+                  "извлечения падает нелинейно с ростом входа — деградация "
+                  "начинается ДО переполнения окна (Chroma, 18 моделей) [2]. "
+                  "Демо: ~172k токенов против ~334k без курирования — "
+                  "направление, не измеренный множитель.",
+             size=9, color=DEEP, line_spacing=1.10)
+
+    # right column — куда класть какой контекст
+    rx2, rw2 = 8.65, 4.20
+    ocean_box(s, rx2, ry0, rw2, (by + 0.56) - ry0, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    icon(s, "list-checks", rx2 + 0.20, ry0 + 0.16, 0.38, "mid")
+    text_box(s, x=rx2 + 0.68, y=ry0 + 0.18, w=rw2 - 0.86, h=0.34,
+             text="Что куда класть в репозитории", size=12, bold=True,
              color=MID)
-    text_box(s, x=rx2 + 0.24, y=ay + 0.66, w=rw2 - 0.48, h=0.86,
-             text="AGENTS.md (стандарт agents.md, Linux Foundation [1]; команды "
-                  "сборки/тестов, стиль, guardrails; аналог CLAUDE.md) · "
-                  "память-заметки · операционная история задач. "
-                  "Правило: вести командами, а не объяснениями.",
-             size=10.5, color=DEEP, line_spacing=1.12)
-    # agent (stateless, reads each session)
-    gx, gw = 9.55, 3.25
-    ocean_box(s, gx, ay, gw, ah)
-    icon(s, "bot", gx + gw / 2 - 0.32, ay + 0.22, 0.64, "mid")
-    text_box(s, x=gx + 0.1, y=ay + 0.94, w=gw - 0.2, h=0.34,
-             text="АГЕНТ (stateless)", size=12.5, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER)
-    text_box(s, x=gx + 0.1, y=ay + 1.24, w=gw - 0.2, h=0.30,
-             text="читает слой каждую сессию", size=10.5, italic=True,
-             color=SLATE, align=PP_ALIGN.CENTER)
-    # arrows
-    connector(s, dx + dw, ay + ah / 2, rx2, ay + ah / 2, color=TEAL, width=2.4)
-    right_arrow(s, rx2 + rw2 + 0.02, ay + ah / 2 - 0.14, 0.30, 0.28, fill=MID)
-
-    # context-engineering block
-    lx, lw = 0.55, 6.05
-    ocean_box(s, lx, 3.36, lw, 2.14)
-    text_box(s, x=lx + 0.24, y=3.48, w=lw - 0.48, h=0.36,
-             text="context-engineering — 3 примитива курирования (Anthropic) [3]",
-             size=12.5, bold=True, color=MID)
-    prims = ["JIT-извлечение", "компакция", "память-заметки"]
-    px = lx + 0.30
-    for pr in prims:
-        chip(s, px, 3.92, 1.85, 0.42, pr, fill=TEAL, color=WHITE, size=11)
-        px += 1.95
-    text_box(s, x=lx + 0.24, y=4.50, w=lw - 0.48, h=0.92,
-             text="Принцип: больше контекста ≠ лучше. Правильно курировать, а не "
-                  "только накапливать.",
-             size=11, color=DEEP, line_spacing=1.14)
-
-    # failure: context rot
-    rx3, rw3 = 6.85, 5.95
-    filled_rect(s, rx3, 3.36, rw3, 2.14, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
-                radius=True, radius_adj=0.05)
-    icon(s, "flame", rx3 + 0.24, 3.50, 0.5, "light")
-    text_box(s, x=rx3 + 0.88, y=3.54, w=rw3 - 1.10, h=0.40,
-             text="context rot (Chroma, 18 моделей) [2]", size=12.5, bold=True,
-             color=DEEP)
-    text_box(s, x=rx3 + 0.24, y=4.04, w=rw3 - 0.48, h=0.78,
-             text="Точность извлечения падает нелинейно с ростом входа — "
-                  "деградация начинается ДО переполнения окна. «Несвежий "
-                  "контекст гниёт».",
-             size=11, color=DEEP, line_spacing=1.14)
-    text_box(s, x=rx3 + 0.24, y=4.86, w=rw3 - 0.48, h=0.58,
-             text="База: демо памяти — пик ~172k против ~334k токенов без памяти "
-                  "— cookbook-демонстрация направления, не контролируемый множитель.",
-             size=10, italic=True, color=SLATE, line_spacing=1.1)
+    where = [
+        ("README", "зачем проект и с чего начать — для человека, который "
+                   "открыл его впервые."),
+        ("AGENTS.md", "команды и ограничения, которые агент исполняет "
+                      "буквально, без пересказа."),
+        ("ADR", "почему выбрали решение и от чего отказались — то, чего нет "
+                "в коде."),
+        ("Комментарий в коде", "почему этот кусок неочевиден; едет в том же "
+                              "изменении."),
+        ("Разбор инцидента", "как чинили в прошлый раз — с датой и отметкой "
+                            "актуальности."),
+    ]
+    wy = ry0 + 0.66
+    for title_, body in where:
+        text_runs(s, rx2 + 0.24, wy, rw2 - 0.48, 0.52, [
+            {"text": title_ + " — ", "size": 10, "bold": True, "color": DEEP,
+             "line_spacing": 1.12},
+            {"text": body, "size": 10, "color": SLATE, "line_spacing": 1.12},
+        ])
+        wy += 0.545
+    filled_rect(s, rx2 + 0.20, wy + 0.04, rw2 - 0.40, 0.78, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.4, radius=True, radius_adj=0.08)
+    text_box(s, x=rx2 + 0.34, y=wy + 0.11, w=rw2 - 0.68, h=0.64,
+             text="Правило: класть туда, где артефакт перечитают вместе с "
+                  "кодом. Что нельзя потерять молча — на уровень 1.",
+             size=9.5, bold=True, color=DEEP, line_spacing=1.12)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
-        "Контекст живёт в репозитории, а не в промпте. Устойчивый паттерн — "
-        "курируемый постоянный слой; хайп — «наш AGENTS.md сам всё решит».",
-        size=13, bold=True, align=PP_ALIGN.CENTER)
+        "Контекст живёт в репозитории, а не в промпте — но каждый уровень "
+        "ведут по-своему: инструкции пишут, сессию курируют, историю датируют, "
+        "память настраивают и проверяют.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
     # Round-5 meme: Monkey Puppet — the silent-failure mode of compaction
     # (a rejected decision can vanish from the summary with no error).
     add_image(s, WEB / "band-monkey-puppet.png", 9.92, 6.40, 2.88, 0.64)
@@ -631,54 +800,74 @@ def s18(p):
 
 
 # ============================================================
-# s18b (NEW, #162 round 3) — honest curation limits: compaction loses
-# silently, JIT symmetric fail, stale AGENTS.md worse than none
+# s18b — предел КАЖДОГО из четырёх уровней (RESTRUCTURED, #162 round 6
+# block 1). Было: 3 карточки честных ограничений вперемешку (компакция /
+# JIT / несвежий AGENTS.md) — owner: «структурировать по уровням».
+# Стало: 4 карточки, строго параллельные четырём уровням предыдущего
+# слайда, у каждой — конкретный режим отказа из разработки.
+# Источник: chapter-part3.md §3.2 + §3.3d (entrenchment).
 # ============================================================
 def s18b(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Курирование не устраняет риск — оно меняет один риск на другой",
-        size=21, w=12.3, h=0.82)
+        s, "У каждого уровня свой предел — риск меняется, а не исчезает",
+        size=23, w=12.3, h=0.74)
 
     cards = [
-        ("layers", "Компакция теряет молча",
-         "Суммаризация — с потерями: отклонённое решение («библиотеку X не "
-         "использовать») может исчезнуть из резюме без ошибки — агент "
-         "предложит именно то, от чего отказались."),
-        ("circle-help", "JIT не спросит о неизвестном",
-         "Агент подгружает то, о чём догадался спросить; то, о существовании "
-         "чего не знает, — не запросит никогда. Симметричный предел той же "
-         "техники."),
-        ("shield-alert", "Несвежий AGENTS.md вреднее отсутствующего",
+        ("shield-alert", "mid", MID, "УРОВЕНЬ 1 · ИНСТРУКЦИИ",
+         "Устаревший файл хуже, чем его отсутствие",
          "Отсутствие файла агент компенсирует вопросом; устаревшему — "
-         "доверяет буквально: устаревшая команда сборки, снятое ограничение, "
-         "которому агент следует."),
+         "доверяет буквально.\n\nПредписана команда сборки, которую давно "
+         "заменили, — агент гоняет её и тратит ходы впустую."),
+        ("layers", "teal", TEAL, "УРОВЕНЬ 2 · СЕССИЯ",
+         "Компакция теряет, JIT не спросит",
+         "Суммаризация — с потерями: «библиотеку X не использовать» может не "
+         "попасть в резюме, и агент предложит именно её. Ошибки при этом "
+         "нет.\n\nJIT симметричен: о существовании чего агент не знает, он "
+         "не запросит никогда."),
+        ("clock", "mid", MID, "УРОВЕНЬ 3 · ИСТОРИЯ",
+         "Стареет тише, чем инструкции",
+         "Файл инструкций один — его перечитывают вместе с проектом. Архив "
+         "разборов — десятки документов.\n\nАгент находит их по "
+         "релевантности, а не по актуальности, и предлагает обход давно "
+         "закрытой проблемы."),
+        ("lock", "teal", TEAL, "УРОВЕНЬ 4 · ПАМЯТЬ",
+         "Закрепляет ошибочный вывод",
+         "Память накапливается сама, поэтому вычитать её построчно, как "
+         "файл, нельзя.\n\nОшибочное убеждение, однажды удержанное и "
+         "читаемое только самим агентом, воспроизводится дальше — нужна "
+         "периодическая проверка снаружи, а не правка."),
     ]
-    cw, gap = 3.97, 0.17
+    cw, gap = 2.95, 0.15
     x0 = 0.55
-    top = 1.44
-    for i, (ic, head, body) in enumerate(cards):
+    top = 1.42
+    ch = 3.34
+    for i, (ic, var, col, lvl, head, body) in enumerate(cards):
         x = x0 + i * (cw + gap)
-        ocean_box(s, x, top, cw, 3.30)
-        icon(s, ic, x + 0.24, top + 0.20, 0.48, "mid")
-        text_box(s, x=x + 0.24, y=top + 0.82, w=cw - 0.48, h=0.62, text=head,
-                 size=13, bold=True, color=MID, line_spacing=1.06)
-        text_box(s, x=x + 0.24, y=top + 1.46, w=cw - 0.48, h=1.72, text=body,
-                 size=10.5, color=DEEP, line_spacing=1.18)
+        ocean_box(s, x, top, cw, ch, fill=SURFACE, stroke=col, stroke_pt=1.5)
+        icon(s, ic, x + 0.22, top + 0.18, 0.44, var)
+        text_box(s, x=x + 0.22, y=top + 0.72, w=cw - 0.44, h=0.20, text=lvl,
+                 size=8.5, bold=True, color=LIGHT, line_spacing=1.0)
+        text_box(s, x=x + 0.22, y=top + 0.94, w=cw - 0.44, h=0.56, text=head,
+                 size=12.5, bold=True, color=col, line_spacing=1.06)
+        text_box(s, x=x + 0.22, y=top + 1.50, w=cw - 0.44, h=1.74, text=body,
+                 size=9.5, color=DEEP, line_spacing=1.16)
 
     filled_rect(s, 0.55, 4.92, 12.25, 0.60, SOFT_GREY, stroke=LIGHT,
                 stroke_pt=1.0, radius=True, radius_adj=0.08)
     text_box(s, x=0.79, y=4.99, w=11.8, h=0.46,
              text="Ни одна техника курирования не устраняет риск — каждая "
-                  "меняет один риск на другой. Это предел самой техники.",
+                  "меняет один риск на другой. Это предел самой техники, а не "
+                  "следствие небрежного применения.",
              size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              align=PP_ALIGN.CENTER)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
-        "Решение, которое нельзя терять молча, не доверяют компакции сессии — "
-        "его фиксируют в постоянном слое инструкций.",
+        "Отсюда правило распределения: решение, которое нельзя потерять молча, "
+        "не доверяют уровню 2 — его фиксируют на уровне 1, единственном, "
+        "который не сжимается между ходами.",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s18b")
     notes_with_sources(s, "s18b")
@@ -701,15 +890,23 @@ def s19(p):
     checks = ["линтеры", "структурные тесты", "fitness-функции",
               "SAST-гейт", "least-privilege", "sandbox"]
     cx = lx + 0.28
-    cyr = 1.72
+    cyr = 1.66
     per = 3
     cwid = (lw - 0.56 - 0.2 * (per - 1)) / per
     for i, ch in enumerate(checks):
         col = i % per
         row = i // per
         x = lx + 0.28 + col * (cwid + 0.2)
-        y = cyr + row * 0.56
+        y = cyr + row * 0.52
         chip(s, x, y, cwid, 0.44, ch, fill=MID, color=WHITE, size=9.5)
+    # acronym gloss for the two non-obvious chips (#162 round 6 block 1,
+    # README §5.8b: раскрывать на ПЕРВОМ видимом употреблении, не только
+    # в speaker notes)
+    text_box(s, x=lx + 0.28, y=2.66, w=lw - 0.56, h=0.34,
+             text="SAST — static application security testing: статический "
+                  "анализ кода на уязвимости без запуска. least-privilege — "
+                  "минимум необходимых прав.",
+             size=9.5, italic=True, color=MID, line_spacing=1.08)
     # model in centre
     circle(s, lx + lw / 2 - 0.62, 3.02, 1.24, GOLD_TINT, stroke=GOLD,
            stroke_pt=2.0)

@@ -654,17 +654,27 @@ def s37(p):
 # "same product, two registers" bridge (AWS Kiro success/failure)
 # ============================================================
 def s37b(p):
+    # Round-6 (Block 5), owner note p54 «нет эффектов». Диагноз: сам вывод
+    # слайда — что при росте внедрения в 2,6× измеримого эффекта для продукта
+    # НЕ появилось — существовал только внутри непереведённой английской
+    # цитаты COO. По-русски слайд читался как четыре внушительных числа про
+    # масштаб и строчка про расходы; строки «эффект» на нём не было вовсе.
+    # Правка: (1) левая карточка перестроена в «Масштаб → Эффект → Реакция»,
+    # (2) «Эффект» вынесен отдельным золотым блоком как главный вывод,
+    # (3) цитата COO переведена (русская версия — из chapter-part5 §7.2),
+    # (4) заголовок несёт вывод, а не только рамку «решает дисциплина».
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Решает не бренд, а применённая дисциплина — два примера",
+        s, "Масштаб внедрения — ещё не эффект: решает не бренд и не охват, "
+           "а применённая дисциплина",
         size=19, w=12.4, h=0.82)
 
     lx, lw = 0.55, 6.05
     rx, rw = 6.85, 5.95
     top = 1.44
 
-    # left: Uber — scale without criterion
+    # left: Uber — scale without criterion → no measurable effect
     ocean_box(s, lx, top, lw, 4.10)
     icon(s, "scale", lx + 0.22, top + 0.14, 0.46, "mid")
     text_box(s, x=lx + 0.82, y=top + 0.18, w=lw - 1.70, h=0.36,
@@ -674,25 +684,29 @@ def s37b(p):
     text_box(s, x=lx + lw - 1.00, y=top + 0.72, w=0.90, h=0.18,
              text="Uber · Wikimedia", size=6.5, italic=True, color=LIGHT,
              align=PP_ALIGN.CENTER)
-    text_box(s, x=lx + 0.24, y=top + 0.62, w=lw - 1.20, h=0.30,
-             text="Внедрение агентных практик 32% → 84% за месяц (2,6×);",
+    text_box(s, x=lx + 0.24, y=top + 0.70, w=lw - 1.30, h=0.28,
+             text="Масштаб внедрения", size=11, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 1.00, w=lw - 0.48, h=0.72,
+             text="агентные практики 32% → 84% за месяц (рост в 2,6 раза) · "
+                  "95% инженеров ежемесячно · 70% закоммиченного кода — от AI · "
+                  "$500–2000 на инженера в месяц",
              size=10.5, color=DEEP, line_spacing=1.16)
-    text_box(s, x=lx + 0.24, y=top + 0.94, w=lw - 0.48, h=0.60,
-             text="95% инженеров ежемесячно; 70% закоммиченного кода — от "
-                  "AI; $500–2000/инженер/мес.",
-             size=10.5, color=DEEP, line_spacing=1.16)
-    filled_rect(s, lx + 0.24, top + 1.58, lw - 0.48, 1.10, TEAL_TINT,
-                stroke=TEAL, stroke_pt=1.2, radius=True, radius_adj=0.06)
-    text_box(s, x=lx + 0.40, y=top + 1.64, w=lw - 0.80, h=0.98,
-             text='COO Andrew Macdonald: «It\'s hard to draw a connection '
-                  'between... rising use of Claude Code and innovations '
-                  'meant to serve consumers... That link is not there yet.»',
-             size=9.5, italic=True, color=DEEP, line_spacing=1.14,
-             font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=lx + 0.24, y=top + 2.86, w=lw - 0.48, h=1.10,
-             text="Потолок $1500/сотрудник/мес введён постфактум — после "
-                  "того как годовой бюджет сгорел за 4 месяца.",
-             size=11, bold=True, color=DEEP, line_spacing=1.18)
+    filled_rect(s, lx + 0.24, top + 1.80, lw - 0.48, 1.46, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.8, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.42, y=top + 1.88, w=lw - 0.84, h=0.32,
+             text="Эффект: не прослеживается", size=13, bold=True, color=DEEP)
+    text_box(s, x=lx + 0.42, y=top + 2.22, w=lw - 0.84, h=0.72,
+             text="«Трудно провести связь между растущим использованием "
+                  "Claude Code и инновациями, которые реально служат "
+                  "потребителю… этой связи пока просто нет»",
+             size=9.5, italic=True, color=DEEP, line_spacing=1.12)
+    text_box(s, x=lx + 0.42, y=top + 2.94, w=lw - 0.84, h=0.24,
+             text="— Эндрю Макдональд, президент и операционный директор Uber",
+             size=8.5, italic=True, color=SLATE)
+    text_box(s, x=lx + 0.24, y=top + 3.38, w=lw - 0.48, h=0.62,
+             text="Реакция: потолок $1500 на сотрудника в месяц — постфактум, "
+                  "после того как годовой бюджет сгорел за 4 месяца.",
+             size=11, bold=True, color=DEEP, line_spacing=1.16)
 
     # right: same product, two registers
     ocean_box(s, rx, top, rw, 4.10, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
@@ -708,7 +722,7 @@ def s37b(p):
     text_box(s, x=rx + 0.24, y=top + 0.66, w=rw - 0.48, h=0.30,
              text="Успех:", size=11.5, bold=True, color=MID)
     text_box(s, x=rx + 0.24, y=top + 0.98, w=rw - 0.48, h=0.78,
-             text="life sciences (фарма/биотех) — спека-first дисциплина, "
+             text="фарма и биотех (life sciences) — спека-first дисциплина, "
                   "гейты проверяемости заранее → продакшен за 3 недели "
                   "(тот же кейс, что уже был в начале лекции).",
              size=10, color=DEEP, line_spacing=1.14)
@@ -723,14 +737,17 @@ def s37b(p):
                 stroke=SLATE, stroke_pt=0.8, radius=True, radius_adj=0.08)
     text_box(s, x=rx + 0.40, y=top + 3.20, w=rw - 0.80, h=0.68,
              text="Разница — не бренд (продукт один и тот же), а применённая "
-                  "или пропущенная дисциплина.",
+                  "или пропущенная дисциплина: здесь исход измерим в обе "
+                  "стороны — в отличие от масштаба без критерия слева.",
              size=10, italic=True, color=SLATE, line_spacing=1.14,
              anchor=MSO_ANCHOR.MIDDLE)
 
     gold_callout(
-        s, 0.55, 5.72, 12.25, 0.62,
-        "Решение о масштабе AI — измеримое инженерное решение с критерием, "
-        "заданным заранее, а не культурная инерция без критерия.",
+        s, 0.55, 5.66, 12.25, 0.78,
+        "Рост внедрения сам по себе не является результатом: 2,6× за месяц "
+        "без заранее заданного критерия дали рост расходов и неподтверждённый "
+        "эффект. Решение о масштабе AI — измеримое инженерное решение с "
+        "критерием, заданным заранее, а не культурная инерция.",
         size=12, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s37b")
     notes_with_sources(s, "s37b")
@@ -741,10 +758,25 @@ def s37b(p):
 # s38 — risk-triad (3 axes, allowed zone) [in-bucket]
 # ============================================================
 def s38(p):
+    # Round-6 (Block 5) reframe: the triad was titled/framed as a binary gate
+    # («когда AI да / нет»). Owner note p55: вопрос «да или нет» больше не
+    # стоит — AI применяется в любом случае, считать нужно ПОТОЛОК АВТОНОМИИ,
+    # его цену и меры. Механика триады (три оси, перемножение, зона
+    # low×low×high, «какую ось чинить») не тронута — она и есть аппарат
+    # расчёта уровня; переписаны заголовок и рамка (chapter-part5 §7.3:
+    # «не "доверять / не доверять AI" вообще, а на каждой задаче перемножать
+    # три оси и ставить контроль туда, где произведение это требует»).
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "risk-triad: «когда AI да / нет» = вероятность × влияние × обнаружимость",
-                size=21, w=12.3, h=0.82)
+    slide_title(s, "Вопрос не «AI или нет», а какой уровень автономии: "
+                   "вероятность × влияние × обнаружимость",
+                size=20, w=12.3, h=0.82)
+
+    teal_callout(
+        s, 0.55, 1.26, 12.25, 0.50,
+        "AI в том или ином режиме применяется почти всегда — триада отвечает "
+        "не «да / нет», а какой потолок автономии допустим и чем он оплачен.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
 
     # left: three axes with scale markers inside
     lx, lw = 0.55, 6.50
@@ -756,8 +788,8 @@ def s38(p):
         ("Обнаружимость", "низкая → высокая",
          "есть ли тест-оракул, SAST, ревью, которые поймают ошибку"),
     ]
-    ay = 1.48
-    ah = 1.08
+    ay = 1.94
+    ah = 1.06
     for i, (name, scale, desc) in enumerate(axes):
         y = ay + i * (ah + 0.08)
         ocean_box(s, lx, y, lw, ah)
@@ -772,39 +804,41 @@ def s38(p):
                     fill=TEAL)
         text_box(s, x=lx + 0.24, y=bar_y + 0.18, w=2.6, h=0.24, text=scale,
                  size=10, italic=True, color=TEAL)
-        text_box(s, x=lx + 2.95, y=bar_y + 0.16, w=lw - 3.25, h=0.42,
+        text_box(s, x=lx + 2.95, y=bar_y + 0.14, w=lw - 3.25, h=0.42,
                  text=desc, size=9.5, color=SLATE, line_spacing=1.02)
 
-    # right: allowed zone + which axis to fix
+    # right: where the ceiling is highest + what each axis costs
     rx, rw = 7.35, 5.45
-    filled_rect(s, rx, 1.48, rw, 1.62, GOLD_TINT, stroke=GOLD, stroke_pt=1.9,
+    filled_rect(s, rx, 1.94, rw, 1.70, GOLD_TINT, stroke=GOLD, stroke_pt=1.9,
                 radius=True, radius_adj=0.06)
-    text_box(s, x=rx + 0.24, y=1.58, w=rw - 0.48, h=0.34,
-             text="Зона допустимого vibe-coding", size=13, bold=True, color=DEEP)
-    text_box(s, x=rx + 0.24, y=1.96, w=rw - 0.48, h=1.06,
-             text="ТОЛЬКО низкая × низкая × высокая (низкая вероятность × низкое "
-                  "влияние × высокая обнаружимость). Любая другая комбинация → "
-                  "дисциплина. Оси перемножаются, не складываются.",
-             size=11, bold=True, color=DEEP, line_spacing=1.16)
-    ocean_box(s, rx, 3.24, rw, 1.66)
-    text_box(s, x=rx + 0.24, y=3.34, w=rw - 0.48, h=0.34,
-             text="Триада подсказывает, что чинить:", size=12, bold=True,
-             color=MID)
-    fixes = [
-        "влияние ↑ → жёсткий человеческий гейт, потолок автономии вниз",
-        "обнаружимость ↓ → добавить машинный оракул",
-        "вероятность ↑ → senior-ревью",
-    ]
-    for i, fx in enumerate(fixes):
-        text_box(s, x=rx + 0.24, y=3.74 + i * 0.38, w=rw - 0.48, h=0.34,
-                 text=f"• {fx}", size=11, color=DEEP, line_spacing=1.02)
+    text_box(s, x=rx + 0.24, y=2.04, w=rw - 0.48, h=0.34,
+             text="Где потолок автономии самый высокий", size=13, bold=True,
+             color=DEEP)
+    text_box(s, x=rx + 0.24, y=2.42, w=rw - 0.48, h=1.16,
+             text="Полный vibe-coding — только при сочетании низкая × "
+                  "низкая × высокая: низкая вероятность ошибки, низкое "
+                  "влияние, высокая обнаружимость. Любая другая комбинация — "
+                  "не запрет AI, а потолок ниже и обязательные меры. Оси "
+                  "перемножаются, не складываются.",
+             size=10.5, bold=True, color=DEEP, line_spacing=1.14)
+    ocean_box(s, rx, 3.72, rw, 1.58)
+    text_box(s, x=rx + 0.24, y=3.82, w=rw - 0.48, h=0.34,
+             text="Чем оплачивается более высокий уровень:", size=12,
+             bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=4.22, w=rw - 0.48, h=0.98,
+             text="• влияние ↑ → жёсткий человеческий гейт\n"
+                  "• обнаружимость ↓ → машинный оракул\n"
+                  "• вероятность ↑ → построчное senior-ревью",
+             size=11, color=DEEP, line_spacing=1.28)
 
     gold_callout(
-        s, 0.55, 5.06, 12.25, 0.90,
-        "Böckeler [1]: «использование генеративного AI — постоянная оценка риска». "
-        "Провал — vibe-coding «по ощущению»: игнор всех трёх осей. В нём сходятся "
-        "все кейсы лекции: Replit (влияние ↑), curl-slop (обнаружимость ↓), "
-        "уязвимый код (вероятность ↑).",
+        s, 0.55, 5.44, 12.25, 1.00,
+        "Böckeler [1]: «использование генеративного AI — постоянная оценка "
+        "риска»: решение принимается не один раз и не про инструмент целиком, "
+        "а на каждой задаче. Провал — vibe-coding «по ощущению»: ни одна из "
+        "трёх осей не посчитана. В нём сходятся все кейсы лекции: Replit "
+        "(влияние ↑), curl-slop (обнаружимость ↓), уязвимый код "
+        "(вероятность ↑).",
         size=12, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s39")
     notes_with_sources(s, "s39")
@@ -815,54 +849,73 @@ def s38(p):
 # s39 — checklist + Anthropic -17% [in-bucket]
 # ============================================================
 def s39(p):
+    # Round-6 (Block 5) reframe, matched pair with s38/p55: восемь вопросов
+    # остаются те же (они и есть рабочий критерий), но перестают читаться как
+    # бинарный шлагбаум «пускать AI или нет» — каждый пункт формулирован как
+    # настройка режима и уровня автономии. Источник рамки — chapter-part5
+    # §7.4: «чек-лист — распределение бремени доказательства, а не "всегда
+    # выбирай меньше AI"; для подходящей задачи он приведёт к высокой
+    # автономии осознанно».
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Чек-лист «когда AI да / когда нет» + что это значит лично для вас",
+    slide_title(s, "Восемь вопросов — не «AI или нет», а как, где и с каким "
+                   "контролем его применить",
                 size=22, w=12.2, h=0.82)
 
     # left: 8-point checklist
     lx, lw = 0.55, 7.05
-    ocean_box(s, lx, 1.52, lw, 4.60)
+    ocean_box(s, lx, 1.52, lw, 4.40)
     checks = [
-        ("Какая это фаза жизненного цикла?", False),
-        ("Можно ли решить без AI (детерминированно)? Да → не добавляйте AI", False),
-        ("Существенная или привнесённая сложность? Существенная → человек", False),
-        ("Обратимо ли последствие? Необратимое → жёсткий человеческий гейт — ВЕТО-ось", True),
-        ("Есть ли машинный оракул (тест, SAST, прогон)? Нет → не доверять", False),
-        ("Затронуты секреты / недоверенный контент? Да → least-priv + изоляция", False),
-        ("Кто ревьюит и мержит? Merge и accountability — всегда человек", False),
-        ("Цель — артефакт или навык? Навык → не делегировать генерацию", False),
+        ("Какая это фаза жизненного цикла? Она задаёт режим отказа", False),
+        ("Что здесь решается детерминированно? Эту часть пишет обычный код, "
+         "AI — на разбор и проверку", False),
+        ("Существенная или привнесённая сложность? Существенная — решает "
+         "человек, AI на периферии", False),
+        ("Обратимо ли последствие? Необратимое → потолок автономии вниз, "
+         "жёсткий гейт — ВЕТО-ось", True),
+        ("Есть ли машинный оракул (тест, SAST, прогон)? Нет → сначала оракул, "
+         "потом автономия", False),
+        ("Затронуты секреты / недоверенный контент? Да → минимум прав и "
+         "изоляция", False),
+        ("Кто ревьюит и кто мержит? Слияние и ответственность — всегда человек",
+         False),
+        ("Цель — артефакт или навык? Навык → генерацию не делегировать", False),
     ]
-    ci_y = 1.72
+    ci_y = 1.68
     for i, (txt, veto) in enumerate(checks):
-        y = ci_y + i * 0.535
+        y = ci_y + i * 0.52
         if veto:
             filled_rect(s, lx + 0.20, y, lw - 0.40, 0.48, GOLD_TINT,
                         stroke=GOLD, stroke_pt=1.6, radius=True, radius_adj=0.08)
-        icon(s, "check-check", lx + 0.28, y + 0.06, 0.34,
+        icon(s, "check-check", lx + 0.28, y + 0.07, 0.32,
              "gold" if veto else "mid")
-        text_box(s, x=lx + 0.72, y=y + 0.03, w=lw - 0.94, h=0.44,
-                 text=f"{i+1}. {txt}", size=11, bold=veto,
+        text_box(s, x=lx + 0.70, y=y + 0.02, w=lw - 0.92, h=0.44,
+                 text=f"{i+1}. {txt}", size=10.5, bold=veto,
                  color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
 
     # right: Anthropic -17% chart + explanation
     rx, rw = 7.85, 4.95
-    ocean_box(s, rx, 1.52, rw, 4.60)
-    add_image(s, CHARTS / "c39-anthropic-quiz.png", rx + 0.14, 1.66,
-              rw - 0.28, 2.10)
-    text_box(s, x=rx + 0.24, y=3.82, w=rw - 0.48, h=2.24,
+    ocean_box(s, rx, 1.52, rw, 4.40)
+    add_image(s, CHARTS / "c39-anthropic-quiz.png", rx + 0.14, 1.64,
+              rw - 0.28, 2.02)
+    text_box(s, x=rx + 0.24, y=3.74, w=rw - 0.48, h=1.52,
              text="Anthropic, Shen & Tamkin 2026 (RCT, n=52, освоение незнакомой "
                   "библиотеки) [1]: группа с AI на квизе 50% против 67% без AI "
                   "(~−17 п.п.). Кто делегировал генерацию — просел; кто спрашивал "
                   "концепции («как работает, почему») — деградации нет. Ускорение "
                   "статистически не значимо.",
-             size=11, color=DEEP, line_spacing=1.20)
+             size=10.5, color=DEEP, line_spacing=1.18)
+    text_box(s, x=rx + 0.24, y=5.30, w=rw - 0.48, h=0.52,
+             text="Когда цель — навык, пишете вы; AI объясняет и проверяет.",
+             size=11, bold=True, color=MID, line_spacing=1.10)
 
     gold_callout(
-        s, 0.55, 6.20, 12.25, 0.55,
-        "Чек-лист — распределение бремени доказательства, не «всегда меньше AI»: "
-        "для подходящей задачи он приведёт к высокой автономии. Необратимость и "
-        "влияние — вето-ось. При обучении писать должны вы, роль AI — объяснять и проверять.",
+        s, 0.55, 6.00, 12.25, 0.86,
+        "Чек-лист не решает «применять AI или нет» — он выдаёт режим: для "
+        "подходящей задачи приведёт к высокой автономии, для неподходящей — "
+        "опустит потолок и назовёт обязательные меры. Это распределение "
+        "бремени доказательства, а не «всегда меньше AI». Необратимость и "
+        "влияние — вето-ось.",
         size=11.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s40", y=7.14)
     notes_with_sources(s, "s40")
@@ -890,10 +943,16 @@ def s40(p):
         "не инструмент, а дисциплина по фазам.",
         size=12.5, bold=True)
 
-    ocean_box(s, 0.45, 3.06, 6.30, 2.36)
-    text_box(s, x=0.68, y=3.16, w=5.85, h=0.36,
+    # Round-6 (Block 5): the «Семинар 4 — примените чек-лист…» teal strip that
+    # used to sit at y=5.58 was REMOVED — it is a cross-artifact course-scaffold
+    # pointer, not student-facing material (owner note p57; same class as the
+    # «mastery — Семинар 4» line deliberately kept off this slide earlier).
+    # The four method-transfer steps now breathe into the freed vertical band
+    # and «Вопросы?» moves up to close the slide.
+    ocean_box(s, 0.45, 3.06, 6.30, 3.02)
+    text_box(s, x=0.68, y=3.20, w=5.85, h=0.36,
              text="Метод переносится на все отрасли (не список инструментов):",
-             size=12, bold=True, color=MID, line_spacing=1.0)
+             size=12.5, bold=True, color=MID, line_spacing=1.0)
     steps = [
         "разложить деятельность на фазы",
         "спросить: привнесённая или существенная сложность",
@@ -901,21 +960,15 @@ def s40(p):
         "отделить устойчивый паттерн от вендор-хайпа пятью вопросами",
     ]
     for i, st in enumerate(steps):
-        y = 3.56 + i * 0.44
-        circle(s, 0.70, y + 0.02, 0.30, TEAL)
-        text_box(s, x=0.70, y=y + 0.02, w=0.30, h=0.30, text=str(i + 1),
-                 size=12, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+        y = 3.74 + i * 0.56
+        circle(s, 0.70, y + 0.04, 0.32, TEAL)
+        text_box(s, x=0.70, y=y + 0.04, w=0.32, h=0.32, text=str(i + 1),
+                 size=12.5, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
                  anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=1.14, y=y, w=5.45, h=0.40, text=st, size=10.5, color=DEEP,
+        text_box(s, x=1.16, y=y, w=5.45, h=0.42, text=st, size=11, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
 
-    # bridge to seminar + Q&A
-    filled_rect(s, 0.45, 5.58, 6.30, 0.62, TEAL_TINT, stroke=TEAL, stroke_pt=1.4,
-                radius=True, radius_adj=0.08)
-    text_box(s, x=0.68, y=5.66, w=5.85, h=0.48,
-             text="Семинар 4 — примените чек-лист к реальным кейсам своими руками.",
-             size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=0.45, y=6.36, w=6.30, h=0.7, text="Вопросы?", size=30,
+    text_box(s, x=0.45, y=6.36, w=6.30, h=0.7, text="Вопросы?", size=32,
              bold=True, color=DEEP)
     notes_with_sources(s, "s41")
     return s

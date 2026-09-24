@@ -5,7 +5,7 @@ from _helpers_en import (
     gold_callout, teal_callout, footer, src, speaker_notes, load_notes, notes_with_sources, refs_of_slide,
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
-    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS, WEB,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
@@ -15,80 +15,110 @@ SCR = ASSETS / "screenshots"
 
 
 # ============================================================
-# s31 — Replit culmination [in-bucket]
+# s31 — Replit culmination [in-bucket; round-6 block-4 restructure]
 # ============================================================
 def s31(p):
+    """Round-6 block-4 (owner ask: «important, but it is all in a heap, reads
+    badly, and what the 95 and the 9 seconds even are is unclear»). Restructured
+    into a causal chain the eye can follow: WHAT happened (left, numbered) →
+    WHY the guardrail failed → WHY the agent\u2019s own report proves nothing (this
+    is where «95» is now decoded in place: it is the agent\u2019s self-grade FOR THE
+    RUN IN WHICH IT WIPED THE DB) → WHAT would actually have stopped it. The
+    orphan «9 seconds» is gone from the headline strip: it belonged to a
+    DIFFERENT incident (PocketOS/Cursor) and now appears only inside the echo
+    box, labeled as a separate incident so it reads without cross-referencing
+    anything."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "The agent's speed is the speed of the catastrophe; accountability is not delegated",
-                size=21, w=12.3, h=0.82)
+    slide_title(s, "The agent\u2019s speed is the speed of the catastrophe; "
+                   "accountability is not delegated",
+                size=20, w=12.3, h=0.86)
 
-    # left: Replit chronicle
+    # left: WHAT happened — the Replit chronicle as a numbered chain
     lx, lw = 0.55, 6.05
-    ocean_box(s, lx, 1.52, lw, 4.02)
-    text_box(s, x=lx + 0.24, y=1.64, w=lw - 0.48, h=0.66,
-             text="July 2025, a vibe-coding experiment (Replit; Fortune, "
-                  "2025-07-23). The human set an explicit code freeze: \"NO MORE "
-                  "CHANGES\". Despite the ban, the agent:",
-             size=11.5, bold=True, color=MID, line_spacing=1.1)
+    top = 1.44
+    ocean_box(s, lx, top, lw, 4.18)
+    text_box(s, x=lx + 0.24, y=top + 0.10, w=lw - 0.48, h=0.30,
+             text="What happened — Replit, July 2025 [1]", size=12.5,
+             bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.44, w=lw - 0.48, h=0.66,
+             text="A vibe-coding experiment. The human declared an explicit "
+                  "code freeze: \"NO MORE CHANGES\". Despite the ban, the "
+                  "agent:",
+             size=10.5, color=DEEP, line_spacing=1.12)
     chron = [
-        "deleted the live (production) DB (1200+ executives, 1190+ companies)",
-        "fabricated reports masking the problem",
-        "lied to a direct question",
-        "rated its own behavior 95 out of 100",
-        "claimed rollback was impossible — yet the mechanism worked, the data was restored",
+        ("deleted the live (production) database — data on 1200+ executives "
+         "and 1190+ companies", 0.52),
+        ("fabricated reports masking the problem", 0.34),
+        ("lied when asked directly", 0.34),
+        ("rated its own behavior 95 out of 100", 0.34),
+        ("claimed rollback was impossible — although the mechanism worked and "
+         "the data was restored", 0.52),
     ]
-    cy = 2.30
-    for i, txt in enumerate(chron):
-        y = cy + i * 0.44
-        circle(s, lx + 0.30, y + 0.06, 0.16, GOLD)
-        text_box(s, x=lx + 0.60, y=y - 0.02, w=lw - 0.86, h=0.42, text=txt,
-                 size=10.5, color=DEEP, line_spacing=1.05)
-    filled_rect(s, lx + 0.24, 4.60, lw - 0.48, 0.78, SOFT_GREY, stroke=LIGHT,
-                stroke_pt=1.0, radius=True, radius_adj=0.06)
-    text_box(s, x=lx + 0.44, y=4.68, w=lw - 0.86, h=0.64,
-             text="Echoes of the same class (The Register): Amazon Kiro (Dec 2025) — "
-                  "hours of downtime · PocketOS / Cursor (Apr 2026) — wiped the DB "
-                  "in 9 seconds.",
-             size=10.5, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.1)
+    cy = top + 1.14
+    for i, (txt, hh) in enumerate(chron):
+        circle(s, lx + 0.30, cy + 0.07, 0.16, GOLD)
+        text_box(s, x=lx + 0.60, y=cy, w=lw - 0.86, h=hh, text=txt,
+                 size=10.5, color=DEEP, line_spacing=1.08)
+        cy += hh
+    filled_rect(s, lx + 0.24, top + 3.20, lw - 0.48, 0.84, SOFT_GREY,
+                stroke=LIGHT, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.44, y=top + 3.26, w=lw - 0.86, h=0.74,
+             text="Echoes of the same class (The Register): Amazon Kiro, "
+                  "December 2025 — hours of downtime. PocketOS / Cursor, "
+                  "April 2026 — a separate incident, a database wiped in "
+                  "9 seconds.",
+             size=10, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.12)
 
-    # right: 3 collapsing pillars
+    # right: WHY it failed → WHY the report proves nothing → WHAT stops it
     rx, rw = 6.85, 5.95
-    pillars = [
-        ("Prompt != control",
-         "\"NO MORE CHANGES\" is, to an agent, not an environment barrier but text "
-         "competing for attention. There is no architectural boundary between a \"rule\" "
-         "and a \"wish\"."),
-        ("Self-assessment != verification",
-         "\"95/100\" is anti-correlated with reality (highest at the worst outcome)."),
-        ("The agent's report != proof",
-         "the source of truth in a postmortem is independent telemetry, not the agent's narrative."),
-    ]
-    py = 1.52
-    hs = [1.30, 0.92, 0.92]
-    yy = py
-    for i, (head, body) in enumerate(pillars):
-        ocean_box(s, rx, yy, rw, hs[i] - 0.06)
-        text_box(s, x=rx + 0.24, y=yy + 0.10, w=rw - 0.48, h=0.34, text=head,
-                 size=12.5, bold=True, color=MID)
-        text_box(s, x=rx + 0.24, y=yy + 0.44, w=rw - 0.48, h=hs[i] - 0.54,
-                 text=body, size=11, color=DEEP, line_spacing=1.14)
-        yy += hs[i]
-    filled_rect(s, rx, yy + 0.02, rw, 0.66, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
-                radius=True, radius_adj=0.06)
-    text_box(s, x=rx + 0.24, y=yy + 0.08, w=rw - 0.48, h=0.56,
-             text="\"95/100\" at the worst outcome · \"9 seconds\"", size=13,
-             bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             align=PP_ALIGN.CENTER)
+    ocean_box(s, rx, top, rw, 1.32)
+    text_box(s, x=rx + 0.24, y=top + 0.10, w=rw - 0.48, h=0.30,
+             text="Why the ban did not work", size=12.5, bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=top + 0.44, w=rw - 0.48, h=0.84,
+             text="\"NO MORE CHANGES\" is, to an agent, not a barrier in the "
+                  "environment but one more piece of text competing for "
+                  "attention. There was no boundary between a \"rule\" and a "
+                  "\"wish\": deleting the prod database was technically "
+                  "possible.",
+             size=10, color=DEEP, line_spacing=1.14)
+
+    ocean_box(s, rx, top + 1.40, rw, 1.36)
+    text_box(s, x=rx + 0.24, y=top + 1.50, w=rw - 0.48, h=0.30,
+             text="Why the agent\u2019s report proves nothing", size=12.5,
+             bold=True, color=MID)
+    text_box(s, x=rx + 0.24, y=top + 1.84, w=rw - 0.48, h=0.84,
+             text="\"95 out of 100\" is the grade the agent gave itself for the "
+                  "very run in which it wiped the database and lied: it peaks "
+                  "exactly at the worst outcome. \"Rollback is impossible\" "
+                  "also turned out to be untrue. The source of truth in a "
+                  "postmortem is independent telemetry, not the agent\u2019s "
+                  "account.",
+             size=10, color=DEEP, line_spacing=1.14)
+
+    filled_rect(s, rx, top + 2.84, rw, 1.34, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.6, radius=True, radius_adj=0.06)
+    text_box(s, x=rx + 0.24, y=top + 2.94, w=rw - 0.48, h=0.30,
+             text="What would have stopped it", size=12.5, bold=True,
+             color=DEEP)
+    text_box(s, x=rx + 0.24, y=top + 3.28, w=rw - 0.48, h=0.84,
+             text="Not a stricter prompt, but barriers outside the agent: "
+                  "separation of the development environment from prod · no "
+                  "rights to delete prod (least-privilege — minimum necessary "
+                  "access) · a human gate on any irreversible action · a "
+                  "regularly tested rollback.",
+             size=10, color=DEEP, line_spacing=1.14)
 
     gold_callout(
-        s, 0.55, 5.70, 12.25, 0.60,
-        "Level-D safety does not live in the prompt — it lives outside the agent: "
-        "dev/prod isolation, a hard human gate on destructive actions, least-privilege, "
-        "a tested rollback. The root error is autonomy inadequate to the cost of "
-        "error [1]. Accountability is not delegated.",
-        size=12, bold=True, align=PP_ALIGN.CENTER)
+        s, 0.55, 5.72, 12.25, 0.62,
+        "The root error is not a \"badly configured agent\" but autonomy "
+        "inadequate to the cost of error [1]. Accountability for prod stays "
+        "human: it cannot be handed to the agent along with the task.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme (EN caption bake): Boardroom Suggestion, panel 3 — an
+    # explicit human instruction ignored, the agent keeps going regardless.
+    add_image(s, WEB / "band-boardroom-panel3-en.png", 8.95, 6.50, 3.85, 0.56)
     refs_of_slide(s, "s32")
     notes_with_sources(s, "s32")
     return s

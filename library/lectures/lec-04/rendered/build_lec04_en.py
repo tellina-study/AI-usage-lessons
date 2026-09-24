@@ -10,7 +10,8 @@ Source-of-truth: deck.en.yaml + slides-en/*.md (visible content + readable
 EN speaker notes). Builders live in slides_band{1..4}_en.py, importing from
 _helpers_en.py (SLIDES_DIR=slides-en, CHARTS=charts-en, EN NAV/dividers/refs).
 
-Build: python3 build_lec04_en.py  → lec-04-en.pptx (41 slides s01..s41).
+Build: python3 build_lec04_en.py  → lec-04-en.pptx (slide count follows the
+builders list; EN-sync blocks add their own slides toward RU parity).
 """
 from pathlib import Path
 import sys
@@ -38,15 +39,24 @@ def main():
                  b2.s11, b2.s12, b2.s13, b2.s14, b2.s15,     # s12..s16
                  b2.s16, b2.s17, b2.s18, b2.s19]             # s17..s20
     # display s21–s30
+    # EN-sync block 4 (issue #172 / #162): +b3.s25b (BDD + trunk-based) and
+    # +b3.s25c (the agent's local test toolkit) after the testing-failure slide,
+    # matching the RU deck's own round-2 insert / round-6 rebuild; +b3.s30b
+    # (Amazon Q wiper) after the security-failure slide, matching the RU deck's
+    # round-3 insert. Other EN-sync blocks add their own builders here too —
+    # the count below is bumped per block, not owned by any one of them.
     builders += [b2.s20,                                     # s21
-                 b3.s21, b3.s22, b3.s23, b3.s24, b3.s25,     # s22..s26
-                 b3.s26, b3.s27, b3.s28, b3.s29]             # s27..s30
+                 b3.s21, b3.s22, b3.s23, b3.s24,
+                 b3.s25b, b3.s25c,                           # NEW (EN-sync b4)
+                 b3.s25,
+                 b3.s26, b3.s27, b3.s28, b3.s29]
+    builders += [b3.s30b]                                    # NEW (EN-sync b4)
     # display s31–s41
     builders += [b3.s30,                                     # s31
                  b4.s31, b4.s32, b4.s33, b4.s34, b4.s35,     # s32..s36
                  b4.s36, b4.s37, b4.s38, b4.s39, b4.s40]     # s37..s41
 
-    assert len(builders) == 41, f"expected 41 builders, got {len(builders)}"
+    assert len(builders) == 44, f"expected 44 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
@@ -56,7 +66,7 @@ def main():
     total = len(builders)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 41, f"expected 41 slides, got {n}"
+    assert n == len(builders), f"expected {len(builders)} slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

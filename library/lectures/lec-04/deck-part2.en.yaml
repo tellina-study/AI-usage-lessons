@@ -54,6 +54,36 @@ slides:
     in_bucket: true
     verify_day_of: true
 
+  - id: s25b
+    file: slides-en/s25b-bdd-trunk-based.md
+    type: assertion_visual
+    section: "Section 4. Testing — TDD as a discipline"
+    duration_min: 3
+    assertion: "BDD and trunk-based are settled by balance, not by description: BDD gives a shared language with a non-technical stakeholder, but costs an extra layer and outside Ruby is not mainstream (~27%); trunk-based keeps up with the pace of agent commits, but requires feature flags and real test coverage"
+    learning_goal: "Round 6 block 3 (owner): explicit \"+\" and \"−\" for each methodology + a micro-example for each — for someone seeing BDD/trunk-based for the first time"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.4 [for-slide-s25b]"
+    references: [cucumber-bdd, trunk-based-dev]
+    verify_day_of: true
+    interaction: none
+    # EN-sync block 4 (#172/#162): EN twin of the RU round-2 insert, rebuilt
+    # in round 6 block 3. Sits after s24 (all-green-mutation), before s25c.
+
+  - id: s25c
+    file: slides-en/s25c-test-tooling-matrix.md
+    type: schema_matrix
+    section: "Section 4. Testing — TDD as a discipline"
+    duration_min: 3
+    assertion: "The local toolkit closes five channels in which the agent is blind without a tool: data (Testcontainers), network (MSW / WireMock OSS), user interface (Playwright), your own checks (a skill wrapper), an air-gapped setup (local test generation) — and for each it names exactly what cannot be done without it"
+    learning_goal: "Round 6 block 3 (owner): +Playwright and +local test generation as the 4th and 5th categories; the rows reframed to \"what it does / what is impossible without it\""
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.5 [for-slide-s25c]"
+    references: [testcontainers, msw, wiremock, pytest-generator-distil]
+    verify_day_of: true
+    interaction: none
+    # EN-sync block 4 (#172/#162): EN twin of the RU round-2 insert, rebuilt
+    # in round 6 block 3. Sits after s25b, before s25 (divider Section 5).
+
   # ─── Section 5. Review + Security — the discipline of skepticism (s25–s31) ───
   - id: s25
     file: slides-en/s25-divider-review-security.md
@@ -119,6 +149,22 @@ slides:
     references: [stanford-perry, nyu-asleep-keyboard]
     in_bucket: true
     verify_day_of: true
+
+  - id: s30b
+    file: slides-en/s30b-amazon-q-wiper.md
+    type: case_study
+    section: "Section 5. Review + Security — the discipline of skepticism"
+    duration_min: 3
+    assertion: "A third, mechanically separate failure class: trust is needed not only in what the agent produces or reads, but in what the agent itself is made of — an unaudited contributor merged a malicious system prompt straight into an official Amazon Q Developer release"
+    learning_goal: "The supply-chain risk of the AI tool itself (not only of its output or its input) — a third failure mechanism next to slopsquatting and CamoLeak"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§5.6 [for-slide-s30b]"
+    references: [amazon-q-wiper]
+    in_bucket: true
+    verify_day_of: true
+    interaction: none
+    # EN-sync block 4 (#172/#162): EN twin of the RU round-3 insert. Sits
+    # after s29 (vulnerable + false confidence), before s30 (supply chain).
 
   - id: s30
     file: slides-en/s30-slopsquatting-camoleak.md

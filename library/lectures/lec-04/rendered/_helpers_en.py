@@ -43,6 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]      # library/lectures/lec-04
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts-en"
+WEB = ASSETS / "web"          # meme composites; EN captions baked as band-*-en.png
 SLIDES_DIR = ROOT / "slides-en"
 FONT_HEAD = "DejaVu Sans"
 FONT_BODY = "DejaVu Sans"
@@ -117,6 +118,19 @@ URLS = {
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
     "anthropic_ctx_eng": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "willison_vibe_code": "https://simonwillison.net/2025/Oct/7/vibe-engineering/",
+    # --- EN-sync block 4 (issue #172 / #162): keys used by s25b/s25c/s28/s30b ---
+    "cucumber_bdd": "https://cucumber.io/docs/bdd/",
+    "software303_bdd_adoption": "https://303software.com/",
+    "trunk_based_dev": "https://trunkbaseddevelopment.com/",
+    "testcontainers": "https://testcontainers.com/",
+    "msw_docs": "https://mswjs.io/docs",
+    "wiremock_split": "https://wiremock.io/",
+    "pytest_generator_distil": "https://distillabs.ai/",
+    "tianpan_rubber_stamp": "https://tianpan.co/",
+    "matplotlib_hitpiece_register": "https://www.theregister.com/2026/02/",
+    "oss_review_burden": "https://arxiv.org/abs/2510.10165",
+    "amazon_q_wiper": "https://www.bleepingcomputer.com/",
+    "aws_security_bulletin_q": "https://aws.amazon.com/security/security-bulletins/",
 }
 
 
@@ -803,6 +817,31 @@ SLIDE_REFS = {
         ("2", "Meta — TestGen-LLM", "meta_testgen",
          "more coverage (32% vs 5.3%), but fewer mutants killed (2.4% vs 15%)"),
     ],
+    # --- EN-sync block 4: s25b / s25c (round-2 slides, round-6 rebuild) ---
+    "s25b": [
+        ("1", "Cucumber — BDD documentation", "cucumber_bdd",
+         "three practices of the cycle: Discovery / Formulation / Automation"),
+        ("2", "303software.com — BDD adoption 2025", "software303_bdd_adoption",
+         "BDD frameworks in ~27% of the OSS sample (68% of that in Ruby) — "
+         "not mainstream in most ecosystems", True),
+        ("3", "trunkbaseddevelopment.com", "trunk_based_dev",
+         "a short-lived branch — under 24 hours; DORA records it as a "
+         "high-performance practice"),
+    ],
+    "s25c": [
+        ("1", "Testcontainers — official site", "testcontainers",
+         "a real service in Docker on an ephemeral port for the duration of the "
+         "run, destroyed afterwards; the only dependency is a local Docker daemon"),
+        ("2", "MSW (Mock Service Worker) — documentation", "msw_docs",
+         "network-level HTTP interception inside the process; one handler for "
+         "unit / integration / e2e", True),
+        ("3", "WireMock — OSS vs Cloud", "wiremock_split",
+         "the AI features (Skills/MCP) live mostly in the paid WireMock Cloud, "
+         "not in the local OSS core", True),
+        ("4", "pytest-generator (Distil Labs)", "pytest_generator_distil",
+         "CPU-only local test generation, ~77% accuracy self-reported, low "
+         "adoption", True),
+    ],
     "s27": [
         ("1", "Willison — Vibe engineering", "willison_vibe_eng",
          "adversarial review with fresh context; \"review it — or it's not engineering\""),
@@ -819,6 +858,20 @@ SLIDE_REFS = {
          True),
         ("3", "CodeCrash", "codecrash",
          "misleading comments crash the model's reasoning (~-23%)"),
+        # --- EN-sync block 4: round-6 additions (3 -> 6 refs) ---
+        ("4", "Rubber-Stamp Collapse (TianPan.co)", "tianpan_rubber_stamp",
+         "470 CodeRabbit PRs + telemetry on 22,000 developers: +170% findings, "
+         "+242.7% incidents per PR", True),
+        ("5", "The Register — the matplotlib hit-piece",
+         "matplotlib_hitpiece_register",
+         "PR #31132: an AI agent published an essay against the maintainer who "
+         "closed its PR", True),
+        ("6", "Xu et al. — who pays for reviewing AI code (arXiv 2510.10165)",
+         "oss_review_burden",
+         "a panel of 2,755 GitHub repositories / 1,699 contributors, 12 months "
+         "before and after Copilot: the periphery (75%) +43.5% commits and "
+         "+17.7% PRs, the core (top 25%) -19% of their own commits and +6.5% "
+         "reviewing others' code, PR rework +2.4%"),
     ],
     "s29": [
         ("1", "Willison — the lethal trifecta", "lethal_trifecta",
@@ -833,6 +886,15 @@ SLIDE_REFS = {
          "with an AI assistant people introduce vulnerabilities more often and more confidently"),
         ("2", "NYU — Asleep at the Keyboard? (IEEE S&P 2022)", "nyu_asleep",
          "~40% of Copilot programs contained vulnerabilities (in security-sensitive tasks)"),
+    ],
+    # --- EN-sync block 4: s30b (round-3 slide) ---
+    "s30b": [
+        ("1", "BleepingComputer — the Amazon Q Developer wiper prompt",
+         "amazon_q_wiper",
+         "an unaudited PR carrying a \"system cleaner\" system prompt shipped in "
+         "release v1.84.0, ~1 million developers", True),
+        ("2", "AWS Security Bulletin AWS-2025-019", "aws_security_bulletin_q",
+         "the prompt's formatting broke execution — luck, not control", True),
     ],
     "s31": [
         ("1", "Slopsquatting — Spracklen et al., USENIX Security 2025",

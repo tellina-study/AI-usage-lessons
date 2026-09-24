@@ -15,7 +15,17 @@ SCR = ASSETS / "screenshots"
 
 
 # ============================================================
-# s21 — anti-hype benchmarks (SWE-bench gap chart + 3 overclaims) [in-bucket]
+# s21 — DROPPED FROM THE v4.5 DISPLAY ORDER (#172 EN sync of #162 round 6,
+# block 3). The RU twin was deleted on the owner's direct instruction
+# ("slide 32 is redundant, remove it"): the SWE-bench Verified/Pro gap is
+# introduced in Lecture 3, and vendor skepticism in THIS lecture is carried by
+# s20 (the 70% problem), s37 (triangulation) and s38 (the risk triad).
+#
+# The function body is kept so the legacy 41-slide assembler
+# (build_lec04_en.py, not yet rebased onto the 58-slide order) still imports
+# and runs. THE v4.5 EN ASSEMBLER MUST NOT CALL IT — see
+# rendered/iteration-log-en.md § "EN-Sync Block 3" for the required builder
+# ordering. Its chart c21-swe-bench.png stays in assets.
 # ============================================================
 def s21(p):
     s = blank(p)
@@ -99,41 +109,42 @@ def s23(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "TDD-as-approach: the human decides what to check; the run is deterministic",
-        size=22, w=12.2, h=0.82)
+        s, "TDD with a coding agent: not the ritual \"test first\", but five steps "
+           "that work",
+        size=21, w=12.3, h=0.82)
 
     # left: red-green-refactor cycle
-    lx, lw = 0.55, 5.35
-    ocean_box(s, lx, 1.52, lw, 4.02)
-    text_box(s, x=lx + 0.24, y=1.64, w=lw - 0.48, h=0.34,
-             text="The red-green-refactor cycle (Kent Beck, TDD) [1] — the human owns "
-                  "the test spec", size=12.5, bold=True, color=MID,
+    lx, lw = 0.55, 5.20
+    ocean_box(s, lx, 1.40, lw, 4.10)
+    text_box(s, x=lx + 0.24, y=1.50, w=lw - 0.48, h=0.34,
+             text="The red-green-refactor cycle (Kent Beck, TDD) [1] — the human "
+                  "owns the test spec", size=12, bold=True, color=MID,
              line_spacing=1.0)
     cyc = [
         ("red", "a failing test expresses a requirement", GOLD, True),
         ("green", "the code that makes it pass", MID, False),
         ("refactor", "improve while keeping it green", TEAL, False),
     ]
-    cy0 = 2.06
+    cy0 = 1.96
     for i, (name, desc, col, start) in enumerate(cyc):
-        y = cy0 + i * 0.66
-        filled_rect(s, lx + 0.30, y, lw - 0.60, 0.54,
+        y = cy0 + i * 0.64
+        filled_rect(s, lx + 0.28, y, lw - 0.56, 0.54,
                     (GOLD_TINT if start else SURFACE),
                     stroke=col, stroke_pt=(1.8 if start else 1.2),
                     radius=True, radius_adj=0.10)
         if start:
-            circle(s, lx + 0.42, y + 0.15, 0.24, GOLD)
-        text_box(s, x=lx + (0.78 if start else 0.50), y=y + 0.04, w=1.6, h=0.46,
-                 text=name, size=12.5, bold=True, color=DEEP,
+            circle(s, lx + 0.40, y + 0.15, 0.24, GOLD)
+        text_box(s, x=lx + (0.76 if start else 0.48), y=y + 0.04, w=1.6, h=0.46,
+                 text=name, size=12, bold=True, color=DEEP,
                  anchor=MSO_ANCHOR.MIDDLE, font="DejaVu Sans Mono")
-        text_box(s, x=lx + 2.15, y=y + 0.04, w=lw - 2.5, h=0.46, text=desc,
+        text_box(s, x=lx + 2.10, y=y + 0.04, w=lw - 2.42, h=0.46, text=desc,
                  size=10.5, color=SLATE, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=lx + 0.30, y=4.04, w=lw - 0.60, h=0.16, text="↑ repeats",
+    text_box(s, x=lx + 0.28, y=3.86, w=lw - 0.56, h=0.18, text="↑ repeats",
              size=10.5, italic=True, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
     # role split
-    filled_rect(s, lx + 0.30, 4.30, lw - 0.60, 1.06, TEAL_TINT, stroke=TEAL,
+    filled_rect(s, lx + 0.28, 4.14, lw - 0.56, 1.20, TEAL_TINT, stroke=TEAL,
                 stroke_pt=1.4, radius=True, radius_adj=0.06)
-    text_runs(s, lx + 0.50, 4.40, lw - 1.0, 0.9, [
+    text_runs(s, lx + 0.46, 4.26, lw - 0.92, 0.98, [
         {"text": "AI writes tests fast", "size": 11.5, "bold": True,
          "color": TEAL},
         {"text": " — volume (accidental). ", "size": 11.5, "color": DEEP},
@@ -142,51 +153,65 @@ def s23(p):
         {"text": " — essential.", "size": 11.5, "color": DEEP},
     ])
 
-    # right: no-outsource + nuance + tools
-    rx, rw = 6.10, 6.70
-    ocean_box(s, rx, 1.52, rw, 1.28)
-    text_box(s, x=rx + 0.24, y=1.62, w=rw - 0.48, h=0.34,
-             text="Verification is not outsourced to the model", size=12.5, bold=True,
-             color=MID)
-    text_box(s, x=rx + 0.24, y=1.96, w=rw - 0.48, h=0.80,
-             text="Willison / Fowler: \"if you haven't seen it work, it's not a "
-                  "working system.\" Tests are run by a deterministic executor "
-                  "(script / CI), not by the model's word. Incident → permanent regression test.",
-             size=11, color=DEEP, line_spacing=1.14)
-    # nuance (honest)
-    filled_rect(s, rx, 2.92, rw, 1.28, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
-                radius=True, radius_adj=0.05)
-    text_box(s, x=rx + 0.24, y=3.02, w=rw - 0.48, h=0.34,
-             text="An important nuance — structure != ritual", size=12.5, bold=True,
-             color=DEEP)
-    text_box(s, x=rx + 0.24, y=3.36, w=rw - 0.48, h=0.80,
-             text="The value of TDD is the structure (spec-test + gate), not the ritual "
-                  "of forcing the order on the agent. Böckeler [2]: TDD-first in the agent loop — "
-                  "no gain + ~3x tokens (\"I stopped telling "
-                  "agents to write tests first\").",
-             size=11, color=DEEP, line_spacing=1.12)
-    # Fowler tests-as-guardrails caption
-    filled_rect(s, rx, 4.32, rw, 0.52, TEAL_TINT, stroke=TEAL, stroke_pt=1.2,
-                radius=True, radius_adj=0.07)
-    text_runs(s, rx + 0.22, 4.39, rw - 0.44, 0.40, [
-        {"text": "Tests-as-guardrails (Fowler) [3]: ", "size": 10.5, "bold": True,
-         "color": TEAL},
-        {"text": "a test forces the interface without coupling to the implementation — "
-                 "which is why the TDD structure is valuable.", "size": 10.5, "color": DEEP},
-    ], anchor=MSO_ANCHOR.MIDDLE)
-    # tools row
-    filled_rect(s, rx, 4.96, rw, 0.52, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+    # right: what does NOT work → the recipe → tools
+    rx, rw = 6.02, 6.78
+    filled_rect(s, rx, 1.40, rw, 1.02, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
                 radius=True, radius_adj=0.06)
-    text_box(s, x=rx + 0.24, y=5.03, w=rw - 0.48, h=0.40,
+    text_box(s, x=rx + 0.22, y=1.46, w=rw - 0.44, h=0.28,
+             text="What does NOT work: ordering the agent to write tests first",
+             size=12, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.22, y=1.75, w=rw - 0.44, h=0.62,
+             text="Böckeler [2]: in the agent loop this produced no gain and about "
+                  "three times more tokens — \"I stopped telling agents to write "
+                  "tests first\". The value is carried by the structure, not by the "
+                  "order of the commands.",
+             size=10.5, color=DEEP, line_spacing=1.06)
+
+    ocean_box(s, rx, 2.50, rw, 2.58)
+    text_box(s, x=rx + 0.22, y=2.57, w=rw - 0.44, h=0.28,
+             text="What works instead — a five-step recipe",
+             size=12.5, bold=True, color=MID)
+    recipe = [
+        ("1", "The human states WHAT the test must assert",
+         " — an invariant or acceptance criterion, before any code is generated."),
+        ("2", "Leave the generation order to the agent",
+         " — test and code together, or code then test; forcing \"test first\" is "
+         "not needed."),
+        ("3", "A human reads the test's assertions",
+         ": the test holds on to behavior, not to the implementation (Fowler [3])."),
+        ("4", "Only a deterministic executor counts as a run",
+         " (a script or CI with a real exit code); \"the model said they're green\" "
+         "is not a run."),
+        ("5", "Gate on the share of defects actually caught",
+         ", not on the coverage percentage. Every incident → a permanent "
+         "regression test."),
+    ]
+    sy = 2.90
+    for i, (num, lead, tail) in enumerate(recipe):
+        y = sy + i * 0.43
+        filled_rect(s, rx + 0.22, y + 0.03, 0.30, 0.30, TEAL,
+                    radius=True, radius_adj=0.28)
+        text_box(s, x=rx + 0.22, y=y + 0.05, w=0.30, h=0.28, text=num,
+                 size=11, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_runs(s, rx + 0.62, y, rw - 0.86, 0.44, [
+            {"text": lead, "size": 11, "bold": True, "color": DEEP},
+            {"text": tail, "size": 11, "color": DEEP},
+        ], line_spacing=1.06)
+
+    filled_rect(s, rx, 5.16, rw, 0.42, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+                radius=True, radius_adj=0.07)
+    text_box(s, x=rx + 0.22, y=5.21, w=rw - 0.44, h=0.34,
              text="Executors (secondary): AWS Q /test · Qodo · JetBrains Junie · "
                   "Anthropic (failing test → fix + Stop-hook as a gate).",
              size=10, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
-        "Durable pattern: test-as-executable-specification + a deterministic "
-        "run gate. Hype: \"AI covered the code with tests on its own.\"",
-        size=13, bold=True, align=PP_ALIGN.CENTER)
+        "The invariant is not \"the test was written first\", but \"the test "
+        "exists, asserts what the human decided, and was run by a machine\". "
+        "Willison: \"if you haven't seen it work, it's not a working system\".",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s24")
     notes_with_sources(s, "s24")
     return s

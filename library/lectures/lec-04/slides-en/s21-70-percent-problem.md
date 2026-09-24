@@ -15,8 +15,10 @@ visual_brief: >
   (edge cases, error handling, security, integration, behavior under load) remain just as hard →
   senior oversight; the gap is STRUCTURAL (the specifics of the system are absent from the training data = essential complexity), not temporary.
   The "two steps back" loop. A plate "almost-right code is costlier than obviously wrong" — the work shifts from writing to debugging someone else's plausible logic.
-  Right — 3 numbers with a baseline: SO-2025 66% the main frustration "almost right" · GitClear 211M lines: clones 8.3%→12.3%,
-  refactoring ~25%→<10%, churn 3.3%→5.7% · the knowledge paradox (seniors challenge, juniors accept).
+  Right — 3 numbers with a baseline: SO-2025 66% the main frustration "almost right" · GitClear, two independent
+  measurements (211M lines 2020-24: clones 8.3%→12.3%, refactoring ~25%→<10%, churn 3.3%→5.7%; 623M changes
+  2023-26: refactoring 21%→3.8%, duplicates 40.3→73.0 per M lines, churn +15%) · the knowledge paradox
+  (seniors challenge, juniors accept).
   Gold — "AI speeds up the first 70%, but not the last 30% — understanding". Source citations — inline right next to the material itself (definition/claim/recommendation), NOT in a bottom footer; small and muted: Osmani; SO 2025; GitClear (correlation over 211M LOC, not an RCT).
 interaction: none
 ---
@@ -40,7 +42,7 @@ The gap is **structural**, not temporary: the specifics of your system are absen
 
 **Stack Overflow 2025: 66%** of developers named as their main frustration "solutions that are almost right, but not quite."
 
-**GitClear** (211M lines, 2020-2024): clones **8.3% → 12.3%**; refactored **~25% → <10%**; churn **3.3% → 5.7%**. *(Correlation over 211M lines, not an RCT.)*
+**GitClear** — two independent measurements: (2020-2024, 211M lines) clones **8.3% → 12.3%**, refactored **~25% → <10%**, churn **3.3% → 5.7%**; (2023-2026, 623M changes, a separate sample) refactoring **21% → 3.8%** (−70%), duplication **40.3 → 73.0 per million lines** (+81%), churn **+15%**. *(Both are correlation over time, not an RCT.)*
 
 **The knowledge paradox** (Osmani): seniors challenge AI's output, juniors accept it ("house of cards") — AI amplifies the experienced more.
 
@@ -53,4 +55,4 @@ The first failure of the implementation phase was named by Addy Osmani, a Google
 
 A particular but important case — "almost right" code is costlier than obviously wrong [1]. Obviously wrong code falls over right away, you throw it out. "Almost right" passes a quick glance, gets into the system, and breaks on an edge case in production, while the work shifts from the pleasant writing to the unpleasant debugging of someone else's plausible logic that you didn't write and don't hold in your head.
 
-Now the measured consequence. GitClear analyzed two hundred eleven million lines over 2020-2024: the share of clones rose from eight point three to twelve point three percent, the share of refactored and reused code fell from about twenty-five to under ten percent, and churn — code rewritten within two weeks — rose from three point three to five point seven [2]. A caveat about the baseline: this is a correlation over a large corpus, not a controlled experiment, but three markers point the same way — the accumulation of tech debt [2]. And Osmani's knowledge paradox: the experienced challenge AI's output, while beginners accept it as is, building a house of cards — so AI amplifies the strong more than the weak [1]. The alternative — not "don't use AI," but the discipline of the previous slides: small verifiable units, a harness, and mandatory reading of the diff before accept, plus duplication and churn metrics in CI as a gate. And the unchanging rule: merge is always a human.
+Now the measured consequence — two independent GitClear measurements, not one. The first covers two hundred eleven million lines over 2020-2024: clones rose from eight point three to twelve point three percent, refactored code fell from about twenty-five to under ten percent, and churn — code rewritten within two weeks — rose from three point three to five point seven [2]. The second is a separate, more recent sample of six hundred twenty-three million changes over 2023-2026: refactoring fell from twenty-one to three point eight percent, duplication rose from forty point three to seventy-three per million lines, and churn rose a further fifteen percent. Two samples, two measurements — not one figure growing from 211 to 623 million. Both are correlation rather than controlled experiment, but they point the same way: the accumulation of tech debt [2]. And Osmani's knowledge paradox: the experienced challenge AI's output, while beginners accept it as is, building a house of cards — so AI amplifies the strong more than the weak [1]. The alternative — not "don't use AI," but the discipline of the previous slides: small verifiable units, a harness, and mandatory reading of the diff before accept, plus duplication and churn metrics in CI as a gate. And the unchanging rule: merge is always a human.

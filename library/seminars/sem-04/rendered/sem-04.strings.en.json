@@ -4731,8 +4731,8 @@
   "id": "s43.body.020",
   "slide": "s43",
   "where": "body",
-  "ru": "Источник практики: ADR — Майкл Найгард, 2011; adr-tools. Сила доказательства: задокументированная практика для людей (4500+ ADR в 750 проектах), но контролируемого измерения «ADR помогают агенту» нет. Содержимое записей иллюстративное, ждёт живой сессии.",
-  "en": "Source of the practice: ADR — Michael Nygard, 2011; adr-tools. Strength of evidence: a documented practice for humans (4500+ ADRs in 750 projects), but there is no controlled measurement that \"ADRs help an agent\". The content of the records is illustrative, awaiting a live session.",
+  "ru": "Источник практики: ADR — Майкл Найгард, 2011; adr-tools. Сила доказательства: задокументированная практика для людей (4500+ ADR в 750 проектах), но контролируемого измерения «ADR помогают агенту» нет. Содержимое записей — иллюстративное: номера 0031/0187 и встречная пара Amends / Amended by. Снимок демо-репозитория есть (doc/adr/, коммит 3b4b289), но он про другую сцену: записей там три, встречных ссылок между ними нет, adr-tools не установлен.",
+  "en": "Source of the practice: ADR — Michael Nygard, 2011; adr-tools. Strength of evidence: a documented practice for humans (4500+ ADRs in 750 projects), but there is no controlled measurement that \"ADRs help an agent\". The content of the records is illustrative: the numbers 0031/0187 and the matching Amends / Amended by pair. A capture of the demo repository does exist (doc/adr/, commit 3b4b289), but it shows a different scene: it holds three records, there are no cross-links between them, and adr-tools is not installed.",
   "passthrough": false
  },
  {

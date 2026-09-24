@@ -1,4 +1,4 @@
-"""EN twin of build_lec04_v4.py — full 41-slide English build of Lecture 4
+"""EN twin of build_lec04_v4.py — English build of Lecture 4
 "AI across the software development lifecycle (SDLC)".
 
 Issue #172 (Ф3): English re-render. Structure, layout, palette, motif, and
@@ -10,7 +10,12 @@ Source-of-truth: deck.en.yaml + slides-en/*.md (visible content + readable
 EN speaker notes). Builders live in slides_band{1..4}_en.py, importing from
 _helpers_en.py (SLIDES_DIR=slides-en, CHARTS=charts-en, EN NAV/dividers/refs).
 
-Build: python3 build_lec04_en.py  → lec-04-en.pptx (41 slides s01..s41).
+Build: python3 build_lec04_en.py  → lec-04-en.pptx.
+
+EN-Sync (issue #172, 5-way block split): the RU deck reached 58 slides over
+rounds 1–6; each EN block wires its own new builders here and bumps the
+assert. Block 2 (s10..s18 range) added b1.s11b · b2.s14b · b2.s17b → 44.
+Final assembly reconciles the total across all five blocks.
 """
 from pathlib import Path
 import sys
@@ -33,10 +38,18 @@ def main():
     builders += [b1.s01, b1.s02, b1.s03, b1.s04, b1.s05f,   # s05 foundations
                  b1.s06k,                                    # s06 keystone
                  b1.s06, b1.s07, b1.s08, b1.s09]             # s07..s10
-    # display s11–s20
+    # display s11–s20 (+3 from EN-Sync Block 2: b1.s11b · b2.s14b · b2.s17b —
+    # the RU round-2/round-3/round-6 inserts, placed in the same order the RU
+    # assembler uses: s11 → s11b → s12 → s13 → s14 → s15 → s14b → s16 → s17 →
+    # s18 → s17b → s19).
     builders += [b1.s10,                                     # s11
-                 b2.s11, b2.s12, b2.s13, b2.s14, b2.s15,     # s12..s16
-                 b2.s16, b2.s17, b2.s18, b2.s19]             # s17..s20
+                 b1.s11b,                                    # NEW (r2)
+                 b2.s11, b2.s12, b2.s13, b2.s14,             # s12..s15
+                 b2.s14b,                                    # NEW (r6 b1)
+                 b2.s15,                                     # s16
+                 b2.s16, b2.s17,                             # s17..s18
+                 b2.s17b,                                    # NEW (r3)
+                 b2.s18, b2.s19]                             # s19..s20
     # display s21–s30
     builders += [b2.s20,                                     # s21
                  b3.s21, b3.s22, b3.s23, b3.s24, b3.s25,     # s22..s26
@@ -46,7 +59,7 @@ def main():
                  b4.s31, b4.s32, b4.s33, b4.s34, b4.s35,     # s32..s36
                  b4.s36, b4.s37, b4.s38, b4.s39, b4.s40]     # s37..s41
 
-    assert len(builders) == 41, f"expected 41 builders, got {len(builders)}"
+    assert len(builders) == 44, f"expected 44 builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
@@ -56,7 +69,7 @@ def main():
     total = len(builders)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 41, f"expected 41 slides, got {n}"
+    assert n == 44, f"expected 44 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

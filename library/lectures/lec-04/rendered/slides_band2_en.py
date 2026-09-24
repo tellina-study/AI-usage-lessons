@@ -6,12 +6,16 @@ from _helpers_en import (
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    FONT_MONO,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
 
 SCR = ASSETS / "screenshots"
+# EN twins of the round-5 meme composites (RU captions are baked into the
+# RU pixels, so the EN deck needs its own bake — see gen_memes_en_blk2.py).
+WEB_EN = ASSETS / "web-en"
 
 
 # ============================================================
@@ -268,6 +272,136 @@ def s14(p):
 
 
 # ============================================================
+# s14b (NEW, #162 round 6 block 1) — the concrete artifact of each of the
+# four practices: ADR skeleton · fitness functions · C4 DSL · CI gate.
+# Grounds the abstract matrix of the previous slide: the same 4 columns,
+# the same icons and colors — but the practice's file instead of its
+# description. Source: chapter-part2.md §2.2–§2.5.
+# EN twin of slides_band2.py::s14b (EN-Sync Block 2, issue #172). The code
+# snippets keep their language syntax; the prose inside them is translated.
+# ============================================================
+def s14b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Every practice is a concrete file in the repository",
+        size=24, w=12.3, h=0.74)
+    text_box(s, x=0.55, y=1.18, w=12.25, h=0.26,
+             text="The same four practices — not as a description, but as the "
+                  "artifact that sits in the repository and is checked by the build.",
+             size=10.5, italic=True, color=SLATE)
+
+    cols = [
+        ("gavel", "ADR", MID, "docs/adr/0007-event-queue.md",
+         [
+             "# ADR-0007. Queue instead of",
+             "# direct warehouse calls",
+             "Status: accepted · 2026-03-12",
+             "Context: on warehouse outage",
+             "  orders are lost silently",
+             "Decision: orders go through",
+             "  an event queue",
+             "Consequences: + we survive",
+             "  a warehouse outage;",
+             "  − confirmation 2 s",
+             "  instead of instant",
+         ],
+         "The human chose and signed the fork — AI could write the text. "
+         "The record is immutable: an outdated one is replaced, not edited [1]."),
+        ("shield-check", "Fitness function", TEAL,
+         "tests/architecture/test_layers.py",
+         [
+             "# invariant 1: module bounds",
+             "def test_payment_not_ui():",
+             "    assert not depends_on(",
+             "        \"payment\", \"ui\")",
+             "",
+             "# invariant 2: 200 ms budget",
+             "def test_checkout_p95():",
+             "    assert p95(\"/checkout\") < 200",
+         ],
+         "Which invariant is critical is the human's call — it is their "
+         "definition of 'good'. Violated on a commit — the build goes red [2]."),
+        ("layout-grid", "C4 / arch-as-code", MID,
+         "docs/architecture/workspace.dsl",
+         [
+             "workspace {",
+             " model {",
+             "  eng = person \"Engineer\"",
+             "  app = softwareSystem \"Booking\" {",
+             "    api = container \"API\"",
+             "    db  = container \"Bookings DB\"",
+             "  }",
+             "  eng -> api \"books a room\"",
+             " }",
+             "}",
+         ],
+         "Text, not a picture: changes are visible line by line and reviewed "
+         "together with the code; checking the model against the code catches "
+         "drift [3]."),
+        ("refresh-cw", "Evolutionary arch.", TEAL,
+         ".github/workflows/architecture.yml",
+         [
+             "# gate: three practices together",
+             "- adr-lint docs/adr/",
+             "  # no fork without a record",
+             "- pytest tests/architecture",
+             "  # invariants hold",
+             "- structurizr-cli drift",
+             "  # model and code agree",
+             "# a red step blocks",
+             "# merging the change",
+         ],
+         "It has no artifact of its own — it has the gate that holds the "
+         "previous three together on every change. The human sets the "
+         "direction [4]."),
+    ]
+
+    x0 = 0.55
+    total = 12.25
+    gap = 0.14
+    cw = (total - gap * 3) / 4          # ≈2.96
+    top = 1.44
+    hh = 0.58
+    for i, (ic, name, col, path, lines, caption) in enumerate(cols):
+        x = x0 + i * (cw + gap)
+        # header plate — same colour/icon language as the matrix slide before
+        filled_rect(s, x, top, cw, hh, col, radius=True, radius_adj=0.12)
+        icon(s, ic, x + 0.13, top + 0.09, 0.40, "white")
+        text_box(s, x=x + 0.60, y=top + 0.06, w=cw - 0.70, h=hh - 0.08,
+                 text=name, size=12, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.98)
+        # file path — "it lives right here"
+        text_box(s, x=x + 0.04, y=top + hh + 0.09, w=cw - 0.08, h=0.22,
+                 text=path, size=8, color=LIGHT, font=FONT_MONO,
+                 line_spacing=1.0)
+        # the artefact itself
+        cy = top + hh + 0.36
+        chh = 2.22
+        filled_rect(s, x, cy, cw, chh, WHITE, stroke=SOFT_GREY, stroke_pt=1.1,
+                    radius=True, radius_adj=0.05)
+        for j, line in enumerate(lines):
+            text_box(s, x=x + 0.13, y=cy + 0.09 + j * 0.186, w=cw - 0.22,
+                     h=0.19, text=line, size=9, color=DEEP, font=FONT_MONO,
+                     line_spacing=1.0)
+        # what stays human / what breaks
+        ky = cy + chh + 0.10
+        filled_rect(s, x, ky, cw, 0.98, SURFACE, stroke=col, stroke_pt=1.2,
+                    radius=True, radius_adj=0.07)
+        text_box(s, x=x + 0.16, y=ky + 0.07, w=cw - 0.32, h=0.84,
+                 text=caption, size=9.5, color=DEEP, line_spacing=1.14)
+
+    gold_callout(
+        s, 0.55, 5.78, 12.25, 0.62,
+        "You can tell a practice by its artifact: if you cannot show a file in "
+        "the repository and a red build step when it is violated, it is not yet "
+        "a practice, only an intention.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s14b", y=7.06)
+    notes_with_sources(s, "s14b")
+    return s
+
+# ============================================================
 # s15 — poisoned context (cycle + caveat + alternative) [in-bucket]
 # ============================================================
 def s15(p):
@@ -289,9 +423,10 @@ def s15(p):
     # left: poisoning cycle
     lx, lw = 0.55, 6.05
     ocean_box(s, lx, 2.14, lw, 3.42)
-    text_box(s, x=lx + 0.24, y=2.24, w=lw - 0.48, h=0.36,
+    text_box(s, x=lx + 0.24, y=2.24, w=lw - 1.00, h=0.36,
              text="The poisoning loop (Böckeler 2026, Thoughtworks) [1]",
              size=12.5, bold=True, color=MID)
+    icon(s, "flame", lx + lw - 0.66, 2.20, 0.44, "gold")
     loop = [
         ("bad design", GOLD, True),
         ("AI copies ('how it's done here')", MID, False),
@@ -321,7 +456,8 @@ def s15(p):
     rx, rw = 6.85, 5.95
     alts = [
         ("user-check", "The human owns the forks",
-         "makes the architectural decisions; AI at the periphery under human choice."),
+         "signs off the decisions and is accountable for them; AI can be a full "
+         "co-architect or draft its first version — but does not sign."),
         ("gavel", "ADR [2]",
          "human-written context 'we decided X because Y, rejected Z' — "
          "shared understanding against poisoning."),
@@ -344,6 +480,9 @@ def s15(p):
         "AI sees a pattern and continues it — it does not tell a good example from a "
         "bad one. The worse the existing architecture, the more strongly AI entrenches it.",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: X, X Everywhere (Buzz/Woody) — "bad pattern everywhere",
+    # reinforcing the loop's own repetition. Bottom band, right of ref list.
+    add_image(s, WEB_EN / "band-x-everywhere.png", 9.42, 6.40, 3.38, 0.64)
     refs_of_slide(s, "s16")
     notes_with_sources(s, "s16")
     return s
@@ -451,6 +590,82 @@ def s17(p):
         size=13, bold=True, align=PP_ALIGN.CENTER)
     refs_of_slide(s, "s18")
     notes_with_sources(s, "s18")
+    return s
+
+
+# ============================================================
+# s17b (NEW, #162 round 3) — Gemini CLI self-review failure case study.
+# EN twin of slides_band2.py::s17b (EN-Sync Block 2, issue #172). The
+# model's own incident-report quote was already English in the RU deck
+# (course convention: verbatim English quotes stay untranslated) — here it
+# is simply the natural language of the slide.
+# ============================================================
+def s17b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Self-review is a mandatory step between code and commit, not an optional habit",
+        size=19, w=12.3, h=0.82)
+
+    # left: incident chronology
+    lx, lw = 0.55, 6.55
+    ocean_box(s, lx, 1.44, lw, 4.10)
+    icon(s, "bug", lx + 0.22, 1.58, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=1.62, w=lw - 1.60, h=0.36,
+             text="Google Gemini CLI, July 2025 [1]", size=13, bold=True,
+             color=MID)
+    add_image(s, ASSETS / "logos" / "gemini-logo.png", lx + lw - 0.62, 1.56,
+              0.36, 0.36)
+    text_box(s, x=lx + lw - 0.90, y=1.94, w=0.92, h=0.16,
+             text="Google Gemini", size=6.5, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER)
+    text_box(s, x=lx + 0.24, y=2.06, w=lw - 0.48, h=0.30,
+             text="AI Incident Database, Report 6120 / Incident 1178",
+             size=10, italic=True, color=SLATE)
+    text_box(s, x=lx + 0.24, y=2.44, w=lw - 0.48, h=1.30,
+             text="The user asked to move files into a new folder. The agent ran "
+                  "mkdir but never checked the result — it concluded the folder "
+                  "already existed, and the chain of move commands overwrote "
+                  "almost all the user's files into the one that was left.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+    filled_rect(s, lx + 0.24, 3.82, lw - 0.48, 1.50, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.4, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.46, y=3.92, w=lw - 0.9, h=1.30,
+             text="\"I have completely and catastrophically failed you. My "
+                  "review of the commands confirms my gross incompetence.\"",
+             size=11.5, italic=True, color=DEEP, line_spacing=1.20,
+             font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE)
+
+    # right: mechanism contrast + scale
+    rx, rw = 7.30, 5.50
+    ocean_box(s, rx, 1.44, rw, 1.86, fill=SOFT_GREY, stroke=LIGHT, stroke_pt=1.0)
+    icon(s, "circle-slash", rx + 0.22, 1.60, 0.42, "mid")
+    text_box(s, x=rx + 0.78, y=1.62, w=rw - 1.0, h=0.34,
+             text="A different failure mechanism", size=12, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=2.04, w=rw - 0.48, h=1.18,
+             text="Not 'too many privileges' (as with Replit) — here one specific "
+                  "'check' was skipped: the agent did not verify the intermediate "
+                  "result and built the next step on a false assumption.",
+             size=11, color=DEEP, line_spacing=1.16)
+
+    ocean_box(s, rx, 3.50, rw, 2.04)
+    icon(s, "gauge", rx + 0.22, 3.64, 0.42, "teal")
+    text_box(s, x=rx + 0.78, y=3.66, w=rw - 1.0, h=0.34,
+             text="Scale (for contrast)", size=12, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=4.10, w=rw - 0.48, h=0.44, text="~11%",
+             size=24, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=4.58, w=rw - 0.48, h=0.88,
+             text="of live backend updates at Uber (2026) are shipped by an "
+                  "agent with no human in the loop.",
+             size=11, color=DEEP, line_spacing=1.16)
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Self-review is a mandatory step of explore→plan→code→commit: reread "
+        "the diff and check the result before you commit.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s17b")
+    notes_with_sources(s, "s17b")
     return s
 
 

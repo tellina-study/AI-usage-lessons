@@ -40,7 +40,7 @@ AI sees a pattern and **continues** it — it does not distinguish a good exampl
 
 [Right — the alternative, 3 plates, bridge to s14]
 
-**The human owns the forks** — makes the architectural decisions; AI on the periphery under the human's choice.
+**The human owns the forks** — signs off the decisions and is accountable for them; AI can be a full co-architect or write the first draft (propose options, sketch an ADR), but does not sign off the decision.
 
 **ADR** — human-written context "we decided X because Y, rejected Z": shared understanding against poisoning.
 

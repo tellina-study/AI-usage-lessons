@@ -705,12 +705,12 @@ def s10(p):
         ("Stories + acceptance criteria [3]",
          "\"As a <role>, I want <goal>, so that <benefit>\" + verifiable criteria for "
          "each story."),
-        ("EARS notation [7]",
+        ("EARS notation (Easy Approach to Requirements Syntax) [7]",
          "\"WHEN <trigger>, the system SHALL <response>\" (Mavin 2009) — removes "
          "\"should/may\", makes a requirement testable."),
         ("Functional vs non-functional [6]",
-         "behavior separate from characteristics (latency / cost / security); NFRs "
-         "are enforced by fitness functions."),
+         "behavior separate from characteristics (latency / cost / security); "
+         "NFRs (non-functional requirements) are enforced by fitness functions."),
         ("requirements → design → tasks [3]",
          "the enforced order of 3 files (Kiro / Spec-Kit); DoD — small "
          "independently testable units."),
@@ -740,8 +740,8 @@ def s10(p):
          "requirements are diffable Markdown in the repository, not in a wiki / chat; "
          "a durable artifact, not a fleeting prompt."),
         ("Syncing with change [9]",
-         "keep current like an ADR; the human owns \"what to build\", AI owns "
-         "structure and completeness."),
+         "keep current like an ADR (architecture decision record); the human "
+         "owns \"what to build\", AI owns structure and completeness."),
     ]
     for i, (head, body) in enumerate(proc):
         y = sy + i * 0.82
@@ -760,4 +760,104 @@ def s10(p):
 
     refs_of_slide(s, "s11")
     notes_with_sources(s, "s11")
+    return s
+
+
+# ============================================================
+# s11b — requirements visualization (Mermaid User Journey + Gherkin
+# bridge; honest boundary — story mapping NOT code-as-DSL) [#162 r2]
+# EN twin of slides_band1.py::s11b (EN-Sync Block 2, issue #172).
+# The DSL snippets keep their syntax keywords (title / section / Given /
+# When / Then) verbatim; only the prose values inside them are translated.
+# ============================================================
+def s11b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Visualizing requirements — the same architecture-as-code principle",
+        size=22, w=12.4, h=0.82)
+
+    colw = 6.05
+    gap = 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.44
+    boxh = 3.34
+
+    # --- LEFT: Mermaid User Journey ---
+    ocean_box(s, lx, top, colw, boxh, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "route", lx + 0.22, top + 0.16, 0.44, "mid")
+    text_box(s, x=lx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Mermaid User Journey", size=13, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="A text DSL for diagrams, the same family as "
+                  "PlantUML/Structurizr for architecture. Structure: title "
+                  "→ journey sections → steps with a 1–5 rating and actors.",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "title Booking a meeting room",
+            "section Find a slot",
+            "  Open the calendar: 4: Engineer",
+            "  Find a free slot: 2: Engineer"]):
+        text_box(s, x=lx + 0.36, y=top + 1.84 + i * 0.225, w=colw - 0.72, h=0.22,
+                 text=line, size=9.5, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=lx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="AI both reads such a diagram as context and generates it "
+                  "from a scenario — the same format as C4: text in the repository.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- RIGHT: Gherkin bridge ---
+    ocean_box(s, rx, top, colw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "file-code", rx + 0.22, top + 0.16, 0.44, "teal")
+    text_box(s, x=rx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="The bridge to Gherkin — an executable spec", size=13,
+             bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="A more direct analogue of architecture-as-code: the scenario "
+                  "does not merely describe a flow, it is verified by running an "
+                  "automated test (the testing section).",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "Given the meeting room is free",
+            "When an engineer books a slot",
+            "Then the booking is confirmed"]):
+        text_box(s, x=rx + 0.36, y=top + 1.90 + i * 0.255, w=colw - 0.72, h=0.24,
+                 text=line, size=10, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="Just as C4/Mermaid is text checked by a drift detector, "
+                  "Gherkin is text checked by an automated test: AI can write "
+                  "and validate both.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- contrast strip: honest boundary (story mapping) ---
+    cy = top + boxh + 0.12
+    filled_rect(s, 0.55, cy, 12.25, 0.62, SOFT_GREY, stroke=SLATE,
+                stroke_pt=0.75, radius=True, radius_adj=0.10)
+    icon(s, "circle-slash", 0.72, cy + 0.10, 0.40, "teal")
+    text_runs(s, 1.28, cy + 0.07, 11.35, 0.48, [
+        {"text": "The honest boundary: ", "size": 10.5, "bold": True,
+         "color": SLATE},
+        {"text": "story mapping (laying activities out in columns, Miro/"
+                 "FigJam) is an important practice, but it is a facilitation "
+                 "workshop technique, not code-as-DSL. Here the road to a "
+                 "disciplined requirement runs through the people in the room, "
+                 "not through versioned text.",
+         "size": 10, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, cy + 0.74, 12.25, 0.58,
+        "Not a separate new tool category — the same move as architecture-as-"
+        "code: the artifact as text rather than a picture, so that AI can read "
+        "and generate it on a par with the human.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+
+    refs_of_slide(s, "s11b")
+    notes_with_sources(s, "s11b")
     return s

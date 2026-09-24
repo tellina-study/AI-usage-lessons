@@ -117,6 +117,10 @@ URLS = {
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
     "anthropic_ctx_eng": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "willison_vibe_code": "https://simonwillison.net/2025/Oct/7/vibe-engineering/",
+    # --- EN-Sync Block 2 (#172 / #162): s11b · s14b · s17b ---
+    "mermaid_user_journey": "https://mermaid.js.org/syntax/userJourney.html",
+    "cucumber_bdd": "https://cucumber.io/docs/bdd/",
+    "gemini_cli_incident": "https://incidentdatabase.ai/cite/1178/",
 }
 
 
@@ -718,6 +722,15 @@ SLIDE_REFS = {
         ("9", "Nygard — ADR", "nygard_adr",
          "keep requirements current like an ADR — in sync with the code"),
     ],
+    # EN-Sync Block 2 (#172 / #162 round 2): requirements visualization.
+    "s11b": [
+        ("1", "Mermaid — User Journey syntax", "mermaid_user_journey",
+         "the diagram is described in text (a DSL), not with a mouse — the same "
+         "family as PlantUML/Structurizr in the architecture section"),
+        ("2", "Cucumber — BDD/Gherkin documentation", "cucumber_bdd",
+         "Given-When-Then — a scenario verified by running an automated test, "
+         "not merely describing a flow"),
+    ],
     "s12": [
         ("1", "Brooks — No Silver Bullet", "brooks",
          "the bottleneck is the precision of stating intent (essential complexity)"),
@@ -742,6 +755,22 @@ SLIDE_REFS = {
         ("4", "Thoughtworks — Technology Radar", "tw_radar",
          "a catalog of practices for managing architecture with AI", True),
     ],
+    # EN-Sync Block 2 (#172 / #162 round 6): the four practices as real files.
+    "s14b": [
+        ("1", "Nygard — ADR", "nygard_adr",
+         "the record template: context · decision · status · consequences; one "
+         "fork = one immutable record in version control"),
+        ("2", "Thoughtworks — architectural fitness function", "fitness_fn",
+         "an objective automated check of an architectural attribute: \"you and "
+         "I will never argue about whether it passed\" (Parsons)"),
+        ("3", "Brown — C4 + Structurizr DSL", "c4",
+         "the model as text: four zoom levels (Context/Container/Component/"
+         "Code), one model — many renders", True),
+        ("4", "Ford, Parsons, Kua — Building Evolutionary Architectures",
+         "evol_arch",
+         "incrementality + fitness functions + supporting change \"with as much "
+         "automation as possible\""),
+    ],
     "s16": [
         ("1", "Thoughtworks — Exploring Gen AI (Böckeler)", "fowler_genai",
          "the \"poisoning loop\": AI copies \"how it's done here\", not \"how it's right\""),
@@ -749,6 +778,13 @@ SLIDE_REFS = {
          "shared understanding of \"why\" breaks the poisoning loop"),
         ("3", "Thoughtworks — fitness function", "fitness_fn",
          "deterministic invariants against self-entrenchment of bad design"),
+    ],
+    # EN-Sync Block 2 (#172 / #162 round 3): Gemini CLI self-review failure.
+    "s17b": [
+        ("1", "AI Incident Database — Report 6120 / Incident 1178",
+         "gemini_cli_incident",
+         "Gemini CLI, July 2025: mkdir without a read-after-write check → the "
+         "move chain overwrote the user's files", True),
     ],
     "s18": [
         ("1", "Anthropic — AI-Native SDLC playbook", "anthropic_playbook",

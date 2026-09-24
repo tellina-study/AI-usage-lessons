@@ -23,15 +23,15 @@ How to run requirements: structure (how to write) + process (how to maintain)
 
 **STRUCTURE — how to write requirements**
 - **User stories + acceptance criteria** [3] — "As a <role>, I want <goal> so that <benefit>" + verifiable criteria for each story.
-- **EARS notation** [7] — "WHEN <trigger>, the system SHALL <response>" (Mavin, 2009): removes "should/may", makes the requirement verifiable and AI-readable.
-- **Functional vs non-functional** [6] — behavior separately from characteristics (latency / cost / security); the non-functional ones are enforced by fitness functions.
+- **EARS notation (Easy Approach to Requirements Syntax)** [7] — "WHEN <trigger>, the system SHALL <response>" (Mavin, 2009): removes "should/may", makes the requirement verifiable and AI-readable.
+- **Functional vs non-functional** [6] — behavior separately from characteristics (latency / cost / security); NFRs (non-functional requirements) are enforced by fitness functions.
 - **requirements → design → tasks** [3] — the enforced order of three files (Kiro / Spec-Kit); Definition of Done — small independently-testable units.
 
 **PROCESS — how to maintain requirements**
 - **Elicitation: the interrogatory LLM** [4] — the model ASKS you questions (Fowler, "Interrogatory LLM"), surfacing unstated assumptions, rather than "prompt-and-pray".
 - **Review and sign-off BEFORE code** [1] — requirements are reviewed and signed off by a human before generation; accept/reject of the spec = "the merge".
 - **Versioning next to the code** [3] — requirements are diffable Markdown in the repository, not in a wiki/chat; a durable artifact, not a fleeting prompt.
-- **Syncing on change** [9] — keep them current like an ADR; the human owns "what to build", AI helps with structure and completeness.
+- **Syncing on change** [9] — keep them current like an ADR (architecture decision record); the human owns "what to build", AI helps with structure and completeness.
 
 [Judgment plate, gold]
 Durable pattern: EARS + decomposition + requirements-as-check + human sign-off will outlive any tool. The hype: "our command pipeline = requirements discipline".

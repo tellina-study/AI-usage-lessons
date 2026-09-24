@@ -1,0 +1,182 @@
+deck:
+  seminar_number: 3
+  title: "Seminar 3 — Three model mechanisms in system design"
+  format: "case_walkthrough"
+  central_question: "Three mechanisms across six system-design tasks: we build, we fix, we extend."
+  learning_outcomes: [LO1, LO4, LO6, LO7]
+  language: en
+  visual_style: "matched to sem-02 (Ocean rounded boxes, schema pipelines, example cards)"
+  render: "tools/seminar-render/build_cases_deck.py"
+slides:
+  - id: s01
+    file: slides-en/s01-cover.md
+    type: cover
+    assertion: "Three model mechanisms in system design"
+  - id: s02
+    file: slides-en/s02-map.md
+    type: map
+    assertion: "Three blocks, six tasks"
+  - id: s03
+    file: slides-en/s03-divider.md
+    type: divider
+    assertion: "Embeddings: comparing and grouping by meaning"
+  - id: s04
+    file: slides-en/s04-context.md
+    type: context
+    assertion: "Which embedding model to use for your corpus"
+  - id: s05
+    file: slides-en/s05-concept.md
+    type: concept
+    assertion: "How to choose: eval first, everything else second"
+  - id: s06
+    file: slides-en/s06-variants.md
+    type: variants
+    assertion: "Three axes of choice — each checked by the same eval"
+  - id: s07
+    file: slides-en/s07-complication.md
+    type: complication
+    assertion: "The benchmark leader slips exactly on the Russian domain"
+  - id: s08
+    file: slides-en/s08-scheme.md
+    type: scheme
+    assertion: "Selection pipeline: leaderboard → eval → metrics → choice"
+  - id: s09
+    file: slides-en/s09-breakdown.md
+    type: breakdown
+    assertion: "Case 1.1 · Breakdown"
+  - id: s10
+    file: slides-en/s10-resolution.md
+    type: resolution
+    assertion: "Case 1.1"
+  - id: s11
+    file: slides-en/s11-context.md
+    type: context
+    assertion: "Collapsing duplicates in a stream of support tickets"
+  - id: s12
+    file: slides-en/s12-concept.md
+    type: concept
+    assertion: "How the dedup works — and why a structural gate"
+  - id: s13
+    file: slides-en/s13-complication.md
+    type: complication
+    assertion: "\"Visa\" and \"Mastercard\": close by vector, not the same thing"
+  - id: s14
+    file: slides-en/s14-scheme.md
+    type: scheme
+    assertion: "Hybrid \"similarity + structural keys\""
+  - id: s15
+    file: slides-en/s15-breakdown.md
+    type: breakdown
+    assertion: "Case 1.2 · Breakdown"
+  - id: s16
+    file: slides-en/s16-resolution.md
+    type: resolution
+    assertion: "Case 1.2"
+  - id: s17
+    file: slides-en/s17-divider.md
+    type: divider
+    assertion: "Attention: what the model understands in text"
+  - id: s18
+    file: slides-en/s18-context.md
+    type: context
+    assertion: "Extract \"who pays whom, how much, and when\""
+  - id: s19
+    file: slides-en/s19-concept.md
+    type: concept
+    assertion: "Value + span evidence + confidence gate"
+  - id: s20
+    file: slides-en/s20-complication.md
+    type: complication
+    assertion: "\"...if it provides the guarantee\" -- who is \"it\"?"
+  - id: s21
+    file: slides-en/s21-scheme.md
+    type: scheme
+    assertion: "LLM extraction with verification of critical fields"
+  - id: s22
+    file: slides-en/s22-breakdown.md
+    type: breakdown
+    assertion: "Case 2.1 · Breakdown"
+  - id: s23
+    file: slides-en/s23-resolution.md
+    type: resolution
+    assertion: "Case 2.1"
+  - id: s24
+    file: slides-en/s24-context.md
+    type: context
+    assertion: "\"It answers inaccurately -- make it better\""
+  - id: s25
+    file: slides-en/s25-concept.md
+    type: concept
+    assertion: "Metric and baseline first, changes second"
+  - id: s26
+    file: slides-en/s26-complication.md
+    type: complication
+    assertion: "\"You are an experienced lawyer\" doesn't move the metric"
+  - id: s27
+    file: slides-en/s27-breakdown.md
+    type: breakdown
+    assertion: "Case 2.2 · Breakdown"
+  - id: s28
+    file: slides-en/s28-resolution.md
+    type: resolution
+    assertion: "Case 2.2"
+  - id: s29
+    file: slides-en/s29-divider.md
+    type: divider
+    assertion: "Sampling and tokenization: how the model generates and sees text"
+  - id: s30
+    file: slides-en/s30-context.md
+    type: context
+    assertion: "Product cards: description and structural parameters"
+  - id: s31
+    file: slides-en/s31-variants.md
+    type: variants
+    assertion: "One prompt, three temperatures: an axis of spread, not of \"flair\""
+  - id: s32
+    file: slides-en/s32-concept.md
+    type: concept
+    assertion: "Temperature sets spread; a schema sets form, not truth"
+  - id: s33
+    file: slides-en/s33-complication.md
+    type: complication
+    assertion: "Regulated fields: no temperature saves you"
+  - id: s34
+    file: slides-en/s34-scheme.md
+    type: scheme
+    assertion: "A three-branch pipeline: two runs + substitution"
+  - id: s35
+    file: slides-en/s35-breakdown.md
+    type: breakdown
+    assertion: "Case 3.1 · Breakdown"
+  - id: s36
+    file: slides-en/s36-resolution.md
+    type: resolution
+    assertion: "Case 3.1"
+  - id: s37
+    file: slides-en/s37-context.md
+    type: context
+    assertion: "Character-level features: password, card, limit, count"
+  - id: s38
+    file: slides-en/s38-concept.md
+    type: concept
+    assertion: "Why the model structurally can't count characters"
+  - id: s39
+    file: slides-en/s39-complication.md
+    type: complication
+    assertion: "Patch != skill: strawberry fixed, cranberry breaks"
+  - id: s40
+    file: slides-en/s40-scheme.md
+    type: scheme
+    assertion: "Deterministic to code, semantic to the model"
+  - id: s41
+    file: slides-en/s41-breakdown.md
+    type: breakdown
+    assertion: "Case 3.2 · Breakdown"
+  - id: s42
+    file: slides-en/s42-resolution.md
+    type: resolution
+    assertion: "Case 3.2"
+  - id: s43
+    file: slides-en/s43-closing.md
+    type: closing
+    assertion: "closing"

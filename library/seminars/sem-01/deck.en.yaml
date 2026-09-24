@@ -1,0 +1,192 @@
+deck:
+  seminar_number: 1
+  title: "Seminar 1 — Introductions"
+  audience: "3rd-year students, program 09.03.01, group 1 — the seminar runs before the course's first lecture"
+  duration_min: 77
+  duration_note: "was 76 min for 20 slides; round-4 (editor comments #243–#248, 2026-08-29): +1 slide 'Course chat in MAX' (s04b, ~1 min), quiz s18 expanded into a base + 6 progressive-reveal slides (same material, answers revealed one at a time — time doesn't increase). Round-4b (owner follow-up): the memo summary slide (s19) was RESTORED after the reveal sequence; 6 personal instructor stories were added to the speaker notes of the failure slide s07, category 6 was renamed to 'An answer that doesn't fit your specific situation'. Result: 27 slides; balance untouched."
+  render_note: "rendered/sem-01.pptx was assembled by hand/script (rendered/apply_comments.py on top of the owner's manual edits); build_sem01.py is OUTDATED (19-slide numbering) and must NOT be run — see its header. Source of truth: this deck.yaml + slides/*.md describe the final pptx (26 slides) after the fact."
+  format: icebreaker
+  central_question: "What am I bringing to this course — and what will change by the end of it?"
+  learning_outcomes: []
+  lo_note: "N/A — an introductory icebreaker seminar, not tied to any specific lecture LOs"
+  language: en
+
+slides:
+  - id: s01
+    file: slides-en/s01-hero-cover.md
+    type: hero_cover
+    assertion: "Seminar 1 — Introductions"
+    learning_goal: "Emotional hook + hero illustration: the course spans AI across many real industries"
+    visual:
+      pattern: hero_cover_industry_photo_collage
+      backup: assets/screenshots/s01-*.jpg
+
+  - id: s02
+    file: slides-en/s02-instructor-bio.md
+    type: assertion_visual
+    assertion: "About the instructor — Maxim Nikolaevich Levko"
+    learning_goal: "Short orgware part of getting acquainted: who teaches the course, what they do outside teaching, how to reach them"
+    visual:
+      pattern: instructor_bio_card
+
+  - id: s03
+    file: slides-en/s03-course-roadmap.md
+    type: assertion_visual
+    assertion: "17 lectures × 3 modules — from fundamentals to AI by industry"
+    learning_goal: "A map of the semester (the Lecture 1 pattern, s29) — structure kept separate from cross-cutting themes"
+    visual:
+      pattern: 3_modules_17_lectures_timeline_with_today_marker
+
+  - id: s04
+    file: slides-en/s04-checkpoint-mechanics.md
+    type: process
+    assertion: "Midterms — test at home, review in the seminar"
+    learning_goal: "Midterm mechanics: where and how the test is taken, what happens at the midterm seminar itself"
+    visual:
+      pattern: two_step_process_home_then_seminar
+
+  # NEW round-4 (comment #245): course chat in MAX (announcements + materials as they appear)
+  - id: s04b
+    file: slides-en/s04b-max-chat.md
+    type: process
+    assertion: "The course chat in MAX — everything important in one place"
+    learning_goal: "Orgware part: where students get announcements and lecture/seminar materials as they appear; QR code to join the chat"
+    visual:
+      pattern: qr_plus_three_benefit_rows
+      note: "The QR code and working chat link are placeholders, inserted by the course owner"
+
+  - id: s05
+    file: slides-en/s05-poll-questions.md
+    type: poll_reveal
+    assertion: "Warm-up: how do you use AI?"
+    learning_goal: "Live discussion (round-4 comment #246: removed the hand+YOLO+rounds mechanic — we just discuss out loud), a reference card of 4 poll questions"
+    visual:
+      pattern: poll_discussion_reference_card
+
+  - id: s06
+    file: slides-en/s06-stats-developers-russia.md
+    type: assertion_visual
+    assertion: "Used more, trusted less — and that's not a paradox"
+    learning_goal: "Stack Overflow 2025 + VCIOM; round-4 comment #247: unreadable charts replaced with big numbers — usage (84%), breakdown by tool (ChatGPT 82% / Copilot 68% / Gemini 47% / Claude 41%), trust (29%); the comparison with the audience is delivered verbally"
+    visual:
+      pattern: triple_bignumber_usage_tools_trust
+
+  - id: s07
+    file: slides-en/s07-experience-sharing.md
+    type: assertion_visual
+    assertion: "Who has a story — did it help or let you down?"
+    learning_goal: "A plenary scaffold for an open exchange of experience across the whole audience"
+    visual:
+      pattern: failure_category_grid
+
+  - id: s08
+    file: slides-en/s08-calibration-fiction-q.md
+    type: comparison
+    assertion: "Who wrote it — fiction: AI or human?"
+    learning_goal: "Calibration 1/5 — fiction, vote before the explanation"
+    visual:
+      pattern: two_text_voting_cards
+
+  - id: s09
+    file: slides-en/s09-calibration-fiction-a.md
+    type: assertion_visual
+    assertion: "Text A — Pelevin, \"Generation P\". Text B — AI"
+    learning_goal: "Reveal the answer: fiction, attribution and a short explanation"
+    visual:
+      pattern: reveal_two_cards_labeled
+
+  - id: s10
+    file: slides-en/s10-calibration-technical-q.md
+    type: comparison
+    assertion: "Who wrote it — technical text: AI or human?"
+    learning_goal: "Calibration 2/5 — technical documentation, focused on the measurable payoff. A/B round-2: A=AI, B=human"
+    visual:
+      pattern: two_text_voting_cards
+
+  - id: s11
+    file: slides-en/s11-calibration-technical-a.md
+    type: assertion_visual
+    assertion: "Text A — AI, in seconds. Text B — official Python documentation"
+    learning_goal: "Reveal the answer + AI's upside: accuracy and speed on typical technical questions"
+    visual:
+      pattern: reveal_two_cards_plus_tradeoff
+
+  - id: s12
+    file: slides-en/s12-calibration-code-q.md
+    type: comparison
+    assertion: "Who wrote it — code: AI or human?"
+    learning_goal: "Calibration 3/5 — code, focused on the measurable payoff"
+    visual:
+      pattern: two_code_voting_cards
+
+  - id: s13
+    file: slides-en/s13-calibration-code-a.md
+    type: assertion_visual
+    assertion: "Code A — the requests library, 10+ years in production. Code B — AI, 10-20 seconds"
+    learning_goal: "Reveal the answer + AI's upside: speed on typical tasks, humans on complex and unique ones"
+    visual:
+      pattern: reveal_two_code_cards_plus_tradeoff
+
+  - id: s14
+    file: slides-en/s14-calibration-image-q.md
+    type: comparison
+    assertion: "Who made it — a painting: AI or human?"
+    learning_goal: "Calibration 4/5 — an image, about style and perception, not productivity. A/B round-2: A=AI, B=human"
+    visual:
+      pattern: two_image_voting_cards
+
+  - id: s15
+    file: slides-en/s15-calibration-image-a.md
+    type: assertion_visual
+    assertion: "Image B — José María Velasco, 1875. AI would generate something similar in seconds"
+    learning_goal: "Reveal the answer: the real painting (Velasco, round-2 replacement for Shishkin/Savitsky), an honest description of the AI alternative without a fabricated file"
+    visual:
+      pattern: reveal_two_image_cards
+
+  - id: s16
+    file: slides-en/s16-calibration-dataviz-q.md
+    type: comparison
+    assertion: "Who made it — a data visualization: AI or human?"
+    learning_goal: "Calibration 5/5 — a chart, focused on the measurable payoff (data verification). A/B round-2: A=AI, B=human"
+    visual:
+      pattern: two_chart_voting_cards
+
+  - id: s17
+    file: slides-en/s17-calibration-dataviz-a.md
+    type: assertion_visual
+    assertion: "Chart A — AI, seconds. Chart B — Our World in Data, weeks of verification"
+    learning_goal: "Reveal the answer + AI's upside: it solves the visualization task in seconds, with no ethics question (unlike the painting)"
+    visual:
+      pattern: reveal_two_chart_cards_plus_tradeoff
+
+  # round-4 (comment #248): quiz base slide + 6 progressive-reveal copies (s18a..s18f).
+  # The base has no answers; each copy highlights (GOLD ✓) the correct answer for
+  # questions 1..k cumulatively. Correct answers: 1 false, 2 false, 3 true,
+  # 4 false, 5 false, 6 false. Each copy's speaker notes cover the corresponding
+  # question.
+  - id: s18
+    file: slides-en/s18-quickfire-quiz.md
+    type: assertion_visual
+    assertion: "True or false? Let's check your intuition about AI"
+    learning_goal: "A quickfire quiz on 6 statements, voting before the answer; answers revealed sequentially on 6 copies of the slide (progressive reveal)"
+    visual:
+      pattern: quiz_statement_list_progressive_reveal
+    reveal_slides: [s18a, s18b, s18c, s18d, s18e, s18f]
+
+  # round-4b (owner follow-up 2026-08-29): the memo summary slide was RESTORED —
+  # it sits after the whole reveal sequence, before the hero closing.
+  - id: s19
+    file: slides-en/s19-reality-check-memo.md
+    type: summary
+    assertion: "The \"AI reality-check\" memo — 5 points to carry into the next week"
+    learning_goal: "The 5 misconceptions debunked by the quiz, summarized to take away"
+    visual:
+      pattern: five_point_memo
+
+  - id: s20
+    file: slides-en/s20-hero-closing.md
+    type: hero_closing
+    assertion: "From today's snapshot to a systematic look at AI by industry"
+    learning_goal: "Bridge to Lecture 1 and the rest of the course; emotional payoff; real photos, not icons"
+    visual:
+      pattern: hero_closing_bridge_photo

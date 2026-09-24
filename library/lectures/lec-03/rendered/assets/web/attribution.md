@@ -5,6 +5,42 @@
 (включая мемы). Английские baked-in подписи мем-шаблонов обрезаны/перекрыты
 русскими подписями в мем-стиле.
 
+## WAVE 3 — §3/§4 deepening: 2 fresh мем-шаблона (issue #196)
+
+2 новых judgment-слайда (обучение/агенты). Ни один шаблон не переиспользован из
+23 уже занятых деком. Blank — из imgflip. Английские baked-in подписи (там где
+есть) перекрыты RU.
+
+| локальный файл (композит) | слайд | мем-шаблон (imgflip id) | тезис | blank-источник | лицензия |
+|---|---|---|---|---|---|
+| `s-ft-eval-leftexit-ru.png` (из `memes-src/left-exit-12.jpg`) | s-ft-eval | Left Exit 12 Off Ramp (id 124822590) | оценка сложнее обучения: машина сворачивает со «строгой оценки (held-out + A/B)» на «красивое число на бенчмарке» | `https://imgflip.com/s/meme/Left-Exit-12-Off-Ramp.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный некоммерческий контекст |
+| `s-agent-when-clown-ru.png` (из `memes-src/clown-makeup.jpg`) | s-agent-when | Clown Applying Makeup (id 141136560) | эскалация агентов без триггера: «чуть непредсказуема» → агент → мульти-агент → 0,95²⁰ ≈ 36% надёжности (p^n коллапс) | `https://imgflip.com/s/meme/Clown-Applying-Makeup.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный некоммерческий контекст |
+
+## WAVE 1 — §1 rework: 5 fresh мем-шаблонов (issue #196)
+
+5 новых типовых-задача/формат-слайдов §1. Ни один шаблон не переиспользован из
+уже занятых деком. Blank — из imgflip. Английские baked-in подписи перекрыты RU.
+
+| локальный файл (композит) | слайд | мем-шаблон (imgflip id) | тезис | blank-источник | лицензия |
+|---|---|---|---|---|---|
+| `s-fmt-twobuttons-ru.png` (из `memes-src/two-buttons.jpg`) | s-fmt | Two Buttons / Daily Struggle (id 87743020) | дилемма формата ВЫХОДА: принудить JSON vs дать свободно рассуждать (reasoning tax) | `https://imgflip.com/s/meme/Blank-Nut-Button.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный некоммерческий контекст |
+| `s-task-assistant-simply-ru.png` (из `memes-src/one-does-not-simply.jpg`) | s-task-assistant | One Does Not Simply (id 61579) | нельзя просто прыгнуть сразу к агенту — поднимайся по мини-лестнице | `https://imgflip.com/s/meme/One-Does-Not-Simply.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный контекст |
+| `s-task-tone-fry-ru.png` (из `memes-src/futurama-fry.jpg`) | s-task-tone | Futurama Fry / Not Sure If (id 61520) | текст написал человек или детектор снова врёт — ненадёжность AI-детекторов | `https://imgflip.com/s/meme/Futurama-Fry.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный контекст |
+| `s-task-research-panik-ru.png` (из `memes-src/panik-kalm-panik.png`) | s-task-research | Panik / Kalm / Panik (id 226297822) | цитата есть → резолвится → 3–13% URL сфабрикованы (фабрикация цитат deep research) | `https://imgflip.com/s/meme/Panik-Kalm-Panik.png` (2026-09-14) | Imgflip meme template — fair use, образовательный контекст |
+| `s-task-extract-trade-ru.png` (из `memes-src/trade-offer.jpg`) | s-task-extract | Trade Offer (id 309868304) | честный обмен: даёшь JSON-схему → получаешь ~100% соответствия (constrained decoding) | `https://imgflip.com/s/meme/Trade-Offer.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный контекст |
+
+## WAVE 2 — §2 RAG deepening: 2 fresh мем-шаблона (issue #196)
+
+2 judgment-слайда §2 RAG (мем несёт тезис суждения). Ни один шаблон не
+переиспользован из уже занятых деком (18 занятых на момент WAVE 2). Схемные
+слайды WAVE 2 (hybrid/stack/chunk1/design) — чистые диаграммы/таблицы, без мема.
+Blank — из imgflip. Английские baked-in подписи перекрыты RU.
+
+| локальный файл (композит) | слайд | мем-шаблон (imgflip id) | тезис | blank-источник | лицензия |
+|---|---|---|---|---|---|
+| `s-rag-elastic-cat-ru.png` (из `memes-src/woman-yelling-cat.jpg`) | s-rag-elastic | Woman Yelling at a Cat (id 188390779) | суждение «нужна ли выделенная векторная БД»: «срочно ставим!» vs «у тебя 3 млн чанков — хватит Postgres» | `https://imgflip.com/s/meme/Woman-Yelling-At-Cat.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный некоммерческий контекст |
+| `s-rag-chunk2-disaster-ru.png` (из `memes-src/disaster-girl.jpg`) | s-rag-chunk2 | Disaster Girl (id 97984) | anti-cargo-cult: внедрили semantic chunking по хайпу → таблицы тихо разъехались (тихий провал retrieval) | `https://imgflip.com/s/meme/Disaster-Girl.jpg` (2026-09-14) | Imgflip meme template — fair use, образовательный контекст |
+
 ## v6.2 — мемы в §3 (Дообучение) и §5 (Фреймворк) (issue #185, owner: «ни один раздел без мема»)
 
 Owner-требование: закрыть §3 и §5 — до этого мемы стояли в §1/§2/§4, но §3

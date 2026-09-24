@@ -64,27 +64,75 @@ slides:
     new_in_v5: "#185 — MCP отдельным слайдом (adoption + security-поворот)"
     verify_day_of: true
 
+  # v6 D2 (#196, owner #13): s21 MOVED — сразу после s-classic-agents (петля
+  # plan→act→check следует за классическим управляющим циклом OODA, ДО API/MCP/
+  # экономики). Порядок §4: div → classic → s21 → s19 → s19b → s20 → s-mcp-api.
   - id: s21
     file: slides/s21-agent-loop.md
     type: process
     section: "Раздел 4. Агенты"
     duration_min: 3
+    order_in_v6d2: "MOVED сразу после s-classic-agents (#13)"
     assertion: "Агент = цикл plan → act → check → iterate; каждый шаг — место отказа; check не должен быть самооценкой"
     learning_goal: "Цикл агента + check как несущий шаг (§4.2)"
     chapter_ref: "§4.2 [for-slide-s21]"
     references: [yao-2022-react]
     subtype: schema_cycle
 
+  - id: s-mcp-api
+    file: slides/s-mcp-api-decision.md
+    type: comparison_table
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "MCP или прямой API — не альтернативы: MCP — тонкий слой обнаружения/переносимости ПОВЕРХ REST; N×M→N+M окупается только при N,M≥2–3; ~25% реестра непригодны, 43,7% лучший MCP-Universe"
+    learning_goal: "Когда MCP окупается vs когда прямой API проще и безопаснее — decision-table (§4.1b)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.1b [for-slide-mcp-api]"
+    subtype: comparison_table
+    references: [mcp-universe, anthropic-mcp-donate]
+    verify_day_of: true
+    new_in_v6d2: "#196 WAVE D2 owner #14 — MCP vs API decision-table (после s20); corrected stats; no meme"
+
   - id: s22
     file: slides/s22-workflow-vs-agent.md
     type: comparison
     section: "Раздел 4. Агенты"
     duration_min: 2.5
-    assertion: "Предсказуемая задача → workflow; непредсказуемая И ценность оправдывает → агент. Вложенность — норма"
-    learning_goal: "Workflow vs Agent + вложенность workflow↔agent (§4.3)"
-    chapter_ref: "§4.3 [for-slide-s22, s22a]"
+    assertion: "Workflow — не примитив: пять паттернов вокруг предсказуемого (prompt chaining / routing / parallelization / orchestrator-workers / evaluator-optimizer)"
+    learning_goal: "Пять паттернов workflow (Anthropic Building Effective Agents) — что/когда (§4.3)"
+    chapter_ref: "§4.3 [for-slide-s22]"
     subtype: schema_matrix
-    changed_in_v4: "#231 — добавлена идея вложенности (agent содержит workflow и наоборот)"
+    changed_in_v4: "#196 WAVE 3 — REFRAME из «workflow vs agent» в «Когда workflow: пять паттернов»; diagram slide, no meme"
+
+  - id: s-agent-frameworks
+    file: slides/s-agent-frameworks-overview.md
+    type: comparison_table
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Фреймворк агента — абстракционный налог; берут под требование. LangGraph / CrewAI / AG2 / OpenAI Agents SDK / Claude Agent SDK / smolagents / LlamaIndex / Pydantic AI — и «ни одного: обычный код»"
+    learning_goal: "Обзор фреймворков агентов по схеме ядро-абстракция · под что · один минус (§4.3c)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3c [for-slide-agent-frameworks-cons, agent-frameworks-intro, agent-frameworks-list, agent-frameworks-none]"
+    subtype: comparison_table
+    references: [anthropic-agents, langgraph]
+    verify_day_of: true
+    new_in_v4: "#196 WAVE 3 — agent frameworks (comparison-table, no meme; versions [VFY-day-of])"
+    changed_in_v6d2: "#196 WAVE D2 owner #15 — ADD пять общих минусов ВСЕХ фреймворков (кастомизация / прозрачность / lock-in / version churn / overhead CrewAI +18%) отдельной панелью над таблицей"
+
+  - id: s-agent-when
+    file: slides/s-agent-when-judgment.md
+    type: assertion_visual
+    section: "Раздел 4. Агенты"
+    duration_min: 2.5
+    assertion: "Агент — под открытую непредсказуемую задачу; предсказуемая → workflow; мульти-агент только под триггер. p^n: 0,95^10≈60%, 0,95^20≈36%; τ-bench 61%→25% pass@1→pass@8"
+    learning_goal: "Судейство: когда агент, когда workflow, когда мульти-агент (§4.3 + reliability)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.3 [for-slide-s22, s22a-multi, agent-reliability]"
+    subtype: assertion_visual
+    references: [tau-bench, anthropic-multiagent]
+    verify_day_of: true
+    new_in_v4: "#196 WAVE 3 — agent-vs-workflow judgment"
+    changed_in_v6d2: "#196 WAVE D2 owner #16 — DROP clown meme (formal per §5.10); top-down decision framework; +Kim et al. 2512.08296 (рой 17,2× vs координатор 4,4×); Cognition-vs-Anthropic примирение (параллелить чтения, не решения)"
 
   - id: s22a_multi
     file: slides/s22a_multi-multi-agent.md
@@ -109,16 +157,8 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §4.4 — карта экипировки; рифма с лестницей"
 
-  - id: s22c
-    file: slides/s22c-agent-memory.md
-    type: assertion_visual
-    section: "Раздел 4. Агенты"
-    duration_min: 2.5
-    assertion: "Память агента — тот же вопрос масштаба знания, что RAG, но для истории самого агента"
-    learning_goal: "Память: плоский файл → mem0/Cognee/Graphiti-Zep; callback RAG (§4.5)"
-    chapter_ref: "§4.5 [for-slide-s22c]"
-    references: [agent-harness-registry]
-    new_in_v4: "новый слайд §4.5"
+  # s22c (память = RAG-scale) CUT — #196 WAVE 3 (owner-confirmed); RAG-callback
+  # достаточен, дек не тянет отдельный слайд памяти-спектра.
 
   - id: s22d
     file: slides/s22d-memory-failure.md
@@ -131,16 +171,9 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §4.6; freshness-оговорка Letta v0.6.7 vs v0.16.8 на видимом слое"
 
-  - id: s22e
-    file: slides/s22e-operational-layer.md
-    type: assertion_visual
-    section: "Раздел 4. Агенты"
-    duration_min: 2.5
-    assertion: "Файл-инструкция агенту — не «магическая прививка»: presence paradox + Honest Lying"
-    learning_goal: "Операционный слой: presence paradox + Honest Lying + claude-code#51735 (§4.7)"
-    chapter_ref: "§4.7 [for-slide-s22e]"
-    references: [gloaguen-2026-presence-paradox, dixit-2026-honest-lying]
-    new_in_v4: "новый слайд §4.7"
+  # s22e (presence paradox / файл-инструкция musing) CUT — #196 WAVE 3
+  # (owner-confirmed); «странные рассуждения про подумать прежде чем
+  # действовать» — musing, дек чище без него.
 
   - id: s25
     file: slides/s25-tool-attacks.md
@@ -177,16 +210,23 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §4.9; РОВНО 4 инструмента; OpenClaw hedge = неподтверждённая гипотеза"
 
-  - id: s23
-    file: slides/s23-agent-failures.md
+  # v6 D2 (#196, owner #17): s23 REMOVED — redundant с s23b (каталог классов) +
+  # s23c (deep-dive): петля $4200, compounding pⁿ, мульти-агентная хрупкость
+  # покрыты обоими. Заменён s-agent-cases (типовые задачи, #18) перед каталогом.
+
+  - id: s-agent-cases
+    file: slides/s-agent-cases-typical.md
     type: case_study
     section: "Раздел 4. Агенты"
     duration_min: 3
-    assertion: "Агент сжёг $4 200 за 63ч в петле (retry-скрипт решил бы бесплатно); 5×99%≈95%; мульти-агентная хрупкость"
-    learning_goal: "Провалы агентов: петля + reliability compounding + мульти-агентная хрупкость (§4.10)"
-    chapter_ref: "§4.10 [for-slide-s23a]"
-    references: [jain-2026-agent-loop, mindstudio-2025-reliability, cognition-2025-multiagent]
-    changed_in_v4: "#233 — база сравнения retry-скрипта к $4200; #232 — «правильно»→«более подходящая»; 4-й класс (injection) → s25"
+    assertion: "Шесть типовых агентных задач по одной схеме (coding / поддержка Air Canada+Klarna / ETL / research / браузер-Operator / SRE ITBench): задача → форма петли → где ломается → был бы лучше workflow?"
+    learning_goal: "Типовые агентные кейсы: где агент оправдан, где часть задачи откатить в workflow (§4.9b)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§4.9b [for-slide-agent-cases]"
+    subtype: case_study
+    references: [aircanada-mccarthy, itbench]
+    verify_day_of: true
+    new_in_v6d2: "#196 WAVE D2 owner #18 — типовые агентные кейсы (перед каталогом провалов); real anchors; invented details «иллюстративно»; no meme"
 
   - id: s23b
     file: slides/s23b-failure-catalog.md
@@ -244,16 +284,8 @@ slides:
     chapter_ref: "§5.1 [for-slide-s26]"
     subtype: schema_layered
 
-  - id: s27
-    file: slides/s27-decision-matrix.md
-    type: process
-    section: "Раздел 5. Фреймворк решения"
-    duration_min: 3
-    assertion: "План решения — маршрут 8 вопросов сверху вниз; детерминированное+верифицируемое → код, СТОП"
-    learning_goal: "Flowchart маршрут выбора + worked example + mini-apply (§5.2)"
-    chapter_ref: "§5.2 [for-slide-s27]"
-    subtype: schema_pipeline
-    changed_in_v4: "ЗАМЕНА 7×7 матрицы на flowchart с да/нет-ветвлениями (§5.2)"
+  # v6 D3 (#196, owner #20): s27 (План решения) УДАЛЁН из дека.
+  # Builder build_s27 остаётся в build_v3.py как dead-код (не вызывается).
 
   - id: s27b
     file: slides/s27b-agent-starter-kit.md
@@ -266,28 +298,10 @@ slides:
     references: [agent-harness-registry]
     new_in_v4: "новый слайд §5.2b"
 
-  - id: s28
-    file: slides/s28-summary-table.md
-    type: summary
-    section: "Раздел 5. Фреймворк решения"
-    duration_min: 3
-    assertion: "Итоги-таблица «механизм → граница → что делать» по всем архитектурам + «не ИИ»"
-    learning_goal: "Сводная таблица (паттерн Лекции 2 s38), keystone-итог"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§5.3 [for-slide-s28]"
-    new_in_v5: "#185 — итоги-таблица механизм→граница→что делать"
-
-  - id: s29
-    file: slides/s29-human-validator-nanda.md
-    type: assertion_visual
-    section: "Раздел 5. Фреймворк решения"
-    duration_min: 1.5
-    assertion: "Агент делает — человек проверяет результат и факты; ~95% пилотов без ROI — дело в интеграции"
-    learning_goal: "Человек-валидатор + 3 измерения + урок MIT NANDA (§5.4)"
-    chapter_ref: "§5.4 [for-slide-s29]"
-    references: [mit-nanda-2025]
-    changed_in_v4: "#237 — 3 измерения: степень автономности / область доверия / непрерывный мониторинг"
-    verify_day_of: true
+  # v6 D3 (#196, owner #20): s28 (Итоги-таблица) и s29 (человек-валидатор +
+  # NANDA ~95%) УДАЛЕНЫ из дека. Builders build_s28/build_s29 остаются в
+  # build_v3.py как dead-код (не вызываются). s26 (лестница) — замыкающий
+  # синтез/keystone раздела.
 
   - id: s30
     file: slides/s30-bridge-homework-qa.md
@@ -315,15 +329,15 @@ slides:
 # by_section — v5-раскладка (issue #185), 51 слайд, актуализирована в polish-проходе v5.
 # Порядок соответствует сборке build_v3.py; PNG s-01…s-51 идут в этом порядке.
 totals:
-  slides: 55
+  slides: 67
   by_section:
     "Раздел 0. Открытие": [s01, s02, s02a, s03, s04]                             # 5 (s01b снят #312)
-    "Раздел 1. Промпт": [s04a, s-classic-prompt, s05, s05a, s05c, s05b, s06, s07, s08, s08a]  # div + classic + 8
-    "Раздел 2. RAG": [s09, s-classic-rag, s10, s11, s12, s13]                     # div + classic + 4
-    "Раздел 3. Fine-tune": [s13a, s-classic-ft, s13b, s15, s17, s14, s16]         # div + classic + 5
-    "Раздел 4. Агенты": [s18, s-classic-agents, s19, s19b, s20, s21, s22, s22a_multi, s22b, s22c, s22d, s22e, s25, s24, s25b, s23, s23b, s23c]  # div + classic + 16
-    "Раздел 5. Фреймворк": [s25a, s-classic-framework, s26, s27, s27b, s28, s29, s30, s31]  # div + classic + 7
-  duration_min_total: 98
+    "Раздел 1. Промпт": [s04a, s-classic-prompt, s05, s05c, s05b, s-fmt, s06, s07, s08, s08a, s-task-assistant, s-task-tone, s-task-extract]  # v6 D1 #196: div + classic + 11 (s-task-research relocated→§2; s-task-extract FORMAL JSON-spec no meme)
+    "Раздел 2. RAG": [s09, s-classic-rag, s10, s-rag-hybrid, s-rag-stack, s-rag-elastic, s-rag-chunk1, s-rag-chunk2, s-rag-chunk3, s-rag-design, s-rag-cases, s-rag-research, s11, s12, s13]  # v6 D1 #196: div + classic + 13 (+chunk3 +cases +research relocated)
+    "Раздел 3. Fine-tune": [s13a, s-classic-ft, s13b, s-ft-cost, s15, s17, s14, s16, s-ft-eval]  # v6 D2 #196: div + classic + 7 (s-ft-cost REFRAME размер-функция, s14 REFRAME дистилляция=дообучение, s-ft-eval FORMAL 6 методов no meme)
+    "Раздел 4. Агенты": [s18, s-classic-agents, s21, s19, s19b, s20, s-mcp-api, s22, s-agent-frameworks, s-agent-when, s22a_multi, s22b, s22d, s25, s24, s25b, s-agent-cases, s23b, s23c]  # v6 D2 #196: s21 MOVED после classic (#13); +s-mcp-api (#14); +s-agent-cases (#18); −s23 (#17); div + classic + 17
+    "Раздел 5. Фреймворк": [s25a, s-classic-framework, s26, s27b, s30, s31]  # v6 D3 #196 #20: −s27/s28/s29; s26 (лестница) — замыкающий синтез/keystone; div + classic + 4
+  duration_min_total: 103
   note: >
     v5b (issue #185): s01b снят (#312) — Air Canada остаётся кейсом §2 (s13);
     56→55 слайдов. WP8: +5 «классическая база с нуля» (по
@@ -344,16 +358,28 @@ totals:
 
 ai_failure_judgment:
   # strict-in слайды (failure / limitation / criterion «не ИИ» / альтернатива)
-  in_bucket_slides: [s01, s05a, s06, s08, s12, s13, s14, s16, s22, s22d, s22e, s23, s25, s27, s29]
-  count: 15
-  share_by_slides: "15/40 ≈ 38% по слайдам"
+  in_bucket_slides: [s01, s06, s08, s-fmt, s-task-tone, s-rag-elastic, s-rag-chunk2, s-rag-chunk3, s-rag-cases, s-rag-research, s12, s13, s14, s16, s-ft-cost, s-ft-eval, s-mcp-api, s22, s-agent-frameworks, s-agent-when, s22d, s-agent-cases, s25]
+  count: 23
+  share_by_slides: "23/67 ≈ 34,3% по слайдам (v6 D3 §5: −s27/s28/s29 (owner #20); s27 и s29 были strict-in — bucket 25→23, доля 34,3% всё ещё ≥30%; s26-лестница остаётся замыкающим keystone-синтезом раздела)"
   note: >
-    Failure/judgment: Air Canada (s01), миф роли (s05a), unfaithfulness (s06),
-    context rot (s08), когда НЕ RAG (s12), провал RAG+Air Canada (s13),
-    критерии+forgetting (s14/s16), workflow vs agent разумный выбор (s22),
-    провал памяти (s22d), presence paradox (s22e), провалы агентов (s23),
-    безопасность+injection (s25), нижняя плашка «код без ИИ» (s27), NANDA (s29).
-    Curriculum L1-L3 introductory — owner waiver на strict-in ≥30% доступен.
+    Failure/judgment strict-in: Air Canada (s01), unfaithfulness (s06),
+    context rot (s08), reasoning-tax формата (s-fmt), детекторы <80% (s-task-tone),
+    когда НЕ вектор-БД (s-rag-elastic), не карго-культи semantic (s-rag-chunk2),
+    тихий провал таблиц «голый ряд цифр» (s-rag-chunk3), legal 17–33% галлюцинаций
+    + Cody вернул классический поиск (s-rag-cases), фабрикация цитат 3–13%
+    (s-rag-research, relocated из §1), когда НЕ RAG (s12), провал RAG+Air Canada
+    (s13), дистилляция как дообучение — потолок способностей (s14), catastrophic
+    forgetting (s16), когда НЕ Full-FT (s-ft-cost), ни один из 6 методов eval не
+    самодостаточен (s-ft-eval), когда прямой API вместо MCP + ~25% реестра
+    непригодны (s-mcp-api), когда workflow не агент (s22), когда «ни одного
+    фреймворка» + 5 общих минусов (s-agent-frameworks), когда НЕ агент/мульти-агент
+    p^n (s-agent-when), провал памяти (s22d), типовые кейсы «был бы лучше
+    workflow?» + Air Canada/Operator/ITBench (s-agent-cases),
+    injection+безопасность (s25). v6 D3 (#20): удалены s27/s28/s29;
+    s27 (нижняя плашка «код без ИИ») и s29 (NANDA ~95%) были strict-in —
+    bucket 25→23, доля 34,3% всё ещё ≥30%. Curriculum L1-L3 introductory —
+    owner waiver на strict-in ≥30% доступен; здесь порог 34,3% превышен и без
+    waiver.
 
 verify_day_of_items:
   - s06_cot_faithfulness_percentages     # Claude 3.7 ~25% / DeepSeek R1 ~39%
@@ -362,6 +388,10 @@ verify_day_of_items:
   - s22d_letta_freshness                  # Letta v0.6.7 vs v0.16.8
   - s25_retention_zdr_boundary            # граница ZDR / retention статус
   - s25b_stars_counts                     # Aider ~47k / OpenHands ~80k stars
+  - s-ft-cost_dollar_gpu_hours            # $61–92M / 30,8M H100-ч / <$10 — движутся
+  - s-ft-eval_contamination_pct           # MMLU ~29% / GSM8K→GSM1k −13 п.п. / разрыв ~37%
+  - s-agent-frameworks_versions           # rename-churn 2026 (AutoGen→AG2, версии SDK)
+  - s-agent-when_tau_bench                # τ-bench 61%→25%; токен-множители 4×/15×
 
 open_questions:
   - openhands_openclaw: >

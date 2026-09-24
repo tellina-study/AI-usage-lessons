@@ -11,6 +11,13 @@ contrast).
 15 memes: s01-drake, s05-gru, s05a-changemymind, s05c-pigeon, s06-distracted,
 s11-pooh, s12-rollsafe, s14-yoda, s15-doge, s19b-batman, s22c-pooh,
 s22e-thisisfine, s24-alwayshasbeen, s27b-bus, s31-skeleton.
+
+Plus 9 more (issue #196 EN parity, 55->67 slide track): s-fmt-twobuttons,
+s-task-assistant-simply, s-task-tone-fry, s-task-extract-trade,
+s-rag-elastic-cat, s-rag-chunk2-disaster, s-ft-eval-leftexit,
+s-agent-when-clown, s-task-research-panik — EN captions for the same 9
+templates used in make_memes_v6.py (RU), matching those exact box
+geometries.
 """
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
@@ -406,11 +413,215 @@ def make_skeleton():
     return out
 
 
+# ------------------------------------------------------------------
+# s-fmt-twobuttons — TWO BUTTONS — the output-format dilemma: force the
+#        answer into JSON vs let the model reason freely (reasoning tax).
+# ------------------------------------------------------------------
+def make_two_buttons():
+    img = Image.open(SRC / "two-buttons.jpg").convert("RGB")
+    W, H = img.size            # 600x908
+    d = ImageDraw.Draw(img)
+    d.rectangle([70, 70, 300, 300], fill=WHITE)
+    draw_block(d, "force the answer into JSON",
+               (78, 90, 214, 190), font(27), fill=BLACK,
+               align="center", valign="center", line_h=1.06)
+    d.rectangle([315, 55, 545, 300], fill=WHITE)
+    draw_block(d, "let it reason freely",
+               (322, 80, 216, 190), font(30), fill=BLACK,
+               align="center", valign="center", line_h=1.06)
+    out = WEB / "s-fmt-twobuttons-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-task-assistant-simply — ONE DOES NOT SIMPLY — you can't skip the
+#        one-shot / tool-use rungs and jump straight to a full agent.
+# ------------------------------------------------------------------
+def make_one_does_not():
+    img = Image.open(SRC / "one-does-not-simply.jpg").convert("RGB")
+    W, H = img.size            # 568x335
+    d = ImageDraw.Draw(img)
+    outline_block(d, "one does not simply",
+                  (10, 6, W - 20, int(H * 0.20)), font(34),
+                  align="center", valign="top", ow=3)
+    outline_block(d, "jump straight to an agent",
+                  (10, int(H * 0.78), W - 20, int(H * 0.20)), font(34),
+                  align="center", valign="bottom", ow=3)
+    out = WEB / "s-task-assistant-simply-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-task-tone-fry — FUTURAMA FRY / NOT SURE IF — AI detectors are not
+#        reliable evidence of authorship.
+# ------------------------------------------------------------------
+def make_futurama_fry():
+    img = Image.open(SRC / "futurama-fry.jpg").convert("RGB")
+    W, H = img.size            # 552x414
+    d = ImageDraw.Draw(img)
+    outline_block(d, "not sure if a human wrote this",
+                  (10, 6, W - 20, int(H * 0.22)), font(32),
+                  align="center", valign="top", ow=3)
+    outline_block(d, "or the detector is lying again",
+                  (10, int(H * 0.76), W - 20, int(H * 0.22)), font(32),
+                  align="center", valign="bottom", ow=3)
+    out = WEB / "s-task-tone-fry-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-task-extract-trade — TRADE OFFER — the honest exchange of constrained
+#        decoding: you give a JSON schema, you get ~100% compliance.
+# ------------------------------------------------------------------
+def make_trade_offer():
+    img = Image.open(SRC / "trade-offer.jpg").convert("RGB")
+    W, H = img.size            # 607x794
+    d = ImageDraw.Draw(img)
+    # cover the red "TRADE OFFER" banner — keep the red panel, EN text
+    d.rectangle([118, 34, 490, 96], fill=(230, 57, 53))
+    outline_block(d, "FAIR TRADE",
+                  (120, 40, 368, 54), font(34), fill=WHITE, outline=BLACK,
+                  ow=2, align="center", valign="center")
+    # cover the "i receive:" / "you receive:" banner labels (dark panels)
+    d.rectangle([44, 138, 250, 350], fill=(28, 24, 48))
+    d.rectangle([340, 138, 560, 350], fill=(28, 24, 48))
+    draw_block(d, "you give:",
+               (52, 144, 190, 34), font(24), fill=WHITE,
+               align="left", valign="top")
+    draw_block(d, "a JSON\nschema",
+               (52, 186, 190, 150), font(26), fill=WHITE,
+               align="left", valign="top", line_h=1.12)
+    draw_block(d, "you get:",
+               (348, 144, 205, 34), font(24), fill=WHITE,
+               align="left", valign="top")
+    draw_block(d, "~100%\ncompliance",
+               (348, 186, 205, 150), font(26), fill=WHITE,
+               align="left", valign="top", line_h=1.12)
+    out = WEB / "s-task-extract-trade-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-rag-elastic-cat — WOMAN YELLING AT A CAT — judgment call: do you
+#        really need a dedicated vector database.
+# ------------------------------------------------------------------
+def make_woman_cat():
+    img = Image.open(SRC / "woman-yelling-cat.jpg").convert("RGB")
+    W, H = img.size            # 680x438
+    d = ImageDraw.Draw(img)
+    half = W // 2
+    outline_block(d, "“we need a vector DB, now!”",
+                  (6, 4, half - 12, int(H * 0.30)), font(26),
+                  align="center", valign="top", ow=3, line_h=1.05)
+    outline_block(d, "you have 3M chunks — Postgres is fine",
+                  (half + 6, 4, half - 12, int(H * 0.30)), font(22),
+                  align="center", valign="top", ow=3, line_h=1.05)
+    out = WEB / "s-rag-elastic-cat-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-rag-chunk2-disaster — DISASTER GIRL — the quiet failure: hyped-up
+#        semantic chunking, tables silently fall apart.
+# ------------------------------------------------------------------
+def make_disaster_girl():
+    img = Image.open(SRC / "disaster-girl.jpg").convert("RGB")
+    W, H = img.size            # 500x375
+    d = ImageDraw.Draw(img)
+    outline_block(d, "shipped semantic chunking on hype",
+                  (10, 6, W - 20, int(H * 0.24)), font(26),
+                  align="center", valign="top", ow=3, line_h=1.04)
+    outline_block(d, "tables silently fell apart",
+                  (10, int(H * 0.74), W - 20, int(H * 0.24)), font(30),
+                  align="center", valign="bottom", ow=3, line_h=1.04)
+    out = WEB / "s-rag-chunk2-disaster-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-ft-eval-leftexit — LEFT EXIT 12 OFF RAMP — swerving off rigorous
+#        eval onto a pretty benchmark number.
+# ------------------------------------------------------------------
+def make_left_exit():
+    img = Image.open(SRC / "left-exit-12.jpg").convert("RGB")
+    W, H = img.size            # 804x767
+    d = ImageDraw.Draw(img)
+    outline_block(d, "rigorous eval: held-out + A/B",
+                  (150, 96, 210, 70), font(19),
+                  align="center", valign="center", ow=3, line_h=1.02)
+    outline_block(d, "a pretty benchmark number",
+                  (392, 96, 200, 70), font(21),
+                  align="center", valign="center", ow=3, line_h=1.02)
+    out = WEB / "s-ft-eval-leftexit-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-agent-when-clown — CLOWN APPLYING MAKEUP — 4-panel escalation from
+#        a slightly unpredictable task to multi-agent, punchline: p^n
+#        reliability math.
+# ------------------------------------------------------------------
+def make_clown_agents():
+    img = Image.open(SRC / "clown-makeup.jpg").convert("RGB")
+    W, H = img.size            # 750x798
+    d = ImageDraw.Draw(img)
+    caps = [
+        "the task is a bit unpredictable",
+        "I'll grab an agent",
+        "I'll grab multi-agent",
+        "0.95²⁰ ≈ 36% reliability",
+    ]
+    ys = [10, 210, 410, 610]
+    hs = [180, 180, 180, 150]
+    for cap, y, h in zip(caps, ys, hs):
+        draw_block(d, cap, (24, y, 380, h), font(28),
+                   fill=BLACK, align="left", valign="center", line_h=1.06)
+    out = WEB / "s-agent-when-clown-en.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-rag-research-panik — PANIK/KALM/PANIK (imgflip 226297822) — the citation
+#        checking cycle: agent hands back a report with links → some links
+#        even resolve → 3-13% of the URLs are just fabricated. Left white
+#        column (3 panels), "Panik/Kalm/Panik" baked in on the right.
+#        Panels: y=[10..295],[305..585],[600..870]; x=[15..300].
+# ------------------------------------------------------------------
+def make_panik_kalm():
+    img = Image.open(SRC / "panik-kalm-panik.png").convert("RGB")
+    W, H = img.size            # 640x881
+    d = ImageDraw.Draw(img)
+    lx, lw = 18, 288
+    panels = [
+        ("agent hands back\na report with\ncitations", 14, 288),
+        ("some links\neven resolve", 306, 578),
+        ("3-13% of URLs\nare just\nfabricated", 596, 866),
+    ]
+    for txt, y0, y1 in panels:
+        f = fit_font(d, txt.replace("\n", " "), lw - 10, 30, True, 15)
+        draw_block(d, txt.replace("\n", " "), (lx, y0, lw, y1 - y0), f,
+                   fill=BLACK, align="center", valign="center", line_h=1.1)
+    out = WEB / "s-task-research-panik-en.png"
+    img.save(out)
+    return out
+
+
 ALL = [
     make_drake, make_gru, make_change_my_mind, make_pigeon, make_distracted,
     make_pooh, make_pooh_memory, make_roll_safe, make_doge, make_batman,
     make_this_is_fine, make_always_has_been, make_yoda, make_two_guys_bus,
     make_skeleton,
+    make_two_buttons, make_one_does_not, make_futurama_fry, make_trade_offer,
+    make_woman_cat, make_disaster_girl, make_left_exit, make_clown_agents,
+    make_panik_kalm,
 ]
 
 if __name__ == "__main__":

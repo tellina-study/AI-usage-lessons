@@ -89,6 +89,27 @@ URLS = {
     "jain_4200": "https://medium.com/@sattyamjain96/the-agent-that-burned-4-200-in-63-hours-a-production-ai-postmortem-d38fd9586a85",
     "mindstudio_reliability": "https://www.mindstudio.ai/blog/reliability-compounding-problem-ai-agent-stacks",
     "mit_nanda_fortune": "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/",
+    # v6.4 parity (#204): URLs for the slides the EN deck was missing —
+    # language-neutral, copied verbatim from refs_lec03.py.
+    "anthropic_contextual": "https://www.anthropic.com/engineering/contextual-retrieval",
+    "anthropic_multiagent": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "benchmark_contamination": "https://blog.pebblous.ai/blog/llm-benchmark-contamination/en/",
+    "bigdata_es_os": "https://bigdataboutique.com/blog/opensearch-and-elasticsearch-vector-search-an-introduction-6af584",
+    "citation_fabrication": "https://arxiv.org/abs/2604.03173",
+    "denser_hybrid": "https://denser.ai/blog/hybrid-search-for-rag/",
+    "firecrawl_chunking": "https://www.firecrawl.dev/blog/best-chunking-strategies-rag",
+    "firecrawl_vectordb": "https://www.firecrawl.dev/blog/best-vector-databases",
+    "futureagi_metrics": "https://futureagi.com/blog/rag-evaluation-metrics-2025/",
+    "gsm1k": "https://arxiv.org/abs/2405.00332",
+    "langgraph": "https://github.com/langchain-ai/langgraph",
+    "mcp_universe": "https://arxiv.org/abs/2508.14704",
+    "pureinsights_hybrid": "https://pureinsights.com/blog/2026/from-vector-hype-to-hybrid-reality-is-elasticsearch-still-the-right-bet/",
+    "redis_rag_scale": "https://redis.io/blog/rag-at-scale/",
+    "sourcegraph_search": "https://sourcegraph.com/docs/cody/core-concepts/context",
+    "stanford_legalai": "https://hai.stanford.edu/news/ai-trial-legal-models-hallucinate-1-out-6-or-more-benchmarking-queries",
+    "tau_bench": "https://arxiv.org/abs/2406.12045",
+    "thinkingmachines_lora": "https://thinkingmachines.ai/blog/lora/",
+    "tigerdata_pgvector": "https://www.tigerdata.com/blog/pgvector-vs-qdrant",
 }
 
 # ============================================================
@@ -97,6 +118,22 @@ URLS = {
 # (agent-harness-registry, unconfirmed) → notes-only [VFY], never on slide.
 # ============================================================
 SLIDE_REFS = {
+    # v6.4 parity (#204) — slides added to the EN deck
+    's-rag-hybrid': [('1', 'denser.ai — Hybrid Search for RAG (WANDS / financial-table deltas)', 'denser_hybrid', 'WANDS NDCG 0.7497 hybrid vs 0.6983 BM25 / 0.6953 vector; financial text Recall@5 0.816 vs 0.587', True), ('2', 'Anthropic — Contextual Retrieval (miss-rate cascade 5.7→1.9%)', 'anthropic_contextual', 'context+BM25 → 2.9%; +reranking → 1.9% from a 5.7% baseline')],
+    's-rag-stack': [('1', 'firecrawl — Best Vector Databases 2026 (engine ceilings)', 'firecrawl_vectordb', 'pgvector ~50M; Milvus 100M+/billions; Qdrant/Weaviate/FAISS/Chroma/LanceDB', True), ('2', 'TigerData — pgvector vs Qdrant (vendor benchmark, read skeptically)', 'tigerdata_pgvector', '471 QPS@99% recall at 50M — a vendor number; measure on your own data', True)],
+    's-rag-elastic': [('1', 'Pureinsights — From Vector Hype to Hybrid Reality (do you need a vector database)', 'pureinsights_hybrid', 'most systems ≤ a few million chunks → pgvector / the built-in hybrid is the right answer'), ('2', 'bigdataboutique — Elastic/OpenSearch vector search (native RRF hybrid)', 'bigdata_es_os', 'ELSER (no GPU), BBQ ~16× memory; OpenSearch k-NN via FAISS/Lucene', True)],
+    's-rag-chunk1': [('1', 'firecrawl — Best Chunking Strategies for RAG', 'firecrawl_chunking', 'fixed / recursive / sentence-window / semantic / parent-document / late / contextual'), ('2', 'Anthropic — Contextual Retrieval (50–100 tokens of context per chunk)', 'anthropic_contextual', 'prepending document-level context before embedding and BM25')],
+    's-rag-chunk2': [('1', 'firecrawl — chunking benchmark (recursive-512 69% vs semantic 54%)', 'firecrawl_chunking', '7 strategies on 50 papers; semantic produced ~43-token fragments', True), ('2', 'firecrawl — chunking eval (recall@k in isolation can mislead)', 'firecrawl_chunking', 'recall@k 91.9% at 54% end-to-end accuracy — evaluate chunking through end-to-end too', True)],
+    's-rag-design': [('1', 'Redis — RAG at Scale (ingestion bottleneck, CDC 24h→sub-minute, cache ~69%)', 'redis_rag_scale', 'POC→production is a dual pipeline; freshness batch vs CDC; semantic cache ~69%', True), ('2', 'futureagi — RAG Evaluation Metrics (recall@k ~0.8, nDCG, RAGAS)', 'futureagi_metrics', 'two metric groups: label-based + LLM judge; check them against a human', True)],
+    's-rag-chunk3': [('1', 'Anthropic — Contextual Retrieval (tables are a silent retrieval failure)', 'anthropic_contextual', 'flattening a table breaks row/column relationships without an error — fix with table-aware splitting'), ('2', 'firecrawl — Chunking Strategies (re-chunk when changing embedders, k-sensitivity)', 'firecrawl_chunking', "chunk size is tied to the model's context window; evaluate chunking only through recall@k AND end-to-end", True)],
+    's-rag-cases': [('1', 'Barnett et al. 2024 — Seven Failure Points (RAG archetypes)', 'barnett_7fail', '«returned something ≠ returned the right thing»: failure points across typical RAG tasks'), ('2', 'Stanford HAI/RegLab — Legal-AI hallucinates 17–33% (Lexis/Westlaw)', 'stanford_legalai', 'commercial legal-AI tools built on RAG hallucinate on 1 in 6+ queries, despite «0%» marketing', True), ('3', 'Sourcegraph Cody — context without embeddings (classic search)', 'sourcegraph_search', 'Cody on Enterprise removed embeddings → lexical/structural search is cheaper, safer, more scalable', True)],
+    's-rag-research': [('1', 'Anthropic — Multi-Agent Research System (agentic RAG loop)', 'anthropic_multiagent', 'reasoning LLM + agentic loop: reasoning steers the search, findings refine the reasoning'), ('2', 'arXiv:2604.03173 — citation fabrication in retrieval-augmented (3–13%)', 'citation_fabrication', '3–13% of URLs are fabricated; deep research is worse than plain search, 10.7% vs 4.8% per query', True)],
+    's-ft-cost': [('1', 'Thinking Machines — LoRA Without Regret (LoRA ≈ Full-FT under the right conditions)', 'thinkingmachines_lora', 'LoRA is compared with Full-FT across all layers and outside capacity; ~0.13% of parameters, <$10', True), ('2', 'Dettmers et al. 2023 — QLoRA (65B on a single 48 GB card)', 'qlora_paper', '4-bit NF4 quantization of the frozen base → fine-tuning 65B on a single GPU')],
+    's-ft-eval': [('1', 'Pebblous — LLM Benchmark Contamination (MMLU ~29%)', 'benchmark_contamination', 'about 29% of MMLU items show signs of contamination — a benchmark number without a leakage check is theater', True), ('2', 'Zhang et al. 2024 — GSM1k (clean mirror of GSM8K −13 pp)', 'gsm1k', 'a clean mirror drops accuracy by up to 13 points — trust the delta on the clean mirror', True)],
+    's-mcp-api': [('1', 'MCP-Universe (arXiv:2508.14704) — top result 43.7%', 'mcp_universe', 'the top model on real MCP servers scores 43.7% of tasks; >56% of real tasks fail', True), ('2', 'DEV/theopslog audit 2026 — ~25% of registry servers unusable', None, '≈25% of registry servers are unusable (a floor, not a ceiling); injection 43% / path traversal 82%', True)],
+    's-agent-frameworks': [('1', 'Anthropic — Building Effective Agents (framework = abstraction tax)', 'anthropic_agents', 'many patterns are a few lines of direct API calls; frameworks hide prompts and make debugging harder'), ('2', 'LangGraph (LangChain) — stateful graph, production orchestration', 'langgraph', 'framework versions are volatile in 2026 (rename churn) — verify day-of', True)],
+    's-agent-when': [('1', 'Anthropic — Multi-Agent Research System (spend enough tokens)', 'anthropic_multiagent', 'multi-agent wins research tasks through token volume; parallelize reads, not decisions', True), ('2', 'Kim et al. 2026 (arXiv:2512.08296) — topology: swarm vs coordinator', None, 'a decentralized "swarm" amplifies errors more than a coordinator — details on the next slide', True)],
+    's-agent-cases': [('1', 'McCarthy Tétrault — Air Canada (bot invented a policy)', 'aircanada_mccarthy', "a policy hallucination became legally binding; don't let a free-running agent speak for policy"), ('2', 'OSWorld / WebArena / ITBench — agentic-task benchmarks', None, 'Operator ~38% OSWorld; SRE ~14% ITBench — narrow the search space, not replace the person', True)],
     "s01": [
         ("1", "McCarthy Tétrault — Moffatt v. Air Canada (BC CRT, 14.02.2024)", "aircanada_mccarthy",
          "the bot invented a refund policy; tribunal: the company is liable for the bot's answer"),
@@ -262,6 +299,22 @@ SLIDE_REFS = {
 # rendered runs. The EN builder uses CURLY quotes/apostrophes (“ ” ‘ ’), so
 # anchors are deliberately chosen quote-free to avoid U+2019/U+201C mismatch.
 ANCHORS = {
+    # v6.4 parity (#204) — slides added to the EN deck
+    's-rag-hybrid': [('1', 'vs BM25 0.6983 / vector 0.6953 → ~7.4% (modest)'), ('2', '+context+BM25 → 2.9%; +rerank → 1.9% (−67%)')],
+    's-rag-stack': [('1', '~50M vectors; degrades past ~50–100M'), ('2', 'billions (needs operations)')],
+    's-rag-elastic': [('1', 'at that scale, pgvector or the Elastic/OpenSearch hybrid is the boring right answer'), ('2', 'ELSER without a GPU embedding service')],
+    's-rag-chunk1': [('1', 'by a hierarchy of separators (paragraph→sentence) — the pragmatic default'), ('2', 'The LLM prepends 50–100 tokens of document-level context to each chunk before embedding and BM25')],
+    's-rag-chunk2': [('1', 'recursive 512-token is #1; semantic gave ~43-token fragments'), ('2', 'Recall@k in isolation can mislead (91.9% recall at 54% correct answers)')],
+    's-rag-design': [('1', 'a stale index → silent degradation'), ('2', 'recall@k ~0.8, nDCG')],
+    's-rag-chunk3': [('1', 'The main win came not from a “smart” split but from respecting structure.'), ('2', 'change embedders → re-chunk the whole corpus, not “a line in a config”.')],
+    's-rag-cases': [('1', 'Retrieval design follows from the nature of the data.'), ('2', '17–33% hallucinations despite “0%”'), ('3', 'Cody removed embeddings → lexical')],
+    's-rag-research': [('1', 'Reasoning steers the search, findings refine the reasoning — a closed loop (agentic RAG)'), ('2', 'because it generates far more of them.')],
+    's-ft-cost': [('1', 'a 7B LoRA run costs <$10 — ~7 orders of magnitude cheaper than frontier pretraining ($61–92M)'), ('2', '65B fits on a single 48 GB card')],
+    's-ft-eval': [('1', 'contamination: MMLU ~29% of questions'), ('2', 'GSM8K→GSM1k −13 pp')],
+    's-mcp-api': [('1', 'top result on MCP-Universe'), ('2', 'registry servers are unusable')],
+    's-agent-frameworks': [('1', 'a few lines of direct API calls'), ('2', 'LangGraph')],
+    's-agent-when': [('1', 'parallelize independent READS'), ('2', 'faster collapse')],
+    's-agent-cases': [('1', 'Air Canada: the bot invented a policy'), ('2', 'OSWorld ~38%')],
     "s01": [("1,2", "complicate the prompt")],
     "s05": [("1", "without a reason expressed in the task")],
     "s05a": [("1", "personas did NOT raise accuracy")],

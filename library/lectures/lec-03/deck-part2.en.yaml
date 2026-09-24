@@ -1,202 +1,261 @@
-# library/lectures/lec-03/deck-part2.en.yaml  —  EN translation (issue #172), PART 2 of 2
+# library/lectures/lec-03/deck-part2.en.yaml  —  EN translation (issue #172), PART 2 of 3
 #
-# Continuation of the English deck for Lecture 3 (v6.3-en, 55 slides).
-# THIS FILE — slides s22b..s31 (rest of Section 4 + Section 5) + totals + metrics.
-# Header / palette / motif / glossary and slides s01..s22a_multi are in deck.en.yaml.
-# Split because the single file exceeded the 600-line doc-size limit.
-# Render target rendered/build_lec03_en.py reads both parts.
+# Continuation of the English deck for Lecture 3 (v6.3-en, 67 slides).
+# THIS FILE — slides s09..s16 (Section 2. RAG + Section 3. Fine-tune vs
+# prompt vs RAG). Header / palette / motif / glossary and slides s01..
+# s-task-extract (Section 0 + Section 1) are in deck.en.yaml. Slides
+# s18..s31 (Section 4 + Section 5) + totals are in deck-part3.en.yaml.
+# Split because the single file would exceed the 600-line doc-size limit.
+# Render target rendered/build_lec03_en.py reads all three parts.
 
+# ─────────────────────────────────────────────────────────────────────────
+# Section 2. RAG
+# ─────────────────────────────────────────────────────────────────────────
 slides:
-  - id: s22b
-    file: slides-en/s22b-agent-equipment.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "Each equipment slot of the agent is a trade-off, not a default upgrade"
-    chapter_ref: "§4.4 [for-slide-s22b]"
-    references: [agent-harness-registry]
-
-  - id: s22c
-    file: slides-en/s22c-agent-memory.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 2.5
-    assertion: "The agent's memory is the same scale-of-knowledge question as RAG, but for the agent's own history"
-    chapter_ref: "§4.5 [for-slide-s22c]"
-    references: [agent-harness-registry]
-
-  - id: s22d
-    file: slides-en/s22d-memory-failure.md
-    type: case_study
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "\"An agent that remembers\" is not always better: Letta Tier D and even a 17% tail on the best system"
-    chapter_ref: "§4.6 [for-slide-s22d]"
-    references: [agent-harness-registry]
-
-  - id: s22e
-    file: slides-en/s22e-operational-layer.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 2.5
-    assertion: "An instruction file for the agent is not a \"magic vaccine\": presence paradox + Honest Lying"
-    chapter_ref: "§4.7 [for-slide-s22e]"
-    references: [gloaguen-2026-presence-paradox, dixit-2026-honest-lying]
-
-  - id: s25
-    file: slides-en/s25-tool-attacks.md
-    type: case_study
-    section: "Section 4. Agents"
-    duration_min: 3.5
-    assertion: "Skills, subagents, access — and the trust boundary: injection x broad privileges = catastrophe"
-    chapter_ref: "§4.8 [for-slide-s23, s24, s25]"
-    references: [willison-2025-prompt-injection, nyt-v-openai-2025, anthropic-2026-data-retention]
-    verify_day_of: true
-
-  - id: s24
-    file: slides-en/s24-data-security.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 2
-    assertion: "A data map by feature: ZDR does NOT cover third-party/MCP; least-privilege is mandatory"
-    learning_outcomes: [LO7]
-    chapter_ref: "§4.8 [for-slide-s24]"
-    verify_day_of: true
-
-  - id: s25b
-    file: slides-en/s25b-coding-agents.md
-    type: comparison
-    section: "Section 4. Agents"
-    duration_min: 2.5
-    assertion: "Real coding agents — through the equipment frame: Claude Code / Aider / Cursor / OpenHands"
-    chapter_ref: "§4.9 [for-slide-s25b]"
-    references: [agent-harness-registry]
-
-  - id: s23
-    file: slides-en/s23-agent-failures.md
-    type: case_study
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "An agent burned $4,200 in 63h in a loop (a retry script would have done it for free); 5x99%~95%; multi-agent fragility"
-    chapter_ref: "§4.10 [for-slide-s23a]"
-    references: [jain-2026-agent-loop, mindstudio-2025-reliability, cognition-2025-multiagent]
-
-  - id: s23b
-    file: slides-en/s23b-failure-catalog.md
-    type: case_study
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "A catalog of 10 CLASSES of failures as a table: class -> case -> lesson (188 of 344 — the agent broke it itself)"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§4.10 [for-slide-s23b]"
-
-  - id: s23c
-    file: slides-en/s23c-failure-deepdive.md
-    type: case_study
-    section: "Section 4. Agents"
-    duration_min: 2.5
-    assertion: "Deep-dive of the classes: PocketOS 9 sec, runaway $48k/$1.3M, slopsquatting 19.7%, cascade 61%"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§4.10 [for-slide-s23c]"
-    verify_day_of: true
-
-  # ─────────────────────────────────────────────────────────────────────
-  # Section 5. The decision framework
-  # ─────────────────────────────────────────────────────────────────────
-  - id: s25a
-    file: slides-en/s25a-section5-divider-framework.md
+  - id: s09
+    file: slides-en/s09-section2-divider-rag.md
     type: section_divider
-    section: "Section 5. The decision framework"
-    duration_min: 0.3
-    assertion: "Section 5 — gather all the architectures and their failures into one choice tool"
-    chapter_ref: "§5 [for-slide-s26]"
+    section: "Section 2. RAG"
+    duration_min: 1
+    assertion: "Section 2 — RAG: retrieval-augmented generation on top of Lecture 2's embeddings"
+    chapter_ref: "§2.1 [for-slide-s09]"
 
-  - id: s-classic-framework
-    file: slides-en/s-classic-framework-base.md
+  - id: s-classic-rag
+    file: slides-en/s-classic-rag-base.md
     type: assertion_visual
-    section: "Section 5. The decision framework"
+    section: "Section 2. RAG"
     duration_min: 2
-    assertion: "Classical technology choice: from the requirement, not the tool; build-vs-buy, KISS, YAGNI, the principle of least power; the architecture ladder is the same \"simplest that works\" principle"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§5.0 [for-slide-s-classic-framework]"
+    assertion: "The R in RAG is retrieval: inverted index, boolean search, TF-IDF, BM25; RAG adds a semantic layer on top, the classics do not vanish"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.0 [for-slide-s-classic-rag]"
     subtype: classic_base
 
-  - id: s26
-    file: slides-en/s26-complexity-ladder.md
+  - id: s10
+    file: slides-en/s10-rag-principle.md
     type: process
-    section: "Section 5. The decision framework"
-    duration_min: 2
-    assertion: "The complexity ladder: stay on the bottom rung, climb only for a requirement; the bottom is code without AI"
-    chapter_ref: "§5.1 [for-slide-s26]"
-    subtype: schema_layered
-
-  - id: s27
-    file: slides-en/s27-decision-matrix.md
-    type: process
-    section: "Section 5. The decision framework"
+    section: "Section 2. RAG"
     duration_min: 3
-    assertion: "The decision plan — a route of 8 questions top to bottom; deterministic+verifiable -> code, STOP"
-    chapter_ref: "§5.2 [for-slide-s27]"
+    assertion: "RAG = indexing -> retrieval -> grounded generation; \"I don't know\" is a correct answer, a made-up one is a defect"
+    chapter_ref: "§2.1 [for-slide-s10]"
+    references: [lewis-2020-rag]
     subtype: schema_pipeline
 
-  - id: s27b
-    file: slides-en/s27b-agent-starter-kit.md
-    type: assertion_visual
-    section: "Section 5. The decision framework"
-    duration_min: 2
-    assertion: "The agent starter kit — a thin default + justified triggers for adding complexity"
-    chapter_ref: "§5.2b [for-slide-s27a]"
-    references: [agent-harness-registry]
+  - id: s-rag-hybrid
+    file: slides-en/s-rag-hybrid-base.md
+    type: process
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "Hybrid search = BM25 + dense vectors fused by rank (RRF), plus cross-encoder reranking; adopted for a measured gap, not by default"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.6 [for-slide-rag-hybrid-rrf]"
+    subtype: schema_pipeline
+    references: [denser-2026-hybrid, anthropic-2024-contextual]
 
-  - id: s28
-    file: slides-en/s28-summary-table.md
-    type: summary
-    section: "Section 5. The decision framework"
-    duration_min: 3
-    assertion: "Summary table \"mechanism -> boundary -> what to do\" across all architectures + \"not AI\""
+  - id: s-rag-stack
+    file: slides-en/s-rag-stack-base.md
+    type: comparison
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "The vector engine is chosen for scale: pgvector ~50M, Milvus 100M+; frameworks (LlamaIndex/LangGraph) are added for agentic complexity, not by default"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.7 [for-slide-rag-vectordb]"
+    subtype: schema_matrix
+    references: [firecrawl-2026-vectordb, tigerdata-2025-pgvector]
+
+  - id: s-rag-elastic
+    file: slides-en/s-rag-elastic-base.md
+    type: assertion_visual
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "Three tiers: plain BM25 is enough / the built-in Elastic-OpenSearch hybrid is enough / a dedicated vector database only at 100M+, multi-vector, or a latency SLA"
     learning_outcomes: [LO7, LO4]
-    chapter_ref: "§5.3 [for-slide-s28]"
+    chapter_ref: "§2.8 [for-slide-rag-need-vectordb]"
+    subtype: meme_forward
+    references: [pureinsights-2026-hybrid, bigdata-2026-es-os]
 
-  - id: s29
-    file: slides-en/s29-human-validator-nanda.md
+  - id: s-rag-chunk1
+    file: slides-en/s-rag-chunk1-base.md
+    type: comparison
+    section: "Section 2. RAG"
+    duration_min: 2
+    assertion: "Chunking strategies from simple to complex (fixed/recursive/sentence-window/semantic/parent-document/late/contextual); there's no single correct default -- you tune it to the corpus"
+    learning_outcomes: [LO7]
+    chapter_ref: "§2.9 [for-slide-rag-chunk-strategies]"
+    subtype: schema_matrix
+    references: [firecrawl-2026-chunking, anthropic-2024-contextual]
+
+  - id: s-rag-chunk2
+    file: slides-en/s-rag-chunk2-base.md
+    type: case_study
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "Studies on the effect of chunking disagree: recursive-512 69% vs semantic 54%; don't cargo-cult semantic; the silent retrieval failure is tables"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.10 [for-slide-rag-chunk-studies]"
+    subtype: meme_forward
+    references: [firecrawl-2026-chunking, anthropic-2024-contextual]
+
+  - id: s-rag-chunk3
+    file: slides-en/s-rag-chunk3-base.md
+    type: case_study
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "The silent chunking failure: naive splitting flattens a table into a \"bare row of numbers\" with no headers -- the system doesn't crash, it just quietly answers wrong"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.10 [for-slide-rag-chunk-worked] · [for-slide-rag-chunk-fail]"
+    subtype: schema
+    references: [anthropic-2024-contextual, firecrawl-2026-chunking]
+
+  - id: s-rag-design
+    file: slides-en/s-rag-design-base.md
+    type: process
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "POC -> production is a different architecture: a dual pipeline (ingestion is the first bottleneck), freshness, a full re-embed on model change, eval; the counterfactual \"<200k tokens -- you don't need RAG\""
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.11 [for-slide-rag-design-pipeline]"
+    subtype: checklist_schema
+    references: [redis-2026-rag-scale, futureagi-2026-metrics]
+
+  - id: s-rag-cases
+    file: slides-en/s-rag-cases-base.md
+    type: case_study
+    section: "Section 2. RAG"
+    duration_min: 3
+    assertion: "\"RAG\" doesn't exist in a vacuum -- there's RAG for support/code/contracts/enterprise; the retrieval design follows from the nature of the data; 2 cases show \"RAG was the wrong tool\""
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.12 [for-slide-rag-cases-intro] · [for-slide-rag-case-support] · [for-slide-rag-case-code] · [for-slide-rag-case-legal] · [for-slide-rag-case-enterprise]"
+    subtype: schema
+    references: [barnett-2024-7fail, stanford-legalai, sourcegraph-search]
+
+  - id: s-rag-research
+    file: slides-en/s-rag-research-base.md
+    type: case_study
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "Deep research is RAG + an agentic loop + citation verification, not a \"big prompt\"; the typical failure -- 3-13% fabricated citations (worse than search: 10.7% vs 4.8%)"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§2.12 [for-slide-rag-case-deepresearch] · §1.10 [for-slide-task-boundary]"
+    subtype: meme_forward
+    references: [anthropic-2024-multiagent, citation-fabrication-2604]
+
+  - id: s11
+    file: slides-en/s11-when-rag-right.md
     type: assertion_visual
-    section: "Section 5. The decision framework"
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "RAG is justified given a strong signal on the features — and no blockers, with a \"when not\""
+    chapter_ref: "§2.2 [for-slide-s11]"
+    references: [u-niah-2025]
+
+  - id: s12
+    file: slides-en/s12-when-not-rag.md
+    type: comparison
+    section: "Section 2. RAG"
+    duration_min: 2.5
+    assertion: "When RAG is not needed: fits the window -> full-context; fixed policy -> lookup; live data via API/MCP -> the tool directly"
+    chapter_ref: "§2.3 [for-slide-s12]"
+    subtype: schema_matrix
+
+  - id: s13
+    file: slides-en/s13-rag-fails-air-canada.md
+    type: case_study
+    section: "Section 2. RAG"
+    duration_min: 3
+    assertion: "\"Returned something != returned the right thing\": RAG without observability quietly degrades; Air Canada — a grounding failure"
+    chapter_ref: "§2.4, §2.5 [for-slide-s13]"
+    references: [barnett-2024-rag-failures, mccarthy-tetrault-2024]
+
+  # ─────────────────────────────────────────────────────────────────────
+  # Section 3. Fine-tune vs prompt vs RAG
+  # ─────────────────────────────────────────────────────────────────────
+
+  - id: s13a
+    file: slides-en/s13a-section3-divider-finetune.md
+    type: section_divider
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 0.3
+    assertion: "Section 3 — fine-tuning against the prompt and RAG: the problem isn't knowledge, but the model's behavior"
+    chapter_ref: "§3 [for-slide-s14]"
+
+  - id: s-classic-ft
+    file: slides-en/s-classic-ft-base.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2
+    assertion: "Classical ML: training set, reference labels, train/val/test split, transfer learning; PEFT/LoRA is the same transfer learning, cheap, on top of a pre-trained model"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.0 [for-slide-s-classic-ft]"
+    subtype: classic_base
+
+  - id: s13b
+    file: slides-en/s13b-what-is-fine-tuning.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
     duration_min: 1.5
-    assertion: "The agent acts — the human checks the result and the facts; ~95% of pilots with no ROI — it's about integration"
-    chapter_ref: "§5.4 [for-slide-s29]"
-    references: [mit-nanda-2025]
-    verify_day_of: true
+    assertion: "Fine-tuning changes THE WEIGHTS THEMSELVES; in practice it's almost always LoRA/PEFT, not full-FT"
+    chapter_ref: "§3.1 [for-slide-s14]"
+    subtype: schema_pipeline
 
-  - id: s30
-    file: slides-en/s30-bridge-homework-qa.md
-    type: hero_closing
-    section: "Section 5. The decision framework"
-    duration_min: 1.5
-    assertion: "Next — industries, starting with software development; the SDLCxAI axis; this frame is the base of Lectures 4–17"
-    chapter_ref: "§5.5 [for-slide-s30]"
+  - id: s-ft-cost
+    file: slides-en/s-ft-cost-comparison.md
+    type: comparison_table
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2.5
+    assertion: "Training cost is a function of model size: Full-FT VRAM ~ 16-20B x N (grows linearly), LoRA ~ baseline + ε (nearly flat). LoRA is the default: under $10, ~7 orders of magnitude cheaper than pretraining"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.6 [for-slide-ft-cost-law, ft-cost-table, ft-cost-baselines, ft-cost-when]"
+    subtype: comparison_table
+    references: [thinkingmachines-lora, qlora-paper]
 
-  - id: s31
-    file: slides-en/s31-qa.md
-    type: qa_minimal
-    section: "Section 5. The decision framework"
-    duration_min: 5
-    assertion: "Q&A"
-    chapter_ref: "§5.5 [for-slide-s30]"
+  - id: s15
+    file: slides-en/s15-peft-not-full-ft.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2
+    assertion: "PEFT (LoRA/QLoRA) is almost always better than full-FT; 98.4% of PEFT-tagged models are LoRA"
+    chapter_ref: "§3.2 [for-slide-s15]"
+    references: [hf-peft-2026]
 
-# ─── Validation ───
-totals:
-  slides: 55
-  by_section:
-    "Section 0. Opening": [s01, s02, s02a, s03, s04]
-    "Section 1. The prompt": [s04a, s-classic-prompt, s05, s05a, s05c, s05b, s06, s07, s08, s08a]
-    "Section 2. RAG": [s09, s-classic-rag, s10, s11, s12, s13]
-    "Section 3. Fine-tune": [s13a, s-classic-ft, s13b, s15, s17, s14, s16]
-    "Section 4. Agents": [s18, s-classic-agents, s19, s19b, s20, s21, s22, s22a_multi, s22b, s22c, s22d, s22e, s25, s24, s25b, s23, s23b, s23c]
-    "Section 5. The decision framework": [s25a, s-classic-framework, s26, s27, s27b, s28, s29, s30, s31]
-  duration_min_total: 98
+  - id: s17
+    file: slides-en/s17-finetune-criteria.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2.5
+    assertion: "Fine-tuning narrowed to behavior: knowledge -> RAG, behavior -> PEFT, deterministic -> code; a hybrid is the norm"
+    learning_outcomes: [LO7]
+    chapter_ref: "§3.3, §3.5 [for-slide-s17]"
 
-ai_failure_judgment:
-  in_bucket_slides: [s01, s05a, s06, s07, s08, s12, s13, s16, s17, s22, s22a_multi, s22d, s22e, s20, s24, s25, s23, s23b, s23c, s27, s29]
-  count: 21
-  share_by_slides: "21/55 ~ 38% by slides"
+  - id: s14
+    file: slides-en/s14-fine-tuning-narrowed.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2.5
+    assertion: "Distillation is fine-tuning a small student model; it differs in GOAL (matching the teacher's distribution, soft logits) and DATA (generated by the teacher) -- not in being \"not training\". DistilBERT -40%/97%, Alpaca 52k/<$600"
+    chapter_ref: "§3.3, §3.5 [for-slide-s-distill]"
+    subtype: schema_pipeline
 
+  - id: s16
+    file: slides-en/s16-catastrophic-forgetting.md
+    type: case_study
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2.5
+    assertion: "Narrow aggressive fine-tuning breaks general abilities; without an eval loop and versions — a \"don't do it\" criterion"
+    chapter_ref: "§3.4 [for-slide-s16]"
+    references: [luo-2023-catastrophic-forgetting]
+
+  - id: s-ft-eval
+    file: slides-en/s-ft-eval-measure.md
+    type: assertion_visual
+    section: "Section 3. Fine-tune vs prompt vs RAG"
+    duration_min: 2.5
+    assertion: "Evaluating training is more expensive than the training itself and unsolved: none of the SIX methods is self-sufficient (MMLU ~29%, GSM8K -> GSM1k -13 pp, judge position bias 75%, human κ>=0.6 $300-1200, BLEU r~0.25-0.52); the lab -> prod gap ~37% -- a benchmark gain is a hypothesis, not a result"
+    learning_outcomes: [LO7, LO4]
+    chapter_ref: "§3.7 [for-slide-ft-eval-benchmarks, ft-eval-heldout, ft-eval-judge, ft-eval-human, ft-eval-task, ft-eval-ab, ft-eval-gap]"
+    subtype: comparison_table
+    references: [benchmark-contamination, gsm1k]
+
+# ─────────────────────────────────────────────────────────────────────────
+# END OF PART 2 (deck-part2.en.yaml). Slides s18..s31 (Section 4 + Section 5)
+# + the totals/metrics block are in deck-part3.en.yaml.
+# ─────────────────────────────────────────────────────────────────────────

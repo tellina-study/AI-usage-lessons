@@ -1,0 +1,19 @@
+$ git ls-tree -r --name-only e5c60d2 | sort   # commit e5c60d2
+
+AGENTS.md
+.claude/agents/diff-reviewer.md
+CLAUDE.md
+.claude/settings.json
+.claude/skills/deploy/SKILL.md
+DECISIONS.md
+index.html
+.mcp.json
+package.json
+src/main.js
+src/validate.js
+Tasks/2026-09-20_form-endpoint-fix/log.md
+Tasks/README.md
+Tasks/review.md.template
+tests/form.spec.ts
+
+# Комментарий: Ступень 7 (процесс): + Tasks/ (README.md, review.md.template, 2026-09-20_form-endpoint-fix/log.md — реальная запись по ходу работы над email-regex фиксом).

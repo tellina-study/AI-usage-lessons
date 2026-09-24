@@ -1,22 +1,34 @@
 # library/lectures/lec-03/deck.en.yaml  —  EN translation (issue #172)
 #
 # English deck structure for Lecture 3 "AI system architectures: agents, RAG, API"
-# (v6.3-en, 55 slides). Translated from deck.yaml + deck-part2.yaml + deck-part3.yaml
+# (v6.3-en, 67 slides). Translated from deck.yaml + deck-part2.yaml + deck-part3.yaml
 # (RU source of truth, 3 parts). Render target: rendered/build_lec03_en.py.
 # Per-slide `file:` points to slides-en/<same-basename>.md (RU basenames mirrored).
 #
-# SPLIT (600-line doc-size limit): this file holds header + palette + motif +
-# glossary + slides s01..s22a_multi; deck-part2.en.yaml holds s22b..s31 + totals.
+# SPLIT (600-line doc-size limit, same 3-way split as the RU trio): this file
+# holds header + palette + motif + glossary + slides s01..s-task-extract
+# (Section 0 + Section 1). deck-part2.en.yaml holds Section 2 + Section 3.
+# deck-part3.en.yaml holds Section 4 + Section 5 + totals + metrics.
 #
-# v5b/v6 order (55 slides) — WP8 (#185): +5 "classical base" slides, one per
-# section, right after the divider, before the AI part; s01b removed (#312):
+# v6.3 order (67 slides, issue #196/#185 rework): "classical base" slides,
+# one per section, right after the divider, before the AI part; plus WAVE 1-3
+# / D1 / D2 deepening slides (prompt formats + task patterns; RAG hybrid
+# search, vector stacks, chunking, design-at-scale, RAG cases, deep research;
+# fine-tune cost + eval; MCP-vs-API, agent frameworks, agent judgment, agent
+# cases). Seven pre-rework EN-only slides (s05a, s22c, s22e, s23, s27, s28,
+# s29) are not part of this order; their slides-en/*.md files are kept on
+# disk but are no longer referenced from any deck part:
 #   R0: s01(meme) s02 s02a s03 s04
-#   R1: s04a(div) [s-classic-prompt] s05 s05a s05c s05b s06 s07 s08 s08a
-#   R2: s09(div) [s-classic-rag] s10 s11 s12 s13
-#   R3: s13a(div) [s-classic-ft] s13b s15 s17 s14 s16
-#   R4: s18(div) [s-classic-agents] s19 s19b s20 s21 s22 s22a_multi s22b
-#        s22c s22d s22e s25 s24 s25b s23 s23b s23c
-#   R5: s25a(div) [s-classic-framework] s26 s27 s27b s28 s29 s30 s31
+#   R1: s04a(div) [s-classic-prompt] s05 s05c s05b s-fmt s06 s07 s08 s08a
+#       s-task-assistant s-task-tone s-task-extract
+#   R2: s09(div) [s-classic-rag] s10 s-rag-hybrid s-rag-stack s-rag-elastic
+#       s-rag-chunk1 s-rag-chunk2 s-rag-chunk3 s-rag-design s-rag-cases
+#       s-rag-research s11 s12 s13
+#   R3: s13a(div) [s-classic-ft] s13b s-ft-cost s15 s17 s14 s16 s-ft-eval
+#   R4: s18(div) [s-classic-agents] s19 s19b s20 s21 s-mcp-api s22
+#       s-agent-frameworks s-agent-when s22a_multi s22b s22d s25 s24 s25b
+#       s-agent-cases s23b s23c
+#   R5: s25a(div) [s-classic-framework] s26 s27b s30 s31
 
 deck:
   lecture_number: 3
@@ -28,10 +40,10 @@ deck:
   language: en
   status: final
   version: v6.3-en
-  source: chapter v3.0 finalized (5 parts) + WP8 classic-base-first (#185)
-  total_slides: 55
+  source: chapter v5.0 finalized + WAVE D1 §1/§2 + WAVE D2 §3/§4 rework (#196)
+  total_slides: 67
   curriculum_level: introductory
-  deck_parts: [deck.en.yaml, deck-part2.en.yaml]
+  deck_parts: [deck.en.yaml, deck-part2.en.yaml, deck-part3.en.yaml]
 
 palette:
   primary_deep: "#21295C"
@@ -154,6 +166,7 @@ slides:
     chapter_ref: "§Introduction [for-slide-s04]"
 
   # ─── Section 1. The prompt and its limits ───
+
   - id: s04a
     file: slides-en/s04a-section1-divider-prompt.md
     type: section_divider
@@ -180,15 +193,6 @@ slides:
     assertion: "The default is a single call; the model knows only what's in the prompt plus its weights"
     chapter_ref: "§1.1 [for-slide-s05]"
 
-  - id: s05a
-    file: slides-en/s05a-roles-in-prompt.md
-    type: assertion_visual
-    section: "Section 1. The prompt and its limits"
-    duration_min: 2
-    assertion: "A role in the prompt tunes tone — not accuracy (the \"persona=accuracy\" myth is refuted)"
-    chapter_ref: "§1.2 [for-slide-s05a]"
-    references: [zheng-2024-personas, arxiv-2605-29420]
-
   - id: s05c
     file: slides-en/s05c-protocol-roles.md
     type: assertion_visual
@@ -207,6 +211,16 @@ slides:
     duration_min: 1.5
     assertion: "Prompt structure: separate the instruction, the context, the data (parallel to structured output)"
     chapter_ref: "§1.3 [for-slide-s05b]"
+
+  - id: s-fmt
+    file: slides-en/s-fmt-prompt-format.md
+    type: assertion_visual
+    section: "Section 1. The prompt and its limits"
+    duration_min: 2
+    assertion: "Frontier models tolerate the input format; forcing an output format on a reasoning task costs quality (reasoning tax: GSM8K 76.6% -> 49.3%)"
+    learning_outcomes: [LO7]
+    chapter_ref: "§1.9 [for-slide-prompt-format-intro]"
+    subtype: format_matrix
 
   - id: s06
     file: slides-en/s06-chain-of-thought.md
@@ -245,213 +259,40 @@ slides:
     assertion: "Cheat sheet: how to build a prompt — 8 points, the compact form of Section 1"
     chapter_ref: "§1.8 [for-slide-s08a]"
 
-  # ─────────────────────────────────────────────────────────────────────
-  # Section 2. RAG
-  # ─────────────────────────────────────────────────────────────────────
-  - id: s09
-    file: slides-en/s09-section2-divider-rag.md
-    type: section_divider
-    section: "Section 2. RAG"
-    duration_min: 1
-    assertion: "Section 2 — RAG: retrieval-augmented generation on top of Lecture 2's embeddings"
-    chapter_ref: "§2.1 [for-slide-s09]"
-
-  - id: s-classic-rag
-    file: slides-en/s-classic-rag-base.md
+  - id: s-task-assistant
+    file: slides-en/s-task-assistant.md
     type: assertion_visual
-    section: "Section 2. RAG"
+    section: "Section 1. The prompt and its limits"
     duration_min: 2
-    assertion: "The R in RAG is retrieval: inverted index, boolean search, TF-IDF, BM25; RAG adds a semantic layer on top, the classics do not vanish"
+    assertion: "An assistant with tools is a mini-ladder -- one-shot -> tool-use -> agent; the failure is jumping straight to an agent (the $4,200 loop, §4)"
     learning_outcomes: [LO7]
-    chapter_ref: "§2.0 [for-slide-s-classic-rag]"
-    subtype: classic_base
+    chapter_ref: "§1.10 [for-slide-task-assistant]"
+    subtype: task_case
 
-  - id: s10
-    file: slides-en/s10-rag-principle.md
-    type: process
-    section: "Section 2. RAG"
-    duration_min: 3
-    assertion: "RAG = indexing -> retrieval -> grounded generation; \"I don't know\" is a correct answer, a made-up one is a defect"
-    chapter_ref: "§2.1 [for-slide-s10]"
-    references: [lewis-2020-rag]
-    subtype: schema_pipeline
-
-  - id: s11
-    file: slides-en/s11-when-rag-right.md
+  - id: s-task-tone
+    file: slides-en/s-task-tone.md
     type: assertion_visual
-    section: "Section 2. RAG"
-    duration_min: 2.5
-    assertion: "RAG is justified given a strong signal on the features — and no blockers, with a \"when not\""
-    chapter_ref: "§2.2 [for-slide-s11]"
-    references: [u-niah-2025]
-
-  - id: s12
-    file: slides-en/s12-when-not-rag.md
-    type: comparison
-    section: "Section 2. RAG"
-    duration_min: 2.5
-    assertion: "When RAG is not needed: fits the window -> full-context; fixed policy -> lookup; live data via API/MCP -> the tool directly"
-    chapter_ref: "§2.3 [for-slide-s12]"
-    subtype: schema_matrix
-
-  - id: s13
-    file: slides-en/s13-rag-fails-air-canada.md
-    type: case_study
-    section: "Section 2. RAG"
-    duration_min: 3
-    assertion: "\"Returned something != returned the right thing\": RAG without observability quietly degrades; Air Canada — a grounding failure"
-    chapter_ref: "§2.4, §2.5 [for-slide-s13]"
-    references: [barnett-2024-rag-failures, mccarthy-tetrault-2024]
-
-  # ─────────────────────────────────────────────────────────────────────
-  # Section 3. Fine-tune
-  # ─────────────────────────────────────────────────────────────────────
-  - id: s13a
-    file: slides-en/s13a-section3-divider-finetune.md
-    type: section_divider
-    section: "Section 3. Fine-tune vs prompt vs RAG"
-    duration_min: 0.3
-    assertion: "Section 3 — fine-tuning against the prompt and RAG: the problem isn't knowledge, but the model's behavior"
-    chapter_ref: "§3 [for-slide-s14]"
-
-  - id: s-classic-ft
-    file: slides-en/s-classic-ft-base.md
-    type: assertion_visual
-    section: "Section 3. Fine-tune vs prompt vs RAG"
+    section: "Section 1. The prompt and its limits"
     duration_min: 2
-    assertion: "Classical ML: training set, reference labels, train/val/test split, transfer learning; PEFT/LoRA is the same transfer learning, cheap, on top of a pre-trained model"
+    assertion: "Text in a given tone is few-shot from 3-5 samples; the boundary -- detectors can't be trusted (some under 80% accurate, +30% false positives on non-native writers)"
     learning_outcomes: [LO7, LO4]
-    chapter_ref: "§3.0 [for-slide-s-classic-ft]"
-    subtype: classic_base
+    chapter_ref: "§1.10 [for-slide-task-tone]"
+    subtype: task_case
 
-  - id: s13b
-    file: slides-en/s13b-what-is-fine-tuning.md
+  - id: s-task-extract
+    file: slides-en/s-task-extract.md
     type: assertion_visual
-    section: "Section 3. Fine-tune vs prompt vs RAG"
-    duration_min: 1.5
-    assertion: "Fine-tuning changes THE WEIGHTS THEMSELVES; in practice it's almost always LoRA/PEFT, not full-FT"
-    chapter_ref: "§3.1 [for-slide-s14]"
-    subtype: schema_pipeline
-
-  - id: s15
-    file: slides-en/s15-peft-not-full-ft.md
-    type: assertion_visual
-    section: "Section 3. Fine-tune vs prompt vs RAG"
+    section: "Section 1. The prompt and its limits"
     duration_min: 2
-    assertion: "PEFT (LoRA/QLoRA) is almost always better than full-FT; 98.4% of PEFT-tagged models are LoRA"
-    chapter_ref: "§3.2 [for-slide-s15]"
-    references: [hf-peft-2026]
-
-  - id: s17
-    file: slides-en/s17-finetune-criteria.md
-    type: assertion_visual
-    section: "Section 3. Fine-tune vs prompt vs RAG"
-    duration_min: 2.5
-    assertion: "Fine-tuning narrowed to behavior: knowledge -> RAG, behavior -> PEFT, deterministic -> code; a hybrid is the norm"
+    assertion: "\"Asking for JSON\" != \"specifying a contract\": two levels of control (prompt ~80% / decoder ~100%), three ways to specify a schema, the invariant \"valid JSON != correct data\""
     learning_outcomes: [LO7]
-    chapter_ref: "§3.3, §3.5 [for-slide-s17]"
-
-  - id: s14
-    file: slides-en/s14-fine-tuning-narrowed.md
-    type: assertion_visual
-    section: "Section 3. Fine-tune vs prompt vs RAG"
-    duration_min: 2.5
-    assertion: "Distillation = a standalone technique (teacher FT + student distill), NOT a kind of fine-tuning"
-    chapter_ref: "§3.1, §3.3, §3.5 [for-slide-s14]"
-    subtype: schema_matrix
-
-  - id: s16
-    file: slides-en/s16-catastrophic-forgetting.md
-    type: case_study
-    section: "Section 3. Fine-tune vs prompt vs RAG"
-    duration_min: 2.5
-    assertion: "Narrow aggressive fine-tuning breaks general abilities; without an eval loop and versions — a \"don't do it\" criterion"
-    chapter_ref: "§3.4 [for-slide-s16]"
-    references: [luo-2023-catastrophic-forgetting]
-
-  # ─────────────────────────────────────────────────────────────────────
-  # Section 4. Agents
-  # ─────────────────────────────────────────────────────────────────────
-  - id: s18
-    file: slides-en/s18-section4-divider-api.md
-    type: section_divider
-    section: "Section 4. Agents"
-    duration_min: 1
-    assertion: "Section 4 — Agents: the loop, the equipment, memory, tool access — and where all of it breaks"
-    chapter_ref: "§4 [for-slide-s18]"
-
-  - id: s-classic-agents
-    file: slides-en/s-classic-agents-base.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 2
-    assertion: "Classical automation: finite-state machine, workflow engines (BPMN/DAG/RPA), a control loop plan->act->check (OODA); an agent = the same loop, but the LLM generates the steps non-deterministically"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§4.0 [for-slide-s-classic-agents]"
-    subtype: classic_base
-
-  - id: s19
-    file: slides-en/s19-api-layer.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "The model becomes a system component: structured output / function calling / prompt caching + MCP"
-    chapter_ref: "§4.1 [for-slide-s18, s19, s20]"
-    subtype: schema_matrix
-
-  - id: s19b
-    file: slides-en/s19b-agent-economics.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 2.5
-    assertion: "Economics: an agent is xN tokens vs chat, multi-agent another x15; caching goes from a guideline to a necessity"
-    learning_outcomes: [LO7]
-    chapter_ref: "§4.1 [for-slide-s19]"
-    verify_day_of: true
-
-  - id: s20
-    file: slides-en/s20-mcp.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "MCP NxM -> N+M; ~11% of the catalog is actually runnable; ease of connection != security"
-    learning_outcomes: [LO7]
-    chapter_ref: "§4.1 [for-slide-s20]"
-    verify_day_of: true
-
-  - id: s21
-    file: slides-en/s21-agent-loop.md
-    type: process
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "An agent = a loop plan -> act -> check -> iterate; every step is a place of failure; check must not be self-assessment"
-    chapter_ref: "§4.2 [for-slide-s21]"
-    references: [yao-2022-react]
-    subtype: schema_cycle
-
-  - id: s22
-    file: slides-en/s22-workflow-vs-agent.md
-    type: comparison
-    section: "Section 4. Agents"
-    duration_min: 2.5
-    assertion: "A predictable task -> workflow; unpredictable AND the value justifies it -> agent. Nesting is the norm"
-    chapter_ref: "§4.3 [for-slide-s22, s22a]"
-    subtype: schema_matrix
-
-  - id: s22a_multi
-    file: slides-en/s22a_multi-multi-agent.md
-    type: assertion_visual
-    section: "Section 4. Agents"
-    duration_min: 3
-    assertion: "Multi-agent by default is NOT an upgrade: p^n (95%x10=60%); swarm 17.2x vs coordinator 4.4x"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§4.3 [for-slide-s22a-multi]"
-    verify_day_of: true
+    chapter_ref: "§1.10 [for-slide-task-json-frame] · [for-slide-task-json-howto] · [for-slide-task-json-goodbad] · [for-slide-task-json-guarantee]"
+    subtype: task_case
 
 # ─────────────────────────────────────────────────────────────────────────
-# END OF PART 1 (deck.en.yaml). Slides s22b..s31 (rest of Section 4 + Section 5)
-# and the totals/metrics block are in deck-part2.en.yaml.
+# END OF PART 1 (deck.en.yaml). Slides s09..s16 (Section 2 + Section 3) are
+# in deck-part2.en.yaml; slides s18..s31 (Section 4 + Section 5) + the
+# totals/metrics block are in deck-part3.en.yaml.
 # Split because the single file exceeded the 600-line doc-size limit.
-# Render target rendered/build_lec03_en.py reads both parts.
+# Render target rendered/build_lec03_en.py reads all three parts.
 # ─────────────────────────────────────────────────────────────────────────
-

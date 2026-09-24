@@ -380,11 +380,260 @@ def make_skeleton():
     return out
 
 
+# ==================================================================
+# WAVE 1 (issue #196) — 5 fresh templates for новые §1-слайды.
+# Ни один не переиспользует ранее занятый шаблон дека.
+# ==================================================================
+
+# ------------------------------------------------------------------
+# s-fmt — TWO BUTTONS (Daily Struggle, imgflip 87743020) — дилемма формата
+#         ВЫХОДА: «заставить рассуждающий ответ в JSON» vs «дать свободно
+#         рассуждать». Пот на лбу = reasoning tax. Подписи на белых кнопках.
+#         Кнопки: левая ≈ x[135..270] y[95..250]; правая ≈ x[300..470] y[70..230].
+# ------------------------------------------------------------------
+def make_two_buttons():
+    img = Image.open(SRC / "two-buttons.jpg").convert("RGB")
+    W, H = img.size            # 600x908
+    d = ImageDraw.Draw(img)
+    # левая кнопка-панель — перекрыть белым для чистой подписи
+    d.rectangle([70, 70, 300, 300], fill=WHITE)
+    draw_block(d, "принудить\nответ в JSON",
+               (78, 90, 214, 190), font(30), fill=BLACK,
+               align="center", valign="center", line_h=1.06)
+    # правая кнопка-панель
+    d.rectangle([315, 55, 545, 300], fill=WHITE)
+    draw_block(d, "дать свободно\nрассуждать",
+               (322, 80, 216, 190), font(30), fill=BLACK,
+               align="center", valign="center", line_h=1.06)
+    out = WEB / "s-fmt-twobuttons-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-task-assistant — ONE DOES NOT SIMPLY (imgflip 61579) — «нельзя просто так
+#        взять и прыгнуть сразу к агенту». Классический top/bottom outline.
+# ------------------------------------------------------------------
+def make_one_does_not():
+    img = Image.open(SRC / "one-does-not-simply.jpg").convert("RGB")
+    W, H = img.size            # 568x335
+    d = ImageDraw.Draw(img)
+    outline_block(d, "нельзя просто так взять",
+                  (10, 6, W - 20, int(H * 0.20)), font(34),
+                  align="center", valign="top", ow=3)
+    outline_block(d, "и прыгнуть сразу к агенту",
+                  (10, int(H * 0.78), W - 20, int(H * 0.20)), font(34),
+                  align="center", valign="bottom", ow=3)
+    out = WEB / "s-task-assistant-simply-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-task-tone — FUTURAMA FRY / NOT SURE IF (imgflip 61520) — «не пойму:
+#        текст написал человек или ИИ» — ненадёжность детекторов. Прищур Фрая.
+#        Классический top/bottom outline.
+# ------------------------------------------------------------------
+def make_futurama_fry():
+    img = Image.open(SRC / "futurama-fry.jpg").convert("RGB")
+    W, H = img.size            # 552x414
+    d = ImageDraw.Draw(img)
+    outline_block(d, "не пойму: текст написал человек",
+                  (10, 6, W - 20, int(H * 0.22)), font(32),
+                  align="center", valign="top", ow=3)
+    outline_block(d, "или детектор снова врёт",
+                  (10, int(H * 0.76), W - 20, int(H * 0.22)), font(32),
+                  align="center", valign="bottom", ow=3)
+    out = WEB / "s-task-tone-fry-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-task-research — PANIK / KALM / PANIK (imgflip 226297822) — цикл проверки
+#        цитаты: нашёл ссылку → она резолвится → URL сфабрикован. Левый белый
+#        столбец (3 панели), «Panik/Kalm/Panik» уже вжжены справа. RU-подписи
+#        в левые панели. Панели: y≈[10..295],[305..585],[600..870]; x≈[15..300].
+# ------------------------------------------------------------------
+def make_panik_kalm():
+    img = Image.open(SRC / "panik-kalm-panik.png").convert("RGB")
+    W, H = img.size            # 640x881
+    d = ImageDraw.Draw(img)
+    lx, lw = 18, 288
+    panels = [
+        ("агент дал\nотчёт со\nссылками", 14, 288),
+        ("часть ссылок\nдаже резолвится", 306, 578),
+        ("3–13% URL\nпросто\nсфабрикованы", 596, 866),
+    ]
+    for txt, y0, y1 in panels:
+        f = fit_font(d, txt.replace("\n", " "), lw - 10, 30, True, 15)
+        draw_block(d, txt.replace("\n", " "), (lx, y0, lw, y1 - y0), f,
+                   fill=BLACK, align="center", valign="center", line_h=1.1)
+    out = WEB / "s-task-research-panik-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-task-extract — TRADE OFFER (imgflip 309868304) — честный обмен: «ты даёшь
+#        JSON-схему — я даю ~100% соответствия» (constrained decoding). Baked-in
+#        английские «TRADE OFFER / i receive / you receive» перекрыты RU.
+#        Баннер ≈ x[135..475] y[38..92]; «i receive:» ≈ x[55..205] y[145..180];
+#        «you receive:» ≈ x[350..545] y[145..180].
+# ------------------------------------------------------------------
+def make_trade_offer():
+    img = Image.open(SRC / "trade-offer.jpg").convert("RGB")
+    W, H = img.size            # 607x794
+    d = ImageDraw.Draw(img)
+    # перекрыть красный баннер «TRADE OFFER» — оставить красный фон, RU-текст
+    d.rectangle([118, 34, 490, 96], fill=(230, 57, 53))
+    outline_block(d, "ЧЕСТНЫЙ ОБМЕН",
+                  (120, 40, 368, 54), font(34), fill=WHITE, outline=BLACK,
+                  ow=2, align="center", valign="center")
+    # перекрыть «i receive:» и «you receive:» баннерные подписи (тёмный фон-плашка)
+    d.rectangle([44, 138, 250, 350], fill=(28, 24, 48))
+    d.rectangle([340, 138, 560, 350], fill=(28, 24, 48))
+    draw_block(d, "ты даёшь:",
+               (52, 144, 190, 34), font(24), fill=WHITE,
+               align="left", valign="top")
+    draw_block(d, "JSON-схему\nвыхода",
+               (52, 186, 190, 150), font(26), fill=WHITE,
+               align="left", valign="top", line_h=1.12)
+    draw_block(d, "получаешь:",
+               (348, 144, 205, 34), font(24), fill=WHITE,
+               align="left", valign="top")
+    draw_block(d, "~100%\nпо схеме",
+               (348, 186, 205, 150), font(26), fill=WHITE,
+               align="left", valign="top", line_h=1.12)
+    out = WEB / "s-task-extract-trade-ru.png"
+    img.save(out)
+    return out
+
+
+# ==================================================================
+# WAVE 2 (issue #196) — 2 fresh templates для §2 RAG judgment-слайдов.
+# Ни один не переиспользует ранее занятый шаблон дека. Только на 2 слайда,
+# где мем несёт тезис суждения (s-rag-elastic, s-rag-chunk2); схемные слайды
+# (hybrid, stack, chunk1, design) остаются чистыми диаграммами/таблицами.
+# ==================================================================
+
+# ------------------------------------------------------------------
+# s-rag-elastic — WOMAN YELLING AT A CAT (imgflip 188390779) — суждение
+#        «а нужна ли мне выделенная векторная БД». Левая панель (две женщины,
+#        кричат «нам нужна векторная БД!») ≈ x[0..340]; правая (кот за столом,
+#        «у тебя 3 млн чанков — хватит Postgres») ≈ x[340..680]. Классические
+#        белые outline-подписи сверху каждой панели.
+# ------------------------------------------------------------------
+def make_woman_cat():
+    img = Image.open(SRC / "woman-yelling-cat.jpg").convert("RGB")
+    W, H = img.size            # 680x438
+    d = ImageDraw.Draw(img)
+    half = W // 2
+    # левая панель — крик команды
+    outline_block(d, "«срочно ставим векторную БД!»",
+                  (6, 4, half - 12, int(H * 0.30)), font(26),
+                  align="center", valign="top", ow=3, line_h=1.05)
+    # правая панель — спокойный кот
+    outline_block(d, "у тебя 3 млн чанков — хватит Postgres",
+                  (half + 6, 4, half - 12, int(H * 0.30)), font(24),
+                  align="center", valign="top", ow=3, line_h=1.05)
+    out = WEB / "s-rag-elastic-cat-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-rag-chunk2 — DISASTER GIRL (imgflip 97984) — тихий провал: команда
+#        внедрила «умный» semantic chunking (девочка улыбается), а таблицы в
+#        документах тихо разъехались (дом горит на фоне). Классический
+#        top/bottom outline-caption.
+# ------------------------------------------------------------------
+def make_disaster_girl():
+    img = Image.open(SRC / "disaster-girl.jpg").convert("RGB")
+    W, H = img.size            # 500x375
+    d = ImageDraw.Draw(img)
+    outline_block(d, "внедрили semantic chunking по хайпу",
+                  (10, 6, W - 20, int(H * 0.24)), font(28),
+                  align="center", valign="top", ow=3, line_h=1.04)
+    outline_block(d, "таблицы тихо разъехались",
+                  (10, int(H * 0.74), W - 20, int(H * 0.24)), font(30),
+                  align="center", valign="bottom", ow=3, line_h=1.04)
+    out = WEB / "s-rag-chunk2-disaster-ru.png"
+    img.save(out)
+    return out
+
+
+# ==================================================================
+# WAVE 3 (issue #196) — 2 fresh templates для §3/§4 judgment-слайдов.
+# Ни один не переиспользует ранее занятый шаблон дека (23 уже занято).
+# Только на 2 слайда, где мем несёт тезис суждения (s-ft-eval, s-agent-when);
+# table/diagram-слайды (s-ft-cost, s22-паттерны, s-agent-frameworks) — чистые.
+# ==================================================================
+
+# ------------------------------------------------------------------
+# s-ft-eval — LEFT EXIT 12 OFF RAMP (imgflip 124822590) — тезис «оценка
+#        сложнее обучения»: машина резко сворачивает с прямого пути «строгая
+#        оценка (held-out + A/B)» на съезд «красивое число на бенчмарке».
+#        Верхняя панель — дорожный знак: прямо (левая стрелка) ≈ x[300..365],
+#        съезд (правая стрелка) ≈ x[375..520]; обе на высоте y[110..185].
+#        Нижняя панель (авто в заносе) — без подписи. Размер 804x767.
+# ------------------------------------------------------------------
+def make_left_exit():
+    img = Image.open(SRC / "left-exit-12.jpg").convert("RGB")
+    W, H = img.size            # 804x767
+    d = ImageDraw.Draw(img)
+    # прямой путь — над левой стрелкой
+    outline_block(d, "строгая оценка: held-out + A/B",
+                  (150, 96, 210, 70), font(21),
+                  align="center", valign="center", ow=3, line_h=1.02)
+    # съезд — над/справа от правой стрелки
+    outline_block(d, "красивое число на бенчмарке",
+                  (392, 96, 200, 70), font(21),
+                  align="center", valign="center", ow=3, line_h=1.02)
+    out = WEB / "s-ft-eval-leftexit-ru.png"
+    img.save(out)
+    return out
+
+
+# ------------------------------------------------------------------
+# s-agent-when — CLOWN APPLYING MAKEUP (imgflip 141136560) — 4 панели
+#        эскалации: «задача чуть непредсказуема» → «возьму агента» → «возьму
+#        мульти-агент» → «0,95²⁰ ≈ 36% надёжности». Лица справа (x[420..640]),
+#        левая половина — белая, туда RU-подписи. Панели по вертикали:
+#        y[10..190], [210..390], [410..590], [610..760]. Размер 750x798.
+# ------------------------------------------------------------------
+def make_clown_agents():
+    img = Image.open(SRC / "clown-makeup.jpg").convert("RGB")
+    W, H = img.size            # 750x798
+    d = ImageDraw.Draw(img)
+    caps = [
+        "задача чуть непредсказуема",
+        "возьму агента",
+        "возьму мульти-агент",
+        "0,95²⁰ ≈ 36% надёжности",
+    ]
+    ys = [10, 210, 410, 610]
+    hs = [180, 180, 180, 150]
+    for cap, y, h in zip(caps, ys, hs):
+        draw_block(d, cap, (24, y, 380, h), font(30),
+                   fill=BLACK, align="left", valign="center", line_h=1.06)
+    out = WEB / "s-agent-when-clown-ru.png"
+    img.save(out)
+    return out
+
+
 ALL = [
     make_gru, make_change_my_mind, make_pigeon, make_pooh, make_pooh_memory,
     make_roll_safe, make_doge, make_batman, make_this_is_fine,
     make_always_has_been,
     make_yoda, make_two_guys_bus, make_skeleton,
+    # WAVE 1 (#196)
+    make_two_buttons, make_one_does_not, make_futurama_fry, make_panik_kalm,
+    make_trade_offer,
+    # WAVE 2 (#196)
+    make_woman_cat, make_disaster_girl,
+    # WAVE 3 (#196)
+    make_left_exit, make_clown_agents,
 ]
 
 if __name__ == "__main__":

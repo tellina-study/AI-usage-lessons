@@ -907,12 +907,20 @@
   "id": "s11.body.007",
   "slide": "s11",
   "where": "body",
+  "ru": "AGENTS.md → симлинк на CLAUDE.md, заведён на дне 0",
+  "en": "AGENTS.md → symlink to CLAUDE.md, set up on day 0",
+  "passthrough": false
+ },
+ {
+  "id": "s11.body.008",
+  "slide": "s11",
+  "where": "body",
   "ru": "Прототип работает, задач по нему ещё на несколько дней. Разработчик заводит CLAUDE.md, чтобы агент в следующих сессиях работал с проектом одинаково, и открывает файл — там одна строка, гейт готовности, остальное пусто.",
   "en": "The prototype works, and there are still several days of tasks on it. The developer sets up CLAUDE.md so the agent works with the project the same way in later sessions, and opens the file — there is one line in it, the readiness gate, the rest is empty.",
   "passthrough": false
  },
  {
-  "id": "s11.body.008",
+  "id": "s11.body.009",
   "slide": "s11",
   "where": "body",
   "ru": "Первый раздел, с которого такой файл обычно начинается, — «Repository overview»: из чего собран сайт, где лежит форма, какая структура папок. Так устроено большинство файлов инструкций, которые можно открыть в публичных репозиториях.",
@@ -1337,6 +1345,14 @@
  },
  {
   "id": "s14.body.004",
+  "slide": "s14",
+  "where": "body",
+  "ru": "AGENTS.md        → симлинк на CLAUDE.md, заведён на дне 0",
+  "en": "AGENTS.md        → symlink to CLAUDE.md, set up on day 0",
+  "passthrough": false
+ },
+ {
+  "id": "s14.body.005",
   "slide": "s14",
   "where": "body",
   "ru": "«Описания структуры репозитория в файле нет: сигнала для него нет. Пусто — не навсегда: часть содержимого CLAUDE.md появится в нём уже на этой неделе, и по другой причине — не по сигналу, а как базовая практика.»",
@@ -1947,8 +1963,8 @@
   "id": "s20.body.002",
   "slide": "s20",
   "where": "body",
-  "ru": "Итоговый файл — тринадцать строк: критерий готово, гейт-предупреждение, честная оговорка предела; AGENTS.md — симлинк на тот же файл",
-  "en": "The final file is thirteen lines: the \"done\" criterion, the gate warning, an honest caveat about the limit; AGENTS.md is a symlink to the same file",
+  "ru": "Итоговый файл — пятнадцать строк: критерий готово, гейт-предупреждение, честная оговорка предела и один разовый шаг, без которого тесты падают не по делу; AGENTS.md — симлинк на тот же файл",
+  "en": "The final file is fifteen lines: the \"done\" criterion, the gate warning, an honest caveat about the limit, and one one-off step without which the tests fail for no good reason; AGENTS.md is a symlink to the same file",
   "passthrough": false
  },
  {
@@ -1971,16 +1987,16 @@
   "id": "s20.body.005",
   "slide": "s20",
   "where": "body",
-  "ru": "Готово = npm run build код 0, npx playwright test зелёный,",
-  "en": "Done = npm run build exit code 0, npx playwright test green,",
+  "ru": "Готово = npm run build код 0, npx playwright test зелёный, форма",
+  "en": "Done = npm run build exit code 0, npx playwright test green, the",
   "passthrough": false
  },
  {
   "id": "s20.body.006",
   "slide": "s20",
   "where": "body",
-  "ru": "форма реально отправляет заявку на проде.",
-  "en": "the form really sends the request in production.",
+  "ru": "отправлена руками из собранного dist/ — и заполненная, и пустая.",
+  "en": "form submitted by hand from the built dist/ — filled in and empty.",
   "passthrough": false
  },
  {
@@ -2011,28 +2027,52 @@
   "id": "s20.body.010",
   "slide": "s20",
   "where": "body",
-  "ru": "- To verify: открыть dist/index.html после сборки, вручную",
-  "en": "- To verify: open dist/index.html after the build and manually",
+  "ru": "- To verify: открыть dist/index.html после сборки и отправить форму",
+  "en": "- To verify: open dist/index.html after the build and submit the",
   "passthrough": false
  },
  {
   "id": "s20.body.011",
   "slide": "s20",
   "where": "body",
-  "ru": "  отправить форму с заполненными и с пустыми полями.",
-  "en": "  submit the form with filled-in and with empty fields.",
+  "ru": "  руками — с заполненными и с пустыми полями.",
+  "en": "  form by hand — with filled-in and with empty fields.",
   "passthrough": false
  },
  {
   "id": "s20.body.012",
   "slide": "s20",
   "where": "body",
-  "ru": "Файл грузится в начало каждой сессии целиком (официальный ориентир — до 200 строк, наш итог — 13)",
-  "en": "The file is loaded in full at the start of every session (the official guideline is up to 200 lines, our result is 13)",
+  "ru": "- Один раз на машину, до первого npx playwright test: npm ci, затем",
+  "en": "- Once per machine, before the first npx playwright test: npm ci,",
   "passthrough": false
  },
  {
   "id": "s20.body.013",
+  "slide": "s20",
+  "where": "body",
+  "ru": "  npx playwright install chromium. Без второй команды падают все",
+  "en": "  then npx playwright install chromium. Without the second command",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.014",
+  "slide": "s20",
+  "where": "body",
+  "ru": "  тесты сразу и не по делу.",
+  "en": "  every test fails at once and for no good reason.",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.015",
+  "slide": "s20",
+  "where": "body",
+  "ru": "Файл грузится в начало каждой сессии целиком (официальный ориентир — до 200 строк, наш итог — 15)",
+  "en": "The file is loaded in full at the start of every session (the official guideline is up to 200 lines, our result is 15)",
+  "passthrough": false
+ },
+ {
+  "id": "s20.body.016",
   "slide": "s20",
   "where": "body",
   "ru": "@-импорты организуют файл, но не экономят контекст",
@@ -2040,11 +2080,11 @@
   "passthrough": false
  },
  {
-  "id": "s20.body.014",
+  "id": "s20.body.017",
   "slide": "s20",
   "where": "body",
-  "ru": "AGENTS.md — симлинк на тот же файл (ln -s CLAUDE.md AGENTS.md). Острый край: cp -R без -P на macOS разыменовывает симлинк во вторую копию молча — копировать через cp -a / git clone / git archive",
-  "en": "AGENTS.md is a symlink to the same file (ln -s CLAUDE.md AGENTS.md). The sharp edge: cp -R without -P on macOS silently dereferences the symlink into a second copy — copy with cp -a / git clone / git archive",
+  "ru": "AGENTS.md — симлинк на тот же файл (ln -s CLAUDE.md AGENTS.md). Острый край: поведение cp -R на симлинке стандартом не задано (POSIX.1-2024); -P фиксирует намерение, -L ломает симлинк гарантированно",
+  "en": "AGENTS.md is a symlink to the same file (ln -s CLAUDE.md AGENTS.md). Sharp edge: cp -R on a symlink is not defined by the standard (POSIX.1-2024); -P states the intent, -L breaks the symlink for certain",
   "passthrough": false
  },
  {
@@ -2891,8 +2931,8 @@
   "id": "s27.body.002",
   "slide": "s27",
   "where": "body",
-  "ru": "Корневой файл остался тем же, на тринадцать строк — деталь ушла комментарием к функции, конвенция тестов уже в самих тестах, ни одного вложенного файла инструкций не завелось",
-  "en": "The root file stayed the same, thirteen lines long — the detail went off into a comment on the function, the test convention already sits in the tests, not a single nested instruction file got set up",
+  "ru": "Корневой файл остался тем же, на пятнадцать строк — деталь ушла комментарием к функции, конвенция тестов уже в самих тестах, ни одного вложенного файла инструкций не завелось",
+  "en": "The root file stayed the same, fifteen lines long — the detail went off into a comment on the function, the test convention already sits in the tests, not a single nested instruction file got set up",
   "passthrough": false
  },
  {
@@ -2915,8 +2955,8 @@
   "id": "s27.body.005",
   "slide": "s27",
   "where": "body",
-  "ru": "CLAUDE.md              ← те же 13 строк, не выросли",
-  "en": "CLAUDE.md              ← the same 13 lines, no growth",
+  "ru": "CLAUDE.md              ← те же 15 строк, не выросли",
+  "en": "CLAUDE.md              ← the same 15 lines, no growth",
   "passthrough": false
  },
  {
@@ -3755,8 +3795,8 @@
   "id": "s34.body.006",
   "slide": "s34",
   "where": "body",
-  "ru": "Не подключаем стороннюю библиотеку\nвалидации — форма из двух полей",
-  "en": "We are not pulling in a third-party\nvalidation library — the form has two fields",
+  "ru": "Сторонний виджет валидации в форму\nне добавляем — форма из двух полей",
+  "en": "We are not adding a third-party validation\nwidget — the form has two fields",
   "passthrough": false
  },
  {
@@ -3795,16 +3835,16 @@
   "id": "s34.body.011",
   "slide": "s34",
   "where": "body",
-  "ru": "собранная запись — реальный файл демо-репозитория",
-  "en": "the assembled entry — a real file from the demo repository",
+  "ru": "собранная запись — реальный файл демо-репозитория (коммит 94c5378)",
+  "en": "the assembled entry — a real file from the demo repository (commit 94c5378)",
   "passthrough": false
  },
  {
   "id": "s34.body.012",
   "slide": "s34",
   "where": "body",
-  "ru": "## 2026-09-20 — не подключаем библиотеку валидации форм",
-  "en": "## 2026-09-20 — we are not pulling in a form-validation library",
+  "ru": "## 2026-09-24 — сторонние виджеты в форму не добавляем",
+  "en": "## 2026-09-24 — no third-party widgets in the form",
   "passthrough": false
  },
  {
@@ -3819,8 +3859,16 @@
   "id": "s34.body.014",
   "slide": "s34",
   "where": "body",
-  "ru": "index.html. Сторонняя библиотека — лишняя зависимость ради этого объёма.",
-  "en": "index.html are enough. A third-party library is an extra dependency for this scope.",
+  "ru": "index.html. Сторонний виджет — лишняя зависимость и лишние килобайты",
+  "en": "index.html are enough. A third-party widget is an extra dependency and",
+  "passthrough": false
+ },
+ {
+  "id": "s34.body.015",
+  "slide": "s34",
+  "where": "body",
+  "ru": "в сборке ради этого объёма.",
+  "en": "extra kilobytes in the bundle for this much functionality.",
   "passthrough": false
  },
  {
@@ -3867,20 +3915,12 @@
   "id": "s35.body.006",
   "slide": "s35",
   "where": "body",
-  "ru": "## 2026-09-26 — сторонние виджеты в форму не добавляем",
-  "en": "## 2026-09-26 — no third-party widgets in the form",
-  "passthrough": false
- },
- {
-  "id": "s35.body.007",
-  "slide": "s35",
-  "where": "body",
   "ru": "Форма — два поля (имя, email), хватает нативных required/pattern",
   "en": "The form has two fields (name, email), native required/pattern in",
   "passthrough": false
  },
  {
-  "id": "s35.body.008",
+  "id": "s35.body.007",
   "slide": "s35",
   "where": "body",
   "ru": "в index.html. Сторонний виджет — лишняя зависимость и лишние",
@@ -3888,15 +3928,15 @@
   "passthrough": false
  },
  {
-  "id": "s35.body.009",
+  "id": "s35.body.008",
   "slide": "s35",
   "where": "body",
   "ru": "килобайты в сборке ради этого объёма.",
-  "en": "and extra kilobytes in the bundle for this scope.",
+  "en": "and extra kilobytes in the bundle for this much functionality.",
   "passthrough": false
  },
  {
-  "id": "s35.body.010",
+  "id": "s35.body.009",
   "slide": "s35",
   "where": "body",
   "ru": "состояние репозитория, неделя 1",
@@ -3904,11 +3944,27 @@
   "passthrough": false
  },
  {
-  "id": "s35.body.011",
+  "id": "s35.body.010",
   "slide": "s35",
   "where": "body",
   "ru": "AGENTS.md",
   "en": "AGENTS.md",
+  "passthrough": true
+ },
+ {
+  "id": "s35.body.011",
+  "slide": "s35",
+  "where": "body",
+  "ru": "tests/delivery.spec.ts",
+  "en": "tests/delivery.spec.ts",
+  "passthrough": true
+ },
+ {
+  "id": "s35.body.012",
+  "slide": "s35",
+  "where": "body",
+  "ru": "tests/page-objects/form.page.ts",
+  "en": "tests/page-objects/form.page.ts",
   "passthrough": true
  },
  {

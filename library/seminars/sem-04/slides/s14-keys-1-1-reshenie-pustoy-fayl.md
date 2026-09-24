@@ -7,7 +7,7 @@ learning_goal: "Решение кейса 1.1 — пустой файл как �
 visual:
   pattern: assertion_visual
   primary: "Состояние репозитория: CLAUDE.md заведён и по-прежнему пуст. Крупная строка-итог: «Описания структуры в файле нет — для него нет сигнала». Ниже — строка-мостик к кейсу 1.2: часть содержимого CLAUDE.md заводится сразу, на дне 0, как дешёвая гигиена."
-  backup: "Продуктовый слой дерева — assets/captures/21-tree-stage1.txt; spec.md, README.md и DECISIONS.md заведены на дне 0 и в тот git-снимок не вошли."
+  backup: "Продуктовый слой дерева — assets/captures/21-tree-stage1.txt (`git ls-tree -r --name-only 1019546` в tellina-study/signup-landing-demo, ветка seminar-4-arc); опущена инфраструктура сборки: .gitignore, package-lock.json, vite.config.js, playwright.config.ts, src/style.css, src/validate.js. AGENTS.md на слайде показан, потому что он в репозитории настоящий: симлинк на CLAUDE.md, заведён на дне 0 (коммит 10699a2)."
 ---
 
 # Файл остаётся пустым
@@ -29,6 +29,7 @@ package.json
 src/main.js
 tests/form.spec.ts
 CLAUDE.md        ← заведён, по-прежнему пуст
+AGENTS.md        → симлинк на CLAUDE.md, заведён на дне 0
 ```
 
 Крупная строка-итог:

@@ -1,11 +1,27 @@
-$ git ls-tree -r --name-only 01931c0 | sort   # commit 01931c0
+$ git clone https://github.com/tellina-study/signup-landing-demo.git && cd signup-landing-demo
+$ git switch seminar-4-arc
+$ git ls-tree -r --name-only 94c5378 | LC_ALL=C sort   # кейс 2.1, коммит 94c5378
 
+.gitignore
 AGENTS.md
 CLAUDE.md
 DECISIONS.md
+README.md
 index.html
+package-lock.json
 package.json
+playwright.config.ts
+spec.md
 src/main.js
+src/style.css
+src/validate.js
+tests/delivery.spec.ts
 tests/form.spec.ts
+tests/page-objects/form.page.ts
+vite.config.js
 
-# Комментарий: Ступень 2 (память): + DECISIONS.md (append-only лог решений).
+# Комментарий: состояние репозитория на кейсе 2.1 (коммит 94c5378, ветка seminar-4-arc
+# публичного репозитория tellina-study/signup-landing-demo). DECISIONS.md заведён на дне 0
+# (коммит 10699a2) — на этом коммите в нём появляется первая содержательная запись, сам файл
+# новым не является. В tests/ уже три файла: они пришли в кейсе 1.3 (a1bd73f, ffbb258).
+# Снято 2026-09-24.

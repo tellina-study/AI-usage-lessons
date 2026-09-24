@@ -7,7 +7,7 @@ learning_goal: "The problem of case 1.1 — a decision-point scenario at the ent
 visual:
   pattern: problem_scenario
   primary: "On the left — the state of the repository after the first run. On the right — the scenario: the developer opens CLAUDE.md — there is one line in it, the readiness gate, the rest is empty; the typical first section of such a file is 'Repository overview' (what the site is built from, where the form lives, what the folder structure is), and that is how instruction files are put together in most public repositories. NO question, NO cards, NO evaluation."
-  backup: "The tree — assets/captures/21-tree-stage1.txt (the product layer) plus spec.md, README.md and DECISIONS.md, set up on day 0: that git snapshot was taken before them, and on the slide the state of the repository is shown in full."
+  backup: "The tree is the product layer of assets/captures/21-tree-stage1.txt (`git ls-tree -r --name-only 1019546` in tellina-study/signup-landing-demo, branch seminar-4-arc); at this step the file list is identical to commit 25bd3f0, where the prototype has just been built — verified by diff. The build infrastructure is omitted: .gitignore, package-lock.json, vite.config.js, playwright.config.ts, src/style.css, src/validate.js. AGENTS.md is shown on the slide because it is real in the repository: a symlink to CLAUDE.md, set up on day 0 (commit 10699a2, mode 120000)."
 ---
 
 # An almost empty CLAUDE.md
@@ -29,6 +29,7 @@ package.json
 src/main.js
 tests/form.spec.ts
 CLAUDE.md        ← set up, has the gate line, nothing else
+AGENTS.md        → symlink to CLAUDE.md, set up on day 0
 ```
 
 On the right — the scenario:

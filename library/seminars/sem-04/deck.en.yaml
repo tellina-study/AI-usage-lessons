@@ -221,7 +221,7 @@ slides:
     file: slides-en/s20-keys-1-2-reshenie-itogovyy-claude-md.md
     type: code_artifact
     duration_min: 1.5
-    assertion: "The final file is thirteen lines: the 'done' criterion, the gate warning, an honest caveat about its limit; AGENTS.md is a symlink to the same file"
+    assertion: "The final file is fifteen lines: the 'done' criterion, the gate warning, an honest caveat about its limit, and one one-off step without which the tests fail for no good reason; AGENTS.md is a symlink to the same file"
     learning_goal: "The decision of case 1.2 — the real final CLAUDE.md, the loading mechanics, the AGENTS.md symlink and the sharp edge of cp -R"
     visual:
       pattern: code_artifact
@@ -277,7 +277,7 @@ slides:
     file: slides-en/s27-keys-1-3-reshenie-most-k-pamyati.md
     type: assertion_visual
     duration_min: 1.5
-    assertion: "The root file stayed the same, thirteen lines long: the detail went into a comment on the function, the tests' convention already sits in the tests themselves, not a single nested instruction file was set up — and knowledge that appears as the work goes along has a different address, and that is section two"
+    assertion: "The root file stayed the same, fifteen lines long: the detail went into a comment on the function, the tests' convention already sits in the tests themselves, not a single nested instruction file was set up — and knowledge that appears as the work goes along has a different address, and that is section two"
     learning_goal: "The decision of case 1.3 (the state of the repository + the threshold for switching on each address) and section 1's final bridge to section 2 — memory"
     visual:
       pattern: assertion_visual

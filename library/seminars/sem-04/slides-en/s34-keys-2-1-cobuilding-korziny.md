@@ -7,6 +7,7 @@ learning_goal: "Co-building for case 2.1: sorting five fact cards into three bas
 visual:
   pattern: cobuilding_baskets_and_record
   primary: "Three baskets — auto-memory / DECISIONS.md / nowhere — with the cards distributed according to the discussion. Below — the assembled entry appearing: the date, the decision in one line, the reason."
+  backup: "The entry is `git show 94c5378:DECISIONS.md` in tellina-study/signup-landing-demo, branch seminar-4-arc — the same file as assets/captures/33-code-DECISIONS.md.txt. The date of the entry is the real date of the commit. The five fact cards on this slide are illustrative: they are not recorded in the repository — only the entry itself is, the one that went into the DECISIONS.md basket first."
 ---
 
 # Three baskets, one entry
@@ -21,13 +22,19 @@ Three baskets in a row — **auto-memory** · **DECISIONS.md** · **nowhere** �
 
 | Card | Basket |
 |---|---|
-| "We are not pulling in a third-party validation library — the form has two fields" | `DECISIONS.md` |
+| "We are not adding a third-party validation widget to the form — the form has two fields" | `DECISIONS.md` |
 | "The developer asks for short answers, with no preamble" | `auto-memory` |
 | "The form handler lives in `src/main.js`" | `nowhere` |
 | "On September 24 a test failed because of a timeout, we raised the wait" | `nowhere` |
 | "We are not building our own backend — the request goes to an external form-intake service" | `DECISIONS.md` |
 
-Below — the assembled entry appears: the date, the decision in one line, the reason in one to three sentences — the one that actually sits in the demo repository.
+Below — the assembled entry appears: the date, the decision in one line, the reason in one to three sentences — the one that actually sits in the demo repository (commit `94c5378`; the date of the entry is the real date of the commit):
+
+```markdown
+## 2026-09-24 — no third-party widgets in the form
+The form has two fields (name, email), the native `required`/`pattern` in `index.html` are enough.
+A third-party widget is an extra dependency and extra kilobytes in the bundle for this much functionality.
+```
 
 ## Speaker notes
 

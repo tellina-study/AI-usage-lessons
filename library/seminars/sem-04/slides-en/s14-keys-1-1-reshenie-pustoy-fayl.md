@@ -7,7 +7,7 @@ learning_goal: "The resolution of case 1.1 — the empty file as a substantive o
 visual:
   pattern: assertion_visual
   primary: "The state of the repository: CLAUDE.md is set up and still empty. A large outcome line: 'There is no description of the structure in the file — there is no signal for it'. Below — a bridge line to case 1.2: part of the content of CLAUDE.md is set up right away, on day 0, as cheap hygiene."
-  backup: "The product layer of the tree — assets/captures/21-tree-stage1.txt; spec.md, README.md and DECISIONS.md were set up on day 0 and did not make it into that git snapshot."
+  backup: "The product layer of the tree — assets/captures/21-tree-stage1.txt (`git ls-tree -r --name-only 1019546` in tellina-study/signup-landing-demo, branch seminar-4-arc); the build infrastructure is omitted: .gitignore, package-lock.json, vite.config.js, playwright.config.ts, src/style.css, src/validate.js. AGENTS.md is shown on the slide because it is real in the repository: a symlink to CLAUDE.md, set up on day 0 (commit 10699a2)."
 ---
 
 # The file stays empty
@@ -29,6 +29,7 @@ package.json
 src/main.js
 tests/form.spec.ts
 CLAUDE.md        ← set up, still empty
+AGENTS.md        → symlink to CLAUDE.md, set up on day 0
 ```
 
 A large outcome line:

@@ -1170,12 +1170,13 @@ def build_s11(p):
         "гейта готовности, остальное пусто, а стандартный первый раздел такого файла "
         "называется «Repository overview»")
     half_w = 5.85
-    h1 = 3.05
+    h1 = 3.35
     terminal_card(s, 0.55, y, half_w, h1, [
         ("README.md", CODE_FG), ("spec.md", CODE_FG), ("DECISIONS.md", CODE_FG),
         ("index.html", CODE_FG), ("package.json", CODE_FG),
         ("src/main.js", CODE_FG), ("tests/form.spec.ts", CODE_FG),
         ("CLAUDE.md ← гейт есть, остальное пусто", GOLD, True),
+        ("AGENTS.md → симлинк на CLAUDE.md, заведён на дне 0", CODE_MUTED),
     ], title="состояние репозитория", size=11.5)
     rx = 0.55 + half_w + 0.33
     ocean_box(s, rx, y, half_w, h1)
@@ -1264,13 +1265,14 @@ def build_s14(p):
         "Описания структуры репозитория в CLAUDE.md не появляется: сигнала для него "
         "нет — а первое содержимое у файла появится уже в следующем кейсе, и по другой "
         "причине")
-    terminal_card(s, 0.55, y, 12.23, 3.1, [
+    terminal_card(s, 0.55, y, 12.23, 3.4, [
         ("README.md", CODE_FG), ("spec.md", CODE_FG), ("DECISIONS.md", CODE_FG),
         ("index.html", CODE_FG), ("package.json", CODE_FG),
         ("src/main.js", CODE_FG), ("tests/form.spec.ts", CODE_FG),
         ("CLAUDE.md        ← заведён, по-прежнему пуст", GOLD, True),
+        ("AGENTS.md        → симлинк на CLAUDE.md, заведён на дне 0", CODE_MUTED),
     ], title="состояние репозитория", size=11.5)
-    y2 = y + 3.1 + 0.22
+    y2 = y + 3.4 + 0.22
     gold_callout(s, 0.55, y2, 12.23, 7.0 - y2,
                  "«Описания структуры репозитория в файле нет: сигнала для него нет. "
                  "Пусто — не навсегда: часть содержимого CLAUDE.md появится в нём уже на "
@@ -1445,34 +1447,38 @@ def build_s20(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     y = auto_header(s, "Кейс 1.2 · Решение",
-        "Итоговый файл — тринадцать строк: критерий готово, гейт-предупреждение, "
-        "честная оговорка предела; AGENTS.md — симлинк на тот же файл")
-    half_w = 6.7
-    h1 = 4.75
+        "Итоговый файл — пятнадцать строк: критерий готово, гейт-предупреждение, "
+        "честная оговорка предела и один разовый шаг, без которого тесты падают не по "
+        "делу; AGENTS.md — симлинк на тот же файл")
+    half_w = 7.05
+    h1 = 7.02 - y          # держим карточки внутри слайда: 15 строк выше прежних 12
     terminal_card(s, 0.55, y, half_w, h1, [
         ("# CLAUDE.md", TEAL, True),
         ("", CODE_FG),
         ("signup-landing: статический лендинг с формой заявки на демо-урок.", CODE_FG),
-        ("Готово = npm run build код 0, npx playwright test зелёный,", CODE_FG),
-        ("форма реально отправляет заявку на проде.", CODE_FG),
+        ("Готово = npm run build код 0, npx playwright test зелёный, форма", CODE_FG),
+        ("отправлена руками из собранного dist/ — и заполненная, и пустая.", CODE_FG),
         ("", CODE_FG),
         ("## Safety / scope boundaries", TEAL, True),
         ("- Никогда не запускать деплой на прод без явного запроса.", CODE_FG),
         ("", CODE_FG),
         ("## Build, test, verify", TEAL, True),
-        ("- To verify: открыть dist/index.html после сборки, вручную", CODE_FG),
-        ("  отправить форму с заполненными и с пустыми полями.", CODE_FG),
-    ], size=11, line_spacing=1.28)
+        ("- To verify: открыть dist/index.html после сборки и отправить форму", CODE_FG),
+        ("  руками — с заполненными и с пустыми полями.", CODE_FG),
+        ("- Один раз на машину, до первого npx playwright test: npm ci, затем", CODE_FG),
+        ("  npx playwright install chromium. Без второй команды падают все", CODE_FG),
+        ("  тесты сразу и не по делу.", CODE_FG),
+    ], size=9.8, line_spacing=1.2)
     rx = 0.55 + half_w + 0.3
     rw = 12.23 - half_w - 0.3
     numbered_card(s, rx, y, rw, h1, [
         "Файл грузится в начало каждой сессии целиком (официальный ориентир — до 200 "
-        "строк, наш итог — 13)",
+        "строк, наш итог — 15)",
         "@-импорты организуют файл, но не экономят контекст",
         "AGENTS.md — симлинк на тот же файл (ln -s CLAUDE.md AGENTS.md). Острый край: "
-        "cp -R без -P на macOS разыменовывает симлинк во вторую копию молча — копировать "
-        "через cp -a / git clone / git archive",
-    ], size=12)
+        "поведение cp -R на симлинке стандартом не задано (POSIX.1-2024); -P фиксирует "
+        "намерение, -L ломает симлинк гарантированно",
+    ], size=11.5)
     speaker_notes(s, load_notes("s20"))
 
 
@@ -1675,14 +1681,14 @@ def build_s27(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     header(s, "Кейс 1.3 · Решение",
-        "Корневой файл остался тем же, на тринадцать строк — деталь ушла комментарием "
+        "Корневой файл остался тем же, на пятнадцать строк — деталь ушла комментарием "
         "к функции, конвенция тестов уже в самих тестах, ни одного вложенного файла "
         "инструкций не завелось",
         title_size=12, title_h=1.0)
     y = 0.7 + 1.0 + 0.1
     terminal_card(s, 0.55, y, 12.23, 2.8, [
         ("README.md · spec.md · DECISIONS.md", CODE_FG),
-        ("CLAUDE.md              ← те же 13 строк, не выросли", CODE_FG),
+        ("CLAUDE.md              ← те же 15 строк, не выросли", CODE_FG),
         ("AGENTS.md              → симлинк на CLAUDE.md", CODE_FG),
         ("index.html · package.json", CODE_FG),
         ("src/main.js  ← комментарий к submitForm(): повтор при", GOLD, True),
@@ -1852,18 +1858,19 @@ def build_s34(p):
     bh = 2.7
     basket_row(s, 0.55, y, 12.23, bh, [
         ("авто-память", ["Разработчик просит отвечать\nкоротко, без преамбул"]),
-        ("DECISIONS.md", ["Не подключаем стороннюю библиотеку\nвалидации — форма из двух "
-                           "полей", "Своего бэкенда не делаем — заявка\nуходит на внешний "
-                           "сервис приёма форм"]),
+        ("DECISIONS.md", ["Сторонний виджет валидации в форму\nне добавляем — форма из "
+                           "двух полей", "Своего бэкенда не делаем — заявка\nуходит на "
+                           "внешний сервис приёма форм"]),
         ("никуда", ["Обработчик формы лежит\nв src/main.js",
                      "24 сентября тест упал из-за\nтаймаута, увеличили ожидание"]),
     ], highlight_idx=2)
     y2 = y + bh + 0.25
     terminal_card(s, 0.55, y2, 12.23, 7.0 - y2, [
-        ("## 2026-09-20 — не подключаем библиотеку валидации форм", TEAL, True),
+        ("## 2026-09-24 — сторонние виджеты в форму не добавляем", TEAL, True),
         ("Форма — два поля (имя, email), хватает нативных required/pattern в", CODE_FG),
-        ("index.html. Сторонняя библиотека — лишняя зависимость ради этого объёма.", CODE_FG),
-    ], title="собранная запись — реальный файл демо-репозитория", size=11.5)
+        ("index.html. Сторонний виджет — лишняя зависимость и лишние килобайты", CODE_FG),
+        ("в сборке ради этого объёма.", CODE_FG),
+    ], title="собранная запись — реальный файл демо-репозитория (коммит 94c5378)", size=11.5)
     speaker_notes(s, load_notes("s34"))
 
 
@@ -1880,7 +1887,7 @@ def build_s35(p):
         ("", CODE_FG),
         ("Append-only log of why, in date order.", CODE_MUTED),
         ("", CODE_FG),
-        ("## 2026-09-26 — сторонние виджеты в форму не добавляем", TEAL, True),
+        ("## 2026-09-24 — сторонние виджеты в форму не добавляем", TEAL, True),
         ("Форма — два поля (имя, email), хватает нативных required/pattern", CODE_FG),
         ("в index.html. Сторонний виджет — лишняя зависимость и лишние", CODE_FG),
         ("килобайты в сборке ради этого объёма.", CODE_FG),
@@ -1893,6 +1900,8 @@ def build_s35(p):
         ("CLAUDE.md", CODE_FG), ("AGENTS.md", CODE_FG), ("index.html", CODE_FG),
         ("package.json", CODE_FG), ("src/main.js", CODE_FG),
         ("tests/form.spec.ts", CODE_FG),
+        ("tests/delivery.spec.ts", CODE_FG),
+        ("tests/page-objects/form.page.ts", CODE_FG),
     ], title="состояние репозитория, неделя 1", size=10.5)
     speaker_notes(s, load_notes("s35"))
 

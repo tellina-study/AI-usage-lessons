@@ -7,7 +7,7 @@ learning_goal: "Проблема кейса 1.1 — сценарий-разви�
 visual:
   pattern: problem_scenario
   primary: "Слева — состояние репозитория после первого прогона. Справа — сценарий: разработчик открывает CLAUDE.md — там одна строка, гейт готовности, остальное пусто; типовой первый раздел такого файла — «Repository overview» (из чего собран сайт, где лежит форма, какая структура папок), так устроены файлы инструкций в большинстве публичных репозиториев. БЕЗ вопроса, БЕЗ карточек, БЕЗ оценки."
-  backup: "Дерево — assets/captures/21-tree-stage1.txt (продуктовый слой) плюс spec.md, README.md и DECISIONS.md, заведённые на дне 0: тот git-снимок сделан до них, на слайде состояние репозитория показывается целиком."
+  backup: "Дерево — продуктовый слой assets/captures/21-tree-stage1.txt (`git ls-tree -r --name-only 1019546` в tellina-study/signup-landing-demo, ветка seminar-4-arc); на этом шаге список файлов совпадает с коммитом 25bd3f0, где прототип только что собран, — сверено diff. Опущена инфраструктура сборки: .gitignore, package-lock.json, vite.config.js, playwright.config.ts, src/style.css, src/validate.js. AGENTS.md на слайде показан, потому что он в репозитории настоящий: симлинк на CLAUDE.md, заведён на дне 0 (коммит 10699a2, режим 120000)."
 ---
 
 # Почти пустой CLAUDE.md
@@ -29,6 +29,7 @@ package.json
 src/main.js
 tests/form.spec.ts
 CLAUDE.md        ← заведён, есть строка гейта, остальное пусто
+AGENTS.md        → симлинк на CLAUDE.md, заведён на дне 0
 ```
 
 Справа — сценарий:

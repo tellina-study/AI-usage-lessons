@@ -1,16 +1,23 @@
+$ git clone https://github.com/tellina-study/signup-landing-demo.git && cd signup-landing-demo
+$ git switch seminar-4-arc
+$ git show 1019546:CLAUDE.md   # итоговый CLAUDE.md кейса 1.2, 15 строк
+
 # CLAUDE.md
 
-signup-landing: статический лендинг с формой заявки на демо-урок. Готово = `npm run build`
-завершается кодом 0, `npx playwright test` зелёный, форма реально отправляет заявку на проде.
+signup-landing: статический лендинг с формой заявки на демо-урок.
+Готово = `npm run build` код 0, `npx playwright test` зелёный, форма
+отправлена руками из собранного `dist/` — и заполненная, и пустая.
 
 ## Safety / scope boundaries
-
 - Никогда не запускать деплой на прод без явного запроса.
 
 ## Build, test, verify
+- To verify: открыть `dist/index.html` после сборки и отправить форму
+  руками — с заполненными и с пустыми полями.
+- Один раз на машину, до первого `npx playwright test`: `npm ci`, затем
+  `npx playwright install chromium`. Без второй команды падают все тесты
+  сразу и не по делу.
 
-- Build: `npm run build`
-- Test: `npx playwright test`
-- Run locally: `npm run dev`
-- To verify a change actually works (not just compiles): открыть `dist/index.html` после сборки,
-  вручную отправить форму с заполненными и с пустыми полями.
+# Комментарий: настоящий файл настоящего репозитория, переносить на слайд s20 дословно.
+# Число строк — git show 1019546:CLAUDE.md | wc -l -> 15. Проверять командой, не по слайду.
+# Снято 2026-09-24.

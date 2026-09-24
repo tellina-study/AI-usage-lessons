@@ -31,7 +31,7 @@ At the bottom, two caveats in italics:
 
 > "No direct measurement of the presence paradox on append-only decision logs specifically has been carried out — this is a transfer of an already established mechanism to a new object, not a separate new study."
 >
-> "The flip side of the same mechanics: an entry the agent did not open costs nothing — and gives nothing. In the final `CLAUDE.md` of case 1.2, thirteen lines, there is no pointer to `DECISIONS.md`: a guaranteed path from the auto-loaded layer to the decision log does not currently exist for us. This is an open question, not a solved one."
+> "The flip side of the same mechanics: an entry the agent did not open costs nothing — and gives nothing. In the final `CLAUDE.md` of case 1.2, fifteen lines, there is no pointer to `DECISIONS.md`: a guaranteed path from the auto-loaded layer to the decision log does not currently exist for us. This is an open question, not a solved one."
 
 ## Speaker notes
 
@@ -43,4 +43,4 @@ Hence a correction to the presence paradox. In case 1.1 a controlled experiment 
 
 No separate measurement on decision logs specifically has been carried out — this is a transfer of a mechanism to a new object, not new proof, and that is how it is presented.
 
-And the flip side, which is more honest to name right away: an entry the agent did not open costs nothing and gives nothing. In our final instruction file — the thirteen lines from case 1.2 — there is no pointer to `DECISIONS.md`. Which means we currently have no guaranteed path from the auto-loaded layer to the decision log. That is an open question, not a closed one."
+And the flip side, which is more honest to name right away: an entry the agent did not open costs nothing and gives nothing. In our final instruction file — the fifteen lines from case 1.2 — there is no pointer to `DECISIONS.md`. Which means we currently have no guaranteed path from the auto-loaded layer to the decision log. That is an open question, not a closed one."

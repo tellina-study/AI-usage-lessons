@@ -16,6 +16,8 @@ visual_brief: >
   (a command → AGENTS.md; an invariant broken → a fitness function; unsafe → a SAST-gate). An arrow "we narrow the solution space, not give more freedom".
   An HONEST limit plate (in-bucket): guardrails ≠ verification — a linter knows the code is formatted, it does NOT know whether it solves the right task.
   Three layers at the bottom: harness + behavior tests + human at merge (none replaces another). Gold — "a nondeterministic model is held by a deterministic scaffold".
+  Under the grid of check chips — a compact gloss line (9.5pt italic, MID) expanding the two non-obvious
+  labels at their FIRST VISIBLE use: SAST and least-privilege (README §5.8b, acronym glossing).
 interaction: none
 ---
 
@@ -30,6 +32,9 @@ A deterministic scaffold-gate around a nondeterministic model
 **The harness** (harness engineering, Böckeler): reliability is achieved not by "giving the model more freedom," but by **narrowing its solution space** with explicit structure and verification. The model is nondeterministic (one prompt → different answers, some plausibly wrong); the harness is deterministic (a test either passed or not).
 
 Three categories of scaffold: **context-engineering · architectural constraints** (linters, structural tests) **· entropy management** ("garbage-collector" agents). The security perimeter: **least-privilege, sandbox, PR-as-gate**.
+
+[Gloss line under the grid of checks]
+*SAST — static application security testing: analysis of code for vulnerabilities without running it. least-privilege — the minimum rights needed, nothing more.*
 
 [Feedback loop — the main mechanism]
 The agent **stalls → this is a signal** about a hole in the scaffold → add the missing part back: not enough of a command → into AGENTS.md; an invariant broken → a fitness function; unsafe → a SAST-gate.

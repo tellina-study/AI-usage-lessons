@@ -43,6 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]      # library/lectures/lec-04
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts-en"
+WEB = ASSETS / "web"          # meme composites; EN captions carry an «-en» suffix
 SLIDES_DIR = ROOT / "slides-en"
 FONT_HEAD = "DejaVu Sans"
 FONT_BODY = "DejaVu Sans"
@@ -117,6 +118,27 @@ URLS = {
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
     "anthropic_ctx_eng": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "willison_vibe_code": "https://simonwillison.net/2025/Oct/7/vibe-engineering/",
+    # --- EN-sync block 3 (#172): keys the round-6 RU slides s18b/s20b–s20g
+    # introduced. Values copied verbatim from _helpers.py — a translation
+    # never changes a URL. ---
+    "agent_skills_std": "https://agentskills.io/",
+    "claude_skills_docs": "https://code.claude.com/docs/en/skills",
+    "destefanis_skills_se": "https://arxiv.org/abs/2607.25032",
+    "github_mcp_server": "https://github.com/github/github-mcp-server",
+    "playwright_mcp": "https://github.com/microsoft/playwright-mcp",
+    "conventional_commits": "https://www.conventionalcommits.org/en/v1.0.0/",
+    "conventional_branch": "https://conventionalbranch.org/",
+    "backlog_md": "https://github.com/MrLesk/Backlog.md",
+    "claude_task_tools": "https://code.claude.com/docs/en/best-practices",
+    "git_worktree_docs": "https://git-scm.com/docs/git-worktree",
+    "claude_worktree_docs": "https://code.claude.com/docs/en/best-practices",
+    "cc_issue_60295_branch_swap":
+        "https://github.com/anthropics/claude-code/issues/60295",
+    "cc_issue_55724_lock_contention":
+        "https://github.com/anthropics/claude-code/issues/55724",
+    "register_env_secrets": "https://www.theregister.com/2026/01/28/",
+    "gitleaks": "https://github.com/gitleaks/gitleaks",
+    "trufflehog": "https://github.com/trufflesecurity/trufflehog",
 }
 
 
@@ -757,6 +779,72 @@ SLIDE_REFS = {
          "the smaller the AI's proposal, the more real the review; a giant diff goes unread"),
         ("3", "Brooks — No Silver Bullet", "brooks",
          "AI takes the accidental complexity, the human the essential"),
+    ],
+    # --- EN-sync block 3 (#172): registries for the round-6 RU additions ---
+    "s18b": [
+        ("1", "Anthropic — context engineering", "anthropic_ctx_eng",
+         "compaction summarizes lossily; JIT retrieval will not ask for what it "
+         "does not know exists — curation trades one risk for another", True),
+    ],
+    "s20b": [
+        ("1", "Agent Skills — open standard", "agent_skills_std",
+         "the SKILL.md format works across several AI tools, not one vendor"),
+        ("2", "Claude Docs — Skills", "claude_skills_docs",
+         "the body of a skill loads only when used — progressive disclosure",
+         True),
+        ("3", "Destefanis — Authoring Agent Skills (arXiv:2607.25032)",
+         "destefanis_skills_se",
+         "SE design principles for a skill: single responsibility, high cohesion / "
+         "low coupling; single author, preprint", True),
+    ],
+    "s20c": [
+        ("1", "GitHub MCP server", "github_mcp_server",
+         "toolsets enabled selectively; an explicit read-only mode — writes are "
+         "skipped", True),
+        ("2", "Playwright MCP server (Microsoft)", "playwright_mcp",
+         "an accessibility tree instead of a screenshot; generates an e2e test",
+         True),
+        ("3", "Willison — the lethal trifecta", "lethal_trifecta",
+         "one MCP server often covers 2 of the 3 corners in a single connection"),
+    ],
+    "s20e": [
+        ("1", "Backlog.md — open-source project", "backlog_md",
+         "\"one task = one context window = one pull request\""),
+        ("2", "Claude Docs — best practices (Task tools)", "claude_task_tools",
+         "TaskCreate/TaskUpdate/TaskGet/TaskList — session-scoped live progress",
+         True),
+    ],
+    "s20d": [
+        ("1", "Conventional Commits v1.0.0", "conventional_commits",
+         "<type>[scope]: <description>; fix→PATCH, feat→MINOR, BREAKING CHANGE→MAJOR"),
+        ("2", "Conventional Branch v1.1.0", "conventional_branch",
+         "AI Agent Source Prefixes: ai/, claude/, codex/, copilot/, cursor/", True),
+    ],
+    "s20g": [
+        ("1", "The Register — Claude Code reads .env despite .gitignore",
+         "register_env_secrets",
+         "\"ignored by git\" and \"ignored by Claude Code\" are two different "
+         "contracts; at least 4 open issues at the time of publication", True),
+        ("2", "Gitleaks — rule-first secret scanner", "gitleaks",
+         "regex + entropy, pre-commit hook, bypassable with --no-verify"),
+        ("3", "TruffleHog — verification-first scanner", "trufflehog",
+         "a live API call confirms the credential is valid right now"),
+    ],
+    "s20f": [
+        ("1", "Git — worktree documentation", "git_worktree_docs",
+         "a separate working directory with its own branch, but sharing the .git "
+         "object store with the main copy"),
+        ("2", "Claude Code — docs, best practices", "claude_worktree_docs",
+         "the isolation is enforced: the tool blocks edits outside the assigned "
+         "worktree", True),
+        ("3", "claude-code #60295 — branch swap",
+         "cc_issue_60295_branch_swap",
+         "two sessions in one working directory: a checkout in one silently "
+         "switches the other's working tree, reflog attached; closed as not planned"),
+        ("4", "claude-code #55724 — the .git lock",
+         "cc_issue_55724_lock_contention",
+         "13 parallel agents: 5 committed, 8 lost work to contention on "
+         ".git/index.lock; closed as a duplicate"),
     ],
     "s19": [
         ("1", "agents.md — open standard", "agents_md",

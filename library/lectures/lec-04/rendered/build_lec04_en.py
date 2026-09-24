@@ -1,5 +1,8 @@
-"""EN twin of build_lec04_v4.py — full 41-slide English build of Lecture 4
+"""EN twin of build_lec04_v4.py — full English build of Lecture 4
 "AI across the software development lifecycle (SDLC)".
+
+Slide count tracks the RU deck (58 after round 6); the EN-parity rebuild is
+landing block by block across five parallel worktrees (issue #172 / #162).
 
 Issue #172 (Ф3): English re-render. Structure, layout, palette, motif, and
 slide count are identical to the RU deck; only the rendered visible strings
@@ -10,7 +13,7 @@ Source-of-truth: deck.en.yaml + slides-en/*.md (visible content + readable
 EN speaker notes). Builders live in slides_band{1..4}_en.py, importing from
 _helpers_en.py (SLIDES_DIR=slides-en, CHARTS=charts-en, EN NAV/dividers/refs).
 
-Build: python3 build_lec04_en.py  → lec-04-en.pptx (41 slides s01..s41).
+Build: python3 build_lec04_en.py  → lec-04-en.pptx.
 """
 from pathlib import Path
 import sys
@@ -41,12 +44,26 @@ def main():
     builders += [b2.s20,                                     # s21
                  b3.s21, b3.s22, b3.s23, b3.s24, b3.s25,     # s22..s26
                  b3.s26, b3.s27, b3.s28, b3.s29]             # s27..s30
-    # display s31–s41
+    # display s31–s41 (+3 from the block-5 EN-parity rebuild, see below)
     builders += [b3.s30,                                     # s31
-                 b4.s31, b4.s32, b4.s33, b4.s34, b4.s35,     # s32..s36
-                 b4.s36, b4.s37, b4.s38, b4.s39, b4.s40]     # s37..s41
+                 b4.s31, b4.s32, b4.s33]                     # s32..s34
+    builders += [b4.s33b]                       # NEW (r3): BT Group / Azure
+                                                # Triangle vs IaC insecurity
+    builders += [b4.s34,
+                 b4.s35b,                       # NEW (r2): §6.3 docs tooling
+                 b4.s35,
+                 b4.s36, b4.s37]
+    builders += [b4.s37b]                       # NEW (r3): Uber + Kiro
+                                                # dual-register bridge
+    builders += [b4.s38, b4.s39, b4.s40]
 
-    assert len(builders) == 41, f"expected 41 builders, got {len(builders)}"
+    # EN parity with the 58-slide RU deck is landing block by block across five
+    # parallel worktrees (issue #172 / #162 round 6). Until all five are merged
+    # the count is checked softly so a partially-merged tree still renders.
+    EXPECTED_FINAL = 58
+    if len(builders) != EXPECTED_FINAL:
+        print(f"note: {len(builders)} builders — EN parity target is "
+              f"{EXPECTED_FINAL} (blocks still landing)")
     for fn in builders:
         fn(p)
 
@@ -56,7 +73,7 @@ def main():
     total = len(builders)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 41, f"expected 41 slides, got {n}"
+    assert n == len(builders), f"expected {len(builders)} slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

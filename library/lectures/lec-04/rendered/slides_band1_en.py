@@ -65,7 +65,12 @@ def s01(p):
         {"text": "Measured actual: with AI, tasks took +19% longer",
          "size": 12.5, "bold": True, "color": DEEP, "newpara": True,
          "space_before": 2},
-        {"text": "— METR RCT, n=16 experienced OSS developers, 246 tasks, 2025",
+        # Acronym gloss mirrors the RU round-4 pass (#162): every load-bearing
+        # acronym is expanded inline on first visible use, not only in the
+        # frontmatter.
+        {"text": "— METR (Model Evaluation and Threat Research, an independent "
+                 "research organization), RCT (randomized controlled trial), "
+                 "n=16, 246 tasks, 2025",
          "size": 9, "italic": True, "color": LIGHT, "newpara": True,
          "space_before": 4},
     ])
@@ -173,6 +178,92 @@ def s03(p):
 
 
 # ============================================================
+# s03b (EN twin of the RU slide added in #162 round 6, block 5) —
+# industry-wide adoption statistics. Sits between s03 (the bridge from
+# Module 1) and s04 (the central question): first the scale (the industry
+# has closed "adopt or not"), then the lecture's own question ("what makes
+# it reliable"). Same frame as the reworked s38/s39 — the yes/no argument is
+# settled, what is open is cost and countermeasures.
+# Frame source — chapter-part5 §7.4, the paragraph "An anchor for the
+# checklist: the industry uses what it trusts less and less".
+# EN note (#172): the chart is charts-en/c03b-adoption.png, regenerated in
+# English by gen_charts_r6b5_en.py — the RU original has Cyrillic baked into
+# the pixels and could not be reused.
+# ============================================================
+def s03b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "The industry has already closed the \"use it or not\" question — "
+           "what stayed open is reliability",
+        size=21, w=12.3, h=0.82)
+
+    lx, lw = 0.55, 6.60
+    rx, rw = 7.35, 5.45
+    top = 1.42
+    boxh = 4.20
+
+    # --- LEFT: scale of adoption (chart + baselines) ---
+    ocean_box(s, lx, top, lw, boxh)
+    icon(s, "users", lx + 0.22, top + 0.12, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=top + 0.16, w=lw - 1.04, h=0.36,
+             text="Scale: almost the whole industry is already inside",
+             size=13, bold=True, color=MID)
+    add_image(s, CHARTS / "c03b-adoption.png", lx + 0.18, top + 0.60,
+              lw - 0.36, 2.16)
+    text_box(s, x=lx + 0.24, y=top + 2.90, w=lw - 0.48, h=0.62,
+             text="51% of professional developers work with AI tools daily; the "
+                  "median time spent with them is about two hours a day, roughly "
+                  "a quarter of the working day.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 3.56, w=lw - 0.48, h=0.50,
+             text="The surveys differ: Stack Overflow asks \"use or plan to "
+                  "use\" (more than 49,000 people from 177 countries), DORA "
+                  "asks \"use\" (more than 5,000). The order of magnitude agrees.",
+             size=9, italic=True, color=SLATE, line_spacing=1.10)
+
+    # --- RIGHT: trust falls while adoption rises ---
+    ocean_box(s, rx, top, rw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "circle-help", rx + 0.22, top + 0.12, 0.46, "teal")
+    text_box(s, x=rx + 0.82, y=top + 0.16, w=rw - 1.04, h=0.36,
+             text="Trust, meanwhile, is falling", size=13, bold=True, color=TEAL)
+    filled_rect(s, rx + 0.20, top + 0.66, rw - 0.40, 1.32, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.8, radius=True, radius_adj=0.06)
+    text_box(s, x=rx + 0.38, y=top + 0.78, w=1.50, h=0.90, text="46%",
+             size=38, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 1.92, y=top + 0.80, w=rw - 2.30, h=1.06,
+             text="do not trust the accuracy of what AI tools produce — "
+                  "against 31% a year earlier [1]",
+             size=11.5, bold=True, color=DEEP, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 0.24, y=top + 2.12, w=rw - 0.48, h=0.84,
+             text="Over 80% at the same time report a gain in personal "
+                  "effectiveness — yet only 24% highly trust the result [2]. "
+                  "The feeling of usefulness and trust in the output have "
+                  "come apart.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.20, top + 3.02, rw - 0.40, 0.98, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.4, radius=True, radius_adj=0.07)
+    text_box(s, x=rx + 0.40, y=top + 3.10, w=rw - 0.80, h=0.84,
+             text="Almost everyone uses them — fewer than half trust them. "
+                  "Nothing left to argue in \"switch AI on or not\"; the "
+                  "engineering question is what closes this gap.",
+             size=10.5, bold=True, color=DEEP, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, 5.76, 12.25, 0.68,
+        "84–90% of the industry is already inside, and the share is growing for "
+        "the second year running. So the useful question is not \"use AI or "
+        "not\" but at what cost, with which risks, and with which measures they "
+        "are closed — phase by phase.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s03b")
+    notes_with_sources(s, "s03b")
+    return s
+
+
+# ============================================================
 # s04 — central question (contrast two framings)
 # ============================================================
 def s04(p):
@@ -200,8 +291,14 @@ def s04(p):
     filled_rect(s, 0.55, fy, 6.0, 1.55, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
                 radius=True, radius_adj=0.06)
     icon(s, "circle-slash", 0.78, fy + 0.22, 0.5, "light")
+    # EN-sync (#172): both frame headers are 14pt, not the RU 15pt. "Which
+    # practice is warranted in the phase?" is ~2× the character count of
+    # «Какая практика оправдана в фазе?» and wrapped onto a second line,
+    # colliding with the body text below it. Dropping ONE point puts it back on
+    # a single line; both headers move together so the comparison pair stays
+    # symmetric (the whole point of this slide is the left/right contrast).
     text_box(s, x=1.42, y=fy + 0.22, w=4.9, h=0.5,
-             text="Which tool is best?", size=15, bold=True, color=SLATE)
+             text="Which tool is best?", size=14, bold=True, color=SLATE)
     text_box(s, x=0.80, y=fy + 0.80, w=5.5, h=0.65,
              text="Goes stale in a quarter; \"best\" can't be named without "
                   "\"for what, in which phase, in which mode\".",
@@ -211,7 +308,7 @@ def s04(p):
                 radius=True, radius_adj=0.06)
     icon(s, "check-check", 7.03, fy + 0.22, 0.5, "gold")
     text_box(s, x=7.67, y=fy + 0.20, w=4.9, h=0.55,
-             text="Which practice is warranted in the phase?", size=15, bold=True,
+             text="Which practice is warranted in the phase?", size=14, bold=True,
              color=DEEP)
     text_box(s, x=7.05, y=fy + 0.80, w=5.5, h=0.65,
              text="Which artifact does it end in? Where is a human mandatory? — "
@@ -500,14 +597,19 @@ def s06(p):
     # two boundaries
     filled_rect(s, rx, 3.62, rw, 0.90, TEAL_TINT, stroke=TEAL, stroke_pt=1.4,
                 radius=True, radius_adj=0.07)
+    # EN-sync (#172): body runs are 11.5pt, not the RU 12pt. The English
+    # rendering of the C↔D boundary is ~20% longer than the Russian and wrapped
+    # onto a THIRD line, breaking the two-line parallel structure of the pair
+    # and crowding the teal box floor. 11.5pt restores 2 lines / 2 lines at
+    # identical geometry — still above the 11pt projector minimum.
     text_runs(s, rx + 0.26, 3.72, rw - 0.52, 0.72, [
         {"text": "B ↔ C  ", "size": 13, "bold": True, "color": TEAL},
         {"text": "does it iterate and run tests without you? (yes → C)",
-         "size": 12, "color": DEEP},
+         "size": 11.5, "color": DEEP},
         {"text": "C ↔ D  ", "size": 13, "bold": True, "color": TEAL,
          "newpara": True, "space_before": 3},
-        {"text": "where the task comes from, where it lands (tracker → PR → D)",
-         "size": 12, "color": DEEP},
+        {"text": "task comes from the tracker, result is a PR (→ D)",
+         "size": 11.5, "color": DEEP},
     ])
 
     gold_callout(
@@ -567,11 +669,16 @@ def s07(p):
                 stroke_pt=1.2, radius=True, radius_adj=0.05)
     icon(s, "triangle-alert", 0.80, 4.82, 0.52, "light")
     text_box(s, x=1.48, y=4.72, w=11.05, h=0.82,
+             # Acronym gloss mirrors the RU round-4 pass (#162): DORA expanded
+             # inline on the visible layer, not only in the frontmatter.
              text="\"We adopted an AI tool\" ≠ \"we adopted an AI discipline\". "
-                  "The tool is there, the practice is not — and the DORA multiplier works "
-                  "the wrong way. Behind this stand all the failures of the lecture: prompt-and-pray, "
-                  "poisoned context, the 70% problem, the Replit incident — everywhere "
-                  "the tool applied without the practice.",
+                  "The tool is there, the practice is not — and the DORA "
+                  "(DevOps Research and Assessment — Google's research program "
+                  "on the maturity of DevOps practices) multiplier works the "
+                  "wrong way. Behind this stand all the failures of the "
+                  "lecture: prompt-and-pray, poisoned context, the 70% "
+                  "problem, the Replit incident — everywhere the tool applied "
+                  "without the practice.",
              size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
 
     gold_callout(
@@ -679,6 +786,94 @@ def s09(p):
 
 
 # ============================================================
+# s09b (EN twin of the RU slide added in #162 round 3) — AWS Kiro success
+# vs the 847-deployments honest-failure contrast; SDD naming.
+# The confidence labels ("MEDIUM" / "LOW-MEDIUM", "not an independent audit",
+# "sampling methodology not disclosed") are load-bearing content, not
+# decoration — they are translated in full, never dropped.
+# All assets here are language-agnostic; nothing needed EN regeneration.
+# ============================================================
+def s09b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Discipline in advance — a fast result; without it, failure is "
+           "expected, not accidental",
+        size=21, w=12.3, h=0.82)
+
+    colw, gap = 6.05, 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.44
+    boxh = 3.36
+
+    # left: AWS Kiro success
+    ocean_box(s, lx, top, colw, boxh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.8)
+    icon(s, "check-check", lx + 0.22, top + 0.16, 0.46, "gold")
+    text_box(s, x=lx + 0.82, y=top + 0.20, w=colw - 1.0, h=0.36,
+             text="AWS Kiro · life sciences (pharma/biotech, 2026)", size=12,
+             bold=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 0.68, w=colw - 0.48, h=0.92,
+             text="A production-ready agent for therapeutic target discovery: a "
+                  "spec-first workflow — specification → execution against "
+                  "milestones → verification against the spec.",
+             size=11, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 1.62, w=colw - 0.48, h=0.60,
+             text="3 weeks, 3 developers", size=22, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 2.24, w=colw - 0.48, h=0.34,
+             text="— not a drawn-out cycle of ad-hoc prompting.", size=11,
+             italic=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 2.66, w=colw - 0.48, h=0.60,
+             text="Medium confidence — a vendor-published case study, not an "
+                  "independent audit.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+
+    # right: 847-deployments honest-failure contrast
+    ocean_box(s, rx, top, colw, boxh)
+    icon(s, "circle-x", rx + 0.22, top + 0.16, 0.46, "mid")
+    text_box(s, x=rx + 0.82, y=top + 0.20, w=colw - 1.0, h=0.36,
+             text="847 documented AI-agent deployments", size=12.5,
+             bold=True, color=DEEP, line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 0.68, w=colw - 0.48, h=0.60,
+             text="76% failed within 90 days", size=20, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 1.30, w=colw - 0.48, h=0.78,
+             text="The root cause named by the source is a failure of "
+                  "specification, not an inability of the model.",
+             size=12, color=DEEP, line_spacing=1.24)
+    text_box(s, x=rx + 0.24, y=top + 2.10, w=colw - 0.48, h=0.56,
+             text="The intent was never specified precisely enough to be "
+                  "checkable at all.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.16)
+    text_box(s, x=rx + 0.24, y=top + 2.66, w=colw - 0.48, h=0.60,
+             text="Low-to-medium confidence — the sampling methodology is not "
+                  "disclosed; an illustration of the claim, not audited "
+                  "statistics.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+
+    # bottom: SDD naming strip
+    sy = top + boxh + 0.16
+    filled_rect(s, 0.55, sy, 12.25, 0.62, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+                radius=True, radius_adj=0.08)
+    text_runs(s, 0.79, sy + 0.08, 11.8, 0.48, [
+        {"text": "SDD (Spec-Driven Development) — ", "size": 12, "bold": True,
+         "color": DEEP},
+        {"text": "GitHub Spec Kit ~90k stars; by 2026, at least 8 major vendors "
+                 "with their own variant of the practice.",
+         "size": 11.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, sy + 0.78, 12.25, 0.60,
+        "Discipline in advance is not a guarantee but a shift in probability: "
+        "specifying the intent makes failure the exception rather than the "
+        "statistically expected outcome.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s09b")
+    notes_with_sources(s, "s09b")
+    return s
+
+
+# ============================================================
 # s10 (display s11) — как вести требования: СТРУКТУРА + ПРОЦЕСС (ПРАВКА 6)
 # ============================================================
 def s10(p):
@@ -705,12 +900,12 @@ def s10(p):
         ("Stories + acceptance criteria [3]",
          "\"As a <role>, I want <goal>, so that <benefit>\" + verifiable criteria for "
          "each story."),
-        ("EARS notation [7]",
+        ("EARS notation (Easy Approach to Requirements Syntax) [7]",
          "\"WHEN <trigger>, the system SHALL <response>\" (Mavin 2009) — removes "
          "\"should/may\", makes a requirement testable."),
         ("Functional vs non-functional [6]",
-         "behavior separate from characteristics (latency / cost / security); NFRs "
-         "are enforced by fitness functions."),
+         "behavior separate from characteristics (latency / cost / security); "
+         "NFRs (non-functional requirements) are enforced by fitness functions."),
         ("requirements → design → tasks [3]",
          "the enforced order of 3 files (Kiro / Spec-Kit); DoD — small "
          "independently testable units."),
@@ -740,8 +935,8 @@ def s10(p):
          "requirements are diffable Markdown in the repository, not in a wiki / chat; "
          "a durable artifact, not a fleeting prompt."),
         ("Syncing with change [9]",
-         "keep current like an ADR; the human owns \"what to build\", AI owns "
-         "structure and completeness."),
+         "keep current like an ADR (architecture decision record); the human "
+         "owns \"what to build\", AI owns structure and completeness."),
     ]
     for i, (head, body) in enumerate(proc):
         y = sy + i * 0.82
@@ -760,4 +955,104 @@ def s10(p):
 
     refs_of_slide(s, "s11")
     notes_with_sources(s, "s11")
+    return s
+
+
+# ============================================================
+# s11b — requirements visualization (Mermaid User Journey + Gherkin
+# bridge; honest boundary — story mapping NOT code-as-DSL) [#162 r2]
+# EN twin of slides_band1.py::s11b (EN-Sync Block 2, issue #172).
+# The DSL snippets keep their syntax keywords (title / section / Given /
+# When / Then) verbatim; only the prose values inside them are translated.
+# ============================================================
+def s11b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Visualizing requirements — the same architecture-as-code principle",
+        size=22, w=12.4, h=0.82)
+
+    colw = 6.05
+    gap = 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.44
+    boxh = 3.34
+
+    # --- LEFT: Mermaid User Journey ---
+    ocean_box(s, lx, top, colw, boxh, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "route", lx + 0.22, top + 0.16, 0.44, "mid")
+    text_box(s, x=lx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Mermaid User Journey", size=13, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="A text DSL for diagrams, the same family as "
+                  "PlantUML/Structurizr for architecture. Structure: title "
+                  "→ journey sections → steps with a 1–5 rating and actors.",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "title Booking a meeting room",
+            "section Find a slot",
+            "  Open the calendar: 4: Engineer",
+            "  Find a free slot: 2: Engineer"]):
+        text_box(s, x=lx + 0.36, y=top + 1.84 + i * 0.225, w=colw - 0.72, h=0.22,
+                 text=line, size=9.5, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=lx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="AI both reads such a diagram as context and generates it "
+                  "from a scenario — the same format as C4: text in the repository.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- RIGHT: Gherkin bridge ---
+    ocean_box(s, rx, top, colw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "file-code", rx + 0.22, top + 0.16, 0.44, "teal")
+    text_box(s, x=rx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="The bridge to Gherkin — an executable spec", size=13,
+             bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="A more direct analogue of architecture-as-code: the scenario "
+                  "does not merely describe a flow, it is verified by running an "
+                  "automated test (the testing section).",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "Given the meeting room is free",
+            "When an engineer books a slot",
+            "Then the booking is confirmed"]):
+        text_box(s, x=rx + 0.36, y=top + 1.90 + i * 0.255, w=colw - 0.72, h=0.24,
+                 text=line, size=10, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="Just as C4/Mermaid is text checked by a drift detector, "
+                  "Gherkin is text checked by an automated test: AI can write "
+                  "and validate both.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- contrast strip: honest boundary (story mapping) ---
+    cy = top + boxh + 0.12
+    filled_rect(s, 0.55, cy, 12.25, 0.62, SOFT_GREY, stroke=SLATE,
+                stroke_pt=0.75, radius=True, radius_adj=0.10)
+    icon(s, "circle-slash", 0.72, cy + 0.10, 0.40, "teal")
+    text_runs(s, 1.28, cy + 0.07, 11.35, 0.48, [
+        {"text": "The honest boundary: ", "size": 10.5, "bold": True,
+         "color": SLATE},
+        {"text": "story mapping (laying activities out in columns, Miro/"
+                 "FigJam) is an important practice, but it is a facilitation "
+                 "workshop technique, not code-as-DSL. Here the road to a "
+                 "disciplined requirement runs through the people in the room, "
+                 "not through versioned text.",
+         "size": 10, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, cy + 0.74, 12.25, 0.58,
+        "Not a separate new tool category — the same move as architecture-as-"
+        "code: the artifact as text rather than a picture, so that AI can read "
+        "and generate it on a par with the human.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+
+    refs_of_slide(s, "s11b")
+    notes_with_sources(s, "s11b")
     return s

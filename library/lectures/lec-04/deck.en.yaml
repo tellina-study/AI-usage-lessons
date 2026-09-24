@@ -1,6 +1,6 @@
 # library/lectures/lec-04/deck.en.yaml  —  PART 1 of 2  (English twin, issue #172 Ph3)
 #
-# Deck structure of Lecture 4 "AI across the software development lifecycle (SDLC)" (41 slides — v4.1: +foundations slide s05, keystone→s06, dividers without tag plates).
+# Deck structure of Lecture 4 "AI across the software development lifecycle (SDLC)" (58 slides — v4.5 after round 6; v4.1 base of 41 + the issue #162 rounds 1-6 inserts, minus s21).
 #
 # This is the ENGLISH source-of-truth twin of deck.yaml. It is documentation, NOT read at render time.
 # The render-authoritative sources are slides-en/*.md (notes) + build_lec04_en.py (visible strings).
@@ -178,6 +178,21 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s03b
+    file: slides-en/s03b-industry-adoption.md
+    type: assertion_visual
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 2
+    assertion: "The industry has closed the argument about whether to adopt AI in development: 84–90% of developers already use AI tools, and the share is growing for the second year running — while the share of those who do not trust the accuracy of the output has risen from 31% to 46%, so what is still open is not \"yes or no\" but the question of cost, risks, and countermeasures"
+    learning_goal: "Set the industry-wide scale before the phase-by-phase walkthrough: show that the decision to use AI has already been made de facto, and reframe the lecture's question as one of reliability rather than a choice between \"use\" and \"don't use\""
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§7.4 (the paragraph “Anchor for the checklist: the industry uses what it trusts less and less”)"
+    references: [so-survey-2025, dora-2025]
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s03b-industry-adoption.md, structural fields mirror deck.yaml.
+
   - id: s04
     file: slides-en/s04-central-question.md
     type: assertion_visual
@@ -189,6 +204,20 @@ slides:
     chapter_ref: "§0.3 [for-slide-s04]"
     interaction: none
     verify_day_of: false
+
+  - id: s05f
+    file: slides-en/s05-foundations-practices.md
+    type: assertion_visual
+    section: "Section 0. Introduction and methodological frame"
+    duration_min: 3
+    assertion: "This lecture is a digest of practices: modern approaches from industry leaders + time-tested classics; tools change, practices are durable"
+    learning_goal: "Source frame: show that the phase discipline rests on two bodies — fresh practices of leading players and classics that have withstood decades; all with references"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0 (survey of sources) [for-slide-s05f]"
+    interaction: none
+    verify_day_of: false
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s05-foundations-practices.md, structural fields mirror deck.yaml.
 
   - id: s05
     file: slides-en/s05-keystone-git-loop.md
@@ -255,6 +284,21 @@ slides:
     interaction: none
     verify_day_of: true
 
+  - id: s09b
+    file: slides-en/s09b-spec-driven-cases.md
+    type: case_study
+    section: "Section 1. Requirements — the first artifact"
+    duration_min: 3
+    assertion: "Discipline applied in advance makes a measurable difference: where a spec-first workflow is built around a clear criterion, the result is fast and predictable; where AI is adopted without specifying intent, failure is a statistically expected outcome, not an exception"
+    learning_goal: "Contrast the two outcomes of the spec-driven discipline on concrete, honestly labelled figures; SDD as a named industry term"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.1 [for-slide-s08]"
+    references: [aws-kiro-lifesciences, sdd-terminology]
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s09b-spec-driven-cases.md, structural fields mirror deck.yaml.
+
   - id: s10
     file: slides-en/s10-requirements-methodics.md
     type: assertion_visual
@@ -267,6 +311,21 @@ slides:
     references: [spec-kit, openai-deliberative-alignment, fowler-intent]
     interaction: none
     verify_day_of: true
+
+  - id: s11b
+    file: slides-en/s11b-requirements-visualization.md
+    type: assertion_visual
+    section: "Section 1. Requirements — the first artifact"
+    duration_min: 3
+    assertion: "Visualizing requirements is not a new category but the same architecture-as-code principle (§2.4) applied to requirements: keep the artifact as text rather than a picture, so it is versioned and readable by both the human and AI"
+    learning_goal: "Mermaid User Journey + the bridge to Gherkin as an executable specification; the honest boundary — story mapping does not belong here"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.2b [for-slide-s11b]"
+    references: [mermaid-user-journey, cucumber-bdd]
+    interaction: none
+    verify_day_of: false
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s11b-requirements-visualization.md, structural fields mirror deck.yaml.
 
   - id: s11
     file: slides-en/s11-prompt-and-pray.md
@@ -324,6 +383,21 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s14b
+    file: slides-en/s14b-architecture-artifacts.md
+    type: schema_matrix
+    section: "Section 2. Architecture — before code, and it must be managed"
+    duration_min: 3
+    assertion: "Each of the four architecture-management practices has a concrete artifact in the repository and a concrete build step that goes red when it is violated: an ADR record, a test invariant, a textual C4 model, and a gate that holds the previous three together"
+    learning_goal: "Ground the abstract matrix of the four practices (s15) in real files: the student should see what an ADR, a fitness function, a C4 DSL and an architectural gate look like in code"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2–§2.5 [for-slide-s13], [for-slide-s14], [for-slide-s15]"
+    references: [nygard-adr, ford-fitness-functions, brown-c4, evolutionary-architectures]
+    interaction: none
+    verify_day_of: false
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s14b-architecture-artifacts.md, structural fields mirror deck.yaml.
+
   - id: s15
     file: slides-en/s15-poisoned-context.md
     type: case_study
@@ -365,6 +439,22 @@ slides:
     interaction: none
     verify_day_of: true
 
+  - id: s17b
+    file: slides-en/s17b-gemini-cli-selfreview.md
+    type: case_study
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "A skipped self-review step has a concrete price: Gemini CLI did not check the result of mkdir and, acting on a false assumption, overwrote the user's files with a chain of move commands — the cost is documented, not hypothetical"
+    learning_goal: "Self-review as a mandatory step of the loop (not an optional habit); the price of a skipped check on a concrete incident + a contrast of scale"
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§3.1 [for-slide-s16]"
+    references: [gemini-cli-incident]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s17b-gemini-cli-selfreview.md, structural fields mirror deck.yaml.
+
   - id: s18
     file: slides-en/s18-persistent-memory-layer.md
     type: schema_architecture
@@ -378,6 +468,22 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s18b
+    file: slides-en/s18b-curation-limits.md
+    type: assertion_visual
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "Each of the four context levels has its own limit: stale instructions are worse than none, compaction loses decisions silently and JIT will not ask about the unknown, operational history ages more quietly than instructions, memory entrenches a wrong conclusion — the risk does not disappear, it is traded for another"
+    learning_goal: "The honest limit of EVERY context level, in parallel with the previous slide — not an optional caveat but a condition of applying the practice correctly"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.2 [for-slide-s17], §3.3d (entrenchment)"
+    references: [anthropic-context-engineering, agents-md]
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s18b-curation-limits.md, structural fields mirror deck.yaml.
+
   - id: s19
     file: slides-en/s19-harness-gate.md
     type: schema_pipeline
@@ -390,6 +496,97 @@ slides:
     references: [bockeler-thoughtworks]
     interaction: none
     verify_day_of: false
+
+  - id: s20b
+    file: slides-en/s20b-skills.md
+    type: assertion_visual
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "In development a skill pays off on a rare but repeatable multi-step procedure (running the checks, a throwaway database for an integration test, building the docs); what is needed every turn belongs in AGENTS.md, and a one-off is just a request in chat"
+    learning_goal: "Leading: skills as progressive disclosure of instructions (an on-demand layer over the permanent AGENTS.md) + an honest cross-vendor calibration"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3b [for-slide-s20b]"
+    references: [agent-skills-std, claude-skills-docs]
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s20b-skills.md, structural fields mirror deck.yaml.
+
+  - id: s20c
+    file: slides-en/s20c-mcp-coding-agent.md
+    type: assertion_visual
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "MCP removes the human bridge between the agent and external systems, but it gives not the system's whole interface — only a curated subset of its API and commands; and that same single connection concentrates two corners of the lethal trifecta at once, a risk closed by read-only-by-default"
+    learning_goal: "Leading: MCP extends the agent beyond the file system (GitHub / Playwright / filesystem MCP) + the bridge to security (the lethal trifecta through one server)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3c [for-slide-s20c]"
+    references: [github-mcp-server, playwright-mcp, willison-lethal-trifecta]
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s20c-mcp-coding-agent.md, structural fields mirror deck.yaml.
+
+  - id: s20e
+    file: slides-en/s20e-task-logging-layer.md
+    type: schema_matrix
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "Task logging is grown in ascending order of complexity — one file, then a folder with one file per task, then a folder per task with files inside; the choice is compound (who works × how long the task lives × the need for an audit trail), and a fourth option — the log in the tracker — is visible to non-technical participants but sits outside the agent's file context"
+    learning_goal: "Leading: criteria for choosing between three file-based task-logging patterns — a method with no single right answer"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3d [for-slide-s20e]"
+    references: [backlog-md, claude-task-tools]
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s20e-task-logging-layer.md, structural fields mirror deck.yaml.
+
+  - id: s20d
+    file: slides-en/s20d-git-conventions.md
+    type: assertion_visual
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "A git convention is not a requirement of git but a voluntary team agreement: the marker in a commit is there for a program (which assembles the changelog and the version number itself), the prefix in a branch name is there for the reviewer before the diff is opened, and the pull-request template is there so nobody has to reconstruct the intent; an agent follows only the agreement it can see written down"
+    learning_goal: "Leading: git conventions (commit/branch/PR) as one level above build commands in the contract with the agent; the specific of scale — an agent commits systematically and an order of magnitude more"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3e [for-slide-s20d]"
+    references: [conventional-commits, conventional-branch]
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s20d-git-conventions.md, structural fields mirror deck.yaml.
+
+  - id: s20g
+    file: slides-en/s20g-register-env-secrets.md
+    type: case_study
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "\"Ignored by git\" and \"ignored by Claude Code\" are two different things governed by different config files: Claude Code read .env despite both .gitignore and .claudeignore, and a Bash subprocess walks around even an explicit deny rule on reading"
+    learning_goal: "Secrets are a separate, independently configured contract from the git conventions; a two-layer limit (.claudeignore + permissions.deny) and a three-layer scanner defense"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3e [for-slide-s20g]"
+    references: [register-env-secrets, gitleaks, trufflehog]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s20g-register-env-secrets.md, structural fields mirror deck.yaml.
+
+  - id: s20f
+    file: slides-en/s20f-git-worktree.md
+    type: case_study
+    section: "Section 3. Implementation — discipline and harness"
+    duration_min: 3
+    assertion: "Every parallel session should have its own working folder, and all that stays shared is the history: a worktree separates the files (claude-code #60295 — a branch swap between sessions in one directory), but a shared .git means a shared lock — in claude-code #55724, 8 of 13 parallel agents lost unsaved work on .git/index.lock"
+    learning_goal: "Git worktree as the answer to a shared working copy under parallel agent sessions; honest verifiability on two public incidents"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3f [for-slide-s20f]"
+    references: [git-worktree-docs, claude-worktree-docs]
+    interaction: none
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s20f-git-worktree.md, structural fields mirror deck.yaml.
 
   - id: s20
     file: slides-en/s20-70-percent-problem.md
@@ -405,19 +602,12 @@ slides:
     interaction: none
     verify_day_of: true
 
-  - id: s21
-    file: slides-en/s21-anti-hype-benchmarks.md
-    type: case_study
-    section: "Section 3. Implementation — discipline and harness"
-    duration_min: 3
-    assertion: "A benchmark number can be both true and misleading: Devin 13.86% — 79 of 570 (only 25% of the bench, with contamination); OpenAI \"70% more PRs\" — with no denominator; brand/benchmark ≠ discipline"
-    learning_goal: "[SI] Anti-hype: Devin 13.86% (79/570), Cursor admits weakness, OpenAI \"70% more PRs\" with no denominator"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§3.5 [for-slide-s19]"
-    references: [devin-cognition, swe-bench-pro, openai-swe-bench, cursor]
-    in_bucket: true
-    interaction: none
-    verify_day_of: true
+  # REMOVED (RU round 6, block 3): id s21 — anti-hype benchmarks. The
+  # owner dropped it from the RU deck; the EN twin follows. The
+  # SWE-bench Verified/Pro gap is introduced in Lecture 3; vendor
+  # skepticism is carried by s20 (the 70% problem), s37 (triangulation)
+  # and s38 (risk triad). Builder b3.s21 and
+  # slides-en/s22-anti-hype-benchmarks.md are gone with the entry.
 
 # ─────────────────────────────────────────────────────────────────────────
 # Continued — deck-part2.en.yaml: slides s22..s40 + totals + ai_failure_judgment

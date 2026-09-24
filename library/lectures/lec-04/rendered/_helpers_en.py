@@ -43,6 +43,8 @@ ROOT = Path(__file__).resolve().parents[1]      # library/lectures/lec-04
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts-en"
+WEB = ASSETS / "web"          # meme composites; EN captions carry an «-en» suffix
+WEB = ASSETS / "web"          # meme composites; EN captions baked as band-*-en.png
 SLIDES_DIR = ROOT / "slides-en"
 FONT_HEAD = "DejaVu Sans"
 FONT_BODY = "DejaVu Sans"
@@ -117,6 +119,61 @@ URLS = {
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
     "anthropic_ctx_eng": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "willison_vibe_code": "https://simonwillison.net/2025/Oct/7/vibe-engineering/",
+    # --- EN-sync block 1 (#172): keys the RU deck gained in rounds 3 and 6
+    # and the EN twin never had. Values copied VERBATIM from _helpers.py —
+    # a URL is never "localized".
+    # s09b (AWS Kiro success vs the 847-deployments contrast, round 3):
+    "aws_kiro_lifesciences": "https://kiro.dev/docs/specs/feature-specs/",
+    "krishnan_sdd_manning": "https://www.manning.com/",
+    # s03b (industry-adoption intro slide, round 6):
+    "so_survey_2025_ai": "https://survey.stackoverflow.co/2025/ai",
+    # --- EN-Sync Block 2 (#172 / #162): s11b · s14b · s17b ---
+    "mermaid_user_journey": "https://mermaid.js.org/syntax/userJourney.html",
+    "cucumber_bdd": "https://cucumber.io/docs/bdd/",
+    "gemini_cli_incident": "https://incidentdatabase.ai/cite/1178/",
+    # --- EN-sync block 3 (#172): keys the round-6 RU slides s18b/s20b–s20g
+    # introduced. Values copied verbatim from _helpers.py — a translation
+    # never changes a URL. ---
+    "agent_skills_std": "https://agentskills.io/",
+    "claude_skills_docs": "https://code.claude.com/docs/en/skills",
+    "destefanis_skills_se": "https://arxiv.org/abs/2607.25032",
+    "github_mcp_server": "https://github.com/github/github-mcp-server",
+    "playwright_mcp": "https://github.com/microsoft/playwright-mcp",
+    "conventional_commits": "https://www.conventionalcommits.org/en/v1.0.0/",
+    "conventional_branch": "https://conventionalbranch.org/",
+    "backlog_md": "https://github.com/MrLesk/Backlog.md",
+    "claude_task_tools": "https://code.claude.com/docs/en/best-practices",
+    "git_worktree_docs": "https://git-scm.com/docs/git-worktree",
+    "claude_worktree_docs": "https://code.claude.com/docs/en/best-practices",
+    "cc_issue_60295_branch_swap":
+        "https://github.com/anthropics/claude-code/issues/60295",
+    "cc_issue_55724_lock_contention":
+        "https://github.com/anthropics/claude-code/issues/55724",
+    "register_env_secrets": "https://www.theregister.com/2026/01/28/",
+    "gitleaks": "https://github.com/gitleaks/gitleaks",
+    "trufflehog": "https://github.com/trufflesecurity/trufflehog",
+    # --- EN-sync block 4 (issue #172 / #162): keys used by s25b/s25c/s28/s30b ---
+    "cucumber_bdd": "https://cucumber.io/docs/bdd/",
+    "software303_bdd_adoption": "https://303software.com/",
+    "trunk_based_dev": "https://trunkbaseddevelopment.com/",
+    "testcontainers": "https://testcontainers.com/",
+    "msw_docs": "https://mswjs.io/docs",
+    "wiremock_split": "https://wiremock.io/",
+    "pytest_generator_distil": "https://distillabs.ai/",
+    "tianpan_rubber_stamp": "https://tianpan.co/",
+    "matplotlib_hitpiece_register": "https://www.theregister.com/2026/02/",
+    "oss_review_burden": "https://arxiv.org/abs/2510.10165",
+    "amazon_q_wiper": "https://www.bleepingcomputer.com/",
+    "aws_security_bulletin_q": "https://aws.amazon.com/security/security-bulletins/",
+    # --- EN-parity block 5 (issue #172 / #162 round 6): delivery+ops+docs
+    #     tail and the synthesis/closing cluster. Keys mirror _helpers.py.
+    "bt_group_incidentio": "https://incident.io/",
+    "azure_triangle_ms": "https://azure.microsoft.com/en-us/blog/",
+    "iac_insecurity_2026": "https://www.thoughtworks.com/radar",
+    "eesel_confluence_ai": "https://www.eesel.ai/",
+    "aws_q_doc": "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/software-dev-doc-generation.html",
+    "uber_claude_code": "https://www.fortune.com/",
+    "aws_kiro_outage": "https://kiro.dev/docs/specs/feature-specs/",
 }
 
 
@@ -633,6 +690,20 @@ SLIDE_REFS = {
          "metr", "randomized controlled trial, n=16, 246 tasks; "
          "measured real time, not perception"),
     ],
+    # EN-sync block 1 (#172): new in the RU deck at round 6, no EN twin existed.
+    "s03b": [
+        ("1", "Stack Overflow — Developer Survey 2025, AI section",
+         "so_survey_2025_ai",
+         "84% use or plan to use AI tools, against 76% a year earlier; 51% of "
+         "professional developers use them daily; 46% do not trust the accuracy "
+         "of the output, against 31% a year earlier; n > 49,000 developers from "
+         "177 countries", True),
+        ("2", "DORA — State of AI-assisted Software Development 2025",
+         "dora_2025",
+         "90% use AI at work (+14 pp vs 2024); the median is about two hours a "
+         "day; over 80% report a gain in personal effectiveness, yet only 24% "
+         "highly trust the output; n > 5,000", True),
+    ],
     "s04": [
         ("1", "Fowler — Interrogatory LLM", "fowler_interrogatory",
          "the bottleneck of AI development is intent, not typing code"),
@@ -691,6 +762,17 @@ SLIDE_REFS = {
         ("3", "Anthropic — AI-Native SDLC playbook", "anthropic_playbook",
          "the method leads, the tool executes; artifacts and gates live in the practice"),
     ],
+    # EN-sync block 1 (#172): new in the RU deck at round 3, no EN twin existed.
+    "s09b": [
+        ("1", "AWS Kiro — life sciences case study (pharma/biotech)",
+         "aws_kiro_lifesciences",
+         "a spec-first workflow, 3 weeks / 3 developers to production — a "
+         "vendor-published case, not independently audited", True),
+        ("2", "Hari Krishnan — \"Spec-Driven Development\", Manning",
+         "krishnan_sdd_manning",
+         "SDD/BDD/TDD as an \"altitude stack\" over one task, differing in the "
+         "level of detail"),
+    ],
     "s10": [
         ("1", "Anthropic — AI-Native SDLC playbook", "anthropic_playbook",
          "AI is strong at structuring intent; the intent itself stays with the human"),
@@ -718,6 +800,15 @@ SLIDE_REFS = {
         ("9", "Nygard — ADR", "nygard_adr",
          "keep requirements current like an ADR — in sync with the code"),
     ],
+    # EN-Sync Block 2 (#172 / #162 round 2): requirements visualization.
+    "s11b": [
+        ("1", "Mermaid — User Journey syntax", "mermaid_user_journey",
+         "the diagram is described in text (a DSL), not with a mouse — the same "
+         "family as PlantUML/Structurizr in the architecture section"),
+        ("2", "Cucumber — BDD/Gherkin documentation", "cucumber_bdd",
+         "Given-When-Then — a scenario verified by running an automated test, "
+         "not merely describing a flow"),
+    ],
     "s12": [
         ("1", "Brooks — No Silver Bullet", "brooks",
          "the bottleneck is the precision of stating intent (essential complexity)"),
@@ -742,6 +833,22 @@ SLIDE_REFS = {
         ("4", "Thoughtworks — Technology Radar", "tw_radar",
          "a catalog of practices for managing architecture with AI", True),
     ],
+    # EN-Sync Block 2 (#172 / #162 round 6): the four practices as real files.
+    "s14b": [
+        ("1", "Nygard — ADR", "nygard_adr",
+         "the record template: context · decision · status · consequences; one "
+         "fork = one immutable record in version control"),
+        ("2", "Thoughtworks — architectural fitness function", "fitness_fn",
+         "an objective automated check of an architectural attribute: \"you and "
+         "I will never argue about whether it passed\" (Parsons)"),
+        ("3", "Brown — C4 + Structurizr DSL", "c4",
+         "the model as text: four zoom levels (Context/Container/Component/"
+         "Code), one model — many renders", True),
+        ("4", "Ford, Parsons, Kua — Building Evolutionary Architectures",
+         "evol_arch",
+         "incrementality + fitness functions + supporting change \"with as much "
+         "automation as possible\""),
+    ],
     "s16": [
         ("1", "Thoughtworks — Exploring Gen AI (Böckeler)", "fowler_genai",
          "the \"poisoning loop\": AI copies \"how it's done here\", not \"how it's right\""),
@@ -750,6 +857,13 @@ SLIDE_REFS = {
         ("3", "Thoughtworks — fitness function", "fitness_fn",
          "deterministic invariants against self-entrenchment of bad design"),
     ],
+    # EN-Sync Block 2 (#172 / #162 round 3): Gemini CLI self-review failure.
+    "s17b": [
+        ("1", "AI Incident Database — Report 6120 / Incident 1178",
+         "gemini_cli_incident",
+         "Gemini CLI, July 2025: mkdir without a read-after-write check → the "
+         "move chain overwrote the user's files", True),
+    ],
     "s18": [
         ("1", "Anthropic — AI-Native SDLC playbook", "anthropic_playbook",
          "the loop explore->plan->code->commit; the order is enforced"),
@@ -757,6 +871,72 @@ SLIDE_REFS = {
          "the smaller the AI's proposal, the more real the review; a giant diff goes unread"),
         ("3", "Brooks — No Silver Bullet", "brooks",
          "AI takes the accidental complexity, the human the essential"),
+    ],
+    # --- EN-sync block 3 (#172): registries for the round-6 RU additions ---
+    "s18b": [
+        ("1", "Anthropic — context engineering", "anthropic_ctx_eng",
+         "compaction summarizes lossily; JIT retrieval will not ask for what it "
+         "does not know exists — curation trades one risk for another", True),
+    ],
+    "s20b": [
+        ("1", "Agent Skills — open standard", "agent_skills_std",
+         "the SKILL.md format works across several AI tools, not one vendor"),
+        ("2", "Claude Docs — Skills", "claude_skills_docs",
+         "the body of a skill loads only when used — progressive disclosure",
+         True),
+        ("3", "Destefanis — Authoring Agent Skills (arXiv:2607.25032)",
+         "destefanis_skills_se",
+         "SE design principles for a skill: single responsibility, high cohesion / "
+         "low coupling; single author, preprint", True),
+    ],
+    "s20c": [
+        ("1", "GitHub MCP server", "github_mcp_server",
+         "toolsets enabled selectively; an explicit read-only mode — writes are "
+         "skipped", True),
+        ("2", "Playwright MCP server (Microsoft)", "playwright_mcp",
+         "an accessibility tree instead of a screenshot; generates an e2e test",
+         True),
+        ("3", "Willison — the lethal trifecta", "lethal_trifecta",
+         "one MCP server often covers 2 of the 3 corners in a single connection"),
+    ],
+    "s20e": [
+        ("1", "Backlog.md — open-source project", "backlog_md",
+         "\"one task = one context window = one pull request\""),
+        ("2", "Claude Docs — best practices (Task tools)", "claude_task_tools",
+         "TaskCreate/TaskUpdate/TaskGet/TaskList — session-scoped live progress",
+         True),
+    ],
+    "s20d": [
+        ("1", "Conventional Commits v1.0.0", "conventional_commits",
+         "<type>[scope]: <description>; fix→PATCH, feat→MINOR, BREAKING CHANGE→MAJOR"),
+        ("2", "Conventional Branch v1.1.0", "conventional_branch",
+         "AI Agent Source Prefixes: ai/, claude/, codex/, copilot/, cursor/", True),
+    ],
+    "s20g": [
+        ("1", "The Register — Claude Code reads .env despite .gitignore",
+         "register_env_secrets",
+         "\"ignored by git\" and \"ignored by Claude Code\" are two different "
+         "contracts; at least 4 open issues at the time of publication", True),
+        ("2", "Gitleaks — rule-first secret scanner", "gitleaks",
+         "regex + entropy, pre-commit hook, bypassable with --no-verify"),
+        ("3", "TruffleHog — verification-first scanner", "trufflehog",
+         "a live API call confirms the credential is valid right now"),
+    ],
+    "s20f": [
+        ("1", "Git — worktree documentation", "git_worktree_docs",
+         "a separate working directory with its own branch, but sharing the .git "
+         "object store with the main copy"),
+        ("2", "Claude Code — docs, best practices", "claude_worktree_docs",
+         "the isolation is enforced: the tool blocks edits outside the assigned "
+         "worktree", True),
+        ("3", "claude-code #60295 — branch swap",
+         "cc_issue_60295_branch_swap",
+         "two sessions in one working directory: a checkout in one silently "
+         "switches the other's working tree, reflog attached; closed as not planned"),
+        ("4", "claude-code #55724 — the .git lock",
+         "cc_issue_55724_lock_contention",
+         "13 parallel agents: 5 committed, 8 lost work to contention on "
+         ".git/index.lock; closed as a duplicate"),
     ],
     "s19": [
         ("1", "agents.md — open standard", "agents_md",
@@ -803,6 +983,31 @@ SLIDE_REFS = {
         ("2", "Meta — TestGen-LLM", "meta_testgen",
          "more coverage (32% vs 5.3%), but fewer mutants killed (2.4% vs 15%)"),
     ],
+    # --- EN-sync block 4: s25b / s25c (round-2 slides, round-6 rebuild) ---
+    "s25b": [
+        ("1", "Cucumber — BDD documentation", "cucumber_bdd",
+         "three practices of the cycle: Discovery / Formulation / Automation"),
+        ("2", "303software.com — BDD adoption 2025", "software303_bdd_adoption",
+         "BDD frameworks in ~27% of the OSS sample (68% of that in Ruby) — "
+         "not mainstream in most ecosystems", True),
+        ("3", "trunkbaseddevelopment.com", "trunk_based_dev",
+         "a short-lived branch — under 24 hours; DORA records it as a "
+         "high-performance practice"),
+    ],
+    "s25c": [
+        ("1", "Testcontainers — official site", "testcontainers",
+         "a real service in Docker on an ephemeral port for the duration of the "
+         "run, destroyed afterwards; the only dependency is a local Docker daemon"),
+        ("2", "MSW (Mock Service Worker) — documentation", "msw_docs",
+         "network-level HTTP interception inside the process; one handler for "
+         "unit / integration / e2e", True),
+        ("3", "WireMock — OSS vs Cloud", "wiremock_split",
+         "the AI features (Skills/MCP) live mostly in the paid WireMock Cloud, "
+         "not in the local OSS core", True),
+        ("4", "pytest-generator (Distil Labs)", "pytest_generator_distil",
+         "CPU-only local test generation, ~77% accuracy self-reported, low "
+         "adoption", True),
+    ],
     "s27": [
         ("1", "Willison — Vibe engineering", "willison_vibe_eng",
          "adversarial review with fresh context; \"review it — or it's not engineering\""),
@@ -819,6 +1024,20 @@ SLIDE_REFS = {
          True),
         ("3", "CodeCrash", "codecrash",
          "misleading comments crash the model's reasoning (~-23%)"),
+        # --- EN-sync block 4: round-6 additions (3 -> 6 refs) ---
+        ("4", "Rubber-Stamp Collapse (TianPan.co)", "tianpan_rubber_stamp",
+         "470 CodeRabbit PRs + telemetry on 22,000 developers: +170% findings, "
+         "+242.7% incidents per PR", True),
+        ("5", "The Register — the matplotlib hit-piece",
+         "matplotlib_hitpiece_register",
+         "PR #31132: an AI agent published an essay against the maintainer who "
+         "closed its PR", True),
+        ("6", "Xu et al. — who pays for reviewing AI code (arXiv 2510.10165)",
+         "oss_review_burden",
+         "a panel of 2,755 GitHub repositories / 1,699 contributors, 12 months "
+         "before and after Copilot: the periphery (75%) +43.5% commits and "
+         "+17.7% PRs, the core (top 25%) -19% of their own commits and +6.5% "
+         "reviewing others' code, PR rework +2.4%"),
     ],
     "s29": [
         ("1", "Willison — the lethal trifecta", "lethal_trifecta",
@@ -833,6 +1052,15 @@ SLIDE_REFS = {
          "with an AI assistant people introduce vulnerabilities more often and more confidently"),
         ("2", "NYU — Asleep at the Keyboard? (IEEE S&P 2022)", "nyu_asleep",
          "~40% of Copilot programs contained vulnerabilities (in security-sensitive tasks)"),
+    ],
+    # --- EN-sync block 4: s30b (round-3 slide) ---
+    "s30b": [
+        ("1", "BleepingComputer — the Amazon Q Developer wiper prompt",
+         "amazon_q_wiper",
+         "an unaudited PR carrying a \"system cleaner\" system prompt shipped in "
+         "release v1.84.0, ~1 million developers", True),
+        ("2", "AWS Security Bulletin AWS-2025-019", "aws_security_bulletin_q",
+         "the prompt's formatting broke execution — luck, not control", True),
     ],
     "s31": [
         ("1", "Slopsquatting — Spracklen et al., USENIX Security 2025",
@@ -851,12 +1079,32 @@ SLIDE_REFS = {
         ("2", "Google — DORA 2025", "dora_2025",
          "a negative link of AI to stability for the second year running", True),
     ],
+    "s33b": [
+        ("1", "incident.io — BT Group case study", "bt_group_incidentio",
+         "MTTR ~2h -> 85s (~97%) on top of a mature SRE practice; a vendor case study",
+         True),
+        ("2", "Microsoft Azure — \"Triangle\"", "azure_triangle_ms",
+         "time-to-engage -91%, triage accuracy 97%; a first-party source "
+         "(Microsoft itself)", True),
+        ("3", "Industry code-security reports, 2026", "iac_insecurity_2026",
+         "AI-generated IaC is secure by default in only ~55% of tasks (2 years "
+         "with no movement); 8.4% is a separate 2026 security-checked benchmark",
+         True),
+    ],
     "s35": [
         ("1", "Google — DORA 2024", "dora_2024",
          "+7.5% to documentation quality — the only clean plus, but with a paired cost",
          True),
         ("2", "Thoughtworks — Exploring Gen AI (Böckeler)", "fowler_genai",
          "\"AI will not replace a well-documented and automated setup\""),
+    ],
+    "s35b": [
+        ("1", "eesel.ai — independent guide to Confluence AI", "eesel_confluence_ai",
+         "summarization + content generation + Q&A search over the knowledge base "
+         "(a RAG pattern)", True),
+        ("2", "AWS — Amazon Q Developer /doc documentation", "aws_q_doc",
+         "the input is the codebase, not a retelling of the prompt; can build "
+         "diagrams from IaC files", True),
     ],
     "s37": [
         ("1", "Google — DORA 2025", "dora_2025",
@@ -873,6 +1121,15 @@ SLIDE_REFS = {
          True),
         ("3", "METR — RCT (n=16, experts)", "metr",
          "+19% time with AI while believing in speed-up — the perception gap"),
+    ],
+    "s37b": [
+        ("1", "Fortune / TechCrunch — Uber and Claude Code, 2026",
+         "uber_claude_code",
+         "32%->84% adoption of agentic practices in one month, 70% of code from "
+         "AI, $500-2000/engineer/month, the cap introduced after the fact", True),
+        ("2", "AWS Kiro — the same product, two registers", "aws_kiro_outage",
+         "the life-sciences success and the December 2025 Kiro incident — the "
+         "difference is the discipline applied, not the brand", True),
     ],
     "s39": [
         ("1", "Böckeler — To vibe or not to vibe", "vibe_or_not",

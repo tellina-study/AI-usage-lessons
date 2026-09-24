@@ -65,7 +65,10 @@ def s01(p):
         {"text": "Измеренный факт: с AI задачи заняли на +19% дольше",
          "size": 12.5, "bold": True, "color": DEEP, "newpara": True,
          "space_before": 2},
-        {"text": "— METR RCT, n=16 опытных OSS-разработчиков, 246 задач, 2025",
+        {"text": "— METR (Model Evaluation and Threat Research, независимая "
+                 "исследовательская организация), RCT (randomized controlled "
+                 "trial, рандомизированный контролируемый эксперимент), n=16, "
+                 "246 задач, 2025",
          "size": 9, "italic": True, "color": LIGHT, "newpara": True,
          "space_before": 4},
     ])
@@ -169,6 +172,87 @@ def s03(p):
         "дисциплина делает AI в одной индустрии надёжным по фазам — и где ломается без неё.",
         size=13, bold=True)
     notes_with_sources(s, "s03")
+    return s
+
+
+# ============================================================
+# s03b (NEW, #162 round 6 block 5) — общая статистика по отрасли.
+# Owner note: «и в начале презы надо добавить общую статистику по отрасли».
+# Ставится между s03 (мост из Модуля 1) и s04 (центральный вопрос): сначала
+# масштаб («внедрять или нет» индустрия закрыла), потом вопрос лекции («что
+# делает это надёжным»). Та же рамка, что в переформулированных s38/s39 —
+# спор «да или нет» снят, открыт вопрос цены и мер.
+# Источник рамки — chapter-part5 §7.4, абзац «Якорь для чек-листа: индустрия
+# использует то, чему всё меньше доверяет».
+# ============================================================
+def s03b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Вопрос «применять или нет» индустрия уже закрыла — открытым "
+           "остался вопрос надёжности",
+        size=21, w=12.3, h=0.82)
+
+    lx, lw = 0.55, 6.60
+    rx, rw = 7.35, 5.45
+    top = 1.42
+    boxh = 4.20
+
+    # --- LEFT: scale of adoption (chart + baselines) ---
+    ocean_box(s, lx, top, lw, boxh)
+    icon(s, "users", lx + 0.22, top + 0.12, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=top + 0.16, w=lw - 1.04, h=0.36,
+             text="Масштаб: почти вся отрасль уже внутри",
+             size=13, bold=True, color=MID)
+    add_image(s, CHARTS / "c03b-adoption.png", lx + 0.18, top + 0.60,
+              lw - 0.36, 2.16)
+    text_box(s, x=lx + 0.24, y=top + 2.90, w=lw - 0.48, h=0.62,
+             text="51% профессиональных разработчиков работают с AI-инструментами "
+                  "ежедневно; медиана времени работы с ними — около двух часов "
+                  "в день, примерно четверть рабочего дня.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 3.56, w=lw - 0.48, h=0.50,
+             text="Опросы разные: Stack Overflow спрашивает «используют или "
+                  "планируют» (более 49 000 человек из 177 стран), DORA — "
+                  "«используют» (более 5 000). Порядок величины совпадает.",
+             size=9, italic=True, color=SLATE, line_spacing=1.10)
+
+    # --- RIGHT: trust falls while adoption rises ---
+    ocean_box(s, rx, top, rw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "circle-help", rx + 0.22, top + 0.12, 0.46, "teal")
+    text_box(s, x=rx + 0.82, y=top + 0.16, w=rw - 1.04, h=0.36,
+             text="Доверие при этом падает", size=13, bold=True, color=TEAL)
+    filled_rect(s, rx + 0.20, top + 0.66, rw - 0.40, 1.32, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.8, radius=True, radius_adj=0.06)
+    text_box(s, x=rx + 0.38, y=top + 0.78, w=1.50, h=0.90, text="46%",
+             size=38, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 1.92, y=top + 0.80, w=rw - 2.30, h=1.06,
+             text="не доверяют точности того, что выдают AI-инструменты — "
+                  "против 31% годом ранее [1]",
+             size=11.5, bold=True, color=DEEP, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=rx + 0.24, y=top + 2.12, w=rw - 0.48, h=0.84,
+             text="Более 80% при этом отмечают рост личной эффективности — а "
+                  "высоко доверяют результату лишь 24% [2]. Ощущение пользы и "
+                  "доверие к выводу разошлись.",
+             size=10.5, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.20, top + 3.02, rw - 0.40, 0.98, TEAL_TINT,
+                stroke=TEAL, stroke_pt=1.4, radius=True, radius_adj=0.07)
+    text_box(s, x=rx + 0.40, y=top + 3.10, w=rw - 0.80, h=0.84,
+             text="Пользуются почти все — доверяют меньше половины. Спорить "
+                  "«включать ли AI» уже не о чем; инженерный вопрос — чем "
+                  "закрыть этот разрыв.",
+             size=10.5, bold=True, color=DEEP, line_spacing=1.14,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, 5.76, 12.25, 0.68,
+        "84–90% отрасли уже внутри, и доля растёт второй год подряд. Значит "
+        "полезный вопрос не «применять AI или нет», а какой ценой, с какими "
+        "рисками и какими мерами они закрываются — по фазам разработки.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s03b")
+    notes_with_sources(s, "s03b")
     return s
 
 
@@ -568,10 +652,12 @@ def s07(p):
     icon(s, "triangle-alert", 0.80, 4.82, 0.52, "light")
     text_box(s, x=1.48, y=4.72, w=11.05, h=0.82,
              text="«Мы внедрили AI-инструмент» ≠ «мы внедрили AI-дисциплину». "
-                  "Инструмент есть, практики нет — и множитель DORA работает в "
-                  "худшую сторону. За этим стоят все провалы лекции: prompt-and-pray, "
-                  "отравленный контекст, 70%-проблема, инцидент Replit — везде "
-                  "инструмент применён без практики.",
+                  "Инструмент есть, практики нет — и множитель DORA (DevOps "
+                  "Research and Assessment — исследовательская программа Google "
+                  "по зрелости DevOps-практик) работает в худшую сторону. За этим "
+                  "стоят все провалы лекции: prompt-and-pray, отравленный "
+                  "контекст, 70%-проблема, инцидент Replit — везде инструмент "
+                  "применён без практики.",
              size=12, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
 
     gold_callout(
@@ -679,6 +765,88 @@ def s09(p):
 
 
 # ============================================================
+# s09b (NEW, #162 round 3) — AWS Kiro success vs 847-deployments
+# honest-failure contrast; SDD naming
+# ============================================================
+def s09b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Дисциплина заранее — быстрый результат; без неё отказ ожидаем, не случаен",
+        size=21, w=12.3, h=0.82)
+
+    colw, gap = 6.05, 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.44
+    boxh = 3.36
+
+    # left: AWS Kiro success
+    ocean_box(s, lx, top, colw, boxh, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.8)
+    icon(s, "check-check", lx + 0.22, top + 0.16, 0.46, "gold")
+    text_box(s, x=lx + 0.82, y=top + 0.20, w=colw - 1.0, h=0.36,
+             text="AWS Kiro · life sciences (фарма/биотех, 2026)", size=12,
+             bold=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 0.68, w=colw - 0.48, h=0.92,
+             text="Продакшен-готовый агент для поиска терапевтических мишеней: "
+                  "рабочий процесс spec-first — спецификация → исполнение по "
+                  "вехам → верификация против спеки.",
+             size=11, color=DEEP, line_spacing=1.16)
+    text_box(s, x=lx + 0.24, y=top + 1.62, w=colw - 0.48, h=0.60,
+             text="3 недели, 3 разработчика", size=22, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 2.24, w=colw - 0.48, h=0.34,
+             text="— не растянутый цикл ad-hoc-промптинга.", size=11,
+             italic=True, color=DEEP)
+    text_box(s, x=lx + 0.24, y=top + 2.66, w=colw - 0.48, h=0.60,
+             text="Средняя достоверность — опубликованный вендором кейс-стади, "
+                  "не независимый аудит.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+
+    # right: 847-deployments honest-failure contrast
+    ocean_box(s, rx, top, colw, boxh)
+    icon(s, "circle-x", rx + 0.22, top + 0.16, 0.46, "mid")
+    text_box(s, x=rx + 0.82, y=top + 0.20, w=colw - 1.0, h=0.36,
+             text="847 задокументированных внедрений AI-агентов", size=12.5,
+             bold=True, color=DEEP, line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 0.68, w=colw - 0.48, h=0.60,
+             text="76% отказали за 90 дней", size=20, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 1.30, w=colw - 0.48, h=0.78,
+             text="Корневая причина по источнику — провал спецификации, не "
+                  "техническая неспособность модели.",
+             size=12, color=DEEP, line_spacing=1.24)
+    text_box(s, x=rx + 0.24, y=top + 2.10, w=colw - 0.48, h=0.56,
+             text="Намерение не было специфицировано настолько точно, чтобы "
+                  "его вообще можно было проверить.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.16)
+    text_box(s, x=rx + 0.24, y=top + 2.66, w=colw - 0.48, h=0.60,
+             text="Низкая-средняя достоверность — методология выборки не "
+                  "раскрыта; иллюстрация тезиса, не аудированная статистика.",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.10)
+
+    # bottom: SDD naming strip
+    sy = top + boxh + 0.16
+    filled_rect(s, 0.55, sy, 12.25, 0.62, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
+                radius=True, radius_adj=0.08)
+    text_runs(s, 0.79, sy + 0.08, 11.8, 0.48, [
+        {"text": "SDD (Spec-Driven Development, разработка через "
+                 "спецификацию) — ", "size": 12, "bold": True,
+         "color": DEEP},
+        {"text": "GitHub Spec Kit ~90 тыс. звёзд; к 2026 — минимум 8 крупных "
+                 "вендоров с собственным вариантом практики.",
+         "size": 11.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, sy + 0.78, 12.25, 0.60,
+        "Дисциплина заранее — не гарантия, а сдвиг вероятности: спецификация "
+        "намерения делает отказ исключением, а не статистически ожидаемым исходом.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s09b")
+    notes_with_sources(s, "s09b")
+    return s
+
+
+# ============================================================
 # s10 (display s11) — как вести требования: СТРУКТУРА + ПРОЦЕСС (ПРАВКА 6)
 # ============================================================
 def s10(p):
@@ -705,12 +873,12 @@ def s10(p):
         ("Истории + критерии приёмки [3]",
          "«Как <роль>, я хочу <цель>, чтобы <польза>» + проверяемые критерии на "
          "каждую историю."),
-        ("EARS-нотация [7]",
+        ("EARS-нотация (лёгкий синтаксис требований) [7]",
          "«КОГДА <триггер>, система ДОЛЖНА <ответ>» (Mavin 2009) — убирает "
          "«should/may», делает требование testable."),
         ("Функциональные vs нефункциональные [6]",
-         "поведение отдельно от характеристик (latency / cost / security); NFR "
-         "энфорсятся fitness-функциями."),
+         "поведение отдельно от характеристик (latency / cost / security); "
+         "NFR (нефункциональные требования) энфорсятся fitness-функциями."),
         ("требования → дизайн → задачи [3]",
          "принудительный порядок 3 файлов (Kiro / Spec-Kit); DoD — малые "
          "изолированно-тестируемые единицы."),
@@ -740,8 +908,9 @@ def s10(p):
          "требования — диффабельный Markdown в репозитории, не в вики / чате; "
          "durable-артефакт, не мимолётный промпт."),
         ("Синхронизация с изменением [9]",
-         "держать в актуальности как ADR; человек владеет «что строить», AI — "
-         "структурой и полнотой."),
+         "держать в актуальности как ADR (architecture decision record, "
+         "документ архитектурного решения); человек владеет «что строить», "
+         "AI — структурой и полнотой."),
     ]
     for i, (head, body) in enumerate(proc):
         y = sy + i * 0.82
@@ -760,4 +929,100 @@ def s10(p):
 
     refs_of_slide(s, "s11")
     notes_with_sources(s, "s11")
+    return s
+
+
+# ============================================================
+# s11b — requirements visualization (Mermaid User Journey + Gherkin
+# bridge; honest boundary — story mapping NOT code-as-DSL) [#162 r2]
+# ============================================================
+def s11b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Визуализация требований — тот же принцип архитектура-как-код",
+        size=22, w=12.4, h=0.82)
+
+    colw = 6.05
+    gap = 0.15
+    lx = 0.55
+    rx = lx + colw + gap
+    top = 1.44
+    boxh = 3.34
+
+    # --- LEFT: Mermaid User Journey ---
+    ocean_box(s, lx, top, colw, boxh, fill=SURFACE, stroke=MID, stroke_pt=1.6)
+    icon(s, "route", lx + 0.22, top + 0.16, 0.44, "mid")
+    text_box(s, x=lx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Mermaid User Journey", size=13, bold=True, color=MID)
+    text_box(s, x=lx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="Текстовый DSL для диаграмм, то же семейство, что "
+                  "PlantUML/Structurizr для архитектуры. Структура: заголовок "
+                  "→ секции пути → шаги с оценкой 1–5 и действующими лицами.",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, lx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "title Бронирование переговорки",
+            "section Поиск",
+            "  Открыть календарь: 4: Инженер",
+            "  Найти свободный слот: 2: Инженер"]):
+        text_box(s, x=lx + 0.36, y=top + 1.84 + i * 0.225, w=colw - 0.72, h=0.22,
+                 text=line, size=9.5, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=lx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="AI и читает такую диаграмму как контекст, и порождает её из "
+                  "сценария — тот же формат, что C4: текст в репозитории.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- RIGHT: Gherkin bridge ---
+    ocean_box(s, rx, top, colw, boxh, fill=SURFACE, stroke=LIGHT, stroke_pt=1.6)
+    icon(s, "file-code", rx + 0.22, top + 0.16, 0.44, "teal")
+    text_box(s, x=rx + 0.80, y=top + 0.18, w=colw - 1.0, h=0.36,
+             text="Мост к Gherkin — исполняемая спецификация", size=13,
+             bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=top + 0.62, w=colw - 0.48, h=1.10,
+             text="Более прямой аналог архитектура-как-код: сценарий не "
+                  "просто описывает поток, а проверяется прогоном автотеста "
+                  "(раздел тестирования).",
+             size=11, color=DEEP, line_spacing=1.16)
+    filled_rect(s, rx + 0.24, top + 1.78, colw - 0.48, 0.98, WHITE,
+                stroke=SOFT_GREY, stroke_pt=1.0, radius=True, radius_adj=0.06)
+    for i, line in enumerate([
+            "Given переговорка свободна",
+            "When инженер бронирует слот",
+            "Then бронь подтверждена"]):
+        text_box(s, x=rx + 0.36, y=top + 1.90 + i * 0.255, w=colw - 0.72, h=0.24,
+                 text=line, size=10, color=SLATE, font="DejaVu Sans Mono",
+                 line_spacing=1.0)
+    text_box(s, x=rx + 0.24, y=top + 2.84, w=colw - 0.48, h=0.46,
+             text="Как C4/Mermaid — текст, проверяемый drift-детектором, так "
+                  "Gherkin — текст, проверяемый автотестом: оба AI может писать "
+                  "и валидировать.",
+             size=10, italic=True, color=LIGHT, line_spacing=1.12)
+
+    # --- contrast strip: honest boundary (story mapping) ---
+    cy = top + boxh + 0.12
+    filled_rect(s, 0.55, cy, 12.25, 0.62, SOFT_GREY, stroke=SLATE,
+                stroke_pt=0.75, radius=True, radius_adj=0.10)
+    icon(s, "circle-slash", 0.72, cy + 0.10, 0.40, "teal")
+    text_runs(s, 1.28, cy + 0.07, 11.35, 0.48, [
+        {"text": "Честная граница: ", "size": 10.5, "bold": True, "color": SLATE},
+        {"text": "story mapping (раскладка активностей по колонкам, Miro/"
+                 "FigJam) — важная практика, но это воркшоп-техника "
+                 "фасилитации, не code-as-DSL. Путь к дисциплинированному "
+                 "требованию здесь лежит через людей в комнате, а не через "
+                 "версионируемый текст.",
+         "size": 10, "color": DEEP, "line_spacing": 1.12},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+
+    gold_callout(
+        s, 0.55, cy + 0.74, 12.25, 0.58,
+        "Не отдельная новая категория инструментов — тот же ход, что "
+        "архитектура-как-код: артефакт текстом, а не картинкой, чтобы AI мог "
+        "его читать и порождать наравне с человеком.",
+        size=12, bold=True, align=PP_ALIGN.CENTER)
+
+    refs_of_slide(s, "s11b")
+    notes_with_sources(s, "s11b")
     return s

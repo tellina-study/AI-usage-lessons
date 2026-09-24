@@ -1,6 +1,6 @@
 # library/lectures/lec-04/deck.yaml  —  PART 1 of 2
 #
-# Deck-структура Лекции 4 «AI в жизненном цикле разработки ПО (SDLC)» (41 слайд — v4.1: +слайд-фундамент s05, keystone→s06, дивайдеры без тег-плашек).
+# Deck-структура Лекции 4 «AI в жизненном цикле разработки ПО (SDLC)» (50 слайдов — v4.3 #162 round 2: +s11b/s20f/s25b/s25c/s35b requirements-viz·git-worktree·BDD-trunk-based·test-tooling·docs-tooling; v4.2 #162: +s20b/s20c/s20d/s20e Skills·MCP·git-конвенции·task-logging; v4.1: +слайд-фундамент s05, keystone→s06, дивайдеры без тег-плашек).
 #
 # Source: chapter v4 methodology-first (~34.5k, 5 частей) +
 # plan v4-methodology-first §4 (послайдовая карта s01–s41 (v4.1: s05 foundations, s06 keystone-цикл).
@@ -38,10 +38,10 @@ deck:
   learning_outcomes: [LO1, LO4, LO7]
   language: ru
   status: draft-for-gate-b
-  version: v4.0
+  version: v4.5
   source: "chapter v4 methodology-first (~34.5k, 5 частей)"
   plan: notes/lecture-4-software-review/final/plan-v4-methodology-first.md (v4 §4)
-  total_slides: 41          # v4.1: s01–s41; 7 section-dividers s09/s13/s17/s23/s26/s33/s36 (сдвиг +1); s05 foundations, s06 keystone
+  total_slides: 58          # v4.5 (#162 round 6 — сводный проход пяти блоков): +1 s14b (конкретные артефакты четырёх архитектурных практик, между s14 и s15 — блок 1), −1 s21 (anti-hype-бенчмарки, старый display 32 — удалён по прямому указанию владельца, блок 3), +1 s03b (статистика внедрения в отрасли: Stack Overflow 2025 / DORA 2025, между s03 и s04 — блок 5); блоки 2 и 4 правили только содержимое существующих слайдов. 57 → 58. Было 57: v4.4 (#162 round 3 QA-fix): +7 slides s09b/s17b/s18b/s20g/s30b/s33b/s37b (AWS Kiro vs 847-deployments · Gemini CLI self-review · curation honest limits · Register .env secrets · Amazon Q wiper · BT Group/Azure Triangle vs IaC-insecurity · Uber+Kiro dual-register) + s20d/s20e ORDER SWAP + content fixes (s16 AI-periphery / s21+s37-triangulation GitClear-2026 / s25c rebuilt / s34 risk-calibrated gate / s37-matrix vendor-column removed); было 50 (v4.3 round 2: +5 slides s11b/s20f/s25b/s25c/s35b; было 45 v4.2; было 41 v4.1). v4.4.1 (post-critic QA-fix, this file): +id s05f (previously-undeclared foundations slide — the actual root cause of 56-declared-ids-vs-57-slides; see s05f entry below) + s30b re-positioned between s29/s30 (was mis-declared between s30/s31) + s39/s40 file: paths corrected (s40-checklist.md / s41-bridge-qa.md) — declared slide count now 57/57, matches rendered PPTX exactly.
   curriculum_level: "Module 1, первая отраслевая (после обзорных Л1–Л3); L4 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "методико-first: фаза SDLC × ведущая практика (методика: артефакт + кто предписывает + почему); инструмент — вторичная иллюстрация"
@@ -125,9 +125,9 @@ glossary_lock:
 ai_failure:
   # AI-Failure & Judgment Content Rule (ENFORCED): ≥30% strict-in, waiver НЕДОСТУПЕН для L4.
   # Целиком-in-bucket слайды (провал+урок / лимит / «когда не AI» / сравнение с альтернативой):
-  strict_in_slides: [s07, s11, s13, s15, s20, s21, s24, s27, s29, s30, s31, s33, s34, s37, s38, s39]
-  count: 16
-  share_by_slides: "16/40 = 40% по слайдам (буфер +10 пп над порогом 30%). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s20/s21-Р3 · s24-Р4 · s27/s29/s30/s31-Р5 · s33/s34-Р6 · s37/s38/s39-Р7 — single-artifact concentration отсутствует."
+  strict_in_slides: [s07, s11, s13, s15, s17b, s18b, s20, s20g, s24, s27, s29, s30, s30b, s31, s33, s34, s37, s37b, s38, s39]
+  count: 20
+  share_by_slides: "20/48 ≈ 42% по слайдам (round-6, сводный пересчёт: −1 in_bucket слайд s21 (anti-hype) удалён вместе со слайдом; +1 s14b и +1 s03b — оба out-of-bucket, поэтому знаменатель 47 → 48, числитель 21 → 20; было 21/47 ≈ 45%; buffer well above порога 30%; self-estimate, требует methodology-critic re-confirm). partial→out (Решение #78): s01 hook, s02 cover, s03 мост, s04 ЦВ, s05 keystone (несущая ось = course-scaffold), s06 демотированная линза A→D, s08/s12/s16/s22/s25/s32/s35 дивайдеры, s09/s10 практика+рекомендации требований (partial-upside), s09b AWS Kiro/847 contrast (partial-upside, mixed success+honest-failure), s14 подходы архитектуры (upside), s17/s18/s19 практики реализации (upside), s23 TDD-практика (upside), s26 практика ревью (upside), s28 практика безопасности (upside), s32 дивайдер, s33b BT Group/Azure vs IaC (partial-upside, mixed), s36 матрица (упаковка), s40 мост+Q&A. Кластеры распределены по 7 разделам: s07-Р0 · s11-Р1 · s13/s15-Р2 · s17b/s18b/s20/s20g-Р3 · s24-Р4 · s27/s29/s30/s30b/s31-Р5 · s33/s34-Р6 · s37/s37b/s38/s39-Р7 — single-artifact concentration отсутствует."
 
 # ─────────────────────────────────────────────────────────────────────────
 # Порядок предъявления (plan v4 §4): фазы SDLC, внутри — практика ведёт.
@@ -176,6 +176,24 @@ slides:
     interaction: none
     verify_day_of: false
 
+  # NEW (#162 round 6, block 5): общая статистика по отрасли перед центральным
+  # вопросом. Owner note: «и в начале презы надо добавить общую статистику по
+  # отрасли». Ставит масштаб («внедрять или нет» индустрия закрыла) до того,
+  # как задаётся вопрос лекции о надёжности; та же рамка, что в
+  # переформулированных s39/s40 (risk-triad и чек-лист).
+  - id: s03b
+    file: slides/s03b-industry-adoption.md
+    type: assertion_visual
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 2
+    assertion: "Спор «внедрять AI в разработку или нет» индустрия закрыла: 84–90% разработчиков уже пользуются AI-инструментами, и доля растёт второй год подряд — при этом доля не доверяющих точности выводов выросла с 31% до 46%, поэтому открыт не вопрос «да или нет», а вопрос цены, рисков и мер"
+    learning_goal: "Задать масштаб отрасли до разбора по фазам и переформулировать вопрос лекции как вопрос надёжности, а не выбора «использовать / не использовать»"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§7.4 (абзац «Якорь для чек-листа: индустрия использует то, чему всё меньше доверяет»)"
+    references: [so-survey-2025, dora-2025]
+    interaction: none
+    verify_day_of: true
+
   - id: s04
     file: slides/s04-central-question.md
     type: assertion_visual
@@ -188,8 +206,28 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s05f
+    file: slides/s05-foundations-practices.md
+    type: assertion_visual
+    section: "Раздел 0. Введение и методическая рамка"
+    duration_min: 3
+    assertion: "Эта лекция — сводка практик: современные подходы лидеров (Anthropic, OpenAI, GitHub, Google DORA, Thoughtworks, Willison) + проверенная временем классика (Brooks, Beck, Nygard, Ford/Parsons, Fowler, Brown)"
+    learning_goal: "Источники главы одним слайдом — 2 колонки (современные практики лидеров / классика) со ссылками; готовит keystone (s05, следующий слайд)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0 (обзор источников) [for-slide-s05f]"
+    interaction: none
+    verify_day_of: false
+    # ADDED (round-3 QA-fix, критик-cross-deck-finding #2): this slide (build
+    # function b1.s05f, actual display position s05, renders BEFORE keystone)
+    # had NO declared id anywhere in deck.yaml/deck-part2.yaml — the true root
+    # cause of the 56-declared-ids-vs-57-rendered-slides mismatch (not the s41
+    # tail, which turned out to be only a file: path issue — see s39/s40
+    # below). Verified via direct PPTX text extraction + build_lec04_v4.py
+    # source (b1.s05f is a distinct builder from b1.s06k, which is what the
+    # existing "id: s05" entry below actually describes — the keystone).
+
   - id: s05
-    file: slides/s05-keystone-git-loop.md
+    file: slides/s06-keystone-git-loop.md
     type: assertion_visual
     section: "Раздел 0. Введение и методическая рамка"
     duration_min: 3
@@ -253,6 +291,22 @@ slides:
     interaction: none
     verify_day_of: true
 
+  - id: s09b
+    file: slides/s09b-spec-driven-cases.md
+    type: case_study
+    section: "Раздел 1. Требования — первый артефакт"
+    duration_min: 3
+    assertion: "Дисциплина, применённая заранее, даёт измеримую разницу: там, где спека-first выстроена под понятный критерий, результат быстр и предсказуем; там, где AI внедряют без спецификации намерения, отказ — статистически ожидаемый исход, а не исключение"
+    learning_goal: "Контраст двух исходов дисциплины spec-driven на конкретных, честно промаркированных цифрах; SDD как названный термин отрасли"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.1 [for-slide-s08]"
+    references: [aws-kiro-lifesciences, sdd-terminology]
+    interaction: none
+    verify_day_of: true
+    # NEW (#162 round 3 QA-fix): inserted between s09 (spec-driven-practice)
+    # and s10 (requirements-methodics) — AWS Kiro success case (§1.1) vs
+    # honest 847-deployments/76%-failed contrast; SDD naming.
+
   - id: s10
     file: slides/s10-requirements-methodics.md
     type: assertion_visual
@@ -265,6 +319,21 @@ slides:
     references: [spec-kit, openai-deliberative-alignment, fowler-intent]
     interaction: none
     verify_day_of: true
+
+  - id: s11b
+    file: slides/s11b-requirements-visualization.md
+    type: assertion_visual
+    section: "Раздел 1. Требования — первый артефакт"
+    duration_min: 3
+    assertion: "Визуализация требований — не новая категория, а тот же принцип architecture-as-code, применённый к требованиям: держать артефакт текстом, а не картинкой, чтобы он версионировался и читался и человеком, и AI"
+    learning_goal: "Mermaid User Journey + мост к Gherkin как исполняемой спецификации; честная граница — story mapping сюда не входит"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§1.2b [for-slide-s11b]"
+    references: [mermaid-user-journey, cucumber-bdd]
+    interaction: none
+    verify_day_of: false
+    # NEW (#162 round 2): inserted between s10 (requirements-methodics) and
+    # s11 (prompt-and-pray) — content sits between §1.2 and §1.3.
 
   - id: s11
     file: slides/s11-prompt-and-pray.md
@@ -322,6 +391,22 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s14b
+    file: slides/s14b-architecture-artifacts.md
+    type: schema_matrix
+    section: "Раздел 2. Архитектура — до кода, и ею надо управлять"
+    duration_min: 3
+    assertion: "У каждой из четырёх практик управления архитектурой есть конкретный артефакт в репозитории и конкретный шаг сборки, который краснеет при нарушении: ADR-запись, тест-инвариант, текстовая модель C4 и конвейер, держащий три предыдущих вместе"
+    learning_goal: "Заземлить абстрактную матрицу четырёх практик (s14) на реальные файлы: ADR-скелет, fitness-функции, Structurizr-DSL, архитектурный гейт"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2–§2.5 [for-slide-s13], [for-slide-s14], [for-slide-s15]"
+    references: [nygard-adr, ford-fitness-functions, brown-c4, evolutionary-architectures]
+    interaction: none
+    verify_day_of: false
+    # NEW (#162 round 6 block 1): inserted right after s14 (матрица четырёх
+    # практик) — owner: «после него еще один слайд с примерами артефактов/
+    # инструкций по каждому типу, чтобы заземлить и пояснить».
+
   - id: s15
     file: slides/s15-poisoned-context.md
     type: case_study
@@ -338,7 +423,7 @@ slides:
 
   # ─── Раздел 3. Реализация — дисциплина + харнес (s16–s21) ───
   - id: s16
-    file: slides/s16-divider-implementation.md
+    file: slides/s16-poisoned-context.md
     type: section_divider
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 0.5
@@ -351,7 +436,7 @@ slides:
     verify_day_of: false
 
   - id: s17
-    file: slides/s17-small-units-cycle.md
+    file: slides/s17-divider-implementation.md
     type: assertion_visual
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -363,21 +448,53 @@ slides:
     interaction: none
     verify_day_of: true
 
-  - id: s18
-    file: slides/s18-persistent-memory-layer.md
-    type: schema_architecture
+  - id: s17b
+    file: slides/s17b-gemini-cli-selfreview.md
+    type: case_study
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
-    assertion: "Постоянный слой инструкций и памяти в репозитории (AGENTS.md, память, context-engineering) — то, что агент читает каждую сессию: контекст живёт в репо, а не в мимолётных промптах"
-    learning_goal: "Ведущее: постоянный слой инструкций/памяти (AGENTS.md конвенции/guardrails, память, context-eng JIT/компакция/context-rot)"
+    assertion: "Пропущенный шаг саморевью стоит конкретно: Gemini CLI не проверил результат mkdir и на основе ложного допущения перезаписал файлы пользователя цепочкой move — цена не гипотетическая, а задокументированная"
+    learning_goal: "Cаморевью как обязательный шаг цикла (не факультативная привычка); цена пропущенного check на конкретном инциденте + контраст масштаба"
+    learning_outcomes: [LO1, LO7, LO4]
+    chapter_ref: "§3.1 [for-slide-s16]"
+    references: [gemini-cli-incident]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+    # NEW (#162 round 3 QA-fix): inserted between s17 (small-units-cycle)
+    # and s18 (persistent-memory-layer) — Gemini CLI self-review incident.
+
+  - id: s18
+    file: slides/s19-persistent-memory-layer.md
+    type: schema_layered
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Контекст агента живёт на четырёх разных уровнях — постоянные инструкции, контекст одной сессии, операционная история задач и память (слот 1 карты Лекции 3), — и каждый ведут по-своему: инструкции пишут, сессию курируют, историю датируют, память настраивают и проверяют"
+    learning_goal: "Ведущее: четыре уровня контекста/памяти как явная структура (кто ведёт · срок жизни · пример из разработки) + явное определение JIT-извлечения + распределение контекста по артефактам репозитория — round-6 rework §3.2"
     learning_outcomes: [LO1, LO7]
     chapter_ref: "§3.2 [for-slide-s18]"
     references: [anthropic-context-engineering, agents-md]
     interaction: none
     verify_day_of: false
 
+  - id: s18b
+    file: slides/s18b-curation-limits.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "У каждого из четырёх уровней контекста свой предел: устаревшие инструкции хуже их отсутствия, компакция теряет решения молча, а JIT не спросит о неизвестном, операционная история стареет тише инструкций, память закрепляет ошибочный вывод — риск не исчезает, а меняется на другой"
+    learning_goal: "Честный предел КАЖДОГО уровня контекста, строго параллельно предыдущему слайду — не факультативная оговорка, а условие корректного применения практики"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.2 [for-slide-s17], §3.3d (entrenchment)"
+    references: [anthropic-context-engineering, agents-md]
+    in_bucket: true
+    interaction: none
+    verify_day_of: false
+    # NEW (#162 round 3 QA-fix): inserted right after reworked s18
+    # (persistent-memory/AGENTS.md), before s19 (harness-gate).
+
   - id: s19
-    file: slides/s19-harness-gate.md
+    file: slides/s20-harness-gate.md   # corrected #162 r3: was mis-pointing at s19-persistent-memory-layer.md (pre-existing drift, fixed while touching this region — content below already matched the real s20-harness-gate.md file)
     type: schema_pipeline
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -389,8 +506,107 @@ slides:
     interaction: none
     verify_day_of: false
 
+  - id: s20b
+    file: slides/s20b-skills.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Skill — процедура, которую агент подгружает on-demand, а не всегда: AGENTS.md держит короткое и частое, skill — длинное и редкое, цена которого равна нулю, пока не вызван"
+    learning_goal: "Ведущее: skills как progressive disclosure инструкций (on-demand слой поверх постоянного AGENTS.md) + честная кросс-вендорная калибровка"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3b [for-slide-s20b]"
+    references: [agent-skills-std, claude-skills-docs]
+    interaction: none
+    verify_day_of: true
+
+  - id: s20c
+    file: slides/s20c-mcp-coding-agent.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "MCP убирает человека-моста между агентом и внешними системами (issue-трекер, браузер, деплой): сервер публикует инструменты, агент вызывает их как встроенные — но тот же канал закрывает сразу два угла Lethal Trifecta"
+    learning_goal: "Ведущее: MCP расширяет агента за пределы файловой системы (GitHub / Playwright / filesystem MCP) + мост к security (Lethal Trifecta через один сервер)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3c [for-slide-s20c]"
+    references: [github-mcp-server, playwright-mcp, willison-lethal-trifecta]
+    interaction: none
+    verify_day_of: true
+
+  # ORDER SWAP (#162 round 3 QA-fix): task-logging (s20e) now presents
+  # BEFORE git-conventions (s20d), matching book's round-3 §3.3d↔§3.3e
+  # reorder (§3.3d is now task-logging, §3.3e is now git-conventions).
+  # File/slide ids s20d/s20e are NOT renamed — only order + chapter_ref.
+  - id: s20e
+    file: slides/s20e-task-logging-layer.md
+    type: schema_matrix
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Нет единственно правильного паттерна логирования задач — выбор составной: solo/команда × длительность задачи × нужда в аудит-следе; встроенный TodoWrite/Task* — session-scoped прогресс, не замена персистентному файловому логу"
+    learning_goal: "Ведущее: критерии выбора между 3 файловыми паттернами логирования задач (папка-на-задачу / единый лог / плоская папка) — методика без единственного правильного ответа, как growth-ladder в Лекции 3"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3d [for-slide-s20e]"
+    references: [backlog-md, claude-task-tools]
+    interaction: none
+    verify_day_of: true
+
+  - id: s20d
+    file: slides/s20d-git-conventions.md
+    type: assertion_visual
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "То, что не записано в steering-файле, агент не знает и угадывает заново каждую сессию — это касается и git: Conventional Commits + Conventional Branch (с AI Agent Source Prefixes) + структурный PR-шаблон превращают объём агентных коммитов из шума в машинно-читаемый сигнал"
+    learning_goal: "Ведущее: git-конвенции (commit/branch/PR) — часть контракта с агентом на уровень выше команд сборки; специфика масштаба — агент коммитит систематически и на порядок больше"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3e [for-slide-s20d]"
+    references: [conventional-commits, conventional-branch]
+    interaction: none
+    verify_day_of: true
+
+  - id: s20g
+    file: slides/s20g-register-env-secrets.md
+    type: case_study
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "«Ignored by git» и «ignored by Claude Code» — две разные вещи, управляемые разными конфиг-файлами: Claude Code читал .env вопреки и .gitignore, и .claudeignore, а Bash-подпроцесс обходит даже явный deny-запрет на чтение"
+    learning_goal: "Секреты — отдельный, независимо настраиваемый контракт от git-конвенций; двухслойный предел (.claudeignore + permissions.deny) и трёхслойная защита сканерами"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3e [for-slide-s20g]"
+    references: [register-env-secrets, gitleaks, trufflehog]
+    in_bucket: true
+    interaction: none
+    verify_day_of: true
+    # NEW (#162 round 3 QA-fix): inserted after git-conventions (s20d, in
+    # its corrected order), before s20f (git worktree).
+
+  - id: s20f
+    file: slides/s20f-git-worktree.md
+    type: case_study
+    section: "Раздел 3. Реализация — дисциплина и харнес"
+    duration_min: 3
+    assertion: "Несколько параллельных агентных сессий над одним репозиторием портят незакоммиченные правки друг друга — git worktree (отдельная директория и ветка, общий .git) закрывает этот класс инцидента; курс сам на нём потерял ~2 часа и формализовал правило после"
+    learning_goal: "Git worktree как решение проблемы общей рабочей копии при параллельных агентных сессиях; честная проверяемость на собственном инциденте курса"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§3.3f [for-slide-s20f]"
+    references: [git-worktree-docs, claude-worktree-docs]
+    interaction: none
+    verify_day_of: true
+    # NEW (#162 round 2): inserted between s20e (task-logging-layer) and
+    # s21 (70-percent-problem/anti-hype).
+
+  # УДАЛЁН (round 6, block 3): id s21 — anti-hype benchmarks (display-слайд 32,
+  # «Бренд и бенчмарк-число ≠ инженерная дисциплина»: SWE-bench Verified/Pro +
+  # Devin/OpenAI/Cursor + «пять вопросов к вендорскому числу»). Удалён по
+  # прямому указанию владельца («слайд 32 — лишний, убрать»). Разрыв
+  # Verified/Pro введён в Лекции 3; вендор-скепсис держат s20 (70%-проблема),
+  # s37 (триангуляция) и s38 (risk-triad). Builder b3.s21 и
+  # slides/s22-anti-hype-benchmarks.md удалены вместе с записью.
+
+# ─────────────────────────────────────────────────────────────────────────
+# Продолжение — deck-part2.yaml: slides s22..s40 + totals + ai_failure_judgment
+# + verify_day_of_items + fact_check_items. Loader читает ОБЕ части.
+# ─────────────────────────────────────────────────────────────────────────
   - id: s20
-    file: slides/s20-70-percent-problem.md
+    file: slides/s21-70-percent-problem.md
     type: case_study
     section: "Раздел 3. Реализация — дисциплина и харнес"
     duration_min: 3
@@ -403,21 +619,3 @@ slides:
     interaction: none
     verify_day_of: true
 
-  - id: s21
-    file: slides/s21-anti-hype-benchmarks.md
-    type: case_study
-    section: "Раздел 3. Реализация — дисциплина и харнес"
-    duration_min: 3
-    assertion: "Бенчмарк-число бывает истинным и вводящим в заблуждение: Devin 13,86% — 79 из 570 (только 25% бенча с контаминацией); OpenAI «70% больше PR» — без знаменателя; бренд/бенчмарк ≠ дисциплина"
-    learning_goal: "[SI] Anti-hype: Devin 13,86% (79/570), Cursor признаёт слабость, OpenAI «70% more PRs» без знаменателя"
-    learning_outcomes: [LO7, LO4]
-    chapter_ref: "§3.5 [for-slide-s19]"
-    references: [devin-cognition, swe-bench-pro, openai-swe-bench, cursor]
-    in_bucket: true
-    interaction: none
-    verify_day_of: true
-
-# ─────────────────────────────────────────────────────────────────────────
-# Продолжение — deck-part2.yaml: slides s22..s40 + totals + ai_failure_judgment
-# + verify_day_of_items + fact_check_items. Loader читает ОБЕ части.
-# ─────────────────────────────────────────────────────────────────────────

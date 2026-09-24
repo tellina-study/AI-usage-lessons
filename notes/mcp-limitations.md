@@ -788,6 +788,16 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
 - **Workaround:** накладывать подпись текстовым слоем python-pptx поверх вставленного PNG (lec-02 s25: «11 из 13 — ниже 50%» gold-текст на белом поле чарта).
 - **First seen in:** #183 (lec-02 v2.0 batch 2, s25 NoLiMa chart, 2026-09-05).
 
+### [#162-1] `add_image()` молча возвращает `None` при отсутствующем файле иконки — не рендерится, без ошибки
+
+- **Tool:** `_helpers.py` `add_image()` (python-pptx build-скрипт), паттерн этого репозитория для recolored SVG→PNG иконок из `rendered/assets/icons/`.
+- **Symptom:** слайд `s20e` (schema_matrix, Лекция 4) рендерился без иконки в заголовке колонки (а) — не было ни исключения, ни визуального placeholder'а, просто пусто. Обнаружено только vision-ревью (`presentation-critic`), не автоматической проверкой.
+- **Root cause:** `assets/icons/file-stack-white.png` физически отсутствовал на диске (не был сгенерирован в исходном design-проходе); `add_image()` при `FileNotFoundError`/отсутствии пути тихо возвращает `None` вместо ошибки — вызывающий код не проверяет возврат.
+- **Severity:** P2 (silent visual gap — не видно без vision-QA, легко пропустить при self-report designer'а).
+- **Workaround:** генерация недостающей иконки на этом хосте без `rsvg-convert`/`ImageMagick`/`inkscape` (недоступны, `apt install` запрещён правами) — через `cairosvg` (pip), но ему нужен `libcairo.so.2`, которого нет в системном `LD_LIBRARY_PATH`. Рабочая команда: `LD_LIBRARY_PATH=/home/harness/.local/lo-sysroot/usr/lib/x86_64-linux-gnu python3 -c "import cairosvg; cairosvg.svg2png(...)"` — та же sysroot-библиотека, что уже используется для LibreOffice headless (см. [#172-2]). Recolor через lucide SVG source + цветовая замена в тексте SVG перед рендером.
+- **Long-term fix:** добавить sanity-check в `add_image()` (raise вместо silent `None`) или pre-build assertion «все referenced icon-файлы существуют» перед сборкой pptx — предотвратит повтор на будущих лекциях.
+- **First seen in:** #162 (Лекция 4, s20e schema_matrix icon gap, 2026-09-19).
+
 ### [#render-bootstrap-1] Canonical no-root render toolchain, consolidated: `tools/presentation-build/{render-bootstrap.sh,render-env.sh,pptx_to_png.sh}`
 
 - **Tool:** LibreOffice headless (PPTX→PDF) + `pdftoppm` (PDF→PNG) + `rsvg-convert`/ImageMagick `convert` (icon recolor/raster post-processing), no root/sudo available on this host.

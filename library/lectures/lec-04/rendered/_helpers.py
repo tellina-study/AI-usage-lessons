@@ -43,6 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]      # library/lectures/lec-04
 ASSETS = ROOT / "rendered/assets"
 ICONS = ASSETS / "icons"
 CHARTS = ASSETS / "charts"
+WEB = ASSETS / "web"          # Round-5: meme composites (imgflip templates + RU captions)
 SLIDES_DIR = ROOT / "slides"
 FONT_HEAD = "DejaVu Sans"
 FONT_BODY = "DejaVu Sans"
@@ -112,11 +113,71 @@ URLS = {
     "cve_59145": "https://nvd.nist.gov/vuln/detail/CVE-2025-59145",
     "register_curl": "https://www.theregister.com/2026/01/21/curl_ends_bug_bounty/",
     "codecrash": "https://arxiv.org/abs/2504.14119",
+    # round-6 block-4: Xu, Medappa, Tunc, Vroegindeweij, Fransoo — OSS-панель
+    # до/после Copilot; прирост у периферии, нагрузка ревью на ядро.
+    "oss_review_burden": "https://arxiv.org/abs/2510.10165",
     "anthropic_skill_arxiv": "https://arxiv.org/abs/2601.20245",
     "adr_templates": "https://github.com/joelparkerhenderson/architecture-decision-record",
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
     "anthropic_ctx_eng": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "willison_vibe_code": "https://simonwillison.net/2025/Oct/7/vibe-engineering/",
+    # --- added for s20b–s20e (Skills / MCP / git-конвенции / task-logging, #162) ---
+    "agent_skills_std": "https://agentskills.io/",
+    "claude_skills_docs": "https://code.claude.com/docs/en/skills",
+    "github_mcp_server": "https://github.com/github/github-mcp-server",
+    "playwright_mcp": "https://github.com/microsoft/playwright-mcp",
+    "conventional_commits": "https://www.conventionalcommits.org/en/v1.0.0/",
+    "conventional_branch": "https://conventionalbranch.org/",
+    "backlog_md": "https://github.com/MrLesk/Backlog.md",
+    "claude_task_tools": "https://code.claude.com/docs/en/best-practices",
+    # --- added for s11b/s20f/s25b/s25c/s35b (#162 round 2) ---
+    "mermaid_user_journey": "https://mermaid.js.org/syntax/userJourney.html",
+    "cucumber_bdd": "https://cucumber.io/docs/bdd/",
+    "git_worktree_docs": "https://git-scm.com/docs/git-worktree",
+    "claude_worktree_docs": "https://code.claude.com/docs/en/best-practices",
+    # --- added for s20f (#162 round 6): two verified public cases ---
+    "cc_issue_60295_branch_swap":
+        "https://github.com/anthropics/claude-code/issues/60295",
+    "cc_issue_55724_lock_contention":
+        "https://github.com/anthropics/claude-code/issues/55724",
+    "automationpanda_gherkin_ai": "https://automationpanda.com/",
+    "software303_bdd_adoption": "https://303software.com/",
+    "trunk_based_dev": "https://trunkbaseddevelopment.com/",
+    "daniellopes_semantic_conflicts": "https://journal.daniellopes.dev/",
+    "postman_ai_blog": "https://blog.postman.com/",
+    "testcontainers": "https://testcontainers.com/",
+    "saucelabs_visual_regression": "https://saucelabs.com/resources/blog",
+    "eesel_confluence_ai": "https://www.eesel.ai/",
+    "aws_q_doc": "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/software-dev-doc-generation.html",
+    # --- added for round-3 QA-fix pass (issue #162 round 3): s09b/s17b/s18b/
+    # s20g/s30b/s33b/s37b + s25c rebuild ---
+    "aws_kiro_lifesciences": "https://kiro.dev/docs/specs/feature-specs/",
+    "spec_kit_stars": "https://github.com/github/spec-kit",
+    "krishnan_sdd_manning": "https://www.manning.com/",
+    "gemini_cli_incident": "https://incidentdatabase.ai/cite/1178/",
+    "destefanis_skills_se": "https://arxiv.org/abs/2607.25032",
+    "register_env_secrets": "https://www.theregister.com/2026/01/28/",
+    "gitleaks": "https://github.com/gitleaks/gitleaks",
+    "trufflehog": "https://github.com/trufflesecurity/trufflehog",
+    "amazon_q_wiper": "https://www.bleepingcomputer.com/",
+    "aws_security_bulletin_q": "https://aws.amazon.com/security/security-bulletins/",
+    "matplotlib_hitpiece_register": "https://www.theregister.com/2026/02/",
+    "matplotlib_hitpiece_decrypt": "https://decrypt.co/",
+    "tianpan_rubber_stamp": "https://tianpan.co/",
+    "bt_group_incidentio": "https://incident.io/",
+    "azure_triangle_ms": "https://azure.microsoft.com/en-us/blog/",
+    "iac_insecurity_2026": "https://www.thoughtworks.com/radar",
+    "uber_claude_code": "https://www.fortune.com/",
+    "uber_techcrunch": "https://techcrunch.com/",
+    "aws_kiro_outage": "https://kiro.dev/docs/specs/feature-specs/",
+    "msw_docs": "https://mswjs.io/docs",
+    "wiremock_split": "https://wiremock.io/",
+    "pytest_generator_distil": "https://distillabs.ai/",
+    # --- added for s03b (industry-adoption intro slide, #162 round 6 block 5) ---
+    "so_survey_2025_ai": "https://survey.stackoverflow.co/2025/ai",
+    "so_survey_2025_press": (
+        "https://stackoverflow.co/company/press/archive/"
+        "stack-overflow-2025-developer-survey/"),
 }
 
 
@@ -633,6 +694,19 @@ SLIDE_REFS = {
          "metr", "рандомизированный контролируемый эксперимент, n=16, 246 задач; "
          "измеряли реальное время, а не ощущение"),
     ],
+    "s03b": [
+        ("1", "Stack Overflow — Developer Survey 2025, раздел AI",
+         "so_survey_2025_ai",
+         "84% используют или планируют использовать AI-инструменты против 76% "
+         "годом ранее; 51% профессиональных разработчиков — ежедневно; не "
+         "доверяют точности 46% против 31% годом ранее; n > 49 000 "
+         "разработчиков из 177 стран", True),
+        ("2", "DORA — State of AI-assisted Software Development 2025",
+         "dora_2025",
+         "90% используют AI в работе (+14 п.п. к 2024); медиана — около двух "
+         "часов в день; более 80% отмечают рост личной эффективности, при этом "
+         "высоко доверяют результату 24%; n > 5 000", True),
+    ],
     "s04": [
         ("1", "Fowler — Interrogatory LLM", "fowler_interrogatory",
          "узкое место разработки с AI — намерение, а не набор кода"),
@@ -775,6 +849,39 @@ SLIDE_REFS = {
         ("3", "Thoughtworks — fitness function", "fitness_fn",
          "инвариант-нарушение → добавить fitness-функцию обратно в каркас"),
     ],
+    "s20b": [
+        ("1", "Agent Skills — открытый стандарт", "agent_skills_std",
+         "формат SKILL.md работает в нескольких AI-инструментах, не один вендор"),
+        ("2", "Claude Docs — Skills", "claude_skills_docs",
+         "тело skill'а загружается только при использовании — progressive disclosure",
+         True),
+        ("3", "Destefanis — Authoring Agent Skills (arXiv:2607.25032)",
+         "destefanis_skills_se",
+         "SE-принципы дизайна skill: single-responsibility, высокая связность/"
+         "низкая связанность; единственный автор, препринт", True),
+    ],
+    "s20c": [
+        ("1", "GitHub MCP server", "github_mcp_server",
+         "toolsets выборочно; явный read-only режим — write пропускается",
+         True),
+        ("2", "Playwright MCP server (Microsoft)", "playwright_mcp",
+         "accessibility-дерево вместо скриншота; генерирует e2e-тест", True),
+        ("3", "Willison — the lethal trifecta", "lethal_trifecta",
+         "один MCP-сервер часто закрывает 2 из 3 углов трифекты одним подключением"),
+    ],
+    "s20d": [
+        ("1", "Conventional Commits v1.0.0", "conventional_commits",
+         "<type>[scope]: <описание>; fix→PATCH, feat→MINOR, BREAKING CHANGE→MAJOR"),
+        ("2", "Conventional Branch v1.1.0", "conventional_branch",
+         "AI Agent Source Prefixes: ai/, claude/, codex/, copilot/, cursor/", True),
+    ],
+    "s20e": [
+        ("1", "Backlog.md — открытый проект", "backlog_md",
+         "«каждая задача = одно контекстное окно = один pull request»"),
+        ("2", "Claude Docs — best practices (Task-инструменты)", "claude_task_tools",
+         "TaskCreate/TaskUpdate/TaskGet/TaskList — session-scoped live-прогресс",
+         True),
+    ],
     "s21": [
         ("1", "Osmani — The 70% Problem", "osmani_70",
          "AI ускоряет первые ~70%, последние 20–30% (понимание) — трудны"),
@@ -782,12 +889,8 @@ SLIDE_REFS = {
          "рост клонов и churn, падение рефакторинга — маркеры техдолга (корреляция)",
          True),
     ],
-    "s22": [
-        ("1", "Devin (Cognition) — SWE-bench technical report", "devin",
-         "13,86% — только на 25% бенча, признанная контаминация, лимит 45 мин"),
-        ("2", "OpenAI — Model Spec", "model_spec",
-         "вендорские числа требуют базы сравнения и знания среза", True),
-    ],
+    # "s22" (anti-hype benchmarks) — запись удалена вместе со слайдом
+    # (round 6, block 3; см. slides_band3.py).
     "s24": [
         ("1", "Beck — TDD: By Example", "beck_tdd",
          "red-green-refactor; человек владеет спекой теста"),
@@ -819,14 +922,26 @@ SLIDE_REFS = {
          True),
         ("3", "CodeCrash", "codecrash",
          "вводящие в заблуждение комментарии роняют рассуждение модели (~−23%)"),
+        ("4", "Rubber-Stamp Collapse (TianPan.co)", "tianpan_rubber_stamp",
+         "470 PR CodeRabbit + телеметрия 22 000 разработчиков: +170% замечаний, "
+         "+242,7% инцидентов на PR", True),
+        ("5", "The Register — matplotlib hit-piece",
+         "matplotlib_hitpiece_register",
+         "PR #31132, AI-агент опубликовал эссе против мейнтейнера, отклонившего его PR",
+         True),
+        ("6", "Xu и др. — кто платит за ревью AI-кода (arXiv 2510.10165)",
+         "oss_review_burden",
+         "панель 2 755 репозиториев GitHub / 1 699 участников, 12 мес до и после "
+         "Copilot: периферия (75%) +43,5% коммитов и +17,7% PR, ядро (топ-25%) "
+         "−19% собственных коммитов и +6,5% ревью чужого кода, доработка PR +2,4%"),
     ],
     "s29": [
         ("1", "Willison — the lethal trifecta", "lethal_trifecta",
-         "смертельная триада: недоверенный контент × секреты × egress"),
+         "смертельная триада: недоверенный контент × секреты × канал наружу"),
         ("2", "Fowler — Exploring Gen AI", "fowler_genai",
          "разрыв триады — архитектурный, не «лучшей моделью»"),
         ("3", "Google — Big Sleep / OSS-Fuzz", "dora_google_2025",
-         "AI-поиск уязвимостей — curated-кейсы, не универсальный гейт", True),
+         "AI-поиск уязвимостей — отобранные кейсы, не универсальный гейт", True),
     ],
     "s30": [
         ("1", "Stanford — Perry et al. (CCS 2023)", "stanford_perry",
@@ -847,7 +962,8 @@ SLIDE_REFS = {
     ],
     "s34": [
         ("1", "Google — DORA 2024", "dora_2024",
-         "+throughput и +7,5% документации, но −7,2% стабильности доставки", True),
+         "рост пропускной способности и +7,5% документации, но −7,2% "
+         "стабильности доставки", True),
         ("2", "Google — DORA 2025", "dora_2025",
          "негативная связь AI со стабильностью второй год подряд", True),
     ],
@@ -883,6 +999,140 @@ SLIDE_REFS = {
          "anthropic_skill_arxiv", "RCT n=52: квиз 50% с AI против 67% без (~−17 п.п.) "
          "при делегировании генерации; кто спрашивал концепции — деградации нет",
          True),
+    ],
+    # --- added for s11b/s20f/s25b/s25c/s35b (#162 round 2) ---
+    "s11b": [
+        ("1", "Mermaid — User Journey синтаксис", "mermaid_user_journey",
+         "диаграмма описывается текстом (DSL), не мышью — то же семейство, что "
+         "PlantUML/Structurizr в разделе про архитектуру"),
+        ("2", "Cucumber — BDD/Gherkin документация", "cucumber_bdd",
+         "Given-When-Then — сценарий, проверяемый прогоном автотеста, а не только "
+         "описывающий поток"),
+    ],
+    "s20f": [
+        ("1", "Git — документация worktree", "git_worktree_docs",
+         "отдельная рабочая директория со своей веткой, но общим .git-хранилищем "
+         "объектов с основной копией"),
+        ("2", "Claude Code — docs, best practices", "claude_worktree_docs",
+         "изоляция принудительная: инструмент блокирует правки вне назначенного "
+         "worktree", True),
+        ("3", "claude-code #60295 — подмена ветки",
+         "cc_issue_60295_branch_swap",
+         "две сессии в одном рабочем каталоге: checkout одной незаметно "
+         "переключает рабочее дерево другой, reflog приложен; закрыт как "
+         "not planned"),
+        ("4", "claude-code #55724 — замок .git",
+         "cc_issue_55724_lock_contention",
+         "13 параллельных агентов: 5 закоммитили, 8 потеряли работу на "
+         "конкуренции за .git/index.lock; закрыт как дубликат"),
+    ],
+    "s25b": [
+        ("1", "Cucumber — BDD документация", "cucumber_bdd",
+         "три практики цикла: Discovery / Formulation / Automation"),
+        ("2", "303software.com — BDD adoption 2025", "software303_bdd_adoption",
+         "BDD-фреймворки ~27% OSS-выборки (68% в Ruby) — не мейнстрим большинства "
+         "экосистем", True),
+        ("3", "trunkbaseddevelopment.com", "trunk_based_dev",
+         "короткоживущая ветка — меньше 24 часов; DORA фиксирует как "
+         "high-performance-практику"),
+    ],
+    "s25c": [
+        ("1", "Testcontainers — официальный сайт", "testcontainers",
+         "реальный сервис в Docker на эфемерном порту на время прогона, "
+         "уничтожается после; единственная зависимость — локальный Docker daemon"),
+        ("2", "MSW (Mock Service Worker) — документация", "msw_docs",
+         "перехват HTTP на уровне сети в процессе; один handler для unit/"
+         "integration/e2e", True),
+        ("3", "WireMock — OSS vs Cloud", "wiremock_split",
+         "AI-фичи (Skills/MCP) преимущественно на платном WireMock Cloud, не "
+         "в локальном OSS-ядре", True),
+        ("4", "pytest-generator (Distil Labs)", "pytest_generator_distil",
+         "CPU-only локальная генерация тестов, ≈77% точность self-reported, "
+         "низкая adoption", True),
+    ],
+    "s35b": [
+        ("1", "eesel.ai — независимый гайд по Confluence AI", "eesel_confluence_ai",
+         "суммаризация + генерация контента + Q&A-поиск по базе знаний "
+         "(RAG-паттерн)", True),
+        ("2", "AWS — документация Amazon Q Developer /doc", "aws_q_doc",
+         "вход — кодовая база, не пересказ промпта; может строить диаграммы из "
+         "IaC-файлов", True),
+    ],
+    # --- added for round-3 QA-fix pass (issue #162 round 3) ---
+    "s09b": [
+        ("1", "AWS Kiro — кейс life sciences (фарма/биотех)",
+         "aws_kiro_lifesciences",
+         "рабочий процесс spec-first, 3 недели / 3 разработчика до "
+         "продакшена — опубликованный вендором кейс, не независимо "
+         "аудирован", True),
+        ("2", "Хари Кришнан — «Spec-Driven Development», Manning",
+         "krishnan_sdd_manning",
+         "SDD/BDD/TDD как «стек высот» одной задачи, разная степень детализации"),
+    ],
+    "s17b": [
+        ("1", "AI Incident Database — Report 6120 / Incident 1178",
+         "gemini_cli_incident",
+         "Gemini CLI, июль 2025: mkdir без read-after-write → move перезаписал "
+         "файлы пользователя", True),
+    ],
+    "s18b": [
+        ("1", "Anthropic — context engineering", "anthropic_ctx_eng",
+         "компакция суммаризирует с потерями; JIT-retrieval не запросит то, о "
+         "чём не знает — курирование меняет один риск на другой", True),
+    ],
+    "s20g": [
+        ("1", "The Register — Claude Code читает .env вопреки .gitignore",
+         "register_env_secrets",
+         "«ignored by git» и «ignored by Claude Code» — два разных контракта, "
+         "минимум 4 открытых issue на дату публикации", True),
+        ("2", "Gitleaks — rule-first сканер секретов", "gitleaks",
+         "regex + энтропия, pre-commit hook, обходим --no-verify"),
+        ("3", "TruffleHog — verification-first сканер", "trufflehog",
+         "живой API-вызов подтверждает, что credential валиден прямо сейчас"),
+    ],
+    "s30b": [
+        ("1", "BleepingComputer — Amazon Q Developer wiper-промпт",
+         "amazon_q_wiper",
+         "неаудированный PR с системным промптом «system cleaner» в релизе "
+         "v1.84.0, ~1 млн разработчиков", True),
+        ("2", "AWS Security Bulletin AWS-2025-019", "aws_security_bulletin_q",
+         "форматирование промпта сломало исполнение — везение, не контроль", True),
+    ],
+    "s33b": [
+        ("1", "incident.io — кейс BT Group", "bt_group_incidentio",
+         "MTTR ~2ч → 85с (~97%) на зрелой SRE-практике, вендорский кейс-стади",
+         True),
+        ("2", "Microsoft Azure — «Triangle»", "azure_triangle_ms",
+         "время до подключения дежурного −91%, точность триажа 97%, "
+         "источник первой стороны (сама Microsoft)", True),
+        ("3", "Индустриальные отчёты о безопасности кода, 2026",
+         "iac_insecurity_2026",
+         "IaC безопасен по умолчанию лишь в ~55% задач (2 года без сдвига); "
+         "8,4% — отдельный 2026-бенчмарк с проверкой безопасности", True),
+    ],
+    # --- added for round-6 block-1 (issue #162 round 6): s14b ---
+    "s14b": [
+        ("1", "Найгард — ADR", "nygard_adr",
+         "шаблон записи: контекст · решение · статус · последствия; одна "
+         "развилка = одна неизменяемая запись в контроле версий"),
+        ("2", "Thoughtworks — architectural fitness function", "fitness_fn",
+         "объективная автопроверка архитектурной характеристики: «вы и я "
+         "никогда не поспорим, прошла она или нет» (Парсонс)"),
+        ("3", "Браун — C4 + Structurizr DSL", "c4",
+         "модель как текст: четыре уровня зума (Context/Container/Component/"
+         "Code), одна модель — много рендеров", True),
+        ("4", "Форд, Парсонс, Кюа — Эволюционные архитектуры", "evol_arch",
+         "инкрементальность + fitness-функции + поддержка изменений «с "
+         "максимумом автоматизации»"),
+    ],
+    "s37b": [
+        ("1", "Fortune / TechCrunch — Uber и Claude Code, 2026",
+         "uber_claude_code",
+         "32%→84% внедрение агентных практик за месяц, 70% кода от AI, "
+         "$500–2000/инженер/мес, потолок введён постфактум", True),
+        ("2", "AWS Kiro — тот же продукт, два регистра", "aws_kiro_outage",
+         "успех в фарме и биотехе и Kiro-инцидент декабря 2025 — разница в "
+         "применённой дисциплине, не в бренде", True),
     ],
 }
 

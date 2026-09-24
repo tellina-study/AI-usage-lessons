@@ -165,6 +165,15 @@ URLS = {
     "oss_review_burden": "https://arxiv.org/abs/2510.10165",
     "amazon_q_wiper": "https://www.bleepingcomputer.com/",
     "aws_security_bulletin_q": "https://aws.amazon.com/security/security-bulletins/",
+    # --- EN-parity block 5 (issue #172 / #162 round 6): delivery+ops+docs
+    #     tail and the synthesis/closing cluster. Keys mirror _helpers.py.
+    "bt_group_incidentio": "https://incident.io/",
+    "azure_triangle_ms": "https://azure.microsoft.com/en-us/blog/",
+    "iac_insecurity_2026": "https://www.thoughtworks.com/radar",
+    "eesel_confluence_ai": "https://www.eesel.ai/",
+    "aws_q_doc": "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/software-dev-doc-generation.html",
+    "uber_claude_code": "https://www.fortune.com/",
+    "aws_kiro_outage": "https://kiro.dev/docs/specs/feature-specs/",
 }
 
 
@@ -1070,12 +1079,32 @@ SLIDE_REFS = {
         ("2", "Google — DORA 2025", "dora_2025",
          "a negative link of AI to stability for the second year running", True),
     ],
+    "s33b": [
+        ("1", "incident.io — BT Group case study", "bt_group_incidentio",
+         "MTTR ~2h -> 85s (~97%) on top of a mature SRE practice; a vendor case study",
+         True),
+        ("2", "Microsoft Azure — \"Triangle\"", "azure_triangle_ms",
+         "time-to-engage -91%, triage accuracy 97%; a first-party source "
+         "(Microsoft itself)", True),
+        ("3", "Industry code-security reports, 2026", "iac_insecurity_2026",
+         "AI-generated IaC is secure by default in only ~55% of tasks (2 years "
+         "with no movement); 8.4% is a separate 2026 security-checked benchmark",
+         True),
+    ],
     "s35": [
         ("1", "Google — DORA 2024", "dora_2024",
          "+7.5% to documentation quality — the only clean plus, but with a paired cost",
          True),
         ("2", "Thoughtworks — Exploring Gen AI (Böckeler)", "fowler_genai",
          "\"AI will not replace a well-documented and automated setup\""),
+    ],
+    "s35b": [
+        ("1", "eesel.ai — independent guide to Confluence AI", "eesel_confluence_ai",
+         "summarization + content generation + Q&A search over the knowledge base "
+         "(a RAG pattern)", True),
+        ("2", "AWS — Amazon Q Developer /doc documentation", "aws_q_doc",
+         "the input is the codebase, not a retelling of the prompt; can build "
+         "diagrams from IaC files", True),
     ],
     "s37": [
         ("1", "Google — DORA 2025", "dora_2025",
@@ -1092,6 +1121,15 @@ SLIDE_REFS = {
          True),
         ("3", "METR — RCT (n=16, experts)", "metr",
          "+19% time with AI while believing in speed-up — the perception gap"),
+    ],
+    "s37b": [
+        ("1", "Fortune / TechCrunch — Uber and Claude Code, 2026",
+         "uber_claude_code",
+         "32%->84% adoption of agentic practices in one month, 70% of code from "
+         "AI, $500-2000/engineer/month, the cap introduced after the fact", True),
+        ("2", "AWS Kiro — the same product, two registers", "aws_kiro_outage",
+         "the life-sciences success and the December 2025 Kiro incident — the "
+         "difference is the discipline applied, not the brand", True),
     ],
     "s39": [
         ("1", "Böckeler — To vibe or not to vibe", "vibe_or_not",

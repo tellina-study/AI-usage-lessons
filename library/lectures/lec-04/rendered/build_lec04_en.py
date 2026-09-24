@@ -1,5 +1,8 @@
-"""EN twin of build_lec04_v4.py — English build of Lecture 4
+"""EN twin of build_lec04_v4.py — full English build of Lecture 4
 "AI across the software development lifecycle (SDLC)".
+
+Slide count tracks the RU deck (58 after round 6); the EN-parity rebuild is
+landing block by block across five parallel worktrees (issue #172 / #162).
 
 Issue #172 (Ф3): English re-render. Structure, layout, palette, motif, and
 slide count are identical to the RU deck; only the rendered visible strings
@@ -84,8 +87,16 @@ def main():
     builders += [b3.s30b]                                    # NEW (EN-sync b4)
     # display s31–s41
     builders += [b3.s30,                                     # s31
-                 b4.s31, b4.s32, b4.s33, b4.s34, b4.s35,     # s32..s36
-                 b4.s36, b4.s37, b4.s38, b4.s39, b4.s40]     # s37..s41
+                 b4.s31, b4.s32, b4.s33]                     # s32..s34
+    builders += [b4.s33b]                       # NEW (r3): BT Group / Azure
+                                                # Triangle vs IaC insecurity
+    builders += [b4.s34,
+                 b4.s35b,                       # NEW (r2): §6.3 docs tooling
+                 b4.s35,
+                 b4.s36, b4.s37]
+    builders += [b4.s37b]                       # NEW (r3): Uber + Kiro
+                                                # dual-register bridge
+    builders += [b4.s38, b4.s39, b4.s40]
 
     # Parity target: one EN slide per RU slide. The number is read from the RU
     # deck rather than hard-coded, so a partially merged tree still renders and

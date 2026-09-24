@@ -3,52 +3,66 @@ id: s33
 type: case_study
 section: "Section 6. Delivery · Operations · Documentation"
 duration_min: 3
-assertion: "Delivery is DORA-first: a mature pipeline first, then scale AI ('AI amplifies what is already there') + a hard human prod gate; AI consumes pipelines but does not own them; DORA — both halves (+throughput / -7.2% stability)"
-learning_goal: "[SI] CI/CD+Ops practices: DORA-first + prod gate; the DORA pair, both halves; operations is the weakest phase"
+assertion: "Delivery is DORA-first: a mature pipeline first, then scale AI ('AI amplifies what is already there') + a risk-calibrated prod gate (hard and human on the irreversible, AI may take part in approving something small and reversible); AI consumes pipelines but does not own them; DORA — both halves (+throughput / -7.2% stability)"
+learning_goal: "[SI] CI/CD+Ops practices: DORA-first + a risk-calibrated prod gate; the DORA pair, both halves; operations is the weakest phase"
 learning_outcomes: [LO1, LO7]
 chapter_ref: "§6.1 [for-slide-s33]"
 references: [dora-report, osmani-70-percent]
 in_bucket: true
 verify_day_of: true
 visual_brief: >
-  case_study: left — the DORA-first practice in an Ocean rounded box: first mature delivery capabilities (automated tests, versions with cheap rollback,
-  fast feedback, small batches), THEN scale AI ("AI amplifies what is already there"); inside — a hard human prod gate (irreversibility).
-  A plate "AI consumes pipelines but does not own them" — there is no AI-CD product; the agent calls gh/aws/gcloud as a least-privilege user.
-  Right — DORA BOTH HALVES (the main anti-one-sidedness visual, a paired diagram): +throughput / +7.5% docs AND -7.2% stability (negative for the 2nd year running).
-  Plus a failure: scaling AI onto an immature pipeline → the DORA multiplier works the wrong way. Operations is the weakest phase (no system/runtime context; the agent report != source of truth — the Replit link).
-  A secondary row muted: headless (Anthropic parity), AWS Q Operational Investigations over CloudWatch (assist, not replacement). Gold — "the AI multiplier works BOTH ways". Source references — inline right at the material (definition/claim/recommendation), NOT in a bottom footer; small and muted: DORA 2024/2025.
+  case_study, THE ENTRY SLIDE OF SECTION 6 (round-6, owner: "does not read at all without deep analysis of the
+  notes — rebuild it and structure it as an entry into the section"). The slide carries ONE thesis — the order of
+  investment: maturity first, then AI. Left: a gold plate "AI amplifies what is already there", below it TWO
+  numbered steps (1 — mature delivery without AI, with four example capabilities; 2 — only then AI on top), then
+  a counter-line "the reverse does not work: AI does not fix an immature pipeline, it speeds it up". The seven
+  delivery capabilities are NOT enumerated in full — they are named as a count with four examples. The three
+  previously co-equal insets (risk-calibrated gate · consumes-but-does-not-own · operations is the weakest phase)
+  are DEMOTED into one muted subordinate paragraph: they are needed later in the section but must not compete
+  with the thesis.
+  Right — the evidence: the paired DORA diagram (+7.5% documentation / -7.2% stability) + a gold plate "one and
+  the same adoption yields both halves" + the line "which half outweighs the other is decided by the maturity of
+  the pipeline, not by the choice of model".
+  A secondary row muted: headless (Anthropic parity), AWS Q Operational Investigations over CloudWatch (assist,
+  not replacement). Gold — "the AI multiplier works BOTH ways". Source references — inline right at the material
+  (definition/claim/recommendation), NOT in a bottom footer; small and muted: DORA 2024/2025.
 interaction: none
 ---
 
 # Visible content
 
 ## Title bar
-Delivery is DORA-first: a mature pipeline first, then scale AI
+Delivery — DORA-first: a mature pipeline first, then scale AI
 
 ## Body
-[Left — the DORA-first practice, Ocean rounded box]
+[Left — one order of investment, in two steps]
 
-It is not the tool that leads but the order: **mature delivery capabilities first** (automated tests, versions with cheap rollback, fast feedback, small batches), **then** scale AI. "AI amplifies what is already there".
+[Gold plate] "**AI amplifies what is already there**" — so there is only one order, and it runs against intuition:
 
-Inside — a **hard human prod gate** (a rollout is irreversible).
+1. **First — mature delivery that works WITHOUT AI:** automated tests as a gate · version control with cheap rollback · fast feedback · small batches. These are four of the seven delivery capabilities DORA identifies.
+2. **Only then — scale AI on top of it.**
 
-**AI consumes pipelines but does not own them** — there is no "AI-CD product"; the agent calls `gh` / `aws` / `gcloud` as a **least-privilege user** inside the infrastructure.
+**The reverse does not work: AI does not fix an immature pipeline — it speeds it up.**
 
-[Right — DORA both halves]
+*Inside the practice: the prod gate is calibrated by risk — a human approves the irreversible, while something small and reversible that has passed its gates may be confirmed by AI. AI consumes the pipeline but does not own it: the agent calls `gh` / `aws` / `gcloud` as a privilege-limited user. Operations is the weakest of the three phases: AI has no runtime context.*
 
-**+ throughput**, **+7.5% documentation** — but **-7.2% delivery stability**, a negative link for the **second year running**.
+[Right — the evidence: both halves of one and the same adoption]
 
-A failure: scaling AI onto an **immature** pipeline → the DORA multiplier works **the wrong way**, instability grows.
+[Paired diagram: +7.5 / −7.2]
 
-**Operations is the weakest phase** of the cycle: no system and runtime context; the agent's report on the state != source of truth (a Replit echo).
+**One and the same AI adoption yields both halves: +7.5% to documentation quality and −7.2% to delivery stability (DORA 2024); the link with stability has been negative for the second year running (DORA 2025).**
+
+Which of the halves outweighs the other is decided by the **maturity of the pipeline**, not by the choice of model.
 
 [Gold callout]
-The AI multiplier works **both ways**. Sustainable pattern: DORA-first + a human prod gate. Hype: "an AI-CD/ops product as a replacement for the human".
+The failure of this phase is scaling AI onto an **immature** pipeline: both speed and instability grow. Hype: "an AI-CD/ops product as a replacement for the human".
 
 ## Speaker notes
 
-What leads in the delivery phase is not the tool but the order, best formulated by the DORA program: maturity first, then AI [1]. It helps to name the maturity explicitly: DORA identifies seven delivery capabilities on which it makes sense to scale AI — platform engineering, automated testing, version control, fast feedback, loosely coupled architecture, quality documentation, and working in small batches [1]. This is a capability model derived from many years of quantitative research on thousands of teams, not from opinions. And only on this foundation does it make sense to scale AI, because AI amplifies what is already there. Inside delivery there is a hard human production gate: a rollout to prod is irreversible, and the decision about it remains human.
+This is the entry into the section on the last three phases of the cycle, and the whole section rests on one rule, best formulated by the DORA program: maturity first, then AI [1].
 
-An important observation about tools: in delivery there is not, and likely will not be, a separate AI-CD product that "does delivery for you". The reason is structural — the phase's input is your specific infrastructure. So here AI consumes pipelines rather than owning them: the agent runs inside your infrastructure, for example on top of GitHub Actions, and calls the utilities gh, aws, gcloud as a least-privilege user.
+Take the order apart. Step one — delivery has to work without any AI at all: automated tests as a mandatory gate, version control with a cheap and regularly exercised rollback, fast feedback from the pipeline, and working in small batches. These are four of the seven delivery capabilities DORA derives from years of quantitative research on thousands of teams; the other three are platform engineering, loosely coupled architecture and quality documentation [1]. Step two, and only then, is to scale AI on top of a pipeline that already works. The reverse order does not work: AI does not fix an immature pipeline, it speeds it up, and instability grows along with speed.
 
-Now for the numbers, and here it is essential to show both halves. DORA records that a rise in AI adoption is associated with a rise in throughput and with a plus of seven and a half percent to documentation quality [1] — that is real value. But the same rise is associated with a minus of seven point two percent to delivery stability [1], and this link is negative for the second year running [2]. You cannot cite one half without the other. Hence the failure: if you scale AI onto an immature pipeline without automated tests and cheap rollback, the DORA multiplier will work the wrong way — both speed and instability will grow. The load-bearing point of the phase: the AI multiplier works both ways, so pipeline discipline first, then AI.
+How we know this holds. DORA measures both halves of one and the same adoption: a rise in AI adoption is associated with a plus of seven and a half percent to documentation quality — and at the same time with a minus of seven point two percent to delivery stability [1], and in the second report that link remained negative for the second year running [2]. One half cannot be cited without the other. This is the multiplier working both ways: which half outweighs the other is decided by the maturity of the pipeline, not by the choice of model.
+
+Three clarifications that will be needed later. The production gate is calibrated by risk: the irreversible — a schema migration, payment code — is approved by a human, while something small and reversible that has passed its deterministic gates may be confirmed by AI. There is no separate AI-CD product, and it seems there will not be one: the agent runs inside your infrastructure and calls gh, aws and gcloud as a privilege-limited user. And of the three phases, operations is the weakest for AI: it has no runtime context and no system history, and the agent's report about the state of the system is not a source of truth.

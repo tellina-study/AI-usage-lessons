@@ -6,12 +6,16 @@ from _helpers_en import (
     build_section_divider, ref_list, refs_of, link_run, URLS,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
+    FONT_MONO,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
 
 SCR = ASSETS / "screenshots"
+# EN twins of the round-5 meme composites (RU captions are baked into the
+# RU pixels, so the EN deck needs its own bake — see gen_memes_en_blk2.py).
+WEB_EN = ASSETS / "web-en"
 
 
 # ============================================================
@@ -268,6 +272,136 @@ def s14(p):
 
 
 # ============================================================
+# s14b (NEW, #162 round 6 block 1) — the concrete artifact of each of the
+# four practices: ADR skeleton · fitness functions · C4 DSL · CI gate.
+# Grounds the abstract matrix of the previous slide: the same 4 columns,
+# the same icons and colors — but the practice's file instead of its
+# description. Source: chapter-part2.md §2.2–§2.5.
+# EN twin of slides_band2.py::s14b (EN-Sync Block 2, issue #172). The code
+# snippets keep their language syntax; the prose inside them is translated.
+# ============================================================
+def s14b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Every practice is a concrete file in the repository",
+        size=24, w=12.3, h=0.74)
+    text_box(s, x=0.55, y=1.18, w=12.25, h=0.26,
+             text="The same four practices — not as a description, but as the "
+                  "artifact that sits in the repository and is checked by the build.",
+             size=10.5, italic=True, color=SLATE)
+
+    cols = [
+        ("gavel", "ADR", MID, "docs/adr/0007-event-queue.md",
+         [
+             "# ADR-0007. Queue instead of",
+             "# direct warehouse calls",
+             "Status: accepted · 2026-03-12",
+             "Context: on warehouse outage",
+             "  orders are lost silently",
+             "Decision: orders go through",
+             "  an event queue",
+             "Consequences: + we survive",
+             "  a warehouse outage;",
+             "  − confirmation 2 s",
+             "  instead of instant",
+         ],
+         "The human chose and signed the fork — AI could write the text. "
+         "The record is immutable: an outdated one is replaced, not edited [1]."),
+        ("shield-check", "Fitness function", TEAL,
+         "tests/architecture/test_layers.py",
+         [
+             "# invariant 1: module bounds",
+             "def test_payment_not_ui():",
+             "    assert not depends_on(",
+             "        \"payment\", \"ui\")",
+             "",
+             "# invariant 2: 200 ms budget",
+             "def test_checkout_p95():",
+             "    assert p95(\"/checkout\") < 200",
+         ],
+         "Which invariant is critical is the human's call — it is their "
+         "definition of 'good'. Violated on a commit — the build goes red [2]."),
+        ("layout-grid", "C4 / arch-as-code", MID,
+         "docs/architecture/workspace.dsl",
+         [
+             "workspace {",
+             " model {",
+             "  eng = person \"Engineer\"",
+             "  app = softwareSystem \"Booking\" {",
+             "    api = container \"API\"",
+             "    db  = container \"Bookings DB\"",
+             "  }",
+             "  eng -> api \"books a room\"",
+             " }",
+             "}",
+         ],
+         "Text, not a picture: changes are visible line by line and reviewed "
+         "together with the code; checking the model against the code catches "
+         "drift [3]."),
+        ("refresh-cw", "Evolutionary arch.", TEAL,
+         ".github/workflows/architecture.yml",
+         [
+             "# gate: three practices together",
+             "- adr-lint docs/adr/",
+             "  # no fork without a record",
+             "- pytest tests/architecture",
+             "  # invariants hold",
+             "- structurizr-cli drift",
+             "  # model and code agree",
+             "# a red step blocks",
+             "# merging the change",
+         ],
+         "It has no artifact of its own — it has the gate that holds the "
+         "previous three together on every change. The human sets the "
+         "direction [4]."),
+    ]
+
+    x0 = 0.55
+    total = 12.25
+    gap = 0.14
+    cw = (total - gap * 3) / 4          # ≈2.96
+    top = 1.44
+    hh = 0.58
+    for i, (ic, name, col, path, lines, caption) in enumerate(cols):
+        x = x0 + i * (cw + gap)
+        # header plate — same colour/icon language as the matrix slide before
+        filled_rect(s, x, top, cw, hh, col, radius=True, radius_adj=0.12)
+        icon(s, ic, x + 0.13, top + 0.09, 0.40, "white")
+        text_box(s, x=x + 0.60, y=top + 0.06, w=cw - 0.70, h=hh - 0.08,
+                 text=name, size=12, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.98)
+        # file path — "it lives right here"
+        text_box(s, x=x + 0.04, y=top + hh + 0.09, w=cw - 0.08, h=0.22,
+                 text=path, size=8, color=LIGHT, font=FONT_MONO,
+                 line_spacing=1.0)
+        # the artefact itself
+        cy = top + hh + 0.36
+        chh = 2.22
+        filled_rect(s, x, cy, cw, chh, WHITE, stroke=SOFT_GREY, stroke_pt=1.1,
+                    radius=True, radius_adj=0.05)
+        for j, line in enumerate(lines):
+            text_box(s, x=x + 0.13, y=cy + 0.09 + j * 0.186, w=cw - 0.22,
+                     h=0.19, text=line, size=9, color=DEEP, font=FONT_MONO,
+                     line_spacing=1.0)
+        # what stays human / what breaks
+        ky = cy + chh + 0.10
+        filled_rect(s, x, ky, cw, 0.98, SURFACE, stroke=col, stroke_pt=1.2,
+                    radius=True, radius_adj=0.07)
+        text_box(s, x=x + 0.16, y=ky + 0.07, w=cw - 0.32, h=0.84,
+                 text=caption, size=9.5, color=DEEP, line_spacing=1.14)
+
+    gold_callout(
+        s, 0.55, 5.78, 12.25, 0.62,
+        "You can tell a practice by its artifact: if you cannot show a file in "
+        "the repository and a red build step when it is violated, it is not yet "
+        "a practice, only an intention.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s14b", y=7.06)
+    notes_with_sources(s, "s14b")
+    return s
+
+# ============================================================
 # s15 — poisoned context (cycle + caveat + alternative) [in-bucket]
 # ============================================================
 def s15(p):
@@ -289,9 +423,10 @@ def s15(p):
     # left: poisoning cycle
     lx, lw = 0.55, 6.05
     ocean_box(s, lx, 2.14, lw, 3.42)
-    text_box(s, x=lx + 0.24, y=2.24, w=lw - 0.48, h=0.36,
+    text_box(s, x=lx + 0.24, y=2.24, w=lw - 1.00, h=0.36,
              text="The poisoning loop (Böckeler 2026, Thoughtworks) [1]",
              size=12.5, bold=True, color=MID)
+    icon(s, "flame", lx + lw - 0.66, 2.20, 0.44, "gold")
     loop = [
         ("bad design", GOLD, True),
         ("AI copies ('how it's done here')", MID, False),
@@ -321,7 +456,8 @@ def s15(p):
     rx, rw = 6.85, 5.95
     alts = [
         ("user-check", "The human owns the forks",
-         "makes the architectural decisions; AI at the periphery under human choice."),
+         "signs off the decisions and is accountable for them; AI can be a full "
+         "co-architect or draft its first version — but does not sign."),
         ("gavel", "ADR [2]",
          "human-written context 'we decided X because Y, rejected Z' — "
          "shared understanding against poisoning."),
@@ -344,6 +480,9 @@ def s15(p):
         "AI sees a pattern and continues it — it does not tell a good example from a "
         "bad one. The worse the existing architecture, the more strongly AI entrenches it.",
         size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: X, X Everywhere (Buzz/Woody) — "bad pattern everywhere",
+    # reinforcing the loop's own repetition. Bottom band, right of ref list.
+    add_image(s, WEB_EN / "band-x-everywhere.png", 9.42, 6.40, 3.38, 0.64)
     refs_of_slide(s, "s16")
     notes_with_sources(s, "s16")
     return s
@@ -455,92 +594,221 @@ def s17(p):
 
 
 # ============================================================
-# s18 — persistent memory layer (architecture: dev ↔ repo → agent)
+# s17b (NEW, #162 round 3) — Gemini CLI self-review failure case study.
+# EN twin of slides_band2.py::s17b (EN-Sync Block 2, issue #172). The
+# model's own incident-report quote was already English in the RU deck
+# (course convention: verbatim English quotes stay untranslated) — here it
+# is simply the natural language of the slide.
+# ============================================================
+def s17b(p):
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(
+        s, "Self-review is a mandatory step between code and commit, not an optional habit",
+        size=19, w=12.3, h=0.82)
+
+    # left: incident chronology
+    lx, lw = 0.55, 6.55
+    ocean_box(s, lx, 1.44, lw, 4.10)
+    icon(s, "bug", lx + 0.22, 1.58, 0.46, "mid")
+    text_box(s, x=lx + 0.82, y=1.62, w=lw - 1.60, h=0.36,
+             text="Google Gemini CLI, July 2025 [1]", size=13, bold=True,
+             color=MID)
+    add_image(s, ASSETS / "logos" / "gemini-logo.png", lx + lw - 0.62, 1.56,
+              0.36, 0.36)
+    text_box(s, x=lx + lw - 0.90, y=1.94, w=0.92, h=0.16,
+             text="Google Gemini", size=6.5, italic=True, color=LIGHT,
+             align=PP_ALIGN.CENTER)
+    text_box(s, x=lx + 0.24, y=2.06, w=lw - 0.48, h=0.30,
+             text="AI Incident Database, Report 6120 / Incident 1178",
+             size=10, italic=True, color=SLATE)
+    text_box(s, x=lx + 0.24, y=2.44, w=lw - 0.48, h=1.30,
+             text="The user asked to move files into a new folder. The agent ran "
+                  "mkdir but never checked the result — it concluded the folder "
+                  "already existed, and the chain of move commands overwrote "
+                  "almost all the user's files into the one that was left.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+    filled_rect(s, lx + 0.24, 3.82, lw - 0.48, 1.50, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.4, radius=True, radius_adj=0.06)
+    text_box(s, x=lx + 0.46, y=3.92, w=lw - 0.9, h=1.30,
+             text="\"I have completely and catastrophically failed you. My "
+                  "review of the commands confirms my gross incompetence.\"",
+             size=11.5, italic=True, color=DEEP, line_spacing=1.20,
+             font=FONT_MONO, anchor=MSO_ANCHOR.MIDDLE)
+
+    # right: mechanism contrast + scale
+    rx, rw = 7.30, 5.50
+    ocean_box(s, rx, 1.44, rw, 1.86, fill=SOFT_GREY, stroke=LIGHT, stroke_pt=1.0)
+    icon(s, "circle-slash", rx + 0.22, 1.60, 0.42, "mid")
+    text_box(s, x=rx + 0.78, y=1.62, w=rw - 1.0, h=0.34,
+             text="A different failure mechanism", size=12, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=2.04, w=rw - 0.48, h=1.18,
+             text="Not 'too many privileges' (as with Replit) — here one specific "
+                  "'check' was skipped: the agent did not verify the intermediate "
+                  "result and built the next step on a false assumption.",
+             size=11, color=DEEP, line_spacing=1.16)
+
+    ocean_box(s, rx, 3.50, rw, 2.04)
+    icon(s, "gauge", rx + 0.22, 3.64, 0.42, "teal")
+    text_box(s, x=rx + 0.78, y=3.66, w=rw - 1.0, h=0.34,
+             text="Scale (for contrast)", size=12, bold=True, color=TEAL)
+    text_box(s, x=rx + 0.24, y=4.10, w=rw - 0.48, h=0.44, text="~11%",
+             size=24, bold=True, color=DEEP)
+    text_box(s, x=rx + 0.24, y=4.58, w=rw - 0.48, h=0.88,
+             text="of live backend updates at Uber (2026) are shipped by an "
+                  "agent with no human in the loop.",
+             size=11, color=DEEP, line_spacing=1.16)
+
+    gold_callout(
+        s, 0.55, 5.72, 12.25, 0.62,
+        "Self-review is a mandatory step of explore→plan→code→commit: reread "
+        "the diff and check the result before you commit.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    refs_of_slide(s, "s17b")
+    notes_with_sources(s, "s17b")
+    return s
+
+
+# ============================================================
+# s18 — four levels of agent context (RESTRUCTURED — EN twin of the RU
+# round-6 block-1 rework, #162/#172).
+# Was: schema_architecture «developer ↔ repository → agent» + a separate
+# curation block + a context-rot plate — owner: «unclear, structure it by
+# levels of context/memory and ground it in development».
+# Now: four explicit LEVELS (per §3.2 chapter-part3.md: instructions ·
+# session curation · operational history · memory-slot-1), each with who
+# maintains it, its lifetime and a concrete development example; plus an
+# explicit definition of JIT retrieval and a «what goes where in the
+# repository» column.
 # ============================================================
 def s18(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "A persistent memory layer in the repository — what the agent reads every session",
-        size=21, w=12.3, h=0.82)
+        s, "Four levels of agent context — each one is maintained differently",
+        size=23, w=12.3, h=0.74)
+    text_box(s, x=0.55, y=1.14, w=12.25, h=0.26,
+             text="The agent is stateless: between runs it remembers nothing — "
+                  "everything it must know about the project sits at one of "
+                  "these four levels.",
+             size=10.5, italic=True, color=SLATE)
 
-    # architecture row: DEVELOPER — REPO — AGENT
-    ay = 1.55
-    ah = 1.60
-    # developer (human, curates)
-    dx, dw = 0.55, 2.70
-    ocean_box(s, dx, ay, dw, ah)
-    icon(s, "user-check", dx + dw / 2 - 0.32, ay + 0.22, 0.64, "teal")
-    text_box(s, x=dx + 0.1, y=ay + 0.94, w=dw - 0.2, h=0.34, text="DEVELOPER",
-             size=12.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, x=dx + 0.1, y=ay + 1.24, w=dw - 0.2, h=0.30, text="curates the layer",
-             size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    # repo (persistent layer)
-    rx2, rw2 = 4.10, 5.10
-    ocean_box(s, rx2, ay, rw2, ah, fill=SURFACE, stroke=MID, stroke_pt=1.8)
-    icon(s, "database", rx2 + 0.22, ay + 0.20, 0.5, "mid")
-    text_box(s, x=rx2 + 0.82, y=ay + 0.22, w=rw2 - 1.0, h=0.36,
-             text="REPOSITORY — the persistent layer", size=12.5, bold=True,
+    levels = [
+        ("file-stack", "mid", MID, "1", "Permanent\ninstructions",
+         "human · lives with the repo",
+         "A static file at the repository root: the agent rereads it every "
+         "session — precisely because it has no memory between runs.",
+         [("AGENTS.md", True), (" (the analog is CLAUDE.md): “Tests: pnpm "
+                                "test” — verbatim build and test commands, "
+                                "code style, guardrails [1].", False)]),
+        ("scan-search", "teal", TEAL, "2", "Context of\none session",
+         "human+agent · one session",
+         "The window of the current dialogue. Three curation primitives: JIT "
+         "retrieval, compaction, notes. More context ≠ better [3].",
+         [("JIT retrieval", True), (" — the agent opens the file it needs at "
+                                    "the moment the task calls for it, instead "
+                                    "of loading the whole repository up front.",
+                                    False)]),
+        ("clipboard-list", "mid", MID, "3", "Operational\ntask history",
+         "people · between tasks",
+         "Past incidents and “how we fixed it” notes — as retrievable "
+         "documents, so the agent does not reinvent them. No mature standard "
+         "exists.",
+         [("An incident record", True), (" with a date and a status: "
+                                         "“current” / “obsolete, "
+                                         "see commit X” — otherwise the "
+                                         "archive ages unnoticed.", False)]),
+        ("database", "teal", TEAL, "4", "Memory\n(slot 1)",
+         "system · a human checks it",
+         "A separate system: it decides for itself what to retain across "
+         "sessions. You do not edit it line by line — you organize and audit it.",
+         [("Mem0 · Cognee · Graphiti · Letta", True),
+          (" — you tune the selection rules, you do not edit the contents.",
+           False)]),
+    ]
+
+    lx, lw = 0.55, 7.95
+    rh, rgap = 0.86, 0.06
+    ry0 = 1.44
+    wa, wb, wc = 1.85, 3.00, 2.60
+    for i, (ic, var, col, num, name, meta, what, example) in enumerate(levels):
+        y = ry0 + i * (rh + rgap)
+        filled_rect(s, lx, y, lw, rh, SURFACE if i % 2 == 0 else WHITE,
+                    stroke=col, stroke_pt=1.3, radius=True, radius_adj=0.06)
+        xa = lx + 0.14
+        icon(s, ic, xa, y + 0.13, 0.34, var)
+        text_box(s, x=xa + 0.44, y=y + 0.09, w=wa - 0.44, h=0.20,
+                 text=f"LEVEL {num}", size=8, bold=True, color=LIGHT,
+                 line_spacing=1.0)
+        text_box(s, x=xa + 0.44, y=y + 0.27, w=wa - 0.44, h=0.38, text=name,
+                 size=10.5, bold=True, color=col, line_spacing=0.98)
+        text_box(s, x=xa, y=y + 0.62, w=wa, h=0.18, text=meta,
+                 size=8, italic=True, color=SLATE, line_spacing=1.0)
+        xb = lx + 0.14 + wa + 0.11
+        text_box(s, x=xb, y=y + 0.09, w=wb, h=rh - 0.16, text=what,
+                 size=9.5, color=DEEP, line_spacing=1.12)
+        xc = xb + wb + 0.11
+        text_runs(s, xc, y + 0.09, wc, rh - 0.16,
+                  [{"text": tx, "size": 9.5, "bold": bd,
+                    "color": (col if bd else DEEP), "line_spacing": 1.12}
+                   for tx, bd in example])
+
+    # honest limit band — why curation, not accumulation
+    by = ry0 + 4 * (rh + rgap) + 0.04
+    filled_rect(s, lx, by, lw, 0.56, TEAL_TINT, stroke=TEAL, stroke_pt=1.4,
+                radius=True, radius_adj=0.08)
+    text_box(s, x=lx + 0.20, y=by + 0.05, w=lw - 0.40, h=0.48,
+             text="Why level 2 is curated rather than accumulated: retrieval "
+                  "accuracy drops non-linearly as the input grows — degradation "
+                  "starts BEFORE the window overflows (Chroma, 18 models) [2]. "
+                  "Demo: ~172k tokens vs ~334k without curation — a direction, "
+                  "not a measured multiplier.",
+             size=9, color=DEEP, line_spacing=1.10)
+
+    # right column — where to put which context
+    rx2, rw2 = 8.65, 4.20
+    ocean_box(s, rx2, ry0, rw2, (by + 0.56) - ry0, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    icon(s, "list-checks", rx2 + 0.20, ry0 + 0.16, 0.38, "mid")
+    text_box(s, x=rx2 + 0.68, y=ry0 + 0.18, w=rw2 - 0.86, h=0.34,
+             text="What goes where in the repository", size=12, bold=True,
              color=MID)
-    text_box(s, x=rx2 + 0.24, y=ay + 0.66, w=rw2 - 0.48, h=0.86,
-             text="AGENTS.md (the agents.md standard, Linux Foundation [1]; "
-                  "build/test commands, style, guardrails; the analog of CLAUDE.md) · "
-                  "memory notes · the operational history of tasks. "
-                  "Rule: lead with commands, not explanations.",
-             size=10.5, color=DEEP, line_spacing=1.12)
-    # agent (stateless, reads each session)
-    gx, gw = 9.55, 3.25
-    ocean_box(s, gx, ay, gw, ah)
-    icon(s, "bot", gx + gw / 2 - 0.32, ay + 0.22, 0.64, "mid")
-    text_box(s, x=gx + 0.1, y=ay + 0.94, w=gw - 0.2, h=0.34,
-             text="AGENT (stateless)", size=12.5, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER)
-    text_box(s, x=gx + 0.1, y=ay + 1.24, w=gw - 0.2, h=0.30,
-             text="reads the layer every session", size=10.5, italic=True,
-             color=SLATE, align=PP_ALIGN.CENTER)
-    # arrows
-    connector(s, dx + dw, ay + ah / 2, rx2, ay + ah / 2, color=TEAL, width=2.4)
-    right_arrow(s, rx2 + rw2 + 0.02, ay + ah / 2 - 0.14, 0.30, 0.28, fill=MID)
-
-    # context-engineering block
-    lx, lw = 0.55, 6.05
-    ocean_box(s, lx, 3.36, lw, 2.14)
-    text_box(s, x=lx + 0.24, y=3.48, w=lw - 0.48, h=0.36,
-             text="context engineering — 3 curation primitives (Anthropic) [3]",
-             size=12.5, bold=True, color=MID)
-    prims = ["JIT retrieval", "compaction", "memory notes"]
-    px = lx + 0.30
-    for pr in prims:
-        chip(s, px, 3.92, 1.85, 0.42, pr, fill=TEAL, color=WHITE, size=11)
-        px += 1.95
-    text_box(s, x=lx + 0.24, y=4.50, w=lw - 0.48, h=0.92,
-             text="Principle: more context != better. Curate it right, not just "
-                  "accumulate.",
-             size=11, color=DEEP, line_spacing=1.14)
-
-    # failure: context rot
-    rx3, rw3 = 6.85, 5.95
-    filled_rect(s, rx3, 3.36, rw3, 2.14, SOFT_GREY, stroke=LIGHT, stroke_pt=1.0,
-                radius=True, radius_adj=0.05)
-    icon(s, "flame", rx3 + 0.24, 3.50, 0.5, "light")
-    text_box(s, x=rx3 + 0.88, y=3.54, w=rw3 - 1.10, h=0.40,
-             text="context rot (Chroma, 18 models) [2]", size=12.5, bold=True,
-             color=DEEP)
-    text_box(s, x=rx3 + 0.24, y=4.04, w=rw3 - 0.48, h=0.78,
-             text="Retrieval accuracy drops non-linearly as input grows — "
-                  "degradation starts BEFORE the window overflows. 'Stale "
-                  "context rots'.",
-             size=11, color=DEEP, line_spacing=1.14)
-    text_box(s, x=rx3 + 0.24, y=4.86, w=rw3 - 0.48, h=0.58,
-             text="Baseline: a memory demo — peak ~172k vs ~334k tokens without memory "
-                  "— a cookbook demonstration of direction, not a controlled multiplier.",
-             size=10, italic=True, color=SLATE, line_spacing=1.1)
+    where = [
+        ("README", "why the project exists and where to start — for a person "
+                   "opening it for the first time."),
+        ("AGENTS.md", "commands and constraints the agent executes literally, "
+                      "with no paraphrasing."),
+        ("ADR", "why a decision was taken and what was rejected — what the code "
+                "does not say."),
+        ("Code comment", "why this particular piece is non-obvious; ships in "
+                         "the same change."),
+        ("Incident record", "how it was fixed last time — with a date and a "
+                            "freshness marker."),
+    ]
+    wy = ry0 + 0.66
+    for title_, body in where:
+        text_runs(s, rx2 + 0.24, wy, rw2 - 0.48, 0.52, [
+            {"text": title_ + " — ", "size": 10, "bold": True, "color": DEEP,
+             "line_spacing": 1.12},
+            {"text": body, "size": 10, "color": SLATE, "line_spacing": 1.12},
+        ])
+        wy += 0.545
+    filled_rect(s, rx2 + 0.20, wy + 0.04, rw2 - 0.40, 0.78, GOLD_TINT,
+                stroke=GOLD, stroke_pt=1.4, radius=True, radius_adj=0.08)
+    text_box(s, x=rx2 + 0.34, y=wy + 0.11, w=rw2 - 0.68, h=0.64,
+             text="Rule: put it where the artifact gets reread together with "
+                  "the code. Whatever must not be lost silently goes to level 1.",
+             size=9.5, bold=True, color=DEEP, line_spacing=1.12)
 
     gold_callout(
         s, 0.55, 5.72, 12.25, 0.62,
-        "Context lives in the repository, not in the prompt. The durable pattern is "
-        "a curated persistent layer; the hype is 'our AGENTS.md will decide everything itself'.",
-        size=13, bold=True, align=PP_ALIGN.CENTER)
+        "Context lives in the repository, not in the prompt — but each level is "
+        "maintained differently: instructions are written, sessions are curated, "
+        "history is dated, memory is configured and audited.",
+        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+    # Round-5 meme: Monkey Puppet — the silent-failure mode of compaction
+    # (a rejected decision can vanish from the summary with no error).
+    add_image(s, WEB_EN / "band-monkey-puppet.png", 9.62, 6.40, 3.18, 0.64)
     refs_of_slide(s, "s19")
     notes_with_sources(s, "s19")
     return s

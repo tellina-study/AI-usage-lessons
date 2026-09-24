@@ -1,0 +1,25 @@
+$ git clone https://github.com/tellina-study/signup-landing-demo.git && cd signup-landing-demo
+$ git switch seminar-4-arc
+$ git ls-tree -r --name-only 1019546 | LC_ALL=C sort   # кейсы 1.1-1.2, коммит 1019546
+
+.gitignore
+AGENTS.md
+CLAUDE.md
+DECISIONS.md
+README.md
+index.html
+package-lock.json
+package.json
+playwright.config.ts
+spec.md
+src/main.js
+src/style.css
+src/validate.js
+tests/form.spec.ts
+vite.config.js
+
+# Комментарий: состояние репозитория на итоге кейса 1.2 (коммит 1019546, ветка seminar-4-arc
+# публичного репозитория tellina-study/signup-landing-demo). AGENTS.md — симлинк на CLAUDE.md
+# (режим 120000, заведён на дне 0, коммит 10699a2). В tests/ на этом коммите один файл:
+# второй тест и объект страницы появляются позже, в кейсе 1.3 (коммиты a1bd73f, ffbb258).
+# Снято 2026-09-24.

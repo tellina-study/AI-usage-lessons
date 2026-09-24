@@ -2,7 +2,7 @@
 name: glossary-ru-en
 issue: 172
 status: locked
-terms_count: 156
+terms_count: 219
 ---
 
 # RU→EN Terminology Glossary (course "AI-usage-lessons")
@@ -190,3 +190,72 @@ On first use: transliteration + inline gloss. Latin-script brands kept as-is.
 | ЕСКД | ESKD | Unified System of Design Documentation (Russian eng-drawing standard, L6) |
 | АСКОН | ASCON | Russian CAD/PLM vendor (Kompas-3D), L6 |
 | Третье Мнение | Third Opinion | Russian medical-imaging AI vendor (translate name; L7) |
+
+## Part C — Seminar 4 terms (coding-agent setup: day-0 baseline vs wait for a signal)
+
+Added for the Seminar 4 EN track (issue #204 pattern). The **axis terms** and the **case-machinery terms** below recur 20-120× each across 57 slides, so a one-off variant in any single slide reads as a different concept. Part A/B still win where they overlap (`экипировка` → *harness*, `провал` → *failure*, `слот` → *slot*), and the Lecture 3 EN deck is the upstream anchor for the harness vocabulary this seminar continues.
+
+| RU | EN (US) | Note |
+|---|---|---|
+| Сборка кодинг-агента | Setting up a coding agent | Seminar 4 title. Not "assembling"/"building" — the seminar is about configuration decisions. |
+| день-0 база | day-0 baseline | Keystone axis, left half. Hyphenated attributively: *a day-0 baseline practice*. |
+| день-0-практика | day-0 practice | |
+| жди сигнала | wait for a signal | Keystone axis, right half. Imperative, matching the RU. |
+| по сигналу | on a signal | The classification label paired with "day 0". |
+| сигнал | signal | Never "trigger" in this seminar: Lecture 3 EN uses *trigger* for harness complication; here the RU is consistently «сигнал» and the distinction is load-bearing. |
+| на дне 0 / в первый день | on day 0 / on the first day | |
+| гейт готовности | readiness gate | The `CLAUDE.md` line requiring tests + a manual check before saying "done". Deliberately **not** "definition-of-done gate" — that imports Scrum baggage the RU does not carry. |
+| критерий «готово» | the "done" criterion | Keep the quotes around *done*, as the RU does around «готово». |
+| файл инструкций | instruction file | Locked by the Lecture 3 EN deck. |
+| вложенные файлы (инструкций) | nested (instruction) files | Case 1.3. |
+| обзор репозитория / repository overview | repository overview | Source itself uses the EN term; keep it. |
+| presence paradox | presence paradox | Already EN in the RU source; never translate or re-gloss. |
+| недискаверабельные конвенции | non-discoverable conventions | |
+| правило трёх адресов | the rule of three addresses | Case 1.3 target answer. |
+| адрес (знания) | address | *knowledge has an address* — keep the metaphor. |
+| журнал решений | decision log | The `DECISIONS.md` artifact. |
+| структурированная вики | structured wiki | Case 2.2's actual slide wording (s38/s43); «структурированная вики-память» → *structured wiki memory*. The `deck.yaml` changelog's shorter «структура вики» → *wiki structure* is the same thing named at deck level. |
+| авто-память | auto-memory | The runtime's own agent-written, machine-local layer (s32-s35, s55). Hyphenated, distinct from *memory* as a harness slot. |
+| отравление памяти | memory poisoning | What s36 actually says (the SpAIware class). Distinct from `отравление контекста` → *context poisoning*, which the seminar does not use — do not substitute one for the other. |
+| запись (в журнале / ADR) | record | One term for both a flat `DECISIONS.md` item and an ADR file, so the log's items and ADR's own "Record" read as the same object. Not "entry". |
+| универсальная гигиена | universal hygiene | The axis label paired with *specific to the project*. |
+| тезис (столбец таблицы источников) | Claim | Evidence-table header, next to *Source* / *Strength of evidence*. "Thesis" reads academic — keep *thesis* only for «тезис лекции» (a lecture's thesis). |
+| гейт-фраза | the gate line | The `CLAUDE.md` line that states the readiness gate. |
+| занятие | session | The seminar itself, kept distinct from «сессия агента» → *the agent's session*. |
+| заявка | submission / request | The `signup-landing` domain object. |
+| корзина (co-building) | basket | Matches the `cobuilding_baskets_*` pattern names. |
+| плашка | plate | Matches `criterion_plate`. |
+| строка-состояние | state line | |
+| мостик | bridge | |
+| свод-указатель | corpus pointer | See `свод`. |
+| отдельные файлы (ADR) | separate files (ADRs) | Case 2.2 target answer; ADR stays an acronym per Part A. |
+| оперативная память | working memory | Case 2.3 (a file per task). Not "RAM", not "operational memory". |
+| практика файла-на-задачу | the file-per-task practice | |
+| отравление контекста | context poisoning | |
+| развилка | decision point | **Never "fork"** — in a seminar spent inside a git repository, *fork* reads as a repo fork. «Шесть развилок» → *six decision points*. |
+| кейс | case | |
+| сквозной кейс | running case | The `signup-landing` case carried through the whole session. |
+| постановка (задачи) | setup | As in «постановка кейса» → *the case setup*. |
+| задача заказчика | the client's request | |
+| карточка-вариант | option card | |
+| целевой ответ | target answer | The answer the case is steering toward. |
+| разбор | breakdown | «Разбор карточек» → *the breakdown of the cards*. Never "analysis". |
+| исследование (слайд) | the evidence | Slide type `research_evidence`: it presents published studies. «Что говорят четыре источника» → *what four sources say*. |
+| честный пробел | an honest gap | Where the seminar admits no study measured this. |
+| сила доказательства | strength of evidence | Evidence-table column header. |
+| критерий и граница | criterion and boundary | |
+| «здесь ещё рано» | "too early here" | `criterion_plate` title; keep it terse — it sits in a 10.5pt plate. |
+| «пока ничего» | "nothing yet" | The recurring target answer. Keep the quotes. |
+| завести (файл, практику) | to set up | «Завести CLAUDE.md» → *set up `CLAUDE.md`*. Not "to found"/"to introduce". |
+| отложить | to defer | |
+| зал | the room | «Карточки зала» → *the room's cards*; «при молчании зала» → *if the room stays silent*. Not "audience hall". |
+| голосование | the vote | |
+| цикл «создай — прожарь — улучши» | the create - roast - improve loop | *roast* is the course's own term for adversarial self-critique (see the Roast-Before-Implement rule); keep it. |
+| журнал хода работы | progress log | |
+| дивайдер (макро / микро) | divider (macro / micro) | Production term; appears in `deck.yaml`/frontmatter, not on slides. |
+| раздел | section | |
+| цена структуры | the cost of structure | Case 2.2. |
+| свод (знания) | corpus | Case 1.3/2.2's second metaphor, next to *address*. Deliberately **not** "knowledge base" — that imports Confluence/product baggage the RU does not carry — and not "compendium" (too literary). `указатель-свод` → *a corpus pointer*. |
+| отказ (инструмента реализовать) | refusal | s25: four tools declining to implement recursive discovery. Distinct from `режим отказа` → *failure mode* (Part A), which is the other sense the source uses. |
+| п.п. (процентных пунктов) | pp (percentage points) | Abbreviated in tables as the RU abbreviates, spelled out in prose as the RU spells out. |
+| цена отсутствия | the cost of not having it | |

@@ -1,0 +1,11 @@
+$ git ls-tree -r --name-only 01931c0 | sort   # commit 01931c0
+
+AGENTS.md
+CLAUDE.md
+DECISIONS.md
+index.html
+package.json
+src/main.js
+tests/form.spec.ts
+
+# Комментарий: Ступень 2 (память): + DECISIONS.md (append-only лог решений).

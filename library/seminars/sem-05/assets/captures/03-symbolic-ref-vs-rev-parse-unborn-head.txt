@@ -1,0 +1,11 @@
+$ git init -q -b main
+$ git symbolic-ref --short HEAD
+main
+(exit code: 0)
+
+$ git rev-parse --abbrev-ref HEAD
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+HEAD
+(exit code: 128)

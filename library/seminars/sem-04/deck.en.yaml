@@ -1,0 +1,525 @@
+# Seminar 4 — final assembly v6 (round 6: consolidating five parallel sets of edits — R6-1
+# the readiness gate is visible from section 0, R6-2 the rule of three addresses in case 1.3,
+# R6-3 case 2.1 reordered around the table of the four layers, R6-4 case 2.2 gets the honest
+# wording "separate files (ADRs)" + the costs of structure, R6-5 five new slides).
+#
+# What v6 changes relative to v5 (52 slides, 81 min):
+# (R6-1) New slide 0.5c "What was set up on the first day" (section 0) — closes the gap of
+#   where the artifacts of cases 1.2/2.1/2.3 came from before they show up by name. Case 1.1
+#   (s11) is brought into line: CLAUDE.md is not entirely empty on entry, it already carries
+#   the readiness-gate line.
+# (R6-2) Case 1.3 got a new target answer — "the rule of three addresses" (function → code,
+#   class of files → path pattern, project → root) — and a new breakdown slide (s26,
+#   the evidence pt. 2 + the breakdown), inserted after the mechanics of the five delivery
+#   channels (s25).
+# (R6-3) Case 1.2: the evidence and the breakdown are split across two slides (s18 — two
+#   source tables + the breakdown of the cards; s19 — the "requests/laws" formula + an
+#   expanded block on "can you get by without a hook today"), plus a new slide s21 "What else
+#   gets set up right away" (three day-0 practices in addition to the gate).
+# (R6-4) Case 2.1: the table of the four recording layers is moved ahead of the breakdown of
+#   the cards (s32, it used to come after the decision) — the breakdown (s33) now leans on
+#   layers already shown instead of re-explaining them out loud.
+# (R6-5) Case 2.2: the target answer is made precise — "separate files (ADRs), not thematic
+#   ones" — aligned with the case's decision (the ADR structure is a file per decision, not
+#   per topic); the Letta counterexample is made precise ("a file store" — not "grep only",
+#   with automatic indexing and semantic search); a new slide s45 "The cost of structure" —
+#   four costs on the case's own doc/adr/, separate from the Letta counterexample (they used
+#   to share one overloaded slide).
+# (R6-6) Case 2.1 (s35, the real DECISIONS.md) and case 2.2 (s39-s42) are brought down to a
+#   single wording of the rejected decision — "we are not adding third-party widgets to the
+#   form" — instead of two different ones on adjacent slides.
+#
+# Section 0 (opening, s01-s08, 13 min) — new slide s07 "what was set up on the first day".
+# Section 1 (the instruction file, 3 cases, s09-s27, 32 min) — was 16 slides, now 19: case
+#   1.2 got 2 new slides (the evidence and the breakdown split into s18/s19 + the new s21),
+#   case 1.3 got 1 new slide (s26).
+# Section 2 (memory, 3 cases, s28-s54, 34.75 min) — was 26 slides, now 27: case 2.2 got a
+#   new slide s45 "the cost of structure"; case 2.1 (s31-s37) is physically reordered — the
+#   table of the four layers (s32) comes before the breakdown (s33) rather than after the
+#   decision.
+# Section 3 (closing, s55-s57, 4.5 min) — no structural changes; two rows of the recap table
+#   (s55) are updated for the new target answers of cases 1.3 and 2.2.
+#
+# Sources of the old v5 structure: the slides of the old deck.yaml (52 slides) — R5-0..R5-4
+# (round 5, the switch of the axis to day-0/wait-for-a-signal) remain in force as the
+# methodological foundation; v6 does not cancel them but consolidates five parallel sets of
+# edits from five sessions into one coherent deck.
+#
+# Slides were 52 (v5), now 57 (v6). Details — rework/section-*.md (v5/v6) +
+# rendered/iteration-log.md.
+deck:
+  seminar_number: 4
+  title: "Seminar 4 — Setting up a coding agent: day-0 baseline or wait for a signal"
+  audience: "third-year students, program 09.03.01 — practicing engineers, all of them use AI assistants at work"
+  duration_min: 86  # material 83.75 (13 section 0 + 32 section 1 + 34.25 section 2 + 4.5 section 3) + ~2.25 min of reserve
+  format: "facilitator slides + open questions with option cards (the question comes BEFORE the evidence, R5-3) + building the configuration together with the room (no live terminal)"
+  central_question: "What in an agent's configuration is worth putting in place right away, on day 0, as a baseline practice — and what cannot be known in advance because it is specific to your project?"
+  learning_outcomes: [LO7, LO6, LO3]
+  case: "signup-landing — a landing page with a sign-up form for a demo lesson: the requirements are fixed in spec.md and README before the agent's first session; build, form test, deploy, tasks in the tracker; one developer with an agent, a fixed date for the client demo. The session works through 2 of the harness's 5 slots in detail (the instruction file, memory), 3 cases on each — three of them are specific to the project (wait for a signal: 1.1, 1.3, 2.2), three are universal hygiene (day 0: 1.2, 2.1, 2.3); the remaining 3 slots + the 2 practical layers (hook, process) — Seminar 5."
+  language: en
+  slide_count: 57
+  timing_budget: "83.75 min of material (13 section 0 + 32 section 1 + 34.25 section 2 + 4.5 section 3 closing) + ~2.25 min of reserve = 86; section 0 grew from 12 to 13 min (the new slide 'what was set up on the first day', which gathers the day-0 artifacts of cases 1.2/2.1/2.3 into one place before they show up by name), section 1 grew from 29.5 to 32 min (case 1.2 got 2 new slides — the split of the evidence and the breakdown, and 'what else gets set up right away'; case 1.3 got a new breakdown slide with the target answer 'the rule of three addresses'), section 2 grew from 32.75 to 34.25 min (case 2.2 got the new slide 'the cost of structure', case 2.1 is physically reordered without changing the total time). The session's total duration grew from 81 to 86 min — a deliberate decision by the orchestrator while consolidating the five parallel sets of edits: each one adds substantive rather than cosmetic material (an honest day-0 baseline, sharpened target answers, failure slides pulled apart)."
+  failure_share: "computed for each case separately (the share of research + answer_breakdown + failure_vignette + criteria_boundary slides in the case's duration, including the new slides): 1.1=(0.5+5+1.5)/9≈78%, 1.2=(0.5+4+3+1.5+1.5)/13≈81% (including the new slide 'what else gets set up right away', which is itself neither failure nor evidence but does not change the conclusion — the evidence + the breakdown + the criterion make up the core), 1.3=(3+3+1.5)/10.5≈71% (including the new breakdown slide s26), 2.1=(1+1+1.25+1.75+3+1)/12.25≈73% (the table of layers s32 is counted as a research_evidence-like support for the breakdown), 2.2=(1.25+1.25+1.5+1.5+2.0+0.75)/13.25≈62% (including the new slide 'the cost of structure'), 2.3=(1.5+1.25+3.25+1)/10.75≈62%. All 6 cases individually clear 30% with a wide margin (AI-Failure & Judgment Content Rule, strict-in). The aggregate share across the whole session is well above the 30% threshold and is distributed holistically across all 6 cases rather than concentrated in one."
+  source: "library/seminars/sem-04/rework/section-0-otkrytie.md + section-0-otkrytie-part2.md + section-1-fayl-instrukciy.md + section-1-fayl-instrukciy-part2.md + section-1-fayl-instrukciy-part3.md + section-2-pamyat.md + section-2-pamyat-part1b.md + section-2-pamyat-part2.md + section-2-pamyat-part3.md + section-2-pamyat-timings.md (round 6 — consolidating five parallel edit sessions into one deck, orchestrator). Supersedes v5 deck.yaml (52 slides, round 5 — R5-0 the axis switch + R5-1 the visual unification of the dividers + R5-2 section 0 rewritten + R5-3 the question before the evidence + R5-4 the README plate)."
+
+slides:
+  # --- Section 0. Opening: the client's request, spec.md, the running case, the two modes, what was set up right away, the map (13 min) ---
+  - id: s01
+    file: slides-en/s01-oblozhka-centralnyy-vopros.md
+    type: hero_cover
+    duration_min: 1
+    assertion: "An agent's configuration is a set of decisions taken as the work on a project goes along: some of them pay off from the first day, some cannot be taken in advance"
+    learning_goal: "Opening the session with one idea and one question — no table of contents, no warm-up; the session's axis (day-0 vs wait for a signal) is stated in the first minute and holds the whole session together"
+    visual:
+      pattern: hero_cover
+  - id: s02
+    file: slides-en/s02-zadacha-zakazchika-vopros.md
+    type: problem_scenario
+    duration_min: 1.5
+    assertion: "The task arrives in the client's wording: what the result should be is there; how the code is laid out, what the readiness criteria are and where the boundaries of action lie is not"
+    learning_goal: "The client's request stated as a verbatim quote + an open discussion, 'do we hand it over as is or fix the requirements first' — the entry into the running project"
+    visual:
+      pattern: open_discussion
+  - id: s03
+    file: slides-en/s03-spec-md-trebovaniya.md
+    type: code_artifact
+    duration_min: 1.5
+    assertion: "The requirements break down into functional and non-functional ones and go into spec.md in the first commit; README describes how the repository is laid out and is set up in the same commit"
+    learning_goal: "A structured record of the requirements — an illustrative spec.md example, explicitly marked as not a screen capture; README as a separate artifact of the product layer"
+    visual:
+      pattern: code_artifact
+  - id: s04
+    file: slides-en/s04-pustoy-repozitoriy-i-povorot.md
+    type: code_artifact
+    duration_min: 2
+    assertion: "The agent built a working prototype from the spec without a single clarifying question — and chose the repository's structure itself along the way, because spec.md does not describe it"
+    learning_goal: "The first run of the running project: a real empty repository, the task from the spec, the prototype that came out; the structural decisions were taken by the agent silently — the entry into case 1.1"
+    visual:
+      pattern: terminal_task_and_dialogue
+  - id: s05
+    file: slides-en/s05-vopros-dva-rezhima.md
+    type: reflection_question
+    duration_min: 1
+    assertion: "When setting up an agent in a new repository, everyone works in one of two modes — put the baseline in place right away, or wait for a real problem"
+    learning_goal: "The session's first open question — a self-diagnosis against the two modes; NO breakdown and NO highlighting, the breakdown is on the next slide"
+    visual:
+      pattern: question_with_option_cards
+  - id: s06
+    file: slides-en/s06-razbor-dva-rezhima.md
+    type: answer_breakdown
+    duration_min: 1.5
+    assertion: "Both modes work — the question is which type of decision they are applied to: what is specific to the project waits for a signal, universal hygiene is set up right away"
+    learning_goal: "The breakdown of the two modes — introduces the explicit axis 'day-0 / wait for a signal' and separates it from Lecture 3's thesis about the thin agent"
+    visual:
+      pattern: dual_mode_breakdown
+  - id: s07
+    file: slides-en/s07-chto-zavedeno-v-pervyy-den.md
+    type: assertion_visual
+    duration_min: 1
+    assertion: "Besides the spec and README, three more things go into the repository the same day — not one of them waited for a signal"
+    learning_goal: "The list of what was set up on the first day (0.5c) — closes the gap of where the artifacts of cases 1.2/2.1/2.3 came from, before they are met by name; inserted after the breakdown of the two modes (0.5b) so as not to give away question 0.5"
+    visual:
+      pattern: day_zero_checklist
+  - id: s08
+    file: slides-en/s08-karta-ekipirovki-sokraschennaya.md
+    type: keystone_axis
+    duration_min: 3.5
+    assertion: "An agent's configuration breaks down into five slots; today's project uses two of them — instruction-rules and memory"
+    learning_goal: "A single harness-map slide — co-building the five slots from memory of Lecture 3, two in focus, the ladder rule"
+    visual:
+      pattern: keystone_scope_map
+  # --- Section 1. The instruction file: 3 cases — role/repository, baseline processes, nested files (32 min) ---
+  - id: s09
+    file: slides-en/s09-divider-fayl-instrukciy.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Section 1 — the instruction file: three decision points about one and the same file, in the order in which they come up while working on a project"
+    learning_goal: "Section 1 divider (macro level: a gold 4-segment progress bar + the section's number badge)"
+    visual:
+      pattern: section_divider_macro
+  - id: s10
+    file: slides-en/s10-divider-keys-1-1-rol-i-repozitoriy.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Case 1.1 — the agent's role and a general description of the repository: what an empty instruction file gets filled with when there is one run behind you"
+    learning_goal: "Case 1.1 divider (micro level: a teal 3-segment progress bar, without the section's number badge). The tag names the decision point's topic, not its outcome — the 'day-0 / on a signal' classification is assembled in section 3"
+    visual:
+      pattern: section_divider_micro
+  - id: s11
+    file: slides-en/s11-keys-1-1-problema-overview.md
+    type: problem_scenario
+    duration_min: 1.5
+    assertion: "The prototype is built, the next session is tomorrow — CLAUDE.md already carries the readiness-gate line, the rest is empty, and the standard first section of such a file is called 'Repository overview'"
+    learning_goal: "The problem of case 1.1 — a decision-point scenario at the entry to CLAUDE.md, where nothing but the gate line is there yet. NO question, NO cards, NO evaluation of the options — those are on the following slides"
+    visual:
+      pattern: problem_scenario
+  - id: s12
+    file: slides-en/s12-keys-1-1-vopros.md
+    type: reflection_question
+    duration_min: 0.5
+    assertion: "A choice among five options: which of the items listed will go into the file now, before the next session"
+    learning_goal: "The open question of case 1.1 (it comes BEFORE the evidence) — a question with a ready set of options, NO numbers, NO sources, NO breakdown table"
+    visual:
+      pattern: question_with_option_cards
+  - id: s13
+    file: slides-en/s13-keys-1-1-issledovanie-i-razbor.md
+    type: research_evidence
+    duration_min: 5
+    assertion: "A repository overview measurably does not raise success and does cost context — and a structured description, if it is needed, lives in README.md and is not duplicated in CLAUDE.md"
+    learning_goal: "The evidence + the breakdown of case 1.1, merged into one pass after the vote — four sources, an honest gap, a breakdown table of the five positions, the target answer and the README plate at the level of the target answer"
+    visual:
+      pattern: research_and_answer_combined
+  - id: s14
+    file: slides-en/s14-keys-1-1-reshenie-pustoy-fayl.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "A description of the repository's structure does not appear in CLAUDE.md: there is no signal for it — and the file's first content will appear in the very next case, for a different reason"
+    learning_goal: "The decision of case 1.1 — an empty file as a substantive outcome for the repository overview, a bridge to case 1.2"
+    visual:
+      pattern: assertion_visual
+  - id: s15
+    file: slides-en/s15-divider-keys-1-2-processy.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Case 1.2 — baseline processes: the readiness gate and the 'plan → code → improvement' loop, written into the instruction file"
+    learning_goal: "Case 1.2 divider (micro level: a teal 3-segment progress bar, without the section's number badge). The tag names the decision point's topic, not its outcome — the 'day-0 / on a signal' classification is assembled in section 3"
+    visual:
+      pattern: section_divider_micro
+  - id: s16
+    file: slides-en/s16-keys-1-2-problema-gotovo-raskhoditsya.md
+    type: problem_scenario
+    duration_min: 1.5
+    assertion: "The readiness gate has been sitting in CLAUDE.md since day 0 — and twice in a row 'done' was said before anyone checked by hand that the submission was delivered"
+    learning_goal: "The problem of case 1.2 — the state of the instruction file and what happened in the first week. NO question, NO cards, NO statement of the decision"
+    visual:
+      pattern: problem_scenario
+  - id: s17
+    file: slides-en/s17-keys-1-2-vopros.md
+    type: reflection_question
+    duration_min: 0.5
+    assertion: "The gate line has been there from the very start and did not fire — a choice among five options for what to do next so that it actually fires in the next session"
+    learning_goal: "The open question of case 1.2 (it comes BEFORE the evidence) — a question slide with a ready set of options, NOT a single number, NO source, NO breakdown table"
+    visual:
+      pattern: question_with_option_cards
+  - id: s18
+    file: slides-en/s18-keys-1-2-issledovanie-i-razbor.md
+    type: research_evidence
+    duration_min: 4
+    assertion: "A textual gate without tooling is not merely useless but harmful — regressions rose to almost 10%; none of the room's five options solves the problem systemically, except handing the check over to a mechanism outside the text"
+    learning_goal: "The evidence + the breakdown of case 1.2, part 1 (slide 1.2.4) — two mini source tables (gates + the improvement loop), an honest gap, a breakdown table of the five cards; the formula and the expanded block about the hook are on the next slide"
+    visual:
+      pattern: research_and_answer_combined
+  - id: s19
+    file: slides-en/s19-keys-1-2-mozhno-li-bez-huka.md
+    type: research_evidence
+    duration_min: 3
+    assertion: "Rules in the prompt are requests, rules in code are laws; a textual gate catches an honest mistake but does not hold under pressure — the boundary for a mechanism runs where the action, the cost and the frequency are named"
+    learning_goal: "The evidence + the breakdown of case 1.2, part 2 (slide 1.2.4b) — the unconditional 'requests/laws' formula and an expanded answer to the question 'can you get by without a hook today', leaning on the previous slide's sources, with no new numbers"
+    visual:
+      pattern: research_and_answer_combined
+  - id: s20
+    file: slides-en/s20-keys-1-2-reshenie-itogovyy-claude-md.md
+    type: code_artifact
+    duration_min: 1.5
+    assertion: "The final file is fifteen lines: the 'done' criterion, the gate warning, an honest caveat about its limit, and one one-off step without which the tests fail for no good reason; AGENTS.md is a symlink to the same file"
+    learning_goal: "The decision of case 1.2 — the real final CLAUDE.md, the loading mechanics, the AGENTS.md symlink and the sharp edge of cp -R"
+    visual:
+      pattern: code_artifact
+  - id: s21
+    file: slides-en/s21-keys-1-2-chto-esche-zavoditsya-srazu.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "The gate is not the only cheap baseline: three more practices get set up on the first day and do not wait for a signal"
+    learning_goal: "The decision of case 1.2, step 2 (1.2.6) — three day-0 practices in addition to the gate: the create - roast - improve loop, a progress log for the task, a rule together with its reason; inserted after the final CLAUDE.md, before the case 1.3 divider"
+    visual:
+      pattern: day_zero_checklist
+  - id: s22
+    file: slides-en/s22-divider-keys-1-3-vlozhennye-fayly.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Case 1.3 — where the project's documentation physically lives: the address of a piece of knowledge, not its content"
+    learning_goal: "Case 1.3 divider (micro level: a teal 3-segment progress bar). The tag names the decision point's topic, not its outcome — the 'day-0 / on a signal' classification is assembled in section 3"
+    visual:
+      pattern: section_divider_micro
+  - id: s23
+    file: slides-en/s23-keys-1-3-problema-tests-claude-md.md
+    type: problem_scenario
+    duration_min: 1.5
+    assertion: "Over a month two pieces of knowledge of different natures have piled up — a convention for a whole folder and a detail about a single function — and the developer treats both the same way: by setting up nested instruction files"
+    learning_goal: "The problem of case 1.3 — the state of the repository a month in and the action the developer took. NO question, NO cards, NO evaluation of the action"
+    visual:
+      pattern: problem_scenario
+  - id: s24
+    file: slides-en/s24-keys-1-3-vopros.md
+    type: reflection_question
+    duration_min: 0.5
+    assertion: "Where to put each of the two pieces of knowledge so that the agent gets it when it is needed and does not pay for it in all the other sessions — a choice among five cards, more than one allowed"
+    learning_goal: "The open question of case 1.3 (it comes BEFORE the evidence) — a question slide with a ready set of options, NO numbers, NO source"
+    visual:
+      pattern: question_with_option_cards
+  - id: s25
+    file: slides-en/s25-keys-1-3-issledovanie-i-razbor.md
+    type: research_evidence
+    duration_min: 3
+    assertion: "'Where to put it' is the question 'will the text reach the agent, and what does it cost'; five channels have five different answers, and three tools out of four independently converged on one mechanism — a declared path pattern"
+    learning_goal: "The evidence of case 1.3, part 1 — the delivery mechanics: a table of the five channels (guarantee × cost in context) and the convergence of three tools out of four on a declared path pattern. The breakdown of the cards and the target answer are on the next slide"
+    visual:
+      pattern: research_and_answer_combined
+  - id: s26
+    file: slides-en/s26-keys-1-3-issledovanie-ch2-i-razbor.md
+    type: research_evidence
+    duration_min: 3
+    assertion: "Neither of the two controlled measurements found that spreading documentation around improves the result — so the channel is chosen by delivery and cost, not by promised benefit: knowledge about a function goes into the code, about a class of files — into a rule with a path pattern, about the project — into the root file as pointers"
+    learning_goal: "The evidence of case 1.3, part 2 + the breakdown: four sources, an 'honest about the gap' block, a breakdown table of the five cards, the target answer 'the rule of three addresses'"
+    visual:
+      pattern: research_and_answer_combined
+  - id: s27
+    file: slides-en/s27-keys-1-3-reshenie-most-k-pamyati.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "The root file stayed the same, fifteen lines long: the detail went into a comment on the function, the tests' convention already sits in the tests themselves, not a single nested instruction file was set up — and knowledge that appears as the work goes along has a different address, and that is section two"
+    learning_goal: "The decision of case 1.3 (the state of the repository + the threshold for switching on each address) and section 1's final bridge to section 2 — memory"
+    visual:
+      pattern: assertion_visual
+  # --- Section 2. Memory: 3 cases — a flat file (day 0), wiki memory (on a signal), working memory (day 0) (34.25 min) ---
+  - id: s28
+    file: slides-en/s28-divider-pamyat-keys-2-1.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Section 2 — memory: what survives the end of a session, not what you wrote to the agent in advance; case 2.1 — the project's decision log"
+    learning_goal: "A combined section + case divider: the macro badge of section 2 and the micro caption of case 2.1 are visible on one slide. The tag names the decision point's topic, not its outcome"
+    visual:
+      pattern: section_divider_hybrid
+  - id: s29
+    file: slides-en/s29-keys-2-1-problema.md
+    type: problem_scenario
+    duration_min: 0.5
+    assertion: "The end of the first week: a rejected decision about validation surfaces again — DECISIONS.md was set up on day 0, but there is no entry about this decision in it"
+    learning_goal: "The problem of case 2.1 — the state of the project and the decision point at the entry. NO question, NO cards, NO statement of the decision: it is assembled after the vote"
+    visual:
+      pattern: problem_scenario
+  - id: s30
+    file: slides-en/s30-keys-2-1-vopros.md
+    type: reflection_question
+    duration_min: 1
+    assertion: "Choose where to record the rejected decision — from the cards below — so that you do not have to explain it a third time"
+    learning_goal: "The open question of case 2.1 verbatim with five option cards (it comes BEFORE the evidence) — no breakdown table, not a single number"
+    visual:
+      pattern: question_with_option_cards
+  - id: s31
+    file: slides-en/s31-keys-2-1-issledovanie.md
+    type: research_evidence
+    duration_min: 1
+    assertion: "The instruction file is loaded automatically at the start of every session, while `DECISIONS.md` is an ordinary repository file that the agent reads only on its own initiative or on an explicit reference; the presence paradox carries over to it in a conditional, but all-or-nothing, form"
+    learning_goal: "The evidence of case 2.1 (it comes AFTER the question) — separate the two different loading mechanisms and honestly carry the presence paradox over to a file that is not loaded by itself"
+    visual:
+      pattern: research_evidence
+  - id: s32
+    file: slides-en/s32-keys-2-1-tablica-chetyrekh-sloev.md
+    type: comparison_table
+    duration_min: 1
+    assertion: "The difference between the layers is not the format but who initiates the record, who will see it later, and by what mechanism it gets into the context at all"
+    learning_goal: "The table of the four recording layers: instruction file / auto-memory / DECISIONS.md / a complex memory system — by authorship, where it lives, loading mechanism, review and portability; the table comes before the breakdown of the vote"
+    visual:
+      pattern: comparison_table
+  - id: s33
+    file: slides-en/s33-keys-2-1-razbor.md
+    type: answer_breakdown
+    duration_min: 1.25
+    assertion: "A team decision with its rationale goes into DECISIONS.md, a personal preference into auto-memory, and anything derivable from the code nowhere"
+    learning_goal: "The breakdown of the five positions in the room's answer for case 2.1 + the target answer 'both mechanisms at once, with the roles split'; the slide comes straight after the table of the four layers and leans on it"
+    visual:
+      pattern: answer_breakdown_table
+  - id: s34
+    file: slides-en/s34-keys-2-1-cobuilding-korziny.md
+    type: assertion_visual
+    duration_min: 1.75
+    assertion: "Not everything the agent has learned is worth recording at all — the third basket is just as legitimate as the first two"
+    learning_goal: "The co-building of case 2.1: sorting five fact cards into three baskets plus assembling the final entry"
+    visual:
+      pattern: cobuilding_baskets_and_record
+  - id: s35
+    file: slides-en/s35-keys-2-1-reshenie-decisions-md.md
+    type: code_artifact
+    duration_min: 0.75
+    assertion: "What is new is not the file (it was set up on day 0) but the first substantive entry in it, dated the day the decision was recorded"
+    learning_goal: "The concrete decision of case 2.1 — the contents of an already existing file, with no creation diff: the file has existed since day 0, the only new thing in it is the entry"
+    visual:
+      pattern: code_artifact
+  - id: s36
+    file: slides-en/s36-keys-2-1-proval-otravlenie-i-effektivnost.md
+    type: failure_vignette
+    duration_min: 3
+    assertion: "Memory is read by default as trusted context rather than as data — and switching memory on does not necessarily improve the result"
+    learning_goal: "The failure/limitation of case 2.1, two layers of different natures: memory poisoning (SpAIware) and the measured 'having memory ≠ memory helping'"
+    visual:
+      pattern: failure_vignette
+  - id: s37
+    file: slides-en/s37-keys-2-1-kriteriy-i-granica.md
+    type: criteria_boundary
+    duration_min: 1
+    assertion: "A flat file is enough as long as the history of decisions fits into the context whole and there are no links between the entries yet"
+    learning_goal: "The 'too early here' criterion for a flat file + the explicit boundary where DECISIONS.md stops coping — the transition to case 2.2"
+    visual:
+      pattern: criteria_checklist_and_boundary
+  - id: s38
+    file: slides-en/s38-divider-keys-2-2-struktura-viki.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Case 2.2 — structured wiki memory: the same decision log four months later"
+    learning_goal: "Case 2.2 divider (micro level: a teal 3-segment progress bar). The tag names the decision point's topic, not its outcome — the 'day-0 / on a signal' classification is assembled in section 3"
+    visual:
+      pattern: section_divider_micro
+  - id: s39
+    file: slides-en/s39-keys-2-2-scenariy-razroshiysya-log.md
+    type: problem_scenario
+    duration_min: 1.5
+    assertion: "The fourth month: DECISIONS.md holds two hundred entries, two of them are about the same question — and neither references the other"
+    learning_goal: "The scenario of case 2.2 — the state of the decision log in the fourth month and what happened because of it. NO question, NO cards, NO statement of the decision"
+    visual:
+      pattern: scenario_pain
+  - id: s40
+    file: slides-en/s40-keys-2-2-vopros.md
+    type: reflection_question
+    duration_min: 1.25
+    assertion: "A decision log that has grown out of hand and a lost link between two entries — a reason to choose how to reorganize it, not to set it up again from scratch"
+    learning_goal: "The open question of case 2.2 verbatim + five option cards (it comes BEFORE the evidence) — no breakdown table, not a single number: the number of entries was stated on the scenario slide and is not repeated here"
+    visual:
+      pattern: question_with_option_cards
+  - id: s41
+    file: slides-en/s41-keys-2-2-issledovanie.md
+    type: research_evidence
+    duration_min: 1.25
+    assertion: "Flat memory degrades over time, and structure can pay off for an agent precisely where it does not pay off for a human — but 'smarter' does not mean 'better' without a check"
+    learning_goal: "A separate evidence slide for case 2.2 — an honest methodological caveat about fresh preprints, MEMTIER, the logic of the raw sources→wiki→schema pattern, the Letta counterexample"
+    visual:
+      pattern: research_evidence
+  - id: s42
+    file: slides-en/s42-keys-2-2-razbor.md
+    type: answer_breakdown
+    duration_min: 1.5
+    assertion: "Splitting it into separate files (one per decision) with cross-references is the target answer, but not a free one: the structure itself creates a new load"
+    learning_goal: "The breakdown of the five positions in the room's answer for case 2.2 + the target answer with an explicit list of costs"
+    visual:
+      pattern: answer_breakdown_table
+  - id: s43
+    file: slides-en/s43-keys-2-2-reshenie-struktura-viki.md
+    type: code_artifact
+    duration_min: 1.5
+    assertion: "The ADR practice: one decision — one numbered file, and the link between decisions is a line in the Status section that the tool fills in both directions at once"
+    learning_goal: "The decision of case 2.2: not an invented structure but the documented practice of architecture decision records (ADR, Nygard 2011; the adr-tools tool) on the signup-landing material — with an honest note on the strength of evidence"
+    visual:
+      pattern: code_structure_illustrative
+  - id: s44
+    file: slides-en/s44-keys-2-2-proval-letta-i-izderzhki.md
+    type: failure_vignette
+    duration_min: 1.5
+    assertion: "A file store beat graph memory — but what was measured was questions about a long dialogue, not finding a related decision in a project's log"
+    learning_goal: "A counterexample to structure, with the conditions of the measurement unpacked: what LoCoMo is, what lies behind 74.0% and 68.5%, and what this result does NOT prove. The costs of the structure itself are on the next slide"
+    visual:
+      pattern: failure_vignette
+  - id: s45
+    file: slides-en/s45-keys-2-2-cena-struktury.md
+    type: failure_vignette
+    duration_min: 2
+    assertion: "Four costs of structure — not general categories but concrete files in our own doc/adr/: a generated table of contents, a redundant entry, an orphaned rationale and manual reconciliation"
+    learning_goal: "The cost of structure shown on the case's own artifact: what exactly diverges, gets duplicated and is left dangling when there are two hundred decisions — inserted after s44 (the Letta counterexample), before the 'too early' criterion"
+    visual:
+      pattern: failure_vignette
+  - id: s46
+    file: slides-en/s46-keys-2-2-kriteriy-i-most.md
+    type: criteria_boundary
+    duration_min: 0.75
+    assertion: "A handful of links per entry and one or two people editing the memory — the structure is enough; a full memory system requires measurements at your own scale, not general advice"
+    learning_goal: "The 'too early' criterion for the structure of case 2.2 + the bridge to case 2.3 — the axis shifts from 'forever' to 'one task'"
+    visual:
+      pattern: criteria_checklist_and_boundary
+  - id: s47
+    file: slides-en/s47-divider-keys-2-3-operativnaya-pamyat.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Case 2.3 — working memory: not 'what has been decided forever' but 'what is happening right now in one task'"
+    learning_goal: "Case 2.3 divider (micro level: a teal 3-segment progress bar). The tag names the decision point's topic, not its outcome — the 'day-0 / on a signal' classification is assembled in section 3"
+    visual:
+      pattern: section_divider_micro
+  - id: s48
+    file: slides-en/s48-keys-2-3-problema.md
+    type: problem_scenario
+    duration_min: 1
+    assertion: "The task file was set up on day 0 and the plan in it is ticked off for the first steps — but the agreement on how to do the next step, reached during the first session, never made it in"
+    learning_goal: "The problem of case 2.3 — the state of a multi-step task at the entry to the second session. NO question, NO cards, NO conclusion about what was missing: it is assembled after the vote"
+    visual:
+      pattern: problem_scenario
+  - id: s49
+    file: slides-en/s49-keys-2-3-vopros.md
+    type: reflection_question
+    duration_min: 1.25
+    assertion: "The task file existed from the very start and still misled — a choice among five options for what to do differently"
+    learning_goal: "The open question of case 2.3 verbatim + five option cards (it comes BEFORE the evidence) — no breakdown table, not a single number: the step numbers were stated on the scenario slide"
+    visual:
+      pattern: question_with_option_cards
+  - id: s50
+    file: slides-en/s50-keys-2-3-issledovanie.md
+    type: research_evidence
+    duration_min: 1.5
+    assertion: "The task file is precisely the written plan the next session works from; that is why the case runs into the measured question of incomplete and stale plans"
+    learning_goal: "A separate evidence slide for case 2.3: first the bridge from the problem to what is being measured (the file = the next session's plan), then the practice (Pokémon/Manus/metasphere-agents), then a brief mention of the stale-plan risk; the full picture of the risk is on the failure slide"
+    visual:
+      pattern: research_evidence
+  - id: s51
+    file: slides-en/s51-keys-2-3-razbor.md
+    type: answer_breakdown
+    duration_min: 1.25
+    assertion: "The target answer is a line in CLAUDE.md obliging the agent to append an agreement to the task file at the moment it is reached; the task file is not the same thing as the decision log"
+    learning_goal: "The breakdown of the five positions in the room's answer for case 2.3 + the target answer as an instruction to the agent (not as human discipline), echoing case 1.2's formula 'rules in the prompt are requests', with a caveat about the simplification down to a file"
+    visual:
+      pattern: answer_breakdown_table
+  - id: s52
+    file: slides-en/s52-keys-2-3-reshenie-fayl-na-zadachu.md
+    type: code_artifact
+    duration_min: 1
+    assertion: "What is new in this case is not the file but three lines in CLAUDE.md: they tell the agent when to write into that file"
+    learning_goal: "The decision of case 2.3 — the 'Working memory' block in CLAUDE.md (an instruction to the agent, not a reminder to a human) + .tasks/active/signup-wizard.md, in which the rule did fire; the honest boundary 'a request, not a law'; marked illustrative"
+    visual:
+      pattern: code_artifact_illustrative
+  - id: s53
+    file: slides-en/s53-keys-2-3-proval-ustarevshiy-plan.md
+    type: failure_vignette
+    duration_min: 3.25
+    assertion: "A bad plan is worse than no plan at all — and the 100% failure was measured precisely without any check that the plan was still current, so the countermeasure is direct: reconcile the plan at the start and at the end of the session"
+    learning_goal: "The failure/limitation of case 2.3 with nothing cut: a stale plan is more harmful than its absence (13 pp, 100% over 30 runs) + the risk-reduction measure derived from the experiment's conditions (reconciliation + a 'Reconciled: date' line), Index Sickness (n=1, an honest caveat), how niche the practice is"
+    visual:
+      pattern: failure_vignette
+  - id: s54
+    file: slides-en/s54-keys-2-3-kriteriy-fayl-vs-papka.md
+    type: criteria_boundary
+    duration_min: 1
+    assertion: "One file per task is enough as long as the task is linear and one agent and one developer are running it — otherwise moving to a folder is justified"
+    learning_goal: "The 'file vs folder' criterion for a task's working memory + the bridge to section 3, closing section 2"
+    visual:
+      pattern: criteria_checklist_and_boundary
+  # --- Section 3. Closing: a synthesis of the six decision points along two logics, honest coverage, the final question (4.5 min) ---
+  - id: s55
+    file: slides-en/s55-shest-razvilok-dve-logiki.md
+    type: recap_table
+    duration_min: 1.5
+    assertion: "The six decision points of today's session split into two types: specific to the project (wait for a signal) and universal hygiene (set it up right away, on day 0)"
+    learning_goal: "Section 3's synthesis, step 3.1 — the first time the shared axis 'day-0 vs wait for a signal' is named out loud, the one that unites the three decision points of section 1 and the three of section 2; the 'When' column is the only visual accent, and it is not evaluative"
+    visual:
+      pattern: recap_table
+  - id: s56
+    file: slides-en/s56-chestnyy-okhvat-dva-iz-pyati.md
+    type: scope_statement
+    duration_min: 1.5
+    assertion: "Two of the harness's five slots are closed today; the other three plus both mechanical layers (hook, process) — Seminar 5"
+    learning_goal: "Section 3's synthesis, step 3.2 — the session's honest coverage is named directly, in the same even tone as section 0's scope statement; the map of the five slots is not re-assembled through co-building, it is shown as a static final version"
+    visual:
+      pattern: scope_statement
+  - id: s57
+    file: slides-en/s57-finalnyy-vopros-perenos-na-svoy-repozitoriy.md
+    type: closing_question
+    duration_min: 1.5
+    assertion: "Transfer today's six decisions to your own repository — and check which of them is really a day-0 baseline and which one you deferred without a reason, or set up too early without a signal"
+    learning_goal: "Section 3's synthesis, step 3.3 — the session's final open question along the 'day-0 vs wait for a signal' axis; the only one without option cards; answers are not collected out loud"
+    visual:
+      pattern: closing_question

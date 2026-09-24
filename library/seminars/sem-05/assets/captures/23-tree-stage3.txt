@@ -1,0 +1,12 @@
+$ git ls-tree -r --name-only 2c2a0f7 | sort   # commit 2c2a0f7
+
+AGENTS.md
+CLAUDE.md
+.claude/settings.json
+DECISIONS.md
+index.html
+package.json
+src/main.js
+tests/form.spec.ts
+
+# Комментарий: Ступень 3 (хуки): + .claude/settings.json (PreToolUse-хук защиты main/master).

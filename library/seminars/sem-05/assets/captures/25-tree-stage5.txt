@@ -1,0 +1,15 @@
+$ git ls-tree -r --name-only 1b5196a | sort   # commit 1b5196a
+
+AGENTS.md
+CLAUDE.md
+.claude/settings.json
+.claude/skills/deploy/SKILL.md
+DECISIONS.md
+index.html
+.mcp.json
+package.json
+src/main.js
+src/validate.js
+tests/form.spec.ts
+
+# Комментарий: Ступень 5 (MCP): + .mcp.json (project-scope, GitHub MCP сервер).

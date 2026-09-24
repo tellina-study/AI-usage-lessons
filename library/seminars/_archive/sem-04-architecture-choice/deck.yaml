@@ -1,0 +1,246 @@
+deck:
+  seminar_number: 4
+  title: "Семинар 4 — Архитектурный выбор: чат, агент, RAG или API — разбор трёх кейсов"
+  audience: "студенты 3 курса, направление 09.03.01, группа 1 — семинар закрепляет материал Лекции 3, идёт после неё, закрывает обзорный Модуль 1"
+  duration_min: 76
+  format: "разбор+опрос_дискуссия+лестница_голосование"
+  central_question: "У вас есть задача и доступ к LLM — какую ступень лестницы выбрать, и когда правильный ответ проще, чем кажется (а иногда — вообще не ИИ)?"
+  learning_outcomes: [LO7, LO4]
+  lo_note: "Закрепляет LO7 (обосновать выбор архитектуры AI для задачи) полностью — ядро всего занятия. LO4 (применить AI-инструменты к типовой аналитической задаче) — частично, только через Кейс 3. Глава Лекции 3 называет семинар местом «полного освоения LO4» (chapter-part3.md, §5.3/§5.5) — расхождение отмечено явно, требует отдельной сверки (вне scope текущей задачи)."
+  language: ru
+
+slides:
+  - id: s01
+    file: slides/s01-hero-cover.md
+    type: hero_cover
+    assertion: "У вас есть задача и доступ к LLM — какую ступень лестницы выбрать?"
+    learning_goal: "Emotional hook + hero-фото реального архива документов — foreshadow keystone-оси (лестница сложности + Кейс 1)"
+    visual:
+      pattern: hero_cover_real_photo
+      backup: assets/screenshots/s01-legal-archive-real.jpg
+
+  - id: s02
+    file: slides/s02-opening-bridge.md
+    type: assertion_visual
+    assertion: "На Лекции 3 вы увидели Air Canada. Сегодня — ваша очередь решать"
+    learning_goal: "Мостик от Лекции 3, дословная цитата фасилитатора §1"
+    visual:
+      pattern: bridge_quote_card
+
+  - id: s03
+    file: slides/s03-ladder-recap.md
+    type: assertion_visual
+    assertion: "Шесть ступеней — код, промпт, RAG, workflow, агент, мульти-агент"
+    learning_goal: "Визуальный recap лестницы сложности + правило движения по ступеням"
+    visual:
+      pattern: schema_pipeline_ladder
+
+  - id: s04
+    file: slides/s04-four-criteria.md
+    type: assertion_visual
+    assertion: "Четыре критерия: контроль, стоимость, шаги, инструменты"
+    learning_goal: "Ввод 4 критериев обоснования + 0.99⁵≈95% / 0.99²⁰≈82%"
+    visual:
+      pattern: four_criteria_grid
+
+  - id: s05
+    file: slides/s05-warmup-question.md
+    type: reflection_question
+    assertion: "Пять шагов вместо одного — какой критерий бьёт сильнее всего?"
+    learning_goal: "Неформальная разминка перед Кейсом 1, без отдельного reveal-слайда"
+    visual:
+      pattern: single_question_card
+
+  - id: s06
+    file: slides/s06-case1-intro.md
+    type: case_study
+    assertion: "Юридический архив — 200 PDF, вопрос — точный пункт про расторжение"
+    learning_goal: "Постановка Кейса 1"
+    visual:
+      pattern: case_intro_card
+
+  - id: s07
+    file: slides/s07-case1-ladder-q.md
+    type: poll_reveal
+    assertion: "Какую ступень лестницы вы выберете для поиска в 200 PDF?"
+    learning_goal: "Голосование по 6 ступеням — постановка, без ответа"
+    visual:
+      pattern: vote_ladder_no_answer
+
+  - id: s08
+    file: slides/s08-case1-ladder-a.md
+    type: poll_reveal
+    assertion: "RAG — retrieval по корпусу, которого нет целиком в контексте"
+    learning_goal: "Официальный разбор Кейса 1 — инструменты/контроль/шаги, не fine-tuning, не long-context"
+    visual:
+      pattern: reveal_ladder_reasoning
+
+  - id: s09
+    file: slides/s09-case1-failure.md
+    type: reflection_question
+    assertion: "Агент вместо RAG — тот же результат дороже, медленнее, менее аудируемо"
+    learning_goal: "Failure-виньетка + обязательный вопрос классу (AI-Failure/Judgment content)"
+    visual:
+      pattern: failure_vignette_question
+
+  - id: s10
+    file: slides/s10-case2-intro.md
+    type: case_study
+    assertion: "Хелпдеск с чтением И записью — впервые нужны действия, не только поиск"
+    learning_goal: "Постановка Кейса 2, явный акцент на write-действии"
+    visual:
+      pattern: case_intro_card
+
+  - id: s11
+    file: slides/s11-case2-ladder-q.md
+    type: poll_reveal
+    assertion: "Какую ступень лестницы вы выберете для бота техподдержки?"
+    learning_goal: "Голосование по 6 ступеням — постановка, без ответа"
+    visual:
+      pattern: vote_ladder_no_answer
+
+  - id: s12
+    file: slides/s12-case2-ladder-a.md
+    type: poll_reveal
+    assertion: "Workflow или агент — зависит от предсказуемости маршрута"
+    learning_goal: "Раскрытие голосования — оба варианта на экране, критерий решения не раскрыт ещё"
+    visual:
+      pattern: reveal_ladder_split
+      backup: null
+
+  - id: s13
+    file: slides/s13-case2-reveal-reasoning.md
+    type: assertion_visual
+    assertion: "Инструменты — какие права выдать боту и по какому принципу"
+    learning_goal: "Официальный разбор workflow vs агент + least-privilege + гибридный 95%/5% пример"
+    visual:
+      pattern: reasoning_card_hybrid
+
+  - id: s14
+    file: slides/s14-case2-failure.md
+    type: reflection_question
+    assertion: "Токен на все тикеты + инструкция в теле тикета — тот же паттерн, что GitHub MCP heist"
+    learning_goal: "Failure-виньетка + параллель с Лекцией 3 + обязательный вопрос классу"
+    visual:
+      pattern: failure_vignette_question
+
+  - id: s15
+    file: slides/s15-case3-intro.md
+    type: case_study
+    assertion: "Разовый отчёт о продажах — один раз, для одной встречи"
+    learning_goal: "Постановка Кейса 3, акцент на слове «один раз»"
+    visual:
+      pattern: case_intro_card
+
+  - id: s16
+    file: slides/s16-case3-ladder-q.md
+    type: poll_reveal
+    assertion: "Какую ступень лестницы вы выберете для разового отчёта?"
+    learning_goal: "Голосование по 6 ступеням — постановка, без ответа"
+    visual:
+      pattern: vote_ladder_no_answer
+
+  - id: s17
+    file: slides/s17-case3-ladder-a.md
+    type: poll_reveal
+    assertion: "Низ лестницы — код или один промпт, без RAG и без агента"
+    learning_goal: "Раскрытие голосования + разбор по критериям, стоимость решающая"
+    visual:
+      pattern: reveal_ladder_reasoning
+
+  - id: s18
+    file: slides/s18-case3-failure.md
+    type: reflection_question
+    assertion: "Задача «звучит важно» тянет выбрать ступень выше, чем нужно"
+    learning_goal: "Overengineering-ловушка + обязательный вопрос классу"
+    visual:
+      pattern: failure_vignette_question
+
+  - id: s19
+    file: slides/s19-quickfire-a-q.md
+    type: poll_reveal
+    assertion: "НДС по чеку — какая архитектура?"
+    learning_goal: "Quickfire А — постановка, мгновенный раунд"
+    visual:
+      pattern: quickfire_no_answer
+
+  - id: s20
+    file: slides/s20-quickfire-a-a.md
+    type: poll_reveal
+    assertion: "Фиксированная формула — обычный код, ИИ не нужен вовсе"
+    learning_goal: "Quickfire А — раскрытие, нижняя плашка матрицы Лекции 3"
+    visual:
+      pattern: quickfire_reveal
+
+  - id: s21
+    file: slides/s21-quickfire-b-q.md
+    type: poll_reveal
+    assertion: "Due diligence из пяти источников — какая архитектура?"
+    learning_goal: "Quickfire Б — постановка, контрастный кейс"
+    visual:
+      pattern: quickfire_no_answer
+
+  - id: s22
+    file: slides/s22-quickfire-b-a.md
+    type: poll_reveal
+    assertion: "Непредсказуемый маршрут, высокая цена решения — агент оправдан"
+    learning_goal: "Quickfire Б — раскрытие, контрвес против «ИИ = усложнение = плохо»"
+    visual:
+      pattern: quickfire_reveal
+
+  - id: s23
+    file: slides/s23-quickfire-connective.md
+    type: assertion_visual
+    assertion: "Лестница — не «всегда выбирай низ». Это инструмент, а не правило экономии"
+    learning_goal: "Обязательная связка после обеих quickfire-виньеток"
+    visual:
+      pattern: connective_statement_card
+
+  - id: s24
+    file: slides/s24-air-canada-q.md
+    type: reflection_question
+    assertion: "Air Canada — какая ступень лестницы закрывала задачу, и где ошибка?"
+    learning_goal: "Диагностический вопрос по 4 критериям, без пересказа фактологии"
+    visual:
+      pattern: diagnostic_question_card
+
+  - id: s25
+    file: slides/s25-air-canada-a.md
+    type: reflection_question
+    assertion: "Генеративная архитектура там, где задаче нужна нулевая генерация"
+    learning_goal: "Разбор по критериям + связка с Кейсом 3 (overengineering в обратную сторону)"
+    visual:
+      pattern: diagnostic_reveal_card
+
+  - id: s26
+    file: slides/s26-open-question.md
+    type: reflection_question
+    assertion: "Где ещё в ваших проектах будет соблазн переусложнить?"
+    learning_goal: "Обязательный открытый вопрос классу, без подсказки направления"
+    visual:
+      pattern: open_question_card
+
+  - id: s27
+    file: slides/s27-bridge-to-lec4.md
+    type: assertion_visual
+    assertion: "Тот же выбор архитектуры — применённый к вашему собственному коду"
+    learning_goal: "Лёгкий мостик к Лекции 4, без раскрытия механики"
+    visual:
+      pattern: hook_card_plus_tag_row
+
+  - id: s28
+    file: slides/s28-handout-memo.md
+    type: summary
+    assertion: "Лестница + 4 критерия — что взять с собой"
+    learning_goal: "Итоговая карточка на вынос — компиляция без нового материала"
+    visual:
+      pattern: four_block_cheatsheet
+
+  - id: s29
+    file: slides/s29-hero-closing.md
+    type: hero_closing
+    assertion: "От выбора архитектуры — к вашему собственному коду"
+    learning_goal: "Bridge к Лекции 4; emotional payoff; реальное фото кода в редакторе"
+    visual:
+      pattern: hero_closing_bridge_photo
+      backup: assets/screenshots/s-closing-code-editor-real.jpg

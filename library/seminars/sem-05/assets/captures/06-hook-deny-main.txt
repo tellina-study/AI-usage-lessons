@@ -1,0 +1,7 @@
+=== INPUT ===
+{"tool_input":{"command":"git commit -m \"fix: second form field\""}}
+=== current branch ===
+main
+=== HOOK OUTPUT (stdout) ===
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"BLOCKED: direct commit to main/master. Create a feature branch first."}}
+=== exit code: 0 ===

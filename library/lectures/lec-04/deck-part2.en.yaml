@@ -1,7 +1,7 @@
 # library/lectures/lec-04/deck-part2.en.yaml  —  PART 2 of 2  (English twin, issue #172 Ph3)
 #
 # Continuation of the deck structure of Lecture 4 "AI across the software development lifecycle"
-# (41 slides, methodology-first re-spine v4.1: +foundations s05, keystone→s06). Split per Document Size Limit.
+# (58 slides, methodology-first re-spine v4.5: v4.1 base of 41 + the issue #162 round 1-6 inserts, minus s21). Split per Document Size Limit.
 #
 # ┌─ SPLIT: see deck.en.yaml (PART 1) — deck/palette/motif/typography/ ─────┐
 # │ glossary_lock + ai_failure + slides s01..s21. THIS FILE — slides         │
@@ -221,6 +221,21 @@ slides:
     in_bucket: true
     verify_day_of: true
 
+  - id: s33b
+    file: slides-en/s33b-ops-copilot-iac.md
+    type: comparison
+    section: "Section 6. Delivery · Operations · Documentation"
+    duration_min: 3
+    assertion: "The AI multiplier works both ways inside one and the same phase: BT Group and Azure cut response times by orders of magnitude on top of a mature SRE practice, while the same class of AI simultaneously generates infrastructure-as-code that is insecure by default — restricting privileges does not protect against unsafe content inside the artifact"
+    learning_goal: "Going deeper into operations: where an AI copilot genuinely works (a mature platform) — and the symmetrical failure (IaC secure-by-default has not moved in 2 years)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§6.1 [for-slide-s33b]"
+    references: [bt-group-incidentio, azure-triangle-ms, iac-insecurity-2026]
+    verify_day_of: true
+    interaction: none
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s33b-ops-copilot-iac.md, structural fields mirror deck.yaml.
+
   - id: s34
     file: slides-en/s34-docs-bright-spot.md
     type: case_study
@@ -235,6 +250,21 @@ slides:
     verify_day_of: true
 
   # ─── Section 7. Synthesis — discipline by phase (s35–s40) ───
+  - id: s35b
+    file: slides-en/s35b-docs-tooling.md
+    type: assertion_visual
+    section: "Section 6. Delivery · Operations · Documentation"
+    duration_min: 3
+    assertion: "The documentation toolchain mechanically repeats the 'bright spot' thesis: AI retells what already exists in the code or the thread — visible both in the SaaS layer (Confluence AI, AWS Q /doc) and in the code-first alternative through an installed skill with no vendor lock-in"
+    learning_goal: "What docs-as-context looks like in practice: the 3 capabilities of Confluence AI, AWS Q /doc (input = code, not prompt), the code-first alternative through a skill"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§6.3 [for-slide-s35b]"
+    references: [eesel-confluence-ai, aws-q-doc]
+    verify_day_of: true
+    interaction: none
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s35b-docs-tooling.md, structural fields mirror deck.yaml.
+
   - id: s35
     file: slides-en/s35-divider-synthesis.md
     type: section_divider
@@ -274,6 +304,21 @@ slides:
     references: [dora-report, gitclear, metr-study]
     in_bucket: true
     verify_day_of: true
+
+  - id: s37b
+    file: slides-en/s37b-uber-kiro-dual-register.md
+    type: comparison
+    section: "Section 7. Synthesis — discipline by phase"
+    duration_min: 3
+    assertion: "Uber scaled AI adoption 2.6× with no success criterion set in advance — and its own COO admitted that the link to consumer value is not there yet; AWS Kiro appears in this chapter as both the best success and the worst failure — not because the brand differs, but because the discipline was either applied or skipped"
+    learning_goal: "The reverse order at company scale (Uber) as a systemic illustration of the triangulation; the bridge 'the same product, two registers' (it is the discipline applied, not the brand, that decides the outcome)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§7.2 [for-slide-s37b]"
+    references: [uber-claude-code, aws-kiro-outage]
+    in_bucket: true
+    verify_day_of: true
+    # EN-sync assembly (#172/#162): RU->EN parity entry — prose from
+    # slides-en/s37b-uber-kiro-dual-register.md, structural fields mirror deck.yaml.
 
   - id: s38
     file: slides-en/s38-risk-triad.md
@@ -319,17 +364,31 @@ slides:
 # Validation
 # ─────────────────────────────────────────────────────────────────────────
 totals:
-  slides: 41                    # s01–s41 (v4.1: +foundations s05, keystone→s06, dividers without tag plates)
-  base_slides_locked: "s01–s41 (v4.1). s01 = METR hook (hero). s05 = practice summary (2 lists with links). s06 = keystone phase cycle (Requirements→Architecture→Implementation→Testing→Review+Security→Delivery/Operations→Documentation→). 7 section dividers: s09(S1) s13(S2) s17(S3) s23(S4) s26(S5) s33(S6) s36(S7) — without tag plates. Hero required = s01 + s41."
-  slide_times_sum_min: 82.5     # Σ per-slide duration_min below; active part ~74 + Q&A buffer
-  total_min: 75                 # active ~71 + ~4 Q&A buffer (s40)
-  note: >
-    Plan v4 §4: 40 slides ≈ 75 min. Section budgets: S0 s01–s07 · S1 [s08]
-    s09–s11 · S2 [s12] s13–s15 · S3 [s16] s17–s21 · S4 [s22] s23–s24 · S5 [s25]
-    s26–s31 · S6 [s32] s33–s34 · S7 [s35] s36–s40. Gain vs v3 (37): architecture
-    split (+2: s13/s14), harness as a separate slide (+1: s18/s19 separated), method
-    recommendations (+1: s10); compensated by compressing the vendor blocks (tools secondary).
-    Q&A merged into s40 (hero closing). Final per-minute calibration — at the render phase.
+  base_slides_locked: "s01-s41 (v4.1) core + s20b/s20c/s20d/s20e (issue #162,
+    v4.2) + s11b/s20f/s25b/s25c/s35b (issue #162, v4.3 round 2) +
+    s09b/s17b/s18b/s20g/s30b/s33b/s37b (issue #162, v4.4 round-3 QA-fix) + s14b
+    and s03b (issue #162, round 6) = 58 slides. s01 = METR hook (hero). s05 =
+    practice summary (2 lists with links). s06 = keystone phase cycle
+    (Requirements->Architecture->Implementation->Testing->Review+Security->
+    Delivery/Operations->Documentation->). 7 section dividers: s09(S1) s13(S2)
+    s17(S3) s23(S4) s26(S5) s33(S6) s36(S7) - without tag plates. Insert
+    positions mirror the RU deck exactly: s03b between s03/s04; s09b between
+    s09/s10; s11b between s10/s11; s14b between s14/s15; s17b between s17/s18;
+    s18b after the reworked s18; s20b/s20c/s20e/s20d/s20g/s20f between s20 and
+    s21 (round-3 swap: task logging before git conventions); s25b/s25c between
+    s24 and the s25 divider; s30b between s29/s30; s33b between s33/s34; s35b
+    between s34 and the s35 divider; s37b between s37/s38. Slide s21
+    (anti-hype benchmarks) is REMOVED - round 6 block 3, owner's direct
+    instruction. Hero required = s01 + s41."
+  note: "Plan v4 §4: 40 slides ~ 75 min was the base calibration; the +17 issue
+    #162 slides of rounds 1-6 were never re-budgeted, so slide_times_sum_min is
+    the sum of per-slide times, NOT a recommended lecture timing. Q&A merged
+    into the hero closing. Final per-minute calibration happens at the render
+    phase."
+  slide_times_sum_min: 149.5
+  slides: 58
+  total_min: 75
+
 
 # Per-slide duration_min (plan v4 §4):
 #   S0: s01=3 s02=0.5 s03=2 s04=2.5 s05=3 s06=2 s07=2.5 (=15.5) ·

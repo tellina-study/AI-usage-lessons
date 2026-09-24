@@ -50,52 +50,61 @@ def ru_slide_count():
 
 def main():
     p = setup_pres()
+    # Assembly pass across all five EN-sync blocks (#172 / #162 round 6).
+    # The order below MIRRORS build_lec04_v4.py's own builders list 1:1 — the
+    # RU deck is source of truth for sequence as well as content, so parity is
+    # a property of this list, not a number someone remembered to bump.
     builders = []
-    # --- EN-sync block 1 (#172): +b1.s03b (industry adoption, RU round 6) and
-    # +b1.s09b (AWS Kiro vs 847 deployments, RU round 3). Both were missing
-    # entirely from the Sept-19 EN baseline.
+    # display s01–s12
     builders += [b1.s01, b1.s02, b1.s03,
-                 b1.s03b,                                    # NEW (RU round 6)
+                 b1.s03b,                                    # NEW (r6 b5): industry adoption
                  b1.s04, b1.s05f,                            # foundations
                  b1.s06k,                                    # keystone
-                 b1.s06, b1.s07, b1.s08, b1.s09,
-                 b1.s09b]                                    # NEW (RU round 3)
-    # display s11–s20 (+3 from EN-Sync Block 2: b1.s11b · b2.s14b · b2.s17b —
-    # the RU round-2/round-3/round-6 inserts, placed in the same order the RU
-    # assembler uses: s11 → s11b → s12 → s13 → s14 → s15 → s14b → s16 → s17 →
-    # s18 → s17b → s19).
-    builders += [b1.s10,                                     # s11
-                 b1.s11b,                                    # NEW (r2)
-                 b2.s11, b2.s12, b2.s13, b2.s14,             # s12..s15
-                 b2.s14b,                                    # NEW (r6 b1)
-                 b2.s15,                                     # s16
-                 b2.s16, b2.s17,                             # s17..s18
-                 b2.s17b,                                    # NEW (r3)
-                 b2.s18, b2.s19]                             # s19..s20
-    # display s21–s30
-    # EN-sync block 4 (issue #172 / #162): +b3.s25b (BDD + trunk-based) and
-    # +b3.s25c (the agent's local test toolkit) after the testing-failure slide,
-    # matching the RU deck's own round-2 insert / round-6 rebuild; +b3.s30b
-    # (Amazon Q wiper) after the security-failure slide, matching the RU deck's
-    # round-3 insert. Other EN-sync blocks add their own builders here too —
-    # the count below is bumped per block, not owned by any one of them.
-    builders += [b2.s20,                                     # s21
-                 b3.s21, b3.s22, b3.s23, b3.s24,
-                 b3.s25b, b3.s25c,                           # NEW (EN-sync b4)
+                 b1.s06, b1.s07, b1.s08, b1.s09]
+    builders += [b1.s09b]                                    # NEW (r3): AWS Kiro vs 847 deployments
+    # display s13–s24
+    builders += [b1.s10,
+                 b1.s11b,                                    # NEW (r2): requirements visualization
+                 b2.s11, b2.s12, b2.s13, b2.s14,
+                 b2.s14b,                                    # NEW (r6 b1): artifacts of the 4 practices
+                 b2.s15,
+                 b2.s16, b2.s17]
+    builders += [b2.s17b]                                    # NEW (r3): Gemini CLI self-review
+    builders += [b2.s18]                                     # four levels of agent context
+    builders += [b2.s18b]                                    # NEW (r3): curation — honest limits
+    builders += [b2.s19]                                     # harness gate
+    # display s27–s32 (NEW, #162): Skills · MCP · task logging · git
+    # conventions · secrets (Register) · git worktree. Presentation order
+    # follows the RU r3 QA-fix swap: task logging (s20e) before git
+    # conventions (s20d); the file/slide ids themselves are not renamed.
+    builders += [b2.s20b, b2.s20c,
+                 b2.s20e,
+                 b2.s20d,
+                 b2.s20g,                                    # NEW (r3): secrets/.env — Register case
+                 b2.s20f]
+    # display s33–s44
+    builders += [b2.s20,                                     # the 70% problem
+                 # b3.s21 (anti-hype benchmarks) REMOVED — RU round 6 block 3
+                 # dropped it; the EN twin follows. Vendor skepticism is
+                 # carried by s20 (70% problem) and s37/s38 (triangulation,
+                 # risk triad).
+                 b3.s22, b3.s23, b3.s24,
+                 b3.s25b, b3.s25c,                           # NEW (r2): BDD/trunk-based · test tooling
                  b3.s25,
-                 b3.s26, b3.s27, b3.s28, b3.s29]
-    builders += [b3.s30b]                                    # NEW (EN-sync b4)
-    # display s31–s41
-    builders += [b3.s30,                                     # s31
-                 b4.s31, b4.s32, b4.s33]                     # s32..s34
-    builders += [b4.s33b]                       # NEW (r3): BT Group / Azure
-                                                # Triangle vs IaC insecurity
+                 b3.s26, b3.s27, b3.s28]
+    builders += [b3.s29]
+    builders += [b3.s30b]                                    # NEW (r3): Amazon Q wiper
+    # display s45–s58
+    builders += [b3.s30,
+                 b4.s31, b4.s32]
+    builders += [b4.s33]
+    builders += [b4.s33b]                                    # NEW (r3): BT Group / Azure Triangle vs IaC
     builders += [b4.s34,
-                 b4.s35b,                       # NEW (r2): §6.3 docs tooling
+                 b4.s35b,                                    # NEW (r2): docs tooling
                  b4.s35,
-                 b4.s36, b4.s37]
-    builders += [b4.s37b]                       # NEW (r3): Uber + Kiro
-                                                # dual-register bridge
+                 b4.s36]                                     # synthesis matrix (vendor column removed)
+    builders += [b4.s37]                                     # triangulation
+    builders += [b4.s37b]                                    # NEW (r3): Uber + Kiro dual register
     builders += [b4.s38, b4.s39, b4.s40]
 
     # Parity target: one EN slide per RU slide. The number is read from the RU

@@ -227,16 +227,16 @@
   "id": "s03.body.009",
   "slide": "s03",
   "where": "body",
-  "ru": "- Критерий приёмки: форма реально доставляет заявку — проверено",
-  "en": "- Acceptance criterion: the form actually delivers the submission — verified",
+  "ru": "- Критерий приёмки: заявка реально уходит — форма отправлена руками",
+  "en": "- Acceptance criterion: the submission actually goes out — the form",
   "passthrough": false
  },
  {
   "id": "s03.body.010",
   "slide": "s03",
   "where": "body",
-  "ru": "  на проде, а не только «тест зелёный»",
-  "en": "  in prod, not just \"the test is green\"",
+  "ru": "  из собранной страницы, а не только «тест зелёный»",
+  "en": "  submitted by hand from the built page, not just \"the test is green\"",
   "passthrough": false
  },
  {
@@ -4643,12 +4643,28 @@
   "id": "s43.body.009",
   "slide": "s43",
   "where": "body",
+  "ru": "  0031 — та же запись, что в кейсе 2.1:",
+  "en": "  0031 — the same record as in case 2.1:",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.010",
+  "slide": "s43",
+  "where": "body",
+  "ru": "  она переехала сюда из DECISIONS.md",
+  "en": "  it moved here out of DECISIONS.md",
+  "passthrough": false
+ },
+ {
+  "id": "s43.body.011",
+  "slide": "s43",
+  "where": "body",
   "ru": "ноябрьская запись — по шаблону adr-tools",
   "en": "the November record — per the adr-tools template",
   "passthrough": false
  },
  {
-  "id": "s43.body.010",
+  "id": "s43.body.012",
   "slide": "s43",
   "where": "body",
   "ru": "# 187. Антиспам — honeypot-поле, без капчи",
@@ -4656,7 +4672,7 @@
   "passthrough": false
  },
  {
-  "id": "s43.body.011",
+  "id": "s43.body.013",
   "slide": "s43",
   "where": "body",
   "ru": "Date: 2026-11-28",
@@ -4664,7 +4680,7 @@
   "passthrough": true
  },
  {
-  "id": "s43.body.012",
+  "id": "s43.body.014",
   "slide": "s43",
   "where": "body",
   "ru": "## Status",
@@ -4672,7 +4688,7 @@
   "passthrough": true
  },
  {
-  "id": "s43.body.013",
+  "id": "s43.body.015",
   "slide": "s43",
   "where": "body",
   "ru": "Accepted",
@@ -4680,7 +4696,7 @@
   "passthrough": true
  },
  {
-  "id": "s43.body.014",
+  "id": "s43.body.016",
   "slide": "s43",
   "where": "body",
   "ru": "Amends [31. Сторонние виджеты не добавляем]",
@@ -4688,7 +4704,7 @@
   "passthrough": false
  },
  {
-  "id": "s43.body.015",
+  "id": "s43.body.017",
   "slide": "s43",
   "where": "body",
   "ru": "## Context / Decision / Consequences",
@@ -4696,7 +4712,7 @@
   "passthrough": true
  },
  {
-  "id": "s43.body.016",
+  "id": "s43.body.018",
   "slide": "s43",
   "where": "body",
   "ru": "...",
@@ -4704,7 +4720,7 @@
   "passthrough": true
  },
  {
-  "id": "s43.body.017",
+  "id": "s43.body.019",
   "slide": "s43",
   "where": "body",
   "ru": "adr new -l \"31:Amends:Amended by\" ... — и в файл 31 инструмент сам дописал встречную строку Amended by [187...]. Обе ссылки написал инструмент, а не автор записи.",
@@ -4712,7 +4728,7 @@
   "passthrough": false
  },
  {
-  "id": "s43.body.018",
+  "id": "s43.body.020",
   "slide": "s43",
   "where": "body",
   "ru": "Источник практики: ADR — Майкл Найгард, 2011; adr-tools. Сила доказательства: задокументированная практика для людей (4500+ ADR в 750 проектах), но контролируемого измерения «ADR помогают агенту» нет. Содержимое записей иллюстративное, ждёт живой сессии.",

@@ -6,7 +6,7 @@ assertion: "The ADR practice: one decision — one numbered file, and the link b
 learning_goal: "The solution for case 2.2: not an invented structure but a documented practice of architecture decision records (ADR, Nygard 2011; the adr-tools tooling) applied to signup-landing — with an honest note on the strength of evidence"
 visual:
   pattern: code_structure_illustrative
-  primary: "On the left — the doc/adr/ directory with numbered decision files and a generated README.md table of contents. On the right — the November record in full, following the adr-tools template: a heading with the number, the date, a Status section with the Amends link line, then Context / Decision / Consequences. At the bottom — the adr new command with the link flag and a line saying that the tool wrote the back-link into the September record. Caption: the source of the practice and an honest strength of evidence."
+  primary: "On the left — the doc/adr/ directory with numbered decision files and a generated README.md table of contents; under the listing, a gold line saying that record 0031 came over from case 2.1 rather than being set up a second time. On the right — the November record in full, following the adr-tools template: a heading with the number, the date, a Status section with the Amends link line, then Context / Decision / Consequences. At the bottom — the adr new command with the link flag and a line saying that the tool wrote the back-link into the September record. Caption: the source of the practice and an honest strength of evidence."
   backup: "The content of the records is illustrative (a real capture awaits a live session); the structure, section names, link format and behavior of the command follow the adr-tools template and sources — they are not invented."
 ---
 
@@ -28,6 +28,9 @@ doc/adr/
   ...
   0187-antispam-honeypot-bez-kapchi.md
   README.md   ← the table of contents, printed by `adr generate toc`
+
+  0031 — the same record as in case 2.1:
+  it moved here out of DECISIONS.md
 ```
 
 On the right — the November record in full, following the template:

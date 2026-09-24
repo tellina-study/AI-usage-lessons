@@ -26,8 +26,8 @@ The requirements break down into functional and non-functional ones and go into 
 - A submit button; no backend — the submission goes to an external form-intake service
 
 ## Non-functional requirements
-- Acceptance criterion: the form actually delivers the submission — verified in
-  prod, not just "the test is green"
+- Acceptance criterion: the submission actually goes out — the form submitted
+  by hand from the built page, not just "the test is green"
 - Boundary of action: do not deploy to prod without an explicit request
 - Accessibility: the form is operable from the keyboard, the fields have labels
 ```

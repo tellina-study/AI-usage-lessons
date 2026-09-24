@@ -117,6 +117,14 @@ URLS = {
     "kiro_specs": "https://kiro.dev/docs/specs/feature-specs/",
     "anthropic_ctx_eng": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "willison_vibe_code": "https://simonwillison.net/2025/Oct/7/vibe-engineering/",
+    # --- EN-sync block 1 (#172): keys the RU deck gained in rounds 3 and 6
+    # and the EN twin never had. Values copied VERBATIM from _helpers.py —
+    # a URL is never "localized".
+    # s09b (AWS Kiro success vs the 847-deployments contrast, round 3):
+    "aws_kiro_lifesciences": "https://kiro.dev/docs/specs/feature-specs/",
+    "krishnan_sdd_manning": "https://www.manning.com/",
+    # s03b (industry-adoption intro slide, round 6):
+    "so_survey_2025_ai": "https://survey.stackoverflow.co/2025/ai",
 }
 
 
@@ -633,6 +641,20 @@ SLIDE_REFS = {
          "metr", "randomized controlled trial, n=16, 246 tasks; "
          "measured real time, not perception"),
     ],
+    # EN-sync block 1 (#172): new in the RU deck at round 6, no EN twin existed.
+    "s03b": [
+        ("1", "Stack Overflow — Developer Survey 2025, AI section",
+         "so_survey_2025_ai",
+         "84% use or plan to use AI tools, against 76% a year earlier; 51% of "
+         "professional developers use them daily; 46% do not trust the accuracy "
+         "of the output, against 31% a year earlier; n > 49,000 developers from "
+         "177 countries", True),
+        ("2", "DORA — State of AI-assisted Software Development 2025",
+         "dora_2025",
+         "90% use AI at work (+14 pp vs 2024); the median is about two hours a "
+         "day; over 80% report a gain in personal effectiveness, yet only 24% "
+         "highly trust the output; n > 5,000", True),
+    ],
     "s04": [
         ("1", "Fowler — Interrogatory LLM", "fowler_interrogatory",
          "the bottleneck of AI development is intent, not typing code"),
@@ -690,6 +712,17 @@ SLIDE_REFS = {
          True),
         ("3", "Anthropic — AI-Native SDLC playbook", "anthropic_playbook",
          "the method leads, the tool executes; artifacts and gates live in the practice"),
+    ],
+    # EN-sync block 1 (#172): new in the RU deck at round 3, no EN twin existed.
+    "s09b": [
+        ("1", "AWS Kiro — life sciences case study (pharma/biotech)",
+         "aws_kiro_lifesciences",
+         "a spec-first workflow, 3 weeks / 3 developers to production — a "
+         "vendor-published case, not independently audited", True),
+        ("2", "Hari Krishnan — \"Spec-Driven Development\", Manning",
+         "krishnan_sdd_manning",
+         "SDD/BDD/TDD as an \"altitude stack\" over one task, differing in the "
+         "level of detail"),
     ],
     "s10": [
         ("1", "Anthropic — AI-Native SDLC playbook", "anthropic_playbook",

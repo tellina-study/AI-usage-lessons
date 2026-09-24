@@ -29,10 +29,17 @@ OUT = ROOT / "rendered/lec-04-en.pptx"
 def main():
     p = setup_pres()
     builders = []
-    # display s01–s10
-    builders += [b1.s01, b1.s02, b1.s03, b1.s04, b1.s05f,   # s05 foundations
-                 b1.s06k,                                    # s06 keystone
-                 b1.s06, b1.s07, b1.s08, b1.s09]             # s07..s10
+    # --- EN-sync block 1 (#172): +b1.s03b (industry adoption, RU round 6) and
+    # +b1.s09b (AWS Kiro vs 847 deployments, RU round 3). Both were missing
+    # entirely from the Sept-19 EN baseline. The trailing builder list and the
+    # two `== 41` asserts below are reconciled by the final assembly pass once
+    # all five EN blocks are merged — do not hand-tune the total here.
+    builders += [b1.s01, b1.s02, b1.s03,
+                 b1.s03b,                                    # NEW (RU round 6)
+                 b1.s04, b1.s05f,                            # foundations
+                 b1.s06k,                                    # keystone
+                 b1.s06, b1.s07, b1.s08, b1.s09,
+                 b1.s09b]                                    # NEW (RU round 3)
     # display s11–s20
     builders += [b1.s10,                                     # s11
                  b2.s11, b2.s12, b2.s13, b2.s14, b2.s15,     # s12..s16
@@ -46,7 +53,8 @@ def main():
                  b4.s31, b4.s32, b4.s33, b4.s34, b4.s35,     # s32..s36
                  b4.s36, b4.s37, b4.s38, b4.s39, b4.s40]     # s37..s41
 
-    assert len(builders) == 41, f"expected 41 builders, got {len(builders)}"
+    expected = 43   # EN-sync block 1: 41 baseline + s03b + s09b (assembly pass reconciles the whole-deck total)
+    assert len(builders) == expected, f"expected {expected} builders, got {len(builders)}"
     for fn in builders:
         fn(p)
 
@@ -56,7 +64,7 @@ def main():
     total = len(builders)
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
-    assert n == 41, f"expected 41 slides, got {n}"
+    assert n == expected, f"expected {expected} slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides")
 

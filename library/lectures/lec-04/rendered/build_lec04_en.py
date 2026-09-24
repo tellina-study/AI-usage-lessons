@@ -70,9 +70,18 @@ def main():
                  b2.s17b,                                    # NEW (r3)
                  b2.s18, b2.s19]                             # s19..s20
     # display s21–s30
+    # EN-sync block 4 (issue #172 / #162): +b3.s25b (BDD + trunk-based) and
+    # +b3.s25c (the agent's local test toolkit) after the testing-failure slide,
+    # matching the RU deck's own round-2 insert / round-6 rebuild; +b3.s30b
+    # (Amazon Q wiper) after the security-failure slide, matching the RU deck's
+    # round-3 insert. Other EN-sync blocks add their own builders here too —
+    # the count below is bumped per block, not owned by any one of them.
     builders += [b2.s20,                                     # s21
-                 b3.s21, b3.s22, b3.s23, b3.s24, b3.s25,     # s22..s26
-                 b3.s26, b3.s27, b3.s28, b3.s29]             # s27..s30
+                 b3.s21, b3.s22, b3.s23, b3.s24,
+                 b3.s25b, b3.s25c,                           # NEW (EN-sync b4)
+                 b3.s25,
+                 b3.s26, b3.s27, b3.s28, b3.s29]
+    builders += [b3.s30b]                                    # NEW (EN-sync b4)
     # display s31–s41
     builders += [b3.s30,                                     # s31
                  b4.s31, b4.s32, b4.s33, b4.s34, b4.s35,     # s32..s36

@@ -75,3 +75,9 @@ if __name__ == "__main__":
     # RU: «плохой паттерн, / плохой паттерн везде»
     compose_strip("x-everywhere", (300, 100, 1750, 1350),
                   ["bad pattern,", "bad pattern everywhere"], font_pt=13)
+
+    # s18 (four levels of agent context) — Monkey Puppet: the silent-failure
+    # mode of compaction (a rejected decision can vanish from the summary with
+    # no error). RU: «решение тихо / исчезло при сжатии»
+    compose_strip("monkey-puppet", (0, 260, 470, 768),
+                  ["a decision quietly", "vanished in compaction"], font_pt=13)

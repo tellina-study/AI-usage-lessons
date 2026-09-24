@@ -1,53 +1,77 @@
 ---
 id: s18
-type: schema_architecture
+type: schema_layered
 section: "Section 3. Implementation — discipline and harness"
 duration_min: 3
-assertion: "A persistent layer of instructions and memory in the repository (AGENTS.md, memory, context-engineering) — what the agent reads every session: context lives in the repo, not in fleeting prompts"
-learning_goal: "Leading: persistent layer of instructions/memory (AGENTS.md conventions/guardrails, memory, context-eng JIT/compaction/context-rot)"
+assertion: "An agent's context lives at four distinct levels — permanent instructions, the context of one session, the operational history of tasks, and memory (slot 1 of the Lecture 3 map) — and each is maintained differently: instructions are written, sessions are curated, history is dated, memory is configured and audited"
+learning_goal: "Leading: four levels of context/memory as an explicit structure (who maintains it · lifetime · a development example) + an explicit definition of JIT retrieval + how context is distributed across repository artifacts"
 learning_outcomes: [LO1, LO7]
 chapter_ref: "§3.2 [for-slide-s18]"
 references: [anthropic-context-engineering, agents-md]
 verify_day_of: false
 visual_brief: >
-  schema_architecture: in the center — the AGENT (stateless, icon), left — the DEVELOPER (human, curates), right — the REPOSITORY.
-  From the repository into the agent EVERY SESSION a persistent layer is read (a bidirectional arrow "reads / human curates"):
-  AGENTS.md (build/test commands, style, guardrails) · memory-notes · operational task history.
-  A separate block context-engineering: 3 primitives (JIT-retrieval · compaction · memory) + a warning "more context ≠ better".
-  A failure plate: context rot (Chroma, 18 models: retrieval accuracy drops non-linearly, BEFORE the window overflows) +
-  "stale context rots". Baseline memory demo: peak ~172k vs ~334k tokens WITHOUT memory — mark "cookbook demo, direction, not a multiplier".
-  Gold — "context lives in the repo, not in the prompt". USER actor explicit. Lucide icons.
+  schema_layered: on the left — four horizontal level bands (1 permanent instructions · 2 context of one
+  session · 3 operational task history · 4 memory-slot-1). Each band has three zones: (a) icon + "LEVEL N" +
+  name + in small italics "who maintains it · lifetime"; (b) what it is; (c) a concrete development example
+  (AGENTS.md with a verbatim command · the definition of JIT retrieval · an incident record with a date and a
+  status · Mem0/Cognee/Graphiti/Letta). Under the bands — a teal plate with the honest limit: context rot
+  (Chroma, 18 models) + baseline ~172k against ~334k tokens, marked "a direction, not a measured multiplier".
+  On the right — a "What goes where in the repository" column: README · AGENTS.md · ADR · code comment ·
+  incident record, each with one phrase about its own type of context, and a gold rule plate. At the bottom
+  a gold callout. Lucide icons, level colors alternate mid/teal.
 interaction: none
 ---
 
 # Visible content
 
 ## Title bar
-A persistent memory layer in the repository — what the agent reads every session
+Four levels of agent context — each one is maintained differently
+
+The agent is stateless: between runs it remembers nothing — everything it must know about the project sits at one of these four levels.
 
 ## Body
-[schema_architecture — developer (curates) ↔ repository → agent (stateless, reads every session)]
 
-The agent is **stateless**: memory is not preserved between runs. Therefore context must live not in the prompt but in the **repository** — a human-curated, versioned layer that the agent reads every session:
+[Level 1 — Permanent instructions · human · lives with the repo]
+A static file at the repository root: the agent rereads it every session — precisely because it has no memory between runs.
+**AGENTS.md** (the analog is `CLAUDE.md`): "Tests: pnpm test" — verbatim build and test commands, code style, guardrails.
 
-**AGENTS.md** (a vendor-neutral standard; the analog is `CLAUDE.md`) — "what you would tell a new colleague": build and test commands, style, guardrails. Rule: **lead with commands, not explanations** (otherwise the agent hallucinates the setup).
+[Level 2 — Context of one session · human+agent · one session]
+The window of the current dialogue. Three curation primitives: JIT retrieval, compaction, notes. More context ≠ better.
+**JIT retrieval** — the agent opens the file it needs at the moment the task calls for it, instead of loading the whole repository up front.
 
-**Memory-notes** + **operational task history** — what has already been decided and why.
+[Level 3 — Operational task history · people · between tasks]
+Past incidents and "how we fixed it" notes — as retrievable documents, so the agent does not reinvent them. No mature standard exists.
+**An incident record** with a date and a status: "current" / "obsolete, see commit X" — otherwise the archive ages unnoticed.
 
-[context-engineering block]
-Three curation primitives (Anthropic): **JIT retrieval · compaction · memory-notes**. Principle: **more context ≠ better**.
+[Level 4 — Memory (slot 1) · system · a human checks it]
+A separate system: it decides for itself what to retain across sessions. You do not edit it line by line — you organize and audit it.
+**Mem0 · Cognee · Graphiti · Letta** — you tune the selection rules, you do not edit the contents.
 
-[Failure plate]
-**context rot** (Chroma, 18 frontier models): retrieval accuracy drops **non-linearly** as input grows — degradation begins **before** the window overflows. "Stale context rots."
-*Baseline: the memory demo — peak ~172k vs ~334k tokens without memory — is a cookbook demonstration of direction, not a controlled multiplier.*
+[Honest limit plate]
+Why level 2 is curated rather than accumulated: retrieval accuracy drops non-linearly as the input grows — degradation starts **before** the window overflows (Chroma, 18 models). *Demo: ~172k tokens vs ~334k without curation — a direction, not a measured multiplier.*
+
+[Column "What goes where in the repository"]
+**README** — why the project exists and where to start — for a person opening it for the first time.
+**AGENTS.md** — commands and constraints the agent executes literally, with no paraphrasing.
+**ADR** — why a decision was taken and what was rejected — what the code does not say.
+**Code comment** — why this particular piece is non-obvious; ships in the same change.
+**Incident record** — how it was fixed last time — with a date and a freshness marker.
+
+*Rule: put it where the artifact gets reread together with the code. Whatever must not be lost silently goes to level 1.*
 
 [Gold callout]
-Context lives **in the repository, not in the prompt**. The durable pattern is a curated persistent layer; the hype is "our AGENTS.md will decide everything by itself."
+Context lives **in the repository, not in the prompt** — but each level is maintained differently: instructions are written, sessions are curated, history is dated, memory is configured and audited.
 
 ## Speaker notes
 
-The second practice of the implementation phase is the organization of the environment, and this is a separate engineering discipline that is easy to confuse with the first. The first was about how to work; this is about what to store. The key fact: the agent is stateless, its memory is not preserved between sessions. This means that if context lives in fleeting prompts, it is lost every run, and the agent starts from a blank slate each time, filling in the missing parts with guesses. The solution is a persistent layer of instructions and memory that lives in the repository and that the agent reads every session.
+The agent is stateless: between runs it remembers nothing. So everything it must know about the project sits not in the prompt but at one of four levels — and confusing them is expensive, because each is maintained in a different way.
 
-The form of this layer today is the AGENTS.md file, an open vendor-neutral standard (Anthropic's analog is called CLAUDE.md), which holds build and test commands, style, and guardrails — what you would tell a new colleague on the first day [1]. An important recommendation: lead with commands, not explanations — if you write "we use such-and-such build system" instead of the exact command, the agent hallucinates the setup steps [1]. The second component of the layer is memory-notes and operational task history: what we have already decided and why, so the agent doesn't rediscover it from scratch.
+Level one is permanent instructions: a static AGENTS.md file at the repository root (Anthropic's analog is called CLAUDE.md) that the agent rereads every session [1]. The key recommendation is to write it in commands rather than explanations: "Run the tests: pnpm test" works, while "we use such-and-such build system" makes the agent invent the setup steps. A human writes and updates this file, and it lives exactly as long as the repository does.
 
-And here comes an honest limitation. More context does not mean better. Chroma's study on eighteen frontier models showed the context rot effect: retrieval accuracy drops non-linearly as input grows, and the degradation begins even before the window overflows [2]. Plus Böckeler's rule "stale context rots": an outdated note is worse than its absence, because it actively misinforms. Therefore Anthropic proposes three curation primitives — retrieve what's needed precisely at the moment of need, compact the history, and keep short memory-notes [3]. The section's judgment: the durable pattern is a curated persistent layer of instructions and memory in the repository; the vendor hype is the promise that the file itself or the memory itself will decide everything. Context lives in the repository, not in the prompt, and it must be actively curated, not merely accumulated.
+Level two is the context of one session — that is, managing the window of the current dialogue. There are three primitives: JIT retrieval, compaction, notes [3]. JIT retrieval is worth spelling out: the agent opens a specific file at the moment the task calls for it, instead of loading the whole repository at the start of the session. Curation is not about saving tokens: Chroma's study across eighteen models showed that retrieval accuracy drops non-linearly as the input grows, and the degradation begins before the window overflows [2].
+
+Level three is the operational history of tasks: past incidents and "how we fixed it" notes, kept as retrievable documents. The practice is alive, but it has no mature standard yet, and every document needs a date and a freshness marker.
+
+Level four is memory as a separate system: Mem0, Cognee, Graphiti, Letta. You do not edit it line by line the way you edit a file: it accumulates on its own, so you organize it and audit it periodically.
+
+From this follows the practical conclusion about distribution. README answers a person's question of why the project exists. AGENTS.md answers the agent's question of which commands to execute literally. An ADR says why a decision was taken. A code comment says why this particular piece is non-obvious. An incident record says how it was fixed last time. Put context where it will be reread together with the code.

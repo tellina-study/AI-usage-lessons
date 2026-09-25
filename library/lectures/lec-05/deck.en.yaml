@@ -36,7 +36,7 @@ deck:
   lecture_number: 5
   title: "Lecture 5. AI Product: the full lifecycle — from intent to operation"
   audience: "3rd-year engineering students, universal, no local binding"
-  duration_min: 100
+  duration_min: 90
   central_question: "Now that AI made assembly almost free — what became the product's real bottleneck, and on every phase of the loop: which classical discipline stays, what does AI speed up, and where does AI-first break?"
   learning_outcomes: [LO1, LO2, LO3, LO6]
   language: en

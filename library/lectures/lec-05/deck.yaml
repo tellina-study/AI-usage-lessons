@@ -14,7 +14,8 @@
 # │ (not clustered). Keystone s05 (loop PDCA/OODA/BML) + s06 (cost/trust asymmetry).  │
 # └─────────────────────────────────────────────────────────────────────────────────┘
 #
-# ┌─ SPLIT: deck.yaml >600 строк (Document Size Limit, waiver НЕТ) → разбит ──────┐
+# ┌─ ТАЙМИНГ ПЕРЕСЧЁТ Ф1 (2026-09-25, issue #212): 100 мин → 90 мин ────────┐
+# │ Сокращение под новый слот (Л5 как Л4 по структуре, без изменения глубины). │
 # │ deck.yaml      (ЭТОТ ФАЙЛ) — deck/palette/motif/typography/glossary_lock      │
 # │                + ai_failure_judgment (top-level share) + slides s01..s27      │
 # │                (Раздел 0 «Введение» через конец Раздела 3 «Build/Launch»).    │
@@ -31,7 +32,7 @@ deck:
   lecture_number: 5
   title: "Лекция 5. AI-продукт: полный жизненный цикл — от намерения до эксплуатации"
   audience: "студенты-инженеры 3 курса, универсально, без локального binding"
-  duration_min: 100
+  duration_min: 90
   central_question: "Когда AI сделал сборку почти бесплатной — что стало настоящим узким местом продукта, и на каждой фазе цикла: какая классическая дисциплина остаётся, что AI ускоряет, и где AI-first ломается?"
   learning_outcomes: [LO1, LO2, LO3, LO6]
   language: ru

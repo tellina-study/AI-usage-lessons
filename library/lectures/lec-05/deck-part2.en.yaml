@@ -351,22 +351,46 @@ slides:
 totals:
   slides: 56                    # s01–s49 + s13a + 6× sNNb ELI5 (s07b/s14b/s21b/s28b/s36b/s44b)
   base_slides_locked: "s01–s49 + s13a + s07b/s14b/s21b/s28b/s36b/s44b (ELI5 overviews). Hero required = s01 + s49. 6 section dividers: s07(S1) s14(S2) s21(S3) s28(S4) s36(S5) s44(S6), each followed by its own sNNb ELI5 overview."
-  slide_times_sum_min: 107.3    # sum of per-slide duration_min below (table sum; was 98.3 pre-ELI5, +6×1.5=9.0)
-  total_min: 100                # active ~92 + ~8 Q&A buffer (partly within s49); ELI5 slides absorbed within section budgets, target duration_min unchanged
+  slide_times_sum_min: 107.3    # FULL-PASS time; deliberately above the slot — this is the material reserve, trimmed via cut_order
+  total_min: 90                 # L5 slot (F1, issue #212; was 100): ≈82 active + ≈8 min of Q&A embedded in s49
   note: >
-    Plan-final §4: ~49-50 slides ≈ 100 min + 6 ELI5 overviews (Phase 5 post-plan
-    addition, +1.5 min each). Section budgets: S0 s01-s06 (10) ·
-    S1 [s07] s07b s08-s13a (17.5) · S2 [s14] s14b s15-s20 (15.3) ·
-    S3 [s21] s21b s22-s27 (14.8) · S4 [s28] s28b s29-s35 (17.3) ·
-    S5 [s36] s36b s37-s43 (17.3) · S6 [s44] s44b s45-s49 (13.8) ·
-    Q&A buffer embedded in s49. Cut order (plan §4a, if timing needs trimming
-    at render phase): s16 (heuristics — compress to 1 slide) → s25 (AI limits
-    build — move to speaker notes) → s43 (S5 synthesis) → s30 (traps — top-3
-    instead of 6) → s45 (governance base — compress). DO NOT cut: keystone
-    (s05/s06), each section's base (its first slide), on-point failures (hold
-    ≥30%).
+    F1 (2026-09-25, issue #212): the slot moved from 100 to 90 minutes. The timing model is the
+    same one Lecture 4 uses (slot 75 against Σ 149, a ×2.0 reserve): per-slide duration_min is
+    FULL-PASS time, and the sum deliberately exceeds the active budget. What brings it down to
+    ≈82 active minutes is the ranked cut_order below, not deflated per-slide numbers: 56 slides
+    squeezed into 82 minutes would put substantive slides at 30–60 seconds each — a false fit.
+    Full-pass section sums: S0 10.0 · S1 18.8 · S2 15.3 · S3 14.8 · S4 17.3 · S5 17.3 ·
+    S6 13.8 = 107.3, a ×1.31 reserve over the 82 active minutes. F3 (artifact slides + deeper
+    notes) will take Σ to ≈125–135, i.e. ×1.5–1.6 — the level the course rule asks for
+    ("plan with roughly ×1.5 the slot in material, plus an explicit cut order").
+  cut_order:
+    - " 1. s16 — Nielsen heuristics — compress to a single claim (−1.0 → 106.3)"
+    - " 2. s25 — AI limits of build — move into speaker notes (−1.5 → 104.8)"
+    - " 3. s43 — Section 5 synthesis (−1.5 → 103.3)"
+    - " 4. s35 — Section 4 synthesis (−1.5 → 101.8)"
+    - " 5. s30 — experiment traps — top 3 instead of six (−1.5 → 100.3)"
+    - " 6. s46 — operating model — compress (−1.0 → 99.3)"
+    - " 7. s18 — non-deterministic interface — compress (−1.0 → 98.3)"
+    - " 8. s11 — AI limits of discovery — compress (−1.0 → 97.3)"
+    - " 9. s24 — control transfer — compress (−1.0 → 96.3)"
+    - "10. s39 — silent drift — compress (−1.0 → 95.3)"
+    - "11. s17 — design tools — name, do not walk through (−1.5 → 93.8)"
+    - "12. s10 — discovery tools — name, do not walk through (−1.5 → 92.3)"
+    - "13. s31 — evals — keep the definition and one example (−1.5 → 90.8)"
+    - "14. s32 — Goodhart's law — compress (−1.0 → 89.8)"
+    - "15. s38 — LLMOps/AgentOps — compress to the layer map (−1.5 → 88.3)"
+    - "16. s23 — the review bottleneck — compress (−1.0 → 87.3)"
+    - "17. s04 — bridge from Lecture 4 — compress (−1.0 → 86.3)"
+    - "18. s03 — lecture map — compress (−0.5 → 85.8)"
+    - "19. s02 — cover (−0.5 → 85.3)"
+  cut_order_note: >
+    Items 1–19 remove 22.0 minutes: 107.3 → 85.3. The remaining ~3 minutes come from pace.
+    Cutting further means cutting failures — a signal to rebuild the deck, not to cut deeper.
+  never_cut: >
+    keystone s05/s06 · the base slide opening each section (s08/s15/s22/s29/s37/s45) · every on-point failure (s12/s13/s13a/s19/s20/s26/s27/s33/s34/s40/s41/s42/s47/s48) — they carry the ≥30% strict-in share · the s49 payoff close · the s01 hero
 
-# Per-slide duration_min (plan-final §4, distributed per slide; ELI5 sNNb — Phase 5 addition, +1.5 each):
+# Per-slide duration_min — FULL-PASS time (F1 2026-09-25, issue #212; slot 100 → 90).
+# The sum deliberately exceeds the active budget: it is the material reserve, trimmed via cut_order above.
 #   S0: s01=3 s02=0.5 s03=1 s04=2 s05=2 s06=1.5 (=10) ·
 #   S1: [s07=0.3] s07b=1.5 s08=2.5 s09=2.5 s10=2.5 s11=2 s12=3 s13=2 s13a=2.5 (=18.8) ·
 #   S2: [s14=0.3] s14b=1.5 s15=2 s16=2 s17=2.5 s18=2.5 s19=2.5 s20=2 (=15.3) ·
@@ -374,10 +398,7 @@ totals:
 #   S4: [s28=0.3] s28b=1.5 s29=2.5 s30=2.5 s31=2.5 s32=2 s33=2.5 s34=2 s35=1.5 (=17.3) ·
 #   S5: [s36=0.3] s36b=1.5 s37=2.5 s38=2.5 s39=2 s40=2.5 s41=2 s42=2.5 s43=1.5 (=17.3) ·
 #   S6: [s44=0.3] s44b=1.5 s45=2 s46=2 s47=3 s48=2.5 s49=2.5 (=13.8)
-#   Σ per-slide ≈ 107.3 discussion (10+18.8+15.3+14.8+17.3+17.3+13.8); active
-#   presentation ~92 + Q&A buffer unchanged (ELI5 overviews absorbed within
-#   existing section time budgets, not additive to total_min). Final minute
-#   calibration — at the render phase (Phase 6).
+#   Σ = 107.3 min full pass (10+18.8+15.3+14.8+17.3+17.3+13.8) against an active budget of ~82.
 
 ai_failure_judgment_part2_note: >
   The full ai_failure_judgment specification (strict_in_slides, count, share_by_minutes,

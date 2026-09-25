@@ -4,8 +4,8 @@ title: "Глава 5, Часть 3. Measure / Experiment · Support / Operate"
 status: draft
 version: v1
 part: 3
-parts_total: 4
-cross_ref: "Часть 1 — chapter.md (§0, Раздел 1). Часть 2 — chapter-part2.md (Раздел 2, 3). Часть 4 — chapter-part4.md (Раздел 6, Q&A, глоссарий, источники)."
+parts_total: 5
+cross_ref: "Часть 1 — chapter.md (§0, Раздел 1). Часть 2 — chapter-part2.md (Раздел 2, 3). Часть 4 — chapter-part4.md (Раздел 6). Часть 5 — chapter-part5.md (Раздел 7, Заключение, Q&A, глоссарий). Источники и Дальнейшее чтение — chapter-references.md."
 slide_map: "s28–s43"
 ---
 

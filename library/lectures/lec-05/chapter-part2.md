@@ -4,8 +4,8 @@ title: "Глава 5, Часть 2. Design / прототип · Build / Launch"
 status: draft
 version: v1
 part: 2
-parts_total: 4
-cross_ref: "Часть 1 — chapter.md (§0, Раздел 1). Часть 3 — chapter-part3.md (Раздел 4, 5). Часть 4 — chapter-part4.md (Раздел 6, Q&A, глоссарий, источники)."
+parts_total: 5
+cross_ref: "Часть 1 — chapter.md (§0, Раздел 1). Часть 3 — chapter-part3.md (Раздел 4, 5). Часть 4 — chapter-part4.md (Раздел 6). Часть 5 — chapter-part5.md (Раздел 7, Заключение, Q&A, глоссарий). Источники и Дальнейшее чтение — chapter-references.md."
 slide_map: "s14–s27"
 ---
 

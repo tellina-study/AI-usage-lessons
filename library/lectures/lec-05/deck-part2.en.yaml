@@ -348,6 +348,12 @@ slides:
 # ─────────────────────────────────────────────────────────────────────────
 # Validation
 # ─────────────────────────────────────────────────────────────────────────
+# ⚠ EN SYNC PENDING (issue #212, phase F5): the RU deck moved to 62 slides (Section 7 added:
+# s50 divider, s51 matrix, s52 triangulation, s53 decision triad, s54 checklist, s55 bridge+Q&A;
+# s49 reduced to the keystone payoff). slides-en/ still holds the previous 56 and this file's
+# totals still describe them. The cut_order above is already the RU-final one. Translating the
+# six new slides and re-syncing totals is phase F5 — stated here rather than left to be noticed.
+
 totals:
   slides: 56                    # s01–s49 + s13a + 6× sNNb ELI5 (s07b/s14b/s21b/s28b/s36b/s44b)
   base_slides_locked: "s01–s49 + s13a + s07b/s14b/s21b/s28b/s36b/s44b (ELI5 overviews). Hero required = s01 + s49. 6 section dividers: s07(S1) s14(S2) s21(S3) s28(S4) s36(S5) s44(S6), each followed by its own sNNb ELI5 overview."
@@ -383,9 +389,23 @@ totals:
     - "17. s04 — bridge from Lecture 4 — compress (−1.0 → 86.3)"
     - "18. s03 — lecture map — compress (−0.5 → 85.8)"
     - "19. s02 — cover (−0.5 → 85.3)"
+    - "20. s07b — Section 1 overview — drop (−1.5 → 96.6)"
+    - "21. s14b — Section 2 overview — drop (−1.5 → 95.1)"
+    - "22. s21b — Section 3 overview — drop (−1.5 → 93.6)"
+    - "23. s28b — Section 4 overview — drop (−1.5 → 92.1)"
+    - "24. s36b — Section 5 overview — drop (−1.5 → 90.6)"
+    - "25. s44b — Section 6 overview — drop (−1.5 → 89.1)"
+    - "26. s51 — matrix — show 3 phases of 6, the rest in the handout (−1.5 → 87.6)"
+    - "27. s52 — triangulation — one piece of evidence instead of three (−1.5 → 86.1)"
+    - "28. s54 — checklist — 4 questions of 8 (−1.5 → 84.6)"
   cut_order_note: >
-    Items 1–19 remove 22.0 minutes: 107.3 → 85.3. The remaining ~3 minutes come from pace.
-    Cutting further means cutting failures — a signal to rebuild the deck, not to cut deeper.
+    Items 1–19 remove 22.0 minutes: 120.1 → 98.1. Items 20–28 (the six section overviews
+    plus compression of three synthesis slides) remove a further 13.5: 98.1 → 84.6. The
+    remaining ~2.6 minutes come from pace. The overviews lead this second tier deliberately:
+    this course's audience is strong (the group profile in CLAUDE.md — everyone works with
+    AI assistants, many are already in the industry), so an introductory recap of a section
+    is the first thing a lecturer drops on the spot. Cutting past that means cutting the
+    failure walkthroughs — a signal to rebuild the deck, not to cut deeper.
   never_cut: >
     keystone s05/s06 · the base slide opening each section (s08/s15/s22/s29/s37/s45) · every on-point failure (s12/s13/s13a/s19/s20/s26/s27/s33/s34/s40/s41/s42/s47/s48) — they carry the ≥30% strict-in share · the s49 payoff close · the s01 hero
 

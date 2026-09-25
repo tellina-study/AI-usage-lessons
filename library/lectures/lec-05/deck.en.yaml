@@ -32,6 +32,12 @@
 # ⚠ EN RENDER STATUS: text structure only (deck.en.yaml + slides-en/*.md). PPTX render is a
 # later phase. DO NOT RENDER in this phase.
 
+# ⚠ EN SYNC PENDING (issue #212, phase F5): the RU deck moved to 62 slides (Section 7 added:
+# s50 divider, s51 matrix, s52 triangulation, s53 decision triad, s54 checklist, s55 bridge+Q&A;
+# s49 reduced to the keystone payoff). slides-en/ still holds the previous 56 and this file's
+# totals still describe them. The cut_order above is already the RU-final one. Translating the
+# six new slides and re-syncing totals is phase F5 — stated here rather than left to be noticed.
+
 deck:
   lecture_number: 5
   title: "Lecture 5. AI Product: the full lifecycle — from intent to operation"

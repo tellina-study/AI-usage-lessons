@@ -1,7 +1,7 @@
 # library/lectures/lec-05/deck.yaml  —  PART 1 of 2
 #
 # Deck-структура Лекции 5 «AI-продукт: полный жизненный цикл — от намерения до эксплуатации»
-# (56 слайдов: s01–s49 + s13a IBM Watson — cascade-safe suffix-ID + 6× sNNb ELI5 overviews).
+# (62 слайда: s01–s55 + s13a IBM Watson — cascade-safe suffix-ID + 6× sNNb ELI5 overviews; Раздел 7 s50–s55 добавлен issue #212).
 #
 # Source: chapter.md + chapter-part2/3/4.md (≥30k слов, 4 части) +
 # notes/lecture-5-review/pdlc/final/plan-final.md §4 (slide list s01–s49 + s13a).
@@ -40,7 +40,7 @@ deck:
   version: v1.0
   source: "chapter.md + chapter-part2/3/4.md (≥30k слов, 4 части)"
   plan: "notes/lecture-5-review/pdlc/final/plan-final.md §4"
-  total_slides: 56          # s01–s49 + s13a (IBM Watson, cascade-safe suffix) + 6× sNNb ELI5 overviews
+  total_slides: 62          # s01–s55 + s13a (IBM Watson, cascade-safe suffix) + 6× sNNb ELI5 overviews (Раздел 7 s50-s55, issue #212)
   curriculum_level: "Отраслевая лекция (после Л4 SDLC); L5 = strict-in ≥30% mandatory, waiver НЕДОСТУПЕН"
   deck_parts: [deck.yaml, deck-part2.yaml]   # split >600 строк; loader reads both
   axis: "фазы петли продукта (discover→build→measure→learn→decide); каждая фаза = база→AI→ограничения→провал"

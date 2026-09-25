@@ -18,7 +18,7 @@ meme_or_visual: >
   hammer / gauge / server / scale соответственно). Gold callout снизу — «как читать матрицу».
   Каждая клетка выведена из разобранного раздела, не назначена. Ссылки-источники — inline
   вплотную к материалу, НЕ в нижнем footer; мелко и приглушённо.
-source: "BCG (сент. 2025); MIT NANDA (июль 2025); ACM Web4All 2026 (WCAG 29,0%)"
+source: "BCG AI Radar 2025 (янв. 2025, n=1803); MIT NANDA (июль 2025); ACM Web4All 2026 (WCAG 29,0%)"
 ---
 
 # Visible content

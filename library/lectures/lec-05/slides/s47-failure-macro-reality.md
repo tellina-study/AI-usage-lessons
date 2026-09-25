@@ -14,7 +14,7 @@ meme_or_visual: >
   case_study: воронка «60% исследовали → 20% пилот → 5% успех» (реальные данные MIT),
   контрастирующая с заголовком-мемом «95% ПРОВАЛ» (перечёркнут крупно). Payoff-стрелка,
   визуально связывающая обратно к иконке s01 (концептуально, не копируя тот же арт).
-source: "MIT Project NANDA 'The GenAI Divide' (July 2025, v0.1); Gartner (7 Apr 2026); BCG (Sep 2025)"
+source: "MIT Project NANDA 'The GenAI Divide' (July 2025, v0.1); Gartner (7 Apr 2026); BCG AI Radar 2025 'From Potential to Profit' (Jan 2025, n=1803, 19 countries)"
 ---
 
 # Visible content
@@ -32,7 +32,7 @@ source: "MIT Project NANDA 'The GenAI Divide' (July 2025, v0.1); Gartner (7 Apr 
 4. Прослеживается ли к первоисточнику с методологией?
 
 [Gold callout]
-BCG: 60% компаний **не отслеживают ни одного** финансового KPI, привязанного к ценности ИИ
+BCG AI Radar 2025 (янв. 2025, 1803 руководителя): 60% компаний **не отслеживают ни одного** финансового KPI, привязанного к ценности ИИ
 
 ## Speaker notes
 

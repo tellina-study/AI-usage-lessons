@@ -4,7 +4,7 @@ type: case_study
 section: "Раздел 2. Design / прототип"
 duration_min: 2.5
 assertion: "Safety-фичи Character.AI появились только после иска о смерти подростка — почти два года после запуска"
-learning_goal: "Провал on-point #3 (Р2): Character.AI (LO3/LO6)"
+learning_goal: "Провал on-point #4 (Р2): Character.AI (LO3/LO6)"
 learning_outcomes: [LO3, LO6]
 chapter_ref: "§2.6 [for-slide-s19]"
 in_bucket: true

@@ -4,7 +4,7 @@ type: case_study
 section: "Раздел 2. Design / прототип"
 duration_min: 2
 assertion: "iTutorGroup закодировал автоотказ кандидатам 55+/60+ лет — найдено случайно; EEOC: первое урегулирование по ИИ-дискриминации"
-learning_goal: "Провал on-point #4 (Р2): iTutorGroup (LO2/LO6) — контраст с s19: здесь заложен вредный критерий"
+learning_goal: "iTutorGroup (Р2): провал автоматизации без модели, не провал ИИ — вне сквозной нумерации; контраст с s19 (LO2/LO6)"
 learning_outcomes: [LO2, LO6]
 chapter_ref: "§2.7 [for-slide-s20]"
 in_bucket: true

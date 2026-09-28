@@ -7,7 +7,7 @@ assertion: "ИИ сжимает desk research и синтез интервью �
 learning_goal: "ИИ: возможности + инструменты Discovery 2025-26 (desk research, синтез, reference dataset, синт-юзеры как pre-research)"
 learning_outcomes: [LO1, LO2]
 chapter_ref: "§1.5 [for-slide-s11]"
-interaction: none
+interaction: retrieval_think_pause
 verify_day_of: true
 partial_out_strict_in: true
 meme_or_visual: >
@@ -32,6 +32,9 @@ source: "Perplexity Deep Research; Dovetail; NN/g 2026 practitioner survey [FACT
 
 [Ocean rounded box, gold]
 97% исследователей используют ИИ · лишь ~8% доверяют ИИ-персонам как данным
+
+[Бейдж-пауза]
+**Вопрос залу: ИИ-персона прошла ваш онбординг целиком и назвала функцию отличной. Что в устройстве такого источника мешает ему сказать «нет»?**
 
 ## Speaker notes
 

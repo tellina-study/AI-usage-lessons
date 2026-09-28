@@ -7,7 +7,7 @@ assertion: "Эвристики Нильсена — «линтер для UX»: 
 learning_goal: "БАЗА-2: топ-5 эвристик Нильсена + дизайн-система + fidelity spectrum + юзабилити-тест"
 learning_outcomes: [LO1]
 chapter_ref: "§2.2, §2.3 [for-slide-s16]"
-interaction: none
+interaction: retrieval_think_pause
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >
@@ -33,6 +33,9 @@ meme_or_visual: >
 
 [Ocean rounded box]
 **Дизайн-система** = guardrail — удерживает генеративную свободу в рамках провалидированного бренда
+
+[Бейдж-пауза]
+**Вопрос залу: Интерфейс на один и тот же ввод даёт разный вывод. Какая из пяти эвристик ломается первой?**
 
 ## Speaker notes
 

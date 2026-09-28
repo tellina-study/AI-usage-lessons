@@ -8,6 +8,7 @@ learning_goal: "Keystone payoff §6.5: разрешение хук-парадо�
 learning_outcomes: [LO1, LO6]
 chapter_ref: "§6.5 [for-slide-s49]"
 interaction: none
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >

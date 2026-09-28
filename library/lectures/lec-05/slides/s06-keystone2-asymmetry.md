@@ -9,6 +9,7 @@ learning_goal: "KEYSTONE-2 — асимметрия стоимость/дове�
 learning_outcomes: [LO1, LO2]
 chapter_ref: "§0.5, §0.6, §0.7 [for-slide-s06]"
 interaction: think_pause
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 axis_slide: true

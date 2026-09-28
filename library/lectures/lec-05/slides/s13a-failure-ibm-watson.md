@@ -9,6 +9,7 @@ learning_outcomes: [LO2, LO6]
 chapter_ref: "§1.9 [for-slide-s13a]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 note: "cascade-safe suffix ID (s13a) — 3-й провал Discovery, добавлен по course-curator LO3 sign-off; не сдвигает нумерацию s14+. type сменён case_study → comparison (issue #212): глава §1.9 переписана как два независимых провала с разными root cause, две равные колонки передают это точнее одной линейной истории."
 meme_or_visual: >

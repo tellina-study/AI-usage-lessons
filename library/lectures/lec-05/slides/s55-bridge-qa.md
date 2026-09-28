@@ -8,6 +8,7 @@ learning_goal: "Мост §7.6 к Семинару 7 и Лекции 6 + Q&A; HE
 learning_outcomes: [LO1, LO6]
 chapter_ref: "§7.6 [for-slide-s55]"
 interaction: qa_minimal
+protected: true
 verify_day_of: false
 hero_required: true
 partial_out_strict_in: true

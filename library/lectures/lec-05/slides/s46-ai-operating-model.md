@@ -7,7 +7,7 @@ assertion: "Пять независимых источников сходятс�
 learning_goal: "ИИ: operating model — operators→orchestrators, maturity 0-5 (Сбер на Level 3, не 5), IDP-экономика, agentwashing"
 learning_outcomes: [LO1, LO2]
 chapter_ref: "§6.2 [for-slide-s46]"
-interaction: none
+interaction: retrieval_pause
 verify_day_of: true
 partial_out_strict_in: true
 meme_or_visual: >
@@ -31,6 +31,9 @@ Deloitte: 75% говорят — модель должна измениться 
 
 [Gold callout]
 Сбер сам ставит себя на **Level 3 из 5** — anti-hype сигнал: даже крупный игрок не заявляет вершину шкалы
+
+[Бейдж-пауза]
+**Вопрос залу: Вам показывают заголовок «95% ИИ-пилотов провалились». Какой первый вопрос вы задаёте этой цифре?**
 
 ## Speaker notes
 

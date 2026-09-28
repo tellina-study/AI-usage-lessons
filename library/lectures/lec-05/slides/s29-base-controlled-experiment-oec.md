@@ -7,7 +7,8 @@ assertion: "Рандомизация даёт причинность, а не с
 learning_goal: "БАЗА: контролируемый эксперимент + OEC + guardrail-метрики; учебный пример Кохави (time-on-site)"
 learning_outcomes: [LO1]
 chapter_ref: "§4.1 [for-slide-s29]"
-interaction: none
+interaction: retrieval_think_pause
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >
@@ -29,6 +30,9 @@ meme_or_visual: >
 
 **OEC** — метрика, о значении которой организация **согласилась заранее**
 - Учебная ловушка (Кохави): «время на сайте поддержки» — хорошо или плохо?
+
+[Бейдж-пауза]
+**Вопрос залу: OEC вырос на 8% на третий день теста, p < 0,05. Останавливаете тест и раскатываете?**
 
 ## Speaker notes
 

@@ -9,6 +9,7 @@ learning_outcomes: [LO1, LO6]
 chapter_ref: "§7.4 [for-slide-s54]"
 verify_day_of: false
 in_bucket: true
+protected: true
 interaction: none
 meme_or_visual: >
   schema_matrix 8 строк × 2 столбца (Вопрос / Действие при «нет»). Иконка-галочка (Lucide

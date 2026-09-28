@@ -9,6 +9,7 @@ learning_outcomes: [LO2, LO6]
 chapter_ref: "§4.5 [for-slide-s33]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study: 5 одинаковых по размеру иконок-эмодзи (love/haha/wow/sad/angry), каждая

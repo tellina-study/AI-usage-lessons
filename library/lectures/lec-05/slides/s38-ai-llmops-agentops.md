@@ -25,7 +25,7 @@ source: "LangSmith / Langfuse / Arize Phoenix / Helicone; Gartner Market Guide f
 ## Body
 [Путь запроса: промпт→retrieval→инструменты→ответ, камера-иконка над каждым узлом]
 
-**LLMOps/AgentOps**
+**LLMOps / AgentOps** — эксплуатация моделей и эксплуатация агентов: LLMOps следит за одним вызовом (промпт, ответ, стоимость), AgentOps — за цепочкой шагов и вызовов инструментов целиком
 - Трейсинг: LangSmith · Langfuse · Arize Phoenix · Helicone
 - Data drift / concept drift · runtime guardrails · circuit breaker
 - **Guardian Agents** (категория Gartner) — агенты, следящие за агентами

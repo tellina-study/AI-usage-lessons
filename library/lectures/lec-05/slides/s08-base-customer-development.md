@@ -8,6 +8,7 @@ learning_goal: "БАЗА: Customer Development + фальсифицируема�
 learning_outcomes: [LO1]
 chapter_ref: "§1.1, §1.3 [for-slide-s08, s09]"
 interaction: none
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >

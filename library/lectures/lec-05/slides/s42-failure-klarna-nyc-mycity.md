@@ -9,6 +9,7 @@ learning_outcomes: [LO2, LO6]
 chapter_ref: "§5.6 [for-slide-s42]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study: 2 мини-панели side-by-side — «Klarna» (растущий бар FTE-эквивалента 700→853,

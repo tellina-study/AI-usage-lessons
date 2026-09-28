@@ -9,6 +9,7 @@ learning_outcomes: [LO6]
 chapter_ref: "§6.3 [for-slide-s47]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: true
 meme_or_visual: >
   case_study: воронка «60% исследовали → 20% пилот → 5% успех» (реальные данные MIT),

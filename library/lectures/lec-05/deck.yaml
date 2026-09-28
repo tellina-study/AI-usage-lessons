@@ -133,6 +133,63 @@ ai_failure_judgment:
     (Phase 7/10).
 
 # ─────────────────────────────────────────────────────────────────────────
+# RETRIEVAL-ПРАКТИКА (issue #212, Причина 4 разбора занятий 25.09.2026).
+# Замер до правки: 59 из 62 слайдов имели interaction: none. У Лекции 4 было 42 из 58,
+# и последствие зафиксировано в расшифровке: за всё занятие до Q&A не было ни одного
+# момента проверки понимания, а оба вопроса студентов в конце оказались про уже
+# пройденный материал.
+#
+# Точки расставлены по одной-двум на раздел — там, где нужно достать из памяти, а не
+# там, где удобно. Формат — принятые в курсе значения (Лекция 2 deck.yaml):
+# retrieval_pause (короткая пауза с адресным вопросом) и retrieval_think_pause
+# (вопрос-предсказание, отвечает следующий слайд). Вопрос напечатан в видимом слое
+# слайда блоком [Бейдж-пауза]; ответ рядом не печатается.
+#
+# Хронометраж: duration_min НЕ увеличен ни на одном слайде. Точки — проверка, а не
+# упражнение; 10-20 секунд каждая укладываются в уже заложенное per-slide время полного
+# прохода. Σ slide_times_sum_min остаётся 120.1, cut_order не пересчитывается.
+# ─────────────────────────────────────────────────────────────────────────
+interaction_summary:
+  points:
+    # Р0
+    - { slide: s01, format: open_question,          note: "хук-парадокс (было до правки)" }
+    - { slide: s06, format: think_pause,            note: "keystone-асимметрия (было до правки)" }
+    # Р1 Discovery
+    - { slide: s09, format: retrieval_pause,        note: "«Как вам идея — ассистент, который сам разбирает вашу почту?» какое из трёх правил нарушено и как переспросить. После базы: применить Mom Test, а не пересказать" }
+    - { slide: s10, format: retrieval_think_pause,  note: "ИИ-персона прошла онбординг целиком — что в устройстве такого источника мешает ему сказать «нет». Предсказание, отвечают s11 и s12" }
+    # Р2 Design
+    - { slide: s16, format: retrieval_think_pause,  note: "один и тот же ввод даёт разный вывод — какая из пяти эвристик ломается первой. После базы, отвечает s18" }
+    - { slide: s18, format: retrieval_pause,        note: "какой вопрос дизайн-брифа пропускают первым при скорости «экран за минуты». Предсказание перед провалом s19" }
+    # Р3 Build/Launch
+    - { slide: s24, format: retrieval_pause,        note: "своя функция на лестнице агентности — какая ступень сейчас и под какое требование поднимать. Перенос на свою задачу" }
+    # Р4 Measure
+    - { slide: s29, format: retrieval_think_pause,  note: "OEC вырос на 8% на третий день теста, p < 0,05 — останавливаете. После базы, ловушку называет s30" }
+    # Р5 Support/Operate
+    - { slide: s39, format: retrieval_pause,        note: "один сигнал своей системы, которого нет ни в одном дашборде, но он первым скажет о падении качества. Перенос на свою задачу" }
+    # Р6 Governance
+    - { slide: s46, format: retrieval_pause,        note: "«95% ИИ-пилотов провалились» — какой первый вопрос задаёте этой цифре. Предсказание перед провалом s47" }
+    # Р7 Синтез
+    - { slide: s53, format: retrieval_think_pause,  note: "автоответ на публичные отзывы — прогнать свой случай по трём осям. Применение аппарата к новому случаю" }
+    - { slide: s55, format: qa_minimal,             note: "Q&A (было до правки)" }
+  coverage: "8 разделов из 8; 12 точек всего, 9 из них новые. Р0 — 2, Р1 — 2, Р2 — 2, Р3 — 1, Р4 — 1, Р5 — 1, Р6 — 1, Р7 — 2."
+  leak_check: >
+    Проверка на утечку ответа сделана по ВСЕМУ предшествующему деку, а не по слайду с вопросом
+    (дефект Семинара 4: целевые ответы шести кейсов были напечатаны таблицей за 6-45 позиций до
+    самих вопросов, и владелец из-за этого отказался от интерактива в обеих группах). Метод:
+    видимые слои всех 62 слайдов склеены в порядке показа, по каждому планируемому ответу — поиск
+    по срезу «до слайда с вопросом». Различаются АППАРАТ (список правил, три оси, набор примитивов
+    раскатки — печатать можно и нужно, вопрос требует его применить) и ОТВЕТ (вердикт по конкретному
+    случаю — не должен быть напечатан раньше). Две точки перенесены из-за найденной утечки: вопрос
+    про механизм синтетического источника стоит на s10, а не после s11, потому что s11 печатает
+    «не может произвести несогласие»; вопрос Раздела 5 переформулирован в перенос на свою систему,
+    потому что s38 печатает circuit breaker и мониторинг дрейфа за слайд до s39.
+  timing: >
+    duration_min не увеличен ни на одном слайде. Точки — проверка, а не упражнение: 10-20 секунд
+    каждая укладываются в уже заложенное per-slide время полного прохода. Σ slide_times_sum_min
+    остаётся 120.1, cut_order не пересчитывается. Суммарный прирост 0 мин — в пределах потолка
+    «не больше 0,5 минуты суммарно по деке».
+
+# ─────────────────────────────────────────────────────────────────────────
 # Порядок предъявления (plan-final §4): фазы петли продукта, каждая
 # база→AI→ограничения→провал. Р0 s01-s06 (введение+keystone) ·
 # Р1 [s07] s08-s13a (Discovery) · Р2 [s14] s15-s20 (Design) ·
@@ -144,6 +201,7 @@ ai_failure_judgment:
 slides:
   # ─── Раздел 0. Введение + keystone (s01–s06) ───
   - id: s01
+    protected: true
     file: slides/s01-hook-paradox.md
     type: hero_cover
     section: "Раздел 0. Введение и keystone"
@@ -195,6 +253,7 @@ slides:
     verify_day_of: false
 
   - id: s05
+    protected: true
     file: slides/s05-keystone-loop.md
     type: assertion_visual
     section: "Раздел 0. Введение и keystone"
@@ -209,6 +268,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s06
+    protected: true
     file: slides/s06-keystone2-asymmetry.md
     type: assertion_visual
     section: "Раздел 0. Введение и keystone"
@@ -251,6 +311,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s08
+    protected: true
     file: slides/s08-base-customer-development.md
     type: process
     section: "Раздел 1. Discovery / исследование"
@@ -272,7 +333,7 @@ slides:
     learning_goal: "БАЗА-2: The Mom Test 3 правила + плохой/хороший вопрос + qual vs quant"
     learning_outcomes: [LO1]
     chapter_ref: "§1.2, §1.4 [for-slide-s09, s10]"
-    interaction: none
+    interaction: retrieval_pause
     verify_day_of: false
     partial_out_strict_in: true
 
@@ -285,7 +346,7 @@ slides:
     learning_goal: "AI: возможности + инструменты Discovery 2025-26 (desk research, синтез, reference dataset, синт-юзеры как pre-research)"
     learning_outcomes: [LO1, LO2]
     chapter_ref: "§1.5 [for-slide-s11]"
-    interaction: none
+    interaction: retrieval_think_pause
     verify_day_of: true
     partial_out_strict_in: true
 
@@ -303,6 +364,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s12
+    protected: true
     file: slides/s12-failure-synthetic-users.md
     type: case_study
     section: "Раздел 1. Discovery / исследование"
@@ -316,6 +378,7 @@ slides:
     verify_day_of: false
 
   - id: s13
+    protected: true
     file: slides/s13-failure-fabricated-research.md
     type: case_study
     section: "Раздел 1. Discovery / исследование"
@@ -329,6 +392,7 @@ slides:
     verify_day_of: false
 
   - id: s13a
+    protected: true
     file: slides/s13a-failure-ibm-watson.md
     type: case_study
     section: "Раздел 1. Discovery / исследование"
@@ -370,6 +434,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s15
+    protected: true
     file: slides/s15-base-double-diamond.md
     type: process
     section: "Раздел 2. Design / прототип"
@@ -391,7 +456,7 @@ slides:
     learning_goal: "БАЗА-2: топ-5 эвристик Нильсена + дизайн-система + fidelity spectrum + юзабилити-тест"
     learning_outcomes: [LO1]
     chapter_ref: "§2.2, §2.3 [for-slide-s16]"
-    interaction: none
+    interaction: retrieval_think_pause
     verify_day_of: false
     partial_out_strict_in: true
 
@@ -417,11 +482,12 @@ slides:
     learning_goal: "AI-ограничения: AI-мусор/гомогенизация, WCAG-пробел, дизайн для недетерминированного вывода, LO3"
     learning_outcomes: [LO2, LO3]
     chapter_ref: "§2.5 [for-slide-s18]"
-    interaction: none
+    interaction: retrieval_pause
     verify_day_of: false
     partial_out_strict_in: true
 
   - id: s19
+    protected: true
     file: slides/s19-failure-character-ai.md
     type: case_study
     section: "Раздел 2. Design / прототип"
@@ -435,6 +501,7 @@ slides:
     verify_day_of: false
 
   - id: s20
+    protected: true
     file: slides/s20-failure-itutorgroup.md
     type: case_study
     section: "Раздел 2. Design / прототип"
@@ -475,6 +542,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s22
+    protected: true
     file: slides/s22-base-mvp-release-mechanics.md
     type: process
     section: "Раздел 3. Build / Launch"
@@ -509,7 +577,7 @@ slides:
     learning_goal: "AI: запуск как передача контроля — CC/CD vs CI/CD, agency-ladder"
     learning_outcomes: [LO2]
     chapter_ref: "§3.4 [for-slide-s24]"
-    interaction: none
+    interaction: retrieval_pause
     verify_day_of: false
     partial_out_strict_in: true
 
@@ -527,6 +595,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s26
+    protected: true
     file: slides/s26-failure-google-ai-overviews.md
     type: case_study
     section: "Раздел 3. Build / Launch"
@@ -540,6 +609,7 @@ slides:
     verify_day_of: false
 
   - id: s27
+    protected: true
     file: slides/s27-failure-mcdonalds-drive-thru.md
     type: case_study
     section: "Раздел 3. Build / Launch"

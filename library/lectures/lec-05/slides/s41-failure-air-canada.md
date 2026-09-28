@@ -9,6 +9,7 @@ learning_outcomes: [LO3, LO6]
 chapter_ref: "§5.5 [for-slide-s41]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study: иконка «весы правосудия» с ботом на одной чаше и статичной веб-страницей на

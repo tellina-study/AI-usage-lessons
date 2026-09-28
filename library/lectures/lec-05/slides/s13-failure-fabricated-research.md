@@ -9,6 +9,7 @@ learning_outcomes: [LO6]
 chapter_ref: "§1.8 [for-slide-s13]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study: иконка «документ с печатью, но одна ссылка внутри — оборванная нить, ведущая

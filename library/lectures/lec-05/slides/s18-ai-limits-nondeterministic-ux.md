@@ -7,7 +7,7 @@ assertion: "29% соответствие WCAG на 21 880 оценках ИИ-и
 learning_goal: "ИИ-ограничения: ИИ-мусор/гомогенизация, WCAG-пробел, дизайн для недетерминированного вывода, LO3"
 learning_outcomes: [LO2, LO3]
 chapter_ref: "§2.5 [for-slide-s18]"
-interaction: none
+interaction: retrieval_pause
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >
@@ -31,6 +31,9 @@ source: "'Generated Inaccessible: Measuring WCAG Violations in AI UI Design Tool
 
 [Ocean rounded box]
 Дизайн для НЕДЕТЕРМИНИРОВАННОГО вывода: тот же ввод → разный вывод → ломает эвристику консистентности
+
+[Бейдж-пауза]
+**Вопрос залу: Черновик экрана теперь стоит минуты. Какой вопрос дизайн-брифа при такой скорости пропускают первым?**
 
 ## Speaker notes
 

@@ -10,6 +10,7 @@ chapter_ref: "§7.1 [for-slide-s51]"
 verify_day_of: true
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   schema_matrix 6 строк (фазы) × 4 столбца. Столбцы: Дисциплина (артефакт) — Primary mid,
   доминирует, шире · Что AI удешевил · Режим отказа · Где человек обязателен (gold-акцент

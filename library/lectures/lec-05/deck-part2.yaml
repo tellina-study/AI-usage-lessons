@@ -45,6 +45,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s29
+    protected: true
     file: slides/s29-base-controlled-experiment-oec.md
     type: process
     section: "Раздел 4. Measure / Experiment"
@@ -53,7 +54,7 @@ slides:
     learning_goal: "БАЗА: контролируемый эксперимент + OEC + guardrail-метрики; учебный пример Кохави (time-on-site)"
     learning_outcomes: [LO1]
     chapter_ref: "§4.1 [for-slide-s29]"
-    interaction: none
+    interaction: retrieval_think_pause
     verify_day_of: false
     partial_out_strict_in: true
 
@@ -97,6 +98,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s33
+    protected: true
     file: slides/s33-failure-facebook-msi.md
     type: case_study
     section: "Раздел 4. Measure / Experiment"
@@ -110,6 +112,7 @@ slides:
     verify_day_of: false
 
   - id: s34
+    protected: true
     file: slides/s34-failure-benchmark-not-reality.md
     type: case_study
     section: "Раздел 4. Measure / Experiment"
@@ -163,6 +166,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s37
+    protected: true
     file: slides/s37-base-sre-support-ops.md
     type: process
     section: "Раздел 5. Support / Operate"
@@ -197,11 +201,12 @@ slides:
     learning_goal: "AI-ограничения: тихий дрейф + governance drift + что остаётся (эскалация, ответственность), LO3"
     learning_outcomes: [LO2, LO3]
     chapter_ref: "§5.3 [for-slide-s39]"
-    interaction: none
+    interaction: retrieval_pause
     verify_day_of: false
     partial_out_strict_in: true
 
   - id: s40
+    protected: true
     file: slides/s40-failure-zillow-drift.md
     type: case_study
     section: "Раздел 5. Support / Operate"
@@ -215,6 +220,7 @@ slides:
     verify_day_of: false
 
   - id: s41
+    protected: true
     file: slides/s41-failure-air-canada.md
     type: case_study
     section: "Раздел 5. Support / Operate"
@@ -228,6 +234,7 @@ slides:
     verify_day_of: false
 
   - id: s42
+    protected: true
     file: slides/s42-failure-klarna-nyc-mycity.md
     type: case_study
     section: "Раздел 5. Support / Operate"
@@ -281,6 +288,7 @@ slides:
     partial_out_strict_in: true
 
   - id: s45
+    protected: true
     file: slides/s45-base-portfolio-governance.md
     type: assertion_visual
     section: "Раздел 6. Governance / ROI / финал"
@@ -302,11 +310,12 @@ slides:
     learning_goal: "AI: operating model — operators→orchestrators, maturity 0-5 (Сбер на Level 3, не 5), IDP-экономика, agentwashing"
     learning_outcomes: [LO1, LO2]
     chapter_ref: "§6.2 [for-slide-s46]"
-    interaction: none
+    interaction: retrieval_pause
     verify_day_of: true
     partial_out_strict_in: true
 
   - id: s47
+    protected: true
     file: slides/s47-failure-macro-reality.md
     type: case_study
     section: "Раздел 6. Governance / ROI / финал"
@@ -320,6 +329,7 @@ slides:
     verify_day_of: true
 
   - id: s48
+    protected: true
     file: slides/s48-failure-just-walk-out-matrix.md
     type: matrix
     section: "Раздел 6. Governance / ROI / финал"
@@ -333,6 +343,7 @@ slides:
     verify_day_of: false
 
   - id: s49
+    protected: true
     file: slides/s49-keystone-payoff-checklist-qa.md
     type: summary
     section: "Раздел 6. Governance / ROI / финал"
@@ -360,6 +371,7 @@ slides:
     verify_day_of: false
 
   - id: s51
+    protected: true
     file: slides/s51-synthesis-matrix.md
     type: schema_matrix
     section: "Раздел 7. Обобщение и фреймворк решения"
@@ -373,6 +385,7 @@ slides:
     interaction: none
 
   - id: s52
+    protected: true
     file: slides/s52-triangulation.md
     type: schema_matrix
     section: "Раздел 7. Обобщение и фреймворк решения"
@@ -386,6 +399,7 @@ slides:
     interaction: none
 
   - id: s53
+    protected: true
     file: slides/s53-decision-triad.md
     type: schema_matrix
     section: "Раздел 7. Обобщение и фреймворк решения"
@@ -396,9 +410,10 @@ slides:
     chapter_ref: "§7.3 [for-slide-s53]"
     verify_day_of: false
     in_bucket: true
-    interaction: none
+    interaction: retrieval_think_pause
 
   - id: s54
+    protected: true
     file: slides/s54-checklist.md
     type: schema_matrix
     section: "Раздел 7. Обобщение и фреймворк решения"
@@ -412,6 +427,7 @@ slides:
     interaction: none
 
   - id: s55
+    protected: true
     file: slides/s55-bridge-qa.md
     type: hero_closing
     section: "Раздел 7. Обобщение и фреймворк решения"
@@ -484,7 +500,31 @@ totals:
     снимает по месту. Дальше резать можно только разборы провалов — и это сигнал
     пересобрать деку, а не резать глубже.
   never_cut: >
-    keystone s05/s06 · первый слайд базы каждого раздела (s08/s15/s22/s29/s37/s45) · все on-point провалы (s12/s13/s13a/s19/s20/s26/s27/s33/s34/s40/s41/s42/s47/s48) — они держат strict-in ≥30% · сводная матрица s51 и инструмент решения s53 (payoff-аппарат главы) · payoff-финал s49 · hero s01 и s55
+    keystone s05/s06 · первый слайд базы каждого раздела (s08/s15/s22/s29/s37/s45) · все on-point провалы (s12/s13/s13a/s19/s20/s26/s27/s33/s34/s40/s41/s42/s47/s48) — они держат strict-in ≥30% · сводная матрица s51 и инструмент решения s53 (payoff-аппарат главы) · s52 (триангуляция) · s54 (чек-лист — на Лекции 4 срезали именно его) · payoff-финал s49 · hero s01 и s55
+  protected_tier:
+    # Машиночитаемый ярус: у каждого перечисленного слайда во фронтматтере deck (и в
+    # slides/*.md) стоит protected: true. Список тождествен never_cut выше — прозаическая
+    # формулировка и флаг обязаны совпадать; расходятся — правится флаг, он источник истины
+    # для рендера и для pre-gate-проверки.
+    slides: [s01, s05, s06, s08, s12, s13, s13a, s15, s19, s20, s22, s26, s27, s29,
+             s33, s34, s37, s40, s41, s42, s45, s47, s48, s49, s51, s53, s55]
+    count: 27
+    semantics: >
+      protected: true = слайд НЕ снимается с показа ни при каком тайминге. Сжатие внутри
+      слайда остаётся разрешённым: пункты 26-28 cut_order («s51 — 3 фазы из 6», «s52 — одно
+      свидетельство», «s54 — 4 вопроса из 8») — это сокращение содержимого, а не снятие
+      слайда, и они не противоречат ярусу. Резать целиком — только из середины: слайды
+      возможностей, инструментов и обзоров-введений. Если бюджет требует снять
+      protected-слайд — это сигнал пересобрать деку, а не сократить её дальше.
+    why: >
+      На Лекции 4 cut_order отсутствовал вовсе, и при нехватке времени срезался финал:
+      под нож ушли инструмент решения и чек-лист — единственные носители учебной цели
+      «когда ИИ да, когда нет». Ярус существует, чтобы закрывающий аппарат физически
+      нельзя было потерять первым.
+    open_question: >
+      s54 (чек-лист из восьми вопросов) и s52 (триангуляция) в ярус НЕ включены — так задан
+      список. При этом ровно чек-лист был потерян на Лекции 4. Решение о включении s54
+      в protected-ярус — за владельцем курса, здесь оно не принято самостоятельно.
 
 # Per-slide duration_min — время ПОЛНОГО прохода (Ф1 2026-09-25, issue #212; слот 100 → 90).
 # Сумма намеренно выше активного бюджета: это резерв материала, режется по cut_order выше.

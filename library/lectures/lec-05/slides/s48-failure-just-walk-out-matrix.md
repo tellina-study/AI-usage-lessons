@@ -9,6 +9,7 @@ learning_outcomes: [LO1, LO2]
 chapter_ref: "§6.4 [for-slide-s48]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study верхняя половина: иконка «магазин без касс» с маленькими скрытыми силуэтами

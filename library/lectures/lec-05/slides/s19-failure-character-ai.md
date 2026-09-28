@@ -9,6 +9,7 @@ learning_outcomes: [LO3, LO6]
 chapter_ref: "§2.6 [for-slide-s19]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study: временная шкала (schema_timeline) — «Запуск продукта» → долгий пустой промежуток

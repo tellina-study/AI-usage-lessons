@@ -9,6 +9,7 @@ learning_outcomes: [LO1, LO2]
 chapter_ref: "§7.2 [for-slide-s52]"
 verify_day_of: true
 partial_out_strict_in: true
+protected: true
 interaction: none
 meme_or_visual: >
   schema_matrix 3 строки (свидетельства) × 3 столбца (Метод / Что показывает / Граница метода).

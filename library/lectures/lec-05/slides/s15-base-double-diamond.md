@@ -8,6 +8,7 @@ learning_goal: "БАЗА: Double Diamond как несущий каркас ра
 learning_outcomes: [LO1]
 chapter_ref: "§2.1 [for-slide-s15]"
 interaction: none
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >

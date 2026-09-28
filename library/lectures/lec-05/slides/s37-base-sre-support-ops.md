@@ -8,6 +8,7 @@ learning_goal: "БАЗА: SRE + support-ops; явная плашка «ново�
 learning_outcomes: [LO1]
 chapter_ref: "§5.1 [for-slide-s37]"
 interaction: none
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >

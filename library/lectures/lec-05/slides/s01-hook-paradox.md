@@ -8,6 +8,7 @@ learning_goal: "Hook-парадокс: два факта одновременн�
 learning_outcomes: [LO6]
 chapter_ref: "§0.1 [for-slide-s01]"
 interaction: open_question
+protected: true
 verify_day_of: true
 hero_required: true
 meme_or_visual: >

@@ -7,7 +7,7 @@ assertion: "Тихий дрейф: доверие падает раньше, ч�
 learning_goal: "ИИ-ограничения: тихий дрейф + governance drift + что остаётся (эскалация, ответственность), LO3"
 learning_outcomes: [LO2, LO3]
 chapter_ref: "§5.3 [for-slide-s39]"
-interaction: none
+interaction: retrieval_pause
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >
@@ -30,6 +30,9 @@ meme_or_visual: >
 
 [Gold callout]
 Что остаётся: human escalation, accountability, incident-дисциплина — усилены автономностью ИИ, не отменены
+
+[Бейдж-пауза]
+**Вопрос залу: Назовите один сигнал в своей системе, который сегодня не попадает ни в один дашборд, но первым скажет, что качество упало.**
 
 ## Speaker notes
 

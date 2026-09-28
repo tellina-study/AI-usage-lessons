@@ -9,6 +9,7 @@ learning_goal: "KEYSTONE — петля обратной связи, 3 неза�
 learning_outcomes: [LO1]
 chapter_ref: "§0.4 [for-slide-s05]"
 interaction: none
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >

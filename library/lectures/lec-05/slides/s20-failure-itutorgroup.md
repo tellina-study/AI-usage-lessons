@@ -9,6 +9,7 @@ learning_outcomes: [LO2, LO6]
 chapter_ref: "§2.7 [for-slide-s20]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study: иконка «фильтр с жёстко закодированным правилом» (шестерёнка с датой рождения

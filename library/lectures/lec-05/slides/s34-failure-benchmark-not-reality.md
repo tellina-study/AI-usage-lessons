@@ -9,6 +9,7 @@ learning_outcomes: [LO6]
 chapter_ref: "§4.6 [for-slide-s34]"
 in_bucket: true
 interaction: none
+protected: true
 verify_day_of: false
 meme_or_visual: >
   case_study: 2 параллельных мини-кейса side-by-side — слева «медицина» (86.5% MedQA badge,

@@ -8,6 +8,7 @@ learning_goal: "БАЗА: MVP/BML + release-механика + Stage-Gate go/kil
 learning_outcomes: [LO1]
 chapter_ref: "§3.1, §3.2 [for-slide-s22]"
 interaction: none
+protected: true
 verify_day_of: false
 partial_out_strict_in: true
 meme_or_visual: >
@@ -25,7 +26,7 @@ meme_or_visual: >
 ## Body
 [Flow: Feature flag → Canary → Staged rollout → Rollback + отдельная иконка «бизнес-решение»]
 
-**Примитивы вы знаете из CI/CD** — новое здесь: чьё и по каким критериям решение они обслуживают
+**Примитивы вы знаете из CI/CD** — переключатель функции (feature flag), канареечный релиз, поэтапная раскатка, откат. Новое здесь: чьё и по каким критериям решение они обслуживают
 
 - MVP (Райс) = обучение, не отгрузка
 - Stage-Gate go/kill (Купер) — «воронка, не туннель»; пороги провала записаны числом заранее

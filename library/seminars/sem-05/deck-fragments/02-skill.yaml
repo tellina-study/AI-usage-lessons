@@ -1,0 +1,113 @@
+  # --- Блок 2. Скилл: описание-триггер и послойное раскрытие (14 слайдов, 19,5 мин) ---
+  - id: s24
+    file: slides/s24-divider-skill-nalog-na-kontekst.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Ступень 4 — скилл: файл инструкций уже платит налог за процедуру деплоя, которая нужна не в каждой сессии, — второе усиление разбирается по сигналу перегрузки, а не по порядку голосования"
+    learning_goal: "Разделитель ступени 4 (macro-уровень: gold 5-сегментный прогресс-бар пяти ступеней занятия, сегмент 2 — скилл). Тег называет масштаб кейса, не его исход"
+    visual:
+      pattern: section_divider_macro
+  - id: s25
+    file: slides/s25-problema-fayl-instruktsiy-vyros-vdvoe.md
+    type: problem_scenario
+    duration_min: 1.0
+    assertion: "Хук на месте; файл инструкций из-за процедуры деплоя вырос с сорока до восьмидесяти строк, грузится в каждую сессию, а нужен примерно в одной из десяти"
+    learning_goal: "Проблема ступени 4 — рост файла инструкций из-за процедуры деплоя на signup-landing, нейтральный тон: без вопроса, без карточек, без вывода"
+    visual:
+      pattern: problem_scenario
+  - id: s26
+    file: slides/s26-vopros-chtoby-agent-sam-ponyal.md
+    type: reflection_question
+    duration_min: 1.0
+    assertion: "Выбор из пяти карточек: куда вынести процедуру деплоя так, чтобы агент сам понял, когда её открыть"
+    learning_goal: "Открытый вопрос ступени 4 — вопрос с готовым набором вариантов, БЕЗ цифр, БЕЗ источников, БЕЗ таблицы разбора"
+    visual:
+      pattern: question_with_option_cards
+  - id: s27
+    file: slides/s27-issledovanie-chetyre-istochnika.md
+    type: research_evidence
+    duration_min: 1.0
+    assertion: "Четыре источника сходятся на одном: курированное, узкое описание-триггер поднимает успех задачи и защищает от деградации выбора, — а прямой экономики для кейса «один скилл про одну процедуру» ни один не измеряет"
+    learning_goal: "Свидетельства ступени 4 — таблица источник/тезис/сила доказательства (послойное раскрытие, SkillsBench, Skill Shadowing, Skill-Induced Failures) + честный пробел про масштаб демо-кейса"
+    visual:
+      pattern: evidence_table_with_gap
+  - id: s28
+    file: slides/s28-razbor-pyati-variantov.md
+    type: answer_breakdown
+    duration_min: 1.0
+    assertion: "Из пяти вариантов только скилл с описанием-триггером отдаёт решение о релевантности модели, не человеку и не хуку; файл инструкций уже платит за процедуру в девяти сессиях из десяти"
+    learning_goal: "Разбор пяти карточек ступени 4 — где работает / почему рано / что вместо, целевой ответ выделен"
+    visual:
+      pattern: answer_breakdown_table
+  - id: s29
+    file: slides/s29-cobuilding-skill-chyo-opisanie-imya.md
+    type: cobuilding
+    duration_min: 0.75
+    assertion: "Скилл `deploy: deploy` не может сработать по смыслу запроса — описание совпадает с именем каталога, и зал называет три недостающие части, а не готовую формулировку"
+    learning_goal: "Совместное формирование ступени 4, ход 1 — задача на исправление заведомо плохого скилла: три официальных антипаттерна описания + три недостающие части (что делает / когда использовать / когда НЕ использовать)"
+    visual:
+      pattern: cobuilding_bad_example_reveal
+  - id: s30
+    file: slides/s30-cobuilding-sobiraem-opisanie-i-telo.md
+    type: cobuilding
+    duration_min: 0.75
+    assertion: "Описание собирается из трёх частей в реальную формулировку из демо-репозитория, а тело — пять шагов, которые зал уже называл в сценарии проблемы"
+    learning_goal: "Совместное формирование ступени 4, ход 2 — сборка описания-триггера из трёх частей + напоминание тела скилла (пять шагов деплоя)"
+    visual:
+      pattern: cobuilding_description_assembly
+  - id: s31
+    file: slides/s31-artefakt-skill-md-i-dve-proverki.md
+    type: code_artifact
+    duration_min: 1.25
+    assertion: "Собранный SKILL.md — реальный файл в репозитории; файл инструкций одновременно худеет обратно до сорока строк, а скилл проверяется в обе стороны — срабатывает, когда нужно, и молчит, когда не нужно"
+    learning_goal: "Решение ступени 4 — реальный .claude/skills/deploy/SKILL.md, дельта дерева, свёрнутая таблица трёх уровней раскрытия и две проверки (позитивная и негативная)"
+    visual:
+      pattern: code_artifact
+  - id: s32
+    file: slides/s32-mekhanika-tri-urovnya-dva-chisla.md
+    type: mechanics
+    duration_min: 2.5
+    assertion: "Три уровня раскрытия официально задокументированы, но у первого уровня — цена метаданных — два разных числа в двух разных документах, и стоит показать оба, а не выбрать одно"
+    learning_goal: "Механика ступени 4 — три уровня загрузки как механизм, не число; два документа про цену уровня 1 (≈100 токенов/скилл vs 1% окна + потолок 1536 символов), честно поданное расхождение; иллюстрация 13×100≈1300 против бюджета ≈2000"
+    visual:
+      pattern: mechanics_disclosure_levels
+  - id: s33
+    file: slides/s33-mekhanika-kontrakt-i-podstanovka.md
+    type: mechanics
+    duration_min: 2.5
+    assertion: "Спецификация делает name и description обязательными, а Claude Code — рекомендательными; и когда фронтматтера нет вовсе, подставляется не имя вместо описания, а первая непустая строка файла — что и произошло в этом самом репозитории у двенадцати скиллов из тринадцати"
+    learning_goal: "Механика ступени 4 — контракт фронтматтера (два разных по модальности документа) + дефолты при отсутствии полей + живой пример курса (12 из 13 скиллов без фронтматтера, 1 рабочий положительный пример)"
+    visual:
+      pattern: mechanics_frontmatter_contract
+  - id: s34
+    file: slides/s34-mekhanika-kak-otladitsya.md
+    type: mechanics
+    duration_min: 2.0
+    assertion: "Четыре инструмента отладки закрывают вопросы по возрастанию точности, а из шести причин несрабатывания самая тихая — не отсутствие фронтматтера, а описание, слишком похожее на описание соседнего скилла"
+    learning_goal: "Механика ступени 4 — как отлаживается: /skills, /context, /skill-doctor, claude --debug; таблица шести причин несрабатывания с пометкой «тихо/не тихо»"
+    visual:
+      pattern: mechanics_debug_toolkit
+  - id: s35
+    file: slides/s35-proval-vredit-pokhozhim-i-chuzhoy-kod.md
+    type: failure_vignette
+    duration_min: 2.5
+    assertion: "Скилл может навредить, даже не будучи очевидно неуместным: 307 подтверждённых случаев вреда, 68,8% функциональных провалов — от скиллов, казавшихся релевантными; а установка чужого скилла — это установка стороннего кода с постоянными правами, не чтение текста"
+    learning_goal: "Провал ступени 4, слой 1 — вред от сработавшего скилла (307/125/68,8%, +451%, 16/84); слой 2 — скилл как чужой исполняемый код с постоянными правами (SkillScan 26,1%/5,2%/2,12×, ClawHub 341→824+, Cato CTRL/GIF Creator). Strict-in"
+    visual:
+      pattern: failure_vignette
+  - id: s36
+    file: slides/s36-kriterii-rano-i-ne-nuzhno.md
+    type: criteria_boundary
+    duration_min: 1.5
+    assertion: "Скилл рано ставить там, где процедура нужна каждой сессии, одноразовая, или правило нельзя нарушить ни разу; а набор скиллов из чужого списка «про запас» — не рано, а измеримо вредно: −21% успешности при 202 скиллах"
+    learning_goal: "Критерий ступени 4 — «здесь ещё рано» и «здесь не нужно вообще», с явным акцентом на деградацию библиотеки скиллов при запасливой установке"
+    visual:
+      pattern: criteria_checklist_and_boundary
+  - id: s37
+    file: slides/s37-os-zanyatiya-dvazhdy-oshiblas-intuitsiya.md
+    type: axis_placement
+    duration_min: 1.25
+    assertion: "Решаем — реактивно, по сигналу перегрузки файла инструкций; и интуиция ошиблась дважды: описание — не деталь, а условие срабатывания, а одобрение скилла — разовое, права — постоянные"
+    learning_goal: "Строка в ось занятия ступени 4 + мостик к разделу про MCP. Никогда не режется"
+    visual:
+      pattern: axis_placement

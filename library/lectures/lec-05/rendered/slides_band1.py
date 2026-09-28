@@ -15,7 +15,7 @@ from _helpers import (
     right_arrow, circle, chip, connector, add_image, icon, slide_title,
     gold_callout, teal_callout, footer, src, speaker_notes, load_notes,
     notes_with_sources, refs_of_slide, roadmap_bar, build_section_divider,
-    eli5_overview, meme_in_box, photo_in_box,
+    eli5_overview, meme_in_box, photo_in_box, check_point, src,
     NAV, DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, ICONS, CHARTS, ASSETS,
 )
@@ -215,10 +215,13 @@ def s04(p):
                 size=23, w=12.0, h=0.85)
 
     # outer big loop box
-    ocean_box(s, 0.55, 1.50, 12.25, 2.85, fill=SURFACE, stroke=MID,
+    ocean_box(s, 0.55, 1.34, 12.25, 3.00, fill=SURFACE, stroke=MID,
               stroke_pt=1.6)
-    text_box(s, x=0.80, y=1.62, w=6.0, h=0.35, text="Цикл продукта (Лекция 5)",
+    text_box(s, x=0.85, y=1.44, w=6.0, h=0.30, text="Цикл продукта (Лекция 5)",
              size=13, bold=True, color=MID)
+    text_box(s, x=0.85, y=1.74, w=6.0, h=0.30,
+             text="откуда берётся уверенность, что стоит писать этот код",
+             size=11, italic=True, color=SLATE)
     # GATE-B fix (audit 2026-09-07): the upper-left quadrant of this box used
     # to be ~45-50% blank — "Цикл продукта" was only NAMED, never SHOWN. Add
     # a compact 6-node mini-loop (small-scale reuse of the s03 icon-loop
@@ -226,7 +229,7 @@ def s04(p):
     # visible here, not just in the caption line below it. This is the
     # lecture's highest-stakes bridge slide (central-question payload).
     import math
-    mcx, mcy, mr = 2.55, 2.85, 0.72
+    mcx, mcy, mr = 2.05, 2.78, 0.66
     mnodes = ["search", "pencil", "hammer", "ruler", "headphones", "scale"]
     mcenters = []
     for i in range(6):
@@ -240,40 +243,47 @@ def s04(p):
                   width=(2.0 if i == 5 else 1.4), arrow_end=True)
     for i, ic in enumerate(mnodes):
         nx, ny = mcenters[i]
-        circle(s, nx - 0.22, ny - 0.22, 0.44, WHITE, stroke=MID, stroke_pt=1.2)
-        icon(s, ic, nx - 0.14, ny - 0.14, 0.28, "mid")
-    chip(s, 4.55, 2.62, 1.05, 0.42, "6 фаз", fill=GOLD, color=DEEP, size=12)
-    icon(s, "layers", 0.85, 3.75, 0.5, "teal")
-    text_box(s, x=1.50, y=3.75, w=6.05, h=0.55,
+        circle(s, nx - 0.20, ny - 0.20, 0.40, WHITE, stroke=MID, stroke_pt=1.2)
+        icon(s, ic, nx - 0.125, ny - 0.125, 0.25, "mid")
+    chip(s, 3.35, 2.57, 1.05, 0.42, "6 фаз", fill=GOLD, color=DEEP, size=12)
+    icon(s, "layers", 0.85, 3.74, 0.44, "teal")
+    text_box(s, x=1.42, y=3.70, w=5.35, h=0.55,
              text="исследование → дизайн → сборка/запуск → измерение → "
                   "эксплуатация → управление → снова исследование",
              size=11, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
     # inner small loop box nested inside "build" area
-    ocean_box(s, 7.9, 2.05, 4.65, 2.00, fill=WHITE, stroke=GOLD,
+    ocean_box(s, 7.05, 1.80, 5.50, 2.10, fill=WHITE, stroke=GOLD,
               stroke_pt=1.8)
-    text_box(s, x=8.10, y=2.20, w=4.30, h=0.32,
-             text="Цикл кода (Лекция 4)", size=11.5, bold=True, color=DEEP)
-    text_box(s, x=8.10, y=2.62, w=4.30, h=1.20,
+    icon(s, "git-branch", 7.30, 2.00, 0.46, "teal")
+    text_box(s, x=7.90, y=2.00, w=4.45, h=0.30,
+             text="Цикл кода (Лекция 4)", size=12.5, bold=True, color=DEEP)
+    text_box(s, x=7.90, y=2.34, w=4.45, h=0.30,
+             text="как надёжно писать код с ИИ", size=11, italic=True,
+             color=SLATE)
+    text_box(s, x=7.30, y=2.90, w=5.05, h=0.80,
              text="спека → ADR → план → PR → инцидент",
-             size=12, italic=True, color=SLATE, line_spacing=1.2,
+             size=13, italic=True, color=MID, line_spacing=1.2,
              anchor=MSO_ANCHOR.TOP)
-    icon(s, "git-branch", 8.10, 3.30, 0.5, "teal")
 
-    ocean_box(s, 0.55, 4.35, 12.25, 1.65)
-    text_box(s, x=0.85, y=4.48, w=11.65, h=1.4,
+    # ПРАВКА #212: несущая мысль слайда (формулировка владельца) — она же
+    # первая строка Body в slides/s04-*.md, поэтому занимает золотой слот.
+    # Прежний золотой текст про «единицу работы» живёт в заметках докладчика.
+    gold_callout(
+        s, 0.55, 4.46, 12.25, 0.90,
+        "Чтобы пользовательская ценность состоялась — то есть продукт "
+        "работал, был внедрён и кем-то выбран, — цикл кода приходится "
+        "обернуть в ещё один цикл. Без внешнего цикла выходит собранное и "
+        "никем не используемое: код есть, продукта нет.",
+        size=13, bold=True)
+
+    ocean_box(s, 0.55, 5.42, 12.25, 1.52)
+    text_box(s, x=0.85, y=5.52, w=11.65, h=1.32,
              text="Когда ИИ сделал сборку почти бесплатной — что стало "
                   "настоящим узким местом продукта, и на каждой фазе цикла: "
                   "какая классическая дисциплина остаётся, что ИИ ускоряет, "
                   "и где AI-first ломается?",
-             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.18)
-
-    gold_callout(
-        s, 0.55, 6.15, 12.25, 0.60,
-        "Единица работы Лекции 4 — pull request (запрос на слияние кода). "
-        "Единица работы здесь — "
-        "гипотеза, эксперимент, релиз-решение.",
-        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+             size=16.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.16)
     notes_with_sources(s, "s04")
     return s
 
@@ -483,39 +493,51 @@ def s09(p):
     ]
     cw, gap = 3.95, 0.20
     x0 = 0.55
-    y0 = 1.55
+    y0 = 1.48
     for i, (ic, head, body) in enumerate(rules):
         x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 1.85)
-        icon(s, ic, x + 0.24, y0 + 0.18, 0.5, "mid")
-        text_box(s, x=x + 0.24, y=y0 + 0.78, w=cw - 0.48, h=0.50, text=head,
+        ocean_box(s, x, y0, cw, 1.72)
+        icon(s, ic, x + 0.24, y0 + 0.14, 0.46, "mid")
+        text_box(s, x=x + 0.24, y=y0 + 0.70, w=cw - 0.48, h=0.48, text=head,
                  size=13, bold=True, color=DEEP, line_spacing=1.05)
-        text_box(s, x=x + 0.24, y=y0 + 1.30, w=cw - 0.48, h=0.50, text=body,
+        text_box(s, x=x + 0.24, y=y0 + 1.18, w=cw - 0.48, h=0.48, text=body,
                  size=10.5, italic=True, color=SLATE, line_spacing=1.05)
 
     # contrast: bad vs good question
-    by = 3.70
-    filled_rect(s, 0.55, by, 5.95, 1.35, SOFT_GREY, stroke=LIGHT,
+    by = 3.32
+    filled_rect(s, 0.55, by, 5.95, 1.12, SOFT_GREY, stroke=LIGHT,
                 stroke_pt=1.0, radius=True, radius_adj=0.07)
-    text_box(s, x=0.80, y=by + 0.15, w=5.45, h=0.35, text="Плохо",
-             size=12.5, bold=True, color=SLATE)
-    text_box(s, x=0.80, y=by + 0.52, w=5.45, h=0.75,
+    text_box(s, x=0.80, y=by + 0.11, w=5.45, h=0.32, text="Плохо",
+             size=12, bold=True, color=SLATE)
+    text_box(s, x=0.80, y=by + 0.46, w=5.45, h=0.58,
              text="«Заплатили бы $20 в месяц?»", size=13.5, italic=True,
              color=SLATE, line_spacing=1.1)
-    filled_rect(s, 6.75, by, 6.05, 1.35, TEAL_TINT, stroke=TEAL,
+    filled_rect(s, 6.75, by, 6.05, 1.12, TEAL_TINT, stroke=TEAL,
                 stroke_pt=1.6, radius=True, radius_adj=0.07)
-    text_box(s, x=7.00, y=by + 0.15, w=5.55, h=0.35, text="Хорошо",
-             size=12.5, bold=True, color=TEAL)
-    text_box(s, x=7.00, y=by + 0.52, w=5.55, h=0.75,
+    text_box(s, x=7.00, y=by + 0.11, w=5.55, h=0.32, text="Хорошо",
+             size=12, bold=True, color=TEAL)
+    text_box(s, x=7.00, y=by + 0.46, w=5.55, h=0.58,
              text="«Сколько вы платите сегодня за ближайший аналог?»",
              size=13.5, bold=True, color=DEEP, line_spacing=1.1)
 
+    # ПРАВКА #212: определение JTBD вынесено в видимый слой (правило курса —
+    # определение доставлено, только если оно на слайде или в речи).
+    # Прежняя золотая плашка (качественное vs количественное) целиком
+    # сохранена в заметках докладчика.
     gold_callout(
-        s, 0.55, 5.35, 12.25, 0.85,
-        "Качественное отвечает «почему» на маленькой выборке и порождает "
-        "гипотезы; количественное отвечает «сколько» в масштабе и проверяет "
-        "уже существующую гипотезу — не иерархия, а разделение труда.",
+        s, 0.55, 4.58, 12.25, 0.92,
+        "JTBD (Jobs-to-be-Done), «работа, на которую нанимают продукт» — "
+        "смежная рамка Кристенсена: спрашиваем не о предпочтениях, а об "
+        "обстоятельстве последней покупки, и получаем таймлайн решения, а не "
+        "список мнений.",
         size=12.5, bold=True)
+
+    check_point(
+        s, 0.55, 5.64, 12.25,
+        "«Как вам идея — ассистент, который сам разбирает вашу почту?» "
+        "Какое из трёх правил нарушил этот вопрос и как переспросить, "
+        "чтобы получить факт?",
+        h=0.88, size=12.5)
     refs_of_slide(s, "s09")
     notes_with_sources(s, "s09")
     return s
@@ -540,28 +562,28 @@ def s10(p):
     ]
     cw, gap = 3.95, 0.20
     x0 = 0.55
-    y0 = 1.55
+    y0 = 1.48
     for i, (ic, head, body) in enumerate(blocks):
         x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 2.05)
-        icon(s, ic, x + 0.24, y0 + 0.20, 0.56, "mid")
-        text_box(s, x=x + 0.24, y=y0 + 0.88, w=cw - 0.48, h=0.50, text=head,
+        ocean_box(s, x, y0, cw, 1.95)
+        icon(s, ic, x + 0.24, y0 + 0.18, 0.52, "mid")
+        text_box(s, x=x + 0.24, y=y0 + 0.82, w=cw - 0.48, h=0.48, text=head,
                  size=12, bold=True, color=MID, line_spacing=1.05)
-        text_box(s, x=x + 0.24, y=y0 + 1.44, w=cw - 0.48, h=0.55, text=body,
+        text_box(s, x=x + 0.24, y=y0 + 1.34, w=cw - 0.48, h=0.52, text=body,
                  size=11, color=DEEP, line_spacing=1.10)
         if i == 0:
-            chip(s, x + cw - 1.55, y0 + 0.20, 1.30, 0.36, "проверь источник",
+            chip(s, x + cw - 1.55, y0 + 0.18, 1.30, 0.36, "проверь источник",
                  fill=GOLD, color=DEEP, size=9)
 
     gold_callout(
-        s, 0.55, 3.90, 12.25, 0.72,
+        s, 0.55, 3.62, 12.25, 0.70,
         "97% исследователей используют ИИ — лишь ~8% доверяют ИИ-персонам "
         "как данным [3]",
         size=14.5, bold=True, align=PP_ALIGN.CENTER)
 
-    filled_rect(s, 0.55, 4.85, 12.25, 1.35, SOFT_GREY, stroke=LIGHT,
+    filled_rect(s, 0.55, 4.46, 12.25, 1.28, SOFT_GREY, stroke=LIGHT,
                 stroke_pt=1.0, radius=True, radius_adj=0.06)
-    text_box(s, x=0.85, y=4.98, w=11.65, h=1.10,
+    text_box(s, x=0.85, y=4.56, w=11.65, h=1.08,
              text="Обязательная практика: проверять важные данные напрямую "
                   "по источнику до использования в решении. Синтетические "
                   "пользователи — только пре-исследование (пилотаж гайда, "
@@ -569,6 +591,13 @@ def s10(p):
                   "доказательство для решения «продолжать/остановить».",
              size=12.5, color=DEEP, line_spacing=1.15,
              anchor=MSO_ANCHOR.MIDDLE)
+
+    check_point(
+        s, 0.55, 5.90, 12.25,
+        "ИИ-персона прошла ваш сценарий знакомства с продуктом целиком и "
+        "назвала функцию отличной. Что в устройстве такого источника мешает "
+        "ему сказать «нет»?",
+        h=0.88, size=12.5)
     refs_of_slide(s, "s10")
     notes_with_sources(s, "s10")
     return s
@@ -583,34 +612,58 @@ def s11(p):
     slide_title(s, "Синтетический собеседник не может произвести несогласие",
                 size=22, w=12.2, h=0.85)
 
-    lx, lw = 0.55, 4.30
-    ocean_box(s, lx, 1.55, lw, 3.35, fill=SURFACE, stroke=LIGHT,
+    # LEFT: «зеркало согласия» + ПРАВКА #212 — количественная оценка
+    # подхалимства (раньше на слайде не было ни одной цифры).
+    lx, lw = 0.55, 4.55
+    ocean_box(s, lx, 1.48, lw, 3.88, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.5)
-    icon(s, "smile", lx + lw / 2 - 0.55, 1.90, 1.10, "light")
-    text_box(s, x=lx + 0.25, y=3.15, w=lw - 0.50, h=1.55,
-             text="Зеркало согласия: синтетический собеседник структурно не "
-                  "может отразить несогласие — у него нет реального прошлого, "
-                  "способного противоречить формулировке вопроса.",
-             size=12.5, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.18)
+    icon(s, "smile", lx + lw / 2 - 0.42, 1.64, 0.84, "light")
+    text_box(s, x=lx + 0.25, y=2.58, w=lw - 0.50, h=0.34,
+             text="Зеркало согласия", size=14, bold=True, color=MID,
+             align=PP_ALIGN.CENTER)
+    stats = [("72–91%", "при явном согласии", GOLD),
+             ("7–28%", "при явном несогласии", LIGHT)]
+    for i, (num, lbl, col) in enumerate(stats):
+        sx = lx + 0.22 + i * 2.10
+        filled_rect(s, sx, 3.02, 1.90, 0.98,
+                    (GOLD_TINT if i == 0 else SURFACE), stroke=col,
+                    stroke_pt=1.6, radius=True, radius_adj=0.10)
+        text_box(s, x=sx, y=3.10, w=1.90, h=0.48, text=num, size=21,
+                 bold=True, color=(DEEP if i == 0 else col),
+                 align=PP_ALIGN.CENTER)
+        text_box(s, x=sx + 0.05, y=3.60, w=1.80, h=0.34, text=lbl, size=9.5,
+                 color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.0)
+    text_box(s, x=lx + 0.25, y=4.12, w=lw - 0.50, h=0.86,
+             text="Сдвиг тона ответа модели к позитиву («feedback positivity», "
+                  "5 моделей) — это не «частота отрицательного ответа».",
+             size=11, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.14)
+    src(s, lx + 0.25, 5.00, lw - 0.50,
+        "Sharma и др., 2023 — Figure 1, ICLR 2024", size=9.5,
+        align=PP_ALIGN.CENTER)
 
-    rx, rw = 5.15, 7.65
+    rx, rw = 5.35, 7.45
     crit = [
         "Высокая цена ошибки «продолжать/остановить»",
         "Нужно реальное прошлое, не правдоподобное",
         "Нужна валидация обязательством, не мнением",
     ]
-    text_box(s, x=rx, y=1.55, w=rw, h=0.40,
+    text_box(s, x=rx, y=1.48, w=rw, h=0.40,
              text="Когда живое интервью строго лучше ИИ-синтеза", size=14,
              bold=True, color=MID)
     for i, c in enumerate(crit):
-        y = 2.10 + i * 0.85
-        ocean_box(s, rx, y, rw, 0.70, fill=SURFACE, stroke=MID, stroke_pt=1.3)
-        text_box(s, x=rx + 0.65, y=y, w=rw - 0.85, h=0.70, text=f"{i+1}. {c}",
+        y = 1.98 + i * 0.82
+        ocean_box(s, rx, y, rw, 0.68, fill=SURFACE, stroke=MID, stroke_pt=1.3)
+        text_box(s, x=rx + 0.65, y=y, w=rw - 0.85, h=0.68, text=f"{i+1}. {c}",
                  size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-        icon(s, "shield-alert", rx + 0.14, y + 0.15, 0.42, "mid")
+        icon(s, "shield-alert", rx + 0.14, y + 0.14, 0.40, "mid")
+    text_box(s, x=rx, y=4.52, w=rw, h=0.84,
+             text="У синтетического собеседника нет реального прошлого, "
+                  "способного противоречить формулировке вопроса, — поэтому "
+                  "несогласие он не производит в принципе.",
+             size=12.5, color=DEEP, line_spacing=1.16)
 
     gold_callout(
-        s, 0.55, 5.10, 12.25, 0.95,
+        s, 0.55, 5.56, 12.25, 0.92,
         "ИИ-резюме теряет 20-40% деталей интервью (Torres) [1], если пропущен "
         "шаг «сначала по отдельности» — прослеживаемый до конкретного шага "
         "сбой, не расплывчатое «ИИ иногда ошибается».",
@@ -638,33 +691,37 @@ def s12(p):
 
     # RIGHT: split comparison 3/7 vs 7/7
     rx, rw = 5.35, 7.45
-    ocean_box(s, rx, 1.55, rw, 1.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=rx + 0.24, y=1.63, w=3.0, h=0.36,
+    text_box(s, x=rx, y=1.52, w=rw, h=0.38,
+             text="NN/g: контролируемое сравнение на сценарии знакомства "
+                  "с продуктом",
+             size=12.5, bold=True, color=MID, line_spacing=1.05)
+    ocean_box(s, rx, 1.98, rw, 1.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
+    text_box(s, x=rx + 0.24, y=2.06, w=3.0, h=0.36,
              text="Реальные люди", size=12.5, bold=True, color=MID)
     for i in range(7):
         cxx = rx + 0.28 + i * 0.42
         ok = i < 3
-        icon(s, "check-check" if ok else "x", cxx, 2.02, 0.36,
+        icon(s, "check-check" if ok else "x", cxx, 2.45, 0.36,
              "mid" if ok else "light")
-    text_box(s, x=rx + 3.35, y=1.75, w=rw - 3.6, h=0.7,
+    text_box(s, x=rx + 3.35, y=2.18, w=rw - 3.6, h=0.7,
              text="3 из 7 — «надуманно и бесполезно»", size=12, bold=True,
              color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
 
-    ocean_box(s, rx, 2.75, rw, 1.05, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.8)
-    text_box(s, x=rx + 0.24, y=2.83, w=3.0, h=0.36,
+    ocean_box(s, rx, 3.18, rw, 1.05, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.8)
+    text_box(s, x=rx + 0.24, y=3.26, w=3.0, h=0.36,
              text="Синт-панель", size=12.5, bold=True, color=DEEP)
     for i in range(7):
         cxx = rx + 0.28 + i * 0.42
-        icon(s, "check-check", cxx, 3.22, 0.36, "gold")
-    text_box(s, x=rx + 3.35, y=2.95, w=rw - 3.6, h=0.7,
+        icon(s, "check-check", cxx, 3.65, 0.36, "gold")
+    text_box(s, x=rx + 3.35, y=3.38, w=rw - 3.6, h=0.7,
              text="7 из 7 — «меняет правила игры»", size=12, bold=True,
              color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
-    text_box(s, x=rx, y=3.95, w=rw, h=0.55,
+    text_box(s, x=rx, y=4.36, w=rw, h=0.38,
              text="Одна и та же фича — противоположные вердикты",
              size=12.5, italic=True, color=SLATE)
 
     gold_callout(
-        s, 0.55, 4.90, 12.25, 1.05,
+        s, 0.55, 5.12, 12.25, 1.05,
         "Критерий: синтетический выход дисквалифицирован для решения "
         "«продолжать/остановить» по построению, а не из-за невезения "
         "прогона. Альтернатива: до-исследовательская роль + реальное "
@@ -679,48 +736,89 @@ def s12(p):
 # s13a - FAILURE on-point #3: IBM Watson for Oncology
 # ============================================================
 def s13a(p):
+    """ПРАВКА #212: тип слайда сменён case_study -> comparison. Глава §1.9
+    переписана как ДВА НЕЗАВИСИМЫХ провала одной корпорации с разными
+    корневыми причинами (данные vs управление проектом); две равные колонки
+    передают это точнее, чем одна линейная история про «$62 млн».
+    Колонка A — Primary mid, колонка B — Teal: два механизма отказа должны
+    читаться как разные, а не как оттенки одного."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "$62 млн — и ни одного пролеченного пациента",
-                size=23, w=12.2, h=0.85)
+    slide_title(s, "Один бренд, два провала: данные подвели одну систему, "
+                   "закупка — другую",
+                size=19, w=12.3, h=0.62, y=0.36)
 
-    # scale visual
-    lx = 0.55
-    ocean_box(s, lx, 1.55, 5.55, 2.55, fill=SURFACE, stroke=MID,
-              stroke_pt=1.5)
-    icon(s, "scale", lx + 2.35, 1.70, 0.9, "mid")
-    text_box(s, x=lx + 0.25, y=2.70, w=2.4, h=0.75,
-             text="$62 млн", size=22, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER)
-    text_box(s, x=lx + 2.9, y=2.70, w=2.4, h=0.75,
-             text="0 пациентов", size=22, bold=True, color=TEAL,
-             align=PP_ALIGN.CENTER)
-    text_box(s, x=lx + 0.25, y=3.55, w=5.05, h=0.45,
-             text="MD Anderson: партнёрство закрыто (2016) [1]", size=11.5,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    chip(s, 0.55, 1.14, 2.95, 0.42, "IBM Watson Health", fill=MID,
+         color=WHITE, size=13)
 
-    rx, rw = 6.35, 6.45
-    text_box(s, x=rx, y=1.55, w=rw, h=0.35,
-             text="IBM Watson for Oncology, с 2012", size=14, bold=True,
-             color=MID)
-    bullets = [
-        "Внутренние документы: рекомендации «небезопасные и некорректные» [1]",
-        "Обучен на гипотетических кейсах горстки онкологов MSK — не на "
-        "реальных исходах [2]",
+    cols = [
+        dict(x=0.55, stroke=MID, tint=MID_TINT, ivar="mid", icn="flask-conical",
+             head="Случай A — Watson for Oncology",
+             sub="Memorial Sloan Kettering, с 2012",
+             bullets=[
+                 "Коммерческий запуск 2015; внутренние документы: "
+                 "рекомендации «небезопасные и некорректные»",
+                 "Бевацизумаб гипотетическому пациенту с активным "
+                 "кровотечением — вопреки предупреждению производителя",
+             ],
+             cause="Причина: обучен на малом числе синтетических, "
+                   "гипотетических кейсов горстки онкологов MSK — не на "
+                   "реальных исходах [2]",
+             ccol=MID,
+             stat="STAT News · 25 июля 2018 [1]", stat_gold=False),
+        dict(x=6.75, stroke=TEAL, tint=TEAL_TINT, ivar="teal",
+             icn="file-warning",
+             head="Случай B — Oncology Expert Advisor",
+             sub="MD Anderson, 2013–2016",
+             bullets=[
+                 "Контракт через 12 продлений вырос с $2,4 млн до "
+                 "$39,2 млн IBM + $23 млн PwC",
+                 "Закрыт в сентябре 2016 — без единого пролеченного пациента",
+             ],
+             cause="Причина по аудиту University of Texas System: обход "
+                   "конкурсных закупочных процедур + дефицит донорского "
+                   "финансирования ≈ $11,6 млн — не про данные и не про "
+                   "модель",
+             ccol=TEAL,
+             stat="≈ $62 млн  →  0 пациентов", stat_gold=True),
     ]
-    for i, b in enumerate(bullets):
-        y = 2.05 + i * 0.95
-        icon(s, "user-x" if i else "users", rx, y, 0.42, "light")
-        text_box(s, x=rx + 0.55, y=y - 0.05, w=rw - 0.55, h=0.85, text=b,
-                 size=12.5, color=DEEP, line_spacing=1.12)
+    cw = 6.05
+    for c in cols:
+        x = c["x"]
+        ocean_box(s, x, 1.70, cw, 3.60, fill=SURFACE, stroke=c["stroke"],
+                  stroke_pt=1.6)
+        icon(s, c["icn"], x + 0.24, 1.86, 0.50, c["ivar"])
+        text_box(s, x=x + 0.86, y=1.86, w=cw - 1.10, h=0.32, text=c["head"],
+                 size=13, bold=True, color=c["ccol"], line_spacing=1.05)
+        text_box(s, x=x + 0.86, y=2.19, w=cw - 1.10, h=0.28, text=c["sub"],
+                 size=10.5, italic=True, color=SLATE, line_spacing=1.0)
+        by = 2.56
+        for b in c["bullets"]:
+            text_box(s, x=x + 0.26, y=by, w=cw - 0.52, h=0.56, text="• " + b,
+                     size=11.5, color=DEEP, line_spacing=1.14)
+            by += 0.60
+        filled_rect(s, x + 0.26, 3.80, cw - 0.52, 0.42,
+                    (GOLD_TINT if c["stat_gold"] else WHITE),
+                    stroke=(GOLD if c["stat_gold"] else LIGHT),
+                    stroke_pt=(1.6 if c["stat_gold"] else 1.0), radius=True,
+                    radius_adj=0.14)
+        text_box(s, x=x + 0.26, y=3.80, w=cw - 0.52, h=0.42, text=c["stat"],
+                 size=(14 if c["stat_gold"] else 11), bold=c["stat_gold"],
+                 italic=(not c["stat_gold"]),
+                 color=(DEEP if c["stat_gold"] else SLATE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        filled_rect(s, x + 0.26, 4.32, cw - 0.52, 0.86, c["tint"],
+                    stroke=c["stroke"], stroke_pt=1.2, radius=True,
+                    radius_adj=0.09)
+        text_box(s, x=x + 0.42, y=4.36, w=cw - 0.84, h=0.78, text=c["cause"],
+                 size=10.5, bold=True, color=DEEP, line_spacing=1.10,
+                 anchor=MSO_ANCHOR.MIDDLE)
 
     gold_callout(
-        s, 0.55, 4.35, 12.25, 1.15,
-        "Критерий: домен с высокой ценой ошибки + только "
-        "синтетические/гипотетические данные под рекомендацией = продукт не "
-        "готов, каким бы впечатляющим ни было демо. Альтернатива: система на "
-        "доказательных клинических руководствах с прозрачной "
-        "трассируемостью источника.",
+        s, 0.55, 5.50, 12.25, 0.94,
+        "Два независимых механизма отказа одной корпорации: непригодные "
+        "данные против несостоятельного управления проектом. Не всякий "
+        "дорогой провал с ИИ на обложке объясняется самим ИИ.",
         size=13, bold=True)
     refs_of_slide(s, "s13a")
     notes_with_sources(s, "s13a")

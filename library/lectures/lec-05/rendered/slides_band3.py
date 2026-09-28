@@ -9,7 +9,7 @@ from _helpers import (
     right_arrow, circle, chip, connector, icon, slide_title,
     gold_callout, teal_callout, notes_with_sources, refs_of_slide,
     build_section_divider,
-    eli5_overview, meme_in_box, photo_in_box, add_image,
+    eli5_overview, meme_in_box, photo_in_box, add_image, check_point, src,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
 )
@@ -81,11 +81,16 @@ def s29(p):
                   "до теста.",
              size=12.5, color=DEEP, line_spacing=1.2)
     gold_callout(
-        s, 0.55, 4.85, 12.25, 0.95,
+        s, 0.55, 4.85, 12.25, 0.88,
         "Только случайное деление групп даёт причинность: разница между "
         "Control и Treatment вызвана вашим изменением, а не сезоном, рекламой "
         "или везением [2].",
         size=13, bold=True)
+    check_point(
+        s, 0.55, 5.92, 12.25,
+        "OEC вырос на 8% на третий день теста, p < 0,05. Останавливаете тест "
+        "и раскатываете?",
+        h=0.80, size=12.5)
     refs_of_slide(s, "s29")
     notes_with_sources(s, "s29")
     return s
@@ -431,22 +436,31 @@ def s38(p):
             right_arrow(s, x + cw + 0.05, y0 + 0.35, gap - 0.10, 0.25,
                         fill=LIGHT)
     # LLMOps card + PII warning
-    ocean_box(s, 0.55, 3.75, 7.55, 1.15, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=0.80, y=3.85, w=7.05, h=0.95,
-             text="LLMOps/AgentOps: дрейф данных vs дрейф концепта · runtime "
-                  "guardrails · circuit breaker (предохранитель). Guardian "
-                  "Agents (категория Gartner) [2] — агенты, следящие за агентами.",
-             size=12, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
-    filled_rect(s, 8.30, 3.75, 4.50, 1.15, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
+    # ПРАВКА #212: различение LLMOps и AgentOps вынесено в видимый слой —
+    # раньше на слайде стояла только сдвоенная аббревиатура без расшифровки.
+    ocean_box(s, 0.55, 3.66, 7.55, 2.02, fill=SURFACE, stroke=MID, stroke_pt=1.4)
+    text_box(s, x=0.80, y=3.82, w=7.05, h=0.30,
+             text="LLMOps / AgentOps", size=13, bold=True, color=MID)
+    text_box(s, x=0.80, y=4.16, w=7.05, h=0.72,
+             text="Эксплуатация моделей и эксплуатация агентов: LLMOps следит "
+                  "за одним вызовом (промпт, ответ, стоимость), AgentOps — за "
+                  "цепочкой шагов и вызовов инструментов целиком.",
+             size=11.5, color=DEEP, line_spacing=1.14)
+    text_box(s, x=0.80, y=4.94, w=7.05, h=0.60,
+             text="Дрейф данных против дрейфа концепта · защитные правила "
+                  "во время работы · предохранитель (circuit breaker) · Guardian Agents "
+                  "(категория Gartner) [2] — агенты, следящие за агентами.",
+             size=11, color=SLATE, line_spacing=1.14)
+    filled_rect(s, 8.30, 3.66, 4.50, 2.02, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
                 radius=True, radius_adj=0.08)
-    icon(s, "lock", 8.55, 3.98, 0.5, "gold")
-    text_box(s, x=9.20, y=3.85, w=3.4, h=0.95,
+    icon(s, "lock", 8.55, 3.94, 0.5, "gold")
+    text_box(s, x=9.20, y=3.88, w=3.4, h=1.60,
              text="Не отправлять регулируемые PII (перс. данные) во внешний "
                   "трейсинг без анонимизации или self-host.",
              size=11.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.12)
     gold_callout(
-        s, 0.55, 5.05, 12.25, 0.90,
+        s, 0.55, 5.78, 12.25, 0.86,
         "Инфраструктурный мониторинг видит «сервис жив»; трейсинг видит «ответы "
         "деградируют»: дрейф галлюцинаций, сбои поиска, регрессию промптов.",
         size=13, bold=True)
@@ -486,6 +500,11 @@ def s39(p):
         "Что остаётся: эскалация к человеку, ответственность, инцидент-"
         "дисциплина — усилены автономностью ИИ, не отменены ею.",
         size=12.5, bold=True)
+    check_point(
+        s, 0.55, 6.06, 12.25,
+        "Назовите один сигнал в своей системе, который сегодня не попадает "
+        "ни в один дашборд, но первым скажет, что качество упало.",
+        h=0.80, size=12.5)
     notes_with_sources(s, "s39")
     return s
 

@@ -498,6 +498,31 @@ def teal_callout(slide, x, y, w, h, text, *, size=14, bold=False,
              align=align, line_spacing=1.18)
 
 
+def check_point(slide, x, y, w, text, *, h=0.80, size=12.5,
+                label="ВОПРОС ЗАЛУ"):
+    """Точка проверки понимания — единый бейдж для всей деки (issue #212).
+
+    Один узнаваемый образец, одинаковый на КАЖДОМ слайде, где .md содержит
+    блок «[Бейдж-пауза]»: белая карточка с золотой рамкой 2pt, золотой кружок
+    со знаком вопроса слева, золотая надпись-метка и сам вопрос залу.
+
+    Намеренно НЕ повторяет gold_callout (тот — заливка GOLD_TINT без иконки):
+    на многих слайдах бейдж соседствует с золотой плашкой-выводом, и две
+    одинаковые золотые полосы читались бы как один блок.
+    """
+    filled_rect(slide, x, y, w, h, WHITE, stroke=GOLD, stroke_pt=2.0,
+                radius=True, radius_adj=0.10)
+    d = 0.44
+    cy = y + (h - d) / 2.0
+    circle(slide, x + 0.20, cy, d, GOLD)
+    icon(slide, "circle-help", x + 0.20 + 0.085, cy + 0.085, d - 0.17, "white")
+    text_runs(slide, x + 0.82, y + 0.05, w - 1.05, h - 0.10,
+              [{"text": label + "   ", "size": 10.5, "bold": True,
+                "color": GOLD},
+               {"text": text, "size": size, "bold": True, "color": DEEP}],
+              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.16)
+
+
 def footer(slide, text):
     text_box(slide, x=0.55, y=7.04, w=12.25, h=0.34, text=text,
              size=12, italic=True, color=LIGHT, align=PP_ALIGN.LEFT,
@@ -1022,12 +1047,11 @@ SLIDE_REFS = {
         ("4", "Gartner (7 апр. 2026, 782 I&O-лидеров)",
          "gartner_io_stall_2026",
          "28% ИИ-кейсов в I&O полностью успешны; 20% — провал", True),
-        ("5", "BCG — Closing the AI Impact Gap",
+        ("5", "BCG AI Radar 2025 (янв. 2025)",
          "bcg_ai_impact_gap",
          "60% компаний не отслеживают ни одного финансового KPI, "
-         "привязанного к ценности ИИ; publish-дата на сайте BCG "
-         "расходится с датой в research-досье — см. owner follow-up",
-         True),
+         "привязанного к ценности ИИ; не путать с сентябрьским отчётом BCG "
+         "«The Widening AI Value Gap» (n=1250) — другие заголовочные цифры"),
     ],
     "s48": [
         ("1", "Business Standard (апр. 2024) — Just Walk Out",
@@ -1098,6 +1122,7 @@ NAV = [
     ("4", "Измерение"),
     ("5", "Поддержка"),
     ("6", "Управление"),
+    ("7", "Обобщение"),          # issue #212 — Раздел 7 (синтез, s50-s55)
 ]
 
 

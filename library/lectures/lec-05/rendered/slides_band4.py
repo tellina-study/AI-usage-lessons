@@ -8,7 +8,7 @@ from _helpers import (
     right_arrow, circle, chip, connector, icon, slide_title,
     gold_callout, teal_callout, notes_with_sources, refs_of_slide,
     build_section_divider,
-    eli5_overview, meme_in_box, photo_in_box, add_image,
+    eli5_overview, meme_in_box, photo_in_box, add_image, check_point, src,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
 )
@@ -138,10 +138,15 @@ def s46(p):
                   "заявляет вершину шкалы.",
              size=12, color=DEEP, line_spacing=1.18)
     gold_callout(
-        s, 0.55, 5.35, 12.25, 0.72,
+        s, 0.55, 5.25, 12.25, 0.72,
         "Пять независимых источников сходятся в одном: выигрывает не тот, у "
         "кого лучше модель, а тот, кто перестроил команды и управление под неё.",
         size=12.5, bold=True)
+    check_point(
+        s, 0.55, 6.08, 12.25,
+        "Вам показывают заголовок «95% ИИ-пилотов провалились». Какой первый "
+        "вопрос вы задаёте этой цифре?",
+        h=0.80, size=12.5)
     refs_of_slide(s, "s46")
     notes_with_sources(s, "s46")
     return s
@@ -185,10 +190,12 @@ def s47(p):
                  size=10, color=DEEP, line_spacing=1.0)
     filled_rect(s, 8.75, 5.35, 4.05, 1.55, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
                 radius=True, radius_adj=0.08)
+    # ПРАВКА #212 (фактическая): цифра принадлежит BCG AI Radar 2025
+    # (январь 2025, выборка 1803), а НЕ сентябрьскому отчёту BCG.
     text_box(s, x=8.95, y=5.45, w=3.65, h=1.35,
-             text="BCG: 60% компаний не отслеживают ни одного финансового "
-                  "KPI, привязанного к ценности ИИ [5] — вот почему цифры "
-                  "провалов так легко раздуваются.",
+             text="BCG AI Radar 2025 (январь 2025, 1803 руководителя): 60% "
+                  "компаний не отслеживают ни одного финансового KPI, "
+                  "привязанного к ценности ИИ [5].",
              size=10.5, bold=True, color=DEEP, line_spacing=1.15,
              anchor=MSO_ANCHOR.MIDDLE)
     refs_of_slide(s, "s47")
@@ -245,51 +252,73 @@ def s48(p):
 
 
 def s49(p):
+    """ПРАВКА #212: слайд разгружен — чек-лист «прежде чем делать фазу
+    AI-first» и блок вопросов уехали на новые s54/s55, здесь остаётся только
+    keystone-payoff: разрешение парадокса + что изменилось / что осталось
+    человеческим. Визуал понижен с hero до обычного Ocean-блока: замыкающий
+    hero всей деки теперь на последнем слайде (s55), см. slides/s49-*.md и
+    slides/s55-*.md.
+    """
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Сборка бесплатна — дефицит теперь: суждение, а не исполнение",
-                size=20, w=12.3, h=0.62, y=0.22)
-    # GATE-B fix (P0 #3): closing hero was schematic-only (hexagon loop —
-    # already shown 3x on s03/s05/s43, so repeating it here would ALSO be a
-    # cross-slide redundancy violation). Replaced with a REAL photo hero
-    # (>=40% area) via 6-tier acquisition: NASA Mission Control (Apollo 16),
-    # public domain, Wikimedia Commons Tier 2 — humans exercising judgment
-    # over a live, highly-automated operation is a direct, non-metaphorical
-    # match for "человек в центре петли, суждение — дефицитный ресурс".
-    # Cropped to a 12.25x3.55in banner (~43.5% of slide area) — see
-    # assets/screenshots/s49-missioncontrol-crop.png + .url sidecar for the
-    # source photo + acquisition log.
-    photo_in_box(s, "s49-missioncontrol-crop.png", 0.55, 0.92, 12.25, 3.55,
+                size=21, w=12.3, h=0.66, y=0.30)
+
+    # РЯД A: реальное фото (обычный визуал, не hero) + разрешение парадокса
+    photo_in_box(s, "s49-missioncontrol-crop.png", 0.55, 1.12, 6.25, 1.92,
                  pad=0.09)
-    text_box(s, x=0.70, y=4.50, w=9.0, h=0.28,
-             text="Центр управления NASA, Apollo 16 — люди принимают решение, "
-                  "пока автоматика работает",
-             size=10.5, italic=True, color=SLATE)
+    src(s, 0.58, 3.10, 6.25,
+        "Центр управления NASA, Apollo 16 — решение принимают люди", size=9.5)
+
+    ocean_box(s, 7.05, 1.12, 5.75, 1.92, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    text_box(s, x=7.30, y=1.26, w=5.25, h=0.32,
+             text="Разрешение парадокса, с которого начали",
+             size=13, bold=True, color=MID)
+    text_box(s, x=7.30, y=1.66, w=5.25, h=1.24,
+             text="Сборка стала почти бесплатной — правда. Успех редок — тоже "
+                  "правда, но точнее: 25% среди дошедших до пилота, а не 5% "
+                  "«всех».",
+             size=12.5, color=DEEP, line_spacing=1.18)
+
+    # РЯД B: что изменилось / что осталось человеческим
+    changed = ["Стоимость сборки", "Скорость исследования",
+               "Скорость прототипа", "Скорость наблюдения"]
+    human = ["Намерение",
+             "Суждение о сигнале против шума",
+             "Ответственность за каждый ответ продукта",
+             "Решение «здесь ИИ не тот инструмент»",
+             "Управление с названным владельцем"]
+
+    ocean_box(s, 0.55, 3.42, 6.25, 2.02, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    icon(s, "repeat", 0.80, 3.56, 0.40, "teal")
+    text_box(s, x=1.34, y=3.58, w=5.2, h=0.32, text="Что изменилось",
+             size=13.5, bold=True, color=TEAL)
+    for i, t in enumerate(changed):
+        y = 4.04 + i * 0.34
+        circle(s, 0.86, y + 0.09, 0.13, TEAL)
+        text_box(s, x=1.18, y=y, w=5.4, h=0.30, text=t, size=12, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
+
+    ocean_box(s, 7.05, 3.42, 5.75, 2.02, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    icon(s, "users", 7.30, 3.56, 0.40, "mid")
+    text_box(s, x=7.84, y=3.58, w=4.7, h=0.32,
+             text="Что осталось человеческим", size=13.5, bold=True,
+             color=MID)
+    for i, t in enumerate(human):
+        y = 3.94 + i * 0.29
+        circle(s, 7.36, y + 0.08, 0.13, GOLD)
+        text_box(s, x=7.68, y=y, w=4.95, h=0.28, text=t, size=11.5,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+
     gold_callout(
-        s, 0.55, 4.82, 12.25, 0.62,
-        "Когда исполнение почти бесплатно, дефицитный ресурс — суждение: "
-        "отличить сигнал от шума и удержать намерение и ответственность на "
-        "человеке.",
-        size=12.5, bold=True)
-    # compact 8-question checklist below the keystone statement (2 rows x 4)
-    checks = [
-        "1. Классика на месте?", "2. Стоит ли доверие цены?",
-        "3. Есть эталонный набор и eval?", "4. Есть guardrail-метрика?",
-        "5. Поэтапная раскатка + откат?", "6. Эскалация к человеку гарантирована?",
-        "7. Кто отвечает?", "8. Данные безопасны?",
-    ]
-    chip(s, 0.55, 5.56, 5.4, 0.32, "Чек-лист «прежде чем делать фазу AI-first»",
-         fill=GOLD, color=DEEP, size=10.5)
-    cw2, gap2 = 2.98, 0.12
-    x0, y0 = 0.55, 5.98
-    for i, c in enumerate(checks):
-        col_i = i % 4
-        row_i = i // 4
-        x = x0 + col_i * (cw2 + gap2)
-        y = y0 + row_i * 0.55
-        icon(s, "circle-check", x, y, 0.24, "teal")
-        text_box(s, x=x + 0.30, y=y - 0.03, w=cw2 - 0.30, h=0.50, text=c,
-                 size=9.2, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=0.95)
+        s, 0.55, 5.66, 12.25, 0.82,
+        "Когда сборка бесплатна, дефицитный ресурс — не исполнение, "
+        "а суждение.",
+        size=15, bold=True, align=PP_ALIGN.CENTER)
     notes_with_sources(s, "s49")
     return s
+
+

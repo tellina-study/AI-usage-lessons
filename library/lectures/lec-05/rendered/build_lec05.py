@@ -10,7 +10,8 @@ Issue #189 · Branch: hc/pldlc-lesson5-c5cc1586
 Palette LOCKED: Ocean Gradient + Teal secondary + Gold >=1x/slide. Motif
 «Ocean rounded box». Canvas 13.333"x7.5" (16:9).
 
-Target ~56 slides = 49 original IDs + s13a + 6 new sNNb ELI5 overviews.
+Target 62 slides = 49 original IDs + s13a + 6 sNNb ELI5 overviews +
+Раздел 7 (s50-s55, issue #212).
 """
 from pathlib import Path
 import sys
@@ -22,6 +23,7 @@ import slides_band1 as b1  # noqa: E402
 import slides_band2 as b2  # noqa: E402
 import slides_band3 as b3  # noqa: E402
 import slides_band4 as b4  # noqa: E402
+import slides_band5 as b5  # noqa: E402
 
 OUT = ROOT / "rendered/lec-05.pptx"
 
@@ -44,6 +46,8 @@ def main():
         b3.s36, b3.s36b, b3.s37, b3.s38, b3.s39, b3.s40, b3.s41, b3.s42, b3.s43,
         # ── Раздел 6. Управление / финал ──
         b4.s44, b4.s44b, b4.s45, b4.s46, b4.s47, b4.s48, b4.s49,
+        # ── Раздел 7. Обобщение и фреймворк решения (issue #212) ──
+        b5.s50, b5.s51, b5.s52, b5.s53, b5.s54, b5.s55,
     ]
     builders = [b for b in builders if b is not None]
 
@@ -56,7 +60,7 @@ def main():
 
     n = len(p.slides.__iter__.__self__._sldIdLst)
     assert n == total, f"expected {total} slides, got {n}"
-    assert n == 56, f"target 56 slides, got {n}"
+    assert n == 62, f"target 62 slides, got {n}"
     p.save(str(OUT))
     print(f"saved {OUT} — {n} slides (FULL DECK)")
 

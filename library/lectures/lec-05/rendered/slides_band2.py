@@ -11,7 +11,7 @@ from _helpers import (
     right_arrow, circle, chip, connector, icon, slide_title,
     gold_callout, teal_callout, notes_with_sources, refs_of_slide,
     build_section_divider,
-    eli5_overview, meme_in_box, photo_in_box, add_image,
+    eli5_overview, meme_in_box, photo_in_box, add_image, check_point, src,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
 )
@@ -112,12 +112,12 @@ def s16(p):
         "Консистентность",
         "Предотвращение ошибок",
     ]
-    ocean_box(s, 0.55, 1.55, 6.75, 5.35)
-    icon(s, "circle-check", 0.80, 1.75, 0.55, "mid")
-    text_box(s, x=1.55, y=1.80, w=5.6, h=0.4, text="Топ-5 из 10 эвристик [1]",
+    ocean_box(s, 0.55, 1.50, 6.75, 3.30)
+    icon(s, "circle-check", 0.80, 1.68, 0.52, "mid")
+    text_box(s, x=1.55, y=1.72, w=5.6, h=0.4, text="Топ-5 из 10 эвристик [1]",
              size=15, bold=True, color=MID)
     for i, h in enumerate(heur):
-        y = 2.45 + i * 0.50
+        y = 2.30 + i * 0.46
         chip(s, 0.80, y, 0.42, 0.34, str(i + 1), fill=GOLD, color=DEEP, size=12)
         text_box(s, x=1.40, y=y - 0.02, w=5.6, h=0.4, text=h, size=13,
                  color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
@@ -125,22 +125,28 @@ def s16(p):
     # list (GATE-B fix, audit 2026-09-07: left ocean box grew to fill the
     # slide height, closing this slide's own share of the deck-wide
     # bottom-void pattern)
-    ocean_box(s, 0.55, 5.20, 6.75, 1.55, fill=SURFACE, stroke=TEAL,
+    ocean_box(s, 0.55, 4.90, 6.75, 1.12, fill=SURFACE, stroke=TEAL,
               stroke_pt=1.6)
-    icon(s, "shield-check", 0.80, 5.42, 0.55, "teal")
-    text_box(s, x=1.55, y=5.44, w=5.6, h=0.4, text="Дизайн-система = guardrail",
-             size=14, bold=True, color=TEAL)
-    text_box(s, x=0.80, y=6.05, w=6.25, h=0.6,
+    icon(s, "shield-check", 0.80, 5.06, 0.46, "teal")
+    text_box(s, x=1.45, y=5.12, w=5.7, h=0.34,
+             text="Дизайн-система = guardrail",
+             size=13.5, bold=True, color=TEAL)
+    text_box(s, x=0.80, y=5.48, w=6.25, h=0.46,
              text="Удерживает генеративную свободу в рамках "
                   "провалидированного бренда.",
-             size=12.5, color=DEEP, line_spacing=1.15)
+             size=12, color=DEEP, line_spacing=1.12)
+    check_point(
+        s, 0.55, 6.10, 6.75,
+        "Интерфейс на один и тот же ввод даёт разный вывод. Какая из пяти "
+        "эвристик ломается первой?",
+        h=0.84, size=11.5)
     # right column: gold callout on top, ENLARGED Bernie meme below (GATE-B
     # fix, audit 2026-09-07: Bernie previously rendered at <10% slide area,
     # well under the 30-55% band Drake/Disaster-Girl/Distracted-Boyfriend
     # use). Portrait meme (0.77 aspect) now gets a tall dedicated box sized
     # to its own aspect ratio instead of competing with side text for width.
     gold_callout(
-        s, 7.55, 1.55, 5.25, 1.05,
+        s, 7.55, 1.50, 5.25, 1.00,
         "Метафора: эвристики — как линтер для интерфейса. Ловят типовые "
         "проблемы до траты денег на исследование — но не заменяют тест на "
         "живом пользователе [2].",
@@ -150,9 +156,9 @@ def s16(p):
     # death). This restores exactly 1 tasteful meme in the section, reusing
     # the Bernie template with a caption specific to THIS slide's own claim
     # (distinct from s09's use of the same template — no joke duplication).
-    mx, my, mw, mh = 7.90, 2.80, 4.55, 3.60
+    mx, my, mw, mh = 7.90, 2.62, 4.55, 3.35
     meme_in_box(s, "s16-bernie.jpg", mx, my, mw, mh, pad=0.12)
-    text_box(s, x=7.55, y=my + mh + 0.12, w=5.25, h=0.65,
+    text_box(s, x=7.55, y=my + mh + 0.10, w=5.25, h=0.60,
              text="«Я снова прошу»: эвристики ловят типовые проблемы, но не "
                   "заменяют проверку на живом пользователе.",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
@@ -229,10 +235,15 @@ def s18(p):
                   "решают дефолты платформы, а не текст запроса.",
              size=11.5, italic=True, color=SLATE, line_spacing=1.18)
     gold_callout(
-        s, 0.55, 5.30, 12.25, 0.80,
+        s, 0.55, 5.20, 12.25, 0.78,
         "Дизайн для НЕДЕТЕРМИНИРОВАННОГО вывода: тот же ввод → разный вывод → "
         "ломает эвристику консистентности; нужны человеко-контрольные точки.",
         size=13, bold=True)
+    check_point(
+        s, 0.55, 6.06, 12.25,
+        "Черновик экрана теперь стоит минуты. Какой вопрос дизайн-брифа при "
+        "такой скорости пропускают первым?",
+        h=0.80, size=12.5)
     refs_of_slide(s, "s18")
     notes_with_sources(s, "s18")
     return s
@@ -368,16 +379,20 @@ def s22(p):
     slide_title(s, "Та же механика — но здесь решение убить продукт, а не флаг переключить",
                 size=20, w=12.3, h=0.85)
     # flow of primitives
-    prim = ["Feature flag", "Canary", "Staged rollout", "Rollback"]
-    gloss = ["переключатель", "канарейка", "поэтапно", "откат"]
+    # ПРАВКА #212: русский глосс — первым, английский примитив — подписью
+    # (правило курса: термин доставлен студенту только по-русски).
+    prim = ["Переключатель функции", "Канареечный релиз",
+            "Поэтапная раскатка", "Откат"]
+    gloss = ["feature flag", "canary", "staged rollout", "rollback"]
     cw, gap = 2.72, 0.28
     x0, y0 = 0.55, 1.70
     for i, (pr, gl) in enumerate(zip(prim, gloss)):
         x = x0 + i * (cw + gap)
         ocean_box(s, x, y0, cw, 1.15, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-        text_box(s, x=x + 0.10, y=y0 + 0.20, w=cw - 0.20, h=0.4, text=pr,
-                 size=13.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x=x + 0.10, y=y0 + 0.68, w=cw - 0.20, h=0.34, text=gl,
+        text_box(s, x=x + 0.08, y=y0 + 0.14, w=cw - 0.16, h=0.56, text=pr,
+                 size=12.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=1.05)
+        text_box(s, x=x + 0.08, y=y0 + 0.74, w=cw - 0.16, h=0.30, text=gl,
                  size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
         if i < 3:
             right_arrow(s, x + cw + 0.02, y0 + 0.44, gap - 0.04, 0.26,
@@ -386,10 +401,10 @@ def s22(p):
              text="Эти примитивы вы знаете из инженерной раскатки (CI/CD)",
              size=12.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
     # new content card
-    ocean_box(s, 1.55, 3.65, 10.25, 1.30, fill=GOLD_TINT, stroke=GOLD,
+    ocean_box(s, 1.55, 3.85, 10.25, 1.35, fill=GOLD_TINT, stroke=GOLD,
               stroke_pt=1.6)
-    icon(s, "scale", 1.80, 3.95, 0.55, "gold")
-    text_box(s, x=2.55, y=3.78, w=9.0, h=1.05,
+    icon(s, "scale", 1.80, 4.18, 0.55, "gold")
+    text_box(s, x=2.55, y=3.98, w=9.0, h=1.10,
              text="НОВОЕ здесь — чьё и по каким критериям решение они "
                   "обслуживают: MVP (Райс) [1] = обучение, не отгрузка. "
                   "Stage-Gate go/kill (Купер) [2] — «воронка, не туннель»: пороги "
@@ -397,7 +412,7 @@ def s22(p):
              size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
              line_spacing=1.15)
     gold_callout(
-        s, 0.55, 5.25, 12.25, 0.85,
+        s, 0.55, 5.60, 12.25, 0.85,
         "Общий смысл: скорость запуска покупается ограниченным «радиусом "
         "поражения» — сколько пользователей задето, если новое окажется плохим.",
         size=13, bold=True)
@@ -448,35 +463,50 @@ def s24(p):
         ("v3", "Автоматически, с возвратом к человеку", "заслужено трассами"),
     ]
     for i, (v, head, sub) in enumerate(steps):
-        y = 4.25 - i * 0.95
-        w = 5.5 + i * 0.9
+        y = 3.98 - i * 0.96
+        w = 4.85 + i * 0.85          # max 6.55 -> right edge 7.25 < 7.75 box
         col = [LIGHT, MID, GOLD][i]
-        filled_rect(s, 0.70, y, w, 0.80, SURFACE, stroke=col, stroke_pt=1.6,
+        filled_rect(s, 0.70, y, w, 0.90, SURFACE, stroke=col, stroke_pt=1.6,
                     radius=True, radius_adj=0.08)
-        chip(s, 0.90, y + 0.22, 0.75, 0.36, v, fill=col, color=WHITE, size=13)
-        text_box(s, x=1.80, y=y + 0.10, w=w - 1.2, h=0.4, text=head, size=12.5,
-                 bold=True, color=DEEP)
-        text_box(s, x=1.80, y=y + 0.46, w=w - 1.2, h=0.3, text=sub, size=10.5,
-                 italic=True, color=SLATE)
+        chip(s, 0.90, y + 0.27, 0.75, 0.36, v, fill=col, color=WHITE, size=13)
+        text_box(s, x=1.80, y=y + 0.08, w=w - 1.15, h=0.46, text=head,
+                 size=12, bold=True, color=DEEP, line_spacing=1.05)
+        text_box(s, x=1.80, y=y + 0.57, w=w - 1.15, h=0.28, text=sub,
+                 size=10.5, italic=True, color=SLATE)
     # right explainer — GATE-B fix (audit 2026-09-07): box now bottom-aligns
     # with the v1/v2/v3 stack's own bottom edge (stack spans y=2.35..5.05;
     # box was y=1.55..4.60, leaving a visible 0.45in gap vs the stack) —
     # grew height 3.05->3.50 so both right-column elements end at y=5.05.
-    ocean_box(s, 7.75, 1.55, 5.05, 3.50, fill=SURFACE, stroke=TEAL,
+    ocean_box(s, 7.75, 1.52, 5.05, 3.36, fill=SURFACE, stroke=TEAL,
               stroke_pt=1.5)
-    text_box(s, x=8.00, y=1.70, w=4.6, h=0.9, text="CC/CD против привычного CI/CD [1]",
-             size=14, bold=True, color=TEAL, line_spacing=1.1)
-    text_box(s, x=8.00, y=2.55, w=4.6, h=2.3,
+    text_box(s, x=8.00, y=1.66, w=4.6, h=0.62,
+             text="CC/CD против привычного CI/CD [1]",
+             size=13.5, bold=True, color=TEAL, line_spacing=1.1)
+    text_box(s, x=8.00, y=2.30, w=4.6, h=0.92,
              text="CC/CD — Continuous Calibration/Development (непрерывная "
                   "калибровка). Релиз версионируется по уровню агентности, а "
-                  "не по набору функций. Лестница агентности: Copilot, Cursor.",
-             size=12.5, color=DEEP, line_spacing=1.2)
+                  "не по набору функций.",
+             size=12, color=DEEP, line_spacing=1.16)
+    # ПРАВКА #212: сам термин лестницы назван в видимом слое
+    text_box(s, x=8.00, y=3.34, w=4.6, h=0.32,
+             text="Лестница агентности (agency-ladder)",
+             size=13, bold=True, color=TEAL)
+    text_box(s, x=8.00, y=3.70, w=4.6, h=0.92,
+             text="Три ступени передачи контроля; поднимаются по ней под "
+                  "требование, а не по готовности инструмента.",
+             size=12, color=DEEP, line_spacing=1.16)
     gold_callout(
-        s, 0.70, 5.05, 12.10, 0.95,
+        s, 0.70, 5.00, 12.10, 0.80,
         "«Если не тестировали при высоком контроле — не готовы давать высокую "
         "агентность»: автономию агент заслуживает трассами исполнения, а не "
         "сразу по умолчанию.",
         size=13, bold=True)
+    check_point(
+        s, 0.70, 5.90, 12.10,
+        "Возьмите функцию из своего проекта, которую доверили бы ИИ. На какой "
+        "она ступени сейчас — и какое требование должно появиться, чтобы "
+        "поднять её на следующую?",
+        h=0.84, size=12.5)
     refs_of_slide(s, "s24")
     notes_with_sources(s, "s24")
     return s

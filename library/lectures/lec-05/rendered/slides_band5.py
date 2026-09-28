@@ -74,10 +74,10 @@ def matrix_row(slide, x, y, widths, cells, *, h=0.70, size=10.0,
         if i == 0 and "\n" in txt:
             # «Название\nуточнение уровня» — второе приглушено и мельче
             name, sub = txt.split("\n", 1)
-            text_box(slide, x=tx, y=y + 0.10, w=tw, h=h * 0.56, text=name,
+            text_box(slide, x=tx, y=y + 0.08, w=tw, h=h * 0.46, text=name,
                      size=first_size, bold=True, color=DEEP,
                      anchor=MSO_ANCHOR.BOTTOM, line_spacing=1.08)
-            text_box(slide, x=tx, y=y + h * 0.60, w=tw, h=h * 0.34, text=sub,
+            text_box(slide, x=tx, y=y + h * 0.58, w=tw, h=h * 0.38, text=sub,
                      size=first_size - 2.0, italic=True, color=SLATE,
                      anchor=MSO_ANCHOR.TOP, line_spacing=1.05)
         else:
@@ -218,8 +218,8 @@ def s52(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Три независимых метода — один вывод: артефакт дешевеет, суждение "
-           "о нём — нет",
+        s, "Три независимых метода — один вывод: артефакт дешевеет, "
+           "суждение — нет",
         size=18, w=12.3, h=0.52, y=0.28)
 
     x0, gap = 0.55, 0.06

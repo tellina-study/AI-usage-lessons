@@ -10,6 +10,7 @@ chapter_ref: "§1.5a"
 verify_day_of: true
 partial_out_strict_in: true
 interaction: retrieval_pause
+protected: true
 meme_or_visual: >
   schema_matrix 4 блока сверху вниз с единой левой колонкой-подписью: МЕХАНИЗМ (4 пронумерованных
   шага, Primary mid) · АРТЕФАКТ (белая коробка с моноширинными путями к файлам, SOFT_GREY-обводка —

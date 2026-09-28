@@ -10,6 +10,7 @@ chapter_ref: "§5.3"
 verify_day_of: false
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   process-линия с четырьмя засечками-секундомерами на одной горизонтальной оси времени: алерт →
   регламент открыт → размыкатель сработал → откат завершён. Над каждой засечкой пустое поле под

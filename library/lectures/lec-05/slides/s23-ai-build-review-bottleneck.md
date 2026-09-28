@@ -2,7 +2,7 @@
 id: s23
 type: assertion_visual
 section: "Раздел 3. Build / Launch"
-duration_min: 2.5
+duration_min: 2
 assertion: "Build → почти ноль (Anthropic); объём кода +200% в год, но лишь ~16% PR получили содержательное ревью"
 learning_goal: "ИИ-особенность: Build→≈0 + смещение узкого места в ревью; что оставить из классики"
 learning_outcomes: [LO1, LO2]

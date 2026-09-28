@@ -2,7 +2,7 @@
 id: s18
 type: assertion_visual
 section: "Раздел 2. Design / прототип"
-duration_min: 2.5
+duration_min: 2
 assertion: "29% соответствие WCAG на 21 880 оценках ИИ-интерфейсов — платформа определяет доступность сильнее, чем промпт"
 learning_goal: "ИИ-ограничения: ИИ-мусор/гомогенизация, WCAG-пробел, дизайн для недетерминированного вывода, LO3"
 learning_outcomes: [LO2, LO3, LO6]

@@ -2,7 +2,7 @@
 id: s11
 type: assertion_visual
 section: "Раздел 1. Discovery / исследование"
-duration_min: 2
+duration_min: 1.5
 assertion: "ИИ-синтез может терять 20-40% деталей интервью (Torres) и не способен произвести реальное несогласие — живое интервью не имеет ИИ-заменителя"
 learning_goal: "ИИ-ограничения + что остаётся: 3 критерия «когда живое интервью строго лучше»"
 learning_outcomes: [LO2, LO3]

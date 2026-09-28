@@ -10,6 +10,7 @@ chapter_ref: "§4.3"
 verify_day_of: true
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   schema_matrix 3 колонки-инструмента, каждая — узкая карточка: имя инструмента моноширинным в
   шапке · одна строка команды в белой коробке · одна строка «что это даёт» обычным. Колонки

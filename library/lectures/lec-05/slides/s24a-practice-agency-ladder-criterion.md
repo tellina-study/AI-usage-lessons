@@ -10,6 +10,7 @@ chapter_ref: "§3.4"
 verify_day_of: true
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   schema_matrix: слева вертикальная лестница из трёх ступеней, выровненная по нижней границе
   (в1 «маршрутизирует» Primary light → в2 «предлагает на утверждение» Primary mid → в3 «решает

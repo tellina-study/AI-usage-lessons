@@ -2,7 +2,7 @@
 id: s01
 type: hero_cover
 section: "Раздел 0. Введение и keystone"
-duration_min: 3
+duration_min: 2.5
 assertion: "Anthropic: недели работы → часы; MIT: ~95% пилотов якобы дают ноль отдачи — сборка почти бесплатна, а превращение сборки в ценность нет"
 learning_goal: "Hook-парадокс: два факта одновременно правдивы; payoff s47"
 learning_outcomes: [LO6]

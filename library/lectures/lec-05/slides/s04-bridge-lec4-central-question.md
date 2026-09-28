@@ -2,7 +2,7 @@
 id: s04
 type: comparison
 section: "Раздел 0. Введение и keystone"
-duration_min: 2
+duration_min: 1.5
 assertion: "Цикл кода (Лекция 4) живёт внутри цикла продукта: код — один, теперь дешёвый, шаг петли, а не весь путь от намерения до эксплуатации"
 learning_goal: "Мост из Л4 + центральный вопрос главы"
 learning_outcomes: [LO1]

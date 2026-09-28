@@ -10,6 +10,7 @@ chapter_ref: "§6.1"
 verify_day_of: false
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   schema_matrix: слева заполненная форма в белой коробке — фраза целиком, с подсвеченными
   разными цветами палитры кусками (оптимизируемая величина / ограничители / объём и срок /

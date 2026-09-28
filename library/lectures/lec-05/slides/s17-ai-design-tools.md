@@ -2,7 +2,7 @@
 id: s17
 type: process
 section: "Раздел 2. Design / прототип"
-duration_min: 2.5
+duration_min: 1.5
 assertion: "v0, Figma Make, Google Stitch генерируют 2-4 направления за минуты — рабочая практика: ИИ для дивергенции, человек для конвергенции"
 learning_goal: "ИИ: возможности + инструменты Design 2025-26"
 learning_outcomes: [LO1, LO2]

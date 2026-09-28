@@ -2,7 +2,7 @@
 id: s46
 type: process
 section: "Раздел 6. Governance / ROI / финал"
-duration_min: 2
+duration_min: 1.5
 assertion: "Пять независимых источников сходятся: узкое место сместилось с технологии на операционную модель — выигрывает тот, кто перестроил команды и governance"
 learning_goal: "ИИ: operating model — operators→orchestrators, maturity 0-5 (Сбер на Level 3, не 5), IDP-экономика, agentwashing"
 learning_outcomes: [LO1, LO2]

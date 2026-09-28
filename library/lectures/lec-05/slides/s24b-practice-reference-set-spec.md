@@ -10,6 +10,7 @@ chapter_ref: "§3.4a"
 verify_day_of: true
 partial_out_strict_in: true
 interaction: retrieval_think_pause
+protected: true
 meme_or_visual: >
   schema_matrix: слева белая коробка с одной строкой набора, разобранной на четыре поля
   (моноширинный, каждое поле подсвечено своим цветом палитры) · в центре столбик порогов по

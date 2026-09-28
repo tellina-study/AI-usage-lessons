@@ -10,6 +10,7 @@ chapter_ref: "§4.3"
 verify_day_of: false
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   process, но замкнутый в кольцо, а не в прямую линию: OFFLINE (курируемый набор, до
   развёртывания) → РАЗВЁРТЫВАНИЕ → ONLINE (живой трафик) → ИНЦИДЕНТ → стрелка ОБРАТНО в набор

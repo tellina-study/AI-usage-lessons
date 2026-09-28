@@ -1,55 +1,37 @@
 # library/lectures/lec-05/deck-part2.yaml  —  PART 2 of 2
 #
-# Продолжение deck-структуры Лекции 5 «AI-продукт: полный жизненный цикл —
-# от намерения до эксплуатации» (62 слайда, s01–s55 + s13a + 6× ELI5, issue #212). Split по Document Size Limit.
+# Слайды Разделов 4–7 (s28..s55) + totals + cut_order + protected_tier +
+# verify_day_of_items + fact_check_items.
+# Палитра, мотив, типографика, glossary_lock, ai_failure_judgment и
+# interaction_summary — в deck.yaml (PART 1), здесь НЕ дублируются.
+# Issue #212 · пересборка 2026-09-28: 69 → 56 слайдов, Σ 92,6 мин.
 #
-# ┌─ SPLIT: см. deck.yaml (PART 1) — deck/palette/motif/typography/           ─┐
-# │ glossary_lock + ai_failure_judgment (top-level share) + slides s01..s27.   │
-# │ ЭТОТ ФАЙЛ — slides s28..s55 (s28..s49 + Раздел 7 s50..s55, issue #212) +    │
-# │ totals + verify_day_of_items +                                             │
-# │ fact_check_items.                                                          │
-# │ Loader (rendered build-скрипт) читает ОБЕ части и объединяет `slides`.     │
-# └─────────────────────────────────────────────────────────────────────────┘
-#
-# Issue #189 · Branch: hc/pldlc-lesson5-c5cc1586 · version v1.0
-# Порядок предъявления — см. deck.yaml PART 1 (s27 → s28 → ..).
-#
-# ⚠ PHASE 5 STATUS: структура текста ТОЛЬКО. НЕ РЕНДЕРИТЬ.
+# role: служебный | рамка | keystone | база | что ИИ меняет | практика | граница |
+#       подводка к провалу | провал | синтез
 
 slides:
-  # ─── Раздел 4. Measure / Experiment (s28–s35) ───
+  # ─── Раздел 4. Измерение (s28–s34) — 11,8 мин ───
   - id: s28
     file: slides/s28-divider-measure-experiment.md
     type: section_divider
     section: "Раздел 4. Measure / Experiment"
     duration_min: 0.3
+    role: служебный
     assertion: "Measure / Experiment: стрелка петли, которой AI снизил доверие, а не стоимость"
-    learning_goal: "Section divider Р4: смысл фазы одной строкой, tag «2 провала»"
+    learning_goal: "Section divider Р4: смысл фазы одной строкой, tag «1 база · 2 практики · 2 провала»"
     learning_outcomes: [LO1]
     chapter_ref: "§Раздел 4 (структурный divider) [for-slide-s28]"
-    partial_out_strict_in: true
-    interaction: none
-    verify_day_of: false
-
-  - id: s28b
-    file: slides/s28b-measure-eli5.md
-    type: eli5_overview
-    section: "Раздел 4. Measure / Experiment"
-    duration_min: 1.5
-    assertion: "Измерение простыми словами: узнать, ваше ли изменение дало результат, а не совпадение — единственный честный способ это сравнить две случайные группы"
-    learning_goal: "ELI5-обзор фазы измерения: зачем эксперимент, ментальная модель «две одинаковые группы»"
-    learning_outcomes: [LO1]
-    chapter_ref: "§4.1 [for-slide-s28b]"
     interaction: none
     verify_day_of: false
     partial_out_strict_in: true
 
   - id: s29
-    protected: true
     file: slides/s29-base-controlled-experiment-oec.md
     type: process
     section: "Раздел 4. Measure / Experiment"
-    duration_min: 2.5
+    duration_min: 1.5
+    role: база
+    protected: true
     assertion: "Рандомизация — единственный способ узнать, что изменение вызвало результат, а не просто совпало с ним; OEC — метрика, о значении которой команда согласилась заранее, не после"
     learning_goal: "БАЗА: контролируемый эксперимент + OEC + guardrail-метрики; учебный пример Кохави (time-on-site)"
     learning_outcomes: [LO1]
@@ -58,28 +40,32 @@ slides:
     verify_day_of: false
     partial_out_strict_in: true
 
-  - id: s30
-    file: slides/s30-base2-experiment-traps.md
-    type: assertion_visual
+  - id: s30a
+    file: slides/s30a-practice-experiment-preregistration.md
+    type: schema_matrix
     section: "Раздел 4. Measure / Experiment"
-    duration_min: 2.5
-    assertion: "Восемь ловушек эксперимента — три вопроса в правильном порядке: настроен ли тест правильно (SRM)? читаю ли результат правильно (peeking)? реален ли сам эффект (Твайман)?"
-    learning_goal: "БАЗА-2: ловушки в 3 суб-кластера (топ-3 на слайд); A/B ≠ feature flag; Bing ≈$100M (не «$300M кнопка»)"
-    learning_outcomes: [LO1]
-    chapter_ref: "§4.2 [for-slide-s30]"
-    interaction: none
+    duration_min: 2
+    role: практика
+    protected: true
+    assertion: "Один файл, закоммиченный до включения эксперимента, технически убирает подглядывание и перебор метрик: правило остановки уже стоит в истории с временной меткой раньше первого результата — но пред-регистрация не делает эксперимент валидным, она делает невалидность видимой"
+    learning_goal: "Пошаговая практика Measure: поля файла пред-регистрации, почему он не редактируется после старта, критерий и честная граница приёма"
+    learning_outcomes: [LO1, LO2, LO6]
+    chapter_ref: "§4.2"
+    interaction: retrieval_think_pause
     verify_day_of: false
     partial_out_strict_in: true
 
-  - id: s31
-    file: slides/s31-ai-evals-as-experiments.md
+  - id: s31a
+    file: slides/s31a-practice-eval-loop.md
     type: process
     section: "Раздел 4. Measure / Experiment"
-    duration_min: 2.5
-    assertion: "Evals — «юнит-тесты для агента»: лестница unit→judge→A/B; pass@k стремится к 100%, pass^k обваливается к 0% при одинаковой базовой вероятности — вероятностный вывод ломает pass/fail"
-    learning_goal: "AI: evals как эксперименты для агента — 3-уровневая рамка Хусейна, pass@k vs pass^k, LLM-as-judge"
+    duration_min: 2
+    role: практика
+    protected: true
+    assertion: "Петля оценок замыкается только тогда, когда промышленные сбои возвращаются в набор: оценка до развёртывания ловит известные регрессии, оценка на живом трафике вскрывает длинный хвост, а упёршийся в потолок балл означает не качество, а сдувшийся измеритель"
+    learning_goal: "Пошаговая практика Measure: замкнутая петля «до развёртывания + на живом трафике + возврат сбоев в набор» и проверка насыщения; где модель-судья надёжна меньше всего"
     learning_outcomes: [LO1, LO2]
-    chapter_ref: "§4.3 [for-slide-s31]"
+    chapter_ref: "§4.3"
     interaction: none
     verify_day_of: false
     partial_out_strict_in: true
@@ -89,6 +75,7 @@ slides:
     type: assertion_visual
     section: "Раздел 4. Measure / Experiment"
     duration_min: 2
+    role: граница
     assertion: "Закон Гудхарта: когда мера становится целью, она перестаёт быть хорошей мерой — модель находит способ «выиграть» прокси-метрику, не достигая задуманного результата"
     learning_goal: "AI-ограничения: закон Гудхарта/reward hacking + что остаётся (контролируемый эксперимент, guardrail, Твайман), LO6"
     learning_outcomes: [LO2, LO6]
@@ -98,79 +85,57 @@ slides:
     partial_out_strict_in: true
 
   - id: s33
-    protected: true
     file: slides/s33-failure-facebook-msi.md
     type: case_study
     section: "Раздел 4. Measure / Experiment"
-    duration_min: 2.5
+    duration_min: 2
+    role: провал
+    protected: true
     assertion: "Facebook взвесил все 5 эмодзи-реакций в 5 раз выше лайка ради «содержательных взаимодействий» — прокси вовлечённости без guardrail на дезинформацию скрывала вред почти 2 года"
     learning_goal: "Провал on-point #7: Facebook MSI, исправленная версия (все реакции ×5, не только гнев) (LO2/LO6)"
     learning_outcomes: [LO2, LO6]
     chapter_ref: "§4.5 [for-slide-s33]"
-    in_bucket: true
     interaction: none
     verify_day_of: false
+    in_bucket: true
 
   - id: s34
-    protected: true
     file: slides/s34-failure-benchmark-not-reality.md
     type: case_study
     section: "Раздел 4. Measure / Experiment"
     duration_min: 2
+    role: провал
+    protected: true
     assertion: "Med-PaLM 2 набрал 86,5% на MedQA — но клиническая безопасность требует отдельного adversarial-набора; Lexis+ 17%, Westlaw 33% галлюцинаций — «сдал бенчмарк» ≠ «безопасен в проде»"
     learning_goal: "Провал on-point #8: benchmark ≠ reality (medical + legal AI, исправленная атрибуция: ChatGPT, не Harvey) (LO6)"
     learning_outcomes: [LO6]
     chapter_ref: "§4.6 [for-slide-s34]"
+    interaction: none
+    verify_day_of: false
     in_bucket: true
-    interaction: none
-    verify_day_of: false
 
-  - id: s35
-    file: slides/s35-synthesis-section4.md
-    type: assertion_visual
-    section: "Раздел 4. Measure / Experiment"
-    duration_min: 1.5
-    assertion: "Measure — стрелка, которой AI снизил доверие: классический A/B остаётся, но evals и guardrail-метрики теперь обязательны поверх; центральный навык — отличать сигнал от шума"
-    learning_goal: "Синтез Р4 (LO1) — мост в Support: тот же навык в эксплуатации = заметить дрейф раньше дашборда"
-    learning_outcomes: [LO1]
-    chapter_ref: "§4.7 [for-slide-s35]"
-    interaction: none
-    verify_day_of: false
-    partial_out_strict_in: true
-
-  # ─── Раздел 5. Support / Operate (s36–s43) ───
+  # ─── Раздел 5. Поддержка (s36–s42) — 13,8 мин ───
   - id: s36
     file: slides/s36-divider-support-operate.md
     type: section_divider
     section: "Раздел 5. Support / Operate"
     duration_min: 0.3
+    role: служебный
     assertion: "Support / Operate: продукт как оркестр — что происходит, когда продукт уже в проде 24/7"
-    learning_goal: "Section divider Р5: смысл фазы одной строкой, tag «3 провала»"
+    learning_goal: "Section divider Р5: смысл фазы одной строкой, tag «1 база · 2 практики · 3 провала»"
     learning_outcomes: [LO1]
     chapter_ref: "§Раздел 5 (структурный divider) [for-slide-s36]"
-    partial_out_strict_in: true
-    interaction: none
-    verify_day_of: false
-
-  - id: s36b
-    file: slides/s36b-support-eli5.md
-    type: eli5_overview
-    section: "Раздел 5. Support / Operate"
-    duration_min: 1.5
-    assertion: "Поддержка простыми словами: между «работает у меня» и «надёжно работает у миллионов 24/7» — пропасть, и её закрывают процессом, а не только качеством кода"
-    learning_goal: "ELI5-обзор фазы поддержки: зачем эксплуатация, ментальная модель «бюджет на ошибки»"
-    learning_outcomes: [LO1]
-    chapter_ref: "§5.1 [for-slide-s36b]"
     interaction: none
     verify_day_of: false
     partial_out_strict_in: true
 
   - id: s37
-    protected: true
     file: slides/s37-base-sre-support-ops.md
     type: process
     section: "Раздел 5. Support / Operate"
-    duration_min: 2.5
+    duration_min: 1.5
+    role: база
+    protected: true
     assertion: "SLI→SLO→error budget («1 минус SLO»): изменения — примерно 70% сбоев; но SLI «доля успешных ответов 200» ничего не говорит о том, галлюцинирует ли модель"
     learning_goal: "БАЗА: SRE + support-ops; явная плашка «новое здесь — недетерминированная модель в проде»"
     learning_outcomes: [LO1]
@@ -179,17 +144,34 @@ slides:
     verify_day_of: false
     partial_out_strict_in: true
 
-  - id: s38
-    file: slides/s38-ai-llmops-agentops.md
+  - id: s38a
+    file: slides/s38a-practice-ai-observability.md
+    type: schema_matrix
+    section: "Раздел 5. Support / Operate"
+    duration_min: 2
+    role: практика
+    protected: true
+    assertion: "Наблюдаемость ИИ-компонента держится на трёх вещах: трасса с идентификаторами версий промпта, модели и ограничителей; бюджет ошибок, посчитанный на немедленно доступном прокси вместо отложенной метки; порог сжигания, откалиброванный на собственном разбросе этой модели, а не скопированный из инфраструктурного норматива"
+    learning_goal: "Пошаговая практика Support/Operate: три части наблюдаемости ИИ-компонента, регламент реагирования как артефакт, проверка учением и тройная граница приёма"
+    learning_outcomes: [LO1, LO2, LO3]
+    chapter_ref: "§5.2"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
+  - id: s38b
+    file: slides/s38b-practice-runbook-drill.md
     type: process
     section: "Раздел 5. Support / Operate"
-    duration_min: 2.5
-    assertion: "Трейсинг ловит то, что инфраструктурный мониторинг пропускает: дрейф галлюцинаций, сбои retrieval, регрессию промптов; Guardian Agents (категория Gartner) — агенты, следящие за агентами"
-    learning_goal: "AI: LLMOps/AgentOps — трейсинг, drift-мониторинг, runtime guardrails, circuit breaker, LO3-акцент (что нельзя отправлять во внешний трейсинг)"
-    learning_outcomes: [LO1, LO3]
-    chapter_ref: "§5.2 [for-slide-s38]"
+    duration_min: 1.5
+    role: практика
+    protected: true
+    assertion: "Раз в несколько недель деградацию вызывают искусственно и замеряют четыре времени — до алерта, до открытия регламента дежурным, до срабатывания аварийного размыкателя, до завершённого отката; учение, не давшее ни одной правки регламента, было слишком лёгким"
+    learning_goal: "Пошаговая практика Support/Operate: плановое учение как проверка того, что механизм обнаружения существует, и почему оно не закрывает тихий дрейф"
+    learning_outcomes: [LO1, LO2]
+    chapter_ref: "§5.3"
     interaction: none
-    verify_day_of: true
+    verify_day_of: false
     partial_out_strict_in: true
 
   - id: s39
@@ -197,6 +179,7 @@ slides:
     type: assertion_visual
     section: "Раздел 5. Support / Operate"
     duration_min: 2
+    role: граница
     assertion: "Тихий дрейф: доверие падает раньше, чем двигаются дашборды — power-users замечают регрессию, даже когда агрегированные метрики выглядят зелёными"
     learning_goal: "AI-ограничения: тихий дрейф + governance drift + что остаётся (эскалация, ответственность), LO3"
     learning_outcomes: [LO2, LO3]
@@ -206,93 +189,72 @@ slides:
     partial_out_strict_in: true
 
   - id: s40
-    protected: true
     file: slides/s40-failure-zillow-drift.md
     type: case_study
     section: "Раздел 5. Support / Operate"
     duration_min: 2.5
+    role: провал
+    protected: true
     assertion: "Zillow не имел runtime circuit breaker на дрейф точности предсказания — списания $304-408 млн, ~2000 уволенных, ≈$80k убытка на дом"
     learning_goal: "Провал on-point #9: Zillow-дрейф — капитал-committing модель без circuit breaker (LO2/LO3/LO6)"
     learning_outcomes: [LO2, LO3, LO6]
     chapter_ref: "§5.4 [for-slide-s40]"
-    in_bucket: true
     interaction: none
     verify_day_of: false
+    in_bucket: true
 
   - id: s41
-    protected: true
     file: slides/s41-failure-air-canada.md
     type: case_study
     section: "Раздел 5. Support / Operate"
     duration_min: 2
+    role: провал
+    protected: true
     assertion: "Трибунал отклонил защиту «бот — отдельное юрлицо»: компания отвечает за ответ бота точно так же, как за статичную страницу сайта"
     learning_goal: "Провал on-point #10: Air Canada — принцип ответственности за каждый ответ бота (LO3/LO6)"
     learning_outcomes: [LO3, LO6]
     chapter_ref: "§5.5 [for-slide-s41]"
-    in_bucket: true
     interaction: none
     verify_day_of: false
+    in_bucket: true
 
   - id: s42
-    protected: true
     file: slides/s42-failure-klarna-nyc-mycity.md
     type: case_study
     section: "Раздел 5. Support / Operate"
-    duration_min: 2.5
+    duration_min: 2
+    role: провал
+    protected: true
     assertion: "Klarna откатила политику «без людей» при росте автоматизации до 853 FTE-эквивалента; 10 из 10 журналистов получили от бота NYC один и тот же незаконный совет"
     learning_goal: "Провал on-point #11: Klarna + NYC MyCity (+Chevy inline) — гарантированная эскалация + детерминированные guardrails (LO2/LO6)"
     learning_outcomes: [LO2, LO6]
     chapter_ref: "§5.6 [for-slide-s42]"
+    interaction: none
+    verify_day_of: false
     in_bucket: true
-    interaction: none
-    verify_day_of: false
 
-  - id: s43
-    file: slides/s43-synthesis-section5.md
-    type: assertion_visual
-    section: "Раздел 5. Support / Operate"
-    duration_min: 1.5
-    assertion: "Эксплуатация — точка, где петля физически замыкается: сигнал из support конвертируется в обновление reference dataset/guardrail и обратно в намерение"
-    learning_goal: "Синтез Р5 (LO1) — keystone-callback: сигнал из эксплуатации меняет намерение"
-    learning_outcomes: [LO1]
-    chapter_ref: "§5.7 [for-slide-s43]"
-    interaction: none
-    verify_day_of: false
-    partial_out_strict_in: true
-
-  # ─── Раздел 6. Governance / ROI / финал (s44–s49) ───
+  # ─── Раздел 6. Управление (s44–s48) — 11,3 мин ───
   - id: s44
     file: slides/s44-divider-governance-roi.md
     type: section_divider
     section: "Раздел 6. Governance / ROI / финал"
     duration_min: 0.3
+    role: служебный
     assertion: "Governance / ROI / когда не надо: капстоун собирает петлю целиком и отвечает на хук-парадокс"
-    learning_goal: "Section divider Р6: смысл фазы одной строкой, tag «payoff»"
+    learning_goal: "Section divider Р6: смысл фазы одной строкой, tag «1 база · 2 практики · 2 провала»"
     learning_outcomes: [LO1]
     chapter_ref: "§Раздел 6 (структурный divider) [for-slide-s44]"
-    partial_out_strict_in: true
-    interaction: none
-    verify_day_of: false
-
-  - id: s44b
-    file: slides/s44b-governance-eli5.md
-    type: eli5_overview
-    section: "Раздел 6. Governance / ROI / финал"
-    duration_min: 1.5
-    assertion: "Управление простыми словами: решить, куда вкладывать деньги между многими инициативами, и честно посчитать, приносит ли ИИ-продукт больше ценности, чем стоит"
-    learning_goal: "ELI5-обзор фазы управления: зачем governance, ментальная модель «воронка капитала + стоимость на запрос»"
-    learning_outcomes: [LO1]
-    chapter_ref: "§6.1 [for-slide-s44b]"
     interaction: none
     verify_day_of: false
     partial_out_strict_in: true
 
   - id: s45
-    protected: true
     file: slides/s45-base-portfolio-governance.md
     type: assertion_visual
     section: "Раздел 6. Governance / ROI / финал"
-    duration_min: 2
+    duration_min: 1.5
+    role: база
+    protected: true
     assertion: "Portfolio governance — тот же Stage-Gate go/kill, поднятый на уровень капитала между многими инициативами; для AI-продукта unit-экономика приобретает новую переменную — стоимость на запрос"
     learning_goal: "БАЗА: portfolio governance + unit-экономика + операциональный финансовый KPI (пример триажа поддержки)"
     learning_outcomes: [LO1]
@@ -301,11 +263,42 @@ slides:
     verify_day_of: false
     partial_out_strict_in: true
 
+  - id: s45a
+    file: slides/s45a-practice-cost-per-query.md
+    type: schema_matrix
+    section: "Раздел 6. Governance / ROI / финал"
+    duration_min: 2
+    role: практика
+    protected: true
+    assertion: "Стоимость на запрос считается формулой из четырёх множителей, каждый из которых уже разобран в Лекции 2 — и сравнивается с базовой линией без ИИ, иначе это не юнит-экономика, а учёт расходов"
+    learning_goal: "Пошаговая практика Governance: формула стоимости на запрос, что в неё входит невидимо, какой артефакт остаётся и почему удешевление токена не означает снижения счёта"
+    learning_outcomes: [LO1, LO2, LO6]
+    chapter_ref: "§6.1a"
+    interaction: none
+    verify_day_of: true
+    partial_out_strict_in: true
+
+  - id: s45b
+    file: slides/s45b-practice-financial-criterion.md
+    type: schema_matrix
+    section: "Раздел 6. Governance / ROI / финал"
+    duration_min: 1.5
+    role: практика
+    protected: true
+    assertion: "Финансовый критерий до пилота — одна заполненная форма, и годной её делают четыре проверки: исходная величина измерена на своём процессе, у каждой величины есть единица и направление, назван владелец с недельным ритмом и существует исход «закрываем»"
+    learning_goal: "Пошаговая практика Governance: заполненная форма финансового критерия, четыре проверки годности до старта и признак негодности — числа, появившиеся после включения пилота"
+    learning_outcomes: [LO1, LO2, LO6]
+    chapter_ref: "§6.1"
+    interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
+
   - id: s46
     file: slides/s46-ai-operating-model.md
     type: process
     section: "Раздел 6. Governance / ROI / финал"
-    duration_min: 2
+    duration_min: 1.5
+    role: подводка к провалу
     assertion: "Пять независимых источников (Deloitte, Сбер, Gartner, McKinsey, Forrester) сходятся: узкое место сместилось с технологии на операционную модель — выигрывает тот, кто перестроил команды и governance"
     learning_goal: "AI: operating model — operators→orchestrators, maturity 0-5 (Сбер на Level 3, не 5), IDP-экономика, agentwashing"
     learning_outcomes: [LO1, LO2]
@@ -315,253 +308,230 @@ slides:
     partial_out_strict_in: true
 
   - id: s47
-    protected: true
     file: slides/s47-failure-macro-reality.md
     type: case_study
     section: "Раздел 6. Governance / ROI / финал"
-    duration_min: 3
+    duration_min: 2.5
+    role: провал
+    protected: true
     assertion: "Payoff хука s01: MIT «95% пилотов — 0 прибыли» на деле 60→20→5 — успех среди дошедших до пилота 25%, не 5%; хайп-цифры (RAND 80,3%, Сбер v1) не переживают калибровку"
     learning_goal: "Провал on-point #12: макро-реальность MIT/RAND/Gartner/S&P/BCG — 4 вопроса к любой громкой статистике (LO6)"
     learning_outcomes: [LO6]
     chapter_ref: "§6.3 [for-slide-s47]"
-    in_bucket: true
     interaction: none
     verify_day_of: true
+    in_bucket: true
 
   - id: s48
-    protected: true
     file: slides/s48-failure-just-walk-out-matrix.md
     type: matrix
     section: "Раздел 6. Governance / ROI / финал"
-    duration_min: 2.5
+    duration_min: 2
+    role: провал
+    protected: true
     assertion: "Just Walk Out: 700 из 1000 транзакций требовали ручной проверки против цели 50 из 1000 — заявленная автономность разошлась с операционной реальностью в 14 раз"
     learning_goal: "Провал on-point #13: Just Walk Out (hidden human cost) + сводная матрица «фаза × стоимость × доверие × что остаётся» (LO1/LO2)"
     learning_outcomes: [LO1, LO2]
     chapter_ref: "§6.4 [for-slide-s48]"
+    interaction: none
+    verify_day_of: false
     in_bucket: true
-    interaction: none
-    verify_day_of: false
 
-  - id: s49
-    protected: true
-    file: slides/s49-keystone-payoff-checklist-qa.md
-    type: summary
-    section: "Раздел 6. Governance / ROI / финал"
-    duration_min: 2
-    assertion: "Когда сборка бесплатна, дефицитный ресурс — не исполнение, а суждение: отличить сигнал от шума и удержать намерение и ответственность на человеке"
-    learning_goal: "Keystone payoff §6.5: разрешение хук-парадокса s01, что изменилось / что осталось человеческим"
-    learning_outcomes: [LO1, LO6]
-    chapter_ref: "§6.5 [for-slide-s49]"
-    interaction: none
-    verify_day_of: false
-    partial_out_strict_in: true
-
-  # ─── Раздел 7. Обобщение и фреймворк решения (s50–s55, issue #212) ───
+  # ─── Раздел 7. Обобщение и фреймворк решения (s50–s55) — 9,3 мин ───
   - id: s50
     file: slides/s50-divider-synthesis.md
     type: section_divider
     section: "Раздел 7. Обобщение и фреймворк решения"
     duration_min: 0.3
+    role: служебный
     assertion: "Раздел 7 не добавляет новый материал по существу — он собирает уже разобранные шесть фаз петли продукта в один переносимый аппарат суждения: матрицу, триангуляцию, триаду и чек-лист"
-    learning_goal: "Section divider Р7: смысл раздела одной строкой, tag «6 фаз · 3 свидетельства · 1 инструмент решения»"
+    learning_goal: "Section divider Р7: смысл раздела одной строкой, tag «6 фаз · 1 матрица · 3 оси · 8 пунктов»"
     learning_outcomes: [LO1]
     chapter_ref: "§Раздел 7 (структурный divider) [for-slide-s50]"
-    partial_out_strict_in: true
     interaction: none
     verify_day_of: false
+    partial_out_strict_in: true
 
   - id: s51
-    protected: true
     file: slides/s51-synthesis-matrix.md
     type: schema_matrix
     section: "Раздел 7. Обобщение и фреймворк решения"
     duration_min: 3
+    role: синтез
+    protected: true
     assertion: "Матрица лекции: фаза × ведущая дисциплина × что AI удешевил × режим отказа × где человек обязателен — без вендорской колонки, вендор-иллюстрации уже названы прозой в разделах 1–6"
     learning_goal: "Синтез §7.1: сводная матрица 6 фаз × 4 столбца — дисциплина / удешевление / режим отказа / где человек обязателен"
     learning_outcomes: [LO1, LO2, LO6]
     chapter_ref: "§7.1 [for-slide-s51]"
+    interaction: none
     verify_day_of: true
     partial_out_strict_in: true
-    interaction: none
-
-  - id: s52
-    protected: true
-    file: slides/s52-triangulation.md
-    type: schema_matrix
-    section: "Раздел 7. Обобщение и фреймворк решения"
-    duration_min: 2.5
-    assertion: "Три независимых метода — организационный опрос, внутренняя инженерная телеметрия одной компании, контролируемое психометрическое исследование бенчмарков — разными способами сходятся на одном выводе: артефакт дешевеет, суждение о нём — нет"
-    learning_goal: "Синтез §7.2: триангуляция трёх независимых свидетельств с явным методом и границей каждого"
-    learning_outcomes: [LO1, LO2]
-    chapter_ref: "§7.2 [for-slide-s52]"
-    verify_day_of: true
-    partial_out_strict_in: true
-    interaction: none
 
   - id: s53
-    protected: true
     file: slides/s53-decision-triad.md
     type: schema_matrix
     section: "Раздел 7. Обобщение и фреймворк решения"
-    duration_min: 3
+    duration_min: 2.5
+    role: синтез
+    protected: true
     assertion: "Триада обратимость × стоимость ошибки × наблюдаемость даёт режим фазы одним правилом: AI-first без дополнительного гейта оправдан только при высокой обратимости, низкой стоимости ошибки и высокой наблюдаемости одновременно"
     learning_goal: "Синтез §7.3: инструмент решения — триада обратимость×стоимость×наблюдаемость, прогон через 2 разобранных случая"
     learning_outcomes: [LO1, LO2, LO6]
     chapter_ref: "§7.3 [for-slide-s53]"
-    verify_day_of: false
-    in_bucket: true
     interaction: retrieval_think_pause
+    verify_day_of: false
+    partial_out_strict_in: true
 
   - id: s54
-    protected: true
     file: slides/s54-checklist.md
     type: schema_matrix
     section: "Раздел 7. Обобщение и фреймворк решения"
-    duration_min: 2.5
+    duration_min: 2
+    role: синтез
+    protected: true
     assertion: "Восемь вопросов проверяют любую фазу перед тем, как отдать её AI-first, и для каждого «нет» есть конкретное действие — это распределение бремени доказательства, а не запрет"
     learning_goal: "Синтез §7.4: чек-лист из восьми вопросов — действие на каждое «нет»"
     learning_outcomes: [LO1, LO6]
     chapter_ref: "§7.4 [for-slide-s54]"
-    verify_day_of: false
-    in_bucket: true
     interaction: none
+    verify_day_of: false
+    partial_out_strict_in: true
 
   - id: s55
-    protected: true
     file: slides/s55-bridge-qa.md
     type: hero_closing
     section: "Раздел 7. Обобщение и фреймворк решения"
-    duration_min: 2
+    duration_min: 1.5
+    role: рамка
+    protected: true
+    hero_required: true
     assertion: "Метод переносится — не список инструментов: разработка ПО была первым полигоном, продукт целиком — вторым, инженерное проектирование и CAD/CAM — следующая проверка того же метода на материале, где цена физической ошибки выше"
     learning_goal: "Мост §7.6 к Семинару 7 и Лекции 6 + Q&A; HERO closing (замыкает лекцию)"
     learning_outcomes: [LO1, LO6]
     chapter_ref: "§7.6 [for-slide-s55]"
     interaction: qa_minimal
     verify_day_of: false
-    hero_required: true
     partial_out_strict_in: true
-
-# ─────────────────────────────────────────────────────────────────────────
-# Validation
-# ─────────────────────────────────────────────────────────────────────────
 totals:
-  slides: 62                    # s01–s55 + s13a + 6× sNNb ELI5 (s07b/s14b/s21b/s28b/s36b/s44b)
-  base_slides_locked: "s01–s55 + s13a + s07b/s14b/s21b/s28b/s36b/s44b (ELI5 overviews). s50–s55 — Раздел 7 (issue #212), новый структурный паритет с Лекцией 4 (s37–s41). Hero required = s01 + s55 (было s49 — перенесено на s55, теперь действительно финальный слайд деки). 6 section-dividers: s07(Р1) s14(Р2) s21(Р3) s28(Р4) s36(Р5) s44(Р6) + s50(Р7), each followed by its sNNb ELI5 overview (кроме s50, у Раздела 7 нет отдельного ELI5 — это синтез уже пройденного, не новая фаза)."
-  slide_times_sum_min: 120.1    # время ПОЛНОГО прохода; намеренно выше слота — это резерв материала, режется по cut_order
-  total_min: 90                 # слот Л5 (Ф1, issue #212; было 100): ≈82 активных + ≈8 мин Q&A, встроенных в s55
-  note: >
-    Ф1 (2026-09-25, issue #212): слот переведён со 100 на 90 минут. Модель тайминга — та же,
-    что у Лекции 4 (слот 75 при Σ 149, запас ×2,0): per-slide duration_min — это время ПОЛНОГО
-    прохода слайда, и сумма намеренно выше активного бюджета. До ≈82 активных минут доводит
-    ранжированный cut_order ниже, а не заниженные per-slide числа.
-    Ф3 (2026-09-25, issue #212): добавлен Раздел 7 (s50–s55, 6 слайдов, 13,3 мин полного
-    прохода) — структурный паритет с Лекцией 4 (s37–s41: матрица/триангуляция/триада/чек-лист/
-    мост+Q&A). s49 сокращён с 2,5 до 2 мин: чек-лист переехал на s54, мост+Q&A — на s55, на
-    s49 остался только keystone-payoff §6.5.
-    Суммы разделов при полном проходе: Р0 10,0 · Р1 18,8 · Р2 15,3 · Р3 14,8 · Р4 17,3 ·
-    Р5 17,3 · Р6 13,3 · Р7 13,3 = 120,1. Запас ×1,46 к активным 82 — приближается к целевому
-    ×1,5–1,6, заданному правилом курса «планировать с запасом материала ~×1,5 от слота и явным
-    cut-order».
+  slides: 56
+  base_slides_locked: >
+    s01–s06 (введение + keystone) · 7 дивайдеров s07/s14/s21/s28/s36/s44/s50 ·
+    6 слайдов базы s08/s15/s22/s29/s37/s45 · 3 слайда «что ИИ меняет» s10/s17/s23 ·
+    12 слайдов-практик s11a/s11b/s17a/s24a/s24b/s24c/s30a/s31a/s38a/s38b/s45a/s45b ·
+    5 слайдов границ s11/s18/s25/s32/s39 · подводка s46 · 12 провалов
+    s12/s13a/s19/s26/s27/s33/s34/s40/s41/s42/s47/s48 · синтез Раздела 7 s51/s53/s54 ·
+    финал s55. Hero required = s01, s02, s55.
+  slide_times_sum_min: 92.6     # время ПОЛНОГО прохода; выше активного бюджета — резерв, режется по cut_order
+  total_min: 90                 # слот: ≈82 активных + ≈8 мин Q&A, встроенных в s55
+  section_sums_min:
+    Р0_введение_и_keystone: 9.0
+    Р1_исследование: 13.3
+    Р2_дизайн: 9.3
+    Р3_сборка_и_запуск: 14.8
+    Р4_измерение: 11.8
+    Р5_поддержка: 13.8
+    Р6_управление: 11.3
+    Р7_обобщение: 9.3
+  time_by_role_min:
+    практики_пошагового_применения_ИИ: 22.0      # 12 слайдов = 23,8% Σ
+    что_ИИ_меняет: 5.5                            # 3 слайда  (было 7 слайдов / 16,5 мин)
+    границы_и_что_остаётся_человеку: 9.0          # 5 слайдов
+    классика_продуктовой_дисциплины: 9.0          # 6 слайдов = 9,7% Σ (было 9 слайдов / 21 мин)
+    провалы: 25.5                                 # 12 слайдов
+    рамка_keystone_синтез: 16.5                   # s01 s04 · keystone s05 s06 · синтез s51 s53 s54 · финал s55
+    подводка_к_провалу: 1.5                       # s46
+    служебные: 3.6                                # обложка 0,5 + карта лекции 1,0 + 7 дивайдеров по 0,3
+  share_notes: >
+    Использование ИИ (практики + «что ИИ меняет» + границы) = 36,5 из 92,6 = 39,4%; из них
+    строго пошаговые практики — 22,0 = 23,8% против нуля до пересборки. Классика — 9,0 =
+    9,7% (была 21,0 мин на девяти слайдах, теперь шесть слайдов по одной строке-определению
+    и одному критерию). Хронометраж пересчитан, а не унаследован: до пересборки deck.yaml
+    объявлял 90 мин при сумме 120,1 — расхождение на 33%, зафиксированное аудитом как дефект.
   cut_order:
-    - " 1. s16 — эвристики Нильсена — сжать до одного тезиса (−1.0 → 119.1)"
-    - " 2. s25 — AI-ограничения build — увести в speaker notes (−1.5 → 117.6)"
-    - " 3. s43 — синтез Раздела 5 (−1.5 → 116.1)"
-    - " 4. s35 — синтез Раздела 4 (−1.5 → 114.6)"
-    - " 5. s30 — ловушки эксперимента — топ-3 вместо шести (−1.5 → 113.1)"
-    - " 6. s46 — operating model — сжать (−1.0 → 112.1)"
-    - " 7. s18 — недетерминированный интерфейс — сжать (−1.0 → 111.1)"
-    - " 8. s11 — AI-ограничения discovery — сжать (−1.0 → 110.1)"
-    - " 9. s24 — передача контроля — сжать (−1.0 → 109.1)"
-    - "10. s39 — тихий дрейф — сжать (−1.0 → 108.1)"
-    - "11. s17 — инструменты дизайна — назвать, не разбирать (−1.5 → 106.6)"
-    - "12. s10 — инструменты discovery — назвать, не разбирать (−1.5 → 105.1)"
-    - "13. s31 — evals — оставить определение и один пример (−1.5 → 103.6)"
-    - "14. s32 — закон Гудхарта — сжать (−1.0 → 102.6)"
-    - "15. s38 — LLMOps/AgentOps — сжать до карты слоёв (−1.5 → 101.1)"
-    - "16. s23 — узкое место ревью — сжать (−1.0 → 100.1)"
-    - "17. s04 — мост из Лекции 4 — сжать (−1.0 → 99.1)"
-    - "18. s03 — карта лекции — сжать (−0.5 → 98.6)"
-    - "19. s02 — обложка (−0.5 → 98.1)"
-    - "20. s07b — обзор-введение Раздела 1 — снять (−1.5 → 96.6)"
-    - "21. s14b — обзор-введение Раздела 2 — снять (−1.5 → 95.1)"
-    - "22. s21b — обзор-введение Раздела 3 — снять (−1.5 → 93.6)"
-    - "23. s28b — обзор-введение Раздела 4 — снять (−1.5 → 92.1)"
-    - "24. s36b — обзор-введение Раздела 5 — снять (−1.5 → 90.6)"
-    - "25. s44b — обзор-введение Раздела 6 — снять (−1.5 → 89.1)"
-    - "26. s51 — матрица — показать 3 фазы из 6, остальные в раздатке (−1.5 → 87.6)"
-    - "27. s52 — триангуляция — одно свидетельство вместо трёх (−1.5 → 86.1)"
-    - "28. s54 — чек-лист — 4 вопроса из 8 (−1.5 → 84.6)"
+    # Тир 1 — каталог инструментов и рамка: сжать содержимое, слайд остаётся.
+    - " 1. s17 — инструменты дизайна назвать, не разбирать (−0.5 → 92.1)"
+    - " 2. s10 — инструменты исследования назвать, не разбирать (−0.5 → 91.6)"
+    - " 3. s46 — операционная модель: один источник из пяти (−0.5 → 91.1)"
+    - " 4. s23 — узкое место ревью: два числа без разбора (−0.5 → 90.6)"
+    - " 5. s04 — мост из Лекции 4 одной строкой (−0.5 → 90.1)"
+    - " 6. s03 — карту лекции показать, не проговаривать (−0.5 → 89.6)"
+    # Тир 2 — границы: сжать, а s25 увести целиком в заметки.
+    - " 7. s25 — асимметрия генерации и верификации → в заметки, снять (−1.5 → 88.1)"
+    - " 8. s32 — закон Гудхарта: определение и один пример (−0.5 → 87.6)"
+    - " 9. s18 — недетерминированный интерфейс: одно число вместо трёх (−0.5 → 87.1)"
+    - "10. s39 — тихий дрейф: один признак из трёх (−0.5 → 86.6)"
+    - "11. s11 — граница исследования: один критерий из трёх (−0.5 → 86.1)"
+    # Тир 3 — сжатие ВНУТРИ защищённого яруса: слайд остаётся на экране.
+    - "12. s24c — оснастка гейта: один инструмент из трёх (−0.5 → 85.6)"
+    - "13. s11b — поиск по корпусу: механизм без разбора таблицы (−0.5 → 85.1)"
+    - "14. s38b — учение: четыре засечки назвать, не разбирать (−0.5 → 84.6)"
+    - "15. s51 — матрица: три фазы из шести вслух, остальные в раздатке (−1.0 → 83.6)"
+    - "16. s54 — чек-лист: четыре вопроса из восьми вслух (−0.5 → 83.1)"
+    - "17. s45b — форма критерия: проверки списком, без разбора (−0.5 → 82.6)"
+    - "18. s13a — Watson: один эпизод из двух (−0.5 → 82.1)"
+    - "19. s53 — триада: один прогнанный случай из двух (−0.5 → 81.6)"
   cut_order_note: >
-    Пункты 1–19 дают −22,0 минуты: 120,1 → 98,1. Пункты 20–28 (шесть обзоров-введений
-    и сжатие трёх слайдов синтеза) дают ещё −13,5: 98,1 → 84,6. Оставшиеся ~2,6 минуты
-    добираются темпом. Обзоры-введения стоят первыми в этой второй очереди намеренно:
-    аудитория курса сильная (профиль группы в CLAUDE.md — все работают с ИИ-ассистентами,
-    многие уже в отрасли), и вводный пересказ раздела для неё — первое, что лектор
-    снимает по месту. Дальше резать можно только разборы провалов — и это сигнал
-    пересобрать деку, а не резать глубже.
+    Итоги накоплены от нового Σ 92,6, а не от прежних 120,1. Пункты 1–6 (−3,0) снимают
+    разбор каталога инструментов и рамки: 92,6 → 89,6. Пункты 7–11 (−3,5) сжимают слайды
+    границ, единственное полное снятие — s25: 89,6 → 86,1. Пункты 12–19 (−4,5) — сжатие
+    содержимого внутри защищённого яруса, ни один слайд с экрана не уходит: 86,1 → 81,6,
+    что укладывается в ≈82 активных минуты. Дальше резать нечего, кроме разборов провалов
+    и самих практик, — а это сигнал пересобрать деку, а не сократить её ещё раз.
   never_cut: >
-    keystone s05/s06 · первый слайд базы каждого раздела (s08/s15/s22/s29/s37/s45) · все on-point провалы (s12/s13/s13a/s19/s20/s26/s27/s33/s34/s40/s41/s42/s47/s48) — они держат strict-in ≥30% · сводная матрица s51 и инструмент решения s53 (payoff-аппарат главы) · s52 (триангуляция) · s54 (чек-лист — на Лекции 4 срезали именно его) · payoff-финал s49 · hero s01 и s55
+    keystone s05/s06 · первый слайд базы каждой фазы s08/s15/s22/s29/s37/s45 · все двенадцать
+    слайдов-практик s11a/s11b/s17a/s24a/s24b/s24c/s30a/s31a/s38a/s38b/s45a/s45b · все
+    двенадцать on-point провалов s12/s13a/s19/s26/s27/s33/s34/s40/s41/s42/s47/s48 — они
+    держат strict-in · синтез Раздела 7: сводная матрица s51, инструмент решения s53,
+    чек-лист s54 · хук s01 и финал s55.
   protected_tier:
-    # Машиночитаемый ярус: у каждого перечисленного слайда во фронтматтере deck (и в
-    # slides/*.md) стоит protected: true. Список тождествен never_cut выше — прозаическая
-    # формулировка и флаг обязаны совпадать; расходятся — правится флаг, он источник истины
-    # для рендера и для pre-gate-проверки.
-    slides: [s01, s05, s06, s08, s12, s13, s13a, s15, s19, s20, s22, s26, s27, s29,
-             s33, s34, s37, s40, s41, s42, s45, s47, s48, s49, s51, s53, s55]
-    count: 27
+    # Машиночитаемый ярус. Список ТОЖДЕСТВЕН прозе never_cut выше (сверено поэлементно:
+    # 2 keystone + 6 базы + 12 практик + 12 провалов + 3 синтеза + s01 + s55 = 37).
+    # У каждого перечисленного слайда стоит protected: true и в deck, и в slides/*.md.
+    slides: [s01, s05, s06, s08, s11a, s11b, s12, s13a, s15, s17a, s19, s22, s24a, s24b,
+             s24c, s26, s27, s29, s30a, s31a, s33, s34, s37, s38a, s38b, s40, s41, s42,
+             s45, s45a, s45b, s47, s48, s51, s53, s54, s55]
+    count: 37
     semantics: >
-      protected: true = слайд НЕ снимается с показа ни при каком тайминге. Сжатие внутри
-      слайда остаётся разрешённым: пункты 26-28 cut_order («s51 — 3 фазы из 6», «s52 — одно
-      свидетельство», «s54 — 4 вопроса из 8») — это сокращение содержимого, а не снятие
-      слайда, и они не противоречат ярусу. Резать целиком — только из середины: слайды
-      возможностей, инструментов и обзоров-введений. Если бюджет требует снять
-      protected-слайд — это сигнал пересобрать деку, а не сократить её дальше.
+      protected: true = слайд НЕ снимается с показа ни при каком тайминге. Сжатие содержимого
+      внутри слайда остаётся разрешённым — именно это делают пункты 12–19 cut_order. Резать
+      целиком можно только из тира 1–2: каталог инструментов, рамку и границы.
     why: >
-      На Лекции 4 cut_order отсутствовал вовсе, и при нехватке времени срезался финал:
-      под нож ушли инструмент решения и чек-лист — единственные носители учебной цели
-      «когда ИИ да, когда нет». Ярус существует, чтобы закрывающий аппарат физически
-      нельзя было потерять первым.
-    open_question: >
-      s54 (чек-лист из восьми вопросов) и s52 (триангуляция) в ярус НЕ включены — так задан
-      список. При этом ровно чек-лист был потерян на Лекции 4. Решение о включении s54
-      в protected-ярус — за владельцем курса, здесь оно не принято самостоятельно.
-
-# Per-slide duration_min — время ПОЛНОГО прохода (Ф1 2026-09-25, issue #212; слот 100 → 90).
-# Сумма намеренно выше активного бюджета: это резерв материала, режется по cut_order выше.
-#   Р0: s01=3 s02=0.5 s03=1 s04=2 s05=2 s06=1.5 (=10) ·
-#   Р1: [s07=0.3] s07b=1.5 s08=2.5 s09=2.5 s10=2.5 s11=2 s12=3 s13=2 s13a=2.5 (=18.8) ·
-#   Р2: [s14=0.3] s14b=1.5 s15=2 s16=2 s17=2.5 s18=2.5 s19=2.5 s20=2 (=15.3) ·
-#   Р3: [s21=0.3] s21b=1.5 s22=2.5 s23=2.5 s24=2 s25=1.5 s26=2.5 s27=2 (=14.8) ·
-#   Р4: [s28=0.3] s28b=1.5 s29=2.5 s30=2.5 s31=2.5 s32=2 s33=2.5 s34=2 s35=1.5 (=17.3) ·
-#   Р5: [s36=0.3] s36b=1.5 s37=2.5 s38=2.5 s39=2 s40=2.5 s41=2 s42=2.5 s43=1.5 (=17.3) ·
-#   Р6: [s44=0.3] s44b=1.5 s45=2 s46=2 s47=3 s48=2.5 s49=2 (=13.3) ·
-#   Р7 (issue #212): [s50=0.3] s51=3 s52=2.5 s53=3 s54=2.5 s55=2 (=13.3)
-#   Σ = 120.1 мин полного прохода (10+18.8+15.3+14.8+17.3+17.3+13.3+13.3) при активном бюджете ~82.
-
-ai_failure_judgment_part2_note: >
-  Полная ai_failure_judgment спецификация (strict_in_slides, count, share_by_minutes,
-  partial_out, note) живёт в deck.yaml (PART 1) как top-level ключ — единый источник
-  истины для обеих частей. Не дублировать здесь во избежание рассинхронизации.
+      На Лекции 4 cut_order отсутствовал, и при нехватке времени срезался финал: под нож ушли
+      инструмент решения и чек-лист — единственные носители учебной цели «когда ИИ да, когда
+      нет». Ярус существует, чтобы закрывающий аппарат физически нельзя было потерять первым.
+    resolved_open_question: >
+      Открытый вопрос прежней редакции — включать ли чек-лист s54 в ярус — закрыт включением:
+      потерян на Лекции 4 был именно он. s52 (триангуляция) из вопроса выбыл вместе со снятием
+      слайда. Двенадцать слайдов-практик внесены в ярус целиком: без них пересборка теряет
+      смысл, ради которого делалась.
 
 verify_day_of_items:
   - s01_anthropic_pr_metrics        # Anthropic недели→часы PR-метрики
-  - s10_perplexity_deep_research    # Perplexity Deep Research версии/модели-Opus привязка
-  - s17_design_tools_versions       # v0/Figma Make/Google Stitch/bolt.new версии 2025-26
-  - s23_anthropic_200pct_16pct      # Anthropic 2026 Agentic Coding Trends Report — 200%/16% + PR-review продукт март 2026
-  - s34_stanford_reglab_percentages # Lexis+ 17% / Westlaw 33% — переподтвердить на день рендера
-  - s38_guardian_agents_sber        # Guardian Agents Gartner Market Guide 02.2026; GigaCowork статус
-  - s46_deloitte_sber_gartner       # Deloitte 75%/42%/81%; Sber maturity/IDP-экономика; Gartner 5-стадийная кривая
-  - s47_gartner_sp_bcg_numbers      # Gartner 782/28%/3400+/40%; S&P 17%→42%; BCG 60%/25%; Sber v1→v2 цифры
+  - s10_perplexity_deep_research    # Perplexity Deep Research / NotebookLM — версии и привязка к моделям
+  - s11a_synthetic_panel_tooling    # формат файла-субагента и окно контекста — сменяемая механика
+  - s17_design_tools_versions       # v0 / Figma Make / Google Stitch / bolt.new — версии 2025-26
+  - s23_anthropic_200pct_16pct      # Anthropic Agentic Coding Trends — 200% / 16% + продукт ревью
+  - s24a_agency_ladder_vendors      # регуляторы доверия Cursor / GitHub Copilot — состав ступеней
+  - s24b_reference_set_thresholds   # рекомендация Anthropic 5–10 промышленных примеров на старте
+  - s24c_eval_tooling_flags         # promptfoo код выхода 100; claude plugin eval --threshold; DeepEval
+  - s45a_token_pricing              # цены на токены и кэширование входа — меняются чаще всего в деке
+  - s46_deloitte_sber_gartner       # Deloitte 75%/42%; Сбер maturity; Gartner 5-стадийная кривая
+  - s47_gartner_sp_bcg_numbers      # Gartner 782/28%/3400+/40%; S&P 17%→42%; BCG 60%/25%
+  - s51_matrix_vendor_free          # матрица намеренно без вендоров — проверить, что так и осталось
 
 fact_check_items:
-  - s10_reference_dataset_synth_users_split   # 97% используют / 8% доверяют synth users
-  - s12_nng_synthetic_users_7of7_3of7          # NN/g 3/7 vs 7/7, drone «game-changer»
-  - s13_deloitte_charlotin_712_90pct           # Damien Charlotin DB 712 дел / ~90% 2025
-  - s18_wcag_29pct_21880                       # WCAG 29.0% / 21 880 оценок; contrast 26.8% / color 19.2%
-  - s26_google_ai_overviews_sources            # eat rocks (Onion) / glue on pizza (Reddit 11yo comment)
-  - s30_peeking_2x_5x_12x                      # 2 подглядки ≈2×, 5 ≈3.2×, непрерывное ~12× FP
-  - s31_llm_judge_85pct_60pct_safety           # MT-Bench 85%/81% agreement; <60% safety категории
-  - s33_facebook_msi_all_reactions_5x          # ИСПРАВЛЕНО: все реакции ×5, не только «гнев» (Techdirt поправка)
-  - s34_stanford_reglab_88pct_17pct_33pct      # GPT-4 raw 88% / Lexis+ 17% / Westlaw 33%
-  - s38_model_variance_15pct_70pct             # вариация точности до 15% между запусками, разрыв до 70%
-  - s42_klarna_853_fte_10of10_nyc              # Klarna 853 FTE; NYC MyCity 10/10 журналистов
+  - s10_reference_dataset_synth_users_split   # 97% используют ИИ / ~8% засчитывают ИИ-персон как данные
+  - s10_deloitte_charlotin_712_90pct          # Deloitte 440 000 AUD; база 712 дел / ~90% на 2025 год
+  - s11a_bisbee_sd_16_vs_31                   # синтетика против ANES: стандартное отклонение 16 против 31
+  - s11_sharma_sycophancy_72_91               # feedback positivity 72–91% при согласии / 7–28% при несогласии
+  - s12_nng_synthetic_users_7of7_3of7         # NN/g 7 из 7 против 3 из 7
+  - s17a_wcag_contrast_26_8_color_19_2        # контраст 26,8% соответствия; использование цвета 19,2%
+  - s18_wcag_29pct_21880                      # 29,0% соответствия на 21 880 оценках; iTutorGroup как соседний класс
+  - s26_google_ai_overviews_sources           # «есть камни» (The Onion) / клей в пиццу (комментарий Reddit)
+  - s30a_power_31200_vs_5000                  # иллюстративный расчёт мощности: 31 200 на группу против 5 000
+  - s31a_judge_agreement_85_60                # согласие модели-судьи 80–85% / ниже 60% на безопасности; 3 → 30 в день
+  - s33_facebook_msi_all_reactions_5x         # все реакции ×5, не только «гнев» (поправка Techdirt)
+  - s34_stanford_reglab_88pct_17pct_33pct     # GPT-4 raw 88% / Lexis+ 17% / Westlaw 33%
+  - s38a_model_variance_15pp                  # вариация точности до 15 процентных пунктов между прогонами
+  - s42_nyc_mycity_10of10                     # 10 из 10 журналистов получили один и тот же незаконный совет
+  - s45b_bcg_60pct_no_financial_kpi           # BCG: 60% компаний не отслеживают ни одного финансового показателя

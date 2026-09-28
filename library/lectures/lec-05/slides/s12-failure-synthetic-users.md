@@ -2,7 +2,7 @@
 id: s12
 type: case_study
 section: "Раздел 1. Discovery / исследование"
-duration_min: 3
+duration_min: 2.5
 assertion: "Синтетическая панель отчиталась 7 из 7 задач выполнено; реальные пользователи — 3 из 7: панель не способна произвести несогласие"
 learning_goal: "Провал on-point #1: синт-юзеры NN/g (LO2/LO6)"
 learning_outcomes: [LO2, LO6]

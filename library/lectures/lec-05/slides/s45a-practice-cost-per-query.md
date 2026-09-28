@@ -10,6 +10,7 @@ chapter_ref: "§6.1a"
 verify_day_of: true
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   schema_matrix: сверху формула крупно, разложенная на четыре множителя, каждый — отдельная
   плашка своего цвета палитры, и под каждой мелкая подпись «откуда берётся» со ссылкой на

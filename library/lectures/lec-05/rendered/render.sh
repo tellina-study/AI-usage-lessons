@@ -9,7 +9,7 @@ export PYTHONPATH=/home/harness/harness-control-data/accounts/256/claude-code-kl
 SOFF=/home/harness/.local/libreoffice-portable/program/soffice
 OUT=/tmp/claude-999/lec05-snap
 rm -rf "$OUT"; mkdir -p "$OUT" "$REND/snapshots"
-timeout 260 $SOFF --headless -env:UserInstallation=file:///tmp/claude-999/loprofile_lec05 \
+timeout 900 $SOFF --headless -env:UserInstallation=file:///tmp/claude-999/loprofile_lec05 \
   --convert-to pdf --outdir "$OUT" "$REND/lec-05.pptx" >/dev/null 2>&1
 PAGES="$*"
 python3 - "$OUT/lec-05.pdf" "$REND/snapshots" "$PAGES" <<'PY'

@@ -10,6 +10,7 @@ chapter_ref: "§2.4a"
 verify_day_of: false
 partial_out_strict_in: true
 interaction: retrieval_pause
+protected: true
 meme_or_visual: >
   schema_matrix, но механизм подан как три горизонтальные полосы-слоя, уложенные снизу вверх и
   выровненные по нижней границе: слой 1 «токены» (Primary light) · слой 2 «свои компоненты»

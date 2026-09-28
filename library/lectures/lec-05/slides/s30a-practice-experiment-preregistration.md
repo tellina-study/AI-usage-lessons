@@ -10,6 +10,7 @@ chapter_ref: "§4.2"
 verify_day_of: false
 partial_out_strict_in: true
 interaction: retrieval_think_pause
+protected: true
 meme_or_visual: >
   schema_matrix: слева белая коробка-файл с семью полями моноширинным, сверху плашка «коммит до
   включения» с временной меткой (gold) — визуальный акцент именно на порядке во времени, а не на

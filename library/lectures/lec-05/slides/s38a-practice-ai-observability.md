@@ -10,6 +10,7 @@ chapter_ref: "§5.2"
 verify_day_of: false
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   schema_matrix из трёх пронумерованных горизонтальных карточек, выровненных по левому краю:
   (1) ТРАССА — цепочка мелких иконок промпт → извлечение → вызовы инструментов → ответ, и под

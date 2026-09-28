@@ -10,6 +10,7 @@ chapter_ref: "§1.5b"
 verify_day_of: false
 partial_out_strict_in: true
 interaction: none
+protected: true
 meme_or_visual: >
   process: три блока-шага слева направо (ИНДЕКСАЦИЯ — иконка database с ярлыками метаданных ·
   ИЗВЛЕЧЕНИЕ — иконка search-check, две сходящиеся стрелки «лексический + векторный» и узкое

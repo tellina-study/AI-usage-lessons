@@ -868,3 +868,13 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
 - **Workaround:** never launch a second conversion while `pgrep -f soffice.bin` returns anything. Before retrying: kill by PID with `-9`, confirm `pgrep` is empty (a `<defunct>` zombie is harmless and can be ignored), THEN `rm -rf` both the outdir and the profile dir, and only then re-run. If two renders genuinely must overlap, give each its own `-env:UserInstallation` path.
 - **Status:** active (upstream LibreOffice behavior; discipline rule, not a fix).
 - **First seen in:** #212 (Лекция 5, пересборка раскладки, 2026-09-28) — while investigating [#212-1].
+
+### [#212-3] `render_chunked.sh` returns exit 0 while leaving `lec-05.pptx` stale — a successful-looking render that rendered nothing
+
+- **Symptom:** after editing a slide builder, `bash render_chunked.sh` completed with `exit=0` and no error output, but `lec-05.pptx` kept its previous mtime and still contained the pre-edit text. An independent check of the built file (not of the script's exit code) found the old wording still on slides 45 and 49.
+- **Why it matters:** this is the second failure mode in the same session where a render tool reports success without producing output (see [#212-1]). The dangerous part is not the failure — it is that every downstream check passes: the deck opens, the slide count is right, the notes are correct, and only the specific edited string is missing. A visual sweep of a *sample* of slides will not catch it.
+- **Root cause:** not fully established. The chunked path builds per-chunk pptx files and merges them; on this run the merge step appears to have reused an existing artifact rather than the freshly built chunks. Not reproduced deterministically.
+- **Severity:** P1 — silently ships a stale deck under a green exit code.
+- **Workaround:** after any builder edit, rebuild with `python3 build_lec05.py` directly (it prints `saved … — N slides` and updates mtime), then convert to PDF. Do not trust the chunked wrapper's exit code alone. **Verification rule: check the built `.pptx` for the string you just changed, not the script's exit status** — `python3 -c "from pptx import Presentation; ..."` over the visible layer costs seconds and is the only check that actually falsifies this failure.
+- **Status:** active.
+- **First seen in:** #212 (Лекция 5, замена англицизмов на дивайдере управления, 2026-09-28) — found by the orchestrator while verifying a subagent's work against the built file.

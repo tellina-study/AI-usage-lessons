@@ -20,7 +20,7 @@ from pptx.util import Inches, Pt
 def s44(p):
     return build_section_divider(
         p, here_idx=6,
-        subtitle="Управление — капстоун, отвечающий на хук-парадокс",
+        subtitle="Управление — замыкающий раздел: отвечает на парадокс из начала лекции",
         bridge="Почему сборка почти бесплатна, а ценность — нет. Здесь мы "
                "поднимаемся на уровень организации и собираем петлю целиком.",
         sid="s44", tag="1 база · 2 практики · 2 провала",
@@ -119,7 +119,7 @@ def s46(p):
              size=11, italic=True, color=SLATE)
     # right: maturity scale
     ocean_box(s, 7.15, 1.60, 5.65, 3.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.40, y=1.75, w=5.15, h=0.4, text="Зрелость 0–5 (maturity)",
+    text_box(s, x=7.40, y=1.75, w=5.15, h=0.4, text="Зрелость 0–5",
              size=14, bold=True, color=TEAL)
     for i in range(6):
         x = 7.45 + i * 0.85

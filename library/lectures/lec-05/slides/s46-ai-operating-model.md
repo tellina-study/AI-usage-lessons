@@ -13,7 +13,7 @@ partial_out_strict_in: true
 meme_or_visual: >
   process: 5 иконок-источников (Deloitte/Сбер/Gartner/McKinsey/Forrester), стрелки от каждого
   сходятся в одну общую точку-тезис «узкое место = операционная модель». Рядом — 6-ступенчатая
-  шкала maturity 0-5 с маркером «Сбер здесь» на ступени 3 (не на 5) — anti-hype сигнал.
+  шкала зрелости 0-5 с маркером «Сбер здесь» на ступени 3 (не на 5) — anti-hype сигнал.
 source: "Deloitte 2026 Global Technology Leadership Study; Gartner 5-stage agent adoption curve [VFY-day-of]"
 ---
 
@@ -23,7 +23,7 @@ source: "Deloitte 2026 Global Technology Leadership Study; Gartner 5-stage agent
 Узкое место сместилось с технологии на операционную модель организации
 
 ## Body
-[5 источников → 1 тезис; шкала maturity 0-5 с маркером «Сбер здесь» на 3]
+[5 источников → 1 тезис; шкала зрелости 0-5 с маркером «Сбер здесь» на 3]
 
 **5 независимых источников** (Deloitte, Сбер, Gartner, McKinsey, Forrester)
 

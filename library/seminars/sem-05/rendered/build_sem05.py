@@ -80,8 +80,11 @@ TAGS={"s08":"1 кейс · 2 слоя провала · 5 форм обхода"
       "s38":"1 кейс · 3 слоя провала · 3 области видимости"}
 
 def render(sl, stype, sid, title, blocks):
-    figp = Path(__file__).parent/"figures"/FIGS[sid] if sid in FIGS else None
-    fig = figp if (figp and figp.exists()) else None
+    figdir = Path(__file__).parent/"figures"
+    cand = sorted(figdir.glob(f"{sid}.png")) + sorted(figdir.glob(f"{sid}-*.png"))
+    if not cand and sid in FIGS and (figdir/FIGS[sid]).exists():
+        cand=[figdir/FIGS[sid]]
+    fig = cand[0] if cand else None
     tables=[b for k,b in blocks if k=="table"]; codes=[b for k,b in blocks if k=="code"]
     quotes=[b for k,b in blocks if k=="quote"]; cards=[b for k,b in blocks if k=="cards"]
     bullets=[b for k,b in blocks if k=="bullets"]; paras=[b for k,b in blocks if k=="para"]
@@ -116,43 +119,48 @@ def render(sl, stype, sid, title, blocks):
     rect(sl,Inches(0),Inches(1.02),Inches(13.333),Inches(0.055),fill=GOLD,rounded=False)
     txt(sl,Inches(0.55),Inches(0.14),Inches(12.2),Inches(0.78),[title],24,WHITE,bold=True,anchor=MSO_ANCHOR.MIDDLE)
     txt(sl,Inches(12.0),Inches(6.95),Inches(1.0),Inches(0.32),[sid],11,MUTE,align=PP_ALIGN.RIGHT)
-    y=Inches(1.35); bottom=Inches(6.85)
+    y=Inches(1.35); bottom=Inches(6.80); L=Inches(0.55); WIDTH=Inches(12.2)
+
     if fig:
-        sl.shapes.add_picture(str(fig), Inches(0.55), y, width=Inches(12.2))
         from PIL import Image as _I
         iw,ih=_I.open(fig).size
-        y += Inches(12.2*ih/iw) + Inches(0.18)
+        fh=min(Inches(12.2*ih/iw), bottom-y-Inches(0.2))
+        sl.shapes.add_picture(str(fig), L, y, width=int(fh*iw/ih))
+        y += fh + Inches(0.16)
 
-    if quotes:
-        h=Inches(min(1.5,0.42*len(quotes[0][:4])+0.5))
-        rect(sl,Inches(0.55),y,Inches(12.2),h,fill=RGBColor(0xFF,0xF7,0xE2),line=GOLD)
-        txt(sl,Inches(0.85),y+Inches(0.12),Inches(11.6),h-Inches(0.24),quotes[0][:4],16,INK,anchor=MSO_ANCHOR.MIDDLE)
-        y+=h+Inches(0.22)
-    if cards:
-        items=cards[0]; x=Inches(0.55); cw=(Inches(12.2)-Inches(0.1)*(len(items)-1))/len(items)
-        for it in items:
-            rect(sl,x,y,cw,Inches(1.0),fill=SURF,line=LIGHT)
-            txt(sl,x+Inches(0.08),y+Inches(0.08),cw-Inches(0.16),Inches(0.84),[it],12,INK,align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
-            x+=cw+Inches(0.1)
-        y+=Inches(1.2)
-    if tables and y<Inches(5.6):
-        rows=tables[0]; keep=min(len(rows),8)
-        h=min(bottom-y,Inches(0.42*keep+0.25))
-        table(sl,[r[:4] for r in rows[:keep]],Inches(0.55),y,Inches(12.2),h,fs=11 if len(rows[0])>3 else 12)
-        y+=h+Inches(0.18)
-    if codes and y<Inches(5.9):
-        code=codes[0][:14]; h=min(bottom-y,Inches(0.235*len(code)+0.3))
-        rect(sl,Inches(0.55),y,Inches(12.2),h,fill=CODEBG,line=LIGHT)
-        txt(sl,Inches(0.8),y+Inches(0.12),Inches(11.7),h-Inches(0.2),[c[:104] for c in code],11.5,RGBColor(0xE8,0xEF,0xF7),mono=True,spc=1)
-        y+=h+Inches(0.18)
-    if bullets and y<Inches(6.2):
-        items=["• "+b for b in bullets[0][:7]]
-        h=min(bottom-y,Inches(0.34*len(items)+0.3))
-        rect(sl,Inches(0.55),y,Inches(12.2),h,fill=SURF,line=LIGHT)
-        txt(sl,Inches(0.85),y+Inches(0.12),Inches(11.6),h-Inches(0.2),items,14,INK)
-        y+=h+Inches(0.18)
-    # описательные абзацы (задание дизайнеру) на слайд НЕ выводятся — они спецификация, не текст для зала
-    pass
+    # блоки выводятся В ПОРЯДКЕ ИСТОЧНИКА и ВСЕ, пока есть вертикальный бюджет
+    for kind,b in blocks:
+        if y >= bottom - Inches(0.3): break
+        avail = bottom - y
+        if kind=="quote":
+            lines=b[:5]; h=min(avail,Inches(0.34*len(lines)+0.34))
+            rect(sl,L,y,WIDTH,h,fill=RGBColor(0xFF,0xF7,0xE2),line=GOLD)
+            txt(sl,L+Inches(0.3),y+Inches(0.1),WIDTH-Inches(0.6),h-Inches(0.2),lines,15,INK,anchor=MSO_ANCHOR.MIDDLE)
+            y+=h+Inches(0.14)
+        elif kind=="cards":
+            items=b; cw=(WIDTH-Inches(0.1)*(len(items)-1))/max(len(items),1)
+            h=min(avail,Inches(0.92)); x=L
+            for it in items:
+                rect(sl,x,y,cw,h,fill=SURF,line=LIGHT)
+                txt(sl,x+Inches(0.07),y+Inches(0.06),cw-Inches(0.14),h-Inches(0.12),[it],11.5,INK,align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
+                x+=cw+Inches(0.1)
+            y+=h+Inches(0.16)
+        elif kind=="table":
+            rows=[r[:5] for r in b]; keep=min(len(rows),9)
+            h=min(avail,Inches(0.40*keep+0.2))
+            table(sl,rows[:keep],L,y,WIDTH,h,fs=11 if len(rows[0])>3 else 12)
+            y+=h+Inches(0.16)
+        elif kind=="code":
+            code=[c[:104] for c in b[:16]]; h=min(avail,Inches(0.225*len(code)+0.26))
+            rect(sl,L,y,WIDTH,h,fill=CODEBG,line=LIGHT)
+            txt(sl,L+Inches(0.22),y+Inches(0.11),WIDTH-Inches(0.44),h-Inches(0.2),code,11,RGBColor(0xE8,0xEF,0xF7),mono=True,spc=1)
+            y+=h+Inches(0.14)
+        elif kind=="bullets":
+            items=["• "+x for x in b[:8]]; h=min(avail,Inches(0.32*len(items)+0.26))
+            rect(sl,L,y,WIDTH,h,fill=SURF,line=LIGHT)
+            txt(sl,L+Inches(0.3),y+Inches(0.1),WIDTH-Inches(0.6),h-Inches(0.2),items,13.5,INK,spc=3)
+            y+=h+Inches(0.14)
+        # 'para' — спецификация для дизайнера, на слайд не выводится никогда
 
 built=0
 for s in deck["slides"]:

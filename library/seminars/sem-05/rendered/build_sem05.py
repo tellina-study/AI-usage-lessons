@@ -77,11 +77,78 @@ def roadmap(sl,cur):
 FIGS={"s09":"khuk-scene.png","s13":"khuk-cobuild.png","s16":"lifecycle.png",
       "s17":"khuk-stdin.png","s18":"contract.png","s19":"khuk-debug.png",
       "s20":"bypass.png","s21":"khuk-blindspot.png"}
+FRAME={"hero_cover","keystone_axis","recap_table","closing_question"}  # рамка занятия: открытие и сборка оси
+COLW={2:(2.3,9.2), 4:(1.45,2.62,3.18,4.25)}  # доли ширины таблицы оси: «Ступень» узкая, «Проверка показала» широкая
+
 TAGS={"s08":"1 кейс · 2 слоя провала · 5 форм обхода",
       "s24":"1 кейс · 2 слоя провала · 6 причин молчания",
       "s38":"1 кейс · 3 слоя провала · 3 области видимости"}
 
+def wrapn(lines, per):
+    """Сколько строк реально займёт цитата после переноса — высота коробки считается по этому числу."""
+    return sum(max(1, -(-len(l) // per)) for l in lines)
+
+def figure_for(sid):
+    figdir = Path(__file__).parent/"figures"
+    cand = sorted(figdir.glob(f"{sid}.png")) + sorted(figdir.glob(f"{sid}-*.png"))
+    if not cand and sid in FIGS and (figdir/FIGS[sid]).exists(): cand=[figdir/FIGS[sid]]
+    return cand[0] if cand else None
+
+def render_frame(sl, sid, title, blocks):
+    """Рамка занятия: тёмный фон, крупный заголовок, блоки в порядке источника.
+
+    Обложка получает иллюстрацию во всю ширину в нижней трети (≥40% площади слайда);
+    последняя короткая цитата на слайде становится подписью в золотой плашке."""
+    bg(sl,DEEP)
+    txt(sl,Inches(0.9),Inches(0.30),Inches(11.5),Inches(1.44),[title],34 if len(title)<=62 else 29,
+        WHITE,bold=True,anchor=MSO_ANCHOR.BOTTOM)
+    rect(sl,Inches(0),Inches(1.82),Inches(13.333),Inches(0.07),fill=GOLD,rounded=False)
+    y, bottom, L, WIDTH = Inches(2.10), Inches(7.08), Inches(0.9), Inches(11.5)
+
+    hero = figure_for(sid)
+    if hero:
+        from PIL import Image as _I
+        iw,ih=_I.open(hero).size
+        hh=Inches(13.333*ih/iw)
+        sl.shapes.add_picture(str(hero), Inches(0), Inches(7.5)-hh, width=Inches(13.333))
+        bottom = Inches(7.5)-hh-Inches(0.18)
+    else:
+        txt(sl,Inches(12.0),Inches(7.08),Inches(1.0),Inches(0.3),[sid],11,RGBColor(0x6F,0x7E,0x99),align=PP_ALIGN.RIGHT)
+
+    last = max((i for i,(k,_) in enumerate(blocks) if k!="para"), default=-1)
+    # подпись слайда получает свою высоту первой — иначе таблица съедает её бюджет
+    reserve = Inches(0)
+    if last >= 0 and blocks[last][0]=="quote" and len(blocks[last][1])<=2:
+        reserve = Inches(0.34*wrapn(blocks[last][1],92)+0.50)
+    for i,(kind,b) in enumerate(blocks):
+        if y >= bottom - Inches(0.3): break
+        avail = bottom - y - (Inches(0) if i==last else reserve)
+        if kind=="quote":
+            tail = (i==last and len(b)<=2)          # закрывающая подпись слайда
+            h=min(avail,Inches(0.34*wrapn(b[:5], 92 if tail else 80)+0.34))
+            rect(sl,L,y,WIDTH,h,fill=RGBColor(0xFF,0xF7,0xE2) if tail else RGBColor(0x2A,0x34,0x70),line=GOLD)
+            txt(sl,L+Inches(0.3),y+Inches(0.1),WIDTH-Inches(0.6),h-Inches(0.2),b[:5],
+                15 if tail else 18, INK if tail else WHITE, anchor=MSO_ANCHOR.MIDDLE)
+            y+=h+Inches(0.16)
+        elif kind=="table":
+            rows=[r[:5] for r in b]; h=min(avail,Inches(0.44*len(rows)+0.2))
+            gt=table(sl,rows,L,y,WIDTH,h,fs=11 if len(rows[0])>3 else 13)
+            for j,wd in enumerate(COLW.get(len(gt.columns),())): gt.columns[j].width=Inches(wd)
+            y+=h+Inches(0.18)
+        elif kind=="cards":
+            cw=(WIDTH-Inches(0.12)*(len(b)-1))/max(len(b),1); h=min(avail,Inches(0.95)); x=L
+            for it in b:
+                rect(sl,x,y,cw,h,fill=RGBColor(0x2A,0x34,0x70),line=LIGHT)
+                txt(sl,x+Inches(0.08),y+Inches(0.06),cw-Inches(0.16),h-Inches(0.12),[it],14,WHITE,
+                    align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
+                x+=cw+Inches(0.12)
+            y+=h+Inches(0.16)
+        # 'para' и 'code' на рамочных слайдах не встречаются — спецификация на слайд не выводится
+
+
 def render(sl, stype, sid, title, blocks):
+    if stype in FRAME:
+        return render_frame(sl, sid, title, blocks)
     figdir = Path(__file__).parent/"figures"
     cand = sorted(figdir.glob(f"{sid}.png")) + sorted(figdir.glob(f"{sid}-*.png"))
     if not cand and sid in FIGS and (figdir/FIGS[sid]).exists():
@@ -109,12 +176,10 @@ def render(sl, stype, sid, title, blocks):
                 x+=cw+Inches(0.12)
             y+=Inches(1.05)
         elif paras:
-            txt(sl,Inches(0.9),y,Inches(11.5),Inches(1.3),paras[:3],18,RGBColor(0xD6,0xE2,0xEC))
-            y+=Inches(1.45)
+            txt(sl,Inches(0.9),y,Inches(11.5),Inches(2.2),paras[:3],18,RGBColor(0xD6,0xE2,0xEC))
         if stype=="section_divider":
             if sid in TAGS:
-                # тег идёт ПОД содержимым дивайдера, а не поверх него
-                txt(sl,Inches(0.9),y,Inches(11.5),Inches(0.5),[TAGS[sid]],17,GOLD,bold=True)
+                txt(sl,Inches(0.9),Inches(3.0),Inches(11.5),Inches(0.5),[TAGS[sid]],17,GOLD,bold=True)
             roadmap(sl,sid)
         return
 
@@ -137,7 +202,7 @@ def render(sl, stype, sid, title, blocks):
         if y >= bottom - Inches(0.3): break
         avail = bottom - y
         if kind=="quote":
-            lines=b[:5]; h=min(avail,Inches(0.34*len(lines)+0.34))
+            lines=b[:5]; h=min(avail,Inches(0.34*wrapn(lines,95)+0.34))
             rect(sl,L,y,WIDTH,h,fill=RGBColor(0xFF,0xF7,0xE2),line=GOLD)
             txt(sl,L+Inches(0.3),y+Inches(0.1),WIDTH-Inches(0.6),h-Inches(0.2),lines,15,INK,anchor=MSO_ANCHOR.MIDDLE)
             y+=h+Inches(0.14)

@@ -74,7 +74,14 @@ def roadmap(sl,cur):
             bold=on,align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
         x+=Inches(2.45)
 
+FIGS={"s16":"lifecycle.png","s17":"contract.png","s20":"bypass.png"}
+TAGS={"s08":"1 кейс · 2 слоя провала · 5 форм обхода",
+      "s24":"1 кейс · 2 слоя провала · 6 причин молчания",
+      "s38":"1 кейс · 3 слоя провала · 3 области видимости"}
+
 def render(sl, stype, sid, title, blocks):
+    figp = Path(__file__).parent/"figures"/FIGS[sid] if sid in FIGS else None
+    fig = figp if (figp and figp.exists()) else None
     tables=[b for k,b in blocks if k=="table"]; codes=[b for k,b in blocks if k=="code"]
     quotes=[b for k,b in blocks if k=="quote"]; cards=[b for k,b in blocks if k=="cards"]
     bullets=[b for k,b in blocks if k=="bullets"]; paras=[b for k,b in blocks if k=="para"]
@@ -98,7 +105,10 @@ def render(sl, stype, sid, title, blocks):
             y+=Inches(1.05)
         elif paras:
             txt(sl,Inches(0.9),y,Inches(11.5),Inches(2.2),paras[:3],18,RGBColor(0xD6,0xE2,0xEC))
-        if stype=="section_divider": roadmap(sl,sid)
+        if stype=="section_divider":
+            if sid in TAGS:
+                txt(sl,Inches(0.9),Inches(3.0),Inches(11.5),Inches(0.5),[TAGS[sid]],17,GOLD,bold=True)
+            roadmap(sl,sid)
         return
 
     bg(sl,WHITE)
@@ -107,6 +117,11 @@ def render(sl, stype, sid, title, blocks):
     txt(sl,Inches(0.55),Inches(0.14),Inches(12.2),Inches(0.78),[title],24,WHITE,bold=True,anchor=MSO_ANCHOR.MIDDLE)
     txt(sl,Inches(12.0),Inches(6.95),Inches(1.0),Inches(0.32),[sid],11,MUTE,align=PP_ALIGN.RIGHT)
     y=Inches(1.35); bottom=Inches(6.85)
+    if fig:
+        sl.shapes.add_picture(str(fig), Inches(0.55), y, width=Inches(12.2))
+        from PIL import Image as _I
+        iw,ih=_I.open(fig).size
+        y += Inches(12.2*ih/iw) + Inches(0.18)
 
     if quotes:
         h=Inches(min(1.5,0.42*len(quotes[0][:4])+0.5))
@@ -136,11 +151,8 @@ def render(sl, stype, sid, title, blocks):
         rect(sl,Inches(0.55),y,Inches(12.2),h,fill=SURF,line=LIGHT)
         txt(sl,Inches(0.85),y+Inches(0.12),Inches(11.6),h-Inches(0.2),items,14,INK)
         y+=h+Inches(0.18)
-    if not (quotes or cards or tables or codes or bullets) and paras:
-        rect(sl,Inches(0.55),y,Inches(12.2),Inches(5.3),fill=SURF,line=LIGHT)
-        txt(sl,Inches(0.9),y+Inches(0.25),Inches(11.5),Inches(4.9),paras[:8],15,INK,spc=7)
-    elif paras and y<Inches(6.3):
-        txt(sl,Inches(0.6),y,Inches(12.1),bottom-y,paras[:3],13,MUTE,spc=5)
+    # описательные абзацы (задание дизайнеру) на слайд НЕ выводятся — они спецификация, не текст для зала
+    pass
 
 built=0
 for s in deck["slides"]:

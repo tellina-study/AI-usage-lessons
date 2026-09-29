@@ -1,0 +1,129 @@
+  # --- Блок 1. Субагент: кастомная ограниченная роль (16 слайдов, 19,5 мин) ---
+  - id: s05
+    file: slides/s05-divider-subagent-otnyataya-vozmozhnost.md
+    type: section_divider
+    duration_min: 0.5
+    assertion: "Ступень 6 — субагент: один кейс разбирается здесь, потому что роль в нём переизобреталась трижды подряд, а права один раз сработали против результата"
+    learning_goal: "Разделитель ступени 6 (macro-уровень: gold 5-сегментный прогресс-бар пяти ступеней занятия, сегмент 4 — субагент). Тег называет масштаб кейса, не его исход"
+    visual:
+      pattern: section_divider_macro
+  - id: s06
+    file: slides/s06-problema-samoproverka-i-troekratnyy-peredel.md
+    type: problem_scenario
+    duration_min: 1.25
+    assertion: "Правку проверяет та же сессия, которая её написала, — ничего нового не находит; встроенный субагент общего назначения проверяет бесплатно, без единой строки настройки — а через три недели роль трижды переизобретена заново, и один раз права сработали против результата"
+    learning_goal: "Проблема ступени 6 — сцена на signup-landing, три такта, исход не предрешён: без вопроса, без карточек, без оценки"
+    visual:
+      pattern: problem_scenario
+  - id: s07
+    file: slides/s07-vopros-chto-teper-zavesti.md
+    type: reflection_question
+    duration_min: 1.0
+    assertion: "Выбор из пяти карточек: что стоит завести теперь — и почему именно это, а не встроенное делегирование, которое уже есть бесплатно"
+    learning_goal: "Открытый вопрос ступени 6 — вопрос дословно с готовым набором вариантов, БЕЗ цифр, БЕЗ источников, БЕЗ намёка на ответ"
+    visual:
+      pattern: question_with_option_cards
+  - id: s08
+    file: slides/s08-issledovanie-chetyre-istochnika-i-chestnyy-probel.md
+    type: research_evidence
+    duration_min: 1.25
+    assertion: "Четыре источника независимо сходятся на дороговизне и хрупкости мультиагентных схем, а прямой цифры «сколько контекста экономит субагент» не даёт ни один"
+    learning_goal: "Свидетельства ступени 6 — таблица источник/тезис/сила доказательства + честный пробел (экономия контекста качественно описана, количественно — нигде)"
+    visual:
+      pattern: evidence_table_with_gap
+  - id: s09
+    file: slides/s09-razbor-pyati-kartochek-i-tselevoy-otvet.md
+    type: answer_breakdown
+    duration_min: 1.25
+    assertion: "Из пяти вариантов только кастомный субагент решает обе проблемы сразу — переизобретение роли и лишние права; граница проходит не между «делегировать» и «не делегировать», а между «разово» и «роль повторяется настолько, что стоит её зафиксировать и урезать»"
+    learning_goal: "Разбор пяти карточек ступени 6 — где работает / почему рано / что вместо, целевой ответ выделен, первая карточка признана наполовину верной"
+    visual:
+      pattern: answer_breakdown_table
+  - id: s10
+    file: slides/s10-cobuilding-imya-i-otnyatie-prav.md
+    type: cobuilding
+    duration_min: 1.25
+    assertion: "Роль называется по трёхчастной схеме, а затем зал сам вычёркивает у неё инструмент правки — центральный ход ступени: слова «не правь сам» это просьба, а строка tools: отнятая возможность"
+    learning_goal: "Совместное формирование субагента, ход 1–2: имя+описание (что/когда/когда не) и отнятие прав — вопросом «а править файлы ему нужно?», список инструментов проявляется с вычеркнутой правкой"
+    visual:
+      pattern: cobuilding_config_reveal
+  - id: s11
+    file: slides/s11-cobuilding-format-verdikta.md
+    type: cobuilding
+    duration_min: 0.75
+    assertion: "Формат вердикта — три элемента, чтобы три разных проверки можно было сравнить: вердикт первой строкой, конкретное «что проверено», находки; пустой список находок — валидный PASS, а не признак халтуры"
+    learning_goal: "Совместное формирование субагента, ход 3: формат вердикта из трёх элементов + обратный риск переусложнения"
+    visual:
+      pattern: cobuilding_config_reveal
+  - id: s12
+    file: slides/s12-artefakt-diff-reviewer-fayl-roli.md
+    type: code_artifact
+    duration_min: 1.0
+    assertion: "Файл роли diff-reviewer.md — не клонируемый артефакт занятия, а материал для устного разбора; строка tools: Read, Grep, Glob короче всего остального файла и делает больше всего"
+    learning_goal: "Артефакт ступени 6 — файл роли целиком, строка tools: выделена, подпись о происхождении на самом слайде"
+    visual:
+      pattern: code_artifact
+  - id: s13
+    file: slides/s13-modelnyy-razbor-verdikta.md
+    type: code_artifact
+    duration_min: 1.0
+    assertion: "Что должен вернуть ревьюер на этот diff, если следует собственному формату: BLOCK, пять конкретных проверенных действий, находка о новой функции, которая добавлена, но нигде не подключена к валидации формы"
+    learning_goal: "Модельный разбор вердикта ступени 6 — иллюстративный разбор ожидаемого ответа по формату роли, явно не заявленный как живой прогон"
+    visual:
+      pattern: code_artifact
+  - id: s14
+    file: slides/s14-mekhanika-vhod-i-vyhod.md
+    type: mechanics
+    duration_min: 1.5
+    assertion: "Роль получает свой системный промпт, задачу от вызывающей сессии, иерархию файлов инструкций и снимок git status — но не переписку родителя; возвращает только финальный итог, ни одного промежуточного вызова инструмента"
+    learning_goal: "Механика ступени 6 — точный список входа/выхода субагента, исключение форка одной строкой"
+    visual:
+      pattern: mechanics_event_map
+  - id: s15
+    file: slides/s15-mekhanika-semantika-prav-samoizoblichenie.md
+    type: mechanics
+    duration_min: 2.0
+    assertion: "Пустое поле tools означает не «без инструментов», а «весь пул целиком» — и в каталоге ролей этого репозитория 13 файлов, ни один не задаёт tools: все технически имеют право писать и править файлы, которые пришли оценивать"
+    learning_goal: "Механика ступени 6 — матрица tools/disallowedTools, самоизобличающий пример курса (13 ролей без tools:), глубина отнятия на уровне типа инструмента"
+    visual:
+      pattern: mechanics_debug_toolkit
+  - id: s16
+    file: slides/s16-mekhanika-otladka-srabotal-ne-znachit-prinudil.md
+    type: mechanics
+    duration_min: 1.5
+    assertion: "Хуки уровня настроек срабатывают и на вызовы внутри субагента, данные несут agent_id/agent_type — но известны два независимых случая, где корректный deny не остановил команду: «сработал» не значит «принудил»"
+    learning_goal: "Механика ступени 6 — четыре сигнала отладки роли + поправленный тезис про хуки внутри субагента"
+    visual:
+      pattern: mechanics_debug_toolkit
+  - id: s17
+    file: slides/s17-proval-otchet-eto-utverzhdenie-ne-fakt.md
+    type: failure_vignette
+    duration_min: 2.0
+    assertion: "Шесть из пятнадцати параллельных субагентов вернули уверенные отчёты без единого вызова инструмента, включая два выдуманных отчёта об инъекции; отдельно — блокировка внутри субагента не долетает до родителя, и фан-аут выглядит полностью успешным, хотя запись была заблокирована"
+    learning_goal: "Провал ступени 6, слой 1 — отчёт субагента не факт: #67730 (галлюцинация) и #76726 (молчаливое непрохождение блокировки). Strict-in"
+    visual:
+      pattern: failure_vignette
+  - id: s18
+    file: slides/s18-proval-koordinatsiya-i-tsena-arkhitektury.md
+    type: failure_vignette
+    duration_min: 1.5
+    assertion: "41–87% трасс мультиагентных систем проваливаются — три категории причин, ни одна не про ошибку в факте; а неверная архитектура не только дороже (3–15×), но и хуже: на последовательной задаче проигрыш до 70%, неструктурированная схема усиливает число ошибок в 17,2 раза"
+    learning_goal: "Провал ступени 6, слои 2–3 — MAST (масштаб, три категории, предостережение про «79%») + цена и деградация архитектуры (Google Research). Strict-in"
+    visual:
+      pattern: failure_vignette
+  - id: s19
+    file: slides/s19-kriterii-eshchyo-rano-i-ne-nuzhno.md
+    type: criteria_boundary
+    duration_min: 1.25
+    assertion: "Роль ещё не нужна для разовой проверки или задачи без устойчивой формы; вообще не нужна, если критерий кодируется детерминированно скриптом или CI; узкая оговорка — необратимые действия ждать повторения не должны"
+    learning_goal: "Критерий ступени 6 — «здесь ещё рано» и «здесь не нужно вообще», плюс оговорка про необратимые действия. Strict-in"
+    visual:
+      pattern: criteria_checklist_and_boundary
+  - id: s20
+    file: slides/s20-os-zanyatiya-reshaem-po-signalu-povtoreniya.md
+    type: axis_placement
+    duration_min: 0.5
+    assertion: "Кастомная роль — решаем, по сигналу повторения: делегировать можно бесплатно без единой строки конфигурации; заводить стоило не сам факт делегирования, а конкретную роль с урезанным набором инструментов"
+    learning_goal: "Строка в ось занятия ступени 6, дословно + короткий мостик к следующему разделу про процесс. Никогда не режется"
+    visual:
+      pattern: axis_placement

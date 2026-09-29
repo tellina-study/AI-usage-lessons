@@ -1,244 +1,584 @@
 #!/usr/bin/env python3
-"""
-Финальный рендер деки Семинара 5 из source-of-truth: ../deck.yaml + ../slides/sNN-*.md
+"""Сборка деки Семинара 5 из source-of-truth: ../deck.yaml + ../slides/sNN-*.md
 
-Раскладка выбирается по типу слайда: таблицы становятся настоящими таблицами,
-блоки кода — моноширинными карточками, карточки-варианты — плашками, цитаты —
-блоками в золотой рамке. Текст берётся из секции `## Visual` один к одному;
-заметки — из `## Speaker notes`. Ничего не досочиняется.
+Устройство. Это СБОРЩИК ИЗ БИБЛИОТЕКИ ПРИЁМОВ (`deck_kit.py`), а не укладчик
+блоков. Приём выбирается по полю `visual.pattern`, которое уже заполнено во
+всех 56 слайдах и которое прежний рендерер не читал вовсе — он ветвился по
+`type` и по наличию блоков, отчего 30 разных замыслов укладывались пятью
+одинаковыми раскладками сверху вниз.
 
-Палитра Ocean Gradient (зафиксирована курсом), канва 16:9.
+Середина между двумя крайностями: Семинар 4 верстал 57 функций под каждый
+слайд (перенести нельзя — они привязаны к его содержанию), Семинар 5 верстал
+всё одним стеком полноширинных коробок (видно, что получилось). Здесь —
+универсальный сборщик плюс словарь именованных приёмов, где каждый слайд
+называет свой приём сам.
+
+Три правила, которые держит этот файл:
+
+* Высота каждого блока ИЗМЕРЯЕТСЯ (`metrics.py`), а не оценивается по числу
+  элементов, и замеряется тем же кодом, который потом рисует, — блок сначала
+  рисуется на черновом слайде, который выбрасывается. Разойтись замер и
+  отрисовка поэтому не могут.
+* Вёрстка идёт ОТ КУРСОРА: каждый приём возвращает занятую высоту. Жёстких
+  координат, в которые можно напечатать поверх уже нарисованного, здесь нет.
+* Воздух — параметр, а не остаток: если содержимое не заполнило полотно,
+  композиция центрируется, а не прижимается к верху.
+
+Тексты слайдов и схемы `make_figures*.py` этот файл не трогает.
 """
-import re, yaml
+import re
+import sys
 from pathlib import Path
+
+import yaml
 from pptx import Presentation
-from pptx.util import Inches, Pt
-from pptx.dml.color import RGBColor
+from pptx.util import Inches
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
-from pptx.enum.shapes import MSO_SHAPE
+
+import deck_kit as K
+import metrics as M
 import slide_parts as SP
 
-DEEP, MID, LIGHT = RGBColor(0x21,0x29,0x5C), RGBColor(0x06,0x5A,0x82), RGBColor(0x1C,0x72,0x93)
-TEAL, GOLD, SURF = RGBColor(0x02,0x80,0x90), RGBColor(0xF0,0xAB,0x00), RGBColor(0xF4,0xF7,0xFA)
-WHITE, INK, MUTE = RGBColor(0xFF,0xFF,0xFF), RGBColor(0x14,0x1B,0x2E), RGBColor(0x5B,0x6B,0x7F)
-CODEBG = RGBColor(0x18,0x20,0x3A)
+ROOT = Path(__file__).resolve().parent.parent
+HERE = Path(__file__).resolve().parent
+FIGDIR = HERE / "figures"
 
-root = Path(__file__).resolve().parent.parent
-deck = yaml.safe_load((root/"deck.yaml").read_text(encoding="utf-8"))
-DARK = {"hero_cover","section_divider","keystone_axis","closing_question"}
-STAGES = [("Хук","s08"),("Скилл","s24"),("MCP","s38")]
+TOP, BOTTOM = 0.34, 6.92        # рабочее поле по вертикали
+LEFT, WIDTH = 0.55, 12.23       # и по горизонтали
+GAP = 0.18                      # шаг между блоками
 
-prs = Presentation(); prs.slide_width, prs.slide_height = Inches(13.333), Inches(7.5)
-BLANK = prs.slide_layouts[6]
+# ── Где мы: короткое имя раздела для надзаголовка ────────────────────────────
+SECTIONS = [(1, 7, "Открытие", None), (8, 23, "Хук", 0), (24, 37, "Скилл", 1),
+            (38, 53, "MCP", 2), (54, 56, "Сборка", None)]
+STAGES = ["Хук", "Скилл", "Доступ наружу"]
 
-def bg(sl,c):
-    f=sl.background.fill; f.solid(); f.fore_color.rgb=c
-def rect(sl,l,t,w,h,fill=None,line=None,rounded=True):
-    sh=sl.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE if rounded else MSO_SHAPE.RECTANGLE,l,t,w,h)
-    if fill: sh.fill.solid(); sh.fill.fore_color.rgb=fill
-    else: sh.fill.background()
-    if line: sh.line.color.rgb=line; sh.line.width=Pt(1.25)
-    else: sh.line.fill.background()
-    sh.shadow.inherit=False; return sh
-def txt(sl,l,t,w,h,lines,size,color,bold=False,align=PP_ALIGN.LEFT,anchor=MSO_ANCHOR.TOP,mono=False,spc=4):
-    tb=sl.shapes.add_textbox(l,t,w,h); tf=tb.text_frame; tf.word_wrap=True; tf.vertical_anchor=anchor
-    ls = lines if isinstance(lines,list) else [lines]
-    for i,ln in enumerate(ls):
-        p = tf.paragraphs[0] if i==0 else tf.add_paragraph()
-        p.text=ln; p.alignment=align
-        p.font.size=Pt(size); p.font.bold=bold; p.font.color.rgb=color
-        p.font.name = "Consolas" if mono else "Arial"
-        p.space_after=Pt(spc)
-    return tb
-def table(sl,rows,l,t,w,h,fs=12):
-    ncol=max(len(r) for r in rows); nrow=len(rows)
-    gt=sl.shapes.add_table(nrow,ncol,l,t,w,h).table
-    for j,cell in enumerate(rows[0]):
-        c=gt.cell(0,j); c.text=cell
-        for p in c.text_frame.paragraphs:
-            p.font.size=Pt(fs); p.font.bold=True; p.font.color.rgb=WHITE; p.font.name="Arial"
-        c.fill.solid(); c.fill.fore_color.rgb=MID
-    for i,row in enumerate(rows[1:],1):
-        for j in range(ncol):
-            c=gt.cell(i,j); c.text=row[j] if j<len(row) else ""
-            for p in c.text_frame.paragraphs:
-                p.font.size=Pt(fs); p.font.color.rgb=INK; p.font.name="Arial"
-            c.fill.solid(); c.fill.fore_color.rgb=WHITE if i%2 else SURF
-    return gt
-def roadmap(sl,cur):
-    x=Inches(0.55)
-    for name,sid in STAGES:
-        on = sid==cur
-        rect(sl,x,Inches(6.62),Inches(2.25),Inches(0.42),fill=GOLD if on else RGBColor(0x2E,0x3A,0x6B))
-        txt(sl,x,Inches(6.66),Inches(2.25),Inches(0.36),[name],13,DEEP if on else RGBColor(0x9F,0xAE,0xC4),
-            bold=on,align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
-        x+=Inches(2.45)
+# ── Что это за шаг: жанр слайда по его приёму ───────────────────────────────
+# Это и есть потерянный приём Семинара 4 — одна строка, которая отвечает
+# и на «вопрос это или утверждение», и на «мы ещё в том же кейсе».
+GENRE = {
+    "hero_cover": "", "lecture_map": "карта занятия",
+    "keystone_scope_map": "ось занятия", "recap_table": "ось занятия",
+    "closing_question_partial": "возврат к вопросу открытия",
+    "assertion_visual": "ограничение",
+    "section_divider_macro": "",
+    "problem_scenario": "завязка", "question_with_option_cards": "вопрос",
+    "evidence_table_with_gap": "свидетельства",
+    "answer_breakdown_table": "разбор", "dual_mode_breakdown": "разбор",
+    "cobuilding_config_reveal": "собираем вместе",
+    "cobuilding_bad_example_reveal": "собираем вместе",
+    "cobuilding_description_assembly": "собираем вместе",
+    "code_artifact": "артефакт", "file_tree_snapshot": "артефакт",
+    "failure_vignette": "провал",
+    "criteria_checklist_and_boundary": "критерий и граница",
+    "axis_placement": "строка оси", "token_cost_table": "цена",
+}
+MECHANICS_TAG = "механика"
 
-FIGS={"s09":"khuk-scene.png","s13":"khuk-cobuild.png","s16":"lifecycle.png",
-      "s17":"khuk-stdin.png","s18":"contract.png","s19":"khuk-debug.png",
-      "s20":"bypass.png","s21":"khuk-blindspot.png"}
-FRAME={"hero_cover","keystone_axis","recap_table","closing_question"}  # рамка занятия: открытие и сборка оси
-COLW={2:(2.3,9.2), 4:(1.45,2.62,3.18,4.25)}  # доли ширины таблицы оси: «Ступень» узкая, «Проверка показала» широкая
+TAGS = {"s08": "1 кейс · 2 слоя провала · 5 форм обхода",
+        "s24": "1 кейс · 2 слоя провала · 6 причин молчания",
+        "s38": "1 кейс · 3 слоя провала · 3 области видимости"}
+BADGE = {"s08": 3, "s24": 4, "s38": 5}
 
-TAGS={"s08":"1 кейс · 2 слоя провала · 5 форм обхода",
-      "s24":"1 кейс · 2 слоя провала · 6 причин молчания",
-      "s38":"1 кейс · 3 слоя провала · 3 области видимости"}
+FIGS = {"s09": "khuk-scene.png", "s13": "khuk-cobuild.png", "s16": "lifecycle.png",
+        "s17": "khuk-stdin.png", "s18": "contract.png", "s19": "khuk-debug.png",
+        "s20": "bypass.png", "s21": "khuk-blindspot.png"}
 
-def wrapn(lines, per):
-    """Сколько строк реально займёт цитата после переноса — высота коробки считается по этому числу."""
-    return sum(max(1, -(-len(l) // per)) for l in lines)
+
+def num(sid):
+    return int(sid[1:])
+
+
+def where(sid):
+    n = num(sid)
+    for lo, hi, name, stage in SECTIONS:
+        if lo <= n <= hi:
+            return name, stage
+    return "", None
+
+
+def label_for(sid, pattern):
+    """Надзаголовок «где мы · что это за шаг»."""
+    name, _ = where(sid)
+    genre = GENRE.get(pattern, MECHANICS_TAG if pattern.startswith("mechanics") else "")
+    return f"{name} · {genre}" if genre else name
+
 
 def figure_for(sid):
-    figdir = Path(__file__).parent/"figures"
-    cand = sorted(figdir.glob(f"{sid}.png")) + sorted(figdir.glob(f"{sid}-*.png"))
-    if not cand and sid in FIGS and (figdir/FIGS[sid]).exists(): cand=[figdir/FIGS[sid]]
+    """Автоподбор схемы по имени файла — `figures/<id>.png` или `<id>-*.png`.
+    Поведение сохранено ровно как было: 23 схемы сделаны отдельно и хорошо."""
+    cand = sorted(FIGDIR.glob(f"{sid}.png")) + sorted(FIGDIR.glob(f"{sid}-*.png"))
+    if not cand and sid in FIGS and (FIGDIR / FIGS[sid]).exists():
+        cand = [FIGDIR / FIGS[sid]]
     return cand[0] if cand else None
 
-def render_frame(sl, sid, title, blocks):
-    """Рамка занятия: тёмный фон, крупный заголовок, блоки в порядке источника.
 
-    Обложка получает иллюстрацию во всю ширину в нижней трети (≥40% площади слайда);
-    последняя короткая цитата на слайде становится подписью в золотой плашке."""
-    bg(sl,DEEP)
-    txt(sl,Inches(0.9),Inches(0.30),Inches(11.5),Inches(1.44),[title],34 if len(title)<=62 else 29,
-        WHITE,bold=True,anchor=MSO_ANCHOR.BOTTOM)
-    rect(sl,Inches(0),Inches(1.82),Inches(13.333),Inches(0.07),fill=GOLD,rounded=False)
-    y, bottom, L, WIDTH = Inches(2.10), Inches(7.08), Inches(0.9), Inches(11.5)
+# ── Замер = отрисовка ───────────────────────────────────────────────────────
+_scratch = Presentation()
+_scratch.slide_width, _scratch.slide_height = Inches(K.W_IN), Inches(K.H_IN)
+
+
+def measure(fn, *a, **kw):
+    """Высота блока, полученная ТЕМ ЖЕ кодом, который его рисует: блок
+    рисуется на черновом слайде, высота запоминается, слайд выбрасывается.
+    Замер и отрисовка поэтому не могут разойтись — а именно это расхождение
+    (`0.40 × число строк` против реальной высоты) и роняло прежнюю вёрстку."""
+    sl = _scratch.slides.add_slide(_scratch.slide_layouts[6])
+    saved = list(M._WARNINGS)
+    h = fn(sl, *a, **kw)
+    M._WARNINGS[:] = saved      # предупреждения чернового прохода не печатаем
+    return h
+
+
+# ── Роль блока: какую работу он делает на слайде ────────────────────────────
+
+# Приём слайда (`visual.pattern`) объявляет работу; текст её только уточняет.
+# Это надёжнее, чем угадывать по одним лишь кавычкам: вопрос залу далеко не
+# всегда кончается знаком вопроса — из 56 слайдов таких оказалось два, а
+# остальные вопросы сформулированы повелительно («Выберите, куда её вынести»).
+PATTERN_ROLE = {
+    "question_with_option_cards": "question",
+    "closing_question_partial": "question",
+    "evidence_table_with_gap": "caveat",
+    "answer_breakdown_table": "formula",
+    "dual_mode_breakdown": "formula",
+    "failure_vignette": "formula",
+    "criteria_checklist_and_boundary": "formula",
+    "axis_placement": "fact",
+    "assertion_visual": "fact",
+    "token_cost_table": "fact",
+}
+
+ASK = re.compile(r"выберите|что бы вы|как бы вы|назовите|подумайте", re.I)
+CAVEAT = re.compile(r"честн|не наш|не проверен|не измер|нет данных|не найден|"
+                 r"оговорк|не подтвер|пробел|не удалось|не ставит", re.I)
+
+
+def quote_role(lines, pattern):
+    """Какую работу делает этот блок-цитата.
+
+    Прежняя вёрстка красила золотом ЛЮБУЮ цитату — и золотая коробка встала на
+    33 слайдах из 56, в основном под утверждениями. Сигнал, который у Семинара
+    4 означал «вопрос или формула», обнулился частотой. Здесь у каждой работы
+    своя форма, и золотая заливка с рамкой остаётся ровно за вопросом."""
+    body = " ".join(K.plain(l) for l in lines).strip()
+    if body.rstrip("»\"' ").endswith("?") or ASK.search(body):
+        return "question"
+    if CAVEAT.search(body):
+        return "caveat"
+    base = PATTERN_ROLE.get(pattern)
+    if base == "question":          # вопрос уже нашёлся бы выше — значит это подводка
+        return "speech" if body.lstrip().startswith("«") else "fact"
+    if body.lstrip().startswith("«"):
+        return "speech"
+    return base or "formula"
+
+
+FORM = {"question": K.form_question, "formula": K.form_formula,
+        "speech": K.form_speech, "caveat": K.form_caveat, "fact": K.form_fact}
+
+
+def split_question(lines):
+    """Разделить блок на СЦЕНУ и сам ВОПРОС.
+
+    Вопрос к залу в исходнике почти всегда дописан в конец того же абзаца, что
+    и сцена: «Правило записано… Коммит всё равно случился. Выберите, как
+    сделать нарушение невозможным». Целиком в золотой коробке это четыре
+    строки, из которых вопрос — последняя: коробка перестаёт читаться как
+    вопрос и становится просто самым большим текстом на слайде.
+
+    Режем по границе предложения, по ПЕРВОМУ предложению-вопросу: всё до него
+    — сцена, всё от него и дальше — вопрос (за вопросом часто идёт уточнение
+    вроде «назовите недостающие части», и оно принадлежит вопросу, а не сцене).
+    Текст не меняется ни на знак — меняется только то, какой формой набрана
+    каждая его часть.
+    """
+    flat = " ".join(lines)
+    # предложение = до точки/воскл./вопр./многоточия, вместе с закрывающими кавычками
+    bounds, pos = [], 0
+    for m in re.finditer(r"[.!?…]+[»\"\')\s]*", flat):
+        bounds.append((pos, m.end()))
+        pos = m.end()
+    if pos < len(flat):
+        bounds.append((pos, len(flat)))
+    for a, b in bounds:
+        sent = flat[a:b]
+        if "?" in sent or ASK.search(sent):
+            if a == 0:
+                return [], [flat.strip()]           # вопрос занимает весь блок
+            return [flat[:a].strip()], [flat[a:].strip()]
+    return [], lines
+
+
+# ── Отрисовка одного блока ──────────────────────────────────────────────────
+
+def block_drawer(kind, b, sid, pattern, *, role=None):
+    """Блок → приём. Одна работа — одна форма, форма под другую работу не
+    переиспользуется. Возвращает функцию (sl, y, max_h) -> занятая высота."""
+    if kind == "quote":
+        r = role or quote_role(b, pattern)
+        fn = FORM[r]
+        return lambda sl, y, mh: fn(sl, LEFT, y, WIDTH, b, max_h=mh, label=f"{sid} {r}")
+    if kind == "table":
+        headers, rows = b
+        return lambda sl, y, mh: K.table_card(sl, LEFT, y, WIDTH, headers, rows,
+                                              max_h=mh, label=f"{sid} таблица")
+    if kind == "code":
+        return lambda sl, y, mh: K.terminal_card(sl, LEFT, y, WIDTH, b, max_h=mh,
+                                                 label=f"{sid} код")
+    if kind == "cards":
+        # «выбери» и «запомни» — разные работы, значит разные формы
+        if pattern == "question_with_option_cards":
+            return lambda sl, y, mh: K.option_row(sl, LEFT, y, WIDTH, b,
+                                                  max_h=min(mh or 1.7, 1.7),
+                                                  label=f"{sid} варианты")
+        return lambda sl, y, mh: K.term_pills(sl, LEFT, y, WIDTH, b, label=f"{sid} термины")
+    if kind == "bullets":
+        return lambda sl, y, mh: K.numbered_list(sl, LEFT, y, WIDTH, b, max_h=mh,
+                                                 label=f"{sid} список")
+    return None     # 'para' — спецификация для дизайнера, на слайд не выводится
+
+
+def compose(sl, sid, y0, drawers, *, bottom=BOTTOM, center=True):
+    """Универсальная укладка: сначала все блоки меряются, потом раскладываются.
+
+    Если содержимого меньше, чем полотна, лишнее место становится ВОЗДУХОМ —
+    композиция центрируется в оставшемся поле и получает увеличенные интервалы.
+    Прежнее правило «блоки сверху, остаток вниз» давало больше 1,4″ пустоты
+    внизу на 27 слайдах из 56 и 3,4–3,7″ на четырёх.
+
+    Если содержимого больше — бюджет режется пропорционально, и каждый приём
+    сам ужимает кегль; что не влезло, попадает в список предупреждений, а не
+    выезжает за край молча.
+    """
+    if not drawers:
+        return
+    avail = bottom - y0
+    nat = [measure(d, y0, None) for d in drawers]
+    total = sum(nat) + GAP * (len(nat) - 1)
+
+    if total <= avail:
+        # Лишнее место сначала уходит в интервалы между блоками, остаток — в
+        # паузу под заголовком: Семинар 4 держал её осознанно и вешал
+        # композицию в нижних ¾ полотна. Правило «блоки сверху, остаток вниз»
+        # давало больше 1,4″ пустого низа на 27 слайдах из 56.
+        slack = avail - total
+        gap = GAP + min(slack / max(len(nat), 1), 0.55)
+        used = sum(nat) + gap * (len(nat) - 1)
+        y = y0 + (avail - used) / 2 * (0.8 if center else 0.0)
+        for d, h in zip(drawers, nat):
+            d(sl, y, None)
+            y += h + gap
+        return
+
+    budget = avail - GAP * (len(drawers) - 1)
+    k = budget / sum(nat)
+    y = y0
+    for d, h in zip(drawers, nat):
+        drawn = d(sl, y, max(h * k, 0.5))
+        y += drawn + GAP
+
+
+# ── Жанры слайдов ───────────────────────────────────────────────────────────
+
+def g_divider(sl, sid, title, blocks, pattern, assertion=""):
+    """Дивайдер уровня раздела: градиент DEEP→MID→LIGHT, широкая золотая
+    полоса прогресса, номерной значок, смысловая строка, ярлык — и дорожная
+    карта внизу.
+
+    Ярлык рисуется ОТ КУРСОРА. Прежняя вёрстка печатала его жёстко в
+    `Inches(3.0)` — ровно туда, где уже стоял абзац, — и два текстовых блока
+    ложились друг на друга буква в букву на s08 и s24; на s38 он прошивал
+    рамку коробки-цитаты. Три разделителя, три разные поломки, одна причина.
+
+    Смысловая строка берётся из `## Assertion` самого слайда, если в `##
+    Visual` её нет: у s08 в Visual лежал только собственный заголовок,
+    напечатанный второй раз, и раздел на 16 слайдов открывался пустым полем.
+    Ничего не дописывается — используется текст, который у слайда уже есть."""
+    _, stage = where(sid)
+    K.divider_bg(sl)
+    K.strip_pills(sl, LEFT, 0.5, 11.3, len(STAGES), stage if stage is not None else -1)
+
+    meaning = []
+    for kind, b in blocks:
+        for ln in (b if kind == "quote" else ([b] if kind == "para" else [])):
+            rest = K.plain(ln)
+            if rest.lower().startswith(K.plain(title).lower()):
+                rest = rest[len(K.plain(title)):].strip(" ·—-")
+            if rest and rest != TAGS.get(sid, ""):
+                meaning.append(rest)
+    if not meaning and assertion:
+        meaning = [K.plain(assertion)]
+
+    # композиция считается целиком, потом центрируется между полосой и картой
+    tw = 10.0
+    th = M.text_h(K.plain(title), 34, tw, spacing=1.05, bold=True)
+    # резерв на одну строку больше измеренного: перенос в настоящем Arial
+    # может разойтись с замером по DejaVu, и лучше оставить воздух, чем
+    # подпустить смысловую строку вплотную к ярлыку
+    mh = (M.block_h(meaning, 17, 10.4, spacing=1.32, space_after=4)
+          + M.line_h(17, 1.32)) if meaning else 0.0
+    tag_h = 0.55 if sid in TAGS else 0.0
+    total = th + (mh + 0.34 if meaning else 0) + (tag_h + 0.30 if tag_h else 0)
+    y = 1.25 + max((5.2 - total) / 2, 0.0)
+
+    if sid in BADGE:
+        K.divider_badge(sl, BADGE[sid], cy=y + th / 2)
+    K.text_box(sl, 1.68, y, tw, th, title, size=34, bold=True, color=K.WHITE, spacing=1.05)
+    y += th + 0.34
+    if meaning:
+        K.text_box(sl, LEFT + 0.35, y, 10.4, mh, meaning, size=17, italic=True,
+                   color=K.ON_DARK, spacing=1.32, space_after=4)
+        y += mh + 0.30
+    if tag_h:
+        K.tag_plate(sl, LEFT + 0.35, y, TAGS[sid])
+    if stage is not None:
+        K.roadmap(sl, STAGES, stage)
+    K.slide_id_mark(sl, sid, on_dark=True)
+
+
+def g_cover(sl, sid, title, blocks, pattern, assertion=""):
+    """Обложка: тёмный фон, крупный заголовок, иллюстрация во всю ширину,
+    центральный вопрос занятия — в золотой коробке поверх неё."""
+    K.set_bg(sl, K.DEEP)
+    K.text_box(sl, 0.9, 0.42, 11.5, 1.5, title, size=33, bold=True, color=K.WHITE,
+               anchor=MSO_ANCHOR.BOTTOM, spacing=1.08)
+    K.rect(sl, 0, 2.02, K.W_IN, 0.07, K.GOLD)
+    y, bottom = 2.34, BOTTOM
 
     hero = figure_for(sid)
     if hero:
-        from PIL import Image as _I
-        iw,ih=_I.open(hero).size
-        hh=Inches(13.333*ih/iw)
-        sl.shapes.add_picture(str(hero), Inches(0), Inches(7.5)-hh, width=Inches(13.333))
-        bottom = Inches(7.5)-hh-Inches(0.18)
+        from PIL import Image
+        iw, ih = Image.open(hero).size
+        fh = K.W_IN * ih / iw
+        sl.shapes.add_picture(str(hero), Inches(0), Inches(K.H_IN - fh), width=Inches(K.W_IN))
+        bottom = K.H_IN - fh - 0.2
+
+    quotes = [b for k, b in blocks if k == "quote"]
+    if quotes:
+        lines = [l for q in quotes for l in q]
+        question = [l for l in lines if K.plain(l).rstrip("»\"' ").endswith("?")]
+        rest = [l for l in lines if l not in question]
+        if rest:
+            h = M.block_h([K.plain(l) for l in rest], 15, 11.5, space_after=4)
+            K.rect(sl, 0.9, y + 0.04, 0.035, h - 0.08, K.TEAL)
+            K.text_box(sl, 1.2, y, 11.2, h, rest, size=15, color=K.ON_DARK, space_after=4)
+            y += h + 0.26
+        if question:
+            K.form_question(sl, 0.9, y, 11.5, question, size=17,
+                            max_h=max(bottom - y, 0.7),
+                            label=f"{sid} центральный вопрос")
+    K.slide_id_mark(sl, sid, on_dark=True)
+
+
+def g_question(sl, sid, title, blocks, pattern, assertion=""):
+    """Вопрос — отдельный жанр из трёх сигналов сразу: надзаголовок «· ВОПРОС»,
+    дословный вопрос в золотой коробке, серая подпись «разбор — на следующем
+    слайде». Ни одной цифры, ни одного подсвеченного варианта: голосование
+    идёт вслепую.
+
+    Прежде вопрос отличался от утверждения только содержимым золотой коробки —
+    а та же коробка стояла на 33 слайдах из 56 под утверждениями, и жанр
+    «вопрос» перестал читаться вовсе."""
+    K.set_bg(sl, K.WHITE)
+    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    bottom = BOTTOM - 0.46
+
+    drawers = []
+    for kind, b in blocks:
+        if kind == "quote":
+            scene, question = split_question(b)
+            if scene:
+                drawers.append(lambda sl, y, mh, s_=scene: K.form_speech(
+                    sl, LEFT, y, WIDTH, s_, max_h=mh, label=f"{sid} сцена"))
+            if question:
+                drawers.append(lambda sl, y, mh, q=question: K.form_question(
+                    sl, LEFT, y, WIDTH, q, max_h=mh, label=f"{sid} вопрос"))
+        elif kind == "cards":
+            drawers.append(lambda sl, y, mh, c=b: K.option_row(
+                sl, LEFT, y, WIDTH, c, highlight_idx=None, max_h=min(mh or 1.8, 1.8),
+                label=f"{sid} варианты"))
+        else:
+            d = block_drawer(kind, b, sid, pattern)
+            if d:
+                drawers.append(d)
+    compose(sl, sid, y0, drawers, bottom=bottom)
+    K.footer_note(sl, "разбор — на следующем слайде", y=bottom + 0.12, align=PP_ALIGN.CENTER)
+    K.slide_id_mark(sl, sid)
+
+
+# Таблица оси возвращается пять раз за занятие. Колонки ей задаются явно:
+# иначе ширины пересчитываются по содержимому каждого возврата, и «та же
+# таблица, которую занятие открывало пустой» выглядит каждый раз другой.
+AXIS_COLS = (0.13, 0.27, 0.27, 0.33)
+
+
+def g_axis_table(sl, sid, title, blocks, pattern, assertion=""):
+    """Ось занятия и её возвраты. Светлый фон, таблица-коробка; незаполненные
+    ячейки — пунктирные слоты, а не пустые клетки сетки.
+
+    Прежде эта таблица была настоящей таблицей PPTX с зеброй и синей шапкой,
+    положенной прямо на тёмно-синее поле, — и читалась как вставленный из
+    другого документа скриншот; пустые ячейки читались как недоделанный слайд."""
+    K.set_bg(sl, K.WHITE)
+    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    drawers = []
+    for kind, b in blocks:
+        if kind == "table" and len(b[0]) == len(AXIS_COLS):
+            inner = WIDTH - 0.4
+            cols = [c * inner for c in AXIS_COLS]
+            drawers.append(lambda sl, y, mh, h_=b[0], r_=b[1], c=cols: K.table_card(
+                sl, LEFT, y, WIDTH, h_, r_, col_w=c, max_h=mh, label=f"{sid} ось"))
+            continue
+        d = block_drawer(kind, b, sid, pattern)
+        if d:
+            drawers.append(d)
+    compose(sl, sid, y0, drawers)
+    K.slide_id_mark(sl, sid)
+
+
+def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
+    """«Ещё рано» и «не нужно вообще» — два РАЗНЫХ вопроса, и выглядеть они
+    обязаны по-разному. Две таблицы подряд становятся двумя плашками-критериями
+    бок о бок; одна таблица — плашкой на две колонки.
+
+    Прежде здесь стояли две одинаковые сетки друг над другом, отличавшиеся
+    только заголовком первой колонки, — самый буквальный «сплошные таблицы
+    странные» в деке."""
+    K.set_bg(sl, K.WHITE)
+    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    tables = [b for k, b in blocks if k == "table"]
+    others = [(k, b) for k, b in blocks if k != "table"]
+
+    drawers = []
+    for kind, b in others:
+        if kind == "quote":
+            drawers.append(block_drawer(kind, b, sid, pattern))
+
+    if len(tables) == 1 and len(tables[0][0]) == 2:
+        # одна таблица «рано | не нужно» — две плашки бок о бок
+        headers, rows = tables[0]
+        left = [r[0] for r in rows if len(r) > 0 and r[0].strip() and r[0].strip() != "—"]
+        right = [r[1] for r in rows if len(r) > 1 and r[1].strip() and r[1].strip() != "—"]
+        gap, cw = 0.3, (WIDTH - 0.3) / 2
+
+        def pair(sl, y, mh, h_=headers, l_=left, r_=right, cw=cw, gap=gap):
+            # плашки выравниваются по высоте: две колонки одного сравнения с
+            # разными низами читаются как недовёрстанные
+            tall = max(measure(lambda s2, yy, m2, it=it, t=t, a=a: K.criterion_plate(
+                           s2, LEFT, yy, cw, t, it, max_h=m2, accent=a), y, mh)
+                       for t, it, a in ((h_[0], l_, K.SLATE), (h_[1], r_, K.GOLD_DARK)))
+            K.criterion_plate(sl, LEFT, y, cw, h_[0], l_, max_h=mh, min_h=tall,
+                              accent=K.SLATE, label=f"{sid} рано")
+            K.criterion_plate(sl, LEFT + cw + gap, y, cw, h_[1], r_, max_h=mh, min_h=tall,
+                              accent=K.GOLD_DARK, label=f"{sid} не нужно")
+            return tall
+        drawers.append(pair)
     else:
-        txt(sl,Inches(12.0),Inches(7.08),Inches(1.0),Inches(0.3),[sid],11,RGBColor(0x6F,0x7E,0x99),align=PP_ALIGN.RIGHT)
+        # «ещё рано» — вопрос про МОМЕНТ (тиловая, нейтральная);
+        # «не нужно вообще» — вопрос про ЗАДАЧУ (золотая, это граница)
+        accents = [None, K.GOLD_DARK, K.MID]
+        for i, (headers, rows) in enumerate(tables):
+            drawers.append(lambda sl, y, mh, h_=headers, r_=rows, a=accents[min(i, 2)]:
+                           K.table_card(sl, LEFT, y, WIDTH, h_, r_, max_h=mh, accent=a,
+                                        label=f"{sid} критерии"))
 
-    last = max((i for i,(k,_) in enumerate(blocks) if k!="para"), default=-1)
-    # подпись слайда получает свою высоту первой — иначе таблица съедает её бюджет
-    reserve = Inches(0)
-    if last >= 0 and blocks[last][0]=="quote" and len(blocks[last][1])<=2:
-        reserve = Inches(0.34*wrapn(blocks[last][1],92)+0.50)
-    for i,(kind,b) in enumerate(blocks):
-        if y >= bottom - Inches(0.3): break
-        avail = bottom - y - (Inches(0) if i==last else reserve)
-        if kind=="quote":
-            tail = (i==last and len(b)<=2)          # закрывающая подпись слайда
-            h=min(avail,Inches(0.34*wrapn(b[:5], 92 if tail else 80)+0.34))
-            rect(sl,L,y,WIDTH,h,fill=RGBColor(0xFF,0xF7,0xE2) if tail else RGBColor(0x2A,0x34,0x70),line=GOLD)
-            txt(sl,L+Inches(0.3),y+Inches(0.1),WIDTH-Inches(0.6),h-Inches(0.2),b[:5],
-                15 if tail else 18, INK if tail else WHITE, anchor=MSO_ANCHOR.MIDDLE)
-            y+=h+Inches(0.16)
-        elif kind=="table":
-            rows=[r[:5] for r in b]; h=min(avail,Inches(0.44*len(rows)+0.2))
-            gt=table(sl,rows,L,y,WIDTH,h,fs=11 if len(rows[0])>3 else 13)
-            for j,wd in enumerate(COLW.get(len(gt.columns),())): gt.columns[j].width=Inches(wd)
-            y+=h+Inches(0.18)
-        elif kind=="cards":
-            cw=(WIDTH-Inches(0.12)*(len(b)-1))/max(len(b),1); h=min(avail,Inches(0.95)); x=L
-            for it in b:
-                rect(sl,x,y,cw,h,fill=RGBColor(0x2A,0x34,0x70),line=LIGHT)
-                txt(sl,x+Inches(0.08),y+Inches(0.06),cw-Inches(0.16),h-Inches(0.12),[it],14,WHITE,
-                    align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
-                x+=cw+Inches(0.12)
-            y+=h+Inches(0.16)
-        # 'para' и 'code' на рамочных слайдах не встречаются — спецификация на слайд не выводится
+    for kind, b in others:
+        if kind in ("bullets", "code", "cards"):
+            drawers.append(block_drawer(kind, b, sid, pattern))
+    compose(sl, sid, y0, drawers)
+    K.slide_id_mark(sl, sid)
 
 
-def render(sl, stype, sid, title, blocks):
-    if stype in FRAME:
-        return render_frame(sl, sid, title, blocks)
-    figdir = Path(__file__).parent/"figures"
-    cand = sorted(figdir.glob(f"{sid}.png")) + sorted(figdir.glob(f"{sid}-*.png"))
-    if not cand and sid in FIGS and (figdir/FIGS[sid]).exists():
-        cand=[figdir/FIGS[sid]]
-    fig = cand[0] if cand else None
-    tables=[b for k,b in blocks if k=="table"]; codes=[b for k,b in blocks if k=="code"]
-    quotes=[b for k,b in blocks if k=="quote"]; cards=[b for k,b in blocks if k=="cards"]
-    bullets=[b for k,b in blocks if k=="bullets"]; paras=[b for k,b in blocks if k=="para"]
+def g_closing(sl, sid, title, blocks, pattern, assertion=""):
+    """Закрытие — возврат к вопросу открытия. Золотая коробка с вопросом
+    получает вес, таблица становится спокойной сводкой под ней."""
+    K.set_bg(sl, K.WHITE)
+    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    drawers = []
+    first = True
+    for kind, b in blocks:
+        if kind == "quote" and first:
+            first = False
+            drawers.append(lambda sl, y, mh, q=b: K.form_question(
+                sl, LEFT, y, WIDTH, q, size=15.5, max_h=mh,
+                label=f"{sid} вопрос открытия"))
+            continue
+        d = block_drawer(kind, b, sid, pattern)
+        if d:
+            drawers.append(d)
+    compose(sl, sid, y0, drawers)
+    K.slide_id_mark(sl, sid)
 
-    if stype in DARK:
-        bg(sl,DEEP); rect(sl,Inches(0),Inches(2.62),Inches(13.333),Inches(0.08),fill=GOLD,rounded=False)
-        txt(sl,Inches(0.9),Inches(1.15),Inches(11.5),Inches(1.35),[title],38,WHITE,bold=True,anchor=MSO_ANCHOR.BOTTOM)
-        y=Inches(3.0)
-        if quotes:
-            rect(sl,Inches(0.9),y,Inches(11.5),Inches(1.75),fill=RGBColor(0x2A,0x34,0x70),line=GOLD)
-            txt(sl,Inches(1.2),y+Inches(0.18),Inches(10.9),Inches(1.4),quotes[0][:4],19,WHITE,anchor=MSO_ANCHOR.MIDDLE)
-            y+=Inches(2.0)
-        if tables:
-            table(sl,tables[0][:6],Inches(0.9),y,Inches(11.5),Inches(2.4),fs=12); y+=Inches(2.5)
-        elif cards:
-            x=Inches(0.9); cw=Inches(11.5/len(cards[0]))-Inches(0.12)
-            for it in cards[0]:
-                rect(sl,x,y,cw,Inches(0.85),fill=RGBColor(0x2A,0x34,0x70),line=LIGHT)
-                txt(sl,x+Inches(0.08),y+Inches(0.08),cw-Inches(0.16),Inches(0.7),[it],12,WHITE,align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
-                x+=cw+Inches(0.12)
-            y+=Inches(1.05)
-        elif paras:
-            txt(sl,Inches(0.9),y,Inches(11.5),Inches(2.2),paras[:3],18,RGBColor(0xD6,0xE2,0xEC))
-        if stype=="section_divider":
-            if sid in TAGS:
-                txt(sl,Inches(0.9),Inches(3.0),Inches(11.5),Inches(0.5),[TAGS[sid]],17,GOLD,bold=True)
-            roadmap(sl,sid)
-        return
 
-    bg(sl,WHITE)
-    rect(sl,Inches(0),Inches(0),Inches(13.333),Inches(1.02),fill=DEEP,rounded=False)
-    rect(sl,Inches(0),Inches(1.02),Inches(13.333),Inches(0.055),fill=GOLD,rounded=False)
-    txt(sl,Inches(0.55),Inches(0.14),Inches(12.2),Inches(0.78),[title],24,WHITE,bold=True,anchor=MSO_ANCHOR.MIDDLE)
-    txt(sl,Inches(12.0),Inches(6.95),Inches(1.0),Inches(0.32),[sid],11,MUTE,align=PP_ALIGN.RIGHT)
-    y=Inches(1.35); bottom=Inches(6.80); L=Inches(0.55); WIDTH=Inches(12.2)
-
+def g_content(sl, sid, title, blocks, pattern, assertion=""):
+    """Содержательный слайд: надзаголовок, заголовок-утверждение с кеглем по
+    длине, схема (если есть) и блоки в порядке источника — каждый своим
+    приёмом, все по измеренной высоте."""
+    K.set_bg(sl, K.WHITE)
+    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    drawers = []
+    fig = figure_for(sid)
     if fig:
-        from PIL import Image as _I
-        iw,ih=_I.open(fig).size
-        fh=min(Inches(12.2*ih/iw), bottom-y-Inches(0.2))
-        sl.shapes.add_picture(str(fig), L, y, width=int(fh*iw/ih))
-        y += fh + Inches(0.16)
+        drawers.append(lambda sl, y, mh, p=fig: K.figure(
+            sl, p, LEFT, y, WIDTH, mh if mh else 4.3))
+    for kind, b in blocks:
+        if kind == "table" and pattern == "evidence_table_with_gap":
+            # таблица свидетельств — свой акцент: «разбор» подсвечивает целевую
+            # строку золотом, «свидетельства» ничего не выбирают, они взвешивают
+            drawers.append(lambda sl, y, mh, h_=b[0], r_=b[1]: K.table_card(
+                sl, LEFT, y, WIDTH, h_, r_, max_h=mh, accent=K.MID, highlight={},
+                label=f"{sid} свидетельства"))
+            continue
+        d = block_drawer(kind, b, sid, pattern)
+        if d:
+            drawers.append(d)
+    compose(sl, sid, y0, drawers)
+    K.slide_id_mark(sl, sid)
 
-    # блоки выводятся В ПОРЯДКЕ ИСТОЧНИКА и ВСЕ, пока есть вертикальный бюджет
-    for kind,b in blocks:
-        if y >= bottom - Inches(0.3): break
-        avail = bottom - y
-        if kind=="quote":
-            lines=b[:5]; h=min(avail,Inches(0.34*wrapn(lines,95)+0.34))
-            rect(sl,L,y,WIDTH,h,fill=RGBColor(0xFF,0xF7,0xE2),line=GOLD)
-            txt(sl,L+Inches(0.3),y+Inches(0.1),WIDTH-Inches(0.6),h-Inches(0.2),lines,15,INK,anchor=MSO_ANCHOR.MIDDLE)
-            y+=h+Inches(0.14)
-        elif kind=="cards":
-            items=b; cw=(WIDTH-Inches(0.1)*(len(items)-1))/max(len(items),1)
-            h=min(avail,Inches(0.92)); x=L
-            for it in items:
-                rect(sl,x,y,cw,h,fill=SURF,line=LIGHT)
-                txt(sl,x+Inches(0.07),y+Inches(0.06),cw-Inches(0.14),h-Inches(0.12),[it],11.5,INK,align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
-                x+=cw+Inches(0.1)
-            y+=h+Inches(0.16)
-        elif kind=="table":
-            rows=[r[:5] for r in b]; keep=min(len(rows),9)
-            h=min(avail,Inches(0.40*keep+0.2))
-            table(sl,rows[:keep],L,y,WIDTH,h,fs=11 if len(rows[0])>3 else 12)
-            y+=h+Inches(0.16)
-        elif kind=="code":
-            code=[c[:104] for c in b[:16]]; h=min(avail,Inches(0.225*len(code)+0.26))
-            rect(sl,L,y,WIDTH,h,fill=CODEBG,line=LIGHT)
-            txt(sl,L+Inches(0.22),y+Inches(0.11),WIDTH-Inches(0.44),h-Inches(0.2),code,11,RGBColor(0xE8,0xEF,0xF7),mono=True,spc=1)
-            y+=h+Inches(0.14)
-        elif kind=="bullets":
-            items=["• "+x for x in b[:8]]; h=min(avail,Inches(0.32*len(items)+0.26))
-            rect(sl,L,y,WIDTH,h,fill=SURF,line=LIGHT)
-            txt(sl,L+Inches(0.3),y+Inches(0.1),WIDTH-Inches(0.6),h-Inches(0.2),items,13.5,INK,spc=3)
-            y+=h+Inches(0.14)
-        # 'para' — спецификация для дизайнера, на слайд не выводится никогда
 
-built=0
-for s in deck["slides"]:
-    md=(root/s["file"]).read_text(encoding="utf-8")
-    title,_,visual,notes = SP.sections(md)
-    sl=prs.slides.add_slide(BLANK)
-    render(sl, s.get("type",""), s["id"], title or s["id"], SP.blocks(visual))
-    if notes: sl.notes_slide.notes_text_frame.text=notes
-    built+=1
+GENRE_FN = {
+    "section_divider_macro": g_divider,
+    "hero_cover": g_cover,
+    "question_with_option_cards": g_question,
+    "keystone_scope_map": g_axis_table,
+    "recap_table": g_axis_table,
+    "criteria_checklist_and_boundary": g_criteria,
+    "closing_question_partial": g_closing,
+}
 
-out=Path(__file__).parent/"sem-05.pptx"; prs.save(out)
-print(f"слайдов: {built}   файл: {out.name} ({out.stat().st_size//1024} КБ)")
+
+# ── Сборка ──────────────────────────────────────────────────────────────────
+
+def main():
+    deck = yaml.safe_load((ROOT / "deck.yaml").read_text(encoding="utf-8"))
+    prs = Presentation()
+    prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
+    blank = prs.slide_layouts[6]
+    M.reset()
+
+    only = set(sys.argv[1:])
+    built = 0
+    for s in deck["slides"]:
+        sid = s["id"]
+        pattern = (s.get("visual") or {}).get("pattern", "")
+        md = (ROOT / s["file"]).read_text(encoding="utf-8")
+        title, _assertion, visual, notes = SP.sections(md)
+        sl = prs.slides.add_slide(blank)
+        if not only or sid in only:
+            GENRE_FN.get(pattern, g_content)(sl, sid, title or sid, SP.blocks(visual),
+                                             pattern, _assertion)
+        if notes:
+            sl.notes_slide.notes_text_frame.text = notes
+        built += 1
+
+    out = HERE / "sem-05.pptx"
+    prs.save(out)
+    warns = M.report()
+    for w in warns:
+        print("•", w)
+    print(f"\nслайдов: {built}   предупреждений: {len(warns)}   "
+          f"файл: {out.name} ({out.stat().st_size // 1024} КБ)")
+
+
+if __name__ == "__main__":
+    main()

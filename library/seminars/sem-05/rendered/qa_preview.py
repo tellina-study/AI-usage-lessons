@@ -35,6 +35,50 @@ def wrap(d, text, fo, w, mono=False):
         out.append(line)
     return out
 
+A = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
+
+
+def grad_stops(sh):
+    """Остановки градиентной заливки, если она есть.
+
+    Без этого предпросмотр рисовал дивайдеры БЕЛЫМИ: градиент задаётся узлом
+    `gradFill`, а не `solidFill`, проверка `fill.type == 1` его не видела — и
+    белый текст на «белом» фоне пропадал вовсе. Смотреть на такую картинку и
+    делать вывод о вёрстке нельзя, поэтому градиент разбирается явно."""
+    try: sppr = sh._element.spPr
+    except Exception: return None
+    g = sppr.find(A + "gradFill")
+    if g is None: return None
+    out = []
+    for gs in g.iter(A + "gs"):
+        clr = gs.find(A + "srgbClr")
+        if clr is None: continue
+        v = clr.get("val")
+        out.append((int(gs.get("pos", 0)) / 100000.0,
+                    (int(v[0:2], 16), int(v[2:4], 16), int(v[4:6], 16))))
+    return sorted(out) or None
+
+
+def paint_gradient(im, x, y, w, h, stops):
+    """Линейный градиент по диагонали — тот же угол 45°, что задаёт вёрстка."""
+    if w <= 0 or h <= 0: return
+    box = Image.new("RGB", (max(w, 1), max(h, 1)))
+    px = box.load()
+    for j in range(box.size[1]):
+        for i in range(0, box.size[0], 4):
+            t = (i / max(box.size[0] - 1, 1) + j / max(box.size[1] - 1, 1)) / 2
+            lo = stops[0]; hi = stops[-1]
+            for k in range(len(stops) - 1):
+                if stops[k][0] <= t <= stops[k + 1][0]:
+                    lo, hi = stops[k], stops[k + 1]; break
+            span = max(hi[0] - lo[0], 1e-6)
+            f = min(max((t - lo[0]) / span, 0.0), 1.0)
+            col = tuple(int(lo[1][c] + (hi[1][c] - lo[1][c]) * f) for c in range(3))
+            for d in range(4):
+                if i + d < box.size[0]: px[i + d, j] = col
+    im.paste(box, (x, y))
+
+
 def run_info(p):
     r = p.runs[0] if p.runs else None
     sz = (p.font.size or (r.font.size if r else None))
@@ -103,6 +147,10 @@ def render(pptx, ids):
                 pass
             if sh.shape_type == 1 or getattr(sh, "fill", None) is not None and not sh.has_text_frame:
                 pass
+            grad = grad_stops(sh)
+            if grad:
+                paint_gradient(im, x, y, w, h, grad)
+                continue
             try:
                 fill = tuple(sh.fill.fore_color.rgb) if sh.fill.type == 1 else None
             except Exception: fill = None

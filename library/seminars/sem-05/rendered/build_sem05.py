@@ -74,7 +74,9 @@ def roadmap(sl,cur):
             bold=on,align=PP_ALIGN.CENTER,anchor=MSO_ANCHOR.MIDDLE)
         x+=Inches(2.45)
 
-FIGS={"s16":"lifecycle.png","s17":"contract.png","s20":"bypass.png"}
+FIGS={"s09":"khuk-scene.png","s13":"khuk-cobuild.png","s16":"lifecycle.png",
+      "s17":"khuk-stdin.png","s18":"contract.png","s19":"khuk-debug.png",
+      "s20":"bypass.png","s21":"khuk-blindspot.png"}
 TAGS={"s08":"1 кейс · 2 слоя провала · 5 форм обхода",
       "s24":"1 кейс · 2 слоя провала · 6 причин молчания",
       "s38":"1 кейс · 3 слоя провала · 3 области видимости"}
@@ -107,10 +109,12 @@ def render(sl, stype, sid, title, blocks):
                 x+=cw+Inches(0.12)
             y+=Inches(1.05)
         elif paras:
-            txt(sl,Inches(0.9),y,Inches(11.5),Inches(2.2),paras[:3],18,RGBColor(0xD6,0xE2,0xEC))
+            txt(sl,Inches(0.9),y,Inches(11.5),Inches(1.3),paras[:3],18,RGBColor(0xD6,0xE2,0xEC))
+            y+=Inches(1.45)
         if stype=="section_divider":
             if sid in TAGS:
-                txt(sl,Inches(0.9),Inches(3.0),Inches(11.5),Inches(0.5),[TAGS[sid]],17,GOLD,bold=True)
+                # тег идёт ПОД содержимым дивайдера, а не поверх него
+                txt(sl,Inches(0.9),y,Inches(11.5),Inches(0.5),[TAGS[sid]],17,GOLD,bold=True)
             roadmap(sl,sid)
         return
 

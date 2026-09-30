@@ -34,26 +34,9 @@ W = (255, 255, 255); WARM = (0xFF, 0xF7, 0xE2); PALE = (0xE6, 0xEE, 0xF4)
 OUT = Path(__file__).parent / "figures"
 OUT.mkdir(exist_ok=True)
 WARN = []
-RECTS = []   # прямоугольники текущего полотна: (x1, y1, x2, y2, что это)
-
-
-def _claim(x, y, w, h, where):
-    """Регистрирует прямоугольник и ругается, если он перекрыл уже нарисованный.
-
-    Закрывает слепой угол, из-за которого за один день три сессии поймали
-    наползающие блоки ТОЛЬКО глазами: проверка ширины текста есть, проверки
-    вертикальных столкновений не было ни у кого.
-    """
-    if where.startswith("+"):        # намеренная накладка: значок поверх блока
-        return
-    x2, y2 = x + w, y + h
-    for (ax, ay, bx, by, aw) in RECTS:
-        ox = min(x2, bx) - max(x, ax)
-        oy = min(y2, by) - max(y, ay)
-        if ox > 2 and oy > 2:
-            WARN.append(f"СТОЛКНОВЕНИЕ: {where!r} перекрывает {aw!r} на {ox}x{oy} px")
-            break
-    RECTS.append((x, y, x2, y2, where))
+import deck_kit as K                      # общий набор: проверка наложений и подписей
+CL = K.Claims(tol=2)                     # была локальная копия _claim — снята,
+                                         # алгоритм жил в трёх экземплярах
 
 
 def f(sz, b=False, m=False):
@@ -69,12 +52,14 @@ def fit(d, txt, fo, limit, where):
 
 def box(d, x, y, w, h, lines, fc, tc=W, sz=32, b=True, m=False, r=12, pad=18,
         outline=None, where="?"):
-    _claim(x, y, w, h, where)
+    CL.claim(x, y, w, h, where)
     d.rounded_rectangle([x, y, x + w, y + h], radius=r, fill=fc,
                         outline=outline, width=3 if outline else 0)
     fo = f(sz, b, m)
     if isinstance(lines, str):
         lines = [lines]
+    for _ln in lines:
+        CL.label(_ln, where)
     th = len(lines) * (sz + 8) - 8
     cy = y + (h - th) // 2
     for i, ln in enumerate(lines):
@@ -85,7 +70,7 @@ def box(d, x, y, w, h, lines, fc, tc=W, sz=32, b=True, m=False, r=12, pad=18,
 
 def lbox(d, x, y, w, h, lines, fc, tc=INK, sz=30, b=False, m=False, r=12,
          pad=20, outline=None, where="?"):
-    _claim(x, y, w, h, where)
+    CL.claim(x, y, w, h, where)
     d.rounded_rectangle([x, y, x + w, y + h], radius=r, fill=fc,
                         outline=outline, width=3 if outline else 0)
     fo = f(sz, b, m)
@@ -107,6 +92,7 @@ def arrow(d, x1, y1, x2, y2, col=MID, wd=5, head=16):
 
 
 def caption(d, y, txt, sz=34, col=DEEP, b=True, Wd=2400):
+    txt = CL.label(txt, "подпись")
     fo = f(sz, b)
     fit(d, txt, fo, Wd - 80, "подпись")
     tw = d.textlength(txt, font=fo)
@@ -114,12 +100,12 @@ def caption(d, y, txt, sz=34, col=DEEP, b=True, Wd=2400):
 
 
 def head(d, txt, sz=34):
-    d.text((40, 18), txt, font=f(sz, True), fill=DEEP)
+    d.text((40, 18), CL.label(txt, "заголовок схемы"), font=f(sz, True), fill=DEEP)
 
 
 def save(im, name):
     im.save(OUT / name)
-    RECTS.clear()   # новое полотно — новый набор прямоугольников
+    CL.rects.clear()   # новое полотно — новый набор прямоугольников
 
 
 # ── n07 — схема отменена ─────────────────────────────────────────────────────
@@ -298,6 +284,7 @@ save(im, "khuki-n32-sloi.png")
 print("схемы блока «Хуки»:")
 for p in sorted(OUT.glob("khuki-*.png")):
     print("  ", p.name)
+WARN.extend(CL.report())
 if WARN:
     print("\nПРЕДУПРЕЖДЕНИЯ (текст шире отведённого места):")
     for w in dict.fromkeys(WARN):

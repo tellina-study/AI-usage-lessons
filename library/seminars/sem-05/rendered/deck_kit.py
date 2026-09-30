@@ -125,7 +125,10 @@ def text_box(sl, x, y, w, h, lines, *, size=13, bold=False, italic=False,
             r.text = seg
             r.font.name = MONO if (mono or mo) else FONT
             r.font.size = Pt(size)
-            r.font.bold = bold or b
+            # В моноширинной коробке шрифт у всех кусков и так один, поэтому
+            # `` `кусок` `` выделяется единственным, что там осталось, —
+            # насыщенностью. На светлом слайде он выделяется сменой шрифта.
+            r.font.bold = bold or b or (mo and mono)
             r.font.italic = italic
             r.font.color.rgb = color
     return tb
@@ -659,10 +662,30 @@ def slot_row(sl, x, y, w, slots, *, accent_idx=(), h=1.5, gap=0.16, label="сл�
     return h
 
 
-def terminal_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None, label="код"):
+def code_w(ln, size, markup):
+    """Ширина строки кода. При `markup` куски в обратных кавычках меряются
+    ЖИРНЫМ моноширинным и без самих кавычек — тем, чем будут нарисованы."""
+    if not markup:
+        return M.text_w(ln, size, mono=True)
+    return sum(M.text_w(seg, size, bold=mo, mono=True) for seg, _b, mo in inline_runs(ln))
+
+
+def terminal_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
+                  label="код", markup=False):
     """Тёмная моноширинная карточка для вывода команд и файлов. Высота — по
     числу РЕАЛЬНЫХ строк вывода; перенос моноширинного текста не делается,
-    длинная строка отмечается предупреждением, а не молча обрезается."""
+    длинная строка отмечается предупреждением, а не молча обрезается.
+
+    `markup=True` — карточка показывает ЛИСТИНГ ФАЙЛА РАЗМЕТКИ (ограждение
+    помечено языком `markdown`). Тогда `` `кусок` `` внутри строки — разметка
+    показываемого файла, и она становится оформлением: кусок набирается жирным
+    моноширинным, сами кавычки на слайд не идут.
+
+    По умолчанию ВЫКЛЮЧЕНО, и это не лень. В ограждении без языка и в
+    `bash`/`json` обратная кавычка — настоящий знак содержимого (подстановка
+    команды в оболочке, например), и убрать её значило бы соврать про то, что
+    карточка обещает показать дословно. Решает автор, пометив ограждение
+    языком, — вёрстка не угадывает."""
     pad = 0.24
     inner = w - 2 * pad
     fs = size
@@ -679,11 +702,11 @@ def terminal_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None, labe
         text_box(sl, x + pad, y + 0.12, inner, 0.28, title, size=10.5, bold=True,
                  color=ON_DARK_MUTE, rich=False)
     for ln in lines:
-        if M.text_w(ln, fs, mono=True) > inner:
+        if code_w(ln, fs, markup) > inner:
             M._WARNINGS.append(f"ПЕРЕПОЛНЕНИЕ [{label}]: строка кода «{ln[:40]}…» шире карточки")
             break
     text_box(sl, x + pad, y + pad + head - 0.04, inner, h - 2 * pad - head + 0.08,
-             lines, size=fs, color=CODE_FG, mono=True, spacing=1.3, rich=False)
+             lines, size=fs, color=CODE_FG, mono=True, spacing=1.3, rich=markup)
     return h
 
 

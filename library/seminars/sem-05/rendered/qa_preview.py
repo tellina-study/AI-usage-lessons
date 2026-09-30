@@ -202,9 +202,18 @@ def draw_tf(d, tf, x, y, w, h, report, tag):
         # «`---` первой строкой плюс описание» разъезжалась на строку-на-прогон:
         # `---` отдельной строкой, остальное отдельной, поверх разделителя.
         mono = all(_is_mono(r) for r in p.runs)
-        if mono:                            # моноширинный вывод не переносится
-            lines = [[(seg, fo, col)] for seg, fo, col in runs
-                     for seg in seg.split("\n")]
+        if mono:
+            # Моноширинный вывод не переносится — но и не разваливается на
+            # строку-на-прогон: после того как `` `кусок` `` в листинге разметки
+            # стал отдельным (жирным) прогоном, одна строка файла рисовалась
+            # тремя, и карточка на картинке «переполнялась», будучи целой.
+            lines = [[]]
+            for seg, fo, col in runs:
+                for k, part in enumerate(seg.split("\n")):
+                    if k:
+                        lines.append([])
+                    if part:
+                        lines[-1].append((part, fo, col))
             wide_n = len(lines)
         else:
             lines = wrap_runs(d, runs, wide)

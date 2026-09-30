@@ -80,7 +80,7 @@ def _clean(s):
 
 def blocks(visual):
     """Последовательность блоков в порядке источника:
-    ('table', (headers, rows)) | ('code', lines) | ('quote', lines)
+    ('table', (headers, rows)) | ('code', (язык, lines)) | ('quote', lines)
     | ('cards', items) | ('bullets', items) | ('para', text).
     """
     out, buf, i = [], [], 0
@@ -96,12 +96,17 @@ def blocks(visual):
     while i < len(lines):
         ln = lines[i]
         if ln.strip().startswith("```"):
-            flush(); i += 1; code = []
+            # Язык ограждения — не украшение исходника, а ЗАЯВЛЕНИЕ автора о
+            # том, что внутри. Вёрстке он нужен, чтобы отличить листинг файла
+            # разметки (где обратные кавычки — разметка этого файла) от вывода
+            # команды (где они — настоящие знаки, и трогать их нельзя).
+            flush(); lang = ln.strip().lstrip("`~").strip().lower()
+            i += 1; code = []
             while i < len(lines) and not lines[i].strip().startswith("```"):
                 code.append(lines[i].rstrip()); i += 1
             i += 1
             if code:
-                out.append(("code", code))
+                out.append(("code", (lang, code)))
             continue
         if ln.strip().startswith("|") and ln.strip().endswith("|"):
             flush(); rows = []

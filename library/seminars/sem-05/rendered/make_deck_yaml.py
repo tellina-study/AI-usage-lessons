@@ -84,9 +84,17 @@ def cover_texts(files):
 
 
 def gaps(slides):
-    nums = [B.num(s["id"]) for s in slides]
+    """Дыры и повторы в нумерации.
+
+    Повтор считается по ИДЕНТИФИКАТОРУ, а не по номеру: `n18` и `n18a` — это
+    два разных слайда с одним номером, и так их и заводят, когда слайд делят
+    надвое и не хотят двигать всю деку. Проверка по номеру объявляла такую
+    пару дефектом — ложно, и ровно в тот момент, когда деление слайдов идёт
+    потоком."""
+    ids = [s["id"] for s in slides]
+    nums = {B.num(i) for i in ids}
     holes = [n for n in range(min(nums), max(nums) + 1) if n not in nums]
-    dupes = sorted({n for n in nums if nums.count(n) > 1})
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
     return holes, dupes
 
 
@@ -98,7 +106,7 @@ def build(prefix="n"):
     if holes:
         print(f"  ⚠ пропуски в нумерации: {holes}")
     if dupes:
-        print(f"  ⚠ повторяющиеся номера: {dupes}")
+        print(f"  ⚠ повторяющиеся идентификаторы: {dupes}")
 
     # Прозаические поля шапки переносятся из любого `deck.yaml`, какой найдётся:
     # при самой первой сборке нового файла его ещё нет, а старая дека лежит

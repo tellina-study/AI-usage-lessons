@@ -15,6 +15,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+import deck_kit as K
+
 F = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FM = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
@@ -27,35 +29,19 @@ PALE = (0xE6, 0xEC, 0xF3); ROSE = (0xF7, 0xE6, 0xE4); W = (255, 255, 255)
 OUT = Path(__file__).parent / "figures"; OUT.mkdir(exist_ok=True)
 CW = 2400
 WARN = []
-RECTS = []
+# Проверка наложений — общая: `deck_kit.Claims`. Своя копия у меня была, у
+# хуков своя, у предпросмотра третья — три экземпляра одного алгоритма давали
+# три ответа на один вопрос. Перешёл на общую, как только она появилась.
+CL = K.Claims(tol=2)
 
 
 def _claim(x, y, w, h, where):
-    """Регистрирует прямоугольник и ругается, если он перекрыл уже нарисованный.
-
-    Взято у генератора блока «Хуки» — закрывает слепой угол, из-за которого
-    за один день три сессии поймали наползающие блоки ТОЛЬКО глазами: проверка
-    ширины текста была у всех, проверки вертикальных столкновений не было ни у
-    кого. У меня этим слепым углом были ярлык, наехавший на подпись, и золотая
-    плашка, наехавшая на строку над ней.
-
-    Префикс «+» в имени — намеренная накладка, такие не считаются.
-    """
-    if where.startswith("+"):
-        return
-    x2, y2 = x + w, y + h
-    for (ax, ay, bx, by, aw) in RECTS:
-        ox = min(x2, bx) - max(x, ax)
-        oy = min(y2, by) - max(y, ay)
-        if ox > 2 and oy > 2:
-            WARN.append(f"СТОЛКНОВЕНИЕ: {where!r} перекрывает {aw!r} на {ox}x{oy} px")
-            break
-    RECTS.append((x, y, x2, y2, where))
+    CL.claim(x, y, w, h, where)
 
 
 def _newfig(w, h):
     """Новая канва — прямоугольники предыдущей больше не в счёт."""
-    RECTS.clear()
+    CL.rects.clear()
     return Image.new("RGB", (w, h), W)
 
 
@@ -309,6 +295,7 @@ plate(d, 40, 468, 2320, 62,
       ROSE, tc=RED, sz=22, b=True)
 im.save(OUT / "skilly-chuzhoy-katalog.png")
 
+WARN.extend(CL.report())
 print("схемы блока «Скиллы»:", *[p.name for p in sorted(OUT.glob("skilly-*.png"))])
 if WARN:
     print("ПРЕДУПРЕЖДЕНИЯ (ширина и столкновения):", len(WARN))

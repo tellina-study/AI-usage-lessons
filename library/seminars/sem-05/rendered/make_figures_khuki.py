@@ -105,7 +105,7 @@ def save(im, name):
 
 
 # ── n07. Три кадра сцены ─────────────────────────────────────────────────────
-im = Image.new("RGB", (2400, 520), W); d = ImageDraw.Draw(im)
+im = Image.new("RGB", (2400, 410), W); d = ImageDraw.Draw(im)
 head(d, "Одна сессия, три кадра — и ни одного нарушенного правила")
 frames = [
     ("1", ["агент правит", "валидацию формы"], MID),
@@ -114,18 +114,18 @@ frames = [
 ]
 x = 90
 for num, lines, col in frames:
-    box(d, x, 110, 560, 210, lines, SURF, tc=INK, sz=36, b=True, where="n07 кадр")
-    box(d, x + 18, 128, 56, 56, num, col, sz=32, r=28, pad=6, where="n07 номер")
+    box(d, x, 88, 560, 168, lines, SURF, tc=INK, sz=36, b=True, where="n07 кадр")
+    box(d, x + 18, 104, 56, 56, num, col, sz=32, r=28, pad=6, where="n07 номер")
     x += 700
 for cx in (700, 1400):
-    arrow(d, cx - 40, 215, cx + 55, 215, col=LIGHT, wd=6, head=20)
-box(d, 90, 370, 2220, 100,
+    arrow(d, cx - 40, 172, cx + 55, 172, col=LIGHT, wd=6, head=20)
+box(d, 90, 290, 2220, 88,
     "правило не нарушено: правила про ветки в файле нет", RED, sz=40,
     where="n07 плашка")
 save(im, "khuki-n07-stsena.png")
 
 # ── n12. Конвейер срабатывания ───────────────────────────────────────────────
-im = Image.new("RGB", (2400, 560), W); d = ImageDraw.Draw(im)
+im = Image.new("RGB", (2400, 460), W); d = ImageDraw.Draw(im)
 head(d, "Как срабатывает: пять шагов от аргументов вызова до исполнения")
 steps = [
     (["модель собрала", "аргументы вызова"], SURF, INK),
@@ -136,14 +136,14 @@ steps = [
 ]
 x, bw = 60, 420
 for i, (lines, fc, tc) in enumerate(steps):
-    box(d, x, 130, bw, 190, lines, fc, tc=tc, sz=32, where="n12 шаг")
+    box(d, x, 100, bw, 164, lines, fc, tc=tc, sz=32, where="n12 шаг")
     if i < 4:
-        arrow(d, x + bw + 6, 225, x + bw + 52, 225, col=LIGHT, wd=6, head=18)
+        arrow(d, x + bw + 6, 182, x + bw + 52, 182, col=LIGHT, wd=6, head=18)
     x += bw + 58
-lbox(d, 60, 375, 1140, 150,
+lbox(d, 60, 296, 1140, 132,
      ["видит команду СОБРАННОЙ,", "но до раскрытия оболочкой"],
      WARM, sz=34, b=True, outline=GOLD, where="n12 выноска 1")
-lbox(d, 1250, 375, 1090, 150,
+lbox(d, 1250, 296, 1090, 132,
      ["никогда не узнает,", "чем вызов кончился"],
      PALE, sz=34, b=True, outline=LIGHT, where="n12 выноска 2")
 save(im, "khuki-n12-ustroystvo.png")
@@ -167,7 +167,7 @@ for q, lvl in rows:
 save(im, "khuki-n13-sborka.png")
 
 # ── n15. Шесть форм команды ──────────────────────────────────────────────────
-im = Image.new("RGB", (2400, 700), W); d = ImageDraw.Draw(im)
+im = Image.new("RGB", (2400, 506), W); d = ImageDraw.Draw(im)
 head(d, "Шесть форм одной команды: отклонена одна")
 forms = [
     ("git commit", True),
@@ -177,20 +177,20 @@ forms = [
     ("env git commit", False),
     ("… && git commit  (2-я строка)", False),
 ]
-y = 100
+y = 84
 for txt, denied in forms:
     fc = RED if denied else SURF
     tc = W if denied else INK
-    lbox(d, 60, y, 1180, 72, [txt], fc, tc=tc, sz=30, m=True, where="n15 форма")
+    lbox(d, 60, y, 1180, 54, [txt], fc, tc=tc, sz=30, m=True, where="n15 форма")
     if denied:
-        box(d, 1290, y, 460, 72, "ОТКЛОНЁН", RED, sz=30, where="n15 исход")
+        box(d, 1290, y, 460, 54, "ОТКЛОНЁН", RED, sz=30, where="n15 исход")
     else:
-        box(d, 1290, y, 460, 72, "барьер молчит", MUTE, sz=30, where="n15 исход")
-    y += 80
-lbox(d, 1810, 100, 530, 472,
+        box(d, 1290, y, 460, 54, "барьер молчит", MUTE, sz=30, where="n15 исход")
+    y += 58
+lbox(d, 1810, 84, 530, 336,
      ["из шести форм", "отклонена одна", "", "четыре из пяти", "нашёл внешний", "тест"],
      WARM, sz=32, b=True, outline=GOLD, where="n15 база")
-box(d, 60, 606, 2280, 72,
+box(d, 60, 440, 2280, 52,
     "исполняемый файл с правильным именем — не барьер", DEEP, sz=36,
     where="n15 итог")
 save(im, "khuki-n15-proval.png")
@@ -254,9 +254,9 @@ caption(d, 410, "ни одного сообщения об ошибке", sz=32,
 save(im, "khuki-n26-stsena.png")
 
 # ── n29. Узкий матчер против широкого ────────────────────────────────────────
-im = Image.new("RGB", (2400, 600), W); d = ImageDraw.Draw(im)
+im = Image.new("RGB", (2400, 440), W); d = ImageDraw.Draw(im)
 head(d, "Один масштаб: что платит задача при узком и при широком матчере")
-base_y, maxh = 500, 330
+base_y, maxh = 330, 208
 # 27 мс против 51 000 мс — логарифм невозможен наглядно, поэтому
 # показываем полосу узкого как видимый минимум и подписываем кратность.
 bars = [
@@ -276,7 +276,7 @@ for label, val, note, col in bars:
         d.text((x + (520 - tw) // 2, base_y + 16 + k * 40), ln, font=fo2, fill=INK)
     x += 1120
 d.line([60, base_y, 2340, base_y], fill=MUTE, width=3)
-lbox(d, 80, 150, 620, 150,
+lbox(d, 80, 96, 620, 118,
      ["одна и та же", "машина и проект,", "разница — матчер"],
      WARM, sz=32, b=True, outline=GOLD, where="n29 выноска")
 save(im, "khuki-n29-umnozhenie.png")

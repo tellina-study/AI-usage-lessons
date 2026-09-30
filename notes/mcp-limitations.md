@@ -893,6 +893,29 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
   `libXinerama.so.1: cannot open shared object file`, PDF не создаётся вовсе, а сообщение уходит в `2>&1`,
   который в рецепте обычно погашен в `/dev/null` — то есть отказ выглядит как «конвертация прошла, файла нет».
   Заодно ставить `HOME` в свой каталог: профиль пишется относительно него.
+- **Дополнение 2 (правка по student-roast, 2026-09-30):** в рецепте приватного рендера выше команда названа
+  `soffice` — но такого исполняемого файла **нет в `PATH`**: `render.sh` вызывает его по полному пути
+  `/home/harness/.local/libreoffice-portable/program/soffice`. Скопировав рецепт дословно, получаешь
+  `timeout: failed to run command 'soffice': No such file or directory` и **exit 2 без единого слова о причине** —
+  то есть отказ выглядит как очередная неудачная конвертация, а не как опечатка в рецепте. Полный рабочий вызов:
+  ```bash
+  export LD_LIBRARY_PATH=/home/harness/.local/lo-sysroot/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+  export HOME=/tmp/<свой-каталог>
+  timeout 600 /home/harness/.local/libreoffice-portable/program/soffice --headless \
+    -env:UserInstallation=file:///tmp/<свой-каталог>/loprofile \
+    --convert-to pdf --outdir /tmp/<свой-каталог> /tmp/<свой-каталог>/subset.pptx
+  ```
+  И следом — **вторая ловушка того же рецепта**: `export HOME=<свой-каталог>` уводит интерпретатор от
+  `~/.local/lib/python3.12/site-packages`, поэтому `import pymupdf` в том же вызове падает с `ModuleNotFoundError`,
+  хотя модуль установлен. Шаг PDF→PNG надо выполнять **отдельной командой, без подменённого `HOME`**.
+- **Дополнение 3 (там же):** `gen_charts.py` не запускается из коробки — `matplotlib` в системном python3
+  отсутствует, а `pip install` блокирован PEP 668. Рабочая установка:
+  `python3 -m pip install --user --break-system-packages matplotlib`.
+- **Дополнение 4 (там же):** при одновременной правке одного билдера двумя сессиями чтение файла может попасть
+  в середину чужой записи: `python3 build_lec05.py` упал с `NameError: name 'text_runs' is not defined` в
+  `slides_band5.py`, хотя импорт в файле был — через полминуты та же сборка прошла без изменений с моей стороны.
+  Вывод тот же, что у всей этой группы записей: **единственная честная проверка — перечитать собранный
+  `.pptx`**, а не доверять ни коду возврата, ни одной неудачной сборке.
 - **Status:** active.
 - **First seen in:** #212 (Лекция 5, правка по owner-review 2026-09-30, Раздел 7 — six sections revised in parallel in one worktree).
 

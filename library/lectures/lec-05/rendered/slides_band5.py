@@ -20,10 +20,10 @@ Palette Ocean LOCKED, motif «Ocean rounded box», Gold ≥1×/слайд.
 Заметки докладчика приходят из slides/*.md через notes_with_sources.
 """
 from _helpers import (
-    blank, set_slide_bg, text_box, ocean_box, filled_rect,
+    blank, set_slide_bg, text_box, text_runs, ocean_box, filled_rect,
     circle, chip, connector, icon, slide_title, src,
     gold_callout, teal_callout, notes_with_sources,
-    roadmap_bar, NAV,
+    roadmap_bar, build_section_divider, NAV,
     photo_in_box,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT,
@@ -98,59 +98,27 @@ def matrix_row(slide, x, y, widths, cells, *, h=0.70, size=10.0,
 # ============================================================
 
 def s50(p):
-    """Дивайдер Раздела 7 — тот же левый блок и та же полоса разделов, что у
-    остальных дивайдеров деки. Правый герой не декоративный: шесть стрелок фаз
-    сходятся к компасу, и на слайде подписано, что это за схема. Раздел
-    открывается необходимостью работы, а не названием метода."""
-    s = blank(p)
-    set_slide_bg(s, SURFACE)
-    here = 7
+    """Дивайдер Раздела 7.
 
-    # ── правый герой: гигантская «7» + компас в кольце шести стрелок ──
-    text_box(s, x=8.55, y=0.20, w=4.5, h=5.8, text=str(here),
-             size=400, bold=True, color=COVER_OUTLINE,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.0)
-    ccx, ccy, r_out, r_in = 10.75, 2.88, 1.62, 0.80
-    circle(s, ccx - 0.60, ccy - 0.60, 1.20, WHITE, stroke=GOLD, stroke_pt=2.0)
-    icon(s, "compass", ccx - 0.40, ccy - 0.40, 0.80, "gold")
-    phases = ["Исследование", "Дизайн", "Сборка", "Измерение", "Поддержка",
-              "Управление"]
-    for i, lab in enumerate(phases):
-        a = math.radians(-90 + i * 60)
-        connector(s, ccx + r_out * math.cos(a), ccy + r_out * math.sin(a),
-                  ccx + r_in * math.cos(a), ccy + r_in * math.sin(a),
-                  color=LIGHT, width=2.0, arrow_end=True)
-        lx = ccx + (r_out + 0.32) * math.cos(a)
-        ly = ccy + (r_out + 0.32) * math.sin(a)
-        text_box(s, x=lx - 0.75, y=ly - 0.14, w=1.50, h=0.28, text=lab,
-                 size=9.0, bold=True, color=MID, align=PP_ALIGN.CENTER,
-                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    # подпись схемы: фигура без подписи на слайде недопустима
-    text_box(s, x=8.66, y=5.02, w=4.18, h=0.62,
-             text="Схема: шесть разобранных фаз сходятся к одному инструменту "
-                  "решения",
-             size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.TOP, line_spacing=1.12)
-
-    # ── левый блок: тот же порядок, что у остальных дивайдеров деки ──
-    text_box(s, x=0.75, y=1.55, w=7.3, h=0.55, text=f"РАЗДЕЛ {here}",
-             size=20, bold=True, color=TEAL)
-    text_box(s, x=0.75, y=2.62, w=7.3, h=1.75,
-             text="Обобщение: один инструмент\nна все шесть фаз",
-             size=26, bold=True, color=DEEP, line_spacing=1.12)
-    chip(s, 0.78, 4.22, 4.35, 0.42,
-         "6 фаз · 1 матрица · 3 оси решения",
-         fill=GOLD, color=DEEP, size=12.5)
-    text_box(s, x=0.78, y=4.82, w=7.35, h=1.55,
-             text="Шесть фаз разобраны по отдельности, но решение принимают по "
-                  "задаче, а не по разделу лекции. Без общего инструмента "
-                  "остаётся шесть отдельных выводов и ни одного ответа на "
-                  "случай, которого здесь не было.",
-             size=15, italic=True, color=LIGHT, line_spacing=1.16)
-    roadmap_bar(s, here, y=6.55)
-    notes_with_sources(s, "s50")
-    return s
+    ПРАВКА #212 (student-roast 2026-09-30, правка 5): правым героем здесь
+    была самодельная схема — компас в кольце из шести стрелок, подписанных
+    названиями фаз. Студент прочитал её как пустую: «красиво, но смысла в
+    ней ноль: я и так знаю, что фаз шесть». Он прав — схема пересказывала
+    то, что зритель видел на пяти предыдущих дивайдерах и на ленте разделов
+    внизу, то есть не сообщала ничего. Снята целиком; дивайдер приведён к
+    общему для деки виду (гигантская цифра раздела + одна иконка-эмблема),
+    которым собраны все остальные шесть.
+    """
+    return build_section_divider(
+        p, here_idx=7,
+        subtitle="Обобщение: один инструмент\nна все шесть фаз",
+        bridge="Шесть фаз разобраны по отдельности, но решение принимают по "
+               "задаче, а не по разделу лекции. Без общего инструмента "
+               "остаётся шесть отдельных выводов и ни одного ответа на "
+               "случай, которого здесь не было.",
+        sid="s50", tag="6 фаз · 1 матрица · 3 оси решения",
+        icon_name="compass",
+    )
 
 
 # ============================================================
@@ -312,7 +280,16 @@ def s53(p):
     владельца»), то есть читались как инструкция исполнителю, а не как
     объяснение подхода. Теперь каждая ось сама говорит, что должно стоять
     рядом, если она в проблемном положении, а прогон двух разобранных случаев
-    остаётся доказательством, что инструмент работает."""
+    остаётся доказательством, что инструмент работает.
+
+    ПРАВКА после методической прожарки 2026-09-30: при слиянии чек-листа
+    потерялся его первый вопрос — «классическая дисциплина этой фазы на
+    месте?». Лекция построена как «классическая база → что добавляет ИИ →
+    где ломается», и её итоговый инструмент перестал проверять собственную
+    несущую ось. Вопрос возвращён отдельной полосой НАД тремя осями, а не
+    четвёртой осью: он задаётся раньше них и отвечает не «какой нужен
+    режим», а «есть ли вообще что усиливать». Формулировка взята из главы,
+    chapter-part5.md §7.4, пункт 1, без англицизмов видимого слоя."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
@@ -320,10 +297,22 @@ def s53(p):
            "высокой обратимости, низкой цене ошибки и высокой наблюдаемости",
         size=18, w=12.3, h=0.72, y=0.20)
 
-    text_box(s, x=0.55, y=0.96, w=12.25, h=0.26,
+    # ── вопрос, который задают раньше трёх осей (chapter-part5.md §7.4) ──
+    ocean_box(s, 0.55, 0.94, 12.25, 0.42, fill=MID_TINT, stroke=MID,
+              stroke_pt=1.8)
+    text_runs(s, 0.75, 0.94, 11.85, 0.42, [
+        {"text": "Вопрос до всех трёх осей: классическая дисциплина этой "
+                 "фазы на месте — или ИИ применяется в пустоте? ",
+         "size": 11.0, "bold": True, "color": DEEP},
+        {"text": "Если её нет, сначала выстраивают её: ИИ усиливает то, что "
+                 "уже есть, и в пустоте усиливать нечего.",
+         "size": 11.0, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+
+    text_box(s, x=0.55, y=1.42, w=12.25, h=0.18,
              text="Три оси решения: что каждая означает и что должно стоять "
                   "рядом, если ось в проблемном положении",
-             size=11.5, italic=True, color=SLATE, line_spacing=1.0)
+             size=10.5, italic=True, color=SLATE, line_spacing=1.0)
 
     # ── три карточки-оси: определение + чего требует проблемная ось ──
     axes = [
@@ -342,39 +331,46 @@ def s53(p):
          "Низкая — нужен эталонный набор и метрика-ограничитель раньше "
          "доверия к средним."),
     ]
-    cw, cgap, cy0, ch = 3.95, 0.20, 1.26, 1.76
+    # ПРАВКА #212 (student-roast 2026-09-30, правка 6): нижняя бирюзовая
+    # плашка наезжала на номер страницы — её низ приходился на 7,36", а
+    # штамп номера начинается на 7,16". Вся вертикаль слайда подтянута
+    # вверх на ~0,35": низ плашки теперь 6,98", то есть на 0,18" выше
+    # номера. Содержание не тронуто.
+    cw, cgap, cy0, ch = 3.95, 0.20, 1.62, 1.52
     for i, (ic, name, col, body, need) in enumerate(axes):
         x = 0.55 + i * (cw + cgap)
         ocean_box(s, x, cy0, cw, ch, fill=SURFACE, stroke=col, stroke_pt=1.6)
         icon(s, ic, x + 0.20, cy0 + 0.12, 0.38, "mid")
         text_box(s, x=x + 0.68, y=cy0 + 0.10, w=cw - 0.84, h=0.40, text=name,
                  size=15, bold=True, color=col, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=x + 0.20, y=cy0 + 0.52, w=cw - 0.40, h=0.52, text=body,
-                 size=11.0, color=DEEP, line_spacing=1.12)
-        filled_rect(s, x + 0.16, cy0 + 1.08, cw - 0.32, 0.58, GOLD_TINT,
+        text_box(s, x=x + 0.20, y=cy0 + 0.48, w=cw - 0.40, h=0.46, text=body,
+                 size=10.5, color=DEEP, line_spacing=1.12)
+        # врезка поднята и стала выше: у третьей оси текст в ТРИ строки и
+        # вываливался из рамки (student-roast, правка 6 — тот же класс дефекта)
+        filled_rect(s, x + 0.16, cy0 + 0.96, cw - 0.32, 0.56, GOLD_TINT,
                     stroke=GOLD, stroke_pt=1.0, radius=True, radius_adj=0.12)
-        text_box(s, x=x + 0.28, y=cy0 + 1.10, w=cw - 0.56, h=0.54, text=need,
-                 size=10.5, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+        text_box(s, x=x + 0.26, y=cy0 + 0.98, w=cw - 0.52, h=0.52, text=need,
+                 size=10.0, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
                  line_spacing=1.10)
 
     # ── правило ──
     gold_callout(
-        s, 0.55, 3.16, 12.25, 0.68,
+        s, 0.55, 3.20, 12.25, 0.60,
         "Отдать фазу ИИ без человека на рубеже оправдано только при сочетании "
         "высокой обратимости, низкой цены ошибки и высокой наблюдаемости. Любая "
         "другая комбинация требует рубежа по проблемной оси.",
         size=12, bold=True, align=PP_ALIGN.CENTER)
 
     # ── прогон через два разобранных случая ──
-    text_box(s, x=0.55, y=3.92, w=12.25, h=0.26,
+    text_box(s, x=0.55, y=3.86, w=12.25, h=0.18,
              text="Прогон тех же трёх осей через два случая, разобранных в "
                   "лекции",
-             size=11.5, italic=True, color=SLATE, line_spacing=1.0)
+             size=10.5, italic=True, color=SLATE, line_spacing=1.0)
     x0, gap = 0.55, 0.06
     widths = [2.56, 2.24, 2.34, 2.34, 2.53]
     heads = ["Случай", "Обратимость", "Цена ошибки", "Наблюдаемость",
              "Проблемная ось → мера"]
-    y = matrix_header(s, x0, 4.20, widths, heads, h=0.38, size=10.5,
+    y = matrix_header(s, x0, 4.06, widths, heads, h=0.34, size=10.5,
                       accent_idx=4, gap=gap)
     rows = [
         ("Google AI Overviews\nответ поиска раскатан сразу на всех",
@@ -391,11 +387,11 @@ def s53(p):
          "все три оси сразу: жёсткий рубеж нужен на каждой — не было ни одного"),
     ]
     for cells in rows:
-        y = matrix_row(s, x0, y + 0.06, widths, cells, h=0.98, size=10.0,
+        y = matrix_row(s, x0, y + 0.06, widths, cells, h=0.94, size=10.0,
                        accent_idx=4, gap=gap, first_size=10.5)
 
     teal_callout(
-        s, 0.55, y + 0.12, 12.25, 0.58,
+        s, 0.55, y + 0.10, 12.25, 0.54,
         "Ни одна ось не запрещает ИИ — каждая называет, что должно стоять "
         "рядом. Там, где все три условия выполнены сразу, высокая "
         "самостоятельность обоснована, а не рискованна.",

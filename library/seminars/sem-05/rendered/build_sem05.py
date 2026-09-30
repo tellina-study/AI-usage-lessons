@@ -97,23 +97,56 @@ GENRE = {
 }
 MECHANICS_TAG = "механика"
 
+# Ярлык развилки — СОДЕРЖАНИЕ, а не вёрстка: он называет, из чего состоит
+# кейс. Поэтому его место во фронтматтере слайда (`visual.tag`), рядом с
+# остальным, что пишет автор. Таблица ниже — переходная: она держит ярлыки,
+# написанные до того, как поле появилось, и отстаёт при каждой перенумерации.
+# Развилка, у которой нет ни поля, ни строки в таблице, теперь не молчит.
 TAGS = {"s07": "1 кейс · 2 слоя провала · 5 форм обхода",
         "s21": "1 кейс · 2 слоя провала · 6 причин молчания",
         "s33": "1 кейс · 3 слоя провала · 3 области видимости",
-        # Новая дека: развилка каждого кейса. Ярлык называет, из чего кейс
-        # состоит, — и ни в одном нет слова «хук»: развилка называет боль.
         "n06": "1 кейс · 5 решений сборки · 2 слоя провала",
         "n17": "1 инцидент · 5 клеток · 8 способов промолчать",
         "n25": "1 случай · 3 замера · 5 вариантов действия",
         "n34": "3 повода завести · 2 измерения · 1 наш файл",
-        "n43": "3 части описания · 2 длины, которые путают",
-        "n51": "13 скиллов · 1 с описанием · 5 средств ревизии"}
-# Номер на значке развилки — номер КЕЙСА, а не ступени. Кейсов шесть, и счёт
-# СКВОЗНОЙ через всю деку: три про хуки (1–3), три про скиллы (4–6). Номер
-# ступени на значке не нужен — ступень и так видна полосой сверху и дорожкой
-# внизу, а зал считает кейсы: «это четвёртый из шести», а не «второй из двух».
-BADGE = {"s07": 3, "s21": 4, "s33": 5,
-         "n06": 1, "n17": 2, "n25": 3, "n34": 4, "n43": 5, "n51": 6}
+        "n44": "3 части описания · 2 длины, которые путают"}
+
+
+def divider_index(sid):
+    """Порядковый номер развилки в деке, считая с единицы; 0 — не развилка."""
+    div = [s["id"] for s in _deck_slides(sid[0])
+           if (s.get("visual") or {}).get("pattern") == "section_divider_macro"]
+    return div.index(sid) + 1 if sid in div else 0
+
+
+def badge_for(sid):
+    if sid in BADGE_OVERRIDE:
+        return BADGE_OVERRIDE[sid]
+    n = divider_index(sid)
+    return n or None
+
+
+def tag_for(sid, visual_meta):
+    tag = (visual_meta or {}).get("tag") or TAGS.get(sid)
+    if not tag:
+        M._WARNINGS.append(
+            f"НЕТ ЯРЛЫКА [{sid}]: развилка без ярлыка — впишите `tag:` в "
+            f"`visual:` фронтматтера слайда (ярлык называет, из чего состоит "
+            f"кейс: «1 кейс · 5 решений · 2 слоя провала»)")
+    return tag
+# Номер на значке развилки — номер КЕЙСА, а не ступени. Кейсов шесть, счёт
+# сквозной: три про хуки (1–3), три про скиллы (4–6). Номер ступени на значке
+# не нужен — ступень видна полосой сверху и дорожкой внизу, а зал считает
+# кейсы: «это четвёртый из шести», а не «второй из двух».
+#
+# Номер ВЫВОДИТСЯ: он и есть порядковый номер развилки в деке. Таблица по
+# идентификаторам здесь была, и она отстала при первой же перенумерации —
+# шестая развилка уехала с n51 на n53 и осталась без значка совсем, молча.
+# Это ровно та же беда, что была с границами разделов, и лечится так же.
+#
+# Таблица осталась для случая, когда номер НЕ равен порядковому: у старой деки
+# на значке стоял номер ступени оси (хук — 3-я из пяти), а не номер кейса.
+BADGE_OVERRIDE = {"s07": 3, "s21": 4, "s33": 5}
 
 FIGS={
     "n01": "ramka-n01-hero.png",
@@ -225,12 +258,19 @@ def _anchor_sections(slides):
 
 
 def _deck_slides(prefix):
-    if prefix == "n":
-        return deck_from_files("n")
-    try:
-        return yaml.safe_load((ROOT / "deck.yaml").read_text(encoding="utf-8"))["slides"]
-    except Exception:
-        return []
+    """Слайды той деки, к которой относится эта нумерация.
+
+    `deck.yaml` описывает продукт; если его слайды той же нумерации — берём
+    его. Иначе ищем рядом: старая дека лежит в `deck-s50.yaml`, а блок,
+    которого ещё нет ни в одном `deck.yaml`, собирается прямо из файлов."""
+    for name in ("deck.yaml", "deck-s50.yaml"):
+        try:
+            sl = yaml.safe_load((ROOT / name).read_text(encoding="utf-8"))["slides"]
+        except Exception:
+            continue
+        if sl and sl[0]["id"][0] == prefix:
+            return sl
+    return deck_from_files(prefix)
 
 
 def sections_for(sid):
@@ -561,7 +601,7 @@ def compose(sl, sid, y0, drawers, *, bottom=BOTTOM, center=True):
 
 # ── Жанры слайдов ───────────────────────────────────────────────────────────
 
-def g_divider(sl, sid, title, blocks, pattern, assertion=""):
+def g_divider(sl, sid, title, blocks, pattern, assertion="", meta=None):
     """Дивайдер уровня раздела: градиент DEEP→MID→LIGHT, широкая золотая
     полоса прогресса, номерной значок, смысловая строка, ярлык — и дорожная
     карта внизу.
@@ -577,6 +617,7 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
     Ничего не дописывается — используется текст, который у слайда уже есть."""
     _, stage = where(sid)
     stages = sections_for(sid)[1]
+    tag, badge = tag_for(sid, meta), badge_for(sid)
     K.divider_bg(sl)
     K.strip_pills(sl, LEFT, 0.5, 11.3, len(stages), stage if stage is not None else -1)
 
@@ -591,7 +632,7 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
                 # снимать вместе с приставкой — это её хвост, а не начало
                 # оставшейся фразы.
                 rest = rest[len(K.plain(title)):].strip(" ·—–-.,;:!?")
-            if rest and rest != TAGS.get(sid, ""):
+            if rest and rest != tag:
                 meaning.append(rest)
     if not meaning and assertion:
         meaning = [K.plain(assertion)]
@@ -609,12 +650,12 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
     # подпустить смысловую строку вплотную к ярлыку
     mh = (M.block_h(meaning, 17, 10.4, spacing=1.32, space_after=4)
           + M.line_h(17, 1.32)) if meaning else 0.0
-    tag_h = 0.55 if sid in TAGS else 0.0
+    tag_h = 0.55 if tag else 0.0
     total = th + (mh + 0.34 if meaning else 0) + (tag_h + 0.30 if tag_h else 0)
     y = 1.25 + max((5.2 - total) / 2, 0.0)
 
-    if sid in BADGE:
-        K.divider_badge(sl, BADGE[sid], cy=y + th / 2)
+    if badge:
+        K.divider_badge(sl, badge, cy=y + th / 2)
     K.text_box(sl, 1.68, y, tw, th, title, size=34, bold=True, color=K.WHITE, spacing=1.05)
     y += th + 0.34
     if meaning:
@@ -622,7 +663,7 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
                    color=K.ON_DARK, spacing=1.32, space_after=4)
         y += mh + 0.30
     if tag_h:
-        K.tag_plate(sl, LEFT + 0.35, y, TAGS[sid])
+        K.tag_plate(sl, LEFT + 0.35, y, tag)
     if stage is not None:
         K.roadmap(sl, stages, stage)
     K.slide_id_mark(sl, sid, on_dark=True)
@@ -960,6 +1001,12 @@ def main():
         block = argv[i + 1] if i + 1 < len(argv) else "n"
         del argv[i:i + 2]
 
+    deck_file = "deck.yaml"
+    if "--deck" in argv:
+        i = argv.index("--deck")
+        deck_file = argv[i + 1]
+        del argv[i:i + 2]
+
     if block:
         slides = deck_from_files(block)
         out_name = f"sem-05-{block}.pptx"
@@ -967,8 +1014,9 @@ def main():
             print(f"слайдов по образцу «{block}*.md» не найдено")
             return
     else:
-        slides = yaml.safe_load((ROOT / "deck.yaml").read_text(encoding="utf-8"))["slides"]
-        out_name = "sem-05.pptx"
+        slides = yaml.safe_load((ROOT / deck_file).read_text(encoding="utf-8"))["slides"]
+        out_name = "sem-05.pptx" if deck_file == "deck.yaml" else \
+            f"sem-05-{Path(deck_file).stem}.pptx"
     deck = {"slides": slides}
     prs = Presentation()
     prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
@@ -984,8 +1032,9 @@ def main():
         title, _assertion, visual, notes = SP.sections(md)
         sl = prs.slides.add_slide(blank)
         if not only or sid in only:
-            GENRE_FN.get(pattern, g_content)(sl, sid, title or sid, SP.blocks(visual),
-                                             pattern, _assertion)
+            fn = GENRE_FN.get(pattern, g_content)
+            kw = {"meta": s.get("visual")} if fn is g_divider else {}
+            fn(sl, sid, title or sid, SP.blocks(visual), pattern, _assertion, **kw)
         if notes:
             K.write_notes(sl, notes)
         built += 1

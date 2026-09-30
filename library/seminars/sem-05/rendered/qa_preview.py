@@ -158,29 +158,19 @@ def wrap_runs(d, runs, w):
 def _overlaps(boxes, report):
     """Наложения НАРИСОВАННОГО текста на нарисованный текст.
 
-    Проверка по другой оси, чем всё остальное в этом файле, и нужна она именно
-    потому, что высотная проверка эту беду не видит по построению: строк ровно
-    столько, сколько отведено, — а стоят они поверх соседа.
+    Сравниваются не рамки, а плотные прямоугольники текста: рамки в этой деке
+    налезают друг на друга штатно сплошь и рядом (текст поверх коробки), и
+    список по рамкам утопил бы настоящее столкновение.
 
-    Сравниваются не рамки, а ПЛОТНЫЕ прямоугольники нарисованного текста:
-    самая широкая строка на реальную высоту всех строк. Рамки в этой деке
-    налезают друг на друга сплошь и рядом штатно (текст поверх коробки,
-    подпись в поле другой рамки) — сравнивать их значило бы получить список,
-    в котором тонет настоящее столкновение.
-
-    Порог в 2 px по каждой оси — чтобы касание пикселями не считалось
-    наложением."""
-    T = 2
-    for i in range(len(boxes)):
-        x1, y1, x2, y2, t1 = boxes[i]
-        for j in range(i + 1, len(boxes)):
-            a1, b1, a2, b2, t2 = boxes[j]
-            ox = min(x2, a2) - max(x1, a1)
-            oy = min(y2, b2) - max(y1, b1)
-            if ox > T and oy > T:
-                report.append(
-                    f"НАЛОЖЕНИЕ ТЕКСТА: «{t1[:26]}…» и «{t2[:26]}…» "
-                    f"перекрываются на {ox / 120:.2f}×{oy / 120:.2f}\"")
+    Сам алгоритм — общий `deck_kit.Claims`, тот же, которым генераторы схем
+    проверяют свои блоки. Один вопрос — одна реализация.
+    """
+    import deck_kit as K
+    c = K.Claims(tol=2)
+    for x1, y1, x2, y2, t in boxes:
+        c.claim(x1, y1, x2 - x1, y2 - y1, t[:26] + "…")
+    report.extend(w.replace("СТОЛКНОВЕНИЕ:", "НАЛОЖЕНИЕ ТЕКСТА:") + " px"
+                  for w in c.report())
 
 
 def draw_tf(d, tf, x, y, w, h, report, tag, boxes=None):
@@ -294,7 +284,12 @@ def deck_order(pptx=None):
         import build_sem05 as B
         return [s["id"] for s in B.deck_from_files(name[7:])]
     import yaml
-    deck = yaml.safe_load((Path(__file__).parent.parent / "deck.yaml").read_text())
+    root = Path(__file__).parent.parent
+    if name.startswith("sem-05-"):          # sem-05-<имя деки>.pptx
+        cand = root / f"{name[7:]}.yaml"
+        if cand.exists():
+            return [s["id"] for s in yaml.safe_load(cand.read_text())["slides"]]
+    deck = yaml.safe_load((root / "deck.yaml").read_text())
     return [s["id"] for s in deck["slides"]]
 
 

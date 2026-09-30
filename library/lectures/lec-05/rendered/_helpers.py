@@ -799,7 +799,7 @@ SLIDE_REFS = {
         ("2", "MIT NANDA — «The GenAI Divide» (июль 2025, v0.1)",
          "mit_nanda_pdf",
          "«95% пилотов — ноль отдачи»: неревьюированный препринт, требует "
-         "калибровки (см. s47)", True),
+         "калибровки — разбор этой цифры идёт в разделе про управление", True),
     ],
     "s08": [
         ("1", "Blank — Customer Development (Four Steps to the Epiphany)",

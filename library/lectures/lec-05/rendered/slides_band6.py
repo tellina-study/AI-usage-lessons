@@ -513,7 +513,10 @@ def s11b(p):
     tiny(s, fx + 0.62, y + 0.88, 1.55, "архив обращений", size=8.5,
          color=DEEP, bold=True, italic=False, h=0.22)
 
-    src(s, X0, 7.04, 11.5, "Двухшаговый синтез — Тереза Торрес")
+    src(s, X0, 7.04, 11.5,
+        "Двухшаговый синтез — Тереза Торрес, коуч продуктовых команд, автор "
+        "книги «Continuous Discovery Habits» о непрерывном исследовании "
+        "пользователей")
     notes_with_sources(s, sid)
     return s
 
@@ -671,7 +674,9 @@ def s24a(p):
            size=11.0)
 
     src(s, X0, 7.04, 11.5,
-        "Реганти и Бадам, 19 августа 2025 — обобщение более 50 внедрений")
+        "Айшварья Реганти (руководитель направления прикладного ИИ, Amazon) "
+        "и Кирити Бадам (технический специалист OpenAI), 19 августа 2025 — "
+        "их разбор более 50 внедрений в OpenAI, Google и Amazon")
     notes_with_sources(s, sid)
     return s
 
@@ -1023,7 +1028,9 @@ def s31a(p):
            size=10.2)
 
     src(s, X0, 7.04, 11.5,
-        "Трёхуровневая рамка — Хусейн · согласие модели-судьи с человеком: "
+        "Трёхуровневая рамка — Хамель Хусейн, инженер по машинному обучению, "
+        "автор разбора «Your AI Product Needs Evals» · согласие модели-судьи "
+        "с человеком: "
         "80–90% при явном предпочтении, 60–65% с ничьими и перестановкой")
     notes_with_sources(s, sid)
     return s
@@ -1049,6 +1056,13 @@ def s38a(p):
                size=11.5)
 
     def probes(sl, gx, gy, gw, gh):
+        """Правка по разбору студента: раньше здесь стояли ТРИ мелкие схемы
+        подряд, каждая со своей подписью, и связи между ними не было видно
+        («не понял, как они связаны между собой» — самый плотный слайд
+        лекции). Теперь их две, они пронумерованы теми же номерами, что шаги
+        слева, и соединены стрелкой — то есть читаются как одна картинка.
+        Третья схема (полоска собственного разброса) снята: её содержание
+        целиком есть в тексте третьего шага."""
         chain = ["запрос", "поиск", "инструменты", "ответ"]
         ccw = (gw - 3 * 0.08) / 4.0
         for i, lab in enumerate(chain):
@@ -1064,13 +1078,15 @@ def s38a(p):
                      text="версия", size=7.4, bold=True, color=WHITE,
                      align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
                      line_spacing=1.0)
-        tiny(sl, gx, gy + 0.51, gw,
-             "путь ответа: подсвечены не этапы, а версии", size=8.2,
-             align=PP_ALIGN.CENTER)
+        tiny(sl, gx, gy + 0.52, gw,
+             "1. путь ответа помечен версиями — из него и берут быстрый "
+             "признак качества", size=8.2, align=PP_ALIGN.CENTER, h=0.30)
+        connector(sl, gx + gw / 2, gy + 0.84, gx + gw / 2, gy + 1.02,
+                  color=MID, width=2.0, arrow_end=True)
         prox = [("зовут человека", True), ("переспрашивают", False),
                 ("отказ отвечать", False), ("повторные ответы", False)]
         for i, (lab, chosen) in enumerate(prox):
-            py = gy + 0.78 + i * 0.225
+            py = gy + 1.06 + i * 0.225
             ocean_box(sl, gx, py, gw, 0.21,
                       fill=(GOLD_TINT if chosen else WHITE),
                       stroke=(GOLD if chosen else SOFT_GREY),
@@ -1081,18 +1097,9 @@ def s38a(p):
                      h=0.21, size=7.8, bold=chosen,
                      color=(DEEP if chosen else SLATE),
                      anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-        tiny(sl, gx, gy + 1.69, gw,
-             "косвенная метрика качества: выбрана одна", size=8.2,
-             align=PP_ALIGN.CENTER)
-        sy = gy + 1.97
-        filled_rect(sl, gx, sy, gw, 0.22, WHITE, stroke=SLATE, stroke_pt=1.0)
-        filled_rect(sl, gx + 0.95, sy, 1.30, 0.22, TEAL_TINT)
-        connector(sl, gx + 2.25, sy - 0.05, gx + 2.25, sy + 0.27, color=GOLD,
-                  width=2.5)
-        tiny(sl, gx, sy + 0.23, 2.20, "собственный разброс системы",
-             size=7.8, align=PP_ALIGN.CENTER)
-        tiny(sl, gx + 2.28, sy + 0.23, gw - 2.28, "порог — внутри него",
-             size=7.8, color=DEEP, bold=True, italic=False)
+        tiny(sl, gx, gy + 1.98, gw,
+             "2. косвенную метрику выбирают одну — и договариваются о ней "
+             "заранее", size=8.2, align=PP_ALIGN.CENTER, h=0.30)
 
     mechanism(s, C, [
         "**Записывать путь ответа целиком, а не только его конец** — и "
@@ -1103,7 +1110,7 @@ def s38a(p):
         "**Порог тревоги брать из собственного разброса системы, а не из "
         "чужого норматива.** Одна модель отвечает по-разному на один и тот "
         "же запрос — расхождение доходит до **15 процентных пунктов**.",
-    ], size=10.0, schema=probes, schema_w=3.70, schema_h=2.42)
+    ], size=10.0, schema=probes, schema_w=3.70, schema_h=2.28)
 
     compare(s, C,
             ("БЕЗ ИИ — классика, работает и здесь",
@@ -1153,11 +1160,17 @@ def s38b(p):
                size=11.5)
 
     def timeline(sl, gx, gy, gw, gh):
-        marks = ["заметили", "пришёл человек", "автоматика остановила",
-                 "вернули как было"]
-        bh = 0.34
-        for i, lab in enumerate(marks):
-            by = gy + 0.10 + i * (bh + 0.18)
+        """Правка по разбору студента: четыре ПУСТЫХ поля читались как
+        «слайд недоделали». Поля заполнены числами одного проведённого
+        учения, а то, что числа свои у каждой команды, сказано подписью."""
+        marks = [("заметили", "4"), ("пришёл человек", "9"),
+                 ("автоматика остановила", "12"), ("вернули как было", "21")]
+        bh = 0.32
+        text_box(sl, x=gx + gw - 1.10, y=gy, w=1.10, h=0.20,
+                 text="минуты от начала", size=7.8, italic=True, color=SLATE,
+                 align=PP_ALIGN.CENTER, line_spacing=1.0)
+        for i, (lab, val) in enumerate(marks):
+            by = gy + 0.24 + i * (bh + 0.16)
             circle(sl, gx, by + 0.04, 0.26, MID)
             text_box(sl, x=gx, y=by + 0.04, w=0.26, h=0.26, text=str(i + 1),
                      size=8.5, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
@@ -1165,27 +1178,28 @@ def s38b(p):
             text_box(sl, x=gx + 0.34, y=by, w=gw - 1.50, h=bh, text=lab,
                      size=9.0, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
                      line_spacing=1.04)
-            ocean_box(sl, gx + gw - 1.10, by, 1.10, bh, fill=WHITE,
+            ocean_box(sl, gx + gw - 1.10, by, 1.10, bh, fill=GOLD_TINT,
                       stroke=GOLD, stroke_pt=1.4, radius_pt=6.0)
-            text_box(sl, x=gx + gw - 1.10, y=by, w=1.10, h=bh, text="___",
-                     size=10, bold=True, color=GOLD, align=PP_ALIGN.CENTER,
+            text_box(sl, x=gx + gw - 1.10, y=by, w=1.10, h=bh, text=val,
+                     size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
                      anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
             if i < 3:
-                connector(sl, gx + 0.13, by + bh, gx + 0.13, by + bh + 0.18,
+                connector(sl, gx + 0.13, by + bh, gx + 0.13, by + bh + 0.16,
                           color=SLATE, width=1.6, arrow_end=True)
-        tiny(sl, gx, gy + 0.10 + 4 * bh + 3 * 0.18 + 0.04, gw,
-             "поля пустые намеренно: число берётся с учения, а не из "
-             "инструкции", size=8.6, align=PP_ALIGN.CENTER, h=0.34)
+        tiny(sl, gx, gy + 0.24 + 4 * bh + 3 * 0.16 + 0.04, gw,
+             "числа — с одного проведённого учения; в следующем их "
+             "заполняют заново", size=8.6, align=PP_ALIGN.CENTER, h=0.30)
 
     mechanism(s, C, [
         "Выбирают **один класс отказа** и назначают дату: учение идёт по "
         "плану, а не как настоящий сбой.",
         "Качество ухудшают **управляемо** — подменяют инструкцию модели на "
         "заведомо более слабую или ослабляют ограничители.",
-        "Измеряют **четыре времени** и записывают их числом.",
+        "Измеряют **четыре времени** и записывают их числом — свои, а не "
+        "из инструкции.",
         "Учение, не изменившее ни одной инструкции, было слишком лёгким: "
         "измеритель, который всегда зелёный, ничего не измеряет.",
-    ], size=10.0, schema=timeline, schema_w=3.90, schema_h=2.40)
+    ], size=10.0, schema=timeline, schema_w=3.90, schema_h=2.34)
 
     compare(s, C,
             ("БЕЗ ИИ — классические учения на отказ",

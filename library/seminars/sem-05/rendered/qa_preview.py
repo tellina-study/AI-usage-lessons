@@ -4,12 +4,29 @@
 Конвертера pptx→pdf в окружении нет, поэтому картинка собирается из реальной геометрии
 готового .pptx: позиции, размеры, заливки, шрифты и текст читаются из файла, а не из исходников.
 Строки переносятся по той же ширине, что задана фигуре, и переполнение печатается списком.
+
+ПОПРАВКА НА ШРИФТ РАБОТАЕТ В ДВЕ СТОРОНЫ — и перепутать их значит либо врать
+картинкой, либо врать списком переполнений. Дека задаёт Arial, в окружении есть
+только DejaVu, который для кириллицы шире примерно на 5–10%.
+
+  * РИСУЕМ по мерке DejaVu без поправки (`K_LAYOUT`, ровно 1.0). Картинка
+    показывает худший случай переноса — если на ней текст стоит в рамке, в
+    настоящем Arial он стоит с запасом. Подкручивать картинку в «как будет в
+    Arial» нельзя: смотреть глазами тогда не на что.
+  * ОБЪЯВЛЯЕМ переполнение по мерке `K_REPORT` (0.88), то есть считая текст
+    УЗКИМ. Иначе каждая вторая рамка деки попадала бы в список как дефект,
+    которого в настоящем Arial нет, — и список перестал бы читаться.
+
+Обе величины берутся из `metrics.py`, а не задаются здесь вторым экземпляром:
+разойтись сборка и предпросмотр в оценке «влезло или нет» не должны.
 """
 import sys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from pptx import Presentation
 from pptx.util import Emu
+
+import metrics as M
 
 SC = 120 / 914400          # пикселей на EMU при 120 px/дюйм
 FR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -79,41 +96,166 @@ def paint_gradient(im, x, y, w, h, stops):
     im.paste(box, (x, y))
 
 
-def run_info(p):
-    r = p.runs[0] if p.runs else None
-    sz = (p.font.size or (r.font.size if r else None))
-    nm = (p.font.name or (r.font.name if r else None)) or "Arial"
-    bo = bool(p.font.bold or (r.font.bold if r else False))
+def _is_mono(r):
+    nm = (r.font.name or "").lower()
+    return nm.startswith("consol") or nm.startswith("dejavu sans mono")
+
+
+def _margin(tf, attr):
+    """Поле текстовой рамки в пикселях предпросмотра. У ячейки таблицы оно
+    своё (python-pptx ставит 0,1″ по бокам), у наших фигур — ноль."""
+    try:
+        v = getattr(tf, attr)
+        return int(v * SC) if v is not None else 0
+    except Exception:
+        return 0
+
+
+def run_info(p, r=None):
+    """Кегль, шрифт, насыщенность и цвет — для абзаца или для ОДНОГО прогона.
+
+    Прогон нужен отдельно, потому что `**жирный**` внутри строки теперь
+    что-то значит (целевой ответ в таблице, острая часть кромки на Такте Б), а
+    прежде предпросмотр красил весь абзац по нулевому прогону — и жирного на
+    картинке не было видно вовсе. Смотреть глазами на разметку, которой не
+    видно, нельзя."""
+    if r is None:
+        r = p.runs[0] if p.runs else None
+    sz = (r.font.size if r else None) or p.font.size
+    nm = ((r.font.name if r else None) or p.font.name) or "Arial"
+    bo = bool((r.font.bold if r else None) or p.font.bold)
     col = None
-    for src in (p.font, r.font if r else None):
+    for src in (r.font if r else None, p.font):
         try:
             if src and src.color and src.color.rgb: col = tuple(src.color.rgb); break
         except Exception: pass
     return (sz.pt if sz else 18), nm, bo, col or (20, 27, 46)
 
-def draw_tf(d, tf, x, y, w, h, report, tag):
-    pad = 4
-    cy, need = y + pad, 0
-    for p in tf.paragraphs:
-        t = "".join(r.text for r in p.runs) or p.text
-        pt, nm, bo, col = run_info(p)
-        fo = font(pt, bo, nm.lower().startswith("consol") or nm.lower().startswith("dejavu sans mono"))
-        lh = int(pt * 120 / 72 * 1.22)
-        mono = nm.lower().startswith("consol")
-        for ln in (wrap(d, t, fo, w - 2 * pad, mono) if t else [""]):
-            if t: d.text((x + pad, cy), ln, font=fo, fill=col)
-            cy += lh; need += lh
-    if need > h - 2 * pad + 2:
-        report.append(f"{tag}: текст выше рамки на {(need - h) / 120:.2f}\"")
 
-def render(pptx, ids):
-    prs = Presentation(pptx)
+import re as _re
+_WS = _re.compile(r"(\s+)")
+
+
+def wrap_runs(d, runs, w):
+    """Перенос строки, в которой соседствуют прогоны разной насыщенности.
+
+    Возвращает список строк, каждая — список кусков `(текст, шрифт, цвет)`.
+    Слово меряется тем шрифтом, которым будет нарисовано, а пробелы берутся из
+    самого текста: досочинять их на стыке прогонов нельзя — получается двойной
+    пробел перед жирным куском и пробел перед точкой после него.
+
+    Перенос делает `metrics.wrap_tokens` — тот же код, что и при сборке, чтобы
+    предпросмотр и вёрстка не расходились в том, сколько вышло строк."""
+    tokens, meta = [], []
+    for text, fo, col in runs:
+        for tok in _WS.split(text):
+            if tok:
+                tokens.append((tok, len(meta), False)); meta.append((fo, col))
+    lines = M.wrap_tokens(tokens, 0, w,
+                          measure=lambda t, i, _mo: d.textlength(t, font=meta[i][0]))
+    return [[(t, meta[i][0], meta[i][1]) for t, i, _ in ln] for ln in lines] or [[]]
+
+def draw_tf(d, tf, x, y, w, h, report, tag):
+    """Нарисовать рамку и сказать, переполнена ли она.
+
+    Две высоты считаются РАЗНЫМИ мерками, и это не дублирование:
+
+      `need_draw`   — по фактической ширине рамки, в DejaVu. Столько строк
+                      видно на картинке, и именно это глаз проверяет.
+      `need_report` — по ширине, увеличенной на 1/K_REPORT, то есть в
+                      предположении более узкого Arial. Только переполнение,
+                      которое переживает эту поправку, попадает в список.
+
+    Прежде список считался по `need_draw`: на нём висели рамки, у которых в
+    настоящем Arial запас, и настоящие дефекты в нём терялись."""
+    # Поля берутся у САМОЙ рамки, а не назначаются здесь константой. Вёрстка
+    # ставит `margin_* = 0` (текст идёт от края рамки), и прежние «4 px с
+    # каждой стороны» отнимали у каждой рамки 0,067″ ширины и столько же
+    # высоты — этого хватало, чтобы ровно уложенный текст переносился на
+    # лишнюю строку И попадал в список переполнений. То есть предпросмотр
+    # сообщал о дефекте, который создавал сам.
+    ml, mr, mt, mb = (_margin(tf, a) for a in
+                      ("margin_left", "margin_right", "margin_top", "margin_bottom"))
+    cy, need_draw, need_report = y + mt, 0, 0
+    rows = []                       # копим строки, рисуем после — см. ниже
+    wide = w - ml - mr                      # как есть — по этой ширине рисуем
+    narrow = wide / M.K_REPORT              # как в Arial — по этой судим
+    room = h - mt - mb
+    for p in tf.paragraphs:
+        pt, nm, _bo, _col = run_info(p)
+        try:
+            mult = float(p.line_spacing) if isinstance(p.line_spacing, float) else 1.22
+        except Exception:
+            mult = 1.22
+        lh = int(pt * 120 / 72 * mult)
+        runs = []
+        for r in (p.runs or []):
+            rpt, rnm, rbo, rcol = run_info(p, r)
+            low = rnm.lower()
+            runs.append((r.text, font(rpt, rbo, low.startswith("consol")
+                                      or low.startswith("dejavu sans mono")), rcol))
+        if not runs:
+            need_draw += lh; need_report += lh; rows.append(([], lh))
+            continue
+        # «Не переносить» — режим ТЕРМИНАЛЬНОЙ карточки, где моноширинным набран
+        # весь абзац. Прежде режим включался по ПЕРВОМУ прогону — и ячейка вида
+        # «`---` первой строкой плюс описание» разъезжалась на строку-на-прогон:
+        # `---` отдельной строкой, остальное отдельной, поверх разделителя.
+        mono = all(_is_mono(r) for r in p.runs)
+        if mono:                            # моноширинный вывод не переносится
+            lines = [[(seg, fo, col)] for seg, fo, col in runs
+                     for seg in seg.split("\n")]
+            wide_n = len(lines)
+        else:
+            lines = wrap_runs(d, runs, wide)
+            wide_n = len(lines)
+        for ln in lines:
+            rows.append((ln, lh))
+        need_draw += wide_n * lh
+        need_report += (wide_n if mono else len(wrap_runs(d, runs, narrow))) * lh
+
+    # Вертикальное выравнивание рамки. Прежде предпросмотр его ИГНОРИРОВАЛ и
+    # всегда рисовал от верха — отчего текст в пилюле-термине и в ячейке
+    # таблицы (обе выровнены по центру) вылезал на картинке за верхний край,
+    # и каждая такая рамка выглядела сломанной, будучи целой.
+    try:
+        va = int(tf.vertical_anchor) if tf.vertical_anchor is not None else 0
+    except Exception:
+        va = 0
+    if va == 3 and need_draw < room:            # MIDDLE
+        cy = y + mt + (room - need_draw) / 2
+    elif va == 4 and need_draw < room:          # BOTTOM
+        cy = y + mt + (room - need_draw)
+    else:
+        cy = y + mt
+    for ln, lh in rows:
+        cx = x + ml
+        for seg, fo, col in ln:
+            d.text((cx, cy), seg, font=fo, fill=col)
+            cx += d.textlength(seg, font=fo)
+        cy += lh
+    if need_report > room + 2:
+        report.append(f"{tag}: текст выше рамки на {(need_report - room) / 120:.2f}\" "
+                      f"(по мерке Arial; в DejaVu на картинке "
+                      f"{(need_draw - room) / 120:+.2f}\")")
+
+def deck_order():
     import yaml
     deck = yaml.safe_load((Path(__file__).parent.parent / "deck.yaml").read_text())
-    order = [s["id"] for s in deck["slides"]]
+    return [s["id"] for s in deck["slides"]]
+
+
+def render(pptx, ids, order=None):
+    """`order` — перечень идентификаторов в порядке слайдов файла. По умолчанию
+    берётся из `deck.yaml`. Отдельный параметр нужен пробнику приёма
+    (`probe_base_edge.py`): у него своя однослайдовая дека, которой в
+    `deck.yaml` нет и быть не должно."""
+    prs = Presentation(pptx)
+    if order is None:
+        order = deck_order()
     problems = []
     for sid in ids:
-        sl = prs.slides[order.index(sid)]
+        sl = prs.slides[order.index(sid) if sid in order else ids.index(sid)]
         W, H = int(prs.slide_width * SC), int(prs.slide_height * SC)
         bgc = (255, 255, 255)
         try: bgc = tuple(sl.background.fill.fore_color.rgb)
@@ -167,7 +309,11 @@ def render(pptx, ids):
     return problems
 
 if __name__ == "__main__":
-    ids = sys.argv[1:] or ["s01","s02","s03","s03","s04","s05","s06","s46","s47","s48"]
-    for p in render(Path(__file__).parent / "sem-05.pptx", ids):
+    args = sys.argv[1:]
+    pptx = Path(__file__).parent / "sem-05.pptx"
+    if args and args[0].endswith(".pptx"):
+        pptx = Path(args[0]); args = args[1:]
+    ids = args or ["s01","s02","s03","s03","s04","s05","s06","s46","s47","s48"]
+    for p in render(pptx, ids):
         print("•", p)
     print("предпросмотр:", ", ".join(ids))

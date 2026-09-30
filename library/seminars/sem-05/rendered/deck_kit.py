@@ -80,20 +80,7 @@ def inline_runs(s):
     на слайд обычной строкой среди таких же. Здесь разметка становится
     оформлением, а не теряется.
     """
-    import re
-    s = re.sub(r"\[(.+?)\]\(.+?\)", r"\1", s)
-    out, pos = [], 0
-    for m in re.finditer(r"\*\*(.+?)\*\*|`(.+?)`", s):
-        if m.start() > pos:
-            out.append((s[pos:m.start()], False, False))
-        if m.group(1) is not None:
-            out.append((m.group(1), True, False))
-        else:
-            out.append((m.group(2), False, True))
-        pos = m.end()
-    if pos < len(s):
-        out.append((s[pos:], False, False))
-    return [r for r in out if r[0]] or [(s, False, False)]
+    return M.inline_segments(s)
 
 
 def is_bold(s):
@@ -283,10 +270,10 @@ def gold_callout(sl, x, y, w, text, *, size=14, bold=True, align=PP_ALIGN.LEFT,
     lines = text if isinstance(text, (list, tuple)) else [text]
     inner = w - 2 * pad
     if max_h:
-        while size > 10.5 and M.block_h([plain(l) for l in lines], size, inner,
+        while size > 10.5 and M.rich_block_h(lines, size, inner,
                                         spacing=1.22, space_after=3) + 2 * 0.16 > max_h:
             size -= 0.5
-    th = M.block_h([plain(l) for l in lines], size, inner, spacing=1.22, space_after=3)
+    th = M.rich_block_h(lines, size, inner, spacing=1.22, space_after=3)
     h = max(min_h, th + 0.32)
     if max_h:
         h = min(h, max_h)
@@ -303,9 +290,9 @@ def quote_box(sl, x, y, w, lines, *, size=13.5, max_h=None, on_dark=False, label
     pad = 0.24
     inner = w - 2 * pad
     if max_h:
-        while size > 10 and M.block_h([plain(l) for l in lines], size, inner, space_after=3) + 0.3 > max_h:
+        while size > 10 and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
             size -= 0.5
-    h = M.block_h([plain(l) for l in lines], size, inner, space_after=3) + 0.3
+    h = M.rich_block_h(lines, size, inner, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
     if on_dark:
@@ -323,6 +310,32 @@ def quote_box(sl, x, y, w, lines, *, size=13.5, max_h=None, on_dark=False, label
 # ── Таблица как коробка с текстом ───────────────────────────────────────────
 
 CELL_SIZES = (12.5, 12, 11.5, 11, 10.5, 10, 9.5, 9)
+
+# ── Подгонка таблицы: что уступать, когда 0,05″ не хватает ──────────────────
+#
+# Прежде переполнение таблицы только ОБЪЯВЛЯЛОСЬ. Кегль сбавлялся по лестнице
+# `CELL_SIZES`, и если не помогал даже 9 pt, вёрстка печатала предупреждение и
+# рисовала как есть — таблица вылезала на 0,05–0,20″ за отведённое. Между тем
+# кегль — не единственная уступка: межстрочный, отступ строки, минимальная
+# высота строки и поля коробки вместе дают ещё около 15% высоты, и отдавать их
+# правильнее, чем ещё полступени кегля.
+#
+# Каждая ступень — (межстрочный, отступ строки, мин. высота строки, поле):
+TIGHTEN = ((1.15, 0.18, 0.34, 0.20),      # штатно, ничего не уступлено
+           (1.09, 0.14, 0.30, 0.17),      # ступень 1: ~7% высоты
+           (1.04, 0.11, 0.26, 0.14))      # ступень 2: ещё ~6%
+#
+# Порядок перебора: СНАЧАЛА вся лестница кеглей при штатном сжатии, и только
+# если не подошёл ни один кегль — следующая ступень сжатия, снова по всем
+# кеглям. Сжатие тут последнее средство, а не равноправная уступка.
+#
+# Смешанный порядок (цена = номер кегля + номер ступени) пробовался и отвергнут
+# по измерению: на этой деке он уводил на сжатие 10 таблиц из 28 — то есть
+# делал сжатый вид штатным, ровно то, чего сжатие должно избегать. При
+# лестничном порядке сжатие включается на двух таблицах, которые до этой правки
+# просто вылезали за рамку.
+def _fit_ladder(sizes):
+    return [(si, ti) for ti in range(len(TIGHTEN)) for si in range(len(sizes))]
 
 
 def _col_shares(headers, rows, ncol, inner_w, size):
@@ -438,32 +451,52 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
     inner_w = w - 2 * pad
 
     sizes = CELL_SIZES if cell_size is None else (cell_size,)
-    chosen = sizes[-1]
-    for size in sizes:
-        shares = col_w or _col_shares(headers, rows, ncol, inner_w, size)
-        hs = header_size if header_size is not None else min(size, 11.5)
-        head_h = (max(M.text_h(plain(h_), hs, shares[j] - gap, bold=True)
-                      for j, h_ in enumerate(headers)) + 0.12) if headers else 0.0
-        rh = []
-        for r in rows:
-            need = max(M.rich_h(c, size, shares[j] - gap) for j, c in enumerate(r))
-            rh.append(max(min_row_h, need + 0.18))
-        total = pad + head_h + sum(rh) + pad
-        chosen = size
-        if max_h is None or total <= max_h:
-            break
 
-    shares = col_w or _col_shares(headers, rows, ncol, inner_w, chosen)
-    hs = header_size if header_size is not None else min(chosen, 11.5)
-    head_h = (max(M.text_h(plain(h_), hs, shares[j] - gap, bold=True)
+    def geometry(size, tighten):
+        """Ширины колонок, высота шапки и высоты строк при заданных кегле и
+        ступени сжатия. Ровно тот же расчёт, по которому потом рисуют."""
+        spacing, row_pad, mrh, box_pad = tighten
+        # Минимальная высота строки сжимается В ДОЛЯХ от заданной вызывающим, а
+        # не заменяется табличной: `min(mrh, min_row_h)` молча игнорировал бы
+        # вызов, который просит строки ВЫШЕ штатных.
+        mrh = min_row_h * (mrh / TIGHTEN[0][2])
+        sh = col_w or _col_shares(headers, rows, ncol, w - 2 * box_pad, size)
+        hsz = header_size if header_size is not None else min(size, 11.5)
+        hh = (max(M.text_h(plain(h_), hsz, sh[j] - gap, bold=True)
                   for j, h_ in enumerate(headers)) + 0.12) if headers else 0.0
-    rh = []
-    for r in rows:
-        need = max(M.rich_h(c, chosen, shares[j] - gap) for j, c in enumerate(r))
-        rh.append(max(min_row_h, need + 0.18))
-    h = pad + head_h + sum(rh) + pad
+        rhs = [max(mrh, max(M.rich_h(c, size, sh[j] - gap, spacing=spacing)
+                            for j, c in enumerate(r)) + row_pad) for r in rows]
+        return sh, hsz, hh, rhs, box_pad, spacing, row_pad, box_pad * 2 + hh + sum(rhs)
+
+    step = 0
+    chosen = sizes[-1]
+    geo = geometry(chosen, TIGHTEN[0])
+    if max_h is None:
+        chosen = sizes[0]
+        geo = geometry(chosen, TIGHTEN[0])
+    else:
+        best = None
+        for si, ti in _fit_ladder(sizes):
+            g = geometry(sizes[si], TIGHTEN[ti])
+            if best is None or g[-1] < best[2][-1]:
+                best = (sizes[si], ti, g)          # запасной: самый низкий из всех
+            if g[-1] <= max_h:
+                chosen, step, geo = sizes[si], ti, g
+                break
+        else:
+            chosen, step, geo = best[0], best[1], best[2]
+
+    shares, hs, head_h, rh, pad, cell_spacing, row_pad, h = geo
+    if step:
+        # Подгонка совершилась молча — и это ровно то, о чём потом спорят
+        # («почему эта таблица мельче соседней?»). Поэтому она остаётся в
+        # логе сборки наравне с переполнением: уступка названа и измерена.
+        M._WARNINGS.append(
+            f"ПОДГОНКА [{label}]: ступень {step} — кегль {chosen} pt, межстрочный "
+            f"{cell_spacing}, поле {pad:.2f}″; таблица {h:.2f}″ при бюджете {max_h:.2f}″")
     if max_h is not None and h > max_h + 0.02:
-        M._WARNINGS.append(f"ПЕРЕПОЛНЕНИЕ [{label}]: таблица {h:.2f}″ при бюджете {max_h:.2f}″")
+        M._WARNINGS.append(f"ПЕРЕПОЛНЕНИЕ [{label}]: таблица {h:.2f}″ при бюджете "
+                           f"{max_h:.2f}″ даже после сжатия — сократить содержание")
 
     # `accent` различает две таблицы, стоящие на одном слайде подряд: без него
     # «здесь ещё рано» и «здесь не нужно вообще» — две одинаковые сетки друг
@@ -495,10 +528,14 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
                            rh[i] - 0.16, fill=GREY_FILL, stroke=SOFT_GREY,
                            stroke_pt=1.0, radius_pt=6)
                 continue
-            M.fits(plain(c), chosen, shares[j] - gap, rh[i] - 0.14,
+            # Просвет ячейки — строка минус её отступ: он меняется вместе со
+            # ступенью сжатия, и зашитая под штатный отступ константа объявляла
+            # переполнением каждую подогнанную ячейку.
+            M.fits(plain(c), chosen, shares[j] - gap, rh[i] - row_pad + 0.04,
+                   spacing=cell_spacing,
                    label=f"{label} строка {i} колонка {j}", mono="`" in c)
             text_box(sl, cx[j], ry, shares[j] - gap, rh[i], c, size=chosen, color=INK,
-                     anchor=MSO_ANCHOR.MIDDLE, spacing=1.15,
+                     anchor=MSO_ANCHOR.MIDDLE, spacing=cell_spacing,
                      align=(align[j] if align else PP_ALIGN.LEFT))
         if i < len(rows) - 1:
             hairline(sl, x + pad, ry + rh[i], x + w - pad)
@@ -767,10 +804,10 @@ def form_formula(sl, x, y, w, lines, *, size=15, max_h=None, label="формул
     bar, pad = 0.09, 0.3
     inner = w - bar - pad - 0.2
     if max_h:
-        while size > 11 and M.block_h([plain(l) for l in lines], size, inner,
+        while size > 11 and M.rich_block_h(lines, size, inner,
                                     spacing=1.24, space_after=3) + 0.3 > max_h:
             size -= 0.5
-    h = M.block_h([plain(l) for l in lines], size, inner, spacing=1.24, space_after=3) + 0.3
+    h = M.rich_block_h(lines, size, inner, spacing=1.24, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
     rect(sl, x, y, bar, h, GOLD, radius=True, radius_adj=0.5)
@@ -787,10 +824,10 @@ def form_speech(sl, x, y, w, lines, *, size=13, max_h=None, label="реплик�
     bar, pad = 0.035, 0.26
     inner = w - bar - pad - 0.2
     if max_h:
-        while size > 10 and M.block_h([plain(l) for l in lines], size, inner,
+        while size > 10 and M.rich_block_h(lines, size, inner,
                                     spacing=1.26, space_after=3) + 0.2 > max_h:
             size -= 0.5
-    h = M.block_h([plain(l) for l in lines], size, inner, spacing=1.26, space_after=3) + 0.2
+    h = M.rich_block_h(lines, size, inner, spacing=1.26, space_after=3) + 0.2
     if max_h:
         h = min(h, max_h)
     rect(sl, x, y + 0.04, bar, h - 0.08, TEAL)
@@ -807,9 +844,9 @@ def form_caveat(sl, x, y, w, lines, *, size=12.5, max_h=None, label="огово�
     pad = 0.26
     inner = w - 2 * pad
     if max_h:
-        while size > 9.5 and M.block_h([plain(l) for l in lines], size, inner, space_after=3) + 0.3 > max_h:
+        while size > 9.5 and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
             size -= 0.5
-    h = M.block_h([plain(l) for l in lines], size, inner, space_after=3) + 0.3
+    h = M.rich_block_h(lines, size, inner, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
     dashed_box(sl, x, y, w, h, fill=GREY_FILL, stroke=SLATE, stroke_pt=1.2)
@@ -828,9 +865,9 @@ def form_fact(sl, x, y, w, lines, *, size=13.5, max_h=None, label="факт"):
     bar, pad = 0.07, 0.26
     inner = w - bar - 2 * pad
     if max_h:
-        while size > 10 and M.block_h([plain(l) for l in lines], size, inner, space_after=3) + 0.3 > max_h:
+        while size > 10 and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
             size -= 0.5
-    h = M.block_h([plain(l) for l in lines], size, inner, space_after=3) + 0.3
+    h = M.rich_block_h(lines, size, inner, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
     ocean_box(sl, x, y, w, h, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.1)
@@ -841,27 +878,47 @@ def form_fact(sl, x, y, w, lines, *, size=13.5, max_h=None, label="факт"):
     return h
 
 
-def term_pills(sl, x, y, w, items, *, size=13, label="термины"):
+PILL_PAD, PILL_GAP, PILL_H = 0.22, 0.14, 0.44
+
+
+def pill_rows(items, w, size):
+    """Упаковка терминов в строки заданной ширины — отдельно от отрисовки,
+    потому что высоту ряда пилюль надо знать ДО того, как он нарисован:
+    дорожки Такта Б считают свою высоту вместе с терминами под базой."""
+    rows, cur, cw = [], [], 0.0
+    for it in items:
+        iw = min(M.text_w(plain(it), size, bold=True) + 2 * PILL_PAD, w)
+        if cur and cw + iw + PILL_GAP > w:
+            rows.append(cur); cur, cw = [], 0.0
+        cur.append((it, iw)); cw += iw + PILL_GAP
+    if cur:
+        rows.append(cur)
+    return rows
+
+
+def pill_rows_h(items, w, size):
+    n = len(pill_rows(items, w, size))
+    return n * (PILL_H + PILL_GAP) - PILL_GAP if n else 0.0
+
+
+def term_pills(sl, x, y, w, items, *, size=13, label="термины", center=True):
     """Ряд терминов — работа «ЗАПОМНИ». Компактные тиловые пилюли по ширине
     текста, в одну-две строки.
 
     Отличается от `option_row` («ВЫБЕРИ») устройством, а не оттенком: там
     карточки равной ширины во всю строку, здесь пилюли по размеру слова. Ряд
     карточек прежде означал «выбери» на четырёх слайдах и «запомни» на двух —
-    одна форма на две разные работы."""
-    pad, gap, ph = 0.22, 0.14, 0.44
-    rows, cur, cw = [], [], 0.0
-    for it in items:
-        iw = min(M.text_w(plain(it), size, bold=True) + 2 * pad, w)
-        if cur and cw + iw + gap > w:
-            rows.append(cur); cur, cw = [], 0.0
-        cur.append((it, iw)); cw += iw + gap
-    if cur:
-        rows.append(cur)
+    одна форма на две разные работы.
+
+    `center=False` — для узкой колонки (дорожка «база» Такта Б): ряд из двух
+    пилюль, поставленный по центру полуширины, читается как случайно съехавший
+    от края текста, под которым он стоит."""
+    pad, gap, ph = PILL_PAD, PILL_GAP, PILL_H
+    rows = pill_rows(items, w, size)
     ry = y
     for row in rows:
         total = sum(iw for _, iw in row) + gap * (len(row) - 1)
-        cx = x + (w - total) / 2
+        cx = x + ((w - total) / 2 if center else 0.0)
         for it, iw in row:
             ocean_box(sl, cx, ry, iw, ph, fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.2, radius_pt=20)
             text_box(sl, cx, ry, iw, ph, plain(it), size=size, bold=True, color=MID,
@@ -869,3 +926,104 @@ def term_pills(sl, x, y, w, items, *, size=13, label="термины"):
             cx += iw + gap
         ry += ph + 0.14
     return ry - y - 0.14
+
+
+# ── Такт Б: две дорожки на одном экране ─────────────────────────────────────
+#
+# Седьмая форма грамматики — и ЕДИНСТВЕННАЯ БЕЗ КОРОБКИ. Шесть прежних форм
+# все до одной суть плашка, коробка или карточка; здесь рабочее поле делится
+# вертикальным ШВОМ на две равные дорожки, каждая под своей горизонтальной
+# планкой сверху. Спутать не с чем:
+#
+#   вопрос      → золотая ЗАЛИВКА с золотой РАМКОЙ      — здесь заливки нет
+#   формула     → толстая золотая планка СЛЕВА           — здесь планка СВЕРХУ
+#   факт        → тиловая заливка и тиловая планка       — здесь заливки нет
+#   оговорка    → пунктирная РАМКА                       — здесь рамки нет
+#   технический → тёмная моноширинная КАРТОЧКА           — здесь фона нет
+#   критерий    → скруглённая коробка, кегль 11,5        — здесь коробки нет,
+#                 (и она тоже бывает парой бок о бок)      кегль 15,5–16,5,
+#                                                          а между дорожками
+#                                                          шов, а не зазор
+#
+# Устройство читается за полсекунды: два равных поля, тонкий шов между ними,
+# золотой тик на шве. Планка над левой дорожкой — MID (спокойная), над правой
+# — GOLD: кромка и есть то, за чем на этом слайде приходит сильный.
+
+TRACK_SIZES = (18, 17, 16, 15, 14, 13, 12)
+TRACK_HEAD = 0.56          # планка + ярлык капителями над дорожкой
+TRACK_SPACING = 1.30       # межстрочный: 45 секунд — значит воздух, не плотность
+
+
+def _track_h(lines, size, w, terms=None, term_size=12.5):
+    h = M.rich_block_h(lines, size, w, spacing=TRACK_SPACING, space_after=6)
+    if terms:
+        h += 0.26 + pill_rows_h(terms, w, term_size)
+    return h
+
+
+def base_edge_tracks(sl, x, y, w, left_lines, right_lines, *, left_label="база",
+                     right_label="кромка", terms=(), size=None, max_h=None,
+                     seam=0.46, label="дорожки"):
+    """Такт Б: база слева, кромка справа, на одном экране и в равных правах.
+
+    Равноправие здесь — не пожелание, а конструкция: ширины дорожек равны с
+    точностью до шва, кегль у них ОДИН И ТОТ ЖЕ, обе начинаются с одного y, и
+    шов проходит на всю высоту более высокой из двух. Поэтому ни одна из них
+    не может прочитаться как сноска к другой. Различает их не вес, а цвет
+    планки сверху: MID у базы, GOLD у кромки.
+
+    Термины (`terms`) встают пилюлями ПОД базой, а не отдельным блоком: они
+    принадлежат левой дорожке — это ровно то, что «дальше звучит без
+    объяснения». Кегль у них на ступень мельче текста дорожки, потому что
+    пилюля — ярлык, а не фраза.
+    """
+    col = (w - seam) / 2
+    term_size = 12.5
+
+    ladder = TRACK_SIZES if size is None else (size,)
+    chosen = ladder[-1]
+    for s in ladder:
+        chosen = s
+        need = TRACK_HEAD + max(_track_h(left_lines, s, col, terms, term_size),
+                                _track_h(right_lines, s, col))
+        if max_h is None or need <= max_h:
+            break
+
+    hl = _track_h(left_lines, chosen, col, terms, term_size)
+    hr = _track_h(right_lines, chosen, col)
+    h = TRACK_HEAD + max(hl, hr)
+    if max_h is not None and h > max_h + 0.02:
+        M._WARNINGS.append(f"ПЕРЕПОЛНЕНИЕ [{label}]: дорожки {h:.2f}″ при бюджете "
+                           f"{max_h:.2f}″ — текста на 45 секунд слишком много")
+
+    xr = x + col + seam
+    # планки сверху: равной длины и толщины, разного цвета
+    rect(sl, x, y, col, 0.05, MID)
+    rect(sl, xr, y, col, 0.05, GOLD)
+    text_box(sl, x, y + 0.14, col, 0.28, left_label.upper(), size=11.5, bold=True,
+             color=MID, rich=False)
+    text_box(sl, xr, y + 0.14, col, 0.28, right_label.upper(), size=11.5, bold=True,
+             color=GOLD_DARK, rich=False)
+
+    # шов: одна тонкая линия на всю высоту поля и золотой тик на её вершине.
+    # Именно шов, а не зазор: зазор у нас уже означает «две отдельные плашки»
+    # (слайд критериев), а шов — «одно поле, поделённое на два».
+    sx = x + col + seam / 2
+    rect(sl, sx - 0.004, y, 0.008, h, SOFT_GREY)
+    rect(sl, sx - 0.05, y, 0.10, 0.10, GOLD)
+
+    by = y + TRACK_HEAD
+    M.fits(" ".join(plain(l) for l in left_lines), chosen, col, hl,
+           label=f"{label} база", spacing=TRACK_SPACING)
+    M.fits(" ".join(plain(l) for l in right_lines), chosen, col, hr,
+           label=f"{label} кромка", spacing=TRACK_SPACING)
+    text_box(sl, x, by, col, hl, left_lines, size=chosen, color=INK,
+             spacing=TRACK_SPACING, space_after=6)
+    text_box(sl, xr, by, col, hr, right_lines, size=chosen, color=INK,
+             spacing=TRACK_SPACING, space_after=6)
+    if terms:
+        ty = by + M.rich_block_h(left_lines, chosen, col,
+                                 spacing=TRACK_SPACING, space_after=6) + 0.26
+        term_pills(sl, x, ty, col, list(terms), size=term_size, center=False,
+                   label=f"{label} термины")
+    return h

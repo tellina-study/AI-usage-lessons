@@ -64,6 +64,7 @@ GENRE = {
     "assertion_visual": "ограничение",
     "section_divider_macro": "",
     "problem_scenario": "завязка", "question_with_option_cards": "вопрос",
+    "base_and_edge": "база",
     "evidence_table_with_gap": "свидетельства",
     "answer_breakdown_table": "разбор", "dual_mode_breakdown": "разбор",
     "cobuilding_config_reveal": "собираем вместе",
@@ -178,6 +179,7 @@ PATTERN_ROLE = {
     "axis_placement": "fact",
     "assertion_visual": "fact",
     "token_cost_table": "fact",
+    "base_and_edge": "fact",
 }
 
 ASK = re.compile(r"выберите|что бы вы|как бы вы|назовите|подумайте", re.I)
@@ -296,7 +298,12 @@ def compose(sl, sid, y0, drawers, *, bottom=BOTTOM, center=True):
         slack = avail - total
         gap = GAP + min(slack / max(len(nat), 1), 0.55)
         used = sum(nat) + gap * (len(nat) - 1)
-        y = y0 + (avail - used) / 2 * (0.8 if center else 0.0)
+        # `center` — доля, а не флаг: True = 0.8 (композиция висит в нижних ¾,
+        # приём Семинара 4), False = 0.0 (блоки сверху), число = как задано.
+        # Такту Б нужна ровно 1.0: на нём мало текста по построению, и при 0.8
+        # под дорожками остаётся полоса пустоты вдвое шире, чем над ними.
+        kc = 0.8 if center is True else (0.0 if center is False else float(center))
+        y = y0 + (avail - used) / 2 * kc
         for d, h in zip(drawers, nat):
             d(sl, y, None)
             y += h + gap
@@ -575,8 +582,74 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
     K.slide_id_mark(sl, sid)
 
 
+# Ярлыки дорожек по умолчанию. Заголовок слайда фиксирован приёмом («Что это
+# за штука и зачем она»), ярлыки — нет: их берёт шапка таблицы из исходника,
+# если автор её заполнил. Рекомендованная шапка — ровно `| База | Кромка |`,
+# чтобы все шесть Тактов Б выглядели одним и тем же слайдом.
+TRACK_LABELS = ("база", "кромка")
+
+
+def g_base_edge(sl, sid, title, blocks, pattern, assertion=""):
+    """Такт Б — база и кромка на одном экране, 45 секунд, ничего не решается.
+
+    Три сигнала жанра, как у слайда-вопроса, только направленные в обратную
+    сторону: надзаголовок «· БАЗА» СЕРЫМ (самый тихий ярлык в деке — на этом
+    слайде нечего решать, и это сказано цветом), две равные дорожки вместо
+    коробок, серая подпись внизу «здесь ничего не решается». Сильный опознаёт
+    слайд по шапке и знает, что следующие три четверти минуты можно слушать
+    вполуха; слабый получает термины напечатанными.
+
+    Источник дорожек — ТАБЛИЦА ИЗ ДВУХ КОЛОНОК в `## Visual` (первая колонка —
+    база, вторая — кромка). Это не прихоть разметки: разбор `.md` живёт в
+    `slide_parts.py`, который этой сессии трогать нельзя, а таблицу он уже
+    умеет — значит приём обязан встать на то, что парсер отдаёт сегодня, без
+    новой разметки и без правки чужого файла.
+    """
+    left, right, labels, terms, rest = [], [], TRACK_LABELS, [], []
+    for kind, b in blocks:
+        if kind == "table" and not left and not right:
+            headers, rows = b
+            if headers and len(headers) >= 2 and any(K.plain(h).strip() for h in headers):
+                labels = (K.plain(headers[0]).strip() or TRACK_LABELS[0],
+                          K.plain(headers[1]).strip() or TRACK_LABELS[1])
+            for r in rows:
+                if len(r) > 0 and r[0].strip():
+                    left.append(r[0].strip())
+                if len(r) > 1 and r[1].strip():
+                    right.append(r[1].strip())
+            continue
+        if kind == "cards" and not terms:
+            terms = b
+            continue
+        rest.append((kind, b))
+
+    if not (left and right):
+        # Двух дорожек нет — это не Такт Б. Лучше показать слайд обычной
+        # раскладкой, чем нарисовать половину приёма и молчать об этом.
+        M._WARNINGS.append(f"ПРИЁМ [{sid} base_and_edge]: в «## Visual» нет таблицы "
+                           f"из двух колонок — слайд собран обычной раскладкой")
+        return g_content(sl, sid, title, blocks, pattern, assertion)
+
+    K.set_bg(sl, K.WHITE)
+    y0 = K.auto_header(sl, label_for(sid, pattern), title, tag_color=K.SLATE)
+    bottom = BOTTOM - 0.46
+
+    drawers = [lambda sl, y, mh: K.base_edge_tracks(
+        sl, LEFT, y, WIDTH, left, right, left_label=labels[0], right_label=labels[1],
+        terms=terms, max_h=mh, label=f"{sid} дорожки")]
+    for kind, b in rest:
+        d = block_drawer(kind, b, sid, pattern)
+        if d:
+            drawers.append(d)
+    compose(sl, sid, y0, drawers, bottom=bottom, center=1.0)
+    K.footer_note(sl, "здесь ничего не решается — вопрос на следующем слайде",
+                  y=bottom + 0.12, align=PP_ALIGN.CENTER)
+    K.slide_id_mark(sl, sid)
+
+
 GENRE_FN = {
     "section_divider_macro": g_divider,
+    "base_and_edge": g_base_edge,
     "hero_cover": g_cover,
     "question_with_option_cards": g_question,
     "question_repeat": g_question,

@@ -14,6 +14,7 @@
 он влезает с запасом. Обратное неверно, и это ровно та сторона, в которую
 ошибаться безопасно.
 """
+import re
 from functools import lru_cache
 from PIL import ImageFont
 
@@ -91,6 +92,99 @@ def text_h(s, size_pt, width_in, *, spacing=1.18, bold=False, mono=False, pad=0.
     return nlines(s, size_pt, width_in, bold, mono) * line_h(size_pt, spacing) + pad
 
 
+# ── Разметка внутри строки: её надо не только рисовать, но и МЕРИТЬ ──────────
+#
+# `**жирный**` и `` `моноширинный` `` стали оформлением (раньше их вырезали), и
+# с этого момента строку нельзя мерить одним шрифтом целиком: жирный прогон
+# шире обычного, моноширинный — заметно шире обоих. Замер по `plain()` даёт
+# МЕНЬШЕ строк, чем отрисовка, рамка выходит ниже нужного, и текст вылезает —
+# ровно тот класс дефекта, ради которого этот модуль и писался, только вернувшийся
+# через новый вход.
+_RUNS = re.compile(r"\*\*(.+?)\*\*|`(.+?)`")
+_LINK = re.compile(r"\[(.+?)\]\(.+?\)")
+
+
+def inline_segments(s):
+    """Строка → [(текст, жирный, моноширинный)]. Единственный разборщик
+    разметки в рендерере: `deck_kit.inline_runs` вызывает его же, чтобы замер
+    и отрисовка резали строку одинаково."""
+    s = _LINK.sub(r"\1", s)
+    out, pos = [], 0
+    for m in _RUNS.finditer(s):
+        if m.start() > pos:
+            out.append((s[pos:m.start()], False, False))
+        if m.group(1) is not None:
+            out.append((m.group(1), True, False))
+        else:
+            out.append((m.group(2), False, True))
+        pos = m.end()
+    if pos < len(s):
+        out.append((s[pos:], False, False))
+    return [r for r in out if r[0]] or [(s, False, False)]
+
+
+_WS = re.compile(r"(\s+)")
+
+
+def inline_tokens(s):
+    """Строка → [(токен, жирный, моноширинный)], где токен — слово ИЛИ пробел.
+
+    Пробелы берутся из исходника и не досочиняются. Склейка прогонов через
+    «добавим пробел, если строка непустая» рвётся на обоих концах разметки:
+    `«моментов » + «33»` даёт двойной пробел, а `«один» + «.»` — пробел перед
+    точкой. На картинке это видно сразу, в замере — нет."""
+    out = []
+    for text, b, mo in inline_segments(s):
+        for tok in _WS.split(text):
+            if tok:
+                out.append((tok, b, mo))
+    return out
+
+
+def wrap_tokens(tokens, size_pt, width_in, *, bold=False, measure=None):
+    """Жадный перенос потока токенов. `measure(токен, жирный, моно) -> ширина`
+    подменяется предпросмотром, который меряет в пикселях, а не в дюймах.
+    Возвращает строки как списки токенов — этого хватает и чтобы посчитать их,
+    и чтобы нарисовать."""
+    mw = measure or (lambda t, b, mo: text_w(t, size_pt, bold or b, mo))
+    lines, line, lw = [], [], 0.0
+    for tok, b, mo in tokens:
+        w = mw(tok, b, mo)
+        if tok.isspace():
+            if line:                         # пробел в начале строки съедается
+                line.append((tok, b, mo)); lw += w
+            continue
+        if line and lw + w > width_in:
+            while line and line[-1][0].isspace():
+                line.pop()
+            lines.append(line); line, lw = [], 0.0
+        line.append((tok, b, mo)); lw += w
+    if line:
+        lines.append(line)
+    return lines or [[]]
+
+
+def rich_nlines(s, size_pt, width_in, *, bold=False):
+    """Число строк, на которые разойдётся строка С РАЗМЕТКОЙ внутри: каждое
+    слово меряется тем шрифтом, которым будет нарисовано."""
+    segs = inline_segments(s)
+    if len(segs) == 1 and not segs[0][1] and not segs[0][2]:
+        return nlines(segs[0][0], size_pt, width_in, bold)
+    return len(wrap_tokens(inline_tokens(s), size_pt, width_in, bold=bold))
+
+
+def rich_block_h(lines, size_pt, width_in, *, spacing=1.18, space_after=0.0,
+                 bold=False, pad=0.0):
+    """`block_h` для абзацев с разметкой внутри. Ей меряются все формы
+    грамматики: в любую из них автор вправе поставить `**жирный**`."""
+    total = 0.0
+    for i, ln in enumerate(lines):
+        total += rich_nlines(ln, size_pt, width_in, bold=bold) * line_h(size_pt, spacing)
+        if i < len(lines) - 1:
+            total += space_after / 72.0
+    return total + pad
+
+
 def block_h(lines, size_pt, width_in, *, spacing=1.18, space_after=0.0,
             bold=False, mono=False, pad=0.0):
     """То же для списка абзацев — каждый переносится сам по себе."""
@@ -103,16 +197,19 @@ def block_h(lines, size_pt, width_in, *, spacing=1.18, space_after=0.0,
 
 
 def rich_h(s, size_pt, width_in, *, spacing=1.18, bold=False, pad=0.0):
-    """Высота текста, в котором могут быть `моноширинные` куски.
+    """Высота текста, в котором есть `моноширинные` и **жирные** куски.
 
     Consolas заметно шире Arial, поэтому строку с кодом внутри нельзя мерить
     пропорциональным шрифтом: замер даст меньше строк, чем отрисовка, и текст
-    вылезет из ячейки. Если моноширинный кусок в строке есть, вся строка
-    меряется по моноширинному — оценка консервативная в безопасную сторону.
-    Так переполнялись ячейки таблицы вывода хука."""
-    mono = "`" in s
-    return text_h(s.replace("`", ""), size_pt, width_in, spacing=spacing,
-                  bold=bold, mono=mono, pad=pad)
+    вылезет из ячейки — так переполнялись ячейки таблицы вывода хука.
+
+    Прежде эта функция мерила ВСЮ строку моноширинным, стоило в ней появиться
+    одному слову в обратных кавычках. Оценка была консервативной в безопасную
+    сторону, но грубой: ячейка «46 из `N` РЦ» получала высоту, как если бы
+    моноширинным была набрана вся фраза, и таблица росла на строку без всякой
+    причины. Теперь каждый кусок меряется своим шрифтом — это и точнее, и
+    по-прежнему безопасно, потому что мерка та же, по которой рисуют."""
+    return rich_nlines(s, size_pt, width_in, bold=bold) * line_h(size_pt, spacing) + pad
 
 
 def fit_size(s, width_in, height_in, sizes, *, spacing=1.18, bold=False, mono=False):

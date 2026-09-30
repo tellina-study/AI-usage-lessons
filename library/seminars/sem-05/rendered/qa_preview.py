@@ -167,7 +167,7 @@ def render(pptx, ids):
     return problems
 
 if __name__ == "__main__":
-    ids = sys.argv[1:] or ["s01","s02","s03","s04","s05","s06","s07","s54","s55","s56"]
+    ids = sys.argv[1:] or ["s01","s02","s03","s03","s04","s05","s06","s46","s47","s48"]
     for p in render(Path(__file__).parent / "sem-05.pptx", ids):
         print("•", p)
     print("предпросмотр:", ", ".join(ids))

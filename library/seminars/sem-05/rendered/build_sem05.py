@@ -48,8 +48,8 @@ LEFT, WIDTH = 0.55, 12.23       # и по горизонтали
 GAP = 0.18                      # шаг между блоками
 
 # ── Где мы: короткое имя раздела для надзаголовка ────────────────────────────
-SECTIONS = [(1, 7, "Открытие", None), (8, 23, "Хук", 0), (24, 37, "Скилл", 1),
-            (38, 53, "MCP", 2), (54, 56, "Сборка", None)]
+SECTIONS = [(1, 6, "Открытие", None), (7, 20, "Хук", 0), (21, 32, "Скилл", 1),
+            (33, 45, "Доступ наружу", 2), (46, 50, "Сборка", None)]
 STAGES = ["Хук", "Скилл", "Доступ наружу"]
 
 # ── Что это за шаг: жанр слайда по его приёму ───────────────────────────────
@@ -59,6 +59,8 @@ GENRE = {
     "hero_cover": "", "lecture_map": "карта занятия",
     "keystone_scope_map": "ось занятия", "recap_table": "ось занятия",
     "closing_question_partial": "возврат к вопросу открытия",
+    "question_repeat": "тот же вопрос, второй раз",
+    "transfer_exercise": "перенос на свой репозиторий",
     "assertion_visual": "ограничение",
     "section_divider_macro": "",
     "problem_scenario": "завязка", "question_with_option_cards": "вопрос",
@@ -74,14 +76,14 @@ GENRE = {
 }
 MECHANICS_TAG = "механика"
 
-TAGS = {"s08": "1 кейс · 2 слоя провала · 5 форм обхода",
-        "s24": "1 кейс · 2 слоя провала · 6 причин молчания",
-        "s38": "1 кейс · 3 слоя провала · 3 области видимости"}
-BADGE = {"s08": 3, "s24": 4, "s38": 5}
+TAGS = {"s07": "1 кейс · 2 слоя провала · 5 форм обхода",
+        "s21": "1 кейс · 2 слоя провала · 6 причин молчания",
+        "s33": "1 кейс · 3 слоя провала · 3 области видимости"}
+BADGE = {"s07": 3, "s21": 4, "s33": 5}
 
-FIGS = {"s09": "khuk-scene.png", "s13": "khuk-cobuild.png", "s16": "lifecycle.png",
-        "s17": "khuk-stdin.png", "s18": "contract.png", "s19": "khuk-debug.png",
-        "s20": "bypass.png", "s21": "khuk-blindspot.png"}
+FIGS = {"s08": "khuk-scene.png", "s12": "khuk-cobuild.png", "s15": "lifecycle.png",
+        "s16": "khuk-stdin.png", "s17": "contract.png", "s18": "khuk-debug.png",
+        "s19": "bypass.png", "s20": "khuk-blindspot.png"}
 
 
 def num(sid):
@@ -137,9 +139,13 @@ def measure(fn, *a, **kw):
 # остальные вопросы сформулированы повелительно («Выберите, куда её вынести»).
 PATTERN_ROLE = {
     "question_with_option_cards": "question",
+    "question_repeat": "question",
     "closing_question_partial": "question",
+    "transfer_exercise": "question",
     "evidence_table_with_gap": "caveat",
     "answer_breakdown_table": "formula",
+    "failure_case_story": "fact",
+    "problem_scenario_ledger": "fact",
     "dual_mode_breakdown": "formula",
     "failure_vignette": "formula",
     "criteria_checklist_and_boundary": "formula",
@@ -287,11 +293,11 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
 
     Ярлык рисуется ОТ КУРСОРА. Прежняя вёрстка печатала его жёстко в
     `Inches(3.0)` — ровно туда, где уже стоял абзац, — и два текстовых блока
-    ложились друг на друга буква в букву на s08 и s24; на s38 он прошивал
+    ложились друг на друга буква в букву на s07 и s21; на s33 он прошивал
     рамку коробки-цитаты. Три разделителя, три разные поломки, одна причина.
 
     Смысловая строка берётся из `## Assertion` самого слайда, если в `##
-    Visual` её нет: у s08 в Visual лежал только собственный заголовок,
+    Visual` её нет: у s07 в Visual лежал только собственный заголовок,
     напечатанный второй раз, и раздел на 16 слайдов открывался пустым полем.
     Ничего не дописывается — используется текст, который у слайда уже есть."""
     _, stage = where(sid)
@@ -490,8 +496,11 @@ def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
 
 
 def g_closing(sl, sid, title, blocks, pattern, assertion=""):
-    """Закрытие — возврат к вопросу открытия. Золотая коробка с вопросом
-    получает вес, таблица становится спокойной сводкой под ней."""
+    """Закрытие — возврат к вопросу открытия и перенос на свой репозиторий.
+    Золотая коробка с вопросом получает вес, остальное — спокойная сводка под
+    ней. Схема, если она у слайда есть, встаёт СРАЗУ ПОД вопросом: здесь вопрос
+    задаёт рамку, а схема показывает, во что раскладывается ответ, — поэтому
+    порядок обратный тому, что на содержательном слайде (`g_content`)."""
     K.set_bg(sl, K.WHITE)
     y0 = K.auto_header(sl, label_for(sid, pattern), title)
     drawers = []
@@ -502,6 +511,10 @@ def g_closing(sl, sid, title, blocks, pattern, assertion=""):
             drawers.append(lambda sl, y, mh, q=b: K.form_question(
                 sl, LEFT, y, WIDTH, q, size=15.5, max_h=mh,
                 label=f"{sid} вопрос открытия"))
+            fig = figure_for(sid)
+            if fig:
+                drawers.append(lambda sl, y, mh, p=fig: K.figure(
+                    sl, p, LEFT, y, WIDTH, mh if mh else 3.2))
             continue
         d = block_drawer(kind, b, sid, pattern)
         if d:
@@ -540,6 +553,8 @@ GENRE_FN = {
     "section_divider_macro": g_divider,
     "hero_cover": g_cover,
     "question_with_option_cards": g_question,
+    "question_repeat": g_question,
+    "transfer_exercise": g_closing,
     "keystone_scope_map": g_axis_table,
     "recap_table": g_axis_table,
     "criteria_checklist_and_boundary": g_criteria,

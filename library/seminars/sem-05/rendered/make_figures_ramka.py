@@ -10,7 +10,7 @@ make_figures_mcp.py / make_figures_otkrytie.py этой сессией не тр
 30 px — как 11 pt. Ниже 30 px не опускаться: на проекторе не читается.
 
   ramka-n01-hero.png            n01  просьба → пять сегментов, два залиты
-  ramka-n05-karta.png           n05  две ступени по три развилки, без ответов
+  ramka-n05-karta.png           n05  две ступени по три развилки, без ролей и файлов
   ramka-n62-chto-razlozheno.png n62  две строки с артефактом, три пустые
   ramka-n63-korziny.png         n63  два усиления над тремя равными корзинами
 
@@ -171,12 +171,12 @@ save(im, "ramka-n01-hero.png")
 # текст выезжает за её рамку — это не ловится ни одной проверкой сборки (внутрь
 # схемы вёрстка не смотрит), поэтому проверка стоит здесь, в генераторе.
 STEPS = [
-    ("хук", "исполняемый барьер", ".claude/settings.json", [
+    ("хук", [
         ("В файле нет ни слова про ветки", "чем заменить строку в инструкции"),
         ("Хук работал. Потом молча перестал", "в какой момент и насколько жёстко"),
         ("Хук не ломается — он замедляет", "что делать, когда он мешает"),
     ]),
-    ("скилл", "загрузка по требованию", ".claude/skills/deploy/SKILL.md", [
+    ("скилл", [
         ("Вынести процедуру легко. Что станет лучше?", "выигрыш или просто переезд"),
         ("Тела скилла в контексте нет", "что должно быть в описании"),
         ("Тринадцать скиллов, двенадцать не могут сработать", "что делать с теми, что не работают"),
@@ -185,41 +185,35 @@ STEPS = [
 CARD_H, PAIN_MAX = 236, 3
 im = Image.new("RGB", (2400, 740), W); d = ImageDraw.Draw(im)
 y = 26
-for name, role, art, forks in STEPS:
-    d.rounded_rectangle([50, y, 470, y + CARD_H], radius=14, fill=MID)
-    clabel(d, 260, y + 26, name, 36, W, b=True)
-    ly = y + 82
-    for ln in wrap(d, role, f(22), 380):
-        clabel(d, 260, ly, ln, 22, (0xCD, 0xDC, 0xE8)); ly += 30
-    d.rounded_rectangle([70, y + 160, 450, y + 220], radius=10, fill=DARKCARD)
-    fo = f(19, m=True)
-    fit(d, art, fo, 360, "n05 артефакт")
-    clabel(d, 260, y + 179, art, 19, (0xE8, 0xEF, 0xF7), m=True)
+for name, forks in STEPS:
+    d.rounded_rectangle([50, y, 370, y + CARD_H], radius=14, fill=MID)
+    ly = y + (CARD_H - 44) // 2
+    clabel(d, 210, ly, name, 44, W, b=True, where="n05 ступень")
 
-    fx = 500
+    fx = 400
     for pain, solve in forks:
-        d.rounded_rectangle([fx, y, fx + 596, y + CARD_H], radius=12, fill=SURF,
+        d.rounded_rectangle([fx, y, fx + 636, y + CARD_H], radius=12, fill=SURF,
                             outline=LIGHT, width=3)
         fo = f(30, True)
-        pl = wrap(d, pain, fo, 548)
+        pl = wrap(d, pain, fo, 588)
         if len(pl) > PAIN_MAX:
             WARN.append(f"n05 боль: больше {PAIN_MAX} строк — {pain!r}")
         lines_at(d, fx + 24, y + 18, pl[:PAIN_MAX], fo, INK, 36)
-        d.line([fx + 24, y + 140, fx + 572, y + 140], fill=(0xC6, 0xD5, 0xE2), width=2)
+        d.line([fx + 24, y + 140, fx + 612, y + 140], fill=(0xC6, 0xD5, 0xE2), width=2)
         d.text((fx + 24, y + 152), "решаем", font=f(22, True), fill=GOLDTX)
         fo = f(28)
-        sl_ = wrap(d, solve, fo, 548)
+        sl_ = wrap(d, solve, fo, 588)
         if len(sl_) > 1:
             WARN.append(f"n05 «решаем» не в одну строку — {solve!r}")
         lines_at(d, fx + 24, y + 188, sl_[:1], fo, MUTE, 32)
-        fx += 616
+        fx += 656
     y += CARD_H + 26
 
 dashbox(d, 50, y + 6, 1160, 84, GHOST)
 clabel(d, 630, y + 32, "следующее занятие:  MCP · субагент · процесс", 30, DIMTX,
        b=True, where="n05 следующее")
 d.rounded_rectangle([1250, y + 6, 1750, y + 90], radius=12, fill=PALE)
-clabel(d, 1500, y + 32, "на входе:  .claude/ нет вовсе", 26, INK, where="n05 вход")
+clabel(d, 1500, y + 32, "на входе:  .claude/ нет", 26, INK, where="n05 вход")
 arrow(d, 1770, y + 48, 1850, y + 48, col=MID, wd=5, head=18)
 d.rounded_rectangle([1870, y + 6, 2350, y + 90], radius=12, fill=WARM,
                     outline=GOLD, width=3)
@@ -230,7 +224,7 @@ save(im, "ramka-n05-karta.png")
 # ── n62 · что разложено по артефакту, а что не разложено ничем ────────────────
 # 2400 × 600 px при ширине 12,23″ = 3,06″.
 im = Image.new("RGB", (2400, 600), W); d = ImageDraw.Draw(im)
-head(d, "Что раскладывается по артефакту — и чем именно он проверяется")
+head(d, "Под какими строками лежит файл, который можно открыть")
 DONE = [
     ("хук", "барьер стоит и сам печатает свои дыры",
      ["settings.json + самотест", "ветка seminar-5-hook, 9803643"]),

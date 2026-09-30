@@ -9,7 +9,6 @@ make_figures_otkrytie.py этой сессией не трогаются.
 шириной 12,2″ на канву 13,333″, поэтому 38 px читается как 14 pt, 30 px — как
 11 pt. Ниже 30 px не опускаться: на проекторе не читается.
 
-  khuki-n07-stsena.png      n07  три кадра сцены: правка → коммит → main
   khuki-n12-ustroystvo.png  n12  ПОЛНАЯ СТРУКТУРА хука: пять блоков одним экраном
   khuki-n15-proval.png      n15  шесть форм команды: одна отклонена, пять мимо
   khuki-n22-kletki.png      n22  решётка «момент × жёсткость», целевая клетка
@@ -36,6 +35,26 @@ W = (255, 255, 255); WARM = (0xFF, 0xF7, 0xE2); PALE = (0xE6, 0xEE, 0xF4)
 OUT = Path(__file__).parent / "figures"
 OUT.mkdir(exist_ok=True)
 WARN = []
+RECTS = []   # прямоугольники текущего полотна: (x1, y1, x2, y2, что это)
+
+
+def _claim(x, y, w, h, where):
+    """Регистрирует прямоугольник и ругается, если он перекрыл уже нарисованный.
+
+    Закрывает слепой угол, из-за которого за один день три сессии поймали
+    наползающие блоки ТОЛЬКО глазами: проверка ширины текста есть, проверки
+    вертикальных столкновений не было ни у кого.
+    """
+    if where.startswith("+"):        # намеренная накладка: значок поверх блока
+        return
+    x2, y2 = x + w, y + h
+    for (ax, ay, bx, by, aw) in RECTS:
+        ox = min(x2, bx) - max(x, ax)
+        oy = min(y2, by) - max(y, ay)
+        if ox > 2 and oy > 2:
+            WARN.append(f"СТОЛКНОВЕНИЕ: {where!r} перекрывает {aw!r} на {ox}x{oy} px")
+            break
+    RECTS.append((x, y, x2, y2, where))
 
 
 def f(sz, b=False, m=False):
@@ -51,6 +70,7 @@ def fit(d, txt, fo, limit, where):
 
 def box(d, x, y, w, h, lines, fc, tc=W, sz=32, b=True, m=False, r=12, pad=18,
         outline=None, where="?"):
+    _claim(x, y, w, h, where)
     d.rounded_rectangle([x, y, x + w, y + h], radius=r, fill=fc,
                         outline=outline, width=3 if outline else 0)
     fo = f(sz, b, m)
@@ -66,6 +86,7 @@ def box(d, x, y, w, h, lines, fc, tc=W, sz=32, b=True, m=False, r=12, pad=18,
 
 def lbox(d, x, y, w, h, lines, fc, tc=INK, sz=30, b=False, m=False, r=12,
          pad=20, outline=None, where="?"):
+    _claim(x, y, w, h, where)
     d.rounded_rectangle([x, y, x + w, y + h], radius=r, fill=fc,
                         outline=outline, width=3 if outline else 0)
     fo = f(sz, b, m)
@@ -99,27 +120,16 @@ def head(d, txt, sz=34):
 
 def save(im, name):
     im.save(OUT / name)
+    RECTS.clear()   # новое полотно — новый набор прямоугольников
 
 
-# ── n07. Три кадра сцены ─────────────────────────────────────────────────────
-im = Image.new("RGB", (2400, 410), W); d = ImageDraw.Draw(im)
-head(d, "Одна сессия, три кадра — и ни одного нарушенного правила")
-frames = [
-    ("1", ["агент правит", "валидацию формы"], MID),
-    ("2", ["`git commit`"], MID),
-    ("3", ["коммит лёг", "в main"], RED),
-]
-x = 90
-for num, lines, col in frames:
-    box(d, x, 88, 560, 168, lines, SURF, tc=INK, sz=36, b=True, where="n07 кадр")
-    box(d, x + 18, 104, 56, 56, num, col, sz=32, r=28, pad=6, where="n07 номер")
-    x += 700
-for cx in (700, 1400):
-    arrow(d, cx - 40, 172, cx + 55, 172, col=LIGHT, wd=6, head=20)
-box(d, 90, 290, 2220, 88,
-    "правило не нарушено: правила про ветки в файле нет", RED, sz=40,
-    where="n07 плашка")
-save(im, "khuki-n07-stsena.png")
+# ── n07 — схема отменена ─────────────────────────────────────────────────────
+# Слайд показывает CLAUDE.md демо-репозитория ЦЕЛИКОМ, 20 строк, 845 знаков —
+# это его единственная работа: зал читает файл и сам видит, чего в нём нет.
+# Со схемой листинг ложился на дно кегля (7,5 pt, «ниже приём не умеет») и с
+# задних рядов не читался. Три кадра сцены проговариваются в заметках, а
+# красная плашка схемы дублировала ## Assertion слайда.
+# Сессии рендерера: снять запись "n07" из FIGS.
 
 # ── n12. Полная структура хука: пять блоков одним экраном ────────────────────
 # Структурный слайд по требованию владельца: «у нас нигде не прописаны
@@ -135,7 +145,7 @@ im = Image.new("RGB", (2400, 844), W); d = ImageDraw.Draw(im)
 head(d, "Хук целиком: где объявлен, когда запускается, что получает, чем отвечает, что с этим делает среда", sz=32)
 
 def blocknum(n, x, y):
-    box(d, x, y, 46, 46, str(n), DEEP, sz=27, r=23, pad=6, where="n12 номер")
+    box(d, x, y, 46, 46, str(n), DEEP, sz=27, r=23, pad=6, where="+n12 номер")
 
 # 1 — где объявляется
 blocknum(1, 60, 70)
@@ -205,7 +215,7 @@ save(im, "khuki-n12-ustroystvo.png")
 # Сессии рендерера: снять запись "n13" из FIGS в build_sem05.py.
 
 # ── n15. Шесть форм команды ──────────────────────────────────────────────────
-im = Image.new("RGB", (2400, 462), W); d = ImageDraw.Draw(im)
+im = Image.new("RGB", (2400, 492), W); d = ImageDraw.Draw(im)
 head(d, "Шесть форм одной команды: отклонена одна")
 forms = [
     ("git commit", True),
@@ -228,7 +238,7 @@ for txt, denied in forms:
 lbox(d, 1810, 84, 530, 300,
      ["из шести форм", "отклонена одна", "", "четыре из пяти", "нашёл внешний", "тест"],
      WARM, sz=32, b=True, outline=GOLD, where="n15 база")
-box(d, 60, 398, 2280, 50,
+box(d, 60, 416, 2280, 52,
     "исполняемый файл с правильным именем — не барьер", DEEP, sz=36,
     where="n15 итог")
 save(im, "khuki-n15-proval.png")
@@ -253,7 +263,7 @@ for i, r in enumerate(rws):
 cells = {
     (0, 0): ("ЦЕЛЕВОЙ", GOLD, DEEP),
     (0, 1): ("протокол, не запрет", SURF, INK),
-    (1, 0): ("так отвечает наш хук\nв соседней клетке", SURF, INK),
+    (1, 0): ("так отвечает наш барьер\nиз первого кейса", SURF, INK),
     (1, 1): ("бессмысленно", SURF, MUTE),
     (2, 0): ("снова текст", SURF, INK),
     (2, 1): ("вырождено", PALE, MUTE),
@@ -310,7 +320,7 @@ arrow(d, 1040, 165, 1460, 220, col=LIGHT, wd=6, head=18)
 arrow(d, 1040, 305, 1460, 250, col=LIGHT, wd=6, head=18)
 box(d, 1480, 320, 800, 100, "платит сумму обоих", RED, sz=34, where="n32 итог")
 lbox(d, 120, 400, 1240, 100,
-     ["владелец репозитория второй уровень видит,", "а первый — не видит вовсе"],
+     ["владелец репозитория видит проектные хуки,", "а личные участников — не видит"],
      WARM, sz=30, b=True, outline=GOLD, where="n32 оговорка")
 save(im, "khuki-n32-sloi.png")
 

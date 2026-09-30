@@ -118,7 +118,7 @@ BADGE = {"s07": 3, "s21": 4, "s33": 5,
 FIGS={
     "n01": "ramka-n01-hero.png",
     "n05": "ramka-n05-karta.png",
-    "n62": "ramka-n62-chto-razlozheno.png",
+    "n65": "ramka-n62-chto-razlozheno.png",
     "s01": "hero-barier.png",
     "s05": "pravilo-poryadka.png",
     "s06": "karta-stupeney.png",
@@ -147,12 +147,9 @@ FIGS={
     "s49": "itog-chto-razlozheno.png",
     "s50": "itog-tri-korziny.png",
     # Блок «Хуки» новой деки, n06–n32 — девять схем
-    "n07": "khuki-n07-stsena.png",
     "n12": "khuki-n12-ustroystvo.png",
     "n15": "khuki-n15-proval.png",
-    "n18": "khuki-n18-stsena.png",
     "n22": "khuki-n22-kletki.png",
-    "n26": "khuki-n26-stsena.png",
     "n29": "khuki-n29-umnozhenie.png",
     "n32": "khuki-n32-sloi.png",
     # Блок «Скиллы», n34–n58 — четыре схемы
@@ -814,7 +811,7 @@ def g_closing(sl, sid, title, blocks, pattern, assertion=""):
             fig = figure_for(sid)
             if fig:
                 drawers.append(lambda sl, y, mh, p=fig: K.figure(
-                    sl, p, LEFT, y, WIDTH, mh if mh else 3.2))
+                    sl, p, LEFT, y, WIDTH, mh if mh else 3.2, label=sid))
             continue
         d = block_drawer(kind, b, sid, pattern)
         if d:
@@ -833,7 +830,7 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
     fig = figure_for(sid)
     if fig:
         drawers.append(lambda sl, y, mh, p=fig: K.figure(
-            sl, p, LEFT, y, WIDTH, mh if mh else 4.3))
+            sl, p, LEFT, y, WIDTH, mh if mh else 4.3, label=sid))
     for kind, b in blocks:
         if kind == "table" and pattern == "evidence_table_with_gap":
             # таблица свидетельств — свой акцент: «разбор» подсвечивает целевую

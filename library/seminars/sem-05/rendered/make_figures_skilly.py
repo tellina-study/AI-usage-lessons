@@ -67,13 +67,22 @@ def cplate(d, x, y, w, h, lines, fc, tc=W, sz=21, b=True, m=False):
         d.text((x + (w - tw) // 2, cy + i * step), ln, font=fo, fill=tc)
 
 
+def arrow(d, x1, y1, x2, y2, col=MID):
+    """Стрелка между шагами конвейера."""
+    import math
+    d.line([x1, y1, x2, y2], fill=col, width=4)
+    a = math.atan2(y2 - y1, x2 - x1); L = 13
+    d.polygon([(x2, y2), (x2 - L * math.cos(a - 0.4), y2 - L * math.sin(a - 0.4)),
+               (x2 - L * math.cos(a + 0.4), y2 - L * math.sin(a + 0.4))], fill=col)
+
+
 def bar(d, x, y, w, h, frac, fc, bg=PALE):
     d.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=bg)
     if frac > 0:
         d.rounded_rectangle([x, y, x + max(int(w * frac), 12), y + h], radius=6, fill=fc)
 
 
-# ── n40. Двойная оплата: скилл вынесли, копию оставили ───────────────────────
+# ── Артефакт К4: двойная оплата: скилл вынесли, копию оставили ───────────────────────
 im = Image.new("RGB", (CW, 360), W); d = ImageDraw.Draw(im)
 head(d, "Одна процедура, два места — и платят за неё дважды с 17 мая 2026")
 plate(d, 40, 70, 1090, 118,
@@ -94,7 +103,7 @@ cline(d, 308, "Вынос сделан правильно. Не сделана �
       21, RED, True)
 im.save(OUT / "skilly-dvoynaya-oplata.png")
 
-# ── n41. Цена отбора ────────────────────────────────────────────────────────
+# ── Провал К4: цена отбора ────────────────────────────────────────────────────────
 im = Image.new("RGB", (CW, 420), W); d = ImageDraw.Draw(im)
 head(d, "Прирост дал отобранный скилл — и вот насколько отобранное отличается от среднего")
 d.text((40, 74), "успешных прохождений: те же 87 задач, те же 18 связок модели со средой",
@@ -117,41 +126,156 @@ for i, (lbl, val, frac, col) in enumerate(
 cline(d, 388, "Разница между 6,2 и 10,1 по одной рубрике и есть цена отбора.", 21, DEEP, True)
 im.save(OUT / "skilly-otbor.png")
 
-# ── n52. Налог на перечень ──────────────────────────────────────────────────
-im = Image.new("RGB", (CW, 330), W); d = ImageDraw.Draw(im)
-head(d, "Перечень скиллов этого репозитория: что в нём лежит и за что платится каждый ход")
-names = ["build-deck", "catalog-docs", "compile-wiki", "diagram-refresh", "extract-links",
-         "impact-check", "issue-from-change", "pre-user-gate", "publish-article",
-         "query-kb", "reflect", "sync-library", "update-lecture"]
-x0, pw, gap = 40, 168, 12
-for i, nm in enumerate(names):
-    live = nm == "pre-user-gate"
-    x = x0 + i * (pw + gap)
-    cplate(d, x, 74, pw, 96,
-           [nm, "описание" if live else "имя вместо", "написано" if live else "описания"],
-           GOLD if live else PALE, tc=DEEP if live else MUTE, sz=15, b=live)
-cplate(d, 40, 196, 1140, 58, ["12 из 13 сработать по смыслу не могут"], ROSE, tc=RED, sz=22)
-cplate(d, 1220, 196, 1140, 58,
-       ["~100 токенов × 13 = ~1 300 в каждом ходу, из них ~1 200 впустую"], SURF, tc=DEEP, sz=22)
-cline(d, 284, "Платится за каждый скилл независимо от того, вызывался ли он хоть раз — включая эту сессию.",
-      21, INK)
-im.save(OUT / "skilly-nalog.png")
 
-# ── n57. Вредит и релевантный ───────────────────────────────────────────────
-im = Image.new("RGB", (CW, 380), W); d = ImageDraw.Draw(im)
-head(d, "307 подтверждённых случаев вреда: из чего они складываются и кто их дал")
-cplate(d, 40, 74, 1120, 64, ["125 функциональных — работа сделана неверно"], MID, sz=22)
-cplate(d, 1240, 74, 1120, 64, ["182 стоимостных — работа сделана дороже"], LIGHT, sz=22)
-d.text((40, 164), "из 125 функциональных:", font=f(21, True), fill=INK)
-bar(d, 400, 160, 1430, 40, 0.688, RED)
-d.text((1850, 164), "86 = 68,8%", font=f(22, True), fill=RED)
-plate(d, 40, 222, 2320, 56,
-      ["86 из 125 дали скиллы, которые выглядели ПОДХОДЯЩИМИ задаче — не лишние и не подсунутые"],
+
+
+# ── Структурный слайд: скилл целиком: устройство одним экраном ────────────────────────────
+# Форма согласована с блоком «Хуки» (их n12): одна схема на всю площадь,
+# пять пронумерованных частей, термины — подписями К ЧАСТЯМ, а не глоссарием,
+# внизу золотая плашка с правилами, которые дальше нужны не один раз.
+# Уровням загрузки отдано больше площади, чем остальным частям: это блок,
+# снимающий больше всего вопросов, — та же логика, что у них с событиями.
+im = Image.new("RGB", (2400, 845), W); d = ImageDraw.Draw(im)
+
+
+def numbox(d, x, y, n, title, w=None):
+    """Номерной кружок и заголовок части."""
+    r = 17
+    d.ellipse([x, y, x + 2 * r, y + 2 * r], fill=DEEP)
+    fo = f(19, True); tw = d.textlength(str(n), font=fo)
+    d.text((x + r - tw / 2, y + r - 13), str(n), font=fo, fill=W)
+    d.text((x + 2 * r + 14, y + 2), title, font=f(23, True), fill=DEEP)
+
+
+# 1 — где лежит и из чего состоит
+numbox(d, 40, 24, 1, "где лежит и из чего состоит")
+d.rounded_rectangle([40, 66, 1180, 430], radius=12, fill=SURF)
+rows = [(".claude/skills/deploy/", "имя каталога = имя скилла", FM, DEEP, None),
+        ("  SKILL.md", "единственный обязательный файл", FM, INK, None),
+        ("    ---", "", FM, MUTE, "ФРОНТМАТТЕР"),
+        ("    name: deploy", "", FM, INK, None),
+        ("    description: Деплоит лендинг…", "", FM, INK, "ОПИСАНИЕ"),
+        ("    ---", "", FM, MUTE, None),
+        ("    # deploy", "", FM, INK, "ТЕЛО"),
+        ("    1. Собрать: npm run build", "", FM, INK, None),
+        ("  checklist.md", "читается по ссылке из тела", FM, INK, "ВЛОЖЕНИЕ"),
+        ("  check.sh", "запускается, в контекст идёт вывод", FM, INK, None)]
+y = 84
+for txt, note, font_path, col, tag in rows:
+    fo = ImageFont.truetype(font_path, 20)
+    if d.textlength(txt, font=fo) > 600: WARN.append(f"шире колонки схемы: {txt[:40]!r}")
+    d.text((62, y), txt, font=fo, fill=col)
+    # ширина ярлыка МЕРЯЕТСЯ, а не оценивается по числу букв: оценка «11 px
+    # на знак» дала наложение ярлыка ВЛОЖЕНИЕ на подпись справа от него
+    nx = 700
+    if tag:
+        tf = f(16, True); tw = d.textlength(tag, font=tf)
+        d.rounded_rectangle([700, y - 3, 700 + tw + 20, y + 26], radius=7, fill=GOLD)
+        d.text((710, y + 1), tag, font=tf, fill=DEEP)
+        nx = 700 + tw + 34
+    if note:
+        nf = f(17)
+        if nx + d.textlength(note, font=nf) > 1160:
+            WARN.append(f"подпись не влезает справа от ярлыка: {note[:40]!r}")
+        d.text((nx, y + 1), note, font=nf, fill=MUTE)
+    y += 34
+
+# 2 — что попадает в контекст и когда (самая большая часть)
+numbox(d, 1240, 24, 2, "что попадает в контекст и когда")
+d.rounded_rectangle([1240, 66, 2360, 430], radius=12, fill=SURF)
+lv = [("имя и описание", "всегда, с первого хода сессии", "никто — попадает само", GOLD, DEEP),
+      ("тело файла", "когда скилл выбран", "модель, по описанию", (0xD8, 0xE4, 0xEE), INK),
+      ("вложения", "когда тело на них сослалось", "тело файла", PALE, INK)]
+for i, (name, when, who, fc, tc) in enumerate(lv):
+    yy = 86 + i * 114
+    d.rounded_rectangle([1262, yy, 2338, yy + 100], radius=10, fill=fc)
+    d.text((1284, yy + 10), name, font=f(24, True), fill=tc)
+    d.text((1284, yy + 44), f"когда: {when}", font=f(19), fill=tc)
+    d.text((1284, yy + 70), f"кто решает: {who}", font=f(19), fill=tc)
+
+# 3 — чем вызывается
+numbox(d, 40, 446, 3, "чем вызывается")
+d.rounded_rectangle([40, 488, 1180, 622], radius=12, fill=SURF)
+cplate(d, 62, 506, 540, 50, ["модель выбирает сама — по описанию"], MID, sz=20)
+cplate(d, 622, 506, 536, 50, ["человек зовёт по имени — /deploy"], LIGHT, sz=20)
+d.text((62, 566), "второй способ работает даже когда описание никуда не годится —", font=f(19), fill=INK)
+d.text((62, 592), "отсюда целый класс поломок, которых автор не замечает", font=f(19), fill=INK)
+
+# 4 — перечень
+numbox(d, 1240, 446, 4, "перечень — всё, что видно до выбора")
+d.rounded_rectangle([1240, 488, 2360, 622], radius=12, fill=SURF)
+d.text((1262, 500), "build-deck: build-deck", font=ImageFont.truetype(FM, 20), fill=MUTE)
+d.text((1262, 530), "pre-user-gate: Pre-USER-GATE walkthrough — orchestrator…", font=ImageFont.truetype(FM, 20), fill=INK)
+d.text((1262, 560), "…по строке на каждый установленный скилл", font=f(19), fill=MUTE)
+d.rounded_rectangle([1262, 588, 2338, 616], radius=7, fill=GOLD)
+d.text((1276, 591), "ПЕРЕЧЕНЬ", font=f(16, True), fill=DEEP)
+d.text((1400, 592), "ни тела, ни файлов внутри до выбора не видно", font=f(19), fill=DEEP)
+
+# 5 — путь от запроса до исполнения, во всю ширину
+numbox(d, 40, 640, 5, "путь от запроса до исполнения")
+steps = [("запрос", "пользователя"), ("перечень", "имён и описаний"), ("выбор", "по описанию"),
+         ("чтение", "тела файла"), ("вложения", "по ссылке из тела")]
+xw, gap = 420, 42
+for i, st in enumerate(steps):
+    x = 40 + i * (xw + gap)
+    cplate(d, x, 684, xw, 84, list(st), MID if i % 2 == 0 else LIGHT, sz=20)
+    if i < len(steps) - 1:
+        arrow(d, x + xw + 6, 726, x + xw + gap - 6, 726, col=MUTE)
+
+# золотая плашка: два правила, которые дальше нужны не один раз
+d.rounded_rectangle([40, 780, 2360, 838], radius=12, fill=(0xFD, 0xF3, 0xD8))
+d.text((66, 790), "•  до выбора модель видит ТОЛЬКО имя и описание — ни тела, ни того, что скилл умеет «на самом деле»",
+       font=f(20), fill=INK)
+d.text((66, 816), "•  описание пишут ТРЕТЬИМ ЛИЦОМ: «деплоит лендинг», а не «я задеплою» — оно ложится в системный "
+                   "промпт рядом с чужими", font=f(20), fill=INK)
+im.save(OUT / "skilly-ustroystvo.png")
+
+# ── Сцена внешнего кейса: своё за недели или готовое сегодня ────────────────
+im = Image.new("RGB", (2400, 620), W); d = ImageDraw.Draw(im)
+head(d, "Одна задача, два пути — и по трём меркам из четырёх готовое честно выигрывает")
+cols = [("Написать своё", MID, [("срок", "недели"), ("качество разбора таблиц", "хуже"),
+                                ("поддержка при смене формата", "ваша навсегда"),
+                                ("что внутри", "знаете: сами писали")]),
+        ("Взять готовое", TEAL, [("срок", "минута"), ("качество разбора таблиц", "лучше"),
+                                 ("поддержка при смене формата", "чужая, пока проект жив"),
+                                 ("что внутри", "НЕ ЗНАЕТЕ")])]
+for i, (ttl, col, rows) in enumerate(cols):
+    x = 40 + i * 1180
+    cplate(d, x, 66, 1140, 52, [ttl], col, sz=24)
+    for j, (k, v) in enumerate(rows):
+        y = 134 + j * 78
+        last = j == len(rows) - 1
+        d.rounded_rectangle([x, y, x + 1140, y + 66], radius=10,
+                            fill=ROSE if (last and i == 1) else SURF)
+        d.text((x + 22, y + 10), k, font=f(18), fill=MUTE)
+        d.text((x + 22, y + 34), v, font=f(21, True), fill=RED if (last and i == 1) else INK)
+cline(d, 468, "Выбор никогда не звучит как «безопасно или опасно» — он звучит как «сегодня или через месяц».", 22, DEEP, True)
+cline(d, 510, "Три мерки из четырёх за готовое. Четвёртая — единственная, ради которой стоит этот кейс.", 21, INK)
+cline(d, 556, "«Недели» — оценка объёма работы, а не измерение.", 19, MUTE)
+im.save(OUT / "skilly-svoy-ili-gotovyy.png")
+
+# ── Провал внешнего кейса: два замера одного каталога ───────────────────────
+im = Image.new("RGB", (2400, 560), W); d = ImageDraw.Draw(im)
+head(d, "Один открытый каталог, два сплошных обхода с разницей в одиннадцать дней")
+for i, (when, bad, total, share) in enumerate([("первый обход", 341, 2857, "12%"),
+                                               ("через 11 дней", 824, 10700, "8%")]):
+    y = 88 + i * 150
+    d.text((40, y + 10), when, font=f(21, True), fill=DEEP)
+    # полосы рисуются В МАСШТАБЕ друг друга: подложка во всю ширину скрывала
+    # бы главное — что каталог между обходами вырос почти вчетверо
+    wtot = int(1240 * total / 10700)
+    d.rounded_rectangle([330, y, 330 + wtot, y + 52], radius=6, fill=(0xD8, 0xE4, 0xEE))
+    d.rounded_rectangle([330, y, 330 + max(int(1240 * bad / 10700), 10), y + 52], radius=6, fill=RED)
+    d.text((330 + wtot + 14, y + 16), f"{total} всего", font=f(18), fill=MUTE)
+    d.text((1830, y + 6), f"{bad} вредоносных", font=f(21, True), fill=RED)
+    d.text((1830, y + 32), f"это {share} каталога", font=f(19), fill=MUTE)
+plate(d, 40, 392, 2320, 62,
+      ["Каталог вырос почти вчетверо, вредоносных стало вдвое больше — а доля НЕ выросла: 12% против 8%."],
+      SURF, tc=DEEP, sz=22, b=True)
+plate(d, 40, 468, 2320, 62,
+      ["Вычитка — снимок на сегодня. Она ничего не говорит про то, что положат в каталог завтра."],
       ROSE, tc=RED, sz=22, b=True)
-plate(d, 40, 296, 2320, 56,
-      ["и отдельно: скиллы с исполняемым кодом внутри уязвимы в 2,12 раза чаще — тот же корпус 31 132, различие только в наличии скрипта"],
-      SURF, tc=DEEP, sz=21)
-im.save(OUT / "skilly-relevantnyy-vred.png")
+im.save(OUT / "skilly-chuzhoy-katalog.png")
 
 print("схемы блока «Скиллы»:", *[p.name for p in sorted(OUT.glob("skilly-*.png"))])
 if WARN:

@@ -1,5 +1,5 @@
 ---
-id: n44
+id: n45
 type: problem_scenario
 duration_min: 1.0
 assertion: "Двенадцать скиллов из тринадцати в этом репозитории показывают вместо описания собственное имя — а годное описание лежит строкой ниже и в перечень не попадает"
@@ -25,15 +25,9 @@ build-deck: build-deck
 catalog-docs: catalog-docs
 compile-wiki: compile-wiki
 diagram-refresh: diagram-refresh
-extract-links: extract-links
-impact-check: impact-check
-issue-from-change: issue-from-change
-pre-user-gate: Pre-USER-GATE walkthrough — orchestrator self-review before
-               presenting GATE to user. Reduces user feedback rounds.
-publish-article: publish-article
-query-kb: query-kb
-reflect: reflect
-sync-library: sync-library
+        … ещё восемь строк ровно такого же вида …
+pre-user-gate: Pre-USER-GATE walkthrough — orchestrator self-review
+               before presenting GATE to user.
 update-lecture: update-lecture
 ```
 

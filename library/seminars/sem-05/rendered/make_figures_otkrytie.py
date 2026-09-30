@@ -11,11 +11,11 @@ s01 и s06 воспроизводятся байт-в-байт по замысл
 13,333″, полотно 2400 px → 1 px ≈ 0,366 pt. Кегль 38 px читается как 14 pt,
 30 px — как 11 pt. Ниже 30 px не опускаться: на проекторе не читается.
 
-  s01-hero-barier.png     s01  правило, которое не удержало, и пять сегментов барьера
-  s06-karta-stupeney.png  s06  карта занятия: три ступени сегодня, две на следующем
-  s05-pravilo-poryadka.png    s05  три вопроса, по которым раскладывается любое усиление
-  s49-chto-razlozheno.png     s49  что разложено по артефакту, а что не разложено ничем
-  s50-tri-korziny.png         s50  три корзины переноса на свой репозиторий
+  hero-barier.png     s01  правило, которое не удержало, и пять сегментов барьера
+  karta-stupeney.png  s06  карта занятия: три ступени сегодня, две на следующем
+  pravilo-poryadka.png    s05  три вопроса, по которым раскладывается любое усиление
+  itog-chto-razlozheno.png     s49  что разложено по артефакту, а что не разложено ничем
+  itog-tri-korziny.png         s50  три корзины переноса на свой репозиторий
 """
 import math
 from pathlib import Path
@@ -162,7 +162,7 @@ d.line([560, 184, 1500, 184], fill=GOLD, width=4)
 clabel(d, 1030, 130, "сегодня — три", 26, GOLD, b=True)
 d.line([1580, 184, 2340, 184], fill=GHOST, width=4)
 clabel(d, 1960, 130, "следующее занятие — две", 26, DIMTX)
-save(im, "s01-hero-barier.png")
+save(im, "hero-barier.png")
 
 
 # ── s06 · карта занятия: три ступени сегодня, две на следующем ───────────────
@@ -200,7 +200,7 @@ arrow(d, 800, 518, 1600, 518, col=MID, head=18, wd=5)
 panel(d, 1640, 466, 710, 104, line=GOLD)
 clabel(d, 1995, 490, "на выходе", 20, MUTE)
 clabel(d, 1995, 522, ".claude/ и .mcp.json", 21, INK, b=True, m=True)
-save(im, "s06-karta-stupeney.png")
+save(im, "karta-stupeney.png")
 
 
 # ── s05 · три вопроса, по которым раскладывается любое усиление ──────────────
@@ -266,7 +266,7 @@ arrow(d, 1800, 560, 1876, 512, col=GOLD, wd=9, head=20, text="да")
 
 center(d, 728, "Шестое усиление, которого сегодня нет в списке, раскладывается этими же тремя вопросами.",
        26, INK, b=True)
-save(im, "s05-pravilo-poryadka.png")
+save(im, "pravilo-poryadka.png")
 
 
 # ── s49 · что разложено по артефакту, а что не разложено ничем ───────────────
@@ -299,7 +299,7 @@ for name in ("субагент", "процесс"):
     dashbox(d, 1560, y, 780, 88, GH)
     clabel(d, 1950, y + 30, "нечем", 26, GH, b=True)
     y += 108
-save(im, "s49-chto-razlozheno.png")
+save(im, "itog-chto-razlozheno.png")
 
 
 # ── s50 · три корзины переноса на свой репозиторий ───────────────────────────
@@ -325,7 +325,7 @@ for col, head, sub in baskets:
     clabel(d, x + 370, y + 58, "сюда — ваши", 24, GH, b=True)
     x += 780
 center(d, 536, "Третья корзина — такой же законный исход, как первые две.", 28, INK, b=True)
-save(im, "s50-tri-korziny.png")
+save(im, "itog-tri-korziny.png")
 
 
 print("схемы открытия и сборки оси:",

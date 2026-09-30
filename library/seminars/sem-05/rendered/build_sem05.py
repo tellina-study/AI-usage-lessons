@@ -81,9 +81,35 @@ TAGS = {"s07": "1 кейс · 2 слоя провала · 5 форм обход
         "s33": "1 кейс · 3 слоя провала · 3 области видимости"}
 BADGE = {"s07": 3, "s21": 4, "s33": 5}
 
-FIGS = {"s08": "khuk-scene.png", "s12": "khuk-cobuild.png", "s15": "lifecycle.png",
-        "s16": "khuk-stdin.png", "s17": "contract.png", "s18": "khuk-debug.png",
-        "s19": "bypass.png", "s20": "khuk-blindspot.png"}
+FIGS={
+    "s01": "hero-barier.png",
+    "s05": "pravilo-poryadka.png",
+    "s06": "karta-stupeney.png",
+    "s08": "khuk-scene.png",
+    "s12": "khuk-cobuild.png",
+    "s14": "bypass.png",
+    "s15": "khuk-blindspot.png",
+    "s16": "khuk-tochka-i-vhod.png",
+    "s17": "contract.png",
+    "s18": "khuk-debug.png",
+    "s28": "skill-uroven-odin.png",
+    "s29": "skill-tri-urovnya.png",
+    "s30": "skill-podstanovka.png",
+    "s31": "skill-otladka.png",
+    "s32": "skill-vred.png",
+    "s34": "mcp-ruchnoy-tsikl.png",
+    "s36": "mcp-lestnitsa.png",
+    "s37": "mcp-poryadok-proverok.png",
+    "s38": "mcp-vycherkivanie.png",
+    "s40": "mcp-anatomiya.png",
+    "s41": "mcp-ot-fayla.png",
+    "s42": "mcp-poryadok-otladki.png",
+    "s43": "mcp-svyazka.png",
+    "s44": "mcp-podmena.png",
+    "s47": "mcp-chto-gruzitsya.png",
+    "s49": "itog-chto-razlozheno.png",
+    "s50": "itog-tri-korziny.png",
+}
 
 
 def num(sid):
@@ -108,7 +134,7 @@ def label_for(sid, pattern):
 def figure_for(sid):
     """Автоподбор схемы по имени файла — `figures/<id>.png` или `<id>-*.png`.
     Поведение сохранено ровно как было: 23 схемы сделаны отдельно и хорошо."""
-    cand = sorted(FIGDIR.glob(f"{sid}.png")) + sorted(FIGDIR.glob(f"{sid}-*.png"))
+    cand = []
     if not cand and sid in FIGS and (FIGDIR / FIGS[sid]).exists():
         cand = [FIGDIR / FIGS[sid]]
     return cand[0] if cand else None

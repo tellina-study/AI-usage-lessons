@@ -80,7 +80,7 @@ arrow(d, xs[0]+135, 212, xs[0]+135, 176, col=MUTE)
 mcent(d, 222, "цикл повторяется целиком, вручную", 20, MUTE)
 mcent(d, 268, "Правило, барьер, процедура — внутри репозитория, в файлах.", 23, INK)
 mcent(d, 302, "Список открытых задач — снаружи, и меняется без разработчика.", 23, INK)
-print(msave(im, "s34-ruchnoy-tsikl.png"))
+print(msave(im, "mcp-ruchnoy-tsikl.png"))
 
 # ── s37. Порядок трёх проверок ─────────────────────────────────────────────
 im = Image.new("RGB", (MW, 348), W); d = ImageDraw.Draw(im)
@@ -93,7 +93,7 @@ mcent(d, 218, "что вообще не следовало подключать.
 mpanel(d, 60, 252, MW-120, 76, fill=SURF, stroke=MUTE)
 mcent(d, 266, "«официальный» и «сколько звёзд» — оценка источника, а не проверка:", 20, MUTE)
 mcent(d, 294, "ни один из трёх вопросов они не закрывают", 20, MUTE)
-print(msave(im, "s37-poryadok-treh-proverok.png"))
+print(msave(im, "mcp-poryadok-proverok.png"))
 
 # ── s38. Вычёркивание прав под названные операции ──────────────────────────
 im = Image.new("RGB", (MW, 460), W); d = ImageDraw.Draw(im)
@@ -112,7 +112,7 @@ mtext(d, 772+d.textlength("чтение и запись", font=f(23))+22, 158, "
 mtext(d, 772, 296, "вопрос по каждой строке: наш список из трёх этого требует?", 20, MUTE)
 arrow(d, 660, 200, 730, 200, col=DEEP, label="нужно?")
 box(d, 25, 382, MW-50, 62, "Остаётся: один репозиторий  ·  чтение issue  ·  создание черновика правки", GOLD, tc=DEEP, sz=24)
-print(msave(im, "s38-vycherkivanie-prav.png"))
+print(msave(im, "mcp-vycherkivanie.png"))
 
 # ── s40. Анатомия .mcp.json ────────────────────────────────────────────────
 im = Image.new("RGB", (MW, 420), W); d = ImageDraw.Draw(im)
@@ -133,7 +133,7 @@ for y, t, c in notes:
     d.rounded_rectangle([845, y-6, 852, y+28*len(lines)-2], radius=3, fill=c)
     arrow(d, 792, y+14, 836, y+14, col=c)
 mcent(d, 380, "Файл лежит в корне репозитория — и коммитится вместе с кодом.", 22, INK)
-print(msave(im, "s40-anatomiya-mcp-json.png"))
+print(msave(im, "mcp-anatomiya.png"))
 
 # Прежние схемы s41 (области видимости), s47 (что грузится) и s42 (статус)
 # удалены вместе со слиянием тактов: их содержание живёт в двух новых схемах
@@ -169,7 +169,7 @@ mtext(d, 130+w+132, 350, res, 22, DEEP, b=True)
 mpanel(d, 105, 418, 1390, 64, None, fill=SURF, stroke=RED)
 mcent(d, 430, "Без модели вообще: сетевой вход сервера слушает без проверки, кто обратился,", 20, INK)
 mcent(d, 454, "а защита от чужих сайтов обходится подменой DNS — 2 запроса, 0 учётных данных.", 20, INK)
-print(msave(im, "s43-svyazka-treh-usloviy.png"))
+print(msave(im, "mcp-svyazka.png"))
 
 
 # ── s36. Лестница свидетельств: кто мог это перепроверить ──────────────────
@@ -245,7 +245,7 @@ mdash_rect(d, 20, y, MW - 20, y + gh, MUTE)
 mtext(d, 46, y + 11, "Не измерил никто", 23, MUTE, b=True)
 for k, ln in enumerate(gap_lines):
     mtext(d, 78, y + 46 + k * 30, ln, 21, MUTE)
-print(msave(im.crop((0, 0, MW, y + gh + 12)), "s36-lestnitsa-svidetelstv.png"))
+print(msave(im.crop((0, 0, MW, y + gh + 12)), "mcp-lestnitsa.png"))
 
 # ── s41. От файла до инструмента: слияние «областей» и «что грузится» ──────
 # Три механики подряд (области → контекст → отладка) шли 7 минут в одном
@@ -306,7 +306,7 @@ mtext(d, CX[2] + 22, y + 11, "сервер__инструмент", 21, W, m=True
 y += 56
 cpanel(CX[2], y, "полное имя — именно его требуют правило прав, список инструментов скилла "
                  "и совпадение в хуке", stroke=SURF, col=MUTE, sz=18)
-print(msave(im, "s41-ot-fayla-do-instrumenta.png"))
+print(msave(im, "mcp-ot-fayla.png"))
 
 # ── s42. Порядок отладки: тот же приём, что на s37 ─────────────────────────
 # Ревью назвало s37 образцом: целевой ответ там не карточка, а ПОРЯДОК —
@@ -337,4 +337,4 @@ for k, ln in enumerate(["сервер отвечает «успех», не де
                         "подключён, но ни один инструмент не доступен модели — отдельной строкой, если список не получен"]):
     d.ellipse([92, 328 + k * 30, 104, 340 + k * 30], fill=MUTE)
     mtext(d, 120, 322 + k * 30, ln, 20, INK)
-print(msave(im, "s42-poryadok-otladki.png"))
+print(msave(im, "mcp-poryadok-otladki.png"))

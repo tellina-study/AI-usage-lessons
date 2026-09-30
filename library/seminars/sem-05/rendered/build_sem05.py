@@ -48,9 +48,24 @@ LEFT, WIDTH = 0.55, 12.23       # и по горизонтали
 GAP = 0.18                      # шаг между блоками
 
 # ── Где мы: короткое имя раздела для надзаголовка ────────────────────────────
-SECTIONS = [(1, 6, "Открытие", None), (7, 20, "Хук", 0), (21, 32, "Скилл", 1),
-            (33, 45, "Доступ наружу", 2), (46, 50, "Сборка", None)]
-STAGES = ["Хук", "Скилл", "Доступ наружу"]
+#
+# Границы заданы ОТДЕЛЬНО для каждой нумерации, а не одним списком по номеру.
+# Старая дека (`sNN`) и новая (`nNN`) живут в репозитории одновременно, пока
+# блоки пересобираются параллельными сессиями, и номера у них пересекаются:
+# 22-й слайд старой деки — «Скилл», 22-й новой — всё ещё «Хук». Один список по
+# номеру обслуживает ровно одну из двух и врёт про вторую — именно так на
+# n22–n32 в надзаголовке стояло «СКИЛЛ» посреди блока хуков.
+SECTIONS_BY_PREFIX = {
+    "s": ([(1, 6, "Открытие", None), (7, 20, "Хук", 0), (21, 32, "Скилл", 1),
+           (33, 45, "Доступ наружу", 2), (46, 50, "Сборка", None)],
+          ["Хук", "Скилл", "Доступ наружу"]),
+    # Новая дека, 63 слайда: шесть кейсов — три про хуки, три про скиллы.
+    # Доступ наружу решением владельца уехал в Занятие 6 целиком.
+    "n": ([(1, 5, "Открытие", None), (6, 32, "Хук", 0), (33, 58, "Скилл", 1),
+           (59, 63, "Сборка", None)],
+          ["Хук", "Скилл"]),
+}
+SECTIONS, STAGES = SECTIONS_BY_PREFIX["s"]      # совместимость: прежние имена
 
 # ── Что это за шаг: жанр слайда по его приёму ───────────────────────────────
 # Это и есть потерянный приём Семинара 4 — одна строка, которая отвечает
@@ -79,8 +94,16 @@ MECHANICS_TAG = "механика"
 
 TAGS = {"s07": "1 кейс · 2 слоя провала · 5 форм обхода",
         "s21": "1 кейс · 2 слоя провала · 6 причин молчания",
-        "s33": "1 кейс · 3 слоя провала · 3 области видимости"}
-BADGE = {"s07": 3, "s21": 4, "s33": 5}
+        "s33": "1 кейс · 3 слоя провала · 3 области видимости",
+        # Новая дека: развилка каждого кейса. Ярлык называет, из чего кейс
+        # состоит, — и ни в одном нет слова «хук»: развилка называет боль.
+        "n06": "1 кейс · 5 решений сборки · 2 слоя провала",
+        "n17": "1 инцидент · 5 клеток · 8 способов промолчать",
+        "n25": "1 случай · 3 замера · 5 вариантов действия"}
+# Номер на значке развилки — номер КЕЙСА, а не раздела: кейсов шесть, три про
+# хуки и три про скиллы. Номера взяты из самих слайдов («Развилка первого
+# кейса» в `learning_goal` n06/n17/n25), не назначены вёрсткой.
+BADGE = {"s07": 3, "s21": 4, "s33": 5, "n06": 1, "n17": 2, "n25": 3}
 
 FIGS={
     "s01": "hero-barier.png",
@@ -110,6 +133,16 @@ FIGS={
     "s47": "mcp-chto-gruzitsya.png",
     "s49": "itog-chto-razlozheno.png",
     "s50": "itog-tri-korziny.png",
+    # Блок «Хуки» новой деки, n06–n32 — девять схем
+    "n07": "khuki-n07-stsena.png",
+    "n12": "khuki-n12-ustroystvo.png",
+    "n13": "khuki-n13-sborka.png",
+    "n15": "khuki-n15-proval.png",
+    "n18": "khuki-n18-stsena.png",
+    "n22": "khuki-n22-kletki.png",
+    "n26": "khuki-n26-stsena.png",
+    "n29": "khuki-n29-umnozhenie.png",
+    "n32": "khuki-n32-sloi.png",
 }
 
 
@@ -117,9 +150,14 @@ def num(sid):
     return int(sid[1:])
 
 
+def sections_for(sid):
+    """Границы разделов и ступени дорожной карты — по нумерации слайда."""
+    return SECTIONS_BY_PREFIX.get(sid[0], (SECTIONS, STAGES))
+
+
 def where(sid):
     n = num(sid)
-    for lo, hi, name, stage in SECTIONS:
+    for lo, hi, name, stage in sections_for(sid)[0]:
         if lo <= n <= hi:
             return name, stage
     return "", None
@@ -178,6 +216,13 @@ PATTERN_ROLE = {
     "criteria_checklist_and_boundary": "formula",
     "axis_placement": "fact",
     "assertion_visual": "fact",
+    # Карта занятия НЕ формула. Золотая планка слева означает «это надо
+    # запомнить» — на слайде-карте запоминать нечего, он отвечает на «где мы и
+    # куда идём». Без этой строки карта проваливалась в `formula` по умолчанию
+    # и получала набор форм, неотличимый от слайда-правила (`dual_mode_
+    # breakdown`), хотя работы у них разные: одна даёт правило, вторая
+    # ориентирует. Это и показал аудит совпадением наборов.
+    "lecture_map": "fact",
     "token_cost_table": "fact",
     "base_and_edge": "fact",
 }
@@ -210,6 +255,29 @@ def quote_role(lines, pattern):
 FORM = {"question": K.form_question, "formula": K.form_formula,
         "speech": K.form_speech, "caveat": K.form_caveat, "fact": K.form_fact}
 
+# Абзац целиком в звёздочках — тихая ремарка. Форма та же, что у реплики
+# докладчика: приглушённый курсив с тиловой линией слева.
+ITALIC_LINE = re.compile(r"^\s*\*([^*].*?)\*\s*$")
+# Курсив ВНУТРИ строки вёрстка не умеет (жирный и моноширинный умеет). Молча
+# срезать звёздочки нельзя — прошлая версия так потеряла целевые ответы,
+# помеченные жирным; молча печатать их на слайд тоже нельзя. Значит — сказать.
+INLINE_ITALIC = re.compile(r"(?<![*\w])\*(?!\*)[^*\n]+\*(?![*\w])")
+
+
+def para_role(text, pattern):
+    """Какую работу делает ГОЛЫЙ абзац и каким текстом он выйдет на слайд.
+
+    Голый абзац в `## Visual` — это тот же материал, что и абзац в плашке
+    `>`; отличается он только тем, как автор его набрал. Прежде вёрстка
+    считала его «спецификацией для дизайнера» и не выводила вовсе. По факту
+    во всех 50 слайдах прежней деки нет НИ ОДНОГО такого абзаца — то есть
+    правило описывало намерение, а не наблюдение, и первый же раздел новой
+    деки потерял на нём 18 абзацев на 8 слайдах, ничего не сказав."""
+    m = ITALIC_LINE.match(text)
+    if m:
+        return "speech", m.group(1).strip()
+    return quote_role([text], pattern), text
+
 
 def split_question(lines):
     """Разделить блок на СЦЕНУ и сам ВОПРОС.
@@ -225,6 +293,16 @@ def split_question(lines):
     вроде «назовите недостающие части», и оно принадлежит вопросу, а не сцене).
     Текст не меняется ни на знак — меняется только то, какой формой набрана
     каждая его часть.
+
+    Возвращает `(сцена, вопрос, нашёлся ли вопрос)`. Третье значение
+    обязательно: «вопрос занял весь блок» и «вопроса в блоке нет вовсе» прежде
+    возвращались одинаково — пустой сценой и блоком целиком во второй позиции.
+    Из-за этого ЛЮБАЯ цитата на слайде-вопросе уезжала в золотую коробку,
+    включая подводку без единого вопросительного знака, и на слайде оказывалось
+    ДВЕ золотые коробки: одна под цитатой из файла, вторая под настоящим
+    вопросом. Золотая заливка с рамкой существует ровно в одном месте — на
+    вопросе, — и две такие коробки на одном слайде обнуляют сигнал ровно так
+    же, как его обнуляла одна кремовая плашка на 31 слайде из 56.
     """
     flat = " ".join(lines)
     # предложение = до точки/воскл./вопр./многоточия, вместе с закрывающими кавычками
@@ -238,9 +316,24 @@ def split_question(lines):
         sent = flat[a:b]
         if "?" in sent or ASK.search(sent):
             if a == 0:
-                return [], [flat.strip()]           # вопрос занимает весь блок
-            return [flat[:a].strip()], [flat[a:].strip()]
-    return [], lines
+                return [], [flat.strip()], True     # вопрос занимает весь блок
+            return [flat[:a].strip()], [flat[a:].strip()], True
+    return [], lines, False                         # вопроса в блоке нет
+
+
+def unseen(sid, pattern, blocks, handled, why):
+    """Сказать вслух про блоки, которые этот жанр рисовать не будет.
+
+    Нужна там, где жанр строит композицию сам и до `block_drawer` блоки не
+    доводит. Правило на всю вёрстку одно: **блок либо нарисован, либо назван в
+    предупреждении**. Молча исчезнуть он не может нигде — потерянный блок
+    ничем не отличается от ненаписанного, и заметить его можно только сверкой
+    текста собранного файла с исходником, чего никто не делает.
+    """
+    for kind, _b in blocks:
+        if kind not in handled:
+            M._WARNINGS.append(f"БЛОК НЕ ПОКАЗАН [{sid} · {pattern}]: блок вида "
+                               f"«{kind}» — {why}")
 
 
 # ── Отрисовка одного блока ──────────────────────────────────────────────────
@@ -269,7 +362,20 @@ def block_drawer(kind, b, sid, pattern, *, role=None):
     if kind == "bullets":
         return lambda sl, y, mh: K.numbered_list(sl, LEFT, y, WIDTH, b, max_h=mh,
                                                  label=f"{sid} список")
-    return None     # 'para' — спецификация для дизайнера, на слайд не выводится
+    if kind == "para":
+        r, text = para_role(b, pattern)
+        fn = FORM[role or r]
+        if INLINE_ITALIC.search(text):
+            M._WARNINGS.append(
+                f"РАЗМЕТКА [{sid}]: курсив `*…*` внутри строки вёрстка не умеет — "
+                f"звёздочки выйдут на слайд как есть: «{INLINE_ITALIC.search(text).group(0)[:40]}»")
+        return lambda sl, y, mh: fn(sl, LEFT, y, WIDTH, [text], max_h=mh,
+                                    label=f"{sid} {role or r}")
+    # Сюда попадает только вид блока, которого вёрстка не знает. Молчать
+    # нельзя: потерянный блок ничем не отличается от ненаписанного.
+    M._WARNINGS.append(f"БЛОК НЕ ПОКАЗАН [{sid} · {pattern}]: блок вида «{kind}» "
+                       f"ни один приём не рисует — содержание пропало бы молча")
+    return None
 
 
 def compose(sl, sid, y0, drawers, *, bottom=BOTTOM, center=True):
@@ -316,6 +422,28 @@ def compose(sl, sid, y0, drawers, *, bottom=BOTTOM, center=True):
         drawn = d(sl, y, max(h * k, 0.5))
         y += drawn + GAP
 
+    # Урезание бюджета — просьба, а не гарантия: у каждой формы есть пол по
+    # кеглю, а таблица, которая не влезла даже после сжатия, честно возвращает
+    # СВОЮ высоту, а не отведённую. Значит курсор может уехать ниже рабочего
+    # поля, и последний блок окажется поверх номера слайда или вовсе за краем
+    # полотна — то есть исчезнет, не сказав ни слова. Здесь он говорит.
+    end = y - GAP
+    over = end - bottom
+    if over > 0.02:
+        # Две разные беды, и путать их нельзя. Ниже рабочего поля, но на
+        # полотне — блок видно, просто номер слайда ложится поверх него. Ниже
+        # ПОЛОТНА — блока в PowerPoint не видно вовсе, а файл при этом
+        # собирается без единой жалобы: ровно тот молчаливый пропуск, который
+        # ищется сверкой текста, а не глазами.
+        if end > K.H_IN - 0.15:
+            M._WARNINGS.append(
+                f"ЗА КРАЕМ ПОЛОТНА [{sid}]: композиция кончается на {end:.2f}″ при "
+                f"высоте полотна {K.H_IN:.2f}″ — нижний блок в PowerPoint не виден вовсе")
+        else:
+            M._WARNINGS.append(
+                f"НЕ ПОМЕСТИЛОСЬ [{sid}]: композиция на {over:.2f}″ ниже рабочего поля — "
+                f"блок заходит в поле подписи, номер слайда ляжет поверх него")
+
 
 # ── Жанры слайдов ───────────────────────────────────────────────────────────
 
@@ -334,8 +462,9 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
     напечатанный второй раз, и раздел на 16 слайдов открывался пустым полем.
     Ничего не дописывается — используется текст, который у слайда уже есть."""
     _, stage = where(sid)
+    stages = sections_for(sid)[1]
     K.divider_bg(sl)
-    K.strip_pills(sl, LEFT, 0.5, 11.3, len(STAGES), stage if stage is not None else -1)
+    K.strip_pills(sl, LEFT, 0.5, 11.3, len(stages), stage if stage is not None else -1)
 
     meaning = []
     for kind, b in blocks:
@@ -347,6 +476,11 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
                 meaning.append(rest)
     if not meaning and assertion:
         meaning = [K.plain(assertion)]
+    # Дивайдер — единственный жанр, который НЕ проводит блоки через
+    # `block_drawer`: у него своя композиция из заголовка, смысловой строки и
+    # ярлыка. Значит и сказать о непоказанном блоке он обязан сам.
+    unseen(sid, pattern, blocks, {"quote", "para"},
+           "на развилке рисуются только заголовок, смысловая строка и ярлык")
 
     # композиция считается целиком, потом центрируется между полосой и картой
     tw = 10.0
@@ -371,7 +505,7 @@ def g_divider(sl, sid, title, blocks, pattern, assertion=""):
     if tag_h:
         K.tag_plate(sl, LEFT + 0.35, y, TAGS[sid])
     if stage is not None:
-        K.roadmap(sl, STAGES, stage)
+        K.roadmap(sl, stages, stage)
     K.slide_id_mark(sl, sid, on_dark=True)
 
 
@@ -392,6 +526,8 @@ def g_cover(sl, sid, title, blocks, pattern, assertion=""):
         sl.shapes.add_picture(str(hero), Inches(0), Inches(K.H_IN - fh), width=Inches(K.W_IN))
         bottom = K.H_IN - fh - 0.2
 
+    unseen(sid, pattern, blocks, {"quote"},
+           "на обложке рисуются иллюстрация и центральный вопрос")
     quotes = [b for k, b in blocks if k == "quote"]
     if quotes:
         lines = [l for q in quotes for l in q]
@@ -425,7 +561,14 @@ def g_question(sl, sid, title, blocks, pattern, assertion=""):
     drawers = []
     for kind, b in blocks:
         if kind == "quote":
-            scene, question = split_question(b)
+            scene, question, found = split_question(b)
+            if not found:
+                # Вопроса в блоке нет — значит это подводка, и форму ей даёт
+                # обычная грамматика, а не жанр слайда.
+                d = block_drawer(kind, b, sid, pattern)
+                if d:
+                    drawers.append(d)
+                continue
             if scene:
                 drawers.append(lambda sl, y, mh, s_=scene: K.form_speech(
                     sl, LEFT, y, WIDTH, s_, max_h=mh, label=f"{sid} сцена"))
@@ -522,7 +665,7 @@ def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
                                         label=f"{sid} критерии"))
 
     for kind, b in others:
-        if kind in ("bullets", "code", "cards"):
+        if kind in ("bullets", "code", "cards", "para"):
             drawers.append(block_drawer(kind, b, sid, pattern))
     compose(sl, sid, y0, drawers)
     K.slide_id_mark(sl, sid)
@@ -663,14 +806,54 @@ GENRE_FN = {
 
 # ── Сборка ──────────────────────────────────────────────────────────────────
 
+def deck_from_files(prefix):
+    """Список слайдов блока, собранный ИЗ САМИХ ФАЙЛОВ, минуя `deck.yaml`.
+
+    Пока блоки новой деки пишутся параллельными сессиями, `deck.yaml` ещё
+    перечисляет старые 50 слайдов — и блок, которого в нём нет, собрать было
+    нечем вовсе. Поэтому смотреть на свою работу сессия блока не могла и
+    сверяла текст собранного файла с исходником вместо того, чтобы открыть
+    картинку. Здесь `id` и `visual.pattern` читаются из фронтматтера слайда —
+    тех же полей, что потом окажутся в `deck.yaml`.
+
+    Это режим ПРЕДПРОСМОТРА БЛОКА, а не вторая дека: порядок — по `id`,
+    `deck.yaml` остаётся единственным источником правды для настоящей сборки.
+    """
+    out = []
+    for f in sorted((ROOT / "slides").glob(f"{prefix}*.md")):
+        md = f.read_text(encoding="utf-8")
+        m = re.match(r"^---\n(.*?)\n---\n", md, re.S)
+        fm = (yaml.safe_load(m.group(1)) if m else {}) or {}
+        out.append({"id": fm.get("id") or f.name.split("-")[0],
+                    "file": f"slides/{f.name}",
+                    "visual": fm.get("visual") or {}})
+    return sorted(out, key=lambda s: s["id"])
+
+
 def main():
-    deck = yaml.safe_load((ROOT / "deck.yaml").read_text(encoding="utf-8"))
+    argv = list(sys.argv[1:])
+    block = None
+    if "--block" in argv:
+        i = argv.index("--block")
+        block = argv[i + 1] if i + 1 < len(argv) else "n"
+        del argv[i:i + 2]
+
+    if block:
+        slides = deck_from_files(block)
+        out_name = f"sem-05-{block}.pptx"
+        if not slides:
+            print(f"слайдов по образцу «{block}*.md» не найдено")
+            return
+    else:
+        slides = yaml.safe_load((ROOT / "deck.yaml").read_text(encoding="utf-8"))["slides"]
+        out_name = "sem-05.pptx"
+    deck = {"slides": slides}
     prs = Presentation()
     prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
     blank = prs.slide_layouts[6]
     M.reset()
 
-    only = set(sys.argv[1:])
+    only = set(argv)
     built = 0
     for s in deck["slides"]:
         sid = s["id"]
@@ -685,7 +868,7 @@ def main():
             sl.notes_slide.notes_text_frame.text = notes
         built += 1
 
-    out = HERE / "sem-05.pptx"
+    out = HERE / out_name
     prs.save(out)
     warns = M.report()
     for w in warns:

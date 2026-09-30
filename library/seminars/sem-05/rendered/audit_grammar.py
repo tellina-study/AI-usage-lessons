@@ -44,8 +44,10 @@ def forms_of(sid, pattern, visual):
         if kind == "quote":
             r = B.quote_role(b, pattern)
             if pattern == "question_with_option_cards":
-                scene, _q = B.split_question(b)
-                forms += (["реплика"] if scene else []) + ["вопрос"]
+                scene, _q, found = B.split_question(b)
+                forms += ((["реплика"] if scene else []) + ["вопрос"]) if found else [
+                    {"question": "вопрос", "formula": "формула", "speech": "реплика",
+                     "caveat": "оговорка", "fact": "факт"}[r]]
             else:
                 forms.append({"question": "вопрос", "formula": "формула",
                               "speech": "реплика", "caveat": "оговорка",
@@ -58,6 +60,13 @@ def forms_of(sid, pattern, visual):
             forms.append("варианты" if pattern == "question_with_option_cards" else "термины")
         elif kind == "bullets":
             forms.append("список")
+        elif kind == "para":
+            # Голый абзац несёт ту же работу, что и абзац в плашке `>`, и
+            # получает ту же форму. В аудите он обязан считаться наравне —
+            # иначе форма, попавшая на слайд, в грамматике не видна.
+            forms.append({"question": "вопрос", "formula": "формула",
+                          "speech": "реплика", "caveat": "оговорка",
+                          "fact": "факт"}[B.para_role(b, pattern)[0]])
     return forms
 
 

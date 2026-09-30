@@ -10,12 +10,67 @@
 import re
 
 
+_FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
+_HEAD = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
+
+
+def _outline(md):
+    r"""Заголовки документа — ТОЛЬКО настоящие, то есть вне блоков в ограждении.
+
+    Прежде секции резались регуляркой `^##\s+…(?=^##\s+|\Z)` по всему тексту.
+    Регулярка не знает про ограждение, и на слайде, который показывает файл
+    инструкций ЦЕЛИКОМ, разбор обрывался на первом `## Safety / scope
+    boundaries` ВНУТРИ листинга: из 20 строк на слайд доезжали 4 — то есть
+    ровно то, ради чего слайд и существует, терялось.
+
+    Обход, которым это чинили на стороне слайда (сдвинуть листинг на два
+    пробела вправо, чтобы `##` перестал начинать строку), работает, но платит
+    за это враньём: слайд обещает показать файл дословно, а показывает файл с
+    добавленным отступом. Поэтому чинится здесь.
+
+    Ограждение открывается и закрывается строкой из трёх и более «гравис» или
+    «тильда», возможно с отступом (`  ```` ```markdown ```` `). Закрывающей
+    считается строка с тем же знаком и не короче открывающей — иначе `~~~`
+    внутри блока на грависах закрыл бы его.
+    """
+    out, fence = [], None
+    for i, ln in enumerate(md.splitlines()):
+        m = _FENCE.match(ln)
+        if m:
+            tok = m.group(1)
+            if fence is None:
+                fence = tok
+            elif tok[0] == fence[0] and len(tok) >= len(fence):
+                fence = None
+            continue
+        if fence is not None:
+            continue
+        h = _HEAD.match(ln)
+        if h:
+            out.append((i, len(h.group(1)), h.group(2)))
+    return out
+
+
 def sections(md):
+    """(заголовок, Assertion, Visual, Speaker notes) — по настоящим заголовкам."""
+    lines = md.splitlines()
+    heads = _outline(md)
+    title = next((t for _i, lvl, t in heads if lvl == 1), "")
+
     def sect(name):
-        m = re.search(rf"^##\s+{name}\s*$(.*?)(?=^##\s+|\Z)", md, re.M | re.S)
-        return m.group(1).strip() if m else ""
-    t = re.search(r"^#\s+(.+)$", md, re.M)
-    return (t.group(1).strip() if t else ""), sect("Assertion"), sect("Visual"), sect("Speaker notes")
+        low = name.lower()
+        for k, (i, lvl, t) in enumerate(heads):
+            if lvl != 2 or t.lower() != low:
+                continue
+            end = len(lines)
+            for j, lvl2, _t2 in heads[k + 1:]:
+                if lvl2 <= 2:
+                    end = j
+                    break
+            return "\n".join(lines[i + 1:end]).strip()
+        return ""
+
+    return title, sect("Assertion"), sect("Visual"), sect("Speaker notes")
 
 
 def _clean(s):

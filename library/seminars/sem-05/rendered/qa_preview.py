@@ -239,7 +239,14 @@ def draw_tf(d, tf, x, y, w, h, report, tag):
                       f"(по мерке Arial; в DejaVu на картинке "
                       f"{(need_draw - room) / 120:+.2f}\")")
 
-def deck_order():
+def deck_order(pptx=None):
+    """Порядок слайдов файла. Для блочной сборки `sem-05-n.pptx` берётся из
+    тех же файлов, из которых её собрали, а не из `deck.yaml`, где блока ещё
+    нет — иначе предпросмотр показывал бы чужой слайд под нужным именем."""
+    name = Path(pptx).stem if pptx else ""
+    if name.startswith("sem-05-") and len(name) > 7:
+        import build_sem05 as B
+        return [s["id"] for s in B.deck_from_files(name[7:])]
     import yaml
     deck = yaml.safe_load((Path(__file__).parent.parent / "deck.yaml").read_text())
     return [s["id"] for s in deck["slides"]]
@@ -252,7 +259,7 @@ def render(pptx, ids, order=None):
     `deck.yaml` нет и быть не должно."""
     prs = Presentation(pptx)
     if order is None:
-        order = deck_order()
+        order = deck_order(pptx)
     problems = []
     for sid in ids:
         sl = prs.slides[order.index(sid) if sid in order else ids.index(sid)]

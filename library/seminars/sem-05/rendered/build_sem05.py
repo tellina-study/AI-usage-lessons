@@ -325,6 +325,43 @@ def figure_for(sid):
     return path
 
 
+def audit_figure_text():
+    """Разметка в тексте, который генераторы схем печатают на картинку.
+
+    Проверка одна на ВСЕ генераторы и стоит не у вызова отрисовки, а над
+    исходником: разбирает `make_figures*.py` и смотрит каждый строковый
+    литерал, кроме докстрингов (докстринг на картинку не попадает).
+
+    Почему так, а не обёрткой каждого вызова. Обёртка проверяет ровно тот
+    вызов, который обернули: у одного генератора через неё шли подписи, у
+    второго — только столкновения, у третьего не шло ничего, и узнать это
+    можно было, лишь пересчитав вызовы руками. «Проверка у одного входа
+    проверяет один вход» — на этом в этой деке горели трижды, и тут вход
+    убран вовсе: строка попадает под проверку самим фактом того, что она
+    написана в генераторе.
+
+    Ловит `` `кусок` `` и `**кусок**`: генератор рисует текст как есть, знаки
+    разметки печатаются вместе с ним, и видно это только глазами на картинке.
+    """
+    import ast
+    c = K.Claims()
+    for f in sorted(HERE.glob("make_figures*.py")):
+        try:
+            tree = ast.parse(f.read_text(encoding="utf-8"))
+        except Exception as e:
+            M._WARNINGS.append(f"ГЕНЕРАТОР СХЕМ [{f.name}]: не разбирается — {e}")
+            continue
+        docs = {d for n in ast.walk(tree)
+                if isinstance(n, (ast.Module, ast.ClassDef, ast.FunctionDef,
+                                  ast.AsyncFunctionDef))
+                for d in [ast.get_docstring(n, clean=False)] if d}
+        for n in ast.walk(tree):
+            if isinstance(n, ast.Constant) and isinstance(n.value, str) \
+                    and n.value not in docs:
+                c.label(n.value, f"{f.name}:{n.lineno}")
+    M._WARNINGS.extend(c.report())
+
+
 def audit_figs(slides):
     """Записи реестра, которым больше не соответствует ни один слайд деки.
 
@@ -1042,6 +1079,7 @@ def main():
         built += 1
 
     audit_figs(slides)
+    audit_figure_text()
     out = HERE / out_name
     prs.save(out)
     warns = M.report()

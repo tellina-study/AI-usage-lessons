@@ -328,6 +328,54 @@ def draws_figure(pattern):
     return GENRE_FN.get(pattern, g_content) in (g_content, g_closing, g_cover)
 
 
+# Что после вопроса — выбор, а что уже ответ.
+#
+# Карточки вариантов — это ВЫБОР, а не ответ: голосование идёт вслепую, и
+# стоять рядом с вопросом им положено. Повторный вопрос и реплика докладчика
+# вопрос уточняют. А таблица, список, код или сформулированный тезис — это
+# ответ, и на одном экране с вопросом он делает вопрос бессмысленным: зал
+# читает ответ раньше, чем успевает открыть рот.
+ANSWER_KINDS = {"table", "code", "bullets"}
+ANSWER_ROLES = {"formula", "fact", "caveat"}
+
+
+def audit_question_answer(sid, pattern, blocks):
+    """Вопрос к залу и ответ на него на ОДНОМ экране.
+
+    Дефект дважды прошёл мимо всех проверок и мимо всех глаз: слайд
+    собирается безупречно, геометрия в порядке, ничего не переполнено —
+    просто под золотой рамкой «что бы вы заподозрили первым» лежит таблица
+    «что оказалось» с полным диагнозом.
+
+    Правило владельца: **на слайде всё одновременно.** Если ответ должен
+    прийти после паузы, он обязан быть на СЛЕДУЮЩЕМ слайде — не ниже, не
+    мельче, не бледнее.
+
+    Машине это даётся потому, что и вопрос, и ответ уже размечены: вопрос —
+    роль блока в грамматике деки, ответ — вид блока. Угадывать ничего не надо.
+    """
+    qi = None
+    for i, (kind, b) in enumerate(blocks):
+        if kind != "quote":
+            continue
+        if quote_role(b, pattern) == "question" or (
+                pattern == "question_with_option_cards" and split_question(b)[2]):
+            qi = i
+            break
+    if qi is None:
+        return
+    for kind, b in blocks[qi + 1:]:
+        role = quote_role(b, pattern) if kind == "quote" else None
+        if kind in ANSWER_KINDS or role in ANSWER_ROLES:
+            what = {"table": "таблица", "code": "технический блок",
+                    "bullets": "список"}.get(kind, f"блок-{role}")
+            M._WARNINGS.append(
+                f"ОТВЕТ РЯДОМ С ВОПРОСОМ [{sid}]: под вопросом к залу стоит "
+                f"{what} — зал прочтёт ответ раньше, чем откроет рот. "
+                f"Ответ переносится на СЛЕДУЮЩИЙ слайд, а не ниже и не мельче")
+            return
+
+
 def audit_figure_text():
     """Разметка в тексте, который генераторы схем печатают на картинку.
 
@@ -1099,6 +1147,7 @@ def main():
             fn = GENRE_FN.get(pattern, g_content)
             kw = {"meta": s.get("visual")} if fn is g_divider else {}
             fn(sl, sid, title or sid, SP.blocks(visual), pattern, _assertion, **kw)
+        audit_question_answer(sid, pattern, SP.blocks(visual))
         if notes:
             K.write_notes(sl, notes)
         built += 1

@@ -151,7 +151,7 @@ BADGE_OVERRIDE = {"s07": 3, "s21": 4, "s33": 5}
 FIGS={
     "n01": "ramka-n01-hero.png",
     "n05": "ramka-n05-karta.png",
-    "n65": "ramka-n62-chto-razlozheno.png",
+    "n67": "ramka-n62-chto-razlozheno.png",
     "s01": "hero-barier.png",
     "s05": "pravilo-poryadka.png",
     "s06": "karta-stupeney.png",
@@ -188,8 +188,8 @@ FIGS={
     "n40": "skilly-ustroystvo.png",
     "n41": "skilly-dvoynaya-oplata.png",
     "n42": "skilly-otbor.png",
-    "n54": "skilly-svoy-ili-gotovyy.png",
-    "n60": "skilly-chuzhoy-katalog.png",
+    "n56": "skilly-svoy-ili-gotovyy.png",
+    "n62": "skilly-chuzhoy-katalog.png",
 }
 
 

@@ -106,13 +106,19 @@ def _no_shadow(shp):
 
 def text_box(sl, x, y, w, h, lines, *, size=13, bold=False, italic=False,
              color=INK, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP,
-             mono=False, spacing=1.18, space_after=0, rich=True):
+             mono=False, spacing=1.18, space_after=0, rich=True, wrap=True):
     """Текстовая рамка. `lines` — строка или список абзацев; **жирный** и
     `моноширинный` внутри становятся прогонами, а не вырезаются."""
     tb = sl.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     tf = tb.text_frame
     tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = Inches(0)
-    tf.word_wrap = True
+    # `wrap=False` — только для терминальной карточки: строку вывода команды
+    # переносить нельзя, её ломаная копия перестаёт быть тем, что напечатала
+    # команда. Это НЕ оптимизация: пока намерение не записано в самом файле,
+    # прочитать его неоткуда, и предпросмотр вынужден угадывать «раз шрифт
+    # моноширинный, значит не переносится» — а по этой догадке ячейка таблицы
+    # с моноширинной командой рисовалась одной строкой и налезала на соседнюю.
+    tf.word_wrap = wrap
     tf.vertical_anchor = anchor
     ls = lines if isinstance(lines, (list, tuple)) else [lines]
     for i, ln in enumerate(ls):
@@ -490,6 +496,8 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
             chosen, step, geo = best[0], best[1], best[2]
 
     shares, hs, head_h, rh, pad, cell_spacing, row_pad, h = geo
+    M.floor_reached(chosen, sizes[-1], label=label,
+                    chars=sum(len(plain(c)) for r in rows for c in r))
     if step:
         # Подгонка совершилась молча — и это ровно то, о чём потом спорят
         # («почему эта таблица мельче соседней?»). Поэтому она остаётся в
@@ -701,12 +709,14 @@ def terminal_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
     if title:
         text_box(sl, x + pad, y + 0.12, inner, 0.28, title, size=10.5, bold=True,
                  color=ON_DARK_MUTE, rich=False)
+    M.floor_reached(fs, 7.5, label=label, chars=sum(len(ln) for ln in lines))
     for ln in lines:
         if code_w(ln, fs, markup) > inner:
             M._WARNINGS.append(f"ПЕРЕПОЛНЕНИЕ [{label}]: строка кода «{ln[:40]}…» шире карточки")
             break
     text_box(sl, x + pad, y + pad + head - 0.04, inner, h - 2 * pad - head + 0.08,
-             lines, size=fs, color=CODE_FG, mono=True, spacing=1.3, rich=markup)
+             lines, size=fs, color=CODE_FG, mono=True, spacing=1.3, rich=markup,
+             wrap=False)
     return h
 
 

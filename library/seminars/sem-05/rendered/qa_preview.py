@@ -155,7 +155,35 @@ def wrap_runs(d, runs, w):
                           measure=lambda t, i, _mo: d.textlength(t, font=meta[i][0]))
     return [[(t, meta[i][0], meta[i][1]) for t, i, _ in ln] for ln in lines] or [[]]
 
-def draw_tf(d, tf, x, y, w, h, report, tag):
+def _overlaps(boxes, report):
+    """Наложения НАРИСОВАННОГО текста на нарисованный текст.
+
+    Проверка по другой оси, чем всё остальное в этом файле, и нужна она именно
+    потому, что высотная проверка эту беду не видит по построению: строк ровно
+    столько, сколько отведено, — а стоят они поверх соседа.
+
+    Сравниваются не рамки, а ПЛОТНЫЕ прямоугольники нарисованного текста:
+    самая широкая строка на реальную высоту всех строк. Рамки в этой деке
+    налезают друг на друга сплошь и рядом штатно (текст поверх коробки,
+    подпись в поле другой рамки) — сравнивать их значило бы получить список,
+    в котором тонет настоящее столкновение.
+
+    Порог в 2 px по каждой оси — чтобы касание пикселями не считалось
+    наложением."""
+    T = 2
+    for i in range(len(boxes)):
+        x1, y1, x2, y2, t1 = boxes[i]
+        for j in range(i + 1, len(boxes)):
+            a1, b1, a2, b2, t2 = boxes[j]
+            ox = min(x2, a2) - max(x1, a1)
+            oy = min(y2, b2) - max(y1, b1)
+            if ox > T and oy > T:
+                report.append(
+                    f"НАЛОЖЕНИЕ ТЕКСТА: «{t1[:26]}…» и «{t2[:26]}…» "
+                    f"перекрываются на {ox / 120:.2f}×{oy / 120:.2f}\"")
+
+
+def draw_tf(d, tf, x, y, w, h, report, tag, boxes=None):
     """Нарисовать рамку и сказать, переполнена ли она.
 
     Две высоты считаются РАЗНЫМИ мерками, и это не дублирование:
@@ -197,11 +225,15 @@ def draw_tf(d, tf, x, y, w, h, report, tag):
         if not runs:
             need_draw += lh; need_report += lh; rows.append(([], lh))
             continue
-        # «Не переносить» — режим ТЕРМИНАЛЬНОЙ карточки, где моноширинным набран
-        # весь абзац. Прежде режим включался по ПЕРВОМУ прогону — и ячейка вида
-        # «`---` первой строкой плюс описание» разъезжалась на строку-на-прогон:
-        # `---` отдельной строкой, остальное отдельной, поверх разделителя.
-        mono = all(_is_mono(r) for r in p.runs)
+        # «Не переносить» — СВОЙСТВО РАМКИ, а не свойство шрифта. Догадка «раз
+        # моноширинный, значит не переносится» держалась ровно до первой
+        # моноширинной ячейки таблицы: `claude plugin validate <каталог>` в
+        # колонке 1,5″ рисовался одной строкой и налезал на соседнюю колонку —
+        # на картинке столкновение, в самом файле перенос на три строки и
+        # честно отведённая под них высота. Ложный дефект, который стоил
+        # прожарки и двух правок, — поэтому свойство теперь читается, а не
+        # угадывается.
+        mono = tf.word_wrap is False
         if mono:
             # Моноширинный вывод не переносится — но и не разваливается на
             # строку-на-прогон: после того как `` `кусок` `` в листинге разметки
@@ -237,12 +269,17 @@ def draw_tf(d, tf, x, y, w, h, report, tag):
         cy = y + mt + (room - need_draw)
     else:
         cy = y + mt
+    top, widest = cy, 0
     for ln, lh in rows:
         cx = x + ml
         for seg, fo, col in ln:
             d.text((cx, cy), seg, font=fo, fill=col)
             cx += d.textlength(seg, font=fo)
+        widest = max(widest, cx - (x + ml))
         cy += lh
+    if boxes is not None and widest > 0:
+        # плотный прямоугольник нарисованного текста, а не рамка
+        boxes.append((x + ml, top, x + ml + widest, cy, tf.text.replace("\n", " ")))
     if need_report > room + 2:
         report.append(f"{tag}: текст выше рамки на {(need_report - room) / 120:.2f}\" "
                       f"(по мерке Arial; в DejaVu на картинке "
@@ -277,6 +314,7 @@ def render(pptx, ids, order=None):
         try: bgc = tuple(sl.background.fill.fore_color.rgb)
         except Exception: pass
         im = Image.new("RGB", (W, H), bgc); d = ImageDraw.Draw(im)
+        boxes = []
         for sh in sl.shapes:
             x, y, w, h = [int(v * SC) for v in (sh.left, sh.top, sh.width, sh.height)]
             if sh.shape_type is not None and sh.has_chart if False else False: pass
@@ -296,7 +334,7 @@ def render(pptx, ids, order=None):
                         try: fc = tuple(cell.fill.fore_color.rgb)
                         except Exception: pass
                         d.rectangle([cx, ry, cx + cw[j], ry + rh], fill=fc, outline=(200, 210, 220))
-                        draw_tf(d, cell.text_frame, cx, ry, cw[j], rh, problems, f"{sid} ячейка [{i},{j}]")
+                        draw_tf(d, cell.text_frame, cx, ry, cw[j], rh, problems, f"{sid} ячейка [{i},{j}]", boxes)
                         cx += cw[j]
                     ry += rh
                 if ry > H: problems.append(f"{sid}: таблица уходит за нижний край на {(ry - H) / 120:.2f}\"")
@@ -318,9 +356,12 @@ def render(pptx, ids, order=None):
             if fill or line:
                 d.rounded_rectangle([x, y, x + w, y + h], radius=10, fill=fill, outline=line, width=2)
             if sh.has_text_frame and sh.text_frame.text.strip():
-                draw_tf(d, sh.text_frame, x, y, w, h, problems, f"{sid} «{sh.text_frame.text[:28]}…»")
+                draw_tf(d, sh.text_frame, x, y, w, h, problems, f"{sid} «{sh.text_frame.text[:28]}…»", boxes)
             if x < 0 or y < 0 or x + w > W + 2 or y + h > H + 2:
                 problems.append(f"{sid}: фигура вне канвы ({x},{y},{w},{h})")
+        hits = []
+        _overlaps(boxes, hits)
+        problems += [f"{sid} {h}" for h in hits]
         im.save(OUT / f"{sid}.png")
     return problems
 

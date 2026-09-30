@@ -210,28 +210,30 @@ def s28_woman_yelling_cat():
 
 
 # ============================================================
-# s36 — Disaster Girl (Поддержка: продукт в проде «горит», а метрики зелёные)
+# s36 — Disaster Girl (Поддержка: продукт «горит» у людей, а графики зелёные)
 # ============================================================
 def s36_disaster_girl():
     overlay("disaster-girl.jpg", "s36-disaster-girl.jpg", [
-        (0.5, 0.07, "продукт в проде 24/7", 30,
+        (0.5, 0.07, "продукт горит у людей", 30,
          dict(fill=WHITE, stroke_fill=BLACK, stroke_width=5, anchor="mm",
               max_width=680)),
-        (0.5, 0.92, "а дашборд зелёный", 30,
+        (0.5, 0.92, "а графики зелёные", 30,
          dict(fill=WHITE, stroke_fill=BLACK, stroke_width=5, anchor="mm",
               max_width=680)),
     ])
 
 
 # ============================================================
-# s44 — Sad Pablo Escobar (Управление: жду обещанный ROI от ИИ-пилота)
+# s44 — Sad Pablo Escobar (Управление: жду обещанную отдачу от ИИ-пилота).
+# ПРАВКА #212 (правило Р5): «ROI» было впечатано в саму картинку — текстовая
+# проверка сокращений его не видит, а студент видит. Заменено на «отдачу».
 # GATE-B fix: caption baked "AI-пилота" (Latin) into the raster image itself
 # — the AI->ИИ cascade over build-script text/markdown does not touch text
 # already burned into a PNG, so this needed a separate regenerate.
 # ============================================================
 def s44_sad_pablo():
     overlay("sad-pablo.jpg", "s44-sad-pablo.jpg", [
-        (0.5, 0.08, "жду ROI", 32,
+        (0.5, 0.08, "жду отдачу", 32,
          dict(fill=WHITE, stroke_fill=BLACK, stroke_width=5, anchor="mm",
               max_width=760)),
         (0.5, 0.90, "от ИИ-пилота", 32,
@@ -398,10 +400,10 @@ def s39_grus_plan():
     hw, hh = w // 2, h // 2
     card_cx_frac = 0.755   # centre of the blank card within each half-width
     panels = [
-        (0, 0, "дашборд\nзелёный"),
-        (hw, 0, "дашборд\nвсё ещё\nзелёный"),
-        (0, hh, "дашборд\nзелёный\nуже месяц"),
-        (hw, hh, "доверие падает\nнедели — дашборд\nне заметил"),
+        (0, 0, "графики\nзелёные"),
+        (hw, 0, "графики\nвсё ещё\nзелёные"),
+        (0, hh, "графики\nзелёные\nуже месяц"),
+        (hw, hh, "доверие падает\nнедели — графики\nне заметили"),
     ]
     for ox, oy, txt in panels:
         cx = ox + hw * card_cx_frac

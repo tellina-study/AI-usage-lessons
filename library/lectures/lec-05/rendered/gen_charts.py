@@ -45,7 +45,7 @@ def c_wcag():
            wedgeprops=dict(width=0.42, edgecolor="white", linewidth=2))
     ax.text(0, 0.08, "29%", ha="center", va="center", fontsize=44,
             fontweight="bold", color=DEEP)
-    ax.text(0, -0.30, "соответствие WCAG", ha="center", va="center",
+    ax.text(0, -0.30, "проверок пройдено", ha="center", va="center",
             fontsize=12, color=SLATE)
     ax.set_aspect("equal")
     save(fig, "c-wcag-29.png")
@@ -160,7 +160,10 @@ def c_mit_funnel():
     ax.set_xlim(0, 72)
     ax.set_ylim(-0.6, 2.6)
     ax.axis("off")
-    ax.text(36, -0.55, "% от всех опрошенных компаний (MIT)", ha="center",
+    # ПРАВКА #212 (правило Р5): «MIT» в подписи графика — нераскрытое
+    # сокращение в видимом слое. Расшифровка теперь стоит в тексте слайда,
+    # подпись графика говорит только про знаменатель.
+    ax.text(36, -0.55, "% от всех опрошенных компаний", ha="center",
             fontsize=10, color=SLATE)
     save(fig, "c-mit-funnel.png")
 

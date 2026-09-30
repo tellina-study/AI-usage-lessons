@@ -33,7 +33,7 @@ def s01(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Сборка почти бесплатна. Почему тогда почти никто не извлекает из этого пользу?",
+        s, "Сборка стала почти бесплатной — и почти никто не превратил это в пользу",
         size=21, w=12.2, h=0.80, y=0.30)
 
     # GATE-B fix: hero meme was only ~16.5% of slide area (4.65x3.55 in a
@@ -42,29 +42,33 @@ def s01(p):
     # two-fact metaphor compressed into a narrow left column instead of a
     # second equal-weight box, so the meme is unambiguously the hero, not a
     # co-equal panel.
+    # ПРАВКА #212: высоты подобраны под РЕАЛЬНУЮ длину подписи-источника —
+    # у второго факта она в три строки (добавлен знаменатель: доля от всех
+    # организаций, а не от дошедших до пилота), поэтому его рамка выше первой.
+    # Равные высоты выдавливали последнюю строку за границу рамки.
     lx, lw = 0.55, 4.35
-    fact_h = 1.62
-    ocean_box(s, lx, 1.30, lw, fact_h, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
-    icon(s, "clock", lx + 0.24, 1.30 + 0.20, 0.80, "mid")
-    text_box(s, x=lx + 1.18, y=1.30 + 0.16, w=lw - 1.40, h=0.75,
+    ocean_box(s, lx, 1.26, lw, 1.28, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
+    icon(s, "clock", lx + 0.24, 1.26 + 0.24, 0.78, "mid")
+    text_box(s, x=lx + 1.18, y=1.34, w=lw - 1.40, h=0.52,
              text="Недели работы → часы [1]", size=14, bold=True, color=MID,
              line_spacing=1.02, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=lx + 1.18, y=1.30 + fact_h - 0.42, w=lw - 1.40, h=0.34,
+    text_box(s, x=lx + 1.18, y=1.94, w=lw - 1.40, h=0.32,
              text="внутренний опыт Anthropic", size=10.5, italic=True,
              color=SLATE)
-    ocean_box(s, lx, 1.30 + fact_h + 0.16, lw, fact_h, fill=SURFACE,
-              stroke=LIGHT, stroke_pt=1.5)
-    icon(s, "funnel", lx + 0.24, 1.30 + fact_h + 0.16 + 0.20, 0.80, "teal")
-    text_box(s, x=lx + 1.18, y=1.30 + fact_h + 0.16 + 0.16, w=lw - 1.40, h=0.75,
-             text="~95% пилотов — ноль отдачи [2]", size=14, bold=True,
+    ocean_box(s, lx, 2.68, lw, 1.92, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
+    icon(s, "funnel", lx + 0.24, 2.68 + 0.24, 0.78, "teal")
+    text_box(s, x=lx + 1.18, y=2.78, w=lw - 1.40, h=0.76,
+             text="~95% организаций — нулевая отдача [2]", size=14, bold=True,
              color=TEAL, line_spacing=1.02, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=lx + 1.18, y=1.30 + 2 * fact_h + 0.16 - 0.42, w=lw - 1.40,
-             h=0.34, text="MIT, лето 2025", size=10.5, italic=True, color=SLATE)
+    text_box(s, x=lx + 1.18, y=3.58, w=lw - 1.40, h=0.94,
+             text="Массачусетский технологический институт, лето 2025 — "
+                  "доля от всех организаций, а не от дошедших до пилота",
+             size=9.5, italic=True, color=SLATE, line_spacing=1.06)
     gold_callout(
-        s, lx, 1.30 + 2 * fact_h + 0.16 + 0.18, lw, 2.14,
+        s, lx, 4.76, lw, 2.02,
         "Оба факта правдивы одновременно: сборка стала почти бесплатной, а "
-        "превращение сборки в ценность — нет. Держите вопрос — вернёмся к "
-        "нему в конце лекции.",
+        "превращение сборки в ценность — нет. Разрыв между ними и есть "
+        "предмет лекции; он разрешится в самом конце.",
         size=13, bold=True)
     # right: real meme (Spider-Man Pointing at Spider-Man — GATE-B fix,
     # replaces This-Is-Fine: lec-2 collision + tonal mismatch, see
@@ -86,7 +90,9 @@ def s02(p):
     s = blank(p)
     set_slide_bg(s, SURFACE)
     # decorative circular loop of 6 nodes, upper-left (hero, evergreen)
-    cx, cy, r = 3.15, 2.85, 1.55
+    # ПРАВКА #212: петля поднята (cy 2.85 → 2.55), иначе подпись нижнего узла
+    # «Измерение» уходила под рамку мема, которую пришлось сузить по картинке.
+    cx, cy, r = 3.15, 2.55, 1.55
     import math
     nodes = ["Исследование", "Дизайн", "Сборка\nи запуск", "Измерение",
              "Поддержка", "Управление"]
@@ -111,22 +117,29 @@ def s02(p):
 
     # real meme (One Does Not Simply) — cover meme, bottom-left, framed
     from _helpers import meme_in_box
-    meme_in_box(s, "s02-one-does-not-simply.jpg", 0.75, 4.85, 5.0, 1.55,
+    meme_in_box(s, "s02-one-does-not-simply.jpg", 1.52, 4.92, 3.35, 1.48,
                 pad=0.10)
 
-    # title block, right
-    text_box(s, x=6.55, y=1.55, w=6.35, h=0.5, text="ЛЕКЦИЯ 5",
+    # title block, right. ПРАВКА #212: колонка расширена (6.40 → 7.25) и кегль
+    # снижен (30 → 27) — русский заголовок «ИИ-продукт…» длиннее прежнего
+    # латинского и в старую рамку не помещался: он налезал на строку с
+    # раскрытием аббревиатуры и на золотую плашку.
+    rx, rw = 5.78, 7.25
+    text_box(s, x=rx, y=1.34, w=rw, h=0.48, text="ЛЕКЦИЯ 5",
              size=20, bold=True, color=TEAL)
-    text_box(s, x=6.55, y=2.10, w=6.40, h=2.0,
-             text="AI-продукт: полный жизненный цикл — от намерения до эксплуатации",
-             size=30, bold=True, color=DEEP, line_spacing=1.05)
-    text_box(s, x=6.58, y=4.35, w=6.30, h=0.6,
+    text_box(s, x=rx, y=1.86, w=rw, h=1.92,
+             text="ИИ-продукт: полный жизненный цикл — от намерения до эксплуатации",
+             size=27, bold=True, color=DEEP, line_spacing=1.05)
+    text_box(s, x=rx + 0.03, y=3.84, w=rw - 0.06, h=0.34,
+             text="ИИ — искусственный интеллект", size=13, bold=True,
+             color=TEAL)
+    text_box(s, x=rx + 0.03, y=4.22, w=rw - 0.06, h=0.40,
              text="Курс «Осознанное применение ИИ» · инженеры-студенты 3 курса",
-             size=14, italic=True, color=LIGHT)
+             size=13.5, italic=True, color=LIGHT)
     gold_callout(
-        s, 6.55, 5.05, 6.35, 0.78,
-        "Шесть разделов — шесть стрелок одной петли: код (Лекция 4) — один "
-        "дешёвый шаг внутри неё.",
+        s, rx, 4.76, rw, 0.90,
+        "Шесть разделов — шесть стрелок одной петли. Код из Лекции 4 — один "
+        "шаг внутри неё, и теперь самый дешёвый из всех.",
         size=13, bold=True)
     roadmap_bar(s, 0, y=6.55)
     notes_with_sources(s, "s02")
@@ -145,11 +158,11 @@ def s03(p):
     import math
     cx, cy, r = 4.15, 4.05, 2.05
     steps = [
-        ("search", "1. Исследование", "откуда гипотеза"),
-        ("pencil", "2. Дизайн", "гипотеза → артефакт"),
-        ("hammer", "3. Сборка и запуск", "артефакт → продукт"),
-        ("ruler", "4. Измерение", "сработало ли"),
-        ("headphones", "5. Поддержка", "живёт 24/7"),
+        ("search", "1. Исследование", "откуда берётся гипотеза"),
+        ("pencil", "2. Дизайн", "гипотеза становится артефактом"),
+        ("hammer", "3. Сборка и запуск", "артефакт становится продуктом"),
+        ("ruler", "4. Измерение", "сработало ли это на самом деле"),
+        ("headphones", "5. Поддержка", "работает без остановки"),
         ("scale", "6. Управление", "куда вкладывать"),
     ]
     centers = []
@@ -169,14 +182,28 @@ def s03(p):
         dx, dy = x2 - x1, y2 - y1
         dist = math.hypot(dx, dy)
         ux, uy = dx / dist, dy / dist
-        pad = 0.62
+        # ПРАВКА #212: замыкающее ребро названо в золотой плашке словами
+        # («золотая стрелка возврата»), поэтому оно обязано читаться как
+        # стрелка: меньше подрезка, заметно большая толщина. Прежние 2.6pt
+        # при подрезке 0.62 с каждой стороны оставляли золотой огрызок.
+        is_return = (i == 5)  # Управление(5) -> Исследование(0)
+        pad = 0.50 if is_return else 0.62
         sx1, sy1 = x1 + ux * pad, y1 + uy * pad
         sx2, sy2 = x2 - ux * pad, y2 - uy * pad
-        is_return = (i == 5)  # Управление(5) -> Исследование(0)
         connector(s, sx1, sy1, sx2, sy2,
                   color=(GOLD if is_return else LIGHT),
-                  width=(2.6 if is_return else 2.0),
+                  width=(5.5 if is_return else 2.2),
                   arrow_end=True)
+        if is_return:
+            # подпись ровно у этого ребра, снаружи кольца (Р4: на схеме
+            # не должно быть линии, про которую непонятно, что она значит)
+            mx, my = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+            ox, oy = mx - cx, my - cy
+            on = (ox ** 2 + oy ** 2) ** 0.5 or 1.0
+            lx2, ly2 = mx + ox / on * 0.55, my + oy / on * 0.55
+            text_box(s, x=lx2 - 0.48, y=ly2 - 0.15, w=0.96, h=0.30,
+                     text="возврат", size=10, bold=True, color=GOLD,
+                     align=PP_ALIGN.CENTER)
     for i, (ic, name, desc) in enumerate(steps):
         nx, ny = centers[i]
         ocean_box(s, nx - 0.70, ny - 0.48, 1.40, 0.96, fill=SURFACE,
@@ -192,192 +219,188 @@ def s03(p):
     # right column: numbered list + return arrow note
     rx, rw = 7.15, 5.65
     for i, (ic, name, desc) in enumerate(steps):
-        y = 1.55 + i * 0.62
+        y = 1.50 + i * 0.68
         text_box(s, x=rx, y=y, w=rw, h=0.56,
                  text=f"{name} — {desc}", size=13, bold=True, color=DEEP,
                  line_spacing=1.0)
     gold_callout(
-        s, 7.15, 5.55, 5.65, 1.00,
-        "Стрелка возврата: управление снова питает исследование — "
-        "замкнутая петля, а не одноразовый линейный процесс.",
+        s, 7.15, 5.42, 5.65, 1.18,
+        "Золотая стрелка возврата: управление снова питает исследование. "
+        "Это замкнутая петля, а не одноразовый линейный процесс — поэтому "
+        "карта нарисована кругом.",
         size=12.5, bold=True)
     notes_with_sources(s, "s03")
     return s
 
 
 # ============================================================
-# s04 - bridge from Lec-4 + central question (nested loops)
+# s04 - ПЕРЕСОБРАН (issue #212): «зачем продукту цикл и что без него»
+# Прежний слайд (мост из Лекции 4 + центральный вопрос) забракован
+# владельцем: «ценность не понятна, кроме как сказать, что используем то,
+# что было в лекции 4». Содержание взято из chapter.md §0.3a — раздела,
+# которого на слайдах не было вовсе. Мост из Лекции 4 сжат до одной
+# подчинённой строки под заголовком; центральный вопрос переехал на s06.
 # ============================================================
 def s04(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Цикл кода Лекции 4 — это один шаг внутри цикла продукта",
-                size=23, w=12.0, h=0.85)
+    slide_title(s, "Зачем продукту цикл: без него ошибку находят слишком поздно",
+                size=22, w=12.25, h=0.66, y=0.24)
+    # мост из Лекции 4 — подчинённая строка, а не смысл слайда. Аббревиатуры
+    # ADR / PR раскрыты словами (Р5): «архитектурное решение», «запрос на
+    # слияние» — голая латиница на видимом слое недопустима.
+    text_box(s, x=0.55, y=0.94, w=12.25, h=0.36,
+             text="Цикл кода из Лекции 4 — спецификация, архитектурное "
+                  "решение, план, запрос на слияние, запись об инциденте — "
+                  "целиком лежит внутри одной из этих фаз, «сборки и запуска».",
+             size=11.5, italic=True, color=SLATE, line_spacing=1.04)
 
-    # outer big loop box
-    ocean_box(s, 0.55, 1.34, 12.25, 3.00, fill=SURFACE, stroke=MID,
-              stroke_pt=1.6)
-    text_box(s, x=0.85, y=1.44, w=6.0, h=0.30, text="Цикл продукта (Лекция 5)",
-             size=13, bold=True, color=MID)
-    text_box(s, x=0.85, y=1.74, w=6.0, h=0.30,
-             text="откуда берётся уверенность, что стоит писать этот код",
-             size=11, italic=True, color=SLATE)
-    # GATE-B fix (audit 2026-09-07): the upper-left quadrant of this box used
-    # to be ~45-50% blank — "Цикл продукта" was only NAMED, never SHOWN. Add
-    # a compact 6-node mini-loop (small-scale reuse of the s03 icon-loop
-    # pattern) so the thesis box's own hero content — the loop itself — is
-    # visible here, not just in the caption line below it. This is the
-    # lecture's highest-stakes bridge slide (central-question payload).
-    import math
-    mcx, mcy, mr = 2.05, 2.78, 0.66
-    mnodes = ["search", "pencil", "hammer", "ruler", "headphones", "scale"]
-    mcenters = []
-    for i in range(6):
-        ang = math.pi / 2 - i * (2 * math.pi / 6)
-        mcenters.append((mcx + mr * math.cos(ang), mcy - mr * math.sin(ang)))
-    for i in range(6):
-        x1, y1 = mcenters[i]
-        x2, y2 = mcenters[(i + 1) % 6]
-        connector(s, x1, y1, x2, y2,
-                  color=(GOLD if i == 5 else LIGHT),
-                  width=(2.0 if i == 5 else 1.4), arrow_end=True)
-    for i, ic in enumerate(mnodes):
-        nx, ny = mcenters[i]
-        circle(s, nx - 0.20, ny - 0.20, 0.40, WHITE, stroke=MID, stroke_pt=1.2)
-        icon(s, ic, nx - 0.125, ny - 0.125, 0.25, "mid")
-    chip(s, 3.35, 2.57, 1.05, 0.42, "6 фаз", fill=GOLD, color=DEEP, size=12)
-    icon(s, "layers", 0.85, 3.74, 0.44, "teal")
-    text_box(s, x=1.42, y=3.70, w=5.35, h=0.55,
-             text="исследование → дизайн → сборка/запуск → измерение → "
-                  "эксплуатация → управление → снова исследование",
-             size=11, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
-    # inner small loop box nested inside "build" area
-    ocean_box(s, 7.05, 1.80, 5.50, 2.10, fill=WHITE, stroke=GOLD,
-              stroke_pt=1.8)
-    icon(s, "git-branch", 7.30, 2.00, 0.46, "teal")
-    text_box(s, x=7.90, y=2.00, w=4.45, h=0.30,
-             text="Цикл кода (Лекция 4)", size=12.5, bold=True, color=DEEP)
-    text_box(s, x=7.90, y=2.34, w=4.45, h=0.30,
-             text="как надёжно писать код с ИИ", size=11, italic=True,
-             color=SLATE)
-    text_box(s, x=7.30, y=2.90, w=5.05, h=0.80,
-             text="спека → ADR → план → PR → инцидент",
-             size=13, italic=True, color=MID, line_spacing=1.2,
-             anchor=MSO_ANCHOR.TOP)
+    # ── левая колонка: пять вопросов ↔ фазы (связка с картой лекции s03) ──
+    lx, lw = 0.55, 6.10
+    text_box(s, x=lx, y=1.36, w=lw, h=0.46,
+             text="Пять вопросов, на которые продукт отвечает наблюдением, а не мнением",
+             size=11.5, bold=True, color=TEAL, line_spacing=1.02)
+    questions = [
+        ("Нужно ли это кому-то вообще", "фаза 1 · исследование"),
+        ("Сможет ли человек этим воспользоваться и не пострадает ли тот, "
+         "о ком не подумали", "фаза 2 · дизайн"),
+        ("Можем ли мы это сделать и безопасно выпустить",
+         "фаза 3 · сборка и запуск"),
+        ("Выберут ли это настолько, чтобы за это платить",
+         "фазы 4 и 6 · измерение, управление"),
+        ("Держатся ли эти ответы через квартал", "фаза 5 · поддержка"),
+    ]
+    for i, (q, phase) in enumerate(questions):
+        y = 1.86 + i * 0.64
+        ocean_box(s, lx, y, lw, 0.60, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.3)
+        circle(s, lx + 0.16, y + 0.15, 0.30, MID)
+        text_box(s, x=lx + 0.16, y=y + 0.17, w=0.30, h=0.28, text=str(i + 1),
+                 size=11, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+        text_box(s, x=lx + 0.58, y=y + 0.02, w=lw - 0.76, h=0.38, text=q,
+                 size=11, bold=True, color=DEEP, line_spacing=0.96,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=lx + 0.58, y=y + 0.38, w=lw - 0.76, h=0.20, text=phase,
+                 size=9.5, italic=True, color=TEAL)
+    text_box(s, x=lx + 0.04, y=5.10, w=lw - 0.08, h=0.70,
+             text="Первые четыре — риски продукта по Марти Кагану; пятый "
+                  "открывается только после запуска. У каждого своя фаза: "
+                  "цикл и есть минимальный набор мест, где на эти вопросы "
+                  "отвечают.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.08)
 
-    # ПРАВКА #212: несущая мысль слайда (формулировка владельца) — она же
-    # первая строка Body в slides/s04-*.md, поэтому занимает золотой слот.
-    # Прежний золотой текст про «единицу работы» живёт в заметках докладчика.
+    # ── правая колонка: механизм отсутствия цикла, три подписанные рамки ──
+    rx, rw = 6.95, 5.85
+
+    def framed(y, h, head, body, *, stroke=MID, body_size=11, head_color=TEAL):
+        ocean_box(s, rx, y, rw, h, fill=SURFACE, stroke=stroke, stroke_pt=1.4)
+        text_box(s, x=rx + 0.22, y=y + 0.08, w=rw - 0.44, h=0.30, text=head,
+                 size=12.5, bold=True, color=head_color)
+        text_box(s, x=rx + 0.22, y=y + 0.42, w=rw - 0.44, h=h - 0.52,
+                 text=body, size=body_size, color=DEEP, line_spacing=1.10)
+
+    framed(1.36, 1.72, "Когда цикла нет",
+           "Вопросы не исчезают — их место занимают допущения, обычно "
+           "оптимистичные.\n"
+           "Ошибка тоже не исчезает — сдвигается только момент, когда её "
+           "находят.\n"
+           "Находят её после того, как сборка оплачена, релиз состоялся, "
+           "а откат стоит дороже самой ошибки.")
+    framed(3.16, 1.48, "Цена позднего обнаружения",
+           "От требований до выпуска стоимость исправления расходится до ста "
+           "раз в крупных проектах и примерно вчетверо в небольших (Барри "
+           "Боэм, 1981).\n"
+           "Цикл не устраняет ошибку в гипотезе: он двигает её обнаружение "
+           "туда, где она стоит разговор, а не сборку.",
+           body_size=10.5)
+    framed(4.72, 1.14, "Изнутри команды это не выглядит провалом",
+           "Собрали — никто не пользуется · дошли до пилота и застряли · "
+           "работает, но не выбрано · внедрили, а через квартал перестали "
+           "открывать. Сборка во всех четырёх случаях прошла успешно.",
+           stroke=TEAL, body_size=10.5)
+
     gold_callout(
-        s, 0.55, 4.46, 12.25, 0.90,
-        "Чтобы пользовательская ценность состоялась — то есть продукт "
-        "работал, был внедрён и кем-то выбран, — цикл кода приходится "
-        "обернуть в ещё один цикл. Без внешнего цикла выходит собранное и "
-        "никем не используемое: код есть, продукта нет.",
-        size=13, bold=True)
-
-    ocean_box(s, 0.55, 5.42, 12.25, 1.52)
-    text_box(s, x=0.85, y=5.52, w=11.65, h=1.32,
-             text="Когда ИИ сделал сборку почти бесплатной — что стало "
-                  "настоящим узким местом продукта, и на каждой фазе цикла: "
-                  "какая классическая дисциплина остаётся, что ИИ ускоряет, "
-                  "и где AI-first ломается?",
-             size=16.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.16)
+        s, 0.55, 5.92, 12.25, 0.98,
+        "Дороговизна сборки работала невольным заслоном: пока изготовление "
+        "стоило недели, оно само заставляло думать заранее. Искусственный "
+        "интеллект обнулил именно её — и у команд, у которых явного цикла не "
+        "было никогда, не осталось ничего, что удерживало бы от пропуска "
+        "этих вопросов. Воронка из начала лекции — 60% организаций пробуют, "
+        "20% доходят до пилота, 5% внедряют — не парадокс, а следствие.",
+        size=12, bold=True)
     notes_with_sources(s, "s04")
     return s
 
 
 # ============================================================
-# s05 - KEYSTONE: loop, 3 independent sources (PDCA/OODA/BML)
-# ============================================================
-def s05(p):
-    s = blank(p)
-    set_slide_bg(s, WHITE)
-    slide_title(s, "Три человека из разных областей нарисовали один и тот же чертёж",
-                size=23, w=12.2, h=0.85)
-
-    domains = [
-        ("bar-chart-3", "Деминг · статистика качества", "PDCA",
-         "планируй → делай → проверяй → корректируй"),
-        ("plane", "Бойд · воздушный бой", "OODA",
-         "наблюдай → ориентируйся → решай → действуй"),
-        ("rocket", "Райс · стартапы", "BML",
-         "строй → измеряй → учись"),
-    ]
-    cw, gap = 3.95, 0.20
-    x0 = 0.55
-    y0 = 1.55
-    for i, (ic, who, tag, seq) in enumerate(domains):
-        x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 2.05)
-        icon(s, ic, x + 0.24, y0 + 0.20, 0.56, "mid")
-        text_box(s, x=x + 0.94, y=y0 + 0.22, w=cw - 1.15, h=0.55, text=who,
-                 size=11.5, bold=True, color=MID, line_spacing=1.0)
-        chip(s, x + 0.24, y0 + 0.86, 1.15, 0.36, tag, fill=GOLD, color=DEEP,
-             size=13)
-        text_box(s, x=x + 0.24, y=y0 + 1.32, w=cw - 0.48, h=0.66, text=seq,
-                 size=10.5, color=DEEP, line_spacing=1.08)
-
-    # central shared loop symbol below
-    cx = 6.67
-    circle(s, cx - 0.55, 3.95, 1.10, GOLD_TINT, stroke=GOLD, stroke_pt=2.2)
-    icon(s, "repeat", cx - 0.35, 4.15, 0.70, "gold")
-    for i in range(3):
-        x = x0 + i * (cw + gap) + cw / 2
-        connector(s, x, y0 + 2.05, cx, 3.95, color=LIGHT, width=1.4,
-                  dash="dash")
-
-    gold_callout(
-        s, 0.55, 5.35, 12.25, 0.85,
-        "Не сговариваясь — один и тот же чертёж: петля обратной связи как "
-        "структурное свойство любой системы, которая учится в условиях "
-        "неопределённости.",
-        size=13.5, bold=True)
-    notes_with_sources(s, "s05")
-    return s
-
-
-# ============================================================
-# s06 - KEYSTONE-2: cost/trust asymmetry (axis slide)
+# s06 - KEYSTONE: асимметрия стоимости и доверия (несущая ось лекции)
+# issue #212: s05 (петля + три первоисточника) снят владельцем как повтор
+# уже введённой идеи; его несущий аргумент сжат здесь в одну подписанную
+# строку. Центральный вопрос лекции переехал сюда с s04 и переписан
+# утверждением — вопросов на слайдах не остаётся (Р2).
 # ============================================================
 def s06(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "ИИ меняет стоимость и доверие каждой стрелки петли — но не одинаково",
-                size=21, w=12.3, h=0.85)
+    slide_title(s, "Искусственный интеллект меняет каждую стрелку — но не одинаково",
+                size=22, w=12.25, h=1.00, y=0.24)
 
     rows = [
-        ("hammer", "Строить", "стоимость почти обнулилась", GOLD, "gold"),
-        ("ruler", "Измерять / учиться", "стоимость та же, доверие упало",
-         LIGHT, "light"),
-        ("search", "Исследовать", "быстрее, но уязвимее к атаке",
-         TEAL, "teal"),
+        ("hammer", "Строить", "фаза сборки и запуска",
+         "стоимость упала почти до нуля: черновик кода, макета, плана "
+         "исследования", GOLD, "gold"),
+        ("ruler", "Измерять и делать выводы", "фаза измерения",
+         "стоимость та же, а доверие к результату упало: сам инструмент "
+         "измерения стал вероятностным", LIGHT, "light"),
+        ("eye", "Наблюдать за работой продукта", "фаза поддержки",
+         "наблюдать стало быстрее, но само наблюдение уязвимо: подменённые "
+         "данные на входе ведут к уверенному неверному выводу", TEAL, "teal"),
     ]
-    y0 = 1.55
-    for i, (ic, name, desc, col, av) in enumerate(rows):
-        y = y0 + i * 1.05
-        ocean_box(s, 0.55, y, 12.25, 0.90, fill=SURFACE, stroke=col,
+    for i, (ic, name, phase, desc, col, av) in enumerate(rows):
+        y = 1.30 + i * 0.94
+        ocean_box(s, 0.55, y, 12.25, 0.82, fill=SURFACE, stroke=col,
                   stroke_pt=1.6)
-        icon(s, ic, 0.80, y + 0.20, 0.5, av)
-        text_box(s, x=1.50, y=y + 0.14, w=3.5, h=0.6, text=name, size=15,
-                 bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=5.15, y=y + 0.14, w=7.4, h=0.6, text=desc, size=14,
-                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        icon(s, ic, 0.80, y + 0.18, 0.46, av)
+        # ПРАВКА #212: имя строки получило собственную высоту под две строки,
+        # подпись фазы опущена под него — прежде «Наблюдать за работой
+        # продукта» переносилось и налезало на «фаза поддержки».
+        text_box(s, x=1.44, y=y + 0.05, w=3.95, h=0.40, text=name, size=13.5,
+                 bold=True, color=DEEP, line_spacing=0.96,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=1.44, y=y + 0.48, w=3.95, h=0.26, text=phase, size=9.5,
+                 italic=True, color=TEAL)
+        text_box(s, x=5.52, y=y + 0.10, w=7.05, h=0.62, text=desc, size=12.5,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+
+    # сжатый аргумент снятого s05 — одна подписанная строка, без схемы
+    filled_rect(s, 0.55, 4.10, 12.25, 0.72, SOFT_GREY, stroke=LIGHT,
+                stroke_pt=1.0, radius=True, radius_adj=0.10)
+    text_box(s, x=0.85, y=4.18, w=11.65, h=0.58,
+             text="Одну и ту же петлю независимо описали трижды: в статистике "
+                  "качества (Деминг, 1939), в военной авиации (Бойд, 1970-е) "
+                  "и в стартапах (Райс, 2011). Это структурное свойство любой "
+                  "системы, которая учится в неопределённости, а не "
+                  "методология одного автора.",
+             size=11, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.08)
 
     gold_callout(
-        s, 0.55, 4.85, 12.25, 0.95,
-        "Мета-паттерн, повторяется в каждом из 6 разделов: у каждой стрелки "
-        "есть классическая дисциплина — ИИ её не отменяет, а меняет её "
-        "стоимость и требуемую степень проверки.",
-        size=13.5, bold=True)
+        s, 0.55, 4.92, 12.25, 0.94,
+        "Мета-паттерн всех шести разделов: у каждой стрелки есть классическая "
+        "дисциплина, и искусственный интеллект её не отменяет. Он меняет, "
+        "сколько эта дисциплина стоит и насколько ей можно верить без "
+        "проверки.",
+        size=13, bold=True)
 
-    filled_rect(s, 0.55, 5.95, 12.25, 0.75, SOFT_GREY, stroke=LIGHT,
-                stroke_pt=1.0, radius=True, radius_adj=0.08)
-    text_box(s, x=0.85, y=6.08, w=11.65, h=0.55,
-             text="Подумайте: на какой стрелке вашей последней задачи "
-                  "скорость обогнала ваше реальное доверие к результату?",
-             size=12.5, italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE)
+    ocean_box(s, 0.55, 5.98, 12.25, 0.88, fill=WHITE, stroke=MID,
+              stroke_pt=1.6)
+    text_box(s, x=0.85, y=6.06, w=11.65, h=0.72,
+             text="Каждая из шести фаз дальше разбирается по одной и той же "
+                  "схеме: какая классическая дисциплина за неё отвечает, что "
+                  "в ней удешевил искусственный интеллект, и где подход "
+                  "«сначала ИИ» ломается.",
+             size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.12)
     notes_with_sources(s, "s06")
     return s
 
@@ -385,17 +408,17 @@ def s06(p):
 # ============================================================
 # s07 - section divider Р1 Discovery
 # ============================================================
+
 def s07(p):
     return build_section_divider(
         p, here_idx=1,
-        subtitle="Исследование — намерение и гипотеза",
-        bridge="Откуда вообще берётся гипотеза о том, что строить. У "
-               "большинства есть неформальный опыт «спросить у друзей» — и "
-               "почти никто не сталкивался с формальной дисциплиной, "
-               "объясняющей, почему этот опыт систематически лжёт.",
+        subtitle="Исследование — есть ли проблема и у кого",
+        bridge="Цель фазы одна: выяснить, существует ли проблема и у кого "
+               "именно, пока решение ещё не построено. Пропустить её можно — "
+               "тогда ответ придёт в день запуска, когда деньги и месяцы уже "
+               "потрачены, а вернуть их нечем.",
         sid="s07", tag="1 база · 2 практики · 2 провала",
         meme_name="s07-distracted-boyfriend.jpg")
-
 
 # ============================================================
 # s07b - ELI5 overview «Исследование для чайников»
@@ -421,58 +444,104 @@ def s07b(p):
 # ============================================================
 # s08 - BASE: Customer Development (4-step flow)
 # ============================================================
+
 def s08(p):
+    """ПРАВКА #212 (замечания владельца): раздел начинается с цели и
+    необходимости работы (Р3), неподписанные ромбики и голая аббревиатура
+    BML сняты (Р4/Р5), место дисциплины относительно петли лекции названо
+    прямо — это был буквальный вопрос владельца «альтернатива циклу
+    создания продукта или что?». Билдер приведён к slides/s08-*.md."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "«Внутри офиса нет фактов» — 4 шага, каждый заканчивается решением",
-                size=22, w=12.2, h=0.85)
+    slide_title(s, "Проверить гипотезу стоит нескольких разговоров — "
+                   "не проверить стоит всей разработки",
+                size=21, w=12.25, h=0.78, y=0.13)
 
-    steps = [
-        ("Исследование", "discovery"), ("Проверка", "validation"),
-        ("Создание спроса", "creation"), ("Масштаб", "building"),
+    # ── ЗАЧЕМ ЭТА РАБОТА ──────────────────────────────────────────────
+    filled_rect(s, 0.55, 1.02, 12.25, 0.86, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.6, radius=True, radius_adj=0.08)
+    icon(s, "target", 0.78, 1.24, 0.42, "teal")
+    text_runs(s, 1.38, 1.06, 11.28, 0.78, [
+        {"text": "ЗАЧЕМ ЭТА РАБОТА   ", "size": 10.5, "bold": True,
+         "color": TEAL},
+        {"text": "Исследование отвечает на один вопрос: существует ли "
+                 "проблема и у кого именно. Ответ придёт в любом случае — "
+                 "либо от восьми разговоров за две недели, либо от рынка в "
+                 "день запуска, когда разработка уже оплачена.",
+         "size": 12.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
+
+    # ── Слева: названная дисциплина + формат гипотезы ─────────────────
+    lx, lw = 0.55, 6.05
+    ocean_box(s, lx, 1.98, lw, 3.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
+    icon(s, "compass", lx + 0.24, 2.12, 0.46, "mid")
+    text_box(s, x=lx + 0.84, y=2.12, w=lw - 1.08, h=0.58,
+             text="Развитие клиента (Customer Development)", size=13,
+             bold=True, color=MID, line_spacing=1.06)
+    src(s, lx + 0.84, 2.56, lw - 1.08,
+        "Стив Бланк — дисциплина поиска ответа «что и для кого строить»",
+        size=9.5)
+    text_box(s, x=lx + 0.26, y=2.92, w=lw - 0.52, h=0.98,
+             text="Правило, ради которого она существует: внутри офиса "
+                  "фактов нет, факты снаружи. Но выйти наружу мало: без "
+                  "записанной заранее гипотезы возвращаются с впечатлениями, "
+                  "подтверждающими то, во что верили до выхода.",
+             size=11, color=DEEP, line_spacing=1.14)
+    ocean_box(s, lx + 0.22, 3.96, lw - 0.44, 0.60, fill=GOLD_TINT,
+              stroke=GOLD, stroke_pt=1.6)
+    text_box(s, x=lx + 0.30, y=3.96, w=lw - 0.60, h=0.60,
+             text="мы верим X → проверим через Y → к дате Z получим ответ "
+                  "да или нет",
+             size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+    text_box(s, x=lx + 0.26, y=4.62, w=lw - 0.52, h=0.36,
+             text="Дата — не оформление: без неё «проверим» не имеет срока.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.05)
+
+    # ── Справа: два правила разговора + пара «плохо → хорошо» ─────────
+    rx, rw = 6.75, 6.05
+    ocean_box(s, rx, 1.98, rw, 3.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
+    text_box(s, x=rx + 0.26, y=2.12, w=rw - 0.52, h=0.32,
+             text="Два правила разговора", size=13, bold=True, color=MID)
+    src(s, rx + 0.26, 2.44, rw - 0.52,
+        "книга «The Mom Test», Роб Фитцпатрик", size=9.5)
+    rules = [
+        ("history", "Спрашивать о конкретном прошлом, а не о мнении про "
+                    "будущее"),
+        ("handshake", "Засчитывать обязательство — время, репутацию, "
+                      "деньги, — а не комплимент"),
     ]
-    cw, gap = 2.72, 0.28
-    x0 = 0.55
-    y0 = 1.85
-    for i, (name, gloss) in enumerate(steps):
-        x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 1.35, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-        text_box(s, x=x + 0.10, y=y0 + 0.12, w=cw - 0.20, h=0.28,
-                 text=f"{i+1}", size=14, bold=True, color=GOLD,
-                 align=PP_ALIGN.CENTER)
-        text_box(s, x=x + 0.06, y=y0 + 0.42, w=cw - 0.12, h=0.34, text=name,
-                 size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x=x + 0.10, y=y0 + 0.74, w=cw - 0.20, h=0.26, text=gloss,
-                 size=9.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-        icon(s, "diamond", x + cw / 2 - 0.16, y0 + 1.02, 0.32, "gold")
-        if i < 3:
-            right_arrow(s, x + cw + 0.02, y0 + 0.55, gap - 0.04, 0.26,
-                        fill=LIGHT)
-    text_box(s, x=0.55, y=y0 + 1.45, w=12.25, h=0.35,
-             text="Стив Бланк — методология Customer Development [1]",
-             size=12.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-
-    # falsifiable-hypothesis card
-    ocean_box(s, 1.55, 3.90, 10.25, 1.35, fill=GOLD_TINT, stroke=GOLD,
-              stroke_pt=1.6)
-    icon(s, "route", 1.80, 4.10, 0.5, "gold")
-    text_runs(s, 2.45, 4.08, 9.10, 1.05, [
-        {"text": "Фальсифицируемая гипотеза", "size": 14, "bold": True,
+    ry = 2.78
+    for ic, txt in rules:
+        filled_rect(s, rx + 0.26, ry, rw - 0.52, 0.64, WHITE, stroke=LIGHT,
+                    stroke_pt=1.2, radius=True, radius_adj=0.12)
+        icon(s, ic, rx + 0.42, ry + 0.15, 0.34, "light")
+        text_box(s, x=rx + 0.92, y=ry, w=rw - 1.20, h=0.64, text=txt,
+                 size=11, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.12)
+        ry += 0.74
+    ocean_box(s, rx + 0.26, 4.30, rw - 0.52, 0.66, fill=TEAL_TINT,
+              stroke=TEAL, stroke_pt=1.4)
+    text_runs(s, rx + 0.40, 4.30, rw - 0.80, 0.66, [
+        {"text": "Плохо: ", "size": 10.5, "bold": True, "color": SLATE},
+        {"text": "«Заплатили бы 20 долларов в месяц?»   →   ", "size": 10.5,
          "color": DEEP},
-        {"text": "мы верим X → проверим через Y → к дате Z получим ответ да/нет",
-         "size": 13, "color": DEEP, "newpara": True, "space_before": 6},
-    ])
+        {"text": "Хорошо: ", "size": 10.5, "bold": True, "color": TEAL},
+        {"text": "«Сколько вы платите сегодня за ближайший аналог?»",
+         "size": 10.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.12)
 
+    # ── Место дисциплины относительно петли лекции ────────────────────
     gold_callout(
-        s, 0.55, 5.55, 12.25, 0.85,
-        "BML — двигатель; Customer Development — карта местности, по которой "
-        "двигатель едет. Сначала понять, что проверяем и у кого — потом, как "
-        "быстро крутить цикл.",
+        s, 0.55, 5.18, 12.25, 1.10,
+        "Это не альтернатива циклу разработки и не второй процесс рядом с "
+        "ним. Цикл отвечает на вопрос «как быстро проверять», эта "
+        "дисциплина — на вопрос «что и у кого проверять». Она работает на "
+        "первой стрелке петли, до того как что-то построено.",
         size=13, bold=True)
     refs_of_slide(s, "s08")
     notes_with_sources(s, "s08")
     return s
-
 
 # ============================================================
 # s09 - BASE-2: The Mom Test (3 rules + contrast)
@@ -546,284 +615,379 @@ def s09(p):
 # ============================================================
 # s10 - ИИ: discovery tools 2025-26
 # ============================================================
+
 def s10(p):
+    """ПРАВКА #212 (замечания владельца, Р6/Р7): устаревшие оценки экономии
+    времени и состав инструментов заменены практиками 2026 года и поданы
+    сравнением «без ИИ / с ИИ» по шагам фазы. ИИ-персоны больше не
+    появляются ниоткуда: у них названное место на шкале «кто на том конце
+    разговора». Эталонный набор снят — он вводится своим слайдом в
+    Разделе 3 (s24b), здесь он был непонятной отсылкой вперёд."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Часы → минуты: но ссылки существуют, чтобы их проверяли",
-                size=22, w=12.2, h=0.85)
+    slide_title(s, "Что ИИ изменил в исследовании к 2026 году — "
+                   "и что не изменил",
+                size=22, w=12.25, h=0.58, y=0.13)
 
-    blocks = [
-        ("file-search", "Desk research (кабинетное исследование)",
-         "Perplexity Deep Research: 2 часа → ~30 минут [1]"),
-        ("layout-list", "Синтез интервью",
-         "Dovetail — кластеризация болей в масштабе [2]"),
-        ("database", "Reference dataset (эталонный набор)",
-         "курируемая коллекция «запрос → правильный ответ»"),
+    # ── Таблица-сравнение по шагам фазы ───────────────────────────────
+    col_x = [0.55, 3.30, 8.00]
+    col_w = [2.60, 4.55, 4.80]
+    for x, w, t in zip(col_x, col_w, ["ШАГ ФАЗЫ", "БЕЗ ИИ", "С ИИ — 2026"]):
+        filled_rect(s, x, 0.82, w, 0.32, MID, radius=True, radius_adj=0.12)
+        text_box(s, x=x + 0.08, y=0.82, w=w - 0.16, h=0.32, text=t,
+                 size=9.5, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+
+    rows = [
+        ("file-search", "Кабинетный поиск",
+         "собрать, что уже известно о рынке и о боли",
+         "Аналитик читает отчёты, публикации и форумы — дни работы",
+         "Режим глубокого исследования сам планирует поиск, читает сотни "
+         "источников и отдаёт отчёт со ссылками за 2–30 минут. Есть у всех "
+         "основных помощников, включая бесплатные тарифы с лимитом"),
+        ("headphones", "Сам разговор", "",
+         "Каждое интервью исследователь проводит лично; восемь разговоров — "
+         "недели календаря",
+         "Вопросы задаёт модель, отвечает живой человек — разговоров за тот "
+         "же срок кратно больше"),
+        ("layout-list", "Сведение разговоров", "",
+         "Расшифровка вручную, темы выписываются глазами",
+         "Расшифровка стала бесплатным приложением к созвону; инструменты "
+         "непрерывно пересобирают темы по всему накопленному корпусу, а не "
+         "по одному звонку"),
     ]
-    cw, gap = 3.95, 0.20
-    x0 = 0.55
-    y0 = 1.48
-    for i, (ic, head, body) in enumerate(blocks):
-        x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 1.95)
-        icon(s, ic, x + 0.24, y0 + 0.18, 0.52, "mid")
-        text_box(s, x=x + 0.24, y=y0 + 0.82, w=cw - 0.48, h=0.48, text=head,
-                 size=12, bold=True, color=MID, line_spacing=1.05)
-        text_box(s, x=x + 0.24, y=y0 + 1.34, w=cw - 0.48, h=0.52, text=body,
-                 size=11, color=DEEP, line_spacing=1.10)
-        if i == 0:
-            chip(s, x + cw - 1.55, y0 + 0.18, 1.30, 0.36, "проверь источник",
-                 fill=GOLD, color=DEEP, size=9)
+    ry = 1.22
+    for ic, name, gloss, was, now in rows:
+        rh = 0.78
+        ocean_box(s, col_x[0], ry, col_w[0], rh, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.3)
+        icon(s, ic, col_x[0] + 0.16, ry + 0.10, 0.32, "mid")
+        text_box(s, x=col_x[0] + 0.54, y=ry + 0.08, w=col_w[0] - 0.66,
+                 h=0.34, text=name, size=11, bold=True, color=MID,
+                 line_spacing=1.04)
+        if gloss:
+            text_box(s, x=col_x[0] + 0.14, y=ry + 0.42, w=col_w[0] - 0.28,
+                     h=0.32, text=gloss, size=8.5, italic=True, color=SLATE,
+                     line_spacing=1.04)
+        ocean_box(s, col_x[1], ry, col_w[1], rh, fill=WHITE, stroke=SOFT_GREY,
+                  stroke_pt=1.2)
+        text_box(s, x=col_x[1] + 0.16, y=ry, w=col_w[1] - 0.32, h=rh,
+                 text=was, size=10, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.14)
+        ocean_box(s, col_x[2], ry, col_w[2], rh, fill=TEAL_TINT, stroke=TEAL,
+                  stroke_pt=1.4)
+        text_box(s, x=col_x[2] + 0.16, y=ry, w=col_w[2] - 0.32, h=rh,
+                 text=now, size=10, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.14)
+        ry += rh + 0.08
 
+    # ── Шкала «кто на том конце разговора» ────────────────────────────
+    text_box(s, x=0.55, y=3.80, w=12.25, h=0.30,
+             text="Кто на том конце разговора", size=12.5, bold=True,
+             color=MID)
+    lad = [
+        ("человек ↔ человек", "классическое интервью", MID, SURFACE),
+        ("человек ↔ модель", "спрашивает машина, отвечает живой человек",
+         TEAL, TEAL_TINT),
+        ("модель ↔ модель",
+         "ИИ-персона: отвечает тоже машина — живого человека в цепочке нет "
+         "ни разу", GOLD, GOLD_TINT),
+    ]
+    lw_ = 3.97
+    for i, (t1, t2, col, fill) in enumerate(lad):
+        x = 0.55 + i * (lw_ + 0.17)
+        ocean_box(s, x, 4.14, lw_, 0.86, fill=fill, stroke=col, stroke_pt=1.7)
+        text_box(s, x=x + 0.12, y=4.20, w=lw_ - 0.24, h=0.28, text=t1,
+                 size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=1.02)
+        text_box(s, x=x + 0.12, y=4.50, w=lw_ - 0.24, h=0.46, text=t2,
+                 size=9.5, color=SLATE, align=PP_ALIGN.CENTER,
+                 line_spacing=1.08)
+    text_runs(s, 0.55, 5.08, 12.25, 0.30, [
+        {"text": "Опрос 150 исследователей, май 2026:   ", "size": 10.5,
+         "italic": True, "color": SLATE},
+        {"text": "81%", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " регулярно применяют ИИ в работе   ·   ", "size": 10.5,
+         "color": DEEP},
+        {"text": "8%", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " — как отвечающего участника   ·   ", "size": 10.5,
+         "color": DEEP},
+        {"text": "28%", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " отвергают его прямо", "size": 10.5, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.05)
+
+    # ── Что не изменилось: граница кабинетного поиска ─────────────────
     gold_callout(
-        s, 0.55, 3.62, 12.25, 0.70,
-        "97% исследователей используют ИИ — лишь ~8% доверяют ИИ-персонам "
-        "как данным [3]",
-        size=14.5, bold=True, align=PP_ALIGN.CENTER)
-
-    filled_rect(s, 0.55, 4.46, 12.25, 1.28, SOFT_GREY, stroke=LIGHT,
-                stroke_pt=1.0, radius=True, radius_adj=0.06)
-    text_box(s, x=0.85, y=4.56, w=11.65, h=1.08,
-             text="Обязательная практика: проверять важные данные напрямую "
-                  "по источнику до использования в решении. Синтетические "
-                  "пользователи — только пре-исследование (пилотаж гайда, "
-                  "черновик персон, генерация гипотез), никогда не "
-                  "доказательство для решения «продолжать/остановить».",
-             size=12.5, color=DEEP, line_spacing=1.15,
-             anchor=MSO_ANCHOR.MIDDLE)
-
-    check_point(
-        s, 0.55, 5.90, 12.25,
-        "ИИ-персона прошла ваш сценарий знакомства с продуктом целиком и "
-        "назвала функцию отличной. Что в устройстве такого источника мешает "
-        "ему сказать «нет»?",
-        h=0.88, size=12.5)
+        s, 0.55, 5.48, 12.25, 1.26,
+        "Ссылка в отчёте не доказательство, пока её не открыли. Измерено на "
+        "53\u00a0090 ссылках из отчётов десяти моделей и исследовательских "
+        "агентов: 3–13% ссылок выдуманы — их нет даже в веб-архиве, они не "
+        "существовали никогда, и не открываются ещё от 5 до 18%. Отсюда прямая "
+        "арифметика: при самом низком измеренном уровне 3% отчёт с 50 "
+        "ссылками содержит хотя бы одну несуществующую с вероятностью 78%. "
+        "Deloitte сдала правительству Австралии отчёт за "
+        "440\u00a0000\u00a0австралийских долларов именно с таким содержимым.",
+        size=12, bold=True)
     refs_of_slide(s, "s10")
     notes_with_sources(s, "s10")
     return s
 
-
 # ============================================================
 # s11 - ИИ LIMITS: synthetic sycophancy, live-interview criteria
 # ============================================================
+
 def s11(p):
+    """ПРАВКА #212: формулировки приведены к slides/s11-*.md и очищены от
+    англицизмов («go/no-go» → «продолжать или остановить», «валидация» →
+    «проверка», английский термин из подписи к числам снят)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Синтетический собеседник не может произвести несогласие",
-                size=22, w=12.2, h=0.85)
+                size=22, w=12.25, h=0.58, y=0.13)
 
-    # LEFT: «зеркало согласия» + ПРАВКА #212 — количественная оценка
-    # подхалимства (раньше на слайде не было ни одной цифры).
+    # ── Слева: измеренный сдвиг тона ──────────────────────────────────
     lx, lw = 0.55, 4.55
-    ocean_box(s, lx, 1.48, lw, 3.88, fill=SURFACE, stroke=LIGHT,
+    ocean_box(s, lx, 0.92, lw, 4.32, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.5)
-    icon(s, "smile", lx + lw / 2 - 0.42, 1.64, 0.84, "light")
-    text_box(s, x=lx + 0.25, y=2.58, w=lw - 0.50, h=0.34,
+    icon(s, "smile", lx + lw / 2 - 0.40, 1.06, 0.80, "light")
+    text_box(s, x=lx + 0.25, y=1.96, w=lw - 0.50, h=0.34,
              text="Зеркало согласия", size=14, bold=True, color=MID,
              align=PP_ALIGN.CENTER)
-    stats = [("72–91%", "при явном согласии", GOLD),
-             ("7–28%", "при явном несогласии", LIGHT)]
+    stats = [("72–91%", "когда собеседник\nявно соглашается", GOLD),
+             ("7–28%", "когда собеседник\nявно возражает", LIGHT)]
     for i, (num, lbl, col) in enumerate(stats):
         sx = lx + 0.22 + i * 2.10
-        filled_rect(s, sx, 3.02, 1.90, 0.98,
+        filled_rect(s, sx, 2.40, 1.90, 1.12,
                     (GOLD_TINT if i == 0 else SURFACE), stroke=col,
                     stroke_pt=1.6, radius=True, radius_adj=0.10)
-        text_box(s, x=sx, y=3.10, w=1.90, h=0.48, text=num, size=21,
+        text_box(s, x=sx, y=2.50, w=1.90, h=0.48, text=num, size=21,
                  bold=True, color=(DEEP if i == 0 else col),
                  align=PP_ALIGN.CENTER)
-        text_box(s, x=sx + 0.05, y=3.60, w=1.80, h=0.34, text=lbl, size=9.5,
-                 color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.0)
-    text_box(s, x=lx + 0.25, y=4.12, w=lw - 0.50, h=0.86,
-             text="Сдвиг тона ответа модели к позитиву («feedback positivity», "
-                  "5 моделей) — это не «частота отрицательного ответа».",
+        text_box(s, x=sx + 0.05, y=3.00, w=1.80, h=0.46, text=lbl, size=9.5,
+                 color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.06)
+    text_box(s, x=lx + 0.25, y=3.66, w=lw - 0.50, h=0.92,
+             text="Это доля случаев, в которых тон ответа модели сдвигается "
+                  "к позитиву (5 моделей). Не «частота отрицательного "
+                  "ответа» — именно сдвиг тона.",
              size=11, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.14)
-    src(s, lx + 0.25, 5.00, lw - 0.50,
-        "Sharma и др., 2023 — Figure 1, ICLR 2024", size=9.5,
-        align=PP_ALIGN.CENTER)
+    src(s, lx + 0.25, 4.70, lw - 0.50, "Sharma и соавторы, 2023 — рисунок 1",
+        size=9.5, align=PP_ALIGN.CENTER)
 
+    # ── Справа: три признака + причина ────────────────────────────────
     rx, rw = 5.35, 7.45
-    crit = [
-        "Высокая цена ошибки «продолжать/остановить»",
-        "Нужно реальное прошлое, не правдоподобное",
-        "Нужна валидация обязательством, не мнением",
-    ]
-    text_box(s, x=rx, y=1.48, w=rw, h=0.40,
-             text="Когда живое интервью строго лучше ИИ-синтеза", size=14,
+    text_box(s, x=rx, y=0.96, w=rw, h=0.36,
+             text="Когда живой разговор строго лучше синтеза", size=14,
              bold=True, color=MID)
+    crit = [
+        "Высока цена ошибки в решении «продолжать или остановить»",
+        "Нужно реальное прошлое, а не правдоподобное",
+        "Нужна проверка обязательством, а не мнением",
+    ]
     for i, c in enumerate(crit):
-        y = 1.98 + i * 0.82
+        y = 1.44 + i * 0.82
         ocean_box(s, rx, y, rw, 0.68, fill=SURFACE, stroke=MID, stroke_pt=1.3)
-        text_box(s, x=rx + 0.65, y=y, w=rw - 0.85, h=0.68, text=f"{i+1}. {c}",
-                 size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=rx + 0.65, y=y, w=rw - 0.85, h=0.68,
+                 text=f"{i+1}. {c}", size=13, bold=True, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
         icon(s, "shield-alert", rx + 0.14, y + 0.14, 0.40, "mid")
-    text_box(s, x=rx, y=4.52, w=rw, h=0.84,
+    text_box(s, x=rx, y=4.00, w=rw, h=1.24,
              text="У синтетического собеседника нет реального прошлого, "
                   "способного противоречить формулировке вопроса, — поэтому "
-                  "несогласие он не производит в принципе.",
-             size=12.5, color=DEEP, line_spacing=1.16)
+                  "несогласие он не производит в принципе. Сложите это со "
+                  "сдвигом тона слева: ответ смещён не просто в сторону "
+                  "«да», а в сторону «да» о событии, которого никогда не "
+                  "было.",
+             size=12.5, color=DEEP, line_spacing=1.18)
 
     gold_callout(
-        s, 0.55, 5.56, 12.25, 0.92,
-        "ИИ-резюме теряет 20-40% деталей интервью (Torres) [1], если пропущен "
-        "шаг «сначала по отдельности» — прослеживаемый до конкретного шага "
-        "сбой, не расплывчатое «ИИ иногда ошибается».",
+        s, 0.55, 5.44, 12.25, 1.00,
+        "Пересказ интервью теряет 20–40% деталей, если пропущен шаг "
+        "«сначала каждое по отдельности», — прослеживаемый до конкретного "
+        "шага сбой, а не расплывчатое «ИИ иногда ошибается».",
         size=13, bold=True)
     refs_of_slide(s, "s11")
     notes_with_sources(s, "s11")
     return s
 
-
 # ============================================================
 # s12 - FAILURE on-point #1: synthetic users (NN/g)
 # ============================================================
+
+
 def s12(p):
+    """ПРАВКА #212 (Р9): слайд-кейс начинается с краткого описания случая —
+    человек, читающий только экран, должен понять, о чём речь, до того как
+    увидит выводы. Вопрос залу снят (Р2). Мем снят: его собственные подписи
+    на 3,5 дюймах не читались, а сравнение 3/7 против 7/7 на полную ширину
+    и есть главный образ слайда."""
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(
-        s, "Одна и та же задача: реальные люди — 3 из 7, синтетическая панель — 7 из 7 [1]",
-        size=20, w=12.2, h=0.85)
+        s, "Одна и та же задача: реальные люди — 3 из 7, панель ИИ-персон "
+           "— 7 из 7 [1]",
+        size=21, w=12.25, h=0.92, y=0.13)
 
-    # LEFT: real meme (Trade Offer — GATE-B fix, replaces Surprised Pikachu:
-    # lec-2 collision + weak affect-fit, see arc-meme-layout-audit.md) — the
-    # false 7/7 "offer" vs the 3/7 that actually decides
-    from _helpers import meme_in_box
-    meme_in_box(s, "s12-trade-offer.jpg", 0.55, 1.55, 4.55, 3.15, pad=0.14)
+    # ── ЧТО ПРОИЗОШЛО ─────────────────────────────────────────────────
+    filled_rect(s, 0.55, 1.10, 12.25, 1.04, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.6, radius=True, radius_adj=0.07)
+    icon(s, "file-text", 0.78, 1.42, 0.42, "teal")
+    text_runs(s, 1.38, 1.14, 11.28, 0.96, [
+        {"text": "ЧТО ПРОИЗОШЛО   ", "size": 10.5, "bold": True,
+         "color": TEAL},
+        {"text": "Nielsen Norman Group — исследовательская группа, которая "
+                 "с 1998 года занимается удобством интерфейсов, — взяла один "
+                 "сценарий первого знакомства с продуктом и прогнала его "
+                 "дважды: с живыми участниками и с панелью ИИ-персон, "
+                 "сгенерированных под тот же профиль. Сравнивали две "
+                 "величины: сколько шагов сценария доведено до конца и как "
+                 "оценены одни и те же функции.",
+         "size": 11.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
 
-    # RIGHT: split comparison 3/7 vs 7/7
-    rx, rw = 5.35, 7.45
-    text_box(s, x=rx, y=1.52, w=rw, h=0.38,
-             text="NN/g: контролируемое сравнение на сценарии знакомства "
-                  "с продуктом",
-             size=12.5, bold=True, color=MID, line_spacing=1.05)
-    ocean_box(s, rx, 1.98, rw, 1.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=rx + 0.24, y=2.06, w=3.0, h=0.36,
-             text="Реальные люди", size=12.5, bold=True, color=MID)
-    for i in range(7):
-        cxx = rx + 0.28 + i * 0.42
-        ok = i < 3
-        icon(s, "check-check" if ok else "x", cxx, 2.45, 0.36,
-             "mid" if ok else "light")
-    text_box(s, x=rx + 3.35, y=2.18, w=rw - 3.6, h=0.7,
-             text="3 из 7 — «надуманно и бесполезно»", size=12, bold=True,
-             color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    # ── Два прогона одного сценария ───────────────────────────────────
+    rows = [
+        dict(name="Живые участники", done=3, fill=SURFACE, stroke=MID,
+             var="mid", verdict="3 из 7 шагов доведены до конца"),
+        dict(name="Панель ИИ-персон", done=7, fill=GOLD_TINT, stroke=GOLD,
+             var="gold", verdict="отчиталась о 7 из 7"),
+    ]
+    ry = 2.28
+    for r in rows:
+        ocean_box(s, 0.55, ry, 12.25, 1.18, fill=r["fill"],
+                  stroke=r["stroke"], stroke_pt=1.7)
+        text_box(s, x=0.85, y=ry, w=3.20, h=1.18, text=r["name"], size=13,
+                 bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        for i in range(7):
+            cxx = 4.15 + i * 0.58
+            ok = i < r["done"]
+            icon(s, "check-check" if ok else "x", cxx, ry + 0.38, 0.42,
+                 r["var"] if ok else "light")
+        text_box(s, x=8.60, y=ry, w=4.00, h=1.18, text=r["verdict"],
+                 size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.10)
+        ry += 1.34
 
-    ocean_box(s, rx, 3.18, rw, 1.05, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.8)
-    text_box(s, x=rx + 0.24, y=3.26, w=3.0, h=0.36,
-             text="Синт-панель", size=12.5, bold=True, color=DEEP)
-    for i in range(7):
-        cxx = rx + 0.28 + i * 0.42
-        icon(s, "check-check", cxx, 3.65, 0.36, "gold")
-    text_box(s, x=rx + 3.35, y=3.38, w=rw - 3.6, h=0.7,
-             text="7 из 7 — «меняет правила игры»", size=12, bold=True,
-             color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
-    text_box(s, x=rx, y=4.36, w=rw, h=0.38,
-             text="Одна и та же фича — противоположные вердикты",
-             size=12.5, italic=True, color=SLATE)
+    ocean_box(s, 0.55, 4.96, 12.25, 0.58, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.3)
+    text_runs(s, 0.80, 4.96, 11.75, 0.58, [
+        {"text": "Об одной и той же функции:   ", "size": 11.5,
+         "italic": True, "color": SLATE},
+        {"text": "«надуманно и бесполезно»", "size": 12.5, "bold": True,
+         "color": MID},
+        {"text": "  — живые участники,   ", "size": 11.5, "color": SLATE},
+        {"text": "«изменяет правила игры»", "size": 12.5, "bold": True,
+         "color": DEEP},
+        {"text": "  — ИИ-персоны", "size": 11.5, "color": SLATE},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
 
     gold_callout(
-        s, 0.55, 5.12, 12.25, 1.05,
-        "Критерий: синтетический выход дисквалифицирован для решения "
-        "«продолжать/остановить» по построению, а не из-за невезения "
-        "прогона. Альтернатива: до-исследовательская роль + реальное "
-        "тестирование 5-8 участников.",
-        size=13, bold=True)
+        s, 0.55, 5.68, 12.25, 1.10,
+        "Расхождение здесь не в одной измеряемой величине, а сразу в обеих, "
+        "на одном и том же материале: дело не в неудачном прогоне — такой "
+        "выход дисквалифицирован для решения «продолжать или остановить» по "
+        "построению. Альтернатива: оставить панели до-исследовательскую "
+        "роль, а решение опереть на тест с 5–8 живыми участниками — размер, "
+        "который уже вскрывает большинство проблем удобства.",
+        size=12.5, bold=True)
     refs_of_slide(s, "s12")
     notes_with_sources(s, "s12")
     return s
 
-
 # ============================================================
 # s13a - FAILURE on-point #3: IBM Watson for Oncology
 # ============================================================
+
 def s13a(p):
-    """ПРАВКА #212: тип слайда сменён case_study -> comparison. Глава §1.9
-    переписана как ДВА НЕЗАВИСИМЫХ провала одной корпорации с разными
-    корневыми причинами (данные vs управление проектом); две равные колонки
-    передают это точнее, чем одна линейная история про «$62 млн».
-    Колонка A — Primary mid, колонка B — Teal: два механизма отказа должны
-    читаться как разные, а не как оттенки одного."""
+    """ПРАВКА #212 (Р9 + расхождение билдера с исходником): слайд начинается
+    с краткого описания случая, и на нём остаётся ОДИН кейс — тот, что учит
+    применению (данные). Управленческая половина (Oncology Expert Advisor,
+    MD Anderson) снята отсюда по решению, записанному во frontmatter
+    slides/s13a-*.md: она уже живёт строкой-якорем на s22, где работает как
+    отсутствующий порог гейта «продолжать или закрыть»."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Один бренд, два провала: данные подвели одну систему, "
-                   "закупка — другую",
-                size=19, w=12.3, h=0.62, y=0.36)
+    slide_title(s, "Помощник врача, обученный на придуманных случаях: "
+                   "рекомендации назвали небезопасными",
+                size=21, w=12.25, h=0.92, y=0.13)
 
-    chip(s, 0.55, 1.14, 2.95, 0.42, "IBM Watson Health", fill=MID,
-         color=WHITE, size=13)
+    # ── ЧТО ПРОИЗОШЛО ─────────────────────────────────────────────────
+    filled_rect(s, 0.55, 1.10, 12.25, 1.02, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.6, radius=True, radius_adj=0.07)
+    icon(s, "file-text", 0.78, 1.42, 0.42, "teal")
+    text_runs(s, 1.38, 1.14, 11.28, 0.94, [
+        {"text": "ЧТО ПРОИЗОШЛО   ", "size": 10.5, "bold": True,
+         "color": TEAL},
+        {"text": "С 2012 года компания IBM вместе с онкологическим центром "
+                 "Memorial Sloan Kettering разрабатывала Watson for Oncology "
+                 "— систему, подсказывающую врачу схему лечения рака. С 2015 "
+                 "года её продавали больницам по всему миру. 25 июля 2018 "
+                 "года издание STAT News опубликовало утёкшие внутренние "
+                 "документы компании.",
+         "size": 11.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
 
-    cols = [
-        dict(x=0.55, stroke=MID, tint=MID_TINT, ivar="mid", icn="flask-conical",
-             head="Случай A — Watson for Oncology",
-             sub="Memorial Sloan Kettering, с 2012",
-             bullets=[
-                 "Коммерческий запуск 2015; внутренние документы: "
-                 "рекомендации «небезопасные и некорректные»",
-                 "Бевацизумаб гипотетическому пациенту с активным "
-                 "кровотечением — вопреки предупреждению производителя",
-             ],
-             cause="Причина: обучен на малом числе синтетических, "
-                   "гипотетических кейсов горстки онкологов MSK — не на "
-                   "реальных исходах [2]",
-             ccol=MID,
-             stat="STAT News · 25 июля 2018 [1]", stat_gold=False),
-        dict(x=6.75, stroke=TEAL, tint=TEAL_TINT, ivar="teal",
-             icn="file-warning",
-             head="Случай B — Oncology Expert Advisor",
-             sub="MD Anderson, 2013–2016",
-             bullets=[
-                 "Контракт через 12 продлений вырос с $2,4 млн до "
-                 "$39,2 млн IBM + $23 млн PwC",
-                 "Закрыт в сентябре 2016 — без единого пролеченного пациента",
-             ],
-             cause="Причина по аудиту University of Texas System: обход "
-                   "конкурсных закупочных процедур + дефицит донорского "
-                   "финансирования ≈ $11,6 млн — не про данные и не про "
-                   "модель",
-             ccol=TEAL,
-             stat="≈ $62 млн  →  0 пациентов", stat_gold=True),
-    ]
-    cw = 6.05
-    for c in cols:
-        x = c["x"]
-        ocean_box(s, x, 1.70, cw, 3.60, fill=SURFACE, stroke=c["stroke"],
-                  stroke_pt=1.6)
-        icon(s, c["icn"], x + 0.24, 1.86, 0.50, c["ivar"])
-        text_box(s, x=x + 0.86, y=1.86, w=cw - 1.10, h=0.32, text=c["head"],
-                 size=13, bold=True, color=c["ccol"], line_spacing=1.05)
-        text_box(s, x=x + 0.86, y=2.19, w=cw - 1.10, h=0.28, text=c["sub"],
-                 size=10.5, italic=True, color=SLATE, line_spacing=1.0)
-        by = 2.56
-        for b in c["bullets"]:
-            text_box(s, x=x + 0.26, y=by, w=cw - 0.52, h=0.56, text="• " + b,
-                     size=11.5, color=DEEP, line_spacing=1.14)
-            by += 0.60
-        filled_rect(s, x + 0.26, 3.80, cw - 0.52, 0.42,
-                    (GOLD_TINT if c["stat_gold"] else WHITE),
-                    stroke=(GOLD if c["stat_gold"] else LIGHT),
-                    stroke_pt=(1.6 if c["stat_gold"] else 1.0), radius=True,
-                    radius_adj=0.14)
-        text_box(s, x=x + 0.26, y=3.80, w=cw - 0.52, h=0.42, text=c["stat"],
-                 size=(14 if c["stat_gold"] else 11), bold=c["stat_gold"],
-                 italic=(not c["stat_gold"]),
-                 color=(DEEP if c["stat_gold"] else SLATE),
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        filled_rect(s, x + 0.26, 4.32, cw - 0.52, 0.86, c["tint"],
-                    stroke=c["stroke"], stroke_pt=1.2, radius=True,
-                    radius_adj=0.09)
-        text_box(s, x=x + 0.42, y=4.36, w=cw - 0.84, h=0.78, text=c["cause"],
-                 size=10.5, bold=True, color=DEEP, line_spacing=1.10,
-                 anchor=MSO_ANCHOR.MIDDLE)
+    cw_ = 6.05
+    left, right = 0.55, 6.75
+
+    # ── Что показали документы ────────────────────────────────────────
+    ocean_box(s, left, 2.22, cw_, 2.50, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    icon(s, "file-warning", left + 0.24, 2.36, 0.46, "mid")
+    text_box(s, x=left + 0.84, y=2.40, w=cw_ - 1.08, h=0.34,
+             text="Что показали документы", size=13, bold=True, color=MID)
+    by = 2.88
+    for b, bh in [("Сотрудники в переписке называли рекомендации системы "
+                   "«небезопасными и некорректными»", 0.62),
+                  ("Разобранный пример: препарат назначен гипотетическому "
+                   "пациенту с активным кровотечением — вопреки прямому "
+                   "предупреждению производителя против такого применения",
+                   0.92)]:
+        text_box(s, x=left + 0.26, y=by, w=cw_ - 0.52, h=bh,
+                 text="• " + b, size=11.5, color=DEEP, line_spacing=1.14)
+        by += bh + 0.14
+
+    # ── Почему так вышло ──────────────────────────────────────────────
+    ocean_box(s, right, 2.22, cw_, 2.50, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.6)
+    icon(s, "flask-conical", right + 0.24, 2.36, 0.46, "teal")
+    text_box(s, x=right + 0.84, y=2.40, w=cw_ - 1.08, h=0.34,
+             text="Почему так вышло", size=13, bold=True, color=TEAL)
+    bw = 2.25
+    bx1 = right + 0.26
+    bx2 = right + cw_ - 0.26 - bw
+    for bx, t in [(bx1, "придуманные случаи\n(на них обучали)"),
+                  (bx2, "реальные исходы лечения\n(на них не обучали)")]:
+        ocean_box(s, bx, 2.86, bw, 0.58, fill=WHITE, stroke=LIGHT,
+                  stroke_pt=1.3)
+        text_box(s, x=bx + 0.06, y=2.86, w=bw - 0.12, h=0.58, text=t,
+                 size=9.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.06)
+    gx, gw = bx1 + bw, bx2 - (bx1 + bw)
+    connector(s, gx + 0.08, 3.15, gx + gw - 0.08, 3.15, color=SLATE,
+              width=1.4, dash="dash")
+    icon(s, "x", gx + gw / 2 - 0.10, 3.05, 0.20, "gold")
+    text_box(s, x=gx, y=3.46, w=gw, h=0.22, text="сверки нет", size=8.5,
+             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    text_box(s, x=right + 0.26, y=3.70, w=cw_ - 0.52, h=0.96,
+             text="Обучали на небольшом числе придуманных случаев, "
+                  "размеченных горсткой врачей одной клиники: материал "
+                  "правдоподобный, непротиворечивый и полностью выдуманный. "
+                  "Мнение горстки врачей при этом выдано за отраслевой "
+                  "стандарт.",
+             size=11, color=DEEP, line_spacing=1.14)
 
     gold_callout(
-        s, 0.55, 5.50, 12.25, 0.94,
-        "Два независимых механизма отказа одной корпорации: непригодные "
-        "данные против несостоятельного управления проектом. Не всякий "
-        "дорогой провал с ИИ на обложке объясняется самим ИИ.",
-        size=13, bold=True)
+        s, 0.55, 4.90, 12.25, 1.22,
+        "Тот же класс сбоя, что двумя слайдами раньше: правдоподобный "
+        "материал принят за реальный. Разница только в цене ошибки — здесь "
+        "она измеряется в людях, а не в возвращённом гонораре. Чем выше "
+        "цена ошибки, тем строже требование: материал, на котором строится "
+        "решение, должен прослеживаться до зафиксированного прошлого, а не "
+        "до правдоподобного.",
+        size=12.5, bold=True)
     refs_of_slide(s, "s13a")
     notes_with_sources(s, "s13a")
     return s
-
 
 # ============================================================
 # s13 - FAILURE on-point #2: Deloitte fabricated research

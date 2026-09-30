@@ -27,6 +27,9 @@ TARGETS = {
     "s40-zillow": "File:Zillow logo.svg",
     "s41-aircanada": "File:Air Canada in Toronto 05.jpg",
     "s42-klarna": "File:Klarna Payment Badge.svg",
+    # issue #212: Klarna уехала со s42 на s39 (доказательство, не кейс),
+    # s42 остался чисто нью-йоркским — ему нужен свой реальный образ.
+    "s42-nyc": "File:Seal of New York City.svg",
     "s48-amazon": "File:Amazon Go in Seattle, December 2016.jpg",
     "s13a-ibm": "File:IBM logo.svg",
     "s47-mit": "File:MIT Dome night1 Edit.jpg",

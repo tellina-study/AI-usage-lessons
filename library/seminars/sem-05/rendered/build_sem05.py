@@ -79,7 +79,7 @@ GENRE = {
     "hero_cover": "", "lecture_map": "карта занятия",
     "keystone_scope_map": "ось занятия", "recap_table": "ось занятия",
     "closing_question_partial": "возврат к вопросу открытия",
-    "question_repeat": "тот же вопрос, второй раз",
+    "question_repeat": "повторный вопрос",
     "transfer_exercise": "перенос на свой репозиторий",
     "assertion_visual": "ограничение",
     "section_divider_macro": "",
@@ -87,9 +87,9 @@ GENRE = {
     "base_and_edge": "база",
     "evidence_table_with_gap": "свидетельства",
     "answer_breakdown_table": "разбор", "dual_mode_breakdown": "разбор",
-    "cobuilding_config_reveal": "собираем вместе",
-    "cobuilding_bad_example_reveal": "собираем вместе",
-    "cobuilding_description_assembly": "собираем вместе",
+    "cobuilding_config_reveal": "сборка",
+    "cobuilding_bad_example_reveal": "сборка",
+    "cobuilding_description_assembly": "сборка",
     "code_artifact": "артефакт", "file_tree_snapshot": "артефакт",
     "failure_vignette": "провал",
     "criteria_checklist_and_boundary": "критерий и граница",
@@ -119,7 +119,6 @@ FIGS={
     "n01": "ramka-n01-hero.png",
     "n05": "ramka-n05-karta.png",
     "n62": "ramka-n62-chto-razlozheno.png",
-    "n63": "ramka-n63-korziny.png",
     "s01": "hero-barier.png",
     "s05": "pravilo-poryadka.png",
     "s06": "karta-stupeney.png",
@@ -150,7 +149,6 @@ FIGS={
     # Блок «Хуки» новой деки, n06–n32 — девять схем
     "n07": "khuki-n07-stsena.png",
     "n12": "khuki-n12-ustroystvo.png",
-    "n13": "khuki-n13-sborka.png",
     "n15": "khuki-n15-proval.png",
     "n18": "khuki-n18-stsena.png",
     "n22": "khuki-n22-kletki.png",
@@ -240,12 +238,41 @@ def label_for(sid, pattern):
 
 
 def figure_for(sid):
-    """Автоподбор схемы по имени файла — `figures/<id>.png` или `<id>-*.png`.
-    Поведение сохранено ровно как было: 23 схемы сделаны отдельно и хорошо."""
-    cand = []
-    if not cand and sid in FIGS and (FIGDIR / FIGS[sid]).exists():
-        cand = [FIGDIR / FIGS[sid]]
-    return cand[0] if cand else None
+    """Схема слайда по реестру `FIGS`.
+
+    Прежде отсутствие файла проходило МОЛЧА: `FIGS` называл схему, файла не
+    было, `figure_for` отдавал `None`, слайд собирался без иллюстрации и
+    сборка не говорила ни слова. Реестр и каталог расходятся ровно тогда,
+    когда схему отменили или переименовали, — то есть в момент правки, когда
+    смотреть на слайд никто не будет. На этом уже один раз получили старую
+    схему вместо новой.
+
+    Теперь реестр, называющий несуществующий файл, — предупреждение. Это тот
+    же класс, что и остальные: запись существует, реальности не
+    соответствует, и молчать об этом нельзя."""
+    fn = FIGS.get(sid)
+    if not fn:
+        return None
+    path = FIGDIR / fn
+    if not path.exists():
+        M._WARNINGS.append(f"НЕТ СХЕМЫ [{sid}]: реестр FIGS называет «{fn}», "
+                           f"файла нет — слайд соберётся без иллюстрации")
+        return None
+    return path
+
+
+def audit_figs(slides):
+    """Записи реестра, которым больше не соответствует ни один слайд деки.
+
+    Вторая половина той же беды: схема осталась в реестре, а слайд из деки
+    ушёл. Молча это не видно вовсе — `figure_for` для несуществующего слайда
+    просто не зовётся."""
+    ids = {s["id"] for s in slides}
+    pre = next(iter(ids), "n")[0]
+    for sid, fn in FIGS.items():
+        if sid[0] == pre and sid not in ids:
+            M._WARNINGS.append(f"МЁРТВАЯ ЗАПИСЬ FIGS [{sid}]: «{fn}» — такого "
+                               f"слайда в деке нет")
 
 
 # ── Замер = отрисовка ───────────────────────────────────────────────────────
@@ -938,9 +965,10 @@ def main():
             GENRE_FN.get(pattern, g_content)(sl, sid, title or sid, SP.blocks(visual),
                                              pattern, _assertion)
         if notes:
-            sl.notes_slide.notes_text_frame.text = notes
+            K.write_notes(sl, notes)
         built += 1
 
+    audit_figs(slides)
     out = HERE / out_name
     prs.save(out)
     warns = M.report()

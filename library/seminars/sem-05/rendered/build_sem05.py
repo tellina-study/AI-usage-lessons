@@ -1135,6 +1135,53 @@ GENRE_FN = {
 
 # ── Сборка ──────────────────────────────────────────────────────────────────
 
+def refresh_manifest():
+    """Пересобрать `deck.yaml` из слайдов перед сборкой — и СКАЗАТЬ, если он
+    разошёлся.
+
+    Разошёлся он молча, и это был четвёртый случай одного класса: правка есть,
+    до потребителя не доехала, тишина читается как порядок. Автор объявил схему
+    во фронтматтере, сборка прочла старый манифест, `figure_for` честно вернул
+    `None` — поля в его картине мира не существовало, — и слайд вышел без
+    иллюстрации, не дав ни одного предупреждения.
+
+    Почему пересобираем, а не только предупреждаем. Предупреждение приходит
+    ПОСЛЕ того, как собран неверный файл: узнаёшь вовремя, но артефакт уже
+    испорчен, и надо собирать второй раз. Манифест выводится из слайдов
+    целиком — значит рассинхрона может не быть как СОСТОЯНИЯ, а не как ошибки,
+    о которой сообщают.
+
+    Почему при этом говорим вслух. Молча переписывать файл, который читает
+    человек, — это ровно тот класс ошибки, с которым мы воюем всю пересборку:
+    правка без следа. Поэтому пересборка не тихая: если манифест изменился,
+    сборка называет, что именно поехало, и `git diff` не окажется сюрпризом.
+
+    `--deck <файл>` эту дорогу не трогает: прежняя дека ведётся руками, и
+    перезаписывать её нечем и незачем."""
+    import difflib
+    try:
+        import make_deck_yaml as G
+        doc, slides = G.build("n")
+        text = G.header_comment(slides, doc["deck"]) + G.yaml.safe_dump(
+            doc, allow_unicode=True, sort_keys=False, width=100,
+            default_flow_style=False)
+    except Exception as e:
+        M._WARNINGS.append(f"МАНИФЕСТ: пересобрать не удалось — {e}. "
+                           f"Собираю по тому, что лежит в deck.yaml")
+        return
+    path = ROOT / "deck.yaml"
+    was = path.read_text(encoding="utf-8") if path.exists() else ""
+    if was == text:
+        return
+    path.write_text(text, encoding="utf-8")
+    changed = [l for l in difflib.unified_diff(was.splitlines(), text.splitlines(), n=0)
+               if l[:1] in "+-" and l[:3] not in ("+++", "---")]
+    head = "; ".join(l.strip() for l in changed[:4])
+    M._WARNINGS.append(
+        f"МАНИФЕСТ ПЕРЕСОБРАН: deck.yaml был старше слайдов, строк разошлось "
+        f"{len(changed)} — {head}{'…' if len(changed) > 4 else ''}")
+
+
 def deck_from_files(prefix):
     """Список слайдов блока, собранный ИЗ САМИХ ФАЙЛОВ, минуя `deck.yaml`.
 
@@ -1188,6 +1235,12 @@ def main():
     prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
     blank = prs.slide_layouts[6]
     M.reset()
+    # ПОСЛЕ reset(): иначе собственное предупреждение о пересобранном
+    # манифесте стёрлось бы вместе с чужими, и правка без пересборки снова
+    # прошла бы молча — ровно тот дефект, ради которого всё это написано.
+    if not block and deck_file == "deck.yaml":
+        refresh_manifest()
+        slides = yaml.safe_load((ROOT / deck_file).read_text(encoding="utf-8"))["slides"]
 
     only = set(argv)
     built = 0

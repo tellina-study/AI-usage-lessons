@@ -116,6 +116,10 @@ BADGE = {"s07": 3, "s21": 4, "s33": 5,
          "n06": 1, "n17": 2, "n25": 3, "n34": 4, "n43": 5, "n51": 6}
 
 FIGS={
+    "n01": "ramka-n01-hero.png",
+    "n05": "ramka-n05-karta.png",
+    "n62": "ramka-n62-chto-razlozheno.png",
+    "n63": "ramka-n63-korziny.png",
     "s01": "hero-barier.png",
     "s05": "pravilo-poryadka.png",
     "s06": "karta-stupeney.png",

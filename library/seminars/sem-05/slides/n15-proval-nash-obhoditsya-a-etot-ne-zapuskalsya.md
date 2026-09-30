@@ -24,7 +24,7 @@ visual:
 
 | Причина | Чем проверяется |
 |---|---|
-| это `git`-хук, а не хук среды | `cat .claude/settings.json` → `{}` |
+| это `git`-хук, среде он не зарегистрирован | `cat .claude/settings.json` → `{}` |
 | как `git`-хук не установлен | `ls .git/hooks/` → только `.sample` |
 | зовёт библиотеку, которой нет | `bash …pre-commit-viz.sh; echo $?` → **0** |
 

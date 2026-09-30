@@ -149,14 +149,12 @@ FIGS={
     # Блок «Хуки» новой деки, n06–n32 — девять схем
     "n12": "khuki-n12-ustroystvo.png",
     "n15": "khuki-n15-proval.png",
-    "n22": "khuki-n22-kletki.png",
     "n29": "khuki-n29-umnozhenie.png",
     "n32": "khuki-n32-sloi.png",
     # Блок «Скиллы», n34–n58 — четыре схемы
     "n40": "skilly-dvoynaya-oplata.png",
     "n41": "skilly-otbor.png",
     "n52": "skilly-nalog.png",
-    "n57": "skilly-relevantnyy-vred.png",
 }
 
 

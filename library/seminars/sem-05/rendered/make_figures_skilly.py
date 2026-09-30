@@ -27,6 +27,36 @@ PALE = (0xE6, 0xEC, 0xF3); ROSE = (0xF7, 0xE6, 0xE4); W = (255, 255, 255)
 OUT = Path(__file__).parent / "figures"; OUT.mkdir(exist_ok=True)
 CW = 2400
 WARN = []
+RECTS = []
+
+
+def _claim(x, y, w, h, where):
+    """Регистрирует прямоугольник и ругается, если он перекрыл уже нарисованный.
+
+    Взято у генератора блока «Хуки» — закрывает слепой угол, из-за которого
+    за один день три сессии поймали наползающие блоки ТОЛЬКО глазами: проверка
+    ширины текста была у всех, проверки вертикальных столкновений не было ни у
+    кого. У меня этим слепым углом были ярлык, наехавший на подпись, и золотая
+    плашка, наехавшая на строку над ней.
+
+    Префикс «+» в имени — намеренная накладка, такие не считаются.
+    """
+    if where.startswith("+"):
+        return
+    x2, y2 = x + w, y + h
+    for (ax, ay, bx, by, aw) in RECTS:
+        ox = min(x2, bx) - max(x, ax)
+        oy = min(y2, by) - max(y, ay)
+        if ox > 2 and oy > 2:
+            WARN.append(f"СТОЛКНОВЕНИЕ: {where!r} перекрывает {aw!r} на {ox}x{oy} px")
+            break
+    RECTS.append((x, y, x2, y2, where))
+
+
+def _newfig(w, h):
+    """Новая канва — прямоугольники предыдущей больше не в счёт."""
+    RECTS.clear()
+    return Image.new("RGB", (w, h), W)
 
 
 def f(sz, b=False, m=False):
@@ -44,8 +74,9 @@ def cline(d, y, txt, sz=20, col=INK, b=False):
     d.text(((CW - tw) // 2, y), txt, font=fo, fill=col)
 
 
-def plate(d, x, y, w, h, lines, fc, tc=INK, sz=21, b=False, m=False, pad=18):
+def plate(d, x, y, w, h, lines, fc, tc=INK, sz=21, b=False, m=False, pad=18, where=None):
     """Плашка с текстом по левому краю, вертикально по центру."""
+    _claim(x, y, w, h, where or f"плашка {lines[0][:24]!r}")
     d.rounded_rectangle([x, y, x + w, y + h], radius=10, fill=fc)
     fo = f(sz, b, m); step = sz + 9
     cy = y + (h - (len(lines) * step - 9)) // 2
@@ -55,8 +86,9 @@ def plate(d, x, y, w, h, lines, fc, tc=INK, sz=21, b=False, m=False, pad=18):
         d.text((x + pad, cy + i * step), ln, font=fo, fill=tc)
 
 
-def cplate(d, x, y, w, h, lines, fc, tc=W, sz=21, b=True, m=False):
+def cplate(d, x, y, w, h, lines, fc, tc=W, sz=21, b=True, m=False, where=None):
     """Плашка с текстом по центру."""
+    _claim(x, y, w, h, where or f"плашка {lines[0][:24]!r}")
     d.rounded_rectangle([x, y, x + w, y + h], radius=10, fill=fc)
     fo = f(sz, b, m); step = sz + 9
     cy = y + (h - (len(lines) * step - 9)) // 2
@@ -135,7 +167,7 @@ im.save(OUT / "skilly-otbor.png")
 # внизу золотая плашка с правилами, которые дальше нужны не один раз.
 # Уровням загрузки отдано больше площади, чем остальным частям: это блок,
 # снимающий больше всего вопросов, — та же логика, что у них с событиями.
-im = Image.new("RGB", (2400, 845), W); d = ImageDraw.Draw(im)
+im = _newfig(2400, 845); d = ImageDraw.Draw(im)
 
 
 def numbox(d, x, y, n, title, w=None):
@@ -231,7 +263,7 @@ d.text((66, 816), "•  описание пишут ТРЕТЬИМ ЛИЦОМ: �
 im.save(OUT / "skilly-ustroystvo.png")
 
 # ── Сцена внешнего кейса: своё за недели или готовое сегодня ────────────────
-im = Image.new("RGB", (2400, 620), W); d = ImageDraw.Draw(im)
+im = _newfig(2400, 620); d = ImageDraw.Draw(im)
 head(d, "Одна задача, два пути — и по трём меркам из четырёх готовое честно выигрывает")
 cols = [("Написать своё", MID, [("срок", "недели"), ("качество разбора таблиц", "хуже"),
                                 ("поддержка при смене формата", "ваша навсегда"),
@@ -255,7 +287,7 @@ cline(d, 556, "«Недели» — оценка объёма работы, а �
 im.save(OUT / "skilly-svoy-ili-gotovyy.png")
 
 # ── Провал внешнего кейса: два замера одного каталога ───────────────────────
-im = Image.new("RGB", (2400, 560), W); d = ImageDraw.Draw(im)
+im = _newfig(2400, 560); d = ImageDraw.Draw(im)
 head(d, "Один открытый каталог, два сплошных обхода с разницей в одиннадцать дней")
 for i, (when, bad, total, share) in enumerate([("первый обход", 341, 2857, "12%"),
                                                ("через 11 дней", 824, 10700, "8%")]):
@@ -279,8 +311,8 @@ im.save(OUT / "skilly-chuzhoy-katalog.png")
 
 print("схемы блока «Скиллы»:", *[p.name for p in sorted(OUT.glob("skilly-*.png"))])
 if WARN:
-    print("ПРЕДУПРЕЖДЕНИЯ ПО ШИРИНЕ:", len(WARN))
+    print("ПРЕДУПРЕЖДЕНИЯ (ширина и столкновения):", len(WARN))
     for w in dict.fromkeys(WARN):
         print("  -", w)
 else:
-    print("по ширине всё влезло")
+    print("по ширине влезло, столкновений нет")

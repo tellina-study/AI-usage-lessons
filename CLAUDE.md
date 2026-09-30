@@ -543,7 +543,7 @@ library/lectures/lec-NN/
 
 ## Best Practices Documentation
 
-**Reference:** `notes/decisions.md` — accumulated findings, patterns, and anti-patterns.
+**Reference:** `notes/decisions.md` — указатель частей журнала + текущие записи. Старые периоды вынесены в `notes/decisions-2026-*.md` (журнал разрезан по лимиту 600 строк). Новые записи добавляются всегда в `decisions.md`.
 
 ### Update Rule
 Every time a new finding, gotcha, or best practice is discovered during work, it MUST be added to `notes/decisions.md`. Before starting work, CHECK this file for existing findings relevant to your task.

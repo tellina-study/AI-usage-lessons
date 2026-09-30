@@ -87,6 +87,7 @@ URLS = {
     "aarrr_inc": "https://www.inc.com/walter-chen/aarrr-dave-mcclure-s-pirate-metrics-and-the-only-five-numbers-that-matter.html",
     # --- AI-эра: инструменты / evals / governance ---
     "anthropic_agentic_2026": "https://resources.anthropic.com/2026-agentic-coding-trends-report",
+    "anthropic_code_review": "https://claude.com/blog/code-review",
     "bain_ai_pdlc": "https://www.bain.com/insights/the-rise-of-the-ai-development-life-cycle/",
     "reganti_badam_ccdc": "https://www.lennysnewsletter.com/p/why-your-ai-product-needs-a-different",
     "deepmind_specgaming": "https://deepmind.google/blog/specification-gaming-the-flip-side-of-ai-ingenuity/",
@@ -881,11 +882,12 @@ SLIDE_REFS = {
          "приобретение Google, май 2025; обновление марта 2026 — быстро "
          "меняющийся ландшафт инструментов", True),
         ("3", "Стюарт и соавторы — рандомизированный опыт, arXiv:2609.26725 "
-              "(23 сент. 2026)", "figma_make_rct",
+              "(22 сент. 2026)", "figma_make_rct",
          "100 участников (50 дизайнеров + 50 продуктовых руководителей), "
          "контрольная группа без генератора: ~20% сокращение времени, у "
-         "руководителей 23%, у дизайнеров эффект зависит от сложности "
-         "задачи. Выполнен самой Figma на своём инструменте — поправка на "
+         "продуктовых руководителей 35%, у дизайнеров только на самой "
+         "сложной задаче (26%), общий эффект пограничный (17%, p=0,049). "
+         "Выполнен самой Figma на своём инструменте — поправка на "
          "заинтересованность"),
     ],
     "s18": [
@@ -917,18 +919,21 @@ SLIDE_REFS = {
          "MVP как обучающий инструмент, не урезанная отгрузка; риск "
          "vanity-метрик"),
         ("2", "Stage-Gate — история метода", "stage_gate_story",
-         "go/kill-гейт: «воронка, не туннель», пороги провала заданы "
+         "рубеж «продолжать или закрыть»: «воронка, не туннель», пороги "
+         "провала заданы "
          "заранее"),
     ],
     "s23": [
-        ("1", "Anthropic — 2026 Agentic Coding Trends Report",
-         "anthropic_agentic_2026",
-         "+200% кода на инженера год к году; лишь ~16% PR получают "
-         "содержательное человеческое ревью до слияния", True),
+        ("1", "Anthropic — Code Review for Claude Code (9 марта 2026)",
+         "anthropic_code_review",
+         "+200% кода на инженера за год; содержательные комментарии ревью "
+         "получали 16% изменений до внедрения автоматического ревью и 54% "
+         "после — дословно «Before, 16% of PRs got substantive review "
+         "comments. Now 54% do»", True),
     ],
     "s24": [
         ("1", "Reganti & Badam — CC/CD framework", "reganti_badam_ccdc",
-         "Continuous Calibration/Development; лестница агентности "
+         "Continuous Calibration/Development; шкала самостоятельности "
          "(Copilot→Cursor); «не готовы давать высокую агентность»"),
     ],
     "s25": [

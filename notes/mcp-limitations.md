@@ -887,6 +887,12 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
 - **Severity:** P1 — combined with [#212-1]/[#212-3] it means a parallel session can visually "verify" its slides against a PDF produced by, and for, somebody else's build.
 - **Workaround (used in #212 Раздел 7):** do not render the shared deck at all for a per-section visual check. Build a throwaway pptx containing only the section's own builders (slide layout does not depend on slide position, so the check is still valid), convert it with a **private** `-env:UserInstallation` path into a **private** outdir, and assert the string you just changed is present in the produced PDF's text. Cost is seconds instead of the full deck's minutes, and it cannot be disturbed by, or disturb, a concurrent session.
 - **Proper fix (not done here):** give `render.sh` a per-invocation profile and outdir (e.g. suffix by `$$` or by session id) so overlap is safe by default — the one-line change [#212-2] already names as the escape hatch but the script never took.
+- **Дополнение (правка P0 по фактчеку, 2026-09-30):** приватный рендер по этому рецепту падает, если скопировать
+  только строку `soffice`. Бинарник нуждается в `export LD_LIBRARY_PATH=/home/harness/.local/lo-sysroot/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH`
+  (её ставит `render.sh`, и только поэтому общий рендер работает). Без неё `oosplash` умирает на
+  `libXinerama.so.1: cannot open shared object file`, PDF не создаётся вовсе, а сообщение уходит в `2>&1`,
+  который в рецепте обычно погашен в `/dev/null` — то есть отказ выглядит как «конвертация прошла, файла нет».
+  Заодно ставить `HOME` в свой каталог: профиль пишется относительно него.
 - **Status:** active.
 - **First seen in:** #212 (Лекция 5, правка по owner-review 2026-09-30, Раздел 7 — six sections revised in parallel in one worktree).
 

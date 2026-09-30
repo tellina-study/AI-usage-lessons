@@ -479,7 +479,8 @@ Owner дал 20 правок на v4-дек Лекции 3; сквозная т�
    который рисует.
 
 **Полный словарь приёмов, грамматика форм, правила измерения и расчёт ширины колонок —
-[`seminar-deck-kit.md`](seminar-deck-kit.md).**
+[`seminar-deck-kit.md`](seminar-deck-kit.md). Чем проверяется работа и почему проверки врут —
+[`proverki-i-pravila.md`](proverki-i-pravila.md): пять правил, каждое из живого случая.**
 Эталонная реализация: `library/seminars/sem-05/rendered/` — `deck_kit.py`, `metrics.py`,
 `build_sem05.py`, аудит `audit_grammar.py`.
 

@@ -156,7 +156,7 @@ libreoffice --headless --convert-to pdf /tmp/test.pptx       # smoke test conver
 
 - [ ] Read this README (§1-§5 как минимум).
 - [ ] Read `notes/mcp-limitations.md` — известные грабли PowerPoint MCP.
-- [ ] Read `notes/decisions.md` (последний раздел) — anti-patterns каталог.
+- [ ] Read `notes/decisions.md` (указатель частей + текущие записи) и `notes/decisions-2026-03-05-lectures-1-6.md` § «2026-05-12 — Presentation pipeline» — anti-patterns каталог.
 - [ ] Verify tools: `mmdc --version`, `convert --version`, `rsvg-convert --version`, `libreoffice --headless --version`, `pdftoppm -v`.
 - [ ] Verify PowerPoint MCP: `mcp__powerpoint__get_server_info` отвечает.
 

@@ -55,7 +55,7 @@ description: Критикует методическую глубину + пед
 
 #### Anti-pattern Grep Awareness (ENFORCED)
 
-**Mandatory step:** перед review — read `notes/decisions.md` § anti-pattern catalog (теперь 35 items после lec-01 v3 reflection).
+**Mandatory step:** перед review — read `notes/decisions-2026-03-05-lectures-1-6.md` § anti-pattern catalog (теперь 35 items после lec-01 v3 reflection).
 
 Run automated grep checks against артефакт за известные anti-patterns:
 - «магическая пилюля» / «AI спасёт» / «революция» — promise-driven tone.

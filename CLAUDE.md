@@ -620,7 +620,7 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 
 **Workflow:** `/build-deck N` — orchestrator-skill, спавнит `presentation-designer` для рендера + 3 QA agents (`presentation-critic` + `student-simulator` + `reader-simulator` mode=rendered) параллельно. `reader-simulator` mode=`text-only` запускается ДО рендера для методического контроля.
 
-**Required reading для любого agent'а, работающего со слайдами:** `tools/presentation-build/README.md` (агенты начинаются с явной ссылки на этот файл). Также обязательно `notes/mcp-limitations.md` (PowerPoint MCP gotchas) и `notes/decisions.md` § «2026-05-12 — Presentation pipeline» (anti-patterns каталог).
+**Required reading для любого agent'а, работающего со слайдами:** `tools/presentation-build/README.md` (агенты начинаются с явной ссылки на этот файл). Также обязательно `notes/mcp-limitations.md` (PowerPoint MCP gotchas) и `notes/decisions-2026-03-05-lectures-1-6.md` § «2026-05-12 — Presentation pipeline» (anti-patterns каталог).
 
 ### Skills (`.claude/skills/`)
 

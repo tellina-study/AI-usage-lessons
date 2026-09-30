@@ -83,7 +83,7 @@ GENRE = {
     "transfer_exercise": "перенос на свой репозиторий",
     "assertion_visual": "ограничение",
     "section_divider_macro": "",
-    "problem_scenario": "завязка", "question_with_option_cards": "вопрос",
+    "problem_scenario": "завязка", "problem_scenario_with_figure": "завязка", "question_with_option_cards": "вопрос",
     "base_and_edge": "база",
     "evidence_table_with_gap": "свидетельства",
     "answer_breakdown_table": "разбор", "dual_mode_breakdown": "разбор",
@@ -91,7 +91,7 @@ GENRE = {
     "cobuilding_bad_example_reveal": "сборка",
     "cobuilding_description_assembly": "сборка",
     "code_artifact": "артефакт", "file_tree_snapshot": "артефакт",
-    "failure_vignette": "провал",
+    "failure_vignette": "провал", "failure_vignette_with_figure": "провал",
     "criteria_checklist_and_boundary": "критерий и граница",
     "axis_placement": "строка оси", "token_cost_table": "цена",
 }

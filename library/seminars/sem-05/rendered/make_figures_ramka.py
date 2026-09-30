@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Схемы рамки новой деки Семинара 5 — открытие n01–n05 и закрытие n59–n63.
+"""Схемы рамки новой деки Семинара 5 — открытие n01-n05 и закрытие n59-n62.
+
+Слайд переноса на свой репозиторий и его схема трёх корзин сняты решением
+владельца (qa/zamechaniya-vladeltsa-round3.md п. 33, «CTA убрать»): занятие
+кончается на том, что стало проверяемым.
 
 Рисуются программно (PIL), а не описываются словами. Файл принадлежит сессии
 рамки; make_figures.py / make_figures_khuki.py / make_figures_skill.py /
@@ -12,7 +16,6 @@ make_figures_mcp.py / make_figures_otkrytie.py этой сессией не тр
   ramka-n01-hero.png            n01  просьба → пять сегментов, два залиты
   ramka-n05-karta.png           n05  две ступени по три развилки, без ролей и файлов
   ramka-n62-chto-razlozheno.png n62  две строки с артефактом, три пустые
-  ramka-n63-korziny.png         n63  два усиления над тремя равными корзинами
 
 Высота полотна = высота схемы на слайде: ширина всегда 12,23″ (а на обложке
 13,333″), поэтому 2400 × H px встаёт как 12,23 × 12,23·H/2400 дюймов. Отсюда
@@ -68,8 +71,12 @@ def lines_at(d, x, y, lines, fo, col, lh):
         d.text((x, y + i * lh), ln, font=fo, fill=col)
 
 
-def clabel(d, cx, y, txt, sz, col=INK, b=False, m=False, where="?"):
+def clabel(d, cx, y, txt, sz, col=INK, b=False, m=False, where="?", limit=None):
+    """Подпись по центру. limit — ширина, в которую она обязана уложиться;
+    без него подпись не измеряется вовсе, и так hero молча потерял рамку."""
     fo = f(sz, b, m)
+    if limit:
+        fit(d, txt, fo, limit, where)
     d.text((cx - d.textlength(txt, font=fo) / 2, y), txt, font=fo, fill=col)
 
 
@@ -132,10 +139,11 @@ im = Image.new("RGB", (2400, 612), DEEP); d = ImageDraw.Draw(im)
 d.line([50, 556, 2350, 556], fill=LIGHT, width=5)
 
 d.rounded_rectangle([70, 352, 380, 552], radius=12, fill=W)
-clabel(d, 225, 380, "просьба", 34, INK, b=True)
+clabel(d, 225, 374, "просьба", 34, INK, b=True, where="n01 просьба", limit=274)
 for i, s in enumerate(("записана", "прочитана")):
-    clabel(d, 225, 434 + i * 32, s, 21, MUTE)
-clabel(d, 225, 506, "исполнять её некому", 22, RED, b=True, where="n01 просьба")
+    clabel(d, 225, 424 + i * 30, s, 21, MUTE, where="n01 просьба", limit=274)
+for i, s in enumerate(("механизма", "исполнения нет")):
+    clabel(d, 225, 492 + i * 28, s, 21, RED, b=True, where="n01 просьба", limit=274)
 arrow(d, 410, 452, 560, 452, col=LIGHT, head=20, wd=6)
 
 x = 588
@@ -256,41 +264,6 @@ for name in EMPTY:
 save(im, "ramka-n62-chto-razlozheno.png")
 
 
-# ── n63 · два усиления над тремя равными корзинами ───────────────────────────
-# 2400 × 560 px при ширине 12,23″ = 2,85″ — влезает под золотую коробку вопроса.
-im = Image.new("RGB", (2400, 560), W); d = ImageDraw.Draw(im)
-x = 760
-for name in ("хук", "скилл"):
-    box(d, x, 24, 440, 92, name, GOLD, tc=DEEP, sz=36, where="n63 чип")
-    x += 480
-BASKETS = [
-    ("сигнал прозвучал", "завожу на этой неделе", GOLD),
-    ("сигнала нет", "жду, и это решение", LIGHT),
-    ("не нужно вообще", "и я могу сказать, почему", TEAL),
-]
-# Шина: два чипа спускаются к общей линии, от линии — по стрелке в каждую из
-# трёх корзин. Прежде стрелка рисовалась НАД каждой корзиной, и над третьей
-# она приходила ни от чего — читалось как потерянный чип.
-CX = [50 + 370 + i * 780 for i in range(3)]
-d.line([CX[0], 168, CX[2], 168], fill=(0xC6, 0xD5, 0xE2), width=5)
-for cx in (980, 1460):
-    d.line([cx, 116, cx, 168], fill=(0xC6, 0xD5, 0xE2), width=5)
-for cx in CX:
-    arrow(d, cx, 168, cx, 212, col=(0xC6, 0xD5, 0xE2), wd=5, head=16)
-
-x = 50
-for title, sub, line in BASKETS:
-    d.rounded_rectangle([x, 220, x + 740, 520], radius=14, fill=SURF,
-                        outline=(0xC6, 0xD5, 0xE2), width=3)
-    d.rectangle([x + 4, 222, x + 736, 236], fill=line)
-    ly = 276
-    for ln in wrap(d, title, f(34, True), 684):
-        clabel(d, x + 370, ly, ln, 34, INK, b=True); ly += 44
-    ly = 380
-    for ln in wrap(d, sub, f(28), 684):
-        clabel(d, x + 370, ly, ln, 28, MUTE); ly += 36
-    x += 780
-save(im, "ramka-n63-korziny.png")
 
 
 print("схемы рамки:")

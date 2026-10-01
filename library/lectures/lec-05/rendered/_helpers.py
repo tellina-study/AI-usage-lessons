@@ -76,12 +76,20 @@ URLS = {
     "nielsen_not_user": "https://medium.com/hippo-digital/you-are-not-the-user-but-what-about-when-you-are-35abe4006b8",
     "lean_startup_vanity": "https://effectivesoftwaredesign.com/2021/03/23/lean-startup-principles-vanity-metrics-and-actionable-metrics/",
     "stage_gate_story": "https://www.stage-gate.com/about/our-story-2/",
+    "x_foghorn": "https://x.company/projects/foghorn/",
     "kohavi_oec": "https://www.linkedin.com/pulse/overall-evaluation-criterion-oec-ronny-kohavi",
     "kohavi_bing_ab": "https://en.wikipedia.org/wiki/A/B_testing",
     "exp_platform": "https://exp-platform.com/",
     "srm_microsoft": "https://www.microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/",
     "gopractice_peeking": "https://gopractice.io/data/peeking-problem/",
     "sre_error_budget": "https://sre.google/workbook/error-budget-policy/",
+    # owner-review 2026-10-01: Раздел 5 развёрнут на использование ИИ
+    # в поддержке — источники половины «люди» заведены здесь.
+    "google_sre_book": "https://sre.google/sre-book/introduction/",
+    "itil_service_management": "https://www.axelos.com/certifications/itil-service-management",
+    "genai_at_work_qje": "https://www.nber.org/papers/w31161",
+    "cursor_support_bot_aiid": "https://incidentdatabase.ai/cite/1039/",
+    "incidentio_ai_platform": "https://incident.io/ai-platform",
     "heart_google": "https://research.google/pubs/measuring-the-user-experience-on-a-large-scale-user-centered-metrics-for-web-applications/",
     "northstar_amplitude": "https://amplitude.com/blog/good-bad-north-star-metric",
     "aarrr_inc": "https://www.inc.com/walter-chen/aarrr-dave-mcclure-s-pirate-metrics-and-the-only-five-numbers-that-matter.html",
@@ -111,6 +119,14 @@ URLS = {
     "llmops_langsmith_langfuse": "https://www.digitalapplied.com/blog/agent-observability-platforms-langsmith-langfuse-arize-2026",
     "osmani_70": "https://addyo.substack.com/p/the-70-problem-hard-truths-about-ai-assisted-coding",
     # --- Провалы (13 кейсов) ---
+    # issue #212, owner-review 2026-10-01: замена кейсов s13a и s19.
+    "humane_returns_9to5": "https://9to5mac.com/2024/08/07/humane-ai-pin-woes-worsen-as-recent-returns-exceed-sales/",
+    "humane_hp_techcrunch": "https://techcrunch.com/2025/02/18/humanes-ai-pin-is-dead-as-hp-buys-startups-assets-for-116m",
+    "humane_wiki": "https://en.wikipedia.org/wiki/Humane_Inc.",
+    "glass_enterprise_dt": "https://www.digitaltrends.com/mobile/google-glass-enterprise-edition/",
+    "nhtsa_23v838": "https://static.nhtsa.gov/odi/rcl/2023/RCLRPT-23V838-8276.PDF",
+    "nhtsa_ea22002": "https://static.nhtsa.gov/odi/inv/2022/INCLA-EA22002-14498.pdf",
+    "nhtsa_rq24009": "https://static.nhtsa.gov/odi/inv/2024/INOA-RQ24009-12046.pdf",
     "nng_synthetic_drone": "https://www.nngroup.com/articles/synthetic-users/",
     "fortune_deloitte_australia": "https://fortune.com/2025/10/07/deloitte-ai-australia-government-report-hallucinations-technology-290000-refund",
     "science_maha_deloitte": "https://www.science.org/content/article/trump-officials-downplay-fake-citations-high-profile-report-children-s-health",
@@ -153,6 +169,11 @@ URLS = {
     "amazon_jwo_2026": "https://www.aboutamazon.com/news/retail/amazon-just-walk-out-dash-cart-grocery-shopping-checkout-stores",
     "finops_tokenomics_2026": "https://www.finops.org/wg/token-economics-saas/",
     "anthropic_multiagent": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    # --- issue #212, замечание владельца 2: структура затрат и доходов (s45a) ---
+    "iconiq_state_of_ai_2026": "https://www.iconiq.com/growth/reports/state-of-ai-2026",
+    "cloudzero_finance_2026": "https://www.prnewswire.com/news-releases/cloudzero-survey-says-78-of-finance-execs-cant-fully-tie-ai-spending-to-business-outcomes-302808711.html",
+    "eu_ai_act_art12": "https://artificialintelligenceact.eu/article/12/",
+    "eu_ai_act_art19": "https://artificialintelligenceact.eu/article/19/",
     "business_standard_jwo": "https://www.business-standard.com/companies/news/amazon-s-just-walk-out-checkout-tech-was-powered-by-1-000-indian-workers-124040400463_1.html",
     "retaildive_jwo": "https://www.retaildive.com/news/amazon-removes-just-walk-out-tech-amazon-fresh-stores-dash-carts/712150",
 }
@@ -854,16 +875,27 @@ SLIDE_REFS = {
          "~712 задокументированных судебных дел с ИИ-галлюцинациями "
          "по миру", True),
     ],
+    # issue #212 (Р1-2026-10-01): кейс IBM Watson заменён — его корень в
+    # обучающих данных, а слайд стоит в фазе изучения пользователей.
     "s13a": [
-        ("1", "STAT News — утечка внутренних документов IBM Watson",
-         "ibm_watson_statnews",
-         "«небезопасные и некорректные» рекомендации по онкологии (25 июля "
-         "2018)"),
-        ("2", "IEEE Spectrum — как Watson переобещал и недодал",
-         "ibm_watson_ieee",
-         "обучен на придуманных, гипотетических случаях, размеченных "
-         "горсткой онкологов одной клиники, а не на реальных исходах "
-         "лечения"),
+        ("1", "9to5Mac (7 авг. 2024) — внутренние данные продаж Humane",
+         "humane_returns_9to5",
+         "с мая по август 2024 возвратов больше, чем покупок: ≈10 000 "
+         "проданных приборов, ≈9 млн долларов выручки, к августу на руках "
+         "ближе к 7 000"),
+        ("2", "TechCrunch (18 фев. 2025) — активы Humane купила HP",
+         "humane_hp_techcrunch",
+         "116 млн долларов за активы при более 230 млн привлечённых; "
+         "продажи прекращены, облачный сервис погашен 28 февраля 2025"),
+        ("3", "Humane Inc. — даты, цены и цель продаж", "humane_wiki",
+         "показ 9 ноября 2023; продажи с апреля 2024 по 699 долларов плюс "
+         "24 в месяц; снижение до 499 с 23 октября 2024; цель 100 000 "
+         "приборов за год"),
+        ("4", "Digital Trends — Glass Enterprise Edition у AGCO и DHL",
+         "glass_enterprise_dt",
+         "против той же работы без очков: время сборки −25%, время контроля "
+         "−30% (AGCO), выработка на складе +15% (DHL); широкие продажи "
+         "Explorer за 1500 долларов закрыты в январе 2015"),
     ],
     "s15": [
         ("1", "Совет по дизайну Великобритании — двойной ромб", "double_diamond",
@@ -898,19 +930,24 @@ SLIDE_REFS = {
          "21 880 оценок WCAG на ИИ-интерфейсах, 29,0% соответствие "
          "(контраст 26,8%, цвет 19,2%)", True),
     ],
+    # issue #212 (Р2-2026-10-01): кейс Character.AI заменён — его корень в
+    # отсутствующем требовании безопасности, а раздел про дизайн
+    # взаимодействия требует провала поведения системы и её предъявления.
     "s19": [
-        ("1", "Washington Post (24 окт. 2024)", "wapo_characterai",
-         "гибель 14-летнего пользователя после месяцев общения с "
-         "ИИ-персонажем"),
-        ("2", "CBS News (7 янв. 2026) — урегулирование",
-         "cbs_characterai_settle",
-         "Character.AI и Google урегулировали иски; условия "
-         "конфиденциальны, без признания вины"),
-        ("3", "Character.AI — объявление о защите несовершеннолетних "
-              "(29 окт. 2025)", "charai_u18",
-         "запрет свободного общения для пользователей младше 18 и проверка "
-         "возраста — не позднее 25 нояб. 2025; запуск сервиса — 16 сент. "
-         "2022, отсюда «три года»"),
+        ("1", "NHTSA — отчёт об отзыве 23V-838 (12 дек. 2023)",
+         "nhtsa_23v838",
+         "2 031 220 машин — все с Autosteer, выпущенные с 5 окт. 2012 по "
+         "7 дек. 2023; формулировка производителя о недостаточной "
+         "заметности и охвате элементов управления; устранение обновлением "
+         "2023.44.30"),
+        ("2", "NHTSA — закрытие расследования EA22-002", "nhtsa_ea22002",
+         "открыто 13 авг. 2021 как PE21-020, углублено 8 июня 2022; не "
+         "менее 13 аварий с погибшими, где свою роль сыграло предсказуемое "
+         "неверное применение системы"),
+        ("3", "NHTSA — проверка устранения RQ24-009 (25 апр. 2024)",
+         "nhtsa_rq24009",
+         "не менее 20 аварий после обновления; часть мер включается "
+         "согласием водителя и им же отключается"),
     ],
     "s20": [
         ("1", "EEOC (9 авг. 2023) — iTutorGroup", "eeoc_itutorgroup",
@@ -925,6 +962,11 @@ SLIDE_REFS = {
          "рубеж «продолжать или закрыть»: «воронка, не туннель», пороги "
          "провала заданы "
          "заранее"),
+        ("3", "X — проект Foghorn", "x_foghorn",
+         "топливо из морской воды: цель по стоимости 8 долларов за "
+         "галлон-эквивалент, модели дали 8–16, дешёвый водород требовал ещё "
+         "5+ лет исследований; закрыт в январе 2016 после двух лет работы, "
+         "результаты опубликованы"),
     ],
     "s23": [
         ("1", "Anthropic — Code Review for Claude Code (9 марта 2026)",
@@ -1029,10 +1071,47 @@ SLIDE_REFS = {
          "доля выдуманных ссылок на реальных юридических запросах: "
          "Lexis+ 17%, Westlaw 33%"),
     ],
+    # owner-review 2026-10-01: новый базовый слайд раздела — рамка качества
+    # из двух половин, обе дисциплины названы по имени.
+    "s36c": [
+        ("1", "Google — Site Reliability Engineering (O'Reilly, 2016)",
+         "google_sre_book",
+         "книга, которой оформлена дисциплина надёжности; половина "
+         "«система» и её измерители"),
+        ("2", "Axelos — ITIL, свод правил управления ИТ-услугами",
+         "itil_service_management",
+         "откуда идут служба поддержки и её измерители: решение с первого "
+         "раза, время до ответа, оценка после закрытия"),
+    ],
     "s37": [
         ("1", "Google — политика бюджета ошибок (Error Budget Policy)",
          "sre_error_budget",
-         "SLI/SLO/error budget = «1 − SLO»; изменения — ≈70% всех сбоев"),
+         "показатель / цель / бюджет = «1 − цель»; изменения дают ≈70% всех "
+         "сбоев; многооконное оповещение: 2% месячного бюджета за час, "
+         "5% за шесть часов"),
+    ],
+    # owner-review 2026-10-01: s38a переделан на ИИ в поддержке, s38b получил
+    # роль ИИ внутри учения — у обоих появились собственные источники.
+    "s38a": [
+        ("1", "Brynjolfsson, Li, Raymond — Generative AI at Work "
+              "(Quarterly Journal of Economics, 2025; препринт NBER w31161)",
+         "genai_at_work_qje",
+         "5 172 оператора поддержки, развёртывание ноя. 2020 — май 2021: "
+         "+15% решений в час в среднем и +30% у наименее опытных при базе "
+         "2,1 решения в час; у самых опытных прибавки почти нет, качество "
+         "слегка ниже"),
+        ("2", "AI Incident Database, инцидент 1039 — бот поддержки Cursor",
+         "cursor_support_bot_aiid",
+         "апрель 2025: бот объявил выдуманное ограничение «один вход на "
+         "пользователя», клиенты отменяли подписки, компания вернула деньги"),
+    ],
+    "s38b": [
+        ("1", "incident.io — сборка хронологии и черновика разбора по "
+              "записям инцидента",
+         "incidentio_ai_platform",
+         "класс инструментов 2026 года (incident.io, Rootly, PagerDuty); "
+         "экономия времени заявлена поставщиком, независимого замера нет",
+         True),
     ],
     "s38": [
         ("1", "Confident AI — обзор LLMOps observability 2026",
@@ -1094,15 +1173,26 @@ SLIDE_REFS = {
          "измеримую отдачу — снижение расходов или рост выручки — видят 6% "
          "компаний"),
     ],
+    # issue #212, замечание владельца 2: слайд выведен из карточной формы и
+    # показывает структуру затрат и доходов. Прежние ссылки (FinOps, Anthropic)
+    # относились к арифметике токенов и ушли вместе с ней в главу §6.1a.
     "s45a": [
-        ("1", "FinOps Foundation — рабочая группа по экономике токенов",
-         "finops_tokenomics_2026",
-         "расходами на ИИ занимаются 98% команд по управлению расходами "
-         "против 31% двумя годами раньше"),
-        ("2", "Anthropic — инженерный разбор многоагентной системы",
-         "anthropic_multiagent",
-         "агент расходует примерно вчетверо, многоагентная схема — примерно "
-         "в 15 раз больше токенов, чем обычный диалог"),
+        ("1", "ICONIQ Capital — обзор состояния ИИ (2026)",
+         "iconiq_state_of_ai_2026",
+         "около 305 руководителей компаний, делающих продукты с ИИ, опрос "
+         "второго квартала 2026 года: доли расхода по типам до запуска и на "
+         "масштабе; валовая маржа 45% в 2025 году против ожидаемых 53% в 2026",
+         True),
+        ("2", "CloudZero — опрос финансовых руководителей (2026)",
+         "cloudzero_finance_2026",
+         "260 респондентов, больше половины — финансовые директора: связать "
+         "расход на ИИ с деньгами умеют 22%; 60% согласны, что тратят на ИИ "
+         "больше, чем могут обосновать"),
+        ("3", "Регламент Европейского союза об ИИ, ст. 12 и 19",
+         "eu_ai_act_art12",
+         "система высокого риска обязана автоматически записывать события на "
+         "всём сроке жизни; журналы хранят не меньше шести месяцев — "
+         "обязанность действует с 2 августа 2026 года"),
     ],
     "s45b": [
         ("1", "Boston Consulting Group — окупаемость пилотов (2026)", "bcg_ai_pilots_2026",
@@ -1113,21 +1203,11 @@ SLIDE_REFS = {
          "вкладываются почти все: 94% продолжат вкладывать даже без немедленной "
          "отдачи"),
     ],
-    "s46": [
-        ("1", "Deloitte — исследование технологического лидерства (2026)",
-         "deloitte_2026_tech_leadership",
-         "более 660 руководителей: 81% уверены, что масштабируют ИИ, и при этом "
-         "75% говорят, что операционная модель обязана измениться; 42% — низкий "
-         "или нулевой возврат вложенного"),
-        ("2", "Gartner — прогноз по агентным проектам",
-         "gartner_agentic_cancel",
-         "более 40% агентных проектов закроют до конца 2027 года: расходы, "
-         "неясная ценность, слабый контроль рисков; реально агентных "
-         "поставщиков около 130 из тысяч"),
-        ("3", "Boston Consulting Group — окупаемость пилотов (2026)", "bcg_ai_pilots_2026",
-         "доли вклада в результат: 10% алгоритм, 20% данные и техника, 70% "
-         "люди и процессы"),
-    ],
+    # issue #212, замечание владельца 3: s46 пересобран в аппарат оценки
+    # любой функции и внешних цифр больше не цитирует — Deloitte / Gartner /
+    # Boston Consulting Group остались в главе §6.2, Deloitte и BCG звучат
+    # на s45. Запись снята, чтобы под слайдом не печатался список
+    # источников, которых он не приводит.
     "s47": [
         ("1", "MIT — отчёт о состоянии ИИ (июль 2025)", "mit_nanda_pdf",
          "нерецензированный препринт: воронка 60% → 20% → 5% — это 25% успеха "

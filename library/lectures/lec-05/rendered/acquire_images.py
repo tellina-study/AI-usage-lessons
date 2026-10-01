@@ -32,6 +32,9 @@ TARGETS = {
     "s42-nyc": "File:Seal of New York City.svg",
     "s48-amazon": "File:Amazon Go in Seattle, December 2016.jpg",
     "s13a-ibm": "File:IBM logo.svg",
+    # issue #212 (owner-review 2026-10-01): s19 сменил кейс с Character.AI на
+    # отзыв Tesla 23V-838; логотип взят тем же tier 2, лицензия public domain.
+    "s19-tesla": "File:Tesla Motors Logo.svg",
     "s47-mit": "File:MIT Dome night1 Edit.jpg",
     # GATE-B fix (2026-09-06): s49 closing hero — was schematic-only (P0,
     # presentation-critic + iteration-log admitted gap). "Человек в центре

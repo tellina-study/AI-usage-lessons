@@ -223,11 +223,25 @@ latin_kept_as_names:
   - name: "OpenTelemetry"
     russian: "—  название стандарта"
     first_appearance: "s38a (в строке источника)"
+  - name: "Autopilot"
+    russian: "—  имя режима в машинах Tesla, русского имени нет"
+    first_appearance: "s19 — «Autopilot — набор функций помощи водителю в машинах Tesla»"
+    note: >
+      issue #212, owner-review 2026-10-01: имя разбирается на слайде как решение фазы
+      дизайна (оно задаёт картину системы раньше первого предупреждения), поэтому стоит
+      в кавычках там, где речь о самом имени, и без кавычек там, где речь о функции.
+  - name: "AI Pin"
+    russian: "—  имя продукта компании Humane, русского имени нет"
+    first_appearance: "s13a — «Её единственный продукт, AI Pin, — носимый прибор без экрана»"
+  - name: "Google Glass"
+    russian: "—  имя продукта, русского имени нет"
+    first_appearance: "s13a — контрфактуал: «Google Glass прошёл тот же путь в обратную сторону»"
   - name: >
       бренды и издания: Google, Zillow, Klarna, IBM Watson, Amazon Go / Amazon Fresh,
       Figma, Statsig, GrowthBook, Eppo, Langfuse, Braintrust, LangSmith, Arize Phoenix,
       Faros, LinearB, Lovable, Magic Patterns, bolt.new, axe-core, Deloitte, Gartner,
-      Boston Consulting Group, FinOps Foundation, Nielsen Norman Group
+      Boston Consulting Group, FinOps Foundation, Nielsen Norman Group,
+      Humane, HP, Apple, Tesla, AGCO, DHL
     russian: "—  не переводятся"
     first_appearance: "по месту; каждое сопровождается ролью либо строкой источника"
 
@@ -238,6 +252,13 @@ abbreviations:
   - abbr: "WCAG"
     first: "s18"
     gloss_on_slide: "WCAG (Web Content Accessibility Guidelines, «правила доступности веб-содержимого»)"
+  - abbr: "NHTSA"
+    first: "s19"
+    gloss_on_slide: "Национальное управление безопасности дорожного движения США (NHTSA)"
+    note: >
+      issue #212, owner-review 2026-10-01: слайд s19 сменил кейс на отзыв Tesla 23V-838.
+      Раскрытие даётся русским названием ведомства — английская полная форма на видимый
+      слой не выносится, латиница там только для имён.
   - abbr: "MVP"
     first: "s22"
     gloss_on_slide: "Минимально жизнеспособный продукт (MVP — minimum viable product), Эрик Райс"
@@ -299,6 +320,14 @@ terms:
   - canonical: "путь назад"
     aliases: ["откат", "возврат к прошлой версии"]
     note: "«Роллбэк» запрещён."
+  - canonical: "поверхности и точки контакта"
+    note: >
+      Экран, голос, уведомление, письмо и отчёт, отказ, молчание (s14a). Вводятся как
+      объём слова «дизайн» в Разделе 2; оговорка продолжена на s15, s17, s17a, s18.
+  - canonical: "путаница режимов"
+    note: >
+      Картина системы в голове человека расходится с тем, что система делает (s19).
+      Имя пришло из авиации. «Mode confusion» латиницей на видимый слой не выносится.
   - canonical: "дизайн-система"
     note: >
       Свод правил интерфейса; ограничитель ГЕНЕРАЦИИ (s17a). Механизмом контроля становится

@@ -96,7 +96,7 @@ slides:
     chapter_ref: "§4.4 [for-slide-s32]"
     interaction: none
     verify_day_of: false
-    partial_out_strict_in: true
+    in_bucket: true
 
   - id: s33
     file: slides/s33-failure-facebook-msi.md
@@ -221,7 +221,7 @@ slides:
     chapter_ref: "§5.3 [for-slide-s39]"
     interaction: "none"
     verify_day_of: true
-    partial_out_strict_in: true
+    in_bucket: true
 
   - id: s40
     file: slides/s40-failure-zillow-drift.md

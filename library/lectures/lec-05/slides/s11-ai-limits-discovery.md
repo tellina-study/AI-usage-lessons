@@ -7,9 +7,9 @@ assertion: "Синтетический собеседник не произво�
 learning_goal: "ИИ-ограничения фазы + три признака, по которым видно, что здесь нужен живой разговор, а не синтез"
 learning_outcomes: [LO2, LO3]
 chapter_ref: "§1.6 [for-slide-s12]"
+in_bucket: true
 interaction: none
 verify_day_of: false
-partial_out_strict_in: true
 meme_or_visual: >
   assertion_visual: слева подписанная карточка «зеркало согласия» (иконка Lucide smile) с
   двумя числами рядом — доля сдвига тона при согласии и при несогласии, первая подсвечена

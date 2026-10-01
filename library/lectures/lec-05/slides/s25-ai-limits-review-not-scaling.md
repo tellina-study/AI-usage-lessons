@@ -7,9 +7,9 @@ assertion: "Ревью не растёт вместе с генерацией: �
 learning_goal: "Ограничение фазы: почему проверка — структурное узкое место, и что из этого следует для готовности выпускать"
 learning_outcomes: [LO2, LO3]
 chapter_ref: "§3.5 [for-slide-s25]"
+in_bucket: true
 interaction: none
 verify_day_of: false
-partial_out_strict_in: true
 note: "issue #212, Р2: из заголовка и тела убрано обращение к аудитории («вы удваиваете»). Р5: англицизм «eval-гейт» заменён русской формулировкой."
 meme_or_visual: >
   assertion_visual: весы, накренённые в одну сторону — слева лёгкая чаша «сделать»

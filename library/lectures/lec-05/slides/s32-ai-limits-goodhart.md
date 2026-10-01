@@ -7,9 +7,9 @@ assertion: "Когда мера становится целью, она пере
 learning_goal: "Ограничение раздела: взлом вознаграждения и закон Гудхарта на двух названных случаях; что из этого следует для проверки цифр"
 learning_outcomes: [LO2, LO6]
 chapter_ref: "§4.4 [for-slide-s32]"
+in_bucket: true
 interaction: none
 verify_day_of: false
-partial_out_strict_in: true
 note: "issue #212, Р5: сокращение RL раскрыто словами, «OEC-дисциплина» и «guardrail-метрики» заменены на русские названия из базы раздела. Р4: иконка заменена подписанной схемой «очки / финиш»."
 source: "DeepMind — Specification gaming (21 апр. 2020) · Anthropic — Sycophancy to Subterfuge (arXiv:2406.10162)"
 meme_or_visual: >

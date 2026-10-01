@@ -7,9 +7,9 @@ assertion: "Тихий дрейф: продукт продолжает отве�
 learning_goal: "Ограничения ИИ в эксплуатации: тихий дрейф, дрейф правил и то, что остаётся обязательным из классики"
 learning_outcomes: [LO2, LO3]
 chapter_ref: "§5.3 [for-slide-s39]"
+in_bucket: true
 interaction: none
 verify_day_of: true
-partial_out_strict_in: true
 revision: >
   issue #212. (1) Правило Р2: убран бейдж-пауза с вопросом залу. (2) Правило Р5 и
   русификация: guardrails → защитные правила, policy-as-code → правила как код,

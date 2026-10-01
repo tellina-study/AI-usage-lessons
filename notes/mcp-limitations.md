@@ -879,6 +879,13 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
 - **Status:** active.
 - **First seen in:** #212 (Лекция 5, замена англицизмов на дивайдере управления, 2026-09-28) — found by the orchestrator while verifying a subagent's work against the built file.
 
+### [#212-3b] Сборка молча не состоялась, а `render.sh` отрисовал предыдущую деку — тот же стоялый артефакт, другой триггер
+
+- **Когда:** issue #212, правка Разделов 6–7 Лекции 5, 2026-10-01.
+- **Что произошло:** команда вида `cd <lec-05> && python3 build_lec05.py && cd rendered && ./render.sh 50 54` выполнялась из оболочки, которая сбрасывает рабочий каталог между вызовами. `build_lec05.py` лежит в `rendered/`, поэтому сборка упала с `can't open file`, а следующая за ней отрисовка отработала штатно и выдала пять строк `rendered slide N` — по СТАРОМУ `lec-05.pptx`. Правка ячейки таблицы «отсутствовала» на снимке, хотя в исходнике была.
+- **Почему попадается:** признак успеха снова взят не из артефакта. Все пять `rendered slide N` настоящие, PDF настоящий, число страниц верное — неверен только возраст входа. Это тот же класс, что `[#212-3]`, но ломается не рендер, а сборка ПЕРЕД ним, поэтому «проверил, что render.sh отработал» здесь не спасает.
+- **Обход:** запускать сборку и отрисовку РАЗНЫМИ вызовами, каждый с явным абсолютным `cd` в `rendered/`, и сверять `ls -la --time-style=+%H:%M:%S lec-05.pptx` ПОСЛЕ сборки и ДО отрисовки. Если `mtime` не изменился — сборка не состоялась, что бы ни печатала следующая команда.
+
 ### [#212-4] `render.sh` hard-codes ONE shared LibreOffice profile, so N parallel sessions in the same worktree collide by construction — and `[#212-2]`'s "wait for pgrep to clear" workaround does not apply
 
 - **Tool:** render-toolchain (`library/lectures/lec-05/rendered/render.sh`, the literal `-env:UserInstallation=file:///tmp/claude-999/loprofile_lec05`).

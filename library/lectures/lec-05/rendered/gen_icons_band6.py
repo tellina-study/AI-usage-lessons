@@ -44,7 +44,9 @@ BAND6_ICONS = [
     "activity", "shield-off",
     # s38b — учение
     "timer", "siren",
-    # s45a — стоимость на запрос
+    # s45a — структура расхода и дохода (issue #212: слайд переделан
+    #        владельцем из «стоимости на запрос»; арифметика токенов
+    #        осталась в главе §6.1a)
     "calculator", "chart-line",
     # s45b — финансовый критерий
     "clipboard-check", "user-check", "door-open",

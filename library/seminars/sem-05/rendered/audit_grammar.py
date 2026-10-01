@@ -100,7 +100,13 @@ def main():
             per_form[f].add(sid)
         if pattern:
             per_pattern[pattern].add(tuple(forms))
-        rows.append((sid, B.label_for(sid, pattern), " · ".join(forms) or "—"))
+        # Второй столбец был надзаголовком жанра («ХУК · ВОПРОС»), который
+        # печатался на слайде. Надзаголовок снят (круг 4, А3) вместе с таблицей
+        # `GENRE`, и столбец переведён на то, что в деке осталось: раздел по
+        # границам + сам приём. Отчёт стал точнее — приём виден дословно, а не
+        # через ярлык, который ещё надо было завести вручную.
+        rows.append((sid, f"{B.where(sid)[0]} · {pattern or '—'}",
+                     " · ".join(forms) or "—"))
 
     for sid, pattern, visual in probe_slides():
         forms = forms_of(sid, pattern, visual)

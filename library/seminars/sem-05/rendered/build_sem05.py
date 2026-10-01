@@ -47,7 +47,11 @@ TOP, BOTTOM = 0.34, 6.92        # рабочее поле по вертикал�
 LEFT, WIDTH = 0.55, 12.23       # и по горизонтали
 GAP = 0.18                      # шаг между блоками
 
-# ── Где мы: короткое имя раздела для надзаголовка ────────────────────────────
+# ── Где мы: границы разделов и ступень дорожной карты ───────────────────────
+#
+# Надзаголовок, который эти имена печатал, снят (А3, см. ниже). Границы нужны
+# по-прежнему: по ним дивайдер подсвечивает свою ступень в дорожной карте, и
+# по ним же `audit_grammar.py` раскладывает слайды по разделам.
 #
 # Границы заданы ОТДЕЛЬНО для каждой нумерации, а не одним списком по номеру.
 # Старая дека (`sNN`) и новая (`nNN`) живут в репозитории одновременно, пока
@@ -72,30 +76,24 @@ SECTIONS_BY_PREFIX = {
 }
 SECTIONS, STAGES = SECTIONS_BY_PREFIX["s"]      # совместимость: прежние имена
 
-# ── Что это за шаг: жанр слайда по его приёму ───────────────────────────────
-# Это и есть потерянный приём Семинара 4 — одна строка, которая отвечает
-# и на «вопрос это или утверждение», и на «мы ещё в том же кейсе».
-GENRE = {
-    "hero_cover": "", "lecture_map": "карта занятия",
-    "keystone_scope_map": "ось занятия", "recap_table": "ось занятия",
-    "closing_question_partial": "возврат к вопросу открытия",
-    "question_repeat": "повторный вопрос",
-    "transfer_exercise": "перенос на свой репозиторий",
-    "assertion_visual": "ограничение",
-    "section_divider_macro": "",
-    "problem_scenario": "завязка", "problem_scenario_with_figure": "завязка", "question_with_option_cards": "вопрос",
-    "base_and_edge": "база",
-    "evidence_table_with_gap": "свидетельства",
-    "answer_breakdown_table": "разбор", "dual_mode_breakdown": "разбор",
-    "cobuilding_config_reveal": "сборка",
-    "cobuilding_bad_example_reveal": "сборка",
-    "cobuilding_description_assembly": "сборка",
-    "code_artifact": "артефакт", "file_tree_snapshot": "артефакт",
-    "failure_vignette": "провал", "failure_vignette_with_figure": "провал",
-    "criteria_checklist_and_boundary": "критерий и граница",
-    "axis_placement": "строка оси", "token_cost_table": "цена",
-}
-MECHANICS_TAG = "механика"
+# ── Надзаголовка жанра на слайде БОЛЬШЕ НЕТ ─────────────────────────────────
+#
+# Здесь стояла таблица `GENRE` и функция `label_for`, печатавшие над каждым
+# заголовком строку вида «ХУК · ЗАВЯЗКА», «СКИЛЛ · ПРОВАЛ», «ХУК · БАЗА» —
+# «где мы · что это за шаг». Снято целиком по решению владельца (круг 4,
+# правило А3): «эти хедеры — не заголовки слайдов… давай их везде уберём,
+# лишнее, просто засорение слайда, ненужное никому».
+#
+# Таблица удалена, а не оставлена «на всякий случай»: реестр, который больше
+# ничего не решает в продукте, но который просят пополнять при каждом новом
+# приёме, — это ровно тот отставший реестр, на котором дека уже горела трижды
+# (`FIGS` по номеру, `TAGS` по номеру, номера развилок). Жанр слайда и без
+# надзаголовка читается формой: вопрос — золотая коробка, база — две дорожки,
+# провал — красная планка; `audit_grammar.py` сверяет это машиной.
+#
+# Освободившиеся 0,34″ ушли СОДЕРЖАНИЮ, а не в поля: заголовок встал на то
+# место, где стоял надзаголовок (`deck_kit.auto_header`, `y=0.34`), и каждый
+# слайд деки получил на треть дюйма больше рабочей высоты.
 
 # Ярлык развилки — СОДЕРЖАНИЕ, и его место во фронтматтере слайда
 # (`visual.tag`). Ниже остались только ярлыки ПРЕЖНЕЙ деки: у новой они все
@@ -271,19 +269,37 @@ def sections_for(sid):
     return _DERIVED[pre] or SECTIONS_BY_PREFIX.get(pre, (SECTIONS, STAGES))
 
 
+def slide_number(sid):
+    """Сквозной номер слайда для печати в углу: его ПОРЯДОК в деке, с единицы.
+
+    Круг 4, правило А6. На слайде стоял идентификатор — «n04», «n03», — и
+    владелец про него сказал: «что это такое — n04, n03? Просто номера должны
+    быть, и желательно сквозные».
+
+    СЧИТАЕТСЯ ПО ПОРЯДКУ, А НЕ ПО ИДЕНТИФИКАТОРУ, и это единственный способ,
+    который переживёт этот круг. В деке есть буквенные хвосты (`n18a`, `n24a`,
+    `n26a`) и дырка на месте снятого `n10`: `num("n18a")` вернёт 18, а слайд
+    восемнадцатый по счёту — девятнадцатый. Разойдутся и дальше, с каждой
+    вставкой и каждым снятием.
+
+    Таблицы по идентификатору здесь не будет и быть не может: в этом файле уже
+    записано, как такая таблица врала трижды — границы разделов, схемы `FIGS`,
+    значки развилок. Номер на слайде — четвёртый случай того же, и он худший:
+    соврёт он молча и будет виден залу.
+
+    `None`, если слайда в деке нет (пробники `probe_base_edge.py` собираются
+    мимо манифеста): печатать им чужой порядковый номер было бы хуже, чем не
+    печатать никакого."""
+    ids = [s["id"] for s in _deck_slides(sid[0])]
+    return ids.index(sid) + 1 if sid in ids else None
+
+
 def where(sid):
     n = num(sid)
     for lo, hi, name, stage in sections_for(sid)[0]:
         if lo <= n <= hi:
             return name, stage
     return "", None
-
-
-def label_for(sid, pattern):
-    """Надзаголовок «где мы · что это за шаг»."""
-    name, _ = where(sid)
-    genre = GENRE.get(pattern, MECHANICS_TAG if pattern.startswith("mechanics") else "")
-    return f"{name} · {genre}" if genre else name
 
 
 def slide_figure(sid):
@@ -407,6 +423,51 @@ def audit_figure_text():
                     and n.value not in docs:
                 c.label(n.value, f"{f.name}:{n.lineno}")
     M._WARNINGS.extend(c.report())
+
+
+def audit_numbering(slides):
+    """Сквозной номер напечатан на КАЖДОМ слайде и ровно один раз, 1…N.
+
+    Проверка идёт по самой деке, а не по тому, что вернул `slide_number`:
+    номер — последнее, что ещё можно вывести из косвенного признака, и в этом
+    файле уже записано, чем это кончается (границы разделов, `FIGS`, значки
+    развилок — три реестра по идентификатору, три молчаливых вранья).
+    Четвёртое было бы худшим: номер видит зал, а не сборка.
+
+    Что ловится и чем это бывает в жизни:
+
+    * слайд собран, но в деку не попал → номера нет вовсе. Так выглядит
+      слайд, который строят по `--block`, и так же выглядел бы настоящий
+      слайд, выпавший из манифеста.
+    * один идентификатор в деке дважды → два слайда с одним номером, и
+      `.index()` честно отдаст обоим первый.
+    * номер разошёлся с порядком → называется КАЖДЫЙ разошедшийся слайд и
+      величина сдвига. Это ровно то, что напечатала бы старая реализация,
+      бравшая номер из идентификатора: на этой деке `n11` — десятый, `n18a` —
+      девятнадцатый, и сдвиг растёт к хвосту.
+
+    Величина обязательна: «номера поехали» нечинимо, «n24a: напечатано 24,
+    порядок 25, сдвиг −1» чинится не глядя."""
+    ids = [s["id"] for s in slides]
+    dup = sorted({i for i in ids if ids.count(i) > 1})
+    if dup:
+        M._WARNINGS.append(
+            f"НОМЕР ДВАЖДЫ [{', '.join(dup)}]: идентификатор стоит в деке "
+            f"больше одного раза — слайды получат один и тот же номер")
+    off = []
+    for pos, sid in enumerate(ids, 1):
+        got = slide_number(sid)
+        if got is None:
+            M._WARNINGS.append(
+                f"НОМЕРА НЕТ [{sid}]: слайд есть в деке, а порядкового номера "
+                f"у него не вышло — в углу будет пусто")
+        elif got != pos:
+            off.append(f"{sid}: напечатано {got}, порядок {pos}, сдвиг {got - pos:+d}")
+    if off:
+        M._WARNINGS.append(
+            f"НОМЕР НЕ ПО ПОРЯДКУ ({len(off)} из {len(ids)}): " + "; ".join(off[:6])
+            + ("…" if len(off) > 6 else "")
+            + " — номер обязан выводиться из порядка слайда в deck.yaml")
 
 
 def audit_figs(slides):
@@ -832,7 +893,7 @@ def g_divider(sl, sid, title, blocks, pattern, assertion="", meta=None):
         K.tag_plate(sl, LEFT + 0.35, y, tag)
     if stage is not None:
         K.roadmap(sl, stages, stage)
-    K.slide_id_mark(sl, sid, on_dark=True)
+    K.slide_number_mark(sl, slide_number(sid), on_dark=True)
 
 
 def g_cover(sl, sid, title, blocks, pattern, assertion=""):
@@ -899,21 +960,35 @@ def g_cover(sl, sid, title, blocks, pattern, assertion=""):
             K.form_question(sl, 0.9, y, 11.5, question, size=17,
                             max_h=max(bottom - y, 0.7),
                             label=f"{sid} центральный вопрос")
-    K.slide_id_mark(sl, sid, on_dark=True)
+    K.slide_number_mark(sl, slide_number(sid), on_dark=True)
 
 
 def g_question(sl, sid, title, blocks, pattern, assertion=""):
-    """Вопрос — отдельный жанр из трёх сигналов сразу: надзаголовок «· ВОПРОС»,
-    дословный вопрос в золотой коробке, серая подпись «разбор — на следующем
-    слайде». Ни одной цифры, ни одного подсвеченного варианта: голосование
-    идёт вслепую.
+    """Вопрос — дословный вопрос в золотой коробке. Ни одной цифры, ни одного
+    подсвеченного варианта: голосование идёт вслепую.
+
+    СИГНАЛОВ ЖАНРА БЫЛО ТРИ, ОСТАЛСЯ ОДИН, И ЭТОГО ДОСТАТОЧНО. Снятые два —
+    надзаголовок «· ВОПРОС» (А3) и серая подпись внизу «разбор — на следующем
+    слайде» (А4, круг 4): «это презентация, а не инструкция преподавателя; я
+    сам прекрасно помню, что они должны сделать, а когда нужно, чтобы зал
+    ответил на вопрос, я его задам».
+
+    Подпись к тому же была и НЕВЕРНОЙ в части слайдов: правило А1 этого круга
+    разворачивает структуру так, что разбор идёт сразу за вопросом не везде, а
+    `qa/roast3-student.md` §4.1 поймал слайд, где обещанного разбора на
+    следующем слайде не было вовсе. Печаталась она автоматически на КАЖДОМ
+    слайде-вопросе — то есть обещание давалось не автором, а раскладкой, и
+    проверить его было некому.
 
     Прежде вопрос отличался от утверждения только содержимым золотой коробки —
     а та же коробка стояла на 33 слайдах из 56 под утверждениями, и жанр
     «вопрос» перестал читаться вовсе."""
     K.set_bg(sl, K.WHITE)
-    y0 = K.auto_header(sl, label_for(sid, pattern), title)
-    bottom = BOTTOM - 0.46
+    y0 = K.auto_header(sl, title)
+    # Поле до самого низа: 0,46″ держались ПОД серую подпись, и вместе с ней
+    # сняты. Оставить их значило бы оставить обход без причины — ровно то, на
+    # чём эта дека уже горела (`proverki-i-pravila.md` §2).
+    bottom = BOTTOM
 
     drawers = []
     for kind, b in blocks:
@@ -941,8 +1016,7 @@ def g_question(sl, sid, title, blocks, pattern, assertion=""):
             if d:
                 drawers.append(d)
     compose(sl, sid, y0, drawers, bottom=bottom)
-    K.footer_note(sl, "разбор — на следующем слайде", y=bottom + 0.12, align=PP_ALIGN.CENTER)
-    K.slide_id_mark(sl, sid)
+    K.slide_number_mark(sl, slide_number(sid))
 
 
 # Таблица оси возвращается пять раз за занятие. Колонки ей задаются явно:
@@ -959,7 +1033,7 @@ def g_axis_table(sl, sid, title, blocks, pattern, assertion=""):
     положенной прямо на тёмно-синее поле, — и читалась как вставленный из
     другого документа скриншот; пустые ячейки читались как недоделанный слайд."""
     K.set_bg(sl, K.WHITE)
-    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    y0 = K.auto_header(sl, title)
     drawers = []
     for kind, b in blocks:
         if kind == "table" and len(b[0]) == len(AXIS_COLS):
@@ -972,7 +1046,7 @@ def g_axis_table(sl, sid, title, blocks, pattern, assertion=""):
         if d:
             drawers.append(d)
     compose(sl, sid, y0, drawers)
-    K.slide_id_mark(sl, sid)
+    K.slide_number_mark(sl, slide_number(sid))
 
 
 def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
@@ -984,7 +1058,7 @@ def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
     только заголовком первой колонки, — самый буквальный «сплошные таблицы
     странные» в деке."""
     K.set_bg(sl, K.WHITE)
-    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    y0 = K.auto_header(sl, title)
     tables = [b for k, b in blocks if k == "table"]
     others = [(k, b) for k, b in blocks if k != "table"]
 
@@ -1025,7 +1099,7 @@ def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
         if kind in ("bullets", "code", "cards", "para"):
             drawers.append(block_drawer(kind, b, sid, pattern))
     compose(sl, sid, y0, drawers)
-    K.slide_id_mark(sl, sid)
+    K.slide_number_mark(sl, slide_number(sid))
 
 
 def g_closing(sl, sid, title, blocks, pattern, assertion=""):
@@ -1035,7 +1109,7 @@ def g_closing(sl, sid, title, blocks, pattern, assertion=""):
     задаёт рамку, а схема показывает, во что раскладывается ответ, — поэтому
     порядок обратный тому, что на содержательном слайде (`g_content`)."""
     K.set_bg(sl, K.WHITE)
-    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    y0 = K.auto_header(sl, title)
     drawers = []
     first = True
     for kind, b in blocks:
@@ -1053,7 +1127,7 @@ def g_closing(sl, sid, title, blocks, pattern, assertion=""):
         if d:
             drawers.append(d)
     compose(sl, sid, y0, drawers)
-    K.slide_id_mark(sl, sid)
+    K.slide_number_mark(sl, slide_number(sid))
 
 
 def g_content(sl, sid, title, blocks, pattern, assertion=""):
@@ -1061,7 +1135,7 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
     длине, схема (если есть) и блоки в порядке источника — каждый своим
     приёмом, все по измеренной высоте."""
     K.set_bg(sl, K.WHITE)
-    y0 = K.auto_header(sl, label_for(sid, pattern), title)
+    y0 = K.auto_header(sl, title)
     drawers = []
     fig = figure_for(sid)
     if fig:
@@ -1079,7 +1153,7 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
         if d:
             drawers.append(d)
     compose(sl, sid, y0, drawers)
-    K.slide_id_mark(sl, sid)
+    K.slide_number_mark(sl, slide_number(sid))
 
 
 # Ярлыки дорожек по умолчанию. Заголовок слайда фиксирован приёмом («Что это
@@ -1133,8 +1207,12 @@ def g_base_edge(sl, sid, title, blocks, pattern, assertion=""):
         return g_content(sl, sid, title, blocks, pattern, assertion)
 
     K.set_bg(sl, K.WHITE)
-    y0 = K.auto_header(sl, label_for(sid, pattern), title, tag_color=K.SLATE)
-    bottom = BOTTOM - 0.46
+    y0 = K.auto_header(sl, title)
+    # То же, что на слайде-вопросе, но здесь обход пережил свою причину на два
+    # круга: подпись «здесь ничего не решается» сняли в 6f5eda37, а её 0,46″
+    # остались держать пустоту — и держали бы дальше, потому что дефекта у
+    # них нет, только зря отданная высота.
+    bottom = BOTTOM
 
     drawers = [lambda sl, y, mh: K.base_edge_tracks(
         sl, LEFT, y, WIDTH, left, right, left_label=labels[0], right_label=labels[1],
@@ -1147,7 +1225,7 @@ def g_base_edge(sl, sid, title, blocks, pattern, assertion=""):
     # решению владельца. Жанр опознаётся надзаголовком «· БАЗА» и самой формой
     # из двух дорожек — третий сигнал оказался лишним.
     compose(sl, sid, y0, drawers, bottom=bottom, center=1.0)
-    K.slide_id_mark(sl, sid)
+    K.slide_number_mark(sl, slide_number(sid))
 
 
 GENRE_FN = {
@@ -1290,6 +1368,7 @@ def main():
             K.write_notes(sl, notes)
         built += 1
 
+    audit_numbering(deck["slides"])
     audit_figs(slides)
     audit_figure_text()
     out = HERE / out_name

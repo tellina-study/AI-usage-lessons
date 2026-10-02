@@ -152,106 +152,162 @@ def measured_pitch(pdf_path, page_index, size_pt):
 
 # ── Самопроверка на нарочно сломанном входе ─────────────────────────────────
 #
-# Приём `base_and_edge` ставит пилюли под базу. Длинная база (пять строк) —
-# сломанный вход: ошибка мерки накапливается, и пилюли режут последний ряд.
-# Короткая (три строки) — годный. Проверка, которая молчит на первом,
-# бесполезна; проверка, которая ругается на втором, — тоже.
+# ЧТО ЗДЕСЬ ПРОВЕРЯЕТСЯ И ПОЧЕМУ ИМЕННО ТАК.
+#
+# Прежние пробы собирались приёмами вёрстки (`base_and_edge`, `terminal_card`)
+# и ломались НЕДОМЕРКОЙ МЕЖСТРОЧНОГО: мерка считала шаг долей кегля, LibreOffice
+# рисовал долей высоты строки шрифта, разница 19,7% копилась по строкам — и
+# пилюли резали базу, а листинг уезжал за дно карточки. Недомерку починили
+# (`deck_kit.text_box` пишет `Pt(size * spacing)`), и обе пробы перестали
+# ломаться: карточка теперь честно вырастает под свой листинг, пилюли честно
+# встают под текст. Проба, которая больше не ломается, НИЧЕГО НЕ ДОКАЗЫВАЕТ про
+# проверку — она доказывает только, что починка работает.
+#
+# Поэтому пробы разделены по тому, что каждая сторожит:
+#
+#   * `cuts`/`spills` — предикаты геометрии: «фигура налезла на строку»,
+#     «залитая карточка кончилась выше своего текста». Их и надо кормить
+#     ГЕОМЕТРИЕЙ, выставленной руками, а не ждать, пока её случайно соберёт
+#     приём вёрстки. Такая проба не зависит от арифметики ни одного приёма и не
+#     умирает от её починки — ровно то свойство, которого не хватало прежним.
+#   * Сама недомерка — отдельной пробой на ШАГ СТРОКИ: две одинаковые надписи,
+#     нарисованный шаг против мерки. Эта проба поймала бы исходный дефект и
+#     поймает возврат `p.line_spacing = spacing` вещественным числом. Прежде
+#     расхождение лишь печаталось числом рядом с результатом и ни на что не влияло:
+#     19,7% на экране не делали прогон красным.
 
-BROKEN = """# Проба
-
-## Visual
-
-| База | Кромка |
-|---|---|
-| Описание — текст, который вставляется в системный промпт агента; по нему и делается выбор. Тело файла не читается, пока выбор не сделан: до срабатывания в контексте лежат только имя и описание. | У перечня есть бюджет — **1% окна модели**. Когда он переполнен, среда отнимает описания, начиная с тех скиллов, которые вызывают реже всего. |
-
-`описание` · `бюджет перечня` · `урезание`
-"""
-
-CLEAN = BROKEN.replace(
-    "Описание — текст, который вставляется в системный промпт агента; по нему и "
-    "делается выбор. Тело файла не читается, пока выбор не сделан: до "
-    "срабатывания в контексте лежат только имя и описание.",
-    "В системный промпт агента уходят имя и описание — по ним и делается выбор. "
-    "Тела файла до срабатывания там нет.")
-
-
-CARD_BROKEN = """# Проба карточки
-
-## Visual
-
-```
-перечень скиллов этой сессии, как его видит модель:
-
-build-deck: build-deck
-catalog-docs: catalog-docs
-compile-wiki: compile-wiki
-diagram-refresh: diagram-refresh
-        … ещё восемь строк ровно такого же вида …
-pre-user-gate: Pre-USER-GATE walkthrough — orchestrator self-review
-               before presenting GATE to user.
-update-lecture: update-lecture
-```
-"""
-
-CARD_CLEAN = """# Проба карточки
-
-## Visual
-
-```
-перечень скиллов этой сессии:
-build-deck: build-deck
-catalog-docs: catalog-docs
-```
-"""
+PITCH_TOL = 0.02        # доля — на столько нарисованный шаг вправе разойтись
+                        # с меркой. 2% — это округление кегля в PDF, а не
+                        # недомерка: исходный дефект давал 19,7%.
 
 
-def _build_probe(md, out_pptx):
+def _probe_cut(out_pptx, *, overlap):
+    """Четыре строки текста и фигура под ними. `overlap=True` — фигура
+    поставлена НА последнюю строку (так вставал ряд пилюль при недомерке);
+    `False` — под ней с зазором. Координаты заданы числами: проба сторожит
+    предикат `cuts`, а не чью-то арифметику."""
     from pptx import Presentation as P
     from pptx.util import Inches
-    import build_sem05 as B
     import deck_kit as K
-    import slide_parts as SP
     prs = P()
     prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
     sl = prs.slides.add_slide(prs.slide_layouts[6])
-    title, assertion, visual, _ = SP.sections(md)
-    blocks = SP.blocks(visual)
-    if any(k == "table" for k, _ in blocks):
-        B.g_base_edge(sl, "s08", title, blocks, "base_and_edge", assertion)
-    else:
-        B.g_content(sl, "s07", title, blocks, "problem_scenario", assertion)
+    K.set_bg(sl, K.WHITE)
+    lines = [f"База, строка {i}." for i in (1, 2, 3, 4)]
+    size, spacing, w = 18, K.TRACK_SPACING, 5.0
+    # Ни один абзац пробы не вправе ПЕРЕНЕСТИСЬ: расчёт `last_top` ниже считает
+    # абзац одной строкой, и перенос молча сдвинул бы последнюю строку вниз —
+    # годная проба тогда получает фигуру на настоящем тексте и приходит ложным
+    # «РЕЖЕТ». Так и вышло на первом прогоне: строки были длинные, каждая
+    # разошлась на две, и зазор 0,15″ оказался отмерен не от той строки.
+    assert all(K.M.nlines(ln, size, w) == 1 for ln in lines), \
+        "абзац пробы переносится — зазор будет отмерен не от последней строки"
+    y, step = 1.00, K.M.line_h(size, spacing)
+    K.text_box(sl, 1.0, y, w, 4 * step, lines, size=size, spacing=spacing)
+    last_top = y + 3 * step
+    # сломанный вход: верх фигуры ВНУТРИ последней строки, на треть её высоты
+    # ниже верха — так, чтобы фигура не опознавалась как собственная рамка
+    # строки (признак владения в `cuts` — верх не ниже строки).
+    box_y = last_top + step / 3 if overlap else last_top + step + 0.22
+    K.ocean_box(sl, 1.0, box_y, w, 0.42)
+    prs.save(out_pptx)
+
+
+def _probe_spill(out_pptx, *, short_card):
+    """Залитая карточка и текст в ней. `short_card=True` — дно карточки
+    приходится на середину одной из строк, и всё, что ниже, печатается тёмным
+    по белому за её краем; `False` — карточка накрывает текст целиком.
+
+    Дно обязано попасть ВНУТРЬ строки, а не выше всех: `spills` считает
+    вываливанием только строку, которая НАЧАЛАСЬ внутри карточки (иначе
+    контейнером оказывается любая фигура выше текста). Поэтому строк восемь —
+    какая-нибудь из них заведомо окажется на кромке при любом округлении."""
+    from pptx import Presentation as P
+    from pptx.util import Inches
+    import deck_kit as K
+    prs = P()
+    prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
+    sl = prs.slides.add_slide(prs.slide_layouts[6])
+    K.set_bg(sl, K.WHITE)
+    lines = [f"строка вывода номер {i} в залитой карточке" for i in range(1, 9)]
+    size, spacing, pad = 14, 1.30, 0.20
+    step = K.M.line_h(size, spacing)
+    x, y, w = 1.0, 1.0, 6.0
+    full = len(lines) * step + 2 * pad
+    K.ocean_box(sl, x, y, w, (5.4 * step + 2 * pad) if short_card else full,
+                fill=K.CODE_BG, stroke=K.LIGHT)
+    K.text_box(sl, x + pad, y + pad, w - 2 * pad, len(lines) * step, lines,
+               size=size, spacing=spacing, color=K.CODE_FG, mono=True)
+    prs.save(out_pptx)
+
+
+def _probe_pitch(out_pptx):
+    """Две одинаковые надписи кеглем 18 и межстрочным `TRACK_SPACING` — по
+    расстоянию между ними меряется НАРИСОВАННЫЙ шаг строки."""
+    from pptx import Presentation as P
+    from pptx.util import Inches
+    import deck_kit as K
+    prs = P()
+    prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
+    sl = prs.slides.add_slide(prs.slide_layouts[6])
+    K.set_bg(sl, K.WHITE)
+    K.text_box(sl, 1.0, 1.0, 9.0, 3.0,
+               ["Мерка шага строки — надпись один.",
+                "Мерка шага строки — надпись два.",
+                "Мерка шага строки — надпись три."],
+               size=18, spacing=K.TRACK_SPACING)
     prs.save(out_pptx)
 
 
 def self_test():
     sys.path.insert(0, str(HERE))
+    import deck_kit as K
+    import metrics as M
     script = HERE.parents[3] / "tools" / "presentation-build" / "pptx_to_png.sh"
     ok = True
+
+    def render(build, tag, d):
+        pptx = d / f"probe-{tag}.pptx"
+        build(str(pptx))
+        subprocess.run([str(script), str(pptx), str(d), "150", "1", "1"],
+                       check=True, capture_output=True)
+        return pptx, pptx.with_suffix(".pdf")
+
     with tempfile.TemporaryDirectory() as d:
         d = Path(d)
-        cases = (("пилюли режут: база в 5 строк", BROKEN, True, "РЕЖЕТ"),
-                 ("пилюли чисто: база в 3 строки", CLEAN, False, "РЕЖЕТ"),
-                 ("карточка мала: листинг 10 строк", CARD_BROKEN, True, "ВЫВАЛИЛСЯ"),
-                 ("карточка впору: листинг 3 строки", CARD_CLEAN, False, "ВЫВАЛИЛСЯ"))
-        for name, md, want_hit, kind in cases:
-            pptx = d / (f"probe-{abs(hash(name)) % 10000}.pptx")
-            _build_probe(md, str(pptx))
-            subprocess.run([str(script), str(pptx), str(d), "150", "1", "1"],
-                           check=True, capture_output=True)
-            msgs = [m for m in check(str(pptx), str(pptx.with_suffix(".pdf")),
-                                     pages=[0]) if m.startswith(kind)]
+        cases = (
+            ("фигура на строке: верх внутри строки", "РЕЖЕТ", True,
+             lambda o: _probe_cut(o, overlap=True)),
+            ("фигура под строкой: зазор 0,22″", "РЕЖЕТ", False,
+             lambda o: _probe_cut(o, overlap=False)),
+            ("дно карточки в середине строки", "ВЫВАЛИЛСЯ", True,
+             lambda o: _probe_spill(o, short_card=True)),
+            ("карточка накрывает текст целиком", "ВЫВАЛИЛСЯ", False,
+             lambda o: _probe_spill(o, short_card=False)),
+        )
+        for i, (name, kind, want_hit, build) in enumerate(cases):
+            pptx, pdf = render(build, f"{kind}-{i}", d)
+            msgs = [m for m in check(str(pptx), str(pdf), pages=[0])
+                    if m.startswith(kind)]
             hit = bool(msgs)
-            mark = "✓" if hit == want_hit else "✗ ПРОВЕРКА МЁРТВАЯ"
             ok = ok and hit == want_hit
-            print(f"{mark} {name:34} → {msgs[0] if msgs else 'чисто'}")
-            if want_hit and kind == "РЕЖЕТ":
-                import metrics as M
-                import deck_kit as K
-                p = measured_pitch(str(pptx.with_suffix(".pdf")), 0, 18.0)
-                est = M.line_h(18, K.TRACK_SPACING) * 72
-                print(f"   мерка {est:.1f} pt против нарисованных {p:.1f} pt "
-                      f"— расхождение {(p / est - 1) * 100:.1f}%")
+            mark = "✓" if hit == want_hit else "✗ ПРОВЕРКА МЁРТВАЯ"
+            print(f"{mark} {name:38} → {msgs[0][:78] if msgs else 'чисто'}")
+
+        # ── шаг строки: проба, которая поймала бы саму недомерку ────────────
+        pptx, pdf = render(_probe_pitch, "pitch", d)
+        drawn = measured_pitch(str(pdf), 0, 18.0)
+        est = M.line_h(18, K.TRACK_SPACING) * 72
+        if drawn is None:
+            ok = False
+            print("✗ ПРОВЕРКА МЁРТВАЯ шаг строки: в PDF не нашлось двух строк кеглем 18")
+        else:
+            off = drawn / est - 1
+            good = abs(off) <= PITCH_TOL
+            ok = ok and good
+            mark = "✓" if good else f"✗ НЕДОМЕРКА ВЕРНУЛАСЬ (допуск {PITCH_TOL:.0%})"
+            print(f"{mark} {'шаг строки совпадает с меркой':38} → мерка {est:.1f} pt, "
+                  f"нарисовано {drawn:.1f} pt, расхождение {off * 100:+.1f}%")
     return 0 if ok else 1
 
 

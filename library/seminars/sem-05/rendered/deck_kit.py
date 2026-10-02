@@ -124,7 +124,20 @@ def text_box(sl, x, y, w, h, lines, *, size=13, bold=False, italic=False,
     for i, ln in enumerate(ls):
         p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
         p.alignment = align
-        p.line_spacing = spacing
+        # Межстрочный задаётся В ПУНКТАХ, а не вещественным множителем, и это
+        # не стилистика — это единственный способ попасть в ту высоту, которую
+        # намерила вёрстка. Вещественное число python-pptx пишет в файл как
+        # `<a:lnSpc><a:spcPct>`, а и LibreOffice, и PowerPoint понимают процент
+        # как долю СОБСТВЕННОЙ высоты строки шрифта (для Arial/Liberation Sans
+        # ≈1,197 кегля), тогда как `metrics.line_h` считает ту же величину
+        # долей КЕГЛЯ. При кегле 18 и `TRACK_SPACING = 1.30` мерка давала
+        # 23,4 pt, LibreOffice рисовал 28,1 — строка выходила на 19,7% выше
+        # мерки, ошибка копилась по строкам, и её ловила первой та фигура,
+        # которую ставят вплотную под текст. `Pt(size * spacing)` пишет
+        # `<a:spcPts>` — абсолютный шаг, который ни один из двух движков уже не
+        # домножает на метрику шрифта, и нарисованный шаг совпадает с меркой
+        # знак в знак. Подробно: notes/mcp-limitations.md [#211-1], [#211-2].
+        p.line_spacing = Pt(size * spacing)
         p.space_after = Pt(space_after)
         for seg, b, mo in (inline_runs(ln) if rich else [(ln, False, False)]):
             r = p.add_run()

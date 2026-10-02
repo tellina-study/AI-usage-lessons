@@ -201,8 +201,23 @@ def draw_tf(d, tf, x, y, w, h, report, tag, boxes=None):
     room = h - mt - mb
     for p in tf.paragraphs:
         pt, nm, _bo, _col = run_info(p)
+        # Межстрочный в файле бывает ДВУХ видов, и путать их — значит мерить
+        # не то, что нарисуют. Вещественное число — доля (`spcPct`), объект
+        # Length — абсолютный шаг в пунктах (`spcPts`), и после починки
+        # `deck_kit.text_box` пишет именно второй вид. Прежняя строка проверяла
+        # только `isinstance(..., float)` и на Length молча брала 1.22: сразу
+        # после починки предпросмотр стал бы считать шаг 1,22 кегля там, где в
+        # файле стоит 1,30 — и снова разошёлся бы с рендером, только теперь в
+        # другую сторону. Это ровно тот способ, которым предпросмотр уже один
+        # раз сообщал о дефекте, созданном им самим.
+        ls = p.line_spacing
         try:
-            mult = float(p.line_spacing) if isinstance(p.line_spacing, float) else 1.22
+            if hasattr(ls, "pt"):           # Length → абсолютный шаг в пунктах
+                mult = float(ls.pt) / pt
+            elif isinstance(ls, float):     # доля высоты строки шрифта
+                mult = float(ls)
+            else:
+                mult = 1.22
         except Exception:
             mult = 1.22
         lh = int(pt * 120 / 72 * mult)

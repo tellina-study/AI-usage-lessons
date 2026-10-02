@@ -1,0 +1,16 @@
+# prompt-structure-experiment.py — вывод прогона
+Дата/время запуска (UTC): 2026-10-02T19:38:20.145161+00:00
+SEED_EASY=20261002, SEED_HARD=20261003, N_TASKS_EASY=24, N_HARD=16, MODEL=haiku, WORKERS=4
+claude CLI version: 2.1.197 (Claude Code)
+
+EASY: сгенерировано 24 заданий, near-miss avg=3.79
+HARD: сгенерировано 16 заданий, near-miss avg=19.25, qualifiers avg=3.00
+[easy-ceiling] запускаю 96 вызовов, concurrency=4 ...
+[easy-ceiling] 10/96 готово (31s)
+[easy-ceiling] 20/96 готово (64s)
+[easy-ceiling] 30/96 готово (88s)
+[easy-ceiling] 40/96 готово (113s)
+[easy-ceiling] 50/96 готово (144s)
+[easy-ceiling] 60/96 готово (176s)
+[easy-ceiling] 70/96 готово (201s)
+[easy-ceiling] 80/96 готово (227s)

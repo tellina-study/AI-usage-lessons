@@ -1,0 +1,14 @@
+# prompt-structure-experiment.py — вывод прогона
+Дата/время запуска (UTC): 2026-10-02T19:09:02.975585+00:00
+SEED_EASY=20261002, SEED_HARD=20261003, N_TASKS_EASY=24, N_HARD=16, MODEL=haiku, WORKERS=4
+claude CLI version: 2.1.197 (Claude Code)
+
+EASY: сгенерировано 24 заданий, near-miss avg=3.79
+HARD: сгенерировано 16 заданий, near-miss avg=19.25, qualifiers avg=3.00
+[pilot-hard] запускаю 16 вызовов, concurrency=4 ...
+[pilot-hard] 10/16 готово (109s)
+[pilot-hard] 16/16 готово (157s)
+[pilot-hard] завершено за 157s
+
+КАЛИБРОВКА hard role_first/RU: 13/16 = 81.2% (валидных 16/16)
+РЕШЕНИЕ: 45-88% -> зафиксировать seed, гнать полную сетку --full-hard на этом N.

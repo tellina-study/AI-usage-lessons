@@ -1,0 +1,83 @@
+# prompt-structure-experiment.py — вывод прогона
+Дата/время запуска (UTC): 2026-10-02T19:12:04.611395+00:00
+SEED_EASY=20261002, SEED_HARD=20261003, N_TASKS_EASY=24, N_HARD=16, MODEL=haiku, WORKERS=4
+claude CLI version: 2.1.197 (Claude Code)
+
+EASY: сгенерировано 24 заданий, near-miss avg=3.79
+HARD: сгенерировано 16 заданий, near-miss avg=19.25, qualifiers avg=3.00
+[hard-main-grid] запускаю 128 вызовов, concurrency=4 ...
+[hard-main-grid] 10/128 готово (126s)
+[hard-main-grid] 20/128 готово (237s)
+[hard-main-grid] 30/128 готово (333s)
+[hard-main-grid] 40/128 готово (447s)
+[hard-main-grid] 50/128 готово (566s)
+[hard-main-grid] 60/128 готово (634s)
+[hard-main-grid] 70/128 готово (730s)
+[hard-main-grid] 80/128 готово (794s)
+[hard-main-grid] 90/128 готово (884s)
+[hard-main-grid] 100/128 готово (967s)
+[hard-main-grid] 110/128 готово (1056s)
+[hard-main-grid] 120/128 готово (1141s)
+[hard-main-grid] 128/128 готово (1209s)
+[hard-main-grid] завершено за 1209s
+[hard-repeat-cells] запускаю 32 вызовов, concurrency=4 ...
+[hard-repeat-cells] 10/32 готово (103s)
+[hard-repeat-cells] 20/32 готово (191s)
+[hard-repeat-cells] 30/32 готово (312s)
+[hard-repeat-cells] 32/32 готово (330s)
+[hard-repeat-cells] завершено за 330s
+
+## HARD: точность по 8 ячейкам (порядок × язык)
+
+| order | lang | correct/valid | accuracy |
+|---|---|---|---|
+| constraints_last | EN | 11/16 | 68.8% |
+| constraints_last | RU | 14/16 | 87.5% |
+| resources_last | EN | 10/16 | 62.5% |
+| resources_last | RU | 9/16 | 56.2% |
+| role_first | EN | 10/16 | 62.5% |
+| role_first | RU | 10/16 | 62.5% |
+| task_first | EN | 10/16 | 62.5% |
+| task_first | RU | 13/16 | 81.2% |
+
+## HARD: ранжирование порядков внутри RU и внутри EN
+
+RU: constraints_last (14/16) > task_first (13/16) > role_first (10/16) > resources_last (9/16)
+EN: constraints_last (11/16) > role_first (10/16) > task_first (10/16) > resources_last (10/16)
+
+## HARD: разброс лучший-худший порядок внутри каждого языка
+
+RU: best=constraints_last (14/16), worst=resources_last (9/16), разница = 5 заданий (~31.2 п.п.)
+EN: best=constraints_last (11/16), worst=role_first (10/16), разница = 1 заданий (~6.2 п.п.)
+
+## HARD: McNemar (точный, парный) — best vs worst внутри каждого языка
+
+RU: constraints_last vs resources_last -> дискордантные пары: best-only-right=5, worst-only-right=0, McNemar exact p=0.062
+EN: constraints_last vs role_first -> дискордантные пары: best-only-right=3, worst-only-right=2, McNemar exact p=1.000
+
+## HARD: биномиальный 95% CI по каждой ячейке (Wilson)
+
+constraints_last/EN: 11/16 = 68.8%, 95% CI [44.4%, 85.8%]
+constraints_last/RU: 14/16 = 87.5%, 95% CI [64.0%, 96.5%]
+resources_last/EN: 10/16 = 62.5%, 95% CI [38.6%, 81.5%]
+resources_last/RU: 9/16 = 56.2%, 95% CI [33.2%, 76.9%]
+role_first/EN: 10/16 = 62.5%, 95% CI [38.6%, 81.5%]
+role_first/RU: 10/16 = 62.5%, 95% CI [38.6%, 81.5%]
+task_first/EN: 10/16 = 62.5%, 95% CI [38.6%, 81.5%]
+task_first/RU: 13/16 = 81.2%, 95% CI [57.0%, 93.4%]
+
+## HARD: согласие знаков разницы между RU и EN по всем 6 парам порядков
+
+  role_first vs task_first: RU diff=-3 заданий, EN diff=+0 заданий, РАСХОДЯТСЯ
+  role_first vs constraints_last: RU diff=-4 заданий, EN diff=-1 заданий, согласуются
+  role_first vs resources_last: RU diff=+1 заданий, EN diff=+0 заданий, РАСХОДЯТСЯ
+  task_first vs constraints_last: RU diff=-1 заданий, EN diff=-1 заданий, согласуются
+  task_first vs resources_last: RU diff=+4 заданий, EN diff=+0 заданий, РАСХОДЯТСЯ
+  constraints_last vs resources_last: RU diff=+5 заданий, EN diff=+1 заданий, согласуются
+
+Итого согласующихся по знаку пар: 3/6
+
+## HARD: повторные прогоны (оценка шума прогона-к-прогону)
+
+role_first/RU: run1 = 10/16, run2 = 12/16, разница = -2 заданий (прогон-к-прогону шум при идентичных промптах)
+resources_last/EN: run1 = 10/16, run2 = 10/16, разница = +0 заданий (прогон-к-прогону шум при идентичных промптах)

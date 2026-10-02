@@ -18,6 +18,12 @@
 | `03-tokenization-mixed-scripts.md` | BPE на границах письменностей, fertility, byte-fallback + своя эмпирика | 305 |
 | `04-unicode-bidi-homoglyph-injection.md` | RTL/bidi, homoglyph, невидимые символы, нормализация, инъекции | 188 |
 | `05-multilingual-embeddings-rag.md` | Многоязычные эмбеддинги, cross-lingual retrieval, code-switching, RAG | 183 |
+| `06-chapter-and-slides-proposal.md` | План правок главы + слайды + roast (раунд 1; пересобирается под раунд 2) | 124 |
+| `07-prompt-structure-sensitivity.md` | **Раунд 2:** структура промпта как измеряемый фактор, английская база | 153 |
+| `08-structure-x-language.md` | **Раунд 2:** прямое взаимодействие «структура × язык» — не найдено | 182 |
+| `09-typology-and-ru-guides.md` | **Раунд 2:** типология языка + гайды отечественных вендоров | 220 |
+| `10-experiment-structure-x-language.md` | **Раунд 2:** наш эксперимент RU против EN, 176 вызовов | 188 |
+| `prompt-structure-experiment.py` + `-raw.jsonl` + `*-stdout.log` | Воспроизводимый эксперимент раунда 2 | — |
 | `tokenizer-probe.py` + `tokenizer-probe-output.txt` | Воспроизводимый прогон на 7 токенизаторах | 443 / 193 |
 
 ---

@@ -1,0 +1,15 @@
+# AGENTS.md — проект «Волна»
+
+Сборка: `npm install && npm run build`. Dev-сервер: `npm run dev` (порт 5173).
+
+Проверки перед коммитом: `npm run lint` и `npm run test`. Оба должны быть зелёными — не коммитить при красных тестах.
+
+Стиль коммитов: `type(scope): короткое описание` (например `fix(forms): исправить валидацию адреса`), на английском.
+
+Ветки: `feature/<issue>-<slug>` от `main`, PR обязателен, прямые пуши в `main` запрещены.
+
+Секреты (API-ключи, токены доступа к биллингу) никогда не коммитить — только через `.env.local`, который в `.gitignore`.
+
+Перед любой работой над дизайном прочитай `notes/research/student-questions/skills-vs-instructions/_exp2/docs/design-guide.md`.
+
+Логи сборки чистить перед PR: `npm run clean` удаляет артефакты `dist/`.

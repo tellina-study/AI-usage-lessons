@@ -669,3 +669,36 @@ Owner подтвердил сдвиг границ модулей курса (в
 - **`source:` frontmatter can carry internal-only tags like `[FACT-CHECK]` that MUST be stripped before landing in speaker notes** — a naive regex pull of the `source:` line verbatim leaked `[FACT-CHECK]` into 2 slides' visible speaker-notes text, caught only by the mandatory deep-scan/grep pass (`tools/presentation-build/deep_latin_scan.py` on pptx-extracted text), not by eyeballing PNG snapshots (notes aren't in the PNG). **Lesson: any helper that copies raw frontmatter text into notes/body needs an explicit marker-strip step (`\[[A-Z-]+\]`) — don't assume frontmatter is pre-cleaned.**
 - **`deep_latin_scan.py` takes markdown/text files, not `.pptx` directly** — extract visible text + speaker notes via a tiny python-pptx script into a `.txt` first (`shape.text_frame.text` + `notes_slide.notes_text_frame.text` per slide), then scan that. Confirmed useful: caught the `[FACT-CHECK]` leak above; also surfaced that section-loop node names (Discovery/Design/Build/Measure/Support/Governance) recur ~50× as "unique Latin tokens" — all legitimate against this lecture's own `deck.yaml`/`glossary.yaml` (roadmap NAV labels + PDCA/OODA/BML formal names + Customer Development/reference dataset canonical glossary-locked terms) — reviewer should cross-check hits against the lecture's own `glossary.yaml` `canonical:` list before flagging, not just the shared brand allowlist.
 - **A decorative circular "loop" of icon nodes reads as scattered dots without explicit connector arcs between them** — s02's cover hero (6 nodes on a circle) only became legible as "one loop" after adding `connector()` lines between adjacent nodes in the same draw pass (drawn before the nodes so they sit behind). Any circular-arrangement hero visual needs the connecting edges as a first-class element, not just positioned nodes.
+
+## 2026-10-02 — Вопрос студентов #217: skill vs CLAUDE.md vs ссылочный файл (research + собственный эксперимент)
+
+**Контекст.** Занятие 2026-10-02: студенты спросили, есть ли разница между оформлением процедуры
+как skill и тем же текстом в always-on файле / ссылочном файле / слэш-команде / хуке / MCP-инструменте.
+Материалы: `notes/research/student-questions/skills-vs-instructions/`.
+
+**Findings:**
+- **Прямого измерения «skill vs always-on vs ссылочный файл» на одних задачах в литературе нет** —
+  проверено отдельным research-проходом. Любое утверждение «скилл надёжнее» — vendor или народная практика.
+- **«Lost in the Middle» (2307.03172) измеряет поиск факта по позиции, а НЕ соблюдение инструкции.**
+  Перенос на «правило в середине CLAUDE.md забудется» — экстраполяция. Анти-паттерн цитирования.
+- **Измерено и релевантно:** затухание соблюдения правил ПО ХОДУ сессии/диалога (McMillan 2605.10039
+  OR≈0.944 на шаг; SEQUOR 2605.06353; Laban 2505.06120 −39% single→multi-turn); деградация при многих
+  одновременных правилах (IFScale 2507.11538); curated skills +16.6 п.п. (33.9%→50.5%, SkillsBench
+  2602.12670) против публичных skills (SWE-Skills-Bench 2603.15401: 39 из 49 — нулевой эффект).
+- **Собственный эксперимент (воспроизводим, `_exp/check.py`):** когда задача НЕ напоминает про процедуру,
+  always-on / skill / раздутый файл дают 5/5, а ссылочный файл — 0/5 дважды (агент его не открыл).
+  Когда напоминает — все четыре способа 5/5 (потолок). Раздутый always-on: +32-35% токенов за тот же результат.
+- **Находка в собственном репозитории:** из 13 навыков в `.claude/skills/` YAML-frontmatter с `description`
+  есть только у `pre-user-gate`. Навык без `description` не даёт модели текста для решения об активации →
+  вырождается в слэш-команду (работает только при явном `/имя`). Это следует починить отдельной задачей.
+
+**Правило, выведенное для себя:** способ подачи процедуры выбирается по ЦЕНЕ ПРОПУСКА, а не по новизне
+механизма. Недопустим молчаливый пропуск → хук (код) или явный вызов человеком, не документ.
+Ссылочный файл годится как справочник, но никогда как гарантия.
+
+**Gotcha (методический, найден в ходе эксперимента):** несколько параллельных агентов, дописывающих
+в ОДИН индексный файл, затирают строки друг друга — пилотный прогон дал ложный «пропуск шага».
+Плечи эксперимента/параллельные субагенты должны писать в раздельные файлы.
+
+**Open:** `notes/decisions.md` — 671 строка, то есть уже превышает лимит 600 из CLAUDE.md; нужен split
+отдельной задачей (не делался здесь: файл трогают параллельные сессии, конфликт дороже).

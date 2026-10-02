@@ -407,7 +407,12 @@ PDF не удалось прочитать (WebFetch возвращал нечи
 - Mellone, M., Verschaffel, L., & Van Dooren, W. (2014). Making sense of word problems: the
   effect of rewording and dyadic interaction. In *Proceedings of PME 38 / PME-NA 36*, Vol. 4,
   pp. 201–208 (ERIC ED599914). https://files.eric.ed.gov/fulltext/ED599914.pdf — текст открыт
-  лично, access date 2026-10-02.
+  лично, access date 2026-10-02. Примечание оркестратора: у тех же авторов есть более поздняя
+  журнальная публикация на ту же тему — Mellone, Verschaffel & Van Dooren (2017), «The effect of
+  rewording and dyadic interaction on realistic reasoning in solving word problems», *Journal of
+  Mathematical Behavior*, 46, 1–12, DOI 10.1016/j.jmathb.2017.02.002 (сверено по Crossref).
+  Цифры в этом файле взяты из материалов конференции 2014 года; при цитировании в главе
+  предпочтительна журнальная версия 2017 года, но её числа отдельно не сверялись.
 - Mark, W., & Dowker, A. (2015). Linguistic influence on mathematical development is specific
   rather than pervasive: revisiting the Chinese Number Advantage in Chinese and English
   children. *Frontiers in Psychology*, 6, Article 203.

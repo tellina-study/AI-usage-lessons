@@ -33,6 +33,9 @@ verify_day_of: true
 [Small line]
 *You can't just "stretch" the window: token position is encoded in a geometry trained on specific lengths — extending it (RoPE / YaRN) is separate engineering work.*
 
+[Small line, adjacent]
+*A 10M claim ≈ 32TB of KV-cache — a physical ceiling.*
+
 [Gold callout]
 **You pay for what you put in the window, not for what the window can hold: 900K input tokens at $10/million ≈ $9 for a single call.**
 
@@ -45,6 +48,6 @@ The context window — the maximum number of tokens per request — has grown th
 
 Two sobering outliers around the standard. On the high side — marketing: Llama 4 Scout advertises ten million tokens, but no published benchmark confirms that quality holds up anywhere near that limit; "advertised window" and "usable window" are different quantities, and we'll measure the gap between them a couple of slides from now. On the low side — a contrast: YandexGPT 5 Pro works with a 32,000-token window — for tasks with long documents, that's not a nuance, it's a defining constraint on model choice.
 
-Why is the window finite, and why can't you "just increase it"? The first reason is familiar: the quadratic cost of attention plus a linearly growing cache. The second is subtler: token position is encoded in the model's geometry in a way trained on specific lengths, and naively stretching it breaks the mechanism; extension methods — RoPE, YaRN — are covered in the coursebook for self-study: the chapter, part 2 — the section on positional encoding.
+Why is the window finite, and why can't you "just increase it"? There are two separate reasons here, and they're worth keeping apart. The first is compute: even where some layers are already sparse or linear, the cost still grows faster than linearly on whatever dense layers remain. The second is memory: the KV-cache grows linearly with token count regardless of whether attention is dense or sparse — sparsity decides which part of the cache to access, not how much of it needs to be stored; that's handled separately by MLA, GQA, quantization, and sliding window. In concrete terms: at the ten million tokens Llama 4 Scout advertises, the KV-cache alone requires on the order of thirty-two terabytes of memory — a physical ceiling, not an algorithmic one. And a third reason, separate from compute and memory: token position is encoded in the model's geometry in a way trained on specific lengths, and naively stretching it breaks the mechanism; extension methods — RoPE, YaRN — are covered in the coursebook for self-study: the chapter, part 2 — the section on positional encoding.
 
 And the money arithmetic that's worth doing once. The full window is tokens you pay for as input on every request: a call to a premium model at $10 per million input tokens, filled to 900,000, costs around $9 — for a single call; ten turns of dialogue run close to a hundred dollars without caching. The question "how much context does this task need" matters more economically than the question "how much can the model accept."

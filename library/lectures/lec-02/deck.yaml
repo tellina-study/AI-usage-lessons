@@ -122,7 +122,7 @@ deck:
   learning_outcomes: [LO1, LO4, LO6, LO7]
   language: ru
   status: draft
-  version: v3.3
+  version: v3.4
   source: "chapter v2.3 (3 части)"
   plan: "notes/lecture-2-review/final/rework-round2.md"
   total_slides: 47
@@ -469,7 +469,7 @@ slides:
     chapter_ref: "§3.1 (chapter-part2.md) [for-slide-s18]"
     visual:
       pattern: attention_matrix_7x7_heatmap
-      primary: "Слева 60% — 7×7 heatmap-матрица внимания для «Кот съел мышь, потому что он был голоден», ячейка «он»→«Кот» в gold (согласование по роду); верхний треугольник засерён. Справа 40% — 3 свойства: N×N и квадратичность; пересчёт на каждом шаге; multi-head. Callout «на что влияет распределение весов»: веса определяют, чьи Value попадут в представление текущего токена → напрямую влияет на следующее предсказание."
+      primary: "Слева 60% — 7×7 heatmap-матрица внимания для «Кот съел мышь, потому что он был голоден», ячейка «он»→«Кот» в gold (согласование по роду); верхний треугольник засерён. Справа 40% — 3 свойства: N×N и квадратичность; пересчёт на каждом шаге; multi-head. Callout «на что влияет распределение весов»: веса определяют, чьи Value попадут в представление текущего токена → напрямую влияет на следующее предсказание; внизу сноска — sparse/linear-модели 2025-26 снижают вычисления, N×N остаётся базой."
 
   - id: s19
     file: slides/s19-what-is-attention.md
@@ -537,7 +537,7 @@ slides:
     chapter_ref: "§3.5 (chapter-part2.md) [for-slide-s23]"
     visual:
       pattern: bar_chart_timeline_plus_poles
-      primary: "Bar chart (лог-шкала): GPT-3.5 (2022) 4K → Claude 3.5 (2024) 200K → фронтир-стандарт до 1M — Fable 5, GPT-5.6, Gemini 3.1 Pro и др. (gold). Отдельно — единичный полюс Gemini 3.5 Pro 2M (не стандарт, одна модель). Контрасты: Llama 4 Scout «10M — заявлено, без бенчмарков, маркетинг» (штриховка); YandexGPT 5 Pro 32K. Внизу строка про позиционное кодирование. Gold callout «платите за то, что кладёте в окно»."
+      primary: "Bar chart (лог-шкала): GPT-3.5 (2022) 4K → Claude 3.5 (2024) 200K → фронтир-стандарт до 1M — Fable 5, GPT-5.6, Gemini 3.1 Pro и др. (gold). Отдельно — единичный полюс Gemini 3.5 Pro 2M (не стандарт, одна модель). Контрасты: Llama 4 Scout «10M — заявлено, без бенчмарков, маркетинг» (штриховка); YandexGPT 5 Pro 32K. Внизу строка про позиционное кодирование. Gold callout «платите за то, что кладёте в окно»; факт про 32ТБ KV-cache на 10M токенов (физический потолок)."
     verify_day_of: true
 
   - id: s25

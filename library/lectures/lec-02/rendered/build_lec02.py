@@ -1682,17 +1682,17 @@ def build_s18(p):
                 cell_text(cell, f"{v:.1f}".replace(".", ","), size=10,
                           bold=(v >= 0.7),
                           color=WHITE if v >= 0.45 else DEEP)
-    text_runs(s, 0.55, 5.62, 7.5, 0.8, [
-        {"text": "По строке «он»: ", "size": 12.5, "bold": True,
+    text_runs(s, 0.55, 5.58, 7.5, 0.7, [
+        {"text": "По строке «он»: ", "size": 12, "bold": True,
          "color": DEEP},
         {"text": "наибольший вес — на «Кот» (мужской род). "
                  "Статистическая связь, выученная на корпусе.",
-         "size": 12.5, "color": DEEP},
+         "size": 12, "color": DEEP},
         {"text": "В декодере токен видит только предыдущие — показана "
-                 "полная сверка для наглядности.", "size": 11.5,
+                 "полная сверка для наглядности.", "size": 10.5,
          "italic": True, "color": SLATE, "newpara": True,
-         "space_before_pt": 3},
-    ], line_spacing=1.12)
+         "space_before_pt": 2},
+    ], line_spacing=1.08)
     # Справа — 3 свойства
     props = [
         ("Размерность", [
@@ -1718,11 +1718,17 @@ def build_s18(p):
                  color=MID)
         text_runs(s, 8.55, y + 0.50, 4.0, 0.9, runs, line_spacing=1.15)
         y += 1.62
-    gold_callout(s, 0.55, 6.45, 12.25, 0.70,
+    gold_callout(s, 0.55, 6.30, 12.25, 0.62,
                  "На что влияют веса: они определяют, чьи Value попадут в "
                  "представление текущего токена — и напрямую формируют "
                  "следующее предсказание.",
-                 size=14.5, align=PP_ALIGN.CENTER)
+                 size=13.5, align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, 7.00, 12.25, 0.35,
+             "Продакшен 2025-26: часть моделей заменяет часть слоёв на "
+             "разреженное/линейное внимание — это снижает вычисления, но "
+             "правило N×N остаётся базой и ценой полного внимания.",
+             size=10.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
+             line_spacing=1.1)
     speaker_notes(s, load_notes("s18"))
 
 
@@ -2133,17 +2139,21 @@ def build_s23(p):
              "на полтора-два порядка меньше флагманов — для длинных "
              "документов это определяющее ограничение", size=12, color=DEEP,
              line_spacing=1.18)
-    text_box(s, 0.55, 5.2, 12.25, 0.55,
-             "Просто «растянуть» окно нельзя: позиция токена закодирована "
-             "геометрией, обученной на конкретных длинах, — расширение "
-             "(RoPE / YaRN) — отдельная инженерная работа.",
-             size=12, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
-             line_spacing=1.15)
-    gold_callout(s, 0.55, 5.9, 12.25, 0.68,
+    text_runs(s, 0.55, 5.12, 12.25, 0.72, [
+        {"text": "Просто «растянуть» окно нельзя: позиция токена "
+                 "закодирована геометрией, обученной на конкретных длинах, "
+                 "— расширение (RoPE / YaRN) — отдельная инженерная работа.",
+         "size": 11.5, "italic": True, "color": LIGHT,
+         "align": PP_ALIGN.CENTER},
+        {"text": "10M заявка ≈ 32 ТБ KV-cache — физический потолок.",
+         "size": 11.5, "italic": True, "color": LIGHT,
+         "align": PP_ALIGN.CENTER, "newpara": True, "space_before_pt": 2},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.12)
+    gold_callout(s, 0.55, 5.92, 12.25, 0.62,
                  "Платите за то, что кладёте в окно, а не за то, что окно "
                  "вмещает: 900 тыс. токенов входа по $10/млн ≈ $9 за один "
-                 "вызов.", size=13.5, align=PP_ALIGN.CENTER)
-    text_runs(s, 0.55, 6.63, 12.25, 0.55, [
+                 "вызов.", size=13, align=PP_ALIGN.CENTER)
+    text_runs(s, 0.55, 6.62, 12.25, 0.55, [
         {"text": "Что делать: ", "size": 12.5, "bold": True, "color": TEAL},
         {"text": "выбирайте модель по эффективному окну задачи (бенчмарки "
                  "без лексических подсказок), не по маркетинговому "

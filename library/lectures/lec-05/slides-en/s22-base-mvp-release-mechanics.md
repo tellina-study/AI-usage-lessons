@@ -1,7 +1,7 @@
 ---
 id: s22
 type: process
-section: "Section 3. Build / Launch"
+section: "Section 3. Build and launch"
 duration_min: 2.5
 assertion: "You know feature flags/canary/rollback from engineering rollout — but here the same mechanics serve a product go/kill gate"
 learning_goal: "BASE: MVP/BML + release mechanics + Stage-Gate go/kill; explicit callout for the stronger half"

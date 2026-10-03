@@ -1,7 +1,7 @@
 ---
 id: s46
 type: process
-section: "Section 6. Governance / ROI / finale"
+section: "Section 6. Governance"
 duration_min: 2
 assertion: "Five independent sources converge: the bottleneck shifted from technology to the operating model — the winner is whoever rebuilt teams and governance"
 learning_goal: "AI: the operating model — operators→orchestrators, maturity 0-5 (Sber at Level 3, not 5), IDP economics, agentwashing"

@@ -37,6 +37,15 @@ def s14(p):
         meme_name="s14-drake.jpg")
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the ELI5 overviews are gone as a class (issue #212).
 def s14b(p):
     return eli5_overview(
         p, "s14b", title="Design in plain terms", icon_name="pencil",
@@ -53,6 +62,110 @@ def s14b(p):
              "solution. A common mistake is jumping straight to the "
              "solution."),
         ])
+
+
+def s14a(p):
+    """ISSUE #212 (owner remark R3-2026-10-01): "in the design section we
+    need a slide and the caveats that this is not only about interface
+    design". The slide opens the section right after the divider and before
+    the base slide: the scope of the word, six surfaces of contact, three
+    decisions about the system's behaviour over time. The gold panel works as
+    the run-up to the section's failure — the product's name sets the picture
+    of the system in a person's head before the first screen does. The caveat
+    is continued on s15, s17, s17a and s18, so that it does not stand
+    alone."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Design here is the whole of a person's work with the "
+                   "system: surfaces and touchpoints, behaviour, the answer "
+                   "when unsure",
+                size=22, y=0.13, w=12.25, h=0.86)
+
+    # -- the scope of the word --
+    filled_rect(s, 0.55, 1.05, 12.25, 1.04, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.6, radius=True, radius_adj=0.08)
+    icon(s, "compass", 0.78, 1.38, 0.40, "teal")
+    text_runs(s, 1.36, 1.09, 11.30, 0.96, [
+        {"text": "THE SCOPE OF THE WORD   ", "size": 10.5, "bold": True,
+         "color": TEAL},
+        {"text": "The screen is one of the surfaces on which a person meets "
+                 "the system. Design in this phase settles the whole make-up "
+                 "of that meeting: where the system comes across a person, "
+                 "how it behaves over time, and what it does in the minute "
+                 "when it is unsure of its own answer. In a product built on "
+                 "a language model, there is usually more work on the other "
+                 "surfaces than there is on the screen.",
+         "size": 11, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
+
+    # -- six surfaces and touchpoints --
+    text_box(s, x=0.55, y=2.18, w=12.25, h=0.26,
+             text="Surfaces and touchpoints", size=12, bold=True,
+             color=MID, line_spacing=1.0)
+    tiles = [
+        ("monitor-smartphone", "Screen",
+         "what a person sees, and in what order", MID),
+        ("headphones", "Voice",
+         "the same decision with no picture: order, length, the right to "
+         "interrupt", MID),
+        ("siren", "Notification",
+         "the system opens the conversation itself: when, and on what "
+         "occasion", TEAL),
+        ("file-text", "Email, report",
+         "the answer read when the system is nowhere at hand", MID),
+        ("shield-off", "Refusal",
+         "what the system says when it will not do the thing", TEAL),
+        ("clock", "Silence",
+         "processing is running, there is no answer yet: what a person sees "
+         "for that minute",
+         TEAL),
+    ]
+    tw = (12.25 - 2 * 0.16) / 3.0
+    for i, (icn, name, body, col) in enumerate(tiles):
+        tx = 0.55 + (i % 3) * (tw + 0.16)
+        ty = 2.48 + (i // 3) * (0.82 + 0.10)
+        ocean_box(s, tx, ty, tw, 0.82, fill=SURFACE, stroke=col,
+                  stroke_pt=1.4)
+        icon(s, icn, tx + 0.16, ty + 0.11, 0.28,
+             "teal" if col is TEAL else "mid")
+        text_box(s, x=tx + 0.54, y=ty + 0.09, w=tw - 0.70, h=0.28,
+                 text=name, size=11, bold=True, color=col, line_spacing=1.0)
+        text_box(s, x=tx + 0.18, y=ty + 0.42, w=tw - 0.36, h=0.36,
+                 text=body, size=9.5, color=DEEP, line_spacing=1.12)
+
+    # -- the system's behaviour over time --
+    text_box(s, x=0.55, y=4.52, w=12.25, h=0.26,
+             text="The system's behaviour over time", size=12, bold=True,
+             color=MID, line_spacing=1.0)
+    behav = [("circle-check", "Sure",
+              "it answers and shows what the answer is built on", MID),
+             ("circle-help", "Unsure",
+              "it says so in the first person and offers a move forward",
+              TEAL),
+             ("undo-2", "Wrong",
+              "the person sees what happened, and has a rollback path",
+              TEAL)]
+    for i, (icn, name, body, col) in enumerate(behav):
+        bx = 0.55 + i * (tw + 0.16)
+        ocean_box(s, bx, 4.82, tw, 0.84, fill=WHITE, stroke=col,
+                  stroke_pt=1.6)
+        icon(s, icn, bx + 0.16, 4.92, 0.28,
+             "teal" if col is TEAL else "mid")
+        text_box(s, x=bx + 0.54, y=4.90, w=tw - 0.70, h=0.28, text=name,
+                 size=11, bold=True, color=col, line_spacing=1.0)
+        text_box(s, x=bx + 0.18, y=5.22, w=tw - 0.36, h=0.36, text=body,
+                 size=9.5, color=DEEP, line_spacing=1.12)
+
+    gold_callout(
+        s, 0.55, 5.80, 12.25, 0.92,
+        "Decisions in this layer are taken once, and they outlive any "
+        "layout: the product's name, the promise at the entrance, the right "
+        "to stop. The name sets the picture of the system in a person's head "
+        "before they see the first screen — and correcting that picture "
+        "costs a recall of the entire fleet.",
+        size=12.5, bold=True)
+    notes_with_sources(s, "s14a")
+    return s
 
 
 def s15(p):
@@ -99,6 +212,15 @@ def s15(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: superseded base — heuristics / the design system moved into s15 and s17a (issue #212).
 def s16(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -226,53 +348,143 @@ def s18(p):
 
 
 def s19(p):
+    """ISSUE #212 (owner remark R2-2026-10-01): Character.AI used to stand
+    here — a case whose root lies in an absent safety requirement, and in the
+    section on interaction design it was standing in the wrong place. In its
+    place goes a case where interaction design itself is what failed: the
+    system's behaviour, its warnings, and the picture of the system in a
+    person's head. The choice rests on the wording in the manufacturer's own
+    defect report and on the fact that the remedy lay entirely in this layer
+    — the prominence of the warnings and the strictness of the attention
+    checks, with no changes to the driving model. The abbreviation NHTSA is
+    expanded at its first appearance (R5)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Safeguards appeared almost two years after launch — only after the tragedy",
-                size=21, w=12.3, h=0.85)
-    ocean_box(s, 0.55, 1.55, 3.75, 4.30, fill=SURFACE, stroke=LIGHT,
-              stroke_pt=1.5)
-    icon(s, "shield-alert", 1.55, 2.05, 1.75, "light")
-    text_box(s, x=0.85, y=4.05, w=3.15, h=1.5,
-             text="Protection for vulnerable users was added as a "
-                  "retrofit — after the tragedy, not in the original "
-                  "design brief.",
-             size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             line_spacing=1.2)
-    # right: real logo + timeline + facts
-    photo_in_box(s, "s19-characterai-real-source.png", 4.55, 1.55, 3.15, 1.45,
-                 pad=0.20)
-    ocean_box(s, 7.90, 1.55, 4.90, 1.45, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=8.15, y=1.62, w=4.4, h=0.34, text="Character.AI",
-             size=14, bold=True, color=MID)
-    text_box(s, x=8.15, y=2.02, w=4.4, h=0.9,
-             text="A 14-year-old user died after months of conversation "
-                  "with an AI character (02.2024) [1].",
-             size=12, color=DEEP, line_spacing=1.15)
-    # timeline strip
-    stages = ["Launch", "Tragedy\n02.2024", "Lawsuit\n10.2024", "Safeguards\n11.2025"]
-    xs = [4.85, 6.85, 8.85, 10.85]
-    for i, (st, x) in enumerate(zip(stages, xs)):
-        col = GOLD if i == 3 else LIGHT
-        circle(s, x, 3.55, 0.30, col, stroke=WHITE, stroke_pt=1.5)
-        st_lbl = f"{st} [2]" if i == 3 else st
-        text_box(s, x=x - 0.55, y=3.95, w=1.40, h=0.5, text=st_lbl, size=10,
-                 bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=0.9)
-        if i < 3:
-            connector(s, x + 0.30, 3.70, xs[i + 1], 3.70, color=SOFT_GREY,
-                      width=2.0)
+    slide_title(s, "All 2,031,220 cars with the driver-assistance feature "
+                   "recalled: the prominence of the controls was found "
+                   "insufficient",
+                size=21, y=0.13, w=12.30, h=0.80)
+
+    # -- 1. WHAT THE CASE IS — description before analysis (R9) --
+    ocean_box(s, 0.55, 0.97, 12.25, 1.90, fill=SURFACE, stroke=MID,
+              stroke_pt=1.4)
+    photo_in_box(s, "s19-tesla-real-source.png", 0.70, 1.34, 2.02, 0.84,
+                 pad=0.10)
+    text_box(s, x=0.70, y=2.24, w=2.02, h=0.44,
+             text="driver-assistance\nfeatures", size=9.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.05)
+    text_box(s, x=2.94, y=1.03, w=9.64, h=0.26,
+             text="What the case is", size=12, bold=True, color=MID)
+    text_runs(s, 2.94, 1.31, 9.64, 1.50, [
+        {"text": "Autopilot ", "size": 10.5, "bold": True, "color": DEEP},
+        {"text": "is the set of driver-assistance features in Tesla cars: "
+                 "it holds the lane, the speed and the following distance "
+                 "while the person watches the road and keeps their hands "
+                 "on the wheel.", "size": 10.5,
+         "color": DEEP},
+        {"text": "On 13 August 2021 the National Highway Traffic Safety "
+                 "Administration (NHTSA) opened an investigation: cars with "
+                 "Autopilot engaged were running into emergency vehicles "
+                 "stopped on the road. On 12 December 2023 Tesla recalled "
+                 "all 2,031,220 cars carrying the feature — the entire fleet "
+                 "built since 2012. In the defect report the company wrote, "
+                 "in its own words, that the prominence and scope of the "
+                 "system's controls may be insufficient to prevent driver "
+                 "misuse.",
+         "size": 10.5, "color": DEEP, "newpara": True, "space_before": 4},
+    ], line_spacing=1.14)
+
+    # -- 2. HOW IT RAN IN TIME --
+    ocean_box(s, 0.55, 2.93, 12.25, 0.72, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    stages = [("Investigation\n08.2021", False),
+              ("Recall of 2,031,220 cars\n12.12.2023", True),
+              ("Over-the-air update\n12.2023", False),
+              ("Recall query\n25.04.2024", False),
+              ("≥20 crashes\nafter the update", False)]
+    xs = [1.55, 4.05, 6.60, 9.15, 11.65]
+    for i, ((lbl, hot), x) in enumerate(zip(stages, xs)):
+        col = GOLD if hot else LIGHT
+        circle(s, x - 0.11, 3.05, 0.22, col, stroke=WHITE, stroke_pt=1.5)
+        text_box(s, x=x - 1.15, y=3.32, w=2.30, h=0.28, text=lbl, size=8.5,
+                 bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=0.95)
+        if i < len(xs) - 1:
+            connector(s, x + 0.11, 3.16, xs[i + 1] - 0.11, 3.16,
+                      color=SOFT_GREY, width=2.0)
+
+    # -- 3. WHAT BROKE / WHY THIS IS THE DESIGN PHASE --
+    cw_ = 6.05
+    for x_, head_, col, icn, runs in [
+        (0.55, "What broke", MID, "eye-off", [
+            {"text": "Over the course of the investigation, from August "
+                     "2021 to December 2023, at least 13 fatal crashes "
+                     "accumulated in which foreseeable misuse played its "
+                     "part.", "size": 10, "color": DEEP},
+            {"text": "The driver's picture of the system diverged from what "
+                     "the system was doing. The name of this error is ",
+             "size": 10, "color": DEEP, "newpara": True, "space_before": 4},
+            {"text": "mode confusion", "size": 10, "bold": True,
+             "color": MID},
+            {"text": ".", "size": 10, "color": DEEP},
+        ]),
+        (6.75, "Why this is a design-phase decision", TEAL, "layers", [
+            {"text": "The recall touched not one line of the driving model. "
+                     "What was fixed was how the system presents itself: the "
+                     "prominence of the warnings, the frequency of the "
+                     "attention checks, the threshold past which the feature "
+                     "switches off.", "size": 10,
+             "color": DEEP},
+            {"text": "The name \"Autopilot\" is a decision from the same "
+                     "layer: it sets the picture before the first warning "
+                     "does.", "size": 10,
+             "color": DEEP, "newpara": True, "space_before": 4},
+        ]),
+    ]:
+        ocean_box(s, x_, 3.71, cw_, 1.58, fill=SURFACE, stroke=col,
+                  stroke_pt=1.5)
+        icon(s, icn, x_ + 0.22, 3.82, 0.32, "teal" if col is TEAL else "mid")
+        text_box(s, x=x_ + 0.64, y=3.82, w=cw_ - 0.88, h=0.30, text=head_,
+                 size=11.5, bold=True, color=col, line_spacing=1.0)
+        text_runs(s, x_ + 0.22, 4.16, cw_ - 0.44, 1.04, runs,
+                  line_spacing=1.12)
+
+    # -- 4. ANALYSIS --
     gold_callout(
-        s, 4.55, 4.75, 8.25, 1.10,
-        "Root cause — not a runtime bug, but a missing requirement in the "
-        "design brief: the MVP optimized for engagement without asking "
-        "\"who could be harmed.\" Criterion: safeguards for vulnerable "
-        "users belong in the MVP, not as a patch after a tragedy.",
-        size=12.5, bold=True)
+        s, 0.55, 5.35, 12.25, 0.82,
+        "The root is a decision about how the system presents itself to a "
+        "person: what it reports, how insistently, and when it refuses to "
+        "go on. Two years and four months passed between the opening of "
+        "the investigation and the recall, and all that time the fleet drove "
+        "with the picture it was given. Testing the model does not catch "
+        "this: it behaved exactly as advertised.",
+        size=12, bold=True)
+
+    # -- 5. THE CRITERION THAT CARRIES FORWARD --
+    teal_callout(
+        s, 0.55, 6.23, 12.25, 0.76,
+        "The agency opened its query into the remedy on 25 April 2024: in "
+        "the first four months after the update, at least 20 crashes "
+        "accumulated with the system suspected of involvement, and some of "
+        "the measures are switched on by the driver's own consent and "
+        "switched off the same way. The criterion that carries forward: a "
+        "measure a person can switch off stays a request — what turns it "
+        "into a mechanism is the ability to stop the action.",
+        size=10.5, bold=False)
     refs_of_slide(s, "s19")
     notes_with_sources(s, "s19")
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: superseded failure — iTutorGroup now runs as a neighbouring class on s18 (issue #212).
 def s20(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -330,6 +542,15 @@ def s21(p):
         meme_name="s21-anakin-padme.jpg")
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the ELI5 overviews are gone as a class (issue #212).
 def s21b(p):
     return eli5_overview(
         p, "s21b", title="Build and launch in plain terms", icon_name="sliders-horizontal",
@@ -427,6 +648,15 @@ def s23(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: absorbed by s24a (the autonomy ladder as a practice card) (issue #212).
 def s24(p):
     s = blank(p)
     set_slide_bg(s, WHITE)

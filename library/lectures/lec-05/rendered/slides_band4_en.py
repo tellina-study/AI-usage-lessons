@@ -30,6 +30,15 @@ def s44(p):
         meme_name="s44-sad-pablo.jpg")
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the ELI5 overviews are gone as a class (issue #212).
 def s44b(p):
     return eli5_overview(
         p, "s44b", title="Governance in plain terms", icon_name="scale",
@@ -238,6 +247,15 @@ def s48(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: a duplicate of s47/s51/s55 (issue #212).
 def s49(p):
     s = blank(p)
     set_slide_bg(s, WHITE)

@@ -142,6 +142,26 @@ URLS = {
     "bcg_ai_impact_gap": "https://www.bcg.com/publications/2025/closing-the-ai-impact-gap",
     "business_standard_jwo": "https://www.business-standard.com/companies/news/amazon-s-just-walk-out-checkout-tech-was-powered-by-1-000-indian-workers-124040400463_1.html",
     "retaildive_jwo": "https://www.retaildive.com/news/amazon-removes-just-walk-out-tech-amazon-fresh-stores-dash-carts/712150",
+    # issue #212, EN parity rebuild 2026-10-03: ported from _helpers.URLS for
+    # the slides the EN deck gained in this rebuild (s13a Humane AI Pin,
+    # s19 Tesla recall, s36c, s38a, s38b, s45a, s45b).
+    "humane_returns_9to5": "https://9to5mac.com/2024/08/07/humane-ai-pin-woes-worsen-as-recent-returns-exceed-sales/",
+    "humane_hp_techcrunch": "https://techcrunch.com/2025/02/18/humanes-ai-pin-is-dead-as-hp-buys-startups-assets-for-116m",
+    "humane_wiki": "https://en.wikipedia.org/wiki/Humane_Inc.",
+    "glass_enterprise_dt": "https://www.digitaltrends.com/mobile/google-glass-enterprise-edition/",
+    "nhtsa_23v838": "https://static.nhtsa.gov/odi/rcl/2023/RCLRPT-23V838-8276.PDF",
+    "nhtsa_ea22002": "https://static.nhtsa.gov/odi/inv/2022/INCLA-EA22002-14498.pdf",
+    "nhtsa_rq24009": "https://static.nhtsa.gov/odi/inv/2024/INOA-RQ24009-12046.pdf",
+    "google_sre_book": "https://sre.google/sre-book/introduction/",
+    "itil_service_management": "https://www.axelos.com/certifications/itil-service-management",
+    "genai_at_work_qje": "https://www.nber.org/papers/w31161",
+    "cursor_support_bot_aiid": "https://incidentdatabase.ai/cite/1039/",
+    "incidentio_ai_platform": "https://incident.io/ai-platform",
+    "iconiq_state_of_ai_2026": "https://www.iconiq.com/growth/reports/state-of-ai-2026",
+    "cloudzero_finance_2026": "https://www.prnewswire.com/news-releases/cloudzero-survey-says-78-of-finance-execs-cant-fully-tie-ai-spending-to-business-outcomes-302808711.html",
+    "eu_ai_act_art12": "https://artificialintelligenceact.eu/article/12/",
+    "bcg_ai_pilots_2026": "https://www.bcg.com/publications/2026/why-ai-pilots-rarely-deliver-value",
+    "bcg_ai_radar_2026": "https://www.bcg.com/press/15january2026-as-ai-investments-surge-ceos-take-lead",
 }
 
 
@@ -498,6 +518,32 @@ def teal_callout(slide, x, y, w, h, text, *, size=14, bold=False,
              align=align, line_spacing=1.18)
 
 
+def check_point(slide, x, y, w, text, *, h=0.80, size=12.5,
+                label="QUESTION TO THE ROOM"):
+    """Comprehension check — one badge for the whole deck (issue #212).
+
+    EN twin of _helpers.check_point: one recognisable pattern, identical on
+    EVERY slide whose .md carries a «[Бейдж-пауза]» / [Pause badge] block —
+    a white card with a 2pt gold border, a gold circle with a question mark
+    on the left, a gold label and the question to the room itself.
+
+    Deliberately NOT a repeat of gold_callout (that one is a GOLD_TINT fill
+    with no icon): on many slides the badge sits next to a gold takeaway
+    bar, and two identical gold stripes would read as a single block.
+    """
+    filled_rect(slide, x, y, w, h, WHITE, stroke=GOLD, stroke_pt=2.0,
+                radius=True, radius_adj=0.10)
+    d = 0.44
+    cy = y + (h - d) / 2.0
+    circle(slide, x + 0.20, cy, d, GOLD)
+    icon(slide, "circle-help", x + 0.20 + 0.085, cy + 0.085, d - 0.17, "white")
+    text_runs(slide, x + 0.82, y + 0.05, w - 1.05, h - 0.10,
+              [{"text": label + "   ", "size": 10.5, "bold": True,
+                "color": GOLD},
+               {"text": text, "size": size, "bold": True, "color": DEEP}],
+              anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.16)
+
+
 def footer(slide, text):
     text_box(slide, x=0.55, y=7.04, w=12.25, h=0.34, text=text,
              size=12, italic=True, color=LIGHT, align=PP_ALIGN.LEFT,
@@ -804,15 +850,30 @@ SLIDE_REFS = {
          "~712 documented court cases worldwide involving AI "
          "hallucinations", True),
     ],
+    # issue #212, EN parity rebuild 2026-10-03: s13a is no longer IBM Watson
+    # for Oncology — the RU deck replaced it with Humane AI Pin, a failure of
+    # the discovery phase itself. The old IBM entries are gone with it.
     "s13a": [
-        ("1", "STAT News — leaked internal IBM Watson documents",
-         "ibm_watson_statnews",
-         "\"unsafe and incorrect\" oncology recommendations (July 25, "
-         "2018)"),
-        ("2", "IEEE Spectrum — how Watson overpromised and underdelivered",
-         "ibm_watson_ieee",
-         "trained on hypothetical cases from a handful of MSK oncologists, "
-         "not on real outcomes"),
+        ("1", "9to5Mac (7 Aug 2024) — Humane's internal sales figures",
+         "humane_returns_9to5",
+         "from May to August 2024 returns exceeded purchases: ~10,000 "
+         "devices sold, ~$9 million in revenue, closer to 7,000 still in "
+         "customers' hands by August"),
+        ("2", "TechCrunch (18 Feb 2025) — HP buys Humane's assets",
+         "humane_hp_techcrunch",
+         "$116 million for the assets against more than $230 million "
+         "raised; sales ended, the cloud service shut down on 28 February "
+         "2025"),
+        ("3", "Humane Inc. — dates, prices and the sales target",
+         "humane_wiki",
+         "unveiled 9 November 2023; on sale from April 2024 at $699 plus "
+         "$24 a month; cut to $499 from 23 October 2024; target of 100,000 "
+         "devices in a year"),
+        ("4", "Digital Trends — Glass Enterprise Edition at AGCO and DHL",
+         "glass_enterprise_dt",
+         "against the same work without the glasses: assembly time -25%, "
+         "inspection time -30% (AGCO), warehouse throughput +15% (DHL); "
+         "wide sales of the $1,500 Explorer closed in January 2015"),
     ],
     "s15": [
         ("1", "UK Design Council — The Double Diamond", "double_diamond",
@@ -838,13 +899,25 @@ SLIDE_REFS = {
          "21,880 WCAG evaluations on AI-generated interfaces, 29.0% "
          "compliance (contrast 26.8%, color 19.2%)", True),
     ],
+    # issue #212, EN parity rebuild 2026-10-03: s19 is no longer Character.AI
+    # — the RU deck replaced it with Tesla recall 23V-838, a failure of
+    # interaction design (mode confusion). The old entries are gone with it.
     "s19": [
-        ("1", "Washington Post (Oct 24, 2024)", "wapo_characterai",
-         "a 14-year-old user's death after months of conversation with an "
-         "AI character"),
-        ("2", "CBS News (Jan 2026) — settlement", "cbs_characterai_settle",
-         "Character.AI/Google — safeguards retrofitted after the "
-         "tragedy"),
+        ("1", "NHTSA — recall report 23V-838 (12 Dec 2023)",
+         "nhtsa_23v838",
+         "2,031,220 cars — every one with Autosteer, built between 5 Oct "
+         "2012 and 7 Dec 2023; the manufacturer named insufficient "
+         "prominence and scope of the controls as the cause; remedied by "
+         "software update 2023.44.30"),
+        ("2", "NHTSA — closing of investigation EA22-002", "nhtsa_ea22002",
+         "opened 13 Aug 2021 as PE21-020, upgraded 8 June 2022; no fewer "
+         "than 13 fatal crashes in which foreseeable misuse of the system "
+         "played a part"),
+        ("3", "NHTSA — remedy query RQ24-009 (25 Apr 2024)",
+         "nhtsa_rq24009",
+         "no fewer than 20 crashes after the update; some of the measures "
+         "are enabled by the driver's consent and can be switched off by "
+         "the driver too"),
     ],
     "s20": [
         ("1", "EEOC (Aug 9, 2023) — iTutorGroup", "eeoc_itutorgroup",
@@ -1045,6 +1118,72 @@ SLIDE_REFS = {
          "the technology pulled from Amazon Fresh; 27 of 44 stores lose "
          "the feature"),
     ],
+    # issue #212, EN parity rebuild 2026-10-03: the slides the EN deck gained
+    # in this rebuild. s45 is deliberately absent here, exactly as in
+    # _helpers.SLIDE_REFS — see the note there.
+    "s36c": [
+        ("1", "Google — Site Reliability Engineering (O'Reilly, 2016)",
+         "google_sre_book",
+         "the book that gave the reliability discipline its shape; the "
+         "\"system\" half and its instruments"),
+        ("2", "Axelos — ITIL, the body of practice for IT service "
+              "management",
+         "itil_service_management",
+         "where the support desk and its instruments come from: "
+         "first-contact resolution, time to answer, the rating after "
+         "closing"),
+    ],
+    "s38a": [
+        ("1", "Brynjolfsson, Li, Raymond — Generative AI at Work "
+              "(Quarterly Journal of Economics, 2025; NBER preprint w31161)",
+         "genai_at_work_qje",
+         "5,172 support agents, rollout Nov 2020 - May 2021: +15% "
+         "resolutions per hour on average and +30% among the least "
+         "experienced, against a base of 2.1 resolutions per hour; almost "
+         "no gain among the most experienced, and quality slightly lower"),
+        ("2", "AI Incident Database, incident 1039 — the Cursor support bot",
+         "cursor_support_bot_aiid",
+         "April 2025: the bot announced an invented \"one login per user\" "
+         "restriction, customers cancelled subscriptions, the company "
+         "refunded them"),
+    ],
+    "s38b": [
+        ("1", "incident.io — assembling a timeline and a draft review from "
+              "the records of an incident",
+         "incidentio_ai_platform",
+         "a 2026 class of tools (incident.io, Rootly, PagerDuty); the time "
+         "saving is the vendor's claim, there is no independent "
+         "measurement",
+         True),
+    ],
+    "s45a": [
+        ("1", "ICONIQ Capital — State of AI report (2026)",
+         "iconiq_state_of_ai_2026",
+         "about 305 leaders of companies building AI products, surveyed in "
+         "Q2 2026: the split of spend by type before launch and at scale; "
+         "gross margin of 45% in 2025 against an expected 53% in 2026",
+         True),
+        ("2", "CloudZero — survey of finance leaders (2026)",
+         "cloudzero_finance_2026",
+         "260 respondents, more than half of them CFOs: 22% can tie AI "
+         "spend to money; 60% agree they spend more on AI than they can "
+         "justify"),
+        ("3", "European Union Artificial Intelligence Act, arts. 12 and 19",
+         "eu_ai_act_art12",
+         "a high-risk system must automatically log events across its "
+         "whole lifetime; the logs are kept for no less than six months — "
+         "the obligation applies from 2 August 2026"),
+    ],
+    "s45b": [
+        ("1", "Boston Consulting Group — the payback of pilots (2026)",
+         "bcg_ai_pilots_2026",
+         "companies measure activity — hours saved, tasks automated — "
+         "instead of money in the profit and loss account"),
+        ("2", "Boston Consulting Group — annual AI review (January 2026, "
+              "2,360 executives)", "bcg_ai_radar_2026",
+         "almost everyone is investing: 94% will keep investing even "
+         "without an immediate return"),
+    ],
 }
 
 
@@ -1105,6 +1244,7 @@ NAV = [
     ("4", "Measure"),
     ("5", "Support"),
     ("6", "Governance"),
+    ("7", "Synthesis"),          # issue #212 — Section 7 (synthesis, s50-s55)
 ]
 
 

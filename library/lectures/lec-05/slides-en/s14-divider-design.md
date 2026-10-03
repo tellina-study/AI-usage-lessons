@@ -1,7 +1,7 @@
 ---
 id: s14
 type: section_divider
-section: "Section 2. Design / prototype"
+section: "Section 2. Design"
 duration_min: 0.3
 assertion: "Design: how a hypothesis becomes an artifact you can show a human — prototyping and safety-by-design"
 learning_goal: "Section divider S2: the meaning of the phase in one line, tag \"2 failures\""

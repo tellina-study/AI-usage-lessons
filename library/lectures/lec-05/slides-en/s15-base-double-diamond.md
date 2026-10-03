@@ -1,7 +1,7 @@
 ---
 id: s15
 type: process
-section: "Section 2. Design / prototype"
+section: "Section 2. Design"
 duration_min: 2
 assertion: "Double Diamond: two divergence-convergence cycles — first the right problem, then the right solution"
 learning_goal: "BASE: Double Diamond as the section's load-bearing framework (Design Thinking = its 5-step version)"

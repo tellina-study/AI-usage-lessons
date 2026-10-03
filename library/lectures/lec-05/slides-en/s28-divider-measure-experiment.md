@@ -1,7 +1,7 @@
 ---
 id: s28
 type: section_divider
-section: "Section 4. Measure / Experiment"
+section: "Section 4. Measurement"
 duration_min: 0.3
 assertion: "Measure / Experiment: the loop's arrow where AI lowered trust, not cost"
 learning_goal: "Section divider S4: the meaning of the phase in one line, tag \"2 failures\""

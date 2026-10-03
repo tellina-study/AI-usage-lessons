@@ -1,7 +1,7 @@
 ---
 id: s45
 type: assertion_visual
-section: "Section 6. Governance / ROI / finale"
+section: "Section 6. Governance"
 duration_min: 2
 assertion: "Portfolio governance is the same Stage-Gate go/kill, raised to the level of capital; an AI product's unit economics gains a new variable — cost per request"
 learning_goal: "BASE: portfolio governance + unit economics + an operational financial KPI"

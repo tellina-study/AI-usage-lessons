@@ -1,7 +1,7 @@
 ---
 id: s41
 type: case_study
-section: "Section 5. Support / Operate"
+section: "Section 5. Support and operations"
 duration_min: 2
 assertion: "The tribunal rejected the \"bot is a separate legal entity\" defense: the company is responsible for the bot's answer exactly as for a static page"
 learning_goal: "On-point failure #10: Air Canada — the principle of accountability for every bot answer (LO3/LO6)"

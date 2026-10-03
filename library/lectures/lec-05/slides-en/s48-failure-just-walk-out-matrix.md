@@ -1,7 +1,7 @@
 ---
 id: s48
 type: matrix
-section: "Section 6. Governance / ROI / finale"
+section: "Section 6. Governance"
 duration_min: 2.5
 assertion: "Just Walk Out: 700 of 1,000 transactions needed manual review against a target of 50 of 1,000 — the claimed autonomy diverged from reality by a factor of 14"
 learning_goal: "On-point failure #13: Just Walk Out (hidden human cost) + a summary matrix (LO1/LO2)"

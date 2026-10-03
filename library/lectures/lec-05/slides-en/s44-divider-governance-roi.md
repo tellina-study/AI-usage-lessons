@@ -1,7 +1,7 @@
 ---
 id: s44
 type: section_divider
-section: "Section 6. Governance / ROI / finale"
+section: "Section 6. Governance"
 duration_min: 0.3
 assertion: "Governance / ROI / when not to: the capstone assembles the whole loop and answers the hook paradox"
 learning_goal: "Section divider S6: the meaning of the phase in one line, tag \"payoff\""

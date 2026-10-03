@@ -1,7 +1,7 @@
 ---
 id: s27
 type: case_study
-section: "Section 3. Build / Launch"
+section: "Section 3. Build and launch"
 duration_min: 2
 assertion: "McDonald's kept AI order-taking on 0.7% of the chain's restaurants for 2.5-3 years and still killed the pilot — the correct kill decision"
 learning_goal: "Failure/positive on-point #6: McDonald's × IBM drive-thru — an exemplary kill decision (LO2/LO6)"

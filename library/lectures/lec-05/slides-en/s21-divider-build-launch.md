@@ -1,7 +1,7 @@
 ---
 id: s21
 type: section_divider
-section: "Section 3. Build / Launch"
+section: "Section 3. Build and launch"
 duration_min: 0.3
 assertion: "Build / Launch: the collapsed arrow — this is exactly where AI changes the most, the cost of writing the code itself"
 learning_goal: "Section divider S3: the meaning of the phase in one line, tag \"2 failures\""

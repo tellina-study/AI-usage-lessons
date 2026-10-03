@@ -189,67 +189,115 @@ def s03(p):
 
 
 # ============================================================
-# s04 - bridge from Lec-4 + central question (nested loops)
+# s04 - REBUILT (issue #212): "why a product needs the loop, and what
+# happens without one". The previous slide (the bridge from Lecture 4 plus
+# the central question) was rejected by the owner: "the value is not clear,
+# beyond saying that we are using what was in Lecture 4". The content is
+# taken from chapter.md §0.3a — a section that was not on the slides at all.
+# The bridge from Lecture 4 is compressed into a single subordinate line
+# under the title; the central question moved to s06.
 # ============================================================
 def s04(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Lecture 4's code loop is one step inside the product loop",
-                size=23, w=12.0, h=0.85)
+    slide_title(s, "Why a product needs the loop: without one, the error is "
+                   "found too late",
+                size=22, w=12.25, h=0.66, y=0.24)
+    # EDIT #212 (student-roast 2026-09-30, edit 4 — overload): the bridge
+    # from Lecture 4 ("the code loop sits inside the build phase") is off the
+    # visible layer and has moved into the notes. It was a subordinate line,
+    # yet it occupied the first position after the title — students read it
+    # before they read the five questions.
 
-    # outer big loop box
-    ocean_box(s, 0.55, 1.50, 12.25, 2.85, fill=SURFACE, stroke=MID,
-              stroke_pt=1.6)
-    text_box(s, x=0.80, y=1.62, w=6.0, h=0.35, text="Product loop (Lecture 5)",
-             size=13, bold=True, color=MID)
-    import math
-    mcx, mcy, mr = 2.55, 2.85, 0.72
-    mnodes = ["search", "pencil", "hammer", "ruler", "headphones", "scale"]
-    mcenters = []
-    for i in range(6):
-        ang = math.pi / 2 - i * (2 * math.pi / 6)
-        mcenters.append((mcx + mr * math.cos(ang), mcy - mr * math.sin(ang)))
-    for i in range(6):
-        x1, y1 = mcenters[i]
-        x2, y2 = mcenters[(i + 1) % 6]
-        connector(s, x1, y1, x2, y2,
-                  color=(GOLD if i == 5 else LIGHT),
-                  width=(2.0 if i == 5 else 1.4), arrow_end=True)
-    for i, ic in enumerate(mnodes):
-        nx, ny = mcenters[i]
-        circle(s, nx - 0.22, ny - 0.22, 0.44, WHITE, stroke=MID, stroke_pt=1.2)
-        icon(s, ic, nx - 0.14, ny - 0.14, 0.28, "mid")
-    chip(s, 4.55, 2.62, 1.05, 0.42, "6 phases", fill=GOLD, color=DEEP, size=12)
-    icon(s, "layers", 0.85, 3.75, 0.5, "teal")
-    text_box(s, x=1.50, y=3.75, w=6.05, h=0.55,
-             text="discovery → design → build/launch → measure → "
-                  "operate → govern → discovery again",
-             size=11, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
-    # inner small loop box nested inside "build" area
-    ocean_box(s, 7.9, 2.05, 4.65, 2.00, fill=WHITE, stroke=GOLD,
-              stroke_pt=1.8)
-    text_box(s, x=8.10, y=2.20, w=4.30, h=0.32,
-             text="Code loop (Lecture 4)", size=11.5, bold=True, color=DEEP)
-    text_box(s, x=8.10, y=2.62, w=4.30, h=1.20,
-             text="spec → ADR → plan → PR → incident",
-             size=12, italic=True, color=SLATE, line_spacing=1.2,
-             anchor=MSO_ANCHOR.TOP)
-    icon(s, "git-branch", 8.10, 3.30, 0.5, "teal")
+    # ── left column: five questions ↔ phases (ties to the lecture map, s03) ──
+    lx, lw = 0.55, 6.10
+    text_box(s, x=lx, y=1.02, w=lw, h=0.34,
+             text="Five questions a product answers by observation rather "
+                  "than by opinion",
+             size=11.5, bold=True, color=TEAL, line_spacing=1.02)
+    questions = [
+        ("Does anyone need this at all", "phase 1 · discovery"),
+        ("Can a person actually use it, and will someone nobody thought "
+         "about be harmed", "phase 2 · design"),
+        ("Can we build it and release it safely",
+         "phase 3 · build and launch"),
+        ("Will it be chosen firmly enough that people pay for it",
+         "phases 4 and 6 · measurement, governance"),
+        ("Do those answers still hold a quarter later", "phase 5 · support"),
+    ]
+    for i, (q, phase) in enumerate(questions):
+        y = 1.46 + i * 0.64
+        ocean_box(s, lx, y, lw, 0.60, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.3)
+        circle(s, lx + 0.16, y + 0.15, 0.30, MID)
+        text_box(s, x=lx + 0.16, y=y + 0.17, w=0.30, h=0.28, text=str(i + 1),
+                 size=11, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+        text_box(s, x=lx + 0.58, y=y + 0.02, w=lw - 0.76, h=0.38, text=q,
+                 size=11, bold=True, color=DEEP, line_spacing=0.96,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=lx + 0.58, y=y + 0.38, w=lw - 0.76, h=0.20, text=phase,
+                 size=9.5, italic=True, color=TEAL)
+    # A name on a slide has to carry a role (student-roast 2026-09-30, edit
+    # 1): "Marty Cagan" means nothing to a third-year student, so the
+    # argument "the product risks after Cagan" read as a pointer to a
+    # stranger.
+    text_box(s, x=lx + 0.04, y=4.74, w=lw - 0.08, h=0.84,
+             text="The first four are the product risks named by Marty "
+                  "Cagan (product leader, founder of the Silicon Valley "
+                  "Product Group, author of \"Inspired\"); the fifth only "
+                  "opens up after launch. Each has a phase of its own: the "
+                  "loop is the minimum set of places where these questions "
+                  "get answered.",
+             size=10.5, italic=True, color=SLATE, line_spacing=1.08)
 
-    ocean_box(s, 0.55, 4.35, 12.25, 1.65)
-    text_box(s, x=0.85, y=4.48, w=11.65, h=1.4,
-             text="Now that AI made assembly nearly free — what became the "
-                  "product's real bottleneck, and on every phase of the "
-                  "loop: which classical discipline stays, what does AI "
-                  "speed up, and where does AI-first break?",
-             size=17, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.18)
+    # ── right column: the mechanism of having no loop ──
+    # EDIT #212 (student-roast, edit 4): there used to be three text frames
+    # in a row plus a large gold panel — the right column as a whole could
+    # not be read in the time available. Two frames now: "the cost of late
+    # discovery" is folded into a single line inside the first one (Boehm's
+    # figure kept together with his role), and the repeat of the 60/20/5
+    # funnel is out of the gold panel — that figure was already on s01 and
+    # gets a slide of its own in Section 6.
+    rx, rw = 6.95, 5.85
+
+    def framed(y, h, head, body, *, stroke=MID, body_size=11, head_color=TEAL):
+        ocean_box(s, rx, y, rw, h, fill=SURFACE, stroke=stroke, stroke_pt=1.4)
+        text_box(s, x=rx + 0.22, y=y + 0.10, w=rw - 0.44, h=0.28, text=head,
+                 size=12.5, bold=True, color=head_color)
+        # anchor TOP, not MIDDLE: with MIDDLE, text that does not fit the
+        # frame rides UP and covers the frame's own heading — which is
+        # exactly what happened on the first iteration of this edit.
+        text_box(s, x=rx + 0.22, y=y + 0.44, w=rw - 0.44, h=h - 0.56,
+                 text=body, size=body_size, color=DEEP, line_spacing=1.14)
+
+    framed(1.02, 2.58, "When there is no loop",
+           "The questions do not disappear — optimistic assumptions take "
+           "their place.\n"
+           "The error does not disappear either; only the moment of finding "
+           "it moves — to after the build has been paid for and the release "
+           "has happened, where rolling back costs more than the error "
+           "itself.\n"
+           "From requirements to release, the cost of a fix spreads out up "
+           "to a hundredfold on large projects and fourfold on small ones "
+           "(Barry Boehm, a researcher in the economics of software "
+           "development, 1981).")
+    framed(3.70, 2.10, "From inside the team it does not look like failure",
+           "Built it, nobody uses it · got to a pilot and stalled · it works "
+           "and it is not chosen · rolled it out, and a quarter later people "
+           "stopped opening it.\n"
+           "In all four cases the build itself went through successfully — "
+           "which is why from inside the team it reads as success; an error "
+           "sitting inside an unchecked hypothesis is not visible to anyone.",
+           stroke=TEAL)
 
     gold_callout(
-        s, 0.55, 6.15, 12.25, 0.60,
-        "Lecture 4's unit of work is the pull request. The unit of work "
-        "here is a hypothesis, an experiment, a release decision.",
-        size=12.5, bold=True, align=PP_ALIGN.CENTER)
+        s, 0.55, 5.94, 12.25, 0.88,
+        "The expense of building worked as an involuntary barrier: while "
+        "making the thing cost weeks, that cost alone forced teams to think "
+        "in advance. AI is exactly what zeroed it out — and teams that never "
+        "had an explicit loop now have nothing left holding them back from "
+        "skipping these questions.",
+        size=12.5, bold=True)
     notes_with_sources(s, "s04")
     return s
 
@@ -257,6 +305,15 @@ def s04(p):
 # ============================================================
 # s05 - KEYSTONE: loop, 3 independent sources (PDCA/OODA/BML)
 # ============================================================
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: removed by the owner — a repeat of the loop already introduced; its argument was condensed into one line on s06 (issue #212).
 def s05(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -366,6 +423,15 @@ def s07(p):
 # ============================================================
 # s07b - ELI5 overview "Discovery in plain terms"
 # ============================================================
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the ELI5 overviews are gone as a class (issue #212).
 def s07b(p):
     return eli5_overview(
         p, "s07b", title="Discovery in plain terms", icon_name="search",
@@ -446,6 +512,15 @@ def s08(p):
 # ============================================================
 # s09 - BASE-2: The Mom Test (3 rules + contrast)
 # ============================================================
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: superseded base — the Mom Test is folded into s08 (issue #212).
 def s09(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -654,52 +729,115 @@ def s12(p):
 
 
 # ============================================================
-# s13a - FAILURE on-point #3: IBM Watson for Oncology
+# s13a - FAILURE on-point #2: Humane AI Pin (a failure of user research)
 # ============================================================
+
 def s13a(p):
+    """EDIT #212 (owner remark R1-2026-10-01): IBM Watson for Oncology used
+    to stand here — a case whose root cause lies in the training data rather
+    than in user research, which means that in the user-research phase it was
+    standing in the wrong place. In its place goes a case where that very
+    phase is what failed: the product was built on an assumption about a
+    person that was never checked with that person, and the question
+    "compared with what" was closed by the market 10.5 months into sales.
+    Watson stays in the chapter (§1.9, Case A): the failure class "the
+    plausible taken for the real" has already been shown in Section 1 on s10
+    and s12. The Google Glass counterfactual supplies the alternative the
+    course rule requires — the same class of device, after the user was
+    changed, delivered a measured gain."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "$62 million — and not a single patient treated",
-                size=23, w=12.2, h=0.85)
+    slide_title(s, "10,000 devices sold out of the 100,000 planned: the "
+                   "comparison with the phone in the buyer's pocket was "
+                   "made after the build",
+                size=20, w=12.25, h=0.86, y=0.13)
 
-    # scale visual
-    lx = 0.55
-    ocean_box(s, lx, 1.55, 5.55, 2.55, fill=SURFACE, stroke=MID,
-              stroke_pt=1.5)
-    icon(s, "scale", lx + 2.35, 1.70, 0.9, "mid")
-    text_box(s, x=lx + 0.25, y=2.70, w=2.4, h=0.75,
-             text="$62M", size=22, bold=True, color=DEEP,
-             align=PP_ALIGN.CENTER)
-    text_box(s, x=lx + 2.9, y=2.70, w=2.4, h=0.75,
-             text="0 patients", size=22, bold=True, color=TEAL,
-             align=PP_ALIGN.CENTER)
-    text_box(s, x=lx + 0.25, y=3.55, w=5.05, h=0.45,
-             text="MD Anderson: partnership closed (2016) [1]", size=11.5,
-             italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    # ── WHAT HAPPENED — the account before the analysis ───────────────
+    filled_rect(s, 0.55, 1.10, 12.25, 1.36, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.6, radius=True, radius_adj=0.07)
+    icon(s, "file-text", 0.78, 1.60, 0.42, "teal")
+    text_runs(s, 1.38, 1.14, 11.28, 1.28, [
+        {"text": "WHAT HAPPENED   ", "size": 10.5, "bold": True,
+         "color": TEAL},
+        {"text": "Humane is a company founded in 2018 by people who came "
+                 "out of Apple. Its only product, the AI Pin, is a wearable "
+                 "device with no screen: a small box worn on your clothes "
+                 "with a camera, a microphone and a laser projection onto "
+                 "your palm, answering out loud through a language model. "
+                 "The idea: a person stops looking at their phone. The "
+                 "device was shown on 9 November 2023 and sales opened in "
+                 "April 2024 — $699 plus $24 a month. On 18 February 2025 "
+                 "HP bought the assets for $116 million, and on 28 February "
+                 "the cloud service was shut down: the devices in buyers' "
+                 "hands stopped answering.",
+         "size": 11, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
 
-    rx, rw = 6.35, 6.45
-    text_box(s, x=rx, y=1.55, w=rw, h=0.35,
-             text="IBM Watson for Oncology, since 2012", size=14, bold=True,
-             color=MID)
-    bullets = [
-        "Internal documents: recommendations were \"unsafe and incorrect\" [1]",
-        "Trained on hypothetical cases from a handful of MSK oncologists — "
-        "not on real outcomes [2]",
-    ]
-    for i, b in enumerate(bullets):
-        y = 2.05 + i * 0.95
-        icon(s, "user-x" if i else "users", rx, y, 0.42, "light")
-        text_box(s, x=rx + 0.55, y=y - 0.05, w=rw - 0.55, h=0.85, text=b,
-                 size=12.5, color=DEEP, line_spacing=1.12)
+    cw_ = 6.05
+    left, right = 0.55, 6.75
+
+    # ── What the numbers showed: every line with a base of its own ────
+    ocean_box(s, left, 2.56, cw_, 2.30, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    icon(s, "trending-down", left + 0.24, 2.70, 0.46, "mid")
+    text_box(s, x=left + 0.84, y=2.74, w=cw_ - 1.08, h=0.34,
+             text="What the numbers showed", size=13, bold=True, color=MID)
+    by = 3.20
+    for b in ["About 10,000 devices sold — a tenth of the company's own "
+              "target of 100,000 by the end of the year",
+              "Revenue of about $9 million against about $230 million "
+              "raised — roughly 4%",
+              "Between May and August 2024, more returns than purchases: by "
+              "August, closer to 7,000 were still in people's hands",
+              "The price was cut from $699 to $499 on 23 October 2024 — six "
+              "months after sales opened"]:
+        text_box(s, x=left + 0.26, y=by, w=cw_ - 0.52, h=0.36,
+                 text="• " + b, size=10, color=DEEP, line_spacing=1.12)
+        by += 0.38
+
+    # ── What was not found out before the build ───────────────────────
+    ocean_box(s, right, 2.56, cw_, 2.30, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.6)
+    icon(s, "search-x", right + 0.24, 2.70, 0.46, "teal")
+    text_box(s, x=right + 0.84, y=2.74, w=cw_ - 1.08, h=0.34,
+             text="What was not found out before the build", size=13,
+             bold=True, color=TEAL)
+    text_runs(s, right + 0.26, 3.18, cw_ - 0.52, 1.62, [
+        {"text": "The discovery phase's question fits in one phrase: ",
+         "size": 10.5, "color": DEEP},
+        {"text": "compared with what", "size": 10.5, "bold": True,
+         "color": TEAL},
+        {"text": ". Every buyer already had a phone in their pocket that "
+                 "does the same things, and everything else on top. "
+                 "Reviewers converged on the same point: the device does "
+                 "less than a phone and does it more slowly.",
+         "size": 10.5, "color": DEEP},
+        {"text": "An answer like that costs eight conversations with living "
+                 "people before the build. Here it arrived from the market "
+                 "— by way of $230 million and 10.5 months of sales.",
+         "size": 10.5, "color": DEEP, "newpara": True, "space_before": 4},
+    ], line_spacing=1.14)
 
     gold_callout(
-        s, 0.55, 4.35, 12.25, 1.15,
-        "Criterion: a high-stakes domain + only synthetic/hypothetical "
-        "data behind the recommendation = the product isn't ready, no "
-        "matter how impressive the demo. Alternative: a system built on "
-        "evidence-based clinical guidelines with transparent source "
-        "traceability.",
-        size=13, bold=True)
+        s, 0.55, 4.96, 12.25, 0.84,
+        "The answer about the user arrives either way; the discovery phase "
+        "only chooses when, and at what price. The criterion that carries "
+        "forward: a hypothesis about the user is closed by comparing it "
+        "with whatever that person gets by with today.",
+        size=12.5, bold=True)
+
+    teal_callout(
+        s, 0.55, 5.88, 12.25, 1.06,
+        "The device does work, and the miss lies in the answer to who needs "
+        "it and what for. Google Glass travelled the same road in the "
+        "opposite direction: the $1,500 glasses were pulled from general "
+        "sale in January 2015 and then handed to people whose hands are "
+        "busy with work. At AGCO, a maker of agricultural machinery, "
+        "machine assembly time fell by 25% and inspection time by 30%; at "
+        "the logistics company DHL, warehouse output rose by 15% — all "
+        "against the same work done without the glasses. Same device. "
+        "Different user.",
+        size=10.5, bold=False)
     refs_of_slide(s, "s13a")
     notes_with_sources(s, "s13a")
     return s
@@ -708,6 +846,15 @@ def s13a(p):
 # ============================================================
 # s13 - FAILURE on-point #2: Deloitte fabricated research
 # ============================================================
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: superseded failure — the Deloitte fabricated-research case left Section 1 (issue #212).
 def s13(p):
     s = blank(p)
     set_slide_bg(s, WHITE)

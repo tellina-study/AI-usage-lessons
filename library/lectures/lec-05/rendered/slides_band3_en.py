@@ -34,6 +34,15 @@ def s28(p):
         meme_name="s28-woman-yelling-cat.jpg")
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the ELI5 overviews are gone as a class (issue #212).
 def s28b(p):
     return eli5_overview(
         p, "s28b", title="Measurement in plain terms", icon_name="ruler",
@@ -95,6 +104,15 @@ def s29(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: superseded base — the experiment traps moved into s29 and s30a (issue #212).
 def s30(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -140,6 +158,15 @@ def s30(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: absorbed by s31a (the eval loop as a practice card) (issue #212).
 def s31(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -292,6 +319,15 @@ def s34(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the per-section syntheses were dropped (issue #212).
 def s35(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -343,6 +379,15 @@ def s36(p):
         meme_name="s36-disaster-girl.jpg")
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the ELI5 overviews are gone as a class (issue #212).
 def s36b(p):
     return eli5_overview(
         p, "s36b", title="Support in plain terms", icon_name="headphones",
@@ -360,6 +405,128 @@ def s36b(p):
              "budget for errors). Harder with AI: a model can \"quietly "
              "degrade\" while the charts are still green."),
         ])
+
+
+# issue #212, owner review 2026-10-01: the slide was ADDED by the owner and
+# until the 2026-10-01 reconciliation did not appear in the manifest at all.
+# It introduces the subject of the section (quality as two halves with
+# different instruments) before the first descent into numbers.
+# DIVERGENCE, THE ORCHESTRATOR DECIDES: this is now the FIRST base slide of
+# Section 5, while the protection-tier principle is "the first base slide of
+# every phase". But s36c-*.md carries no `protected: true` flag, so the slide
+# is NOT entered into that tier here: raising the flag is a decision about
+# content, not a reconciliation. For now this is the one section whose first
+# base slide is unprotected.
+def s36c(p):
+    """NEW slide, owner review 2026-10-01, on the remark about slide 37:
+    "we start telling the SRE story from the middle — introduce the notion
+    and say what it is, a separate preceding step is fine; and show the work
+    with users in the same place".
+
+    Carries the frame of the whole section unfolded: support holds quality in
+    place, quality is made of two halves with DIFFERENT instruments — the
+    user's satisfaction with the product and the reliability of the system —
+    and each half names where AI enters it. Both disciplines are named, the
+    abbreviations expanded at first appearance (rule R5).
+    """
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Support holds quality in place: one half is people, "
+                   "the other is the system",
+                size=21, y=0.13, w=12.3, h=0.78)
+
+    # ── what this is at all ───────────────────────────────────────────
+    ocean_box(s, 0.55, 0.98, 12.25, 1.06, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    text_runs(s, 0.78, 1.06, 11.79, 0.90, [
+        {"text": "WHAT SUPPORT IS.  ", "size": 12, "bold": True,
+         "color": MID},
+        {"text": "After launch a product makes the same promise every day: "
+                 "an answer will come, it will be correct, and what breaks "
+                 "will be mended. Support is the work that holds that "
+                 "promise for years. The promise has two halves, and they "
+                 "are measured with different instruments: one you ask a "
+                 "person about, the other you read off the system.",
+         "size": 12, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
+
+    # ── the two halves of quality ─────────────────────────────────────
+    COLS = [
+        dict(x=0.55, accent=MID, icon_name="users",
+             head="PEOPLE · the user's satisfaction with the product",
+             body="The half turned towards the person: questions, "
+                  "complaints, tickets, returns.",
+             mlabel="The measures are what the person sees",
+             marks=["the share of tickets closed on first contact",
+                    "time to first response and time to resolution",
+                    "the rating a person gives once a ticket is closed"],
+             disc="The discipline grew out of the help desk and the IT "
+                  "service management framework (ITIL).",
+             ai="Where AI enters: a suggester at the agent's elbow, and a "
+                "bot answering the customer on its own — the next slide."),
+        dict(x=6.78, accent=TEAL, icon_name="activity",
+             head="SYSTEM · reliability",
+             body="The half turned towards the machine: availability, "
+                  "latency, outages, deployments.",
+             mlabel="The measures are what you read off the system",
+             marks=["the share of requests served successfully",
+                    "response latency",
+                    "the error budget — how many failures are permissible "
+                    "in a period"],
+             disc="The discipline was given its shape at Google and "
+                  "published as a book in 2016 — site reliability "
+                  "engineering (Site Reliability Engineering, SRE).",
+             ai="Where AI enters: the object of observation, and an "
+                "instrument of failure drills."),
+    ]
+    CY, CH, CWD = 2.12, 3.62, 6.02
+    for c in COLS:
+        x = c["x"]
+        ocean_box(s, x, CY, CWD, CH, fill=SURFACE, stroke=c["accent"],
+                  stroke_pt=1.6)
+        # column header
+        filled_rect(s, x, CY, CWD, 0.46, c["accent"], radius=True,
+                    radius_adj=0.14)
+        icon(s, c["icon_name"], x + 0.16, CY + 0.10, 0.26, "white")
+        text_box(s, x=x + 0.52, y=CY, w=CWD - 0.70, h=0.46, text=c["head"],
+                 size=11.5, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.02)
+        # what this half is
+        text_box(s, x=x + 0.20, y=CY + 0.56, w=CWD - 0.40, h=0.46,
+                 text=c["body"], size=11, color=DEEP, line_spacing=1.14)
+        # the name of the discipline — straight under the description
+        text_box(s, x=x + 0.20, y=CY + 1.06, w=CWD - 0.40, h=0.56,
+                 text=c["disc"], size=9.8, italic=True, color=SLATE,
+                 line_spacing=1.10)
+        # the measures
+        text_box(s, x=x + 0.20, y=CY + 1.66, w=CWD - 0.40, h=0.26,
+                 text=c["mlabel"], size=10, bold=True, color=c["accent"],
+                 line_spacing=1.04)
+        yy = CY + 1.98
+        for m in c["marks"]:
+            circle(s, x + 0.22, yy + 0.07, 0.11, GOLD)
+            text_box(s, x=x + 0.44, y=yy, w=CWD - 0.66, h=0.34, text=m,
+                     size=10.5, color=DEEP, line_spacing=1.10)
+            yy += 0.34
+        # where AI enters
+        ocean_box(s, x + 0.18, CY + CH - 0.60, CWD - 0.36, 0.52,
+                  fill=TEAL_TINT, stroke=TEAL, stroke_pt=1.4, radius_pt=7.0)
+        text_box(s, x=x + 0.32, y=CY + CH - 0.60, w=CWD - 0.64, h=0.52,
+                 text=c["ai"], size=10.2, bold=True, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.08)
+
+    gold_callout(
+        s, 0.55, 5.86, 12.25, 1.00,
+        "The halves hold quality only together. A system that never fails "
+        "but leaves a person unable to get an answer to their question "
+        "loses the product's promise; attentive support on top of a service "
+        "that keeps falling over loses it just the same. From here the "
+        "section runs along both: reliability in numbers, AI in the work "
+        "with people, and the failure drill that tests both.",
+        size=12)
+    refs_of_slide(s, "s36c")
+    notes_with_sources(s, "s36c")
+    return s
 
 
 def s37(p):
@@ -410,6 +577,15 @@ def s37(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: absorbed by s38a / s38b (issue #212).
 def s38(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -603,6 +779,15 @@ def s42(p):
     return s
 
 
+# ============================================================
+# [NOT IN THE DECK] This function is not in ORDER (rendered/build_lec05_en.py)
+# and is never called during the build: its text does not reach the deck. Kept
+# by the convention build_lec05_en.py states ("the dropped builder functions
+# stay as dead code"), not by oversight. Any term search over the builders must
+# exclude such functions — strings removed from the visible layer legitimately
+# live on in them.
+# ============================================================
+# Dropped: the per-section syntheses were dropped (issue #212).
 def s43(p):
     s = blank(p)
     set_slide_bg(s, WHITE)

@@ -1,7 +1,7 @@
 ---
 id: s42
 type: case_study
-section: "Section 5. Support / Operate"
+section: "Section 5. Support and operations"
 duration_min: 2.5
 assertion: "Klarna walked back its \"no humans\" policy as automation grew to a 853-FTE equivalent; 10 out of 10 journalists got the same unlawful advice from the NYC bot"
 learning_goal: "On-point failure #11: Klarna + NYC MyCity (+Chevy inline) — guaranteed escalation + deterministic guardrails (LO2/LO6)"

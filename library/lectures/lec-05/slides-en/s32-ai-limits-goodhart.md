@@ -1,7 +1,7 @@
 ---
 id: s32
 type: assertion_visual
-section: "Section 4. Measure / Experiment"
+section: "Section 4. Measurement"
 duration_min: 2
 assertion: "Goodhart's law: when a measure becomes a target, it ceases to be a good measure"
 learning_goal: "AI limitations: Goodhart's law/reward hacking + what stays, LO6"

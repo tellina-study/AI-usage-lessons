@@ -1,7 +1,7 @@
 ---
 id: s25
 type: assertion_visual
-section: "Section 3. Build / Launch"
+section: "Section 3. Build and launch"
 duration_min: 1.5
 assertion: "Review doesn't scale alongside generation — an asymmetry between the cost of generating and the cost of verifying"
 learning_goal: "AI limitations of Build/Launch: why review is a structural bottleneck, not a temporary staffing shortage"

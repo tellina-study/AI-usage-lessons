@@ -1,7 +1,7 @@
 ---
 id: s39
 type: assertion_visual
-section: "Section 5. Support / Operate"
+section: "Section 5. Support and operations"
 duration_min: 2
 assertion: "Silent drift: trust falls before dashboards move — power users notice a regression before the aggregates do"
 learning_goal: "AI limitations: silent drift + governance drift + what stays (escalation, accountability), LO3"

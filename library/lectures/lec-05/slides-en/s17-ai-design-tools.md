@@ -1,7 +1,7 @@
 ---
 id: s17
 type: process
-section: "Section 2. Design / prototype"
+section: "Section 2. Design"
 duration_min: 2.5
 assertion: "v0, Figma Make, Google Stitch generate 2-4 directions in minutes — best practice: AI for divergence, human for convergence"
 learning_goal: "AI: capabilities + tools of Design 2025-26"

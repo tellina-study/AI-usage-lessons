@@ -1,7 +1,7 @@
 ---
 id: s47
 type: case_study
-section: "Section 6. Governance / ROI / finale"
+section: "Section 6. Governance"
 duration_min: 3
 assertion: "Payoff of the s01 hook: MIT's \"95% of pilots — 0 profit\" is actually 60→20→5 — success among those who reached a pilot is 25%, not 5%"
 learning_goal: "On-point failure #12: macro reality of MIT/RAND/Gartner/S&P/BCG — 4 questions to ask of any loud statistic (LO6)"

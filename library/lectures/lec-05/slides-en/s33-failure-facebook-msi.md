@@ -1,7 +1,7 @@
 ---
 id: s33
 type: case_study
-section: "Section 4. Measure / Experiment"
+section: "Section 4. Measurement"
 duration_min: 2.5
 assertion: "Facebook weighted all 5 emoji reactions 5x higher than a like — an engagement proxy with no guardrail hid the harm for almost 2 years"
 learning_goal: "On-point failure #7: Facebook MSI, corrected version (all reactions ×5, not only anger) (LO2/LO6)"

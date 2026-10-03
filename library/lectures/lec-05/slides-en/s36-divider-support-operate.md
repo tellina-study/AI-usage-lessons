@@ -1,7 +1,7 @@
 ---
 id: s36
 type: section_divider
-section: "Section 5. Support / Operate"
+section: "Section 5. Support and operations"
 duration_min: 0.3
 assertion: "Support / Operate: the product as an orchestra — what happens once the product is already live 24/7"
 learning_goal: "Section divider S5: the meaning of the phase in one line, tag \"3 failures\""

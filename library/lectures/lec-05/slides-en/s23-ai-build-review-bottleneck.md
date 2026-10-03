@@ -1,7 +1,7 @@
 ---
 id: s23
 type: assertion_visual
-section: "Section 3. Build / Launch"
+section: "Section 3. Build and launch"
 duration_min: 2.5
 assertion: "Build → near zero (Anthropic); code volume +200% a year, yet only ~16% of PRs got substantive review"
 learning_goal: "AI trait: Build→≈0 + the bottleneck shift into review; what to keep from the classic"

@@ -1,7 +1,7 @@
 ---
 id: s34
 type: case_study
-section: "Section 4. Measure / Experiment"
+section: "Section 4. Measurement"
 duration_min: 2
 assertion: "Med-PaLM 2 scored 86.5% on MedQA — but clinical safety needs a separate adversarial set; Lexis+ 17%, Westlaw 33% hallucinations"
 learning_goal: "On-point failure #8: benchmark ≠ reality (medical + legal AI, corrected attribution: ChatGPT, not Harvey) (LO6)"

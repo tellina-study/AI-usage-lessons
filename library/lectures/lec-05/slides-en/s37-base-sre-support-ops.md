@@ -1,7 +1,7 @@
 ---
 id: s37
 type: process
-section: "Section 5. Support / Operate"
+section: "Section 5. Support and operations"
 duration_min: 2.5
 assertion: "SLI→SLO→error budget: changes cause roughly 70% of outages; but an SLI of \"share of successful 200 responses\" says nothing about whether the model is hallucinating"
 learning_goal: "BASE: SRE + support-ops; explicit callout \"what's new here — a non-deterministic model in production\""

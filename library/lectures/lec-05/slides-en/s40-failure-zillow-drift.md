@@ -1,7 +1,7 @@
 ---
 id: s40
 type: case_study
-section: "Section 5. Support / Operate"
+section: "Section 5. Support and operations"
 duration_min: 2.5
 assertion: "Zillow had no runtime circuit breaker on prediction-accuracy drift — $304-408M in write-downs, ~2,000 laid off"
 learning_goal: "On-point failure #9: Zillow drift — a capital-committing model with no circuit breaker (LO2/LO3/LO6)"

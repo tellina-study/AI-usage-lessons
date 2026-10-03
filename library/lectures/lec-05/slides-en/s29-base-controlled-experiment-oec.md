@@ -1,7 +1,7 @@
 ---
 id: s29
 type: process
-section: "Section 4. Measure / Experiment"
+section: "Section 4. Measurement"
 duration_min: 2.5
 assertion: "Randomization gives causation, not coincidence; the OEC is the metric the team agreed on in advance"
 learning_goal: "BASE: the controlled experiment + OEC + guardrail metrics; Kohavi's teaching example (time-on-site)"

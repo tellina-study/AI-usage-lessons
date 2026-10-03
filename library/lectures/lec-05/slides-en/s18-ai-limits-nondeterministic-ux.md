@@ -1,7 +1,7 @@
 ---
 id: s18
 type: assertion_visual
-section: "Section 2. Design / prototype"
+section: "Section 2. Design"
 duration_min: 2.5
 assertion: "29% WCAG conformance across 21,880 evaluations of AI-generated interfaces — the platform determines accessibility more than the prompt"
 learning_goal: "AI limitations: AI slop/homogenization, the WCAG gap, designing for non-deterministic output, LO3"

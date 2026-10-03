@@ -1,7 +1,7 @@
 ---
 id: s26
 type: case_study
-section: "Section 3. Build / Launch"
+section: "Section 3. Build and launch"
 duration_min: 2.5
 assertion: "Google shipped AI Overviews to 100% of US search in one step, skipping canary rollout — and got \"eat rocks\" / \"glue on pizza\""
 learning_goal: "On-point failure #5: Google AI Overviews (LO2/LO6)"

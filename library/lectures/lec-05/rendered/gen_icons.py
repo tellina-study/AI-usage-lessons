@@ -65,8 +65,8 @@ ICON_NAMES = [
     "check-check", "x", "monitor-smartphone",
     # s13 fabricated research
     "file-x", "banknote",
-    # s13a ibm watson
-    "scale", "users", "user-x",
+    # s13a ibm watson (two independent failures: data vs procurement)
+    "scale", "users", "user-x", "flask-conical", "file-warning",
     # generic
     "triangle-alert", "circle-help", "sliders-horizontal", "shield-check",
 ]

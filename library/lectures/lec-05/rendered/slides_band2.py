@@ -11,9 +11,9 @@ from _helpers import (
     right_arrow, circle, chip, connector, icon, slide_title,
     gold_callout, teal_callout, notes_with_sources, refs_of_slide,
     build_section_divider,
-    eli5_overview, meme_in_box, photo_in_box, add_image,
+    eli5_overview, meme_in_box, photo_in_box, add_image, check_point, src,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
-    GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
+    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, CHARTS,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
@@ -27,14 +27,22 @@ def s14(p):
     return build_section_divider(
         p, here_idx=2,
         subtitle="Дизайн — гипотеза становится артефактом",
-        bridge="Как гипотеза из исследования превращается в конкретный "
-               "артефакт, который можно показать человеку. Здесь же "
-               "закладывается безопасность — в дизайн-брифе, а не патчем после "
-               "того, как что-то пошло не так.",
-        sid="s14", tag="2 базы · 2 провала",
+        # ПРАВКА #212 (Р3-2026-10-01): мост снят с рамки «кого продукт может
+        # задеть» (она вела к снятому кейсу Character.AI) и приведён к объёму
+        # дизайна, который раздел теперь предъявляет слайдом s14a.
+        bridge="Шаг, на котором гипотезу впервые показывают живому "
+               "человеку — пока она стоит дёшево и её не жалко выбросить. "
+               "Здесь же решают, как человек будет понимать систему: "
+               "поверхности контакта, её поведение, ответ в неуверенности.",
+        sid="s14", tag="1 база · 1 практика · 1 провал",
         meme_name="s14-drake.jpg")
 
 
+# [НЕ В СОСТАВЕ ДЕКИ] Функция не входит в ORDER (rendered/build_lec05.py) и при сборке
+# не вызывается: её текст в деку не попадает. Сохранена по конвенции build_lec05.py
+# («остальные builder-функции остаются мёртвым кодом»), а не по недосмотру. Любой поиск
+# терминов по билдерам обязан исключать такие функции — снятые из видимого слоя термины
+# в них живут законно.
 def s14b(p):
     return eli5_overview(
         p, "s14b", title="Дизайн простыми словами", icon_name="pencil",
@@ -51,55 +59,218 @@ def s14b(p):
         ])
 
 
-def s15(p):
+def s14a(p):
+    """ПРАВКА #212 (замечание владельца Р3-2026-10-01): «в разделе дизайна
+    надо добавить слайд и оговорки, что речь не только про дизайн
+    интерфейсов». Слайд открывает раздел сразу после дивайдера и до базы:
+    объём понятия, шесть поверхностей контакта, три решения о поведении
+    системы во времени. Gold-плашка работает подводкой к провалу раздела —
+    имя продукта задаёт картину системы раньше первого экрана. Оговорка
+    продолжена на s15, s17, s17a и s18, чтобы не осталась одиночной."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Два алмаза: сначала правильная проблема, потом правильное решение",
-                size=22, w=12.2, h=0.85)
-    # two diamonds — GATE-B fix (audit 2026-09-07): "Расширяем/Сужаем" labels
-    # used to sit CENTRED INSIDE the diamond near its narrow top/bottom
-    # vertices, where 2 lines of centred text don't actually fit the shape's
-    # width at that height and visually overlap/crowd the outline. Moved
-    # OUTSIDE the diamond as side annotations (above the top vertex, below
-    # the bottom vertex) — the diamond itself now carries only the domain
-    # label (Проблема/Решение), never overlapping text.
+    slide_title(s, "Дизайн здесь — вся работа человека с системой: "
+                   "поверхности контакта, поведение, ответ в неуверенности",
+                size=22, y=0.13, w=12.25, h=0.86)
+
+    # ── объём понятия ──
+    filled_rect(s, 0.55, 1.05, 12.25, 1.04, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.6, radius=True, radius_adj=0.08)
+    icon(s, "compass", 0.78, 1.38, 0.40, "teal")
+    text_runs(s, 1.36, 1.09, 11.30, 0.96, [
+        {"text": "ОБЪЁМ ПОНЯТИЯ   ", "size": 10.5, "bold": True,
+         "color": TEAL},
+        {"text": "Экран — одна из поверхностей, через которые человек "
+                 "встречается с системой. Дизайн этой фазы решает весь "
+                 "состав встречи: где система попадается человеку, как ведёт "
+                 "себя со временем и что делает в ту минуту, когда сама не "
+                 "уверена в ответе. У продукта с языковой моделью работы на "
+                 "остальных поверхностях обычно больше, чем на экране.",
+         "size": 11, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.14)
+
+    # ── шесть поверхностей контакта ──
+    text_box(s, x=0.55, y=2.18, w=12.25, h=0.26,
+             text="Поверхности и точки контакта", size=12, bold=True,
+             color=MID, line_spacing=1.0)
+    tiles = [
+        ("monitor-smartphone", "Экран",
+         "что человек видит и в каком порядке", MID),
+        ("headphones", "Голос",
+         "то же решение без картинки: порядок, длина, право перебить", MID),
+        ("siren", "Уведомление",
+         "система начинает разговор сама: когда и по какому поводу", TEAL),
+        ("file-text", "Письмо, отчёт",
+         "ответ, который читают, когда системы под рукой нет", MID),
+        ("shield-off", "Отказ",
+         "что система говорит, когда делать не станет", TEAL),
+        ("clock", "Молчание",
+         "обработка идёт, ответа ещё нет: что человек видит эту минуту",
+         TEAL),
+    ]
+    tw = (12.25 - 2 * 0.16) / 3.0
+    for i, (icn, name, body, col) in enumerate(tiles):
+        tx = 0.55 + (i % 3) * (tw + 0.16)
+        ty = 2.48 + (i // 3) * (0.82 + 0.10)
+        ocean_box(s, tx, ty, tw, 0.82, fill=SURFACE, stroke=col,
+                  stroke_pt=1.4)
+        icon(s, icn, tx + 0.16, ty + 0.11, 0.28,
+             "teal" if col is TEAL else "mid")
+        text_box(s, x=tx + 0.54, y=ty + 0.09, w=tw - 0.70, h=0.28,
+                 text=name, size=11, bold=True, color=col, line_spacing=1.0)
+        text_box(s, x=tx + 0.18, y=ty + 0.42, w=tw - 0.36, h=0.36,
+                 text=body, size=9.5, color=DEEP, line_spacing=1.12)
+
+    # ── поведение системы во времени ──
+    text_box(s, x=0.55, y=4.52, w=12.25, h=0.26,
+             text="Поведение системы во времени", size=12, bold=True,
+             color=MID, line_spacing=1.0)
+    behav = [("circle-check", "Уверена",
+              "отвечает и показывает, на чём ответ построен", MID),
+             ("circle-help", "Не уверена",
+              "говорит об этом от первого лица и предлагает ход дальше",
+              TEAL),
+             ("undo-2", "Ошиблась",
+              "человек видит, что произошло, и у него есть путь назад",
+              TEAL)]
+    for i, (icn, name, body, col) in enumerate(behav):
+        bx = 0.55 + i * (tw + 0.16)
+        ocean_box(s, bx, 4.82, tw, 0.84, fill=WHITE, stroke=col,
+                  stroke_pt=1.6)
+        icon(s, icn, bx + 0.16, 4.92, 0.28,
+             "teal" if col is TEAL else "mid")
+        text_box(s, x=bx + 0.54, y=4.90, w=tw - 0.70, h=0.28, text=name,
+                 size=11, bold=True, color=col, line_spacing=1.0)
+        text_box(s, x=bx + 0.18, y=5.22, w=tw - 0.36, h=0.36, text=body,
+                 size=9.5, color=DEEP, line_spacing=1.12)
+
+    gold_callout(
+        s, 0.55, 5.80, 12.25, 0.92,
+        "Решения этого слоя принимают один раз, и живут они дольше любой "
+        "вёрстки: имя продукта, обещание на входе, право остановиться. Имя "
+        "задаёт картину системы в голове раньше, чем человек увидит первый "
+        "экран, — и правка этой картины обходится в отзыв всего парка.",
+        size=12.5, bold=True)
+    notes_with_sources(s, "s14a")
+    return s
+
+
+def s15(p):
+    """База Раздела 2. Порядок продиктован Р3 замечаний владельца (#212):
+    сначала ЗАЧЕМ этот шаг вообще нужен и что будет, если его пропустить, и
+    только потом метод. Схема подписана (Р4): сказано, что такое ромб и что
+    двойной ромб — не альтернатива петле лекции, а увеличительное стекло на
+    её шаге 2. Здесь же вводятся эвристики Нильсена: отдельный слайд s16 снят
+    с показа при пересборке, а слайды 18/19 и синтез на них ссылаются (Р7)."""
+    s = blank(p)
+    set_slide_bg(s, WHITE)
+    slide_title(s, "Зачем нужен отдельный шаг дизайна: ошибку ищут на дешёвом "
+                   "черновике, а не в готовом продукте",
+                size=21, y=0.13, w=12.25, h=0.92)
+
+    # ── ЗАЧЕМ ЭТА РАБОТА НУЖНА (Р3) ──
+    ocean_box(s, 0.55, 1.12, 12.25, 1.60, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.6)
+    text_box(s, x=0.80, y=1.18, w=11.75, h=0.28,
+             text="Зачем эта работа нужна", size=13, bold=True, color=TEAL)
+    icon(s, "pencil", 0.82, 1.56, 0.32, "mid")
+    text_box(s, x=1.26, y=1.48, w=5.05, h=0.72,
+             text="Ошибку нашли на черновике — переделать набросок стоит "
+                  "часов работы одного человека. Черновик для того и делают: "
+                  "его не жалко выбросить целиком.",
+             size=11.5, color=DEEP, line_spacing=1.16)
+    right_arrow(s, 6.48, 1.72, 0.42, 0.24, fill=LIGHT)
+    icon(s, "rocket", 7.08, 1.56, 0.32, "gold")
+    text_box(s, x=7.52, y=1.48, w=5.02, h=0.72,
+             text="Ту же ошибку нашли после выпуска — переделывать придётся "
+                  "работающий продукт: недели работы команды, и к ним "
+                  "прибавляются ушедшие пользователи.",
+             size=11.5, color=DEEP, line_spacing=1.16)
+    text_box(s, x=0.80, y=2.28, w=11.75, h=0.34,
+             text="Пропустить этот шаг — не сэкономить, а заплатить то же "
+                  "самое позже и дороже.",
+             size=12.5, bold=True, color=DEEP, line_spacing=1.14)
+
+    # ── МЕТОД: два ромба, с подписью, что это такое (Р4) ──
     def diamond(cx, top_lbl, bot_lbl, col, domain_lbl):
-        y0, dw, dh = 2.05, 2.7, 2.0
+        y0, dw, dh = 3.18, 2.26, 1.24
         sh = s.shapes.add_shape(MSO_SHAPE.DIAMOND, Inches(cx - dw / 2),
                                 Inches(y0), Inches(dw), Inches(dh))
         sh.fill.solid(); sh.fill.fore_color.rgb = SURFACE
         sh.line.color.rgb = col; sh.line.width = Pt(1.8)
         from _helpers import disable_shadow
         disable_shadow(sh)
-        text_box(s, x=cx - dw / 2 - 0.5, y=y0 + dh / 2 - 0.35, w=dw + 1.0,
-                 h=0.7, text=domain_lbl, size=13.5, bold=True, color=col,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, x=cx - dw / 2 - 0.35, y=y0 - 0.62, w=dw + 0.7, h=0.55,
-                 text=top_lbl, size=12.5, bold=True, color=col,
-                 align=PP_ALIGN.CENTER, line_spacing=1.05)
-        text_box(s, x=cx - dw / 2 - 0.35, y=y0 + dh + 0.08, w=dw + 0.7,
-                 h=0.55, text=bot_lbl, size=12.5, bold=True, color=DEEP,
-                 align=PP_ALIGN.CENTER, line_spacing=1.05)
-    diamond(3.35, "Расширяем проблему", "Сужаем: одна проблема", MID,
-            "Правильная\nпроблема")
-    diamond(7.65, "Расширяем решение", "Сужаем: одно решение", TEAL,
-            "Правильное\nрешение")
-    right_arrow(s, 5.05, 2.90, 0.55, 0.28, fill=LIGHT)
-    text_box(s, x=9.35, y=2.85, w=3.4, h=1.3,
-             text="Double Diamond [1]\n(Design Council UK)\n\nDesign Thinking — "
-                  "его 5-шаговая версия того же каркаса",
-             size=12, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, x=cx - dw / 2 - 0.40, y=y0 + dh / 2 - 0.28, w=dw + 0.80,
+                 h=0.56, text=domain_lbl, size=12, bold=True, color=col,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.02)
+        text_box(s, x=cx - dw / 2 - 0.34, y=y0 - 0.34, w=dw + 0.68, h=0.30,
+                 text=top_lbl, size=11, bold=True, color=col,
+                 align=PP_ALIGN.CENTER, line_spacing=1.02)
+        text_box(s, x=cx - dw / 2 - 0.34, y=y0 + dh + 0.03, w=dw + 0.68,
+                 h=0.30, text=bot_lbl, size=11, bold=True, color=DEEP,
+                 align=PP_ALIGN.CENTER, line_spacing=1.02)
+    diamond(2.32, "расширяем набор задач", "сводим к одной задаче", MID,
+            "Какую задачу\nрешаем")
+    diamond(5.42, "расширяем набор решений", "сводим к одному решению", TEAL,
+            "Каким решением\nеё закрываем")
+    right_arrow(s, 3.62, 3.67, 0.50, 0.26, fill=LIGHT)
+
+    ocean_box(s, 7.05, 2.80, 5.75, 2.00, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, x=7.28, y=2.88, w=5.30, h=0.26,
+             text="Двойной ромб (Double Diamond) [1]", size=12, bold=True,
+             color=TEAL)
+    text_runs(s, 7.28, 3.18, 5.30, 1.54, [
+        {"text": "Ромб — один цикл работы: ", "size": 11, "bold": True,
+         "color": DEEP},
+        {"text": "расширяем набор вариантов, потом сводим их к одному.",
+         "size": 11, "color": DEEP},
+        {"text": "Ромбов два, потому что выбирают дважды: ", "size": 11,
+         "bold": True, "color": DEEP, "newpara": True, "space_before": 4},
+        {"text": "сначала задачу, и только потом — решение.", "size": 11,
+         "color": DEEP},
+        {"text": "Это не вторая петля вместо нашей, ", "size": 11,
+         "bold": True, "color": DEEP, "newpara": True, "space_before": 4},
+        {"text": "а увеличительное стекло на её шаге 2 «Дизайн».",
+         "size": 11, "color": DEEP},
+    ], line_spacing=1.16)
+
+    # ── ПРОВЕРКА ПОВЕРХ РЕЗУЛЬТАТА: эвристики Нильсена (Р7) ──
+    ocean_box(s, 0.55, 4.94, 12.25, 0.86, fill=SURFACE, stroke=MID,
+              stroke_pt=1.4)
+    icon(s, "list-checks", 0.78, 5.20, 0.34, "mid")
+    text_runs(s, 1.24, 5.02, 11.32, 0.70, [
+        {"text": "Десять эвристик Якоба Нильсена (1994) ", "size": 11.5,
+         "bold": True, "color": MID},
+        {"text": "— короткий список правил удобства: знающий человек за "
+                 "полчаса проходит по нему готовый вариант и отвечает на "
+                 "вопрос, недоступный машине, — понятно ли это живому "
+                 "человеку. Не стадия процесса, а проверка поверх уже "
+                 "сведённого варианта. [2]",
+         "size": 11.5, "color": DEEP},
+    ], line_spacing=1.16, anchor=MSO_ANCHOR.MIDDLE)
+
+    # ПРАВКА #212 (Р3-2026-10-01): третья фраза — продолжение оговорки со
+    # слайда об объёме дизайна (s14a), чтобы она не осталась одиночной.
     gold_callout(
-        s, 0.55, 4.60, 12.25, 1.35,
-        "Частая ошибка: конвергировать на решении, не проверив саму проблему "
-        "— перепрыгнуть первый алмаз. Дешёвый прототип нужен именно для того, "
-        "чтобы это вскрыть до траты денег на разработку.",
-        size=14, bold=True)
+        s, 0.55, 5.90, 12.25, 1.06,
+        "Частая ошибка инженера — сойтись на решении, не проверив саму "
+        "задачу: перепрыгнуть первый ромб. Тот же образ действия, что «сразу "
+        "писать код», минуя вопрос, ту ли задачу мы вообще решаем. Оба ромба "
+        "работают по всей встрече человека с системой: экран, голос, "
+        "поведение в неуверенности.",
+        size=12.5, bold=True)
     refs_of_slide(s, "s15")
     notes_with_sources(s, "s15")
     return s
 
 
+# [НЕ В СОСТАВЕ ДЕКИ] Функция не входит в ORDER (rendered/build_lec05.py) и при сборке
+# не вызывается: её текст в деку не попадает. Сохранена по конвенции build_lec05.py
+# («остальные builder-функции остаются мёртвым кодом»), а не по недосмотру. Любой поиск
+# терминов по билдерам обязан исключать такие функции — снятые из видимого слоя термины
+# в них живут законно.
 def s16(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -112,12 +283,12 @@ def s16(p):
         "Консистентность",
         "Предотвращение ошибок",
     ]
-    ocean_box(s, 0.55, 1.55, 6.75, 5.35)
-    icon(s, "circle-check", 0.80, 1.75, 0.55, "mid")
-    text_box(s, x=1.55, y=1.80, w=5.6, h=0.4, text="Топ-5 из 10 эвристик [1]",
+    ocean_box(s, 0.55, 1.50, 6.75, 3.30)
+    icon(s, "circle-check", 0.80, 1.68, 0.52, "mid")
+    text_box(s, x=1.55, y=1.72, w=5.6, h=0.4, text="Топ-5 из 10 эвристик [1]",
              size=15, bold=True, color=MID)
     for i, h in enumerate(heur):
-        y = 2.45 + i * 0.50
+        y = 2.30 + i * 0.46
         chip(s, 0.80, y, 0.42, 0.34, str(i + 1), fill=GOLD, color=DEEP, size=12)
         text_box(s, x=1.40, y=y - 0.02, w=5.6, h=0.4, text=h, size=13,
                  color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
@@ -125,22 +296,28 @@ def s16(p):
     # list (GATE-B fix, audit 2026-09-07: left ocean box grew to fill the
     # slide height, closing this slide's own share of the deck-wide
     # bottom-void pattern)
-    ocean_box(s, 0.55, 5.20, 6.75, 1.55, fill=SURFACE, stroke=TEAL,
+    ocean_box(s, 0.55, 4.90, 6.75, 1.12, fill=SURFACE, stroke=TEAL,
               stroke_pt=1.6)
-    icon(s, "shield-check", 0.80, 5.42, 0.55, "teal")
-    text_box(s, x=1.55, y=5.44, w=5.6, h=0.4, text="Дизайн-система = guardrail",
-             size=14, bold=True, color=TEAL)
-    text_box(s, x=0.80, y=6.05, w=6.25, h=0.6,
+    icon(s, "shield-check", 0.80, 5.06, 0.46, "teal")
+    text_box(s, x=1.45, y=5.12, w=5.7, h=0.34,
+             text="Дизайн-система = guardrail",
+             size=13.5, bold=True, color=TEAL)
+    text_box(s, x=0.80, y=5.48, w=6.25, h=0.46,
              text="Удерживает генеративную свободу в рамках "
                   "провалидированного бренда.",
-             size=12.5, color=DEEP, line_spacing=1.15)
+             size=12, color=DEEP, line_spacing=1.12)
+    check_point(
+        s, 0.55, 6.10, 6.75,
+        "Интерфейс на один и тот же ввод даёт разный вывод. Какая из пяти "
+        "эвристик ломается первой?",
+        h=0.84, size=11.5)
     # right column: gold callout on top, ENLARGED Bernie meme below (GATE-B
     # fix, audit 2026-09-07: Bernie previously rendered at <10% slide area,
     # well under the 30-55% band Drake/Disaster-Girl/Distracted-Boyfriend
     # use). Portrait meme (0.77 aspect) now gets a tall dedicated box sized
     # to its own aspect ratio instead of competing with side text for width.
     gold_callout(
-        s, 7.55, 1.55, 5.25, 1.05,
+        s, 7.55, 1.50, 5.25, 1.00,
         "Метафора: эвристики — как линтер для интерфейса. Ловят типовые "
         "проблемы до траты денег на исследование — но не заменяют тест на "
         "живом пользователе [2].",
@@ -150,9 +327,9 @@ def s16(p):
     # death). This restores exactly 1 tasteful meme in the section, reusing
     # the Bernie template with a caption specific to THIS slide's own claim
     # (distinct from s09's use of the same template — no joke duplication).
-    mx, my, mw, mh = 7.90, 2.80, 4.55, 3.60
+    mx, my, mw, mh = 7.90, 2.62, 4.55, 3.35
     meme_in_box(s, "s16-bernie.jpg", mx, my, mw, mh, pad=0.12)
-    text_box(s, x=7.55, y=my + mh + 0.12, w=5.25, h=0.65,
+    text_box(s, x=7.55, y=my + mh + 0.10, w=5.25, h=0.60,
              text="«Я снова прошу»: эвристики ловят типовые проблемы, но не "
                   "заменяют проверку на живом пользователе.",
              size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
@@ -163,132 +340,367 @@ def s16(p):
 
 
 def s17(p):
+    """Что ИИ меняет в дизайне. Р6 замечаний владельца (#212): состав
+    инструментов и оценка экономии времени обновлены на 2026 год, и вместо
+    списка возможностей показано сравнение «с ИИ и без» — рандомизированный
+    опыт с контрольной группой, а не обещание вендора. Заголовок — вход для
+    новичка, а не формула для тех, кто и так знает (Р8-6)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "ИИ для дивергенции, человек для конвергенции",
-                size=24, w=12.2, h=0.85)
-    # funnel: 2-4 ИИ directions -> 1 human-refined
-    ocean_box(s, 0.55, 1.60, 6.55, 3.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=0.80, y=1.72, w=6.0, h=0.4, text="Генерация направлений",
-             size=13.5, bold=True, color=MID)
-    for i in range(4):
-        x = 0.85 + i * 1.55
-        filled_rect(s, x, 2.25, 1.30, 0.95, WHITE, stroke=LIGHT, stroke_pt=1.2,
-                    radius=True, radius_adj=0.10)
-        icon(s, "monitor-smartphone", x + 0.42, 2.42, 0.45, "light")
-        text_box(s, x=x, y=3.02, w=1.30, h=0.25, text=f"вариант {i+1}",
-                 size=9.5, color=SLATE, align=PP_ALIGN.CENTER)
-    right_arrow(s, 3.05, 3.55, 1.0, 0.30, fill=GOLD)
-    filled_rect(s, 2.55, 3.95, 2.0, 0.55, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
-                radius=True, radius_adj=0.12)
-    text_box(s, x=2.55, y=4.02, w=2.0, h=0.4, text="1 доработанное",
-             size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    # right: tools
-    ocean_box(s, 7.35, 1.60, 5.45, 3.05, fill=SURFACE, stroke=TEAL,
+    slide_title(s, "Генераторы интерфейсов: машина даёт варианты, выбирает и "
+                   "доводит человек",
+                size=22, y=0.13, w=12.25, h=0.80)
+
+    # ── слева: что машина реально делает ──
+    # ПРАВКА #212 (student-roast 2026-09-30, правка 5): здесь стояли четыре
+    # ОДИНАКОВЫЕ иконки монитора с подписями «набросок 1–4» — студент назвал
+    # их бессмысленными, и был прав: утверждение слайда в том, что машина
+    # выдаёт НЕПОХОЖИЕ варианты одного экрана, а четыре копии одной картинки
+    # говорили ровно обратное. Теперь это четыре разные схемы раскладки.
+    ocean_box(s, 0.55, 1.02, 6.25, 2.60, fill=SURFACE, stroke=MID,
               stroke_pt=1.5)
-    text_box(s, x=7.60, y=1.72, w=5.0, h=0.4, text="Инструменты 2025–26",
-             size=13.5, bold=True, color=TEAL)
-    text_box(s, x=7.60, y=2.20, w=5.0, h=0.5,
-             text="v0 (Vercel) · Figma Make [1] · Google Stitch [2] · bolt.new",
-             size=12.5, color=DEEP, line_spacing=1.15)
-    text_box(s, x=7.60, y=2.95, w=5.0, h=1.5,
-             text="• 2–4 направления за минуты (было — день ручного "
-                  "вайрфрейминга)\n• Figma Make подтягивает собственные "
-                  "компоненты команды — меньше переделки",
-             size=12, color=DEEP, line_spacing=1.18)
+    text_box(s, x=0.78, y=1.06, w=5.80, h=0.50,
+             text="Что машина делает сама: четыре непохожие раскладки "
+                  "одного экрана за минуты",
+             size=12.5, bold=True, color=MID, line_spacing=1.04)
+
+    def wire(x, y, w, h, kind):
+        """Миниатюрная схема раскладки экрана — разная для каждого варианта."""
+        filled_rect(s, x, y, w, h, WHITE, stroke=LIGHT, stroke_pt=1.2,
+                    radius=True, radius_adj=0.10)
+        px, py = x + 0.11, y + 0.11
+        iw, ih = w - 0.22, h - 0.22
+        bar = 0.075
+        if kind == "hero":          # шапка + крупный блок + две подписи
+            filled_rect(s, px, py, iw, bar, MID, radius=True, radius_adj=0.30)
+            filled_rect(s, px, py + bar + 0.05, iw, ih - bar * 2 - 0.14,
+                        SOFT_GREY)
+            filled_rect(s, px, py + ih - bar, iw * 0.55, bar, SOFT_GREY,
+                        radius=True, radius_adj=0.30)
+        elif kind == "list":        # шапка + список строк
+            filled_rect(s, px, py, iw, bar, MID, radius=True, radius_adj=0.30)
+            for k in range(3):
+                filled_rect(s, px, py + bar + 0.06 + k * 0.115,
+                            iw * (1.0 - 0.14 * k), bar, SOFT_GREY,
+                            radius=True, radius_adj=0.30)
+        elif kind == "sidebar":     # боковая панель + контент
+            filled_rect(s, px, py, iw * 0.30, ih, MID)
+            filled_rect(s, px + iw * 0.36, py, iw * 0.64, ih * 0.44,
+                        SOFT_GREY)
+            filled_rect(s, px + iw * 0.36, py + ih * 0.52, iw * 0.64,
+                        ih * 0.48, SOFT_GREY)
+        else:                       # плитки 2x2
+            for r in range(2):
+                for c in range(2):
+                    filled_rect(s, px + c * (iw * 0.54), py + r * (ih * 0.54),
+                                iw * 0.46, ih * 0.46,
+                                (MID if (r + c) == 0 else SOFT_GREY))
+
+    kinds = ["hero", "list", "sidebar", "tiles"]
+    for i, kind in enumerate(kinds):
+        x = 0.78 + i * 1.45
+        wire(x, 1.60, 1.36, 0.84, kind)
+        text_box(s, x=x, y=2.46, w=1.36, h=0.24,
+                 text=f"вариант {i + 1}", size=9.5, color=SLATE,
+                 align=PP_ALIGN.CENTER)
+    filled_rect(s, 0.78, 2.76, 5.78, 0.80, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.5, radius=True, radius_adj=0.10)
+    text_box(s, x=0.96, y=2.78, w=5.42, h=0.76,
+             text="Дальше человек: выбирает одно направление, отбрасывает "
+                  "остальные и правит то, что модель поняла неверно — "
+                  "отступы, порядок важности, редкие случаи.",
+             size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.16)
+
+    # ── справа: инструменты 2026 ──
+    ocean_box(s, 7.05, 1.02, 5.75, 2.60, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=7.28, y=1.10, w=5.30, h=0.28,
+             text="Чем это делают в 2026 году [1]", size=12.5, bold=True,
+             color=TEAL)
+    tools = [
+        ("Figma Make", " — собирает экраны внутри редактора макетов и берёт "
+                       "собственные детали команды, а не общие заготовки."),
+        ("Google Stitch", " — из текста и набросков в экран; бесплатный, "
+                          "с марта 2026 умеет переносить макеты из Figma и "
+                          "отдавать код [2]."),
+        ("v0", " — из описания сразу в готовый код интерфейса."),
+        ("Lovable, bolt.new", " — из описания сразу в работающее приложение "
+                             "целиком."),
+        ("Magic Patterns", " — быстрый перебор вариантов одного экрана."),
+    ]
+    runs = []
+    for k, (name, tail) in enumerate(tools):
+        runs.append({"text": name, "size": 10.5, "bold": True, "color": DEEP,
+                     "newpara": k > 0, "space_before": 3})
+        runs.append({"text": tail, "size": 10.5, "color": DEEP})
+    text_runs(s, 7.28, 1.44, 5.30, 2.06, runs, line_spacing=1.14)
+
+    # ── внизу: сравнение «с ИИ и без» настоящим замером (Р6) ──
+    ocean_box(s, 0.55, 3.70, 12.25, 2.18, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.5)
+    text_box(s, x=0.80, y=3.78, w=11.75, h=0.28,
+             text="С генератором и без него — замер, а не обещание [3]",
+             size=12.5, bold=True, color=DEEP)
+    text_runs(s, 0.80, 4.12, 5.55, 0.90, [
+        {"text": "Как мерили. ", "size": 11, "bold": True, "color": MID},
+        {"text": "Сто участников — пятьдесят дизайнеров и пятьдесят "
+                 "продуктовых руководителей — случайно поделены на две "
+                 "группы: одной дали генератор, второй не дали. Три "
+                 "одинаковые задачи на правку интерфейса, сентябрь 2026 года.",
+         "size": 11, "color": DEEP},
+    ], line_spacing=1.16)
+    text_runs(s, 6.98, 4.12, 5.57, 0.90, [
+        {"text": "Что вышло. ", "size": 11, "bold": True, "color": TEAL},
+        {"text": "Общее время сократилось примерно на 20%. У продуктовых "
+                 "руководителей выигрыш 35%. У профессиональных дизайнеров — "
+                 "только на самой сложной из трёх задач (26%), а общий "
+                 "эффект у них пограничный (17%).",
+         "size": 11, "color": DEEP},
+    ], line_spacing=1.16)
+    text_box(s, x=0.80, y=5.08, w=11.75, h=0.70,
+             text="Обещание «день ручного черчения превращается в минуты» "
+                  "замер не подтверждает: выигрыш реален, но измеряется "
+                  "десятками процентов и зависит от того, кто работает и "
+                  "насколько сложна задача. Опыт поставила сама Figma на "
+                  "собственном инструменте — держите поправку в уме.",
+             size=11, italic=True, color=SLATE, line_spacing=1.16)
+
+    # ПРАВКА #212 (Р3-2026-10-01): вторая фраза — продолжение оговорки со
+    # слайда об объёме дизайна (s14a): генератор закрывает экран.
     gold_callout(
-        s, 0.55, 4.85, 12.25, 1.05,
-        "Конвергенция требует суждения о конкретном контексте, которого нет в "
-        "обучающих данных: ИИ расширяет пространство вариантов, а выбор и "
-        "проверку на живом пользователе оставляем человеку.",
-        size=13, bold=True)
+        s, 0.55, 5.94, 12.25, 0.94,
+        "Машина расширяет набор вариантов. Свести их к одному — решение о "
+        "ваших пользователях и ваших ограничениях, которых в обучающих "
+        "данных нет. Генератор закрывает экран; поверхности контакта, "
+        "поведение системы и ответ в неуверенности остаются за человеком.",
+        size=12.5, bold=True)
     refs_of_slide(s, "s17")
     notes_with_sources(s, "s17")
     return s
 
 
 def s18(p):
+    """Ограничения ИИ в дизайне. Правки по замечаниям владельца (#212):
+    аббревиатура WCAG раскрыта прямо на слайде (Р5); вопрос залу убран (Р2);
+    мем-голубь снят как декоративная графика, его место занял разбор второго
+    ограничения — неповторяемости ответа, — который раньше был сжат в одну
+    строку (Р4, Р1). Соседний случай iTutorGroup с видимого слоя снят: это
+    отдельный кейс, а по Р9 кейс требует собственного описания, которого в
+    боковой врезке не получается; в заметках он остаётся одной фразой."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "29% соответствие WCAG на 21 880 оценках — платформа важнее промпта [1]",
-                size=21, w=12.3, h=0.85)
-    # left: real WCAG donut chart
-    ocean_box(s, 0.55, 1.55, 4.85, 3.55, fill=SURFACE, stroke=LIGHT,
+    slide_title(s, "Сгенерированные интерфейсы прошли 29% проверок "
+                   "доступности — решает платформа, а не формулировка запроса",
+                size=21, y=0.13, w=12.30, h=0.92)
+
+    # ── слева: доля пройденных проверок ──
+    ocean_box(s, 0.55, 1.14, 4.35, 3.05, fill=SURFACE, stroke=LIGHT,
               stroke_pt=1.5)
-    add_image(s, CHARTS / "c-wcag-29.png", 0.85, 1.75, 4.25, 3.15,
+    add_image(s, CHARTS / "c-wcag-29.png", 0.80, 1.28, 3.85, 2.75,
               preserve_aspect=True)
-    # right: pigeon meme + facts
-    meme_in_box(s, "s18-pigeon.jpg", 5.65, 1.55, 3.55, 3.55, pad=0.12)
-    ocean_box(s, 9.45, 1.55, 3.35, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=9.68, y=1.70, w=2.9, h=1.4,
-             text="21 880 оценок WCAG на ИИ-интерфейсах:\n\n• контраст 26,8%\n"
-                  "• использование цвета 19,2%",
-             size=11.5, color=DEEP, line_spacing=1.2)
-    text_box(s, x=9.68, y=3.35, w=2.9, h=1.6,
-             text="«Сделай доступным» в промпте не гарантирует результат — "
-                  "решают дефолты платформы, а не текст запроса.",
-             size=11.5, italic=True, color=SLATE, line_spacing=1.18)
+
+    # ── что это за число: аббревиатура раскрыта здесь же (Р5) ──
+    ocean_box(s, 5.10, 1.14, 7.70, 1.72, fill=SURFACE, stroke=MID,
+              stroke_pt=1.4)
+    text_box(s, x=5.33, y=1.21, w=7.25, h=0.26,
+             text="Что именно проверяли", size=12, bold=True, color=MID)
+    text_runs(s, 5.33, 1.52, 7.25, 1.26, [
+        {"text": "WCAG (Web Content Accessibility Guidelines, «правила "
+                 "доступности веб-содержимого») ", "size": 10.5, "bold": True,
+         "color": DEEP},
+        {"text": "— международный свод требований к интерфейсу: хватает ли "
+                 "контраста между текстом и фоном, не передан ли смысл одним "
+                 "лишь цветом, работает ли всё без мыши, подписаны ли поля. "
+                 "Исследователи прогнали 21 880 таких проверок на экранах, "
+                 "сгенерированных инструментами с прошлого слайда: пройдено "
+                 "29,0%. Хуже всего — самое простое и машинно-проверяемое: "
+                 "контраст 26,8%, использование цвета 19,2% [1].",
+         "size": 10.5, "color": DEEP},
+    ], line_spacing=1.15)
+
+    # ── главная находка ──
+    ocean_box(s, 5.10, 2.96, 7.70, 1.23, fill=TEAL_TINT, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=5.33, y=3.03, w=7.25, h=0.26,
+             text="Главная находка", size=12, bold=True, color=TEAL)
+    text_box(s, x=5.33, y=3.33, w=7.25, h=0.78,
+             text="На итог сильнее влияли настройки самой платформы, чем "
+                  "текст запроса. Значит, оправдание «надо было правильно "
+                  "попросить» не работает: переписывание формулировки "
+                  "доступным результат не делает.",
+             size=10.5, color=DEEP, line_spacing=1.15)
+
+    # ── второе ограничение: какие ДВЕ эвристики ломаются ──
+    # ПРАВКА #212 (student-roast 2026-09-30, правка 3): эвристики Нильсена
+    # назывались в лекции трижды и не были показаны ни разу, а здесь стояло
+    # «из десяти буквально ломаются два» — студент так и не узнал, какие
+    # именно. Теперь обе названы по номеру и по имени прямо в том месте, где
+    # утверждается, что они ломаются. Остальные восемь остаются в главе:
+    # показывать весь список ради двух пунктов — перегруз, а не ясность.
+    text_box(s, x=0.55, y=4.28, w=12.25, h=0.28,
+             text="Какие именно две из десяти эвристик Нильсена ломаются "
+                  "на продукте с языковой моделью",
+             size=12, bold=True, color=MID, line_spacing=1.0)
+    broken = [
+        ("Эвристика 4 — единообразие и стандарты",
+         "Классика исходит из того, что одинаковое действие даёт одинаковый "
+         "результат. У языковой модели это не так: единообразие приходится "
+         "переносить с точных слов на тон и поведение.", MID),
+        ("Эвристика 9 — помощь в распознавании ошибки",
+         "Классика требует, чтобы система показывала, что пошло не так. "
+         "Модель обычно не знает, что она неправа, и подаёт выдумку с той "
+         "же уверенностью, что и факт.", TEAL),
+    ]
+    for i, (head_, body, col) in enumerate(broken):
+        x = 0.55 + i * 6.25
+        ocean_box(s, x, 4.56, 6.00, 1.16, fill=SURFACE, stroke=col,
+                  stroke_pt=1.5)
+        text_box(s, x=x + 0.20, y=4.62, w=5.60, h=0.26, text=head_,
+                 size=11.5, bold=True, color=col, line_spacing=1.0)
+        text_box(s, x=x + 0.20, y=4.90, w=5.60, h=0.76, text=body,
+                 size=10.0, color=DEEP, line_spacing=1.12)
+
+    # ПРАВКА #212 (Р3-2026-10-01): последняя фраза — продолжение оговорки со
+    # слайда об объёме дизайна (s14a): это решения о поведении системы.
     gold_callout(
-        s, 0.55, 5.30, 12.25, 0.80,
-        "Дизайн для НЕДЕТЕРМИНИРОВАННОГО вывода: тот же ввод → разный вывод → "
-        "ломает эвристику консистентности; нужны человеко-контрольные точки.",
-        size=13, bold=True)
+        s, 0.55, 5.79, 12.25, 1.15,
+        "Отсюда три приёма подачи, которых в классике нет: система говорит о "
+        "своей неуверенности от первого лица, а не общей оговоркой мелким "
+        "шрифтом; человек стоит в контуре решения там, где у ошибки есть "
+        "настоящая цена; и прямо сказано, что ответ сгенерирован. Все три — "
+        "решения о поведении системы: на макете экрана их не видно.",
+        size=12.5, bold=True)
     refs_of_slide(s, "s18")
     notes_with_sources(s, "s18")
     return s
 
 
 def s19(p):
+    """ПРАВКА #212 (замечание владельца Р2-2026-10-01): здесь стоял
+    Character.AI — кейс, чей корень лежит в отсутствующем требовании
+    безопасности, и в разделе про дизайн взаимодействия он стоял не на своём
+    месте. Поставлен случай, где провалился именно дизайн взаимодействия:
+    поведение системы, её предупреждения и картина системы в голове человека.
+    Выбор держится на формулировке из отчёта о дефекте самого производителя и
+    на том, что устранение целиком лежало в этом слое — заметность
+    предупреждений и строгость проверок внимания, без правок модели вождения.
+    Аббревиатура NHTSA раскрыта при первом появлении (Р5)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Защита появилась почти через два года после запуска — уже после трагедии",
-                size=21, w=12.3, h=0.85)
-    # GATE-B fix: the clown-applying-makeup meme was removed — this case
-    # involves a minor's death and a meme reads as flippant next to it (owner
-    # + student-simulator flag). Replaced with a sober icon panel (shield +
-    # the "retrofit" concept stated plainly, no joke format) — same visual
-    # weight/footprint as before, no meme anywhere on this slide.
-    ocean_box(s, 0.55, 1.55, 3.75, 4.30, fill=SURFACE, stroke=LIGHT,
-              stroke_pt=1.5)
-    icon(s, "shield-alert", 1.55, 2.05, 1.75, "light")
-    text_box(s, x=0.85, y=4.05, w=3.15, h=1.5,
-             text="Защита уязвимых пользователей добавлена ретрофитом — "
-                  "после трагедии, а не в исходном дизайн-брифе.",
-             size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             line_spacing=1.2)
-    # right: real logo + timeline + facts
-    photo_in_box(s, "s19-characterai-real-source.png", 4.55, 1.55, 3.15, 1.45,
-                 pad=0.20)
-    ocean_box(s, 7.90, 1.55, 4.90, 1.45, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=8.15, y=1.62, w=4.4, h=0.34, text="Character.AI",
-             size=14, bold=True, color=MID)
-    text_box(s, x=8.15, y=2.02, w=4.4, h=0.9,
-             text="14-летний пользователь погиб после месяцев общения с "
-                  "ИИ-персонажем (02.2024) [1].",
-             size=12, color=DEEP, line_spacing=1.15)
-    # timeline strip
-    stages = ["Запуск", "Трагедия\n02.2024", "Иск\n10.2024", "Защита\n11.2025"]
-    xs = [4.85, 6.85, 8.85, 10.85]
-    for i, (st, x) in enumerate(zip(stages, xs)):
-        col = GOLD if i == 3 else LIGHT
-        circle(s, x, 3.55, 0.30, col, stroke=WHITE, stroke_pt=1.5)
-        st_lbl = f"{st} [2]" if i == 3 else st
-        text_box(s, x=x - 0.55, y=3.95, w=1.40, h=0.5, text=st_lbl, size=10,
-                 bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=0.9)
-        if i < 3:
-            connector(s, x + 0.30, 3.70, xs[i + 1], 3.70, color=SOFT_GREY,
-                      width=2.0)
+    slide_title(s, "Отозваны все 2 031 220 машин с функцией помощи водителю: "
+                   "заметность элементов управления признали недостаточной",
+                size=21, y=0.13, w=12.30, h=0.80)
+
+    # ── 1. ЧТО ЗА СЛУЧАЙ — описание раньше разбора (Р9) ──
+    ocean_box(s, 0.55, 0.97, 12.25, 1.90, fill=SURFACE, stroke=MID,
+              stroke_pt=1.4)
+    photo_in_box(s, "s19-tesla-real-source.png", 0.70, 1.34, 2.02, 0.84,
+                 pad=0.10)
+    text_box(s, x=0.70, y=2.24, w=2.02, h=0.44,
+             text="функции помощи\nводителю", size=9.5, italic=True,
+             color=SLATE, align=PP_ALIGN.CENTER, line_spacing=1.05)
+    text_box(s, x=2.94, y=1.03, w=9.64, h=0.26,
+             text="Что за случай", size=12, bold=True, color=MID)
+    text_runs(s, 2.94, 1.31, 9.64, 1.50, [
+        {"text": "Autopilot ", "size": 10.5, "bold": True, "color": DEEP},
+        {"text": "— набор функций помощи водителю в машинах Tesla: держит "
+                 "полосу, скорость и дистанцию, пока человек следит за "
+                 "дорогой и держит руки на руле.", "size": 10.5,
+         "color": DEEP},
+        {"text": "13 августа 2021 года Национальное управление безопасности "
+                 "дорожного движения США (NHTSA) открыло расследование: "
+                 "машины с включённым Autopilot врезались в стоящие на "
+                 "дороге автомобили спецслужб. 12 декабря 2023 года Tesla "
+                 "отозвала все 2 031 220 машин с этой функцией — весь парк, "
+                 "выпущенный с 2012 года. В отчёте о дефекте компания "
+                 "записала: заметность и охват элементов управления системы "
+                 "могут быть недостаточны, чтобы предотвратить неверное "
+                 "применение водителем.",
+         "size": 10.5, "color": DEEP, "newpara": True, "space_before": 4},
+    ], line_spacing=1.14)
+
+    # ── 2. КАК ЭТО ШЛО ПО ВРЕМЕНИ ──
+    ocean_box(s, 0.55, 2.93, 12.25, 0.72, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    stages = [("Расследование\n08.2021", False),
+              ("Отзыв 2 031 220 машин\n12.12.2023", True),
+              ("Обновление по воздуху\n12.2023", False),
+              ("Проверка устранения\n25.04.2024", False),
+              ("≥20 аварий\nпосле обновления", False)]
+    xs = [1.55, 4.05, 6.60, 9.15, 11.65]
+    for i, ((lbl, hot), x) in enumerate(zip(stages, xs)):
+        col = GOLD if hot else LIGHT
+        circle(s, x - 0.11, 3.05, 0.22, col, stroke=WHITE, stroke_pt=1.5)
+        text_box(s, x=x - 1.15, y=3.32, w=2.30, h=0.28, text=lbl, size=8.5,
+                 bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=0.95)
+        if i < len(xs) - 1:
+            connector(s, x + 0.11, 3.16, xs[i + 1] - 0.11, 3.16,
+                      color=SOFT_GREY, width=2.0)
+
+    # ── 3. ЧТО СЛОМАЛОСЬ / ПОЧЕМУ ЭТО ФАЗА ДИЗАЙНА ──
+    cw_ = 6.05
+    for x_, head_, col, icn, runs in [
+        (0.55, "Что сломалось", MID, "eye-off", [
+            {"text": "За время расследования, с августа 2021 по декабрь "
+                     "2023 года, набралось не менее 13 аварий с погибшими, "
+                     "где свою роль сыграло предсказуемое неверное "
+                     "применение.", "size": 10, "color": DEEP},
+            {"text": "Картина системы в голове водителя расходилась с тем, "
+                     "что система делала. Имя этой ошибки — ",
+             "size": 10, "color": DEEP, "newpara": True, "space_before": 4},
+            {"text": "путаница режимов", "size": 10, "bold": True,
+             "color": MID},
+            {"text": ".", "size": 10, "color": DEEP},
+        ]),
+        (6.75, "Почему это решение фазы дизайна", TEAL, "layers", [
+            {"text": "Отзыв не затронул ни одной строки модели вождения. "
+                     "Исправляли то, как система себя предъявляет: "
+                     "заметность предупреждений, частоту проверок внимания, "
+                     "порог, за которым функция отключается.", "size": 10,
+             "color": DEEP},
+            {"text": "Имя «Autopilot» — решение того же слоя: оно задаёт "
+                     "картину раньше первого предупреждения.", "size": 10,
+             "color": DEEP, "newpara": True, "space_before": 4},
+        ]),
+    ]:
+        ocean_box(s, x_, 3.71, cw_, 1.58, fill=SURFACE, stroke=col,
+                  stroke_pt=1.5)
+        icon(s, icn, x_ + 0.22, 3.82, 0.32, "teal" if col is TEAL else "mid")
+        text_box(s, x=x_ + 0.64, y=3.82, w=cw_ - 0.88, h=0.30, text=head_,
+                 size=11.5, bold=True, color=col, line_spacing=1.0)
+        text_runs(s, x_ + 0.22, 4.16, cw_ - 0.44, 1.04, runs,
+                  line_spacing=1.12)
+
+    # ── 4. РАЗБОР ──
     gold_callout(
-        s, 4.55, 4.75, 8.25, 1.10,
-        "Корень — не рантайм-баг, а отсутствующее требование в дизайн-брифе: "
-        "MVP оптимизировал вовлечённость без вопроса «кто может пострадать». "
-        "Критерий: защита уязвимых — в MVP, а не патчем после трагедии.",
-        size=12.5, bold=True)
+        s, 0.55, 5.35, 12.25, 0.82,
+        "Корень — решение о том, как система предъявляет себя человеку: что "
+        "сообщает, насколько настойчиво и когда отказывается продолжать. От "
+        "расследования до отзыва прошло два года и четыре месяца, и всё это "
+        "время парк ездил с заданной ему картиной. Проверкой модели такую "
+        "ошибку не поймать.",
+        size=12, bold=True)
+
+    # ── 5. КРИТЕРИЙ, КОТОРЫЙ ПЕРЕНОСИТСЯ ДАЛЬШЕ ──
+    teal_callout(
+        s, 0.55, 6.23, 12.25, 0.76,
+        "Проверку устранения ведомство открыло 25 апреля 2024 года: за "
+        "первые четыре месяца набралось не менее 20 аварий с предполагаемым "
+        "участием системы, а часть мер водитель включает своим согласием и "
+        "так же отключает. Мера, которую человек может выключить, остаётся "
+        "просьбой — механизмом её делает способность остановить действие.",
+        size=10.5, bold=False)
     refs_of_slide(s, "s19")
     notes_with_sources(s, "s19")
     return s
 
-
+# [НЕ В СОСТАВЕ ДЕКИ] Функция не входит в ORDER (rendered/build_lec05.py) и при сборке
+# не вызывается: её текст в деку не попадает. Сохранена по конвенции build_lec05.py
+# («остальные builder-функции остаются мёртвым кодом»), а не по недосмотру. Любой поиск
+# терминов по билдерам обязан исключать такие функции — снятые из видимого слоя термины
+# в них живут законно.
 def s20(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -335,15 +747,21 @@ def s20(p):
 def s21(p):
     return build_section_divider(
         p, here_idx=3,
-        subtitle="Сборка и запуск — схлопнутая стрелка",
-        bridge="Здесь ИИ меняет больше всего — стоимость самого написания "
-               "кода. Но раздел начинается не с этого факта, а с классической "
-               "дисциплины релиза: как выкатывать безопасно и когда "
-               "остановиться.",
-        sid="s21", tag="2 базы · 2 провала",
+        subtitle="Сборка и запуск — довести продукт до пользователя, "
+                 "пока ошибка ещё обратима",
+        bridge="Без дисциплины запуска у сбоя два исхода, и оба плохие: "
+               "продукт застревает в бесконечном пилоте и гипотеза не "
+               "проверяется — либо выходит сразу на всех, и редкий сбой "
+               "становится кризисом за день.",
+        sid="s21", tag="3 приёма · 2 разобранных случая",
         meme_name="s21-anakin-padme.jpg")
 
 
+# [НЕ В СОСТАВЕ ДЕКИ] Функция не входит в ORDER (rendered/build_lec05.py) и при сборке
+# не вызывается: её текст в деку не попадает. Сохранена по конвенции build_lec05.py
+# («остальные builder-функции остаются мёртвым кодом»), а не по недосмотру. Любой поиск
+# терминов по билдерам обязан исключать такие функции — снятые из видимого слоя термины
+# в них живут законно.
 def s21b(p):
     return eli5_overview(
         p, "s21b", title="Сборка и запуск простыми словами", icon_name="sliders-horizontal",
@@ -363,79 +781,200 @@ def s21b(p):
 
 
 def s22(p):
+    """issue #212: билдер и .md разошлись (совпадение ~20%) — сведены в одну
+    версию. Ведущий блок по правилу Р3 — зачем эта работа вообще нужна."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Та же механика — но здесь решение убить продукт, а не флаг переключить",
-                size=20, w=12.3, h=0.85)
-    # flow of primitives
-    prim = ["Feature flag", "Canary", "Staged rollout", "Rollback"]
-    gloss = ["переключатель", "канарейка", "поэтапно", "откат"]
-    cw, gap = 2.72, 0.28
-    x0, y0 = 0.55, 1.70
-    for i, (pr, gl) in enumerate(zip(prim, gloss)):
-        x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 1.15, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-        text_box(s, x=x + 0.10, y=y0 + 0.20, w=cw - 0.20, h=0.4, text=pr,
-                 size=13.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x=x + 0.10, y=y0 + 0.68, w=cw - 0.20, h=0.34, text=gl,
-                 size=10.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-        if i < 3:
-            right_arrow(s, x + cw + 0.02, y0 + 0.44, gap - 0.04, 0.26,
-                        fill=LIGHT)
-    text_box(s, x=0.55, y=2.98, w=12.25, h=0.35,
-             text="Эти примитивы вы знаете из инженерной раскатки (CI/CD)",
-             size=12.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
-    # new content card
-    ocean_box(s, 1.55, 3.65, 10.25, 1.30, fill=GOLD_TINT, stroke=GOLD,
+    slide_title(s, "Задача фазы — довести продукт до пользователя так, чтобы "
+                   "ошибка осталась обратимой",
+                size=21, y=0.13, h=0.82, w=12.3)
+
+    # ── зачем эта работа (Р3): цель фазы и два исхода без неё ──
+    ocean_box(s, 0.55, 1.02, 12.25, 1.28, fill=SURFACE, stroke=MID,
               stroke_pt=1.6)
-    icon(s, "scale", 1.80, 3.95, 0.55, "gold")
-    text_box(s, x=2.55, y=3.78, w=9.0, h=1.05,
-             text="НОВОЕ здесь — чьё и по каким критериям решение они "
-                  "обслуживают: MVP (Райс) [1] = обучение, не отгрузка. "
-                  "Stage-Gate go/kill (Купер) [2] — «воронка, не туннель»: пороги "
-                  "провала записаны числом заранее.",
-             size=12.5, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.15)
+    icon(s, "compass", 0.78, 1.22, 0.42, "mid")
+    text_box(s, x=1.34, y=1.10, w=11.2, h=0.28, text="ЗАЧЕМ ЭТА РАБОТА",
+             size=11.5, bold=True, color=MID)
+    text_box(s, x=1.34, y=1.40, w=11.24, h=0.82,
+             text="Это единственное место цикла, где команда сама назначает, "
+                  "каким кругом людей и в каком темпе проверяется продукт, "
+                  "пока ошибка ещё дешёвая. Без этой дисциплины у сбоя два "
+                  "исхода: продукт застревает в бесконечном пилоте и "
+                  "гипотеза не проверяется — либо выходит сразу на всех, и "
+                  "редкий сбой становится кризисом за день.",
+             size=12.5, color=DEEP, line_spacing=1.16)
+
+    # ── две классические опоры ──
+    pillars = [
+        ("graduation-cap", "Минимально жизнеспособный продукт",
+         "Эрик Райс, предприниматель, книга «Бережливый стартап», 2011 [1]",
+         "Первая версия существует ради обучения, а не ради отгрузки. "
+         "Планируется в обратном порядке: сначала чему надо научиться, потом "
+         "какой меркой это различить, и только потом что собрать."),
+        ("funnel", "Рубеж «продолжать или закрыть»",
+         "Stage-Gate: Роберт Купер, исследователь новых продуктов, 1990 [2]",
+         "Воронка, а не туннель: вложение растёт только после пройденного "
+         "рубежа. Дешёвая ранняя стадия существует ровно затем, чтобы "
+         "отсеивать до крупных трат."),
+    ]
+    for i, (ic, head_, sub, body) in enumerate(pillars):
+        x = 0.55 + i * 6.25
+        ocean_box(s, x, 2.44, 6.00, 1.62, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.5)
+        icon(s, ic, x + 0.22, 2.60, 0.38, "teal")
+        text_box(s, x=x + 0.72, y=2.54, w=5.10, h=0.32, text=head_,
+                 size=13.5, bold=True, color=DEEP, line_spacing=1.04)
+        text_box(s, x=x + 0.72, y=2.86, w=5.10, h=0.26, text=sub,
+                 size=9.5, italic=True, color=SLATE)
+        text_box(s, x=x + 0.22, y=3.16, w=5.60, h=0.82, text=body,
+                 size=11.5, color=DEEP, line_spacing=1.16)
+
+    # ── механика раскатки: фон, а не содержание ──
+    ocean_box(s, 0.55, 4.16, 12.25, 0.74, fill=SOFT_GREY, stroke=LIGHT,
+              stroke_pt=1.0)
+    text_box(s, x=0.78, y=4.22, w=11.8, h=0.62,
+             text="Механику раскатки — переключатель функции, канареечный "
+                  "выпуск, поэтапное включение, возврат к прошлой версии — "
+                  "инженер знает из непрерывной интеграции и поставки "
+                  "(CI/CD — continuous integration / continuous delivery). "
+                  "Новое здесь не сами примитивы, а чьё решение они "
+                  "обслуживают: не «включить функцию», а «продолжать "
+                  "вкладываться или закрыть».",
+             size=11.0, color=SLATE, line_spacing=1.14)
+
     gold_callout(
-        s, 0.55, 5.25, 12.25, 0.85,
-        "Общий смысл: скорость запуска покупается ограниченным «радиусом "
-        "поражения» — сколько пользователей задето, если новое окажется плохим.",
+        s, 0.55, 5.00, 12.25, 0.72,
+        "Порог записывают числом до старта, потому что иначе нельзя отличить "
+        "«данные сказали нет» от «мы устали». Без него у команды нет права "
+        "честно закончить.",
         size=13, bold=True)
+
+    # ── якорь: как выглядит записанный порог ──
+    # issue #212, owner-review: MD Anderson снят (кейс уже разобран в
+    # Разделе 1, s13a; и его собственный аудит называет причиной закупочные
+    # нарушения, а не отсутствие критерия остановки). Foghorn показывает
+    # приём работающим, что ближе к тексту золотой плашки над якорем.
+    ocean_box(s, 0.55, 5.82, 12.25, 1.06, fill=WHITE, stroke=TEAL,
+              stroke_pt=1.2)
+    icon(s, "circle-check", 0.78, 6.14, 0.34, "teal")
+    text_runs(s, 1.26, 5.88, 11.30, 0.94, [
+        {"text": "Проект Foghorn, лаборатория X: топливо из морской воды. ",
+         "size": 11.0, "bold": True, "color": DEEP},
+        {"text": "Порог назначили числом до начала работ — ",
+         "size": 11.0, "color": SLATE},
+        {"text": "8 долларов за галлон бензинового эквивалента",
+         "size": 11.0, "bold": True, "color": DEEP},
+        {"text": ". Через два года модели стоимости дали 8–16, а дешёвый "
+                 "водород требовал ещё пяти лет исследований. В январе 2016 "
+                 "проект закрыли, результаты опубликовали, команде выплатили "
+                 "премию: записанное заранее число и дало право закончить. "
+                 "[3]", "size": 11.0, "color": SLATE},
+    ], line_spacing=1.16, anchor=MSO_ANCHOR.MIDDLE)
+
     refs_of_slide(s, "s22")
     notes_with_sources(s, "s22")
     return s
 
 
 def s23(p):
+    """issue #212, Р6: цифры обновлены до данных 2026 года, слайд перестроен
+    в сопоставление ключевых практик без ИИ и с ИИ.
+
+    owner-review 2026-10-01 — сверка с Лекцией 4 закрыла три расхождения:
+    заголовок называл ревью единственным узким местом (Л4 §1.3 первым назвала
+    точность намерения на входе); строка про тесты молчала про вывод Л4
+    §4.1/§4.3 (тест как исполняемая спецификация + детерминированный гейт
+    прогона, доля убитых мутантов честнее покрытия); не было предупреждения
+    Л4 §3.7/§5.2 про передачу слияния агенту. Заодно снято переполнение
+    левой колонки на 0,14" (четвёртая плитка вылезала за рамку)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "+200% кода на инженера — но лишь 16% PR получили содержательное ревью [1]",
-                size=20, w=12.3, h=0.85)
-    # left: real contrast chart
-    ocean_box(s, 0.55, 1.55, 6.15, 3.55, fill=SURFACE, stroke=LIGHT,
-              stroke_pt=1.5)
-    add_image(s, CHARTS / "c-review-bottleneck.png", 0.80, 1.80, 5.65, 3.05,
-              preserve_aspect=True)
-    # right: facts
-    ocean_box(s, 6.95, 1.55, 5.85, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=7.20, y=1.72, w=5.4, h=0.4, text="Измерение Anthropic",
-             size=14, bold=True, color=MID)
-    text_box(s, x=7.20, y=2.25, w=5.4, h=2.6,
-             text="• Реализация: недели/месяцы → минуты агентного исполнения\n\n"
-                  "• Объём кода на инженера: +200% год к году\n\n"
-                  "• Содержательное человеческое ревью до слияния: лишь ~16% PR",
-             size=13, color=DEEP, line_spacing=1.25)
+    slide_title(s, "Писать код стало дёшево, проверять — нет: к узкому "
+                   "месту на входе добавилось ревью",
+                size=22, y=0.13, h=0.82, w=12.3)
+
+    # ── слева: измеренный сдвиг ──
+    ocean_box(s, 0.55, 1.02, 4.60, 4.72, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    text_box(s, x=0.78, y=1.12, w=4.15, h=0.30, text="ИЗМЕРЕННЫЙ СДВИГ",
+             size=11.5, bold=True, color=MID)
+    stats = [
+        ("+200%", "объём кода на инженера за год — собственное измерение "
+                  "Anthropic", GOLD),
+        ("16% → 54%", "доля изменений с содержательным ревью до слияния: "
+                       "было — стало, после того как первый проход отдали "
+                       "автоматике; почти половина и теперь идёт без него [1]",
+         DEEP),
+        ("+441%", "медианное время, которое изменение проводит в ревью — "
+                  "телеметрия 22 000 разработчиков, Faros AI", DEEP),
+        ("2,5× / 5×", "изменения от ИИ крупнее и дольше ждут ревьюера — "
+                      "8,1 млн запросов на слияние, LinearB", DEEP),
+    ]
+    yy = 1.48
+    for num, txt, col in stats:
+        text_box(s, x=0.78, y=yy, w=4.15, h=0.42, text=num, size=21,
+                 bold=True, color=col, line_spacing=1.0)
+        text_box(s, x=0.78, y=yy + 0.44, w=4.15, h=0.60, text=txt,
+                 size=10.0, color=SLATE, line_spacing=1.14)
+        yy += 1.06
+
+    # ── справа: ключевые практики без ИИ и с ИИ ──
+    ocean_box(s, 5.35, 1.02, 7.45, 4.72, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.6)
+    text_box(s, x=5.58, y=1.12, w=7.00, h=0.30,
+             text="КЛЮЧЕВЫЕ ПРАКТИКИ: ЧТО БЫЛО И ЧТО ДОБАВИЛОСЬ",
+             size=11.5, bold=True, color=TEAL)
+    hx1, hw1 = 5.58, 2.32
+    hx2, hw2 = 8.24, 4.34
+    text_box(s, x=hx1, y=1.46, w=hw1, h=0.26, text="делали и делаем без ИИ",
+             size=9.5, bold=True, italic=True, color=SLATE)
+    text_box(s, x=hx2, y=1.46, w=hw2, h=0.26,
+             text="что добавляется, когда код пишет агент",
+             size=9.5, bold=True, italic=True, color=TEAL)
+    rows = [
+        ("Ревью изменений перед слиянием",
+         "оно же стало узким местом; передать слияние агенту — значит "
+         "снять единственный контроль"),
+        ("Переключатель функции",
+         "переключает уровень самостоятельности: сколько система решает "
+         "сама"),
+        ("Поэтапная раскатка по доле пользователей",
+         "раскатывают по двум осям сразу: доля аудитории и уровень "
+         "самостоятельности"),
+        ("Тест как исполняемая спецификация и гейт прогона",
+         "добавился гейт по доле убитых мутантов: проверяет, что тест "
+         "вообще способен поймать дефект"),
+        ("Аварийное отключение",
+         "нужно всегда: сбой расходится быстрее, чем его успевают заметить"),
+        ("Спецификация, которой владеет человек",
+         "единственный вход, который агент не может придумать себе сам"),
+    ]
+    ry = 1.78
+    for i, (a, b) in enumerate(rows):
+        if i % 2 == 0:
+            filled_rect(s, 5.50, ry, 7.15, 0.62, MID_TINT)
+        text_box(s, x=hx1, y=ry + 0.02, w=hw1, h=0.58, text=a, size=9.8,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        right_arrow(s, hx1 + hw1 + 0.06, ry + 0.24, 0.14, 0.14, fill=MID)
+        text_box(s, x=hx2, y=ry + 0.02, w=hw2, h=0.58, text=b, size=9.8,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        ry += 0.64
+
     gold_callout(
-        s, 0.55, 5.30, 12.25, 0.80,
-        "Дефицитный ресурс сместился к двум человеческим концам: точность "
-        "намерения на входе и качество суждения на выходе — узкое место теперь "
-        "ревью, а не написание.",
-        size=13, bold=True)
+        s, 0.55, 5.86, 12.25, 0.78,
+        "Дефицитны края работы: точность задачи на входе и скорость "
+        "суждения на выходе.",
+        size=13.5, bold=True)
     refs_of_slide(s, "s23")
     notes_with_sources(s, "s23")
     return s
 
 
+# [НЕ В СОСТАВЕ ДЕКИ] Функция не входит в ORDER (rendered/build_lec05.py) и при сборке
+# не вызывается: её текст в деку не попадает. Сохранена по конвенции build_lec05.py
+# («остальные builder-функции остаются мёртвым кодом»), а не по недосмотру. Любой поиск
+# терминов по билдерам обязан исключать такие функции — снятые из видимого слоя термины
+# в них живут законно.
 def s24(p):
     s = blank(p)
     set_slide_bg(s, WHITE)
@@ -448,76 +987,127 @@ def s24(p):
         ("v3", "Автоматически, с возвратом к человеку", "заслужено трассами"),
     ]
     for i, (v, head, sub) in enumerate(steps):
-        y = 4.25 - i * 0.95
-        w = 5.5 + i * 0.9
+        y = 3.98 - i * 0.96
+        w = 4.85 + i * 0.85          # max 6.55 -> right edge 7.25 < 7.75 box
         col = [LIGHT, MID, GOLD][i]
-        filled_rect(s, 0.70, y, w, 0.80, SURFACE, stroke=col, stroke_pt=1.6,
+        filled_rect(s, 0.70, y, w, 0.90, SURFACE, stroke=col, stroke_pt=1.6,
                     radius=True, radius_adj=0.08)
-        chip(s, 0.90, y + 0.22, 0.75, 0.36, v, fill=col, color=WHITE, size=13)
-        text_box(s, x=1.80, y=y + 0.10, w=w - 1.2, h=0.4, text=head, size=12.5,
-                 bold=True, color=DEEP)
-        text_box(s, x=1.80, y=y + 0.46, w=w - 1.2, h=0.3, text=sub, size=10.5,
-                 italic=True, color=SLATE)
+        chip(s, 0.90, y + 0.27, 0.75, 0.36, v, fill=col, color=WHITE, size=13)
+        text_box(s, x=1.80, y=y + 0.08, w=w - 1.15, h=0.46, text=head,
+                 size=12, bold=True, color=DEEP, line_spacing=1.05)
+        text_box(s, x=1.80, y=y + 0.57, w=w - 1.15, h=0.28, text=sub,
+                 size=10.5, italic=True, color=SLATE)
     # right explainer — GATE-B fix (audit 2026-09-07): box now bottom-aligns
     # with the v1/v2/v3 stack's own bottom edge (stack spans y=2.35..5.05;
     # box was y=1.55..4.60, leaving a visible 0.45in gap vs the stack) —
     # grew height 3.05->3.50 so both right-column elements end at y=5.05.
-    ocean_box(s, 7.75, 1.55, 5.05, 3.50, fill=SURFACE, stroke=TEAL,
+    ocean_box(s, 7.75, 1.52, 5.05, 3.36, fill=SURFACE, stroke=TEAL,
               stroke_pt=1.5)
-    text_box(s, x=8.00, y=1.70, w=4.6, h=0.9, text="CC/CD против привычного CI/CD [1]",
-             size=14, bold=True, color=TEAL, line_spacing=1.1)
-    text_box(s, x=8.00, y=2.55, w=4.6, h=2.3,
+    text_box(s, x=8.00, y=1.66, w=4.6, h=0.62,
+             text="CC/CD против привычного CI/CD [1]",
+             size=13.5, bold=True, color=TEAL, line_spacing=1.1)
+    text_box(s, x=8.00, y=2.30, w=4.6, h=0.92,
              text="CC/CD — Continuous Calibration/Development (непрерывная "
                   "калибровка). Релиз версионируется по уровню агентности, а "
-                  "не по набору функций. Лестница агентности: Copilot, Cursor.",
-             size=12.5, color=DEEP, line_spacing=1.2)
+                  "не по набору функций.",
+             size=12, color=DEEP, line_spacing=1.16)
+    # ПРАВКА #212: сам термин лестницы назван в видимом слое
+    text_box(s, x=8.00, y=3.34, w=4.6, h=0.32,
+             text="Лестница агентности (agency-ladder)",
+             size=13, bold=True, color=TEAL)
+    text_box(s, x=8.00, y=3.70, w=4.6, h=0.92,
+             text="Три ступени передачи контроля; поднимаются по ней под "
+                  "требование, а не по готовности инструмента.",
+             size=12, color=DEEP, line_spacing=1.16)
     gold_callout(
-        s, 0.70, 5.05, 12.10, 0.95,
+        s, 0.70, 5.00, 12.10, 0.80,
         "«Если не тестировали при высоком контроле — не готовы давать высокую "
         "агентность»: автономию агент заслуживает трассами исполнения, а не "
         "сразу по умолчанию.",
         size=13, bold=True)
+    check_point(
+        s, 0.70, 5.90, 12.10,
+        "Возьмите функцию из своего проекта, которую доверили бы ИИ. На какой "
+        "она ступени сейчас — и какое требование должно появиться, чтобы "
+        "поднять её на следующую?",
+        h=0.84, size=12.5)
     refs_of_slide(s, "s24")
     notes_with_sources(s, "s24")
     return s
 
 
 def s25(p):
+    """issue #212, Р2: обращение к аудитории убрано из заголовка и тела."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Удвоив скорость генерации, вы удваиваете очередь на ревью — не пропускную способность",
-                size=19, w=12.3, h=0.85)
-    # tilted scales metaphor
-    ocean_box(s, 0.55, 1.60, 6.55, 3.40, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    icon(s, "scale", 3.15, 1.85, 1.1, "mid")
-    filled_rect(s, 0.95, 3.25, 2.65, 0.80, GOLD_TINT, stroke=GOLD, stroke_pt=1.4,
-                radius=True, radius_adj=0.10)
-    text_box(s, x=1.05, y=3.35, w=2.45, h=0.6, text="генерация\nдёшево и быстро",
-             size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             line_spacing=1.0, anchor=MSO_ANCHOR.MIDDLE)
-    filled_rect(s, 4.05, 3.25, 2.65, 0.80, SOFT_GREY, stroke=LIGHT, stroke_pt=1.4,
-                radius=True, radius_adj=0.10)
-    text_box(s, x=4.15, y=3.35, w=2.45, h=0.6, text="верификация\nне ускорилась",
-             size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             line_spacing=1.0, anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, x=0.95, y=4.20, w=5.7, h=0.7,
-             text="Сгенерировать правдоподобный код — секунды; проверить его — "
-                  "не ускорилось.",
-             size=12, italic=True, color=SLATE, line_spacing=1.12)
-    # right: 70% problem
-    ocean_box(s, 7.35, 1.60, 5.45, 3.40, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.60, y=1.75, w=5.0, h=0.4, text="Проблема 70% [1]",
-             size=14, bold=True, color=TEAL)
-    text_box(s, x=7.60, y=2.30, w=5.0, h=2.4,
-             text="Опытный разработчик переосмысливает ИИ-вывод и тратит время "
-                  "на переделку.\n\nНовичок отправляет «карточный домик кода», "
-                  "который выглядит правдоподобно, но рассыпается под "
-                  "нагрузкой.",
-             size=12.5, color=DEEP, line_spacing=1.25)
+    slide_title(s, "Удвоенная скорость генерации удваивает очередь на "
+                   "проверку, а не пропускную способность",
+                size=21, y=0.13, h=0.82, w=12.3)
+
+    # ── слева: асимметрия стоимости ──
+    # ПРАВКА #212 (student-roast 2026-09-30, правка 5): над двумя плашками
+    # висела крупная иконка весов — студент назвал её украшением («могли бы
+    # и не рисовать»). Снята; освободившееся место отдано заголовку, который
+    # прямо называет, что здесь сопоставляется, и самому тексту.
+    ocean_box(s, 0.55, 1.05, 6.55, 3.95, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    text_box(s, x=0.95, y=1.20, w=5.75, h=0.34,
+             text="Две операции разработки и что с ними сделал ИИ",
+             size=13.5, bold=True, color=MID, line_spacing=1.04)
+    filled_rect(s, 0.95, 1.68, 2.65, 0.82, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.4, radius=True, radius_adj=0.10)
+    text_box(s, x=1.05, y=1.72, w=2.45, h=0.74, text="сделать\nподешевело",
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             line_spacing=1.04, anchor=MSO_ANCHOR.MIDDLE)
+    filled_rect(s, 4.05, 1.68, 2.65, 0.82, SOFT_GREY, stroke=LIGHT,
+                stroke_pt=1.4, radius=True, radius_adj=0.10)
+    text_box(s, x=4.15, y=1.72, w=2.45, h=0.74,
+             text="проверить\nне сдвинулось",
+             size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             line_spacing=1.04, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=0.95, y=2.58, w=5.75, h=0.26,
+             text="сопоставление стоимости двух операций",
+             size=9.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    text_box(s, x=0.95, y=2.98, w=5.75, h=1.86,
+             text="Сделать правдоподобный результат — секунды. Убедиться, что "
+                  "он верный, безопасный и делает именно то, что нужно, "
+                  "по-прежнему требует человеческого понимания в реальном "
+                  "времени.\n\nРабота не исчезла: вся её масса переехала на "
+                  "ту сторону, которая не подешевела. Это не нехватка людей, "
+                  "которая пройдёт.",
+             size=12.0, color=DEEP, line_spacing=1.18,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    # ── справа: разрыв 70 процентов ──
+    ocean_box(s, 7.35, 1.05, 5.45, 3.95, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=7.60, y=1.18, w=4.95, h=0.34, text="Разрыв 70 процентов [1]",
+             size=13.5, bold=True, color=TEAL)
+    text_box(s, x=7.60, y=1.62, w=4.95, h=1.10,
+             text="Инструмент доводит команду примерно на 70% пути к рабочему "
+                  "результату. Оставшиеся 30% — приведение в поддерживаемый "
+                  "вид, ловля краевых случаев, инженерный опыт.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+    filled_rect(s, 7.60, 2.86, 4.95, 0.26, SOFT_GREY, stroke=LIGHT,
+                stroke_pt=1.0, radius=True, radius_adj=0.40)
+    filled_rect(s, 7.60, 2.86, 4.95 * 0.7, 0.26, TEAL, radius=True,
+                radius_adj=0.40)
+    text_box(s, x=7.60, y=3.16, w=4.95, h=0.24,
+             text="70% пути · 30% остаются человеку", size=9.5, italic=True,
+             color=SLATE)
+    text_box(s, x=7.60, y=3.52, w=4.95, h=1.30,
+             text="Документированное расхождение: опытный инженер "
+                  "переосмысливает и ограничивает результат модели, "
+                  "начинающий принимает его охотнее и отправляет дальше код, "
+                  "который выглядит завершённым и рассыпается под нагрузкой.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+
     gold_callout(
-        s, 0.55, 5.15, 12.25, 0.85,
-        "Отгрузка без eval-гейта или плана отката — это не скорость, это "
-        "отложенная цена: ревью не масштабируется вместе с генерацией.",
+        s, 0.55, 5.14, 12.25, 1.00,
+        "Выпуск без проверки на наборе примеров и без проверенного пути "
+        "назад — это не скорость, а отложенная цена. Определение готовности "
+        "обязано вобрать эти 30%, иначе оно молча сводится к «тесты прошли — "
+        "значит готово».",
         size=13, bold=True)
     refs_of_slide(s, "s25")
     notes_with_sources(s, "s25")
@@ -525,41 +1115,84 @@ def s25(p):
 
 
 def s26(p):
+    """issue #212, Р9: краткое описание случая вынесено на слайд перед
+    разбором — слайд читается без лектора."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "0% → 100% одним шагом — минуя канареечную раскатку целиком",
-                size=21, w=12.3, h=0.85)
-    # left: balloon meme
-    meme_in_box(s, "s26-balloon.jpg", 0.55, 1.55, 3.55, 4.30, pad=0.14)
-    # right: real logo + staged vs direct
-    photo_in_box(s, "s26-google-real-source.png", 4.35, 1.55, 3.05, 1.35,
-                 pad=0.24)
-    ocean_box(s, 7.65, 1.55, 5.15, 1.35, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=7.90, y=1.62, w=4.65, h=0.34, text="Google AI Overviews, май 2024",
-             size=13, bold=True, color=MID)
-    text_box(s, x=7.90, y=2.00, w=4.65, h=0.85,
-             text="Раскатан на 100% поиска США одним шагом [1]. Без eval-гейта. "
-                  "Отключить пользователю нельзя.",
-             size=11.5, color=DEEP, line_spacing=1.15)
-    # staged bar
+    slide_title(s, "Google AI Overviews, май 2024: включили сразу всем — "
+                   "минуя пилот целиком",
+                size=21, y=0.13, h=0.82, w=12.3)
+
+    # ── что произошло ──
+    ocean_box(s, 0.55, 1.02, 8.30, 2.42, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    text_box(s, x=0.80, y=1.10, w=7.80, h=0.28, text="ЧТО ПРОИЗОШЛО",
+             size=11.5, bold=True, color=MID)
+    text_box(s, x=0.80, y=1.42, w=7.80, h=1.92,
+             text="Google встроил в поиск генеративные ответы: вместо списка "
+                  "ссылок вверху страницы стал появляться готовый ответ, "
+                  "составленный моделью по найденным страницам. Функцию "
+                  "включили сразу всем пользователям поиска в США, одним "
+                  "шагом, и отключить её пользователь не мог. За несколько "
+                  "дней в ответах разошлись советы есть камни и добавлять в "
+                  "пиццу клей, чтобы сыр держался: модель приняла за "
+                  "источники сатирическую статью и старую шутку с форума. "
+                  "Компания реагировала уже после — ограничила ответы на "
+                  "бессмысленные запросы, отфильтровала сатиру, "
+                  "приостановила ответы на темах о здоровье.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+    photo_in_box(s, "s26-google-real-source.png", 9.05, 1.02, 3.75, 2.42,
+                 pad=0.22)
+
+    # ── сравнение двух путей включения: две подписанные строки ──
+    ocean_box(s, 0.55, 3.54, 12.25, 1.36, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.4)
+    text_box(s, x=0.80, y=3.62, w=1.60, h=0.46, text="как надо:", size=10.5,
+             italic=True, color=SLATE, anchor=MSO_ANCHOR.MIDDLE)
     stages = ["1%", "10%", "25%", "50%", "100%"]
     for i, st in enumerate(stages):
-        x = 4.45 + i * 1.65
-        col = SOFT_GREY if i < 4 else GOLD_TINT
-        filled_rect(s, x, 3.30, 1.45, 0.60, col, stroke=LIGHT, stroke_pt=1.2,
-                    radius=True, radius_adj=0.14)
-        text_box(s, x=x, y=3.38, w=1.45, h=0.44, text=st, size=13, bold=True,
-                 color=DEEP, align=PP_ALIGN.CENTER)
+        x = 2.45 + i * 1.28
+        filled_rect(s, x, 3.62, 1.02, 0.46, SOFT_GREY, stroke=LIGHT,
+                    stroke_pt=1.2, radius=True, radius_adj=0.16)
+        text_box(s, x=x, y=3.62, w=1.02, h=0.46, text=st, size=12.0,
+                 bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE)
         if i < 4:
-            right_arrow(s, x + 1.47, 3.48, 0.16, 0.24, fill=LIGHT)
-    text_box(s, x=4.45, y=4.00, w=8.35, h=0.4,
-             text="правильная канареечная раскатка (перепрыгнута)",
-             size=11.5, italic=True, color=SLATE)
+            right_arrow(s, x + 1.05, 3.78, 0.18, 0.14, fill=LIGHT)
+    text_box(s, x=0.80, y=4.24, w=1.60, h=0.46, text="как пошли:", size=10.5,
+             italic=True, color=GOLD, anchor=MSO_ANCHOR.MIDDLE)
+    right_arrow(s, 2.45, 4.34, 6.02, 0.26, fill=GOLD)
+    text_box(s, x=2.45, y=4.24, w=6.02, h=0.46, text="0% → 100% одним шагом",
+             size=11.0, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+             anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, x=8.72, y=3.66, w=3.90, h=1.06,
+             text="с нуля сразу на всю аудиторию поиска в США — "
+                  "пилотной ступени не было ни одной",
+             size=11.0, bold=True, color=GOLD, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.12)
+
+    # ── разбор ──
+    ocean_box(s, 0.55, 5.00, 12.25, 1.32, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=0.80, y=5.06, w=11.8, h=0.26, text="РАЗБОР", size=11.5,
+             bold=True, color=TEAL)
+    text_box(s, x=0.80, y=5.34, w=11.8, h=0.92,
+             text="• Модель не сломалась технически: она сделала ровно то, "
+                  "что делает генеративная система — собрала правдоподобный "
+                  "ответ из корпуса, не отличив шутку от факта, и выдала его "
+                  "с уверенностью авторитетного источника\n"
+                  "• Это режим «уверенно неправильно», и ловится он не "
+                  "тестом, а наблюдением на живом, но ограниченном трафике\n"
+                  "• Зрелость основного продукта не даёт права пропустить "
+                  "пилот: она повышает цену пропуска — вся аудитория здесь "
+                  "означает всю базу сразу",
+             size=11.0, color=DEEP, line_spacing=1.16)
+
     gold_callout(
-        s, 4.35, 4.65, 8.45, 1.20,
-        "На 1% трафика паттерн («ешьте камни» — сатира The Onion; «клей на "
-        "пиццу» — шутка на Reddit) всплыл бы за дни во внутреннем мониторинге "
-        "[2]. Вместо этого — публичное осмеяние сразу на 100% аудитории.",
+        s, 0.55, 6.40, 12.25, 0.56,
+        "На одном проценте трафика этот класс сбоя всплыл бы за дни во "
+        "внутреннем наблюдении. Вместо этого — публичное осмеяние сразу на "
+        "всей аудитории.",
         size=12.5, bold=True)
     refs_of_slide(s, "s26")
     notes_with_sources(s, "s26")
@@ -567,36 +1200,68 @@ def s26(p):
 
 
 def s27(p):
+    """issue #212: билдер и .md разошлись (совпадение ~37%) — сведены.
+    Р9: краткое описание случая вынесено на слайд перед разбором."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "2,5–3 года на 0,7% сети — и решение остановиться было правильным [1]",
-                size=20, w=12.3, h=0.85)
-    # left: real logo + tiny segment
-    photo_in_box(s, "s27-mcdonalds-real-source.png", 0.55, 1.60, 3.05, 1.55,
-                 pad=0.22)
-    ocean_box(s, 0.55, 3.30, 3.05, 2.10, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=0.80, y=3.45, w=2.55, h=0.9, text="0,7%",
-             size=40, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
-    text_box(s, x=0.70, y=4.45, w=2.75, h=0.85,
-             text="~100 из ≈13 786 ресторанов США",
-             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
-             line_spacing=1.1)
-    # right: facts
-    ocean_box(s, 3.85, 1.60, 8.95, 3.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=4.15, y=1.75, w=8.4, h=0.4, text="McDonald's × IBM — голосовой приём заказов",
-             size=14, bold=True, color=MID)
-    text_box(s, x=4.15, y=2.30, w=8.4, h=2.2,
-             text="• 2,5–3 года пилота на 0,7% сети [2]\n\n"
-                  "• Вирусные провалы: бекон в мороженом, 9 чаёв вместо одного\n\n"
-                  "• Закрыт июнь 2024 — цель (голосовая автоматизация) "
-                  "осталась, вендорский подход убит",
-             size=13, color=DEEP, line_spacing=1.25)
+    slide_title(s, "McDonald's и IBM, 2021–2024: пилот на 0,7% сети "
+                   "закрыли — и это было правильно",
+                size=21, y=0.13, h=0.82, w=12.3)
+
+    # ── что произошло ──
+    ocean_box(s, 0.55, 1.02, 8.30, 2.46, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    text_box(s, x=0.80, y=1.10, w=7.80, h=0.28, text="ЧТО ПРОИЗОШЛО",
+             size=11.5, bold=True, color=MID)
+    text_box(s, x=0.80, y=1.42, w=7.80, h=1.96,
+             text="С конца 2021 года сеть McDonald's вместе с корпорацией IBM "
+                  "испытывала приём заказов голосом у окна автораздачи: "
+                  "посетитель говорит заказ, распознаёт его система, а не "
+                  "сотрудник. Испытание держали примерно на 100 ресторанах из "
+                  "почти 13 800 в США — это 0,7% сети — и продолжали два с "
+                  "половиной года. Всё это время в сеть попадали ролики со "
+                  "сбоями: бекон в мороженом, девять чаёв вместо одного, "
+                  "перепутанные заказы соседних полос. В июне 2024 "
+                  "партнёрство прекратили. Закрыли при этом подход, а не "
+                  "цель: голосовая автоматизация осталась в планах.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+
+    # ── справа: масштаб и срок пилота ──
+    photo_in_box(s, "s27-mcdonalds-real-source.png", 9.05, 1.02, 3.75, 1.18,
+                 pad=0.16)
+    ocean_box(s, 9.05, 2.30, 3.75, 1.18, fill=SURFACE, stroke=GOLD,
+              stroke_pt=1.6)
+    text_box(s, x=9.15, y=2.36, w=3.55, h=0.58, text="0,7%", size=34,
+             bold=True, color=GOLD, align=PP_ALIGN.CENTER, line_spacing=1.0)
+    text_box(s, x=9.15, y=2.96, w=3.55, h=0.46,
+             text="≈100 из ≈13 800 ресторанов США · пилот 2,5 года",
+             size=10.0, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
+             line_spacing=1.10)
+
+    # ── разбор ──
+    ocean_box(s, 0.55, 3.58, 12.25, 1.74, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=0.80, y=3.64, w=11.8, h=0.26, text="РАЗБОР", size=11.5,
+             bold=True, color=TEAL)
+    text_box(s, x=0.80, y=3.94, w=11.8, h=1.30,
+             text="• Знаменатель обязателен: «100 ресторанов» без «из 13 800» "
+                  "читается как масштабное внедрение, а со знаменателем — как "
+                  "узкая полоса, специально удержанная узкой\n"
+                  "• Потолок здесь понятный: распознавание речи в шуме, с "
+                  "разными выговорами и посторонними голосами. Такой потолок "
+                  "не двигается дополнительным временем\n"
+                  "• Закрыт конкретный технический путь, а не задача — это "
+                  "разные решения, и смешивать их дорого\n"
+                  "• Зеркало предыдущего случая: там пропустили пилот целиком, "
+                  "здесь прошли его честно и прочитали сигнал",
+             size=11.0, color=DEEP, line_spacing=1.16)
+
     gold_callout(
-        s, 3.85, 4.80, 8.95, 1.05,
-        "Зеркало предыдущего кейса: там пропустили пилот целиком и выкатили на "
-        "всех; здесь пилот был долгим — и его сигнал использовали правильно, "
-        "приняв дисциплинированное решение «убить», а не масштабировать провал.",
-        size=12.5, bold=True)
+        s, 0.55, 5.42, 12.25, 0.94,
+        "Сигнал прочитан верно: длинный пилот на малой доле, продолжающий "
+        "публично сбоить, означает потолок подхода, а не нехватку данных. Это "
+        "и есть сработавший рубеж «продолжать или закрыть».",
+        size=13, bold=True)
     refs_of_slide(s, "s27")
     notes_with_sources(s, "s27")
     return s

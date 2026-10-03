@@ -1,8 +1,8 @@
 ---
 lecture: 5
 title: "Lecture 5. The AI Product: The Full Lifecycle — From Intent to Operation"
-length_words: "~8,700 spoken (part 1 ~5,700 + part 2 ~3,900), mirroring the RU original"
-length_min: 100
+length_words: "11,586 spoken (part 1 — 6,696, part 2 — 4,890; excluding the preparation block). Against ≈82 active minutes that is ≈141 words/min, normal for English delivery. The earlier ~8,700 figure mirrored the RU count rather than the EN text and was wrong; F4 decides whether to trim."
+length_min: 90
 status: draft
 version: v1.0
 parts: 2
@@ -20,7 +20,7 @@ changelog:
 
 # Lecturer's Speech · Lecture 5 "The AI Product: The Full Lifecycle — From Intent to Operation"
 
-**Duration:** ~100 min (92 active minutes + ~8 min Q&A buffer on s49).
+**Duration:** ~90 min (≈82 active minutes + ~8 min Q&A buffer on s49); F1 timing reindexed from 100 to 90 (issue #212).
 **Parts:** `speech.en.md` (this file) — Section 0 (keystone) + Sections 1-3 (Discovery, Design, Build/Launch), slides s01-s27. `speech-part2.en.md` — Sections 4-6 (Measure, Support/Operate, Governance) + payoff + Q&A, slides s28-s49.
 **Source of truth:** `chapter.md` + `chapter-part2/3/4.md` (the book is the source of truth), cross-checked against the speaker notes of slides s01-s49b. This is a spoken unfolding for the lecturer, not a reading of the chapter.
 **Format:** conversational English, direct address, rhetorical questions, pauses and emphasis marked inline in square brackets where useful. Methodological / pedagogical asides are allowed in this speech (unlike the visible slide layer) — they help the lecturer hold the thread.

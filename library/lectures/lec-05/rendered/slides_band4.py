@@ -8,25 +8,74 @@ from _helpers import (
     right_arrow, circle, chip, connector, icon, slide_title,
     gold_callout, teal_callout, notes_with_sources, refs_of_slide,
     build_section_divider,
-    eli5_overview, meme_in_box, photo_in_box, add_image,
+    eli5_overview, meme_in_box, photo_in_box, add_image, check_point, src,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
     GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
+import re
+
+
+def md_text(slide, x, y, w, h, text, *, size=11.0, color=DEEP,
+            bold_color=MID, line_spacing=1.15, anchor=MSO_ANCHOR.TOP):
+    """Текст с разметкой **жирным** одним вызовом. Локальная копия приёма из
+    slides_band6: общий _helpers в это время правят другие агенты, и тащить
+    туда ещё один примитив ради двух слайдов смысла нет."""
+    runs = []
+    first = True
+    for line in text.split("\n"):
+        newp = not first
+        first = False
+        started = False
+        for part in re.split(r'(\*\*.+?\*\*)', line):
+            if not part:
+                continue
+            b = part.startswith("**") and part.endswith("**")
+            cfg = {"text": (part[2:-2] if b else part), "size": size,
+                   "bold": b, "color": (bold_color if b else color)}
+            if newp and not started:
+                cfg["newpara"] = True
+            started = True
+            runs.append(cfg)
+        if not started:
+            cfg = {"text": " ", "size": size, "color": color}
+            if newp:
+                cfg["newpara"] = True
+            runs.append(cfg)
+    return text_runs(slide, x, y, w, h, runs, line_spacing=line_spacing,
+                     anchor=anchor)
+
+
+def block_label(slide, x, y, w, text, *, color=MID, size=10.0):
+    """Подпись блока внутри Ocean-коробки: говорит, ЧТО это за блок, —
+    правило Р4 из owner-review-2026-09-30 (любая часть слайда подписана)."""
+    text_box(slide, x=x, y=y, w=w, h=0.26, text=text, size=size, bold=True,
+             color=color, line_spacing=1.0)
+
 
 
 def s44(p):
+    # ПРАВКА #212 (замечания владельца, правило Р3): дивайдер открывал раздел
+    # рассказом о своём месте в деке («замыкающий раздел: отвечает на парадокс
+    # из начала лекции»). Теперь открывает целью самой работы. Метка-счётчик
+    # сведена с slides/s44-*.md — раньше файл и билдер расходились.
     return build_section_divider(
         p, here_idx=6,
-        subtitle="Управление — капстоун, отвечающий на хук-парадокс",
-        bridge="Почему сборка почти бесплатна, а ценность — нет. Здесь мы "
-               "поднимаемся на уровень организации и собираем петлю целиком.",
-        sid="s44", tag="2 провала · развязка",
+        subtitle="Во что вкладывать дальше — и что пора закрыть",
+        bridge="Продукт может работать и всё равно не окупаться. Здесь "
+               "решают, какие инициативы финансировать дальше, а какие "
+               "остановить — и почему у ИИ-продукта это считается иначе.",
+        sid="s44", tag="1 база · 2 практики · 2 провала",
         meme_name="s44-sad-pablo.jpg")
 
 
+# [НЕ В СОСТАВЕ ДЕКИ] Функция не входит в ORDER (rendered/build_lec05.py) и при сборке
+# не вызывается: её текст в деку не попадает. Сохранена по конвенции build_lec05.py
+# («остальные builder-функции остаются мёртвым кодом»), а не по недосмотру. Любой поиск
+# терминов по билдерам обязан исключать такие функции — снятые из видимого слоя термины
+# в них живут законно.
 def s44b(p):
     return eli5_overview(
         p, "s44b", title="Управление простыми словами", icon_name="scale",
@@ -46,250 +95,432 @@ def s44b(p):
 
 
 def s45(p):
+    """ПРАВКА #212, замечание владельца 1: «опять про ИИ продукт, а у нас
+    использование ИИ в создании и работе продукта (в любом месте)… и график
+    не правильный. рост издержек всегда есть, просто может удельно падать,
+    но нам тут важно показать что с масштабированием всегда растут затраты +
+    можно показать скачки от внедрения новых фич и вопрос — а надо ли».
+
+    Что изменено. Рамка: вместо «ИИ-продукта как отдельного класса»
+    применение ИИ показано как счётчик, который появляется в любом месте
+    продукта и вокруг него — в функции для пользователя, в поддержке, в
+    самой разработке, во внутреннем инструменте команды. График: прежние
+    две линии утверждали, что у обычной программы расход на обслуживание
+    выполаживается к нулю, а у ИИ-продукта идёт прямой вверх; теперь это
+    один совокупный расход, который с масштабом растёт всегда, с тремя
+    ступенями от новых функций и золотым знаком вопроса у каждой. Падение
+    удельной стоимости вынесено отдельной бирюзовой строкой как другая
+    линейка, потому что именно эти две величины путают."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Тот же go/kill-гейт — но теперь распределяет капитал между многими инициативами",
-                size=19, w=12.3, h=0.85)
-    # portfolio funnel
-    ocean_box(s, 0.55, 1.60, 6.05, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=0.80, y=1.72, w=5.5, h=0.4, text="Воронка портфеля",
-             size=13.5, bold=True, color=MID)
-    # GATE-B fix (audit 2026-09-07): "профинансированы" was wrapping
-    # mid-word ("профинансиро-ваны") because the bottom funnel box was
-    # narrower than the label needed at this font size. Widened the box
-    # (1.7->2.3in) AND shortened the label ("профинансированы" ->
-    # "профинансировано") AND dropped its font size slightly so it now
-    # fits on one line without truncating any funnel-taper visual logic.
-    widths = [5.35, 4.0, 2.6, 2.3]
-    labels = ["много инициатив", "гейт 1", "гейт 2", "профинансировано"]
-    sizes = [11.5, 11.5, 11.5, 10.5]
+    slide_title(s, "Зачем нужен этот шаг: решить, что финансировать дальше, "
+                   "а что закрыть", size=19, w=12.25, h=0.62, y=0.13)
+
+    # ── слева: отбор инициатив + цена нерешения ──
+    ocean_box(s, 0.55, 0.88, 4.85, 4.68, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    block_label(s, 0.78, 1.00, 4.40, "ЧТО ЗДЕСЬ РЕШАЮТ", size=10.5)
+    text_box(s, x=0.78, y=1.30, w=4.40, h=0.30,
+             text="Отбор инициатив: много на входе — финансируют немногие",
+             size=10.2, italic=True, color=SLATE, line_spacing=1.0)
+    widths = [4.30, 3.45, 2.65, 2.10]
+    labels = ["десятки инициатив", "первое решение", "второе решение",
+              "финансируют"]
     cols = [LIGHT, MID, TEAL, GOLD]
-    for i, (w, lb, col, sz) in enumerate(zip(widths, labels, cols, sizes)):
-        y = 2.25 + i * 0.68
-        x = 0.80 + (5.5 - w) / 2
-        filled_rect(s, x, y, w, 0.52, SURFACE, stroke=col, stroke_pt=1.6,
+    for i, (w, lb, col) in enumerate(zip(widths, labels, cols)):
+        y = 1.68 + i * 0.54
+        x = 0.78 + (4.39 - w) / 2
+        filled_rect(s, x, y, w, 0.44, SURFACE, stroke=col, stroke_pt=1.6,
                     radius=True, radius_adj=0.10)
-        text_box(s, x=x, y=y, w=w, h=0.52, text=lb, size=sz, bold=True,
+        text_box(s, x=x, y=y, w=w, h=0.44, text=lb, size=11.0, bold=True,
                  color=DEEP, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    # right: unit economics
-    ocean_box(s, 6.85, 1.60, 5.95, 1.85, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.10, y=1.75, w=5.45, h=0.4, text="Unit-экономика ИИ-продукта",
-             size=14, bold=True, color=TEAL)
-    text_box(s, x=7.10, y=2.25, w=5.45, h=1.1,
-             text="Новая переменная — стоимость на запрос против ценности на "
-                  "запрос. Каждое обращение к модели стоит денег.",
-             size=12.5, color=DEEP, line_spacing=1.18)
-    filled_rect(s, 6.85, 3.65, 5.95, 1.50, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
-                radius=True, radius_adj=0.07)
-    text_box(s, x=7.10, y=3.78, w=5.45, h=1.25,
-             text="Финансовый KPI на входе в пилот: «снизим стоимость тикета "
-                  "с X₽ до Y₽ при CSAT ≥ Z; N тикетов, M недель, владелец — "
-                  "Иванов».",
-             size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.15)
+    block_label(s, 0.78, 3.90, 4.40, "ЧТО БУДЕТ, ЕСЛИ НЕ РЕШАТЬ", size=10.5)
+    md_text(s, 0.78, 4.20, 4.39, 1.30,
+            "Инициатива, которую никто не закрыл, продолжает тратить людей и "
+            "деньги, не показывая результата. **Deloitte, 2026:** 42% "
+            "технологических руководителей сообщают о низком или нулевом "
+            "возврате вложенного. **Boston Consulting Group, январь 2026** "
+            "(2 360 руководителей): измеримую отдачу — снижение расходов или "
+            "рост выручки — видят 6% компаний.",
+            size=10.2, line_spacing=1.14)
+
+    # ── справа: ступенчатый график совокупного расхода ──
+    ocean_box(s, 5.60, 0.88, 7.20, 4.68, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    block_label(s, 5.83, 1.00, 6.74,
+                "ЗАТРАТЫ РАСТУТ ВМЕСТЕ С МАСШТАБОМ — ВСЕГДА",
+                color=TEAL, size=10.5)
+    fx, fy, fw, fh = 5.85, 1.32, 6.70, 2.32
+    ocean_box(s, fx, fy, fw, fh, fill=WHITE, stroke=SOFT_GREY, stroke_pt=1.0,
+              radius_pt=6.0)
+    # оси: горизонталь — масштаб, вертикаль — СОВОКУПНЫЙ расход
+    ax, ay, pw, ph = 6.27, 2.98, 5.73, 1.52
+    connector(s, ax, ay, ax + pw + 0.20, ay, color=SLATE, width=1.0)
+    connector(s, ax, ay - ph - 0.06, ax, ay, color=SLATE, width=1.0)
+    # линия идёт ТОЛЬКО вверх: плавный рост от масштаба + вертикальные
+    # ступени там, где включили новую функцию
+    pts = [(0.00, 0.04), (0.15, 0.12), (0.15, 0.32), (0.41, 0.42),
+           (0.41, 0.63), (0.67, 0.72), (0.67, 0.92), (1.00, 0.97)]
+    for i in range(len(pts) - 1):
+        connector(s, ax + pts[i][0] * pw, ay - pts[i][1] * ph,
+                  ax + pts[i + 1][0] * pw, ay - pts[i + 1][1] * ph,
+                  color=GOLD, width=2.6)
+    text_box(s, x=6.42, y=1.44, w=2.70, h=0.28, text="совокупный расход",
+             size=9.5, bold=True, color=GOLD, line_spacing=1.0)
+    # ступени подписаны местами применения ИИ — «в любом месте продукта»
+    jumps = [(0.15, 0.32, "подсказки\nв поиске"),
+             (0.41, 0.63, "агент\nв поддержке"),
+             (0.67, 0.92, "ИИ-обзор кода\nу разработчиков")]
+    for fr, top, lab in jumps:
+        jx, jy = ax + fr * pw, ay - top * ph
+        circle(s, jx - 0.10, jy - 0.10, 0.20, GOLD, stroke=WHITE,
+               stroke_pt=1.0)
+        text_box(s, x=jx - 0.10, y=jy - 0.10, w=0.20, h=0.20, text="?",
+                 size=9, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x=jx - 0.725, y=3.04, w=1.45, h=0.50, text=lab, size=8.0,
+                 bold=True, color=MID, align=PP_ALIGN.CENTER,
+                 line_spacing=1.04)
+    src(s, 5.95, fy + fh + 0.02, 6.50,
+        "горизонталь — масштаб · вертикаль — совокупный расход · ступень — "
+        "новая функция", size=8.4, color=SLATE, h=0.26)
+
+    # удельная стоимость — ОТДЕЛЬНАЯ линейка, иначе её путают с совокупной
+    filled_rect(s, 5.83, 3.98, 6.74, 0.44, TEAL_TINT, stroke=TEAL,
+                stroke_pt=1.2, radius=True, radius_adj=0.12)
+    icon(s, "trending-down", 5.96, 4.06, 0.28, "teal")
+    text_box(s, x=6.34, y=3.98, w=6.11, h=0.44,
+             text="Расход на одно обращение со временем падает. Это другая "
+                  "линейка — совокупный счёт всё равно идёт вверх.",
+             size=10.0, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.10)
+    md_text(s, 5.83, 4.56, 6.74, 0.95,
+            "Применили ИИ где угодно внутри продукта или вокруг него — в "
+            "функции для пользователя, в поддержке, в разработке, во "
+            "внутреннем инструменте — и у этого применения появился "
+            "**счётчик**, который тикает от объёма работы.",
+            size=10.8, line_spacing=1.16)
+
     gold_callout(
-        s, 0.55, 5.35, 12.25, 0.72,
-        "Портфельное управление = Stage-Gate, поднятый на уровень капитала: та же "
-        "дисциплина «воронка, не туннель», но между продуктами, а не внутри "
-        "одного.",
-        size=12.5, bold=True)
+        s, 0.55, 5.70, 12.25, 0.88,
+        "У каждой ступени один и тот же вопрос: окупает ли новая функция свой "
+        "скачок расхода. Окупает — оставляем и платим за неё; не окупает — "
+        "закрываем сейчас, пока на эту ступень не встала следующая.",
+        size=13, bold=True)
+    refs_of_slide(s, "s45")
     notes_with_sources(s, "s45")
     return s
 
 
 def s46(p):
+    """ПРАВКА #212, замечание владельца 3: «слайд 48 — внезапный и нелогичный
+    переход. лучше дать оценку фичи абстрактной не важно ИИ или нет».
+
+    Слайд был диагностикой операционной модели предприятия — три источника
+    (Deloitte / Gartner / Boston Consulting Group) и полоса вклада 10/20/70 —
+    и обрывал Раздел 6 прыжком с инженерной практики на уровень организации.
+    Теперь он даёт аппарат оценки ЛЮБОЙ функции, безразличный к наличию ИИ
+    внутри, а отдельная полоса говорит, какие два пункта из четырёх ИИ
+    меняет и какие два остаются слово в слово теми же.
+
+    Статистика прежнего слайда осталась в главе §6.2; Deloitte и Boston
+    Consulting Group звучат на s45. Запись s46 в SLIDE_REFS снята: внешних
+    цифр на слайде больше нет, и ссылочный список под ним печатал бы
+    источники, которых слайд не цитирует."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Узкое место сместилось с технологии на операционную модель организации",
-                size=19, w=12.3, h=0.85)
-    # 5 sources converge
-    ocean_box(s, 0.55, 1.60, 6.35, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    srcs = ["Deloitte", "Сбер", "Gartner", "McKinsey", "Forrester"]
-    for i, sname in enumerate(srcs):
-        y = 1.85 + i * 0.60
-        chip(s, 0.85, y, 1.85, 0.44, sname, fill=LIGHT, color=WHITE, size=12)
-        connector(s, 2.75, y + 0.22, 5.05, 2.95, color=SOFT_GREY, width=1.2)
-    filled_rect(s, 4.15, 2.55, 2.5, 0.80, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
-                radius=True, radius_adj=0.10)
-    text_box(s, x=4.20, y=2.62, w=2.4, h=0.65, text="операционная модель",
-             size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    text_box(s, x=0.80, y=4.85, w=5.9, h=0.3,
-             text="Deloitte: 75% — модель должна измениться · 42% низкий/нулевой ROI [1]",
-             size=11, italic=True, color=SLATE)
-    # right: maturity scale
-    ocean_box(s, 7.15, 1.60, 5.65, 3.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.40, y=1.75, w=5.15, h=0.4, text="Зрелость 0–5 (maturity)",
-             size=14, bold=True, color=TEAL)
-    for i in range(6):
-        x = 7.45 + i * 0.85
-        cur = (i == 3)
-        col = GOLD if cur else SOFT_GREY
-        filled_rect(s, x, 2.55, 0.70, 0.70, (GOLD_TINT if cur else SURFACE),
-                    stroke=col, stroke_pt=(2.0 if cur else 1.0), radius=True,
-                    radius_adj=0.12)
-        text_box(s, x=x, y=2.70, w=0.70, h=0.4, text=str(i), size=15,
-                 bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, x=7.45, y=3.35, w=2.4, h=0.5, text="Сбер здесь →",
-             size=11.5, bold=True, color=DEEP)
-    text_box(s, x=7.40, y=3.95, w=5.15, h=1.1,
-             text="Операторы → оркестраторы. Сбер сам ставит себя на "
-                  "уровень 3 из 5 [2] — сигнал против хайпа: даже крупный игрок не "
-                  "заявляет вершину шкалы.",
-             size=12, color=DEEP, line_spacing=1.18)
+    slide_title(s, "Как оценивают любую функцию — безразлично, есть внутри "
+                   "ИИ или нет", size=19, w=12.25, h=0.62, y=0.13)
+
+    cards = [
+        ("1", "Что функция меняет в поведении",
+         "Какое действие пользователя станет чаще, быстрее или дешевле. Пока "
+         "действие не названо, оценивать нечего.", MID, "target"),
+        ("2", "Против какой базы",
+         "Тот же продукт без этой функции за тот же период. Без базы любой "
+         "прирост запишется в заслугу функции.", TEAL, "ruler"),
+        ("3", "Во что она обходится",
+         "Разработка однажды и обслуживание каждый месяц. Второе считают "
+         "вместе с объёмом использования.", LIGHT, "banknote"),
+        ("4", "При каком результате её закрывают",
+         "Число и срок записаны до запуска: названное после результата, оно "
+         "его уже только объясняет.", GOLD, "timer"),
+    ]
+    for i, (num, name, body, col, ic) in enumerate(cards):
+        x = 0.55 + (i % 2) * 6.20
+        y = 0.92 + (i // 2) * 1.63
+        ocean_box(s, x, y, 6.05, 1.48, fill=SURFACE, stroke=col, stroke_pt=1.5)
+        circle(s, x + 0.20, y + 0.16, 0.36, col)
+        text_box(s, x=x + 0.20, y=y + 0.16, w=0.36, h=0.36, text=num, size=14,
+                 bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x=x + 0.66, y=y + 0.14, w=4.70, h=0.40, text=name,
+                 size=12.5, bold=True,
+                 color=(DEEP if col is GOLD else col),
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.04)
+        icon(s, ic, x + 5.52, y + 0.18, 0.32, "light")
+        md_text(s, x + 0.22, y + 0.60, 5.61, 0.78, body, size=10.5,
+                line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    ocean_box(s, 0.55, 4.18, 12.25, 1.22, fill=SURFACE, stroke=GOLD,
+              stroke_pt=2.0)
+    block_label(s, 0.78, 4.28, 11.75,
+                "ЧТО МЕНЯЕТСЯ, ЕСЛИ ВНУТРИ ФУНКЦИИ ЕСТЬ ИИ", color=DEEP,
+                size=10.5)
+    md_text(s, 0.78, 4.58, 11.75, 0.76,
+            "Меняются два пункта из четырёх. **Третий:** обслуживание "
+            "перестаёт быть разовым — у него появляется счётчик, который "
+            "тикает от объёма. **Первый:** ответ модели меняется от запуска к "
+            "запуску, поэтому «работает» подтверждают выборкой, и один "
+            "удачный пример не считается. **Второй и четвёртый** остаются "
+            "слово в слово теми же.",
+            size=11.5, line_spacing=1.16)
+
     gold_callout(
-        s, 0.55, 5.35, 12.25, 0.72,
-        "Пять независимых источников сходятся в одном: выигрывает не тот, у "
-        "кого лучше модель, а тот, кто перестроил команды и управление под неё.",
-        size=12.5, bold=True)
-    refs_of_slide(s, "s46")
+        s, 0.55, 5.52, 12.25, 1.00,
+        "Второй вопрос — про базу — ломается чаще остальных трёх. Дальше два "
+        "разбора ровно об этом: в первом громкая цифра провала оказывается "
+        "цифрой без знаменателя, во втором заявленная автономность "
+        "расходится с собственной целью компании в четырнадцать раз.",
+        size=13, bold=True)
     notes_with_sources(s, "s46")
     return s
 
 
 def s47(p):
-    """GATE-B fix (audit 2026-09-07): this is the single most important
-    payoff of the s01 hook's own headline stat ("~95% pilots return nothing")
-    — but the funnel chart previously occupied only ~1/3 of the slide,
-    competing equally with a MIT campus stock photo and a 4-question
-    sidebar. Rebuilt so the 60->20->5 funnel is the unambiguous visual
-    dominant (wide top band, ~46% of slide area) with the debunk statement
-    directly under it; MIT photo + 4-question checklist demoted to a
-    slimmer bottom row. Facts unchanged."""
+    """ПРАВКА #212 (замечания владельца, правило Р9). Слайд открывался сразу
+    опровержением («60 -> 20 -> 5: это 25% среди дошедших») и без лектора не
+    читался: человек, глядящий на экран, не знал, о каком отчёте речь. Теперь
+    первый блок — краткое описание случая (кто, когда, на чём основано, что
+    ушло в заголовки), и только потом разбор. Сокращение MIT раскрыто
+    (правило Р5), цифра-корень обновлена на замер января 2026 (правило Р6)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "60% исследовали → 20% пилот → 5% успех: это 25% среди дошедших, не «95% провал» [1]",
-                size=18, w=12.3, h=0.72, y=0.28)
-    # TOP: the funnel chart is now the dominant visual — full-width, tall
-    ocean_box(s, 0.55, 1.20, 12.25, 3.15, fill=SURFACE, stroke=GOLD,
+    slide_title(s, "Отчёт про «95% провалов ИИ»: что в нём написано "
+                   "на самом деле", size=19, w=12.25, h=0.62, y=0.13)
+
+    # ── ЧТО ПРОИЗОШЛО — краткое описание случая до всякого разбора ──
+    photo_in_box(s, "s47-mit-real-source.png", 0.55, 0.88, 2.35, 1.45,
+                 pad=0.10)
+    ocean_box(s, 3.05, 0.88, 9.75, 1.45, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.5)
+    block_label(s, 3.28, 0.96, 9.25, "ЧТО ПРОИЗОШЛО", size=10.5)
+    md_text(s, 3.28, 1.26, 9.25, 1.00,
+            "В июле 2025 года исследовательская группа Массачусетского "
+            "технологического института (MIT) выложила предварительный отчёт "
+            "о состоянии ИИ в бизнесе — версия 0.1, без научного "
+            "рецензирования. Основание: 52 интервью с руководителями, 153 "
+            "анкеты и обзор 300 публичных внедрений. В заголовки ушла одна "
+            "строка: **95% корпоративных пилотов не дали измеримого эффекта "
+            "на прибыль** при 30–40 млрд долларов вложений. За месяц цифру "
+            "перепечатали деловые издания по всему миру.",
+            size=10.8, line_spacing=1.14)
+
+    # ── ЧТО В ОТЧЁТЕ — воронка и её чтение ──
+    ocean_box(s, 0.55, 2.48, 6.15, 2.10, fill=SURFACE, stroke=GOLD,
               stroke_pt=2.0)
-    add_image(s, CHARTS / "c-mit-funnel.png", 1.35, 1.40, 10.65, 2.75,
+    add_image(s, CHARTS / "c-mit-funnel.png", 0.72, 2.60, 5.80, 1.86,
               preserve_aspect=True)
-    # debunk statement directly under the funnel — the payoff stated in words
+    ocean_box(s, 6.95, 2.48, 5.85, 2.10, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    block_label(s, 7.18, 2.56, 5.40, "ЧТО В ОТЧЁТЕ", size=10.5)
+    md_text(s, 7.18, 2.88, 5.40, 1.60,
+            "60% организаций изучали тему · 20% дошли до пилота · 5% довели "
+            "до промышленной эксплуатации. Пять из двадцати дошедших — это "
+            "**25% успеха**, а не 5%.\n"
+            "И единица измерения здесь — мнение руководителя о пилоте, "
+            "а не финансовый результат пилота.",
+            size=11.0, line_spacing=1.16)
+
+    # ── переносимый навык ──
+    ocean_box(s, 0.55, 4.72, 12.25, 1.22, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    block_label(s, 0.78, 4.80, 11.70, "ЧЕТЫРЕ ВОПРОСА К ЛЮБОЙ ГРОМКОЙ ЦИФРЕ",
+                color=TEAL, size=10.5)
+    qs = ["Каков знаменатель — от чего считаем?",
+          "Что именно засчитано провалом?",
+          "Есть ли у автора конфликт интересов? Здесь — все четыре автора "
+          "строят и продают агентные продукты.",
+          "Прослеживается ли цифра до первоисточника с описанной методикой?"]
+    cw = 11.70 / 4
+    for i, q in enumerate(qs):
+        x = 0.78 + i * cw
+        circle(s, x, 5.14, 0.24, TEAL)
+        text_box(s, x=x, y=5.14, w=0.24, h=0.24, text=str(i + 1), size=8.5,
+                 bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x=x + 0.32, y=5.10, w=cw - 0.46, h=0.80, text=q, size=9.4,
+                 color=DEEP, line_spacing=1.10)
+
     gold_callout(
-        s, 0.55, 4.50, 12.25, 0.72,
-        "«95% провал» — заголовок, который не переживает калибровку: успех "
-        "среди дошедших до пилота — 25%, не 5% [2, 3].",
-        size=14, bold=True, align=PP_ALIGN.CENTER)
-    # BOTTOM ROW: MIT source photo (small) + 4-question checklist + BCG note
-    photo_in_box(s, "s47-mit-real-source.png", 0.55, 5.35, 2.55, 1.55, pad=0.12)
-    ocean_box(s, 3.25, 5.35, 5.35, 1.55, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=3.48, y=5.45, w=4.9, h=0.32,
-             text="4 вопроса к любой громкой цифре провала ИИ",
-             size=11.5, bold=True, color=MID, line_spacing=1.0)
-    qs = ["1. Каков знаменатель?", "2. Что считается «провалом»?",
-          "3. Каков конфликт интересов автора? [3]",
-          "4. Прослеживается ли к первоисточнику?"]
-    for i, qq in enumerate(qs):
-        text_box(s, x=3.48, y=5.82 + i * 0.27, w=4.9, h=0.26, text=qq,
-                 size=10, color=DEEP, line_spacing=1.0)
-    filled_rect(s, 8.75, 5.35, 4.05, 1.55, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
-                radius=True, radius_adj=0.08)
-    text_box(s, x=8.95, y=5.45, w=3.65, h=1.35,
-             text="BCG: 60% компаний не отслеживают ни одного финансового "
-                  "KPI, привязанного к ценности ИИ [5] — вот почему цифры "
-                  "провалов так легко раздуваются.",
-             size=10.5, bold=True, color=DEEP, line_spacing=1.15,
-             anchor=MSO_ANCHOR.MIDDLE)
+        s, 0.55, 6.06, 12.25, 0.85,
+        "Корень не в моделях. Boston Consulting Group, январь 2026, 2 360 "
+        "руководителей: измеримую отдачу видят 6% компаний — а большинство "
+        "меряет активность (сэкономленные часы, автоматизированные задачи), "
+        "а не деньги. Нечем мерить — нечего и предъявить.",
+        size=12, bold=True)
     refs_of_slide(s, "s47")
     notes_with_sources(s, "s47")
     return s
 
 
 def s48(p):
+    """ПРАВКА #212 (замечания владельца). Правило Р9: на слайд вынесено
+    краткое описание случая до разбора — раньше слайд начинался с цифры
+    700/1000 и без лектора не читался. Сводная матрица шести фаз снята: она
+    дублировала итоговую матрицу раздела обобщения и занимала половину
+    слайда. slides/s48-*.md сняла её ещё при сжатии, а билдер продолжал
+    рисовать — расхождение 16% ключевых слов, теперь совпадает. Добавлен
+    блок «чем кончилось» с проверенным состоянием на 2026 год: замена
+    компьютерного зрения радиометками — ключевое сравнение практик с ИИ и
+    без (правило Р6)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "«Автономный» магазин: 700 из 1000 транзакций требовали ручной проверки против цели 50",
-                size=17, w=12.3, h=0.85)
-    # top: Just Walk Out
-    photo_in_box(s, "s48-amazon-real-source.png", 0.55, 1.50, 3.35, 1.85)
-    ocean_box(s, 4.10, 1.50, 3.55, 1.85, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
-    add_image(s, CHARTS / "c-jwo.png", 4.30, 1.65, 3.15, 1.55,
+    slide_title(s, "Магазин без касс: шесть лет «полной автономии» и 700 "
+                   "ручных проверок на 1000 покупок",
+                size=17, w=12.25, h=0.60, y=0.13)
+
+    # ── ЧТО ПРОИЗОШЛО ──
+    photo_in_box(s, "s48-amazon-real-source.png", 0.55, 0.86, 2.35, 1.50,
+                 pad=0.10)
+    ocean_box(s, 3.05, 0.86, 9.75, 1.50, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.5)
+    block_label(s, 3.28, 0.94, 9.25, "ЧТО ПРОИЗОШЛО", size=10.5)
+    md_text(s, 3.28, 1.24, 9.25, 1.04,
+            "С 2018 года Amazon открывал магазины без касс: берёшь товар с "
+            "полки и выходишь, деньги списываются сами. Технологию продавали "
+            "как **чистое компьютерное зрение** — камеры и датчики сами "
+            "понимают, что ты взял. В апреле 2024 года журналисты выяснили: "
+            "больше тысячи человек в Индии просматривали видеозаписи и "
+            "вручную размечали покупки, которые система не смогла распознать.",
+            size=10.8, line_spacing=1.14)
+
+    # ── РАЗБОР: заявлено против измерено ──
+    ocean_box(s, 0.55, 2.50, 4.55, 2.15, fill=SURFACE, stroke=GOLD,
+              stroke_pt=2.0)
+    add_image(s, CHARTS / "c-jwo.png", 0.72, 2.62, 4.21, 1.91,
               preserve_aspect=True)
-    ocean_box(s, 7.85, 1.50, 4.95, 1.85, fill=GOLD_TINT, stroke=GOLD, stroke_pt=1.6)
-    text_box(s, x=8.10, y=1.62, w=4.45, h=1.65,
-             text="Just Walk Out (Amazon), с 2018: 700/1000 транзакций — "
-                  "ручная проверка (14× выше цели 50/1000) [1]. 6 лет маркетинга "
-                  "«автономный ИИ» без раскрытия масштаба труда (скрытая "
-                  "человеческая стоимость) [2].",
-             size=11.5, bold=True, color=DEEP, line_spacing=1.15,
-             anchor=MSO_ANCHOR.MIDDLE)
-    # bottom: 6-phase summary matrix
-    phases = [("Исследование", "синтез, кабинет.", "интервью"),
-              ("Дизайн", "генерация", "требов. безоп."),
-              ("Сборка/запуск", "код ≈ бесплатно", "ревью, kill-гейт"),
-              ("Измерение", "оценки (evals)", "рандомизация"),
-              ("Поддержка", "трейсинг", "эскалация"),
-              ("Управление", "операц. модель", "стоим./запрос")]
-    cw = 12.25 / 6
-    y0 = 3.65
-    # header
-    filled_rect(s, 0.55, y0, 12.25, 0.42, MID, radius=True, radius_adj=0.05)
-    text_box(s, x=0.55, y=y0, w=12.25, h=0.42, text="Фаза × что ИИ меняет × что остаётся из классики",
-             size=12, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE)
-    for i, (ph, ai, cl) in enumerate(phases):
-        x = 0.55 + i * cw
-        ocean_box(s, x + 0.02, y0 + 0.48, cw - 0.04, 1.35, fill=SURFACE,
-                  stroke=LIGHT, stroke_pt=1.0)
-        text_box(s, x=x + 0.08, y=y0 + 0.56, w=cw - 0.16, h=0.4, text=ph,
-                 size=10.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-                 line_spacing=0.95)
-        text_box(s, x=x + 0.08, y=y0 + 1.00, w=cw - 0.16, h=0.34, text=ai,
-                 size=9, color=TEAL, align=PP_ALIGN.CENTER, line_spacing=0.95)
-        text_box(s, x=x + 0.08, y=y0 + 1.42, w=cw - 0.16, h=0.34, text=cl,
-                 size=9, color=SLATE, align=PP_ALIGN.CENTER, line_spacing=0.95)
+    ocean_box(s, 5.35, 2.50, 7.45, 2.15, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    block_label(s, 5.58, 2.58, 7.00, "РАЗБОР — ОДНА И ТА ЖЕ ЛИНЕЙКА КОМПАНИИ",
+                size=10.5)
+    md_text(s, 5.58, 2.90, 7.00, 1.66,
+            "**700 из 1000** покупок требовали ручной проверки — против "
+            "собственной внутренней цели **20–50 из 1000**. Превышение от 14 до 35 раз.\n"
+            "Само участие людей — не разоблачение: они размечали записи "
+            "постфактум, и формально Amazon возразил верно. Разоблачение в "
+            "другом: цель поставила сама компания, и заявленное разошлось с "
+            "измеренным по её же линейке. Спорить о значении слова "
+            "«автономный» не нужно — достаточно найти число.",
+            size=11.0, line_spacing=1.15)
+
+    # ── ЧЕМ КОНЧИЛОСЬ: 2026, включая уход от ИИ там, где он не держался ──
+    ocean_box(s, 0.55, 4.79, 12.25, 1.22, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    block_label(s, 0.78, 4.87, 11.70, "ЧЕМ КОНЧИЛОСЬ", color=TEAL, size=10.5)
+    outs = [
+        "Из больших продуктовых магазинов технологию убрали в 2024-м, "
+        "а в январе 2026-го Amazon закрыл и сами сети Go и Fresh.",
+        "Технология переехала туда, где ассортимент мал и предсказуем: "
+        "**360+ сторонних точек** в пяти странах — стадионы, больницы, "
+        "университеты.",
+        "Где и это сложно, компьютерное зрение заменили **радиочастотными "
+        "метками (RFID)** — предсказуемым решением **без ИИ**.",
+        "А в больших магазинах место заняла **тележка со сканером**: товар "
+        "отмечает сам покупатель.",
+    ]
+    cw = 11.70 / 4
+    for i, o in enumerate(outs):
+        x = 0.78 + i * cw
+        md_text(s, x, 5.17, cw - 0.22, 0.78, o, size=9.3, bold_color=DEEP,
+                line_spacing=1.10)
+
+    gold_callout(
+        s, 0.55, 6.12, 12.25, 0.82,
+        "Если для приемлемой точности нужна ручная проверка кратно выше "
+        "собственной цели — заявленная автономность не достигнута. Дальше "
+        "два честных хода: снизить обещание до «с помощью ИИ» либо признать "
+        "нишу пока неподходящей и взять инструмент проще. Amazon в итоге "
+        "сделал оба.",
+        size=12, bold=True)
     refs_of_slide(s, "s48")
     notes_with_sources(s, "s48")
     return s
 
 
+# [НЕ В СОСТАВЕ ДЕКИ] Функция не входит в ORDER (rendered/build_lec05.py) и при сборке
+# не вызывается: её текст в деку не попадает. Сохранена по конвенции build_lec05.py
+# («остальные builder-функции остаются мёртвым кодом»), а не по недосмотру. Любой поиск
+# терминов по билдерам обязан исключать такие функции — снятые из видимого слоя термины
+# в них живут законно.
 def s49(p):
+    """ПРАВКА #212: слайд разгружен — чек-лист «прежде чем делать фазу
+    AI-first» и блок вопросов уехали на новые s54/s55, здесь остаётся только
+    keystone-payoff: разрешение парадокса + что изменилось / что осталось
+    человеческим. Визуал понижен с hero до обычного Ocean-блока: замыкающий
+    hero всей деки теперь на последнем слайде (s55), см. slides/s49-*.md и
+    slides/s55-*.md.
+    """
     s = blank(p)
     set_slide_bg(s, WHITE)
     slide_title(s, "Сборка бесплатна — дефицит теперь: суждение, а не исполнение",
-                size=20, w=12.3, h=0.62, y=0.22)
-    # GATE-B fix (P0 #3): closing hero was schematic-only (hexagon loop —
-    # already shown 3x on s03/s05/s43, so repeating it here would ALSO be a
-    # cross-slide redundancy violation). Replaced with a REAL photo hero
-    # (>=40% area) via 6-tier acquisition: NASA Mission Control (Apollo 16),
-    # public domain, Wikimedia Commons Tier 2 — humans exercising judgment
-    # over a live, highly-automated operation is a direct, non-metaphorical
-    # match for "человек в центре петли, суждение — дефицитный ресурс".
-    # Cropped to a 12.25x3.55in banner (~43.5% of slide area) — see
-    # assets/screenshots/s49-missioncontrol-crop.png + .url sidecar for the
-    # source photo + acquisition log.
-    photo_in_box(s, "s49-missioncontrol-crop.png", 0.55, 0.92, 12.25, 3.55,
+                size=21, w=12.3, h=0.66, y=0.30)
+
+    # РЯД A: реальное фото (обычный визуал, не hero) + разрешение парадокса
+    photo_in_box(s, "s49-missioncontrol-crop.png", 0.55, 1.12, 6.25, 1.92,
                  pad=0.09)
-    text_box(s, x=0.70, y=4.50, w=9.0, h=0.28,
-             text="Центр управления NASA, Apollo 16 — люди принимают решение, "
-                  "пока автоматика работает",
-             size=10.5, italic=True, color=SLATE)
+    src(s, 0.58, 3.10, 6.25,
+        "Центр управления NASA, Apollo 16 — решение принимают люди", size=9.5)
+
+    ocean_box(s, 7.05, 1.12, 5.75, 1.92, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    text_box(s, x=7.30, y=1.26, w=5.25, h=0.32,
+             text="Разрешение парадокса, с которого начали",
+             size=13, bold=True, color=MID)
+    text_box(s, x=7.30, y=1.66, w=5.25, h=1.24,
+             text="Сборка стала почти бесплатной — правда. Успех редок — тоже "
+                  "правда, но точнее: 25% среди дошедших до пилота, а не 5% "
+                  "«всех».",
+             size=12.5, color=DEEP, line_spacing=1.18)
+
+    # РЯД B: что изменилось / что осталось человеческим
+    changed = ["Стоимость сборки", "Скорость исследования",
+               "Скорость прототипа", "Скорость наблюдения"]
+    human = ["Намерение",
+             "Суждение о сигнале против шума",
+             "Ответственность за каждый ответ продукта",
+             "Решение «здесь ИИ не тот инструмент»",
+             "Управление с названным владельцем"]
+
+    ocean_box(s, 0.55, 3.42, 6.25, 2.02, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    icon(s, "repeat", 0.80, 3.56, 0.40, "teal")
+    text_box(s, x=1.34, y=3.58, w=5.2, h=0.32, text="Что изменилось",
+             size=13.5, bold=True, color=TEAL)
+    for i, t in enumerate(changed):
+        y = 4.04 + i * 0.34
+        circle(s, 0.86, y + 0.09, 0.13, TEAL)
+        text_box(s, x=1.18, y=y, w=5.4, h=0.30, text=t, size=12, color=DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
+
+    ocean_box(s, 7.05, 3.42, 5.75, 2.02, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    icon(s, "users", 7.30, 3.56, 0.40, "mid")
+    text_box(s, x=7.84, y=3.58, w=4.7, h=0.32,
+             text="Что осталось человеческим", size=13.5, bold=True,
+             color=MID)
+    for i, t in enumerate(human):
+        y = 3.94 + i * 0.29
+        circle(s, 7.36, y + 0.08, 0.13, GOLD)
+        text_box(s, x=7.68, y=y, w=4.95, h=0.28, text=t, size=11.5,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+
     gold_callout(
-        s, 0.55, 4.82, 12.25, 0.62,
-        "Когда исполнение почти бесплатно, дефицитный ресурс — суждение: "
-        "отличить сигнал от шума и удержать намерение и ответственность на "
-        "человеке.",
-        size=12.5, bold=True)
-    # compact 8-question checklist below the keystone statement (2 rows x 4)
-    checks = [
-        "1. Классика на месте?", "2. Стоит ли доверие цены?",
-        "3. Есть эталонный набор и eval?", "4. Есть guardrail-метрика?",
-        "5. Поэтапная раскатка + откат?", "6. Эскалация к человеку гарантирована?",
-        "7. Кто отвечает?", "8. Данные безопасны?",
-    ]
-    chip(s, 0.55, 5.56, 5.4, 0.32, "Чек-лист «прежде чем делать фазу AI-first»",
-         fill=GOLD, color=DEEP, size=10.5)
-    cw2, gap2 = 2.98, 0.12
-    x0, y0 = 0.55, 5.98
-    for i, c in enumerate(checks):
-        col_i = i % 4
-        row_i = i // 4
-        x = x0 + col_i * (cw2 + gap2)
-        y = y0 + row_i * 0.55
-        icon(s, "circle-check", x, y, 0.24, "teal")
-        text_box(s, x=x + 0.30, y=y - 0.03, w=cw2 - 0.30, h=0.50, text=c,
-                 size=9.2, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-                 line_spacing=0.95)
+        s, 0.55, 5.66, 12.25, 0.82,
+        "Когда сборка бесплатна, дефицитный ресурс — не исполнение, "
+        "а суждение.",
+        size=15, bold=True, align=PP_ALIGN.CENTER)
     notes_with_sources(s, "s49")
     return s
+
+

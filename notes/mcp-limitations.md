@@ -848,3 +848,175 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
 - **Workaround:** for any Cyrillic-content anti-pattern grep that matters (timing markers, methodology-comment markers, LO-code markers, etc.), do NOT rely on bare `grep -E '\bPATTERN\b'`. Instead verify with Python's `re` module (`re.findall(r'\bPATTERN\b', text)`), which correctly classifies Cyrillic as word characters regardless of the shell locale (Python's `re` Unicode-mode word-char classification is locale-independent). On `library/seminars/sem-04/rendered/build_sem04.py`'s extracted visible text, `grep -E` flagged 12 lines as containing `мин\b`/other anti-patterns; re-checking the identical alternation with `python3 -c "import re; ..."` against the same text returned **0** genuine hits for all 10 checked patterns (all 12 `grep` hits were this false-positive class, not real timing/methodology leaks). If `grep` must be used standalone (no Python available), prefer a byte-safe substitute check instead of `\b`, e.g. anchor on an explicit non-letter delimiter set (`(^|[^а-яёА-ЯЁ])мин([^а-яёА-ЯЁ]|$)`) rather than `\b`.
 - **Status:** active (upstream grep/locale behavior, not fixable from this project; workaround is a tooling-choice discipline rule).
 - **First seen in:** #201 (Семинар 4 v4 production, full 49-slide rebuild after раскол на два семинара, 2026-09-22) — caught while running this project's own standard designer-extras anti-pattern grep against the rebuilt deck's extracted visible text.
+
+### [#212-1] `render.sh`'s `timeout 260` silently kills the LibreOffice pptx→pdf conversion on a large deck — zero PNG, zero error text
+
+- **Tool:** render-toolchain (`library/lectures/lec-05/rendered/render.sh` → `soffice --headless --convert-to pdf`), not an MCP server.
+- **Symptom:** `./render.sh` exits **0**, prints nothing, and leaves `snapshots/` empty. The stale `lec-05.pdf` from a previous build stays in place with its old timestamp, so a casual `ls` looks like the render "worked" while the PDF is actually the PREVIOUS deck. The only live evidence is a `[soffice.bin] <defunct>` zombie and a `.~lock.lec-05.pdf#` left in `/tmp/claude-999/lec05-snap/`. Reproduced twice on the rebuilt 56-slide Лекция 5 deck (5.0 MB pptx, heavy `schema_matrix` slides with monospace artefact boxes).
+- **Root cause:** `render.sh` wraps soffice in `timeout 260`. On this host that deck needs longer than 260 s of wall time (the killed runs had only ~94 s of CPU each — soffice spends most of the wall time blocked, so CPU time badly under-reports how long it needs). `timeout` kills soffice before it writes the PDF; the subsequent `python3 … pymupdf` step then opens nothing, and because the final `cp` targets a file that already exists, nothing in the script fails loudly. `set -e` does not help: every step "succeeded".
+- **Severity:** P1 — a silent no-op render is worse than a crash, because the next step (visual inspection, pre-gate walkthrough) is then performed against the PREVIOUS deck's snapshots/PDF and reports them as current.
+- **Workaround:** raise the budget (done for lec-05: `timeout 260` → `timeout 900`) **and** verify the render by artefact rather than by exit code — `ls snapshots/*.png | wc -l` must equal the deck's slide count, and `lec-05.pdf`'s mtime must be newer than `lec-05.pptx`'s. Treat "exit 0" from `render.sh` as meaningless on its own.
+- **Status:** active (mitigated for lec-05 only — every other `render*.sh` in the repo still carries its own hard-coded timeout and the same silent-failure shape).
+- **First seen in:** #212 (Лекция 5, пересборка раскладки 69 → 56 слайдов, 2026-09-28).
+
+### [#212-2] Two concurrent `soffice --convert-to` runs sharing one `-env:UserInstallation` profile deadlock — the second never starts, the first goes into uninterruptible sleep
+
+- **Tool:** render-toolchain (`soffice --headless -env:UserInstallation=file:///tmp/…/loprofile_lec05`).
+- **Symptom:** After a first conversion appeared hung, a second `soffice` was launched against the **same** `UserInstallation` path while the first was still alive. Neither produced output: the first moved to state `Dl` (uninterruptible sleep) and stopped accumulating CPU, the second sat at 0:00 forever. `pkill -f soffice` did not clear the first — it had to be killed by PID with `-9`. Deleting the profile directory out from under a live instance (`rm -rf loprofile_lec05`) makes the stuck state worse, not better.
+- **Root cause:** a LibreOffice user profile is single-instance by design; a second process pointed at the same profile tries to hand its command to the first over the existing connection instead of converting anything itself.
+- **Severity:** P2 — self-inflicted, but easy to inflict precisely when a render looks stuck and the reflex is "just run it again".
+- **Workaround:** never launch a second conversion while `pgrep -f soffice.bin` returns anything. Before retrying: kill by PID with `-9`, confirm `pgrep` is empty (a `<defunct>` zombie is harmless and can be ignored), THEN `rm -rf` both the outdir and the profile dir, and only then re-run. If two renders genuinely must overlap, give each its own `-env:UserInstallation` path.
+- **Status:** active (upstream LibreOffice behavior; discipline rule, not a fix).
+- **First seen in:** #212 (Лекция 5, пересборка раскладки, 2026-09-28) — while investigating [#212-1].
+
+### [#212-3] `render_chunked.sh` returns exit 0 while leaving `lec-05.pptx` stale — a successful-looking render that rendered nothing
+
+- **Symptom:** after editing a slide builder, `bash render_chunked.sh` completed with `exit=0` and no error output, but `lec-05.pptx` kept its previous mtime and still contained the pre-edit text. An independent check of the built file (not of the script's exit code) found the old wording still on slides 45 and 49.
+- **Why it matters:** this is the second failure mode in the same session where a render tool reports success without producing output (see [#212-1]). The dangerous part is not the failure — it is that every downstream check passes: the deck opens, the slide count is right, the notes are correct, and only the specific edited string is missing. A visual sweep of a *sample* of slides will not catch it.
+- **Root cause:** not fully established. The chunked path builds per-chunk pptx files and merges them; on this run the merge step appears to have reused an existing artifact rather than the freshly built chunks. Not reproduced deterministically.
+- **Severity:** P1 — silently ships a stale deck under a green exit code.
+- **Workaround:** after any builder edit, rebuild with `python3 build_lec05.py` directly (it prints `saved … — N slides` and updates mtime), then convert to PDF. Do not trust the chunked wrapper's exit code alone. **Verification rule: check the built `.pptx` for the string you just changed, not the script's exit status** — `python3 -c "from pptx import Presentation; ..."` over the visible layer costs seconds and is the only check that actually falsifies this failure.
+- **Status:** active.
+- **First seen in:** #212 (Лекция 5, замена англицизмов на дивайдере управления, 2026-09-28) — found by the orchestrator while verifying a subagent's work against the built file.
+
+### [#212-3b] Сборка молча не состоялась, а `render.sh` отрисовал предыдущую деку — тот же стоялый артефакт, другой триггер
+
+- **Когда:** issue #212, правка Разделов 6–7 Лекции 5, 2026-10-01.
+- **Что произошло:** команда вида `cd <lec-05> && python3 build_lec05.py && cd rendered && ./render.sh 50 54` выполнялась из оболочки, которая сбрасывает рабочий каталог между вызовами. `build_lec05.py` лежит в `rendered/`, поэтому сборка упала с `can't open file`, а следующая за ней отрисовка отработала штатно и выдала пять строк `rendered slide N` — по СТАРОМУ `lec-05.pptx`. Правка ячейки таблицы «отсутствовала» на снимке, хотя в исходнике была.
+- **Почему попадается:** признак успеха снова взят не из артефакта. Все пять `rendered slide N` настоящие, PDF настоящий, число страниц верное — неверен только возраст входа. Это тот же класс, что `[#212-3]`, но ломается не рендер, а сборка ПЕРЕД ним, поэтому «проверил, что render.sh отработал» здесь не спасает.
+- **Обход:** запускать сборку и отрисовку РАЗНЫМИ вызовами, каждый с явным абсолютным `cd` в `rendered/`, и сверять `ls -la --time-style=+%H:%M:%S lec-05.pptx` ПОСЛЕ сборки и ДО отрисовки. Если `mtime` не изменился — сборка не состоялась, что бы ни печатала следующая команда.
+
+### [#212-4] `render.sh` hard-codes ONE shared LibreOffice profile, so N parallel sessions in the same worktree collide by construction — and `[#212-2]`'s "wait for pgrep to clear" workaround does not apply
+
+- **Tool:** render-toolchain (`library/lectures/lec-05/rendered/render.sh`, the literal `-env:UserInstallation=file:///tmp/claude-999/loprofile_lec05`).
+- **Symptom:** during the owner-review fix-out (six parallel sessions, one shared worktree, one shared `lec-05.pptx`), `bash render.sh` exited **2** with no output and left `lec-05.pdf` with an mtime OLDER than `lec-05.pptx`. `ps` showed **three** concurrent `timeout 900 … soffice --convert-to pdf` invocations, all pointed at the same `loprofile_lec05` and the same input file, launched by different sessions.
+- **Why this is not just [#212-2]:** that entry treats the collision as self-inflicted ("the reflex is just run it again") and prescribes "never launch a second conversion while `pgrep -f soffice.bin` returns anything". With several sessions rendering the same deck on their own schedule, `pgrep` is essentially never empty, so the prescribed wait never terminates — and the profile is not a thing the caller chooses, it is baked into the script. The collision is structural, not a discipline failure.
+- **Severity:** P1 — combined with [#212-1]/[#212-3] it means a parallel session can visually "verify" its slides against a PDF produced by, and for, somebody else's build.
+- **Workaround (used in #212 Раздел 7):** do not render the shared deck at all for a per-section visual check. Build a throwaway pptx containing only the section's own builders (slide layout does not depend on slide position, so the check is still valid), convert it with a **private** `-env:UserInstallation` path into a **private** outdir, and assert the string you just changed is present in the produced PDF's text. Cost is seconds instead of the full deck's minutes, and it cannot be disturbed by, or disturb, a concurrent session.
+- **Proper fix (not done here):** give `render.sh` a per-invocation profile and outdir (e.g. suffix by `$$` or by session id) so overlap is safe by default — the one-line change [#212-2] already names as the escape hatch but the script never took.
+- **Дополнение (правка P0 по фактчеку, 2026-09-30):** приватный рендер по этому рецепту падает, если скопировать
+  только строку `soffice`. Бинарник нуждается в `export LD_LIBRARY_PATH=/home/harness/.local/lo-sysroot/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH`
+  (её ставит `render.sh`, и только поэтому общий рендер работает). Без неё `oosplash` умирает на
+  `libXinerama.so.1: cannot open shared object file`, PDF не создаётся вовсе, а сообщение уходит в `2>&1`,
+  который в рецепте обычно погашен в `/dev/null` — то есть отказ выглядит как «конвертация прошла, файла нет».
+  Заодно ставить `HOME` в свой каталог: профиль пишется относительно него.
+- **Дополнение 2 (правка по student-roast, 2026-09-30):** в рецепте приватного рендера выше команда названа
+  `soffice` — но такого исполняемого файла **нет в `PATH`**: `render.sh` вызывает его по полному пути
+  `/home/harness/.local/libreoffice-portable/program/soffice`. Скопировав рецепт дословно, получаешь
+  `timeout: failed to run command 'soffice': No such file or directory` и **exit 2 без единого слова о причине** —
+  то есть отказ выглядит как очередная неудачная конвертация, а не как опечатка в рецепте. Полный рабочий вызов:
+  ```bash
+  export LD_LIBRARY_PATH=/home/harness/.local/lo-sysroot/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+  export HOME=/tmp/<свой-каталог>
+  timeout 600 /home/harness/.local/libreoffice-portable/program/soffice --headless \
+    -env:UserInstallation=file:///tmp/<свой-каталог>/loprofile \
+    --convert-to pdf --outdir /tmp/<свой-каталог> /tmp/<свой-каталог>/subset.pptx
+  ```
+  И следом — **вторая ловушка того же рецепта**: `export HOME=<свой-каталог>` уводит интерпретатор от
+  `~/.local/lib/python3.12/site-packages`, поэтому `import pymupdf` в том же вызове падает с `ModuleNotFoundError`,
+  хотя модуль установлен. Шаг PDF→PNG надо выполнять **отдельной командой, без подменённого `HOME`**.
+- **Дополнение 3 (там же):** `gen_charts.py` не запускается из коробки — `matplotlib` в системном python3
+  отсутствует, а `pip install` блокирован PEP 668. Рабочая установка:
+  `python3 -m pip install --user --break-system-packages matplotlib`.
+- **Дополнение 4 (там же):** при одновременной правке одного билдера двумя сессиями чтение файла может попасть
+  в середину чужой записи: `python3 build_lec05.py` упал с `NameError: name 'text_runs' is not defined` в
+  `slides_band5.py`, хотя импорт в файле был — через полминуты та же сборка прошла без изменений с моей стороны.
+  Вывод тот же, что у всей этой группы записей: **единственная честная проверка — перечитать собранный
+  `.pptx`**, а не доверять ни коду возврата, ни одной неудачной сборке.
+- **Status:** active.
+- **First seen in:** #212 (Лекция 5, правка по owner-review 2026-09-30, Раздел 7 — six sections revised in parallel in one worktree).
+
+### [#212-4b] Параллельные сессии, конвертирующие одну деку, отъедают друг у друга LibreOffice: полный рендер не укладывается в разумное время
+
+> Тот же корень, что у `[#212-4]` выше: обе записи заведены параллельными сессиями независимо и в один и тот же момент, поэтому и номер совпал. `[#212-4]` описывает общий профиль, эта — конкуренцию за процесс. Чинится одним фиксом (см. ниже).
+
+- **Tool:** render-toolchain (`library/lectures/lec-05/rendered/render.sh` → `soffice --headless --convert-to pdf`), не MCP-сервер.
+- **Симптом:** при правке Раздела 0 по owner-review 2026-09-30 полная конвертация 54-слайдовой деки не завершилась за ~7 минут; в процессах висели ДВА одновременных `soffice --convert-to` от разных сессий (`loprofile_lec05` и `r2design-loprofile`), у одного — `[soffice.bin] <defunct>`. Профили разные, то есть это НЕ дедлок из [#212-2], а обычная конкуренция за ресурсы: каждая сессия конвертирует всю деку целиком, хотя правит 5-6 слайдов.
+- **Severity:** P2 — не портит результат, но делает цикл «посмотреть глазами» неприменимым при параллельной работе шести сессий над одной декой.
+- **Workaround (проверен):** собирать подмножество СВОИХ слайдов отдельной декой и конвертировать её — секунды вместо минут, и нет конкуренции. Глобальная нумерация страниц сохраняется, если передать полный `total`:
+  ```python
+  p = setup_pres()
+  for fn in B.ORDER[:5]: fn(p)
+  for i, sl in enumerate(p.slides, start=1): page_number(sl, i, len(B.ORDER))
+  ```
+  Конвертировать в СВОЙ каталог и со СВОИМ `-env:UserInstallation` (иначе [#212-2]).
+- **Сопутствующие грабли:** проверка готовности вида `until [ -f out/s5.png ]` срабатывает мгновенно на файле от ПРЕДЫДУЩЕГО прогона, если `rm -rf` каталога происходит внутри того же фонового задания. Ждать завершения самого задания либо сверять mtime, а не факт существования файла. Это тот же класс ошибки, что [#212-1]/[#212-3]: признак успеха взят не из артефакта.
+- **Status:** active.
+- **First seen in:** #212 (Лекция 5, пересборка Раздела 0 по замечаниям владельца, 2026-09-30).
+
+### [#212-7] `render.sh` отдал exit 0 и ПУСТОЙ PDF: параллельная сборка переписала `lec-05.pptx` прямо во время конвертации
+
+- **Tool:** render-toolchain (`library/lectures/lec-05/rendered/render.sh` → `soffice --convert-to pdf`), не MCP-сервер.
+- **Симптом:** `bash render.sh 44 … 50` завершился успешно, честно напечатал `rendered slide 44 … 50` и `PDF copied`, но **все 54 страницы PDF оказались пустыми** (`page.get_text()` = 0 символов на каждой), а все PNG вышли одинакового размера 9211 байт — белые листы. Размер PDF упал с 6,67 МБ до 2,69 МБ. Ни одной строки ошибки.
+- **Как поймано:** сравнением времён — у `lec-05.pptx` mtime оказался **позже**, чем у `lec-05.pdf`. То есть соседняя сессия запустила `build_lec05.py` и переписала входной файл в тот момент, когда LibreOffice его читал. Проверка «PNG свежее pptx» этого не ловит: PNG действительно свежие, они просто пустые.
+- **Чем отличается от соседей:** [#212-1] — таймаут, [#212-3] — стоялый артефакт при зелёном коде, [#212-4] — общий профиль LibreOffice, [#212-4b] — конкуренция за ресурсы. Здесь новое именно то, что **портится ВХОД, а не выход**: файл валиден, конвертация проходит до конца, на выходе структурно корректный PDF нужного числа страниц — и он пустой. Это худший вид отказа: все счётчики сходятся.
+- **Severity:** P1 — визуальная проверка по такому PDF показывает белые листы, и легко принять это за поломку своей правки вместо поломки рендера.
+- **Workaround (проверен в Разделе 6):** не конвертировать общий `lec-05.pptx` вообще. Собрать подмножество СВОИХ слайдов в **приватный** файл вне репозитория, конвертировать его с **приватным** `-env:UserInstallation` в **приватный** outdir. Тогда вход не может быть переписан чужой сборкой:
+  ```python
+  from _helpers import setup_pres, page_number
+  import build_lec05 as B
+  names = [f.__name__ for f in B.ORDER]
+  mine = ["s44", "s45", "s45a", "s45b", "s46", "s47", "s48"]
+  p = setup_pres()
+  for sid in mine:
+      B.ORDER[names.index(sid)](p)
+  for i, sid in enumerate(mine):            # глобальная нумерация сохраняется
+      page_number(p.slides[i], names.index(sid) + 1, len(names))
+  p.save("/tmp/r6-render/r6-subset.pptx")
+  ```
+  Семь слайдов конвертируются за секунды против минут на полной деке.
+- **Обязательная проверка после ЛЮБОГО рендера:** `len(doc[i].get_text().strip()) > 0` хотя бы на одной своей странице. Код возврата, наличие PNG и их свежесть — все три признака в этом отказе ложно-положительные.
+- **Статус:** активна.
+- **Впервые встречено:** #212 (Лекция 5, правка Раздела 6 по owner-review 2026-09-30, шесть сессий в одном worktree).
+
+### [#212-5] Сторож переполнения в `slides_band6.py` не видит примитивы, рисующие МИМО текстовых блоков — фигура молча уезжает за полосу карточки
+
+- **Инструмент:** render-toolchain (`library/lectures/lec-05/rendered/slides_band6.py`, функции `_check` / `md_box` / `mono_box`), не MCP-сервер.
+- **Симптом:** на слайде практики третья мини-схема (полоса собственного разброса модели с отметкой порога) отрисовалась ВНЕ своей полосы: сама полоса видна, а обе подписи к ней — «собственный разброс системы» и «порог — внутри него» — оказались за нижней границей и в PDF не попали. Сборка при этом прошла молча: `b6.WARN` пуст. Тот же класс ошибки во втором месте — подпись под рядом иконок легла ПОВЕРХ второго ряда иконок и читалась сквозь них.
+- **Причина:** `_check` вызывается только из `md_box` и `mono_box`. Прямые вызовы `text_box`, `tiny`, `icon`, `filled_rect`, `connector`, `circle` никакой проверки не проходят — у них нет ни расчёта нужной высоты, ни сверки с `_BAND[1]`. Поэтому высота полосы, заданная в `C.band(...)` на глаз, проверяется только для текста в коробке, а нарисованные рядом схемы могут вылезать сколько угодно. Ни `WARN`, ни исключение не срабатывают, и `python3 build_lec05.py` печатает обычное `saved … — N slides`.
+- **Severity:** P1 — визуальный дефект, который не ловится ни одной автоматической проверкой в цепочке: сборка зелёная, число слайдов верное, заметки на месте, текстовая сверка исходника с собранным `.pptx` (совпадение ключевых слов) тоже зелёная, потому что подписи В СЛАЙДЕ ЕСТЬ — они просто нарисованы за границей видимой области. Найти можно только глазами на PNG.
+- **Workaround:** после любой правки слайда, где рядом с текстом рисуются схемы, считать нижнюю границу руками: последний рисуемый элемент не должен выходить за `y + h` полосы, где `h` — то, что передали в `C.band(...)`. Практически: рендерить страницу в PNG и смотреть. Пустой `WARN` — НЕ доказательство, что всё поместилось; он доказывает только, что поместился текст в коробках.
+- **Возможное исправление (не сделано):** прогонять через `_check` и остальные примитивы либо добавить в `Cursor.band` финальную сверку «самый нижний нарисованный y против границы полосы». Требует трогать общий для двенадцати практик файл, поэтому отложено.
+- **Status:** active.
+- **First seen in:** #212 (Лекция 5, перестройка практик Раздела 5 по правилу Р8 владельца, 2026-09-30).
+
+### [#212-6] Оценка высоты текста в `slides_band6.py` откалибрована под 10,5 pt — на большем кегле `_check` молчит, а текст вылезает
+
+- **Инструмент:** render-toolchain (`library/lectures/lec-05/rendered/slides_band6.py`, `est_lines` / `est_h` / `_check`), не MCP-сервер.
+- **Симптом:** при перестройке практики Раздела 2 по правилу Р8 из карточки убраны блоки «артефакт» и «критерий», освободившееся место отдано кеглю — текст слоёв поднят с 9,5 до 11 pt. Текст верхнего слоя вылез за нижнюю границу своей коробки («часть урока.» оказалась поверх соседнего слоя), при этом `b6.WARN` был пуст и сборка прошла молча.
+- **Причина:** `est_lines` делит длину строки на константу `122/size` (для жирного `114/size`). Комментарий в самом файле честно говорит, что она «калибрована на первом прогоне этой же полосы (150 dpi, DejaVu Sans): ~120 символов на дюйм ширины **при 10,5 pt**». Реальная плотность в LibreOffice ближе к ~104 символам на дюйм, и расхождение растёт с кеглем и с сужением колонки. То есть `_check` отработал — просто его оценка оказалась ниже факта, и переполнение не попало в `WARN`.
+- **Отличие от [#212-5]:** там примитив вообще не проходит через `_check`; здесь проходит, но получает заниженную оценку. Лечится по-разному, поэтому записано отдельно.
+- **Severity:** P2 — ловится глазами на PNG за один прогон, но именно правило Р8 (убрать блоки, отдать место кеглю) систематически выводит карточки практик в эту зону.
+- **Workaround (проверен):** считать по ~104 символа на дюйм ширины вместо 122 при кегле выше 10,5 pt, то есть закладывать примерно +15-20% высоты против того, что обещает `est_h`; и обязательно смотреть PNG. Пустой `WARN` при изменённом кегле ничего не доказывает.
+- **Возможное исправление (не сделано):** сделать константу функцией кегля либо просто занизить её до ~104 и пересверить все двенадцать карточек практик. Требует трогать общий файл в момент, когда его правят другие сессии, поэтому отложено.
+- **Status:** active.
+- **First seen in:** #212 (Лекция 5, перестройка практики Раздела 2 по правилу Р8 владельца, 2026-09-30).
+
+> **Статус `[#212-6]`: ИСПРАВЛЕНО для `slides_band6.py` 2026-09-30** (сведение форм двенадцати
+> карточек практик). Константа плотности в `est_lines` приведена к факту — `104` символа на
+> дюйм ширины обычным начертанием и `98` жирным вместо прежних `122`/`114`; остаточный запас
+> вынесен в отдельный множитель `SF = 1.04`, который применяется ТОЛЬКО при расчёте высоты
+> полос (`fit_h`), а сторож `_check` по-прежнему считает по голой оценке, иначе он молчал бы
+> там, где текст реально вылезает. Проверено на всех двенадцати карточках: до правки шаг
+> механизма на `s24a` оценивался в две строки, а рисовался в три и наползал на следующий шаг
+> при ПУСТОМ `WARN`; после правки оценка совпадает с фактом рендера. Остальные полосы
+> (`slides_band1..5.py`) сохраняют прежнюю калибровку — там свои, уже подогнанные глазами
+> высоты, и менять их без пересверки каждого слайда нельзя.
+>
+> **`[#212-5]` (примитивы мимо `_check`) остаётся активной, но на этой полосе сужена:** высота
+> полосы МЕХАНИЗМ у всех двенадцати карточек теперь берётся как максимум из посчитанной высоты
+> шагов и ЯВНО ОБЪЯВЛЕННОЙ высоты схемы (`mechanism(..., schema_h=...)`), а не назначается на
+> глаз. Ошибиться по-прежнему можно — `schema_h` пишет человек, — но ошибка теперь одна и
+> видна в одном месте, а не разбросана по координатам отдельных фигур. Три случая реального
+> вылезания (`s11b`, `s24a`, `s24c`) были найдены именно глазами на PNG, а не сборкой.
+
+> **Статус `[#212-4]` и `[#212-4b]`: ИСПРАВЛЕНО 2026-09-30.** В `render.sh` профиль LibreOffice и каталог вывода получили суффикс `$$` (идентификатор процесса), то есть у каждого вызова они свои. Обходные пути со сборкой в `/tmp` и приватным профилем больше не нужны. Правило проверки остаётся в силе: сверять собранный `.pptx`, а не код возврата скрипта.
+
+### [#212-8] Норма «заметки 280–350 слов» меряется по исходнику, а в рендере к ним приписывается библиография — сквозная проверка даёт ложную тревогу
+
+- **Симптом:** после правки всех восьми разделов сквозная проверка по собранному `.pptx` показала 14 слайдов с заметками вне нормы (до 475 слов), хотя каждая сессия независимо отчиталась, что её слайды в коридоре 280–350.
+- **Причина не в содержании.** У всех четырнадцати исходные заметки в `.md` лежат в норме (281–346 слов). Перебор целиком даёт блок «Источники:», который `notes_with_sources()` приписывает к заметкам при сборке: от 19 до 129 слов библиографии со ссылками и пояснениями.
+- **Почему это важно записать:** очевидная реакция на такую проверку — «сократить заметки», то есть вырезать реальный устный текст ради цифры, которую раздувает справочный аппарат. Это ровно тот класс ошибки, от которого спасает разделение «тело против аппарата», уже применённое к главе (источники вынесены из измеряемого тела, см. `chapter-references.md`).
+- **Правило измерения:** норма 280–350 слов относится к **устному тексту**, то есть к разделу `## Speaker notes` в `.md`. Блок источников в неё не входит — он адресован лектору, а не аудитории, и в устной речи не произносится. Мерить надо исходник; проверка по собранному `.pptx` годится для запрещённых оборотов и для факта непустоты, но не для длины.
+- **Severity:** P2 — не ломает артефакт, но провоцирует вредную правку.
+- **First seen in:** #212 (Лекция 5, сведение восьми параллельных сессий, 2026-09-30).

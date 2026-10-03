@@ -2,14 +2,14 @@
 # Usage: render_en.sh [page1 page2 ...]  (no pages = all slides in current build)
 # Renders lec-05-en.pptx -> PDF (isolated profile) -> PNG @150dpi in snapshots/.
 set -e
-REND=/home/harness/harness-projects/256/.worktrees/folder-288/pldlc-lesson5-c5cc1586/library/lectures/lec-05/rendered
+REND=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 export LD_LIBRARY_PATH=/home/harness/.local/lo-sysroot/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 export HOME=/tmp/claude-999
 export PYTHONPATH=/home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/.local/lib/python3.12/site-packages:$PYTHONPATH
 SOFF=/home/harness/.local/libreoffice-portable/program/soffice
-OUT=/tmp/claude-999/lec05-en-snap
+OUT=/tmp/claude-999/lec05-en-snap-$$
 rm -rf "$OUT"; mkdir -p "$OUT" "$REND/snapshots"
-timeout 260 $SOFF --headless -env:UserInstallation=file:///tmp/claude-999/loprofile_lec05en \
+timeout 900 $SOFF --headless -env:UserInstallation=file:///tmp/claude-999/loprofile_lec05en-$$ \
   --convert-to pdf --outdir "$OUT" "$REND/lec-05-en.pptx" >/dev/null 2>&1
 PAGES="$*"
 python3 - "$OUT/lec-05-en.pdf" "$REND/snapshots" "$PAGES" <<'PY'

@@ -1,166 +1,732 @@
 # library/lectures/lec-05/glossary.en.yaml
 # Glossary LOCK (EN) — Lecture 5 "AI Product: the full lifecycle — from intent to operation".
-# English twin of glossary.yaml (issue #172, bilingual production rule). Canonical EN term per
-# concept; translators/producers of speech.en.md, deck.en.yaml, slides-en/*.md MUST use these
-# exact forms — no drift across artifacts. consistency-checker sverifies slides-en/*.md,
-# deck.en.yaml/deck-part2.en.yaml and speech.en.md against this file (terminology-only mode).
-# Issue: #189 / #172.
+#
+# REISSUE 2026-10-03, issue #212. English twin of glossary.yaml as reissued 2026-09-30.
+#
+# WHY THE PREVIOUS EN LOCK IS GONE. The old EN lock (locked_at 2026-09-07, issue #189/#172)
+# was the twin of the PREVIOUS RU lock (2026-09-06), which was built before the deck was
+# russified. The RU lock has since been rebuilt from actual usage in the assembled deck, it
+# merged eleven concepts that had drifted apart, and its concept inventory changed: 34
+# canonical concepts now, against 42 loose entries then. The old EN file therefore described
+# a different set of concepts (pass@k vs pass^k, SRM, Twyman's law, peeking/p-hacking, JTBD,
+# continuous discovery, CC/CD, Guardian Agent, maturity 0-5, operators→orchestrators, hidden
+# human cost, policy-as-code, LLMOps/AgentOps, runbook) — none of which the current RU lock
+# names — and was silent on concepts the current RU lock does name (surfaces and touchpoints,
+# mode confusion, sycophancy, reversibility, the no-AI baseline, failure drills, random
+# assignment, control group, decision metric, the way back).
+#
+# 1:1 WITH THE RU LOCK. One English canonical form per concept of the current RU lock, no
+# concept added, none dropped, none renamed. The RU lock is the source of truth; this file
+# only says how each of its concepts is written in English.
+#
+# WHERE THE EN TRACK IS STRUCTURED DIFFERENTLY — stated here rather than silently mirrored:
+#
+#   1. `forbidden_anglicisms` has no honest EN counterpart and is NOT carried over.
+#      English is the target language of this track; a list banning English words in English
+#      artifacts would be nonsense. Half the RU bans (guardrail, proxy, gate, circuit breaker,
+#      postmortem, rollback, drift, trace, fallback, deployment) ban a TRANSLITERATION of the
+#      very word that is the correct English canon here. The EN analogue is the opposite
+#      problem and it is a real one: Russian left untranslated, and Russian phrasing calqued
+#      into English. That is the section `untranslated_russian_and_calques` below.
+#
+#   2. `latin_kept_as_names` likewise inverts. In EN a product/company/publication name is
+#      simply the name — no gloss needed, so the RU "latin as a gloss at first appearance"
+#      machinery disappears. What DOES need locking in the other direction is the Cyrillic
+#      renderings of names: the RU deck writes "Роберт Купер", "Уильям Деминг", "Регламент
+#      Европейского союза об искусственном интеллекте", and a translator can land on
+#      "Robert Cooper", "William Deming", "European Union Artificial Intelligence Regulation"
+#      — one right, two wrong. Hence `names_restored_from_cyrillic` below, plus a
+#      transliteration convention for Russian-origin names.
+#
+#   3. `chapter_divergences` is empty, with the reason recorded in that section. There is no
+#      EN chapter in this lecture, so there is nothing to diverge.
+#
+#   4. The RU rule "every abbreviation is expanded at first appearance in the visible layer"
+#      is kept as-is — it is a reader rule, not a language rule. What is added is a check
+#      that each English expansion is the industry-accepted one and not a back-translation
+#      of the Russian expansion. Two in the RU lock would be mangled by back-translation:
+#      NHTSA (the RU lock gives the Russian name of the agency) and САПР (whose English
+#      equivalent is CAD, not "automated design systems").
+#
+# SLIDE IDs below are RU-deck IDs — the ORDER constant in rendered/build_lec05.py, i.e. the
+# 56 slides of the assembled rendered/lec-05.pptx. The EN deck (slides-en/, deck.en.yaml,
+# deck-part2.en.yaml) still carries the OLD slide set (s05, s07b, s09, s13, s14b, s16, s20,
+# s21b, s24, s28b, s30, s31, s35, s36b, s38, s43, s44b, s49 — none of which exist in the RU deck)
+# and has NOT been realigned. Realigning it is the next pass; this file is the target it is
+# to be realigned against, which is why the IDs here are the RU ones.
 
 lecture: 5
-locked_at: "2026-09-07"
-source: "glossary.yaml (RU lock, locked_at 2026-09-06) — direct EN twin, 1:1 concept mapping"
+locked_at: "2026-10-03"
+supersedes: >
+  glossary.en.yaml lock 2026-09-07 (issue #189 / #172) — it was the twin of the pre-russification
+  RU lock of 2026-09-06, so it described a concept inventory the RU lock no longer has.
+issue: "#212"
+source: >
+  glossary.yaml as reissued 2026-09-30 (issue #212), read whole: its sections
+  resolved_divergences (11 concepts + 1 nested), terms (22), latin_kept_as_names,
+  abbreviations, proper_name_abbreviations_not_expanded, forbidden_anglicisms,
+  chapter_divergences, enforcement. Slide IDs cross-checked against the ORDER constant in
+  rendered/build_lec05.py. Cyrillic personal and institutional names collected by grep over
+  slides/*.md. This file is derived from the RU LOCK, not from the EN artifacts: the EN deck
+  and speech.en.md are stale with respect to it and were read only to record which forms are
+  currently in drift, never as evidence of what the canon should be.
 
-terms:
-  - canonical: "feedback loop (discover→build→measure→learn→decide)"
-    aliases: ["product loop"]
-    forbidden: []
-    note: "course-scaffold keystone axis, NOT strict-in (partial→out). Three independent origins: PDCA/PDSA (Shewhart/Deming), OODA (Boyd), BML (Ries)."
-  - canonical: "PDCA/PDSA (Plan-Do-Check/Study-Act)"
-    aliases: []
-    forbidden: []
-  - canonical: "OODA (Observe-Orient-Decide-Act)"
-    aliases: []
-    forbidden: []
-  - canonical: "BML (Build-Measure-Learn)"
-    aliases: []
-    forbidden: []
-  - canonical: "cost/trust asymmetry"
-    aliases: []
-    forbidden: []
-    note: "course-scaffold, NOT strict-in (course axis, not a failure). s06 keystone."
-  - canonical: "Customer Development (Blank)"
-    aliases: []
-    forbidden: []
-    note: "inline-define §1.1: 4 steps discovery/validation/creation/building"
-  - canonical: "The Mom Test (Fitzpatrick)"
-    aliases: []
-    forbidden: []
-    note: "3 interview rules; inline-define §1.2"
-  - canonical: "falsifiable hypothesis (belief → test → date)"
-    aliases: []
-    forbidden: []
-    note: "cross-chapter device, introduced §1.3, reused in sections 3/4/5"
-  - canonical: "JTBD (Jobs-to-be-Done)"
-    aliases: []
-    forbidden: []
-  - canonical: "continuous discovery (Torres)"
-    aliases: []
-    forbidden: []
-  - canonical: "reference dataset"
-    aliases: []
-    forbidden: []
-    note: "20-100 curated examples; introduced in Section 1, reused in Sections 3/4"
-  - canonical: "Double Diamond / Design Thinking"
-    aliases: []
-    forbidden: []
-    note: "Double Diamond is the single load-bearing framework (reader-P1); Design Thinking mentioned as its 5-step version"
-  - canonical: "Nielsen heuristics"
-    aliases: []
-    forbidden: []
-    note: "top-5 of 10; metaphor \"a linter for UX\" (one metaphor, reader-P1)"
-  - canonical: "design system"
-    aliases: []
-    forbidden: []
-    note: "guardrail for AI UI generation"
-  - canonical: "MVP (Minimum Viable Product)"
-    aliases: []
-    forbidden: []
-  - canonical: "feature flag"
-    aliases: []
-    forbidden: []
-  - canonical: "canary release"
-    aliases: []
-    forbidden: []
-  - canonical: "blue-green / staged rollout"
-    aliases: []
-    forbidden: []
-  - canonical: "rollback"
-    aliases: []
-    forbidden: []
-  - canonical: "Stage-Gate go/kill"
-    aliases: []
-    forbidden: []
-    note: "\"a funnel, not a tunnel\" (Cooper)"
-  - canonical: "CC/CD (Continuous Calibration/Development) vs CI/CD"
-    aliases: []
-    forbidden: []
-    note: "Reganti & Badam; contrasted with familiar CI/CD"
-  - canonical: "agency ladder"
-    aliases: []
-    forbidden: []
-    note: "Copilot/Cursor: completions → blocks → PRs"
-  - canonical: "eval (offline/online eval) / LLM-as-judge"
-    aliases: []
-    forbidden: []
-    note: "\"a unit test for the agent\"; offline+online layers, not alternatives"
-  - canonical: "pass@k vs pass^k"
-    aliases: []
-    forbidden: []
-    note: "inline-define §4.3: at least 1 success out of k vs all k successful"
-  - canonical: "OEC (Overall Evaluation Criterion)"
-    aliases: []
-    forbidden: []
+scope: >
+  EN artifacts: slides-en/*.md, deck.en.yaml, deck-part2.en.yaml, speech.en.md, and any EN
+  renderer (*_en.py). No EN chapter exists for this lecture. RU artifacts are governed by
+  glossary.yaml and are not touched by this file.
+
+canon_rules:
+  - "1. One concept — one English form. The form is fixed here, not re-chosen per slide."
+  - >
+    2. Product, company, publication and method names stay as they are. Where the RU deck
+    writes such a name in Cyrillic, the English form is the ORIGINAL spelling, restored —
+    not a transliteration of the Cyrillic (see names_restored_from_cyrillic).
+  - >
+    3. Every abbreviation is expanded at its first appearance in the visible layer, in the
+    industry-accepted English expansion — never a back-translation of the Russian expansion.
+  - >
+    4. `replaces` records which English forms the canon displaced — including forms that are
+    currently live in the stale EN deck — so the realignment pass cannot quietly restore them.
+  - >
+    5. Where English offers two defensible forms for one RU concept, BOTH are recorded and the
+    entry is marked `needs_owner_confirmation: true`. Nothing is silently chosen. The open
+    list is collected at the bottom of this file.
+
+# ══════════════════════════════════════════════════════════════════════
+# A. The twelve merged concepts — the English side of what the RU reissue settled
+# ══════════════════════════════════════════════════════════════════════
+resolved_divergences:
+
   - canonical: "guardrail metric"
-    aliases: []
-    forbidden: []
-    note: "monitored, NOT optimized"
-  - canonical: "peeking / p-hacking"
-    aliases: []
-    forbidden: []
-  - canonical: "SRM (Sample Ratio Mismatch)"
-    aliases: []
-    forbidden: []
-  - canonical: "Twyman's law"
-    aliases: []
-    forbidden: []
-  - canonical: "SLI / SLO / error budget"
-    aliases: []
-    forbidden: []
-    note: "error budget = \"1 minus SLO\""
-  - canonical: "observability"
-    aliases: []
-    forbidden: []
-  - canonical: "incident / postmortem / runbook"
-    aliases: []
-    forbidden: []
-  - canonical: "LLMOps / AgentOps"
-    aliases: []
-    forbidden: []
-  - canonical: "model drift / silent drift"
-    aliases: []
-    forbidden: []
-    note: "silent drift — trust falls before the dashboard does; power-users notice first"
-  - canonical: "Goodhart's law / reward hacking"
-    aliases: []
-    forbidden: []
-  - canonical: "guardrails / policy-as-code"
-    aliases: []
-    forbidden: []
-  - canonical: "Guardian Agent (Gartner category)"
-    aliases: []
-    forbidden: ["Guardian Agents as a Sber product"]
-    note: "Market Guide 02.2026; Sber analog GigaCowork [VFY-day-of], NOT a confirmed product name"
-  - canonical: "maturity 0-5 (Sber)"
-    aliases: []
-    forbidden: []
-    note: "Sber rates itself at Level 3, not Level 5 — anti-hype signal"
-  - canonical: "operators→orchestrators"
-    aliases: []
-    forbidden: []
-    note: "Deloitte operating-model shift"
-  - canonical: "hidden human cost"
-    aliases: []
-    forbidden: []
-    note: "\"Wizard-of-Oz AI\"; Just Walk Out"
-  - canonical: "portfolio governance"
-    aliases: []
-    forbidden: []
-  - canonical: "unit economics"
-    aliases: []
-    forbidden: []
-    note: "cost per request vs value per request"
+    ru_canonical: "метрика-ограничитель"
+    definition: >
+      A quantity watched during an experiment but not optimised: it catches the harm the
+      decision metric cannot see.
+    introduced_on: "s29 (Section 4 base slide)"
+    used_on_ru_deck: [s29, s30a, s32, s33, s51, s53]
+    replaces: ["safety metric", "protective metric", "limiter metric", "constraint metric",
+               "metric-limiter"]
+    note: >
+      Mirror case: RU had to invent a Russian form because `guardrail` was an anglicism there.
+      In English the anglicism IS the term — do not calque the Russian back into
+      "limiter metric". Keep the sense distinct from the other RU uses of "ограничитель":
+      a design system constrains GENERATION (s17a), "loosening the guardrails" in a drill
+      means the model's own safety rules (s38b, s39), and the cost-per-unit line on s45a
+      ("a guardrail, not a target") is the same watch-don't-optimise principle applied to
+      cost — see the open question on the unit below before writing that line.
 
-notes:
-  - "Anti-anglicism mandate is RU-only (bilingual rule, CLAUDE.md § Bilingual Production Rule); it does NOT apply to EN artifacts. For EN, English is the target language — no RU-side forbidden-anglicism table applies here."
-  - "Mirror-check applies instead: EN artifacts must contain 0 untranslated Russian fragments (proper nouns / quoted RU source titles excluded and must be listed explicitly by any pre-gate scan)."
-  - "Deep latin-token scan (RU-only concern) does not apply to this file; N/A for EN."
+  - canonical: "golden set"
+    alt_canonical: "reference dataset"
+    needs_owner_confirmation: true
+    ru_canonical: "эталонный набор"
+    definition: >
+      A small collection of real cases, each with the answer that counts as acceptable written
+      down in advance. What is checked is the model's answer, not the code.
+    introduced_on: "s24b (WHAT IT IS — full definition on the slide)"
+    used_on_ru_deck: [s23, s24a, s24b, s31a, s53]
+    replaces: ["set of check examples", "validation set", "eval set", "test set",
+               "etalon set", "standard set", "benchmark set"]
+    note: >
+      Two honest English canons. "Golden set" / "golden dataset" is the working term in LLM
+      evaluation practice and carries exactly the RU sense (hand-curated, answers fixed in
+      advance). "Reference dataset" is what the old EN lock used and is the more literal twin
+      of "эталонный набор". Owner picks one; until then "golden set" is written here as the
+      first-listed form and MUST NOT be mixed with the alternative inside one deck.
+      "Eval set" / "test set" are excluded either way — they name a role, not this artifact.
+
+  - canonical: "autonomy scale"
+    alt_canonical: "agency ladder"
+    needs_owner_confirmation: true
+    position_term: "autonomy level"
+    alt_position_term: "rung"
+    ru_canonical: "шкала самостоятельности"
+    definition: >
+      The order in which a system is given the right to decide: it suggests → it proposes a
+      solution and a human confirms → it decides itself and hands the hard cases back. One
+      position on the scale is an "autonomy level".
+    introduced_on: "s24a (title + caption under the diagram)"
+    used_on_ru_deck: [s23, s24a, s53]
+    replaces: ["trust ladder", "levels of trust", "trust level", "autonomy ladder",
+               "agency-ladder", "independence scale", "scale of independence"]
+    note: >
+      The RU reissue dropped "ladder/ступень" deliberately: "ступень" was needed for the
+      stages of a staged rollout two slides later, and one section cannot call two things by
+      the same word. The same collision exists in English — "rung" vs "rollout stage" is
+      survivable, "ladder step" vs "rollout step" is not. "Autonomy scale" keeps the RU
+      resolution; "agency ladder" is the form the old EN lock used and the one closer to how
+      the idea is usually named in English writing. Owner picks one — and with it the position
+      term, which must match ("autonomy scale" → "autonomy level"; "agency ladder" → "rung").
+
+  - canonical: "staged rollout"
+    ru_canonical: "поэтапная раскатка"
+    step_term: "rollout stage"
+    definition: >
+      Something new is turned on not for everyone at once but for shares of the audience; at
+      each stage the stop signal and a tested way back are named in advance.
+    introduced_on: "s24c (Section 3 practice)"
+    used_on_ru_deck: [s21, s23, s24a, s24c, s26, s29, s53]
+    replaces: ["gradual rollout", "phased rollout", "canary phase",
+               "blue-green / staged rollout"]
+    note: >
+      "Phased rollout" is a true synonym in English and is excluded only to keep one form.
+      "Blue-green" named a different mechanism and was bundled with this one by the old EN
+      lock — unbundled here; it is not a concept of this lecture.
+    related:
+      - canonical: "canary release"
+        ru_canonical: "канареечный выпуск"
+        definition: "The first and narrowest stage of a staged rollout."
+        introduced_on: "s22 (in the row of classic release mechanics)"
+        used_on_ru_deck: [s22, s24c, s53]
+        note: "A mode, not a process: 'canary phase' as a synonym for the rollout itself is out."
+
+  - canonical: "proxy metric"
+    ru_canonical: "косвенная метрика"
+    definition: >
+      A quantity that is easy to measure and is taken instead of the one actually of interest.
+      It is the first thing to be gamed, which is why it always travels with a guardrail metric.
+    introduced_on: "s28 (Section 4 divider) → unfolded on s32/s33"
+    used_on_ru_deck: [s28, s32, s33, s38a, s51]
+    replaces: ["indirect metric", "intermediary indicator", "surrogate metric",
+               "indirect signal"]
+    note: >
+      Second mirror case. RU banned "прокси" as a transliteration and chose "косвенная
+      метрика"; calquing that back gives "indirect metric", which is not the English term.
+      "Proxy metric" is the canon here.
+
+  - canonical: "gate"
+    ru_canonical: "рубеж"
+    definition: >
+      The point at which a "continue or kill" or "let through or stop" decision is taken. A
+      gate with a human on it is one that cannot be passed without a human decision.
+    introduced_on: "s22 ('Continue-or-kill gate', Stage-Gate, Robert Cooper)"
+    used_on_ru_deck: [s13a, s21, s22, s27, s45, s51, s53]
+    replaces: ["checkpoint", "milestone", "threshold", "frontier", "boundary", "gateway"]
+    phrasing:
+      - "continue-or-kill gate — the decision about the project's fate (s22, s27)"
+      - >
+        stop gate — a blocking check before release (s51). ALTERNATIVE: "release gate".
+        See needs_owner_confirmation below.
+      - "no human on the gate — the phase is handed to AI with no mandatory human decision (s53)"
+    note: >
+      Third mirror case: RU banned "гейт" as a transliteration, English keeps "gate".
+      "Stage-Gate" stays the method name on s22 (rule 2). Do not render "рубеж" as
+      "milestone" — a milestone marks time passing, a gate stops things.
+
+  - canonical: "Double Diamond"
+    ru_canonical: "двойной ромб"
+    definition: >
+      Two cycles of "widen the set of options → narrow to one": first the problem is chosen,
+      then the solution.
+    introduced_on: "s15"
+    used_on_ru_deck: [s15, s51]
+    replaces: ["double rhombus", "double rhomb", "two diamonds", "Double Diamond / Design Thinking"]
+    note: >
+      The RU entry exists only because the deck needed a Russian form plus a Latin gloss; in
+      English the name is simply the name and no gloss applies. Calquing "двойной ромб" back
+      gives "double rhombus" — wrong. The old EN lock bundled Design Thinking into the same
+      entry; unbundled, Design Thinking is not a canonical concept of the current RU lock.
+
+  - canonical: "cost of an error"
+    ru_canonical: "цена ошибки"
+    definition: "What an error will cost: money, reputation, health, liability."
+    introduced_on: "s24c → decision axis on s53"
+    used_on_ru_deck: [s22, s24b, s24c, s51, s53]
+    replaces: ["error cost", "price of error", "price of a mistake"]
+    note: >
+      The RU lock settles a цена/стоимость split that does not exist in English — both map to
+      "cost". What must be preserved is the distinction the split was protecting: "cost of an
+      error" (what being wrong costs) is NOT the cost of a unit of work (s45a — see the open
+      question on whether that unit is a token or a request). Keep the two visibly different
+      in EN; never shorten either to a bare "cost".
+
+  - canonical: "service level objective (SLO)"
+    ru_canonical: "цель уровня сервиса (SLO)"
+    definition: >
+      The bar the team promises to hold; the error budget is "one minus the objective".
+    introduced_on: "s37 — alongside 'service level indicator (SLI)'"
+    used_on_ru_deck: [s37, s51]
+    replaces: ["target service level", "service level goal", "service-level target"]
+    note: >
+      Industry-standard expansion, not a back-translation of the Russian. Expanded at first
+      appearance (rule 3), abbreviation alone afterwards.
+
+  - canonical: "circuit breaker"
+    ru_canonical: "аварийный выключатель"
+    definition: >
+      A mechanism that switches a feature off entirely at a numeric threshold named in
+      advance — not the next iteration of the prompt.
+    introduced_on: "s42 (the city chatbot case)"
+    used_on_ru_deck: [s42]
+    replaces: ["emergency switch", "emergency breaker", "kill switch", "cut-out"]
+    note: >
+      Fourth mirror case. The RU adjective "аварийный" exists only to separate the concept
+      from "переключатель функции"; in English "circuit breaker" and "feature flag" are
+      already two different words, so the adjective is dropped rather than calqued.
+      "Kill switch" is excluded: it implies a manual pull, this one trips on a threshold.
+
+  - canonical: "Nielsen's heuristics"
+    ru_canonical: "эвристики Нильсена"
+    full_form_at_first_appearance: "Jakob Nielsen's ten usability heuristics (1994)"
+    definition: >
+      Ten short usability rules (1994): someone who knows them walks a finished variant
+      through them in half an hour and answers the question a machine cannot — is this clear
+      to a living person.
+    introduced_on: "s15 (form + definition in one line)"
+    used_on_ru_deck: [s15, s17a, s18, s51]
+    replaces: ["usability rules (as a standalone name)", "Nielsen heuristics",
+               "clarity heuristics", "heuristics with no number and no name",
+               "a linter for UX"]
+    note: >
+      Possessive form, with the number and the person at first appearance, mirroring the RU
+      requirement. "A short list of usability rules" stays as the DEFINITION inside that first
+      appearance, not as a second name. The old EN lock's "a linter for UX" metaphor is not a
+      name and is not carried here.
+
+# ══════════════════════════════════════════════════════════════════════
+# B. Names — kept as they are (rule 2)
+# ══════════════════════════════════════════════════════════════════════
+names_kept_as_is:
+  note: >
+    In EN these need no gloss and no first-appearance machinery — they are simply names. The
+    RU lock's `latin_kept_as_names` exists to govern Latin inside Cyrillic text; that problem
+    does not arise here. What is kept from it is the ROLE line: every brand and publication
+    still appears with its role or a source line next to it, which is a reader rule, not a
+    language rule.
+  methods_and_frameworks:
+    - "Customer Development (Steve Blank)"
+    - '"The Mom Test" (Rob Fitzpatrick) — book title, always in quotes'
+    - "Double Diamond"
+    - "Stage-Gate (Robert Cooper)"
+    - "OpenTelemetry — standard name"
+  products:
+    - 'Autopilot — the driver-assistance feature set in Tesla cars. In quotes where the NAME
+      itself is under discussion (it sets the picture of the system before the first warning
+      does), unquoted where the feature is. issue #212, owner-review 2026-10-01.'
+    - "AI Pin — Humane's only product"
+    - "Google Glass"
+  brands_and_publications: >
+    Google, Zillow, Klarna, IBM Watson, Amazon Go / Amazon Fresh, Figma, Statsig, GrowthBook,
+    Eppo, Langfuse, Braintrust, LangSmith, Arize Phoenix, Faros, LinearB, Lovable,
+    Magic Patterns, bolt.new, axe-core, Deloitte, Gartner, Boston Consulting Group,
+    FinOps Foundation, Nielsen Norman Group, Humane, HP, Apple, Tesla, AGCO, DHL.
+
+# ══════════════════════════════════════════════════════════════════════
+# B2. Names the RU deck writes in Cyrillic — the English form is RESTORED, not transliterated
+# ══════════════════════════════════════════════════════════════════════
+names_restored_from_cyrillic:
+  note: >
+    Every Cyrillic proper name in the current RU deck is a Russian rendering of a NON-Russian
+    name. The English form is therefore the original spelling, restored — transliterating the
+    Cyrillic produces the wrong word every time ("Robert Cooper", "Yakob Nielsen",
+    "Hamel Hussein", "Barry Boem" are all wrong). Fixed here so the form cannot vary from
+    slide to slide.
+  people:
+    - { ru: "Стив Бланк",        en: "Steve Blank" }
+    - { ru: "Роб Фитцпатрик",    en: "Rob Fitzpatrick" }
+    - { ru: "Роберт Купер",      en: "Robert G. Cooper", note: "NOT 'Robert Cooper' back-formed from the Cyrillic; 'Robert Cooper' acceptable on second mention" }
+    - { ru: "Якоб Нильсен",      en: "Jakob Nielsen", note: "Jakob with a k — not 'Jacob', not 'Yakob'" }
+    - { ru: "Эрик Райс",         en: "Eric Ries", note: "pronounced 'Reese'; never 'Rice'" }
+    - { ru: "Уильям Деминг",     en: "W. Edwards Deming", note: "he published as W. Edwards Deming; 'William Deming' is a back-translation artefact" }
+    - { ru: "Джон Бойд",         en: "John Boyd" }
+    - { ru: "Чарльз Гудхарт",    en: "Charles Goodhart" }
+    - { ru: "Марти Каган",       en: "Marty Cagan" }
+    - { ru: "Тереза Торрес",     en: "Teresa Torres" }
+    - { ru: "Барри Боэм",        en: "Barry Boehm", note: "Boehm, not 'Boem'" }
+    - { ru: "Лизанн Бейнбридж",  en: "Lisanne Bainbridge" }
+    - { ru: "Хамель Хусейн",     en: "Hamel Husain", note: "Husain, not 'Hussein'" }
+    - { ru: "Мринанк Шарма",     en: "Mrinank Sharma" }
+    - { ru: "Айшварья Реганти",  en: "Aishwarya Reganti" }
+    - { ru: "Кирити Бадам",      en: "Kiriti Badam" }
+  institutions_and_instruments:
+    - { ru: "Национальное управление безопасности дорожного движения США", en: "National Highway Traffic Safety Administration (NHTSA)", note: "the official name; a back-translation of the Russian gives 'National Administration for Road Traffic Safety', which is not the agency's name" }
+    - { ru: "Регламент Европейского союза об искусственном интеллекте",    en: "the EU AI Act", note: "the established English name; 'European Union Artificial Intelligence Regulation' is a back-translation and is not used in English sources" }
+    - { ru: "Город Нью-Йорк",   en: "the City of New York", note: "the MyCity chatbot case; the city as operator, not the place — 'New York City' is acceptable where the place is meant" }
+    - { ru: "Британская Колумбия", en: "British Columbia", note: "the Air Canada case; the tribunal is the BC Civil Resolution Tribunal" }
+  russian_origin_names_transliteration:
+    note: >
+      The current RU deck contains NO Russian-origin company or institution names — checked by
+      grep over slides/*.md and rendered/slides_band*.py for Сбер, Магнит, X5, ВЦИОМ, Яндекс
+      and the usual set: zero hits. "Сбер" / "Сбербанк" survives only in chapter*.md (which is
+      not translated) and in the STALE EN deck, where it is already drifting between "Sber"
+      and "Sberbank" in the same file set (deck-part2.en.yaml, slides-en/s46-*.md,
+      speech.en.md). The forms below are locked so that the realignment pass has one answer,
+      whether it keeps such a mention or drops it with the slide it sat on.
+    forms:
+      - { ru: "Сбер",       en: "Sber",    note: "the brand as the company styles itself in English" }
+      - { ru: "Сбербанк",   en: "Sberbank", note: "the bank entity; NOT interchangeable with 'Sber' inside one artifact — pick per referent and keep it" }
+      - { ru: "Яндекс",     en: "Yandex" }
+      - { ru: "Магнит",     en: "Magnit" }
+      - { ru: "X5",         en: "X5", note: "Latin already; X5 Group on first mention" }
+      - { ru: "ВЦИОМ",      en: "VTsIOM (Russian Public Opinion Research Center)", note: "expand at first appearance like any other abbreviation" }
+      - { ru: "ГигаЧат",    en: "GigaChat" }
+    rule: >
+      A Russian-origin name uses the holder's OWN English spelling where it has one (Sber,
+      Yandex, GigaChat); otherwise BGN/PCGN transliteration, fixed once and not re-derived.
+
+# ══════════════════════════════════════════════════════════════════════
+# C. Abbreviations — expanded at first appearance in the visible layer (rule 3)
+# ══════════════════════════════════════════════════════════════════════
+# Each expansion below is the industry-accepted English one, verified NOT to be a
+# back-translation of the Russian expansion in glossary.yaml.
+abbreviations:
+  - abbr: "WCAG"
+    first: "s18"
+    expansion: "Web Content Accessibility Guidelines"
+    gloss_on_slide: "WCAG (Web Content Accessibility Guidelines)"
+    note: "The RU gloss carries a Russian translation of the expansion; in EN the expansion stands alone."
+  - abbr: "NHTSA"
+    first: "s19"
+    expansion: "National Highway Traffic Safety Administration"
+    gloss_on_slide: "the National Highway Traffic Safety Administration (NHTSA)"
+    note: >
+      Back-translation trap: the RU lock expands this as the Russian NAME of the agency
+      («Национальное управление безопасности дорожного движения США»), because Latin on the
+      RU visible layer is reserved for names. In EN the official English name is used.
+      s19 carries the Tesla recall 23V-838 (issue #212, owner-review 2026-10-01).
+  - abbr: "MVP"
+    first: "s22"
+    expansion: "minimum viable product"
+    gloss_on_slide: "minimum viable product (MVP), Eric Ries"
+    note: "Lowercase expansion. In RU the Russian form leads; in EN the expansion leads and the abbreviation follows."
+  - abbr: "CI/CD"
+    first: "s22"
+    expansion: "continuous integration / continuous delivery"
+    gloss_on_slide: "continuous integration / continuous delivery (CI/CD)"
+    note: "'Continuous delivery', matching the RU lock; do not silently switch to 'continuous deployment'."
+  - abbr: "OEC"
+    first: "s29"
+    expansion: "Overall Evaluation Criterion"
+    gloss_on_slide: "Overall Evaluation Criterion (OEC)"
+    note: "Kohavi's term, capitalised as in the source."
+  - abbr: "MSI"
+    first: "s33"
+    expansion: "meaningful social interactions"
+    gloss_on_slide: "meaningful social interactions (MSI)"
+    note: "Facebook's own wording, lowercase — not a description invented for the slide."
+  - abbr: "MMLU"
+    first: "s34"
+    expansion: "Massive Multitask Language Understanding"
+    gloss_on_slide: "MMLU (Massive Multitask Language Understanding — 57 subjects)"
+  - abbr: "MedQA"
+    first: "s34"
+    expansion: "— dataset name; no official expansion"
+    gloss_on_slide: "MedQA (a set of USMLE-style medical licensing exam questions)"
+    note: >
+      Do NOT invent an expansion. The RU lock gives a descriptive gloss, not an expansion,
+      and the English gloss must stay descriptive too. "Medical Question Answering" is a
+      reconstruction, not the dataset's name.
+  - abbr: "SLI"
+    first: "s37"
+    expansion: "service level indicator"
+    gloss_on_slide: "service level indicator (SLI)"
+  - abbr: "SLO"
+    first: "s37"
+    expansion: "service level objective"
+    gloss_on_slide: "service level objective (SLO)"
+  - abbr: "RFID"
+    first: "s48"
+    expansion: "radio-frequency identification"
+    gloss_on_slide: "radio-frequency identification (RFID) tags"
+  - abbr: "CAD"
+    ru_abbr: "САПР"
+    first: "s55"
+    expansion: "computer-aided design"
+    gloss_on_slide: "computer-aided design (CAD)"
+    note: >
+      Back-translation trap, the sharper of the two. The RU abbreviation is САПР, expanded in
+      the RU deck as «системы автоматизированного проектирования». Rendering that literally
+      gives "automated design systems", which names nothing in English. The English concept is
+      CAD, and the abbreviation itself changes — this is the one entry where the EN lock does
+      not merely translate the expansion but replaces the abbreviation.
+
+proper_name_abbreviations_not_expanded:
+  note: >
+    Not expanded — these are parts of proper names, not terms of the course:
+    IBM, MD (MD Anderson), MIT, STAT (STAT News), AI (Google AI Overviews, Character.AI),
+    NANDA (MIT NANDA), NLP (Eval4NLP), CX (CX Dive), FinOps (FinOps Foundation).
+  en_specific_warning: >
+    The pull to expand these is STRONGER in EN than in RU, because an English reader parses
+    them as words rather than as foreign letters. "Massachusetts Institute of Technology
+    Networked AI Agents in Decentralized Architecture", "natural language processing
+    (Eval4NLP)", "customer experience (CX Dive)" are all wrong for the same reason: the
+    letters belong to a name here, not to a term.
+
+# ══════════════════════════════════════════════════════════════════════
+# D. The remaining load-bearing terms
+# ══════════════════════════════════════════════════════════════════════
+terms:
+  - canonical: "the loop"
+    alt_canonical: "the feedback loop"
+    needs_owner_confirmation: true
+    ru_canonical: "петля"
+    ru_aliases: ["цикл"]
+    note: >
+      Six phases of one loop. The RU lock keeps the bare form and does NOT use the long
+      "петля обратной связи" on slides. In EN the bare "the loop" reads under-specified in a
+      slide title where the Russian does not, so the alternative is to introduce it once as
+      "the feedback loop" and use "the loop" thereafter. Owner picks. "Product loop" (old EN
+      lock) is out either way. Three independent origins named on s06: Deming, Boyd, Ries.
+  - canonical: "phase"
+    ru_canonical: "фаза"
+    phase_names: ["discovery", "design", "build and launch", "measurement",
+                  "support and operations", "governance"]
+    note: >
+      Six phases. The EN names are fixed here because the RU section titles carry a mixed
+      form — "Раздел 1. Discovery / исследование" is already half-English, and "Раздел 5.
+      Поддержка и эксплуатация" is the two-word form, so the EN phase is "support and
+      operations" (short form "support", never "maintenance"). "Управление" is governance,
+      not management — it pairs with portfolio governance below.
+  - canonical: "decision metric"
+    alt_canonical: "primary metric"
+    needs_owner_confirmation: true
+    ru_canonical: "метрика решения"
+    note: >
+      One metric, with a direction; travels in a pair with the guardrail metric (s29).
+      "Decision metric" is the literal twin of the RU form and makes the pairing with
+      "guardrail metric" read; "primary metric" is the more common phrase in experimentation
+      practice and is the one a reader of Kohavi expects. Owner picks.
+  - canonical: "control group"
+    ru_canonical: "контрольная группа"
+    note: "Not 'holdout group' — the RU lock rejects the holdout wording explicitly. s29."
+  - canonical: "random assignment"
+    ru_canonical: "случайное деление"
+    note: >
+      This is what buys causality (s29). "Randomisation" is acceptable as the process noun;
+      "random split" is not — it names a data operation, not the assignment of users.
+  - canonical: "feature flag"
+    ru_canonical: "переключатель функции"
+    note: >
+      Do not conflate with the circuit breaker: a flag governs a feature's visibility and
+      autonomy level, a breaker kills the feature at a threshold.
+  - canonical: "rollback path"
+    ru_canonical: "путь назад"
+    ru_aliases: ["откат", "возврат к прошлой версии"]
+    note: >
+      The RU lock carries two forms — «путь назад» (a route back that has been verified) and
+      «откат» (the act) — and bans the transliteration «роллбэк». English collapses all three
+      into "rollback", so the distinction has to be carried by the phrasing instead: "a tested
+      rollback path" for the route, "roll back" as the verb. Never "the way back" on its own —
+      it is a calque and reads as a metaphor.
+  - canonical: "surfaces and touchpoints"
+    ru_canonical: "поверхности и точки контакта"
+    note: >
+      Screen, voice, notification, email and report, refusal, silence (s14a). Introduced as
+      the scope of the word "design" in Section 2; carried through s15, s17, s17a, s18.
+  - canonical: "mode confusion"
+    ru_canonical: "путаница режимов"
+    note: >
+      The person's picture of the system diverges from what the system is doing (s19). The
+      term comes from aviation and is English in origin — this is the one concept where the RU
+      lock had to translate and the EN lock merely restores.
+  - canonical: "design system"
+    ru_canonical: "дизайн-система"
+    note: >
+      The set of interface rules; a guardrail on GENERATION (s17a). Only its
+      machine-readable part becomes an actual control.
+  - canonical: "LLM-as-judge"
+    alt_canonical: "LLM-as-a-judge"
+    needs_owner_confirmation: true
+    ru_canonical: "модель-судья"
+    note: >
+      Agreement with human raters is checked separately; not an oracle (s24b, s31a, s38a).
+      English usage genuinely splits on the article — both spellings are current in the
+      literature. Orthographic only, but it must be settled once: mixing them inside one deck
+      is visible drift. "Model-judge" (a calque of the RU) is out.
+  - canonical: "observability"
+    ru_canonical: "наблюдаемость"
+    note: "A decision axis on s53; the practice on s38a."
+  - canonical: "reversibility"
+    ru_canonical: "обратимость"
+    note: "A decision axis on s53."
+  - canonical: "silent drift"
+    ru_canonical: "тихий дрейф"
+    note: >
+      Masked by the average across all answers (s39, s51). Not "quiet drift"; "model drift"
+      names the broader phenomenon and is not a synonym for this one.
+  - canonical: "error budget"
+    ru_canonical: "бюджет ошибок"
+    note: "'One minus the service level objective' (s37)."
+  - canonical: "sycophancy"
+    ru_canonical: "угодливость"
+    note: >
+      The failure mode of the discovery phase: a synthetic source will not say no (s51).
+      "Sycophancy" is the established English term for this in model behaviour — do not calque
+      the RU into "obsequiousness" or "people-pleasing".
+  - canonical: "Goodhart's law"
+    ru_canonical: "закон Гудхарта"
+    note: "With the person and the year on the slide: 'the economist Charles Goodhart, 1975' (s32)."
+  - canonical: "cost per token"
+    alt_canonical: "cost per request"
+    needs_owner_confirmation: true
+    ru_canonical: "цена за единицу текста"
+    ru_aliases: ["стоимость запроса"]
+    note: >
+      s45a. A guardrail, not a target. The RU lock treats these as one concept with an alias,
+      which English cannot do: a token and a request are different units, and a slide that
+      says one while the speech says the other is saying two different things. Owner picks the
+      unit the slide actually measures; whichever it is, the OTHER phrase must not appear as
+      a synonym for it anywhere in the EN track.
+  - canonical: "the no-AI baseline"
+    ru_canonical: "базовая линия без ИИ"
+    note: >
+      Counting is pointless with nothing to compare against (s45a, s51). Hyphenated "no-AI"
+      so it reads as one modifier; not "baseline without AI".
+  - canonical: "portfolio governance"
+    alt_canonical: "portfolio management"
+    needs_owner_confirmation: true
+    ru_canonical: "портфельное управление"
+    note: >
+      s45, s51. "Portfolio management" is the standard English business phrase; "portfolio
+      governance" is what the old EN lock used and is the form that keeps Section 6 ("Раздел
+      6. Управление" → governance) internally consistent. Owner picks — but the phase name and
+      this term must agree, so this is one decision, not two.
+  - canonical: "failure drill"
+    alt_canonical: "game day"
+    needs_owner_confirmation: true
+    ru_canonical: "учения на отказ"
+    note: >
+      s38b. The RU lock bans the transliteration «дрилл» and uses «учения». In English the
+      SRE-practice name is "game day"; "failure drill" is the literal twin and is transparent
+      to a reader who does not know the practice. Owner picks. "Chaos engineering" is a
+      different, broader thing and is out.
+  - canonical: "postmortem"
+    ru_canonical: "разбор после сбоя"
+    ru_aliases: ["разбор"]
+    note: >
+      Fifth mirror case: the RU lock bans «постмортем» as a transliteration and uses «разбор
+      после сбоя»; in English "postmortem" is the native SRE term and is the canon.
+      "Blameless postmortem" where the no-blame property is the point; never
+      "debriefing after a failure", which is the calque.
+
+# ══════════════════════════════════════════════════════════════════════
+# E. The EN analogue of the RU forbidden-anglicism table
+# ══════════════════════════════════════════════════════════════════════
+# NOT a translation of that table. In EN the failure runs the other way: Russian left in
+# place, and Russian phrasing wearing English words. Both are checkable; the second is what
+# actually happens, because a translator working from a russified RU deck reaches for the
+# literal form of a term the RU lock itself had to invent.
+untranslated_russian_and_calques:
+
+  untranslated_russian:
+    rule: >
+      Zero Cyrillic characters in any EN artifact's visible layer or speaker notes.
+      Check: grep -nP '[\x{0400}-\x{04FF}]' slides-en/*.md deck*.en.yaml speech*.en.md
+    permitted_exceptions:
+      - >
+        A Russian-language source title quoted as a title, with its English rendering beside
+        it. Any pre-gate scan must LIST these explicitly rather than pass over them — an
+        unlisted Cyrillic hit is a failure, not an exception.
+    specific_watch_items:
+      - '«ИИ» left where "AI" belongs — the most common single leak, already noted in speech.en.md frontmatter'
+      - "Cyrillic « » quotation marks carried over around English text; EN uses \" \""
+      - "Cyrillic С/Р/А/Е/О substituted inside Latin words (homoglyph leak from copy-paste)"
+      - "Section headers still reading «Раздел N»"
+
+  calques:
+    rule: >
+      A term rendered by translating the Russian word rather than by using the English term
+      for the concept. The RU lock's own canon choices make these likely, because several of
+      them exist precisely to avoid an English word that IS the EN canon.
+    table:
+      - { calque: "limiter metric / constraint metric / safety metric", use: "guardrail metric", from: "метрика-ограничитель" }
+      - { calque: "indirect metric / intermediary indicator",           use: "proxy metric",      from: "косвенная метрика" }
+      - { calque: "boundary / frontier / milestone / checkpoint",       use: "gate",              from: "рубеж" }
+      - { calque: "scale of independence / independence scale",         use: "autonomy scale",    from: "шкала самостоятельности" }
+      - { calque: "etalon set / standard set / exemplary set",          use: "golden set",        from: "эталонный набор" }
+      - { calque: "stage-by-stage rollout / step rollout",              use: "staged rollout",    from: "поэтапная раскатка" }
+      - { calque: "emergency switch / emergency breaker",               use: "circuit breaker",   from: "аварийный выключатель" }
+      - { calque: "double rhombus / double rhomb / two diamonds",       use: "Double Diamond",    from: "двойной ромб" }
+      - { calque: "price of error / price of a mistake",                use: "cost of an error",  from: "цена ошибки" }
+      - { calque: "service level goal / target service level",          use: "service level objective", from: "цель уровня сервиса" }
+      - { calque: "quiet drift",                                        use: "silent drift",      from: "тихий дрейф" }
+      - { calque: "obsequiousness / ingratiation / people-pleasing",    use: "sycophancy",        from: "угодливость" }
+      - { calque: "function switch / functionality toggle",             use: "feature flag",      from: "переключатель функции" }
+      - { calque: "debriefing after a failure / failure analysis",      use: "postmortem",        from: "разбор после сбоя" }
+      - { calque: "exercises for failure / refusal exercises",          use: "failure drill",     from: "учения на отказ" }
+      - { calque: "regime confusion / mode muddle",                     use: "mode confusion",    from: "путаница режимов" }
+      - { calque: "model-judge",                                        use: "LLM-as-judge",      from: "модель-судья" }
+      - { calque: "the way back (standalone)",                          use: "rollback path",     from: "путь назад" }
+      - { calque: "random division / random split",                     use: "random assignment", from: "случайное деление" }
+      - { calque: "holdout group",                                      use: "control group",     from: "контрольная группа" }
+      - { calque: "baseline without AI",                                use: "the no-AI baseline", from: "базовая линия без ИИ" }
+      - { calque: "route / response path record",                       use: "trace",             from: "трасса / запись пути ответа" }
+      - { calque: "conclusion / observation (where a finding is meant)", use: "finding",          from: "вывод / наблюдение" }
+      - { calque: "spare variant / backup option",                      use: "fallback",          from: "запасной вариант" }
+      - { calque: "unfolding / rollout-as-deployment",                  use: "deployment",        from: "развёртывание" }
+      - { calque: "contact points",                                     use: "touchpoints",       from: "точки контакта" }
+
+  back_translated_expansions:
+    rule: "An abbreviation expanded by translating the Russian expansion rather than by using the English one."
+    table:
+      - { wrong: "National Administration for Road Traffic Safety of the USA", use: "National Highway Traffic Safety Administration", abbr: "NHTSA" }
+      - { wrong: "automated design systems / systems of automated design",     use: "computer-aided design", abbr: "CAD (RU: САПР)" }
+      - { wrong: "rules of web content accessibility",                         use: "Web Content Accessibility Guidelines", abbr: "WCAG" }
+      - { wrong: "minimally viable product",                                   use: "minimum viable product", abbr: "MVP" }
+      - { wrong: "indicator of service level / goal of service level",         use: "service level indicator / service level objective", abbr: "SLI / SLO" }
+      - { wrong: "summary evaluation criterion",                               use: "Overall Evaluation Criterion", abbr: "OEC" }
+      - { wrong: "substantive social interactions",                            use: "meaningful social interactions", abbr: "MSI" }
+      - { wrong: "radio-frequency marks / radio tags",                         use: "radio-frequency identification (RFID) tags", abbr: "RFID" }
+
+  back_formed_names:
+    rule: "A name transliterated out of the Cyrillic instead of restored. Full table in names_restored_from_cyrillic."
+    worst_offenders: ["William Deming → W. Edwards Deming", "Yakob/Jacob Nielsen → Jakob Nielsen",
+                      "Hamel Hussein → Hamel Husain", "Barry Boem → Barry Boehm",
+                      "Eric Rice → Eric Ries", "Lizann Beinbridge → Lisanne Bainbridge",
+                      "European Union Artificial Intelligence Regulation → the EU AI Act"]
+
+  not_applicable_here:
+    - >
+      The RU `forbidden_anglicisms` table is NOT carried over and must not be reconstructed in
+      EN. Ten of its twenty-six rows ban a transliteration of the word that is the correct
+      English canon in this file (guardrail, proxy, gate, circuit breaker, postmortem,
+      rollback, drift, trace, fallback, deployment). Applying it to EN would forbid the canon.
+    - "Deep latin-token scan is an RU-only check. N/A here."
+
+# ══════════════════════════════════════════════════════════════════════
+# F. Divergences with the chapter — NONE, and why
+# ══════════════════════════════════════════════════════════════════════
+chapter_divergences: []
+chapter_divergences_note: >
+  Empty by fact, not by oversight. There is no EN chapter for this lecture: chapter.md and
+  chapter-part2..5.md exist in RU only, and the owner's decision on scope is that no EN
+  translation of the chapter is produced here. With no EN chapter there is nothing for this
+  lock to diverge from, and nothing has been invented to fill the section. The RU lock's own
+  `chapter_divergences` (ten entries, guardrail/гейт/прокси and the rest) describes the RU
+  chapter against the RU canon and is recorded there as a reference, not a task; it is not
+  this file's business and is not mirrored here. If an EN chapter is ever produced, this
+  section is where its divergences get recorded — it is left in place for that reason.
+
+# ══════════════════════════════════════════════════════════════════════
+# G. Open questions — settled by the owner, not by a translator
+# ══════════════════════════════════════════════════════════════════════
+# Every entry below carries needs_owner_confirmation: true above. Collected here so a
+# realignment pass sees the whole list without reading the file through. Until each is
+# settled, the FIRST-LISTED form is what the EN artifacts use — consistently, and never
+# mixed with its alternative inside one deck.
+needs_owner_confirmation:
+  - { concept: "эталонный набор",         options: ["golden set", "reference dataset"], kind: "two live English terms" }
+  - { concept: "шкала самостоятельности", options: ["autonomy scale (+ autonomy level)", "agency ladder (+ rung)"], kind: "two live English terms; position term must follow the choice" }
+  - { concept: "метрика решения",         options: ["decision metric", "primary metric"], kind: "literal twin vs. the phrase the field uses" }
+  - { concept: "цена за единицу текста / стоимость запроса", options: ["cost per token", "cost per request"], kind: "the RU alias pair is two DIFFERENT units in English — a real measurement question, not a wording one" }
+  - { concept: "портфельное управление",  options: ["portfolio governance", "portfolio management"], kind: "must agree with the Section 6 phase name (governance)" }
+  - { concept: "учения на отказ",         options: ["failure drill", "game day"], kind: "literal twin vs. the SRE-practice name" }
+  - { concept: "петля",                   options: ["the loop", "the feedback loop"], kind: "bare form reads under-specified in an English slide title where the Russian does not" }
+  - { concept: "модель-судья",            options: ["LLM-as-judge", "LLM-as-a-judge"], kind: "orthographic only — but must be settled once" }
+  - { concept: "рубеж остановки (phrasing of «рубеж»)", options: ["stop gate", "release gate"], kind: "phrasing within a settled concept" }
+
+# ══════════════════════════════════════════════════════════════════════
+# H. Order of enforcement
+# ══════════════════════════════════════════════════════════════════════
+enforcement:
+  - "consistency-checker checks slides-en/*.md, deck.en.yaml, deck-part2.en.yaml and speech.en.md against this file."
+  - "Critics MAY flag a divergence; they MAY NOT propose a rename without the owner's approval."
+  - >
+    The EN deck is currently NOT aligned with this lock, and that is known rather than
+    discovered: it still carries the pre-reissue slide set and the pre-reissue terminology.
+    Realigning it is the next pass. Until it lands, a consistency run over slides-en/ will
+    report wholesale divergence, which is the expected state and not a new finding.
+  - "Checking is done against the ASSEMBLED EN deck (visible layer + notes), not against a renderer's exit code — see notes/mcp-limitations.md."
+  - "Mirror-check before any gate: zero Cyrillic in EN artifacts, exceptions listed by name (section E)."
+  - "The RU anti-anglicism rule and the deep latin-token scan do NOT apply to the EN track."
+  - "The RU track is governed by glossary.yaml and is not affected by anything in this file."

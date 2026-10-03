@@ -1,0 +1,29 @@
+# Блок 4. Промежуточная сборка оси (5,0 мин, 3 слайда) — источник:
+# rework/block-z5-os-promezhutochnaya.md §A/§B. Контрольная точка, не кульминация —
+# кульминация зарезервирована для закрытия Семинара 6 (rework/section-6-zakrytie.md).
+# Фрагмент деки для сборки в общий deck.yaml Семинара 5. Формат списка слайдов —
+# как в library/seminars/sem-04/deck.yaml от строки `slides:`.
+  - id: s54
+    file: slides/s54-os-tri-stroki-iz-pyati.md
+    type: recap_table
+    duration_min: 2.0
+    assertion: "Три строки оси закрыты — хук, скилл, MCP, каждая с расхождением между интуицией и проверкой; субагент и процесс остаются пустыми до следующего занятия"
+    learning_goal: "Контрольная точка, не развязка: та же таблица, что открывала занятие пустой, теперь с тремя заполненными строками"
+    visual:
+      pattern: recap_table
+  - id: s55
+    file: slides/s55-derevo-repozitoriya-za-zanyatie.md
+    type: code_artifact
+    duration_min: 1.5
+    assertion: "Три ступени добавили в репозиторий два файла, подтверждённых коммитом, и два блока по плану без коммита — граница между «написано» и «уже работает» показана на слайде"
+    learning_goal: "Дерево репозитория за занятие — явная граница подтверждённого коммитом и запланированного"
+    visual:
+      pattern: file_tree_snapshot
+  - id: s56
+    file: slides/s56-vozvrat-k-voprosu-otkrytiya.md
+    type: closing_question
+    duration_min: 1.5
+    assertion: "По хуку, скиллу и MCP правило порядка подтвердилось на практике; по процессу и субагенту утверждение из открытия ещё не проверено"
+    learning_goal: "Частичный возврат к вопросу открытия — полный дословный повтор вопроса и синтез зарезервированы для закрытия следующего занятия"
+    visual:
+      pattern: closing_question_partial

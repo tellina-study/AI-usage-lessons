@@ -543,7 +543,7 @@ Frontmatter chapter-partN.md: `part: N`, `of: 3`, `parent: "chapter.md"`.
 
 ## 10. References
 
-- `notes/decisions.md` § «2026-05-12 — Presentation pipeline» — anti-patterns каталог + iteration journey.
+- `notes/decisions-2026-03-05-lectures-1-6.md` § «2026-05-12 — Presentation pipeline» — anti-patterns каталог + iteration journey.
 - `notes/mcp-limitations.md` — gotchas tools.
 - `tools/presentation-build/README.md` — slides-specific.
 - Anthropic **pptx skill** (knowledge source): `github.com/anthropics/skills/blob/main/skills/pptx/SKILL.md`.

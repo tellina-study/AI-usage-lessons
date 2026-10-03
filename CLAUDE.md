@@ -541,9 +541,35 @@ library/lectures/lec-NN/
 
 ---
 
+## Литературная редактура (ENFORCED — issue #212, 2026-09-30)
+
+**Reference:** `tools/editorial/` — методическая база литературного редактора. Два слоя:
+`_ekonomiya.md` (канон русской редактуры по Норе Галь и Чуковскому, импортирован целиком,
+**читать первым, применять всегда**) и `README.md` (курсовой слой поверх него).
+
+**Зачем заведено.** До этого правила тона были рассыпаны по CLAUDE.md, памяти ассистента и
+промптам отдельных агентов и ни разу не сводились. Следствие: текст проходил фактчек,
+методическую критику и визуальный контроль — и всё равно звучал машинно, а ловил это только
+владелец курса.
+
+**Чего редактура НЕ делает.** Не меняет факты, числа, даты, имена, выводы и структуру.
+Утверждение после правки обязано значить **ровно то же**. Увидел содержательную проблему —
+вынеси находкой; чинить её работа `fact-checker` или `methodology-critic`.
+
+**Главный запрет — формат сопоставления:** «не X, а Y» · «дело не в X, дело в Y» ·
+«с одной стороны… с другой» · парные противопоставления там, где хватает утверждения.
+Конструкция дёшево создаёт видимость точности и читается как протокол. Замеры: Лекция 5 —
+337 вхождений, Семинар 5 — 94 при эталоне Семинара 4 около 60. Грепы в
+`tools/editorial/README.md` §1.
+
+**Применяется** к `chapter.md`, слайдам и `speech.md` **после того, как содержание принято** —
+отдельной фазой, не вперемешку с содержательными правками.
+
+---
+
 ## Best Practices Documentation
 
-**Reference:** `notes/decisions.md` — accumulated findings, patterns, and anti-patterns.
+**Reference:** `notes/decisions.md` — указатель частей журнала + текущие записи. Старые периоды вынесены в `notes/decisions-2026-*.md` (журнал разрезан по лимиту 600 строк). Новые записи добавляются всегда в `decisions.md`.
 
 ### Update Rule
 Every time a new finding, gotcha, or best practice is discovered during work, it MUST be added to `notes/decisions.md`. Before starting work, CHECK this file for existing findings relevant to your task.
@@ -588,6 +614,7 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 | `student-simulator` | Critic | Симулирует студента в зале (PNG + speaker notes) |
 | `reader-simulator` | Critic | 2 режима: `text-only` (md без рендера) и `rendered` (PNG+notes через 2 нед) |
 | `consistency-checker` | Critic | Cross-artifact alignment: chapter ↔ slides ↔ speech |
+| `literary-editor` | Producer | Литературная редактура: правит ЗВУЧАНИЕ, содержание не трогает. База — `tools/editorial/` (канон Норы Галь и Чуковского + курсовой слой). Применяется к chapter, slides, speech после того, как содержание принято |
 
 ### Lecture Production Pipeline (ENFORCED, multi-artifact)
 
@@ -620,7 +647,7 @@ Every time a new finding, gotcha, or best practice is discovered during work, it
 
 **Workflow:** `/build-deck N` — orchestrator-skill, спавнит `presentation-designer` для рендера + 3 QA agents (`presentation-critic` + `student-simulator` + `reader-simulator` mode=rendered) параллельно. `reader-simulator` mode=`text-only` запускается ДО рендера для методического контроля.
 
-**Required reading для любого agent'а, работающего со слайдами:** `tools/presentation-build/README.md` (агенты начинаются с явной ссылки на этот файл). Также обязательно `notes/mcp-limitations.md` (PowerPoint MCP gotchas) и `notes/decisions.md` § «2026-05-12 — Presentation pipeline» (anti-patterns каталог).
+**Required reading для любого agent'а, работающего со слайдами:** `tools/presentation-build/README.md` (агенты начинаются с явной ссылки на этот файл). Также обязательно `notes/mcp-limitations.md` (PowerPoint MCP gotchas) и `notes/decisions-2026-03-05-lectures-1-6.md` § «2026-05-12 — Presentation pipeline» (anti-patterns каталог).
 
 ### Skills (`.claude/skills/`)
 

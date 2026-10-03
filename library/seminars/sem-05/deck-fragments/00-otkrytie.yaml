@@ -1,0 +1,59 @@
+# Раздел 0. Открытие (9,0 мин, 7 слайдов) — источник: rework/section-0-otkrytie.md §A/§B.
+# Фрагмент деки для сборки в общий deck.yaml Семинара 5. Формат списка слайдов —
+# как в library/seminars/sem-04/deck.yaml от строки `slides:`.
+  - id: s01
+    file: slides/s01-oblozhka-centralnyy-vopros.md
+    type: hero_cover
+    duration_min: 0.75
+    assertion: "Пять усилений превращают текстовую просьбу в барьер, который агент не обходит, даже если захочет — у каждого своя цена и точка, где интуиция предсказывает неверно; сегодня разбираются три из них"
+    learning_goal: "Открытие занятия одним вопросом, без разгона — прямое продолжение последней фразы Семинара 4"
+    visual:
+      pattern: hero_cover
+  - id: s02
+    file: slides/s02-gde-my-ostanovilis.md
+    type: code_artifact
+    duration_min: 1.25
+    assertion: "Репозиторий на входе в занятие — рабочий прототип с продуктовым, конфигурационным и документационным слоями, но каталога .claude/ в нём нет вовсе"
+    learning_goal: "«Где мы остановились» — сверенное состояние репозитория после Семинара 4; явное отсутствие .claude/ как точка входа в занятие"
+    visual:
+      pattern: file_tree_snapshot
+  - id: s03
+    file: slides/s03-tekst-eto-prosba.md
+    type: assertion_visual
+    duration_min: 1.5
+    assertion: "Файл инструкций взвешивается моделью заново на каждом шаге сессии: соблюдение правила падает на ~5,6% шансов (OR≈0,944) за каждую следующую функцию в той же сессии"
+    learning_goal: "Фундаментальное ограничение текстового правила — файл инструкций не гарантия исполнения, это открытый список того, что агент может учесть"
+    visual:
+      pattern: assertion_visual
+  - id: s04
+    file: slides/s04-os-zanyatiya-keystone.md
+    type: keystone_axis
+    duration_min: 1.5
+    assertion: "Каждое из пяти усилений сегодня либо стоит завести заранее, либо стоит завести только по сигналу — и у обоих режимов есть ровно одна точка, где интуиция предсказывает неверно"
+    learning_goal: "Keystone-слайд оси занятия — пустая таблица на пять строк, общая на два занятия; неприкосновенный слайд, не режется"
+    visual:
+      pattern: keystone_scope_map
+  - id: s05
+    file: slides/s05-vopros-chto-zavesti-pervym.md
+    type: reflection_question
+    duration_min: 0.75
+    assertion: "Выбор из пяти карточек: какое из пяти усилений завели бы первым, без единой детали о конкретном проекте"
+    learning_goal: "Первый открытый вопрос занятия — самодиагностика без подсказок, без цифр и без источников"
+    visual:
+      pattern: question_with_option_cards
+  - id: s06
+    file: slides/s06-razbor-pravilo-poryadka.md
+    type: answer_breakdown
+    duration_min: 2.0
+    assertion: "У вопроса нет единственно верного ответа: есть правило порядка — заводится то усиление, для которого сигнал уже прозвучал"
+    learning_goal: "Разбор пяти карточек — своя боль за каждой; частичный возврат к вопросу обещан в конце занятия, полный — в конце следующего"
+    visual:
+      pattern: dual_mode_breakdown
+  - id: s07
+    file: slides/s07-karta-zanyatiya.md
+    type: lecture_map
+    duration_min: 1.25
+    assertion: "Три ступени сегодня в порядке разбора — хук, скилл, MCP — и что каждая добавляет в репозиторий; субагент и процесс на следующем занятии"
+    learning_goal: "Карта занятия — навигация по трём сегодняшним ступеням через артефакты, без тайминга и без методических пометок"
+    visual:
+      pattern: lecture_map

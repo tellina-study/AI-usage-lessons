@@ -302,9 +302,20 @@ def gold_callout(sl, x, y, w, text, *, size=14, bold=True, align=PP_ALIGN.LEFT,
     """Золотая коробка. Означает ровно одно: ВОПРОС, который зал должен решить,
     или ФОРМУЛА, которую надо запомнить. Один раз на слайде — иначе акцент
     обнуляется частотой (в прежней деке эта коробка стояла на 33 слайдах из 56
-    и держала там утверждения)."""
+    и держала там утверждения).
+
+    `WRAP_SAFETY` ниже вычтена из рамки переноса (и в мерке, и при рисовании —
+    одной и той же величиной `inner`, поэтому разойтись они не могут). Без неё
+    длинный многострочный вопрос изредка переносится в LibreOffice на знак-два
+    шире, чем намерила мерка: последняя подстрока перед переносом тянет за
+    собой НЕВИДИМЫЙ пробел на границе разрыва, и PDF-экспорт включает его
+    ширину в рамку строки, хотя на экране этого пробела не видно. Видимую
+    золотую коробку запас не красит (в ней и так есть поле), но `check_tracks_
+    pdf.py` меряет НЕВИДИМУЮ рамку текста, а не коробку, и ловит разницу как
+    «фигура режет строку» — живой случай n11, `~4 pt` перебора на 16,5 pt."""
+    WRAP_SAFETY = 0.12
     lines = text if isinstance(text, (list, tuple)) else [text]
-    inner = w - 2 * pad
+    inner = w - 2 * pad - WRAP_SAFETY
     if max_h:
         while size > 10.5 and M.rich_block_h(lines, size, inner,
                                         spacing=1.22, space_after=3) + 2 * 0.16 > max_h:
@@ -571,7 +582,7 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
             # переполнением каждую подогнанную ячейку.
             M.fits(plain(c), chosen, shares[j] - gap, rh[i] - row_pad + 0.04,
                    spacing=cell_spacing,
-                   label=f"{label} строка {i} колонка {j}", mono="`" in c)
+                   label=f"{label} строка {i} колонка {j}", mono="`" in c, raw=c)
             text_box(sl, cx[j], ry, shares[j] - gap, rh[i], c, size=chosen, color=INK,
                      anchor=MSO_ANCHOR.MIDDLE, spacing=cell_spacing,
                      align=(align[j] if align else PP_ALIGN.LEFT))

@@ -78,6 +78,18 @@ def _clean(s):
     return re.sub(r"\[(.+?)\]\(.+?\)", r"\1", s).strip()
 
 
+def _split_row(s):
+    """Разбить строку таблицы по `|`, учитывая экранирование `\\|` — тот же
+    escape, что принят в обычных markdown-таблицах: обратная косая черта
+    перед `|` делает его содержимым ячейки (например, `|`-пайп в shell-
+    команде), а не разделителем столбцов. Наивный `.split("|")` этого не
+    знает и режет такую ячейку на две — живой случай, найденный на n63:
+    `` `ls .../*.md \\| wc -l` `` стало двумя ячейками вместо одной, с
+    голой обратной косой чертой и парой лишних обратных кавычек на слайде."""
+    SENTINEL = "\x00"
+    return [p.replace(SENTINEL, "|") for p in s.replace("\\|", SENTINEL).split("|")]
+
+
 def blocks(visual):
     """Последовательность блоков в порядке источника:
     ('table', (headers, rows)) | ('code', (язык, lines)) | ('quote', lines)
@@ -111,7 +123,7 @@ def blocks(visual):
         if ln.strip().startswith("|") and ln.strip().endswith("|"):
             flush(); rows = []
             while i < len(lines) and lines[i].strip().startswith("|"):
-                cells = [_clean(c) for c in lines[i].strip().strip("|").split("|")]
+                cells = [_clean(c) for c in _split_row(lines[i].strip().strip("|"))]
                 if not all(re.fullmatch(r":?-{2,}:?", c.strip()) for c in cells if c.strip()):
                     rows.append(cells)
                 i += 1

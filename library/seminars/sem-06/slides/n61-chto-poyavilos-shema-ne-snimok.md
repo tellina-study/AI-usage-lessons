@@ -31,17 +31,17 @@ visual:
 ## Visual
 
 ```
-github.com/tellina-study/signup-landing-demo          СХЕМА, НЕ СНИМОК
+github.com/tellina-study/signup-landing-demo СХЕМА, НЕ СНИМОК
 
-ветка main                                             .claude/ — нет вовсе
-ветка seminar-5-hook, коммит 9803643                   .claude/settings.json                   ← хук · коммит есть
-                                                        .claude/hooks/selftest-branch-guard.sh  ← хук · коммит есть
-                                                        .claude/skills/deploy/SKILL.md           ← скилл · по плану, коммита нет
-                                                        CLAUDE.md — 40 строк / 5 разделов        ← коммит есть
+ветка main                                .claude/ — нет вовсе
+ветка seminar-5-hook, коммит 9803643      .claude/settings.json                     ← хук · коммит есть
+                                          .claude/hooks/selftest-branch-guard.sh    ← хук · коммит есть
+                                          .claude/skills/deploy/SKILL.md            ← скилл · по плану, коммита нет
+                                          CLAUDE.md — 40 строк / 5 разделов         ← коммит есть
 
 (сегодняшние две ступени — по плану, коммита нет и не будет)
-.mcp.json                                               ← MCP · кейс 1, права вычеркнуты до трёх операций
-.claude/agents/diff-reviewer.md                         ← субагент · кейс 1, `tools: Read, Grep, Glob`
+.mcp.json                                 ← MCP · кейс 1, права вычеркнуты до трёх операций
+.claude/agents/diff-reviewer.md           ← субагент · кейс 1, `tools: Read, Grep, Glob`
 ```
 
 > «Два файла этого занятия останутся только планом. В публичном репозитории их не будет — и это сказано прямо, не спрятано.»

@@ -25,7 +25,13 @@ visual:
     library/seminars/sem-05/research/mechanics-6-subagent.md §1.2–1.3 и §4.1 (блок 2 — явный вызов
     vs автовыбор по description, строка транскрипта `<имя>(<задача>)`, «general-purpose вместо
     ожидаемого имени — маршрутизация не сработала», дословная цитата quickstart-документации) и
-    §2.3 (блок 1 — name/description обязательны, остальные поля опциональны). Блок 6 — то же число,
+    §2.3 (блок 1 — name/description обязательны, остальные поля опциональны). Блок 5, исход
+    «пустой список — жива без инструментов»: подтверждено повторной проверкой (issue 225,
+    fact-check round 2, 2026-10-05) прямым `curl` по `code.claude.com/docs/en/errors`, раздел
+    «Agent would be spawned with zero tools» — дословно: «If you leave the tools list empty, or
+    disallowedTools removes every entry in it, Claude Code also skips the refusal and launches the
+    subagent without tools» (прежний прогон через суммирующий `WebFetch` этого не нашёл — известное
+    ограничение, `notes/mcp-limitations.md` `[#225-1]`). Блок 6 — то же число,
     что на n40 (15×/3–10×, Anthropic), без нового факта, с явной отсылкой «подробности и честный
     пробел — в свидетельствах кейса», не повтор ради повтора. Форма — по образцу
     sem-05/slides/n11 «Хук целиком, одним экраном» (полная карта одним экраном, к которой

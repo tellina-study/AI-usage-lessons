@@ -15,10 +15,14 @@ visual:
   backup: "library/seminars/sem-05/research/mechanics-6-subagent.md §3.2, официальный пример
     документации харнесса, дословная цитата: `code-reviewer` (`Read, Grep, Glob, Bash`, без
     `Edit`/`Write`) против `debugger` (`Read, Edit, Bash, Grep, Glob` — «Unlike the code reviewer,
-    this one includes Edit because fixing bugs requires modifying code»). Привязка к собственному
-    артефакту кейса (`diff-reviewer.md`, `tools: Read, Grep, Glob`, n42) — не из источника,
-    собственный мост раздела: тот же узкий набор, который в кейсе был верным выбором для роли,
-    которая только находит проблему, — тем же списком не хватит роли, чья работа — чинить."
+    this one includes Edit because fixing bugs requires modifying code»). Повторная проверка
+    (issue 225, fact-check round 2, 2026-10-05): прямой `curl` по `code.claude.com/docs/en/sub-agents`
+    (не суммирующий `WebFetch`, см. `notes/mcp-limitations.md` `[#225-1]`) нашёл оба списка прав и
+    эту фразу буква в букву в разделе «Example subagents» — цитата подтверждена, не выдумана.
+    Привязка к собственному артефакту кейса (`diff-reviewer.md`, `tools: Read, Grep, Glob`, n42) —
+    не из источника, собственный мост раздела: тот же узкий набор, который в кейсе был верным
+    выбором для роли, которая только находит проблему, — тем же списком не хватит роли, чья работа
+    — чинить."
 ---
 
 # Где урезание начинает мешать работе роли

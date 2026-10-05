@@ -474,21 +474,50 @@ def para_role(text, pattern):
     return quote_role([text], pattern), text
 
 
+_WRAP_PAIRS = (("«", "»"), ("**", "**"))
+
+
 def split_question(lines):
-    """Разделить блок на СЦЕНУ и сам ВОПРОС, по границе предложения."""
-    flat = " ".join(lines)
+    """Разделить блок на СЦЕНУ и сам ВОПРОС, по границе предложения.
+
+    Если весь блок обёрнут ОДНОЙ парой маркеров целиком (`**жирный**` на
+    несколько предложений или кавычки `«…»` вокруг целой реплики) — наивное
+    разбиение по границе предложения резало текст ПОСЕРЕДИНЕ прогона:
+    открывающий маркер оставался в одной половине без пары, закрывающий — в
+    другой, и оба печатались на слайде буквально (`**И...` / `...**`,
+    `«Работу...` без закрывающей » в одной рамке / висячая `»` без открывающей
+    в другой — живые случаи n36/n55 и n04/n62).
+
+    Починка: снять внешнюю пару ДО разбиения, разбить голый текст, и — если
+    блок был обёрнут — вернуть обёртку каждой непустой половине ОТДЕЛЬНО, со
+    своей собственной парой маркеров: каждая половина рисуется в своей рамке,
+    и внутри своей рамки обязана быть полной репликой/жирным куском, а не
+    половиной чужой пары."""
+    flat = " ".join(lines).strip()
+    op, cl = "", ""
+    for o, c in _WRAP_PAIRS:
+        if flat.startswith(o) and flat.endswith(c) and len(flat) > len(o) + len(c):
+            op, cl = o, c
+            break
+    core = flat[len(op):len(flat) - len(cl)].strip() if op else flat
+
     bounds, pos = [], 0
-    for m in re.finditer(r"[.!?…]+[»\"\')\s]*", flat):
+    for m in re.finditer(r"[.!?…]+[»\"\')\s]*", core):
         bounds.append((pos, m.end()))
         pos = m.end()
-    if pos < len(flat):
-        bounds.append((pos, len(flat)))
+    if pos < len(core):
+        bounds.append((pos, len(core)))
+
+    def rewrap(text):
+        text = text.strip()
+        return f"{op}{text}{cl}" if op and text else text
+
     for a, b in bounds:
-        sent = flat[a:b]
+        sent = core[a:b]
         if "?" in sent or ASK.search(sent):
             if a == 0:
-                return [], [flat.strip()], True
-            return [flat[:a].strip()], [flat[a:].strip()], True
+                return [], [rewrap(core)], True
+            return [rewrap(core[:a])], [rewrap(core[a:])], True
     return [], lines, False
 
 

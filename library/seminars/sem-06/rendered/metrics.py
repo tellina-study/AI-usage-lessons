@@ -104,6 +104,30 @@ _RUNS = re.compile(r"\*\*(.+?)\*\*|`(.+?)`")
 _LINK = re.compile(r"\[(.+?)\]\(.+?\)")
 
 
+def _mono_words(text):
+    """Моноширинный прогон → куски без пробела ВНУТРИ одного прогона.
+
+    Живой случай (n26, Семинар 6): `` `npx -y` `` рисовался как `npx   - y`
+    — раздвинутые пробелы вокруг дефиса, хотя в самом файле PPTX, по чтению
+    XML, ровно один пробел. Причина — не в разборе markdown (он уже отдавал
+    один прогон с одним пробелом), а в LibreOffice: Consolas в окружении не
+    установлен, и у шрифта-подстановки пробел, лежащий ВНУТРИ одного
+    моноширинного прогона, меряется и рисуется в разы шире буквы. Прогон,
+    где пробел — СВОЙ кусок обычным (не моно) шрифтом, этой подмены не
+    получает: слово остаётся моноширинным, пробел рисуется как обычный."""
+    out, buf = [], ""
+    for ch in text:
+        if ch.isspace():
+            if buf:
+                out.append((buf, False, True)); buf = ""
+            out.append((ch, False, False))
+        else:
+            buf += ch
+    if buf:
+        out.append((buf, False, True))
+    return out
+
+
 def inline_segments(s):
     """Строка → [(текст, жирный, моноширинный)]. Единственный разборщик
     разметки в рендерере: `deck_kit.inline_runs` вызывает его же, чтобы замер
@@ -122,7 +146,7 @@ def inline_segments(s):
             for seg, _b, mo in inline_segments(m.group(1)):
                 out.append((seg, True, mo))
         else:
-            out.append((m.group(2), False, True))
+            out.extend(_mono_words(m.group(2)))
         pos = m.end()
     if pos < len(s):
         out.append((s[pos:], False, False))

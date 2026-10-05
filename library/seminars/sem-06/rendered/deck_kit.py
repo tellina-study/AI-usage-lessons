@@ -56,6 +56,14 @@ PILL_OFF     = RGBColor(0x3E, 0x4C, 0x8A)   # пройденная/будуща�
 CODE_BG = RGBColor(0x16, 0x1C, 0x30)
 CODE_FG = RGBColor(0xE3, 0xE9, 0xF2)
 
+# Карточка кода на СВЕТЛОМ — умолчание деки с круга 2 замечаний владельца
+# (issue 225): «чёрный фон, белые буквы, плохо читаю». Тёмная карточка
+# (`CODE_BG`/`CODE_FG`) остаётся в ките, но её больше никто не просит по
+# умолчанию: за умолчание отвечает `code_card` ниже.
+CODE_LIGHT_BG = WHITE                    # подложка листинга на светлом слайде
+CODE_LIGHT_FG = INK                      # сам листинг — тем же цветом, что текст
+CODE_LIGHT_LABEL = SLATE                 # подпись карточки
+
 W_IN, H_IN = 13.333, 7.5
 FONT, MONO = "Arial", "Consolas"
 NS = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
@@ -716,11 +724,23 @@ def code_w(ln, size, markup):
     return sum(M.text_w(seg, size, bold=mo, mono=True) for seg, _b, mo in inline_runs(ln))
 
 
-def terminal_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
-                  label="код", markup=False):
-    """Тёмная моноширинная карточка для вывода команд и файлов. Высота — по
-    числу РЕАЛЬНЫХ строк вывода; перенос моноширинного текста не делается,
-    длинная строка отмечается предупреждением, а не молча обрезается.
+def code_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
+              label="код", markup=False, dark=False):
+    """Моноширинная карточка для листинга файла и вывода команды. Высота — по
+    числу РЕАЛЬНЫХ строк; перенос моноширинного текста не делается, длинная
+    строка отмечается предупреждением, а не молча обрезается.
+
+    **Светлая по умолчанию** (`dark=False`): белая подложка, тонкая серая
+    рамка, текст тем же чернильным цветом, что и остальной текст слайда, слева
+    — тиловая планка, чтобы листинг читался как листинг и без смены фона.
+    Так решено на круге 2 замечаний владельца (issue 225): «чёрный фон, белые
+    буквы, плохо читаю». Это касается ЛЮБОГО блока в ограждении, независимо от
+    жанра слайда, — до этой правки четыре зоны деки обходили тёмную карточку
+    вручную, вынимая код из ограждения и теряя моноширинность.
+
+    `dark=True` оставлен для случая, когда слайд показывает именно ЭКРАН
+    терминала как предмет разговора. В деке Семинара 6 такого слайда нет, и
+    вызывать с `dark=True` без явной причины не нужно.
 
     `markup=True` — карточка показывает ЛИСТИНГ ФАЙЛА РАЗМЕТКИ (ограждение
     помечено языком `markdown`). Тогда `` `кусок` `` внутри строки — разметка
@@ -743,19 +763,37 @@ def terminal_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
     h = head + len(lines) * M.line_h(fs, 1.3) + 2 * pad
     if max_h:
         h = min(h, max_h)
-    ocean_box(sl, x, y, w, h, fill=CODE_BG, stroke=LIGHT, stroke_pt=1.2, radius_pt=8)
+    if dark:
+        ocean_box(sl, x, y, w, h, fill=CODE_BG, stroke=LIGHT, stroke_pt=1.2, radius_pt=8)
+        title_color, body_color = ON_DARK_MUTE, CODE_FG
+    else:
+        ocean_box(sl, x, y, w, h, fill=CODE_LIGHT_BG, stroke=SOFT_GREY,
+                  stroke_pt=1.0, radius_pt=8)
+        # Планка слева — единственный признак «это листинг», который остался
+        # после смены фона на светлый. Без неё карточка кода и карточка текста
+        # на слайде отличались бы только шрифтом. Та же грамматика планки, что
+        # у `form_formula`/`form_fact`, только тиловая и тонкая.
+        rect(sl, x, y + 0.04, 0.055, h - 0.08, TEAL)
+        title_color, body_color = CODE_LIGHT_LABEL, CODE_LIGHT_FG
     if title:
         text_box(sl, x + pad, y + 0.12, inner, 0.28, title, size=10.5, bold=True,
-                 color=ON_DARK_MUTE, rich=False)
+                 color=title_color, rich=False)
     M.floor_reached(fs, 7.5, label=label, chars=sum(len(ln) for ln in lines))
     for ln in lines:
         if code_w(ln, fs, markup) > inner:
             M._WARNINGS.append(f"ПЕРЕПОЛНЕНИЕ [{label}]: строка кода «{ln[:40]}…» шире карточки")
             break
     text_box(sl, x + pad, y + pad + head - 0.04, inner, h - 2 * pad - head + 0.08,
-             lines, size=fs, color=CODE_FG, mono=True, spacing=1.3, rich=markup,
+             lines, size=fs, color=body_color, mono=True, spacing=1.3, rich=markup,
              wrap=False)
     return h
+
+
+def terminal_card(sl, x, y, w, lines, **kw):
+    """Прежнее имя светлой карточки кода. Оставлено, чтобы не осиротить вызовы
+    в ките и в проверках; поведение — `code_card`, то есть СВЕТЛОЕ.
+    Тёмная форма вызывается явным `dark=True`."""
+    return code_card(sl, x, y, w, lines, **kw)
 
 
 # Ниже этой доли отведённой ширины схема считается ЗАЖАТОЙ. Порог не из
@@ -892,7 +930,7 @@ def roadmap(sl, stages, cur_idx, *, x=0.55, y=6.55, w=12.23):
 #   реплика «…»   → тонкая тиловая линия слева, курсив, тихо     (form_speech)
 #   оговорка      → пунктирная серая рамка                       (form_caveat)
 #   факт / число  → тиловая заливка + тиловая планка             (form_fact)
-#   технический   → тёмная моноширинная карточка                 (terminal_card)
+#   листинг/вывод → СВЕТЛАЯ моноширинная карточка                (code_card)
 #
 # Золотая ЗАЛИВКА С РАМКОЙ существует ровно в одном месте — на вопросе.
 

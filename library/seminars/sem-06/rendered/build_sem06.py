@@ -99,12 +99,20 @@ def badge_for(sid):
 
 
 def tag_for(sid, visual_meta):
+    """Ярлык развилки («5 подключений · 2 слоя провала»). С круга 2 замечаний
+    владельца (issue 225, правило А6) его на развилках НЕТ: «комментарии "четыре
+    хода сборки, два слоя провала" — это тоже лишнее, убери».
+
+    Поэтому отсутствие ярлыка здесь больше не предупреждение, а норма — и
+    наоборот: ярлык, случайно оставшийся в чьём-то фронтматтере, называется
+    вслух, иначе снятое правило вернётся на экран незамеченным через одну
+    невычищенную развилку."""
     tag = (visual_meta or {}).get("tag") or TAGS.get(sid)
-    if not tag:
+    if tag:
         M._WARNINGS.append(
-            f"НЕТ ЯРЛЫКА [{sid}]: развилка без ярлыка — впишите `tag:` в "
-            f"`visual:` фронтматтера слайда (ярлык называет, из чего состоит "
-            f"кейс: «1 кейс · 5 решений · 2 слоя провала»)")
+            f"ЯРЛЫК ВЕРНУЛСЯ [{sid}]: на развилке стоит `tag: {tag}` — круг 2 "
+            f"замечаний владельца (правило А6) снял ярлыки со всех развилок; "
+            f"уберите строку `tag:` из `visual:` фронтматтера")
     return tag
 
 
@@ -893,9 +901,18 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
     drawers = []
     fig = figure_for(sid)
     fig_after = bool(fig) and sid in FIG_AFTER_BLOCKS
+    # Потолок высоты схемы. `K.FIG_NATURAL_H` (4,3″) стоит затем, чтобы схема не
+    # съедала содержательный слайд, где кроме неё есть блоки текста. Если блоков
+    # нет вовсе — одностраничник, где вся работа слайда ВНУТРИ схемы, — съедать
+    # нечего, и потолок становится просто полосой пустоты под схемой: n08 и n43
+    # упирались в него и оставляли ≈1,5″ неиспользованного полотна, а подписи на
+    # них читались с экрана как 5–6 pt. Сведение круга 2 (issue 225, замечание
+    # владельца по одностраничнику: «текст мелкий — укрупнить, место сверху и
+    # снизу есть») отдаёт такой схеме всю доступную высоту.
+    fig_ceiling = (BOTTOM - y0) if not blocks else K.FIG_NATURAL_H
     if fig and not fig_after:
         drawers.append(lambda sl, y, mh, p=fig: K.figure(
-            sl, p, LEFT, y, WIDTH, mh if mh else 4.3, label=sid))
+            sl, p, LEFT, y, WIDTH, mh if mh else fig_ceiling, label=sid))
     gold_rule = GOLD_QUOTE_SIDS.get(sid)
     quote_total = sum(1 for k, _ in blocks if k == "quote") if gold_rule == "last" else 0
     quote_i = -1
@@ -916,7 +933,7 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
             drawers.append(d)
     if fig_after:
         drawers.append(lambda sl, y, mh, p=fig: K.figure(
-            sl, p, LEFT, y, WIDTH, mh if mh else 4.3, label=sid))
+            sl, p, LEFT, y, WIDTH, mh if mh else K.FIG_NATURAL_H, label=sid))
     compose(sl, sid, y0, drawers)
     K.slide_number_mark(sl, slide_number(sid))
 
@@ -1036,8 +1053,41 @@ def deck_from_files(prefix):
     return sorted(out, key=lambda s: s["id"])
 
 
+USAGE = """build_sem06.py — сборка деки Семинара 6.
+
+  --block nNN   ПРЕДПРОСМОТР одного слайда или группы: строит из файлов на
+                диске в отдельный `sem-06-nNN.pptx`. Безопасно при
+                параллельной работе: `deck.yaml` и `rendered/sem-06.pptx`
+                не трогает.
+  --all         ПОЛНАЯ пересборка: пересобирает `deck.yaml` из слайдов и
+                перезаписывает `rendered/sem-06.pptx`. Общие файлы, то есть
+                ход сведения, а не проверка своей зоны.
+  --deck F      собрать по другому манифесту (в `sem-06-F.pptx`).
+  nNN nMM …     собрать полотно только этих слайдов, остальные страницы
+                оставить пустыми (отладка вёрстки).
+
+Полная пересборка требует ЯВНОГО `--all` и без него не запускается. Так
+решено после круга 2 замечаний владельца (issue 225): четыре сессии круга
+независимо запустили полную пересборку, набрав `--help` или перепутав флаг,
+и перезаписали общую деку — расплата за то, что «ничего не передано» значило
+«сделай самое разрушительное».
+"""
+
+
 def main():
     argv = list(sys.argv[1:])
+    if {"--help", "-h", "help"} & set(argv):
+        print(USAGE)
+        return
+    unknown = [a for a in argv if a.startswith("-")
+               and a not in ("--block", "--deck", "--all")]
+    if unknown:
+        print(f"неизвестный флаг: {' '.join(unknown)}\n")
+        print(USAGE)
+        raise SystemExit(2)
+    full = "--all" in argv
+    if full:
+        argv.remove("--all")
     block = None
     if "--block" in argv:
         i = argv.index("--block")
@@ -1056,6 +1106,10 @@ def main():
         if not slides:
             print(f"слайдов по образцу «{block}*.md» не найдено")
             return
+    elif not full and deck_file == "deck.yaml":
+        print("полная пересборка деки не запрошена.\n")
+        print(USAGE)
+        raise SystemExit(2)
     else:
         deck_path = ROOT / deck_file
         if deck_path.exists():

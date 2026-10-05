@@ -140,7 +140,18 @@ msave(im, "mcp-n13-oblasti.png")
 # файла, не только сам файл, и внизу схемы добавлена одна явная строка об
 # этом, отдельно от лестницы.
 # ═══════════════════════════════════════════════════════════════════════════
-H13 = 650
+# Сведение круга 2 (issue 225): лестница стояла ОДНОЙ колонкой из шести
+# ступеней — пропорция 2,61:1 при шести строках. На слайде, где кроме схемы
+# живут листинг файла и построчный разбор, такой схеме доставалось 2,77″
+# высоты, и она ужималась до 59% ширины — то есть до 35% своей площади, при
+# пороге 80%. Сборка печатала это как «СХЕМА ЗАЖАТА» и «НЕ ПОМЕСТИЛОСЬ»
+# одновременно: подписи ступеней на экране переставали читаться — ровно та
+# претензия владельца, ради которой весь круг и затевался.
+#
+# Починка — геометрия, не содержание: те же шесть ступеней, те же подписи
+# знак в знак, но в ДВЕ колонки по три. Высота падает вдвое, пропорция
+# уходит за 4:1, и схема встаёт на всю отведённую ширину.
+H13 = 480
 im = Image.new("RGB", (MW, H13), W); d = ImageDraw.Draw(im)
 mtext(d, 20, 6, "При совпадении имени сервера — приоритет областей, сверху вниз", 24, DEEP, b=True)
 
@@ -152,28 +163,33 @@ RUNGS = [
     ("5", "сервер из плагина", "", LIGHT, W),
     ("6", "коннектор", "", LIGHT, W),
 ]
-RX, RW_ = 20, MW - 40
-RH, RGAP = 62, 10
-y = 58
-for num, name, note, col, tc in RUNGS:
-    mpanel(d, RX, y, RW_, RH, None, fill=col, stroke=col, sw=0)
-    d.ellipse([RX + 16, y + 11, RX + 16 + 40, y + 11 + 40], fill=W if col != GOLD else DEEP)
+RGAPX = 24
+RW_ = (MW - 40 - RGAPX) // 2
+RH, RGAP = 56, 10
+COLX = (20, 20 + RW_ + RGAPX)
+for i, (num, name, note, col, tc) in enumerate(RUNGS):
+    rx = COLX[i // 3]
+    y = 58 + (i % 3) * (RH + RGAP)
+    mpanel(d, rx, y, RW_, RH, None, fill=col, stroke=col, sw=0)
+    d.ellipse([rx + 16, y + 11, rx + 16 + 40, y + 11 + 40], fill=W if col != GOLD else DEEP)
     nw = d.textlength(num, font=f(22, True))
-    d.text((RX + 36 - nw / 2, y + 20), num, font=f(22, True), fill=col if col != GOLD else GOLD)
-    mtext(d, RX + 76, y + RH / 2 - 14, name, 21, tc, b=True)
+    d.text((rx + 36 - nw / 2, y + 20), num, font=f(22, True), fill=col if col != GOLD else GOLD)
+    # Подпись ступени уходит ПОД название, а не вправо от него: в колонке
+    # половинной ширины правее названия места на пояснение уже нет.
     if note:
-        nlen = d.textlength(name, font=f(21, True))
-        mtext(d, RX + 76 + nlen + 24, y + RH / 2 - 11, note, 16, tc)
-    y += RH + RGAP
+        mtext(d, rx + 76, y + 8, name, 20, tc, b=True)
+        mtext(d, rx + 76, y + 34, note, 14, tc)
+    else:
+        mtext(d, rx + 76, y + RH / 2 - 13, name, 20, tc, b=True)
 
+y = 58 + 3 * (RH + RGAP)
 # Красный запрещён палитрой (P1-2) — предупреждение о «вся запись целиком,
 # поля не смешиваются» переходит на тёмно-синий текст, вес держит жирное
 # начертание, не цвет.
-mcent(d, y + 10, "Совпало имя в двух областях — побеждает ВСЯ запись приоритетной области целиком;", 19, DEEP, b=True)
-mcent(d, y + 36, "поля не смешиваются.", 19, DEEP, b=True)
-mpanel(d, RX, y + 64, RW_, 46, None, fill=(0xFD, 0xF3, 0xD6), stroke=GOLD, sw=3)
-mcent(d, y + 78, "Ступени 2 и 4 — один и тот же физический файл, разные записи внутри него, не два одинаковых адреса.", 16, GOLDINK, b=True)
-im = im.crop((0, 0, MW, y + 122))
+mcent(d, y + 6, "Совпало имя в двух областях — побеждает ВСЯ запись приоритетной области целиком; поля не смешиваются.", 19, DEEP, b=True)
+mpanel(d, 20, y + 38, MW - 40, 44, None, fill=(0xFD, 0xF3, 0xD6), stroke=GOLD, sw=3)
+mcent(d, y + 51, "Ступени 2 и 4 — один и тот же физический файл, разные записи внутри него, не два одинаковых адреса.", 16, GOLDINK, b=True)
+im = im.crop((0, 0, MW, y + 94))
 msave(im, "mcp-n14-prioritet.png")
 
 
@@ -321,139 +337,171 @@ def code_card(x, y, w, h, lines, fill=W, stroke=LIGHT):
         yy += 23
 
 
+# Сведение круга 2 (issue 225). Замечание владельца по одностраничнику было
+# «задумка хороша, текст мелкий — укрупнить, место сверху и снизу есть».
+# Первый заход увеличил кегль ВНУТРИ полотна 2400×800 и проверил его как
+# картинку — но на слайде полотно шириной 2400 px ложится в 12,23″, то есть
+# 196 px на дюйм, и подпись в 14–16 px выходит на экран как 5–6 pt. Это ниже
+# собственного порога деки (7,5 pt), и измерено на собранном PDF, а не на глаз.
+#
+# Поднять кегль в точках можно единственным способом: увеличить кегль в
+# пикселях, не трогая ширину полотна. Шесть блоков переставлены с трёх колонок
+# на ДВЕ — каждый блок стал вдвое шире (1168 px вместо 780), текст в нём
+# переносится реже, и освободившееся место ушло в кегль: тело 24 px вместо
+# 16–18, подписи 21 вместо 14–15, моноширинный 22 вместо 16. Полотно стало
+# выше (1164 px, пропорция 2,06), и схема занимает ту высоту слайда, которая
+# до этого пустовала под ней, — ровно «место сверху и снизу есть».
+# Состав блоков и весь текст — прежние, знак в знак.
 MW8 = 2400
-HD8 = 46          # высота заголовка блока (кружок + название)
-GAP8 = 16
-COLW8 = (MW8 - 40 - 2 * GAP8) // 3
-CX1, CX2, CX3 = 20, 20 + COLW8 + GAP8, 20 + 2 * (COLW8 + GAP8)
+HD8 = 58          # высота заголовка блока (кружок + название)
+GAP8 = 22
+COLW8 = (MW8 - 40 - GAP8) // 2
+CX1, CX2 = 20, 20 + COLW8 + GAP8
 
-RA8 = 10          # строка А: блоки 1–2–3
-HA8 = 377
-RB8 = RA8 + HA8 + GAP8     # строка B: блоки 4–5–6
-HB8 = 377
+ROWH8 = 356                       # высота блока вместе с его заголовком
+RY = [12, 12 + ROWH8 + GAP8, 12 + 2 * (ROWH8 + GAP8)]
+H8 = RY[2] + ROWH8 + 16
 
-# Внутреннего заголовка у схемы нет — его несёт заголовок слайда, и канон
-# одностраничника Семинара 5 (`khuki-n12-ustroystvo.png`) строкой-заголовком
-# внутри полотна не открывается. Сведение круга владельца: два одностраничника
-# занятия обязаны читаться одним жанром.
-im = Image.new("RGB", (MW8, RB8 + HB8 + 20), W); d = ImageDraw.Draw(im)
+im = Image.new("RGB", (MW8, H8), W); d = ImageDraw.Draw(im)
 
-# ── 1 — что такое сервер и где работает (было блоком 2 — поднято выше) ───
-bhead(CX1, RA8, "1", "ЧТО ТАКОЕ СЕРВЕР", COLW8)
-bpanel(CX1, RA8 + HD8, COLW8, HA8 - HD8, PALE)
-yy = RA8 + HD8 + 16
+
+def bhead(x, y, n, title, w, numfill=DEEP):
+    """Номер в кружке и название блока — над подложкой, тем же приёмом, что
+    у n14 (лестница приоритета): кружок с цифрой, заголовок жирным рядом."""
+    d.ellipse([x, y, x + 44, y + 44], fill=numfill)
+    nw = d.textlength(n, font=f(24, True))
+    d.text((x + 22 - nw / 2, y + 8), n, font=f(24, True), fill=W)
+    for ln in wrap(d, title, f(25, True), w - 60):
+        mtext(d, x + 58, y + 8, ln, 25, DEEP, b=True)
+        break  # заголовок блока — одна строка по дизайну сетки
+
+
+def bpanel(x, y, w, h, fill=SURF):
+    mpanel(d, x, y, w, h, None, fill=fill, stroke=None, sw=0)
+
+
+def code_card(x, y, w, h, lines, fill=W, stroke=LIGHT):
+    """Светлая карточка кода (правило А4 — не CODEBG): белая подложка,
+    тёмный моноширинный текст, тонкая рамка."""
+    d.rounded_rectangle([x, y, x + w, y + h], radius=10, fill=fill, outline=stroke, width=2)
+    yy = y + 14
+    for ln in lines:
+        d.text((x + 20, yy), ln, font=f(22, False, True), fill=DEEP)
+        yy += 31
+
+
+BODY, NOTE, PANH = 24, 21, ROWH8 - HD8
+
+# ── 1 — что такое сервер и где работает ─────────────────────────────────
+bhead(CX1, RY[0], "1", "ЧТО ТАКОЕ СЕРВЕР", COLW8)
+bpanel(CX1, RY[0] + HD8, COLW8, PANH, PALE)
+yy = RY[0] + HD8 + 18
 for ln in wrap(d, "Отдельная программа, не часть Claude Code. Отвечает на запросы по протоколу.",
-               f(18), COLW8 - 36):
-    d.text((CX1 + 18, yy), ln, font=f(18), fill=INK)
-    yy += 25
-yy += 14
-rows1 = [("stdio — локально", "процесс запускает Claude Code у вас на машине", TEAL),
-         ("http — удалённо", "сервис, который хостит и обновляет кто-то другой", MID)]
-for name, note, col in rows1:
-    d.rounded_rectangle([CX1 + 18, yy, CX1 + 216, yy + 38], radius=9, fill=col)
-    nw = d.textlength(name, font=f(16, True))
-    d.text((CX1 + 18 + (198 - nw) / 2, yy + 10), name, font=f(16, True), fill=W)
-    for j, ln in enumerate(wrap(d, note, f(16), COLW8 - 254)):
-        d.text((CX1 + 234, yy + 3 + j * 20), ln, font=f(16), fill=MUTE)
-    yy += 58
-yy += 8
-for ln in wrap(d, 'Команда в конфиге исполняется буквально при старте сессии: что записано, то и запустится.',
-               f(16, True), COLW8 - 36):
-    mtext(d, CX1 + 18, yy, ln, 16, GOLDINK, b=True)
-    yy += 21
+               f(BODY), COLW8 - 44):
+    d.text((CX1 + 22, yy), ln, font=f(BODY), fill=INK); yy += 33
+yy += 10
+for name, note, col in [("stdio — локально", "процесс запускает Claude Code у вас на машине", TEAL),
+                        ("http — удалённо", "сервис, который хостит и обновляет кто-то другой", MID)]:
+    d.rounded_rectangle([CX1 + 22, yy, CX1 + 286, yy + 48], radius=9, fill=col)
+    nw = d.textlength(name, font=f(21, True))
+    d.text((CX1 + 22 + (264 - nw) / 2, yy + 12), name, font=f(21, True), fill=W)
+    for j, ln in enumerate(wrap(d, note, f(NOTE), COLW8 - 330)):
+        d.text((CX1 + 306, yy + 11 + j * 26), ln, font=f(NOTE), fill=MUTE)
+    yy += 62
+yy += 10
+for ln in wrap(d, "Команда в конфиге исполняется буквально при старте сессии: что записано, то и запустится.",
+               f(NOTE, True), COLW8 - 44):
+    mtext(d, CX1 + 22, yy, ln, NOTE, GOLDINK, b=True); yy += 27
 
 # ── 2 — где объявляется, с мини-шаблоном .mcp.json ───────────────────────
-bhead(CX2, RA8, "2", "ГДЕ ОБЪЯВЛЯЕТСЯ", COLW8)
-bpanel(CX2, RA8 + HD8, COLW8, HA8 - HD8, SURF)
-code_card(CX2 + 18, RA8 + HD8 + 14, COLW8 - 36, 128, [
-    '{ "mcpServers": {',
-    '    "github": {',
-    '      "command": "npx", …',
-    '    } } }',
+bhead(CX2, RY[0], "2", "ГДЕ ОБЪЯВЛЯЕТСЯ", COLW8)
+bpanel(CX2, RY[0] + HD8, COLW8, PANH, SURF)
+code_card(CX2 + 22, RY[0] + HD8 + 16, COLW8 - 44, 142, [
+    '{ "mcpServers": { "github": {',
+    '      "command": "npx", … } } }',
 ])
-yy = RA8 + HD8 + 156
+yy = RY[0] + HD8 + 176
 for k, g in [(".mcp.json", "в репозитории — область project"),
              ("~/.claude.json", "области local (дефолт) и user")]:
-    d.text((CX2 + 18, yy), k, font=f(17, False, True), fill=INK)
-    for j, ln in enumerate(wrap(d, g, f(15), COLW8 - 36)):
-        d.text((CX2 + 18, yy + 23 + j * 19), ln, font=f(15), fill=MUTE)
-    yy += 48
-mtext(d, CX2 + 18, RA8 + HA8 - 28, "Какая область и почему — разбираем дальше в кейсе", 15, MUTE)
+    kw = d.textlength(k, font=f(23, False, True))
+    d.text((CX2 + 22, yy), k, font=f(23, False, True), fill=INK)
+    d.text((CX2 + 32 + kw, yy + 2), "— " + g, font=f(NOTE), fill=MUTE)
+    yy += 36
+mtext(d, CX2 + 22, RY[0] + ROWH8 - 36, "Какая область и почему — разбираем дальше в кейсе",
+      NOTE, MUTE)
 
 # ── 3 — что происходит при подключении ───────────────────────────────────
-bhead(CX3, RA8, "3", "ЧТО ПРОИСХОДИТ ПРИ ПОДКЛЮЧЕНИИ", COLW8)
-bpanel(CX3, RA8 + HD8, COLW8, HA8 - HD8, SURF)
-yy = RA8 + HD8 + 16
+bhead(CX1, RY[1], "3", "ЧТО ПРОИСХОДИТ ПРИ ПОДКЛЮЧЕНИИ", COLW8)
+bpanel(CX1, RY[1] + HD8, COLW8, PANH, SURF)
+yy = RY[1] + HD8 + 18
 for ln in wrap(d, "Транспорт поднялся — Claude Code САМА, без модели, спрашивает у сервера его список:",
-               f(18), COLW8 - 36):
-    d.text((CX3 + 18, yy), ln, font=f(18), fill=INK)
-    yy += 25
-yy += 10
+               f(BODY), COLW8 - 44):
+    d.text((CX1 + 22, yy), ln, font=f(BODY), fill=INK); yy += 33
+yy += 6
+kx = CX1 + 22
+kw = (COLW8 - 44 - 2 * 14) // 3
 for k in ["tools/list", "prompts/list", "resources/list"]:
-    d.rounded_rectangle([CX3 + 18, yy, CX3 + COLW8 - 18, yy + 40], radius=9,
-                        fill=W, outline=LIGHT, width=2)
-    tw = d.textlength(k, font=f(18, False, True))
-    d.text((CX3 + 18 + (COLW8 - 36 - tw) / 2, yy + 8), k, font=f(18, False, True), fill=DEEP)
-    yy += 50
+    d.rounded_rectangle([kx, yy, kx + kw, yy + 50], radius=9, fill=W, outline=LIGHT, width=2)
+    tw = d.textlength(k, font=f(22, False, True))
+    d.text((kx + (kw - tw) / 2, yy + 12), k, font=f(22, False, True), fill=DEEP)
+    kx += kw + 14
+yy += 66
 for ln in wrap(d, "Сервер отвечает именами и короткой инструкцией — не схемами целиком.",
-               f(16), COLW8 - 36):
-    mtext(d, CX3 + 18, yy + 8, ln, 16, MUTE)
+               f(NOTE), COLW8 - 44):
+    mtext(d, CX1 + 22, yy, ln, NOTE, MUTE); yy += 27
 
 # ── 4 — вызов: агент поднимает сервер и передаёт параметры ───────────────
-bhead(CX1, RB8, "4", "ВЫЗОВ: ПАРАМЕТРЫ АГЕНТ СОБИРАЕТ САМ", COLW8)
-bpanel(CX1, RB8 + HD8, COLW8, HB8 - HD8, PALE)
-code_card(CX1 + 18, RB8 + HD8 + 14, COLW8 - 36, 96, [
+bhead(CX2, RY[1], "4", "ВЫЗОВ: ПАРАМЕТРЫ АГЕНТ СОБИРАЕТ САМ", COLW8)
+bpanel(CX2, RY[1] + HD8, COLW8, PANH, PALE)
+code_card(CX2 + 22, RY[1] + HD8 + 16, COLW8 - 44, 110, [
     'mcp__github__create_issue',
     '{ title, body, … }',
 ], fill=W, stroke=TEAL)
-yy = RB8 + HD8 + 124
+yy = RY[1] + HD8 + 146
 for ln in wrap(d, "Агент сам поднимает нужный сервер и вызывает его — так же, как вызвал бы "
                   "функцию: полное имя с префиксом сервера и аргументы, которые собрала модель.",
-               f(16), COLW8 - 36):
-    d.text((CX1 + 18, yy), ln, font=f(16), fill=MUTE)
-    yy += 21
+               f(BODY), COLW8 - 44):
+    d.text((CX2 + 22, yy), ln, font=f(BODY), fill=MUTE); yy += 31
 
 # ── 5 — контекст и цена: три статьи расхода, конкретно ───────────────────
-bhead(CX2, RB8, "5", "КОНТЕКСТ И ЦЕНА — ТРИ СТАТЬИ", COLW8)
-bpanel(CX2, RB8 + HD8, COLW8, HB8 - HD8, SURF)
-stages5 = [("старт сессии", "имя сервера и короткая инструкция — в контексте всегда", TEAL),
-           ("модель решает", "полную схему инструмента подгружает сама, по требованию (ToolSearch)", MID),
-           ("пришёл ответ", "результат вызова — отдельный бюджет: предупреждение за 10 000 токенов, обрезка за 25 000", DEEP)]
-yy = RB8 + HD8 + 14
-for t_, note, col in stages5:
-    box(d, CX2 + 18, yy, COLW8 - 36, 42, t_, col, tc=W, sz=16)
-    yy += 48
-    for ln in wrap(d, note, f(14), COLW8 - 36):
-        d.text((CX2 + 18, yy), ln, font=f(14), fill=MUTE)
-        yy += 18
-    yy += 8
-mpanel(d, CX2 + 18, yy + 2, COLW8 - 36, 56, None, fill=(0xFD, 0xF3, 0xD6), stroke=GOLD, sw=3)
-for i, ln in enumerate(wrap(d, "Постоянная плата идёт за то, что сервер подключён. Цена вызова — отдельно, за каждый ответ.",
-                            f(14, True), COLW8 - 64)):
-    mtext(d, CX2 + 32, yy + 12 + i * 19, ln, 14, GOLDINK, b=True)
+bhead(CX1, RY[2], "5", "КОНТЕКСТ И ЦЕНА — ТРИ СТАТЬИ", COLW8)
+bpanel(CX1, RY[2] + HD8, COLW8, PANH, SURF)
+yy = RY[2] + HD8 + 14
+for t_, note, col in [("старт сессии", "имя сервера и короткая инструкция — в контексте всегда", TEAL),
+                      ("модель решает", "полную схему инструмента подгружает сама, по требованию (ToolSearch)", MID),
+                      ("пришёл ответ", "результат вызова — отдельный бюджет: предупреждение за 10 000 токенов, обрезка за 25 000", DEEP)]:
+    box(d, CX1 + 22, yy, 300, 42, t_, col, tc=W, sz=20)
+    for j, ln in enumerate(wrap(d, note, f(NOTE), COLW8 - 390)):
+        d.text((CX1 + 344, yy + 2 + j * 26), ln, font=f(NOTE), fill=MUTE)
+    yy += 56
+# Высота плашки считается ПО ЧИСЛУ СТРОК, а не берётся константой: при
+# укрупнении кегля текст стал переноситься на вторую строку и вылезал за
+# нижнюю границу рамки.
+_plate = wrap(d, "Постоянная плата идёт за то, что сервер подключён. Цена вызова — отдельно, за каждый ответ.",
+              f(NOTE, True), COLW8 - 80)
+mpanel(d, CX1 + 22, yy + 4, COLW8 - 44, 24 + 28 * len(_plate), None,
+       fill=(0xFD, 0xF3, 0xD6), stroke=GOLD, sw=3)
+for i, ln in enumerate(_plate):
+    mtext(d, CX1 + 44, yy + 16 + i * 28, ln, NOTE, GOLDINK, b=True)
 
 # ── 6 — чем отвечает сервер ───────────────────────────────────────────────
-bhead(CX3, RB8, "6", "ЧЕМ ОТВЕЧАЕТ СЕРВЕР", COLW8)
-bpanel(CX3, RB8 + HD8, COLW8, HB8 - HD8, PALE)
-yy = RB8 + HD8 + 16
+bhead(CX2, RY[2], "6", "ЧЕМ ОТВЕЧАЕТ СЕРВЕР", COLW8)
+bpanel(CX2, RY[2] + HD8, COLW8, PANH, PALE)
+yy = RY[2] + HD8 + 18
 for ln in wrap(d, "Результат приходит отдельным каналом от обнаружения возможностей — не тем же, "
-                  "что при подключении.",
-               f(17), COLW8 - 36):
-    d.text((CX3 + 18, yy), ln, font=f(17), fill=INK)
-    yy += 23
-yy += 10
-d.rounded_rectangle([CX3 + 18, yy, CX3 + COLW8 - 18, yy + 72], radius=9,
+                  "что при подключении.", f(BODY), COLW8 - 44):
+    d.text((CX2 + 22, yy), ln, font=f(BODY), fill=INK); yy += 32
+yy += 8
+d.rounded_rectangle([CX2 + 22, yy, CX2 + COLW8 - 22, yy + 84], radius=9,
                     fill=W, outline=TEAL, width=2)
-d.text((CX3 + 32, yy + 13), "tool call", font=f(16, False, True), fill=DEEP)
-d.text((CX3 + 32, yy + 40), "mcp__github__create_issue", font=f(16, True), fill=TEAL)
-yy += 88
+d.text((CX2 + 38, yy + 14), "tool call", font=f(21, False, True), fill=DEEP)
+d.text((CX2 + 38, yy + 46), "mcp__github__create_issue", font=f(22, True), fill=TEAL)
+yy += 100
 for ln in wrap(d, "Вызов подписан именем сервера — видно, что ответ пришёл именно оттуда, "
-                  "не из общих знаний модели.",
-               f(16), COLW8 - 36):
-    mtext(d, CX3 + 18, yy, ln, 16, MUTE)
-    yy += 21
+                  "не из общих знаний модели.", f(NOTE), COLW8 - 44):
+    mtext(d, CX2 + 22, yy, ln, NOTE, MUTE); yy += 27
 
-im = im.crop((0, 0, MW8, RB8 + HB8 + 20))
+im = im.crop((0, 0, MW8, H8))
 msave(im, "mcp-n08-mehanizm.png")
 
 # ═══════════════════════════════════════════════════════════════════════════

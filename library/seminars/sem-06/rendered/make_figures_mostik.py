@@ -3,14 +3,24 @@
 
 Рисуется программно (PIL), не описывается словами. Продолжает приём обложки
 Семинара 5 (`sem-05/rendered/make_figures_ramka.py` § n01) — тот же
-hero-формат (нижняя треть во всю ширину, ≥40% площади слайда), но контент
-свой: n01.md Семинара 6 просит не «просьбу → хук/скилл/MCP/…», а «сообщение
-против факта» + ряд оси из пяти сегментов. Файл сессии рамки (n01–n05),
-`make_figures_mcp.py` / `make_figures_subagent.py` этой сессией не трогаются.
+hero-формат (нижняя треть во всю ширину, ≥40% площади слайда). Файл сессии
+рамки (n01–n05, n65–n68); `make_figures_mcp.py` / `make_figures_subagent.py`
+этой сессией не трогаются.
 
-  ramka-n01-hero-sem06.png   n01   карточка «сообщение» → пунктирная стрелка
-                                   со знаком вопроса → карточка «факт»;
-                                   под парой — ряд оси из пяти сегментов
+Круг правок владельца (issue 225, §А1+§А2): прежняя схема («сообщение»
+против «факта», с пунктирной стрелкой и незалитой галочкой, плюс ряд оси из
+ПЯТИ сегментов, включая «процесс») снята целиком вместе с аркой, которую она
+держала. Новая схема рисует новую несущую мысль занятия (см. `n01.md`,
+поле `visual.primary`): слева пунктирная карточка «контекст агента» —
+«репозиторий» и «разговор с вами», подпись «дальше агент не видит ничего» —
+от неё две стрелки к двум белым карточкам справа: «данные снаружи — MCP» и
+«своя роль, урезанные права — субагент». Под этой парой — ряд из ЧЕТЫРЁХ
+сегментов, не пяти: хук и скилл серые («закрыты в прошлый раз»), MCP и
+субагент gold («решаем сегодня»).
+
+  ramka-n01-hero-sem06.png   n01   контекст агента → (две стрелки) →
+                                   MCP / субагент; ниже — ось из четырёх
+                                   сегментов, без «процесса»
 
 Холст 2400×620 px при вставке во всю ширину канвы (13,333″) даёт высоту
 620/2400×13,333 = 3,44″ = 45,9% площади слайда 13,333×7,5 — hero-порог ≥40%
@@ -32,41 +42,50 @@ COVER_LINE = (0x9D, 0xBA, 0xD0)
 
 d.line([50, 596, 2350, 596], fill=COVER_LINE, width=4)
 
-# ── Левая карточка «сообщение» ────────────────────────────────────────────
-MX, MY, MW_, MH = 90, 46, 520, 230
-d.rounded_rectangle([MX, MY, MX + MW_, MY + MH], radius=14, fill=W)
-clabel(d, MX + MW_ / 2, MY + 20, "сообщение", 32, INK, b=True, where="n01 сообщение",
-       limit=MW_ - 40)
-d.line([MX + 40, MY + 74, MX + MW_ - 40, MY + 74], fill=(0xC6, 0xD5, 0xE2), width=2)
-clabel(d, MX + MW_ / 2, MY + 98, "сервер: «подключено»", 25, MID, b=True,
-       where="n01 сообщение", limit=MW_ - 48)
-clabel(d, MX + MW_ / 2, MY + 138, "роль: «сделано»", 25, MID, b=True,
-       where="n01 сообщение", limit=MW_ - 48)
-clabel(d, MX + MW_ / 2, MY + 186, "— обе сообщили о себе сами", 20, MUTE,
-       where="n01 сообщение", limit=MW_ - 48)
+# ── Левая пунктирная карточка «контекст агента» ────────────────────────────
+CX, CY, CW, CH = 70, 40, 640, 250
+bgsample = im.getpixel((CX + CW // 2, CY + CH // 2))
+dashbox(d, CX, CY, CW, CH, COVER_LINE, dash=16, gap=10, width=3, bg=bgsample)
+clabel(d, CX + CW / 2, CY + 26, "контекст агента", 32, W, b=True,
+       where="n01 контекст", limit=CW - 50)
+d.line([CX + 40, CY + 78, CX + CW - 40, CY + 78], fill=COVER_LINE, width=2)
+clabel(d, CX + CW / 2, CY + 102, "репозиторий", 25, COVER_DIM, b=True,
+       where="n01 контекст", limit=CW - 56)
+clabel(d, CX + CW / 2, CY + 142, "разговор с вами", 25, COVER_DIM, b=True,
+       where="n01 контекст", limit=CW - 56)
+for k, ln in enumerate(("дальше агент", "не видит ничего")):
+    clabel(d, CX + CW / 2, CY + 190 + k * 26, ln, 19, COVER_DIM,
+           where="n01 контекст", limit=CW - 56)
 
-# ── Пунктирная стрелка со знаком вопроса ──────────────────────────────────
-AX1, AX2, AY = MX + MW_ + 30, MX + MW_ + 310, MY + MH / 2
-arrow(d, AX1, AY, AX2, AY, col=COVER_LINE, wd=6, head=20, dash=True)
-clabel(d, (AX1 + AX2) / 2, AY - 56, "?", 46, GOLD, b=True, where="n01 вопрос")
+# ── Две стрелки к двум карточкам справа ─────────────────────────────────────
+AX1 = CX + CW + 20
+AX2 = AX1 + 130
+RX = AX2
+RW = 820
+RH = (CH - 30) / 2
+arrow(d, AX1, CY + RH / 2, AX2, CY + RH / 2, col=COVER_LINE, wd=6, head=18)
+arrow(d, AX1, CY + RH + 30 + RH / 2, AX2, CY + RH + 30 + RH / 2, col=COVER_LINE, wd=6, head=18)
 
-# ── Правая карточка «факт» ────────────────────────────────────────────────
-FX = AX2 + 30
-FW_ = 520
-d.rounded_rectangle([FX, MY, FX + FW_, MY + MH], radius=14, fill=W)
-clabel(d, FX + FW_ / 2, MY + 20, "факт", 32, INK, b=True, where="n01 факт", limit=FW_ - 40)
-check_outline(d, FX + FW_ / 2, MY + 128, 34, (0x9D, 0xB2, 0xC4))
-# незалитая галочка — приглушённый, но читаемый контур: видна, но
-# демонстративно «не подтверждена» (вопрос задаётся, не отвечается)
-d.line([FX + 40, MY + 74, FX + FW_ - 40, MY + 74], fill=(0xC6, 0xD5, 0xE2), width=2)
-clabel(d, FX + FW_ / 2, MY + 188, "проверено независимо от сообщения?", 20, MUTE,
-       where="n01 факт", limit=FW_ - 48)
+# ── Правая верхняя карточка «данные снаружи — MCP» ─────────────────────────
+d.rounded_rectangle([RX, CY, RX + RW, CY + RH], radius=14, fill=W)
+clabel(d, RX + RW / 2, CY + RH / 2 - 34, "данные снаружи", 28, INK, b=True,
+       where="n01 MCP-карточка", limit=RW - 48)
+clabel(d, RX + RW / 2, CY + RH / 2 + 6, "— MCP", 28, MID, b=True,
+       where="n01 MCP-карточка", limit=RW - 48)
 
-# ── Ряд оси из пяти сегментов ──────────────────────────────────────────────
+# ── Правая нижняя карточка «своя роль, урезанные права — субагент» ─────────
+RY2 = CY + RH + 30
+d.rounded_rectangle([RX, RY2, RX + RW, RY2 + RH], radius=14, fill=W)
+clabel(d, RX + RW / 2, RY2 + RH / 2 - 34, "своя роль, урезанные права", 26, INK, b=True,
+       where="n01 субагент-карточка", limit=RW - 48)
+clabel(d, RX + RW / 2, RY2 + RH / 2 + 8, "— субагент", 28, MID, b=True,
+       where="n01 субагент-карточка", limit=RW - 48)
+
+# ── Ряд оси из ЧЕТЫРЁХ сегментов (issue 225, §А1: пятого — «процесс» — нет) ─
 SEGY, SEGH = 330, 220
 GAP = 26
-SEGW = (2330 - 70 - 4 * GAP) / 5
-names = ["хук", "скилл", "MCP", "субагент", "процесс"]
+SEGW = (2330 - 70 - 3 * GAP) / 4
+names = ["хук", "скилл", "MCP", "субагент"]
 x = 70
 for i, name in enumerate(names):
     if i < 2:
@@ -75,23 +94,12 @@ for i, name in enumerate(names):
         for k, ln in enumerate(("закрыты", "в прошлый раз")):
             clabel(d, x + SEGW / 2, SEGY + 128 + k * 30, ln, 19, GREY_TX,
                    where="n01 ось", limit=SEGW - 24)
-    elif i < 4:
-        # Круг после прожарок (issue 225): здесь стоял значок замка —
-        # студент на прожарке прочёл его как двусмысленный (закрытый с виду
-        # замок на плашке «сегодня», при том что серые соседи подписаны
-        # «закрыты» и замка не имеют вовсе — ровно противоположная по знаку
-        # ассоциация). Снят, не заменён: подпись «сегодня — две из пяти»
-        # несёт весь смысл сама, без значка, который его путал.
+    else:
         d.rounded_rectangle([x, SEGY, x + SEGW, SEGY + SEGH], radius=14, fill=GOLD)
         clabel(d, x + SEGW / 2, SEGY + 46, name, 34, DEEP, b=True, where="n01 ось")
-        for k, ln in enumerate(("сегодня —", "две из пяти")):
+        for k, ln in enumerate(("решаем", "сегодня")):
             clabel(d, x + SEGW / 2, SEGY + 128 + k * 30, ln, 19, GOLDINK,
                    where="n01 ось", limit=SEGW - 24)
-    else:
-        bgsample = im.getpixel((int(x + SEGW / 2), int(SEGY + SEGH / 2)))
-        dashbox(d, x, SEGY, SEGW, SEGH, COVER_LINE, dash=16, gap=10, width=3, bg=bgsample)
-        clabel(d, x + SEGW / 2, SEGY + 46, name, 34, COVER_DIM, b=True, where="n01 ось")
-        clabel(d, x + SEGW / 2, SEGY + 128, "впереди", 19, COVER_DIM, where="n01 ось")
     x += SEGW + GAP
 
 save(im, "ramka-n01-hero-sem06.png")

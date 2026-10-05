@@ -147,10 +147,19 @@ def blocks(visual):
             items = [_clean(x) for x in ln.split("·") if x.strip()]
             if len(items) >= 3:
                 out.append(("cards", items)); i += 1; continue
-        if re.match(r"^\s*[-*]\s+", ln):
+        if re.match(r"^\s*(?:[-*]|\d+\.)\s+", ln):
+            # `\d+\.` — нумерованный список markdown, не только `-`/`*`.
+            # Живой случай (n34/n45/n54, issue 225): «## Visual» писал сцену
+            # нумерованным списком (`1. … 2. … 3. … 4. …`), разборщик знал
+            # только дефис/звёздочку — нумерованные строки не попадали ни в
+            # одну ветку и схлопывались через `flush()` в один жирный абзац
+            # без переносов (та же форма, что и обычный текст). Починка —
+            # распознаём оба маркера, рисуем тем же `K.numbered_list`, что
+            # и дефисные пункты (n07/n18) — маркер в источнике (цифра или
+            # дефис) на экране всё равно не печатается, печатается точка.
             flush(); items = []
-            while i < len(lines) and re.match(r"^\s*[-*]\s+", lines[i]):
-                items.append(_clean(re.sub(r"^\s*[-*]\s+", "", lines[i]))); i += 1
+            while i < len(lines) and re.match(r"^\s*(?:[-*]|\d+\.)\s+", lines[i]):
+                items.append(_clean(re.sub(r"^\s*(?:[-*]|\d+\.)\s+", "", lines[i]))); i += 1
             out.append(("bullets", items)); continue
         buf.append(ln); i += 1
     flush()

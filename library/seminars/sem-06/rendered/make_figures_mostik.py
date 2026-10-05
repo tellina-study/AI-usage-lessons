@@ -76,11 +76,16 @@ for i, name in enumerate(names):
             clabel(d, x + SEGW / 2, SEGY + 128 + k * 30, ln, 19, GREY_TX,
                    where="n01 ось", limit=SEGW - 24)
     elif i < 4:
+        # Круг после прожарок (issue 225): здесь стоял значок замка —
+        # студент на прожарке прочёл его как двусмысленный (закрытый с виду
+        # замок на плашке «сегодня», при том что серые соседи подписаны
+        # «закрыты» и замка не имеют вовсе — ровно противоположная по знаку
+        # ассоциация). Снят, не заменён: подпись «сегодня — две из пяти»
+        # несёт весь смысл сама, без значка, который его путал.
         d.rounded_rectangle([x, SEGY, x + SEGW, SEGY + SEGH], radius=14, fill=GOLD)
-        lock(d, x + SEGW / 2, SEGY + 30, 24, DEEP)
-        clabel(d, x + SEGW / 2, SEGY + 96, name, 34, DEEP, b=True, where="n01 ось")
+        clabel(d, x + SEGW / 2, SEGY + 46, name, 34, DEEP, b=True, where="n01 ось")
         for k, ln in enumerate(("сегодня —", "две из пяти")):
-            clabel(d, x + SEGW / 2, SEGY + 150 + k * 28, ln, 19, GOLDINK,
+            clabel(d, x + SEGW / 2, SEGY + 128 + k * 30, ln, 19, GOLDINK,
                    where="n01 ось", limit=SEGW - 24)
     else:
         bgsample = im.getpixel((int(x + SEGW / 2), int(SEGY + SEGH / 2)))

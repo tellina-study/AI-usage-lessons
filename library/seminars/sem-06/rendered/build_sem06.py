@@ -757,6 +757,21 @@ def g_axis_table(sl, sid, title, blocks, pattern, assertion=""):
     K.slide_number_mark(sl, slide_number(sid))
 
 
+# Круг после прожарок (issue 225, P1-3): n32 — ЕДИНСТВЕННЫЙ `criteria_
+# checklist_and_boundary` из шести (n16/n24/n32/n43/n52/n59), чей мостик-
+# `>`-блок заканчивается знаком вопроса («...в каждой сессии её приходится
+# объяснять заново?») — `quote_role()` ловит это первым правилом («тело
+# кончается на ?» → роль `question`) и рисует его золотой кремовой рамкой
+# «вопрос залу», хотя после n32 идёт не карточка-ответ, а дивайдер (n33):
+# это авторский мостик в следующий блок, а не настоящее голосование. Та же
+# коробка у n04/n09/n19/n27/n36/n46/n55/n62 последовательно значит «сейчас
+# зал отвечает» — n32 ломал этот язык. Проверено (см. комментарий ниже):
+# у остальных пяти `criteria_checklist_and_boundary` мостик не кончается
+# вопросом, форма `formula` подбирается автоматически и верно — форсируем
+# роль только для n32, точечно.
+CRITERIA_QUOTE_ROLE_FORCE = {"n32": "formula"}
+
+
 def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
     """Граница применимости — таблица на 2 колонки становится двумя плашками
     бок о бок. Перенесено из build_sem05.py без изменений."""
@@ -768,7 +783,8 @@ def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
     drawers = []
     for kind, b in others:
         if kind == "quote":
-            drawers.append(block_drawer(kind, b, sid, pattern))
+            drawers.append(block_drawer(kind, b, sid, pattern,
+                                        role=CRITERIA_QUOTE_ROLE_FORCE.get(sid)))
 
     if len(tables) == 1 and len(tables[0][0]) == 2:
         headers, rows = tables[0]
@@ -831,6 +847,33 @@ def g_closing(sl, sid, title, blocks, pattern, assertion=""):
     K.slide_number_mark(sl, slide_number(sid))
 
 
+# Круг после прожарок (issue 225, P1-3): на n13 фигура (лестница приоритета)
+# рисовалась ПЕРВЫМ блоком — глаз сперва читал цветной список, хотя
+# заголовок слайда обещает «собранный файл» (код), а лестница — лишь
+# компаньон к коду, вторая мысль. Код в блоках источника идёт следом за
+# фигурой в `## Visual` слайда, но при фигуре-первой он всегда рисовался
+# ПОСЛЕ неё. Для n13 — единственного `code_artifact` с фигурой — фигура
+# переносится ПОСЛЕ блоков: код (то, что называет заголовок) читается
+# первым, лестница (механика, подпирающая код) — вторым. Больше ни один
+# `code_artifact`-слайд фигуры не объявляет (проверено), так что правка не
+# трогает остальные жанры.
+FIG_AFTER_BLOCKS = {"n13"}
+
+# Круг после прожарок (issue 225, P1-4): «золото ≥1× на слайде» (CLAUDE.md)
+# не выполнялось на четырёх repo-state/рекап слайдах — единственная цитата
+# на них классифицируется как `quote_role` → «speech» (тихая реплика,
+# тиловая полоса), потому что текст начинается с «« и подходящей роли
+# «formula»/«fact» в `PATTERN_ROLE` для их приёмов (`code_artifact`,
+# `recap_table`, `file_tree_snapshot`, `answer_breakdown_table`) не
+# назначено. По содержанию эта цитата — не реплика лектора вразрез по
+# ходу, а ЕДИНСТВЕННАЯ подпись-итог слайда (так и названо в их собственном
+# `visual.primary`: «единственная подпись слайда») — ровно работа формулы
+# (золотая планка), не речи. n63 несёт два `>`-блока; золотой становится
+# только ПОСЛЕДНИЙ (короткая строка оси «Четыре строки из пяти…» — тот же
+# рефрен, что у n60), первый (длинная рефлексия) остаётся тихой репликой.
+GOLD_QUOTE_SIDS = {"n02": "all", "n60": "all", "n61": "all", "n63": "last"}
+
+
 def g_content(sl, sid, title, blocks, pattern, assertion=""):
     """Содержательный слайд по умолчанию: заголовок-утверждение, схема (если
     объявлена), блоки в порядке источника. Это жанр для БОЛЬШИНСТВА приёмов
@@ -845,9 +888,13 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
     y0 = K.auto_header(sl, title)
     drawers = []
     fig = figure_for(sid)
-    if fig:
+    fig_after = bool(fig) and sid in FIG_AFTER_BLOCKS
+    if fig and not fig_after:
         drawers.append(lambda sl, y, mh, p=fig: K.figure(
             sl, p, LEFT, y, WIDTH, mh if mh else 4.3, label=sid))
+    gold_rule = GOLD_QUOTE_SIDS.get(sid)
+    quote_total = sum(1 for k, _ in blocks if k == "quote") if gold_rule == "last" else 0
+    quote_i = -1
     for kind, b in blocks:
         if kind == "table" and pattern == "evidence_table_with_gap":
             # таблица свидетельств — свой акцент: взвешивает, не выбирает
@@ -855,9 +902,17 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
                 sl, LEFT, y, WIDTH, h_, r_, max_h=mh, accent=K.MID, highlight={},
                 label=f"{sid} свидетельства"))
             continue
-        d = block_drawer(kind, b, sid, pattern)
+        role = None
+        if kind == "quote" and gold_rule:
+            quote_i += 1
+            if gold_rule == "all" or (gold_rule == "last" and quote_i == quote_total - 1):
+                role = "formula"
+        d = block_drawer(kind, b, sid, pattern, role=role)
         if d:
             drawers.append(d)
+    if fig_after:
+        drawers.append(lambda sl, y, mh, p=fig: K.figure(
+            sl, p, LEFT, y, WIDTH, mh if mh else 4.3, label=sid))
     compose(sl, sid, y0, drawers)
     K.slide_number_mark(sl, slide_number(sid))
 

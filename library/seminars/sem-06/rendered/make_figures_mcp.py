@@ -13,6 +13,20 @@ VIZUAL-OTCHET.md). Холст 1600 px = 12,23″ рабочей ширины с�
 
 n08 (`base_and_edge`) и n21 (`mechanics_table`, уже две читаемые таблицы —
 см. поправку оркестратора) НЕ тронуты: обоснование — в VIZUAL-OTCHET.md.
+
+Круг правок владельца (issue 225, п.4 — «по субагентам и Mcp сделай подробные
+одностраничники как было в предыдущей лекции»), зона n06–n16:
+
+  mcp-n08a-mehanizm.png        n08a  одностраничник «MCP целиком, одним
+                                      экраном» — шесть блоков, образец n11
+                                      Семинара 5 (`khuki-n12-ustroystvo.png`),
+                                      состав блоков СВОЙ, не копия хука: где
+                                      объявляется · что такое сервер и где
+                                      работает · что передаётся при
+                                      подключении · что передаётся при
+                                      вызове · что попадает в контекст и чего
+                                      это стоит · чем отвечает сервер и что
+                                      среда делает с ответом.
 """
 from fig_toolkit import *
 
@@ -221,5 +235,170 @@ for k, ln in enumerate(["обязательное подтверждение н�
     mtext(d, 44, EY + 74 + k * 22, ln, 16, INK)
 im = im.crop((0, 0, MW, EY + 156))
 msave(im, "mcp-n29-tsepochka.png")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# n08a — одностраничник «MCP целиком, одним экраном» (issue 225, п.4)
+#
+# Образец — n11 Семинара 5 (khuki-n12-ustroystvo.png, 2400×844, 2,84:1):
+# шесть пронумерованных блоков, у каждого своя подложка. Состав блоков здесь
+# СВОЙ — механика MCP, не хука: где объявляется · что такое сервер и где
+# работает · что передаётся при подключении · что передаётся при вызове ·
+# что попадает в контекст и чего это стоит · чем отвечает сервер и что среда
+# делает с ответом. Источник фактов — sem-05/research/mechanics-5-mcp.md
+# §1.1/§1.4 (транспорты, кто запускает), §2.1 (tools/list и другие
+# discovery-запросы, без участия модели), §2.2 (mcp__server__tool), §2.3
+# (tool search, ENABLE_TOOL_SEARCH), §2.4 (вызов в выводе подписан именем
+# сервера).
+#
+# Первая версия (2 колонки × 2 строки сверху + 2 строки во всю ширину снизу,
+# холст 1600×992) была ЗАЖАТА сборкой: `K.figure()` выделяет приёму
+# `mechanics_with_figure` потолок 4,3″ высоты при полной ширине 12,23″ —
+# предельное соотношение сторон 2,84:1 (ровно то, что даёт холст хука,
+# 2400/844). Соотношение 1600/992 = 1,61 — почти вдвое ниже порога, схема
+# встала на слайд в 57% ширины и 32% площади от себя же, нечитаемо плотно.
+# Починка — не перерисовка в деталях, а смена СЕТКИ: с «2+2+1+1» на чистую
+# «3 колонки × 2 строки», тем же приёмом, что у хука (широкий холст, бок о
+# бок, а не стопкой). Холст 2400×840 — соотношение 2,857:1, с запасом выше
+# порога 2,84:1.
+# ═══════════════════════════════════════════════════════════════════════════
+def bhead(x, y, n, title, w, numfill=DEEP):
+    """Номер в кружке и название блока — над подложкой, тем же приёмом, что
+    у n13 (лестница приоритета): кружок с цифрой, заголовок жирным рядом."""
+    d.ellipse([x, y, x + 34, y + 34], fill=numfill)
+    nw = d.textlength(n, font=f(19, True))
+    d.text((x + 17 - nw / 2, y + 7), n, font=f(19, True), fill=W)
+    for ln in wrap(d, title, f(19, True), w - 46):
+        mtext(d, x + 46, y + 6, ln, 19, DEEP, b=True)
+        break  # заголовок блока — одна строка по дизайну сетки
+
+
+def bpanel(x, y, w, h, fill=SURF):
+    mpanel(d, x, y, w, h, None, fill=fill, stroke=None, sw=0)
+
+
+MW8 = 2400
+HD8 = 42          # высота заголовка блока (кружок + название)
+GAP8 = 16
+COLW8 = (MW8 - 40 - 2 * GAP8) // 3
+CX1, CX2, CX3 = 20, 20 + COLW8 + GAP8, 20 + 2 * (COLW8 + GAP8)
+
+RA8 = 54          # строка А: блоки 1–2–3
+HA8 = 360
+RB8 = RA8 + HA8 + GAP8     # строка B: блоки 4–5–6
+HB8 = 360
+
+im = Image.new("RGB", (MW8, RB8 + HB8 + 20), W); d = ImageDraw.Draw(im)
+mtext(d, 20, 8, "MCP устроено из шести частей — одна карта на весь блок", 27, DEEP, b=True)
+
+# ── 1 — где объявляется ──────────────────────────────────────────────────
+bhead(CX1, RA8, "1", "ГДЕ ОБЪЯВЛЯЕТСЯ", COLW8)
+bpanel(CX1, RA8 + HD8, COLW8, HA8 - HD8, SURF)
+for i, (k, g) in enumerate([
+        (".mcp.json", "в репозитории — область project"),
+        ("~/.claude.json", "области local (дефолт) и user"),
+        ('"command"/"args"', "чем и что запускается"),
+        ('"env"', "ключ — подстановкой ${VAR}")]):
+    yy = RA8 + HD8 + 16 + i * 58
+    d.text((CX1 + 18, yy), k, font=f(19, False, True), fill=INK)
+    for j, ln in enumerate(wrap(d, g, f(16), COLW8 - 36)):
+        d.text((CX1 + 18, yy + 26 + j * 20), ln, font=f(16), fill=MUTE)
+mtext(d, CX1 + 18, RA8 + HA8 - 30, "Какая область и почему — через два слайда", 15, MUTE)
+
+# ── 2 — что такое сервер и где работает ──────────────────────────────────
+bhead(CX2, RA8, "2", "ЧТО ТАКОЕ СЕРВЕР И ГДЕ РАБОТАЕТ", COLW8)
+bpanel(CX2, RA8 + HD8, COLW8, HA8 - HD8, PALE)
+yy = RA8 + HD8 + 14
+for ln in wrap(d, "Отдельная программа, не часть Claude Code — отвечает на запросы по протоколу.",
+               f(17), COLW8 - 36):
+    d.text((CX2 + 18, yy), ln, font=f(17), fill=INK)
+    yy += 24
+yy += 14
+rows2 = [("stdio — локально", "процесс запускает Claude Code у вас на машине", TEAL),
+         ("http — удалённо", "сервис, который хостит и обновляет кто-то другой", MID)]
+for name, note, col in rows2:
+    d.rounded_rectangle([CX2 + 18, yy, CX2 + 210, yy + 36], radius=9, fill=col)
+    nw = d.textlength(name, font=f(15, True))
+    d.text((CX2 + 18 + (192 - nw) / 2, yy + 9), name, font=f(15, True), fill=W)
+    for j, ln in enumerate(wrap(d, note, f(15), COLW8 - 248)):
+        d.text((CX2 + 228, yy + 2 + j * 19), ln, font=f(15), fill=MUTE)
+    yy += 56
+for ln in wrap(d, 'Команда в конфиге исполняется буквально при старте сессии.',
+               f(15, True), COLW8 - 36):
+    mtext(d, CX2 + 18, yy + 6, ln, 15, GOLDINK, b=True)
+
+# ── 3 — что передаётся при подключении ───────────────────────────────────
+bhead(CX3, RA8, "3", "ЧТО ПЕРЕДАЁТСЯ ПРИ ПОДКЛЮЧЕНИИ", COLW8)
+bpanel(CX3, RA8 + HD8, COLW8, HA8 - HD8, SURF)
+yy = RA8 + HD8 + 14
+for ln in wrap(d, "Транспорт поднялся — Claude Code САМА, без модели, спрашивает у сервера его список:",
+               f(17), COLW8 - 36):
+    d.text((CX3 + 18, yy), ln, font=f(17), fill=INK)
+    yy += 24
+yy += 10
+for k in ["tools/list", "prompts/list", "resources/list"]:
+    d.rounded_rectangle([CX3 + 18, yy, CX3 + COLW8 - 18, yy + 38], radius=9,
+                        fill=W, outline=LIGHT, width=2)
+    tw = d.textlength(k, font=f(17, False, True))
+    d.text((CX3 + 18 + (COLW8 - 36 - tw) / 2, yy + 8), k, font=f(17, False, True), fill=DEEP)
+    yy += 48
+for ln in wrap(d, "Сервер отвечает именами и короткой инструкцией — не схемами целиком.",
+               f(15), COLW8 - 36):
+    mtext(d, CX3 + 18, yy + 8, ln, 15, MUTE)
+
+# ── 4 — что передаётся при вызове ────────────────────────────────────────
+bhead(CX1, RB8, "4", "ЧТО ПЕРЕДАЁТСЯ ПРИ ВЫЗОВЕ", COLW8)
+bpanel(CX1, RB8 + HD8, COLW8, HB8 - HD8, PALE)
+d.rounded_rectangle([CX1 + 18, RB8 + HD8 + 14, CX1 + COLW8 - 18, RB8 + HD8 + 96],
+                    radius=10, fill=CODEBG)
+d.text((CX1 + 34, RB8 + HD8 + 28), "mcp__github__", font=f(17, False, True), fill=(0xE8, 0xEE, 0xF4))
+d.text((CX1 + 34, RB8 + HD8 + 50), "create_issue", font=f(17, False, True), fill=(0xE8, 0xEE, 0xF4))
+d.text((CX1 + 34, RB8 + HD8 + 72), "{ title, body, … }", font=f(15, False, True), fill=(0xA9, 0xC3, 0xD6))
+yy = RB8 + HD8 + 108
+for ln in wrap(d, "Имя — с префиксом сервера (mcp__<сервер>__<инструмент>) и аргументы, которые собрала модель.",
+               f(15), COLW8 - 36):
+    d.text((CX1 + 18, yy), ln, font=f(15), fill=MUTE)
+    yy += 20
+
+# ── 5 — что попадает в контекст и чего это стоит ─────────────────────────
+bhead(CX2, RB8, "5", "КОНТЕКСТ И ЦЕНА", COLW8)
+bpanel(CX2, RB8 + HD8, COLW8, HB8 - HD8, SURF)
+stages5 = [("старт сессии", "только имена и инструкция", TEAL),
+           ("модель решает", "ToolSearch за полной схемой", MID),
+           ("вызван", "цена оплачена", DEEP)]
+yy = RB8 + HD8 + 14
+for t_, note, col in stages5:
+    box(d, CX2 + 18, yy, COLW8 - 36, 44, t_, col, tc=W, sz=16)
+    yy += 48
+    for ln in wrap(d, note, f(14), COLW8 - 36):
+        d.text((CX2 + 18, yy), ln, font=f(14), fill=MUTE)
+    yy += 22
+mpanel(d, CX2 + 18, yy + 2, COLW8 - 36, 62, None, fill=(0xFD, 0xF3, 0xD6), stroke=GOLD, sw=3)
+for i, ln in enumerate(wrap(d, "Худший случай без отложенной загрузки — отдельная цифра дальше.",
+                            f(14, True), COLW8 - 64)):
+    mtext(d, CX2 + 32, yy + 14 + i * 19, ln, 14, GOLDINK, b=True)
+
+# ── 6 — чем отвечает сервер и что среда делает с ответом ─────────────────
+bhead(CX3, RB8, "6", "ЧЕМ ОТВЕЧАЕТ СЕРВЕР", COLW8)
+bpanel(CX3, RB8 + HD8, COLW8, HB8 - HD8, PALE)
+yy = RB8 + HD8 + 14
+for ln in wrap(d, "Результат вызова — отдельный канал от обнаружения: свой бюджет "
+                  "(предупреждение на 10 000 токенов, обрезка на 25 000 по умолчанию).",
+               f(16), COLW8 - 36):
+    d.text((CX3 + 18, yy), ln, font=f(16), fill=INK)
+    yy += 23
+yy += 10
+d.rounded_rectangle([CX3 + 18, yy, CX3 + COLW8 - 18, yy + 70], radius=9,
+                    fill=W, outline=TEAL, width=2)
+d.text((CX3 + 32, yy + 12), "tool call", font=f(15, False, True), fill=DEEP)
+d.text((CX3 + 32, yy + 38), "mcp__github__create_issue", font=f(15, True), fill=TEAL)
+yy += 84
+for ln in wrap(d, "Вызов подписан именем сервера — видно, что ответ пришёл именно оттуда.",
+               f(15), COLW8 - 36):
+    mtext(d, CX3 + 18, yy, ln, 15, MUTE)
+    yy += 20
+
+im = im.crop((0, 0, MW8, RB8 + HB8 + 20))
+msave(im, "mcp-n08a-mehanizm.png")
 
 report()

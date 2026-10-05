@@ -380,7 +380,7 @@ if __name__ == "__main__":
     pptx = Path(__file__).parent / "sem-06.pptx"
     if args and args[0].endswith(".pptx"):
         pptx = Path(args[0]); args = args[1:]
-    ids = args or ["n01", "n02", "n03", "n06", "n33", "n60"]
+    ids = args or ["n01", "n02", "n03", "n06", "n35", "n65"]
     for p in render(pptx, ids):
         print("•", p)
     print("предпросмотр:", ", ".join(ids))

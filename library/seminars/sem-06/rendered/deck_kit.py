@@ -312,7 +312,7 @@ def gold_callout(sl, x, y, w, text, *, size=14, bold=True, align=PP_ALIGN.LEFT,
     ширину в рамку строки, хотя на экране этого пробела не видно. Видимую
     золотую коробку запас не красит (в ней и так есть поле), но `check_tracks_
     pdf.py` меряет НЕВИДИМУЮ рамку текста, а не коробку, и ловит разницу как
-    «фигура режет строку» — живой случай n11, `~4 pt` перебора на 16,5 pt."""
+    «фигура режет строку» — живой случай n12, `~4 pt` перебора на 16,5 pt."""
     WRAP_SAFETY = 0.12
     lines = text if isinstance(text, (list, tuple)) else [text]
     inner = w - 2 * pad - WRAP_SAFETY

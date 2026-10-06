@@ -390,7 +390,15 @@ def code_card(x, y, w, h, lines, fill=W, stroke=LIGHT):
         yy += 31
 
 
-BODY, NOTE, PANH = 24, 21, ROWH8 - HD8
+# Сведение круга после прожарок (issue 225, P2 — «кегль n08 на грани порога,
+# не с запасом»): NOTE 21 px на полотне 196 px/дюйм = 7,71 pt — выше порога
+# деки 7,5 pt, но на 0,21 pt, запаса нет. Поднято до 24 px = 8,82 pt — тот же
+# кегль, что BODY; шаг переноса строк под NOTE увеличен следом (26→29, 27→29,
+# 28→30), чтобы бо́льшие буквы не касались соседней строки. Высота блоков
+# (PANH, ROWH8) не трогалась — место по комментарию выше («текст мелкий —
+# укрупнить, место сверху и снизу есть») расходуется шагом переноса, не
+# рамкой панели.
+BODY, NOTE, PANH = 24, 24, ROWH8 - HD8
 
 # ── 1 — что такое сервер и где работает ─────────────────────────────────
 bhead(CX1, RY[0], "1", "ЧТО ТАКОЕ СЕРВЕР", COLW8)
@@ -406,12 +414,12 @@ for name, note, col in [("stdio — локально", "процесс запу�
     nw = d.textlength(name, font=f(21, True))
     d.text((CX1 + 22 + (264 - nw) / 2, yy + 12), name, font=f(21, True), fill=W)
     for j, ln in enumerate(wrap(d, note, f(NOTE), COLW8 - 330)):
-        d.text((CX1 + 306, yy + 11 + j * 26), ln, font=f(NOTE), fill=MUTE)
+        d.text((CX1 + 306, yy + 11 + j * 29), ln, font=f(NOTE), fill=MUTE)
     yy += 62
 yy += 10
 for ln in wrap(d, "Команда в конфиге исполняется буквально при старте сессии: что записано, то и запустится.",
                f(NOTE, True), COLW8 - 44):
-    mtext(d, CX1 + 22, yy, ln, NOTE, GOLDINK, b=True); yy += 27
+    mtext(d, CX1 + 22, yy, ln, NOTE, GOLDINK, b=True); yy += 29
 
 # ── 2 — где объявляется, с мини-шаблоном .mcp.json ───────────────────────
 bhead(CX2, RY[0], "2", "ГДЕ ОБЪЯВЛЯЕТСЯ", COLW8)
@@ -448,7 +456,7 @@ for k in ["tools/list", "prompts/list", "resources/list"]:
 yy += 66
 for ln in wrap(d, "Сервер отвечает именами и короткой инструкцией — не схемами целиком.",
                f(NOTE), COLW8 - 44):
-    mtext(d, CX1 + 22, yy, ln, NOTE, MUTE); yy += 27
+    mtext(d, CX1 + 22, yy, ln, NOTE, MUTE); yy += 29
 
 # ── 4 — вызов: агент поднимает сервер и передаёт параметры ───────────────
 bhead(CX2, RY[1], "4", "ВЫЗОВ: ПАРАМЕТРЫ АГЕНТ СОБИРАЕТ САМ", COLW8)
@@ -475,17 +483,17 @@ for t_, note, col in [("старт сессии", "имя сервера и ко
     # оставшийся ниже порога после укрупнения круга 2. 22 px = 8,07 pt.
     box(d, CX1 + 22, yy, 300, 42, t_, col, tc=W, sz=22)
     for j, ln in enumerate(wrap(d, note, f(NOTE), COLW8 - 390)):
-        d.text((CX1 + 344, yy + 2 + j * 26), ln, font=f(NOTE), fill=MUTE)
+        d.text((CX1 + 344, yy + 2 + j * 29), ln, font=f(NOTE), fill=MUTE)
     yy += 56
 # Высота плашки считается ПО ЧИСЛУ СТРОК, а не берётся константой: при
 # укрупнении кегля текст стал переноситься на вторую строку и вылезал за
 # нижнюю границу рамки.
 _plate = wrap(d, "Постоянная плата идёт за то, что сервер подключён. Цена вызова — отдельно, за каждый ответ.",
               f(NOTE, True), COLW8 - 80)
-mpanel(d, CX1 + 22, yy + 4, COLW8 - 44, 24 + 28 * len(_plate), None,
+mpanel(d, CX1 + 22, yy + 4, COLW8 - 44, 24 + 30 * len(_plate), None,
        fill=(0xFD, 0xF3, 0xD6), stroke=GOLD, sw=3)
 for i, ln in enumerate(_plate):
-    mtext(d, CX1 + 44, yy + 16 + i * 28, ln, NOTE, GOLDINK, b=True)
+    mtext(d, CX1 + 44, yy + 16 + i * 30, ln, NOTE, GOLDINK, b=True)
 
 # ── 6 — чем отвечает сервер ───────────────────────────────────────────────
 bhead(CX2, RY[2], "6", "ЧЕМ ОТВЕЧАЕТ СЕРВЕР", COLW8)
@@ -502,7 +510,7 @@ d.text((CX2 + 38, yy + 46), "mcp__github__create_issue", font=f(22, True), fill=
 yy += 100
 for ln in wrap(d, "Вызов подписан именем сервера — видно, что ответ пришёл именно оттуда, "
                   "не из общих знаний модели.", f(NOTE), COLW8 - 44):
-    mtext(d, CX2 + 22, yy, ln, NOTE, MUTE); yy += 27
+    mtext(d, CX2 + 22, yy, ln, NOTE, MUTE); yy += 29
 
 im = im.crop((0, 0, MW8, H8))
 msave(im, "mcp-n08-mehanizm.png")

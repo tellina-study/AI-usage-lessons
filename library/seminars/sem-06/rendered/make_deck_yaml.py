@@ -11,8 +11,13 @@
 * `file` — из имени файла.
 * `slide_count`, `duration_min` шапки, разбивка по блокам — СЧИТАЮТСЯ, не
   переносятся руками.
-* `title`, `central_question` — из обложки (`hero_cover`, n01): заголовок и
-  вопрос в золотой коробке.
+* `title` — из обложки (`hero_cover`, n01), заголовок.
+* `cover_hook` — короткая загадка в золотой коробке обложки, если она там есть.
+* `central_question` — вопрос занятия: из ПЕРВОГО слайда с приёмом
+  `reflection_question` (на Семинаре 6 это n04, где вопрос задаётся после двух
+  промахов; повторно он же стоит на n66). До пересмотра по сторителлингу вопрос
+  занятия стоял на самой обложке, и поле читалось оттуда; теперь на обложке
+  стоит загадка, и чтение из обложки приносило бы в манифест не тот вопрос.
 * `axis` — из ПЕРВОГО слайда с приёмом `recap_table` (на Семинаре 6 это n03,
   ось занятия с пустыми строками). Отличие от Семинара 5: там ось-первый-раз
   называлась отдельным приёмом `keystone_scope_map`, и `axis` брался из него;
@@ -62,28 +67,41 @@ def slides_of(prefix):
     return [r[1] for r in out], [r[2] for r in out]
 
 
+def _gold_question(visual):
+    """Вопрос из золотой коробки слайда — первая цитата, кончающаяся «?»."""
+    for kind, b in SP.blocks(visual):
+        if kind == "quote":
+            body = " ".join(K.plain(l) for l in b).strip()
+            if body.rstrip("»\"' ").endswith("?"):
+                return body.strip("«»")
+    return None
+
+
 def cover_texts(files):
-    """Заголовок, центральный вопрос и строка оси — из самих слайдов.
+    """Заголовок, загадка обложки, вопрос занятия и строка оси — из слайдов.
 
     `axis` берётся из ПЕРВОГО по порядку файлов слайда с приёмом
     `recap_table` (см. докстринг модуля) — не из второго, не из последнего:
     `files` уже отсортирован по номеру (`slides_of`), и первое совпадение в
-    цикле — самое раннее появление оси в деке."""
-    title = question = axis = None
+    цикле — самое раннее появление оси в деке.
+
+    `central_question` — из ПЕРВОГО слайда с приёмом `reflection_question`
+    (n04). Обложка вопроса занятия больше не несёт: после пересмотра по
+    сторителлингу там стоит загадка, и она уезжает в отдельное поле
+    `cover_hook`, чтобы манифест не выдавал её за вопрос занятия."""
+    title = hook = question = axis = None
     for f in files:
         fm = frontmatter(f)
         pat = (fm.get("visual") or {}).get("pattern")
         t, _a, v, _n = SP.sections(f.read_text(encoding="utf-8"))
         if pat == "hero_cover" and title is None:
             title = t
-            for kind, b in SP.blocks(v):
-                if kind == "quote":
-                    body = " ".join(K.plain(l) for l in b).strip()
-                    if body.rstrip("»\"' ").endswith("?"):
-                        question = body.strip("«»")
+            hook = _gold_question(v)
+        if pat == "reflection_question" and question is None:
+            question = _gold_question(v)
         if pat == "recap_table" and axis is None:
             axis = fm.get("assertion")
-    return title, question, axis
+    return title, hook, question, axis
 
 
 def gaps(slides):
@@ -118,12 +136,13 @@ def build(prefix="n"):
     f = ROOT / "deck.yaml"
     if f.exists():
         head = dict((yaml.safe_load(f.read_text(encoding="utf-8")) or {}).get("deck") or {})
-    title, question, axis = cover_texts(files)
+    title, hook, question, axis = cover_texts(files)
 
     total = round(sum(s.get("duration_min") or 0 for s in slides), 2)
     deck = {k: head[k] for k in CARRIED if k in head}
     deck.update({
         "title": title or head.get("title"),
+        "cover_hook": hook or head.get("cover_hook"),
         "central_question": question or head.get("central_question"),
         "axis": axis or head.get("axis"),
         "duration_min": total,
@@ -131,7 +150,8 @@ def build(prefix="n"):
     })
     # порядок полей шапки — читаемый, а не алфавитный
     order = ["seminar_number", "title", "audience", "duration_min", "format",
-             "central_question", "language", "slide_count", "axis", "slot_min"]
+             "cover_hook", "central_question", "language", "slide_count", "axis",
+             "slot_min"]
     deck = {k: deck[k] for k in order if k in deck} | {
         k: v for k, v in deck.items() if k not in order}
     return {"deck": deck, "slides": slides}, slides

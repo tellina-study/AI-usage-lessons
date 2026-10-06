@@ -1,5 +1,5 @@
 ---
-id: n47
+id: n46
 type: reflection_question
 duration_min: 0.75
 assertion: "Три проверки вместо одной по очереди — что из этого стоит взять в привычку"

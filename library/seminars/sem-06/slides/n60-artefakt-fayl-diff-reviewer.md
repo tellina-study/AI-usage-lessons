@@ -1,5 +1,5 @@
 ---
-id: n61
+id: n60
 type: code_artifact
 duration_min: 1.0
 assertion: "Собранная роль — один файл: имя и описание с границей применимости, строка tools: Read, Grep, Glob без Write и Edit, и поведенческая инструкция формата ответа"

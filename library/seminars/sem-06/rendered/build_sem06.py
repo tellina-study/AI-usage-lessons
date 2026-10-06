@@ -751,10 +751,25 @@ AXIS_COLS = (0.13, 0.27, 0.27, 0.33)
 
 def g_axis_table(sl, sid, title, blocks, pattern, assertion=""):
     """Ось занятия и её возврат. Светлый фон, таблица-коробка; незаполненные
-    ячейки — пунктирные слоты. Перенесено из build_sem05.py без изменений."""
+    ячейки — пунктирные слоты. Перенесено из build_sem05.py почти без
+    изменений — одно исправление ниже.
+
+    Вторая прожарка (issue 225, P1-3): `GOLD_QUOTE_SIDS` объявляет `n65`
+    («recap_table») золотым («all»), но до этой правки объявление ничего не
+    решало — эта функция рисовала блок-цитату через `block_drawer(...)` без
+    `role`, той же веткой, что и `n03` (который в `GOLD_QUOTE_SIDS` НЕ стоит).
+    Правило применялось только внутри `g_content` (жанр `code_artifact`/
+    `answer_breakdown_table`/…), а `recap_table` идёт отдельным жанром через
+    эту функцию — отсюда 0 золотых пикселей на `n65`, промеренных по PNG,
+    при том что код уже называл его золотым. Чинится тем же правилом, что в
+    `g_content` (строки `gold_rule`/`quote_total`/`quote_i` ниже — дословно
+    та же логика, не новая)."""
     K.set_bg(sl, K.WHITE)
     y0 = K.auto_header(sl, title)
     drawers = []
+    gold_rule = GOLD_QUOTE_SIDS.get(sid)
+    quote_total = sum(1 for k, _ in blocks if k == "quote") if gold_rule == "last" else 0
+    quote_i = -1
     for kind, b in blocks:
         if kind == "table" and len(b[0]) == len(AXIS_COLS):
             inner = WIDTH - 0.4
@@ -762,7 +777,12 @@ def g_axis_table(sl, sid, title, blocks, pattern, assertion=""):
             drawers.append(lambda sl, y, mh, h_=b[0], r_=b[1], c=cols: K.table_card(
                 sl, LEFT, y, WIDTH, h_, r_, col_w=c, max_h=mh, label=f"{sid} ось"))
             continue
-        d = block_drawer(kind, b, sid, pattern)
+        role = None
+        if kind == "quote" and gold_rule:
+            quote_i += 1
+            if gold_rule == "all" or (gold_rule == "last" and quote_i == quote_total - 1):
+                role = "formula"
+        d = block_drawer(kind, b, sid, pattern, role=role)
         if d:
             drawers.append(d)
     compose(sl, sid, y0, drawers)
@@ -884,7 +904,15 @@ FIG_AFTER_BLOCKS = {"n14"}
 # (золотая планка), не речи. n68 несёт два `>`-блока; золотой становится
 # только ПОСЛЕДНИЙ (короткая строка оси «Четыре строки из пяти…» — тот же
 # рефрен, что у n65), первый (длинная рефлексия) остаётся тихой репликой.
-GOLD_QUOTE_SIDS = {"n02": "all", "n65": "all", "n66": "all", "n68": "last"}
+#
+# Вторая прожарка (issue 225, P1-3): та же дыра на `n05` («Два блока сегодня»,
+# приём `lecture_map`) — там `PATTERN_ROLE["lecture_map"] = "fact"` даёт
+# тиловую карточку для ЛЮБОЙ цитаты этого приёма независимо от «, поэтому
+# простое снятие кавычек (которое чинит `recap_table`-слайды вроде n03, где
+# роль по умолчанию не назначена вовсе) здесь не работает — нужен тот же
+# точечный `role="formula"`, что у четвёрки выше. Цитата n05 — та же работа:
+# единственная подпись-итог карты занятия, не реплика лектора.
+GOLD_QUOTE_SIDS = {"n02": "all", "n05": "all", "n65": "all", "n66": "all", "n68": "last"}
 
 
 def g_content(sl, sid, title, blocks, pattern, assertion=""):

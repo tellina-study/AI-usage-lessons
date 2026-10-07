@@ -669,19 +669,20 @@ def g_divider(sl, sid, title, blocks, pattern, assertion="", meta=None):
 
 
 def g_cover(sl, sid, title, blocks, pattern, assertion=""):
-    """Обложка — градиент DEEP→MID→LIGHT, номер занятия, заголовок,
-    иллюстрация, центральный вопрос в золотой коробке. Перенесено из
-    build_sem05.py; номер занятия («06») — единственная содержательная
-    правка этого жанра для Семинара 6."""
+    """Обложка — градиент DEEP→MID→LIGHT, заголовок, иллюстрация, центральный
+    вопрос в золотой коробке. Перенесено из build_sem05.py; номер занятия
+    («06» в углу и надпись «СЕМИНАР 6» над заголовком) снят по решению
+    владельца (issue 225, пересмотр правила): обложка была унаследованным
+    исключением из правила «номера занятия нет на видимом слое» (Семинары
+    2-5), исключение отменено. Заголовок поднят и отцентрован в освободившейся
+    верхней полосе (anchor=MIDDLE вместо BOTTOM), чтобы пустота читалась как
+    отступ, а не как дыра на месте снятой надписи; золотая полоса и hero-схема
+    внизу (≥40% площади) не трогались."""
     K.gradient_rect(sl, 0, 0, K.W_IN, K.H_IN,
                     [(0, (0x21, 0x29, 0x5C)), (55000, (0x06, 0x5A, 0x82)),
                      (100000, (0x1C, 0x72, 0x93))])
-    K.text_box(sl, 9.1, 0.06, 3.9, 1.92, "06", size=110, bold=True,
-               color=K.RGBColor(0x33, 0x42, 0x7C), align=PP_ALIGN.RIGHT,
-               anchor=MSO_ANCHOR.MIDDLE)
-    K.text_box(sl, 0.9, 0.34, 7.0, 0.32, "СЕМИНАР 6", size=13, bold=True, color=K.GOLD)
-    K.text_box(sl, 0.9, 0.72, 8.0, 1.2, title, size=33, bold=True, color=K.WHITE,
-               anchor=MSO_ANCHOR.BOTTOM, spacing=1.08)
+    K.text_box(sl, 0.9, 0.3, 8.0, 1.42, title, size=33, bold=True, color=K.WHITE,
+               anchor=MSO_ANCHOR.MIDDLE, spacing=1.08)
     K.rect(sl, 0, 2.02, K.W_IN, 0.07, K.GOLD)
     y, bottom = 2.34, BOTTOM
 

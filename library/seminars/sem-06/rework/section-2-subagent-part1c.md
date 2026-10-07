@@ -11,7 +11,8 @@ parent: "section-2-subagent.md"
 
 См. индекс частей и §A «План раздела» в [`section-2-subagent.md`](section-2-subagent.md). Начало
 ступени и кейс 1 (фокус контекста) — в
-[`section-2-subagent-part1b.md`](section-2-subagent-part1b.md); кейс 3 (специализация) и переход к
+[`section-2-subagent-part1b.md`](section-2-subagent-part1b.md); кейс 3 (рабочая копия и общая
+папка) и переход к
 следующему занятию — в [`section-2-subagent-part1e.md`](section-2-subagent-part1e.md).
 
 **Круг 3 владельца (issue 225, `ZADANIE-KRUG-3-SUBAGENT.md`).** Прежний кейс на этом месте

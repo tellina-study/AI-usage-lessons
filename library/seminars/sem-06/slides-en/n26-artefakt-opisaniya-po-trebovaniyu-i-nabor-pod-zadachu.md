@@ -3,7 +3,7 @@ id: n26
 type: code_artifact
 duration_min: 1.25
 assertion: "Four lines of the decision: the server in the project file has no flag forcing definitions to load, deferred loading is not switched off in the environment, only the toolsets needed are passed to the server, and he keeps his own set of servers in the personal scope"
-learning_goal: "The artifact of the third case: checking the loading mode of the definitions, choosing toolsets on the server's side, and dividing the set of servers between the project and the personal scope. The first two lines are a check on what is already on by default; the fourth is the only one that requires work. Here it is also shown that a particular server's flag for on-demand issuing may have been removed by its author: what has to be checked is the current version, not the result of a search"
+learning_goal: "The artifact of the second case: checking the loading mode of the definitions, choosing toolsets on the server's side, and dividing the set of servers between the project and the personal scope. The first two lines are a check on what is already on by default; the fourth is the only one that requires work. Here it is also shown that a particular server's flag for on-demand issuing may have been removed by its author: what has to be checked is the current version, not the result of a search"
 visual:
   pattern: code_artifact
   primary: "Four items on a light card with inline code: the removed flag forcing loading on the server, the value of the deferred-loading variable in the environment, the choice of toolsets in the server's start-up command, the personal scope for one's own set of servers. Under them — a summary formula about what is settled by what."

@@ -3,7 +3,7 @@ id: n06
 type: section_divider
 duration_min: 0.5
 assertion: "The client keeps his tasks in a tracker — a separate system outside the repository, which changes every day without us; what the agent has in the chat is a snapshot taken by hand, and it is already inaccurate"
-learning_goal: "The decision point of the section's first case. The divider's form is a line from the client, not the formula 'We fix what to do when…': this is the first of six dividers the room sees, and identical grammar across six decision points turns them into a catalog of faults (the storytelling revision, P3). The line names the observable problem from the point of view of the person paying for the work, and holds the episode of scene n10 in advance; the words 'server' and 'MCP' are still not heard"
+learning_goal: "The decision point of the section's first case. The divider's form is a line from the client, not the formula 'We fix what to do when…': this is the first of five dividers the room sees, and identical grammar across all the decision points turns them into a catalog of faults (the storytelling revision, P3). The line names the observable problem from the point of view of the person paying for the work, and holds the episode of scene n10 in advance; the words 'server' and 'MCP' are still not heard"
 visual:
   pattern: section_divider_macro
   primary: "A dark Ocean background, the client's line in large type in quotation marks, a gold rule under it. Below it — a line of meaning: where the task lives and what the agent has. At the bottom — the section's case track."

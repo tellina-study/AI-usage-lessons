@@ -61,6 +61,12 @@ ROOT = Path(__file__).resolve().parent.parent
 HERE = Path(__file__).resolve().parent
 FIGDIR = HERE / "figures"
 
+# Язык источника: каталог слайдов, манифест и имя выходного файла. Переключается
+# флагом `--lang` (см. `set_lang` и `LANG_SIGNALS` ниже); по умолчанию русский.
+SLIDES_DIR = {"ru": "slides", "en": "slides-en"}
+DECK_FILE = {"ru": "deck.yaml", "en": "deck.en.yaml"}
+OUT_NAME = {"ru": "sem-06.pptx", "en": "sem-06-en.pptx"}
+
 TOP, BOTTOM = 0.34, 6.92        # рабочее поле по вертикали
 LEFT, WIDTH = 0.55, 12.23       # и по горизонтали
 GAP = 0.18                      # шаг между блоками
@@ -74,12 +80,48 @@ GAP = 0.18                      # шаг между блоками
 # (кейсы 3–5), Сборка 61–64. Нумерация сведена сквозной при сведении после
 # проведения (2026-10-10): дырки на месте свёрнутого кейса больше нет, и
 # идентификатор слайда снова равен его сквозному номеру.
+# Имена блоков занятия ПЕЧАТАЮТСЯ НА ЭКРАНЕ: два из четырёх («MCP»,
+# «Субагент») — это таблички дорожной карты внизу каждой макро-развилки
+# (`deck_kit.roadmap` рисует их текстом, 12,5 pt). То есть строка ниже — не
+# служебное имя, а видимый слой, и в английской деке она обязана быть
+# английской, иначе дорожная карта на пяти развилках выйдет кириллицей.
+#
+# Найдено этой же сессией при разборе того, что вообще в деку попадает НЕ из
+# слайдов: кроме этих имён и номерных значков (цифры) сборщик своего текста на
+# слайд не выводит — все `text_box` в этом файле получают заголовок, смысловую
+# строку или строку развилки из самого слайда, а `label=` таблиц в картинку не
+# идёт, он только называет блок в предупреждениях.
+#
+# Английские имена — из замка (Часть D, строка блоков занятия): Мостик → Bridge,
+# Субагент → Subagent, Сборка → Wrap-up (не *assembly*: это читалось бы как
+# сборка деки; `со-сборка` остаётся *co-building*).
+BLOCKS = {
+    "ru": ("Мостик", "MCP", "Субагент", "Сборка"),
+    "en": ("Bridge", "MCP", "Subagent", "Wrap-up"),
+}
+
+
+def blocks_names():
+    return BLOCKS[LANG]
+
+
 SECTIONS_BY_PREFIX = {
     "n": ([(1, 5, "Мостик", None), (6, 28, "MCP", 0), (29, 60, "Субагент", 1),
            (61, 64, "Сборка", None)],
           ["MCP", "Субагент"]),
 }
 SECTIONS, STAGES = SECTIONS_BY_PREFIX["n"]
+
+
+def _sections_fallback(prefix):
+    """Запасные границы с именами блоков текущего языка."""
+    got = SECTIONS_BY_PREFIX.get(prefix)
+    if not got:
+        return None
+    rows, _stages = got
+    b = blocks_names()
+    rows = [(lo, hi, b[i], st) for i, (lo, hi, _n, st) in enumerate(rows)]
+    return rows, [b[1], b[2]]
 
 # Ярлыки развилок (`visual.tag`) живут в самих слайдах (по тому же решению,
 # что в Семинаре 5 — см. RENDERER-NOTES.md сем. 5 «Схема и ярлык объявляются
@@ -187,10 +229,11 @@ def _anchor_sections(slides):
             f"SECTIONS_BY_PREFIX и это допущение")
     recap = max(recaps)
     last = max(n for _p, n in pat)
-    return [(1, div[0] - 1, "Мостик", None),
-            (div[0], div[-3] - 1, "MCP", 0),
-            (div[-3], recap - 1, "Субагент", 1),
-            (recap, last, "Сборка", None)], ["MCP", "Субагент"]
+    bridge, mcp, sub, wrap = blocks_names()
+    return [(1, div[0] - 1, bridge, None),
+            (div[0], div[-3] - 1, mcp, 0),
+            (div[-3], recap - 1, sub, 1),
+            (recap, last, wrap, None)], [mcp, sub]
 
 
 def _deck_slides(prefix):
@@ -199,7 +242,8 @@ def _deck_slides(prefix):
     собираем прямо из файлов (`deck_from_files`) — тот же режим предпросмотра
     блока, что в Семинаре 5."""
     try:
-        sl = yaml.safe_load((ROOT / "deck.yaml").read_text(encoding="utf-8"))["slides"]
+        sl = yaml.safe_load(
+            (ROOT / DECK_FILE[LANG]).read_text(encoding="utf-8"))["slides"]
         if sl and sl[0]["id"][0] == prefix:
             return sl
     except Exception:
@@ -208,14 +252,19 @@ def _deck_slides(prefix):
 
 
 def sections_for(sid):
-    """Границы разделов и ступени дорожной карты."""
+    """Границы разделов и ступени дорожной карты.
+
+    Кэш ключится ЯЗЫКОМ вместе с приставкой: имена блоков языковые (см.
+    `BLOCKS`), и один общий ключ отдал бы английской сборке русские таблички,
+    если в том же процессе до неё посчиталась русская."""
     pre = sid[0]
-    if pre not in _DERIVED:
+    key = (LANG, pre)
+    if key not in _DERIVED:
         try:
-            _DERIVED[pre] = _anchor_sections(_deck_slides(pre))
+            _DERIVED[key] = _anchor_sections(_deck_slides(pre))
         except Exception:
-            _DERIVED[pre] = None
-    return _DERIVED[pre] or SECTIONS_BY_PREFIX.get(pre, (SECTIONS, STAGES))
+            _DERIVED[key] = None
+    return _DERIVED[key] or _sections_fallback(pre) or (SECTIONS, STAGES)
 
 
 def slide_number(sid):
@@ -488,10 +537,6 @@ PATTERN_ROLE = {
 # блоков-цитат открываются `«` и НИ ОДИН не открывается `"`; в `slides-en/` те же
 # 11 слайдов открываются `"` и ни один — `«`. То есть соответствие один в один, и
 # язык полностью определяет знак.
-SLIDES_DIR = {"ru": "slides", "en": "slides-en"}
-DECK_FILE = {"ru": "deck.yaml", "en": "deck.en.yaml"}
-OUT_NAME = {"ru": "sem-06.pptx", "en": "sem-06-en.pptx"}
-
 # Роль блока опознаётся НЕ ОДНИМ признаком, а тремя, и все три языковые.
 # Задание в эту сессию называло один — кавычку; `--quote-roles` по готовой
 # английской деке нашёл остальные два, и это ровно то, ради чего режим и

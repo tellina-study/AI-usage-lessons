@@ -253,7 +253,8 @@ slides:
   type: lecture_map
   duration_min: 1.25
   assertion: 'Two sections — two opposing answers to one question: bring inside what is not inside, and
-    carry outside what does not fit inside; three cases in each, named by the observable problem'
+    carry outside what does not fit inside; two cases in the first section and three in the second, all
+    named by the observable problem'
   learning_goal: 'The seminar''s map: where we are going inside today''s two sections. The sections are
     named by the direction of the move, in the same words as the seminar''s question on the previous screen
     — so that they read as two answers to one question. The names of the cases are taken word for word
@@ -261,10 +262,11 @@ slides:
   visual:
     pattern: lecture_map
     primary: 'Two sections in the order they are broken down in, with no minutes and no methodological
-      marks — the same form as the Seminar 5 map: a rung line, with three decision-point cards in it.
-      The top line of each card is the observable problem, word for word with half of the title of the
-      case''s divider; the bottom one is "we settle it", with no answer. At the bottom, as a caption —
-      the slide''s one closing line, with no mention of anything beyond today''s two sections.
+      marks — the same form as the Seminar 5 map: a rung line, with decision-point cards in it: two in
+      the top line, three in the bottom. The top line of each card is the observable problem, word for
+      word with half of the title of the case''s divider; the bottom one is "we settle it", with no answer.
+      At the bottom, as a caption — the slide''s one closing line, with no mention of anything beyond
+      today''s two sections.
 
       '
     backup: 'Source: `rework/block-0-mostik.md` §A.5. Filled in during the stitch-up from the titles of
@@ -307,7 +309,7 @@ slides:
       the PREVIOUS round of edits and therefore keeps the previous wording verbatim: it is a record of
       what was changed then, not the name in force. The name in force for the section is "Carry outside
       what does not fit inside — subagent, trimmed permissions", and the same stands in `rendered/svodka-tekst.yaml`
-      (the input of the slide-map generator) and in `rework/block-0-mostik.md` §A.5. The six case cells
+      (the input of the slide-map generator) and in `rework/block-0-mostik.md` §A.5. The five case cells
       were not touched.
 
       The second roast (issue 225, P1-3 — "the gold accent is absent on n05, by the PNG 0 gold pixels"):
@@ -325,11 +327,11 @@ slides:
     changes every day without us; what the agent has in the chat is a snapshot taken by hand, and it is
     already inaccurate
   learning_goal: 'The decision point of the section''s first case. The divider''s form is a line from
-    the client, not the formula ''We fix what to do when…'': this is the first of six dividers the room
-    sees, and identical grammar across six decision points turns them into a catalog of faults (the storytelling
-    revision, P3). The line names the observable problem from the point of view of the person paying for
-    the work, and holds the episode of scene n10 in advance; the words ''server'' and ''MCP'' are still
-    not heard'
+    the client, not the formula ''We fix what to do when…'': this is the first of five dividers the room
+    sees, and identical grammar across all the decision points turns them into a catalog of faults (the
+    storytelling revision, P3). The line names the observable problem from the point of view of the person
+    paying for the work, and holds the episode of scene n10 in advance; the words ''server'' and ''MCP''
+    are still not heard'
   visual:
     pattern: section_divider_macro
     primary: 'A dark Ocean background, the client''s line in large type in quotation marks, a gold rule
@@ -933,11 +935,11 @@ slides:
   assertion: 'The session is open, he has not yet asked the agent a single question — and part of the
     context is already taken: four servers from the project file described themselves at start-up, and
     over the whole task one of them will be needed'
-  learning_goal: 'The decision point of the section''s third case, presented as a scene in the present
+  learning_goal: 'The decision point of the section''s second case, presented as a scene in the present
     tense. The turn of the case is named right away, at the decision point: the cost of the tool definitions
     is paid by being connected, not by use, and it is paid in every session. It differs from the first
-    case (what to connect and with what permissions) and from the second (how to check that what is connected
-    works)'
+    case, which after the fold carries both parts — what to connect, with what permissions, and how to
+    check that what is connected works'
   visual:
     pattern: section_divider_macro
     primary: 'A dark Ocean background, the title in two lines, a gold rule under it. Below — a line of
@@ -968,7 +970,7 @@ slides:
   assertion: He connected the tracker himself, a colleague added three more servers to the same project
     file — and on a long edit the agent compacted the conversation noticeably earlier than usual; over
     the whole task one server out of four was needed
-  learning_goal: 'The hook of the third case: a person and a named cost. The overflow is discovered through
+  learning_goal: 'The hook of the second case: a person and a named cost. The overflow is discovered through
     the conversation being compacted in the middle of a long task, and the cause only opens up when the
     person looks for himself at what the context is made up of before his first question. The cost is
     named in a working register — an hour spent going over the decisions again, and one edit made on a
@@ -1002,7 +1004,7 @@ slides:
   assertion: Four servers are connected by the project file and one was needed over the task; the room
     first names two numbers of its own — how many servers it has connected and how many it reached for
     over the week — and on that difference chooses what it puts as the first step and what it adds next
-  learning_goal: The open question of the third case. The room will predictably split between "disconnect
+  learning_goal: The open question of the second case. The room will predictably split between "disconnect
     the surplus" and "get the definitions on demand" — that is the material of the breakdown, where they
     turn out to be steps of one sequence with different costs. The wording names the two steps outright,
     rather than a choice of one item out of five
@@ -1108,7 +1110,7 @@ slides:
   assertion: 'Four lines of the decision: the server in the project file has no flag forcing definitions
     to load, deferred loading is not switched off in the environment, only the toolsets needed are passed
     to the server, and he keeps his own set of servers in the personal scope'
-  learning_goal: 'The artifact of the third case: checking the loading mode of the definitions, choosing
+  learning_goal: 'The artifact of the second case: checking the loading mode of the definitions, choosing
     toolsets on the server''s side, and dividing the set of servers between the project and the personal
     scope. The first two lines are a check on what is already on by default; the fourth is the only one
     that requires work. Here it is also shown that a particular server''s flag for on-demand issuing may
@@ -1156,10 +1158,10 @@ slides:
     it on his own examples; the same documentation gives 55,000 tokens on five servers and a drop in the
     accuracy of tool choice past 30–50 tools; one team cut its set from 40 tools to 13, another tried
     loading on demand and declined it — and nobody removed their connected servers in the process
-  learning_goal: 'The checkable cases of the third case: what exactly well-known teams did with tool definitions,
-    and how we know about it. The slide takes away a convenient false frame — the refusal concerns the
-    loading of definitions at start-up, and the servers stayed; and there is no single answer across the
-    industry, the last row being the direct opposite of the first three'
+  learning_goal: 'The checkable cases of the second case: what exactly well-known teams did with tool
+    definitions, and how we know about it. The slide takes away a convenient false frame — the refusal
+    concerns the loading of definitions at start-up, and the servers stayed; and there is no single answer
+    across the industry, the last row being the direct opposite of the first three'
   visual:
     pattern: failure_vignette_table
     primary: 'Four numbered rows: what was done and where it is known from, each with its own source and
@@ -1221,7 +1223,7 @@ slides:
     toolsets as the task needs; what is never worth doing is keeping in the shared file what one person
     needs, setting the forced-loading flag with no reason written down, and believing that a large context
     settles the question — the accuracy of tool choice drops past 30–50 available tools
-  learning_goal: 'The generalization of the third case through direct headings — what to keep connected
+  learning_goal: 'The generalization of the second case through direct headings — what to keep connected
     and what never to do. The fourth row of the right column takes the question beyond cost: an overflow
     costs tokens, while a drop in the accuracy of choice is visible in the result. Here too is the bridge
     to the subagent section: the agent has one context and it is finite'
@@ -1277,12 +1279,13 @@ slides:
       previous pair was "forty files / an answer in one word", and the room was justifiably carrying the
       answer in one word over into the second session. The form of the proportion was not touched, and
       it is separated from all four of its neighbors: n06 is a line of speech ("But I did write that into
-      the issue"), n21 is a scene with a day ("Friday. He opens the definition…"), n38 is a question ("The
-      task arrived as one sentence. What do we speed it up with?"), n50 is a count that passes sentence
-      ("Two sessions in one folder. Both reported success"). Rule A2 is satisfied: the question is named
-      by the observable problem (the cost of the search before the edit), and the tool that solves it
-      is not named — the word "subagent" is still not heard on this screen, and the rung''s base on the
-      next slide is the first to name it. No tag is set (rule A6 of round 2 remains in force).'
+      the issue"), n21 is a present-tense scene ("He opened a session in his own repository and has not
+      asked anything yet"), n38 is a question ("The task arrived as one sentence. What do we speed it
+      up with?"), n50 is a count that passes sentence ("Two sessions in one folder. Both reported success").
+      Rule A2 is satisfied: the question is named by the observable problem (the cost of the search before
+      the edit), and the tool that solves it is not named — the word "subagent" is still not heard on
+      this screen, and the rung''s base on the next slide is the first to name it. No tag is set (rule
+      A6 of round 2 remains in force).'
 - id: n30
   file: slides-en/n30-baza-agent-subagent-i-kontekst-kazhdogo.md
   type: base_and_edge
@@ -1559,8 +1562,8 @@ slides:
     the session got a 420-token result — shows the order of magnitude of the saving qualitatively; a measurement
     over a sample of real sessions exists in no source at all
   learning_goal: There is a number, but it is an illustration of one documentation scenario, not a statistic.
-    The honest gap is named directly right here and for the first time in the class — the number does
-    not close it, it illustrates it
+    The honest gap is named directly right here and for the first time in the class — the number is given
+    to it as an illustration, and a gap it remains
   visual:
     pattern: mechanics_table
     primary: A short quote of the teaching example in large type, with an explicit caption "not a measurement
@@ -1734,7 +1737,7 @@ slides:
       on a single means — the number of subagents — and admitted no conversation about other means at
       all. The new five were named by the owner verbatim: pieces one at a time · several sessions · roles
       all at once · the repeating part into a check that runs itself · narrow the task down. There remains
-      one vote per case and it stays on n40 — the seminar''s sixth vote, its position in the deck did
+      one vote per case and it stays on n40 — the seminar''s fifth vote, its position in the deck did
       not change (CUT-ORDER.md, the protected list). The honesty of the single choice is preserved by
       a technique from the second roast: the card is asked for together with the piece, so the whole answer
       lies in one card rather than in a pair of two. Slot 0.75 → 1.0: the quarter minute was taken from

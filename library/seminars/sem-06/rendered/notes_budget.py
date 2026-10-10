@@ -69,11 +69,77 @@ r"""Замер заметки по контракту «заметки на са
 (`[^\W\d_]`, юникодный по умолчанию для строковых шаблонов), а не `\b`. Ровно
 эти ложные примеры стоят в `--self-test` и падают, если шаблон ослабить.
 
+## Два языка: коридоры калиброваны по русскому, и это не свойство жанра
+
+Коридоры выше померены по русским заметкам. Прогнанные по английским КАК ЕСТЬ,
+они ругаются на 24–27 слайдов из 32 в каждой половине деки — то есть проверка
+перестаёт отличать годный файл от сломанного ровно так, как описано выше про
+отменённый прежний контракт. Подрезать английские заметки до русских коридоров
+нельзя: тридцать процентов текста — это содержание, а не вода, и вырезав его,
+получаешь не дубликат, а подстрочник (`CLAUDE.md` § Bilingual Production Rule).
+
+Поэтому у коридоров есть языковой множитель. **Он померен, а не назначен**, и
+мерить его пришлось трижды, потому что ОТНОШЕНИЕ ЗАВИСИТ ОТ ЛИНЕЙКИ:
+
+| Линейка | RU | EN | Отношение |
+|---|---|---|---|
+| разбиение по пробелам (`wc -w`) | 31 120 | 42 861 | ×1,38 |
+| `words()` этого модуля | 30 372 | 42 710 | **×1,41** |
+
+Обе сессии перевода мерили первой линейкой и независимо получили ×1,39 по своей
+половине (`qa/perevod-n01-n32.md` §5.1, `qa/perevod-n33-n64.md` §7.3, разбросы
+1,31–1,48). Здесь стоит ×1,41, и это не спор с ними: `words()` отбрасывает голые
+числа, а в русских заметках их впятеро больше (2,40% токенов против 0,35%),
+поэтому отбрасывание сжимает русский знаменатель сильнее английского числителя.
+Множитель проверки обязан быть померен ТОЙ ЖЕ линейкой, которой она считает, —
+иначе в коде стоит число, которое к коду отношения не имеет.
+
+**Почему слова с множителем, а не знаки.** Счёт по знакам соблазнителен: разброс
+у него теснее (2,6% против 3,4%), и множитель мельче — ×1,15. Но он не единичный,
+то есть знаки множителя НЕ ОТМЕНЯЮТ, а только уменьшают: платишь сменой единицы
+и всё равно несёшь коэффициент. А платишь дорого: ориентир 400–600 задан
+заданием в СЛОВАХ, и единственный известный краевой случай (`n13`, 397 при
+границе 400) записан в словах же — сменив единицу, его больше не с чем сверить.
+Слово к тому же единица, в которой мерят скорость чтения; знак — нет.
+
+Множитель не берётся на слово: `--calibrate` пересчитывает его с диска по всем
+64 парам и краснеет, если константа разошлась с замером.
+
+Устойчивость замера — сама по себе довод. Разброс по 64 слайдам узкий (1,23–1,51
+при медиане 1,415), а абзацный паритет заметок — 64 из 64. Своя многословность
+переводчика дала бы широкий разброс и выбросы; ровность означает, что растёт
+язык, а не текст.
+
+## Чем проверки прежнего жанра отличаются по языкам
+
+Остатки шпаргалки ищутся на обоих языках, но СПИСКИ НЕ ЗЕРКАЛЬНЫ, и это замерено,
+а не предположено. Четыре русских шаблона переносятся так:
+
+* «Если спросят» / «Лектору» / «поднимите руки» / шов справки — переносятся
+  дословно, 0 ложных срабатываний на 64 английских заметках;
+* **«зал» → *the room* НЕ переносится**: по-английски *room* это ещё и
+  «место, пространство», и широкий шаблон даёт 11 законных срабатываний
+  («the reading takes up the room the task was lying in»). Поэтому по-английски
+  ищется зал КАК ДЕЙСТВУЮЩЕЕ ЛИЦО — через глагол речи рядом («ask the room»,
+  «the room answers», «the room's cards»): 0 срабатываний на годной деке;
+* **«окно» → *window* не переносится** по той же причине: законны и дословная
+  англоязычная цитата первоисточника («Tool definitions overload the context
+  window», n27), и «terminal window manager» (n43). Поэтому ищется `context
+  window` ВНЕ дословных кавычек — ровно тот контракт, который §5.3 замка и
+  описывает. На годной деке таких 0 при 180 кавычечных врезках.
+
+Остаток русского запрета, который по-английски не проверяется ничем, назван
+прямо, а не замаскирован нулём: широкое «окно» и широкий «зал». Их держит §5.1 и
+§5.3 отчёта замка — проверки на прозу, с разбором кавычек.
+
 ## Как запускать
 
-    python3 notes_budget.py ../slides/n*.md        # замер по исходникам
-    python3 notes_budget.py --pptx sem-06.pptx     # заметки доехали целиком?
-    python3 notes_budget.py --self-test            # проверка самой проверки
+    python3 notes_budget.py ../slides/n*.md              # замер по русским исходникам
+    python3 notes_budget.py --lang en ../slides-en/n*.md # по английским, коридоры ×1,41
+    python3 notes_budget.py --pptx sem-06.pptx           # заметки доехали целиком?
+    python3 notes_budget.py --lang en --pptx sem-06-en.pptx
+    python3 notes_budget.py --calibrate                  # перепроверить множитель с диска
+    python3 notes_budget.py --self-test                  # проверка самой проверки
 
 `--pptx` сверяет слово в слово то, что лежит в заметках собранной деки, с тем,
 что лежит в исходниках. Нужно потому, что объём заметок вырос втрое, а обрезка
@@ -111,6 +177,28 @@ BANDS = {
     "опорный":        (500, 750),
 }
 
+# Языковой множитель коридоров. ПОМЕРЕН, не назначен (см. преамбулу): отношение
+# EN/RU по СОБСТВЕННОМУ счёту `words()` этого модуля, по всем 64 парам
+# `../slides/nNN*.md` ↔ `../slides-en/nNN*.md` — 42 710 / 30 372 = 1,4062.
+# Округлено до 1,41. Перепроверяется `--calibrate`, который считает то же самое
+# с диска и краснеет при расхождении больше `CALIBRATION_SLACK`; то есть если
+# тексты однажды разойдутся с этой строкой, скажет об этом скрипт, а не читатель.
+LANG_FACTOR = {"ru": 1.0, "en": 1.41}
+CALIBRATION_SLACK = 0.02
+
+SLIDES_DIR = {"ru": "slides", "en": "slides-en"}
+PPTX_NAME = {"ru": "sem-06.pptx", "en": "sem-06-en.pptx"}
+
+
+def bands_for(lang):
+    """Коридоры языка: русские, умноженные на померенный множитель.
+
+    Округление до целого слова намеренно: коридор и так не порог (есть допуск
+    ±5%), а дробная граница в приговоре читалась бы как точность, которой у
+    замера нет."""
+    k = LANG_FACTOR[lang]
+    return {c: (round(lo * k), round(hi * k)) for c, (lo, hi) in BANDS.items()}
+
 DIVIDER_TYPES = {"section_divider", "section_divider_macro"}
 QUESTION_TYPES = {"reflection_question", "question_with_option_cards"}
 
@@ -143,7 +231,7 @@ def _w(body: str) -> str:
 ZAL = re.compile(_w(r"[Зз]ал|[Зз]ал[аеуыом]|[Зз]алами|[Зз]алах"))
 OKNO = re.compile(_w(r"[Оо]кн[оаеуы]|[Оо]кном|[Оо]кон|[Оо]кнами|[Оо]кнах|[Оо]кошк[оаеуи]"))
 
-VEDUSHCHEMU = [
+VEDUSHCHEMU_RU = [
     ("обращение к ведущему", re.compile(
         r"(?i)Если\s+спросят"
         r"|Если\s+прозвучит"
@@ -160,6 +248,48 @@ VEDUSHCHEMU = [
     ("«зал» как действующее лицо", ZAL),
     ("«окно» вместо «контекста»", OKNO),
 ]
+
+# Английские шаблоны. Не перевод русских по строкам, а их СООТВЕТСТВИЕ по работе
+# — см. преамбулу («Чем проверки прежнего жанра отличаются по языкам»): два из
+# четырёх русских шаблонов по-английски дословно не работают, и каждый замерен
+# на всех 64 годных заметках. Числа срабатываний на годной деке: 0 / 0 / 0 / 0.
+DQ_SPAN = re.compile(r'"[^"\n]{0,400}"')
+
+ROOM_AS_ACTOR = re.compile(
+    r"(?i)\b(?:ask(?:s|ed|ing)?|put\s+to|poll)\s+the\s+room\b"
+    r"|\bthe\s+room\s+(?:answers?|answered|says?|said|votes?|voted|replie"
+    r"|stays?\s+silent|is\s+silent)"
+    r"|\bthe\s+room'?s?\s+(?:cards?|answers?|voices?|replies)")
+
+VEDUSHCHEMU_EN = [
+    ("обращение к ведущему", re.compile(
+        r"(?i)\bif\s+(?:someone|anyone|somebody|they|a\s+student)\s+ask"
+        r"|\bif\s+(?:it\s+)?(?:comes\s+up|is\s+raised)"
+        r"|\b(?:to\s+the\s+)?(?:lecturer|instructor|facilitator|presenter)\b"
+        r"|\b(?:raise|show\s+of)\s+hands?\b"
+        r"|\bask\s+your\s+neighb"
+        r"|\b(?:call\s+on|take)\s+(?:two|three)\s+(?:voices|answers|students)")),
+    ("вернувшийся шов справки", re.compile(
+        r"(?m)^[ \t]*(?:\*\*(?:Reference|Background)\.?\*\*"
+        r"|(?:Reference|Background)\.)[ \t]*$")),
+    ("«зал» как действующее лицо", ROOM_AS_ACTOR),
+]
+
+
+def window_outside_quotes(notes):
+    """`context window` в СВОЕЙ прозе, а не внутри дословной цитаты.
+
+    Широкий поиск слова `window` здесь не годится и это проверено: на годной
+    деке он даёт два законных срабатывания — англоязычную цитату первоисточника
+    («Tool definitions overload the context window») и «terminal window
+    manager». Оба законны по §5.3 замка, и шаблон, который на них краснеет,
+    будет выключен первым же читателем. Поэтому кавычечные врезки снимаются
+    ДО поиска: на годной деке их 180, и `context window` вне них — ноль."""
+    return re.findall(r"(?i)\bcontext\s+window\b|\bwindow\s+of\s+the\s+context\b",
+                      DQ_SPAN.sub(" ", notes))
+
+
+CYRILLIC = re.compile(r"[\u0400-\u04FF]")
 
 
 # ── Разбор файла ────────────────────────────────────────────────────────────
@@ -207,12 +337,12 @@ def words(text: str) -> int:
     return len(re.findall(r"[^\W\d_]+(?:-[^\W\d_]+)*", text, re.UNICODE))
 
 
-def check(path: Path):
+def check(path: Path, lang="ru"):
     md = path.read_text(encoding="utf-8")
     sid = path.stem[:3]
     notes = notes_of(md)
     cls = classify(sid, md)
-    lo, hi = BANDS[cls]
+    lo, hi = bands_for(lang)[cls]
     n = words(notes)
     bad, soft = [], []
     if not notes:
@@ -223,17 +353,72 @@ def check(path: Path):
     elif n > hi:
         where = soft if n <= hi * (1 + TOLERANCE) else bad
         where.append(f"{n} слов — выше {hi} ({cls})")
+    # Язык объявляется флагом, и флаг проверяется, а не принимается на слово:
+    # `--lang en`, набранный по русским исходникам, иначе молча померил бы их
+    # английскими коридорами и объявил ВСЕ 64 файла недобравшими — то есть дал
+    # бы самый убедительный вид ложной тревоги, какой у этой проверки бывает.
+    # Признак дешёвый и надёжный: русская заметка не бывает без кириллицы, а в
+    # английских её нет ни в одном из 64 файлов (зеркальная проверка §5.7).
+    if notes:
+        has_ru = bool(CYRILLIC.search(notes))
+        if lang == "en" and has_ru:
+            bad.append("--lang en, а в заметке кириллица — язык или файл не тот")
+        elif lang == "ru" and not has_ru:
+            bad.append("--lang ru, а в заметке нет кириллицы — язык или файл не тот")
     # Остатки прежнего жанра допуска не имеют: одно «Если спросят» — это
     # вернувшаяся шпаргалка, а не отклонение на проценты.
-    for name, rx in VEDUSHCHEMU:
+    for name, rx in (VEDUSHCHEMU_RU if lang == "ru" else VEDUSHCHEMU_EN):
         found = {m.group(0) for m in rx.finditer(notes)}
         if found:
             bad.append(f"{name}: {', '.join(sorted(found)[:4])}")
+    if lang == "en":
+        found = set(window_outside_quotes(notes))
+        if found:
+            bad.append(f"«окно» вместо «контекста»: {', '.join(sorted(found)[:4])}")
     return sid, cls, n, bad, soft
 
 
+# ── Перепроверка множителя с диска ──────────────────────────────────────────
+def calibrate(ru_dir: Path, en_dir: Path):
+    """Пересчитать `LANG_FACTOR["en"]` по парам файлов и сравнить с константой.
+
+    Смысл режима: множитель в коде — это замер, а замер без возможности его
+    повторить ничем не отличается от назначенного числа. Если тексты однажды
+    разойдутся с константой, покраснеет скрипт, а не читатель сайта."""
+    rows = []
+    for ru in sorted(ru_dir.glob("n*.md")):
+        en = en_dir / ru.name
+        if not en.exists():
+            print(f"⚠ {ru.name}: английской пары нет — в замер не вошёл")
+            continue
+        wr = words(notes_of(ru.read_text(encoding="utf-8")))
+        we = words(notes_of(en.read_text(encoding="utf-8")))
+        if wr:
+            rows.append((ru.stem[:3], wr, we, we / wr))
+    if not rows:
+        print("пар файлов не нашлось — мерить нечего")
+        return 1
+    tr = sum(r[1] for r in rows)
+    te = sum(r[2] for r in rows)
+    k = te / tr
+    per = sorted(r[3] for r in rows)
+    med = per[len(per) // 2] if len(per) % 2 else (per[len(per) // 2 - 1]
+                                                   + per[len(per) // 2]) / 2
+    want = LANG_FACTOR["en"]
+    print(f"пар слайдов: {len(rows)}")
+    print(f"RU {tr} слов → EN {te} слов   отношение ×{k:.4f}")
+    print(f"по слайдам: от ×{per[0]:.2f} до ×{per[-1]:.2f}, медиана ×{med:.3f}")
+    print(f"в коде стоит ×{want} — расхождение {abs(k - want):.4f} "
+          f"при допуске {CALIBRATION_SLACK}")
+    if abs(k - want) > CALIBRATION_SLACK:
+        print("⚠ МНОЖИТЕЛЬ РАЗОШЁЛСЯ С ЗАМЕРОМ — поправить LANG_FACTOR и преамбулу")
+        return 1
+    print("· множитель сходится с текстами на диске")
+    return 0
+
+
 # ── Заметки доехали в деку целиком? ─────────────────────────────────────────
-def check_pptx(pptx_path: Path, slides_dir: Path):
+def check_pptx(pptx_path: Path, slides_dir: Path, lang="ru"):
     """Слово в слово: заметка исходника против заметки собранной деки.
 
     `deck_kit.write_notes` превращает `**жирный**`, `` `моноширинный` `` и
@@ -258,7 +443,8 @@ def check_pptx(pptx_path: Path, slides_dir: Path):
             worst = 1
             print(f"⚠ {sid}: в исходнике {want} слов, в деке {got} — расхождение {got - want:+}")
     if not worst:
-        print(f"· заметки всех {len(prs.slides)} слайдов доехали слово в слово")
+        print(f"· заметки всех {len(prs.slides)} слайдов доехали слово в слово "
+              f"({lang}: {pptx_path.name} ↔ {slides_dir.name}/)")
     return worst
 
 
@@ -302,15 +488,75 @@ SELF_TEST = {
     "сломан: за допуском сверху": ("content", "слово " * 635),
 }
 
+# ── Пробы английской строки ────────────────────────────────────────────────
+#
+# Каждая проба держит ровно одно утверждение про язык, и каждая краснеет, если
+# это утверждение сломать:
+#
+# * «годный: английский в коридоре» (700 слов) — покраснеет, если множитель
+#   вернуть к 1,0: 700 выше русской верхней границы 600 и выше её допуска.
+# * «сломан: русская длина по-английски» (480 слов) — покраснеет наоборот, если
+#   множитель задрать: 480 ниже английской нижней границы 564 за допуском.
+#   Вдвоём эти две пробы зажимают множитель с обеих сторон.
+# * «сломан: язык не тот» — английский флаг на русском тексте и обратно. Без
+#   сторожа языка обе прошли бы молча, померив текст чужими коридорами.
+# * «сломан: зал по-английски» — зал КАК ЛИЦО; рядом стоит каверзный годный с
+#   одиннадцатью законными «the room» в смысле «место», и он обязан пройти чисто.
+# * «сломан: окно вне кавычек» против «годный: окно внутри кавычек» — та же
+#   пара: дословная цитата первоисточника законна, своя проза — нет.
+_EN_CLEAN = "word " * 700                      # содержательный EN: 564–846
+_EN_ROOM_OK = ("The reading fits whole and takes up the room the task was lying in, "
+               "and the history frees up the room it had taken. ")
+
+SELF_TEST_EN = {
+    "сломан: английский короче коридора": ("content", "word " * 300),
+    "сломан: английский длиннее коридора": ("content", "word " * 1200),
+    "сломан: русская длина по-английски": ("content", "word " * 480),
+    "сломан: язык не тот (кириллица при en)": ("content", "слово " * 700),
+    "сломан: обращение к ведущему": (
+        "content", _EN_CLEAN + "If someone asks why, the answer is below."),
+    "сломан: указание ведущему": (
+        "content", _EN_CLEAN + "A note to the lecturer: hold the pause here."),
+    "сломан: зал как лицо": (
+        "content", _EN_CLEAN + "Here we ask the room, and the answer gets broken down."),
+    "сломан: карточки зала": (
+        "content", _EN_CLEAN + "The room's cards are read out before the breakdown."),
+    "сломан: окно вне кавычек": (
+        "content", _EN_CLEAN + "All of it sits in the context window before your question."),
+    "сломан: шов справки вернулся": (
+        "content", _EN_CLEAN + "\n\n**Reference.**\n\n" + "word " * 40),
+    "годный: английский в коридоре": ("content", _EN_CLEAN),
+    "годный: зал как место": ("content", "word " * 420 + _EN_ROOM_OK * 11),
+    "годный: окно внутри дословной цитаты": (
+        "content", _EN_CLEAN + 'His analysis opens "Tool definitions overload the '
+                               'context window", and the terminal window manager '
+                               "lays the panes out side by side."),
+    "годный: разделитель": ("divider", "word " * 480),
+    "годный: голосование": ("question", "word " * 600),
+    "годный: опорный экран": ("anchor", "word " * 900),
+    "годный: край коридора снизу": ("content", "word " * 544),
+}
+
 _TYPE_OF = {"content": "answer_breakdown", "divider": "section_divider",
             "question": "reflection_question", "anchor": "mechanics_map"}
 
 
 def self_test():
+    ok = _self_test_lang("ru", SELF_TEST) == 0
+    print()
+    ok = (_self_test_lang("en", SELF_TEST_EN) == 0) and ok
+    print("\nвсе пробы сошлись" if ok else "\nПРОВЕРКА МЁРТВАЯ — см. строки выше")
+    return 0 if ok else 1
+
+
+def _self_test_lang(lang, probes):
     import tempfile
     ok = True
+    b = bands_for(lang)
+    print(f"── язык {lang}: коридоры " + " · ".join(
+        f"{c} {lo}–{hi}" for c, (lo, hi) in b.items()))
     with tempfile.TemporaryDirectory() as d:
-        for name, (kind, notes) in SELF_TEST.items():
+        for name, (kind, notes) in probes.items():
             # Опорность берётся по номеру слайда, поэтому проба на опорный
             # обязана лечь в файл с номером из ANCHOR — иначе она проверяет
             # коридор содержательного и ничего не говорит про опорный.
@@ -318,32 +564,49 @@ def self_test():
             p = Path(d) / f"{sid}-{re.sub(r'[^a-z0-9]+', '-', name.encode('ascii', 'ignore').decode() or 'x')}.md"
             p.write_text(f"---\nid: {sid}\ntype: {_TYPE_OF[kind]}\n---\n\n# проба\n\n"
                          f"## Speaker notes\n\n{notes}\n", encoding="utf-8")
-            sid_, cls, n, bad, soft = check(p)
+            sid_, cls, n, bad, soft = check(p, lang)
             caught = bool(bad)
             want = not name.startswith("годный")
             if caught != want:
                 ok = False
             mark = "✓" if caught == want else "✗ ПРОВЕРКА МЁРТВАЯ"
             note = '; '.join(bad) or ('~ ' + '; '.join(soft) if soft else 'чисто')
-            print(f"{mark} {name:32} {cls:14} слов={n:4} → {note}")
-    print("\nвсе пробы сошлись" if ok else "\nПРОВЕРКА МЁРТВАЯ — см. строки выше")
+            print(f"{mark} {name:40} {cls:14} слов={n:4} → {note}")
     return 0 if ok else 1
 
 
 # ── Точка входа ─────────────────────────────────────────────────────────────
 def main():
     args = sys.argv[1:]
+    here = Path(__file__).resolve().parent
+    lang = "ru"
+    if "--lang" in args:
+        i = args.index("--lang")
+        lang = args[i + 1] if i + 1 < len(args) else ""
+        del args[i:i + 2]
+    if lang not in LANG_FACTOR:
+        print(f"--lang принимает {'/'.join(LANG_FACTOR)}, передано «{lang}»")
+        return 2
+    if "--calibrate" in args:
+        return calibrate(here.parent / SLIDES_DIR["ru"], here.parent / SLIDES_DIR["en"])
     if not args or args[0] == "--self-test":
         return self_test()
     if args[0] == "--pptx":
-        pptx = Path(args[1]) if len(args) > 1 else Path(__file__).parent / "sem-06.pptx"
-        return check_pptx(pptx, Path(__file__).parent.parent / "slides")
+        pptx = Path(args[1]) if len(args) > 1 else here / PPTX_NAME[lang]
+        if not pptx.exists():
+            # Внятный отказ вместо трассировки из `python-pptx`: на английской
+            # строке это самый частый случай — деку ещё не собирали.
+            print(f"деки «{pptx.name}» нет. Собрать: python3 build_sem06.py"
+                  f"{' --lang ' + lang if lang != 'ru' else ''} --all")
+            return 2
+        return check_pptx(pptx, here.parent / SLIDES_DIR[lang], lang)
     worst = 0
     tally = {}
     total = 0
     soft_n = 0
+    bands = bands_for(lang)
     for a in args:
-        sid, cls, n, bad, soft = check(Path(a))
+        sid, cls, n, bad, soft = check(Path(a), lang)
         tally[cls] = tally.get(cls, 0) + 1
         total += n
         if bad:
@@ -355,7 +618,10 @@ def main():
     k = sum(tally.values())
     print(f"\n{k} слайдов, {total} слов, в среднем {total // max(k, 1)} на слайд")
     for c, v in sorted(tally.items()):
-        print(f"  {c:14} {v:3} шт. · коридор {BANDS[c][0]}–{BANDS[c][1]}")
+        print(f"  {c:14} {v:3} шт. · коридор {bands[c][0]}–{bands[c][1]}")
+    if lang != "ru":
+        print(f"  язык {lang}: коридоры — русские ×{LANG_FACTOR[lang]} "
+              f"(померено, см. преамбулу и --calibrate)")
     if soft_n:
         print(f"  в допуске ±{int(TOLERANCE * 100)}% на краю коридора: {soft_n} "
               f"(знак `~`, дефектом не считается)")

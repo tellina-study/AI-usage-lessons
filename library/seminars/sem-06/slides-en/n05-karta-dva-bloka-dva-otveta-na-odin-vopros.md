@@ -2,14 +2,14 @@
 id: n05
 type: lecture_map
 duration_min: 1.25
-assertion: "Two sections — two opposing answers to one question: bring inside what is not inside, and carry outside what does not fit inside; three cases in each, named by the observable problem"
+assertion: "Two sections — two opposing answers to one question: bring inside what is not inside, and carry outside what does not fit inside; two cases in the first section and three in the second, all named by the observable problem"
 learning_goal: "The seminar's map: where we are going inside today's two sections. The sections are named by the direction of the move, in the same words as the seminar's question on the previous screen — so that they read as two answers to one question. The names of the cases are taken word for word from the titles of their dividers, with no reformulation and no answers on the cards"
 visual:
   pattern: lecture_map
   primary: >
     Two sections in the order they are broken down in, with no minutes and no methodological
-    marks — the same form as the Seminar 5 map: a rung line, with three decision-point cards in
-    it. The top line of each card is the observable problem, word for word with half of the
+    marks — the same form as the Seminar 5 map: a rung line, with decision-point cards in it:
+    two in the top line, three in the bottom. The top line of each card is the observable problem, word for word with half of the
     title of the case's divider; the bottom one is "we settle it", with no answer. At the bottom,
     as a caption — the slide's one closing line, with no mention of anything beyond today's two
     sections.
@@ -59,7 +59,7 @@ visual:
     verbatim: it is a record of what was changed then, not the name in force. The name in force
     for the section is "Carry outside what does not fit inside — subagent, trimmed
     permissions", and the same stands in `rendered/svodka-tekst.yaml` (the input of the
-    slide-map generator) and in `rework/block-0-mostik.md` §A.5. The six case cells were not
+    slide-map generator) and in `rework/block-0-mostik.md` §A.5. The five case cells were not
     touched.
 
     The second roast (issue 225, P1-3 — "the gold accent is absent on n05, by the PNG 0 gold
@@ -103,6 +103,6 @@ The order of the sections is not accidental. The first move gives the agent back
 
 There is a connection between the two moves that the map does not show. Access to the outside increases what the agent is able to do by itself in one sitting, and along with the volume of work grows the volume of reading that the work pulls into the session's context. The moves run toward each other, and their limit is one and the same: the more the first move lets you do in one sitting, the sooner you run into the second.
 
-Both moves have a cost of their own, and the seminar names it outright: someone else's code in your work and a permanent place in the context for the first, extra permissions and lost visibility of what was done for the second. The six cases are built the same way: a scene in which something went wrong, a question, a breakdown of the options, mechanics or an assembled artifact, a documented failure, and the criterion by which you choose.
+Both moves have a cost of their own, and the seminar names it outright: someone else's code in your work and a permanent place in the context for the first, extra permissions and lost visibility of what was done for the second. The five cases are built the same way: a scene in which something went wrong, a question, a breakdown of the options, mechanics or an assembled artifact, a documented failure, and the criterion by which you choose.
 
 Carrying all of this over to your own repository is the work of a separate class. Here — the techniques, and the criteria by which they are chosen.

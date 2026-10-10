@@ -3,7 +3,7 @@ id: n28
 type: criteria_boundary
 duration_min: 1.5
 assertion: "Keeping a server connected in the project file is worth it if it is needed in most of the project's sessions, if the definitions of its tools arrive on demand and if it has exactly as many toolsets as the task needs; what is never worth doing is keeping in the shared file what one person needs, setting the forced-loading flag with no reason written down, and believing that a large context settles the question — the accuracy of tool choice drops past 30–50 available tools"
-learning_goal: "The generalization of the third case through direct headings — what to keep connected and what never to do. The fourth row of the right column takes the question beyond cost: an overflow costs tokens, while a drop in the accuracy of choice is visible in the result. Here too is the bridge to the subagent section: the agent has one context and it is finite"
+learning_goal: "The generalization of the second case through direct headings — what to keep connected and what never to do. The fourth row of the right column takes the question beyond cost: an overflow costs tokens, while a drop in the accuracy of choice is visible in the result. Here too is the bridge to the subagent section: the agent has one context and it is finite"
 visual:
   pattern: criteria_checklist_and_boundary
   primary: "A table in two columns: \"keep it connected\" and \"never needed\", each with a list of conditions. Under the table — a transition line to the subagent section: the fifth file in the configuration and one finite context."

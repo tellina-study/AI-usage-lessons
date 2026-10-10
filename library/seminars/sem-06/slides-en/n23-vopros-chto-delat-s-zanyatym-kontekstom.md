@@ -3,7 +3,7 @@ id: n23
 type: reflection_question
 duration_min: 1.0
 assertion: "Four servers are connected by the project file and one was needed over the task; the room first names two numbers of its own — how many servers it has connected and how many it reached for over the week — and on that difference chooses what it puts as the first step and what it adds next"
-learning_goal: "The open question of the third case. The room will predictably split between \"disconnect the surplus\" and \"get the definitions on demand\" — that is the material of the breakdown, where they turn out to be steps of one sequence with different costs. The wording names the two steps outright, rather than a choice of one item out of five"
+learning_goal: "The open question of the second case. The room will predictably split between \"disconnect the surplus\" and \"get the definitions on demand\" — that is the material of the breakdown, where they turn out to be steps of one sequence with different costs. The wording names the two steps outright, rather than a choice of one item out of five"
 visual:
   pattern: question_with_option_cards
   primary: "At the top, in the quiet form — a line about the room's own numbers: how many servers are connected in their working project and how many they reached for over the week. Below, in a gold frame — the question itself: what you put as the first step and what you add next. Under the frame, five equal cards, none of them highlighted."

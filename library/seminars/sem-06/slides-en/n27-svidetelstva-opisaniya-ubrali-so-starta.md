@@ -3,7 +3,7 @@ id: n27
 type: failure_vignette_table
 duration_min: 1.5
 assertion: "The protocol's author called loading all the definitions at start-up a problem and measured it on his own examples; the same documentation gives 55,000 tokens on five servers and a drop in the accuracy of tool choice past 30–50 tools; one team cut its set from 40 tools to 13, another tried loading on demand and declined it — and nobody removed their connected servers in the process"
-learning_goal: "The checkable cases of the third case: what exactly well-known teams did with tool definitions, and how we know about it. The slide takes away a convenient false frame — the refusal concerns the loading of definitions at start-up, and the servers stayed; and there is no single answer across the industry, the last row being the direct opposite of the first three"
+learning_goal: "The checkable cases of the second case: what exactly well-known teams did with tool definitions, and how we know about it. The slide takes away a convenient false frame — the refusal concerns the loading of definitions at start-up, and the servers stayed; and there is no single answer across the industry, the last row being the direct opposite of the first three"
 visual:
   pattern: failure_vignette_table
   primary: "Four numbered rows: what was done and where it is known from, each with its own source and date. At the bottom, in a gold line — what follows from this for the room, with a direct statement that the industry has no identical answer."

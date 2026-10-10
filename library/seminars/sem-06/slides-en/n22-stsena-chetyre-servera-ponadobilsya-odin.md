@@ -3,7 +3,7 @@ id: n22
 type: problem_scenario
 duration_min: 1.25
 assertion: "He connected the tracker himself, a colleague added three more servers to the same project file — and on a long edit the agent compacted the conversation noticeably earlier than usual; over the whole task one server out of four was needed"
-learning_goal: "The hook of the third case: a person and a named cost. The overflow is discovered through the conversation being compacted in the middle of a long task, and the cause only opens up when the person looks for himself at what the context is made up of before his first question. The cost is named in a working register — an hour spent going over the decisions again, and one edit made on a decision that had already been reversed"
+learning_goal: "The hook of the second case: a person and a named cost. The overflow is discovered through the conversation being compacted in the middle of a long task, and the cause only opens up when the person looks for himself at what the context is made up of before his first question. The cost is named in a working register — an hour spent going over the decisions again, and one edit made on a decision that had already been reversed"
 visual:
   pattern: problem_scenario
   primary: "At the top — one line about the composition of the project file: one server his, three somebody else's. Below — four steps: what he noticed, what it is made up of, what he found in the other person's lines, what it cost. At the bottom, as a separate line, the count: over the task, calls went to one server out of four."

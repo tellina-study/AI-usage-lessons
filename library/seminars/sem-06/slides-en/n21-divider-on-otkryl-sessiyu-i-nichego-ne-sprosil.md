@@ -3,7 +3,7 @@ id: n21
 type: section_divider
 duration_min: 0.5
 assertion: "The session is open, he has not yet asked the agent a single question — and part of the context is already taken: four servers from the project file described themselves at start-up, and over the whole task one of them will be needed"
-learning_goal: "The decision point of the section's third case, presented as a scene in the present tense. The turn of the case is named right away, at the decision point: the cost of the tool definitions is paid by being connected, not by use, and it is paid in every session. It differs from the first case (what to connect and with what permissions) and from the second (how to check that what is connected works)"
+learning_goal: "The decision point of the section's second case, presented as a scene in the present tense. The turn of the case is named right away, at the decision point: the cost of the tool definitions is paid by being connected, not by use, and it is paid in every session. It differs from the first case, which after the fold carries both parts — what to connect, with what permissions, and how to check that what is connected works"
 visual:
   pattern: section_divider_macro
   primary: "A dark Ocean background, the title in two lines, a gold rule under it. Below — a line of meaning: how many servers described themselves at start-up and how many of them were needed. At the bottom — the section's case track."

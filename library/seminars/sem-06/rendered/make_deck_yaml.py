@@ -78,9 +78,10 @@ LANGS = {
     "en": {"slides": "slides-en", "deck": "deck.en.yaml", "head": "deck-head.en.yaml"},
 }
 
-# Имена блоков занятия по-английски — из замка (Часть D). Нужны только шапке-комментарию:
-# сами границы считаются по номерам, а номера у двух дек одни.
-BLOCKS_EN = {"Мостик": "Bridge", "MCP": "MCP", "Субагент": "Subagent", "Сборка": "Wrap-up"}
+# Имена блоков занятия — языковые и живут В СБОРЩИКЕ (`build_sem06.BLOCKS`), потому что
+# печатаются на экране (таблички дорожной карты). Второй копии здесь нет намеренно: шапка
+# этого файла и дорожная карта деки обязаны называть блоки одинаково, а две копии одного
+# списка расходятся на первой же правке.
 
 
 def frontmatter(path):
@@ -233,12 +234,12 @@ def header_comment(slides, deck, lang="ru"):
                  "# Поля слайдов — из фронтматтера самих слайдов; правьте слайд, а не этот файл.",
                  "#",
                  "# Хронометраж по блокам (считан, не переписан):"]
+    B.set_lang(lang)            # имена блоков берутся языковые, из сборщика
     for lo, hi, name, _ in B.sections_for(slides[0]["id"])[0]:
         s = sum(x.get("duration_min") or 0 for x in slides if lo <= B.num(x["id"]) <= hi)
         if s:
-            label = BLOCKS_EN.get(name, name) if en else name
             unit = "min" if en else "мин"
-            lines.append(f"#   {label:<10} n{lo:02d}–n{hi:02d}  {s:>6.2f} {unit}")
+            lines.append(f"#   {name:<10} n{lo:02d}–n{hi:02d}  {s:>6.2f} {unit}")
     if en:
         lines.append(f"#   {'TOTAL':<10}            {deck['duration_min']:>6.2f} min "
                      f"in a {deck.get('slot_min', '?')}-min slot")

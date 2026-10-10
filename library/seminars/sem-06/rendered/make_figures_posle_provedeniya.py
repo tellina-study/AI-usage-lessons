@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Схемы круга правок после проведения занятия — `subagent-n49a-tri-yarusa.png`.
+"""Схемы круга правок после проведения занятия — `subagent-n43-tri-yarusa.png`.
 
 Отдельный файл, а не дописка в `make_figures_subagent.py`, по той же причине,
 по которой новым слайдам этого круга дан временный буквенный номер: над декой
@@ -41,22 +41,22 @@ XS = (20, 400, 790, 1210)
 WS = (330, 330, 330, 370)
 
 box(d, XS[0], ROW_Y, WS[0], ROW_H, ["Ваша рабочая", "сессия"], SURF, INK, sz=25,
-    outline=LIGHT, where="n49a/вы")
+    outline=LIGHT, where="n43/вы")
 box(d, XS[1], ROW_Y, WS[1], ROW_H, ["Сессия-оркестратор"], W, DEEP, sz=25,
-    outline=GOLD, where="n49a/оркестратор")
+    outline=GOLD, where="n43/оркестратор")
 
 # Дочерние сессии — три карточки веером, чтобы было видно, что их несколько.
 for k in range(3):
     off = k * 13
     box(d, XS[2] + off, ROW_Y - 16 + off, WS[2] - 26, ROW_H - 16,
         ["Дочерняя сессия"] if k == 2 else [""], MID if k == 2 else PALE,
-        W if k == 2 else PALE, sz=24, outline=LIGHT, where="n49a/дочерняя")
+        W if k == 2 else PALE, sz=24, outline=LIGHT, where="n43/дочерняя")
 
 # Субагенты — пунктиром: от них приходит итог, зайти внутрь нельзя.
 for k in range(3):
     dashbox(d, XS[3], ROW_Y - 12 + k * 44, WS[3] - 20, 36, GHOST, bg=W)
     clabel(d, XS[3] + (WS[3] - 20) / 2, ROW_Y - 4 + k * 44, "субагент", 20,
-           GHOST, where="n49a/субагент", limit=WS[3] - 60)
+           GHOST, where="n43/субагент", limit=WS[3] - 60)
 
 for a in range(3):
     x1 = XS[a] + WS[a] - (0 if a != 2 else -14)
@@ -66,7 +66,7 @@ for a in range(3):
 # ── Ярлыки ярусов над рядом ────────────────────────────────────────────────
 for x, w_, t_ in ((XS[1], WS[1], "ярус 1"), (XS[2], WS[2], "ярус 2"),
                   (XS[3], WS[3] - 20, "ярус 3")):
-    clabel(d, x + w_ / 2, 36, t_, 19, MUTE, b=True, where="n49a/ярус")
+    clabel(d, x + w_ / 2, 36, t_, 19, MUTE, b=True, where="n43/ярус")
 
 # ── Подписи под рядом: чем ярусы различаются ───────────────────────────────
 BY = ROW_Y + ROW_H + 34
@@ -74,11 +74,11 @@ chipw = 300
 d.rounded_rectangle([XS[2], BY, XS[2] + chipw, BY + 38], radius=10,
                     fill=(0xE4, 0xF1, 0xF3), outline=TEAL, width=2)
 clabel(d, XS[2] + chipw / 2, BY + 8, "можно зайти руками", 20, TEAL, b=True,
-       where="n49a/чип1", limit=chipw - 24)
+       where="n43/чип1", limit=chipw - 24)
 d.rounded_rectangle([XS[3], BY, XS[3] + chipw, BY + 38], radius=10,
                     fill=SOFT_GREY, outline=GREY_TX, width=2)
 clabel(d, XS[3] + chipw / 2, BY + 8, "только итог", 20, GREY_TX, b=True,
-       where="n49a/чип2", limit=chipw - 24)
+       where="n43/чип2", limit=chipw - 24)
 
 CAP = ("Так работает автор курса. Дочерние сессии — полноценные, со своим "
        "контекстом; каждая дробит свою часть дальше сама.")
@@ -86,5 +86,5 @@ fo = f(20)
 for i, ln in enumerate(wrap(d, CAP, fo, MW - 80)):
     d.text((40, BY + 52 + i * 27), ln, font=fo, fill=MUTE)
 
-save(im, "subagent-n49a-tri-yarusa.png")
+save(im, "subagent-n43-tri-yarusa.png")
 report()

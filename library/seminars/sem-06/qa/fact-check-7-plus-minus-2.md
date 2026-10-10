@@ -65,3 +65,10 @@
 - `library/seminars/sem-06/qa/rasshifrovki/gruppa-1.txt`, 39:54–40:35.
 - `library/seminars/sem-06/qa/rasshifrovki/gruppa-2.txt`, 50:47–52:02.
 - `library/seminars/sem-06/slides/n49a-orkestrator-i-dochernie-sessii.md` — существующий маркер `[FACT-CHECK]`, который этот отчёт закрывает.
+
+---
+
+**Закрыто 2026-10-10, сессией сведения после проведения.** Маркер снят со слайда; в заметке
+на его месте стоит итог этой проверки и решение не вносить число. Слайд `n49a`, названный выше,
+после сведения нумерации носит номер **`n43`** — все номера в этом отчёте относятся к прежней
+нумерации (`ARCHITECTURE.md` §4, `qa/svedenie-posle-provedeniya.md`).

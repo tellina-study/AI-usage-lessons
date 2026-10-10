@@ -2,7 +2,7 @@
 name: glossary-ru-en
 issue: 172
 status: locked
-terms_count: 286
+terms_count: 336
 ---
 
 # RU→EN Terminology Glossary (course "AI-usage-lessons")
@@ -271,6 +271,24 @@ A-C still win where they overlap (`экипировка` → *harness*, `про�
 harness vocabulary (*subagent*, *harness*, *access to the outside*, *trust boundary*), and
 Seminar 4's EN deck for the case machinery.
 
+**Second pass, after the deck was actually translated (49 rows added).** D.2 below was written
+*before* the 64 slides were rendered into English; the two translation halves then reported back
+what it did not cover. Three kinds of gap came back, and all three are closed here:
+
+1. **Seven load-bearing terms** that the lock simply did not have, each recurring 5-225× and each
+   carrying a case: `кусок`, `раскладка` / `разложить`, `справочник`, `обвязка`,
+   `прогон перед выкладкой`, `промежуток`, `проверка, которая гоняется сама`. These are the rows a
+   one-off variant would have been most visible in.
+2. **The production and layout vocabulary**, which was missing *in full* — see D.3 and the reason
+   it matters stated there.
+3. **Two rows where the two halves of one deck actually diverged and had to be reconciled by
+   hand** — `предотвращаем / решаем` and `ограничение`. They are marked in D.2 and are the proof
+   that an unlocked row does not stay consistent by luck: both halves carry the same axis table,
+   the recap depends on the two copies being identical, and they came back different.
+
+Plus one **exception** (D.4): the single legitimate *fork* in the seminar, stated as an exception
+so that a translator neither breaks Part C's ban nor translates a product's mode name away.
+
 ### D.1 — `session`: the collision, resolved course-wide
 
 **The problem.** Part C renders `занятие` (the class itself) as *session*, with a warning not
@@ -384,3 +402,81 @@ run). Harmonizing those is a separate one-pass sweep, not part of this lock.
 | свидетельства | the evidence | Same slide type Part C locks as *the evidence*; Seminar 6 renamed the RU label from «исследование», the EN term does not change. |
 | со-сборка | co-building | The Part C `корзина → basket` family. |
 | граница (в обе стороны) | a boundary (stated both ways) | Each piece records what is inside it and what stays outside; the point is that both sides state it. |
+| кусок (задачи) | piece | The unit a task is taken apart into (225× in the Seminar 6 EN deck — the whole second subagent case). Not *chunk* (a technical flavor the RU does not have), not *part* (collides with a part of a chapter). «Независимых кусков три» → *three of the pieces are independent*. |
+| раскладка (задачи) / разложить | the layout / to lay out | Taken under the existing `раскладка зон` → *the zone layout*, so one English word covers both uses. **Not *decomposition***: Part C already spends *breakdown* on `разбор`, and a third near-synonym would read as a third concept. The one place *decompose* is allowed is the verbatim owner quote that itself uses the loanword. |
+| справочник (на настраиваемой платформе) | lookup list | The object of the second subagent case (28×). Not *catalog* (pulls ERP-localization baggage), not *directory* (collides with a filesystem directory, which is *directory* in the same half). |
+| обвязка | scaffolding | The wiring a subagent needs around it. *harness* is taken (`экипировка`), and *wiring*/*plumbing* read as hardware infrastructure. |
+| прогон перед выкладкой | the pre-release run | One of the pieces the practice slide lays the task out into. |
+| промежуток (между зонами) | the gap | The place nothing covers. The collision with `честный пробел` → *an honest gap* is harmless — both mean an uncovered place, and the two slides sit far apart. |
+| проверка, которая гоняется сама | a check that runs itself | Deliberately plain words, as in the RU. **Never *CI***: the seminar does not name the tool, and naming it in translation would name an instrument the source refuses to name. |
+| сжатие (разговора) / сжимать / уплотняться | compaction / to compact / to get condensed | The product's own word for the runtime shortening a long conversation, and the observed symptom the second MCP case is built on. Never *to shrink* / *to squeeze* — the reader has to recognize the term from the product's own UI. |
+| статья (расхода) | line item | The MCP block's whole bill stands on «три статьи». Not *item* / *entry* / *category*, which drift from slide to slide. |
+| заказчик | the client | Bare, next to Part C's `задача заказчика` → *the client's request*. |
+| задача (в трекере) | issue | One Russian word, two English ones. The RU source itself writes `читать открытые issue` in code font, which settles it. |
+| задача (дня, занятия) | task | The work in front of you — the thing that gets laid out into pieces. |
+| предотвращаем / решаем | prevent / settle | Column header of the axis table, shown twice (first statement and recap) and required to match character for character, because the return of the axis in the closing block rests on the two tables being identical. **Locked to *settle*, not *fix***: the two halves of the Seminar 6 deck translated it independently and disagreed, and the disagreement had to be undone by hand. «Решаем — правило уже нарушено» → *Settle — the rule has already been broken*. |
+| ограничение (шапка «что не делает») | the limit | Same story, same column pair, locked the same way: *the limit*, not *the limitation*, in all eight axis and comparison tables of a seminar. |
+| описание-триггер (скилла) | the trigger description | From the Seminar 5 vocabulary. Part C's ban on *trigger* covers `сигнал` → *signal*; here the Russian itself says «триггер», so the ban does not reach this row. |
+| перенос руками | the transfer by hand | The name of the defect the first MCP case is built around. |
+| живой источник / живость источника | a live source / the liveness of the source | Defined on the slide: a source is live if its answer depends on the time of the request. |
+| автовыбор / маршрутизация | auto-selection / routing | The second of the two ways to call a subagent. |
+| поставщик | provider | Models provider, harness provider, and `сторож поставщика` → *the provider's watchdog*. |
+| производитель | vendor | The other Russian word, held apart from *provider*: whoever publishes the documentation being quoted. The RU deck removed the loanword «вендор» from the visible layer on purpose — *vendor* in English renders «производитель», never that removed word. |
+| эндпойнт | endpoint | |
+| пересказ | a retelling | What a second session hands back instead of the thing itself; the named defect of that move. |
+| неполадка | fault | |
+| тариф / тарифы | plan / pricing plans | The scene of the second miss. Mind the collision with *plan* in the production sense (a lecture plan): inside seminar text *plan* is the subscription tier. |
+| участник / лимит участников | member / the limit on members | **Not *the member limit*** — the two halves settled on *the limit on members*. |
+| одностраничник | one-pager | The screen a block returns to three or four times. |
+| разбор проведения | the delivery breakdown | Follows Part C's `разбор` → *breakdown*. Not *review*. |
+| отраслевой разворот | the industry's reversal | |
+| целевой (о собранном файле) | a target state | «сам собранный файл при этом целевой» → *the assembled file itself is a target state, with no commit behind it*. |
+| вытеснить (работу чтением) | to crowd (the work) out | «по сигналу вытеснения работы чтением» → *on a signal that reading has crowded the work out*. |
+| Мостик / MCP / Субагент / Сборка (блоки занятия) | Bridge / MCP / Subagent / Wrap-up | The four block names of Seminar 6. Two of them (*MCP*, *Subagent*) are **rendered on the slides** — they are the roadmap pills on every macro divider — so a renderer that leaves them in Russian ships a Cyrillic visible layer. `Сборка` is the closing block (the axis recap, what appeared in the repository, the question asked a second time, how the class ends): *Wrap-up*, **not** *assembly* / *build* (which would read as building the deck), and `со-сборка` stays *co-building*. |
+
+### D.3 — Production and layout vocabulary
+
+This is the largest single gap the Seminar 6 EN pass found, and the one with the worst
+consequences, because it is invisible: these words almost never reach the screen. They live in
+`visual.primary` and `visual.backup` of nearly every slide, which both translation halves had to
+render in full (that text is prose, not metadata, so the mirror rule covers it), and until now
+every translator re-invented them. Two halves of one deck describing the same layout in two
+vocabularies is not a reading problem for a student — it is a reading problem for the next round
+of edits, which is where this costs money.
+
+Parts C already fixed two of these (`плашка` → *plate*, `дивайдер` → *divider*, `слот` → *slot*,
+`мостик` → *the bridge*); the rest are locked here. Every row below is a **record of what the two
+halves actually used**, verified against `slides-en/`, not a proposal.
+
+| RU | EN (US) | Note |
+|---|---|---|
+| подпись-итог | the closing line | The one line that closes a screen. |
+| формула-итог | the closing formula | The gold bar. Distinct from the closing line: a formula is quotable on its own. |
+| тихая реплика | a quiet aside | The teal bar — a speaker's line, not a conclusion. The pair *closing formula* / *quiet aside* is the one the builder decides by punctuation; see the note in `rendered/build_sem06.py`. |
+| дорожка кейсов | the case track | |
+| полотно | the canvas | The drawable area of a slide. |
+| ярус | tier | A horizontal level inside a figure. |
+| полоса (схемы) | band | |
+| коробка-таблица | a table-box | |
+| кружок-номер | a number circle | |
+| рисовалка | the figure script | The `make_figures_*.py` family. Not *drawing tool*. |
+| сторож (проверки сборки) | the guard | A build-time check that prints a warning, e.g. *the "DIAGRAM SQUEEZED" guard was firing on the longer wording*. Held apart from `сторож поставщика` → *the provider's watchdog*, which is a thing in the world, not in the build. |
+| круг правок | a round of edits | |
+| сведение | the consolidation pass | **Not *consolidation session***: `сессия` is a defined term of this seminar (D.1), and *session* in this position collides with it. |
+| разборщик | the parser | `slide_parts.py`. |
+| сборщик | the builder | `build_semNN.py`. |
+| кегль | the point size | |
+| золотая коробка | the gold box | |
+
+### D.4 — The one legitimate *fork*
+
+Part C locks `развилка` → *decision point* and bans *fork* outright: a seminar spent inside a git
+repository reads *fork* as a repo fork. **That ban stands** — in the Seminar 6 EN deck `развилка`
+is *decision point* everywhere, including the half that works with real branches.
+
+There is exactly one place where the ban must not be applied, and it is worth stating as an
+exception rather than letting a translator either violate the lock or lose a product's name:
+
+| RU | EN (US) | Note |
+|---|---|---|
+| форк (режим субагента, наследующий всё) | fork | **The only exception to Part C's `never fork`.** This is not a translation of «развилка» — it is the name of a documented subagent mode (the one that inherits everything from the calling session) as the harness's own documentation spells it, and the slide quotes that documentation. One occurrence, on the subagent one-pager. The consequence for checking: `grep -ci 'fork'` over a Seminar 6 EN deck must come back **1** — a 0 means a product's name was translated away, a 3 means `развилка` leaked. |

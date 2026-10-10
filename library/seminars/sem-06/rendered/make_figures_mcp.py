@@ -62,8 +62,8 @@ def mpanel(d, x, y, w, h, title=None, *, fill=SURF, stroke=LIGHT, tsz=20, tcol=D
 
 
 def msave(im, name):
-    im.save(OUT / name)
-    print("  ", name, im.size)
+    im.save(OUT / name)               # языковая приставка — в патче `fig_toolkit._save`
+    print("  ", outname(name), im.size)
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -75,7 +75,11 @@ mtext(d, 20, 6, "Ключ — в переменную окружения. Фай
 
 mpanel(d, 20, 54, MW - 40, 64, None, fill=SURF, stroke=TEAL)
 mtext(d, 42, 68, "Ход 3 — где хранить ключ?", 20, TEAL, b=True)
-mtext(d, 420, 68, "переменная окружения, не значение в файле", 20, INK)
+# Вторая половина строки отодвигается, когда первая шире: «Move 3 — where to keep
+# the key?» занимает 378 px от x=42, то есть упирается ровно в 420 и наезжает на
+# неё. Замер — в qa/shemy-en.md; русская координата прежняя, байты схемы те же.
+mtext(d, 420 if LANG == "ru" else 448, 68,
+      "переменная окружения, не значение в файле", 20, INK)
 
 mtext(d, 20, 128, "Ход 4 — куда положить сам файл?", 21, MID, b=True)
 
@@ -178,7 +182,7 @@ for i, (num, name, note, col, tc) in enumerate(RUNGS):
     # половинной ширины правее названия места на пояснение уже нет.
     if note:
         mtext(d, rx + 76, y + 8, name, 20, tc, b=True)
-        mtext(d, rx + 76, y + 34, note, 14, tc)
+        mtext(d, rx + 76, y + 34, note, sz(14, 17), tc)
     else:
         mtext(d, rx + 76, y + RH / 2 - 13, name, 20, tc, b=True)
 
@@ -188,7 +192,7 @@ y = 58 + 3 * (RH + RGAP)
 # начертание, не цвет.
 mcent(d, y + 6, "Совпало имя в двух областях — побеждает ВСЯ запись приоритетной области целиком; поля не смешиваются.", 19, DEEP, b=True)
 mpanel(d, 20, y + 38, MW - 40, 44, None, fill=(0xFD, 0xF3, 0xD6), stroke=GOLD, sw=3)
-mcent(d, y + 51, "Ступени 2 и 4 — один и тот же физический файл, разные записи внутри него, не два одинаковых адреса.", 16, GOLDINK, b=True)
+mcent(d, y + 51, "Ступени 2 и 4 — один и тот же физический файл, разные записи внутри него, не два одинаковых адреса.", sz(16, 17), GOLDINK, b=True)
 im = im.crop((0, 0, MW, y + 94))
 msave(im, "mcp-n16-prioritet.png")
 
@@ -211,12 +215,13 @@ d.rounded_rectangle([BX, BY, BX + FILLW, BY + BH_], radius=10, fill=GOLD)
 d.rectangle([BX + FILLW - 10, BY, BX + FILLW, BY + BH_], fill=GOLD)
 mtext(d, BX + 14, BY + 18, "21%", 24, DEEP, b=True)
 mtext(d, BX + FILLW + 16, BY + 20, "≈55 000 токенов", 20, INK, b=True)
-mtext(d, BX, BY + BH_ + 14, "0", 17, MUTE)
-rw = d.textlength("контекст 200 000", font=f(17))
-mtext(d, BX + BW_ - rw, BY + BH_ + 14, "контекст 200 000", 17, MUTE)
+mtext(d, BX, BY + BH_ + 14, "0", sz(17, 18), MUTE)
+rw = d.textlength("контекст 200 000", font=f(sz(17, 18)))
+mtext(d, BX + BW_ - rw, BY + BH_ + 14, "контекст 200 000", sz(17, 18), MUTE)
 mpanel(d, BX, BY + BH_ + 48, BW_, 60, None, fill=SURF, stroke=SOFT_GREY)
-for k, ln in enumerate(wrap(d, "контекст без подключённых серверов — 0; это худший случай, не дефолт", f(16), BW_ - 32)):
-    mtext(d, BX + 16, BY + BH_ + 58 + k * 22, ln, 16, MUTE)
+for k, ln in enumerate(wrap(d, "контекст без подключённых серверов — 0; это худший случай, не дефолт",
+                            f(sz(16, 18)), BW_ - 32)):
+    mtext(d, BX + 16, BY + BH_ + 58 + k * 22, ln, sz(16, 18), MUTE)
 
 # ── правая половина: сравнение цены одного действия ────────────────────────
 RX2 = 800
@@ -226,10 +231,10 @@ v1, v2 = 1365, 44026
 scale = maxw / v2
 y1, y2 = 100, 180
 bh = 48
-mtext(d, RX2, y1 - 26, "обычная команда", 17, MUTE)
+mtext(d, RX2, y1 - 26, "обычная команда", sz(17, 18), MUTE)
 d.rounded_rectangle([RX2, y1, RX2 + max(v1 * scale, 30), y1 + bh], radius=8, fill=TEAL)
 mtext(d, RX2 + max(v1 * scale, 30) + 14, y1 + 12, "1 365", 20, DEEP, b=True)
-mtext(d, RX2, y2 - 26, "через инструмент сервера", 17, MUTE)
+mtext(d, RX2, y2 - 26, "через инструмент сервера", sz(17, 18), MUTE)
 # Красный запрещён палитрой (P1-2) — «дороже» показывает самый тёмный тон
 # палитры (DEEP), не спектральный красный; контраст с бирюзовой «дешёвой»
 # полосой держится достаточно сильным и без него.

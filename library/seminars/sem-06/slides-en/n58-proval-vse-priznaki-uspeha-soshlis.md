@@ -24,7 +24,7 @@ This course is built by several sessions in one working copy, and its log holds 
 |---|---|---|
 | six sessions were editing one deck in one directory; a neighboring build rewrote the input file while the converter was reading it | exit code zero, "rendered slide 44 … 50" line by line, "PDF copied", the right page count | all 54 pages out of 54 blank, the file slimmed down from 6.67 to 2.69 MB. Caught by comparing timestamps: the input turned out to be newer than the output |
 | two sessions were editing one build file; a read of the file landed in the middle of somebody else's write | the build failed, and the error pointed to a name that "does not exist" | the declaration line was in the file; half a minute later the same build went through without a single edit by anybody |
-| a lecture was being built in parallel with another in one working copy, with the branch switched from both sessions | each session saw its own branch in place — at the moment it looked | more than seven branch switches in one session and about two hours spent recovering. After the move to separate copies — three, then four parallel builds without a single collision |
+| a lecture was being built in parallel with another in one working copy, with the branch switched from both sessions | each session saw its own branch in place — at the moment it was looking | more than seven branch switches in one session and about two hours spent recovering. After the move to separate copies — three, then four parallel builds without a single collision |
 
 > **The exit code, the page count, the freshness of the files — every familiar sign lined up, and not one session, taken separately, did anything wrong. The only thing that showed the truth was the result itself and the time of the edit.**
 
@@ -58,7 +58,7 @@ Why the blank pages were not found sooner: people were looking for the breakage 
 
 In sign, this case is the inverse of the first: there, a successful report with a broken result; here, a refusal with an intact file. The cause for both is the same — they read a state somebody was changing at that moment. The sign is worth remembering: an error that disappears by itself, with no edits, is a sign of reading a state in flux. Looking for a defect in the code in a situation like that is pointless, because there is no defect there.
 
-**Case three: two lectures in one copy.** A lecture was being built in parallel with another in one working copy, and the branch was switched from both sessions. Each session saw its own branch in place — at the moment it looked. The switches in one session came to more than seven, and about two hours went on recovering.
+**Case three: two lectures in one copy.** A lecture was being built in parallel with another in one working copy, and the branch was switched from both sessions. Each session saw its own branch in place — at the moment it was looking. The switches in one session came to more than seven, and about two hours went on recovering.
 
 Alongside this case stands its inverse, and it weighs more than the breakage itself. After the move to separate copies the same work went on being done in parallel further: first three lectures at once, then four — and there was not a single collision. Parallel work, then, stayed and expanded. What had to be forbidden was the shared directory underneath it.
 

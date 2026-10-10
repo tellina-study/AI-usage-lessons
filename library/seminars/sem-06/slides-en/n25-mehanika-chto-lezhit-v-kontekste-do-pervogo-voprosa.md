@@ -6,7 +6,7 @@ assertion: "Before your first question there are four line items in the context:
 learning_goal: "The mechanics of start-up: what arrives in the context before the work begins and from exactly where, where the boundary runs between a standing line item and loading on demand, and what cancels the deferral. The measured figure for the worst case, named in the section's first case on the slide about the cost of a connection, also adds up here"
 visual:
   pattern: mechanics_table
-  figure: mcp-n25-chto-v-kontekste.png
+  figure: mcp-n25-chto-v-kontekste-en.png
   primary: "A diagram: the four line items that arrive in the context at start-up by default, each with its source — the client, the repository, the server. As a separate line below — what arrives on demand. At the bottom, a gold zone of exceptions: the two ways of cancelling the deferral and the measured cost of the worst case with a reference to the measurement."
   backup: "Source — rework/section-1-mcp-part1b.md §A.3.5, §B.25 (part1e.md). Round 5 (issue 225): the slide was written anew for the replacement of the case; the previous diagram of trust by name (mcp-n25-tsepochka.png) was removed along with the case, and in its place mcp-n25-chto-v-kontekste.png is drawn (rendered/make_figures_mcp.py, section n25).
     Round 5's cross-cutting decision (C2, the owner's direct requirement: \"we need to show what comes into it at start-up and from where\") is closed here as far as MCP is concerned: four line items, each with its source. The project's instruction files are named in one line deliberately — the room assembled their composition itself over three classes, and there is no point breaking it down again.

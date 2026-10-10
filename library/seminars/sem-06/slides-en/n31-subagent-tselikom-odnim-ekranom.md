@@ -29,7 +29,7 @@ learning_goal: "The full picture of a subagent in one screen — the anchor slid
   the point size were not touched"
 visual:
   pattern: mechanics_with_figure
-  figure: subagent-n31-subagent-tselikom.png
+  figure: subagent-n31-subagent-tselikom-en.png
   primary: "A diagram filling the slide, six numbered blocks each on its own backing. Two tiers of two
     blocks: 1 — where it is declared (a real piece of `diff-reviewer.md` on a light card — the name
     and the permissions verbatim, not an abstract field caption with no value — plus two lines on what

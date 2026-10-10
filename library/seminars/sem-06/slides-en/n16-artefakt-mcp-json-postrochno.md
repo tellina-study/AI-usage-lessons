@@ -6,7 +6,7 @@ assertion: "The result of the conversation is a file with four lines of substanc
 learning_goal: "The artifact of the decision from the two co-buildings, broken down line by line — not the fragment already seen on the one-pager (n09), but the full version with an explanation of every line. With the mechanics of the three configuration scopes and the order of precedence. Named honestly as the target decision, not confirmed by a commit. Round 2 of the owner's edits (issue 225): more detail on the structure of the file, a line-by-line explanation; two specific confusions were fixed — the \"identical addresses\" on the precedence diagram and the mention of the server crashing"
 visual:
   pattern: code_artifact
-  figure: mcp-n16-prioritet.png
+  figure: mcp-n16-prioritet-en.png
   primary: "The code of the .mcp.json file on a light field, with every line captioned through an arrow saying what it means. Below — the diagram of precedence on a clash of names (six rungs, with the file's location on each; the local and user rungs explicitly explained as one and the same physical record, different places inside it)."
   backup: "Source — rework/section-1-mcp.md §A.1.8 (rewritten), §B.8 (part1c.md, rewritten). The honest gap — this is the section's target decision, taken from an earlier capture of the demo repository; there is no commit with it in the current branch of the demo project, and there is no such file in the course's repository either (§A.00, named once for the whole section).
     Round 2 of the owner's edits (issue 225): the slide was expanded (1.25→1.5 min) — a

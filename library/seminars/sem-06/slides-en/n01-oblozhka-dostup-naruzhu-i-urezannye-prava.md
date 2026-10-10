@@ -6,7 +6,7 @@ assertion: "An agent that knew everything about the project starts missing — t
 learning_goal: "A hook, not a table of contents: the seminar opens with a miss on the very project the room built up over the previous two classes, with the cost named. The seminar's question is NOT asked here — it comes on n04, after the second miss, once the shortfall has already been felt"
 visual:
   pattern: hero_cover
-  figure: ramka-n01-hero-sem06.png
+  figure: ramka-n01-hero-sem06-en.png
   primary: >
     A dark Ocean background, the same device as the previous class's cover. A large title, and
     under it two lines: first, as a quiet aside — what happened this week; then, in a gold

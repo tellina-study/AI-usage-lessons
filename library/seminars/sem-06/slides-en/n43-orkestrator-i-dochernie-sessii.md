@@ -6,7 +6,7 @@ assertion: "Alongside the working session people bring up an orchestrator sessio
 learning_goal: "A third move alongside the two already examined. A subagent and a child session answer one request — do the pieces at the same time — and diverge on two properties that decide the choice: whether you can walk in by hand, and whether you can go one tier further down. The criterion is named by the size of the piece, the cost is named in three lines"
 visual:
   pattern: mechanics_table
-  figure: subagent-n43-tri-yarusa.png
+  figure: subagent-n43-tri-yarusa-en.png
   primary: "At the top — a diagram of three tiers: the working session, the orchestrator session, the child sessions and the subagents beneath them; the child session is marked as one you can walk into by hand, the subagent as one that only sends back a result. Under the diagram — a table in two substantive columns: what a child session gives and what it costs. The slide is closed by a criterion line in gold: a small piece to a subagent, a large one to a child session. The line about whose practice this is lives in the diagram's caption."
   backup: "The source is the course author's own working practice, told at both of the classes this deck was delivered in (transcripts: `qa/rasshifrovki/gruppa-1.txt`, 32:33; `qa/rasshifrovki/gruppa-2.txt`, 43:34, 52:02-53:36, 55:38). It was not in the materials, and the author said so directly: \"didn't put it into this lecture\" (group 1, 39:54). Added under section B of the delivery breakdown (`qa/RAZBOR-PROVEDENIYA.md`) — the practice test: what gets added off the cuff twice is what the material is missing.
 

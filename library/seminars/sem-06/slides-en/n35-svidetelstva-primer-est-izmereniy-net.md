@@ -10,7 +10,7 @@ visual:
   backup: "The source is research/mechanics-6-subagent.md §2.2, verbatim: \"The subagent read 6,100 tokens of files. You got a 420-token result. That's the context savings\" (context-window.md, Anthropic's own teaching example, not a measured statistic). The honest gap is spoken out loud here, in this case's evidence, and nowhere else in the deck — which is exactly where the chapter puts it (`rework/section-2-subagent.md`, § \"Evidence\"): \"numbers for how much context a subagent saves compared with the same volume of work in the main session were not found in any source\". Owner's round 3 (issue 225): the number is new to the deck and is used here for the first time. Round 5 (issue 225, ZADANIE-KRUG-5.md, cross-cutting decision C1): the word \"window\" was removed from the slide entirely, replaced by \"context\"; \"parent\" was replaced by \"the session that called the role\"."
 ---
 
-# There is an example; a measurement over a sample, no
+# An example, yes; a measurement over a sample, no
 
 ## Assertion
 

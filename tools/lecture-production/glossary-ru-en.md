@@ -2,7 +2,7 @@
 name: glossary-ru-en
 issue: 172
 status: locked
-terms_count: 336
+terms_count: 346
 ---
 
 # RU→EN Terminology Glossary (course "AI-usage-lessons")
@@ -433,6 +433,14 @@ run). Harmonizing those is a separate one-pass sweep, not part of this lock.
 | целевой (о собранном файле) | a target state | «сам собранный файл при этом целевой» → *the assembled file itself is a target state, with no commit behind it*. |
 | вытеснить (работу чтением) | to crowd (the work) out | «по сигналу вытеснения работы чтением» → *on a signal that reading has crowded the work out*. |
 | Мостик / MCP / Субагент / Сборка (блоки занятия) | Bridge / MCP / Subagent / Wrap-up | The four block names of Seminar 6. Two of them (*MCP*, *Subagent*) are **rendered on the slides** — they are the roadmap pills on every macro divider — so a renderer that leaves them in Russian ships a Cyrillic visible layer. `Сборка` is the closing block (the axis recap, what appeared in the repository, the question asked a second time, how the class ends): *Wrap-up*, **not** *assembly* / *build* (which would read as building the deck), and `со-сборка` stays *co-building*. |
+| хук | hook | Course term from Seminar 5, which the lock carried only inside a sentence («The mechanics of hooks and skills…», D.1) and never as a row. It is **drawn on the Seminar 6 cover** — one of the four axis segments — so an unlocked variant ships on the first screen of the class. |
+| скилл | skill | Same source, same reason. The axis pairs them: *hook* and *skill* closed last time, *MCP* and *subagent* settled today. |
+| форма (экран ввода на платформе) | form | The object of the second subagent case, paired with `справочник` → *lookup list*; the two zones of the boundary figure are *lookup list* and *form*. Lower case, as in the RU: these are box labels, not product names. |
+| витрина отчётов | reporting mart | One of the four external systems a server can reach (n08). Not *report showcase* (literal), not *dashboard* (a different object — the seminar names a data store, not a screen). |
+| коннектор | connector | The product's own name for the sixth rung of scope precedence. Kept as is; the RU is itself the loanword. |
+| сервер из плагина | server from a plugin | The fifth rung. Not *a plugin server*, which reads as a server for plugins rather than one a plugin brought with it. |
+| только итог | only the result | What comes back from a subagent, and the chip under the subagent column of the three-tier figure. The pair below states the other side. |
+| можно зайти руками | you can walk in by hand | What a child session allows and a subagent does not — already the prose form in the `дочерняя сессия` row above; locked here as its own row because it is **drawn on a figure** as a chip and had been re-invented each time. |
 
 ### D.3 — Production and layout vocabulary
 
@@ -467,6 +475,8 @@ halves actually used**, verified against `slides-en/`, not a proposal.
 | сборщик | the builder | `build_semNN.py`. |
 | кегль | the point size | |
 | золотая коробка | the gold box | |
+| подпись на схеме | a figure label | Text **drawn in pixels** by a `make_figures_*.py` script, not laid out by the builder. Two consequences the translator has to carry: a label has **no word wrap** (it does not re-flow, it overruns), and it keeps the **case of the source** — an ALL-CAPS Russian header stays ALL-CAPS. Labels on boxes drop the article (`разговор` → *conversation*, not *the conversation*); labels that are sentences keep it. |
+| словарь схем | the figure strings file | `rendered/fig_strings_en.py` — the RU→EN table the figure scripts translate through, one entry per drawn label. It is a **record** of the lock, never a second place to decide terminology: a term that is not in this glossary is added here only after it is added above. |
 
 ### D.4 — The one legitimate *fork*
 

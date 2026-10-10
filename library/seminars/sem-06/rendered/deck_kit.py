@@ -393,7 +393,7 @@ def _fit_ladder(sizes):
     return [(si, ti) for ti in range(len(TIGHTEN)) for si in range(len(sizes))]
 
 
-def _col_shares(headers, rows, ncol, inner_w, size):
+def _col_shares(headers, rows, ncol, inner_w, size, head_size=None):
     """Доли ширины колонок.
 
     Ширина пропорциональна МАССЕ текста в колонке — тогда все колонки требуют
@@ -410,17 +410,25 @@ def _col_shares(headers, rows, ncol, inner_w, size):
       дюйма. Ровно это и происходило на слайде оси занятия.
 
     Остаток после потолков разливается по колонкам, которым ещё тесно.
+
+    ШАПКА меряется так же, как рисуется, — КАПИТЕЛЯМИ и СВОИМ кеглем
+    (`head_size`), а не строчными буквами и кеглем ячейки. Пока дека была одна,
+    разницы почти не было: на кириллице `Опора` и `ОПОРА` одной ширины. На
+    латинице `Support` → `SUPPORT` шире примерно на 15%, и шапку разорвало
+    посреди слова — ширину колонке назначили её ячейки («yes»/«no»), а шапке в
+    ней не хватило 0,008″ (промер — `qa/render-en.md` §6.2). Правка лечит класс:
+    любая шапка длиннее своих ячеек разошлась бы так же, на любом языке.
     """
     mass, floor, ceil = [], [], []
+    hsz = size if head_size is None else head_size
     for j in range(ncol):
-        cells = [r[j] for r in rows if j < len(r) and r[j]]
+        cells = [(r[j], plain(r[j]), size) for r in rows if j < len(r) and r[j]]
         if headers and j < len(headers):
-            cells.append(headers[j])
-        cells = [(c, plain(c)) for c in cells]
-        widths = [M.text_w(t, size, mono="`" in raw) for raw, t in cells] or [0.35]
+            cells.append((headers[j], plain(headers[j]).upper(), hsz))
+        widths = [M.text_w(t, sz, mono="`" in raw) for raw, t, sz in cells] or [0.35]
         mass.append(max(sum(widths), 0.35))
-        longest = max((M.text_w(wd, size, mono="`" in raw)
-                       for raw, t in cells for wd in t.split()), default=0.4)
+        longest = max((M.text_w(wd, sz, mono="`" in raw)
+                       for raw, t, sz in cells for wd in t.split()), default=0.4)
         floor.append(max(longest + 0.2, inner_w * 0.07))
         ceil.append(max(max(widths) + 0.24, floor[-1]))
 
@@ -515,9 +523,10 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
         # не заменяется табличной: `min(mrh, min_row_h)` молча игнорировал бы
         # вызов, который просит строки ВЫШЕ штатных.
         mrh = min_row_h * (mrh / TIGHTEN[0][2])
-        sh = col_w or _col_shares(headers, rows, ncol, w - 2 * box_pad, size)
+        # Кегль шапки считается ДО ширин: он в них входит (см. `_col_shares`).
         hsz = header_size if header_size is not None else min(size, 11.5)
-        hh = (max(M.text_h(plain(h_), hsz, sh[j] - gap, bold=True)
+        sh = col_w or _col_shares(headers, rows, ncol, w - 2 * box_pad, size, hsz)
+        hh = (max(M.text_h(plain(h_).upper(), hsz, sh[j] - gap, bold=True)
                   for j, h_ in enumerate(headers)) + 0.12) if headers else 0.0
         rhs = [max(mrh, max(M.rich_h(c, size, sh[j] - gap, spacing=spacing)
                             for j, c in enumerate(r)) + row_pad) for r in rows]

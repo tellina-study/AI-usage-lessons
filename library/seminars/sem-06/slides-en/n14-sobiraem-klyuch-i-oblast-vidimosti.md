@@ -6,7 +6,7 @@ assertion: "The key is kept in an environment variable, not in a file; the confi
 learning_goal: "Co-building, part 2 of two: the third and fourth moves — where to keep the key, and which scope to put the configuration file in. The command's default is named explicitly, so as to clear up the typical confusion of \"it works for me — it does not for you\". Round 2 of the owner's edits (issue 225, part A3): the word \"barrier\" was removed from the title"
 visual:
   pattern: cobuilding_config_reveal
-  figure: mcp-n14-oblasti.png
+  figure: mcp-n14-oblasti-en.png
   primary: "Two moves on one screen. Move 3 — the key in an environment variable. Move 4 — the three scopes of the configuration with a mark on which is for what and which is the default of the connect command."
   backup: "Source — rework/section-1-mcp.md §A.1.7 (part 2), §B.7 (part1c.md). The order of precedence of the scopes and the physical files are carried over to the next slide together with the .mcp.json artifact.
     The visual session (issue 225): the table \"Scope · When it is appropriate\" was replaced by a

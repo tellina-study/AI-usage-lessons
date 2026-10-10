@@ -6,7 +6,7 @@ assertion: "The divergence is closed by a shared description of the task in whic
 learning_goal: "The one working technique for this boundary, shown on the two pieces of the scene rather than abstractly. The boundary makes the divergence visible to whoever reads the description before working — it does not remove the seam between the pieces itself"
 visual:
   pattern: mechanics_with_figure
-  figure: subagent-n48-granitsa-dvukh-zon.png
+  figure: subagent-n48-granitsa-dvukh-zon-en.png
   primary: "A diagram: two rectangles for the zones of responsibility — the lookup list (the composition and names of the fields) and the form (what it shows and checks), each with its own \"NOT here...\" line. Between the rectangles — a highlighted zone captioned \"shared, written down by nobody\". Caption below: the boundary makes the divergence visible, it does not remove the seam itself."
   backup: "The sources are section-2-subagent-part1a2.md §A.2 \"The mechanics of the boundary\", section-2-subagent-part1c.md n48. Owner's round 3 (issue 225): carried over as the boundary of the case about parallelism. Storytelling revision (P6): the wording of the technique is the same. The slot was cut from 1.00 to 0.75.
     Revisions after the classes were held (issue 225, qa/RAZBOR-PROVEDENIYA.md §A3): the technique did not change —

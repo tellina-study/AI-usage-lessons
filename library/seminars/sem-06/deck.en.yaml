@@ -39,7 +39,7 @@ slides:
     here — it comes on n04, after the second miss, once the shortfall has already been felt'
   visual:
     pattern: hero_cover
-    figure: ramka-n01-hero-sem06.png
+    figure: ramka-n01-hero-sem06-en.png
     primary: 'A dark Ocean background, the same device as the previous class''s cover. A large title,
       and under it two lines: first, as a quiet aside — what happened this week; then, in a gold box —
       a short riddle of a question that the seminar answers within the next three minutes. The seminar''s
@@ -390,7 +390,7 @@ slides:
     conclusion: MCP is one and the same for the agent, and outward the server talks in the system''s language'
   visual:
     pattern: mechanics_with_figure
-    figure: mcp-n08-gde-chto-stoit.png
+    figure: mcp-n08-gde-chto-stoit-en.png
     primary: 'A diagram filling the slide. On the left a frame "YOUR MACHINE" — the agent is in it, and
       so is the first variant of the server; the arrow "1 — MCP" runs from the agent to the server inside
       the frame. The second arrow, "2 — MCP over the network", leaves the agent, crosses the machine''s
@@ -444,7 +444,7 @@ slides:
     call, and "context and cost" was rewritten concretely'
   visual:
     pattern: mechanics_with_figure
-    figure: mcp-n09-mehanizm.png
+    figure: mcp-n09-mehanizm-en.png
     primary: 'A diagram filling the slide: six numbered blocks, two rows of columns, top and bottom —
       three columns. 1 — what a server is: a separate program, a local process or a remote service, who
       starts it. 2 — where it is declared: a mini-template of .mcp.json and the three scopes, briefly
@@ -642,7 +642,7 @@ slides:
     edits (issue 225, part A3): the word "barrier" was removed from the title'
   visual:
     pattern: cobuilding_config_reveal
-    figure: mcp-n14-oblasti.png
+    figure: mcp-n14-oblasti-en.png
     primary: Two moves on one screen. Move 3 — the key in an environment variable. Move 4 — the three
       scopes of the configuration with a mark on which is for what and which is the default of the connect
       command.
@@ -730,7 +730,7 @@ slides:
     — the "identical addresses" on the precedence diagram and the mention of the server crashing'
   visual:
     pattern: code_artifact
-    figure: mcp-n16-prioritet.png
+    figure: mcp-n16-prioritet-en.png
     primary: The code of the .mcp.json file on a light field, with every line captioned through an arrow
       saying what it means. Below — the diagram of precedence on a clash of names (six rungs, with the
       file's location on each; the local and user rungs explicitly explained as one and the same physical
@@ -815,7 +815,7 @@ slides:
     if time runs short'
   visual:
     pattern: mechanics_table
-    figure: mcp-n18-dolya-konteksta.png
+    figure: mcp-n18-dolya-konteksta-en.png
     primary: The share of the context is shown as a proportion (a filled bar, 21% of 200K), not listed
       as a number in a table; beside it — the comparison of 1,365 against 44,026 tokens by the same device
       (two bars, captioned with the absolute numbers, with the 32-fold difference in gold). Above the
@@ -1076,7 +1076,7 @@ slides:
     the slide about the cost of a connection, also adds up here'
   visual:
     pattern: mechanics_table
-    figure: mcp-n25-chto-v-kontekste.png
+    figure: mcp-n25-chto-v-kontekste-en.png
     primary: 'A diagram: the four line items that arrive in the context at start-up by default, each with
       its source — the client, the repository, the server. As a separate line below — what arrives on
       demand. At the bottom, a gold zone of exceptions: the two ways of cancelling the deferral and the
@@ -1302,7 +1302,7 @@ slides:
     5 the answer lay only in the reference material of the scene, and the case read as unexplained'
   visual:
     pattern: mechanics_with_figure
-    figure: subagent-n30-kontekst-i-subagenty.png
+    figure: subagent-n30-kontekst-i-subagenty-en.png
     backup: 'Round 5 (issue 225, ZADANIE-KRUG-5.md, the remark on case 4: "the terminology of agents and
       roles gets confused, a little diagram with the agents is needed… window is a so-so term as well…
       it is context, surely. And we need to show what comes into it at start-up and from where"). It was:
@@ -1376,7 +1376,7 @@ slides:
     size were not touched'
   visual:
     pattern: mechanics_with_figure
-    figure: subagent-n31-subagent-tselikom.png
+    figure: subagent-n31-subagent-tselikom-en.png
     primary: 'A diagram filling the slide, six numbered blocks each on its own backing. Two tiers of two
       blocks: 1 — where it is declared (a real piece of `diff-reviewer.md` on a light card — the name
       and the permissions verbatim, not an abstract field caption with no value — plus two lines on what
@@ -1818,7 +1818,7 @@ slides:
     by the size of the piece, the cost is named in three lines'
   visual:
     pattern: mechanics_table
-    figure: subagent-n43-tri-yarusa.png
+    figure: subagent-n43-tri-yarusa-en.png
     primary: 'At the top — a diagram of three tiers: the working session, the orchestrator session, the
       child sessions and the subagents beneath them; the child session is marked as one you can walk into
       by hand, the subagent as one that only sends back a result. Under the diagram — a table in two substantive
@@ -2059,7 +2059,7 @@ slides:
     working — it does not remove the seam between the pieces itself
   visual:
     pattern: mechanics_with_figure
-    figure: subagent-n48-granitsa-dvukh-zon.png
+    figure: subagent-n48-granitsa-dvukh-zon-en.png
     primary: 'A diagram: two rectangles for the zones of responsibility — the lookup list (the composition
       and names of the fields) and the form (what it shows and checks), each with its own "NOT here..."
       line. Between the rectangles — a highlighted zone captioned "shared, written down by nobody". Caption

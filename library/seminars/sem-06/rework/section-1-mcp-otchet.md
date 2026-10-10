@@ -18,7 +18,7 @@ issue: 225
 другим — про переполнение контекста описаниями инструментов (`ZADANIE-KRUG-5.md`). Доказательная
 база прежнего третьего кейса (Rashidi, Deadbugz, `postmark-mcp`, `requiresUserInteraction`) из
 занятия выведена и ниже по тексту этого отчёта упоминается как история решения, не как состав
-занятия. Новый состав — `section-1-mcp-part1b.md` §A.3 и `section-1-mcp-part1d.md` §B.21–B.29,
+занятия. Новый состав — `section-1-mcp-part1b.md` §A.3 и `section-1-mcp-part1e.md` §B.21–B.29,
 источники — `research/mcp-kontekst-otkaz.md`, отчёт — `qa/krug5-mcp-keys3.md`.
 
 **Три кейса, не два.** `research/setka-keysov.md` (вердикт REVISE) показал, что материал держит

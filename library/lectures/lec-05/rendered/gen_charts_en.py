@@ -87,51 +87,37 @@ def c_passk():
     save(fig, "c-passk.png")
 
 
-# ── s40: Zillow writedown range $304-408M ──
-# GATE-B fix (student-simulator P1): a single shared axis previously plotted
-# 356 (million-scale) and 80 (thousand-scale) as if directly comparable bar
-# lengths -> a skimming reader could misread "$80M vs $304M" (they are 3
-# orders of magnitude apart: $304-408M total vs $80K per home). Fixed by
-# giving each bar its OWN independent x-axis (two side-by-side panels) so
-# the bar lengths can never imply a false shared-scale comparison; each
-# panel's unit is in its own title, not a shared footnote easy to skim past.
+# ── s40: Zillow — bought against sold in the third quarter of 2021 ──
+# EN twin of gen_charts.py::c_zillow after the #212 fix (student-roast
+# 2026-09-30): there were TWO charts side by side here, captioned "do NOT
+# compare bar lengths directly" — $304-408M on one scale and ~$80K on the
+# other. The student compared them by eye before finishing the warning, and
+# that is to be expected: two charts side by side READ as a comparison
+# whatever is written under them. A warning you have to write is a symptom
+# of a bad chart, not a cure for one. Now there is ONE chart, and both
+# quantities on it are in the SAME unit (homes), so comparing them is not
+# only allowed but required: that gap — 9,680 bought against 3,032 sold in a
+# single quarter — IS the mechanism of the failure. The money figures stay
+# in the slide's text block.
 def c_zillow():
-    fig = plt.figure(figsize=(8.4, 3.2))
-    gs = fig.add_gridspec(1, 2, wspace=0.85, left=0.14, right=0.97,
-                          top=0.84, bottom=0.20)
-    ax1 = fig.add_subplot(gs[0, 0])
-    ax2 = fig.add_subplot(gs[0, 1])
-
-    b1 = ax1.barh(["Zillow Offers\nwrite-down"], [356], color=GOLD, height=0.5,
-                  zorder=3)
-    ax1.bar_label(b1, labels=["$304-408M"], fontsize=12.5,
-                  fontweight="bold", color=DEEP, padding=6)
-    ax1.set_xlim(0, 760)
-    ax1.set_title("Total write-down, $ MILLION", fontsize=11, fontweight="bold",
-                  color=DEEP, pad=10)
-    ax1.spines[["top", "right"]].set_visible(False)
-    ax1.grid(axis="x", color=GREY, linewidth=0.7, zorder=0)
-    ax1.tick_params(labelsize=10.5)
-    ax1.set_xticks([0, 200, 400])
-
-    # independent (unrelated) axis scale for the per-home figure — a shared
-    # scale with panel 1 would squash this bar to ~17% length and invite the
-    # same false "similar magnitude" read the fix is meant to prevent.
-    b2 = ax2.barh(["~loss\nper home"], [80], color=LIGHT, height=0.5,
-                  zorder=3)
-    ax2.bar_label(b2, labels=["~$80K"], fontsize=12.5, fontweight="bold",
-                  color=DEEP, padding=6)
-    ax2.set_xlim(0, 170)
-    ax2.set_title("Per home, $ THOUSAND", fontsize=11, fontweight="bold",
-                  color=DEEP, pad=10)
-    ax2.spines[["top", "right"]].set_visible(False)
-    ax2.grid(axis="x", color=GREY, linewidth=0.7, zorder=0)
-    ax2.tick_params(labelsize=10.5)
-    ax2.set_xticks([0, 50, 100])
-    fig.text(0.5, 0.03, "Different units, different scales — MILLION on the "
-              "left, THOUSAND on the right (do NOT compare bar lengths "
-              "directly)", ha="center", fontsize=9, color=SLATE,
-              style="italic")
+    fig, ax = plt.subplots(figsize=(7.4, 2.9))
+    bars = ax.barh(["Bought", "Sold"], [9680, 3032],
+                   color=[GOLD, LIGHT], height=0.52, zorder=3)
+    ax.bar_label(bars, labels=["9,680 homes", "3,032 homes"], fontsize=13,
+                 fontweight="bold", color=DEEP, padding=8)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 13200)
+    ax.set_xticks([0, 3000, 6000, 9000])
+    ax.set_xticklabels(["0", "3,000", "6,000", "9,000"])
+    ax.set_xlabel("homes in the third quarter of 2021 · a gap of 6,648 homes "
+                  "in one quarter — that is what had to be written down",
+                  fontsize=10, color=SLATE, labelpad=8)
+    ax.set_title("Zillow Offers: homes bought and homes sold",
+                 fontsize=12, fontweight="bold", color=DEEP, pad=12,
+                 loc="left")
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(axis="x", color=GREY, linewidth=0.7, zorder=0)
+    ax.tick_params(labelsize=11)
     save(fig, "c-zillow.png")
 
 

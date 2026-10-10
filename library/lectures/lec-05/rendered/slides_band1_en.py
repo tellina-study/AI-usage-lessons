@@ -580,49 +580,122 @@ def s09(p):
 # s10 - AI: discovery tools 2025-26
 # ============================================================
 def s10(p):
+    """EN twin of the rewritten RU s10 (FIX #212, owner remarks R6/R7):
+    the stale time-saving estimates and tool list are replaced by 2026
+    practice and shown as a "without AI / with AI" comparison per step of
+    the phase. AI personas no longer appear out of nowhere: they have a
+    named place on the scale of who is on the other end of the
+    conversation. The golden set is gone from here — it gets its own slide
+    in Section 3 (s24b); here it was an opaque forward reference."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Hours → minutes: but links exist so they can be checked",
-                size=22, w=12.2, h=0.85)
+    slide_title(s, "What AI changed in research by 2026 — "
+                   "and what it did not",
+                size=22, w=12.25, h=0.58, y=0.13)
 
-    blocks = [
+    # ── Step-by-step comparison table ─────────────────────────────────
+    col_x = [0.55, 3.30, 8.00]
+    col_w = [2.60, 4.55, 4.80]
+    for x, w, t in zip(col_x, col_w,
+                       ["STEP OF THE PHASE", "WITHOUT AI", "WITH AI — 2026"]):
+        filled_rect(s, x, 0.82, w, 0.32, MID, radius=True, radius_adj=0.12)
+        text_box(s, x=x + 0.08, y=0.82, w=w - 0.16, h=0.32, text=t,
+                 size=9.5, bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+
+    rows = [
         ("file-search", "Desk research",
-         "Perplexity Deep Research: 2 hours → ~30 minutes [1]"),
-        ("layout-list", "Interview synthesis",
-         "Dovetail — pain-point clustering at scale [2]"),
-        ("database", "Reference dataset",
-         "a curated collection of \"query → correct answer\""),
+         "what is already known about the market and the pain",
+         "An analyst reads reports, papers and forums — days of work",
+         "Deep research mode plans the search itself, reads hundreds of "
+         "sources and returns a report with links in 2–30 minutes. Every "
+         "major assistant has it, free tiers included, with a cap"),
+        ("headphones", "The conversation", "",
+         "The researcher runs each interview in person; eight of them take "
+         "weeks of calendar",
+         "The model asks, a live human answers — many times more "
+         "conversations in the same span"),
+        ("layout-list", "Interview synthesis", "",
+         "Transcription by hand, themes picked out by eye",
+         "Transcription is now a free add-on to any call; tools "
+         "continuously re-cluster themes across the whole accumulated "
+         "corpus, not one call"),
     ]
-    cw, gap = 3.95, 0.20
-    x0 = 0.55
-    y0 = 1.55
-    for i, (ic, head, body) in enumerate(blocks):
-        x = x0 + i * (cw + gap)
-        ocean_box(s, x, y0, cw, 2.05)
-        icon(s, ic, x + 0.24, y0 + 0.20, 0.56, "mid")
-        text_box(s, x=x + 0.24, y=y0 + 0.88, w=cw - 0.48, h=0.50, text=head,
-                 size=12, bold=True, color=MID, line_spacing=1.05)
-        text_box(s, x=x + 0.24, y=y0 + 1.44, w=cw - 0.48, h=0.55, text=body,
-                 size=11, color=DEEP, line_spacing=1.10)
-        if i == 0:
-            chip(s, x + cw - 1.55, y0 + 0.20, 1.30, 0.36, "verify the source",
-                 fill=GOLD, color=DEEP, size=9)
+    ry = 1.22
+    for ic, name, gloss, was, now in rows:
+        rh = 0.78
+        ocean_box(s, col_x[0], ry, col_w[0], rh, fill=SURFACE, stroke=LIGHT,
+                  stroke_pt=1.3)
+        icon(s, ic, col_x[0] + 0.16, ry + 0.10, 0.32, "mid")
+        text_box(s, x=col_x[0] + 0.54, y=ry + 0.08, w=col_w[0] - 0.66,
+                 h=0.34, text=name, size=11, bold=True, color=MID,
+                 line_spacing=1.04)
+        if gloss:
+            text_box(s, x=col_x[0] + 0.14, y=ry + 0.42, w=col_w[0] - 0.28,
+                     h=0.32, text=gloss, size=8.5, italic=True, color=SLATE,
+                     line_spacing=1.04)
+        ocean_box(s, col_x[1], ry, col_w[1], rh, fill=WHITE, stroke=SOFT_GREY,
+                  stroke_pt=1.2)
+        text_box(s, x=col_x[1] + 0.16, y=ry, w=col_w[1] - 0.32, h=rh,
+                 text=was, size=10, color=SLATE, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.14)
+        ocean_box(s, col_x[2], ry, col_w[2], rh, fill=TEAL_TINT, stroke=TEAL,
+                  stroke_pt=1.4)
+        text_box(s, x=col_x[2] + 0.16, y=ry, w=col_w[2] - 0.32, h=rh,
+                 text=now, size=10, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+                 line_spacing=1.14)
+        ry += rh + 0.08
 
+    # ── The scale: who is on the other end of the conversation ────────
+    text_box(s, x=0.55, y=3.80, w=12.25, h=0.30,
+             text="Who is on the other end of the conversation", size=12.5,
+             bold=True, color=MID)
+    lad = [
+        ("human ↔ human", "the classic interview", MID, SURFACE),
+        ("human ↔ model", "the machine asks, a live human answers",
+         TEAL, TEAL_TINT),
+        ("model ↔ model",
+         "an AI persona: a machine answers too — no live human in the "
+         "chain at all", GOLD, GOLD_TINT),
+    ]
+    lw_ = 3.97
+    for i, (t1, t2, col, fill) in enumerate(lad):
+        x = 0.55 + i * (lw_ + 0.17)
+        ocean_box(s, x, 4.14, lw_, 0.86, fill=fill, stroke=col, stroke_pt=1.7)
+        text_box(s, x=x + 0.12, y=4.20, w=lw_ - 0.24, h=0.28, text=t1,
+                 size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=1.02)
+        text_box(s, x=x + 0.12, y=4.50, w=lw_ - 0.24, h=0.46, text=t2,
+                 size=9.5, color=SLATE, align=PP_ALIGN.CENTER,
+                 line_spacing=1.08)
+    text_runs(s, 0.55, 5.08, 12.25, 0.30, [
+        {"text": "Survey of 150 researchers, May 2026:   ", "size": 10.5,
+         "italic": True, "color": SLATE},
+        {"text": "81%", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " regularly use AI in their work   ·   ", "size": 10.5,
+         "color": DEEP},
+        {"text": "8%", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " — as the answering participant   ·   ", "size": 10.5,
+         "color": DEEP},
+        {"text": "28%", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " reject it outright", "size": 10.5, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.05)
+
+    # ── What did not change: the boundary of desk research ────────────
+    # FIX #212 (student-roast 2026-09-30, fix 4): the callout carried six
+    # numbers and a whole chain of reasoning — the student took away only
+    # "links are sometimes made up" and never followed the arithmetic. One
+    # chain is left (53,090 → 3–13% → 78%) and one case; the share of links
+    # that do not open and the caveat about independence moved to the notes.
     gold_callout(
-        s, 0.55, 3.90, 12.25, 0.72,
-        "97% of researchers use AI — only ~8% trust AI personas as data [3]",
-        size=14.5, bold=True, align=PP_ALIGN.CENTER)
-
-    filled_rect(s, 0.55, 4.85, 12.25, 1.35, SOFT_GREY, stroke=LIGHT,
-                stroke_pt=1.0, radius=True, radius_adj=0.06)
-    text_box(s, x=0.85, y=4.98, w=11.65, h=1.10,
-             text="Mandatory practice: verify important data directly "
-                  "against the source before using it in a decision. "
-                  "Synthetic users are only a pre-research step (piloting "
-                  "a guide, a draft of personas, generating hypotheses), "
-                  "never evidence for a go/no-go decision.",
-             size=12.5, color=DEEP, line_spacing=1.15,
-             anchor=MSO_ANCHOR.MIDDLE)
+        s, 0.55, 5.62, 12.25, 1.06,
+        "A link in a report is not evidence until someone opens it. "
+        "Measured on 53,090 links from the reports of ten models: 3–13% "
+        "are fabricated — those sources never existed. At the lowest "
+        "rate, 3%, a report with 50 links holds at least one fabricated "
+        "link with probability 78%. Deloitte handed exactly such a report "
+        "to the Australian government for A$440,000.",
+        size=12.5, bold=True)
     refs_of_slide(s, "s10")
     notes_with_sources(s, "s10")
     return s

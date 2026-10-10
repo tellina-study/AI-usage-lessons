@@ -280,40 +280,85 @@ def s33(p):
 
 
 def s34(p):
+    """issue #212, R9: both cases described first, the analysis after.
+    R5: MedQA and MMLU expanded. R6: the 2026 state of benchmarks added."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "Passing a format-A benchmark != safe in a format-B production setting",
-                size=21, w=12.3, h=0.85)
-    # two mini-cases
-    ocean_box(s, 0.55, 1.60, 6.05, 2.85, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=0.80, y=1.72, w=5.5, h=0.4, text="Medicine", size=14,
-             bold=True, color=MID)
-    chip(s, 0.80, 2.20, 2.4, 0.5, "86.5% MedQA [1]", fill=GOLD, color=DEEP,
-         size=15)
-    text_box(s, x=0.80, y=2.90, w=5.5, h=1.4,
-             text="Med-PaLM 2 does well on a Q&A benchmark — but clinical "
-                  "safety requires a SEPARATE adversarial safety set.",
-             size=12.5, color=DEEP, line_spacing=1.2)
-    ocean_box(s, 6.75, 1.60, 6.05, 2.85, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.00, y=1.72, w=5.5, h=0.4, text="Law", size=14,
-             bold=True, color=TEAL)
-    text_box(s, x=7.00, y=2.20, w=5.5, h=0.9,
-             text="Stanford RegLab: Lexis+ 17% hallucinations, Westlaw "
-                  "33% — on real legal queries [3].",
-             size=12.5, color=DEEP, line_spacing=1.18)
-    filled_rect(s, 7.00, 3.20, 5.55, 0.95, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
-                radius=True, radius_adj=0.07)
-    text_box(s, x=7.25, y=3.30, w=5.1, h=0.75,
-             text="Mata v. Avianca (fake citations) = ChatGPT, NOT Harvey "
-                  "[2] — a common attribution mistake.",
-             size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.12)
+    slide_title(s, "A benchmark score is evidence only of its own format",
+                size=23, w=12.3, h=0.78)
+    text_box(s, x=0.58, y=1.06, w=12.20, h=0.26,
+             text="A benchmark is a standard set of tasks on which models "
+                  "are compared", size=10.5, italic=True, color=SLATE)
+
+    # ── CASE 1. MEDICINE ──
+    ocean_box(s, 0.55, 1.42, 6.05, 3.28, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    text_box(s, x=0.80, y=1.50, w=5.55, h=0.28, text="CASE 1. MEDICINE",
+             size=11, bold=True, color=MID, line_spacing=1.0)
+    chip(s, 0.80, 1.84, 2.95, 0.46, "86.5% on MedQA", fill=GOLD, color=DEEP,
+         size=14)
+    text_box(s, x=0.80, y=2.44, w=5.55, h=2.14,
+             text="2023. Google shows Med-PaLM 2, a model for medical "
+                  "questions. On MedQA (questions in the format of a "
+                  "medical licensing exam, with four ready answer choices) "
+                  "it scores 86.5% and makes headlines as \"doctor-level "
+                  "AI\". Meanwhile Google's own researchers separately "
+                  "build a harder set of 240 adversarial questions — an "
+                  "exam with ready choices does not surface clinical-safety "
+                  "failures in open dialogue, where the patient offers no "
+                  "choices.",
+             size=11.5, color=DEEP, line_spacing=1.16)
+
+    # ── CASE 2. LAW ──
+    ocean_box(s, 6.75, 1.42, 6.05, 3.28, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=7.00, y=1.50, w=5.55, h=0.28, text="CASE 2. LAW",
+             size=11, bold=True, color=TEAL, line_spacing=1.0)
+    for i, (lbl, val, col) in enumerate([("Lexis+", "17%", MID),
+                                         ("Westlaw", "33%", TEAL)]):
+        x = 7.00 + i * 2.85
+        filled_rect(s, x, 1.84, 2.60, 0.46, SURFACE, stroke=col, stroke_pt=1.5,
+                    radius=True, radius_adj=0.14)
+        text_runs(s, x + 0.14, 1.84, 2.32, 0.46, [
+            {"text": lbl + "  ", "size": 11.5, "color": DEEP},
+            {"text": val + " fabricated citations", "size": 11.5,
+             "bold": True, "color": col},
+        ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.05)
+    text_box(s, x=7.00, y=2.44, w=5.55, h=2.14,
+             text="2023. A lawyer files a brief citing six entirely "
+                  "fabricated court cases — Mata v. Avianca. ChatGPT "
+                  "generated them; the legal service Harvey had nothing to "
+                  "do with it — a common attribution mistake. Stanford "
+                  "RegLab then tests the legal tools themselves on real "
+                  "queries: the most accurate one fabricates citations in "
+                  "about one query in six, the second twice as often, "
+                  "despite a \"hallucination-free\" promise.",
+             size=11.5, color=DEEP, line_spacing=1.16)
+
+    # ── ANALYSIS ──
+    ocean_box(s, 0.55, 4.76, 12.25, 0.80, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.5)
+    text_runs(s, 0.80, 4.82, 11.75, 0.68, [
+        {"text": "ANALYSIS   ", "size": 11, "bold": True, "color": MID},
+        {"text": "The score is measured on a narrow task format and does "
+                 "not carry over to the user's real task. A benchmark is "
+                 "not useless — it compares versions of one model fairly. "
+                 "The trouble starts where a written-exam score is offered "
+                 "as proof of readiness to treat a patient.",
+         "size": 11.5, "color": DEEP},
+    ], line_spacing=1.14, anchor=MSO_ANCHOR.MIDDLE)
+
     gold_callout(
-        s, 0.55, 4.65, 12.25, 1.20,
-        "A benchmark is evidence of performance only on that specific "
-        "benchmark's task format. Alternative: adversarial evals on real "
-        "edge cases of the exact domain the product will run in.",
-        size=13, bold=True)
+        s, 0.55, 5.62, 12.25, 1.22,
+        "By 2026 saturation has been added to the format gap. On MMLU "
+        "(Massive Multitask Language Understanding, a combined set of 57 "
+        "subjects) frontier models sit in a narrow band of 89–92% — the "
+        "score can no longer tell them apart. Worse: 6.5% of the set's own "
+        "questions carry an error in the reference answer, and in the "
+        "virology section 57%. A safety claim resting on a benchmark alone "
+        "is unsupported: it needs an adversarial check on the task the "
+        "product solves.",
+        size=12.0)
     refs_of_slide(s, "s34")
     notes_with_sources(s, "s34")
     return s
@@ -530,51 +575,138 @@ def s36c(p):
 
 
 def s37(p):
+    """The "system" half — reliability as a number. EN PARITY, issue #212.
+
+    The EN twin still carried the pre-Stage-6 slide ("A 200 OK response says
+    nothing about whether the model is hallucinating": an SLI->SLO->error
+    budget flow plus a struck-through HTTP 200 band). OWNER-REVIEW 2026-10-01
+    on the RU side: "we start telling the SRE story from the middle". The
+    introduction of the notion moved out to the new s36c; what stays here is
+    the mechanics, and the slide's place in the frame of the section is shown
+    by a teal tag at the title.
+
+    What else this change brought:
+    - 70% is given WITH a baseline: the share of ALL outages is named and so
+      is the remainder;
+    - the two windows got numbers (2% of the monthly budget in an hour, 5% in
+      six hours) — before, they differed only in the shape of the curve;
+    - the bridge at the end leads to the second half of quality (people and
+      AI in that work) instead of model observability: the section was turned
+      round onto the use of AI in support."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "A 200 OK response says nothing about whether the model is hallucinating",
-                size=20, w=12.3, h=0.85)
-    # flow SLI->SLO->error budget
-    flow = [("SLI", "a metric"), ("SLO", "target 99.9%"),
-            ("Error budget", "\"1 - SLO\"")]
-    x0, y0 = 0.55, 1.75
-    cw, gap = 3.1, 0.35
-    for i, (t, sub) in enumerate(flow):
-        x = x0 + i * (cw + gap)
-        col = GOLD if i == 2 else MID
-        ocean_box(s, x, y0, cw, 1.15, fill=SURFACE, stroke=col, stroke_pt=1.5)
-        text_box(s, x=x + 0.10, y=y0 + 0.18, w=cw - 0.2, h=0.4, text=t,
-                 size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x=x + 0.10, y=y0 + 0.66, w=cw - 0.2, h=0.34, text=sub,
-                 size=11, italic=True, color=SLATE, align=PP_ALIGN.CENTER)
+    slide_title(s, "Error budget: the allowed number of failures, counted "
+                   "ahead",
+                size=21, y=0.13, w=9.95, h=0.78)
+    chip(s, 10.62, 0.22, 2.18, 0.40, "the \"system\" half", fill=TEAL,
+         color=WHITE, size=10.5)
+
+    # -- why this work exists: the share of outages caused by the team's own
+    #    changes, with a baseline --
+    ocean_box(s, 0.55, 0.98, 12.25, 1.16, fill=SURFACE, stroke=MID,
+              stroke_pt=1.5)
+    text_runs(s, 0.78, 1.06, 11.79, 1.00, [
+        {"text": "WHY THIS WORK EXISTS.  ", "size": 12, "bold": True,
+         "color": MID},
+        {"text": "Google attributes about 70% of the outages of a running "
+                 "system to the team's own changes: a deploy, a prompt edit, "
+                 "a model version change. The rest is split between hardware "
+                 "failures and external causes. So failures come from the "
+                 "work the team does every day, and their allowed number is "
+                 "worth agreeing in advance: otherwise \"faster or more "
+                 "reliable\" is settled after the incident, for whoever is "
+                 "louder.",
+         "size": 12, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
+
+    # -- the chain "indicator -> objective -> budget", unfolded into a number
+    chain = [
+        ("Service level indicator (SLI)", "as the user sees it", MID),
+        ("Service level objective (SLO)", "the team's bar: 99.9%", MID),
+        ("Error budget", "left over: 1,000 errors", GOLD),
+    ]
+    cy, ch, cw, cgap = 2.28, 1.00, 2.30, 0.28
+    for i, (ttl, sub, col) in enumerate(chain):
+        x = 0.55 + i * (cw + cgap)
+        ocean_box(s, x, cy, cw, ch, fill=SURFACE, stroke=col, stroke_pt=1.6)
+        text_box(s, x=x + 0.10, y=cy + 0.10, w=cw - 0.20, h=0.46, text=ttl,
+                 size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
+                 line_spacing=1.05)
+        text_box(s, x=x + 0.10, y=cy + 0.60, w=cw - 0.20, h=0.32, text=sub,
+                 size=9.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
+                 line_spacing=1.05)
         if i < 2:
-            right_arrow(s, x + cw + 0.03, y0 + 0.44, gap - 0.06, 0.26,
+            right_arrow(s, x + cw + 0.02, cy + 0.38, cgap - 0.04, 0.24,
                         fill=LIGHT)
-    text_box(s, x=0.55, y=3.05, w=11.0, h=0.5,
-             text="Error budget = \"1 - SLO\". Example: 99.9% → 1,000 "
-                  "errors per 1M requests over 4 weeks. Changes cause "
-                  "~=70% of all outages [1].",
-             size=12.5, color=DEEP, line_spacing=1.15)
-    # struck-through 200
-    filled_rect(s, 0.55, 3.75, 12.25, 1.10, SOFT_GREY, stroke=LIGHT,
-                stroke_pt=1.0, radius=True, radius_adj=0.06)
-    icon(s, "x", 0.85, 4.00, 0.55, "light")
-    text_box(s, x=1.60, y=3.90, w=10.9, h=0.85,
-             text="An SLI of \"share of 200 responses\" = all fine? No: "
-                  "200 arrives even when the model is confidently "
-                  "hallucinating. Infrastructure metrics don't see "
-                  "answer quality.",
-             size=13, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
-             line_spacing=1.15)
+
+    text_runs(s, 0.55, 3.42, 7.46, 0.50, [
+        {"text": "A 99.9% objective on a million requests in the period "
+                 "gives ", "size": 12, "color": DEEP},
+        {"text": "1,000 errors", "size": 12, "bold": True, "color": DEEP},
+        {"text": " — what is left to spend.",
+         "size": 12, "color": DEEP},
+    ], line_spacing=1.15)
+
+    ocean_box(s, 0.55, 3.98, 7.46, 1.02, fill=TEAL_TINT, stroke=TEAL,
+              stroke_pt=1.5)
+    text_runs(s, 0.77, 4.12, 7.02, 0.74, [
+        {"text": "Rule: ", "size": 11.5, "bold": True, "color": TEAL},
+        {"text": "budget exhausted — shipping new features stops. The "
+                 "speed-versus-reliability conversation happens before the "
+                 "incident, and it has a basis that rhetoric cannot argue "
+                 "with.",
+         "size": 11.5, "color": DEEP},
+    ], anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
+
+    # -- two windows: the difference carried by SHAPE, LABEL and NUMBER --
+    ocean_box(s, 8.30, 2.28, 4.50, 2.72, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=8.52, y=2.38, w=4.06, h=0.28,
+             text="Two alert windows, always both", size=12.5, bold=True,
+             color=TEAL, line_spacing=1.05)
+    text_box(s, x=8.52, y=2.68, w=4.06, h=0.30,
+             text="alone, each is blind to the other's case",
+             size=9, italic=True, color=SLATE, line_spacing=1.05)
+
+    # short window: short axis + sharp peak + the number burned
+    text_box(s, x=8.52, y=3.02, w=4.06, h=0.26,
+             text="Short window — a sharp spike", size=10, bold=True,
+             color=DEEP, line_spacing=1.05)
+    connector(s, 8.55, 3.72, 10.05, 3.72, color=SLATE, width=1.4)
+    connector(s, 9.05, 3.72, 9.30, 3.34, color=GOLD, width=2.4)
+    connector(s, 9.30, 3.34, 9.55, 3.72, color=GOLD, width=2.4)
+    text_runs(s, 10.22, 3.28, 2.42, 0.52, [
+        {"text": "2% of budget in an hour", "size": 9.5, "bold": True,
+         "color": DEEP},
+        {"text": "at that rate it is gone in two days — page the on-call "
+                 "now", "newpara": True,
+         "size": 8.6, "italic": True, "color": SLATE},
+    ], line_spacing=1.06)
+
+    # long window: long axis + shallow rise
+    text_box(s, x=8.52, y=3.98, w=4.06, h=0.26,
+             text="Long window — a slow slide", size=10, bold=True,
+             color=DEEP, line_spacing=1.05)
+    connector(s, 8.55, 4.60, 12.55, 4.60, color=SLATE, width=1.4)
+    connector(s, 8.55, 4.54, 12.40, 4.24, color=TEAL, width=2.4)
+    text_runs(s, 8.55, 4.66, 4.05, 0.30, [
+        {"text": "5% in six hours", "size": 9.5, "bold": True,
+         "color": DEEP},
+        {"text": "  — a task for working hours", "size": 8.6,
+         "italic": True, "color": SLATE},
+    ], line_spacing=1.05)
+
     gold_callout(
-        s, 0.55, 5.05, 12.25, 0.90,
-        "On-call, blameless incident reviews, runbooks — you may already "
-        "know these. What's new here: a non-deterministic model now sits "
-        "in production (next slide).",
-        size=13, bold=True)
+        s, 0.55, 5.18, 12.25, 0.96,
+        "All this is built for a system where a request either works or it "
+        "does not. A 200 — \"delivered successfully\" — arrives even when "
+        "the model confidently makes things up. Next, the other half of "
+        "quality: people, their tickets, AI in that work.",
+        size=12.5)
     refs_of_slide(s, "s37")
     notes_with_sources(s, "s37")
     return s
+
 
 
 # ============================================================
@@ -667,35 +799,76 @@ def s39(p):
 
 
 def s40(p):
+    """EN twin of slides_band3.py::s40 (issue #212, rule R9): "what happened"
+    in plain words first, the analysis second and explicitly named as the
+    analysis. The old EN title was the CONCLUSION of the analysis ("the model
+    was calibrated correctly — no fuse"), so a reader of the screen alone met
+    the verdict before learning which case it was about. The old EN body also
+    kept a "circuit breaker" framing the RU source no longer uses here — that
+    term is introduced on s42, not on this slide.
+    """
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "The model was calibrated correctly — there was no real-time fuse for drift",
-                size=18, w=12.3, h=0.85)
-    # left: real chart + logo
-    photo_in_box(s, "s40-zillow-real-source.png", 0.55, 1.60, 3.05, 1.30,
-                 pad=0.22)
-    ocean_box(s, 0.55, 3.10, 3.05, 2.30, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    icon(s, "triangle-alert", 1.55, 3.30, 0.9, "mid")
-    text_box(s, x=0.70, y=4.30, w=2.75, h=1.0,
-             text="The market shifted — concept drift with no circuit "
-                  "breaker",
-             size=12, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
-             line_spacing=1.15)
-    # right: chart
-    ocean_box(s, 3.85, 1.60, 8.95, 3.80, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
-    add_image(s, CHARTS / "c-zillow.png", 4.15, 1.85, 8.35, 2.55,
+    slide_title(s, "Zillow: algorithm bought homes, market moved, "
+                   "business shut",
+                size=21, y=0.13, w=12.3, h=0.78)
+
+    # ── WHAT HAPPENED: reads without the lecturer ─────────────────────
+    ocean_box(s, 0.55, 0.98, 12.25, 1.50, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    photo_in_box(s, "s40-zillow-real-source.png", 0.72, 1.12, 2.45, 1.22,
+                 pad=0.10)
+    text_box(s, x=3.34, y=1.06, w=9.24, h=0.26, text="WHAT HAPPENED",
+             size=10, bold=True, color=MID, line_spacing=1.0)
+    text_runs(s, 3.34, 1.34, 9.24, 1.06, [
+        {"text": "Zillow Offers — a service that bought homes on an "
+                 "algorithmic valuation and resold them fast. In the third "
+                 "quarter of 2021 it bought 9,680 and sold 3,032. On "
+                 "2 November 2021 it announced the shutdown: write-downs of ",
+         "size": 11.5, "color": DEEP},
+        {"text": "$304–408M", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": ", a cut of about ", "size": 11.5, "color": DEEP},
+        {"text": "2,000 people — 25% of staff", "size": 11.5,
+         "bold": True, "color": DEEP},
+        {"text": ". Average loss — about ", "size": 11.5, "color": DEEP},
+        {"text": "$80K per home", "size": 11.5, "bold": True,
+         "color": DEEP},
+        {"text": ".", "size": 11.5, "color": DEEP},
+    ], line_spacing=1.16)
+
+    # ── chart: captioned ──────────────────────────────────────────────
+    ocean_box(s, 0.55, 2.60, 5.95, 2.62, fill=SURFACE, stroke=LIGHT,
+              stroke_pt=1.5)
+    # Mirrors the RU fix (student-roast 2026-09-30): ONE chart, both
+    # quantities in the SAME unit (homes), so the gap between them IS the
+    # mechanism. Money figures stay in the "what happened" bar above.
+    add_image(s, CHARTS / "c-zillow.png", 0.75, 2.86, 5.55, 2.10,
               preserve_aspect=True)
-    text_box(s, x=4.15, y=4.45, w=8.35, h=0.85,
-             text="Zillow Offers, November 2021: 9,680 homes bought, "
-                  "3,032 sold · ~2,000 laid off (~25% of staff) [1] · "
-                  "~=$80K loss per property [2].",
-             size=12, color=DEEP, line_spacing=1.15)
+
+    # ── ANALYSIS ──────────────────────────────────────────────────────
+    ocean_box(s, 6.70, 2.60, 6.10, 2.62, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=6.92, y=2.70, w=5.66, h=0.46,
+             text="ANALYSIS: OPERATIONS,\nNOT MEASUREMENT",
+             size=10, bold=True, color=TEAL, line_spacing=1.08)
+    text_box(s, x=6.92, y=3.22, w=5.66, h=1.90,
+             text="The model was calibrated correctly — on historically "
+                  "stable data. What was missing: real-time "
+                  "monitoring of accuracy and an automatic stop when it "
+                  "falls.\n\nGo back to the two windows: Zillow had "
+                  "neither. The short one — a sharp rise in error went "
+                  "unseen. The long one — quarterly reporting exists, "
+                  "but a report every three months is no observation "
+                  "window: it is an archive, the homes are already bought.",
+             size=11, color=DEEP, line_spacing=1.16)
+
     gold_callout(
-        s, 0.55, 5.55, 12.25, 0.62,
-        "Criterion: a model executing trades with real money requires "
-        "real-time monitoring of prediction accuracy with an automatic "
-        "circuit breaker that shuts it off on drift.",
-        size=12, bold=True)
+        s, 0.55, 5.38, 12.25, 1.05,
+        "Criterion: a model that commits money on its own needs real-time "
+        "monitoring of accuracy and a threshold at which it stops with no "
+        "human involved. Alternative: the algorithmic valuation as an "
+        "input, the decision above a risk threshold left to a person.",
+        size=12.5)
     refs_of_slide(s, "s40")
     notes_with_sources(s, "s40")
     return s
@@ -737,43 +910,86 @@ def s41(p):
 
 
 def s42(p):
+    """EN twin of slides_band3.py::s42 (issue #212). The old EN slide was the
+    pre-Stage-6 composition: a Klarna chart, the 853-FTE-equivalent inset and
+    the "not an isolated glitch" headline. The RU source dropped the Klarna
+    headcount chronicle (a business story about staffing, not a lesson about
+    application) and moved Klarna to s39 as a one-line piece of evidence, so
+    this slide is now purely the New York case.
+
+    (R9) "what happened" first — who shipped the bot, what it advised, how it
+    ended; the analysis second and named as the analysis.
+    """
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "10 of 10 journalists got the same unlawful advice — not an isolated glitch",
-                size=18, w=12.3, h=0.85)
-    # left: Klarna chart + logo
-    photo_in_box(s, "s42-klarna-real-source.png", 0.55, 1.60, 2.55, 1.15,
-                 pad=0.16)
-    ocean_box(s, 0.55, 2.90, 5.75, 2.50, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    add_image(s, CHARTS / "c-klarna.png", 0.80, 3.10, 5.25, 2.05,
-              preserve_aspect=True)
-    text_box(s, x=3.25, y=1.72, w=3.05, h=1.0,
-             text="Klarna: the \"AI-only\" policy was walked back "
-                  "(05.2025) [1] — but automation grew to an 853-FTE "
-                  "equivalent [2] (augmenting people, not replacing "
-                  "them).",
-             size=11.5, color=DEEP, line_spacing=1.15)
-    # right: NYC 10/10
-    ocean_box(s, 6.55, 1.60, 6.25, 3.05, fill=GOLD_TINT, stroke=GOLD,
+    slide_title(s, "New York: city bot advised breaking the law "
+                   "10 times out of 10",
+                size=21, y=0.13, w=12.3, h=0.78)
+
+    # ── WHAT HAPPENED ─────────────────────────────────────────────────
+    ocean_box(s, 0.55, 0.98, 12.25, 1.76, fill=SURFACE, stroke=MID,
               stroke_pt=1.6)
-    text_box(s, x=6.80, y=1.72, w=5.75, h=0.4, text="NYC MyCity — government bot",
-             size=14, bold=True, color=DEEP)
+    text_box(s, x=0.78, y=1.06, w=11.79, h=0.26, text="WHAT HAPPENED",
+             size=10, bold=True, color=MID, line_spacing=1.0)
+    text_runs(s, 0.78, 1.34, 11.79, 1.32, [
+        {"text": "New York City shipped a chatbot for small business "
+                 "owners — to answer questions about city rules. In March "
+                 "2024 an investigation found the bot advising employers to "
+                 "take their staff's tips and to fire people for reporting "
+                 "harassment, and landlords to turn away tenants with "
+                 "housing vouchers. All of that goes against the law in "
+                 "force, and the advice came confidently, as instruction. "
+                 "All ", "size": 11.5, "color": DEEP},
+        {"text": "10 of 10", "size": 11.5, "bold": True, "color": DEEP},
+        {"text": " journalists who asked got the same wrong answer. The "
+                 "mayor acknowledged the errors and did not pull the bot, "
+                 "though switching it off was technically possible.",
+         "size": 11.5, "color": DEEP},
+    ], line_spacing=1.16)
+
+    # ── reproducibility reads as SHAPE and is captioned ───────────────
+    ocean_box(s, 0.55, 2.86, 6.05, 2.42, fill=GOLD_TINT, stroke=GOLD,
+              stroke_pt=1.6)
+    photo_in_box(s, "s42-nyc-real-source.png", 0.75, 2.98, 1.12, 1.12,
+                 pad=0.06)
+    text_box(s, x=2.02, y=2.98, w=4.36, h=1.12,
+             text="The same question — ten times. The same unlawful "
+                  "answer — ten times.",
+             size=11.5, bold=True, color=DEEP, line_spacing=1.16,
+             anchor=MSO_ANCHOR.MIDDLE)
     for i in range(10):
-        col_i = i % 5
-        row_i = i // 5
-        x = 6.85 + col_i * 1.12
-        y = 2.25 + row_i * 0.70
-        icon(s, "user-x", x, y, 0.48, "gold")
-    text_box(s, x=6.80, y=3.70, w=5.75, h=0.85,
-             text="10 of 10 journalists — the same unlawful advice [3]. "
-                  "The mayor did not pull the bot.",
-             size=12.5, bold=True, color=DEEP, line_spacing=1.15)
+        x = 0.80 + (i % 5) * 1.14
+        y = 4.18 + (i // 5) * 0.42
+        icon(s, "user-x", x, y, 0.36, "gold")
+    # caption BELOW the icons: on the old coordinates it lay over the
+    # second row and read through it
+    text_box(s, x=0.78, y=5.02, w=5.60, h=0.24,
+             text="ten people asked — ten identical answers to break the law",
+             size=8.8, italic=True, color=SLATE, line_spacing=1.0)
+
+    # ── ANALYSIS ──────────────────────────────────────────────────────
+    ocean_box(s, 6.80, 2.86, 6.00, 2.42, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=7.02, y=2.96, w=5.56, h=0.26, text="ANALYSIS",
+             size=10, bold=True, color=TEAL, line_spacing=1.0)
+    text_box(s, x=7.02, y=3.26, w=5.56, h=1.92,
+             text="Repeatability changes the class of the event. A single "
+                  "error is grounds for a fix. Ten identical answers to ten "
+                  "identical questions are a system property, "
+                  "reproducible on demand.\n\nThe decision to keep "
+                  "iterating came after reproducibility was shown in "
+                  "public. That is the error under review: the data was "
+                  "there, the response stayed the same.",
+             size=11, color=DEEP, line_spacing=1.16)
+
     gold_callout(
-        s, 0.55, 5.55, 12.25, 0.62,
-        "The lesson isn't \"AI doesn't work\" — it's \"a throughput "
-        "metric with no guaranteed human escalation is the wrong "
-        "design.\"",
-        size=12.5, bold=True)
+        s, 0.55, 5.44, 12.25, 0.92,
+        "Criterion: a reproducible harmful answer calls for a circuit "
+        "breaker. Next iteration waits. The threshold is named as a "
+        "number in advance — else, when it has to be "
+        "applied, it is argued over again and loses to the wish to "
+        "\"polish it\".",
+        size=12.5)
     refs_of_slide(s, "s42")
     notes_with_sources(s, "s42")
     return s

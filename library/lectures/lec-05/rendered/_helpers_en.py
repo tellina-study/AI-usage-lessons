@@ -85,6 +85,7 @@ URLS = {
     "aarrr_inc": "https://www.inc.com/walter-chen/aarrr-dave-mcclure-s-pirate-metrics-and-the-only-five-numbers-that-matter.html",
     # --- AI-эра: инструменты / evals / governance ---
     "anthropic_agentic_2026": "https://resources.anthropic.com/2026-agentic-coding-trends-report",
+    "anthropic_code_review": "https://claude.com/blog/code-review",
     "bain_ai_pdlc": "https://www.bain.com/insights/the-rise-of-the-ai-development-life-cycle/",
     "reganti_badam_ccdc": "https://www.lennysnewsletter.com/p/why-your-ai-product-needs-a-different",
     "deepmind_specgaming": "https://deepmind.google/blog/specification-gaming-the-flip-side-of-ai-ingenuity/",
@@ -94,6 +95,9 @@ URLS = {
     "nng_ai_hallucinations": "https://www.nngroup.com/articles/ai-hallucinations/",
     "nng_state_of_ux_2026": "https://www.nngroup.com/articles/state-of-ux-2026/",
     "perplexity_deep_research": "https://www.secondtalent.com/resources/perplexity-deep-research-review/",
+    "ui_state_synthetic_users": "https://www.userinterviews.com/state-of-synthetic-users-report",
+    "arxiv_ref_hallucination": "https://arxiv.org/abs/2604.03173",
+    "figma_make_rct": "https://arxiv.org/abs/2609.26725",
     "dovetail_ai": "https://listenlabs.ai/articles/dovetail-ai-qualitative-analysis/",
     "figma_make": "https://www.figma.com/resource-library/ai-design-tools/",
     "google_stitch": "https://www.banani.co/blog/galileo-ai-features-and-alternatives",
@@ -820,13 +824,24 @@ SLIDE_REFS = {
          "not an opinion"),
     ],
     "s10": [
-        ("1", "Perplexity Deep Research — overview for product research",
+        ("1", "Perplexity — overview of deep research mode",
          "perplexity_deep_research",
-         "desk research: hours -> minutes; source verification still needed"),
-        ("2", "Dovetail — AI interview synthesis", "dovetail_ai",
-         "pain-point clustering at scale; limits of AI summarization"),
-        ("3", "NN/g — 2026 practitioner survey", "nng_state_of_ux_2026",
-         "97% of researchers use AI, ~8% trust AI personas as data", True),
+         "a report with links in 2-4 minutes on the fastest and up to half "
+         "an hour on the most thorough; every major assistant has the mode",
+         True),
+        ("2", "User Interviews — \"State of Synthetic Users\", May 2026",
+         "ui_state_synthetic_users",
+         "survey of 150 researchers, 11-22 May 2026: 81% regularly use AI "
+         "in their work, 8% as the answering participant, 28% reject that "
+         "use outright", True),
+        ("3", "arXiv 2604.03173 — measurement of links in agent reports",
+         "arxiv_ref_hallucination",
+         "3-13% of links are fabricated (no trace in the web archive), "
+         "5-18% do not open; measured on 53,090 links, 10 models and agents"),
+        ("4", "Fortune (7 Oct 2025) — Deloitte Australia",
+         "fortune_deloitte_australia",
+         "a report to the government for A$440,000 with non-existent "
+         "sources"),
     ],
     "s11": [
         ("1", "Torres — Continuous Discovery Habits / anti-synthetic",
@@ -887,12 +902,19 @@ SLIDE_REFS = {
          "a warning about the atypicality of insider designers"),
     ],
     "s17": [
-        ("1", "Figma — 2026 AI design tools", "figma_make",
-         "Figma Make, v0, Stitch, bolt.new — 2-4 directions in minutes",
+        ("1", "Figma — overview of AI design tools, 2026", "figma_make",
+         "an overview: what interfaces are generated with as of 2026",
          True),
         ("2", "Google Stitch (ex-Galileo AI)", "google_stitch",
-         "Google acquisition, May 2025 — a fast-moving tool landscape",
-         True),
+         "bought by Google in May 2025, updated in March 2026 — the tools "
+         "move fast", True),
+        ("3", "Stewart et al. — randomised trial, arXiv:2609.26725 "
+              "(22 Sep 2026)", "figma_make_rct",
+         "100 participants (50 designers + 50 product managers), a control "
+         "group without the generator: time fell by ~20%, for product "
+         "managers 35%, for designers only on the hardest task (26%), the "
+         "overall effect borderline (17%, p=0.049). Run by Figma itself on "
+         "its own tool — correct for the conflict of interest"),
     ],
     "s18": [
         ("1", "ACM Web4All 2026 — Generated Inaccessible", "wcag_acm",
@@ -933,10 +955,17 @@ SLIDE_REFS = {
          "set in advance"),
     ],
     "s23": [
-        ("1", "Anthropic — 2026 Agentic Coding Trends Report",
-         "anthropic_agentic_2026",
-         "+200% code per engineer year over year; only ~16% of PRs get "
-         "substantive human review before merge", True),
+        # issue #212, EN parity with the RU fact-check of 2026-09-30: these
+        # figures are from the post Code Review for Claude Code (9 March
+        # 2026), NOT from the Agentic Coding Trends Report, and the 16% is
+        # only true as half of a pair — alone it asserted the opposite of
+        # what the source says.
+        ("1", "Anthropic — Code Review for Claude Code (9 March 2026)",
+         "anthropic_code_review",
+         "+200% code per engineer in a year; substantive review comments "
+         "reached 16% of changes before automatic review and 54% after — "
+         "verbatim \"Before, 16% of PRs got substantive review comments. "
+         "Now 54% do\"", True),
     ],
     "s24": [
         ("1", "Reganti & Badam — CC/CD framework", "reganti_badam_ccdc",
@@ -1030,13 +1059,14 @@ SLIDE_REFS = {
          "2023)"),
         ("3", "Stanford RegLab — J. Empirical Legal Studies",
          "stanford_reglab",
-         "Lexis+ 17% / Westlaw 33% / GPT-4 88% hallucination rates on "
-         "real legal queries"),
+         "the share of fabricated citations on real legal queries: "
+         "Lexis+ 17%, Westlaw 33%"),
     ],
     "s37": [
-        ("1", "Google SRE — Error Budget Policy", "sre_error_budget",
-         "SLI/SLO/error budget = \"1 - SLO\"; changes cause ~=70% of all "
-         "outages"),
+        ("1", "Google — Error Budget Policy", "sre_error_budget",
+         "indicator / objective / budget = \"1 - objective\"; changes "
+         "cause ~=70% of all outages; multiwindow burn-rate alerting: 2% "
+         "of the monthly budget in an hour, 5% in six hours"),
     ],
     "s38": [
         ("1", "Confident AI — 2026 LLMOps observability overview",
@@ -1065,27 +1095,20 @@ SLIDE_REFS = {
          "legal analysis: \"bot as a separate legal entity\" dismissed in "
          "one line"),
     ],
+    # issue #212: the Klarna sources (Bloomberg 05.2025, Fortune 853 FTE)
+    # were dropped together with the Klarna half of the slide — Klarna now
+    # lives on s39 as a one-line piece of evidence. Mirrors RU SLIDE_REFS.
     "s42": [
-        ("1", "Bloomberg (May 8, 2025) — Klarna", "bloomberg_klarna",
-         "a reversal of the \"AI-only\" policy back to hiring people"),
-        ("2", "Fortune (Oct 10, 2025) — 853 FTE", "fortune_klarna_853",
-         "automation grew to 853 human-equivalents — augmenting people, "
-         "not replacing them; the exact figure surfaces later in "
-         "Klarna's Q3 filing (Nov 18, 2025) — verify before publication",
-         True),
-        ("3", "The Markup (Mar 29, 2024) — NYC MyCity", "themarkup_nyc_mycity",
+        ("1", "The Markup (Mar 29, 2024) — the New York City chatbot",
+         "themarkup_nyc_mycity",
          "a government chatbot gave 10 of 10 journalists the same "
-         "illegal advice"),
+         "unlawful advice"),
     ],
-    "s46": [
-        ("1", "Deloitte — 2026 Global Technology Leadership Study",
-         "deloitte_2026_tech_leadership",
-         "75% say the operating model must change; 42% low/zero ROI; 81% "
-         "confident despite the internal contradiction", True),
-        ("2", "Sber — the \"AI PDLC Lead\" job posting", "sber_ai_pdlc_role",
-         "the organizational reality of the role, not just a whitepaper "
-         "concept", True),
-    ],
+    # issue #212, EN parity: the s46 entry is REMOVED, mirroring the RU side.
+    # The slide was rewritten from "the operating model" (Deloitte/Sber) into
+    # the apparatus for assessing any feature and carries no external figures
+    # at all, so a reference list under it would print sources it does not
+    # cite — and the notes block would append them to the speaker notes.
     "s47": [
         ("1", "MIT NANDA — \"The GenAI Divide\" (July 2025, v0.1)",
          "mit_nanda_pdf",

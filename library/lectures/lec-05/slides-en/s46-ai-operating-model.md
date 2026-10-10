@@ -2,43 +2,79 @@
 id: s46
 type: process
 section: "Section 6. Governance"
-duration_min: 2
-assertion: "Five independent sources converge: the bottleneck shifted from technology to the operating model — the winner is whoever rebuilt teams and governance"
-learning_goal: "AI: the operating model — operators→orchestrators, maturity 0-5 (Sber at Level 3, not 5), IDP economics, agentwashing"
+duration_min: 1.5
+assertion: "Any feature is assessed with four questions — what behaviour changes, against what baseline, what it costs, at what result it is shut down; AI inside changes two of them, two stay word for word the same"
+learning_goal: "An apparatus for assessing a single feature, indifferent to whether AI sits inside it — and an honest account of what AI does change in it"
 learning_outcomes: [LO1, LO2]
-chapter_ref: "§6.2 [for-slide-s46]"
+chapter_ref: "§6.1 (the financial criterion); the apparatus for assessing a feature has no section of its own in the chapter yet"
 interaction: none
-verify_day_of: true
+verify_day_of: false
 partial_out_strict_in: true
+note: >
+  issue #212, EN parity pass. THIS SLIDE WAS REWRITTEN WHOLE, not re-translated: the EN
+  twin still carried the pre-Stage-6 slide ("The bottleneck shifted from technology to the
+  organization's operating model" — five converging sources Deloitte/Sber/Gartner/McKinsey/
+  Forrester plus a 0-5 maturity scale), which the RU rebuild deleted on the owner's
+  remark 3 ("slide 48 is an abrupt, illogical transition. better to give the assessment of
+  a feature in the abstract, AI inside or not"). The old slide broke Section 6 by jumping
+  from engineering practice to the level of the organization. It now gives the apparatus
+  for assessing any feature, and a separate band states which two of the four points AI
+  changes. The statistics of the former slide stay in the chapter §6.2; Deloitte and Boston
+  Consulting Group are voiced on s45. The s46 entry in SLIDE_REFS (_helpers_en.py) is
+  removed in step with the RU side: there are no external numbers on the slide any more,
+  and the reference list under it would print sources the slide does not cite.
+  The bridge to s47 is kept and made logical: the second question of the apparatus — the
+  baseline — is exactly what breaks in both of the cases that follow.
 meme_or_visual: >
-  process: 5 source-icons (Deloitte/Sber/Gartner/McKinsey/Forrester), arrows from each
-  converge on one common thesis-point "the bottleneck = the operating model". Next to it — a
-  6-step maturity 0-5 scale with a "Sber is here" marker on step 3 (not on 5) — an anti-hype
-  signal.
-source: "Deloitte 2026 Global Technology Leadership Study; Gartner 5-stage agent adoption curve [VFY-day-of]"
+  process: four cards in a 2x2 grid, each with a number in a circle, a question as its
+  heading and an icon (target / ruler / banknote / timer); the order of the questions is
+  fixed and reads by the numbers. Below — a gold-framed band "what changes when there is AI
+  inside the feature": two of the four points named outright. Gold at the bottom — the
+  bridge to the two cases through the second question, the one about the baseline. No
+  external figures and no statistics on the slide.
 ---
 
 # Visible content
 
 ## Title bar
-The bottleneck shifted from technology to the organization's operating model
+How any feature is assessed — AI inside or not
 
 ## Body
-[5 sources → 1 thesis; maturity 0-5 scale with a "Sber is here" marker at 3]
+[Four cards in a 2x2 grid — the order of the questions is fixed]
 
-**5 independent sources** (Deloitte, Sber, Gartner, McKinsey, Forrester)
+**1. What behaviour it changes**
+Which user action becomes more frequent, faster or cheaper. Unnamed action — nothing to assess.
 
-Deloitte: 75% say the operating model must change · 42% report low/zero ROI
+**2. Against what baseline**
+The same product without the feature, same period. With no baseline, any gain gets credited to it.
+
+**3. What it costs**
+Build once, run every month. The second is counted together with usage volume.
+
+**4. At what result it gets shut down**
+Number and date written down before launch: named after, it only explains the result.
+
+**WHAT CHANGES WHEN THERE IS AI INSIDE**
+
+Two of the four change. **The third:** running stops being a one-off — it gains a meter that ticks with volume. **The first:** the model's answer varies run to run, so "it works" is confirmed on a sample, and one lucky example does not count. **The second and fourth** stay word for word the same.
 
 [Gold callout]
-Sber rates itself at **Level 3 of 5** — an anti-hype signal: even a large player does not claim the top of the scale
+The second question — the baseline — breaks more often than the other three. The two cases ahead are exactly about that: a loud failure number that turns out to have no denominator, and a claimed autonomy that is fourteen times off the company's own target.
 
 ## Speaker notes
 
-Five independent sources — Deloitte, Sber, Gartner, McKinsey, Forrester — work in different markets, with different methodologies, yet converge on one point: the bottleneck for extracting value from AI has shifted from technology to the organization's operating model; the winner is not whoever has the more powerful model, but whoever rebuilt the teams, budgets, and decisions around it.
+The section is nearly over, and before we go to the two cases, let us gather in one place the thing you will use every day. Assessing a feature. Any feature — it makes no difference whether a model sits inside it or ordinary code. Four questions, and their order is fixed.
 
-Deloitte: seventy-five percent of tech leaders say the operating model must fundamentally change, while forty-two percent report low or zero ROI. The bottleneck is structural: legacy funding and governance models run on old annual cycles, while AI-embedded workflows are continuous.
+First: what the feature changes in behaviour. Which user action, exactly, becomes more frequent, faster or cheaper. This is where assessment collapses most often: a feature is commissioned without the action being named, and there is nothing left to argue about — there is nothing to measure.
 
-Sber maturity 0-5: Level 0 is no integration, Level 3 is supervised automation, Level 5 is "Zero-Friction PDLC," aspirational. Telling detail: Sber explicitly positions itself at Level 3, not at the aspirational Level 5 — this is a roadmap, not "we've implemented everything." IDP economics only pays off with ten or more product teams — the very proponent of the approach draws the boundary where its own approach doesn't apply.
+Second: against what baseline. The same product without this feature, over the same period, on the same audience. Until there is a baseline, every gain will be credited to the feature — including the seasonal one, the one advertising bought, and the one a competitor handed over by going down at that moment.
 
-Gartner offers the clearest phase model of agent adoption and names the risk — agentwashing: vendors rebrand existing chatbots as "agents" with no agentic outcomes. McKinsey states the same thing from the organizational side: value comes only from redesigning the operating model, not from bolting on a point tool. Forrester adds numbers: coding-only improvements deliver thirty to forty percent gains, but team-level productivity gains without end-to-end adaptation are under ten percent. Practical takeaway: if your AI initiative is stalling, the first question isn't "do we need a bigger model," it's "does it have an owner, a financial KPI, and a governance cycle."
+Third: what it costs. Build — once. Running — every month, and it is counted together with usage volume, because volume is what it depends on.
+
+Fourth: at what result it gets shut down. The number and the date are written down before launch. A number named after the result is visible explains that result; nothing can be tested with it.
+
+Now about AI, and this is the short part. Of the four points it changes two. The third: running stops being a one-off, it gains a meter, and the spend ticks with the volume of work — the thing we have just seen on the chart. The first: the model's answer varies from run to run, so "it works" is confirmed on a sample, and one lucky example does not count as proof. The second and the fourth do not change — not by a single word.
+
+From there comes the answer to the question usually asked at this point: do features with AI need a separate process. Half of the apparatus you already know from ordinary development.
+
+And one last thing. The second question, the one about the baseline, breaks more often than the other three, and it breaks for more than the odd team. The two cases ahead are exactly about that: a loud failure number that turned out to have no denominator, and a claimed autonomy that came out fourteen times off the company's own target.

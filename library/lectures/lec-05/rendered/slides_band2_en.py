@@ -15,7 +15,7 @@ from _helpers_en import (
     build_section_divider,
     eli5_overview, meme_in_box, photo_in_box, add_image,
     DEEP, MID, LIGHT, TEAL, SURFACE, WHITE, GOLD, SLATE, COVER_OUTLINE,
-    GOLD_TINT, TEAL_TINT, SOFT_GREY, CHARTS,
+    GOLD_TINT, TEAL_TINT, SOFT_GREY, MID_TINT, CHARTS,
 )
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
@@ -270,45 +270,143 @@ def s16(p):
 
 
 def s17(p):
+    """EN twin of the rewritten RU s17. Owner remark R6 (#212): the tool
+    list and the time-saving estimate are brought to 2026, and instead of a
+    list of capabilities the slide shows a "with AI and without"
+    comparison — a randomised trial with a control group, not a vendor
+    promise. The title is a way in for a newcomer, not a formula for people
+    who already know it (R8-6)."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "AI for divergence, humans for convergence",
-                size=24, w=12.2, h=0.85)
-    # funnel: 2-4 AI directions -> 1 human-refined
-    ocean_box(s, 0.55, 1.60, 6.55, 3.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=0.80, y=1.72, w=6.0, h=0.4, text="Direction generation",
-             size=13.5, bold=True, color=MID)
-    for i in range(4):
-        x = 0.85 + i * 1.55
-        filled_rect(s, x, 2.25, 1.30, 0.95, WHITE, stroke=LIGHT, stroke_pt=1.2,
-                    radius=True, radius_adj=0.10)
-        icon(s, "monitor-smartphone", x + 0.42, 2.42, 0.45, "light")
-        text_box(s, x=x, y=3.02, w=1.30, h=0.25, text=f"option {i+1}",
-                 size=9.5, color=SLATE, align=PP_ALIGN.CENTER)
-    right_arrow(s, 3.05, 3.55, 1.0, 0.30, fill=GOLD)
-    filled_rect(s, 2.55, 3.95, 2.0, 0.55, GOLD_TINT, stroke=GOLD, stroke_pt=1.5,
-                radius=True, radius_adj=0.12)
-    text_box(s, x=2.55, y=4.02, w=2.0, h=0.4, text="1 refined",
-             size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    # right: tools
-    ocean_box(s, 7.35, 1.60, 5.45, 3.05, fill=SURFACE, stroke=TEAL,
+    slide_title(s, "Interface generators: machine gives options, "
+                   "human picks and refines",
+                size=22, y=0.13, w=12.25, h=0.80)
+
+    # ── left: what the machine actually does ──
+    # FIX #212 (student-roast 2026-09-30, fix 5): four IDENTICAL monitor
+    # icons used to stand here, captioned "sketch 1–4" — the student called
+    # them meaningless, and was right: the slide's claim is that the machine
+    # produces UNLIKE variants of one screen, and four copies of one picture
+    # said the opposite. They are now four different layout schemes.
+    ocean_box(s, 0.55, 1.02, 6.25, 2.60, fill=SURFACE, stroke=MID,
               stroke_pt=1.5)
-    text_box(s, x=7.60, y=1.72, w=5.0, h=0.4, text="2025-26 tools",
-             size=13.5, bold=True, color=TEAL)
-    text_box(s, x=7.60, y=2.20, w=5.0, h=0.5,
-             text="v0 (Vercel) · Figma Make [1] · Google Stitch [2] · bolt.new",
-             size=12.5, color=DEEP, line_spacing=1.15)
-    text_box(s, x=7.60, y=2.95, w=5.0, h=1.5,
-             text="• 2-4 directions in minutes (used to be a day of manual "
-                  "wireframing)\n• Figma Make pulls in the team's own "
-                  "components — less rework",
-             size=12, color=DEEP, line_spacing=1.18)
+    text_box(s, x=0.78, y=1.06, w=5.80, h=0.50,
+             text="What the machine does itself: four different layouts "
+                  "of one screen in minutes",
+             size=12.5, bold=True, color=MID, line_spacing=1.04)
+
+    def wire(x, y, w, h, kind):
+        """A miniature screen-layout scheme — different for each variant."""
+        filled_rect(s, x, y, w, h, WHITE, stroke=LIGHT, stroke_pt=1.2,
+                    radius=True, radius_adj=0.10)
+        px, py = x + 0.11, y + 0.11
+        iw, ih = w - 0.22, h - 0.22
+        bar = 0.075
+        if kind == "hero":          # header + a large block + two captions
+            filled_rect(s, px, py, iw, bar, MID, radius=True, radius_adj=0.30)
+            filled_rect(s, px, py + bar + 0.05, iw, ih - bar * 2 - 0.14,
+                        SOFT_GREY)
+            filled_rect(s, px, py + ih - bar, iw * 0.55, bar, SOFT_GREY,
+                        radius=True, radius_adj=0.30)
+        elif kind == "list":        # header + a list of rows
+            filled_rect(s, px, py, iw, bar, MID, radius=True, radius_adj=0.30)
+            for k in range(3):
+                filled_rect(s, px, py + bar + 0.06 + k * 0.115,
+                            iw * (1.0 - 0.14 * k), bar, SOFT_GREY,
+                            radius=True, radius_adj=0.30)
+        elif kind == "sidebar":     # a side panel + content
+            filled_rect(s, px, py, iw * 0.30, ih, MID)
+            filled_rect(s, px + iw * 0.36, py, iw * 0.64, ih * 0.44,
+                        SOFT_GREY)
+            filled_rect(s, px + iw * 0.36, py + ih * 0.52, iw * 0.64,
+                        ih * 0.48, SOFT_GREY)
+        else:                       # 2x2 tiles
+            for r in range(2):
+                for c in range(2):
+                    filled_rect(s, px + c * (iw * 0.54), py + r * (ih * 0.54),
+                                iw * 0.46, ih * 0.46,
+                                (MID if (r + c) == 0 else SOFT_GREY))
+
+    kinds = ["hero", "list", "sidebar", "tiles"]
+    for i, kind in enumerate(kinds):
+        x = 0.78 + i * 1.45
+        wire(x, 1.60, 1.36, 0.84, kind)
+        text_box(s, x=x, y=2.46, w=1.36, h=0.24,
+                 text=f"option {i + 1}", size=9.5, color=SLATE,
+                 align=PP_ALIGN.CENTER)
+    filled_rect(s, 0.78, 2.76, 5.78, 0.80, GOLD_TINT, stroke=GOLD,
+                stroke_pt=1.5, radius=True, radius_adj=0.10)
+    text_box(s, x=0.96, y=2.78, w=5.42, h=0.76,
+             text="Then the human: picks one direction, discards the rest "
+                  "and fixes what the model got wrong — spacing, order of "
+                  "importance, edge cases.",
+             size=11, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE,
+             line_spacing=1.16)
+
+    # ── right: the 2026 tools ──
+    ocean_box(s, 7.05, 1.02, 5.75, 2.60, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=7.28, y=1.10, w=5.30, h=0.28,
+             text="The tools of 2026 [1]", size=12.5, bold=True, color=TEAL)
+    tools = [
+        ("Figma Make", " — builds screens inside the design editor from the "
+                       "team's own components, not generic templates."),
+        ("Google Stitch", " — text and sketches into a screen; free, and "
+                          "since March 2026 it imports Figma files and "
+                          "emits code [2]."),
+        ("v0", " — a description straight into interface code."),
+        ("Lovable, bolt.new", " — a description straight into a whole "
+                             "working app."),
+        ("Magic Patterns", " — fast sweep over variants of one screen."),
+    ]
+    runs = []
+    for k, (name, tail) in enumerate(tools):
+        runs.append({"text": name, "size": 10.5, "bold": True, "color": DEEP,
+                     "newpara": k > 0, "space_before": 3})
+        runs.append({"text": tail, "size": 10.5, "color": DEEP})
+    text_runs(s, 7.28, 1.44, 5.30, 2.06, runs, line_spacing=1.14)
+
+    # ── bottom: "with AI and without" by an actual measurement (R6) ──
+    ocean_box(s, 0.55, 3.70, 12.25, 2.18, fill=WHITE, stroke=LIGHT,
+              stroke_pt=1.5)
+    text_box(s, x=0.80, y=3.78, w=11.75, h=0.28,
+             text="With a generator and without: measured, not promised [3]",
+             size=12.5, bold=True, color=DEEP)
+    text_runs(s, 0.80, 4.12, 5.55, 0.90, [
+        {"text": "How it was measured. ", "size": 11, "bold": True,
+         "color": MID},
+        {"text": "A hundred participants — fifty designers and fifty "
+                 "product managers — randomly split into two groups: one "
+                 "got a generator, the other did not. Three identical "
+                 "interface-editing tasks, September 2026.",
+         "size": 11, "color": DEEP},
+    ], line_spacing=1.16)
+    text_runs(s, 6.98, 4.12, 5.57, 0.90, [
+        {"text": "What came out. ", "size": 11, "bold": True, "color": TEAL},
+        {"text": "Overall time fell by about 20%. For product managers the "
+                 "gain is 35%. For professional designers — only on the "
+                 "hardest of the three tasks (26%), and their overall "
+                 "effect is borderline (17%).",
+         "size": 11, "color": DEEP},
+    ], line_spacing=1.16)
+    text_box(s, x=0.80, y=5.08, w=11.75, h=0.70,
+             text="The measurement does not bear out the promise that "
+                  "\"a day of manual wireframing turns into minutes\": the "
+                  "gain is real, but it runs in tens of percent and depends "
+                  "on who works and how hard the task is. Figma ran the "
+                  "trial on its own tool — keep that in mind.",
+             size=11, italic=True, color=SLATE, line_spacing=1.16)
+
+    # FIX #212 (R3-2026-10-01): the second sentence continues the caveat
+    # from the design-scope slide (s14a): the generator covers the screen.
     gold_callout(
-        s, 0.55, 4.85, 12.25, 1.05,
-        "Convergence needs judgment about specific context that isn't in "
-        "the training data: AI widens the space of options, choosing and "
-        "testing with a real user stays with the human.",
-        size=13, bold=True)
+        s, 0.55, 5.94, 12.25, 0.94,
+        "The machine widens the set of options. Narrowing to one is a "
+        "decision about your users and your constraints, which the "
+        "training data does not hold. The generator covers the screen; "
+        "surfaces and touchpoints, system behaviour and the answer under "
+        "uncertainty stay human.",
+        size=12.5, bold=True)
     refs_of_slide(s, "s17")
     notes_with_sources(s, "s17")
     return s
@@ -617,35 +715,109 @@ def s22(p):
 
 
 def s23(p):
+    """EN PARITY, issue #212 — re-synchronised with the RU slide as rebuilt in
+    Stage 6. The EN twin still carried "+200% code per engineer — but only 16%
+    of PRs got substantive review": a two-bar chart plus a three-bullet
+    Anthropic list. Three things the RU side had already fixed:
+
+    R6 — the figures are the 2026 data (Faros AI, LinearB) and the slide is a
+    comparison of the key practices without AI and with it, not a list of
+    facts.
+
+    Fact-check 2026-09-30 — the Anthropic figures belong to the post Code
+    Review for Claude Code (9 March 2026), not to the Agentic Coding Trends
+    Report; the 16% is unfolded into "16% before -> 54% after", because alone
+    it asserted the opposite of what the source says; the Faros metric is
+    "time in review", not "time waiting for review" (waiting is +157%).
+
+    owner-review 2026-10-01, cross-check with Lecture 4 — the title called
+    review the ONLY bottleneck where L4 §1.3 named precision of intent at the
+    input first (hence "adds to"); the test row was silent about L4 §4.1/§4.3
+    (executable specification + deterministic run gate, mutation score more
+    honest than coverage); there was no warning from L4 §3.7/§5.2 that
+    handing the merge to an agent removes the only control."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "+200% code per engineer — but only 16% of PRs got substantive review [1]",
-                size=20, w=12.3, h=0.85)
-    # left: real contrast chart
-    ocean_box(s, 0.55, 1.55, 6.15, 3.55, fill=SURFACE, stroke=LIGHT,
-              stroke_pt=1.5)
-    add_image(s, CHARTS / "c-review-bottleneck.png", 0.80, 1.80, 5.65, 3.05,
-              preserve_aspect=True)
-    # right: facts
-    ocean_box(s, 6.95, 1.55, 5.85, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=7.20, y=1.72, w=5.4, h=0.4, text="Anthropic's own measurement",
-             size=14, bold=True, color=MID)
-    text_box(s, x=7.20, y=2.25, w=5.4, h=2.6,
-             text="• Implementation: weeks/months → minutes of agentic "
-                  "execution\n\n"
-                  "• Code volume per engineer: +200% year over year\n\n"
-                  "• Substantive human review before merge: only ~16% "
-                  "of PRs",
-             size=13, color=DEEP, line_spacing=1.25)
+    slide_title(s, "Code got cheap to write, not to check: review adds to "
+                   "the bottleneck at the input",
+                size=22, y=0.13, h=0.82, w=12.3)
+
+    # -- left: the measured shift --
+    ocean_box(s, 0.55, 1.02, 4.60, 4.72, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    text_box(s, x=0.78, y=1.12, w=4.15, h=0.30, text="MEASURED SHIFT",
+             size=11.5, bold=True, color=MID)
+    stats = [
+        ("+200%", "code per engineer in a year — Anthropic's own "
+                  "measurement", GOLD),
+        ("16% \u2192 54%", "share of changes with substantive review before "
+                           "merge: before \u2014 after, once the first pass "
+                           "went to automation; nearly half still merges "
+                           "without one [1]", DEEP),
+        ("+441%", "median time a change spends in review — telemetry from "
+                  "22,000 developers, Faros AI", DEEP),
+        ("2.5\u00d7 / 5\u00d7", "AI changes are larger and wait longer for a "
+                                "reviewer — 8.1M pull requests, LinearB",
+         DEEP),
+    ]
+    yy = 1.48
+    for num, txt, col in stats:
+        text_box(s, x=0.78, y=yy, w=4.15, h=0.42, text=num, size=21,
+                 bold=True, color=col, line_spacing=1.0)
+        text_box(s, x=0.78, y=yy + 0.44, w=4.15, h=0.60, text=txt,
+                 size=10.0, color=SLATE, line_spacing=1.14)
+        yy += 1.06
+
+    # -- right: the key practices without AI and with it --
+    ocean_box(s, 5.35, 1.02, 7.45, 4.72, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.6)
+    text_box(s, x=5.58, y=1.12, w=7.00, h=0.30,
+             text="PRACTICES: WHAT WAS AND WHAT WAS ADDED",
+             size=11.5, bold=True, color=TEAL)
+    hx1, hw1 = 5.58, 2.32
+    hx2, hw2 = 8.24, 4.34
+    text_box(s, x=hx1, y=1.46, w=hw1, h=0.26, text="did and still do, no AI",
+             size=9.5, bold=True, italic=True, color=SLATE)
+    text_box(s, x=hx2, y=1.46, w=hw2, h=0.26,
+             text="added when an agent writes the code",
+             size=9.5, bold=True, italic=True, color=TEAL)
+    rows = [
+        ("Review of changes before merge",
+         "it became the bottleneck itself; handing the merge to an agent "
+         "removes the only control"),
+        ("Feature flag",
+         "switches the autonomy level: how much the system decides itself"),
+        ("Staged rollout by share of users",
+         "rolled out on two axes at once: share of audience and autonomy "
+         "level"),
+        ("Test as executable specification and a run gate",
+         "a mutation-score gate was added: it checks the test can catch a "
+         "defect at all"),
+        ("Circuit breaker",
+         "always needed: a failure spreads faster than anyone notices it"),
+        ("A human-owned specification",
+         "the one input an agent cannot invent for itself"),
+    ]
+    ry = 1.78
+    for i, (a, b) in enumerate(rows):
+        if i % 2 == 0:
+            filled_rect(s, 5.50, ry, 7.15, 0.62, MID_TINT)
+        text_box(s, x=hx1, y=ry + 0.02, w=hw1, h=0.58, text=a, size=9.8,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        right_arrow(s, hx1 + hw1 + 0.06, ry + 0.24, 0.14, 0.14, fill=MID)
+        text_box(s, x=hx2, y=ry + 0.02, w=hw2, h=0.58, text=b, size=9.8,
+                 color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.10)
+        ry += 0.64
+
     gold_callout(
-        s, 0.55, 5.30, 12.25, 0.80,
-        "The scarce resource shifted to the two human ends: precision of "
-        "intent going in and quality of judgment coming out — the "
-        "bottleneck is now review, not writing.",
-        size=13, bold=True)
+        s, 0.55, 5.86, 12.25, 0.78,
+        "Scarcity sits at the edges: precision of the task in, speed of "
+        "judgment out.",
+        size=13.5, bold=True)
     refs_of_slide(s, "s23")
     notes_with_sources(s, "s23")
     return s
+
 
 
 # ============================================================
@@ -785,38 +957,73 @@ def s26(p):
 
 
 def s27(p):
+    """EN twin of slides_band2.py::s27 (issue #212). The builder and the
+    source had diverged on the RU side (~37% overlap) and were reconciled;
+    the EN twin is brought to the same composition. R9: a short "what
+    happened" block before the analysis. The slide stays the payoff of the
+    section's base material, not a standalone failure.
+    """
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "2.5-3 years on 0.7% of the chain — and stopping was the right call [1]",
-                size=20, w=12.3, h=0.85)
-    # left: real logo + tiny segment
-    photo_in_box(s, "s27-mcdonalds-real-source.png", 0.55, 1.60, 3.05, 1.55,
-                 pad=0.22)
-    ocean_box(s, 0.55, 3.30, 3.05, 2.10, fill=SURFACE, stroke=MID, stroke_pt=1.4)
-    text_box(s, x=0.80, y=3.45, w=2.55, h=0.9, text="0.7%",
-             size=40, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
-    text_box(s, x=0.70, y=4.45, w=2.75, h=0.85,
-             text="~100 of ≈13,786 US restaurants",
-             size=11.5, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
-             line_spacing=1.1)
-    # right: facts
-    ocean_box(s, 3.85, 1.60, 8.95, 3.05, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    text_box(s, x=4.15, y=1.75, w=8.4, h=0.4, text="McDonald's x IBM — voice order-taking",
-             size=14, bold=True, color=MID)
-    text_box(s, x=4.15, y=2.30, w=8.4, h=2.2,
-             text="• 2.5-3 years piloted on 0.7% of the chain [2]\n\n"
-                  "• Viral failures: bacon in ice cream, 9 iced teas "
-                  "instead of one\n\n"
-                  "• Killed June 2024 — the goal (voice automation) "
-                  "stayed, the vendor's approach was killed",
-             size=13, color=DEEP, line_spacing=1.25)
+    slide_title(s, "McDonald's and IBM, 2021–2024: killing a pilot on 0.7% "
+                   "of the chain was right",
+                size=21, y=0.13, h=0.82, w=12.3)
+
+    # ── what happened ──
+    ocean_box(s, 0.55, 1.02, 8.30, 2.46, fill=SURFACE, stroke=MID,
+              stroke_pt=1.6)
+    text_box(s, x=0.80, y=1.10, w=7.80, h=0.28, text="WHAT HAPPENED",
+             size=11.5, bold=True, color=MID)
+    text_box(s, x=0.80, y=1.42, w=7.80, h=1.96,
+             text="From late 2021 McDonald's and IBM tested voice "
+                  "order-taking at the drive-thru window: the customer "
+                  "speaks the order straight to the system, past the "
+                  "employee. It ran at about 100 restaurants out of nearly "
+                  "13,800 in the US — 0.7% of the chain — for two and a "
+                  "half years. All that time clips of failures kept "
+                  "surfacing: bacon in ice cream, nine iced teas instead of "
+                  "one, orders mixed between adjacent lanes. In June 2024 "
+                  "the partnership ended. What was killed was the approach; "
+                  "the goal stayed — voice automation is still planned.",
+             size=11.5, color=DEEP, line_spacing=1.18)
+
+    # ── right: the pilot's scale and length ──
+    photo_in_box(s, "s27-mcdonalds-real-source.png", 9.05, 1.02, 3.75, 1.18,
+                 pad=0.16)
+    ocean_box(s, 9.05, 2.30, 3.75, 1.18, fill=SURFACE, stroke=GOLD,
+              stroke_pt=1.6)
+    text_box(s, x=9.15, y=2.36, w=3.55, h=0.58, text="0.7%", size=34,
+             bold=True, color=GOLD, align=PP_ALIGN.CENTER, line_spacing=1.0)
+    text_box(s, x=9.15, y=2.96, w=3.55, h=0.46,
+             text="≈100 of ≈13,800 US restaurants · 2.5-year pilot",
+             size=10.0, italic=True, color=SLATE, align=PP_ALIGN.CENTER,
+             line_spacing=1.10)
+
+    # ── analysis ──
+    ocean_box(s, 0.55, 3.58, 12.25, 1.74, fill=SURFACE, stroke=TEAL,
+              stroke_pt=1.5)
+    text_box(s, x=0.80, y=3.64, w=11.8, h=0.26, text="ANALYSIS", size=11.5,
+             bold=True, color=TEAL)
+    text_box(s, x=0.80, y=3.94, w=11.8, h=1.30,
+             text="• The denominator is mandatory: \"100 restaurants\" "
+                  "without \"of 13,800\" reads as a large rollout; with it, "
+                  "as a narrow strip deliberately kept narrow\n"
+                  "• The ceiling here is plain: speech recognition in noise, "
+                  "across accents, with other voices around. More time does "
+                  "not move such a ceiling\n"
+                  "• A specific technical path was killed; the task stayed. "
+                  "Different decisions, and mixing them is costly\n"
+                  "• Mirror of the previous case: there the pilot was "
+                  "skipped, here it was run honestly and its signal was read",
+             size=11.0, color=DEEP, line_spacing=1.16)
+
     gold_callout(
-        s, 3.85, 4.80, 8.95, 1.05,
-        "Mirror of the previous case: there they skipped the pilot "
-        "entirely and shipped to everyone; here the pilot ran long — and "
-        "its signal was used correctly, in a disciplined decision to "
-        "kill, not scale, the failure.",
-        size=12.5, bold=True)
+        s, 0.55, 5.42, 12.25, 0.94,
+        "The signal was read right: a long pilot on a small share still "
+        "failing in public means the approach has a ceiling; a data "
+        "shortage is not the cause. That is the continue-or-kill gate "
+        "working.",
+        size=13, bold=True)
     refs_of_slide(s, "s27")
     notes_with_sources(s, "s27")
     return s

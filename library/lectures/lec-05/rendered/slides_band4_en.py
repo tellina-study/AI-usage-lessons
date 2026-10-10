@@ -17,6 +17,45 @@ from _helpers_en import (
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
+import re
+
+
+def md_text(slide, x, y, w, h, text, *, size=11.0, color=DEEP,
+            bold_color=MID, line_spacing=1.15, anchor=MSO_ANCHOR.TOP):
+    """Text with **bold** markup in a single call. Local copy of the device
+    from slides_band4.py (RU twin), which in turn copies it from band6: the
+    shared _helpers_en is being edited by other agents, and dragging one more
+    primitive in there for the sake of two slides buys nothing."""
+    runs = []
+    first = True
+    for line in text.split("\n"):
+        newp = not first
+        first = False
+        started = False
+        for part in re.split(r'(\*\*.+?\*\*)', line):
+            if not part:
+                continue
+            b = part.startswith("**") and part.endswith("**")
+            cfg = {"text": (part[2:-2] if b else part), "size": size,
+                   "bold": b, "color": (bold_color if b else color)}
+            if newp and not started:
+                cfg["newpara"] = True
+            started = True
+            runs.append(cfg)
+        if not started:
+            cfg = {"text": " ", "size": size, "color": color}
+            if newp:
+                cfg["newpara"] = True
+            runs.append(cfg)
+    return text_runs(slide, x, y, w, h, runs, line_spacing=line_spacing,
+                     anchor=anchor)
+
+
+def block_label(slide, x, y, w, text, *, color=MID, size=10.0):
+    """Caption of a block inside an Ocean box: says WHAT the block is —
+    rule R4 of owner-review-2026-09-30 (every part of a slide is captioned)."""
+    text_box(slide, x=x, y=y, w=w, h=0.26, text=text, size=size, bold=True,
+             color=color, line_spacing=1.0)
 
 
 def s44(p):
@@ -105,52 +144,78 @@ def s45(p):
 
 
 def s46(p):
+    """EN PARITY, issue #212 — REWRITTEN WHOLE, not re-translated.
+
+    The EN twin still carried the pre-Stage-6 slide ("The bottleneck shifted
+    from technology to the organization's operating model": five converging
+    sources Deloitte/Sber/Gartner/McKinsey/Forrester + a 0-5 maturity scale),
+    which the RU rebuild deleted on the owner's remark 3 — "slide 48 is an
+    abrupt, illogical transition. better to give the assessment of a feature
+    in the abstract, AI inside or not". The slide now gives the apparatus for
+    assessing ANY feature, indifferent to whether AI sits inside it, and a
+    separate band states which two of the four points AI changes and which
+    two stay word for word the same.
+
+    The statistics of the former slide stay in the chapter §6.2; Deloitte and
+    Boston Consulting Group are voiced on s45. The s46 entry in SLIDE_REFS is
+    removed in step with the RU side: there are no external numbers on the
+    slide any more, and the reference list under it would print sources the
+    slide does not cite."""
     s = blank(p)
     set_slide_bg(s, WHITE)
-    slide_title(s, "The bottleneck shifted from technology to the organization's operating model",
-                size=19, w=12.3, h=0.85)
-    # 5 sources converge
-    ocean_box(s, 0.55, 1.60, 6.35, 3.55, fill=SURFACE, stroke=MID, stroke_pt=1.5)
-    srcs = ["Deloitte", "Sber", "Gartner", "McKinsey", "Forrester"]
-    for i, sname in enumerate(srcs):
-        y = 1.85 + i * 0.60
-        chip(s, 0.85, y, 1.85, 0.44, sname, fill=LIGHT, color=WHITE, size=12)
-        connector(s, 2.75, y + 0.22, 5.05, 2.95, color=SOFT_GREY, width=1.2)
-    filled_rect(s, 4.15, 2.55, 2.5, 0.80, GOLD_TINT, stroke=GOLD, stroke_pt=1.6,
-                radius=True, radius_adj=0.10)
-    text_box(s, x=4.20, y=2.62, w=2.4, h=0.65, text="operating model",
-             size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER,
-             anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
-    text_box(s, x=0.80, y=4.85, w=5.9, h=0.3,
-             text="Deloitte: 75% say the model must change · 42% low/zero ROI [1]",
-             size=11, italic=True, color=SLATE)
-    # right: maturity scale
-    ocean_box(s, 7.15, 1.60, 5.65, 3.55, fill=SURFACE, stroke=TEAL, stroke_pt=1.5)
-    text_box(s, x=7.40, y=1.75, w=5.15, h=0.4, text="Maturity 0-5",
-             size=14, bold=True, color=TEAL)
-    for i in range(6):
-        x = 7.45 + i * 0.85
-        cur = (i == 3)
-        col = GOLD if cur else SOFT_GREY
-        filled_rect(s, x, 2.55, 0.70, 0.70, (GOLD_TINT if cur else SURFACE),
-                    stroke=col, stroke_pt=(2.0 if cur else 1.0), radius=True,
-                    radius_adj=0.12)
-        text_box(s, x=x, y=2.70, w=0.70, h=0.4, text=str(i), size=15,
-                 bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, x=7.45, y=3.35, w=2.4, h=0.5, text="Sber is here →",
-             size=11.5, bold=True, color=DEEP)
-    text_box(s, x=7.40, y=3.95, w=5.15, h=1.1,
-             text="Operators → orchestrators. Sber rates itself at level "
-                  "3 of 5 [2] — an anti-hype signal: even a large player "
-                  "doesn't claim the top of the scale.",
-             size=12, color=DEEP, line_spacing=1.18)
+    slide_title(s, "How any feature is assessed — AI inside or not",
+                size=19, w=12.25, h=0.62, y=0.13)
+
+    cards = [
+        ("1", "What behaviour it changes",
+         "Which user action becomes more frequent, faster or cheaper. "
+         "Unnamed action — nothing to assess.", MID, "target"),
+        ("2", "Against what baseline",
+         "The same product without the feature, same period. With no "
+         "baseline, any gain gets credited to it.", TEAL, "ruler"),
+        ("3", "What it costs",
+         "Build once, run every month. The second is counted together "
+         "with usage volume.", LIGHT, "banknote"),
+        ("4", "At what result it gets shut down",
+         "Number and date written down before launch: named after, it "
+         "only explains the result.", GOLD, "timer"),
+    ]
+    for i, (num, name, body, col, ic) in enumerate(cards):
+        x = 0.55 + (i % 2) * 6.20
+        y = 0.92 + (i // 2) * 1.63
+        ocean_box(s, x, y, 6.05, 1.48, fill=SURFACE, stroke=col, stroke_pt=1.5)
+        circle(s, x + 0.20, y + 0.16, 0.36, col)
+        text_box(s, x=x + 0.20, y=y + 0.16, w=0.36, h=0.36, text=num, size=14,
+                 bold=True, color=WHITE, align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.0)
+        text_box(s, x=x + 0.66, y=y + 0.14, w=4.70, h=0.40, text=name,
+                 size=12.5, bold=True,
+                 color=(DEEP if col is GOLD else col),
+                 anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.04)
+        icon(s, ic, x + 5.52, y + 0.18, 0.32, "light")
+        md_text(s, x + 0.22, y + 0.60, 5.61, 0.78, body, size=10.5,
+                line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    ocean_box(s, 0.55, 4.18, 12.25, 1.22, fill=SURFACE, stroke=GOLD,
+              stroke_pt=2.0)
+    block_label(s, 0.78, 4.28, 11.75,
+                "WHAT CHANGES WHEN THERE IS AI INSIDE", color=DEEP,
+                size=10.5)
+    md_text(s, 0.78, 4.58, 11.75, 0.76,
+            "Two of the four change. **The third:** running stops being a "
+            "one-off — it gains a meter that ticks with volume. **The "
+            "first:** the model's answer varies run to run, so \"it works\" "
+            "is confirmed on a sample, and one lucky example does not "
+            "count. **The second and fourth** stay word for word the same.",
+            size=11.5, line_spacing=1.16)
+
     gold_callout(
-        s, 0.55, 5.35, 12.25, 0.72,
-        "Five independent sources converge on one point: the winner "
-        "isn't whoever has the better model, but whoever rebuilt teams "
-        "and governance around it.",
-        size=12.5, bold=True)
-    refs_of_slide(s, "s46")
+        s, 0.55, 5.52, 12.25, 1.00,
+        "The second question — the baseline — breaks more often than the "
+        "other three. The two cases ahead are exactly about that: a loud "
+        "failure number that turns out to have no denominator, and a "
+        "claimed autonomy fourteen times off the company's own target.",
+        size=13, bold=True)
     notes_with_sources(s, "s46")
     return s
 

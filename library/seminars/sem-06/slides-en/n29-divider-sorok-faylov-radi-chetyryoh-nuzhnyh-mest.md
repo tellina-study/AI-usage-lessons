@@ -1,0 +1,33 @@
+---
+id: n29
+type: section_divider
+duration_min: 0.5
+assertion: "Forty files for the sake of four places that are needed: the rung's decision point opens with the cost of a search that is needed not for its own sake but in order to carry on with an edit in this same session, and the room is warned in advance that it will have to check its first guess about the cause"
+learning_goal: "The decision point of the FIRST case of the subagent rung and at the same time the entry into the rung itself — the bridge out of the MCP section holds here (the round-3 consolidation, issue 225: the cases were reordered into the sequence of meaning focus · parallelism · specialization, and the focus decision point came first). The case is built around the reason for setting up a subagent, not around the circumstance of a failure. The observable problem: the volume of reading needed for a short conclusion has no relation to the size of that conclusion, and the result of the reading is needed in the same place the work sits. The solution is not named in the title. The storytelling revision (issue 225, PERESMOTR-STORITELLING.md): the guess that the case's turn will refute is planted here as well — the room is asked outright to remember it"
+visual:
+  pattern: section_divider_macro
+  primary: "A dark Ocean background, a title that is a proportion in one line, a gold rule under it. Below — a line of meaning with two numbers in a row. At the bottom — the case track of this rung, with the first marker active."
+  backup: "The title and the line of meaning are from the owner's round 3 (issue 225, ZADANIE-KRUG-3-SUBAGENT.md, case 1), and the form was rewritten by the storytelling revision (PERESMOTR-STORITELLING.md, rule P3 \"the grammar of the dividers gets separated\"). It was: \"Answering one question requires reading forty files\" — a statement describing a symptom, one of six identical formulas. It became: a NUMERICAL proportion — forty files against four places that are needed, with no person and no verb. Round 5 (issue 225, ZADANIE-KRUG-5.md): the numbers of the proportion changed along with the scene — the previous pair was \"forty files / an answer in one word\", and the room was justifiably carrying the answer in one word over into the second session. The form of the proportion was not touched, and it is separated from all four of its neighbors: n06 is a line of speech (\"But I did write that into the issue\"), n21 is a scene with a day (\"Friday. He opens the definition…\"), n38 is a statement with a short question (\"Three edits, one queue. And what if all at once?\"), n50 is a paired statement (\"Everyone sets up a role. Nobody trims the permissions\"). Rule A2 is satisfied: the question is named by the observable problem (the cost of the search before the edit), and the tool that solves it is not named — the word \"subagent\" is still not heard on this screen, and the rung's base on the next slide is the first to name it. No tag is set (rule A6 of round 2 remains in force)."
+---
+
+# Forty files for the sake of four places that are needed
+
+## Assertion
+
+What to edit is known. Where to edit lies in forty files, and they have to be read into the same place that edit has already been explained in.
+
+## Speaker notes
+
+The agent already has access to the outside: a server hands it what was not in the repository. The second move runs the other way — part of the work goes to a separate worker with a context of its own, and that costs zero lines of configuration.
+
+The connection to the previous section is a direct one, although the moves point in different directions. Access to the outside increases what the agent is able to do by itself in one sitting: it looks at the open issues itself, reads the documentation itself, checks the state of the external system itself. Along with the volume of work grows the volume of reading that the work pulls into the session's context. The limit for the two moves is shared — the room in the context; and the first move spends it faster than an agent locked inside the repository would.
+
+The rung's first decision point is the cost of a search that is needed in order to carry on with the work right here. The proportion in the title describes it in full: forty files have to be opened, and four of them are the places that matter. The numbers are not fitted to the conclusion — they come from a working situation that is broken down three screens from now: an ordinary product in which one rule has spread across the codebase over two years, and a developer who, before making an edit, needs a list of the places where that rule is checked.
+
+The pair of numbers in the title measures one thing that is easy not to notice: the volume of reading has no relation to the size of the conclusion. The conclusion here is four addresses, and it can be written in one line; to obtain it, forty files have to be opened. That lack of relation is what makes the decision point a decision point: if the volume of reading were proportional to the size of the answer, the question "where to put all that reading" would not arise at all — you would have to read exactly as much as the result weighs. The track at the bottom of the screen shows that this is the first of the rung's three breakdowns; the two that follow stand on other reasons for setting up a subagent.
+
+And here too it is worth naming the guess that comes to almost everyone at this point: a separate worker will simply read those forty files faster. Remember it. The breakdown will check it with a count of files, and it will not be confirmed — this case's turn rests on precisely that guess, and it works only if the guess is spoken before the breakdown. A guess that has been suppressed comes back whole a week later, so it is worth saying out loud.
+
+The question "why" is asked before the question "what is it" deliberately: the construction of a subagent, read without a reason, is remembered as a description of a file format. The next two screens answer "what is it" — how an agent differs from a subagent, what each one's context is made of, and how a subagent is built piece by piece. The scene, the question and the breakdown come after them.
+
+About the cost of the move itself it is worth saying in advance, so that "zero lines of configuration" does not read as "zero cost". Setting up a subagent really does cost zero settings: one file in the repository, and it is already working. What you pay is scale — multi-agent work comes more expensive than an ordinary chat, and the figure for that stands as the sixth block on the subagent one-pager.

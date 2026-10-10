@@ -2,7 +2,7 @@
 # Исторические отчёты (qa/, *-otchet.md, rendered/*.md, ZADANIE-*, PERESMOTR-*, research/)
 # и SPLIT-PLAN-6-7.md со SVERKA-PLAN.md здесь НЕ перечислены намеренно: их ссылки
 # описывают прошлое состояние деки либо деку Семинара 5.
-slides/n01-oblozhka-dostup-naruzhu-i-urezannaya-rol.md
+slides/n01-oblozhka-dostup-naruzhu-i-urezannye-prava.md
 slides/n02-gde-my-ostanovilis.md
 slides/n03-os-dve-stroki-zakryty.md
 slides/n04-vopros-dva-promaha-prichiny-protivopolozhnye.md

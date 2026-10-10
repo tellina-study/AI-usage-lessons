@@ -72,7 +72,7 @@ decks:
 # собственных артефактов, выдумывать здесь нечего.
 seminars:
   - seminar: 6
-    title: "Семинар 6. Доступ наружу и урезанная роль"
+    title: "Семинар 6. Доступ наружу и урезанные права"
     type: pptx-local
     format: pptx
     status: produced

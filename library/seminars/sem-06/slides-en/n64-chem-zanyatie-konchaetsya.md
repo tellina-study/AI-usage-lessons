@@ -2,12 +2,12 @@
 id: n64
 type: answer_breakdown
 duration_min: 1.5
-assertion: "Of today's six cases, two carry a support — the server's status and the count of separate copies of the repository; the other four rest on documented research that cannot be reproduced by one command in class. What the room carries away is the question with which you choose between the two moves"
-learning_goal: "How the class ends: it is named what you can ask a checkable question about and get an answer by command, and after that a question to put to your own project, with which you choose between access to the outside and a separate worker. The asymmetry between the two supports and the four places where there is none is spoken out loud, once for the whole class"
+assertion: "Of today's five cases, two carry a support — the server's status and the count of separate copies of the repository; the other three rest on documented research that cannot be reproduced by one command in class. What the room carries away is the question with which you choose between the two moves"
+learning_goal: "How the class ends: it is named what you can ask a checkable question about and get an answer by command, and after that a question to put to your own project, with which you choose between access to the outside and a separate worker. The asymmetry between the two supports and the three places where there is none is spoken out loud, once for the whole class"
 visual:
   pattern: answer_breakdown_table
   primary: >
-    A table of six rows: case, support ("yes" / blank), checked by what. The rows are in the order of the
+    A table of five rows: case, support ("yes" / blank), checked by what. The rows are in the order of the
     sections and cases of this class. No row is highlighted — there is no target answer here.
     Under the table — a quiet remark about the gap in checkability and the slide's last caption: the question
     with which the room chooses its move at home.
@@ -35,7 +35,7 @@ visual:
     Storytelling revision (issue 225, `PERESMOTR-STORITELLING.md`, cause 4 "the close
     takes inventory instead of resolving"; rule P5 "the room applies the material to itself"). The slide
     used to end the class with a summing-up of the protocol: what became checkable, where there is no support. That is honest and
-    stays on the screen unchanged — the table of six rows, both columns and the declaration of the
+    stays on the screen unchanged — the table of five rows, both columns and the declaration of the
     gap are the same. What has been added is the thing the class was going for: the last caption is now
     the question with which the room chooses its move at home ("what is it short of — what is not inside
     at all, or the room taken up by reading?"), and straight after it, where each of the two
@@ -52,7 +52,7 @@ visual:
 
 ## Assertion
 
-Of today's six cases, two carry a support; the other four are documented research that cannot be reproduced by one command.
+Of today's five cases, two carry a support; the other three are documented research that cannot be reproduced by one command.
 
 ## Visual
 

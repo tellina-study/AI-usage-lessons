@@ -26,8 +26,32 @@
 * `seminar_number`, `audience`, `format`, `language`, `slot_min` — прозаические
   поля, переносятся из прежнего `deck.yaml` как есть: вывести их неоткуда.
 
-    python3 make_deck_yaml.py            # переписать ../deck.yaml под слайды n*
-    python3 make_deck_yaml.py --check    # только сверить, ничего не писать
+    python3 make_deck_yaml.py                      # переписать ../deck.yaml под slides/n*
+    python3 make_deck_yaml.py --check              # только сверить, ничего не писать
+    python3 make_deck_yaml.py --lang en            # переписать ../deck.en.yaml под slides-en/n*
+    python3 make_deck_yaml.py --lang en --check    # то же, без записи
+
+## Английский манифест (issue 225, EN-трек Семинара 6)
+
+`deck.en.yaml` СОБИРАЕТСЯ ТЕМ ЖЕ генератором из `slides-en/`, а не копируется с русского и
+переводится руками. Причина та же, по которой генератор вообще заведён (докстринг sem-05):
+манифест скучно править руками, и правят его невнимательно — а переведённая копия добавляет к
+этому вторую беду, расхождение с собственными слайдами, которое ничем не ловится. Все поля,
+которые генератор СЧИТАЕТ, он считает по английским слайдам: `assertion`, `learning_goal`,
+`visual` едут из их фронтматтера дословно, `title` / `cover_hook` / `central_question` / `axis`
+— с английской обложки, английского слайда-вопроса и английской оси.
+
+Единственное, чего в английских слайдах нет нигде, — прозаические поля шапки (`audience`,
+`format`). Их нельзя ни вывести, ни перенести с русского (перенос занёс бы кириллицу в
+английский артефакт — зеркальная проверка §5.7 замка), поэтому они лежат пятью строками в
+`rendered/deck-head.en.yaml`, и генератор читает их ОТТУДА. Если файла нет — генератор
+отказывается работать и называет его, вместо того чтобы молча выдать манифест с пустой или
+русской шапкой.
+
+Границы блоков в шапке-комментарии берутся из `build_sem06.sections_for`, то есть выводятся по
+РУССКОМУ манифесту. Это не недосмотр: границы — свойство нумерации, а нумерация у двух дек одна
+(имена файлов совпадают знак в знак, на этом стоит сверка §5.8 замка). Английские имена блоков
+взяты из замка (Часть D: Мостик → Bridge, Субагент → Subagent, Сборка → Wrap-up).
 """
 import re
 import sys
@@ -40,10 +64,23 @@ import deck_kit as K
 import slide_parts as SP
 
 ROOT = Path(__file__).resolve().parent.parent
+HERE = Path(__file__).resolve().parent
 FM = re.compile(r"^---\n(.*?)\n---\n", re.S)
 
 # Поля шапки, которые не выводятся ни из чего и переносятся как есть.
 CARRIED = ("seminar_number", "audience", "format", "language", "slot_min")
+
+# Язык → (каталог слайдов, имя манифеста, откуда брать прозаическую шапку).
+# Русская строка читает шапку из своего же манифеста (как было); английская — из отдельного
+# файла, потому что переносить её с русского нельзя, а выводить неоткуда (см. докстринг).
+LANGS = {
+    "ru": {"slides": "slides", "deck": "deck.yaml", "head": None},
+    "en": {"slides": "slides-en", "deck": "deck.en.yaml", "head": "deck-head.en.yaml"},
+}
+
+# Имена блоков занятия по-английски — из замка (Часть D). Нужны только шапке-комментарию:
+# сами границы считаются по номерам, а номера у двух дек одни.
+BLOCKS_EN = {"Мостик": "Bridge", "MCP": "MCP", "Субагент": "Subagent", "Сборка": "Wrap-up"}
 
 
 def frontmatter(path):
@@ -51,14 +88,15 @@ def frontmatter(path):
     return (yaml.safe_load(m.group(1)) or {}) if m else {}
 
 
-def slides_of(prefix):
+def slides_of(prefix, lang="ru"):
+    sub = LANGS[lang]["slides"]
     out = []
-    for f in sorted((ROOT / "slides").glob(f"{prefix}*.md")):
+    for f in sorted((ROOT / sub).glob(f"{prefix}*.md")):
         fm = frontmatter(f)
         sid = fm.get("id") or f.name.split("-")[0]
         if sid != f.name.split("-")[0]:
             print(f"  ⚠ {f.name}: id «{sid}» не совпадает с именем файла")
-        row = {"id": sid, "file": f"slides/{f.name}"}
+        row = {"id": sid, "file": f"{sub}/{f.name}"}
         for k in ("type", "duration_min", "assertion", "learning_goal", "visual"):
             if k in fm:
                 row[k] = fm[k]
@@ -67,13 +105,20 @@ def slides_of(prefix):
     return [r[1] for r in out], [r[2] for r in out]
 
 
+# Кавычки, в которые может быть обёрнута реплика: русские «ёлочки» и английские пары.
+# Снимаются с ЗНАЧЕНИЯ поля манифеста (не со слайда): в русском манифесте `cover_hook` и
+# `central_question` лежат без «ёлочек», и английский обязан лежать так же — иначе одно и то же
+# поле двух манифестов различается обёрткой, и сверка RU↔EN спотыкается на ней каждый раз.
+QUOTE_WRAP = '«»"\u201c\u201d'
+
+
 def _gold_question(visual):
     """Вопрос из золотой коробки слайда — первая цитата, кончающаяся «?»."""
     for kind, b in SP.blocks(visual):
         if kind == "quote":
             body = " ".join(K.plain(l) for l in b).strip()
             if body.rstrip("»\"' ").endswith("?"):
-                return body.strip("«»")
+                return body.strip(QUOTE_WRAP)
     return None
 
 
@@ -119,10 +164,11 @@ def gaps(slides):
     return holes, dupes
 
 
-def build(prefix="n"):
-    slides, files = slides_of(prefix)
+def build(prefix="n", lang="ru"):
+    cfg = LANGS[lang]
+    slides, files = slides_of(prefix, lang)
     if not slides:
-        raise SystemExit(f"слайдов по образцу «{prefix}*.md» не найдено")
+        raise SystemExit(f"слайдов по образцу «{cfg['slides']}/{prefix}*.md» не найдено")
     holes, dupes = gaps(slides)
     if holes:
         print(f"  ⚠ пропуски в нумерации: {holes}")
@@ -133,9 +179,21 @@ def build(prefix="n"):
     # существует (первая сборка — его ещё нет, и голова будет пустой; Семинар 6
     # не держит рядом легаси-деку, в отличие от Семинара 5 c `deck-s50.yaml`).
     head = {}
-    f = ROOT / "deck.yaml"
-    if f.exists():
-        head = dict((yaml.safe_load(f.read_text(encoding="utf-8")) or {}).get("deck") or {})
+    if cfg["head"]:
+        # Английская строка: прозаическая шапка — отдельный файл, и его отсутствие это отказ,
+        # а не пустая шапка. Манифест с пустым `audience`/`format` выглядит собранным и
+        # проходит дальше, а дыру в нём замечает только читатель сайта.
+        hf = HERE / cfg["head"]
+        if not hf.exists():
+            raise SystemExit(
+                f"нет файла шапки «{hf.relative_to(ROOT.parent)}» — вывести `audience`/"
+                f"`format` для языка «{lang}» неоткуда, а переносить их с русского нельзя "
+                f"(кириллица в английском артефакте). Завести файл и повторить")
+        head = dict(yaml.safe_load(hf.read_text(encoding="utf-8")) or {})
+    else:
+        f = ROOT / cfg["deck"]
+        if f.exists():
+            head = dict((yaml.safe_load(f.read_text(encoding="utf-8")) or {}).get("deck") or {})
     title, hook, question, axis = cover_texts(files)
 
     total = round(sum(s.get("duration_min") or 0 for s in slides), 2)
@@ -148,6 +206,7 @@ def build(prefix="n"):
         "duration_min": total,
         "slide_count": len(slides),
     })
+    deck["language"] = lang
     # порядок полей шапки — читаемый, а не алфавитный
     order = ["seminar_number", "title", "audience", "duration_min", "format",
              "cover_hook", "central_question", "language", "slide_count", "axis",
@@ -157,30 +216,54 @@ def build(prefix="n"):
     return {"deck": deck, "slides": slides}, slides
 
 
-def header_comment(slides, deck):
-    lines = [f"# {deck['title']}",
-             "# Файл СОБРАН генератором: python3 rendered/make_deck_yaml.py",
-             "# Поля слайдов — из фронтматтера самих слайдов; правьте слайд, а не этот файл.",
-             "#",
-             "# Хронометраж по блокам (считан, не переписан):"]
+def header_comment(slides, deck, lang="ru"):
+    en = lang == "en"
+    if en:
+        lines = [f"# {deck['title']}",
+                 "# This file is GENERATED: python3 rendered/make_deck_yaml.py --lang en",
+                 "# Slide fields come from the frontmatter of slides-en/*.md — edit the slide, "
+                 "not this file.",
+                 "# The prose header fields (audience, format) come from "
+                 "rendered/deck-head.en.yaml.",
+                 "#",
+                 "# Timing per section (computed, not retyped):"]
+    else:
+        lines = [f"# {deck['title']}",
+                 "# Файл СОБРАН генератором: python3 rendered/make_deck_yaml.py",
+                 "# Поля слайдов — из фронтматтера самих слайдов; правьте слайд, а не этот файл.",
+                 "#",
+                 "# Хронометраж по блокам (считан, не переписан):"]
     for lo, hi, name, _ in B.sections_for(slides[0]["id"])[0]:
         s = sum(x.get("duration_min") or 0 for x in slides if lo <= B.num(x["id"]) <= hi)
         if s:
-            lines.append(f"#   {name:<10} n{lo:02d}–n{hi:02d}  {s:>6.2f} мин")
-    lines.append(f"#   {'ИТОГО':<10}            {deck['duration_min']:>6.2f} мин "
-                 f"при слоте {deck.get('slot_min', '?')}")
+            label = BLOCKS_EN.get(name, name) if en else name
+            unit = "min" if en else "мин"
+            lines.append(f"#   {label:<10} n{lo:02d}–n{hi:02d}  {s:>6.2f} {unit}")
+    if en:
+        lines.append(f"#   {'TOTAL':<10}            {deck['duration_min']:>6.2f} min "
+                     f"in a {deck.get('slot_min', '?')}-min slot")
+    else:
+        lines.append(f"#   {'ИТОГО':<10}            {deck['duration_min']:>6.2f} мин "
+                     f"при слоте {deck.get('slot_min', '?')}")
     return "\n".join(lines) + "\n\n"
 
 
 def main():
-    check = "--check" in sys.argv
-    doc, slides = build("n")
-    text = header_comment(slides, doc["deck"]) + yaml.safe_dump(
+    argv = sys.argv[1:]
+    check = "--check" in argv
+    lang = "ru"
+    if "--lang" in argv:
+        i = argv.index("--lang")
+        lang = argv[i + 1] if i + 1 < len(argv) else ""
+    if lang not in LANGS:
+        raise SystemExit(f"--lang принимает {'/'.join(LANGS)}, передано «{lang}»")
+    doc, slides = build("n", lang)
+    text = header_comment(slides, doc["deck"], lang) + yaml.safe_dump(
         doc, allow_unicode=True, sort_keys=False, width=100, default_flow_style=False)
-    out = ROOT / "deck.yaml"
+    out = ROOT / LANGS[lang]["deck"]
     if check:
         cur = out.read_text(encoding="utf-8") if out.exists() else ""
-        print("совпадает с файлом" if cur == text else "РАСХОДИТСЯ с файлом")
+        print(f"{out.name}: " + ("совпадает с файлом" if cur == text else "РАСХОДИТСЯ с файлом"))
         return
     out.write_text(text, encoding="utf-8")
     print(f"{out.name}: {doc['deck']['slide_count']} слайдов, "

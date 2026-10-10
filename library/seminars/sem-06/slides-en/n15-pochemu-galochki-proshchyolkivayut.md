@@ -30,7 +30,7 @@ A key's permissions are asked about once — when it is issued. The move "tick e
 
 | The move almost everyone makes | What in it comes expensive |
 |---|---|
-| tick every box in a row: "what if I need it later, surely I am not going to reissue the key" | the agent's list of operations is four lines long, and the key was issued for all of them: what was crossed out in the breakdown came back in its entirety |
+| tick every box in a row: "what if I need it later, surely I am not going to reissue the key" | the agent's list of operations is three lines long, and the key was issued for all of them: what was crossed out in the breakdown came back in its entirety |
 | put the key within reach — into a file next to the configuration | the file travels into the repository, into the commit history and into the review of edits. The key's home between runs is a secrets store: the name is visible, the value is not |
 | count on nobody looking for your key | keys in public repositories do get searched for and do get found working; one of the model providers watches over its own and blocks an exposed one within seconds — by the account of students from a previous cohort |
 | remember about permissions once the key has already surfaced somewhere | permissions are changed on the service's side, and after the fact they cancel nothing: whatever the key managed, it managed |
@@ -41,7 +41,7 @@ A key's permissions are asked about once — when it is issued. The move "tick e
 
 A key's permissions are asked about once — at the moment of issue. The service lists the actions and asks which of them you trust to this key. There will be no second such question, and that makes issuing a key one of those rare places where a decision is taken once and holds for a long time.
 
-The move most often made at that moment, the course's author describes about himself outright: every box there is gets clicked straight through, one after another. The motive for the move is understandable and almost excusable — what if something is needed later, surely you are not going to issue a new key then. It is worth admitting that this is exactly what should not be done, and worth admitting at the same time that knowing it does not get in the move's way. The breakdown of the permissions in the previous conversation took several minutes and produced a list of operations four lines long; one movement of the mouse at the moment of issue brings everything that was crossed out back in its entirety.
+The move most often made at that moment, the course's author describes about himself outright: every box there is gets clicked straight through, one after another. The motive for the move is understandable and almost excusable — what if something is needed later, surely you are not going to issue a new key then. It is worth admitting that this is exactly what should not be done, and worth admitting at the same time that knowing it does not get in the move's way. The breakdown of the permissions in the previous conversation took several minutes and produced a list of operations three lines long; one movement of the mouse at the moment of issue brings everything that was crossed out back in its entirety.
 
 The divergence here is worth naming precisely, because it is the content. Knowing which permissions are needed and issuing exactly those are two different pieces of work. The first is done with your head and once, the second is done with your hands and anew every time, on somebody else's screen, at the end of a long form, when what you want is to start working already.
 

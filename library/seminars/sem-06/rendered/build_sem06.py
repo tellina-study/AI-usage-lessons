@@ -453,13 +453,113 @@ PATTERN_ROLE = {
     "base_and_edge": "fact",
 }
 
-ASK = re.compile(r"выберите|что бы вы|как бы вы|назовите|подумайте", re.I)
-
 # Оговорка опознаётся двумя разными способами (см. RENDERER-NOTES.md сем. 5,
 # п. 3): жанровым словом в начале блока ИЛИ признанием пробела где угодно.
-CAVEAT_OPEN = re.compile(r"^\W*(оговорка|честный пробел|честно про|честно о\b)", re.I)
-CAVEAT = re.compile(r"не проверен|не провер[её]н|не измер|нет данных|не подтвер|"
-                    r"не удалось|честного пробела|честный пробел|нечестн", re.I)
+# Сами шаблоны — в `LANG_SIGNALS` ниже, по одному набору на язык источника;
+# модульные `ASK` / `CAVEAT_OPEN` / `CAVEAT` ставит `set_lang()`.
+
+
+# ── Чем опознаётся РЕПЛИКА, а не формула ───────────────────────────────────
+#
+# Кавычка в начале блока-цитаты в этом конвейере — РАЗМЕТКА, а не типографика:
+# по ней `quote_role()` ниже отличает тихую реплику докладчика (тиловая полоса)
+# от формулы-итога (золотая планка). На этом стоят живые решения по деке:
+# `backup` n03 описывает, как кавычки СНИМАЛИ, чтобы строка попала в золото, а
+# n05 пришлось добавить в `GOLD_QUOTE_SIDS`, потому что снятия не хватило.
+#
+# Пока дека была одна, знак можно было вписать в код буквой. С английской декой
+# нельзя: «ёлочек» в английском тексте нет (так во всех EN-деках семинаров 1–4,
+# решение D5 EN-трека Семинара 4 — `"…"`), и тот же код, запущенный по
+# `slides-en/`, опознал бы РОЛЬЮ ФОРМУЛЫ каждую из одиннадцати цитат деки и не
+# оставил бы ни одной тихой реплики. Поймано сессиями перевода ДО рендера
+# (`qa/perevod-n01-n32.md` §3.1), а не после него по картинке.
+#
+# Почему аргумент языка, а не второй сборщик. У Семинара 4 отдельный EN-драйвер
+# (`sem-04/rendered/build_sem04_en.py`) заведён по ДРУГОЙ причине: там
+# переведённых слайдов нет вовсе, английский собирается из русских слайдов плюс
+# таблица строк, и драйверу приходится подменять текст на входе в вёрстку.
+# Здесь переведены все 64 файла, и отличий у двух источников ровно два: каталог
+# слайдов (его задаёт манифест, то есть уже существующий флаг `--deck`) и знак
+# кавычки. Копия сборщика ради одного знака разошлась бы с русским при первой же
+# правке русского — тот самый довод, которым свой выбор объясняет докстринг
+# драйвера Семинара 4.
+#
+# Разметочная симметрия, на которой стоит решение, промерена: в `slides/` 11
+# блоков-цитат открываются `«` и НИ ОДИН не открывается `"`; в `slides-en/` те же
+# 11 слайдов открываются `"` и ни один — `«`. То есть соответствие один в один, и
+# язык полностью определяет знак.
+SLIDES_DIR = {"ru": "slides", "en": "slides-en"}
+DECK_FILE = {"ru": "deck.yaml", "en": "deck.en.yaml"}
+OUT_NAME = {"ru": "sem-06.pptx", "en": "sem-06-en.pptx"}
+
+# Роль блока опознаётся НЕ ОДНИМ признаком, а тремя, и все три языковые.
+# Задание в эту сессию называло один — кавычку; `--quote-roles` по готовой
+# английской деке нашёл остальные два, и это ровно то, ради чего режим и
+# заведён. Сверка ролей двух дек до починки: совпали 73 блока из 81, разошлись 8.
+#
+#   1. ЗНАК РЕПЛИКИ (6 из 8 несовпадений шли НЕ отсюда — см. п. 2 и 3). «Ёлочка»
+#      в начале блока → тихая реплика докладчика, иначе формула-итог.
+#   2. ВОПРОС К ЗАЛУ — по жанровому глаголу в повелительном наклонении
+#      («выберите», «назовите»). Английский текст по русскому списку не
+#      опознаётся вовсе, и шесть вопросов с карточками получали роль `fact`:
+#      n11, n23, n33, n40, n52, n60.
+#   3. ОГОВОРКА — по жанровому зачину («Честный пробел…»). Та же причина, два
+#      места: n35 и n47 — честные пробелы кейсов — выходили формулой-итогом,
+#      то есть признание «этого никто не измерял» печаталось золотой планкой
+#      наравне с выводами, которые занятие как раз утверждает.
+#
+# Отсюда вывод, который стоит зафиксировать: вынести в язык надо было не знак, а
+# ВСЕ признаки роли, и единственный надёжный способ это узнать — сверить роли
+# двух дек поблочно, а не прочитать код. Английские шаблоны ниже проверены
+# ровно так: каждый даёт столько же срабатываний, сколько русский, и на тех же
+# слайдах (6 и 2), ни одного лишнего на остальных 73 блоках.
+LANG_SIGNALS = {
+    "ru": {
+        "open": ("«",),
+        "pairs": (("«", "»"), ("**", "**")),
+        "ask": r"выберите|что бы вы|как бы вы|назовите|подумайте",
+        "caveat_open": r"^\W*(оговорка|честный пробел|честно про|честно о\b)",
+        "caveat": (r"не проверен|не провер[её]н|не измер|нет данных|не подтвер|"
+                   r"не удалось|честного пробела|честный пробел|нечестн"),
+    },
+    "en": {
+        "open": ('"', "\u201c"),
+        "pairs": (('"', '"'), ("\u201c", "\u201d"), ("**", "**")),
+        # «name» — слово частое, поэтому берётся не само, а повелительным
+        # оборотом занятия («Name both numbers», «Name yours»): проверено на
+        # всех 81 блоке, ложных срабатываний ноль.
+        "ask": (r"\b(?:pick|choose)\b|\bname (?:yours|both|your|the piece|a |one )"
+                r"|what would you|how would you|\bthink (?:about|through)\b"
+                r"|say out loud"),
+        "caveat_open": r"^\W*(an honest gap|a caveat|honestly about)",
+        "caveat": (r"not been verified|not verified|unverified|not measured"
+                   r"|no data|not confirmed|an honest gap|honest gap|dishonest"),
+    },
+}
+LANG = "ru"
+SPEECH_OPEN = ASK = CAVEAT_OPEN = CAVEAT = None
+
+
+def set_lang(lang):
+    """Переключить язык источника. Трогает ровно те признаки, по которым
+    опознаётся РОЛЬ блока, и ничего кроме: композиция, сетка, цвета, кегли и
+    жанры от языка не зависят. Если однажды начнут — видно это будет здесь, а
+    не в тридцати местах."""
+    global LANG, SPEECH_OPEN, ASK, CAVEAT_OPEN, CAVEAT, _WRAP_PAIRS
+    if lang not in LANG_SIGNALS:
+        raise SystemExit(f"--lang принимает {'/'.join(LANG_SIGNALS)}, передано «{lang}»")
+    cfg = LANG_SIGNALS[lang]
+    LANG = lang
+    SPEECH_OPEN = cfg["open"]
+    _WRAP_PAIRS = cfg["pairs"]
+    ASK = re.compile(cfg["ask"], re.I)
+    CAVEAT_OPEN = re.compile(cfg["caveat_open"], re.I)
+    CAVEAT = re.compile(cfg["caveat"], re.I)
+
+
+def opens_speech(body):
+    """Блок начинается кавычкой языка источника, то есть это реплика."""
+    return body.lstrip().startswith(SPEECH_OPEN)
 
 
 def quote_role(lines, pattern):
@@ -473,8 +573,8 @@ def quote_role(lines, pattern):
         return "caveat"
     base = PATTERN_ROLE.get(pattern)
     if base == "question":          # вопрос уже нашёлся бы выше — значит это подводка
-        return "speech" if body.lstrip().startswith("«") else "fact"
-    if body.lstrip().startswith("«"):
+        return "speech" if opens_speech(body) else "fact"
+    if opens_speech(body):
         return "speech"
     return base or "formula"
 
@@ -493,7 +593,10 @@ def para_role(text, pattern):
     return quote_role([text], pattern), text
 
 
-_WRAP_PAIRS = (("«", "»"), ("**", "**"))
+# Заполняется из `LANG_SIGNALS` вызовом `set_lang("ru")` сразу под этой строкой;
+# объявление нужно только затем, чтобы `global` в `set_lang` имел что связывать.
+_WRAP_PAIRS = ()
+set_lang("ru")
 
 
 def split_question(lines):
@@ -515,9 +618,17 @@ def split_question(lines):
     flat = " ".join(lines).strip()
     op, cl = "", ""
     for o, c in _WRAP_PAIRS:
-        if flat.startswith(o) and flat.endswith(c) and len(flat) > len(o) + len(c):
-            op, cl = o, c
-            break
+        if not (flat.startswith(o) and flat.endswith(c) and len(flat) > len(o) + len(c)):
+            continue
+        # Пара из ОДИНАКОВЫХ знаков (английские `"…"`, а также `**…**`) требует
+        # оговорки, которой русским «…» не нужно: блок «"одна реплика" и
+        # "вторая"» тоже начинается и кончается этим знаком, но одной обёрткой
+        # НЕ является, и снятие «внешней пары» разрушило бы обе внутренние.
+        # Признак настоящей обёртки — внутри знака больше нет.
+        if o == c and o in flat[len(o):len(flat) - len(c)]:
+            continue
+        op, cl = o, c
+        break
     core = flat[len(op):len(flat) - len(cl)].strip() if op else flat
 
     bounds, pos = [], 0
@@ -1050,21 +1161,27 @@ GENRE_FN = {
 # ── Сборка ──────────────────────────────────────────────────────────────────
 
 def refresh_manifest():
-    """Пересобрать `deck.yaml` из слайдов перед сборкой — и СКАЗАТЬ, если он
-    разошёлся (тот же контракт, что в build_sem05.py — манифест — производное,
-    правят слайд, а не этот файл)."""
+    """Пересобрать манифест ТЕКУЩЕГО языка из его слайдов перед сборкой — и
+    СКАЗАТЬ, если он разошёлся (тот же контракт, что в build_sem05.py —
+    манифест производное, правят слайд, а не этот файл).
+
+    Язык здесь несущий: при `--lang en` пересобирается `deck.en.yaml` из
+    `slides-en/`, а русский `deck.yaml` не читается и не пишется вовсе. Иначе
+    английская сборка освежала бы ЧУЖОЙ манифест и собиралась бы по своему,
+    несвежему."""
     import difflib
+    name = DECK_FILE[LANG]
     try:
         import make_deck_yaml as G
-        doc, slides = G.build("n")
-        text = G.header_comment(slides, doc["deck"]) + G.yaml.safe_dump(
+        doc, slides = G.build("n", LANG)
+        text = G.header_comment(slides, doc["deck"], LANG) + G.yaml.safe_dump(
             doc, allow_unicode=True, sort_keys=False, width=100,
             default_flow_style=False)
     except Exception as e:
         M._WARNINGS.append(f"МАНИФЕСТ: пересобрать не удалось — {e}. "
-                           f"Собираю по тому, что лежит в deck.yaml")
+                           f"Собираю по тому, что лежит в {name}")
         return
-    path = ROOT / "deck.yaml"
+    path = ROOT / name
     was = path.read_text(encoding="utf-8") if path.exists() else ""
     if was == text:
         return
@@ -1073,7 +1190,7 @@ def refresh_manifest():
                if l[:1] in "+-" and l[:3] not in ("+++", "---")]
     head = "; ".join(l.strip() for l in changed[:4])
     M._WARNINGS.append(
-        f"МАНИФЕСТ ПЕРЕСОБРАН: deck.yaml был старше слайдов, строк разошлось "
+        f"МАНИФЕСТ ПЕРЕСОБРАН: {name} был старше слайдов, строк разошлось "
         f"{len(changed)} — {head}{'…' if len(changed) > 4 else ''}")
 
 
@@ -1084,12 +1201,13 @@ def deck_from_files(prefix):
     знать части из них — это режим ПРЕДПРОСМОТРА БЛОКА (`--block n`), не
     вторая дека: порядок — по `id`."""
     out = []
-    for f in sorted((ROOT / "slides").glob(f"{prefix}*.md")):
+    sub = SLIDES_DIR[LANG]
+    for f in sorted((ROOT / sub).glob(f"{prefix}*.md")):
         md = f.read_text(encoding="utf-8")
         m = re.match(r"^---\n(.*?)\n---\n", md, re.S)
         fm = (yaml.safe_load(m.group(1)) if m else {}) or {}
         out.append({"id": fm.get("id") or f.name.split("-")[0],
-                    "file": f"slides/{f.name}",
+                    "file": f"{sub}/{f.name}",
                     "visual": fm.get("visual") or {}})
     return sorted(out, key=lambda s: s["id"])
 
@@ -1106,6 +1224,14 @@ USAGE = """build_sem06.py — сборка деки Семинара 6.
   --deck F      собрать по другому манифесту (в `sem-06-F.pptx`).
   nNN nMM …     собрать полотно только этих слайдов, остальные страницы
                 оставить пустыми (отладка вёрстки).
+  --lang en     собирать АНГЛИЙСКУЮ деку: слайды `slides-en/`, манифест
+                `deck.en.yaml`, выход `sem-06-en.pptx`, и — главное — реплика
+                опознаётся по `"`, а не по «ёлочке» (см. `LANG_SIGNALS`).
+                Русскую деку и русский манифест при этом не трогает ничем.
+  --quote-roles НИЧЕГО НЕ СОБИРАЕТ И НЕ ПИШЕТ: печатает, какую роль получит
+                каждый блок-цитата деки. С `--lang en` — то же по английской.
+                Нужно, чтобы сверить роли двух дек ДО рендера: роли обязаны
+                совпасть слайд в слайд, иначе язык меняет не текст, а вёрстку.
 
 Полная пересборка требует ЯВНОГО `--all` и без него не запускается. Так
 решено после круга 2 замечаний владельца (issue 225): четыре сессии круга
@@ -1115,17 +1241,65 @@ USAGE = """build_sem06.py — сборка деки Семинара 6.
 """
 
 
+def print_quote_roles(only):
+    """Какую роль получит каждый блок-цитата — БЕЗ сборки и без записи файлов.
+
+    Зачем отдельный режим, а не «собери и посмотри глазами»: роль видна на
+    картинке цветом полосы, то есть проверяется рендером, PDF и просмотром
+    64 снимков. Между языками сверять надо не картинку, а решение, и решение
+    печатается здесь одной строкой на блок. Несколько реплик на деке вообще
+    не на всех слайдах — глазами их пересчитывать дороже, чем прочесть список.
+
+    Контракт для EN-деки: набор ролей обязан СОВПАСТЬ с русским слайд в слайд.
+    Расхождение значит, что язык поменял не текст, а вёрстку, — и это дефект
+    независимо от того, какая из двух раскрасок красивее."""
+    deck_path = ROOT / DECK_FILE[LANG]
+    if deck_path.exists():
+        slides = yaml.safe_load(deck_path.read_text(encoding="utf-8"))["slides"]
+    else:
+        slides = deck_from_files("n")
+    tally, total = {}, 0
+    for sv in slides:
+        sid = sv["id"]
+        if only and sid not in set(only):
+            continue
+        pattern = (sv.get("visual") or {}).get("pattern", "")
+        _t, _a, visual, _n = SP.sections((ROOT / sv["file"]).read_text(encoding="utf-8"))
+        for kind, b in SP.blocks(visual):
+            if kind != "quote":
+                continue
+            role = quote_role(b, pattern)
+            if GOLD_QUOTE_SIDS.get(sid) == "all":
+                role += " (+gold по GOLD_QUOTE_SIDS)"
+            head = K.plain(" ".join(b))[:58]
+            tally[role.split(" ")[0]] = tally.get(role.split(" ")[0], 0) + 1
+            total += 1
+            print(f"{sid}  {pattern:28} {role:30} {head}…")
+    print(f"\nязык: {LANG}   знак реплики: {' / '.join(SPEECH_OPEN)}   "
+          f"блоков-цитат: {total}")
+    for r, v in sorted(tally.items()):
+        print(f"  {r:10} {v:3}")
+    return 0
+
+
 def main():
     argv = list(sys.argv[1:])
     if {"--help", "-h", "help"} & set(argv):
         print(USAGE)
         return
     unknown = [a for a in argv if a.startswith("-")
-               and a not in ("--block", "--deck", "--all")]
+               and a not in ("--block", "--deck", "--all", "--lang", "--quote-roles")]
     if unknown:
         print(f"неизвестный флаг: {' '.join(unknown)}\n")
         print(USAGE)
         raise SystemExit(2)
+    if "--lang" in argv:
+        i = argv.index("--lang")
+        set_lang(argv[i + 1] if i + 1 < len(argv) else "")
+        del argv[i:i + 2]
+    if "--quote-roles" in argv:
+        argv.remove("--quote-roles")
+        return print_quote_roles(argv)
     full = "--all" in argv
     if full:
         argv.remove("--all")
@@ -1135,7 +1309,7 @@ def main():
         block = argv[i + 1] if i + 1 < len(argv) else "n"
         del argv[i:i + 2]
 
-    deck_file = "deck.yaml"
+    deck_file = DECK_FILE[LANG]
     if "--deck" in argv:
         i = argv.index("--deck")
         deck_file = argv[i + 1]
@@ -1143,11 +1317,11 @@ def main():
 
     if block:
         slides = deck_from_files(block)
-        out_name = f"sem-06-{block}.pptx"
+        out_name = f"sem-06-{block}.pptx" if LANG == "ru" else f"sem-06-en-{block}.pptx"
         if not slides:
             print(f"слайдов по образцу «{block}*.md» не найдено")
             return
-    elif not full and deck_file == "deck.yaml":
+    elif not full and deck_file == DECK_FILE[LANG]:
         print("полная пересборка деки не запрошена.\n")
         print(USAGE)
         raise SystemExit(2)
@@ -1155,7 +1329,7 @@ def main():
         deck_path = ROOT / deck_file
         if deck_path.exists():
             slides = yaml.safe_load(deck_path.read_text(encoding="utf-8"))["slides"]
-        elif deck_file == "deck.yaml":
+        elif deck_file == DECK_FILE[LANG]:
             # Самая первая сборка этого занятия: манифеста ещё не существует
             # вовсе (не «устарел», а именно отсутствует — в Семинаре 5 этот
             # путь никогда не исполнялся, там deck.yaml существовал с первого
@@ -1165,14 +1339,14 @@ def main():
         else:
             raise SystemExit(f"файла «{deck_file}» нет — и это не deck.yaml, "
                              f"чтобы пересобрать его автоматически")
-        out_name = "sem-06.pptx" if deck_file == "deck.yaml" else \
+        out_name = OUT_NAME[LANG] if deck_file == DECK_FILE[LANG] else \
             f"sem-06-{Path(deck_file).stem}.pptx"
     deck = {"slides": slides}
     prs = Presentation()
     prs.slide_width, prs.slide_height = Inches(K.W_IN), Inches(K.H_IN)
     blank = prs.slide_layouts[6]
     M.reset()
-    if not block and deck_file == "deck.yaml":
+    if not block and deck_file == DECK_FILE[LANG]:
         refresh_manifest()
         slides = yaml.safe_load((ROOT / deck_file).read_text(encoding="utf-8"))["slides"]
         # `deck["slides"]` был снят СО СТАРОГО чтения (строка выше, до

@@ -29,6 +29,8 @@ BANS = {
         re.compile(r'методическ|педагогическ|на этом этапе студент|Лектору|Преподавателю|Вы здесь', re.I),
     'превосходная форма':
         re.compile(r'\bглавн\w*|\bсам(ый|ая|ое|ые)\b|\bлучш(ий|ая|ее|ие)\b|крупнейш|важнейш', re.I),
+    # «то же самое» / «тот же самый» — идиома тождества, не превосходная форма.
+    # Снимается ДО проверки, иначе каждый разбор, сравнивающий два измерения, даёт ложное срабатывание.
     'научная запись числа':
         re.compile(r'\d\s*[·x×]\s*10[\^⁰-₟]|10[⁰-⁹]'),
     'p-значение или интервал на экране':
@@ -45,24 +47,46 @@ SEED = [
 DECOYS = [
     "**минут:** 1,5",                                 # служебное поле плана, не видимый слой
     "- **форма:** нагрузка переехала на другой шаг",  # видимого запрета не несёт
+    "- **на экране:** вот то же самое, собранное по сотне опытов",   # идиома тождества
+    "- **на экране:** позиции по порядку, без подсветки «Вы здесь»",  # запрещённая фраза ВНУТРИ запрета
 ]
+
+
+IDIOM = re.compile(r'\bт(о|от|е|а) же сам(ое|ый|ые|ая)\b', re.I)
+# Запрещённая фраза внутри запрета — не нарушение, а исполнение правила.
+# Но молча отбрасывать нельзя: уходит в отдельное ведро «похоже на запрет», глазами.
+NEGATED = re.compile(r'\b(без|не|нет|никак|запрещ\w*|исключ\w*|сня\w*|убра\w*)\b', re.I)
 
 
 def scan(lines):
     vis = [l for l in lines if VISIBLE.match(l)]
-    out = {}
+    out, maybe = {}, {}
     for name, rx in BANS.items():
-        out[name] = [l.strip()[:120] for l in vis if rx.search(l)]
-    return len(vis), out
+        hits, hedged = [], []
+        for l in vis:
+            probe = IDIOM.sub(' ', l)          # идиома тождества снимается
+            if not rx.search(probe):
+                continue
+            (hedged if NEGATED.search(probe) else hits).append(l.strip()[:120])
+        out[name] = hits
+        if hedged:
+            maybe[name] = hedged
+    return len(vis), out, maybe
 
 
 def selftest():
     lines = [s for s, _ in SEED] + DECOYS
-    nvis, hits = scan(lines)
+    nvis, hits, _ = scan(lines)
     ok = True
-    if nvis != len(SEED):
-        print(f"ПРИМАНКА ПРОСОЧИЛАСЬ: видимых полей {nvis}, ожидалось {len(SEED)}")
+    expect_vis = len(SEED) + 2   # две приманки — тоже видимые поля, но нарушений нести не должны
+    if nvis != expect_vis:
+        print(f"РАСХОЖДЕНИЕ: видимых полей {nvis}, ожидалось {expect_vis}")
         ok = False
+    for name, ls in hits.items():
+        for l in ls:
+            if 'то же самое' in l or 'без подсветки' in l:
+                print(f"ЛОЖНОЕ СРАБАТЫВАНИЕ не снято: {l[:70]}")
+                ok = False
     for _, name in SEED:
         if not hits[name]:
             print(f"НЕ ПОЙМАНО: {name}")
@@ -80,7 +104,7 @@ def main(paths):
         except OSError as e:
             print(f"{p}: не прочитан ({e})")
             continue
-        nvis, hits = scan(lines)
+        nvis, hits, maybe = scan(lines)
         found = {k: v for k, v in hits.items() if v}
         print(f"\n{p}  (видимых полей: {nvis})")
         if not found:
@@ -89,6 +113,10 @@ def main(paths):
             total[name] += len(ls)
             print(f"  {name}: {len(ls)}")
             for l in ls[:3]:
+                print(f"      {l}")
+        for name, ls in maybe.items():
+            print(f"  [похоже на запрет, глазами] {name}: {len(ls)}")
+            for l in ls[:2]:
                 print(f"      {l}")
     print("\nИТОГО:")
     for k, v in total.items():

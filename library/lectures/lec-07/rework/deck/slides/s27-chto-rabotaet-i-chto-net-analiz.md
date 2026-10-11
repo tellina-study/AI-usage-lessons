@@ -1,5 +1,5 @@
 ---
-id: s25
+id: s27
 local_id: s2-05
 section: "2. Анализ данных — и группа, на которой он посчитан"
 type: comparison

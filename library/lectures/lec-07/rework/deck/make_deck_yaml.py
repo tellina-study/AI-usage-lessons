@@ -57,18 +57,18 @@ CHAP = {
  's15': 'chapter-part1b.md §1.4',
  's16': 'chapter-part1b.md §1.5',
  's17': 'chapter-part1b.md §1.5',
- 's18': 'chapter-part1b.md §1.7',
- 's19': 'chapter-part1b.md §1.7 (+ chapter.md §0.10)',
- 's20': 'chapter-part1b.md § Раздел 2 (вводка), §2.1',
- 's21': 'chapter-part1b.md §2.1',
- 's22': 'chapter-part1b.md §2.2',
- 's23': 'chapter-part1b.md §2.2, §2.3',
- 's24': 'chapter-part1b.md §2.4',
- 's25': 'chapter-part1b.md §2.5',
- 's26': 'chapter-part1b.md §2.6',
- 's27': 'chapter-part1b.md §2.6',
- 's28': 'chapter-part1b.md §1.6',
- 's29': 'chapter-part1b.md §1.6',
+ 's18': 'chapter-part1b.md §1.6',
+ 's19': 'chapter-part1b.md §1.6',
+ 's20': 'chapter-part1b.md §1.7',
+ 's21': 'chapter-part1b.md §1.7 (+ chapter.md §0.10)',
+ 's22': 'chapter-part1b.md § Раздел 2 (вводка), §2.1',
+ 's23': 'chapter-part1b.md §2.1',
+ 's24': 'chapter-part1b.md §2.2',
+ 's25': 'chapter-part1b.md §2.2, §2.3',
+ 's26': 'chapter-part1b.md §2.4',
+ 's27': 'chapter-part1b.md §2.5',
+ 's28': 'chapter-part1b.md §2.6',
+ 's29': 'chapter-part1b.md §2.6',
  's30': 'chapter-part1b.md §2.7',
  's31': 'chapter-part1b.md §2.8',
  's32': 'chapter-part1b.md §2.8',
@@ -179,13 +179,13 @@ def q(s):
     return '"%s"' % s
 
 from collections import Counter
-REAL = set("""s01 s02 s04 s07 s11 s12 s13 s14 s16 s20 s24 s26 s27 s28 s29 s31 s35 s36 s40 s41 s42 s43 s44
+REAL = set("""s01 s02 s04 s07 s11 s12 s13 s14 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s40 s41 s42 s43 s44
 s45 s47 s49 s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s74 s75 s80 s82 s86 s88 s89 s90 s92 s105""".split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',
- 's28':'rework/deck/assets/s28-fundus-kamera-v-kabinete.jpg',
- 's20':'rework/deck/assets/s20-rentgenkabinet-pacient-u-pribora.jpg',
- 's24':'rework/deck/assets/s24-tekhnik-stavit-cheloveka-k-priboru.jpg',
+ 's18':'rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg',
+ 's22':'rework/deck/assets/s22-rentgenkabinet-pacient-u-pribora.jpg',
+ 's26':'rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg',
  's40':'rework/deck/assets/s40-dva-effekta-s-intervalami.png',
  's44':'rework/deck/assets/s44-srez-razmetka-cheloveka-i-modeli.png',
  's52':'rework/deck/assets/s52-sestrinskiy-post.jpg',
@@ -390,11 +390,15 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
         W("\n")
         W("# РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:\n")
         W("# манифест описывает то, что есть на диске, а решение по каждому — владельца.\n")
-        W("# D1 (issue #229, предыдущий круг) закрыт: s18/s19 физически перенесены в раздел 2,\n")
-        W("# сразу после s27 (конец разбора техника) и перед s30 (кожа), согласно их собственному\n")
-        W("# полю section и решениям П6/П7 decisions-owner.md; переезд s20…s29 на свои новые\n")
-        W("# номера нигде не меняет содержание кадров, только порядок показа. Снято из списка,\n")
-        W("# а не перенумеровано здесь — на диске этого расхождения больше нет.\n")
+        W("# D1 (issue #229) закрыт ПРАВИЛЬНОЙ стороной: предыдущий круг перенёс s18/s19\n")
+        W("# (глазное дно) физически в раздел 2, доверившись их собственному (ошибочному) полю\n")
+        W("# section вместо проверки его по fix-brief.md §1 — решения П6/П7 decisions-owner.md\n")
+        W("# к этому случаю не относятся, они про границу «анализ данных» ↔ «постановка\n")
+        W("# диагноза». fix-brief.md §1/§14 закрепляет глазное дно за разделом 1 (s1-08);\n")
+        W("# глава (chapter-part1b.md §1.6) независимо подтверждает то же место. Файлы\n")
+        W("# s18…s29 возвращены на дооктябрьские номера — физический порядок снова совпадает\n")
+        W("# и с полем section, и со SLIDE-PLAN.md, и с §1.6/§2.6 главы. На диске этого\n")
+        W("# расхождения больше нет.\n")
         W("divergences:\n")
         W("  - id: D2\n")
         W("    what: \"сумма timing_min по файлам — %.2f против 80,00, заявленных CUT-ORDER.md §1.1 для 106 кадров\"\n" % (tot_min - 2.15))
@@ -413,10 +417,10 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
         W("    effect: \"chapter_ref ни одного кадра не ведёт в chapter-part4.md, -part4b, -part4c, -part4d — четыре файла главы декой не покрыты\"\n")
         W("    fix: \"известное решение, не находка: прочерк по варианту (б) REGROUP.md §4 (поправка П4)\"\n")
         W("  - id: D5\n")
-        W("    what: \"три пары кадров несут дословно одинаковый title\"\n")
-        W("    evidence: \"s28 и s29 — «Глазное дно без офтальмолога»; s24, s26 и s27 — «Техник флюорографии и годность снимка»\"\n")
-        W("    effect: \"дивайдер обязан называть разборы раздела дословно заголовками их кадров (§5.16) — с одинаковыми заголовками это требование невыполнимо\"\n")
-        W("    fix: \"развести заголовки по тому, что на каждом кадре считается\"\n")
+        W("    what: \"одна пара кадров всё ещё несёт дословно одинаковый title (трёхсторонний дубль «Техник флюорографии и годность снимка» закрыт отдельно: issue #229 — s28/s29 переименованы в «Таиланд: …», s26 держит заземление один)\"\n")
+        W("    evidence: \"s18 и s19 — оба «Глазное дно без офтальмолога»; каждая другая пара кейс+«что переехало» в деке носит разные title (s31/s32, s41/s42, s47/s48 и т.д.) — эта пара исключение\"\n")
+        W("    effect: \"дивайдер раздела 1 называет разбор одним именем без номера — не противоречие само по себе, но расходится с правилом §5.16 «имена дословно совпадают с заголовками кадров», если потребуется различить половины поимённо\"\n")
+        W("    fix: \"не входит в issue #229; решение владельца — развести заголовки (например «…: что переехало» по образцу s27/s29) или оставить как есть\"\n")
         W("  - id: D6\n")
         W("    what: \"у шести кадров в assertion стоит не утверждение кадра, а пометка «[шаг ② провисает: …]» или «под рез (П11)»\"\n")
         W("    evidence: \"s68, s71, s72, s81, s85 — пометка о провисании шага ②; s78 и s86 — пометка «под рез»\"\n")

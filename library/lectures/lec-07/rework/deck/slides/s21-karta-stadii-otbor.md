@@ -1,5 +1,5 @@
 ---
-id: s19
+id: s21
 local_id: s1-10
 section: "1. Отбор — кого вообще смотреть"
 type: map

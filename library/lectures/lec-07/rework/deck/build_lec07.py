@@ -462,7 +462,7 @@ _PH = re.compile(r"\{\{([^}]*)\}\}")
 
 
 class Slide:
-    __slots__ = ("sid", "path", "meta", "body", "notes")
+    __slots__ = ("sid", "path", "meta", "body", "notes", "tick_y")
 
 
 def inline_runs(line, size, color=DEEP):
@@ -583,7 +583,15 @@ def heading(s, sl, color=DEEP, size=27.0):
                   ls=1.08, tag=f"{sl.sid}/заголовок")
     text_box(s, MX, TITLE_Y, FULL_W, 0.92, t, size=sz, bold=True, color=color,
              ls=1.08, tag=f"{sl.sid}/заголовок")
-    gold_tick(s, MX, TITLE_Y + 0.98, sl.sid)
+    # Акцент садится под НАСТОЯЩУЮ высоту заголовка, а не под рамку в 0,92":
+    # у однострочного заголовка рамка на полдюйма выше текста, и акцент,
+    # поставленный по рамке, попадал под коробку мотива.
+    sl.tick_y = min(TITLE_Y + est_h(t, sz, FULL_W, 1.08, True) + 0.07,
+                    BODY_TOP - 0.17)
+    # Золотой акцент рисует НЕ заголовок, а `content()` последним ходом: при
+    # кадре без плашек коробка мотива начинается сразу под заголовком и
+    # закрашивала акцент собой. Проверка `[золото]` при этом молчала — она
+    # считала намерение, а не видимое. Порядок рисования чинит и то и другое.
     return BODY_TOP
 
 
@@ -1039,6 +1047,7 @@ def content(p, sl):
     elif lines:
         WARNINGS.append(f"[высота] {sl.sid}/тело: места под тело не осталось "
                         f"({avail:.2f}\") — примитивы съели кадр")
+    gold_tick(s, MX, getattr(sl, "tick_y", TITLE_Y + 0.98), sl.sid)
     footer(s, sl)
     return s
 

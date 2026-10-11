@@ -8,6 +8,12 @@ issue: 225
 terms_count: "219 → 286 → 336"
 ---
 
+> **Поправка 2026-10-10 при слиянии с main.** Английская дорожка Семинара 5 (#228, issue #211)
+> была слита раньше и забрала имя **Part D** себе. Раздел Семинара 6 в замке называется
+> **Part E**; ссылки ниже приведены к нему. Там же, в `E.0`, записана содержательная коллизия:
+> Семинар 5 зафиксировал `занятие` → *session*, а Семинар 6 это перевернул — решение, нужно ли
+> перерендерить английскую деку Семинара 5, вынесено в issue #230.
+
 # Англо-русский замок Семинара 6
 
 Семинар 6 — первое занятие курса, где собственный словарь исполняющей среды становится
@@ -98,7 +104,7 @@ terms_count: "219 → 286 → 336"
 | **хранилище секретов** | a secrets store | нет → D |
 | утечка · канал утечки | a leak · a leak channel | нет → D |
 | галочки (проставить все) | checkboxes (to tick every box) | нет → D |
-| сторож поставщика | the provider's watchdog | нет → D, см. ловушку в D.2 |
+| сторож поставщика | the provider's watchdog | нет → D, см. ловушку в E.2 |
 | **смертельное трио** | lethal trifecta | да по факту (EN-дек Лекции 4), строки не было → D |
 | канал наружу · эксфильтрация | a channel to the outside · exfiltration | нет → D |
 | чужая инструкция | someone else's instruction | нет → D |
@@ -336,7 +342,7 @@ outside* и *trimmed permissions*; пометка **pending** на строке 
 **Предложение** — заменить строку на:
 
 ```
-| занятие | the seminar / today's class | Never bare *session* — see Part D.1. The agent sense took the bare term. |
+| занятие | the seminar / today's class | Never bare *session* — see Part E.1. The agent sense took the bare term. |
 ```
 
 Строка Части D уже содержит это решение и помечена как superseding; физически строку 224
@@ -359,7 +365,7 @@ sub-agents with their own context window»). То есть расхождени�
 без оговорки читается как разрешение переводить голое «контекст» как *context window*.
 
 **Предложение:** дописать в примечание строки 46: «From Seminar 6 on, the RU source avoids
-«окно» deliberately — render bare «контекст» as *context* (Part D), and keep *context window*
+«окно» deliberately — render bare «контекст» as *context* (Part E), and keep *context window*
 only where the source itself says it (a verbatim documentation quote).»
 
 ### 4.4. Строка 148 `экипировка / оснастка агента → harness` — нужна вторая русская форма
@@ -376,7 +382,7 @@ only where the source itself says it (a verbatim documentation quote).»
 требует не подменять одно другим.
 
 **Предложение:** дописать в примечание строки 133: «Seminar 6 names the same mechanism in
-plain words — see `чужая инструкция` in Part D; keep both, do not substitute.»
+plain words — see `чужая инструкция` in Part E; keep both, do not substitute.»
 
 ### 4.6. Строка 235 `развилка → decision point, never "fork"` — примечание стало сильнее, чем было
 

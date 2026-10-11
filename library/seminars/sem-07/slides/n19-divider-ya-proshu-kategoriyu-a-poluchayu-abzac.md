@@ -13,7 +13,7 @@ learning_goal: "Первый слайд ступени 2 — явная связ
   (одно слово из четырёх); слова decision-модель и Jev не звучат. Источник —
   rework/section-2-routing.md §A.0, §A.1.1-A.1.2; part2b.md §B.1 (n19)."
 visual:
-  pattern: section_divider_macro
+  pattern: case_divider_quote
   primary: >
     Тёмный Ocean-фон, реплика крупно в кавычках, золотая линия под ней. Ниже — короткая
     смысловая строка про несовпадение формы ответа и формы задачи. Внизу — дорожка трёх

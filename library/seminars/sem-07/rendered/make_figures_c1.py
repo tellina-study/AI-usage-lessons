@@ -77,7 +77,7 @@ def graph(dead):
     two_lines(d, 119, R1, "письмо", "от клиента", tsz=25, bsz=18, tcol=DEEP, bcol=MUTE)
 
     oval(d, 282, R1 - 46, 542, R1 + 46, fill=MID)
-    two_lines(d, 412, R1, "classify", "вернуть метку", tsz=26, bsz=19)
+    two_lines(d, 412, R1, "классификация", "одна метка из списка", tsz=22, bsz=17)
 
     diamond(d, 768, R1, 170, 78, fill=gate_fill, stroke=gate_line)
     # Крест рисуется ДО подписи: иначе он ложится поверх букв, и зал читает
@@ -120,7 +120,7 @@ def graph(dead):
 
     # ── ряд 2: draft → очередь человека → клиент ────────────────────────────
     oval(d, 560, R2 - 46, 950, R2 + 46, fill=MID)
-    two_lines(d, 755, R2, "draft", "письмо + метка + база знаний", tsz=26, bsz=19)
+    two_lines(d, 755, R2, "черновик ответа", "письмо + метка + база знаний", tsz=22, bsz=17)
 
     rect(d, 1010, R2 - 45, 1310, R2 + 45,
          fill=DEAD if dead else SURF, stroke=DEADTX if dead else LIGHT)
@@ -137,17 +137,17 @@ def graph(dead):
     arrow(d, 950, R2, 1002, R2, col=path)
     arrow(d, 1310, R2, 1362, R2, col=path)
 
-    # ── подвал: ромб одной строкой кода ─────────────────────────────────────
+    # ── подвал: ромб — одна проверка, без кода ──────────────────────────────
     rect(d, 24, R2 - 42, 520, R2 + 42, fill=SURF, stroke=DEADTX if dead else LIGHT, w=2)
     d.text((46, R2 - 28),
-           "строки проверки нет:" if dead else "ромб — одна строка кода:",
+           "проверки в коде нет:" if dead else "ромб — одна проверка:",
            font=f(20, True), fill=RED if dead else DEEP)
-    code = "if label not in ALLOWED: stop()"
-    fo = f(19, False, True)
+    podpis = "метка либо в списке, либо нет"
+    fo = f(19, False)
     if dead:
-        strike(d, 46, R2 + 4, code, fo, DEADTX)
+        strike(d, 46, R2 + 4, podpis, fo, DEADTX)
     else:
-        d.text((46, R2 + 4), code, font=fo, fill=MID)
+        d.text((46, R2 + 4), podpis, font=fo, fill=MID)
 
     if dead:
         clabel(d, 1473, R2 + 62, "ответ без решения", 19, RED, True, where="цена 1")

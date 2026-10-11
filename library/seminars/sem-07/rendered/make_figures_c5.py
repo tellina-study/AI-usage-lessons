@@ -143,6 +143,18 @@ def odin_ball_dva_stolbika(path):
               "высота столбика — среднее число активных хронических заболеваний "
               "по прямому измерению", f_small, MUTE, 1000, 34)
 
+    # Числовая шкала слева от столбиков — правка круга 5 по замечанию студента:
+    # без оси пропорцию высот приходится принимать на веру, а 26,3% читается
+    # как подпись к картинке, не как измеримое отношение. База 100 (вершина
+    # левого столбика) и метка 126,3 (вершина правого) делают отношение высот
+    # проверяемым глазом прямо на схеме, независимо от текста справа.
+    AXIS_X = x1 - 90
+    d.line([(AXIS_X, base_y), (AXIS_X, top_y - 6)], fill=MUTE, width=4)
+    for val, label in ((0, "0"), (50, "50"), (100, "100"), (126.3, "126,3")):
+        y = base_y - unit * (val / 100)
+        d.line([(AXIS_X - 12, y), (AXIS_X + 10, y)], fill=MUTE, width=4)
+        text(d, (AXIS_X - 20, y), label, f_small, MUTE, anchor="rm")
+
     d.rectangle([x1, base_y - unit, x1 + bw, base_y], fill=MID)
     d.rectangle([x2, base_y - unit, x2 + bw, base_y], fill=MID)
     d.rectangle([x2, top_y, x2 + bw, base_y - unit], fill=GOLD)

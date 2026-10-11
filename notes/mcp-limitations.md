@@ -862,6 +862,7 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
 - **Root cause:** under `LANG=en_US.UTF-8` / `LC_CTYPE=en_US.UTF-8` (this host's default, confirmed via `locale`), GNU grep's regex engine does not reliably classify multi-byte Cyrillic letters as "word" characters (`\w`) for the purposes of `\b` boundary computation — `\b` ends up firing at some position inside the multi-byte sequence rather than only at a true word/non-word transition. A locale with native Cyrillic collation (e.g. `ru_RU.UTF-8`) was not tested here and may behave correctly; this host does not have one installed by default.
 - **Severity:** P1 for any QA step that trusts a bare `grep -E '\bPATTERN\b'` result on Cyrillic content without independent verification — a **false positive** wastes investigation time (as it did here, briefly), but the structurally scarier failure mode is a **false negative**: a real short Cyrillic word sitting mid-string next to other Cyrillic characters could fail to be flagged if the boundary math happens to land wrong in the other direction. Not verified which direction is more common; treat both as possible.
 - **Workaround:** for any Cyrillic-content anti-pattern grep that matters (timing markers, methodology-comment markers, LO-code markers, etc.), do NOT rely on bare `grep -E '\bPATTERN\b'`. Instead verify with Python's `re` module (`re.findall(r'\bPATTERN\b', text)`), which correctly classifies Cyrillic as word characters regardless of the shell locale (Python's `re` Unicode-mode word-char classification is locale-independent). On `library/seminars/sem-04/rendered/build_sem04.py`'s extracted visible text, `grep -E` flagged 12 lines as containing `мин\b`/other anti-patterns; re-checking the identical alternation with `python3 -c "import re; ..."` against the same text returned **0** genuine hits for all 10 checked patterns (all 12 `grep` hits were this false-positive class, not real timing/methodology leaks). If `grep` must be used standalone (no Python available), prefer a byte-safe substitute check instead of `\b`, e.g. anchor on an explicit non-letter delimiter set (`(^|[^а-яёА-ЯЁ])мин([^а-яёА-ЯЁ]|$)`) rather than `\b`.
+- **Сведено с `[#225-7]` (2026-10-10).** Та запись замеряла то же место и получила симптом ПРОТИВОПОЛОЖНЫЙ — `command grep -P '\bроль\b'` даёт **ноль** там, где совпадения есть. Противоречия нет: корень один — буквы классифицируются по байтам, а не по Unicode, — и симптом зависит от того, где в шаблоне стоит граница. Внутри слова `\b` срабатывает лишнее (эта запись), на краю строки не срабатывает вовсе (`[#225-7]`). Разошлись и инструменты: в сентябре `grep` здесь был GNU grep, в октябре это функция-обёртка над `ugrep`, и она на `\b` по кириллице отвечает верно. Общий вывод обеих записей один: мерить Python `re` с якорями по обе стороны, а результату `-P` по кириллице не верить ни в какую сторону.
 - **Status:** active (upstream grep/locale behavior, not fixable from this project; workaround is a tooling-choice discipline rule).
 - **First seen in:** #201 (Семинар 4 v4 production, full 49-slide rebuild after раскол на два семинара, 2026-09-22) — caught while running this project's own standard designer-extras anti-pattern grep against the rebuilt deck's extracted visible text.
 
@@ -1086,6 +1087,58 @@ word-boundary ненадёжен на кириллице под `en_US.UTF-8` lo
   код возврата 1 и строку «НЕДОМЕРКА ВЕРНУЛАСЬ (допуск 2%) … расхождение +19,9%».
 - **First seen in:** #211 (Семинар 5, круг 4, кейс 5 — `n46` «база и кромка», 2026-10-01).
 
+### [#211-4] `deck_kit._col_shares` меряет шапку таблицы КАК НАПИСАНО, а `table_card` рисует её ЖИРНЫМИ КАПИТЕЛЯМИ: заголовок колонки переносится посреди слова, и ни один сторож об этом не говорит
+
+- **Где:** `library/seminars/sem-05/rendered/deck_kit.py` — `_col_shares` (стр. 377-406) и
+  `table_card` (стр. 553).
+- **Что происходит.** `_col_shares` даёт колонке ПОЛ шириной «самое длинное слово + 0,2″»,
+  и меряет это слово как `M.text_w(wd, size, mono=…)` — то есть **без жирного и без
+  капители**. Дальше `table_card` печатает шапку `text_box(…, ht.upper(), …, bold=True)` в
+  ширину `shares[j] - gap`, где `gap = 0,16″`. У DejaVu жирное шире обычного на 11,9%,
+  капитель прибавляет сверху ещё ≈15%. Замерено на кегле 9,5 pt: `Reinforcement` меряется
+  в 1,095″, а `REINFORCEMENT` рисуется в 1,264″ при доступных 1,170″ — не влезает и
+  переносится как `REINFORCEMEN / T`.
+- **Почему не ловится ничем.** Ячейка ПЕРЕНОСИТ текст, а не вываливает его: `_fits`
+  меряет переполнение по высоте блока, а здесь блок своей высоты не превысил — он просто
+  некрасиво разорвал слово. `ПЕРЕПОЛНЕНИЕ` молчит, `ШИРЕ РАМКИ` молчит (слово уже рамки
+  колонки по НЕЖИРНОЙ мерке), `check_text_overlap_pdf.py` молчит (ничего ни на что не
+  наехало). Дефект виден только глазами на настоящем рендере.
+- **Почему русская дека на этом не горела.** Та же шапка по-русски — «УСИЛЕНИЕ», 0,820″
+  жирным: внутри любого пола с запасом. Дефект латентный и достаётся только более длинному
+  языку. Нашла его английская дорожка (`n03`, круг переводов), а не русская сборка.
+- **Обход на сегодня — только в английском драйвере.** `build_sem05_en.py._col_shares_bold`
+  меряет шапку так, как её рисуют (`.upper()`, `bold=True`), и добирает недостающую ширину
+  у колонок, у которых есть запас, сохраняя сумму. Применяется ТОЛЬКО к английской сборке:
+  поднять пол в самом `deck_kit.py` значит перепропорционировать уже одобренные русские
+  таблицы, а русский рендер двигать нельзя.
+- **Что делать правильно.** Либо чинить в `deck_kit._col_shares` (мерить шапку
+  `plain(h).upper()` жирным и прибавлять `gap`) и пересматривать русский рендер глазами,
+  либо оставить как есть и держать шапки короткими. Решение владельца; записано открытым
+  пунктом в `library/seminars/sem-05/EN-TRACK-BRIEF.md`.
+- **Впервые замечено:** #211 (Семинар 5, английская дорожка, рамка `n01`-`n05`/`n65`-`n68`,
+  2026-10-03).
+
+### [#211-5] `build_sem05.py` НЕ байт-воспроизводим: три пересборки неизменённой деки дают три разных файла — «русский рендер цел» нельзя подтвердить хешем
+
+- **Где:** `library/seminars/sem-05/rendered/build_sem05.py` (и любой сборщик на python-pptx).
+- **Замер.** Три подряд пересборки неизменённых `deck.yaml` + `slides/` дали sha256
+  `8c3026fd…`, `f1d26a88…`, `2b46be0a…`. Причина — python-pptx проставляет собственные
+  отметки времени в записи zip-архива.
+- **Чем это опасно.** Во-первых, у ревьюера НЕТ хеша, которым можно показать, что русский
+  рендер не тронут: сравнение «было/стало» всегда расходится, даже когда ничего не менялось.
+  Во-вторых — и это ловушка, в которую легко попасть, — запуск `build_sem05.py` «просто
+  чтобы проверить, что всё собирается» **портит закоммиченный артефакт**, и его приходится
+  возвращать через `git checkout`. Ровно это и случилось в начале английской дорожки.
+- **Как с этим жить.** Неизменность русского рендера держится КОНСТРУКЦИЕЙ, а не сравнением:
+  русские скрипты не правятся, английский драйвер физически отказывается писать
+  `sem-05.pptx` (`build_sem05_en._save_guard`), а `refresh_manifest()` сам пропускается для
+  любого манифеста, кроме `deck.yaml`. Проверка прозрачности драйвера сделана через
+  `build_sem05_en.py --selftest`, который сравнивает СОДЕРЖИМОЕ слайдов (типы форм,
+  геометрию, тексты прогонов, заметки) с закоммиченным `sem-05.pptx`, а не байты.
+- **Правило для английской дорожки:** не запускать `build_sem05.py` вовсе (решение D9 в
+  `library/seminars/sem-05/EN-TRACK-BRIEF.md`).
+- **Впервые замечено:** #211 (Семинар 5, английская дорожка, 2026-10-03).
+
 ### [#225-1] `WebFetch` на длинной официальной HTML-странице конфликтует само с собой между повторными вызовами — не только на PDF
 
 - **Tool:** `WebFetch` (не MCP-сервер, встроенный инструмент харнесса), на `arxiv.org/html/...` и `code.claude.com/docs/...` — живые HTML-страницы, не PDF.
@@ -1217,3 +1270,10 @@ issue #212) — **но сам файл агента тогда не поправ
 
 **Правило:** Python `re` или `grep` оболочки; `-P` по кириллице не использовать; якорить с двух
 сторон; смотреть контекст совпадений, а не счёт.
+
+**Сведено с `[#201-6]`.** Та запись (сентябрь, #201) замерила противоположный симптом —
+`\bмин\b` срабатывало ВНУТРИ слова «минут». Корень один: буквы классифицируются по байтам, и
+`\b` врёт в обе стороны в зависимости от того, где стоит в шаблоне. Плюс сменился инструмент:
+в сентябре `grep` был GNU grep, сейчас это обёртка над `ugrep`, которая отвечает верно. Вывод
+обеих записей совпадает — Python `re`, якоря с двух сторон, `-P` по кириллице не использовать.
+

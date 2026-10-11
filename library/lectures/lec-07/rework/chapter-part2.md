@@ -275,7 +275,7 @@
 
 Сильное по механизму и по дизайну: парное чтение, замер взгляда, подобранный набор случаев с ошибками системы в обе стороны, сравнение человека с собой. Среднее по выборке читателей: десять. По величине падения воспроизведения нет. По механизму — есть, независимое, и оно разобрано в § 3.6; там же выяснится, что знак у этого механизма задаётся не им самим.
 
-**Источник (§ 3.4 и § 3.5).** Taib A., Partridge G., Phillips I., Chen Y. и соавторы, «Automation Bias in Action: Eye Tracking of Humans Reading Screening Mammograms with and without AI Prompts», *Radiology* 2026;**320(1):e252590**, DOI 10.1148/radiol.252590, PMID 42446361.
+**Источник (§ 3.4 и § 3.5).** Taib A., Partridge G., Phillips P., Chen Y. и соавторы, «Automation Bias in Action: Eye Tracking of Humans Reading Screening Mammograms with and without AI Prompts», *Radiology* 2026;**320(1):e252590**, DOI 10.1148/radiol.252590, PMID 42446361.
 
 #### Отметка ступени
 

@@ -424,7 +424,7 @@
 Сведены здесь целиком; у каждого разбора стоит собственная ссылка по месту. Разряд свидетельства назван в тексте и в этом списке не повторяется.
 
 1. Vaccaro M., Almaatouq A., Malone T. When combinations of humans and AI are useful: a systematic review and meta-analysis. *Nature Human Behaviour* 2024;8:2293–2303. DOI 10.1038/s41562-024-02024-1. Препринт той же версии: arXiv:2405.06087v2.
-2. Taib A., Partridge G., Phillips I., Chen Y. и соавторы. Automation Bias in Action: Eye Tracking of Humans Reading Screening Mammograms with and without AI Prompts. *Radiology* 2026. DOI 10.1148/radiol.252590.
+2. Taib A., Partridge G., Phillips P., Chen Y. и соавторы. Automation Bias in Action: Eye Tracking of Humans Reading Screening Mammograms with and without AI Prompts. *Radiology* 2026. DOI 10.1148/radiol.252590.
 3. Gommers J., Verboom E., Duvivier K., Sechopoulos I. и соавторы. *Radiology* 2025;316(1):e243688. DOI 10.1148/radiol.243688. PMID 40626877. Институциональные интересы раскрыты авторами: ScreenPoint, Hologic, Lunit, iCAD и другие.
 4. Kiani A. и соавторы. Impact of a deep learning assistant on the histopathologic classification of liver cancer. *npj Digital Medicine* 2020. PMC7044422.
 5. Goddard K., Roudsari A., Wyatt J. Automation bias: a systematic review of frequency, effect mediators, and mitigators. *JAMIA* 2012;19(1):121–127.

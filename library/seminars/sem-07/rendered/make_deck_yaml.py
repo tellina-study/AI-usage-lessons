@@ -14,15 +14,17 @@
   есть (на n01 её нет по прямому требованию задания слайда — обложка
   «чистая»; поле останется пустым, и это ожидаемо, не дефект).
 * `central_question` — вопрос занятия: из ПЕРВОГО слайда с приёмом
-  `question_with_option_cards` ИЛИ `guess_the_number` (на Семинаре 7 это
-  n21 — «Нужен ли здесь полноценный вызов модели — или достаточно метки?»).
-  Отличие от Семинара 6: там этот вопрос стоял за приёмом `reflection_
-  question` буквально; здесь то же имя — ТИП слайда (`type:`), а
-  `visual.pattern` у вопросных слайдов этой деки — `question_with_option_
-  cards`/`guess_the_number` (см. `build_sem07.PATTERN_ROLE`/`GENRE_FN`), и
-  читать нужно именно их, иначе central_question осталось бы пустым.
-* `axis` — из ПЕРВОГО слайда с приёмом `recap_table` (n02, лестница из
-  девяти строк, пустая).
+  `question_with_option_cards` ИЛИ `guess_the_number` (на Семинаре 7,
+  финальная сквозная нумерация, это n19 — «Нужен ли здесь полноценный
+  вызов модели — или достаточно метки?»). Отличие от Семинара 6: там этот
+  вопрос стоял за приёмом `reflection_question` буквально; здесь то же
+  имя — ТИП слайда (`type:`), а `visual.pattern` у вопросных слайдов этой
+  деки — `question_with_option_cards` (см. `build_sem07.PATTERN_ROLE`/
+  `GENRE_FN`), и читать нужно именно его, иначе central_question осталось
+  бы пустым.
+* `axis` — из ПЕРВОГО слайда с приёмом `ladder_steps_figure` (n03, лестница
+  из девяти строк, пустая; имя приёма отличается от Семинара 6, где ось шла
+  под `recap_table` — здесь лестница рисуется схемой, не таблицей).
 * `seminar_number`, `audience`, `format`, `language`, `slot_min` — из
   `HEAD_DEFAULTS` при первой сборке (deck.yaml ещё не существует вовсе —
   в отличие от Семинара 6, у Семинара 7 нет предыдущей версии манифеста,
@@ -115,7 +117,7 @@ def cover_texts(files):
             hook = _gold_question(v)
         if pat in CENTRAL_QUESTION_PATTERNS and question is None:
             question = _gold_question(v)
-        if pat == "recap_table" and axis is None:
+        if pat == "ladder_steps_figure" and axis is None:
             axis = fm.get("assertion")
     return title, hook, question, axis
 

@@ -1,0 +1,20 @@
+# Поля ШАПКИ английского манифеста, которые НЕ выводятся из слайдов.
+#
+# `make_deck_yaml.py --lang en` собирает `deck.en.yaml` из `slides-en/` целиком, кроме этих
+# строк: `title`, `cover_hook`, `central_question`, `axis`, `duration_min`, `slide_count`
+# считаются по самим английским слайдам, а прозаические поля ниже выводить неоткуда —
+# английского текста для них в слайдах нет нигде.
+#
+# Поэтому они лежат здесь, а не копируются из русского `deck.yaml`: копирование занесло бы
+# кириллицу в английский артефакт (зеркальная проверка §5.7 замка), а выдумывание на ходу
+# развело бы их с EN-манифестами семинаров 1–4. `audience` взята в ту же формулировку, что в
+# `sem-04/deck.en.yaml`, — это одна и та же аудитория, и две разные её записи читались бы как
+# две разные группы.
+#
+# Переводить эти пять строк заново при каждой пересборке не нужно и не следует: генератор
+# читает их отсюда. Править — здесь.
+seminar_number: 6
+audience: "third-year students, program 09.03.01 — practicing engineers, all of them use AI assistants at work"
+format: "facilitator slides + open questions with option cards (the question comes BEFORE the breakdown) + building the artifact together with the room + the mechanics on worked examples; no live terminal"
+language: en
+slot_min: 90

@@ -63,6 +63,45 @@ decks:
     exported_at: "2026-03-31"
     status: reference
 
+# Семинары
+#
+# До issue #225 семинары в этом манифесте не отслеживались вовсе: рендеры есть у sem-01…sem-06,
+# записей не было ни одной. Пункт определения готовности «манифест → produced», унаследованный от
+# конвейера лекций, для семинара применить было некуда. Ниже заведён Семинар 6 — единственный,
+# чьи цифры проверены на месте. Остальные пять остаются долгом: их данные надо снимать с их
+# собственных артефактов, выдумывать здесь нечего.
+seminars:
+  - seminar: 6
+    title: "Семинар 6. Доступ наружу и урезанные права"
+    type: pptx-local
+    format: pptx
+    status: produced
+    slides_count: 64
+    duration_min: 80.5
+    slot_min: 90
+    local_path: "library/seminars/sem-06/rendered/sem-06.pptx"
+    pdf_path: "library/seminars/sem-06/rendered/sem-06.pdf"
+    snapshots_path: "library/seminars/sem-06/rendered/snapshots/"
+    source:
+      slides_dir: "library/seminars/sem-06/slides/"
+      deck_yaml: "library/seminars/sem-06/deck.yaml"
+      slide_map: "library/seminars/sem-06/SVODKA-SLAIDOV.md"
+      chapter: "library/seminars/sem-06/rework/"
+    issue: 225
+    notes: |
+      Произведён как второе занятие дуги про экипировку агента: ступени MCP и субагента.
+      Процесс снят решением владельца и разбирается в Семинаре 7.
+      Три круга замечаний владельца, после каждого сведение; три прожарки дважды.
+    qa_reports:
+      - "library/seminars/sem-06/qa/roast2-dizayn.md"
+      - "library/seminars/sem-06/qa/roast2-student.md"
+      - "library/seminars/sem-06/qa/roast2-metodika.md"
+      - "library/seminars/sem-06/qa/fact-check-krug-vladeltsa.md"
+    rendered_en: "library/seminars/sem-06/rendered/sem-06-en.pptx"
+    deck_manifest_en: "library/seminars/sem-06/deck.en.yaml"
+    slides_en: "library/seminars/sem-06/slides-en/"
+  # Долг: sem-01…sem-05 имеют рендеры, но в манифесте не заведены (issue #225, решение на гейте C).
+
 # Archived (будут удалены из Drive при следующем active использовании workspace-mcp)
 archived:
   - id: 1BviVqnn7vtHGg09h22UzfUTyQswTHfvSXqol_JaRTyM

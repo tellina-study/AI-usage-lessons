@@ -1,5 +1,5 @@
 ---
-id: s20
+id: s18
 local_id: s1-09
 section: "1. Отбор — кого вообще смотреть"
 type: summary

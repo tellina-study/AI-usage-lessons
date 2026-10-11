@@ -202,7 +202,7 @@ slides:
     local_id: "s4-05a"                     # № 58 в SLIDE-PLAN.md
     file: slides/s58-sto-gospitalizatsiy-vosemnadtsat-trevog.md
     type: case
-    title: "Сто госпитализаций, восемнадцать тревог, один подтверждённый случай"
+    title: "Сто госпитализаций, восемнадцать тревог, два подтверждённых случая"
     chapter_ref: "chapter-part3.md §4.6"
     timing_min: 0.85
     marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }

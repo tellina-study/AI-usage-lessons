@@ -1,5 +1,5 @@
 ---
-id: n25
+id: n29
 type: question_with_option_cards
 duration_min: 2.5
 assertion: "Нижняя ступень лестницы — «одного вызова достаточно», и вопрос в том, по какому признаку её видно"

@@ -1,5 +1,5 @@
 ---
-id: n18
+id: n20
 type: answer_breakdown_table
 duration_min: 3.0
 assertion: "Все четыре ответа — это значения настроек On Error и Retry On Fail в карточке любого узла; по умолчанию стоит Stop Workflow"

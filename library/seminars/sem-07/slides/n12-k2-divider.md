@@ -1,5 +1,5 @@
 ---
-id: n11
+id: n12
 type: case_divider_quote
 duration_min: 0.5
 assertion: "«В заявке две темы, а в таблице одна» — наблюдаемый результат первого кейса"

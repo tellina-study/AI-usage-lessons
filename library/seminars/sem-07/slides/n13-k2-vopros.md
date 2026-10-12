@@ -1,5 +1,5 @@
 ---
-id: n12
+id: n13
 type: question_with_option_cards
 duration_min: 3.0
 assertion: "Что должно попасть в тему, когда в заявке их две — второе решение зала"

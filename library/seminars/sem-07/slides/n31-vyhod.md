@@ -1,5 +1,5 @@
 ---
-id: n27
+id: n31
 type: outcome_artifact
 duration_min: 2.5
 assertion: "С занятия уносится файл процесса из пяти узлов, который встаёт в свой n8n одним импортом"

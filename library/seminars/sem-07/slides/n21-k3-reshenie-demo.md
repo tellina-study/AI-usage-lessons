@@ -1,7 +1,7 @@
 ---
-id: n19
+id: n21
 type: mechanism_node_graph
-duration_min: 7.0
+duration_min: 6.0
 assertion: "Retry On Fail плюс выход error: заявка идёт в ту же таблицу со status = not_parsed и на свой экран — ни одна не теряется, и отказ видно сразу"
 learning_goal: "Такт «наше решение» кейса 3, собирается вживую. Отказ демонстрируется честно: ключ провайдера портится на глазах у зала."
 demo: true

@@ -8,12 +8,12 @@
 
 slides:
 
-  # ─── 7. Разработка лекарства — удешевили начало, где узкое место · 14 кадров · 13.20 мин ───
+  # ─── 7. Разработка лекарства — удешевили начало, где узкое место · 17 кадров · 16.30 мин ───
   - id: s74
     local_id: "s6-01"                      # № 69 в SLIDE-PLAN.md
     file: slides/s74-divider-lekarstvo.md
     type: divider
-    title: "Разработка лекарства"
+    title: "Разработка лекарства: удешевили начало — где узкое место"
     chapter_ref: "chapter-part4e.md § Раздел 9 (вводка), §9.1"
     timing_min: 0.5
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
@@ -29,35 +29,35 @@ slides:
     local_id: "s6-02a"                     # № 71 в SLIDE-PLAN.md
     file: slides/s76-put-razrabotki-shemoy.md
     type: norm
-    title: "Путь разработки схемой: четыре шага от мишени до заявки"
+    title: "Что делают участники на стадии разработки — до всякой обученной модели"
     chapter_ref: "chapter-part4e.md §9.1, §9.2"
-    timing_min: 1.0
+    timing_min: 1.1
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s77
     local_id: "s6-03"                      # № 72 в SLIDE-PLAN.md
     file: slides/s77-voronka-otrasli.md
     type: case
-    title: "Воронка отрасли: из тринадцати программ лекарством становится одна"
+    title: "База отрасли: из тринадцати программ лекарством становится одна"
     chapter_ref: "chapter-part4e.md §9.2"
     timing_min: 1.1
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
   - id: s78
     local_id: "s6-03a"                     # № 73 в SLIDE-PLAN.md
-    file: slides/s78-dve-drobi-ryadom.md
-    type: norm
-    title: "Две дроби рядом: «перешли» и «завершили»"
+    file: slides/s78-tsena-oshibok-i-dva-rezhima.md
+    type: case
+    title: "Без модели: цена обеих ошибок и два режима, посчитан из них один"
     chapter_ref: "chapter-part4e.md §9.3"
-    timing_min: 0.7
-    marks: { in_bucket: true, vfy: false, status: "под рез", media_status: no_decision }
-  - id: s79
-    local_id: "s6-04"                      # № 74 в SLIDE-PLAN.md
-    file: slides/s79-chto-podeshevelo-i-chto-net.md
-    type: comparison
-    title: "Что подешевело и что не подешевело"
-    plan_section: "Раздел 6. Лекарство"
-    chapter_ref: "chapter-part4e.md §9.7"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
+  - id: s79
+    local_id: "s6-04"                      # № 74 в SLIDE-PLAN.md
+    file: slides/s79-bez-modeli-i-s-modelyu.md
+    type: comparison
+    title: "Без модели решают по записанному протоколу; модель входит в один шаг из восьми и в четырёх работах не работает"
+    plan_section: "Раздел 6. Лекарство"
+    chapter_ref: "chapter-part4e.md §9.7"
+    timing_min: 1.2
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s80
     local_id: "s6-04a"                     # № 75 в SLIDE-PLAN.md
     file: slides/s80-khitreyt-s-metodom-i-bez.md
@@ -68,50 +68,66 @@ slides:
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s81
-    local_id: "s6-05"                      # № 76 в SLIDE-PLAN.md
-    file: slides/s81-tsena-obeikh-oshibok-molekula.md
+    local_id: "s6-04a"                     # № 76 в SLIDE-PLAN.md
+    file: slides/s81-model-protiv-klassicheskogo-perebora.md
     type: case
-    title: "Воронка молекул машинного происхождения"
+    title: "Модель против классического перебора: два случая, где упал объём"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.4"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s82
-    local_id: "s6-05a"                     # № 77 в SLIDE-PLAN.md
-    file: slides/s82-molekula-za-god-snyataya.md
+    local_id: "s6-05"                      # № 77 в SLIDE-PLAN.md
+    file: slides/s82-primer-1-molekula-za-god.md
     type: case
-    title: "Молекула за год, снятая на первой фазе"
+    title: "Пример 1: молекула за год"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.5"
-    timing_min: 1.1
+    timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s82a
+    local_id: "s6-05a"                     # вставленный кадр, номера в плане нет
+    file: slides/s82a-primer-1-tsena-snyataya-na-faze-1.md
+    type: case
+    title: "Пример 1, цена: снята на первой фазе"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s83
     local_id: "s6-06"                      # № 78 в SLIDE-PLAN.md
-    file: slides/s83-perekhod-vtoroy-fazy.md
+    file: slides/s83-primer-2-voronka-kategorii.md
     type: case
-    title: "Переход второй фазы: не хуже базы"
+    title: "Пример 2: воронка молекул модельного происхождения"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.4"
-    timing_min: 0.9
+    timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s84
     local_id: "s6-06a"                     # № 79 в SLIDE-PLAN.md
-    file: slides/s84-odobreniy-nol.md
+    file: slides/s84-primer-2-tsena-odobreniy-nol.md
     type: case
-    title: "Одобрений — ноль"
+    title: "Пример 2, цена: одобрений — ноль, и нагрузка стоит там, где её и было больше всего"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.4"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s85
     local_id: "s6-07"                      # № 80 в SLIDE-PLAN.md
-    file: slides/s85-otkaz-ot-svoego-obeshchaniya.md
+    file: slides/s85-primer-3-otkaz-ot-obeshchaniya.md
     type: case
-    title: "Компания, отказавшаяся от своего обещания"
+    title: "Пример 3: компания, отказавшаяся от своего обещания"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.6"
-    timing_min: 1.2
+    timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
+  - id: s85a
+    local_id: "s6-07a"                     # вставленный кадр, номера в плане нет
+    file: slides/s85a-primer-3-tsena-minus-180-mest.md
+    type: case
+    title: "Пример 3, цена: минус 180 рабочих мест и отказ от собственной модели бизнеса"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
   - id: s86
     local_id: "s6-08"                      # № 81 в SLIDE-PLAN.md
     file: slides/s86-grafik-depozitariya.md
@@ -125,13 +141,21 @@ slides:
     local_id: "s6-09"                      # № 82 в SLIDE-PLAN.md
     file: slides/s87-vyvod-lekarstvo.md
     type: summary
-    title: "Вывод: узкое место не подешевело"
+    title: "Свод стадии: что получается, что нет, что стало с работой, что это держит"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.12 (+ §9.10, §9.11)"
-    timing_min: 0.9
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s87a
+    local_id: "s6-10"                      # вставленный кадр, номера в плане нет
+    file: slides/s87a-karta-stadii-lekarstvo.md
+    type: map
+    title: "Карта стадии: какая задача и какие данные"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.7
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
 
-  # ─── 8. Что стало с теми, кто решает · 9 кадров · 6.40 мин ───
+  # ─── 8. Что стало с теми, кто решает · 11 кадров · 8.65 мин ───
   - id: s88
     local_id: "s5-01"                      # № 83 в SLIDE-PLAN.md
     file: slides/s88-divider-navyk.md
@@ -145,16 +169,16 @@ slides:
   - id: s89
     local_id: "s5-02"                      # № 84 в SLIDE-PLAN.md
     file: slides/s89-vrach-vernulsya-posle-goda.md
-    type: case
-    title: "Эндоскопист после года без процедур"
+    type: norm
+    title: "Что делают участники на стадии осмотра — до всякой обученной модели"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part5.md §10.2 (+ §10.3)"
-    timing_min: 0.75
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
+    timing_min: 1.0
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s90
     local_id: "s5-03"                      # № 85 в SLIDE-PLAN.md
     file: slides/s90-tsena-obeikh-oshibok-osmotr.md
-    type: comparison
+    type: case
     title: "Цена обеих ошибок, названная до всякой точности"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part5.md §10.4"
@@ -164,25 +188,33 @@ slides:
     local_id: "s5-03a"                     # № 86 в SLIDE-PLAN.md
     file: slides/s91-dva-klassicheskikh-rezhima-osmotra.md
     type: case
-    title: "Два классических режима, посчитанные в одной единице"
+    title: "Без модели: оба классических режима в одной единице"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part5.md §10.5"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s91a
+    local_id: "s5-03b"                     # вставленный кадр, номера в плане нет
+    file: slides/s91a-bez-modeli-i-s-modelyu-osmotr.md
+    type: comparison
+    title: "Без модели решают по опубликованным рекомендациям; модель входит в один шаг из восьми и в трёх местах не работает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 1.2
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s92
     local_id: "s5-04"                      # № 87 в SLIDE-PLAN.md
-    file: slides/s92-dolya-obnaruzheniya-bez-pomoshchnika.md
+    file: slides/s92-primer-1-dolya-bez-pomoshchnika.md
     type: case
-    title: "Доля обнаружения упала там, где помощника не было"
+    title: "Пример 1: доля обнаружения упала там, где помощника не было"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part5.md §10.6"
     timing_min: 0.85
     marks: { in_bucket: true, vfy: true, status: "не режется", media_status: real_image_needed }
   - id: s93
     local_id: "s5-04a"                     # № 88 в SLIDE-PLAN.md
-    file: slides/s93-forma-ispolnitel-tot-zhe-stal-khuzhe.md
+    file: slides/s93-primer-1-tsena-ispolnitel-stal-khuzhe.md
     type: case
-    title: "Что это дало, чего потребовало — форма «Исполнитель тот же, но стал хуже»"
+    title: "Пример 1, цена: исполнитель тот же, но стал хуже"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.8 (+ §10.7)"
     timing_min: 0.8
@@ -191,7 +223,7 @@ slides:
     local_id: "s5-06"                      # № 89 в SLIDE-PLAN.md
     file: slides/s94-dva-probela-i-odno-izmerenie.md
     type: case
-    title: "Два пробела и одно измерение доверия"
+    title: "Плоскость без разбора: два пробела и одно измерение доверия"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.9, §10.10"
     timing_min: 0.65
@@ -200,20 +232,28 @@ slides:
     local_id: "s5-07"                      # № 90 в SLIDE-PLAN.md
     file: slides/s95-potok-resheniya-do-i-posle.md
     type: case
-    title: "Кто теперь исполнитель и какие шаги появились"
+    title: "Плоскость без разбора: кто теперь исполнитель и какие шаги появились"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.11"
     timing_min: 0.75
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s96
-    local_id: "s5-08"                      # № 91 в SLIDE-PLAN.md
-    file: slides/s96-vyvod-navyk.md
+  - id: s95a
+    local_id: "s5-08"                      # вставленный кадр, номера в плане нет
+    file: slides/s95a-vyvod-navyk.md
     type: summary
-    title: "Навык — расходуемое, и расход измерен один раз"
+    title: "Свод стадии: что получается, что нет, что стало с работой, что это держит"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s96
+    local_id: "s5-09"                      # № 91 в SLIDE-PLAN.md
+    file: slides/s96-karta-stadii-navyk.md
+    type: map
+    title: "Карта стадии: какая задача и какие данные"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.14 (+ §10.12, §10.13)"
-    timing_min: 0.8
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+    timing_min: 0.7
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
 
   # ─── 9. Сборка · 8 кадров · 6.30 мин ───
   - id: s96a
@@ -327,25 +367,25 @@ slides:
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
 totals:
-  slides: 106
-  timing_min: 86.60               # сложено по файлам кадров
+  slides: 122
+  timing_min: 100.15               # сложено по файлам кадров
   plan_budget_min: 80.00         # заявлено CUT-ORDER.md §1.1 для 106 кадров плана
-  plan_frames_only_min: 83.15     # те же 106 кадров по файлам, без четырёх вставленных
-  plus_qa_min: 96.60
+  plan_frames_only_min: 83.85     # те же 106 кадров по файлам, без четырёх вставленных
+  plus_qa_min: 110.15
   slot_min: 90
-  overrun_min: 6.60              # против слота 90 с десятью минутами вопросов
-  strict_in_min: 47.65
-  strict_in_share: "55.0%"      # порог курса 30%; счёт по минутам, partial → out
-  vfy_slides: 50                 # кадров с числом под пересверку в день лекции
+  overrun_min: 20.15              # против слота 90 с десятью минутами вопросов
+  strict_in_min: 55.35
+  strict_in_share: "55.3%"      # порог курса 30%; счёт по минутам, partial → out
+  vfy_slides: 63                 # кадров с числом под пересверку в день лекции
   by_status:
-    "собран": 98
-    "каркас": 5
-    "под рез": 2
+    "собран": 119
+    "каркас": 1
+    "под рез": 1
     "не режется": 1
   media:                         # разбор и адреса — deck/images.md
     acquired: 9                   # лежит в deck/assets/, лицензия проверена поимённо
     real_image_needed: 38          # просит настоящий снимок по своему media_needed, не добыт
-    builder_drawn: 44              # схема, плашки, матрица, таблица — снимок не нужен
+    builder_drawn: 60              # схема, плашки, матрица, таблица — снимок не нужен
     no_decision: 16                # media_needed пусто: вопрос не задавали
     wired: 7                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
     note: "вкручен в сборку пока один кадр — обязательный hero s105 (`media` + `media_hero` + `media_caption`); у остальных восьми добытых поле media ещё пусто, пути в deck/images.md §1"
@@ -363,11 +403,11 @@ totals:
 # расхождения больше нет.
 divergences:
   - id: D2
-    what: "сумма timing_min по файлам — 84.45 против 80,00, заявленных CUT-ORDER.md §1.1 для 106 кадров"
+    what: "сумма timing_min по файлам — 98.00 против 80,00, заявленных CUT-ORDER.md §1.1 для 106 кадров"
     evidence: "по поимённым минутам планов блоков: лекарство 10,50 против 13,20 по файлам (+2,70); сборка 4,90 против 5,80 (+0,90); удерживают 8,60 против 8,80 (+0,20); отбор 8,20 против 8,30; ядро 12,75 против 12,85; измерили 9,75 против 9,60 (−0,15)"
-    effect: "перебор слота 6.60 минуты (86.60 + 10 против 90), а не 1,25, как считает CUT-ORDER.md §1.1"
-    effect_2: "лестница А (шаги А2 + А3 = −1,50 по файлам) цель не берёт: остаётся 85.10 + 10 = 95.10"
-    fix: "решение владельца: либо вернуть поимённые минуты планов в файлы кадров, либо пересчитать CUT-ORDER.md от 86.60"
+    effect: "перебор слота 20.15 минуты (100.15 + 10 против 90), а не 1,25, как считает CUT-ORDER.md §1.1"
+    effect_2: "лестница А (шаги А2 + А3 = −1,50 по файлам) цель не берёт: остаётся 98.65 + 10 = 108.65"
+    fix: "решение владельца: либо вернуть поимённые минуты планов в файлы кадров, либо пересчитать CUT-ORDER.md от 100.15"
   - id: D3
     what: "s96a и s103a (дивайдеры «Сборки» и «Закрытия», 0,90 минуты вдвоём) в арифметике CUT-ORDER.md §1.1 не числятся"
     evidence: "§1.1 считает +2 структурных кадра перегруппировки (0,50 + 0,75 = 1,25) — это s60b и s60a; про s96a и s103a там ни строки"

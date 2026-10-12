@@ -61,8 +61,8 @@ from pptx.enum.text import MSO_ANCHOR
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
-from deckkit import (columns, markup, media, metrics, plates, prims,  # noqa: E402
-                     report, scheme, slidefile)
+from deckkit import (columns, flow, markup, media, metrics, plates,  # noqa: E402
+                     prims, report, scheme, slidefile, tables)
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, SLIDE_H,  # noqa: E402
                            SLIDE_W, WHITE)
 
@@ -413,6 +413,46 @@ def content(p, sl, root):
         # Коробка мотива рисуется по МЕСТУ, а текст меряется по бюджету:
         # иначе последняя строка ложится на нижнюю скруглённую грань.
         box_h = BODY_BOT - y + 0.10
+
+    # ── ТАБЛИЦА: вторая раскладка тела, и выбор между ними не вкусовой ──
+    # `body_ordered` — единица СТРОКА, порядок сохранён, и среди видов есть
+    # `table`; `body_blocks` — единица АБЗАЦ, с иерархией кеглей внутри тела
+    # (заголовок 20 · тело 15 · подпись 12), и таблиц она не знает. Перевести
+    # одну на другую нельзя — ядро говорит это прямым текстом в своём
+    # README, — поэтому кадр, получивший матрицу, ОТДАЁТ иерархию кеглей
+    # внутри тела. Уступка названа и принята: по новой ветке идут только
+    # кадры с таблицей в теле, вся остальная дека остаётся на прогоне.
+    #
+    # `apply_matrix_empty` зовётся на КАЖДОМ кадре, а не только на табличном:
+    # заявленная `matrix_empty: true` без таблицы в теле — расхождение
+    # фронтматтера с телом, и сказать о нём обязан именно тот кадр, у
+    # которого таблицы нет.
+    heading_ord, ordered = slidefile.body_ordered(sl)
+    tables.apply_matrix_empty(sl.sid, sl.meta, ordered)
+    if any(k == "table" for k, _ in ordered) and avail > 0.35:
+        size = flow.fit_blocks(ordered, text_w - 0.08, avail,
+                               tag=f"{sl.sid}/тело")
+        # Коробка мотива рисуется по НАСТОЯЩЕЙ высоте блоков, а не по всему
+        # бюджету. Прогон ужимается до рамки сам, и рамка ему впору; поток же
+        # возвращает свою высоту, и коробка «на весь бюджет» ставила бы
+        # нижнюю скруглённую грань вплотную к последней строке — на снимке
+        # s21 грань шла прямо под буквами. Подбор кегля работает вверх, пока
+        # блоки влезают, поэтому запас сверху тут не появится сам.
+        used = flow.blocks_h(ordered, size, text_w - 0.08)
+        prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                        box_h if hero else min(used + 0.30,
+                                               BODY_BOT - y + 0.10))
+        # `accent=DEEP`, а не умолчание ядра: `runs_md` (раскладка-поток)
+        # читает `**` как АКЦЕНТ и красит его в `MID`, а `inline_runs`
+        # (прогон, которым набрана вся остальная дека) — как полужирный, цвет
+        # тот же. Без этой передачи два кадра с таблицей говорили бы
+        # полужирным другим цветом, чем сто четыре остальных: замерено на
+        # снимке s21, где выделенные термины вышли бирюзовыми.
+        flow.flow(s, ordered, MX + 0.04, y, text_w - 0.08, size,
+                  f"{sl.sid}/тело", accent=DEEP)
+        gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
+        footer(s, sl)
+        return s
 
     blocks = slidefile.body_blocks(sl)
     if blocks and avail > 0.35:

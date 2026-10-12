@@ -55,10 +55,10 @@ deck:
   slot_min: 90
   qa_min: 10
   content_target_min: 80.00      # слот минус вопросы; цель CUT-ORDER.md §1.1
-  total_slides: 110
+  total_slides: 106
   plan_slides: 106               # номеров в SLIDE-PLAN.md
   inserted_slides: [s60a, s60b, s96a, s103a]
-  sum_timing_min: 86.45           # сложено по timing_min файлов кадров
+  sum_timing_min: 86.60           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
   curriculum_level: "отраслевая лекция L7; strict-in ≥30% обязателен, waiver недоступен"
@@ -90,20 +90,20 @@ motif:
   surface: "#F4F7FA"
 
 slide_types:                     # значения поля type, с числом кадров
-  case:        { count:  56, meaning: "разбор или картина работы" }
+  case:        { count:  54, meaning: "разбор или картина работы" }
   summary:     { count:  17, meaning: "вывод раздела или свод" }
-  norm:        { count:  12, meaning: "норматив, устройство, правило" }
+  norm:        { count:  11, meaning: "норматив, устройство, правило" }
   divider:     { count:  10, meaning: "дивайдер раздела" }
   comparison:  { count:   7, meaning: "два столбца «что получается / что не получается»" }
   map:         { count:   5, meaning: "карта стадии или сетка курса" }
-  question:    { count:   2, meaning: "вопрос залу или вопросы в конце" }
   cover:       { count:   1, meaning: "обложка" }
+  question:    { count:   1, meaning: "вопрос залу или вопросы в конце" }
 
 sections:                        # разделы показа: кадров и минут, сложено по файлам
   - { name: "0. Вход",
-      slides: 10, timing_min: 7.60, range: [s01, s10] }
+      slides: 5, timing_min: 6.10, range: [s01, s05] }
   - { name: "1. Отбор — кого вообще смотреть",
-      slides: 11, timing_min: 8.30, range: [s11, s21] }
+      slides: 12, timing_min: 9.95, range: [s11, s21] }
   - { name: "2. Анализ данных — и группа, на которой он посчитан",
       slides: 13, timing_min: 9.60, range: [s22, s34] }
   - { name: "3. Постановка диагноза — человек читает рядом с моделью",
@@ -125,7 +125,7 @@ sections:                        # разделы показа: кадров и 
 
 slides:
 
-  # ─── 0. Вход · 10 кадров · 7.60 мин ───
+  # ─── 0. Вход · 5 кадров · 6.10 мин ───
   - id: s01
     local_id: "В-01"                       # № 1 в SLIDE-PLAN.md
     file: slides/s01-cover.md
@@ -137,120 +137,93 @@ slides:
     media_asset: "rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg"
   - id: s02
     local_id: "В-02"                       # № 2 в SLIDE-PLAN.md
-    file: slides/s02-zhivoy-instrument-v-brauzere.md
-    type: case
-    title: "Модель посмотрела на снимок первой"
+    file: slides/s02-iz-chego-sostoit-vecher.md
+    type: map
+    title: "Из чего состоит вечер: путь одного решения о человеке"
     chapter_ref: "chapter.md §0.1"
-    timing_min: 1.2
+    timing_min: 1.3
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s03
-    local_id: "В-02a"                      # № 3 в SLIDE-PLAN.md
-    file: slides/s03-chem-imenno-platyat.md
-    type: summary
-    title: "Удешевили чтение данных. Платят вниманием, навыком, подписью и арбитражем"
+    local_id: "В-03"                       # № 3 в SLIDE-PLAN.md
+    file: slides/s03-kto-smotrit-pervym.md
+    type: norm
+    title: "Кто смотрит первым — и почему подписывает человек"
     chapter_ref: "chapter.md §0.2"
-    timing_min: 0.5
+    timing_min: 1.1
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s04
-    local_id: "В-03"                       # № 4 в SLIDE-PLAN.md
-    file: slides/s04-keystone-model-chelovek-para.md
-    type: case
-    title: "Модель одна против человека с моделью"
+    local_id: "В-04"                       # № 4 в SLIDE-PLAN.md
+    file: slides/s04-setka-kursa-pustaya-matritsa.md
+    type: map
+    title: "Два имени на инструмент — и клетки, которые мы заполним"
     chapter_ref: "chapter.md §0.3"
-    timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s05
-    local_id: "В-03a"                      # № 5 в SLIDE-PLAN.md
-    file: slides/s05-chetyre-stupeni-vzglyada.md
-    type: norm
-    title: "Четыре ступени участия. И то же самое в вашей работе"
-    chapter_ref: "chapter.md §0.4"
-    timing_min: 0.85
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
-  - id: s06
-    local_id: "В-03b"                      # № 6 в SLIDE-PLAN.md
-    file: slides/s06-pochemu-uchastie-cheloveka-obyazatelno.md
-    type: norm
-    title: "Почему без человека нельзя: три опоры и три проверки"
-    chapter_ref: "chapter.md §0.5"
-    timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
-  - id: s07
-    local_id: "В-04"                       # № 7 в SLIDE-PLAN.md
-    file: slides/s07-put-odnogo-resheniya.md
-    type: norm
-    title: "Партию можно отозвать. Решение о человеке — нельзя"
-    chapter_ref: "chapter.md §0.6"
-    timing_min: 0.75
+    timing_min: 0.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s08
-    local_id: "В-05"                       # № 8 в SLIDE-PLAN.md
-    file: slides/s08-setka-kursa.md
-    type: map
-    title: "Где медицина стоит в сетке курса — и чем эти клетки заняты сегодня"
-    chapter_ref: "chapter.md §0.10"
-    timing_min: 0.85
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s09
-    local_id: "В-06"                       # № 9 в SLIDE-PLAN.md
-    file: slides/s09-karta-vechera.md
-    type: map
-    title: "Из чего состоит этот вечер"
-    chapter_ref: "chapter.md § Карта главы, §0.11"
-    timing_min: 0.65
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
-  - id: s10
-    local_id: "В-07"                       # № 10 в SLIDE-PLAN.md
-    file: slides/s10-vopros-lektsii.md
-    type: question
-    title: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
-    chapter_ref: "chapter.md §0.8, §0.9"
-    timing_min: 0.4
+  - id: s05
+    local_id: "В-05"                       # № 5 в SLIDE-PLAN.md
+    file: slides/s05-os-udeshevili-chtenie-dannykh.md
+    type: summary
+    title: "Удешевили чтение данных. Платят вниманием, навыком, подписью и арбитражем"
+    chapter_ref: "chapter.md §0.4"
+    timing_min: 2.4
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 1. Отбор — кого вообще смотреть · 11 кадров · 8.30 мин ───
+  # ─── 1. Отбор — кого вообще смотреть · 12 кадров · 9.95 мин ───
   - id: s11
-    local_id: "s1-01"                      # № 11 в SLIDE-PLAN.md
+    local_id: "s1-01"                      # № 6 в SLIDE-PLAN.md
     file: slides/s11-divider-otbor.md
     type: divider
     title: "Отбор: кто попадает в поле зрения"
+    plan_section: "Раздел 0. Вход"
     chapter_ref: "chapter-part1b.md § Раздел 1 (вводка)"
     timing_min: 0.4
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s12
-    local_id: "s1-02"                      # № 12 в SLIDE-PLAN.md
+    local_id: "s1-02"                      # № 7 в SLIDE-PLAN.md
     file: slides/s12-kak-ustroen-otbor.md
-    type: case
-    title: "Женщине пришло письмо, и её снимок прочли двое, которые её не видели"
-    chapter_ref: "chapter-part1b.md §1.1, §1.2"
-    timing_min: 0.75
+    type: norm
+    title: "Что делают участники на стадии отбора — до всякой обученной модели"
+    plan_section: "Раздел 0. Вход"
+    chapter_ref: "chapter-part1b.md §1.1, §1.2, §1.3"
+    timing_min: 0.85
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s13
-    local_id: "s1-03"                      # № 13 в SLIDE-PLAN.md
+    local_id: "s1-03"                      # № 8 в SLIDE-PLAN.md
     file: slides/s13-zvat-vsekh-po-vozrastu.md
     type: case
-    title: "Приглашение по возрасту и интервалу. Шведская программа"
+    title: "Без модели, режим первый: звать по возрасту и интервалу"
+    plan_section: "Раздел 0. Вход"
     chapter_ref: "chapter-part1b.md §1.3"
     timing_min: 0.7
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s14
-    local_id: "s1-03a"                     # № 14 в SLIDE-PLAN.md
+    local_id: "s1-03a"                     # № 9 в SLIDE-PLAN.md
     file: slides/s14-zhdat-zhalobu.md
     type: case
-    title: "А чем кончается «ждать жалобу»"
+    title: "Без модели, режим второй: ждать жалобу"
+    plan_section: "Раздел 0. Вход"
     chapter_ref: "chapter-part1b.md §1.3"
     timing_min: 0.65
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
-  - id: s15
-    local_id: "s1-04"                      # № 15 в SLIDE-PLAN.md
-    file: slides/s15-triazh-po-predskazannomu-risku.md
+  - id: s14a
+    local_id: "s1-03b"                     # вставленный кадр, номера в плане нет
+    file: slides/s14a-bez-modeli-i-s-modelyu.md
     type: comparison
-    title: "Что здесь получилось, что не получилось, и что про это публикуют"
+    title: "Без модели решают по опубликованному правилу; модель входит в три шага из семи и в трёх местах не работает"
+    chapter_ref: "chapter-part1b.md §1.1-§1.3, §1.7"
+    timing_min: 1.3
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s15
+    local_id: "s1-04"                      # № 10 в SLIDE-PLAN.md
+    file: slides/s15-triazh-po-predskazannomu-risku.md
+    type: case
+    title: "Модель вместо второго читателя: шведская программа"
+    plan_section: "Раздел 0. Вход"
     chapter_ref: "chapter-part1b.md §1.4"
     timing_min: 1.0
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s16
-    local_id: "s1-07"                      # № 16 в SLIDE-PLAN.md
+    local_id: "s1-07"                      # № 11 в SLIDE-PLAN.md
     file: slides/s16-chat-bot-pervoy-linii.md
     type: case
     title: "Пример 1: чат-бот первой линии"
@@ -258,92 +231,97 @@ slides:
     timing_min: 0.85
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s17
-    local_id: "s1-07a"                     # № 17 в SLIDE-PLAN.md
+    local_id: "s1-07a"                     # № 12 в SLIDE-PLAN.md
     file: slides/s17-arifmetika-kanala.md
     type: case
-    title: "Фиксированная сумма, делённая на выросшее число обращений"
+    title: "Пример 1, цена: та же сумма на выросшее число обращений"
     chapter_ref: "chapter-part1b.md §1.5"
     timing_min: 0.9
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s18
-    local_id: "s1-08"                      # № 18 в SLIDE-PLAN.md
+    local_id: "s1-08"                      # № 13 в SLIDE-PLAN.md
     file: slides/s18-glaznoe-dno-bez-oftalmologa.md
     type: case
-    title: "Глазное дно без офтальмолога"
+    title: "Пример 2: глазное дно без офтальмолога"
     chapter_ref: "chapter-part1b.md §1.6"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg"
   - id: s19
-    local_id: "s1-08a"                     # № 19 в SLIDE-PLAN.md
+    local_id: "s1-08a"                     # № 14 в SLIDE-PLAN.md
     file: slides/s19-chto-pereekhalo-glaznoe-dno.md
     type: case
-    title: "Глазное дно без офтальмолога"
+    title: "Пример 2, цена: решение перешло к устройству, появился шаг"
     chapter_ref: "chapter-part1b.md §1.6"
     timing_min: 0.8
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s20
-    local_id: "s1-09"                      # № 20 в SLIDE-PLAN.md
+    local_id: "s1-09"                      # № 15 в SLIDE-PLAN.md
     file: slides/s20-vyvod-otbor.md
     type: summary
-    title: "Что здесь переехало"
+    title: "Свод стадии: что получается, что нет, что стало с работой, что это держит"
     chapter_ref: "chapter-part1b.md §1.7"
-    timing_min: 0.9
+    timing_min: 1.0
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s21
-    local_id: "s1-10"                      # № 21 в SLIDE-PLAN.md
+    local_id: "s1-10"                      # № 16 в SLIDE-PLAN.md
     file: slides/s21-karta-stadii-otbor.md
     type: map
-    title: "Чем эти клетки заняты сегодня"
+    title: "Карта стадии: какая задача и какие данные"
     chapter_ref: "chapter-part1b.md §1.7 (+ chapter.md §0.10)"
-    timing_min: 0.45
+    timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
 
   # ─── 2. Анализ данных — и группа, на которой он посчитан · 13 кадров · 9.60 мин ───
   - id: s22
-    local_id: "s2-01"                      # № 22 в SLIDE-PLAN.md
+    local_id: "s2-01"                      # № 17 в SLIDE-PLAN.md
     file: slides/s22-divider-analiz-dannykh.md
     type: divider
     title: "2. Анализ данных — и группа, на которой он посчитан"
+    plan_section: "Раздел 1. Кто попадает в поле зрения"
     chapter_ref: "chapter-part1b.md § Раздел 2 (вводка), §2.1"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s22-rentgenkabinet-pacient-u-pribora.jpg"
   - id: s23
-    local_id: "s2-02"                      # № 23 в SLIDE-PLAN.md
+    local_id: "s2-02"                      # № 18 в SLIDE-PLAN.md
     file: slides/s23-dve-doli-bez-rabochey-tochki.md
     type: norm
     title: "Чувствительность и специфичность: две доли без рабочей точки"
+    plan_section: "Раздел 1. Кто попадает в поле зрения"
     chapter_ref: "chapter-part1b.md §2.1"
     timing_min: 0.7
     marks: { in_bucket: false, vfy: false, status: "каркас", media_status: builder_drawn }
   - id: s24
-    local_id: "s2-03"                      # № 24 в SLIDE-PLAN.md
+    local_id: "s2-03"                      # № 19 в SLIDE-PLAN.md
     file: slides/s24-odna-sistema-dve-gruppy.md
     type: norm
     title: "Одна система, две группы"
+    plan_section: "Раздел 1. Кто попадает в поле зрения"
     chapter_ref: "chapter-part1b.md §2.2"
     timing_min: 0.7
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s25
-    local_id: "s2-03a"                     # № 25 в SLIDE-PLAN.md
+    local_id: "s2-03a"                     # № 20 в SLIDE-PLAN.md
     file: slides/s25-vernye-trevogi-v-dvukh-gruppakh.md
     type: norm
     title: "Верные тревоги в двух группах"
+    plan_section: "Раздел 1. Кто попадает в поле зрения"
     chapter_ref: "chapter-part1b.md §2.2, §2.3"
     timing_min: 0.6
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s26
-    local_id: "s2-04"                      # № 26 в SLIDE-PLAN.md
+    local_id: "s2-04"                      # № 21 в SLIDE-PLAN.md
     file: slides/s26-tekhnik-flyuorografii.md
     type: case
     title: "Техник флюорографии и годность снимка"
+    plan_section: "Раздел 1. Кто попадает в поле зрения"
     chapter_ref: "chapter-part1b.md §2.4"
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
   - id: s27
-    local_id: "s2-05"                      # № 27 в SLIDE-PLAN.md
+    local_id: "s2-05"                      # № 22 в SLIDE-PLAN.md
     file: slides/s27-chto-rabotaet-i-chto-net-analiz.md
     type: comparison
     title: "Что работает и что не работает: анализ данных"
@@ -351,7 +329,7 @@ slides:
     timing_min: 0.9
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s28
-    local_id: "s2-06"                      # № 28 в SLIDE-PLAN.md
+    local_id: "s2-06"                      # № 23 в SLIDE-PLAN.md
     file: slides/s28-godnost-snimka-v-pole.md
     type: case
     title: "Таиланд: точность приехала, а снимки не прошли"
@@ -359,7 +337,7 @@ slides:
     timing_min: 0.8
     marks: { in_bucket: false, vfy: true, status: "каркас", media_status: real_image_needed }
   - id: s29
-    local_id: "s2-06a"                     # № 29 в SLIDE-PLAN.md
+    local_id: "s2-06a"                     # № 24 в SLIDE-PLAN.md
     file: slides/s29-chto-pereekhalo-godnost.md
     type: case
     title: "Таиланд: что переехало и чем за это платят"
@@ -367,7 +345,7 @@ slides:
     timing_min: 0.7
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s30
-    local_id: "s2-11"                      # № 30 в SLIDE-PLAN.md
+    local_id: "s2-11"                      # № 25 в SLIDE-PLAN.md
     file: slides/s30-kozha-i-sostav-nabora.md
     type: case
     title: "Кожа и состав набора"
@@ -375,7 +353,7 @@ slides:
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s31
-    local_id: "s2-08"                      # № 31 в SLIDE-PLAN.md
+    local_id: "s2-08"                      # № 26 в SLIDE-PLAN.md
     file: slides/s31-raskhody-vmesto-bolezni.md
     type: case
     title: "Пример: отбор в программу повышенного внимания по прогнозу расходов"
@@ -383,7 +361,7 @@ slides:
     timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s32
-    local_id: "s2-08a"                     # № 32 в SLIDE-PLAN.md
+    local_id: "s2-08a"                     # № 27 в SLIDE-PLAN.md
     file: slides/s32-ispravlenie-poschitali-i-ne-primenili.md
     type: case
     title: "То же: исправление посчитали и не применили"
@@ -391,7 +369,7 @@ slides:
     timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s33
-    local_id: "s2-09"                      # № 33 в SLIDE-PLAN.md
+    local_id: "s2-09"                      # № 28 в SLIDE-PLAN.md
     file: slides/s33-karta-stadii-analiz.md
     type: map
     title: "Карта стадии: анализ данных"
@@ -399,7 +377,7 @@ slides:
     timing_min: 0.7
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s34
-    local_id: "s2-10"                      # № 34 в SLIDE-PLAN.md
+    local_id: "s2-10"                      # № 29 в SLIDE-PLAN.md
     file: slides/s34-vyvod-analiz-dannykh.md
     type: summary
     title: "Вывод: анализ данных"

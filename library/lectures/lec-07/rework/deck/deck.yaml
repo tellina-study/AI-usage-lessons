@@ -142,7 +142,7 @@ slides:
     title: "Модель посмотрела на снимок первой"
     chapter_ref: "chapter.md §0.1"
     timing_min: 1.2
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s03
     local_id: "В-02a"                      # № 3 в SLIDE-PLAN.md
     file: slides/s03-chem-imenno-platyat.md
@@ -150,7 +150,7 @@ slides:
     title: "Удешевили чтение данных. Платят вниманием, навыком, подписью и арбитражем"
     chapter_ref: "chapter.md §0.2"
     timing_min: 0.5
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s04
     local_id: "В-03"                       # № 4 в SLIDE-PLAN.md
     file: slides/s04-keystone-model-chelovek-para.md
@@ -158,7 +158,7 @@ slides:
     title: "Модель одна против человека с моделью"
     chapter_ref: "chapter.md §0.3"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s05
     local_id: "В-03a"                      # № 5 в SLIDE-PLAN.md
     file: slides/s05-chetyre-stupeni-vzglyada.md
@@ -166,7 +166,7 @@ slides:
     title: "Четыре ступени участия. И то же самое в вашей работе"
     chapter_ref: "chapter.md §0.4"
     timing_min: 0.85
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s06
     local_id: "В-03b"                      # № 6 в SLIDE-PLAN.md
     file: slides/s06-pochemu-uchastie-cheloveka-obyazatelno.md
@@ -174,7 +174,7 @@ slides:
     title: "Почему без человека нельзя: три опоры и три проверки"
     chapter_ref: "chapter.md §0.5"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s07
     local_id: "В-04"                       # № 7 в SLIDE-PLAN.md
     file: slides/s07-put-odnogo-resheniya.md
@@ -182,7 +182,7 @@ slides:
     title: "Партию можно отозвать. Решение о человеке — нельзя"
     chapter_ref: "chapter.md §0.6"
     timing_min: 0.75
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s08
     local_id: "В-05"                       # № 8 в SLIDE-PLAN.md
     file: slides/s08-setka-kursa.md
@@ -190,7 +190,7 @@ slides:
     title: "Где медицина стоит в сетке курса — и чем эти клетки заняты сегодня"
     chapter_ref: "chapter.md §0.10"
     timing_min: 0.85
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s09
     local_id: "В-06"                       # № 9 в SLIDE-PLAN.md
     file: slides/s09-karta-vechera.md
@@ -206,7 +206,7 @@ slides:
     title: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
     chapter_ref: "chapter.md §0.8, §0.9"
     timing_min: 0.4
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
   # ─── 1. Отбор — кого вообще смотреть · 11 кадров · 8.30 мин ───
   - id: s11
@@ -224,7 +224,7 @@ slides:
     title: "Женщине пришло письмо, и её снимок прочли двое, которые её не видели"
     chapter_ref: "chapter-part1b.md §1.1, §1.2"
     timing_min: 0.75
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s13
     local_id: "s1-03"                      # № 13 в SLIDE-PLAN.md
     file: slides/s13-zvat-vsekh-po-vozrastu.md
@@ -232,7 +232,7 @@ slides:
     title: "Приглашение по возрасту и интервалу. Шведская программа"
     chapter_ref: "chapter-part1b.md §1.3"
     timing_min: 0.7
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s14
     local_id: "s1-03a"                     # № 14 в SLIDE-PLAN.md
     file: slides/s14-zhdat-zhalobu.md
@@ -240,7 +240,7 @@ slides:
     title: "А чем кончается «ждать жалобу»"
     chapter_ref: "chapter-part1b.md §1.3"
     timing_min: 0.65
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s15
     local_id: "s1-04"                      # № 15 в SLIDE-PLAN.md
     file: slides/s15-triazh-po-predskazannomu-risku.md
@@ -256,7 +256,7 @@ slides:
     title: "Пример 1: чат-бот первой линии"
     chapter_ref: "chapter-part1b.md §1.5"
     timing_min: 0.85
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s17
     local_id: "s1-07a"                     # № 17 в SLIDE-PLAN.md
     file: slides/s17-arifmetika-kanala.md
@@ -264,7 +264,7 @@ slides:
     title: "Фиксированная сумма, делённая на выросшее число обращений"
     chapter_ref: "chapter-part1b.md §1.5"
     timing_min: 0.9
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s18
     local_id: "s1-08"                      # № 18 в SLIDE-PLAN.md
     file: slides/s18-glaznoe-dno-bez-oftalmologa.md
@@ -272,7 +272,7 @@ slides:
     title: "Глазное дно без офтальмолога"
     chapter_ref: "chapter-part1b.md §1.6"
     timing_min: 0.9
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: acquired }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
   - id: s19
     local_id: "s1-08a"                     # № 19 в SLIDE-PLAN.md
@@ -281,7 +281,7 @@ slides:
     title: "Глазное дно без офтальмолога"
     chapter_ref: "chapter-part1b.md §1.6"
     timing_min: 0.8
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s20
     local_id: "s1-09"                      # № 20 в SLIDE-PLAN.md
     file: slides/s20-vyvod-otbor.md
@@ -289,7 +289,7 @@ slides:
     title: "Что здесь переехало"
     chapter_ref: "chapter-part1b.md §1.7"
     timing_min: 0.9
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s21
     local_id: "s1-10"                      # № 21 в SLIDE-PLAN.md
     file: slides/s21-karta-stadii-otbor.md
@@ -297,7 +297,7 @@ slides:
     title: "Чем эти клетки заняты сегодня"
     chapter_ref: "chapter-part1b.md §1.7 (+ chapter.md §0.10)"
     timing_min: 0.45
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
 
   # ─── 2. Анализ данных — и группа, на которой он посчитан · 13 кадров · 9.60 мин ───
   - id: s22
@@ -307,7 +307,7 @@ slides:
     title: "2. Анализ данных — и группа, на которой он посчитан"
     chapter_ref: "chapter-part1b.md § Раздел 2 (вводка), §2.1"
     timing_min: 0.6
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: acquired }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s22-rentgenkabinet-pacient-u-pribora.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
   - id: s23
     local_id: "s2-02"                      # № 23 в SLIDE-PLAN.md
@@ -324,7 +324,7 @@ slides:
     title: "Одна система, две группы"
     chapter_ref: "chapter-part1b.md §2.2"
     timing_min: 0.7
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s25
     local_id: "s2-03a"                     # № 25 в SLIDE-PLAN.md
     file: slides/s25-vernye-trevogi-v-dvukh-gruppakh.md
@@ -332,7 +332,7 @@ slides:
     title: "Верные тревоги в двух группах"
     chapter_ref: "chapter-part1b.md §2.2, §2.3"
     timing_min: 0.6
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s26
     local_id: "s2-04"                      # № 26 в SLIDE-PLAN.md
     file: slides/s26-tekhnik-flyuorografii.md
@@ -340,7 +340,7 @@ slides:
     title: "Техник флюорографии и годность снимка"
     chapter_ref: "chapter-part1b.md §2.4"
     timing_min: 0.8
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: acquired }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
   - id: s27
     local_id: "s2-05"                      # № 27 в SLIDE-PLAN.md
@@ -349,7 +349,7 @@ slides:
     title: "Что работает и что не работает: анализ данных"
     chapter_ref: "chapter-part1b.md §2.5"
     timing_min: 0.9
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s28
     local_id: "s2-06"                      # № 28 в SLIDE-PLAN.md
     file: slides/s28-godnost-snimka-v-pole.md
@@ -365,7 +365,7 @@ slides:
     title: "Таиланд: что переехало и чем за это платят"
     chapter_ref: "chapter-part1b.md §2.6"
     timing_min: 0.7
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s30
     local_id: "s2-11"                      # № 30 в SLIDE-PLAN.md
     file: slides/s30-kozha-i-sostav-nabora.md
@@ -373,7 +373,7 @@ slides:
     title: "Кожа и состав набора"
     chapter_ref: "chapter-part1b.md §2.7"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s31
     local_id: "s2-08"                      # № 31 в SLIDE-PLAN.md
     file: slides/s31-raskhody-vmesto-bolezni.md
@@ -381,7 +381,7 @@ slides:
     title: "Пример: отбор в программу повышенного внимания по прогнозу расходов"
     chapter_ref: "chapter-part1b.md §2.8"
     timing_min: 0.75
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s32
     local_id: "s2-08a"                     # № 32 в SLIDE-PLAN.md
     file: slides/s32-ispravlenie-poschitali-i-ne-primenili.md
@@ -389,7 +389,7 @@ slides:
     title: "То же: исправление посчитали и не применили"
     chapter_ref: "chapter-part1b.md §2.8"
     timing_min: 0.75
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s33
     local_id: "s2-09"                      # № 33 в SLIDE-PLAN.md
     file: slides/s33-karta-stadii-analiz.md
@@ -405,4 +405,4 @@ slides:
     title: "Вывод: анализ данных"
     chapter_ref: "chapter-part1b.md §2.9, §2.3"
     timing_min: 0.6
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }

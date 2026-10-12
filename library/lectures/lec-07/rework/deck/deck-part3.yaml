@@ -26,7 +26,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.1"
     timing_min: 1.0
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s76
     local_id: "s6-02a"                     # № 76 в SLIDE-PLAN.md
     file: slides/s76-put-razrabotki-shemoy.md
@@ -35,7 +35,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.1, §9.2"
     timing_min: 1.0
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s77
     local_id: "s6-03"                      # № 77 в SLIDE-PLAN.md
     file: slides/s77-voronka-otrasli.md
@@ -44,7 +44,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.2"
     timing_min: 1.1
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
   - id: s78
     local_id: "s6-03a"                     # № 78 в SLIDE-PLAN.md
     file: slides/s78-dve-drobi-ryadom.md
@@ -62,7 +62,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.7"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s80
     local_id: "s6-04a"                     # № 80 в SLIDE-PLAN.md
     file: slides/s80-khitreyt-s-metodom-i-bez.md
@@ -71,7 +71,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.8"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s81
     local_id: "s6-05"                      # № 81 в SLIDE-PLAN.md
     file: slides/s81-tsena-obeikh-oshibok-molekula.md
@@ -80,7 +80,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.4"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s82
     local_id: "s6-05a"                     # № 82 в SLIDE-PLAN.md
     file: slides/s82-molekula-za-god-snyataya.md
@@ -89,7 +89,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.5"
     timing_min: 1.1
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s83
     local_id: "s6-06"                      # № 83 в SLIDE-PLAN.md
     file: slides/s83-perekhod-vtoroy-fazy.md
@@ -98,7 +98,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.4"
     timing_min: 0.9
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s84
     local_id: "s6-06a"                     # № 84 в SLIDE-PLAN.md
     file: slides/s84-odobreniy-nol.md
@@ -107,7 +107,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.4"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s85
     local_id: "s6-07"                      # № 85 в SLIDE-PLAN.md
     file: slides/s85-otkaz-ot-svoego-obeshchaniya.md
@@ -116,7 +116,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.6"
     timing_min: 1.2
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s86
     local_id: "s6-08"                      # № 86 в SLIDE-PLAN.md
     file: slides/s86-grafik-depozitariya.md
@@ -134,7 +134,7 @@ slides:
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.12 (+ §9.10, §9.11)"
     timing_min: 0.9
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: no_decision }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
 
   # ─── 8. Что стало с теми, кто решает · 9 кадров · 6.40 мин ───
   - id: s88
@@ -155,7 +155,7 @@ slides:
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.2 (+ §10.3)"
     timing_min: 0.75
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s90
     local_id: "s5-03"                      # № 90 в SLIDE-PLAN.md
     file: slides/s90-tsena-obeikh-oshibok-osmotr.md
@@ -164,7 +164,7 @@ slides:
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.4"
     timing_min: 0.55
-    marks: { in_bucket: false, vfy: false, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s91
     local_id: "s5-03a"                     # № 91 в SLIDE-PLAN.md
     file: slides/s91-dva-klassicheskikh-rezhima-osmotra.md
@@ -173,7 +173,7 @@ slides:
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.5"
     timing_min: 0.75
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s92
     local_id: "s5-04"                      # № 92 в SLIDE-PLAN.md
     file: slides/s92-dolya-obnaruzheniya-bez-pomoshchnika.md
@@ -191,7 +191,7 @@ slides:
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.8 (+ §10.7)"
     timing_min: 0.8
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s94
     local_id: "s5-06"                      # № 94 в SLIDE-PLAN.md
     file: slides/s94-dva-probela-i-odno-izmerenie.md
@@ -200,7 +200,7 @@ slides:
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.9, §10.10"
     timing_min: 0.65
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s95
     local_id: "s5-07"                      # № 95 в SLIDE-PLAN.md
     file: slides/s95-potok-resheniya-do-i-posle.md
@@ -209,7 +209,7 @@ slides:
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.11"
     timing_min: 0.75
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s96
     local_id: "s5-08"                      # № 96 в SLIDE-PLAN.md
     file: slides/s96-vyvod-navyk.md
@@ -218,7 +218,7 @@ slides:
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.14 (+ §10.12, §10.13)"
     timing_min: 0.8
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
 
   # ─── 9. Сборка · 8 кадров · 6.30 мин ───
   - id: s96a
@@ -237,7 +237,7 @@ slides:
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.1, §11.3"
     timing_min: 0.85
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s98
     local_id: "s8-01a"                     # № 98 в SLIDE-PLAN.md
     file: slides/s98-kto-ee-delaet-i-chem-platit.md
@@ -246,7 +246,7 @@ slides:
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.2"
     timing_min: 0.85
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s99
     local_id: "s8-02"                      # № 99 в SLIDE-PLAN.md
     file: slides/s99-vyigrysh-pripisan-ne-tomu.md
@@ -255,7 +255,7 @@ slides:
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.4"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s100
     local_id: "s8-02a"                     # № 100 в SLIDE-PLAN.md
     file: slides/s100-chto-my-voobshche-izmeryali.md
@@ -264,7 +264,7 @@ slides:
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.5"
     timing_min: 0.75
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s101
     local_id: "s8-03"                      # № 101 в SLIDE-PLAN.md
     file: slides/s101-kletki-uznavaemye-protsedury-drugie.md
@@ -273,7 +273,7 @@ slides:
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.6"
     timing_min: 0.85
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s102
     local_id: "s8-04"                      # № 102 в SLIDE-PLAN.md
     file: slides/s102-chto-menyaetsya-v-cheloveke-i-v-podpisi.md
@@ -282,7 +282,7 @@ slides:
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.7"
     timing_min: 0.8
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s103
     local_id: "s8-05"                      # № 103 в SLIDE-PLAN.md
     file: slides/s103-chetyre-otveta-na-odin-vopros.md
@@ -291,7 +291,7 @@ slides:
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.8"
     timing_min: 0.7
-    marks: { in_bucket: true, vfy: false, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
   # ─── 10. Закрытие · 4 кадров · 2.40 мин ───
   - id: s103a
@@ -310,7 +310,7 @@ slides:
     plan_section: "Раздел 9. Закрытие"
     chapter_ref: "chapter-part5b.md §12.1"
     timing_min: 0.8
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s105
     local_id: "s9-02"                      # № 105 в SLIDE-PLAN.md
     file: slides/s105-ustroystvo-otozvali-resheniya-ostalis.md
@@ -319,7 +319,7 @@ slides:
     plan_section: "Раздел 9. Закрытие"
     chapter_ref: "chapter-part5b.md §12.2"
     timing_min: 0.85
-    marks: { in_bucket: true, vfy: true, status: "каркас", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s106
     local_id: "s9-03"                      # № 106 в SLIDE-PLAN.md
     file: slides/s106-voprosy.md
@@ -342,8 +342,8 @@ totals:
   strict_in_share: "57.4%"      # порог курса 30%; счёт по минутам, partial → out
   vfy_slides: 51                 # кадров с числом под пересверку в день лекции
   by_status:
-    "каркас": 96
-    "собран": 11
+    "собран": 100
+    "каркас": 7
     "под рез": 2
     "не режется": 1
   media:                         # разбор и адреса — deck/images.md

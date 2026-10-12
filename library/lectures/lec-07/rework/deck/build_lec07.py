@@ -21,6 +21,9 @@
     что не получается»; перечни кейсов идут буллитами в теле;
   * настоящие гиперссылки (`run.hyperlink.address`) в подвале и в заметках;
     URL в теле слайда — блокирующее предупреждение `[ссылка]`.
+  * КАДР-СВИДЕТЕЛЬСТВО `media_hero` — крупная иллюстрация, которая и есть
+    утверждение слайда: не меньше 40% площади (§5.9), подпись об источнике
+    из `media_caption` уезжает в подвал к `source`.
 
 БЛОКИРУЮЩИЕ предупреждения — те, по которым видно физический предел кадра:
 
@@ -29,9 +32,11 @@
   [кегль]   блок набран на дне лестницы кеглей
   [ссылка]  URL в видимом теле слайда (место ссылки — подвал)
 
-Каждое из четырёх прогнано на нарочно сломанном входе: `--selftest`. Прогон,
-показавший ноль, ничего не значит, пока не доказано, что проверка умеет
-находить, — поэтому самопроверка не опция, а часть сдачи.
+Каждое прогнано на нарочно сломанном входе: `--selftest`, десять проб.
+Прогон, показавший ноль, ничего не значит, пока не доказано, что проверка
+умеет находить, — поэтому самопроверка не опция, а часть сдачи. У тега
+`[высота]` проб ДВЕ: мера тела и мера подвала считаются разными местами, и
+доказывать их одной пробой — значит доказывать одну из двух.
 
 Запуск:
   python3 build_lec07.py                 — только PPTX (по умолчанию)
@@ -87,6 +92,14 @@ SLIDE_W, SLIDE_H = 13.333, 7.5
 _TTF_DIR = Path("/home/harness/.local/libreoffice-portable/share/fonts/truetype")
 _TTF = {False: _TTF_DIR / "LiberationSans-Regular.ttf",
         True: _TTF_DIR / "LiberationSans-Bold.ttf"}
+# Курсив Liberation Sans на 3,0% шире прямого (замерено по самим файлам
+# шрифта на строке оговорки плашки s105). Мера прямым там, где рисуется
+# курсив, давала строкой меньше — оговорка плашки выезжала за нижнюю грань
+# на рендере, а сборка молчала. Поправка берётся коэффициентом, а не вторым
+# файлом шрифта: `est_h` считает ВЫСОТУ, и ей довольно знать, что строка
+# шире; подбор кегля и проверка ширины курсивом пока не меряются (прогоны
+# смешивают курсив с прямым в одном абзаце) — это выписано как находка.
+ITAL_W = 1.031
 _FCACHE = {}
 LH = 1.19          # натуральная высота строки Liberation Sans, в кеглях
 SAFE = 1.04        # запас по высоте на расхождение разметки с измерением
@@ -99,6 +112,7 @@ LINKS = Counter()
 PRIM = Counter()
 GOLD_SEEN = set()
 PLACEHOLDERS = Counter()
+HERO_AREA = {}         # sid → доля площади слайда под обязательным hero
 
 # ════════════════════════════════════════════════════════════════════
 # измерение текста настоящими метриками шрифта
@@ -137,10 +151,12 @@ def n_lines(text, size, w_in, bold=False):
     return lines
 
 
-def est_h(text, size, w_in, ls=1.18, bold=False):
+def est_h(text, size, w_in, ls=1.18, bold=False, italic=False):
     """Высота текстового блока в дюймах."""
     if w_in <= 0:
         return 0.0
+    if italic:
+        w_in /= ITAL_W
     rows = sum(n_lines(p, size, w_in, bold) for p in text.split("\n"))
     return rows * size * ls * LH / 72.0 * SAFE
 
@@ -245,7 +261,7 @@ def arrow(s, x, y, w, h, color=LIGHT):
 def text_box(s, x, y, w, h, text, *, size=16, bold=False, italic=False,
              color=DEEP, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP,
              ls=1.18, tag=""):
-    e = est_h(text, size, w, ls, bold)
+    e = est_h(text, size, w, ls, bold, italic)
     if e > h + 0.02:
         WARNINGS.append(
             f"[высота] {tag}: рамка {w:.2f}×{h:.2f}\" кегль {size:.1f} — "
@@ -586,19 +602,20 @@ def gold_tick(s, x, y, sid):
     GOLD_SEEN.add(sid)
 
 
-def heading(s, sl, color=DEEP, size=27.0):
+def heading(s, sl, color=DEEP, size=27.0, width=None):
     t = str(sl.meta.get("title") or "").strip()
     if not t:
         WARNINGS.append(f"[заголовок] {sl.sid}: поле `title` пусто")
         return BODY_TOP
-    sz = fit_size(t, FULL_W, 0.92, hi=size, lo=19.0, floor=15.0, bold=True,
+    w = FULL_W if width is None else width
+    sz = fit_size(t, w, 0.92, hi=size, lo=19.0, floor=15.0, bold=True,
                   ls=1.08, tag=f"{sl.sid}/заголовок")
-    text_box(s, MX, TITLE_Y, FULL_W, 0.92, t, size=sz, bold=True, color=color,
+    text_box(s, MX, TITLE_Y, w, 0.92, t, size=sz, bold=True, color=color,
              ls=1.08, tag=f"{sl.sid}/заголовок")
     # Акцент садится под НАСТОЯЩУЮ высоту заголовка, а не под рамку в 0,92":
     # у однострочного заголовка рамка на полдюйма выше текста, и акцент,
     # поставленный по рамке, попадал под коробку мотива.
-    sl.tick_y = min(TITLE_Y + est_h(t, sz, FULL_W, 1.08, True) + 0.07,
+    sl.tick_y = min(TITLE_Y + est_h(t, sz, w, 1.08, True) + 0.07,
                     BODY_TOP - 0.17)
     # Золотой акцент рисует НЕ заголовок, а `content()` последним ходом: при
     # кадре без плашек коробка мотива начинается сразу под заголовком и
@@ -674,7 +691,7 @@ def _plate_metrics(p, iw):
             break
         vs -= 0.5
     hv = est_h(p["value"], vs, iw, 1.08, True) + 0.04
-    hn = est_h(p["note"], BL_NOTE_PT, iw, 1.12) if p["note"] else 0.0
+    hn = est_h(p["note"], BL_NOTE_PT, iw, 1.12, italic=True) if p["note"] else 0.0
     return vs, hl, hv, hn, PLATE_PAD * 2 + hl + hv + hn
 
 
@@ -774,7 +791,7 @@ def scheme_h(sch, w):
         rh = max(est_h(st, 11.5, iw, 1.12) for st in r["steps"]) + 0.26
         h += max(0.50, rh) + 0.16
     if sch["caption"]:
-        h += est_h(sch["caption"], 10.5, w, 1.12) + 0.04
+        h += est_h(sch["caption"], 10.5, w, 1.12, italic=True) + 0.04
     return h
 
 
@@ -803,7 +820,7 @@ def draw_scheme(s, sl, sch, x, y, w):
             xx += bw + gap
         yy += rh + 0.16
     if sch["caption"]:
-        hc = est_h(sch["caption"], 10.5, w, 1.12)
+        hc = est_h(sch["caption"], 10.5, w, 1.12, italic=True)
         text_box(s, x, yy, w, hc, sch["caption"], size=10.5, italic=True,
                  color=LIGHT, ls=1.12, tag=f"{sl.sid}/схема-подпись-низ")
     return scheme_h(sch, w)
@@ -893,8 +910,84 @@ def draw_media(s, sl, p, x, y, w, h):
     PRIM["кадр"] += 1
 
 
+# Ширина кадра-свидетельства. Число не назначено «на глаз», а найдено
+# перебором по самому сборщику с шагом 0,01": ниже 7,57" площадь падает под
+# требуемые §5.9 сорок процентов, выше 7,59" правый столбец перестаёт
+# укладываться. Чистое окно — ТРИ сотых дюйма, и это не придирка настройки,
+# а измеренный факт про сам кадр s105: обязательная иллюстрация в 40%
+# площади и четыре примитива рядом (заголовок, плашка, два столбца, три
+# абзаца) на одном кадре не помещаются с запасом — только впритык. Любая
+# правка текста s105 окно сдвинет; сборка об этом скажет блокирующим
+# предупреждением, молча не разъедется. Выписано оркестратору находкой:
+# у кадра на один примитив больше, чем место позволяет.
+HERO_W = 7.58
+HERO_TOP = 0.10        # верх кадра: выше заголовка, у самой кромки слайда
+HERO_GAP = 0.06        # просвет между кадром и телом под ним
+HERO_PAD = 0.05        # поле между картинкой и рамкой мотива
+HERO_MIN_AREA = 0.40   # §5.9: обязательный hero — не меньше 40% площади кадра
+
+
+def draw_hero(s, sl, p, x_right, y_top, y_bot, w_max=None):
+    """Крупный кадр-свидетельство с ВИДИМОЙ подписью об источнике.
+
+    Отличается от `draw_media` не размером, а назначением. `draw_media` ставит
+    иллюстрацию сбоку от текста — она поясняет. Здесь картинка и есть
+    утверждение кадра, поэтому правило курса (§5.9 `tools/presentation-build/
+    README.md`) требует ей не меньше 40% площади слайда и видимой подписи об
+    источнике. Подпись тут не украшение и не вежливость: на s105 это снимок
+    записи в базе отзывов регулятора, и неподписанный снимок записи
+    неотличим от карточки, нарисованной нами самими, — ровно та подмена,
+    которую курс запрещает отдельным правилом (решение оркестратора,
+    `rework/OCHERED-OTLOZHENNOGO.md`).
+
+    Саму подпись рисует НЕ эта функция, а `footer`: место источника в этой
+    деке одно — подвал, и поле `media_caption` уезжает туда последним
+    сегментом рядом с `source`. Отдельная строка под картинкой обошлась бы в
+    0,27" высоты, а их на кадре с 40-процентной иллюстрацией нет: замерено,
+    тело под кадром тогда не укладывается ни при каком кегле. Здесь остаётся
+    проверка, что подпись вообще объявлена.
+
+    Ширина берётся наибольшая из возможных, но не больше `w_max`: вертикальный
+    снимок на полную высоту кадра даёт площадь МЕНЬШЕ требуемой, поэтому
+    размер здесь считается от отношения сторон самого файла, а не назначается.
+    Возвращает (левый край коробки, доля площади слайда под картинкой, низ
+    коробки кадра).
+    """
+    try:
+        from PIL import Image
+        with Image.open(p) as im:
+            ar = im.width / max(1, im.height)
+    except Exception as e:
+        WARNINGS.append(f"[кадр] {sl.sid}: {p.name} — {e}")
+        return x_right, 0.0, y_top
+    w_max = HERO_W if w_max is None else w_max
+    cap = str(sl.meta.get("media_caption") or "").strip()
+    if not cap:
+        WARNINGS.append(
+            f"[кадр] {sl.sid}: обязательный hero без поля `media_caption` — "
+            "§5.9 требует видимой подписи об источнике")
+    w = w_max
+    while w > 1.0 and 2 * HERO_PAD + w / ar > y_bot - y_top:
+        w -= 0.02
+    h = w / ar
+    box_w, box_h = w + 2 * HERO_PAD, h + 2 * HERO_PAD
+    x_box = x_right - box_w
+    ocean_box(s, x_box, y_top, box_w, box_h)
+    s.shapes.add_picture(str(p), Inches(x_box + HERO_PAD),
+                         Inches(y_top + HERO_PAD), Inches(w), Inches(h))
+    PRIM["кадр"] += 1
+    return x_box, w * h / (SLIDE_W * SLIDE_H), y_top + box_h
+
+
 def footer(s, sl):
     src = str(sl.meta.get("source") or "").strip()
+    # Подпись обязательного hero идёт сюда же, последним сегментом: место
+    # источника в деке одно, и подпись к снимку-свидетельству — такой же
+    # источник, как работа, из которой взято число (§5.9 требует её видимой,
+    # но не требует ставить её непременно под картинкой).
+    cap = str(sl.meta.get("media_caption") or "").strip()
+    if cap and sl.meta.get("media_hero"):
+        src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return
     runs = []
@@ -915,7 +1008,7 @@ def footer(s, sl):
     # свою рамку, выезжает за нижний край кадра.
     FOOT_H = 0.50
     flat = "".join(r["text"] for r in runs)
-    e = est_h(flat, 11.0, FULL_W, 1.12)
+    e = est_h(flat, 11.0, FULL_W, 1.12, italic=True)
     if e > FOOT_H + 0.02:
         WARNINGS.append(
             f"[высота] {sl.sid}/подвал: источник не влезает в две строки "
@@ -1015,12 +1108,31 @@ def divider(p, sl):
 def content(p, sl):
     s = blank(p)
     rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
-    y = heading(s, sl)
     img = media_path(sl)
-    body_w = FULL_W - (MEDIA_W + COL_GAP if img else 0.0)
-    if img:
-        draw_media(s, sl, img, MX + body_w + COL_GAP, y, MEDIA_W,
-                   min(3.40, BODY_BOT - y))
+    hero = img is not None and bool(sl.meta.get("media_hero"))
+    # `col_bot` — низ КОЛОНКИ примитивов. Без hero это низ тела кадра; с hero
+    # колонка кончается там же, где кадр-свидетельство, а тело уходит под него
+    # во всю ширину. Иначе 40% площади под кадр и четыре примитива рядом
+    # физически не совмещаются: замерено, левая колонка не доберёт 1,5".
+    col_bot = BODY_BOT
+    if hero:
+        # Кадр-свидетельство встаёт ПЕРВЫМ и забирает своё место целиком: от
+        # него считается ширина заголовка и всего остального, а не наоборот.
+        x_box, HERO_AREA[sl.sid], col_bot = draw_hero(
+            s, sl, img, SLIDE_W - MX, HERO_TOP, BODY_BOT)
+        if HERO_AREA[sl.sid] < HERO_MIN_AREA:
+            WARNINGS.append(
+                f"[кадр] {sl.sid}: обязательный hero занял "
+                f"{100 * HERO_AREA[sl.sid]:.1f}% площади кадра при пороге "
+                f"{100 * HERO_MIN_AREA:.0f}% (§5.9)")
+        body_w = x_box - COL_GAP - MX
+        y = heading(s, sl, width=body_w)
+    else:
+        y = heading(s, sl)
+        body_w = FULL_W - (MEDIA_W + COL_GAP if img else 0.0)
+        if img:
+            draw_media(s, sl, img, MX + body_w + COL_GAP, y, MEDIA_W,
+                       min(3.40, BODY_BOT - y))
 
     plates = plates_of(sl) if sl.meta.get("type") in CONTENT_TYPES else []
     if plates and sl.meta.get("type") not in CONTENT_TYPES:
@@ -1033,19 +1145,42 @@ def content(p, sl):
         y += draw_scheme(s, sl, sch, MX, y, body_w) + GAP
 
     cols = columns_of(sl)
-    avail = BODY_BOT - y
+    avail = col_bot - y
     if cols:
         # Столбцы берут не фиксированную высоту, а ОСТАТОК за вычетом того,
         # что нужно телу: иначе кадр с противопоставлением И телом выдавал
-        # телу 0,75" и ломался предупреждением там, где места хватало.
+        # телу 0,75" и ломался предупреждением там, где места хватало. На
+        # кадре с hero тело стоит НЕ под столбцами, а под иллюстрацией во всю
+        # ширину, и вычитать его высоту из колонки нечего.
         need = 0.0
-        for kind, t in body_lines(sl):
-            need += est_h(t, {"head": 15.0, "cap": 11.0}.get(kind, 13.0),
-                          body_w - 0.08, 1.26, kind == "head") + 0.08
+        if not hero:
+            for kind, t in body_lines(sl):
+                need += est_h(t, {"head": 15.0, "cap": 11.0}.get(kind, 13.0),
+                              body_w - 0.08, 1.26, kind == "head") + 0.08
         ch = max(1.55, min(avail - (need + GAP if need else 0.0), 3.40))
         draw_columns(s, sl, cols, MX, y, body_w, ch)
         y += ch + GAP
-        avail = BODY_BOT - y
+        avail = col_bot - y
+
+    text_w = body_w
+    if hero:
+        # Тело уходит во всю ширину под кадр-свидетельство. Обычный просвет
+        # `GAP`, который дописал за собой последний примитив левой колонки,
+        # здесь снимается: полоса начинается от низа КАДРА, а не от низа
+        # колонки, иначе кадр и колонка отталкивают тело вниз дважды.
+        y = max(col_bot, y - GAP) + HERO_GAP
+        text_w = FULL_W
+        # Отступ между абзацами (`space_before`, 7 пт) НЕ входит в est_h, и на
+        # обычном кадре это сходит с рук: тело там не прижато к подвалу и
+        # лишние 0,19" съедает запас рамки. В полосе под hero запаса нет —
+        # третий абзац выезжал на подвал на рендере, при том что мера
+        # говорила «влезает». Поэтому здесь отступы вычитаются ЯВНО.
+        # (Общая мера абзацного отступа не поправлена намеренно: правка
+        # сдвигает 7 других кадров, и это решение не сборщика деки.)
+        avail = BODY_BOT - y - max(0, len(body_lines(sl)) - 1) * 7.0 / 72.0
+        # Коробка мотива рисуется по МЕСТУ, а текст меряется по бюджету: иначе
+        # последняя строка ложится ровно на нижнюю скруглённую грань.
+        box_h = BODY_BOT - y + 0.10
 
     lines = body_lines(sl)
     if lines and avail > 0.35:
@@ -1065,10 +1200,10 @@ def content(p, sl):
                     r["bold"] = True
                 runs.append(r)
             flat.append(t)
-        fit_runs(runs, body_w - 0.08, avail, ls=1.26, tag=f"{sl.sid}/тело")
-        ocean_box(s, MX - 0.14, y - 0.10, body_w + 0.28,
-                  min(avail + 0.18, BODY_BOT - y + 0.10))
-        text_runs(s, MX + 0.04, y, body_w - 0.08, avail, runs, ls=1.26,
+        fit_runs(runs, text_w - 0.08, avail, ls=1.26, tag=f"{sl.sid}/тело")
+        ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                  box_h if hero else min(avail + 0.18, BODY_BOT - y + 0.10))
+        text_runs(s, MX + 0.04, y, text_w - 0.08, avail, runs, ls=1.26,
                   tag=f"{sl.sid}/тело")
     elif lines:
         WARNINGS.append(f"[высота] {sl.sid}/тело: места под тело не осталось "
@@ -1343,6 +1478,50 @@ columns:
 
 проба
 """),
+    # Подвал. Своей пробы у него не было ни одной: тег `[высота]` ловился на
+    # ТЕЛЕ кадра, и путь подвала считался доказанным заодно — хотя мера там
+    # отдельная (одна рамка 0,50" на все прогоны источника, курсив) и ломаться
+    # может сама по себе. Непроверенная на сломанном входе проверка —
+    # не проверка.
+    "[высота] подвал": ("s97", """---
+id: s97
+type: case
+title: "Проба на подвал"
+source: \"""" + ("Очень длинное название работы, которое вместе с выходными "
+                 "данными, томом, номером выпуска и датой среза заведомо не "
+                 "укладывается в две строки подвала, " * 5) + """"
+---
+
+## Видимый текст слайда
+
+Короткое тело.
+
+## Заметки лектора
+
+проба
+"""),
+    # Обязательный hero. На входе — тот самый портретный снимок записи FDA
+    # ЦЕЛИКОМ (отношение 0,67), из-за которого правило и понадобилось: на
+    # полную высоту кадра он даёт около четверти площади вместо требуемых
+    # §5.9 сорока процентов, и сборка обязана это сказать, а не принять.
+    "[кадр] hero": ("s98", """---
+id: s98
+type: case
+title: "Проба на недостаточный hero"
+source: "—"
+media: "rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya.png"
+media_hero: true
+media_caption: "подпись пробы"
+---
+
+## Видимый текст слайда
+
+Короткое тело.
+
+## Заметки лектора
+
+проба
+"""),
 }
 
 
@@ -1376,13 +1555,17 @@ def selftest():
     if base:
         bad.append("чистый кадр выдал предупреждение — проверка шумит")
 
-    for tag, (sid, txt) in _BROKEN.items():
+    # Ключ — «тег» или «тег слово»: под одним тегом живёт больше одной
+    # проверки (у `[высота]` своя мера у тела и своя у подвала), и слово
+    # после тега отличает одну от другой.
+    for key, (sid, txt) in _BROKEN.items():
+        tag, _, need = key.partition(" ")
         w = run([(f"{sid}-broken.md", txt)])
-        hit = [x for x in w if x.startswith(tag)]
+        hit = [x for x in w if x.startswith(tag) and (not need or need in x)]
         mark = "ЛОВИТ" if hit else "НЕ ЛОВИТ"
-        print(f"{tag:<11} на сломанном входе: {mark}"
-              + (f"  →  {hit[0][:96]}" if hit else ""))
-        (ok if hit else bad).append(tag)
+        print(f"{key:<16} на сломанном входе: {mark}"
+              + (f"  →  {hit[0][:92]}" if hit else ""))
+        (ok if hit else bad).append(key)
 
     # Гиперссылки проверяются на ЧИСТОМ кадре: у него один адрес в подвале и
     # один в заметках. Самоотчёт не принимается — считаются `r:id` в XML.

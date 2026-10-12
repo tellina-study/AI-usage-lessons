@@ -319,7 +319,8 @@ slides:
     plan_section: "Раздел 9. Закрытие"
     chapter_ref: "chapter-part5b.md §12.2"
     timing_min: 0.85
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: acquired }
+    media_asset: "rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya-verkh.png"
   - id: s106
     local_id: "s9-03"                      # № 106 в SLIDE-PLAN.md
     file: slides/s106-voprosy.md
@@ -347,11 +348,12 @@ totals:
     "под рез": 2
     "не режется": 1
   media:                         # разбор и адреса — deck/images.md
-    acquired: 8                   # лежит в deck/assets/, лицензия проверена поимённо
-    real_image_needed: 39          # просит настоящий снимок по своему media_needed, не добыт
+    acquired: 9                   # лежит в deck/assets/, лицензия проверена поимённо
+    real_image_needed: 38          # просит настоящий снимок по своему media_needed, не добыт
     builder_drawn: 47              # схема, плашки, матрица, таблица — снимок не нужен
     no_decision: 16                # media_needed пусто: вопрос не задавали
-    note: "поле media во ВСЕХ 110 файлах кадров пока пусто — каталог slides/ держит другая сессия; пути для восьми добытых в deck/images.md §1"
+    wired: 1                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
+    note: "вкручен в сборку пока один кадр — обязательный hero s105 (`media` + `media_hero` + `media_caption`); у остальных восьми добытых поле media ещё пусто, пути в deck/images.md §1"
 
 # РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:
 # манифест описывает то, что есть на диске, а решение по каждому — владельца.

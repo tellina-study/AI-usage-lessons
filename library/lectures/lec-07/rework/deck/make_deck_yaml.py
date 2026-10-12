@@ -218,7 +218,8 @@ ACQUIRED = {
  's40':'rework/deck/assets/s40-dva-effekta-s-intervalami.png',
  's44':'rework/deck/assets/s44-srez-razmetka-cheloveka-i-modeli.png',
  's52':'rework/deck/assets/s52-sestrinskiy-post.jpg',
- 's88':'rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg'}
+ 's88':'rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg',
+ 's105':'rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya-verkh.png'}
 secs = OrderedDict()
 for f in files:
     d = fm(f); secs.setdefault(d['section'], []).append((f, d))
@@ -304,7 +305,8 @@ def slide_block(f, d, W, cur):
     W("    marks: { in_bucket: %s, vfy: %s, status: %s, media_status: %s }\n"
       % (d['in_bucket'], d['vfy'], q(d['status']), ms))
     if sid in ACQUIRED:
-        W("    media_asset: %s   # поле media в файле кадра ещё пусто, см. deck/images.md §1\n" % q(ACQUIRED[sid]))
+        W("    media_asset: %s%s\n" % (q(ACQUIRED[sid]),
+          "" if mv else "   # поле media в файле кадра ещё пусто, см. deck/images.md §1"))
 
 SPLIT = [
     ('deck.yaml',       ['0. Вход','1. Отбор — кого вообще смотреть','2. Анализ данных — и группа, на которой он посчитан']),
@@ -415,7 +417,9 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
           % sum(1 for _, d in flat if d['id'] not in REAL and (d.get('media_needed') or '').strip()))
         W("    no_decision: %d                # media_needed пусто: вопрос не задавали\n"
           % sum(1 for _, d in flat if not (d.get('media_needed') or '').strip()))
-        W("    note: \"поле media во ВСЕХ 110 файлах кадров пока пусто — каталог slides/ держит другая сессия; пути для восьми добытых в deck/images.md §1\"\n")
+        W("    wired: %d                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку\n"
+          % sum(1 for _, d in flat if (d.get('media') or '').strip()))
+        W("    note: \"вкручен в сборку пока один кадр — обязательный hero s105 (`media` + `media_hero` + `media_caption`); у остальных восьми добытых поле media ещё пусто, пути в deck/images.md §1\"\n")
         W("\n")
         W("# РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:\n")
         W("# манифест описывает то, что есть на диске, а решение по каждому — владельца.\n")

@@ -60,6 +60,31 @@ def blocks_h(blocks, size, w):
     return h + GAP_BLOCK * max(0, len(blocks) - 1)
 
 
+def blocks_frames(blocks, size, w):
+    """Блоки потока → `(куски, ширина рамки)` для `metrics.wrap_risk`.
+
+    Таблица пропускается нарочно: её перенос идёт по ячейкам со своей мерой
+    ширины столбцов и своим предупреждением `[столбец]`, и мерить её
+    абзацной рамкой значило бы считать риск не там, где он есть."""
+    out = []
+    for kind, val in blocks:
+        if kind == "table":
+            continue
+        bold = "**" in val
+        out.append(([(plain(_blk_text(val)),
+                      size + (ACCENT_DELTA if bold else 0.0), bold, False)],
+                    blk_width(kind, w)))
+    return out
+
+
+def blocks_line_h(blocks, size):
+    """Высота одной строки тела — тем кеглем, которым набран самый крупный
+    блок. Столько стоит ОДИН несовпавший перенос."""
+    bold = any("**" in v for _k, v in blocks)
+    return (size + (ACCENT_DELTA if bold else 0.0)) * LS * metrics.LH / 72.0 \
+        * metrics.SAFE
+
+
 def fit_blocks(blocks, w, h, *, tag="", hi=HI, floor=FLOOR,
                readable=READABLE):
     """Наибольший кегль, при котором тело влезает в w × h.
@@ -90,6 +115,9 @@ def fit_blocks(blocks, w, h, *, tag="", hi=HI, floor=FLOOR,
     elif f < readable:
         report.warn(f"[кегль] {tag}: тело ужалось до {f:.1f} пт "
                     f"(< {readable:.1f})")
+    metrics.check_thin_margin(blocks_frames(blocks, f, w), h,
+                              blocks_h(blocks, f, w),
+                              blocks_line_h(blocks, f), tag)
     return f
 
 
@@ -186,6 +214,13 @@ def two_columns(s, blocks, x, y, w, h, tag, *, hi=HI, floor=FLOOR,
     elif f < readable:
         report.warn(f"[кегль] {tag}: две колонки ужались до {f:.1f} пт "
                     f"(< {readable:.1f})")
+    if ok:
+        hs = [block_h(k, v, f, cw) for k, v in blocks]
+        for side, part, used in (("лев", blocks[:i], col_pair(hs, i)[0]),
+                                 ("прав", blocks[i:], col_pair(hs, i)[1])):
+            metrics.check_thin_margin(blocks_frames(part, f, cw), h, used,
+                                      blocks_line_h(part, f),
+                                      f"{tag}/{side}")
     flow(s, blocks[:i], x, y, cw, f, f"{tag}/лев")
     flow(s, blocks[i:], x + cw + col_gap, y, cw, f, f"{tag}/прав")
     prims.rect(s, x + cw + col_gap / 2 - 0.005, y, 0.01, h, OUTLINE,

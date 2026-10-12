@@ -341,7 +341,7 @@ slides:
     chapter_ref: "chapter-part1b.md §2.4"
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg"
+    media_asset: "rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
   - id: s27
     local_id: "s2-05"                      # № 27 в SLIDE-PLAN.md
     file: slides/s27-chto-rabotaet-i-chto-net-analiz.md

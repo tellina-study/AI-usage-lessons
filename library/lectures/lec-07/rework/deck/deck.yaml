@@ -248,7 +248,7 @@ slides:
     title: "Что здесь получилось, что не получилось, и что про это публикуют"
     chapter_ref: "chapter-part1b.md §1.4"
     timing_min: 1.0
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s16
     local_id: "s1-07"                      # № 16 в SLIDE-PLAN.md
     file: slides/s16-chat-bot-pervoy-linii.md

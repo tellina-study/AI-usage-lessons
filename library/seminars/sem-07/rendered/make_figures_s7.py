@@ -3,10 +3,10 @@
 
     teoriya-protsess-trigger-shagi.png   n03  триггер → шаг → шаг → результат
     teoriya-dannye-spiskom.png           n04  список из трёх, узел исполняется трижды
-    k1-shema-tri-uzla.png                n09  форма → шаг модели → строка в таблице
-    k2-shema-izvlechenie.png             n14  то же, средний узел отдаёт три поля
-    k3-shema-dve-vetki.png               n19  у среднего узла второй выход, обе ветки в таблицу
-    vyhod-shema-pyat-uzlov.png           n27  процесс занятия целиком
+    k1-shema-pyat-uzlov.png              n09  форма → извлечение → справочник → строка → экран
+    k2-shema-trudnye-zayavki.png         n14  тот же процесс, разобранный на трудных заявках
+    k3-shema-dve-vetki.png               n19  у извлечения второй выход, у отказа свой экран
+    vyhod-shema-protsess.png             n27  процесс занятия целиком
 
 **Почему схемы инструменто-агностичны.** §3 концепции: первый слой подачи —
 принципиальная схема без имён вендора, второй — снимок живого холста. Поэтому на
@@ -32,12 +32,20 @@ NH = 54            # полувысота узла
 
 
 def node(d, cx, cy, w, top, bottom, *, fill=SURF, stroke=LIGHT, tcol=DEEP,
-         bcol=MUTE, tsz=26, bsz=19, wd=3, where="узел"):
+         bcol=MUTE, tsz=26, bsz=19, wd=3, where="узел", num=None):
     """Узел процесса: прямоугольник со скруглением, имя и пояснение под ним.
     Один вид на все схемы — именно поэтому стадии опознаются как «тот же, плюс
-    одно», а не сличаются построчно."""
+    одно», а не сличаются построчно.
+
+    `num` — номер шага в кружке у левого верхнего угла. Те же номера стоят в
+    вводной на форме и в разделах экрана результата: соответствие «что я вижу»
+    ↔ «какой это узел» зал не додумывает (владелец, 2026-10-12)."""
     d.rounded_rectangle([cx - w / 2, cy - NH, cx + w / 2, cy + NH], radius=14,
                         fill=fill, outline=stroke, width=wd)
+    if num is not None:
+        bx, by, r = cx - w / 2, cy - NH, 17
+        d.ellipse([bx - r, by - r, bx + r, by + r], fill=stroke, outline=W, width=3)
+        clabel(d, bx, by - 11, str(num), 21, W, True, where=f"номер {num}")
     ft, fb = f(tsz, True), f(bsz)
     th = tsz + bsz + 9
     y = cy - th / 2
@@ -134,60 +142,63 @@ def f_spiskom():
 
 def protsess(stage):
     """Схемы n09 / n14 / n19 / n27. `stage` = 1..4, и каждая следующая
-    добавляет к предыдущей ровно одно: поля на выходе (2), вторую ветку (3),
-    повтор и публикацию (4). Координаты общие — расхождению взяться негде."""
-    h = 440 if stage >= 3 else 400
+    добавляет к предыдущей ровно одно: трудные заявки (2), вторую ветку с
+    повтором (3), публикацию (4). Координаты общие — расхождению взяться негде.
+
+    Пять узлов на первой же схеме — это не усложнение, а состав решения
+    (владелец, 2026-10-12): справочник не даёт пустой темы, экран результата
+    показывает всю дорогу в том же окне, без походов в журнал и таблицу."""
+    h = 440 if stage >= 3 else 300
     im, d = canvas(h)
-    row = ROW if stage < 3 else 118
-    trig(d, 190, row, 310, T("форма"), T("заявка с сайта"))
+    row = ROW if stage < 3 else 110
 
-    mid_top = T("шаг модели") if stage == 1 else T("извлечение полей")
-    mid_bot = T("пометка темы") if stage == 1 else T("тема · срочность · контакт")
-    node(d, 700, row, 440, mid_top, mid_bot, stroke=TEAL, wd=4, where="средний узел")
-    arrow(d, 345, row, 475, row, col=MID)
+    trig(d, 150, row, 250, T("форма"), T("заявка с сайта"), num=1)
+    node(d, 470, row, 330, T("извлечение"), T("схема с перечислением"),
+         stroke=TEAL, wd=4, where="извлечение", num=2)
+    node(d, 820, row, 300, T("справочник"), T("не из списка → «другое»"),
+         stroke=GOLD, fill=WARM, wd=4, tcol=DEEP, where="справочник", num=3)
+    node(d, 1140, row, 280, T("строка"), T("в таблице"), where="строка", num=4)
+    node(d, 1450, row, 260, T("экран"), T("результата"),
+         stroke=TEAL, wd=4, where="экран", num=5)
+    for x1, x2 in ((275, 300), (635, 665), (970, 995), (1280, 1315)):
+        arrow(d, x1, row, x2, row, col=MID)
 
-    if stage == 1:
-        node(d, 1330, row, 420, T("строка в таблице"), T("один столбец"))
-        arrow(d, 920, row, 1115, row, col=MID)
-    elif stage == 2:
-        node(d, 1330, row, 420, T("строка в таблице"), T("три столбца"))
-        arrow(d, 920, row, 1115, row, col=MID)
-        for i, pole in enumerate(("тема", "срочность", "контакт")):
-            y = 250 + i * 52
-            clabel(d, 1330, y, "· " + T(pole), 22, TEAL, True,
-                   where=f"поле {i + 1}", limit=400)
+    if stage < 3:
+        # Что печатает экран результата, на схеме НЕ дублируется: об этом говорит
+        # таблица параметров на том же слайде, а лишние 90 px высоты уводили
+        # композицию слайда под поле подписи.
+        pass
     else:
-        err_row = row + 196
-        node(d, 1330, row, 420, T("строка в таблице"), T("три столбца"))
-        node(d, 1330, err_row, 420, T("та же таблица"), T("тема = не разобрано"),
+        err_row = row + 180
+        node(d, 820, err_row, 330, T("строка «не разобрано»"), T("status = not_parsed"), tsz=22,
              stroke=RED, fill=W, tcol=DEEP, where="ветка отказа")
-        arrow(d, 920, row, 1115, row, col=MID)
-        clabel(d, 1017, row - 40, T("успех"), 21, MID, True, where="метка успеха")
-        # второй выход того же узла — вниз и вправо
-        arrow(d, 700, row + NH, 700, err_row, col=RED)
-        arrow(d, 700, err_row, 1115, err_row, col=RED)
-        clabel(d, 860, err_row - 40, T("отказ вызова"), 21, RED, True,
+        node(d, 1250, err_row, 300, T("экран"), T("«не разобрана»"),
+             stroke=RED, fill=W, tcol=DEEP, where="экран отказа")
+        arrow(d, 985, err_row, 1095, err_row, col=RED)
+        arrow(d, 470, row + NH, 470, err_row, col=RED)
+        arrow(d, 470, err_row, 650, err_row, col=RED)
+        clabel(d, 700, row - 42, T("успех"), 21, MID, True, where="метка успеха")
+        clabel(d, 580, err_row - 42, T("отказ вызова"), 21, RED, True,
                where="метка отказа")
-        d.rounded_rectangle([475, row - NH - 86, 925, row - NH - 24], radius=10,
+        d.rounded_rectangle([305, row - NH - 84, 635, row - NH - 24], radius=10,
                             fill=WARM, outline=GOLD, width=3)
-        clabel(d, 700, row - NH - 76, T("повтор: 3 попытки, пауза 2 с"), 21,
-               GOLDINK, True, where="плашка повтора", limit=420)
-
-    if stage == 4:
-        d.rounded_rectangle([34, h - 76, CW - 34, h - 16], radius=12, fill=SURF,
-                            outline=LIGHT, width=3)
-        clabel(d, CW / 2, h - 66, T("Боевые прогоны идут по опубликованной версии."),
-               24, DEEP, True, where="подпись публикации")
+        clabel(d, 470, row - NH - 74, T("повтор: 3 попытки"), 21, GOLDINK, True,
+               where="плашка повтора", limit=310)
+        if stage == 4:
+            d.rounded_rectangle([34, h - 72, CW - 34, h - 16], radius=12, fill=SURF,
+                                outline=LIGHT, width=3)
+            clabel(d, CW / 2, h - 62, T("Боевые прогоны идут по опубликованной версии."),
+                   24, DEEP, True, where="подпись публикации")
 
     items = [("trig", "триггер"), ("node", "шаг")]
     if stage >= 3:
         items.append(("err", "ветка отказа"))
-    legend(d, h - (118 if stage == 4 else 46), items)
+    legend(d, h - (112 if stage == 4 else (46 if stage >= 3 else 34)), items)
 
     # Имя передаётся С РАСШИРЕНИЕМ: `fig_toolkit.save` отдаёт его прямо в
     # `Image.save`, а тот выводит формат из расширения и без него падает.
-    save(im, {1: "k1-shema-tri-uzla.png", 2: "k2-shema-izvlechenie.png",
-              3: "k3-shema-dve-vetki.png", 4: "vyhod-shema-pyat-uzlov.png"}[stage])
+    save(im, {1: "k1-shema-pyat-uzlov.png", 2: "k2-shema-trudnye-zayavki.png",
+              3: "k3-shema-dve-vetki.png", 4: "vyhod-shema-protsess.png"}[stage])
 
 
 def main():

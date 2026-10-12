@@ -81,10 +81,12 @@ class SchemeStyle:
     arrow_w: float = 0.30
     arrow_h: float = 0.16
     gap: float = 0.09              # просвет бокс — стрелка
+    nogap: float = 0.16            # просвет бокс — бокс, когда стрелок нет
     row_gap: float = 0.18
     cap_pt: float = 11.0
     cap_ls: float = 1.14
     cap_gap: float = 0.08
+    ai_by_word: bool = True        # узнавать шаг модели шаблоном по словам
     max_steps: int = 4             # владелец: «не надо длинный пайплайн»
     max_rows: int = 3
     min_step_w: float = 0.95       # уже этого бокс не читается
@@ -117,10 +119,21 @@ def scheme_of(sl, st=DEFAULT):
             if isinstance(item, dict):
                 t = str(item.get("text") or item.get("step") or "").strip()
                 flag = item.get("ai")
-                ai = bool(flag) if flag is not None else bool(AI_WORD.search(t))
             else:
-                t = str(item).strip()
-                ai = bool(AI_WORD.search(t))
+                t, flag = str(item).strip(), None
+            # ЯВНОЕ сильнее шаблона — в обе стороны, и `ai: false` тоже.
+            # `ai_by_word=False` снимает шаблон целиком: дека, у которой он
+            # измеренно врёт, объявляет шаг модели сама. Замерено на Лекции 7
+            # (17 схем): шаблон золотит пять шагов, четыре из них по ошибке
+            # («Отказ от модели бизнеса» — модель БИЗНЕСА, «Распечатка вывода
+            # модели» — документ на столе, а не шаг), и пропускает те две
+            # схемы, где шаг модели настоящий и в них весь смысл (`s18`
+            # «без модели / с моделью», `s62` «было / стало»): там слово
+            # «модель» стоит в ПОДПИСИ ряда, а не в тексте шага.
+            if flag is not None:
+                ai = bool(flag)
+            else:
+                ai = bool(AI_WORD.search(t)) if st.ai_by_word else False
             if t:
                 steps.append({"text": t, "ai": ai})
         if not steps:
@@ -132,12 +145,25 @@ def scheme_of(sl, st=DEFAULT):
         return None
     sch = {"caption": str(raw.get("caption") or "").strip(), "rows": rows}
     sch["lab_w"] = st.lab_w if any(r["label"] for r in rows) else 0.0
+    # `arrows: false` — ряд не конвейер, а перечень: четыре участника надзора
+    # стоят рядом, и стрелка между ними соврала бы о порядке, которого нет.
+    # Поле читается явно: ядро, которое его молча игнорировало, рисовало на
+    # таком ряду три стрелки (`s70` Лекции 7) — то есть превращало состав
+    # участников в последовательность.
+    sch["arrows"] = raw.get("arrows", True) is not False
     return sch
+
+
+def _box_gap(sch, st):
+    """Просвет между боксами: со стрелкой внутри либо без неё."""
+    if sch.get("arrows", True):
+        return st.arrow_w + 2 * st.gap
+    return st.nogap
 
 
 def _step_w(sch, n, w, st):
     avail = w - sch["lab_w"] - (st.lab_gap if sch["lab_w"] else 0.0)
-    return (avail - (n - 1) * (st.arrow_w + 2 * st.gap)) / max(n, 1)
+    return (avail - (n - 1) * _box_gap(sch, st)) / max(n, 1)
 
 
 def _step_iw(sch, r, w, st):
@@ -145,6 +171,16 @@ def _step_iw(sch, r, w, st):
     `W_SAFE`, по той же причине: запас нужен решению «сколько строк»."""
     return max(0.3, (_step_w(sch, len(r["steps"]), w, st) - 2 * st.step_pad)
                * metrics.W_SAFE)
+
+
+def _rows(text, f, iw):
+    """Строк, которые займёт текст шага. `\n` — РАЗРЫВ АБЗАЦА, а не пробел:
+    `text_box` рисует его отдельным абзацем, и мера обязана считать так же.
+    Прежде здесь стоял `n_lines` по всей строке: он считал «Разработчик\nкон-
+    тролирует…» одним потоком и недомеривал карточку участника на строку —
+    бокс выходил ниже текста (`s70` Лекции 7). Та же арифметика, что в
+    `metrics.est_h`, который `\n` делит с самого начала."""
+    return sum(metrics.n_lines(p, f, iw, True) for p in text.split("\n"))
 
 
 def _longest(text, f):
@@ -159,7 +195,7 @@ def _step_fits(sch, f, w, st):
     for r in sch["rows"]:
         iw = _step_iw(sch, r, w, st)
         for step in r["steps"]:
-            if metrics.n_lines(step["text"], f, iw, True) > st.step_rows:
+            if _rows(step["text"], f, iw) > st.step_rows:
                 return False
             if metrics.text_w(_longest(step["text"], f), f, True) > iw * 72.0:
                 return False
@@ -183,10 +219,9 @@ def _line_h(size, ls):
 
 def _box_h(sch, w, f, st):
     rows = max(min(st.step_rows,
-                   metrics.n_lines(
-                       step["text"], f,
-                       max(0.3, _step_w(sch, len(r["steps"]), w, st)
-                           - 2 * st.step_pad), True))
+                   _rows(step["text"], f,
+                         max(0.3, _step_w(sch, len(r["steps"]), w, st)
+                             - 2 * st.step_pad)))
                for r in sch["rows"] for step in r["steps"])
     return max(st.box_min_h, rows * _line_h(f, st.step_ls) + st.box_extra)
 
@@ -256,9 +291,10 @@ def draw_scheme(s, sid, sch, x, y, w, st=DEFAULT, tag=None):
         sw = _step_w(sch, len(r["steps"]), w, st)
         for j, step in enumerate(r["steps"], 1):
             if j > 1:
-                prims.arrow(s, cx + st.gap, cy + bh / 2 - st.arrow_h / 2,
-                            st.arrow_w, st.arrow_h, LIGHT)
-                cx += st.arrow_w + 2 * st.gap
+                if sch.get("arrows", True):
+                    prims.arrow(s, cx + st.gap, cy + bh / 2 - st.arrow_h / 2,
+                                st.arrow_w, st.arrow_h, LIGHT)
+                cx += _box_gap(sch, st)
             prims.ocean_box(s, cx, cy, sw, bh,
                             fill=WHITE if step["ai"] else SURFACE,
                             stroke=GOLD if step["ai"] else LIGHT,

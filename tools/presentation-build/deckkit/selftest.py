@@ -26,6 +26,7 @@ import tempfile
 from pathlib import Path
 
 from PIL import Image
+from pptx.enum.shapes import MSO_SHAPE
 
 from . import (markup, metrics, plates, prims, probes, refdeck, regress,
                report, scheme, tables)
@@ -314,6 +315,89 @@ def probe_scheme_ai():
             "«нейросеть» да, «Моделирование» нет")
 
 
+def probe_scheme_ai_explicit():
+    """ЯВНОЕ сильнее шаблона в ОБЕ стороны, и `ai_by_word=False` снимает
+    шаблон. Без этой пробы деке, у которой шаблон врёт (Лекция 7: четыре
+    ложных золота из пяти), осталось бы только мириться с ним."""
+    class S:
+        sid = "s01"
+        meta = {"scheme": {"rows": [{"steps": [
+            "модель отбирает спорное",            # шаблон: да
+            {"text": "модель отбирает", "ai": False},   # явное НЕТ сильнее
+            {"text": "вычитка инженером", "ai": True},  # явное ДА сильнее
+        ]}]}}
+    off = scheme.SchemeStyle(ai_by_word=False)
+    by_word = [x["ai"] for x in scheme.scheme_of(S(), scheme.DEFAULT)["rows"][0]["steps"]]
+    no_word = [x["ai"] for x in scheme.scheme_of(S(), off)["rows"][0]["steps"]]
+    if by_word != [True, False, True] or no_word != [False, False, True]:
+        BAD.append(f"[схема-явное] по шаблону {by_word}, без шаблона "
+                   f"{no_word} — ожидалось [да,нет,да] и [нет,нет,да]")
+    else:
+        OK.append("[схема-явное]")
+        say(f"{'[схема-явное]':<24} явное против шаблона: ЛОВИТ  →  "
+            "`ai: false` гасит шаблон, `ai: true` ставит шаг без слова, "
+            "`ai_by_word=False` снимает шаблон целиком")
+
+
+def probe_scheme_arrows():
+    """`arrows: false` — ряд перечень, а не конвейер: стрелок нет, и
+    просвет между боксами свой. Ядро поле игнорировало, то есть рисовало на
+    перечне участников три стрелки (`s70` Лекции 7) — порядок, которого в
+    материале нет."""
+    class S:
+        sid = "s01"
+        meta = {"scheme": {"arrows": False,
+                           "rows": [{"steps": ["раз", "два", "три"]}]}}
+    class T:
+        sid = "s01"
+        meta = {"scheme": {"rows": [{"steps": ["раз", "два", "три"]}]}}
+    off = scheme.scheme_of(S(), scheme.DEFAULT)
+    on = scheme.scheme_of(T(), scheme.DEFAULT)
+    w_off = scheme._step_w(off, 3, 12.0, scheme.DEFAULT)
+    w_on = scheme._step_w(on, 3, 12.0, scheme.DEFAULT)
+    def arrows_drawn(sch):
+        p = prims.new_deck()
+        sl = prims.blank(p)
+        scheme.draw_scheme(sl, "s01", sch, 0.5, 0.5, 12.0, scheme.DEFAULT)
+        n = 0
+        for sh in sl.shapes:
+            try:
+                n += 1 if sh.auto_shape_type == MSO_SHAPE.RIGHT_ARROW else 0
+            except (AttributeError, ValueError):
+                pass
+        return n
+    n_off, n_on = arrows_drawn(off), arrows_drawn(on)
+    if n_off != 0 or n_on != 2 or not w_off > w_on:
+        BAD.append(f"[схема-стрелки] без стрелок нарисовано {n_off}, со "
+                   f"стрелками {n_on}, бокс {w_off:.2f} против {w_on:.2f} — "
+                   "поле `arrows` снова ничего не меняет")
+    else:
+        OK.append("[схема-стрелки]")
+        say(f"{'[схема-стрелки]':<24} `arrows: false`: ЛОВИТ  →  стрелок 0 "
+            f"против 2, бокс шире ({w_off:.2f}\" против {w_on:.2f}\")")
+
+
+def probe_scheme_newline():
+    """Перевод строки внутри шага — РАЗРЫВ АБЗАЦА, и мера обязана считать
+    его так же, как его рисует `text_box`. Прежде мера считала шаг одним
+    потоком и недомеривала карточку участника на строку: бокс выходил ниже
+    своего текста (`s70` Лекции 7, карточка «Разработчик»)."""
+    flat = "Разработчик контролирует данные"
+    para = "Разработчик\nконтролирует данные"
+    iw = 3.00
+    n_flat = scheme._rows(flat, 11.5, iw)
+    n_para = scheme._rows(para, 11.5, iw)
+    n_blind = metrics.n_lines(para, 11.5, iw, True)
+    if not (n_para > n_blind and n_para == n_flat + 1):
+        BAD.append(f"[схема-абзац] по абзацам {n_para}, одним потоком "
+                   f"{n_blind}, без разрыва {n_flat} — мера снова считает "
+                   "перевод строки пробелом")
+    else:
+        OK.append("[схема-абзац]")
+        say(f"{'[схема-абзац]':<24} разрыв абзаца в шаге: ЛОВИТ  →  строк "
+            f"{n_para} против {n_blind}, которые давала мера одним потоком")
+
+
 def probe_shadow():
     """Тень снимается удалением `<p:style>`, и флаг делает ровно то, что
     обещает. По умолчанию — снимается: это разногласие двух сборщиков,
@@ -442,6 +526,9 @@ def selftest():
     probe_col_min()
     probe_zebra(tmp)
     probe_scheme_ai()
+    probe_scheme_ai_explicit()
+    probe_scheme_arrows()
+    probe_scheme_newline()
     probe_shadow()
     probe_font_gap()
     probe_live_links(tmp)

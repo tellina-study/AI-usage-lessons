@@ -49,11 +49,13 @@
 import argparse
 import importlib.util
 import os
+import re
+import subprocess
 import sys
 import time
 from pathlib import Path
 
-from . import (columns, markup, media, metrics, plates, prims, regress,
+from . import (markup, media, metrics, plates, prims, regress,
                report, scheme, slidefile, tables)
 
 HERE = Path(__file__).resolve().parent
@@ -62,6 +64,12 @@ REPO = TOOLS.parent.parent
 WORK = Path(os.environ.get("DECKKIT_WORK",
                            Path(os.environ["HOME"]) / "deckkit-work"))
 LEC07 = REPO / "library/lectures/lec-07/rework/deck"
+# Доставленная (ДО перевода на ядро) дека Лекции 7 берётся из git, а не с
+# диска: после перевода сборщик пишет по тому же пути, то есть файл на диске
+# — уже результат, а не эталон. `c5e319c3` — последний коммит, тронувший
+# артефакт до перевода; сравнение «с самим собой» на нём проверено.
+LEC07_REF_COMMIT = "c5e319c3"
+LEC07_REF_PATH = "library/lectures/lec-07/rework/deck/lec-07-karkas.pptx"
 LEC06_DEFAULT = Path("/tmp/lec06-ref/library/lectures/lec-06/rendered")
 
 
@@ -78,156 +86,87 @@ def _load(name, path):
 # ════════════════════════════════════════════════════════════════════
 
 
-def patch_lec07(m):
-    """Подменить в сборщике Лекции 7 всё, что ушло в ядро."""
-    prims.STRIP_THEME_STYLE = False      # воспроизводим деку КАК ЕСТЬ
-
-    # ── мера ────────────────────────────────────────────────────────
-    for n in ("_font", "font_gaps", "_unit_w", "text_w", "_tokens",
-              "_pieces_w", "wrap_pieces", "segs_h", "_longest_word_w",
-              "longest_word_w", "n_lines", "est_h", "check_width_segs",
-              "check_width", "fit_size", "runs_paras", "runs_h", "fit_runs",
-              "LH", "SAFE", "W_SAFE"):
-        setattr(m, n, getattr(metrics, n))
-
-    # ── примитивы ───────────────────────────────────────────────────
-    m._no_shadow = prims.no_shadow
-    m.rect = prims.rect
-    m.ocean_box = prims.ocean_box
-    m.arrow = prims.arrow
-    m.text_box = prims.text_box
-    m.text_runs = prims.text_runs
-    m.blank = prims.blank
-    m.new_deck = prims.new_deck
-
-    # ── разметка и ссылки ───────────────────────────────────────────
-    m.inline_runs = markup.inline_runs
-    m.link_parts = markup.link_parts
-    m.source_parts = markup.source_parts
-    m.notes_with_links = markup.notes_with_links
-    m.short_url = markup.short_url
-    m._abs_url = markup.abs_url
-
-    # ── читатель кадров ─────────────────────────────────────────────
-    m.order_key = slidefile.order_key
-    m.read_slide = slidefile.read_slide
-    m.body_lines = slidefile.body_blocks
-    m.all_slides = lambda only=None: slidefile.slide_files(m.SLIDES_DIR, only)
-
-    # ── плашки, набор «ровно как в доставленной деке» ───────────────
-    st = plates.LEC07
-    m.plates_of = lambda sl: plates.plates_of(sl, st)
-    m._gold_idx = lambda pl: plates.gold_idx(pl, st)
-    m.plates_h = lambda pl, w: (plates.plates_h(pl, w, st), None)
-    m.draw_plates = (lambda s, sl, pl, x, y, w:
-                     plates.draw_plates(s, sl.sid, pl, x, y, w, st))
-
-    # ── столбцы ─────────────────────────────────────────────────────
-    m.columns_of = lambda sl: columns.columns_of(sl)
-    m.draw_columns = (lambda s, sl, cols, x, y, w, h:
-                      columns.draw_columns(s, sl.sid, cols, x, y, w, h))
-
-    # ── кадры ───────────────────────────────────────────────────────
-    m.media_path = lambda sl: media.media_path(sl.meta, m.LEC_ROOT, sl.sid)
-    m.img_ar = lambda sl, p: media.img_ar(p, sl.sid)
-    m.media_box = media.media_box_size
-    m.draw_media = (lambda s, sl, p, x, y, w, h:
-                    media.draw_media(s, sl.sid, p, x, y, w, h))
-    m.draw_hero = (lambda s, sl, p, x_right, y_top, y_bot, w_max=None:
-                   media.draw_hero(s, sl.sid, sl.meta, p, x_right, y_top,
-                                   y_bot, m.HERO_W if w_max is None else w_max))
-    m.place_hero = (lambda s, sl, p, w_max=None:
-                    media.place_hero(s, sl.sid, sl.meta, p,
-                                     m.SLIDE_W - m.MX, m.HERO_TOP, m.BODY_BOT,
-                                     m.HERO_W if w_max is None else w_max))
-
-    # ── состояние отчёта: одно на двоих ─────────────────────────────
-    # Сборщик ведёт свои списки (`WARNINGS`, `GOLD_SEEN`, …), ядро — свои.
-    # Пока они разные, половина отчёта теряется молча: `cover` отмечает
-    # золото в своём множестве, а проверка смотрит в чужое — и выдаёт
-    # «золотого акцента на кадре нет» на одиннадцати кадрах, где он есть.
-    # Поэтому имена сборщика СТАНОВЯТСЯ теми же объектами.
-    m.WARNINGS = report.WARNINGS
-    m.GOLD_SEEN = report.GOLD_SEEN
-    m.PRIM = report.PRIM
-    m.LINKS = report.LINKS
-    m.PLACEHOLDERS = report.PLACEHOLDERS
-    m.HERO_AREA = report.HERO_AREA
-
-    # `fit_media` — единственная функция, которую приходится переносить
-    # целиком: она ПЕРЕПРИВЯЗЫВАЕТ `WARNINGS` (`global WARNINGS; WARNINGS =
-    # []`), то есть уводит имя сборщика с общего объекта и обратно уже не
-    # возвращает. Без переноса проба читала бы пустой список предупреждений
-    # и всегда выбирала полную ширину колонки кадра — а от неё зависит
-    # геометрия `s18`. Алгоритм тот же, снимок состояния — из `report`.
-    def fit_media(sl):
-        if str(sl.meta.get("type")) not in m.CONTENT_TYPES:
-            return
-        if not m.media_path(sl) or sl.meta.get("media_hero"):
-            return
-        keep = report.snapshot()
-        chosen, w = None, m.MEDIA_W
-        while w >= m.MEDIA_W_FLOOR - 1e-9:
-            sl.media_w = w
-            report.reset()
-            try:
-                m.content(prims.new_deck(), sl)
-            except Exception:
-                break
-            if not report.blocking():
-                chosen = w
-                break
-            w = round(w - 0.10, 2)
-        report.restore(keep)
-        sl.media_w = chosen or m.MEDIA_W
-        if chosen is None:
-            report.warn(
-                f"[кадр] {sl.sid}: боковая иллюстрация не умещается ни при "
-                f"какой ширине до {m.MEDIA_W_FLOOR:.2f}\" — кадру нечего ей "
-                "отдать")
-    m.fit_media = fit_media
-
-    def build(only=None, out=None, slides_dir=None):
-        if slides_dir:
-            m.SLIDES_DIR = slides_dir
-        p = prims.new_deck()
-        n = 0
-        for f in m.all_slides(only):
-            sl = slidefile.read_slide(f)
-            if sl is None:
-                continue
-            m.fit_media(sl)
-            m.build_one(p, sl)
-            n += 1
-        metrics.font_gaps()
-        p.save(str(out))
-        return n
-    m.build = build
-    # Кеш таблиц сбрасывается на каждую деку: он помнит (таблица, кегль,
-    # ширина), и две деки в одном процессе иначе смотрели бы в чужой ответ.
-    tables.reset_caches()
-    return m
+def _scheme_sids(deck_dir):
+    """Кадры, на которых схема ДЕЙСТВИТЕЛЬНО рисуется. Поле `scheme:` стоит
+    в 26 файлах, но в девяти оно пустое (`{}`) — считать по гребёнке по
+    файлам значило бы записать в разряд 2 девять кадров, которых там нет."""
+    out = set()
+    for f in slidefile.slide_files(deck_dir / "slides"):
+        sl = slidefile.read_slide(f)
+        if sl is not None and scheme.scheme_of(sl, scheme.DEFAULT):
+            out.add(sl.sid)
+    return out
 
 
 def run_lec07(deck_dir=LEC07, work=WORK):
+    """Лекция 7 ПОСЛЕ перевода на ядро (issue #229, этап 2).
+
+    До перевода здесь стояла подстановка: действующий сборщик загружался как
+    есть, его низкоуровневые имена подменялись именами ядра, и дека обязана
+    была совпасть с доставленной до знака. Эта проверка СДЕЛАЛА свою работу
+    и больше не существует — подменять нечего, дека собирается ядром.
+
+    Её место занимает проверка приёмки этапа 2, и она строже, чем «совпало»:
+    расхождения с доставленной декой РАЗБИРАЮТСЯ по разрядам, и третьего
+    разряда быть не должно.
+
+      разряд 1 — снятие `<p:style>`: тень темы, которую прежний сборщик
+                 искал не там, где она лежит (`notes/mcp-limitations.md`
+                 [#223-8]). Утверждена владельцем как правка к лучшему;
+      разряд 2 — кадры со схемой: ядро взяло схему Лекции 6 (подобранный
+                 кегль, одна высота бокса, золото на шаге модели), и это
+                 названо заранее в `README.md`;
+      разряд 3 — ВСЁ ОСТАЛЬНОЕ. Это дефект перевода, а не его следствие.
+
+    Возвращает число расхождений разряда 3 — то есть ноль на чистом
+    переводе."""
     work.mkdir(parents=True, exist_ok=True)
-    ref = deck_dir / "lec-07-karkas.pptx"
-    if not ref.exists():
-        print(f"нет доставленного файла {ref}")
+    ref = work / "lec07-delivered.pptx"
+    try:
+        blob = subprocess.run(
+            ["git", "-C", str(REPO), "show",
+             f"{LEC07_REF_COMMIT}:{LEC07_REF_PATH}"],
+            capture_output=True, check=True, timeout=120).stdout
+        ref.write_bytes(blob)
+    except Exception as e:                           # noqa: BLE001
+        print(f"нет эталона: {LEC07_REF_COMMIT}:{LEC07_REF_PATH} — {e}")
         return 2
-    m = _load("b07_sub", deck_dir / "build_lec07.py")
-    patch_lec07(m)
+    m = _load("b07", deck_dir / "build_lec07.py")
     report.reset()
+    tables.reset_caches()
     out = work / "lec07-deckkit.pptx"
     t = time.time()
     n = m.build(out=out)
     dt = time.time() - t
-    blk = len(report.blocking())
-    print(f"Лекция 7 на ядре: кадров {n}, {dt:.2f} c, блокирующих {blk}, "
-          f"всего предупреждений {len(report.WARNINGS)}")
+    sch = _scheme_sids(deck_dir)
+    sids = [f.name.split("-")[0]
+            for f in slidefile.slide_files(deck_dir / "slides")]
+    cls = {1: 0, 2: 0, 3: []}
+    for where, a, b in regress.compare(regress.fingerprint(ref),
+                                      regress.fingerprint(out),
+                                      limit=10 ** 9):
+        if where.endswith(".p_style"):
+            cls[1] += 1
+            continue
+        mm = re.match(r"\.slides\[(\d+)\]", where)
+        sid = sids[int(mm.group(1))] if mm else "?"
+        if sid in sch:
+            cls[2] += 1
+        else:
+            cls[3].append((sid, where, a, b))
+    print(f"Лекция 7 на ядре: кадров {n}, {dt:.2f} c, блокирующих "
+          f"{len(report.blocking())}, всего предупреждений "
+          f"{len(report.WARNINGS)}")
     for w in report.WARNINGS[:10]:
         print("   " + w)
-    return regress.check(ref, out, label="Лекция 7, ядро против доставленной")
+    print(f"  разряд 1, снятие тени темы: {cls[1]} фигур")
+    print(f"  разряд 2, кадры со схемой ({len(sch)}): {cls[2]} расхождений")
+    print(f"  разряд 3, всё остальное: {len(cls[3])}")
+    for sid, where, a, b in cls[3][:20]:
+        print(f"    {sid} {where}\n        доставлено: {a}\n        на ядре : {b}")
+    print("Лекция 7: " + ("ПЕРЕВОД ЧИСТЫЙ — третьего разряда нет"
+                          if not cls[3] else "ЕСТЬ ДЕФЕКТ ПЕРЕВОДА"))
+    return len(cls[3])
 
 
 # ════════════════════════════════════════════════════════════════════

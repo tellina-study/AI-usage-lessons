@@ -146,7 +146,7 @@ slides:
     chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
     timing_min: 0.5
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
+    media_asset: "rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg"
   - id: s89
     local_id: "s5-02"                      # № 89 в SLIDE-PLAN.md
     file: slides/s89-vrach-vernulsya-posle-goda.md
@@ -352,7 +352,7 @@ totals:
     real_image_needed: 38          # просит настоящий снимок по своему media_needed, не добыт
     builder_drawn: 47              # схема, плашки, матрица, таблица — снимок не нужен
     no_decision: 16                # media_needed пусто: вопрос не задавали
-    wired: 1                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
+    wired: 7                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
     note: "вкручен в сборку пока один кадр — обязательный hero s105 (`media` + `media_hero` + `media_caption`); у остальных восьми добытых поле media ещё пусто, пути в deck/images.md §1"
 
 # РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:

@@ -1,0 +1,19 @@
+{
+ "title": "File:Histopathology of tumor identification by humans and AI.png",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0",
+ "author": "Cruz-Roa A, Gilmore H, Basavanhally A, Feldman M, Ganesan S, Shih NNC",
+ "credit": "Cruz-Roa A, Gilmore H, Basavanhally A, Feldman M, Ganesan S, Shih NNC (2017). \"Accurate and reproducible invasive breast cancer detection in whole-slide images: A Deep Learning approach for quantifying tumor extent.\". Sci Rep 7: 46450. DOI:10.1038/srep46450. PMID 28418027. PMC: 5394452.\"This work is licensed under a Creative Commons Attribution 4.0 International License.\"",
+ "description": "Histopathology with identification of breast cancer by humans and AI in whole-slide images. H&amp;E stains. Original caption:(A–C) Example whole-slide images from test TCGA data cohort with ground truth annotations from pathologists, (D–F) the corresponding region predictions produced by the ConvNet classifier and (G–I) region predictions for whole-slide images from the test NC data cohort of norm",
+ "page": "https://commons.wikimedia.org/wiki/File:Histopathology_of_tumor_identification_by_humans_and_AI.png",
+ "file_url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Histopathology_of_tumor_identification_by_humans_and_AI.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "downloaded": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Histopathology_of_tumor_identification_by_humans_and_AI.png/1920px-Histopathology_of_tumor_identification_by_humans_and_AI.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+ "orig_size": "2100x1604",
+ "tier": "2 (Wikimedia Commons)",
+ "crop": "x 0-601, y 0-1046 файла s44-srez-razmetka-cheloveka-i-modeli.png — панели A (контур патологов) и D (карта вероятностей модели) ОДНОГО И ТОГО ЖЕ среза, левый столбец рисунка. Рез проведён по чёрным рамкам самих панелей: правая рамка A стоит на x 595-598, правая рамка D — на 588-590 (найдены измерением по столбцам, не на глаз; первая попытка резала по 535 и срезала боковой очаг на A). Семь остальных панелей отрезаны. Пара A/D — то, как её подаёт сам первоисточник (A–C разметка, D–F предсказания по тем же срезам), а не составленное нами сопоставление.",
+ "size": "601x1046",
+ "derivative": "вырезка. CC BY 4.0 допускает переработку при указании авторства и факта изменения; и то и другое записано в images.md строкой этого кадра.",
+ "note": "Целиком рисунок — девять панелей; в боковом слоте кадра (4,30\") каждая выходит около 1,3\" и читается как текстура. Вырезка A+D даёт панели по 1,6\" и ровно то противопоставление, о котором кадр говорит.",
+ "assigned_to": "s44 (боковая иллюстрация)",
+ "vnimanie": "Рисунок НЕ из работ, названных в подвале s44 (Kiani; Goddard). Это другая работа и другая локализация — молочная железа, не печень. Кадр показывает, КАК выглядит разметка человека и карта модели на одном срезе, и не является иллюстрацией чисел кадра."
+}

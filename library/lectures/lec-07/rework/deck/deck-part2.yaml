@@ -157,7 +157,7 @@ slides:
     chapter_ref: "chapter-part3.md § Раздел 4 (вводка), §4.1"
     timing_min: 0.5
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s52-sestrinskiy-post.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
+    media_asset: "rework/deck/assets/s52-sestrinskiy-post.jpg"
   - id: s53
     local_id: "s4-02"                      # № 53 в SLIDE-PLAN.md
     file: slides/s53-palata-obkhod-list-nablyudeniya.md

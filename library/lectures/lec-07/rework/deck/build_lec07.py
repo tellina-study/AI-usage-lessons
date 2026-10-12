@@ -490,7 +490,7 @@ _PH = re.compile(r"\{\{([^}]*)\}\}")
 
 
 class Slide:
-    __slots__ = ("sid", "path", "meta", "body", "notes", "tick_y")
+    __slots__ = ("sid", "path", "meta", "body", "notes", "tick_y", "media_w")
 
 
 def inline_runs(line, size, color=DEEP):
@@ -891,14 +891,46 @@ def media_path(sl):
     return p
 
 
-def draw_media(s, sl, p, x, y, w, h):
-    ocean_box(s, x, y, w, h)
+def img_ar(sl, p):
+    """Отношение сторон файла. Нужно ДО раскладки: ширину боковой колонки
+    назначает не слот, а сам снимок (см. `media_box_w`)."""
     try:
         from PIL import Image
         with Image.open(p) as im:
-            ar = im.width / max(1, im.height)
+            return im.width / max(1, im.height)
     except Exception as e:
         WARNINGS.append(f"[кадр] {sl.sid}: {p.name} — {e}")
+        return None
+
+
+def media_box(ar, w_slot, h_slot):
+    """Коробка боковой иллюстрации по СНИМКУ, а не по слоту.
+
+    Слот — это место, которое кадр готов отдать; коробка — то, что снимок
+    действительно занимает. Разница видна сразу: вертикальный снимок,
+    вписанный в слот 4,30×3,40", берёт от ширины полтора дюйма, а остальные
+    два с половиной держит пустыми — и ровно на эту ширину сужается текст
+    рядом. Горизонтальный поступает так же с высотой: у `s52` и `s88`
+    коробка мотива уходила на 5,10", а снимок внутри занимал 3,2", и под ним
+    висела пустая половина рамки.
+
+    Поэтому обе стороны ужимаются до самого снимка, а освободившаяся ширина
+    отдаётся телу кадра. Возвращает (ширина коробки, высота коробки).
+    """
+    if not ar:
+        return w_slot, h_slot
+    iw, ih = w_slot - 0.3, h_slot - 0.3
+    if iw / ih > ar:
+        iw = ih * ar
+    else:
+        ih = iw / ar
+    return iw + 0.3, ih + 0.3
+
+
+def draw_media(s, sl, p, x, y, w, h):
+    ocean_box(s, x, y, w, h)
+    ar = img_ar(sl, p)
+    if not ar:
         return
     iw, ih = w - 0.3, h - 0.3
     if iw / ih > ar:
@@ -925,6 +957,22 @@ HERO_TOP = 0.10        # верх кадра: выше заголовка, у с
 HERO_GAP = 0.06        # просвет между кадром и телом под ним
 HERO_PAD = 0.05        # поле между картинкой и рамкой мотива
 HERO_MIN_AREA = 0.40   # §5.9: обязательный hero — не меньше 40% площади кадра
+
+# Обложка. Своя ширина, потому что рядом с кадром стоит не колонка плашек, а
+# сплошной текст обложки, и он меряется иначе. Число найдено тем же перебором
+# по сборщику, что и HERO_W: при отношении 1,5 (снимок s01) ширина 7,79" даёт
+# 40,5% площади — порог §5.9 взят с запасом в полпроцента, не впритык, —
+# а текстовому столбцу остаётся ровно 4,00", в которые заголовок обложки на
+# 34 пт укладывается двумя строками. Шире кадр — заголовок уходит на три
+# строки и тело перестаёт влезать; уже — площадь падает под сорок процентов.
+COVER_HERO_W = 7.79
+# Текст обложки с hero поднят на 0,60" против обложки без него: в столбце
+# вчетверо уже прежнего тому же тексту нужно 5,49" высоты, а от 1,70" до низа
+# тела остаётся 5,12". Это и есть та плата за 40% площади, о которой говорит
+# §5.9, — не кегль, а начало текста. Просвет между золотой чертой и текстом
+# (0,42") сохранён прежний.
+COVER_HERO_TEXT_Y = 1.10
+COVER_HERO_GOLD_Y = 0.68
 
 
 def draw_hero(s, sl, p, x_right, y_top, y_bot, w_max=None):
@@ -977,6 +1025,26 @@ def draw_hero(s, sl, p, x_right, y_top, y_bot, w_max=None):
                          Inches(y_top + HERO_PAD), Inches(w), Inches(h))
     PRIM["кадр"] += 1
     return x_box, w * h / (SLIDE_W * SLIDE_H), y_top + box_h
+
+
+def place_hero(s, sl, p, w_max=None):
+    """Поставить обязательный hero и проверить порог §5.9 одним ходом.
+
+    Отдельной функцией, потому что мест вызова теперь ДВА — содержательный
+    кадр и обложка, — а порог и текст предупреждения обязаны быть одни. Пока
+    проверка стояла внутри `content`, обложка молча прошла бы мимо неё:
+    ровно так `s01` и оказался без hero при том, что снимок лежал в
+    `assets/` с проверенными правами. Возвращает (левый край коробки, низ).
+    """
+    x_box, area, bot = draw_hero(s, sl, p, SLIDE_W - MX, HERO_TOP, BODY_BOT,
+                                 w_max=w_max)
+    HERO_AREA[sl.sid] = area
+    if area < HERO_MIN_AREA:
+        WARNINGS.append(
+            f"[кадр] {sl.sid}: обязательный hero занял "
+            f"{100 * area:.1f}% площади кадра при пороге "
+            f"{100 * HERO_MIN_AREA:.0f}% (§5.9)")
+    return x_box, bot
 
 
 def footer(s, sl):
@@ -1037,27 +1105,40 @@ def cover(p, sl):
     rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
     check_prims(sl, "cover")
     img = media_path(sl)
-    tw = 7.10 if img else FULL_W
-    if img:
+    hero = img is not None and bool(sl.meta.get("media_hero"))
+    ty, gy = 1.70, 1.28
+    if hero:
+        x_box, _ = place_hero(s, sl, img, w_max=COVER_HERO_W)
+        tw = x_box - COL_GAP - MX
+        ty, gy = COVER_HERO_TEXT_Y, COVER_HERO_GOLD_Y
+    elif img:
+        tw = 7.10
         draw_media(s, sl, img, MX + tw + 0.40, 0.60,
                    SLIDE_W - MX * 2 - tw - 0.40, SLIDE_H - 1.60)
+    else:
+        tw = FULL_W
     lines = body_lines(sl)
     runs = []
+    # Абзац начинает ПЕРВЫЙ прогон строки, а не пустой прогон-разделитель
+    # после предыдущей. Разделитель нёс кегль ПРЕДЫДУЩЕЙ строки, а
+    # `runs_paras` берёт по абзацу максимум кегля — и абзац тела, идущий за
+    # заголовком в 34 пт, мерился как набранный 34-м. Рисовался он при этом
+    # 17-м: мера расходилась с видимым, и расхождение росло вместе с
+    # заголовком. На полной ширине обложки оно пряталось (даже втрое
+    # завышенная оценка влезала в рамку), а на узком столбце рядом с hero
+    # вылезло сразу — оценка 10,34" на тексте, которому нужно 5,49".
     for i, (kind, t) in enumerate(lines):
         sz = {"head": 34.0, "cap": 12.5}.get(kind, 17.0)
-        for r in inline_runs(t, sz, DEEP if kind != "cap" else LIGHT):
+        for j, r in enumerate(inline_runs(t, sz, DEEP if kind != "cap" else LIGHT)):
             r.setdefault("italic", kind == "cap")
-            r["newpara"] = r["newpara"] if "newpara" in r else False
+            r["newpara"] = bool(i and j == 0)
+            if r["newpara"]:
+                r["space_before"] = 12
             runs.append(r)
-        if runs:
-            runs[-1]["_end"] = True
-        if i < len(lines) - 1:
-            runs.append({"text": "", "size": sz, "newpara": True,
-                         "space_before": 12})
     if runs:
-        text_runs(s, MX, 1.70, tw, 4.20, runs, ls=1.22,
-                  anchor=MSO_ANCHOR.TOP, tag=f"{sl.sid}/обложка")
-    rect(s, MX, 1.28, 1.60, 0.07, GOLD)
+        text_runs(s, MX, ty, tw, BODY_BOT - ty if hero else 4.20, runs,
+                  ls=1.22, anchor=MSO_ANCHOR.TOP, tag=f"{sl.sid}/обложка")
+    rect(s, MX, gy, 1.60, 0.07, GOLD)
     GOLD_SEEN.add(sl.sid)
     footer(s, sl)
     return s
@@ -1071,8 +1152,9 @@ def divider(p, sl):
     img = media_path(sl)
     tw = 7.30 if img else FULL_W
     if img:
-        draw_media(s, sl, img, MX + tw + 0.40, 1.00,
-                   SLIDE_W - MX * 2 - tw - 0.40, SLIDE_H - 2.40)
+        mw, mh = media_box(img_ar(sl, img),
+                           SLIDE_W - MX * 2 - tw - 0.40, SLIDE_H - 2.40)
+        draw_media(s, sl, img, SLIDE_W - MX - mw, 1.00, mw, mh)
     lines = body_lines(sl)
     y = 1.05
     for kind, t in lines:
@@ -1115,24 +1197,23 @@ def content(p, sl):
     # во всю ширину. Иначе 40% площади под кадр и четыре примитива рядом
     # физически не совмещаются: замерено, левая колонка не доберёт 1,5".
     col_bot = BODY_BOT
+    media_bot = 0.0        # низ боковой иллюстрации; 0 — её нет
     if hero:
         # Кадр-свидетельство встаёт ПЕРВЫМ и забирает своё место целиком: от
         # него считается ширина заголовка и всего остального, а не наоборот.
-        x_box, HERO_AREA[sl.sid], col_bot = draw_hero(
-            s, sl, img, SLIDE_W - MX, HERO_TOP, BODY_BOT)
-        if HERO_AREA[sl.sid] < HERO_MIN_AREA:
-            WARNINGS.append(
-                f"[кадр] {sl.sid}: обязательный hero занял "
-                f"{100 * HERO_AREA[sl.sid]:.1f}% площади кадра при пороге "
-                f"{100 * HERO_MIN_AREA:.0f}% (§5.9)")
+        x_box, col_bot = place_hero(s, sl, img)
         body_w = x_box - COL_GAP - MX
         y = heading(s, sl, width=body_w)
     else:
         y = heading(s, sl)
-        body_w = FULL_W - (MEDIA_W + COL_GAP if img else 0.0)
+        body_w = FULL_W
         if img:
-            draw_media(s, sl, img, MX + body_w + COL_GAP, y, MEDIA_W,
-                       min(3.40, BODY_BOT - y))
+            mw, mh = media_box(img_ar(sl, img),
+                               getattr(sl, "media_w", None) or MEDIA_W,
+                               min(3.40, BODY_BOT - y))
+            body_w = FULL_W - mw - COL_GAP
+            draw_media(s, sl, img, MX + body_w + COL_GAP, y, mw, mh)
+            media_bot = y + mh
 
     plates = plates_of(sl) if sl.meta.get("type") in CONTENT_TYPES else []
     if plates and sl.meta.get("type") not in CONTENT_TYPES:
@@ -1163,6 +1244,26 @@ def content(p, sl):
         avail = col_bot - y
 
     text_w = body_w
+    if not hero and img and y >= media_bot:
+        # Боковая иллюстрация занимает правый столбец не до низа кадра, а на
+        # свои 3,40" — ниже там пусто. Тело, начавшееся ПОД ней, сужать не за
+        # чем: это тот же ход, что уже сделан для кадра-свидетельства выше.
+        # Без него s18 (две плашки, конвейер на два ряда и три абзаца) ужимал
+        # тело до 0,58 рабочего кегля и упирался в блокирующее `[кегль]` —
+        # при том, что справа под картинкой простаивала полоса 4,30×2,0".
+        text_w = FULL_W
+    if img and not hero:
+        # Та же поправка на абзацный отступ, что ниже делает ветка hero, и по
+        # той же причине — только здесь она куплена рендером, а не рассуждением.
+        # `est_h` не считает `space_before` (7 пт на абзац); на кадре без
+        # иллюстрации эти доли дюйма съедает запас рамки, а рядом с боковым
+        # снимком запаса нет: тело набирает на две-три строки больше в узкой
+        # колонке и упирается в подвал. На рендере это видно прямо — у `s18`
+        # последняя строка легла НА нижнюю грань коробки мотива, у `s44`
+        # последний абзац и подпись наехали на строку источника, и сборка при
+        # этом молчала: мера говорила «влезает». Шесть абзацев `s44` — это
+        # 0,58" неучтённого, больше двух строк.
+        avail -= max(0, len(body_lines(sl)) - 1) * 7.0 / 72.0
     if hero:
         # Тело уходит во всю ширину под кадр-свидетельство. Обычный просвет
         # `GAP`, который дописал за собой последний примитив левой колонки,
@@ -1244,6 +1345,66 @@ def all_slides(only=None):
     return files
 
 
+# Боковая иллюстрация ужимается не до «красиво», а до того, при чём кадр ещё
+# собирается. Ниже этого она перестаёт быть иллюстрацией и становится
+# значком: 2,60" коробки — это снимок около 2,3" в ширину, меньше шестой
+# части кадра.
+MEDIA_W_FLOOR = 2.60
+
+
+def fit_media(sl):
+    """Самая широкая боковая колонка, при которой кадр ещё собирается чисто.
+
+    Тот же ход, каким `fit_size` подбирает кегль: не назначить размер и
+    посмотреть, что вышло, а найти наибольший, который держится. Понадобился
+    он на `s18` — две плашки, конвейер на два ряда и три абзаца, — где слот
+    в 4,30" ужимал тело до 0,70 рабочего кегля (около 10,5 пт, ниже предела
+    читаемости с задних рядов), а слот в 3,40" собирается чисто. Разница
+    между «снимок не влезает» и «слот назначен шире нужного» видна только
+    замером, и до него `s18` читался как первое.
+
+    Пробная сборка идёт в отдельную презентацию, а счётчики сборки
+    снимаются и возвращаются: проба не имеет права попасть в отчёт.
+    """
+    global WARNINGS
+    if str(sl.meta.get("type")) not in CONTENT_TYPES:
+        return
+    if not media_path(sl) or sl.meta.get("media_hero"):
+        return
+    keep = (list(WARNINGS), Counter(PRIM), set(GOLD_SEEN), Counter(LINKS),
+            dict(HERO_AREA), dict(PLACEHOLDERS))
+    chosen, w = None, MEDIA_W
+    while w >= MEDIA_W_FLOOR - 1e-9:
+        sl.media_w = w
+        WARNINGS = []
+        PRIM.clear()
+        GOLD_SEEN.clear()
+        try:
+            content(new_deck(), sl)
+        except Exception:
+            break
+        if not [x for x in WARNINGS if x.startswith(BLOCKING)]:
+            chosen = w
+            break
+        w = round(w - 0.10, 2)
+    WARNINGS[:], _ = keep[0], None
+    PRIM.clear()
+    PRIM.update(keep[1])
+    GOLD_SEEN.clear()
+    GOLD_SEEN.update(keep[2])
+    LINKS.clear()
+    LINKS.update(keep[3])
+    HERO_AREA.clear()
+    HERO_AREA.update(keep[4])
+    PLACEHOLDERS.clear()
+    PLACEHOLDERS.update(keep[5])
+    sl.media_w = chosen or MEDIA_W
+    if chosen is None:
+        WARNINGS.append(
+            f"[кадр] {sl.sid}: боковая иллюстрация не умещается ни при какой "
+            f"ширине до {MEDIA_W_FLOOR:.2f}\" — кадру нечего ей отдать")
+
+
 def build(only=None, out=OUT, slides_dir=None):
     global SLIDES_DIR
     if slides_dir:
@@ -1254,6 +1415,7 @@ def build(only=None, out=OUT, slides_dir=None):
         sl = read_slide(f)
         if sl is None:
             continue
+        fit_media(sl)
         build_one(p, sl)
         n += 1
     p.save(str(out))
@@ -1265,6 +1427,16 @@ def report(n):
     print(f"примитивы: " + " · ".join(f"{k} {v}" for k, v in sorted(PRIM.items())))
     print(f"ссылки: " + (" · ".join(f"{k} {v}" for k, v in sorted(LINKS.items()))
                          or "ни одной"))
+    # Доля площади обязательных hero печатается КАЖДУЮ сборку, а не только
+    # когда она провалилась. Порог §5.9 — единственное число деки, которое
+    # нельзя увидеть в файле кадра: оно получается из отношения сторон
+    # снимка и ширины колонки, и до этой строки его приходилось доставать
+    # из XML вручную. Молчание сборки о 40,5% неотличимо от молчания о том,
+    # что hero вообще нет, — ровно этим `s01` и прожил до issue #229.
+    if HERO_AREA:
+        print("обязательный hero (§5.9, порог 40%): "
+              + " · ".join(f"{k} {100 * v:.1f}%"
+                           for k, v in sorted(HERO_AREA.items())))
     tot_ph = sum(PLACEHOLDERS.values())
     with_ph = sum(1 for v in PLACEHOLDERS.values() if v)
     print(f"заглушки чисел: {tot_ph} на {with_ph} кадрах из {n}")

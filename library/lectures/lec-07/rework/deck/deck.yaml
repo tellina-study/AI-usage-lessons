@@ -134,7 +134,7 @@ slides:
     chapter_ref: "chapter.md § Введение"
     timing_min: 0.4
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
+    media_asset: "rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg"
   - id: s02
     local_id: "В-02"                       # № 2 в SLIDE-PLAN.md
     file: slides/s02-zhivoy-instrument-v-brauzere.md
@@ -273,7 +273,7 @@ slides:
     chapter_ref: "chapter-part1b.md §1.6"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
+    media_asset: "rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg"
   - id: s19
     local_id: "s1-08a"                     # № 19 в SLIDE-PLAN.md
     file: slides/s19-chto-pereekhalo-glaznoe-dno.md
@@ -308,7 +308,7 @@ slides:
     chapter_ref: "chapter-part1b.md § Раздел 2 (вводка), §2.1"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s22-rentgenkabinet-pacient-u-pribora.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
+    media_asset: "rework/deck/assets/s22-rentgenkabinet-pacient-u-pribora.jpg"
   - id: s23
     local_id: "s2-02"                      # № 23 в SLIDE-PLAN.md
     file: slides/s23-dve-doli-bez-rabochey-tochki.md
@@ -341,7 +341,7 @@ slides:
     chapter_ref: "chapter-part1b.md §2.4"
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
+    media_asset: "rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg"
   - id: s27
     local_id: "s2-05"                      # № 27 в SLIDE-PLAN.md
     file: slides/s27-chto-rabotaet-i-chto-net-analiz.md

@@ -1,0 +1,21 @@
+{
+ "title": "Class 2 Device Recall: Caption Interpretation Auto Ejection Fraction Software (Z-2111-2021)",
+ "license": "Public domain",
+ "license_url": "https://www.fda.gov/about-fda/about-website/website-policies#linking",
+ "author": "U.S. Food and Drug Administration, Center for Devices and Radiological Health",
+ "credit": "База отзывов медицинских изделий FDA (CDRH), запись cfres_id 187913. Произведение федерального ведомства США — общественное достояние (17 U.S.C. § 105).",
+ "rights_check": "Проверено 12 октября 2026 года чтением самой страницы политики FDA, не по памяти: «Unless otherwise noted, the contents of the FDA website — both text and graphics — are not copyrighted. They are in the public domain and may be republished, reprinted and otherwise used freely by anyone without the need to obtain permission from FDA.» Оговорка «unless otherwise noted» на снятой странице не срабатывает: на ней нет ничего, кроме полей базы FDA, гербов HHS и FDA и значка CDRH SuperSearch — всё это создано самим ведомством. Текст политики называет хост www.fda.gov, а снятая страница лежит на accessdata.fda.gov — это база того же ведомства, и статья 17 U.S.C. § 105 покрывает её независимо от хоста. Гербы ведомства в общественном достоянии, но их нельзя использовать так, будто ведомство что-то одобряет; снимок собственной страницы ведомства в учебном разборе этого не делает.",
+ "description": "Страница записи об отзыве в базе FDA. Изделие — Caption AI / Caption Interpretation Automated Ejection Fraction Software (Caption Health), программа с ИИ, автоматически считающая фракцию выброса по ультразвуку. Допуск 510(k) K200621 от 22 июля 2020 года; отзыв начат фирмой 19 мая 2021 года — через десять месяцев после допуска, то есть внутри тех самых первых двенадцати месяцев. Причина: дефект проектирования программы, из-за которого в расчёт попадали лишние кадры видео, а оценка фракции выброса и оценка качества изображения выходили неверными. Предписанное действие прямо говорит, что уже посчитанные значения фракции выброса надо перепроверить клинически: отзывается изделие, а решения, принятые по его числам, остаются. Статус на момент съёмки — отзыв закрыт 31 января 2023 года; 15 систем, штаты AZ, DE, NY, IL, CT.",
+ "page": "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfRES/res.cfm?id=187913",
+ "file_url": "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfRES/res.cfm?id=187913",
+ "shot_date": "2026-10-12",
+ "shot_tool": "tools/presentation-build/shoot_page.py (chromium через setup_page_shots.sh), окно 1600 px, двойная плотность точек",
+ "shot_note": "Пограничный фильтр FDA на хосте accessdata.fda.gov отбивает сам браузер (бесконечная переадресация на excessive-requests-apology.html, 404), но пропускает curl. Поэтому запросы браузера к этому хосту перехвачены и выполнены curl, а ответы отданы браузеру как есть. Байты страницы — настоящие, от FDA; рисовал их настоящий браузер. Ничего не дорисовано и не перестилизовано.",
+ "orig_size": "3200x4516 (страница целиком)",
+ "crop": "x 580-2620, y 0-3040 исходного снимка — шапка FDA и карточка записи до строки Total Product Life Cycle; отрезаны нижний колонтитул сайта и сноски",
+ "size": "2040x3040",
+ "tier": "3 (страница ведомства, прямая съёмка записи)",
+ "verified": "Принадлежность изделия к перечню, по которому считалась цифра слайда, проверена отдельно: K200621 присутствует в официальном перечне FDA «Artificial Intelligence-Enabled Medical Devices» строкой «07/22/2020 | K200621 | Caption Interpretation Automated Ejection Fraction Software | Caption Health | Radiology | QIH». Даты допуска и отзыва сверены по openFDA (эндпоинты device/510k и device/recall), не по памяти.",
+ "podpis": "Снимок страницы: база отзывов медицинских изделий FDA (CDRH), запись Z-2111-2021, съёмка 12 октября 2026 года",
+ "note": "Кадр вертикальный (отношение 0,67). Правило §5.9 требует hero не меньше 40% площади кадра 16:9, а вертикальный снимок такого отношения на полную высоту даёт около 28%. Чтобы правило выполнялось, на слайд берётся верхняя часть этого же файла — y 0-1450 (шапка FDA, заголовок записи, дата начала отзыва, статус, номер отзыва, номер допуска): отношение 1,41, при ширине 8,2 дюйма это 48% площади. Нижняя часть файла (причина отзыва и предписанное действие) оставлена в файле целиком — решение о рамке за тем, кто собирает кадр."
+}

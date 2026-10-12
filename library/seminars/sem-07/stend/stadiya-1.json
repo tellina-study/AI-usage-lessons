@@ -1,0 +1,147 @@
+{
+  "name": "С7 · стадия 1 — три узла",
+  "nodes": [
+    {
+      "id": "form",
+      "name": "Заявка с сайта",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "s7-stadiya-1",
+      "parameters": {
+        "path": "s7-stadiya-1",
+        "formTitle": "Заявка в учебный центр",
+        "formDescription": "Напишите, что нужно — мы перезвоним",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Имя",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Контакт",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Что нужно",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "chain",
+      "name": "Шаг модели",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Определи одним словом, о чём эта заявка в учебный центр. Ответь только словом.\n\nЗаявка: {{ $json['Что нужно'] }}",
+        "messages": {},
+        "batching": {}
+      }
+    },
+    {
+      "id": "model",
+      "name": "Модель",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        260,
+        200
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "table",
+      "name": "Строка в таблице",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        560,
+        0
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "veTTXoSvvgMlOfN1",
+          "mode": "list",
+          "cachedResultName": "Заявки"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prishlo": "={{ $now.toISO() }}",
+            "imya": "={{ $('Заявка с сайта').item.json['Имя'] }}",
+            "kontakt": "={{ $('Заявка с сайта').item.json['Контакт'] }}",
+            "tekst": "={{ $('Заявка с сайта').item.json['Что нужно'] }}",
+            "tema": "={{ $json.text }}",
+            "srochnost": "",
+            "kontakt_iz_teksta": ""
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Заявка с сайта": {
+      "main": [
+        [
+          {
+            "node": "Шаг модели",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Шаг модели": {
+      "main": [
+        [
+          {
+            "node": "Строка в таблице",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Модель": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Шаг модели",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

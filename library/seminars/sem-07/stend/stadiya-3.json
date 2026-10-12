@@ -1,0 +1,212 @@
+{
+  "name": "С7 · стадия 3 — повтор и ветка отказа",
+  "nodes": [
+    {
+      "id": "form",
+      "name": "Заявка с сайта",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "s7-stadiya-3",
+      "parameters": {
+        "path": "s7-stadiya-3",
+        "formTitle": "Заявка в учебный центр",
+        "formDescription": "Напишите, что нужно — мы перезвоним",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Имя",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Контакт",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Что нужно",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "extract",
+      "name": "Извлечение полей",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "text": "={{ $json['Что нужно'] }}",
+        "schemaType": "fromAttributes",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "tema",
+              "type": "string",
+              "required": true,
+              "description": "о чём заявка: курс, перенос занятия, оплата, другое"
+            },
+            {
+              "name": "srochnost",
+              "type": "string",
+              "required": true,
+              "description": "когда человек ждёт ответа: сегодня, на неделе, не указано"
+            },
+            {
+              "name": "kontakt",
+              "type": "string",
+              "description": "телефон или почта из текста заявки; если их нет — «не указано»"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "model",
+      "name": "Модель",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        260,
+        240
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "table",
+      "name": "Строка в таблице",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        620,
+        -60
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "veTTXoSvvgMlOfN1",
+          "mode": "list",
+          "cachedResultName": "Заявки"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prishlo": "={{ $now.toISO() }}",
+            "imya": "={{ $('Заявка с сайта').item.json['Имя'] }}",
+            "kontakt": "={{ $('Заявка с сайта').item.json['Контакт'] }}",
+            "tekst": "={{ $('Заявка с сайта').item.json['Что нужно'] }}",
+            "tema": "={{ $json.output.tema }}",
+            "srochnost": "={{ $json.output.srochnost }}",
+            "kontakt_iz_teksta": "={{ $json.output.kontakt }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "table_err",
+      "name": "Та же таблица · не разобрано",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        620,
+        220
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "veTTXoSvvgMlOfN1",
+          "mode": "list",
+          "cachedResultName": "Заявки"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prishlo": "={{ $now.toISO() }}",
+            "imya": "={{ $('Заявка с сайта').item.json['Имя'] }}",
+            "kontakt": "={{ $('Заявка с сайта').item.json['Контакт'] }}",
+            "tekst": "={{ $('Заявка с сайта').item.json['Что нужно'] }}",
+            "tema": "не разобрано",
+            "srochnost": "не указано",
+            "kontakt_iz_teksta": ""
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Заявка с сайта": {
+      "main": [
+        [
+          {
+            "node": "Извлечение полей",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Извлечение полей": {
+      "main": [
+        [
+          {
+            "node": "Строка в таблице",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Та же таблица · не разобрано",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Модель": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Извлечение полей",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

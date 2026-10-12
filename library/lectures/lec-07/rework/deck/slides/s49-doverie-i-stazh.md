@@ -5,7 +5,7 @@ section: "3. Постановка диагноза — человек читае
 type: case
 title: "Доверие и стаж: что ломается, что не спасает и где потолок"
 assertion: "Доверие откалибровано не по правоте, а по подписи, по уверенности и по единичному видимому промаху; устройством подачи согласие с неверной подсказкой подвинуть можно, но не убрать"
-source: "Bond R. R., Novotny T., Andrsova I. и соавт., Automation bias in medicine: the influence of automated diagnoses on interpreter accuracy and uncertainty when reading electrocardiograms, Journal of Electrocardiology 2018;51(6S):S6–S11, DOI 10.1016/j.jelectrocard.2018.08.007, PMID 30122457 · Yu F., Moehring A., Banerjee O., Salz T., Agarwal N., Rajpurkar P., Heterogeneity and predictors of the effects of AI assistance on radiologists, Nature Medicine 2024;30(3):837–849, DOI 10.1038/s41591-024-02850-w, PMID 38504016 · Buçinca Z., Malaya M. B., Gajos K. Z., To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-assisted Decision-making, Proc. ACM Hum.-Comput. Interact. 2021;5(CSCW1), статья 188, DOI 10.1145/3449287 · Dietvorst B., Simmons J., Massey C., Algorithm Aversion: People Erroneously Avoid Algorithms after Seeing Them Err, Journal of Experimental Psychology: General 2015;144(1):114–126 — названный пробел"
+source: "Bond R. R. и соавт., Journal of Electrocardiology 2018 · Yu F. и соавт., Nature Medicine 2024 · Buçinca Z. и соавт., To Trust or to Think, CSCW 2021 · Dietvorst B. и соавт., Algorithm Aversion, Journal of Experimental Psychology: General 2015 — названный пробел"
 media: ""
 media_needed: "рисунок первоисточника по кардиограммам — добыть и проверить права; запасной вариант — собственные три плашки разных жанров"
 media_note: "иллюстрация не добыта"

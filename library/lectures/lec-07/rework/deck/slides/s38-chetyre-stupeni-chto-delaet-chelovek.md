@@ -5,7 +5,7 @@ section: "3. Постановка диагноза — человек читае
 type: case
 title: "Четыре ступени: что именно делает человек"
 assertion: "Ступень, на которой стоит человек, — единственное, что системно различает разборы вечера; на четвёртой формальное требование выполняется за время, за которое подсказку нельзя прочесть"
-source: "Qazi S. и соавт., NEJM AI, DOI 10.1056/AIoa2501001 — рандомизированное испытание, 44 врача, 264 случая (препринт medRxiv от 23.08.2025 — промежуточная стадия той же работы) · Mozannar H., Bansal G., Fourney A., Horvitz E., Reading Between the Lines: Modeling User Behavior and Costs in AI-Assisted Programming, CHI 2024; препринт arXiv:2210.14306v5"
+source: "Qazi S. и соавт., NEJM AI, DOI 10.1056/AIoa2501001 — рандомизированное испытание, 44 врача, 264 случая · Mozannar H. и соавт., Reading Between the Lines, CHI 2024"
 media: ""
 media_needed: "собственная схема четырёх ступеней; на ней же дальше отмечаются разборы"
 media_note: "—"

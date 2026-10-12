@@ -397,7 +397,7 @@ slides:
     title: "Карта стадии: анализ данных"
     chapter_ref: "chapter-part1b.md §2.9"
     timing_min: 0.7
-    marks: { in_bucket: false, vfy: true, status: "каркас", media_status: builder_drawn }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s34
     local_id: "s2-10"                      # № 34 в SLIDE-PLAN.md
     file: slides/s34-vyvod-analiz-dannykh.md

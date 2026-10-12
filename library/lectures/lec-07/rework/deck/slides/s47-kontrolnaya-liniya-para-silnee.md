@@ -5,7 +5,7 @@ section: "3. Постановка диагноза — человек читае
 type: case
 title: "Контрольная линия"
 assertion: "Один человек с моделью и арбитражем на разногласиях даёт значимо большую чувствительность, чем двойное человеческое чтение, при меньшем объёме человеческого чтения"
-source: "Итоговый анализ — Gommers J., Hernström V., … Lång K., Interval cancer, sensitivity, and specificity comparing AI-supported mammography screening with standard double reading without AI in the MASAI study, The Lancet 2026;407(10527):505–514, DOI 10.1016/S0140-6736(25)02464-X, PMID 41620232 (105 934 распределённых) · Промежуточный анализ безопасности — Lång K. и соавт., Lancet Oncology 2023;24(8):936–944, DOI 10.1016/S1470-2045(23)00298-X, PMID 37541274 (80 033 распределённых)"
+source: "Итоговый анализ MASAI — Gommers J., … Lång K., The Lancet 2026 (105 934 распределённых) · промежуточный анализ безопасности — Lång K. и соавт., Lancet Oncology 2023 (80 033 распределённых)"
 media: ""
 media_needed: "рисунок исходов из итоговой публикации — добыть, права проверить; запасной вариант — собственные плашки с атрибуцией данных"
 media_note: "иллюстрация не добыта"

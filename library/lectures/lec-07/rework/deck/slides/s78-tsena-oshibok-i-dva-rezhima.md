@@ -7,7 +7,7 @@ title: "Без модели: цена обеих ошибок и два режи
 assertion: "Классических режимов на стадии два, и посчитан из них один: режим «вести только отобранное» платит отброшенными молекулами, и эта цена в числах не измеряется вовсе"
 source: "BIO / QLS / Informa, Clinical Development Success Rates and Contributing Factors 2011–2020 — https://go.bio.org/rs/490-EHZ-999/images/ClinicalDevelopmentSuccessRates2011_2020.pdf"
 media: ""
-media_note: "не требуется — кадр держится на полосе плашек цены ошибки"
+media_note: "не требуется — слайд держится на полосе плашек цены ошибки"
 media_needed: ""
 blocks:
   - {label: "Довести негодную молекулу до фазы I", value: "месяцы работы центра", note: "здоровые добровольцы под дозой; цена измеримая"}

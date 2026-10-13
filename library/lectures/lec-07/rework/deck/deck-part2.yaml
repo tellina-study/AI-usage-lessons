@@ -8,9 +8,9 @@
 
 slides:
 
-  # ─── 3. Постановка диагноза — человек читает рядом с моделью · 18 кадров · 14.65 мин ───
+  # ─── 3. Постановка диагноза — человек читает рядом с моделью · 16 кадров · 12.70 мин ───
   - id: s35
-    local_id: "s3-01"                      # № 30 в SLIDE-PLAN.md
+    local_id: "s3-01"                      # № 26 в SLIDE-PLAN.md
     file: slides/s35-divider-postanovka-diagnoza.md
     type: divider
     title: "3. Постановка диагноза — человек читает рядом с моделью"
@@ -19,16 +19,16 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s36
-    local_id: "s3-02"                      # № 31 в SLIDE-PLAN.md
+    local_id: "s3-02"                      # № 27 в SLIDE-PLAN.md
     file: slides/s36-kak-ustroena-postanovka-diagnoza.md
     type: norm
     title: "Что делают участники на стадии постановки диагноза — до всякой обученной модели"
     plan_section: "Раздел 2. Что про человека измерили"
     chapter_ref: "chapter-part2.md §3.1"
-    timing_min: 0.9
+    timing_min: 0.95
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s37
-    local_id: "s3-03"                      # № 32 в SLIDE-PLAN.md
+    local_id: "s3-03"                      # № 28 в SLIDE-PLAN.md
     file: slides/s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
     type: case
     title: "Второе мнение: независимость и арбитраж"
@@ -37,7 +37,7 @@ slides:
     timing_min: 1.0
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s38
-    local_id: "s3-04"                      # № 33 в SLIDE-PLAN.md
+    local_id: "s3-04"                      # № 29 в SLIDE-PLAN.md
     file: slides/s38-chetyre-stupeni-chto-delaet-chelovek.md
     type: case
     title: "Четыре ступени: что именно делает человек"
@@ -45,53 +45,49 @@ slides:
     chapter_ref: "chapter-part2.md §3.2 (+ chapter.md §0.4)"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s39
-    local_id: "s3-05"                      # № 34 в SLIDE-PLAN.md
-    file: slides/s39-bez-modeli-i-s-modelyu-diagnoz.md
-    type: comparison
-    title: "Без модели список собирает и читает человек; модель входит в три шага из семи и в трёх местах не работает"
-    plan_section: "Раздел 2. Что про человека измерили"
-    chapter_ref: "chapter-part2.md §3.2"
-    timing_min: 1.2
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s40
-    local_id: "s3-16"                      # № 35 в SLIDE-PLAN.md
+    local_id: "s3-16"                      # № 30 в SLIDE-PLAN.md
     file: slides/s40-pravilo-a-ne-sluchay-agregat.md
     type: case
     title: "Что пара даёт в среднем по 106 опытам"
+    plan_section: "Раздел 2. Что про человека измерили"
     chapter_ref: "chapter-part2.md §3.3"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s40-dva-effekta-s-intervalami.png"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
   - id: s41
-    local_id: "s3-15"                      # № 36 в SLIDE-PLAN.md
+    local_id: "s3-15"                      # № 31 в SLIDE-PLAN.md
     file: slides/s41-zamer-vzglyada-lozhnaya-podskazka.md
     type: case
     title: "Пример 1: замер взгляда радиолога"
+    plan_section: "Раздел 2. Что про человека измерили"
     chapter_ref: "chapter-part2.md §3.4"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s42
-    local_id: "s3-15a"                     # № 37 в SLIDE-PLAN.md
+    local_id: "s3-15a"                     # № 32 в SLIDE-PLAN.md
     file: slides/s42-mekhanizm-i-chto-pereekhalo-vzglyad.md
     type: case
     title: "Пример 1, цена: взгляд ушёл с пропущенного — и это измерено"
+    plan_section: "Раздел 2. Что про человека измерили"
     chapter_ref: "chapter-part2.md §3.5"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s43
-    local_id: "s3-15b"                     # № 38 в SLIDE-PLAN.md
+    local_id: "s3-15b"                     # № 33 в SLIDE-PLAN.md
     file: slides/s43-tot-zhe-zamer-obratnyy-znak.md
     type: case
     title: "Пример 1, обратный знак: подсказка верна, поиск сузился, результат вырос"
+    plan_section: "Раздел 2. Что про человека измерили"
     chapter_ref: "chapter-part2.md §3.6"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s44
-    local_id: "s3-08"                      # № 39 в SLIDE-PLAN.md
+    local_id: "s3-08"                      # № 34 в SLIDE-PLAN.md
     file: slides/s44-odna-podskazka-dva-znaka-patologiya.md
     type: case
     title: "Пример 2: одна подсказка с двумя знаками"
+    plan_section: "Раздел 2. Что про человека измерили"
     chapter_ref: "chapter-part2.md §3.7"
     timing_min: 0.8
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: acquired }
@@ -105,7 +101,7 @@ slides:
     timing_min: 0.65
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s45
-    local_id: "s3-06"                      # № 40 в SLIDE-PLAN.md
+    local_id: "s3-06"                      # № 35 в SLIDE-PLAN.md
     file: slides/s45-izmerennaya-troyka-para-i-chelovek.md
     type: case
     title: "Пример 3: измеренная тройка"
@@ -113,7 +109,7 @@ slides:
     timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s46
-    local_id: "s3-07"                      # № 41 в SLIDE-PLAN.md
+    local_id: "s3-07"                      # № 36 в SLIDE-PLAN.md
     file: slides/s46-vremya-i-chto-pereekhalo-troyka.md
     type: case
     title: "Пример 3, цена: времени меньше, выигрыша нет"
@@ -121,7 +117,7 @@ slides:
     timing_min: 0.5
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s47
-    local_id: "s3-10"                      # № 42 в SLIDE-PLAN.md
+    local_id: "s3-10"                      # № 37 в SLIDE-PLAN.md
     file: slides/s47-kontrolnaya-liniya-para-silnee.md
     type: case
     title: "Пример 4: контрольная линия"
@@ -129,7 +125,7 @@ slides:
     timing_min: 0.75
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s48
-    local_id: "s3-10a"                     # № 43 в SLIDE-PLAN.md
+    local_id: "s3-10a"                     # № 38 в SLIDE-PLAN.md
     file: slides/s48-kontrolnaya-liniya-chto-pereekhalo.md
     type: case
     title: "Пример 4, цена: что переехало и чем за это платят"
@@ -137,7 +133,7 @@ slides:
     timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s49
-    local_id: "s3-12"                      # № 44 в SLIDE-PLAN.md
+    local_id: "s3-12"                      # № 39 в SLIDE-PLAN.md
     file: slides/s49-doverie-i-stazh.md
     type: case
     title: "Доверие и стаж: что ломается, что не спасает и где потолок"
@@ -145,25 +141,17 @@ slides:
     timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s50
-    local_id: "s3-13"                      # № 45 в SLIDE-PLAN.md
+    local_id: "s3-13"                      # № 40 в SLIDE-PLAN.md
     file: slides/s50-vyvod-diagnoz.md
     type: summary
-    title: "Свод стадии: что получается, что нет, что стало с работой, что это держит"
+    title: "Диагноз: один инструмент уронил результат и поднял его — разошлось устройство процедуры"
     chapter_ref: "chapter-part2b.md §3.12, §3.13"
-    timing_min: 1.0
+    timing_min: 0.95
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
-  - id: s51
-    local_id: "s3-14"                      # № 46 в SLIDE-PLAN.md
-    file: slides/s51-karta-stadii-diagnoz.md
-    type: map
-    title: "Карта стадии: какая задача и какие данные"
-    chapter_ref: "chapter-part2b.md §3.14"
-    timing_min: 0.75
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
 
-  # ─── 4. Наблюдение за состоянием — кто заметит ухудшение · 12 кадров · 8.55 мин ───
+  # ─── 4. Наблюдение за состоянием — кто заметит ухудшение · 10 кадров · 7.10 мин ───
   - id: s52
-    local_id: "s4-01"                      # № 47 в SLIDE-PLAN.md
+    local_id: "s4-01"                      # № 41 в SLIDE-PLAN.md
     file: slides/s52-divider-nablyudenie.md
     type: divider
     title: "4. Наблюдение за состоянием"
@@ -173,16 +161,16 @@ slides:
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s52-sestrinskiy-post.jpg"
   - id: s53
-    local_id: "s4-02"                      # № 48 в SLIDE-PLAN.md
+    local_id: "s4-02"                      # № 42 в SLIDE-PLAN.md
     file: slides/s53-palata-obkhod-list-nablyudeniya.md
     type: norm
     title: "Что делают участники на стадии наблюдения — до всякой обученной модели"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3.md §4.1"
-    timing_min: 0.95
+    timing_min: 1.0
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s54
-    local_id: "s4-03"                      # № 49 в SLIDE-PLAN.md
+    local_id: "s4-03"                      # № 43 в SLIDE-PLAN.md
     file: slides/s54-shkala-rannego-preduprezhdeniya.md
     type: norm
     title: "Без модели, классический режим: шкала, веса которой назначили люди"
@@ -191,7 +179,7 @@ slides:
     timing_min: 0.55
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s55
-    local_id: "s4-04"                      # № 50 в SLIDE-PLAN.md
+    local_id: "s4-04"                      # № 44 в SLIDE-PLAN.md
     file: slides/s55-tsena-obeikh-oshibok-smena.md
     type: comparison
     title: "Цена двух ошибок дежурной смены"
@@ -199,16 +187,8 @@ slides:
     chapter_ref: "chapter-part3.md §4.3"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s55a
-    local_id: "новый-nablyudenie-bez-s"    # вставленный кадр, номера в плане нет
-    file: slides/s55a-bez-modeli-i-s-modelyu-nablyudenie.md
-    type: comparison
-    title: "Без модели балл считают по опубликованной таблице; модель вошла в три действия из шести и в трёх местах не работает"
-    chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.9
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s56
-    local_id: "s4-04a"                     # № 51 в SLIDE-PLAN.md
+    local_id: "s4-04a"                     # № 45 в SLIDE-PLAN.md
     file: slides/s56-schet-zamenyaemykh-rezhimov.md
     type: case
     title: "Сколько классических режимов модель может заменить"
@@ -217,55 +197,51 @@ slides:
     timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s57
-    local_id: "s4-05"                      # № 52 в SLIDE-PLAN.md
+    local_id: "s4-05"                      # № 46 в SLIDE-PLAN.md
     file: slides/s57-model-rannego-preduprezhdeniya.md
     type: case
     title: "Пример 1: модель раннего предупреждения"
+    plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3.md §4.5"
     timing_min: 0.8
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s58
-    local_id: "s4-05a"                     # № 53 в SLIDE-PLAN.md
+    local_id: "s4-05a"                     # № 47 в SLIDE-PLAN.md
     file: slides/s58-sto-gospitalizatsiy-vosemnadtsat-trevog.md
     type: case
     title: "Сто госпитализаций, восемнадцать тревог, два подтверждённых случая"
+    plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3.md §4.6"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s59
-    local_id: "s4-06"                      # № 54 в SLIDE-PLAN.md
+    local_id: "s4-06"                      # № 48 в SLIDE-PLAN.md
     file: slides/s59-vtoraya-proverka-drugie-bolnitsy.md
     type: case
     title: "Вторая проверка: другие авторы, другие больницы"
+    plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3.md §4.7, §4.8"
     timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s60
-    local_id: "s4-06a"                     # № 55 в SLIDE-PLAN.md
+    local_id: "s4-06a"                     # № 49 в SLIDE-PLAN.md
     file: slides/s60-para-dalo-potrebovalo-trevogi.md
     type: case
     title: "Пример 1, цена: внимание расходуется там же, только больше"
+    plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3.md §4.9"
     timing_min: 0.65
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s60aa
-    local_id: "новый-nablyudenie-karta"    # вставленный кадр, номера в плане нет
-    file: slides/s60aa-karta-stadii-nablyudenie.md
-    type: map
-    title: "Карта стадии: какая задача и какие данные"
-    chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s60a
     local_id: "новый-nablyudenie-vyvod"    # вставленный кадр, номера в плане нет
     file: slides/s60a-vyvod-nablyudenie.md
     type: summary
-    title: "Свод стадии: что получается, что нет, что стало с работой, что это держит"
+    title: "Наблюдение: тревога без названной базы не предупреждает"
     chapter_ref: "chapter-part3.md §4.11 (+ §4.10)"
     timing_min: 0.85
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 5. Ведение записи — кто прочтёт её потом · 9 кадров · 6.35 мин ───
+  # ─── 5. Ведение записи — кто прочтёт её потом · 7 кадров · 4.90 мин ───
   - id: s60b
     local_id: "новый-zapis-divider"        # вставленный кадр, номера в плане нет
     file: slides/s60b-divider-vedenie-zapisi.md
@@ -280,36 +256,28 @@ slides:
     type: norm
     title: "Что делают участники на стадии записи — до всякой обученной модели"
     chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.95
+    timing_min: 1.0
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s60d
-    local_id: "новый-zapis-bez-s"          # вставленный кадр, номера в плане нет
-    file: slides/s60d-bez-modeli-i-s-modelyu-zapis.md
-    type: comparison
-    title: "Без модели врач держит структуру в голове и печатает сам; модель вошла в два действия из шести и в трёх местах не работает"
-    chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.9
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s61
-    local_id: "s4-07"                      # № 56 в SLIDE-PLAN.md
+    local_id: "s4-07"                      # № 50 в SLIDE-PLAN.md
     file: slides/s61-avtomaticheskaya-zapis-priema.md
     type: case
     title: "Пример 1: автоматическая запись приёма"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
+    plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3b.md §5.3, §5.4"
     timing_min: 0.8
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s62
-    local_id: "s4-07a"                     # № 57 в SLIDE-PLAN.md
+    local_id: "s4-07a"                     # № 51 в SLIDE-PLAN.md
     file: slides/s62-dve-dorozhki-nabor-i-vychitka.md
     type: case
     title: "Пример 1, цена: набор сократился, вычитка появилась"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
+    plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3b.md §5.6 (+ §5.5)"
     timing_min: 0.55
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s63
-    local_id: "s4-08"                      # № 58 в SLIDE-PLAN.md
+    local_id: "s4-08"                      # № 52 в SLIDE-PLAN.md
     file: slides/s63-vypisnoy-epikriz.md
     type: case
     title: "Пример 2: выписной эпикриз"
@@ -326,26 +294,18 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s64
-    local_id: "s4-09"                      # № 59 в SLIDE-PLAN.md
+    local_id: "s4-09"                      # № 53 в SLIDE-PLAN.md
     file: slides/s64-vyvod-vedenie-zapisi.md
     type: summary
-    title: "Свод стадии: что получается, что нет, что стало с работой, что это держит"
+    title: "Ведение записи: набор сократился, вычитка появилась"
     plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.9 (+ §5.8)"
     timing_min: 0.85
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
-  - id: s64a
-    local_id: "новый-zapis-karta"          # вставленный кадр, номера в плане нет
-    file: slides/s64a-karta-stadii-vedenie-zapisi.md
-    type: map
-    title: "Карта стадии: какая задача и какие данные"
-    chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.6
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
 
-  # ─── 6. Чем удерживают — подпись, процедура, норматив · 12 кадров · 9.80 мин ───
+  # ─── 6. Чем удерживают — подпись, процедура, норматив · 9 кадров · 7.65 мин ───
   - id: s65
-    local_id: "s7-01"                      # № 60 в SLIDE-PLAN.md
+    local_id: "s7-01"                      # № 54 в SLIDE-PLAN.md
     file: slides/s65-divider-chem-uderzhivayut.md
     type: divider
     title: "6. Чем удерживают"
@@ -354,24 +314,16 @@ slides:
     timing_min: 0.5
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s66
-    local_id: "s7-02"                      # № 61 в SLIDE-PLAN.md
+    local_id: "s7-02"                      # № 55 в SLIDE-PLAN.md
     file: slides/s66-odna-komnata-i-odin-sluchay.md
     type: norm
     title: "Что делают участники на стадии удержания — до всякой обученной модели"
     plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3c.md §6.2"
-    timing_min: 0.95
+    timing_min: 1.0
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s66a
-    local_id: "новый-uderzhanie-bez-s"     # вставленный кадр, номера в плане нет
-    file: slides/s66a-bez-modeli-i-s-modelyu-uderzhanie.md
-    type: comparison
-    title: "Без модели каждое действие записано в документе; модель не вошла ни в одно из семи, и в трёх местах процедура против неё не работает"
-    chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.9
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s67
-    local_id: "s7-03"                      # № 62 в SLIDE-PLAN.md
+    local_id: "s7-03"                      # № 56 в SLIDE-PLAN.md
     file: slides/s67-razbor-sluchaya-posle-iskhoda.md
     type: case
     title: "Пример 1: склонность доверять автомату"
@@ -388,7 +340,7 @@ slides:
     timing_min: 0.65
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s68
-    local_id: "s7-04"                      # № 63 в SLIDE-PLAN.md
+    local_id: "s7-04"                      # № 57 в SLIDE-PLAN.md
     file: slides/s68-schet-klassicheskogo-rezhima-dvoynoe-chtenie.md
     type: case
     title: "Пример 2: двойное чтение в минутах труда"
@@ -397,7 +349,7 @@ slides:
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s69
-    local_id: "s7-04a"                     # № 64 в SLIDE-PLAN.md
+    local_id: "s7-04a"                     # № 58 в SLIDE-PLAN.md
     file: slides/s69-norma-est-proverki-net.md
     type: case
     title: "Пример 2, цена: норма есть, а проверки нет"
@@ -406,46 +358,29 @@ slides:
     timing_min: 0.95
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s70
-    local_id: "s7-05"                      # № 65 в SLIDE-PLAN.md
+    local_id: "s7-05"                      # № 59 в SLIDE-PLAN.md
     file: slides/s70-chetyre-uchastnika.md
     type: norm
     title: "Четыре участника: контроль у одного, ответственность у другого"
-    plan_section: "Раздел 7. Чем удерживают"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3d.md §6.8"
     timing_min: 0.85
     marks: { in_bucket: false, vfy: false, status: "каркас", media_status: no_decision }
   - id: s71
-    local_id: "s7-07"                      # № 66 в SLIDE-PLAN.md
+    local_id: "s7-07"                      # № 60 в SLIDE-PLAN.md
     file: slides/s71-tri-mekhanizma-nadzora.md
     type: norm
-    title: "Модель, которая меняется после допуска"
-    plan_section: "Раздел 7. Чем удерживают"
+    title: "Модель меняется после допуска: 43,4 процента отзывов — в первый год"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3d.md §6.9"
-    timing_min: 0.85
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
-  - id: s72
-    local_id: "s7-07a"                     # № 67 в SLIDE-PLAN.md
-    file: slides/s72-otzyvy-i-reestr.md
-    type: norm
-    title: "Отзывы и отечественный реестр"
-    plan_section: "Раздел 7. Чем удерживают"
-    chapter_ref: "chapter-part3d.md §6.10, §6.11"
-    timing_min: 0.85
+    timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s73
-    local_id: "s7-08"                      # № 68 в SLIDE-PLAN.md
+    local_id: "s7-08"                      # № 61 в SLIDE-PLAN.md
     file: slides/s73-vyvod-chem-uderzhivayut.md
     type: summary
-    title: "Свод стадии: что получается, что нет, что стало с работой, что это держит"
-    plan_section: "Раздел 7. Чем удерживают"
+    title: "Чем удерживают: где за подписью ничего нет, цена ошибки переезжает на того, кто не подписывал"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3d.md §6.13 (+ §6.12)"
     timing_min: 0.9
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
-  - id: s73a
-    local_id: "новый-uderzhanie-karta"     # вставленный кадр, номера в плане нет
-    file: slides/s73a-karta-stadii-chem-uderzhivayut.md
-    type: map
-    title: "Карта стадии: какая задача и какие данные"
-    chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.6
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }

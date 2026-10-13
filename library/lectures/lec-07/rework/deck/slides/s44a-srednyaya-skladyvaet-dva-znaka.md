@@ -7,7 +7,7 @@ title: "Пример 2, цена: средняя складывает две п�
 assertion: "На группе в целом, без разделения на правоту модели, прибавка незначима — отчёт о внедрении с одним числом показал бы «эффекта нет» там, где эффект велик в обе стороны"
 source: "Та же публикация — Kiani A. и соавт., npj Digital Medicine 2020, PMC7044422 — https://doi.org/10.1038/s41746-020-0232-8 · Goddard K., Roudsari A., Wyatt J., Automation bias: a systematic review of frequency, effect mediators, and mitigators, JAMIA 2012;19(1):121–127, обзор — https://doi.org/10.1136/amiajnl-2011-000089"
 media: ""
-media_needed: "кадра не требуется — плашка пары и строка о средней держат экран сами"
+media_needed: "иллюстрация не нужна — плашка пары и строка о средней держат экран сами"
 media_note: "—"
 blocks:
   - {label: "Дало", value: "прибавку при верной подсказке"}

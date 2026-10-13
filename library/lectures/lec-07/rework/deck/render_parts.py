@@ -51,14 +51,21 @@ def main():
             return 1
         pdfs.append(str(out.with_suffix(".pdf")))
         print(f"часть {i}: {len(part)} кадров готово")
+    # АБСОЛЮТНЫЙ путь склейки: `bash -lc` — login-оболочка со своим рабочим
+    # каталогом, относительный путь в ней указывает не туда, откуда звали.
+    # Тот же класс, что `[#229-6]` в ядре: `pdfunite` отвечает «Could not open
+    # file» ПОСЛЕ того, как все части уже отрендерены, то есть час работы
+    # заканчивается ничем.
+    out_pdf = Path(a.pdf).absolute()
+    out_pdf.parent.mkdir(parents=True, exist_ok=True)
     r = subprocess.run(["bash", "-lc",
                         ". /home/harness/.local/lo-portable-env.sh && "
-                        f"pdfunite {' '.join(pdfs)} {a.pdf}"],
+                        f"pdfunite {' '.join(pdfs)} '{out_pdf}'"],
                        timeout=180, capture_output=True, text=True)
     if r.returncode:
         print(f"склейка: код {r.returncode}\n{r.stderr[-400:]}")
         return 1
-    print(f"склеено: {a.pdf}")
+    print(f"склеено: {out_pdf}")
     return 0
 
 

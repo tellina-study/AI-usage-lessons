@@ -32,7 +32,7 @@
 from pptx.enum.text import MSO_ANCHOR
 
 from . import metrics, prims, report
-from .markup import plain
+from .markup import plain, inline_runs
 from .theme import DEEP, MID, OUTLINE, SURFACE, WHITE
 
 TBL_PAD = 0.44                  # просторные поля, по ним меряются высоты
@@ -46,6 +46,15 @@ TBL_ROW_EXTRA = 0.18
 
 _TBLSZ = {}
 _COL_WARNED = set()
+
+
+# ── набор клетки прогонами: переключатель деки ───────────────────────
+# Читается ВНУТРИ `draw_table`, а не в значении по умолчанию её параметра.
+# Это не стиль: `floor.VIS_PT` в этом же пакете был защёлкнут значением по
+# умолчанию, поднимаемый декой пол молча ничего не делал и даже не отказывался.
+# `cell_runs=None` у вызова означает «взять эту строку», True/False —
+# перебить её на один вызов.
+CELL_RUNS = False
 
 
 def reset_caches():
@@ -192,8 +201,17 @@ def check_cols(table, size, w, tag):
 
 
 def draw_table(s, x, y, table, size, w, tag, *, head_fill=MID,
-               head_color=WHITE, zebra=(SURFACE, WHITE)):
+               head_color=WHITE, zebra=(SURFACE, WHITE), cell_runs=None):
     """Таблица полосами: шапка залита, строки через одну. Возвращает высоту.
+
+    `cell_runs` — набирать ли клетку ПРОГОНАМИ (`None` — как велит
+    `CELL_RUNS` этого модуля), то есть читать `**` внутри
+    неё разметкой. По умолчанию ВЫКЛЮЧЕНО, и это не осторожность: Лекция 6
+    сдана и прочитана залу с полужирностью на всю клетку целиком, её отпечаток
+    держит регрессия, и включение прогонов меняет вид доставленной деки
+    (замерено: десятки расхождений на кадрах 75 и 88). Лекция 7 включает флаг
+    сама — ей накопительная карта стадии нужна двумя начертаниями в одной
+    клетке, иначе «своё полужирным, пройденное светлым» невыполнимо.
 
     `zebra` — пара «нечётная строка, чётная строка», в том порядке, в каком
     их берёт `i % 2`: первая строка после шапки идёт на ПОВЕРХНОСТИ, вторая
@@ -204,6 +222,7 @@ def draw_table(s, x, y, table, size, w, tag, *, head_fill=MID,
     таблицы python-pptx свои поля, свой шрифт темы и своя тень, и ни одно из
     трёх не подчиняется мере этого пакета."""
     widths, heights, rows = table_geom(table, size, w)
+    runs_mode = CELL_RUNS if cell_runs is None else cell_runs
     cy = y
     for i, r in enumerate(rows):
         cx = x
@@ -217,11 +236,24 @@ def draw_table(s, x, y, table, size, w, tag, *, head_fill=MID,
                            zebra[i % 2], stroke=OUTLINE, stroke_pt=1.0,
                            count="ячейка")
                 col, bold = DEEP, "**" in cell
-            prims.text_box(s, cx + TBL_CELL_PAD, cy,
-                           widths[j] - 2 * TBL_CELL_PAD, heights[i],
-                           plain(cell), size=size, bold=bold, color=col,
-                           anchor=MSO_ANCHOR.MIDDLE, ls=TBL_ROW_LS,
-                           tag=f"{tag}/ячейка")
+            bw = widths[j] - 2 * TBL_CELL_PAD
+            if runs_mode and i and ("**" in cell or "*" in cell):
+                # ПРОГОНЫ ВНУТРИ КЛЕТКИ. До этого стояло `bold = "**" in cell`,
+                # то есть одна пара звёздочек красила ячейку полужирной ЦЕЛИКОМ.
+                # Накопительная карта стадии — своё полужирным, пройденное
+                # светлым в одной клетке — была поэтому физически невыполнима:
+                # три сессии подряд обошли это скобками, каждая сочтя
+                # ограничением жанра. Ширины столбцов меряются с `bold=True`
+                # (самый широкий случай), поэтому мера от прогонов не плывёт.
+                prims.text_runs(s, cx + TBL_CELL_PAD, cy, bw, heights[i],
+                                inline_runs(cell, size, col),
+                                anchor=MSO_ANCHOR.MIDDLE, ls=TBL_ROW_LS,
+                                tag=f"{tag}/ячейка")
+            else:
+                prims.text_box(s, cx + TBL_CELL_PAD, cy, bw, heights[i],
+                               plain(cell), size=size, bold=bold, color=col,
+                               anchor=MSO_ANCHOR.MIDDLE, ls=TBL_ROW_LS,
+                               tag=f"{tag}/ячейка")
             cx += widths[j]
         cy += heights[i]
     report.PRIM["таблица"] += 1

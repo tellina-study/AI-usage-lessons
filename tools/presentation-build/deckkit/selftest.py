@@ -572,6 +572,7 @@ def selftest():
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)
+    probe_cell_runs()
     selftest_layout.run_all(OK, BAD, say, _run, tmp, seq)
     say("─────────────────────────────────────────────────────────────")
     total = len(OK) + len(BAD)
@@ -583,6 +584,57 @@ def selftest():
         return 1
     say("все проверки доказаны на сломанном входе")
     return 0
+
+
+def probe_cell_runs():
+    """Клетка карты двумя начертаниями: своё полужирным, пройденное светлым.
+
+    Доказывается РАЗНОСТНО и в обе стороны. Прежнее правило
+    (`bold = "**" in cell`) красило ячейку полужирной ЦЕЛИКОМ от одной пары
+    звёздочек, и накопительная карта стадии была невыполнима — три сессии
+    подряд обошли это скобками, каждая сочтя свойством жанра. Проверка
+    обязана ловить и обратное: при ВЫКЛЮЧЕННОМ переключателе вид доставленной
+    Лекции 6 не двигается, иначе правка меняет уже прочитанную деку."""
+    cell = "**подсказка, которой верят** (отбор · диагноз)"
+    table = [["задача", "данные"], [cell, "изображение"]]
+
+    def runs_of(mode):
+        tables.CELL_RUNS = mode
+        p = prims.new_deck()
+        s = prims.blank(p)
+        tables.reset_caches()
+        tables.draw_table(s, 0.5, 0.5, table, 11.0, 6.0, "проба")
+        for sh in s.shapes:
+            if not sh.has_text_frame:
+                continue
+            for para in sh.text_frame.paragraphs:
+                rs = [(r.text, bool(r.font.bold)) for r in para.runs]
+                if rs and "подсказка" in "".join(x for x, _ in rs):
+                    return rs
+        return []
+
+    try:
+        off, on = runs_of(False), runs_of(True)
+    finally:
+        tables.CELL_RUNS = False
+
+    n_off, n_on = len(off), len(on)
+    b_on = sum(1 for _, b in on if b)
+    light = "".join(x for x, b in on if not b).strip()
+    ok_off = n_off == 1 and off[0][1] is True
+    ok_on = n_on > 1 and b_on == 1 and "подсказка" in next(
+        (x for x, b in on if b), "") and "отбор" in light
+    if not (ok_off and ok_on):
+        BAD.append(
+            f"[клетка-прогоны] выключено — прогонов {n_off} "
+            f"(ждали 1, полужирный); включено — прогонов {n_on}, "
+            f"полужирных {b_on} (ждали >1 и ровно 1)")
+    else:
+        OK.append("[клетка-прогоны]")
+        say(f"{'[клетка-прогоны]':<24} разностно: ЛОВИТ  →  выключено — "
+            f"прогон {n_off}, клетка полужирная целиком (вид Лекции 6 не "
+            f"двинулся); включено — прогонов {n_on}, полужирный из них "
+            f"{b_on}, светлым идёт «{light}»")
 
 
 if __name__ == "__main__":

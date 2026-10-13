@@ -5,7 +5,7 @@ section: "7. Разработка лекарства — удешевили на
 type: divider
 title: "Разработка лекарства: удешевили начало — где узкое место"
 assertion: "Раздел переносит тот же вопрос на масштаб отрасли: ранний шаг разработки подешевел многократно, а клинические фазы на людях — узкое место — не подешевели ни на сколько, и одобрений за десять лет существования категории ноль"
-source: "BIO / QLS / Informa, Clinical Development Success Rates and Contributing Factors 2011–2020; Jayatunga и соавт., Drug Discovery Today, 2024; Haque W. и соавт., J Clin Oncol 2026, DOI 10.1200/JCO.2026.44.16_suppl.11072"
+source: "BIO / QLS / Informa, Clinical Development Success Rates and Contributing Factors 2011–2020 — https://go.bio.org/rs/490-EHZ-999/images/ClinicalDevelopmentSuccessRates2011_2020.pdf · Jayatunga и соавт., Drug Discovery Today, 2024 — https://doi.org/10.1016/j.drudis.2024.104009 · Haque W. и соавт., J Clin Oncol 2026, DOI 10.1200/JCO.2026.44.16_suppl.11072 — https://doi.org/10.1200/JCO.2026.44.16_suppl.11072"
 media: ""
 media_needed: "кадр лаборатории медицинской химии — вытяжной шкаф, колбы, человек за синтезом вещества; постановочность и подпись не нужны"
 media_note: ""
@@ -38,3 +38,5 @@ status: собран
 Отдельно стоит эпизод про предсказание структуры белка: ожидание, что экспериментальная структурная биология сожмётся, числами депозитария не подтвердилось — оговорка против рекламы, держится на статистике, а не на мнении.
 
 Одну границу надо удержать до первого разбора: это работа на масштабе отрасли, и переносить выводы одного масштаба на другой запрещено так же, как в остальных разделах.
+
+**Источники.** [BIO / QLS / Informa, Clinical Development Success Rates 2011–2020](https://go.bio.org/rs/490-EHZ-999/images/ClinicalDevelopmentSuccessRates2011_2020.pdf) · [Jayatunga и соавт., Drug Discovery Today 2024](https://doi.org/10.1016/j.drudis.2024.104009) · [Haque и соавт., J Clin Oncol 2026](https://doi.org/10.1200/JCO.2026.44.16_suppl.11072)

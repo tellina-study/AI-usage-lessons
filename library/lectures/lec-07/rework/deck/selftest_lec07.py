@@ -13,6 +13,11 @@
 быть не может, потому что они про эту деку: подбор ширины боковой
 иллюстрации, два обязательных hero против порога §5.9 и живая гиперссылка.
 """
+import functools
+import inspect
+import re
+import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -22,7 +27,7 @@ from pptx.util import Inches
 import build_lec07 as B
 from build_lec07 import (LEC_ROOT, SLIDES_DIR, build, content,
                          fit_media)
-from deckkit import (media, prims, probes, probes_layout, report,
+from deckkit import (media, pdfmeasure, prims, probes, probes_layout, report,
                      slidefile)
 # `verify_links` переехала в ядро при переводе деки на `deckkit`, а здесь
 # осталась импортом из сборщика — и самопроверка деки падала `ImportError`
@@ -71,8 +76,9 @@ def selftest():
     Проверка, показавшая ноль, ничего не значит, пока не доказано, что она
     умеет находить. Поэтому два прогона на каждое предупреждение: чистый
     кадр (обязан молчать) и сломанный (обязан сработать)."""
+    _arm()
     tmp = Path(tempfile.mkdtemp(prefix="lec07-selftest-"))
-    ok, bad, seq = [], [], [0]
+    ok, bad, seq, table = [], [], [0], [0]
 
     def run(files, name="probe"):
         report.reset()
@@ -95,6 +101,7 @@ def selftest():
         if key in SKIP:
             continue
         tag, _, need = key.partition(" ")
+        table[0] += 1
         w = run([(f"{sid}-broken.md", txt)])
         hit = [x for x in w if x.startswith(tag) and (not need or need in x)]
         print(f"{key:<24} на сломанном входе: "
@@ -111,20 +118,35 @@ def selftest():
     (ok if hit else bad).append("[файлы]")
 
     print("── пробы, которые ставятся только ЭТОЙ декой ────────────────")
+    ok.extend(probe_verdict(bad))
     ok.extend(probe_floor(bad, run))
     ok.extend(probe_fit_media(bad))
     ok.extend(probe_box_over_media(bad, tmp))
     ok.extend(probe_heroes(bad))
     ok.extend(probe_live_links(tmp, bad))
+    ok.extend(probe_glyphs_vs_text(bad))
+    if not table[0]:
+        bad.append("[самотест-таблица] ни один вход из `probes.BROKEN` не "
+                   f"прогнан (в SKIP {len(SKIP)}) — табличная часть прогона "
+                   "пуста, а печатала бы «доказано»")
+    missed = sorted(_declared_probes() - PROBES_RUN)
+    if missed:
+        bad.append("[самотест-полный] объявленные пробы не вызваны: "
+                   + ", ".join(missed))
     print("─────────────────────────────────────────────────────────────")
-    print(f"проверок доказано: {len(ok)} из {len(ok) + len(bad)}")
+    print(f"проверок доказано: {len(ok)} из {len(ok) + len(bad)} "
+          f"(табличных {table[0]}, своих проб деки "
+          f"{len(_declared_probes())}, незваных {len(missed)})")
     print("ядро сдаётся своей самопроверкой отдельно: "
           "python3 -m deckkit.selftest")
+    code = verdict(ok, bad, missed)
     if bad:
         print("НЕ ДОКАЗАНО: " + ", ".join(bad))
-        return 1
-    print("все проверки доказаны на сломанном входе")
-    return 0
+    elif code:
+        print("ПРОГОН НИЧЕГО НЕ ПРОВЕРИЛ — ноль выполненных проб")
+    else:
+        print("все проверки доказаны на сломанном входе")
+    return code
 
 
 # Кадр, которому боковая колонка в 6,00" заведомо не по карману: полоса из
@@ -338,3 +360,179 @@ def probe_box_over_media(bad, tmp):
           "ни одного перехлёста")
     return ["[коробка и снимок]"]
 
+
+
+# Выпуск деки, ЛЕЖАЩИЙ В РЕПОЗИТОРИИ, — чтобы проба не зависела от того,
+# рендерил ли кто-то деку перед прогоном: «пропустим, файла нет» — это и
+# есть молчание, от которого заведён весь этот блок.
+GROUND_PDF = Path(__file__).resolve().parent.parent / "lec-07-pererabotka.pdf"
+GROUND_FRAMES = (38, 75, 104)
+GROUND_TOL = 0.05
+
+
+def _real_chars(pdf, page):
+    """Знаков на странице ПО НАСТОЯЩЕМУ ТЕКСТУ — `pdftotext`, без переводов
+    строк. Пробелы считаются: в потоке PDF пробел — такой же глиф."""
+    r = subprocess.run(
+        ["bash", "-lc", ". /home/harness/.local/lo-portable-env.sh "
+         f"2>/dev/null; pdftotext -f {page} -l {page} '{pdf}' -"],
+        capture_output=True, text=True, timeout=180)
+    if r.returncode or not r.stdout.strip():
+        return None
+    return len(re.sub(r"[\r\n\f]", "", r.stdout))
+
+
+def probe_glyphs_vs_text(bad):
+    """Число знаков меры — против НАСТОЯЩЕГО текста кадра.
+
+    Единственная проба во всём пакете, которая сверяет `pdfmeasure` со
+    сторонним чтением того же файла, — и та, которой не было, когда мера
+    теряла каждый односимвольный прогон нацело. Разностно: прежнее правило
+    («всегда четыре цифры на знак») на тех же кадрах обязано тулерансу НЕ
+    удовлетворить, иначе проба не различает исправленное от сломанного."""
+    if not GROUND_PDF.exists():
+        bad.append(f"[знаки-против-текста] нет выпуска {GROUND_PDF.name} — "
+                   "сверить меру не с чем")
+        return []
+    pages = {n: st for n, st, _b in pdfmeasure.pages(GROUND_PDF)}
+    bpg = pdfmeasure.glyph_bytes(GROUND_PDF.read_bytes())
+    out = {}
+    for mode, b in (("по кодировке", bpg), ("прежним правилом", 2)):
+        rs = []
+        for f in GROUND_FRAMES:
+            real = _real_chars(GROUND_PDF, f)
+            mine = sum(r[1] for r in pdfmeasure.text_runs(pages[f], bpg=b))
+            if real is None or not mine:
+                bad.append("[знаки-против-текста] `pdftotext` не прочитал "
+                           f"кадр {f} — сверять нечем")
+                return []
+            rs.append(real / mine)
+        out[mode] = rs
+    now_ok = all(abs(r - 1.0) <= GROUND_TOL for r in out["по кодировке"])
+    was_bad = all(r > 1.5 for r in out["прежним правилом"])
+    if not now_ok or not was_bad:
+        bad.append(f"[знаки-против-текста] по кодировке отношения "
+                   f"{[round(r, 3) for r in out['по кодировке']]}, прежним "
+                   f"правилом {[round(r, 2) for r in out['прежним правилом']]}"
+                   " — проба не различает исправленную меру от сломанной")
+        return []
+    print(f"{'[знаки-против-текста]':<24} разностно: ЛОВИТ  →  на кадрах "
+          f"{list(GROUND_FRAMES)} мера сходится с `pdftotext` в "
+          + " · ".join(f"{r:.3f}" for r in out["по кодировке"])
+          + "; прежним правилом те же кадры давали "
+          + " · ".join(f"{r:.2f}" for r in out["прежним правилом"])
+          + " (знаков недосчитано вдвое-втрое)")
+    return ["[знаки-против-текста]"]
+
+
+# ════════════════════════════════════════════════════════════════════
+# ЗАПУСКАТЕЛЬ: сам прогон и его код выхода
+# ════════════════════════════════════════════════════════════════════
+# Этого блока здесь не было, и файл от этого выглядел работающим:
+# `python3 selftest_lec07.py` определял все пробы ниже, не звал ни одной,
+# печатал НОЛЬ строк и выходил НУЛЁМ. Пустой вывод и нулевой код приняты
+# за «прошло» — и числа самопроверки уехали владельцу курса, не будучи
+# измеренными ни разу. Тот же класс дефекта, что `ImportError` круга до
+# этого (см. `deckkit/README-pol-i-kolonki.md`, последний раздел): проверка
+# молчит ровно так же, как успех.
+#
+# Поэтому код выхода считает ОТДЕЛЬНАЯ чистая функция, которую можно
+# прогнать на сломанном входе, — и прогоняет её проба `[самотест-код]`.
+# И поэтому же прогон сверяет ОБЪЯВЛЕННЫЕ пробы с ВЫЗВАННЫМИ: проба,
+# которую забыли вписать в `selftest`, иначе не звалась бы вовсе, а строка
+# «доказано N из N» была бы верна — про те N, о которых вспомнили.
+
+PROBES_RUN = set()
+
+
+def verdict(ok, bad, missed):
+    """Код выхода прогона по трём его итогам. Ноль — только если прогон
+    что-то выполнил, ничего не провалил и никого не забыл.
+
+    3 — объявленная проба не вызвана; 2 — не выполнено НИ ОДНОЙ пробы
+    (пустой прогон НЕ успех, в этом вся цена этого блока); 1 — есть
+    недоказанная проба; 0 — прошло."""
+    if missed:
+        return 3
+    if not ok and not bad:
+        return 2
+    return 1 if bad else 0
+
+
+# Пять входов, три из них сломанные. Входы именно такие, какими прогон
+# ломался или мог сломаться: пустой (файл без запускателя), с провалом
+# (проба не поймала), с незваной пробой (пробу определили и забыли вписать).
+VERDICT_CASES = (
+    (([], [], []), 2, "пустой прогон"),
+    ((["a"], [], []), 0, "только доказанные"),
+    ((["a"], ["b"], []), 1, "провал среди доказанных"),
+    (([], ["b"], []), 1, "один провал"),
+    ((["a"], [], ["probe_x"]), 3, "объявленная проба не вызвана"),
+)
+
+
+def probe_verdict(bad):
+    """Сам запускатель — на сломанном входе.
+
+    Проба не про раскладку: она про то, что прогон УМЕЕТ выдать ненулевой
+    код. Проверка, которая не умеет упасть, не отличима от успеха — и
+    именно так этот файл и сдавался до сих пор."""
+    wrong = [(why, want, verdict(*args))
+             for args, want, why in VERDICT_CASES if verdict(*args) != want]
+    if wrong:
+        bad.append(f"[самотест-код] выход прогона неверен: {wrong}")
+        return []
+    print(f"{'[самотест-код]':<24} на сломанном входе: ЛОВИТ  →  входов "
+          f"{len(VERDICT_CASES)}, сломанных "
+          f"{sum(1 for _a, w, _ in VERDICT_CASES if w)}: "
+          + " · ".join(f"{why} → {want}" for _a, want, why in VERDICT_CASES))
+    return ["[самотест-код]"]
+
+
+def _declared_probes():
+    """Имена проб, ОБЪЯВЛЕННЫХ в этом файле, — по самому файлу, а не по
+    списку, который надо не забыть обновить."""
+    return {n for n, v in list(vars(sys.modules[__name__]).items())
+            if n.startswith("probe_") and inspect.isfunction(v)
+            and v.__module__ == __name__}
+
+
+def _record(fn):
+    @functools.wraps(fn)
+    def inner(*a, **kw):
+        PROBES_RUN.add(fn.__name__)
+        return fn(*a, **kw)
+    inner._armed = True
+    return inner
+
+
+def _arm():
+    """Обернуть счётчиком вызова всё, что объявлено пробой.
+
+    Зовётся ПЕРВЫМ делом из `selftest()`, а не на уровне модуля: проба,
+    дописанная в конец файла — то есть ПОСЛЕ точки входа, — на уровне
+    модуля не существовала бы к моменту обёртки, и сверка «объявлено против
+    вызванного» молча считала бы её по-прежнему шестой из шести. Проверено
+    ломом: при обёртке на уровне модуля дописанная проба не нашлась."""
+    me = sys.modules[__name__]
+    for name in sorted(_declared_probes()):
+        fn = getattr(me, name)
+        if not getattr(fn, "_armed", False):
+            setattr(me, name, _record(fn))
+
+
+def main():
+    """`python3 selftest_lec07.py` — то же, что `build_lec07.py --selftest`.
+    Оба зовут `selftest()`, и оба получают один и тот же код выхода."""
+    code = selftest()
+    print("код выхода: " + str(code) + {
+        0: " — прогон прошёл",
+        1: " — есть недоказанные пробы",
+        2: " — НИ ОДНА проба не выполнилась, это НЕ успех",
+        3: " — объявленная проба не была вызвана",
+    }.get(code, " — неизвестный исход"))
+    return code
+
+
+if __name__ == "__main__":
+    sys.exit(main())

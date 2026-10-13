@@ -41,7 +41,7 @@
 import re
 from dataclasses import dataclass, field, replace
 
-from . import metrics, prims, report
+from . import floor, metrics, prims, report
 from .theme import DEEP, GOLD, LIGHT, SLATE, SURFACE, TEAL, WHITE
 
 
@@ -52,7 +52,7 @@ class PlateStyle:
     max_per_row: int = 4            # плашек в ряд; больше — второй ряд
     stroke_pt: float = 1.2
     gold_stroke_pt: float = 2.0
-    label_pt: float = 10.0
+    label_pt: float = 12.0          # пол видимого слоя, см. `floor.py`
     label_ls: float = 1.10
     label_extra: float = 0.05
     label_extra_in_box: bool = True   # отбивка под подписью входит в РАМКУ
@@ -60,14 +60,14 @@ class PlateStyle:
     label_wsafe: bool = False       # мерить подпись по суженной ширине
     value_hi: float = 23.0
     value_lo: float = 13.0
-    value_floor: float = 10.0
+    value_floor: float = 12.0       # пол видимого слоя, см. `floor.py`
     value_ls: float = 1.08
     value_extra: float = 0.04
     value_rows_digit: int = 2       # предел строк, когда в значении есть цифра
     value_rows_word: int = 3        # … и когда это слово, а не число
     value_longest_by_width: bool = True
     value_h_wsafe: bool = False
-    note_pt: float = 10.5
+    note_pt: float = 12.0           # пол видимого слоя, см. `floor.py`
     note_ls: float = 1.12
     note_extra: float = 0.0
     note_rows: int = 3
@@ -86,8 +86,15 @@ DEFAULT = PlateStyle()
 LEC07 = replace(DEFAULT, warn_overflow=False)
 
 # Ровно то, чем собрана доставленная дека Лекции 6.
+# Числа Лекции 6 ПРИШПИЛЕНЫ все до одного, в том числе те, что совпадали с
+# умолчаниями класса. Пока они брались из умолчаний, этот набор означал не
+# «ровно то, чем собрана доставленная дека», а «то, что осталось от
+# умолчаний сегодня»: поднятие пола видимого слоя в `DEFAULT` сдвинуло бы
+# доставленную деку, которую читали залу. Пришпиленное число — обещание,
+# унаследованное — совпадение.
 LEC06 = PlateStyle(
     gap=0.18, pad=0.16, stroke_pt=1.4,
+    label_pt=10.0,
     label_ls=1.08, label_extra=0.05, label_extra_in_box=False,
     label_color=TEAL, label_wsafe=True,
     value_hi=28.0, value_lo=13.0, value_floor=13.0, value_ls=1.06,
@@ -279,6 +286,7 @@ def _draw_plate(s, sid, p, x, y, w, h, is_gold, st, tag):
         # даёт ровно по строкам. Сумма высот одна и та же, поэтому полоса
         # целиком у обоих одинаковой высоты, но рамка самой подписи
         # отличается на 0,05" — и это видно в XML доставленных дек.
+        floor.pt(st.label_pt, tag, "подпись плашки")
         hl = metrics.est_h(lab, st.label_pt, lw, st.label_ls, True)
         box = hl + st.label_extra if st.label_extra_in_box else hl
         prims.text_box(s, x + st.pad, cy, iw, box, lab, size=st.label_pt,
@@ -292,6 +300,7 @@ def _draw_plate(s, sid, p, x, y, w, h, is_gold, st, tag):
                 f"[плашки] {tag}: значению «{p['value']}» и на {f:.1f} пт "
                 f"нужно {rows} строки — плашка держит крупное ЧИСЛО, а не "
                 "фразу: длинное в `note` или на отдельную плашку")
+        floor.pt(f, tag, "значение плашки")
         hv = (rows * f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
               + st.value_extra)
         prims.text_box(s, x + st.pad, cy, iw, hv, p["value"], size=f,
@@ -307,6 +316,7 @@ def _draw_plate(s, sid, p, x, y, w, h, is_gold, st, tag):
                 f"[плашки] {tag}: оговорка заняла {rows} строки "
                 f"(> {st.note_rows}) — полоса плашек выросла на эту высоту "
                 "за счёт тела слайда")
+        floor.pt(st.note_pt, tag, "оговорка плашки")
         hn = metrics.est_h(p["note"], st.note_pt, nw, st.note_ls, False,
                            st.note_italic)
         prims.text_box(s, x + st.pad, cy + st.note_extra, iw, hn, p["note"],

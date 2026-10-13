@@ -18,13 +18,20 @@
 from pptx.enum.text import PP_ALIGN
 
 from . import metrics, prims, report, tables
+# Имя модуля сокращено: у `fit_blocks` есть свой параметр `floor` (пол
+# кегля ЭТОЙ раскладки), и он затенял бы модуль внутри функции.
+from . import floor as vis_floor
 from .markup import plain, runs_md
 from .slidefile import blk_kind, blk_width
 from .theme import DEEP, GOLD, MID, OUTLINE, TEAL
 
 LS = 1.24                 # межстрочный в потоке
 FLOOR = 8.0               # ниже кегль тела не опускается: будет вылет
-READABLE = 13.0           # ниже — «с задних рядов не читается»
+READABLE = vis_floor.VIS_PT   # ниже — «с задних рядов не читается». Порог взят
+                          # из пола видимого слоя, а не своим числом: 13,0,
+                          # стоявшие здесь, валили сборку на теле в 12,5 пт
+                          # — то есть ВЫШЕ курсового порога проекции, —
+                          # и это был второй голос об одном пороге
 GAP_BLOCK = 0.16          # просвет между блоками
 HI = 17.0                 # верхний кегль тела
 COL_GAP = 0.40            # между двумя колонками тела
@@ -115,6 +122,7 @@ def fit_blocks(blocks, w, h, *, tag="", hi=HI, floor=FLOOR,
     elif f < readable:
         report.warn(f"[кегль] {tag}: тело ужалось до {f:.1f} пт "
                     f"(< {readable:.1f})")
+    vis_floor.pt(f, tag, "тело потоком")
     metrics.check_thin_margin(blocks_frames(blocks, f, w), h,
                               blocks_h(blocks, f, w),
                               blocks_line_h(blocks, f), tag)

@@ -58,11 +58,11 @@ from pptx.enum.text import MSO_ANCHOR
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
-from deckkit import (columns, flow, markup, media, metrics, plates,  # noqa: E402
-                     prims, render as rnd, report, scheme, slidefile,
-                     tables, wrap)
-from deckkit.theme import (DEEP, GOLD, LIGHT, MID, SLIDE_H,  # noqa: E402
-                           SLIDE_W, WHITE)
+from deckkit import (columns, floor, flow, markup, media, metrics,  # noqa: E402
+                     plates, prims, render as rnd, report, scheme,
+                     slidefile, tables, titles, twocol, wrap)
+from deckkit.theme import (DEEP, GOLD, LIGHT, MID, OUTLINE,  # noqa: E402
+                           SLIDE_H, SLIDE_W, WHITE)
 
 SLIDES_DIR = HERE / "slides"
 LEC_ROOT = HERE.parent.parent                      # library/lectures/lec-07
@@ -76,13 +76,25 @@ MX = 0.55                              # поле слева и справа
 FULL_W = SLIDE_W - 2 * MX              # 12,23"
 TITLE_Y, TITLE_H = 0.40, 0.92
 BODY_TOP = 1.46
-FOOT_Y, FOOT_H = 6.94, 0.50
+FOOT_BOT = 7.44        # нижняя кромка подвала; ниже — край слайда
+FOOT_H = 0.50          # высота подвала на две строки — та, что была
+FOOT_Y = FOOT_BOT - FOOT_H
 BODY_BOT = FOOT_Y - 0.12
+FOOT_LS = 1.12
+FOOT_GAP = 0.12        # просвет между низом тела и подвалом
+FOOT_MAX_H = 0.75      # предел высоты подвала: три строки на 12 пт (0,693")
+                       # плюс допуск. Выше — это уже не ссылка, а абзац, и
+                       # он отнимает у тела дюйм; подвал всё равно вырастет
+                       # (резать строку источника сборка не вправе), но
+                       # скажет об этом.
 MEDIA_W = 4.30
 MEDIA_W_FLOOR = 2.60   # уже этого иллюстрация становится значком
 COL_GAP = 0.34
 GAP = 0.20
 TICK_W, TICK_H = 1.05, 0.055
+SUB_H = 0.52           # полоса подзаголовка под числом-заголовком
+SUB_GAP = 0.05         # просвет между числом и подзаголовком
+BODY_COL_GAP = 0.40    # между двумя колонками тела (`deckkit.twocol`)
 
 CONTENT_TYPES = {"case", "norm", "comparison", "summary", "map", "question"}
 
@@ -99,8 +111,16 @@ HERO_GAP = 0.06        # просвет между кадром и телом п
 # разрез идёт по границе блока, и шов между двумя надписями обязан читаться
 # тем же просветом, что и обычная граница блоков внутри одной.
 WRAP_GAP = 0.10
-BODY_PT = 15.0         # номинальный кегль тела этой деки: по нему мерится
-                       # пол проекции (`metrics.check_proj`)
+# Выключатель проверки «коробка накрывает снимок целиком» — ТОЛЬКО для пробы
+# (`selftest_lec07.probe_box_over_media`). Проба на саму проверку иначе
+# невозможна: она обязана собрать тот же кадр дважды и показать разницу, а
+# «разницу» не с чем сравнивать, пока второго режима нет. Тот же приём и по
+# той же причине, что `wrap.ENABLED`.
+WRAP_NEEDS_BOX_OVER_MEDIA = True
+BODY_PT = 15.0         # номинальный кегль тела этой деки
+FOOT_PT = 12.0         # строка источника. Пол видимого слоя (`floor.py`):
+                       # было 11,0 — 15 939 знаков деки, самый крупный её
+                       # класс ниже порога проекции
 # Обложка. Своя ширина: рядом с кадром стоит сплошной текст, а не колонка
 # плашек. При отношении 1,5 (снимок s01) ширина 7,79" даёт 40,5% площади —
 # порог взят с запасом в полпроцента, — а текстовому столбцу остаётся ровно
@@ -156,14 +176,20 @@ PLATES = plates.LEC07
 #     Выписано находкой: пометить эти два шага — работа переделки, не
 #     перевода. Явное `ai: true` стоит на одном шаге `s95`, где схема и есть
 #     сравнение «до / после» и шаблон был прав.
+# ПОЛ ВИДИМОГО СЛОЯ (круг #229, `deckkit/floor.py`). Прежде здесь стояли
+# `step_hi=11.5, step_lo=8.5, lab_pt=11.5, cap_pt=10.5` — то есть ВСЯ схема
+# набиралась ниже порога проекции курса, и ни одно предупреждение этого не
+# называло. Поднято до пола; цена названа и замерена в `README.md` деки:
+# бокс шага вырос, и на кадрах, где схема и так шла впритык, высоту теперь
+# забирает она, а не тело. Это и есть обмен, который правило покупает.
 SCHEME = scheme.SchemeStyle(ai_by_word=False,
-                            step_hi=11.5, step_lo=8.5, step_rows=5,
-                            lab_w=1.55, lab_gap=0.0, lab_pt=11.5,
+                            step_hi=13.5, step_lo=12.0, step_rows=5,
+                            lab_w=1.55, lab_gap=0.0, lab_pt=12.0,
                             step_pad=0.09, step_ls=1.12,
                             box_min_h=0.50, box_extra=0.26,
                             arrow_w=0.20, arrow_h=0.15, gap=0.05,
                             nogap=0.16, row_gap=0.16,
-                            cap_pt=10.5, cap_ls=1.12, cap_gap=0.04)
+                            cap_pt=12.0, cap_ls=1.12, cap_gap=0.04)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -176,25 +202,101 @@ def gold_tick(s, x, y, sid):
     report.GOLD_SEEN.add(sid)
 
 
-def heading(s, sl, color=DEEP, size=27.0, width=None):
-    """Заголовок-утверждение. Кегль подбирается под длину строки ИЗ ФАЙЛА:
-    заголовки правятся в `slides/`, и подгонять их руками нельзя."""
+def heading(s, sl, color=DEEP, width=None):
+    """Заголовок кадра — ЛЕСТНИЦЕЙ (`deckkit.titles`), а не подгонкой под
+    высоту рамки, плюс необязательное ЧИСЛО вместо фразы.
+
+    Возвращает верх тела. Прежде он был всегда `BODY_TOP`, и это держалось
+    на том, что заголовок в одну строку. Теперь верх СЧИТАЕТСЯ: кадр с
+    числом-заголовком и кадр с заголовком, который не влез в строку,
+    отдают телу меньше — и отдают его честно, а не кладут золотую черту
+    поверх второй строки."""
     if not sl.title:
         report.warn(f"[заголовок] {sl.sid}: поле `title` пусто")
         return BODY_TOP
     w = FULL_W if width is None else width
-    sz = metrics.fit_size(sl.title, w, TITLE_H, hi=size, lo=19.0, floor=15.0,
-                          bold=True, ls=1.08, tag=f"{sl.sid}/заголовок")
-    prims.text_box(s, MX, TITLE_Y, w, TITLE_H, sl.title, size=sz, bold=True,
-                   color=color, ls=1.08, tag=f"{sl.sid}/заголовок")
+    tag = f"{sl.sid}/заголовок"
+    num = titles.headline_of(sl)
+    if num:
+        nf, _nl, sf, _sl = titles.fit_headline(num, sl.title, w, TITLE_H,
+                                               SUB_H, tag=tag)
+        nh = metrics.est_h(num, nf, w, 1.06, True)
+        prims.text_box(s, MX, TITLE_Y, w, nh, num, size=nf, bold=True,
+                       color=color, ls=1.06, tag=f"{tag}-число")
+        sh = metrics.est_h(sl.title, sf, w, 1.14)
+        prims.text_box(s, MX, TITLE_Y + nh + SUB_GAP, w, sh, sl.title,
+                       size=sf, color=MID, ls=1.14, tag=f"{tag}-подзаголовок")
+        bottom = TITLE_Y + nh + SUB_GAP + sh
+    else:
+        sz, _lines = titles.fit_title(sl.title, w, TITLE_H, tag=tag)
+        prims.text_box(s, MX, TITLE_Y, w, TITLE_H, sl.title, size=sz,
+                       bold=True, color=color, ls=1.08, tag=tag)
+        bottom = TITLE_Y + metrics.est_h(sl.title, sz, w, 1.08, True)
     # Акцент садится под НАСТОЯЩУЮ высоту заголовка, а не под рамку в 0,92":
     # у однострочного заголовка рамка на полдюйма выше текста, и акцент,
     # поставленный по рамке, попадал под коробку мотива. Рисует его не
     # заголовок, а `content` последним ходом — иначе коробка мотива
     # закрашивала акцент собой, а проверка `[золото]` при этом молчала.
-    sl.tick_y = min(TITLE_Y + metrics.est_h(sl.title, sz, w, 1.08, True)
-                    + 0.07, BODY_TOP - 0.17)
-    return BODY_TOP
+    #
+    # ЗАЖИМА СВЕРХУ БОЛЬШЕ НЕТ, и это и была вся поломка золотой черты:
+    # `min(…, BODY_TOP - 0.17)` держал её на 1,29" при двухстрочном
+    # заголовке, то есть ВНУТРИ второй строки — зал видел подчёркнутым
+    # первое слово этой строки («держит», «модели», «арбитражем», «фазе»).
+    # Теперь черта всегда под настоящим низом заголовка, а тело уступает
+    # ей место.
+    sl.tick_y = bottom + 0.07
+    return max(BODY_TOP, sl.tick_y + TICK_H + 0.12)
+
+
+def source_runs(sl):
+    """Прогоны строки источника. Отдельно от `footer` затем, что ту же
+    строку надо ИЗМЕРИТЬ до того, как начнётся раскладка тела: её высота
+    решает, где кончается тело."""
+    src = str(sl.meta.get("source") or "").strip()
+    cap = str(sl.meta.get("media_caption") or "").strip()
+    if cap and sl.meta.get("media_hero"):
+        src = f"{src} · {cap}" if src and src != "—" else cap
+    if not src or src == "—":
+        return []
+    return [{"text": vis, "size": FOOT_PT, "italic": True,
+             "color": MID if url else LIGHT, "url": url}
+            for vis, url in markup.source_parts(src)]
+
+
+def foot_geom(sl):
+    """`(верх подвала, его высота, низ тела)` — по НАСТОЯЩЕЙ длине источника.
+
+    Прежде высота подвала была числом (0,50" = две строки на 11 пт), и
+    длинный источник просто не влезал: шесть кадров деки выдавали
+    блокирующее `[высота] подвал`, а на экране строка уезжала под нижнюю
+    кромку. Поднятие подвала до пола видимого слоя (11 → 12 пт) добавило бы
+    к этим шести ещё, и починить это числом нельзя: источники у кадров
+    разной длины, а общее число подвала — это либо отрезанная строка, либо
+    отнятая у тела высота на всех ста двадцати двух кадрах.
+
+    Поэтому подвал считается по своему содержимому и растёт ВВЕРХ от
+    нижней кромки слайда, а тело кончается там, где начался подвал. Кадр с
+    коротким источником остаётся ровно той же геометрии, что был."""
+    key = "foot"
+    if key not in sl._cache:
+        runs = source_runs(sl)
+        flat = "".join(r["text"] for r in runs)
+        h = max(FOOT_H, metrics.est_h(flat, FOOT_PT, FULL_W, FOOT_LS,
+                                      italic=True)) if flat else FOOT_H
+        if h > FOOT_MAX_H:
+            report.warn(
+                f"[высота] {sl.sid}/подвал: источник занял {h:.2f}\" — "
+                f"больше предела {FOOT_MAX_H:.2f}\" ({len(flat)} знаков). "
+                "Подвал вырастет и заберёт эту высоту у тела; ссылка такой "
+                "длины — место заметок лектора, а не экрана")
+        y = FOOT_BOT - h
+        sl._cache[key] = (y, h, y - FOOT_GAP)
+    return sl._cache[key]
+
+
+def body_bot(sl):
+    """Низ тела этого кадра — см. `foot_geom`."""
+    return foot_geom(sl)[2]
 
 
 def footer(s, sl):
@@ -208,22 +310,11 @@ def footer(s, sl):
         src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return
-    runs = [{"text": vis, "size": 11.0, "italic": True,
-             "color": MID if url else LIGHT, "url": url}
-            for vis, url in markup.source_parts(src)]
+    runs = source_runs(sl)
     if not runs:
         return
-    # Высота подвала мерится ОДИН раз и на один порог — порог самой рамки.
-    # Два порога на одну меру давали два предупреждения разной строгости об
-    # одном дефекте, и счёт в отчёте перестал значить то, что обещает.
-    flat = "".join(r["text"] for r in runs)
-    e = metrics.est_h(flat, 11.0, FULL_W, 1.12, italic=True)
-    if e > FOOT_H + 0.02:
-        report.warn(
-            f"[высота] {sl.sid}/подвал: источник не влезает в две строки "
-            f"подвала — {len(flat)} знаков, оценка {e:.2f}\" против "
-            f"{FOOT_H:.2f}\"")
-    prims.text_runs(s, MX, FOOT_Y, FULL_W, FOOT_H, runs, ls=1.12,
+    _y, h, _bot = foot_geom(sl)
+    prims.text_runs(s, MX, FOOT_BOT - h, FULL_W, h, runs, ls=FOOT_LS,
                     tag=f"{sl.sid}/подвал", quiet=True)
 
 
@@ -245,6 +336,7 @@ def check_prims(sl, kind):
 
 def cover(p, sl, root):
     s = prims.blank(p)
+    bbot = body_bot(sl)
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
     check_prims(sl, "cover")
     img = media.media_path(sl.meta, root, sl.sid)
@@ -252,7 +344,7 @@ def cover(p, sl, root):
     ty, gy = 1.70, 1.28
     if hero:
         x_box, _ = media.place_hero(s, sl.sid, sl.meta, img, SLIDE_W - MX,
-                                    HERO_TOP, BODY_BOT, COVER_HERO_W)
+                                    HERO_TOP, bbot, COVER_HERO_W)
         tw = x_box - COL_GAP - MX
         ty, gy = COVER_HERO_TEXT_Y, COVER_HERO_GOLD_Y
     elif img:
@@ -278,7 +370,7 @@ def cover(p, sl, root):
                 r["space_before"] = 12
             runs.append(r)
     if runs:
-        prims.text_runs(s, MX, ty, tw, BODY_BOT - ty if hero else 4.20, runs,
+        prims.text_runs(s, MX, ty, tw, bbot - ty if hero else 4.20, runs,
                         ls=1.22, anchor=MSO_ANCHOR.TOP,
                         tag=f"{sl.sid}/обложка")
     prims.rect(s, MX, gy, 1.60, 0.07, GOLD)
@@ -289,6 +381,7 @@ def cover(p, sl, root):
 
 def divider(p, sl, root):
     s = prims.blank(p)
+    foot_y = foot_geom(sl)[0]
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
     prims.rect(s, 0, 0, 0.17, SLIDE_H, MID)
     check_prims(sl, "divider")
@@ -324,9 +417,9 @@ def divider(p, sl, root):
                             markup.inline_runs(t, 15.5, DEEP), ls=1.24,
                             tag=f"{sl.sid}/дивайдер-тело")
             y += h + 0.18
-        if y > FOOT_Y - 0.2:
+        if y > foot_y - 0.2:
             report.warn(f"[высота] {sl.sid}/дивайдер: текст дошёл до подвала "
-                        f"— {y:.2f}\" при пределе {FOOT_Y:.2f}\"")
+                        f"— {y:.2f}\" при пределе {foot_y:.2f}\"")
             break
     footer(s, sl)
     return s
@@ -336,6 +429,7 @@ def content(p, sl, root):
     """Содержательный кадр: заголовок · плашки · схема · столбцы · тело ·
     подвал. Тело идёт одним прогоном с иерархией кеглей внутри."""
     s = prims.blank(p)
+    bbot = body_bot(sl)
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
     img = media.media_path(sl.meta, root, sl.sid)
     hero = img is not None and bool(sl.meta.get("media_hero"))
@@ -343,14 +437,14 @@ def content(p, sl, root):
     # колонка кончается там же, где кадр-свидетельство, а тело уходит под него
     # во всю ширину. Иначе 40% площади под кадр и четыре примитива рядом
     # физически не совмещаются: замерено, левая колонка не доберёт 1,5".
-    col_bot = BODY_BOT
+    col_bot = bbot
     media_bot = 0.0        # низ боковой иллюстрации; 0 — её нет
     draw_img = None        # отложенный вызов `draw_media`: (x, y, w, h)
     if hero:
         # Кадр-свидетельство встаёт ПЕРВЫМ и забирает своё место целиком: от
         # него считается ширина заголовка и всего остального, а не наоборот.
         x_box, col_bot = media.place_hero(s, sl.sid, sl.meta, img,
-                                          SLIDE_W - MX, HERO_TOP, BODY_BOT,
+                                          SLIDE_W - MX, HERO_TOP, bbot,
                                           HERO_W)
         body_w = x_box - COL_GAP - MX
         y = heading(s, sl, width=body_w)
@@ -360,7 +454,7 @@ def content(p, sl, root):
         if img:
             mw, mh = media.media_box_size(media.img_ar(img, sl.sid),
                                           sl.media_w or MEDIA_W,
-                                          min(3.40, BODY_BOT - y))
+                                          min(3.40, bbot - y))
             body_w = FULL_W - mw - COL_GAP
             # Снимок ВЫЧИСЛЯЕТСЯ здесь, а РИСУЕТСЯ ниже. Решение «обтекать
             # или нет» принимается после подбора кегля, а коробка мотива в
@@ -417,10 +511,10 @@ def content(p, sl, root):
         # Абзацный отступ ЗДЕСЬ не вычитается: его считает `metrics.runs_h` —
         # одна мера на всю деку. Пока он вычитался по месту, поправка стояла
         # в трёх ветках из многих, и кадры без иллюстрации шли мимо неё.
-        avail = BODY_BOT - y
+        avail = bbot - y
         # Коробка мотива рисуется по МЕСТУ, а текст меряется по бюджету:
         # иначе последняя строка ложится на нижнюю скруглённую грань.
-        box_h = BODY_BOT - y + 0.10
+        box_h = bbot - y + 0.10
 
     # ── ТАБЛИЦА: вторая раскладка тела, и выбор между ними не вкусовой ──
     # `body_ordered` — единица СТРОКА, порядок сохранён, и среди видов есть
@@ -449,7 +543,7 @@ def content(p, sl, root):
         used = flow.blocks_h(ordered, size, text_w - 0.08)
         prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
                         box_h if hero else min(used + 0.30,
-                                               BODY_BOT - y + 0.10))
+                                               bbot - y + 0.10))
         # `accent=DEEP`, а не умолчание ядра: `runs_md` (раскладка-поток)
         # читает `**` как АКЦЕНТ и красит его в `MID`, а `inline_runs`
         # (прогон, которым набрана вся остальная дека) — как полужирный, цвет
@@ -491,19 +585,39 @@ def content(p, sl, root):
         # НА неё — белой карточкой на подложке. Два прямоугольника буквой
         # «Г» дали бы шов из двух обводок посреди кадра, а настоящей
         # Г-образной фигуры со скруглением у мотива нет.
+        #
+        # ── И ВОТ ГДЕ ЭТО ЛОМАЛОСЬ (кадр 84 деки, `s75`) ──────────────
+        # «Снимок ложится НА коробку белой карточкой» верно ровно тогда,
+        # когда снимок лежит В КОРОБКЕ ЦЕЛИКОМ. Снимок ставится от верха
+        # тела, СЧИТАННОГО ДО примитивов (`draw_img` берёт `y` сразу после
+        # заголовка), а коробка — от верха тела ПОСЛЕ них. На кадре с
+        # полосой плашек это разные высоты: на `s75` снимок начинался на
+        # 1,61", коробка — на 3,59", и верхняя грань коробки проходила
+        # ПОПЕРЁК снимка. Замер по собранному PDF: перехлёст 288×50 пт,
+        # правый верхний угол коробки срезан снимком, первая строка тела
+        # осталась одна с дырой под собой.
+        #
+        # Поэтому обтекание берётся только тогда, когда коробка накрывает
+        # снимок целиком. Не накрывает — кадр уходит на `fit_pushed`
+        # (тело целиком под снимком, коробка от его нижней грани) либо на
+        # обычную узкую колонку: обе раскладки грань снимка не пересекают
+        # ни при каком содержимом.
         wrapped, y_bot = None, media_bot + WRAP_GAP
-        if not hero and img and y < media_bot:
+        box_holds_media = (not WRAP_NEEDS_BOX_OVER_MEDIA
+                           or (draw_img is not None
+                               and draw_img[1] >= y - 0.10))
+        if not hero and img and y < media_bot and box_holds_media:
             wrapped = wrap.fit_runs_wrap(
                 runs, body_w - 0.08, media_bot - y, FULL_W - 0.08,
                 col_bot - y_bot, text_w - 0.08, avail, ls=1.26,
-                tag=f"{sl.sid}/тело", proj_base=BODY_PT)
+                tag=f"{sl.sid}/тело")
         pushed = None
         if not wrapped and not hero and img and y < media_bot:
             # Рядом со снимком не поместился ни один блок — тело уходит
             # под него целиком. Та же проверка «кегль не падает».
             pushed = wrap.fit_pushed(
                 runs, FULL_W - 0.08, col_bot - y_bot, text_w - 0.08, avail,
-                ls=1.26, tag=f"{sl.sid}/тело", proj_base=BODY_PT)
+                ls=1.26, tag=f"{sl.sid}/тело")
         if wrapped or pushed:
             # Коробка мотива начинается там, где начинается ТЕКСТ: при
             # обтекании от верха тела, при уходе под снимок — от первой
@@ -513,7 +627,7 @@ def content(p, sl, root):
             bot = wrapped[3] if wrapped else runs
             box_y = y if wrapped else y_bot
             prims.ocean_box(s, MX - 0.14, box_y - 0.10, FULL_W + 0.28,
-                            BODY_BOT - box_y + 0.10)
+                            bbot - box_y + 0.10)
             if top:
                 prims.text_runs(s, MX + 0.04, y, body_w - 0.08,
                                 media_bot - y, top, ls=1.26,
@@ -522,13 +636,48 @@ def content(p, sl, root):
                             col_bot - y_bot, bot, ls=1.26,
                             tag=f"{sl.sid}/тело-под")
         else:
-            metrics.fit_runs(runs, text_w - 0.08, avail, ls=1.26,
-                             tag=f"{sl.sid}/тело", proj_base=BODY_PT)
-            prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
-                            box_h if hero else min(avail + 0.18,
-                                                   BODY_BOT - y + 0.10))
-            prims.text_runs(s, MX + 0.04, y, text_w - 0.08, avail, runs,
-                            ls=1.26, tag=f"{sl.sid}/тело")
+            # ── ТЕЛО В ДВЕ КОЛОНКИ ───────────────────────────────────────
+            # Только там, где рядом нет иллюстрации: при боковом снимке
+            # ширина и так разрезана, а вторая пара колонок внутри узкой
+            # половины даёт строку в тридцать знаков. Берётся по тому же
+            # правилу, что и обтекание: ТОЛЬКО если кегль от этого не
+            # падает (`deckkit.twocol`). Кадр с объявленным
+            # противопоставлением (`columns:`) пропускается — у него уже
+            # есть два столбца, и вторые под ними читались бы как
+            # продолжение первых.
+            two = None
+            cw = (text_w - 0.08 - BODY_COL_GAP) / 2
+            if not hero and not img and not cols and len(blocks) >= 3:
+                two = twocol.fit_two(runs, cw, avail, text_w - 0.08, avail,
+                                     ls=1.26, tag=f"{sl.sid}/тело")
+            if two:
+                _k, _i, left, right = two
+                used = twocol.used_h(left, right, cw)
+                prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                                box_h if hero else min(used + 0.30,
+                                                       bbot - y + 0.10))
+                prims.text_runs(s, MX + 0.04, y, cw, avail, left, ls=1.26,
+                                tag=f"{sl.sid}/тело-лев")
+                prims.text_runs(s, MX + 0.04 + cw + BODY_COL_GAP, y, cw,
+                                avail, right, ls=1.26,
+                                tag=f"{sl.sid}/тело-прав")
+                prims.rect(s, MX + 0.04 + cw + BODY_COL_GAP / 2 - 0.005, y,
+                           0.01, min(used, avail), OUTLINE, count="линейка")
+            else:
+                metrics.fit_runs(runs, text_w - 0.08, avail, ls=1.26,
+                                 tag=f"{sl.sid}/тело")
+                # Коробка — по НАСТОЯЩЕЙ высоте текста, а не по всему
+                # бюджету. Коробка «до подвала» на коротком теле и есть
+                # полупустая коробка, которой у Лекции 6 один кадр из ста,
+                # а здесь было двадцать один; табличная ветка кадра так
+                # считала с самого начала, прогонная — нет.
+                used = metrics.runs_h(runs, text_w - 0.08, 1.26)
+                prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                                box_h if hero else min(used + 0.30,
+                                                       bbot - y + 0.10))
+                prims.text_runs(s, MX + 0.04, y, text_w - 0.08, avail, runs,
+                                ls=1.26, tag=f"{sl.sid}/тело")
+        floor.check_runs(runs, f"{sl.sid}/тело")
     elif blocks:
         report.warn(f"[высота] {sl.sid}/тело: места под тело не осталось "
                     f"({avail:.2f}\") — примитивы съели кадр")

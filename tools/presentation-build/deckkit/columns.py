@@ -19,7 +19,7 @@
       left:  {head: "Что получается", items: ["…", "…"]}
       right: {head: "Что не получается", items: ["…", "…"]}
 """
-from . import metrics, prims, report
+from . import floor, metrics, prims, report
 from .theme import DEEP, LIGHT, MID, SURFACE, TEAL, WHITE
 
 GAP = 0.34
@@ -27,7 +27,14 @@ PAD = 0.18
 TOP_PAD = 0.17
 HEAD_PT = 14.0
 HEAD_LS = 1.12
-ITEM_HI, ITEM_LO, ITEM_FLOOR = 14.5, 11.0, 9.0
+# Пол видимого слоя (`floor.py`). Подбор берёт НАИБОЛЬШИЙ кегль, который
+# влезает, — то есть ниже 12 пт он опускается только там, где 12 не влезает
+# вовсе, и тогда об этом говорит `[пол]` (ниже по тексту). Пол поставлен
+# МЯГКИМ нарочно: жёсткий оставил бы перечень торчать из своей коробки —
+# замерено на `s55a`, 1,30" текста в коробке 1,11". Между «мелко, и об этом
+# сказано» и «вылезло за грань молча» выбрано первое; прежде здесь не было
+# ни того, ни другого — столбец уходил под пол без единого слова.
+ITEM_HI, ITEM_LO, ITEM_FLOOR = 14.5, 9.0, 9.0
 ITEM_LS = 1.26
 MIN_H, MAX_H = 1.55, 3.40
 
@@ -72,6 +79,7 @@ def draw_columns(s, sid, cols, x, y, w, h):
         yy = y + TOP_PAD
         if c["head"]:
             hh = metrics.est_h(c["head"], HEAD_PT, iw, HEAD_LS)
+            floor.pt(HEAD_PT, f"{sid}/столбец-{i + 1}", "шапка столбца")
             prims.text_box(s, xx + PAD, yy, iw, hh, c["head"], size=HEAD_PT,
                            bold=True, color=MID if i == 0 else TEAL,
                            ls=HEAD_LS, tag=f"{sid}/столбец-шапка")
@@ -82,6 +90,7 @@ def draw_columns(s, sid, cols, x, y, w, h):
             sz = metrics.fit_size(body, iw, avail, hi=ITEM_HI, lo=ITEM_LO,
                                   floor=ITEM_FLOOR, ls=ITEM_LS,
                                   tag=f"{sid}/столбец-{i + 1}")
+            floor.pt(sz, f"{sid}/столбец-{i + 1}", "перечень столбца")
             prims.text_box(s, xx + PAD, yy, iw, avail, body, size=sz,
                            color=DEEP, ls=ITEM_LS,
                            tag=f"{sid}/столбец-{i + 1}")

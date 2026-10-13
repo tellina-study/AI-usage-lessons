@@ -20,6 +20,9 @@
   [ссылка-живая]  гиперссылка лежит в пакете как `r:id`, а не как синий текст
   [отпечаток]     регрессия ловит сдвиг фигуры на ОДИН EMU
 
+Пробы на ПОЛ КЕГЛЯ, лестницу заголовка, число-заголовок и две колонки —
+`selftest_floor.py`; зовутся оттуда же, откуда пробы раскладки.
+
 Запуск:  python3 -m deckkit.selftest
 """
 import sys
@@ -30,7 +33,7 @@ from PIL import Image
 from pptx.enum.shapes import MSO_SHAPE
 
 from . import (markup, metrics, plates, prims, probes, refdeck, regress,
-               report, scheme, selftest_layout, tables)
+               render, report, scheme, selftest_layout, tables)
 from .theme import SURFACE, WHITE
 
 OK, BAD, SAID = [], [], []
@@ -144,11 +147,16 @@ def probe_italic():
     note = ("слепая дублированная оценка 22 рецензентов "
             "на 100 госпитализациях")
     st = plates.LEC07
+    # Кегль ТОТ, НА КОТОРОМ ДЕФЕКТ БЫЛ ВИДЕН (оговорка Лекции 7 до поднятия
+    # пола видимого слоя), а не нынешний `st.note_pt`: проба про МЕРУ
+    # курсива, а не про сегодняшний набор. Привязанная к действующему числу,
+    # она умерла молча в тот же круг, когда пол подняли до 12 пт.
+    note_pt = 10.5
     iw = (12.23 - st.gap * 3) / 4 - 2 * st.pad
-    true_n = metrics.n_lines(note, st.note_pt, iw, False, True)
+    true_n = metrics.n_lines(note, note_pt, iw, False, True)
     own = metrics._unit_w(note, False, True) / metrics._unit_w(note, False,
                                                                False)
-    proxy = {c: metrics.n_lines(note, st.note_pt, iw / c, False, False)
+    proxy = {c: metrics.n_lines(note, note_pt, iw / c, False, False)
              for c in (1.0, 1.0235, 1.031)}
     narrow = (metrics._unit_w("дублированная", False, True)
               / metrics._unit_w("дублированная", False, False))
@@ -497,39 +505,20 @@ def probe_font_gap():
 
 def probe_live_links(tmp):
     """Гиперссылка лежит в пакете как `r:id` на внешнее отношение, а не как
-    подчёркнутый синий текст. Самоотчёт не принимается — считается XML."""
-    import zipfile
-    from lxml import etree
-    A = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
-    R = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
-    path = tmp / "clean.pptx"
-    body = notes = targets = 0
-    with zipfile.ZipFile(path) as z:
-        for nm in z.namelist():
-            if not nm.endswith(".xml"):
-                continue
-            if nm.startswith("ppt/slides/slide"):
-                root = etree.fromstring(z.read(nm))
-                body += sum(1 for e in root.iter(f"{A}hlinkClick")
-                            if e.get(f"{R}id"))
-            elif nm.startswith("ppt/notesSlides/notesSlide"):
-                root = etree.fromstring(z.read(nm))
-                notes += sum(1 for e in root.iter(f"{A}hlinkClick")
-                             if e.get(f"{R}id"))
-        for nm in z.namelist():
-            if ".rels" in nm and ("slides/_rels" in nm
-                                  or "notesSlides/_rels" in nm):
-                root = etree.fromstring(z.read(nm))
-                targets += sum(1 for e in root.iter()
-                               if (e.get("Type") or "").endswith("/hyperlink"))
-    if body < 1 or notes < 1 or targets < 2:
-        BAD.append(f"[ссылка-живая] в XML чистого кадра подвал {body}, "
-                   f"заметки {notes}, отношений {targets} — ждали хотя бы "
-                   "по одной и двух отношений")
+    подчёркнутый синий текст. Самоотчёт не принимается — считается XML.
+
+    Считает его `render.verify_links` — та самая, которой сборка отчитывается
+    о ссылках. Своя копия того же обхода стояла здесь до круга #229, и это
+    была проверка, проверяющая НЕ ТО, чем пользуются: разойдись две копии,
+    проба осталась бы зелёной."""
+    n, targets = render.verify_links(tmp / "clean.pptx")
+    if n < 2 or targets < 2:
+        BAD.append(f"[ссылка-живая] в XML чистого кадра ссылок {n}, "
+                   f"отношений {targets} — ждали хотя бы по две")
     else:
         OK.append("[ссылка-живая]")
-        say(f"{'[ссылка-живая]':<24} в пакете: ЛОВИТ  →  подвал {body} · "
-            f"заметки {notes} · отношений {targets}")
+        say(f"{'[ссылка-живая]':<24} в пакете: ЛОВИТ  →  ссылок на прогонах "
+            f"{n} · отношений {targets}")
 
 
 def probe_fingerprint(tmp):

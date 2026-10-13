@@ -17,10 +17,19 @@ import tempfile
 from pathlib import Path
 
 from PIL import Image
+from pptx.util import Inches
 
+import build_lec07 as B
 from build_lec07 import (LEC_ROOT, SLIDES_DIR, build, content,
-                         fit_media, verify_links)
-from deckkit import media, prims, probes, report, slidefile
+                         fit_media)
+from deckkit import (media, prims, probes, probes_layout, report,
+                     slidefile)
+# `verify_links` переехала в ядро при переводе деки на `deckkit`, а здесь
+# осталась импортом из сборщика — и самопроверка деки падала `ImportError`
+# на любом входе. Молча для того, кто звал её через конвейер: пустой вывод
+# читался как «проверки прошли». Поэтому ниже, в `selftest`, стоит проба
+# `[самотест-живой]`: она доказывает, что этот прогон УМЕЕТ упасть.
+from deckkit.render import verify_links
 
 # ════════════════════════════════════════════════════════════════════
 # сломанные входы
@@ -36,6 +45,12 @@ from deckkit import media, prims, probes, report, slidefile
 # на столбец и матрицу значило бы отчитываться о проверке, которой здесь
 # нечего проверять.
 SKIP = {"[столбец]", "[матрица] нет", "[матрица] очищено",
+        # `[проекция]` мерит ОДИН названный кегль тела (`proj_base`), и эта
+        # дека его больше не называет: с круга #229 пол считается по
+        # НАСТОЯЩИМ кеглям прогона (`deckkit.floor`), то есть тегом `[пол]`.
+        # Тот же сломанный вход проверяется ниже пробой `[пол]` — ядро
+        # держит `[проекция]` у себя, для дек, которые мерят по номиналу.
+        "[проекция]",
         # Три предупреждения Лекции 6 у этой деки выключены осознанно
         # (`build_lec07.PLATES`, там же замер: 35 срабатываний, из них 30 по
         # чужому порогу). Проба на выключенное предупреждение — не провал
@@ -96,7 +111,9 @@ def selftest():
     (ok if hit else bad).append("[файлы]")
 
     print("── пробы, которые ставятся только ЭТОЙ декой ────────────────")
+    ok.extend(probe_floor(bad, run))
     ok.extend(probe_fit_media(bad))
+    ok.extend(probe_box_over_media(bad, tmp))
     ok.extend(probe_heroes(bad))
     ok.extend(probe_live_links(tmp, bad))
     print("─────────────────────────────────────────────────────────────")
@@ -110,15 +127,65 @@ def selftest():
     return 0
 
 
-def probe_fit_media(bad):
-    """`fit_media` РАЗНОСТНО: мало знать, что ширина подобралась, — надо
-    знать, что при назначенной 4,30" кадр ломается, а при подобранной нет.
-    Берётся настоящий `s18`, на котором подбор и понадобился: выдуманная
-    проба здесь доказывала бы выдуманный кадр."""
-    f = [x for x in SLIDES_DIR.glob("s18-*.md")]
-    if not f:
-        bad.append("[подбор кадра] файла s18 нет — проба не поставлена")
+# Кадр, которому боковая колонка в 6,00" заведомо не по карману: полоса из
+# четырёх плашек с длинными оговорками и тело в шесть абзацев. Фикстура
+# СВОЯ, а не настоящий кадр деки, и это не отступление от правила «проба на
+# настоящем входе», а вывод из его цены: проба стояла на `s18`, кадр
+# переписали — и она стала доказывать, что подбор НЕ НУЖЕН, то есть молча
+# перестала проверять подбор. Проба на механизм обязана держать свой вход.
+FIT_MEDIA_FIXTURE = """---
+id: s18
+type: case
+title: "Проба подбора ширины боковой иллюстрации"
+source: "—"
+media: "probe-wide.png"
+blocks:
+  - {label: "Было", value: "5 500 ч", note: "ручная вычитка всего потока"}
+  - {label: "Стало", value: "10 500 ч", note: "та же вычитка после внедрения"}
+  - {label: "Привело к", value: "лишний круг", note: "согласование длиннее"}
+---
+
+## Видимый текст слайда
+
+""" + "\n\n".join(
+    "Абзац тела пробы, достаточно длинный, чтобы занять несколько строк "
+    "рамки и дать мере работу: в нём есть и запятые, и длинные слова, и "
+    "обычные короткие. " * 3 for _ in range(4)) + """
+
+## Заметки лектора
+
+проба
+"""
+
+
+def probe_floor(bad, run):
+    """Пол видимого слоя — на РАСКЛАДКЕ ЭТОЙ деки.
+
+    Тот же сломанный вход, которым ядро проверяет `[проекция]`: тело, которое
+    УКЛАДЫВАЕТСЯ (блокирующего нет) и всё равно набрано ниже 12 пт. Ядро
+    меряет его номиналом деки, эта дека — настоящими кеглями прогона
+    (`deckkit.floor`), и проба обязана стоять там, где мера своя."""
+    w = run([("s93-floor.md", probes_layout.PROJ)])
+    hit = [x for x in w if x.startswith("[пол]")]
+    blk = [x for x in w if x.startswith(report.BLOCKING)]
+    if not hit or blk:
+        bad.append(f"[пол] на сломанном входе {len(hit)} предупреждений, "
+                   f"блокирующих {len(blk)} — проба не о том")
         return []
+    print(f"{'[пол]':<24} на сломанном входе: ЛОВИТ  →  {hit[0][:70]}")
+    print(f"{'':24} доказывает: тело УКЛАДЫВАЕТСЯ, блокирующего нет — и всё "
+          "равно оно ниже 12 пт")
+    return ["[пол]"]
+
+
+def probe_fit_media(bad, tmp=None):
+    """`fit_media` РАЗНОСТНО: мало знать, что ширина подобралась, — надо
+    знать, что при назначенной широкой колонке кадр ломается, а при
+    подобранной нет."""
+    d = Path(tempfile.mkdtemp(prefix="lec07-fitmedia-"))
+    _assets(d)
+    (d / "s18-probe.md").write_text(FIT_MEDIA_FIXTURE, encoding="utf-8")
+    f = [d / "s18-probe.md"]
     # Поиск начинается с НАРОЧНО слишком широкого слота, а не с рабочих
     # 4,30": доказывается механизм, а не нынешний исход. Проба, написанная
     # на исход, завтра соврёт в обе стороны — и когда подбор сломается, и
@@ -127,24 +194,24 @@ def probe_fit_media(bad):
     keep = report.snapshot()
     report.reset()
     sl = slidefile.read_slide(f[0])
-    fit_media(sl, LEC_ROOT, w0=W0)
+    fit_media(sl, d, w0=W0)
     chosen = sl.media_w
     report.WARNINGS[:] = []
     sl.media_w = W0
-    content(prims.new_deck(), sl, LEC_ROOT)
+    content(prims.new_deck(), sl, d)
     at_full = list(report.blocking())
     report.WARNINGS[:] = []
     sl.media_w = chosen
-    content(prims.new_deck(), sl, LEC_ROOT)
+    content(prims.new_deck(), sl, d)
     at_fit = list(report.blocking())
     report.restore(keep)
     if chosen >= W0 or not at_full or at_fit:
-        bad.append(f"[подбор кадра] s18: подобрано {chosen:.2f}\", "
+        bad.append(f"[подбор кадра] проба: подобрано {chosen:.2f}\", "
                    f"блокирующих при {W0:.2f}\" {len(at_full)}, при "
                    f"подобранной {len(at_fit)} — проба больше не доказывает "
                    "подбор")
         return []
-    print(f"{'[подбор кадра]':<24} разностно: ЛОВИТ  →  s18 при {W0:.2f}\" "
+    print(f"{'[подбор кадра]':<24} разностно: ЛОВИТ  →  проба при {W0:.2f}\" "
           f"даёт {len(at_full)} блокирующих, при подобранной {chosen:.2f}\" "
           "— ноль")
     return ["[подбор кадра]"]
@@ -181,3 +248,93 @@ def probe_live_links(tmp, bad):
     print(f"{'[ссылка-живая]':<24} на чистом кадре: ЛОВИТ  →  подвал и "
           "заметки дали настоящие `r:id` в пакете")
     return ["[ссылка-живая]"]
+
+# Кадр, на котором ломалась коробка мотива: полоса плашек ОТЖИМАЕТ тело вниз,
+# а боковой снимок стоит от верха тела, считанного ДО плашек. Коробка тела во
+# всю ширину начиналась ниже верха снимка и шла ПОПЕРЁК него. Замер по
+# собранному PDF деки: кадр 84, перехлёст 288×49,7 пт, правый верхний угол
+# коробки срезан снимком.
+BOX_MEDIA_FIXTURE = """---
+id: s75
+type: case
+title: "Проба: коробка тела и боковой снимок"
+source: "—"
+media: "probe-wide.png"
+blocks:
+  - {label: "Было", value: "5 500 ч", note: "ручная вычитка потока"}
+  - {label: "Стало", value: "10 500 ч", note: "та же вычитка после \
+внедрения"}
+---
+
+## Видимый текст слайда
+
+""" + "\n\n".join(
+    "Абзац тела пробы, достаточно длинный, чтобы занять несколько строк "
+    "рамки и дать мере работу: в нём есть и запятые, и длинные слова. "
+    for _ in range(5)) + """
+
+## Заметки лектора
+
+проба
+"""
+
+
+def _crossings(pptx):
+    """Картинки, пересекающие грань коробки мотива, по ГЕОМЕТРИИ пакета.
+
+    Мерится собранный файл, а не намерение раскладки: именно этим разошлись
+    отчёт сборки и экран на кадре 84."""
+    from pptx import Presentation
+    from pptx.enum.shapes import MSO_SHAPE_TYPE
+    p = Presentation(str(pptx))
+    out = []
+    for i, sl in enumerate(p.slides, 1):
+        pics, boxes = [], []
+        for sh in sl.shapes:
+            bb = (sh.left, sh.top, sh.left + sh.width, sh.top + sh.height)
+            if sh.shape_type == MSO_SHAPE_TYPE.PICTURE:
+                pics.append(bb)
+            elif sh.shape_type == MSO_SHAPE_TYPE.AUTO_SHAPE and \
+                    sh.width > Inches(7).emu:
+                boxes.append(bb)
+        for pb in pics:
+            for bx in boxes:
+                dx = min(pb[2], bx[2]) - max(pb[0], bx[0])
+                dy = min(pb[3], bx[3]) - max(pb[1], bx[1])
+                inside = (pb[0] >= bx[0] and pb[1] >= bx[1]
+                          and pb[2] <= bx[2] and pb[3] <= bx[3])
+                if dx > 0 and dy > 0 and not inside:
+                    out.append((i, dx / 914400, dy / 914400))
+    return out
+
+
+def probe_box_over_media(bad, tmp):
+    """Коробка тела НЕ РЕЖЕТ боковой снимок — и проверка это умеет поймать.
+
+    Разностно, иначе никак: «перехлёстов ноль» на кадре, где обтекание и не
+    бралось, не доказывает ничего. Тот же кадр собирается дважды —
+    с проверкой и без неё, — и значение имеет РАЗНИЦА."""
+    d = Path(tempfile.mkdtemp(prefix="lec07-boxmedia-"))
+    _assets(d)
+    (d / "s75-probe.md").write_text(BOX_MEDIA_FIXTURE, encoding="utf-8")
+    keep = report.snapshot()
+    res = {}
+    for name, flag in (("без проверки", False), ("с проверкой", True)):
+        B.WRAP_NEEDS_BOX_OVER_MEDIA = flag
+        report.reset()
+        out = d / f"box-{int(flag)}.pptx"
+        build(out=out, slides_dir=d, root=d)
+        res[name] = _crossings(out)
+    B.WRAP_NEEDS_BOX_OVER_MEDIA = True
+    report.restore(keep)
+    if not res["без проверки"] or res["с проверкой"]:
+        bad.append(f"[коробка и снимок] без проверки {res['без проверки']}, "
+                   f"с проверкой {res['с проверкой']} — проба не доказывает "
+                   "ни дефекта, ни его отсутствия")
+        return []
+    n, dx, dy = res["без проверки"][0]
+    print(f"{'[коробка и снимок]':<24} разностно: ЛОВИТ  →  без проверки "
+          f"снимок режет грань коробки на {dx:.2f}×{dy:.2f}\", с проверкой — "
+          "ни одного перехлёста")
+    return ["[коробка и снимок]"]
+

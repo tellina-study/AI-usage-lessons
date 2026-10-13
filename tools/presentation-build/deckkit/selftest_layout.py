@@ -24,7 +24,7 @@
 Запускается из `selftest.py`; отдельного входа у файла нет нарочно —
 самопроверка ядра одна.
 """
-from . import metrics, probes_layout, regress, report, wrap
+from . import metrics, probes_layout, regress, report, selftest_floor, wrap
 
 
 def _sizes(runs):
@@ -246,6 +246,11 @@ def probe_proj_switch(ok, bad, say):
 
 
 def run_all(ok, bad, say, run, tmp, seq):
+    # Пробы круга #229 на пол видимого слоя, лестницу заголовка,
+    # число-заголовок и две колонки зовутся отсюда, а не из `selftest.py`:
+    # тот упёрся в предел 600 строк, а по смыслу это те же пробы на
+    # РАСКЛАДКУ, что и здешние.
+    selftest_floor.run_all(ok, bad, say, run, tmp, seq)
     probe_grid(ok, bad, say)
     probe_wrap_gain(ok, bad, say)
     probe_wrap_refuse(ok, bad, say)

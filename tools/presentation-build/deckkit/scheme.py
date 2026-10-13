@@ -56,7 +56,7 @@ from dataclasses import dataclass
 
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
-from . import metrics, prims, report
+from . import floor, metrics, prims, report
 from .theme import DEEP, GOLD, LIGHT, MID, SURFACE, WHITE
 
 # «модел…» без «моделирован…»: стадия цикла «3. Моделирование» — не шаг
@@ -69,10 +69,10 @@ AI_WORD = re.compile(r"модел(?!иров)|нейросет|нейронн|м
 @dataclass(frozen=True)
 class SchemeStyle:
     lab_w: float = 1.70            # колонка подписи ряда слева
-    lab_pt: float = 11.5
+    lab_pt: float = 12.0           # пол видимого слоя, см. `floor.py`
     lab_gap: float = 0.10
     step_hi: float = 13.5
-    step_lo: float = 9.0
+    step_lo: float = 12.0          # пол видимого слоя, см. `floor.py`
     step_rows: int = 3             # строк текста в боксе шага
     step_pad: float = 0.09
     step_ls: float = 1.08
@@ -83,7 +83,7 @@ class SchemeStyle:
     gap: float = 0.09              # просвет бокс — стрелка
     nogap: float = 0.16            # просвет бокс — бокс, когда стрелок нет
     row_gap: float = 0.18
-    cap_pt: float = 11.0
+    cap_pt: float = 12.0           # пол видимого слоя, см. `floor.py`
     cap_ls: float = 1.14
     cap_gap: float = 0.08
     ai_by_word: bool = True        # узнавать шаг модели шаблоном по словам
@@ -93,7 +93,11 @@ class SchemeStyle:
 
 
 DEFAULT = SchemeStyle()
-LEC06 = DEFAULT
+# Числа Лекции 6 пришпилены теми, какими они были до поднятия пола видимого
+# слоя в `DEFAULT` (круг #229). Пока здесь стояло `LEC06 = DEFAULT`, набор
+# означал «что осталось от умолчаний сегодня», и первое же изменение
+# умолчаний сдвинуло бы деку, прочитанную залу.
+LEC06 = SchemeStyle(lab_pt=11.5, step_lo=9.0, cap_pt=11.0)
 
 
 def scheme_of(sl, st=DEFAULT):
@@ -279,6 +283,14 @@ def draw_scheme(s, sid, sch, x, y, w, st=DEFAULT, tag=None):
     Возвращает занятую высоту."""
     tag = tag or sid
     f = step_size(sch, w, st)
+    # Три класса текста схемы — против пола видимого слоя. Шаг назван
+    # отдельно от подписи ряда и подписи схемы нарочно: подбирается только
+    # он, остальные два — числа набора, и правятся они по-разному.
+    floor.pt(f, tag, "шаг схемы")
+    if any(r["label"] for r in sch["rows"]):
+        floor.pt(st.lab_pt, tag, "подпись ряда схемы")
+    if sch["caption"]:
+        floor.pt(st.cap_pt, tag, "подпись схемы")
     bh = _box_h(sch, w, f, st)
     cy = y
     for i, r in enumerate(sch["rows"], 1):

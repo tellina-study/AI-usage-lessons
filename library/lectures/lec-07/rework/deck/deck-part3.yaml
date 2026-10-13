@@ -13,7 +13,7 @@ slides:
     local_id: "s6-01"                      # № 69 в SLIDE-PLAN.md
     file: slides/s74-divider-lekarstvo.md
     type: divider
-    title: "Разработка лекарства: удешевили начало — где узкое место"
+    title: "7. Разработка лекарства: удешевили начало — где узкое место"
     chapter_ref: "chapter-part4e.md § Раздел 9 (вводка), §9.1"
     timing_min: 0.5
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
@@ -62,7 +62,7 @@ slides:
     local_id: "s6-04a"                     # № 75 в SLIDE-PLAN.md
     file: slides/s80-khitreyt-s-metodom-i-bez.md
     type: case
-    title: "Хитрейт с методом и без"
+    title: "Доля попаданий: с методом и без"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part4e.md §9.8"
     timing_min: 1.0
@@ -89,7 +89,7 @@ slides:
     local_id: "s6-05a"                     # вставленный кадр, номера в плане нет
     file: slides/s82a-primer-1-tsena-snyataya-na-faze-1.md
     type: case
-    title: "Пример 1, цена: снята на первой фазе"
+    title: "Пример 1, цена: молекулу сняли на первой фазе"
     chapter_ref: "НЕ СОПОСТАВЛЕН"
     timing_min: 0.9
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -160,7 +160,7 @@ slides:
     local_id: "s5-01"                      # № 83 в SLIDE-PLAN.md
     file: slides/s88-divider-navyk.md
     type: divider
-    title: "Что стало с теми, кто решает"
+    title: "8. Что стало с теми, кто решает"
     plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
     timing_min: 0.5
@@ -223,7 +223,7 @@ slides:
     local_id: "s5-06"                      # № 89 в SLIDE-PLAN.md
     file: slides/s94-dva-probela-i-odno-izmerenie.md
     type: case
-    title: "Плоскость без разбора: два пробела и одно измерение доверия"
+    title: "Чего про доверие не измерено"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.9, §10.10"
     timing_min: 0.65
@@ -232,7 +232,7 @@ slides:
     local_id: "s5-07"                      # № 90 в SLIDE-PLAN.md
     file: slides/s95-potok-resheniya-do-i-posle.md
     type: case
-    title: "Плоскость без разбора: кто теперь исполнитель и какие шаги появились"
+    title: "Кто теперь исполнитель"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.11"
     timing_min: 0.75
@@ -268,7 +268,7 @@ slides:
     local_id: "s8-01"                      # № 92 в SLIDE-PLAN.md
     file: slides/s97-gde-rabota-i-skolko-ee.md
     type: summary
-    title: "Где работа и сколько её: пять форм из девяти"
+    title: "Куда переехала работа: пять мест из девяти возможных"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5b.md §11.1, §11.3"
     timing_min: 0.85
@@ -286,7 +286,7 @@ slides:
     local_id: "s8-02"                      # № 94 в SLIDE-PLAN.md
     file: slides/s99-vyigrysh-pripisan-ne-tomu.md
     type: summary
-    title: "Столько раз за вечер выигрыш был приписан не тому"
+    title: "Выигрыш приписан не тому: двенадцать раз за лекцию"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5b.md §11.4"
     timing_min: 1.0
@@ -295,7 +295,7 @@ slides:
     local_id: "s8-02a"                     # № 95 в SLIDE-PLAN.md
     file: slides/s100-chto-my-voobshche-izmeryali.md
     type: summary
-    title: "Что мы вообще измеряли: четыре ступени"
+    title: "На каком уровне измерен каждый разбор"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5b.md §11.5"
     timing_min: 0.75
@@ -304,7 +304,7 @@ slides:
     local_id: "s8-03"                      # № 96 в SLIDE-PLAN.md
     file: slides/s101-kletki-uznavaemye-protsedury-drugie.md
     type: summary
-    title: "Клетки узнаваемые, процедуры другие"
+    title: "Те же клетки — другие процедуры"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5b.md §11.6"
     timing_min: 0.85
@@ -341,7 +341,7 @@ slides:
     local_id: "s9-01"                      # № 99 в SLIDE-PLAN.md
     file: slides/s104-chto-bylo-obeshchano-v-nachale.md
     type: summary
-    title: "Что было обещано в начале. И чем вечер это отработал"
+    title: "Почему подписывает человек — и чем это подтверждено"
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §12.1"
     timing_min: 0.8
@@ -387,7 +387,7 @@ totals:
     real_image_needed: 38          # просит настоящий снимок по своему media_needed, не добыт
     builder_drawn: 60              # схема, плашки, матрица, таблица — снимок не нужен
     no_decision: 16                # media_needed пусто: вопрос не задавали
-    wired: 7                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
+    wired: 16                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
     note: "вкручен в сборку пока один кадр — обязательный hero s105 (`media` + `media_hero` + `media_caption`); у остальных восьми добытых поле media ещё пусто, пути в deck/images.md §1"
 
 # РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:

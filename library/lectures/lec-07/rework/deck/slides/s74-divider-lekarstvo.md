@@ -3,7 +3,7 @@ id: s74
 local_id: s6-01
 section: "7. Разработка лекарства — удешевили начало, где узкое место"
 type: divider
-title: "Разработка лекарства: удешевили начало — где узкое место"
+title: "7. Разработка лекарства: удешевили начало — где узкое место"
 assertion: "Раздел переносит тот же вопрос на масштаб отрасли: ранний шаг разработки подешевел многократно, а клинические фазы на людях — узкое место — не подешевели ни на сколько, и одобрений за десять лет существования категории ноль"
 source: "BIO / QLS / Informa, Clinical Development Success Rates and Contributing Factors 2011–2020 — https://go.bio.org/rs/490-EHZ-999/images/ClinicalDevelopmentSuccessRates2011_2020.pdf · Jayatunga и соавт., Drug Discovery Today, 2024 — https://doi.org/10.1016/j.drudis.2024.104009 · Haque W. и соавт., J Clin Oncol 2026, DOI 10.1200/JCO.2026.44.16_suppl.11072 — https://doi.org/10.1200/JCO.2026.44.16_suppl.11072"
 media: "rework/deck/assets/s74-khimik-u-vytyazhnogo-shkafa.jpg"

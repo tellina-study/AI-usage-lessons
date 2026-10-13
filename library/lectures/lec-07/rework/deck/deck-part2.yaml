@@ -58,7 +58,7 @@ slides:
     local_id: "s3-16"                      # № 35 в SLIDE-PLAN.md
     file: slides/s40-pravilo-a-ne-sluchay-agregat.md
     type: case
-    title: "Правило, а не случай: что в среднем даёт пара человека и модели"
+    title: "Что пара даёт в среднем по 106 опытам"
     chapter_ref: "chapter-part2.md §3.3"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: acquired }
@@ -75,7 +75,7 @@ slides:
     local_id: "s3-15a"                     # № 37 в SLIDE-PLAN.md
     file: slides/s42-mekhanizm-i-chto-pereekhalo-vzglyad.md
     type: case
-    title: "Пример 1, цена: измеренный механизм и что переехало"
+    title: "Пример 1, цена: взгляд ушёл с пропущенного — и это измерено"
     chapter_ref: "chapter-part2.md §3.5"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
@@ -116,7 +116,7 @@ slides:
     local_id: "s3-07"                      # № 41 в SLIDE-PLAN.md
     file: slides/s46-vremya-i-chto-pereekhalo-troyka.md
     type: case
-    title: "Пример 3, цена: время и что переехало"
+    title: "Пример 3, цена: времени меньше, выигрыша нет"
     chapter_ref: "chapter-part2b.md §3.8"
     timing_min: 0.5
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -211,7 +211,7 @@ slides:
     local_id: "s4-04a"                     # № 51 в SLIDE-PLAN.md
     file: slides/s56-schet-zamenyaemykh-rezhimov.md
     type: case
-    title: "Счёт заменяемых режимов"
+    title: "Сколько классических режимов модель может заменить"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part3.md §4.4"
     timing_min: 0.7
@@ -348,7 +348,7 @@ slides:
     local_id: "s7-01"                      # № 60 в SLIDE-PLAN.md
     file: slides/s65-divider-chem-uderzhivayut.md
     type: divider
-    title: "Чем удерживают"
+    title: "6. Чем удерживают"
     plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3c.md § Раздел 6 (вводка), §6.1"
     timing_min: 0.5

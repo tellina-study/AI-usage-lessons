@@ -9,12 +9,12 @@
 (которые читают `ROOT/slides`, то есть каталог НАСТОЯЩИХ слайдов занятия).
 
 Идентификаторы смоук-слайдов (`x01`, `x02`, `x03`) намеренно вне словаря
-`nNN`: `build_sem06._deck_slides("x")` не находит для префикса `x` ни
+`nNN`: `deck_config.deck_slides("x")` не находит для префикса `x` ни
 `deck.yaml`, ни файлов в `slides/x*.md` и возвращает пустой список — это
 значит, что `slide_number()`/`badge_for()` честно отдадут `None` (см.
 `deck_kit.slide_number_mark`: `None` — не печатать номер, у слайда, которого
 нет в деке, порядкового номера не существует), а `sections_for()` упадёт на
-статический запасной `SECTIONS_BY_PREFIX["n"]`. Это ожидаемо и безопасно —
+запасную разметку префикса `n` из `deck-config.yaml`. Это ожидаемо и безопасно —
 смоук-слайд не является частью деки и не должен притворяться, что является.
 
     python3 smoke_build.py
@@ -27,12 +27,18 @@ from pptx.util import Inches
 
 HERE = Path(__file__).resolve().parent
 RENDERED = HERE.parent
-sys.path.insert(0, str(RENDERED))
+# Сборщик и кит — общие на все занятия (`tools/seminar-build/`).
+sys.path.insert(0, str(HERE.resolve().parents[4] / "tools" / "seminar-build"))
 
-import build_sem06 as B   # noqa: E402  (путь добавлен выше)
+import deck_config as D   # noqa: E402  (путь добавлен выше)
+import genres as G        # noqa: E402
+import audits as A        # noqa: E402
 import deck_kit as K      # noqa: E402
 import metrics as M       # noqa: E402
 import slide_parts as SP  # noqa: E402
+from roles import sanitize_blocks  # noqa: E402
+
+D.configure("06")
 
 FILES = ["x01-zaglushka-divider.md",
          "x02-zaglushka-razbor-tri-kolonki.md",
@@ -61,17 +67,18 @@ def main():
         sid = fm["id"]
         pattern = (fm.get("visual") or {}).get("pattern", "")
         sl = prs.slides.add_slide(blank)
-        fn = B.GENRE_FN.get(pattern, B.g_content)
-        kw = {"meta": fm.get("visual")} if fn is B.g_divider else {}
-        fn(sl, sid, title or sid, SP.blocks(visual), pattern, assertion, **kw)
-        B.audit_question_answer(sid, pattern, SP.blocks(visual))
+        fn = G.genre_fn(pattern)
+        kw = {"meta": fm.get("visual")} if fn is G.g_divider else {}
+        blocks = sanitize_blocks(SP.blocks(visual))
+        fn(sl, sid, title or sid, blocks, pattern, assertion, **kw)
+        A.audit_question_answer(sid, pattern, blocks)
         if notes:
             K.write_notes(sl, notes)
         slides_for_audit.append(fm)
 
-    B.audit_numbering(slides_for_audit)
-    B.audit_crossrefs(slides_for_audit)
-    B.audit_figs(slides_for_audit)
+    A.audit_numbering(slides_for_audit)
+    A.audit_crossrefs(slides_for_audit)
+    A.audit_figs(slides_for_audit)
 
     out = HERE / "sem-06-smoke.pptx"
     prs.save(out)

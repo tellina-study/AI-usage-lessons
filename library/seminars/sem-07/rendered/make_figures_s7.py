@@ -24,6 +24,12 @@
 
 Запуск: `python3 make_figures_s7.py` (из `rendered/`).
 """
+# Общий тулкит схем живёт в `tools/seminar-build/` — одна копия на курс
+# (прежде он копировался в папку каждого занятия и копии расходились).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[4] / "tools" / "seminar-build"))
+
 from fig_toolkit import *
 
 CW = 1600
@@ -75,6 +81,11 @@ def legend(d, y, items):
         if kind == "trig":
             d.rounded_rectangle([x, y - 16, x + 56, y + 16], radius=8,
                                 fill=WARM, outline=GOLD, width=4)
+        elif kind == "vocab":
+            # Своя запись: иначе золотая рамка справочника читается как «ещё один
+            # триггер» — находка прожарки по самим картинкам.
+            d.rounded_rectangle([x, y - 16, x + 56, y + 16], radius=8,
+                                fill=W, outline=GOLD, width=3)
         elif kind == "node":
             d.rounded_rectangle([x, y - 16, x + 56, y + 16], radius=8,
                                 fill=SURF, outline=LIGHT, width=3)
@@ -108,7 +119,7 @@ def f_protsess():
 # ── n04: данные ходят списком ──────────────────────────────────────────────
 
 def f_spiskom():
-    im, d = canvas(460)
+    im, d = canvas(400)
     node(d, 230, ROW, 340, T("предыдущий шаг"), T("отдал три заявки"))
     # список из трёх элементов — три узких карточки одна под другой
     for i in range(3):
@@ -148,25 +159,35 @@ def protsess(stage):
     Пять узлов на первой же схеме — это не усложнение, а состав решения
     (владелец, 2026-10-12): справочник не даёт пустой темы, экран результата
     показывает всю дорогу в том же окне, без походов в журнал и таблицу."""
-    h = 440 if stage >= 3 else 300
+    h = 470 if stage >= 3 else 400
     im, d = canvas(h)
-    row = ROW if stage < 3 else 110
+    row = ROW if stage < 3 else 150
 
     trig(d, 150, row, 250, T("форма"), T("заявка с сайта"), num=1)
     node(d, 470, row, 330, T("извлечение"), T("схема с перечислением"),
          stroke=TEAL, wd=4, where="извлечение", num=2)
+    # Подключённый узел модели: на холсте это отдельная коробка под шагом, и
+    # зал считает узлы по тому, что видит (находка прожарки P0-2).
+    node(d, 470, row + 150, 300, T("модель"), T("подключена к шагу"),
+         stroke=TEAL, wd=3, tsz=23, bsz=18, where="модель", num=3)
+    d.line([470, row + NH, 470, row + 150 - 42], fill=TEAL, width=4)
     node(d, 820, row, 300, T("справочник"), T("не из списка → «другое»"),
-         stroke=GOLD, fill=WARM, wd=4, tcol=DEEP, where="справочник", num=3)
-    node(d, 1140, row, 280, T("строка"), T("в таблице"), where="строка", num=4)
+         stroke=GOLD, fill=WARM, wd=4, tcol=DEEP, where="справочник", num=4)
+    node(d, 1140, row, 280, T("строка"), T("в таблице"), where="строка", num=5)
     node(d, 1450, row, 260, T("экран"), T("результата"),
-         stroke=TEAL, wd=4, where="экран", num=5)
+         stroke=TEAL, wd=4, where="экран", num=6)
     for x1, x2 in ((275, 300), (635, 665), (970, 995), (1280, 1315)):
         arrow(d, x1, row, x2, row, col=MID)
 
+    if stage == 2:
+        # Стадия 2 ОБЯЗАНА отличаться от стадии 1: прежде это был побайтово тот
+        # же файл при обещании «подсвечен справочник» (находка прожарки).
+        # Подсветка — золотое кольцо вокруг справочника и подпись новой пометки.
+        d.rounded_rectangle([820 - 168, row - NH - 14, 820 + 168, row + NH + 14],
+                            radius=18, outline=GOLD, width=5)
+        clabel(d, 820, row + NH + 26, T("+ пометка «ещё в заявке»"), 21, GOLDINK,
+               True, where="пометка стадии 2", limit=360)
     if stage < 3:
-        # Что печатает экран результата, на схеме НЕ дублируется: об этом говорит
-        # таблица параметров на том же слайде, а лишние 90 px высоты уводили
-        # композицию слайда под поле подписи.
         pass
     else:
         err_row = row + 180
@@ -178,7 +199,7 @@ def protsess(stage):
         arrow(d, 470, row + NH, 470, err_row, col=RED)
         arrow(d, 470, err_row, 650, err_row, col=RED)
         clabel(d, 700, row - 42, T("успех"), 21, MID, True, where="метка успеха")
-        clabel(d, 580, err_row - 42, T("отказ вызова"), 21, RED, True,
+        clabel(d, 520, err_row - 54, T("отказ вызова"), 21, RED, True,
                where="метка отказа")
         d.rounded_rectangle([305, row - NH - 84, 635, row - NH - 24], radius=10,
                             fill=WARM, outline=GOLD, width=3)
@@ -190,14 +211,14 @@ def protsess(stage):
             clabel(d, CW / 2, h - 62, T("Боевые прогоны идут по опубликованной версии."),
                    24, DEEP, True, where="подпись публикации")
 
-    items = [("trig", "триггер"), ("node", "шаг")]
+    items = [("trig", "триггер"), ("node", "шаг"), ("vocab", "сверка со списком")]
     if stage >= 3:
         items.append(("err", "ветка отказа"))
     legend(d, h - (112 if stage == 4 else (46 if stage >= 3 else 34)), items)
 
     # Имя передаётся С РАСШИРЕНИЕМ: `fig_toolkit.save` отдаёт его прямо в
     # `Image.save`, а тот выводит формат из расширения и без него падает.
-    save(im, {1: "k1-shema-pyat-uzlov.png", 2: "k2-shema-trudnye-zayavki.png",
+    save(im, {1: "k1-shema-shest-uzlov.png", 2: "k2-shema-trudnye-zayavki.png",
               3: "k3-shema-dve-vetki.png", 4: "vyhod-shema-protsess.png"}[stage])
 
 

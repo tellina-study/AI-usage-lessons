@@ -24,6 +24,12 @@
 
 Запуск: `python3 make_figures_c1.py` (из `rendered/`).
 """
+# Общий тулкит схем живёт в `tools/seminar-build/` — одна копия на курс
+# (прежде он копировался в папку каждого занятия и копии расходились).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[4] / "tools" / "seminar-build"))
+
 from fig_toolkit import *
 
 CW, CH = 1600, 520

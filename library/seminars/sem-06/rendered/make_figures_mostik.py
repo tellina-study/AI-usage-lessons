@@ -26,6 +26,12 @@ hero-формат (нижняя треть во всю ширину, ≥40% пл
 620/2400×13,333 = 3,44″ = 45,9% площади слайда 13,333×7,5 — hero-порог ≥40%
 выполнен с тем же запасом, что у Семинара 5 (там 45%).
 """
+# Общий тулкит схем живёт в `tools/seminar-build/` — одна копия на курс
+# (прежде он копировался в папку каждого занятия и копии расходились).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[4] / "tools" / "seminar-build"))
+
 from fig_toolkit import *
 
 W_PX, H_PX = 2400, 620

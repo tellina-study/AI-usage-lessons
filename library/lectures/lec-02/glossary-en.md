@@ -57,6 +57,9 @@ this course going forward.
 | top-k | top-k | As-is — standard term. |
 | max_tokens | max_tokens | As-is — parameter name, keep literal/code-style formatting. |
 | mixture-of-experts (MoE, гиганты) | mixture-of-experts (MoE, giants) | "Гиганты" (giants) refers to large MoE-based frontier models in course narrative; keep the parenthetical gloss in EN as "(MoE, giants)". |
+| sparse attention | sparse attention | As-is — English-origin ML term, no RU translation used in course narrative. |
+| MLA (Multi-head Latent Attention) | MLA (Multi-head Latent Attention) | As-is — DeepSeek KV-cache compression technique; expand acronym on first use. |
+| GQA (Grouped-Query Attention) | GQA (Grouped-Query Attention) | As-is — standard KV-cache-reduction technique; expand acronym on first use. |
 
 ---
 

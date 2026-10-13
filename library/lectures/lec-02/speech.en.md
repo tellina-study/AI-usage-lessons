@@ -260,6 +260,8 @@ The real mechanism is multi-layered: at every layer, dozens of "heads" work in p
 
 What matters most is what the weight distribution actually affects. The weight of each connection determines how much of that token's Value vector flows into the final representation of the position. And that position's representation is exactly what the next prediction gets built from. Attention weights directly determine the next token.
 
+An important addendum for 2025-2026: N×N is the baseline, but it's not the whole production picture anymore. Qwen3-Next and Kimi Linear keep dense attention in only about a quarter of their layers, the rest is linear. The resulting cost is no longer purely quadratic, but it isn't linear either — as long as even one layer stays dense, it's a trade-off, not a solved problem.
+
 ### [s19 · 2 min]
 
 Let's pin the definition down precisely. The working metaphor is a flashlight in a dark room: every token is present, but the beam points at the relevant ones, and brightness is the weight. At every step, attention returns a weight distribution over the entire context, the weights sum to one, and it's recomputed from scratch every single time.
@@ -326,7 +328,7 @@ The context window — the maximum number of tokens per request — has grown th
 
 Two sobering outliers around that standard. Above it: a singular case — Gemini 3.5 Pro holds two million tokens, but that's an exception, not a new standard. Higher still: marketing — Llama 4 Scout claims ten million, but no published benchmark confirms preserved quality anywhere near that limit. Below it: a contrast — YandexGPT 5 Pro works with a 32,000-token window, which is the defining constraint for tasks involving long documents.
 
-Why is the window finite, and why can't you "just make it bigger"? The first reason is familiar: the quadratic cost of attention plus a linearly growing cache. The second is subtler: a token's position is encoded in the model's geometry in a way that was trained on specific lengths, and naively stretching it breaks the mechanism — I'll leave the details in the course materials for anyone curious about the engineering of positional encoding.
+Why is the window finite, and why can't you "just make it bigger"? Two separate reasons here, and it's worth not blurring them together. Compute: even where some layers are already sparse or linear, cost still grows faster than linearly on whatever dense layers are left. Memory: the KV-cache grows linearly with token count regardless of whether attention is dense or sparse — sparsity decides which part of the cache to read, not how much of it you need to store. And here's a concrete number: at the ten million tokens Llama 4 Scout advertises, the KV-cache alone needs on the order of thirty-two terabytes of memory — that's a physical ceiling, not a hypothetical one. A third reason is subtler, separate from compute and memory: a token's position is encoded in the model's geometry in a way that was trained on specific lengths, and naively stretching it breaks the mechanism — I'll leave the details in the course materials for anyone curious about the engineering of positional encoding.
 
 And the arithmetic of money. A full window is tokens you pay for as input on every single request: a call to a premium model at $10 per million input tokens, filled to 900,000 tokens, costs about $9 — for one call. The question "how much context does this task actually need" matters more economically than "how much can the model accept."
 

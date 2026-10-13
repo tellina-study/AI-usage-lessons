@@ -53,6 +53,8 @@ Attention matrix (simplified, single head):
 [Gold callout at the bottom]
 **Attention is a matrix operation: every token against every other. That's the source of the quadratic cost of long context.**
 
+*Production 2025-26: some models replace part of their layers with sparse/linear attention — this cuts compute, but the N×N rule remains the baseline and the price of full attention.*
+
 ## Speaker notes
 
 You know the word "attention" from every other paper on transformers; let's pin down its exact form. Attention is not a linear but a matrix operation: every token in the context is checked against every other, and for a context of length N the weight map is N by N in size. This form immediately implies the single most important economic property of the whole architecture: doubling the context quadruples the volume of attention compute. When we later talk about the cost of million-token windows and why providers cache so aggressively, the root cause is exactly here.
@@ -62,3 +64,5 @@ On the slide is a simplified seven-by-seven matrix for the sentence "The cat ate
 Two refinements to the picture. First: the weight distribution is recomputed from scratch at every generation step — this isn't "computed once and reused." Second: the real mechanism is multi-layer and multi-head — in each layer, dozens of "heads" work in parallel, typically 32 to 128, and each specializes in its own type of relationship: one captures grammatical agreement, another thematic proximity, a third long-range dependencies. Nobody designed these specializations — they emerged from training, because they help predict the next token.
 
 And the key point — what this weight distribution concretely affects, not just "something gets weighted somewhere." The weight of each connection determines what fraction of the corresponding token's Value vector ends up in the updated representation of the current position: if "it" assigns 0.7 of its weight to "cat," then the content of "cat" — its Value — dominates the updated representation of the token "it." And the current token's representation is exactly what the probability distribution for the next prediction is built from at the next step. In other words: the attention weight distribution directly and mechanically determines what the next predicted token will be — this is not a side effect, it's a direct causal chain.
+
+An important addendum for 2025-2026: N×N is an exact description of one dense-attention layer, and it remains the baseline for understanding the mechanism. But in real production models of 2025-2026, not every layer is dense: Qwen3-Next and Kimi Linear keep dense attention in only about 25% of layers, with the rest running linear (O(N)) attention; the resulting asymptotics for the whole model is no longer purely quadratic, but it doesn't become fully linear either, as long as at least some layers stay dense — a trade-off, not an elimination of the problem.

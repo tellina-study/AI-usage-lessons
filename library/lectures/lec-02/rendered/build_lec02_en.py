@@ -1712,18 +1712,18 @@ def build_s18(p):
                 cell_text(cell, f"{v:.1f}", size=9,
                           bold=(v >= 0.7),
                           color=WHITE if v >= 0.45 else DEEP)
-    text_runs(s, 0.55, 5.62, 7.5, 0.8, [
-        {"text": "In the row for “it”: ", "size": 12.5, "bold": True,
+    text_runs(s, 0.55, 5.58, 7.5, 0.7, [
+        {"text": "In the row for “it”: ", "size": 12, "bold": True,
          "color": DEEP},
         {"text": "the largest weight lands on “cat,” not “mouse” — "
                  "resolved by semantic/thematic-role plausibility. A "
                  "statistical association learned from the corpus.",
-         "size": 12.5, "color": DEEP},
+         "size": 12, "color": DEEP},
         {"text": "In the decoder, a token sees only preceding tokens — "
-                 "the full matrix is shown here for clarity.", "size": 11.5,
+                 "the full matrix is shown here for clarity.", "size": 10.5,
          "italic": True, "color": SLATE, "newpara": True,
-         "space_before_pt": 3},
-    ], line_spacing=1.12)
+         "space_before_pt": 2},
+    ], line_spacing=1.08)
     # Right — 3 properties
     props = [
         ("Dimensionality", [
@@ -1751,11 +1751,18 @@ def build_s18(p):
                  color=MID)
         text_runs(s, 8.55, y + 0.50, 4.0, 0.9, runs, line_spacing=1.15)
         y += 1.62
-    gold_callout(s, 0.55, 6.45, 12.25, 0.70,
+    gold_callout(s, 0.55, 6.30, 12.25, 0.62,
                  "What this affects: the weights determine whose Value "
                  "ends up in the current token's representation — and "
                  "directly shape the next prediction.",
-                 size=14.5, align=PP_ALIGN.CENTER)
+                 size=13.5, align=PP_ALIGN.CENTER)
+    text_box(s, 0.55, 7.00, 12.25, 0.35,
+             "Production 2025-26: some models replace part of their "
+             "layers with sparse/linear attention — this cuts compute, "
+             "but the N×N rule remains the baseline and the price of "
+             "full attention.",
+             size=10.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
+             line_spacing=1.1)
     speaker_notes(s, load_notes("s18"))
 
 
@@ -2181,18 +2188,22 @@ def build_s23(p):
              "one to two orders of magnitude below the flagships — for "
              "long documents this is a defining constraint", size=12,
              color=DEEP, line_spacing=1.18)
-    text_box(s, 0.55, 5.2, 12.25, 0.55,
-             "You can't just “stretch” the window: token position is "
-             "encoded by a geometry trained on specific lengths — "
-             "extending it (RoPE / YaRN) is separate engineering work.",
-             size=12, italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
-             line_spacing=1.15)
-    gold_callout(s, 0.55, 5.9, 12.25, 0.68,
+    text_runs(s, 0.55, 5.12, 12.25, 0.72, [
+        {"text": "You can't just “stretch” the window: token position is "
+                 "encoded by a geometry trained on specific lengths — "
+                 "extending it (RoPE / YaRN) is separate engineering work.",
+         "size": 11.5, "italic": True, "color": LIGHT,
+         "align": PP_ALIGN.CENTER},
+        {"text": "A 10M claim ≈ 32TB of KV-cache — a physical ceiling.",
+         "size": 11.5, "italic": True, "color": LIGHT,
+         "align": PP_ALIGN.CENTER, "newpara": True, "space_before_pt": 2},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.12)
+    gold_callout(s, 0.55, 5.92, 12.25, 0.62,
                  "You pay for what you put in the window, not for what "
                  "the window can hold: 900K input tokens at $10/million "
-                 "≈ $9 for a single call.", size=13.5,
+                 "≈ $9 for a single call.", size=13,
                  align=PP_ALIGN.CENTER)
-    text_runs(s, 0.55, 6.63, 12.25, 0.55, [
+    text_runs(s, 0.55, 6.62, 12.25, 0.55, [
         {"text": "What to do: ", "size": 12.5, "bold": True, "color": TEAL},
         {"text": "choose a model by the task's effective window "
                  "(benchmarks without lexical shortcuts), not by the "

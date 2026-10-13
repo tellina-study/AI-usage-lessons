@@ -255,6 +255,7 @@ def main():
             K.write_notes(sl, notes)
         built += 1
 
+    audits.audit_takty_keysa(deck["slides"], D.CFG if hasattr(D, "CFG") else {})
     audits.audit_numbering(deck["slides"])
     audits.audit_crossrefs(deck["slides"])
     audits.audit_figs(slides)

@@ -1,5 +1,5 @@
 ---
-id: n06
+id: n07
 type: case_divider_quote
 duration_min: 0.5
 assertion: "«Их всё равно потом руками в таблицу перекладывают» — постановка первого кейса"

@@ -1,5 +1,5 @@
 ---
-id: n24
+id: n28
 type: case_divider_contradiction
 duration_min: 0.5
 assertion: "На холсте правка есть, результатов по ней нет — оба утверждения верны одновременно"

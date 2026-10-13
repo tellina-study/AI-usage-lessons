@@ -1,5 +1,5 @@
 ---
-id: n12
+id: n14
 type: taxonomy_compare_table
 duration_min: 3.0
 assertion: "Девять классических типов блоков, из которых собирается любой процесс, и чем каждый является в n8n"

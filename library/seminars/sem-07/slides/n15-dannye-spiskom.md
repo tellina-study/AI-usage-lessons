@@ -1,5 +1,5 @@
 ---
-id: n13
+id: n15
 type: mechanism_node_graph
 duration_min: 2.5
 assertion: "В n8n между узлами идёт список элементов, и узел выполняется по разу на каждый элемент"

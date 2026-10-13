@@ -57,6 +57,50 @@ def audit_question_answer(sid, pattern, blocks):
             return
 
 
+def audit_takty_keysa(slides, cfg):
+    """Порядок тактов кейса: дивайдер → СЦЕНА → вопрос → разбор.
+
+    Этот порядок записан в каноне (`tools/seminar-production/README.md` §3)
+    с круга 4 Семинара 5 — и Семинар 7 от него отступил: четыре круга дека
+    шла дивайдер → вопрос, без сцены. Владелец (2026-10-12): «почему ты в
+    кейсах не используешь тот же формат, который был в предыдущих семинарах
+    — слайд описание, слайд вопрос с вариантами (без протечек), разбор
+    вариантов и дальше пошли детали».
+
+    Цена отступления: зал спрашивают до того, как он что-то потерял. Правило
+    было записано словами и не держалось; поэтому здесь оно проверяется
+    машиной, а не памятью автора.
+
+    Проверяется ровно три вещи, и ни одна не про содержание:
+      1. за дивайдером кейса идёт сцена (`problem_scenario`);
+      2. за сценой — вопрос;
+      3. за вопросом — разбор (это уже проверяет `audit_question_answer`,
+         здесь только порядок экранов, не их наполнение).
+    """
+    divs = set(cfg.get("divider_patterns") or ("case_divider_quote",))
+    scenes = {"problem_scenario"}
+    questions = set(cfg.get("question_patterns") or ()) or {
+        "question_with_option_cards", "reflection_question", "guess_the_number"}
+    seq = [(s["id"], (s.get("visual") or {}).get("pattern")) for s in slides]
+    for i, (sid, pat) in enumerate(seq):
+        if pat not in divs:
+            continue
+        after = seq[i + 1:i + 3]
+        if not after or after[0][1] not in scenes:
+            got = after[0][1] if after else "ничего"
+            M._WARNINGS.append(
+                f"НЕТ СЦЕНЫ [{sid}]: за дивайдером кейса идёт «{got}», а по "
+                f"грамматике кейса (канон §3) обязана идти сцена — живая "
+                f"постановка: кто, что делает, что ломается и чего это стоит. "
+                f"Без неё зал спрашивают до того, как он что-то потерял")
+            continue
+        if len(after) > 1 and after[1][1] not in questions:
+            M._WARNINGS.append(
+                f"ПОСЛЕ СЦЕНЫ НЕ ВОПРОС [{after[0][0]}]: идёт "
+                f"«{after[1][1]}» — порядок тактов канона §3: "
+                f"дивайдер → сцена → вопрос → разбор")
+
+
 def audit_numbering(slides):
     """Номер в углу обязан выводиться из ПОРЯДКА слайда в манифесте. Своё
     число во фронтматтере расходится с порядком молча — а именно по нему

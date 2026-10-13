@@ -1,0 +1,16 @@
+{
+ "title": "Examples of ungradable images — рис. 3 в: Skevas C. и соавт., «Implementing and evaluating a fully functional AI-enabled model for chronic eye disease screening in a real clinical environment», BMC Ophthalmology 24, 51 (2024)",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Europe PMC REST: license = «cc by», isOpenAccess = Y для PMC10832120; файл взят с PMC. Проверено 2026-10-13.",
+ "author": "Skevas C., de Olaguer N. P., Lleó A., Thiwa D., Schroeter J. и соавт.",
+ "description": "Три настоящих снимка глазного дна, отклонённых по качеству: засвет, затемнение, нерезкость. Ровно то, что кадр называет негодным снимком на экране камеры.",
+ "page": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10832120/",
+ "file_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10832120/bin/12886_2024_3306_Fig3_HTML.jpg",
+ "orig_size": "669x177",
+ "attribution": "Skevas и соавт., BMC Ophthalmology, 2024, рис. 3, CC BY 4.0",
+ "tier": "3 (рисунок первоисточника открытого доступа)",
+ "assigned_to": "s29 (отклонённый по качеству снимок)",
+ "caveat": "работа немецкая (Гамбург), а разбор кадра — таиландский. Снимок показывает ЯВЛЕНИЕ (как выглядит негодный кадр), а не замер таиландской программы; подпись обязана назвать Skevas и соавт. Отдельно: полоса узкая (669x177), годится только как лента во всю ширину тела, не как главный кадр.",
+ "state": "добыто, НЕ вкручено"
+}

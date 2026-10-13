@@ -1,0 +1,16 @@
+{
+ "title": "Nurse during a drug administration on a UK hospital ward (Wellcome Collection, N0038020)",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Wellcome Collection API: locations[].license.label = «Attribution 4.0 International (CC BY 4.0)» для изображения w5p3nyqq. Проверено 2026-10-13.",
+ "author": "Adrian Wressell, Heart of England NHS Foundation Trust",
+ "description": "Старшая сестра у тележки с лекарствами в отделении: набирает дозу, рядом упаковки, на стене доска отделения. Настоящее отделение, настоящая работа.",
+ "page": "https://wellcomecollection.org/works/cf9tpfkd",
+ "file_url": "https://iiif.wellcomecollection.org/image/N0038020/full/1600,/0/default.jpg",
+ "attribution": "Фото: Adrian Wressell, Heart of England NHS FT, Wellcome Collection, CC BY 4.0",
+ "tier": "3 (банк изображений учреждения — Wellcome Collection)",
+ "assigned_to": "s53 — С ОГОВОРКОЙ",
+ "deviation": "кадр просил ДВА сюжета: сестринский обход по палате и заполненный бланк листа наблюдения крупно. Здесь ни то, ни другое: сестра раздаёт лекарства. Сцена отделения — та, действие — другое, а кадр s53 как раз перечисляет действия стадии наблюдения. Ставить можно только как общий вид отделения; выдавать за «обход» или «лист наблюдения» нельзя. Кадров обхода и заполненного бланка под свободной лицензией по-прежнему нет.",
+ "state": "добыто, НЕ вкручено",
+ "orig_size": "1600x1200 (скачано по IIIF, ширина 1600)"
+}

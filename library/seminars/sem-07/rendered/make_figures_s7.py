@@ -142,10 +142,12 @@ def f_spiskom():
         clabel(d, 1433, y - 17, T("выполнение") + f" {i + 1}", 20, TEAL, True,
                where=f"выполнение {i + 1}", limit=240)
     arrow(d, 1260, ROW, 1294, ROW, col=TEAL)
-    d.rounded_rectangle([34, 360, CW - 34, 440], radius=12, fill=WARM,
+    # Плашка с главным правилом экрана прежде обрезалась нижним краем холста —
+    # видна была верхняя половина букв (находка ревью по самой картинке).
+    d.rounded_rectangle([34, 300, CW - 34, 380], radius=12, fill=WARM,
                         outline=GOLD, width=4)
-    clabel(d, CW / 2, 383, T("Узел выполняется по разу на каждый элемент списка."),
-           26, GOLDINK, True, where="правило n04")
+    clabel(d, CW / 2, 324, T("Узел выполняется по разу на каждый элемент списка."),
+           26, GOLDINK, True, where="правило списка")
     save(im, "teoriya-dannye-spiskom.png")
 
 
@@ -159,7 +161,7 @@ def protsess(stage):
     Пять узлов на первой же схеме — это не усложнение, а состав решения
     (владелец, 2026-10-12): справочник не даёт пустой темы, экран результата
     показывает всю дорогу в том же окне, без походов в журнал и таблицу."""
-    h = 470 if stage >= 3 else 400
+    h = 500 if stage >= 3 else 400
     im, d = canvas(h)
     row = ROW if stage < 3 else 150
 
@@ -196,25 +198,29 @@ def protsess(stage):
         node(d, 1250, err_row, 300, T("экран"), T("«не разобрана»"),
              stroke=RED, fill=W, tcol=DEEP, where="экран отказа")
         arrow(d, 985, err_row, 1095, err_row, col=RED)
-        arrow(d, 470, row + NH, 470, err_row, col=RED)
-        arrow(d, 470, err_row, 650, err_row, col=RED)
+        # Ветка отказа идёт по левому краю, а не сквозь узел модели: прежде
+        # красная стрелка проходила через коробку «модель», а подпись «отказ
+        # вызова» печаталась поверх слова — читалось «мод-отказ-вызова-ль».
+        arrow(d, 290, row, 290, err_row, col=RED)
+        arrow(d, 290, err_row, 650, err_row, col=RED)
         clabel(d, 700, row - 42, T("успех"), 21, MID, True, where="метка успеха")
-        clabel(d, 520, err_row - 54, T("отказ вызова"), 21, RED, True,
-               where="метка отказа")
+        clabel(d, 290, row + 96, T("отказ"), 21, RED, True, where="метка отказа")
         d.rounded_rectangle([305, row - NH - 84, 635, row - NH - 24], radius=10,
                             fill=WARM, outline=GOLD, width=3)
         clabel(d, 470, row - NH - 74, T("повтор: 3 попытки"), 21, GOLDINK, True,
                where="плашка повтора", limit=310)
         if stage == 4:
-            d.rounded_rectangle([34, h - 72, CW - 34, h - 16], radius=12, fill=SURF,
+            d.rounded_rectangle([34, h - 118, CW - 34, h - 62], radius=12, fill=SURF,
                                 outline=LIGHT, width=3)
-            clabel(d, CW / 2, h - 62, T("Боевые прогоны идут по опубликованной версии."),
+            clabel(d, CW / 2, h - 108, T("Боевые прогоны идут по опубликованной версии."),
                    24, DEEP, True, where="подпись публикации")
 
     items = [("trig", "триггер"), ("node", "шаг"), ("vocab", "сверка со списком")]
     if stage >= 3:
         items.append(("err", "ветка отказа"))
-    legend(d, h - (112 if stage == 4 else (46 if stage >= 3 else 34)), items)
+    # Легенда стоит у нижнего края и НЕ накрывает блоки: на схеме выхода она
+    # прежде ложилась на «status = not_parsed» (находка ревью по картинкам).
+    legend(d, h - 26, items)
 
     # Имя передаётся С РАСШИРЕНИЕМ: `fig_toolkit.save` отдаёт его прямо в
     # `Image.save`, а тот выводит формат из расширения и без него падает.

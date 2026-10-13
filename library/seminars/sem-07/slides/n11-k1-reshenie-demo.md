@@ -1,5 +1,5 @@
 ---
-id: n10
+id: n11
 type: mechanism_node_graph
 duration_min: 4.0
 assertion: "Шесть узлов на холсте, и шаг модели — это два узла: сам шаг и подключённая к нему модель"

@@ -1,5 +1,5 @@
 ---
-id: n24
+id: n25
 type: question_with_option_cards
 duration_min: 2.5
 assertion: "Что должен делать узел, когда вызов не удался — третье решение зала"

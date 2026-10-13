@@ -1,5 +1,5 @@
 ---
-id: n26
+id: n28
 type: mechanism_node_graph
 duration_min: 6.0
 assertion: "Retry On Fail плюс выход error: заявка идёт в ту же таблицу со status = not_parsed и на свой экран — ни одна не теряется, и отказ видно сразу"

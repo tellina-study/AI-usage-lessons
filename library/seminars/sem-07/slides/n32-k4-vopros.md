@@ -1,5 +1,5 @@
 ---
-id: n30
+id: n32
 type: question_with_option_cards
 duration_min: 2.5
 assertion: "Почему боевые прогоны идут по старому варианту — четвёртое решение зала"

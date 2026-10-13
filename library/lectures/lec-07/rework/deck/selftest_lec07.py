@@ -365,8 +365,21 @@ def probe_box_over_media(bad, tmp):
 # Выпуск деки, ЛЕЖАЩИЙ В РЕПОЗИТОРИИ, — чтобы проба не зависела от того,
 # рендерил ли кто-то деку перед прогоном: «пропустим, файла нет» — это и
 # есть молчание, от которого заведён весь этот блок.
-GROUND_PDF = Path(__file__).resolve().parent.parent / "lec-07-pererabotka.pdf"
-GROUND_FRAMES = (38, 75, 104)
+# ВЫПУСК ДЛЯ СВЕРКИ МЕРЫ. Берётся полный рендер ТЕКУЩЕЙ деки; прежде здесь
+# стоял выпуск на 122 кадра, а номера кадров — списком вручную. После реза до
+# 102 кадров проба падала трассировкой `KeyError: 104`, и падала молча: её
+# никто не звал, пока деку правили восемь сессий. Трассировка читается как
+# «инструмент сломан», а не как «мера не проверена», — поэтому номера кадров
+# теперь ВЫВОДЯТСЯ из числа страниц, а отсутствующая страница даёт внятный
+# отказ. Третий случай молчаливой поломки этого самотеста.
+GROUND_PDF = Path(__file__).resolve().parent.parent.parent / "rendered" \
+    / "lec-07-peredelka.pdf"
+
+
+def ground_frames(n_pages):
+    """Три кадра выпуска: четверть, середина, почти конец. По ДОЛЕ, а не
+    номерами — номера переживают один рез и врут после второго."""
+    return tuple(sorted({max(1, int(n_pages * q)) for q in (0.35, 0.69, 0.95)}))
 GROUND_TOL = 0.05
 
 
@@ -395,11 +408,18 @@ def probe_glyphs_vs_text(bad):
                    "сверить меру не с чем")
         return []
     pages = {n: st for n, st, _b in pdfmeasure.pages(GROUND_PDF)}
+    frames = ground_frames(len(pages))
+    missing = [f for f in frames if f not in pages]
+    if missing:
+        bad.append(f"[знаки-против-текста] в выпуске {GROUND_PDF.name} "
+                   f"{len(pages)} страниц, а сверять просят кадры {missing} — "
+                   "мера НЕ проверена (выпуск устарел относительно деки)")
+        return []
     bpg = pdfmeasure.glyph_bytes(GROUND_PDF.read_bytes())
     out = {}
     for mode, b in (("по кодировке", bpg), ("прежним правилом", 2)):
         rs = []
-        for f in GROUND_FRAMES:
+        for f in frames:
             real = _real_chars(GROUND_PDF, f)
             mine = sum(r[1] for r in pdfmeasure.text_runs(pages[f], bpg=b))
             if real is None or not mine:
@@ -417,7 +437,7 @@ def probe_glyphs_vs_text(bad):
                    " — проба не различает исправленную меру от сломанной")
         return []
     print(f"{'[знаки-против-текста]':<24} разностно: ЛОВИТ  →  на кадрах "
-          f"{list(GROUND_FRAMES)} мера сходится с `pdftotext` в "
+          f"{list(frames)} мера сходится с `pdftotext` в "
           + " · ".join(f"{r:.3f}" for r in out["по кодировке"])
           + "; прежним правилом те же кадры давали "
           + " · ".join(f"{r:.2f}" for r in out["прежним правилом"])

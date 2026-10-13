@@ -1,1 +1,1 @@
-{"session_id": "sess-106a1cca3cd440e28f579f4148cc02a9", "generation": 7, "host": "golive-harness-control", "transcript_ref": "641ee122-2f75-4d99-8268-5e34a2fe7cc4", "provider": "claude", "model": "opus[1m]", "launch_tier": "native-claude", "base_url": "", "terminated": false}
+{"session_id": "sess-106a1cca3cd440e28f579f4148cc02a9", "generation": 8, "host": "golive-harness-control", "transcript_ref": "641ee122-2f75-4d99-8268-5e34a2fe7cc4", "provider": "claude", "model": "opus[1m]", "launch_tier": "native-claude", "base_url": "", "terminated": false}

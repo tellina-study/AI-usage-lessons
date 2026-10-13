@@ -8,7 +8,6 @@ demo: true
 visual:
   pattern: mechanism_node_graph
   figure: k1-shema-shest-uzlov.png
-  screenshot: SCREENSHOT-TODO-k1-holst.png
   primary: >
     Сверху снимок холста с шестью узлами. Под ним таблица узлов в три колонки —
     имя на холсте, что в карточке, зачем он здесь, клетки полными фразами.

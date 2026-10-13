@@ -573,6 +573,7 @@ def selftest():
     probe_live_links(tmp)
     probe_fingerprint(tmp)
     probe_cell_runs()
+    probe_render_path()
     selftest_layout.run_all(OK, BAD, say, _run, tmp, seq)
     say("─────────────────────────────────────────────────────────────")
     total = len(OK) + len(BAD)
@@ -635,6 +636,39 @@ def probe_cell_runs():
             f"прогон {n_off}, клетка полужирная целиком (вид Лекции 6 не "
             f"двинулся); включено — прогонов {n_on}, полужирный из них "
             f"{b_on}, светлым идёт «{light}»")
+
+
+def probe_render_path():
+    """Пути рендера абсолютны. Доказывается на СЛОМАННОМ входе: подаётся
+    относительный путь — ровно тот случай, на котором рендер и ломался.
+
+    Обе команды делают `cd` в папку деки, поэтому относительный путь после
+    `cd` указывает уже не туда, куда указывал у вызывающего: PDF уезжал в
+    `<папка>/<папка>/`, а `pdftoppm` падал «Couldn't open file». Проба не
+    запускает LibreOffice — она смотрит строки команд, которые его зовут."""
+    import os
+    from . import render as R
+    rel_pptx, rel_snaps = Path("deck/lec-07-karkas.pptx"), Path("look/snaps")
+    bad_cmds = R.render_cmds(rel_pptx, rel_snaps, 110, "")
+    good_cmds = R.render_cmds(rel_pptx.absolute(), rel_snaps.absolute(), 110, "")
+    here = os.getcwd().rstrip("/")
+    # сломанный вход: папка в `cd` относительная, и `--outdir` повторяет её же
+    broke = ('cd "deck"' in bad_cmds[0]
+             and '--outdir "deck"' in bad_cmds[0]
+             and f'"{here}' not in bad_cmds[1])
+    fixed = (f'cd "{here}/deck"' in good_cmds[0]
+             and f'--outdir "{here}/deck"' in good_cmds[0]
+             and f'"{here}/look/snaps/k"' in good_cmds[1])
+    if not (broke and fixed):
+        BAD.append(
+            f"[рендер-путь] проба не различает: на относительном входе "
+            f"сломанность {broke}, на абсолютном исправность {fixed}")
+    else:
+        OK.append("[рендер-путь]")
+        say(f"{'[рендер-путь]':<24} на сломанном входе: ЛОВИТ  →  "
+            f"относительный путь даёт `cd \"deck\"` и `--outdir \"deck\"` "
+            f"после того же `cd`, то есть PDF в `deck/deck/`, а снимки мимо; "
+            f"абсолютный кладёт и PDF, и снимки туда, куда просили")
 
 
 if __name__ == "__main__":

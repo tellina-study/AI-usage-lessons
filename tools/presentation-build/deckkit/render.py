@@ -26,18 +26,32 @@ LO_ENV = Path("/home/harness/.local/lo-portable-env.sh")
 TIMEOUT = 115                 # секунд на команду; дальше — снимаем
 
 
-def render(pptx, snaps_dir, *, dpi=110, timeout=TIMEOUT, env_sh=LO_ENV):
-    """PPTX → PDF рядом с ним → PNG по кадру в `snaps_dir`. 0 — вышло."""
-    pptx, snaps = Path(pptx), Path(snaps_dir)
-    snaps.mkdir(exist_ok=True)
-    env = f". {env_sh} && " if Path(env_sh).exists() else ""
+def render_cmds(pptx, snaps, dpi, env):
+    """Две команды рендера строками. Вынесено из `render`, чтобы путь можно
+    было проверить, НЕ запуская LibreOffice: обе команды делают `cd` в папку
+    деки, и относительный путь в них складывал PDF в `<папка>/<папка>/`, а
+    `pdftoppm` затем падал «Couldn't open file». Пути здесь обязаны быть
+    абсолютными — это и проверяет проба `[рендер-путь]`."""
     pdf = pptx.with_suffix(".pdf")
-    cmds = [
+    return [
         f'{env}cd "{pptx.parent}" && soffice --headless --convert-to pdf '
         f'--outdir "{pptx.parent}" "{pptx.name}"',
         f'{env}cd "{pptx.parent}" && pdftoppm -r {dpi} -png "{pdf.name}" '
         f'"{snaps}/k"',
     ]
+
+
+def render(pptx, snaps_dir, *, dpi=110, timeout=TIMEOUT, env_sh=LO_ENV):
+    """PPTX → PDF рядом с ним → PNG по кадру в `snaps_dir`. 0 — вышло."""
+    # АБСОЛЮТНЫЕ пути, и это не вкусовщина: обе команды делают `cd` в папку
+    # деки, поэтому относительный путь после `cd` указывает уже не туда,
+    # куда указывал у вызывающего. Найдено сессией заключения круга #229:
+    # PDF уезжал в `<папка>/<папка>/`, снимки не снимались вовсе.
+    pptx, snaps = Path(pptx).absolute(), Path(snaps_dir).absolute()
+    snaps.mkdir(parents=True, exist_ok=True)
+    env = f". {env_sh} && " if Path(env_sh).exists() else ""
+    pdf = pptx.with_suffix(".pdf")
+    cmds = render_cmds(pptx, snaps, dpi, env)
     for c in cmds:
         try:
             r = subprocess.run(["bash", "-lc", c], timeout=timeout,

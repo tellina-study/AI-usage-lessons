@@ -12,14 +12,15 @@
 
     theme · report → metrics → prims → markup · slidefile
                              → tables · plates · scheme · columns · flow
-                             → media → refdeck
+                             → wrap → media → refdeck · render
                              → probes → selftest · regress → regress_decks
 
 Два прогона, которыми ядро сдаётся:
 
-    python3 -m deckkit.selftest           — 35 проб на сломанном входе
+    python3 -m deckkit.selftest           — пробы на сломанном входе
     python3 -m deckkit.regress_decks --all — регрессия на двух доставленных деках
 """
 __all__ = ["theme", "report", "metrics", "prims", "markup", "slidefile",
-           "tables", "plates", "scheme", "columns", "flow", "media",
-           "refdeck", "probes", "selftest", "regress", "regress_decks"]
+           "tables", "plates", "scheme", "columns", "flow", "wrap", "media",
+           "refdeck", "render", "probes", "probes_layout", "selftest",
+           "selftest_layout", "regress", "regress_decks"]

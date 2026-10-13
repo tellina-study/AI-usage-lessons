@@ -27,7 +27,7 @@ from dataclasses import dataclass
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
 from . import (columns, flow, markup, media, metrics, plates, prims, report,
-               scheme, slidefile, tables)
+               scheme, slidefile, tables, wrap)
 from .theme import DEEP, GOLD, LIGHT, MID, SLIDE_H, SLIDE_W, WHITE
 
 
@@ -46,6 +46,10 @@ class Geometry:
     hero_w: float = 7.58
     tick_w: float = 1.05
     tick_h: float = 0.055
+    wrap_gap: float = 0.10           # просвет между низом снимка и телом,
+                                     # вернувшим себе полную ширину
+    body_pt: float = 15.0            # номинальный кегль тела: по нему
+                                     # мерится пол проекции
 
     @property
     def full_w(self):
@@ -200,6 +204,11 @@ def content(p, sl, root, g=G):
     img = media.media_path(sl.meta, root, sl.sid)
     hero = img is not None and bool(sl.meta.get("media_hero"))
     col_bot, body_w = g.body_bot, g.full_w
+    media_bot, draw_img = 0.0, None       # низ боковой иллюстрации и её
+                                          # отложенный вызов: в режиме
+                                          # обтекания коробка тела идёт во
+                                          # всю ширину, то есть и под
+                                          # снимком, и накрыла бы его
     if hero:
         x_box, col_bot = media.place_hero(
             s, sl.sid, sl.meta, img, SLIDE_W - g.mx, g.hero_top, g.body_bot,
@@ -213,8 +222,8 @@ def content(p, sl, root, g=G):
                 media.img_ar(img, sl.sid), sl.media_w or g.media_w,
                 min(3.40, g.body_bot - y))
             body_w = g.full_w - mw - g.col_gap
-            media.draw_media(s, sl.sid, img, g.mx + body_w + g.col_gap, y,
-                             mw, mh)
+            draw_img = (g.mx + body_w + g.col_gap, y, mw, mh)
+            media_bot = y + mh
 
     is_content = str(sl.meta.get("type") or "case") in CONTENT_TYPES
     pl = plates.plates_of(sl) if is_content else []
@@ -253,15 +262,51 @@ def content(p, sl, root, g=G):
                     r["bold"] = True
                 runs.append(r)
         if runs:
-            metrics.fit_runs(runs, body_w - 0.08, avail, ls=1.26,
-                             tag=f"{sl.sid}/тело")
-            prims.ocean_box(s, g.mx - 0.14, y - 0.10, body_w + 0.28,
-                            min(avail + 0.18, g.body_bot - y + 0.10))
-            prims.text_runs(s, g.mx + 0.04, y, body_w - 0.08, avail, runs,
-                            ls=1.26, tag=f"{sl.sid}/тело")
+            # Тело, начавшееся РЯДОМ со снимком, обтекает его: узкая надпись
+            # рядом, широкая под ним. Ветка здесь, а не в ядре, потому что
+            # обтекание — раскладка, и образец обязан показать её целиком.
+            wrapped, y_bot = None, media_bot + g.wrap_gap
+            if not hero and img and y < media_bot:
+                wrapped = wrap.fit_runs_wrap(
+                    runs, body_w - 0.08, media_bot - y, g.full_w - 0.08,
+                    col_bot - y_bot, body_w - 0.08, avail, ls=1.26,
+                    tag=f"{sl.sid}/тело", proj_base=g.body_pt)
+            pushed = None
+            if not wrapped and not hero and img and y < media_bot:
+                # Рядом со снимком не поместился ни один блок — тело уходит
+                # под него целиком. Та же проверка «кегль не падает».
+                pushed = wrap.fit_pushed(
+                    runs, g.full_w - 0.08, col_bot - y_bot,
+                    body_w - 0.08, avail, ls=1.26, tag=f"{sl.sid}/тело",
+                    proj_base=g.body_pt)
+            if wrapped or pushed:
+                # Коробка мотива начинается там, где начинается ТЕКСТ: при
+                # обтекании от верха тела, при уходе под снимок — от первой
+                # строки под ним.
+                top = wrapped[2] if wrapped else []
+                bot = wrapped[3] if wrapped else runs
+                box_y = y if wrapped else y_bot
+                prims.ocean_box(s, g.mx - 0.14, box_y - 0.10,
+                                g.full_w + 0.28, g.body_bot - box_y + 0.10)
+                if top:
+                    prims.text_runs(s, g.mx + 0.04, y, body_w - 0.08,
+                                    media_bot - y, top, ls=1.26,
+                                    tag=f"{sl.sid}/тело-рядом")
+                prims.text_runs(s, g.mx + 0.04, y_bot, g.full_w - 0.08,
+                                col_bot - y_bot, bot, ls=1.26,
+                                tag=f"{sl.sid}/тело-под")
+            else:
+                metrics.fit_runs(runs, body_w - 0.08, avail, ls=1.26,
+                                 tag=f"{sl.sid}/тело", proj_base=g.body_pt)
+                prims.ocean_box(s, g.mx - 0.14, y - 0.10, body_w + 0.28,
+                                min(avail + 0.18, g.body_bot - y + 0.10))
+                prims.text_runs(s, g.mx + 0.04, y, body_w - 0.08, avail,
+                                runs, ls=1.26, tag=f"{sl.sid}/тело")
     elif blocks:
         report.warn(f"[высота] {sl.sid}/тело: места под тело не осталось "
                     f"({avail:.2f}\") — примитивы съели кадр")
+    if draw_img:
+        media.draw_media(s, sl.sid, img, *draw_img)
     gold_tick(s, sl.sid, g.mx, sl.tick_y or (g.title_y + 0.98), g)
     footer(s, sl, g)
     return s

@@ -50,28 +50,24 @@ EMU, прогоны, заметки), и всякое расхождение о�
 сборке PPTX и от рендера не зависят.
 """
 import argparse
-import subprocess
 import sys
-import zipfile
 from pathlib import Path
 
-from lxml import etree
 from pptx.enum.text import MSO_ANCHOR
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
 from deckkit import (columns, flow, markup, media, metrics, plates,  # noqa: E402
-                     prims, report, scheme, slidefile, tables)
+                     prims, render as rnd, report, scheme, slidefile,
+                     tables, wrap)
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, SLIDE_H,  # noqa: E402
                            SLIDE_W, WHITE)
 
 SLIDES_DIR = HERE / "slides"
 LEC_ROOT = HERE.parent.parent                      # library/lectures/lec-07
 OUT = HERE / "lec-07-karkas.pptx"
-PDF = HERE / "lec-07-karkas.pdf"
 SNAPS = HERE / "snapshots"
-LO_ENV = Path("/home/harness/.local/lo-portable-env.sh")
 
 # ════════════════════════════════════════════════════════════════════
 # геометрия ЭТОЙ деки
@@ -98,6 +94,13 @@ CONTENT_TYPES = {"case", "norm", "comparison", "summary", "map", "question"}
 HERO_W = 7.58
 HERO_TOP = 0.10        # верх кадра: выше заголовка, у самой кромки слайда
 HERO_GAP = 0.06        # просвет между кадром и телом под ним
+# Просвет между НИЗОМ боковой иллюстрации и первой строкой тела, вернувшего
+# себе полную ширину. Взят равным отбивке между блоками (7 пт ≈ 0,097"):
+# разрез идёт по границе блока, и шов между двумя надписями обязан читаться
+# тем же просветом, что и обычная граница блоков внутри одной.
+WRAP_GAP = 0.10
+BODY_PT = 15.0         # номинальный кегль тела этой деки: по нему мерится
+                       # пол проекции (`metrics.check_proj`)
 # Обложка. Своя ширина: рядом с кадром стоит сплошной текст, а не колонка
 # плашек. При отношении 1,5 (снимок s01) ширина 7,79" даёт 40,5% площади —
 # порог взят с запасом в полпроцента, — а текстовому столбцу остаётся ровно
@@ -342,6 +345,7 @@ def content(p, sl, root):
     # физически не совмещаются: замерено, левая колонка не доберёт 1,5".
     col_bot = BODY_BOT
     media_bot = 0.0        # низ боковой иллюстрации; 0 — её нет
+    draw_img = None        # отложенный вызов `draw_media`: (x, y, w, h)
     if hero:
         # Кадр-свидетельство встаёт ПЕРВЫМ и забирает своё место целиком: от
         # него считается ширина заголовка и всего остального, а не наоборот.
@@ -358,7 +362,11 @@ def content(p, sl, root):
                                           sl.media_w or MEDIA_W,
                                           min(3.40, BODY_BOT - y))
             body_w = FULL_W - mw - COL_GAP
-            media.draw_media(s, sl.sid, img, MX + body_w + COL_GAP, y, mw, mh)
+            # Снимок ВЫЧИСЛЯЕТСЯ здесь, а РИСУЕТСЯ ниже. Решение «обтекать
+            # или нет» принимается после подбора кегля, а коробка мотива в
+            # режиме обтекания идёт во всю ширину — то есть и под снимком.
+            # Нарисованный раньше, снимок оказался бы ею накрыт.
+            draw_img = (MX + body_w + COL_GAP, y, mw, mh)
             media_bot = y + mh
 
     is_content = str(sl.meta.get("type") or "case") in CONTENT_TYPES
@@ -450,6 +458,8 @@ def content(p, sl, root):
         # снимке s21, где выделенные термины вышли бирюзовыми.
         flow.flow(s, ordered, MX + 0.04, y, text_w - 0.08, size,
                   f"{sl.sid}/тело", accent=DEEP)
+        if draw_img:
+            media.draw_media(s, sl.sid, img, *draw_img)
         gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
         footer(s, sl)
         return s
@@ -470,16 +480,60 @@ def content(p, sl, root):
                 if kind == "head":
                     r["bold"] = True
                 runs.append(r)
-        metrics.fit_runs(runs, text_w - 0.08, avail, ls=1.26,
-                         tag=f"{sl.sid}/тело")
-        prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
-                        box_h if hero else min(avail + 0.18,
-                                               BODY_BOT - y + 0.10))
-        prims.text_runs(s, MX + 0.04, y, text_w - 0.08, avail, runs, ls=1.26,
-                        tag=f"{sl.sid}/тело")
+        # ── ОБТЕКАНИЕ: тело начинается РЯДОМ со снимком ───────────────
+        # Условие ровно одно и проверяемое: снимок есть, он боковой, и
+        # первая строка тела стоит ВЫШЕ его нижнего края. Кадр с полосой
+        # плашек под это условие не попадает — он и так отжат ниже снимка
+        # и полную ширину получает веткой `y >= media_bot` выше.
+        #
+        # Коробка мотива здесь во всю ширину и на всю высоту тела: угол,
+        # который занимает снимок, она закрывает собой, а снимок ложится
+        # НА неё — белой карточкой на подложке. Два прямоугольника буквой
+        # «Г» дали бы шов из двух обводок посреди кадра, а настоящей
+        # Г-образной фигуры со скруглением у мотива нет.
+        wrapped, y_bot = None, media_bot + WRAP_GAP
+        if not hero and img and y < media_bot:
+            wrapped = wrap.fit_runs_wrap(
+                runs, body_w - 0.08, media_bot - y, FULL_W - 0.08,
+                col_bot - y_bot, text_w - 0.08, avail, ls=1.26,
+                tag=f"{sl.sid}/тело", proj_base=BODY_PT)
+        pushed = None
+        if not wrapped and not hero and img and y < media_bot:
+            # Рядом со снимком не поместился ни один блок — тело уходит
+            # под него целиком. Та же проверка «кегль не падает».
+            pushed = wrap.fit_pushed(
+                runs, FULL_W - 0.08, col_bot - y_bot, text_w - 0.08, avail,
+                ls=1.26, tag=f"{sl.sid}/тело", proj_base=BODY_PT)
+        if wrapped or pushed:
+            # Коробка мотива начинается там, где начинается ТЕКСТ: при
+            # обтекании от верха тела, при уходе под снимок — от первой
+            # строки под ним. Иначе под снимком оставался бы пустой
+            # подкрашенный поясок там, где текста уже нет.
+            top = wrapped[2] if wrapped else []
+            bot = wrapped[3] if wrapped else runs
+            box_y = y if wrapped else y_bot
+            prims.ocean_box(s, MX - 0.14, box_y - 0.10, FULL_W + 0.28,
+                            BODY_BOT - box_y + 0.10)
+            if top:
+                prims.text_runs(s, MX + 0.04, y, body_w - 0.08,
+                                media_bot - y, top, ls=1.26,
+                                tag=f"{sl.sid}/тело-рядом")
+            prims.text_runs(s, MX + 0.04, y_bot, FULL_W - 0.08,
+                            col_bot - y_bot, bot, ls=1.26,
+                            tag=f"{sl.sid}/тело-под")
+        else:
+            metrics.fit_runs(runs, text_w - 0.08, avail, ls=1.26,
+                             tag=f"{sl.sid}/тело", proj_base=BODY_PT)
+            prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                            box_h if hero else min(avail + 0.18,
+                                                   BODY_BOT - y + 0.10))
+            prims.text_runs(s, MX + 0.04, y, text_w - 0.08, avail, runs,
+                            ls=1.26, tag=f"{sl.sid}/тело")
     elif blocks:
         report.warn(f"[высота] {sl.sid}/тело: места под тело не осталось "
                     f"({avail:.2f}\") — примитивы съели кадр")
+    if draw_img:
+        media.draw_media(s, sl.sid, img, *draw_img)
     gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
     footer(s, sl)
     return s
@@ -557,60 +611,6 @@ def build(only=None, out=OUT, slides_dir=None, root=None):
     return n
 
 
-def verify_links(path=OUT):
-    """`r:id` в XML сохранённого файла. Самоотчёт не принимается: ссылка
-    считается поставленной только тогда, когда отношение лежит в пакете."""
-    A = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
-    R = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
-    body, notes, targets = 0, 0, 0
-    with zipfile.ZipFile(path) as z:
-        for nm in z.namelist():
-            if not nm.endswith(".xml"):
-                continue
-            if nm.startswith("ppt/slides/slide"):
-                body += sum(1 for e in etree.fromstring(z.read(nm))
-                            .iter(f"{A}hlinkClick") if e.get(f"{R}id"))
-            elif nm.startswith("ppt/notesSlides/notesSlide"):
-                notes += sum(1 for e in etree.fromstring(z.read(nm))
-                             .iter(f"{A}hlinkClick") if e.get(f"{R}id"))
-        for nm in z.namelist():
-            if ".rels" in nm and ("slides/_rels" in nm
-                                  or "notesSlides/_rels" in nm):
-                targets += sum(1 for e in etree.fromstring(z.read(nm)).iter()
-                               if e.get("Type", "").endswith("/hyperlink"))
-    print(f"\nгиперссылки в XML: подвал {body} · заметки {notes} · "
-          f"отношений в пакете {targets}")
-    return body + notes, targets
-
-
-# ════════════════════════════════════════════════════════════════════
-# рендер (по требованию, с таймаутом)
-# ════════════════════════════════════════════════════════════════════
-
-
-def render():
-    SNAPS.mkdir(exist_ok=True)
-    env = f". {LO_ENV} && " if LO_ENV.exists() else ""
-    cmds = [
-        f'{env}cd "{HERE}" && soffice --headless --convert-to pdf '
-        f'--outdir "{HERE}" "{OUT.name}"',
-        f'cd "{HERE}" && pdftoppm -r 110 -png "{PDF.name}" "{SNAPS}/k"',
-    ]
-    for c in cmds:
-        try:
-            r = subprocess.run(["bash", "-lc", c], timeout=115,
-                               capture_output=True, text=True)
-            if r.returncode:
-                print(f"рендер: код {r.returncode}\n{r.stderr[-600:]}")
-                return 1
-        except subprocess.TimeoutExpired:
-            print("рендер: таймаут 115 с — снято, см. notes/mcp-limitations.md "
-                  "[#223-6]")
-            return 1
-    print(f"рендер готов: {PDF.name}, снимки в {SNAPS.name}/")
-    return 0
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
@@ -622,9 +622,9 @@ def main():
         return selftest()
     n = build(only=a.only)
     report.report(n, OUT.name)
-    verify_links()
+    rnd.verify_links(OUT)
     if a.render:
-        render()
+        rnd.render(OUT, SNAPS)
     return 0
 
 

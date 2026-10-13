@@ -6,9 +6,9 @@ type: divider
 title: "Разработка лекарства: удешевили начало — где узкое место"
 assertion: "Раздел переносит тот же вопрос на масштаб отрасли: ранний шаг разработки подешевел многократно, а клинические фазы на людях — узкое место — не подешевели ни на сколько, и одобрений за десять лет существования категории ноль"
 source: "BIO / QLS / Informa, Clinical Development Success Rates and Contributing Factors 2011–2020 — https://go.bio.org/rs/490-EHZ-999/images/ClinicalDevelopmentSuccessRates2011_2020.pdf · Jayatunga и соавт., Drug Discovery Today, 2024 — https://doi.org/10.1016/j.drudis.2024.104009 · Haque W. и соавт., J Clin Oncol 2026, DOI 10.1200/JCO.2026.44.16_suppl.11072 — https://doi.org/10.1200/JCO.2026.44.16_suppl.11072"
-media: ""
+media: "rework/deck/assets/s74-khimik-u-vytyazhnogo-shkafa.jpg"
 media_needed: "кадр лаборатории медицинской химии — вытяжной шкаф, колбы, человек за синтезом вещества; постановочность и подпись не нужны"
-media_note: ""
+media_note: "вкручен химик у вытяжного шкафа: человек синтезирует вещество руками. Лаборатория университетская, не фармацевтическая; подписи к месту на снимке нет, и действие то самое. Своей подписи кадр не получил — строка курсивом на нём занята оговоркой про производство лекарственной формы. Права: CC BY-SA 3.0, deck/images.md §3.1"
 timing_min: 0.5
 in_bucket: true
 method_steps: ["дивайдер"]

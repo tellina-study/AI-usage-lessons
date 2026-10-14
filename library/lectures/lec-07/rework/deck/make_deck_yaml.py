@@ -117,7 +117,6 @@ CHAP = {
  's65': 'chapter-part3c.md § Раздел 6 (вводка), §6.1',
  's66': 'chapter-part3c.md §6.2',
  's67': 'chapter-part3c.md §6.3, §6.5 (+ §6.4)',
- 's67a': 'chapter-part3c.md §6.5',
  's68': 'chapter-part3c.md §6.7',
  's69': 'chapter-part3c.md §6.6',
  's70': 'chapter-part3d.md §6.8',

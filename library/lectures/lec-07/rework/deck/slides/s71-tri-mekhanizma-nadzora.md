@@ -5,19 +5,17 @@ section: "6. Допуск, надзор и ответственность"
 type: norm
 title: "Модель меняется после допуска: 43,4 процента отзывов — в первый год"
 assertion: "Надзор отвечает на изменчивость модели тремя механизмами, и его измеренное последствие — ранний отзыв: проверка, которая не состоялась до допуска, состоялась после него [формы разбора здесь нет законно: это обзор механизмов, не измеренный разбор]"
-source: "Руководство регулятора США по плану предварительно утверждённых изменений модели, декабрь 2024 — https://www.fda.gov/regulatory-information/search-fda-guidance-documents/marketing-submission-recommendations-predetermined-change-control-plan-artificial-intelligence · приказ Росздравнадзора от 21.07.2025 № 4472 — http://publication.pravo.gov.ru/document/0001202510140015 · Регламент (ЕС) 2024/1689 — https://eur-lex.europa.eu/eli/reg/2024/1689/oj · Lee B. и соавт., JAMA Health Forum 2025;6(8):e253172, срез ноябрь 2024 — https://doi.org/10.1001/jamahealthforum.2025.3172"
+source: "Руководство регулятора США, 2024 — https://www.fda.gov/regulatory-information/search-fda-guidance-documents/marketing-submission-recommendations-predetermined-change-control-plan-artificial-intelligence · приказ Росздравнадзора № 4472 — http://publication.pravo.gov.ru/document/0001202510140015 · Регламент (ЕС) 2024/1689 — https://eur-lex.europa.eu/eli/reg/2024/1689/oj · Lee и соавт., JAMA Health Forum 2025 — https://doi.org/10.1001/jamahealthforum.2025.3172"
 media: ""
 media_note: "иллюстрация не нужна: слайд держится на трёх строках механизма и полосе плашек"
 media_needed: ""
 blocks:
-  - {label: "Отзывались из допущенных", value: "60 из 950", note: "срез ноябрь 2024"}
-  - {label: "Отзывных событий на эти 60", value: "182", note: "без заявленной проверки — 3,4 на изделие против 1,9"}
-  - {label: "В первый год после допуска", value: "43,4 процента отзывов", note: "79 из 182; 108 остались неразрешёнными", key: true}
+  - {label: "В первый год после допуска", value: "43,4 процента отзывов", note: "79 из 182 событий у 60 отозванных из 950; 108 неразрешённых; срез ноябрь 2024", key: true}
 scheme:
   caption: "Три механизма надзора после допуска"
   rows:
-    - {label: "Механизмы", steps: ["План изменений модели, утверждённый заранее", "Передача данных о работе регулятору", "Перенесённые сроки: 2 декабря 2027 · 2 августа 2028"]}
-timing_min: 1.0
+    - {label: "Механизмы", steps: ["План изменений модели, утверждённый заранее", "Передача данных о работе регулятору", "Сроки: 2 декабря 2027 · медизделия — 2 августа 2028"]}
+timing_min: 0.9
 in_bucket: true
 method_steps: ["—"]
 form: ["[VFY]"]
@@ -29,11 +27,7 @@ status: собран
 
 **У модели есть свойство, которого нет у скальпеля: она меняется после того, как её допустили.**
 
-**Сроки разведены по приложениям, а не по признаку «самостоятельное или встроенное»:** самостоятельное медицинское программное обеспечение живёт по августу 2028 года.
-
-**Измеренное последствие рамки — ранний отзыв:** проверка, которая не состоялась до допуска, состоялась после.
-
-**Отечественный реестр:** 48 в ноябре 2025 → 57 в июне 2026 → 59 в августе 2026. Доля от общего реестра не приводится.
+**Измеренное последствие — ранний отзыв: проверка, не состоявшаяся до допуска, состоялась после.**
 
 *Формы разбора здесь нет: это обзор надзорных механизмов.*
 
@@ -55,4 +49,4 @@ status: собран
 
 Цена обеих ошибок у надзорного механизма не измерена, классического режима в той же цене никто не посчитал. Обзор механизмов остаётся обзором.
 
-**Источники.** [руководство регулятора США по плану утверждённых изменений, 2024](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/marketing-submission-recommendations-predetermined-change-control-plan-artificial-intelligence) · [приказ Росздравнадзора от 21.07.2025 № 4472](http://publication.pravo.gov.ru/document/0001202510140015) · [Регламент (ЕС) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) · [Lee и соавт., JAMA Health Forum 2025, отзывы изделий](https://doi.org/10.1001/jamahealthforum.2025.3172)
+**Источники.** [руководство регулятора США по плану предварительно утверждённых изменений модели, декабрь 2024](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/marketing-submission-recommendations-predetermined-change-control-plan-artificial-intelligence) · [приказ Росздравнадзора от 21.07.2025 № 4472](http://publication.pravo.gov.ru/document/0001202510140015) · [Регламент (ЕС) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) · [Lee B. и соавт., JAMA Health Forum 2025;6(8):e253172, срез ноябрь 2024](https://doi.org/10.1001/jamahealthforum.2025.3172)

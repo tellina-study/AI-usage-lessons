@@ -120,16 +120,26 @@ def part_of(name):
 
 
 def count_chapter(directory):
+    """Возвращает (по частям, по файлам, итог, пропущенные).
+
+    `skipped` — файлы `chapter*.md`, чьё имя в номер части не разобралось. Возвращается и
+    печатается ГРОМКО, а не отбрасывается молча: молча отброшенный файл — это та же ошибка,
+    что заголовок, съевший раздел (см. docstring модуля). Повод, по которому проверка
+    добавлена: разрез по пределу в 600 строк дал имя `chapter-part4da.md`; имя вида
+    `chapter-part4d2.md` этот разбор НЕ прошло бы, файл выпал бы из счёта, а итог остался бы
+    правдоподобным.
+    """
     files = sorted(glob.glob(os.path.join(directory, 'chapter*.md')))
-    by_part, by_file = {}, {}
+    by_part, by_file, skipped = {}, {}, []
     for p in files:
         n = part_of(os.path.basename(p))
         if n is None:
+            skipped.append(os.path.basename(p))
             continue
         c = count_file(p)
         by_file[os.path.basename(p)] = c
         by_part[n] = by_part.get(n, 0) + c
-    return by_part, by_file, sum(by_part.values())
+    return by_part, by_file, sum(by_part.values()), skipped
 
 
 SELFTEST = [
@@ -186,14 +196,25 @@ def main():
     if os.path.isfile(a.target):
         print(count_file(a.target))
         return 0
-    by_part, by_file, total = count_chapter(a.target)
+    by_part, by_file, total, skipped = count_chapter(a.target)
     if not by_part:
         print(f'в {a.target} не найдено ни одного chapter*.md', file=sys.stderr)
         return 2
     if a.parts:
         for name in sorted(by_file):
-            print(f'{by_file[name]:>7}  {name}')
+            zero = '   <-- НОЛЬ, проверьте заголовки файла' if by_file[name] == 0 else ''
+            print(f'{by_file[name]:>7}  {name}{zero}')
         print()
+    zeros = [n for n, c in by_file.items() if c == 0]
+    if zeros:
+        print(f'ВНИМАНИЕ: {len(zeros)} файл(ов) дали ноль слов: {", ".join(sorted(zeros))}.',
+              file=sys.stderr)
+        print('Итог при этом остаётся правдоподобным числом — не верьте ему, пока не разберётесь.',
+              file=sys.stderr)
+    if skipped:
+        print(f'ВНИМАНИЕ: имя не разобралось в номер части, файл НЕ посчитан: '
+              f'{", ".join(skipped)}. Поправьте имя (схема chapter-partN[буквы].md) '
+              f'или part_of() — молча пропущенный файл занижает итог.', file=sys.stderr)
     print('words_by_part: ' + '{' + ', '.join(f'{k}: {v}' for k, v in sorted(by_part.items())) + '}')
     print(f'length_words:  {total}')
     norm = 30000

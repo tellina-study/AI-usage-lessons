@@ -134,7 +134,6 @@ CHAP = {
  's97': 'chapter-part5b.md §11.1, §11.2, §11.3',
  's99': 'chapter-part5b.md §11.4',
  's101': 'chapter-part5b.md §11.6',
- 's102': 'chapter-part5b.md §11.7',
  's103': 'chapter-part5b.md §11.8',
  's103a': 'chapter-part5b.md § Раздел 12 (вводка), §12.1',
  's104': 'chapter-part5b.md §12.1',

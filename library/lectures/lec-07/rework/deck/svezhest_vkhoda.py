@@ -125,13 +125,22 @@ def main():
     #    предыдущую сборку попала забракованная версия формы: правка
     #    отрисовщика легла на 78 секунд позже рендера её части, коммит PDF —
     #    ещё позже, и проверка по коммиту молчала.
-    posl = g("log", "-1", "--format=%ct %h %ci", "--",
-             "slides/", str(HERE.parents[4] / "tools" / "presentation-build"),
-             *[str(x) for x in HERE.glob("*.py")])
+    # Пути берутся НЕ все `deck/*.py`, а только те, что меняют ВЫХОД.
+    # Первая версия брала все, и первой же её жертвой стал мой собственный
+    # коммит в прогоны замера: артефакт оказался «на минуту старше кода»,
+    # хотя `ocenka.py` и `priyomka.py` ничего не рисуют — они меряют. Сторож,
+    # кричащий на исправной сборке, стоит ровно столько же, сколько
+    # молчащий на сломанной, и это уже третий раз, когда я ловлю на этом
+    # себя. Рисуют: ядро `deckkit`, сборщик деки и два отрисовщика.
+    RISUYUT = [str(HERE.parents[4] / "tools" / "presentation-build"),
+               str(HERE / "build_lec07.py"),
+               str(HERE / "render_parts.py"),
+               str(HERE / "render_sec.py")]
+    posl = g("log", "-1", "--format=%ct %h %ci", "--", "slides/", *RISUYUT)
     if posl:
         ts_kod = int(posl.split()[0])
         opis = " ".join(posl.split()[1:])
-        print(f"\nпоследний коммит, тронувший кадры/ядро/прогоны: {opis}")
+        print(f"\nпоследний коммит, тронувший кадры, ядро или отрисовщик: {opis}")
         for p_art in (HERE / a.pdf, HERE / a.pdf.replace(".pdf", ".pptx")):
             if not p_art.exists():
                 print(f"  {p_art.name}: нет")

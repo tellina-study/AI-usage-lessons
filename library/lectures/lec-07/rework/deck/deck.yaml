@@ -68,7 +68,7 @@ deck:
   total_slides: 101
   plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 67 из них
   inserted_slides: [s01a, s01b, s01c, s01d, s05a, s05b, s11a, s19, s22a, s30a, s32, s35a, s43, s48, s49b, s49c, s49d, s52a, s56, s58, s60, s60a, s60b, s60ba, s60bb, s60c, s62, s63a, s65a, s68, s70a, s73ca, s73ha, s78]
-  sum_timing_min: 82.35           # сложено по timing_min файлов кадров
+  sum_timing_min: 82.65           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
   curriculum_level: "отраслевая лекция L7; strict-in ≥30% обязателен, waiver недоступен"
@@ -117,13 +117,13 @@ sections:                        # разделы показа: кадров и 
   - { name: "2. Инструментальная и лабораторная диагностика",
       slides: 11, timing_min: 7.75, range: [s22, s33] }
   - { name: "3. Постановка диагноза",
-      slides: 17, timing_min: 13.50, range: [s35, s50] }
+      slides: 17, timing_min: 14.05, range: [s35, s50] }
   - { name: "4. Динамическое наблюдение и клинические тревоги",
-      slides: 11, timing_min: 8.20, range: [s52, s60a] }
+      slides: 11, timing_min: 7.90, range: [s52, s60a] }
   - { name: "5. Ведение медицинской документации",
       slides: 9, timing_min: 7.55, range: [s60ba, s64] }
   - { name: "6. Допуск, надзор и ответственность",
-      slides: 10, timing_min: 8.85, range: [s65, s73] }
+      slides: 10, timing_min: 8.90, range: [s65, s73] }
   - { name: "7. Профессиональная квалификация: поддержание и износ",
       slides: 9, timing_min: 6.85, range: [s73b, s73j] }
   - { name: "8. Разработка лекарственных средств",

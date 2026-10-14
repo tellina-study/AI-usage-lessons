@@ -17,7 +17,7 @@ blocks:
 timing_min: 1.05
 in_bucket: true
 method_steps: ["③модель против них", "④как это устроено"]
-form: []
+form: ["вопрос залу"]
 vfy: true
 status: собран
 ---

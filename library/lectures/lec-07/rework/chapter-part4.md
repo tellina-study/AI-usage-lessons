@@ -3,7 +3,7 @@
 ← Карта главы и части 1–3 — [`chapter.md`](chapter.md).
 Часть 4 продолжается в [`chapter-part4a.md`](chapter-part4a.md) — § 7.7–7.10 ·
 [`chapter-part4b.md`](chapter-part4b.md) — окончание Раздела 7 ·
-[`chapter-part4c.md`](chapter-part4c.md) и [`chapter-part4d.md`](chapter-part4d.md) — оперативная
+[`chapter-part4c.md`](chapter-part4c.md), [`chapter-part4d.md`](chapter-part4d.md) и [`chapter-part4da.md`](chapter-part4da.md) — оперативная
 помощь · [`chapter-part4e.md`](chapter-part4e.md) и [`chapter-part4f.md`](chapter-part4f.md) — разработка лекарства.
 - [Самопроверка § 7.1–7.2](#самопроверка--712)
 
@@ -29,7 +29,7 @@
 **Состав части 4 по файлам.** **Раздел 7 «Назначение терапии и подбор дозы»** — этот файл,
 [`chapter-part4a.md`](chapter-part4a.md) и [`chapter-part4b.md`](chapter-part4b.md).
 **Раздел 8 «Оперативная помощь»** —
-[`chapter-part4c.md`](chapter-part4c.md) и [`chapter-part4d.md`](chapter-part4d.md).
+[`chapter-part4c.md`](chapter-part4c.md), [`chapter-part4d.md`](chapter-part4d.md) и [`chapter-part4da.md`](chapter-part4da.md).
 **Раздел 9 «Разработка лекарства»** — [`chapter-part4e.md`](chapter-part4e.md) (§ 9.1–9.8) и [`chapter-part4f.md`](chapter-part4f.md) (§ 9.9–9.12). Номера
 разделов части 4 назначены при сведении главы; ссылки на её материал идут параграфом, как
 и по остальным частям.

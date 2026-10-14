@@ -9,11 +9,15 @@ source: "Goh E. и соавт., JAMA Network Open 2024;7(10):e2440969, 28 окт
 media: "rework/deck/assets/s05-podpis-pod-soglasiem.jpg"
 media_needed: "добыт: подпись под документом в клинической обстановке — устройство, которым процедура удерживает цену ошибки"
 media_note: "настоящий снимок, не стилизация; расхождение с планом названо в s05-podpis-pod-soglasiem.url"
-blocks:
-  - {label: "Модель одна", value: "92 из ста", note: "прогон без человека"}
-  - {label: "Человек один", value: "74 из ста", note: "как обычно, своя ветвь"}
-  - {label: "Человек поверх модели", value: "76 из ста", note: "разница 2 пункта, p = 0,60", key: true}
-  - {label: "Кто и на чём мерил", value: "50 врачей · виньетки", note: "Goh, 2024"}
+scheme:
+  kind: shkala
+  unit: "верных ответов из ста"
+  base: "50 врачей · виньетки · Goh, 2024"
+  caption: "разница пары с одиноким человеком — 2 пункта, p = 0,60"
+  marks:
+    - {value: 92, label: "Модель одна"}
+    - {value: 74, label: "Человек один"}
+    - {value: 76, label: "Человек поверх модели", key: true}
 timing_min: 1.15
 in_bucket: false
 method_steps: []

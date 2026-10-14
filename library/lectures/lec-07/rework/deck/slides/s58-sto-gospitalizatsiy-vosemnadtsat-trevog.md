@@ -22,6 +22,7 @@ timing_min: 1
 in_bucket: true
 method_steps: ["②классические режимы", "③модель против них"]
 form: []
+vizforma: "ряды"
 vfy: false
 status: собран
 ---

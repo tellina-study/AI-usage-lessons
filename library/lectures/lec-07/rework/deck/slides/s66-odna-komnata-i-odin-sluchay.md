@@ -21,6 +21,7 @@ pol_slov: 95   # О10 (#229): кадр закрыт формой вместо с
 in_bucket: false
 method_steps: ["заземление"]
 form: ["—"]
+vizforma: "дорожки + пустая дорожка"
 vfy: false
 status: собран
 ---

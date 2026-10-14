@@ -23,6 +23,7 @@ pol_snyat: "ядро переделывает форму кадра в «пар�
 in_bucket: false
 method_steps: ["—"]
 form: ["—"]
+vizforma: "ряды"
 vfy: false
 status: собран
 ---

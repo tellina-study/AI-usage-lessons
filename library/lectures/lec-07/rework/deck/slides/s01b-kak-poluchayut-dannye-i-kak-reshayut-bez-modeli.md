@@ -20,6 +20,7 @@ timing_min: 0.9
 in_bucket: false
 method_steps: ["заземление", "карта режимов"]
 form: []
+vizforma: "ряды"
 vfy: false
 status: собран
 ---

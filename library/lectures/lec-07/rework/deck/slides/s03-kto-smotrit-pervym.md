@@ -22,6 +22,7 @@ timing_min: 1
 in_bucket: false
 method_steps: ["привязка 4 ступеней"]
 form: []
+vizforma: "лестница"
 vfy: false
 status: собран
 ---

@@ -24,6 +24,7 @@ timing_min: 0.75
 in_bucket: true
 method_steps: ["заземление", "упоминание"]
 form: ["[VFY]"]
+vizforma: "лестница"
 vfy: true
 status: собран
 ---

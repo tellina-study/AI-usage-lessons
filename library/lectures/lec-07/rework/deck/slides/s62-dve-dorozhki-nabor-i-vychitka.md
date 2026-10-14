@@ -28,6 +28,7 @@ timing_min: 0.9
 in_bucket: true
 method_steps: ["⑤что переехало", "пара дало–потребовало"]
 form: ["форма 1", "форма 3"]
+vizforma: "дорожки"
 vfy: false
 status: собран
 ---

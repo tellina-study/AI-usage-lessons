@@ -13,6 +13,7 @@ timing_min: 0.6
 in_bucket: false
 method_steps: ["заземление", "описание стадии"]
 form: []
+vizforma: "дорожки"
 vfy: false
 status: собран
 scheme:

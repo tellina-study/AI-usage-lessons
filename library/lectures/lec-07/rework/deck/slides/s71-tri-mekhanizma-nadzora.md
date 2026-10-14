@@ -21,6 +21,7 @@ timing_min: 1.0
 in_bucket: true
 method_steps: ["—"]
 form: ["[VFY]"]
+vizforma: "ряды"
 vfy: true
 status: собран
 ---

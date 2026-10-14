@@ -18,6 +18,7 @@ timing_min: 0.55
 in_bucket: false
 method_steps: ["заземление"]
 form: []
+vizforma: "ряды"
 vfy: false
 status: собран
 ---

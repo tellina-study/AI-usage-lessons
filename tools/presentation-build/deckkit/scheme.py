@@ -138,7 +138,7 @@ LEC06 = SchemeStyle(lab_pt=11.5, step_lo=9.0, cap_pt=11.0)
 SCHEME_KEYS = {"kind", "caption", "rows", "arrows", "entry", "exit",
                "steps_arrows", "axis", "direction", "marks", "unit", "base",
                "zero", "from", "to"}
-ROW_KEYS = {"label", "steps", "arrows"}
+ROW_KEYS = {"label", "steps", "arrows", "empty"}
 STEP_KEYS = {"text", "step", "ai"}
 
 
@@ -192,7 +192,13 @@ def _rows_of(sid, raw, st):
             if t:
                 steps.append({"text": t, "ai": ai})
         if not steps:
-            report.warn(f"[схема] {sid}: в ряду {i} нет шагов")
+            # Ряд без шагов — дефект для всех форм, КРОМЕ дорожек: там ряд
+            # с `empty` это пустая дорожка, то есть утверждение «здесь не
+            # делается ничего», и читает её сама форма
+            # (`tracks.empty_rows_of`). Молчим ровно в этом случае и ровно
+            # потому, что ряд не потерян, а прочитан в другом месте.
+            if not str(r.get("empty") or "").strip():
+                report.warn(f"[схема] {sid}: в ряду {i} нет шагов")
             continue
         # `arrows` РЯДА: None — «не объявлен», и тогда действует схемный.
         # Порядок бывает в одном ряду и не бывает в соседнем: у `s01a`
@@ -230,7 +236,14 @@ def scheme_of(sl, st=DEFAULT):
     if kind:
         mod = KINDS[kind]
         rows = _rows_of(sl.sid, raw, st) if mod.NEEDS_ROWS else None
-        if mod.NEEDS_ROWS and not rows:
+        # Пусто после разбора — обычно это «рисовать нечего», и схема
+        # снимается молча (о каждом отброшенном ряде уже сказано выше). Но
+        # у формы, которая читает ряды САМА (дорожки с их `empty`), пусто
+        # здесь не значит пусто у неё: схема из одних пустых дорожек
+        # исчезала бы, не сказав ни слова, — то есть ровно тем способом,
+        # которым в этом круге ломалось всё остальное.
+        if mod.NEEDS_ROWS and not rows and not getattr(
+                mod, "ROWS_MAY_BE_EMPTY", False):
             return None
         return mod.parse(sl.sid, raw, rows)
 

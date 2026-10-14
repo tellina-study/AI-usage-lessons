@@ -45,6 +45,9 @@ CHAP = {
     's01b': 'chapter.md § Обзор предмета (как получают данные · классические режимы) + chapter-part1b.md §1.2, §2.1, chapter-part2.md §3.1, chapter-part3.md §4.2, chapter-part3b.md §5.1–5.2, chapter-part3c.md §6.3',
     's01c': 'chapter.md § Где обученная модель в этом цикле есть и где её нет + chapter-part5b.md §11.6, §11.3',
     's01d': 'chapter.md §0.1 (+ chapter-part1b.md §1.1)',
+    's11a': 'chapter-part1b.md § Раздел 1 (вводка), §1.1, §1.2, §1.3 + chapter.md § Обзор предмета (три опоры порядка)',
+    's22a': 'chapter-part1b.md § Раздел 2 (вводка), §2.1, §2.2, §2.4',
+    's35a': 'chapter-part2.md § Раздел 3 (вводка), §3.1, §3.1.1',
  's02': 'chapter.md §0.1',
  's03': 'chapter.md §0.2',
  's05': 'chapter.md §0.4',
@@ -59,19 +62,17 @@ CHAP = {
  's18': 'chapter-part1b.md §1.6',
  's19': 'chapter-part1b.md §1.6',
  's20': 'chapter-part1b.md §1.7',
- 's20a': 'chapter-part1b.md §1.7 (+ chapter.md §0.10)',
  's22': 'chapter-part1b.md § Раздел 2 (вводка), §2.1',
- 's23': 'chapter-part1b.md §2.1',
- 's24': 'chapter-part1b.md §2.2',
- 's26': 'chapter-part1b.md §2.4',
- 's28': 'chapter-part1b.md §2.6',
- 's29': 'chapter-part1b.md §2.6',
- 's30': 'chapter-part1b.md §2.7',
- 's30a': 'chapter-part1b.md §2.7',
- 's31': 'chapter-part1b.md §2.8',
- 's32': 'chapter-part1b.md §2.8',
- 's33': 'chapter-part1b.md §2.9',
- 's34': 'chapter-part1b.md §2.9, §2.3',
+ 's23': 'chapter-part1c.md §2.1',
+ 's24': 'chapter-part1c.md §2.2',
+ 's26': 'chapter-part1c.md §2.4',
+ 's28': 'chapter-part1c.md §2.6',
+ 's29': 'chapter-part1c.md §2.6',
+ 's30': 'chapter-part1c.md §2.7',
+ 's30a': 'chapter-part1c.md §2.7',
+ 's31': 'chapter-part1c.md §2.8',
+ 's32': 'chapter-part1c.md §2.8',
+ 's33': 'chapter-part1c.md §2.9',
  's35': 'chapter-part2.md § Раздел 3 (вводка)',
  's36': 'chapter-part2.md §3.1',
  's37': 'chapter-part2.md §3.1',
@@ -91,7 +92,6 @@ CHAP = {
  's49c': 'chapter-part4d.md §8.8',
  's49d': 'chapter-part2.md § Раздел 3 (вводка), §3.3, §3.4, §3.8 + chapter-part4d.md §8.8',
  's50': 'chapter-part2b.md §3.12, §3.13',
- 's51': 'chapter-part2b.md §3.14',
  's52': 'chapter-part3.md § Раздел 4 (вводка), §4.1',
  's53': 'chapter-part3.md §4.1',
  's54': 'chapter-part3.md §4.2',
@@ -102,7 +102,6 @@ CHAP = {
  's59': 'chapter-part3.md §4.7, §4.8',
  's60': 'chapter-part3.md §4.9',
  's60a': 'chapter-part3.md §4.11 (+ §4.10)',
- 's60aa': 'chapter-part3.md §4.10',
  's60b': 'chapter-part3b.md § Раздел 5 (вводка), §5.1',
  's60c': 'chapter-part3b.md §5.1, §5.2',
  's61': 'chapter-part3b.md §5.3, §5.4',
@@ -110,7 +109,6 @@ CHAP = {
  's63': 'chapter-part3b.md §5.7',
  's63a': 'chapter-part3b.md §5.8 (+ §5.7)',
  's64': 'chapter-part3b.md §5.9 (+ §5.8)',
- 's64a': 'chapter-part3b.md §5.9 (+ chapter-part5b.md §11.6)',
  's65': 'chapter-part3c.md § Раздел 6 (вводка), §6.1',
  's66': 'chapter-part3c.md §6.2',
  's67': 'chapter-part3c.md §6.3, §6.5 (+ §6.4)',
@@ -121,7 +119,6 @@ CHAP = {
  's70a': 'chapter-part3d.md §6.8 — норматив и участники; самой политики в главе нет, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.2',
  's71': 'chapter-part3d.md §6.9',
  's73': 'chapter-part3d.md §6.13 (+ §6.12)',
- 's73a': 'chapter-part3d.md §6.13 (+ chapter-part5b.md §11.6)',
  's74': 'chapter-part4e.md § Раздел 9 (вводка), §9.1',
  's77': 'chapter-part4e.md §9.2, §9.3',
  's78': 'chapter-part4e.md §9.3',
@@ -135,7 +132,6 @@ CHAP = {
  's73h': 'chapter-part5.md §10.9, §10.10',
  's73ha': 'chapter-part5.md §10.10, §10.14 — пробел по этой плоскости; счёт по мировому корпусу в главе отсутствует, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.1',
  's73i': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',
- 's73j': 'chapter-part5.md §10.14 (+ §10.12, §10.13)',
  's96a': 'chapter-part5b.md § Раздел 11 (вводка), §11.1',
  's97': 'chapter-part5b.md §11.1, §11.2, §11.3',
  's99': 'chapter-part5b.md §11.4',
@@ -351,7 +347,8 @@ PREAMBLE = """#
 #   deck (файлы кадров) — порядок показа, 0…10, сквозной;
 #   SLIDE-PLAN.md       — номера разделов главы при порядке показа 0→1→2→3→4→7→6→5→8→9;
 #                         порядок показа после переза R1 — 0→1→2→3→4→5→6→7→8→9→10, где
-#                         раздел показа 7 — «Что стало с теми, кто решает» (план зовёт его
+#                         раздел показа 7 — «Профессиональная квалификация: поддержание и
+#                         износ» (план зовёт его
 #                         Разделом 5 и даёт ему номера 88–96; в деке эти кадры лежат под
 #                         идентификаторами s73b…s73j, чтобы порядок показа читался по id);
 #   chapter             — 0…12, включая §7 «Назначение и лечение» и §8 «Оперативная
@@ -400,9 +397,9 @@ def slide_block(f, d, W, cur):
           "" if mv else "   # поле media в файле кадра ещё пусто, см. deck/images.md §1"))
 
 SPLIT = [
-    ('deck.yaml',       ['0. Вход','1. Отбор — кого вообще смотреть','2. Анализ данных — и группа, на которой он посчитан']),
-    ('deck-part2.yaml', ['3. Постановка диагноза — человек читает рядом с моделью','4. Наблюдение за состоянием — кто заметит ухудшение','5. Ведение записи — кто прочтёт её потом','6. Чем удерживают — подпись, процедура, норматив']),
-    ('deck-part3.yaml', ['7. Что стало с теми, кто решает','8. Разработка лекарства — удешевили начало, где узкое место','9. Сборка','10. Закрытие']),
+    ('deck.yaml',       ['0. Вход','1. Первичный скрининг и отбор на обследование','2. Инструментальная и лабораторная диагностика']),
+    ('deck-part2.yaml', ['3. Постановка диагноза','4. Динамическое наблюдение и клинические тревоги','5. Ведение медицинской документации','6. Допуск, надзор и ответственность']),
+    ('deck-part3.yaml', ['7. Профессиональная квалификация: поддержание и износ','8. Разработка лекарственных средств','9. Сборка','10. Закрытие']),
 ]
 
 for i, (fn, seclist) in enumerate(SPLIT, 1):

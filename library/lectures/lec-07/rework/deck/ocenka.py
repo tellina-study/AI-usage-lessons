@@ -1,127 +1,389 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Быстрая ОЦЕНКА числа слов на странице PDF по файлу кадра — без сборки.
+"""Вес кадра по его файлу — ДО сборки. Один инструмент вместо двух.
 
-Зачем: сборка раздела идёт минутами, а правка кадра требует десятка проб.
-Счёт PDF — это `len(page.get_text().split())`, то есть по пробелам, и в него
-входят заголовок, тело, плашки, схема, столбцы и подвал. Разделители «·» и
-глифы буллитов — тоже слова этого счёта.
+**НА ЭТОТ ПРОГОН В ОТЧЁТАХ СОСЫЛАТЬСЯ НЕЛЬЗЯ.** Числа отчёта даёт только
+`render_sec.py`: он мерит собранный PDF, то есть страницу, которую видит зал.
+Здесь — оценка по файлу кадра, нужная затем, чтобы не гонять сборку (минуты)
+на каждую правку абзаца (секунды). Расхождение прогон печатает сам.
 
-Оценка КАЛИБРУЕТСЯ по 20 известным числам раздела 3 (замер до правок), и
-прогон печатает свою ошибку — пользоваться можно только пока она мала.
+Сведён из двух прогонов круга R3 (#229), калиброванных каждый на своём разделе
+и потому расходившихся на чужом: `ocenka.py` (раздел 3) и `predict.py`
+(раздел 2). Взято из обоих:
+* поэлементная раскладка, проверка полосы заметок и сумма минут — от `predict.py`;
+* видимый подвал через `markup.source_parts` (голый адрес из строки убирается,
+  ссылкой становится название работы), глифы буллитов, стрелки схемы, столбцы
+  и снятие разметки таблиц — от `ocenka.py`;
+* правило дивайдера (тело повторяет `title`, и в PDF он один) — от `predict.py`.
 
-    python3 ocenka.py 3            # оценка по разделу
-    python3 ocenka.py s41 s42      # по кадрам
+Калибровка живёт НЕ в коде, а в `ocenka-kalibrovka.json` рядом, и
+пересчитывается по готовому PDF — иначе прогон устаревает на следующем круге:
+
+    python3 ocenka.py 3                      # оценка по разделу
+    python3 ocenka.py s41 s44 s49b           # по кадрам
+    python3 ocenka.py --kalibrovka sec-1-2-3.pdf 1 2 3   # пересчёт по PDF
+    python3 ocenka.py --kalibrovka deka.pdf              # … по всей деке
+
+Печатает заодно две проверки, обе про «форма утверждает то, чего нет»:
+объявлен ли у тяжёлого кадра пол и с какой причиной (решение О10 — человека,
+исполнение — прогона), и не выходит ли разметка `**…**` на экран буквально.
 """
+import argparse
+import json
 import re
-import sys
-import glob
 import statistics
+import sys
+from datetime import date
+from pathlib import Path
 
+import numpy as np
 import yaml
-HERE = __import__("pathlib").Path(__file__).resolve().parent
+
+HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
-from deckkit import markup  # noqa: E402
 
-BASE = {  # замер собранного PDF до правок — render_sec.py 3, 2026-10-14
-    "s35": 69, "s35a": 199, "s36": 198, "s37": 152, "s38": 196, "s41": 191,
-    "s42": 150, "s43": 181, "s44": 168, "s44a": 147, "s45": 192, "s46": 120,
-    "s47": 211, "s48": 204, "s49": 225, "s49a": 185, "s49b": 189,
-    "s49c": 167, "s49d": 194, "s50": 217,
-}
+import build_lec07 as B                                      # noqa: E402
+from deckkit import markup, slidefile                        # noqa: E402
 
-
-def toks(s):
-    """Слова так, как их считает fitz: по пробелам, разметка снята."""
-    s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", str(s or ""))
-    s = re.sub(r"https?://\S+", " ", s)          # голый адрес из подвала убран
-    s = re.sub(r"[*_`#]", " ", s)
-    return len(s.split())
+KAL = HERE / "ocenka-kalibrovka.json"
+# Пол: веса глифов, которые в файле кадра не написаны, а в PDF слова занимают.
+# Это ПЕРВОЕ приближение; `--kalibrovka` их перезаписывает по настоящему PDF.
+DEFAULT = {"glif_bullita": 1.0, "strelka": 1.0, "glif_stolbtsa": 1.0,
+           "a": 1.0, "b": 0.0, "istochnik": "пол, без калибровки"}
 
 
-def count(path):
-    t = open(path, encoding="utf-8").read()
-    m = re.match(r"^---\n(.*?)\n---", t, re.S)
-    meta = yaml.safe_load(m.group(1)) or {}
-    n = 0
-    n += toks(meta.get("title"))
-    body = ""
-    if "## Видимый текст слайда" in t:
-        body = t.split("## Видимый текст слайда", 1)[1].split("## Заметки лектора")[0]
+def kal():
+    if KAL.exists():
+        return {**DEFAULT, **json.loads(KAL.read_text(encoding="utf-8"))}
+    return dict(DEFAULT)
+
+
+def sl(x):
+    """Слова так, как считает fitz: по пробелам, разметка снята."""
+    x = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", str(x or ""))
+    x = re.sub(r"[*_`#]", " ", x)
+    return len(x.split())
+
+
+def body_parts(body):
+    """Тело кадра → (слов, буллитов). Таблица отдаёт содержимое клеток:
+    в PDF рисуется таблица, а не её разметка — `|` и ряд `|---|` словами не
+    становятся. На этом прежняя версия завышала свод `s49d` на 21 слово."""
+    w = n_bul = 0
     for ln in body.splitlines():
         ln = ln.strip()
         if not ln:
             continue
-        n += toks(ln)
+        if re.fullmatch(r"\|[\s:|-]+\|", ln):      # ряд-разделитель таблицы
+            continue
+        if ln.startswith("|"):
+            w += sl(ln.strip("|").replace("|", " "))
+            continue
+        w += sl(ln)
         if ln.startswith(("- ", "* ")):
-            n += 1                                # глиф буллита — слово счёта
-    for b in (meta.get("blocks") or []):
-        n += toks(b.get("label")) + toks(b.get("value")) + toks(b.get("note"))
-    sch = meta.get("scheme") or {}
-    if isinstance(sch, dict) and sch.get("rows"):
-        n += toks(sch.get("caption"))
-        for r in sch["rows"]:
-            n += toks(r.get("label"))
-            for st in (r.get("steps") or []):
-                n += toks(st)
-            if r.get("arrows", True) is not False:
-                n += max(0, len(r.get("steps") or []) - 1)   # стрелки
-    cols = meta.get("columns") or {}
-    if isinstance(cols, dict):
+            n_bul += 1
+    return w, n_bul
+
+
+def pol_prichina(fm_raw):
+    """Пол и ПРИЧИНА из сырой строки `pol_slov: 140  # <причина>`.
+
+    Разбор YAML комментарии снимает, а причина объявления — ровно то, что
+    отличает «кадр живёт по полу 140 по решению О10» от «кадр просто тяжёлый».
+    Поэтому читается строка, а не значение."""
+    m = re.search(r"^pol_slov:\s*(\d+)\s*(?:#\s*(.*))?$", fm_raw, re.M)
+    if not m:
+        return 0, ""
+    return int(m.group(1)), (m.group(2) or "").strip()
+
+
+def razmetka_na_ekran(fm):
+    """Разметка, выходящая на экран БУКВАЛЬНО: `**…**`, `*…*`, `` `…` `` в
+    полях `blocks` / `columns` / `scheme`.
+
+    Почему это дефект, а не придирка: `plates.py`, `columns.py` и `scheme.py`
+    рисуют строку через `prims.text_box` и модуль `markup` не импортируют
+    вовсе — проверено чтением всех трёх. Значит звёздочки попадают на экран
+    как звёздочки. В теле кадра те же `**` разметкой РАБОТАЮТ (тело идёт
+    через `markup`), поэтому автор поля закономерно ждёт того же и здесь.
+    Нашла это сессия Входа (#229); правка ядра за другой сессией, а находить
+    прогон может уже сейчас. Проверяются РАЗОБРАННЫЕ значения, поэтому
+    комментарий YAML под проверку не попадает — он на экран и не идёт."""
+    bad = re.compile(r"\*\*|(?<![\w*])\*(?![\s*])|`")
+    out = []
+    for i, b in enumerate(fm.get("blocks") or []):
+        if isinstance(b, dict):
+            for key in ("label", "value", "note"):
+                if bad.search(str(b.get(key) or "")):
+                    out.append(f"blocks[{i}].{key}")
+    co = fm.get("columns") or {}
+    if isinstance(co, dict):
         for side in ("left", "right"):
-            c = cols.get(side) or {}
-            n += toks(c.get("head"))
-            for i in (c.get("items") or []):
-                n += toks(i) + 1
-    src = str(meta.get("source") or "").strip()
-    if src and src != "—":
-        n += sum(toks(v) for v, _u in markup.source_parts(src))
-    cap = str(meta.get("media_caption") or "").strip()
-    if cap and meta.get("media_hero"):
-        n += toks(cap)
-    return str(meta.get("id")), n
+            c = co.get(side) or {}
+            if bad.search(str(c.get("head") or "")):
+                out.append(f"columns.{side}.head")
+            for j, it in enumerate(c.get("items") or []):
+                if bad.search(str(it)):
+                    out.append(f"columns.{side}.items[{j}]")
+    sc = fm.get("scheme") or {}
+    if isinstance(sc, dict):
+        if bad.search(str(sc.get("caption") or "")):
+            out.append("scheme.caption")
+        for j, r in enumerate(sc.get("rows") or []):
+            if bad.search(str(r.get("label") or "")):
+                out.append(f"scheme.rows[{j}].label")
+            for q, s in enumerate(r.get("steps") or []):
+                if bad.search(str(s)):
+                    out.append(f"scheme.rows[{j}].steps[{q}]")
+    return out
+
+
+def n_izm(bl, body):
+    """Сколько на кадре ИЗМЕРЕННЫХ блоков — плашек с числом и базой при нём
+    либо строк таблицы с числом. Это ПОКАЗАНИЕ, а не порог: решение О10
+    (кадр, несущий измеренные блоки с разрядом и выборкой, живёт по полу 140)
+    принимает человек и записывает в кадр полем `pol_slov`. Прогон сам порог
+    не ослабляет — иначе он прятал бы настоящие нарушения, а сторож, который
+    молча поднимает планку, хуже отсутствующего. Этот счёт печатается затем,
+    чтобы основание для такого решения было видно рядом с весом."""
+    n = sum(1 for b in bl if isinstance(b, dict)
+            and re.search(r"\d", str(b.get("value") or ""))
+            and str(b.get("note") or "").strip())
+    n += sum(1 for ln in body.splitlines()
+             if ln.strip().startswith("|") and re.search(r"\d", ln)
+             and not re.fullmatch(r"\|[\s:|-]+\|", ln.strip()))
+    return n
+
+
+def ves(f, k=None):
+    k = k or kal()
+    t = Path(f).read_text(encoding="utf-8")
+    m = re.match(r"^---\n(.*?)\n---\n(.*)$", t, re.S)
+    fm_raw = m.group(1)
+    fm = yaml.safe_load(fm_raw) or {}
+    rest = m.group(2)
+    vis = re.search(r"## Видимый текст слайда\n(.*?)(?=\n## |\Z)", rest, re.S)
+    nts = re.search(r"## Заметки лектора\n(.*?)(?=\n## |\Z)", rest, re.S)
+
+    # Обложка и дивайдер поля `title` на экран НЕ выводят: их строители
+    # (`build_lec07.BUILDERS`) рисуют только тело и подвал, а заголовок стоит
+    # первой строкой тела. Счёт заголовка у них двоил бы его: +8 на `s35`,
+    # +9 на `s01` — и это ровно те два кадра, на которых оценка расходилась с
+    # PDF сильнее всего по всей деке. Правило взято от строителя, а не от типа
+    # на глаз: тип в `BUILDERS` → заголовок полем не рисуется.
+    w_title = 0 if fm.get("type") in B.BUILDERS else sl(fm.get("title"))
+    w_body, n_bul = body_parts(vis.group(1) if vis else "")
+
+    bl = fm.get("blocks") or []
+    w_bl = sum(sl(b.get("label")) + sl(b.get("value")) + sl(b.get("note"))
+               for b in bl if isinstance(b, dict))
+
+    sc = fm.get("scheme") or {}
+    w_sc = n_arr = 0
+    if isinstance(sc, dict) and sc.get("rows"):
+        w_sc = sl(sc.get("caption"))
+        for r in sc["rows"]:
+            steps = r.get("steps") or []
+            w_sc += sl(r.get("label")) + sum(sl(s) for s in steps)
+            if r.get("arrows", True) is not False:
+                n_arr += max(0, len(steps) - 1)
+
+    co = fm.get("columns") or {}
+    w_co = n_ci = 0
+    if isinstance(co, dict):
+        for side in ("left", "right"):
+            c = co.get(side) or {}
+            w_co += sl(c.get("head"))
+            for it in (c.get("items") or []):
+                w_co += sl(it)
+                n_ci += 1
+
+    src = str(fm.get("source") or "").strip()
+    cap = str(fm.get("media_caption") or "").strip()
+    if cap and fm.get("media_hero"):
+        src = f"{src} · {cap}" if src and src != "—" else cap
+    w_ft = (sum(sl(v) for v, _u in markup.source_parts(src))
+            if src and src != "—" else 0)
+
+    base = w_title + w_body + w_bl + w_sc + w_co + w_ft
+    glifs = (n_bul * k["glif_bullita"] + n_arr * k["strelka"]
+             + n_ci * k["glif_stolbtsa"])
+    return dict(
+        id=str(fm.get("id")), tip=str(fm.get("type") or ""),
+        sec=str(fm.get("section") or "").split(".")[0].strip(),
+        title=w_title, blocks=w_bl, nbl=len(bl), scheme=w_sc, cols=w_co,
+        body=w_body, foot=w_ft, glifs=glifs,
+        n_bul=n_bul, n_arr=n_arr, n_ci=n_ci, base=base,
+        ves=int(round(k["a"] * (base + glifs) + k["b"])),
+        notes=sl(nts.group(1) if nts else ""),
+        timing=float(fm.get("timing_min") or 0),
+        razbor=any(str(s).startswith(("①", "②"))
+                   for s in (fm.get("method_steps") or [])),
+        izmerennyh=n_izm(bl, vis.group(1) if vis else ""),
+        pol_slov=pol_prichina(fm_raw)[0],
+        prichina=pol_prichina(fm_raw)[1],
+        razmetka=razmetka_na_ekran(fm))
+
+
+def pol(r):
+    """Предел слов для кадра: объявленный полем `pol_slov` (решение О10,
+    записанное в кадр), иначе 140 разбору по ①/② и 75 всем прочим."""
+    if r["pol_slov"]:
+        return r["pol_slov"], True
+    return (140 if r["razbor"] else 75), False
 
 
 def files_for(args):
+    """Кадры по номерам разделов и/или по идентификаторам, в порядке деки."""
     out = []
-    for f in sorted(glob.glob("slides/s*.md")):
-        t = open(f, encoding="utf-8").read()
+    for f in slidefile.slide_files(B.SLIDES_DIR):
+        t = f.read_text(encoding="utf-8")
         m = re.match(r"^---\n(.*?)\n---", t, re.S)
-        meta = yaml.safe_load(m.group(1)) or {}
-        sec = str(meta.get("section") or "").split(".")[0].strip()
-        sid = str(meta.get("id"))
-        if sec in args or sid in args:
+        fm = yaml.safe_load(m.group(1)) if m else {}
+        fm = fm or {}
+        sec = str(fm.get("section") or "").split(".")[0].strip()
+        if not args or sec in args or str(fm.get("id")) in args:
             out.append(f)
     return out
 
 
+def pdf_pages(pdf):
+    import fitz
+    d = fitz.open(pdf)
+    return [len(p.get_text().split()) for p in d]
+
+
+def kalibrovka(pdf, secs):
+    """Пересчёт весов глифов и аффинной поправки по СОБРАННОМУ PDF.
+
+    Страница к кадру сопоставляется порядком деки — тем же, которым собирает
+    `render_sec.py`. Расхождение числа страниц и кадров — отказ, а не подгонка:
+    сдвиг на один кадр откалибровал бы прогон на чужих страницах."""
+    fs = files_for(set(secs))
+    rows = [ves(f, DEFAULT) for f in fs]
+    real = pdf_pages(pdf)
+    if len(real) != len(rows):
+        print(f"ОТКАЗ: в PDF страниц {len(real)}, кадров по разделам "
+              f"{secs or 'вся дека'} — {len(rows)}. Сопоставить нечем.")
+        return 1
+    # невязка = настоящее − структурный счёт; объясняем её глифами и сдвигом
+    A = np.array([[r["n_bul"], r["n_arr"], r["n_ci"], 1.0] for r in rows])
+    y = np.array([t - r["base"] for t, r in zip(real, rows)], dtype=float)
+    w, *_ = np.linalg.lstsq(A, y, rcond=None)
+    k = {"glif_bullita": round(float(w[0]), 3),
+         "strelka": round(float(w[1]), 3),
+         "glif_stolbtsa": round(float(w[2]), 3),
+         "a": 1.0, "b": round(float(w[3]), 3),
+         "istochnik": f"{Path(pdf).name}, разделы {','.join(secs) or 'вся дека'}, "
+                      f"{len(real)} страниц, {date.today().isoformat()}"}
+    err = [ves(f, k)["ves"] - t for f, t in zip(fs, real)]
+    k["oshibka"] = {"median_abs": round(float(np.median(np.abs(err))), 2),
+                    "mean": round(float(np.mean(err)), 2),
+                    "max_abs": int(np.max(np.abs(err)))}
+    by = {}
+    for r, e in zip(rows, err):
+        by.setdefault(r["sec"], []).append(e)
+    k["oshibka_po_razdelam"] = {
+        s: {"n": len(v), "median_abs": round(float(np.median(np.abs(v))), 2),
+            "mean": round(float(np.mean(v)), 2)} for s, v in sorted(by.items())}
+    KAL.write_text(json.dumps(k, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print(f"калибровка записана в {KAL.name}")
+    print(f"  глиф буллита {k['glif_bullita']} · стрелка {k['strelka']} · "
+          f"глиф столбца {k['glif_stolbtsa']} · сдвиг {k['b']}")
+    print(f"  ошибка на наборе: медиана |Δ| {k['oshibka']['median_abs']} · "
+          f"среднее Δ {k['oshibka']['mean']:+} · макс |Δ| {k['oshibka']['max_abs']}")
+    print("  по разделам:")
+    for s, v in k["oshibka_po_razdelam"].items():
+        print(f"    раздел {s or '—':3} n={v['n']:3} медиана |Δ| "
+              f"{v['median_abs']:5} · среднее Δ {v['mean']:+}")
+    return 0
+
+
 def main():
-    args = set(sys.argv[1:]) or {"3"}
-    rows, errs = [], []
-    for f in files_for(args):
-        sid, n = count(f)
-        b = BASE.get(sid)
-        rows.append((sid, n, b, f))
-        if b:
-            errs.append(n - b)
-    rows.sort(key=lambda r: (len(r[0]), r[0]))
-    for sid, n, b, f in rows:
-        d = f"  (было {b}, Δ{n - b:+d})" if b else ""
+    ap = argparse.ArgumentParser(add_help=True)
+    ap.add_argument("tseli", nargs="*", help="номера разделов и/или id кадров")
+    ap.add_argument("--kalibrovka", metavar="PDF",
+                    help="пересчитать веса по собранному PDF")
+    a = ap.parse_args()
+    if a.kalibrovka:
+        return kalibrovka(a.kalibrovka, a.tseli)
+
+    k = kal()
+    rows = [ves(f, k) for f in files_for(set(a.tseli))]
+    if not rows:
+        print("кадров не найдено")
+        return 1
+    print(f"{'кадр':6} {'тип':10} {'ВЕС':>4} | {'загл':>4} {'плашки':>7} "
+          f"{'схема':>5} {'стлб':>4} {'тело':>4} {'подв':>4} | "
+          f"{'изм':>3} {'заметки':>7} {'мин':>4}")
+    for r in rows:
+        pred, declared = pol(r)
         flag = ""
-        if n > 140:
-            flag = "  ← ТЯЖЕЛЕЕ 140"
-        elif n > 75:
-            flag = "  ← тяжелее 75"
-        print(f"{n:4d}  {sid:5}{flag}{d}")
-    v = [r[1] for r in rows]
+        if declared:
+            flag = f"  пол {pred} объявлен (изм. блоков {r['izmerennyh']})"
+        if r["ves"] > pred:
+            flag += (f"  ← тяжелее объявленного {pred}" if declared
+                     else f"  ← тяжелее {pred}, ПОЛ НЕ ОБЪЯВЛЕН")
+        nf = "" if 500 <= r["notes"] <= 800 else "  заметки вне 500–800"
+        print(f"{r['id']:6} {r['tip']:10} {r['ves']:4} | {r['title']:4} "
+              f"{r['blocks']:4}({r['nbl']}) {r['scheme']:5} {r['cols']:4} "
+              f"{r['body']:4} {r['foot']:4} | {r['izmerennyh']:3} "
+              f"{r['notes']:7} "
+              f"{r['timing']:4.2f}{flag}{nf}")
+    v = [r["ves"] for r in rows]
+    rz = [r["ves"] for r in rows if pol(r)[0] == 140]
+    pr = [r["ves"] for r in rows if pol(r)[0] != 140]
+    vne = [(r["id"], r["ves"], pol(r)[0], r["izmerennyh"], pol(r)[1])
+           for r in rows if r["ves"] > pol(r)[0]]
     print(f"\nкадров {len(v)} · медиана {statistics.median(v):g} · "
-          f"максимум {max(v)} · тяжелее 140 — {sum(1 for x in v if x > 140)} · "
-          f"тяжелее 75 — {sum(1 for x in v if x > 75)}")
-    if errs:
-        print(f"ошибка оценки против замера PDF: медиана |Δ| "
-              f"{statistics.median([abs(e) for e in errs]):.0f} · "
-              f"среднее Δ {statistics.mean(errs):+.1f} · "
-              f"разброс {min(errs):+d}…{max(errs):+d} · n={len(errs)}")
+          f"максимум {max(v)} · тяжелее 140 — {sum(1 for x in v if x > 140)}")
+    if rz:
+        print(f"  по полу 140 ({len(rz)}: разборы + кадры с измеренными "
+              f"блоками, О10): в полосе 105–140 — "
+              f"{sum(1 for x in rz if 105 <= x <= 140)}, тяжелее 140 — "
+              f"{sum(1 for x in rz if x > 140)}")
+    if pr:
+        print(f"  по полу 75 ({len(pr)}): тяжелее 75 — "
+              f"{sum(1 for x in pr if x > 75)}")
+    decl = [r for r in rows if r["pol_slov"]]
+    if decl:
+        print(f"\n  ПОЛ ОБЪЯВЛЕН у {len(decl)} кадров (решение О10 — его "
+              f"принимает человек, прогон исполняет):")
+        for r in decl:
+            why = r["prichina"] or "ПРИЧИНА НЕ НАЗВАНА — объяви её в той же строке"
+            print(f"    {r['id']}: пол {r['pol_slov']}, вес {r['ves']} — {why}")
+    if vne:
+        print("\n  ВНЕ ПРЕДЕЛА:")
+        for i, v, pr_, nz, dc in vne:
+            if dc:
+                print(f"    {i}: {v} тяжелее ОБЪЯВЛЕННОГО пола {pr_} — режь текст")
+                continue
+            hint = (f" — измеренных блоков {nz}; если это решение О10, объяви "
+                    f"`pol_slov: 140` с причиной") if nz >= 2 else ""
+            print(f"    {i}: {v} при пределе {pr_}, пол НЕ ОБЪЯВЛЕН{hint}")
+    rm = [r for r in rows if r["razmetka"]]
+    if rm:
+        print(f"\n  РАЗМЕТКА ВЫХОДИТ НА ЭКРАН БУКВАЛЬНО у {len(rm)} кадров "
+              f"(`plates`/`columns`/`scheme` рисуют строку без `markup` — "
+              f"звёздочки и обратные кавычки видит зал):")
+        for r in rm:
+            print(f"    {r['id']}: {', '.join(r['razmetka'])}")
+    else:
+        print("\n  разметки, выходящей на экран буквально, нет — ноль "
+              "по `blocks`/`columns`/`scheme`")
+    print(f"минут {sum(r['timing'] for r in rows):.2f} · заметки "
+          f"{min(r['notes'] for r in rows)}–{max(r['notes'] for r in rows)}")
+    o = k.get("oshibka")
+    print(f"\nкалибровка: {k['istochnik']}")
+    if o:
+        print(f"ошибка ЭТОГО прогона против собранного PDF: медиана |Δ| "
+              f"{o['median_abs']} · среднее Δ {o['mean']:+} · макс |Δ| "
+              f"{o['max_abs']}. Числа отчёта берут из `render_sec.py`.")
+    else:
+        print("ошибка не замерена: калибровки нет. Прогон на полу весов, "
+              "числам верить нельзя — сделай `--kalibrovka <pdf>`.")
+    return 0
 
 
 if __name__ == "__main__":

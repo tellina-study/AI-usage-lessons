@@ -377,7 +377,28 @@ Explicit checklist (расширяет existing Pre-USER-GATE Walkthrough Rule �
 - L1–L3: 8-12k acceptable; ≥30k если owner explicit instruction.
 - **Multi-part split mandatory при >600 строк per file** (CLAUDE.md «Document Size Limit»): `chapter.md` + `chapter-part2.md` + `chapter-part3.md`, cross-link через TOC.
 
-**Что НЕ засчитывается в 30k:** frontmatter YAML, heading-only sections, TOC, Источники / bibliography (это отдельно).
+**Чем считать — одной программой, а не глазами и не своим скриптом:**
+[`count_chapter_words.py`](count_chapter_words.py).
+
+```bash
+python3 tools/lecture-production/count_chapter_words.py --selftest           # прежде чем верить числу
+python3 tools/lecture-production/count_chapter_words.py library/lectures/lec-NN --parts
+```
+
+**Что НЕ засчитывается в 30k:** frontmatter YAML, heading-only sections, TOC, Источники /
+bibliography, глоссарий, карта главы, changelog, пометки `[FACT-CHECK]`/`[VERIFY-DAY-OF]`
+(это долг, не содержание). **Засчитываются** блоки самопроверки, развёрнутые ответы Q&A и
+таблицы — это содержание главы по правилу курса. Точный метод — в docstring программы; он
+задан **кодом**, и спорить с ним надо прогоном, а не прочтением.
+
+**Число главы во фронтматтере обязано ссылаться на путь программы**, которой оно получено.
+Причина записана классом в [`notes/decisions.md`](../../notes/decisions.md), запись
+2026-10-14: метод счёта, записанный словами, дал по одной и той же главе четыре числа
+(74 278 · 76 690 · 78 247 · 84 562) и расхождение 12% при объявленном разбросе ±2,5%.
+Ловушка, из-за которой это произошло, **была описана в том блоке прозой** — и следующая
+реализация попала в неё ровно теми же файлами. Поэтому: один счётчик, самотест, путь в
+артефакте. **Читать разбивку `--parts`, а не только итог:** файл, отдавший ноль, в сумме
+выглядит правдоподобно и проходит любую проверку «больше тридцати тысяч».
 
 **Старый red-flag «>15k» НЕ применять для L4+** — обновлено 2026-05-21 (issue #128).
 

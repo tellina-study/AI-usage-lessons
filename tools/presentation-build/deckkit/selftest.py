@@ -73,10 +73,12 @@ def _run(files, tmp, seq, name="probe"):
 
 def file_probes(tmp, seq):
     base = _run([("s01-clean.md", probes.CLEAN),
-                 ("s02-clean-table.md", probes.CLEAN_TABLE)],
+                 ("s02-clean-table.md", probes.CLEAN_TABLE),
+                 ("s03-clean-figure.md", probes.CLEAN_FIGURE)],
                 tmp, seq, name="clean")
     say("── САМОПРОВЕРКА ЯДРА ────────────────────────────────────────")
-    say(f"чистые кадры (прогон и таблица): предупреждений {len(base)}"
+    say(f"чистые кадры (прогон, таблица и одно число): предупреждений"
+        f" {len(base)}"
         + (" — " + "; ".join(base) if base else " (молчат, как и должны)"))
     (BAD if base else OK).append("[чистый кадр]")
     if base:

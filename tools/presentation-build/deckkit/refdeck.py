@@ -26,8 +26,8 @@ from dataclasses import dataclass
 
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
-from . import (columns, flow, markup, media, metrics, plates, prims, report,
-               scheme, slidefile, tables, wrap)
+from . import (columns, figure, flow, markup, media, metrics, plates,
+               prims, report, scheme, slidefile, tables, wrap)
 from .theme import DEEP, GOLD, LIGHT, MID, SLIDE_H, SLIDE_W, WHITE
 
 
@@ -121,7 +121,8 @@ def check_prims(sl, kind):
     """Примитив объявлен на кадре, который его не рисует. Молчать нельзя:
     сессия раздела написала бы полосу плашек и не узнала, что её нет."""
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
-                    ("columns", "столбцы"), ("matrix_empty", "матрица")):
+                    ("columns", "столбцы"), ("matrix_empty", "матрица"),
+                    ("figure", "число")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -195,8 +196,8 @@ def divider(p, sl, root, g=G):
 
 
 def content(p, sl, root, g=G):
-    """Содержательный кадр: заголовок · плашки · схема · столбцы · тело ·
-    подвал. Тело идёт ПОТОКОМ, когда в нём есть таблица, и ПРОГОНОМ, когда
+    """Содержательный кадр: заголовок · плашки · схема · число · столбцы ·
+    тело · подвал. Тело идёт ПОТОКОМ, когда в нём есть таблица, и ПРОГОНОМ, когда
     нет: таблицу прогон не умеет, а иерархию кеглей внутри тела не умеет
     поток."""
     s = prims.blank(p)
@@ -233,6 +234,10 @@ def content(p, sl, root, g=G):
     if sch:
         scheme.check_scheme(sl.sid, sch, body_w)
         y += scheme.draw_scheme(s, sl.sid, sch, g.mx, y, body_w) + g.gap
+    fig = figure.figure_of(sl) if is_content else None
+    if fig:
+        figure.check_figure(sl.sid, fig, body_w)
+        y += figure.draw_figure(s, sl.sid, fig, g.mx, y, body_w) + g.gap
     cols = columns.columns_of(sl) if is_content else None
     if cols:
         ch = max(columns.MIN_H, min(col_bot - y, columns.MAX_H))

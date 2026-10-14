@@ -202,7 +202,7 @@ slides:
     local_id: "s4-03"                      # номер SLIDE-PLAN.md
     file: slides/s54-shkala-rannego-preduprezhdeniya.md
     type: comparison
-    title: "Без модели, классический режим: шкала, веса которой назначили люди"
+    title: "Без модели: шкала, веса которой назначили люди"
     chapter_ref: "chapter-part3.md §4.2"
     timing_min: 0.55
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
@@ -218,7 +218,7 @@ slides:
     local_id: "s4-04a"                     # вставленный кадр, номера в плане нет
     file: slides/s56-schet-zamenyaemykh-rezhimov.md
     type: case
-    title: "Оба классических режима, посчитанные в одной единице — до всякой модели"
+    title: "Оба классических режима в одной единице — до всякой модели"
     chapter_ref: "chapter-part3.md §4.4"
     timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
@@ -234,7 +234,7 @@ slides:
     local_id: "s4-05a"                     # вставленный кадр, номера в плане нет
     file: slides/s58-sto-gospitalizatsiy-vosemnadtsat-trevog.md
     type: case
-    title: "Пример 1, арифметика: сто госпитализаций, восемнадцать тревог, два подтверждённых случая"
+    title: "Пример 1, арифметика: восемнадцать тревог на сто госпитализаций"
     chapter_ref: "chapter-part3.md §4.6"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }

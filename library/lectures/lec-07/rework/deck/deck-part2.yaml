@@ -172,7 +172,7 @@ slides:
     timing_min: 0.95
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 4. Динамическое наблюдение и клинические тревоги · 10 кадров · 7.00 мин ───
+  # ─── 4. Динамическое наблюдение и клинические тревоги · 11 кадров · 7.55 мин ───
   - id: s52
     local_id: "s4-01"                      # номер SLIDE-PLAN.md
     file: slides/s52-divider-nablyudenie.md
@@ -182,6 +182,14 @@ slides:
     timing_min: 0.5
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s52-sestrinskiy-post.jpg"
+  - id: s52a
+    local_id: "s4-01a"                     # вставленный кадр, номера в плане нет
+    file: slides/s52a-dannye-sposoby-i-reshenie-nablyudeniya.md
+    type: norm
+    title: "Динамическое наблюдение: данные, способы и решение стадии"
+    chapter_ref: "chapter-part3.md § Раздел 4 (вводка), §4.1 + chapter.md § Обзор предмета"
+    timing_min: 0.55
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
   - id: s53
     local_id: "s4-02"                      # номер SLIDE-PLAN.md
     file: slides/s53-palata-obkhod-list-nablyudeniya.md
@@ -255,7 +263,15 @@ slides:
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 5. Ведение медицинской документации · 7 кадров · 4.80 мин ───
+  # ─── 5. Ведение медицинской документации · 9 кадров · 6.00 мин ───
+  - id: s60ba
+    local_id: "s5-01a"                     # вставленный кадр, номера в плане нет
+    file: slides/s60ba-dannye-sposoby-i-reshenie-zapisi.md
+    type: norm
+    title: "Ведение медицинской документации: данные, способы, решение"
+    chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1, §5.2"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
   - id: s60b
     local_id: "новый-zapis-divider"        # вставленный кадр, номера в плане нет
     file: slides/s60b-divider-vedenie-zapisi.md
@@ -264,6 +280,14 @@ slides:
     chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1"
     timing_min: 0.5
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
+  - id: s60bb
+    local_id: "s5-01b"                     # вставленный кадр, номера в плане нет
+    file: slides/s60bb-tri-klassicheskikh-rezhima-pisma.md
+    type: case
+    title: "Без модели: три классических режима письма, посчитанные по-разному"
+    chapter_ref: "chapter-part3b.md §5.2 (три классических режима; доля текста по Steinkamp 2022 и Wang 2017)"
+    timing_min: 0.6
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s60c
     local_id: "новый-zapis-zazemlenie"     # вставленный кадр, номера в плане нет
     file: slides/s60c-kak-ustroeno-vedenie-zapisi.md
@@ -317,7 +341,7 @@ slides:
     timing_min: 0.7
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 6. Допуск, надзор и ответственность · 10 кадров · 8.20 мин ───
+  # ─── 6. Допуск, надзор и ответственность · 11 кадров · 8.75 мин ───
   - id: s65
     local_id: "s7-01"                      # номер SLIDE-PLAN.md
     file: slides/s65-divider-chem-uderzhivayut.md
@@ -327,6 +351,14 @@ slides:
     chapter_ref: "chapter-part3c.md § Раздел 6 (вводка), §6.1"
     timing_min: 0.5
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
+  - id: s65a
+    local_id: "s6-01a"                     # вставленный кадр, номера в плане нет
+    file: slides/s65a-dannye-sposoby-i-reshenie-nadzora.md
+    type: norm
+    title: "Допуск, надзор и ответственность: данные, способы, решение"
+    chapter_ref: "chapter-part3c.md § Раздел 6 (вводка), §6.1"
+    timing_min: 0.55
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s66
     local_id: "s7-02"                      # номер SLIDE-PLAN.md
     file: slides/s66-odna-komnata-i-odin-sluchay.md

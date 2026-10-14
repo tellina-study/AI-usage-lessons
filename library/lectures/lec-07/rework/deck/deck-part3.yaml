@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 7. Профессиональная квалификация: поддержание и износ · 8 кадров · 6.20 мин ───
+  # ─── 7. Профессиональная квалификация: поддержание и износ · 9 кадров · 7.05 мин ───
   - id: s73b
     local_id: "s5-01"                      # номер SLIDE-PLAN.md
     file: slides/s73b-divider-navyk.md
@@ -19,6 +19,15 @@ slides:
     timing_min: 0.5
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg"
+  - id: s73ca
+    local_id: "s5-02b"                     # вставленный кадр, номера в плане нет
+    file: slides/s73ca-tri-opory-i-odin-shag-iz-vosmi.md
+    type: norm
+    title: "Как форму держат без модели — и куда в осмотре встала модель"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
+    timing_min: 0.85
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s73c
     local_id: "s5-02"                      # номер SLIDE-PLAN.md
     file: slides/s73c-vrach-vernulsya-posle-goda.md

@@ -119,21 +119,13 @@ sections:                        # разделы показа: кадров и 
   - { name: "3. Постановка диагноза",
       slides: 20, timing_min: 16.20, range: [s35, s50] }
   - { name: "4. Динамическое наблюдение и клинические тревоги",
-      slides: 10, timing_min: 7.00, range: [s52, s60a] }
-  - { name: "4. Наблюдение за состоянием — кто заметит ухудшение",
-      slides: 1, timing_min: 0.55, range: [s52a, s52a] }
-  - { name: "5. Ведение записи — кто прочтёт её потом",
-      slides: 2, timing_min: 1.20, range: [s60ba, s60bb] }
+      slides: 11, timing_min: 7.55, range: [s52, s60a] }
   - { name: "5. Ведение медицинской документации",
-      slides: 7, timing_min: 4.80, range: [s60b, s64] }
+      slides: 9, timing_min: 6.00, range: [s60ba, s64] }
   - { name: "6. Допуск, надзор и ответственность",
-      slides: 10, timing_min: 8.20, range: [s65, s73] }
-  - { name: "6. Чем удерживают — подпись, процедура, норматив",
-      slides: 1, timing_min: 0.55, range: [s65a, s65a] }
+      slides: 11, timing_min: 8.75, range: [s65, s73] }
   - { name: "7. Профессиональная квалификация: поддержание и износ",
-      slides: 8, timing_min: 6.20, range: [s73b, s73i] }
-  - { name: "7. Что стало с теми, кто решает",
-      slides: 1, timing_min: 0.85, range: [s73ca, s73ca] }
+      slides: 9, timing_min: 7.05, range: [s73b, s73i] }
   - { name: "8. Разработка лекарственных средств",
       slides: 5, timing_min: 4.85, range: [s74, s87] }
   - { name: "9. Сборка",
@@ -324,7 +316,7 @@ slides:
     file: slides/s22a-instrumentalnaya-diagnostika-chto-eto-za-stadiya.md
     type: norm
     title: "Инструментальная и лабораторная диагностика: что это за стадия"
-    chapter_ref: "chapter-part1b.md § Раздел 2 (вводка), §2.1, §2.2, §2.4"
+    chapter_ref: "chapter-part1c.md § Раздел 2 (вводка), §2.1, §2.2, §2.4"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s23

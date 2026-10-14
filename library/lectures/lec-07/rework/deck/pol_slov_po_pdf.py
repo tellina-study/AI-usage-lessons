@@ -26,6 +26,7 @@
 """
 import argparse
 import statistics
+import subprocess
 import sys
 from pathlib import Path
 
@@ -36,7 +37,70 @@ sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 import ocenka                                                # noqa: E402
 
 POL_PROCHIH = 75          # медиана деки; норма круга #229, замер 26 дек
+ZAPAS_PREDEL = 8          # запас объявленного пола над замером по PDF
 PREDEL = 140              # 95-й процентиль эталонных страниц
+
+
+def proiskhozhdenie_pdf(pdf):
+    """Чем и когда собран PDF, и сколько кадров правлено ПОСЛЕ него.
+
+    Эту строку просили две сессии в один час, и обе — после того, как на
+    ней обожглись. Цена названа живыми случаями: `s61` перевесил свой
+    объявленный пол 132 на шесть слов, и ни один прогон этого не показал
+    (строка разряда пришла через четыре минуты после сборки); `s97` был
+    подтянут со 140 до 132 по весу 126, снятому до того, как слияние
+    принесло кадру подвал в десять слов, — на свежем PDF он весит 137, и
+    пол 140 давал норму. Три ложные находки за вечер, все три из одного
+    места: число «по собранному PDF» ничего не значит, пока не сказано,
+    КАКОЙ ПDF собран и что правлено после него.
+
+    Поэтому возраст входа печатается не в минутах файла, а коммитом: минуты
+    говорят, когда файл записан, а коммит — какое состояние кадров в нём
+    застыло."""
+    def g(*a):
+        return subprocess.run(["git", *a], capture_output=True, text=True,
+                              cwd=str(HERE)).stdout.strip()
+    kom = g("log", "-1", "--format=%h %ci", "--", str(pdf))
+    if not kom:
+        return "PDF не под версией — чем он собран, сказать нечем"
+    sha = kom.split()[0]
+    posle = g("diff", "--name-only", f"{sha}..HEAD", "--", "slides/")
+    n = len([x for x in posle.splitlines() if x.strip()])
+    s = f"PDF собран коммитом {kom}"
+    if n:
+        s += (f" · после него правлено кадров: {n} — веса ниже относятся к "
+              f"тому состоянию, и мерить по ним нельзя")
+    else:
+        s += " · кадров после него не правлено"
+    return s
+
+
+def golova():
+    """Голова, с которой считано, и расходится ли она со сводной.
+
+    Зачем в выводе. Список заданий, собранный с устаревшей головы, СОЗДАЁТ
+    работу вместо того, чтобы её закрывать: я разослала четырём сессиям
+    полы, из которых раздел 6 объявил шесть ещё коммитом `cef39815`, а
+    веса раздела 2 к тому времени подняла строка разряда — две сессии
+    получили задание на уже сделанное. Проверка свежести печатает возраст
+    PDF ровно по этой причине; голова дерева — та же мера для файлов."""
+    def g(*a):
+        return subprocess.run(["git", *a], capture_output=True, text=True,
+                              cwd=str(HERE)).stdout.strip()
+    nasha = g("rev-parse", "--short", "HEAD")
+    gryaz = bool(g("status", "--porcelain", "--", str(HERE / "slides")))
+    svod = g("rev-parse", "--short", "origin/issue-229-diyeta-svodka")
+    slito = g("merge-base", "--is-merged", "origin/issue-229-diyeta-svodka") 
+    otstala = g("rev-list", "--count", "HEAD..origin/issue-229-diyeta-svodka")
+    s = f"считано с головы {nasha}" + (" + НЕЗАКОММИЧЕННЫЕ правки кадров" if gryaz else "")
+    if svod:
+        s += f" · сводная {svod}"
+        if otstala and otstala != "0":
+            s += (f" · ОТСТАЛА НА {otstala} коммитов — списки с этой головы "
+                  "рассылать нельзя, они создадут работу на уже сделанном")
+        else:
+            s += " · совпадает со сводной"
+    return s
 
 
 def main():
@@ -52,6 +116,8 @@ def main():
     stranitsy = ocenka.pdf_pages(str(pdf))
     print(f"прочитано: кадров {len(fayly)} · страниц PDF {len(stranitsy)} "
           f"({pdf.name})")
+    print(f"  {golova()}")
+    print(f"  {proiskhozhdenie_pdf(pdf)}")
     if len(stranitsy) != len(fayly):
         print(f"ОТКАЗ: страниц {len(stranitsy)}, кадров {len(fayly)} — "
               "сопоставить страницу с кадром нечем, сдвиг на один кадр "
@@ -60,8 +126,18 @@ def main():
 
     rows = [ocenka.ves(f) for f in fayly]
     objavleno, vyshe_pola, vyshe_predela, bez_prichiny = [], [], [], []
+    snyato = []
     for r, ves in zip(rows, stranitsy):
         pol, declared = ocenka.pol(r)
+        # Три состояния, а не два. Кадр, у которого пол СНЯТ по решению и
+        # причина записана полем `pol_snyat`, — это не недосмотр: так стоит
+        # `s70`, которому ядро переделывает форму в параллельные дорожки, и
+        # объявлять ему число сейчас значило бы оставить то, что никто не
+        # перечитает. Прогон обязан различать «пол объявлен» · «пола нет по
+        # решению, причина названа» · «пола нет вовсе».
+        if not declared and r.get("pol_snyat"):
+            snyato.append((r["id"], ves, r["pol_snyat"]))
+            continue
         if declared:
             objavleno.append((r["id"], pol, ves, r["prichina"]))
             if not r["prichina"]:
@@ -83,7 +159,31 @@ def main():
         print(f"  {sid:6} пол {pol:3} · вес {ves:3} · запас {zapas:+3} — "
               f"{why or 'ПРИЧИНА НЕ НАЗВАНА'}")
 
+    if snyato:
+        print(f"\nПОЛА НЕТ ПО РЕШЕНИЮ у {len(snyato)} кадров — это записанное "
+              f"решение, не недосмотр:")
+        for sid, ves, why in sorted(snyato, key=lambda x: -x[1]):
+            print(f"  {sid:6} вес {ves:3} · пол не объявлен — {why}")
+
+    # Пол с БОЛЬШИМ запасом опаснее отсутствующего: замечание на него не
+    # печатается, потому что формально он объявлен. Так у `s97` стоял пол 140
+    # при весе 126 — запас +14, и нашла его не проверка, а сессия раздела,
+    # прогнав этот же прогон по своим кадрам и посмотрев сорок строк глазами.
+    # Глаз для этого не нужен, если список печатать отдельно. Порог +8 взят
+    # замером: подтянутые полы деки лежат в +0…+8.
+    tolstye = [(s, p_, v, p_ - v) for s, p_, v, _w in objavleno
+               if p_ - v > ZAPAS_PREDEL]
     zamechaniy = 0
+    if tolstye:
+        zamechaniy += len(tolstye)
+        print(f"\nЗАМЕЧАНИЕ: запас объявленного пола больше +{ZAPAS_PREDEL} — "
+              f"{len(tolstye)} кадров. Пол — это разрешение; пол, выданный с "
+              f"запасом, кадр со временем зарастает, и замечания на него нет.")
+        print(f"  Запас снят с этого PDF: {proiskhozhdenie_pdf(pdf)}")
+        print("  Прежде чем подтягивать пол по этому списку — пересобрать: "
+              "два из трёх подтягиваний за вечер оказались по старому весу.")
+        for sid, p_, v, z in sorted(tolstye, key=lambda x: -x[3]):
+            print(f"  {sid:6} пол {p_:3} при весе {v:3} — запас +{z}")
     if bez_prichiny:
         zamechaniy += len(bez_prichiny)
         print(f"\nЗАМЕЧАНИЕ: пол объявлен без причины — {bez_prichiny}. "

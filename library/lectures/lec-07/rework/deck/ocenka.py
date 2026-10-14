@@ -236,6 +236,8 @@ def ves(f, k=None):
         izmerennyh=n_izm(bl, vis.group(1) if vis else ""),
         pol_slov=pol_prichina(fm_raw)[0],
         prichina=pol_prichina(fm_raw)[1],
+        pol_snyat=(re.search(r'^pol_snyat:\s*"?(.*?)"?\s*$', fm_raw, re.M).group(1)
+                   if re.search(r"^pol_snyat:", fm_raw, re.M) else ""),
         razmetka=razmetka_na_ekran(fm))
 
 

@@ -111,6 +111,24 @@ def main():
     if not (peresech or net_v_manifestah or net_na_diske):
         print("  дека и её описание совпадают поимённо")
 
+    # ── чем собран PDF: коммит, а не только время файла
+    def g(*a):
+        import subprocess
+        return subprocess.run(["git", *a], capture_output=True, text=True,
+                              cwd=str(HERE)).stdout.strip()
+    kom = g("log", "-1", "--format=%h %ci", "--", a.pdf)
+    if kom:
+        sha = kom.split()[0]
+        n_posle = len([x for x in g("diff", "--name-only", f"{sha}..HEAD",
+                                    "--", "slides/").splitlines() if x.strip()])
+        print(f"\nPDF собран коммитом {kom}")
+        if n_posle:
+            zamechaniy += 1
+            print(f"  ЗАМЕЧАНИЕ: после него правлено кадров: {n_posle} — любой "
+                  "замер по этому PDF относится к прошлому состоянию деки")
+        else:
+            print("  кадров после него не правлено")
+
     # ── свежесть
     nov_kadr = max(f.stat().st_mtime for f in disk.values())
     imya_nov = max(disk.values(), key=lambda f: f.stat().st_mtime).name

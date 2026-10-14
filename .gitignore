@@ -56,3 +56,7 @@ library/lectures/*/rendered/~$*
 # Python bytecode
 __pycache__/
 *.pyc
+
+# рабочие сборки разностного замера круга диеты (#229) — бинарники не хранятся
+library/lectures/lec-07/rework/deck/zamer-diyeta-r7-r10/*.pptx
+library/lectures/lec-07/rework/deck/zamer-diyeta-r7-r10/slides-do/

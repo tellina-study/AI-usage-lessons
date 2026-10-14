@@ -26,7 +26,7 @@ columns:
 timing_min: 0.6
 in_bucket: false
 method_steps: ["①цена ошибки"]
-form: []
+form: ["вопрос залу"]
 vfy: false
 status: собран
 ---

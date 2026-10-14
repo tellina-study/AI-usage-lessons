@@ -41,9 +41,9 @@ def fm(path):
 # ── адрес в главе: § и файл части ────────────────────────────────────────
 CHAP = {
  's01': 'chapter.md § Введение',
+ 's01a': 'chapter.md §0.1 (+ chapter-part1b.md §1.1)',
  's02': 'chapter.md §0.1',
  's03': 'chapter.md §0.2',
- 's04': 'chapter.md §0.3',
  's05': 'chapter.md §0.4',
  's05a': 'chapter-part5b.md §11.1, §11.2',
  's05b': 'chapter-part5b.md §11.5 (разряд свидетельства — сквозной приём главы)',
@@ -113,8 +113,8 @@ CHAP = {
  's66': 'chapter-part3c.md §6.2',
  's67': 'chapter-part3c.md §6.3, §6.5 (+ §6.4)',
  's67a': 'chapter-part3c.md §6.5',
- 's68': 'chapter-part3c.md §6.6',
- 's69': 'chapter-part3c.md §6.7',
+ 's68': 'chapter-part3c.md §6.7',
+ 's69': 'chapter-part3c.md §6.6',
  's70': 'chapter-part3d.md §6.8',
  's71': 'chapter-part3d.md §6.9',
  's73': 'chapter-part3d.md §6.13 (+ §6.12)',
@@ -286,7 +286,7 @@ def q(s):
     return '"%s"' % s
 
 from collections import Counter
-REAL = set("""s01 s02 s04 s11 s12 s13 s14 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
+REAL = set("""s01 s02 s11 s12 s13 s14 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
 s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s73b s73c s73d s73f s74 s105""".split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',

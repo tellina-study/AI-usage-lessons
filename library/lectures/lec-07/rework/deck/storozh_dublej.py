@@ -122,6 +122,38 @@ def chitat_s_diska(paths):
     return [(p.name, p.read_text(encoding="utf-8")) for p in paths]
 
 
+def proverit_papku(slides_dir=None, porog=PO_UMOLCHANIYU):
+    """Вызываемый вход для свода приёмки: результат ВОЗВРАЩАЕТСЯ, не печатается.
+
+    Заведён затем, чтобы оболочка приёмки могла сказать в общей сводке,
+    СКОЛЬКО пар и в каких кадрах, а не только «код возврата 1». Обёртка
+    процессом этого сказать не может, и сводка выходит беднее.
+
+    Возвращает словарь:
+        prochitano: {"файлов": int, "абзацев": int, "пар": int}
+        nahodki:    [{"kadr", "abzats_1", "abzats_2", "obshchnost",
+                      "slov_vo_vtorom", "vyderzhka_1", "vyderzhka_2"}, …]
+        porog:      применённый порог
+        pusto:      True, если читать было нечего, — вызывающий ОБЯЗАН
+                    отличить это от «повторов нет» (ровно та ошибка, ради
+                    которой печать прочитанного стала требованием).
+    """
+    d = Path(slides_dir) if slides_dir else SLIDES
+    files = chitat_s_diska(sorted(p for p in d.glob("s*.md") if p.is_file()))
+    nakhodki, n_f, n_ab, n_par = proverit(files, porog)
+    return {
+        "prochitano": {"файлов": n_f, "абзацев": n_ab, "пар": n_par},
+        "porog": porog,
+        "pusto": n_f == 0 or n_ab == 0,
+        "nahodki": [
+            {"kadr": f.split("-")[0], "abzats_1": i, "abzats_2": j,
+             "obshchnost": round(m, 3), "slov_vo_vtorom": len(b.split()),
+             "vyderzhka_1": re.sub(r"\s+", " ", a)[:160],
+             "vyderzhka_2": re.sub(r"\s+", " ", b)[:160]}
+            for f, i, j, m, a, b in nakhodki],
+    }
+
+
 def chitat_iz_git(commit):
     """Файлы кадров из коммита — для самопроверки на материале «до»."""
     names = subprocess.run(

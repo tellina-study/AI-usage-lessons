@@ -10,6 +10,8 @@ media: ""
 media_needed: "иллюстрация не нужна — схема двух дорожек строится, не ищется"
 media_note: "—"
 scheme:
+  kind: dorozhki
+  steps_arrows: true
   caption: "Две дорожки врача — и третья строка: операция, которую делает не он"
   arrows: true
   rows:

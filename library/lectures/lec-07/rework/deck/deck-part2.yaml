@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 3. Постановка диагноза · 17 кадров · 13.50 мин ───
+  # ─── 3. Постановка диагноза · 17 кадров · 14.05 мин ───
   - id: s35
     local_id: "s3-01"                      # номер SLIDE-PLAN.md
     file: slides/s35-divider-postanovka-diagnoza.md
@@ -47,7 +47,7 @@ slides:
     type: norm
     title: "Четыре ступени участия"
     chapter_ref: "chapter-part2.md §3.2 (+ chapter.md §0.4)"
-    timing_min: 0.6
+    timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s41
     local_id: "s3-15"                      # номер SLIDE-PLAN.md
@@ -112,7 +112,7 @@ slides:
     type: case
     title: "Правило, собранное из ста шести опытов"
     chapter_ref: "chapter-part2.md §3.3"
-    timing_min: 0.6
+    timing_min: 1.0
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s40-dva-effekta-s-intervalami.png"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
   - id: s49b
@@ -148,7 +148,7 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 4. Динамическое наблюдение и клинические тревоги · 11 кадров · 8.20 мин ───
+  # ─── 4. Динамическое наблюдение и клинические тревоги · 11 кадров · 7.90 мин ───
   - id: s52
     local_id: "s4-01"                      # номер SLIDE-PLAN.md
     file: slides/s52-divider-nablyudenie.md
@@ -196,7 +196,7 @@ slides:
     type: case
     title: "Оба классических режима в одной единице — до всякой модели"
     chapter_ref: "chapter-part3.md §4.4"
-    timing_min: 1
+    timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s57
     local_id: "s4-05"                      # номер SLIDE-PLAN.md
@@ -317,7 +317,7 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 6. Допуск, надзор и ответственность · 10 кадров · 8.85 мин ───
+  # ─── 6. Допуск, надзор и ответственность · 10 кадров · 9.30 мин ───
   - id: s65
     local_id: "s7-01"                      # номер SLIDE-PLAN.md
     file: slides/s65-divider-chem-uderzhivayut.md
@@ -342,7 +342,7 @@ slides:
     title: "Одна комната, один случай"
     plan_section: "Раздел 7. Чем удерживают"
     chapter_ref: "chapter-part3c.md §6.2"
-    timing_min: 0.6
+    timing_min: 1.0
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s67
     local_id: "s7-03"                      # номер SLIDE-PLAN.md
@@ -396,7 +396,7 @@ slides:
     title: "Модель меняется после допуска: 43,4 процента отзывов — в первый год"
     plan_section: "Раздел 7. Чем удерживают"
     chapter_ref: "chapter-part3d.md §6.9"
-    timing_min: 0.95
+    timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s73
     local_id: "s7-08"                      # номер SLIDE-PLAN.md

@@ -88,7 +88,7 @@ slides:
     type: summary
     title: "Место раздела в сетке: вне окна"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
-    chapter_ref: "chapter-part5.md §10.14 — вывод раздела, пробел, названный числом"
+    chapter_ref: "chapter-part5.md §10.13 + chapter.md §0.10 — место раздела в сетке курса"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
 

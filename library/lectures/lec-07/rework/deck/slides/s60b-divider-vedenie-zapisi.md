@@ -9,7 +9,7 @@ source: "—"
 media: ""
 media_needed: "рабочее место врача: экран с черновиком заметки приёма рядом с пациентом"
 media_note: "—"
-timing_min: 0.5
+timing_min: 0.55
 in_bucket: false
 method_steps: ["дивайдер"]
 form: []

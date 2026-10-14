@@ -15,7 +15,7 @@ blocks:
   - {label: "Фаза II → фаза III", value: "28,9 %", note: "4 933 перехода"}
   - {label: "Фаза I → одобрение", value: "7,9 %", note: "одна программа из тринадцати"}
   - {label: "Знаменатель", value: "12 728 переходов, 9 704 программы", note: "1 779 компаний, 2011–2020"}
-timing_min: 0.95
+timing_min: 1.15
 in_bucket: false
 method_steps: ["заземление"]
 form: []

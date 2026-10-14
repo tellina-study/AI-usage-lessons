@@ -14,7 +14,7 @@ scheme:
   rows:
     - label: "Ступени"
       steps: ["Смотрит первым", "Смотрит вторым", "Смотрит только спорное", "Подписывает не глядя"]
-timing_min: 1.0
+timing_min: 1
 in_bucket: false
 method_steps: ["привязка 4 ступеней"]
 form: []

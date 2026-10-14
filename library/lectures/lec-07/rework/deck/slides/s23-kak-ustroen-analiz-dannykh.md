@@ -12,7 +12,7 @@ media_note: "свидетельство, а не оформление"
 blocks:
   - {label: "Доли считали", value: "все 62 работы", note: "из 2 212 работ"}
   - {label: "Группу — почти никто", value: "ни одна не годна для клиники", key: true}
-timing_min: 0.75
+timing_min: 0.6
 in_bucket: false
 method_steps: ["заземление", "упоминание"]
 form: ["вопрос залу"]

@@ -13,7 +13,7 @@ scheme:
   caption: "Решение техника о годности снимка"
   rows:
     - {label: "Без модели", steps: ["Снять пациента", "Посмотреть на экран", "Годится или переснять"]}
-timing_min: 0.6
+timing_min: 0.55
 in_bucket: false
 method_steps: ["заземление"]
 form: []

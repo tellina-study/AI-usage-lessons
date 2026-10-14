@@ -10,7 +10,7 @@ media: ""
 media_note: "не требуется — четыре шапки с пунктами держат слайд сами"
 media_needed: ""
 blocks: []
-timing_min: 0.85
+timing_min: 1.15
 in_bucket: true
 method_steps: ["вывод раздела", "свод"]
 form: ["форма 7", "форма 4а", "сетка"]

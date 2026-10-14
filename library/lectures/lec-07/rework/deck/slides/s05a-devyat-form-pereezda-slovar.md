@@ -11,7 +11,7 @@ media_needed: "иллюстрация не нужна — перечень из 
 media_note: "—"
 blocks: []
 scheme: {}
-timing_min: 0.7
+timing_min: 0.8
 in_bucket: false
 method_steps: ["словарь"]
 form: ["форма 1", "форма 2", "форма 3", "форма 4", "форма 4а", "форма 5", "форма 6", "форма 7", "форма 8"]

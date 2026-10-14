@@ -12,7 +12,7 @@ media_note: "снимок добыт (s53-sestra-v-palate.jpg), в слайд Н
 blocks:
   - {label: "Дорожка у одной постели", value: "78 → 92 → 104", note: "пульс при падающем давлении", key: true}
   - {label: "Из шести действий модель заняла", value: "три", note: "измерение, запись, передача"}
-timing_min: 0.9
+timing_min: 0.6
 in_bucket: false
 method_steps: ["заземление"]
 form: []

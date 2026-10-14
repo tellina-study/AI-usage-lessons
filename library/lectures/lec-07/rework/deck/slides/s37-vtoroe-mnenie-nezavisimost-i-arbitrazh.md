@@ -13,7 +13,7 @@ scheme:
   rows:
     - {label: "Два чтения", steps: ["первое чтение", "перегородка", "второе чтение"]}
     - {label: "Разошлись", steps: ["третий читатель", "решение"]}
-timing_min: 0.9
+timing_min: 0.6
 in_bucket: false
 method_steps: ["заземление"]
 form: ["вопрос залу"]

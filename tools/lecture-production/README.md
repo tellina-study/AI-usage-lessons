@@ -4,6 +4,8 @@
 
 **Связан с** `tools/presentation-build/README.md` — он покрывает только slides-specific. Этот README — **полный пайплайн**, slides — одна из фаз.
 
+**Читается вторым:** [`stroenie-i-povestvovanie.md`](stroenie-i-povestvovanie.md) — из чего лекция сделана и почему она держит зал (ось · вопрос лекции · keystone · строение раздела · форма разбора · реестр разборов · швы · словари · минутный счёт · заметки · сторожа с порогами). Этот файл отвечает на вопрос «какие фазы и гейты», тот — «что внутри фазы обязано получиться».
+
 ---
 
 ## 1. Финальные артефакты (3 на каждую лекцию)
@@ -209,17 +211,17 @@ library/lectures/lec-NN/
 
 ---
 
-## 3.8 Проверка практикой (ENFORCED — issue #225, 2026-10-10)
+## 3.7 Self-reported метрики — critic re-verify (ENFORCED)
 
-После проведения лекции материал правится по расшифровке, до того как она пойдёт в следующей
-группе или на сайт. Правило и три сигнала — `CLAUDE.md` § «Проверка практикой»; фаза целиком и
-форма разбора — `tools/seminar-production/README.md` §6. Для лекций применяется так же, как для
-семинаров, как только расшифровка появляется: артефакты — `library/lectures/lec-NN/qa/rasshifrovki/`
-и `qa/RAZBOR-PROVEDENIYA.md`.
+**Источник:** рефлексия Лекции 5 (#100), issue #111.
 
-Отдельно оттуда же: **термины берутся из речи того, кто читает лекцию** — своих не вводим
-(§8.1), и **отменённое правило требует правки своего сторожа в том же круге** (§8.3).
+Producer-агенты (book-editor / presentation-designer / speech-writer) часто прилагают self-проверку метрики (WPM, strict-in %, word-count, pacing-sum, coverage-count) со скриптом. **Self-report НЕ является gate-сигналом.**
 
+- Якорь: speech-writer Phase 9 Л5 заявил «все ≤95 WPM, PROVEN PASS» — фактически s28=100.3 (non-greedy баг скрипта producer'а); methodology-critic Phase 10 поймал → REVISE.
+- Producer в отчёте помечает self-reported метрику как **«требует critic-ре-верификации»**, НЕ «PROVEN / zero-tolerance соблюдён».
+- Если метрика погнала **REVISE** и revision-agent заявил fix → авторитетная ре-верификация = **focused re-spawn профильного critic'а** (узкий scope, методика Phase N), НЕ ad-hoc orchestrator-grep (тоже ненадёжен — Л5 Phase 11.5 orchestrator-WPM-скрипт дал s32=794). Механика — `.claude/skills/pre-user-gate/SKILL.md` Step 0.
+
+---
 
 ## 3.7a Anonymization mandate (ENFORCED — Лекция 9 lesson 2026-05-21)
 
@@ -254,6 +256,23 @@ library/lectures/lec-NN/
 - [ ] **6-tier real image acquisition strategy** sketched per case-study slide — minimum 12-15 real images на типичный deck из 32-35 слайдов ([[no-mock-fallbacks]] + `tools/presentation-build/README.md` §5.7).
 - [ ] **Anonymization carry-forward** — generic «студенты-инженеры 3 курса», без named institutions (см. §3.7a).
 - [ ] **Anti-anglicism таблица** ссылается на canonical replacements (см. §3.7b).
+
+**Структурные обязательства плана (ENFORCED — чтение Лекции 6 2026-10-10, переработка Лекции 7).**
+Полная механика и пороги — [`stroenie-i-povestvovanie.md`](stroenie-i-povestvovanie.md); план без
+этих пунктов на Фазу 2 не уходит:
+
+- [ ] **Ось двумя половинами** (наследуемая + своя) плюс абзац «чем это НЕ является» — проверка на
+      переименование (§1.1 там же).
+- [ ] **Вопрос лекции** — черновик плюс две запасные формулировки для выбора владельцем; две точки
+      произнесения назначены (§1.2).
+- [ ] **Keystone в Разделе 0** до первого погружения; заголовок про саму ось (§1.3).
+- [ ] **Состав разделов таблицей** «№ · раздел · что держит · ядро»; каждый раздел ложится на карту
+      вечера (§2).
+- [ ] **Каждый раздел по пяти шагам**, шаг 1 — одна картина работы, перечень в заметки (§3).
+- [ ] **Разборы по форме пяти шагов** с графой второго шага (а)/(б)/(в) и адресом оси (§4).
+- [ ] **Один вопрос залу на раздел**, выписанный дословно, с назначенным каналом (вслух / чат) (§3).
+- [ ] **Сквозная линия названа по имени**, перечислены кадры пересчёта, назначено число закрытия (§6).
+- [ ] **Минутный счёт и порядок резки** числом: слот владельца, темп 0,75 мин/кадр, cut-order (§9).
 
 ## 3.7d Phase 5 (Deck design) acceptance additions (ENFORCED — Лекция 8 lesson)
 
@@ -292,17 +311,17 @@ Explicit checklist (расширяет existing Pre-USER-GATE Walkthrough Rule �
 
 **Если P0/P1 found — NOT present GATE.** Spawn revision, re-run pre-gate, потом present.
 
-## 3.7 Self-reported метрики — critic re-verify (ENFORCED)
+## 3.8 Проверка практикой (ENFORCED — issue #225, 2026-10-10)
 
-**Источник:** рефлексия Лекции 5 (#100), issue #111.
+После проведения лекции материал правится по расшифровке, до того как она пойдёт в следующей
+группе или на сайт. Правило и три сигнала — `CLAUDE.md` § «Проверка практикой»; фаза целиком и
+форма разбора — `tools/seminar-production/README.md` §6. Для лекций применяется так же, как для
+семинаров, как только расшифровка появляется: артефакты — `library/lectures/lec-NN/qa/rasshifrovki/`
+и `qa/RAZBOR-PROVEDENIYA.md`.
 
-Producer-агенты (book-editor / presentation-designer / speech-writer) часто прилагают self-проверку метрики (WPM, strict-in %, word-count, pacing-sum, coverage-count) со скриптом. **Self-report НЕ является gate-сигналом.**
+Отдельно оттуда же: **термины берутся из речи того, кто читает лекцию** — своих не вводим
+(§8.1), и **отменённое правило требует правки своего сторожа в том же круге** (§8.3).
 
-- Якорь: speech-writer Phase 9 Л5 заявил «все ≤95 WPM, PROVEN PASS» — фактически s28=100.3 (non-greedy баг скрипта producer'а); methodology-critic Phase 10 поймал → REVISE.
-- Producer в отчёте помечает self-reported метрику как **«требует critic-ре-верификации»**, НЕ «PROVEN / zero-tolerance соблюдён».
-- Если метрика погнала **REVISE** и revision-agent заявил fix → авторитетная ре-верификация = **focused re-spawn профильного critic'а** (узкий scope, методика Phase N), НЕ ad-hoc orchestrator-grep (тоже ненадёжен — Л5 Phase 11.5 orchestrator-WPM-скрипт дал s32=794). Механика — `.claude/skills/pre-user-gate/SKILL.md` Step 0.
-
----
 
 ## 4. Роли всех агентов (8 total)
 
@@ -415,7 +434,7 @@ After phase commits в worktree → `git update-ref refs/heads/issue-NN-lec-NN <
 
 ```bash
 SRC=/tmp/lec-NN-wt/library/lectures/lec-NN
-DST=/home/levko/AI-usage-lessons/library/lectures/lec-NN
+DST=<путь к основному репозиторию>/library/lectures/lec-NN   # абсолютный, не cwd-относительный
 mkdir -p "$DST/slides" "$DST/rendered/snapshots"
 cp "$SRC"/chapter*.md "$SRC"/speech.md "$SRC"/glossary.yaml "$SRC"/deck*.yaml "$DST/"
 cp "$SRC"/slides/*.md "$DST/slides/"
@@ -526,7 +545,7 @@ Frontmatter chapter-partN.md: `part: N`, `of: 3`, `parent: "chapter.md"`.
 
 ---
 
-## 8. Связь с slides-specific pipeline
+## 12. Связь с slides-specific pipeline
 
 `tools/presentation-build/README.md` — фокусируется на slides:
 - Palette (Ocean Gradient + Teal + Gold).
@@ -539,21 +558,7 @@ Frontmatter chapter-partN.md: `part: N`, `of: 3`, `parent: "chapter.md"`.
 
 ---
 
-## 9. Текущий статус (#64 EPIC)
-
-- ✅ **#65 (этот sub-issue)** — 5 агентов созданы, README написан, CLAUDE.md обновлён.
-- 🟡 **#64.B** — Phase 1 пилота (re-review v4 plan Лекции 1).
-- ⬜ **#64.C** — Phase 2-3 (chapter draft + critique).
-- ⬜ **#64.D** — Phase 5-7 (slides update + design + QA).
-- ⬜ **#64.E** — Phase 9-10 (speech draft + critique).
-- ⬜ **#64.F** — Phase 11 (final approval).
-- ⬜ **#64.G** — Methodology stabilization.
-
-После #64.G — отдельный EPIC «Factory: scale to L2-L17».
-
----
-
-## 10. References
+## 13. References
 
 - `notes/decisions-2026-03-05-lectures-1-6.md` § «2026-05-12 — Presentation pipeline» — anti-patterns каталог + iteration journey.
 - `notes/mcp-limitations.md` — gotchas tools.

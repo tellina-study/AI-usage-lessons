@@ -1,6 +1,6 @@
 ---
-id: s01a
-local_id: В-01a
+id: s01d
+local_id: В-01d
 section: "0. Вход"
 type: case
 title: "Письмо по возрасту: кто смотрел снимок первым"

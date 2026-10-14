@@ -25,6 +25,7 @@
     python3 pol_slov_po_pdf.py --pdf lec-07-karkas.pdf
 """
 import argparse
+import os
 import statistics
 import subprocess
 import sys
@@ -39,6 +40,18 @@ import ocenka                                                # noqa: E402
 POL_PROCHIH = 75          # медиана деки; норма круга #229, замер 26 дек
 ZAPAS_PREDEL = 8          # запас объявленного пола над замером по PDF
 PREDEL = 140              # 95-й процентиль эталонных страниц
+
+
+def kadrov_posle_sborki(pdf):
+    """Сколько файлов кадров правлено ПОСЛЕ коммита, которым собран PDF."""
+    def g(*a):
+        return subprocess.run(["git", *a], capture_output=True, text=True,
+                              cwd=str(HERE)).stdout.strip()
+    kom = g("log", "-1", "--format=%h", "--", str(pdf))
+    if not kom:
+        return 0
+    return len([x for x in g("diff", "--name-only", f"{kom}..HEAD",
+                             "--", "slides/").splitlines() if x.strip()])
 
 
 def proiskhozhdenie_pdf(pdf):
@@ -126,6 +139,11 @@ def main():
           f"({pdf.name})")
     print(f"  {golova()}")
     print(f"  {proiskhozhdenie_pdf(pdf)}")
+    if kadrov_posle_sborki(pdf) and os.environ.get("PRIYOMKA_MERIT_USTAREVSHEE"):
+        print("  ВНИМАНИЕ: замер идёт по УСТАРЕВШЕМУ PDF по явному "
+              "требованию (PRIYOMKA_MERIT_USTAREVSHEE). Каждое число ниже "
+              "относится к состоянию кадров на момент сборки, а не к "
+              "нынешнему.")
     if len(stranitsy) != len(fayly):
         print(f"ОТКАЗ: страниц {len(stranitsy)}, кадров {len(fayly)} — "
               "сопоставить страницу с кадром нечем, сдвиг на один кадр "
@@ -136,6 +154,26 @@ def main():
     # этого не доказывает: склейка из секционных кусков даёт то же число при
     # сдвиге на один кадр, и тогда все числа правдоподобны и все чужие.
     # Поэтому замер не начинается, пока сверка по заголовкам не прошла.
+    # ── СВЕЖЕСТЬ — ТОЖЕ ПРЕДУСЛОВИЕ, а не строка, которую надо прочитать.
+    # Довод сессии разделов 7–10, её же аргументом против себя: «отказ
+    # сильнее печати головы — голову надо прочитать, а отказ читать не
+    # надо». Она прочла строку про возраст PDF и всё равно смерила не тот
+    # файл: её ложный запас +14 у `s97` пришёл из того, что подвал-рукоятку
+    # кадру принесло слияние ПОСЛЕ сборки. Сверка по заголовку этого не
+    # ловит по построению — заголовок там не менялся, менялся подвал, —
+    # и это главный пробел, а не обратный: случаев «кадр изменился,
+    # заголовок нет» большинство (подвал, плашки, тело).
+    pravleno = kadrov_posle_sborki(pdf)
+    if pravleno and not os.environ.get("PRIYOMKA_MERIT_USTAREVSHEE"):
+        print(f"ОТКАЗ: после сборки этого PDF правлено кадров: {pravleno}. "
+              "Веса относились бы к прошлому состоянию деки, и ни одна "
+              "сверка по заголовку этого не поймает — заголовок при правке "
+              "подвала, плашек или тела не меняется.")
+        print("  Пересобрать деку. Если замер по устаревшему нужен "
+              "осознанно — PRIYOMKA_MERIT_USTAREVSHEE=1, и каждое число "
+              "в выводе будет помечено возрастом.")
+        return 2
+
     import sverka_stranits
     rashozhdeniya, _pr = sverka_stranits.proverit(pdf, fayly)
     if rashozhdeniya:

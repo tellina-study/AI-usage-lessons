@@ -194,11 +194,26 @@ def ves(f, k=None):
 
     sc = fm.get("scheme") or {}
     w_sc = n_arr = 0
-    if isinstance(sc, dict) and sc.get("rows"):
-        w_sc = sl(sc.get("caption"))
-        for r in sc["rows"]:
+    if isinstance(sc, dict) and (sc.get("rows") or sc.get("kind")):
+        # Ядро завело три новых первообраза (`kind`: шкала · лестница ·
+        # дорожки), и у них свои поля: `unit`, `base`, `marks[]` с подписями
+        # и границами интервала, `axis`, `exit`. Прежний счёт брал только
+        # `caption` и `rows[].label/steps` — и МОЛЧА занижал: у `s49a` вышло
+        # 35 слов против 80 по собранному PDF, то есть прогон отчитался
+        # «чисто» по весу, которого на кадре нет. Это тот же класс, что
+        # непокрытые таблицы и заголовок обложки: не шум масштаба, а
+        # непокрытый примитив.
+        w_sc = sl(sc.get("caption")) + sl(sc.get("unit")) + sl(sc.get("base"))
+        w_sc += sl(sc.get("axis")) + sl(sc.get("exit"))
+        for mk in (sc.get("marks") or []):
+            if isinstance(mk, dict):
+                w_sc += (sl(mk.get("value")) + sl(mk.get("label"))
+                         + sl(mk.get("lo")) + sl(mk.get("hi"))
+                         + sl(mk.get("note")))
+        for r in (sc.get("rows") or []):
             steps = r.get("steps") or []
-            w_sc += sl(r.get("label")) + sum(sl(s) for s in steps)
+            w_sc += (sl(r.get("label")) + sl(r.get("note"))
+                     + sum(sl(s) for s in steps))
             if r.get("arrows", True) is not False:
                 n_arr += max(0, len(steps) - 1)
 

@@ -26,6 +26,7 @@
 отдавший ноль в счётчике слов.
 """
 import io, re, glob
+from pathlib import Path
 
 ORDER = ['chapter.md','chapter-part1b.md','chapter-part1c.md','chapter-part2.md','chapter-part2b.md',
          'chapter-part3.md','chapter-part3b.md','chapter-part3c.md','chapter-part3d.md',
@@ -114,7 +115,17 @@ assert not ADDR['навык'].search('навыкнуть к помощнику')
 assert ADDR['навык'].search('навыками-и-привычками')     # а это настоящее вхождение слова
 assert AXIS_MARK.search('ось называет четыре адреса, по которым платят')
 assert not AXIS_MARK.search('это измерено движением глаз')
-print('шаблоны проверены на положительных и отрицательных примерах: находят и не ложатся\n')
+print('шаблоны проверены на положительных и отрицательных примерах: находят и не ложатся')
+# Строка прочитанного — требование приёмки: без неё «ничего не нашлось»
+# неотличимо от «нечего было читать».
+_est = [f for f in ORDER if Path(f).exists()]
+print(f'прочитано: файлов главы {len(_est)} из {len(ORDER)} по списку ORDER'
+      + (f'; НЕ НАЙДЕНЫ: {[f for f in ORDER if f not in _est]}' if len(_est) != len(ORDER) else ''))
+if not _est:
+    raise SystemExit('ОТКАЗ: ни одного файла главы не найдено — '
+                     'прогон зовётся не из каталога главы, и его нули '
+                     'означают пустой вход, а не отсутствие находок')
+print()
 
 print(f'{"раздел":<56} | широко: вним навык подп арб | по оси: вним навык подп арб | ≥3')
 silent, named_all = [], []

@@ -126,7 +126,7 @@ CHAP = {
  's73b': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
  's73c': 'chapter-part5.md §10.2 (+ §10.3)',
  's73d': 'chapter-part5.md §10.4, §10.5',
- 's73f': 'chapter-part5.md §10.6',
+ 's73f': 'chapter-part5.md §10.6, §10.8 (+ §10.7)',
  's73h': 'chapter-part5.md §10.9, §10.10',
  's73ha': 'chapter-part5.md §10.10, §10.14 — пробел по этой плоскости; счёт по мировому корпусу в главе отсутствует, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.1',
  's73i': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',

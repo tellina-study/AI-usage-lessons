@@ -31,6 +31,14 @@
       rows:
         - {label: "Было",  steps: ["набор текста", "подпись"]}
         - {label: "Стало", steps: ["разговор", "черновик", "вычитка"]}
+        - {label: "С моделью", empty: "ни одного действия из семи"}
+
+ПУСТАЯ ДОРОЖКА `empty:` — отдельное утверждение, и оно сильное. Рельс без
+единой клетки с одной строкой внутри говорит «здесь не делается ничего», и
+сказать это нечем больше: ряд из нуля коробок не рисуется, а строка «ни
+одного действия из семи» в теле кадра — обычная фраза, которую зал
+прочтёт наравне с остальными. На `s66` в этом весь кадр: семь действий
+стадии делает человек, а с обученной моделью из них не делается ни одно.
 
 НИЧЕГО УТВЕРЖДАЮЩЕГО ПО УМОЛЧАНИЮ. Стрелка внутри дорожки — утверждение
 «сначала одно, потом другое», и она включается только ключом
@@ -58,7 +66,14 @@ class TracksStyle:
     lab_w: float = 1.55
     lab_pt: float = 12.0           # пол видимого слоя, см. `floor.py`
     lab_gap: float = 0.10
-    rail_pad: float = 0.09         # поле рельса вокруг коробок шагов
+    # Поле рельса РАЗНОЕ по осям, и это не придирка. По горизонтали оно
+    # даёт рельсу вид линии, на которой стоят клетки, — ради него рельс и
+    # нужен. По вертикали оно только растит кадр: 0,09" сверху и снизу на
+    # каждой дорожке — это 0,54" на трёх, и ровно на столько `s62` не
+    # поместился («места под тело не осталось, −0,30"»). Замерено на живом
+    # кадре, а не выведено.
+    rail_pad: float = 0.10         # поле рельса слева и справа
+    rail_vpad: float = 0.03        # и сверху-снизу
     step_hi: float = 13.5
     step_lo: float = 12.0          # пол видимого слоя, см. `floor.py`
     step_rows: int = 4
@@ -68,8 +83,14 @@ class TracksStyle:
     arrow_w: float = 0.20
     arrow_h: float = 0.15
     box_min_h: float = 0.50
-    box_extra: float = 0.22
-    track_gap: float = 0.16
+    # Запас внутри клетки и просвет между дорожками — те же числа, что у
+    # схемы-конвейера этой деки (0,26 и 0,16), уменьшены на 0,06 и 0,04:
+    # ОБЩАЯ СЕТКА, ради которой форма и заведена, сама по себе дороже
+    # рядов (узкая клетка переносит текст на вторую строку там, где
+    # широкая держала в одну), и эту цену надо было чем-то вернуть.
+    # Замерено на `s62`: с прежними числами телу кадра не оставалось места.
+    box_extra: float = 0.16
+    track_gap: float = 0.12
     fan_w: float = 1.45            # ширина коробки общего входа/выхода
     fan_gap: float = 0.22
     tie_w: float = 0.14            # усик веера к дорожке
@@ -85,10 +106,48 @@ class TracksStyle:
 DEFAULT = TracksStyle()
 
 
+def empty_rows_of(sid, raw):
+    """Пустые дорожки: ряды, у которых вместо `steps` стоит `empty`.
+
+    Разбираются ЗДЕСЬ, а не общим читателем рядов: тот отбрасывает ряд без
+    шагов с предупреждением «в ряду нет шагов», и правильно делает — для
+    всех прочих форм ряд без шагов это дефект. Пустота как УТВЕРЖДЕНИЕ
+    живёт только у дорожек, поэтому и читается только ими."""
+    out = {}
+    for i, r in enumerate((raw.get("rows") or []), 1):
+        if not isinstance(r, dict):
+            continue
+        txt = str(r.get("empty") or "").strip()
+        if not txt:
+            continue
+        if r.get("steps"):
+            report.warn(
+                f"[дорожки] {sid}: у дорожки «{r.get('label') or i}» есть и "
+                "`steps`, и `empty` — пустая дорожка это дорожка БЕЗ шагов; "
+                "прочитан `empty`, шаги отброшены")
+        out[i] = {"label": str(r.get("label") or "").strip(), "empty": txt}
+    return out
+
+
 def tracks_of(sid, raw, rows, st=DEFAULT):
     """Разобранная схема → дорожки. `rows` уже разобраны общим читателем
     `scheme.scheme_of`: дорожки отличаются от конвейера не разбором, а
     смыслом, и второй читатель того же поля разошёлся бы с первым."""
+    # Пустые дорожки встают на свои МЕСТА в общем порядке: `empty_rows_of`
+    # ключует их номером ряда во фронтматтере, и дорожка «с моделью» идёт
+    # там, где автор её написал, а не в конце.
+    empt = empty_rows_of(sid, raw)
+    if empt:
+        merged, k = [], 0
+        for i in range(1, len(rows) + len(empt) + 1):
+            if i in empt:
+                merged.append({"label": empt[i]["label"], "steps": [],
+                               "empty": empt[i]["empty"], "arrows": None})
+            elif k < len(rows):
+                merged.append(dict(rows[k], empty="")); k += 1
+        rows = merged
+    else:
+        rows = [dict(r, empty="") for r in rows]
     d = {"kind": "dorozhki", "rows": rows,
          "caption": str(raw.get("caption") or "").strip(),
          "entry": str(raw.get("entry") or "").strip(),
@@ -122,10 +181,16 @@ def _rail_w(d, w, st):
     return w - d["lab_w"] - (st.lab_gap if d["lab_w"] else 0.0) - _fan_w(d, st)
 
 
+def _filled(d):
+    """Дорожки с клетками. Пустая в сетке не участвует: ширину клетки она
+    не задаёт и кегля не требует."""
+    return [r for r in d["rows"] if r["steps"]]
+
+
 def _cells(d):
     """Сколько клеток в сетке — по САМОЙ длинной дорожке. Общая сетка и
     есть то, что делает дорожки сравнимыми."""
-    return max(len(r["steps"]) for r in d["rows"])
+    return max([len(r["steps"]) for r in _filled(d)] or [1])
 
 
 def _step_w(d, w, st):
@@ -154,7 +219,7 @@ def step_size(d, w, st=DEFAULT):
     iw = _iw(d, w, st)
 
     def fits(f):
-        for r in d["rows"]:
+        for r in _filled(d):
             for s in r["steps"]:
                 if _rows_of_text(s["text"], f, iw) > st.step_rows:
                     return False
@@ -174,11 +239,34 @@ def _line_h(size, ls):
     return size * ls * metrics.LH / 72.0 * metrics.SAFE
 
 
-def _box_h(d, w, f, st):
+def _box_h(d, w, f, st, row=None):
+    """Высота клеток ОДНОЙ дорожки (или наибольшая по всем, если дорожка
+    не названа).
+
+    Считается по дорожке, а не по всей схеме, и это не экономия ради
+    экономии. Общая сетка — утверждение о ШИРИНЕ: клетки сравнимы по
+    горизонтали, потому что стоят на одном шаге. К высоте оно не
+    относится: дорожка из одной длинной клетки не делает соседнюю,
+    однострочную, двухстрочной. Замерено на `s62`: единственная клетка в
+    две строки («выборочный контроль заметок») поднимала все три дорожки
+    и отнимала у тела 0,32" — ровно столько, чтобы кадр перестал
+    собираться."""
     iw = _iw(d, w, st)
-    rows = max(min(st.step_rows, _rows_of_text(s["text"], f, iw))
-               for r in d["rows"] for s in r["steps"])
-    return max(st.box_min_h, rows * _line_h(f, st.step_ls) + st.box_extra)
+    rows = _filled(d) if row is None else [row]
+    n = max([min(st.step_rows, _rows_of_text(s["text"], f, iw))
+             for r in rows for s in r["steps"]] or [1])
+    return max(st.box_min_h, n * _line_h(f, st.step_ls) + st.box_extra)
+
+
+def _rail_h(d, w, f, st, row):
+    if row.get("empty"):
+        # Пустая дорожка меряется СВОЕЙ строкой: клеток у неё нет, и брать
+        # высоту соседней дорожки значило бы мерить то, чего здесь нет.
+        iw = max(0.3, _rail_w(d, w, st) - 2 * st.step_pad) * metrics.W_SAFE
+        n = min(st.step_rows, _rows_of_text(row["empty"], f, iw))
+        return max(st.box_min_h, n * _line_h(f, st.step_ls)
+                   + st.box_extra) + 2 * st.rail_vpad
+    return _box_h(d, w, f, st, row) + 2 * st.rail_vpad
 
 
 def _cap_h(d, w, st):
@@ -190,9 +278,10 @@ def _cap_h(d, w, st):
 
 def tracks_h(d, w, st=DEFAULT):
     """Высота схемы — она же то, что схема отнимает у тела кадра."""
-    bh = _box_h(d, w, step_size(d, w, st), st) + 2 * st.rail_pad
+    f = step_size(d, w, st)
     n = len(d["rows"])
-    return n * bh + st.track_gap * (n - 1) + _cap_h(d, w, st)
+    return (sum(_rail_h(d, w, f, st, r) for r in d["rows"])
+            + st.track_gap * (n - 1) + _cap_h(d, w, st))
 
 
 def check_tracks(sid, d, w, st=DEFAULT):
@@ -209,6 +298,11 @@ def check_tracks(sid, d, w, st=DEFAULT):
             f"[дорожки] {sid}: дорожек {n} (> {st.max_tracks}) — столько "
             "линий одновременно не удерживаются взглядом; это таблица, а не "
             "схема")
+    if not _filled(d):
+        report.warn(
+            f"[дорожки] {sid}: ни одной дорожки с шагами — пустая дорожка "
+            "утверждает «здесь не делается ничего» ПРОТИВ чего-то, и это "
+            "«что-то» обязано стоять рядом")
     for i, r in enumerate(d["rows"], 1):
         if len(r["steps"]) > st.max_steps:
             report.warn(
@@ -252,20 +346,37 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
     floor.pt(f, tag, "шаг дорожки")
     if d["lab_w"]:
         floor.pt(st.lab_pt, tag, "подпись дорожки")
-    bh = _box_h(d, w, f, st)
-    rail_h = bh + 2 * st.rail_pad
     n = len(d["rows"])
-    total = n * rail_h + st.track_gap * (n - 1)
+    hs = [_rail_h(d, w, f, st, r) for r in d["rows"]]
+    tops = [y + sum(hs[:i]) + st.track_gap * i for i in range(n)]
+    total = sum(hs) + st.track_gap * (n - 1)
     rx, rw = _rail_x(d, x, st), _rail_w(d, w, st)
     sw = _step_w(d, w, st)
     rails = any(len(r["steps"]) > 1 for r in d["rows"])
     for i, r in enumerate(d["rows"], 1):
-        cy = y + (i - 1) * (rail_h + st.track_gap)
+        cy, rail_h = tops[i - 1], hs[i - 1]
+        bh = rail_h - 2 * st.rail_vpad
         if r["label"]:
             prims.text_box(s, x, cy + 0.04, d["lab_w"] - 0.12, rail_h - 0.08,
                            r["label"], size=st.lab_pt, bold=True, color=MID,
                            anchor=MSO_ANCHOR.MIDDLE, ls=1.10,
                            tag=f"{tag}/дорожка{i}")
+        if r.get("empty"):
+            # ПУСТАЯ ДОРОЖКА: рельс есть, клеток нет, и на их месте —
+            # одна строка о том, что здесь не делается ничего. Рельс
+            # здесь обязателен независимо от `rails`: без него от
+            # дорожки не осталось бы вовсе ничего, и утверждение
+            # «ничего» стало бы неотличимо от «забыли написать».
+            prims.ocean_box(s, rx, cy, rw, rail_h, fill=WHITE,
+                            stroke=GOLD, stroke_pt=2.0)
+            report.GOLD_SEEN.add(sid)
+            floor.pt(f, tag, "пустая дорожка")
+            prims.text_box(s, rx + st.step_pad, cy + st.rail_vpad + 0.05,
+                           rw - 2 * st.step_pad, bh - 0.10, r["empty"],
+                           size=f, bold=True, color=MID,
+                           align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                           ls=st.step_ls, tag=f"{tag}/пусто{i}")
+            continue
         # Рельс говорит «это одна линия, идущая сама по себе», и нужен
         # он ровно там, где ГРУППИРУЕТ: при одной клетке на дорожку рельс
         # обводит её второй раз тем же контуром — две рамки вокруг одного
@@ -287,12 +398,12 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
             # Клетка белая ВСЕГДА: рельс под ней уже на поверхности
             # мотива, и клетка той же заливки слилась бы с ним. Шаг модели
             # различается обводкой, как и в схеме-конвейере.
-            prims.ocean_box(s, cx, cy + st.rail_pad, sw, bh, fill=WHITE,
+            prims.ocean_box(s, cx, cy + st.rail_vpad, sw, bh, fill=WHITE,
                             stroke=GOLD if step["ai"] else LIGHT,
                             stroke_pt=2.0 if step["ai"] else 1.3)
             if step["ai"]:
                 report.GOLD_SEEN.add(sid)
-            prims.text_box(s, cx + st.step_pad, cy + st.rail_pad + 0.05,
+            prims.text_box(s, cx + st.step_pad, cy + st.rail_vpad + 0.05,
                            sw - 2 * st.step_pad, bh - 0.10, step["text"],
                            size=f, bold=step["ai"], color=DEEP,
                            align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
@@ -305,16 +416,16 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
         _fan_box(s, sid, d["entry"], ex, y, st.fan_w, total, st,
                  f"{tag}/вход")
         for i in range(n):
-            cy = y + i * (rail_h + st.track_gap) + rail_h / 2
-            prims.rect(s, ex + st.fan_w, cy - st.tie_h / 2,
+            mid = tops[i] + hs[i] / 2
+            prims.rect(s, ex + st.fan_w, mid - st.tie_h / 2,
                        st.fan_gap, st.tie_h, LIGHT, count="связка")
     if d["exit"]:
         xx = rx + rw + st.fan_gap
         _fan_box(s, sid, d["exit"], xx, y, st.fan_w, total, st,
                  f"{tag}/выход")
         for i in range(n):
-            cy = y + i * (rail_h + st.track_gap) + rail_h / 2
-            prims.rect(s, rx + rw, cy - st.tie_h / 2, st.fan_gap, st.tie_h,
+            mid = tops[i] + hs[i] / 2
+            prims.rect(s, rx + rw, mid - st.tie_h / 2, st.fan_gap, st.tie_h,
                        LIGHT, count="связка")
     cy = y + total
     ch = _cap_h(d, w, st)
@@ -333,6 +444,8 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
 # рисование. Развилка зовёт только их, поэтому форма может завести себе
 # любые собственные имена и числа, не трогая ни одну деку.
 NEEDS_ROWS = True       # форме нужны разобранные `rows` общего читателя
+ROWS_MAY_BE_EMPTY = True  # ...и пустой разбор — ещё не «рисовать нечего»:
+                          # ряды с `empty` форма читает сама
 
 
 def parse(sid, raw, rows):

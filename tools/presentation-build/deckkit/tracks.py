@@ -260,11 +260,16 @@ def _box_h(d, w, f, st, row=None):
     return max(st.box_min_h, n * _line_h(f, st.step_ls) + st.box_extra)
 
 
-def empty_line_h(d, w, st):
-    """Высота строки под пустыми клетками — по её собственному тексту."""
+def empty_line_h(d, w, st, row=None):
+    """Высота строки под пустыми клетками — по ЕЁ СОБСТВЕННОМУ тексту.
+
+    Мерилась высотой одного знака, то есть ровно одной строкой при любой
+    длине фразы: на «ни одного действия из семи» это совпадало, на фразе
+    вдвое длиннее строка вышла бы за дорожку, и сказать об этом было бы
+    некому. Меряется ПОЛУЖИРНЫМ, потому что полужирным и рисуется."""
     iw = max(0.3, _rail_w(d, w, st) - 2 * st.rail_pad)
-    return metrics.est_h(" ", st.lab_pt, iw, st.step_ls) * 0 + \
-        metrics.est_h("x", st.lab_pt, iw, st.step_ls)
+    txt = (row or {}).get("empty") or "x"
+    return metrics.est_h(txt, st.lab_pt, iw, st.step_ls, True)
 
 
 def _rail_h(d, w, f, st, row):
@@ -274,7 +279,7 @@ def _rail_h(d, w, f, st, row):
         # полных), плюс строка под ними. Клетки меряются чужой дорожкой
         # нарочно — это единственное место формы, где так и надо.
         return (_box_h(d, w, f, st) + st.empty_gap
-                + empty_line_h(d, w, st) + 2 * st.rail_vpad)
+                + empty_line_h(d, w, st, row) + 2 * st.rail_vpad)
     return _box_h(d, w, f, st, row) + 2 * st.rail_vpad
 
 
@@ -395,12 +400,20 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
                     st.arrow_w + st.step_gap if d["steps_arrows"] else 0.0)
             # Строка идёт ПОД клетками, а не поверх них: поверх она ложится
             # на грани трёх клеток сразу и читается как подпись к средней.
+            #
+            # НАБРАНА ОНА КАК ПОДПИСЬ РЯДА — полужирным MID, не серым
+            # курсивом. После перерисовки это ЕДИНСТВЕННОЕ место, где
+            # утверждение сказано словами: повтор из тела снят. Серый
+            # курсив — набор оговорки, он тише подписей рядов, и кто не
+            # заметит строку, получит пустой ряд, неотличимый от «ещё не
+            # дорисовали» — ровно та двусмысленность, ради которой форму и
+            # перерисовывали, только переехавшая с коробки на подпись.
             floor.pt(st.lab_pt, tag, "подпись пустой дорожки")
             prims.text_box(s, rx + st.rail_pad,
                            cy + st.rail_vpad + cell_h + st.empty_gap,
-                           rw - 2 * st.rail_pad, empty_line_h(d, w, st),
-                           r["empty"], size=st.lab_pt, italic=True,
-                           color=SLATE, align=PP_ALIGN.CENTER, ls=1.0,
+                           rw - 2 * st.rail_pad, empty_line_h(d, w, st, r),
+                           r["empty"], size=st.lab_pt, bold=True,
+                           color=MID, align=PP_ALIGN.CENTER, ls=st.step_ls,
                            tag=f"{tag}/пусто{i}")
             continue
         # Рельс говорит «это одна линия, идущая сама по себе», и нужен

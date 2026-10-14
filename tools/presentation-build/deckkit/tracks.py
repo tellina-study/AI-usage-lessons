@@ -58,7 +58,14 @@ class TracksStyle:
     lab_w: float = 1.55
     lab_pt: float = 12.0           # пол видимого слоя, см. `floor.py`
     lab_gap: float = 0.10
-    rail_pad: float = 0.09         # поле рельса вокруг коробок шагов
+    # Поле рельса РАЗНОЕ по осям, и это не придирка. По горизонтали оно
+    # даёт рельсу вид линии, на которой стоят клетки, — ради него рельс и
+    # нужен. По вертикали оно только растит кадр: 0,09" сверху и снизу на
+    # каждой дорожке — это 0,54" на трёх, и ровно на столько `s62` не
+    # поместился («места под тело не осталось, −0,30"»). Замерено на живом
+    # кадре, а не выведено.
+    rail_pad: float = 0.10         # поле рельса слева и справа
+    rail_vpad: float = 0.03        # и сверху-снизу
     step_hi: float = 13.5
     step_lo: float = 12.0          # пол видимого слоя, см. `floor.py`
     step_rows: int = 4
@@ -68,8 +75,14 @@ class TracksStyle:
     arrow_w: float = 0.20
     arrow_h: float = 0.15
     box_min_h: float = 0.50
-    box_extra: float = 0.22
-    track_gap: float = 0.16
+    # Запас внутри клетки и просвет между дорожками — те же числа, что у
+    # схемы-конвейера этой деки (0,26 и 0,16), уменьшены на 0,06 и 0,04:
+    # ОБЩАЯ СЕТКА, ради которой форма и заведена, сама по себе дороже
+    # рядов (узкая клетка переносит текст на вторую строку там, где
+    # широкая держала в одну), и эту цену надо было чем-то вернуть.
+    # Замерено на `s62`: с прежними числами телу кадра не оставалось места.
+    box_extra: float = 0.16
+    track_gap: float = 0.12
     fan_w: float = 1.45            # ширина коробки общего входа/выхода
     fan_gap: float = 0.22
     tie_w: float = 0.14            # усик веера к дорожке
@@ -174,11 +187,27 @@ def _line_h(size, ls):
     return size * ls * metrics.LH / 72.0 * metrics.SAFE
 
 
-def _box_h(d, w, f, st):
+def _box_h(d, w, f, st, row=None):
+    """Высота клеток ОДНОЙ дорожки (или наибольшая по всем, если дорожка
+    не названа).
+
+    Считается по дорожке, а не по всей схеме, и это не экономия ради
+    экономии. Общая сетка — утверждение о ШИРИНЕ: клетки сравнимы по
+    горизонтали, потому что стоят на одном шаге. К высоте оно не
+    относится: дорожка из одной длинной клетки не делает соседнюю,
+    однострочную, двухстрочной. Замерено на `s62`: единственная клетка в
+    две строки («выборочный контроль заметок») поднимала все три дорожки
+    и отнимала у тела 0,32" — ровно столько, чтобы кадр перестал
+    собираться."""
     iw = _iw(d, w, st)
-    rows = max(min(st.step_rows, _rows_of_text(s["text"], f, iw))
-               for r in d["rows"] for s in r["steps"])
-    return max(st.box_min_h, rows * _line_h(f, st.step_ls) + st.box_extra)
+    rows = [r for r in (d["rows"] if row is None else [row])]
+    n = max(min(st.step_rows, _rows_of_text(s["text"], f, iw))
+            for r in rows for s in r["steps"])
+    return max(st.box_min_h, n * _line_h(f, st.step_ls) + st.box_extra)
+
+
+def _rail_h(d, w, f, st, row):
+    return _box_h(d, w, f, st, row) + 2 * st.rail_vpad
 
 
 def _cap_h(d, w, st):
@@ -190,9 +219,10 @@ def _cap_h(d, w, st):
 
 def tracks_h(d, w, st=DEFAULT):
     """Высота схемы — она же то, что схема отнимает у тела кадра."""
-    bh = _box_h(d, w, step_size(d, w, st), st) + 2 * st.rail_pad
+    f = step_size(d, w, st)
     n = len(d["rows"])
-    return n * bh + st.track_gap * (n - 1) + _cap_h(d, w, st)
+    return (sum(_rail_h(d, w, f, st, r) for r in d["rows"])
+            + st.track_gap * (n - 1) + _cap_h(d, w, st))
 
 
 def check_tracks(sid, d, w, st=DEFAULT):
@@ -252,15 +282,16 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
     floor.pt(f, tag, "шаг дорожки")
     if d["lab_w"]:
         floor.pt(st.lab_pt, tag, "подпись дорожки")
-    bh = _box_h(d, w, f, st)
-    rail_h = bh + 2 * st.rail_pad
     n = len(d["rows"])
-    total = n * rail_h + st.track_gap * (n - 1)
+    hs = [_rail_h(d, w, f, st, r) for r in d["rows"]]
+    tops = [y + sum(hs[:i]) + st.track_gap * i for i in range(n)]
+    total = sum(hs) + st.track_gap * (n - 1)
     rx, rw = _rail_x(d, x, st), _rail_w(d, w, st)
     sw = _step_w(d, w, st)
     rails = any(len(r["steps"]) > 1 for r in d["rows"])
     for i, r in enumerate(d["rows"], 1):
-        cy = y + (i - 1) * (rail_h + st.track_gap)
+        cy, rail_h = tops[i - 1], hs[i - 1]
+        bh = rail_h - 2 * st.rail_vpad
         if r["label"]:
             prims.text_box(s, x, cy + 0.04, d["lab_w"] - 0.12, rail_h - 0.08,
                            r["label"], size=st.lab_pt, bold=True, color=MID,
@@ -287,12 +318,12 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
             # Клетка белая ВСЕГДА: рельс под ней уже на поверхности
             # мотива, и клетка той же заливки слилась бы с ним. Шаг модели
             # различается обводкой, как и в схеме-конвейере.
-            prims.ocean_box(s, cx, cy + st.rail_pad, sw, bh, fill=WHITE,
+            prims.ocean_box(s, cx, cy + st.rail_vpad, sw, bh, fill=WHITE,
                             stroke=GOLD if step["ai"] else LIGHT,
                             stroke_pt=2.0 if step["ai"] else 1.3)
             if step["ai"]:
                 report.GOLD_SEEN.add(sid)
-            prims.text_box(s, cx + st.step_pad, cy + st.rail_pad + 0.05,
+            prims.text_box(s, cx + st.step_pad, cy + st.rail_vpad + 0.05,
                            sw - 2 * st.step_pad, bh - 0.10, step["text"],
                            size=f, bold=step["ai"], color=DEEP,
                            align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
@@ -305,16 +336,16 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
         _fan_box(s, sid, d["entry"], ex, y, st.fan_w, total, st,
                  f"{tag}/вход")
         for i in range(n):
-            cy = y + i * (rail_h + st.track_gap) + rail_h / 2
-            prims.rect(s, ex + st.fan_w, cy - st.tie_h / 2,
+            mid = tops[i] + hs[i] / 2
+            prims.rect(s, ex + st.fan_w, mid - st.tie_h / 2,
                        st.fan_gap, st.tie_h, LIGHT, count="связка")
     if d["exit"]:
         xx = rx + rw + st.fan_gap
         _fan_box(s, sid, d["exit"], xx, y, st.fan_w, total, st,
                  f"{tag}/выход")
         for i in range(n):
-            cy = y + i * (rail_h + st.track_gap) + rail_h / 2
-            prims.rect(s, rx + rw, cy - st.tie_h / 2, st.fan_gap, st.tie_h,
+            mid = tops[i] + hs[i] / 2
+            prims.rect(s, rx + rw, mid - st.tie_h / 2, st.fan_gap, st.tie_h,
                        LIGHT, count="связка")
     cy = y + total
     ch = _cap_h(d, w, st)

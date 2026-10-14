@@ -254,7 +254,7 @@ Never skip verification. Never proceed to next phase without gate.
 Before presenting any USER GATE to user:
 1. **Mandatory:** invoke `/pre-user-gate` skill (orchestrator can also do manual walkthrough)
 2. **Visual sweep:** для slides — open all PNG snapshots, 5-sec look per slide, can I state main message?
-3. **Notes read:** 5-7 random speaker notes — verify 150-300 words connected text, no «Лектору» / no layout descriptions
+3. **Notes read:** 5-7 random speaker notes — verify **500–800 слов** связного текста для лекции (семинар — 250–450), no «Лектору» / no layout descriptions
 4. **Cross-artifact grep:** terminology drift, orphan references, pacing math
 5. **Designer-extras grep (orchestrator-INDEPENDENT, ENFORCED — Лекция 4 + Лекция 10 lesson):** orchestrator runs its OWN grep over the **rendered pptx visible layer + speaker_notes** (frontmatter exempt) — subagent self-report TOTAL=0 is NOT accepted as verification. Паттерн ОБЯЗАН включать **3 группы**:
    - **Scaffold-фразы:** «Лектору» / «Вы здесь» / `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / `LO[1-9][a-z]?` / `§[0-9]` / `→ s[0-9]+` / `(s[0-9][0-9])` / «точк* возврата» / «— в главе» / «в материалах лекции» / «это payoff» / «возвращаемся [0-9N]» / «не вводи* нов» / «course-scaffold»
@@ -461,7 +461,7 @@ If agent SEES opportunity for improvement → REPORT to orchestrator. NEVER impl
 | Skip roast step for non-trivial work | Always roast before implement |
 | Proceed without phase gate approval | Wait for explicit user approval between phases |
 | Designer-added extras без brief (subtitle, «вы здесь», тайминг, «Лектору») | Producer agents REPORT improvements, не apply (см. No Extra Content Rule) |
-| Speaker notes как layout description («слева donut, справа bar») | Notes — readable student text 150-300 слов, derived from chapter+speech |
+| Speaker notes как layout description («слева donut, справа bar») | Notes — связный текст для студента **500–800 слов** (лекция; семинар 250–450), derived from chapter+speech |
 | Critic catch-all APPROVE-WITH-MINOR | 4-level verdict scale: APPROVE-CLEAN / APPROVE-WITH-POLISH / REVISE / REJECT |
 | Term drift без cascade tracking | Glossary lock после chapter approval; cascade-of-changes grep при renames |
 | `[VERIFY-DAY-OF]` / `[FACT-CHECK]` / LO codes / `§X.X` / `→ sNN` visible to students в body | Frontmatter / speaker_notes only; pre-render grep enforce 0 hits в visible body |

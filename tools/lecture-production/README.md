@@ -329,7 +329,7 @@ Explicit checklist (расширяет existing Pre-USER-GATE Walkthrough Rule �
 | Agent | Что производит | Capabilities (NEW from Лекции 1 v3) | Phase |
 |---|---|---|---|
 | `book-editor` | `chapter.md` | Mark unverified specifics `[FACT-CHECK]`; cross-reference course structure (Drive doc) для footnotes; speaker-notes section markers `[for-slide-sNN]` | 2, 4 (revisions) |
-| `presentation-designer` | slides/*.md adjustments + rendered PPTX + snapshots | **Schema Readability Checklist** per schema slide; **No-extra-content rule** (do nothing not in brief); **Speaker notes contract** (150-300 words readable text, NO layout descriptions); per-designer file ownership при parallel spawn; visual-loop max 7 iter с escalation | 5, 6, 8 |
+| `presentation-designer` | slides/*.md adjustments + rendered PPTX + snapshots | **Schema Readability Checklist** per schema slide; **No-extra-content rule** (do nothing not in brief); **Speaker notes contract** (500–800 слов связного текста для лекции — решение владельца №10; NO layout descriptions); per-designer file ownership при parallel spawn; visual-loop max 7 iter с escalation | 5, 6, 8 |
 | `speech-writer` | `speech.md` | Pre-flight sync с deck.yaml (auto-regenerate при slide deletions); англицизм cleanup pass; reference user-provided Drive docs | 9, 11 (revisions) |
 
 ### Критики (reviewers, read-only)
@@ -369,7 +369,7 @@ Explicit checklist (расширяет existing Pre-USER-GATE Walkthrough Rule �
 |---|---|---|
 | `chapter.md` (L4+) | **≥30 000 слов** (target 28 500–31 500), multi-part 3-5 файлов по 6 500–8 500 слов; ~100-130 страниц A4 | Textbook chapter depth + Q&A backup + self-study reference; ~2-3 ч глубокого чтения; на лекции проходится 30-40%, остальное Q&A backup + self-study deep-dive |
 | `chapter.md` (L1–L3 introductory) | 8–12k слов acceptable с owner waiver | Self-study, ~30-60 мин чтения |
-| `slides/*.md` | ~150-300 слов на slide × 25-30 slides ≈ 5-8k слов суммарно | Visible content + speaker notes |
+| `slides/*.md` | **500–800 слов заметок** на содержательный кадр × 25–30 кадров ≈ 15–24k слов суммарно (решение владельца №10; семинарские 250–450 не переносить) | Visible content + speaker notes; жанр — `stroenie-i-povestvovanie.md` §10 |
 | `speech.md` | 4-6k слов (≈70-80 wpm × 75 мин) | Сliceful pacing, паузы, переходы |
 
 **Chapter Depth Baseline (ENFORCED — см. `CLAUDE.md` § «Chapter Depth Baseline»):**

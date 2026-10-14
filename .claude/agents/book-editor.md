@@ -92,13 +92,13 @@ Example:
 
 Это позволяет presentation-designer'у:
 1. Найти исходный chapter material для notes (`grep '\[for-slide-s14\]' chapter.md`).
-2. Адаптировать в 150-300 слов notes (compress, не paraphrase).
+2. Адаптировать в 500–800 слов notes (развернуть до связного текста, не сжимать до тезисов).
 3. Сохранить terminology consistency (используя exact form из chapter).
 
 ## Speaker Notes Contract (downstream artifact)
 
 Speaker notes (которые presentation-designer создаёт из chapter sections) MUST be:
-- **150-300 слов** связного читаемого текста для студента (target ~200).
+- **500–800 слов** связного читаемого текста для студента (target ~650) — решение владельца №10; семинарские 250–450 не переносить.
 - **Self-study tone** — book-style, не разговорный (отличается от speech.md).
 - **NO layout descriptions** («слева donut, справа bar»).
 - **NO «Лектору» секций**, director's cues («[пауза]»), тайминга, навигационных markers.

@@ -764,7 +764,7 @@ fallacy. Reflection данные: s11/s13/s16/s21 потребовали по 5+
 ## Speaker notes — STRICT CONTRACT
 
 **Format (per slide):**
-- **Length:** 150-300 слов connected readable text для студента (target ~200).
+- **Length:** **500–800 слов** связного текста для студента (target ~650) — решение владельца №10. Семинарские 250–450 не переносить. Замер Лекции 7: медиана 289 слов, ноль кадров из 122 в норме, недостача ≈25 840 слов — потому что в наряде стояло «250–300».
 - **Type:** READABLE STUDENT TEXT для self-study (читает студент через 2 недели,
   без преподавателя).
 - **Source:** derived from chapter §X (primary) + speech [sNN] (secondary).

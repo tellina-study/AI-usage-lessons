@@ -1,0 +1,26 @@
+рендер готов: sec3-01.pdf, снимки в snaps3-01/
+кусок 1: 15 кадров готово
+рендер готов: sec3-02.pdf, снимки в snaps3-02/
+кусок 2: 2 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r4-r5-vtoroy-afa3910b/library/lectures/lec-07/rework/deck/sec-3.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  69  s35-divider-postanovka-diagnoza.md
+  73  s35a-postanovka-diagnoza-chto-eto-za-stadiya.md
+  75  s36-kak-ustroena-postanovka-diagnoza.md
+  80  s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
+  73  s38-chetyre-stupeni-chto-delaet-chelovek.md
+ 135  s41-zamer-vzglyada-lozhnaya-podskazka.md
+  74  s43-tot-zhe-zamer-obratnyy-znak.md
+ 140  s44-odna-podskazka-dva-znaka-patologiya.md
+ 138  s45-izmerennaya-troyka-para-i-chelovek.md
+ 138  s47-kontrolnaya-liniya-para-silnee.md
+ 135  s48-kontrolnaya-liniya-chto-pereekhalo.md
+  74  s49-doverie-i-stazh.md
+  75  s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md
+ 138  s49b-obeshchano-tsena-i-dva-rezhima.md
+ 138  s49c-para-nizhe-obeikh-storon.md
+ 113  s49d-otvet-sobran-chetyre-zamera.md
+  74  s50-vyvod-diagnoz.md
+
+страниц 17 · медиана 80 · среднее 102 · максимум 140 · тяжелее 140 — 0 · тяжелее 90 — 8

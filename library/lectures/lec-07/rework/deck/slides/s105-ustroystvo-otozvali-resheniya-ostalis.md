@@ -38,7 +38,7 @@ blocks:
   - {label: "Доля отзывов в первые двенадцать месяцев", value: "43,4 процента", note: "79 событий из 182 на 60 отозванных изделий из 950; ноябрь 2024", key: true}
 timing_min: 0.85
 in_bucket: true
-method_steps: ["④что переехало"]
+method_steps: ["⑤что переехало"]
 form: ["[VFY]"]
 vfy: true
 status: собран

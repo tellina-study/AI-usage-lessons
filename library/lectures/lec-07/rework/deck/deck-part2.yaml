@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 3. Постановка диагноза — человек читает рядом с моделью · 20 кадров · 16.15 мин ───
+  # ─── 3. Постановка диагноза — человек читает рядом с моделью · 20 кадров · 16.05 мин ───
   - id: s35
     local_id: "s3-01"                      # номер SLIDE-PLAN.md
     file: slides/s35-divider-postanovka-diagnoza.md
@@ -47,7 +47,7 @@ slides:
     type: case
     title: "Пример 1: замер взгляда радиолога"
     chapter_ref: "chapter-part2.md §3.4"
-    timing_min: 1.0
+    timing_min: 0.95
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s42
     local_id: "s3-15a"                     # вставленный кадр, номера в плане нет
@@ -88,7 +88,7 @@ slides:
     type: case
     title: "Пример 3: измеренная тройка"
     chapter_ref: "chapter-part2b.md §3.8 (+ chapter.md §0.3)"
-    timing_min: 0.75
+    timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s46
     local_id: "s3-07"                      # номер SLIDE-PLAN.md
@@ -333,7 +333,7 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
 
-  # ─── 6. Чем удерживают — подпись, процедура, норматив · 10 кадров · 8.30 мин ───
+  # ─── 6. Чем удерживают — подпись, процедура, норматив · 11 кадров · 8.80 мин ───
   - id: s65
     local_id: "s7-01"                      # номер SLIDE-PLAN.md
     file: slides/s65-divider-chem-uderzhivayut.md
@@ -396,6 +396,15 @@ slides:
     chapter_ref: "chapter-part3d.md §6.8"
     timing_min: 0.90
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+  - id: s70a
+    local_id: "s7-05a"                     # вставленный кадр, номера в плане нет
+    file: slides/s70a-podkhodyashchiy-chelovek-po-normativu.md
+    type: norm
+    title: "Кого норматив считает подходящим человеком"
+    plan_section: "Раздел 7. Чем удерживают"
+    chapter_ref: "chapter-part3d.md §6.8 — норматив и участники; самой политики в главе нет, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.2"
+    timing_min: 0.5
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s71
     local_id: "s7-07"                      # номер SLIDE-PLAN.md
     file: slides/s71-tri-mekhanizma-nadzora.md

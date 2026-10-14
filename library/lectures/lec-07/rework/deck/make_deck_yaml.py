@@ -50,7 +50,6 @@ CHAP = {
  's11': 'chapter-part1b.md § Раздел 1 (вводка)',
  's12': 'chapter-part1b.md §1.1, §1.2, §1.3',
  's13': 'chapter-part1b.md §1.3',
- 's14': 'chapter-part1b.md §1.3',
  's15': 'chapter-part1b.md §1.4',
  's16': 'chapter-part1b.md §1.5',
  's17': 'chapter-part1b.md §1.5',
@@ -116,6 +115,7 @@ CHAP = {
  's68': 'chapter-part3c.md §6.7',
  's69': 'chapter-part3c.md §6.6',
  's70': 'chapter-part3d.md §6.8',
+ 's70a': 'chapter-part3d.md §6.8 — норматив и участники; самой политики в главе нет, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.2',
  's71': 'chapter-part3d.md §6.9',
  's73': 'chapter-part3d.md §6.13 (+ §6.12)',
  's73a': 'chapter-part3d.md §6.13 (+ chapter-part5b.md §11.6)',
@@ -126,11 +126,11 @@ CHAP = {
  's87': 'chapter-part4e.md §9.12 (+ §9.10, §9.11, §9.4, §9.5, §9.9)',
  's73b': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
  's73c': 'chapter-part5.md §10.2 (+ §10.3)',
- 's73d': 'chapter-part5.md §10.4',
- 's73e': 'chapter-part5.md §10.5',
+ 's73d': 'chapter-part5.md §10.4, §10.5',
  's73f': 'chapter-part5.md §10.6',
  's73g': 'chapter-part5.md §10.8 (+ §10.7)',
  's73h': 'chapter-part5.md §10.9, §10.10',
+ 's73ha': 'chapter-part5.md §10.10, §10.14 — пробел по этой плоскости; счёт по мировому корпусу в главе отсутствует, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.1',
  's73i': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',
  's73j': 'chapter-part5.md §10.14 (+ §10.12, §10.13)',
  's96a': 'chapter-part5b.md § Раздел 11 (вводка), §11.1',
@@ -286,8 +286,8 @@ def q(s):
     return '"%s"' % s
 
 from collections import Counter
-REAL = set("""s01 s02 s11 s12 s13 s14 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
-s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s73b s73c s73d s73f s74 s105""".split())
+REAL = set("""s01 s02 s11 s12 s13 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
+s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s73b s73c s73d s73f s73ha s74 s105""".split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',
  's18':'rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg',

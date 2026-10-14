@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 7. Что стало с теми, кто решает · 9 кадров · 6.65 мин ───
+  # ─── 7. Что стало с теми, кто решает · 9 кадров · 6.85 мин ───
   - id: s73b
     local_id: "s5-01"                      # номер SLIDE-PLAN.md
     file: slides/s73b-divider-navyk.md
@@ -30,22 +30,13 @@ slides:
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s73d
     local_id: "s5-03"                      # номер SLIDE-PLAN.md
-    file: slides/s73d-tsena-obeikh-oshibok-osmotr.md
+    file: slides/s73d-tsena-i-dva-rezhima-osmotra.md
     type: case
-    title: "Цена обеих ошибок, названная до всякой точности"
+    title: "Цена обеих ошибок и оба классических режима — до всякой модели"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
-    chapter_ref: "chapter-part5.md §10.4"
-    timing_min: 0.55
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s73e
-    local_id: "s5-03a"                     # вставленный кадр, номера в плане нет
-    file: slides/s73e-dva-klassicheskikh-rezhima-osmotra.md
-    type: case
-    title: "Без модели: оба классических режима в одной единице"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
-    chapter_ref: "chapter-part5.md §10.5"
-    timing_min: 0.75
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+    chapter_ref: "chapter-part5.md §10.4, §10.5"
+    timing_min: 0.95
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s73f
     local_id: "s5-04"                      # номер SLIDE-PLAN.md
     file: slides/s73f-primer-1-dolya-bez-pomoshchnika.md
@@ -73,6 +64,15 @@ slides:
     chapter_ref: "chapter-part5.md §10.9, §10.10"
     timing_min: 0.65
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73ha
+    local_id: "s5-06a"                     # вставленный кадр, номера в плане нет
+    file: slides/s73ha-pustye-osi-i-tri-nulya.md
+    type: comparison
+    title: "Единственный чертёж темы — с пустыми осями"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part5.md §10.10, §10.14 — пробел по этой плоскости; счёт по мировому корпусу в главе отсутствует, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.1"
+    timing_min: 0.55
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s73i
     local_id: "s5-08"                      # номер SLIDE-PLAN.md
     file: slides/s73i-vyvod-navyk.md
@@ -238,13 +238,13 @@ totals:
   slides: 103
   timing_min: 80.85               # сложено по файлам кадров
   plan_budget_min: 80.00         # заявлено CUT-ORDER.md §1.1 для 106 кадров плана
-  plan_frames_only_min: 59.80     # только номера плана, без вставленных кадров
+  plan_frames_only_min: 59.10     # только номера плана, без вставленных кадров
   plus_qa_min: 90.85
   slot_min: 90
   overrun_min: 0.85              # против слота 90 с десятью минутами вопросов
-  strict_in_min: 46.15
-  strict_in_share: "57.1%"      # порог курса 30%; счёт по минутам, partial → out
-  vfy_slides: 53                 # кадров с числом под пересверку в день лекции
+  strict_in_min: 47.20
+  strict_in_share: "58.4%"      # порог курса 30%; счёт по минутам, partial → out
+  vfy_slides: 55                 # кадров с числом под пересверку в день лекции
   by_status:
     "собран": 102
     "не режется": 1

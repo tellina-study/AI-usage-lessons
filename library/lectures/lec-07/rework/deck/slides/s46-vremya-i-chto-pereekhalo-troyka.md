@@ -16,7 +16,7 @@ blocks:
   - {label: "В сумме", value: "так же, как было"}
 timing_min: 0.5
 in_bucket: true
-method_steps: ["④что переехало", "пара дало–потребовало"]
+method_steps: ["⑤что переехало", "пара дало–потребовало"]
 form: ["форма 5"]
 vfy: false
 status: собран

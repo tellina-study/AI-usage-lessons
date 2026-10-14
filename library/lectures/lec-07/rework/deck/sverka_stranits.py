@@ -62,8 +62,39 @@ def zagolovok(f):
     return str(fm.get("id")), str(fm.get("title") or "")
 
 
+def dolya(zag, tekst_stranitsy):
+    """Доля слов заголовка, найденных на странице."""
+    nuzhno = slova(zag)
+    if not nuzhno:
+        return None
+    est = set(slova(tekst_stranitsy))
+    return sum(1 for w in nuzhno if w in est) / len(nuzhno)
+
+
+def prichina(tekst, fayly, i, porog, okno=2):
+    """Почему заголовок не совпал — СДВИГ или УСТАРЕВШИЙ PDF.
+
+    Признак дешёвый и назван сессией разделов 7–10 по своему случаю: при
+    сдвиге порядка заголовок страницы совпадёт с СОСЕДНИМ кадром (±1…2),
+    при устаревшем PDF — ни с одним. У неё на странице 1 стояла прежняя
+    обложка: страница была на своём месте, а содержание старое, и она
+    минуту искала сдвиг там, где его не было.
+
+    Для замера разницы нет — мерить нельзя в обоих случаях, и отказ
+    правильный. Для чтения разница большая: это две разные починки.
+    Поэтому прогон называет причину, а не только симптом."""
+    for d in list(range(1, okno + 1)) + [-x for x in range(1, okno + 1)]:
+        j = i + d
+        if 0 <= j < len(fayly):
+            sid, zag = zagolovok(fayly[j])
+            dl = dolya(zag, tekst)
+            if dl is not None and dl >= porog:
+                return ("сдвиг", sid, d)
+    return ("устарел", None, 0)
+
+
 def proverit(pdf, fayly=None, porog=PORRG):
-    """(находки, прочитано) — страницы, которые стоят не на своём кадре."""
+    """(находки, прочитано) — страницы, чей заголовок не совпал с кадром."""
     import fitz
     fayly = fayly or list(slidefile.slide_files(B.SLIDES_DIR))
     d = fitz.open(str(pdf))
@@ -74,15 +105,13 @@ def proverit(pdf, fayly=None, porog=PORRG):
     nakhodki = []
     for i, f in enumerate(fayly):
         sid, zag = zagolovok(f)
-        nuzhno = slova(zag)
-        if not nuzhno:
+        dl = dolya(zag, d[i].get_text())
+        if dl is None or dl >= porog:
             continue
-        est = set(slova(d[i].get_text()))
-        nashlos = sum(1 for w in nuzhno if w in est)
-        dolya = nashlos / len(nuzhno)
-        if dolya < porog:
-            nakhodki.append({"stranitsa": i + 1, "kadr": sid, "dolya": dolya,
-                             "zagolovok": zag[:70]})
+        vid, sosed, sm = prichina(d[i].get_text(), fayly, i, porog)
+        nakhodki.append({"stranitsa": i + 1, "kadr": sid, "dolya": dl,
+                         "zagolovok": zag[:70], "vid": vid,
+                         "sosed": sosed, "smeshchenie": sm})
     return nakhodki, prochitano
 
 
@@ -99,6 +128,21 @@ def samoproverka():
     sdvig = fayly[1:] + fayly[:1]
     n1, _ = proverit(pdf, sdvig)
     proby.append(("на сдвиге в один кадр срабатывает", len(n1) > len(fayly) // 2))
+    proby.append(("сдвиг назван сдвигом, а не устареванием",
+                  sum(1 for n in n1 if n["vid"] == "сдвиг") > len(n1) * 0.8))
+    # Устаревшее содержание: страница на месте, заголовок ничей. Берём кадр,
+    # заголовка которого в деке нет ни на одной странице.
+    import tempfile
+    with tempfile.TemporaryDirectory() as dd:
+        chuzhoy = Path(dd) / "s01-chuzhoy.md"
+        chuzhoy.write_text("---\nid: s01\ntype: norm\n"
+                           "title: \"Небывалый заголовок про квазимонохромный "
+                           "ферромагнетик\"\n---\n\n"
+                           "## Видимый текст слайда\n\nТекст.\n", encoding="utf-8")
+        n3, _ = proverit(pdf, [chuzhoy] + fayly[1:])
+        svoi = [n for n in n3 if n["stranitsa"] == 1]
+        proby.append(("устаревшее содержание названо устареванием",
+                      bool(svoi) and svoi[0]["vid"] == "устарел"))
     n2, _ = proverit(pdf, fayly[:-1])
     proby.append(("на нехватке кадра отказывает", bool(n2) and n2[0].get("pusto")))
     ploho = 0

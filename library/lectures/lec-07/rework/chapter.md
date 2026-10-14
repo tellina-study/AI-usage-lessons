@@ -4,8 +4,8 @@ title: "Лекция 7. Решение о человеке: кто смотри�
 rpd_title: "AI в медицине и фармацевтике"
 parts: 5
 files: 19  # 18 → 19: по пределу в 600 строк разрезаны chapter-part4e.md (§ 9.9–9.12 → chapter-part4f.md) и chapter-part4d.md (§ 8.11–8.16 → chapter-part4da.md); содержание не менялось
-length_words: 96532  # ЕДИНСТВЕННЫЙ счётчик: tools/lecture-production/count_chapter_words.py, прогон 2026-10-14 после правки оси
-words_by_part: {1: 21270, 2: 16603, 3: 18263, 4: 25360, 5: 15036}  # тем же прогоном, построчно по файлам
+length_words: 96669  # ЕДИНСТВЕННЫЙ счётчик: tools/lecture-production/count_chapter_words.py, прогон 2026-10-14 после правки оси
+words_by_part: {1: 21270, 2: 16603, 3: 18400, 4: 25360, 5: 15036}  # тем же прогоном, построчно по файлам
 # МЕТОД СЧЁТА ЗАДАН КОДОМ, А НЕ ЭТИМ АБЗАЦЕМ: tools/lecture-production/count_chapter_words.py
 #   Пересчёт:  python3 tools/lecture-production/count_chapter_words.py library/lectures/lec-07/rework --parts
 #   Перед тем как верить числу:  python3 tools/lecture-production/count_chapter_words.py --selftest

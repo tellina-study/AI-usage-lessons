@@ -282,8 +282,12 @@ def q(s):
     return '"%s"' % s
 
 from collections import Counter
-REAL = set("""s01 s02 s11 s12 s13 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
-s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s73b s73c s73d s73f s73ha s74 s105""".split())
+REAL = set("""
+s01 s02 s11 s12 s13 s16 s18 s19 s22 s26
+s28 s31 s35 s36 s41 s43 s44 s45 s47 s49
+s49a s52 s53 s54 s55 s57 s59 s60b s61 s63
+s65 s66 s73b s73c s73d s73f s73ha s74 s105
+""".split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',
  's18':'rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg',

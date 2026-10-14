@@ -58,7 +58,8 @@ from dataclasses import dataclass
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
 from . import floor, metrics, prims, report
-from .theme import DEEP, GOLD, LIGHT, MID, SURFACE, TEAL, WHITE
+from .theme import (DEEP, GOLD, LIGHT, MID, OUTLINE, SLATE, SURFACE,
+                    TEAL, WHITE)
 
 
 @dataclass(frozen=True)
@@ -95,6 +96,7 @@ class TracksStyle:
     fan_gap: float = 0.22
     tie_w: float = 0.14            # усик веера к дорожке
     tie_h: float = 0.035
+    empty_gap: float = 0.05        # просвет между пустыми клетками и строкой
     cap_pt: float = 12.0           # пол видимого слоя, см. `floor.py`
     cap_ls: float = 1.14
     cap_gap: float = 0.08
@@ -258,14 +260,21 @@ def _box_h(d, w, f, st, row=None):
     return max(st.box_min_h, n * _line_h(f, st.step_ls) + st.box_extra)
 
 
+def empty_line_h(d, w, st):
+    """Высота строки под пустыми клетками — по её собственному тексту."""
+    iw = max(0.3, _rail_w(d, w, st) - 2 * st.rail_pad)
+    return metrics.est_h(" ", st.lab_pt, iw, st.step_ls) * 0 + \
+        metrics.est_h("x", st.lab_pt, iw, st.step_ls)
+
+
 def _rail_h(d, w, f, st, row):
     if row.get("empty"):
-        # Пустая дорожка меряется СВОЕЙ строкой: клеток у неё нет, и брать
-        # высоту соседней дорожки значило бы мерить то, чего здесь нет.
-        iw = max(0.3, _rail_w(d, w, st) - 2 * st.step_pad) * metrics.W_SAFE
-        n = min(st.step_rows, _rows_of_text(row["empty"], f, iw))
-        return max(st.box_min_h, n * _line_h(f, st.step_ls)
-                   + st.box_extra) + 2 * st.rail_vpad
+        # Пустая дорожка — КЛЕТКИ той же высоты, что у заполненных (иначе
+        # сравнивать нечего: ряд пустых мест обязан стоять на месте ряда
+        # полных), плюс строка под ними. Клетки меряются чужой дорожкой
+        # нарочно — это единственное место формы, где так и надо.
+        return (_box_h(d, w, f, st) + st.empty_gap
+                + empty_line_h(d, w, st) + 2 * st.rail_vpad)
     return _box_h(d, w, f, st, row) + 2 * st.rail_vpad
 
 
@@ -362,20 +371,37 @@ def draw_tracks(s, sid, d, x, y, w, st=DEFAULT, tag=None):
                            anchor=MSO_ANCHOR.MIDDLE, ls=1.10,
                            tag=f"{tag}/дорожка{i}")
         if r.get("empty"):
-            # ПУСТАЯ ДОРОЖКА: рельс есть, клеток нет, и на их месте —
-            # одна строка о том, что здесь не делается ничего. Рельс
-            # здесь обязателен независимо от `rails`: без него от
-            # дорожки не осталось бы вовсе ничего, и утверждение
-            # «ничего» стало бы неотличимо от «забыли написать».
-            prims.ocean_box(s, rx, cy, rw, rail_h, fill=WHITE,
-                            stroke=GOLD, stroke_pt=2.0)
-            report.GOLD_SEEN.add(sid)
-            floor.pt(f, tag, "пустая дорожка")
-            prims.text_box(s, rx + st.step_pad, cy + st.rail_vpad + 0.05,
-                           rw - 2 * st.step_pad, bh - 0.10, r["empty"],
-                           size=f, bold=True, color=MID,
-                           align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-                           ls=st.step_ls, tag=f"{tag}/пусто{i}")
+            # ПУСТАЯ ДОРОЖКА. Первая редакция рисовала здесь коробку во всю
+            # ширину рельса с золотой обводкой и строкой внутри — и на
+            # собранной странице она читалась НЕ ТЕМ: гладкая рамка с
+            # текстом внутри есть «одно широкое действие с таким
+            # названием», а не «действий нет». Форма, которая должна
+            # показать отсутствие, показывала присутствие чего-то одного.
+            #
+            # Теперь отсутствие показано МЕСТАМИ: на дорожке стоят пустые
+            # клетки той же сетки, что и клетки выше, — столько же,
+            # сколько в самой длинной дорожке. Глаз сравнивает ряд
+            # заполненных с рядом пустых, и это ровно то утверждение,
+            # которое кадр несёт. Клетка пустая и по виду: заливки нет,
+            # обводка светлая и тонкая. Строка стоит ПОД ними подписью, а
+            # не внутри рамки, потому что внутри рамки она снова сделала
+            # бы из пустоты предмет.
+            cell_h = _box_h(d, w, f, st)
+            ex = rx + st.rail_pad
+            for j in range(_cells(d)):
+                prims.ocean_box(s, ex, cy + st.rail_vpad, sw, cell_h,
+                                fill=WHITE, stroke=OUTLINE, stroke_pt=1.0)
+                ex += sw + st.step_gap + (
+                    st.arrow_w + st.step_gap if d["steps_arrows"] else 0.0)
+            # Строка идёт ПОД клетками, а не поверх них: поверх она ложится
+            # на грани трёх клеток сразу и читается как подпись к средней.
+            floor.pt(st.lab_pt, tag, "подпись пустой дорожки")
+            prims.text_box(s, rx + st.rail_pad,
+                           cy + st.rail_vpad + cell_h + st.empty_gap,
+                           rw - 2 * st.rail_pad, empty_line_h(d, w, st),
+                           r["empty"], size=st.lab_pt, italic=True,
+                           color=SLATE, align=PP_ALIGN.CENTER, ls=1.0,
+                           tag=f"{tag}/пусто{i}")
             continue
         # Рельс говорит «это одна линия, идущая сама по себе», и нужен
         # он ровно там, где ГРУППИРУЕТ: при одной клетке на дорожку рельс

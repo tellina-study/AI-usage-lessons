@@ -130,7 +130,7 @@ CHAP = {
  's73h': 'chapter-part5.md §10.9, §10.10',
  's73ha': 'chapter-part5.md §10.10, §10.14 — пробел по этой плоскости; счёт по мировому корпусу в главе отсутствует, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.1',
  's73i': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',
- 's73j': 'chapter-part5.md § Раздел 10 — карта стадии, поданная счётом',
+ 's73j': 'chapter-part5.md §10.14 — вывод раздела, пробел, названный числом',
  's96a': 'chapter-part5b.md § Раздел 11 (вводка), §11.1',
  's97': 'chapter-part5b.md §11.1, §11.2, §11.3',
  's99': 'chapter-part5b.md §11.4',

@@ -14,7 +14,7 @@ media_note: "—"
 timing_min: 1.05
 in_bucket: true
 method_steps: ["свод"]
-form: []
+form: ["вопрос лекции"]
 vfy: false
 status: собран
 ---

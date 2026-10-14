@@ -1,0 +1,16 @@
+{
+ "title": "Radiologist, reporting (Wellcome Collection, N0038241)",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Лицензия прочитана из ответа Wellcome Collection API (locations[].license.label = «Attribution 4.0 International (CC BY 4.0)») для изображения y4zqau76; файл взят по IIIF с того же хоста. Проверено 2026-10-13.",
+ "author": "Ashley Prytherch, Royal Surrey County Hospital NHS Foundation Trust",
+ "description": "Врач-рентгенолог в затемнённом кабинете чтения: два диагностических монитора с компьютерной томографией брюшной полости и таза, в руке диктофон — он наговаривает заключение. Настоящий кабинет, не постановка со стока.",
+ "page": "https://wellcomecollection.org/works/uefvyqmb",
+ "file_url": "https://iiif.wellcomecollection.org/image/N0038241/full/1600,/0/default.jpg",
+ "attribution": "Фото: Ashley Prytherch, Royal Surrey County Hospital NHS FT, Wellcome Collection, CC BY 4.0",
+ "tier": "3 (банк изображений учреждения — Wellcome Collection)",
+ "assigned_to": "s35 (дивайдер «Постановка диагноза — человек читает рядом с моделью»); годится и s11, и s15",
+ "deviation": "кадр просил ДВОИХ врачей у одного экрана — здесь один. И модальность другая: компьютерная томография, а не маммография. Работа та же — человек читает исследование с экрана и диктует заключение, — и в видимом тексте s35 ни числа читателей, ни модальности нет. Двоих у одного экрана под свободной лицензией не нашлось (перебраны Викисклад, Wellcome Collection, открытый доступ PMC).",
+ "state": "добыто, НЕ вкручено",
+ "orig_size": "1600x1131 (скачано по IIIF, ширина 1600)"
+}

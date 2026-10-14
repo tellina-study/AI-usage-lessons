@@ -1,0 +1,17 @@
+{
+ "title": "Real-time cloud-based CADDIE system — рис. 3, ПАНЕЛЬ (b), в: Kader R. и соавт., npj Digital Medicine (2025)",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Europe PMC REST: license = «cc by», isOpenAccess = Y для PMC12852673; файл взят с PMC. Проверено 2026-10-13.",
+ "author": "Kader R., Hassan C., Lanas Á., Romańczyk M. и соавт.",
+ "description": "Настоящий экран процедуры: панель системы слева, жёлтая рамка на образовании. Панель (a) исходного рисунка — схема стойки с подписями по-английски — срезана.",
+ "page": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12852673/",
+ "file_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/12852673/bin/41746_2025_2270_Fig3_HTML.jpg",
+ "orig_size": "675x640 (исходный рис. 3); вырезка 601x337",
+ "attribution": "Kader и соавт., npj Digital Medicine, 2025, рис. 3 (панель b), CC BY 4.0",
+ "tier": "3 (рисунок первоисточника открытого доступа)",
+ "assigned_to": "s90",
+ "caveat": "кадр просил ДВА кадра рядом: «с подсвеченным участком и без». Здесь есть только «с подсветкой». Пары того же участка без подсветки под свободной лицензией не нашлось (искал в открытом доступе по запросу «same polyp with and without computer-aided detection overlay» — работы показывают либо только находки, либо несравнимые кадры). Ставить это одно как «до и после» нельзя.",
+ "state": "вкручено 13 октября 2026; закрывает половину задания кадра — пары «без подсветки» нет",
+ "derivative": "вырезка панели (b), прямоугольник (74, 303)–(675, 640) исходного файла. CC BY 4.0 допускает переработку при указании авторства и факта правки; факт правки назван здесь, в deck/images.md §3.3 и в поле media_note кадра s90."
+}

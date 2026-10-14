@@ -1,0 +1,17 @@
+{
+ "title": "EndoMind system output — рис. 2 в: Lux T. J. и соавт., «Artificial intelligence assisted colorectal lesion detection in private practices: a randomized controlled study», npj Digital Medicine (2026)",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Лицензия прочитана из Europe PMC REST (license = «cc by», isOpenAccess = Y) для PMC13053717; файл взят с PMC (pmc.ncbi.nlm.nih.gov/articles/instance/13053717/bin/). Проверено 2026-10-13.",
+ "author": "Lux T. J., Saßmannshausen Z., Kafetzis I., Banck M., Kremer и соавт.",
+ "description": "Настоящий кадр колоноскопии, на котором система обнаружения обвела аденому синей рамкой. Подпись первоисточника: «Example of the image displayed by EndoMind when an adenoma is detected. The blue square marks the adenoma.»",
+ "page": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13053717/",
+ "file_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/13053717/bin/41746_2026_2576_Fig2_HTML.jpg",
+ "orig_size": "666x536",
+ "attribution": "Lux и соавт., npj Digital Medicine, 2026, рис. 2, CC BY 4.0",
+ "tier": "3 (рисунок первоисточника открытого доступа)",
+ "assigned_to": "s92 (кадр подсветки образования системой обнаружения)",
+ "caveat": "работа НЕ та, что названа в подвале кадра s92. Это иллюстрация того, КАК выглядит рамка системы на экране, а не рисунок из исследования, чьё число кадр предъявляет. Если кадр её возьмёт, подпись обязана назвать Lux и соавт., иначе повторится ошибка s44.",
+ "resolution_note": "666x536 — хватает на слот шириной до 4,4 дюйма при 150 точках на дюйм; на весь экран не ставить.",
+ "state": "добыто, НЕ вкручено"
+}

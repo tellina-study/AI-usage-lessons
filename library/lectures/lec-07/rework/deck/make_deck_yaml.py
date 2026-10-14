@@ -45,13 +45,8 @@ CHAP = {
  's03': 'chapter.md §0.2',
  's04': 'chapter.md §0.3',
  's05': 'chapter.md §0.4',
- 's06': 'chapter.md §0.5',
- 's07': 'chapter.md §0.6',
- 's08': 'chapter.md §0.10',
- 's09': 'chapter.md § Карта главы, §0.11',
- 's10': 'chapter.md §0.8, §0.9',
  's11': 'chapter-part1b.md § Раздел 1 (вводка)',
- 's12': 'chapter-part1b.md §1.1, §1.2',
+ 's12': 'chapter-part1b.md §1.1, §1.2, §1.3',
  's13': 'chapter-part1b.md §1.3',
  's14': 'chapter-part1b.md §1.3',
  's15': 'chapter-part1b.md §1.4',
@@ -60,16 +55,15 @@ CHAP = {
  's18': 'chapter-part1b.md §1.6',
  's19': 'chapter-part1b.md §1.6',
  's20': 'chapter-part1b.md §1.7',
- 's21': 'chapter-part1b.md §1.7 (+ chapter.md §0.10)',
+ 's20a': 'chapter-part1b.md §1.7 (+ chapter.md §0.10)',
  's22': 'chapter-part1b.md § Раздел 2 (вводка), §2.1',
  's23': 'chapter-part1b.md §2.1',
  's24': 'chapter-part1b.md §2.2',
- 's25': 'chapter-part1b.md §2.2, §2.3',
  's26': 'chapter-part1b.md §2.4',
- 's27': 'chapter-part1b.md §2.5',
  's28': 'chapter-part1b.md §2.6',
  's29': 'chapter-part1b.md §2.6',
  's30': 'chapter-part1b.md §2.7',
+ 's30a': 'chapter-part1b.md §2.7',
  's31': 'chapter-part1b.md §2.8',
  's32': 'chapter-part1b.md §2.8',
  's33': 'chapter-part1b.md §2.9',
@@ -78,17 +72,17 @@ CHAP = {
  's36': 'chapter-part2.md §3.1',
  's37': 'chapter-part2.md §3.1',
  's38': 'chapter-part2.md §3.2 (+ chapter.md §0.4)',
- 's39': 'chapter-part2.md §3.2',
- 's40': 'chapter-part2.md §3.3',
  's41': 'chapter-part2.md §3.4',
  's42': 'chapter-part2.md §3.5',
  's43': 'chapter-part2.md §3.6',
  's44': 'chapter-part2.md §3.7',
+ 's44a': 'chapter-part2.md §3.7',
  's45': 'chapter-part2b.md §3.8 (+ chapter.md §0.3)',
  's46': 'chapter-part2b.md §3.8',
  's47': 'chapter-part2b.md §3.9',
  's48': 'chapter-part2b.md §3.9',
  's49': 'chapter-part2b.md §3.10, §3.11',
+ 's49a': 'chapter-part2.md §3.3',
  's50': 'chapter-part2b.md §3.12, §3.13',
  's51': 'chapter-part2b.md §3.14',
  's52': 'chapter-part3.md § Раздел 4 (вводка), §4.1',
@@ -101,34 +95,41 @@ CHAP = {
  's59': 'chapter-part3.md §4.7, §4.8',
  's60': 'chapter-part3.md §4.9',
  's60a': 'chapter-part3.md §4.11 (+ §4.10)',
+ 's60aa': 'chapter-part3.md §4.10',
  's60b': 'chapter-part3b.md § Раздел 5 (вводка), §5.1',
+ 's60c': 'chapter-part3b.md §5.1, §5.2',
  's61': 'chapter-part3b.md §5.3, §5.4',
  's62': 'chapter-part3b.md §5.6 (+ §5.5)',
  's63': 'chapter-part3b.md §5.7',
+ 's63a': 'chapter-part3b.md §5.8 (+ §5.7)',
  's64': 'chapter-part3b.md §5.9 (+ §5.8)',
+ 's64a': 'chapter-part3b.md §5.9 (+ chapter-part5b.md §11.6)',
  's65': 'chapter-part3c.md § Раздел 6 (вводка), §6.1',
  's66': 'chapter-part3c.md §6.2',
  's67': 'chapter-part3c.md §6.3, §6.5 (+ §6.4)',
+ 's67a': 'chapter-part3c.md §6.5',
  's68': 'chapter-part3c.md §6.6',
  's69': 'chapter-part3c.md §6.7',
  's70': 'chapter-part3d.md §6.8',
  's71': 'chapter-part3d.md §6.9',
- 's72': 'chapter-part3d.md §6.10, §6.11',
  's73': 'chapter-part3d.md §6.13 (+ §6.12)',
+ 's73a': 'chapter-part3d.md §6.13 (+ chapter-part5b.md §11.6)',
  's74': 'chapter-part4e.md § Раздел 9 (вводка), §9.1',
  's75': 'chapter-part4e.md §9.1',
  's76': 'chapter-part4e.md §9.1, §9.2',
  's77': 'chapter-part4e.md §9.2',
  's78': 'chapter-part4e.md §9.3',
- 's79': 'chapter-part4e.md §9.7',
  's80': 'chapter-part4e.md §9.8',
  's81': 'chapter-part4e.md §9.4',
  's82': 'chapter-part4e.md §9.5',
+ 's82a': 'chapter-part4e.md §9.5 (+ §9.2)',
  's83': 'chapter-part4e.md §9.4',
  's84': 'chapter-part4e.md §9.4',
  's85': 'chapter-part4e.md §9.6',
+ 's85a': 'chapter-part4e.md §9.6',
  's86': 'chapter-part4e.md §9.9',
  's87': 'chapter-part4e.md §9.12 (+ §9.10, §9.11)',
+ 's87a': 'chapter-part4e.md §9.7 (+ chapter-part5b.md §11.6, chapter.md §0.10)',
  's88': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
  's89': 'chapter-part5.md §10.2 (+ §10.3)',
  's90': 'chapter-part5.md §10.4',
@@ -136,13 +137,11 @@ CHAP = {
  's92': 'chapter-part5.md §10.6',
  's93': 'chapter-part5.md §10.8 (+ §10.7)',
  's94': 'chapter-part5.md §10.9, §10.10',
- 's95': 'chapter-part5.md §10.11',
+ 's95a': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',
  's96': 'chapter-part5.md §10.14 (+ §10.12, §10.13)',
  's96a': 'chapter-part5b.md § Раздел 11 (вводка), §11.1',
- 's97': 'chapter-part5b.md §11.1, §11.3',
- 's98': 'chapter-part5b.md §11.2',
+ 's97': 'chapter-part5b.md §11.1, §11.2, §11.3',
  's99': 'chapter-part5b.md §11.4',
- 's100': 'chapter-part5b.md §11.5',
  's101': 'chapter-part5b.md §11.6',
  's102': 'chapter-part5b.md §11.7',
  's103': 'chapter-part5b.md §11.8',
@@ -151,6 +150,99 @@ CHAP = {
  's105': 'chapter-part5b.md §12.2',
  's106': 'chapter-part5c.md § Вопросы и ответы для самопроверки (+ chapter-part5b.md §12.4)',
 }
+
+
+_CHISLO = {1: 'один', 2: 'два', 3: 'три', 4: 'четыре', 5: 'пять', 6: 'шесть',
+           7: 'семь', 8: 'восемь', 9: 'девять'}
+
+
+def uncovered_part4():
+    """Файлы главы `chapter-part4*`, в которые не ведёт ни один `chapter_ref`.
+
+    Считается с диска, а не вписано в примечание словами: ровно эту строку уже
+    однажды обогнала жизнь. Разрез `chapter-part4.md` по лимиту 600 строк добавил
+    `chapter-part4a.md`, а примечание продолжало говорить «четыре файла» и
+    перечислять четыре имени — то есть производное было набрано руками и потому
+    соврало при первом же изменении состава главы. Возвращает готовую пару
+    (перечень имён, число словом) под подстановку в текст примечания.
+    """
+    here = os.path.dirname(os.path.abspath(__file__))
+    chap_dir = os.path.dirname(here)
+    names = sorted(os.path.basename(p) for p in
+                   glob.glob(os.path.join(chap_dir, 'chapter-part4*.md')))
+    covered = {n for n in names if any(n in v for v in CHAP.values())}
+    miss = [n for n in names if n not in covered]
+    shown = ', '.join([miss[0]] + ['-' + n[len('chapter-'):-len('.md')]
+                                   for n in miss[1:]]) if miss else 'ни один файл'
+    k = len(miss)
+    slovo = 'файл' if k % 10 == 1 and k % 100 != 11 else (
+        'файла' if k % 10 in (2, 3, 4) and k % 100 not in (12, 13, 14)
+        else 'файлов')
+    return shown, '%s %s' % (_CHISLO.get(k, str(k)), slovo)
+
+def sostav():
+    """Состав деки, посчитанный с диска: всего кадров, сколько из них номера плана,
+    сколько вставлено с буквенным суффиксом, и их перечень.
+
+    Набранный руками состав здесь уже один раз соврал: примечание говорило «110 кадров
+    = 106 номеров плана + 4 вставленных» и перечисляло s60a/s60b/s96a/s103a, когда на
+    диске лежало 109 кадров, 91 номер плана и 18 вставленных — девять сессий переделали
+    деку, а производное примечание об этом не узнало. То же, что уже случилось с
+    примечанием про `chapter-part4*` (см. `uncovered_part4`), и лечится тем же.
+    """
+    nums = [s for s in PLAN_NO if re.fullmatch(r's\d+', s)]
+    ins = sorted((s for s in PLAN_NO if not re.fullmatch(r's\d+', s)),
+                 key=lambda s: (int(re.match(r's(\d+)', s).group(1)),
+                                re.match(r's\d+([a-z]*)', s).group(1)))
+    return len(PLAN_NO), len(nums), len(ins), ins
+
+
+def chapter_files():
+    """Сколько файлов главы лежит на диске: chapter.md плюс все chapter-part*.md."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    chap_dir = os.path.dirname(here)
+    return len(glob.glob(os.path.join(chap_dir, 'chapter*.md')))
+
+def plural(n, one, few, many):
+    """Согласование существительного с числом: 1 группа · 2 группы · 5 групп."""
+    if n % 100 in (11, 12, 13, 14):
+        return many
+    if n % 10 == 1:
+        return one
+    if n % 10 in (2, 3, 4):
+        return few
+    return many
+
+def dup_titles():
+    """Группы кадров, несущих дословно одинаковый `title`.
+
+    Считается с диска: прежняя редакция D5 называла одну пару поимённо (s18/s19), и
+    переделка деки эту пару развела, а восемь вернувшихся карт стадии завели два новых
+    дубля по три и по пять кадров — запись о расхождении при этом не поменялась ни
+    словом. Набранный руками перечень расхождений расходится с диском ровно так же, как
+    любое другое производное.
+    """
+    byt = OrderedDict()
+    for f in files:
+        d = fm(f)
+        byt.setdefault(d.get('title', ''), []).append(d['id'])
+    return [(ti, ids) for ti, ids in byt.items() if len(ids) > 1]
+
+
+def sluzhebnye_assertion():
+    """Кадры, у которых в `assertion` стоит не утверждение кадра, а служебная пометка."""
+    out = []
+    for f in files:
+        d = fm(f)
+        a = d.get('assertion', '')
+        if 'провисает' in a or 'под рез' in a:
+            out.append((d['id'], 'шаг ②' if 'провисает' in a else 'под рез'))
+    return out
+
+
+def wired_slides():
+    """Кадры, у которых поле `media` заполнено, то есть снимок реально встаёт в сборку."""
+    return [fm(f)['id'] for f in files if (fm(f).get('media') or '').strip()]
 
 # номер кадра в SLIDE-PLAN.md (106 номеров); вставленные — без номера
 PLAN_NO = {}
@@ -179,17 +271,18 @@ def q(s):
     return '"%s"' % s
 
 from collections import Counter
-REAL = set("""s01 s02 s04 s07 s11 s12 s13 s14 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s40 s41 s42 s43 s44
-s45 s47 s49 s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s74 s75 s80 s82 s86 s88 s89 s90 s92 s105""".split())
+REAL = set("""s01 s02 s04 s11 s12 s13 s14 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
+s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s74 s75 s80 s82 s86 s88 s89 s90 s92 s105""".split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',
  's18':'rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg',
  's22':'rework/deck/assets/s22-rentgenkabinet-pacient-u-pribora.jpg',
  's26':'rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg',
- 's40':'rework/deck/assets/s40-dva-effekta-s-intervalami.png',
+ 's49a':'rework/deck/assets/s40-dva-effekta-s-intervalami.png',
  's44':'rework/deck/assets/s44-srez-razmetka-cheloveka-i-modeli.png',
  's52':'rework/deck/assets/s52-sestrinskiy-post.jpg',
- 's88':'rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg'}
+ 's88':'rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg',
+ 's105':'rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya-verkh.png'}
 secs = OrderedDict()
 for f in files:
     d = fm(f); secs.setdefault(d['section'], []).append((f, d))
@@ -209,7 +302,7 @@ HDR = """# library/lectures/lec-07/rework/deck/{fn}  —  часть {i} из 3
 """
 
 PREAMBLE = """#
-# ЧТО ЭТО. Опись 110 кадров деки со служебными полями на каждый: идентификатор, тип
+# ЧТО ЭТО. Опись {vsego} кадров деки со служебными полями на каждый: идентификатор, тип
 # кадра, заголовок, раздел, адрес в главе (`chapter_ref`) и `timing_min`. Тайминг и
 # методические поля живут ЗДЕСЬ и во фронтматтере файла кадра — на видимом слое кадра
 # они запрещены (CLAUDE.md § «No Timing / No Methodology in Slides»), и переносить их
@@ -224,12 +317,14 @@ PREAMBLE = """#
 # оглавлениям частей главы. Это единственное поле манифеста, которое держится на
 # суждении, и проверять при расхождении надо его.
 #
-# СОСТАВ: 110 кадров = 106 номеров `SLIDE-PLAN.md` (slides-v3) + 4 вставленных с
-# буквенным суффиксом, чтобы сквозная нумерация не поехала:
-#   s60a   вывод раздела «Наблюдение»          (решение П11)
-#   s60b   дивайдер раздела «Ведение записи»   (решения П11/П12)
-#   s96a   дивайдер раздела «Сборка»
-#   s103a  дивайдер раздела «Закрытие»
+# СОСТАВ, посчитанный с диска: {vsego} кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
+# среди них — {nums} из 106; остальное вставлено с буквенным суффиксом ({nins} кадров),
+# чтобы сквозная нумерация не поехала. Снятый номер не переиспользуется: на идентификаторы ссылаются
+# манифесты, разборы прожарок и другие сессии, поэтому в номерах плана зияют пропуски —
+# {propusk} номеров плана в деке нет, причина по каждому в `slides/_snyato/README.md`.
+# Вставленные: {ins_list}.
+# Что делает каждый — в его собственной записи ниже (`type`, `title`, `section`); списком
+# здесь это не повторяется, потому что набранный руками список состава тут уже соврал.
 #
 # НУМЕРАЦИЯ РАЗДЕЛОВ РАСХОДИТСЯ ТРОЯКО, и это не ошибка выгрузки:
 #   deck (файлы кадров) — порядок показа, 0…10, сквозной;
@@ -275,7 +370,8 @@ def slide_block(f, d, W, cur):
     W("    marks: { in_bucket: %s, vfy: %s, status: %s, media_status: %s }\n"
       % (d['in_bucket'], d['vfy'], q(d['status']), ms))
     if sid in ACQUIRED:
-        W("    media_asset: %s   # поле media в файле кадра ещё пусто, см. deck/images.md §1\n" % q(ACQUIRED[sid]))
+        W("    media_asset: %s%s\n" % (q(ACQUIRED[sid]),
+          "" if mv else "   # поле media в файле кадра ещё пусто, см. deck/images.md §1"))
 
 SPLIT = [
     ('deck.yaml',       ['0. Вход','1. Отбор — кого вообще смотреть','2. Анализ данных — и группа, на которой он посчитан']),
@@ -287,7 +383,9 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
     o = io.StringIO(); W = o.write
     W(HDR.format(fn=fn, i=i))
     if i == 1:
-        W(PREAMBLE)
+        _v, _n, _i, _il = sostav()
+        W(PREAMBLE.format(vsego=_v, nums=_n, nins=_i, propusk=106 - _n,
+                          ins_list=' · '.join(_il)))
     else:
         W("#\n# Продолжение `deck.yaml`. Устройство, оговорки и правило чтения полей — в части 1;\n")
         W("# здесь только записи кадров%s.\n" % (" плюс сводка, расхождения и порядок реза" if i == 3 else ""))
@@ -305,8 +403,9 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
         W("  qa_min: 10\n")
         W("  content_target_min: 80.00      # слот минус вопросы; цель CUT-ORDER.md §1.1\n")
         W("  total_slides: %d\n" % tot_slides)
-        W("  plan_slides: 106               # номеров в SLIDE-PLAN.md\n")
-        W("  inserted_slides: [s60a, s60b, s96a, s103a]\n")
+        W("  plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит %d из них\n"
+          % sostav()[1])
+        W("  inserted_slides: [%s]\n" % ', '.join(sostav()[3]))
         W("  sum_timing_min: %.2f           # сложено по timing_min файлов кадров\n" % tot_min)
         W("  axis: \"путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем\"\n")
         W("  central_question: \"Модель посмотрела первой. Что теперь делает человек — и кто это измерял?\"\n")
@@ -314,7 +413,8 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
         W("  deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]\n")
         W("  builder: deck/build_lec07.py   # читает slides/*.md, НЕ этот файл\n")
         W("  sources:\n")
-        W("    chapter_parts: 16            # chapter.md + 15 файлов chapter-part*.md\n")
+        W("    chapter_parts: %d            # chapter.md + файлы chapter-part*.md, сочтено с диска\n"
+          % chapter_files())
         W("    plan: SLIDE-PLAN.md\n")
         W("    plan_tables: [SLIDE-PLAN-table.md, SLIDE-PLAN-desc-A.md, SLIDE-PLAN-desc-B.md, SLIDE-PLAN-desc-C.md]\n")
         W("    block_plans: plans/          # поимённые минуты кадров\n")
@@ -367,7 +467,7 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
         W("  slides: %d\n" % tot_slides)
         W("  timing_min: %.2f               # сложено по файлам кадров\n" % tot_min)
         W("  plan_budget_min: 80.00         # заявлено CUT-ORDER.md §1.1 для 106 кадров плана\n")
-        W("  plan_frames_only_min: %.2f     # те же 106 кадров по файлам, без четырёх вставленных\n"
+        W("  plan_frames_only_min: %.2f     # только номера плана, без вставленных кадров\n"
           % (tot_min - sum(float(d['timing_min']) for _, d in flat if not re.fullmatch(r's\d+', d['id']))))
         W("  plus_qa_min: %.2f\n" % (tot_min + 10))
         W("  slot_min: 90\n")
@@ -386,16 +486,24 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
           % sum(1 for _, d in flat if d['id'] not in REAL and (d.get('media_needed') or '').strip()))
         W("    no_decision: %d                # media_needed пусто: вопрос не задавали\n"
           % sum(1 for _, d in flat if not (d.get('media_needed') or '').strip()))
-        W("    note: \"поле media во ВСЕХ 110 файлах кадров пока пусто — каталог slides/ держит другая сессия; пути для восьми добытых в deck/images.md §1\"\n")
+        W("    wired: %d                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку\n"
+          % sum(1 for _, d in flat if (d.get('media') or '').strip()))
+        _w = wired_slides()
+        W("    note: \"поле media заполнено у %d кадров — %s; счёт сделан по диску. Расхождение, которое из этого видно: словарь ACQUIRED этого генератора знает %d пути, то есть media_status = acquired выставлен не всем кадрам, у которых снимок реально встаёт в сборку. ACQUIRED — дубль deck/images.md §2, и сверять его с §2 и с deck/assets/ — отдельная работа, не правка chapter_ref\"\n"
+          % (len(_w), ', '.join(_w), len(ACQUIRED)))
         W("\n")
         W("# РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:\n")
         W("# манифест описывает то, что есть на диске, а решение по каждому — владельца.\n")
+        W("# D1 (issue #229) закрыт ПРАВИЛЬНОЙ стороной: предыдущий круг перенёс s18/s19\n")
+        W("# (глазное дно) физически в раздел 2, доверившись их собственному (ошибочному) полю\n")
+        W("# section вместо проверки его по fix-brief.md §1 — решения П6/П7 decisions-owner.md\n")
+        W("# к этому случаю не относятся, они про границу «анализ данных» ↔ «постановка\n")
+        W("# диагноза». fix-brief.md §1/§14 закрепляет глазное дно за разделом 1 (s1-08);\n")
+        W("# глава (chapter-part1b.md §1.6) независимо подтверждает то же место. Файлы\n")
+        W("# s18…s29 возвращены на дооктябрьские номера — физический порядок снова совпадает\n")
+        W("# и с полем section, и со SLIDE-PLAN.md, и с §1.6/§2.6 главы. На диске этого\n")
+        W("# расхождения больше нет.\n")
         W("divergences:\n")
-        W("  - id: D1\n")
-        W("    what: \"s18 и s19 стоят между кадрами раздела 1 и несут section «2. Анализ данных»\"\n")
-        W("    evidence: \"SLIDE-PLAN.md относит № 18–19 (s1-08, s1-08a) к разделу 1; глава разбирает глазное дно в §1.6 части 1б\"\n")
-        W("    effect: \"раздел 1 выгружается 9 кадрами вместо 11, раздел 2 — 15 вместо 13\"\n")
-        W("    fix: \"поменять section в двух файлах кадров на «1. Отбор — кого вообще смотреть»\"\n")
         W("  - id: D2\n")
         W("    what: \"сумма timing_min по файлам — %.2f против 80,00, заявленных CUT-ORDER.md §1.1 для 106 кадров\"\n" % (tot_min - 2.15))
         W("    evidence: \"по поимённым минутам планов блоков: лекарство 10,50 против 13,20 по файлам (+2,70); сборка 4,90 против 5,80 (+0,90); удерживают 8,60 против 8,80 (+0,20); отбор 8,20 против 8,30; ядро 12,75 против 12,85; измерили 9,75 против 9,60 (−0,15)\"\n")
@@ -405,21 +513,32 @@ for i, (fn, seclist) in enumerate(SPLIT, 1):
         W("  - id: D3\n")
         W("    what: \"s96a и s103a (дивайдеры «Сборки» и «Закрытия», 0,90 минуты вдвоём) в арифметике CUT-ORDER.md §1.1 не числятся\"\n")
         W("    evidence: \"§1.1 считает +2 структурных кадра перегруппировки (0,50 + 0,75 = 1,25) — это s60b и s60a; про s96a и s103a там ни строки\"\n")
-        W("    effect: \"объявленный состав 108 кадров против 110 на диске\"\n")
+        W("    effect: \"объявленный состав 108 кадров против %d на диске\"\n" % tot_slides)
         W("    fix: \"дописать два кадра в состав CUT-ORDER.md §1.1\"\n")
         W("  - id: D4\n")
         W("    what: \"у главы есть разделы 7 «Назначение и лечение» (§7.1–7.19) и 8 «Оперативная помощь» (§8.1–8.16), а в деке на них ноль кадров\"\n")
-        W("    evidence: \"решение П9 называет это невыполненным обещанием кадра s07; шаг реза А1 CUT-ORDER.md §2 предъявляет их прочерком\"\n")
-        W("    effect: \"chapter_ref ни одного кадра не ведёт в chapter-part4.md, -part4b, -part4c, -part4d — четыре файла главы декой не покрыты\"\n")
+        W("    evidence: \"решение П9 называет это невыполненным обещанием кадра s07 (сам кадр снят при сокращении входа, в деке его нет); шаг реза А1 CUT-ORDER.md §2 предъявляет их прочерком\"\n")
+        W("    effect: \"chapter_ref ни одного кадра не ведёт в %s — %s главы декой не покрыты\"\n" % (uncovered_part4()))
         W("    fix: \"известное решение, не находка: прочерк по варианту (б) REGROUP.md §4 (поправка П4)\"\n")
+        _dups = dup_titles()
         W("  - id: D5\n")
-        W("    what: \"три пары кадров несут дословно одинаковый title\"\n")
-        W("    evidence: \"s18 и s19 — «Глазное дно без офтальмолога»; s26, s28 и s29 — «Техник флюорографии и годность снимка»\"\n")
-        W("    effect: \"дивайдер обязан называть разборы раздела дословно заголовками их кадров (§5.16) — с одинаковыми заголовками это требование невыполнимо\"\n")
-        W("    fix: \"развести заголовки по тому, что на каждом кадре считается\"\n")
+        W("    what: \"%d %s кадров несут дословно одинаковый title; счёт сделан по диску, не вписан словами\"\n"
+          % (len(_dups), plural(len(_dups), 'группа', 'группы', 'групп')))
+        if _dups:
+            W("    evidence:\n")
+            for _ti, _ids in _dups:
+                W("      - %s  # %d %s: %s\n" % (q(_ti), len(_ids),
+                  plural(len(_ids), 'кадр', 'кадра', 'кадров'), ', '.join(_ids)))
+        else:
+            W("    evidence: \"дублей title на диске нет\"\n")
+        W("    effect: \"дивайдер и карта слайдов называют разные кадры одним именем без номера — расходится с правилом §5.16 «имена дословно совпадают с заголовками кадров», как только половины понадобится различить поимённо. Прежняя редакция этой записи называла пару s18/s19: переделка деки её развела, а восемь вернувшихся карт стадии завели дубли крупнее\"\n")
+        W("    fix: \"не входит в issue #229; решение владельца — развести заголовки карт по имени стадии («Карта стадии: наблюдение») или оставить как есть\"\n")
+        _sl = sluzhebnye_assertion()
         W("  - id: D6\n")
-        W("    what: \"у шести кадров в assertion стоит не утверждение кадра, а пометка «[шаг ② провисает: …]» или «под рез (П11)»\"\n")
-        W("    evidence: \"s68, s71, s72, s81, s85 — пометка о провисании шага ②; s78 и s86 — пометка «под рез»\"\n")
+        W("    what: \"у %d %s в assertion стоит не утверждение кадра, а служебная пометка («[шаг ② провисает: …]» или «под рез (П11)»); счёт сделан по диску\"\n"
+          % (len(_sl), plural(len(_sl), 'кадра', 'кадров', 'кадров')))
+        W("    evidence: \"%s\"\n" % ('; '.join('%s — %s' % (i, k) for i, k in _sl)
+                                       if _sl else 'служебных пометок в assertion на диске не осталось'))
         W("    effect: \"поле assertion служебное и на экран не идёт, но для критика и для речи это не утверждение кадра\"\n")
         W("    fix: \"при сборке содержания вписать утверждение, пометку перенести в отдельное поле\"\n")
     open(fn, 'w', encoding='utf-8').write(o.getvalue())

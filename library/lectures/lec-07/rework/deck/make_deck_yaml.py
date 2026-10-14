@@ -63,7 +63,6 @@ CHAP = {
  's13': 'chapter-part1b.md §1.3',
  's15': 'chapter-part1b.md §1.4',
  's16': 'chapter-part1b.md §1.5',
- 's17': 'chapter-part1b.md §1.5',
  's18': 'chapter-part1b.md §1.6',
  's19': 'chapter-part1b.md §1.6',
  's20': 'chapter-part1b.md §1.7',

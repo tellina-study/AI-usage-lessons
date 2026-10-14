@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 3. Постановка диагноза · 17 кадров · 14.90 мин ───
+  # ─── 3. Постановка диагноза · 17 кадров · 14.65 мин ───
   - id: s35
     local_id: "s3-01"                      # номер SLIDE-PLAN.md
     file: slides/s35-divider-postanovka-diagnoza.md
@@ -45,9 +45,9 @@ slides:
     local_id: "s3-04"                      # номер SLIDE-PLAN.md
     file: slides/s38-chetyre-stupeni-chto-delaet-chelovek.md
     type: norm
-    title: "Четыре ступени участия: что именно делает человек"
+    title: "Четыре ступени участия"
     chapter_ref: "chapter-part2.md §3.2 (+ chapter.md §0.4)"
-    timing_min: 0.75
+    timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s41
     local_id: "s3-15"                      # номер SLIDE-PLAN.md
@@ -61,9 +61,9 @@ slides:
     local_id: "s3-15b"                     # вставленный кадр, номера в плане нет
     file: slides/s43-tot-zhe-zamer-obratnyy-znak.md
     type: comparison
-    title: "Зеркало того же замера: подсказка верна, поиск сузился, результат вырос"
+    title: "Зеркало того же замера: результат вырос"
     chapter_ref: "chapter-part2.md §3.6"
-    timing_min: 0.75
+    timing_min: 0.7
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s44
     local_id: "s3-08"                      # номер SLIDE-PLAN.md
@@ -102,9 +102,9 @@ slides:
     local_id: "s3-12"                      # номер SLIDE-PLAN.md
     file: slides/s49-doverie-i-stazh.md
     type: case
-    title: "Доверие и стаж: что ломается, что не спасает и где потолок"
+    title: "Доверие откалибровано не по правоте"
     chapter_ref: "chapter-part2b.md §3.10, §3.11"
-    timing_min: 0.75
+    timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s49a
     local_id: "s3-16"                      # номер SLIDE-PLAN.md
@@ -137,18 +137,18 @@ slides:
     type: summary
     title: "Ответ собран: четыре замера, один вывод"
     chapter_ref: "chapter-part2.md § Раздел 3 (вводка), §3.3, §3.4, §3.8 + chapter-part4d.md §8.8"
-    timing_min: 0.75
+    timing_min: 0.7
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s50
     local_id: "s3-13"                      # номер SLIDE-PLAN.md
     file: slides/s50-vyvod-diagnoz.md
     type: summary
-    title: "Постановка диагноза: один инструмент уронил результат и поднял его — разошлось устройство процедуры"
+    title: "Вывод: разошлось устройство процедуры"
     chapter_ref: "chapter-part2b.md §3.12, §3.13"
-    timing_min: 0.95
+    timing_min: 0.9
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 4. Динамическое наблюдение и клинические тревоги · 11 кадров · 7.55 мин ───
+  # ─── 4. Динамическое наблюдение и клинические тревоги · 11 кадров · 7.50 мин ───
   - id: s52
     local_id: "s4-01"                      # номер SLIDE-PLAN.md
     file: slides/s52-divider-nablyudenie.md
@@ -162,7 +162,7 @@ slides:
     local_id: "s4-01a"                     # вставленный кадр, номера в плане нет
     file: slides/s52a-dannye-sposoby-i-reshenie-nablyudeniya.md
     type: norm
-    title: "Динамическое наблюдение: данные, способы и решение стадии"
+    title: "Наблюдение: данные, способы, решение"
     chapter_ref: "chapter-part3.md § Раздел 4 (вводка), §4.1 + chapter.md § Обзор предмета"
     timing_min: 0.55
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
@@ -170,15 +170,15 @@ slides:
     local_id: "s4-02"                      # номер SLIDE-PLAN.md
     file: slides/s53-palata-obkhod-list-nablyudeniya.md
     type: norm
-    title: "Что делают участники на стадии динамического наблюдения — до всякой модели"
+    title: "Что делают участники на стадии наблюдения"
     chapter_ref: "chapter-part3.md §4.1"
-    timing_min: 0.95
+    timing_min: 0.9
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s54
     local_id: "s4-03"                      # номер SLIDE-PLAN.md
     file: slides/s54-shkala-rannego-preduprezhdeniya.md
     type: comparison
-    title: "Без модели: шкала, веса которой назначили люди"
+    title: "Без модели: шкала с назначенными весами"
     chapter_ref: "chapter-part3.md §4.2"
     timing_min: 0.55
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
@@ -234,17 +234,17 @@ slides:
     local_id: "новый-nablyudenie-vyvod"    # вставленный кадр, номера в плане нет
     file: slides/s60a-vyvod-nablyudenie.md
     type: summary
-    title: "Динамическое наблюдение: тревога без названной базы не предупреждает"
+    title: "Наблюдение: тревога без базы не предупреждает"
     chapter_ref: "chapter-part3.md §4.11 (+ §4.10)"
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 5. Ведение медицинской документации · 9 кадров · 6.00 мин ───
+  # ─── 5. Ведение медицинской документации · 9 кадров · 5.80 мин ───
   - id: s60ba
     local_id: "s5-01a"                     # вставленный кадр, номера в плане нет
     file: slides/s60ba-dannye-sposoby-i-reshenie-zapisi.md
     type: norm
-    title: "Ведение медицинской документации: данные, способы, решение"
+    title: "Запись: данные, способы, решение"
     chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1, §5.2"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
@@ -258,19 +258,19 @@ slides:
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s60bb
     local_id: "s5-01b"                     # вставленный кадр, номера в плане нет
-    file: slides/s60bb-tri-klassicheskikh-rezhima-pisma.md
+    file: slides/s60bb-chetyre-rezhima-pisma.md
     type: case
-    title: "Без модели: три классических режима письма, посчитанные по-разному"
+    title: "Без модели: четыре режима письма, посчитанные по-разному"
     chapter_ref: "chapter-part3b.md §5.2 (три классических режима; доля текста по Steinkamp 2022 и Wang 2017)"
-    timing_min: 0.6
+    timing_min: 0.75
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s60c
     local_id: "новый-zapis-zazemlenie"     # вставленный кадр, номера в плане нет
     file: slides/s60c-kak-ustroeno-vedenie-zapisi.md
     type: norm
-    title: "Что делают участники на стадии ведения медицинской документации"
+    title: "Что делают участники на стадии записи"
     chapter_ref: "chapter-part3b.md §5.1, §5.2"
-    timing_min: 1.05
+    timing_min: 0.75
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s61
     local_id: "s4-07"                      # номер SLIDE-PLAN.md
@@ -303,15 +303,15 @@ slides:
     local_id: "новый-epikriz-tsena"        # вставленный кадр, номера в плане нет
     file: slides/s63a-tsena-epikriza-vychitka-i-pereskaz.md
     type: case
-    title: "Пример 2, цена: вычитка другого рода — и тройка, которой нет в первоисточниках"
+    title: "Пример 2, цена: вычитка другого рода"
     chapter_ref: "chapter-part3b.md §5.8 (+ §5.7)"
-    timing_min: 0.6
+    timing_min: 0.55
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s64
     local_id: "s4-09"                      # номер SLIDE-PLAN.md
     file: slides/s64-vyvod-vedenie-zapisi.md
     type: summary
-    title: "Ведение документации: столько времени в заметке сняли — и это вся измеренная экономия стадии"
+    title: "Ведение документации: вся измеренная экономия стадии"
     plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.9 (+ §5.8)"
     timing_min: 0.7

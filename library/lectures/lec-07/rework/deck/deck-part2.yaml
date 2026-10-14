@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 3. Постановка диагноза — человек читает рядом с моделью · 17 кадров · 13.45 мин ───
+  # ─── 3. Постановка диагноза — человек читает рядом с моделью · 20 кадров · 16.10 мин ───
   - id: s35
     local_id: "s3-01"                      # номер SLIDE-PLAN.md
     file: slides/s35-divider-postanovka-diagnoza.md
@@ -131,6 +131,30 @@ slides:
     timing_min: 1.0
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s40-dva-effekta-s-intervalami.png"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
+  - id: s49b
+    local_id: "s3-16a"                     # вставленный кадр, номера в плане нет
+    file: slides/s49b-obeshchano-tsena-i-dva-rezhima.md
+    type: comparison
+    title: "Обещано в прошлый раз: оценка риска перед экстренной операцией"
+    chapter_ref: "chapter-part4d.md §8.8"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s49c
+    local_id: "s3-16b"                     # вставленный кадр, номера в плане нет
+    file: slides/s49c-para-nizhe-obeikh-storon.md
+    type: case
+    title: "Пример 5: хирурги на септическом шоке — 0,712 против 0,816 и 0,820"
+    chapter_ref: "chapter-part4d.md §8.8"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s49d
+    local_id: "s3-16c"                     # вставленный кадр, номера в плане нет
+    file: slides/s49d-otvet-sobran-chetyre-zamera.md
+    type: summary
+    title: "Ответ собран: четыре замера, один вывод"
+    chapter_ref: "chapter-part2.md § Раздел 3 (вводка), §3.3, §3.4, §3.8 + chapter-part4d.md §8.8"
+    timing_min: 0.75
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s50
     local_id: "s3-13"                      # номер SLIDE-PLAN.md
     file: slides/s50-vyvod-diagnoz.md

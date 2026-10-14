@@ -317,7 +317,7 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 6. Допуск, надзор и ответственность · 10 кадров · 8.90 мин ───
+  # ─── 6. Допуск, надзор и ответственность · 10 кадров · 9.30 мин ───
   - id: s65
     local_id: "s7-01"                      # номер SLIDE-PLAN.md
     file: slides/s65-divider-chem-uderzhivayut.md
@@ -342,7 +342,7 @@ slides:
     title: "Одна комната, один случай"
     plan_section: "Раздел 7. Чем удерживают"
     chapter_ref: "chapter-part3c.md §6.2"
-    timing_min: 0.6
+    timing_min: 1.0
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
   - id: s67
     local_id: "s7-03"                      # номер SLIDE-PLAN.md

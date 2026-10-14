@@ -231,7 +231,7 @@ totals:
     "собран": 99
   media:                         # разбор и адреса — deck/images.md
     acquired: 9                   # лежит в deck/assets/, лицензия проверена поимённо
-    real_image_needed: 32          # просит настоящий снимок по своему media_needed, не добыт
+    real_image_needed: 30          # просит настоящий снимок по своему media_needed, не добыт
     builder_drawn: 40              # схема, плашки, матрица, таблица — снимок не нужен
     no_decision: 20                # media_needed пусто: вопрос не задавали
     wired: 15                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку

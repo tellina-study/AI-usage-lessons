@@ -26,6 +26,7 @@
 """
 import argparse
 import statistics
+import subprocess
 import sys
 from pathlib import Path
 
@@ -37,6 +38,34 @@ import ocenka                                                # noqa: E402
 
 POL_PROCHIH = 75          # медиана деки; норма круга #229, замер 26 дек
 PREDEL = 140              # 95-й процентиль эталонных страниц
+
+
+def golova():
+    """Голова, с которой считано, и расходится ли она со сводной.
+
+    Зачем в выводе. Список заданий, собранный с устаревшей головы, СОЗДАЁТ
+    работу вместо того, чтобы её закрывать: я разослала четырём сессиям
+    полы, из которых раздел 6 объявил шесть ещё коммитом `cef39815`, а
+    веса раздела 2 к тому времени подняла строка разряда — две сессии
+    получили задание на уже сделанное. Проверка свежести печатает возраст
+    PDF ровно по этой причине; голова дерева — та же мера для файлов."""
+    def g(*a):
+        return subprocess.run(["git", *a], capture_output=True, text=True,
+                              cwd=str(HERE)).stdout.strip()
+    nasha = g("rev-parse", "--short", "HEAD")
+    gryaz = bool(g("status", "--porcelain", "--", str(HERE / "slides")))
+    svod = g("rev-parse", "--short", "origin/issue-229-diyeta-svodka")
+    slito = g("merge-base", "--is-merged", "origin/issue-229-diyeta-svodka") 
+    otstala = g("rev-list", "--count", "HEAD..origin/issue-229-diyeta-svodka")
+    s = f"считано с головы {nasha}" + (" + НЕЗАКОММИЧЕННЫЕ правки кадров" if gryaz else "")
+    if svod:
+        s += f" · сводная {svod}"
+        if otstala and otstala != "0":
+            s += (f" · ОТСТАЛА НА {otstala} коммитов — списки с этой головы "
+                  "рассылать нельзя, они создадут работу на уже сделанном")
+        else:
+            s += " · совпадает со сводной"
+    return s
 
 
 def main():
@@ -52,6 +81,7 @@ def main():
     stranitsy = ocenka.pdf_pages(str(pdf))
     print(f"прочитано: кадров {len(fayly)} · страниц PDF {len(stranitsy)} "
           f"({pdf.name})")
+    print(f"  {golova()}")
     if len(stranitsy) != len(fayly):
         print(f"ОТКАЗ: страниц {len(stranitsy)}, кадров {len(fayly)} — "
               "сопоставить страницу с кадром нечем, сдвиг на один кадр "
@@ -60,8 +90,18 @@ def main():
 
     rows = [ocenka.ves(f) for f in fayly]
     objavleno, vyshe_pola, vyshe_predela, bez_prichiny = [], [], [], []
+    snyato = []
     for r, ves in zip(rows, stranitsy):
         pol, declared = ocenka.pol(r)
+        # Три состояния, а не два. Кадр, у которого пол СНЯТ по решению и
+        # причина записана полем `pol_snyat`, — это не недосмотр: так стоит
+        # `s70`, которому ядро переделывает форму в параллельные дорожки, и
+        # объявлять ему число сейчас значило бы оставить то, что никто не
+        # перечитает. Прогон обязан различать «пол объявлен» · «пола нет по
+        # решению, причина названа» · «пола нет вовсе».
+        if not declared and r.get("pol_snyat"):
+            snyato.append((r["id"], ves, r["pol_snyat"]))
+            continue
         if declared:
             objavleno.append((r["id"], pol, ves, r["prichina"]))
             if not r["prichina"]:
@@ -82,6 +122,12 @@ def main():
         zapas = pol - ves
         print(f"  {sid:6} пол {pol:3} · вес {ves:3} · запас {zapas:+3} — "
               f"{why or 'ПРИЧИНА НЕ НАЗВАНА'}")
+
+    if snyato:
+        print(f"\nПОЛА НЕТ ПО РЕШЕНИЮ у {len(snyato)} кадров — это записанное "
+              f"решение, не недосмотр:")
+        for sid, ves, why in sorted(snyato, key=lambda x: -x[1]):
+            print(f"  {sid:6} вес {ves:3} · пол не объявлен — {why}")
 
     zamechaniy = 0
     if bez_prichiny:

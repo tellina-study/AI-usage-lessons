@@ -36,7 +36,7 @@ columns:
   right: {head: "Что отменить нельзя", items: ["Решение до отзыва", "Уже проведённую процедуру"]}
 blocks:
   - {label: "Отзывы в первые 12 месяцев", value: "43,4 %", note: "79 из 182 событий, 60 изделий из 950", key: true}
-timing_min: 0.8
+timing_min: 1
 in_bucket: true
 method_steps: ["⑤что переехало"]
 form: ["[VFY]"]

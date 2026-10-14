@@ -11,7 +11,7 @@ media_needed: "иллюстрация не нужна — пять ступен�
 media_note: "—"
 blocks: []
 pol_slov: 90  # О10 (#229): словарь пяти разрядов свидетельства, обязан читаться целиком
-timing_min: 0.45
+timing_min: 0.7
 in_bucket: false
 method_steps: ["словарь"]
 form: []

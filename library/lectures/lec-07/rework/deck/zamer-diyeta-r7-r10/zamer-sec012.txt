@@ -1,0 +1,39 @@
+рендер готов: sec0-1-2-01.pdf, снимки в snaps0-1-2-01/
+кусок 1: 15 кадров готово
+рендер готов: sec0-1-2-02.pdf, снимки в snaps0-1-2-02/
+кусок 2: 15 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r7-r10-vtoroy-acf4258a/library/lectures/lec-07/rework/deck/sec-0-1-2.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  48  s01-cover.md
+ 118  s01a-tsikl-okazaniya-pomoshchi-tselikom.md
+ 109  s01b-kak-poluchayut-dannye-i-kak-reshayut-bez-modeli.md
+ 138  s01c-gde-model-stoit-i-gde-ee-net.md
+ 130  s01d-pismo-po-vozrastu-kto-smotrel-pervym.md
+ 110  s02-put-odnogo-sluchaya.md
+ 124  s03-kto-smotrit-pervym.md
+ 139  s05-os-udeshevili-chtenie-dannykh.md
+ 100  s05a-devyat-form-pereezda-slovar.md
+  87  s05b-pyat-razryadov-svidetelstva.md
+  46  s11-divider-otbor.md
+  71  s11a-pervichnyy-skrining-chto-eto-za-stadiya.md
+  75  s12-kak-ustroen-otbor.md
+ 106  s13-dva-klassicheskikh-rezhima-otbora.md
+ 117  s15-triazh-po-predskazannomu-risku.md
+ 133  s16-chat-bot-pervoy-linii.md
+ 115  s18-glaznoe-dno-bez-oftalmologa.md
+  76  s19-chto-pereekhalo-glaznoe-dno.md
+  80  s20-vyvod-otbor.md
+  64  s22-divider-analiz-dannykh.md
+  63  s22a-instrumentalnaya-diagnostika-chto-eto-za-stadiya.md
+  71  s23-kak-ustroen-analiz-dannykh.md
+  73  s24-odna-sistema-dve-gruppy.md
+  67  s26-tekhnik-flyuorografii.md
+ 137  s28-godnost-snimka-v-pole.md
+ 104  s30-kozha-i-sostav-nabora.md
+  97  s30a-kozha-tsena-sostav-dannykh.md
+ 111  s31-raskhody-vmesto-bolezni.md
+  90  s32-ispravlenie-poschitali-i-ne-primenili.md
+  75  s33-vyvod-analiz-dannykh.md
+
+страниц 30 · медиана 98.5 · среднее 96 · максимум 139 · тяжелее 140 — 0 · тяжелее 90 — 16

@@ -8,7 +8,7 @@ assertion: "Раздел измеряет не работу, а человека
 source: "—"
 media: "rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg"
 media_needed: "реальный снимок эндоскопического кабинета: врач у стойки, экран с изображением процедуры"
-timing_min: 0.5
+timing_min: 0.6
 in_bucket: false
 method_steps: ["дивайдер"]
 form: ["—"]

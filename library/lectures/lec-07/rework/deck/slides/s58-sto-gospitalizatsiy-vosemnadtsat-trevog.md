@@ -18,7 +18,7 @@ scheme:
   arrows: true
   rows:
     - {label: "Поток", steps: ["1 000 госпитализаций", "около 181 тревоги", "22 подтверждённых случая"]}
-timing_min: 0.75
+timing_min: 1
 in_bucket: true
 method_steps: ["②классические режимы", "③модель против них"]
 form: []

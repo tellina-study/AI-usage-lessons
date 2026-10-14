@@ -11,7 +11,7 @@ media_needed: "реальный снимок: врач после приёма �
 media_note: "иллюстрация не добыта, нужен поиск"
 blocks:
   - {label: "Из шести действий модель заняла", value: "два", note: "и один шаг убрала", key: true}
-timing_min: 0.75
+timing_min: 0.6
 in_bucket: false
 method_steps: ["заземление", "①цена ошибки", "②классические режимы"]
 form: []

@@ -149,9 +149,23 @@ def n_izm(bl, body):
     n = sum(1 for b in bl if isinstance(b, dict)
             and re.search(r"\d", str(b.get("value") or ""))
             and str(b.get("note") or "").strip())
-    n += sum(1 for ln in body.splitlines()
-             if ln.strip().startswith("|") and re.search(r"\d", ln)
-             and not re.fullmatch(r"\|[\s:|-]+\|", ln.strip()))
+    for ln in body.splitlines():
+        ln = ln.strip()
+        if not ln.startswith("|") or re.fullmatch(r"\|[\s:|-]+\|", ln):
+            continue
+        # НОМЕР в списке — не измеренная величина, хотя цифра в строке та же.
+        # Словарные таблицы деки нумеруют формы (1…8а) первой клеткой, и счёт
+        # «любая цифра в строке» объявлял их измерениями: `s05a` выходил на
+        # десять «измеренных блоков» при нуле измерений, а прогон советовал
+        # объявить пол там, где надо резать. Сторож, зовущий не туда, хуже
+        # молчащего. Поэтому первая клетка из счёта исключена, а в остальных
+        # цифра должна стоять не одна: у величины есть единица либо знак пары.
+        cells = [c.strip() for c in ln.strip("|").split("|")]
+        if len(cells) > 1:
+            cells = cells[1:]
+        if any(re.search(r"\d", c) and not re.fullmatch(r"\*{0,2}\d+[а-яa-z]?\*{0,2}", c)
+               for c in cells):
+            n += 1
     return n
 
 
@@ -310,6 +324,8 @@ def main():
         return kalibrovka(a.kalibrovka, a.tseli)
 
     k = kal()
+    o = k.get("oshibka") or {}
+    dopusk = float(o.get("max_abs") or 0)
     fayly = files_for(set(a.tseli))
     rows = [ves(f, k) for f in fayly]
     if not rows:
@@ -329,9 +345,17 @@ def main():
         flag = ""
         if declared:
             flag = f"  пол {pred} объявлен (изм. блоков {r['izmerennyh']})"
-        if r["ves"] > pred:
+        # Порог сравнивается с ДОПУСКОМ, равным замеренной ошибке этого
+        # прогона против собранного PDF. Иначе оценка требует завышенного
+        # пола: кадру `s12` при весе 117 по PDF и оценке 122 пришлось бы
+        # объявить 125, и объявленный пол перестал бы означать «решение
+        # принято» — он означал бы «запас под чужую погрешность». Пол
+        # отвечает перед PDF; эта таблица — черновая, и она это говорит.
+        if r["ves"] > pred + dopusk:
             flag += (f"  ← тяжелее объявленного {pred}" if declared
                      else f"  ← тяжелее {pred}, ПОЛ НЕ ОБЪЯВЛЕН")
+        elif r["ves"] > pred:
+            flag += f"  (оценка {r['ves']} в допуске ±{dopusk:g} к полу {pred})"
         nf = "" if 500 <= r["notes"] <= 800 else "  заметки вне 500–800"
         print(f"{r['id']:6} {r['tip']:10} {r['ves']:4} | {r['title']:4} "
               f"{r['blocks']:4}({r['nbl']}) {r['scheme']:5} {r['cols']:4} "
@@ -382,7 +406,9 @@ def main():
     print(f"минут {sum(r['timing'] for r in rows):.2f} · заметки "
           f"{min(r['notes'] for r in rows)}–{max(r['notes'] for r in rows)}")
     o = k.get("oshibka")
-    print(f"\nкалибровка: {k['istochnik']}")
+    print(f"\nдопуск к полу: ±{dopusk:g} слова — замеренная ошибка этого "
+          f"прогона. Пол отвечает перед собранным PDF, не перед оценкой.")
+    print(f"калибровка: {k['istochnik']}")
     if o:
         print(f"ошибка ЭТОГО прогона против собранного PDF: медиана |Δ| "
               f"{o['median_abs']} · среднее Δ {o['mean']:+} · макс |Δ| "

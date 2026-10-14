@@ -1,0 +1,30 @@
+{
+  "glif_bullita": -0.001,
+  "strelka": -0.028,
+  "glif_stolbtsa": 1.041,
+  "a": 1.0,
+  "b": -0.288,
+  "istochnik": "sec-1-2-3.pdf, разделы 1,2,3, 38 страниц, 2026-10-14",
+  "oshibka": {
+    "median_abs": 0.0,
+    "mean": 0.29,
+    "max_abs": 2
+  },
+  "oshibka_po_razdelam": {
+    "1": {
+      "n": 10,
+      "median_abs": 1.0,
+      "mean": 0.7
+    },
+    "2": {
+      "n": 11,
+      "median_abs": 0.0,
+      "mean": 0.09
+    },
+    "3": {
+      "n": 17,
+      "median_abs": 0.0,
+      "mean": 0.18
+    }
+  }
+}

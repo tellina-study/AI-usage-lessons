@@ -1877,3 +1877,1116 @@ identification in AI models».
 «оценить предсказания ИИ на настоящих клинических сценариях» — то есть студента ставят ровно
 в ту ситуацию, про искажения которой ему не рассказали.
 
+---
+
+# Часть III. Массовые и профессиональные программы (Stanford Coursera, Johns Hopkins, Michigan, DeepLearning.AI)
+
+**Почему они здесь.** Это курсы, через которые тему проходит на порядок больше людей, чем через
+MIT: у одной стэнфордской специализации 97 392 записавшихся. Если искать, где рубрика «ж»
+должна была бы появиться раньше всего — то здесь, потому что аудитория не инженерная.
+
+**Техническая оговорка:** страницы Coursera отдают перечни модулей прямо в HTML, поэтому
+`curl` + снятие тегов даёт **полный текст, а не сниппет** — всё ниже прочитано целиком.
+А вот `ep.jhu.edu`, `publichealth.jhu.edu`, `malonecenter.jhu.edu`, `bme.jhu.edu`,
+`online.stanford.edu`, `engineering.jhu.edu` отдают **403 (Cloudflare)** и curl, и WebFetch —
+они брались через Wayback, это помечено по каждому пункту. **Архив Интернета посреди работы
+ушёл в недоступность** («Internet Archive services are temporarily offline»), из-за чего два
+пункта остались непроверенными до конца — они помечены как пробел, а не как отсутствие.
+
+## 22. Stanford «AI in Healthcare» — специализация Coursera (Nigam Shah и др.)
+
+**Прочитано** (`[ПРОЧИТАНО целиком]`, 2026-10-14):
+https://www.coursera.org/specializations/ai-healthcare и страницы всех пяти курсов:
+`/learn/intro-to-healthcare`, `/learn/introduction-clinical-data`,
+`/learn/fundamental-machine-learning-healthcare`,
+`/learn/evaluations-ai-applications-healthcare`, `/learn/ai-in-healthcare-capstone`.
+Плюс https://web.archive.org/web/20251002120517/https://online.stanford.edu/programs/artificial-intelligence-healthcare
+*(напрямую stanford.edu отдаёт 202 и пустое тело — защита от роботов).*
+
+**Версия:** дословно из раздела вопросов: `Original Release Date: 08/10/2023` /
+`Expiration Date: 08/09/2029` для курсов 1–4; итоговый проект — `11/16/2023`.
+Коды Stanford: SOM-XCHE0008–0012. Организуют School of Medicine и Stanford Center for Health
+Education; аккредитовано для непрерывного медицинского образования (ACCME/ACPE/ANCC).
+**97 392 записавшихся** на момент чтения.
+**Кому, дословно:** «Beginner level — No prior experience required»; «This specialization is
+designed for **both healthcare providers and computer science professionals**, offering
+insights to facilitate collaboration between the disciplines.»
+**Преподаватели по курсам:** К1 Nigam Shah, Mildred Cho, Laurence Baker. К2 Nigam Shah,
+Steven Bagley, David Magnus. К3 Matthew Lungren, Serena Yeung. К4 Tina Hernandez-Boussard,
+Mildred Cho. К5 Matthew Lungren, Nigam Shah и ещё трое.
+
+### Курс 1 — «Introduction to Healthcare» (7 модулей, 12 ч)
+
+- **M1 «Overview of Health Care Systems and Key Challenges They Face»** (12 видео):
+  Introduction · A Simple Interaction Between Providers and Patients · The Problem of Risk ·
+  Solving the Problem of Risk: Risk Pooling · Insurance and Intermediaries for Risk Pooling ·
+  Beyond Patients, Providers, and Intermediaries · Overview of the Types and Roles of
+  Intermediaries · Overview of the Types and Roles of Providers · Providers and Levels of Care ·
+  The Challenge of Rising Health Care Costs · The Challenges of Quality and Access ·
+  **Lessons for AI and Data**
+- **M2 «Physicians, Physician Practices, and Physician Payment»** (12 видео):
+  Characteristics of Physician Practices · Physicians, Intermediaries, and Networks · Fee for
+  Service Payment · Procedure Codes and Diagnosis Codes · The Medicare Fee Schedule ·
+  Capitation Payment Systems: Overview and Structure · Capitation Payment Systems: Scope of
+  Capitation · Episode-Based Payment Systems and Salary Systems · Risk Shifting in Physician
+  Payment · **Incentives Created by Physician Payments** · Lessons for AI and Data · Wrap Up
+- **M3 «Hospitals, Other Provider Organizations, and Related Payment Systems»** (13 видео):
+  Basic Operations and Characteristics of Hospitals · How Hospitals Relate to Physicians and
+  Intermediaries · Hospital Payment Methods: Charge Masters/FFS and Per Diem · …: DRGs ·
+  …: Global Budgets · Hospital Payment Topics · Risk and Incentives in Hospital Payment ·
+  Independent Facilities – Structure and Payment · Health Care Systems and Larger Provider
+  Organizations · Pay for Performance · EMRs, EHRs, and PHRs · Providers, Provider Incentives,
+  Data, and Tools · Wrap Up
+- **M4 «Intermediaries, Health Insurance Plans, and Health Care Financing»** (15 видео):
+  Intermediaries and their Goals · … and the Broad Challenges Facing Health Care Systems ·
+  Networks and Selective Contracting · Provider Payment Methods and Levels · Patient Cost
+  Sharing · Utilization Review, Gatekeepes, and Other Methods of Directly Influencing Care
+  *[sic, опечатка в источнике]* · Coverage Decisions · Combinations and Tradeoffs · Three
+  Stereotypical Plan Designs: «Traditional», HMO, and PPO · Some More Recent Trends in Plan
+  Design · Public and Private Plans · The U.S. Medicare Program · The U.S. Medicaid Program ·
+  Intermediaries: Lessons for Innovators · Wrap Up
+- **M5 «Health Care Products and Prescription Drugs, and Quality Measurement and
+  Improvement»** (13 видео): Health care products, approvals, and prescription drugs ·
+  Prescription Drug Approval Processes · Patents, Branded Drugs, and Generic Drugs · Patients,
+  Insurance, Formularies, and Prescription Drugs · Intermediaries, Pharmacy Benefit Managers,
+  Drug Prices, and Rebates · Products and Prescription Drugs Wrap Up · Quality of Care Overview
+  and Key Organizing Concepts · Overview, and Structural Quality Measures · Process Quality
+  Measures · Outcome Quality Measures and Satisfaction Measures · Overview of Some Approaches
+  to Improving Quality · Innovation and Data in Quality Improvement · Wrap Up
+- **M6 «Ethics»** (4 видео): Overview of AI applications in delivery of health care services
+  and ethical issues · Ethical frameworks for health care and for AI · AI and incentives in
+  health care delivery and payment structures · More examples of AI and incentives…
+- **M7 «Course Wrap Up»**
+
+### Курс 2 — «Introduction to Clinical Data» (8 модулей, 12 ч)
+
+- **M1 «Asking and answering questions via clinical data mining»** (12 видео): Welcome ·
+  Introduction to the data mining workflow · Real Life Example · Example: Finding similar
+  patients · Example: Estimating risk · Putting patient data on timeline · Revisit the data
+  mining workflow steps · Types of research questions · Research questions suited for clinical
+  data · **Example: making decision to treat** · Properties that make answering a research
+  question useful · Wrap Up
+- **M2 «Data available from Healthcare systems»** (16 видео): Review of the healthcare system ·
+  Review of key entities and the data they collect · **Actors with different interests** ·
+  Common data types in Healthcare · Strengths and weaknesses of observational data ·
+  **Bias and error from the healthcare system perspective** · Bias and error of exposures and
+  outcomes · How a patient's exposure might be misclassified · How a patient's outcome could be
+  misclassified · Electronic medical record data · Claims data · Pharmacy · Surveillance
+  datasets and Registries · Population health data sets · A framework to assess if a data
+  source is useful · Wrap Up
+- **M3 «Representing time, and timing of events, for clinical data mining»** (12 видео):
+  Introduction · Time, timelines, timescales and representations of time · Timescale: Choosing
+  the relevant units of time · What affects the timescale · Representation of time · Time series
+  and non-time series data · Order of events · Implicit representations of time · Different ways
+  to put data in bins · Timing of exposures and outcomes · **Clinical processes are
+  non-stationary** · Wrap Up
+- **M4 «Creating analysis ready datasets from patient timelines»** (18 видео): Turning clinical
+  data into something you can analyze · Defining the unit of analysis · Using features and the
+  presence of features · How to create features from structured sources · Standardizing
+  features · Dealing with too many features · The origins of missing values · Dealing with
+  missing values · Summary recommendations for missing values · Constructing new features ·
+  Examples of engineered features · When to consider engineered features · Main points about
+  creating analysis ready datasets · Structured knowledge graphs · So what exactly is in
+  a knowledge graph · What are important knowledge graphs · How to choose which knowledge graph
+  to use · Wrap Up
+- **M5 «Handling unstructured healthcare data: text, images, signals»** (19 видео):
+  Introduction to unstructured data · What is clinical text · The value of clinical text ·
+  What makes clinical text difficult to handle · Privacy and de-identification · A primer on
+  Natural Language Processing · Practical approach to processing clinical text · Summary –
+  Clinical text · Overview and goals of medical imaging · Why are images important? · What are
+  images? · A typical image management process · Summary – Images · Overview of biomedical
+  signals · Why are signals important? · What are signals? · What are the major issues with
+  using signals? · Summary – Signals · Wrap Up
+- **M6 «Putting the pieces together: Electronic phenotyping»** (11 видео): Introduction to
+  electronic phenotyping · Challenges in electronic phenotyping · Specifying an electronic
+  phenotype · Two approaches to phenotyping · Rule-based electronic phenotyping · Examples of
+  rule based electronic phenotype definitions · Constructing a rule based phenotype definition ·
+  Probabilistic phenotyping · Approaches for creating a probabilistic phenotype definition ·
+  Software for probabilistic phenotype definitions · Wrap Up
+- **M7 «Ethics»** (7 видео): Introduction to Research Ethics and AI · The Belmont Report:
+  A Framework for Research Ethics · Ethical Issues in Data sources for AI · Secondary Uses of
+  Data · Return of Results · AI and The Learning Health System · Ethics Summary
+- **M8 «Course Conclusion»**
+
+### Курс 3 — «Fundamentals of Machine Learning for Healthcare» (8 модулей, 14 ч)
+
+- **M1 «Why machine learning in healthcare?»** (7 видео): Why machine learning in healthcare? ·
+  History of AI in Medicine · Course Overview · Why Healthcare Needs Machine Learning ·
+  Machine Learning Magic · Machine Learning, Biostatistics, Programming ·
+  **«Can Machine Learning Solve Everything?»**
+- **M2 «Concepts and Principles… part 1»** (8 видео): Machine Learning Terms, Definitions, and
+  Jargon Part 1 / Part 2 · How Machines Learn Part 1 / Part 2 · Supervised Machine Learning
+  Approaches: Regression and the «No Free Lunch» Theorem · Other Traditional Supervised Machine
+  Learning Approaches · Support Vector Machine (SVM) · Unsupervised Machine Learning
+- **M3 «Concepts and Principles… part 2»** (10 видео): Introduction to Deep Learning and Neural
+  Networks · Deep Learning and Neural Networks · Cross Entropy Loss · Gradient Descent ·
+  Representing Unstructured Image and Text Data · Convolutional Neural Networks · Natural
+  Language Processing and Recurrent Neural Networks · The Transformer Architecture for
+  Sequences · Commonly Used and Advanced Neural Network Architectures · Advanced Computer
+  Vision Tasks and Wrap-Up
+- **M4 «Evaluation and Metrics for machine learning in healthcare»** (5 видео): Introduction to
+  Model Performance Evaluation · Overfitting and Underfitting · Strategies to Address
+  Overfitting, Underfitting and Introduction to Regularization · Statistical Approaches to Model
+  Evaluation · Receiver Operator and Precision Recall Curves as Evaluation Metrics
+- **M5 «Strategies and Challenges in Machine Learning in Healthcare»** (9 видео): Introduction
+  to Common Clinical Machine Learning Challenges · **Utility of Causative Model Predictions** ·
+  **Context in Clinical Machine Learning** · Intrinsic Interpretability · Medical Data
+  Challenges in Machine Learning Part 1 / Part 2 · How Much Data Do We Need? ·
+  **Retrospective Data in Medicine and «Shelf Life» for Data** · Medical Data: Quality vs Quantity
+- **M6 «Best practices, teams, and launching your machine learning journey»** (6 видео) —
+  **это и есть единственный модуль по человеческому фактору во всей специализации:**
+  Clinical Utility and Output Action Pairing · Taking Action – Utilizing the OAP Framework ·
+  Building Multidiciplinary Teams for Clinical Machine Learning *[sic]* · Governance, Ethics,
+  and Best Practices · **«On Being Human in the Era of Clinical Machine Learning»** (8 мин) ·
+  **«Death by GPS and Other Lessons of Automation Bias»** (5 мин).
+  Материалы для чтения: Study Guide Module 6 · Citations and Additional Readings ·
+  Video Image Credit · **Recommended Reading for Ethics** (15 мин)
+- **M7 «Foundation models (Optional Content)»** (8 видео, 97 мин): Introduction to Foundation
+  Models · Adapting to Technology · General AI and Emergent Behavior · How Foundation Models
+  Work · Healthcare Use Cases for Text Data · Healthcare Use Cases for Non-textual Unstructured
+  Data · **Challenges and Pitfalls** · Conclusion
+- **M8 «Course Conclusion»**
+
+### Курс 4 — «Evaluations of AI Applications in Healthcare» (8 модулей, 11 ч)
+
+- **M1 «AI in Healthcare»** (10 видео): Learning Objectives · Common Definitions · Overview ·
+  Why AI is needed in Healthcare · Examples of AI in Healthcare · Growth of AI in Healthcare ·
+  Questions Answered by AI · AI Output · **«Think beyond area under the curve»** · Recap
+- **M2 «Evaluations of AI in Healthcare»** (15 видео): Learning Objectives · Recap: Framework ·
+  Stakeholders · **Clinical Utility** · **Outcome: Action Pairing, An Overview** ·
+  **Lead Time** · Type of Action · OAP Examples · **Number Needed to Treat** ·
+  **Net Benefits** · **Decision Curves** · Feasibility overview · **Implementation Costs** ·
+  **Clinical Evaluation and Uptake** · Summary
+- **M3 «AI Deployment»** (19 видео): Learning Objectives · The Problem · Practical Questions
+  Prior to Deployment · Deployment Pathway · Design and Development · Stakeholder Involvement ·
+  Data Type and Sources · Settings · In Silico Evaluation · **«Net Utility & Work Capacity»** ·
+  Statistical Validity · **«Care Integration, Silent Mode»** · Clinical Integration,
+  Considerations · Technical Integration · Deployment Modalities · Continuous Monitoring and
+  Maintenance · Challenges of Deployment · **Sepsis Example** · Summary
+- **M4 «Downstream Evaluations of AI in Healthcare: Bias and Fairness»** (18 видео): Learning
+  Objectives · Real World Examples of AI Bias · Introduction – Types of Bias · Historical Bias ·
+  Representation Bias · Measurement Bias · Aggregation Bias · Evaluation Bias ·
+  **Deployment Bias** · What is algorithmic Fairness · Anti-classification · Parity
+  Classification · Calibration · Applying Fairness Measures · Lack of Transparency ·
+  Minimal Reporting Standards · Opportunities and Challenges · Summary
+- **M5 «The Regulatory Environment for AI in Healthcare»** (18 видео): Learning Objectives ·
+  The Problem · International Definitions Used for Regulatory Purposes · Definition Statement &
+  Risk Framework · Valid Clinical Association · Analytical Evaluation · Clinical Evaluation ·
+  General Control · de novo Notifications · Software Modification · TPLC ·
+  **Locked vs Adapted AI solutions** · Examples · Non-Regulated Products · EU Regulations ·
+  Chinese Guidelines · OMB Guidelines · Summary
+- **M6 «Best Ethical Practices for AI in Health Care»** — только тексты (3): Problem
+  Formulation · Identifying Conflicts of Interest · Mitigating Conflicts of Interest
+- **M7 «AI and Medicine (Optional Content)»** (9 видео): Introduction: Navigating the
+  Intersections of AI and Medicine · Life Cycle of AI · A Deep Dive into Historical and Societal
+  Dimensions · Race-Based Medicine and Race-Aware Approach · Bias Mitigation Strategies ·
+  Exploring Potentials and Ethical Quandaries · Dismantling Race-Based Medicine · Deploying AI
+  into Healthcare Settings · Conclusion
+- **M8 «Course Wrap Up»**
+
+### Курс 5 — «AI in Healthcare Capstone» (5 модулей, 11 ч)
+M1 «Getting Started, Phase 1: Data Collection» · M2 «Phase 2: Model Training Part 1» ·
+M3 «Phase 3: Model Training Part 2» · M4 «Phase 4: Model Evaluation» · M5 «Phase 5: Model
+Deployment and Regulation, Wrap Up». Каждый модуль — текст + 2 оцениваемых проекта
++ 2 взаимных проверки.
+
+### Чтение и приговор по рубрике «ж»
+
+**Обязательное чтение есть, но названия закрыты.** В каждом модуле курсов 2–4 есть материал,
+названный буквально «**Citations and Additional Readings**»; в курсе 3 модуль 6 добавляет
+«**Recommended Reading for Ethics**». Содержимое доступно только записавшимся — **ни одного
+названия статьи достать не удалось, и выдумывать я их не буду. Это пустая клетка, не догадка.**
+
+**Отдельного модуля по взаимодействию человека и модели НЕТ.** Вся тема во всей
+пятикурсовой специализации — это **четыре позиции**:
+- «**Death by GPS and Other Lessons of Automation Bias**» (5 минут, курс 3 модуль 6) —
+  **единственный материал про искажение решения под подсказкой во всей программе.** Сплошной
+  поиск по страницам всех пяти курсов по шаблону
+  `automation bias|deskill|skill decay|over-reliance|alert fatigue|human-AI team|anchoring|
+  complacency|vigilance` даёт **ровно одно совпадение — это оно**;
+- «On Being Human in the Era of Clinical Machine Learning» (8 минут);
+- «Net Utility & Work Capacity» и «Care Integration, Silent Mode» (по 2 минуты, курс 4
+  модуль 3) — угол нагрузки и надзора.
+
+**Падение квалификации, якорение на подсказке и усталость от оповещений не встречаются
+ни в одном названии.**
+
+**Обратите внимание на название единственного материала про automation bias:** он назван
+по бытовому отказу автомобильного навигатора («Death by GPS»), а не по клиническому случаю.
+Пятиминутное видео с бытовой метафорой — это весь объём, который ведущая медицинская школа
+США отводит на искажение врачебного решения под подсказкой в курсе на 97 тысяч человек.
+
+**Соседняя, не-Coursera программа Стэнфорда:** «Applications of Machine Learning in Medicine
+Program» (`[ПРОЧИТАНО через Wayback]`
+https://web.archive.org/web/20250627172435/https://online.stanford.edu/programs/applications-machine-learning-medicine-program),
+ведёт Nigam Shah. Всего два курса, разбивки по модулям нет:
+**«Data Foundations for Machine Learning in Medicine»** (XMLPH110, 10 ч) и
+**«Model Development, Deployment, and Ethical Considerations»** (XMLPH210, 10 ч).
+
+## 23. Johns Hopkins
+
+### 23a. Школа общественного здоровья Bloomberg — официальный каталог 2026-27
+
+**Прочитано:** https://e-catalogue.jhu.edu/public-health/ `[ПРОЧИТАНО целиком, 7786 строк
+после снятия тегов]`. Заголовок дословно: «Bloomberg School of Public Health | 2026-27 Edition».
+*(`publichealth.jhu.edu/courses` — 403 и для curl, и для WebFetch; его копия в Wayback
+`web/20260908070328` открывается, но сам указатель отрисовывается на JS и строк курсов
+не отдаёт. `course.jhsph.edu` отвечает, но закрыт входом.)*
+
+**Курса под названием «Artificial Intelligence in Public Health» в школе НЕТ** — поиск точной
+строки по полному тексту каталога даёт ноль. **Это проверенное отрицание, а не пустая выдача
+поиска.** Полный набор курсов с ИИ в названии, дословно из каталога:
+
+| Номер | Точное название | Кредиты |
+|---|---|---|
+| PH.140.618 | AI Programming in Python for Public Health. | 2 |
+| PH.140.629 | AI for Public Health in Python. | 4 |
+| PH.140.644 | Statistical Machine Learning: Methods, Theory, and Applications. | 4 |
+| PH.140.650 | AI Methods for Geospatial Data. | 3 |
+| PH.140.690 | Artificial Intelligence for Improved Patient Outcomes. | 1 |
+| PH.140.697 | AI Tools for Data Science and Statistics. | 1 |
+| PH.340.611 | Using Generative Artificial Intelligence (AI) to Improve Public Health. | 1 |
+| PH.340.621 | Using Generative Artificial Intelligence (AI) to Improve Public Health. | 1 |
+| PH.340.631 | Practical Skills in Using Generative Artificial Intelligence (GenAI) in Public Health. | 2 |
+| PH.550.610 | Using Generative Artificial Intelligence (AI) to Improve Public Health. | 1 |
+| PH.550.616 | Critical Thinking About Artificial Intelligence (AI) and Public Health. | 2 |
+| PH.220.612 | IH Professional Seminar Series: AI in Global Health. | 1 |
+| PH.221.684 | Transforming Health Systems Research through Artificial Intelligence. | 3 |
+| PH.221.696 | Introducing AI in Clinical Settings. | 2 |
+| PH.224.600 | Applied Artificial Intelligence for the Social, Behavioral and Mental Health Sciences. | 3 |
+
+Курсов серии 280.xxx по ИИ не существует. Описание PH.220.612 в каталоге явно устаревшее
+и шаблонное (рассказывает про résumé, сопроводительные письма и LinkedIn, а не про ИИ) —
+привожу как есть.
+
+**Школа публикует только описания курсов, без разбивки по модулям или неделям** — это свойство
+каталога, подтверждено по всем 15 строкам. Три самых близких описания, дословно:
+
+- **PH.140.690 «Artificial Intelligence for Improved Patient Outcomes» (1 кр.):** «Equips
+  students with the essential skills to build and evaluate AI and predictive modeling tools in
+  medicine… **Addresses the limits of AI's potential to benefit patients** and presents
+  actionable insights to overcome these challenges.»
+- **PH.221.696 «Introducing AI in Clinical Settings» (2 кр.):** «Introduces health professionals
+  to the fundamentals of artificial intelligence (AI) in clinical settings… **Emphasizes change
+  management, risk mitigation, and ethical considerations such as medical liability and job
+  displacement.** Develops a solution to an AI-related challenge at their workplace…»
+- **PH.550.616 «Critical Thinking About Artificial Intelligence (AI) and Public Health»
+  (2 кр.):** «Provides an interactive forum for discussion about key emerging topics in AI and
+  public health. Strengthens critical thinking skills with a focus on AI and health. Supplements
+  AI skills-based courses by encouraging students to think more deeply about key topics.» —
+  **перечня тем не опубликовано**, открытого силлабуса найти не удалось.
+
+**Искажение решения, падение квалификации, усталость от оповещений, измеренная работа пары:
+НОЛЬ вхождений во всём каталоге 2026-27.** Сплошной поиск по шаблону
+`automation bias|deskilling|skill decay|over-reliance|alert fatigue|human-AI|human-in-the-loop|
+anchoring|cognitive bias` по всем 7786 строкам даёт **одно** совпадение, и оно **не в курсе
+по ИИ**: это курс по поведенческой экономике здоровья, где перечислены «framing and anchoring,
+mental accounting… heuristics and biases». Самое близкое из курсов по ИИ — формулировка
+«**job displacement**» у PH.221.696.
+
+### 23b. JHU на Coursera — «Introduction to Using Generative AI in Public Health»
+
+**Прочитано целиком:** https://www.coursera.org/learn/generative-ai-to-improve-public-health
+Ведёт **Brian Klaas**. 3 модуля, 2535 записавшихся. Это сетевая версия PH.340.611 / 550.610.
+
+- **M1 «The How and What? of Generative AI»** (11 видео, 155 мин): ChatGPT · Claude ·
+  Microsoft Copilot & Comparison · General AI · Generative AI · Current Approaches, Current
+  Problems · Prompt Engineering · **Truth** · **Bias** · **Sociocultural Harms** ·
+  **Confabulations**
+- **M2 «Applying Generative AI to Public Health Research and Practice»** (7 видео, 144 мин):
+  Education/Learning · Brainstorming · Data Analysis · How Faculty Are Using Generative
+  Artificial Intelligence in Their Work · The Future of Generative Artificial Intelligence for
+  Use in Public Health Research · Case Studies of Generative AI in Public Health Research:
+  Digital Global Health and Bioethics · Getting Involved in Public Health Research With
+  Generative AI. **Названная литература:** «AI Assisted Causal Effect Estimation» ·
+  «Simulations for Social Science Experiments» · «Generating Novel Research Ideas» ·
+  «Activity: Teach Yourself Using AI»
+- **M3 «The Future of Generative AI: Ethical and Big Picture Considerations»** (1 видео,
+  37 мин): Areas of Future Concern. **Названная литература: «AI and Trust».**
+
+Модуля по взаимодействию человека и модели нет. По искажению решения, падению квалификации,
+чрезмерному доверию и усталости от оповещений — ноль. Единственная позиция из семейства
+«доверие» — текст «**AI and Trust**» (название открыто, содержание закрыто).
+
+Отдельно проверено: партнёрская страница https://www.coursera.org/partners/jhu **не содержит**
+никакой специализации JHU «AI in Healthcare» — ссылка «AI in Healthcare Specialization»
+в её подвале это общесайтовая реклама **стэнфордской** специализации.
+
+### 23c. JHU Engineering for Professionals (инженерная школа Whiting)
+
+**Курса под названием «Artificial Intelligence in Medicine» в EP не существует**, и ничто
+в серии 585.xxx по биомедицинской инженерии ему не соответствует. Проверено по полному
+официальному перечню
+https://e-catalogue.jhu.edu/engineering/engineering-professionals/applied-biomedical-engineering/
+`[ПРОЧИТАНО целиком, перечислены все 60+ строк EN.585.xxx]`. Единственный курс по ИИ в 585.xxx:
+
+**EN.585.649 «Artificial Intelligence and Machine Learning for Global Health» (3 кр.)** —
+дословно: «…foundational course in AI for Global Health… does not require prior background in
+machine learning or global public health. It takes a unique approach by teaching foundational
+machine learning topics using case studies and real-life data from global health innovation
+projects across Africa, South Asia, and Latin America. Students will learn machine learning
+topics alongside **weekly case studies involving datasets from projects on Malaria, Maternal
+Health, Neonatal Health, Primary Health Care, Cancer, and more.**… **Prerequisites: Programming
+knowledge in a high-level language such as Python.**»
+Также в серии: EN.585.719 Sparse Representations in Computer Vision and Machine Learning ·
+EN.585.771 Biomedical Data Science · EN.585.783 Introduction to Brain-Computer Interfaces.
+
+**Настоящий курс EP про ИИ в здравоохранении лежит в программе по ИИ, а не в биомедицине:**
+
+**EN.705.617 «Artificial Intelligence in Healthcare» (3 кр.)** —
+https://e-catalogue.jhu.edu/engineering/engineering-professionals/artificial-intelligence/
+`[ПРОЧИТАНО]` + https://web.archive.org/web/20251015083601/https://ep.jhu.edu/courses/705617-artificial-intelligence-in-healthcare/
+`[ПРОЧИТАНО через Wayback; напрямую ep.jhu.edu — 403]`.
+Следующий набор — **весна 2026**; сетевой асинхронный; 5455 долларов;
+**ведут Ian McCulloh и Daniel Byrne**. Описание дословно: «…Structured around real-world
+healthcare workflows, students will explore how artificial intelligence can be integrated to
+enhance clinical decision-making, improve operational efficiency, and support patient outcomes…
+from predictive modeling and clinical decision support to **robotic process automation** and the
+responsible use of large language models… They then build and evaluate AI models that augment
+clinical reasoning, such as risk scoring and diagnostic support. The course also explores the
+application of generative AI to medical documentation and patient communication and culminates
+in the implementation of robotic and process automation tools to **streamline healthcare
+workflows**…» **Понедельного плана не опубликовано** — ссылка «Syllabus» закрыта входом.
+
+Близкие курсы той же программы (описания прочитаны по тому же адресу каталога):
+- **EN.705.614 «AI and Human Relationships»** — дословно: «…examines how artificial
+  intelligence is reshaping human relationships in areas that have traditionally relied on human
+  presence—such as companionship, teaching, therapy, management, and collaboration. Students
+  will explore **when AI enhances human connection and when it substitutes for or undermines
+  it**… AI in workplace relationships, including **algorithmic management, performance
+  monitoring**, and HR systems…»
+- **EN.705.612 «Values and Ethics in Artificial Intelligence»** (включает «**technological
+  unemployment**») · **EN.705.613 «Responsible AI»** · **EN.705.640 «Cognitive and Behavioral
+  Foundations for Artificial Intelligence»** · **EN.705.714 «Artificial Intelligence in
+  Biology – Cancer Detection & Drug Development»** · **EN.705.716 «AI Systems for Life Sciences»**
+- **EN.520.659 «Machine Learning for Medical Applications»** в EP существует (подтверждено
+  через Wayback CDX и снимок 23.01.2025, где видно только «Course Number 520.659»). Описание
+  **достать не удалось** — тело снимка обрезано, а Архив Интернета ушёл в недоступность прежде
+  чем удалось взять другой срез. **Открытый пробел, помечаю честно.**
+
+### 23d. JHU Malone Center — «Data Science for AI in Healthcare»
+
+**Прочитано через Wayback** `[ПРОЧИТАНО]`:
+https://web.archive.org/web/20250426051818/https://malonecenter.jhu.edu/ai-course/
+*(живой сайт — 403 и для curl, и для WebFetch).*
+**Кому, дословно:** «designed for **clinicians and engineers** who would like to learn more
+about machine learning and artificial intelligence and their applications in health care.»
+Требований нет. Финансирование — грант DELTA ректората JHU. Ведут Swaroop Vedula,
+Mathias Uberath, Anand Malpani, Brian Caffo, Greg Hager.
+**Оговорка:** на этом снимке статус набора — «will be live this fall», то есть версия
+**до запуска**.
+
+**Полный силлабус, дословно:**
+- Module 1: Terminologies
+- Module 2: Fundamentals of Data Science
+- Module 3: Anatomy of Research Studies
+- Module 4: Case Study
+- **Module 5: When Machines Don't Work**
+- Module 6: Interpretable AI in Healthcare
+- Module 7: Society & AI in Healthcare
+
+Разбивки по занятиям нет. Названная литература на странице одна: «Reznick, et. al. Task Force
+Report on Artificial Intelligence and Emerging Digital Technologies. Royal College of Physicians
+and Surgeons of Canada» — цитируется в обоснование того, что ИИ стал «new fundamental
+competency for healthcare providers».
+**Модуль 5 — про режимы отказа модели, а не про человеческий фактор**; слов про искажение
+решения и падение квалификации на странице нет.
+
+### 23e. JHU ExecEd — «AI for Improved Patient Outcomes» (однодневный)
+
+**Прочитано через Wayback** `[ПРОЧИТАНО]`:
+https://web.archive.org/web/20251214201006/https://engineering.jhu.edu/ExecEd/course/ai-for-improved-patient-outcomes/
+*(живая страница — 403).* Даты: 14.01.2026 и 17.04.2026, 1365 долларов, 6,25 часа
+AMA PRA Cat-1. Ведёт **Daniel Byrne** (бывший руководитель исследований ИИ в Вандербильте).
+**Кому, дословно:** «Physician-scientists eager to build and test AI tools · Biomedical
+informatics professionals · Biostatisticians interested in AI · Nursing leaders and
+researchers · Chief Medical Informatics Officers · Healthcare executives and administrators
+evaluating AI vendors · Entrepreneurs in the AI healthcare space.»
+**Перечня занятий нет**, только цели. Но формулировки целей прямо по нашей теме, дословно:
+«improving outcomes, **reducing clinician workload**»; «addressing common challenges such as
+**regression to the mean, label leakage, and misinterpreted accuracy metrics**»; «identify
+clinically valuable AI applications aimed at enhancing patient safety and **reducing clinician
+burnout**»; «**cut through marketing hype**».
+
+### 23f. ★ JHU + Great Learning — «AI and Agentic AI in Healthcare»: единственная программа с модулем про переезд нагрузки
+
+**Прочитано целиком:** https://online.lifelonglearning.jhu.edu/jhu-ai-in-healthcare-certificate-program
+**Версия:** действующий набор, «Application closes on 15th Oct 2026»; отзывы слушателей
+датированы сентябрём 2026. 10 недель сетевого обучения, 6 CEU, **без требований
+к программированию**. Ведут **Ian McCulloh** (директор исполнительного и профессионального
+образования по ИИ в JHU) и **Daniel Byrne** — те же двое, что читают EN.705.617.
+
+**Заявленные результаты программы включают, дословно:**
+> «**Analyze human baselines, prospect theory, status quo bias, and risk-based approaches in
+> clinical workflows**»
+> «**Lead through the shift from manual task execution to human-in-the-loop and human-on-the-loop
+> agent supervision**»
+
+**Полная программа, дословно:**
+- **PRE-WORK — HISTORY OF AI IN HEALTHCARE**
+- **MODULE 1: FOUNDATIONS OF AI FOR HEALTHCARE**
+  - WEEK 1: AI IN HEALTHCARE: FOUNDATIONS AND FRAMEWORKS
+  - WEEK 2: UNDERSTANDING THE BUILDING BLOCKS OF AI IN HEALTHCARE
+- **MODULE 2: AI FOR INTELLIGENT DECISION SUPPORT** — описание модуля дословно: «…Participants
+  will **analyze the human baseline concept in AI, risk-based approaches, and psychological
+  factors such as prospect theory and status quo bias**. The module also covers AI's role in
+  **managing information overload**… and the challenges associated with **AI biases and human
+  oversight**.»
+  - **WEEK 3: AI FOR CLINICAL DECISION SUPPORT** — «…explore the concept of the **human
+    baseline** in AI, comparing it to risk-based approaches while considering **manual processes
+    and the effects of prospect theory and status quo bias**…»
+  - **WEEK 4: LARGE LANGUAGE MODELS AND THE SHIFT TO AGENTIC AI** — «…how LLMs and Agents
+    automate administrative tasks, facilitate patient interactions, and **reduce clinician
+    burnout**, while also evaluating **LLM limitations such as reliability gaps, training-data
+    bias, and the need for human oversight**… A case study on the move from ambient scribes to
+    agentic documentation workflows…»
+  - **WEEK 5: AUTOMATION, ROBOTICS, AND AGENTIC AI IN HEALTHCARE** — «…Using a structured
+    evidence rubric, participants evaluate agentic deployments against accuracy thresholds,
+    **select appropriate oversight tiers, and work through the human-in-the-loop and
+    human-on-the-loop spectrum, along with common failure modes**, and regulatory fit…»
+- **MODULE 3: AI FOR POPULATION HEALTH AND DISEASE MANAGEMENT**
+  - WEEK 6: AI FOR IMPROVED HEALTH OUTCOMES · WEEK 7: LEARNING BREAK ·
+    WEEK 8: DESIGNING PREVENTIVE HEALTHCARE STRATEGIES
+- **MODULE 4: AI BUSINESS STRATEGY FOR HEALTHCARE**
+  - **WEEK 9: HEALTH DATA, ETHICS, AND AGENTIC AI GOVERNANCE** — «…**accountability in
+    multi-agent workflows**… the **audit trails** these systems require…»
+  - **WEEK 10: CHANGE MANAGEMENT AND THE SHIFT TO AGENT SUPERVISION** — «…The week also covers
+    the **workforce shift from task execution to agent supervision, including trust-building in
+    human-agent teams, override protocols, and monitoring the performance of deployed agents**.
+    A case study on this transition guides participants in developing a practical care team
+    transition plan.»
+- **MASTERCLASS 1: AI PROJECT MANAGEMENT AND DESIGN** · **MASTERCLASS 2: FUTURE TRENDS IN AI
+  AND HEALTHCARE** · **MASTERCLASS 3: AI-POWERED PRE-VISIT CLINICAL RISK ASSESSMENT USING n8n**
+
+**Названные разборы случаев, дословно:** «AI-Assisted COVID-19 Detection Using Chest X-Rays»
+(DeepCOVID-XR | COVID-Net | Qure.ai; Grad-CAM) · «From Ambient Scribes to Agentic Documentation
+Workflows» · «Evaluating an Agentic Prior Authorization Tool» · «Governing Multi-Agent AI Across
+Healthcare Systems» · **«From Task Execution to Agent Supervision»** — «Explore how care teams
+shift from executing tasks to supervising agents, covering **trust-building in human-agent
+teams, override protocols, and performance monitoring of deployed agents**.»
+
+**Приговор по нашему вопросу.** Это **единственная программа всей разведки, у которой есть
+модуль, названный про переезд нагрузки на надзор** — «WEEK 10: CHANGE MANAGEMENT AND THE SHIFT
+TO AGENT SUPERVISION». Но подана она как **управление изменениями и надзор за агентами, а не
+как искажение решения или падение квалификации**: буквальных слов «automation bias»,
+«deskilling», «skill decay» и «alert fatigue» на странице **нет вообще** (проверено поиском;
+при этом 11 вхождений «oversight», по 2 на «human-in-the-loop» и «human-on-the-loop», 1 на
+«clinician burnout»). Психология решения присутствует, но заведена через **теорию перспектив
+и склонность к сохранению текущего положения**, а не через якорение на подсказке модели.
+**Обязательного списка литературы не опубликовано.**
+
+### 23g. Что достать не удалось (по JHU)
+
+- **Силлабусы Malone Center помимо §23d:** `malonecenter.jhu.edu` живым отдаёт 403; страница
+  `/ai-course/` — единственная найденная с силлабусом. Для адреса
+  `ep.jhu.edu/courses/585631-artificial-intelligence-in-medicine/` в Wayback снимков нет
+  (`archived_snapshots: {}`) — что согласуется с тем, что такого курса в каталоге нет.
+- **`bme.jhu.edu/.../ai-in-medicine-for-medical-trainees/`** (направление магистратуры
+  «AI in Medicine» в биомедицинской инженерии JHU): живым 403, в Wayback никогда
+  не архивировалось (`archived_snapshots: {}`). О существовании известно **ТОЛЬКО ИЗ СНИППЕТА**
+  выдачи (название «AI in Medicine - Johns Hopkins Biomedical Engineering»). Перечень курсов
+  не получен.
+
+## 24. University of Michigan — «Data Augmented Technology Assisted Medical Decision Making» (DATA-MD)
+
+Это **самый близкий к курсу о суждении** из всех найденных курсов для врачей, и потому самый
+показательный.
+
+**Прочитано целиком:**
+https://www.coursera.org/learn/data-augmented-technology-assisted-medical-decision-making
+Ведёт **Cornelius James**. 4 модуля, 18 заданий, начальный уровень.
+**Версия, дословно:** «This activity is released for CME credit on **07/30/2024** and expires
+06/31/2027» *[sic]*; 3,5 часа AMA PRA Cat-1.
+**Кому, дословно:** «created with the needs of **medical students, residents, fellows,
+practicing physicians, advanced practice providers, and registered nurses** in mind. Others,
+like educators, computer programmers, and data scientists, may also find value.»
+Рамка курса, дословно: «The **National Academy of Medicine (NAM)** recommends ensuring that
+clinicians can effectively use technology – including AI – to improve the diagnostic process.»
+Выступающие: **Maggie Makar, Benjamin Li, Nicholson Price, Karandeep Singh**.
+
+- **M1 «Introduction to Artificial Intelligence and Machine Learning»** (17 видео, 71 мин):
+  Welcome to the Course · Welcome to Module 1 · Meet A.I.L.A. · What Is Big Data? · Locating the
+  Data and Datasets · AI/ML in Health Care · Meet Professor Maggie Makar · What is ML? ·
+  Methodologies · Supervised Learning · Unsupervised Learning · Reinforcement Learning ·
+  Deep Learning · How Models Are Developed: Part 1 / Part 2 / Part 3 ·
+  **Challenges With Model Development**. Тексты: Course Syllabus · Pre-Course Survey · Meet Your
+  Instructor · CME Information · **Bibliography** · Module 1 Lecture Notes
+- **M2 «Foundational Biostatistics and Epidemiology in AI/ML for Health Care Professionals»**
+  (15 видео, 57 мин): Welcome to Module 2 · Evidence-Based Medicine (EBM) · **Overlap of EBM,
+  AI, and ML** · **The Diagnostic Process** · Clinical Questions · Correlation vs. Causation ·
+  Hypothesis Testing · Confidence Intervals · Frequency Measures · Probability and Bayesian
+  Statistical Analysis · Bayes Theorem · Likelihood Ratios · How Do We Evaluate Predictive
+  Models? · Introduction to ROC Curves · **Calibration**.
+  **Вопрос к обсуждению, дословно: «What are some concerns that you have about using machine
+  learning in clinical practice?»**
+- **M3 «Using AI/ML to Augment Diagnostic Decisions»** (14 видео, 81 мин): Welcome to Module 3 ·
+  Clinical Case: Part 1 · The Diagnostic Process · **Critical Appraisal** · Validity of the
+  Results (Part 1 / Part 1 Continued / Part 2 / Part 2 Continued) · What Are the Results? ·
+  Clinical Case: Part 2 · **Do Results Apply?** (×3) · **Monitoring Performance**.
+  **Названная обязательная литература, дословно: «Core Reading: Assessment of Accuracy of an
+  Artificial Intelligence Algorithm to Detect Melanoma in Images of Skin Lesions»** +
+  Bibliography + Module 3 Lecture Notes. Задания: Module 3 Graded Assignment ·
+  **Diabetic Retinopathy Case**
+- **M4 «Ethical and Legal Use of AI/ML in the Diagnostic Process»** (15 видео, 75 мин):
+  Welcome to Week 4 · Medical Ethics · Data Availability · Data Collection and Curation ·
+  Meet Professor Nicholson Price · Patient Privacy and Data · Data Ownership · Goals of
+  Governance Key Stakeholders · Sources and Dimensions of Algorithmic Bias ·
+  **Bias and Performance Over Time** · **«Clinician Response to Bias»** (2 мин) · Transparency ·
+  **«Who Is Liable When Something Goes Wrong?»** (8 мин) · **«Trust»** (3 мин) ·
+  Takeaways For Providers.
+  **Вопрос к обсуждению, дословно: «What factors will influence your trust in AI-based
+  technologies designed for use in health care?»**
+
+**Приговор.** DATA-MD — курс для врачей, построенный вокруг **диагностического процесса**
+и **критической оценки** (M3 это по сути разбор «применимы ли результаты к моему пациенту»).
+И при этом **отдельного модуля по взаимодействию человека и модели в нём нет.** Вся тема —
+четыре коротких позиции: «Clinician Response to Bias» (2 мин), «Trust» (3 мин), «Who Is Liable
+When Something Goes Wrong?» (8 мин), «Monitoring Performance» (6 мин) — плюс два вопроса
+к обсуждению про доверие и опасения.
+Сплошной поиск по странице по шаблону `automation bias|deskilling|skill decay|over-reliance|
+alert fatigue|human-AI team|anchoring|complacency` — **ноль совпадений.**
+Обязательное чтение есть, и **одно название открыто** (работа про точность алгоритма
+распознавания меланомы); содержимое помодульных «Bibliography» закрыто — **пустая клетка,
+не догадка.**
+
+Проверено и отсеяно: «AI for Energy and Biomedical Applications» (UMich,
+https://www.coursera.org/learn/ai-for-energy-biomedical-applications, `[ПРОЧИТАНО]`) — три
+модуля, из них по медицине только «AI in Medical Imaging, Genomics, and Drug Discovery»;
+по человеческому фактору ничего. Партнёрская страница https://www.coursera.org/partners/umich
+**не содержит** специализации «AI in Healthcare»; курсы «AI for Healthcare» (ведёт «AI CERTs
+Team») и «AI Technologies in Healthcare» — **не мичиганские**, проверено открытием страниц.
+
+## 25. DeepLearning.AI «AI for Medicine» (Pranav Rajpurkar и др.)
+
+**Прочитано целиком:** https://www.coursera.org/specializations/ai-for-medicine и страницы
+`/learn/ai-for-medical-diagnosis`, `/learn/ai-for-medical-prognosis`,
+`/learn/ai-for-medical-treatment`.
+
+**Версия:** дата выпуска на страницах **не указана** (нет медицинской аккредитации — нет
+и отметки о сроке). 58 678 записавшихся на специализацию, 96 212 на первый курс.
+**Преподаватели (из JSON страницы): Eddy Shyu, Pranav Rajpurkar, Amirhossein Kiani,
+Bora Uyumazturk**; Andrew Ng появляется в видео.
+**Кому и требования, дословно:** «Intermediate level»; «No prior medical expertise is
+required!»; «a working knowledge of **deep neural networks, particularly convolutional
+networks, and proficiency in Python programming at an intermediate level** will be essential.»
+
+### Курс 1 — «AI for Medical Diagnosis» (3 раздела)
+**W1 «Disease Detection with Computer Vision»** (20 видео): Welcome to the Specialization with
+Andrew and Pranav · Demo · Recommended Pre-requisites · Medical Image Diagnosis · Eye Disease
+and Cancer Diagnosis · Building and Training a Model for Medical Diagnosis · Training,
+Prediction, and Loss · Image Classification and Class Imbalance · Binary Cross Entropy Loss
+Function · Impact of Class Imbalance on Loss Calculation · Resampling to Achieve Balanced
+Classes · Multi-Task · Multi-task Loss, Dataset size, and CNN Architectures · Working with
+a Small Training Set · Generating More Samples · Model Testing · Splitting Data by Patient ·
+Sampling · **Ground Truth and Consensus Voting** · Additional Medical Testing.
+**W2 «Evaluating Models»** (10 видео): Sensitivity, Specificity and Evaluation Metrics ·
+Accuracy in Terms of Conditional Probability · Sensitivity, Specificity and Prevalence ·
+PPV, NPV · Confusion Matrix · ROC Curve and Threshold · Varying the Threshold · Sampling from
+the Total Population · Confidence Intervals · 95% Confidence Interval.
+**W3 «Image Segmentation on MRI Images»** (10 видео): Medical Image Segmentation · MRI Data and
+Image Registration · Segmentation · 2D U-Net and 3D U-Net · Data Augmentation for Segmentation ·
+Loss Function for Image Segmentation · **Different Populations and Diagnostic Technology** ·
+**External Validation** · **Measuring Patient Outcomes** · Congratulations!
+
+### Курс 2 — «AI for Medical Prognosis» (4 раздела)
+**W1 «Linear Prognostic Models»** (11 видео): Course 2 Intro · Prerequisites and Learning
+Outcomes · Medical Prognosis · Examples of Prognostic Tasks · Atrial Fibrillation · Liver
+Disease Mortality · Risk of Heart Disease · Risk Score Computation · Evaluating Prognostic
+Models · Concordant Pairs, Risk Ties, Permissible Pairs · C-Index.
+**W2 «Prognosis with Tree-based Models»** (15 видео): Decision Trees for Prognosis · Decision
+Trees · Dividing the Input Space · Building a Decision Tree · How to Fix Overfitting · Survival
+Data · Different Distributions · Missing Data Example · Missing Completely at Random · Missing
+at Random · Missing Not at Random · Imputation · Mean Imputation · Regression Imputation ·
+Calculate Imputed Values.
+**W3 «Survival Models and Time»** (16 видео): Survival Models · Survival Function · Valid
+Survival Functions · Collecting Time Data · When a Stroke is Not Observed · Heart Attack Data ·
+Right Censoring · Estimating the Survival Function · Died Immediately, or Never Die · Somewhere
+in-between · Using Censored Data · Chain Rule of Conditional Probability · Deriving Survival ·
+Calculating Probabilities from the Data · Comparing Estimates · Kaplan Meier Estimate.
+**W4 «Build a Risk Model Using Linear and Tree-based Models»** (24 видео): Hazard Functions ·
+Hazard · Survival to Hazard · Cumulative Hazard · Individualized Predictions · Relative Risk ·
+Ranking Patients by Risk · Individual vs Baseline Hazard · Smoker vs Non-smoker · Effect of Age
+on Hazard · Risk Factor Increase Per Unit Increase in a Variable · Risk Factor Increase or
+Decrease · Intro to Survival Trees · Survival Tree · Nelson Aalen Estimator · Comparing Risks
+of Patients · Mortality Score · Evaluation of Survival Model · Permissible and Non-Permissible
+Pairs · Possible Permissible Pairs · Example of Harrell's C-Index · Example of Concordant
+Pairs · Week 4 Summary · Congratulations!
+
+### Курс 3 — «AI for Medical Treatment» (3 раздела)
+**W1 «Treatment Effect Estimation»** (12 видео): Intro to Course 3 · About Course 3 ·
+**Absolute Risk Reduction** · Randomized Control Trials · Causal Inference · Average Treatment
+Effect · Conditional Average Treatment Effect · T-Learner · S-Learner · Evaluate Individualized
+Treatment Effect · C-for-benefit · C-for-benefit Calculation.
+**W2 «Medical Question Answering»** (10 видео): Medical Question Answering · Handling Words
+with Multiple Meanings · Define the Answer in a Text · Automatic Label Extraction for Medical
+Imaging · Synonyms for Labels · Is-a Relationships for Labels · Presence or Absence of
+a Disease · Evaluating Label Extraction · Precision, Recall and F1 Score · Evaluating on
+Multiple Disease Categories.
+**W3 «ML Interpretation»** (9 видео): Drop Column Method · Permutation Method · Individual
+Feature Importance · Shapley Values · Combining Importances · Shapley Values for all Patients ·
+Interpreting CNN Models · Localization Maps · Heat Maps.
+
+**Приговор.** **Ни модуля, ни занятия, ни практикума, ни текста по взаимодействию человека
+и модели во всей специализации нет.** Сплошной поиск по страницам всех четырёх курсов
+по шаблону `automation bias|deskill|skill decay|over-reliance|alert fatigue|human-AI team|
+human-in-the-loop|anchoring|oversight|workload|complacency` — **ноль совпадений.**
+Это чисто инженерная программа «как построить». Ближайшее к нашей теме у неё — не поведенческое,
+а гносеологическое: «Ground Truth and Consensus Voting», «External Validation», «Measuring
+Patient Outcomes» и весь раздел W3 про интерпретируемость. В каждом курсе есть текст,
+названный буквально «**Citations**», содержание закрыто — **пустая клетка, не догадка.**
+
+### Сводка по части III
+
+| Программа | Есть ли модуль, посвящённый рубрике «ж»? | Что есть вместо |
+|---|---|---|
+| Stanford AI in Healthcare (Coursera, 2023) | **Нет** | 2 занятия в К3-М6: «Death by GPS and Other Lessons of Automation Bias» (5 мин), «On Being Human in the Era of Clinical Machine Learning» (8 мин); + «Net Utility & Work Capacity» и «Care Integration, Silent Mode» в К4-М3 |
+| Каталог JHU BSPH (2026-27) | **Нет** | Ничего. Ноль вхождений по всему каталогу; ближайшее слово — «job displacement» (PH.221.696) |
+| JHU Coursera (GenAI в общественном здоровье) | **Нет** | Один текст — «AI and Trust» |
+| JHU Malone «Data Science for AI in Healthcare» | **Нет** | Модуль 5 «When Machines Don't Work» — режимы отказа, не человеческий фактор |
+| **JHU + Great Learning «AI and Agentic AI in Healthcare»** | **ДА — единственная в разведке** | «WEEK 10: CHANGE MANAGEMENT AND THE SHIFT TO AGENT SUPERVISION» + нед. 3 (теория перспектив, склонность к сохранению текущего, «human baseline») + нед. 5 (уровни надзора) + разбор «From Task Execution to Agent Supervision» |
+| JHU EP EN.705.617 AI in Healthcare | Неизвестно (силлабус закрыт) | В описании про это молчок; у соседнего EN.705.614 «AI and Human Relationships» есть «когда ИИ подменяет и подрывает» и «алгоритмическое управление» |
+| Michigan DATA-MD (2024) | **Нет** | «Clinician Response to Bias» (2 мин), «Trust» (3 мин), «Who Is Liable When Something Goes Wrong?» (8 мин), «Monitoring Performance» (6 мин), 2 вопроса к обсуждению |
+| DeepLearning.AI AI for Medicine | **Нет** | Ничего |
+
+**Два вывода, которые стоит унести в лекцию.**
+**(а) Искажение решения под подсказкой встречается ровно один раз на ~130 опубликованных
+модулей этой части разведки** — одним пятиминутным видео Стэнфорда, названным по отказу
+бытового навигатора. То есть образцовые учебные программы по клиническому ИИ подробно учат
+оценивать модель и почти не учат поведению врача.
+**(б) Единственная программа, построившая на этом модуль, переформулировала тему как «надзор
+за агентами» и «управление изменениями»** (JHU/Great Learning, неделя 10) — это угол нагрузки
+надзора, а не угол падения квалификации.
+**Падение квалификации, усталость от оповещений и якорение на подсказке — отсутствуют
+по названию во всех перечисленных программах.**
+Все списки литературы, которые закрыли бы вопрос окончательно (стэнфордские «Citations and
+Additional Readings» ×14 и «Recommended Reading for Ethics»; мичиганские «Bibliography» ×4;
+«Citations» ×3 у DeepLearning.AI), закрыты записью на курс; во всей этой части разведки
+**открыты всего два названия** — мичиганская работа про точность распознавания меланомы
+и «AI and Trust» у JHU.
+
+---
+
+# Часть IV. Российские программы
+
+**Общий итог вперёд:** найдено **6 программ и курсов с дословно опубликованной структурой**.
+**Ни в одной нет темы про искажение решения под подсказкой, якорение, падение квалификации
+или переезд нагрузки на арбитраж.** Ближайшее — одна шестичасовая тема «Этические аспекты
+и роль человека» у Сеченова, про содержание которой публично ничего не известно, и обязательный
+общеуниверситетский модуль «Культура ИИ» у ИТМО (не медицинский).
+
+## 26. ⭐ Сеченовский университет — ДПО «Специалист по искусственному интеллекту и анализу данных в медицине»
+
+Лучшая российская находка: полный учебный план с часами по каждой теме.
+
+**Прочитано** (`[ПРОЧИТАНО]`, 2026-10-14):
+- страница Цифровой кафедры: https://www.sechenov.ru/univers/structure/institute/institut-biodizayna-i-modelirovaniya-slozhnykh-sistem/tsentr-tsifrovoy-meditsiny/tsifrovaya-kafedra-/
+- **учебный план PDF** (`[PDF ПРОЧИТАН, текстовый слой]`):
+  https://www.sechenov.ru/upload/iblock/978/9ydi6p29mbcldvcexc5y6z6ndun2toq8/Uchebnyy-plan-Spetsialist-po-II_na-sayt.pdf
+
+**Подразделение:** Институт цифрового биодизайна и искусственного интеллекта в медицине,
+Центр цифровой медицины и ИИ в медицине. Проект «Цифровые кафедры» (приказ Минобрнауки № 169
+от 25.02.2025 — **план актуален на 2025/2026**). Профессиональная переподготовка, **256 часов**.
+**Кому:** студенты бакалавриата, магистратуры и специалитета вуза, то есть преимущественно
+**медики, получающие дополнительное ИТ-образование**. Требований к подготовке на странице нет.
+
+### Полный учебный план (дословно, с часами)
+
+**Модуль 1. Основы искусственного интеллекта — 16 ч**
+1. Тема 1. Введение в искусственный интеллект и его роль в медицине — 2 ч
+2. Тема 2. Обзор технологий искусственного интеллекта — 2 ч
+3. Тема 3. Медицинские данные и работа с ними — 3 ч
+4. Тема 4. Обучение моделей и извлечение знаний из медицинских данных — 3 ч
+5. Тема 5. Применение ИИ в медицине: от диагностики до администрирования — 2 ч
+6. Тема 6. ИИ в отраслях медицины: практические примеры — 2 ч
+7. Промежуточное тестирование по теме — 2 ч
+
+**Модуль 2. Управление информационными проектами и ресурсами — 32 ч**
+1. Тема 1. Введение в управление проектами — 6 ч
+2. Тема 2. Инициация и планирование проекта — 6 ч
+3. Тема 3. Методы и подходы управления проектами — 6 ч
+4. Тема 4. Экономика проекта — 6 ч
+5. Тема 5. Управление рисками и качеством проекта — 6 ч
+6. Промежуточное тестирование по теме — 2 ч
+
+**Модуль 3. Аналитика данных — 38 ч**
+1. Тема 1. Введение в медицинскую аналитику и инструменты для работы с данными — 10 ч
+2. Тема 2. Анализ и визуализация медицинских данных — 10 ч
+3. Тема 3. Разведочный анализ данных (EDA) в медицине — 8 ч
+4. Тема 4. Статистический анализ — 8 ч
+5. Промежуточное тестирование по теме — 2 ч
+
+**Модуль 4. Машинное обучение — 40 ч**
+1. Тема 1. Основы машинного обучения — 6 ч
+2. Тема 2. Обучение с учителем — 6 ч
+3. Тема 3. Обучение без учителя — 6 ч
+4. Тема 4. Валидация данных и оценка моделей — 6 ч
+5. Тема 5. Оптимизация гиперпараметров модели — 6 ч
+6. Тема 6. Машинное обучение без программирования — 6 ч
+7. Промежуточное тестирование по теме — 4 ч
+
+**Модуль 5. Глубокое обучение и нейронные сети — 40 ч**
+1. Тема 1. Введение в нейронные сети — 6 ч
+2. Тема 2. Языковые модели и обработка медицинских текстов — 6 ч
+3. Тема 3. Компьютерное зрение в медицине — 6 ч
+4. Тема 4. Безкодовые инструменты для ИИ в медицине — 6 ч
+5. Тема 5. Как обучают модели и оценивают их работу — 6 ч
+6. **Тема 6. Этические аспекты и роль человека — 6 ч**
+7. Промежуточное тестирование по теме — 4 ч
+
+Практическая работа — 22 ч · Самостоятельная работа — 46 ч · Итоговая аттестация — 22 ч ·
+**Итого 256 ч**
+
+**Рубрика «ж»:** единственная близкая позиция — **«Тема 6. Этические аспекты и роль человека»,
+6 часов из 256, то есть 2,3% программы**. Что именно внутри — **не раскрыто**: рабочая
+программа дисциплины не опубликована, в учебном плане только название и часы.
+**Назвать это темой про искажение решения под подсказкой я не могу** — формулировка говорит
+про «роль человека» в общем виде, и это надо держать как пустую клетку, а не как попадание.
+**Литература:** в опубликованном плане её нет вообще — ни основной, ни дополнительной.
+
+Соседние программы той же Цифровой кафедры (планы лежат рядом, не разбирались): «Специалист
+по телемедицинским технологиям и дистанционному мониторингу состояния здоровья», «Разработчик
+решений виртуальной и дополненной реальности в медицине».
+
+**Технические оговорки, пригодятся при перепроверке:** `sechenov.ru` блокирует обычный curl
+(«Доступ к сайту sechenov.ru запрещён»), проходит с браузерным `User-Agent`.
+**`digitalmed.sechenov.ru` не существует — NXDOMAIN.** Страница
+`/univers/structure/institute/institut-tsifrovoy-meditsiny/` отдаёт 404: института
+с таким названием нет, он называется «Институт цифрового биодизайна и искусственного
+интеллекта в медицине».
+
+## 27. Сеченовский университет — магистратура 09.04.02 «Информационные системы и технологии в медицине»
+
+**Прочитано:**
+- учебный план (скан PDF, прочитан постранично как изображение):
+  https://www.sechenov.ru/upload/iblock/667/297tlwddhm22i3k2db4eqlnc2houio5x/InSiT_o_2_2020_UP-2959.pdf
+- ОПОП (текстовый PDF, через Wayback, `[ПРОЧИТАНО целиком]`):
+  https://web.archive.org/web/20241212201230/https://www.sechenov.ru/sveden/education/programs/000000002959%2009.04.02.pdf
+- реестр: https://www.sechenov.ru/sveden/education/eduaccred/
+
+**Версия плана: год набора 2020/2021**, период освоения 01.09.2020 — 31.08.2022, утверждён
+Учёным советом 20.01.2021, протокол № 1. Очная, 2 года, 120 з.е.
+**Кому:** ФГОС ВО 09.04.02 плюс профстандарт «06.016 Руководитель проектов в области
+информационных технологий» — то есть **технари, выпускники ИТ-бакалавриата**. Медицинская
+подготовка не требуется и не упоминается.
+
+**Блок 1, обязательная часть (45 з.е.), дословно и по порядку:**
+1. О.1 Автоматизированное построение расчетных сеток в биомедицинских приложениях — 3 з.е.
+2. О.2 Теория оптимизации — 6
+3. О.3 Арифметико-логические основы и схемотехника ЭВМ — 6
+4. О.4 Суперкомпьютеры — 3
+5. О.5 Искусственный интеллект — 6
+6. О.6 Архитектура микропроцессорных систем и средств — 6
+7. О.7 Конструкторское проектирование и технология производства БИС и СБИС — 6
+8. О.8 Стандартизация программных средств и информационных технологий — 3
+9. О.9 Управление программными проектами — 6
+
+**Часть, формируемая участниками (9 з.е.):** 10. УОО.1 Иностранный язык для научного
+общения — 3 · 11. УОО.2 Защита информации — 6
+**Элективные (6 з.е.):** 12. Телемедицина / Наукометрия — 3 · 13. Защита прав интеллектуальной
+собственности / Вычислительные системы, сети и телекоммуникации — 3
+**Блок 2. Практика (48 з.е.):** Технологическая практика (учебная) — 3 · Научно-исследовательская
+работа — 42 · Технологическая практика — 3
+**Блок 3. ГИА (12 з.е.):** Выполнение и защита выпускной квалификационной работы — 12
+**ФТД. Факультативы:** Нейронные сети — 3
+
+**Рубрика «ж»: НЕТ ни одной темы.** Литература в учебном плане не публикуется (она в РПД;
+для этой программы выложена лишь одна РПД).
+
+### Проверяемая находка: у действующей версии этой программы план не открывается
+
+В том же реестре есть **более новая направленность — «09.04.02 Информационные системы
+и технологии, Интеллектуальные информационные технологии в медицине»**. Её ссылки
+на «Учебный план», «Описание образовательной программы» и все РПД ведут на пути вида
+`/_files_aup/aup/UP/81c42738-afdf-11f0-b04d-0050568800ad`. **Проверено 6 таких ссылок —
+все отдают HTTP 404.** Старые ссылки того же реестра (`/upload/iblock/...`) работают.
+То есть структура актуальной программы «Интеллектуальные информационные технологии
+в медицине» **фактически не опубликована**: ссылки на неё в разделе «Сведения
+об образовательной организации» битые.
+
+### Магистратура 2025 с Депздравом Москвы — только пресс-релиз
+
+Программа «Информационные системы и технологии» с 01.09.2025, занятия в Центре цифровой
+медицины, практика в учреждениях ДЗМ. **Перечень дисциплин есть только в пресс-релизе,
+не в учебном плане**, и он неполный — «среди ключевых дисциплин», дословно:
+
+> федеральные информационные подсистемы здравоохранения, защита информации в медицинских
+> информационных системах, управление изменениями при внедрении цифровых технологий
+> в здравоохранении, цифровые сервисы здравоохранения, технологии разработки и сопровождения
+> программного обеспечения, матричные методы для сжатия и анализа данных, программная инженерия
+
+Источник (`[ПРОЧИТАНО]`): https://www.cnews.ru/news/line/2025-05-20_sechenovskij_universitet
+**Кому:** «выпускники бакалавриата и специалитета ИТ-направлений… а также специалисты
+с медобразованием» — **смешанно**.
+
+## 28. ⭐ НИУ ВШЭ — «Большие данные и машинное обучение в медицине» (Medical Informatics)
+
+**Прочитано:** https://www.hse.ru/edu/courses/836732681 `[ПРОЧИТАНО целиком]`
+
+Курс по выбору магистерской программы **«Науки о данных (Data Science)»**, 01.04.02 Прикладная
+математика и информатика, факультет компьютерных наук, Департамент анализа данных
+и искусственного интеллекта. **2-й курс, 1–2 модуль. Язык английский. 6 кредитов,
+50 контактных часов.** Преподаватель — **Пьяных Олег Станиславович** (Harvard Medical School /
+Massachusetts General Hospital). Версия силлабуса — **2023/2024**.
+**Кому:** технари, магистранты прикладной математики и анализа данных.
+
+### Содержание курса (дословно, по порядку)
+
+1. Introduction: What is MI, and what it is not
+2. Standards: Overview and HL7
+3. Standards: DICOM
+4. Making sense of standards
+5. Computed tomography; Image enhancement
+6. **Computer-Aided Diagnostics (CAD)**
+7. Networking and teleradiology
+8. Security
+9. Scheduling and queuing
+10. Simulation/Modeling in Medicine
+11. Clinical software development; Medical startups
+12. Medical startups
+13. Unusual applications
+
+**Оценивание, дословно:** `0.8 * Class homework/projects, assigned after each lecture
++ 0.2 * Exam`
+
+**Литература — дословно, вся, какая есть:**
+- Recommended Core Bibliography: Pianykh, O. S. *Digital imaging and communications in medicine
+  (DICOM): a practical introduction and survival guide.* Springer Science & Business Media,
+  2009. 417 pp.
+- Recommended Additional Bibliography: Pianykh O. S. *Digital Image Quality in Medicine.*
+  Springer International Publishing, 2014. 140 pp.
+
+То есть вся литература курса — **две книги одного автора (он же преподаватель), обе про DICOM
+и качество изображений**. Работ про искажение решения, падение квалификации или совместную
+работу человека и модели нет.
+**Рубрика «ж»: НЕТ.** Тема 6 «Computer-Aided Diagnostics (CAD)» — про сами системы
+автоматизированной диагностики, а не про поведение врача рядом с ними.
+
+**Оговорка:** полная версия силлабуса с почасовым тематическим планом лежит за кнопкой
+«Full Syllabus» на https://dp.hse.ru/#/summary?implementationId=8207844434 — **доступ закрыт
+капчей** (API `/api/i/summary/` переадресует на `/captcha`), прочитать не удалось.
+
+## 29. ⭐ НИУ ВШЭ — «Информационно-аналитические технологии в здравоохранении»
+
+Единственный найденный российский курс **для управленцев и медиков**, где опубликован полный
+тематический план.
+
+**Прочитано:** https://www.hse.ru/ma/health/courses/918957435.html `[ПРОЧИТАНО целиком]`
+Хлебные крошки страницы: магистерская программа «Управление и экономика здравоохранения» →
+Учебные курсы → «**Информационно-аналитические технологии в здравоохранении 2024 и 2025
+учебного года**». Факультет социальных наук. Курс по выбору, русский.
+Автор — **Алмазов Андрей Александрович**.
+**Кому:** магистранты управления и экономики здравоохранения — **управленцы и медики**,
+не технари.
+
+### Содержание дисциплины (дословно, по порядку)
+
+1. Тема 1. Общие принципы формирования и развития информационно-коммуникационных систем
+   в социальной сфере и здравоохранении России и зарубежных стран: сравнительный анализ.
+2. Тема 2. Единая государственная информационная система в сфере здравоохранения.
+3. Тема 3. Личный кабинет пациента/здоровья, электронные копии медицинской документации,
+   цифровой след и цифровые данные индивидуума.
+4. Тема 4. Дистанционная медицина (телемедицина).
+5. Тема 5. Цифровая зрелость медицинской организации, методика оценки. **Информационная
+   квалификация и навыки персонала.**
+6. Тема 6. Информационные системы и планирование, проектное управление.
+7. Тема 7. Управленческий учет в медицинской организации, расчет реальной себестоимости
+   медицинских услуг, первичный учет, управление маршрутизацией пациента и ресурсами,
+   управление отношениями с пациентами, поддержка комплексных программ ведения пациента.
+8. Тема 8. Присутствие в интернете и социальных сетях (сайты, программы продвижения,
+   информационные каналы и мессенджеры), «интернет знаний» как следующий этап развития общей
+   информационно-коммуникационной среды.
+9. Тема 9. Правовое регулирование отношений в сфере информационных технологий и вопросы
+   информационной безопасности.
+10. Тема 10. Информационные аналитические технологии в вопросе управления и сохранения
+    статуса здоровья индивидуума.
+11. Тема 11. Проблематика использования информационно аналитических технологий в социальном
+    и коммерческом страховании. Цифровые двойники в здравоохранении.
+12. **Тема 12. Экспертные системы и системы поддержки принятия врачебных решений.**
+13. Тема 13. Биоинформатика. Введение в тему.
+14. Тема 14. Онтологии и семантика в здравоохранении. AI vs Онтологии. Управление знаниями.
+15. Тема 15. Презентация и обсуждение индивидуальных и групповых проектов.
+
+Из аннотации: магистрант должен знать «основные принципы использования и **границы
+применимости** современных ИТ-технологий в медицине и здравоохранении» и «принципы создания
+и применения систем поддержки принятия врачебных решений».
+**Оценивание, дословно:** `0.2 * Итоговый экзамен + 0.2 * Эссе на заданную тему
++ 0.4 * Тематический доклад (мини-группа 3-5 чел) + 0.1 * Активность на занятиях`
+
+**Рубрика «ж»:** ближайшее — **«Тема 12. Экспертные системы и системы поддержки принятия
+врачебных решений»**, но она про сами системы, не про поведение врача. Тема 5 содержит оборот
+«Информационная квалификация и навыки персонала» — это про **ИТ-грамотность сотрудников,
+а не про падение клинической квалификации**, путать нельзя. **Темы про искажение решения
+под подсказкой, якорение или арбитраж нет.**
+
+### Отдельная находка: поле «обязательная литература» заполнено мусором
+
+В блоке «Рекомендуемая основная литература» на этой странице опубликовано, дословно (первые
+позиции):
+
+> `!Bien dicho!, Pinilla, R., 2005` · `!Continuemos! : intermediate Spanish, Jarvis, A. C.,
+> 2003` · `!Hola, amigos!, Jarvis, A. C., 2004` · `!Yo soy el Che! : el hombre visto desde
+> adentro, Ortega, L., 2009` · `"A nation of a hundred million idiots"? : a social history
+> of Japanese television, 1953-1973, Chun, J. M., 2009` …
+
+и далее, уже по делу: «Экономика и управление в здравоохранении: учебник и практикум для
+вузов», Решетников А. В., 2017 · «Проектное управление в сфере информационных технологий»,
+Грекул В. И., 2015 · «Проектирование информационных систем», Коваленко В. В., 2012.
+В дополнительной: «Блеск и нищета информационных технологий: почему ИТ не являются
+конкурентным преимуществом», Карр Н. Дж., 2005 · «Biomedical computing: digitizing life
+in the United States», November J., 2012.
+
+Строка проверена в исходном HTML — это **именно опубликованный текст страницы**, а не ошибка
+разбора. Похоже на автоматическую подстановку из библиотечного каталога по алфавиту.
+**Формально обязательная литература есть; содержательно значительная её часть к дисциплине
+отношения не имеет.** Для нашей лекции это хороший материал сам по себе: поле «обязательная
+литература» заполнено и не значит ничего.
+
+## 30. НИУ ВШЭ — магистратура «Анализ данных в биологии и медицине» (ФКН)
+
+**Прочитано:** https://www.hse.ru/ma/adbm/courses `[ПРОЧИТАНО целиком]` — заголовок страницы
+«**Учебные курсы 2026/2027 учебного года**»; плюс https://www.hse.ru/ma/adbm/
+
+Академический руководитель Попцова М. С., научный руководитель Гельфанд М. С.
+25 бюджетных и 10 платных мест, русский и частично английский.
+**Кому — дословно:** «Магистратура предназначена для бакалавров в области прикладной
+математики и/или анализа данных и специалистов, работающих в области наук о жизни…».
+Два входа: прикладная математика и анализ данных (ВШЭ, МГУ, МФТИ и др.) **либо** биологи
+и медики. Вступительное испытание — конкурс портфолио с собеседованием. **Смешанно.**
+
+**Полный перечень курсов 2026/2027 (дословно, в порядке страницы):**
+1. Алгоритмы в биоинформатике — обязательный, русский
+2. Анализ данных секвенирования 1 — по выбору, русский
+3. Sequencing Data Analysis 2 — обязательный, английский
+4. Биоинформатические методы в исследованиях происхождения — по выбору, русский
+5. Введение в молекулярную биологию — по выбору, русский
+6. Генетические технологии в персонализированной медицине — по выбору, русский
+7. Глубинное обучение — обязательный, русский
+8. Machine Learning in Bioinformatics — обязательный, английский
+9. Методы моделирования пространственной структуры протеинов — обязательный, русский
+10. Молекулярное моделирование — по выбору, русский
+11. Основы программирования в R и Python — обязательный, русский
+12. Практическая биоинформатика — обязательный, русский
+13. Прикладная статистика — обязательный, русский
+14. Семинар наставника «Анализ данных в биологии и медицине» — обязательный, русский (две записи)
+15. Современные методы в молекулярной биологии — по выбору, русский
+16. Сравнительная геномика — по выбору, русский
+17. Фармацевтическая информатика — по выбору, русский
+
+**Рубрика «ж»: НЕТ ни одной темы.** Программа чисто биоинформатическая — клинического
+применения и живого врача в ней нет вовсе.
+
+## 31. НИУ ВШЭ — магистратура «Управление и экономика здравоохранения» (ФСН)
+
+**Прочитано:** https://www.hse.ru/ma/health/courses `[ПРОЧИТАНО целиком]` —
+«**Учебные курсы 2026/2027 учебного года**»
+
+**Полный перечень (дословно):**
+1. Бизнес планирование деятельности медицинской организации — по выбору
+2. **Информационно-аналитические технологии в здравоохранении** — по выбору *(разобран в §29)*
+3. Медицинское страхование и страхование здоровья — по выбору
+4. Научно-исследовательский семинар — обязательный (две записи)
+5. Организация и экономика здравоохранения — обязательный
+6. Организация и экономика здравоохранения - 2 — по выбору
+7. Правовое обеспечение государственного и частного здравоохранения — обязательный
+8. Семинар наставника — обязательный (две записи)
+9. Теория и механизмы государственного управления — обязательный
+10. Управление и экономика социальной сферы — обязательный
+11. Управление качеством в здравоохранении — по выбору
+12. Управление лекарственным обеспечением — по выбору
+13. Управление медицинскими и страховыми организациями — обязательный
+14. Управление человеческими ресурсами в здравоохранении — по выбору
+15. Ценностно-ориентированное здравоохранение и внедрение инновационных технологий — по выбору
+16. Экономика общественного сектора — обязательный
+
+**Всё содержание по ИИ сосредоточено в одной дисциплине по выбору** (№ 2). Рубрики «ж» нет.
+
+## 32. ИТМО — магистратура «Биоинформатика и системная биология»
+
+**Прочитано:**
+- https://abit.itmo.ru/program/master/bioinformatics `[ПРОЧИТАНО, данные из встроенного
+  `__NEXT_DATA__`]`
+- **учебный план 2026** (`[PDF ПРОЧИТАН целиком, текстовый]`):
+  https://abitlk.itmo.ru/file_storage/academic_plan/2026/academic_plan_10332_01.04.02.pdf
+
+⚠️ **Оговорка:** по ссылке, которую даёт сама страница (`https://abit.itmo.ru/file_storage/...`),
+файл отдаёт **404**; тот же путь на хосте `abitlk.itmo.ru` работает. То есть кнопка «Скачать
+учебный план» на сайте абитуриента битая.
+
+**Версия: год набора 2026.** 01.04.02, 120 з.е., английский, Институт прикладных компьютерных
+наук. **Кому:** и биологи/медики, и ИТ/математики — первый семестр разводит их по разным
+дисциплинам (у биологов математика и программирование, у ИТ-шников биология и статистика).
+
+**Блок 1. Модули — 60 з.е. / 2160 ч (дословно):**
+*Профессиональные дисциплины (24 з.е.):* Introduction to Bioinformatics / Введение
+в биоинформатику (3, сем. 1) · Scientific Python / Программирование на языке Python для
+научных задач (3, сем. 2) · Bioinformatics algorithms / Алгоритмы в биоинформатике (3,
+сем. 2) · Transcriptomics / Транскриптомика (3, сем. 2) · Systems Biology / Системная биология
+(6, сем. 2) · Medical Genetics / Медицинская генетика (6, сем. 2)
+*Профессиональные по выбору (9 з.е.), три пары:* Discrete Mathematics / Дискретная математика
+**или** Algorithms and Data Structures · Molecular biology / Молекулярная биология **или**
+Programming in Python · Statistics / Статистика **или** Advanced Statistics — все по 3 з.е., сем. 1
+*Профильные по выбору (12 з.е., все сем. 3, по 3 з.е.):* Microbial Omics / Омиксные технологии
+микроорганизмов · Structural bioinformatics / Структурная биоинформатика ·
+Advanced Machine Learning / Машинное обучение (углубленный курс) · Optimization and Sampling ·
+Population genetics and genomics · Natural language processing / Обработка естественного языка
+*Универсальная (надпрофессиональная) подготовка — 15 з.е.:* **Applied Artificial Intelligence →
+AI Culture / Культура ИИ (3 з.е., сем. 1)** · Иностранный язык (6) · Мировоззренческий модуль
+(3): Introduction to Conceptual Thinking / Основы концептуального мышления;
+**Critical Thinking Skills (Advanced) / Навыки критического мышления (продвинутый уровень)** ·
+Предпринимательская культура → MVP to Market · микромодули Soft Skills (Доказательный подход
+к управлению карьерой · Публичные выступления · Управление стрессом · Эмпатичная коммуникация ·
+**Art & math of decision making / Инструменты принятия решений** · Медиация · Планирование
+карьерной траектории) и большие курсы (Emotional Intelligence и др.)
+
+**Блок 2. Практика — 54 з.е.:** Research Work 9+9+9+15 (сем. 1–4) · Research Seminar 3+3 ·
+Pre-graduation Internship 6
+**Блок 3. ГИА — 6 з.е.** · **Блок 4. Факультативы:** Introduction to Linux ·
+Higher Mathematics · **«Как учиться в партнерстве с ИИ» (3 з.е.)** · «Когнитивные ошибки
+в понимании людей» · «Введение в киберпсихологию» и ещё около пятидесяти общеуниверситетских
+
+**Рубрика «ж»:** медицинской — **НЕТ**. Есть два неотраслевых попадания: обязательный модуль
+**«AI Culture / Культура ИИ»** и факультатив **«Как учиться в партнерстве с ИИ»**. Содержание
+ни того, ни другого в учебном плане не раскрыто (только название и часы), рабочие программы
+ИТМО публично не отдаёт. **Литература:** в учебном плане ИТМО литературы нет вообще — только
+дисциплины, зачётные единицы и часы.
+
+**Отдельной программы «ИИ в медицине» или «Цифровое здравоохранение» у ИТМО найти
+не удалось.** Проверено: `abit.itmo.ru/program/master/digital_health` — 404; поиск
+по магистратурам; перечень программ в JSON страницы. Единственное медицинское попадание среди
+названий — та самая «Биоинформатика и системная биология». **Оговорка: страница перечня
+магистратур отрисовывается на клиенте, полный список через её JSON вытащить не удалось —
+поэтому это «не нашли», а не «доказано отсутствие».**
+
+## 33. Что по России проверить не удалось и почему
+
+- **openedu.ru («Открытое образование») — платформа лежала.** `https://openedu.ru/course/`
+  и `https://openedu.ru/api/v1/courses/` отдают **HTTP 502** с текстом на самой странице:
+  «Платформа "Открытое образование" временно недоступна из-за масштабной аварии у облачного
+  провайдера». Проверено дважды с интервалом, оба раза 502.
+  Обход через Wayback: Архив Интернета по ходу работы уходил в 429, затем в полную
+  недоступность, потом частично вернулся. Через CDX API удалось получить около 6000 архивных
+  адресов курсов openedu и разложить по организациям: **hse (2039), mephi (1799),
+  ITMOUniversity (1099), mipt (501), misis (301), eltech (94), bmstu (70), miit (8), kpfu (5),
+  mednet (2), msu (1), spbstu (1)**. Медицинских вузов на платформе в этой выборке нет;
+  единственный медицинский адрес — `openedu.ru/course/mednet/ozno/` (снимки 2022 года,
+  «Организация здравоохранения и общественное здоровье», не про ИИ). Курса по ИИ в медицине
+  с разбивкой по неделям найти не удалось — но, **пока платформа лежит, это «не проверено»,
+  а не «не существует».**
+- **Полные силлабусы ВШЭ (dp.hse.ru)** — закрыты капчей.
+- **Сколтех, МФТИ (Физтех-школа биологической и медицинской физики), РНИМУ им. Пирогова,
+  Университет Иннополис, Яндекс Практикум** — **не смотрели**, бюджет ушёл на глубину
+  по шести программам выше. Помечаю как пробел разведки.
+
+## Сводка по России
+
+| Программа | Версия | Кому | Тема про человека и модель | Литература про искажение решения / падение квалификации |
+|---|---|---|---|---|
+| Сеченов, ДПО «Специалист по ИИ в медицине», 256 ч | 2025/26 | медики + ИТ-доп. | «Этические аспекты и роль человека», **6 ч из 256**, содержание не раскрыто | литературы в плане нет вовсе |
+| Сеченов, магистратура 09.04.02 | набор 2020 | технари | **нет** | не публикуется |
+| Сеченов, «Интеллектуальные информационные технологии в медицине» | действующая | — | **план не опубликован** (6 ссылок → 404) | — |
+| ВШЭ, «Большие данные и МО в медицине» | 2023/24 | технари | **нет** | нет (две книги по DICOM одного автора) |
+| ВШЭ, «Информационно-аналитические технологии в здравоохранении» | 2024 и 2025 | управленцы, медики | **нет** (есть «Экспертные системы и СППВР» — про системы) | список частью мусорный, нужного нет |
+| ВШЭ, «Анализ данных в биологии и медицине» | 2026/27 | смешанно | **нет** | — |
+| ВШЭ, «Управление и экономика здравоохранения» | 2026/27 | управленцы | **нет** | — |
+| ИТМО, «Биоинформатика и системная биология» | набор 2026 | смешанно | медицинской **нет**; есть общий «Культура ИИ» и факультатив «Как учиться в партнерстве с ИИ» | литературы в плане нет |
+

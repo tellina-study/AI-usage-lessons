@@ -10,6 +10,7 @@ media: ""
 media_needed: "иллюстрация не нужна — пять ступеней перечнем держат экран сами"
 media_note: "—"
 blocks: []
+pol_slov: 90  # словарь пяти разрядов свидетельства, обязан читаться целиком
 timing_min: 0.45
 in_bucket: false
 method_steps: ["словарь"]

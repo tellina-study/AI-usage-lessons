@@ -17,7 +17,7 @@ pol_slov: 140   # О10 (#229): база у числа дописана из гл
 timing_min: 1.15
 in_bucket: false
 method_steps: []
-form: ["ось"]
+form: ["ось", "вопрос лекции"]
 vfy: false
 status: собран
 ---

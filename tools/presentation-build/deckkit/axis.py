@@ -49,6 +49,7 @@
         - {value: 0.712, label: "Хирург с подсказкой", key: true,
            lo: 0.65, hi: 0.78}
 """
+import math
 import re
 from dataclasses import dataclass
 
@@ -89,6 +90,10 @@ class AxisStyle:
     max_marks: int = 5
     min_lab_w: float = 1.05     # уже этого подпись засечки не читается
     pad_frac: float = 0.12      # запас шкалы за крайними значениями
+    ends: bool = True           # называть КОНЦЫ окна, см. `_end_label`
+    end_pt: float = 12.0        # пол видимого слоя, см. `floor.py`
+    end_w: float = 0.80
+    break_w: float = 0.09       # метка разрыва у левого конца
 
 
 DEFAULT = AxisStyle()
@@ -149,6 +154,30 @@ def axis_of(sid, raw, rows=None, st=DEFAULT):
     return d
 
 
+def _step(span_v):
+    """Шаг сетки «1 · 2 · 5 на порядок» под четыре-шесть делений окна.
+
+    Нужен не сетке (её на оси нет), а КОНЦАМ: окно 68,84…84,36 подписать
+    нельзя — такие числа читаются как данные. Округлённое наружу до 65 и
+    85 окно подписывается и не врёт: оно шире настоящего, а не уже."""
+    if span_v <= 0:
+        return 1.0
+    raw = span_v / 4.0
+    mag = 10 ** math.floor(math.log10(raw))
+    for m in (1, 2, 5):
+        if raw <= m * mag:
+            return m * mag
+    return 10 * mag
+
+
+def _fmt(v, step):
+    """Число концом окна — с тем же числом знаков, что несёт шаг, и
+    запятой, как везде в деке."""
+    dec = max(0, -int(math.floor(math.log10(step)))) if step < 1 else 0
+    s = f"{v:.{dec}f}"
+    return s.replace(".", ",")
+
+
 def span(d, st=DEFAULT):
     """Предел шкалы: (нижний, верхний). Берётся по крайним значениям с
     запасом, а при `zero: true` — симметрично нулю, иначе ноль уехал бы к
@@ -168,6 +197,16 @@ def span(d, st=DEFAULT):
         hi = d["to"]
     if hi - lo <= 0:
         hi = lo + 1.0
+    # Наружу до круглого: концы окна подписываются, и подписать их можно
+    # только числами, которые читаются как ГРАНИЦЫ, а не как данные.
+    step = _step(hi - lo)
+    if d["from"] is None:
+        lo = math.floor(lo / step) * step
+    if d["to"] is None:
+        hi = math.ceil(hi / step) * step
+    if d["zero"]:
+        r = max(abs(lo), abs(hi))
+        lo, hi = -r, r
     return lo, hi
 
 
@@ -244,6 +283,12 @@ def line_y_of(y, d=None, w=11.0, st=DEFAULT):
 def axis_h(d, w, st=DEFAULT):
     """Высота оси — она же то, что ось отнимает у тела кадра."""
     h = block_h(d, w, st)
+    if st.ends:
+        # Концы стоят в полосе НИЖНЕЙ дорожки подписей, но нижняя дорожка
+        # может быть пустой (все засечки сверху) — тогда полосу надо
+        # добавить, иначе концы сели бы на единицу оси.
+        if lanes_h(d, w, st)[1] <= 1e-9:
+            h += 0.26
     if d["unit"] or d["base"]:
         h += st.unit_gap + st.unit_h
     if d["caption"]:
@@ -330,6 +375,31 @@ def draw_axis(s, sid, d, x, y, w, st=DEFAULT, tag=None):
                        "ноль", size=st.unit_pt, italic=True, color=SLATE,
                        align=PP_ALIGN.CENTER, ls=1.0, tag=f"{tag}/ноль",
                        quiet=True)
+    if st.ends:
+        # КОНЦЫ ОКНА НАЗВАНЫ. Без них ось читается шкалой от нуля до ста:
+        # приёмка глазами замерила `s05` — окно 70…95, и зал, принявший
+        # левый край за ноль, прочтёт 74 как «почти ничего», а 92 как
+        # «почти всё». Пропорции при этом верные: форма не врала, ей не
+        # хватало рамки отсчёта. У оси с нулём по центру эта рамка была с
+        # самого начала (сам ноль подписан), у общей шкалы — не было.
+        lo, hi = span(d, st)
+        step = _step(hi - lo)
+        floor.pt(st.end_pt, tag, "конец оси")
+        for v, ax in ((lo, x + st.line_pad / 2 - st.end_w / 2),
+                      (hi, x + w - st.line_pad / 2 - st.end_w / 2)):
+            prims.text_box(s, ax, line_y + st.line_h + 0.04, st.end_w, 0.24,
+                           _fmt(v, step), size=st.end_pt, color=SLATE,
+                           align=PP_ALIGN.CENTER, ls=1.0,
+                           tag=f"{tag}/конец", quiet=True)
+        if not d["zero"] and lo > 0:
+            # Окно НЕ от нуля — об этом говорит разрыв у левого конца,
+            # знак того же рода, каким его рисуют на графиках. Словами это
+            # стоило бы строки, а кадры деки стоят у предела.
+            bx = x + st.line_pad / 2 + st.break_w
+            for dx in (0.0, st.break_w * 0.9):
+                prims.rect(s, bx + dx, line_y - st.line_h * 1.6,
+                           st.break_w * 0.45, st.line_h * 4.2, WHITE,
+                           count="разрыв")
     for i, m in enumerate(d["marks"]):
         mx = _x_of(m["v"], d, x, w, st)
         up = lanes[i]

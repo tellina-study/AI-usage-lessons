@@ -62,6 +62,7 @@ from pathlib import Path
 DECK = Path(__file__).resolve().parent
 GLAVA = DECK.parent
 VYVOD = DECK / "priyomka-vyvod"
+KOREN = DECK.parents[4]        # корень репозитория: часть прогонов задаёт пути от него
 
 # Строка, которой прогон сообщает, что он прочитал. Отсутствие такой
 # строки — само по себе замечание: см. пункт 1 в шапке файла.
@@ -131,9 +132,14 @@ def progony(sborka, razdely):
         Progon("повторы в заметках", ["storozh_dublej.py"], DECK, True),
         Progon("вес кадров, заметки, минуты", ["ocenka.py"], DECK, True),
         Progon("перепись форм", ["perepis_form.py"], DECK, False),
-        Progon("счёт повествования", ["qa/zamer-povestvovaniya.py"],
-               GLAVA, False),
-        Progon("ось главы", ["qa/zamer-osi.py"], GLAVA, False),
+        # Пути внутри заданы ОТ КОРНЯ репозитория, и из каталога главы
+        # прогон читал ноль кадров, печатая при этом бодрые нули: «разделов
+        # без адреса оси — 0» при нулевом входе. Нашлось это строкой
+        # прочитанного, которую приёмка требует от всех.
+        Progon("счёт повествования", ["library/lectures/lec-07/rework/qa/"
+                                      "zamer-povestvovaniya.py"],
+               KOREN, False),
+        Progon("ось главы", ["qa/zamer-osi.py"], GLAVA, False),  # ему глава и нужна
     ]
     p.append(Progon("кромка кадра по PDF", ["storozh_kromki.py"], DECK, True))
     if sborka:

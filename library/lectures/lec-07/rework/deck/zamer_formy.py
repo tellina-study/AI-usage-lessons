@@ -28,13 +28,20 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
 import build_lec07 as B                       # noqa: E402
-from deckkit import pdfmeasure as pm, render as rnd, report  # noqa: E402
+from deckkit import (pdfmeasure as pm, render as rnd,  # noqa: E402
+                     report, slidefile)
 
 OUT = HERE / "zamer-formy"
 FLOOR = 12.0
 
 
 def measure(sids):
+    """ПОРЯДОК СТРАНИЦ — НЕ ПОРЯДОК АРГУМЕНТОВ. Сборка идёт по порядку
+    показа (`slidefile.order_key`), и пока этот прогон подписывал страницы
+    списком с командной строки, он подписывал их ЧУЖИМИ именами: замер
+    девяти кадров разъехался на все девять. Сортируем тем же ключом, каким
+    сортирует сборка, — одним на обе стороны."""
+    sids = sorted(sids, key=slidefile.order_key)
     OUT.mkdir(exist_ok=True)
     report.reset()
     pptx = OUT / "f.pptx"

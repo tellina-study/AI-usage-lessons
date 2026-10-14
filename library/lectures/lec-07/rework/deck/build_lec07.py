@@ -779,6 +779,14 @@ def main():
         from selftest_lec07 import selftest
         return selftest()
     n = build(only=a.only)
+    # Проверки по СОХРАНЁННОМУ файлу: hero по порядку деки и пол контраста.
+    # Зовутся здесь, а не из `build`, нарочно — см. `render.verify_built`:
+    # обе про деку целиком, а `build` зовут однокадровые пробы.
+    # `quiet=False`: строка контраста печатается КАЖДУЮ сборку, а не только
+    # когда порог провален. Та же причина, по которой `report.report` всегда
+    # печатает долю площади hero: молчание о «65 ниже порога» неотличимо от
+    # молчания о том, что контраст вообще не мерился.
+    rnd.verify_built(OUT, partial=bool(a.only))
     report.report(n, OUT.name)
     rnd.verify_links(OUT)
     if a.render:

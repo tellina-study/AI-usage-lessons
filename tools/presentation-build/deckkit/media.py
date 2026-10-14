@@ -17,8 +17,9 @@
 from pathlib import Path
 
 from PIL import Image
+from pptx.enum.shapes import MSO_SHAPE_TYPE
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
-from pptx.util import Inches
+from pptx.util import Emu, Inches
 
 from . import metrics, prims, report
 from .markup import plain
@@ -349,3 +350,112 @@ def place_hero(s, sid, meta, p, x_right, y_top, y_bot, w_max):
             f"[кадр] {sid}: обязательный hero занял {100 * area:.1f}% "
             f"площади кадра при пороге {100 * HERO_MIN_AREA:.0f}% (§5.9)")
     return x_box, bot
+
+
+# ── hero по ПОРЯДКУ ДЕКИ, а не по объявлению автора ─────────────────
+# Прожарка 2026-10-14, §3.3. `place_hero` выше меряет порог §5.9 только на
+# тех кадрах, где автор САМ поставил `media_hero: true`. У Лекции 7 таких
+# два — `s01` (40,5%) и `s105` (40,1%), оба проходят, — а ПОСЛЕДНИЙ кадр
+# показа `s106` несёт снимок лентой на 10,7% и в поле зрения сторожа не
+# попадает вовсе: поля `media_hero` у него нет, значит и мерить, по мнению
+# сторожа, нечего. Порядок деки он не читает.
+#
+# Это в точности случай из `proverki-i-pravila.md`: проверялась не работа,
+# а её отражение в собственном объявлении автора. Поэтому проверка ниже не
+# спрашивает фронтматтер ни о чём. Она берёт СОБРАННУЮ деку, первую и
+# последнюю её страницу по порядку сборки и меряет площадь настоящих
+# снимков на них.
+
+
+def _pic_rects(sl):
+    """Рамки всех снимков страницы в дюймах, обрезанные гранью слайда."""
+    out = []
+    for shp in sl.shapes:
+        if shp.shape_type != MSO_SHAPE_TYPE.PICTURE:
+            continue
+        if None in (shp.left, shp.top, shp.width, shp.height):
+            continue
+        x0, y0 = Emu(shp.left).inches, Emu(shp.top).inches
+        x1 = Emu(shp.left + shp.width).inches
+        y1 = Emu(shp.top + shp.height).inches
+        x0, y0 = max(0.0, x0), max(0.0, y0)
+        x1, y1 = min(SLIDE_W, x1), min(SLIDE_H, y1)
+        if x1 > x0 and y1 > y0:
+            out.append((x0, y0, x1, y1))
+    return out
+
+
+def union_area(rects):
+    """Площадь ОБЪЕДИНЕНИЯ прямоугольников, а не сумма их площадей.
+
+    Сумма проще и на одном снимке даёт то же число — но на двух
+    перекрывающихся (лента поверх подложки, два кадра полосой с нахлёстом)
+    она считает нахлёст дважды и способна выдать «площадь 112% слайда».
+    Доля, перевалившая за сотню, читается как сбой меры и обесценивает
+    верные числа рядом. Считается сжатием координат: полоса между двумя
+    соседними вертикальными разрезами умножается на длину занятой части
+    вертикали в ней."""
+    xs = sorted({x for r in rects for x in (r[0], r[2])})
+    total = 0.0
+    for i in range(len(xs) - 1):
+        x0, x1 = xs[i], xs[i + 1]
+        spans = sorted((r[1], r[3]) for r in rects if r[0] <= x0 and r[2] >= x1)
+        covered, cur = 0.0, None
+        for a, b in spans:
+            if cur is None or a > cur[1]:
+                if cur:
+                    covered += cur[1] - cur[0]
+                cur = [a, b]
+            else:
+                cur[1] = max(cur[1], b)
+        if cur:
+            covered += cur[1] - cur[0]
+        total += (x1 - x0) * covered
+    return total
+
+
+def page_image_share(sl):
+    """Доля площади страницы под снимками (объединением)."""
+    return union_area(_pic_rects(sl)) / (SLIDE_W * SLIDE_H)
+
+
+def check_hero_order(prs, *, threshold=HERO_MIN_AREA, partial=False):
+    """§5.9 по ПОРЯДКУ ДЕКИ: первый и последний кадр показа несут hero.
+
+    `prs` — собранная презентация (объект `Presentation`): порядок её
+    страниц и есть порядок сборки, а не сортировка имён файлов и не
+    фронтматтер. Площадь берётся с настоящих снимков страницы.
+
+    `partial=True` — сборка части деки (`--only`): «первый и последний» там
+    означают «первый и последний ИЗ ОТОБРАННЫХ», то есть не то, что видит
+    зал. Проверка в этом случае НЕ молчит, а говорит, что не мерила, —
+    молчание неотличимо от «порог взят».
+
+    Возвращает {номер страницы: доля} по измеренным кадрам."""
+    pages = list(prs.slides)
+    if not pages:
+        return {}
+    if partial:
+        report.warn("[кадр] hero по порядку деки НЕ МЕРЕН: собрана часть "
+                    "деки, и «первый и последний» здесь — первый и последний "
+                    "из отобранных, а не из показа")
+        return {}
+    out = {}
+    ends = [(1, pages[0], "первый")]
+    if len(pages) > 1:
+        ends.append((len(pages), pages[-1], "последний"))
+    for n, sl, which in ends:
+        share = page_image_share(sl)
+        out[n] = share
+        report.HERO_ORDER[n] = share
+        if share >= threshold - 1e-9:
+            continue
+        what = ("снимка на нём нет вовсе" if share <= 0
+                else f"снимки на нём занимают {100 * share:.1f}%")
+        report.warn(
+            f"[кадр] {which} кадр показа (страница {n} порядка деки): "
+            f"{what} при пороге {100 * threshold:.0f}% (§5.9). Мерено по "
+            "ПОРЯДКУ СБОРКИ, а не по полю `media_hero`: объявление автора "
+            "о hero и площадь снимка на странице — разные вещи, и расходятся "
+            "они молча")
+    return out

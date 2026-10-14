@@ -33,7 +33,8 @@ from PIL import Image
 from pptx.enum.shapes import MSO_SHAPE
 
 from . import (markup, metrics, plates, prims, probes, refdeck, regress,
-               render, report, scheme, selftest_layout, tables)
+               render, report, scheme, selftest_contrast, selftest_layout,
+               tables)
 from .theme import SURFACE, WHITE
 
 OK, BAD, SAID = [], [], []
@@ -575,6 +576,11 @@ def selftest():
     probe_cell_runs()
     probe_render_path()
     selftest_layout.run_all(OK, BAD, say, _run, tmp, seq)
+    # Пол КОНТРАСТА и hero по ПОРЯДКУ деки — обе проверки круга прожарки
+    # 2026-10-14, обе заведены после дефекта, который прошёл мимо всех
+    # прежних сторожей. Свой файл, как и у раскладки: эти пробы собирают
+    # фигуры и миниатюрные деки, а не кирпич текста.
+    selftest_contrast.run_all(OK, BAD, say, _run, tmp, seq)
     say("─────────────────────────────────────────────────────────────")
     total = len(OK) + len(BAD)
     say(f"проверок доказано: {len(OK)} из {total}")

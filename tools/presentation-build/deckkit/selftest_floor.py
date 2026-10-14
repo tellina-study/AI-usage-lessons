@@ -11,6 +11,8 @@
                         названа; тому же кадру с запасом места — молчание
   [пол-класс]           пол видит НЕ ТОЛЬКО тело: оговорка плашки, набранная
                         10,5 пт, названа, а набранная 12 пт — нет
+  [пол-таблица]         и клетку таблицы тоже: класс, который проходил мимо
+                        пола ЦЕЛИКОМ, пока `tables.py` не звал `floor.pt`
   [пол-ручка]           порог, поднятый декой, ДЕЙСТВУЕТ: прежняя подпись
                         `floor=VIS_PT` застывала при импорте и ручку глушила
   [знаки-hex]           знак считается по кодировке файла: прежнее «всегда
@@ -28,8 +30,8 @@
   [две-колонки]         две колонки взяты, когда кегль от них не падает, и
                         отвергнуты, когда упал бы; отказ возвращает кегли
 """
-from . import (floor, metrics, pdfmeasure, plates, probes_floor, report, titles,
-               twocol)
+from . import (floor, metrics, pdfmeasure, plates, prims, probes_floor,
+               report, tables, titles, twocol)
 from .probes_layout import BRICK
 
 
@@ -113,6 +115,48 @@ def probe_floor_class(ok, bad, say):
             "10,5 пт названа, та же в 12 пт — молчание. Набор `DEFAULT` "
             f"держит оговорку {plates.DEFAULT.note_pt:.0f} пт, набор "
             f"Лекции 6 — {plates.LEC06.note_pt:.1f} пт, и это РАЗНЫЕ наборы")
+
+
+def probe_floor_table(ok, bad, say):
+    """Клетка таблицы — класс, который проходил мимо пола ЦЕЛИКОМ.
+
+    Прожарка 2026-10-14 §3.9: `tables.py` не звал `floor.pt` ни разу, у
+    таблицы свой предел подбора `TBL_FLOOR` = 8 пт, и сборка сообщила ОДИН
+    кадр ниже пола там, где по собранному PDF их ШЕСТЬ. Пять потерянных —
+    клетки матриц на 11,5 пт и таблица `s102`, где 70% знаков кадра.
+
+    Разностно, и вторая половина — не «та же таблица крупнее», а ТЕЛО:
+    пол на классе «тело» при 15 пт молчит на том же прогоне. Именно этим
+    прежняя самопроверка и обманывалась — она доказывала `[пол]` на классе,
+    у которого дыры нет, и проходила. Без половины про тело эта проба
+    повторила бы ту же ошибку с другой стороны."""
+    table = [["Режим", "Что делает"],
+             ["отбор", "классификация изображений"]]
+    out = {}
+    for name, sz in (("11,5 пт", 11.5), ("12,5 пт", 12.5)):
+        report.reset()
+        tables.reset_caches()
+        s = prims.blank(prims.new_deck())
+        tables.draw_table(s, 0.5, 0.5, table, sz, 6.0, "проба/таблица")
+        out[name] = [w for w in report.WARNINGS
+                     if w.startswith("[пол]") and "клетка таблицы" in w]
+    report.reset()
+    body = floor.check_runs([{"text": "тело кадра", "size": 15.0}], "проба")
+    body_said = [w for w in report.WARNINGS if w.startswith("[пол]")]
+    report.reset()
+    if not out["11,5 пт"] or out["12,5 пт"] or body_said:
+        bad.append(f"[пол-таблица] 11,5 пт → {len(out['11,5 пт'])}, 12,5 пт "
+                   f"→ {len(out['12,5 пт'])}, тело 15 пт → "
+                   f"{len(body_said)} — пол не видит клетку либо шумит")
+    else:
+        ok.append("[пол-таблица]")
+        say(f"{'[пол-таблица]':<24} разностно: ЛОВИТ  →  клетка на 11,5 пт "
+            f"названа, та же на 12,5 пт — молчание; а ТЕЛО на {body:.1f} пт "
+            "молчит на том же прогоне, то есть прежняя самопроверка "
+            "проходила, доказывая пол на классе без дыры. Предел подбора "
+            f"таблицы {tables.TBL_FLOOR:.0f} пт ниже пола видимого слоя "
+            f"{floor.VIS_PT:.0f} пт — и поднимать его нельзя, иначе рвётся "
+            "слово в столбце")
 
 
 def probe_title_ladder(ok, bad, say):
@@ -300,6 +344,7 @@ def run_all(ok, bad, say, run, tmp, seq):
     probe_floor_body(ok, bad, say)
     probe_floor_not_proj(ok, bad, say)
     probe_floor_class(ok, bad, say)
+    probe_floor_table(ok, bad, say)
     probe_floor_knob(ok, bad, say)
     probe_glyph_count(ok, bad, say)
     probe_title_ladder(ok, bad, say)

@@ -21,6 +21,7 @@ timing_min: 0.95
 in_bucket: false
 method_steps: ["①цена ошибки", "②классические режимы", "③модель против них", "④как это устроено"]
 form: ["сетка"]
+vizforma: "ряды"
 vfy: false
 status: собран
 ---

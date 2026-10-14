@@ -23,6 +23,7 @@ timing_min: 0.7
 in_bucket: true
 method_steps: ["②классические режимы"]
 form: []
+vizforma: "ось"
 vfy: true
 status: собран
 ---

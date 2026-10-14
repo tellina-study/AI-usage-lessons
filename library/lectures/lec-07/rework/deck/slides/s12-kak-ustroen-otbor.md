@@ -14,6 +14,7 @@ timing_min: 0.6
 in_bucket: false
 method_steps: ["заземление"]
 form: ["вопрос залу"]
+vizforma: "ряды"
 vfy: false
 status: собран
 scheme:

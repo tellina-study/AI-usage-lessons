@@ -22,6 +22,7 @@ timing_min: 1.0
 in_bucket: true
 method_steps: ["свод"]
 form: []
+vizforma: "ось с нулём"
 vfy: false
 status: собран
 ---

@@ -23,6 +23,7 @@ timing_min: 1.15
 in_bucket: false
 method_steps: []
 form: ["ось", "вопрос лекции"]
+vizforma: "ось"
 vfy: false
 status: собран
 ---

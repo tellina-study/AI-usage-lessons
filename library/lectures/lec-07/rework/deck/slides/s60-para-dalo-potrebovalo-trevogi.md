@@ -25,6 +25,7 @@ timing_min: 1.05
 in_bucket: false
 method_steps: ["⑤что переехало", "пара дало–потребовало", "упоминание"]
 form: ["форма 4", "форма 3"]
+vizforma: "ряды"
 vfy: true
 status: собран
 ---

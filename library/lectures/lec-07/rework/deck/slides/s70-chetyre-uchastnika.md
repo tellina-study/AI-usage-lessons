@@ -23,6 +23,7 @@ pol_slov: 139  # О10 (#229): форма кадра ВСТАЛА — «пара�
 in_bucket: false
 method_steps: ["—"]
 form: ["—"]
+vizforma: "ряды"
 vfy: false
 status: собран
 ---

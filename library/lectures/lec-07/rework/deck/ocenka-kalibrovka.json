@@ -1,20 +1,30 @@
 {
-  "glif_bullita": -0.001,
-  "strelka": -0.028,
-  "glif_stolbtsa": 1.041,
+  "glif_bullita": 0.075,
+  "strelka": -0.076,
+  "glif_stolbtsa": 1.05,
   "a": 1.0,
-  "b": -0.288,
-  "istochnik": "sec-1-2-3.pdf, разделы 1,2,3, 38 страниц, 2026-10-14",
+  "b": -0.313,
+  "istochnik": "lec-07-karkas.pdf, разделы вся дека, 99 страниц, 2026-10-14",
   "oshibka": {
     "median_abs": 0.0,
-    "mean": 0.29,
-    "max_abs": 2
+    "mean": 0.21,
+    "max_abs": 3
   },
   "oshibka_po_razdelam": {
-    "1": {
+    "0": {
       "n": 10,
-      "median_abs": 1.0,
-      "mean": 0.7
+      "median_abs": 0.0,
+      "mean": 0.1
+    },
+    "1": {
+      "n": 9,
+      "median_abs": 0.0,
+      "mean": 0.44
+    },
+    "10": {
+      "n": 4,
+      "median_abs": 0.0,
+      "mean": 0.5
     },
     "2": {
       "n": 11,
@@ -24,7 +34,37 @@
     "3": {
       "n": 17,
       "median_abs": 0.0,
-      "mean": 0.18
+      "mean": 0.06
+    },
+    "4": {
+      "n": 11,
+      "median_abs": 0.0,
+      "mean": 0.64
+    },
+    "5": {
+      "n": 9,
+      "median_abs": 0.0,
+      "mean": -0.22
+    },
+    "6": {
+      "n": 10,
+      "median_abs": 0.0,
+      "mean": 0.2
+    },
+    "7": {
+      "n": 8,
+      "median_abs": 0.0,
+      "mean": 0.0
+    },
+    "8": {
+      "n": 5,
+      "median_abs": 1.0,
+      "mean": 1.0
+    },
+    "9": {
+      "n": 5,
+      "median_abs": 0.0,
+      "mean": 0.0
     }
   }
 }

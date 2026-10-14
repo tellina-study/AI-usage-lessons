@@ -1,0 +1,63 @@
+рендер готов: sec0-1-3-6-01.pdf, снимки в snaps0-1-3-6-01/
+кусок 1: 15 кадров готово
+рендер готов: sec0-1-3-6-02.pdf, снимки в snaps0-1-3-6-02/
+кусок 2: 15 кадров готово
+рендер готов: sec0-1-3-6-03.pdf, снимки в snaps0-1-3-6-03/
+кусок 3: 15 кадров готово
+рендер готов: sec0-1-3-6-04.pdf, снимки в snaps0-1-3-6-04/
+кусок 4: 1 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r4-r5-vtoroy-afa3910b/library/lectures/lec-07/rework/deck/sec-0-1-3-6.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  31  s01-cover.md
+ 118  s01a-tsikl-okazaniya-pomoshchi-tselikom.md
+ 109  s01b-kak-poluchayut-dannye-i-kak-reshayut-bez-modeli.md
+ 138  s01c-gde-model-stoit-i-gde-ee-net.md
+ 130  s01d-pismo-po-vozrastu-kto-smotrel-pervym.md
+ 110  s02-put-odnogo-sluchaya.md
+ 125  s03-kto-smotrit-pervym.md
+ 138  s05-os-udeshevili-chtenie-dannykh.md
+  75  s05a-devyat-form-pereezda-slovar.md
+  87  s05b-pyat-razryadov-svidetelstva.md
+  46  s11-divider-otbor.md
+  75  s11a-pervichnyy-skrining-chto-eto-za-stadiya.md
+ 117  s12-kak-ustroen-otbor.md
+ 106  s13-dva-klassicheskikh-rezhima-otbora.md
+ 117  s15-triazh-po-predskazannomu-risku.md
+ 136  s16-chat-bot-pervoy-linii.md
+ 117  s18-glaznoe-dno-bez-oftalmologa.md
+  76  s19-chto-pereekhalo-glaznoe-dno.md
+  86  s20-vyvod-otbor.md
+  72  s35-divider-postanovka-diagnoza.md
+  73  s35a-postanovka-diagnoza-chto-eto-za-stadiya.md
+  65  s36-kak-ustroena-postanovka-diagnoza.md
+  75  s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
+  69  s38-chetyre-stupeni-chto-delaet-chelovek.md
+ 137  s41-zamer-vzglyada-lozhnaya-podskazka.md
+  85  s43-tot-zhe-zamer-obratnyy-znak.md
+ 135  s44-odna-podskazka-dva-znaka-patologiya.md
+ 126  s45-izmerennaya-troyka-para-i-chelovek.md
+ 137  s47-kontrolnaya-liniya-para-silnee.md
+ 139  s48-kontrolnaya-liniya-chto-pereekhalo.md
+  74  s49-doverie-i-stazh.md
+  80  s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md
+ 138  s49b-obeshchano-tsena-i-dva-rezhima.md
+ 129  s49c-para-nizhe-obeikh-storon.md
+ 113  s49d-otvet-sobran-chetyre-zamera.md
+  74  s50-vyvod-diagnoz.md
+  75  s65-divider-chem-uderzhivayut.md
+  75  s65a-dannye-sposoby-i-reshenie-nadzora.md
+  91  s66-odna-komnata-i-odin-sluchay.md
+ 140  s67-razbor-sluchaya-posle-iskhoda.md
+ 131  s68-norma-est-proverki-net.md
+ 127  s69-dvoynoe-chtenie-v-minutakh-truda.md
+ 136  s70-chetyre-uchastnika.md
+  74  s70a-podkhodyashchiy-chelovek-po-normativu.md
+ 119  s71-tri-mekhanizma-nadzora.md
+ 140  s73-vyvod-chem-uderzhivayut.md
+
+страниц 46 · медиана 111.5 · среднее 104 · максимум 140 · тяжелее 140 — 0 · тяжелее 90 — 27
+
+Предупреждений сборки этот прогон не показывает — ни одного, ни на каком входе:
+это замер слов, а не приёмка. Блокирующие берут отдельной сборкой
+(`python3 build_lec07.py --only sNN`) либо сводом `python3 priyomka.py`.

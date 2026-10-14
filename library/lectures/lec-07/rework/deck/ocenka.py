@@ -149,9 +149,23 @@ def n_izm(bl, body):
     n = sum(1 for b in bl if isinstance(b, dict)
             and re.search(r"\d", str(b.get("value") or ""))
             and str(b.get("note") or "").strip())
-    n += sum(1 for ln in body.splitlines()
-             if ln.strip().startswith("|") and re.search(r"\d", ln)
-             and not re.fullmatch(r"\|[\s:|-]+\|", ln.strip()))
+    for ln in body.splitlines():
+        ln = ln.strip()
+        if not ln.startswith("|") or re.fullmatch(r"\|[\s:|-]+\|", ln):
+            continue
+        # НОМЕР в списке — не измеренная величина, хотя цифра в строке та же.
+        # Словарные таблицы деки нумеруют формы (1…8а) первой клеткой, и счёт
+        # «любая цифра в строке» объявлял их измерениями: `s05a` выходил на
+        # десять «измеренных блоков» при нуле измерений, а прогон советовал
+        # объявить пол там, где надо резать. Сторож, зовущий не туда, хуже
+        # молчащего. Поэтому первая клетка из счёта исключена, а в остальных
+        # цифра должна стоять не одна: у величины есть единица либо знак пары.
+        cells = [c.strip() for c in ln.strip("|").split("|")]
+        if len(cells) > 1:
+            cells = cells[1:]
+        if any(re.search(r"\d", c) and not re.fullmatch(r"\*{0,2}\d+[а-яa-z]?\*{0,2}", c)
+               for c in cells):
+            n += 1
     return n
 
 

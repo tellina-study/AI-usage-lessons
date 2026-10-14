@@ -41,7 +41,10 @@ def fm(path):
 # ── адрес в главе: § и файл части ────────────────────────────────────────
 CHAP = {
  's01': 'chapter.md § Введение',
- 's01a': 'chapter.md §0.1 (+ chapter-part1b.md §1.1)',
+    's01a': 'chapter.md § Обзор предмета (цикл оказания медицинской помощи)',
+    's01b': 'chapter.md § Обзор предмета (как получают данные · классические режимы) + chapter-part1b.md §1.2, §2.1, chapter-part2.md §3.1, chapter-part3.md §4.2, chapter-part3b.md §5.1–5.2, chapter-part3c.md §6.3',
+    's01c': 'chapter.md § Где обученная модель в этом цикле есть и где её нет + chapter-part5b.md §11.6, §11.3',
+    's01d': 'chapter.md §0.1 (+ chapter-part1b.md §1.1)',
  's02': 'chapter.md §0.1',
  's03': 'chapter.md §0.2',
  's05': 'chapter.md §0.4',

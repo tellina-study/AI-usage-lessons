@@ -41,6 +41,12 @@
 
     python3 priyomka.py                 # всё, кроме сборки (быстро)
     python3 priyomka.py --sborka        # + собрать деку и замерить PDF
+
+КАКОЙ РЕЖИМ КОГДА. Если деку собрал кто-то другой — зови БЕЗ `--sborka`:
+проверки по собранному PDF (пол кегля, пол слов, кромка) и так читают
+готовый файл, а свежесть входа сама скажет, не отстал ли он от кадров.
+`--sborka` нужен там, где собранного PDF нет вовсе: он строит деку часами,
+и звать его после чужой сборки значит собрать одно и то же дважды.
     python3 priyomka.py --sborka 0 1 4  # сборка только названных разделов
     python3 priyomka.py --polno         # печатать вывод каждого прогона целиком
 
@@ -66,14 +72,16 @@ CHTO_PROCHITAL = re.compile(
 
 
 class Progon:
-    def __init__(self, imya, cmd, cwd, blokiruet, vedro=None):
+    def __init__(self, imya, cmd, cwd, blokiruet, vedro=None, timeout=1800):
         self.imya, self.cmd, self.cwd = imya, cmd, cwd
         self.blokiruet, self.vedro = blokiruet, vedro
+        self.timeout = timeout
         self.kod = None
         self.out = ""
         self.otkaz = None          # причина отказа, если прогон не состоялся
 
-    def zapustit(self, timeout=1800):
+    def zapustit(self, timeout=None):
+        timeout = timeout or self.timeout
         try:
             r = subprocess.run([sys.executable, *self.cmd], cwd=self.cwd,
                                capture_output=True, text=True, timeout=timeout)
@@ -129,8 +137,12 @@ def progony(sborka, razdely):
     ]
     p.append(Progon("кромка кадра по PDF", ["storozh_kromki.py"], DECK, True))
     if sborka:
+        # Сборка ста кадров идёт ЧАСАМИ, а не минутами. При общем пределе в
+        # 1800 с приёмка отказала бы ровно на том прогоне, ради которого её
+        # зовут, и отказ этот прочитался бы как «приёмка не состоялась».
         p.append(Progon("замер собранного PDF",
-                        ["render_sec.py", *(razdely or ALL_SEC)], DECK, True))
+                        ["render_sec.py", *(razdely or ALL_SEC)], DECK, True,
+                        timeout=4 * 3600))
     # Пол кегля, наезды текста и полупустые коробки — по СОБРАННОМУ PDF.
     # Прогон был в деке и в составе приёмки не стоял, а это ровно та мера,
     # про которую канон говорит «числа этого прогона — единственные, на

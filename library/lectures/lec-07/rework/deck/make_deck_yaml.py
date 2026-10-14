@@ -63,7 +63,6 @@ CHAP = {
  's13': 'chapter-part1b.md §1.3',
  's15': 'chapter-part1b.md §1.4',
  's16': 'chapter-part1b.md §1.5',
- 's17': 'chapter-part1b.md §1.5',
  's18': 'chapter-part1b.md §1.6',
  's19': 'chapter-part1b.md §1.6',
  's20': 'chapter-part1b.md §1.7',
@@ -72,7 +71,6 @@ CHAP = {
  's24': 'chapter-part1c.md §2.2',
  's26': 'chapter-part1c.md §2.4',
  's28': 'chapter-part1c.md §2.6',
- 's29': 'chapter-part1c.md §2.6',
  's30': 'chapter-part1c.md §2.7',
  's30a': 'chapter-part1c.md §2.7',
  's31': 'chapter-part1c.md §2.8',
@@ -83,12 +81,9 @@ CHAP = {
  's37': 'chapter-part2.md §3.1',
  's38': 'chapter-part2.md §3.2 (+ chapter.md §0.4)',
  's41': 'chapter-part2.md §3.4',
- 's42': 'chapter-part2.md §3.5',
  's43': 'chapter-part2.md §3.6',
  's44': 'chapter-part2.md §3.7',
- 's44a': 'chapter-part2.md §3.7',
  's45': 'chapter-part2b.md §3.8 (+ chapter.md §0.3)',
- 's46': 'chapter-part2b.md §3.8',
  's47': 'chapter-part2b.md §3.9',
  's48': 'chapter-part2b.md §3.9',
  's49': 'chapter-part2b.md §3.10, §3.11',
@@ -117,7 +112,6 @@ CHAP = {
  's65': 'chapter-part3c.md § Раздел 6 (вводка), §6.1',
  's66': 'chapter-part3c.md §6.2',
  's67': 'chapter-part3c.md §6.3, §6.5 (+ §6.4)',
- 's67a': 'chapter-part3c.md §6.5',
  's68': 'chapter-part3c.md §6.7',
  's69': 'chapter-part3c.md §6.6',
  's70': 'chapter-part3d.md §6.8',
@@ -140,7 +134,6 @@ CHAP = {
  's97': 'chapter-part5b.md §11.1, §11.2, §11.3',
  's99': 'chapter-part5b.md §11.4',
  's101': 'chapter-part5b.md §11.6',
- 's102': 'chapter-part5b.md §11.7',
  's103': 'chapter-part5b.md §11.8',
  's103a': 'chapter-part5b.md § Раздел 12 (вводка), §12.1',
  's104': 'chapter-part5b.md §12.1',
@@ -289,8 +282,12 @@ def q(s):
     return '"%s"' % s
 
 from collections import Counter
-REAL = set("""s01 s02 s11 s12 s13 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
-s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s73b s73c s73d s73f s73ha s74 s105""".split())
+REAL = set("""
+s01 s02 s11 s12 s13 s16 s18 s19 s22 s26
+s28 s31 s35 s36 s41 s43 s44 s45 s47 s49
+s49a s52 s53 s54 s55 s57 s59 s60b s61 s63
+s65 s66 s73b s73c s73d s73f s73ha s74 s105
+""".split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',
  's18':'rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg',

@@ -37,6 +37,7 @@ sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 import ocenka                                                # noqa: E402
 
 POL_PROCHIH = 75          # медиана деки; норма круга #229, замер 26 дек
+ZAPAS_PREDEL = 8          # запас объявленного пола над замером по PDF
 PREDEL = 140              # 95-й процентиль эталонных страниц
 
 
@@ -129,7 +130,22 @@ def main():
         for sid, ves, why in sorted(snyato, key=lambda x: -x[1]):
             print(f"  {sid:6} вес {ves:3} · пол не объявлен — {why}")
 
+    # Пол с БОЛЬШИМ запасом опаснее отсутствующего: замечание на него не
+    # печатается, потому что формально он объявлен. Так у `s97` стоял пол 140
+    # при весе 126 — запас +14, и нашла его не проверка, а сессия раздела,
+    # прогнав этот же прогон по своим кадрам и посмотрев сорок строк глазами.
+    # Глаз для этого не нужен, если список печатать отдельно. Порог +8 взят
+    # замером: подтянутые полы деки лежат в +0…+8.
+    tolstye = [(s, p_, v, p_ - v) for s, p_, v, _w in objavleno
+               if p_ - v > ZAPAS_PREDEL]
     zamechaniy = 0
+    if tolstye:
+        zamechaniy += len(tolstye)
+        print(f"\nЗАМЕЧАНИЕ: запас объявленного пола больше +{ZAPAS_PREDEL} — "
+              f"{len(tolstye)} кадров. Пол — это разрешение; пол, выданный с "
+              f"запасом, кадр со временем зарастает, и замечания на него нет:")
+        for sid, p_, v, z in sorted(tolstye, key=lambda x: -x[3]):
+            print(f"  {sid:6} пол {p_:3} при весе {v:3} — запас +{z}")
     if bez_prichiny:
         zamechaniy += len(bez_prichiny)
         print(f"\nЗАМЕЧАНИЕ: пол объявлен без причины — {bez_prichiny}. "

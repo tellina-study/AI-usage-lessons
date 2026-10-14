@@ -115,30 +115,20 @@ CHAP = {
  's73': 'chapter-part3d.md §6.13 (+ §6.12)',
  's73a': 'chapter-part3d.md §6.13 (+ chapter-part5b.md §11.6)',
  's74': 'chapter-part4e.md § Раздел 9 (вводка), §9.1',
- 's75': 'chapter-part4e.md §9.1',
- 's76': 'chapter-part4e.md §9.1, §9.2',
- 's77': 'chapter-part4e.md §9.2',
+ 's77': 'chapter-part4e.md §9.2, §9.3',
  's78': 'chapter-part4e.md §9.3',
- 's80': 'chapter-part4e.md §9.8',
- 's81': 'chapter-part4e.md §9.4',
- 's82': 'chapter-part4e.md §9.5',
- 's82a': 'chapter-part4e.md §9.5 (+ §9.2)',
- 's83': 'chapter-part4e.md §9.4',
- 's84': 'chapter-part4e.md §9.4',
  's85': 'chapter-part4e.md §9.6',
  's85a': 'chapter-part4e.md §9.6',
- 's86': 'chapter-part4e.md §9.9',
- 's87': 'chapter-part4e.md §9.12 (+ §9.10, §9.11)',
- 's87a': 'chapter-part4e.md §9.7 (+ chapter-part5b.md §11.6, chapter.md §0.10)',
- 's88': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
- 's89': 'chapter-part5.md §10.2 (+ §10.3)',
- 's90': 'chapter-part5.md §10.4',
- 's91': 'chapter-part5.md §10.5',
- 's92': 'chapter-part5.md §10.6',
- 's93': 'chapter-part5.md §10.8 (+ §10.7)',
- 's94': 'chapter-part5.md §10.9, §10.10',
- 's95a': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',
- 's96': 'chapter-part5.md §10.14 (+ §10.12, §10.13)',
+ 's87': 'chapter-part4e.md §9.12 (+ §9.10, §9.11, §9.4, §9.5, §9.9)',
+ 's73b': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
+ 's73c': 'chapter-part5.md §10.2 (+ §10.3)',
+ 's73d': 'chapter-part5.md §10.4',
+ 's73e': 'chapter-part5.md §10.5',
+ 's73f': 'chapter-part5.md §10.6',
+ 's73g': 'chapter-part5.md §10.8 (+ §10.7)',
+ 's73h': 'chapter-part5.md §10.9, §10.10',
+ 's73i': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',
+ 's73j': 'chapter-part5.md §10.14 (+ §10.12, §10.13)',
  's96a': 'chapter-part5b.md § Раздел 11 (вводка), §11.1',
  's97': 'chapter-part5b.md §11.1, §11.2, §11.3',
  's99': 'chapter-part5b.md §11.4',
@@ -190,11 +180,11 @@ def sostav():
     деку, а производное примечание об этом не узнало. То же, что уже случилось с
     примечанием про `chapter-part4*` (см. `uncovered_part4`), и лечится тем же.
     """
-    nums = [s for s in PLAN_NO if re.fullmatch(r's\d+', s)]
-    ins = sorted((s for s in PLAN_NO if not re.fullmatch(r's\d+', s)),
+    nums = [s for s, lid in PLAN_LID.items() if lid]
+    ins = sorted((s for s, lid in PLAN_LID.items() if not lid),
                  key=lambda s: (int(re.match(r's(\d+)', s).group(1)),
                                 re.match(r's\d+([a-z]*)', s).group(1)))
-    return len(PLAN_NO), len(nums), len(ins), ins
+    return len(PLAN_LID), len(nums), len(ins), ins
 
 
 def chapter_files():
@@ -244,27 +234,48 @@ def wired_slides():
     """Кадры, у которых поле `media` заполнено, то есть снимок реально встаёт в сборку."""
     return [fm(f)['id'] for f in files if (fm(f).get('media') or '').strip()]
 
-# номер кадра в SLIDE-PLAN.md (106 номеров); вставленные — без номера
-PLAN_NO = {}
-n = 0
+# Адрес кадра в SLIDE-PLAN.md берётся ИЗ `local_id` КАДРА, а не из его позиции в деке.
+#
+# Прежняя редакция считала номер плана позиционно — «сколько кадров с чисто числовым `id`
+# прошло до этого» — и потому врала при любом изменении состава: на сборке 2026-10-13
+# кадры «Сборки» (`s97` `s99` `s101` `s102` `s103`) выходили с пометкой
+# `plan_section: "Раздел 6. Лекарство"`, а `s74`, дивайдер самого раздела о лекарстве, —
+# с «Раздел 4. Что решили». Дека разошлась с планом на пятнадцать номеров, и позиционный
+# счёт сдвинулся весь целиком. Поймано перезом R1 (2026-10-14), который сдвинул состав ещё
+# раз и сделал ложь видимой.
+#
+# `local_id` — это и есть идентификатор кадра В ПЛАНЕ (`В-05`, `s6-03`, `s5-01`), он лежит
+# в файле кадра и переездом кадра по деке не меняется. Поэтому раздел плана читается из его
+# приставки, а «номер плана против вставленного каркасом кадра» — по наличию буквенного
+# хвоста у самого `local_id` (`s6-03` — номер плана, `s6-03a` — вставленный).
+PLAN_LID = {}
 for f in files:
-    sid = fm(f)['id']
-    if re.fullmatch(r's\d+', sid):
-        n += 1
-        PLAN_NO[sid] = n
-    else:
-        PLAN_NO[sid] = None
+    _d = fm(f)
+    _lid = (_d.get('local_id') or '').strip()
+    PLAN_LID[_d['id']] = _lid if re.fullmatch(r'(В|s\d)-\d+', _lid) else None
 
-# раздел плана, которому номер принадлежит (№ → имя раздела SLIDE-PLAN.md)
-PLAN_SEC = [(1,10,'Раздел 0. Вход'),(11,21,'Раздел 1. Кто попадает в поле зрения'),
-            (22,34,'Раздел 2. Что про человека измерили'),(35,51,'Раздел 3. Кто это прочёл: человек и модель'),
-            (52,64,'Раздел 4. Что решили и кто это заметил'),(65,73,'Раздел 7. Чем удерживают'),
-            (74,87,'Раздел 6. Лекарство'),(88,96,'Раздел 5. Что стало с теми, кто решает'),
-            (97,103,'Раздел 8. Сборка'),(104,106,'Раздел 9. Закрытие')]
-def plan_sec(no):
-    for a,b,nm in PLAN_SEC:
-        if no and a <= no <= b: return nm
-    return None
+# приставка `local_id` → имя раздела в SLIDE-PLAN.md
+PLAN_SEC = {'В': 'Раздел 0. Вход',
+            's1': 'Раздел 1. Кто попадает в поле зрения',
+            's2': 'Раздел 2. Что про человека измерили',
+            's3': 'Раздел 3. Кто это прочёл: человек и модель',
+            's4': 'Раздел 4. Что решили и кто это заметил',
+            's5': 'Раздел 5. Что стало с теми, кто решает',
+            's6': 'Раздел 6. Лекарство',
+            's7': 'Раздел 7. Чем удерживают',
+            's8': 'Раздел 8. Сборка',
+            's9': 'Раздел 9. Закрытие'}
+
+
+def plan_sec(sid):
+    """Раздел плана для кадра — по приставке его `local_id`. Работает и для вставленных
+    кадров: вставка `s6-07a` принадлежит тому же разделу плана, что и `s6-07`."""
+    lid = (fm_by_sid.get(sid) or '')
+    pref = lid.split('-')[0] if '-' in lid else ''
+    return PLAN_SEC.get(pref)
+
+
+fm_by_sid = {fm(f)['id']: (fm(f).get('local_id') or '').strip() for f in files}
 
 def q(s):
     s = str(s).replace('\\', '\\\\').replace('"', '\\"')
@@ -272,7 +283,7 @@ def q(s):
 
 from collections import Counter
 REAL = set("""s01 s02 s04 s11 s12 s13 s14 s16 s18 s19 s22 s26 s28 s29 s31 s35 s36 s41 s42 s43 s44
-s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s74 s75 s80 s82 s86 s88 s89 s90 s92 s105""".split())
+s45 s47 s49 s49a s52 s53 s54 s55 s57 s59 s60b s61 s63 s65 s66 s73b s73c s73d s73f s74 s105""".split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',
  's18':'rework/deck/assets/s18-fundus-kamera-v-kabinete.jpg',
@@ -281,7 +292,7 @@ ACQUIRED = {
  's49a':'rework/deck/assets/s40-dva-effekta-s-intervalami.png',
  's44':'rework/deck/assets/s44-srez-razmetka-cheloveka-i-modeli.png',
  's52':'rework/deck/assets/s52-sestrinskiy-post.jpg',
- 's88':'rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg',
+ 's73b':'rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg',
  's105':'rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya-verkh.png'}
 secs = OrderedDict()
 for f in files:
@@ -318,10 +329,13 @@ PREAMBLE = """#
 # суждении, и проверять при расхождении надо его.
 #
 # СОСТАВ, посчитанный с диска: {vsego} кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
-# среди них — {nums} из 106; остальное вставлено с буквенным суффиксом ({nins} кадров),
-# чтобы сквозная нумерация не поехала. Снятый номер не переиспользуется: на идентификаторы ссылаются
-# манифесты, разборы прожарок и другие сессии, поэтому в номерах плана зияют пропуски —
-# {propusk} номеров плана в деке нет, причина по каждому в `slides/_snyato/README.md`.
+# среди них — {nums} из 106; остальные {nins} кадров каркас ВСТАВИЛ, и у них номера в плане
+# нет: это кадры, чей `local_id` несёт буквенный хвост (`s6-07a` — вставка к номеру `s6-07`).
+# Считается это по `local_id`, а не по идентификатору показа: `id` говорит, где кадр СТОИТ,
+# `local_id` — какое место плана он занимает, и после переза R1 эти две вещи окончательно
+# разошлись. Снятый номер не переиспользуется: на идентификаторы ссылаются манифесты, разборы
+# прожарок и другие сессии, поэтому в номерах плана зияют пропуски — {propusk} номеров плана
+# в деке нет, причина по каждому в `slides/_snyato/README.md` и `slides-snyatye/README.md`.
 # Вставленные: {ins_list}.
 # Что делает каждый — в его собственной записи ниже (`type`, `title`, `section`); списком
 # здесь это не повторяется, потому что набранный руками список состава тут уже соврал.
@@ -329,6 +343,10 @@ PREAMBLE = """#
 # НУМЕРАЦИЯ РАЗДЕЛОВ РАСХОДИТСЯ ТРОЯКО, и это не ошибка выгрузки:
 #   deck (файлы кадров) — порядок показа, 0…10, сквозной;
 #   SLIDE-PLAN.md       — номера разделов главы при порядке показа 0→1→2→3→4→7→6→5→8→9;
+#                         порядок показа после переза R1 — 0→1→2→3→4→5→6→7→8→9→10, где
+#                         раздел показа 7 — «Что стало с теми, кто решает» (план зовёт его
+#                         Разделом 5 и даёт ему номера 88–96; в деке эти кадры лежат под
+#                         идентификаторами s73b…s73j, чтобы порядок показа читался по id);
 #   chapter             — 0…12, включая §7 «Назначение и лечение» и §8 «Оперативная
 #                         помощь», у которых в деке НЕТ ни одного кадра (решения П9/П11,
 #                         шаг реза А1 в CUT-ORDER.md §2).
@@ -350,13 +368,14 @@ PREAMBLE = """#
 def slide_block(f, d, W, cur):
     sid = d['id']
     W("  - id: %s\n" % sid)
-    no = PLAN_NO.get(sid)
-    W("    local_id: %-28s %s\n" % (q(d.get('local_id','')) + ',' if False else q(d.get('local_id','')),
-                                    ("# № %d в SLIDE-PLAN.md" % no) if no else "# вставленный кадр, номера в плане нет"))
+    no = PLAN_LID.get(sid)
+    W("    local_id: %-28s %s\n" % (q(d.get('local_id','')),
+                                    "# номер SLIDE-PLAN.md" if no
+                                    else "# вставленный кадр, номера в плане нет"))
     W("    file: %s\n" % ('slides/' + os.path.basename(f)))
     W("    type: %s\n" % d['type'])
     W("    title: %s\n" % q(d.get('title','')))
-    ps = plan_sec(no)
+    ps = plan_sec(sid)
     if ps and ps.split('.')[0].replace('Раздел ','') != cur.split('.')[0]:
         W("    plan_section: %s\n" % q(ps))
     W("    chapter_ref: %s\n" % q(CHAP.get(sid,'НЕ СОПОСТАВЛЕН')))
@@ -376,7 +395,7 @@ def slide_block(f, d, W, cur):
 SPLIT = [
     ('deck.yaml',       ['0. Вход','1. Отбор — кого вообще смотреть','2. Анализ данных — и группа, на которой он посчитан']),
     ('deck-part2.yaml', ['3. Постановка диагноза — человек читает рядом с моделью','4. Наблюдение за состоянием — кто заметит ухудшение','5. Ведение записи — кто прочтёт её потом','6. Чем удерживают — подпись, процедура, норматив']),
-    ('deck-part3.yaml', ['7. Разработка лекарства — удешевили начало, где узкое место','8. Что стало с теми, кто решает','9. Сборка','10. Закрытие']),
+    ('deck-part3.yaml', ['7. Что стало с теми, кто решает','8. Разработка лекарства — удешевили начало, где узкое место','9. Сборка','10. Закрытие']),
 ]
 
 for i, (fn, seclist) in enumerate(SPLIT, 1):

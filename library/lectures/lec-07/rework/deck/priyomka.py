@@ -181,7 +181,31 @@ ITOGI = {
 }
 
 
+def shapka():
+    """Три числа сверху — чтобы сводку читал человек, а не только прогон.
+
+    Сводка идёт владельцу предъявлением, и первое, что он должен увидеть,
+    это кадров · медиана · тяжелее предела. Числа берутся с СОБРАННОГО PDF:
+    он единственный источник, на который в отчёте можно ссылаться."""
+    pdf = DECK / "lec-07-karkas.pdf"
+    if not pdf.exists():
+        print("\nШАПКА: собранного PDF нет — три числа предъявить нечем")
+        return
+    try:
+        import statistics
+        import ocenka
+        v = ocenka.pdf_pages(str(pdf))
+    except Exception as e:                                   # noqa: BLE001
+        print(f"\nШАПКА: не прочитана ({e})")
+        return
+    print("\n" + "=" * 72)
+    print(f"ДЕКА: кадров {len(v)} · медиана {statistics.median(v):g} слова · "
+          f"тяжелее предела 140 — {sum(1 for x in v if x > 140)}")
+    print("=" * 72)
+
+
 def svodka(ps, polno):
+    shapka()
     print("\n" + "=" * 72)
     print("СВОДКА ПРИЁМКИ")
     print("=" * 72)

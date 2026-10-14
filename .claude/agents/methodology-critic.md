@@ -341,7 +341,7 @@ python3 tools/presentation-build/deep_latin_scan.py /tmp/pptx-visible.txt
 - **Speech**: WPM ≤ 95 для каждого fragment (не «average», не «8 of 10») — см. speech-writer §WPM Hard Rule.
 - **Slides matrix/quadrant**: fill rate ≥ 70% (минимум 3 из 4 квадрантов с content).
 - **Slides 2D diagram**: schema readability — все 7 subtype-specific items pass (см. presentation-designer.md «Schema Readability Checklist»).
-- **Speaker notes**: 150-300 слов, no layout descriptions, no «Лектору».
+- **Speaker notes**: 500–800 слов связного текста для лекции (решение владельца №10), no layout descriptions, no «Лектору». Ниже 500 — P1, и это структурный пробел повествования, а не придирка к объёму.
 - **Chapter**: 5k-15k words, all sections present, sources inline.
 - **Reader-simulator self-containedness**: ≥ 30/N slides self-contained.
 - **AI-Failure & Judgment share**: ≥ 30% bucket-контента в артефакте, holistic across chapter/slides/speech (single-artifact concentration = fail; см. AI-Failure & Judgment Share Check).

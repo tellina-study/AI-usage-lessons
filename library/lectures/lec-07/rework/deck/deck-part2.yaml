@@ -218,7 +218,7 @@ slides:
     local_id: "s4-06"                      # номер SLIDE-PLAN.md
     file: slides/s59-vtoraya-proverka-drugie-bolnitsy.md
     type: case
-    title: "Пример 1, вторая проверка: другие авторы, другие больницы"
+    title: "Пример 1, вторая проверка: другие авторы и больницы"
     chapter_ref: "chapter-part3.md §4.7, §4.8"
     timing_min: 0.65
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }

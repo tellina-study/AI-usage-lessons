@@ -268,7 +268,7 @@ slides:
     local_id: "новый-zapis-zazemlenie"     # вставленный кадр, номера в плане нет
     file: slides/s60c-kak-ustroeno-vedenie-zapisi.md
     type: norm
-    title: "Что делают участники на стадии записи — до всякой обученной модели"
+    title: "Что делают участники на стадии ведения медицинской документации"
     chapter_ref: "chapter-part3b.md §5.1, §5.2"
     timing_min: 1.05
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
@@ -331,7 +331,7 @@ slides:
     local_id: "s7-02"                      # номер SLIDE-PLAN.md
     file: slides/s66-odna-komnata-i-odin-sluchay.md
     type: norm
-    title: "Что делают участники на стадии удержания — до всякой обученной модели"
+    title: "Что делают участники на стадии допуска, надзора и ответственности"
     plan_section: "Раздел 7. Чем удерживают"
     chapter_ref: "chapter-part3c.md §6.2"
     timing_min: 1.0

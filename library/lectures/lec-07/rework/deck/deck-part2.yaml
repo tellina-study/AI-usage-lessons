@@ -142,7 +142,7 @@ slides:
   - id: s50
     local_id: "s3-13"                      # номер SLIDE-PLAN.md
     file: slides/s50-vyvod-diagnoz.md
-    type: summary
+    type: comparison
     title: "Вывод: разошлось устройство процедуры"
     chapter_ref: "chapter-part2b.md §3.12, §3.13"
     timing_min: 0.6

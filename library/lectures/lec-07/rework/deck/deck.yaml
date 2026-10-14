@@ -102,9 +102,9 @@ motif:
 slide_types:                     # значения поля type, с числом кадров
   case:        { count:  35, meaning: "разбор или картина работы" }
   norm:        { count:  25, meaning: "норматив, устройство, правило" }
-  summary:     { count:  19, meaning: "вывод раздела или свод" }
+  summary:     { count:  18, meaning: "вывод раздела или свод" }
   divider:     { count:  10, meaning: "дивайдер раздела" }
-  comparison:  { count:   8, meaning: "два столбца «что получается / что не получается»" }
+  comparison:  { count:   9, meaning: "два столбца «что получается / что не получается»" }
   map:         { count:   2, meaning: "карта стадии или сетка курса" }
   cover:       { count:   1, meaning: "обложка" }
   question:    { count:   1, meaning: "вопрос залу или вопросы в конце" }

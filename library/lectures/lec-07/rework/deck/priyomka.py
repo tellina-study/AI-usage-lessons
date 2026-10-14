@@ -127,6 +127,7 @@ def progony(sborka, razdely):
                GLAVA, False),
         Progon("ось главы", ["qa/zamer-osi.py"], GLAVA, False),
     ]
+    p.append(Progon("кромка кадра по PDF", ["storozh_kromki.py"], DECK, True))
     if sborka:
         p.append(Progon("замер собранного PDF",
                         ["render_sec.py", *(razdely or ALL_SEC)], DECK, True))
@@ -175,6 +176,7 @@ ITOGI = {
                                     r"РАЗМЕТКА ВЫХОДИТ НА ЭКРАН",
                                     r"пол \d+ объявлен"],
     "замер собранного PDF": [r"^страниц "],
+    "кромка кадра по PDF": [r"^выходов за кромку", r"^\s+стр\.", r"^ОТКАЗ"],
     "самопроверка раскладки": [r"^проверок доказано|НЕ ЛОВИТ"],
     "счёт повествования": [r"разделов без|сцен"],
     "ось главы": [r"^\s*(МОЛЧАТ|называют|разделов)[^\n]*"],

@@ -12,7 +12,7 @@ media_note: "снимок официального стандарта BCSP-S14 �
 timing_min: 0.6
 in_bucket: false
 method_steps: ["заземление"]
-form: []
+form: ["вопрос залу"]
 vfy: true
 status: собран
 ---

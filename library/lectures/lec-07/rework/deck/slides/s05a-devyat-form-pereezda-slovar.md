@@ -10,7 +10,6 @@ media: ""
 media_needed: "иллюстрация не нужна — перечень из девяти строк и есть предмет кадра; картинка рядом отнимает скорость чтения"
 media_note: "—"
 blocks: []
-scheme: {}
 timing_min: 0.7
 in_bucket: false
 method_steps: ["словарь"]

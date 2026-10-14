@@ -75,7 +75,7 @@ deck:
   deck_parts: [deck.yaml, deck-part2.yaml, deck-part3.yaml]
   builder: deck/build_lec07.py   # читает slides/*.md, НЕ этот файл
   sources:
-    chapter_parts: 18            # chapter.md + файлы chapter-part*.md, сочтено с диска
+    chapter_parts: 20            # chapter.md + файлы chapter-part*.md, сочтено с диска
     plan: SLIDE-PLAN.md
     plan_tables: [SLIDE-PLAN-table.md, SLIDE-PLAN-desc-A.md, SLIDE-PLAN-desc-B.md, SLIDE-PLAN-desc-C.md]
     block_plans: plans/          # поимённые минуты кадров

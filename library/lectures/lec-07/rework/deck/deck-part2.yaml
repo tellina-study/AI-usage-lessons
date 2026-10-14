@@ -186,7 +186,7 @@ slides:
     local_id: "s4-02"                      # номер SLIDE-PLAN.md
     file: slides/s53-palata-obkhod-list-nablyudeniya.md
     type: norm
-    title: "Что делают участники на стадии наблюдения — до всякой обученной модели"
+    title: "Что делают участники на стадии динамического наблюдения — до всякой модели"
     chapter_ref: "chapter-part3.md §4.1"
     timing_min: 0.95
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }

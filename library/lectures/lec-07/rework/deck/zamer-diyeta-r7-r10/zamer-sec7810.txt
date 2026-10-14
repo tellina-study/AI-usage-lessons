@@ -6,8 +6,8 @@
 
 warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
   73  s73b-divider-navyk.md
-  76  s73c-vrach-vernulsya-posle-goda.md
-  81  s73ca-tri-opory-i-odin-shag-iz-vosmi.md
+  74  s73c-vrach-vernulsya-posle-goda.md
+  75  s73ca-tri-opory-i-odin-shag-iz-vosmi.md
  120  s73d-tsena-i-dva-rezhima-osmotra.md
  137  s73f-primer-1-dolya-bez-pomoshchnika.md
   85  s73h-dva-probela-i-odno-izmerenie.md
@@ -30,4 +30,4 @@ warning: The `fitz` API is deprecated and will be removed in future. Use `import
  124  s105-ustroystvo-otozvali-resheniya-ostalis.md
  102  s106-voprosy.md
 
-страниц 24 · медиана 113.5 · среднее 106 · максимум 140 · тяжелее 140 — 0 · тяжелее 90 — 15
+страниц 24 · медиана 113.5 · среднее 105 · максимум 140 · тяжелее 140 — 0 · тяжелее 90 — 15

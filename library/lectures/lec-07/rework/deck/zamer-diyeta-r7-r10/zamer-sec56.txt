@@ -1,0 +1,28 @@
+рендер готов: sec5-6-01.pdf, снимки в snaps5-6-01/
+кусок 1: 15 кадров готово
+рендер готов: sec5-6-02.pdf, снимки в snaps5-6-02/
+кусок 2: 4 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r7-r10-vtoroy-acf4258a/library/lectures/lec-07/rework/deck/sec-5-6.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  67  s60b-divider-vedenie-zapisi.md
+  71  s60ba-dannye-sposoby-i-reshenie-zapisi.md
+ 139  s60bb-chetyre-rezhima-pisma.md
+  75  s60c-kak-ustroeno-vedenie-zapisi.md
+ 129  s61-avtomaticheskaya-zapis-priema.md
+ 110  s62-dve-dorozhki-nabor-i-vychitka.md
+ 129  s63-vypisnoy-epikriz.md
+ 128  s63a-tsena-epikriza-vychitka-i-pereskaz.md
+  75  s64-vyvod-vedenie-zapisi.md
+  75  s65-divider-chem-uderzhivayut.md
+  75  s65a-dannye-sposoby-i-reshenie-nadzora.md
+  73  s66-odna-komnata-i-odin-sluchay.md
+ 139  s67-razbor-sluchaya-posle-iskhoda.md
+ 127  s68-norma-est-proverki-net.md
+ 127  s69-dvoynoe-chtenie-v-minutakh-truda.md
+ 132  s70-chetyre-uchastnika.md
+  74  s70a-podkhodyashchiy-chelovek-po-normativu.md
+ 115  s71-tri-mekhanizma-nadzora.md
+ 139  s73-vyvod-chem-uderzhivayut.md
+
+страниц 19 · медиана 115 · среднее 105 · максимум 139 · тяжелее 140 — 0 · тяжелее 90 — 11

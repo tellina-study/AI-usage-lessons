@@ -11,7 +11,7 @@ media_needed: "иллюстрация не нужна — четыре стро�
 media_note: "—"
 blocks: []
 pol_slov: 140   # О10 (#229): свод четырёх замеров раздела: у каждого на кадре разряд свидетельства и выборка, и на этой графе стоит assertion кадра
-timing_min: 0.7
+timing_min: 0.95
 in_bucket: true
 method_steps: ["свод"]
 form: []

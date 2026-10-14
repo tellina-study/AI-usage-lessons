@@ -11,7 +11,7 @@ media_needed: "иллюстрация не нужна — четыре ступ�
 blocks:
   - {label: "Четвёртая ступень, она же частая", value: "счёт секунд — около двух", note: "медиана, вне медицины", key: true}
 media_note: "—"
-timing_min: 0.65
+timing_min: 1.05
 in_bucket: true
 method_steps: ["свод"]
 form: []

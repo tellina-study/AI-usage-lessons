@@ -11,8 +11,8 @@
 зависит):
 
     theme · report → metrics → prims → markup · slidefile
-                             → tables · plates · scheme · columns
-                             → figure · flow
+                             → tables · plates · columns · figure
+                             → tracks · ladder · axis → scheme → flow
                              → wrap → media · contrast → refdeck · render
                              → probes → selftest · regress → regress_decks
 
@@ -24,8 +24,8 @@
     python3 -m deckkit.regress_decks --all — регрессия на двух доставленных деках
 """
 __all__ = ["theme", "report", "metrics", "prims", "markup", "slidefile",
-           "tables", "plates", "scheme", "columns", "figure", "flow",
-           "wrap", "media",
+           "tables", "plates", "columns", "figure", "tracks", "ladder",
+           "axis", "scheme", "flow", "wrap", "media",
            "refdeck", "render", "probes", "probes_layout", "probes_contrast",
            "contrast", "selftest", "selftest_layout", "selftest_contrast",
            "regress", "regress_decks"]

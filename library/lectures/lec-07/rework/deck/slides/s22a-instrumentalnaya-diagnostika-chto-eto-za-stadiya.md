@@ -9,7 +9,7 @@ source: "—"
 media: ""
 media_needed: ""
 media_note: "иллюстрация не поставлена: настоящий кабинет стоит на дивайдере раздела выше и на s26, где техник у прибора и есть предмет кадра"
-timing_min: 0.6
+timing_min: 0.5
 in_bucket: false
 method_steps: ["заземление"]
 form: []

@@ -13,21 +13,25 @@ warning: The `fitz` API is deprecated and will be removed in future. Use `import
   85  s73h-dva-probela-i-odno-izmerenie.md
   87  s73ha-pustye-osi-i-tri-nulya.md
   74  s73i-vyvod-navyk.md
- 107  s73j-mesto-razdela-vne-okna.md
+ 112  s73j-mesto-razdela-vne-okna.md
   67  s74-divider-lekarstvo.md
- 140  s77-voronka-otrasli.md
+ 136  s77-voronka-otrasli.md
  133  s78-tsena-oshibok-i-dva-rezhima.md
  125  s85-primer-1-otkaz-ot-obeshchaniya.md
  136  s87-vyvod-lekarstvo.md
   75  s96a-divider-sborka.md
- 126  s97-devyat-form-slovarya-tselikom.md
+ 137  s97-devyat-form-slovarya-tselikom.md
  127  s99-vyigrysh-pripisan-ne-tomu.md
  138  s101-kletki-uznavaemye-protsedury-drugie.md
-  96  s102-chto-menyaetsya-v-cheloveke-i-v-podpisi.md
+ 127  s102-chto-menyaetsya-v-cheloveke-i-v-podpisi.md
  129  s103-chetyre-otveta-na-odin-vopros.md
   46  s103a-divider-zakrytie.md
  134  s104-chto-bylo-obeshchano-v-nachale.md
  124  s105-ustroystvo-otozvali-resheniya-ostalis.md
  102  s106-voprosy.md
 
-страниц 24 · медиана 113.5 · среднее 105 · максимум 140 · тяжелее 140 — 0 · тяжелее 90 — 15
+страниц 24 · медиана 122 · среднее 107 · максимум 138 · тяжелее 140 — 0 · тяжелее 90 — 15
+
+Предупреждений сборки этот прогон не показывает — ни одного, ни на каком входе:
+это замер слов, а не приёмка. Блокирующие берут отдельной сборкой
+(`python3 build_lec07.py --only sNN`) либо сводом `python3 priyomka.py`.

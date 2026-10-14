@@ -68,7 +68,7 @@ deck:
   total_slides: 101
   plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 67 из них
   inserted_slides: [s01a, s01b, s01c, s01d, s05a, s05b, s11a, s19, s22a, s30a, s32, s35a, s43, s48, s49b, s49c, s49d, s52a, s56, s58, s60, s60a, s60b, s60ba, s60bb, s60c, s62, s63a, s65a, s68, s70a, s73ca, s73ha, s78]
-  sum_timing_min: 82.95           # сложено по timing_min файлов кадров
+  sum_timing_min: 82.35           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
   curriculum_level: "отраслевая лекция L7; strict-in ≥30% обязателен, waiver недоступен"
@@ -117,7 +117,7 @@ sections:                        # разделы показа: кадров и 
   - { name: "2. Инструментальная и лабораторная диагностика",
       slides: 11, timing_min: 7.75, range: [s22, s33] }
   - { name: "3. Постановка диагноза",
-      slides: 17, timing_min: 14.10, range: [s35, s50] }
+      slides: 17, timing_min: 13.50, range: [s35, s50] }
   - { name: "4. Динамическое наблюдение и клинические тревоги",
       slides: 11, timing_min: 8.20, range: [s52, s60a] }
   - { name: "5. Ведение медицинской документации",
@@ -158,7 +158,7 @@ slides:
     file: slides/s01b-kak-poluchayut-dannye-i-kak-reshayut-bez-modeli.md
     type: norm
     title: "Как получают данные и как решают без модели"
-    chapter_ref: "chapter.md § Обзор предмета (как получают данные · классические режимы) + chapter-part1b.md §1.2, §2.1, chapter-part2.md §3.1, chapter-part3.md §4.2, chapter-part3b.md §5.1–5.2, chapter-part3c.md §6.3"
+    chapter_ref: "chapter.md § Обзор предмета (как получают данные · классические режимы) + chapter-part1b.md §1.2 + chapter-part1c.md §2.1, chapter-part2.md §3.1, chapter-part3.md §4.2, chapter-part3b.md §5.1–5.2, chapter-part3c.md §6.3"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s01c
@@ -299,7 +299,7 @@ slides:
     file: slides/s22-divider-analiz-dannykh.md
     type: divider
     title: "2. Инструментальная и лабораторная диагностика"
-    chapter_ref: "chapter-part1b.md § Раздел 2 (вводка), §2.1"
+    chapter_ref: "chapter-part1c.md § Раздел 2 (вводка), §2.1"
     timing_min: 0.5
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s22-rentgenkabinet-pacient-u-pribora.jpg"

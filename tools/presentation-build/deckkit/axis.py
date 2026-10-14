@@ -65,7 +65,11 @@ class AxisStyle:
     line_h: float = 0.055       # толщина самой прямой
     line_pad: float = 0.55      # поле слева и справа под крайние подписи
     tick_w: float = 0.055
-    tick_h: float = 0.30
+    # Засечка 0,30" стоила 0,60" высоты на блок — больше, чем обе дорожки
+    # подписей вместе. На собранном `s45` эта разница решала, останется ли
+    # тело кадра на полу 12 пт или уйдёт под него; 0,18" на снимке
+    # различается так же ясно, а кадру возвращает четверть дюйма.
+    tick_h: float = 0.18
     lane_h: float = 0.62        # высота дорожки подписи над/под прямой
     lane_gap: float = 0.10
     val_pt: float = 15.0
@@ -74,6 +78,10 @@ class AxisStyle:
     lab_ls: float = 1.10
     unit_pt: float = 12.0       # пол видимого слоя, см. `floor.py`
     unit_h: float = 0.24
+    unit_gap: float = 0.12      # просвет от нижней дорожки подписей: пока
+                                # его не было, строка единицы прилипала к
+                                # подписи нижней засечки вплотную — видно
+                                # на собранном `s45`
     ci_h: float = 0.075         # толщина полосы интервала
     cap_pt: float = 12.0        # пол видимого слоя, см. `floor.py`
     cap_ls: float = 1.14
@@ -180,7 +188,38 @@ def _lanes(d):
     return {m: (k % 2 == 0) for k, m in enumerate(order)}
 
 
-def block_h(st=DEFAULT):
+def lane_w(d, w, st=DEFAULT):
+    """Ширина, отведённая подписи одной засечки."""
+    return max(st.min_lab_w, w / max(len(d["marks"]), 1))
+
+
+def mark_text(m):
+    """Что стоит в подписи засечки: величина, под ней — чьё это."""
+    return m["shown"] + ("\n" + m["label"] if m["label"] else "")
+
+
+def lanes_h(d, w, st=DEFAULT):
+    """Высота ВЕРХНЕЙ и НИЖНЕЙ дорожек подписей — по тому, что в них
+    написано, а не по числу из набора.
+
+    Было числом (0,62"), и число это ЛГАЛО в обе стороны: подпись в одну
+    строку оставляла под собой пустоту, подпись в три молча вылезала из
+    своей дорожки — проверка высоты у этих надписей была выключена
+    (`quiet=True`). Выключенная проверка плюс постоянная высота — ровно тот
+    молчащий сторож, который в этом круге чинят везде, и заводить его
+    новой формой нельзя. Замерено на живом `s45`: подпись «Врач один, со
+    справочниками» занимает две строки, то есть 0,78" против обещанных
+    0,62"."""
+    lw = lane_w(d, w, st)
+    lanes = _lanes(d)
+    up = [metrics.est_h(mark_text(m), st.lab_pt, lw, st.lab_ls)
+          for i, m in enumerate(d["marks"]) if lanes[i]]
+    dn = [metrics.est_h(mark_text(m), st.lab_pt, lw, st.lab_ls)
+          for i, m in enumerate(d["marks"]) if not lanes[i]]
+    return (max(up) if up else 0.0), (max(dn) if dn else 0.0)
+
+
+def block_h(d=None, w=11.0, st=DEFAULT):
     """Высота САМОЙ оси: дорожка подписи · просвет · засечка · прямая ·
     засечка · просвет · дорожка подписи.
 
@@ -188,20 +227,25 @@ def block_h(st=DEFAULT):
     было, верхняя дорожка подписей начиналась выше отведённого оси блока
     ровно на высоту засечки — то есть лезла в заголовок кадра, а мера об
     этом молчала. Мерить надо то, что рисуется, и обеими сторонами."""
-    return 2 * (st.lane_h + st.lane_gap + st.tick_h) + st.line_h
+    if d is None:
+        up = dn = st.lane_h
+    else:
+        up, dn = lanes_h(d, w, st)
+    return up + dn + 2 * (st.lane_gap + st.tick_h) + st.line_h
 
 
-def line_y_of(y, st=DEFAULT):
+def line_y_of(y, d=None, w=11.0, st=DEFAULT):
     """Верх самой прямой при блоке, начатом в `y`. Одно место на меру и на
     рисование: две формулы одного числа расходятся на первой же правке."""
-    return y + st.lane_h + st.lane_gap + st.tick_h
+    up = st.lane_h if d is None else lanes_h(d, w, st)[0]
+    return y + up + st.lane_gap + st.tick_h
 
 
 def axis_h(d, w, st=DEFAULT):
     """Высота оси — она же то, что ось отнимает у тела кадра."""
-    h = block_h(st)
+    h = block_h(d, w, st)
     if d["unit"] or d["base"]:
-        h += st.unit_h
+        h += st.unit_gap + st.unit_h
     if d["caption"]:
         h += st.cap_gap + metrics.n_lines(d["caption"], st.cap_pt, w) \
             * st.cap_pt * st.cap_ls * metrics.LH / 72.0 * metrics.SAFE
@@ -272,7 +316,8 @@ def draw_axis(s, sid, d, x, y, w, st=DEFAULT, tag=None):
     tag = tag or sid
     lanes = _lanes(d)
     top = y
-    line_y = line_y_of(top, st)
+    up_h, dn_h = lanes_h(d, w, st)
+    line_y = line_y_of(top, d, w, st)
     prims.rect(s, x + st.line_pad / 2, line_y,
                w - st.line_pad, st.line_h, LIGHT, count="ось")
     if d["zero"]:
@@ -298,19 +343,22 @@ def draw_axis(s, sid, d, x, y, w, st=DEFAULT, tag=None):
                    st.tick_w, st.tick_h, col, count="засечка")
         if m["key"]:
             report.GOLD_SEEN.add(sid)
-        lane_y = (line_y - st.tick_h - st.lane_gap - st.lane_h) if up \
+        lane_y = (line_y - st.tick_h - st.lane_gap - up_h) if up \
             else (line_y + st.line_h + st.tick_h + st.lane_gap)
-        text = m["shown"] + ("\n" + m["label"] if m["label"] else "")
-        lw = max(st.min_lab_w, w / max(len(d["marks"]), 1))
+        text = mark_text(m)
+        lw = lane_w(d, w, st)
         floor.pt(st.lab_pt, tag, "подпись засечки")
-        floor.pt(st.val_pt, tag, "величина засечки")
-        prims.text_box(s, mx - lw / 2, lane_y, lw, st.lane_h, text,
-                       size=st.lab_pt, bold=False, color=DEEP,
+        # Без `quiet`: рамка подписи теперь мерена по её собственному
+        # тексту, значит предупреждению есть что сказать, и затыкать его
+        # нечем.
+        prims.text_box(s, mx - lw / 2, lane_y, lw, up_h if up else dn_h,
+                       text, size=st.lab_pt, bold=False, color=DEEP,
                        align=PP_ALIGN.CENTER,
                        anchor=MSO_ANCHOR.BOTTOM if up else MSO_ANCHOR.TOP,
-                       ls=st.lab_ls, tag=f"{tag}/засечка{i + 1}", quiet=True)
-    cy = top + block_h(st)
+                       ls=st.lab_ls, tag=f"{tag}/засечка{i + 1}")
+    cy = top + block_h(d, w, st)
     if d["unit"] or d["base"]:
+        cy += st.unit_gap
         floor.pt(st.unit_pt, tag, "единица оси")
         txt = " · ".join(t for t in (d["unit"], d["base"]) if t)
         prims.text_box(s, x, cy, w, st.unit_h, txt, size=st.unit_pt,

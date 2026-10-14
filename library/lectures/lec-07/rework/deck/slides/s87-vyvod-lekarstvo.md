@@ -13,7 +13,7 @@ blocks: []
 timing_min: 1.1
 in_bucket: true
 method_steps: ["вывод раздела", "свод"]
-form: ["форма 1", "форма 4а", "форма 6"]
+form: ["форма 1", "форма 4а", "форма 6", "вопрос залу"]
 vfy: false
 status: собран
 ---

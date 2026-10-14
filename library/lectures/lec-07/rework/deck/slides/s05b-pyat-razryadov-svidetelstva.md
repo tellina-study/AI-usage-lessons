@@ -10,7 +10,7 @@ media: ""
 media_needed: "иллюстрация не нужна — пять ступеней перечнем держат экран сами"
 media_note: "—"
 blocks: []
-timing_min: 0.45
+timing_min: 0.7
 in_bucket: false
 method_steps: ["словарь"]
 form: []

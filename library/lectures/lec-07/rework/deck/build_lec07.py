@@ -58,8 +58,8 @@ from pptx.enum.text import MSO_ANCHOR
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
-from deckkit import (columns, floor, flow, markup, media, metrics,  # noqa: E402
-                     plates, prims, render as rnd, report, scheme,
+from deckkit import (columns, figure, floor, flow, markup, media,  # noqa: E402
+                     metrics, plates, prims, render as rnd, report, scheme,
                      slidefile, tables, titles, twocol, wrap)
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, OUTLINE,  # noqa: E402
                            SLIDE_H, SLIDE_W, WHITE)
@@ -331,7 +331,7 @@ def check_prims(sl, kind):
     """Примитив объявлен на кадре, который его не рисует. Молчать нельзя:
     сессия раздела написала бы полосу плашек и не узнала, что её нет."""
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
-                    ("columns", "столбцы")):
+                    ("columns", "столбцы"), ("figure", "число")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -481,6 +481,16 @@ def content(p, sl, root):
     if sch:
         scheme.check_scheme(sl.sid, sch, body_w, SCHEME)
         y += scheme.draw_scheme(s, sl.sid, sch, MX, y, body_w, SCHEME) + GAP
+
+    # КАДР ОДНОГО ЧИСЛА (`deckkit.figure`, круг #229). Четыре строки, и
+    # без них самопроверка ДЕКИ не могла доказать четыре пробы `[число]`:
+    # ядро доказывает их на своей образцовой раскладке, а здесь ловить было
+    # нечего — раскладка этой деки форму не звала вовсе. Проверка, которой
+    # нечего проверять, отчитывается нулём и выглядит как пройденная.
+    fig = figure.figure_of(sl) if is_content else None
+    if fig:
+        figure.check_figure(sl.sid, fig, body_w)
+        y += figure.draw_figure(s, sl.sid, fig, MX, y, body_w) + GAP
 
     cols = columns.columns_of(sl)
     avail = col_bot - y

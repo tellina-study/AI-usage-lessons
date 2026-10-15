@@ -292,8 +292,17 @@ def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
     others = [(k, b) for k, b in blocks if k != "table"]
     force = D.table("quote_role_force")
 
+    # Порядок блоков берётся ИЗ ФАЙЛА: врезка, написанная после таблицы,
+    # рисуется под таблицей. Прежде все врезки выносились наверх скопом, и
+    # слайд читался выводом вперёд доказательства — на Семинаре 7 предел
+    # применимости и закрытие строки оси оказались НАД критериями, из которых
+    # они следуют. Замечено владельцем, круг 9 (2026-10-15).
+    first_table = next((i for i, (k, _) in enumerate(blocks) if k == "table"), len(blocks))
+    pre = [(k, b) for i, (k, b) in enumerate(blocks) if k != "table" and i < first_table]
+    post = [(k, b) for i, (k, b) in enumerate(blocks) if k != "table" and i > first_table]
+
     drawers = []
-    for kind, b in others:
+    for kind, b in pre:
         if kind == "quote":
             drawers.append(block_drawer(kind, b, sid, pattern, role=force.get(sid)))
 
@@ -320,6 +329,9 @@ def g_criteria(sl, sid, title, blocks, pattern, assertion=""):
                            K.table_card(sl, D.LEFT, y, D.WIDTH, h_, r_, max_h=mh,
                                         accent=a, label=f"{sid} критерии"))
 
+    for kind, b in post:
+        if kind == "quote":
+            drawers.append(block_drawer(kind, b, sid, pattern, role=force.get(sid)))
     for kind, b in others:
         if kind in ("bullets", "code", "cards", "para"):
             drawers.append(block_drawer(kind, b, sid, pattern))

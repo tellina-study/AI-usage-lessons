@@ -690,7 +690,10 @@ def criterion_plate(sl, x, y, w, title, items, *, size=11.5, accent=SLATE, max_h
     ih = [M.text_h(plain(i), fs, inner) + 0.16 for i in items]
     h = max(min_h, 0.42 + sum(ih) + pad)
     ocean_box(sl, x, y, w, h, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.2)
-    text_box(sl, x + pad, y + 0.12, inner, 0.3, title.upper(), size=11, bold=True,
+    # Заголовок плашки рисуется БЕЗ разбора разметки (`rich=False`), поэтому
+    # звёздочки жирного начертания из исходной ячейки напечатались бы как текст:
+    # «РАСЩЕПЛЯТЬ **НУЖНО**». Замечено владельцем на Семинаре 7, круг 9.
+    text_box(sl, x + pad, y + 0.12, inner, 0.3, plain(title).upper(), size=11, bold=True,
              color=accent, rich=False)
     iy = y + 0.42
     for i, item in enumerate(items):

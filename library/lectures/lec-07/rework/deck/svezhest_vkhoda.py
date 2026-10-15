@@ -90,6 +90,11 @@ def main():
 
     zamechaniy = 0
 
+    def g(*a):
+        import subprocess
+        return subprocess.run(["git", *a], capture_output=True, text=True,
+                              cwd=str(HERE)).stdout.strip()
+
     # ── счёт по объединению
     sojuz = [i for ids in mans.values() for i in ids]
     unik = set(sojuz)
@@ -111,11 +116,59 @@ def main():
     if not (peresech or net_v_manifestah or net_na_diske):
         print("  дека и её описание совпадают поимённо")
 
+    # ── ВРЕМЯ ЗАПИСИ артефакта против последнего коммита, тронувшего и
+    #    кадры, И КОД. Находка сессии добычи, и она закрывает две дыры
+    #    сразу. Первая: сборка устаревает не только от правки кадра, но и
+    #    от правки `tools/presentation-build/` или `deck/*.py` — отрисовщик
+    #    меняет то, что выходит на экран, при неизменных кадрах. Вторая:
+    #    время КОММИТА артефакта не равно времени его СБОРКИ. Именно так в
+    #    предыдущую сборку попала забракованная версия формы: правка
+    #    отрисовщика легла на 78 секунд позже рендера её части, коммит PDF —
+    #    ещё позже, и проверка по коммиту молчала.
+    # Пути берутся НЕ все `deck/*.py`, а только те, что меняют ВЫХОД.
+    # Первая версия брала все, и первой же её жертвой стал мой собственный
+    # коммит в прогоны замера: артефакт оказался «на минуту старше кода»,
+    # хотя `ocenka.py` и `priyomka.py` ничего не рисуют — они меряют. Сторож,
+    # кричащий на исправной сборке, стоит ровно столько же, сколько
+    # молчащий на сломанной, и это уже третий раз, когда я ловлю на этом
+    # себя. Рисуют: ядро `deckkit`, сборщик деки и два отрисовщика.
+    RISUYUT = [str(HERE.parents[4] / "tools" / "presentation-build"),
+               str(HERE / "build_lec07.py"),
+               str(HERE / "render_parts.py"),
+               str(HERE / "render_sec.py")]
+    posl = g("log", "-1", "--format=%ct %h %ci", "--", "slides/", *RISUYUT)
+    if posl:
+        ts_kod = int(posl.split()[0])
+        opis = " ".join(posl.split()[1:])
+        print(f"\nпоследний коммит, тронувший кадры, ядро или отрисовщик: {opis}")
+        for p_art in (HERE / a.pdf, HERE / a.pdf.replace(".pdf", ".pptx")):
+            if not p_art.exists():
+                print(f"  {p_art.name}: нет")
+                continue
+            dt = p_art.stat().st_mtime - ts_kod
+            if dt < 0:
+                zamechaniy += 1
+                print(f"  ЗАМЕЧАНИЕ: {p_art.name} записан на {-dt / 60:.0f} мин "
+                      "РАНЬШЕ этого коммита — артефакт собран прежним кодом "
+                      "либо прежними кадрами, и замеры по нему не о нынешней деке")
+            else:
+                print(f"  {p_art.name}: записан на {dt / 60:.0f} мин позже — "
+                      "собран нынешним кодом и кадрами")
+        # Пакет собирается ОТДЕЛЬНОЙ командой: `render_parts.py` полный pptx
+        # не обновляет, и прогоны, читающие пакет, обязаны знать его возраст.
+        pk = HERE / a.pdf.replace(".pdf", ".pptx")
+        pdf_p = HERE / a.pdf
+        if pk.exists() and pdf_p.exists():
+            raz = (pk.stat().st_mtime - pdf_p.stat().st_mtime) / 60
+            print(f"  пакет против PDF: {raz:+.0f} мин "
+                  f"({'пакет свежее' if raz >= 0 else 'ПАКЕТ СТАРШЕ PDF'})")
+            if raz < 0:
+                zamechaniy += 1
+                print("    ЗАМЕЧАНИЕ: `render_parts.py` полный pptx НЕ обновляет "
+                      "— его собирают отдельной командой; всё, что читает "
+                      "пакет (контраст, ссылки, hero), смотрит прошлую версию")
+
     # ── чем собран PDF: коммит, а не только время файла
-    def g(*a):
-        import subprocess
-        return subprocess.run(["git", *a], capture_output=True, text=True,
-                              cwd=str(HERE)).stdout.strip()
     kom = g("log", "-1", "--format=%h %ci", "--", a.pdf)
     if kom:
         sha = kom.split()[0]

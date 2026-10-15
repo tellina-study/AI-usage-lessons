@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 3. Ведение медицинской документации · 9 кадров · 7.55 мин ───
+  # ─── 3. Ведение медицинской документации · 10 кадров · 8.40 мин ───
   - id: s60ba
     local_id: "s5-01a"                     # вставленный кадр, номера в плане нет
     file: slides/s60ba-dannye-sposoby-i-reshenie-zapisi.md
@@ -77,6 +77,14 @@ slides:
     title: "Пример 2, цена: вычитка другого рода"
     chapter_ref: "chapter-part3b.md §5.8 (+ §5.7)"
     timing_min: 1.05
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s63b
+    local_id: "новый-zapis-shov"           # вставленный кадр, номера в плане нет
+    file: slides/s63b-nadiktovka-kotoraya-predlagaet-diagnoz.md
+    type: norm
+    title: "Надиктовка, которая предлагает диагноз: граница проведена по подписи"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.85
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s64
     local_id: "s4-09"                      # номер SLIDE-PLAN.md

@@ -73,6 +73,11 @@ def po_kadram(pdf, imena=None):
         for s, _x, _y in vnutri:
             ves[round(s, 1)] += 1
         telo = max(ves, key=lambda k: ves[k])
+        # МИНИМУМ, а не только самый частый. Куплено собственной ошибкой: на
+        # `s59` в коробке тела лежали 9 прогонов по 14,5 пт и ОДИН по 11,5 —
+        # самый частый дал 14,5, прогон отрапортовал «ниже пола 0», а сборка
+        # в ту же минуту сказала `[пол] 11,5 пт`. Меньшинство ниже пола не
+        # видно по самому частому, а читается с задних рядов оно так же плохо.
         out.append((imya, telo, min(ves), ves[telo]))
     return out
 
@@ -85,11 +90,13 @@ if __name__ == "__main__":
     r = [x for x in r if x[1] is not None]
     tela = [t for _i, t, _m, _v in r]
     na_polu = [i for i, t, _m, _v in r if abs(t - POL) < 0.05]
-    nizhe = [i for i, t, _m, _v in r if t < POL - 0.05]
+    # «Ниже пола» считается по МИНИМУМУ в коробке тела, не по самому частому.
+    nizhe = [f"{i} (мин {m:.1f})" for i, _t, m, _v in r if m < POL - 0.05]
     print(f"кадров с коробкой тела: {len(r)}"
           + (f"; без неё (обложка/дивайдер/снимок) — {len(bez)}" if bez else ""))
-    print(f"наименьший кегль ТЕЛА по полосе: {min(tela):.1f} пт "
-          f"(пол {POL:.1f})")
+    mins = [m for _i, _t, m, _v in r]
+    print(f"наименьший кегль ТЕЛА по полосе: {min(tela):.1f} пт по самому "
+          f"частому, {min(mins):.1f} пт по минимуму (пол {POL:.1f})")
     print(f"кадров РОВНО на полу 12,0: {len(na_polu)}"
           + (" — " + ", ".join(na_polu) if na_polu else ""))
     print(f"кадров НИЖЕ пола: {len(nizhe)}"

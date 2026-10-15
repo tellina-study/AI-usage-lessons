@@ -273,7 +273,7 @@ def source_runs(sl):
     решает, где кончается тело."""
     src = str(sl.meta.get("source") or "").strip()
     cap = str(sl.meta.get("media_caption") or "").strip()
-    if cap and sl.meta.get("media_hero"):
+    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
         src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return []
@@ -325,7 +325,7 @@ def footer(s, sl):
     число (§5.9 требует её видимой, но не требует ставить под картинкой)."""
     src = str(sl.meta.get("source") or "").strip()
     cap = str(sl.meta.get("media_caption") or "").strip()
-    if cap and sl.meta.get("media_hero"):
+    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
         src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return

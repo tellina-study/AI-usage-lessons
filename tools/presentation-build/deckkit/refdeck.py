@@ -91,11 +91,13 @@ def gold_tick(s, sid, x, y, g=G):
 
 
 def footer(s, sl, g=G):
-    """Подвал: источник живыми ссылками. Подпись обязательного hero идёт
-    сюда же последним сегментом — место источника в деке одно."""
+    """Подвал: источник живыми ссылками. Подпись hero или предъявленного
+    документа идёт сюда же последним сегментом — место источника в деке
+    одно. `media_document` (О18, #229) включает подпись и там, где кадр не
+    hero: документ зал обязан мочь проверить независимо от размера."""
     src = str(sl.meta.get("source") or "").strip()
     cap = str(sl.meta.get("media_caption") or "").strip()
-    if cap and sl.meta.get("media_hero"):
+    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
         src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return

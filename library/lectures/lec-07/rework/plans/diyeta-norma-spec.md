@@ -215,7 +215,7 @@ author: оркестратор (сессия «Седьмая конкц», по
 
 ## 10. Нормативное чтение
 
-- `tools/presentation-build/trebovaniya-k-soderzhaniyu.md` §5.12–5.17 — форма подачи кадра;
+- `tools/presentation-build/trebovaniya-k-soderzhaniyu-forma.md` §5.12–5.22 — форма подачи кадра;
 - `tools/lecture-production/stroenie-i-povestvovanie.md` — строение раздела, форма разбора, швы;
 - `library/lectures/lec-07/rework/decisions-orkestratora.md` О6, О7, О8, О20 — решения этого круга;
 - `library/lectures/lec-07/rework/research/08-norma-teksta-na-kadre.md` — замер нормы;

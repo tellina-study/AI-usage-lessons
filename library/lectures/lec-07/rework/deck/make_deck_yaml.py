@@ -47,7 +47,6 @@ CHAP = {
     's22a': 'chapter-part1c.md § Раздел 2 (вводка), §2.1, §2.2, §2.4',
     's60ba': 'chapter-part3b.md § Раздел 5 (вводка), §5.1, §5.2',
     's60bb': 'chapter-part3b.md §5.2 (три классических режима; доля текста по Steinkamp 2022 и Wang 2017)',
-    's65a': 'chapter-part3c.md § Раздел 6 (вводка), §6.1',
     's73ca': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
  's03': 'chapter.md §0.2',
  's05': 'chapter.md §0.4',
@@ -83,35 +82,17 @@ CHAP = {
  's63': 'chapter-part3b.md §5.7',
  's63a': 'chapter-part3b.md §5.8 (+ §5.7)',
  's64': 'chapter-part3b.md §5.9 (+ §5.8)',
- 's65': 'chapter-part3c.md § Раздел 6 (вводка), §6.1',
- 's66': 'chapter-part3c.md §6.2',
- 's67': 'chapter-part3c.md §6.3, §6.5 (+ §6.4)',
- 's68': 'chapter-part3c.md §6.7',
- 's69': 'chapter-part3c.md §6.6',
- 's70': 'chapter-part3d.md §6.8',
- 's70a': 'chapter-part3d.md §6.8 — норматив и участники; самой политики в главе нет, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md ',
- 's71': 'chapter-part3d.md §6.9',
- 's73': 'chapter-part3d.md §6.13 (+ §6.12)',
- 's74': 'chapter-part4e.md § Раздел 9 (вводка), §9.1',
- 's77': 'chapter-part4e.md §9.2, §9.3',
- 's78': 'chapter-part4e.md §9.3',
- 's85': 'chapter-part4e.md §9.6',
- 's87': 'chapter-part4f.md §9.12 (+ §9.10, §9.11, §9.9) + chapter-part4e.md §9.4, §9.5',
  's73b': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
  's73c': 'chapter-part5.md §10.2 (+ §10.3)',
  's73d': 'chapter-part5.md §10.4, §10.5',
  's73f': 'chapter-part5.md §10.6, §10.8 (+ §10.7)',
- 's73h': 'chapter-part5.md §10.9, §10.10',
- 's73ha': 'chapter-part5.md §10.10, §10.14 — пробел по этой плоскости; счёт по мировому корпусу в главе отсутствует, источник кадра — rework/research/07-mirovye-analogi-i-novye-zamery.md §1.1',
  's73i': 'chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)',
  's73j': 'chapter-part5.md §10.13 (+ chapter.md §0.10) — карта стадии счётом; две величины кадра («12 из 42 в окне», «четвёртый раздел подряд») в главе отсутствуют: это счёт деки по своей карте, подписанный как собственный',
  's96a': 'chapter-part5b.md § Раздел 11 (вводка), §11.1',
  's97': 'chapter-part5b.md §11.1, §11.2, §11.3',
- 's99': 'chapter-part5b.md §11.4',
  's101': 'chapter-part5b.md §11.6',
  's102': 'chapter-part5b.md §11.7',
  's103': 'chapter-part5b.md §11.8',
- 's103a': 'chapter-part5b.md § Раздел 12 (вводка), §12.1',
  's104': 'chapter-part5b.md §12.1',
  's105': 'chapter-part5b.md §12.2',
  's106': 'chapter-part5c.md § Вопросы и ответы для самопроверки (+ chapter-part5b.md §12.4)',
@@ -260,9 +241,8 @@ def q(s):
 from collections import Counter
 REAL = set("""
 s01 s11 s12 s13 s16 s18 s22 s26 s28 s31
-s36 s41 s44 s47 s49 s49a s60b s61 s63 s65
-s66 s73b s73c s73d
-s73f s73ha s74 s105
+s36 s41 s44 s47 s49 s49a s60b s61 s63 s73b
+s73c s73d s73f s105
 """.split())
 ACQUIRED = {
  's01':'rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg',
@@ -377,8 +357,8 @@ def slide_block(f, d, W, cur):
 # пересобрана по числу кадров: 30 · 30 · 24.
 SPLIT = [
     ('deck.yaml',       ['0. Вход','1. Первичный скрининг и отбор на обследование','2. Исследование и постановка диагноза']),
-    ('deck-part2.yaml', ['3. Ведение медицинской документации','4. Допуск, надзор и ответственность']),
-    ('deck-part3.yaml', ['5. Профессиональная квалификация: поддержание и износ','6. Разработка лекарственных средств','7. Сборка','8. Закрытие']),
+    ('deck-part2.yaml', ['3. Ведение медицинской документации','4. Профессиональная квалификация: поддержание и износ']),
+    ('deck-part3.yaml', ['5. Итоги','6. Закрытие']),
 ]
 
 for i, (fn, seclist) in enumerate(SPLIT, 1):

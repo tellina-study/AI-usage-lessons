@@ -3,7 +3,7 @@ id: s73ha
 local_id: s5-06a
 section: "6. Профессиональная квалификация: поддержание и износ"
 type: comparison
-title: "Отчёт государственного органа образования: оси подписаны, величин нет"
+title: "Единственный чертёж темы — с пустыми осями"
 assertion: "Тема износа навыка и доверия к подсказке объявлена во всём мировом корпусе обучения и не получила ни одной величины: документ, доведший её до чертежа, подписал оси и оставил поле пустым"
 source: "Health Education England и NHS AI Lab, 2022 — https://digital-transformation.hee.nhs.uk/binaries/content/assets/digital-transformation/dart-ed/understandingconfidenceinai-may22.pdf · AAPM, ACR, RSNA, SIIM, 2025 — https://doi.org/10.1007/s10278-025-01485-8"
 media: "rework/deck/assets/s73ha-pustye-osi-otchet-HEE-2022.png"

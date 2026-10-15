@@ -1,0 +1,275 @@
+{
+  "name": "С7 · стадия 2б — расщепление записи",
+  "nodes": [
+    {
+      "id": "form",
+      "name": "Request form",
+      "webhookId": "a7f1c0de-2b2b-4c0a-9f11-7b5e2d9c0001",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "parameters": {
+        "path": "s7-stage-2b",
+        "formTitle": "Заявка в учебный центр · расщепление записи",
+        "formDescription": "Так выглядит вход процесса, который мы собираем",
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "html",
+              "html": "<div style=\"font-size:14px;line-height:1.5\"><p style=\"margin:0 0 10px\">Заявка пройдёт <b>пять шагов</b>. После отправки вы увидите каждый из них на одном экране.</p><p style=\"margin:0 0 6px\"><b>1 · Форма</b> — то, что вы сейчас заполните: имя, контакт и свободный текст. Писать можно как человеку, без формата.</p><p style=\"margin:0 0 6px\"><b>2 · Извлечение</b> — шаг модели достаёт из текста <i>тему</i>, <i>срочность</i> и <i>контакт, указанный в тексте</i>.</p><p style=\"margin:0 0 6px\"><b>3 · Справочник</b> — сверяет тему и срочность со списком допустимых значений. Что не из списка или пусто — станет «другое» и «не указано».</p><p style=\"margin:0 0 6px\"><b>4 · Запись</b> — строка уходит в таблицу заявок.</p><p style=\"margin:0 0 10px\"><b>5 · Экран результата</b> — покажет все четыре шага подряд, здесь же.</p><p style=\"margin:0\"><b>Справочники:</b> тема — курс · перенос занятия · оплата · другое; срочность — сегодня · на неделе · не указано.</p></div>"
+            },
+            {
+              "fieldLabel": "Имя",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Контакт",
+              "placeholder": "телефон или почта",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Что нужно",
+              "fieldType": "textarea",
+              "placeholder": "Напишите своими словами — например: «хочу на курс по аналитике, перезвоните сегодня»",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "extract",
+      "name": "Extract fields",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "text": "={{ $json['Что нужно'] }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"topics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\",\n        \"enum\": [\n          \"курс\",\n          \"перенос занятия\",\n          \"оплата\",\n          \"другое\"\n        ]\n      },\n      \"description\": \"ВСЕ темы, которые есть в заявке, из списка; если тема одна — массив из одного элемента\"\n    },\n    \"urgency\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"сегодня\",\n        \"на неделе\",\n        \"не указано\"\n      ],\n      \"description\": \"когда человек ждёт ответа; если не сказано — «не указано»\"\n    },\n    \"contact_from_text\": {\n      \"type\": \"string\",\n      \"description\": \"телефон или почта, указанные В ТЕКСТЕ заявки; если их нет — пустая строка\"\n    }\n  },\n  \"required\": [\n    \"topics\",\n    \"urgency\"\n  ]\n}",
+        "options": {}
+      }
+    },
+    {
+      "id": "model",
+      "name": "Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        220
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "split-topics",
+      "name": "Split topics",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        280,
+        0
+      ],
+      "parameters": {
+        "fieldToSplitOut": "output.topics",
+        "include": "allOtherFields",
+        "destinationFieldName": "topic_raw",
+        "options": {}
+      }
+    },
+    {
+      "id": "vocab",
+      "name": "Vocabulary check",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        500,
+        0
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "topic",
+              "type": "string",
+              "value": "={{ [\"курс\", \"перенос занятия\", \"оплата\", \"другое\"].includes($json['output.topics']) ? $json['output.topics'] : 'другое' }}"
+            },
+            {
+              "id": "a2",
+              "name": "urgency",
+              "type": "string",
+              "value": "={{ [\"сегодня\", \"на неделе\", \"не указано\"].includes($json.output.urgency) ? $json.output.urgency : 'не указано' }}"
+            },
+            {
+              "id": "a3",
+              "name": "contact_from_text",
+              "type": "string",
+              "value": "={{ $json.output.contact_from_text || '' }}"
+            },
+            {
+              "id": "a4",
+              "name": "status",
+              "type": "string",
+              "value": "ok"
+            },
+            {
+              "id": "a5",
+              "name": "extra_topics",
+              "type": "string",
+              "value": ""
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "table",
+      "name": "Write row",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        720,
+        0
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "xlDAQCm75jLAKNom",
+          "mode": "list",
+          "cachedResultName": "requests"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "received_at": "={{ $now.toISO() }}",
+            "name": "={{ $('Request form').item.json['Имя'] }}",
+            "contact": "={{ $('Request form').item.json['Контакт'] }}",
+            "request_text": "={{ $('Request form').item.json['Что нужно'] }}",
+            "topic": "={{ $json.topic }}",
+            "urgency": "={{ $json.urgency }}",
+            "contact_from_text": "={{ $json.contact_from_text }}",
+            "status": "={{ $json.status }}",
+            "extra_topics": "={{ $json.extra_topics || '' }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "screen",
+      "name": "Result screen",
+      "webhookId": "a7f1c0de-2b2b-4c0a-9f11-7b5e2d9c0002",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        940,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Заявка разобрана: записей несколько",
+        "completionMessage": "=<div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 1</div><div style=\"font-weight:700;margin:2px 0 6px\">Форма</div><div style=\"line-height:1.5\">{{ $('Request form').item.json['Что нужно'] }}</div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 2</div><div style=\"font-weight:700;margin:2px 0 6px\">Извлечение — что предложила модель</div><div style=\"line-height:1.5\">темы: <b>{{ $('Extract fields').first().json.output.topics.join(' · ') }}</b><br>срочность: <b>{{ $('Extract fields').first().json.output.urgency }}</b></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 3</div><div style=\"font-weight:700;margin:2px 0 6px\">Расщепление — сколько записей вышло из одного письма</div><div style=\"line-height:1.5\">элементов после Split topics: <b>{{ $('Split topics').all().length }}</b></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 4</div><div style=\"font-weight:700;margin:2px 0 6px\">Запись</div><div style=\"line-height:1.5\">строк добавлено в таблицу requests: <b>{{ $('Write row').all().length }}</b><br>темы записей: <b>{{ $('Write row').all().map(i => i.json.topic).join(' · ') }}</b></div></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Request form": {
+      "main": [
+        [
+          {
+            "node": "Extract fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract fields": {
+      "main": [
+        [
+          {
+            "node": "Split topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Extract fields",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split topics": {
+      "main": [
+        [
+          {
+            "node": "Vocabulary check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vocabulary check": {
+      "main": [
+        [
+          {
+            "node": "Write row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row": {
+      "main": [
+        [
+          {
+            "node": "Result screen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

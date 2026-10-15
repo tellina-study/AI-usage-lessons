@@ -8,152 +8,13 @@
 
 slides:
 
-  # ─── 3. Постановка диагноза · 17 кадров · 14.05 мин ───
-  - id: s35
-    local_id: "s3-01"                      # номер SLIDE-PLAN.md
-    file: slides/s35-divider-postanovka-diagnoza.md
-    type: divider
-    title: "3. Постановка диагноза"
-    chapter_ref: "chapter-part2.md § Раздел 3 (вводка)"
-    timing_min: 0.55
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s35a
-    local_id: "s3-01a"                     # вставленный кадр, номера в плане нет
-    file: slides/s35a-postanovka-diagnoza-chto-eto-za-stadiya.md
-    type: norm
-    title: "Постановка диагноза: что это за стадия"
-    chapter_ref: "chapter-part2.md § Раздел 3 (вводка), §3.1, §3.1.1"
-    timing_min: 0.6
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
-  - id: s36
-    local_id: "s3-02"                      # номер SLIDE-PLAN.md
-    file: slides/s36-kak-ustroena-postanovka-diagnoza.md
-    type: norm
-    title: "Один приём: как сужается список"
-    chapter_ref: "chapter-part2.md §3.1"
-    timing_min: 0.55
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s37
-    local_id: "s3-03"                      # номер SLIDE-PLAN.md
-    file: slides/s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
-    type: norm
-    title: "Как устроено второе мнение"
-    chapter_ref: "chapter-part2.md §3.1"
-    timing_min: 0.6
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
-  - id: s38
-    local_id: "s3-04"                      # номер SLIDE-PLAN.md
-    file: slides/s38-chetyre-stupeni-chto-delaet-chelovek.md
-    type: norm
-    title: "Четыре ступени участия"
-    chapter_ref: "chapter-part2.md §3.2 (+ chapter.md §0.4)"
-    timing_min: 0.75
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s41
-    local_id: "s3-15"                      # номер SLIDE-PLAN.md
-    file: slides/s41-zamer-vzglyada-lozhnaya-podskazka.md
-    type: case
-    title: "Пример 1: замер взгляда радиолога"
-    chapter_ref: "chapter-part2.md §3.4"
-    timing_min: 1.1
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
-  - id: s43
-    local_id: "s3-15b"                     # вставленный кадр, номера в плане нет
-    file: slides/s43-tot-zhe-zamer-obratnyy-znak.md
-    type: comparison
-    title: "Зеркало того же замера: результат вырос"
-    chapter_ref: "chapter-part2.md §3.6"
-    timing_min: 0.6
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
-  - id: s44
-    local_id: "s3-08"                      # номер SLIDE-PLAN.md
-    file: slides/s44-odna-podskazka-dva-znaka-patologiya.md
-    type: case
-    title: "Пример 2: одна подсказка с двумя знаками"
-    chapter_ref: "chapter-part2.md §3.7"
-    timing_min: 1.1
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s44-srez-razmetka-cheloveka-i-modeli.png"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
-  - id: s45
-    local_id: "s3-06"                      # номер SLIDE-PLAN.md
-    file: slides/s45-izmerennaya-troyka-para-i-chelovek.md
-    type: case
-    title: "Пример 3: измеренная тройка"
-    chapter_ref: "chapter-part2b.md §3.8 (+ chapter.md §0.3)"
-    timing_min: 0.7
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
-  - id: s47
-    local_id: "s3-10"                      # номер SLIDE-PLAN.md
-    file: slides/s47-kontrolnaya-liniya-para-silnee.md
-    type: case
-    title: "Пример 4: контрольная линия"
-    chapter_ref: "chapter-part2b.md §3.9"
-    timing_min: 1.15
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
-  - id: s48
-    local_id: "s3-10a"                     # вставленный кадр, номера в плане нет
-    file: slides/s48-kontrolnaya-liniya-chto-pereekhalo.md
-    type: case
-    title: "Пример 4, цена: чьим находкам верят"
-    chapter_ref: "chapter-part2b.md §3.9"
-    timing_min: 1.05
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s49
-    local_id: "s3-12"                      # номер SLIDE-PLAN.md
-    file: slides/s49-doverie-i-stazh.md
-    type: case
-    title: "Доверие откалибровано не по правоте"
-    chapter_ref: "chapter-part2b.md §3.10, §3.11"
-    timing_min: 0.6
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
-  - id: s49a
-    local_id: "s3-16"                      # номер SLIDE-PLAN.md
-    file: slides/s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md
-    type: case
-    title: "Правило, собранное из ста шести опытов"
-    chapter_ref: "chapter-part2.md §3.3"
-    timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: acquired }
-    media_asset: "rework/deck/assets/s40-dva-effekta-s-intervalami.png"   # поле media в файле кадра ещё пусто, см. deck/images.md §1
-  - id: s49b
-    local_id: "s3-16a"                     # вставленный кадр, номера в плане нет
-    file: slides/s49b-obeshchano-tsena-i-dva-rezhima.md
-    type: comparison
-    title: "Обещано в прошлый раз: оценка риска перед экстренной операцией"
-    chapter_ref: "chapter-part4d.md §8.8"
-    timing_min: 1.15
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s49c
-    local_id: "s3-16b"                     # вставленный кадр, номера в плане нет
-    file: slides/s49c-para-nizhe-obeikh-storon.md
-    type: case
-    title: "Пример 5: хирурги на септическом шоке — 0,712 против 0,816 и 0,820"
-    chapter_ref: "chapter-part4d.md §8.8"
-    timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s49d
-    local_id: "s3-16c"                     # вставленный кадр, номера в плане нет
-    file: slides/s49d-otvet-sobran-chetyre-zamera.md
-    type: summary
-    title: "Ответ собран: четыре замера, один вывод"
-    chapter_ref: "chapter-part2.md § Раздел 3 (вводка), §3.3, §3.4 + chapter-part2b.md §3.8 + chapter-part4d.md §8.8"
-    timing_min: 0.95
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
-  - id: s50
-    local_id: "s3-13"                      # номер SLIDE-PLAN.md
-    file: slides/s50-vyvod-diagnoz.md
-    type: comparison
-    title: "Вывод: разошлось устройство процедуры"
-    chapter_ref: "chapter-part2b.md §3.12, §3.13"
-    timing_min: 0.6
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
-
-  # ─── 4. Динамическое наблюдение и клинические тревоги · 11 кадров · 7.90 мин ───
+  # ─── 3. Динамическое наблюдение и клинические тревоги · 11 кадров · 7.90 мин ───
   - id: s52
     local_id: "s4-01"                      # номер SLIDE-PLAN.md
     file: slides/s52-divider-nablyudenie.md
     type: divider
-    title: "4. Динамическое наблюдение и клинические тревоги"
+    title: "3. Динамическое наблюдение и клинические тревоги"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md § Раздел 4 (вводка), §4.1"
     timing_min: 0.5
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
@@ -163,6 +24,7 @@ slides:
     file: slides/s52a-dannye-sposoby-i-reshenie-nablyudeniya.md
     type: norm
     title: "Наблюдение: данные, способы, решение"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md § Раздел 4 (вводка), §4.1 + chapter.md § Обзор предмета"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
@@ -171,6 +33,7 @@ slides:
     file: slides/s53-palata-obkhod-list-nablyudeniya.md
     type: norm
     title: "Что делают участники на стадии наблюдения"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.1"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
@@ -179,6 +42,7 @@ slides:
     file: slides/s54-shkala-rannego-preduprezhdeniya.md
     type: comparison
     title: "Без модели: шкала с назначенными весами"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.2"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
@@ -187,6 +51,7 @@ slides:
     file: slides/s55-tsena-obeikh-oshibok-smena.md
     type: comparison
     title: "Цена двух ошибок дежурной смены"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.3"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
@@ -195,6 +60,7 @@ slides:
     file: slides/s56-schet-zamenyaemykh-rezhimov.md
     type: case
     title: "Оба классических режима в одной единице — до всякой модели"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.4"
     timing_min: 0.7
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
@@ -203,6 +69,7 @@ slides:
     file: slides/s57-model-rannego-preduprezhdeniya.md
     type: case
     title: "Пример 1: модель раннего предупреждения"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.5"
     timing_min: 1
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: real_image_needed }
@@ -211,6 +78,7 @@ slides:
     file: slides/s58-sto-gospitalizatsiy-vosemnadtsat-trevog.md
     type: case
     title: "Пример 1, арифметика: восемнадцать тревог на сто госпитализаций"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.6"
     timing_min: 1
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -219,6 +87,7 @@ slides:
     file: slides/s59-vtoraya-proverka-drugie-bolnitsy.md
     type: case
     title: "Пример 1, вторая проверка: другие авторы и больницы"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.7, §4.8"
     timing_min: 0.65
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -227,6 +96,7 @@ slides:
     file: slides/s60-para-dalo-potrebovalo-trevogi.md
     type: case
     title: "Пример 1, цена: внимание расходуется там же, только больше"
+    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.9"
     timing_min: 1.05
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
@@ -239,12 +109,13 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 5. Ведение медицинской документации · 9 кадров · 7.55 мин ───
+  # ─── 4. Ведение медицинской документации · 9 кадров · 7.55 мин ───
   - id: s60ba
     local_id: "s5-01a"                     # вставленный кадр, номера в плане нет
     file: slides/s60ba-dannye-sposoby-i-reshenie-zapisi.md
     type: norm
     title: "Запись: данные, способы, решение"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1, §5.2"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
@@ -252,7 +123,7 @@ slides:
     local_id: "новый-zapis-divider"        # вставленный кадр, номера в плане нет
     file: slides/s60b-divider-vedenie-zapisi.md
     type: divider
-    title: "5. Ведение медицинской документации"
+    title: "4. Ведение медицинской документации"
     chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1"
     timing_min: 0.55
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
@@ -261,6 +132,7 @@ slides:
     file: slides/s60bb-chetyre-rezhima-pisma.md
     type: case
     title: "Без модели: четыре режима письма, посчитанные по-разному"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part3b.md §5.2 (три классических режима; доля текста по Steinkamp 2022 и Wang 2017)"
     timing_min: 1.15
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
@@ -277,7 +149,6 @@ slides:
     file: slides/s61-avtomaticheskaya-zapis-priema.md
     type: case
     title: "Пример 1: автоматическая запись приёма"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.3, §5.4"
     timing_min: 1.05
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -286,7 +157,6 @@ slides:
     file: slides/s62-dve-dorozhki-nabor-i-vychitka.md
     type: case
     title: "Пример 1, цена: набор сократился, вычитка появилась"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.6 (+ §5.5)"
     timing_min: 0.9
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -295,7 +165,6 @@ slides:
     file: slides/s63-vypisnoy-epikriz.md
     type: case
     title: "Пример 2: выписной эпикриз"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.7"
     timing_min: 1.05
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -312,17 +181,16 @@ slides:
     file: slides/s64-vyvod-vedenie-zapisi.md
     type: summary
     title: "Ведение документации: вся измеренная экономия стадии"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.9 (+ §5.8)"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 6. Допуск, надзор и ответственность · 10 кадров · 9.30 мин ───
+  # ─── 5. Допуск, надзор и ответственность · 10 кадров · 9.30 мин ───
   - id: s65
     local_id: "s7-01"                      # номер SLIDE-PLAN.md
     file: slides/s65-divider-chem-uderzhivayut.md
     type: divider
-    title: "6. Допуск, надзор и ответственность"
+    title: "5. Допуск, надзор и ответственность"
     plan_section: "Раздел 7. Чем удерживают"
     chapter_ref: "chapter-part3c.md § Раздел 6 (вводка), §6.1"
     timing_min: 0.6
@@ -332,6 +200,7 @@ slides:
     file: slides/s65a-dannye-sposoby-i-reshenie-nadzora.md
     type: norm
     title: "Допуск и надзор: данные, вопрос, решение"
+    plan_section: "Раздел 6. Лекарство"
     chapter_ref: "chapter-part3c.md § Раздел 6 (вводка), §6.1"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
@@ -393,7 +262,7 @@ slides:
     local_id: "s7-07"                      # номер SLIDE-PLAN.md
     file: slides/s71-tri-mekhanizma-nadzora.md
     type: norm
-    title: "Модель меняется после допуска: 43,4 процента отзывов — в первый год"
+    title: "Модель меняется после допуска: 43,4 процента отзывных событий — в первый год"
     plan_section: "Раздел 7. Чем удерживают"
     chapter_ref: "chapter-part3d.md §6.9"
     timing_min: 1.0

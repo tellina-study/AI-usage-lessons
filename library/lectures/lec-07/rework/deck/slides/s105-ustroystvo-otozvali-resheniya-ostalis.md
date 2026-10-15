@@ -3,7 +3,7 @@ id: s105
 local_id: s9-02
 section: "9. Закрытие"
 type: comparison
-title: "Изделие отзовут. Решения этого года останутся."
+title: "Что отзывается, а что остаётся"
 assertion: "Необратимы не изделия — необратимы решения, принятые по ним до отзыва"
 source: "Lee и соавт., JAMA Health Forum 2025, срез ноябрь 2024 — https://doi.org/10.1001/jamahealthforum.2025.3172"
 media: "rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya-verkh.png"

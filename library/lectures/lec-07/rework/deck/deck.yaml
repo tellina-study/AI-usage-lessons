@@ -68,7 +68,7 @@ deck:
   total_slides: 76
   plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 55 из них
   inserted_slides: [s01a, s01b, s05a, s11a, s18a, s22a, s49b, s49d, s49f, s60b, s60ba, s60bb, s60c, s62, s63a, s65a, s68, s70a, s73ca, s73ha, s78]
-  sum_timing_min: 69.80           # сложено по timing_min файлов кадров
+  sum_timing_min: 70.00           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
   curriculum_level: "отраслевая лекция L7; strict-in ≥30% обязателен, waiver недоступен"
@@ -115,7 +115,7 @@ sections:                        # разделы показа: кадров и 
   - { name: "1. Первичный скрининг и отбор на обследование",
       slides: 9, timing_min: 6.85, range: [s11, s20] }
   - { name: "2. Исследование и постановка диагноза",
-      slides: 18, timing_min: 20.10, range: [s22, s50] }
+      slides: 18, timing_min: 20.30, range: [s22, s50] }
   - { name: "3. Ведение медицинской документации",
       slides: 9, timing_min: 7.55, range: [s60ba, s64] }
   - { name: "4. Допуск, надзор и ответственность",
@@ -257,7 +257,7 @@ slides:
     timing_min: 0.65
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 2. Исследование и постановка диагноза · 18 кадров · 20.10 мин ───
+  # ─── 2. Исследование и постановка диагноза · 18 кадров · 20.30 мин ───
   - id: s22
     local_id: "s2-01"                      # номер SLIDE-PLAN.md
     file: slides/s22-divider-analiz-dannykh.md
@@ -271,7 +271,7 @@ slides:
     local_id: "s2-01a"                     # вставленный кадр, номера в плане нет
     file: slides/s22a-instrumentalnaya-diagnostika-chto-eto-za-stadiya.md
     type: norm
-    title: "Инструментальная и лабораторная диагностика: что это за стадия"
+    title: "Исследование: шесть действий стадии и два, которые заняла модель"
     chapter_ref: "chapter-part1c.md § Раздел 2 (вводка), §2.1, §2.2, §2.4"
     timing_min: 1.1
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
@@ -279,7 +279,7 @@ slides:
     local_id: "s2-04"                      # номер SLIDE-PLAN.md
     file: slides/s26-tekhnik-flyuorografii.md
     type: norm
-    title: "Классический режим: годность снимка решает человек"
+    title: "Классический режим: годность снимка решает техник у аппарата"
     chapter_ref: "chapter-part1c.md §2.4"
     timing_min: 0.55
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
@@ -288,7 +288,7 @@ slides:
     local_id: "s2-06"                      # номер SLIDE-PLAN.md
     file: slides/s28-godnost-snimka-v-pole.md
     type: case
-    title: "Пример 1: Таиланд — точность приехала, а снимки не прошли"
+    title: "Пример 1: Таиланд — чтение глазного дна в кабинете первичного звена"
     chapter_ref: "chapter-part1c.md §2.6"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -296,7 +296,7 @@ slides:
     local_id: "s2-08"                      # номер SLIDE-PLAN.md
     file: slides/s31-raskhody-vmesto-bolezni.md
     type: case
-    title: "Пример 2: расходы вместо болезни"
+    title: "Пример 2: отбор в программу повышенного внимания — балл вместо решения врача"
     chapter_ref: "chapter-part1c.md §2.8"
     timing_min: 1.65
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -304,7 +304,7 @@ slides:
     local_id: "s3-02"                      # номер SLIDE-PLAN.md
     file: slides/s36-kak-ustroena-postanovka-diagnoza.md
     type: norm
-    title: "Один приём: как сужается список"
+    title: "Постановка диагноза: семь действий стадии и три, на которых стоит модель"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md §3.1"
     timing_min: 0.85
@@ -313,7 +313,7 @@ slides:
     local_id: "s3-03"                      # номер SLIDE-PLAN.md
     file: slides/s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
     type: norm
-    title: "Как устроено второе мнение"
+    title: "Второе мнение: чем оно держится и когда перестаёт быть вторым"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md §3.1"
     timing_min: 0.6
@@ -331,16 +331,16 @@ slides:
     local_id: "s3-15"                      # номер SLIDE-PLAN.md
     file: slides/s41-zamer-vzglyada-lozhnaya-podskazka.md
     type: case
-    title: "Пример 3: замер взгляда радиолога"
+    title: "Пример 3: замер взгляда — при ложной и при верной подсказке"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md §3.4"
-    timing_min: 1.7
+    timing_min: 1.9
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s44
     local_id: "s3-08"                      # номер SLIDE-PLAN.md
     file: slides/s44-odna-podskazka-dva-znaka-patologiya.md
     type: case
-    title: "Пример 4: одна подсказка с двумя знаками"
+    title: "Пример 4: патологи читают срезы — с подсказкой и без"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md §3.7"
     timing_min: 1.1
@@ -350,7 +350,7 @@ slides:
     local_id: "s3-10"                      # номер SLIDE-PLAN.md
     file: slides/s47-kontrolnaya-liniya-para-silnee.md
     type: case
-    title: "Пример 5: контрольная линия"
+    title: "Пример 5: шведское испытание — одно человеческое чтение поверх модели вместо двух"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2b.md §3.9"
     timing_min: 2.2
@@ -359,7 +359,7 @@ slides:
     local_id: "s3-12"                      # номер SLIDE-PLAN.md
     file: slides/s49-doverie-i-stazh.md
     type: case
-    title: "Доверие откалибровано не по правоте"
+    title: "Кардиограмма с неверной машинной расшифровкой: кто теряет больше"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2b.md §3.10, §3.11"
     timing_min: 0.6
@@ -368,7 +368,7 @@ slides:
     local_id: "s3-16"                      # номер SLIDE-PLAN.md
     file: slides/s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md
     type: case
-    title: "Правило, собранное из ста шести опытов"
+    title: "Свод 106 опытов: где пара сильнее человека и где слабее модели"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md §3.3"
     timing_min: 1.0
@@ -378,7 +378,7 @@ slides:
     local_id: "s3-16a"                     # вставленный кадр, номера в плане нет
     file: slides/s49b-obeshchano-tsena-i-dva-rezhima.md
     type: case
-    title: "Пример 6: хирурги на септическом шоке"
+    title: "Пример 6: хирурги оценивают риск — сами и после знакомства с моделью"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part4d.md §8.8"
     timing_min: 2.15
@@ -387,7 +387,7 @@ slides:
     local_id: "s3-16c"                     # вставленный кадр, номера в плане нет
     file: slides/s49d-otvet-sobran-chetyre-zamera.md
     type: summary
-    title: "Ответ собран: четыре замера, один вывод"
+    title: "Ответ собран: четыре случая, четыре эффекта, один вывод"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md § Раздел 3 (вводка), §3.3, §3.4 + chapter-part2b.md §3.8 + chapter-part4d.md §8.8"
     timing_min: 0.95
@@ -414,7 +414,7 @@ slides:
     local_id: "s3-13"                      # номер SLIDE-PLAN.md
     file: slides/s50-vyvod-diagnoz.md
     type: comparison
-    title: "Вывод: разошлось устройство процедуры"
+    title: "Вывод раздела: две стадии, и расходится у них устройство процедуры"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2b.md §3.12, §3.13"
     timing_min: 1.2

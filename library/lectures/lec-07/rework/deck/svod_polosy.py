@@ -58,19 +58,28 @@ def main(pdf, do_file=None):
     # другой. Тогда каждое число садится на чужой кадр, и отчёт выглядит
     # нормально: «s20 194 слова» вместо 85. Поэтому сверяем ЗАГОЛОВОК каждой
     # страницы с заголовком её кадра.
-    ploho = []
-    for n, (f, i) in enumerate(zip(fs, ids)):
-        m = re.match(r"^---\n(.*?)\n---", f.read_text(encoding="utf-8"), re.S)
-        zag = str((__import__("yaml").safe_load(m.group(1)) or {}).get("title") or "")
-        if not zag:
-            continue                      # обложка и дивайдеры заголовка не рисуют
-        nach = " ".join(zag.split()[:4]).lower()
-        if nach and nach not in " ".join(d[n].get_text().split()).lower():
-            ploho.append(f"стр.{n + 1} ожидался {i}")
+    # Сверку порядка делает НЕ этот файл: её умеет `sverka_stranits.py` из
+    # приёмки, и умеет лучше — он сравнивает по ДОЛЕ слов заголовка и знает,
+    # что у обложки и дивайдеров `title` на экран не выводится вовсе, а
+    # заголовок стоит первой строкой тела. Это 7 кадров полосы, которые моя
+    # прежняя версия молча пропускала.
+    #
+    # Зачем тогда сверка здесь. Свод полосы обязан отказываться считать САМ,
+    # не дожидаясь приёмки: его зовут посреди работы, когда приёмку ещё не
+    # гоняли. Разные роли, не дублирование.
+    try:
+        import sverka_stranits as ss
+        nakhodki, _prochitano = ss.proverit(pdf, fs)
+        ploho = [f"стр.{x['stranitsa']} ждали {x['kadr']}" for x in nakhodki]
+    except Exception as e:                       # noqa: BLE001
+        print(f"СТОП: сверку порядка страниц выполнить не удалось ({e}). "
+              "Считать нельзя:\nчисла сядут на чужие кадры, и отчёт будет "
+              "выглядеть правдоподобно.")
+        return 1
     if ploho:
         print("СТОП: страницы PDF не на своих кадрах — числа сядут на чужих.")
-        print("  " + "; ".join(ploho[:6])
-              + (f" … всего {len(ploho)}" if len(ploho) > 6 else ""))
+        print("  " + ", ".join(ploho[:8])
+              + (f" … всего {len(ploho)}" if len(ploho) > 8 else ""))
         print("  Похоже, PDF склеен из кусков в другом порядке. Соберите одним "
               "прогоном:\n  python3 render_sec.py 0 1 2 3 4 5")
         return 1

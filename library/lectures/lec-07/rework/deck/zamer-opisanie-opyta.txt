@@ -20,9 +20,9 @@ warning: The `fitz` API is deprecated and will be removed in future. Use `import
   73  s73b-divider-navyk.md
   74  s73c-vrach-vernulsya-posle-goda.md
   75  s73ca-tri-opory-i-odin-shag-iz-vosmi.md
- 147  s73d-tsena-i-dva-rezhima-osmotra.md  ← тяжелее 140
+ 166  s73d-tsena-i-dva-rezhima-osmotra.md  ← тяжелее 140
  170  s73f-primer-1-dolya-bez-pomoshchnika.md  ← тяжелее 140
- 108  s73h-dva-probela-i-odno-izmerenie.md
+ 114  s73h-dva-probela-i-odno-izmerenie.md
  112  s73ha-pustye-osi-i-tri-nulya.md
   75  s73i-vyvod-navyk.md
  111  s73j-mesto-razdela-vne-okna.md
@@ -42,7 +42,7 @@ warning: The `fitz` API is deprecated and will be removed in future. Use `import
  114  s105-ustroystvo-otozvali-resheniya-ostalis.md
  102  s106-voprosy.md
 
-страниц 34 · медиана 125.5 · среднее 115 · максимум 170 · тяжелее 140 — 7 · тяжелее 90 — 24
+страниц 34 · медиана 125.5 · среднее 116 · максимум 170 · тяжелее 140 — 7 · тяжелее 90 — 24
 
 Предупреждений сборки этот прогон не показывает — ни одного, ни на каком входе:
 это замер слов, а не приёмка. Блокирующие берут отдельной сборкой

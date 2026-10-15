@@ -58,6 +58,89 @@ NE_SMOTRIM = {
 # законны — в счёт латиницы и словаря он не идёт.
 
 
+# ПРИ КАКОМ УСЛОВИИ поле доезжает до экрана. Заведено потому, что «поле есть»
+# НЕ равно «зал это видит», и на этом ошиблись сразу две сессии в один день
+# (`notes/mcp-limitations.md` [#229-16]): обе проверяли СМЫСЛ строки
+# `media_caption` и ни одна — рисуется ли она вообще. Рисуется она только при
+# `media_hero`, и уходит не под картинку, а последним сегментом строки
+# источника в подвал.
+USLOVIE = {
+    "title": ("всегда, кроме дивайдера и обложки — там видно `# Имя` из тела",
+              "deckkit/slidefile.py"),
+    "headline_number": ("всегда, если поле задано", "deckkit/titles.py"),
+    "blocks": ("всегда, если список непуст", "deckkit/plates.py"),
+    "scheme": ("всегда, если задана", "deckkit/scheme.py"),
+    "columns": ("всегда, если заданы", "deckkit/columns.py"),
+    "figure": ("всегда, если задана", "deckkit/figure.py"),
+    "source": ("в подвале, ссылкой; «—» не печатается",
+               "build_lec07.py:272"),
+    "media_caption": ("ТОЛЬКО при `media_hero: true`, и не под картинкой, а "
+                      "последним сегментом строки источника в подвале",
+                      "build_lec07.py:275 и :327, deckkit/media.py:309"),
+}
+
+
+def usloviya(path):
+    """Поля этого кадра и условие рисования каждого — заполнено ли, нарисуется.
+
+    Отвечает на вопрос, которого не задала ни одна проверка до [#229-16]:
+    строка в файле есть — увидит ли её зал."""
+    raw = Path(path).read_text(encoding="utf-8")
+    m = re.match(r"^---\n(.*?)\n---", raw, re.S)
+    d = (yaml.safe_load(m.group(1)) or {}) if m else {}
+    out = []
+    for k, (cond, adres) in USLOVIE.items():
+        if d.get(k) in (None, "", [], {}):
+            continue
+        risuet = "да"
+        if k == "media_caption" and not d.get("media_hero"):
+            risuet = "НЕТ — `media_hero` не задан, строка в файл есть, зал её не видит"
+        out.append((k, risuet, cond, adres))
+    return out
+
+
+def polya_sborshchika():
+    """Поля фронтматтера, которые РЕАЛЬНО читает код сборки — выведено из кода.
+
+    Решение О17: перечень видимого слоя обязан собираться из того, что рисует
+    сборщик, а не поддерживаться руками. Иначе каждая новая первооснова в ядре
+    открывает новую слепую зону — так и вышло четыре раза за два дня
+    (`headline_number`, `scheme.unit`, `figure`, `media_caption`).
+
+    Этот прогон — СТОРОЖ списка выше, не замена ему: он ищет обращения вида
+    `meta.get("имя")` / `["имя"]` по сборщику деки и по всему ядру отрисовки и
+    говорит, не появилось ли поля, которого `polnyy` не смотрит. Чего он НЕ
+    умеет: поле, которое ядро читает вычисленным именем, он не увидит — и
+    поэтому печатает это ограничение вместе с ответом."""
+    pat = re.compile(r'(?:meta|sl|d|s|spec|it|row|c)\.get\(\s*["\']([a-z_]+)["\']'
+                     r'|\[["\']([a-z_]+)["\']\]')
+    kern = next((d / "tools" / "presentation-build" / "deckkit")
+                for d in HERE.parents
+                if (d / "tools" / "presentation-build" / "deckkit").exists())
+    src = [HERE / "build_lec07.py", *sorted(kern.glob("*.py"))]
+    vidit = set()
+    for f in src:
+        try:
+            txt = f.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        for m in pat.finditer(txt):
+            vidit.add(m.group(1) or m.group(2))
+    # Что `polnyy` реально извлекает, и что намеренно пропущено с причиной.
+    smotrim = {"title", "headline_number", "media_caption", "blocks",
+               "scheme", "columns", "figure", "source"}
+    # Поля, которые сборщик читает, но текста залу они не дают.
+    ne_tekst = {"id": "идентификатор, не текст",
+                "type": "тип кадра, выбирает раскладку",
+                "media": "путь к файлу снимка, не текст",
+                "media_hero": "флаг «снимок во весь кадр»"}
+    chitaet = vidit & (smotrim | set(NE_SMOTRIM) | set(ne_tekst))
+    # Слепая зона: сборщик читает, а мы не смотрим и причины не записано.
+    slepo = sorted(chitaet - smotrim - set(NE_SMOTRIM) - set(ne_tekst))
+    return sorted(chitaet), slepo, sorted(
+        (chitaet & set(ne_tekst)) | (chitaet & set(NE_SMOTRIM)))
+
+
 def chego_ne_videli(path):
     """Какие НЕсмотренные поля на этом кадре реально заполнены.
 
@@ -140,6 +223,18 @@ def kadry_polosy(sections):
 
 
 if __name__ == "__main__":
+    chital, slepo, s_prichinoy = polya_sborshchika()
+    print("поля фронтматтера, которые читает код сборки: " + ", ".join(chital))
+    print("из них пропущены НАМЕРЕННО, с причиной: " + ", ".join(s_prichinoy))
+    print("СЛЕПАЯ ЗОНА (сборщик читает, мы не смотрим, причины нет): "
+          + (", ".join(slepo) if slepo else "нет — список сошёлся"))
+    bez_uslovia = sorted(set(chital) - set(USLOVIE) - set(NE_SMOTRIM)
+                         - {"id", "media", "media_hero", "type"})
+    print("полей без записанного условия рисования: "
+          + (", ".join(bez_uslovia) if bez_uslovia else "нет — условие есть у каждого"))
+    print("чего этот сторож не умеет: поля, читаемого ядром под вычисленным "
+          "именем, он не увидит; и условие рисования он СВЕРЯЕТ по записи "
+          "выше, а не выводит из кода.\n")
     ids = sys.argv[1:]
     for f in sorted((HERE / "slides").glob("s*.md")):
         sid = f.stem.split("-")[0]
@@ -153,3 +248,6 @@ if __name__ == "__main__":
             print("  видимых полей не нашлось — и вот где не искали:")
         for k, why in chego_ne_videli(f):
             print(f"  (не смотрим) {k}: {why}")
+        for k, risuet, cond, adres in usloviya(f):
+            if risuet != "да":
+                print(f"  !! {k}: {risuet}  [{adres}]")

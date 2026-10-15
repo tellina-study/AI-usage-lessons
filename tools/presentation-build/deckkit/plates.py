@@ -75,7 +75,7 @@ class PlateStyle:
     note_color: object = LIGHT
     note_wsafe: bool = False
     warn_overflow: bool = True      # три предупреждения lec-06
-    # ЦВЕТ КЛЮЧЕВОГО ЗНАЧЕНИЯ — решение владельца О3 (`decisions-owner.md`,
+    # ЦВЕТ КЛЮЧЕВОГО ЗНАЧЕНИЯ — решение владельца О3 (`decisions-orkestratora.md`,
     # «на весь курс»), исполненное ПЕРЕКЛЮЧАТЕЛЕМ, а не сменой темы.
     #
     # Замер приёмки по пикселям собранной страницы: золото `F0AB00` на

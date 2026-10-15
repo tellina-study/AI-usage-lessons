@@ -20,7 +20,7 @@ branch: issue-229-deka-7-10
 `CLAUDE.md` § «Строение раздела отраслевой лекции» п. 1/1а/1б, § «Форма подачи слайда»,
 § «No Timing / No Methodology in Slides» · образец `deck/slides/s01a`–`s01c` ·
 `plans/vvedenie-spec.md` §1, §3.6, §5 (единственный источник материала и терминов) ·
-`decisions-owner.md` О1, О5 · `qa/prozharka-2026-10-14/SVODKA.md` §1, §6, §7 ·
+`decisions-orkestratora.md` О1, О5 · `qa/prozharka-2026-10-14/SVODKA.md` §1, §6, §7 ·
 `tools/presentation-build/trebovaniya-k-soderzhaniyu.md` §5.12–5.17.
 
 **Чего файл не делает.** Не вводит ни одного утверждения о мире, которого нет в главе. Каждая

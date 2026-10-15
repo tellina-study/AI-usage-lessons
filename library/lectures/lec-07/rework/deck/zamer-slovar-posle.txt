@@ -11,8 +11,8 @@ warning: The `fitz` API is deprecated and will be removed in future. Use `import
   72  s65a-dannye-sposoby-i-reshenie-nadzora.md
   91  s66-odna-komnata-i-odin-sluchay.md
  159  s67-razbor-sluchaya-posle-iskhoda.md  ← тяжелее 140
- 152  s68-norma-est-proverki-net.md  ← тяжелее 140
- 143  s69-dvoynoe-chtenie-v-minutakh-truda.md  ← тяжелее 140
+ 165  s68-norma-est-proverki-net.md  ← тяжелее 140
+ 157  s69-dvoynoe-chtenie-v-minutakh-truda.md  ← тяжелее 140
  130  s70-chetyre-uchastnika.md
   69  s70a-podkhodyashchiy-chelovek-po-normativu.md
  119  s71-tri-mekhanizma-nadzora.md
@@ -20,11 +20,11 @@ warning: The `fitz` API is deprecated and will be removed in future. Use `import
   73  s73b-divider-navyk.md
   74  s73c-vrach-vernulsya-posle-goda.md
   75  s73ca-tri-opory-i-odin-shag-iz-vosmi.md
- 120  s73d-tsena-i-dva-rezhima-osmotra.md
- 151  s73f-primer-1-dolya-bez-pomoshchnika.md  ← тяжелее 140
+ 137  s73d-tsena-i-dva-rezhima-osmotra.md
+ 167  s73f-primer-1-dolya-bez-pomoshchnika.md  ← тяжелее 140
   85  s73h-dva-probela-i-odno-izmerenie.md
   87  s73ha-pustye-osi-i-tri-nulya.md
-  73  s73i-vyvod-navyk.md
+  83  s73i-vyvod-navyk.md
  112  s73j-mesto-razdela-vne-okna.md
   70  s74-divider-lekarstvo.md
  138  s77-voronka-otrasli.md
@@ -42,7 +42,7 @@ warning: The `fitz` API is deprecated and will be removed in future. Use `import
  109  s105-ustroystvo-otozvali-resheniya-ostalis.md
  102  s106-voprosy.md
 
-страниц 34 · медиана 119.5 · среднее 110 · максимум 159 · тяжелее 140 — 5 · тяжелее 90 — 22
+страниц 34 · медиана 122 · среднее 112 · максимум 167 · тяжелее 140 — 5 · тяжелее 90 — 22
 
 Предупреждений сборки этот прогон не показывает — ни одного, ни на каком входе:
 это замер слов, а не приёмка. Блокирующие берут отдельной сборкой

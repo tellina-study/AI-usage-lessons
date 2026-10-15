@@ -229,14 +229,18 @@ def g_question(sl, sid, title, blocks, pattern, assertion=""):
                 drawers.append(lambda sl, y, mh, q=question: K.form_question(
                     sl, D.LEFT, y, D.WIDTH, q, max_h=mh, label=f"{sid} вопрос"))
         elif kind == "cards":
+            # На экране вопроса кроме рамки с вопросом и ряда карточек нет
+            # ничего, и при прежних 1.15–1.8″ нижняя треть слайда оставалась
+            # пустой. Карточкам дан более широкий коридор: они занимают место,
+            # а не висят в верхней половине (правка владельца, круг 9).
             drawers.append(lambda sl, y, mh, c=b: K.option_row(
-                sl, D.LEFT, y, D.WIDTH, c, highlight_idx=None,
-                max_h=min(mh or 1.8, 1.8), label=f"{sid} варианты"))
+                sl, D.LEFT, y, D.WIDTH, c, highlight_idx=None, size=15.0,
+                min_h=1.7, max_h=min(mh or 2.4, 2.4), label=f"{sid} варианты"))
         else:
             d = block_drawer(kind, b, sid, pattern)
             if d:
                 drawers.append(d)
-    compose(sl, sid, y0, drawers, bottom=D.BOTTOM)
+    compose(sl, sid, y0, drawers, bottom=D.BOTTOM, center=1.0)
     K.slide_number_mark(sl, D.slide_number(sid))
 
 

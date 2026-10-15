@@ -1,7 +1,7 @@
 ---
 id: n30
 type: answer_breakdown_table
-duration_min: 3.0
+duration_min: 2.5
 assertion: "Все четыре ответа — это значения настроек On Error и Retry On Fail в карточке любого узла; по умолчанию стоит Stop Workflow"
 learning_goal: "Разбор сразу за вопросом. Главный поворот: зал голосовал за поведение и, не зная того, выбирал из готового списка настроек инструмента."
 visual:

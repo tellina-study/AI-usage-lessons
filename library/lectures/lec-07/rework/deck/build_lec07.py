@@ -798,7 +798,18 @@ def main():
     if a.selftest:
         from selftest_lec07 import selftest
         return selftest()
-    n = build(only=a.only)
+    # ВЫПУСК ДЕКИ НЕ ПЕРЕЗАПИСЫВАЕТСЯ ЧАСТИЧНОЙ СБОРКОЙ (`notes/mcp-limitations.md`
+    # [#229-14]). До 2026-10-15 `--only sNN` писал в тот же `lec-07-karkas.pptx`,
+    # и 7,9 МБ деки молча становились 178 КБ одного кадра. Сессия круга
+    # восстанавливала файл `git checkout` после каждой поштучной сборки и
+    # предупредила об этом письмом; оркестратор прочёл предупреждение и через
+    # час сам же в ловушку и попал. Значит, лечится это не памятью, а путём:
+    # частичная сборка пишет в свой файл, и выпуск ей недоступен.
+    vykhod = OUT if not a.only else HERE / "chastichnaya-sborka.pptx"
+    n = build(only=a.only, out=vykhod)
+    if a.only:
+        print(f"[частичная сборка] {len(a.only.split(','))} кадров → "
+              f"{vykhod.name}; выпуск {OUT.name} НЕ ТРОНУТ")
     # Проверки по СОХРАНЁННОМУ файлу: hero по порядку деки и пол контраста.
     # Зовутся здесь, а не из `build`, нарочно — см. `render.verify_built`:
     # обе про деку целиком, а `build` зовут однокадровые пробы.
@@ -806,11 +817,11 @@ def main():
     # когда порог провален. Та же причина, по которой `report.report` всегда
     # печатает долю площади hero: молчание о «65 ниже порога» неотличимо от
     # молчания о том, что контраст вообще не мерился.
-    rnd.verify_built(OUT, partial=bool(a.only))
-    report.report(n, OUT.name)
-    rnd.verify_links(OUT)
+    rnd.verify_built(vykhod, partial=bool(a.only))
+    report.report(n, vykhod.name)
+    rnd.verify_links(vykhod)
     if a.render:
-        rnd.render(OUT, SNAPS)
+        rnd.render(vykhod, SNAPS)
     return 0
 
 

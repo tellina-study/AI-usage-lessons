@@ -410,7 +410,7 @@ slides:
     local_id: "s3-13"                      # номер SLIDE-PLAN.md
     file: slides/s50-vyvod-diagnoz.md
     type: comparison
-    title: "Вывод раздела: две стадии, и расходится у них устройство процедуры"
+    title: "Вывод раздела: три места, где провалилось не чтение"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2b.md §3.12, §3.13"
     timing_min: 1.2

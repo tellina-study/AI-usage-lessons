@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""ЗАПАС до пола кегля, а не факт его проваливания.
+
+Зачем отдельно от `zamer_pdf.py`. Тот отвечает «знаков ниже 12,0 пт — 0», и
+это число **недостаточное**: оно одинаково выглядит и когда полоса набрана
+на 15 пт с запасом, и когда она стоит ровно НА полу и дописать в неё нельзя
+ни строки. Сборка скажет `[кегль]` только когда кегль уже провалился, то
+есть предупреждает по факту, а не при выборе запаса (находка сессии
+разделов 6–10 при сдаче: у неё наименьший кегль ровно 12,0 на четырёх
+кадрах). Тот же класс, что `origin/<ветка>`: ответ уверенный и
+неинформативный.
+
+Печатает три числа вместо одного: наименьший кегль по полосе · сколько
+кадров стоят РОВНО на полу · сколько ниже него. Кадры на полу называются
+поимённо: это те, которые следующий круг не имеет права дописывать.
+
+Считается только ТЕЛО кадра: подписи плашек, единицы и подвал набираются
+своим кеглем (12,0 и ниже по замыслу), и мешать их с телом значит получить
+«полоса на полу» на любой деке.
+
+    python3 zapas_keglya.py <pdf> [имена кадров через запятую]
+"""
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(next(d / "tools" / "presentation-build"
+                            for d in HERE.parents
+                            if (d / "tools" / "presentation-build").exists())))
+from deckkit import pdfmeasure as pm        # noqa: E402
+
+POL = 12.0
+# Ниже этого прогона не считаем: подписи плашек, единица оси и подвал живут
+# на своём кегле по замыслу — у них пол другой, и смешение дало бы ложную
+# тревогу на любой деке.
+# Коробка мотива ТЕЛА отбирается по ширине — так же, как в `zamer_pdf.py`:
+# полоса плашек и боксы схемы залиты той же поверхностью, но ни один из них
+# не бывает шире 550 пт, а коробка тела — уже 900. Без этого отбора «самый
+# частый кегль кадра» оказывается кеглем ПЛАШЕК (их 12,0 по замыслу), и
+# полоса читается стоящей на полу на любой деке. На этом я и ошибся первым
+# прогоном: 17 кадров «ровно на полу» были кадрами с полосой плашек.
+TELO_FILL, TELO_MIN_W, TELO_MIN_H = "#f4f7fa", 550.0, 50.0
+
+
+def po_kadram(pdf, imena=None):
+    out = []
+    for n, st, _box in pm.pages(pdf):
+        runs = pm.text_runs(st)
+        boxes = [bb for bb, fl, _sk, _op in pm.paths(st)
+                 if pm.rgb(fl) == TELO_FILL
+                 and (bb[2] - bb[0]) >= TELO_MIN_W
+                 and (bb[3] - bb[1]) >= TELO_MIN_H]
+        vnutri = [(s, x, y) for s, _c, x, y in runs
+                  if any(bb[0] - 2 <= x <= bb[2] + 2 and bb[1] - 2 <= y <= bb[3] + 2
+                         for bb in boxes)]
+        imya = imena[n - 1] if imena and n <= len(imena) else f"стр.{n}"
+        if not vnutri:
+            # Обложка, дивайдер, кадр-снимок: коробки тела у них нет вовсе.
+            out.append((imya, None, None, 0))
+            continue
+        ves = defaultdict(int)
+        for s, _x, _y in vnutri:
+            ves[round(s, 1)] += 1
+        telo = max(ves, key=lambda k: ves[k])
+        out.append((imya, telo, min(ves), ves[telo]))
+    return out
+
+
+if __name__ == "__main__":
+    pdf = sys.argv[1]
+    imena = sys.argv[2].split(",") if len(sys.argv) > 2 else None
+    r = po_kadram(pdf, imena)
+    bez = [i for i, t, _m, _v in r if t is None]
+    r = [x for x in r if x[1] is not None]
+    tela = [t for _i, t, _m, _v in r]
+    na_polu = [i for i, t, _m, _v in r if abs(t - POL) < 0.05]
+    nizhe = [i for i, t, _m, _v in r if t < POL - 0.05]
+    print(f"кадров с коробкой тела: {len(r)}"
+          + (f"; без неё (обложка/дивайдер/снимок) — {len(bez)}" if bez else ""))
+    print(f"наименьший кегль ТЕЛА по полосе: {min(tela):.1f} пт "
+          f"(пол {POL:.1f})")
+    print(f"кадров РОВНО на полу 12,0: {len(na_polu)}"
+          + (" — " + ", ".join(na_polu) if na_polu else ""))
+    print(f"кадров НИЖЕ пола: {len(nizhe)}"
+          + (" — " + ", ".join(nizhe) if nizhe else ""))
+    hud = sorted(r, key=lambda x: x[1])[:6]
+    print("шесть кадров с наименьшим запасом (кадр · кегль тела · запас):")
+    for i, t, _m, _v in hud:
+        print(f"   {i:<46} {t:5.1f}   {t - POL:+.1f}")

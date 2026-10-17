@@ -823,8 +823,21 @@ def analitika(p, sl, root):
                 r.setdefault("italic", kind == "cap")
                 r.setdefault("bold", kind == "head")
                 runs.append(r)
-        prims.ocean_box(s, MX - 0.14, y - 0.10, FULL_W + 0.28,
-                        min(avail + 0.10, bbot - y + 0.10))
+        # Коробка мотива — по НАСТОЯЩЕЙ высоте комментария, а не по всему
+        # остатку бюджета. Это тот же урок, что записан в `content` про
+        # таблицу, и я его здесь не применила: на моих трёх кадрах тело
+        # занимало почти весь остаток, и разницы не было видно. Увидно
+        # стало на чужом кадре — схема и две строки комментария под ней:
+        # коробка вышла в полтора дюйма пустоты под одной строкой текста.
+        # Поймано просмотром снимка, не прогоном: для сборки пустая коробка
+        # так же законна, как полная.
+        nuzhno = 0.0
+        for kind, tx in blocks:
+            sz = {"head": 15.0, "cap": 12.0, "bullet": 14.0}.get(kind, 14.0)
+            nuzhno += metrics.est_h(tx, sz, FULL_W - 0.16, 1.26,
+                                    kind == "head") + 0.09
+        box_h = max(0.42, min(avail + 0.10, nuzhno + 0.24))
+        prims.ocean_box(s, MX - 0.14, y - 0.10, FULL_W + 0.28, box_h)
         prims.text_runs(s, MX + 0.04, y, FULL_W - 0.08, avail, runs,
                         tag=f"{sl.sid}/тело")
     elif blocks:

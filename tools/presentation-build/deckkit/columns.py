@@ -39,6 +39,52 @@ ITEM_LS = 1.26
 MIN_H, MAX_H = 1.55, 3.40
 
 
+def _strok(tekst, kegl, iw):
+    """Сколько строк займёт пункт перечня. Высота делится на межстрочный
+    шаг того же кегля — та же мера, которой считает раскладка."""
+    shag = kegl * ITEM_LS / 72.0
+    return max(1, round(metrics.est_h("• " + tekst, kegl, iw, ITEM_LS) / shag))
+
+
+def proverit_pary(sid, cols, shiriny, kegli):
+    """[пары] — строка слева не стоит напротив своей строки справа.
+
+    ЗАЧЕМ ЭТО ЗДЕСЬ. Два столбца рисуются как два НЕЗАВИСИМЫХ перечня, и
+    для сборки это два валидных списка: ни одна проверка пакета не знает,
+    что пункт слева и пункт справа — ОДНА пара. Поэтому пункт слева в одну
+    строку против пункта справа в две сдвигает всё, что ниже, и к шестой
+    паре проявление стоит напротив чужого последствия. Молча.
+
+    Найдено не прогоном, а просмотром снимка — сессией кадров о влиянии ИИ
+    на человека (#244), и найдено ДВАЖДЫ В ОБЕ СТОРОНЫ: при равных столбцах
+    разъезжался правый, при доле 0,40 — левый. Обходилось подгонкой длин,
+    то есть держалось на дисциплине автора, а не на мере. Теперь на мере.
+
+    Проверка включается только там, где пара ЕСТЬ по содержанию («как
+    проявляется / последствия»): у противопоставления «получается / не
+    получается» пункты не парные, и равнять их число нечем и незачем.
+    """
+    levye, pravye = cols[0]["items"], cols[1]["items"]
+    if len(levye) != len(pravye):
+        report.warn(
+            f"[пары] {sid}: слева {len(levye)} строк, справа "
+            f"{len(pravye)} — столбцы объявлены парами, и при разном числе "
+            f"пунктов пара читается напротив чужой строки")
+        return
+    rashod = []
+    for i, (l, r) in enumerate(zip(levye, pravye), 1):
+        sl_ = _strok(l, kegli[0], shiriny[0] - 2 * PAD)
+        sr_ = _strok(r, kegli[1], shiriny[1] - 2 * PAD)
+        if sl_ != sr_:
+            rashod.append(f"пара {i}: {sl_} против {sr_}")
+    if rashod:
+        report.warn(
+            f"[пары] {sid}: строки пар не совпадают по высоте — "
+            + " · ".join(rashod[:4])
+            + ("…" if len(rashod) > 4 else "")
+            + "; всё, что ниже первой такой пары, читается со сдвигом")
+
+
 def columns_of(sl, *, require_type="comparison"):
     """Поле `columns` → пара столбцов или None."""
     raw = sl.meta.get("columns")
@@ -66,7 +112,7 @@ def columns_of(sl, *, require_type="comparison"):
     return cols
 
 
-def draw_columns(s, sid, cols, x, y, w, h, dolya_levogo=0.5):
+def draw_columns(s, sid, cols, x, y, w, h, dolya_levogo=0.5, pary=False):
     """Два столбца в коробках мотива. Левый на поверхности, правый белый с
     бирюзовой обводкой — различие сторон держится цветом рамки, а не
     подписью «против».
@@ -79,6 +125,7 @@ def draw_columns(s, sid, cols, x, y, w, h, dolya_levogo=0.5):
     высоту обоих — кегль подбирается на двоих."""
     dolya_levogo = min(0.75, max(0.25, float(dolya_levogo)))
     shiriny = [(w - GAP) * dolya_levogo, (w - GAP) * (1.0 - dolya_levogo)]
+    kegli = [ITEM_HI, ITEM_HI]
     xx = x
     for i, c in enumerate(cols):
         cw = shiriny[i]
@@ -100,8 +147,11 @@ def draw_columns(s, sid, cols, x, y, w, h, dolya_levogo=0.5):
                                   floor=ITEM_FLOOR, ls=ITEM_LS,
                                   tag=f"{sid}/столбец-{i + 1}")
             floor.pt(sz, f"{sid}/столбец-{i + 1}", "перечень столбца")
+            kegli[i] = sz
             prims.text_box(s, xx + PAD, yy, iw, avail, body, size=sz,
                            color=DEEP, ls=ITEM_LS,
                            tag=f"{sid}/столбец-{i + 1}")
         xx += cw + GAP
+    if pary and len(cols) == 2:
+        proverit_pary(sid, cols, shiriny, kegli)
     report.PRIM["столбцы"] += 1

@@ -1,6 +1,6 @@
 ---
-id: s0Xb
-local_id: s0Xb
+id: s01ab
+local_id: В-01ab
 section: "0. Вход"
 type: analitika
 title: "Изделия с ИИ: счёт и пути"

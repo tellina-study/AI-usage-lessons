@@ -58,8 +58,10 @@ from pptx.enum.text import MSO_ANCHOR
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
-from deckkit import (columns, floor, flow, markup, media, metrics,  # noqa: E402
-                     plates, prims, render as rnd, report, scheme,
+from dataclasses import replace  # noqa: E402
+
+from deckkit import (columns, figure, floor, flow, markup, media,  # noqa: E402
+                     metrics, plates, prims, render as rnd, report, scheme,
                      slidefile, tables, titles, twocol, wrap)
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, OUTLINE,  # noqa: E402
                            SLIDE_H, SLIDE_W, WHITE)
@@ -151,7 +153,15 @@ COVER_HERO_GOLD_Y = 0.68
 # фраза, а не число (`s37/3`: «независимость: доступа к первому заключению
 # второго читателя лишают…» — четыре строки на 10 пт). Это правка текста
 # кадров, то есть работа переделки, а не перевода на ядро.
-PLATES = plates.LEC07
+# Решение владельца О3: ключевое значение плашки набирается `1C7293`, а не
+# золотом. Замер приёмки по пикселям собранной страницы — золото `F0AB00`
+# на белом 1,99 : 1 при пороге 3,0 для крупного текста, и этим цветом шло
+# ЧИСЛО, по которому назван кадр, на 61 кадре этой деки. `1C7293` даёт
+# 5,42 : 1. Золото остаётся обводкой ключевой плашки, чертой под
+# заголовком и меткой — палитра не меняется, меняется цвет одного класса
+# текста. Переключатель живёт в наборе ДЕКИ, а не в теме: Лекция 6 сдана и
+# обязана собираться знак в знак, поэтому умолчание ядра осталось золотым.
+PLATES = replace(plates.LEC07, value_key_color=LIGHT)
 
 # Схема: арифметика ядра (подобранный кегль, одна высота бокса, золото на
 # шаге модели, проверка тесного бокса), числа — этой деки. Три из них не
@@ -263,7 +273,7 @@ def source_runs(sl):
     решает, где кончается тело."""
     src = str(sl.meta.get("source") or "").strip()
     cap = str(sl.meta.get("media_caption") or "").strip()
-    if cap and sl.meta.get("media_hero"):
+    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
         src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return []
@@ -315,7 +325,7 @@ def footer(s, sl):
     число (§5.9 требует её видимой, но не требует ставить под картинкой)."""
     src = str(sl.meta.get("source") or "").strip()
     cap = str(sl.meta.get("media_caption") or "").strip()
-    if cap and sl.meta.get("media_hero"):
+    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
         src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return
@@ -331,7 +341,7 @@ def check_prims(sl, kind):
     """Примитив объявлен на кадре, который его не рисует. Молчать нельзя:
     сессия раздела написала бы полосу плашек и не узнала, что её нет."""
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
-                    ("columns", "столбцы")):
+                    ("columns", "столбцы"), ("figure", "число")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -481,6 +491,16 @@ def content(p, sl, root):
     if sch:
         scheme.check_scheme(sl.sid, sch, body_w, SCHEME)
         y += scheme.draw_scheme(s, sl.sid, sch, MX, y, body_w, SCHEME) + GAP
+
+    # КАДР ОДНОГО ЧИСЛА (`deckkit.figure`, круг #229). Четыре строки, и
+    # без них самопроверка ДЕКИ не могла доказать четыре пробы `[число]`:
+    # ядро доказывает их на своей образцовой раскладке, а здесь ловить было
+    # нечего — раскладка этой деки форму не звала вовсе. Проверка, которой
+    # нечего проверять, отчитывается нулём и выглядит как пройденная.
+    fig = figure.figure_of(sl) if is_content else None
+    if fig:
+        figure.check_figure(sl.sid, fig, body_w)
+        y += figure.draw_figure(s, sl.sid, fig, MX, y, body_w) + GAP
 
     cols = columns.columns_of(sl)
     avail = col_bot - y
@@ -778,11 +798,30 @@ def main():
     if a.selftest:
         from selftest_lec07 import selftest
         return selftest()
-    n = build(only=a.only)
-    report.report(n, OUT.name)
-    rnd.verify_links(OUT)
+    # ВЫПУСК ДЕКИ НЕ ПЕРЕЗАПИСЫВАЕТСЯ ЧАСТИЧНОЙ СБОРКОЙ (`notes/mcp-limitations.md`
+    # [#229-14]). До 2026-10-15 `--only sNN` писал в тот же `lec-07-karkas.pptx`,
+    # и 7,9 МБ деки молча становились 178 КБ одного кадра. Сессия круга
+    # восстанавливала файл `git checkout` после каждой поштучной сборки и
+    # предупредила об этом письмом; оркестратор прочёл предупреждение и через
+    # час сам же в ловушку и попал. Значит, лечится это не памятью, а путём:
+    # частичная сборка пишет в свой файл, и выпуск ей недоступен.
+    vykhod = OUT if not a.only else HERE / "chastichnaya-sborka.pptx"
+    n = build(only=a.only, out=vykhod)
+    if a.only:
+        print(f"[частичная сборка] {len(a.only.split(','))} кадров → "
+              f"{vykhod.name}; выпуск {OUT.name} НЕ ТРОНУТ")
+    # Проверки по СОХРАНЁННОМУ файлу: hero по порядку деки и пол контраста.
+    # Зовутся здесь, а не из `build`, нарочно — см. `render.verify_built`:
+    # обе про деку целиком, а `build` зовут однокадровые пробы.
+    # `quiet=False`: строка контраста печатается КАЖДУЮ сборку, а не только
+    # когда порог провален. Та же причина, по которой `report.report` всегда
+    # печатает долю площади hero: молчание о «65 ниже порога» неотличимо от
+    # молчания о том, что контраст вообще не мерился.
+    rnd.verify_built(vykhod, partial=bool(a.only))
+    report.report(n, vykhod.name)
+    rnd.verify_links(vykhod)
     if a.render:
-        rnd.render(OUT, SNAPS)
+        rnd.render(vykhod, SNAPS)
     return 0
 
 

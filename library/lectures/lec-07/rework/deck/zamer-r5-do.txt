@@ -1,0 +1,74 @@
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  31  s01-cover.md
+ 118  s01a-tsikl-okazaniya-pomoshchi-tselikom.md
+ 109  s01b-kak-poluchayut-dannye-i-kak-reshayut-bez-modeli.md
+ 138  s01c-gde-model-stoit-i-gde-ee-net.md
+ 130  s01d-pismo-po-vozrastu-kto-smotrel-pervym.md
+ 110  s02-put-odnogo-sluchaya.md
+ 125  s03-kto-smotrit-pervym.md
+ 137  s05-os-udeshevili-chtenie-dannykh.md
+  75  s05a-devyat-form-pereezda-slovar.md
+  87  s05b-pyat-razryadov-svidetelstva.md
+  46  s11-divider-otbor.md
+  75  s11a-pervichnyy-skrining-chto-eto-za-stadiya.md
+ 117  s12-kak-ustroen-otbor.md
+ 106  s13-dva-klassicheskikh-rezhima-otbora.md
+ 117  s15-triazh-po-predskazannomu-risku.md
+ 135  s16-chat-bot-pervoy-linii.md
+ 117  s18-glaznoe-dno-bez-oftalmologa.md
+  76  s19-chto-pereekhalo-glaznoe-dno.md
+  86  s20-vyvod-otbor.md
+  74  s22-divider-analiz-dannykh.md
+  63  s22a-instrumentalnaya-diagnostika-chto-eto-za-stadiya.md
+  71  s23-kak-ustroen-analiz-dannykh.md
+  73  s24-odna-sistema-dve-gruppy.md
+  67  s26-tekhnik-flyuorografii.md
+ 139  s28-godnost-snimka-v-pole.md
+ 118  s30-kozha-i-sostav-nabora.md
+ 111  s30a-kozha-tsena-sostav-dannykh.md
+ 111  s31-raskhody-vmesto-bolezni.md
+  99  s32-ispravlenie-poschitali-i-ne-primenili.md
+  75  s33-vyvod-analiz-dannykh.md
+  72  s35-divider-postanovka-diagnoza.md
+  73  s35a-postanovka-diagnoza-chto-eto-za-stadiya.md
+  65  s36-kak-ustroena-postanovka-diagnoza.md
+  75  s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
+  69  s38-chetyre-stupeni-chto-delaet-chelovek.md
+ 137  s41-zamer-vzglyada-lozhnaya-podskazka.md
+  85  s43-tot-zhe-zamer-obratnyy-znak.md
+ 135  s44-odna-podskazka-dva-znaka-patologiya.md
+ 128  s45-izmerennaya-troyka-para-i-chelovek.md
+ 137  s47-kontrolnaya-liniya-para-silnee.md
+ 139  s48-kontrolnaya-liniya-chto-pereekhalo.md
+  74  s49-doverie-i-stazh.md
+  74  s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md
+ 138  s49b-obeshchano-tsena-i-dva-rezhima.md
+ 131  s49c-para-nizhe-obeikh-storon.md
+ 113  s49d-otvet-sobran-chetyre-zamera.md
+  74  s50-vyvod-diagnoz.md
+  63  s52-divider-nablyudenie.md
+  72  s52a-dannye-sposoby-i-reshenie-nablyudeniya.md
+  74  s53-palata-obkhod-list-nablyudeniya.md
+  74  s54-shkala-rannego-preduprezhdeniya.md
+  74  s55-tsena-obeikh-oshibok-smena.md
+ 125  s56-schet-zamenyaemykh-rezhimov.md
+ 129  s57-model-rannego-preduprezhdeniya.md
+ 124  s58-sto-gospitalizatsiy-vosemnadtsat-trevog.md
+  83  s59-vtoraya-proverka-drugie-bolnitsy.md
+ 127  s60-para-dalo-potrebovalo-trevogi.md
+  72  s60a-vyvod-nablyudenie.md
+  71  s60b-divider-vedenie-zapisi.md
+  71  s60ba-dannye-sposoby-i-reshenie-zapisi.md
+ 139  s60bb-chetyre-rezhima-pisma.md
+  75  s60c-kak-ustroeno-vedenie-zapisi.md
+ 134  s61-avtomaticheskaya-zapis-priema.md
+ 111  s62-dve-dorozhki-nabor-i-vychitka.md
+ 135  s63-vypisnoy-epikriz.md
+ 131  s63a-tsena-epikriza-vychitka-i-pereskaz.md
+  75  s64-vyvod-vedenie-zapisi.md
+
+страниц 67 · медиана 99 · среднее 99 · максимум 139 · тяжелее 140 — 0 · тяжелее 90 — 34
+
+Предупреждений сборки этот прогон не показывает — ни одного, ни на каком входе:
+это замер слов, а не приёмка. Блокирующие берут отдельной сборкой
+(`python3 build_lec07.py --only sNN`) либо сводом `python3 priyomka.py`.

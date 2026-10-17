@@ -50,6 +50,13 @@ PRIM = Counter()         # сколько примитивов нарисова�
 GOLD_SEEN = set()        # кадры, на которых золотой акцент виден
 PLACEHOLDERS = Counter()
 HERO_AREA = {}           # sid → доля площади слайда под обязательным hero
+# Номер страницы ПОРЯДКА ДЕКИ → доля площади под снимками. Отдельно от
+# `HERO_AREA` нарочно: та ключуется `sid` и держит ОБЪЯВЛЕННЫЕ автором hero,
+# эта — страницы, которые зал видит первой и последней. Прожарка 2026-10-14
+# §3.3: у Лекции 7 эти два множества не пересекались вовсе, и расхождение
+# между ними было молчащим. Сведённые в один словарь, они снова стали бы
+# одной величиной с двумя смыслами.
+HERO_ORDER = {}
 MISSING_MEDIA = []       # заявленные кадры, файла которых нет на диске
 
 
@@ -76,6 +83,7 @@ def reset():
     GOLD_SEEN.clear()
     PLACEHOLDERS.clear()
     HERO_AREA.clear()
+    HERO_ORDER.clear()
     MISSING_MEDIA[:] = []
 
 
@@ -87,11 +95,12 @@ def snapshot():
     Её предупреждения — не предупреждения деки, и счётчики примитивов тоже
     её: без возврата состояния отчёт считал бы примитивы вчетверо."""
     return (list(WARNINGS), Counter(LINKS), Counter(PRIM), set(GOLD_SEEN),
-            Counter(PLACEHOLDERS), dict(HERO_AREA), list(MISSING_MEDIA))
+            Counter(PLACEHOLDERS), dict(HERO_AREA), list(MISSING_MEDIA),
+            dict(HERO_ORDER))
 
 
 def restore(state):
-    w, li, pr, gs, ph, ha, mm = state
+    w, li, pr, gs, ph, ha, mm, ho = state
     WARNINGS[:] = w
     LINKS.clear(); LINKS.update(li)
     PRIM.clear(); PRIM.update(pr)
@@ -99,6 +108,7 @@ def restore(state):
     PLACEHOLDERS.clear(); PLACEHOLDERS.update(ph)
     HERO_AREA.clear(); HERO_AREA.update(ha)
     MISSING_MEDIA[:] = mm
+    HERO_ORDER.clear(); HERO_ORDER.update(ho)
 
 
 def report(n, out_name="", hero_threshold=0.40):
@@ -118,6 +128,11 @@ def report(n, out_name="", hero_threshold=0.40):
         print(f"обязательный hero (§5.9, порог {100 * hero_threshold:.0f}%): "
               + " · ".join(f"{k} {100 * v:.1f}%"
                            for k, v in sorted(HERO_AREA.items())))
+    if HERO_ORDER:
+        print(f"hero по ПОРЯДКУ деки (§5.9, порог "
+              f"{100 * hero_threshold:.0f}%): "
+              + " · ".join(f"стр {k} — {100 * v:.1f}%"
+                           for k, v in sorted(HERO_ORDER.items())))
     if PLACEHOLDERS:
         tot = sum(PLACEHOLDERS.values())
         with_ph = sum(1 for v in PLACEHOLDERS.values() if v)

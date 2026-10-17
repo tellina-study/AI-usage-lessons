@@ -10,5 +10,8 @@
  "file_url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Institut_de_chimie_des_substances_naturelles_de_Gif-sur-Yvette_en_2011_085.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
  "downloaded": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Institut_de_chimie_des_substances_naturelles_de_Gif-sur-Yvette_en_2011_085.jpg/1920px-Institut_de_chimie_des_substances_naturelles_de_Gif-sur-Yvette_en_2011_085.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
  "orig_size": "3888x2592",
- "tier": "2 (Викисклад)"
+ "tier": "2 (Викисклад)",
+ "assigned_to": "НЕ ПЕРЕНАЗНАЧЕН — остаётся в assets/ без кадра. Прежний адрес s75 снят резом.",
+ "caveat": "Две причины, обе самостоятельные. Первая: людей в кадре нет — это место, а не работа, а кадрам обзора стадии канон велит нести картину РАБОТЫ. Вторая: сюжет (вытяжной шкаф, синтез) уже стоит на дивайдере s74, и там он с человеком. Ставить второй вытяжной шкаф на s77 или s78 значит показать то же самое хуже.",
+ "reassigned_at": "2026-10-14"
 }

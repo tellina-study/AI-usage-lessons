@@ -1,6 +1,6 @@
 ---
-id: s0Xc
-local_id: s0Xc
+id: s01ac
+local_id: В-01ac
 section: "0. Вход"
 type: analitika
 title: "Применение ИИ: врачи и поток"

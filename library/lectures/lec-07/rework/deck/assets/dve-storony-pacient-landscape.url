@@ -1,0 +1,16 @@
+{
+ "title": "Crop (landscape) of File:Hospital Radiology Room Philips DigitalDiagnost Digital Radiography System.jpg",
+ "license": "CC BY-SA 4.0 (унаследовано от источника, обрезка не меняет лицензию)",
+ "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+ "author": "Ptrump16 (оригинал); обрезка — эта сессия",
+ "description": "Верхние 660px (потолок и трубы аппарата) обрезаны у оригинала assets/s22-rentgenkabinet-pacient-u-pribora.jpg — пациент, стол, штора и комната остались полностью. Единственная причина обрезки: альбомный кадр нужен под `media_2` режима участников (§8, #262/#264) близко к альбомному аспекту первого снимка (врач, ≈0,71) — портретный аспект оригинала (≈1,05) ронял подпись «Пациент» через механизм `spill` и срывал бюджет высоты тела кадра («0,10\" при пороге 0,30\"», блокирующее [высота]).",
+ "source_file": "assets/s22-rentgenkabinet-pacient-u-pribora.jpg (НЕ изменён — используется отдельно в s22-divider-analiz-dannykh.md, делить с ним один файл нельзя)",
+ "source_url": "assets/s22-rentgenkabinet-pacient-u-pribora.url",
+ "crop": "PIL: im.crop((0, 660, 1920, 2017)) — верх 660px срезан, низ не тронут",
+ "script": "assets/make_crop_dve_storony.py",
+ "orig_size": "1920x2017 (после общей для деки уменьшки с 2460x2584)",
+ "cropped_size": "1920x1357, ar=0,7068",
+ "assigned_to": "dve-storony-priyoma.md, поле media_2 — второй снимок режима участников",
+ "state": "собрано, вкручено",
+ "generated_by": "сессия кадров о влиянии ИИ на человека (#244), 2026-10-17, по находке «седьмая22»/сессии кадров допуска о зажатом бюджете высоты (#264)"
+}

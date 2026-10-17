@@ -1,0 +1,311 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Кадр аналитики: столбцы и линии для деки курса. Шаблон, не разовая картинка.
+
+Заведено по указанию владельца курса (issue #244, 2026-10-17): «сделай
+столбчатую сортированную диаграмму по государствам, график с динамикой и
+небольшой подвал с комментарием… заведи шаблон слайда с аналитикой и
+диаграммами (а может два) и используй их». Шаблон файла кадра лежит рядом —
+`../../templates/kadr-analitiki.md`; этот модуль рисует то, что на нём стоит.
+
+ЧТО ЭТОТ МОДУЛЬ ДЕРЖИТ, ЧЕГО НЕ ДЕРЖИТ НИ ОДИН РАЗОВЫЙ ПРОГОН
+
+1. **Кегли задаются в точках СЛАЙДА, а не в пикселях картинки.** Это главная
+   ловушка, и она уже стоила деке кадра: `rework/deck/make_chart_s86.py`
+   описывает, как подписи, набранные пятнадцатым кеглем в фигуре шириной 7",
+   сели на кадр восемью с половиной. Здесь логический размер холста задаётся
+   в тех же точках, которыми картинка встанет на слайд (1 логический пиксель
+   = 1 точка на слайде), а чёткость даёт `devicePixelRatio`. Значит число в
+   `kegl=11` — это одиннадцать точек НА ЭКРАНЕ, и проверять его можно до
+   сборки.
+2. **Знаменатель — часть подписи столбца, а не легенда.** Доля без
+   знаменателя на кадре не принимается (`CLAUDE.md` § Baseline /
+   Counterfactual Mandate), а диаграмма — ровно то место, где знаменатель
+   теряется первым. Поэтому `stolbtsy` берёт подпись второй строкой под
+   каждым столбцом и рисует её всегда.
+3. **Единица называется один раз и на картинке.** `edinitsa` уходит в
+   подзаголовок. Столбцы разных единиц в один ряд не ставятся: у `stolbtsy`
+   единица одна на всю диаграмму, и это не удобство, а запрет — ряд из
+   случаев, решений и исследований без подписи единицы и есть та пара из
+   разных выборок, на которой круг спотыкался трижды.
+4. **Запятая в десятичной дроби, а не точка.** Chart.js пишет `1.7`;
+   по-русски это `1,70`. Чинится только функцией-переводчиком, поэтому
+   спецификация уходит на QuickChart НЕ строгим JSON, а текстом JS (сервис
+   разбирает его как JS). Отсюда `_JS` ниже: значение, которое выводится без
+   кавычек. Проверено: без этого на кадре стоят `1.7` и ось с точками.
+
+ПАЛИТРА — курсовая (Ocean): глубокий `#21295C`, средний `#065A82`, светлый
+`#1C7293`, бирюза `#028090`, золото `#F0AB00` на выделенном столбце.
+
+ЧЕГО ЗДЕСЬ НЕТ. Нет вывода в PPTX: картинка кладётся в `assets/` и ставится
+на кадр полем `media:` обычного файла кадра — сборщик деки не правится, и
+новый тип кадра не заводится. Это сознательно: тип кадра живёт в сборщике
+двух дек, а шаблон аналитики нужен один и сейчас.
+
+СЕТЬ. Рисует QuickChart (`quickchart.io`) — тот же инструмент, что назван в
+`README.md` §стек. Картинка сохраняется в репозиторий, поэтому сборка деки
+сети уже не требует: без сети не пересобрать картинку, но дека собирается.
+
+    python3 analitika.py --samoproverka     # нарисовать образцы в /tmp
+"""
+from __future__ import annotations
+
+import re
+import sys
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+DEEP, MID, LIGHT, TEAL, GOLD = "#21295C", "#065A82", "#1C7293", "#028090", "#F0AB00"
+SETKA, TEKST = "#D7DEE7", "#21295C"
+BASE = "https://quickchart.io/chart"
+TAYMAUT = 60
+
+
+# ─────────────────────────── черчение ───────────────────────────
+
+_METKA, _KONETS = "@@JS@@", "@@/JS@@"
+
+
+def _JS(tekst):
+    """Значение, которое уйдёт в спецификацию БЕЗ кавычек — функция JS."""
+    return _METKA + tekst + _KONETS
+
+
+def _v_js(spec):
+    """Спецификация → текст JS: как `json.dumps`, но помеченные значения
+    выводятся функциями.
+
+    Метка ЗАКРЫВАЮЩАЯ, и это не украшение. Первая редакция искала до
+    ближайшей кавычки — и ломалась на первой же функции, внутри которой
+    есть строка: подписи значений («60 млн случаев») приходят массивом JS,
+    кавычки в нём экранированы, и разбор обрывался на первой из них.
+    Поймано прогоном, а не рассуждением."""
+    import json as _json
+    s = _json.dumps(spec, ensure_ascii=False)
+    return re.sub(r'"' + re.escape(_METKA) + r'(.*?)' + re.escape(_KONETS)
+                  + r'"', lambda m: _json.loads('"' + m.group(1) + '"'),
+                  s, flags=re.S)
+
+
+# Перевод числа в русскую запись: «1,70» вместо «1.7», «1 614» вместо «1614».
+# ДВА переводчика, а не один с догадкой. Деление оси считает каждое число
+# по отдельности и не знает шага соседей, поэтому «дробная или целая шкала»
+# обязан объявить тот, кто её заводит: иначе на одной оси выходят «1,80» и
+# «1» рядом — замерено на первом прогоне.
+_TSELYE = _JS("function(v){var s=String(v);"
+              "var ch=s.split('.');"
+              "return ch[0].replace(/\\B(?=(\\d{3})+(?!\\d))/g,' ')"
+              "+(ch[1]?','+ch[1]:'');}")
+_DROBI = _JS("function(v){return Number(v).toFixed(2).replace('.',',');}")
+
+
+def _perevodchik(drobnaya):
+    return _DROBI if drobnaya else _TSELYE
+
+
+def _zapas_sprava(gorizontal, kegl, podpisi, znach, drobnaya):
+    """Сколько места оставить справа под подпись значения у лежачих столбцов.
+
+    Мерится по самой длинной подписи в половину кегля на знак — грубо, но
+    в ту сторону, в какую ошибаться безопасно: лишний воздух справа кадр не
+    портит, обрезанная подпись портит."""
+    if not gorizontal:
+        return 10
+    if podpisi:
+        dlina = max(len(str(s)) for s in podpisi)
+    else:
+        dlina = max(len(f"{z:.2f}" if drobnaya else str(z)) for z in znach)
+    return min(150, max(34, int(dlina * kegl * 0.62)))
+
+
+def _osnova(kegl):
+    """Общее для обоих видов: шрифт, цвет текста, прозрачный фон выключен."""
+    return {
+        "font": {"size": kegl, "family": "sans-serif"},
+        "color": TEKST,
+    }
+
+
+def stolbtsy(zagolovok, ryady, edinitsa, *, zoloto=None, kegl=11,
+             kegl_zagolovka=13, drobnaya=False, gorizontal=False,
+             podpisi_znacheniy=None):
+    """Сортированные столбцы. `ryady` — [(имя, число, подпись-знаменатель), …].
+
+    Подпись-знаменатель идёт ВТОРОЙ СТРОКОЙ под именем столбца и рисуется
+    всегда: диаграмма — первое место, где знаменатель теряется. `zoloto` —
+    индекс столбца, который надо выделить золотом (или None).
+
+    `podpisi_znacheniy` — готовые строки вместо чисел у концов столбцов
+    («60 млн случаев», «53 млн решений»). Нужны там, где единица у каждого
+    столбца СВОЯ: иначе единица уезжает в подпись слева, подпись становится
+    двухстрочной, а в полосе высотой три дюйма двухстрочная подпись не
+    помещается — замерено на кадре потока.
+
+    `gorizontal=True` кладёт столбцы набок. Это не вкусовщина: подпись из
+    двух строк под вертикальным столбцом Chart.js разворачивает на сорок
+    пять градусов, как только она шире слота, — замерено на обоих кадрах
+    этого круга. Лёжа подпись читается строкой и места берёт столько,
+    сколько ей нужно.
+    """
+    ryady = list(ryady)
+    podpisi = [[im, pod] if pod else [im] for im, _, pod in ryady]
+    znach = [z for _, z, _ in ryady]
+    cveta = [GOLD if zoloto == i else MID for i in range(len(ryady))]
+    perevod = _perevodchik(drobnaya)
+    # Ось ЧИСЕЛ у лежачих столбцов — горизонтальная, ось ИМЁН — вертикальная;
+    # переводчик числа обязан переехать вместе с ней, иначе имена уходят в
+    # него, а числа остаются без запятой.
+    os_chisel, os_imyon = ("x", "y") if gorizontal else ("y", "x")
+    if podpisi_znacheniy:
+        import json as _json
+        gotovye = _json.dumps(list(podpisi_znacheniy), ensure_ascii=False)
+        perevod = _JS("function(v,c){return %s[c.dataIndex];}" % gotovye)
+    return {
+        "type": "bar",
+        "data": {"labels": podpisi,
+                 "datasets": [{"data": znach, "backgroundColor": cveta,
+                               "borderWidth": 0,
+                               "datalabels": {"color": TEKST,
+                                              "anchor": "end", "align": "right" if gorizontal else "end",
+                                              "offset": 2,
+                                              "formatter": perevod,
+                                              "font": {"size": kegl,
+                                                       "weight": "bold"}}}]},
+        "options": {
+            "plugins": {
+                "legend": {"display": False},
+                "title": {"display": True, "text": [zagolovok, edinitsa],
+                          "color": TEKST,
+                          "font": {"size": kegl_zagolovka, "weight": "bold"}},
+                "datalabels": {"display": True},
+            },
+            "indexAxis": "y" if gorizontal else "x",
+            # Справа место ПОД ПОДПИСЬ ЗНАЧЕНИЯ: у лежачих столбцов она стоит
+            # за концом самого длинного столбца и без запаса обрезается краем
+            # картинки — поймано глазом дважды («60» у верхнего столбца, потом
+            # «60 мл» вместо «60 млн случаев»), прогоном не ловится. Запас
+            # считается по самой длинной подписи, а не назначается числом:
+            # второй раз он обрезался именно потому, что число было назначено.
+            "layout": {"padding": {"top": 2, "bottom": 0,
+                                   "right": _zapas_sprava(gorizontal, kegl,
+                                                          podpisi_znacheniy,
+                                                          znach, drobnaya)}},
+            "scales": {
+                os_imyon: {"ticks": {**_osnova(kegl), "maxRotation": 0,
+                                     "autoSkip": False},
+                           "grid": {"display": False}},
+                os_chisel: {"ticks": {**_osnova(kegl), "callback": perevod},
+                            "grid": {"color": SETKA},
+                            "beginAtZero": True},
+            },
+        },
+    }
+
+
+def linii(zagolovok, podpisi_x, ryady, edinitsa, *, kegl=11,
+          kegl_zagolovka=13, drobnaya=False):
+    """Линии динамики. `ryady` — [(имя, [значения], цвет), …].
+
+    Имя ряда идёт в легенду: у двух линий разной величины подписать каждую
+    точку нельзя, а без имени линии не различить. Легенда снизу — сверху её
+    место занимает заголовок.
+    """
+    perevod = _perevodchik(drobnaya)
+    nabory = []
+    for i, (imya, znach, cvet) in enumerate(ryady):
+        nabory.append({
+            "label": imya, "data": list(znach),
+            "borderColor": cvet, "backgroundColor": cvet,
+            "borderWidth": 2.5, "pointRadius": 3, "fill": False,
+            "tension": 0.25,
+        })
+    return {
+        "type": "line",
+        "data": {"labels": list(podpisi_x), "datasets": nabory},
+        "options": {
+            "plugins": {
+                "legend": {"position": "bottom",
+                           "labels": {**_osnova(kegl),
+                                      "boxWidth": 14, "boxHeight": 8,
+                                      "usePointStyle": False}},
+                "title": {"display": True, "text": [zagolovok, edinitsa],
+                          "color": TEKST,
+                          "font": {"size": kegl_zagolovka, "weight": "bold"}},
+                "datalabels": {"display": False},
+            },
+            "layout": {"padding": {"top": 2, "right": 10, "bottom": 0}},
+            "scales": {
+                "x": {"ticks": {**_osnova(kegl)}, "grid": {"display": False}},
+                "y": {"ticks": {**_osnova(kegl), "callback": perevod},
+                      "grid": {"color": SETKA}, "beginAtZero": True},
+            },
+        },
+    }
+
+
+# ─────────────────────────── вывод ───────────────────────────
+
+def narisovat(spec, put, *, shirina_pt, vysota_pt, chetkost=2):
+    """Спецификация → PNG. Размеры задаются В ТОЧКАХ СЛАЙДА.
+
+    Логический холст QuickChart берётся равным размеру картинки на слайде в
+    точках, поэтому `kegl=11` в спецификации выше — это одиннадцать точек на
+    экране, а не в пикселях файла. `chetkost` множит только число пикселей.
+    """
+    put = Path(put)
+    put.parent.mkdir(parents=True, exist_ok=True)
+    adres = (f"{BASE}?w={int(shirina_pt)}&h={int(vysota_pt)}&v=4"
+             f"&devicePixelRatio={chetkost}&bkg=white&c="
+             + urllib.parse.quote(_v_js(spec)))
+    with urllib.request.urlopen(adres, timeout=TAYMAUT) as r:
+        telo = r.read()
+    if not telo.startswith(b"\x89PNG"):
+        raise RuntimeError(f"QuickChart вернул не PNG: {telo[:200]!r}")
+    put.write_bytes(telo)
+    return put
+
+
+def ryadom(levaya, pravaya, put, *, zazor_pt=10, chetkost=2):
+    """Две картинки в одну, бок о бок, с белым зазором между ними.
+
+    Нужно там, где на кадре две диаграммы: поле `media:` у файла кадра одно,
+    и двух картинок сборщик деки не возьмёт. Высоты выравниваются по большей.
+    """
+    from PIL import Image
+    a, b = Image.open(levaya).convert("RGB"), Image.open(pravaya).convert("RGB")
+    z = int(zazor_pt * chetkost)
+    h = max(a.height, b.height)
+    holst = Image.new("RGB", (a.width + z + b.width, h), "white")
+    holst.paste(a, (0, (h - a.height) // 2))
+    holst.paste(b, (a.width + z, (h - b.height) // 2))
+    put = Path(put)
+    put.parent.mkdir(parents=True, exist_ok=True)
+    holst.save(put)
+    return put
+
+
+def _samoproverka():
+    """Доказать, что обе формы рисуются и что кегль задан в точках слайда."""
+    tmp = Path("/tmp/analitika-samoproverka")
+    s = stolbtsy("Проба столбцов", [("Корея", 1.70, "88 из 549"),
+                                    ("Россия", 0.39, "57 из 57"),
+                                    ("США", 0.18, "61 из 1 614")],
+                 "на миллион населения", zoloto=0, drobnaya=True)
+    l = linii("Проба линий", [2010, 2015, 2020, 2025],
+              [("первый ряд", [7, 11, 23, 56], MID),
+               ("второй ряд", [1, 6, 114, 335], LIGHT)], "штук в год")
+    a = narisovat(s, tmp / "stolbtsy.png", shirina_pt=265, vysota_pt=250)
+    b = narisovat(l, tmp / "linii.png", shirina_pt=265, vysota_pt=250)
+    c = ryadom(a, b, tmp / "ryadom.png")
+    from PIL import Image
+    for p in (a, b, c):
+        im = Image.open(p)
+        print(f"  {p.name}: {im.width}×{im.height} пикс, {p.stat().st_size} Б")
+    print("самопроверка: обе формы нарисованы, свод собран")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_samoproverka() if "--samoproverka" in sys.argv else
+             print(__doc__) or 0)

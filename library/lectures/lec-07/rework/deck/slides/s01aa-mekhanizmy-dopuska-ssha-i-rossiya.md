@@ -1,6 +1,6 @@
 ---
-id: s0Xa
-local_id: s0Xa
+id: s01aa
+local_id: В-01aa
 section: "0. Вход"
 type: norm
 title: "Механизмы допуска медицинского изделия: США и Россия"

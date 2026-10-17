@@ -61,8 +61,8 @@ sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 from dataclasses import replace  # noqa: E402
 
 from deckkit import (columns, figure, floor, flow, markup, media,  # noqa: E402
-                     metrics, plates, prims, render as rnd, report, scheme,
-                     slidefile, tables, titles, twocol, wrap)
+                     metrics, plates, prims, render as rnd, report, rowblocks,
+                     scheme, slidefile, tables, titles, twocol, wrap)
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, OUTLINE,  # noqa: E402
                            SLIDE_H, SLIDE_W, WHITE)
 
@@ -867,6 +867,26 @@ def analitika(p, sl, root):
         columns.draw_columns(s, sl.sid, cols, MX, y, FULL_W, ch, dolya,
                              pary=(True if pary is None else bool(pary)))
         y += ch + GAP
+
+    # СТРОЧНЫЕ БЛОКИ (§9, вторая форма разбора «механизм / объяснение /
+    # последствия» — альтернатива `columns`, не довесок к ней; `deckkit.
+    # rowblocks`, вызвана как полноправный альтернативный слот ТЕЛА, тем
+    # же ходом, что `cols` выше: бюджет высоты — остаток за вычетом того,
+    # что нужно комментарию под полосой). Заведена по запросу сессии кадров
+    # о влиянии ИИ на человека (#244): у пяти-шести пунктов полноценное
+    # объяснение-предложение («без голоса лектора») не влезает в клетку
+    # `columns` или сжимается до нечитаемого — блок несёт свою высоту сам,
+    # сторож `[пары]` здесь не вызывается вовсе, пары не заявлены.
+    rb = rowblocks.row_blocks_of(sl)
+    if rb:
+        need = 0.0
+        for kind, tx in slidefile.body_blocks(sl):
+            need += metrics.est_h(tx, {"head": 15.0, "cap": 11.0}.get(kind,
+                                                                     13.0),
+                                  FULL_W - 0.08, 1.26, kind == "head") + 0.08
+        rh = max(0.0, bbot - y - (need + GAP if need else 0.0))
+        used = rowblocks.draw_row_blocks(s, sl.sid, rb, MX, y, FULL_W, rh)
+        y += used + GAP
 
     avail = bbot - y
     blocks = slidefile.body_blocks(sl)

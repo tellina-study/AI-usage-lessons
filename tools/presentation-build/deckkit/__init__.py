@@ -11,16 +11,21 @@
 зависит):
 
     theme · report → metrics → prims → markup · slidefile
-                             → tables · plates · scheme · columns · flow
-                             → wrap → media → refdeck · render
+                             → tables · plates · columns · figure
+                             → tracks · ladder · axis → scheme → flow
+                             → wrap → media · contrast → refdeck · render
                              → probes → selftest · regress → regress_decks
 
 Два прогона, которыми ядро сдаётся:
 
     python3 -m deckkit.selftest           — пробы на сломанном входе
+    python3 -m deckkit.contrast --selftest — пробы пола контраста и hero
+    python3 -m deckkit.contrast <файл>    — таблица контраста по собранной деке
     python3 -m deckkit.regress_decks --all — регрессия на двух доставленных деках
 """
 __all__ = ["theme", "report", "metrics", "prims", "markup", "slidefile",
-           "tables", "plates", "scheme", "columns", "flow", "wrap", "media",
-           "refdeck", "render", "probes", "probes_layout", "selftest",
-           "selftest_layout", "regress", "regress_decks"]
+           "tables", "plates", "columns", "figure", "tracks", "ladder",
+           "axis", "scheme", "flow", "wrap", "media",
+           "refdeck", "render", "probes", "probes_layout", "probes_contrast",
+           "contrast", "selftest", "selftest_layout", "selftest_contrast",
+           "regress", "regress_decks"]

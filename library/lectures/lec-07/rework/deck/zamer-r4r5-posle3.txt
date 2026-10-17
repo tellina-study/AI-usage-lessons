@@ -1,0 +1,29 @@
+рендер готов: sec4-5-01.pdf, снимки в snaps4-5-01/
+кусок 1: 15 кадров готово
+рендер готов: sec4-5-02.pdf, снимки в snaps4-5-02/
+кусок 2: 5 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r4-r5-vtoroy-afa3910b/library/lectures/lec-07/rework/deck/sec-4-5.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  63  s52-divider-nablyudenie.md
+  72  s52a-dannye-sposoby-i-reshenie-nablyudeniya.md
+  76  s53-palata-obkhod-list-nablyudeniya.md
+  74  s54-shkala-rannego-preduprezhdeniya.md
+  74  s55-tsena-obeikh-oshibok-smena.md
+ 122  s56-schet-zamenyaemykh-rezhimov.md
+ 122  s57-model-rannego-preduprezhdeniya.md
+ 124  s58-sto-gospitalizatsiy-vosemnadtsat-trevog.md
+  82  s59-vtoraya-proverka-drugie-bolnitsy.md
+ 127  s60-para-dalo-potrebovalo-trevogi.md
+  72  s60a-vyvod-nablyudenie.md
+  67  s60b-divider-vedenie-zapisi.md
+  71  s60ba-dannye-sposoby-i-reshenie-zapisi.md
+ 139  s60bb-chetyre-rezhima-pisma.md
+  75  s60c-kak-ustroeno-vedenie-zapisi.md
+ 129  s61-avtomaticheskaya-zapis-priema.md
+ 110  s62-dve-dorozhki-nabor-i-vychitka.md
+ 129  s63-vypisnoy-epikriz.md
+ 128  s63a-tsena-epikriza-vychitka-i-pereskaz.md
+  76  s64-vyvod-vedenie-zapisi.md
+
+страниц 20 · медиана 79 · среднее 97 · максимум 139 · тяжелее 140 — 0 · тяжелее 90 — 9

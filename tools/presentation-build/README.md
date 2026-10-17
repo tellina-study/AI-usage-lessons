@@ -99,8 +99,8 @@ libreoffice --headless --convert-to pdf /tmp/test.pptx       # smoke test conver
 
 | Type | Когда | Layout-pattern | Acceptance |
 |---|---|---|---|
-| `hero_cover` | s01 (ice-breaker / cover, всегда первый) | Hero ≥40% площади ИЛИ full-bleed background. Real image via 6-tier acquisition. Foreshadow keystone OR domain identity. Russian caption + attribution. | См. §5.9 |
-| `hero_closing` | s39 (closing / bridge, всегда последний) | Hero ≥40% площади. Real image via 6-tier. Bridge к Lec-N+1 OR emotional payoff OR iconic case visual. Russian caption + attribution. | См. §5.9 |
+| `hero_cover` | s01 (ice-breaker / cover, всегда первый) | Hero ≥40% площади ИЛИ full-bleed background. Real image via 6-tier acquisition. Foreshadow keystone OR domain identity. Подписи источника фотографии на кадре НЕТ (О18, #229) — провенанс в заметках и `assets/*.url`. | См. §5.9 |
+| `hero_closing` | s39 (closing / bridge, всегда последний) | Hero ≥40% площади. Real image via 6-tier. Bridge к Lec-N+1 OR emotional payoff OR iconic case visual. Подписи источника фотографии на кадре НЕТ (О18, #229). | См. §5.9 |
 
 ### Schema subtypes (расширение `assertion_visual`, добавлено после Лекции 1 v3 production)
 
@@ -356,11 +356,11 @@ library/lectures/lec-01/
 
 ### Visual sweep additions
 
-- [ ] **Hero on s01 (≥40% area, real image, attribution visible)** — иначе structural gap, не polish.
-- [ ] **Hero on s39 (≥40% area, real image, attribution visible)** — иначе structural gap.
+- [ ] **Hero on s01 (≥40% area, real image)** — иначе structural gap, не polish. Подпись источника фотографии на кадре НЕ ставится (О18, #229); она обязательна только у предъявленного документа (`media_document: true`).
+- [ ] **Hero on s39 (≥40% area, real image)** — иначе structural gap. Подпись — см. О18 выше.
 - [ ] **Visual sweep: каждый «screenshot» claim — actual real source identifiable?** Sample 5 slides claiming external screenshot → identifiable source URL? matches what source would show? Stylized Ocean card с verbatim headline = FAIL (mock, не real image).
 - [ ] **«Is this image REAL or stylized mock?» visual check** per slide claiming to show external screenshot — vision-enabled distinguishing.
-- [ ] **Real-image attribution label visible** per slide (source name + date, e.g. «CNN · 16 мая 2024»).
+- [ ] **Атрибуция снимка записана** — в заметках кадра и в `assets/*.url`, а НЕ подписью на кадре (О18, #229). Подпись на кадре — только у предъявленного документа, по которому зал проверяет запись.
 
 ### Deep latin-token scan (mandatory ДО GATE)
 

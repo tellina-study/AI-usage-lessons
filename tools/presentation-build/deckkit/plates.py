@@ -75,6 +75,28 @@ class PlateStyle:
     note_color: object = LIGHT
     note_wsafe: bool = False
     warn_overflow: bool = True      # три предупреждения lec-06
+    # ЦВЕТ КЛЮЧЕВОГО ЗНАЧЕНИЯ — решение владельца О3 (`decisions-orkestratora.md`,
+    # «на весь курс»), исполненное ПЕРЕКЛЮЧАТЕЛЕМ, а не сменой темы.
+    #
+    # Замер приёмки по пикселям собранной страницы: золото `F0AB00` на
+    # белом даёт 1,99 : 1, на поверхности `F4F7FA` — 1,85, при пороге 3,0
+    # для КРУПНОГО текста. Им набрано не украшение, а значение ключевой
+    # плашки — то самое число, по которому назван кадр, — и соседние
+    # плашки рядом идут тёмно-синим и читаются. То есть самое важное число
+    # кадра выходило самым бледным на нём, а сборка при этом молчала:
+    # кегль 15,0, предупреждений ноль.
+    #
+    # Умолчание ОСТАВЛЕНО золотым нарочно: Лекция 6 сдана и прочитана залу,
+    # и её «СОВПАЛО, 2202 фигуры, 0 расхождений» обязано пережить эту
+    # правку. Дека, которой решение адресовано, объявляет цвет сама —
+    # `1C7293` (5,42 : 1) либо `028090` (4,67). Золото при этом НЕ уходит с
+    # кадра: оно остаётся обводкой плашки, чертой под заголовком и меткой,
+    # то есть палитра курса не меняется ни на один цвет.
+    #
+    # Перевёрнутая плашка (заливка `21295C`, число золотом, 6,85 : 1)
+    # сильнее по иерархии и владельцем ОТВЕРГНУТА: менять вид пятнадцати
+    # дек по одной находке в разгар переделки нельзя.
+    value_key_color: object = GOLD
     gold_fallback_last: bool = True
     total_from_rows: bool = True    # сумма рядов, а не «докуда дошёл курсор»
 
@@ -100,6 +122,7 @@ LEC06 = PlateStyle(
     value_hi=28.0, value_lo=13.0, value_floor=13.0, value_ls=1.06,
     value_extra=0.0, value_rows_digit=2, value_rows_word=2,
     value_longest_by_width=False, value_h_wsafe=True,
+    value_key_color=GOLD,
     note_pt=10.5, note_ls=1.14, note_extra=0.07, note_rows=3,
     note_italic=False, note_color=SLATE, note_wsafe=True,
     warn_overflow=True, gold_fallback_last=False, total_from_rows=False)
@@ -304,7 +327,8 @@ def _draw_plate(s, sid, p, x, y, w, h, is_gold, st, tag):
         hv = (rows * f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
               + st.value_extra)
         prims.text_box(s, x + st.pad, cy, iw, hv, p["value"], size=f,
-                       bold=True, color=GOLD if is_gold else DEEP,
+                       bold=True,
+                       color=st.value_key_color if is_gold else DEEP,
                        ls=st.value_ls, tag=f"{tag}/значение")
         cy += hv
     if p["note"]:

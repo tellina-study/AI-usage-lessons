@@ -1,0 +1,20 @@
+рендер готов: sec5-01.pdf, снимки в snaps5-01/
+кусок 1: 9 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r4-r5-vtoroy-afa3910b/library/lectures/lec-07/rework/deck/sec-5.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  71  s60b-divider-vedenie-zapisi.md
+  71  s60ba-dannye-sposoby-i-reshenie-zapisi.md
+ 139  s60bb-chetyre-rezhima-pisma.md
+  75  s60c-kak-ustroeno-vedenie-zapisi.md
+ 134  s61-avtomaticheskaya-zapis-priema.md
+ 111  s62-dve-dorozhki-nabor-i-vychitka.md
+ 135  s63-vypisnoy-epikriz.md
+ 134  s63a-tsena-epikriza-vychitka-i-pereskaz.md
+  75  s64-vyvod-vedenie-zapisi.md
+
+страниц 9 · медиана 111 · среднее 105 · максимум 139 · тяжелее 140 — 0 · тяжелее 90 — 5
+
+Предупреждений сборки этот прогон не показывает — ни одного, ни на каком входе:
+это замер слов, а не приёмка. Блокирующие берут отдельной сборкой
+(`python3 build_lec07.py --only sNN`) либо сводом `python3 priyomka.py`.

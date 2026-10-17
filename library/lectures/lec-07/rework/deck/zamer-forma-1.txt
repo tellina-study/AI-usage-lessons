@@ -1,0 +1,47 @@
+рендер готов: sec1-3-6-01.pdf, снимки в snaps1-3-6-01/
+кусок 1: 15 кадров готово
+рендер готов: sec1-3-6-02.pdf, снимки в snaps1-3-6-02/
+кусок 2: 15 кадров готово
+рендер готов: sec1-3-6-03.pdf, снимки в snaps1-3-6-03/
+кусок 3: 6 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r4-r5-vtoroy-afa3910b/library/lectures/lec-07/rework/deck/sec-1-3-6.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  46  s11-divider-otbor.md
+  71  s11a-pervichnyy-skrining-chto-eto-za-stadiya.md
+  81  s12-kak-ustroen-otbor.md
+ 106  s13-dva-klassicheskikh-rezhima-otbora.md
+ 117  s15-triazh-po-predskazannomu-risku.md
+ 153  s16-chat-bot-pervoy-linii.md  ← тяжелее 140
+ 115  s18-glaznoe-dno-bez-oftalmologa.md
+  76  s19-chto-pereekhalo-glaznoe-dno.md
+  80  s20-vyvod-otbor.md
+  69  s35-divider-postanovka-diagnoza.md
+  73  s35a-postanovka-diagnoza-chto-eto-za-stadiya.md
+  75  s36-kak-ustroena-postanovka-diagnoza.md
+  80  s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
+  73  s38-chetyre-stupeni-chto-delaet-chelovek.md
+ 135  s41-zamer-vzglyada-lozhnaya-podskazka.md
+  74  s43-tot-zhe-zamer-obratnyy-znak.md
+ 142  s44-odna-podskazka-dva-znaka-patologiya.md  ← тяжелее 140
+ 138  s45-izmerennaya-troyka-para-i-chelovek.md
+ 138  s47-kontrolnaya-liniya-para-silnee.md
+ 135  s48-kontrolnaya-liniya-chto-pereekhalo.md
+  74  s49-doverie-i-stazh.md
+  75  s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md
+ 150  s49b-obeshchano-tsena-i-dva-rezhima.md  ← тяжелее 140
+ 138  s49c-para-nizhe-obeikh-storon.md
+ 113  s49d-otvet-sobran-chetyre-zamera.md
+  74  s50-vyvod-diagnoz.md
+  75  s65-divider-chem-uderzhivayut.md
+  75  s65a-dannye-sposoby-i-reshenie-nadzora.md
+  73  s66-odna-komnata-i-odin-sluchay.md
+ 139  s67-razbor-sluchaya-posle-iskhoda.md
+ 127  s68-norma-est-proverki-net.md
+ 127  s69-dvoynoe-chtenie-v-minutakh-truda.md
+ 132  s70-chetyre-uchastnika.md
+  74  s70a-podkhodyashchiy-chelovek-po-normativu.md
+ 114  s71-tri-mekhanizma-nadzora.md
+ 139  s73-vyvod-chem-uderzhivayut.md
+
+страниц 36 · медиана 93.5 · среднее 102 · максимум 153 · тяжелее 140 — 3 · тяжелее 90 — 18

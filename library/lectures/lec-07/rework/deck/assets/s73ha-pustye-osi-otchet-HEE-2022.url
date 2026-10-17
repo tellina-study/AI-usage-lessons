@@ -1,0 +1,19 @@
+{
+ "title": "Figure B «Ideal and inappropriate levels of confidence» — Nix M., Onisiforou G., Painter A., «Understanding healthcare workers' confidence in AI», Health Education England и NHS AI Lab (NHS Transformation Directorate), май 2022, стр. 11",
+ "license": "Open Government Licence v3.0",
+ "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+ "license_basis": "Прочитана страница условий самого сайта-издателя 2026-10-14: https://digital-transformation.hee.nhs.uk/terms-and-conditions — «You may use and re-use the information featured on this website (not including logos or photographs) unless identified as another party's copyright free of charge in any format or medium, under the terms of the Open Government Licence», в подвале «© Crown copyright». Рисунок B — схема, не логотип и не фотография, и чужим правообладателем в отчёте не помечен. Проверено чтением страницы, а не по памяти о правилах государственных сайтов Британии.",
+ "author": "Dr Mike Nix, George Onisiforou, Dr Annabelle Painter (Health Education England / NHS AI Lab)",
+ "credit": "Health Education England & NHS AI Lab, «Understanding healthcare workers' confidence in AI», Report 1 of 2, May 2022, 90 страниц, стр. 11",
+ "description": "График отчёта: по оси ординат «User Confidence (%)» от 0 до 100, по оси абсцисс «Appropriate confidence (%)» от 0 до 100, слева легенда «Inappropriately High / Ideal / Inappropriately Low». Величин под осями нет.",
+ "date": "2022-05",
+ "page": "https://digital-transformation.hee.nhs.uk/binaries/content/assets/digital-transformation/dart-ed/understandingconfidenceinai-may22.pdf",
+ "file_url": "https://digital-transformation.hee.nhs.uk/binaries/content/assets/digital-transformation/dart-ed/understandingconfidenceinai-may22.pdf (стр. 11)",
+ "orig_size": "вырезка со стр. 11 при 300 точках на дюйм — 1780x1563; уменьшено до 1600x1405",
+ "downloaded_at": "2026-10-14",
+ "tier": "3 (документ первоисточника, адрес которого кадр называет сам в поле source)",
+ "assigned_to": "s73ha «Единственный чертёж темы — с пустыми осями»",
+ "attribution": "Health Education England и NHS AI Lab, «Understanding healthcare workers' confidence in AI», май 2022, рис. B. © Crown copyright, Open Government Licence v3.0",
+ "caveat": "Читать перед вкручиванием. Кадр говорит «поле под ними пустое». Точно: под осями нет НИ ОДНОЙ ВЕЛИЧИНЫ — ни точки, ни кривой, ни деления, кроме 0 и 100 на концах. Но поле не выглядит белым: оно засеяно декоративными полумесяцами, которые идут диагональю и обозначают «идеальную линию» значком, а не числом. То есть зал увидит не пустой квадрат, а квадрат с орнаментом. Утверждение кадра от этого не ломается (данных там действительно нет), но произносить «поле пустое», показывая узор, нельзя — речь обязана назвать, что в поле стоят значки вместо величин. Иначе повторяется ошибка s44: подпись говорит одно, снимок показывает другое.",
+ "state": "добыто, в кадр НЕ вкручено (вкручивание — отдельный проход после диеты)"
+}

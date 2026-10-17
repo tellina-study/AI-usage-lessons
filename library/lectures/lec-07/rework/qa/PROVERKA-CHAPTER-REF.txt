@@ -1,0 +1,17 @@
+прочитано записей CHAP: 107
+прочитано файлов главы: 20; параграфов с номером: 152
+
+адресов «файл+параграф» сошлось: 145
+ОШИБОК ФАЙЛА: 0
+ОШИБОК ПАРАГРАФА: 9
+   s01b: адрес говорит «chapter-part1b.md §2.1», а параграф лежит в chapter-part1c.md
+   s22: адрес говорит «chapter-part1b.md §2.1», а параграф лежит в chapter-part1c.md
+   s49d: адрес говорит «chapter-part2.md §3.8», а параграф лежит в chapter-part2b.md
+   s70a: адрес говорит «chapter-part3d.md §1.2», а параграф лежит в chapter-part1b.md
+   s87: адрес говорит «chapter-part4e.md §9.12», а параграф лежит в chapter-part4f.md
+   s87: адрес говорит «chapter-part4e.md §9.10», а параграф лежит в chapter-part4f.md
+   s87: адрес говорит «chapter-part4e.md §9.11», а параграф лежит в chapter-part4f.md
+   s87: адрес говорит «chapter-part4e.md §9.9», а параграф лежит в chapter-part4f.md
+   s73ha: адрес говорит «chapter-part5.md §1.1», а параграф лежит в chapter-part1b.md
+
+контроль: § 8.12 найден в chapter-part4da.md, § 9.10 — в chapter-part4f.md, то есть проверка видит переезд

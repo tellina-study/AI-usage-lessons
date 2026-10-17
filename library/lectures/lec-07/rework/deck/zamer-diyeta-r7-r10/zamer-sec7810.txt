@@ -1,0 +1,37 @@
+рендер готов: sec10-7-8-9-01.pdf, снимки в snaps10-7-8-9-01/
+кусок 1: 15 кадров готово
+рендер готов: sec10-7-8-9-02.pdf, снимки в snaps10-7-8-9-02/
+кусок 2: 9 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r7-r10-vtoroy-acf4258a/library/lectures/lec-07/rework/deck/sec-10-7-8-9.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  73  s73b-divider-navyk.md
+  74  s73c-vrach-vernulsya-posle-goda.md
+  75  s73ca-tri-opory-i-odin-shag-iz-vosmi.md
+ 120  s73d-tsena-i-dva-rezhima-osmotra.md
+ 137  s73f-primer-1-dolya-bez-pomoshchnika.md
+  85  s73h-dva-probela-i-odno-izmerenie.md
+  87  s73ha-pustye-osi-i-tri-nulya.md
+  74  s73i-vyvod-navyk.md
+ 112  s73j-mesto-razdela-vne-okna.md
+  67  s74-divider-lekarstvo.md
+ 136  s77-voronka-otrasli.md
+ 133  s78-tsena-oshibok-i-dva-rezhima.md
+ 125  s85-primer-1-otkaz-ot-obeshchaniya.md
+ 136  s87-vyvod-lekarstvo.md
+  75  s96a-divider-sborka.md
+ 137  s97-devyat-form-slovarya-tselikom.md
+ 127  s99-vyigrysh-pripisan-ne-tomu.md
+ 138  s101-kletki-uznavaemye-protsedury-drugie.md
+ 127  s102-chto-menyaetsya-v-cheloveke-i-v-podpisi.md
+ 129  s103-chetyre-otveta-na-odin-vopros.md
+  46  s103a-divider-zakrytie.md
+ 134  s104-chto-bylo-obeshchano-v-nachale.md
+ 124  s105-ustroystvo-otozvali-resheniya-ostalis.md
+ 102  s106-voprosy.md
+
+страниц 24 · медиана 122 · среднее 107 · максимум 138 · тяжелее 140 — 0 · тяжелее 90 — 15
+
+Предупреждений сборки этот прогон не показывает — ни одного, ни на каком входе:
+это замер слов, а не приёмка. Блокирующие берут отдельной сборкой
+(`python3 build_lec07.py --only sNN`) либо сводом `python3 priyomka.py`.

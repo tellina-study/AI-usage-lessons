@@ -2,6 +2,11 @@
 # НОМЕР НЕ ПРИСВОЕН НАМЕРЕННО. Имя файла начинается не с `s`, поэтому глоб `s*.md` этот кадр
 # не подхватывает и дека им не меняется. Номер, раздел и место выбирает владелец; после выбора
 # файл переименовывается в `sNN-vliyanie-na-patsienta.md`.
+# ПОДВАЛ — GIT-АДРЕС на main, по указанию владельца. Шесть замеров этого кадра существовали
+# только в заметках, поэтому под них создан research/16-doverie-patsienta-k-modeli.md: адрес
+# честен лишь тогда, когда по нему лежит то, что на кадре. ВНИМАНИЕ: файл пока на ЭТОЙ ветке,
+# и до слияния в main ссылка подвала отдаст 404 — со сцены это неотличимо от выдуманного
+# источника. Слить до того, как дека уйдёт на показ.
 # ПЕРЕСЕЧЕНИЙ С ДЕКОЙ НЕТ: ни одного из этих шести замеров в деке сейчас нет. Плоскость
 # «доверие и согласие пациента» в ведомости четырёх адресов названа как отсутствующая.
 # ПАРЫ, КОТОРЫЕ ЗДЕСЬ НАМЕРЕННО НЕ СОБРАНЫ (урок этого круга — разряд ставится сопоставлению,
@@ -16,7 +21,7 @@ section: ""
 type: summary
 title: "Влияние ИИ на пациента: доверие, раскрытие, перепроверка"
 assertion: "Пациент принимает модель помощником и отвергает её исполнителем, перепроверять просит только в одну сторону, деньгами выбор двигается, а обезличенный машинный ответ он оценивает выше врачебного — шесть замеров, каждый парой внутри своей выборки, и между собой они в пару не складываются"
-source: "Chen и Cui, Journal of Medical Internet Research 2025 — https://doi.org/10.2196/66083 · Ozcan и соавт., Radiology: Imaging Cancer 2025 — https://doi.org/10.1148/rycan.240290 · Yang, Dai, Wolf, npj Digital Medicine 2026 — https://doi.org/10.1038/s41746-026-02635-0 · Chen и соавт., npj Digital Medicine 2025 — https://doi.org/10.1038/s41746-025-01671-6 · He и соавт., Internet Interventions 2025 — https://doi.org/10.1016/j.invent.2025.100806 · Bracic и соавт., JAMA Network Open 2026 — https://doi.org/10.1001/jamanetworkopen.2026.0815 · Baldus и соавт., Insights into Imaging 2026 — https://doi.org/10.1186/s13244-025-02159-3"
+source: "Полная запись источников — https://github.com/tellina-study/AI-usage-lessons/blob/main/library/lectures/lec-07/rework/research/16-doverie-patsienta-k-modeli.md"
 media: ""
 media_needed: "иллюстрация не нужна — ведомость из пяти строк и трёх подписей и есть предмет кадра"
 media_note: "кадр собран по заказу владельца отдельной сессией"
@@ -64,4 +69,4 @@ status: собран
 
 И последнее, прикладное. Три тысячи взрослых выбирали между описаниями приёма; цена двух признаков названа числом: присутствие врача поднимает вероятность выбора на восемнадцать пунктов, уровень модели выше специалиста — на тридцать два. Вот и ответ, чем лечить недоверие: качеством модели и человеком, оставленным в контуре. Объяснения и кампании в этом замере не участвовали.
 
-**Источники.** [Chen C., Cui Z., Impact of AI-Assisted Diagnosis on American Patients' Trust, Journal of Medical Internet Research 2025;27:e66083](https://doi.org/10.2196/66083). [Ozcan B. B., Dogan B. E., Xi Y., Knippa E. E., Patient Perception of Artificial Intelligence Use in Interpretation of Screening Mammograms, Radiology: Imaging Cancer 2025;7(3)](https://doi.org/10.1148/rycan.240290). [Yang H., Dai T., Wolf R. M., Financial incentives increase uptake of autonomous medical AI, yet patients still seek human reconfirmation, npj Digital Medicine 2026](https://doi.org/10.1038/s41746-026-02635-0). [Chen D., Chauhan K., Parsa R. и соавт., Patient perceptions of empathy in physician and AI chatbot responses, npj Digital Medicine 2025](https://doi.org/10.1038/s41746-025-01671-6). [He L., Basar E., Wiers R. W. и соавт., Chatting your way to quitting, Internet Interventions 2025;100806](https://doi.org/10.1016/j.invent.2025.100806). [Bracic A., Spector-Bagdady K., Towle S. и соавт., Factors for Patient Trust and Acceptance of Medical Artificial Intelligence, JAMA Network Open 2026;9](https://doi.org/10.1001/jamanetworkopen.2026.0815). [Baldus S. G., Wiesmann M., Habel U. и соавт., Patients' views on the use of AI in healthcare, Insights into Imaging 2026;17](https://doi.org/10.1186/s13244-025-02159-3) — 198 пациентов.
+**Источники.** Полная запись всех шести замеров с выборками, интервалами и разрядом — [свод доверия пациента к модели](https://github.com/tellina-study/AI-usage-lessons/blob/main/library/lectures/lec-07/rework/research/16-doverie-patsienta-k-modeli.md). Там же §8 — две пары, которые намеренно не собраны, и §9 — чего не нашлось.

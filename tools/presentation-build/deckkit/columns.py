@@ -66,13 +66,22 @@ def columns_of(sl, *, require_type="comparison"):
     return cols
 
 
-def draw_columns(s, sid, cols, x, y, w, h):
+def draw_columns(s, sid, cols, x, y, w, h, dolya_levogo=0.5):
     """Два столбца в коробках мотива. Левый на поверхности, правый белый с
     бирюзовой обводкой — различие сторон держится цветом рамки, а не
-    подписью «против»."""
-    cw = (w - GAP) / 2
+    подписью «против».
+
+    `dolya_levogo` — доля ширины, отданная левому столбцу; по умолчанию
+    поровну. Неравное деление нужно там, где стороны неравны по весу:
+    пара «как проявляется / последствия» даёт отношение медиан около
+    1 : 2 (замер сессии кадров о влиянии ИИ на человека, #244), и при
+    делении пополам правый столбец переносит вдвое чаще левого и съедает
+    высоту обоих — кегль подбирается на двоих."""
+    dolya_levogo = min(0.75, max(0.25, float(dolya_levogo)))
+    shiriny = [(w - GAP) * dolya_levogo, (w - GAP) * (1.0 - dolya_levogo)]
+    xx = x
     for i, c in enumerate(cols):
-        xx = x + i * (cw + GAP)
+        cw = shiriny[i]
         prims.ocean_box(s, xx, y, cw, h, fill=SURFACE if i == 0 else WHITE,
                         stroke=LIGHT if i == 0 else TEAL)
         iw = cw - 2 * PAD
@@ -94,4 +103,5 @@ def draw_columns(s, sid, cols, x, y, w, h):
             prims.text_box(s, xx + PAD, yy, iw, avail, body, size=sz,
                            color=DEEP, ls=ITEM_LS,
                            tag=f"{sid}/столбец-{i + 1}")
+        xx += cw + GAP
     report.PRIM["столбцы"] += 1

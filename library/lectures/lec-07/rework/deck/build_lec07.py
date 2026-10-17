@@ -717,7 +717,121 @@ def content(p, sl, root):
     return s
 
 
-BUILDERS = {"cover": cover, "divider": divider}
+# ── аналитический кадр (#244): полоса диаграммы, плашки либо разбор ──
+
+POLOSA_H = 3.00        # высота полосы диаграммы; замер — в docstring ниже
+POLOSA_MIN = 1.40      # ниже этого полоса перестаёт читаться и не рисуется
+
+
+def analitika(p, sl, root):
+    """Аналитический кадр: заголовок → полоса диаграммы во всю ширину →
+    плашки ЛИБО разбор в двух столбцах → строка-комментарий → подвал.
+
+    ПЕРВЫЙ настоящий тип кадра в этой деке после обложки и дивайдера.
+    Заведён по указанию владельца (#244): «заведи шаблон слайда с аналитикой
+    и диаграммами (а может два) и используй их». До него поле `type` у семи
+    значений из девяти было декоративным — `case`, `norm`, `summary`,
+    `comparison`, `question` и `map` падали в один `content` и собирались
+    одинаково; отсюда и «выглядит слабо».
+
+    ЧЕМ ОН ОТЛИЧАЕТСЯ ОТ `content`, а не просто «ещё одна раскладка»:
+
+    * Диаграмма идёт ПОЛОСОЙ ВО ВСЮ ШИРИНУ и стоит ПЕРВОЙ, сразу под
+      заголовком. У `content` иллюстрация живёт боковой колонкой 4,30" или
+      кадром-свидетельством справа — диаграмме этого мало: подписи, набранные
+      под ширину 7,58", в колонке 4,30" садятся ниже пола кегля (та же
+      ловушка, что описана в `make_chart_s86.py`).
+    * Числа кадра живут В ДИАГРАММЕ, поэтому тело здесь — одна-две строки
+      комментария, а не разбор. Владелец так и просил: «небольшой подвал с
+      комментарием».
+    * `columns` разрешены НЕ как противопоставление «получается / не
+      получается», а как разбор «как проявляется / последствия» (замер идёт
+      внутрь клетки последствий). Это согласовано с сессией кадров о влиянии
+      ИИ на человека: один тип на оба случая, а не два похожих.
+
+    ПОЛОСА И ТЕЛО ДЕЛЯТ ОДИН БЮДЖЕТ. Под тело и примитивы у кадра около 5,4";
+    полоса берёт 3,0", полоса плашек около 1,4", просветы 0,4" — телу остаётся
+    примерно полдюйма, то есть строка-другая. Диаграмма, нарисованная выше
+    этой пропорции, съедает комментарий целиком: проверяется не на глаз, а
+    предупреждением `[высота]` при сборке.
+
+    Слот пустой — он схлопывается: кадр без `media` отдаёт высоту полосы
+    столбцам, и разбор в двух столбцах встаёт во весь кадр. Поэтому тип один
+    и для кадра с диаграммой, и для кадра без неё.
+    """
+    s = prims.blank(p)
+    bbot = body_bot(sl)
+    prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
+    y = heading(s, sl)
+
+    img = media.media_path(sl.meta, root, sl.sid)
+    if img:
+        ar = media.img_ar(img, sl.sid) or 3.0
+        h = min(POLOSA_H, FULL_W / ar)
+        if h < POLOSA_MIN:
+            report.warn(
+                f"[полоса] {sl.sid}: диаграмма при ширине {FULL_W:.2f}\" даёт "
+                f"высоту {h:.2f}\" — ниже {POLOSA_MIN:.2f}\" подписи не "
+                f"читаются; нужна более широкая картинка, не более высокая")
+        w = min(FULL_W, h * ar)
+        media.draw_media(s, sl.sid, img, MX + (FULL_W - w) / 2, y, w, h)
+        y += h + GAP
+
+    pl = plates.plates_of(sl, PLATES)
+    if pl:
+        y += plates.draw_plates(s, sl.sid, pl, MX, y, FULL_W, PLATES) + GAP
+
+    sch = scheme.scheme_of(sl, SCHEME)
+    if sch:
+        scheme.check_scheme(sl.sid, sch, FULL_W, SCHEME)
+        y += scheme.draw_scheme(s, sl.sid, sch, MX, y, FULL_W, SCHEME) + GAP
+
+    cols = columns.columns_of(sl, require_type="analitika")
+    if cols:
+        need = 0.0
+        for kind, tx in slidefile.body_blocks(sl):
+            need += metrics.est_h(tx, {"head": 15.0, "cap": 11.0}.get(kind,
+                                                                     13.0),
+                                  FULL_W - 0.08, 1.26, kind == "head") + 0.08
+        ch = max(columns.MIN_H, min(bbot - y - (need + GAP if need else 0.0),
+                                    columns.MAX_H))
+        # Доля левого столбца объявляется кадром: пара «как проявляется /
+        # последствия» неравна по весу, и деление пополам заставляет правый
+        # столбец переносить вдвое чаще — кегль при этом подбирается на двоих.
+        dolya = float(sl.meta.get("dolya_levogo_stolbtsa") or 0.5)
+        columns.draw_columns(s, sl.sid, cols, MX, y, FULL_W, ch, dolya)
+        y += ch + GAP
+
+    avail = bbot - y
+    blocks = slidefile.body_blocks(sl)
+    if blocks and avail > 0.30:
+        runs, first = [], True
+        for kind, tx in blocks:
+            sz = {"head": 15.0, "cap": 12.0, "bullet": 14.0}.get(kind, 14.0)
+            if not first:
+                runs.append({"text": "", "size": sz, "newpara": True,
+                             "space_before": 6})
+            first = False
+            for r in markup.inline_runs(tx, sz, LIGHT if kind == "cap"
+                                        else DEEP):
+                r.setdefault("italic", kind == "cap")
+                r.setdefault("bold", kind == "head")
+                runs.append(r)
+        prims.ocean_box(s, MX - 0.14, y - 0.10, FULL_W + 0.28,
+                        min(avail + 0.10, bbot - y + 0.10))
+        prims.text_runs(s, MX + 0.04, y, FULL_W - 0.08, avail, runs,
+                        tag=f"{sl.sid}/тело")
+    elif blocks:
+        report.warn(f"[высота] {sl.sid}/тело: комментарию осталось "
+                    f"{avail:.2f}\" — полоса диаграммы и плашки съели кадр")
+
+    gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
+    footer(s, sl)
+    return s
+
+
+BUILDERS = {"cover": cover, "divider": divider,
+            "analitika": analitika}
 
 
 # ════════════════════════════════════════════════════════════════════

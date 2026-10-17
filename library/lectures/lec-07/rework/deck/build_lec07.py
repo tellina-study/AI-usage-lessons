@@ -53,7 +53,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from pptx.enum.text import MSO_ANCHOR
+from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
@@ -800,8 +800,31 @@ def analitika(p, sl, root):
         caps = [str(sl.meta.get("media_label") or "").strip() or None,
                 str(sl.meta.get("media_2_label") or "").strip() or None]
         h = min(POLOSA_H, media.band_h(fr, caps, FULL_W, GAP))
-        media.media_band(s, fr, caps, MX, y, h, FULL_W, GAP, sl.sid)
+        # `media_box` (через `media_band`) роняет подпись в двух разных
+        # местах — переносится на строку больше `CAP_MAX_ROWS`, ИЛИ снимок
+        # сузился ниже `MIN_IMG_W`, пока место делят с подписью под ним —
+        # и в обоих случаях ВОЗВРАЩАЕТ ровно то, что упало, а не рисует
+        # молча. #244, найдено сессией «седьмая22» по снимкам докладчика:
+        # на паре аспектов ≈0,71/≈1,05 обе подписи участников падают именно
+        # так — одна с попутным `[кадр] … тесное место» (второй проход без
+        # подписи освобождает высоту, но остаётся узким), другая БЕЗ него
+        # (второй проход расширяется сам, едва отпускает подпись — порог
+        # проверяется дважды на разной ширине, и один из разов её не ловит).
+        # Полагаться на этот побочный сторож для «подпись потеряна» нельзя —
+        # он называет тесноту, а не пропажу, и называет её не всегда.
+        spill = media.media_band(s, fr, caps, MX, y, h, FULL_W, GAP, sl.sid)
         y += h + GAP
+        if spill:
+            text = " · ".join(spill)
+            report.warn(
+                f"[подпись] {sl.sid}: подпись участника не поместилась под "
+                f"своим снимком — перенесена под полосу целиком: {text!r}")
+            cap_h = metrics.est_h(text, media.CAP_PT, FULL_W, 1.12,
+                                  italic=True) + 0.06
+            prims.text_box(s, MX, y, FULL_W, cap_h, text, size=media.CAP_PT,
+                           italic=True, color=LIGHT, align=PP_ALIGN.CENTER,
+                           ls=1.12, tag=f"{sl.sid}/полоса-подпись")
+            y += cap_h + GAP
     elif img:
         ar = media.img_ar(img, sl.sid) or 3.0
         h = min(POLOSA_H, FULL_W / ar)

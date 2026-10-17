@@ -1,0 +1,13 @@
+{
+ "title": "Composite: Radiologist, reporting + Patient at X-ray device",
+ "license": "составное изображение: CC BY 4.0 (левая половина) + CC BY-SA 4.0 (правая половина)",
+ "description": "Сшивка `analitika.ryadom()` двух уже существующих в деке фото: слева — врач-рентгенолог диктует заключение (s35-vrach-chitaet-s-ekrana.jpg), справа — пациент у рентгеновского аппарата (s22-rentgenkabinet-pacient-u-pribora.jpg). Обе половины — настоящие фото, не постановка и не мок; полный провенанс каждой — в её собственном `.url` файле рядом.",
+ "left_source": "assets/s35-vrach-chitaet-s-ekrana.url",
+ "right_source": "assets/s22-rentgenkabinet-pacient-u-pribora.url",
+ "assigned_to": "нулевой кадр блока о человеке («Две стороны приёма», #244) — заземление по §8 trebovaniya-k-soderzhaniyu-forma.md: схема + короткий комментарий + картинки врач и пациент",
+ "why_reused_not_new": "Обе половины уже прошли 6-ступенчатую добычу настоящих фото в этой же деке (s35 — не вкручено никуда; s22 — вкручено только в s22-divider-analiz-dannykh.md, визуально далеко по вечеру от этого кадра). Новая добыча не начата — риск дубля ниже риска новой постановочной/слабой картинки.",
+ "tool": "tools/presentation-build/analitika.ryadom(), zazor_pt=14, высоты приведены к 1131px перед сшивкой",
+ "combined_size": "2690x1131, ar≈2,38",
+ "state": "собрано, вкручено в media нулевого кадра",
+ "generated_by": "сессия кадров о влиянии ИИ на человека (#244), 2026-10-17"
+}

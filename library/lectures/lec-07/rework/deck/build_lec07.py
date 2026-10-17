@@ -799,7 +799,13 @@ def analitika(p, sl, root):
         # последствия» неравна по весу, и деление пополам заставляет правый
         # столбец переносить вдвое чаще — кегль при этом подбирается на двоих.
         dolya = float(sl.meta.get("dolya_levogo_stolbtsa") or 0.5)
-        columns.draw_columns(s, sl.sid, cols, MX, y, FULL_W, ch, dolya)
+        # Пары строк проверяются по умолчанию: на этом типе столбцы и
+        # заведены под пару «как проявляется / последствия», где строка
+        # слева обязана стоять напротив своей строки справа. Кадр, у
+        # которого столбцы НЕ парные, объявляет `stolbtsy_parami: false`.
+        pary = sl.meta.get("stolbtsy_parami")
+        columns.draw_columns(s, sl.sid, cols, MX, y, FULL_W, ch, dolya,
+                             pary=(True if pary is None else bool(pary)))
         y += ch + GAP
 
     avail = bbot - y

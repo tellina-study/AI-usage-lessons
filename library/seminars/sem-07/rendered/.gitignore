@@ -1,0 +1,5 @@
+preview/
+snapshots/
+smoke/png/
+__pycache__/
+*.pdf

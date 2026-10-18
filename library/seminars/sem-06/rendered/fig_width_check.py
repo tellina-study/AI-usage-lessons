@@ -10,6 +10,12 @@
 import contextlib, io, runpy, sys
 from pathlib import Path
 from PIL import Image, ImageDraw
+# Общий тулкит схем живёт в `tools/seminar-build/` — одна копия на курс
+# (прежде он копировался в папку каждого занятия и копии расходились).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[4] / "tools" / "seminar-build"))
+
 import fig_toolkit as FT
 
 GENS = ("make_figures_mcp.py", "make_figures_subagent.py",

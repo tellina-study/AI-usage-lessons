@@ -26,6 +26,11 @@ from PIL import Image, ImageDraw, ImageFont
 from pptx import Presentation
 from pptx.util import Emu
 
+# Кит вёрстки и сборщик живут в `tools/seminar-build/` — одна копия на курс.
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[4] / "tools" / "seminar-build"))
+
 import metrics as M
 
 SC = 120 / 914400          # пикселей на EMU при 120 px/дюйм
@@ -296,8 +301,9 @@ def deck_order(pptx=None):
     нет — иначе предпросмотр показывал бы чужой слайд под нужным именем."""
     name = Path(pptx).stem if pptx else ""
     if name.startswith("sem-06-") and len(name) > 7:
-        import build_sem06 as B
-        return [s["id"] for s in B.deck_from_files(name[7:])]
+        import deck_config as D
+        D.configure("06")
+        return [s["id"] for s in D.deck_from_files(name[7:])]
     import yaml
     root = Path(__file__).parent.parent
     if name.startswith("sem-06-"):          # sem-06-<имя деки>.pptx

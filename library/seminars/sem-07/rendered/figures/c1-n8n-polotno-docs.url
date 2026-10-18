@@ -1,0 +1,6 @@
+https://docs.n8n.io/try-it-out/tutorial-first-workflow/
+Снимок полотна n8n из официальной документации (страница «Tutorial: first workflow»),
+скачан 2026-10-11 через gitbook-прокси docs.n8n.io (файл tutorial-first.png).
+Что на нём: Schedule Trigger → NASA (HTTP-запрос) → узел-развилка If → две ветки
+(true/false) к PostBin. Ни одного вызова модели в цепочке нет.
+Подпись к использованию на слайде: «полотно n8n · docs.n8n.io».

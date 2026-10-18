@@ -1,0 +1,16 @@
+{
+ "title": "External validation of the Epic sepsis predictive model in 2 county emergency departments — JAMIA Open 2024;7(4):ooae133",
+ "license": "CC BY 4.0 (содержание статьи) на странице PMC (оформление сайта — работа федерального ведомства США)",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Лицензия статьи прочитана из Europe PMC REST (поле license = «cc by», isOpenAccess = Y) для DOI 10.1093/jamiaopen/ooae133; страница снята с PMC (NLM/NIH — работа федерального ведомства США), поэтому и содержание, и оформление снимка свободны. Проверено 2026-10-13.",
+ "author": "Ostermayer D. G., Braunheim B., Mehta A. M., Ward J., Andrabi S., Sirajuddin A. M.; публикатор страницы — PubMed Central (NLM, NIH)",
+ "description": "Шапка страницы публикации 2024 года: выходные данные JAMIA Open, заголовок работы о внешней проверке модели предсказания сепсиса в двух приёмных отделениях, список авторов, PMCID и PMID. Ровно та публикация, которую кадр называет второй проверкой.",
+ "page": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11560849/",
+ "shot_date": "2026-10-13",
+ "shot_tool": "tools/presentation-build/shoot_page.py, обрезка шапки сайта и правой колонки",
+ "orig_size": "2800x1960, обрезано до 1620x1190",
+ "attribution": "Снимок страницы: Ostermayer и соавт., JAMIA Open 2024;7(4):ooae133, CC BY 4.0, через PubMed Central; съёмка 13 октября 2026 года",
+ "tier": "3 (страница первоисточника — прямая съёмка)",
+ "assigned_to": "s59 (вторая проверка: другие авторы, другие больницы)",
+ "state": "добыто, НЕ вкручено"
+}

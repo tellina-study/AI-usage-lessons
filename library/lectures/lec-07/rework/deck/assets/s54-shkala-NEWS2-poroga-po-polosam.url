@@ -1,0 +1,19 @@
+{
+ "title": "Fig. 1 «The NEWS2 scoring system» — Riccalton V. и соавт., «Modifications to the National Early Warning Score 2: a Scoping Review», BMC Medicine 23:154 (2025)",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Europe PMC REST, PMC11899892: license = «cc by», isOpenAccess = Y. Прочитан и сам блок <license> полного текста (2026-10-14): «The images or other third party material in this article are included in the article's Creative Commons licence, unless indicated otherwise in a credit line to the material». У рисунка 1 строки-исключения НЕТ — подпись несёт только библиографическую ссылку [22] на Royal College of Physicians, NEWS2 (2017), то есть указание, откуда взята сама шкала, а не оговорку о правах.",
+ "author": "Riccalton V, Threlfall L, Ananthakrishnan A, Cong C, Milne-Ives M, Le Roux P, Plummer C, Meinert E.",
+ "credit": "BMC Medicine 23:154 (2025), рис. 1; doi 10.1186/s12916-025-03943-0",
+ "description": "Таблица шкалы NEWS2: восемь физиологических показателей по строкам, баллы 3-2-1-0-1-2-3 по столбцам, клетки залиты цветом по тяжести — красный на краях, жёлтый и оранжевый между ними, белый в середине. Ровно то, чего просит поле кадра: шкала, веса которой назначили люди, с цветными полосами порогов.",
+ "date": "2025",
+ "page": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11899892/",
+ "file_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/11899892/bin/12916_2025_3943_Fig1_HTML.jpg",
+ "orig_size": "1946x1260 (в первоисточнике); PMC отдаёт по адресу /bin/ показную копию 778x504 — её и скачали",
+ "downloaded_at": "2026-10-14",
+ "tier": "3 (рисунок первоисточника открытого доступа через Europe PMC + PMC)",
+ "assigned_to": "s54 «Без модели: шкала, веса которой назначили люди»",
+ "attribution": "Riccalton и соавт., BMC Medicine, 2025, рис. 1, CC BY 4.0",
+ "caveat": "Это НЕ скан официального наблюдательного бланка Королевской коллегии врачей, которого поле кадра просило дословно («со страницы публикации профессионального общества»), а отрисовка той же шкалы в журнале. Как и у s29 и s73f, рисунок показывает ЯВЛЕНИЕ — назначенные людьми веса и цветные пороги, — а не документ коллегии; подпись обязана называть Riccalton и соавт., иначе повторяется ошибка s44. Сам бланк коллегии по-прежнему под её авторским правом и не добыт. Текст в таблице английский.",
+ "state": "добыто, в кадр НЕ вкручено (вкручивание — отдельный проход после диеты)"
+}

@@ -58,7 +58,7 @@ Before each USER GATE in lecture-production pipeline (см. `tools/lecture-produ
 
 - Read 5-7 random speaker notes (random sample, not first/last).
 - Verify per-note:
-  - 150-300 words (count roughly).
+  - 500–800 слов для лекции (count roughly; семинар — 250–450).
   - Connected text (paragraphs, not bullet list of layout descriptions).
   - **No «Лектору» section** (cues for lecturer go to speech.md, not notes).
   - **No layout descriptions** («левый верхний угол: иконка», «справа: chart» — это для дизайнера, не для студента).
@@ -130,7 +130,7 @@ Return a report to orchestrator:
 ...
 
 ## P1 issues (should-fix before GATE)
-1. [sNN] speaker notes 90 words (target 150-300)
+1. [sNN] speaker notes 90 words (target 500–800 для лекции)
 ...
 
 ## Recommendation

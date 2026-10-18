@@ -1,0 +1,13 @@
+{
+ "title": "File:Histopathology of tumor identification by humans and AI.png",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0",
+ "author": "Cruz-Roa A, Gilmore H, Basavanhally A, Feldman M, Ganesan S, Shih NNC",
+ "credit": "Cruz-Roa A, Gilmore H, Basavanhally A, Feldman M, Ganesan S, Shih NNC (2017). \"Accurate and reproducible invasive breast cancer detection in whole-slide images: A Deep Learning approach for quantifying tumor extent.\". Sci Rep 7: 46450. DOI:10.1038/srep46450. PMID 28418027. PMC: 5394452.\"This work is licensed under a Creative Commons Attribution 4.0 International License.\"",
+ "description": "Histopathology with identification of breast cancer by humans and AI in whole-slide images. H&amp;E stains. Original caption:(A–C) Example whole-slide images from test TCGA data cohort with ground truth annotations from pathologists, (D–F) the corresponding region predictions produced by the ConvNet classifier and (G–I) region predictions for whole-slide images from the test NC data cohort of norm",
+ "page": "https://commons.wikimedia.org/wiki/File:Histopathology_of_tumor_identification_by_humans_and_AI.png",
+ "file_url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Histopathology_of_tumor_identification_by_humans_and_AI.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "downloaded": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Histopathology_of_tumor_identification_by_humans_and_AI.png/1920px-Histopathology_of_tumor_identification_by_humans_and_AI.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+ "orig_size": "2100x1604",
+ "tier": "2 (Wikimedia Commons)"
+}

@@ -1,0 +1,146 @@
+# library/lectures/lec-07/rework/deck/deck-part3.yaml  —  часть 3 из 3
+#
+# Служебный манифест деки Лекции 7 «Решение о человеке: кто смотрит, кто подписывает,
+# кто платит». Issue #229 · ветка issue-lec-07-rework.
+#
+# Продолжение `deck.yaml`. Устройство, оговорки и правило чтения полей — в части 1;
+# здесь только записи кадров плюс сводка, расхождения и порядок реза.
+
+slides:
+
+  # ─── 5. Итоги · 5 кадров · 4.65 мин ───
+  - id: s96a
+    local_id: "s8-00"                      # номер SLIDE-PLAN.md
+    file: slides/s96a-divider-sborka.md
+    type: divider
+    title: "5. Итоги"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md § Раздел 11 (вводка), §11.1"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s97
+    local_id: "s8-01"                      # номер SLIDE-PLAN.md
+    file: slides/s97-devyat-form-slovarya-tselikom.md
+    type: summary
+    title: "Девять форм целиком: что сделалось с работой"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md §11.1, §11.2, §11.3"
+    timing_min: 1.05
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s101
+    local_id: "s8-03"                      # номер SLIDE-PLAN.md
+    file: slides/s101-kletki-uznavaemye-protsedury-drugie.md
+    type: summary
+    title: "Итог карты: четыре ячейки заняты, восемь пусты"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md §11.6"
+    timing_min: 1.15
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s102
+    local_id: "s8-04"                      # номер SLIDE-PLAN.md
+    file: slides/s102-chto-menyaetsya-v-cheloveke-i-v-podpisi.md
+    type: summary
+    title: "Чем заплатили: внимание, навык, подпись, арбитраж"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md §11.7"
+    timing_min: 0.8
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s103
+    local_id: "s8-05"                      # номер SLIDE-PLAN.md
+    file: slides/s103-chetyre-otveta-na-odin-vopros.md
+    type: summary
+    title: "Четыре разных ответа на один вопрос"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md §11.8"
+    timing_min: 1.05
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+
+  # ─── 6. Закрытие · 3 кадров · 2.95 мин ───
+  - id: s104
+    local_id: "s9-01"                      # номер SLIDE-PLAN.md
+    file: slides/s104-chto-bylo-obeshchano-v-nachale.md
+    type: summary
+    title: "Почему подписывает человек — и чем это подтверждено"
+    plan_section: "Раздел 9. Закрытие"
+    chapter_ref: "chapter-part5b.md §12.1"
+    timing_min: 1.1
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s105
+    local_id: "s9-02"                      # номер SLIDE-PLAN.md
+    file: slides/s105-ustroystvo-otozvali-resheniya-ostalis.md
+    type: comparison
+    title: "Изделие отзовут. Решения этого года останутся."
+    plan_section: "Раздел 9. Закрытие"
+    chapter_ref: "chapter-part5b.md §12.2"
+    timing_min: 1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: acquired }
+    media_asset: "rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya-verkh.png"
+  - id: s106
+    local_id: "s9-03"                      # номер SLIDE-PLAN.md
+    file: slides/s106-voprosy.md
+    type: question
+    title: "Три проверки для любой отрасли — и вопрос"
+    plan_section: "Раздел 9. Закрытие"
+    chapter_ref: "chapter-part5c.md § Вопросы и ответы для самопроверки (+ chapter-part5b.md §12.4)"
+    timing_min: 0.85
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+
+totals:
+  slides: 58
+  timing_min: 53.80               # сложено по файлам кадров
+  plan_budget_min: 80.00         # заявлено CUT-ORDER.md §1.1 для 106 кадров плана
+  plan_frames_only_min: 31.65     # только номера плана, без вставленных кадров
+  plus_qa_min: 63.80
+  slot_min: 90
+  overrun_min: -26.20              # против слота 90 с десятью минутами вопросов
+  strict_in_min: 34.15
+  strict_in_share: "63.5%"      # порог курса 30%; счёт по минутам, partial → out
+  vfy_slides: 29                 # кадров с числом под пересверку в день лекции
+  by_status:
+    "собран": 58
+  media:                         # разбор и адреса — deck/images.md
+    acquired: 8                   # лежит в deck/assets/, лицензия проверена поимённо
+    real_image_needed: 16          # просит настоящий снимок по своему media_needed, не добыт
+    builder_drawn: 27              # схема, плашки, матрица, таблица — снимок не нужен
+    no_decision: 7                # media_needed пусто: вопрос не задавали
+    wired: 13                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
+    note: "поле media заполнено у 13 кадров — s01, s05, s11, s12, s22, s22a, s28, s36, s73b, s73c, s73d, s105, s106; счёт сделан по диску. Расхождение, которое из этого видно: словарь ACQUIRED этого генератора знает 8 пути, то есть media_status = acquired выставлен не всем кадрам, у которых снимок реально встаёт в сборку. ACQUIRED — дубль deck/images.md §2, и сверять его с §2 и с deck/assets/ — отдельная работа, не правка chapter_ref"
+
+# РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:
+# манифест описывает то, что есть на диске, а решение по каждому — владельца.
+# D1 (issue #229) закрыт ПРАВИЛЬНОЙ стороной: предыдущий круг перенёс s18/s19
+# (глазное дно) физически в раздел 2, доверившись их собственному (ошибочному) полю
+# section вместо проверки его по fix-brief.md §1 — решения П6/П7 decisions-owner.md
+# к этому случаю не относятся, они про границу «анализ данных» ↔ «постановка
+# диагноза». fix-brief.md §1/§14 закрепляет глазное дно за разделом 1 (s1-08);
+# глава (chapter-part1b.md §1.6) независимо подтверждает то же место. Файлы
+# s18…s29 возвращены на дооктябрьские номера — физический порядок снова совпадает
+# и с полем section, и со SLIDE-PLAN.md, и с §1.6/§2.6 главы. На диске этого
+# расхождения больше нет.
+divergences:
+  - id: D2
+    what: "сумма timing_min по файлам — 51.65 против 80,00, заявленных CUT-ORDER.md §1.1 для 106 кадров"
+    evidence: "по поимённым минутам планов блоков: лекарство 10,50 против 13,20 по файлам (+2,70); сборка 4,90 против 5,80 (+0,90); удерживают 8,60 против 8,80 (+0,20); отбор 8,20 против 8,30; ядро 12,75 против 12,85; измерили 9,75 против 9,60 (−0,15)"
+    effect: "перебор слота -26.20 минуты (53.80 + 10 против 90), а не 1,25, как считает CUT-ORDER.md §1.1"
+    effect_2: "лестница А (шаги А2 + А3 = −1,50 по файлам) цель не берёт: остаётся 52.30 + 10 = 62.30"
+    fix: "решение владельца: либо вернуть поимённые минуты планов в файлы кадров, либо пересчитать CUT-ORDER.md от 53.80"
+  - id: D3
+    what: "s96a и s103a (дивайдеры «Сборки» и «Закрытия», 0,90 минуты вдвоём) в арифметике CUT-ORDER.md §1.1 не числятся"
+    evidence: "§1.1 считает +2 структурных кадра перегруппировки (0,50 + 0,75 = 1,25) — это s60b и s60a; про s96a и s103a там ни строки"
+    effect: "объявленный состав 108 кадров против 58 на диске"
+    fix: "дописать два кадра в состав CUT-ORDER.md §1.1"
+  - id: D4
+    what: "у главы есть разделы 7 «Назначение и лечение» (§7.1–7.19) и 8 «Оперативная помощь» (§8.1–8.16), а в деке на них ноль кадров"
+    evidence: "решение П9 называет это невыполненным обещанием кадра s07 (сам кадр снят при сокращении входа, в деке его нет); шаг реза А1 CUT-ORDER.md §2 предъявляет их прочерком"
+    effect: "chapter_ref ни одного кадра не ведёт в chapter-part4.md, -part4a, -part4b, -part4c, -part4da, -part4e, -part4f — семь файлов главы декой не покрыты"
+    fix: "известное решение, не находка: прочерк по варианту (б) REGROUP.md §4 (поправка П4)"
+  - id: D5
+    what: "0 групп кадров несут дословно одинаковый title; счёт сделан по диску, не вписан словами"
+    evidence: "дублей title на диске нет"
+    effect: "дивайдер и карта слайдов называют разные кадры одним именем без номера — расходится с правилом §5.16 «имена дословно совпадают с заголовками кадров», как только половины понадобится различить поимённо. Прежняя редакция этой записи называла пару s18/s19: переделка деки её развела, а восемь вернувшихся карт стадии завели дубли крупнее"
+    fix: "не входит в issue #229; решение владельца — развести заголовки карт по имени стадии («Карта стадии: наблюдение») или оставить как есть"
+  - id: D6
+    what: "у 0 кадров в assertion стоит не утверждение кадра, а служебная пометка («[шаг ② провисает: …]» или «под рез (П11)»); счёт сделан по диску"
+    evidence: "служебных пометок в assertion на диске не осталось"
+    effect: "поле assertion служебное и на экран не идёт, но для критика и для речи это не утверждение кадра"
+    fix: "при сборке содержания вписать утверждение, пометку перенести в отдельное поле"

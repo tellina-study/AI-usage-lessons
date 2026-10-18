@@ -6,6 +6,46 @@
 устройство конвейера: архитектура, стек, типы слайдов, визуальный цикл, схема `deck.yaml`,
 раскладка каталогов, агенты и антипаттерны.
 
+## 5.6 Visual Loop iteration cap (ENFORCED)
+
+| Cap | Значение | Действие |
+|---|---|---|
+| **Min** | 3 итерации на слайд (existing Anthropic principle) | Без 3-iter — slide не может быть declared done. |
+| **Max** | **7 итераций на слайд (NEW)** | Hard cap. На 7-й итерации если schema всё ещё не проходит §5.5 gate → **escalate**. |
+
+### Escalation (на iter 7 без pass)
+
+Designer **обязан** остановиться и emit escalation report:
+
+```
+## ESCALATION — sNN, iter 7
+- Subtype: schema_cycle
+- Что пробовали: 6 vertical steps → linear flow → 2 USER icons → ...
+- Что не сходится: «cycle direction» не считывается студентом за 5 сек
+- Гипотеза: schema concept may need redesign — возможно cycle не подходит, нужен dialogue-form
+- Recommend: orchestrator + book-editor пересмотреть assertion слайда
+```
+
+Escalation = **stop** для designer, **trigger** для orchestrator: пересмотреть концепт слайда (assertion / type / source-of-truth chapter §) **до** продолжения visual loop. Не перерасходовать iteration capacity на неправильный концепт.
+
+### Per-iteration log контракт
+
+Каждая итерация логируется в `rendered/iteration-log.md`:
+
+```
+## sNN [iter K]
+- Inspected: snapshots/iter{K-1}/sNN.png — что увидел (1-3 фразы)
+- Changed: что поменял (per element: shape coords / text / color / icon)
+- Re-snapshot: snapshots/iter{K}/sNN.png
+- Schema Readability Checklist: PASS / FAIL (что fail)
+- 5-Second Test: PASS / FAIL
+- Verdict: continue / accept / escalate
+```
+
+Без per-iter лога — итерация не считается проведённой.
+
+---
+
 ## 5.7 Image acquisition — 6-tier fallback (ENFORCED — [[no-mock-fallbacks]])
 
 **Источник:** рефлексия Лекции 8 (#122), owner feedback «что за херня, где картинки? не верю что не мог найти, ты просто забил! ... все переделать». Designer Phase 6+7 столкнулся с paywall/JS на BBC/Futurism/NYT/Reuters → blanket-fallback 16 stylized Ocean-palette PNG mocks с verbatim headlines. Self-report «87.2% media coverage» прошёл orchestrator visual sweep (mocks выглядели похоже на cards).
@@ -232,10 +272,48 @@ python3 deep_latin_scan.py /tmp/pptx-visible.txt
 
 Используй **6-tier acquisition** (§5.7). При truly unavailable real image → custom data-viz hero (NOT plain text card), e.g. cost-collapse chart full-bleed для finance lecture.
 
+### Подпись об источнике — только у предъявленного документа (решение О18, #229, 2026-10-15)
+
+**Было до 2026-10-15:** подпись об источнике требовалась у ЛЮБОГО hero, и сторож
+`deckkit/media.py` кричал на hero без `media_caption`.
+
+**Отменено, и вот чем.** Решение владельца от 2026-10-08 (`CLAUDE.md` § «Форма подачи
+слайда»): «**Источники фотографий на слайде не подписывать**». Оно новее, прямое и его; §5.9 —
+наш производственный канон. На hero-кадре два правила были противоположны, и **сторож исполнял
+отменённое** — анти-паттерн `CLAUDE.md` §8.3 («Отменил правило — поправь сторож в том же
+круге»).
+
+**Разобрано по собственной цели проверки, записанной в докстринге сторожа:** «неподписанный
+снимок записи в базе регулятора неотличим от карточки, нарисованной нами самими». Цель — про
+**предъявленный документ**, а не про фотографию-иллюстрацию. Отсюда:
+
+| что на кадре | подпись источника на кадре | чем держится провенанс |
+|---|---|---|
+| **фотография-иллюстрация** (hero она или боковая) | **нет** | реестр добычи, сверка прав в `assets/*.url`, атрибуция в заметках |
+| **предъявленный документ** (снимок записи регулятора, страница с датой) | **обязательна** | сама подпись: зал по ней проверяет запись |
+
+**Различение объявляется полем кадра, а не выводится сторожем:** `media_document: true`.
+Выводить его из `media_hero` значило бы снова решать за автора, что у него на картинке — и
+именно это умолчание требовало подпись у обложки с фотографией. Поле включает и отрисовку
+подписи, если кадр не hero: документ зал обязан мочь проверить независимо от размера картинки.
+
+**Где подпись появляется.** Не под картинкой, а последним сегментом строки источника **в
+подвале** — место источника в деке одно; отдельная строка под иллюстрацией стоила бы 0,27"
+высоты, которых на кадре с 40-процентной картинкой нет (замерено).
+
+**Проверки, которыми это закрыто** (`python3 -m deckkit.selftest`): сломанный вход — документ
+без подписи, сторож обязан сработать; чистый вход — иллюстрация без подписи, сторож обязан
+молчать. Пара нужна целиком: без второй половины доказано было бы только то, что проверка умеет
+кричать, но не то, что умеет молчать там, где теперь должна.
+
 ### Acceptance criteria
 
-- s01: hero image present, ≥40% площади, links to keystone OR domain identity, attribution label visible.
-- s39: hero image present, ≥40% площади, links to emotional payoff OR Lec-N+1 bridge, attribution label visible.
+- s01: hero image present, ≥40% площади, links to keystone OR domain identity. **Подписи
+  источника фотографии на кадре нет** (О18); провенанс — в заметках и `assets/*.url`.
+- s39: hero image present, ≥40% площади, links to emotional payoff OR Lec-N+1 bridge. **То же
+  про подпись.**
+- Кадр с предъявленным документом: `media_document: true` **и** `media_caption` с адресом
+  записи — иначе сборка называет это `[кадр]`.
 - Captions на русском (см. §5.8 Russification).
 - Ocean palette consistency (см. §5.5 + дизайн-плейбук).
 
@@ -251,13 +329,13 @@ python3 deep_latin_scan.py /tmp/pptx-visible.txt
 
 Owner дал 20 правок на v4-дек Лекции 3; сквозная тема — «тезисно на слайде + бедно в заметках + мало реальных примеров + перескок в глубину без базы». Четыре правила, обязательные для всех деков курса (memory: [[slides-deep-notes-base-cases]] + [[slides-meme-forward-minimal-text]] п.1a):
 
-1. **Глубокие speaker notes — 250–450 слов связного нарратива** (было 150–300). Не тезисно, не layout-описание. Выводятся book-first из главы: определение → механизм → пример → провал/граница. Слайд несёт assertion + минимум evidence; ЗАМЕТКА несёт полное объяснение. **Каждый** содержательный слайд обязан иметь заметки (0 пустых — owner поймал 4 типовые задачи без notes).
+1. **Глубокие speaker notes — для лекции 500–800 слов связного нарратива** (решение владельца №10, 2026-10; прежние 250–450 действуют для семинаров — `../seminar-production/README.md` §5; ещё более раннее 150–300 отменено). Не тезисно, не layout-описание. Выводятся book-first из главы: определение → механизм → пример → провал/граница. Слайд несёт assertion + минимум evidence; ЗАМЕТКА несёт полное объяснение. **Каждый** содержательный слайд обязан иметь заметки (0 пустых — owner поймал 4 типовые задачи без notes).
 2. **База ДО глубины.** Не открывать слайд/заметку продвинутым числом/приёмом без установленной базы. Перед «recursive-512 69%» — что такое чанкирование; перед «0.95^n≈36%» — что такое p^n; перед MCP — транспорт/REST. Мини-база перед каждым advanced-тезисом (сверх §-классической базы [[lecture-section-classic-base-first]]).
 3. **Реальные кейсы в КАЖДОЙ секции.** Каждая крупная тема (RAG, агенты, обучение, промпт-задачи) несёт слайды-кейсы: реальная задача → архитектура → что трудно → типовой провал → как чинит → baseline. Привязка к реальным реализациям; выдуманные детали — «иллюстративный».
 4. **Formal-vs-meme.** Мем ТОЛЬКО на hook / judgment / контраст-слайдах. Слайды-процедуры/техники/сравнения (how-to, decision-table, how-each-works — напр. JSON-спека, eval-методы, agent-when-логика) — **формальные, без мема**. Тест: «мем несёт тезис-суждение?» да → ок; «слайд объясняет КАК делать?» → формальный.
 
 ### Pre-GATE проверки (добавить к §9.5)
-- Sample 5–7 заметок → длина 250–450 слов связного текста, не буллеты. `grep` слайдов с пустыми notes = 0.
+- Sample 5–7 заметок → длина 500–800 слов связного текста для лекции (250–450 для семинара), не буллеты. `grep` слайдов с пустыми notes = 0.
 - Каждая крупная секция имеет ≥1 кейс-слайд с реальной привязкой + baseline.
 - Мемы: нет мема на формальном how-to/сравнительном слайде.
 - Sample advanced-тезисов → у каждого база предъявлена рядом/до.
@@ -288,43 +366,19 @@ Owner дал 20 правок на v4-дек Лекции 3; сквозная т�
 `deck_kit.py`, `metrics.py`, `build.py`, аудит `audit_grammar.py`); своё у занятия — только
 `rendered/deck-config.yaml`. См. `tools/seminar-build/README.md`.
 
-## 5.6 Visual Loop iteration cap (ENFORCED)
-
-| Cap | Значение | Действие |
-|---|---|---|
-| **Min** | 3 итерации на слайд (existing Anthropic principle) | Без 3-iter — slide не может быть declared done. |
-| **Max** | **7 итераций на слайд (NEW)** | Hard cap. На 7-й итерации если schema всё ещё не проходит §5.5 gate → **escalate**. |
-
-### Escalation (на iter 7 без pass)
-
-Designer **обязан** остановиться и emit escalation report:
-
-```
-## ESCALATION — sNN, iter 7
-- Subtype: schema_cycle
-- Что пробовали: 6 vertical steps → linear flow → 2 USER icons → ...
-- Что не сходится: «cycle direction» не считывается студентом за 5 сек
-- Гипотеза: schema concept may need redesign — возможно cycle не подходит, нужен dialogue-form
-- Recommend: orchestrator + book-editor пересмотреть assertion слайда
-```
-
-Escalation = **stop** для designer, **trigger** для orchestrator: пересмотреть концепт слайда (assertion / type / source-of-truth chapter §) **до** продолжения visual loop. Не перерасходовать iteration capacity на неправильный концепт.
-
-### Per-iteration log контракт
-
-Каждая итерация логируется в `rendered/iteration-log.md`:
-
-```
-## sNN [iter K]
-- Inspected: snapshots/iter{K-1}/sNN.png — что увидел (1-3 фразы)
-- Changed: что поменял (per element: shape coords / text / color / icon)
-- Re-snapshot: snapshots/iter{K}/sNN.png
-- Schema Readability Checklist: PASS / FAIL (что fail)
-- 5-Second Test: PASS / FAIL
-- Verdict: continue / accept / escalate
-```
-
-Без per-iter лога — итерация не считается проведённой.
-
 ---
 
+
+## 5.12–5.22 Форма подачи кадра — вынесены в отдельный файл
+
+Файл дошёл до 629 строк и разрезан 2026-10-15 по лимиту 600
+(`CLAUDE.md` § Document Size Limit). Правила формы подачи живут в
+[`trebovaniya-k-soderzhaniyu-forma.md`](trebovaniya-k-soderzhaniyu-forma.md):
+
+- **§5.12** форма подачи кадра · **§5.13** раскладка подробного разбора ·
+  **§5.14** числа пишутся так, как произносятся · **§5.15** список упоминаний несёт наблюдения ·
+  **§5.16** дивайдер называет разборы по порядку · **§5.17** карта стадии без оговорки;
+- **§5.18** экспозиция примера — в названии и первом блоке · **§5.19** человеко-центричные
+  метрики, сравнимые между примерами · **§5.20** термин без объяснения не ставится ·
+  **§5.21** просторечие, калька и слово, которое ничего не называет · **§5.22** пример привязан
+  к шагу стадии, у кадра есть мост.

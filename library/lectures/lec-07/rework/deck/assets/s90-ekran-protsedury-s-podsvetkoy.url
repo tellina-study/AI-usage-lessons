@@ -1,0 +1,16 @@
+{
+ "title": "Real-time cloud-based CADDIE system — рис. 3 в: Kader R. и соавт., npj Digital Medicine (2025)",
+ "license": "CC BY 4.0",
+ "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "license_basis": "Europe PMC REST: license = «cc by», isOpenAccess = Y для PMC12852673; файл взят с PMC. Проверено 2026-10-13.",
+ "author": "Kader R., Hassan C., Lanas Á., Romańczyk M. и соавт.",
+ "description": "Панель (a) — эндоскопическая стойка с монитором и схема, куда уходит видео; панель (b) — настоящий экран процедуры с панелью системы слева и жёлтой рамкой на образовании.",
+ "page": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12852673/",
+ "file_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/12852673/bin/41746_2025_2270_Fig3_HTML.jpg",
+ "orig_size": "675x640",
+ "attribution": "Kader и соавт., npj Digital Medicine, 2025, рис. 3, CC BY 4.0",
+ "tier": "3 (рисунок первоисточника открытого доступа)",
+ "assigned_to": "s90 — ЧАСТИЧНО",
+ "caveat": "кадр просил ДВА кадра рядом: «с подсвеченным участком и без». Здесь есть только «с подсветкой». Пары того же участка без подсветки под свободной лицензией не нашлось (искал в открытом доступе по запросу «same polyp with and without computer-aided detection overlay» — работы показывают либо только находки, либо несравнимые кадры). Ставить это одно как «до и после» нельзя.",
+ "state": "добыто; в кадр пошла вырезка панели (b) — s90-ekran-protsedury-panel-b.jpg"
+}

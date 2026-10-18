@@ -59,7 +59,7 @@ You are an orchestrator. **Do NOT render slides yourself.** Delegate rendering t
 - Visual loop: **минимум 3 итерации на слайд (existing), максимум 7 (NEW)**. На iter 7 без §5.5 gate-pass — escalate с гипотезой «schema concept may need redesign» (см. `tools/presentation-build/README.md` §5.6).
 - Для любого schema slide (matrix / quadrant / layered / cycle / pipeline / timeline / architecture): **Schema Readability Checklist pass обязателен** перед declaring slide done (§5.5). Per-iter log включает checklist status.
 - **No-extra-content rule**: designer добавляет ТОЛЬКО что в task brief. Никаких subtitle / «Вы здесь» / тайминг в видимом / «Лектору» в notes / прочих «полезных» добавлений по своей инициативе.
-- **Speaker notes contract**: 150-300 слов читаемого текста для студента, derived from chapter §X + speech [sNN]. NO layout descriptions.
+- **Speaker notes contract**: **500–800 слов** связного текста для студента (решение владельца №10; семинарские 250–450 не переносить), derived from chapter §X + speech [sNN]. NO layout descriptions. Жанр и цена устаревшего числа — `tools/lecture-production/stroenie-i-povestvovanie.md` §10.
 - Output: `library/lectures/lec-NN/rendered/lec-NN-pilot.pptx` + `snapshots/sNN.png` + `iteration-log.md` (per-iter log с checklist status) + assets.
 
 Designer должен прочитать `.claude/agents/presentation-designer.md` (его playbook) — там палитра, типы слайдов, schema subtypes, anti-patterns.
@@ -100,7 +100,7 @@ Orchestrator:
 
 После critic-approve, **ДО presenting USER GATE B пользователю**, orchestrator запускает `/pre-user-gate mode=slides`:
 - Visual sweep всех PNG snapshots (open + 5-second test per slide).
-- Read 5-7 random speaker notes (verify 150-300 words readable text, not layout description).
+- Read 5-7 random speaker notes (verify 500–800 слов связного текста, not layout description).
 - Designer-extras grep: «Лектору» / «Вы здесь» / «мин» в visible content — should be 0.
 - Schema Readability Checklist verification (per schema slide).
 - Cross-slide redundancy check.

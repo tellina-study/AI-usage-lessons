@@ -1,0 +1,37 @@
+рендер готов: sec3-4-01.pdf, снимки в snaps3-4-01/
+кусок 1: 15 кадров готово
+рендер готов: sec3-4-02.pdf, снимки в snaps3-4-02/
+кусок 2: 13 кадров готово
+склеено: /home/harness/harness-control-data/accounts/256/claude-code-klabulan-8da64c79/harness-projects/256/.worktrees/folder-288/diyeta-r7-r10-vtoroy-acf4258a/library/lectures/lec-07/rework/deck/sec-3-4.pdf
+
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  69  s35-divider-postanovka-diagnoza.md
+  73  s35a-postanovka-diagnoza-chto-eto-za-stadiya.md
+  65  s36-kak-ustroena-postanovka-diagnoza.md
+  71  s37-vtoroe-mnenie-nezavisimost-i-arbitrazh.md
+  73  s38-chetyre-stupeni-chto-delaet-chelovek.md
+ 135  s41-zamer-vzglyada-lozhnaya-podskazka.md
+  74  s43-tot-zhe-zamer-obratnyy-znak.md
+ 137  s44-odna-podskazka-dva-znaka-patologiya.md
+ 138  s45-izmerennaya-troyka-para-i-chelovek.md
+ 138  s47-kontrolnaya-liniya-para-silnee.md
+ 130  s48-kontrolnaya-liniya-chto-pereekhalo.md
+  74  s49-doverie-i-stazh.md
+  75  s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md
+ 140  s49b-obeshchano-tsena-i-dva-rezhima.md
+ 138  s49c-para-nizhe-obeikh-storon.md
+ 113  s49d-otvet-sobran-chetyre-zamera.md
+  74  s50-vyvod-diagnoz.md
+  63  s52-divider-nablyudenie.md
+  72  s52a-dannye-sposoby-i-reshenie-nablyudeniya.md
+  74  s53-palata-obkhod-list-nablyudeniya.md
+  74  s54-shkala-rannego-preduprezhdeniya.md
+  74  s55-tsena-obeikh-oshibok-smena.md
+ 122  s56-schet-zamenyaemykh-rezhimov.md
+ 122  s57-model-rannego-preduprezhdeniya.md
+ 124  s58-sto-gospitalizatsiy-vosemnadtsat-trevog.md
+  82  s59-vtoraya-proverka-drugie-bolnitsy.md
+ 127  s60-para-dalo-potrebovalo-trevogi.md
+  72  s60a-vyvod-nablyudenie.md
+
+страниц 28 · медиана 74.5 · среднее 97 · максимум 140 · тяжелее 140 — 0 · тяжелее 90 — 12

@@ -38,6 +38,12 @@ n07 «источники данных», и `base_and_edge` сдвинулся �
                                       стоит»; имя файла шло за номером оба
                                       раза, прежние PNG удалены.)
 """
+# Общий тулкит схем живёт в `tools/seminar-build/` — одна копия на курс
+# (прежде он копировался в папку каждого занятия и копии расходились).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[4] / "tools" / "seminar-build"))
+
 from fig_toolkit import *
 
 MW = 1600

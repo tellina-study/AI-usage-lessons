@@ -93,8 +93,8 @@ totals:
   plus_qa_min: 72.00
   slot_min: 90
   overrun_min: -18.00              # против слота 90 с десятью минутами вопросов
-  strict_in_min: 41.95
-  strict_in_share: "67.7%"      # порог курса 30%; счёт по минутам, partial → out
+  strict_in_min: 40.95
+  strict_in_share: "66.0%"      # порог курса 30%; счёт по минутам, partial → out
   vfy_slides: 37                 # кадров с числом под пересверку в день лекции
   by_status:
     "собран": 68

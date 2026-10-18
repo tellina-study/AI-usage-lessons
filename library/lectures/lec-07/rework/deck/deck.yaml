@@ -267,7 +267,7 @@ slides:
     title: "Скрининговые программы по странам и участие ИИ"
     chapter_ref: "chapter-part1b.md § Скрининговые программы по странам и участие ИИ"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+    marks: { in_bucket: false   # методическая критика P1-D (#278): кадр смешанный, не полностью in-bucket., vfy: true, status: "собран", media_status: builder_drawn }
   - id: s15
     local_id: "s1-04"                      # номер SLIDE-PLAN.md
     file: slides/s15-triazh-po-predskazannomu-risku.md

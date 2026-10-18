@@ -14,6 +14,31 @@ _FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
 _HEAD = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 
 
+def _split_outside_ticks(s, sep):
+    """Разбить строку по `sep`, но не внутри `моноширинного` спана.
+
+    Найдено на Семинаре 8, слайд n02 (issue #274): одна карточка-вариант
+    сама по себе может называть исход узлом-и-статусом внутри ОДНОЙ пары
+    грависов — `` `Write row · not parsed` `` — где «·» не разделяет две
+    карточки, а стоит внутри имени одной. Наивный `ln.split("·")` режет
+    такую строку посередине спана и выпускает половинки без закрывающей
+    гравис — вёрстка получает мусор, не две карточки. Здесь «·» считается
+    разделителем ТОЛЬКО когда он встретился вне чётного числа уже открытых
+    грависов в строке."""
+    parts, buf, in_tick = [], "", False
+    for ch in s:
+        if ch == "`":
+            in_tick = not in_tick
+            buf += ch
+        elif ch == sep and not in_tick:
+            parts.append(buf)
+            buf = ""
+        else:
+            buf += ch
+    parts.append(buf)
+    return parts
+
+
 def _outline(md):
     r"""Заголовки документа — ТОЛЬКО настоящие, то есть вне блоков в ограждении.
 
@@ -143,9 +168,9 @@ def blocks(visual):
                 out.append(("quote", q))
             continue
         if "·" in ln and ln.count("`") >= 4:
-            flush()
-            items = [_clean(x) for x in ln.split("·") if x.strip()]
+            items = [_clean(x) for x in _split_outside_ticks(ln, "·") if x.strip()]
             if len(items) >= 3:
+                flush()
                 out.append(("cards", items)); i += 1; continue
         if re.match(r"^\s*(?:[-*]|\d+\.)\s+", ln):
             # `\d+\.` — нумерованный список markdown, не только `-`/`*`.

@@ -10,9 +10,9 @@
         -180,
         0
       ],
-      "webhookId": "sem-07",
+      "webhookId": "s8-case4",
       "parameters": {
-        "path": "sem-07",
+        "path": "s8-case4",
         "formTitle": "Заявка в учебный центр",
         "formDescription": "Так выглядит вход процесса, который мы собираем",
         "formFields": {
@@ -75,6 +75,12 @@
       "parameters": {
         "model": "openai/gpt-4o-mini",
         "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
       }
     },
     {
@@ -139,8 +145,9 @@
         "operation": "insert",
         "dataTableId": {
           "__rl": true,
-          "value": "",
-          "mode": "list"
+          "value": "xlDAQCm75jLAKNom",
+          "mode": "list",
+          "cachedResultName": "requests"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -193,8 +200,9 @@
         "operation": "insert",
         "dataTableId": {
           "__rl": true,
-          "value": "",
-          "mode": "list"
+          "value": "xlDAQCm75jLAKNom",
+          "mode": "list",
+          "cachedResultName": "requests"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -261,16 +269,22 @@
     },
     {
       "id": "fetch_card_image",
-      "name": "Read card image (binary)",
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
+      "name": "Fetch card image (HTTP)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         1020,
         -260
       ],
       "parameters": {
-        "operation": "read",
-        "fileSelector": "/tmp/s8-case4-card.png"
+        "url": "https://picsum.photos/800/450",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
       }
     },
     {
@@ -284,7 +298,7 @@
       ],
       "parameters": {
         "operation": "sendPhoto",
-        "chatId": "={{ $json.coordinator_chat_id }}",
+        "chatId": "266536553",
         "binaryData": true,
         "additionalFields": {
           "caption": "={{ $json.notification_text }}"
@@ -292,8 +306,8 @@
       },
       "credentials": {
         "telegramApi": {
-          "id": "",
-          "name": "Telegram account (С8, не создан на стенде)"
+          "id": "kfXE6PWKNzA56vc6",
+          "name": "Telegram account (С8)"
         }
       }
     }
@@ -381,14 +395,14 @@
       "main": [
         [
           {
-            "node": "Read card image (binary)",
+            "node": "Fetch card image (HTTP)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Read card image (binary)": {
+    "Fetch card image (HTTP)": {
       "main": [
         [
           {

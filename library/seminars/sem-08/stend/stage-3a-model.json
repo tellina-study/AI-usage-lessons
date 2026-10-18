@@ -61,14 +61,14 @@
       },
       "credentials": {
         "openRouterApi": {
-          "id": "",
-          "name": "OpenRouter account (как в С7)"
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
         }
       }
     },
     {
       "id": "refund_decide_llm",
-      "name": "Decide refund (Ollama)",
+      "name": "Decide refund (model)",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.5,
       "position": [
@@ -82,22 +82,22 @@
       }
     },
     {
-      "id": "ollama_model",
-      "name": "Model (Ollama, Qwen2.5)",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "id": "decide_model",
+      "name": "Model (decision, Qwen2.5)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
         300,
         220
       ],
       "parameters": {
-        "model": "qwen2.5:7b-instruct",
+        "model": "qwen/qwen-2.5-7b-instruct",
         "options": {}
       },
       "credentials": {
-        "ollamaApi": {
-          "id": "",
-          "name": "Ollama account (локально, не поднят)"
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
         }
       }
     },
@@ -137,14 +137,14 @@
       "main": [
         [
           {
-            "node": "Decide refund (Ollama)",
+            "node": "Decide refund (model)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Decide refund (Ollama)": {
+    "Decide refund (model)": {
       "main": [
         [
           {
@@ -166,11 +166,11 @@
         ]
       ]
     },
-    "Model (Ollama, Qwen2.5)": {
+    "Model (decision, Qwen2.5)": {
       "ai_languageModel": [
         [
           {
-            "node": "Decide refund (Ollama)",
+            "node": "Decide refund (model)",
             "type": "ai_languageModel",
             "index": 0
           }

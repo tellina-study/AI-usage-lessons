@@ -10,9 +10,9 @@
         -180,
         0
       ],
-      "webhookId": "sem-07",
+      "webhookId": "s8-case1-before",
       "parameters": {
-        "path": "sem-07",
+        "path": "s8-case1-before",
         "formTitle": "Заявка в учебный центр",
         "formDescription": "Так выглядит вход процесса, который мы собираем",
         "formFields": {
@@ -75,6 +75,12 @@
       "parameters": {
         "model": "openai/gpt-4o-mini",
         "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
       }
     },
     {
@@ -139,8 +145,9 @@
         "operation": "insert",
         "dataTableId": {
           "__rl": true,
-          "value": "",
-          "mode": "list"
+          "value": "xlDAQCm75jLAKNom",
+          "mode": "list",
+          "cachedResultName": "requests"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -193,8 +200,9 @@
         "operation": "insert",
         "dataTableId": {
           "__rl": true,
-          "value": "",
-          "mode": "list"
+          "value": "xlDAQCm75jLAKNom",
+          "mode": "list",
+          "cachedResultName": "requests"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -250,6 +258,26 @@
       }
     },
     {
+      "id": "notify_model",
+      "name": "Model (notification)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        780,
+        -40
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
       "id": "tg_notify",
       "name": "Notify coordinator (Telegram)",
       "type": "n8n-nodes-base.telegram",
@@ -260,14 +288,14 @@
       ],
       "parameters": {
         "operation": "sendMessage",
-        "chatId": "={{ $json.coordinator_chat_id }}",
+        "chatId": "266536553",
         "text": "={{ $json.text }}",
         "additionalFields": {}
       },
       "credentials": {
         "telegramApi": {
-          "id": "",
-          "name": "Telegram account (С8, не создан на стенде)"
+          "id": "kfXE6PWKNzA56vc6",
+          "name": "Telegram account (С8)"
         }
       }
     }
@@ -357,6 +385,17 @@
           {
             "node": "Notify coordinator (Telegram)",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (notification)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Compose notification (LLM)",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]

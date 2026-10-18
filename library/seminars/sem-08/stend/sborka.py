@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 """Собрать стадии Семинара 8 — ДОСТРОЙКА `student.json` Семинара 7, не замена.
 
-**Статус на 2026-10-18: НЕ ВЫЛОЖЕНО И НЕ ПРОГНАНО.** Этот генератор написан по образцу
-`sem-07/stend/sborka.py` (та же форма узлов, та же функция `api()`, тот же флаг `--push`),
-но ни один из шести файлов ниже не был создан на живом стенде и ни один узел не был
-запущен настоящим прогоном. Причина — блокер, зафиксированный в
-`../SETKA-KEYSOV-S8.md` «Состояние стенда»: `N8N_API_KEY` для `https://n8n.lessons.tellian.io`
-нигде в среде этой сессии не присутствует (единственный найденный документ,
-`attachments/*n8n-lab-agent-handover.md`, — незаполненный шаблон, который сам говорит:
-«Nothing in workain/infra can mint the API key for you»). Запуск этого файла БЕЗ `--push`
-безопасен и детерминирован (не ходит в сеть, только пишет json рядом); запуск С `--push`
-упадёт на первом вызове `api()` с 401, как и прямая проверка `curl` в этой же сессии.
+**Статус на 2026-10-18 (второй проход): выложено и прогнано настоящими прогонами.**
+Блокер первого прохода (отсутствие `N8N_API_KEY`) снят владельцем — ключ лежит в
+`/home/harness/.n8n-lab-credentials` (вне репозитория, chmod 600), читается только оттуда.
+Credential-узлы ниже — РЕАЛЬНЫЕ id с живого стенда, не пустые ссылки.
 
-    python3 sborka.py              только записать json-файлы рядом (сделано в этой сессии)
-    source ~/.n8n-lab.env && python3 sborka.py --push     выложить и опубликовать (НЕ сделано)
+**Процесс (A) Кейса 3 — через OpenRouter, не через локальную Ollama.** Первая попытка этого
+прохода (поднять Ollama локально + туннель cloudflared/ngrok к удалённому стенду) была
+остановлена по прямому слову владельца: n8n стенд — удалённый, Ollama на агентской машине для
+него недостижима без туннеля, а туннель — ровно та лишняя сложность, которую сам Кейс 1 этого
+же занятия учит не создавать. На стенде уже есть работающий credential `OpenRouter account`
+(`VbxiQn8TbqA4R2mw`, тот же, что использует С7 для шага extraction) — он и переиспользован для
+процесса (A), моделью `qwen/qwen-2.5-7b-instruct` (подтверждена в каталоге
+`https://openrouter.ai/api/v1/models`). Следов Ollama/cloudflared в этом файле не осталось.
+
+    python3 sborka.py                                      только записать json-файлы рядом
+    N8N_API_URL=... N8N_API_KEY=... python3 sborka.py --push   выложить и опубликовать
 
 ## Шесть файлов — по кейсам занятия, каждый ДОСТРАИВАЕТ стадию 4 Семинара 7
 
     stage-1-before.json   Кейс 1 «до»: отдельный LLM-узел сочиняет текст Telegram-уведомления
     stage-1-after.json    Кейс 1 «после»: узел подстановки переменных (шаблон) вместо модели
     stage-2.json          Кейс 2: дедупликация — механический фильтр, затем LLM на спорное
-    stage-3a-model.json   Кейс 3, процесс (A): решение о возврате принимает модель (Ollama)
+    stage-3a-model.json   Кейс 3, процесс (A): решение о возврате принимает модель (OpenRouter)
     stage-3b-code.json    Кейс 3, процесс (B): решение принимает `IF`-узел по сумме
     stage-4.json          Кейс 4: та же цепочка уведомления, плюс картинка в Telegram
 
@@ -28,21 +31,14 @@
 извлечение → справочник → таблица → экран) и ТОЛЬКО ДОБАВЛЯЮТ узлы — ни один узел С7 не
 переименован и не удалён, в точности как того требует шов из `ARCHITECTURE.md` §2.
 
-## Credential-узлы — ссылки, не секреты, и в этой сессии ПУСТЫЕ ссылки
+## Секреты — читаются из окружения/внешнего файла, в этот файл не вписаны
 
-Telegram-узлы ниже несут `credentials: {telegramApi: {id: "", name: "Telegram account (С8)"}}`
-— пустой `id`, потому что credential на стенде никогда не создавался (это тоже требует
-`N8N_API_KEY` или логина в UI). Настоящий токен бота, который дал оркестратор для этой
-сессии, НЕ записан ни в этот файл, ни в какой-либо другой файл репозитория — он был
-использован РОВНО ОДИН РАЗ, напрямую через Telegram Bot API (`getMe`, `getUpdates`), чтобы
-проверить, что бот жив, и результат этой проверки — в `README.md` рядом. Это не нарушает
-правило `PODNYAT-N8N.md` про credential-тип `Telegram`: правило о том, что токен не должен
-оказаться в ПАРАМЕТРАХ узла или в URL внутри сценария, который потом живёт в репозитории
-или уходит студенту, — именно это не произошло ни разу.
-
-Узел модели Ollama (Кейс 3, процесс A) несёт `credentials: {ollamaApi: {id: "", name:
-"Ollama account (локально, без ключа)"}}` по той же причине — Ollama не поднят в этой
-сессии (см. README.md), credential создавать было не на чём.
+`N8N_API_URL`/`N8N_API_KEY` — из окружения (см. запуск выше). Настоящий токен Telegram-бота и
+настоящий `chat_id` НЕ хардкожены здесь как секрет-значения: `TELEGRAM_CHAT_ID` — не секрет
+(это просто числовой адрес чата, нужен n8n-узлу так же, как имя таблицы нужно узлу Data Table
+в `student.json`), а сам токен бота живёт только в n8n-credential `kfXE6PWKNzA56vc6`,
+созданном на стенде через управляющий API и никогда не попадавший в файл репозитория
+(см. `README.md` «Шаг 1»).
 """
 import json
 import os
@@ -58,22 +54,65 @@ KEY = os.environ.get("N8N_API_KEY", "")
 STUDENT = json.loads((S7 / "student.json").read_text(encoding="utf-8"))
 
 # Порог возврата для Кейса 3 — зафиксирован здесь как единственный источник правды для
-# ГЕНЕРАТОРА; реальный стенд (когда будет собран) должен держать то же число и в промпте
-# процесса (A), и в условии `IF`-узла процесса (B) — ровно нюанс №2 Кейса 3 в
-# `SETKA-KEYSOV-S8.md`: порог не должен жить в двух местах, которые надеются совпасть.
+# ГЕНЕРАТОРА; реальный стенд должен держать то же число и в промпте процесса (A), и в условии
+# `IF`-узла процесса (B) — ровно нюанс №2 Кейса 3 в `SETKA-KEYSOV-S8.md`: порог не должен жить
+# в двух местах, которые надеются совпасть.
 REFUND_THRESHOLD = 3000  # рублей — «мелкий» возврат одобряется процессом без эскалации
-TG_CRED = {"telegramApi": {"id": "", "name": "Telegram account (С8, не создан на стенде)"}}
-OLLAMA_CRED = {"ollamaApi": {"id": "", "name": "Ollama account (локально, не поднят)"}}
+
+# Credential-узлы — РЕАЛЬНЫЕ id с живого стенда n8n.lessons.tellian.io (проверены
+# `POST /credentials/<id>/test` → {"status":"OK"} для Telegram, и уже использовались С7 для
+# OpenRouter — не секреты сами по себе, только ссылки на то, где секрет хранится на стенде).
+TG_CRED = {"telegramApi": {"id": "kfXE6PWKNzA56vc6", "name": "Telegram account (С8)"}}
+OPENROUTER_CRED = {"openRouterApi": {"id": "VbxiQn8TbqA4R2mw", "name": "OpenRouter account"}}
+TELEGRAM_CHAT_ID = "266536553"  # координатор, подтвердил /start боту; не секрет (ADR см. README)
+NOTIFY_MODEL = "openai/gpt-4o-mini"           # та же модель, что в student.json на extraction
+REFUND_MODEL = "qwen/qwen-2.5-7b-instruct"    # средне-размерная Qwen через OpenRouter
+
+# `student.json` — файл НА ВЫНОС студенту, и `student_file()` в `sem-07/stend/sborka.py`
+# намеренно снимает с узлов credential модели и ссылку на таблицу (чужой id читается как
+# сломанный узел, см. docstring той функции). Для РЕАЛЬНОГО стенда — наоборот: эти ссылки
+# нужно восстановить на то же, с чем и так работает стенд С7 (общая таблица `requests`).
+TABLE_ID = "xlDAQCm75jLAKNom"
+TABLE_NAME = "requests"
 
 
 def base_nodes():
-    """Шесть узлов стадии 4 С7, скопированные как есть (копия, не ссылка — каждая
-    функция ниже достраивает СВОЮ копию, не делит объекты между стадиями)."""
-    return json.loads(json.dumps(STUDENT["nodes"]))
+    """Шесть узлов стадии 4 С7 — копия (не ссылка), с восстановленными ссылками на
+    реальный стенд, которые `student.json` снимает для студента: credential узла
+    `Model` и `dataTableId` узлов записи."""
+    nodes = json.loads(json.dumps(STUDENT["nodes"]))
+    for n in nodes:
+        if n["type"] == "@n8n/n8n-nodes-langchain.lmChatOpenRouter":
+            n["credentials"] = OPENROUTER_CRED
+        if n["type"] == "n8n-nodes-base.dataTable":
+            n["parameters"]["dataTableId"] = {
+                "__rl": True, "value": TABLE_ID, "mode": "list",
+                "cachedResultName": TABLE_NAME}
+    return nodes
 
 
 def base_connections():
     return json.loads(json.dumps(STUDENT["connections"]))
+
+
+def set_form_path(nodes, path):
+    """`student.json` сбрасывает путь формы на общий `sem-07` (правильно для файла на
+    вынос — у каждого студента свой импорт). На живом стенде каждая стадия С8 обязана
+    получить СВОЙ путь, иначе формы разных стадий молча делят один webhook."""
+    for n in nodes:
+        if n["type"] == "n8n-nodes-base.formTrigger":
+            n["parameters"]["path"] = path
+            n["webhookId"] = path
+    return nodes
+
+
+def openrouter_model_node(node_id, name, pos, model=NOTIFY_MODEL):
+    return {
+        "id": node_id, "name": name, "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1, "position": pos,
+        "parameters": {"model": model, "options": {}},
+        "credentials": OPENROUTER_CRED,
+    }
 
 
 def telegram_text_node(node_id, name, pos, text_expr):
@@ -82,7 +121,7 @@ def telegram_text_node(node_id, name, pos, text_expr):
         "typeVersion": 1.2, "position": pos,
         "parameters": {
             "operation": "sendMessage",
-            "chatId": "={{ $json.coordinator_chat_id }}",
+            "chatId": TELEGRAM_CHAT_ID,
             "text": text_expr,
             "additionalFields": {},
         },
@@ -96,7 +135,7 @@ def telegram_photo_node(node_id, name, pos, caption_expr):
         "typeVersion": 1.2, "position": pos,
         "parameters": {
             "operation": "sendPhoto",
-            "chatId": "={{ $json.coordinator_chat_id }}",
+            "chatId": TELEGRAM_CHAT_ID,
             "binaryData": True,
             "additionalFields": {"caption": caption_expr},
         },
@@ -107,9 +146,9 @@ def telegram_photo_node(node_id, name, pos, caption_expr):
 def llm_notification_node(pos):
     """Кейс 1 «до»: отдельная цепочка модели сочиняет текст «по-человечески».
 
-    Это и есть узел, который на стенде нужно прогнать несколько раз подряд на
-    РАЗНЫХ заявках и сохранить хотя бы один реальный пример расхождения (деталь,
-    которой не было в заявке) — см. README.md «Чего здесь не хватает»."""
+    Прогнать на стенде несколько раз подряд на РАЗНЫХ заявках и сохранить хотя бы
+    один реальный пример расхождения (деталь, которой не было в заявке) —
+    см. README.md «Находки прогонов»."""
     return {
         "id": "notify_llm", "name": "Compose notification (LLM)",
         "type": "@n8n/n8n-nodes-langchain.chainLlm", "typeVersion": 1.5, "position": pos,
@@ -150,10 +189,11 @@ def template_notification_node(pos):
 
 
 def stage_1_before():
-    """Добавляет к стадии 4 С7: LLM-узел уведомления → Telegram, веткой от
-    `Write row` (параллельно с существующим `Result screen`, не вместо него)."""
-    nodes = base_nodes()
+    """Добавляет к стадии 4 С7: LLM-узел уведомления (+ свой Model-узел) → Telegram,
+    веткой от `Write row` (параллельно с существующим `Result screen`, не вместо него)."""
+    nodes = set_form_path(base_nodes(), "s8-case1-before")
     nodes.append(llm_notification_node([780, -260]))
+    nodes.append(openrouter_model_node("notify_model", "Model (notification)", [780, -40]))
     nodes.append(telegram_text_node(
         "tg_notify", "Notify coordinator (Telegram)", [1020, -260],
         "={{ $json.text }}"))
@@ -163,13 +203,15 @@ def stage_1_before():
         {"node": "Compose notification (LLM)", "type": "main", "index": 0})
     conn["Compose notification (LLM)"] = {
         "main": [[{"node": "Notify coordinator (Telegram)", "type": "main", "index": 0}]]}
+    conn["Model (notification)"] = {"ai_languageModel": [[
+        {"node": "Compose notification (LLM)", "type": "ai_languageModel", "index": 0}]]}
     return {"name": "С8 · Кейс 1 (до) — LLM сочиняет уведомление",
             "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
 
 
 def stage_1_after():
     """То же ветвление, но композиция уведомления — шаблоном, не моделью."""
-    nodes = base_nodes()
+    nodes = set_form_path(base_nodes(), "s8-case1-after")
     nodes.append(template_notification_node([780, -260]))
     nodes.append(telegram_text_node(
         "tg_notify", "Notify coordinator (Telegram)", [1020, -260],
@@ -185,22 +227,35 @@ def stage_1_after():
 
 
 def dedup_nodes(pos0):
-    """Кейс 2: механический фильтр (хэш нормализованного текста + контакт в
-    окне времени) → если не решил однозначно → LLM-проверка смысла.
+    """Кейс 2: механический фильтр (хэш нормализованного текста) → если не решил
+    однозначно → LLM-проверка смысла (+ свой Model-узел).
 
-    Механическая часть — выражением, без отдельного узла кода (курс избегает
-    кода, см. `ARCHITECTURE.md` С7 §7): нормализация и сравнение со свежими
-    строками той же таблицы делается в `Set`, сравнение — в `IF`."""
+    **Честное сужение этого прохода (см. README.md «Кейс 2 — что проверено по-честному,
+    что упрощено»):** постоянный дизайн кейса — сверка с автоматически найденной
+    недавней строкой того же контакта в Data Table. На живом стенде за разумное время
+    не удалось подтвердить рабочий набор параметров узла `n8n-nodes-base.dataTable` для
+    такого запроса (несколько операций дали `Cannot read properties of undefined` —
+    видимо, версия узла на этом стенде ожидает другую форму параметров, не
+    подтверждённую в официальной документации на момент проверки). Чтобы не гадать и не
+    заявлять непроверенное работающим, сравнение здесь использует ЧЕТВЁРТОЕ поле формы
+    `Предыдущее сообщение (тест)` — тестовый ввод для ЭТОЙ проверки, не часть постоянного
+    дизайна; реальная автоматическая выборка — открытый пункт для Фазы production."""
     mech_filter = {
         "id": "dedup_hash", "name": "Normalize + hash", "type": "n8n-nodes-base.set",
         "typeVersion": 3.4, "position": pos0,
         "parameters": {
             "mode": "manual", "includeOtherFields": True,
-            "assignments": {"assignments": [{
-                "id": "d1", "name": "normalized_hash", "type": "string",
-                "value": "={{ $('Request form').item.json['Что нужно']"
-                         ".toLowerCase().trim().replace(/\\s+/g, ' ') }}",
-            }]},
+            "assignments": {"assignments": [
+                {"id": "d1", "name": "normalized_hash", "type": "string",
+                 "value": "={{ $('Request form').item.json['Что нужно']"
+                          ".toLowerCase().trim().replace(/\\s+/g, ' ') }}"},
+                {"id": "d2", "name": "recent_same_contact_text", "type": "string",
+                 "value": "={{ $('Request form').item.json['Предыдущее сообщение (тест)'] "
+                          "|| '' }}"},
+                {"id": "d3", "name": "recent_same_contact_hash", "type": "string",
+                 "value": "={{ ($('Request form').item.json['Предыдущее сообщение (тест)'] "
+                          "|| '').toLowerCase().trim().replace(/\\s+/g, ' ') }}"},
+            ]},
             "options": {},
         },
     }
@@ -227,13 +282,27 @@ def dedup_nodes(pos0):
             "options": {},
         },
     }
-    return [mech_filter, mech_if, llm_dedup]
+    dedup_model = openrouter_model_node(
+        "dedup_model", "Model (dedup)", [pos0[0] + 220, pos0[1] + 320])
+    return [mech_filter, mech_if, llm_dedup, dedup_model]
+
+
+def add_test_field(nodes, label, placeholder=""):
+    """Добавляет необязательное тестовое поле в форму — только для ручной проверки
+    на стенде (см. предупреждение в `dedup_nodes`), не часть формы студента С7."""
+    for n in nodes:
+        if n["type"] == "n8n-nodes-base.formTrigger":
+            n["parameters"]["formFields"]["values"].append(
+                {"fieldLabel": label, "placeholder": placeholder, "requiredField": False})
+    return nodes
 
 
 def stage_2():
     """Дедупликация встаёт МЕЖДУ справочником и записью: решение «дубль/новый»
     принимается до того, как строка попадёт в таблицу."""
-    nodes = base_nodes()
+    nodes = set_form_path(base_nodes(), "s8-case2")
+    nodes = add_test_field(nodes, "Предыдущее сообщение (тест)",
+                            "для ручной проверки дедупликации на стенде, не часть формы студента")
     nodes.extend(dedup_nodes([300, 160]))
     conn = base_connections()
     # Справочник теперь ведёт в фильтр дублей, а не прямо в запись.
@@ -247,6 +316,8 @@ def stage_2():
     ]}
     conn["Same question, reworded? (LLM)"] = {"main": [[
         {"node": "Write row", "type": "main", "index": 0}]]}
+    conn["Model (dedup)"] = {"ai_languageModel": [[
+        {"node": "Same question, reworded? (LLM)", "type": "ai_languageModel", "index": 0}]]}
     return {"name": "С8 · Кейс 2 — дедупликация в два уровня",
             "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
 
@@ -286,22 +357,16 @@ def refund_base_nodes(path):
             "options": {},
         },
     }
-    extract_model = {
-        "id": "extract_model", "name": "Model (extraction)",
-        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter", "typeVersion": 1,
-        "position": [60, 220],
-        "parameters": {"model": "openai/gpt-4o-mini", "options": {}},
-        "credentials": {"openRouterApi": {"id": "", "name": "OpenRouter account (как в С7)"}},
-    }
+    extract_model = openrouter_model_node("extract_model", "Model (extraction)", [60, 220])
     return [form, extract_amount, extract_model]
 
 
 def stage_3a_model():
-    """Процесс (A): решение о пороге принимает модель через Ollama — правило-порог
-    живёт ТЕКСТОМ в промпте, не в условии."""
+    """Процесс (A): решение о пороге принимает модель через OpenRouter (Qwen2.5) —
+    правило-порог живёт ТЕКСТОМ в промпте, не в условии."""
     nodes = refund_base_nodes("s8-refund-model")
     decide = {
-        "id": "refund_decide_llm", "name": "Decide refund (Ollama)",
+        "id": "refund_decide_llm", "name": "Decide refund (model)",
         "type": "@n8n/n8n-nodes-langchain.chainLlm", "typeVersion": 1.5,
         "position": [300, 0],
         "parameters": {
@@ -313,13 +378,8 @@ def stage_3a_model():
             "options": {},
         },
     }
-    ollama_model = {
-        "id": "ollama_model", "name": "Model (Ollama, Qwen2.5)",
-        "type": "@n8n/n8n-nodes-langchain.lmChatOllama", "typeVersion": 1,
-        "position": [300, 220],
-        "parameters": {"model": "qwen2.5:7b-instruct", "options": {}},
-        "credentials": OLLAMA_CRED,
-    }
+    decide_model = openrouter_model_node(
+        "decide_model", "Model (decision, Qwen2.5)", [300, 220], model=REFUND_MODEL)
     result = {
         "id": "refund_result_a", "name": "Result screen (process A)",
         "type": "n8n-nodes-base.form", "typeVersion": 1, "position": [540, 0],
@@ -331,15 +391,15 @@ def stage_3a_model():
             "options": {"appendAttribution": False},
         },
     }
-    nodes += [decide, ollama_model, result]
+    nodes += [decide, decide_model, result]
     conn = {
         "Refund request": {"main": [[{"node": "Extract amount", "type": "main", "index": 0}]]},
-        "Extract amount": {"main": [[{"node": "Decide refund (Ollama)", "type": "main", "index": 0}]]},
-        "Decide refund (Ollama)": {"main": [[{"node": "Result screen (process A)", "type": "main", "index": 0}]]},
+        "Extract amount": {"main": [[{"node": "Decide refund (model)", "type": "main", "index": 0}]]},
+        "Decide refund (model)": {"main": [[{"node": "Result screen (process A)", "type": "main", "index": 0}]]},
         "Model (extraction)": {"ai_languageModel": [[
             {"node": "Extract amount", "type": "ai_languageModel", "index": 0}]]},
-        "Model (Ollama, Qwen2.5)": {"ai_languageModel": [[
-            {"node": "Decide refund (Ollama)", "type": "ai_languageModel", "index": 0}]]},
+        "Model (decision, Qwen2.5)": {"ai_languageModel": [[
+            {"node": "Decide refund (model)", "type": "ai_languageModel", "index": 0}]]},
     }
     return {"name": "С8 · Кейс 3, процесс (A) — решение принимает модель",
             "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
@@ -399,17 +459,23 @@ def stage_3b_code():
 def stage_4():
     """Кейс 4: та же ветка уведомления (вариант «после» — шаблон), плюс картинка.
 
-    Наложение текста на картинку — вне n8n (ImageMagick/Pillow, см. README.md),
-    картинка попадает в сценарий как бинарные данные через отдельный вызов, узел
-    ниже только отправляет уже готовый файл — это и есть вводный уровень,
-    заявленный в `ARCHITECTURE.md` §6 (не генерация картинки внутри n8n)."""
-    nodes = base_nodes()
+    Картинка приходит узлом `HTTP Request` (публичный сервис-заглушка Picsum) —
+    наложение текста на картинку вне n8n (ImageMagick/Pillow, см. README.md) здесь не
+    собрано как часть сценария; узел ниже отправляет уже готовый файл. Это и есть
+    вводный уровень, заявленный в `ARCHITECTURE.md` §6 (не генерация картинки внутри
+    n8n). Эта стадия несёт обычный размер (800×450, через n8n целиком); граница
+    10 МБ `sendPhoto`, подтверждённая на этом же стенде, проверена ПРЯМЫМ вызовом
+    Telegram Bot API (не через этот workflow — см. README.md, почему)."""
+    nodes = set_form_path(base_nodes(), "s8-case4")
     nodes.append(template_notification_node([780, -260]))
     nodes.append({
-        "id": "fetch_card_image", "name": "Read card image (binary)",
-        "type": "n8n-nodes-base.readWriteFile", "typeVersion": 1,
+        "id": "fetch_card_image", "name": "Fetch card image (HTTP)",
+        "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2,
         "position": [1020, -260],
-        "parameters": {"operation": "read", "fileSelector": "/tmp/s8-case4-card.png"},
+        "parameters": {
+            "url": "https://picsum.photos/800/450",
+            "options": {"response": {"response": {"responseFormat": "file"}}},
+        },
     })
     nodes.append(telegram_photo_node(
         "tg_photo", "Send card (Telegram photo)", [1260, -260],
@@ -419,8 +485,8 @@ def stage_4():
     conn["Write row"]["main"][0].append(
         {"node": "Compose notification (template)", "type": "main", "index": 0})
     conn["Compose notification (template)"] = {"main": [[
-        {"node": "Read card image (binary)", "type": "main", "index": 0}]]}
-    conn["Read card image (binary)"] = {"main": [[
+        {"node": "Fetch card image (HTTP)", "type": "main", "index": 0}]]}
+    conn["Fetch card image (HTTP)"] = {"main": [[
         {"node": "Send card (Telegram photo)", "type": "main", "index": 0}]]}
     return {"name": "С8 · Кейс 4 — картинка в Telegram",
             "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
@@ -452,7 +518,7 @@ def main():
         wf = fn()
         (HERE / f"{fname}.json").write_text(
             json.dumps(wf, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"  {fname}.json — {len(wf['nodes'])} узлов (НЕ прогнано)")
+        print(f"  {fname}.json — {len(wf['nodes'])} узлов")
         if not push:
             continue
         if wf["name"] in existing:

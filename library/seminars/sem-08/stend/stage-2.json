@@ -10,9 +10,9 @@
         -180,
         0
       ],
-      "webhookId": "sem-07",
+      "webhookId": "s8-case2",
       "parameters": {
-        "path": "sem-07",
+        "path": "s8-case2",
         "formTitle": "Заявка в учебный центр",
         "formDescription": "Так выглядит вход процесса, который мы собираем",
         "formFields": {
@@ -35,6 +35,11 @@
               "fieldType": "textarea",
               "placeholder": "Напишите своими словами — например: «хочу на курс по аналитике, перезвоните сегодня»",
               "requiredField": true
+            },
+            {
+              "fieldLabel": "Предыдущее сообщение (тест)",
+              "placeholder": "для ручной проверки дедупликации на стенде, не часть формы студента",
+              "requiredField": false
             }
           ]
         },
@@ -75,6 +80,12 @@
       "parameters": {
         "model": "openai/gpt-4o-mini",
         "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
       }
     },
     {
@@ -139,8 +150,9 @@
         "operation": "insert",
         "dataTableId": {
           "__rl": true,
-          "value": "",
-          "mode": "list"
+          "value": "xlDAQCm75jLAKNom",
+          "mode": "list",
+          "cachedResultName": "requests"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -193,8 +205,9 @@
         "operation": "insert",
         "dataTableId": {
           "__rl": true,
-          "value": "",
-          "mode": "list"
+          "value": "xlDAQCm75jLAKNom",
+          "mode": "list",
+          "cachedResultName": "requests"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -253,6 +266,18 @@
               "name": "normalized_hash",
               "type": "string",
               "value": "={{ $('Request form').item.json['Что нужно'].toLowerCase().trim().replace(/\\s+/g, ' ') }}"
+            },
+            {
+              "id": "d2",
+              "name": "recent_same_contact_text",
+              "type": "string",
+              "value": "={{ $('Request form').item.json['Предыдущее сообщение (тест)'] || '' }}"
+            },
+            {
+              "id": "d3",
+              "name": "recent_same_contact_hash",
+              "type": "string",
+              "value": "={{ ($('Request form').item.json['Предыдущее сообщение (тест)'] || '').toLowerCase().trim().replace(/\\s+/g, ' ') }}"
             }
           ]
         },
@@ -301,6 +326,26 @@
         "promptType": "define",
         "text": "=Это новое сообщение: «{{ $('Request form').item.json['Что нужно'] }}». Недавнее сообщение того же контакта: «{{ $json.recent_same_contact_text }}». Это тот же вопрос, просто сформулированный иначе? Ответь строго «да» или «нет».",
         "options": {}
+      }
+    },
+    {
+      "id": "dedup_model",
+      "name": "Model (dedup)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        520,
+        480
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
       }
     }
   ],
@@ -407,6 +452,17 @@
           {
             "node": "Write row",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (dedup)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Same question, reworded? (LLM)",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]

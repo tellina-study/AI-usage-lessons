@@ -1,0 +1,193 @@
+{
+  "name": "С8 · Кейс 3, процесс (B) — решение принимает код",
+  "nodes": [
+    {
+      "id": "refund_form",
+      "name": "Refund request",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "webhookId": "s8-refund-code",
+      "parameters": {
+        "path": "s8-refund-code",
+        "formTitle": "Запрос на возврат",
+        "formDescription": "Тестовый вход Кейса 3 — не форма студента",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Текст запроса",
+              "fieldType": "textarea",
+              "placeholder": "например: прошу вернуть 2500 рублей за пропущенное занятие",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "extract_amount",
+      "name": "Extract amount",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "text": "={{ $json['Текст запроса'] }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"amount_rub\": {\n      \"type\": \"number\",\n      \"description\": \"сумма возврата в рублях, указанная в тексте\"\n    }\n  },\n  \"required\": [\n    \"amount_rub\"\n  ]\n}",
+        "options": {}
+      }
+    },
+    {
+      "id": "extract_model",
+      "name": "Model (extraction)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        220
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "",
+          "name": "OpenRouter account (как в С7)"
+        }
+      }
+    },
+    {
+      "id": "refund_decide_if",
+      "name": "Amount over threshold?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.output.amount_rub }}",
+              "rightValue": 3000,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "refund_result_b_esc",
+      "name": "Result screen (escalate)",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        540,
+        -80
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Решение процесса (B)",
+        "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽. Решение кода: эскалировать.",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "refund_result_b_ok",
+      "name": "Result screen (approve)",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        540,
+        80
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Решение процесса (B)",
+        "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽. Решение кода: одобрить (не выше порога).",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Refund request": {
+      "main": [
+        [
+          {
+            "node": "Extract amount",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract amount": {
+      "main": [
+        [
+          {
+            "node": "Amount over threshold?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Amount over threshold?": {
+      "main": [
+        [
+          {
+            "node": "Result screen (escalate)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Result screen (approve)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (extraction)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Extract amount",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

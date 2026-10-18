@@ -1,0 +1,406 @@
+{
+  "name": "С8 · Кейс 4 — картинка в Telegram",
+  "nodes": [
+    {
+      "id": "form",
+      "name": "Request form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "webhookId": "sem-07",
+      "parameters": {
+        "path": "sem-07",
+        "formTitle": "Заявка в учебный центр",
+        "formDescription": "Так выглядит вход процесса, который мы собираем",
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "html",
+              "html": "<div style=\"font-size:14px;line-height:1.5\"><p style=\"margin:0 0 10px\">Заявка пройдёт <b>пять шагов</b>. После отправки вы увидите каждый из них на одном экране.</p><p style=\"margin:0 0 6px\"><b>1 · Форма</b> — то, что вы сейчас заполните: имя, контакт и свободный текст. Писать можно как человеку, без формата.</p><p style=\"margin:0 0 6px\"><b>2 · Извлечение</b> — шаг модели достаёт из текста <i>тему</i>, <i>срочность</i> и <i>контакт, указанный в тексте</i>.</p><p style=\"margin:0 0 6px\"><b>3 · Справочник</b> — сверяет тему и срочность со списком допустимых значений. Что не из списка или пусто — станет «другое» и «не указано».</p><p style=\"margin:0 0 6px\"><b>4 · Запись</b> — строка уходит в таблицу заявок.</p><p style=\"margin:0 0 10px\"><b>5 · Экран результата</b> — покажет все четыре шага подряд, здесь же.</p><p style=\"margin:0\"><b>Справочники:</b> тема — курс · перенос занятия · оплата · другое; срочность — сегодня · на неделе · не указано.</p></div>"
+            },
+            {
+              "fieldLabel": "Имя",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Контакт",
+              "placeholder": "телефон или почта",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Что нужно",
+              "fieldType": "textarea",
+              "placeholder": "Напишите своими словами — например: «хочу на курс по аналитике, перезвоните сегодня»",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "extract",
+      "name": "Extract fields",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "text": "={{ $json['Что нужно'] }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"topic\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"курс\",\n        \"перенос занятия\",\n        \"оплата\",\n        \"другое\"\n      ],\n      \"description\": \"о чём заявка; если ни одно не подходит — «другое»\"\n    },\n    \"urgency\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"сегодня\",\n        \"на неделе\",\n        \"не указано\"\n      ],\n      \"description\": \"когда человек ждёт ответа; если не сказано — «не указано»\"\n    },\n    \"contact_from_text\": {\n      \"type\": \"string\",\n      \"description\": \"телефон или почта, указанные В ТЕКСТЕ заявки; если в тексте их нет — пустая строка\"\n    },\n    \"extra_topics\": {\n      \"type\": \"string\",\n      \"description\": \"остальные темы из этого же списка, если в заявке их несколько, через запятую; если тема одна — пустая строка\"\n    }\n  },\n  \"required\": [\n    \"topic\",\n    \"urgency\"\n  ]\n}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "model",
+      "name": "Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        260
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      }
+    },
+    {
+      "id": "vocab",
+      "name": "Vocabulary check",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        300,
+        -80
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "topic",
+              "type": "string",
+              "value": "={{ [\"курс\", \"перенос занятия\", \"оплата\", \"другое\"].includes($json.output.topic) ? $json.output.topic : 'другое' }}"
+            },
+            {
+              "id": "a2",
+              "name": "urgency",
+              "type": "string",
+              "value": "={{ [\"сегодня\", \"на неделе\", \"не указано\"].includes($json.output.urgency) ? $json.output.urgency : 'не указано' }}"
+            },
+            {
+              "id": "a3",
+              "name": "contact_from_text",
+              "type": "string",
+              "value": "={{ $json.output.contact_from_text || '' }}"
+            },
+            {
+              "id": "a4",
+              "name": "status",
+              "type": "string",
+              "value": "ok"
+            },
+            {
+              "id": "a5",
+              "name": "extra_topics",
+              "type": "string",
+              "value": "={{ ($json.output.extra_topics || '').split(',').map(s => s.trim()).filter(s => [\"курс\", \"перенос занятия\", \"оплата\", \"другое\"].includes(s)).join(' · ') }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "table",
+      "name": "Write row",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        540,
+        -80
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "received_at": "={{ $now.toISO() }}",
+            "name": "={{ $('Request form').item.json['Имя'] }}",
+            "contact": "={{ $('Request form').item.json['Контакт'] }}",
+            "request_text": "={{ $('Request form').item.json['Что нужно'] }}",
+            "topic": "={{ $json.topic }}",
+            "urgency": "={{ $json.urgency }}",
+            "contact_from_text": "={{ $json.contact_from_text }}",
+            "status": "={{ $json.status }}",
+            "extra_topics": "={{ $json.extra_topics || '' }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "screen",
+      "name": "Result screen",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        780,
+        -80
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Заявка разобрана",
+        "completionMessage": "=<div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 1</div><div style=\"font-weight:700;margin:2px 0 6px\">Форма</div><div style=\"line-height:1.5\">{{ $('Request form').item.json['Что нужно'] }}</div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 2</div><div style=\"font-weight:700;margin:2px 0 6px\">Извлечение — что предложила модель</div><div style=\"line-height:1.5\">тема: <b>{{ $('Extract fields').item.json.output.topic }}</b><br>срочность: <b>{{ $('Extract fields').item.json.output.urgency }}</b><br>контакт из текста: <b>{{ $('Extract fields').item.json.output.contact_from_text || '—' }}</b></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 3</div><div style=\"font-weight:700;margin:2px 0 6px\">Справочник — что осталось после сверки</div><div style=\"line-height:1.5\">тема: <b>{{ $('Vocabulary check').item.json.topic }}</b><br>срочность: <b>{{ $('Vocabulary check').item.json.urgency }}</b><br>ещё в заявке: <b>{{ $('Vocabulary check').item.json.extra_topics || '—' }}</b></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 4</div><div style=\"font-weight:700;margin:2px 0 6px\">Запись</div><div style=\"line-height:1.5\">строка <b>{{ $json.id }}</b> в таблице requests, status = <b>{{ $json.status }}</b></div></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "table_err",
+      "name": "Write row · not parsed",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        360,
+        200
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "received_at": "={{ $now.toISO() }}",
+            "name": "={{ $('Request form').item.json['Имя'] }}",
+            "contact": "={{ $('Request form').item.json['Контакт'] }}",
+            "request_text": "={{ $('Request form').item.json['Что нужно'] }}",
+            "topic": "другое",
+            "urgency": "не указано",
+            "contact_from_text": "",
+            "status": "not_parsed",
+            "extra_topics": ""
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "screen_err",
+      "name": "Result screen · not parsed",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        620,
+        200
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Заявка принята, но не разобрана",
+        "completionMessage": "=<div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 1</div><div style=\"font-weight:700;margin:2px 0 6px\">Форма</div><div style=\"line-height:1.5\">{{ $('Request form').item.json['Что нужно'] }}</div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 2</div><div style=\"font-weight:700;margin:2px 0 6px\">Извлечение</div><div style=\"line-height:1.5\"><b style=\"color:#B3261E\">вызов не удался</b> — три попытки с паузой по две секунды, все три неудачны</div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 3</div><div style=\"font-weight:700;margin:2px 0 6px\">Справочник</div><div style=\"line-height:1.5\">тема → <b>другое</b><br>срочность → <b>не указано</b><br><i>справочник сработал и на отказе: пустых клеток нет</i></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 4</div><div style=\"font-weight:700;margin:2px 0 6px\">Запись</div><div style=\"line-height:1.5\">строка в таблице есть, <b>status = not_parsed</b><br><i>заявка не потеряна — её видно по этому столбцу</i></div></div>",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "notify_template",
+      "name": "Compose notification (template)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        780,
+        -260
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "n1",
+              "name": "notification_text",
+              "type": "string",
+              "value": "=Новая заявка от {{ $('Request form').item.json['Имя'] }}: тема «{{ $('Vocabulary check').item.json.topic }}»{{ $('Vocabulary check').item.json.extra_topics ? ', также: ' + $('Vocabulary check').item.json.extra_topics : '' }}."
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "fetch_card_image",
+      "name": "Read card image (binary)",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        -260
+      ],
+      "parameters": {
+        "operation": "read",
+        "fileSelector": "/tmp/s8-case4-card.png"
+      }
+    },
+    {
+      "id": "tg_photo",
+      "name": "Send card (Telegram photo)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        -260
+      ],
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $json.coordinator_chat_id }}",
+        "binaryData": true,
+        "additionalFields": {
+          "caption": "={{ $json.notification_text }}"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "",
+          "name": "Telegram account (С8, не создан на стенде)"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Request form": {
+      "main": [
+        [
+          {
+            "node": "Extract fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract fields": {
+      "main": [
+        [
+          {
+            "node": "Vocabulary check",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Write row · not parsed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vocabulary check": {
+      "main": [
+        [
+          {
+            "node": "Write row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row": {
+      "main": [
+        [
+          {
+            "node": "Result screen",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Compose notification (template)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row · not parsed": {
+      "main": [
+        [
+          {
+            "node": "Result screen · not parsed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Extract fields",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compose notification (template)": {
+      "main": [
+        [
+          {
+            "node": "Read card image (binary)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read card image (binary)": {
+      "main": [
+        [
+          {
+            "node": "Send card (Telegram photo)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

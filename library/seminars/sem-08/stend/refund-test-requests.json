@@ -1,0 +1,407 @@
+{
+  "status": "ПОДГОТОВЛЕНО, НЕ ПРОГНАНО — см. ../SETKA-KEYSOV-S8.md «Состояние стенда»",
+  "threshold_rub": 3000,
+  "count": 50,
+  "requests": [
+    {
+      "id": 1,
+      "amount_rub": 1500,
+      "text": "хочу вернуть 1500 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 2,
+      "amount_rub": 1800,
+      "text": "верните 1800 рублей, передумал по поводу курса",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 3,
+      "amount_rub": 2000,
+      "text": "можно возврат 2000 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 4,
+      "amount_rub": 2200,
+      "text": "хочу вернуть 2200 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 5,
+      "amount_rub": 2500,
+      "text": "хочу вернуть 2500 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 6,
+      "amount_rub": 2700,
+      "text": "прошу вернуть 2700 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 7,
+      "amount_rub": 2900,
+      "text": "прошу вернуть 2900 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 8,
+      "amount_rub": 2999,
+      "text": "хочу вернуть 2999 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 9,
+      "amount_rub": 3000,
+      "text": "хочу вернуть 3000 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 10,
+      "amount_rub": 3000,
+      "text": "хочу вернуть 3000 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 11,
+      "amount_rub": 1200,
+      "text": "можно возврат 1200 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 12,
+      "amount_rub": 1600,
+      "text": "прошу вернуть 1600 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 13,
+      "amount_rub": 1900,
+      "text": "можно возврат 1900 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 14,
+      "amount_rub": 2100,
+      "text": "можно возврат 2100 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 15,
+      "amount_rub": 2300,
+      "text": "можно возврат 2300 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 16,
+      "amount_rub": 2600,
+      "text": "можно возврат 2600 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 17,
+      "amount_rub": 2800,
+      "text": "можно возврат 2800 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 18,
+      "amount_rub": 2950,
+      "text": "хочу вернуть 2950 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 19,
+      "amount_rub": 3000,
+      "text": "можно возврат 3000 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 20,
+      "amount_rub": 1000,
+      "text": "прошу вернуть 1000 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 21,
+      "amount_rub": 1700,
+      "text": "можно возврат 1700 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 22,
+      "amount_rub": 2400,
+      "text": "хочу вернуть 2400 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 23,
+      "amount_rub": 2650,
+      "text": "прошу вернуть 2650 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 24,
+      "amount_rub": 2850,
+      "text": "верните 2850 рублей, передумал по поводу курса",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 25,
+      "amount_rub": 2990,
+      "text": "можно возврат 2990 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 26,
+      "amount_rub": 3200,
+      "text": "возврат 3200 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 27,
+      "amount_rub": 3500,
+      "text": "возврат 3500 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 28,
+      "amount_rub": 3800,
+      "text": "прошу вернуть всю сумму — 3800 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 29,
+      "amount_rub": 4000,
+      "text": "хочу полный возврат 4000 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 30,
+      "amount_rub": 4500,
+      "text": "прошу вернуть всю сумму — 4500 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 31,
+      "amount_rub": 5000,
+      "text": "прошу вернуть всю сумму — 5000 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 32,
+      "amount_rub": 5500,
+      "text": "возврат 5500 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 33,
+      "amount_rub": 6000,
+      "text": "возврат 6000 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 34,
+      "amount_rub": 6500,
+      "text": "прошу вернуть всю сумму — 6500 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 35,
+      "amount_rub": 7000,
+      "text": "прошу вернуть всю сумму — 7000 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 36,
+      "amount_rub": 3300,
+      "text": "хочу полный возврат 3300 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 37,
+      "amount_rub": 3600,
+      "text": "верните 3600 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 38,
+      "amount_rub": 3900,
+      "text": "прошу вернуть всю сумму — 3900 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 39,
+      "amount_rub": 4200,
+      "text": "возврат 4200 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 40,
+      "amount_rub": 4800,
+      "text": "верните 4800 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 41,
+      "amount_rub": 5200,
+      "text": "верните 5200 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 42,
+      "amount_rub": 5800,
+      "text": "прошу вернуть всю сумму — 5800 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 43,
+      "amount_rub": 6200,
+      "text": "прошу вернуть всю сумму — 6200 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 44,
+      "amount_rub": 6800,
+      "text": "возврат 6800 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 45,
+      "amount_rub": 7500,
+      "text": "верните 7500 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 46,
+      "amount_rub": 3400,
+      "text": "верните 3400 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 47,
+      "amount_rub": 4100,
+      "text": "возврат 4100 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 48,
+      "amount_rub": 4700,
+      "text": "возврат 4700 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 49,
+      "amount_rub": 5600,
+      "text": "хочу полный возврат 5600 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    },
+    {
+      "id": 50,
+      "amount_rub": 9000,
+      "text": "хочу полный возврат 9000 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать",
+      "model_decision_process_A": null,
+      "note": "не прогнано"
+    }
+  ]
+}

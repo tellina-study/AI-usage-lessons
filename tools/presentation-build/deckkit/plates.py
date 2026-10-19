@@ -75,6 +75,13 @@ class PlateStyle:
     note_color: object = LIGHT
     note_wsafe: bool = False
     warn_overflow: bool = True      # три предупреждения lec-06
+    # Высота значения — по ХУДШЕЙ из двух мер ширины (см. `_val_fit`).
+    # Дека Лекции 6 от этого не двигается, и это свойство, а не везение: у
+    # `LEC06` стоит `value_h_wsafe=True`, то есть высота там И ТАК мерится
+    # суженной шириной, обе меры совпадают и `max` их не меняет. Поле всё
+    # равно пришпилено в том наборе явно — по правилу этого же модуля:
+    # пришпиленное число обещание, унаследованное совпадение.
+    value_rows_safe: bool = True
     # ЦВЕТ КЛЮЧЕВОГО ЗНАЧЕНИЯ — решение владельца О3 (`decisions-orkestratora.md`,
     # «на весь курс»), исполненное ПЕРЕКЛЮЧАТЕЛЕМ, а не сменой темы.
     #
@@ -125,6 +132,7 @@ LEC06 = PlateStyle(
     value_key_color=GOLD,
     note_pt=10.5, note_ls=1.14, note_extra=0.07, note_rows=3,
     note_italic=False, note_color=SLATE, note_wsafe=True,
+    value_rows_safe=True,
     warn_overflow=True, gold_fallback_last=False, total_from_rows=False)
 
 
@@ -223,7 +231,21 @@ def _val_fit(value, iw, st):
             break
         f -= 0.5
     hw = iwm if st.value_h_wsafe else max(0.3, iw)
-    return f, metrics.n_lines(value, f, hw, True)
+    # ВЫСОТА БЕРЁТСЯ ПО ХУДШЕЙ ИЗ ДВУХ МЕР, а не по широкой. Решение «этот
+    # кегль годится» принято выше по СУЖЕННОЙ ширине (`iwm`), а высота под
+    # него считалась по полной (`hw`) — и на пограничной строке две меры
+    # расходились ровно на строку. Замерено на `s16`: «10,5 млн фунтов» при
+    # 23 пт имеет ширину 2,621" против внутренних 2,623" — по полной мере
+    # одна строка, по суженной две. Плашка получила высоту под одну,
+    # LibreOffice набрал две, и вторая строка легла ПОВЕРХ оговорки под ней
+    # (замер `tools/presentation-build/nalozhenie_bbox.py`: перекрытие 1146
+    # кв. пт, 52% площади меньшей рамки). Запас `W_SAFE` для того и заведён,
+    # что на границе метрика и LibreOffice расходятся; брать его в решении и
+    # не брать в высоте — значит закладывать это расхождение в геометрию.
+    rows = max(metrics.n_lines(value, f, hw, True),
+               metrics.n_lines(value, f, iwm, True)) if st.value_rows_safe \
+        else metrics.n_lines(value, f, hw, True)
+    return f, rows
 
 
 def plate_h(p, pw, st=DEFAULT):

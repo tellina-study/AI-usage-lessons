@@ -41,7 +41,8 @@ TOOLS = HERE.parents[4] / "tools" / "presentation-build"
 # Имя пары файлов в ветке для каждого раздела. Держится здесь, а не
 # выводится из заголовка: имя закоммиченного файла — договорённость с теми,
 # кто на него ссылается, и переехать оно может только осознанно.
-IMENA = {"1": "sec1-skrining-otbor"}
+IMENA = {"1": "sec1-skrining-otbor",
+         "4": "sec4-vedenie-dokumentatsii"}
 
 
 def shag(nazvanie, cmd, cwd=None):

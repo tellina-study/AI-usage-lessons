@@ -322,6 +322,16 @@ _Пока не обнаружено._
 - **Status:** active.
 - **First seen in:** #55 redo (2026-05-12), при сборке s04 charts.
 
+### [#278-render-1] QuickChart/Chart.js v4: `legend.labels.generateLabels` не рисует `text` при `indexAxis: "y"`
+
+- **Tool:** QuickChart API (`https://quickchart.io/chart`, `"v": "4"`), опция `options.plugins.legend.labels.generateLabels` (ручная легенда для одной серии данных, раскрашенной по категориям через массив `backgroundColor`).
+- **Symptom:** На вертикальном bar chart (`indexAxis` не задан, т.е. `"x"` по умолчанию) `generateLabels`, вернувший массив объектов `{text, fillStyle, strokeStyle}`, рисует и цветные плашки, и подписи — проверено минимальным прогоном. На ТОМ ЖЕ спеке, но с `"indexAxis": "y"` (горизонтальные бары), рисуются только цветные плашки легенды — подписи `text` не появляются вовсе, без ошибки в ответе (PNG валиден, HTTP 200).
+- **Root cause:** не выяснена (закрытый рендер-сервис). Разница воспроизведена трижды подряд на идентичных payload'ах, отличающихся только `indexAxis` — не случайность кеша/сети. Похоже на баг позиционирования легенды конкретно в горизонтальном layout'е Chart.js v4 на стороне QuickChart.
+- **Severity:** P2 (обход простой, но стоит знать заранее — иначе полчаса уходит на отладку «почему текста нет»).
+- **Workaround:** Не полагаться на `generateLabels` для текста легенды при `indexAxis: "y"`. Либо (а) `legend.display: false` и кодировать смысл цвета в самой подписи категории (как в `make_chart_s13a.py`, круг 4 правки s13a issue #278— каждая строка и так называет болезнь словом, цвет остаётся вспомогательным сканированием), либо (б) вертикальные бары, где `generateLabels` отрабатывает штатно.
+- **Status:** active.
+- **First seen in:** issue #278, 4-й круг доводки, перестройка диаграммы s13a (группировка по стране, 2026-10-19).
+
 ### [#69-render-1] Snapshot resolution mismatch: 110dpi скрывает overlap-bugs которые видны на 150dpi
 
 - **Tool:** `pdftoppm` snapshots при iterative visual loop.

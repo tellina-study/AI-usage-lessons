@@ -827,7 +827,24 @@ def analitika(p, sl, root):
             y += cap_h + GAP
     elif img:
         ar = media.img_ar(img, sl.sid) or 3.0
-        h = min(POLOSA_H, FULL_W / ar)
+        # `media_h_in` — ОПЦИОНАЛЬНЫЙ per-слайдовый потолок полосы, выше
+        # стандартного `POLOSA_H`. Заведено для s13a (issue #278, 5-й круг):
+        # настоящая Chart.js-группировка по стране (несколько датасетов на
+        # категорию) требует больше вертикали на категорию, чем держит
+        # стандартная полоса 3,00" — иначе соседние суб-бары одной страны
+        # (Великобритания: лёгкое+шейка матки; Нидерланды: шейка
+        # матки+колоректальный) наезжают подписями друг на друга, проверено
+        # прогоном. Поле НЕ сдвигает default: ни один из остальных кадров
+        # деки его не объявляет, `POLOSA_H` остаётся потолком для них всех.
+        potolok = POLOSA_H
+        h_in = sl.meta.get("media_h_in")
+        if h_in:
+            try:
+                potolok = max(POLOSA_H, float(h_in))
+            except (TypeError, ValueError):
+                report.warn(f"[полоса] {sl.sid}: media_h_in={h_in!r} "
+                            "не число — потолок остался стандартным")
+        h = min(potolok, FULL_W / ar)
         if h < POLOSA_MIN:
             report.warn(
                 f"[полоса] {sl.sid}: диаграмма при ширине {FULL_W:.2f}\" даёт "

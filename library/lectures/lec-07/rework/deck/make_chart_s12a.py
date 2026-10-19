@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Диаграмма кадра s13a — охват скрининговых программ ПО СТРАНАМ.
+"""Диаграмма кадра s12a — охват скрининговых программ ПО СТРАНАМ.
 
 ПОЧЕМУ ЭТОТ ФАЙЛ ПЕРЕПИСАН (§10.1 и §11.4 `tools/presentation-build/
 trebovaniya-k-soderzhaniyu-forma.md`). Прежний прогон рисовал десять строк
@@ -51,7 +51,7 @@ trebovaniya-k-soderzhaniyu-forma.md`). Прежний прогон рисова�
 знаменателя охвата источники не публикуют — обе стоят плашкой на кадре,
 где измерено участие модели, а не долей на диаграмме охвата.
 
-    python3 make_chart_s13a.py
+    python3 make_chart_s12a.py
 """
 import sys
 from pathlib import Path
@@ -180,7 +180,7 @@ def main():
     # давала блокирующее [высота] «полоса диаграммы и плашки съели кадр». Семь стран по два-три столбца внутри каждой
     # проверены прогоном: подписи читаются и не наезжают (замер
     # `tools/presentation-build/nalozhenie_bbox.py` по собранному PDF).
-    out = A.narisovat(spec, ASSETS / "s13a-ohvat-po-stranam.png",
+    out = A.narisovat(spec, ASSETS / "s12a-ohvat-po-stranam.png",
                       shirina_pt=880, vysota_pt=216)
 
     from PIL import Image

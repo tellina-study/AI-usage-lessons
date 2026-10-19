@@ -26,7 +26,7 @@
 # разошлись. Снятый номер не переиспользуется: на идентификаторы ссылаются манифесты, разборы
 # прожарок и другие сессии, поэтому в номерах плана зияют пропуски — 65 номеров плана
 # в деке нет, причина по каждому в `slides/_snyato/README.md` и `slides-snyatye/README.md`.
-# Вставленные: s01a · s01aa · s01ab · s01ac · s01ad · s01ae · s01af · s01b · s05a · s11a · s13a · s13b · s15a · s16a · s18a · s18b · s22a · s49b · s49d · s49f · s60b · s60ba · s60bb · s60c · s62 · s63a · s63b · s73ca.
+# Вставленные: s01a · s01aa · s01ab · s01ac · s01ad · s01ae · s01af · s01b · s05a · s11a · s12a · s12b · s15a · s16a · s18a · s18b · s22a · s49b · s49d · s49f · s60b · s60ba · s60bb · s60c · s62 · s63a · s63b · s73ca.
 # Что делает каждый — в его собственной записи ниже (`type`, `title`, `section`); списком
 # здесь это не повторяется, потому что набранный руками список состава тут уже соврал.
 #
@@ -67,7 +67,7 @@ deck:
   content_target_min: 80.00      # слот минус вопросы; цель CUT-ORDER.md §1.1
   total_slides: 69
   plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 41 из них
-  inserted_slides: [s01a, s01aa, s01ab, s01ac, s01ad, s01ae, s01af, s01b, s05a, s11a, s13a, s13b, s15a, s16a, s18a, s18b, s22a, s49b, s49d, s49f, s60b, s60ba, s60bb, s60c, s62, s63a, s63b, s73ca]
+  inserted_slides: [s01a, s01aa, s01ab, s01ac, s01ad, s01ae, s01af, s01b, s05a, s11a, s12a, s12b, s15a, s16a, s18a, s18b, s22a, s49b, s49d, s49f, s60b, s60ba, s60bb, s60c, s62, s63a, s63b, s73ca]
   sum_timing_min: 62.70           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
@@ -252,6 +252,22 @@ slides:
     chapter_ref: "chapter-part1b.md §1.1, §1.2, §1.3"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
+  - id: s12a
+    local_id: "s1-02a"                     # вставленный кадр, номера в плане нет
+    file: slides/s12a-skrining-po-stranam-i-uchastie-ii.md
+    type: analitika
+    title: "Скрининговые программы по странам и участие модели"
+    chapter_ref: "chapter-part1b.md § Скрининговые программы по странам и участие ИИ"
+    timing_min: 1.0
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s12b
+    local_id: "s1-02b"                     # вставленный кадр, номера в плане нет
+    file: slides/s12b-istoriya-dostupnosti-skriningov.md
+    type: norm
+    title: "Скрининг как практика: откуда он взялся"
+    chapter_ref: "chapter-part1b.md § Раздел 1 (вводка) — новый материал (issue #278 §10.2): происхождение скрининга как класса практики (Wilson–Jungner 1968, массовая флюорография Глазго 1957, Reiser 1978) пока не отражён в тексте главы, добавлен только в деку"
+    timing_min: 0.7
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s13
     local_id: "s1-03"                      # номер SLIDE-PLAN.md
     file: slides/s13-dva-klassicheskikh-rezhima-otbora.md
@@ -260,22 +276,6 @@ slides:
     chapter_ref: "chapter-part1b.md §1.3"
     timing_min: 0.85
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
-  - id: s13a
-    local_id: "s1-03a"                     # вставленный кадр, номера в плане нет
-    file: slides/s13a-skrining-po-stranam-i-uchastie-ii.md
-    type: analitika
-    title: "Скрининговые программы по странам и участие модели"
-    chapter_ref: "chapter-part1b.md § Скрининговые программы по странам и участие ИИ"
-    timing_min: 1.0
-    marks: { in_bucket: false   # кадр смешанный: охват по странам — нейтральная статистика,, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s13b
-    local_id: "s1-03b"                     # вставленный кадр, номера в плане нет
-    file: slides/s13b-istoriya-dostupnosti-skriningov.md
-    type: norm
-    title: "Скрининг как практика: откуда он взялся"
-    chapter_ref: "chapter-part1b.md § Раздел 1 (вводка) — новый материал (issue #278 §10.2): происхождение скрининга как класса практики (Wilson–Jungner 1968, массовая флюорография Глазго 1957, Reiser 1978) пока не отражён в тексте главы, добавлен только в деку"
-    timing_min: 0.7
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s15
     local_id: "s1-04"                      # номер SLIDE-PLAN.md
     file: slides/s15-triazh-po-predskazannomu-risku.md

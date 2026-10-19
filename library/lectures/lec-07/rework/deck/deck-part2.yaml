@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 3. Ведение медицинской документации · 10 кадров · 8.40 мин ───
+  # ─── 4. Ведение медицинской документации · 10 кадров · 8.40 мин ───
   - id: s60ba
     local_id: "s5-01a"                     # вставленный кадр, номера в плане нет
     file: slides/s60ba-dannye-sposoby-i-reshenie-zapisi.md
@@ -22,7 +22,7 @@ slides:
     local_id: "новый-zapis-divider"        # вставленный кадр, номера в плане нет
     file: slides/s60b-divider-vedenie-zapisi.md
     type: divider
-    title: "3. Ведение медицинской документации"
+    title: "4. Ведение медицинской документации"
     chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1"
     timing_min: 0.55
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
@@ -48,7 +48,6 @@ slides:
     file: slides/s61-avtomaticheskaya-zapis-priema.md
     type: case
     title: "Пример 1: автоматическая запись приёма"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.3, §5.4"
     timing_min: 1.05
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -57,7 +56,6 @@ slides:
     file: slides/s62-dve-dorozhki-nabor-i-vychitka.md
     type: case
     title: "Пример 1, цена: набор сократился, вычитка появилась"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.6 (+ §5.5)"
     timing_min: 0.9
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -66,7 +64,6 @@ slides:
     file: slides/s63-vypisnoy-epikriz.md
     type: case
     title: "Пример 2: выписной эпикриз"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.7"
     timing_min: 1.05
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -91,18 +88,16 @@ slides:
     file: slides/s64-vyvod-vedenie-zapisi.md
     type: summary
     title: "Ведение документации: вся измеренная экономия стадии"
-    plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3b.md §5.9 (+ §5.8)"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 4. Профессиональная квалификация: поддержание и износ · 7 кадров · 5.45 мин ───
+  # ─── 5. Профессиональная квалификация: поддержание и износ · 7 кадров · 5.45 мин ───
   - id: s73b
     local_id: "s5-01"                      # номер SLIDE-PLAN.md
     file: slides/s73b-divider-navyk.md
     type: divider
-    title: "4. Профессиональная квалификация: поддержание и износ"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    title: "5. Профессиональная квалификация: поддержание и износ"
     chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
@@ -112,7 +107,6 @@ slides:
     file: slides/s73ca-tri-opory-i-odin-shag-iz-vosmi.md
     type: norm
     title: "Чем держат форму и куда встала модель"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
     timing_min: 0.65
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
@@ -121,7 +115,6 @@ slides:
     file: slides/s73c-vrach-vernulsya-posle-goda.md
     type: norm
     title: "Квалификация: что замеряют и чем"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.2 (+ §10.3)"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
@@ -130,7 +123,6 @@ slides:
     file: slides/s73d-tsena-i-dva-rezhima-osmotra.md
     type: case
     title: "Цена обеих ошибок и оба классических режима — до всякой модели"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.4, §10.5"
     timing_min: 1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -139,7 +131,6 @@ slides:
     file: slides/s73f-primer-1-dolya-bez-pomoshchnika.md
     type: case
     title: "Пример 1: доля упала без помощника"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.6, §10.8 (+ §10.7)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -148,7 +139,6 @@ slides:
     file: slides/s73i-vyvod-navyk.md
     type: summary
     title: "Квалификация: исполнитель тот же, но стал хуже"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)"
     timing_min: 0.6
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
@@ -157,7 +147,6 @@ slides:
     file: slides/s73j-mesto-razdela-vne-okna.md
     type: summary
     title: "Место раздела на карте курса: своего столбца нет"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.13 (+ chapter.md §0.10) — карта стадии счётом; две величины кадра («12 из 42 в окне», «четвёртый раздел подряд») в главе отсутствуют: это счёт деки по своей карте, подписанный как собственный"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }

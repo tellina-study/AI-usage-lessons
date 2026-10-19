@@ -400,7 +400,7 @@ slides:
     local_id: "s3-15"                      # номер SLIDE-PLAN.md
     file: slides/s41-zamer-vzglyada-lozhnaya-podskazka.md
     type: case
-    title: "Пример 3: замер взгляда — при ложной и при верной подсказке"
+    title: "Пример 4: замер взгляда — при ложной и при верной подсказке"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md §3.4"
     timing_min: 1.9
@@ -409,7 +409,7 @@ slides:
     local_id: "s3-08"                      # номер SLIDE-PLAN.md
     file: slides/s44-odna-podskazka-dva-znaka-patologiya.md
     type: case
-    title: "Пример 4: патологи читают срезы — с подсказкой и без"
+    title: "Пример 5: патологи читают срезы — с подсказкой и без"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2.md §3.7"
     timing_min: 1.1
@@ -419,7 +419,7 @@ slides:
     local_id: "s3-10"                      # номер SLIDE-PLAN.md
     file: slides/s47-kontrolnaya-liniya-para-silnee.md
     type: case
-    title: "Пример 5: шведское испытание — одно человеческое чтение поверх модели вместо двух"
+    title: "Пример 6: шведское испытание — одно человеческое чтение поверх модели вместо двух"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2b.md §3.9"
     timing_min: 2.2
@@ -447,7 +447,7 @@ slides:
     local_id: "s3-16a"                     # вставленный кадр, номера в плане нет
     file: slides/s49b-obeshchano-tsena-i-dva-rezhima.md
     type: case
-    title: "Пример 6: хирурги оценивают риск — сами и после знакомства с моделью"
+    title: "Пример 7: хирурги оценивают риск — сами и после знакомства с моделью"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part4d.md §8.8"
     timing_min: 2.15
@@ -465,7 +465,7 @@ slides:
     local_id: "s4-05"                      # номер SLIDE-PLAN.md
     file: slides/s49e-primer-7-model-rannego-preduprezhdeniya.md
     type: case
-    title: "Пример 7: модель раннего предупреждения о сепсисе"
+    title: "Пример 8: модель раннего предупреждения о сепсисе"
     plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.1-§4.5 (устройство шкалы, цена обеих ошибок, счёт режимов, модель)"
     timing_min: 1.1
@@ -474,7 +474,7 @@ slides:
     local_id: "s4-06a"                     # вставленный кадр, номера в плане нет
     file: slides/s49f-primer-7-tsena-arifmetika-potoka.md
     type: case
-    title: "Пример 7, цена: восемнадцать тревог на сто госпитализаций"
+    title: "Пример 8, цена: восемнадцать тревог на сто госпитализаций"
     plan_section: "Раздел 4. Что решили и кто это заметил"
     chapter_ref: "chapter-part3.md §4.6-§4.9 (арифметика потока, вторая проверка, что переехало)"
     timing_min: 1.0

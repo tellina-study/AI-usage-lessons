@@ -256,7 +256,7 @@ slides:
     local_id: "s1-03"                      # номер SLIDE-PLAN.md
     file: slides/s13-dva-klassicheskikh-rezhima-otbora.md
     type: norm
-    title: "Шведский скрининг без модели: зовут по возрасту — и что из этого выходит"
+    title: "Пример 1, без модели: шведская программа зовёт по возрасту"
     chapter_ref: "chapter-part1b.md §1.3"
     timing_min: 0.85
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
@@ -264,10 +264,10 @@ slides:
     local_id: "s1-03a"                     # вставленный кадр, номера в плане нет
     file: slides/s13a-skrining-po-stranam-i-uchastie-ii.md
     type: analitika
-    title: "Скрининговые программы по странам и участие ИИ"
+    title: "Скрининговые программы по странам и участие модели"
     chapter_ref: "chapter-part1b.md § Скрининговые программы по странам и участие ИИ"
     timing_min: 1.0
-    marks: { in_bucket: false   # методическая критика P1-D (#278): кадр смешанный, не полностью in-bucket., vfy: true, status: "собран", media_status: builder_drawn }
+    marks: { in_bucket: false   # кадр смешанный: охват по странам — нейтральная статистика,, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s13b
     local_id: "s1-03b"                     # вставленный кадр, номера в плане нет
     file: slides/s13b-istoriya-dostupnosti-skriningov.md
@@ -280,7 +280,7 @@ slides:
     local_id: "s1-04"                      # номер SLIDE-PLAN.md
     file: slides/s15-triazh-po-predskazannomu-risku.md
     type: comparison
-    title: "Шведский скрининг с моделью: кому достаётся второе чтение"
+    title: "Пример 1, с моделью: кому достаётся второе чтение"
     chapter_ref: "chapter-part1b.md §1.4"
     timing_min: 0.95
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
@@ -288,7 +288,7 @@ slides:
     local_id: "s1-04b"                     # вставленный кадр, номера в плане нет
     file: slides/s15a-arbitrazh-i-asimmetriya-doveriya.md
     type: case
-    title: "Маммографический скрининг, продолжение: арбитраж и доверие находке модели"
+    title: "Пример 1, цена: арбитраж и доверие находке"
     chapter_ref: "chapter-part1b.md §1.4 (продолжение разбора s15: арбитраж, асимметрия доверия, честный пробел обучения/обновления/дрейфа)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
@@ -296,7 +296,7 @@ slides:
     local_id: "s1-07"                      # номер SLIDE-PLAN.md
     file: slides/s16-chat-bot-pervoy-linii.md
     type: case
-    title: "Пример 1: чат-бот первой линии вместо звонка в практику"
+    title: "Пример 2: чат-бот первой линии вместо звонка в практику"
     chapter_ref: "chapter-part1b.md §1.5"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -304,7 +304,7 @@ slides:
     local_id: "s1-07b"                     # вставленный кадр, номера в плане нет
     file: slides/s16a-ustroystvo-chat-bota-bez-modeli.md
     type: case
-    title: "Пример 1, Babylon «GP at Hand»: граф вероятностей и правила для красных флагов"
+    title: "Пример 2, устройство: кто что сказал про внутренности Babylon"
     chapter_ref: "chapter-part1b.md §1.5 (продолжение разбора s16: опубликованная архитектура — вероятностный граф и правила для красных флагов)"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -312,7 +312,7 @@ slides:
     local_id: "s1-08"                      # номер SLIDE-PLAN.md
     file: slides/s18-glaznoe-dno-bez-oftalmologa.md
     type: case
-    title: "Пример 2: целевой скрининг осложнения у диабетиков, не у офтальмолога"
+    title: "Пример 3: глазное дно снимают на приёме"
     chapter_ref: "chapter-part1b.md §1.6"
     timing_min: 0.95
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: acquired }
@@ -321,7 +321,7 @@ slides:
     local_id: "s1-08a"                     # вставленный кадр, номера в плане нет
     file: slides/s18a-tsena-otkaznoy-potok-i-novyy-shag.md
     type: case
-    title: "Пример 2, цена: отказной поток и новый шаг"
+    title: "Пример 3, цена: отказной поток и новый шаг"
     chapter_ref: "НЕ СОПОСТАВЛЕН"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -329,7 +329,7 @@ slides:
     local_id: "s1-08b"                     # вставленный кадр, номера в плане нет
     file: slides/s18b-obuchenie-obnovlenie-i-dreyf.md
     type: case
-    title: "Пример 2, глазное дно (IDx-DR): обучение, обновление и другая популяция"
+    title: "Пример 3, устройство: обучение, обновление и другая популяция"
     chapter_ref: "chapter-part1b.md §1.6 (продолжение разбора s18/s18a: архитектура EyeArt, пост-маркетинговое обновление 510(k) K213037, германское измерение чувствительности к популяции)"
     timing_min: 0.85
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
@@ -435,7 +435,7 @@ slides:
     local_id: "s3-10"                      # номер SLIDE-PLAN.md
     file: slides/s47-kontrolnaya-liniya-para-silnee.md
     type: case
-    title: "Пример 5: шведское испытание — одно человеческое чтение поверх модели вместо двух"
+    title: "Пример 5: шведское испытание — второе человеческое чтение заменено моделью"
     plan_section: "Раздел 3. Кто это прочёл: человек и модель"
     chapter_ref: "chapter-part2b.md §3.9"
     timing_min: 2.2

@@ -3,7 +3,7 @@
 # Служебный манифест деки Лекции 7 «Решение о человеке: кто смотрит, кто подписывает,
 # кто платит». Issue #229 · ветка issue-lec-07-rework.
 #
-# ЧТО ЭТО. Опись 58 кадров деки со служебными полями на каждый: идентификатор, тип
+# ЧТО ЭТО. Опись 66 кадров деки со служебными полями на каждый: идентификатор, тип
 # кадра, заголовок, раздел, адрес в главе (`chapter_ref`) и `timing_min`. Тайминг и
 # методические поля живут ЗДЕСЬ и во фронтматтере файла кадра — на видимом слое кадра
 # они запрещены (CLAUDE.md § «No Timing / No Methodology in Slides»), и переносить их
@@ -18,15 +18,15 @@
 # оглавлениям частей главы. Это единственное поле манифеста, которое держится на
 # суждении, и проверять при расхождении надо его.
 #
-# СОСТАВ, посчитанный с диска: 58 кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
-# среди них — 41 из 106; остальные 17 кадров каркас ВСТАВИЛ, и у них номера в плане
+# СОСТАВ, посчитанный с диска: 66 кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
+# среди них — 42 из 106; остальные 24 кадров каркас ВСТАВИЛ, и у них номера в плане
 # нет: это кадры, чей `local_id` несёт буквенный хвост (`s6-07a` — вставка к номеру `s6-07`).
 # Считается это по `local_id`, а не по идентификатору показа: `id` говорит, где кадр СТОИТ,
 # `local_id` — какое место плана он занимает, и после переза R1 эти две вещи окончательно
 # разошлись. Снятый номер не переиспользуется: на идентификаторы ссылаются манифесты, разборы
-# прожарок и другие сессии, поэтому в номерах плана зияют пропуски — 65 номеров плана
+# прожарок и другие сессии, поэтому в номерах плана зияют пропуски — 64 номеров плана
 # в деке нет, причина по каждому в `slides/_snyato/README.md` и `slides-snyatye/README.md`.
-# Вставленные: s01a · s01b · s05a · s11a · s18a · s22a · s49b · s49d · s49f · s60b · s60ba · s60bb · s60c · s62 · s63a · s63b · s73ca.
+# Вставленные: s01a · s01aa · s01ab · s01ac · s01ad · s01ae · s01af · s01b · s05a · s11a · s18a · s22a · s49b · s49d · s49f · s60ba · s60bb · s60c · s62 · s63 · s63a · s63ab · s63b · s73ca.
 # Что делает каждый — в его собственной записи ниже (`type`, `title`, `section`); списком
 # здесь это не повторяется, потому что набранный руками список состава тут уже соврал.
 #
@@ -65,10 +65,10 @@ deck:
   slot_min: 90
   qa_min: 10
   content_target_min: 80.00      # слот минус вопросы; цель CUT-ORDER.md §1.1
-  total_slides: 58
-  plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 41 из них
-  inserted_slides: [s01a, s01b, s05a, s11a, s18a, s22a, s49b, s49d, s49f, s60b, s60ba, s60bb, s60c, s62, s63a, s63b, s73ca]
-  sum_timing_min: 53.80           # сложено по timing_min файлов кадров
+  total_slides: 66
+  plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 42 из них
+  inserted_slides: [s01a, s01aa, s01ab, s01ac, s01ad, s01ae, s01af, s01b, s05a, s11a, s18a, s22a, s49b, s49d, s49f, s60ba, s60bb, s60c, s62, s63, s63a, s63ab, s63b, s73ca]
+  sum_timing_min: 60.20           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
   curriculum_level: "отраслевая лекция L7; strict-in ≥30% обязателен, waiver недоступен"
@@ -100,9 +100,10 @@ motif:
   surface: "#F4F7FA"
 
 slide_types:                     # значения поля type, с числом кадров
-  case:        { count:  20, meaning: "разбор или картина работы" }
-  norm:        { count:  15, meaning: "норматив, устройство, правило" }
+  case:        { count:  22, meaning: "разбор или картина работы" }
+  norm:        { count:  16, meaning: "норматив, устройство, правило" }
   summary:     { count:  12, meaning: "вывод раздела или свод" }
+  analitika:   { count:   5, meaning: "—" }
   divider:     { count:   5, meaning: "дивайдер раздела" }
   comparison:  { count:   3, meaning: "два столбца «что получается / что не получается»" }
   cover:       { count:   1, meaning: "обложка" }
@@ -111,13 +112,13 @@ slide_types:                     # значения поля type, с число
 
 sections:                        # разделы показа: кадров и минут, сложено по файлам
   - { name: "0. Вход",
-      slides: 6, timing_min: 5.20, range: [s01, s05a] }
+      slides: 12, timing_min: 9.80, range: [s01, s05a] }
   - { name: "1. Первичный скрининг и отбор на обследование",
       slides: 9, timing_min: 6.85, range: [s11, s20] }
   - { name: "2. Исследование и постановка диагноза",
       slides: 18, timing_min: 20.30, range: [s22, s50] }
   - { name: "3. Ведение медицинской документации",
-      slides: 10, timing_min: 8.40, range: [s60ba, s64] }
+      slides: 12, timing_min: 10.20, range: [s60ba, s64] }
   - { name: "4. Профессиональная квалификация: поддержание и износ",
       slides: 7, timing_min: 5.45, range: [s73b, s73j] }
   - { name: "5. Итоги",
@@ -127,7 +128,7 @@ sections:                        # разделы показа: кадров и 
 
 slides:
 
-  # ─── 0. Вход · 6 кадров · 5.20 мин ───
+  # ─── 0. Вход · 12 кадров · 9.80 мин ───
   - id: s01
     local_id: "В-01"                       # номер SLIDE-PLAN.md
     file: slides/s01-cover.md
@@ -137,6 +138,22 @@ slides:
     timing_min: 0.4
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s01-hero-chtenie-mammogrammy.jpg"
+  - id: s01ad
+    local_id: "В-01ad"                     # вставленный кадр, номера в плане нет
+    file: slides/s01ad-dve-storony-priyoma.md
+    type: analitika
+    title: "Две стороны приёма: врач и пациент"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.4
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s01ae
+    local_id: "В-01ae"                     # вставленный кадр, номера в плане нет
+    file: slides/s01ae-vliyanie-na-vracha.md
+    type: analitika
+    title: "Влияние на врача"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s01a
     local_id: "В-01a"                      # вставленный кадр, номера в плане нет
     file: slides/s01a-tsikl-okazaniya-pomoshchi-tselikom.md
@@ -145,6 +162,38 @@ slides:
     chapter_ref: "chapter.md § Обзор предмета (цикл оказания медицинской помощи)"
     timing_min: 0.95
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+  - id: s01ab
+    local_id: "В-01ab"                     # вставленный кадр, номера в плане нет
+    file: slides/s01ab-statistika-dopuska-ii-izdeliy.md
+    type: analitika
+    title: "Изделия с ИИ: счёт и пути"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.8
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s01af
+    local_id: "В-01af"                     # вставленный кадр, номера в плане нет
+    file: slides/s01af-vliyanie-na-patsienta.md
+    type: analitika
+    title: "Влияние на пациента"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s01ac
+    local_id: "В-01ac"                     # вставленный кадр, номера в плане нет
+    file: slides/s01ac-statistika-ispolzovaniya-ii.md
+    type: analitika
+    title: "Применение ИИ: врачи и поток"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.8
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s01aa
+    local_id: "В-01aa"                     # вставленный кадр, номера в плане нет
+    file: slides/s01aa-mekhanizmy-dopuska-ssha-i-rossiya.md
+    type: norm
+    title: "Механизмы допуска медицинского изделия: США и Россия"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.8
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s01b
     local_id: "В-01b"                      # вставленный кадр, номера в плане нет
     file: slides/s01b-kak-poluchayut-dannye-i-kak-reshayut-bez-modeli.md

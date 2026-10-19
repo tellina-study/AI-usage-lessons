@@ -72,7 +72,47 @@ completion`) — это НЕ признак того, что данные не �
   буквальный плейсхолдер «[Имя координатора]», доставлен как есть, `message_id 4`.
 - Execution `43` (шаблон) — детерминированный текст, доставлен без модели, `message_id 5`.
 
-## Кейс 2 — дедупликация
+## Кейс 2 — переизмерение на 4 схемы (2026-10-19, второй проход)
+
+Исходные 20 тестовых пар первого измерения (хэш 15/20, TF-IDF 15/20, LLM-судья 19/20) нигде не
+сохранились — временный workflow первого прохода был удалён, в отличие от Кейса 3. **На этот раз
+ничего не удалено.**
+
+- Генератор пар — `_gen_duplicate_check_pairs.py`, набор — `duplicate-check-test-pairs.json` (20
+  пар: 5 буквальных повторов + 5 перефразировок + 10 разных вопросов, 3 из них на близкую тему).
+- Хэш и TF-IDF-косинус (порог 0,3) — детерминированный локальный расчёт, без сети, воспроизводим
+  (формула смотри в `duplicate-check-results.json` поле `methodology`).
+- LLM-судья (gpt-4o-mini) — реальные вызовы через workflow `stage-2-duptest.json`
+  («С8 · Кейс 2 — тест дедупликации (стенд, 4 схемы)», id `gs5uhluV74yu045D`), **опубликован на
+  стенде и НЕ удалён**.
+- Результат: хэш **15/20**, TF-IDF-косинус **13/20** (хуже хэша — 2 новых ложных срабатывания на
+  вопросах близкой темы, которые хэш в принципе не может дать), LLM-судья **17/20** (3 ложных
+  срабатывания, включая пару без единого общего слова).
+
+**Jev (TypeSafe Decisions API) — подтверждён как реальный сервис, но не измерен.** Три независимые
+проверки подлинности: `GET /api/v1/models/typesafe/jev-1.13/endpoints` → 200, модель с модальностью
+`text+image->decisions`; `POST https://openrouter.ai/api/alpha/decisions` без авторизации → 401
+«No cookie auth credentials found» (путь существует, не 404); credential `OpenRouter account`
+(`VbxiQn8TbqA4R2mw`), использованный ОШИБОЧНО через `lmChatOpenRouter` на chat/completions,
+получил настоящую структурную ошибку 400 от бэкенда OpenRouter: «typesafe/jev-1.13 is a decisions
+model and cannot be used with the chat/completions endpoint. Use the /api/alpha/decisions endpoint
+instead.» — т.е. ключ живой.
+
+**Блокер — не сервис, а право n8n-credential на generic HTTP.** HTTP Request узел с
+`authentication: predefinedCredentialType`, `nodeCredentialType: openRouterApi` на тот же
+credential даёт `NodeOperationError «Credentials not found»` — воспроизводимо на всех 20 парах и
+на диагностическом вызове к заведомо рабочему `GET /api/v1/models`. `GET
+/credentials/schema/openRouterApi` подтверждает, что у этого типа credential есть поле
+`allowedHttpRequestDomains` (enum `all`/`domains`/`none`) — именно оно, похоже, гейтит generic-HTTP
+использование отдельно от node-specific (langchain) использования, которое работает без проблем.
+Агент НЕ пытался менять credential (песочница блокирует `PATCH /credentials/<id>` — правильно,
+это чужой секрет). **Нужно одно действие владельца в n8n UI:** Credentials → «OpenRouter account»
+→ включить разрешение на использование в HTTP Request node (домен `openrouter.ai`). После этого
+workflow `gs5uhluV74yu045D` прогоняется по тем же 20 парам без единой правки кода.
+
+Полный протокол по каждой паре и все 4 поля методологии — `duplicate-check-results.json`.
+
+## Кейс 2 — дедупликация (первый проход, 2026-10-18 — числа утрачены)
 
 - Execution `50` (повтор другими словами) — узел `Same question, reworded? (LLM)` реально
   ответил «Да.».

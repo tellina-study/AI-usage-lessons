@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Кейс «Проверка на повтор» Семинара 8 (issue #274) — 3 схемы.
+"""Кейс «Проверка на повтор» Семинара 8 (issue #274) — 4 схемы.
 
-    k2-shema-sravnenie.png    слой 1, ГЛАВНАЯ схема кейса: три столбца —
+    k2-shema-sravnenie.png    слой 1, ГЛАВНАЯ схема кейса: четыре столбца —
                                точное совпадение (хэш) 15/20 (75%), TF-IDF +
-                               косинус 15/20 (75%), дешёвая LLM-судья 19/20
-                               (95%) — настоящие измеренные числа, 20 тестовых
-                               пар. Четвёртой схемы (внешний сервис «jev») на
-                               схеме нет вовсе — не реализована (SETKA
-                               «Состояние стенда»), даже пустого места под
-                               неё здесь нет.
+                               косинус 13/20 (65%, хуже хэша), дешёвая
+                               LLM-судья 17/20 (85%), внешний сервис jev —
+                               не измерено (сервис подтверждён, блокер —
+                               право доступа credential в n8n). Набор
+                               переизмерен 2026-10-19 на НОВОМ наборе 20 пар
+                               (исходный набор первого измерения не
+                               сохранился) — stend/duplicate-check-results.json.
     k2-n8n-mehanika.png        слой 2 (n8n-стиль): `Set` «Normalize + hash» →
                                `IF` «Exact duplicate in window?» → два исхода.
     k2-n8n-llm-provexa.png     слой 2 (n8n-стиль): `chainLlm` «Same question,
@@ -16,8 +17,8 @@
                                прогонах (буквальный повтор / перефразировка).
 
 Числа и формулировки — дословно `SETKA-KEYSOV-S8.md` «Кейс 2 — Проверка на
-повтор» (таблица трёх схем) и `BRIEF-PROIZVODSTVO.md` §3. Слой 2 — не снимок
-живого UI n8n, недостижим в этой среде, см. `notes/mcp-limitations.md`
+повтор» (таблица четырёх схем) и `BRIEF-PROIZVODSTVO.md` §3. Слой 2 — не
+снимок живого UI n8n, недостижим в этой среде, см. `notes/mcp-limitations.md`
 [#233-8].
 
 Запуск: `python3 make_figures_k2.py` (из `rendered/`).
@@ -36,66 +37,82 @@ def frame(d, x, y, w, h, *, fill=SURF, stroke=LIGHT, sw=3, r=14):
     d.rounded_rectangle([x, y, x + w, y + h], radius=r, fill=fill, outline=stroke, width=sw)
 
 
-# ── слой 1: три столбца сравнения, реальные числа ───────────────────────────
+# ── слой 1: четыре столбца сравнения, реальные числа ────────────────────────
 def sravnenie():
-    CH = 560
+    CH = 580
     im = Image.new("RGB", (CW, CH), W)
     d = ImageDraw.Draw(im)
-    head(d, "Три измеренных способа найти повтор — на одних и тех же 20 парах",
+    head(d, "Четыре способа найти повтор — на одних и тех же 20 парах",
          sz=25, x=40, y=16)
 
     cols = [
         dict(x=40, title="Точное совпадение (хэш)", pct="15/20 (75%)", col=MID, line=LIGHT,
-             fill=SURF,
+             fill=SURF, measured=True,
              good="поймала все 5 буквальных повторов и все 10 разных вопросов",
              bad="пропустила все 5 перефразировок — 0% на них"),
-        dict(x=560, title="TF-IDF + косинус (порог 0,3)", pct="15/20 (75%)", col=MID, line=LIGHT,
-             fill=SURF,
-             good="поймала ровно то же, что и хэш",
-             bad="та же пятёрка перефразировок — 0 общих слов у большинства пар"),
-        dict(x=1080, title="Дешёвая LLM-судья (gpt-4o-mini)", pct="19/20 (95%)", col=GOLDINK,
-             line=GOLD, fill=WARM,
-             good="поймала все 10 дублей и 9 из 10 разных вопросов",
-             bad="1 ложное срабатывание — тематически близкая, но другая пара"),
+        dict(x=430, title="TF-IDF + косинус (порог 0,3)", pct="13/20 (65%)", col=RED, line=RED,
+             fill=SURF, measured=True,
+             good="хуже хэша, не наравне",
+             bad="те же 5 перефразировок + 2 ложных срабатывания, где хэш не ошибается"),
+        dict(x=820, title="Дешёвая LLM-судья (gpt-4o-mini)", pct="17/20 (85%)", col=GOLDINK,
+             line=GOLD, fill=WARM, measured=True,
+             good="поймала все 10 дублей",
+             bad="3 ложных срабатывания — не все объясняются совпадением слов"),
+        dict(x=1210, title="Внешний сервис (jev)", pct="не измерено", col=GREY_TX, line=GREY_FILL,
+             fill=SOFT_GREY, measured=False,
+             good="сервис подтверждён как реальный (OpenRouter, typesafe/jev-1.13)",
+             bad="блокер — право доступа credential в n8n, не существование сервиса"),
     ]
-    CW_COL = 480
-    BAR_Y, BAR_H = 150, 230
+    CW_COL = 350
+    BAR_Y, BAR_H = 150, 250
 
     for c in cols:
         frame(d, c["x"], BAR_Y, CW_COL, BAR_H, fill=c["fill"], stroke=c["line"], sw=4)
-        lines = wrap(d, c["title"], f(21, True), CW_COL - 40)
-        yy = BAR_Y + 20
+        lines = wrap(d, c["title"], f(19, True), CW_COL - 32)
+        yy = BAR_Y + 18
         for ln in lines:
-            fit(d, ln, f(21, True), CW_COL - 40, f"заголовок «{c['title']}»")
-            clabel(d, c["x"] + CW_COL / 2, yy, ln, 21, DEEP, True,
-                   where=f"заголовок «{c['title']}»", limit=CW_COL - 40)
-            yy += 28
-        clabel(d, c["x"] + CW_COL / 2, yy + 8, c["pct"], 38, c["col"], True,
-               where=f"число «{c['title']}»", limit=CW_COL - 40)
+            fit(d, ln, f(19, True), CW_COL - 32, f"заголовок «{c['title']}»")
+            clabel(d, c["x"] + CW_COL / 2, yy, ln, 19, DEEP, True,
+                   where=f"заголовок «{c['title']}»", limit=CW_COL - 32)
+            yy += 26
 
-        # тонкая полоса-прогресс под числом — доля правильных ответов
-        frac = int(c["pct"].split("/")[0])
-        track_y = yy + 62
-        d.rounded_rectangle([c["x"] + 30, track_y, c["x"] + CW_COL - 30, track_y + 14],
-                            radius=7, fill=GREY_FILL)
-        fw = (CW_COL - 60) * frac / 20
-        d.rounded_rectangle([c["x"] + 30, track_y, c["x"] + 30 + fw, track_y + 14],
-                            radius=7, fill=c["col"])
+        pct_sz = 32 if c["measured"] else 24
+        clabel(d, c["x"] + CW_COL / 2, yy + 8, c["pct"], pct_sz, c["col"], True,
+               where=f"число «{c['title']}»", limit=CW_COL - 32)
 
-        gy = track_y + 34
-        for txt, col in ((c["good"], MID), (c["bad"], GOLDINK if c is cols[2] else MUTE)):
-            glines = wrap(d, txt, f(15), CW_COL - 40)
+        track_y = yy + (56 if c["measured"] else 46)
+        if c["measured"]:
+            # тонкая полоса-прогресс под числом — доля правильных ответов
+            frac = int(c["pct"].split("/")[0])
+            d.rounded_rectangle([c["x"] + 24, track_y, c["x"] + CW_COL - 24, track_y + 14],
+                                radius=7, fill=GREY_FILL)
+            fw = (CW_COL - 48) * frac / 20
+            d.rounded_rectangle([c["x"] + 24, track_y, c["x"] + 24 + fw, track_y + 14],
+                                radius=7, fill=c["col"])
+        else:
+            # не измерено — пунктирный намёк вместо полосы (ряд коротких штрихов)
+            seg_y = track_y + 7
+            xx = c["x"] + 24
+            while xx < c["x"] + CW_COL - 24:
+                d.line([(xx, seg_y), (xx + 14, seg_y)], fill=GREY_FILL, width=4)
+                xx += 22
+
+        gy = track_y + 32
+        for txt, col in ((c["good"], MID if c["measured"] else GREY_TX),
+                         (c["bad"], RED if c is cols[1] else (GOLDINK if c is cols[2] else MUTE))):
+            glines = wrap(d, txt, f(14), CW_COL - 32)
             for ln in glines:
-                fit(d, ln, f(15), CW_COL - 40, f"пояснение «{c['title']}»")
-                clabel(d, c["x"] + CW_COL / 2, gy, ln, 15, col, where=f"пояснение «{c['title']}»",
-                       limit=CW_COL - 40)
-                gy += 20
+                fit(d, ln, f(14), CW_COL - 32, f"пояснение «{c['title']}»")
+                clabel(d, c["x"] + CW_COL / 2, gy, ln, 14, col, where=f"пояснение «{c['title']}»",
+                       limit=CW_COL - 32)
+                gy += 18
             gy += 4
 
-    clabel(d, CW / 2, 490,
-           "Числа — измерение на 20 тестовых парах (10 настоящих дублей + 10 разных вопросов),",
+    clabel(d, CW / 2, 496,
+           "Числа — измерение на 20 тестовых парах, переизмерено 2026-10-19 на новом наборе,",
            18, MUTE, where="подвал 1", limit=CW - 100)
-    clabel(d, CW / 2, 514, "не предположение. Четвёртая схема (внешний сервис) не реализована.",
+    clabel(d, CW / 2, 520,
+           "не предположение. Jev — реальный сервис, прогон блокирован правом доступа credential.",
            18, MUTE, where="подвал 2", limit=CW - 100)
     return im
 

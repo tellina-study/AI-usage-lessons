@@ -96,7 +96,7 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 4. Профессиональная квалификация: поддержание и износ · 7 кадров · 5.45 мин ───
+  # ─── 4. Профессиональная квалификация: поддержание и износ · 8 кадров · 6.45 мин ───
   - id: s73b
     local_id: "s5-01"                      # номер SLIDE-PLAN.md
     file: slides/s73b-divider-navyk.md
@@ -129,7 +129,7 @@ slides:
     local_id: "s5-03"                      # номер SLIDE-PLAN.md
     file: slides/s73d-tsena-i-dva-rezhima-osmotra.md
     type: case
-    title: "Цена обеих ошибок и оба классических режима — до всякой модели"
+    title: "Осмотр при выведении прибора: цена промаха и два порядка работы без модели"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.4, §10.5"
     timing_min: 1
@@ -143,11 +143,20 @@ slides:
     chapter_ref: "chapter-part5.md §10.6, §10.8 (+ §10.7)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73g
+    local_id: "s5-05"                      # номер SLIDE-PLAN.md
+    file: slides/s73g-primer-2-artincol-rossiya.md
+    type: case
+    title: "Пример 2: отечественный помощник ArtInCol на той же процедуре"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s73i
     local_id: "s5-08"                      # номер SLIDE-PLAN.md
     file: slides/s73i-vyvod-navyk.md
     type: summary
-    title: "Квалификация: исполнитель тот же, но стал хуже"
+    title: "Свод стадии: что получается, что нет и что из этого про вас"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)"
     timing_min: 0.6
@@ -156,8 +165,8 @@ slides:
     local_id: "s5-09"                      # номер SLIDE-PLAN.md
     file: slides/s73j-mesto-razdela-vne-okna.md
     type: summary
-    title: "Место раздела на карте курса: своего столбца нет"
+    title: "Два режима подсветки: где человек остаётся и где его снимают"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part5.md §10.13 (+ chapter.md §0.10) — карта стадии счётом; две величины кадра («12 из 42 в окне», «четвёртый раздел подряд») в главе отсутствуют: это счёт деки по своей карте, подписанный как собственный"
     timing_min: 0.9
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }

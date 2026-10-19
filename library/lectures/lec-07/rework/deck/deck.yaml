@@ -288,7 +288,7 @@ slides:
     local_id: "s1-04b"                     # вставленный кадр, номера в плане нет
     file: slides/s15a-arbitrazh-i-asimmetriya-doveriya.md
     type: case
-    title: "Арбитраж на расхождении и асимметрия доверия находке модели"
+    title: "Маммографический скрининг, продолжение: арбитраж и доверие находке модели"
     chapter_ref: "chapter-part1b.md §1.4 (продолжение разбора s15: арбитраж, асимметрия доверия, честный пробел обучения/обновления/дрейфа)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
@@ -304,7 +304,7 @@ slides:
     local_id: "s1-07b"                     # вставленный кадр, номера в плане нет
     file: slides/s16a-ustroystvo-chat-bota-bez-modeli.md
     type: case
-    title: "Пример 1, устройство: граф вероятностей и правила для красных флагов"
+    title: "Пример 1, Babylon «GP at Hand»: граф вероятностей и правила для красных флагов"
     chapter_ref: "chapter-part1b.md §1.5 (продолжение разбора s16: опубликованная архитектура — вероятностный граф и правила для красных флагов)"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
@@ -312,7 +312,7 @@ slides:
     local_id: "s1-08"                      # номер SLIDE-PLAN.md
     file: slides/s18-glaznoe-dno-bez-oftalmologa.md
     type: case
-    title: "Пример 2: глазное дно снимают на приёме, а не у офтальмолога"
+    title: "Пример 2: целевой скрининг осложнения у диабетиков, не у офтальмолога"
     chapter_ref: "chapter-part1b.md §1.6"
     timing_min: 0.95
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: acquired }
@@ -329,7 +329,7 @@ slides:
     local_id: "s1-08b"                     # вставленный кадр, номера в плане нет
     file: slides/s18b-obuchenie-obnovlenie-i-dreyf.md
     type: case
-    title: "Пример 2, устройство: обучающая выборка, обновление и другая популяция"
+    title: "Пример 2, глазное дно (IDx-DR): обучение, обновление и другая популяция"
     chapter_ref: "chapter-part1b.md §1.6 (продолжение разбора s18/s18a: архитектура EyeArt, пост-маркетинговое обновление 510(k) K213037, германское измерение чувствительности к популяции)"
     timing_min: 0.85
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }

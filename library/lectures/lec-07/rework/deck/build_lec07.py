@@ -61,7 +61,7 @@ sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 from dataclasses import replace  # noqa: E402
 
 from deckkit import (columns, figure, floor, flow, markup, media,  # noqa: E402
-                     metrics, plates, prims, render as rnd, report, rowblocks,
+                     metrics, plates, plotnost, prims, render as rnd, report, rowblocks,
                      scheme, slidefile, tables, titles, twocol, wrap)
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, OUTLINE,  # noqa: E402
                            SLIDE_H, SLIDE_W, WHITE)
@@ -986,17 +986,29 @@ def build(only=None, out=OUT, slides_dir=None, root=None):
     root = root or LEC_ROOT
     p = prims.new_deck()
     n = 0
+    plotno = []
     for f in slidefile.slide_files(sd, only):
         sl = slidefile.read_slide(f)
         if sl is None:
             continue
         fit_media(sl, root)
         kind = str(sl.meta.get("type") or "case").strip()
+        # §11.2/§11.3 канона формы: оба порога проверяются СБОРКОЙ, а не
+        # напоминанием в наряде агента. Счёт идёт до отрисовки — чтобы
+        # предупреждение стояло рядом со своим кадром в отчёте.
+        slov, _ = plotnost.proverit_kadr(sl)
+        plotno.append((sl.sid, slov, kind))
+        if kind == "case" and not sl.meta.get("scheme"):
+            report.warn(
+                f"[схема] {sl.sid}: кадр разбора без поля `scheme` — схема "
+                "решения и есть главный носитель инженерного содержания, "
+                "текст к ней пояснение (§10.3)")
         s = BUILDERS.get(kind, content)(p, sl, root)
         markup.notes_with_links(s, sl.notes)
         if sl.sid not in report.GOLD_SEEN:
             report.warn(f"[золото] {sl.sid}: золотого акцента на кадре нет")
         n += 1
+    plotnost.proverit_mediany(plotno)
     metrics.font_gaps()
     p.save(str(out))
     return n

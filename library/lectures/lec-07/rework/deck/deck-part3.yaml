@@ -8,12 +8,12 @@
 
 slides:
 
-  # ─── 5. Итоги · 5 кадров · 4.65 мин ───
+  # ─── 6. Итоги · 8 кадров · 7.45 мин ───
   - id: s96a
     local_id: "s8-00"                      # номер SLIDE-PLAN.md
     file: slides/s96a-divider-sborka.md
     type: divider
-    title: "5. Итоги"
+    title: "6. Итоги"
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md § Раздел 11 (вводка), §11.1"
     timing_min: 0.6
@@ -27,15 +27,42 @@ slides:
     chapter_ref: "chapter-part5b.md §11.1, §11.2, §11.3"
     timing_min: 1.05
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s98
+    local_id: "s8-02"                      # номер SLIDE-PLAN.md
+    file: slides/s98-schet-pripisok.md
+    type: summary
+    title: "Счёт приписок: в тринадцати случаях из двадцати одного выигрыш не у модели"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s99
+    local_id: "s8-02a"                     # вставленный кадр, номера в плане нет
+    file: slides/s99-rabotaet-i-net-po-tipam-zadach.md
+    type: comparison
+    title: "Что работает и что не работает — по типам задач, через все пять стадий"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s101
     local_id: "s8-03"                      # номер SLIDE-PLAN.md
     file: slides/s101-kletki-uznavaemye-protsedury-drugie.md
     type: summary
-    title: "Итог карты: четыре ячейки заняты, восемь пусты"
+    title: "Итог карты: четыре ячейки заняты пятью разделами, восемь пусты"
     plan_section: "Раздел 8. Сборка"
     chapter_ref: "chapter-part5b.md §11.6"
     timing_min: 1.15
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s101a
+    local_id: "s8-03a"                     # вставленный кадр, номера в плане нет
+    file: slides/s101a-shest-mekhanizmov-chto-s-nimi-stalo.md
+    type: analitika
+    title: "Шесть механизмов из введения: встретились все, назван один"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s102
     local_id: "s8-04"                      # номер SLIDE-PLAN.md
     file: slides/s102-chto-menyaetsya-v-cheloveke-i-v-podpisi.md
@@ -55,7 +82,7 @@ slides:
     timing_min: 1.05
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 6. Закрытие · 3 кадров · 2.95 мин ───
+  # ─── 7. Закрытие · 3 кадров · 2.95 мин ───
   - id: s104
     local_id: "s9-01"                      # номер SLIDE-PLAN.md
     file: slides/s104-chto-bylo-obeshchano-v-nachale.md
@@ -86,25 +113,25 @@ slides:
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
 totals:
-  slides: 58
-  timing_min: 53.80               # сложено по файлам кадров
+  slides: 96
+  timing_min: 87.30               # сложено по файлам кадров
   plan_budget_min: 80.00         # заявлено CUT-ORDER.md §1.1 для 106 кадров плана
-  plan_frames_only_min: 31.65     # только номера плана, без вставленных кадров
-  plus_qa_min: 63.80
+  plan_frames_only_min: 38.50     # только номера плана, без вставленных кадров
+  plus_qa_min: 97.30
   slot_min: 90
-  overrun_min: -26.20              # против слота 90 с десятью минутами вопросов
-  strict_in_min: 34.15
-  strict_in_share: "63.5%"      # порог курса 30%; счёт по минутам, partial → out
-  vfy_slides: 29                 # кадров с числом под пересверку в день лекции
+  overrun_min: 7.30              # против слота 90 с десятью минутами вопросов
+  strict_in_min: 61.80
+  strict_in_share: "70.8%"      # порог курса 30%; счёт по минутам, partial → out
+  vfy_slides: 57                 # кадров с числом под пересверку в день лекции
   by_status:
-    "собран": 58
+    "собран": 96
   media:                         # разбор и адреса — deck/images.md
     acquired: 8                   # лежит в deck/assets/, лицензия проверена поимённо
     real_image_needed: 16          # просит настоящий снимок по своему media_needed, не добыт
-    builder_drawn: 27              # схема, плашки, матрица, таблица — снимок не нужен
-    no_decision: 7                # media_needed пусто: вопрос не задавали
-    wired: 13                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
-    note: "поле media заполнено у 13 кадров — s01, s05, s11, s12, s22, s22a, s28, s36, s73b, s73c, s73d, s105, s106; счёт сделан по диску. Расхождение, которое из этого видно: словарь ACQUIRED этого генератора знает 8 пути, то есть media_status = acquired выставлен не всем кадрам, у которых снимок реально встаёт в сборку. ACQUIRED — дубль deck/images.md §2, и сверять его с §2 и с deck/assets/ — отдельная работа, не правка chapter_ref"
+    builder_drawn: 61              # схема, плашки, матрица, таблица — снимок не нужен
+    no_decision: 12                # media_needed пусто: вопрос не задавали
+    wired: 19                     # поле media в файле кадра заполнено, кадр реально встаёт в сборку
+    note: "поле media заполнено у 19 кадров — s01, s01ad, s01ab, s01ac, s05, s11, s12, s12a, s22, s22a, s27, s35, s36, s60bab, s60b, s73b, s73c, s105, s106; счёт сделан по диску. Расхождение, которое из этого видно: словарь ACQUIRED этого генератора знает 8 пути, то есть media_status = acquired выставлен не всем кадрам, у которых снимок реально встаёт в сборку. ACQUIRED — дубль deck/images.md §2, и сверять его с §2 и с deck/assets/ — отдельная работа, не правка chapter_ref"
 
 # РАСХОЖДЕНИЯ плана, файлов кадров и арифметики реза. Выписаны, НЕ исправлены:
 # манифест описывает то, что есть на диске, а решение по каждому — владельца.
@@ -119,15 +146,15 @@ totals:
 # расхождения больше нет.
 divergences:
   - id: D2
-    what: "сумма timing_min по файлам — 51.65 против 80,00, заявленных CUT-ORDER.md §1.1 для 106 кадров"
+    what: "сумма timing_min по файлам — 85.15 против 80,00, заявленных CUT-ORDER.md §1.1 для 106 кадров"
     evidence: "по поимённым минутам планов блоков: лекарство 10,50 против 13,20 по файлам (+2,70); сборка 4,90 против 5,80 (+0,90); удерживают 8,60 против 8,80 (+0,20); отбор 8,20 против 8,30; ядро 12,75 против 12,85; измерили 9,75 против 9,60 (−0,15)"
-    effect: "перебор слота -26.20 минуты (53.80 + 10 против 90), а не 1,25, как считает CUT-ORDER.md §1.1"
-    effect_2: "лестница А (шаги А2 + А3 = −1,50 по файлам) цель не берёт: остаётся 52.30 + 10 = 62.30"
-    fix: "решение владельца: либо вернуть поимённые минуты планов в файлы кадров, либо пересчитать CUT-ORDER.md от 53.80"
+    effect: "перебор слота 7.30 минуты (87.30 + 10 против 90), а не 1,25, как считает CUT-ORDER.md §1.1"
+    effect_2: "лестница А (шаги А2 + А3 = −1,50 по файлам) цель не берёт: остаётся 85.80 + 10 = 95.80"
+    fix: "решение владельца: либо вернуть поимённые минуты планов в файлы кадров, либо пересчитать CUT-ORDER.md от 87.30"
   - id: D3
     what: "s96a и s103a (дивайдеры «Сборки» и «Закрытия», 0,90 минуты вдвоём) в арифметике CUT-ORDER.md §1.1 не числятся"
     evidence: "§1.1 считает +2 структурных кадра перегруппировки (0,50 + 0,75 = 1,25) — это s60b и s60a; про s96a и s103a там ни строки"
-    effect: "объявленный состав 108 кадров против 58 на диске"
+    effect: "объявленный состав 108 кадров против 96 на диске"
     fix: "дописать два кадра в состав CUT-ORDER.md §1.1"
   - id: D4
     what: "у главы есть разделы 7 «Назначение и лечение» (§7.1–7.19) и 8 «Оперативная помощь» (§8.1–8.16), а в деке на них ноль кадров"

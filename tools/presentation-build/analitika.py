@@ -203,6 +203,119 @@ def stolbtsy(zagolovok, ryady, edinitsa, *, zoloto=None, kegl=11,
     }
 
 
+def gruppy(zagolovok, imena_grupp, ryady, edinitsa, *, kegl=11,
+           kegl_zagolovka=13, podpisi_znacheniy=None, gorizontal=True,
+           dolya_gruppy=0.78, dolya_stolbtsa=0.80, legenda=True):
+    """Сгруппированные столбцы: ОДНА ГРУППА — ОДНА ЕДИНИЦА СРАВНЕНИЯ
+    (страна, цех, регион), внутри неё по столбцу на каждую величину.
+
+    ЗАЧЕМ ОТДЕЛЬНО ОТ `stolbtsy`. У `stolbtsy` одна строка — одна величина, и
+    строки сортируются по длине. Для обзора «как дела в стране X» эта форма
+    не годится и была возвращена прожаркой (§10.1 и §11.4
+    `trebovaniya-k-soderzhaniyu-forma.md`): десять строк вида «Лёгкое · США»,
+    «Лёгкое · Великобритания», отсортированных по значению, визуально
+    ранжируют величины с РАЗНЫМИ основаниями счёта и не дают прочесть ни одну
+    страну целиком. Здесь строка — страна, и всё, что про неё известно,
+    стоит в одном ряду; сортировка внутри группы не применяется вовсе,
+    порядок величин одинаков у всех групп, поэтому глаз сравнивает по
+    столбцу, а не по длине.
+
+    `legenda=False` снимает легенду — нужно там, где высота полосы кадра
+    задана типом (у `analitika` она 3,00", и логический холст обязан быть
+    880×216 точек, иначе картинка ужимается по ширине и кегль подписей
+    уезжает ниже пола видимого слоя). Освободившиеся ~25 точек идут группам;
+    взамен имя величины ставится В САМУ ПОДПИСЬ столбца («Лёгкое — 18,7% из
+    12,8 млн»), и тогда столбец читается без сверки с легендой вовсе.
+
+    `imena_grupp` — подписи оси (страны), в том порядке, в каком их читать.
+    `ryady` — `[(имя величины, [значение на каждую группу…], цвет), …]`;
+    `None` на месте значения означает, что величины у этой группы НЕТ, и
+    столбец не рисуется вовсе. Нулём отсутствие не обозначается никогда:
+    ноль читается как измеренная величина, а «программы нет» — это не ноль
+    охвата, это другое утверждение, и называть его надо словами на кадре.
+
+    `podpisi_znacheniy` — `{(индекс ряда, индекс группы): "текст"}`: готовая
+    подпись у конца конкретного столбца. Через неё на кадр попадает
+    ЗНАМЕНАТЕЛЬ, у каждой группы свой («18,7% из 12,8 млн»), — то самое, без
+    чего доля на кадре не принимается (`CLAUDE.md` § Baseline /
+    Counterfactual Mandate). Не задана — печатается само число с процентом.
+
+    Имена величин уходят в ЛЕГЕНДУ: у `stolbtsy` легенда выключена, потому
+    что там ряд один, здесь рядов несколько и различать их нечем больше.
+    """
+    imena_grupp = list(imena_grupp)
+    podpisi_znacheniy = podpisi_znacheniy or {}
+    nabory = []
+    for i, (imya, znach, cvet) in enumerate(ryady):
+        assert len(znach) == len(imena_grupp), (imya, len(znach))
+        gotovye = [podpisi_znacheniy.get((i, g)) for g in range(len(znach))]
+        nabory.append({
+            "label": imya,
+            "data": [None if z is None else z for z in znach],
+            "backgroundColor": cvet,
+            "borderWidth": 0,
+            # Просвет между группами и между столбцами внутри группы:
+            # без него подпись значения одного столбца встаёт вплотную к
+            # столбцу соседнего ряда и читается как его подпись.
+            "categoryPercentage": dolya_gruppy,
+            "barPercentage": dolya_stolbtsa,
+            "datalabels": {
+                "color": TEKST,
+                "anchor": "end",
+                "align": "right" if gorizontal else "end",
+                "offset": 2,
+                # Пустая подпись у отсутствующей величины: `null` в данных
+                # Chart.js столбца не рисует, но подпись — рисует, и без
+                # этого на месте «программы нет» печаталось «null».
+                "formatter": _JS(
+                    "function(v,c){var g=%s;if(v===null||v===undefined)"
+                    "return '';return g[c.dataIndex]||(String(v)"
+                    ".replace('.',',')+'%%');}"
+                    % _spisok_js(gotovye)),
+                "font": {"size": kegl, "weight": "bold"},
+            },
+        })
+    os_chisel, os_imyon = ("x", "y") if gorizontal else ("y", "x")
+    dliny = [s for s in podpisi_znacheniy.values()] or ["00,0%"]
+    return {
+        "type": "bar",
+        "data": {"labels": imena_grupp, "datasets": nabory},
+        "options": {
+            "plugins": {
+                "legend": {"display": legenda, "position": "top",
+                           "labels": {**_osnova(kegl), "boxWidth": kegl,
+                                      "boxHeight": kegl, "padding": 8}},
+                "title": {"display": True, "text": [zagolovok, edinitsa],
+                          "color": TEKST,
+                          "font": {"size": kegl_zagolovka, "weight": "bold"}},
+                "datalabels": {"display": True},
+            },
+            "indexAxis": "y" if gorizontal else "x",
+            "layout": {"padding": {"top": 2, "bottom": 0,
+                                   "right": min(190, max(40, int(
+                                       max(len(s) for s in dliny)
+                                       * kegl * 0.62)))}},
+            "scales": {
+                os_imyon: {"ticks": {**_osnova(kegl), "maxRotation": 0,
+                                     "autoSkip": False},
+                           "grid": {"display": False}},
+                os_chisel: {"ticks": {**_osnova(kegl),
+                                      "callback": _perevodchik(False)},
+                            "grid": {"color": SETKA},
+                            "beginAtZero": True},
+            },
+        },
+    }
+
+
+def _spisok_js(spisok):
+    """Список строк как литерал JS: `null` там, где подписи нет."""
+    import json
+    return "[" + ",".join(
+        "null" if s is None else json.dumps(s, ensure_ascii=False)
+        for s in spisok) + "]"
+
+
 def linii(zagolovok, podpisi_x, ryady, edinitsa, *, kegl=11,
           kegl_zagolovka=13, drobnaya=False):
     """Линии динамики. `ryady` — [(имя, [значения], цвет), …].

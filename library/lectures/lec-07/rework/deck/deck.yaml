@@ -3,7 +3,7 @@
 # Служебный манифест деки Лекции 7 «Решение о человеке: кто смотрит, кто подписывает,
 # кто платит». Issue #229 · ветка issue-lec-07-rework.
 #
-# ЧТО ЭТО. Опись 89 кадров деки со служебными полями на каждый: идентификатор, тип
+# ЧТО ЭТО. Опись 93 кадров деки со служебными полями на каждый: идентификатор, тип
 # кадра, заголовок, раздел, адрес в главе (`chapter_ref`) и `timing_min`. Тайминг и
 # методические поля живут ЗДЕСЬ и во фронтматтере файла кадра — на видимом слое кадра
 # они запрещены (CLAUDE.md § «No Timing / No Methodology in Slides»), и переносить их
@@ -18,15 +18,15 @@
 # оглавлениям частей главы. Это единственное поле манифеста, которое держится на
 # суждении, и проверять при расхождении надо его.
 #
-# СОСТАВ, посчитанный с диска: 89 кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
-# среди них — 48 из 106; остальные 41 кадров каркас ВСТАВИЛ, и у них номера в плане
+# СОСТАВ, посчитанный с диска: 93 кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
+# среди них — 50 из 106; остальные 43 кадров каркас ВСТАВИЛ, и у них номера в плане
 # нет: это кадры, чей `local_id` несёт буквенный хвост (`s6-07a` — вставка к номеру `s6-07`).
 # Считается это по `local_id`, а не по идентификатору показа: `id` говорит, где кадр СТОИТ,
 # `local_id` — какое место плана он занимает, и после переза R1 эти две вещи окончательно
 # разошлись. Снятый номер не переиспользуется: на идентификаторы ссылаются манифесты, разборы
-# прожарок и другие сессии, поэтому в номерах плана зияют пропуски — 58 номеров плана
+# прожарок и другие сессии, поэтому в номерах плана зияют пропуски — 56 номеров плана
 # в деке нет, причина по каждому в `slides/_snyato/README.md` и `slides-snyatye/README.md`.
-# Вставленные: s01a · s01aa · s01ab · s01ac · s01ad · s01ae · s01af · s01b · s05a · s11a · s12a · s12b · s15a · s16a · s18a · s18b · s22a · s26a · s27a · s27b · s27c · s30a · s33a · s49b · s49d · s49f · s60ba · s60baa · s60bab · s60bb · s60c · s60e · s61a · s62 · s63 · s63a · s63ab · s63b · s73ca · s73da · s73ga.
+# Вставленные: s01a · s01aa · s01ab · s01ac · s01ad · s01ae · s01af · s01b · s05a · s11a · s12a · s12b · s15a · s16a · s18a · s18b · s19a · s22a · s26a · s27a · s27b · s27c · s30a · s33a · s49b · s49d · s49f · s49h · s60ba · s60baa · s60bab · s60bb · s60c · s60e · s61a · s62 · s63 · s63a · s63ab · s63b · s73ca · s73da · s73ga.
 # Что делает каждый — в его собственной записи ниже (`type`, `title`, `section`); списком
 # здесь это не повторяется, потому что набранный руками список состава тут уже соврал.
 #
@@ -65,10 +65,10 @@ deck:
   slot_min: 90
   qa_min: 10
   content_target_min: 80.00      # слот минус вопросы; цель CUT-ORDER.md §1.1
-  total_slides: 89
-  plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 48 из них
-  inserted_slides: [s01a, s01aa, s01ab, s01ac, s01ad, s01ae, s01af, s01b, s05a, s11a, s12a, s12b, s15a, s16a, s18a, s18b, s22a, s26a, s27a, s27b, s27c, s30a, s33a, s49b, s49d, s49f, s60ba, s60baa, s60bab, s60bb, s60c, s60e, s61a, s62, s63, s63a, s63ab, s63b, s73ca, s73da, s73ga]
-  sum_timing_min: 80.50           # сложено по timing_min файлов кадров
+  total_slides: 93
+  plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 50 из них
+  inserted_slides: [s01a, s01aa, s01ab, s01ac, s01ad, s01ae, s01af, s01b, s05a, s11a, s12a, s12b, s15a, s16a, s18a, s18b, s19a, s22a, s26a, s27a, s27b, s27c, s30a, s33a, s49b, s49d, s49f, s49h, s60ba, s60baa, s60bab, s60bb, s60c, s60e, s61a, s62, s63, s63a, s63ab, s63b, s73ca, s73da, s73ga]
+  sum_timing_min: 84.50           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
   curriculum_level: "отраслевая лекция L7; strict-in ≥30% обязателен, waiver недоступен"
@@ -100,7 +100,7 @@ motif:
   surface: "#F4F7FA"
 
 slide_types:                     # значения поля type, с числом кадров
-  case:        { count:  33, meaning: "разбор или картина работы" }
+  case:        { count:  37, meaning: "разбор или картина работы" }
   norm:        { count:  21, meaning: "норматив, устройство, правило" }
   summary:     { count:  13, meaning: "вывод раздела или свод" }
   analitika:   { count:   8, meaning: "—" }
@@ -114,11 +114,11 @@ sections:                        # разделы показа: кадров и 
   - { name: "0. Вход",
       slides: 12, timing_min: 9.80, range: [s01, s05a] }
   - { name: "1. Первичный скрининг и отбор на обследование",
-      slides: 14, timing_min: 11.15, range: [s11, s20] }
+      slides: 16, timing_min: 13.15, range: [s11, s20] }
   - { name: "2. Инструментальная и лабораторная диагностика",
       slides: 15, timing_min: 14.35, range: [s22, s33a] }
   - { name: "3. Постановка диагноза",
-      slides: 14, timing_min: 16.00, range: [s35, s50] }
+      slides: 16, timing_min: 18.00, range: [s35, s50] }
   - { name: "4. Ведение медицинской документации",
       slides: 16, timing_min: 13.25, range: [s60ba, s64] }
   - { name: "5. Профессиональная квалификация: поддержание и износ",
@@ -229,7 +229,7 @@ slides:
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 1. Первичный скрининг и отбор на обследование · 14 кадров · 11.15 мин ───
+  # ─── 1. Первичный скрининг и отбор на обследование · 16 кадров · 13.15 мин ───
   - id: s11
     local_id: "s1-01"                      # номер SLIDE-PLAN.md
     file: slides/s11-divider-otbor.md
@@ -334,6 +334,22 @@ slides:
     title: "Пример 3, устройство: обучение, обновление и другая популяция"
     chapter_ref: "chapter-part1b.md §1.6 (продолжение разбора s18/s18a: архитектура EyeArt, пост-маркетинговое обновление 510(k) K213037, германское измерение чувствительности к популяции)"
     timing_min: 0.85
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s19
+    local_id: "s1-10"                      # номер SLIDE-PLAN.md
+    file: slides/s19-primer-4-moskva-mammografiya.md
+    type: case
+    title: "Пример 4: Москва, Россия — модель на месте второго читателя маммограмм"
+    chapter_ref: "chapter-part1b.md §1.6а (отечественный разбор: Москва, модель на месте второго читателя маммограмм — что за случай, устройство, цена, оба классических режима)"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s19a
+    local_id: "s1-10a"                     # вставленный кадр, номера в плане нет
+    file: slides/s19a-primer-4-dopusk-i-nadzor.md
+    type: case
+    title: "Пример 4, допуск: два года девять месяцев до оплаты по страховке"
+    chapter_ref: "chapter-part1b.md §1.6а (продолжение разбора s19: контур допуска и пересмотра — пять калибровок, четыре версии, состав технических отказов, нюансы надёжности, что переехало)"
+    timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s20
     local_id: "s1-09"                      # номер SLIDE-PLAN.md
@@ -468,7 +484,7 @@ slides:
     timing_min: 0.7
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 3. Постановка диагноза · 14 кадров · 16.00 мин ───
+  # ─── 3. Постановка диагноза · 16 кадров · 18.00 мин ───
   - id: s35
     local_id: "s3-01"                      # номер SLIDE-PLAN.md
     file: slides/s35-divider-postanovka-diagnoza.md
@@ -573,6 +589,22 @@ slides:
     type: case
     title: "Пример 5, цена: восемнадцать тревог на сто госпитализаций"
     chapter_ref: "chapter-part3.md §4.6-§4.9 (арифметика потока, вторая проверка, что переехало)"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s49g
+    local_id: "s3-18"                      # номер SLIDE-PLAN.md
+    file: slides/s49g-primer-6-moskva-aida.md
+    type: case
+    title: "Пример 6: Москва, Россия — модель предлагает заключительный диагноз по медкарте"
+    chapter_ref: "chapter-part2b.md §3.11а (отечественный разбор: Москва, AIDA — заключительный диагноз по медкарте; устройство, набор кодов, классический режим, отказ модели отвечать)"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s49h
+    local_id: "s3-18a"                     # вставленный кадр, номера в плане нет
+    file: slides/s49h-primer-6-tsena-raskhozhdeniya.md
+    type: case
+    title: "Пример 6, цена: где врач и модель расходятся"
+    chapter_ref: "chapter-part2b.md §3.11а (продолжение разбора s49g: точка расхождения врача и модели, трудные случаи, строгий счёт против синонимичного, что переехало)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s50

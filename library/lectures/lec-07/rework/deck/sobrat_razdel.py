@@ -45,9 +45,11 @@ TOOLS = HERE.parents[4] / "tools" / "presentation-build"
 IMENA = {"1": "sec1-skrining-otbor",
          "4": "sec4-vedenie-dokumentatsii",
          "5": "sec5-kvalifikaciya-i-iznos",
-         # Вся лекция одним файлом: ключ — тег, который `render_sec.py`
-         # собирает из своих аргументов ("-".join(sorted(secs))).
-         "1-2-3-4-5": "lec-07-vsya-lekciya"}
+         # Вся лекция: ключ — тег, который `render_sec.py` склеивает из своих
+         # аргументов ("-".join(sorted(secs))). Разделов у лекции ВОСЕМЬ, не
+         # пять: кроме пяти стадий есть «0. Вход», «6. Итоги» и «7. Закрытие»,
+         # и без них собралось бы 64 кадра из 89.
+         "0-1-2-3-4-5-6-7": "lec-07-vsya-lekciya"}
 
 
 def razdely(tag):
@@ -127,9 +129,11 @@ def main():
     ap.add_argument("--tolko-zametki", action="store_true")
     ap.add_argument("--size", type=int, default=0,
                     help="кадров в куске; 0 — весь раздел одним куском")
+    ap.add_argument("--imya", default=None,
+                    help="имя пары файлов, если его нет в IMENA")
     a = ap.parse_args()
     tag = a.razdel
-    imya = IMENA.get(tag)
+    imya = a.imya or IMENA.get(tag)
     if not imya:
         raise SystemExit(f"для раздела {tag} имя пары файлов не задано "
                          f"(см. IMENA в этом файле)")

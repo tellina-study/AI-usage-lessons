@@ -47,7 +47,9 @@ echo "################ 3. СВЕРКА ДИВАЙДЕРА С ЗАГОЛОВКА�
 # а в разделе 2 их семь и они пре-существующие. Проверяется СВОЙ раздел.
 python3 sverka_reestra.py > /tmp/sverka.txt 2>&1 || true
 cat /tmp/sverka.txt
-python3 "$(dirname "$0")/proverit_svoy_razdel.py" "$RAZDEL" /tmp/sverka.txt
+# Помощник берётся ИЗ КЛОНА, а не из рабочего каталога: всё, что прогоняется,
+# должно приходить из ветки, включая саму проверку.
+python3 "$KLON/library/lectures/lec-07/rework/krug2/proverit_svoy_razdel.py" "$RAZDEL" /tmp/sverka.txt
 
 echo "################ 4. НАЛОЖЕНИЯ — по ЗАКОММИЧЕННОМУ файлу, ДО всякой пересборки"
 # Порядок здесь несущий. Если сначала пересобрать, сторож проверит пересборку,

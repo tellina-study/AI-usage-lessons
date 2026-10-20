@@ -20,3 +20,7 @@ priyomka-vyvod/
 png-FINAL/
 build-pptx*.log
 render-final*.log
+# Полный pptx, который `sobrat_razdel.py --odnim-pptx` собирает под заметки:
+# заметкам он нужен (текст берут из pptx), в репозиторий — нет, он на 6 МБ
+# пересобирается одной командой. Тот же класс, что `chastichnaya-sborka.pdf`.
+lec-07-vsya-lekciya.pptx

@@ -109,7 +109,7 @@ def zametki(tag, imya, odnim_pptx=False):
     if odnim_pptx:
         import build_lec07 as B
         from deckkit import report
-        only = ",".join(i for i, _ in ids_razdela(tag))
+        only = ",".join(ids_razdela(tag))
         pptx = HERE / f"{imya}.pptx"
         print(f"\n=== полный pptx под заметки ({len(only.split(','))} кадров, "
               f"без рендера) ===", flush=True)

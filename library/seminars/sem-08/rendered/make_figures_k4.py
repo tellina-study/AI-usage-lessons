@@ -519,4 +519,195 @@ def vetvlenie_real():
 
 vetvlenie_real()
 
+
+# ── EN variants of the three fully-drawn schemes (issue #172/#274, Bilingual ─
+# Production Rule, first EN pass for this seminar). Self-contained English
+# literals here, NOT the shared --lang/fig_strings_en.py mechanism this
+# toolkit also supports (see fig_toolkit.py docstring) — that dictionary is
+# a seminar-wide resource other parallel case translators may also be
+# touching today, and this file only owns Case 4's own figures. Saved with
+# an explicit "-en.png" name while module-level LANG stays "ru" (default),
+# so `save()`/`outname()` pass the literal name through unchanged. k4-n8n-
+# vetvlenie-real.png / k4-n8n-tsepochka-real.png / k4-uzly-nastroyka-real.png
+# are real rig screenshots — no EN variant needed, the RU names are reused
+# as-is in slides-en/ (n8n's own UI is already English in the real crops).
+def trebovaniya_en():
+    CH = 560
+    im = Image.new("RGB", (CW, CH), W)
+    d = ImageDraw.Draw(im)
+    head(d, "Two classes of picture requirement — the same «model or code» axis",
+         sz=23, x=40, y=16)
+
+    COLW, GAP = 740, 60
+    LX, RX = 40, 40 + COLW + GAP
+    CY0, CH0 = 110, 400
+
+    frame(d, LX, CY0, COLW, CH0, fill=PALE, stroke=MID, sw=4)
+    clabel(d, LX + COLW / 2, CY0 + 28, "Mechanical", 28, DEEP, True,
+           where="заголовок · mechanical", limit=COLW - 60)
+    items_l = ["file size", "format", "resolution"]
+    iy = CY0 + 100
+    for it in items_l:
+        d.ellipse([LX + 60, iy + 8, LX + 76, iy + 24], fill=MID)
+        clabel(d, LX + COLW / 2 + 20, iy, it, 22, DEEP, where=f"пункт · {it}", limit=COLW - 160)
+        iy += 54
+    frame(d, LX + 40, CY0 + 300, COLW - 80, 70, fill=W, stroke=MID, sw=3, r=12)
+    clabel(d, LX + COLW / 2, CY0 + 322, "code checks it — the file has measurable properties",
+           17, MID, True, where="тег · mechanical", limit=COLW - 120)
+
+    frame(d, RX, CY0, COLW, CH0, fill=WARM, stroke=GOLD, sw=4)
+    clabel(d, RX + COLW / 2, CY0 + 28, "Semantic / content-based", 26, GOLDINK, True,
+           where="заголовок · semantic", limit=COLW - 60)
+    lines_r = wrap(d, "the picture actually shows what's needed"
+                       " — not a broken placeholder file, not someone else's image", f(22), COLW - 160)
+    iy = CY0 + 110
+    for ln in lines_r:
+        fit(d, ln, f(22), COLW - 160, "пункт · semantic")
+        clabel(d, RX + COLW / 2, iy, ln, 22, GOLDINK, where="пункт · semantic", limit=COLW - 160)
+        iy += 32
+    frame(d, RX + 40, CY0 + 300, COLW - 80, 70, fill=W, stroke=GOLD, sw=3, r=12)
+    clabel(d, RX + COLW / 2, CY0 + 318, "needs a vision-capable model", 17, GOLDINK, True,
+           where="тег · semantic 1", limit=COLW - 120)
+    clabel(d, RX + COLW / 2, CY0 + 340, "not covered today", 17, GOLDINK, True,
+           where="тег · semantic 2", limit=COLW - 120)
+
+    clabel(d, CW / 2, 530,
+           "A technically sound file can still show the wrong thing.",
+           19, MUTE, where="подвал", limit=CW - 120)
+    return im
+
+
+save(trebovaniya_en(), "k4-shema-trebovaniya-en.png")
+
+
+# ── EN variant: generating the card (n51) ───────────────────────────────────
+def generatsiya_en():
+    CW2, CH = 1600, 600
+    im = Image.new("RGB", (CW2, CH), W)
+    d = ImageDraw.Draw(im)
+    head(d, "Generating the card: text baked into the image, not captioned separately",
+         sz=22, x=40, y=16)
+
+    y, h = 130, 160
+    xs = [40, 430, 820, 1210]
+    bw = 350
+    lim = bw - 40
+
+    frame(d, xs[0], y, bw, h, fill=SURF, stroke=LIGHT)
+    two_lines(d, xs[0] + bw / 2, y + h / 2, "Notification text",
+              "+ requirement: text on top of the picture", limit=lim, where="узел 1 en")
+
+    frame(d, xs[1], y, bw, h, fill=WARM, stroke=GOLD, sw=4)
+    two_lines(d, xs[1] + bw / 2, y + h / 2, "Generating model",
+              "specifically: text → image", bsz=14,
+              tcol=GOLDINK, bcol=GOLDINK, limit=lim, where="узел 2 · generation en")
+
+    frame(d, xs[2], y, bw, h, fill=SURF, stroke=TEAL)
+    two_lines(d, xs[2] + bw / 2, y + h / 2, "Finished card",
+              "text already baked into the pixels", limit=lim, where="узел 3 en")
+
+    frame(d, xs[3], y, bw, h, fill=W, stroke=DEEP, sw=4)
+    two_lines(d, xs[3] + bw / 2, y + h / 2, "Sent to Telegram",
+              "as a photo", limit=lim, where="узел 4 en")
+
+    for i in range(3):
+        arrow(d, xs[i] + bw, y + h / 2, xs[i + 1], y + h / 2, col=MID, wd=4)
+
+    cy2 = y + h + 40
+    callout(d, 40, cy2, 760, 185,
+            "Cost of generating one picture — a reference point",
+            ["gpt-image-1.5 (OpenAI), 1024x1024: low quality $0.009 ·"
+             " medium $0.034 · high $0.133 per picture — for a notification"
+             " I take medium, approx $0.034 per picture",
+             "Source: OpenAI pricing for image-generation models,"
+             " checked October 2026",
+             "Illustrative, NOT measured: approx 20 cards/day — the request"
+             " flow of Case 1 (n06) -> approx 600/month -> approx $20.4/month"],
+            tone="ok", where="cost of generation en")
+
+    callout(d, 820, cy2, 740, 185,
+            "Note: the generated file is not ready to send right away",
+            ["Pictures from generating models come at a large standard"
+             " size and lightly compressed",
+             "Needs re-encoding into a lighter format before sending to"
+             " Telegram — the same sendPhoto 10 MB limit already measured"
+             " at layer 2"],
+            tone="warn", where="перекодировка en")
+
+    clabel(d, CW2 / 2, cy2 + 205,
+           "An architectural estimate, not a node on the rig: image generation is not built into the chain today.",
+           16, MUTE, where="дисклеймер en", limit=CW2 - 100)
+    return im
+
+
+save(generatsiya_en(), "k4-shema-generatsii-en.png")
+
+
+# ── EN variant: mechanics -> content model + compression (n52) ─────────────
+def szhatie_en():
+    CW2, CH = 1600, 680
+    im = Image.new("RGB", (CW2, CH), W)
+    d = ImageDraw.Draw(im)
+    head(d, "Mechanical check -> content-check model, and the compression question",
+         sz=22, x=40, y=16)
+
+    y, h = 110, 140
+    frame(d, 40, y, 300, h, fill=SURF, stroke=LIGHT)
+    two_lines(d, 40 + 150, y + h / 2, "File received", "binary data",
+              limit=260, where="узел файл en")
+
+    frame(d, 390, y, 340, h, fill=PALE, stroke=MID, sw=4)
+    two_lines(d, 390 + 170, y + h / 2, "Mechanical check",
+              "size · format · resolution", limit=300, where="узел мех. проверка en")
+
+    frame(d, 850, y, 420, h, fill=WARM, stroke=GOLD, sw=4)
+    two_lines(d, 850 + 210, y + h / 2, "Content check",
+              "content-check model — semantic requirement", bsz=14,
+              tcol=GOLDINK, bcol=GOLDINK, limit=380, where="узел модель-проверка en")
+    clabel(d, 850 + 210, y + h + 24, "not built on the rig — an architectural estimate",
+           15, MUTE, where="тег модель-проверка en", limit=420)
+
+    arrow(d, 340, y + h / 2, 390, y + h / 2, col=MID, wd=4)
+    arrow(d, 730, y + h / 2, 850, y + h / 2, col=MID, wd=4)
+    clabel(d, 790, y - 14, "passed", 18, MID, True, where="метка прошла en")
+
+    ry = y + h + 80
+    frame(d, 390, ry, 340, 90, fill=W, stroke=RED, sw=3)
+    clabel(d, 390 + 170, ry + 26, "Did not pass", 20, RED, True,
+           where="узел отказ en", limit=300)
+    clabel(d, 390 + 170, ry + 54, "reject — goes no further", 16, MUTE,
+           where="узел отказ-низ en", limit=300)
+    arrow(d, 390 + 170, y + h, 390 + 170, ry, col=RED, wd=4, dash=True)
+    clabel(d, 390 + 170 + 110, y + h + 34, "did not pass", 17, RED, True,
+           where="метка не прошла en")
+
+    y2 = ry + 90 + 70
+    clabel(d, CW2 / 2, y2 - 12, "Compression before sending to the content-check model",
+           20, DEEP, True, where="заголовок секции 2 en", limit=CW2 - 120)
+
+    y3, h3 = y2 + 40, 160
+    frame(d, 120, y3, 460, h3, fill=SURF, stroke=LIGHT)
+    two_lines(d, 120 + 230, y3 + h3 / 2, "Before compression", "4032x3024, uncompressed",
+              third="approx 1500 tokens", tcol3=MUTE, limit=400, where="до сжатия en")
+
+    frame(d, 1020, y3, 460, h3, fill=SURF, stroke=TEAL, sw=4)
+    two_lines(d, 1020 + 230, y3 + h3 / 2, "After compression", "720x540, JPEG Q85",
+              third="approx 300 tokens — five times cheaper", tcol3=MID, limit=400,
+              where="после сжатия en")
+
+    arrow(d, 580, y3 + h3 / 2, 1020, y3 + h3 / 2, col=MID, wd=4)
+    clabel(d, 800, y3 + h3 / 2 - 50, "moderate compression:", 16, MUTE, True,
+           where="метка сжатия 1 en", limit=420)
+    clabel(d, 800, y3 + h3 / 2 - 28, "JPEG Q75-85, width <=1024 px", 16, MUTE,
+           where="метка сжатия 2 en", limit=420)
+
+    clabel(d, CW2 / 2, y3 + h3 + 40,
+           "Illustrative example from a comparable case (public sources),"
+           " not a measurement on this rig.",
+           16, MUTE, where="дисклеймер сжатие en", limit=CW2 - 100)
+    return im
+
+
+save(szhatie_en(), "k4-shema-szhatie-en.png")
+
 report()

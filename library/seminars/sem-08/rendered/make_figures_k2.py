@@ -145,6 +145,89 @@ def gibrid():
 save(gibrid(), "k2-shema-gibrid.png")
 
 
+# ── слой 1 (EN): та же схема, английские подписи — Bilingual Production Rule
+# (CLAUDE.md, issue #172/#274), EN-трек Кейса 2. Единственная фигура кейса,
+# которую требовалось перерисовать на английском (issue #274, задача
+# EN-перевода n17-n26): все остальные фигуры кейса — настоящие скрины живого
+# n8n-стенда и не перерисовываются ни на одном языке (см. slides-en/n18..n26
+# и glossary.en.yaml). Текст — прямой перевод gibrid(), без изменения
+# раскладки, цветов и координат (fig_toolkit.set_lang здесь не используется:
+# у Семинара 8 нет общего словаря fig_strings_en.py, заводить его одним
+# кейсом из четырёх параллельных — создало бы риск столкновения с другими
+# переводчиками, работающими над своими figures в то же время; отдельная
+# EN-функция в этом, не общем, файле кейса такого риска не несёт).
+def gibrid_en():
+    CH = 600
+    im = Image.new("RGB", (CW, CH), W)
+    d = ImageDraw.Draw(im)
+    head(d, "Solution: hash first, jev on the expensive step",
+         sz=24, x=40, y=16)
+
+    BOX_Y, BOX_H = 150, 250
+
+    # Step 1 — cheap mechanical pre-filter
+    ax, aw = 60, 600
+    frame(d, ax, BOX_Y, aw, BOX_H, fill=PALE, stroke=MID, sw=4)
+    yy = BOX_Y + 26
+    for ln in wrap(d, "Step 1 — cheap mechanical pre-filter", f(20, True), aw - 48):
+        fit(d, ln, f(20, True), aw - 48, "step 1 · title (en)")
+        clabel(d, ax + aw / 2, yy, ln, 20, DEEP, True, where="step 1 · title (en)", limit=aw - 48)
+        yy += 27
+    yy += 10
+    for piece in ("Catches literal repeats for free and instantly — "
+                  "no model call at all.",
+                  "On the test (previous screen): 15 of 20 — all literal "
+                  "repeats, 0 rephrasings."):
+        for ln in wrap(d, piece, f(16), aw - 48):
+            fit(d, ln, f(16), aw - 48, "step 1 · text (en)")
+            clabel(d, ax + aw / 2, yy, ln, 16, MUTE, where="step 1 · text (en)", limit=aw - 48)
+            yy += 22
+        yy += 8
+
+    # Arrow between steps
+    GAP = 140
+    arrow(d, ax + aw, BOX_Y + BOX_H / 2, ax + aw + GAP, BOX_Y + BOX_H / 2, col=MID, wd=4)
+    clabel(d, ax + aw + GAP / 2, BOX_Y + BOX_H / 2 - 40, "not resolved", 14, MUTE,
+           where="подпись стрелки 1 (en)", limit=GAP - 10)
+    clabel(d, ax + aw + GAP / 2, BOX_Y + BOX_H / 2 - 22, "unambiguously", 14, MUTE,
+           where="подпись стрелки 2 (en)", limit=GAP - 10)
+
+    # Step 2 — meaning check: the choice is jev
+    bx, bw = ax + aw + GAP, 600
+    frame(d, bx, BOX_Y, bw, BOX_H, fill=PALE, stroke=TEAL, sw=4)
+    yy = BOX_Y + 26
+    for ln in wrap(d, "Step 2 — meaning check: the choice is jev", f(20, True), bw - 48):
+        fit(d, ln, f(20, True), bw - 48, "step 2 · title (en)")
+        clabel(d, bx + bw / 2, yy, ln, 20, DEEP, True, where="step 2 · title (en)", limit=bw - 48)
+        yy += 27
+    yy += 10
+    for piece in ("The specialized service beats the general-purpose model "
+                  "on this test, and costs less by public pricing.",
+                  "On the test: 20 of 20, zero errors, vs 17 of 20 for the "
+                  "cheap judge model. The node is built and live on the rig."):
+        for ln in wrap(d, piece, f(16), bw - 48):
+            fit(d, ln, f(16), bw - 48, "step 2 · text (en)")
+            clabel(d, bx + bw / 2, yy, ln, 16, MUTE, where="step 2 · text (en)", limit=bw - 48)
+            yy += 22
+        yy += 8
+
+    # Honest caveat — on the figure itself, not only in the slide text
+    dashbox(d, 60, BOX_Y + BOX_H + 40, bx + bw - 60, 110, col=GREY_TX, width=3, r=10)
+    clabel(d, CW / 2, BOX_Y + BOX_H + 62,
+           "One measurement, on 20 pairs of one language and one topic (course enrollment) —",
+           17, MUTE, where="оговорка 1 (en)", limit=bw + aw + 20)
+    clabel(d, CW / 2, BOX_Y + BOX_H + 86,
+           "generalizing beyond this set is untested. This is an honest limit of the measurement,",
+           17, MUTE, where="оговорка 2 (en)", limit=bw + aw + 20)
+    clabel(d, CW / 2, BOX_Y + BOX_H + 110,
+           "not a reason to hold off: the chain on the rig further on is already built this way.",
+           17, MUTE, where="оговорка 3 (en)", limit=bw + aw + 20)
+    return im
+
+
+save(gibrid_en(), "k2-shema-gibrid-en.png")
+
+
 # ── слой 2: n8n-стиль, механика хэша + IF ───────────────────────────────────
 def mehanika():
     CH = 500

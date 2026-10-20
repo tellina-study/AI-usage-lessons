@@ -21,6 +21,15 @@ langs:
     out: sem-08.pptx
     # Имена блоков занятия — ими подписана дорожная карта на дивайдерах.
     blocks: [Введение, Ось, Кейсы, Закрытие]
+  en:
+    # Bilingual Production Rule (CLAUDE.md, issue #172): EN track, добавлен
+    # 2026-10-20 (issue #274). Прозаическая шапка — из отдельного файла
+    # (кириллицу в EN-артефакт переносить нельзя), см. `head_file` ниже.
+    slides: slides-en
+    deck: deck.en.yaml
+    out: sem-08-en.pptx
+    head: head.en.yaml
+    blocks: [Introduction, Axis, Cases, Closing]
 
 # Границы блоков: [от, до, индекс блока, индекс ступени или null].
 # Третья волна (развёрнутая обратная связь, 16 пунктов, 2026-10-19):

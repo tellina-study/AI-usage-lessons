@@ -17,7 +17,13 @@
 взяты без изменений.
 
 Запуск: `python3 make_figures_lestnitsa.py` (из `rendered/` папки Семинара 8).
-"""
+EN-прогон (issue #172/#274, первый круг EN-трека этого занятия):
+`python3 make_figures_lestnitsa.py --lang en` — тот же `fig_toolkit.set_lang`/`T()`
+механизм, что уже стоит в `make_figures_n02.py` (superседированном, но
+задавшем образец). Словарь переводов — `fig_strings_en.py` рядом, строки
+STUPENI и подпись оси. Сегодняшнее занятие переведено как «S8», соседние —
+«S7»/«S9»/… (сжатая форма: русская подпись укладывается в 290 px, и
+«Seminar 7 → Seminar 8 · today» туда не влезает)."""
 import sys as _sys
 from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parents[4] / "tools" / "seminar-build"))
@@ -89,6 +95,12 @@ def lestnitsa():
     save(im, "lestnitsa-dugi.png")
 
 
-if __name__ == "__main__":
+def main():
+    if "--lang" in _sys.argv:
+        set_lang(_sys.argv[_sys.argv.index("--lang") + 1])
     lestnitsa()
     report()
+
+
+if __name__ == "__main__":
+    main()

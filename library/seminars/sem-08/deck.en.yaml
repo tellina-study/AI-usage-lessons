@@ -1,0 +1,2014 @@
+# Where the model decides, and where code must
+# Файл СОБРАН генератором: python3 tools/seminar-build/make_deck_yaml.py --seminar 08
+# Поля слайдов — из фронтматтера самих слайдов; правьте слайд, а не этот файл.
+#
+# Хронометраж по блокам (считан, не переписан):
+#   Introduction n01–n03    5.50 мин
+#   Axis       n04–n04    4.00 мин
+#   Cases      n05–n50   92.50 мин
+#   Closing    n51–n53    7.25 мин
+#   ИТОГО                 118.75 мин при слоте 90
+
+deck:
+  seminar_number: 8
+  title: Where the model decides, and where code must
+  audience: 3rd-year students, 09.03.01 — practicing engineers, all already use AI assistants daily
+  duration_min: 118.75
+  format: facilitator slides + open questions with option cards (question BEFORE the breakdown) + a measured
+    experiment in Case 3 (51 runs, later extended to 101); during the session the facilitator does not
+    edit any n8n node live — only runs already-prepared workflows (owner decision, see ARCHITECTURE.md
+    §4)
+  cover_hook: null
+  central_question: How do you assemble the notification text from these three values?
+  language: en
+  slide_count: 67
+  axis: 'Four rows — and in each one, something that looks reliable today. The right column is empty:
+    we will fill it in one row at a time, one per case.'
+  slot_min: 90
+slides:
+- id: n01
+  file: slides-en/n01-oblozhka.md
+  type: hero_cover
+  duration_min: 0.5
+  assertion: 'Every new step the chain picks up today is checked against one question: does the model
+    decide this, or should code?'
+  learning_goal: Cover slide. Names the session's topic and places it on the same arc rung as S7 — a chain,
+    not a new rung.
+  visual:
+    pattern: hero_cover
+    primary: 'Dark Ocean gradient, a large title, a thin gold bar, a subtitle line. No seminar number
+      on screen (owner decision, sem-06/qa/oblozhka-bez-nomera.md).
+
+      '
+    backup: 'Third production wave (issue #274, the owner''s extended feedback, 16 points). The session''s
+      topic is verbatim from SETKA-KEYSOV-S8.md: "where in the chain the model decides, and where code
+      must." Wave 1 (n01–n16): intro, axis, Case "Notifications".'
+- id: n02
+  file: slides-en/n02-shov-s7-s8.md
+  type: mechanism_node_graph
+  duration_min: 2.5
+  assertion: We have a workflow that classifies incoming requests — six nodes, the same ones that were
+    working at the end of last session
+  learning_goal: 'Seam S7→S8: the workflow is shown as a real screenshot, not retold or redrawn. Today''s
+    cases exist not because these six nodes are bad, but because the chain is about to get new steps that
+    have not faced this question yet.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: shov-s7-obzor-klassifikatsii-en.png
+    primary: 'A real screenshot of the live n8n canvas from last session (not a diagram): six nodes left
+      to right, each numbered, with a short one-line key to the numbers below the shot. The failure branch
+      is not shown in this particular shot — the notes cover it separately.
+
+      '
+    backup: 'The owner''s edit, 2026-10-20 (issue #274): "let''s not show that scary diagram — let''s
+      show a screenshot from n8n that already exists, with a short caption underneath — not the same workflow
+      that one person will remember and another won''t, but a note saying we have a workflow for classification."
+      The shot is sem-07/rendered/figures/obzor-k1.png, a real frame from the live rig with marked labels
+      (sem-07/rendered/annotate_shots.py, function annotate, the obzor-k1.png call: labels are placed
+      over the real frame, the interface itself is not redrawn), copied unchanged into sem-08/rendered/figures/shov-s7-obzor-klassifikatsii.png.
+      The earlier programmatic diagram (make_figures_n02.py, shov-s7-s8.png) was accurate in node composition
+      but drawn by code, not captured from the screen — it is left in the repository as a record of the
+      decision; the slide no longer uses it. The failure branch (3-attempt retry → a separate status=not_parsed
+      row → its own screen) did not make it into the frame itself — it is described in words in the notes,
+      not invented: the composition is confirmed by reading sem-07/stend/student.json directly.
+
+      EN track note (this file, issue #172/#274): the figure is re-annotated with English captions from
+      the same underlying screenshot (sem-07/rendered/figures/n8n-holst-stage1.png, read-only — sem-07''s
+      own folder is never edited) and the same label coordinates as obzor-k1.png — see sem-08/rendered/make_figures_n02_en.py.
+      The numbered circles (1–6) carry no language; only the caption band below them is translated.'
+- id: n03
+  file: slides-en/n03-lestnitsa-napominanie.md
+  type: taxonomy_compare_table
+  duration_min: 2.5
+  assertion: 'Same rung as last time: chain. Today we are not climbing to the fifth rung — we are staying
+    on the second.'
+  learning_goal: A short reminder of the arc ladder, not a new introduction — the audience already saw
+    this screen in S7. Reinforces that the 'model or code' question lives inside one rung and does not
+    require moving to the next one.
+  visual:
+    pattern: taxonomy_compare_table
+    figure: lestnitsa-dugi-en.png
+    primary: 'The same nine-rung ladder as last session, the gold bar sits in the same place as last time
+      — it has not moved. A short caption instead of re-explaining the whole ladder.
+
+      '
+    backup: 'A reminder, not re-teaching: the full introduction of the ladder and the rule "don''t climb
+      without a requirement the rung below doesn''t close" already happened in S7 (sem-07/slides/n02-lestnitsa-dugi.md).
+      The figure lestnitsa-dugi.png already exists in this session''s rendered/figures/ — it is reused,
+      not redrawn.
+
+      EN track note (this file, issue #172/#274): the English figure lestnitsa-dugi-en.png is produced
+      by the same script (make_figures_lestnitsa.py --lang en) through fig_toolkit''s own set_lang/T()
+      mechanism, not drawn separately — see fig_strings_en.py for the translated row and label strings.
+      Geometry, palette, and the gold-bar position are identical to the Russian figure; only the baked-in
+      labels differ. Seminar numbers are abbreviated "S7"/"S9"/… (the 290px label slot does not fit "Seminar
+      7") — this is this seminar''s first EN figure to need the convention; flagged to the orchestrator
+      to keep it consistent across the rest of the course''s EN track.'
+- id: n04
+  file: slides-en/n04-os-zanyatiya.md
+  type: keystone_axis
+  duration_min: 4.0
+  assertion: 'Four rows — and in each one, something that looks reliable today. The right column is empty:
+    we will fill it in one row at a time, one per case.'
+  learning_goal: The session's axis, verbatim from SETKA-KEYSOV-S8.md. The right column opens empty (Pre-USER-GATE
+    §6, keystone-axis check) and closes at the end of the session (n55), not here.
+  visual:
+    pattern: keystone_axis
+    primary: 'A two-column, four-row table. The left column is filled in, the right is empty, dashed cells.
+      Below the table, one line noting that the right column closes over the course of the session, not
+      all at once at the end.
+
+      '
+    backup: The left column's text is verbatim from SETKA-KEYSOV-S8.md, section "Session axis" — not rephrased.
+      In SETKA the right column is marked with production-only notes like "closes in case…" — none of
+      that is on the visible slide, the column is entirely empty (a direct instruction from this wave's
+      brief).
+- id: n05
+  file: slides-en/n05-k1-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: Olga, the training center's administrator, asked for one Telegram message per multi-topic
+    request
+  learning_goal: 'Case 1 divider. Named by function (canon §1): ''Notifications'', not the lesson. The
+    line states a need, not a solution (A2).'
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, the line large. Below it, the four-case track of the session, the first
+      one highlighted.
+
+      '
+    backup: 'Case name — "Notifications", by function, not by lesson (canon §1 proektirovanie-keysa-i-voprosa.md:
+      a single name must not let you guess how the case ends). The line is Olga''s need spelled out in
+      full (A13, the course''s recurring administrator character across all cases, pattern from sem-07/slides/n09-k1-stsena.md),
+      drawn from SETKA-KEYSOV-S8.md, not a verbatim quote (the source states the need in indirect speech,
+      and names the character "Marina" — renamed per the owner''s voice edit 2026-10-20, issue #274; SETKA-KEYSOV-S8.md
+      itself was not edited in that round, so the name mismatch is a known open item for the orchestrator
+      at the next wave reconciliation).'
+- id: n06
+  file: slides-en/n06-k1-stsena.md
+  type: problem_scenario
+  duration_min: 2.0
+  assertion: Olga only sees that a request touched more than one topic if she opens the result screen
+    herself — and she doesn't open it for every request right away, so a multi-topic request sometimes
+    waits until the next check
+  learning_goal: 'Case 1 scene beat, in the session''s accepted form (pattern: sem-07/slides/n09-k1-stsena.md):
+    a live staging of Olga''s need — who she is, what she does, what breaks — with no solution version
+    and no practice finding. Both moved to the real-runs breakdown beat (owner''s voice edit 2026-10-20,
+    issue #274: ''what practice showed'' does not belong in the staging).'
+  visual:
+    pattern: problem_scenario
+    primary: 'An inset frame with the setting (continuing last session''s classification process), below
+      it a numbered timeline of Olga''s day, a closing paragraph on the cost, and the request line. No
+      tables, no solution version.
+
+      '
+    backup: 'Rewritten per the owner''s voice edit (2026-10-20, issue #274): the previous version introduced
+      "Version 1" and a practice finding (the "placeholder") right inside the case''s staging — explicitly
+      rejected by the owner. The character is Olga, not Marina (A13, the course''s recurring administrator
+      across all cases, pattern sem-07/slides/n09-k1-stsena.md). The target notification text example
+      and the three values (name, topic, extra topics) follow SETKA-KEYSOV-S8.md''s "The need — concretely"
+      section in meaning (the character there is still "Marina" — a known open mismatch, SETKA was not
+      edited in this round), but are woven into Olga''s own request rather than standing as a separate
+      abstract technical line after the quote (the second edit from the same voice comment).'
+- id: n07
+  file: slides-en/n07-k1-vopros.md
+  type: question_with_option_cards
+  duration_min: 2.0
+  assertion: Four actions, laid out as an explicit spectrum from full model freedom to full algorithmic
+    assembly
+  learning_goal: 'Case 1 question: bare action cards, no arguments and no verdicts (A6, canon §5 — a design
+    choice, not a fact).'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'The question in a gold frame and a row of four equal-width cards laid out as a spectrum:
+      from "the model decides everything" to "the algorithm decides everything." No explanations or arguments
+      on the cards — the breakdown comes later, on screen.
+
+      '
+    backup: 'The cards — verbatim from SETKA-KEYSOV-S8.md, section "Question to the room: how do you assemble
+      the notification text from these three values?", not reworded. Each card names an action ("fill
+      in," "call the model," "add"), not a fact about what the tool can do (canon §5).'
+- id: n08
+  file: slides-en/n08-k1-razbor.md
+  type: answer_breakdown_table
+  duration_min: 2.0
+  assertion: 'Three of the four actions solve a problem Olga no longer has: every value was already extracted,
+    so there''s nothing left to interpret'
+  learning_goal: 'Breakdown right after the question (A1), 4-column form ''action · how it works · advantage
+    · drawbacks'' (A5, owner''s voice edit 2026-10-20, issue #274, replaces the earlier 2-column form
+    — README.md §3/§8.3 already updated in the same wave). No ''right/wrong'' verdicts.'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A table: action · how it works · advantage · drawbacks. Four rows, no verdict column — the
+      decision comes on the next screen.
+
+      '
+    backup: 'Text condensed from SETKA-KEYSOV-S8.md, section "Breakdown", not reworded in substance, fit
+      into the 4-column form (A5, a new owner decision, not a restoration of an old canon — see README.md
+      §8.3). References to the practice finding ("we saw this in practice") are removed from this beat
+      and moved forward, to the real-runs beat (n13) — at this point in the breakdown, the finding hasn''t
+      been shown to the room yet (owner''s voice edit 2026-10-20, issue #274).'
+- id: n09
+  file: slides-en/n09-k1-shema-s-llm.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'Architecture diagram of Version 1: form → extraction → a model node freely composes the
+    text → Telegram'
+  learning_goal: Layer 1 (architecture, system-neutral) for the LLM version — one slide, no vendor names
+    in the solution's wording (canon §2). The first of two architecture diagrams for comparison.
+  visual:
+    pattern: mechanism_node_graph
+    figure: k1-shema-s-llm-en.png
+    primary: 'A schematic diagram with no vendor names: form → field extraction → model node (freely composes
+      the text) → send to Telegram. Exactly four blocks in a row, one branch arrow to the existing chain.
+
+      '
+    backup: 'System-neutral wording for the node — "a step that calls the model on every run and gets
+      back freely composed text" — names no specific tool (canon §2: the wording must not change if tomorrow
+      the chain is built in something other than n8n). EN figure `k1-shema-s-llm-en.png`, generated by
+      `chain4_en()` in `rendered/make_figures_k1.py` (added for this EN track, issue #172/#274) — same
+      layout as the RU `k1-shema-s-llm.png`, labels translated. This diagram also serves as a FALLBACK
+      presentation option: if the live n8n system is unavailable during the session, the case can be taught
+      from this one schematic plus the action breakdown (n08) alone, without the live rig — the architectural
+      decision is clear without naming a specific tool.'
+- id: n10
+  file: slides-en/n10-k1-shema-bez-llm.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'Architecture diagram of Version 2: form → extraction → a node substituting values into a
+    template → Telegram'
+  learning_goal: Layer 1 (architecture), second diagram — no LLM. The difference from the previous screen
+    is exactly one node, not the rest of the chain (a direct comparison, not a separate story).
+  visual:
+    pattern: mechanism_node_graph
+    figure: k1-shema-bez-llm-en.png
+    primary: 'The same schematic diagram as the previous screen, with exactly one block swapped: form
+      → field extraction → a value-substitution node (template) → send to Telegram.
+
+      '
+    backup: 'System-neutral wording — "substituting values into a fixed form instead of calling the model"
+      (canon §2, a direct example of correctly worded first-layer description). EN figure `k1-shema-bez-llm-en.png`,
+      generated by `chain4_en()` in `rendered/make_figures_k1.py`, same layout as the RU `k1-shema-bez-llm.png`,
+      labels translated. This diagram also serves as a FALLBACK presentation option: if the live n8n system
+      is unavailable during the session, the case can be taught from the two schematic diagrams (n09 and
+      this one) plus the action breakdown (n08), without the live rig.'
+- id: n11
+  file: slides-en/n11-k1-n8n-versiya1.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'The real configuration of the model version: six nodes from the request form to Telegram,
+    the model is called twice — once to extract fields, once to compose the notification text'
+  learning_goal: 'Layer 2 for Version 1: a real screenshot of the live n8n rig, cropped wide enough to
+    show all six main-path nodes on one frame, per the owner''s standing note for all cases — a screenshot
+    must show the whole process, not a tight crop on two nodes. Node captions are the tool''s own English
+    UI labels, quoted verbatim. The prompt text itself isn''t legible here; it has its own dedicated slide
+    (n11a).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k1-n8n-versiya1-real.png
+    primary: 'A real screenshot of the n8n canvas (workflow "С8 · Case 1 (before) — LLM composes the notification",
+      live rig), a wide crop: request form → field extraction → vocabulary check → write row → "Compose
+      notification…" (the caption is cut off by an ellipsis — that''s how the n8n interface behaves with
+      a narrow card) → send to the coordinator in Telegram. Under two of the nodes is a "Model*" marker
+      — a required parameter; the model call here is not optional.
+
+      '
+    backup: 'This is the real live screenshot — unchanged, and NOT re-drawn: the node titles ("Request
+      form", "Extract fields", "Compose notification (LLM)", "Notify coordinator (Telegram)") are the
+      n8n tool''s own English UI labels and are quoted exactly as shown on the canvas. What''s visible
+      on this frame: Request form (trigger, lightning-bolt icon) → Extract fields (`Set`, marked "Model*"
+      below it — the field-extraction node also calls the model; this is not new and does not distinguish
+      Version 1 from Version 2, see the same marker on the n14 figure) → Vocabulary check (`IF`) → Write
+      row → "Compose notification…" (the caption is cut off by an ellipsis on the canvas; the full name
+      "Compose notification (LLM)" is confirmed by `stend/stage-1-before.json`) → Notify coordinator (Telegram).
+      Below the composition node is the same "Model*" marker, and just below that, an extra node, "Result
+      screen Model (notification)", which Version 2 does not have (the same spot on the n14 figure is
+      empty) — this is the main structural difference between the two versions, visible already at the
+      canvas level, before opening a single settings panel. No workflow or execution id on the frame (canon
+      §3) — the breadcrumb on the source screenshot shows only the workflow name, which the crop excludes
+      entirely.
+
+      The exact prompt text is not legible on this frame (the canvas shows only node cards, not their
+      open settings) and is deliberately not stated in prose here — stating it in prose next to a frame
+      that doesn''t show it is exactly how the earlier form of this slide produced a "slide text vs. what
+      the screenshot shows" mismatch, which the owner caught. The prompt text, with its own real settings-panel
+      screenshot, is on the next slide (n11a).'
+- id: n11a
+  file: slides-en/n11a-k1-nastroyka-llm.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'The settings panel of the ''Compose notification (LLM)'' node: the real prompt text, exactly
+    as it stands on the rig right now — not a paraphrase'
+  learning_goal: 'New slide (n11a), inserted between n11 and n12, answering the owner''s standing note
+    for all cases: a general canvas frame must be followed by a real screenshot of the node''s own open
+    settings panel, not a prose paraphrase of the prompt. The prompt text is read verbatim from the screenshot
+    and cross-checked word for word against `stend/stage-1-before.json` — both sources agree.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k1-n8n-versiya1-nastroyka-llm.png
+    primary: 'A real screenshot of the "Compose notification (LLM)" node''s settings panel (Parameters
+      tab): the "Prompt (User Message)" field with the full prompt text, and the "Require Specific Output
+      Format" / "Enable Fallback Model" toggles — both off. On the left, the list of fields available
+      to this node from the "Write row" node.
+
+      '
+    backup: '**This screenshot is real, and its prompt text is in Russian on purpose — read this before
+      anything else.** The live rig is a real training-center automation whose coordinator is Russian-speaking,
+      so the prompt the facilitator actually wrote instructs the model to address a Russian-speaking person,
+      in Russian: "Напиши короткое дружелюбное уведомление координатору учебного центра в Telegram о новой
+      многотемной заявке…" ("Write a short, friendly Telegram notification to the training center''s coordinator
+      about a new multi-topic request…"). This is NOT re-drawn or re-translated for the EN deck — doing
+      so would misrepresent what is actually configured in the live system (see `glossary.en.yaml`''s
+      mirror-check note). The visible body and these speaker notes state explicitly, in English, that
+      the screen is real and why its text is in Russian.
+
+      Prompt text visible on the frame, read in full up to the word "упомянуто: {{ $(''Vocabulary check'').item.json.extra_to…"
+      — the field then scrolls out of frame (an honest limit of the n8n scroll box, not a crop on our
+      part). The full value is confirmed verbatim by `stend/stage-1-before.json`: "Напиши короткое дружелюбное
+      уведомление координатору учебного центра в Telegram о новой многотемной заявке. Имя заявителя: {{
+      $(''Request form'').item.json[''Имя''] }}. Основная тема: {{ $(''Vocabulary check'').item.json.topic
+      }}. Также в заявке упомянуто: {{ $(''Vocabulary check'').item.json.extra_topics }}. Пиши по-человечески,
+      одно-два предложения." — the visible part of the frame matches this text verbatim up to the scroll
+      cutoff, no discrepancies.
+
+      This replaces the earlier form of presenting this: previously the same prompt text (paraphrased
+      closely but in prose, not quoted in full) sat next to a canvas crop that showed neither the panel
+      nor the text — forcing the reader to take the slide''s word for it. Now the text and its source
+      are on the same frame.
+
+      The field list on the left (received_at, name, contact, request_text, topic, urgency, contact_from_text,
+      status, extra_topics, id, createdAt, updatedAt) are the real fields available to this node from
+      "Write row" (visible on the panel as a tag list), not invented for illustration.'
+- id: n12
+  file: slides-en/n12-k1-rezultat-preview.md
+  type: result_preview
+  duration_min: 0.75
+  assertion: Olga doesn't open a separate screen — the notification arrives in the same bot chat as other
+    alerts, as one line
+  learning_goal: 'New slide (n12), inserted between n11 and n14 by the owner''s voice edit, 2026-10-20,
+    issue #274: shows what the final answer looks like visually for the user, before we show the real
+    runs with the error. Placed BEFORE the failure-demo slide (n13), per the owner''s direct instruction.'
+  visual:
+    pattern: result_preview
+    primary: 'A mockup of a single Telegram chat message — the target-shape notification text. A caption
+      under the mockup ties it back to Olga''s request from the scene (n06).
+
+      '
+    backup: The message text is the target example from the scene (n06), matching the text actually delivered
+      in the real execution (the LLM version, Maria's request) — confirmed in `stend/README.md`, "Case
+      1 — LLM notification vs. template". No execution id is shown on the slide (canon §3). No figure
+      asset exists on disk yet — the slide is assembled as a text representation of the chat (a block
+      quote), ready for the designer to turn into a real interface mockup at render time.
+- id: n13
+  file: slides-en/n13-k1-oshibki-demo.md
+  type: failure_vignette_table
+  duration_min: 1.5
+  assertion: 'Two real runs of the model version: one text came out exactly as Olga asked, the other had
+    the literal instruction text inside the message'
+  learning_goal: 'Restored failure-demo slide (existed in deck v1, dropped at the v2/v3 transition, restored
+    by the owner''s voice edit 2026-10-20, issue #274). A table of ''request text / what came out and
+    why'', with no system ids on screen (canon §3) — not A5 (this is a demonstration of runs, not a breakdown
+    of actions/options).'
+  visual:
+    pattern: failure_vignette_table
+    primary: 'A two-row table: request text · what came out and why. Below the table, a conclusion that
+      a format check doesn''t catch this error.
+
+      '
+    backup: 'The data is from real runs on the rig; no execution ids are shown on the slide (canon §3):
+      two requests through the workflow "С8 · Case 1 (before) — LLM composes the notification" — confirmed
+      in `stend/README.md`, "Case 1 — LLM notification vs. template", against the runData of each execution
+      read directly. These are the only two documented runs of the model version on this rig; a third
+      documented run (the template) is deliberately not included here — it has its own breakdown slide
+      (n14), and this table is about the model version only.'
+- id: n14
+  file: slides-en/n14-k1-n8n-versiya2.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'The real configuration of the template version: the same six-node path, but with no model
+    call at all on the composition step — that node and the adjacent model block are simply absent'
+  learning_goal: 'Layer 2 for Version 2: the same wide canvas crop as n11, for direct visual comparison
+    between versions — all six main-path nodes on one frame. Node captions are the tool''s own English
+    UI labels, quoted verbatim; the exact expression text has its own dedicated slide (n14a).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k1-n8n-versiya2-real.png
+    primary: 'A real screenshot of the n8n canvas (workflow "С8 · Case 1 (after) — a template instead
+      of the model", live rig), the same wide crop as n11: request form → field extraction → vocabulary
+      check → write row → "Compose notification (template)" (the caption reads in full — it''s shorter,
+      so it fits the card) → send to the coordinator in Telegram. In the spot where Version 1 had a "Model*"
+      marker and the "Result screen Model (notification)" block, this frame is empty: there''s no model
+      node on this step at all.
+
+      '
+    backup: 'This is the real live screenshot, unchanged and NOT re-drawn — the node titles are the n8n
+      tool''s own English UI labels, quoted exactly as shown. Same crop rectangle as n11, deliberately:
+      the two frames line up directly, one on top of the other, and the difference shows literally in
+      the place where Version 1 had the model block and this one has empty space. What''s visible: the
+      same path as n11, with one structural difference at the composition node — "Compose notification
+      (template)" (the caption reads in full, the card is the same width, but the text is shorter than
+      "Compose notification (LLM)") is connected by a DIRECT arrow to "Notify coordinator (Telegram),"
+      with no intermediate model node and no "Model*" marker beneath it. The "Result screen Model (notification)"
+      block, which sits in the same spot in Version 1, is absent here — in its place there''s a plain
+      "Result screen". The field-extraction node ("Extract fields") is still marked "Model*" — that call
+      is shared by both versions, not part of the difference between them. No workflow or execution id
+      on the frame (canon §3).
+
+      ONE KNOWN, DOCUMENTED DISCREPANCY (carried over from the RU production history, still current):
+      an earlier wave found an honest mismatch — the target text example in n06 once included "contact,"
+      which the node''s expression doesn''t collect. The orchestrator fixed the target in SETKA-KEYSOV-S8.md
+      and in n05–n08 to the three values without contact (contact is already visible on the result screen;
+      the notification solves one job — noticing multi-topicness) — the target and the implementation
+      now agree, no open question remains.
+
+      The expression text of the composition node is not legible on this frame (the canvas shows only
+      node cards) — it''s on its own slide (n14a), with a real settings-panel screenshot.'
+- id: n14a
+  file: slides-en/n14a-k1-nastroyka-template.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'The settings panel of the ''Compose notification (template)'' node: one expression substituting
+    ready values into a form written in advance — the whole text fits on screen with no scrolling'
+  learning_goal: 'New slide (n14a), the template version''s counterpart to n11a: a real screenshot of
+    this node''s open settings panel. Unlike n11a, the expression is fully visible with no scroll cutoff
+    — cross-checked word for word against `stend/stage-1-after.json`, both sources agree.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k1-n8n-versiya2-nastroyka-template.png
+    primary: 'A real screenshot of the "Compose notification (template)" node''s settings panel (Parameters
+      tab): Mode — "Manual Mapping," the "Fields to Set" field → `notification_text` (type String) with
+      the full expression, "Include Other Input Fields" on, "Input Fields to Include" — All.
+
+      '
+    backup: '**This screenshot is real, and the expression it shows manipulates Russian-language field
+      values on purpose — read this before anything else.** The expression pulls from the live rig''s
+      real fields ("Имя" = name, plus the topic and extra-topics values) and produces Russian output text,
+      because the live training center''s requests, coordinator, and notifications are genuinely in Russian.
+      This is NOT re-drawn or re-translated for the EN deck, for the same reason as n11a (see `glossary.en.yaml`''s
+      mirror-check note): changing it would misrepresent what''s actually configured in the live system.
+      The expression, read in full from the frame and cross-checked against `stend/stage-1-after.json`:
+      `=Новая заявка от {{ $(''Request form'').item.json[''Имя''] }}: тема «{{ $(''Vocabulary check'').item.json.topic
+      }}»{{ $(''Vocabulary check'').item.json.extra_topics ? '', также: '' + $(''Vocabulary check'').item.json.extra_topics
+      : '''' }}.` — screen and live API agree verbatim, no discrepancies.
+
+      The node is `n8n-nodes-base.set` (`Edit Fields` / `Set`, blue-pencil icon), Mode "Manual Mapping"
+      (not automatic expression mode — a hand-set single field). "Include Other Input Fields" is on, "Input
+      Fields to Include" is "All": besides `notification_text`, the node passes every other request field
+      onward unchanged — it doesn''t just assemble the notification text, it also avoids losing data later
+      nodes might need.
+
+      This replaces the earlier form of presenting this (same as n11a): previously the same expression
+      was quoted in prose next to a canvas crop that showed neither the panel nor the expression. The
+      text match was exact even then, but the screenshot didn''t confirm it; now the expression and its
+      source are on the same frame.'
+- id: n15
+  file: slides-en/n15-k1-obobshchenie.md
+  type: answer_breakdown_table
+  duration_min: 1.0
+  assertion: 'Not every text output is generation. The task class: assembling a message from already-extracted
+    values in a fixed form'
+  learning_goal: 'Generalization beat: a principle that carries over to any orchestrator, the task class
+    named explicitly (the ''generalization'' beat, ARCHITECTURE.md §3). Kept separate from the nuances
+    — those get their own beat on the next screen.'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A compact two-row table: the principle and the task class. No verdicts, no repeating the
+      breakdown from previous screens.
+
+      '
+    backup: Text condensed from SETKA-KEYSOV-S8.md, section "Generalization," fit into table form. The
+      case's nuances are deliberately not included here — they get their own beat (n16), so the generalization
+      doesn't turn into a second breakdown.
+- id: n16
+  file: slides-en/n16-k1-kriteriy.md
+  type: criteria_checklist_and_boundary
+  duration_min: 2.0
+  assertion: The model is needed when content genuinely varies; a template is enough when the form is
+    fixed and every value is already structured — the first line of the axis is closed
+  learning_goal: Nuances (two classes) + criterion + closing the first axis line, in the same form as
+    Seminars 6/7 (criteria_checklist_and_boundary). A transferable criterion, with no tool name.
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A table of two nuances, below it the criterion as its own plate, and a line closing the
+      first axis row.
+
+      '
+    backup: Text of the nuances and the criterion condensed from SETKA-KEYSOV-S8.md, sections "Nuances"
+      and "Criterion." The axis-closing line is carried over verbatim rather than reworded.
+- id: n17
+  file: slides-en/n17-k2-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: '"Isn''t this the same question he wrote in two hours ago?" — the case''s need, stated through
+    the administrator''s own line'
+  learning_goal: Case 2 divider. The need is named directly through what the administrator feels, not
+    through a ready-made conclusion about which tool should close it (canon §1).
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, the line large. The four-case track, the second one highlighted.
+
+      '
+    backup: 'The line is built from the scene in SETKA-KEYSOV-S8.md, Case 2 ("Duplicate Check"): Olga
+      (the course''s recurring administrator character, canon §A13 — SETKA calls her "Svetlana", renamed
+      by the 2026-10-20 voice edit) sees a second request from the same client two hours after the first
+      and doesn''t recognize the rephrasing (the "Boris" pair from the measurement methodology stays an
+      example only here, in the backup). The case name is by function (canon §1, example table): "Duplicate
+      Check", not a thesis-lesson like "prompt rule vs. algorithmic gate".'
+- id: n18
+  file: slides-en/n18-k2-stsena.md
+  type: problem_scenario
+  duration_min: 2.5
+  assertion: The same question sometimes arrives at the training center twice, in different words — and
+    the administrator doesn't always recognize the rephrasing
+  learning_goal: 'Case 2 scene: a need, not a solution (canon §1 — the setup states the problem, versions
+    of the solution don''t leak in here). A concrete business episode from one morning, not an abstract
+    example (canon §4.3). Character is Olga (canon §A13).'
+  visual:
+    pattern: problem_scenario
+    primary: 'An inset with a numbered timeline, a "not rare" badge with a frequency estimate, a paragraph
+      on the cost of the mistake. No "Version 1/2" — this is a problem statement, not a solution.
+
+      '
+    backup: 'Source — SETKA-KEYSOV-S8.md, Case 2, section "The Need — a Concrete Business Case". Character
+      — Olga, the course''s recurring administrator from Seminar 7 (canon §A13; SETKA calls her "Svetlana"
+      — renamed by the 2026-10-20 voice edit, issue #274, SETKA-KEYSOV-S8.md isn''t edited in this round).
+      The request texts are carried over unchanged: "when can I pay for the class?" and "how do I pay
+      for the course" — the setup''s real wording, not invented for the slide; the pair is known in the
+      measurement methodology (n20 backup) as "Boris''s pair" — the client name that stood in an earlier
+      version of the title stays only here and in the notes, not in the visible setup (2026-10-20 voice
+      edit: "just say the requests get duplicated", with no name attached). "Version 1" was removed from
+      the setup: that''s a solution beat, not a problem beat — it starts on the next screen (n19).'
+- id: n19
+  file: slides-en/n19-k2-vopros.md
+  type: question_with_option_cards
+  duration_min: 2.5
+  assertion: How to build a duplicate check — five actions, and all five show up in live systems
+  learning_goal: 'Question with no hints (A12): the cards are actions, not facts about a tool''s capabilities
+    (canon §5). The room designs the check''s order on a real pair of phrasings, not guessing a pre-marked
+    answer. The fifth card (a specialized service) was added per the 2026-10-20 voice edit — jev is now
+    a full choice option, not just a row in the final measurement table (n20).'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'A pair of texts in an inset, the question in a gold frame, and a row of five action cards
+      with no explanations.
+
+      '
+    backup: 'The first four cards are from SETKA-KEYSOV-S8.md, Case 2, section "Question to the Room",
+      wording almost unchanged (the second card already names the classic vector approach explicitly,
+      not "word comparison" — the deck''s wording was already right here). The fifth card is new, added
+      per the 2026-10-20 voice edit (issue #274): a specialized external service (jev) as a standalone
+      option for the expensive step, alongside the general-purpose model, not only a row in the final
+      measurement table. All five are actions (canon §5): "compare", "ask", "check" — verbs, not claims
+      about a tool''s properties. The pair of questions in the inset is known in the measurement methodology
+      (n20 backup) as "Boris''s pair" — fine here and in the notes, not named on the visible layer.'
+- id: n20
+  file: slides-en/n20-k2-razbor.md
+  type: answer_breakdown_table
+  duration_min: 3.0
+  assertion: 'Measured, not assumed: on 20 test pairs the classic vector approach (13/20) turned out worse
+    than plain hashing (15/20), the cheap judge model scored 17/20, and the external service (jev) scored
+    20/20 with zero errors — and each scheme has its own price'
+  learning_goal: 'A breakdown on a real measurement, not verdicts (canon §6 — a realistic contrast case:
+    the classic vector approach is measured as a full candidate, not a strawman). The twist: a heavier
+    non-language tool isn''t just a non-improvement over hashing — it can be measurably worse; a narrow
+    specialized service measurably beats the cheap judge model here — but one measurement on 20 pairs
+    isn''t reason enough to change an already-built and demonstrated architecture. A fifth column (cost
+    and speed) was added, and the raw jev numbers were removed from the visible layer (2026-10-20 voice
+    edit).'
+  visual:
+    pattern: answer_breakdown_table
+    figure: k2-n8n-test-stend-real.png
+    primary: 'A 4-row, 5-column table: scheme · correct out of 20 · what it caught · what it missed ·
+      cost and speed. Below it — a condensed honest finding about the threshold and the best result. No
+      raw jev numbers on the visible layer. Below the finding — a real screenshot of the live n8n rig,
+      the test workflow: not an illustration of the point but the actual process these numbers were measured
+      on (ADDED 2026-10-20, issue #274, owner''s voice edit: "did you even look at the screenshots yourself?
+      the last section has almost none, and not many in the others either"). CHANGED in the same round:
+      the intro line "20 test pairs: ..." was dropped from the visible layer (the slide''s height budget
+      doesn''t fit intro + table + finding + figure at once — see backup), and the "Honest finding" was
+      compressed by half. Neither edit loses facts: the test-set composition (10 duplicates, 10 different,
+      close topics) already reads from the table''s columns, and all three findings of the quote are kept,
+      just shorter.
+
+      '
+    backup: 'The table and the finding are from SETKA-KEYSOV-S8.md, Case 2, section "Measurement Result".
+      The numbers are final and real, re-measured 2026-10-19 on a NEW set of 20 pairs (the original set
+      from the first measurement wasn''t preserved anywhere — the first pass''s temporary workflow was
+      deleted; this pass''s generator and set are stend/_gen_duplicate_check_pairs.py and stend/duplicate-check-test-pairs.json,
+      full log — stend/duplicate-check-results.json): hash 15/20, TF-IDF-cosine 13/20, LLM judge 17/20
+      — see BRIEF-PROIZVODSTVO.md §3. The fourth scheme (jev, TypeSafe Decisions API, endpoint POST https://openrouter.ai/api/alpha/decisions,
+      model typesafe/jev-1.13) was measured 2026-10-20 on the same set of 20 pairs via the production
+      workflow stage-2-duptest.json (id gs5uhluV74yu045D): 20/20, classification threshold 0.5 (jev_noul
+      >= 0.5 => duplicate), a clean split — jev_noul 0.70–0.97 on all 10 duplicates, 0.02–0.08 on all
+      10 different questions (the raw numbers were removed from the visible layer and from the notes per
+      the 2026-10-20 voice edit — "unclear to the viewer without context" — and are kept only here, replaced
+      on the visible layer with the wording "a clean split, no overlap between duplicates and different
+      questions"). The blocker previously described as a credential access restriction was a WRONG diagnosis:
+      the actual cause was a plain authoring mistake on the node "Jev decision (noul)" — the credential
+      wasn''t attached in the workflow''s node.credentials (the field was null), even though nodeCredentialType
+      was set; fixed by the orchestrator via PUT /workflows/gs5uhluV74yu045D, with no need to touch the
+      owner or their credential. The full log and the honest caveat about this being a single measurement
+      — stend/duplicate-check-results.json, section jev_measured.
+
+      The "Cost and speed" column is new (2026-10-20 voice edit). Hash and TF-IDF are pure mechanics with
+      no model call — cost and latency are negligible by construction and weren''t measured separately,
+      because there''s nothing to measure. The LLM judge (gpt-4o-mini) — public pricing from OpenAI''s
+      price list on the production date: $0.15 per 1M input tokens, $0.60 per 1M output tokens — an estimate
+      from the public price list, NOT an exact fact about this test''s specific runs (token count per
+      call wasn''t measured separately). jev — $0.042 per 1M input tokens, $0 for output, OpenRouter Decisions
+      API, model typesafe/jev-1.13 — the same caveat: an estimate from OpenRouter''s public price list,
+      not a measured fact about this run.
+
+      RECALCULATED FOR THE CASE''S VOLUME (2026-10-20 voice edit, issue #274): the owner separately required
+      that "the cost estimate for model calls must be given for our own case, not just the price list"
+      — bare pricing without volume says nothing about the real budget. A strictly illustrative calculation,
+      with explicit assumptions at every step:
+
+      Volume — from n18 (`slides/n18-k2-stsena.md`): Olga estimates repeats at "about 10 times a day"
+      — her own estimate, not measured statistics (the overall daily-request denominator isn''t measured).
+      This calculation''s assumption: the expensive step fires on ALL of these ~10 daily cases (in practice
+      part of them should be caught by the free hash step first — see n20/n21 — so this is a ceiling on
+      spend, not a measured fact) → ≈300 calls per month (10 × 30).
+
+      Message length per call — NOT a measured fact, an illustrative assumption based on the typical message
+      length in the test set (stend/duplicate-check-test-pairs.json, 40 texts, average length 39 characters,
+      range 26–66). The judge model''s prompt — the verbatim text of the node "Same question, reworded?
+      (LLM)" from stend/stage-2.json ("This is a new message: «...». A recent message from the same contact:
+      «...». Is this the same question, just phrased differently? Answer strictly «yes» or «no».") without
+      the two messages — 145 characters; plus two messages at ~39 characters each — ≈223 characters per
+      call in total. The jev request body (verbatim on n23: instructions 185 characters, criteria.true
+      92, criteria.false 66, JSON structure model/keys/punctuation ≈80) without the two messages — ≈420
+      characters; plus two messages — ≈500 characters per call in total (the jev request is longer: it
+      has an explicit instruction and both criteria, which the judge model''s prompt doesn''t).
+
+      Characters → tokens — an illustrative assumption of ≈2 characters per token for Russian text (NOT
+      a measured fact, a rough counting rule — this tokenizer specifically wasn''t checked): the judge
+      model ≈110 input tokens, a short output ("Да." / "Нет." — see llm_judge_raw in duplicate-check-results.json)
+      ≈5 tokens; jev ≈250 input tokens, $0 output by pricing (the Decisions API returns a probability,
+      not text).
+
+      Cost per call: judge model ≈110×$0.15/M + 5×$0.60/M ≈ $0.0000197; jev ≈250×$0.042/M ≈ $0.0000105.
+      At ≈300 calls a month: judge model ≈$0.006/month, jev ≈$0.003/month — BOTH under a cent a month
+      at this volume. The honest conclusion of this recalculation: the price difference between the two
+      expensive schemes is practically unnoticeable in money here — at Olga''s volume, what decides isn''t
+      call cost but accuracy (17/20 vs. 20/20). This doesn''t cancel the per-million-token price comparison
+      (it still shows which scheme is cheaper AT SCALE), but it directly answers the owner''s question
+      — "what does this mean for our case" — and for our case it means "under a cent a month, price isn''t
+      the argument".
+
+      ADDED (2026-10-20 voice edit, issue #274, the owner after looking at the deck — "did you even look
+      at the screenshots yourself? the last section has almost none, and not many in the others either"):
+      the figure k2-n8n-test-stend-real.png is CONFIRMATORY (the fig_after device, deck-config.yaml, the
+      same one used for n31 — drawn AFTER the table and the honest finding, not instead of them). Source
+      — a real screenshot of the live n8n rig (Playwright, taken 2026-10-20, https://n8n.lessons.tellian.io,
+      see notes/mcp-limitations.md [#233-8]), file stend/n8n-screenshots-raw/case2-test-4schemes.png (1900×1100),
+      crop (230, 340, 1740, 810) → 1510×470, with no redrawing, assembled in rendered/make_figures_k2.py
+      by the function test_stend_real(), saved as library/seminars/sem-08/rendered/figures/k2-n8n-test-stend-real.png.
+
+      The frame shows the canvas of the workflow "C8 · Case 2 — dedup test (rig, 4 schemes)", the very
+      test process these numbers in the table above were measured on (hash 15/20, TF-IDF 13/20, LLM judge
+      17/20, jev 20/20). The text on the frame reads literally, line by line: the node Test pair (webhook)
+      (trigger, output label POST) leads by two arrows — to the node Jev decision (noul) (type httpRequest,
+      label POST: https://openrouter.ai/...) and to the node LLM judge (input Input 2, zigzag icon); a
+      separate node Judge model is connected to LLM judge by a dashed line labeled Model (the mandatory
+      model sub-node, a chat-model link type, not a direct data flow). Both nodes — Jev decision (noul)
+      and LLM judge — converge on the node Combine (labeled combine, two labeled inputs Input 1 / Input
+      2), then Combine → Shape result (curly braces — a transform node) → Respond (returns the webhook
+      response). Hash and TF-IDF are NOT drawn as nodes on this canvas — these two schemes don''t call
+      an external model and were computed by a local script (stend/_gen_duplicate_check_pairs.py + string/cosine
+      comparison), not on the live rig; the canvas shows exactly the two nodes that actually call a model
+      (the LLM judge and jev) — exactly what needed confirming with a screenshot, unlike hash and TF-IDF,
+      which have nothing to screenshot. The crop cuts out the canvas header (the line with the workflow''s
+      name), the Published badge, the Editor/Executions/Evaluations tabs, the left column of app icons,
+      the right floating zoom/search panel, the "Execute workflow" button, and the bottom Logs panel —
+      there''s no workflow/execution id anywhere on the final frame (canon §2–§3, tools/seminar-production/README.md).
+
+      HEIGHT BUDGET (same round of edits): the slide was already at the ceiling — the 5-column table at
+      10.5 pt already took 2.79″ out of the allotted 2.81″ before the figure even entered (build.py, measured
+      before the edit). With the figure (natural height ~3.81″ at the current crop), the sum of the four
+      blocks'' natural heights (intro line 1.08″ + table 3.81″ + finding 2.63″ + figure 3.81″ — DEBUG
+      measurement from tools/seminar-build/roles.py:compose()) was four times the allotted 5.89″, and
+      proportional shrinking pushed the table below stage 2''s floor (9 pt, 2.30″) — build.py returned
+      OVERFLOW (×3) and PAST THE CANVAS EDGE (the composition ended at 7.42″ against a 7.50″ canvas height,
+      with the bottom block not visible). The intro line "20 test pairs: ..." was dropped entirely (its
+      facts — the 10/10 composition, 3 close topics — are already duplicated in the table''s columns,
+      see the TF-IDF row "2 false positives on close topics"); the "Honest finding" was compressed from
+      3 expanded sentences to 3 compact ones — all three findings (TF-IDF doesn''t save the threshold,
+      jev beat the judge model, both paid schemes cost under a cent) are kept, at ~47% of the original
+      text length. After both edits — no OVERFLOW and no PAST THE CANVAS EDGE: the table sits on stage
+      2''s floor (9 pt, "AT THE FLOOR OF THE SIZE" — the device can''t go lower, but the 2.29″ budget
+      is practically equal to the needed 2.30″, within rendering tolerance) — the same level of compression
+      already accepted on n46 of this same deck, not a new precedent. The render was checked visually
+      (pdftoppm of page n20) and by the overlap checker (check_text_overlap_pdf.py — 0 overlaps on n20):
+      the text doesn''t run over, the table, the finding, and the figure all read in full, without cropping.'
+- id: n21
+  file: slides-en/n21-k2-reshenie-sloy1.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'The decision is made and built: the cheap mechanical step still goes first, and the expensive
+    step now runs the specialized service jev (20/20) instead of the cheap judge model (17/20) — this
+    is a built architecture, not a hypothesis'
+  learning_goal: 'Layer 1 of the ''our solution'' beat, rebuilt a second time the same day (2026-10-20):
+    the chain on the live rig was actually reconfigured via the n8n API to run jev instead of the judge
+    model, confirmed by screenshots and a direct API query — so the slide now states this as a built fact
+    rather than a hedge (''recommendation, not fact'').'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k2-shema-gibrid-en.png
+    primary: 'Two blocks left to right: step 1 — the cheap mechanical pre-filter (hash), step 2 — the
+      meaning check, the choice is jev, the node is built and live on the rig. Below — a frame with the
+      honest caveat right on the figure: one measurement, on 20 pairs of one language and one topic —
+      generalizing beyond the set is untested, this is a boundary of the measurement, not a reason not
+      to deploy.
+
+      '
+    backup: 'The figure was regenerated: library/seminars/sem-08/rendered/figures/ k2-shema-gibrid.png,
+      script library/seminars/sem-08/rendered/make_figures_k2.py (function gibrid(), the text on the figure
+      itself rewritten together with the slide — the title "Solution: hash first, jev on the expensive
+      step", block 2 "the choice is jev" instead of "recommendation — jev", a line "the node is built
+      and live on the rig" added, the caveat at the bottom reworded for the new meaning). Canon §7 directly
+      requires it: captions inside figures are pixels, not caught by grepping the slide''s text, so the
+      figure is edited together with the frontmatter rather than left as it was.
+
+      The numbers didn''t change: 20/20 (jev) against 17/20 (LLM judge) — verbatim from stend/duplicate-check-results.json,
+      section jev_measured. Hash 15/20 and TF-IDF 13/20 from the same file, unchanged.
+
+      The chain actually built and demonstrated on the rig (n22 — hash+IF, n23 — jev) now MATCHES this
+      scheme: the expensive step is jev, not the judge model. The node "Same question, reworded? (LLM)"
+      and the model node "Model (dedup)" were removed from the workflow c7evxIhox45tn127, confirmed by
+      a direct query to the n8n API (GET /workflows/c7evxIhox45tn127 — the node list has no chainLlm/
+      lmChatOpenRouter at all, and has an httpRequest node "Jev decision (reworded?)" with id "jev-prod").
+
+      EDIT HISTORY (not erased, canon §8.10 — a live statement differs from a record of the past): before
+      2026-10-20 morning the slide was cards with numbers duplicating the n20 table (owner, voice edit,
+      08:24: "the cards look nice, but let''s remove it"). On the morning of 2026-10-20 it was rebuilt
+      into an architectural conclusion, presented as a recommendation — because at that point the chain
+      on the rig hadn''t been rebuilt yet. On the evening of 2026-10-20 (this edit) — the hedging was
+      removed, because by this point the chain had actually been rebuilt and confirmed.
+
+      EN FIGURE NOTE (Bilingual Production Rule, issue #172/#274): the EN slide uses k2-shema-gibrid-en.png,
+      a direct English-text redraw of the same figure (same layout, same colors, same numbers), generated
+      by the new function gibrid_en() added to make_figures_k2.py in this translation round. This is the
+      only figure of Case 2 that needed redrawing — every other figure in the case is a real screenshot
+      of the live rig and isn''t redrawn in either language (see glossary.en.yaml).'
+- id: n22
+  file: slides-en/n22-k2-reshenie-sloy2a.md
+  type: mechanism_node_graph
+  duration_min: 2.0
+  assertion: Normalization strips case and extra whitespace; the condition compares the resulting hash
+    against the same contact's recent request — neither of the two nodes calls a model
+  learning_goal: 'Layer 2a of the ''our solution'' beat: the real configuration of the normalization node
+    and the exact-match condition — actual parameters from the rig, with no system ids on screen (canon
+    §2–§3). The crop was widened in the same 2026-10-20 round to show the full process path, with detailed
+    settings panels split off onto the new letter-tail slide n22a.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k2-n8n-mehanika-real.png
+    primary: 'A real, wide screenshot of the n8n canvas (workflow "C8 · Case 2 — two-level dedup", live
+      rig): the whole path from `Request form` and `Extract fields` on the left, through the node `Normalize
+      + hash` (Set) and `Exact duplicate in window?` (IF) with true/false branches, to `Vocabulary check`
+      → `Write row` → `Result screen` at the top — an overview of the process, not a tight crop of two
+      nodes.
+
+      '
+    backup: 'SCREENSHOT INSERTED 2026-10-20, WIDENED THE SAME DAY (second round of edits, issue #274):
+      a crop from stend/n8n-screenshots-raw/case2-dedup-prod-jev.png — this is the full canvas of the
+      same workflow as on n23 (the jev node is visible there too, further down the canvas; it doesn''t
+      fall in this crop, it has its own crop on n23). Saved as library/seminars/sem-08/rendered/figures/k2-n8n-mehanika-real.png,
+      the region (390, 300)–(1600, 695) of the source file, no enlargement (1210×395, aspect ratio 3.06
+      — fits the layout without compression).
+
+      The FIRST version of this field (morning of 2026-10-20) used a tight crop (855, 540)–(1420, 705),
+      ×2 — only two nodes, no path to them. The owner looked at the deck and explicitly demanded: "every
+      case needs a screenshot of the whole process with a comment on what was added, and then screenshots
+      of individual nodes with settings descriptions" — this was the tight, non-overview version. The
+      crop was widened the same day, in the same round that added n22a: the frame now shows the whole
+      path — `Request form` and `Extract fields` on the left, down to `Normalize + hash` → `Exact duplicate
+      in window?` with true/false outputs, and separately at the top `Vocabulary check` → `Write row`
+      → `Result screen` (the successful result-logging path). The detailed parameter panels (fields, expressions,
+      the condition) are deliberately NOT visible on this overview frame — this is the canvas, not an
+      open node panel; those are on n22a, the next slide.
+
+      REPLACED the previous field (a programmatic diagram, k2-n8n-mehanika.png) — that figure was left
+      untouched on disk, the slide no longer references it. The field''s previous state called a live
+      screenshot "physically unreachable in this environment (no root for a headless browser)" and left
+      the question "screenshot or programmatic diagram" open to the owner — that was true at the time
+      it was written (morning of 2026-10-20) and stopped being true the same day: by evening screenshots
+      had been captured (the same channel that produced case2-jev-node-config.png and the case3/case4
+      screenshots on neighboring slides), notes/mcp-limitations.md [#233-8] was lifted.
+
+      What''s literally visible on the screenshot: the node `Normalize + hash` (Set icon, blue pencil)
+      is connected by an arrow to the node `Exact duplicate in window?` (IF icon, dark-green fork), which
+      has two outputs — true and false. Nearby are the nodes the request''s path leads through: `Request
+      form` (trigger), `Extract fields`, `Vocabulary check`, `Write row`, `Result screen` — the real,
+      dense layout of the live n8n canvas, not a crop artifact; left as is, not cleaned up, honestly —
+      we cut a rectangle, we don''t redraw what''s inside it. Partially visible at the bottom of the frame
+      is the circle of the `Model` node (the model-based request-parsing branch) — also not cleaned up,
+      honestly cut off at the frame''s edge.
+
+      The mechanics of the two nodes were NOT changed by this day''s architectural edit — they''re the
+      same now as before: hash plus window comparison, with not a single model call. The parameters match
+      in substance stend/stage-2.json, nodes dedup_hash ("Normalize + hash") and dedup_mech_if ("Exact
+      duplicate in window?"); that file on disk doesn''t yet contain the jev node (it describes an earlier
+      state of the workflow) — the current configuration is confirmed by a direct query to the live n8n
+      API, not by reading a stale local file.'
+- id: n22a
+  file: slides-en/n22a-k2-nastroyka-uzlov.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'Settings panels, not a paraphrase: on the left — the three fields of the `Normalize + hash`
+    node with their expressions shown whole on screen; on the right — the single condition of the `Exact
+    duplicate in window?` node, line for line with what''s actually configured on the rig'
+  learning_goal: Letter-tail slide between n22 and n23, per the owner's 2026-10-20 voice edit asking for
+    real node-settings screenshots instead of prose paraphrase. The expressions on these real panels reference
+    actual Russian-language field names from the live n8n form — a documented, deliberate exception to
+    the EN track, not an untranslated artifact (see glossary.en.yaml and the explanation below).
+  visual:
+    pattern: mechanism_node_graph
+    figure: k2-n8n-panels-real.png
+    primary: 'A composite of two real n8n settings-panel screenshots, side by side: on the left — the
+      node `Normalize + hash` (`Set`, Manual Mapping mode, three fields with expressions), on the right
+      — the node `Exact duplicate in window?` (`IF`, one condition). Both are live-rig parameter panels,
+      not a canvas and not a drawn diagram.
+
+      '
+    backup: 'SCREENSHOTS TAKEN 2026-10-20 from the live rig (the same capture channel as n22/n23): library/seminars/sem-08/stend/n8n-screenshots-raw/
+      case2-normalize-hash.png (1900×1100) and case2-exact-duplicate-if.png (1900×1100) — the open parameter
+      panels of two nodes in the workflow "C8 · Case 2 — two-level dedup", the same process as on n22.
+      The composite was assembled by a direct crop + join (no redrawing): the region (0,0)–(1160,660)
+      was cut from each screenshot — the node''s header, the Parameters tab, the whole parameter panel,
+      without the empty right OUTPUT panel ("No output data") and without the left INPUT tree beyond the
+      visible schema — the INPUT tree was kept, it''s real and shows actual fields from earlier nodes.
+      The two crops are joined horizontally with a neutral 24px gray bar between them; the result is saved
+      as library/seminars/sem-08/rendered/figures/k2-n8n-panels-real.png, 2344×660 (aspect ratio 3.55
+      — fits the layout without compression, canon deck_kit.py: FIG_MIN_FILL).
+
+      The text on the panels reads literally, line by line:
+
+      Left panel, node `Normalize + hash` (`Set`), Mode: `Manual Mapping`, three fields under Fields to
+      Set — `normalized_hash` (String) = `{{ $(''Request form'').item.json[''Что нужно''].toLowerCase().trim()
+      .replace(/\s+/g, '' '') }}`; `recent_same_contact_text` (String) = `{{ $(''Request form'').item.json[''Предыдущее
+      сообщение (тест)''] || '''' }}`; `recent_same_contact_hash` (String) = `{{ ($(''Request form'').item.json[''Предыдущее
+      сообщение (тест)''] || '''').toLowerCase() .trim().replace(/\s+/g, '' '') }}`. Below that — the
+      toggle "Include Other Input Fields" is on, "Input Fields to Include": All.
+
+      ON THE FIELD NAMES: `''Что нужно''` ("what''s needed") and `''Предыдущее сообщение (тест)''` ("previous
+      message (test)") are NOT translation artifacts — they are the literal, real field names of the live
+      n8n intake form (`Request form`), which was itself built with Russian field names. The expressions
+      reference those fields by their real names because that is what the form actually calls them; renaming
+      them on the slide would make the screenshot stop matching the live system. This is a documented,
+      deliberate exception to the EN track''s anti-mirror rule (see glossary.en.yaml) — the figure and
+      the expressions inside it are left exactly as captured.
+
+      Right panel, node `Exact duplicate in window?` (`IF`), Conditions tab: `{{ $json.normalized_hash
+      }}` — operator "is equal to" — `{{ $json.recent_same_contact_hash }}`; the toggle "Convert types
+      where required" is off; the "Add condition" button shows there''s exactly one condition.
+
+      The earlier n22 text conveyed the formula `normalized_hash = text.toLowerCase().trim().replace(/\s+/g,
+      '' '')` in prose and mentioned only one calculation "alongside, for the recent message" — correct
+      in meaning, but it didn''t show that this is actually THREE separate fields (including the raw,
+      unnormalized text) and that the IF condition compares specifically the third field against the first,
+      not the formula directly. This slide doesn''t change the mechanics (they''re the same as on n22/n21/n20)
+      — it shows them exactly as they stand on screen, which is the fix for "the settings descriptions
+      are also so-so".
+
+      No workflow/execution id on screen (canon §2–§3) — both screenshots are clean parameter panels,
+      with no address bar and no workflow ID.'
+- id: n23
+  file: slides-en/n23-k2-reshenie-sloy2b.md
+  type: mechanism_node_graph
+  duration_min: 2.5
+  assertion: 'The expensive step isn''t a text prompt — it''s a structured request to a specialized service
+    with a quantized ''yes/no with probability'' question — and across all 20 real pairs the split is
+    clean: duplicates 0.70–0.97, different questions 0.02–0.08'
+  learning_goal: 'Layer 2b of the ''our solution'' beat — fully rebuilt 2026-10-20: the judge model (free-text
+    prompt) was replaced on the live rig by the jev node (a structured HTTP request with a typed yes/no-with-probability
+    question). Shown with the full real distribution across all 20 test pairs, not two sample runs, with
+    no system ids on screen.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k2-n8n-jev-real.png
+    primary: 'A real screenshot of the n8n canvas: the node `Jev decision (reworded?)` (`httpRequest`,
+      globe icon) labeled `POST: https://openrouter.ai/...` on the production workflow''s canvas. The
+      request''s structure (model, question type noul, criteria) and the real score distribution across
+      the 20 pairs are given as a separate text block alongside, not inside the image (same as the prompts
+      on neighboring slides of this case).
+
+      '
+    backup: 'The figure is a real screenshot, 2026-10-20: a crop from the same file as n22 (one canvas,
+      two different nodes), stend/n8n-screenshots-raw/case2-dedup-prod-jev.png, the region (1010, 742)–(1570,
+      908) of the source file, enlarged 2×. Saved as library/seminars/sem-08/rendered/figures/k2-n8n-jev-real.png.
+      Partially visible at the top of the frame is the background node "Result screen · not parsed" (the
+      real, dense layout of the canvas, not a crop artifact — the same honesty as the n22 figure).
+
+      The FIRST VERSION of this edit used a crop of the node''s settings panel (case2-jev-node-config.png)
+      as the figure — the portrait aspect ratio (752×1587) didn''t fit the mechanism_node_graph layout:
+      the builder (tools/seminar-build/build.py) returned blocking OVERFLOW/DOESN''T FIT warnings (the
+      diagram shrank to 1.02″, the text and table spilled outside the working area). Replaced with this
+      landscape canvas crop — every other -real.png figure in the case (n11, n14, n34, n50) is also landscape
+      (roughly 4–5:1), which isn''t a stylistic choice but a constraint of the slide layout. The settings
+      panel (case2-jev-node-config.png) wasn''t discarded as a source, though: the full JSON body text
+      below in this field was read directly from it and cross-checked against the live API.
+
+      The FULL, real JSON body of the node (verbatim, from the live API): `{model: "typesafe/jev-1.13",
+      state: {previous_message: $json.recent_same_contact_text, new_message: $(''Request form'').item.json[''Что
+      нужно'']}, questions: {same_question: {type: "noul", instructions: "Новое сообщение клиента учебного
+      центра — это тот же вопрос, что и недавнее сообщение того же контакта, просто переформулированный
+      (перефразировка), а не новый, другой по смыслу вопрос?", criteria: {true: "Это переформулировка
+      того же вопроса, который уже был задан — смысл совпадает, слова разные.", false: "Это другой по
+      смыслу вопрос, даже если тема или часть слов похожи."}}}}`. The instructions/criteria strings are
+      kept verbatim in Russian, exactly as configured on the live node — they are the real, literal instruction
+      text sent to jev, not a translation artifact (the same documented exception as n22a''s field names).
+      In English, that body reads: instructions — "Is the training center client''s new message the same
+      question as the same contact''s recent message, just reworded (a rephrasing), rather than a new,
+      different question?"; criteria.true — "This is a rephrasing of a question already asked — the meaning
+      matches, the words differ."; criteria.false — "This is a different question in meaning, even if
+      the topic or some words look similar." Read off the screenshot case2-jev-node-config.png and checked
+      verbatim against the live n8n API (GET /workflows/c7evxIhox45tn127, node id "jev-prod") — both sources
+      match word for word, no discrepancies.
+
+      The results — verbatim from stend/duplicate-check-results.json → jev_measured: 20 pairs from stend/duplicate-check-test-pairs.json
+      were run through the test webhook s8-case2-duptest (workflow stage-2-duptest.json, the same jev
+      node as in the production chain, but in a test harness for a batch run — the methodology is identical
+      to the node on screen). Classification threshold jev_noul >= 0.5 → "duplicate". Result: 20/20, a
+      clean split — the duplicate pairs (id 1–10) give jev_noul 0.70–0.97, the different-question pairs
+      (id 11–20) give 0.02–0.08; the 0.5 threshold holds comfortably across the whole 0.08–0.70 gap, and
+      choosing a specific threshold within that interval doesn''t change the final score. For context,
+      on the same set: hash 15/20, TF-IDF 13/20, LLM judge 17/20 — the same numbers as on n20/n21, not
+      recalculated.
+
+      An example of one pair for concreteness (id 6, a rephrasing, real texts from the set): "when can
+      I pay for the class?" → "how do I pay for the course", jev_noul = 0.76 — above the threshold; jev
+      correctly recognized the rephrasing exactly where hash and TF-IDF give 0 by construction (different
+      strings, no shared meaningful words).
+
+      Execution ids are never mentioned — not in the slide text, not in the notes, not on the figure (canon
+      §3): instead of run numbers, the test set''s pair id (1–20) is used — that''s a data identifier,
+      not a rig identifier.'
+- id: n23a
+  file: slides-en/n23a-k2-rezultat-preview.md
+  type: result_preview
+  duration_min: 0.75
+  assertion: A literal repeat never reaches the requests table today — Olga doesn't see it; the same question
+    in different words still gets logged as a new row, with no 'looks like a repeat' flag
+  learning_goal: 'New letter-tail slide between n23 and n24, per the 2026-10-20 voice edit requiring a
+    result-preview mockup for every case. Honest architectural finding, confirmed from the workflow''s
+    graph connections, not assumed: the duplicate-match branch is a dead end (no record written), while
+    the meaning-check branch writes unconditionally regardless of its verdict — so measuring the classifier''s
+    accuracy (20/20 here) isn''t the same as proving it affects today''s output.'
+  visual:
+    pattern: result_preview
+    primary: 'A mockup of three requests-table rows, not a chat (in this case the recipient reads a table,
+      not a Telegram notification) — the first an ordinary request, the second row absent (the literal
+      repeat is caught before being logged), the third row present and looking like an ordinary new request
+      (the rephrasing is logged as-is).
+
+      '
+    backup: 'The artifact was chosen to match the scene: n18 — "Olga ... opens the requests table and
+      sees a question from a client"; unlike Case 1 (n12, a Telegram chat), Case 2 has no recipient-notification
+      node at all (the node list in stend/stage-2.json: Request form / Extract fields / Model / Vocabulary
+      check / Write row / Result screen / Normalize+hash / Exact duplicate in window? / Same question,
+      reworded? (LLM) / Model (dedup) — not a single Telegram node), so the mockup is built as rows of
+      the `requests` table, not as a chat bubble.
+
+      Checked against the connections (`python3 -c "import json; d=json.load( open(''stend/stage-2.json''));
+      print(d[''connections''])"`): the node `Exact duplicate in window?` (IF) has an outgoing connection
+      ONLY from branch 1 (false), leading to `Same question, reworded? (LLM)`; branch 0 (true, a match
+      found) has NO outgoing connection at all — a genuine dead end at the graph level, not a textual
+      description of one. The node `Same question, reworded? (LLM)` (chainLlm, a node type with physically
+      one output) leads unconditionally to `Write row` — the model''s answer ("yes"/"no") is never read
+      anywhere further down the graph, there''s not a single Switch/IF after it. The columns of `Write
+      row` (received_at/ name/contact/request_text/topic/urgency/contact_from_text/status/ extra_topics)
+      contain no field for the meaning-check''s result — the node''s answer simply isn''t saved. Today''s
+      replacement of that node with jev (n21/n23, issue #274) is a literal swap of one node for another
+      with the same single outgoing connection; neither n21, nor n22, nor n23 describe adding any branching
+      after jev, and the orchestrator touched nothing but the node itself (n21 backup: "the node «Same
+      question, reworded? (LLM)» and the model node «Model (dedup)» were removed, replaced by a new node
+      «Jev decision (reworded?)»" — a node swap, not a change to the graph around it) — meaning that same
+      unconditional connection survives the swap.
+
+      Independent textual confirmation for the literal repeat — stend/README.md, section "Case 2 — dedup
+      (first pass, 2026-10-18 — numbers lost)": "Execution 51 (literal repeat) — the node `Exact duplicate
+      in window?` caught the match, the request went down the branch with no record and no reply; n8n
+      marked the execution status success".
+
+      The node''s name, the 0.5 threshold, the word "jev", and the execution id are not surfaced on the
+      mockup (canon §3, proektirovanie-keysa-i-voprosa.md) — the same decision as on n12/n34b/n52a: the
+      visible layer shows only what Olga actually sees, not the mechanics of the solution. There''s no
+      figure on disk yet — the slide is built as a text representation of the table (a block quote), like
+      the three preceding slides of this pattern, ready for the designer to render visually at the production
+      stage.'
+- id: n24
+  file: slides-en/n24-k2-obobshchenie.md
+  type: answer_breakdown_table
+  duration_min: 2.0
+  assertion: Mechanical and meaning-based checking aren't competitors, but different tools with different
+    costs and different coverage; a heavier non-language tool doesn't guarantee an improvement
+  learning_goal: Case 2's generalization on the measured result, plus a forward bridge to Seminar 10 as
+    its own line, not a topic declaration.
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A short generalization thesis built on the n20 measurement, plus a separate line about Seminar
+      10.
+
+      '
+    backup: The generalization and the forward bridge are from SETKA-KEYSOV-S8.md, Case 2, sections "Generalization"
+      and "Forward Bridge", carried over without changing the wording.
+- id: n25
+  file: slides-en/n25-k2-nyuansy.md
+  type: criteria_checklist_and_boundary
+  duration_min: 2.0
+  assertion: The time window, the LLM judge's own error asymmetry (measured, not assumed), and 'what counts
+    as a duplicate' — three classes of nuance, unrelated to which tool was chosen
+  learning_goal: Three classes of nuance for Case 2, a separate slide from the criterion. The second nuance
+    is anchored by the team's own measurement (3 false positives out of 20), not just a citation of outside
+    work.
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A list of three nuance classes; the second one carries a source link right on screen and
+      ties to the team''s own measurement.
+
+      '
+    backup: 'The three classes are from SETKA-KEYSOV-S8.md, Case 2, section "Nuances". The source link
+      for the second nuance (NeurIPS 2024 Safe GenAI Workshop, Wataoka/Takahashi/Ri, arXiv:2410.21819)
+      is on the visible layer per trebovaniya-k-soderzhaniyu-forma.md §5.12–5.22: links to papers belong
+      on the slide itself, not only in the notes.'
+- id: n26
+  file: slides-en/n26-k2-kriteriy.md
+  type: criteria_checklist_and_boundary
+  duration_min: 2.5
+  assertion: Exact match is enough for literal repeats, for free; the classic vector approach doesn't
+    give a guaranteed improvement over it in Russian; a model is needed where rephrasings are expected,
+    and its error rate is a cost, not zero
+  learning_goal: Case 2's criterion on measured numbers, plus closing the session axis's second row. A
+    line on choosing the specific meaning-check tool was added (2026-10-20 voice edit) — jev named explicitly
+    as an option, not just a row in the n20 measurement table.
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A two-column criterion, with a closing-the-axis-row banner below it.
+
+      '
+    backup: 'The criterion text and the axis-row closing wording are from SETKA-KEYSOV-S8.md, Case 2,
+      section "Criterion", carried over nearly unchanged: a line was added about choosing between a general-purpose
+      model and a specialized service (jev) as a separate decision inside "the meaning check", the character
+      is Olga instead of Svetlana (canon §A13), the client''s name ("Boris") is kept only in the notes
+      as the measurement methodology''s pair, not on the visible layer — per the 2026-10-20 voice edit,
+      issue #274.'
+- id: n27
+  file: slides-en/n27-k3-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: The training center approves small refunds itself and escalates large ones to the manager;
+    the decision splits them by amount
+  learning_goal: Case 3 divider. The title names the task ('Refund approval'), not the lesson. The quote
+    states the business rule ('automatic refund up to a set amount'), not the literal model prompt — the
+    literal prompt is shown later, on n34, for contrast.
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, the business rule large and centered. Below it, the four-case track of
+      the session, the third one highlighted.
+
+      '
+    backup: 'The quote used to be the literal text of the version-1 prompt ("Rule: do not automatically
+      refund more than 3,000 rubles, otherwise escalate to the manager"); the owner asked for it to read
+      as a business rule instead, with no technical detail. The literal prompt text is not removed from
+      the deck — it appears later, on n34, in direct contrast with the IF-node setting. Mirrors RU n27
+      after this round''s edits (issue #274).'
+- id: n28
+  file: slides-en/n28-k3-stsena.md
+  type: problem_scenario
+  duration_min: 1.5
+  assertion: 'Version 1 is a continuation of the classification process from Seminar 7: a person describes
+    the situation in their own words, the system reads it and decides on its own whether to approve the
+    amount or hand it to the manager; a month in production, no complaints'
+  learning_goal: The scene for Case 3, written as a connected story with a numbered sequence and a closing
+    paragraph about what today's trust rests on. The explicit prompt text is kept off the visible layer;
+    the process is framed as a continuation of the Seminar-7 classification step, and the approval branch
+    explicitly ends with the money landing on the client's card automatically.
+  visual:
+    pattern: problem_scenario
+    primary: 'A framed vignette with the setting, below it the numbered steps of handling one request,
+      then a closing paragraph — what today''s trust rests on. No tables. The prompt text is not shown
+      on screen.
+
+      '
+    backup: 'The rule used to be shown as the literal text of the prompt in step 1; it now reads at the
+      level of the business process ("the system reads and decides"). The model is named (`qwen/qwen-2.5-7b-instruct`)
+      but its prompt text is not quoted here — it appears on n34, layer 2. The link to Seminar 7 is explicit:
+      same classification process, one decision step added after a request is recognized as a refund request,
+      not a new process. Mirrors RU n28 after this round''s edits (issue #274).'
+- id: n29
+  file: slides-en/n29-k3-vopros.md
+  type: question_with_option_cards
+  duration_min: 2.0
+  assertion: The rule has run for a month without a single complaint — the question is how to make sure
+    the threshold decision is really never wrong
+  learning_goal: 'The question for Case 3: four action cards (down from five), each phrased as an imperative
+    action rather than a claim about the model.'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'A short reminder of the scene at the top. Below it, the question in a gold frame and a row
+      of four equal-width cards. No arguments or hints next to the cards — the breakdown comes on a later
+      screen.
+
+      '
+    backup: 'The "run it several times and take a majority vote" card was removed: the measured experiment
+      (n31–n32) shows this option isn''t merely limited, it is useless against the specific error found
+      — a systematic one at the exact boundary, which majority voting cannot fix, since it only defends
+      against random noise. The remaining four cards describe actions on the process, not facts about
+      the model. Mirrors RU n29 after this round''s edits (issue #274).'
+- id: n30
+  file: slides-en/n30-k3-razbor-deystviy.md
+  type: answer_breakdown_table
+  duration_min: 2.5
+  assertion: Two actions reduce the error rate or shift the probabilistic part one step earlier (and are
+    now actually measured — one well, one badly); two eliminate it structurally or don't need an accuracy
+    measurement at all
+  learning_goal: The breakdown of all FOUR actions (down from five) right after the question, in a four-column
+    form — Action · How it works · Advantage · Drawbacks. Every row carries a real live-rig measurement
+    except the numeric-field row, where a different metric (applicability, not accuracy) applies instead.
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A table: Action · How it works · Advantage · Drawbacks, four rows. Below it, a short bridge
+      to the next beat: before choosing among the actions that eliminate the problem structurally, it''s
+      necessary to measure exactly how bad version 1 currently is.
+
+      '
+    backup: 'Each of the four cards carries a real measured result from the live rig except the numeric-field
+      action (a different metric applies there). "Clearer rule": 100/100 on the extended hundred-request
+      set, including all the boundary and ambiguous cases where version 1 scored 9 errors out of 101.
+      "Calculator": 56/100 — worse than every other option, with detailed, real failure modes. "IF node"
+      = version 2, measured this round on the extended set: 0 errors out of 101. "Explicit numeric field"
+      — not measured as accuracy, and that''s not a gap: this option has no extraction step at all, so
+      "extraction accuracy" is trivial here (100% by construction). A separate honest finding this round,
+      not among the four cards: the jev service, checked as an idea for amount extraction and rejected
+      — see n30a. Mirrors RU n30 (issue #274).'
+- id: n30a
+  file: slides-en/n30a-k3-nahodka-jev.md
+  type: failure_vignette
+  duration_min: 1.5
+  assertion: The proposal to pull the amount out with the jev service and compare it to the threshold
+    in code could not be built as intended — the jev service structurally does not return an open-ended
+    number, only a quantized answer
+  learning_goal: 'An honestly-reported dead end: an idea tested on the live rig and found not to be buildable
+    as proposed — not a less-accurate option, but a structural capability gap in the jev service, placed
+    right after the four-action table and before the version-2 solution diagram.'
+  visual:
+    pattern: failure_vignette
+    primary: 'A three-block vignette, top to bottom: the proposed idea · what the live-rig test showed
+      (the decisive 2,999/3,001 test) · how this differs from the calculator on the previous screen, and
+      the lesson. No accuracy percentage — there isn''t one here by construction, not by omission.
+
+      '
+    backup: 'Source: a diagnostic protocol of three real calls through a temporary workflow on the live
+      rig, removed after the test. The numbers quoted (2,999 and 3,001 rubles; the four jev response types
+      — yes/no with probability, single choice, scale position, image region) are exactly what the protocol
+      recorded. No accuracy percentage is invented or measured — the task never reached the stage where
+      accuracy could be computed, and that is the content of the finding. Mirrors RU n30a (issue #274).'
+- id: n30b
+  file: slides-en/n30b-k3-reshenie-shema.md
+  type: mechanism_node_graph
+  duration_min: 2.0
+  assertion: 'Version 2 is a direct answer to the error found: the same chain as version 1, with the difference
+    confined to exactly one node, the decision point — the amount-to-threshold comparison is handed to
+    code, not to a text call to the model'
+  learning_goal: The solution (layer 1, system-neutral). The diagram is drawn as a SEQUENTIAL iteration
+    — version 1 → problem found in production → version 2 — in two stacked bands, a deliberate departure
+    from an earlier, rejected parallel A/B diagram.
+  visual:
+    pattern: mechanism_node_graph
+    figure: k3-shema-versii-en.png
+    primary: 'A two-band diagram, one under the other: version 1 (free-text form → model extracts the
+      amount → the same model decides from the rule text → result) and version 2 (the same form → model
+      extracts the amount → IF node compares the number to the threshold → result). The difference is
+      highlighted at exactly one decision node; the rest of the chain is visually identical. The bands
+      sit as "was → became," not as two equal parallel worlds.
+
+      '
+    backup: 'Fully drawn diagram (no screenshot) — generated by `rendered/make_figures_k3.py`, function
+      `shema_versii_en()`, the EN companion to the RU `shema_versii()`. Carries the current measured numbers,
+      9 errors out of 101 for version 1 and 0 out of 101 for version 2, matching the current RU figure
+      after this round''s renumbering (not the earlier "3 of 51"). Mirrors RU n30b (issue #274).'
+- id: n31
+  file: slides-en/n31-k3-eksperiment-metodologiya.md
+  type: mechanism_node_graph
+  duration_min: 3.0
+  assertion: 101 test requests (51 original + 50 new, harder than the first — ambiguous phrasings, two
+    numbers in one text, amounts right at the boundary) were generated deterministically and run as real
+    submissions through the live rig
+  learning_goal: A full slide about the measurement PROCESS, expanded this round because '3 errors out
+    of N' sounded under-powered — the set was extended with 50 harder requests. Methodology follows the
+    stand's own README and results file.
+  visual:
+    pattern: mechanism_node_graph
+    figure: k3-n8n-variants-real-en.png
+    primary: 'Five vignettes in a row: why measure at all · the original 50+1 (two clusters) · the NEW,
+      harder 50 (three groups) · how correctness is read · the final count of 101. Below the vignettes
+      — a real n8n canvas screenshot, two workflows side by side: left, "clearer rule in the prompt" (measuring
+      action #1 from n30), right, "model with a calculator tool" (measuring action #2 from n30) — the
+      real setup that ran the same set and got 100/100 and 56/100. The architectural solution diagram
+      (version 1 → version 2) is already shown in the previous beat (n30b) and configured further in n34/n34a
+      — here it''s a backup view of two OTHER options from the action breakdown.
+
+      '
+    backup: '50 new requests were added — a deterministic seed, three groups: 15 "tight_border" (±20 rubles
+      from the threshold), 20 "two_numbers" (a distracting amount and a target amount in the same text),
+      15 "ambiguous" (the amount is the result of arithmetic or an indirect phrasing). Total 101 requests
+      (was 51). No workflow/execution id appears on screen. The figure is a composite of two real screenshots
+      of the live n8n rig, placed side by side — confirming the two setups were really built, not just
+      claimed; it is not a new measurement, 56/100 and 100/100 were already stated and explained on n30.
+      Mirrors RU n31 (issue #274).'
+- id: n32
+  file: slides-en/n32-k3-eksperiment-rezultat.md
+  type: answer_breakdown_table
+  duration_min: 2.0
+  assertion: On 101 requests version 1 erred 9 times, and all nine were on the amount exactly equal to
+    the threshold; version 2 — 0 errors on the same set; this is a systematic error at one point, not
+    random scatter
+  learning_goal: 'The experiment''s result rebuilt into block form at the owner''s direct request: each
+    test block gets its own row with its own count of requests and errors, instead of running prose.'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A block table across six test groups with the number of requests, errors, and a real example
+      request text in each, with a totals row at the bottom. No execution id — only the observed behavior.
+
+      '
+    backup: 'The six block labels name the content of each group (range / phrasing feature), not a production
+      history of "original" vs. "new" — all six are equal parts of one 101-request test from the student''s
+      point of view. The example column uses real request text from the data files, never invented; for
+      the single manual test the text is honestly not shown, because it was never recorded as data. Mirrors
+      RU n32 (issue #274).'
+- id: n34
+  file: slides-en/n34-k3-reshenie-n8n.md
+  type: mechanism_node_graph
+  duration_min: 2.0
+  assertion: 'The real IF-node setup — the condition is "strictly greater than 3000", a number compared
+    with a number; next to it, the real, open settings panel of the version-1 node with the prompt text,
+    not a paraphrase: the same step of the chain, two fundamentally different ways to make the decision'
+  learning_goal: 'The solution (layer 2, the n8n implementation) — two real screenshots of the live rig,
+    side by side: left, the IF node on the canvas; right, the open settings panel of the version-1 model
+    node with the real prompt text. No workflow/execution id.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k3-n8n-reshenie-real-en.png
+    primary: 'A composite of two real screenshots of the live n8n rig, with a caption above each half.
+      Left — the canvas of the workflow "process (B) — code decides": node `Extract amount` → node `IF`
+      ("Amount over threshold?") → the `true` branch to card "Result screen (escalate)", the `false` branch
+      to "Result screen (approve)". Right — the open settings panel of node `Decide refund (model)` (version
+      1): the `Prompt (User Message)` field with the rule''s text, exactly as it is actually set. No node,
+      workflow, or execution id on screen.
+
+      '
+    backup: 'The left screen is the same crop already used as `k3-n8n-if-uzel-real.png` — node and branch
+      names read literally. The right screen''s `Prompt (User Message)` field is cut off by n8n''s own
+      interface (a height-limited textarea with scroll, not our crop) — the full rule, uncut, is carried
+      in the speaker notes, same as on the RU slide. HONEST EXCEPTION (glossary.en.yaml): because this
+      is a genuine screenshot of a live rig serving a Russian-speaking training center, the prompt text
+      itself is in Russian on screen and is quoted verbatim rather than translated; an English gloss is
+      added alongside it in both the visible body and the notes. Mirrors RU n34 (issue #274).'
+- id: n34a
+  file: slides-en/n34a-k3-nastroyka-uzlov.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: Inside the "Extract amount" node — a strict JSON schema with one required numeric field;
+    inside "IF" — a single condition, the amount compared with 3000 literally, both parameters checkable
+    right on screen, not just by the node's name
+  learning_goal: A new slide showing the settings panels of two version-2 nodes from the inside (open
+    configuration), not just as named boxes on the canvas — real screenshots, not a paraphrase.
+  visual:
+    pattern: mechanism_node_graph
+    figure: k3-n8n-nastroyka-uzlov-en.png
+    primary: 'A composite of two real screenshots of open settings panels from the live rig, each with
+      a caption above it: left, the "Extract amount" node (Information Extractor) — Parameters tab, showing
+      the input JSON schema; right, the "Amount over threshold?" node (IF) — Parameters tab, showing the
+      comparison condition. Both panels are real configuration screens, not a canvas with named boxes.
+
+      '
+    backup: 'The JSON schema of `Extract amount` reads literally: one required field, `amount_rub`, strictly
+      numeric. The condition of `Amount over threshold?` reads: `{{ $json.output.amount_rub }}` is greater
+      than `3000` — a single condition, with "Convert types where required" switched off. Mirrors RU n34a
+      (issue #274).'
+- id: n34b
+  file: slides-en/n34b-k3-rezultat-preview.md
+  type: result_preview
+  duration_min: 0.75
+  assertion: The client doesn't open a separate screen and doesn't see a node or a threshold — they get
+    one short message saying the request is approved and the money has already been sent to their card
+  learning_goal: A new slide pairing the solution diagrams/setup (n30b, n34, n34a) with what the end user
+    actually sees, before the version-comparison table (n35) — the same 'what the user sees' pattern already
+    used in Case 1 (n12).
+  visual:
+    pattern: result_preview
+    primary: 'A mockup of a single support-chat message — short text about the approved refund and the
+      money transfer to the card. The caption under the mockup ties it to the request from the scene (n28):
+      2,500 rubles, an example below the threshold.
+
+      '
+    backup: 'The amount is taken verbatim from the example already used in the deck (n28: "please refund
+      2,500 rubles for a missed class") — an amount below the 3,000-ruble threshold, i.e. exactly the
+      case version 2 approves automatically (the `IF` node, n30b/n34); no new amount was invented. The
+      mockup shows no node name, threshold, or workflow/ execution id — only what the client actually
+      sees. No interface figure exists on disk yet; the slide is built as a text representation of the
+      message (a blockquote), same as n12, ready for the designer''s visual pass at render time. Mirrors
+      RU n34b (issue #274).'
+- id: n35
+  file: slides-en/n35-k3-razbor-versiy.md
+  type: answer_breakdown_table
+  duration_min: 2.0
+  assertion: On the same 101-request set, version 1 erred 9 times at the boundary, version 2 — 0 times;
+    outside the boundary both versions are flawless — the difference lies entirely in behavior at the
+    one point of the condition
+  learning_goal: The side-by-side breakdown AFTER the test — a sequential beat, not a parallel A/B. Numbers
+    updated to the extended 101-request set (was 51).
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A three-row table: errors on all 101 requests · at the boundary · outside the boundary.
+      Both versions were run on the same extended set of 101 requests — the very one that found the problem
+      and confirmed it on harder phrasings, not a separate test built "for version 2."
+
+      '
+    backup: 'Numbers from this round''s full protocol. Original 51: 3 errors for version 1 (all at 3,000
+      rubles), 0 for version 2. New 50 (harder — tight border / two numbers / indirect phrasing): 6 errors
+      for version 1 (again all at 3,000 rubles, including cases where 3,000 came from arithmetic in the
+      text), 0 for version 2. Total: 9 vs. 0 on 101. Mirrors RU n35 (issue #274).'
+- id: n36
+  file: slides-en/n36-k3-obobshchenie.md
+  type: answer_breakdown_table
+  duration_min: 1.5
+  assertion: The model systematically misses exactly at the boundary of a condition, rather than erring
+    probabilistically in general; the class of task — a decision formalizable as a condition over a number
+    — is not a decision point for the model
+  learning_goal: The generalization of Case 3 — the precise wording of the task class, kept exact rather
+    than smoothed into a generic 'the AI sometimes makes mistakes.'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A short generalization banner at the top, below it the task class stated in one large phrase,
+      highlighted in gold.
+
+      '
+    backup: 'The wording "the model systematically misses exactly at the boundary of the condition...
+      flawless over the rest of the range" is kept exact — this is the safeguard against drifting into
+      the generic "the model sometimes makes mistakes," which the course''s AI-failure rule treats as
+      not counting at all. Mirrors RU n36 (issue #274).'
+- id: n37
+  file: slides-en/n37-k3-nyuansy.md
+  type: criteria_checklist_and_boundary
+  duration_min: 1.5
+  assertion: A calculator tool given to the model is not a guarantee and is measurably worse in practice;
+    the threshold must live in exactly one place, not two copies; the extracting model can still make
+    a mistake, and an explicit numeric field removes that part of the risk only if the form itself can
+    be changed
+  learning_goal: Three nuances of Case 3; the calculator nuance is now backed by a real measurement (56/100),
+    and card references were corrected after the question went from five cards to four.
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'Three numbered banners, each a full-sentence nuance, not shortened to a headline.
+
+      '
+    backup: 'The calculator nuance is now backed by a real run of an agent with a genuine calculator tool
+      on the same hundred requests (56/100) — worse than every other option, with new, unplanned-for failure
+      modes. Card references were updated: the question now gives four cards, not five. Mirrors RU n37
+      (issue #274).'
+- id: n38
+  file: slides-en/n38-k3-kriteriy.md
+  type: criteria_checklist_and_boundary
+  duration_min: 1.5
+  assertion: 'It must be code when the decision criterion formalizes as a condition over an already-structured
+    value; better still — eliminate the need for extraction entirely; this closes the session''s third
+    axis row: the model bypasses the rule in a measured share of runs, code — never'
+  learning_goal: A criterion rather than an essay, closing the third row of the session's axis — the model
+    bypassed the rule in 9 of 101 runs, code in zero.
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'The criterion in a large banner, below it a separate closing line for the session''s axis,
+      with explicit contrast between "the model, in a measured share" and "code — never."
+
+      '
+    backup: 'The number is updated to the extended set — "9 of 101" instead of the earlier "3 of 51."
+      The number was already shown on n32/n35 — here it''s reused for contrast with code''s "never," not
+      introduced as a new finding. Mirrors RU n38 (issue #274).'
+- id: n39
+  file: slides-en/n39-zillow-divider-stsena.md
+  type: section_divider_macro
+  duration_min: 2.0
+  assertion: Zillow shut down its algorithmic home-buying business and wrote off hundreds of millions
+    of dollars — the same ungated decision threshold as in the 'Refund Approval' case, just at the scale
+    of an entire company
+  learning_goal: 'EN mirror of the third wave (BRIEF-PROIZVODSTVO.md §0/§4): Zillow written up as a full
+    business case, not a shortened filler. Divider and scene stay merged into one screen (carried over
+    from the previous wave), but the business context — what iBuying is and how Zillow Offers worked —
+    is now explicit on screen, not only in the notes. The CEO quote leads.'
+  visual:
+    pattern: section_divider_macro
+    primary: 'A dark macro-divider. The CEO''s quote large, in quotation marks, the attribution underneath.
+      Below it — a short business context: what iBuying is and how Zillow Offers worked, plus a table-strip
+      of five numeric tiles. No case track on this screen — Zillow sits outside the case track.
+
+      '
+    backup: 'Numbers checked word for word against SETKA-KEYSOV-S8-part2.md, section "Концептуальный разбавитель
+      — Zillow", and library/lectures/lec-05/ chapter-part3.md §5.4 — unchanged from the previous wave.
+      The business context (the iBuying paragraph) is new text from this wave, per the brief''s own §4
+      requirement ("business context: what iBuying is, how it worked"), drawn from the same SETKA part2
+      section, with no details added beyond the source.'
+- id: n40
+  file: slides-en/n40-zillow-shema-bez-geyta.md
+  type: mechanism_node_graph
+  duration_min: 1.0
+  assertion: The algorithmic valuation decided on the purchase with no mandatory gate and no short monitoring
+    period — the error became visible only in quarterly SEC filings, a historical archive, not a control
+    period
+  learning_goal: Zillow's no-gate decision diagram — layer 1, system-neutral (canon §2), the same device
+    as the 'with LLM / without LLM' diagram in the 'Notifications' case, at a different scale. Short caption
+    under the figure, no prose retelling of the diagram's content (BRIEF-PROIZVODSTVO.md §2) — the full
+    unpacking lives in the notes.
+  visual:
+    pattern: mechanism_node_graph
+    figure: zillow-shema-bez-geyta-en.png
+    primary: 'A one-row diagram: Zestimate → purchase with no gate above the risk threshold → no monitoring
+      period → the error is visible only in the quarterly report.
+
+      '
+    backup: EN mirror of the figure, generated from the same script (make_figures_zillow.py --lang en)
+      via the fig_strings_en.py dictionary, the established pattern from sem-06. Content is a direct unpacking
+      of "Схема решения, как оно работало" from SETKA-KEYSOV-S8-part2.md, section "Zillow", with no details
+      added.
+- id: n41
+  file: slides-en/n41-zillow-vopros.md
+  type: question_with_option_cards
+  duration_min: 1.0
+  assertion: The model was calibrated correctly, yet the decision was bypassed thousands of times in a
+    row — the question is what was missing from the loop, not from the model itself
+  learning_goal: 'Zillow''s question: bare action cards, no arguments or verdicts (canon §5). The cards
+    are a design choice, not a claim about the model.'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'The question in a gold frame, four equal-width cards underneath, no explanations and no
+      highlighted correct option.
+
+      '
+    backup: Cards are a literal rendering of SETKA-KEYSOV-S8-part2.md, section "Zillow", with no rephrasing.
+      All four are actions that could be built into the decision loop (or explicitly are not such an action
+      — the fourth card), not claims about the model's properties.
+- id: n42
+  file: slides-en/n42-zillow-razbor.md
+  type: answer_breakdown_table
+  duration_min: 1.5
+  assertion: Calibration and external volatility are not an engineer's point of intervention; what's decisive
+    is the absence of a short monitoring period and of a human on decisions with a large stake
+  learning_goal: 'Zillow breakdown: form A5 (two columns, no verdicts), the turn is on what actually was
+    the cause versus what wasn''t.'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A table: option · what it does · what it doesn''t do. Below it, the turn as a separate tile:
+      what turned out to be decisive.
+
+      '
+    backup: Content is a direct unpacking of the breakdown from SETKA-KEYSOV-S8-part2.md, section "Zillow",
+      recast into form A5 (two columns) instead of prose.
+- id: n43
+  file: slides-en/n43-zillow-shema-s-geytom.md
+  type: mechanism_node_graph
+  duration_min: 1.0
+  assertion: 'The algorithmic valuation as an input, not as the decision: a human underwriter above the
+    risk threshold plus an explicit circuit breaker, checked weekly, not quarterly'
+  learning_goal: 'Zillow''s solution with no demo: someone else''s halted system, not our own rig. The
+    diagram WITH the gate is the same device as the one without it (n40), at a different scale of condition
+    than ''Refund Approval''. Short caption under the figure, full unpacking in the notes (BRIEF-PROIZVODSTVO.md
+    §2).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: zillow-shema-s-geytom-en.png
+    primary: 'A one-row diagram: Zestimate (input) → human underwriter above the risk threshold → explicit
+      circuit breaker, checked weekly → purchase or halt.
+
+      '
+    backup: 'EN mirror of the figure, generated from the same script (make_figures_zillow.py --lang en)
+      via the fig_strings_en.py dictionary, the established pattern from sem-06. Content is a direct unpacking
+      of "Наше решение (без демо)" from SETKA-KEYSOV-S8-part2.md, section "Zillow", with no details added.
+      No demo, deliberately: someone else''s halted system, not our own rig.'
+- id: n44
+  file: slides-en/n44-zillow-kriteriy.md
+  type: criteria_checklist_and_boundary
+  duration_min: 1.5
+  assertion: Scale back automation when the cost of a single error is real capital and the external regime
+    is shifting; this is the same idea as in 'Refund Approval', at the scale of an entire company
+  learning_goal: Zillow's criterion in direct form plus an explicit tie to the 'Refund Approval' case
+    — closes the bridge between the training-center scale and the corporate scale of the same design mistake.
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A two-column table, below it the limit as a separate tile and an explicit tie to the "Refund
+      Approval" case.
+
+      '
+    backup: The criterion is a direct quote from SETKA-KEYSOV-S8-part2.md, section "Zillow", paragraph
+      "Критерий"; the tie to "Refund Approval" is the paragraph "Закрывает ту же мысль" of the same section,
+      unchanged in content.
+- id: n45
+  file: slides-en/n45-k4-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: The n8n run log is green, the sending node got a successful response from Telegram, and the
+    coordinator's Telegram has no card at all
+  learning_goal: 'EN mirror of the Case 4 divider, "Card in Telegram." Names the practice finding, not
+    the fix — this case''s entry form is different from the canon default: the finding arrives before
+    the need is named, on the next screen.'
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, two short statements, large, one under the other. At the bottom, the four-case
+      track, the fourth one highlighted.
+
+      '
+    backup: 'The entry form "two statements that look mutually exclusive" is a practice finding, not a
+      needs-statement (ARCHITECTURE.md §3, table "Case entry forms," row "Card in Telegram"). This doesn''t
+      violate canon §1: marketing''s need is named in the first paragraph of the next screen (the scene)
+      — the finding stands first here on purpose, as a hook.'
+- id: n46
+  file: slides-en/n46-k4-stsena.md
+  type: problem_scenario
+  duration_min: 2.0
+  assertion: Marketing asked for a card with a picture instead of plain text; we put a chain together,
+    it worked on test pictures, and on the first real one the result vanished quietly during a formally
+    successful run; closes with an explicit list of requirements the solution has to meet
+  learning_goal: 'Case 4 scene, canon §1 form: need first, version 1 as the natural first attempt, the
+    practice finding as the cost paragraph, and now a new footer — two classes of concrete requirement,
+    moved here from the former separate slide n48 as part of stating what must be met, not part of why
+    the split is right.'
+  visual:
+    pattern: problem_scenario
+    primary: 'A callout with marketing''s need, below it a numbered timeline of assembly and the first
+      real run, a paragraph on the cost of the quiet loss, and a new footer — a two-class requirements
+      table the solution has to meet. Still no table in the scene''s main body — the table lives only
+      in the footer.
+
+      '
+    backup: 'The scene''s content is a direct unfolding of "Need" + "Version 1" + "What the practice showed"
+      from SETKA-KEYSOV-S8-part2.md, section "Card in Telegram," folded into the scene''s form (callout
+      → timeline → cost). The footer with the two requirement classes was moved here by the owner''s 2026-10-20
+      edit (issue #274) from the former separate slide n48 (`slides/n48-k4-razbor.md` before the move)
+      — the wording is the same, the framing shifted from "breakdown" to "statement requirement" (canon
+      `proektirovanie-keysa-i-voprosa.md` §1: the statement is formulated as a need, not as a review of
+      an already-built solution). Slide n48 wasn''t deleted — it was repurposed into a breakdown of the
+      answer to question n47 and a bridge to implementation (layers n49/n50), without duplicating this
+      table — see its own backup.'
+- id: n47
+  file: slides-en/n47-k4-vopros.md
+  type: question_with_option_cards
+  duration_min: 2.0
+  assertion: Four ways to check that a picture matches the requirements before the file goes to Telegram
+    — a direct continuation of the «model or code» axis, applied to an image
+  learning_goal: 'Case 4''s question: not «what happens past the limit» but how to build the check. The
+    cards split the mechanical check from the semantic one — the case''s central methodological finding,
+    continuing the session''s axis. Cards are actions.'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'The question in a gold frame, below it four cards of equal width, with no explanations and
+      no highlight on the correct option.
+
+      '
+    backup: 'The cards are verbatim from SETKA-KEYSOV-S8-part2.md, section "Card in Telegram," the paragraph
+      "Question to the room: how do you check that a picture matches the requirements?" — no rephrasing.
+      The question was rewritten this wave: it used to be "how do you handle a picture that might turn
+      out to be over the limit" — it became "how do you check that a picture matches the requirements,"
+      an explicit continuation of the session''s axis.'
+- id: n48
+  file: slides-en/n48-k4-razbor.md
+  type: answer_breakdown_table
+  duration_min: 2.0
+  assertion: Cards 1 and 2 close the mechanical requirement with code; card 3 closes the semantic one,
+    and there's no step for it in the chain today; card 4 closes neither — and that's exactly what happened
+    in the scene
+  learning_goal: 'Breakdown of question n47, repurposed by the owner''s 2026-10-20 edit (issue #274):
+    the two requirement classes are now named in the n46 footer, so this screen no longer introduces them
+    — it resolves the four cards against the already-named requirements and bridges to how the first two
+    points get implemented technically (n49 layer 1, n50 layer 2).'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A four-row table: card · which requirement it closes · closed today or not. Below it a paragraph-example
+      about a technically sound file with the wrong content, and a short bridge to the next two screens.
+
+      '
+    backup: 'Before the owner''s 2026-10-20 edit (issue #274), this slide itself introduced the two requirement
+      classes with a "class · example · who checks" table — that table was moved into the statement''s
+      footer (`n46-k4-stsena.md`), at the owner''s direct request ("move the requirement class into the
+      statement"). The slide wasn''t deleted (it didn''t become redundant): question n47 still needs a
+      breakdown immediately after itself (canon §3 A1), and a card-by-card breakdown is content that n46''s
+      footer doesn''t have and shouldn''t have (the statement''s footer formulates the REQUIREMENT, it
+      doesn''t resolve the vote). The card wording and the hosting-error-page example are the same as
+      they were here before, word for word from SETKA-KEYSOV-S8-part2.md, section "Card in Telegram,"
+      with no added detail.'
+- id: n49
+  file: slides-en/n49-k4-reshenie-sloy1.md
+  type: mechanism_node_graph
+  duration_min: 1.5
+  assertion: 'Mechanical and semantic are different in kind as requirements on a file, and each has its
+    own checker: code for one, a vision model for the other'
+  learning_goal: Case 4 solution, layer 1 — a tool-agnostic architecture (canon §2), a diagram of the
+    two requirement classes named in the n46 footer and resolved by card in the n48 breakdown. A short
+    caption on the figure, expanded in the notes.
+  visual:
+    pattern: mechanism_node_graph
+    figure: k4-shema-trebovaniya-en.png
+    primary: 'A two-column diagram: mechanical requirement → code, a deterministic check before sending;
+      semantic requirement → a vision model, not implemented today.
+
+      '
+    backup: The figure is being prepared in parallel (BRIEF-PROIZVODSTVO.md §5) — the filename is final,
+      the orchestrator will confirm it exists before assembly. The content is a direct unfolding of "Our
+      solution, layer 1" from SETKA-KEYSOV-S8-part2.md, section "Card in Telegram," with no mention of
+      specific nodes (that's layer 2).
+- id: n49a
+  file: slides-en/n49a-k4-tochka-vetvleniya.md
+  type: mechanism_node_graph
+  duration_min: 1.0
+  assertion: The card's three nodes aren't a separate process off to the side — they grow out of the same
+    point where the ordinary request-intake path already writes a row and shows the result screen
+  learning_goal: 'New letter-tail slide from the owner''s screenshot-density edit (issue #274, 2026-10-20
+    evening). Between n49 (tool-agnostic architecture) and n50 (a tight zoom on the real configuration
+    + size boundary) — an establishing shot of the real canvas, showing exactly where Case 4''s three
+    nodes branch off the already-familiar request-intake path.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k4-n8n-vetvlenie-real.png
+    primary: 'A real screenshot of the n8n canvas (workflow "C8 · Case 4 — photo in Telegram," live rig),
+      cropped wider than n50''s close view: `Write row` → `Result screen` (the main request-intake path)
+      on the left, and an arrow running upward from the branch point to `Compose notification (template)`
+      → `Fetch card image (HTTP)` → `Send card (Telegram photo)` — the three nodes the case breaks down
+      next.
+
+      '
+    backup: 'ORIGINALLY this screenshot was conceived as a confirming `fig_after` figure on n48 (breakdown),
+      on the model of `k2-n8n-test-stend-real.png` on n20 (owner''s voice edit, same day, same complaint
+      "too few screenshots" — already applied to Case 2). Pulled off n48: `check_tracks_pdf.py` (canon
+      §7, checking against what LibreOffice ACTUALLY drew, not against the `metrics` measurement) caught
+      a real defect — on n48 a 4-row table and two text blocks already stand before the figure, and the
+      figure encroached on the text above it (5.7–7.0 pt across different crop aspect ratios; the crowding
+      is structural, not fixable by adjusting the aspect ratio). Moved to its own letter-tail screen,
+      where the figure is the only content block, and `check_tracks_pdf.py` and `check_text_overlap_pdf.py`
+      come back clean on it.
+
+      Source — a real screenshot of the live n8n rig (Playwright, taken 2026-10-20, https://n8n.lessons.tellian.io,
+      see notes/mcp-limitations.md [#233-8]), file `stend/n8n-screenshots-raw/case4-telegram-image.png`
+      (1900×1100, the same source file as `k4-n8n-tsepochka-real.png` on n50, but cropped wider to the
+      left), assembled in `rendered/make_figures_k4.py` by the function `vetvlenie_real()`, saved as `library/seminars/sem-08/rendered/figures/k4-n8n-vetvlenie-real.png`
+      (980×304, crop (820, 258, 1800, 562) of the source file — the right edge also removes the n8n interface''s
+      floating "✨ AI assist" button, which has nothing to do with the process).
+
+      On the frame, literally: `Write row` → `Result screen` (the main request-intake path — the same
+      one already shown on Case 1''s canvas, `k1-n8n-versiya1-real.png`, n11) and an arrow running upward
+      from the branch point after `Write row` to Case 4''s three nodes. This is honestly NOT the full
+      canvas of the workflow "C8 · Case 4 — photo in Telegram": left out of frame are `Request form` /
+      `Extract fields` / `Model` / `Vocabulary check` — the same model-based request-parsing trick already
+      shown on Case 1''s figure; repeating it here would be repeating a screen already seen. And honestly
+      BELOW the frame (on the uncropped screenshot, but not in this crop) there''s one more real branch
+      — `Write row · not parsed` / `Result screen · not parsed`, the fallback path for when the model
+      fails to parse the request''s fields: it genuinely exists on the rig, but it belongs to the request-INTAKE
+      step, not to assembling and sending the card, and it isn''t the focus today — the only reason not
+      to include it in this frame HERE (not deliberate concealment) is geometry: a single rectangle holding
+      both it and the card''s three nodes at once turns the frame nearly portrait (ratio ~1.88) and hits
+      the schema''s ceiling (`deck_kit.py: FIG_MIN_FILL`/`FIG_NATURAL_H`) — checked by direct calculation,
+      not by eye. The workflow-name breadcrumb, the `Published` badge, the Editor/Executions/Evaluations
+      tabs, the app''s left icon column, the right floating zoom/search panel, the "Execute workflow"
+      button, the bottom `Logs` panel — all out of frame; there is no workflow/execution id anywhere on
+      the frame (canon §2–§3 `tools/seminar-production/README.md`).'
+- id: n50
+  file: slides-en/n50-k4-reshenie-sloy2.md
+  type: mechanism_node_graph
+  duration_min: 3.5
+  assertion: Three nodes assemble the card without a single model call, and the uncompressed 12,812,355-byte
+    file — between n8n's 16 MB limit and Telegram's 10,485,760-byte photo limit — produced a real, explicit
+    Telegram Bot API error, not silence
+  learning_goal: Case 4 solution, layer 2 — a real screenshot of the live n8n rig (Playwright, 2026-10-20)
+    with the actual three-node chain + a real size boundary, checked with an actual call. Parameters are
+    real, taken from the rig's files; no workflow/execution id on screen. The error text is a real API
+    quote, not a service id, so it's given in full.
+  visual:
+    pattern: mechanism_node_graph
+    figure: k4-n8n-tsepochka-real.png
+    primary: 'A real screenshot of the n8n canvas (workflow "C8 · Case 4 — photo in Telegram," live rig):
+      node "Compose notification (template)" → node "Fetch card image (HTTP)" (a GET request to a link
+      is visible) → node "Send card (Telegram photo)." Below the diagram — a three-number table and the
+      real Telegram Bot API error text (a separate text block, not part of the screenshot).
+
+      '
+    backup: 'SCREENSHOT TAKEN 2026-10-20 from the live rig https://n8n.lessons.tellian.io via Playwright
+      (workaround — ~/.cache/page-shot-libs/x; update to notes/mcp-limitations.md [#233-8]): a crop from
+      stend/n8n-screenshots-raw/case4-telegram-image.png, workflow "C8 · Case 4 — photo in Telegram."
+      REPLACED the schematic diagram — the former file rendered/figures/k4-n8n-tsepochka.png stays untouched
+      on disk, the slide no longer references it. Node names are read literally off the screenshot: "Compose
+      notification (template)," "Fetch card image (HTTP)" (under the title the parameter `GET: https://picsum.photos/8…`
+      is visible — real, this is the actual source of the test picture, not invented for the example),
+      "Send card (Telegram photo)" (caption `sendPhoto: message`). The nodes and parameters match stend/stage-4.json
+      by meaning (BRIEF-PROIZVODSTVO.md §3). The numbers and the error quote are from SETKA-KEYSOV-S8-part2.md
+      and stend/README.md, section "Case 4," checked by a direct call to the Telegram Bot API (an ephemeral
+      host for feeding a file this size into the image-fetch node was unavailable at the time of checking)
+      — named honestly, not disguised as a run through n8n; this is still true, the screenshot only changes
+      the fact that the canvas is now real. HONESTLY: stage-4.json on the rig contains exactly these three
+      nodes and does not contain a separate size/format-check node — layer 1''s architectural rule (n49)
+      is demonstrated on the rig by the boundary diagnostic below, not by a separate built node, unlike
+      Cases 1 and 3, where both versions are actually built. This remains an open item of the production
+      phase, not a contradiction of the source. The owner requested real n8n node-settings screenshots
+      via the 2026-10-20 voice edit (issue #274); the "live UI unreachable" limitation (notes/mcp-limitations.md
+      [#233-8]) was lifted the same day.'
+- id: n50a
+  file: slides-en/n50a-k4-nastroyka-uzlov.md
+  type: mechanism_node_graph
+  duration_min: 2.25
+  assertion: 'Settings panels, not the canvas and not a retelling: on the left the `Compose notification
+    (template)` node — the same expression as in Case 1, unchanged; in the middle `Fetch card image (HTTP)`
+    — the GET method and the real picture URL at the top, the «File» response format and the binary field
+    name at the bottom; on the right `Send card (Telegram photo)` — the real recipient, the binary data,
+    and the caption built from the notification text, all visible in full'
+  learning_goal: 'Owner''s voice edit 2026-10-20 (issue #274): every case needs a full-chain screenshot
+    with a comment on what was added, followed by per-node settings screenshots. n50 gives the wide chain
+    view; this slide is the second half — real settings panels for all three nodes. Revision: added a
+    minimal Compose panel to confirm the node is unchanged, not re-explain substitution.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k4-uzly-nastroyka-real.png
+    primary: 'A composite of three real crops of the live rig, side by side: on the left — the minimal
+      panel of the `Compose notification (template)` node (title, Mode, Fields to Set, the expression
+      line itself — no lower service tail); in the middle — the `Fetch card image (HTTP)` node''s panel,
+      top (title · Method · URL) and bottom (Response Format · Put Output in Field) of the SAME screenshot,
+      stitched vertically with an explicit caption naming exactly what''s skipped between them; on the
+      right — the `Send card (Telegram photo)` node''s panel in full, one solid crop, with the Chat ID
+      masked by a rectangle.
+
+      '
+    backup: 'SCREENSHOTS TAKEN 2026-10-20 from the live rig (the same Playwright capture channel as n50/n22a):
+      library/seminars/sem-08/stend/n8n-screenshots-raw/ case4-compose-notification.png, case4-fetch-image.png,
+      and case4-send-telegram.png (1900×1100 each) — the open settings panels of the workflow "C8 · Case
+      4 — photo in Telegram"''s three nodes, the same process as on n50''s overview frame and on n48 (`k4-n8n-razbor-real.png`).
+
+      LEFT panel (`Compose notification (template)`) — NEW in this revision round, one solid crop (0,0)–(1160,430):
+      the node''s title, the Parameters tab, `Mode` = Manual Mapping, `Fields to Set` → the `notification_text`
+      field (type String) and the entire expression line itself, word-for-word the same one that was already
+      on Case 1''s panel (n11a/n14a): «Новая заявка от {{ $(''Request form'').item.json[''Имя''] }}: тема
+      «{{ $(''Vocabulary check'').item.json.topic }}»...» — in English, what this produces: "New request
+      from {name}: topic ''{topic}''...". The crop is deliberately kept to a minimum — below this point
+      the real panel still continues with "Drag input fields here / Add Field," "Include Other Input Fields,"
+      and "Options," the same service tail already shown and named uninteresting on the Fetch panel (see
+      below), and here it''s cut off with no separate caption noting the omission: the crop stops at a
+      meaningful boundary (the end of the visible expression line), not mid-field, so it doesn''t read
+      as misleading. This is a CONFIRMATION that the node is the same one, not a repeat breakdown of the
+      substitution trick — the breakdown of the substitution itself stays with Case 1 (canon §8.1 isn''t
+      violated here: the term and the mechanism aren''t introduced again, only recognized on a new screen).
+
+      MIDDLE panel (`Fetch card image (HTTP)`) is assembled as a TWO-STRIP crop of one screenshot, not
+      a splice of different screenshots: top — the region (0,0)–(1160,290) (the node''s title, the Parameters
+      tab, Method=GET, URL= `https://picsum.photos/800/450`); bottom — the region (0,630)–(1160,900) (Response
+      Format=File, Put Output in Field=data). Between them — an honest caption right on the figure: "Authentication
+      / Send Query Parameters / Send Headers / Send Body — untouched, default" — these are exactly the
+      panel''s four disabled toggles, none of them carries a lesson, and the slide doesn''t pretend they
+      don''t exist — it names the omission out loud rather than staying silent about it. The reason for
+      the two-strip crop isn''t aesthetic: the needed fields (the URL at the top, the response format
+      at the bottom) sit farther apart on the real panel than fits the slide''s allotted height without
+      shrinking the diagram (canon `deck_kit.py: FIG_MIN_FILL` — a solid crop of the whole panel gives
+      a portrait ratio that has already broken the layout once before, see the n23 backup on `case2-jev-node-config.png`).
+
+      RIGHT panel (`Send card (Telegram photo)`) — one solid crop (0,0)–(1160,700), with nothing skipped:
+      `Credential` = Telegram account (C8), `Resource` = Message, `Operation` = Send Photo, `Chat ID`
+      (masked, see below), `Binary File` is on, `Input Binary Field` = data, `Reply Markup` = None, `Additional
+      Fields` → `Caption` = `{{ $json.notification_text }}`. There was nothing to skip here — every field
+      is set away from its default and carries a lesson (the recipient, the binary data, the caption built
+      from the chain''s first node''s text).
+
+      MASK: the `Chat ID` field on the right panel showed the real number 266536553 — the rig''s test
+      account''s personal Telegram id, not relevant to the lesson. Masked with a rectangle captioned "masked,
+      the rig''s personal id" — the field is titled `Chat ID` on the screenshot itself, so the room sees
+      what kind of parameter it is, just not whose number it is.
+
+      HONESTLY, about INPUT: on all three screenshots the INPUT panel is empty — "No input data" / "Execute
+      previous nodes," unlike n22a (there the INPUT tree shows the previous nodes'' real fields) — on
+      these rig nodes, the chain''s earlier steps weren''t run before the screenshot was taken. The frame
+      is left as it is, not touched up; the only thing actually measured here, and the only thing that
+      needs to be real, is the parameters panel on each of the three halves, and it is real and complete
+      within its allotted bounds.
+
+      The composite is assembled in `rendered/make_figures_k4.py`, the function `uzly_nastroyka()` — a
+      direct PIL crop + splice, with no redrawing, the same principle as `k2-n8n-panels-real.png` (n22a).
+      The final file is 3528×700 (ratio 5.04) — fits the intake layout without compression, with a comfortable
+      margin above the `FIG_MIN_FILL` threshold. No workflow/execution id on screen (canon §2–§3).'
+- id: n51
+  file: slides-en/n51-k4-generatsiya-kartinki.md
+  type: mechanism_node_graph
+  duration_min: 2.0
+  assertion: The assembled chain puts text in the caption, not on the picture — marketing asked for text
+    on top of the picture; getting that for real takes a separate generation step, and it has a cost and
+    its own output format
+  learning_goal: 'New slide, owner''s voice edit 2026-10-20 (issue #274), a letter-tail between n50 and
+    n53. Names the honest gap: n50 assembles text as a caption to a photo fetched by link, not text baked
+    into the image marketing asked for in the scene (n46). Closing that gap takes a separate generating
+    model — an architectural estimate, not a node on the rig.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k4-shema-generatsii-en.png
+    primary: 'A single-row, four-step diagram: notification text → specialized generating model → finished
+      card (text already in the pixels) → sent to Telegram. Below it two blocks: the cost of generating
+      one picture, with a source, an assumption, and an illustrative monthly estimate, and a note about
+      re-encoding before Telegram.
+
+      '
+    backup: 'New slide at the direct request of the owner''s voice edit (`qa/BRIEF-GOLOSOVAYA-PRAVKA-2026-10-20.md`,
+      section "Case 4," paragraph "Add a picture-generation diagram"). Honestly: this step is NOT built
+      on Seminar 8''s rig — neither a generating model nor a node that would receive its result exists
+      in `stend/stage-4.json` (see the honest note in the `n50-k4-reshenie-sloy2.md` backup: the chain
+      on the rig is three nodes, the text goes in as a caption to a photo fetched by link). This is an
+      architectural estimate of the missing step, not a run. The cost — the public price of gpt-image-1.5
+      (OpenAI), 1024×1024, by quality tier: low $0.009 · medium $0.034 · high $0.133 per picture (checked
+      via WebSearch, October 2026, OpenAI pricing aggregators; gpt-image-1, this model''s predecessor,
+      is being discontinued on 2026-10-23 — which is why the current version was used). The choice of
+      tier is a producer''s assumption: a notification card doesn''t need the highest generation precision,
+      so the reference point is medium quality, ≈$0.034/picture; if the owner considers the assumption
+      wrong, the figure is easily recalculated off the same table. The note about re-encoding is a direct
+      brief requirement: generated pictures come at a large standard size, lightly compressed, and the
+      `sendPhoto` 10,485,760-byte limit (measured on n50) hasn''t gone anywhere.
+
+      BASELINE/COUNT (2026-10-20 edit, issue #274): the ≈$0.034/picture price was given bare, with no
+      tie to this case''s real mailing volume — a structural gap (CLAUDE.md § "Baseline / Counterfactual
+      Mandate": any measurable claim is required to have a baseline). The case scene (n46) and the neighboring
+      slides (n45/n47/n48/n49/n50/n53/n54) do NOT explicitly state how many cards a day/month go out in
+      the mailing — checked by direct reading of every Case 4 file, the frequency is nowhere. The only
+      explicitly named volume for the training center in the whole deck is Case 1 (n06, the scene): "twenty
+      requests a day"; this is the center''s overall request flow, and the card in Case 4 replaces that
+      very notification sent for every new request (n46: "instead of plain text — a card ... in the same
+      notification") — that is, with a full switch to cards, the card volume equals the request volume,
+      the same denominator, not invented separately. Calculation: ≈20 cards/day × ≈30 days ≈ 600 cards/month
+      × $0.034 ≈ $20.4/month. This is an ILLUSTRATIVE EXAMPLE OF A CALCULATION, NOT A MEASURED VOLUME
+      — neither the mailing frequency nor the decision "switch 100% of notifications to cards" is explicitly
+      fixed in the scene; if the real-world volume is smaller (not every request needs a card) or larger
+      (several mailings a day), the sum is recalculated off the same formula. Added as a third line to
+      the "Generation cost" callout on the figure `k4-shema-generatsii.png` (function `generatsiya()`,
+      `rendered/make_figures_k4.py`) — the callout was widened from h=160 to h=185, the canvas CH stayed
+      at 560 (the aspect ratio didn''t drop below the `deck_kit.py: FIG_MIN_FILL`-safe threshold of ~2.84
+      — checked: 2.857).'
+- id: n52
+  file: slides-en/n52-k4-szhatie-pered-proverkoy.md
+  type: mechanism_node_graph
+  duration_min: 2.5
+  assertion: The mechanical check goes first and filters out junk cheaply, the content-check model goes
+    second, only on what already passed; compressing a picture before that second step is fine and usually
+    worth doing — but moderately, not below ~1024 px, if the model has to read text on the card
+  learning_goal: 'New slide, owner''s voice edit 2026-10-20 (issue #274), a letter-tail between n51 and
+    n53. Two explicit owner requirements: an explicit diagram of the mechanical-check → content-check-model
+    order, not prose; an honest research answer on whether to compress before the check, with exact figures
+    from the brief.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: k4-shema-szhatie-en.png
+    primary: 'A two-row diagram. Top — an explicit chain: file received → mechanical check → branch (did
+      not pass → reject, goes no further / passed → content-check model, not built on the rig). Bottom
+      — picture size before/after moderate compression ahead of sending to the content- check model, with
+      a warning about reading text on the picture.
+
+      '
+    backup: 'The order "mechanical → model" isn''t arbitrary: the mechanical check is essentially free
+      (a condition over a number) and deterministic, while any model call doing image recognition costs
+      real money per call (a separate figure from the GENERATION cost on n51 — the checking model''s input
+      is priced by image input tokens, not on the same scale as output generation, and this specific price
+      wasn''t estimated here, to avoid mixing two different pricing models without verification); putting
+      the cheap filter first saves model calls on files that won''t pass by format or size anyway — the
+      same economy logic as Case 2''s hybrid solution (hash first, jev on what''s left), carried over
+      to a picture. The answer about compression is VERBATIM from the voice-edit brief (`qa/BRIEF-GOLOSOVAYA-PRAVKA-2026-10-20.md`,
+      lines 180-196, "Case 4 research question — answer (WebSearch, not invented)"): 4032×3024 uncompressed
+      ≈1500 tokens, the same image at 720×540 at JPEG Q85 ≈300 tokens — a fivefold saving; the caveat
+      about OCR-like tasks and the ~1024 px limit on the longer side — the same quote, the numbers weren''t
+      changed. The source is marked on the slide as "public sources," not as a measurement on this rig
+      — the checking model itself isn''t built on the rig (see n49/n51), so the token saving can''t be
+      confirmed by our own run, only honestly cited.'
+- id: n52a
+  file: slides-en/n52a-k4-rezultat-preview.md
+  type: result_preview
+  duration_min: 0.75
+  assertion: The coordinator doesn't see a node, a byte count, or a run log — he gets a photo card with
+    a caption in the same notifications chat where only text used to arrive
+  learning_goal: 'New letter-tail slide between n52 and n53, owner''s voice edit 2026-10-20 (issue #274),
+    transcript 15:01: alongside the diagrams, every case needs a matching screen showing what the end
+    user actually sees. Same pattern already used for Case 1 (n12) and Case 3 (n34b) — a positive mockup
+    before the case wrap-up.'
+  visual:
+    pattern: result_preview
+    primary: 'A mockup of one Telegram chat message — a photo card with a short caption, in the same training-center
+      notifications chat as Case 1. The caption under the mockup ties it to the scene (n46): shows the
+      successful case, where the file fits the measured limit and the card arrives whole.
+
+      '
+    backup: 'The caption text is literally the same one already used in Case 1''s mockup (n12-k1-rezultat-preview.md:
+      "New request from Maria: topic ''course'', also mentioned: payment.") — not invented for this slide.
+      The reuse is grounded in the solution''s own architecture: n50 (speaker notes) directly names the
+      chain''s first node "the same value-substitution trick we configured in the ''Notifications'' case"
+      — that is, the caption text in Case 4 is assembled by the same formula as the message text in Case
+      1, and it diverges from it only in that it now arrives as a photo''s caption rather than a separate
+      text message (that very card marketing asked for in the n46 scene). The mockup has no node name,
+      no byte count, no `sendPhoto` threshold, and no workflow/execution id — only what the coordinator
+      actually sees (canon §3 proektirovanie-keysa-i-voprosa.md: service ids belong in the production
+      documentation, not on the visible screen). The SUCCESSFUL case is shown (the file fits the limit)
+      as the flip side of the scene (n46, where the card disappeared quietly) and the measured boundary
+      (n50, where the same file, but larger, produced an explicit API error) — the same trick as n34b:
+      a positive mockup before the case wrap-up, not a repeat of the failure scene. There''s no interface
+      figure/mockup on disk yet — the slide is assembled as a text representation of the chat (a blockquote),
+      like n12 and n34b, ready for the designer''s visual realization at the render phase.'
+- id: n53
+  file: slides-en/n53-k4-obobshchenie.md
+  type: answer_breakdown_table
+  duration_min: 2.0
+  assertion: Binary data is a separate data model from JSON fields, and the same contract that broke on
+    text in «Notifications» breaks here on format and size; this session introduces them at the level
+    of «one file, one limit, one send,» no deeper
+  learning_goal: Case 4 wrap-up + an explicit boundary on the introductory level of binary data. Storing
+    and searching many files is Seminar 10, not here.
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A short wrap-up and below it a two-column table — what''s enough for this session and what''s
+      deliberately left out of frame until Seminar 10.
+
+      '
+    backup: The text is a direct unfolding of "Wrap-up" from SETKA-KEYSOV-S8-part2.md, section "Card in
+      Telegram," including the sentence "An explicit boundary of the introductory level," folded into
+      the table.
+- id: n54
+  file: slides-en/n54-k4-nyuansy-kriteriy.md
+  type: criteria_checklist_and_boundary
+  duration_min: 2.5
+  assertion: Two independent limits, not one, and a manual run on binary data eats memory noticeably harder;
+    you always need to check a file's size and format, and you don't need anything beyond that — closes
+    the axis's fourth row
+  learning_goal: Nuances (3 classes) + Case 4 criterion + closing the axis's fourth row. The third nuance
+    is dropped last of the three, per CUT-ORDER.md — the first two carry the actual measured error from
+    the screen.
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'Three nuances as short paragraphs, below them a two-column criterion table, the axis''s
+      closing row as a separate callout.
+
+      '
+    backup: The nuances and the criterion are a direct unfolding of "Nuances" + "Criterion" from SETKA-KEYSOV-S8-part2.md,
+      section "Card in Telegram," with no added numbers.
+- id: n55
+  file: slides-en/n55-os-zakryta.md
+  type: keystone_axis
+  duration_min: 2.5
+  assertion: The four rows of the axis are filled in, and they were filled in by the screens, not by a
+    story; the session's question comes back to the room verbatim
+  learning_goal: 'Closing of the session''s axis. The pairs sit side by side; the session''s question
+    returns verbatim. Case names match SETKA-KEYSOV-S8.md: ''Notifications'', ''Duplicate check'', ''Refund
+    approval'', ''Card in Telegram''.'
+  visual:
+    pattern: keystone_axis
+    primary: 'The same table that opened the session, now with the right column filled in. Below it —
+      the session''s question returned, verbatim, in a gold line.
+
+      '
+    backup: 'The right column quotes the "Closes the axis row" paragraphs from each section of SETKA-KEYSOV-S8.md
+      / SETKA-KEYSOV-S8-part2.md (Cases 1-4). The left column and the session''s question are verbatim
+      from the "Session axis" section of the same file; the case names are checked against the renaming
+      table in §1 of the proektirovanie-keysa-i-voprosa.md canon.
+
+      EN track note (this file, issue #172/#274): case names in the right column ("Notifications" / "Duplicate
+      check" / "Refund approval" / "Card in Telegram") are this translator''s own direct rendering of
+      the four Russian case names used in the RU slide (slides/n55-os-zakryta.md, row by row), built from
+      terms already locked in glossary.en.yaml (deduplication/duplicate, refund, approve/approval, card).
+      glossary.en.yaml does not lock a dedicated case-name list — reconciled 2026-10-20 (issue #274, consistency-checker
+      audit) against the case-divider slide (n45-k4-divider.md, title "Card in Telegram"): the fourth
+      case name now matches it exactly.'
+- id: n56
+  file: slides-en/n56-vyhod.md
+  type: outcome_artifact
+  duration_min: 2.0
+  assertion: 'What leaves the session is a continuation of student.json with four fixes: a template instead
+    of a model for the notification, two-tier deduplication, a code condition instead of a text rule,
+    a size check before sending the image'
+  learning_goal: 'The session''s output presented as an artifact: what got added and what to do with it
+    at home. Carries the through-line S7→S9.'
+  visual:
+    pattern: outcome_artifact
+    primary: 'A file card: what it is, how to install it, what''s needed, what to do at home. The same
+      form as in the closing of Seminar 7.
+
+      '
+    backup: 'AN HONEST NOTE ON THE ARTIFACT''S STATE as of writing this slide: each of the four fixes
+      has been built and confirmed by its own real runs on the rig (stend/stage-1-after.json, stage-2.json,
+      stage-3b-code.json, stage-4.json — see SETKA-KEYSOV-S8.md "Rig state"). Combining all four into
+      ONE file for handing to students (by analogy with sem-07/stend/student.json) is ABSENT from the
+      repository as of this slide — stend/sborka.py has no function equivalent to student_file() in sem-07/stend/sborka.py.
+      This is an open item of the production phase, not a hidden gap: the slide describes the contents
+      of the file that will be assembled for the handout, not a claim that the combined file already sits
+      in the repository.'
+- id: n57
+  file: slides-en/n57-mostik-k-s9.md
+  type: bridge_forward
+  duration_min: 2.5
+  assertion: Today every step got the model or code in turn, one road for any input; in Seminar 9 different
+    inputs start to need different paths
+  learning_goal: Closes this session and sets up the next. The rung is named for what it is, with no promise
+    that 'it will get more interesting'.
+  visual:
+    pattern: bridge_forward
+    primary: 'The current workflow''s diagram, faded, with a dashed fork drawn over it at the spot where
+      S9 will add branching. Below, three lines about the next session.
+
+      '
+    backup: 'Content follows KONTSEPTSIYA-7-12.md §7, the S9 row, exactly: "branching: condition versus
+      switch, classification as a step, default branch, merge"; the typical problem "an input that fits
+      no branch; Merge cuts by the first input"; the conceptual change-of-pace "Optum or IRS — what the
+      classifier decides on" (the choice between the two cases had not been made yet as of this file —
+      not prejudged here).'

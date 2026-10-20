@@ -106,6 +106,61 @@ save(chain4(True), "k1-shema-s-llm.png")
 save(chain4(False), "k1-shema-bez-llm.png")
 
 
+# ── слой 1, EN: та же схема, подписи на английском (issue #172/#274,
+# Bilingual Production Rule) ────────────────────────────────────────────────
+def chain4_en(with_llm):
+    im = Image.new("RGB", (CW, 460), W)
+    d = ImageDraw.Draw(im)
+    head(d, "Solution with an LLM: the model drafts the text" if with_llm
+            else "Solution without an LLM: a template fills in the values", sz=27, x=40, y=16)
+
+    y, h = 170, 150
+    xs = [40, 440, 840, 1240]
+    bw = 320
+
+    lim = bw - 50
+
+    frame(d, xs[0], y, bw, h, fill=SURF, stroke=LIGHT)
+    two_lines(d, xs[0] + bw / 2, y + h / 2, "Form", "request from a student",
+              limit=lim, where="node 1 · form")
+
+    frame(d, xs[1], y, bw, h, fill=SURF, stroke=LIGHT)
+    two_lines(d, xs[1] + bw / 2, y + h / 2, "Field extraction",
+              "name · topic · extra topics · contact", bsz=15, limit=lim, where="node 2 · extraction")
+
+    if with_llm:
+        frame(d, xs[2], y, bw, h, fill=WARM, stroke=GOLD)
+        two_lines(d, xs[2] + bw / 2, y + h / 2, "Model node", "drafts the text freely",
+                  tcol=GOLDINK, bcol=GOLDINK, limit=lim, where="node 3 · model")
+    else:
+        frame(d, xs[2], y, bw, h, fill=PALE, stroke=MID)
+        two_lines(d, xs[2] + bw / 2, y + h / 2, "Template node", "substitutes the values",
+                  tcol=DEEP, bsz=15, limit=lim, where="node 3 · template")
+
+    frame(d, xs[3], y, bw, h, fill=SURF, stroke=TEAL)
+    two_lines(d, xs[3] + bw / 2, y + h / 2, "Send to Telegram", "message to the coordinator",
+              limit=lim, where="node 4 · telegram")
+
+    for i in range(3):
+        arrow(d, xs[i] + bw, y + h / 2, xs[i + 1], y + h / 2, col=MID, wd=4)
+
+    if with_llm:
+        clabel(d, CW / 2, 380, "Risk: the model can add a detail that was not in the request.",
+               24, GOLDINK, True, where="caption-summary (with LLM)", limit=CW - 120)
+        clabel(d, CW / 2, 412, "Plus the cost and latency of calling the model on every run.",
+               19, MUTE, where="caption-summary 2 (with LLM)", limit=CW - 120)
+    else:
+        clabel(d, CW / 2, 380, "No model call — no risk of an invented detail.",
+               24, MID, True, where="caption-summary (without LLM)", limit=CW - 120)
+        clabel(d, CW / 2, 412, "The same message shape, assembled once in a template.",
+               19, MUTE, where="caption-summary 2 (without LLM)", limit=CW - 120)
+    return im
+
+
+save(chain4_en(True), "k1-shema-s-llm-en.png")
+save(chain4_en(False), "k1-shema-bez-llm-en.png")
+
+
 # ── слой 2: n8n-стиль, версия 1 (модель) ────────────────────────────────────
 def versiya1():
     CH = 660

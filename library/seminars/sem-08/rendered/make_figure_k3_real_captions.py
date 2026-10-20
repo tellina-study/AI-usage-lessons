@@ -174,3 +174,85 @@ print("\nготово: k3-n8n-variants-real.png (n31, подписан), "
       "k3-n8n-nastroyka-uzlov.png (n34a, подписан), "
       "k3-n8n-reshenie-real.png (n34, новый — IF-узел версии 2 рядом с "
       "панелью промпта версии 1)")
+
+
+# ── EN companions (issue #274, EN track, Кейс 3) ─────────────────────────────
+#
+# Подписи — РИСОВАННЫЙ ТЕКСТ (caption_bar), а не пиксели настоящего
+# интерфейса, поэтому их можно и нужно перевести; нижележащие кропы живого
+# стенда не трогаются — те же файлы `RAW/*.png`, что и у русских композитов
+# выше. EN-варианты собраны отдельными функциями (не через fig_toolkit
+# --lang/fig_strings_en.py: тот словарь общий на все рисовалки кейсов этого
+# занятия, и правка его из зоны одного переводчика — Кейс 3 — рисковала бы
+# столкнуться с параллельными переводчиками других кейсов). Имя выходного
+# файла задаётся явно строкой в save(), без языкового патча `_save`.
+
+def variants_composite_en():
+    raw1 = Image.open(RAW / "case3-variant-clearer-prompt.png").convert("RGB")
+    raw2 = Image.open(RAW / "case3-variant-calculator.png").convert("RGB")
+    crop1 = raw1.crop((170, 425, 1470, 790))
+    crop2 = raw2.crop((170, 425, 1400, 790))
+
+    left = stack_caption_and_crop(
+        crop1,
+        "Action #1 — clearer rule in the prompt",
+        "Measured: 100/100 on the extended set")
+    right = stack_caption_and_crop(
+        crop2,
+        "Action #2 — model with a calculator",
+        "Measured: 56/100 — worse than every other option")
+    return hcompose([left, right])
+
+
+save(variants_composite_en(), "k3-n8n-variants-real-en.png")
+
+
+def nastroyka_uzlov_composite_en():
+    raw_extract = Image.open(RAW / "case3-extract-amount.png").convert("RGB")
+    raw_if = Image.open(RAW / "case3-if-threshold.png").convert("RGB")
+    crop_extract = raw_extract.crop((0, 0, 1180, 580))
+    crop_if = raw_if.crop((0, 0, 1280, 580))
+
+    left = stack_caption_and_crop(
+        crop_extract,
+        "Node “Extract amount” (Information Extractor)",
+        "Schema: amount_rub — number, required field")
+    right = stack_caption_and_crop(
+        crop_if,
+        "Node “Amount over threshold?” (IF)",
+        "Condition: amount_rub is greater than 3000")
+    return hcompose([left, right])
+
+
+save(nastroyka_uzlov_composite_en(), "k3-n8n-nastroyka-uzlov-en.png")
+
+
+def reshenie_composite_en():
+    """Левая половина — тот же уже готовый кроп канваса `k3-n8n-if-uzel-real.png`
+    (узел не подписан собственным текстом — на нём нет кириллицы помимо имён
+    узлов n8n, которые и в RU, и в EN деке читаются одинаково, см. glossary.en
+    note о UI-строках). Правая половина — тот же кроп панели промпта версии 1
+    (`case3a-model-decides.png`): сам промпт на экране остаётся на русском
+    (честное исключение — бот обслуживает русскоязычный учебный центр), на EN
+    меняется только рисованная подпись бара."""
+    left_raw = Image.open(OUT / "k3-n8n-if-uzel-real.png").convert("RGB")
+    raw_model = Image.open(RAW / "case3a-model-decides.png").convert("RGB")
+    crop_model = raw_model.crop((0, 0, 1160, 358))
+
+    left = stack_caption_and_crop(
+        left_raw,
+        "Node “Amount over threshold?” (IF) — version 2",
+        "Condition in code: number compared with number")
+    right = stack_caption_and_crop(
+        crop_model,
+        "Node “Decide refund (model)” — version 1",
+        "The rule lives inside the prompt text (shown in Russian — real screen)")
+    return hcompose([left, right])
+
+
+save(reshenie_composite_en(), "k3-n8n-reshenie-real-en.png")
+
+print("\nEN done: k3-n8n-variants-real-en.png (n31), "
+      "k3-n8n-nastroyka-uzlov-en.png (n34a), "
+      "k3-n8n-reshenie-real-en.png (n34) — same live-rig crops, captions "
+      "translated.")

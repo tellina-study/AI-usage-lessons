@@ -5,6 +5,11 @@
   по v2; старые 51 файл удалены, нумерация полностью новая, 53 слайда)"
 основание: "SETKA-KEYSOV-S8.md + SETKA-KEYSOV-S8-part2.md (пятый проход, источник содержания),
   ARCHITECTURE.md (пятый проход), proektirovanie-keysa-i-voprosa.md (канон)"
+устарело: "2026-10-20 (четвёртая волна — голосовая правка владельца, issue #274, qa/BRIEF-GOLOSOVAYA-PRAVKA-2026-10-20.md):
+  номера слайдов ниже относятся к третьей волне (53 слайда) и НЕ совпадают с текущим deck.yaml
+  (57 слайдов после вставки n11a/n11b/n48a/n48b и сквозной перенумеровки). Источник правды по
+  номерам — deck.yaml/SVODKA-SLAIDOV.md, пересобранные из слайдов. Этот файл не актуализирован
+  построчно — исторический рабочий бриф волны 3, не трогать без необходимости."
 ---
 
 # Бриф производства слайдов — Семинар 8 (третья волна)
@@ -109,10 +114,10 @@ workflow/execution id на видимом слое; карточки вопро�
 | n14 | criteria_checklist_and_boundary | нюансы + критерий, закрытие строки оси |
 | **Кейс «Проверка на повтор» (10 слайдов)** ||
 | n15 | case_divider_quote | дивайдер |
-| n16 | problem_scenario | сцена — бизнес-кейс (Светлана/Борис, цена ошибки) |
-| n17 | question_with_option_cards | вопрос — 4 действия |
-| n18 | answer_breakdown_table | разбор — 4 схемы, реальные числа 15/13/17/20 из 20 (jev — лучший) |
-| n19 | mechanism_node_graph | решение, слой 1 — схема сравнения четырёх схем (`k2-shema-sravnenie.png`) |
+| n16 | problem_scenario | сцена — бизнес-кейс (Ольга, цена ошибки; голосовая правка 2026-10-20: без имени клиента, без «версия 1», с оценкой «~10 раз в день») |
+| n17 | question_with_option_cards | вопрос — 5 действий (голосовая правка 2026-10-20: добавлена карточка специализированного сервиса / jev) |
+| n18 | answer_breakdown_table | разбор — 4 схемы, реальные числа 15/13/17/20 из 20 (jev — лучший), + колонка стоимость/скорость (голосовая правка 2026-10-20) |
+| n19 | mechanism_node_graph | решение, слой 1 — АРХИТЕКТУРНАЯ РЕКОМЕНДАЦИЯ хэш+jev, не повтор карточек сравнения (`k2-shema-gibrid.png`, заменила `k2-shema-sravnenie.png` по голосовой правке 2026-10-20) |
 | n20 | mechanism_node_graph | решение, слой 2а — n8n-схема хэш+IF (`k2-n8n-mehanika.png`) |
 | n21 | mechanism_node_graph | решение, слой 2б — n8n-схема LLM-проверки (`k2-n8n-llm-provexa.png`) |
 | n22 | answer_breakdown_table | обобщение + форвард-мостик к С10 |
@@ -162,7 +167,8 @@ workflow/execution id на видимом слое; карточки вопро�
 готовится параллельно, имя файла финальное»: оркестратор сверит перед финальной сборкой.
 
 `k1-shema-s-llm.png` · `k1-shema-bez-llm.png` · `k1-n8n-versiya1.png` · `k1-n8n-versiya2.png` ·
-`k2-shema-sravnenie.png` · `k2-n8n-mehanika.png` · `k2-n8n-llm-provexa.png` · `k3-shema-versii.png`
+`k2-shema-gibrid.png` (бывш. `k2-shema-sravnenie.png`, заменена 2026-10-20) · `k2-n8n-mehanika.png` ·
+`k2-n8n-llm-provexa.png` · `k3-shema-versii.png`
 · `k3-n8n-if-uzel.png` · `zillow-shema-bez-geyta.png` · `zillow-shema-s-geytom.png` ·
 `k4-shema-trebovaniya.png` · `k4-n8n-tsepochka.png`
 

@@ -3,7 +3,7 @@ id: n04
 type: keystone_axis
 duration_min: 4.0
 assertion: "Четыре строки — и в каждой то, что сегодня выглядит надёжным. Правая колонка пуста: мы заполним её по одной строке за кейс"
-learning_goal: "Ось занятия, дословно из SETKA-KEYSOV-S8.md. Правая колонка открывается пустой (Pre-USER-GATE §6, keystone-axis check) и закрывается в конце занятия (n51), не здесь."
+learning_goal: "Ось занятия, дословно из SETKA-KEYSOV-S8.md. Правая колонка открывается пустой (Pre-USER-GATE §6, keystone-axis check) и закрывается в конце занятия (n55), не здесь."
 visual:
   pattern: keystone_axis
   primary: >

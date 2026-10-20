@@ -1,22 +1,32 @@
 #!/usr/bin/env python3
 """Кейс «Проверка на повтор» Семинара 8 (issue #274) — 4 схемы.
 
-    k2-shema-sravnenie.png    слой 1, ГЛАВНАЯ схема кейса: четыре столбца —
-                               точное совпадение (хэш) 15/20 (75%), TF-IDF +
-                               косинус 13/20 (65%, хуже хэша), дешёвая
-                               LLM-судья 17/20 (85%), внешний сервис jev —
-                               20/20 (100%, лучший из четырёх; блокер прежнего
-                               измерения был ошибкой авторинга узла, не правом
-                               доступа — исправлено 2026-10-20). Три схемы
-                               переизмерены 2026-10-19 на НОВОМ наборе 20 пар
-                               (исходный набор первого измерения не
-                               сохранился), jev измерен 2026-10-20 на том же
-                               наборе — stend/duplicate-check-results.json.
+    k2-shema-gibrid.png        слой 1, АРХИТЕКТУРНАЯ схема кейса (переделана
+                               по голосовой правке 2026-10-20 — заменяет
+                               k2-shema-sravnenie.png, которая просто
+                               повторяла карточками числа из таблицы n18,
+                               без новой информации): два шага гибрида —
+                               дешёвый механический предфильтр (хэш, 15/20
+                               литеральных совпадений бесплатно) → проверка
+                               смыслом, РЕКОМЕНДАЦИЯ по измерению —
+                               специализированный сервис (jev, 20/20) вместо
+                               модели общего назначения (17/20). Подписана как
+                               рекомендация по одному тесту на 20 парах одной
+                               тематики, не как решённый факт — собранная и
+                               показанная на стенде (слой 2, следующие две
+                               фигуры) цепочка пока использует модель-судью,
+                               не jev.
     k2-n8n-mehanika.png        слой 2 (n8n-стиль): `Set` «Normalize + hash» →
                                `IF` «Exact duplicate in window?» → два исхода.
+                               Это и есть собранный дешёвый шаг гибрида — не
+                               меняется независимо от того, какой инструмент
+                               стоит дорогим шагом дальше.
     k2-n8n-llm-provexa.png     слой 2 (n8n-стиль): `chainLlm` «Same question,
                                reworded? (LLM)» + результат на двух реальных
                                прогонах (буквальный повтор / перефразировка).
+                               Это дорогой шаг, как он собран и демонстрируется
+                               на стенде СЕГОДНЯ — модель-судья, не jev; замену
+                               не делали из-за одного теста на 20 парах.
 
 Числа и формулировки — дословно `SETKA-KEYSOV-S8.md` «Кейс 2 — Проверка на
 повтор» (таблица четырёх схем) и `BRIEF-PROIZVODSTVO.md` §3. Слой 2 — не
@@ -39,87 +49,77 @@ def frame(d, x, y, w, h, *, fill=SURF, stroke=LIGHT, sw=3, r=14):
     d.rounded_rectangle([x, y, x + w, y + h], radius=r, fill=fill, outline=stroke, width=sw)
 
 
-# ── слой 1: четыре столбца сравнения, реальные числа ────────────────────────
-def sravnenie():
-    CH = 580
+# ── слой 1: архитектурная рекомендация — хэш первым, jev на оставшееся ──────
+def gibrid():
+    CH = 600
     im = Image.new("RGB", (CW, CH), W)
     d = ImageDraw.Draw(im)
-    head(d, "Четыре способа найти повтор — на одних и тех же 20 парах",
-         sz=25, x=40, y=16)
+    head(d, "Рекомендация по измерению: хэш первым, jev — на оставшееся",
+         sz=24, x=40, y=16)
 
-    cols = [
-        dict(x=40, title="Точное совпадение (хэш)", pct="15/20 (75%)", col=MID, line=LIGHT,
-             fill=SURF, measured=True,
-             good="поймала все 5 буквальных повторов и все 10 разных вопросов",
-             bad="пропустила все 5 перефразировок — 0% на них"),
-        dict(x=430, title="TF-IDF + косинус (порог 0,3)", pct="13/20 (65%)", col=RED, line=RED,
-             fill=SURF, measured=True,
-             good="хуже хэша, не наравне",
-             bad="те же 5 перефразировок + 2 ложных срабатывания, где хэш не ошибается"),
-        dict(x=820, title="Дешёвая LLM-судья (gpt-4o-mini)", pct="17/20 (85%)", col=GOLDINK,
-             line=GOLD, fill=WARM, measured=True,
-             good="поймала все 10 дублей",
-             bad="3 ложных срабатывания — не все объясняются совпадением слов"),
-        dict(x=1210, title="Внешний сервис (jev)", pct="20/20 (100%)", col=TEAL,
-             line=TEAL, fill=PALE, measured=True,
-             good="все 10 дублей и все 10 разных вопросов — без единой ошибки",
-             bad="одно измерение на 20 парах одной темы — не основание менять готовую архитектуру"),
-    ]
-    CW_COL = 350
-    BAR_Y, BAR_H = 150, 250
+    BOX_Y, BOX_H = 150, 250
 
-    for c in cols:
-        frame(d, c["x"], BAR_Y, CW_COL, BAR_H, fill=c["fill"], stroke=c["line"], sw=4)
-        lines = wrap(d, c["title"], f(19, True), CW_COL - 32)
-        yy = BAR_Y + 18
-        for ln in lines:
-            fit(d, ln, f(19, True), CW_COL - 32, f"заголовок «{c['title']}»")
-            clabel(d, c["x"] + CW_COL / 2, yy, ln, 19, DEEP, True,
-                   where=f"заголовок «{c['title']}»", limit=CW_COL - 32)
-            yy += 26
+    # Шаг 1 — дешёвый механический предфильтр
+    ax, aw = 60, 600
+    frame(d, ax, BOX_Y, aw, BOX_H, fill=PALE, stroke=MID, sw=4)
+    yy = BOX_Y + 26
+    for ln in wrap(d, "Шаг 1 — дешёвый механический предфильтр", f(20, True), aw - 48):
+        fit(d, ln, f(20, True), aw - 48, "шаг 1 · заголовок")
+        clabel(d, ax + aw / 2, yy, ln, 20, DEEP, True, where="шаг 1 · заголовок", limit=aw - 48)
+        yy += 27
+    yy += 10
+    for piece in ("Берёт на себя буквальные повторы бесплатно и мгновенно, "
+                  "без единого вызова модели.",
+                  "На тесте (предыдущий экран): 15 из 20 — все буквальные "
+                  "повторы, 0 перефразировок."):
+        for ln in wrap(d, piece, f(16), aw - 48):
+            fit(d, ln, f(16), aw - 48, "шаг 1 · текст")
+            clabel(d, ax + aw / 2, yy, ln, 16, MUTE, where="шаг 1 · текст", limit=aw - 48)
+            yy += 22
+        yy += 8
 
-        pct_sz = 32 if c["measured"] else 24
-        clabel(d, c["x"] + CW_COL / 2, yy + 8, c["pct"], pct_sz, c["col"], True,
-               where=f"число «{c['title']}»", limit=CW_COL - 32)
+    # Стрелка между шагами
+    GAP = 140
+    arrow(d, ax + aw, BOX_Y + BOX_H / 2, ax + aw + GAP, BOX_Y + BOX_H / 2, col=MID, wd=4)
+    clabel(d, ax + aw + GAP / 2, BOX_Y + BOX_H / 2 - 40, "не разрешено", 14, MUTE,
+           where="подпись стрелки 1", limit=GAP - 10)
+    clabel(d, ax + aw + GAP / 2, BOX_Y + BOX_H / 2 - 22, "однозначно", 14, MUTE,
+           where="подпись стрелки 2", limit=GAP - 10)
 
-        track_y = yy + (56 if c["measured"] else 46)
-        if c["measured"]:
-            # тонкая полоса-прогресс под числом — доля правильных ответов
-            frac = int(c["pct"].split("/")[0])
-            d.rounded_rectangle([c["x"] + 24, track_y, c["x"] + CW_COL - 24, track_y + 14],
-                                radius=7, fill=GREY_FILL)
-            fw = (CW_COL - 48) * frac / 20
-            d.rounded_rectangle([c["x"] + 24, track_y, c["x"] + 24 + fw, track_y + 14],
-                                radius=7, fill=c["col"])
-        else:
-            # не измерено — пунктирный намёк вместо полосы (ряд коротких штрихов)
-            seg_y = track_y + 7
-            xx = c["x"] + 24
-            while xx < c["x"] + CW_COL - 24:
-                d.line([(xx, seg_y), (xx + 14, seg_y)], fill=GREY_FILL, width=4)
-                xx += 22
+    # Шаг 2 — проверка смыслом, рекомендация jev
+    bx, bw = ax + aw + GAP, 600
+    frame(d, bx, BOX_Y, bw, BOX_H, fill=PALE, stroke=TEAL, sw=4)
+    yy = BOX_Y + 26
+    for ln in wrap(d, "Шаг 2 — проверка смыслом: рекомендация — jev", f(20, True), bw - 48):
+        fit(d, ln, f(20, True), bw - 48, "шаг 2 · заголовок")
+        clabel(d, bx + bw / 2, yy, ln, 20, DEEP, True, where="шаг 2 · заголовок", limit=bw - 48)
+        yy += 27
+    yy += 10
+    for piece in ("Специализированный сервис точнее универсальной модели "
+                  "на этом тесте и дешевле по публичному прайсу.",
+                  "На тесте: 20 из 20 — без единой ошибки, против 17 из 20 "
+                  "у дешёвой модели-судьи."):
+        for ln in wrap(d, piece, f(16), bw - 48):
+            fit(d, ln, f(16), bw - 48, "шаг 2 · текст")
+            clabel(d, bx + bw / 2, yy, ln, 16, MUTE, where="шаг 2 · текст", limit=bw - 48)
+            yy += 22
+        yy += 8
 
-        gy = track_y + 32
-        for txt, col in ((c["good"], MID if c["measured"] else GREY_TX),
-                         (c["bad"], RED if c is cols[1] else (GOLDINK if c is cols[2] else MUTE))):
-            glines = wrap(d, txt, f(14), CW_COL - 32)
-            for ln in glines:
-                fit(d, ln, f(14), CW_COL - 32, f"пояснение «{c['title']}»")
-                clabel(d, c["x"] + CW_COL / 2, gy, ln, 14, col, where=f"пояснение «{c['title']}»",
-                       limit=CW_COL - 32)
-                gy += 18
-            gy += 4
-
-    clabel(d, CW / 2, 496,
-           "Числа — измерение на 20 тестовых парах (хэш/TF-IDF/LLM-судья — 2026-10-19,",
-           18, MUTE, where="подвал 1", limit=CW - 100)
-    clabel(d, CW / 2, 520,
-           "jev — 2026-10-20, тот же набор), не предположение. Лучший результат — не повод менять архитектуру.",
-           18, MUTE, where="подвал 2", limit=CW - 100)
+    # Честная оговорка — на самой схеме, не только в тексте слайда
+    dashbox(d, 60, BOX_Y + BOX_H + 40, bx + bw - 60, 110, col=GREY_TX, width=3, r=10)
+    clabel(d, CW / 2, BOX_Y + BOX_H + 62,
+           "Рекомендация по одному тесту на 20 парах одной тематики — не повод слепо менять",
+           17, MUTE, where="оговорка 1", limit=bw + aw + 20)
+    clabel(d, CW / 2, BOX_Y + BOX_H + 86,
+           "уже собранную архитектуру. Цепочка, показанная на стенде дальше, пока использует",
+           17, MUTE, where="оговорка 2", limit=bw + aw + 20)
+    clabel(d, CW / 2, BOX_Y + BOX_H + 110,
+           "модель-судью на втором шаге, а не jev — замену не делали из-за одного измерения.",
+           17, MUTE, where="оговорка 3", limit=bw + aw + 20)
     return im
 
 
-save(sravnenie(), "k2-shema-sravnenie.png")
+save(gibrid(), "k2-shema-gibrid.png")
 
 
 # ── слой 2: n8n-стиль, механика хэша + IF ───────────────────────────────────

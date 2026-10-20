@@ -27,7 +27,7 @@ mcp-limitations.md` [#171-1]). Поэтому здесь строится вре
 
     python3 sobrat_razdel.py 1                 # собрать оба файла раздела 1
     python3 sobrat_razdel.py 1 --tolko-zametki # не пересобирать, только заметки
-    python3 sobrat_razdel.py 1-2-3-4-5 --size 15   # вся лекция, кусками по 15
+    python3 sobrat_razdel.py 0-1-2-3-4-5-6-7 --size 15 --odnim-pptx   # вся лекция
 """
 import argparse
 import shutil
@@ -74,39 +74,67 @@ def shag(nazvanie, cmd, cwd=None):
         raise SystemExit(f"{nazvanie}: код {r.returncode}")
 
 
-def zametki(tag, imya):
-    """Собрать `<имя>-notes.pdf` из тех же pptx, которыми собраны слайды.
+def zametki(tag, imya, odnim_pptx=False):
+    """Собрать `<имя>-notes.pdf` из того же pptx, которым собраны слайды.
 
-    НЕ ТЕРЯЕТ ХВОСТ (круг 2, #285) И НЕ ТРЕБУЕТ ОДНОГО КУСКА (интеграция
-    пяти разделов). `render_sec.py` режет вход на куски по `--size` и кладёт
-    `parts-sec/sec<тег>-01.pptx`, `-02.pptx` и так далее; слайды склеиваются
-    из всех кусков, а заметки раньше собирались ТОЛЬКО из первого. Пока
-    раздел был короче шестнадцати кадров, это совпадало. На шестнадцатом
-    `notes_pages_pdf.py` сказал «count mismatch: pdf_pages=16 pptx_notes=15;
-    using 15» ОДНОЙ строкой посреди вывода — и выпустил заметки без
-    последнего кадра. Первый фикс сделал из этой строки отказ: собирай одним
-    куском или не собирай вовсе. На всей лекции (сто с лишним кадров) один
-    кусок не берётся по памяти (`notes/mcp-limitations.md` [#229-2]), поэтому
-    здесь заметки собираются ПО КАЖДОМУ куску и склеиваются в порядке кусков.
-    Пара «кадр ↔ заметка» от этого не страдает: `notes_pages_pdf.py` ставит
-    её позиционно (страница i pdf ↔ слайд i pptx), а кусок — это свой pptx
-    со своим pdf. Счёт страниц проверяется против числа кадров ниже.
+    ДВА ПУТИ, И У КАЖДОГО СВОЯ ЦЕНА — выбирать осознанно.
+
+    Путь кусками (по умолчанию). `render_sec.py` режет вход по `--size` и
+    кладёт `parts-sec/sec<тег>-01.pptx`, `-02.pptx` и далее; заметки раньше
+    собирались ТОЛЬКО из первого куска. Пока раздел был короче шестнадцати
+    кадров, это совпадало. На шестнадцатом `notes_pages_pdf.py` сказал
+    «count mismatch: pdf_pages=16 pptx_notes=15; using 15» ОДНОЙ строкой
+    посреди вывода — и выпустил заметки без последнего кадра. Теперь заметки
+    собираются по КАЖДОМУ куску и склеиваются по порядку кусков.
+
+    ЦЕНА ЭТОГО ПУТИ, ЗАМЕРЕНА: `notes_pages_pdf.py` нумерует «слайд N» и
+    подвал «страница / всего» ВНУТРИ своего прогона, а офсета у него нет.
+    Шесть кусков дали в склейке шесть «слайд 1» и шесть счётчиков страниц с
+    начала — 215 страниц читаются как шесть документов подряд. Для ОДНОГО
+    раздела это незаметно (кусок один), для всей лекции — дефект, который
+    видит читатель.
+
+    Путь одним pptx (`odnim_pptx=True`) — для всей лекции. Сборка ПОЛНОЙ
+    деки в один pptx не рендерится через `soffice` (память, `notes/
+    mcp-limitations.md` [#229-2]), но заметкам рендер и не нужен: они берут
+    КАРТИНКИ из уже склеенного PDF, а ТЕКСТ — из pptx. Поэтому полный pptx
+    собирается без рендера, и в пару ему идёт склейка кусков. Пара «кадр ↔
+    заметка» позиционная (страница i ↔ слайд i), а порядок у обоих один и
+    тот же — `slidefile.slide_files`. Нумерация выходит сквозной.
     """
-    kuski = sorted((HERE / "parts-sec").glob(f"sec{tag}-*.pptx"))
-    if not kuski:
-        raise SystemExit(f"кусков сборки для тега {tag} нет — нечего собирать")
+    pdf = HERE / f"{imya}.pdf"
+    if not pdf.exists():
+        raise SystemExit(f"нет входа для заметок: {pdf}")
+
+    if odnim_pptx:
+        import build_lec07 as B
+        from deckkit import report
+        only = ",".join(i for i, _ in ids_razdela(tag))
+        pptx = HERE / f"{imya}.pptx"
+        print(f"\n=== полный pptx под заметки ({len(only.split(','))} кадров, "
+              f"без рендера) ===", flush=True)
+        keep = report.snapshot()
+        B.build(only=only, out=pptx)
+        report.restore(keep)
+        kuski = [pptx]
+        pdfs = [pdf]
+    else:
+        kuski = sorted((HERE / "parts-sec").glob(f"sec{tag}-*.pptx"))
+        if not kuski:
+            raise SystemExit(f"кусков сборки для тега {tag} нет")
+        pdfs = [k.with_suffix(".pdf") for k in kuski]
+
     chasti = []
     with tempfile.TemporaryDirectory() as d:
-        for n, pptx in enumerate(kuski, 1):
-            pdf = pptx.with_suffix(".pdf")
-            for f in (pptx, pdf):
+        for n, (pptx, pdf_i) in enumerate(zip(kuski, pdfs), 1):
+            for f in (pptx, pdf_i):
                 if not f.exists():
                     raise SystemExit(f"нет входа для заметок: {f}")
-            lecdir = Path(d) / f"{imya}-{n:02d}"
+            lecdir = Path(d) / (imya if len(kuski) == 1 else f"{imya}-{n:02d}")
             (lecdir / "rendered").mkdir(parents=True)
             shutil.copy2(HERE / "deck.yaml", lecdir / "deck.yaml")
             shutil.copy2(pptx, lecdir / "rendered" / f"{lecdir.name}.pptx")
-            shutil.copy2(pdf, lecdir / "rendered" / f"{lecdir.name}.pdf")
+            shutil.copy2(pdf_i, lecdir / "rendered" / f"{lecdir.name}.pdf")
             shag(f"заметки, кусок {n} из {len(kuski)}",
                  [sys.executable, TOOLS / "notes_pages_pdf.py",
                   lecdir, "--dpi", "150"])
@@ -131,6 +159,9 @@ def main():
                     help="кадров в куске; 0 — весь раздел одним куском")
     ap.add_argument("--imya", default=None,
                     help="имя пары файлов, если его нет в IMENA")
+    ap.add_argument("--odnim-pptx", action="store_true",
+                    help="заметки одним прогоном по полному pptx — сквозная "
+                         "нумерация «слайд N»; нужно для всей лекции")
     a = ap.parse_args()
     tag = a.razdel
     imya = a.imya or IMENA.get(tag)
@@ -152,7 +183,7 @@ def main():
         shutil.copy2(src, HERE / f"{imya}.pdf")
         print(f"[ok] {imya}.pdf")
 
-    zametki(tag, imya)
+    zametki(tag, imya, odnim_pptx=a.odnim_pptx)
 
     print("\nОба файла пересобраны. Закоммитить ОБА — артефакт в ветке и есть "
           "то,\nчто откроет читатель; свежесть своей локальной пересборки "

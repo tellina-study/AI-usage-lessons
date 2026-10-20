@@ -41,7 +41,15 @@ TOOLS = HERE.parents[4] / "tools" / "presentation-build"
 # Имя пары файлов в ветке для каждого раздела. Держится здесь, а не
 # выводится из заголовка: имя закоммиченного файла — договорённость с теми,
 # кто на него ссылается, и переехать оно может только осознанно.
-IMENA = {"1": "sec1-skrining-otbor"}
+IMENA = {"1": "sec1-skrining-otbor",
+         "4": "sec4-vedenie-dokumentatsii"}
+
+
+def ids_razdela(tag):
+    """Номера кадров раздела — тем же способом, которым их отбирает
+    `render_sec.ids_of`, чтобы счёт кусков и счёт кадров не разошлись."""
+    import render_sec
+    return [i for i, _ in render_sec.ids_of({tag})]
 
 
 def shag(nazvanie, cmd, cwd=None):
@@ -52,8 +60,24 @@ def shag(nazvanie, cmd, cwd=None):
 
 
 def zametki(tag, imya):
-    """Собрать `<имя>-notes.pdf` из того же pptx, которым собраны слайды."""
-    pptx = HERE / "parts-sec" / f"sec{tag}-01.pptx"
+    """Собрать `<имя>-notes.pdf` из того же pptx, которым собраны слайды.
+
+    ПАДАЕТ, А НЕ ТЕРЯЕТ (круг 2, #285). `render_sec.py` режет раздел на
+    куски по `--size` (по умолчанию 15) и складывает `parts-sec/secN-01.pptx`,
+    `-02.pptx` и так далее; слайды склеиваются из всех кусков, а заметки
+    собирались ТОЛЬКО из первого. Пока раздел был короче шестнадцати кадров,
+    это совпадало. На шестнадцатом кадре `notes_pages_pdf.py` сказал
+    «count mismatch: pdf_pages=16 pptx_notes=15; using 15» ОДНОЙ строкой
+    посреди вывода — и выпустил заметки без последнего кадра. Проверка ниже
+    делает из этой строки отказ: лучше не собрать, чем собрать неполным.
+    """
+    kuski = sorted((HERE / "parts-sec").glob(f"sec{tag}-*.pptx"))
+    if len(kuski) != 1:
+        raise SystemExit(
+            f"кусков сборки {len(kuski)} ({', '.join(k.name for k in kuski)}), "
+            f"а заметки собираются из одного. Пересобрать слайды одним куском:\n"
+            f"    python3 render_sec.py {tag} --size {len(kuski) * 15 + 15}")
+    pptx = kuski[0]
     pdf = HERE / f"{imya}.pdf"
     for p in (pptx, pdf):
         if not p.exists():
@@ -83,7 +107,13 @@ def main():
                          f"(см. IMENA в этом файле)")
 
     if not a.tolko_zametki:
-        shag("слайды", [sys.executable, HERE / "render_sec.py", tag])
+        # Раздел собирается ОДНИМ куском: иначе заметки соберутся не по всему
+        # разделу (см. `zametki` выше). Размер берётся по числу кадров раздела.
+        kadrov = len(ids_razdela(tag))
+        for stale in (HERE / "parts-sec").glob(f"sec{tag}-*"):
+            stale.unlink() if stale.is_file() else None
+        shag("слайды", [sys.executable, HERE / "render_sec.py", tag,
+                        "--size", str(max(kadrov, 1))])
         src = HERE / f"sec-{tag}.pdf"
         if not src.exists():
             raise SystemExit(f"render_sec.py не оставил {src}")

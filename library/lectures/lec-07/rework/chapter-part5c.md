@@ -161,7 +161,7 @@
 
 | часть | список источников | что покрывает |
 |---|---|---|
-| 1 | [`chapter-part1b.md`](chapter-part1b.md), «Источники части 1» — 26 позиций | Введение · Вход · Отбор · Анализ данных |
+| 1 | [`chapter-part1c.md`](chapter-part1c.md), «Источники части 1» — 32 позиции | Введение · Вход · Отбор · Анализ данных |
 | 2 | [`chapter-part2b.md`](chapter-part2b.md), «Источники раздела 3» | Постановка диагноза — ядро главы |
 | 3 | [`chapter-part3.md`](chapter-part3.md), [`chapter-part3b.md`](chapter-part3b.md), [`chapter-part3c.md`](chapter-part3c.md), [`chapter-part3d.md`](chapter-part3d.md) — **сводного списка нет: источники названы построчно внутри разборов** (журнал, DOI, PMID, разряд) | Раздел 4 «Наблюдение за состоянием» · Раздел 5 «Ведение записи» · Раздел 6 «Чем удерживают» |
 | 4 | [`chapter-part4.md`](chapter-part4.md), [`chapter-part4a.md`](chapter-part4a.md), [`chapter-part4b.md`](chapter-part4b.md), [`chapter-part4c.md`](chapter-part4c.md), [`chapter-part4d.md`](chapter-part4d.md), [`chapter-part4da.md`](chapter-part4da.md), [`chapter-part4e.md`](chapter-part4e.md), [`chapter-part4f.md`](chapter-part4f.md) — **сводного списка нет: источники названы построчно внутри разборов** | Раздел 7 «Назначение и лечение» · Раздел 8 «Оперативная помощь» · Раздел 9 «Разработка лекарства» |

@@ -72,7 +72,7 @@ completion`) — это НЕ признак того, что данные не �
   буквальный плейсхолдер «[Имя координатора]», доставлен как есть, `message_id 4`.
 - Execution `43` (шаблон) — детерминированный текст, доставлен без модели, `message_id 5`.
 
-## Кейс 2 — переизмерение на 4 схемы (2026-10-19, второй проход)
+## Кейс 2 — измерение на 4 схемы (хэш/TF-IDF/LLM-судья 2026-10-19, jev 2026-10-20)
 
 Исходные 20 тестовых пар первого измерения (хэш 15/20, TF-IDF 15/20, LLM-судья 19/20) нигде не
 сохранились — временный workflow первого прохода был удалён, в отличие от Кейса 3. **На этот раз
@@ -89,28 +89,37 @@ completion`) — это НЕ признак того, что данные не �
   вопросах близкой темы, которые хэш в принципе не может дать), LLM-судья **17/20** (3 ложных
   срабатывания, включая пару без единого общего слова).
 
-**Jev (TypeSafe Decisions API) — подтверждён как реальный сервис, но не измерен.** Три независимые
-проверки подлинности: `GET /api/v1/models/typesafe/jev-1.13/endpoints` → 200, модель с модальностью
-`text+image->decisions`; `POST https://openrouter.ai/api/alpha/decisions` без авторизации → 401
-«No cookie auth credentials found» (путь существует, не 404); credential `OpenRouter account`
-(`VbxiQn8TbqA4R2mw`), использованный ОШИБОЧНО через `lmChatOpenRouter` на chat/completions,
-получил настоящую структурную ошибку 400 от бэкенда OpenRouter: «typesafe/jev-1.13 is a decisions
-model and cannot be used with the chat/completions endpoint. Use the /api/alpha/decisions endpoint
-instead.» — т.е. ключ живой.
+**Jev (TypeSafe Decisions API) — измерен 2026-10-20, 20/20, лучший результат из четырёх.** Три
+независимые проверки подлинности сервиса, сделанные ранее: `GET
+/api/v1/models/typesafe/jev-1.13/endpoints` → 200, модель с модальностью `text+image->decisions`;
+`POST https://openrouter.ai/api/alpha/decisions` без авторизации → 401 «No cookie auth credentials
+found» (путь существует, не 404); credential `OpenRouter account` (`VbxiQn8TbqA4R2mw`),
+использованный ОШИБОЧНО через `lmChatOpenRouter` на chat/completions, получил настоящую
+структурную ошибку 400 от бэкенда OpenRouter — т.е. ключ живой.
 
-**Блокер — не сервис, а право n8n-credential на generic HTTP.** HTTP Request узел с
-`authentication: predefinedCredentialType`, `nodeCredentialType: openRouterApi` на тот же
-credential даёт `NodeOperationError «Credentials not found»` — воспроизводимо на всех 20 парах и
-на диагностическом вызове к заведомо рабочему `GET /api/v1/models`. `GET
-/credentials/schema/openRouterApi` подтверждает, что у этого типа credential есть поле
-`allowedHttpRequestDomains` (enum `all`/`domains`/`none`) — именно оно, похоже, гейтит generic-HTTP
-использование отдельно от node-specific (langchain) использования, которое работает без проблем.
-Агент НЕ пытался менять credential (песочница блокирует `PATCH /credentials/<id>` — правильно,
-это чужой секрет). **Нужно одно действие владельца в n8n UI:** Credentials → «OpenRouter account»
-→ включить разрешение на использование в HTTP Request node (домен `openrouter.ai`). После этого
-workflow `gs5uhluV74yu045D` прогоняется по тем же 20 парам без единой правки кода.
+**Прошлый диагноз блокера был ОШИБОЧНЫМ.** Запись ниже (не удалена, оставлена для истории) винила
+право доступа credential на generic HTTP (`allowedHttpRequestDomains`). Оркестратор проверил
+причину напрямую через n8n API: у узла «Jev decision (noul)» в workflow `stage-2-duptest.json`
+(id `gs5uhluV74yu045D`) поле `parameters.nodeCredentialType` было выставлено, но сам credential НЕ
+был привязан в `node.credentials` (было `null`) — обычная ошибка авторинга узла, не вопрос прав.
+Исправлено через `PUT /workflows/gs5uhluV74yu045D` (добавлен `credentials: {openRouterApi: {id:
+VbxiQn8TbqA4R2mw, name: "OpenRouter account"}}` на этот узел). Владельца и его credential трогать
+не пришлось.
 
-Полный протокол по каждой паре и все 4 поля методологии — `duplicate-check-results.json`.
+**Результат измерения (2026-10-20, тот же набор 20 пар, тот же webhook):** 20/20 — все 10 дублей
+и все 10 разных вопросов без единой ошибки. Порог классификации 0,5 (`jev_noul >= 0,5` ⇒ дубль);
+разделение чистое — `jev_noul` 0,70–0,97 на дублях, 0,02–0,08 на разных вопросах, порог работает с
+запасом на всём промежутке 0,08–0,70.
+
+*(Историческая запись прошлого, неверного диагноза — для документации производства.)* HTTP Request
+узел с `authentication: predefinedCredentialType`, `nodeCredentialType: openRouterApi` на тот же
+credential без явной привязки credential к узлу давал `NodeOperationError «Credentials not
+found»` — это выглядело как ограничение прав (`GET /credentials/schema/openRouterApi`
+действительно показывает поле `allowedHttpRequestDomains`), но реальная причина была проще:
+credential просто не был указан у узла.
+
+Полный протокол по каждой паре, все 4 поля методологии и честная оговорка про единичность
+измерения jev — `duplicate-check-results.json`, раздел `jev_measured`.
 
 ## Кейс 2 — дедупликация (первый проход, 2026-10-18 — числа утрачены)
 

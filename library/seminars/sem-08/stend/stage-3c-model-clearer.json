@@ -1,0 +1,184 @@
+{
+  "name": "С8 · Кейс 3, вариант — яснее правило в промте (измерение действия №1)",
+  "nodes": [
+    {
+      "id": "refund_form",
+      "name": "Refund request",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "webhookId": "s8-refund-clearer",
+      "parameters": {
+        "path": "s8-refund-clearer",
+        "formTitle": "Запрос на возврат",
+        "formDescription": "Тестовый вход Кейса 3 — не форма студента",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Текст запроса",
+              "fieldType": "textarea",
+              "placeholder": "например: прошу вернуть 2500 рублей за пропущенное занятие",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "extract_amount",
+      "name": "Extract amount",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "text": "={{ $json['Текст запроса'] }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"amount_rub\": {\n      \"type\": \"number\",\n      \"description\": \"сумма возврата в рублях, указанная в тексте\"\n    }\n  },\n  \"required\": [\n    \"amount_rub\"\n  ]\n}",
+        "options": {}
+      }
+    },
+    {
+      "id": "extract_model",
+      "name": "Model (extraction)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        220
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "refund_decide_llm",
+      "name": "Decide refund (model, clearer rule)",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Правило: если сумма запроса меньше или равна 3000 рублей (включая саму сумму 3000), ответь \"одобрить\". Если сумма запроса строго больше 3000 рублей, ответь \"эскалировать\". Сумма запроса: {{ $json.output.amount_rub }} рублей. Ответь строго одним словом: «одобрить» или «эскалировать».",
+        "options": {}
+      }
+    },
+    {
+      "id": "decide_model",
+      "name": "Model (decision, Qwen2.5)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        300,
+        220
+      ],
+      "parameters": {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "refund_result_a",
+      "name": "Result screen (process A)",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        540,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Решение процесса (A)",
+        "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽. Решение модели: {{ $json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Refund request": {
+      "main": [
+        [
+          {
+            "node": "Extract amount",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract amount": {
+      "main": [
+        [
+          {
+            "node": "Decide refund (model, clearer rule)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decide refund (model, clearer rule)": {
+      "main": [
+        [
+          {
+            "node": "Result screen (process A)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (extraction)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Extract amount",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (decision, Qwen2.5)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Decide refund (model, clearer rule)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

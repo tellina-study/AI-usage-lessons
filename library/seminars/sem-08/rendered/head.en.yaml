@@ -1,0 +1,16 @@
+# EN prose header for Seminar 8 — Bilingual Production Rule (CLAUDE.md, issue
+# #172/#274). Cannot be carried over from the RU deck.yaml (that would leak
+# Cyrillic into an English artifact) — see make_deck_yaml.py's own docstring
+# "Английский манифест". Values are a direct, faithful translation of
+# `head_defaults` in this file (deck-config.yaml), not a rewrite.
+
+seminar_number: 8
+audience: "3rd-year students, 09.03.01 — practicing engineers, all already use AI assistants daily"
+format: >-
+  facilitator slides + open questions with option cards (question BEFORE the
+  breakdown) + a measured experiment in Case 3 (51 runs, later extended to
+  101); during the session the facilitator does not edit any n8n node live —
+  only runs already-prepared workflows (owner decision, see ARCHITECTURE.md
+  §4)
+language: en
+slot_min: 90

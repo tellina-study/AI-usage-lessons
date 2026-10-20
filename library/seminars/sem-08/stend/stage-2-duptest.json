@@ -1,0 +1,198 @@
+{
+  "name": "С8 · Кейс 2 — тест дедупликации (стенд, 4 схемы)",
+  "nodes": [
+    {
+      "id": "in",
+      "name": "Test pair (webhook)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        0
+      ],
+      "webhookId": "s8-case2-duptest",
+      "parameters": {
+        "path": "s8-case2-duptest",
+        "httpMethod": "POST",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "jev",
+      "name": "Jev decision (noul)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        60,
+        -120
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/alpha/decisions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({model: \"typesafe/jev-1.13\", state: { previous_message: $json.body.text_old, new_message: $json.body.text_new }, questions: { same_question: { type: \"noul\", instructions: \"Новое сообщение клиента учебного центра — это тот же вопрос, что и недавнее сообщение того же контакта, просто переформулированный (перефразировка), а не новый, другой по смыслу вопрос?\", criteria: { true: \"Это переформулировка того же вопроса, который уже был задан — смысл совпадает, слова разные.\", false: \"Это другой по смыслу вопрос, даже если тема или часть слов похожи.\" } } } }) }}",
+        "options": {}
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "judge_model",
+      "name": "Judge model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        180
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "judge",
+      "name": "LLM judge",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        320,
+        180
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Это новое сообщение: «{{ $json.body.text_new }}». Недавнее сообщение того же контакта: «{{ $json.body.text_old }}». Это тот же вопрос, просто сформулированный иначе? Ответь строго «да» или «нет».",
+        "options": {}
+      }
+    },
+    {
+      "id": "combine",
+      "name": "Combine",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        560,
+        30
+      ],
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      }
+    },
+    {
+      "id": "shape",
+      "name": "Shape result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        30
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "javaScript",
+        "jsCode": "const webhookBody = $('Test pair (webhook)').item.json.body;\nconst jevItem = $('Jev decision (noul)').item.json;\nconst judgeItem = $('LLM judge').item.json;\nlet jevNoul = null, jevError = null;\nif (jevItem && jevItem.answers && jevItem.answers.same_question) {\n  jevNoul = jevItem.answers.same_question.noul;\n} else if (jevItem && jevItem.error) {\n  jevError = JSON.stringify(jevItem.error);\n}\nreturn { json: {\n  pair_id: webhookBody.id,\n  jev_noul: jevNoul,\n  jev_error: jevError,\n  llm_judge_raw: (judgeItem && judgeItem.text) || JSON.stringify(judgeItem),\n} };"
+      }
+    },
+    {
+      "id": "out",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        30
+      ],
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Test pair (webhook)": {
+      "main": [
+        [
+          {
+            "node": "Jev decision (noul)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LLM judge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jev decision (noul)": {
+      "main": [
+        [
+          {
+            "node": "Combine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Judge model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LLM judge",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM judge": {
+      "main": [
+        [
+          {
+            "node": "Combine",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Combine": {
+      "main": [
+        [
+          {
+            "node": "Shape result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shape result": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

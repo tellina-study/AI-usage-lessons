@@ -1,0 +1,180 @@
+# Что у Семинара 8 своё. Код сборщика — общий, в `tools/seminar-build/`.
+#
+# Правило, которое этот файл обслуживает (канон `tools/presentation-build/
+# seminar-deck-kit.md`): дека собирается из ИМЕНОВАННОЙ БИБЛИОТЕКИ ПРИЁМОВ, и
+# приём выбирается по полю `visual.pattern` слайда — ниже, в `genres`.
+# Решение по каждому новому имени приёма пишет сам автор слайда, в поле
+# `backup:` его фронтматтера; здесь только сводка соответствий.
+#
+# Взято за образец у `library/seminars/sem-07/rendered/deck-config.yaml` и
+# переписано под сетку С8 (BRIEF-PROIZVODSTVO.md §4): 51 слайд (вторая волна,
+# применение канона proektirovanie-keysa-i-voprosa.md), четыре кейса + Zillow
+# вне дорожки кейсов.
+
+seminar: "08"
+issue: 274
+
+langs:
+  ru:
+    slides: slides
+    deck: deck.yaml
+    out: sem-08.pptx
+    # Имена блоков занятия — ими подписана дорожная карта на дивайдерах.
+    blocks: [Введение, Ось, Кейсы, Закрытие]
+  en:
+    # Bilingual Production Rule (CLAUDE.md, issue #172): EN track, добавлен
+    # 2026-10-20 (issue #274). Прозаическая шапка — из отдельного файла
+    # (кириллицу в EN-артефакт переносить нельзя), см. `head_file` ниже.
+    slides: slides-en
+    deck: deck.en.yaml
+    out: sem-08-en.pptx
+    head: head.en.yaml
+    blocks: [Introduction, Axis, Cases, Closing]
+
+# Границы блоков: [от, до, индекс блока, индекс ступени или null].
+# Третья волна (развёрнутая обратная связь, 16 пунктов, 2026-10-19):
+# 53 слайда. Введение n01–n03, ось n04, кейсы+Zillow n05–n50, закрытие n51–n53.
+razmetka:
+  n:
+    rows:
+      - [1, 3, 0, null]
+      - [4, 4, 1, null]
+      - [5, 50, 2, 0]
+      - [51, 53, 3, null]
+    stages: [2]
+
+# Дорожка кейсов на лёгком дивайдере: рисуется по этому списку, названия —
+# по функции (канон §1), не по тезису. Zillow (n37) НЕ входит — концептуальный
+# разбавитель вне дорожки кейсов (ARCHITECTURE.md §6), его дивайдер собран
+# другим приёмом (section_divider_macro), не case_divider_quote.
+case_track: [Уведомления, Проверка на повтор, Одобрение возврата, Карточка в Telegram]
+case_idx:
+  n05: 0
+  n15: 1
+  n27: 2
+  n43: 3
+  # n27 — ПОЧИНЕНО в рамках issue #274 (правка Кейса 3): дивайдер Кейса 3
+  # фактически `n27-k3-divider.md` (grep `pattern: case_divider_quote`),
+  # ключ стоял стале `n25` — `D.case_idx().get(sid)` не находил совпадение
+  # по точному id, и полоса-дорожка кейсов (`K.roadmap`) на дивайдере n27
+  # не рисовалась вовсе. Ключи `n15` (факт. `n17-k2-divider.md`) и `n43`
+  # (факт. `n45-k4-divider.md`) — та же стале, НЕ исправлены здесь: вне
+  # мандата этой правки (только Кейс 3), см. финальный отчёт оркестратору.
+
+# `visual.pattern` → жанр из библиотеки приёмов (`tools/seminar-build/
+# genres.py`). Имя, которого здесь нет, рисуется жанром `content` — и это
+# нормальный, самый частый случай.
+genres:
+  hero_cover: cover_centered
+  section_divider_macro: divider
+  case_divider_quote: case_divider
+  question_with_option_cards: question
+  reflection_question: question
+  guess_the_number: question
+  recap_table: axis_table
+  keystone_axis: axis_table
+  taxonomy_compare_table: content
+  criteria_checklist_and_boundary: criteria
+  base_and_edge: base_edge
+  outcome_artifact: closing
+  bridge_forward: closing
+
+# Роль блока-цитаты ПО УМОЛЧАНИЮ для этого приёма. Запись нужна только там,
+# где умолчание (`formula`) неверно, или наоборот — где текст вопроса не
+# означает вопроса залу.
+pattern_role:
+  question_with_option_cards: question
+  reflection_question: question
+  guess_the_number: question
+  answer_breakdown_table: formula
+  answer_breakdown_schema: formula
+  criteria_checklist_and_boundary: formula
+  base_and_edge: fact
+  recap_table: fact
+  keystone_axis: fact
+
+# Приёмы, где зал ГОЛОСУЕТ карточками: их блок `cards` рисуется рядом
+# «ВЫБЕРИ», а не пилюлями терминов, и к ним применяется аудит «ответ рядом с
+# вопросом».
+vote_patterns:
+  - question_with_option_cards
+  - guess_the_number
+  - scene_cards_and_question
+
+# Дивайдеры: у них другая грамматика — риторический вопрос в заголовке
+# перехода не голосование, разбор ему не положен.
+#
+# ВАЖНО: здесь, в отличие от Семинара 7, стоит ТОЛЬКО `case_divider_quote`.
+# `audit_takty_keysa` (audits.py) читает именно этот список, чтобы проверить
+# порядок «дивайдер → сцена → вопрос» для ДИВАЙДЕРОВ КЕЙСА — и это правило
+# не действует на Zillow (n35): концептуальный разбавитель вне дорожки
+# кейсов (ARCHITECTURE.md §6), с бюджетом 7 минут без демо и без отдельного
+# экрана сцены — дивайдер и сцена слиты в один экран сознательно
+# (BRIEF-PROIZVODSTVO.md §4). У Семинара 7 `section_divider_macro` стоял в
+# этом списке «про запас» и ни разу не встречался на реальном слайде — здесь
+# он встречается (n35), и его грамматика ДРУГАЯ, поэтому он не в этом списке.
+divider_patterns: [case_divider_quote]
+
+# Слайды, где фигура — подтверждающий бэкап, добавленный ПОСЛЕ основных
+# врезок (не вводная схема): рисуется последней, не первой. n31 — голосовая
+# правка 2026-10-20 (issue #274), реальный скрин двух вариантов Кейса 3
+# (калькулятор + яснее правило) как доказательная база к числам из n30.
+# n20 — тем же приёмом, тем же днём (владелец: «ты сам смотрел на скрины? в
+# последнем разделе почти нет, в остальных тоже мало»): реальный скрин
+# воркфлоу тестового стенда Кейса 2 как доказательная база к таблице 4 схем.
+# Кейс 4 ту же жалобу решает ОТДЕЛЬНЫМ letter-tail слайдом (n48a), не
+# fig_after на n48 — на n48 уже стоят таблица + два текстовых блока, и
+# fig_after там будил реальный дефект, пойманный `check_tracks_pdf.py`
+# (фигура заходила на текст над собой); решение и разбор — в backup n48a.
+fig_after: [n20, n31]
+
+# Осознанные исключения из стандартной рамки таблицы `#1C7293`.
+table_style: {}
+
+# Слайды, где единственная подпись-итог начинается с «ёлочки» и потому была
+# бы опознана как тихая реплика докладчика.
+gold_quote_sids: {}
+
+# Точечное переопределение роли там, где общий механизм неверен.
+quote_role_force: {}
+
+deck_yaml:
+  central_question_patterns: [question_with_option_cards, guess_the_number]
+  axis_pattern: keystone_axis
+  # Бутстрап шапки — только для самой первой сборки, когда deck.yaml ещё не
+  # существует вовсе; дальше прозаические поля переносятся из него.
+  head_defaults:
+    seminar_number: 8
+    audience: "3 курс, 09.03.01 — практикующие инженеры, все пользуются ИИ-ассистентами"
+    format: >-
+      слайды фасилитатора + открытые вопросы с карточками (вопрос ДО разбора) +
+      измеренный эксперимент Кейса 3 (51 прогон); на занятии ведущий ничего не
+      редактирует в узлах n8n вживую — только прогоняет уже готовые процессы
+      (решение владельца, см. ARCHITECTURE.md §4)
+    language: ru
+    slot_min: 90
+
+# ── Сторожа и генераторы ────────────────────────────────────────────────────
+
+notes:
+  # Калибровка объёма заметок ЭТОГО занятия — канон называет коридор 250–450
+  # на содержательный слайд для семинара (не 500–800, это норма лекций).
+  bands:
+    разделитель: [250, 450]
+    голосование: [250, 450]
+    содержательный: [250, 450]
+    опорный: [250, 450]
+    обложка: null
+  anchor: {}
+
+svodka:
+  case_divider_patterns: [section_divider_macro, case_divider_quote]
+  nachalo_default: "развилка, одностраничник"
+  zal:
+    question_with_option_cards: голосования карточками
+    scene_cards_and_question: голосование-сцена вслепую
+    guess_the_number: устная оценка числа
+
+sluzhebnoe:
+  timing_patterns: [hero_cover, section_divider_macro, case_divider_quote, keystone_axis]
+  razdely: ["МОСТИК", "ШОВ С7→С8", "ОСЬ", "ZILLOW"]

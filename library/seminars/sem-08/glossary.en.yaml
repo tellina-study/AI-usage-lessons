@@ -1,0 +1,67 @@
+# library/seminars/sem-08/glossary.en.yaml
+# Glossary LOCK (EN) — Seminar 8 "Где решает модель, а где должен — код" /
+# "Where the model decides, and where code must". First EN track for this
+# seminar (issue #172 Bilingual Production Rule, issue #274). All translators
+# of slides-en/*.md MUST use these exact forms — no per-agent drift across the
+# 4 parallel case batches. consistency-checker verifies slides-en/*.md against
+# this file.
+
+seminar: 8
+locked_at: "2026-10-20"
+
+terms:
+  - canonical: "node"
+    ru: "узел"
+    note: "n8n UI term, always lower-case unless at sentence start"
+  - canonical: "workflow"
+    ru: "воркфлоу"
+  - canonical: "live rig"
+    ru: "живой стенд"
+    note: "the real running n8n instance at lessons.tellian.io, as opposed to a drawn schema"
+  - canonical: "deduplication / duplicate"
+    ru: "дедупликация / дубликат"
+  - canonical: "rephrasing / paraphrase"
+    ru: "перефразировка"
+  - canonical: "exact match (hash)"
+    ru: "хэш (точное совпадение)"
+  - canonical: "TF-IDF + cosine similarity"
+    ru: "TF-IDF + косинус"
+  - canonical: "judge model / LLM-as-judge"
+    ru: "модель-судья"
+  - canonical: "jev"
+    ru: "сервис jev"
+    forbidden: ["Jev", "JEV"]
+    note: "proper noun, third-party service name — lower-case, never translated or expanded"
+  - canonical: "threshold"
+    ru: "порог"
+  - canonical: "escalate / escalation"
+    ru: "эскалировать / эскалация"
+  - canonical: "approve / approval"
+    ru: "одобрить / одобрение"
+  - canonical: "extract / extraction"
+    ru: "извлечь / извлечение"
+  - canonical: "refund"
+    ru: "возврат (денег)"
+  - canonical: "request"
+    ru: "заявка"
+    note: "an incoming request/ticket from a prospective student, not a technical API request"
+  - canonical: "coordinator"
+    ru: "координатор"
+  - canonical: "training center"
+    ru: "учебный центр"
+  - canonical: "card (photo card)"
+    ru: "карточка"
+  - canonical: "compression"
+    ru: "сжатие"
+  - canonical: "requests table"
+    ru: "таблица заявок"
+  - canonical: "IF node"
+    ru: "IF-узел"
+  - canonical: "settings panel"
+    ru: "панель настройки"
+
+notes:
+  - "n8n UI labels (node titles like \"Extract amount\", field names like \"Response Format\", \"Chat ID\") are English in the real screenshots already — do not re-translate or paraphrase them; quote verbatim exactly as in the RU slide."
+  - "Anti-anglicism mandate is RU-only (CLAUDE.md § Bilingual Production Rule); does not apply to this EN track."
+  - "Mirror-check instead: EN slides must contain 0 untranslated Russian fragments — proper nouns and quoted RU UI strings (there should be none; the UI is English) excluded."
+  - "Numbers, dates, thresholds, measured results (e.g. 9 errors out of 101, jev_noul 0.70-0.97, $0.034/image) MUST be carried over byte-for-byte unchanged — fact-checker verifies this against the RU slides, not against source data a second time."

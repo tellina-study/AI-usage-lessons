@@ -1,0 +1,705 @@
+{
+  "requests": [
+    {
+      "id": "orig-1",
+      "group": "original_51",
+      "target_amount_rub": 1500,
+      "text": "хочу вернуть 1500 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-2",
+      "group": "original_51",
+      "target_amount_rub": 1800,
+      "text": "верните 1800 рублей, передумал по поводу курса",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-3",
+      "group": "original_51",
+      "target_amount_rub": 2000,
+      "text": "можно возврат 2000 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-4",
+      "group": "original_51",
+      "target_amount_rub": 2200,
+      "text": "хочу вернуть 2200 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-5",
+      "group": "original_51",
+      "target_amount_rub": 2500,
+      "text": "хочу вернуть 2500 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-6",
+      "group": "original_51",
+      "target_amount_rub": 2700,
+      "text": "прошу вернуть 2700 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-7",
+      "group": "original_51",
+      "target_amount_rub": 2900,
+      "text": "прошу вернуть 2900 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-8",
+      "group": "original_51",
+      "target_amount_rub": 2999,
+      "text": "хочу вернуть 2999 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-9",
+      "group": "original_51",
+      "target_amount_rub": 3000,
+      "text": "хочу вернуть 3000 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-10",
+      "group": "original_51",
+      "target_amount_rub": 3000,
+      "text": "хочу вернуть 3000 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-11",
+      "group": "original_51",
+      "target_amount_rub": 1200,
+      "text": "можно возврат 1200 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-12",
+      "group": "original_51",
+      "target_amount_rub": 1600,
+      "text": "прошу вернуть 1600 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-13",
+      "group": "original_51",
+      "target_amount_rub": 1900,
+      "text": "можно возврат 1900 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-14",
+      "group": "original_51",
+      "target_amount_rub": 2100,
+      "text": "можно возврат 2100 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-15",
+      "group": "original_51",
+      "target_amount_rub": 2300,
+      "text": "можно возврат 2300 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-16",
+      "group": "original_51",
+      "target_amount_rub": 2600,
+      "text": "можно возврат 2600 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-17",
+      "group": "original_51",
+      "target_amount_rub": 2800,
+      "text": "можно возврат 2800 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-18",
+      "group": "original_51",
+      "target_amount_rub": 2950,
+      "text": "хочу вернуть 2950 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-19",
+      "group": "original_51",
+      "target_amount_rub": 3000,
+      "text": "можно возврат 3000 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-20",
+      "group": "original_51",
+      "target_amount_rub": 1000,
+      "text": "прошу вернуть 1000 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-21",
+      "group": "original_51",
+      "target_amount_rub": 1700,
+      "text": "можно возврат 1700 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-22",
+      "group": "original_51",
+      "target_amount_rub": 2400,
+      "text": "хочу вернуть 2400 руб, занятие не состоялось по моей вине, но прошу всё равно",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-23",
+      "group": "original_51",
+      "target_amount_rub": 2650,
+      "text": "прошу вернуть 2650 рублей за пропущенное занятие",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-24",
+      "group": "original_51",
+      "target_amount_rub": 2850,
+      "text": "верните 2850 рублей, передумал по поводу курса",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-25",
+      "group": "original_51",
+      "target_amount_rub": 2990,
+      "text": "можно возврат 2990 рублей за один пропуск?",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "orig-26",
+      "group": "original_51",
+      "target_amount_rub": 3200,
+      "text": "возврат 3200 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-27",
+      "group": "original_51",
+      "target_amount_rub": 3500,
+      "text": "возврат 3500 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-28",
+      "group": "original_51",
+      "target_amount_rub": 3800,
+      "text": "прошу вернуть всю сумму — 3800 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-29",
+      "group": "original_51",
+      "target_amount_rub": 4000,
+      "text": "хочу полный возврат 4000 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-30",
+      "group": "original_51",
+      "target_amount_rub": 4500,
+      "text": "прошу вернуть всю сумму — 4500 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-31",
+      "group": "original_51",
+      "target_amount_rub": 5000,
+      "text": "прошу вернуть всю сумму — 5000 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-32",
+      "group": "original_51",
+      "target_amount_rub": 5500,
+      "text": "возврат 5500 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-33",
+      "group": "original_51",
+      "target_amount_rub": 6000,
+      "text": "возврат 6000 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-34",
+      "group": "original_51",
+      "target_amount_rub": 6500,
+      "text": "прошу вернуть всю сумму — 6500 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-35",
+      "group": "original_51",
+      "target_amount_rub": 7000,
+      "text": "прошу вернуть всю сумму — 7000 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-36",
+      "group": "original_51",
+      "target_amount_rub": 3300,
+      "text": "хочу полный возврат 3300 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-37",
+      "group": "original_51",
+      "target_amount_rub": 3600,
+      "text": "верните 3600 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-38",
+      "group": "original_51",
+      "target_amount_rub": 3900,
+      "text": "прошу вернуть всю сумму — 3900 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-39",
+      "group": "original_51",
+      "target_amount_rub": 4200,
+      "text": "возврат 4200 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-40",
+      "group": "original_51",
+      "target_amount_rub": 4800,
+      "text": "верните 4800 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-41",
+      "group": "original_51",
+      "target_amount_rub": 5200,
+      "text": "верните 5200 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-42",
+      "group": "original_51",
+      "target_amount_rub": 5800,
+      "text": "прошу вернуть всю сумму — 5800 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-43",
+      "group": "original_51",
+      "target_amount_rub": 6200,
+      "text": "прошу вернуть всю сумму — 6200 рублей, курс не подошёл совсем",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-44",
+      "group": "original_51",
+      "target_amount_rub": 6800,
+      "text": "возврат 6800 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-45",
+      "group": "original_51",
+      "target_amount_rub": 7500,
+      "text": "верните 7500 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-46",
+      "group": "original_51",
+      "target_amount_rub": 3400,
+      "text": "верните 3400 рублей за весь оплаченный блок занятий",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-47",
+      "group": "original_51",
+      "target_amount_rub": 4100,
+      "text": "возврат 4100 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-48",
+      "group": "original_51",
+      "target_amount_rub": 4700,
+      "text": "возврат 4700 рублей, иначе буду писать жалобу",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-49",
+      "group": "original_51",
+      "target_amount_rub": 5600,
+      "text": "хочу полный возврат 5600 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "orig-50",
+      "group": "original_51",
+      "target_amount_rub": 9000,
+      "text": "хочу полный возврат 9000 рублей, оплатил три месяца вперёд",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-1",
+      "group": "tight_border",
+      "target_amount_rub": 2980,
+      "text": "верните, пожалуйста, 2980 руб. — я оплатил, но не смог присутствовать",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-2",
+      "group": "tight_border",
+      "target_amount_rub": 2985,
+      "text": "сделайте возврат на 2985 рублей, курс не подошёл по расписанию",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-3",
+      "group": "tight_border",
+      "target_amount_rub": 2990,
+      "text": "хочу возврат 2990 рублей за абонемент, использовал только одно занятие",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-4",
+      "group": "tight_border",
+      "target_amount_rub": 2992,
+      "text": "верните, пожалуйста, 2992 руб. — я оплатил, но не смог присутствовать",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-5",
+      "group": "tight_border",
+      "target_amount_rub": 2995,
+      "text": "верните, пожалуйста, 2995 руб. — я оплатил, но не смог присутствовать",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-6",
+      "group": "tight_border",
+      "target_amount_rub": 2997,
+      "text": "хочу возврат 2997 рублей за абонемент, использовал только одно занятие",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-7",
+      "group": "tight_border",
+      "target_amount_rub": 2998,
+      "text": "верните, пожалуйста, 2998 руб. — я оплатил, но не смог присутствовать",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-8",
+      "group": "tight_border",
+      "target_amount_rub": 2999,
+      "text": "прошу вернуть 2999 рублей, занятие отменили в последний момент",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-9",
+      "group": "tight_border",
+      "target_amount_rub": 3001,
+      "text": "сделайте возврат на 3001 рублей, курс не подошёл по расписанию",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-10",
+      "group": "tight_border",
+      "target_amount_rub": 3002,
+      "text": "сделайте возврат на 3002 рублей, курс не подошёл по расписанию",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-11",
+      "group": "tight_border",
+      "target_amount_rub": 3003,
+      "text": "прошу вернуть 3003 рублей, занятие отменили в последний момент",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-12",
+      "group": "tight_border",
+      "target_amount_rub": 3005,
+      "text": "верните, пожалуйста, 3005 руб. — я оплатил, но не смог присутствовать",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-13",
+      "group": "tight_border",
+      "target_amount_rub": 3008,
+      "text": "хочу возврат 3008 рублей за абонемент, использовал только одно занятие",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-14",
+      "group": "tight_border",
+      "target_amount_rub": 3012,
+      "text": "верните, пожалуйста, 3012 руб. — я оплатил, но не смог присутствовать",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-15",
+      "group": "tight_border",
+      "target_amount_rub": 3020,
+      "text": "прошу вернуть 3020 рублей, занятие отменили в последний момент",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-16",
+      "group": "two_numbers",
+      "target_amount_rub": 2400,
+      "text": "курс обошёлся в 12000 руб., хочу возврат 2400 рублей за один блок",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-17",
+      "group": "two_numbers",
+      "target_amount_rub": 3100,
+      "text": "у меня было два платежа: 8000 рублей в прошлом месяце и сейчас — прошу вернуть 3100 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-18",
+      "group": "two_numbers",
+      "target_amount_rub": 2950,
+      "text": "оплата была 15000 рублей, однако прошу вернуть 2950, остальное оставляю за уже пройденные уроки",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-19",
+      "group": "two_numbers",
+      "target_amount_rub": 3050,
+      "text": "предыдущий возврат был на 6000 рублей, а по этой заявке прошу вернуть 3050 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-20",
+      "group": "two_numbers",
+      "target_amount_rub": 2700,
+      "text": "курс обошёлся в 9000 руб., хочу возврат 2700 рублей за один блок",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-21",
+      "group": "two_numbers",
+      "target_amount_rub": 3300,
+      "text": "предыдущий возврат был на 20000 рублей, а по этой заявке прошу вернуть 3300 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-22",
+      "group": "two_numbers",
+      "target_amount_rub": 2990,
+      "text": "занятие стоило 5000 рублей, но прошу вернуть только 2990 — за пропущенную часть",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-23",
+      "group": "two_numbers",
+      "target_amount_rub": 3400,
+      "text": "предыдущий возврат был на 10000 рублей, а по этой заявке прошу вернуть 3400 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-24",
+      "group": "two_numbers",
+      "target_amount_rub": 2850,
+      "text": "занятие стоило 7000 рублей, но прошу вернуть только 2850 — за пропущенную часть",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-25",
+      "group": "two_numbers",
+      "target_amount_rub": 3600,
+      "text": "у меня было два платежа: 18000 рублей в прошлом месяце и сейчас — прошу вернуть 3600 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-26",
+      "group": "two_numbers",
+      "target_amount_rub": 3700,
+      "text": "занятие стоило 4000 рублей, но прошу вернуть только 3700 — за пропущенную часть",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-27",
+      "group": "two_numbers",
+      "target_amount_rub": 2600,
+      "text": "предыдущий возврат был на 25000 рублей, а по этой заявке прошу вернуть 2600 рублей",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-28",
+      "group": "two_numbers",
+      "target_amount_rub": 3150,
+      "text": "оплата была 6500 рублей, однако прошу вернуть 3150, остальное оставляю за уже пройденные уроки",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-29",
+      "group": "two_numbers",
+      "target_amount_rub": 2999,
+      "text": "предыдущий возврат был на 13000 рублей, а по этой заявке прошу вернуть 2999 рублей",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-30",
+      "group": "two_numbers",
+      "target_amount_rub": 4200,
+      "text": "занятие стоило 30000 рублей, но прошу вернуть только 4200 — за пропущенную часть",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-31",
+      "group": "two_numbers",
+      "target_amount_rub": 3001,
+      "text": "абонемент на 9500 рублей не трогаю, а вот за отдельное занятие прошу вернуть 3001 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-32",
+      "group": "two_numbers",
+      "target_amount_rub": 2750,
+      "text": "курс обошёлся в 11000 руб., хочу возврат 2750 рублей за один блок",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-33",
+      "group": "two_numbers",
+      "target_amount_rub": 3900,
+      "text": "абонемент на 16000 рублей не трогаю, а вот за отдельное занятие прошу вернуть 3900 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-34",
+      "group": "two_numbers",
+      "target_amount_rub": 2900,
+      "text": "оплата была 8500 рублей, однако прошу вернуть 2900, остальное оставляю за уже пройденные уроки",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-35",
+      "group": "two_numbers",
+      "target_amount_rub": 5000,
+      "text": "предыдущий возврат был на 22000 рублей, а по этой заявке прошу вернуть 5000 рублей",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-36",
+      "group": "ambiguous",
+      "target_amount_rub": 2900,
+      "text": "хочу вернуть примерно 2900 рублей, может чуть больше за комиссию",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-37",
+      "group": "ambiguous",
+      "target_amount_rub": 3000,
+      "text": "прошу возврат около 3000 — точную сумму скажет бухгалтерия, но ориентируюсь на эту цифру",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-38",
+      "group": "ambiguous",
+      "target_amount_rub": 3000,
+      "text": "занятие стоило 1500 рублей, прошу вернуть за два таких занятия",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-39",
+      "group": "ambiguous",
+      "target_amount_rub": 2200,
+      "text": "курс состоял из трёх блоков по 1100 рублей, пропустил два — прошу возврат",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-40",
+      "group": "ambiguous",
+      "target_amount_rub": 700,
+      "text": "прошу вернуть сумму одного занятия из абонемента на пять занятий по 700 рублей",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-41",
+      "group": "ambiguous",
+      "target_amount_rub": 3000,
+      "text": "хочу возврат половины от оплаченных 6000 рублей за курс",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-42",
+      "group": "ambiguous",
+      "target_amount_rub": 3000,
+      "text": "вернуть, пожалуйста, всё за минус один использованный визит по тысяче рублей, оплатил четыре по 1000",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-43",
+      "group": "ambiguous",
+      "target_amount_rub": 7500,
+      "text": "прошу эскалировать сразу — сумма большая, где-то в районе 7-8 тысяч",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-44",
+      "group": "ambiguous",
+      "target_amount_rub": 3000,
+      "text": "возврат за неиспользованные две трети абонемента, абонемент был на 4500 рублей",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-45",
+      "group": "ambiguous",
+      "target_amount_rub": 2997,
+      "text": "оплатил 3 занятия по 999 рублей, прошу вернуть за все",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-46",
+      "group": "ambiguous",
+      "target_amount_rub": 3050,
+      "text": "хочу вернуть сумму чуть выше трёх тысяч, не помню точно, около 3050",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-47",
+      "group": "ambiguous",
+      "target_amount_rub": 2950,
+      "text": "прошу возврат ровно половины от 5900 рублей",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-48",
+      "group": "ambiguous",
+      "target_amount_rub": 3000,
+      "text": "занятие отменили, стоимость была тысяча рублей, умножить на три пропущенных",
+      "expected_by_rule_B": "одобрить"
+    },
+    {
+      "id": "extra-49",
+      "group": "ambiguous",
+      "target_amount_rub": 3200,
+      "text": "верните деньги за месяц занятий — это четыре встречи по 800 рублей каждая",
+      "expected_by_rule_B": "эскалировать"
+    },
+    {
+      "id": "extra-50",
+      "group": "ambiguous",
+      "target_amount_rub": 2965,
+      "text": "прошу вернуть сумму чуть ниже трёх тысяч, примерно 2960-2970",
+      "expected_by_rule_B": "одобрить"
+    }
+  ],
+  "count": 100
+}

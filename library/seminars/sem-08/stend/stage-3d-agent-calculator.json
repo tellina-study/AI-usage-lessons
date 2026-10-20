@@ -1,0 +1,147 @@
+{
+  "name": "С8 · Кейс 3, вариант — модель с инструментом-калькулятором (измерение действия №2)",
+  "nodes": [
+    {
+      "id": "in",
+      "name": "Diag trigger",
+      "webhookId": "s8-refund-calc-diag",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "parameters": {
+        "path": "s8-refund-calc-diag",
+        "formTitle": "calc diag",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Текст запроса",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "agent_model",
+      "name": "Agent model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        220
+      ],
+      "parameters": {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "calc_tool",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        220,
+        220
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "agent",
+      "name": "Decide refund (agent+calculator)",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Правило: не возвращай больше 3000 рублей автоматически, иначе эскалируй руководителю. Текст заявки: \"{{ $json['Текст запроса'] }}\". Сначала определи сумму из текста, затем воспользуйся калькулятором, чтобы сравнить её с порогом 3000. Ответь строго одним словом: «одобрить» или «эскалировать».",
+        "options": {}
+      }
+    },
+    {
+      "id": "out",
+      "name": "Result",
+      "webhookId": "0ca70a70-65fe-452b-8eb3-1893a83f1d86",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        400,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "calc diag",
+        "completionMessage": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Diag trigger": {
+      "main": [
+        [
+          {
+            "node": "Decide refund (agent+calculator)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Decide refund (agent+calculator)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Decide refund (agent+calculator)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decide refund (agent+calculator)": {
+      "main": [
+        [
+          {
+            "node": "Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

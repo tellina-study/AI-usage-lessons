@@ -1,0 +1,147 @@
+{
+  "status": "ПОДГОТОВЛЕНО — набор для измерения 4 схем Кейса 2, см. README.md",
+  "structure": "10 дублей (5 буквальных + 5 перефразировок) + 10 разных вопросов",
+  "count": 20,
+  "pairs": [
+    {
+      "id": 1,
+      "pair_type": "literal_repeat",
+      "expected_duplicate": true,
+      "text_old": "когда начинается следующий курс по аналитике",
+      "text_new": "когда начинается следующий курс по аналитике"
+    },
+    {
+      "id": 2,
+      "pair_type": "literal_repeat",
+      "expected_duplicate": true,
+      "text_old": "можно перенести занятие в четверг на другое время",
+      "text_new": "Можно перенести занятие в четверг на другое время"
+    },
+    {
+      "id": 3,
+      "pair_type": "literal_repeat",
+      "expected_duplicate": true,
+      "text_old": "сколько стоит абонемент на три месяца",
+      "text_new": "сколько стоит абонемент на три месяца"
+    },
+    {
+      "id": 4,
+      "pair_type": "literal_repeat",
+      "expected_duplicate": true,
+      "text_old": "как связаться с преподавателем напрямую",
+      "text_new": "как связаться с преподавателем напрямую  "
+    },
+    {
+      "id": 5,
+      "pair_type": "literal_repeat",
+      "expected_duplicate": true,
+      "text_old": "есть ли скидка для студентов",
+      "text_new": "есть ли скидка для студентов"
+    },
+    {
+      "id": 6,
+      "pair_type": "paraphrase",
+      "expected_duplicate": true,
+      "text_old": "когда можно оплатить занятие?",
+      "text_new": "как мне внести оплату за курс"
+    },
+    {
+      "id": 7,
+      "pair_type": "paraphrase",
+      "expected_duplicate": true,
+      "text_old": "хочу вернуть деньги за урок, который пропустил",
+      "text_new": "можно оформить возврат средств, я был на одном пропущенном занятии"
+    },
+    {
+      "id": 8,
+      "pair_type": "paraphrase",
+      "expected_duplicate": true,
+      "text_old": "в какое время у нас урок в четверг",
+      "text_new": "подскажите расписание четверга, когда начинается занятие"
+    },
+    {
+      "id": 9,
+      "pair_type": "paraphrase",
+      "expected_duplicate": true,
+      "text_old": "как записаться на курс по питону",
+      "text_new": "хочу попасть на программу обучения python, что нужно сделать"
+    },
+    {
+      "id": 10,
+      "pair_type": "paraphrase",
+      "expected_duplicate": true,
+      "text_old": "можно ли перенести занятие на другой день",
+      "text_new": "нельзя ли сместить урок на другую дату"
+    },
+    {
+      "id": 11,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "хочу возврат средств за урок, на который не попал",
+      "text_new": "в какое время у нас урок в четверг"
+    },
+    {
+      "id": 12,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "сколько стоит курс по питону",
+      "text_new": "сколько стоит курс по аналитике данных"
+    },
+    {
+      "id": 13,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "как оплатить занятие картой",
+      "text_new": "можно ли оплатить занятие в рассрочку"
+    },
+    {
+      "id": 14,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "подскажите адрес офиса для очных занятий",
+      "text_new": "можно получить сертификат после прохождения курса"
+    },
+    {
+      "id": 15,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "как удалить мои данные из системы",
+      "text_new": "хочу сменить преподавателя"
+    },
+    {
+      "id": 16,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "есть ли группа для начинающих",
+      "text_new": "почему не пришло подтверждение записи на вебинар"
+    },
+    {
+      "id": 17,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "сколько длится одно занятие по времени",
+      "text_new": "расскажите про группу для продолжающих"
+    },
+    {
+      "id": 18,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "почему не работает ссылка на зум для занятия",
+      "text_new": "можно получить справку для бухгалтерии об оплате"
+    },
+    {
+      "id": 19,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "хочу сменить время занятия",
+      "text_new": "как изменить контактный телефон в анкете"
+    },
+    {
+      "id": 20,
+      "pair_type": "different",
+      "expected_duplicate": false,
+      "text_old": "подскажите, где можно распечатать материалы курса",
+      "text_new": "сколько всего занятий в курсе"
+    }
+  ]
+}

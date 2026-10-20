@@ -27,6 +27,7 @@ mcp-limitations.md` [#171-1]). Поэтому здесь строится вре
 
     python3 sobrat_razdel.py 1                 # собрать оба файла раздела 1
     python3 sobrat_razdel.py 1 --tolko-zametki # не пересобирать, только заметки
+    python3 sobrat_razdel.py 1-2-3-4-5 --size 15   # вся лекция, кусками по 15
 """
 import argparse
 import shutil
@@ -42,14 +43,26 @@ TOOLS = HERE.parents[4] / "tools" / "presentation-build"
 # выводится из заголовка: имя закоммиченного файла — договорённость с теми,
 # кто на него ссылается, и переехать оно может только осознанно.
 IMENA = {"1": "sec1-skrining-otbor",
-         "4": "sec4-vedenie-dokumentatsii"}
+         "4": "sec4-vedenie-dokumentatsii",
+         "5": "sec5-kvalifikaciya-i-iznos",
+         # Вся лекция одним файлом: ключ — тег, который `render_sec.py`
+         # собирает из своих аргументов ("-".join(sorted(secs))).
+         "1-2-3-4-5": "lec-07-vsya-lekciya"}
+
+
+def razdely(tag):
+    """Разделы, которые называет тег. `render_sec.py` склеивает тег из своих
+    аргументов (`"-".join(sorted(secs))`), поэтому тег «1-2-3-4-5» означает
+    пять разделов, а «4» — один. Обратный разбор держится здесь, чтобы вся
+    лекция собиралась тем же прогоном, что и один раздел."""
+    return tag.split("-")
 
 
 def ids_razdela(tag):
     """Номера кадров раздела — тем же способом, которым их отбирает
     `render_sec.ids_of`, чтобы счёт кусков и счёт кадров не разошлись."""
     import render_sec
-    return [i for i, _ in render_sec.ids_of({tag})]
+    return [i for i, _ in render_sec.ids_of(set(razdely(tag)))]
 
 
 def shag(nazvanie, cmd, cwd=None):
@@ -60,38 +73,51 @@ def shag(nazvanie, cmd, cwd=None):
 
 
 def zametki(tag, imya):
-    """Собрать `<имя>-notes.pdf` из того же pptx, которым собраны слайды.
+    """Собрать `<имя>-notes.pdf` из тех же pptx, которыми собраны слайды.
 
-    ПАДАЕТ, А НЕ ТЕРЯЕТ (круг 2, #285). `render_sec.py` режет раздел на
-    куски по `--size` (по умолчанию 15) и складывает `parts-sec/secN-01.pptx`,
-    `-02.pptx` и так далее; слайды склеиваются из всех кусков, а заметки
-    собирались ТОЛЬКО из первого. Пока раздел был короче шестнадцати кадров,
-    это совпадало. На шестнадцатом кадре `notes_pages_pdf.py` сказал
-    «count mismatch: pdf_pages=16 pptx_notes=15; using 15» ОДНОЙ строкой
-    посреди вывода — и выпустил заметки без последнего кадра. Проверка ниже
-    делает из этой строки отказ: лучше не собрать, чем собрать неполным.
+    НЕ ТЕРЯЕТ ХВОСТ (круг 2, #285) И НЕ ТРЕБУЕТ ОДНОГО КУСКА (интеграция
+    пяти разделов). `render_sec.py` режет вход на куски по `--size` и кладёт
+    `parts-sec/sec<тег>-01.pptx`, `-02.pptx` и так далее; слайды склеиваются
+    из всех кусков, а заметки раньше собирались ТОЛЬКО из первого. Пока
+    раздел был короче шестнадцати кадров, это совпадало. На шестнадцатом
+    `notes_pages_pdf.py` сказал «count mismatch: pdf_pages=16 pptx_notes=15;
+    using 15» ОДНОЙ строкой посреди вывода — и выпустил заметки без
+    последнего кадра. Первый фикс сделал из этой строки отказ: собирай одним
+    куском или не собирай вовсе. На всей лекции (сто с лишним кадров) один
+    кусок не берётся по памяти (`notes/mcp-limitations.md` [#229-2]), поэтому
+    здесь заметки собираются ПО КАЖДОМУ куску и склеиваются в порядке кусков.
+    Пара «кадр ↔ заметка» от этого не страдает: `notes_pages_pdf.py` ставит
+    её позиционно (страница i pdf ↔ слайд i pptx), а кусок — это свой pptx
+    со своим pdf. Счёт страниц проверяется против числа кадров ниже.
     """
     kuski = sorted((HERE / "parts-sec").glob(f"sec{tag}-*.pptx"))
-    if len(kuski) != 1:
-        raise SystemExit(
-            f"кусков сборки {len(kuski)} ({', '.join(k.name for k in kuski)}), "
-            f"а заметки собираются из одного. Пересобрать слайды одним куском:\n"
-            f"    python3 render_sec.py {tag} --size {len(kuski) * 15 + 15}")
-    pptx = kuski[0]
-    pdf = HERE / f"{imya}.pdf"
-    for p in (pptx, pdf):
-        if not p.exists():
-            raise SystemExit(f"нет входа для заметок: {p}")
+    if not kuski:
+        raise SystemExit(f"кусков сборки для тега {tag} нет — нечего собирать")
+    chasti = []
     with tempfile.TemporaryDirectory() as d:
-        lecdir = Path(d) / imya
-        (lecdir / "rendered").mkdir(parents=True)
-        shutil.copy2(HERE / "deck.yaml", lecdir / "deck.yaml")
-        shutil.copy2(pptx, lecdir / "rendered" / f"{imya}.pptx")
-        shutil.copy2(pdf, lecdir / "rendered" / f"{imya}.pdf")
-        shag("заметки", [sys.executable, TOOLS / "notes_pages_pdf.py",
-                         lecdir, "--dpi", "150"])
-        gotovo = lecdir / "rendered" / f"{imya}-notes.pdf"
-        shutil.copy2(gotovo, HERE / f"{imya}-notes.pdf")
+        for n, pptx in enumerate(kuski, 1):
+            pdf = pptx.with_suffix(".pdf")
+            for f in (pptx, pdf):
+                if not f.exists():
+                    raise SystemExit(f"нет входа для заметок: {f}")
+            lecdir = Path(d) / f"{imya}-{n:02d}"
+            (lecdir / "rendered").mkdir(parents=True)
+            shutil.copy2(HERE / "deck.yaml", lecdir / "deck.yaml")
+            shutil.copy2(pptx, lecdir / "rendered" / f"{lecdir.name}.pptx")
+            shutil.copy2(pdf, lecdir / "rendered" / f"{lecdir.name}.pdf")
+            shag(f"заметки, кусок {n} из {len(kuski)}",
+                 [sys.executable, TOOLS / "notes_pages_pdf.py",
+                  lecdir, "--dpi", "150"])
+            chasti.append(lecdir / "rendered" / f"{lecdir.name}-notes.pdf")
+        gotovo = HERE / f"{imya}-notes.pdf"
+        if len(chasti) == 1:
+            shutil.copy2(chasti[0], gotovo)
+        else:
+            shag("склейка заметок",
+                 ["bash", "-lc",
+                  ". /home/harness/.local/lo-portable-env.sh && pdfunite "
+                  + " ".join(f"'{c}'" for c in chasti)
+                  + f" '{gotovo}'"])
     print(f"[ok] {imya}-notes.pdf")
 
 
@@ -99,6 +125,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("razdel")
     ap.add_argument("--tolko-zametki", action="store_true")
+    ap.add_argument("--size", type=int, default=0,
+                    help="кадров в куске; 0 — весь раздел одним куском")
     a = ap.parse_args()
     tag = a.razdel
     imya = IMENA.get(tag)
@@ -107,13 +135,13 @@ def main():
                          f"(см. IMENA в этом файле)")
 
     if not a.tolko_zametki:
-        # Раздел собирается ОДНИМ куском: иначе заметки соберутся не по всему
-        # разделу (см. `zametki` выше). Размер берётся по числу кадров раздела.
+        # Куски чистятся до сборки: иначе заметки склеятся с хвостом прошлого
+        # прогона, а слайды — нет, и разойдутся они молча.
         kadrov = len(ids_razdela(tag))
         for stale in (HERE / "parts-sec").glob(f"sec{tag}-*"):
             stale.unlink() if stale.is_file() else None
-        shag("слайды", [sys.executable, HERE / "render_sec.py", tag,
-                        "--size", str(max(kadrov, 1))])
+        shag("слайды", [sys.executable, HERE / "render_sec.py",
+                        *razdely(tag), "--size", str(a.size or max(kadrov, 1))])
         src = HERE / f"sec-{tag}.pdf"
         if not src.exists():
             raise SystemExit(f"render_sec.py не оставил {src}")

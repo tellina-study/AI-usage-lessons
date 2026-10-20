@@ -62,3 +62,6 @@ library/lectures/lec-07/rework/deck/zamer-diyeta-r7-r10/*.pptx
 library/lectures/lec-07/rework/deck/zamer-diyeta-r7-r10/slides-do/
 library/lectures/lec-07/rework/deck/zamer-diyeta-r7-r10/*.pdf
 library/lectures/lec-07/rework/deck/chastichnaya-sborka.pptx
+# ...и её рендер: правило игнорировало только pptx, а `--only` оставляет рядом и pdf,
+# который иначе попадает в коммит как случайный артефакт (круг #285, раздел 5).
+library/lectures/lec-07/rework/deck/chastichnaya-sborka.pdf

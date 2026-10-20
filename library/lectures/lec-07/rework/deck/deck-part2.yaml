@@ -154,7 +154,7 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 5. Профессиональная квалификация: поддержание и износ · 7 кадров · 5.45 мин ───
+  # ─── 5. Профессиональная квалификация: поддержание и износ · 10 кадров · 8.35 мин ───
   - id: s73b
     local_id: "s5-01"                      # номер SLIDE-PLAN.md
     file: slides/s73b-divider-navyk.md
@@ -180,11 +180,19 @@ slides:
     chapter_ref: "chapter-part5.md §10.2 (+ §10.3)"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73da
+    local_id: "s5-03b"                     # вставленный кадр, номера в плане нет
+    file: slides/s73da-dopusk-po-stranam.md
+    type: norm
+    title: "Входит ли измеренный результат работы врача в его допуск: Великобритания, США, Россия"
+    chapter_ref: "chapter-part5.md § Удержание квалификации по странам (безномерный подраздел между §10.5 и §10.5а)"
+    timing_min: 0.8
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s73d
     local_id: "s5-03"                      # номер SLIDE-PLAN.md
     file: slides/s73d-tsena-i-dva-rezhima-osmotra.md
     type: case
-    title: "Цена обеих ошибок и оба классических режима — до всякой модели"
+    title: "Осмотр при выведении прибора: цена промаха и два порядка работы без модели"
     chapter_ref: "chapter-part5.md §10.4, §10.5"
     timing_min: 1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
@@ -196,19 +204,35 @@ slides:
     chapter_ref: "chapter-part5.md §10.6, §10.8 (+ §10.7)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73ga
+    local_id: "s5-05b"                     # вставленный кадр, номера в плане нет
+    file: slides/s73ga-primer-3-razrabotchiki.md
+    type: case
+    title: "Пример 3: разработчики на незнакомой библиотеке"
+    chapter_ref: "chapter-part5.md §10.8а"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73g
+    local_id: "s5-05"                      # номер SLIDE-PLAN.md
+    file: slides/s73g-primer-2-artincol-rossiya.md
+    type: case
+    title: "Пример 2: ArtInCol, Россия — помощник на той же процедуре"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73j
+    local_id: "s5-09"                      # номер SLIDE-PLAN.md
+    file: slides/s73gb-dva-rezhima-podsvetki.md
+    type: summary
+    title: "Два режима одного класса: где человек остаётся и где его снимают"
+    chapter_ref: "chapter-part5.md §10.13 (+ §10.14) — различение двух режимов одного класса инструмента; кадр переставлен ПЕРЕД сводом стадии, файл кадра лежит под именем s73gb, идентификатор показа прежний"
+    timing_min: 0.9
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s73i
     local_id: "s5-08"                      # номер SLIDE-PLAN.md
     file: slides/s73i-vyvod-navyk.md
     type: summary
-    title: "Квалификация: исполнитель тот же, но стал хуже"
+    title: "Свод стадии: что получается, что нет и что из этого про вас"
     chapter_ref: "chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)"
     timing_min: 0.6
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s73j
-    local_id: "s5-09"                      # номер SLIDE-PLAN.md
-    file: slides/s73j-mesto-razdela-vne-okna.md
-    type: summary
-    title: "Место раздела на карте курса: своего столбца нет"
-    chapter_ref: "chapter-part5.md §10.13 (+ chapter.md §0.10) — карта стадии счётом; две величины кадра («12 из 42 в окне», «четвёртый раздел подряд») в главе отсутствуют: это счёт деки по своей карте, подписанный как собственный"
-    timing_min: 0.9
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }

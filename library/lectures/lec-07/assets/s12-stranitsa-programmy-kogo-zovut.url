@@ -1,0 +1,17 @@
+{
+ "title": "Breast screening: programme overview — Target population (GOV.UK)",
+ "license": "Open Government Licence v3.0 (свободная)",
+ "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+ "license_basis": "Подвал страницы: «All content is available under the Open Government Licence v3.0, except where otherwise stated. © Crown copyright». Проверено чтением текста страницы 2026-10-13.",
+ "author": "NHS England / UK Health Security Agency (публикатор — GOV.UK)",
+ "description": "Раздел «Target population» страницы национальной программы скрининга молочной железы: кого зовут («women aged 50 up to their 71st birthday») и что исследуют. Документ, по которому видно, что человека ЗОВУТ по признаку группы, а не он пришёл сам.",
+ "page": "https://www.gov.uk/guidance/breast-screening-programme-overview#target-population",
+ "shot_date": "2026-10-13",
+ "shot_tool": "tools/presentation-build/shoot_page.py, обрезка текстового столбца",
+ "orig_size": "2800x1960, обрезано до 1384x1320",
+ "attribution": "Снимок страницы: программа скрининга молочной железы NHS England, GOV.UK, съёмка 13 октября 2026 года. © Crown copyright, Open Government Licence v3.0",
+ "tier": "3 (страница ведомства — прямая съёмка)",
+ "assigned_to": "s12 (стадия отбора: порог записан и опубликован)",
+ "deviation": "программа АНГЛИЙСКАЯ, а разбор соседних кадров идёт по шведской. На s12 страны в видимом тексте нет («программа зовёт по возрасту»), поэтому расхождения нет. На s13, где в видимом тексте стоит «шведская программа», этот снимок ставить НЕЛЬЗЯ — это была бы ровно ошибка s26.",
+ "state": "добыто, НЕ вкручено"
+}

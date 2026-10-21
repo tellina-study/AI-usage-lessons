@@ -1,0 +1,17 @@
+{
+ "title": "Bowel cancer screening programme standards: reporting from 1 April 2025 — BCSP-S14: scope withdrawal time",
+ "license": "Open Government Licence v3.0 (свободная; совместима с CC BY 4.0)",
+ "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+ "license_basis": "© Crown copyright 2025. На самой странице стоит: «This publication is licensed under the terms of the Open Government Licence v3.0» и в подвале сайта «All content is available under the Open Government Licence v3.0, except where otherwise stated». Проверено чтением текста страницы 2026-10-13, не по памяти о правилах gov.uk.",
+ "author": "NHS England / UK Health Security Agency (публикатор — GOV.UK)",
+ "description": "Официальный стандарт BCSP-S14 «scope withdrawal time» национальной программы скрининга рака кишечника: описание, обоснование, определение числителя и знаменателя. В оглавлении слева видны соседние показатели — BCSP-S12 «serrated polyp and adenoma detection» и BCSP-S13 «caecal intubation». Это и есть «показатель как документ».",
+ "page": "https://www.gov.uk/government/publications/bowel-cancer-screening-programme-standards/bowel-cancer-screening-programme-standards-reporting-from-1-april-2025#bcsp-s14-interventiontreatment-scope-withdrawal-time",
+ "shot_date": "2026-10-13",
+ "shot_tool": "tools/presentation-build/shoot_page.py --width 1400 --height 980, двойная плотность точек",
+ "orig_size": "2800x2000",
+ "attribution": "Снимок страницы: стандарты программы скрининга рака кишечника NHS, BCSP-S14, GOV.UK, съёмка 13 октября 2026 года. © Crown copyright, Open Government Licence v3.0",
+ "tier": "3 (страница ведомства — прямая съёмка)",
+ "assigned_to": "s73c «Квалификация: что замеряют и чем» — ВОЗВРАЩЁН 2026-10-14 после перемера. Снимок официального стандарта BCSP-S14 программы скрининга рака кишечника, тот же файл, права те же (OGL v3.0).",
+ "state": "добыто, НЕ вкручено",
+ "remeasured": "ПЕРЕМЕР 2026-10-14 на голове сводной 219cdd41 (99 кадров, после диеты): ОТКАЗ СНЯТ. Мерено тем же measure_body.py в отдельном дереве-черновике, кадры деки не трогались. Кадр s73c (бывший s89) похудел с 318 слов до 69, и тело теперь ОБТЕКАЕТ снимок: 15,0 пт вместо прежних 10,8. Прежний отказ держался на двух концах замера при теле в 170–337 слов; оба конца разжались. Порог проекции курса — 12 пт; ниже 12 пт по всей деке с этим снимком — ноль кадров, блокирующих предупреждений сборка не дала."
+}

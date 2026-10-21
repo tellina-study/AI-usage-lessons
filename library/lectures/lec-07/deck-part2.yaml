@@ -1,0 +1,238 @@
+# library/lectures/lec-07/rework/deck/deck-part2.yaml  —  часть 2 из 3
+#
+# Служебный манифест деки Лекции 7 «Решение о человеке: кто смотрит, кто подписывает,
+# кто платит». Issue #229 · ветка issue-lec-07-rework.
+#
+# Продолжение `deck.yaml`. Устройство, оговорки и правило чтения полей — в части 1;
+# здесь только записи кадров.
+
+slides:
+
+  # ─── 4. Ведение медицинской документации · 16 кадров · 13.25 мин ───
+  - id: s60ba
+    local_id: "s5-01a"                     # вставленный кадр, номера в плане нет
+    file: slides/s60ba-dannye-sposoby-i-reshenie-zapisi.md
+    type: norm
+    title: "Запись: данные, вопрос, решение"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1, §5.2"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s60baa
+    local_id: "s5-01aa"                    # вставленный кадр, номера в плане нет
+    file: slides/s60baa-shest-deystviy-stadii-zapisi.md
+    type: norm
+    title: "Что делают на стадии: запись приёма и выписной эпикриз"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.65
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+  - id: s60bab
+    local_id: "s5-01ab"                    # вставленный кадр, номера в плане нет
+    file: slides/s60bab-zachem-voobshche-vedut-zapis.md
+    type: norm
+    title: "Зачем вообще ведут медицинскую документацию"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s60b
+    local_id: "s5-00"                      # номер SLIDE-PLAN.md
+    file: slides/s60b-divider-vedenie-zapisi.md
+    type: divider
+    title: "4. Ведение медицинской документации"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1"
+    timing_min: 0.55
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
+  - id: s60bb
+    local_id: "s5-01b"                     # вставленный кадр, номера в плане нет
+    file: slides/s60bb-chetyre-rezhima-pisma.md
+    type: case
+    title: "Без модели: четыре режима письма, посчитанные по-разному"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.2 (три классических режима; доля текста по Steinkamp 2022 и Wang 2017)"
+    timing_min: 1.15
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
+  - id: s60c
+    local_id: "s5-01c"                     # вставленный кадр, номера в плане нет
+    file: slides/s60c-kak-ustroeno-vedenie-zapisi.md
+    type: norm
+    title: "Что модель заняла на стадии записи и чего не может"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.1, §5.2"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s60e
+    local_id: "s5-06a"                     # вставленный кадр, номера в плане нет
+    file: slides/s60e-skolko-pishut-v-raznykh-stranakh.md
+    type: analitika
+    title: "Сколько пишут в разных странах и почему"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.85
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
+  - id: s61
+    local_id: "s5-07"                      # номер SLIDE-PLAN.md
+    file: slides/s61-avtomaticheskaya-zapis-priema.md
+    type: case
+    title: "Пример 1: автоматическая запись приёма"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.3, §5.4"
+    timing_min: 1.05
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s61a
+    local_id: "s5-07aa"                    # вставленный кадр, номера в плане нет
+    file: slides/s61a-primer-1-rossiya-protokol-priyoma.md
+    type: case
+    title: "Пример 1, Россия: протокол приёма заполняет голосовой помощник"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.95
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s62
+    local_id: "s5-07a"                     # вставленный кадр, номера в плане нет
+    file: slides/s62-dve-dorozhki-nabor-i-vychitka.md
+    type: case
+    title: "Пример 1, цена: набор сократился, вычитка появилась"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.6 (+ §5.5)"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s63
+    local_id: "s5-07b"                     # вставленный кадр, номера в плане нет
+    file: slides/s63-vypisnoy-epikriz.md
+    type: case
+    title: "Пример 2: выписной эпикриз"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.7"
+    timing_min: 1.05
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s63ab
+    local_id: "s5-10a"                     # вставленный кадр, номера в плане нет
+    file: slides/s63ab-primer-3-tsena-okonchaniya-i-chuzhaya-rech.md
+    type: case
+    title: "Пример 3, цена: окончания слов, чужая речь и число без базы"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.85
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s63a
+    local_id: "s5-07c"                     # вставленный кадр, номера в плане нет
+    file: slides/s63a-tsena-epikriza-vychitka-i-pereskaz.md
+    type: case
+    title: "Пример 2, цена: вычитка другого рода"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.8 (+ §5.7)"
+    timing_min: 1.05
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s63aa
+    local_id: "s5-10"                      # номер SLIDE-PLAN.md
+    file: slides/s63aa-primer-3-golosovoy-vvod-protokola.md
+    type: case
+    title: "Пример 3: голосовой ввод протокола лучевого исследования"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.95
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s63b
+    local_id: "s5-10b"                     # вставленный кадр, номера в плане нет
+    file: slides/s63b-nadiktovka-kotoraya-predlagaet-diagnoz.md
+    type: norm
+    title: "Надиктовка, которая предлагает диагноз: допуск и замеры"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 0.85
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s64
+    local_id: "s5-11"                      # номер SLIDE-PLAN.md
+    file: slides/s64-vyvod-vedenie-zapisi.md
+    type: summary
+    title: "Вывод раздела: что получается, что не получается, куда переехала нагрузка"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.9 (+ §5.8)"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
+
+  # ─── 5. Профессиональная квалификация: поддержание и износ · 10 кадров · 8.35 мин ───
+  - id: s73b
+    local_id: "s5-01"                      # номер SLIDE-PLAN.md
+    file: slides/s73b-divider-navyk.md
+    type: divider
+    title: "5. Профессиональная квалификация: поддержание и износ"
+    chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
+    media_asset: "rework/deck/assets/s88-endoskopicheskiy-kabinet.jpg"
+  - id: s73ca
+    local_id: "s5-02b"                     # вставленный кадр, номера в плане нет
+    file: slides/s73ca-tri-opory-i-odin-shag-iz-vosmi.md
+    type: norm
+    title: "Чем держат форму и куда встала модель"
+    chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
+    timing_min: 0.65
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73c
+    local_id: "s5-02"                      # номер SLIDE-PLAN.md
+    file: slides/s73c-vrach-vernulsya-posle-goda.md
+    type: norm
+    title: "Квалификация: что замеряют и чем"
+    chapter_ref: "chapter-part5.md §10.2 (+ §10.3)"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73da
+    local_id: "s5-03b"                     # вставленный кадр, номера в плане нет
+    file: slides/s73da-dopusk-po-stranam.md
+    type: norm
+    title: "Входит ли измеренный результат работы врача в его допуск: Великобритания, США, Россия"
+    chapter_ref: "chapter-part5.md § Удержание квалификации по странам (безномерный подраздел между §10.5 и §10.5а)"
+    timing_min: 0.8
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73d
+    local_id: "s5-03"                      # номер SLIDE-PLAN.md
+    file: slides/s73d-tsena-i-dva-rezhima-osmotra.md
+    type: case
+    title: "Осмотр при выведении прибора: цена промаха и два порядка работы без модели"
+    chapter_ref: "chapter-part5.md §10.4, §10.5"
+    timing_min: 1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73f
+    local_id: "s5-04"                      # номер SLIDE-PLAN.md
+    file: slides/s73f-primer-1-dolya-bez-pomoshchnika.md
+    type: case
+    title: "Пример 1: доля упала без помощника"
+    chapter_ref: "chapter-part5.md §10.6, §10.8 (+ §10.7)"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73ga
+    local_id: "s5-05b"                     # вставленный кадр, номера в плане нет
+    file: slides/s73ga-primer-3-razrabotchiki.md
+    type: case
+    title: "Пример 3: разработчики на незнакомой библиотеке"
+    chapter_ref: "chapter-part5.md §10.8а"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73g
+    local_id: "s5-05"                      # номер SLIDE-PLAN.md
+    file: slides/s73g-primer-2-artincol-rossiya.md
+    type: case
+    title: "Пример 2: ArtInCol, Россия — помощник на той же процедуре"
+    chapter_ref: "НЕ СОПОСТАВЛЕН"
+    timing_min: 1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73j
+    local_id: "s5-09"                      # номер SLIDE-PLAN.md
+    file: slides/s73gb-dva-rezhima-podsvetki.md
+    type: summary
+    title: "Два режима одного класса: где человек остаётся и где его снимают"
+    chapter_ref: "chapter-part5.md §10.13 (+ §10.14) — различение двух режимов одного класса инструмента; кадр переставлен ПЕРЕД сводом стадии, файл кадра лежит под именем s73gb, идентификатор показа прежний"
+    timing_min: 0.9
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73i
+    local_id: "s5-08"                      # номер SLIDE-PLAN.md
+    file: slides/s73i-vyvod-navyk.md
+    type: summary
+    title: "Свод стадии: что получается, что нет и что из этого про вас"
+    chapter_ref: "chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)"
+    timing_min: 0.6
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }

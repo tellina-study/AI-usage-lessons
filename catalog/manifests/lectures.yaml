@@ -87,7 +87,8 @@ lectures:
     repo_dir: lec-07
     status: produced
     repo_title_note: "произведена в репо как lec-07 (номер папки совпадает с номером лекции РПД)"
-    updated_at: "2026-05-16"
+    issue: 229
+    updated_at: "2026-10-21"
 
   - number: 8
     title: "AI в креативных индустриях и медиа"

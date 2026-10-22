@@ -1,0 +1,58 @@
+{
+ "node": {
+  "id": "tg_client_approved",
+  "name": "Notify client (Telegram)",
+  "webhookId": "e8667dff-8a4c-4601-8688-00aeda09eecc",
+  "type": "n8n-nodes-base.telegram",
+  "typeVersion": 1.2,
+  "position": [
+   544,
+   80
+  ],
+  "parameters": {
+   "operation": "sendMessage",
+   "chatId": "266536553",
+   "text": "=Здравствуйте! Ваш запрос на возврат рассмотрен: одобрено.\nСумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽.\nДеньги вернутся на карту в течение трёх рабочих дней.",
+   "additionalFields": {
+    "appendAttribution": false
+   }
+  },
+  "credentials": {
+   "telegramApi": {
+    "id": "kfXE6PWKNzA56vc6",
+    "name": "Telegram account (С8)"
+   }
+  }
+ },
+ "connections_patch": {
+  "Amount over threshold?": {
+   "main": [
+    [
+     {
+      "node": "Result screen (escalate)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Notify client (Telegram)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Notify client (Telegram)": {
+   "main": [
+    [
+     {
+      "node": "Result screen (approve)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

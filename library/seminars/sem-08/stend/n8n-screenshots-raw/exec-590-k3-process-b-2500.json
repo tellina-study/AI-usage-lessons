@@ -1,0 +1,665 @@
+{
+ "id": "590",
+ "finished": false,
+ "mode": "webhook",
+ "retryOf": null,
+ "retrySuccessId": null,
+ "status": "waiting",
+ "createdAt": "2026-10-22T10:04:57.042Z",
+ "startedAt": "2026-10-22T10:04:57.054Z",
+ "stoppedAt": "2026-10-22T10:04:59.552Z",
+ "deletedAt": null,
+ "workflowId": "1ZspTIY2zukoEYAF",
+ "waitTill": "3000-01-01T00:00:00.000Z",
+ "storedAt": "db",
+ "tracingContext": null,
+ "deduplicationKey": null,
+ "jsonSizeBytes": 11344,
+ "binaryDataSizeBytes": 0,
+ "workflowVersionId": "27ba3135-5d14-4a26-af25-ce5eb6d1d1a0",
+ "usedPrivateCredentials": false,
+ "data": {
+  "version": 1,
+  "startData": {},
+  "resultData": {
+   "runData": {
+    "Refund request": [
+     {
+      "startTime": 1792663497188,
+      "executionIndex": 0,
+      "source": [],
+      "hints": [],
+      "executionTime": 0,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "Текст запроса": "прошу вернуть 2500 рублей за пропущенное занятие",
+           "submittedAt": "2026-10-22T13:04:57.022+03:00",
+           "formMode": "production"
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Model (extraction)": [
+     {
+      "startTime": 1792663497232,
+      "executionTime": 1060,
+      "executionIndex": 2,
+      "executionStatus": "success",
+      "source": [
+       {
+        "previousNode": "Extract amount",
+        "previousNodeRun": 0
+       }
+      ],
+      "data": {
+       "ai_languageModel": [
+        [
+         {
+          "json": {
+           "response": {
+            "generations": [
+             [
+              {
+               "text": "```json\n{\"amount_rub\":2500}\n```",
+               "generationInfo": {
+                "finish_reason": "stop"
+               }
+              }
+             ]
+            ]
+           },
+           "tokenUsage": {
+            "completionTokens": 12,
+            "promptTokens": 382,
+            "totalTokens": 394
+           }
+          }
+         }
+        ]
+       ]
+      },
+      "inputOverride": {
+       "ai_languageModel": [
+        [
+         {
+          "json": {
+           "messages": [
+            "System: You are an expert extraction algorithm.\nOnly extract relevant information from the text.\nIf you do not know the value of an attribute asked to extract, you may omit the attribute's value.\nYou must format your output as a JSON value that adheres to a given \"JSON Schema\" instance.\n\n\"JSON Schema\" is a declarative language that allows you to annotate and validate JSON documents.\n\nFor example, the example \"JSON Schema\" instance {{\"properties\": {{\"foo\": {{\"description\": \"a list of test words\", \"type\": \"array\", \"items\": {{\"type\": \"string\"}}}}}}, \"required\": [\"foo\"]}}}}\nwould match an object with one required property, \"foo\". The \"type\" property specifies \"foo\" must be an \"array\", and the \"description\" property semantically describes it as \"a list of test words\". The items within \"foo\" must be strings.\nThus, the object {{\"foo\": [\"bar\", \"baz\"]}} is a well-formatted instance of this example \"JSON Schema\". The object {{\"properties\": {{\"foo\": [\"bar\", \"baz\"]}}}} is not well-formatted.\n\nYour output will be parsed and type-checked according to the provided schema instance, so make sure all fields in your output match the schema exactly and there are no trailing commas!\n\nHere is the JSON Schema instance your output must adhere to. Include the enclosing markdown codeblock:\n```json\n{\"type\":\"object\",\"properties\":{\"amount_rub\":{\"type\":\"number\",\"description\":\"сумма возврата в рублях, указанная в тексте\"}},\"required\":[\"amount_rub\"],\"additionalProperties\":false,\"$schema\":\"http://json-schema.org/draft-07/schema#\"}\n```\n\nHuman: прошу вернуть 2500 рублей за пропущенное занятие"
+           ],
+           "estimatedTokens": 375,
+           "options": {
+            "openai_api_key": {
+             "lc": 1,
+             "type": "secret",
+             "id": [
+              "OPENAI_API_KEY"
+             ]
+            },
+            "model": "openai/gpt-4o-mini",
+            "max_retries": 2,
+            "configuration": {
+             "baseURL": "https://openrouter.ai/api/v1",
+             "fetchOptions": {
+              "dispatcher": {
+               "_events": {},
+               "_eventsCount": 0
+              }
+             }
+            },
+            "model_kwargs": {}
+           }
+          }
+         }
+        ]
+       ]
+      },
+      "metadata": {
+       "subRun": [
+        {
+         "node": "Model (extraction)",
+         "runIndex": 0
+        }
+       ]
+      }
+     }
+    ],
+    "Extract amount": [
+     {
+      "startTime": 1792663497189,
+      "executionIndex": 1,
+      "source": [
+       {
+        "previousNode": "Refund request",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 1105,
+      "metadata": {
+       "tracing": {
+        "llm.tokens.in": 382,
+        "llm.tokens.out": 12,
+        "llm.tokens.total": 394,
+        "llm.tokens.estimated": false
+       }
+      },
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "output": {
+            "amount_rub": 2500
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Amount over threshold?": [
+     {
+      "startTime": 1792663498294,
+      "executionIndex": 3,
+      "source": [
+       {
+        "previousNode": "Extract amount",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 3,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [],
+        [
+         {
+          "json": {
+           "output": {
+            "amount_rub": 2500
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Notify client (Telegram)": [
+     {
+      "startTime": 1792663498297,
+      "executionIndex": 4,
+      "source": [
+       {
+        "previousNode": "Amount over threshold?",
+        "previousNodeOutput": 1,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 1250,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "ok": true,
+           "result": {
+            "message_id": 8,
+            "from": {
+             "id": 8961470896,
+             "is_bot": true,
+             "first_name": "n8n demo",
+             "username": "n8ndemo_study_bot"
+            },
+            "chat": {
+             "id": 266536553,
+             "first_name": "Maxim",
+             "last_name": "Levko",
+             "username": "Maxim_Levko",
+             "type": "private"
+            },
+            "date": 1792663499,
+            "text": "Здравствуйте! Ваш запрос на возврат рассмотрен: одобрено.\nСумма: 2500 ₽.\nДеньги вернутся на карту в течение трёх рабочих дней."
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Result screen (approve)": [
+     {
+      "startTime": 1792663499547,
+      "executionIndex": 5,
+      "source": [
+       {
+        "previousNode": "Notify client (Telegram)",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 4,
+      "metadata": {
+       "resumeFormUrl": "https://n8n.lessons.tellian.io/form-waiting/590?signature=db6255a51dc5d0735fd619cf2d39a8cb82bd927765044311d5daa1d3d31b4d10"
+      },
+      "executionStatus": "waiting",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "ok": true,
+           "result": {
+            "message_id": 8,
+            "from": {
+             "id": 8961470896,
+             "is_bot": true,
+             "first_name": "n8n demo",
+             "username": "n8ndemo_study_bot"
+            },
+            "chat": {
+             "id": 266536553,
+             "first_name": "Maxim",
+             "last_name": "Levko",
+             "username": "Maxim_Levko",
+             "type": "private"
+            },
+            "date": 1792663499,
+            "text": "Здравствуйте! Ваш запрос на возврат рассмотрен: одобрено.\nСумма: 2500 ₽.\nДеньги вернутся на карту в течение трёх рабочих дней."
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ]
+   },
+   "lastNodeExecuted": "Result screen (approve)"
+  },
+  "executionData": {
+   "contextData": {},
+   "nodeExecutionStack": [
+    {
+     "node": {
+      "id": "refund_result_b_ok",
+      "name": "Result screen (approve)",
+      "webhookId": "549c80b2-29a2-4c12-a85f-8b69186ad33f",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+       784,
+       80
+      ],
+      "parameters": {
+       "triggerNotice": "",
+       "operation": "completion",
+       "respondWith": "text",
+       "completionTitle": "Решение процесса (B)",
+       "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽. Решение кода: одобрить (не выше порога).",
+       "limitWaitTime": false,
+       "options": {
+        "appendAttribution": false
+       }
+      }
+     },
+     "data": {
+      "main": [
+       [
+        {
+         "json": {
+          "ok": true,
+          "result": {
+           "message_id": 8,
+           "from": {
+            "id": 8961470896,
+            "is_bot": true,
+            "first_name": "n8n demo",
+            "username": "n8ndemo_study_bot"
+           },
+           "chat": {
+            "id": 266536553,
+            "first_name": "Maxim",
+            "last_name": "Levko",
+            "username": "Maxim_Levko",
+            "type": "private"
+           },
+           "date": 1792663499,
+           "text": "Здравствуйте! Ваш запрос на возврат рассмотрен: одобрено.\nСумма: 2500 ₽.\nДеньги вернутся на карту в течение трёх рабочих дней."
+          }
+         },
+         "pairedItem": {
+          "item": 0
+         }
+        }
+       ]
+      ]
+     },
+     "source": {
+      "main": [
+       {
+        "previousNode": "Notify client (Telegram)",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ]
+     },
+     "metadata": {
+      "resumeFormUrl": "https://n8n.lessons.tellian.io/form-waiting/590?signature=db6255a51dc5d0735fd619cf2d39a8cb82bd927765044311d5daa1d3d31b4d10"
+     }
+    }
+   ],
+   "metadata": {
+    "Model (extraction)": [
+     {
+      "subRun": [
+       {
+        "node": "Model (extraction)",
+        "runIndex": 0
+       }
+      ]
+     }
+    ]
+   },
+   "waitingExecution": {},
+   "waitingExecutionSource": {},
+   "runtimeData": {
+    "version": 1,
+    "establishedAt": 1792663497025,
+    "source": "webhook",
+    "triggerNode": {
+     "name": "Refund request",
+     "type": "n8n-nodes-base.formTrigger"
+    },
+    "redaction": {
+     "version": 2,
+     "production": false,
+     "manual": false
+    }
+   }
+  },
+  "resumeToken": "db6255a51dc5d0735fd619cf2d39a8cb82bd927765044311d5daa1d3d31b4d10",
+  "waitTill": "3000-01-01T00:00:00.000Z"
+ },
+ "customData": {},
+ "workflowData": {
+  "id": "1ZspTIY2zukoEYAF",
+  "name": "С8 · Кейс 3, процесс (B) — решение принимает код",
+  "nodes": [
+   {
+    "id": "refund_form",
+    "name": "Refund request",
+    "webhookId": "s8-refund-code",
+    "type": "n8n-nodes-base.formTrigger",
+    "typeVersion": 2.2,
+    "position": [
+     -176,
+     0
+    ],
+    "parameters": {
+     "authentication": "none",
+     "formTitle": "Запрос на возврат",
+     "formDescription": "Тестовый вход Кейса 3 — не форма студента",
+     "formFields": {
+      "values": [
+       {
+        "fieldLabel": "Текст запроса",
+        "fieldType": "textarea",
+        "placeholder": "например: прошу вернуть 2500 рублей за пропущенное занятие",
+        "defaultValue": "",
+        "requiredField": true
+       }
+      ]
+     },
+     "responseMode": "onReceived",
+     "addFormPage": "",
+     "options": {
+      "appendAttribution": false
+     }
+    }
+   },
+   {
+    "id": "extract_amount",
+    "name": "Extract amount",
+    "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+    "typeVersion": 1,
+    "position": [
+     64,
+     0
+    ],
+    "parameters": {
+     "text": "={{ $json['Текст запроса'] }}",
+     "schemaType": "manual",
+     "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"amount_rub\": {\n      \"type\": \"number\",\n      \"description\": \"сумма возврата в рублях, указанная в тексте\"\n    }\n  },\n  \"required\": [\n    \"amount_rub\"\n  ]\n}",
+     "options": {}
+    }
+   },
+   {
+    "id": "extract_model",
+    "name": "Model (extraction)",
+    "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+    "typeVersion": 1,
+    "position": [
+     64,
+     224
+    ],
+    "parameters": {
+     "notice": "",
+     "model": "openai/gpt-4o-mini",
+     "options": {}
+    },
+    "credentials": {
+     "openRouterApi": {
+      "id": "VbxiQn8TbqA4R2mw",
+      "name": "OpenRouter account"
+     }
+    }
+   },
+   {
+    "id": "refund_decide_if",
+    "name": "Amount over threshold?",
+    "type": "n8n-nodes-base.if",
+    "typeVersion": 2.2,
+    "position": [
+     304,
+     0
+    ],
+    "parameters": {
+     "conditions": {
+      "options": {
+       "caseSensitive": true,
+       "leftValue": "",
+       "typeValidation": "strict",
+       "version": 2
+      },
+      "conditions": [
+       {
+        "leftValue": "={{ $json.output.amount_rub }}",
+        "rightValue": 3000,
+        "operator": {
+         "type": "number",
+         "operation": "gt"
+        },
+        "id": "823d3497-69a3-44cc-ad26-66d137e202b8"
+       }
+      ],
+      "combinator": "and"
+     },
+     "looseTypeValidation": false,
+     "options": {}
+    }
+   },
+   {
+    "id": "refund_result_b_esc",
+    "name": "Result screen (escalate)",
+    "webhookId": "80b0a619-84ee-40ec-8e12-e830e7d8a974",
+    "type": "n8n-nodes-base.form",
+    "typeVersion": 1,
+    "position": [
+     544,
+     -80
+    ],
+    "parameters": {
+     "triggerNotice": "",
+     "operation": "completion",
+     "respondWith": "text",
+     "completionTitle": "Решение процесса (B)",
+     "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽. Решение кода: эскалировать.",
+     "limitWaitTime": false,
+     "options": {
+      "appendAttribution": false
+     }
+    }
+   },
+   {
+    "id": "refund_result_b_ok",
+    "name": "Result screen (approve)",
+    "webhookId": "549c80b2-29a2-4c12-a85f-8b69186ad33f",
+    "type": "n8n-nodes-base.form",
+    "typeVersion": 1,
+    "position": [
+     784,
+     80
+    ],
+    "parameters": {
+     "triggerNotice": "",
+     "operation": "completion",
+     "respondWith": "text",
+     "completionTitle": "Решение процесса (B)",
+     "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽. Решение кода: одобрить (не выше порога).",
+     "limitWaitTime": false,
+     "options": {
+      "appendAttribution": false
+     }
+    }
+   },
+   {
+    "id": "tg_client_approved",
+    "name": "Notify client (Telegram)",
+    "webhookId": "e8667dff-8a4c-4601-8688-00aeda09eecc",
+    "type": "n8n-nodes-base.telegram",
+    "typeVersion": 1.2,
+    "position": [
+     544,
+     80
+    ],
+    "parameters": {
+     "resource": "message",
+     "operation": "sendMessage",
+     "chatId": "266536553",
+     "text": "=Здравствуйте! Ваш запрос на возврат рассмотрен: одобрено.\nСумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽.\nДеньги вернутся на карту в течение трёх рабочих дней.",
+     "replyMarkup": "none",
+     "additionalFields": {
+      "appendAttribution": false
+     }
+    },
+    "credentials": {
+     "telegramApi": {
+      "id": "kfXE6PWKNzA56vc6",
+      "name": "Telegram account (С8)"
+     }
+    }
+   }
+  ],
+  "connections": {
+   "Refund request": {
+    "main": [
+     [
+      {
+       "node": "Extract amount",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Extract amount": {
+    "main": [
+     [
+      {
+       "node": "Amount over threshold?",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Amount over threshold?": {
+    "main": [
+     [
+      {
+       "node": "Result screen (escalate)",
+       "type": "main",
+       "index": 0
+      }
+     ],
+     [
+      {
+       "node": "Notify client (Telegram)",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Model (extraction)": {
+    "ai_languageModel": [
+     [
+      {
+       "node": "Extract amount",
+       "type": "ai_languageModel",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Notify client (Telegram)": {
+    "main": [
+     [
+      {
+       "node": "Result screen (approve)",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   }
+  },
+  "settings": {
+   "executionOrder": "v1",
+   "binaryMode": "separate"
+  },
+  "nodeGroups": []
+ }
+}

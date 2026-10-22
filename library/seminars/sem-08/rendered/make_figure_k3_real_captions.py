@@ -10,15 +10,18 @@
 подписи рисуются тем же PIL, что и программные схемы кейса
 (`fig_toolkit.py`), тем же шрифтом и той же палитрой Ocean.
 
-Два композита:
+Собирает сегодня ОДИН композит (и его EN-близнеца):
 
-    k3-n8n-variants-real.png        n31 — два варианта измерения действий
-                                     №1/№2 (яснее правило / калькулятор),
-                                     подписаны результатом измерения.
-    k3-n8n-nastroyka-uzlov.png      n34b (НОВЫЙ слайд) — две панели
-                                     настройки узлов версии 2 (Extract
-                                     amount, Amount over threshold?),
-                                     подписаны именем узла.
+    k3-n8n-nastroyka-uzlov.png      две панели настройки узлов версии 2
+                                     (Extract amount, Amount over
+                                     threshold?), подписаны именем узла.
+
+ОТКЛЮЧЕНО волной 2б (issue #292) — `k3-n8n-variants-real(-en).png` и
+`k3-n8n-reshenie-real(-en).png`: те же четыре имени собирает
+`make_figures_crops.py` волны 1б, и по БОЛЕЕ УЗКИМ прямоугольникам, поднявшим
+кегль подписей интерфейса выше пола 7,5 pt. Прогон этого файла возвращал бы
+прежний, заваленный кегль молча. Подробности и способ снять отключение — у
+блока `_OTKLYUCHENO` ниже.
 
 Источник — RAW-скрины `stend/n8n-screenshots-raw/*.png` (Playwright,
 2026-10-20, живой стенд https://n8n.lessons.tellian.io), не прежние
@@ -100,6 +103,37 @@ def save(im, name):
     print("  ", name, im.size)
 
 
+# ── ВОЛНА 2б «конфетки» (issue #292): ЧЕТЫРЕ ЦЕЛИ ОТКЛЮЧЕНЫ ────────────────
+#
+# `k3-n8n-variants-real(-en).png` и `k3-n8n-reshenie-real(-en).png` с волны 1б
+# собираются `make_figures_crops.py` — по ПЕРЕКРОПЛЕННЫМ, узким
+# прямоугольникам, поднявшим кегль подписей интерфейса выше пола 7,5 pt
+# (там же, в шапке того файла, замеры «было → стало»: reshenie 5,7 pt,
+# variants 4,8 pt — обе ниже пола). Этот файл режет те же снимки СТАРЫМИ,
+# широкими прямоугольниками, и его прогон молча возвращал бы прежний кегль.
+#
+# Тот файл честно назвал ловушку в своём комментарии и оставил её жить,
+# потому что ЭТОТ файл был вне его волны. Волна 2б закрывает её здесь:
+# функции-композиты оставлены на месте (в них записано, какими были старые
+# прямоугольники — это история, а не мусор), но `save` по этим четырём
+# именам больше не вызывается. Два оставшихся имени
+# (`k3-n8n-nastroyka-uzlov(-en).png`) собирает только этот файл, у них
+# пересечения нет, и они пишутся как прежде.
+#
+# Снять отключение можно ровно одним способом: привести прямоугольники
+# `crop1`/`crop2`/`crop_model` в соответствие с `make_figures_crops.py` и
+# замерить кегль — не раньше.
+_OTKLYUCHENO = (
+    "k3-n8n-variants-real.png", "k3-n8n-variants-real-en.png",
+    "k3-n8n-reshenie-real.png", "k3-n8n-reshenie-real-en.png",
+)
+
+
+def skip(name):
+    print(f"   ПРОПУЩЕНО {name}: источник — make_figures_crops.py "
+          f"(волна 1б, перекроп под пол кегля 7,5 pt)")
+
+
 # ── n31: два варианта измерения, подписанные явно ───────────────────────────
 def variants_composite():
     raw1 = Image.open(RAW / "case3-variant-clearer-prompt.png").convert("RGB")
@@ -118,7 +152,7 @@ def variants_composite():
     return hcompose([left, right])
 
 
-save(variants_composite(), "k3-n8n-variants-real.png")
+skip("k3-n8n-variants-real.png")          # было: save(variants_composite(), …)
 
 
 # ── n34b (новый слайд): панели настройки узлов версии 2 ─────────────────────
@@ -168,12 +202,10 @@ def reshenie_composite():
     return hcompose([left, right])
 
 
-save(reshenie_composite(), "k3-n8n-reshenie-real.png")
+skip("k3-n8n-reshenie-real.png")          # было: save(reshenie_composite(), …)
 
-print("\nготово: k3-n8n-variants-real.png (n31, подписан), "
-      "k3-n8n-nastroyka-uzlov.png (n34a, подписан), "
-      "k3-n8n-reshenie-real.png (n34, новый — IF-узел версии 2 рядом с "
-      "панелью промпта версии 1)")
+print("\nготово: k3-n8n-nastroyka-uzlov.png. "
+      f"Отключено целей: {len(_OTKLYUCHENO)} — их собирает make_figures_crops.py.")
 
 
 # ── EN companions (issue #274, EN track, Кейс 3) ─────────────────────────────
@@ -204,7 +236,7 @@ def variants_composite_en():
     return hcompose([left, right])
 
 
-save(variants_composite_en(), "k3-n8n-variants-real-en.png")
+skip("k3-n8n-variants-real-en.png")       # было: save(variants_composite_en(), …)
 
 
 def nastroyka_uzlov_composite_en():
@@ -250,9 +282,8 @@ def reshenie_composite_en():
     return hcompose([left, right])
 
 
-save(reshenie_composite_en(), "k3-n8n-reshenie-real-en.png")
+skip("k3-n8n-reshenie-real-en.png")       # было: save(reshenie_composite_en(), …)
 
-print("\nEN done: k3-n8n-variants-real-en.png (n31), "
-      "k3-n8n-nastroyka-uzlov-en.png (n34a), "
-      "k3-n8n-reshenie-real-en.png (n34) — same live-rig crops, captions "
-      "translated.")
+print("\nEN done: k3-n8n-nastroyka-uzlov-en.png. "
+      "variants/reshenie are produced by make_figures_crops.py — see the "
+      "note above.")

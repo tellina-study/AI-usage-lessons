@@ -106,6 +106,68 @@ save(chain4(True), "k1-shema-s-llm.png")
 save(chain4(False), "k1-shema-bez-llm.png")
 
 
+# ── слой 1, СВЕДЁННАЯ схема: обе версии на одном холсте ─────────────────────
+#
+# Волна 2б «конфетки» (issue #292, план §4.8): слайды n09 и n10 сведены в один,
+# и сравнение «что именно изменилось» переехало с памяти зала на кадр. Две
+# цепочки стоят одна под другой в ОДНОЙ сетке колонок — три общих узла
+# приглушены до светло-серой рамки, различающийся третий узел выделен в обеих
+# строках (золото у модели, тиловая заливка у шаблона). Пары `k1-shema-s-llm`
+# и `k1-shema-bez-llm` НЕ удалены: они остаются запасным вариантом показа без
+# стенда (см. `backup` прежних n09/n10) и используются EN-треком до волны 6.
+def chain4_both():
+    CH = 520
+    im = Image.new("RGB", (CW, CH), W)
+    d = ImageDraw.Draw(im)
+
+    xs = [250, 580, 910, 1240]
+    bw, h = 300, 120
+    lim = bw - 44
+    rows = (
+        (60, "Версия с моделью", "Узел-модель", "сочиняет текст свободно", WARM, GOLD, GOLDINK),
+        (280, "Версия с шаблоном", "Узел-шаблон", "подставляет значения", PALE, MID, DEEP),
+    )
+
+    for y, rowname, t3, b3, fill3, stroke3, ink3 in rows:
+        # Подпись строки — слева от цепочки, в её же вертикальной середине:
+        # ряд читается как «вот эта версия устроена так», а не как заголовок
+        # над обеими.
+        two_lines(d, 130, y + h / 2, rowname.split()[0], rowname.split(maxsplit=1)[1],
+                  tsz=19, bsz=19, tcol=MUTE, bcol=ink3, limit=200,
+                  where=f"подпись строки · {rowname}")
+
+        frame(d, xs[0], y, bw, h, fill=W, stroke=SOFT_GREY, sw=2)
+        two_lines(d, xs[0] + bw / 2, y + h / 2, "Форма", "заявка от клиента",
+                  tsz=20, bsz=15, tcol=MUTE, bcol=DIMTX, limit=lim, where="узел 1")
+
+        frame(d, xs[1], y, bw, h, fill=W, stroke=SOFT_GREY, sw=2)
+        two_lines(d, xs[1] + bw / 2, y + h / 2, "Извлечение полей",
+                  "имя · тема · доп. темы", tsz=20, bsz=15, tcol=MUTE, bcol=DIMTX,
+                  limit=lim, where="узел 2")
+
+        frame(d, xs[2], y, bw, h, fill=fill3, stroke=stroke3, sw=4)
+        two_lines(d, xs[2] + bw / 2, y + h / 2, t3, b3, tsz=21, bsz=15,
+                  tcol=ink3, bcol=ink3, limit=lim, where=f"узел 3 · {t3}")
+
+        frame(d, xs[3], y, bw, h, fill=W, stroke=SOFT_GREY, sw=2)
+        two_lines(d, xs[3] + bw / 2, y + h / 2, "Отправка в Telegram",
+                  "сообщение координатору", tsz=20, bsz=15, tcol=MUTE, bcol=DIMTX,
+                  limit=lim, where="узел 4")
+
+        for i in range(3):
+            arrow(d, xs[i] + bw, y + h / 2, xs[i + 1], y + h / 2, col=GREY_FILL, wd=3)
+
+    clabel(d, CW / 2, 440, "Различие — ровно один узел из четырёх; остальные три одинаковы.",
+           24, DEEP, True, where="подпись-итог сведённой схемы", limit=CW - 120)
+    clabel(d, CW / 2, 476,
+           "В верхней строке форма текста выбирается заново на каждой заявке, в нижней — выбрана один раз.",
+           18, MUTE, where="подпись-итог 2 сведённой схемы", limit=CW - 120)
+    return im
+
+
+save(chain4_both(), "k1-shema-dve-versii.png")
+
+
 # ── слой 1, EN: та же схема, подписи на английском (issue #172/#274,
 # Bilingual Production Rule) ────────────────────────────────────────────────
 def chain4_en(with_llm):

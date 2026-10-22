@@ -469,12 +469,20 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
     любой деки — различие между ними несёт роль блока, а не раскладка.
 
     `fig_after` конфига переносит схему ПОСЛЕ блоков: когда заголовок обещает
-    собранный файл, первым читается код, а схема-компаньон — вторым."""
+    собранный файл, первым читается код, а схема-компаньон — вторым.
+
+    `metric_band_sids` конфига (список id) рисует ПЕРВУЮ таблицу слайда рядом
+    плашек, а не карточкой таблицы. Нужно там, где числа слайда несущие, а сам
+    слайд — не такт-выплата: на такте-выплате (`metric_band`) на экране не
+    должно быть ничего, кроме ряда и одной строки, а здесь ряд стоит рядом со
+    скрином и репликой. Умолчание — пустой список: дека, которая ничего здесь
+    не называет, собирается знак в знак как прежде."""
     K.set_bg(sl, K.WHITE)
     y0 = K.auto_header(sl, title)
     drawers = []
     fig = D.figure_for(sid)
     fig_after = bool(fig) and sid in set(D.CFG.get("fig_after") or ())
+    as_band = sid in set(D.CFG.get("metric_band_sids") or ())
     fig_ceiling = (D.BOTTOM - y0) if not blocks else K.FIG_NATURAL_H
     if fig and not fig_after:
         drawers.append(lambda sl, y, mh, p=fig: K.figure(
@@ -483,6 +491,12 @@ def g_content(sl, sid, title, blocks, pattern, assertion=""):
     force = D.table("quote_role_force")
     quote_i = -1
     for kind, b in blocks:
+        if kind == "table" and as_band:
+            as_band = False
+            band = _plates(*b)
+            drawers.append(lambda sl, y, mh, p=band: K.metric_band(
+                sl, D.LEFT, y, D.WIDTH, p, max_h=mh, label=f"{sid} плашки"))
+            continue
         role = None
         if kind == "quote":
             quote_i += 1

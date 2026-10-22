@@ -341,11 +341,156 @@ def check_prims(sl, kind):
     """Примитив объявлен на кадре, который его не рисует. Молчать нельзя:
     сессия раздела написала бы полосу плашек и не узнала, что её нет."""
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
-                    ("columns", "столбцы"), ("figure", "число")):
+                    ("columns", "столбцы"), ("figure", "число"),
+                    ("chronicle", "хроника"), ("fraza", "фраза")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
                 f"«{kind}» — оно рисуется только на содержательных кадрах")
+
+
+# ── ХРОНИКА (#293, Этап C): вертикальная лента дат ───────────────────
+#
+# ЗАЧЕМ. Прожарка сторителлинга нашла, что доля «вклад ошибок переноса
+# 2,6% из 190» говорит о частоте и ничего — об устройстве случая, а сам
+# случай стоял на кадре третьим абзацем прозы: пациент, которому пять дней
+# переносили из заметки в заметку запись о профилактике, которой не было.
+# Проза этого не показывает: читается она как ещё один абзац, а случай
+# держится ПОРЯДКОМ — день первый, дни со второго по пятый, после выписки.
+# Отсюда примитив: лента, у которой слева стоит отметка времени, справа —
+# что в этот момент произошло, и между ними вертикальная черта, по которой
+# видно, что это одна цепочка, а не три наблюдения.
+#
+# ПОЧЕМУ ЗДЕСЬ, А НЕ В ЯДРЕ. Тот же довод, которым в этом файле живут
+# `udar` и `fit_media`: ядро держит то, что нужно двум настоящим декам, а
+# хронику пока просит одна. Переедет в `deckkit`, когда её попросит вторая
+# — ровно так же, как переехали плашки и схема.
+#
+# ЧТО ОНА НЕ ДЕЛАЕТ. Не рисует стрелок (цепочку держит черта), не
+# раскрашивает ряды по смыслу и не умеет вложенных уровней: четыре-пять
+# рядов — предел, за которым лента становится таблицей, и об этом выходит
+# предупреждение, а не молчание.
+CHRON_WHEN_W = 1.62     # столбец отметки времени; шире подписи ряда схемы
+CHRON_WHEN_PT = 12.0    # пол видимого слоя (`deckkit/floor.py`)
+CHRON_TEXT_PT = 13.5
+CHRON_CAP_PT = 12.0
+CHRON_ROWS_MAX = 5      # больше — это уже таблица, а не лента
+CHRON_GAP = 0.14        # просвет между рядами
+CHRON_PAD = 0.16        # поле ленты внутри коробки мотива
+CHRON_RULE_W = 0.022    # вертикальная черта
+CHRON_DOT = 0.11        # отметка ряда на черте
+CHRON_LS = 1.22
+
+
+def chronicle_of(sl):
+    """Поле `chronicle` → лента. Чужая форма поля не роняет сборку: о ней
+    выходит `[хроника]`, и кадр собирается без ленты — тот же договор, что
+    у `plates_of` в ядре."""
+    raw = sl.meta.get("chronicle")
+    if raw in (None, "", [], {}):
+        return None
+    if not isinstance(raw, dict) or not isinstance(raw.get("rows"), list):
+        report.warn(
+            f"[хроника] {sl.sid}: поле `chronicle` — "
+            f"{type(raw).__name__} без списка `rows`; лента это "
+            "`{caption, rows: [{when, text}]}`")
+        return None
+    rows = []
+    for i, it in enumerate(raw["rows"], 1):
+        if not isinstance(it, dict):
+            report.warn(f"[хроника] {sl.sid}: ряд {i} не пара when/text")
+            continue
+        when = str(it.get("when") or "").strip()
+        text = str(it.get("text") or "").strip()
+        if not when or not text:
+            report.warn(
+                f"[хроника] {sl.sid}: у ряда {i} нет "
+                + ("отметки времени" if not when else "события")
+                + " — лента держится парой «когда · что произошло»")
+            continue
+        rows.append({"when": when, "text": text, "key": bool(it.get("key"))})
+    if not rows:
+        report.warn(f"[хроника] {sl.sid}: в ленте не осталось ни одного ряда")
+        return None
+    if len(rows) > CHRON_ROWS_MAX:
+        report.warn(
+            f"[хроника] {sl.sid}: рядов {len(rows)} при пределе "
+            f"{CHRON_ROWS_MAX} — лента читается как цепочка, пока её видно "
+            "целиком; длинное идёт в заметки либо на второй кадр")
+    return {"caption": str(raw.get("caption") or "").strip(), "rows": rows}
+
+
+def chronicle_row_h(r, tw):
+    wh = metrics.est_h(r["when"], CHRON_WHEN_PT,
+                       CHRON_WHEN_W - CHRON_PAD, CHRON_LS, True)
+    th = metrics.est_h(r["text"], CHRON_TEXT_PT, tw, CHRON_LS, r["key"])
+    return max(wh, th, CHRON_DOT + 0.06)
+
+
+def chronicle_h(ch, w):
+    """Высота ленты — она же то, что лента отнимает у тела кадра."""
+    tw = w - 2 * CHRON_PAD - CHRON_WHEN_W - 0.18
+    h = 2 * CHRON_PAD + sum(chronicle_row_h(r, tw) for r in ch["rows"]) \
+        + CHRON_GAP * (len(ch["rows"]) - 1)
+    if ch["caption"]:
+        h += metrics.est_h(ch["caption"], CHRON_CAP_PT,
+                           w - 2 * CHRON_PAD, CHRON_LS, True) + 0.08
+    return h
+
+
+def draw_chronicle(s, sid, ch, x, y, w):
+    """Лента дат во всю ширину тела. Возвращает занятую высоту.
+
+    Порядок рисования: коробка мотива → подпись ленты → вертикальная черта
+    → ряды. Черта рисуется ОДНИМ прямоугольником от первой отметки до
+    последней, а не отрезками между рядами: разрывы на границах рядов
+    читались бы как пропуск в самой цепочке дней."""
+    h = chronicle_h(ch, w)
+    prims.ocean_box(s, x, y, w, h)
+    tw = w - 2 * CHRON_PAD - CHRON_WHEN_W - 0.18
+    yy = y + CHRON_PAD
+    if ch["caption"]:
+        cap_h = metrics.est_h(ch["caption"], CHRON_CAP_PT,
+                              w - 2 * CHRON_PAD, CHRON_LS, True)
+        floor.pt(CHRON_CAP_PT, f"{sid}/хроника", "подпись ленты")
+        prims.text_box(s, x + CHRON_PAD, yy, w - 2 * CHRON_PAD, cap_h,
+                       ch["caption"], size=CHRON_CAP_PT, bold=True,
+                       color=MID, ls=CHRON_LS, tag=f"{sid}/хроника-подпись")
+        yy += cap_h + 0.08
+    rule_x = x + CHRON_PAD + CHRON_WHEN_W - 0.09
+    heights = [chronicle_row_h(r, tw) for r in ch["rows"]]
+    top = yy + CHRON_DOT / 2
+    bot = yy + sum(heights) + CHRON_GAP * (len(heights) - 1) \
+        - heights[-1] + CHRON_DOT / 2
+    prims.rect(s, rule_x + (CHRON_DOT - CHRON_RULE_W) / 2, top,
+               CHRON_RULE_W, max(0.02, bot - top), OUTLINE, count="хроника")
+    for r, rh in zip(ch["rows"], heights):
+        floor.pt(CHRON_WHEN_PT, f"{sid}/хроника", "отметка времени")
+        floor.pt(CHRON_TEXT_PT, f"{sid}/хроника", "событие ленты")
+        prims.text_box(s, x + CHRON_PAD, yy, CHRON_WHEN_W - CHRON_PAD,
+                       metrics.est_h(r["when"], CHRON_WHEN_PT,
+                                     CHRON_WHEN_W - CHRON_PAD, CHRON_LS,
+                                     True),
+                       r["when"], size=CHRON_WHEN_PT, bold=True, color=MID,
+                       align=PP_ALIGN.RIGHT, ls=CHRON_LS,
+                       tag=f"{sid}/хроника-когда")
+        prims.rect(s, rule_x, yy, CHRON_DOT, CHRON_DOT,
+                   GOLD if r["key"] else LIGHT, count="хроника")
+        if r["key"]:
+            report.GOLD_SEEN.add(sid)
+        runs = markup.inline_runs(r["text"], CHRON_TEXT_PT, DEEP)
+        if r["key"]:
+            # Последний ряд ленты — исход, и он набирается полужирным
+            # ЦЕЛИКОМ: `**` внутри своей строки его автор ставить не
+            # обязан, а исход обязан читаться сразу.
+            for run in runs:
+                run["bold"] = True
+        prims.text_runs(
+            s, rule_x + CHRON_DOT + 0.18, yy, tw, rh + 0.04, runs,
+            ls=CHRON_LS, tag=f"{sid}/хроника-событие")
+        yy += rh + CHRON_GAP
+    report.PRIM["лента хроники"] += 1
+    return h
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -483,6 +628,26 @@ def content(p, sl, root):
             media_bot = y + mh
 
     is_content = str(sl.meta.get("type") or "case") in CONTENT_TYPES
+
+    # ЛЕНТА ХРОНИКИ СТОИТ ПЕРВОЙ, ВЫШЕ ПЛАШЕК, и порядок здесь несущий: её
+    # заводили под случай, который обязан предъявляться ПРЕЖДЕ доли (П2.1
+    # прожарки — «доля говорит о частоте, экспонат об устройстве»). Лента
+    # под полосой плашек была бы тем же абзацем прозы, только с чертой.
+    if sl.meta.get("fraza"):
+        report.warn(
+            f"[фраза] {sl.sid}: поле `fraza` объявлено на содержательном "
+            "кадре — кадр-пауза это `type: udar`; здесь оно не рисуется")
+
+    chron = chronicle_of(sl) if is_content else None
+    if chron:
+        ch_h = chronicle_h(chron, body_w)
+        if ch_h > col_bot - y + 0.02:
+            report.warn(
+                f"[высота] {sl.sid}/хроника: лента заняла {ch_h:.2f}\" при "
+                f"{col_bot - y:.2f}\" свободного поля — короче делают сами "
+                "события, рядов в ленте не больше пяти")
+        y += draw_chronicle(s, sl.sid, chron, MX, y, body_w) + GAP
+
     pl = plates.plates_of(sl, PLATES) if is_content else []
     if pl:
         y += plates.draw_plates(s, sl.sid, pl, MX, y, body_w, PLATES) + GAP
@@ -501,6 +666,32 @@ def content(p, sl, root):
     if fig:
         figure.check_figure(sl.sid, fig, body_w)
         y += figure.draw_figure(s, sl.sid, fig, MX, y, body_w) + GAP
+
+    # СТОЛБИК ПРИМИТИВОВ НА НИЗ КАДРА НЕ ПРОВЕРЯЛСЯ ВОВСЕ (#293, Этап C).
+    #
+    # Что здесь происходит. Лента, плашки, схема и карточка числа встают
+    # друг под друга и НИКОГДА не ужимаются: подбор кегля есть только у
+    # тела, и `[высота]`/`[кегль]` до сих пор говорили исключительно о нём.
+    # Примитив, которому не хватило места, просто рисовался ниже низа тела —
+    # то есть поверх подвала, молча.
+    #
+    # Чем поймано. `s60bb`: лента хроники подняла схему на 2,25", подпись
+    # схемы (она рисуется ПОД рядами, см. `scheme.draw_scheme`) села на
+    # 6,96" при низе тела 6,82" и легла прямо в строку источника. На
+    # собранной странице — две строки одна в другой; предупреждений ноль.
+    # Своя проверка ленты этого не видела и видеть не могла: лента мерит
+    # СЕБЯ и проходит, разваливает кадр СУММА.
+    #
+    # Почему порог общий, а не у каждого примитива свой: место кончается
+    # один раз, и виноват в этом не последний нарисованный, а их сумма.
+    # Поэтому предупреждение называет перелёт числом и не назначает
+    # виноватого — кого сокращать, решает автор кадра.
+    if y - GAP > col_bot + 0.02:
+        report.warn(
+            f"[высота] {sl.sid}: примитивы кадра кончились на "
+            f"{y - GAP:.2f}\" при низе тела {col_bot:.2f}\" — перелёт "
+            f"{y - GAP - col_bot:.2f}\". Нижний из них рисуется поверх "
+            "подвала: ужимается только тело, примитивы — нет")
 
     cols = columns.columns_of(sl)
     avail = col_bot - y
@@ -945,6 +1136,161 @@ UDAR = replace(figure.DEFAULT, val_hi=120.0, val_lo=60.0, pad=0.44,
                unit_pt=20.0, base_pt=16.0, rule_w=2.20, rule_h=0.085,
                min_h=2.60)
 
+# ── КАДР-ПАУЗА `fraza:` — одна ФРАЗА во весь кадр (#293, Этап C) ─────
+#
+# ЗАЧЕМ ОТДЕЛЬНО ОТ `figure`. П6.1 прожарки просит примитив «однострочный
+# кадр: ЧИСЛО ИЛИ ФРАЗА 60–90 пт по центру, тёмный или белый фон», и две
+# половины этого «или» — разные формы, а не одна с послаблением. `figure`
+# отказывается принимать фразу НАМЕРЕННО и говорит об этом вслух
+# (`check_figure`: «в значении нет ни одной цифры — кадр одного числа
+# держит ВЕЛИЧИНУ; словесное утверждение живёт заголовком и телом»). Этот
+# сторож правильный, и обходить его, подсунув фразу в `value`, значило бы
+# сломать единственную проверку, которая ловит число без базы. Поэтому у
+# фразы своё поле и свои правила.
+#
+# ЧЕМ ПРАВИЛА ОТЛИЧАЮТСЯ. У величины база ОБЯЗАТЕЛЬНА: число без базы не
+# читается. У фразы обязательна `note` — но не как знаменатель, а как
+# ОГОВОРКА ОБЛАСТИ: фраза во весь тёмный экран звучит как закон вечера, и
+# ровно в этой позиции цена завышенного обобщения наибольшая. Здесь это не
+# теория: кадр-пауза заводился под строку «Исхода пациента нет ни у одного
+# разбора», и глава (§11.5, `chapter-part5b` таблица градации замера) эту
+# строку опровергает поимённо — скрининг до исхода дошёл. Строка, которую
+# никто не поймал мелким шрифтом на `s103`, на 54 пт стала бы заявлением
+# лекции. Поэтому `note` обязательна и проверяется.
+#
+# ЧЕГО ФОРМА НЕ ДЕЛАЕТ. Не переносит фразу на четыре строки (две — предел,
+# дальше это абзац), не живёт рядом с `figure` на одном кадре и не берёт
+# плашек, схем и лент: кадр-пауза держит ОДНО утверждение.
+FRAZA_HI = 54.0        # ниже заголовка не бывает: это тело кадра
+FRAZA_LO = 30.0
+FRAZA_LS = 1.16
+FRAZA_PAD = 0.44
+FRAZA_RULE_W = 2.20
+FRAZA_RULE_H = 0.085
+FRAZA_RULE_GAP = 0.20
+FRAZA_NOTE_PT = 14.0   # выше пола видимого слоя (12 пт): оговорка несущая
+FRAZA_NOTE_LS = 1.18
+FRAZA_NOTE_GAP = 0.16
+FRAZA_MAX_ZNAKOV = 110  # дальше фраза перестаёт читаться с одного взгляда
+FRAZA_MAX_STROK = 3
+# ТРИ СТРОКИ, А НЕ ДВЕ, И ЧИСЛО ЭТО ВЗЯТО С РЕНДЕРА, А НЕ С ПОТОЛКА. Сперва
+# здесь стояло 2 — и собранная страница показала ТРИ при мере «две»:
+# `metrics.n_lines` считает по своей таблице ширин, а переносит строку
+# LibreOffice, и на полужирном в полсотни пунктов они расходятся. Выбор был
+# между «подогнать меру под одну фразу» и «назвать настоящий предел»;
+# назван настоящий. Фраза, в отличие от величины, перенос переносит: она
+# рвётся по словам, а не по разрядам числа. Четвёртая строка — уже абзац, и
+# её ловит `FRAZA_MAX_ZNAKOV`.
+FRAZA_W_SAFE = 0.93     # запас ПОВЕРХ `metrics.W_SAFE`, оттуда же — с рендера
+
+
+def fraza_of(sl):
+    """Поле `fraza` → разобранная фраза или None. Чужая форма поля не
+    роняет сборку — тот же договор, что у `figure_of`/`plates_of`."""
+    raw = sl.meta.get("fraza")
+    if raw in (None, "", [], {}):
+        return None
+    if not isinstance(raw, dict):
+        report.warn(f"[фраза] {sl.sid}: поле `fraza` — "
+                    f"{type(raw).__name__}, а должно быть text/note")
+        return None
+    text = str(raw.get("text") or "").strip()
+    if not text:
+        report.warn(f"[фраза] {sl.sid}: в `fraza` нет `text` — "
+                    "кадру-паузе нечего сказать")
+        return None
+    return {"text": text, "note": str(raw.get("note") or "").strip(),
+            "invert": bool(raw.get("invert"))}
+
+
+def fraza_iw(w):
+    """Ширина, по которой МЕРЯЕТСЯ перенос фразы.
+
+    Запас `metrics.W_SAFE` здесь не украшение: без него мера сказала «две
+    строки», а собранная страница показала ТРИ — на первом же кадре-паузе,
+    замерено по рендеру, а не рассуждением. `figure.val_size` этот множитель
+    применяет, и пропустить его тут значило завести сторож, который зеленеет
+    на том, что он же и обязан ловить."""
+    return max(0.3, w - 2 * FRAZA_PAD) * metrics.W_SAFE * FRAZA_W_SAFE
+
+
+def fraza_size(fr, w):
+    """Кегль фразы: наибольший, при котором она встаёт не более чем в две
+    строки. Две, а не одна: у величины перенос разрывает число надвое и
+    потому запрещён, у фразы он разрывает предложение по словам и читается."""
+    iw = fraza_iw(w)
+    f = FRAZA_HI
+    while f > FRAZA_LO:
+        if metrics.n_lines(fr["text"], f, iw) <= FRAZA_MAX_STROK:
+            break
+        f -= 1.0
+    return f
+
+
+def fraza_h(fr, w):
+    iw = max(0.3, w - 2 * FRAZA_PAD)
+    h = 2 * FRAZA_PAD
+    # Высота считается по ТОЙ ЖЕ суженной ширине, по которой считался кегль
+    # (`fraza_iw`), а не по полной: иначе коробка выйдет на строку ниже, чем
+    # рендер её набрал, и фраза сядет на золотую черту.
+    h += metrics.est_h(fr["text"], fraza_size(fr, w), fraza_iw(w),
+                       FRAZA_LS, True)
+    h += FRAZA_RULE_GAP + FRAZA_RULE_H
+    if fr["note"]:
+        h += FRAZA_NOTE_GAP + metrics.est_h(fr["note"], FRAZA_NOTE_PT, iw,
+                                            FRAZA_NOTE_LS, False, True)
+    return h
+
+
+def check_fraza(sid, fr, w):
+    """`[фраза]`: фраза стала абзацем · оговорки области нет · не влезла."""
+    if len(fr["text"]) > FRAZA_MAX_ZNAKOV:
+        report.warn(
+            f"[фраза] {sid}: во фразе {len(fr['text'])} знаков (> "
+            f"{FRAZA_MAX_ZNAKOV}) — это абзац, а не пауза. Кадр-пауза "
+            "держит одно утверждение, остальное идёт в оговорку и заметки")
+    if not fr["note"]:
+        report.warn(
+            f"[фраза] {sid}: у фразы «{fr['text'][:40]}…» не названа "
+            "ОГОВОРКА ОБЛАСТИ (`note`). Фраза во весь экран читается как "
+            "закон вечера, и именно здесь обобщение дороже всего: "
+            "оговорка называет, где утверждение НЕ действует")
+    f = fraza_size(fr, w)
+    iw = fraza_iw(w)
+    if metrics.n_lines(fr["text"], f, iw) > FRAZA_MAX_STROK:
+        report.warn(
+            f"[фраза] {sid}: фраза не встаёт в {FRAZA_MAX_STROK} строки "
+            f"даже на {f:.0f} пт при колонке {iw:.2f}\" — сокращают фразу, "
+            "а не кегль: ниже этого фраза перестаёт быть паузой")
+
+
+def draw_fraza(s, sid, fr, x, y, w):
+    """Фраза во весь кадр: текст · золотая черта · оговорка области.
+    Возвращает занятую высоту."""
+    dark = fr["invert"]
+    iw = max(0.3, w - 2 * FRAZA_PAD)
+    f = fraza_size(fr, w)
+    floor.pt(f, f"{sid}/пауза", "фраза")
+    th = metrics.est_h(fr["text"], f, fraza_iw(w), FRAZA_LS, True)
+    prims.text_box(s, x + FRAZA_PAD, y + FRAZA_PAD, iw, th, fr["text"],
+                   size=f, bold=True, color=GOLD if dark else DEEP,
+                   align=PP_ALIGN.CENTER, ls=FRAZA_LS, tag=f"{sid}/пауза")
+    yy = y + FRAZA_PAD + th + FRAZA_RULE_GAP
+    prims.rect(s, x + (w - FRAZA_RULE_W) / 2, yy, FRAZA_RULE_W,
+               FRAZA_RULE_H, GOLD, count="пауза")
+    report.GOLD_SEEN.add(sid)
+    yy += FRAZA_RULE_H
+    if fr["note"]:
+        nh = metrics.est_h(fr["note"], FRAZA_NOTE_PT, iw, FRAZA_NOTE_LS,
+                           False, True)
+        floor.pt(FRAZA_NOTE_PT, f"{sid}/пауза", "оговорка области")
+        prims.text_box(s, x + FRAZA_PAD, yy + FRAZA_NOTE_GAP, iw, nh,
+                       fr["note"], size=FRAZA_NOTE_PT, italic=True,
+                       color=WHITE if dark else MID, align=PP_ALIGN.CENTER,
+                       ls=FRAZA_NOTE_LS, tag=f"{sid}/пауза-оговорка")
+    report.PRIM["кадр-пауза"] += 1
+    return fraza_h(fr, w)
+
 
 def udar_footer(s, sl, dark):
     """Подвал кадра-удара.
@@ -1013,10 +1359,18 @@ def udar(p, sl, root):
     как и в ядре."""
     s = prims.blank(p)
     fig = figure.figure_of(sl)
-    dark = bool(fig and fig["invert"])
+    fr = fraza_of(sl)
+    if fig and fr:
+        report.warn(
+            f"[фраза] {sl.sid}: на кадре-ударе объявлены И `figure`, И "
+            "`fraza` — он держит ОДНО утверждение; нарисована величина, "
+            "фраза пропущена")
+        fr = None
+    dark = bool((fig and fig["invert"]) or (fr and fr["invert"]))
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, DEEP if dark else WHITE)
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
-                    ("columns", "столбцы"), ("row_blocks", "строчные блоки")):
+                    ("columns", "столбцы"), ("row_blocks", "строчные блоки"),
+                    ("chronicle", "хроника")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре-ударе — "
@@ -1036,11 +1390,22 @@ def udar(p, sl, root):
             f"его {len(sl.body.split())} слов — величина живёт полями "
             "`figure` (value/unit/base/note), остальное идёт в заметки")
     bbot = body_bot(sl)
-    if not fig:
+    if fr:
+        check_fraza(sl.sid, fr, FULL_W)
+        h = fraza_h(fr, FULL_W)
+        if h > bbot - y + 0.02:
+            report.warn(
+                f"[высота] {sl.sid}/пауза: фраза с оговоркой заняла "
+                f"{h:.2f}\" при {bbot - y:.2f}\" свободного поля — короче "
+                "делают фразу, кегль здесь уже на полу")
+        draw_fraza(s, sl.sid, fr, MX, y + max(0.0, (bbot - y - h) / 2),
+                   FULL_W)
+    elif not fig:
         report.warn(
-            f"[число] {sl.sid}: кадр-удар без поля `figure` — ударять нечем; "
-            "величина и её база и есть всё содержимое такого кадра")
-    else:
+            f"[число] {sl.sid}: кадр-удар без поля `figure` и без `fraza` — "
+            "ударять нечем; величина с базой либо фраза с оговоркой области "
+            "и есть всё содержимое такого кадра")
+    if fig:
         figure.check_figure(sl.sid, fig, FULL_W, UDAR)
         h = figure.figure_h(fig, FULL_W, UDAR)
         if h > bbot - y + 0.02:

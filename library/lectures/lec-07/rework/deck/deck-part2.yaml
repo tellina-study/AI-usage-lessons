@@ -49,7 +49,7 @@ slides:
     local_id: "s5-01b"                     # вставленный кадр, номера в плане нет
     file: slides/s60bb-chetyre-rezhima-pisma.md
     type: case
-    title: "Без модели: четыре режима письма, посчитанные по-разному"
+    title: "Перенос прежней записи: случай с гепарином и четыре режима письма"
     plan_section: "Раздел 5. Что стало с теми, кто решает"
     chapter_ref: "chapter-part3b.md §5.2 (три классических режима; доля текста по Steinkamp 2022 и Wang 2017)"
     timing_min: 1.15
@@ -167,7 +167,7 @@ slides:
     local_id: "s5-02b"                     # вставленный кадр, номера в плане нет
     file: slides/s73ca-tri-opory-i-odin-shag-iz-vosmi.md
     type: norm
-    title: "Чем держат форму и куда встала модель"
+    title: "Врач вернулся после года: чем держат форму и куда встала модель"
     chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
     timing_min: 0.65
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }

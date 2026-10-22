@@ -3,7 +3,7 @@
 # Служебный манифест деки Лекции 7 «Решение о человеке: кто смотрит, кто подписывает,
 # кто платит». Issue #229 · ветка issue-lec-07-rework.
 #
-# ЧТО ЭТО. Опись 87 кадров деки со служебными полями на каждый: идентификатор, тип
+# ЧТО ЭТО. Опись 90 кадров деки со служебными полями на каждый: идентификатор, тип
 # кадра, заголовок, раздел, адрес в главе (`chapter_ref`) и `timing_min`. Тайминг и
 # методические поля живут ЗДЕСЬ и во фронтматтере файла кадра — на видимом слое кадра
 # они запрещены (CLAUDE.md § «No Timing / No Methodology in Slides»), и переносить их
@@ -18,15 +18,15 @@
 # оглавлениям частей главы. Это единственное поле манифеста, которое держится на
 # суждении, и проверять при расхождении надо его.
 #
-# СОСТАВ, посчитанный с диска: 87 кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
-# среди них — 48 из 106; остальные 39 кадров каркас ВСТАВИЛ, и у них номера в плане
+# СОСТАВ, посчитанный с диска: 90 кадров. Номеров `SLIDE-PLAN.md` (slides-v3)
+# среди них — 49 из 106; остальные 41 кадров каркас ВСТАВИЛ, и у них номера в плане
 # нет: это кадры, чей `local_id` несёт буквенный хвост (`s6-07a` — вставка к номеру `s6-07`).
 # Считается это по `local_id`, а не по идентификатору показа: `id` говорит, где кадр СТОИТ,
 # `local_id` — какое место плана он занимает, и после переза R1 эти две вещи окончательно
 # разошлись. Снятый номер не переиспользуется: на идентификаторы ссылаются манифесты, разборы
-# прожарок и другие сессии, поэтому в номерах плана зияют пропуски — 58 номеров плана
+# прожарок и другие сессии, поэтому в номерах плана зияют пропуски — 57 номеров плана
 # в деке нет, причина по каждому в `slides/_snyato/README.md` и `slides-snyatye/README.md`.
-# Вставленные: s01_1 · s01a · s01aa · s01ac · s01ad · s01b · s11a · s12a · s15a · s16a · s18a · s18b · s19a · s20b · s22a · s27a · s27b · s27c · s30a · s33a · s49b · s49d · s49f · s49h · s60ba · s60baa · s60bab · s60bb · s60c · s61a · s62 · s63 · s63a · s63ab · s63b · s73ca · s73cb · s73da · s99.
+# Вставленные: s01_1 · s01a · s01aa · s01ac · s01ad · s01b · s11a · s12a · s15a · s16a · s18a · s18b · s19a · s20b · s22a · s27_1 · s27a · s27b · s27c · s30a · s33a · s49_1 · s49b · s49d · s49f · s49h · s60ba · s60baa · s60bab · s60bb · s60c · s61a · s62 · s63 · s63a · s63ab · s63b · s73ca · s73cb · s73da · s99.
 # Что делает каждый — в его собственной записи ниже (`type`, `title`, `section`); списком
 # здесь это не повторяется, потому что набранный руками список состава тут уже соврал.
 #
@@ -65,10 +65,10 @@ deck:
   slot_min: 90
   qa_min: 10
   content_target_min: 80.00      # слот минус вопросы; цель CUT-ORDER.md §1.1
-  total_slides: 87
-  plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 48 из них
-  inserted_slides: [s01_1, s01a, s01aa, s01ac, s01ad, s01b, s11a, s12a, s15a, s16a, s18a, s18b, s19a, s20b, s22a, s27a, s27b, s27c, s30a, s33a, s49b, s49d, s49f, s49h, s60ba, s60baa, s60bab, s60bb, s60c, s61a, s62, s63, s63a, s63ab, s63b, s73ca, s73cb, s73da, s99]
-  sum_timing_min: 79.95           # сложено по timing_min файлов кадров
+  total_slides: 90
+  plan_slides: 106               # номеров в SLIDE-PLAN.md; в деке стоит 49 из них
+  inserted_slides: [s01_1, s01a, s01aa, s01ac, s01ad, s01b, s11a, s12a, s15a, s16a, s18a, s18b, s19a, s20b, s22a, s27_1, s27a, s27b, s27c, s30a, s33a, s49_1, s49b, s49d, s49f, s49h, s60ba, s60baa, s60bab, s60bb, s60c, s61a, s62, s63, s63a, s63ab, s63b, s73ca, s73cb, s73da, s99]
+  sum_timing_min: 80.90           # сложено по timing_min файлов кадров
   axis: "путь одного решения о человеке: удешевили чтение данных — платят вниманием, навыком, подписью и арбитражем"
   central_question: "Модель посмотрела первой. Что теперь делает человек — и кто это измерял?"
   curriculum_level: "отраслевая лекция L7; strict-in ≥30% обязателен, waiver недоступен"
@@ -100,14 +100,14 @@ motif:
   surface: "#F4F7FA"
 
 slide_types:                     # значения поля type, с числом кадров
-  case:        { count:  37, meaning: "разбор или картина работы" }
+  case:        { count:  38, meaning: "разбор или картина работы" }
   norm:        { count:  18, meaning: "норматив, устройство, правило" }
   summary:     { count:  13, meaning: "вывод раздела или свод" }
   divider:     { count:   6, meaning: "дивайдер раздела" }
   analitika:   { count:   5, meaning: "—" }
   comparison:  { count:   4, meaning: "два столбца «что получается / что не получается»" }
+  udar:        { count:   3, meaning: "—" }
   cover:       { count:   1, meaning: "обложка" }
-  udar:        { count:   1, meaning: "—" }
   map:         { count:   1, meaning: "карта стадии или сетка курса" }
   question:    { count:   1, meaning: "вопрос залу или вопросы в конце" }
 
@@ -117,9 +117,9 @@ sections:                        # разделы показа: кадров и 
   - { name: "1. Первичный скрининг и отбор на обследование",
       slides: 16, timing_min: 13.25, range: [s11, s20b] }
   - { name: "2. Инструментальная и лабораторная диагностика",
-      slides: 14, timing_min: 13.55, range: [s22, s33a] }
+      slides: 15, timing_min: 13.85, range: [s22, s33a] }
   - { name: "3. Постановка диагноза",
-      slides: 16, timing_min: 18.00, range: [s35, s50] }
+      slides: 17, timing_min: 18.40, range: [s35, s50] }
   - { name: "4. Ведение медицинской документации",
       slides: 15, timing_min: 12.40, range: [s60b, s64] }
   - { name: "5. Профессиональная квалификация: поддержание и износ",
@@ -127,7 +127,7 @@ sections:                        # разделы показа: кадров и 
   - { name: "6. Итоги",
       slides: 5, timing_min: 4.80, range: [s96a, s102] }
   - { name: "7. Закрытие",
-      slides: 3, timing_min: 3.45, range: [s103, s106] }
+      slides: 4, timing_min: 3.70, range: [s102_1, s106] }
 
 slides:
 
@@ -329,7 +329,7 @@ slides:
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 2. Инструментальная и лабораторная диагностика · 14 кадров · 13.55 мин ───
+  # ─── 2. Инструментальная и лабораторная диагностика · 15 кадров · 13.85 мин ───
   - id: s22
     local_id: "s2-01"                      # номер SLIDE-PLAN.md
     file: slides/s22-divider-analiz-dannykh.md
@@ -372,6 +372,14 @@ slides:
     chapter_ref: "chapter-part1c.md §2.5а"
     timing_min: 1.1
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s27_1
+    local_id: "s2-04_1"                    # вставленный кадр, номера в плане нет
+    file: slides/s27_1-udar-55-iz-sta.md
+    type: udar
+    title: "Москва, профилактический поток: сколько снимков не открывает человек"
+    chapter_ref: "chapter-part1c.md §2.5а (доля потока: 315 491 из 575 549, 54,8 %)"
+    timing_min: 0.3
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s27a
     local_id: "s2-05a"                     # вставленный кадр, номера в плане нет
     file: slides/s27a-avtonomnaya-sortirovka-profilakticheskikh-snimkov.md
@@ -445,7 +453,7 @@ slides:
     timing_min: 0.7
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 3. Постановка диагноза · 16 кадров · 18.00 мин ───
+  # ─── 3. Постановка диагноза · 17 кадров · 18.40 мин ───
   - id: s35
     local_id: "s3-01"                      # номер SLIDE-PLAN.md
     file: slides/s35-divider-postanovka-diagnoza.md
@@ -507,10 +515,18 @@ slides:
     local_id: "s3-12"                      # номер SLIDE-PLAN.md
     file: slides/s49-doverie-i-stazh.md
     type: case
-    title: "Кардиограмма с неверной машинной расшифровкой: кто теряет больше"
-    chapter_ref: "chapter-part2b.md §3.10, §3.11"
-    timing_min: 0.6
+    title: "Кардиограмма с машинной расшифровкой: что будет, когда расшифровка неверна"
+    chapter_ref: "chapter-part2b.md §3.10 (постановка опыта и база: верная расшифровка)"
+    timing_min: 0.45
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s49_1
+    local_id: "s3-12_1"                    # вставленный кадр, номера в плане нет
+    file: slides/s49_1-vskrytie-kardiogrammy.md
+    type: case
+    title: "Вскрытие: обе группы падают вдвое, менее экспертная — глубже"
+    chapter_ref: "chapter-part2b.md §3.10, §3.11 (вскрытие: матрица двух групп, потери, согласие с неверной расшифровкой)"
+    timing_min: 0.55
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s49a
     local_id: "s3-16"                      # номер SLIDE-PLAN.md
     file: slides/s49a-pravilo-sobrannoe-iz-sta-shesti-opytov.md

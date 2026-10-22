@@ -42,6 +42,23 @@ def case_divider_patterns():
                  or ("section_divider_macro", "case_divider_quote"))
 
 
+def razbaviteli():
+    """Дивайдеры, которые РЕЖУТ блок, но кейсом не являются: концептуальный
+    разбавитель занятия (`id слайда → как его называть в карте`).
+
+    Зачем отдельная таблица, а не просто имя в `keysy`: рубрика карты
+    печатается как «Кейс N», где N — счёт дивайдеров подряд. Разбавитель
+    стоит между кейсами, и счёт его исправно считал, из-за чего карта
+    Семинара 8 называла Zillow «Кейсом 4», а четвёртый кейс занятия —
+    «Кейсом 5», хотя в самой деке кейсов четыре и дорожка кейсов
+    (`case_track`) состоит из четырёх имён. Имя кейса из `keysy` перекрыть
+    это не могло: «Кейс N» приписывается ПЕРЕД ним.
+
+    Пусто у занятия без разбавителя — тогда счёт ведётся как раньше, по
+    всем дивайдерам подряд."""
+    return _cfg().get("razbaviteli") or {}
+
+
 def mins(x):
     """1.0 → «1», 1.25 → «1,25» — так, как это читают в карте."""
     return (f"{x:g}").replace(".", ",")
@@ -64,7 +81,9 @@ def headline(rel):
 
 def groups(slides, lo, hi, stage, names):
     """Разбить блок на «начало ступени» и кейсы. Возвращает список
-    (подзаголовок или None, слайды)."""
+    (метка, слайды), где метка — `None`, строка `"nachalo"` либо пара
+    `("case", id дивайдера)`: нумерацию раздаёт уже вызывающий, потому что
+    разбавитель режет блок наравне с кейсом, а номера кейса не получает."""
     body = [s for s in slides if lo <= D.num(s["id"]) <= hi]
     if stage is None:
         return [(None, body)], 0
@@ -73,9 +92,11 @@ def groups(slides, lo, hi, stage, names):
     if not cuts:
         return [(None, body)], 0
     out, case = [], 0
+    razb = razbaviteli()
     for k, start in enumerate(cuts):
         end = cuts[k + 1] if k + 1 < len(cuts) else len(body)
         chunk = body[start:end]
+        sid = body[start]["id"]
         if k == 0:
             scene = next((i for i, s in enumerate(chunk)
                           if pat(s) == _cfg().get("scene_pattern", "problem_scenario")), None)
@@ -85,8 +106,9 @@ def groups(slides, lo, hi, stage, names):
             elif scene > 1:
                 out.append(("nachalo", chunk[:scene]))
                 chunk = chunk[scene:]
-        case += 1
-        out.append((case, chunk))
+        if sid not in razb:
+            case += 1
+        out.append((("case", sid), chunk))
     return out, case
 
 
@@ -146,11 +168,16 @@ def main():
                     name, _cfg().get("nachalo_default", "развилка, одностраничник"))
                 L.append(f"### Начало ступени — {sub} ({mins(cmin)} мин, {sl(len(chunk))})")
                 L.append("")
-            elif isinstance(tag, int):
-                case_counter += 1
-                title = txt["keysy"].get(case_counter, "—")
-                L.append(f"### Кейс {case_counter} — {title} ({mins(cmin)} мин, "
-                         f"{sl(len(chunk))})")
+            elif isinstance(tag, tuple) and tag[0] == "case":
+                sid = tag[1]
+                razb = razbaviteli().get(sid)
+                if razb:
+                    L.append(f"### {razb} ({mins(cmin)} мин, {sl(len(chunk))})")
+                else:
+                    case_counter += 1
+                    title = txt["keysy"].get(case_counter, "—")
+                    L.append(f"### Кейс {case_counter} — {title} ({mins(cmin)} мин, "
+                             f"{sl(len(chunk))})")
                 L.append("")
             L.append("| № | Тип | Что на слайде | Мин |")
             L.append("|---|---|---|---|")

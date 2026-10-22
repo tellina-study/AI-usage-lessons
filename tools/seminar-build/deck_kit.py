@@ -483,7 +483,8 @@ def _col_shares(headers, rows, ncol, inner_w, size, head_size=None):
 
 def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
                max_h=None, pad=0.2, gap=0.16, min_row_h=0.34, label="таблица",
-               header_size=None, cell_size=None, align=None, accent=None):
+               header_size=None, cell_size=None, align=None, accent=None,
+               slots=True):
     """Таблица, собранная руками: скруглённая коробка, отступ 0,2″, шапка
     СЕРЫМИ КАПИТЕЛЯМИ БЕЗ ЗАЛИВКИ, разделители строк — тонкие линии 0,75 pt,
     целевая строка подсвечена `GOLD_TINT`.
@@ -497,6 +498,15 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
     Строка, помеченная в исходнике **жирным**, распознаётся как целевой ответ
     и подсвечивается автоматически — это и есть «подсветка = смысл».
     Возвращает занятую высоту.
+
+    `slots` — рисовать ли пустую ячейку серой штриховой плашкой. По умолчанию
+    да: пустая клетка в таблице этого курса чаще всего СЛОТ, который зал
+    заполняет по ходу занятия (правая колонка оси), и невидимая пустота
+    читалась бы как забытая клетка. Но бывает таблица, где пустая ячейка
+    значит «здесь нечего писать» — итоговая строка под колонкой примеров, —
+    и там плашка-слот обещает залу заполнение, которого не будет. Выбор
+    принадлежит ДЕКЕ, не коду: `table_style.<приём>.slots: false` в её
+    конфиге (см. `roles._table_style`).
     """
     ncol = max([len(r) for r in rows] + ([len(headers)] if headers else [1]))
     rows = [list(r) + [""] * (ncol - len(r)) for r in rows]
@@ -589,10 +599,12 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
             rect(sl, x + 0.07, ry, w - 0.14, rh[i], tint, radius=True, radius_adj=0.08)
         for j, c in enumerate(r):
             if not c.strip():
-                # пустая ячейка — это СЛОТ, а не забытая клетка
-                dashed_box(sl, cx[j] + 0.02, ry + 0.08, shares[j] - gap - 0.04,
-                           rh[i] - 0.16, fill=GREY_FILL, stroke=SOFT_GREY,
-                           stroke_pt=1.0, radius_pt=6)
+                # пустая ячейка — это СЛОТ, а не забытая клетка; но только
+                # там, где заполнение действительно обещано (см. `slots`).
+                if slots:
+                    dashed_box(sl, cx[j] + 0.02, ry + 0.08, shares[j] - gap - 0.04,
+                               rh[i] - 0.16, fill=GREY_FILL, stroke=SOFT_GREY,
+                               stroke_pt=1.0, radius_pt=6)
                 continue
             # Просвет ячейки — строка минус её отступ: он меняется вместе со
             # ступенью сжатия, и зашитая под штатный отступ константа объявляла

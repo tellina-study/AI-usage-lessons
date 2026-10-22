@@ -17,13 +17,27 @@
 дубль deck/images.md 1, там же лицензии) и REAL (кадры, которым по их собственному
 media_needed нужен настоящий снимок).
 """
-import re, glob, os, io
+import re, glob, os, io, sys
 from collections import OrderedDict
 
 SL = 'slides'
+
+# ПОРЯДОК БЕРЁТСЯ У СБОРЩИКА, А НЕ ПИШЕТСЯ ВТОРОЙ РАЗ. Здесь лежал свой
+# ключ сортировки, и он был СЛАБЕЕ настоящего двумя способами сразу:
+# буквенный хвост он брал одной буквой (`[a-z]?`), то есть `s01a`, `s01aa`,
+# `s01ab`, `s01ac` давали ОДИН И ТОТ ЖЕ ключ и раскладывались в том
+# порядке, в каком их вернул `glob`, — то есть в произвольном; а подномера
+# (`s01_1`, #293) он не знал вовсе. Манифест при этом описывает ПОРЯДОК
+# ПОКАЗА, и порядок показа решает `deckkit.slidefile.order_key` — один и
+# тот же вызов у сборщика и у выгрузки, иначе это снова два описания
+# одного состава, способные разойтись молча.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(_HERE, *[os.pardir] * 5,
+                                'tools', 'presentation-build'))
+from deckkit.slidefile import order_key          # noqa: E402
+
 files = sorted(glob.glob(os.path.join(SL, 's*.md')),
-               key=lambda f: (int(re.match(r's(\d+)', os.path.basename(f)).group(1)),
-                              re.match(r's\d+([a-z]?)', os.path.basename(f)).group(1)))
+               key=lambda f: order_key(os.path.basename(f)))
 
 def fm(path):
     """Фронтматтер кадра → плоский словарь скалярных полей.
@@ -79,8 +93,11 @@ def razbiraetsya(fn):
 # ── адрес в главе: § и файл части ────────────────────────────────────────
 CHAP = {
  's01': 'chapter.md § Введение',
+    's01_1': 'chapter-part1c.md §2.5а (доля потока, прочитанного моделью: Англия, два официальных знаменателя)',
     's01a': 'chapter.md § Обзор предмета (цикл оказания медицинской помощи)',
-    's01b': 'chapter.md § Обзор предмета (как получают данные · классические режимы) + chapter-part1b.md §1.2 + chapter-part1c.md §2.1, chapter-part2.md §3.1, chapter-part3.md §4.2, chapter-part3b.md §5.1–5.2, chapter-part3c.md §6.3',
+    's01aa': 'главой не покрыт: порядок допуска медицинского изделия и счёт изделий с обученной моделью живут в research/09a, 09b, 10-II-FDA, 11 — в главе подраздела нет',
+    's01ac': 'главой не покрыт: применение и поток живут в research/14 и 10b — в главе подраздела нет',
+    's01ad': 'chapter-part2.md §3.3, §3.4 + chapter-part5.md §10.6 (шесть искажений названы здесь, измерены в своих разделах)',
     's11a': 'chapter-part1b.md § Раздел 1 (вводка), §1.1, §1.2, §1.3 + chapter.md § Обзор предмета (три опоры порядка)',
     's12a': 'chapter-part1b.md § Скрининговые программы по странам и участие ИИ',
     's12b': 'chapter-part1b.md § Раздел 1 (вводка) — новый материал (issue #278 §10.2): происхождение скрининга как класса практики (Wilson–Jungner 1968, массовая флюорография Глазго 1957, Reiser 1978) пока не отражён в тексте главы, добавлен только в деку',
@@ -91,9 +108,9 @@ CHAP = {
     's60ba': 'chapter-part3b.md § Раздел 5 (вводка), §5.1, §5.2',
     's60bb': 'chapter-part3b.md §5.2 (три классических режима; доля текста по Steinkamp 2022 и Wang 2017)',
     's73ca': 'chapter-part5.md § Раздел 10 (вводка), §10.1',
- 's03': 'chapter.md §0.2',
+ 's01b': 'chapter.md §0.2 + chapter.md § Обзор предмета (как получают данные · классические режимы) + chapter-part1b.md §1.2 + chapter-part1c.md §2.1, chapter-part2.md §3.1, chapter-part3.md §4.2, chapter-part3b.md §5.1–5.2, chapter-part3c.md §6.3',
  's05': 'chapter.md §0.4',
- 's05a': 'chapter-part5b.md §11.1, §11.2',
+ 's20b': 'chapter-part5b.md §11.1, §11.2',   # был `s05a` во Входе, #293 перенёс в конец раздела 1
  's11': 'chapter-part1b.md § Раздел 1 (вводка)',
  's12': 'chapter-part1b.md §1.1, §1.2, §1.3',
  's13': 'chapter-part1b.md §1.3',
@@ -315,7 +332,22 @@ ACQUIRED = {
  's105':'rework/deck/assets/s105-hero-uvedomlenie-ob-otzyve-izdeliya-verkh.png'}
 secs = OrderedDict()
 for f in files:
-    d = fm(f); secs.setdefault(d['section'], []).append((f, d))
+    d = fm(f)
+    # ОТКАЗ ПО ИМЕНИ, а не `KeyError: 'section'`. Эти три поля — весь вход
+    # выгрузки: по `section` строятся разделы показа, по `timing_min` —
+    # минуты, по `in_bucket` — доля ведра. Кадр без любого из них манифест
+    # описать не может, и сказать об этом надо тем же словом, каким поле
+    # называется во фронтматтере, — иначе отказ читается как поломка
+    # инструмента, а не как незаполненный кадр.
+    net = [k for k in ('section', 'timing_min', 'in_bucket') if not d.get(k)]
+    if net:
+        raise SystemExit(
+            '%s: во фронтматтере нет %s — манифест описывает порядок показа '
+            'и минуты, и без %s кадр в него не встаёт. Допишите поле в файл '
+            'кадра и перезапустите выгрузку.'
+            % (f, ', '.join('`%s`' % k for k in net),
+               'них' if len(net) > 1 else 'него'))
+    secs.setdefault(d['section'], []).append((f, d))
 flat = [(f, d) for v in secs.values() for f, d in v]
 tot_slides = len(flat)
 tot_min = sum(float(d['timing_min']) for _, d in flat)

@@ -140,6 +140,7 @@ def selftest():
     ok.extend(probe_fit_media(bad))
     ok.extend(probe_box_over_media(bad, tmp))
     ok.extend(probe_heroes(bad))
+    ok.extend(probe_udar_dark(bad))
     ok.extend(probe_live_links(tmp, bad))
     ok.extend(probe_glyphs_vs_text(bad))
     if not table[0]:
@@ -273,6 +274,55 @@ def probe_heroes(bad):
     print(f"{'[hero §5.9]':<24} на настоящих кадрах: ЛОВИТ  →  "
           + " · ".join(f"{k} {100 * v:.1f}%" for k, v in sorted(areas.items())))
     return ["[hero §5.9]"]
+
+
+def probe_udar_dark(bad):
+    """ТЁМНЫЙ кадр-удар и его подвал — РАЗНОСТНО, по собранному пакету.
+
+    Доказывается не «контраст в порядке» (это и так печатает каждая сборка),
+    а что порядок здесь КУПЛЕН правкой: на тёмной заливке `21295C` обычные
+    цвета подвала (`MID`/`LIGHT`) ниже порога, и `udar_footer` набирает
+    строку источника белым. Проба собирает НАСТОЯЩИЙ кадр деки дважды —
+    выключателем `UDAR_FOOT_SVOY`, тем же приёмом, что `probe_box_over_media`,
+    — и значение имеет разница: без правки обязаны найтись прогоны ниже
+    порога, с правкой — ни одного.
+
+    Проба на настоящем кадре, а не на выдуманном: тёмный кадр в деке один,
+    и если его переведут на белый фон, проба обязана это заметить, а не
+    продолжать доказывать раскладку, которой никто не пользуется."""
+    from pptx import Presentation
+
+    from deckkit import contrast
+    d = Path(tempfile.mkdtemp(prefix="lec07-udar-"))
+    keep = report.snapshot()
+    res, pages = {}, {}
+    for name, flag in (("без правки", False), ("с правкой", True)):
+        B.UDAR_FOOT_SVOY = flag
+        report.reset()
+        out = d / f"udar-{int(flag)}.pptx"
+        build(only="s01_1", out=out)
+        rows = contrast.rows_of(Presentation(str(out)))
+        res[name] = [r for r in rows if r["ok"] is False]
+        pages[name] = len(rows)
+    B.UDAR_FOOT_SVOY = True
+    report.restore(keep)
+    if not pages["с правкой"]:
+        bad.append("[удар и подвал] кадр `s01_1` не собрался ни одним "
+                   "прогоном — проверять нечего")
+        return []
+    if not res["без правки"] or res["с правкой"]:
+        bad.append(
+            f"[удар и подвал] без правки прогонов ниже порога "
+            f"{len(res['без правки'])}, с правкой {len(res['с правкой'])} — "
+            "проба больше не доказывает ни дефекта, ни его отсутствия "
+            "(тёмный кадр перевели на белый фон? снят `invert`?)")
+        return []
+    r = res["без правки"][0]
+    print(f"{'[удар и подвал]':<24} разностно: ЛОВИТ  →  без правки "
+          f"{len(res['без правки'])} прогонов ниже порога (худший {r['fg']} "
+          f"на {r['bg']} — {r['ratio']:.2f} : 1 при пороге {r['thr']}), "
+          "с правкой — ни одного")
+    return ["[удар и подвал]"]
 
 
 def probe_live_links(tmp, bad):

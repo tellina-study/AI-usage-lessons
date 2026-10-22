@@ -49,7 +49,14 @@ BEZ_PREDELA = {"cover", "divider"}
 # Поля фронтматтера, НАБРАННЫЕ НА КАДРЕ.
 VIDIMYE_POLYA = ("title", "blocks", "scheme", "source", "columns",
                  "row_blocks", "ladder", "tracks", "media_label",
-                 "media_2_label", "media_caption")
+                 "media_2_label", "media_caption", "figure")
+# `figure` дописано 2026-10-22 (#293): величина, её единица, база и
+# оговорка набраны НА КАДРЕ, а в этом перечне их не было — пока ни один
+# кадр поля не объявлял, счёт был верен случайно, и кадр одного числа
+# вошёл бы в медиану нулём. Тот же класс, что `[#229-15]`/`[#229-16]` в
+# `notes/mcp-limitations.md`: перечень видимых полей поддерживается руками
+# и отстаёт от ядра. Ключи `invert` (bool) и `kind` в счёт не идут сами —
+# `_slova` их не считает.
 
 
 def _slova(uzel):

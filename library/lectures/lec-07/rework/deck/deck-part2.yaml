@@ -8,7 +8,7 @@
 
 slides:
 
-  # ─── 4. Ведение медицинской документации · 16 кадров · 13.25 мин ───
+  # ─── 4. Ведение медицинской документации · 15 кадров · 12.40 мин ───
   - id: s60b
     local_id: "s5-00"                      # номер SLIDE-PLAN.md
     file: slides/s60b-divider-vedenie-zapisi.md
@@ -63,15 +63,6 @@ slides:
     chapter_ref: "chapter-part3b.md §5.1, §5.2"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s60e
-    local_id: "s5-06a"                     # вставленный кадр, номера в плане нет
-    file: slides/s60e-skolko-pishut-v-raznykh-stranakh.md
-    type: analitika
-    title: "Сколько пишут в разных странах и почему"
-    plan_section: "Раздел 5. Что стало с теми, кто решает"
-    chapter_ref: "НЕ СОПОСТАВЛЕН"
-    timing_min: 0.85
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
   - id: s61
     local_id: "s5-07"                      # номер SLIDE-PLAN.md
     file: slides/s61-avtomaticheskaya-zapis-priema.md
@@ -180,6 +171,14 @@ slides:
     chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
     timing_min: 0.65
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73cb
+    local_id: "s5-02c"                     # вставленный кадр, номера в плане нет
+    file: slides/s73cb-primer-1-razrabotchiki.md
+    type: case
+    title: "Пример 1: разработчики на незнакомой библиотеке"
+    chapter_ref: "chapter-part5.md §10.8а"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s73d
     local_id: "s5-03"                      # номер SLIDE-PLAN.md
     file: slides/s73d-tsena-i-dva-rezhima-osmotra.md
@@ -198,27 +197,19 @@ slides:
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s73f
     local_id: "s5-04"                      # номер SLIDE-PLAN.md
-    file: slides/s73f-primer-1-dolya-bez-pomoshchnika.md
+    file: slides/s73f-primer-2-dolya-bez-pomoshchnika.md
     type: case
-    title: "Пример 1: доля упала без помощника"
+    title: "\"Пример 2: доля упала без помощника\"   # был «Пример 1» — перенумерован под новый порядок раздела (#293, Этап B): разбор на разработчиках встал первым"
     chapter_ref: "chapter-part5.md §10.6, §10.8 (+ §10.7)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s73g
     local_id: "s5-05"                      # номер SLIDE-PLAN.md
-    file: slides/s73g-primer-2-artincol-rossiya.md
+    file: slides/s73g-primer-3-artincol-rossiya.md
     type: case
-    title: "Пример 2: ArtInCol, Россия — помощник на той же процедуре"
+    title: "\"Пример 3: ArtInCol, Россия — помощник на той же процедуре\"   # был «Пример 2» — перенумерован под новый порядок раздела (#293, Этап B): разбор на разработчиках встал первым"
     chapter_ref: "НЕ СОПОСТАВЛЕН"
     timing_min: 1
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
-  - id: s73ga
-    local_id: "s5-05b"                     # вставленный кадр, номера в плане нет
-    file: slides/s73ga-primer-3-razrabotchiki.md
-    type: case
-    title: "Пример 3: разработчики на незнакомой библиотеке"
-    chapter_ref: "chapter-part5.md §10.8а"
-    timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s73j
     local_id: "s5-09"                      # номер SLIDE-PLAN.md

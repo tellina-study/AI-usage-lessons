@@ -1053,19 +1053,40 @@ def tag_plate(sl, x, y, text, *, w=6.2, stroke=GOLD, color=GOLD, size=11.5):
     return h
 
 
-def roadmap(sl, stages, cur_idx, *, x=0.55, y=6.55, w=12.23):
-    """Дорожная карта занятия внизу дивайдера: где мы среди ступеней."""
+def roadmap(sl, stages, cur_idx, *, x=0.55, y=6.55, w=12.23, future_color=None):
+    """Дорожная карта занятия внизу дивайдера: где мы среди ступеней.
+
+    `future_color` — цвет подписи ЕЩЁ НЕ ПРОЙДЕННОЙ ступени. Умолчание
+    `None` означает `ON_DARK_MUTE` — ровно то, что здесь стояло всегда, то
+    есть дека, которая ничего не передаёт, собирается знак в знак как прежде.
+
+    Зачем параметр вообще понадобился (замер волны 3а «конфетки» Семинара 8,
+    issue #292, план §3.5 — «WCAG AA ≥4,5:1»): приглушённый `ON_DARK_MUTE`
+    `#9FAEC4` на плашке `PILL_OFF` `#3E4C8A` даёт **3,58:1** — ниже порога
+    AA, и это не оценка на глаз, а измерение по настоящему рендеру (цвет
+    строки из pptx, фон — пиксель страницы). Приглушение здесь осмысленно:
+    ступень, до которой занятие не дошло, обязана читаться тише пройденной.
+    Но «тише» не значит «неразборчиво»: различие пройденного и будущего
+    несёт ЗАЛИВКА плашки (тиловая против тёмно-синей) и жирность текущей,
+    и подписи достаточно быть светлее, чтобы остаться подписью.
+
+    Почему не сменили сам `ON_DARK_MUTE` или `PILL_OFF`: обе константы
+    общие на все занятия курса, и правка молча переверстала бы принятые деки
+    Семинаров 6 и 7. Цена такой правки уже замерена и записана
+    (`notes/mcp-limitations.md` [#292-2]) — поэтому здесь параметр с пустым
+    умолчанием, а не новое общее значение."""
     n = len(stages)
     gap = 0.2
     cw = (w - gap * (n - 1)) / n
     cx = x
+    future = future_color or ON_DARK_MUTE
     for i, name in enumerate(stages):
         on = (i == cur_idx)
         done = (i < cur_idx)
         rect(sl, cx, y, cw, 0.42, GOLD if on else (TEAL if done else PILL_OFF),
              radius=True, radius_adj=0.3)
         text_box(sl, cx, y, cw, 0.42, name, size=12.5, bold=on,
-                 color=DEEP if on else (WHITE if done else ON_DARK_MUTE),
+                 color=DEEP if on else (WHITE if done else future),
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, rich=False)
         cx += cw + gap
     return 0.42

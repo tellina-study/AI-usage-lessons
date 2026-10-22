@@ -34,6 +34,20 @@ from roles import (ITALIC_LINE, block_drawer, compose, forced_role, measure,
                    split_question, unseen, with_footnote)
 
 
+def _roadmap_future():
+    """Цвет подписи ЕЩЁ НЕ ПРОЙДЕННОЙ ступени дорожки — параметр деки:
+
+        roadmap: {future_color: ON_DARK}
+
+    Умолчание — запись отсутствует, и `K.roadmap` берёт свой прежний
+    `ON_DARK_MUTE`: дека, которая ничего здесь не называет, собирается знак
+    в знак как прежде. Имя разрешается по палитре `deck_kit`, тем же
+    `getattr`, что `hook_color` дивайдера и обложки."""
+    cfg = D.CFG.get("roadmap") or {}
+    name = cfg.get("future_color")
+    return getattr(K, str(name).upper()) if name else None
+
+
 def g_divider(sl, sid, title, blocks, pattern, assertion="", meta=None):
     """Дивайдер уровня РАЗДЕЛА — градиент, золотая полоса, номерной значок,
     смысловая строка, дорожная карта ступеней. Дивайдер называет ПРОБЛЕМУ,
@@ -77,7 +91,7 @@ def g_divider(sl, sid, title, blocks, pattern, assertion="", meta=None):
     if tag_h:
         K.tag_plate(sl, D.LEFT + 0.35, y, tag)
     if stage is not None:
-        K.roadmap(sl, stages, stage)
+        K.roadmap(sl, stages, stage, future_color=_roadmap_future())
     K.slide_number_mark(sl, D.slide_number(sid), on_dark=True)
 
 
@@ -176,7 +190,7 @@ def g_case_divider(sl, sid, title, blocks, pattern, assertion=""):
 
     idx = D.case_idx().get(sid)
     if idx is not None:
-        K.roadmap(sl, D.case_track(), idx)
+        K.roadmap(sl, D.case_track(), idx, future_color=_roadmap_future())
     K.slide_number_mark(sl, D.slide_number(sid), on_dark=True)
 
 
@@ -291,11 +305,27 @@ def g_cover_centered(sl, sid, title, blocks, pattern, assertion=""):
 def g_question(sl, sid, title, blocks, pattern, assertion=""):
     """Вопрос залу — дословный вопрос в золотой коробке, карточки вариантов
     под ним, ни одна не подсвечена. Единственное место с золотой заливкой;
-    форма обязана оставаться редкой (канон §1)."""
+    форма обязана оставаться редкой (канон §1).
+
+    `metric_band_sids` конфига работает и здесь — та же запись и то же
+    умолчание (пустой список), что в `g_content`: ПЕРВАЯ таблица слайда
+    рисуется рядом плашек. На экране вопроса это УСЛОВИЕ задачи — что лежит
+    на входе и что требуется на выходе, — а не разбор: разбор под вопросом
+    запрещён правилом А1 и ловится `audits.audit_question_answer`, и таблица
+    условия поэтому ставится ПЕРЕД вопросом. Нужно это там, где слайд вопроса
+    иначе остаётся из двух блоков и нижняя треть экрана пустует (§3.3 плана
+    «конфетки» Семинара 8: n07 — 1,17″ случайной пустоты)."""
     K.set_bg(sl, K.WHITE)
     y0 = K.auto_header(sl, title)
     drawers = []
+    as_band = sid in set(D.CFG.get("metric_band_sids") or ())
     for kind, b in blocks:
+        if kind == "table" and as_band:
+            as_band = False
+            band = _plates(*b)
+            drawers.append(lambda sl, y, mh, p=band: K.metric_band(
+                sl, D.LEFT, y, D.WIDTH, p, max_h=mh, label=f"{sid} плашки"))
+            continue
         if kind == "quote":
             scene, question, found = split_question(b)
             if not found:
@@ -655,7 +685,7 @@ def g_macro_scene(sl, sid, title, blocks, pattern, assertion=""):
     stages = D.sections_for(sid)[1]
     _, stage = D.where(sid)
     if stage is not None:
-        K.roadmap(sl, stages, stage)
+        K.roadmap(sl, stages, stage, future_color=_roadmap_future())
     K.slide_number_mark(sl, D.slide_number(sid), on_dark=True)
 
 

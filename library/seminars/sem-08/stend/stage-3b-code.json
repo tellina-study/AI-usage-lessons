@@ -115,12 +115,36 @@
       }
     },
     {
+      "id": "tg_client_approved",
+      "name": "Notify client (Telegram)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        544,
+        80
+      ],
+      "parameters": {
+        "operation": "sendMessage",
+        "chatId": "266536553",
+        "text": "=Здравствуйте! Ваш запрос на возврат рассмотрен: одобрено.\nСумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽.\nДеньги вернутся на карту в течение трёх рабочих дней.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "kfXE6PWKNzA56vc6",
+          "name": "Telegram account (С8)"
+        }
+      }
+    },
+    {
       "id": "refund_result_b_ok",
       "name": "Result screen (approve)",
       "type": "n8n-nodes-base.form",
       "typeVersion": 1,
       "position": [
-        540,
+        784,
         80
       ],
       "parameters": {
@@ -166,6 +190,17 @@
             "index": 0
           }
         ],
+        [
+          {
+            "node": "Notify client (Telegram)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify client (Telegram)": {
+      "main": [
         [
           {
             "node": "Result screen (approve)",

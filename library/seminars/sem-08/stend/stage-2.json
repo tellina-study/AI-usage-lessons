@@ -161,11 +161,11 @@
             "name": "={{ $('Request form').item.json['Имя'] }}",
             "contact": "={{ $('Request form').item.json['Контакт'] }}",
             "request_text": "={{ $('Request form').item.json['Что нужно'] }}",
-            "topic": "={{ $json.topic }}",
-            "urgency": "={{ $json.urgency }}",
-            "contact_from_text": "={{ $json.contact_from_text }}",
-            "status": "={{ $json.status }}",
-            "extra_topics": "={{ $json.extra_topics || '' }}"
+            "topic": "={{ $('Vocabulary check').item.json.topic }}",
+            "urgency": "={{ $('Vocabulary check').item.json.urgency }}",
+            "contact_from_text": "={{ $('Vocabulary check').item.json.contact_from_text }}",
+            "status": "={{ $('Vocabulary check').item.json.status }}",
+            "extra_topics": "={{ $('Vocabulary check').item.json.extra_topics }}"
           },
           "matchingColumns": [],
           "schema": []
@@ -253,7 +253,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        300,
+        304,
         160
       ],
       "parameters": {
@@ -290,7 +290,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        520,
+        524,
         160
       ],
       "parameters": {
@@ -314,31 +314,22 @@
       }
     },
     {
-      "id": "dedup_llm",
-      "name": "Same question, reworded? (LLM)",
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.5,
+      "id": "jev-prod",
+      "name": "Jev decision (reworded?)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
-        520,
+        528,
         320
       ],
       "parameters": {
-        "promptType": "define",
-        "text": "=Это новое сообщение: «{{ $('Request form').item.json['Что нужно'] }}». Недавнее сообщение того же контакта: «{{ $json.recent_same_contact_text }}». Это тот же вопрос, просто сформулированный иначе? Ответь строго «да» или «нет».",
-        "options": {}
-      }
-    },
-    {
-      "id": "dedup_model",
-      "name": "Model (dedup)",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
-      "typeVersion": 1,
-      "position": [
-        520,
-        480
-      ],
-      "parameters": {
-        "model": "openai/gpt-4o-mini",
+        "method": "POST",
+        "url": "https://openrouter.ai/api/alpha/decisions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({model: \"typesafe/jev-1.13\", state: { previous_message: $json.recent_same_contact_text, new_message: $('Request form').item.json['Что нужно'] }, questions: { same_question: { type: \"noul\", instructions: \"Новое сообщение клиента учебного центра — это тот же вопрос, что и недавнее сообщение того же контакта, просто переформулированный (перефразировка), а не новый, другой по смыслу вопрос?\", criteria: { true: \"Это переформулировка того же вопроса, который уже был задан — смысл совпадает, слова разные.\", false: \"Это другой по смыслу вопрос, даже если тема или часть слов похожи.\" } } } }) }}",
         "options": {}
       },
       "credentials": {
@@ -346,7 +337,8 @@
           "id": "VbxiQn8TbqA4R2mw",
           "name": "OpenRouter account"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "connections": {
@@ -439,30 +431,19 @@
         [],
         [
           {
-            "node": "Same question, reworded? (LLM)",
+            "node": "Jev decision (reworded?)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Same question, reworded? (LLM)": {
+    "Jev decision (reworded?)": {
       "main": [
         [
           {
             "node": "Write row",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Model (dedup)": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Same question, reworded? (LLM)",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]

@@ -1,0 +1,149 @@
+{
+ "date": "2026-10-22",
+ "workflow": "С8 · Кейс 4 — генерация карточки (живой узел)",
+ "model": "google/gemini-2.5-flash-image",
+ "runs": [
+  {
+   "exec_id": 596,
+   "request": {
+    "Имя": "Мария",
+    "Контакт": "maria@example.com",
+    "Что нужно": "хочу на курс по аналитике, перезвоните сегодня"
+   },
+   "caption_delivered": "Новая заявка от Мария: тема «курс».",
+   "model": "google/gemini-2.5-flash-image",
+   "openrouter_generation_id": "gen-1792666224-GIjGaewh8ZBRXE7aJ2GQ",
+   "cost_usd": 0.0387307,
+   "data_url_chars": 1157550,
+   "generation_node_ms": 5394,
+   "exec_wall_s": 7.87,
+   "telegram_message_id": 13,
+   "model_file_bytes": 868146,
+   "model_file_format": "PNG",
+   "model_file_size_px": "1024x1024",
+   "model_file_saved": "k4-gen-card-exec596.png",
+   "telegram_file_bytes": 42477,
+   "telegram_file_format": "JPEG",
+   "telegram_file_size_px": "1024x1024",
+   "telegram_file_saved": "k4-gen-card-exec596-telegram.jpg"
+  },
+  {
+   "exec_id": 597,
+   "request": {
+    "Имя": "Мария",
+    "Контакт": "maria@example.com",
+    "Что нужно": "хочу на курс по аналитике, перезвоните сегодня"
+   },
+   "caption_delivered": "Новая заявка от Мария: тема «курс».",
+   "model": "google/gemini-2.5-flash-image",
+   "openrouter_generation_id": "gen-1792666297-YRjtPoJavPEqA5S6wTq3",
+   "cost_usd": 0.0387307,
+   "data_url_chars": 1065726,
+   "generation_node_ms": 5061,
+   "exec_wall_s": 9.44,
+   "telegram_message_id": 14,
+   "model_file_bytes": 799277,
+   "model_file_format": "PNG",
+   "model_file_size_px": "1024x1024",
+   "model_file_saved": "k4-gen-card-exec597.png",
+   "telegram_file_bytes": 39815,
+   "telegram_file_format": "JPEG",
+   "telegram_file_size_px": "1024x1024",
+   "telegram_file_saved": "k4-gen-card-exec597-telegram.jpg"
+  },
+  {
+   "exec_id": 598,
+   "status": "error",
+   "request": {
+    "Имя": null,
+    "Контакт": null,
+    "Что нужно": null
+   },
+   "model": "google/gemini-2.5-flash-image",
+   "openrouter_generation_id": "gen-1792666307-KUclYwdW0k27Xzdx8yt9",
+   "cost_usd": 6.13e-05,
+   "image_tokens": 0,
+   "generation_node_ms": 570,
+   "no_image_text_reply": "Вот ваша карточка-уведомление для Telegram:\n",
+   "failed_nodes": [
+    [
+     "Base64 to file",
+     "The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received null"
+    ]
+   ],
+   "telegram_message_id": null
+  },
+  {
+   "exec_id": 599,
+   "request": {
+    "Имя": "Мария",
+    "Контакт": "maria@example.com",
+    "Что нужно": "хочу на курс по аналитике, перезвоните сегодня"
+   },
+   "caption_delivered": "Новая заявка от Мария: тема «курс».",
+   "model": "google/gemini-2.5-flash-image",
+   "openrouter_generation_id": "gen-1792666488-WuQKFliNO9Z1vPx7Ubqt",
+   "cost_usd": 0.0387282,
+   "data_url_chars": 1169694,
+   "generation_node_ms": 5706,
+   "exec_wall_s": 9.38,
+   "telegram_message_id": 15,
+   "model_file_bytes": 877252,
+   "model_file_format": "PNG",
+   "model_file_size_px": "1024x1024",
+   "model_file_saved": "k4-gen-card-exec599.png",
+   "telegram_file_bytes": 45021,
+   "telegram_file_format": "JPEG",
+   "telegram_file_size_px": "1024x1024",
+   "telegram_file_saved": "k4-gen-card-exec599-telegram.jpg"
+  },
+  {
+   "exec_id": 600,
+   "request": {
+    "Имя": "Олег",
+    "Контакт": "+7 900 111-22-33",
+    "Что нужно": "нужно перенести занятие по математике на следующую неделю"
+   },
+   "caption_delivered": "Новая заявка от Олег: тема «перенос занятия».",
+   "model": "google/gemini-2.5-flash-image",
+   "openrouter_generation_id": "gen-1792666498-SGdk7K0gWReXafabxqkM",
+   "cost_usd": 0.0387688,
+   "data_url_chars": 1199234,
+   "generation_node_ms": 5485,
+   "exec_wall_s": 8.89,
+   "telegram_message_id": 16,
+   "model_file_bytes": 899409,
+   "model_file_format": "PNG",
+   "model_file_size_px": "1024x1024",
+   "model_file_saved": "k4-gen-card-exec600.png",
+   "telegram_file_bytes": 48608,
+   "telegram_file_format": "JPEG",
+   "telegram_file_size_px": "1024x1024",
+   "telegram_file_saved": "k4-gen-card-exec600-telegram.jpg"
+  },
+  {
+   "exec_id": 601,
+   "request": {
+    "Имя": "Нина",
+    "Контакт": "nina@example.com",
+    "Что нужно": "вопрос по оплате курса, не срочно"
+   },
+   "caption_delivered": "Новая заявка от Нина: тема «оплата».",
+   "model": "google/gemini-2.5-flash-image",
+   "openrouter_generation_id": "gen-1792666508-LUHrrMppIXdTHCTTAYOf",
+   "cost_usd": 0.0387288,
+   "data_url_chars": 1228946,
+   "generation_node_ms": 6807,
+   "exec_wall_s": 8.71,
+   "telegram_message_id": 17,
+   "model_file_bytes": 921693,
+   "model_file_format": "PNG",
+   "model_file_size_px": "1024x1024",
+   "model_file_saved": "k4-gen-card-exec601.png",
+   "telegram_file_bytes": 45618,
+   "telegram_file_format": "JPEG",
+   "telegram_file_size_px": "1024x1024",
+   "telegram_file_saved": "k4-gen-card-exec601-telegram.jpg"
+  }
+ ]
+}

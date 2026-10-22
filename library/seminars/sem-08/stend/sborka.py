@@ -18,16 +18,19 @@ Credential-узлы ниже — РЕАЛЬНЫЕ id с живого стенд�
     python3 sborka.py                                      только записать json-файлы рядом
     N8N_API_URL=... N8N_API_KEY=... python3 sborka.py --push   выложить и опубликовать
 
-## Шесть файлов — по кейсам занятия, каждый ДОСТРАИВАЕТ стадию 4 Семинара 7
+## Семь файлов — по кейсам занятия, каждый ДОСТРАИВАЕТ стадию 4 Семинара 7
 
     stage-1-before.json   Кейс 1 «до»: отдельный LLM-узел сочиняет текст Telegram-уведомления
     stage-1-after.json    Кейс 1 «после»: узел подстановки переменных (шаблон) вместо модели
     stage-2.json          Кейс 2: дедупликация — механический фильтр, затем LLM на спорное
     stage-3a-model.json   Кейс 3, процесс (A): решение о возврате принимает модель (OpenRouter)
     stage-3b-code.json    Кейс 3, процесс (B): решение принимает `IF`-узел по сумме
+                          (+ узел клиенту в ветке «одобрить» — волна 1в, issue #292)
     stage-4.json          Кейс 4: та же цепочка уведомления, плюс картинка в Telegram
+    stage-4-generate.json Кейс 4: ЖИВАЯ генерация карточки (волна 1г, issue #292) — отдельный
+                          workflow, `stage-4` с его демо лимита 10 МБ не тронут
 
-Все шесть читают структуру существующих узлов из `sem-07/stend/student.json` (форма →
+Все они читают структуру существующих узлов из `sem-07/stend/student.json` (форма →
 извлечение → справочник → таблица → экран) и ТОЛЬКО ДОБАВЛЯЮТ узлы — ни один узел С7 не
 переименован и не удалён, в точности как того требует шов из `ARCHITECTURE.md` §2.
 
@@ -67,6 +70,11 @@ OPENROUTER_CRED = {"openRouterApi": {"id": "VbxiQn8TbqA4R2mw", "name": "OpenRout
 TELEGRAM_CHAT_ID = "266536553"  # координатор, подтвердил /start боту; не секрет (ADR см. README)
 NOTIFY_MODEL = "openai/gpt-4o-mini"           # та же модель, что в student.json на extraction
 REFUND_MODEL = "qwen/qwen-2.5-7b-instruct"    # средне-размерная Qwen через OpenRouter
+# Генерация карточки Кейса 4 (волна 1г, 2026-10-22). Выбрана по каталогу
+# `GET https://openrouter.ai/api/v1/models` среди моделей с `output_modalities`,
+# содержащим `image` (всего таких 12 на 22.10.2026), и подтверждена живым вызовом на
+# ЭТОМ credential: ответ 200, `message.images[0].image_url.url` = настоящий PNG.
+IMAGE_MODEL = "google/gemini-2.5-flash-image"
 
 # `student.json` — файл НА ВЫНОС студенту, и `student_file()` в `sem-07/stend/sborka.py`
 # намеренно снимает с узлов credential модели и ссылку на таблицу (чужой id читается как
@@ -115,7 +123,7 @@ def openrouter_model_node(node_id, name, pos, model=NOTIFY_MODEL):
     }
 
 
-def telegram_text_node(node_id, name, pos, text_expr):
+def telegram_text_node(node_id, name, pos, text_expr, extra_fields=None):
     return {
         "id": node_id, "name": name, "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2, "position": pos,
@@ -123,7 +131,7 @@ def telegram_text_node(node_id, name, pos, text_expr):
             "operation": "sendMessage",
             "chatId": TELEGRAM_CHAT_ID,
             "text": text_expr,
-            "additionalFields": {},
+            "additionalFields": dict(extra_fields or {}),
         },
         "credentials": TG_CRED,
     }
@@ -269,22 +277,62 @@ def dedup_nodes(pos0):
                             "rightValue": "={{ $json.recent_same_contact_hash }}",
                             "operator": {"type": "string", "operation": "equals"}}]}},
     }
-    llm_dedup = {
-        "id": "dedup_llm", "name": "Same question, reworded? (LLM)",
-        "type": "@n8n/n8n-nodes-langchain.chainLlm", "typeVersion": 1.5,
-        "position": [pos0[0] + 220, pos0[1] + 160],
+    # Второй уровень — ЖЕВ (TypeSafe Decisions API), а не свободный ответ модели.
+    #
+    # Сверка со стендом 2026-10-22 (`sverka_so_stendom.py`, волна 1г) показала, что на живом
+    # Кейсе 2 давно стоит именно этот узел: измерение четырёх схем 2026-10-20 дало жеву 20/20
+    # против 17/20 у LLM-судьи, и рабочий воркфлоу перевели на него руками через
+    # `PUT /workflows/c7evxIhox45tn127` — а генератор продолжал писать пару «chainLlm +
+    # Model (dedup)». Любой `--push` вернул бы Кейс 2 к худшей схеме и к узлам, которых нет
+    # ни на одном скрине деки (`case2-dedup-prod-jev.png` снят с жевом). Узел ниже списан с
+    # живого стенда дословно, включая `onError: continueRegularOutput`: сервис отвечает не
+    # всегда, и прогон не должен падать целиком из-за второго уровня проверки.
+    jev_dedup = {
+        "id": "jev-prod", "name": "Jev decision (reworded?)",
+        "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2,
+        "position": [pos0[0] + 224, pos0[1] + 160],
         "parameters": {
-            "promptType": "define",
-            "text": "=Это новое сообщение: «{{ $('Request form').item.json['Что нужно'] }}». "
-                    "Недавнее сообщение того же контакта: «{{ $json.recent_same_contact_text }}». "
-                    "Это тот же вопрос, просто сформулированный иначе? Ответь строго "
-                    "«да» или «нет».",
+            "method": "POST",
+            "url": "https://openrouter.ai/api/alpha/decisions",
+            "authentication": "predefinedCredentialType",
+            "nodeCredentialType": "openRouterApi",
+            "sendBody": True,
+            "specifyBody": "json",
+            "jsonBody": (
+                '={{ JSON.stringify({model: "typesafe/jev-1.13", state: '
+                '{ previous_message: $json.recent_same_contact_text, new_message: '
+                "$('Request form').item.json['Что нужно'] }, questions: { same_question: "
+                '{ type: "noul", instructions: "Новое сообщение клиента учебного центра — '
+                "это тот же вопрос, что и недавнее сообщение того же контакта, просто "
+                'переформулированный (перефразировка), а не новый, другой по смыслу вопрос?", '
+                'criteria: { true: "Это переформулировка того же вопроса, который уже был '
+                'задан — смысл совпадает, слова разные.", false: "Это другой по смыслу '
+                'вопрос, даже если тема или часть слов похожи." } } } }) }}'
+            ),
             "options": {},
         },
+        "credentials": OPENROUTER_CRED,
+        "onError": "continueRegularOutput",
     }
-    dedup_model = openrouter_model_node(
-        "dedup_model", "Model (dedup)", [pos0[0] + 220, pos0[1] + 320])
-    return [mech_filter, mech_if, llm_dedup, dedup_model]
+    return [mech_filter, mech_if, jev_dedup]
+
+
+def write_row_from_vocabulary(nodes):
+    """`Write row` берёт значения справочника ПО ИМЕНИ УЗЛА, а не из `$json`.
+
+    В стадии 4 С7 запись стоит сразу за справочником, и `$json.topic` работает. В Кейсе 2
+    между ними встаёт дедупликация — после неё в `$json` лежат поля дедупликации, а не
+    справочника, и запись молча пишет пустые значения. На живом стенде это уже исправлено
+    руками; генератор повторяет исправление, иначе `--push` вернёт таблицу к пустым темам
+    (сверка 2026-10-22)."""
+    fields = ("topic", "urgency", "status", "contact_from_text", "extra_topics")
+    for n in nodes:
+        if n["name"] == "Write row":
+            val = n["parameters"]["columns"]["value"]
+            for f in fields:
+                if f in val:
+                    val[f] = "={{ $('Vocabulary check').item.json." + f + " }}"
+    return nodes
 
 
 def add_test_field(nodes, label, placeholder=""):
@@ -303,7 +351,8 @@ def stage_2():
     nodes = set_form_path(base_nodes(), "s8-case2")
     nodes = add_test_field(nodes, "Предыдущее сообщение (тест)",
                             "для ручной проверки дедупликации на стенде, не часть формы студента")
-    nodes.extend(dedup_nodes([300, 160]))
+    nodes = write_row_from_vocabulary(nodes)
+    nodes.extend(dedup_nodes([304, 160]))
     conn = base_connections()
     # Справочник теперь ведёт в фильтр дублей, а не прямо в запись.
     conn["Vocabulary check"] = {"main": [[
@@ -312,12 +361,10 @@ def stage_2():
         {"node": "Exact duplicate in window?", "type": "main", "index": 0}]]}
     conn["Exact duplicate in window?"] = {"main": [
         [],  # true — точный повтор, в запись не идём вовсе (обрабатывается отдельно на стенде)
-        [{"node": "Same question, reworded? (LLM)", "type": "main", "index": 0}],  # false
+        [{"node": "Jev decision (reworded?)", "type": "main", "index": 0}],  # false
     ]}
-    conn["Same question, reworded? (LLM)"] = {"main": [[
+    conn["Jev decision (reworded?)"] = {"main": [[
         {"node": "Write row", "type": "main", "index": 0}]]}
-    conn["Model (dedup)"] = {"ai_languageModel": [[
-        {"node": "Same question, reworded? (LLM)", "type": "ai_languageModel", "index": 0}]]}
     return {"name": "С8 · Кейс 2 — дедупликация в два уровня",
             "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
 
@@ -430,9 +477,20 @@ def stage_3b_code():
             "options": {"appendAttribution": False},
         },
     }
+    # Узел клиенту (волна 1в, 2026-10-22, issue #292): одобренный возврат должен доехать до
+    # ЧЕЛОВЕКА, а не только до экрана формы — иначе процесс (B) выглядит дешевле процесса (A)
+    # ровно на тот шаг, который в (A) есть, а в (B) забыт. Вставлен на ветку «одобрить» ПЕРЕД
+    # экраном результата; `Result screen (approve)` поэтому отъехал с [540,80] на [784,80]
+    # (позиция снята с живого стенда, чтобы холст не наезжал сам на себя).
+    notify_client = telegram_text_node(
+        "tg_client_approved", "Notify client (Telegram)", [544, 80],
+        "=Здравствуйте! Ваш запрос на возврат рассмотрен: одобрено.\n"
+        "Сумма: {{ $('Extract amount').item.json.output.amount_rub }} ₽.\n"
+        "Деньги вернутся на карту в течение трёх рабочих дней.",
+        extra_fields={"appendAttribution": False})
     result_approve = {
         "id": "refund_result_b_ok", "name": "Result screen (approve)",
-        "type": "n8n-nodes-base.form", "typeVersion": 1, "position": [540, 80],
+        "type": "n8n-nodes-base.form", "typeVersion": 1, "position": [784, 80],
         "parameters": {
             "operation": "completion", "respondWith": "text",
             "completionTitle": "Решение процесса (B)",
@@ -441,14 +499,16 @@ def stage_3b_code():
             "options": {"appendAttribution": False},
         },
     }
-    nodes += [decide, result_escalate, result_approve]
+    nodes += [decide, result_escalate, notify_client, result_approve]
     conn = {
         "Refund request": {"main": [[{"node": "Extract amount", "type": "main", "index": 0}]]},
         "Extract amount": {"main": [[{"node": "Amount over threshold?", "type": "main", "index": 0}]]},
         "Amount over threshold?": {"main": [
             [{"node": "Result screen (escalate)", "type": "main", "index": 0}],
-            [{"node": "Result screen (approve)", "type": "main", "index": 0}],
+            [{"node": "Notify client (Telegram)", "type": "main", "index": 0}],
         ]},
+        "Notify client (Telegram)": {"main": [[
+            {"node": "Result screen (approve)", "type": "main", "index": 0}]]},
         "Model (extraction)": {"ai_languageModel": [[
             {"node": "Extract amount", "type": "ai_languageModel", "index": 0}]]},
     }
@@ -492,6 +552,127 @@ def stage_4():
             "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
 
 
+def generate_card_node(pos):
+    """Генерация карточки: один `HTTP Request` на OpenRouter `chat/completions` с
+    моделью, которая умеет отдавать ИЗОБРАЖЕНИЕ, а не текст.
+
+    Почему HTTP Request, а не узел модели n8n: узлы `lmChat*`/`chainLlm` принимают и
+    отдают текст — поля `modalities` и ответа `message.images[]` у них нет вовсе. Тот же
+    credential `OpenRouter account` (`VbxiQn8TbqA4R2mw`) привязан к узлу ЯВНО: ровно та
+    ошибка авторинга, на которой застрял жев Кейса 2 (`nodeCredentialType` выставлен,
+    `node.credentials` пуст → `NodeOperationError «Credentials not found»`, см. README).
+
+    `usage: {include: true}` — просьба к OpenRouter положить в ответ РЕАЛЬНУЮ стоимость
+    этого вызова (`usage.cost`, доллары). Без этого поля цену пришлось бы считать по
+    прайсу, то есть опять оценивать, а не измерять."""
+    content = (
+        "'Нарисуй карточку-уведомление 1024 на 1024 точки для Telegram. Внутри "
+        "изображения крупным, хорошо читаемым русским текстом напиши ровно эту строку: "
+        "«' + $json.notification_text + '». Фон — спокойный синий градиент, текст белый, "
+        "по центру. Никаких других надписей, подписей, логотипов и рамок.'"
+    )
+    body = (
+        "{ model: '" + IMAGE_MODEL + "', modalities: ['image', 'text'], "
+        "usage: { include: true }, "
+        "messages: [ { role: 'user', content: " + content + " } ] }"
+    )
+    return {
+        "id": "gen_card", "name": "Generate card (OpenRouter image)",
+        "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": pos,
+        "parameters": {
+            "method": "POST",
+            "url": "https://openrouter.ai/api/v1/chat/completions",
+            "authentication": "predefinedCredentialType",
+            "nodeCredentialType": "openRouterApi",
+            "sendBody": True,
+            "specifyBody": "json",
+            "jsonBody": "={{ JSON.stringify(" + body + ") }}",
+            "options": {"timeout": 120000},
+        },
+        "credentials": OPENROUTER_CRED,
+    }
+
+
+def card_base64_node(pos):
+    """Из ответа модели — только две вещи: сама картинка (чистый base64 без префикса
+    `data:image/png;base64,`) и цена вызова. Остальной ответ дальше не несём
+    (`includeOtherFields: False`), иначе мегабайтный JSON поедет в Telegram-узел."""
+    return {
+        "id": "card_b64", "name": "Card bytes and cost", "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4, "position": pos,
+        "parameters": {
+            "mode": "manual", "includeOtherFields": False,
+            "assignments": {"assignments": [
+                {"id": "g1", "name": "data", "type": "string",
+                 "value": "={{ $json.choices[0].message.images[0].image_url.url"
+                          ".split(',')[1] }}"},
+                {"id": "g2", "name": "gen_cost_usd", "type": "number",
+                 "value": "={{ $json.usage.cost }}"},
+                {"id": "g3", "name": "gen_model", "type": "string",
+                 "value": "={{ $json.model }}"},
+                {"id": "g4", "name": "gen_id", "type": "string",
+                 "value": "={{ $json.id }}"},
+                {"id": "g5", "name": "gen_b64_chars", "type": "number",
+                 "value": "={{ $json.choices[0].message.images[0].image_url.url.length }}"},
+            ]},
+            "options": {},
+        },
+    }
+
+
+def base64_to_file_node(pos):
+    """Telegram-узел умеет отправлять только бинарное вложение, а модель отдаёт текст
+    (base64). Этот узел — перевод одного в другое; ровно тот шаг «перекодировки», о
+    котором слайд n51 предупреждал до того, как шаг собрали."""
+    return {
+        "id": "card_to_file", "name": "Base64 to file",
+        "type": "n8n-nodes-base.convertToFile", "typeVersion": 1.1, "position": pos,
+        "parameters": {
+            "operation": "toBinary", "sourceProperty": "data",
+            "options": {"fileName": "card.png", "mimeType": "image/png"},
+        },
+    }
+
+
+def stage_4_generate():
+    """Кейс 4, ЖИВАЯ генерация карточки (волна 1г, 2026-10-22, issue #292).
+
+    Решение владельца 2026-10-22 (вариант «б»): шаг генерации должен реально стоять на
+    стенде, а не оставаться архитектурной оценкой из прайса. Поэтому — ОТДЕЛЬНЫЙ
+    workflow, со своим путём формы `s8-case4-generate`:
+
+    * `stage-4` (демо лимита `sendPhoto` 10 МБ) не тронут ни одним узлом — его урок
+      держится на управляемом файле по ссылке, и ломать его генерацией нельзя;
+    * генерация включается и выключается независимо (свой workflow — свой `publish`).
+
+    Цепочка после записи заявки: тот же шаблон текста, что в Кейсе 1 «после» →
+    генерирующая модель (картинка с текстом ВНУТРИ пикселей) → перекодировка base64 в
+    файл → `sendPhoto`. Текст карточки не выдуман для генерации: это буквально
+    `notification_text` шаблона («Новая заявка от …: тема …»)."""
+    nodes = set_form_path(base_nodes(), "s8-case4-generate")
+    nodes.append(template_notification_node([780, -260]))
+    nodes.append(generate_card_node([1020, -260]))
+    nodes.append(card_base64_node([1260, -260]))
+    nodes.append(base64_to_file_node([1500, -260]))
+    nodes.append(telegram_photo_node(
+        "tg_gen_photo", "Send generated card (Telegram photo)", [1740, -260],
+        "={{ $('Compose notification (template)').item.json.notification_text }}"))
+    conn = base_connections()
+    conn.setdefault("Write row", {"main": [[]]})
+    conn["Write row"]["main"][0].append(
+        {"node": "Compose notification (template)", "type": "main", "index": 0})
+    conn["Compose notification (template)"] = {"main": [[
+        {"node": "Generate card (OpenRouter image)", "type": "main", "index": 0}]]}
+    conn["Generate card (OpenRouter image)"] = {"main": [[
+        {"node": "Card bytes and cost", "type": "main", "index": 0}]]}
+    conn["Card bytes and cost"] = {"main": [[
+        {"node": "Base64 to file", "type": "main", "index": 0}]]}
+    conn["Base64 to file"] = {"main": [[
+        {"node": "Send generated card (Telegram photo)", "type": "main", "index": 0}]]}
+    return {"name": "С8 · Кейс 4 — генерация карточки (живой узел)",
+            "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
+
+
 def api(method, path, body=None):
     req = urllib.request.Request(
         f"{API}{path}", method=method,
@@ -506,6 +687,7 @@ STAGES = {
     "stage-1-before": stage_1_before, "stage-1-after": stage_1_after,
     "stage-2": stage_2, "stage-3a-model": stage_3a_model,
     "stage-3b-code": stage_3b_code, "stage-4": stage_4,
+    "stage-4-generate": stage_4_generate,
 }
 
 

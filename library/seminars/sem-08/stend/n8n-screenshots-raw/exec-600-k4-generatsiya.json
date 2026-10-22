@@ -1,0 +1,1175 @@
+{
+ "id": "600",
+ "finished": true,
+ "mode": "webhook",
+ "retryOf": null,
+ "retrySuccessId": null,
+ "status": "success",
+ "createdAt": "2026-10-22T10:54:56.630Z",
+ "startedAt": "2026-10-22T10:54:56.658Z",
+ "stoppedAt": "2026-10-22T10:55:05.546Z",
+ "deletedAt": null,
+ "workflowId": "Yg4CcRdssgX3lfvw",
+ "waitTill": null,
+ "storedAt": "db",
+ "tracingContext": null,
+ "deduplicationKey": null,
+ "jsonSizeBytes": 2426402,
+ "binaryDataSizeBytes": 899409,
+ "workflowVersionId": "483e2170-e1b7-4933-87c3-5664351f8073",
+ "usedPrivateCredentials": false,
+ "data": {
+  "version": 1,
+  "startData": {},
+  "resultData": {
+   "runData": {
+    "Request form": [
+     {
+      "startTime": 1792666496807,
+      "executionIndex": 0,
+      "source": [],
+      "hints": [],
+      "executionTime": 1,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "": null,
+           "Имя": "Олег",
+           "Контакт": "+7 900 111-22-33",
+           "Что нужно": "нужно перенести занятие по математике на следующую неделю",
+           "submittedAt": "2026-10-22T13:54:56.617+03:00",
+           "formMode": "production"
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Model": [
+     {
+      "startTime": 1792666496830,
+      "executionTime": 1677,
+      "executionIndex": 2,
+      "executionStatus": "success",
+      "source": [
+       {
+        "previousNode": "Extract fields",
+        "previousNodeRun": 0
+       }
+      ],
+      "data": {
+       "ai_languageModel": [
+        [
+         {
+          "json": {
+           "response": {
+            "generations": [
+             [
+              {
+               "text": "```json\n{\"topic\":\"перенос занятия\",\"urgency\":\"на неделе\",\"contact_from_text\":\"\",\"extra_topics\":\"\"}\n```",
+               "generationInfo": {
+                "finish_reason": "stop"
+               }
+              }
+             ]
+            ]
+           },
+           "tokenUsage": {
+            "completionTokens": 28,
+            "promptTokens": 520,
+            "totalTokens": 548
+           }
+          }
+         }
+        ]
+       ]
+      },
+      "inputOverride": {
+       "ai_languageModel": [
+        [
+         {
+          "json": {
+           "messages": [
+            "System: You are an expert extraction algorithm.\nOnly extract relevant information from the text.\nIf you do not know the value of an attribute asked to extract, you may omit the attribute's value.\nYou must format your output as a JSON value that adheres to a given \"JSON Schema\" instance.\n\n\"JSON Schema\" is a declarative language that allows you to annotate and validate JSON documents.\n\nFor example, the example \"JSON Schema\" instance {{\"properties\": {{\"foo\": {{\"description\": \"a list of test words\", \"type\": \"array\", \"items\": {{\"type\": \"string\"}}}}}}, \"required\": [\"foo\"]}}}}\nwould match an object with one required property, \"foo\". The \"type\" property specifies \"foo\" must be an \"array\", and the \"description\" property semantically describes it as \"a list of test words\". The items within \"foo\" must be strings.\nThus, the object {{\"foo\": [\"bar\", \"baz\"]}} is a well-formatted instance of this example \"JSON Schema\". The object {{\"properties\": {{\"foo\": [\"bar\", \"baz\"]}}}} is not well-formatted.\n\nYour output will be parsed and type-checked according to the provided schema instance, so make sure all fields in your output match the schema exactly and there are no trailing commas!\n\nHere is the JSON Schema instance your output must adhere to. Include the enclosing markdown codeblock:\n```json\n{\"type\":\"object\",\"properties\":{\"topic\":{\"type\":\"string\",\"enum\":[\"курс\",\"перенос занятия\",\"оплата\",\"другое\"],\"description\":\"о чём заявка; если ни одно не подходит — «другое»\"},\"urgency\":{\"type\":\"string\",\"enum\":[\"сегодня\",\"на неделе\",\"не указано\"],\"description\":\"когда человек ждёт ответа; если не сказано — «не указано»\"},\"contact_from_text\":{\"type\":\"string\",\"description\":\"телефон или почта, указанные В ТЕКСТЕ заявки; если в тексте их нет — пустая строка\"},\"extra_topics\":{\"type\":\"string\",\"description\":\"остальные темы из этого же списка, если в заявке их несколько, через запятую; если тема одна — пустая строка\"}},\"required\":[\"topic\",\"urgency\"],\"additionalProperties\":false,\"$schema\":\"http://json-schema.org/draft-07/schema#\"}\n```\n\nHuman: нужно перенести занятие по математике на следующую неделю"
+           ],
+           "estimatedTokens": 512,
+           "options": {
+            "openai_api_key": {
+             "lc": 1,
+             "type": "secret",
+             "id": [
+              "OPENAI_API_KEY"
+             ]
+            },
+            "model": "openai/gpt-4o-mini",
+            "max_retries": 2,
+            "configuration": {
+             "baseURL": "https://openrouter.ai/api/v1",
+             "fetchOptions": {
+              "dispatcher": {
+               "_events": {},
+               "_eventsCount": 0
+              }
+             }
+            },
+            "model_kwargs": {}
+           }
+          }
+         }
+        ]
+       ]
+      },
+      "metadata": {
+       "subRun": [
+        {
+         "node": "Model",
+         "runIndex": 0
+        }
+       ]
+      }
+     }
+    ],
+    "Extract fields": [
+     {
+      "startTime": 1792666496808,
+      "executionIndex": 1,
+      "source": [
+       {
+        "previousNode": "Request form",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 1701,
+      "metadata": {
+       "tracing": {
+        "llm.tokens.in": 520,
+        "llm.tokens.out": 28,
+        "llm.tokens.total": 548,
+        "llm.tokens.estimated": false
+       }
+      },
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "output": {
+            "topic": "перенос занятия",
+            "urgency": "на неделе",
+            "contact_from_text": "",
+            "extra_topics": ""
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ],
+        []
+       ]
+      }
+     }
+    ],
+    "Vocabulary check": [
+     {
+      "startTime": 1792666498510,
+      "executionIndex": 3,
+      "source": [
+       {
+        "previousNode": "Extract fields",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 7,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "output": {
+            "topic": "перенос занятия",
+            "urgency": "на неделе",
+            "contact_from_text": "",
+            "extra_topics": ""
+           },
+           "topic": "перенос занятия",
+           "urgency": "на неделе",
+           "contact_from_text": "",
+           "status": "ok",
+           "extra_topics": ""
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Write row": [
+     {
+      "startTime": 1792666498518,
+      "executionIndex": 4,
+      "source": [
+       {
+        "previousNode": "Vocabulary check",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 32,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "received_at": "2026-10-22T13:54:58.523+03:00",
+           "name": "Олег",
+           "contact": "+7 900 111-22-33",
+           "request_text": "нужно перенести занятие по математике на следующую неделю",
+           "topic": "перенос занятия",
+           "urgency": "на неделе",
+           "contact_from_text": "",
+           "status": "ok",
+           "extra_topics": "",
+           "id": 40,
+           "createdAt": "2026-10-22T10:54:58.546Z",
+           "updatedAt": "2026-10-22T10:54:58.546Z"
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Compose notification (template)": [
+     {
+      "startTime": 1792666498551,
+      "executionIndex": 5,
+      "source": [
+       {
+        "previousNode": "Write row",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 4,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "received_at": "2026-10-22T13:54:58.523+03:00",
+           "name": "Олег",
+           "contact": "+7 900 111-22-33",
+           "request_text": "нужно перенести занятие по математике на следующую неделю",
+           "topic": "перенос занятия",
+           "urgency": "на неделе",
+           "contact_from_text": "",
+           "status": "ok",
+           "extra_topics": "",
+           "id": 40,
+           "createdAt": "2026-10-22T10:54:58.546Z",
+           "updatedAt": "2026-10-22T10:54:58.546Z",
+           "notification_text": "Новая заявка от Олег: тема «перенос занятия»."
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Generate card (OpenRouter image)": [
+     {
+      "startTime": 1792666498555,
+      "executionIndex": 6,
+      "source": [
+       {
+        "previousNode": "Compose notification (template)",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 5485,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "id": "gen-1792666498-SGdk7K0gWReXafabxqkM",
+           "object": "chat.completion",
+           "created": 1792666498,
+           "model": "google/gemini-2.5-flash-image",
+           "provider": "Google",
+           "system_fingerprint": null,
+           "service_tier": "default",
+           "choices": [
+            {
+             "index": 0,
+             "logprobs": null,
+             "finish_reason": "stop",
+             "native_finish_reason": "STOP",
+             "message": {
+              "role": "assistant",
+              "content": "Хорошо, вот карточка-уведомление для Telegram:\n",
+              "refusal": null,
+              "reasoning": null,
+              "images": [
+               {
+                "type": "image_url",
+                "image_url": {
+                 "url": "<обрезано при сохранении: 1199234 символов; картинка сохранена как k4-gen-card-exec600.png>"
+                }
+               }
+              ]
+             }
+            }
+           ],
+           "usage": {
+            "prompt_tokens": 96,
+            "completion_tokens": 1306,
+            "total_tokens": 1402,
+            "cost": 0.0387688,
+            "is_byok": false,
+            "prompt_tokens_details": {
+             "cached_tokens": 0,
+             "cache_write_tokens": 0,
+             "audio_tokens": 0,
+             "video_tokens": 0
+            },
+            "cost_details": {
+             "upstream_inference_cost": 0.0387688,
+             "upstream_inference_prompt_cost": 2.88e-05,
+             "upstream_inference_completions_cost": 0.03874
+            },
+            "completion_tokens_details": {
+             "reasoning_tokens": 0,
+             "image_tokens": 1290,
+             "audio_tokens": 0
+            }
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Card bytes and cost": [
+     {
+      "startTime": 1792666504041,
+      "executionIndex": 7,
+      "source": [
+       {
+        "previousNode": "Generate card (OpenRouter image)",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 14,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "data": "<обрезано при сохранении: 1199212 символов; картинка сохранена как k4-gen-card-exec600.png>",
+           "gen_cost_usd": 0.0387688,
+           "gen_model": "google/gemini-2.5-flash-image",
+           "gen_id": "gen-1792666498-SGdk7K0gWReXafabxqkM",
+           "gen_b64_chars": 1199234
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Base64 to file": [
+     {
+      "startTime": 1792666504055,
+      "executionIndex": 8,
+      "source": [
+       {
+        "previousNode": "Card bytes and cost",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 6,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {},
+          "binary": {
+           "data": {
+            "mimeType": "image/png",
+            "fileType": "image",
+            "fileExtension": "png",
+            "data": "filesystem-v2",
+            "fileName": "card.png",
+            "id": "filesystem-v2:workflows/Yg4CcRdssgX3lfvw/executions/600/binary_data/26d5c713-3662-492e-af10-e35ab739e3ec",
+            "fileSize": "899 kB",
+            "bytes": 899409
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Send generated card (Telegram photo)": [
+     {
+      "startTime": 1792666504062,
+      "executionIndex": 9,
+      "source": [
+       {
+        "previousNode": "Base64 to file",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 236,
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "ok": true,
+           "result": {
+            "message_id": 16,
+            "from": {
+             "id": 8961470896,
+             "is_bot": true,
+             "first_name": "n8n demo",
+             "username": "n8ndemo_study_bot"
+            },
+            "chat": {
+             "id": 266536553,
+             "first_name": "Maxim",
+             "last_name": "Levko",
+             "username": "Maxim_Levko",
+             "type": "private"
+            },
+            "date": 1792666504,
+            "photo": [
+             {
+              "file_id": "AgACAgIAAxkDAAMQatnriBKMnP1q-g-vMk3d72n4LkoAAl0caxvGOshKBgZ4Pi6sHp8BAAMCAANzAAM9BA",
+              "file_unique_id": "AQADXRxrG8Y6yEp4",
+              "file_size": 883,
+              "width": 90,
+              "height": 90
+             },
+             {
+              "file_id": "AgACAgIAAxkDAAMQatnriBKMnP1q-g-vMk3d72n4LkoAAl0caxvGOshKBgZ4Pi6sHp8BAAMCAANtAAM9BA",
+              "file_unique_id": "AQADXRxrG8Y6yEpy",
+              "file_size": 9076,
+              "width": 320,
+              "height": 320
+             },
+             {
+              "file_id": "AgACAgIAAxkDAAMQatnriBKMnP1q-g-vMk3d72n4LkoAAl0caxvGOshKBgZ4Pi6sHp8BAAMCAAN4AAM9BA",
+              "file_unique_id": "AQADXRxrG8Y6yEp9",
+              "file_size": 34786,
+              "width": 800,
+              "height": 800
+             },
+             {
+              "file_id": "AgACAgIAAxkDAAMQatnriBKMnP1q-g-vMk3d72n4LkoAAl0caxvGOshKBgZ4Pi6sHp8BAAMCAAN5AAM9BA",
+              "file_unique_id": "AQADXRxrG8Y6yEp-",
+              "file_size": 48608,
+              "width": 1024,
+              "height": 1024
+             }
+            ],
+            "caption": "Новая заявка от Олег: тема «перенос занятия»."
+           }
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ],
+    "Result screen": [
+     {
+      "startTime": 1792666505545,
+      "executionIndex": 0,
+      "source": [
+       {
+        "previousNode": "Write row",
+        "previousNodeOutput": 0,
+        "previousNodeRun": 0
+       }
+      ],
+      "hints": [],
+      "executionTime": 1,
+      "metadata": {
+       "resumeFormUrl": "https://n8n.lessons.tellian.io/form-waiting/600?signature=308449a4477834565026ed6b25e48778f244008e964cf392c86268638859593b",
+       "forwardAllOutputs": true
+      },
+      "executionStatus": "success",
+      "data": {
+       "main": [
+        [
+         {
+          "json": {
+           "received_at": "2026-10-22T13:54:58.523+03:00",
+           "name": "Олег",
+           "contact": "+7 900 111-22-33",
+           "request_text": "нужно перенести занятие по математике на следующую неделю",
+           "topic": "перенос занятия",
+           "urgency": "на неделе",
+           "contact_from_text": "",
+           "status": "ok",
+           "extra_topics": "",
+           "id": 40,
+           "createdAt": "2026-10-22T10:54:58.546Z",
+           "updatedAt": "2026-10-22T10:54:58.546Z"
+          },
+          "pairedItem": {
+           "item": 0
+          }
+         }
+        ]
+       ]
+      }
+     }
+    ]
+   },
+   "lastNodeExecuted": "Result screen"
+  },
+  "executionData": {
+   "contextData": {},
+   "nodeExecutionStack": [],
+   "metadata": {
+    "Model": [
+     {
+      "subRun": [
+       {
+        "node": "Model",
+        "runIndex": 0
+       }
+      ]
+     }
+    ]
+   },
+   "waitingExecution": {},
+   "waitingExecutionSource": {},
+   "runtimeData": {
+    "version": 1,
+    "establishedAt": 1792666496621,
+    "source": "webhook",
+    "triggerNode": {
+     "name": "Request form",
+     "type": "n8n-nodes-base.formTrigger"
+    },
+    "redaction": {
+     "version": 2,
+     "production": false,
+     "manual": false
+    }
+   }
+  },
+  "resumeToken": "308449a4477834565026ed6b25e48778f244008e964cf392c86268638859593b"
+ },
+ "customData": {},
+ "workflowData": {
+  "id": "Yg4CcRdssgX3lfvw",
+  "name": "С8 · Кейс 4 — генерация карточки (живой узел)",
+  "nodes": [
+   {
+    "id": "form",
+    "name": "Request form",
+    "webhookId": "s8-case4-generate",
+    "type": "n8n-nodes-base.formTrigger",
+    "typeVersion": 2.2,
+    "position": [
+     -180,
+     0
+    ],
+    "parameters": {
+     "authentication": "none",
+     "formTitle": "Заявка в учебный центр",
+     "formDescription": "Так выглядит вход процесса, который мы собираем",
+     "formFields": {
+      "values": [
+       {
+        "fieldType": "html",
+        "elementName": "",
+        "html": "<div style=\"font-size:14px;line-height:1.5\"><p style=\"margin:0 0 10px\">Заявка пройдёт <b>пять шагов</b>. После отправки вы увидите каждый из них на одном экране.</p><p style=\"margin:0 0 6px\"><b>1 · Форма</b> — то, что вы сейчас заполните: имя, контакт и свободный текст. Писать можно как человеку, без формата.</p><p style=\"margin:0 0 6px\"><b>2 · Извлечение</b> — шаг модели достаёт из текста <i>тему</i>, <i>срочность</i> и <i>контакт, указанный в тексте</i>.</p><p style=\"margin:0 0 6px\"><b>3 · Справочник</b> — сверяет тему и срочность со списком допустимых значений. Что не из списка или пусто — станет «другое» и «не указано».</p><p style=\"margin:0 0 6px\"><b>4 · Запись</b> — строка уходит в таблицу заявок.</p><p style=\"margin:0 0 10px\"><b>5 · Экран результата</b> — покажет все четыре шага подряд, здесь же.</p><p style=\"margin:0\"><b>Справочники:</b> тема — курс · перенос занятия · оплата · другое; срочность — сегодня · на неделе · не указано.</p></div>"
+       },
+       {
+        "fieldLabel": "Имя",
+        "fieldType": "text",
+        "placeholder": "",
+        "defaultValue": "",
+        "requiredField": true
+       },
+       {
+        "fieldLabel": "Контакт",
+        "fieldType": "text",
+        "placeholder": "телефон или почта",
+        "defaultValue": "",
+        "requiredField": true
+       },
+       {
+        "fieldLabel": "Что нужно",
+        "fieldType": "textarea",
+        "placeholder": "Напишите своими словами — например: «хочу на курс по аналитике, перезвоните сегодня»",
+        "defaultValue": "",
+        "requiredField": true
+       }
+      ]
+     },
+     "responseMode": "onReceived",
+     "addFormPage": "",
+     "options": {
+      "appendAttribution": false
+     }
+    }
+   },
+   {
+    "id": "extract",
+    "name": "Extract fields",
+    "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+    "typeVersion": 1,
+    "retryOnFail": true,
+    "maxTries": 3,
+    "waitBetweenTries": 2000,
+    "onError": "continueErrorOutput",
+    "position": [
+     60,
+     0
+    ],
+    "parameters": {
+     "text": "={{ $json['Что нужно'] }}",
+     "schemaType": "manual",
+     "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"topic\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"курс\",\n        \"перенос занятия\",\n        \"оплата\",\n        \"другое\"\n      ],\n      \"description\": \"о чём заявка; если ни одно не подходит — «другое»\"\n    },\n    \"urgency\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"сегодня\",\n        \"на неделе\",\n        \"не указано\"\n      ],\n      \"description\": \"когда человек ждёт ответа; если не сказано — «не указано»\"\n    },\n    \"contact_from_text\": {\n      \"type\": \"string\",\n      \"description\": \"телефон или почта, указанные В ТЕКСТЕ заявки; если в тексте их нет — пустая строка\"\n    },\n    \"extra_topics\": {\n      \"type\": \"string\",\n      \"description\": \"остальные темы из этого же списка, если в заявке их несколько, через запятую; если тема одна — пустая строка\"\n    }\n  },\n  \"required\": [\n    \"topic\",\n    \"urgency\"\n  ]\n}",
+     "options": {}
+    }
+   },
+   {
+    "id": "model",
+    "name": "Model",
+    "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+    "typeVersion": 1,
+    "position": [
+     60,
+     260
+    ],
+    "parameters": {
+     "notice": "",
+     "model": "openai/gpt-4o-mini",
+     "options": {}
+    },
+    "credentials": {
+     "openRouterApi": {
+      "id": "VbxiQn8TbqA4R2mw",
+      "name": "OpenRouter account"
+     }
+    }
+   },
+   {
+    "id": "vocab",
+    "name": "Vocabulary check",
+    "type": "n8n-nodes-base.set",
+    "typeVersion": 3.4,
+    "position": [
+     300,
+     -80
+    ],
+    "parameters": {
+     "mode": "manual",
+     "duplicateItem": false,
+     "assignments": {
+      "assignments": [
+       {
+        "id": "a1",
+        "name": "topic",
+        "type": "string",
+        "value": "={{ [\"курс\", \"перенос занятия\", \"оплата\", \"другое\"].includes($json.output.topic) ? $json.output.topic : 'другое' }}"
+       },
+       {
+        "id": "a2",
+        "name": "urgency",
+        "type": "string",
+        "value": "={{ [\"сегодня\", \"на неделе\", \"не указано\"].includes($json.output.urgency) ? $json.output.urgency : 'не указано' }}"
+       },
+       {
+        "id": "a3",
+        "name": "contact_from_text",
+        "type": "string",
+        "value": "={{ $json.output.contact_from_text || '' }}"
+       },
+       {
+        "id": "a4",
+        "name": "status",
+        "type": "string",
+        "value": "ok"
+       },
+       {
+        "id": "a5",
+        "name": "extra_topics",
+        "type": "string",
+        "value": "={{ ($json.output.extra_topics || '').split(',').map(s => s.trim()).filter(s => [\"курс\", \"перенос занятия\", \"оплата\", \"другое\"].includes(s)).join(' · ') }}"
+       }
+      ]
+     },
+     "includeOtherFields": true,
+     "include": "all",
+     "options": {}
+    }
+   },
+   {
+    "id": "table",
+    "name": "Write row",
+    "type": "n8n-nodes-base.dataTable",
+    "typeVersion": 1,
+    "position": [
+     540,
+     -80
+    ],
+    "parameters": {
+     "resource": "row",
+     "operation": "insert",
+     "dataTableId": {
+      "__rl": true,
+      "value": "xlDAQCm75jLAKNom",
+      "mode": "list",
+      "cachedResultName": "requests"
+     },
+     "columns": {
+      "mappingMode": "defineBelow",
+      "value": {
+       "received_at": "={{ $now.toISO() }}",
+       "name": "={{ $('Request form').item.json['Имя'] }}",
+       "contact": "={{ $('Request form').item.json['Контакт'] }}",
+       "request_text": "={{ $('Request form').item.json['Что нужно'] }}",
+       "topic": "={{ $json.topic }}",
+       "urgency": "={{ $json.urgency }}",
+       "contact_from_text": "={{ $json.contact_from_text }}",
+       "status": "={{ $json.status }}",
+       "extra_topics": "={{ $json.extra_topics || '' }}"
+      },
+      "matchingColumns": [],
+      "schema": []
+     },
+     "options": {}
+    }
+   },
+   {
+    "id": "screen",
+    "name": "Result screen",
+    "type": "n8n-nodes-base.form",
+    "typeVersion": 1,
+    "position": [
+     780,
+     -80
+    ],
+    "parameters": {
+     "triggerNotice": "",
+     "operation": "completion",
+     "respondWith": "text",
+     "completionTitle": "Заявка разобрана",
+     "completionMessage": "=<div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 1</div><div style=\"font-weight:700;margin:2px 0 6px\">Форма</div><div style=\"line-height:1.5\">{{ $('Request form').item.json['Что нужно'] }}</div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 2</div><div style=\"font-weight:700;margin:2px 0 6px\">Извлечение — что предложила модель</div><div style=\"line-height:1.5\">тема: <b>{{ $('Extract fields').item.json.output.topic }}</b><br>срочность: <b>{{ $('Extract fields').item.json.output.urgency }}</b><br>контакт из текста: <b>{{ $('Extract fields').item.json.output.contact_from_text || '—' }}</b></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 3</div><div style=\"font-weight:700;margin:2px 0 6px\">Справочник — что осталось после сверки</div><div style=\"line-height:1.5\">тема: <b>{{ $('Vocabulary check').item.json.topic }}</b><br>срочность: <b>{{ $('Vocabulary check').item.json.urgency }}</b><br>ещё в заявке: <b>{{ $('Vocabulary check').item.json.extra_topics || '—' }}</b></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 4</div><div style=\"font-weight:700;margin:2px 0 6px\">Запись</div><div style=\"line-height:1.5\">строка <b>{{ $json.id }}</b> в таблице requests, status = <b>{{ $json.status }}</b></div></div>",
+     "limitWaitTime": false,
+     "options": {
+      "appendAttribution": false
+     }
+    },
+    "webhookId": "e3f583e4-dcdf-4231-aa38-114ff47a0760"
+   },
+   {
+    "id": "table_err",
+    "name": "Write row · not parsed",
+    "type": "n8n-nodes-base.dataTable",
+    "typeVersion": 1,
+    "position": [
+     360,
+     200
+    ],
+    "parameters": {
+     "resource": "row",
+     "operation": "insert",
+     "dataTableId": {
+      "__rl": true,
+      "value": "xlDAQCm75jLAKNom",
+      "mode": "list",
+      "cachedResultName": "requests"
+     },
+     "columns": {
+      "mappingMode": "defineBelow",
+      "value": {
+       "received_at": "={{ $now.toISO() }}",
+       "name": "={{ $('Request form').item.json['Имя'] }}",
+       "contact": "={{ $('Request form').item.json['Контакт'] }}",
+       "request_text": "={{ $('Request form').item.json['Что нужно'] }}",
+       "topic": "другое",
+       "urgency": "не указано",
+       "contact_from_text": "",
+       "status": "not_parsed",
+       "extra_topics": ""
+      },
+      "matchingColumns": [],
+      "schema": []
+     },
+     "options": {}
+    }
+   },
+   {
+    "id": "screen_err",
+    "name": "Result screen · not parsed",
+    "type": "n8n-nodes-base.form",
+    "typeVersion": 1,
+    "position": [
+     620,
+     200
+    ],
+    "parameters": {
+     "triggerNotice": "",
+     "operation": "completion",
+     "respondWith": "text",
+     "completionTitle": "Заявка принята, но не разобрана",
+     "completionMessage": "=<div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 1</div><div style=\"font-weight:700;margin:2px 0 6px\">Форма</div><div style=\"line-height:1.5\">{{ $('Request form').item.json['Что нужно'] }}</div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 2</div><div style=\"font-weight:700;margin:2px 0 6px\">Извлечение</div><div style=\"line-height:1.5\"><b style=\"color:#B3261E\">вызов не удался</b> — три попытки с паузой по две секунды, все три неудачны</div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 3</div><div style=\"font-weight:700;margin:2px 0 6px\">Справочник</div><div style=\"line-height:1.5\">тема → <b>другое</b><br>срочность → <b>не указано</b><br><i>справочник сработал и на отказе: пустых клеток нет</i></div></div><div style=\"margin:0 0 14px;padding:10px 12px;border-left:3px solid #1C7293;background:#F4F7FA\"><div style=\"font-size:12px;color:#5B6B7F;letter-spacing:.04em\">ШАГ 4</div><div style=\"font-weight:700;margin:2px 0 6px\">Запись</div><div style=\"line-height:1.5\">строка в таблице есть, <b>status = not_parsed</b><br><i>заявка не потеряна — её видно по этому столбцу</i></div></div>",
+     "limitWaitTime": false,
+     "options": {
+      "appendAttribution": false
+     }
+    },
+    "webhookId": "f89e14f2-b417-47d8-85c1-4376ca6784e7"
+   },
+   {
+    "id": "notify_template",
+    "name": "Compose notification (template)",
+    "type": "n8n-nodes-base.set",
+    "typeVersion": 3.4,
+    "position": [
+     780,
+     -260
+    ],
+    "parameters": {
+     "mode": "manual",
+     "duplicateItem": false,
+     "assignments": {
+      "assignments": [
+       {
+        "id": "n1",
+        "name": "notification_text",
+        "type": "string",
+        "value": "=Новая заявка от {{ $('Request form').item.json['Имя'] }}: тема «{{ $('Vocabulary check').item.json.topic }}»{{ $('Vocabulary check').item.json.extra_topics ? ', также: ' + $('Vocabulary check').item.json.extra_topics : '' }}."
+       }
+      ]
+     },
+     "includeOtherFields": true,
+     "include": "all",
+     "options": {}
+    }
+   },
+   {
+    "id": "gen_card",
+    "name": "Generate card (OpenRouter image)",
+    "type": "n8n-nodes-base.httpRequest",
+    "typeVersion": 4.2,
+    "position": [
+     1020,
+     -260
+    ],
+    "parameters": {
+     "curlImport": "",
+     "method": "POST",
+     "url": "https://openrouter.ai/api/v1/chat/completions",
+     "authentication": "predefinedCredentialType",
+     "nodeCredentialType": "openRouterApi",
+     "provideSslCertificates": false,
+     "sendQuery": false,
+     "sendHeaders": false,
+     "sendBody": true,
+     "contentType": "json",
+     "specifyBody": "json",
+     "jsonBody": "={{ JSON.stringify({ model: 'google/gemini-2.5-flash-image', modalities: ['image', 'text'], usage: { include: true }, messages: [ { role: 'user', content: 'Нарисуй карточку-уведомление 1024 на 1024 точки для Telegram. Внутри изображения крупным, хорошо читаемым русским текстом напиши ровно эту строку: «' + $json.notification_text + '». Фон — спокойный синий градиент, текст белый, по центру. Никаких других надписей, подписей, логотипов и рамок.' } ] }) }}",
+     "options": {
+      "timeout": 120000
+     },
+     "infoMessage": ""
+    },
+    "credentials": {
+     "openRouterApi": {
+      "id": "VbxiQn8TbqA4R2mw",
+      "name": "OpenRouter account"
+     }
+    }
+   },
+   {
+    "id": "card_b64",
+    "name": "Card bytes and cost",
+    "type": "n8n-nodes-base.set",
+    "typeVersion": 3.4,
+    "position": [
+     1260,
+     -260
+    ],
+    "parameters": {
+     "mode": "manual",
+     "duplicateItem": false,
+     "assignments": {
+      "assignments": [
+       {
+        "id": "g1",
+        "name": "data",
+        "type": "string",
+        "value": "={{ $json.choices[0].message.images[0].image_url.url.split(',')[1] }}"
+       },
+       {
+        "id": "g2",
+        "name": "gen_cost_usd",
+        "type": "number",
+        "value": "={{ $json.usage.cost }}"
+       },
+       {
+        "id": "g3",
+        "name": "gen_model",
+        "type": "string",
+        "value": "={{ $json.model }}"
+       },
+       {
+        "id": "g4",
+        "name": "gen_id",
+        "type": "string",
+        "value": "={{ $json.id }}"
+       },
+       {
+        "id": "g5",
+        "name": "gen_b64_chars",
+        "type": "number",
+        "value": "={{ $json.choices[0].message.images[0].image_url.url.length }}"
+       }
+      ]
+     },
+     "includeOtherFields": false,
+     "options": {}
+    }
+   },
+   {
+    "id": "card_to_file",
+    "name": "Base64 to file",
+    "type": "n8n-nodes-base.convertToFile",
+    "typeVersion": 1.1,
+    "position": [
+     1500,
+     -260
+    ],
+    "parameters": {
+     "operation": "toBinary",
+     "sourceProperty": "data",
+     "binaryPropertyName": "data",
+     "options": {
+      "fileName": "card.png",
+      "mimeType": "image/png"
+     }
+    }
+   },
+   {
+    "id": "tg_gen_photo",
+    "name": "Send generated card (Telegram photo)",
+    "type": "n8n-nodes-base.telegram",
+    "typeVersion": 1.2,
+    "position": [
+     1740,
+     -260
+    ],
+    "parameters": {
+     "resource": "message",
+     "operation": "sendPhoto",
+     "chatId": "266536553",
+     "binaryData": true,
+     "binaryPropertyName": "data",
+     "replyMarkup": "none",
+     "additionalFields": {
+      "caption": "={{ $('Compose notification (template)').item.json.notification_text }}"
+     }
+    },
+    "credentials": {
+     "telegramApi": {
+      "id": "kfXE6PWKNzA56vc6",
+      "name": "Telegram account (С8)"
+     }
+    },
+    "webhookId": "bd9bc2b7-775d-4a44-883f-4ff3f5425ace"
+   }
+  ],
+  "connections": {
+   "Request form": {
+    "main": [
+     [
+      {
+       "node": "Extract fields",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Extract fields": {
+    "main": [
+     [
+      {
+       "node": "Vocabulary check",
+       "type": "main",
+       "index": 0
+      }
+     ],
+     [
+      {
+       "node": "Write row · not parsed",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Vocabulary check": {
+    "main": [
+     [
+      {
+       "node": "Write row",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Write row": {
+    "main": [
+     [
+      {
+       "node": "Result screen",
+       "type": "main",
+       "index": 0
+      },
+      {
+       "node": "Compose notification (template)",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Write row · not parsed": {
+    "main": [
+     [
+      {
+       "node": "Result screen · not parsed",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Model": {
+    "ai_languageModel": [
+     [
+      {
+       "node": "Extract fields",
+       "type": "ai_languageModel",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Compose notification (template)": {
+    "main": [
+     [
+      {
+       "node": "Generate card (OpenRouter image)",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Generate card (OpenRouter image)": {
+    "main": [
+     [
+      {
+       "node": "Card bytes and cost",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Card bytes and cost": {
+    "main": [
+     [
+      {
+       "node": "Base64 to file",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   },
+   "Base64 to file": {
+    "main": [
+     [
+      {
+       "node": "Send generated card (Telegram photo)",
+       "type": "main",
+       "index": 0
+      }
+     ]
+    ]
+   }
+  },
+  "settings": {
+   "executionOrder": "v1"
+  },
+  "nodeGroups": []
+ }
+}

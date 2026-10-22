@@ -50,9 +50,11 @@ EMU, прогоны, заметки), и всякое расхождение о�
 сборке PPTX и от рендера не зависят.
 """
 import argparse
+import re
 import sys
 from pathlib import Path
 
+import yaml
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
 HERE = Path(__file__).resolve().parent
@@ -1784,12 +1786,79 @@ def fit_media(sl, root, w0=MEDIA_W):
             f"ширине до {MEDIA_W_FLOOR:.2f}\" — кадру нечего ей отдать")
 
 
+def _scheme_on_disk(ref, sd):
+    """Несёт ли кадр `ref` свою схему — по файлу на диске, а не по сборке.
+
+    Нужно ОДНОМУ случаю: частичной сборке (`--only s49_1`), где названный
+    кадр в пакет не попал и спросить его в сборке нельзя. На полном прогоне
+    эта ветка не берётся ни разу — ref резолвится по собранным кадрам.
+
+    Читает фронтматтер сам, а не через `slidefile.read_slide`: тот на каждом
+    чтении складывает в отчёт свои предупреждения (`[ссылка]`, `[файл]`), и
+    кадр-цель получил бы их ВТОРОЙ раз — один раз за себя, второй за то, что
+    на него сослались. Возвращает None, если файла нет вовсе."""
+    hit = [f for f in sorted(Path(sd).glob("s*.md"))
+           if f.name.split("-")[0] == ref]
+    if not hit:
+        return None
+    m = re.match(r"^---\n(.*?)\n---", hit[0].read_text(encoding="utf-8"), re.S)
+    if not m:
+        return None
+    try:
+        meta = yaml.safe_load(m.group(1)) or {}
+    except yaml.YAMLError:
+        return None
+    return bool(meta.get("scheme"))
+
+
+def check_scheme_refs(refs, built, sd):
+    """`scheme_ref: <sid>` — разбор, чья схема стоит на ДРУГОМ кадре.
+
+    Заведено под `s49_1` (issue #293, Этап E). `s49` разрезан надвое под
+    игру-предсказание: на первой половине постановка опыта и схема порядка
+    чтения, на второй — вскрытие. Схема у разреза одна по построению, и
+    ставить её дублем на вторую половину запрещено прямо (§5.12: два
+    написания одного содержания на соседних кадрах). Но сторож `[схема]`
+    видит только своё поле и называет вторую половину кадром разбора без
+    схемы — то есть требует ровно того, что запрещено.
+
+    Поэтому ссылка, а не отмена сторожа и не исключение по имени кадра:
+    `scheme_ref` ПЕРЕАДРЕСУЕТ проверку, и проверяется она целиком. Битый
+    ref — то же блокирующее `[схема]`, с уточнением, чем именно он битый:
+    названного кадра нет · кадр есть, а схемы на нём нет · ссылка на себя.
+    Ссылка, по которой ничего не лежит, хуже отсутствия поля: отсутствие
+    видно, а мёртвая ссылка читается как сделанная работа."""
+    for sid, ref in refs:
+        if ref == sid:
+            report.warn(
+                f"[схема] {sid}: `scheme_ref: {ref}` ссылается на сам кадр — "
+                "схема не может стоять на кадре, у которого её нет")
+            continue
+        has = built.get(ref)
+        where = "в сборке"
+        if has is None:
+            has = _scheme_on_disk(ref, sd)
+            where = "ни в сборке, ни в каталоге кадров"
+        if has is None:
+            report.warn(
+                f"[схема] {sid}: `scheme_ref: {ref}` — кадра `{ref}` нет "
+                f"{where}; схему переадресовали в пустоту")
+        elif not has:
+            report.warn(
+                f"[схема] {sid}: `scheme_ref: {ref}` — кадр `{ref}` есть, но "
+                "своей схемы не несёт; переадресовывать проверку некуда")
+
+
 def build(only=None, out=OUT, slides_dir=None, root=None):
     sd = slides_dir or SLIDES_DIR
     root = root or LEC_ROOT
     p = prims.new_deck()
     n = 0
     plotno = []
+    # Схемы собранных кадров и отложенные ссылки на них: ref проверяется
+    # ПОСЛЕ прогона, иначе кадр, стоящий раньше своей цели, судился бы по
+    # ещё не прочитанной её половине.
+    sch_built, sch_refs = {}, []
     for f in slidefile.slide_files(sd, only):
         sl = slidefile.read_slide(f)
         if sl is None:
@@ -1801,16 +1870,24 @@ def build(only=None, out=OUT, slides_dir=None, root=None):
         # предупреждение стояло рядом со своим кадром в отчёте.
         slov, _ = plotnost.proverit_kadr(sl)
         plotno.append((sl.sid, slov, kind))
+        sch_built[sl.sid] = bool(sl.meta.get("scheme"))
         if kind == "case" and not sl.meta.get("scheme"):
-            report.warn(
-                f"[схема] {sl.sid}: кадр разбора без поля `scheme` — схема "
-                "решения и есть главный носитель инженерного содержания, "
-                "текст к ней пояснение (§10.3)")
+            ref = str(sl.meta.get("scheme_ref") or "").strip()
+            if ref:
+                sch_refs.append((sl.sid, ref))
+            else:
+                report.warn(
+                    f"[схема] {sl.sid}: кадр разбора без поля `scheme` — "
+                    "схема решения и есть главный носитель инженерного "
+                    "содержания, текст к ней пояснение (§10.3). Если схема "
+                    "стоит на соседней половине разреза — назовите её "
+                    "кадром в `scheme_ref`")
         s = BUILDERS.get(kind, content)(p, sl, root)
         markup.notes_with_links(s, sl.notes)
         if sl.sid not in report.GOLD_SEEN:
             report.warn(f"[золото] {sl.sid}: золотого акцента на кадре нет")
         n += 1
+    check_scheme_refs(sch_refs, sch_built, sd)
     plotnost.proverit_mediany(plotno)
     metrics.font_gaps()
     p.save(str(out))

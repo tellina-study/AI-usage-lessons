@@ -740,6 +740,139 @@ def slot_row(sl, x, y, w, slots, *, accent_idx=(), h=1.5, gap=0.16, label="сл�
     return h
 
 
+# ── Полоса плашек: несущие числа отдельным рядом ────────────────────────────
+#
+# Приём заведён по §5.4 плана «конфетки» Семинара 8 и по правилу А11 /
+# `trebovaniya-k-soderzhaniyu-forma.md` §5.12: «числа — плашками, а не внутри
+# абзаца». До него в ките не было ни одной формы, у которой ЗНАЧЕНИЕ набирается
+# крупнее подписи: `slot_row` ставит заголовок 12,5 pt над курсивным
+# пояснением 9,8 — это карточка, а не число; `form_fact` держит число внутри
+# строки текста. Поэтому «$304 млн», «9 из 101», «~2000 человек» уходили в
+# прозу жирным начертанием — ровно то, что §5.12 запрещает.
+#
+# Высота ряда ФИКСИРОВАНА (`BAND_H`), а не считается по содержимому: ряд
+# плашек возвращается в деке несколько раз, и посчитанный по своему тексту он
+# выглядел бы каждый раз другой формой (та же причина, по которой у оси
+# занятия доли колонок заданы явно).
+BAND_H = 1.42
+BAND_VALUE_SIZES = (34, 32, 30, 28)   # пол 28 pt — ниже плашка перестаёт быть числом
+BAND_CAPTION_SIZE = 11.5
+BAND_CAPTION_FLOOR = 10.0
+BAND_MAX_PLATES = 3
+BAND_CAPTION_MAX_LINES = 2
+
+
+def metric_band(sl, x, y, w, plates, *, gap=0.22, max_h=None, label="плашки"):
+    """Ряд из 2–3 плашек «крупное значение + подпись».
+
+    `plates` — последовательность `(значение, подпись, золотая?)`. Золотая
+    плашка допускается ОДНА: золото на экране означает один акцент (правило
+    §3.8 плана), и два золотых числа в одном ряду обнуляют оба.
+
+    Четвёртая плашка, подпись длиннее двух строк и значение, не влезающее в
+    28 pt, — ПРЕДУПРЕЖДЕНИЕ сборки, а не молчаливое ужатие: ряд, тихо
+    набранный 22-м кеглем, читается как обычный текст в рамке, то есть
+    перестаёт быть тем приёмом, ради которого его поставили."""
+    plates = [tuple(p) + (False,) * (3 - len(p)) for p in plates]
+    n = len(plates)
+    if n < 2 or n > BAND_MAX_PLATES:
+        M._WARNINGS.append(
+            f"РЯД ПЛАШЕК [{label}]: плашек {n} — приём рассчитан на 2–{BAND_MAX_PLATES}; "
+            f"{'одна плашка — это не ряд, возьмите form_fact' if n < 2 else 'лишние ставьте вторым рядом или сокращайте состав'}")
+    gold_n = sum(1 for _v, _c, g in plates if g)
+    if gold_n > 1:
+        M._WARNINGS.append(
+            f"РЯД ПЛАШЕК [{label}]: золотых плашек {gold_n} — золото означает ОДИН "
+            f"акцент на экране (§3.8); пометьте жирным только несущее значение")
+
+    h = BAND_H
+    if max_h and max_h < h - 0.01:
+        M._WARNINGS.append(
+            f"РЯД ПЛАШЕК [{label}]: на ряд отведено {max_h:.2f}″ при фиксированной "
+            f"высоте {BAND_H:.2f}″ — соседние блоки съели место, ряд сжат")
+        h = max_h
+    cw = (w - gap * (max(n, 1) - 1)) / max(n, 1)
+    inner = cw - 0.28
+
+    # Кегль значения — общий на весь ряд: плашки одного ряда одной высоты и
+    # одного веса, иначе ряд читается как три разных по важности числа.
+    vs = BAND_VALUE_SIZES[0]
+    for cand in BAND_VALUE_SIZES:
+        vs = cand
+        if all(M.nlines(plain(v), cand, inner, bold=True) <= 1 for v, _c, _g in plates):
+            break
+    for v, _c, _g in plates:
+        if M.nlines(plain(v), vs, inner, bold=True) > 1:
+            M._WARNINGS.append(
+                f"РЯД ПЛАШЕК [{label}]: значение «{plain(v)[:28]}» не встаёт в одну "
+                f"строку даже при {BAND_VALUE_SIZES[-1]} pt — это не число, "
+                f"а фраза; перенесите её в подпись")
+            break
+
+    cs = BAND_CAPTION_SIZE
+    while cs > BAND_CAPTION_FLOOR and any(
+            M.nlines(plain(c), cs, inner) > BAND_CAPTION_MAX_LINES for _v, c, _g in plates):
+        cs -= 0.5
+    for _v, c, _g in plates:
+        if M.nlines(plain(c), cs, inner) > BAND_CAPTION_MAX_LINES:
+            M._WARNINGS.append(
+                f"РЯД ПЛАШЕК [{label}]: подпись «{plain(c)[:34]}» занимает "
+                f"{M.nlines(plain(c), cs, inner)} строки при {cs} pt (пол {BAND_CAPTION_FLOOR}) — "
+                f"подпись плашки не длиннее двух строк, сокращайте текст")
+            break
+
+    vh = M.line_h(vs, 1.08)
+    ch_ = min(BAND_CAPTION_MAX_LINES, max(
+        (M.nlines(plain(c), cs, inner) for _v, c, _g in plates), default=1)) * M.line_h(cs, 1.18)
+    top = max((h - vh - ch_ - 0.12) / 2, 0.08)
+    cx = x
+    for i, (value, caption, gold) in enumerate(plates):
+        ocean_box(sl, cx, y, cw, h, fill=(GOLD_TINT if gold else SURFACE),
+                  stroke=(GOLD if gold else LIGHT), stroke_pt=1.8 if gold else 1.5)
+        text_box(sl, cx + 0.14, y + top, inner, vh, plain(value), size=vs, bold=True,
+                 color=(GOLD_DARK if gold else MID), align=PP_ALIGN.CENTER,
+                 anchor=MSO_ANCHOR.MIDDLE, spacing=1.08, rich=False)
+        if caption:
+            M.fits(plain(caption), cs, inner, ch_ + 0.04, label=f"{label} {i}")
+            text_box(sl, cx + 0.14, y + top + vh + 0.10, inner, ch_, plain(caption),
+                     size=cs, color=INK, align=PP_ALIGN.CENTER, spacing=1.18, rich=False)
+        cx += cw + gap
+    return h
+
+
+def form_footnote(sl, x, y, w, lines, *, size=10.5, max_h=None, label="сноска"):
+    """Сноска-пояснение термина. Седьмая работа слайда и седьмая форма:
+    не вопрос, не вывод, не реплика, не оговорка и не факт — короткое
+    «что это слово значит», набранное мельче тела и подвешенное под блоком,
+    к которому относится.
+
+    Устройство — минимальное из всех форм: тонкая линия сверху и серый текст,
+    без заливки и без рамки. Так и должно быть: сноска обязана читаться как
+    подчинённая строка, а не как ещё один блок содержания. Пол кегля 10 pt
+    (§3.6 плана «конфетки»): мельче — уже не читается с задних рядов, и
+    тогда честнее снять её совсем, чем поставить нечитаемой."""
+    # Поля у сноски самые тесные в ките (0,14″ против 0,30″ у остальных форм),
+    # и это не экономия ради экономии: сноска ВСЕГДА стоит на слайде, которому
+    # уже не хватает места — иначе её содержание было бы обычным блоком.
+    PAD = 0.14
+    inner = w - 0.3
+    if max_h:
+        while size > BAND_CAPTION_FLOOR and \
+                M.rich_block_h(lines, size, inner, spacing=1.2) + PAD > max_h:
+            size -= 0.5
+    th = M.rich_block_h(lines, size, inner, spacing=1.2)
+    h = th + PAD
+    if max_h:
+        h = min(h, max_h)
+    M.floor_reached(size, BAND_CAPTION_FLOOR, label=label,
+                    chars=sum(len(plain(l)) for l in lines))
+    hairline(sl, x, y + 0.01, x + min(w, 4.0))
+    M.fits(" ".join(plain(l) for l in lines), size, inner, h - 0.10, label=label, spacing=1.2)
+    text_box(sl, x, y + 0.09, inner, h - 0.09, lines, size=size, color=SLATE,
+             anchor=MSO_ANCHOR.TOP, spacing=1.2)
+    return h
+
+
 def code_w(ln, size, markup):
     """Ширина строки кода. При `markup` куски в обратных кавычках меряются
     ЖИРНЫМ моноширинным и без самих кавычек — тем, чем будут нарисованы."""
@@ -954,9 +1087,16 @@ def roadmap(sl, stages, cur_idx, *, x=0.55, y=6.55, w=12.23):
 #   реплика «…»   → тонкая тиловая линия слева, курсив, тихо     (form_speech)
 #   оговорка      → пунктирная серая рамка                       (form_caveat)
 #   факт / число  → тиловая заливка + тиловая планка             (form_fact)
+#   сноска-глосс  → тонкая линия сверху, мелкий серый текст      (form_footnote)
 #   листинг/вывод → СВЕТЛАЯ моноширинная карточка                (code_card)
 #
 # Золотая ЗАЛИВКА С РАМКОЙ существует ровно в одном месте — на вопросе.
+#
+# Седьмая форма, `form_footnote`, заведена позже остальных (план «конфетки»
+# Семинара 8, §4.10) под работу, которой у деки до сих пор не было: ПОЯСНИТЬ
+# ТЕРМИН, стоящий на том же экране. Она не вывод (не золото), не наблюдение
+# (не тил) и не оговорка (не пунктир) — пунктирная рамка обещала бы, что
+# здесь чего-то НЕТ, тогда как сноска, наоборот, добавляет то, чего не хватало.
 
 
 def form_question(sl, x, y, w, lines, *, size=16.5, max_h=None, label="вопрос"):

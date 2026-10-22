@@ -96,18 +96,18 @@ def main():
     strany = A.stolbtsy(
         "Допущено без ссылки на предшественник",
         STRANY, "на миллион населения · признак новизны у каждой строки свой",
-        zoloto=1, drobnaya=True, kegl=11, kegl_zagolovka=12,
+        zoloto=1, drobnaya=True, kegl_zagolovka=14,
         gorizontal=True)
     dinamika = A.linii(
         "Накопленный счёт изделий с ИИ, США",
         GODY,
         [("без ссылки на предшественник", NOVYE, A.DEEP),
          ("по похожести на предшественник", KOROTKIY, A.TEAL)],
-        "штук, накопленным счётом", kegl=11, kegl_zagolovka=12)
+        "штук, накопленным счётом", kegl_zagolovka=14)
     potok = A.stolbtsy(
         "Поток за год через названные системы",
         POTOK, "за год · единица у каждого столбца своя, названа у числа",
-        zoloto=0, drobnaya=False, kegl=11, kegl_zagolovka=12,
+        zoloto=0, drobnaya=False, kegl_zagolovka=14,
         gorizontal=True, podpisi_znacheniy=POTOK_PODPISI)
 
     # ПРОПОРЦИЯ 4,07 — под полосу аналитического кадра, а не под боковую

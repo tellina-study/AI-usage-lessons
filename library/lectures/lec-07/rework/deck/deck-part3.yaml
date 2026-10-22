@@ -78,7 +78,7 @@ slides:
     local_id: "s9-02"                      # номер SLIDE-PLAN.md
     file: slides/s105-ustroystvo-otozvali-resheniya-ostalis.md
     type: comparison
-    title: "Изделие отзовут. Решения этого года останутся."
+    title: "Изделие отзовут, решения останутся"
     plan_section: "Раздел 9. Закрытие"
     chapter_ref: "chapter-part5b.md §12.2"
     timing_min: 1

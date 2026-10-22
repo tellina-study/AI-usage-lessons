@@ -119,16 +119,66 @@ def _zapas_sprava(gorizontal, kegl, podpisi, znach, drobnaya):
     return min(150, max(34, int(dlina * kegl * 0.62)))
 
 
-def _osnova(kegl):
+# ПОЛ КЕГЛЯ ПОДПИСЕЙ ДИАГРАММЫ (#293, Этап D, П6-б.5). Прожарка: «подписи
+# осей и значений на пределе читаемости — пол для подписей значений 12–13 пт
+# В ТОЧКАХ СЛАЙДА (`analitika.py` это умеет — задать в ШАБЛОНЕ, не per-кадр)».
+#
+# Шаблон это и правда умел, и ровно поэтому умолчание здесь было ошибкой, а
+# не мелочью: кегли тут уже заданы в точках слайда (см. п. 1 шапки модуля),
+# то есть `kegl=11` означало одиннадцать точек на экране — НИЖЕ пола видимого
+# слоя курса (12 пт, `deckkit/floor.py`), и ни один сторож этого не видел,
+# потому что подпись уехала в пиксели картинки и для сборки её больше нет.
+# Три кадра аналитики Лекции 7 так и стояли: два на 11 пт, один на 10,5.
+#
+# Умолчание поднято до 13 — середины названного прожаркой окна 12–13, — а
+# `KEGL_POL` ниже делает пол ПРОВЕРЯЕМЫМ: кегль мельче просто не принимается.
+# Отказом, а не тихим подъёмом: рисунок, молча набранный не тем кеглем, — это
+# та же подмена, против которой заведён весь этот модуль.
+KEGL_POL = 12          # пол видимого слоя курса, в точках СЛАЙДА
+KEGL_PODPISEY = 13     # умолчание для подписей осей и значений
+KEGL_ZAGOLOVKA = 15    # умолчание для заголовка диаграммы
+
+
+def _osnova(kegl, pochemu=None):
     """Общее для обоих видов: шрифт, цвет текста, прозрачный фон выключен."""
+    _pol(kegl, "подпись оси или значения", pochemu)
     return {
         "font": {"size": kegl, "family": "sans-serif"},
         "color": TEKST,
     }
 
 
-def stolbtsy(zagolovok, ryady, edinitsa, *, zoloto=None, kegl=11,
-             kegl_zagolovka=13, drobnaya=False, gorizontal=False,
+def _pol(kegl, chto, pochemu=None):
+    """Пол кегля подписи. Отказ, а не поправка: см. комментарий выше.
+
+    `pochemu` — ОБЪЯВЛЕННОЕ исключение: причина, по которой этот рисунок
+    кегль не держит. Заведено не для удобства, а потому, что одно такое
+    место в деке Лекции 7 действительно есть и проверено замером: кадр
+    `s12a` (охват скрининговых программ) ставит пять стран по два-три
+    столбца в полосу высотой 216 точек, и подпись значения крупнее 11
+    логических пунктов там ЛОЖИТСЯ НА СОСЕДНИЙ СТОЛБЕЦ — проверено
+    рендером при 13 пт, подписи наехали друг на друга и на столбцы. Поднять
+    полосу нельзя: её высоту (3,00") назначает тип кадра, а пропорция
+    картинки от этого жёстко задана.
+
+    Тихо опустить пол там нельзя, молча отказать — тоже: второе оставило бы
+    деку с нечитаемой диаграммой, первое вернуло бы ровно ту слепую зону,
+    ради которой этот пол и заведён. Поэтому исключение ОБЪЯВЛЯЕТСЯ в месте
+    вызова и печатается в прогоне — его видно и его можно оспорить."""
+    if float(kegl) >= KEGL_POL - 1e-9:
+        return
+    if not pochemu:
+        raise ValueError(
+            f"{chto} набрана {kegl} пт — ниже пола видимого слоя "
+            f"{KEGL_POL} пт в точках слайда. Диаграмма с такой подписью с "
+            "задних рядов не читается; поднимите кегль, сократите ряды — "
+            "или объявите исключение параметром `kegl_nizhe_pola=\"причина\"`")
+    print(f"[пол диаграммы] {chto} набрана {kegl} пт при поле {KEGL_POL} — "
+          f"исключение ОБЪЯВЛЕНО: {pochemu}")
+
+
+def stolbtsy(zagolovok, ryady, edinitsa, *, zoloto=None, kegl=KEGL_PODPISEY,
+             kegl_zagolovka=KEGL_ZAGOLOVKA, drobnaya=False, gorizontal=False,
              podpisi_znacheniy=None):
     """Сортированные столбцы. `ryady` — [(имя, число, подпись-знаменатель), …].
 
@@ -203,8 +253,9 @@ def stolbtsy(zagolovok, ryady, edinitsa, *, zoloto=None, kegl=11,
     }
 
 
-def gruppy(zagolovok, imena_grupp, ryady, edinitsa, *, kegl=11,
-           kegl_zagolovka=13, podpisi_znacheniy=None, gorizontal=True,
+def gruppy(zagolovok, imena_grupp, ryady, edinitsa, *, kegl=KEGL_PODPISEY,
+           kegl_nizhe_pola=None,
+           kegl_zagolovka=KEGL_ZAGOLOVKA, podpisi_znacheniy=None, gorizontal=True,
            dolya_gruppy=0.78, dolya_stolbtsa=0.80, legenda=True):
     """Сгруппированные столбцы: ОДНА ГРУППА — ОДНА ЕДИНИЦА СРАВНЕНИЯ
     (страна, цех, регион), внутри неё по столбцу на каждую величину.
@@ -283,7 +334,7 @@ def gruppy(zagolovok, imena_grupp, ryady, edinitsa, *, kegl=11,
         "options": {
             "plugins": {
                 "legend": {"display": legenda, "position": "top",
-                           "labels": {**_osnova(kegl), "boxWidth": kegl,
+                           "labels": {**_osnova(kegl, kegl_nizhe_pola), "boxWidth": kegl,
                                       "boxHeight": kegl, "padding": 8}},
                 "title": {"display": True, "text": [zagolovok, edinitsa],
                           "color": TEKST,
@@ -296,10 +347,10 @@ def gruppy(zagolovok, imena_grupp, ryady, edinitsa, *, kegl=11,
                                        max(len(s) for s in dliny)
                                        * kegl * 0.62)))}},
             "scales": {
-                os_imyon: {"ticks": {**_osnova(kegl), "maxRotation": 0,
+                os_imyon: {"ticks": {**_osnova(kegl, kegl_nizhe_pola), "maxRotation": 0,
                                      "autoSkip": False},
                            "grid": {"display": False}},
-                os_chisel: {"ticks": {**_osnova(kegl),
+                os_chisel: {"ticks": {**_osnova(kegl, kegl_nizhe_pola),
                                       "callback": _perevodchik(False)},
                             "grid": {"color": SETKA},
                             "beginAtZero": True},
@@ -316,8 +367,8 @@ def _spisok_js(spisok):
         for s in spisok) + "]"
 
 
-def linii(zagolovok, podpisi_x, ryady, edinitsa, *, kegl=11,
-          kegl_zagolovka=13, drobnaya=False):
+def linii(zagolovok, podpisi_x, ryady, edinitsa, *, kegl=KEGL_PODPISEY,
+          kegl_zagolovka=KEGL_ZAGOLOVKA, drobnaya=False):
     """Линии динамики. `ryady` — [(имя, [значения], цвет), …].
 
     Имя ряда идёт в легенду: у двух линий разной величины подписать каждую

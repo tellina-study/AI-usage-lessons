@@ -324,7 +324,7 @@ slides:
     local_id: "s1-09a"                     # вставленный кадр, номера в плане нет
     file: slides/s20b-devyat-form-pereezda-slovar.md
     type: summary
-    title: "Девять форм переезда: чем каждая выглядит и где мы её встретим"
+    title: "Девять форм переезда: чем каждая выглядит в примере"
     chapter_ref: "chapter-part5b.md §11.1, §11.2"
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
@@ -351,7 +351,7 @@ slides:
     local_id: "s2-03"                      # номер SLIDE-PLAN.md
     file: slides/s24-odna-sistema-dve-gruppy.md
     type: norm
-    title: "Как считают точность: одну рабочую точку применили к двум группам по десять тысяч человек"
+    title: "Как считают точность: один порог срабатывания на двух группах по десять тысяч"
     chapter_ref: "chapter-part1c.md §2.2, §2.3"
     timing_min: 0.75
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }

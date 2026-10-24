@@ -492,6 +492,174 @@ def stage_4():
             "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
 
 
+def image_size_guard_nodes(pos0):
+    """Четвёртая доработка объединённого файла: доставка картинки с проверкой размера
+    перед отправкой — не слепая отправка, как было в `stage_4()` (там граница `sendPhoto`
+    10 МБ была проверена ПРЯМЫМ вызовом Telegram Bot API, см. README.md «Кейс 4» — вовсе не
+    узлом сценария). Здесь решение остаётся в графе: `IF`-узел читает `content-length`
+    настоящего HTTP-ответа (доступен только когда запрос сделан с `fullResponse: true`,
+    иначе узел отдаёт только файл без заголовков) и решает, слать фото или сообщить
+    координатору текстом, что картинка не прошла."""
+    size_if = {
+        "id": "image_size_if", "name": "Within Telegram photo limit?",
+        "type": "n8n-nodes-base.if", "typeVersion": 2.2, "position": pos0,
+        "parameters": {"conditions": {
+            "options": {"caseSensitive": True, "typeValidation": "strict"},
+            "combinator": "and", "conditions": [{
+                "leftValue": "={{ Number($json.headers['content-length'] || 0) }}",
+                "rightValue": 10485760,
+                "operator": {"type": "number", "operation": "lte"}}]}},
+    }
+    notify_oversized = {
+        "id": "image_oversized_notify", "name": "Notify oversized image (Telegram)",
+        "type": "n8n-nodes-base.telegram", "typeVersion": 1.2,
+        "position": [pos0[0] + 240, pos0[1] + 140],
+        "parameters": {
+            "operation": "sendMessage", "chatId": TELEGRAM_CHAT_ID,
+            "text": "=Картинка к заявке превышает лимит Telegram sendPhoto (10 МБ) и не "
+                    "отправлена. Размер: {{ Math.round(Number($json.headers['content-length']"
+                    " || 0) / 1024) }} КБ.",
+            "additionalFields": {},
+        },
+        "credentials": TG_CRED,
+    }
+    return [size_if, notify_oversized]
+
+
+def student_file():
+    """Файл, который уносит студент с С8 — ОДИН сценарий, содержащий ВСЕ ЧЕТЫРЕ доработки
+    занятия поверх `sem-07/stend/student.json`. Аналог `student_file()` из
+    `sem-07/stend/sborka.py` по назначению и стилю: та же стрижка credential / таблицы /
+    пути формы перед выдачей — чужой id читается студентом как сломанный узел и стоит ему
+    десяти минут недоумения (см. docstring той функции).
+
+    Слайд `sem-08/slides/n56-vyhod.md` держит сборку этого файла как открытый пункт в
+    своём `backup` — эта функция его закрывает (`ARCHITECTURE.md` Семинара 9, §2).
+
+    Четыре доработки — одним графом, не четырьмя отдельными стендовыми воркфлоу, как они
+    жили на стенде Семинара 8 для раздельного разбора по кейсам:
+
+      1. **уведомление шаблоном** координатору вместо модели (`stage_1_after`);
+      2. **дедупликация в два уровня** — механический хэш, затем модель на спорное
+         (`stage_2`), то же тестовое поле формы для ручной проверки;
+      3. **картинка в ответе с проверкой размера** перед отправкой — развитие `stage_4`:
+         добавлен `IF`-узел по `content-length`, а не внешняя проверка вручную;
+      4. **возврат — решение `IF`-узлом по сумме, не моделью** (`stage_3b_code`), со своей
+         формой: запрос на возврат — другой повод обращения, не тот же текст заявки на
+         курс. Второй триггер в одном workflow — обычная техника n8n (устройство самого
+         инструмента, не усложнение графа студента): два входа висят рядом на одном
+         холсте и исполняются независимо, каждый по своему вебхуку.
+
+    На живом стенде эта же структура (с восстановленными credential/таблицей/путями)
+    публикуется под именем «С9 · вход (выход С8)» — см. `sem-09/stend/sborka.py`, который
+    переиздаёт её для настоящих прогонов, не трогая этот файл."""
+    nodes = set_form_path(base_nodes(), "sem-08-course")
+    nodes = add_test_field(nodes, "Предыдущее сообщение (тест)",
+                            "для ручной проверки дедупликации, не часть формы студента")
+    nodes.extend(dedup_nodes([300, 160]))
+    nodes.append(template_notification_node([780, -260]))
+    nodes.append({
+        "id": "fetch_card_image", "name": "Fetch card image (HTTP)",
+        "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2,
+        "position": [1020, -260],
+        "parameters": {
+            "url": "https://picsum.photos/800/450",
+            "options": {"response": {"response": {
+                "responseFormat": "file", "fullResponse": True}}},
+        },
+    })
+    nodes.extend(image_size_guard_nodes([1260, -260]))
+    nodes.append(telegram_photo_node(
+        "tg_photo", "Send card (Telegram photo)", [1500, -340],
+        "={{ $('Compose notification (template)').item.json.notification_text }}"))
+
+    refund_nodes = refund_base_nodes("sem-08-refund")
+    refund_if = {
+        "id": "refund_decide_if", "name": "Amount over threshold?",
+        "type": "n8n-nodes-base.if", "typeVersion": 2.2, "position": [60, 460],
+        "parameters": {"conditions": {
+            "options": {"caseSensitive": True, "typeValidation": "strict"},
+            "combinator": "and", "conditions": [{
+                "leftValue": "={{ $json.output.amount_rub }}",
+                "rightValue": REFUND_THRESHOLD,
+                "operator": {"type": "number", "operation": "gt"}}]}},
+    }
+    refund_escalate = {
+        "id": "refund_result_esc", "name": "Result screen (escalate)",
+        "type": "n8n-nodes-base.form", "typeVersion": 1, "position": [300, 380],
+        "parameters": {
+            "operation": "completion", "respondWith": "text",
+            "completionTitle": "Решение по возврату",
+            "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub "
+                                  "}} ₽. Решение кода: эскалировать руководителю.",
+            "options": {"appendAttribution": False},
+        },
+    }
+    refund_approve = {
+        "id": "refund_result_ok", "name": "Result screen (approve)",
+        "type": "n8n-nodes-base.form", "typeVersion": 1, "position": [300, 540],
+        "parameters": {
+            "operation": "completion", "respondWith": "text",
+            "completionTitle": "Решение по возврату",
+            "completionMessage": "=Сумма: {{ $('Extract amount').item.json.output.amount_rub "
+                                  "}} ₽. Решение кода: одобрить (не выше порога).",
+            "options": {"appendAttribution": False},
+        },
+    }
+    nodes.extend(refund_nodes + [refund_if, refund_escalate, refund_approve])
+
+    conn = base_connections()
+    conn["Vocabulary check"] = {"main": [[
+        {"node": "Normalize + hash", "type": "main", "index": 0}]]}
+    conn["Normalize + hash"] = {"main": [[
+        {"node": "Exact duplicate in window?", "type": "main", "index": 0}]]}
+    conn["Exact duplicate in window?"] = {"main": [
+        [],  # true — точный повтор, в запись не идём вовсе
+        [{"node": "Same question, reworded? (LLM)", "type": "main", "index": 0}],  # false
+    ]}
+    conn["Same question, reworded? (LLM)"] = {"main": [[
+        {"node": "Write row", "type": "main", "index": 0}]]}
+    conn["Model (dedup)"] = {"ai_languageModel": [[
+        {"node": "Same question, reworded? (LLM)", "type": "ai_languageModel", "index": 0}]]}
+    conn.setdefault("Write row", {"main": [[]]})
+    conn["Write row"]["main"][0].append(
+        {"node": "Compose notification (template)", "type": "main", "index": 0})
+    conn["Compose notification (template)"] = {"main": [[
+        {"node": "Fetch card image (HTTP)", "type": "main", "index": 0}]]}
+    conn["Fetch card image (HTTP)"] = {"main": [[
+        {"node": "Within Telegram photo limit?", "type": "main", "index": 0}]]}
+    conn["Within Telegram photo limit?"] = {"main": [
+        [{"node": "Send card (Telegram photo)", "type": "main", "index": 0}],
+        [{"node": "Notify oversized image (Telegram)", "type": "main", "index": 0}],
+    ]}
+    conn["Refund request"] = {"main": [[
+        {"node": "Extract amount", "type": "main", "index": 0}]]}
+    conn["Extract amount"] = {"main": [[
+        {"node": "Amount over threshold?", "type": "main", "index": 0}]]}
+    conn["Amount over threshold?"] = {"main": [
+        [{"node": "Result screen (escalate)", "type": "main", "index": 0}],
+        [{"node": "Result screen (approve)", "type": "main", "index": 0}],
+    ]}
+    conn["Model (extraction)"] = {"ai_languageModel": [[
+        {"node": "Extract amount", "type": "ai_languageModel", "index": 0}]]}
+
+    wf = {"name": "Семинар 8 — вход Семинара 9 (четыре доработки на student.json)",
+          "nodes": nodes, "connections": conn, "settings": {"executionOrder": "v1"}}
+
+    # Стрижка перед выдачей — ровно то, что `student_file()` С7 делает со своими узлами:
+    # credential модели и выбор таблицы у студента свои, чужой id читается как сломанный
+    # узел. Два триггера формы — два разных сброшенных пути, иначе они делят один вебхук.
+    for n in wf["nodes"]:
+        n.pop("credentials", None)
+        if n["type"] == "n8n-nodes-base.dataTable":
+            n["parameters"]["dataTableId"] = {"__rl": True, "value": "", "mode": "list"}
+        if n["type"] == "n8n-nodes-base.formTrigger":
+            path = "sem-08-combined-refund" if n["id"] == "refund_form" else "sem-08-combined"
+            n["parameters"]["path"] = path
+            n["webhookId"] = path
+    return wf
+
+
 def api(method, path, body=None):
     req = urllib.request.Request(
         f"{API}{path}", method=method,
@@ -506,6 +674,7 @@ STAGES = {
     "stage-1-before": stage_1_before, "stage-1-after": stage_1_after,
     "stage-2": stage_2, "stage-3a-model": stage_3a_model,
     "stage-3b-code": stage_3b_code, "stage-4": stage_4,
+    "student-s8": student_file,
 }
 
 
@@ -519,7 +688,10 @@ def main():
         (HERE / f"{fname}.json").write_text(
             json.dumps(wf, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"  {fname}.json — {len(wf['nodes'])} узлов")
-        if not push:
+        # student-s8 — файл на вынос, без credential; на стенд он не публикуется этим
+        # скриптом (ровно как "student" в sem-07/stend/sborka.py). Настоящий прогон его
+        # структуры публикует sem-09/stend/sborka.py под именем «С9 · вход (выход С8)».
+        if not push or fname == "student-s8":
             continue
         if wf["name"] in existing:
             wid = existing[wf["name"]]

@@ -1,0 +1,312 @@
+{
+  "name": "С9 · Кейс 1, версия 2 — проверка по пункту базы (детерминированно)",
+  "nodes": [
+    {
+      "id": "c1_form",
+      "name": "Client question",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "webhookId": "s9-answer-gated",
+      "parameters": {
+        "path": "s9-answer-gated",
+        "formTitle": "Вопрос в учебный центр",
+        "formDescription": "Кейс 1 Семинара 9 — не форма студента С7",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Вопрос",
+              "fieldType": "textarea",
+              "placeholder": "например: когда вернут деньги за отменённый курс?",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "c1_model_gated",
+      "name": "Model (answer, gated)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        260
+      ],
+      "parameters": {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "c1_extract_gated",
+      "name": "Answer with grounding (structured)",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "text": "=База знаний учебного центра:\nkb1 · Оплата: Курс оплачивается на сайте по ссылке в личном кабинете (карта, Робокасса) или наличными на ресепшене при личном визите. Рассрочка не предусмотрена.\nkb2 · Перенос занятия: Перенести конкретное занятие можно не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Позже 24 часов занятие считается использованным.\nkb3 · Документы при поступлении: Нужен паспорт (копия разворота) и СНИЛС; если студенту не исполнилось 18 лет — согласие одного из родителей, бланк в личном кабинете.\nkb4 · Возврат денег: Возврат оформляется в течение 10 рабочих дней на карту, с которой была оплата. Для сумм выше 3000 рублей решение проходит через руководителя, это дольше стандартного срока.\nkb5 · Пересдача пропущенного занятия: Пересдачи идут каждую вторую субботу месяца, расписание публикуется в объявлениях личного кабинета за неделю.\nkb6 · Пропуск без предупреждения: Занятие считается проведённым, бесплатного повтора не предусмотрено — действует то же правило, что и перенос позже 24 часов.\nkb7 · Сертификат: Электронный сертификат формируется автоматически и появляется в личном кабинете в течение 5 рабочих дней после последнего занятия курса.\nkb8 · Перевод на другой курс: Перевод возможен при наличии мест на новом курсе; разница в стоимости пересчитывается администратором индивидуально.\nkb9 · Работа в праздники: Центр не работает в государственные праздники РФ, занятия на эти даты переносятся автоматически, уведомление приходит в личный кабинет.\nkb10 · Связь с преподавателем: Написать конкретному преподавателю можно через раздел «Сообщения» личного кабинета, ответ приходит в течение одного рабочего дня.\n\nВопрос клиента: {{ $json['Вопрос'] }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"answer\": {\n      \"type\": \"string\",\n      \"description\": \"ответ клиенту по существу, 1-2 предложения\"\n    },\n    \"grounded_in_item\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"kb1\",\n        \"kb2\",\n        \"kb3\",\n        \"kb4\",\n        \"kb5\",\n        \"kb6\",\n        \"kb7\",\n        \"kb8\",\n        \"kb9\",\n        \"kb10\",\n        \"\"\n      ],\n      \"description\": \"id пункта базы знаний (kb1..kb10), на который опирается ответ; если ни один пункт не покрывает вопрос — пустая строка, и тогда ответ передаётся человеку, а не клиенту\"\n    }\n  },\n  \"required\": [\n    \"answer\",\n    \"grounded_in_item\"\n  ]\n}",
+        "options": {}
+      }
+    },
+    {
+      "id": "c1_grounded_if",
+      "name": "Grounded in known KB item?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ [\"kb1\", \"kb2\", \"kb3\", \"kb4\", \"kb5\", \"kb6\", \"kb7\", \"kb8\", \"kb9\", \"kb10\"].includes($json.output.grounded_in_item) }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c1_write_answered",
+      "name": "Write row (answered)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        540,
+        -80
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "U5BLSv5cPzVVyRGy",
+          "mode": "list",
+          "cachedResultName": "s9_case1_answers"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "version": "v2-gated",
+            "question": "={{ $('Client question').item.json['Вопрос'] }}",
+            "answer": "={{ $json.output.answer }}",
+            "grounded_item": "={{ $json.output.grounded_in_item }}",
+            "decision": "answered"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "c1_result_answered",
+      "name": "Result screen (answered)",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        780,
+        -80
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Ответ (версия 2 — проверено)",
+        "completionMessage": "=Вопрос: {{ $('Client question').item.json['Вопрос'] }}<br><br>Ответ: {{ $json.answer }}<br><small>опора: {{ $json.grounded_item }}</small>",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "c1_notify_olga",
+      "name": "Notify Olga (escalation)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        540,
+        160
+      ],
+      "parameters": {
+        "operation": "sendMessage",
+        "chatId": "266536553",
+        "text": "=Клиент спросил «{{ $('Client question').item.json['Вопрос'] }}». Модель не нашла опору в базе знаний (grounded_in_item={{ $json.output.grounded_in_item || '—' }}) — вопрос передан вам.",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "kfXE6PWKNzA56vc6",
+          "name": "Telegram account (С8)"
+        }
+      }
+    },
+    {
+      "id": "c1_write_escalated",
+      "name": "Write row (escalated)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        780,
+        160
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "U5BLSv5cPzVVyRGy",
+          "mode": "list",
+          "cachedResultName": "s9_case1_answers"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "version": "v2-gated",
+            "question": "={{ $('Client question').item.json['Вопрос'] }}",
+            "answer": "",
+            "grounded_item": "={{ $('Answer with grounding (structured)').item.json.output.grounded_in_item }}",
+            "decision": "escalated"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "c1_result_escalated",
+      "name": "Result screen (escalated)",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        160
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Передано сотруднику",
+        "completionMessage": "=Вопрос: {{ $('Client question').item.json['Вопрос'] }}<br><br>Подождите, пожалуйста — ответит человек.",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Client question": {
+      "main": [
+        [
+          {
+            "node": "Answer with grounding (structured)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer with grounding (structured)": {
+      "main": [
+        [
+          {
+            "node": "Grounded in known KB item?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grounded in known KB item?": {
+      "main": [
+        [
+          {
+            "node": "Write row (answered)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Olga (escalation)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row (answered)": {
+      "main": [
+        [
+          {
+            "node": "Result screen (answered)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Olga (escalation)": {
+      "main": [
+        [
+          {
+            "node": "Write row (escalated)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row (escalated)": {
+      "main": [
+        [
+          {
+            "node": "Result screen (escalated)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (answer, gated)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer with grounding (structured)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

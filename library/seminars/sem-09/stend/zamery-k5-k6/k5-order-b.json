@@ -1,0 +1,127 @@
+{
+  "name": "С9 · замер K5 — порядок полей, рассуждение первым",
+  "nodes": [
+    {
+      "id": "k5o_form",
+      "name": "Client question",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "webhookId": "s9-m5-order-b",
+      "parameters": {
+        "path": "s9-m5-order-b",
+        "formTitle": "Вопрос в учебный центр",
+        "formDescription": "Кейс 1 Семинара 9 — не форма студента С7",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Вопрос",
+              "fieldType": "textarea",
+              "placeholder": "например: когда вернут деньги за отменённый курс?",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "k5o_model",
+      "name": "Model (order test)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        60,
+        220
+      ],
+      "parameters": {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "k5o_extract",
+      "name": "Extract (reasoning-first)",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "text": "=Вопрос клиента учебного центра: {{ $json['Вопрос'] }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"reasoning\": {\n      \"type\": \"string\",\n      \"description\": \"объясни вычисление коротко, шаг за шагом\"\n    },\n    \"answer\": {\n      \"type\": \"number\",\n      \"description\": \"итоговая сумма возврата в рублях, только число\"\n    }\n  },\n  \"required\": [\n    \"reasoning\",\n    \"answer\"\n  ]\n}",
+        "options": {}
+      }
+    },
+    {
+      "id": "k5o_result",
+      "name": "Result screen",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Ответ (замер K5 — порядок полей, рассуждение первым)",
+        "completionMessage": "=Вопрос: {{ $('Client question').item.json['Вопрос'] }}<br><br>answer: {{ $json.output.answer }}<br>reasoning: {{ $json.output.reasoning }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Client question": {
+      "main": [
+        [
+          {
+            "node": "Extract (reasoning-first)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract (reasoning-first)": {
+      "main": [
+        [
+          {
+            "node": "Result screen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (order test)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Extract (reasoning-first)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

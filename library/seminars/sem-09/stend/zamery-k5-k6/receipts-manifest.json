@@ -1,0 +1,160 @@
+{
+  "amount_font_size_px_full_res": 64,
+  "amount_glyph_height_px_full_res": 49,
+  "canvas_width_full_res": 1200,
+  "canvas_height_full_res": 1600,
+  "receipts": [
+    {
+      "id": "receipt-01",
+      "number": "0000481",
+      "date": "12.09.2026",
+      "payer": "Смирнова Анна Павловна",
+      "course": "Python для анализа данных",
+      "amount": "18 990,00",
+      "purpose": "оплата курса (полная стоимость)",
+      "clean_file": "receipts/clean/receipt-01-clean.png",
+      "aged_file": "receipts/aged/receipt-01-aged.png",
+      "aged_size": [
+        1698,
+        2074
+      ]
+    },
+    {
+      "id": "receipt-02",
+      "number": "0000503",
+      "date": "03.10.2026",
+      "payer": "Кузнецов Игорь Олегович",
+      "course": "Основы n8n и автоматизации",
+      "amount": "23 450,00",
+      "purpose": "оплата курса, 1-й взнос",
+      "clean_file": "receipts/clean/receipt-02-clean.png",
+      "aged_file": "receipts/aged/receipt-02-aged.png",
+      "aged_size": [
+        1706,
+        2080
+      ]
+    },
+    {
+      "id": "receipt-03",
+      "number": "0000517",
+      "date": "21.10.2026",
+      "payer": "Фёдорова Ольга Сергеевна",
+      "course": "Data Science: интенсив",
+      "amount": "31 200,00",
+      "purpose": "оплата курса (полная стоимость)",
+      "clean_file": "receipts/clean/receipt-03-clean.png",
+      "aged_file": "receipts/aged/receipt-03-aged.png",
+      "aged_size": [
+        1594,
+        1992
+      ]
+    },
+    {
+      "id": "receipt-04",
+      "number": "0000522",
+      "date": "14.07.2026",
+      "payer": "Петров Дмитрий Андреевич",
+      "course": "SQL для начинающих",
+      "amount": "9 800,00",
+      "purpose": "оплата курса (полная стоимость)",
+      "clean_file": "receipts/clean/receipt-04-clean.png",
+      "aged_file": "receipts/aged/receipt-04-aged.png",
+      "aged_size": [
+        1586,
+        1986
+      ]
+    },
+    {
+      "id": "receipt-05",
+      "number": "0000538",
+      "date": "29.08.2026",
+      "payer": "Иванова Мария Викторовна",
+      "course": "Python с нуля",
+      "amount": "12 450,00",
+      "purpose": "оплата курса, 2-й взнос",
+      "clean_file": "receipts/clean/receipt-05-clean.png",
+      "aged_file": "receipts/aged/receipt-05-aged.png",
+      "aged_size": [
+        1618,
+        2010
+      ]
+    },
+    {
+      "id": "receipt-06",
+      "number": "0000549",
+      "date": "05.10.2026",
+      "payer": "Соколов Егор Николаевич",
+      "course": "Основы машинного обучения",
+      "amount": "27 300,00",
+      "purpose": "оплата курса (полная стоимость)",
+      "clean_file": "receipts/clean/receipt-06-clean.png",
+      "aged_file": "receipts/aged/receipt-06-aged.png",
+      "aged_size": [
+        1592,
+        1990
+      ]
+    }
+  ],
+  "resolution_variants": [
+    {
+      "name": "full",
+      "scale": 1.0,
+      "size": [
+        1698,
+        2074
+      ],
+      "amount_glyph_height_px": 49.0,
+      "file": "receipts/resolution/receipt-01-full.png"
+    },
+    {
+      "name": "half",
+      "scale": 0.5,
+      "size": [
+        849,
+        1037
+      ],
+      "amount_glyph_height_px": 24.5,
+      "file": "receipts/resolution/receipt-01-half.png"
+    },
+    {
+      "name": "quarter",
+      "scale": 0.25,
+      "size": [
+        424,
+        518
+      ],
+      "amount_glyph_height_px": 12.2,
+      "file": "receipts/resolution/receipt-01-quarter.png"
+    },
+    {
+      "name": "eighth",
+      "scale": 0.125,
+      "size": [
+        212,
+        259
+      ],
+      "amount_glyph_height_px": 6.1,
+      "file": "receipts/resolution/receipt-01-eighth.png"
+    },
+    {
+      "name": "sixteenth",
+      "scale": 0.0625,
+      "size": [
+        106,
+        129
+      ],
+      "amount_glyph_height_px": 3.1,
+      "file": "receipts/resolution/receipt-01-sixteenth.png"
+    },
+    {
+      "name": "thirtysecond",
+      "scale": 0.03125,
+      "size": [
+        53,
+        64
+      ],
+      "amount_glyph_height_px": 1.5,
+      "file": "receipts/resolution/receipt-01-thirtysecond.png"
+    }
+  ]
+}

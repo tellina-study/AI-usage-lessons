@@ -8,291 +8,235 @@
 
 slides:
 
-  # ─── 4. Права и лицензирование · 13 кадров · 0.00 мин ───
-  - id: s38
-    local_id: "s4-01"
-    file: slides/s38-divider-prava-i-litsenzirovanie.md
+  # ─── 4. Права и лицензирование · 11 кадров · 14.40 мин ───
+  - id: s45
+    local_id: "s45"
+    file: slides/s45-divider-prava-i-litsenzirovanie.md
     type: divider
     title: "4. Права и лицензирование"
     chapter_ref: "chapter-part3.md §4.1 (дивайдер -- framing-проза перенесена в заметки по образцу Лекции 7)"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s39
-    local_id: "s4-02"
-    file: slides/s39-tri-sposoba-kupit-pravo.md
+    timing_min: 0.5
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s46
+    local_id: "s46"
+    file: slides/s46-tri-sposoba-kupit-pravo.md
     type: norm
-    title: "Три способа купить право — и зачем нужна отдельная служба, когда это не сделано"
-    chapter_ref: "chapter-part3.md §4.1 (перечень трёх способов купить право + клиринг прав/E&O-страхование)"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
+    title: "Классика: три способа купить право — и во сколько это обходится"
+    chapter_ref: "chapter-part3.md §4.1 (перечень трёх способов купить право + клиринг прав/E&O-страхование) + (слито сюда бывший s40) chapter-part3.md §4.2 (абзацы о фотографии и музыке)"
+    timing_min: 1.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s40
-    local_id: "s4-03"
-    file: slides/s40-klassika-skolko-stoit-litsenziya.md
-    type: norm
-    title: "Классика: во сколько обходится лицензия — и почему дёшево оптом, дорого в розницу"
-    chapter_ref: "chapter-part3.md §4.2 (абзацы о фотографии и музыке)"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s41
-    local_id: "s4-04"
-    file: slides/s41-golos-litsenziya-kotoraya-ne-deshevet.md
+  - id: s47
+    local_id: "s47"
+    file: slides/s47-golos-litsenziya-kotoraya-ne-deshevet.md
     type: norm
     title: "Исключение: голос и внешность стоят дороже синтеза, а не дешевле"
     chapter_ref: "chapter-part3.md §4.2 (абзацы про голос и внешность -- исключение, цена зафиксирована профсоюзным контрактом)"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s42
-    local_id: "s4-05"
-    file: slides/s42-dva-puti-tseny-riska.md
-    type: norm
-    title: "Два пути одной развилки — и путь, который не стали ждать"
-    chapter_ref: "chapter-part3.md §4.3 целиком + разбор Adobe Firefly"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s43
-    local_id: "s4-06"
-    file: slides/s43-getty-stability-storony-i-schyot.md
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s48
+    local_id: "s48"
+    file: slides/s48-getty-stability-storony-i-schyot.md
     type: case
-    title: "Getty против Stability AI (Великобритания): стороны и счёт по заявленному масштабу"
-    chapter_ref: "chapter-part3b.md §4.4 Шаг 1 + Шаг 2 (Getty против Stability AI, Великобритания -- стороны и счёт)"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s44
-    local_id: "s4-07"
-    file: slides/s44-getty-stability-chto-reshil-sud.md
+    title: "Цена риска до точности — и Getty против Stability AI (Великобритания): стороны и счёт"
+    chapter_ref: "chapter-part3b.md §4.4 Шаг 1 + Шаг 2 (Getty против Stability AI, Великобритания -- стороны и счёт) + (слито сюда бывший s42) chapter-part3.md §4.3 целиком + разбор Adobe Firefly"
+    timing_min: 2.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s49
+    local_id: "s49"
+    file: slides/s49-getty-stability-chto-reshil-sud.md
     type: case
     title: "Что решил суд — и почему это не «суд разрешил красть»"
-    chapter_ref: "chapter-part3b.md §4.4 Шаг 3, элементы 1-2 (что решил суд) + оговорка memorization/Carlini 2023 + отсутствие fair use в праве Великобритании"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s45
-    local_id: "s4-08"
-    file: slides/s45-getty-stability-tovarny-znak-i-apellyatsiya.md
-    type: case
-    title: "Ни победа, ни поражение не полные — и дело ещё не закрыто"
-    chapter_ref: "chapter-part3b.md §4.4 Шаг 3, элемент 3 (ни победа, ни поражение не полные) + параллельная ветвь в США + выбор юрисдикции"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s46
-    local_id: "s4-09"
-    file: slides/s46-getty-stability-ustroystvo.md
+    chapter_ref: "chapter-part3b.md §4.4 Шаг 3, элементы 1-2 (что решил суд) + оговорка memorization/Carlini 2023 + отсутствие fair use в праве Великобритании + (слито сюда бывший s45) chapter-part3b.md §4.4 Шаг 3, элемент 3 (ни победа, ни поражение не полные) + параллельная ветвь в США + выбор юрисдикции"
+    timing_min: 2.0
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s50
+    local_id: "s50"
+    file: slides/s50-getty-stability-ustroystvo.md
     type: case
     title: "Как это устроено: LAION-5B на входе, Stable Diffusion на выходе"
     chapter_ref: "chapter-part3b.md §4.4 Шаг 4 (устройство: LAION-5B на входе, Stable Diffusion на выходе)"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
+    timing_min: 1.0
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s51
+    local_id: "s51"
+    file: slides/s51-skolko-vesit-model-vopros.md
+    type: case
+    title: "Сколько весит модель — вопрос залу"
+    chapter_ref: "chapter-part3b.md §4.4 (вопрос-предсказание «сколько весит модель», без ответа)"
+    timing_min: 0.4
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s47
-    local_id: "s4-10"
-    file: slides/s47-getty-stability-chto-pereekhalo.md
+  - id: s52
+    local_id: "s52"
+    file: slides/s52-skolko-vesit-model-vskrytie.md
+    type: case
+    title: "Сколько весит модель — вскрытие"
+    chapter_ref: "chapter-part3b.md §4.4 (вскрытие -- байт/изображение по трём базам)"
+    timing_min: 1.3
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s53
+    local_id: "s53"
+    file: slides/s53-getty-stability-chto-pereekhalo.md
     type: case
     title: "Что переехало: риск — с рынка в суд"
     chapter_ref: "chapter-part3b.md §4.4 Шаг 5 (что переехало -- риск с рынка в суд) + абзац про рациональность settlement"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s48
-    local_id: "s4-11"
-    file: slides/s48-nyt-protiv-openai.md
-    type: norm
-    title: "NYT против OpenAI: решения нет, а числа уже есть"
-    chapter_ref: "chapter-part3c.md §4.5 (NYT против OpenAI) + абзац про 20 млн логов ChatGPT + абзац про EU TDM"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s49
-    local_id: "s4-12"
-    file: slides/s49-riaa-tri-leybla-dva-servisa.md
+    timing_min: 1.0
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
+  - id: s54
+    local_id: "s54"
+    file: slides/s54-nyt-protiv-openai.md
     type: comparison
-    title: "Три лейбла, два сервиса — и ни одна строка не повторяет другую"
-    chapter_ref: "chapter-part3c.md §4.5 (кластер RIAA -- три лейбла, два сервиса) + таблица-матрица"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s50
-    local_id: "s4-13"
-    file: slides/s50-vyvod-prava-i-litsenzirovanie.md
+    title: "Остальные направления: решения нет, а числа уже есть"
+    chapter_ref: "chapter-part3c.md §4.5 (NYT против OpenAI) + абзац про 20 млн логов ChatGPT + абзац про EU TDM + (слито сюда бывший s49) chapter-part3c.md §4.5 (кластер RIAA -- три лейбла, два сервиса) + таблица-матрица"
+    timing_min: 2.3
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
+  - id: s55
+    local_id: "s55"
+    file: slides/s55-vyvod-prava-i-litsenzirovanie.md
     type: comparison
     title: "Второй раз тот же разрыв — теперь на стороне оплаты прав"
     chapter_ref: "chapter-part3c.md §4.6 + сводная таблица разрывов «три-четыре порядка» (второй раз рефрена, после Раздела 1)"
-    timing_min: 0   # поле отсутствует во фронтматтере кадра
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+    timing_min: 0.8
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
 
-  # ─── 5. Кадровый рынок отрасли · 11 кадров · 11.30 мин ───
-  - id: s51
-    local_id: "s5-01"
-    file: slides/s51-divider-kadrovyy-rynok.md
+  # ─── 5. Кадровый рынок отрасли · 9 кадров · 11.00 мин ───
+  - id: s56
+    local_id: "s56"
+    file: slides/s56-divider-kadrovyy-rynok.md
     type: divider
     title: "5. Кадровый рынок отрасли"
     chapter_ref: "chapter-part4.md § Раздел 5 (дивайдер)"
     timing_min: 0.6
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s52
-    local_id: "s5-02"
-    file: slides/s52-kak-stroilas-kariera-do-modeli.md
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s57
+    local_id: "s57"
+    file: slides/s57-kak-stroilas-kariera-do-modeli.md
     type: norm
     title: "Как строилась карьера до генеративной модели"
     chapter_ref: "chapter-part4.md §5.1 (как строится карьера до генеративной модели -- до перехода к Чижовой)"
     timing_min: 1.1
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s53
-    local_id: "s5-03"
-    file: slides/s53-lada-chizhova-obval-dokhoda.md
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s58
+    local_id: "s58"
+    file: slides/s58-lada-chizhova-obval-dokhoda.md
     type: case
     title: "Лада Чижова: обвал дохода, который не объяснялся мастерством"
     chapter_ref: "chapter-part4.md §5.1 (именованный кейс Лады Чижовой -- обвал дохода)"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s54
-    local_id: "s5-04"
-    file: slides/s54-lada-chizhova-god-spustya.md
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s59
+    local_id: "s59"
+    file: slides/s59-lada-chizhova-god-spustya.md
     type: case
     title: "Лада Чижова: год спустя — доход без ремесла"
     chapter_ref: "chapter-part4.md §5.1 (Чижова, год спустя -- доход без ремесла)"
     timing_min: 1.1
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s55
-    local_id: "s5-05"
-    file: slides/s55-upwork-rost-izmeren.md
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s60
+    local_id: "s60"
+    file: slides/s60-upwork-rost-izmeren.md
     type: norm
     title: "Фриланс-биржи: рост ИИ-навыков измерен точно"
     chapter_ref: "chapter-part4.md §5.2 (Upwork/Fiverr -- измеренный рост ИИ-навыков)"
     timing_min: 1.0
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s56
-    local_id: "s5-06"
-    file: slides/s56-upwork-chestnyy-probel.md
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
+  - id: s61
+    local_id: "s61"
+    file: slides/s61-upwork-chestnyy-probel.md
     type: summary
     title: "Фриланс-биржи: обратная сторона роста — честный пробел"
     chapter_ref: "chapter-part4.md §5.2 (честно неизмеренный упадок -- пробел в данных, BLS -2% за десятилетие)"
     timing_min: 1.0
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s57
-    local_id: "s5-07"
-    file: slides/s57-getty-tsena-stavki.md
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s62
+    local_id: "s62"
+    file: slides/s62-getty-tsena-stavki.md
     type: case
     title: "Getty Images и Shutterstock: цена ставки на слияние"
     chapter_ref: "chapter-part4.md §5.3 (Getty Images/Shutterstock -- цена защитной ставки на слияние, начало)"
     timing_min: 1.1
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s58
-    local_id: "s5-08"
-    file: slides/s58-getty-chto-sluchilos-na-samom-dele.md
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s63
+    local_id: "s63"
+    file: slides/s63-getty-chto-sluchilos-na-samom-dele.md
     type: case
-    title: "Getty Images: что случилось со ставкой на самом деле"
-    chapter_ref: "chapter-part4.md §5.3 (что случилось со ставкой на самом деле)"
-    timing_min: 1.2
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s59
-    local_id: "s5-09"
-    file: slides/s59-getty-prichiny-i-tsena.md
-    type: case
-    title: "Getty Images: причины банкротства и цена ошибки"
-    chapter_ref: "chapter-part4.md §5.3 (причины банкротства и цена ошибки)"
-    timing_min: 1.1
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s60
-    local_id: "s5-10"
-    file: slides/s60-getty-samopopravka-kak-metod.md
-    type: case
-    title: "Getty Images: самопоправка как метод"
-    chapter_ref: "chapter-part4.md §5.3 (самопоправка как метод -- смена прочтения кейса между майской и октябрьской версией + обобщаемый урок про защитную консолидацию)"
-    timing_min: 1.1
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
-  - id: s61
-    local_id: "s5-11"
-    file: slides/s61-chto-pereekhalo-tri-masshtaba.md
+    title: "Getty Images: что случилось со ставкой на самом деле — причины и цена"
+    chapter_ref: "chapter-part4.md §5.3 (что случилось со ставкой на самом деле) + (слито сюда бывший s59) chapter-part4.md §5.3 (причины банкротства и цена ошибки)"
+    timing_min: 2.3
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s64
+    local_id: "s64"
+    file: slides/s64-chto-pereekhalo-tri-masshtaba.md
     type: summary
     title: "Что переехало: три масштаба одной нагрузки"
-    chapter_ref: "chapter-part4.md §5.4 (что переехало -- три масштаба одной нагрузки)"
-    timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+    chapter_ref: "chapter-part4.md §5.4 (что переехало -- три масштаба одной нагрузки) + (слито сюда бывший s60) chapter-part4.md §5.3 (самопоправка как метод -- смена прочтения кейса между майской и октябрьской версией + обобщаемый урок про защитную консолидацию)"
+    timing_min: 1.8
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
 
-  # ─── 6. Сборка · 11 кадров · 11.30 мин ───
-  - id: s62
-    local_id: "s6-01"
-    file: slides/s62-divider-sborka.md
+  # ─── 6. Сборка · 8 кадров · 11.20 мин ───
+  - id: s65
+    local_id: "s65"
+    file: slides/s65-divider-sborka.md
     type: divider
     title: "6. Сборка"
     chapter_ref: "chapter-part4a.md § Раздел 6 (дивайдер)"
     timing_min: 0.6
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s63
-    local_id: "s6-02"
-    file: slides/s63-kriterii-otkaza-odin-dva.md
-    type: norm
-    title: "Критерии отказа I–II: лицензия и сходство"
-    chapter_ref: "chapter-part4a.md §6.1 (критерии отказа 1-3)"
-    timing_min: 1.1
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
-  - id: s64
-    local_id: "s6-03"
-    file: slides/s64-kriterii-otkaza-tri-chetyre.md
-    type: norm
-    title: "Критерии отказа III–IV: согласие и доверие к бренду"
-    chapter_ref: "chapter-part4a.md §6.1 (критерий отказа 4 -- доверие к бренду)"
-    timing_min: 1.1
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
-  - id: s65
-    local_id: "s6-04"
-    file: slides/s65-kak-primenyat-cheklist.md
-    type: norm
-    title: "Как применять чек-лист: последовательность стоп-сигналов"
-    chapter_ref: "chapter-part4a.md §6.1 (как применять чек-лист на практике -- последовательность стоп-сигналов + работает в обе стороны)"
-    timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
   - id: s66
-    local_id: "s6-05"
-    file: slides/s66-cheklist-lady-chizhovoy.md
-    type: comparison
-    title: "Чек-лист Лады Чижовой: формально пройден, а заказ потерян"
-    chapter_ref: "chapter-part4a.md §6.1 (чек-лист со стороны заказчика -- случай Лады Чижовой из §5.1)"
-    timing_min: 1.1
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+    local_id: "s66"
+    file: slides/s66-kriterii-otkaza-odin-dva.md
+    type: norm
+    title: "Четыре критерия отказа"
+    chapter_ref: "chapter-part4a.md §6.1 (критерии отказа 1-3) + (слито сюда бывший s64) chapter-part4a.md §6.1 (критерий отказа 4 -- доверие к бренду)"
+    timing_min: 2.2
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
   - id: s67
-    local_id: "s6-06"
-    file: slides/s67-forma-nagruzka-pereekhala.md
-    type: summary
-    title: "Форма: нагрузка переехала — на зрителя, закон, рынок"
-    chapter_ref: "chapter-part4a.md §6.2 (форма первая -- нагрузка переехала на зрителя/закон/рынок)"
-    timing_min: 1.0
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+    local_id: "s67"
+    file: slides/s67-cheklist-lady-chizhovoy.md
+    type: comparison
+    title: "Как применять чек-лист — на Ладе Чижовой: формально пройден, а заказ потерян"
+    chapter_ref: "chapter-part4a.md §6.1 (чек-лист со стороны заказчика -- случай Лады Чижовой из §5.1) + (слито сюда бывший s65) chapter-part4a.md §6.1 (как применять чек-лист на практике -- последовательность стоп-сигналов + работает в обе стороны)"
+    timing_min: 2.0
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
   - id: s68
-    local_id: "s6-07"
-    file: slides/s68-forma-ispolnitel-tot-zhe.md
+    local_id: "s68"
+    file: slides/s68-forma-nagruzka-pereekhala.md
     type: summary
-    title: "Форма: тот же человек, новая задача — и новый шаг"
-    chapter_ref: "chapter-part4a.md §6.2 (форма вторая -- тот же человек, новая задача; + вариант Чижовой и «появился новый шаг»)"
-    timing_min: 1.0
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+    title: "Словарь форм: нагрузка переехала — и тот же человек, новая задача"
+    chapter_ref: "chapter-part4a.md §6.2 (форма первая -- нагрузка переехала на зрителя/закон/рынок) + (слито сюда бывший s68) chapter-part4a.md §6.2 (форма вторая -- тот же человек, новая задача; + вариант Чижовой и «появился новый шаг»)"
+    timing_min: 2.0
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
   - id: s69
-    local_id: "s6-08"
+    local_id: "s69"
     file: slides/s69-forma-poddelyvaemoe-uznavanie.md
     type: summary
     title: "Подделываемое узнавание: собственная форма лекции"
     chapter_ref: "chapter-part4a.md §6.2 (форма третья -- подделываемое узнавание, собственная форма лекции; + масштаб явления, Checkr/advisory 11 стран)"
     timing_min: 1.1
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
   - id: s70
-    local_id: "s6-09"
+    local_id: "s70"
     file: slides/s70-kto-platit-poimenno.md
     type: summary
     title: "Кто платит — поимённо"
     chapter_ref: "chapter-part4a.md §6.3 (ответ на вопрос лекции поимённо -- кто платит)"
     timing_min: 1.3
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
   - id: s71
-    local_id: "s6-10"
+    local_id: "s71"
     file: slides/s71-schet-skvoznoy-linii.md
     type: summary
     title: "Счёт сквозной линии: три-четыре порядка"
     chapter_ref: "chapter-part4a.md §6.4 (счёт сквозной линии -- измерения 1-4, три-четыре порядка)"
     timing_min: 1.2
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s72
-    local_id: "s6-11"
+    local_id: "s72"
     file: slides/s72-vyvod-razdela-sborka.md
     type: summary
     title: "Вывод раздела: заработанный ответ"
     chapter_ref: "chapter-part4a.md §6.4 (вывод раздела и мост к закрытию)"
     timing_min: 0.8
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
 
   # ─── 7. Закрытие · 4 кадров · 4.00 мин ───
   - id: s73
@@ -301,43 +245,43 @@ slides:
     title: "Четыре точки пути — и что в каждой сломалось"
     chapter_ref: "chapter-part5.md §7.1"
     timing_min: 1.2
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
   - id: s74
     file: slides/s74-dolg-vpered-lekciya-14.md
     type: comparison
     title: "Один и тот же синтез — разный адрес в Лекции 14"
     chapter_ref: "chapter-part5.md §7.2"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
   - id: s75
     file: slides/s75-zarabotannoe-utverzhdenie.md
     type: summary
     title: "Что это утверждение не говорит — и что остаётся инженеру"
     chapter_ref: "chapter-part5.md §7.3"
     timing_min: 1.0
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
   - id: s76
     file: slides/s76-voprosy.md
     type: question
     title: "Три проверки — и вопрос в зал"
     chapter_ref: "chapter-part5.md §7.3 (продолжение -- вопросы в зал; собственного нового содержания главы не несёт, см. также \"Вопросы и ответы для самопроверки\" в chapter-part5.md)"
     timing_min: 0.8
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
 
 totals:
   slides: 76
-  timing_min: 58.75               # сложено по файлам кадров; курс пока не зафиксировал плановый слот-бюджет для Лекции 8 (нет аналога CUT-ORDER.md Лекции 7) -- счёт честный по арифметике, без подгонки под ожидаемое число
-  timing_missing: 13   # поле timing_min отсутствует во фронтматтере -- сочтены как 0.0 в timing_min выше, не выдуманы: s38, s39, s40, s41, s42, s43, s44, s45, s46, s47, s48, s49, s50
-  plus_qa_min: 68.75               # + 10 минут вопросов, условно (как в других отраслевых лекциях курса)
-  strict_in_min: 33.40
-  strict_in_share: "56.9%"      # порог курса 30%; счёт по минутам, partial → out
-  vfy_slides: 39                 # кадров с числом под пересверку в день лекции
+  timing_min: 85.70               # сложено по файлам кадров; курс пока не зафиксировал плановый слот-бюджет для Лекции 8 (нет аналога CUT-ORDER.md Лекции 7) -- счёт честный по арифметике, без подгонки под ожидаемое число
+  timing_missing: 0
+  plus_qa_min: 95.70               # + 10 минут вопросов, условно (как в других отраслевых лекциях курса)
+  strict_in_min: 40.00
+  strict_in_share: "46.7%"      # порог курса 30%; счёт по минутам, partial → out
+  vfy_slides: 43                 # кадров с числом под пересверку в день лекции
   by_status:
     "собран": 76
   media:
-    wired: 0
-    needs_media: 60
-    no_decision: 16
+    wired: 45
+    needs_media: 21
+    no_decision: 10
   chapter_ref_coverage:
     mapped: 76
     unmapped: 0

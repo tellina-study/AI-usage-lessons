@@ -1,6 +1,6 @@
 ---
 id: s69
-local_id: s6-08
+local_id: "s69"
 section: "6. Сборка"
 type: summary
 title: "Подделываемое узнавание: собственная форма лекции"

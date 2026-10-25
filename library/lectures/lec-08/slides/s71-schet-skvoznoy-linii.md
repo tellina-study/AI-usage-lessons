@@ -1,6 +1,6 @@
 ---
 id: s71
-local_id: s6-10
+local_id: "s71"
 section: "6. Сборка"
 type: summary
 title: "Счёт сквозной линии: три-четыре порядка"

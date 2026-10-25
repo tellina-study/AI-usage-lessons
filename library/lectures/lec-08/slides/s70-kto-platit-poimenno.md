@@ -1,6 +1,6 @@
 ---
 id: s70
-local_id: s6-09
+local_id: "s70"
 section: "6. Сборка"
 type: summary
 title: "Кто платит — поимённо"

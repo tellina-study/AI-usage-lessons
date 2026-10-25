@@ -1,6 +1,6 @@
 ---
 id: s07
-local_id: "0-07"
+local_id: "s07"
 section: "0. Вход"
 type: comparison
 title: "Тот же механизм, два разных адреса в цикле"

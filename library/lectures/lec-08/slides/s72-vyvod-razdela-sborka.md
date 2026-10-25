@@ -1,6 +1,6 @@
 ---
 id: s72
-local_id: s6-11
+local_id: "s72"
 section: "6. Сборка"
 type: summary
 title: "Вывод раздела: заработанный ответ"

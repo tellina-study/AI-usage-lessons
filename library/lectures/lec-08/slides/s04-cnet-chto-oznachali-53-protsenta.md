@@ -1,6 +1,6 @@
 ---
 id: s04
-local_id: "0-04"
+local_id: "s04"
 section: "0. Вход"
 type: case
 title: "CNET: как это вскрылось и что стояло на кону"

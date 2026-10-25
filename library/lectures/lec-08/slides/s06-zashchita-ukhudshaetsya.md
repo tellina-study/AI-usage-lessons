@@ -1,6 +1,6 @@
 ---
 id: s06
-local_id: "0-06"
+local_id: "s06"
 section: "0. Вход"
 type: case
 title: "Защита не улучшается, а ухудшается"

@@ -1,0 +1,222 @@
+{
+  "name": "С9 · замер K3 · без цикла (once)",
+  "nodes": [
+    {
+      "id": "q_form",
+      "name": "Client question",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -260,
+        0
+      ],
+      "webhookId": "s9-m3-once",
+      "parameters": {
+        "path": "s9-m3-once",
+        "formTitle": "Замер K3 — вопрос",
+        "formDescription": "Измерительный стенд Семинара 9, не форма студента",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Вопрос",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "pick_kb",
+      "name": "Pick KB item",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -20,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "javaScript",
+        "jsCode": "const inp = $input.item.json;\nconst question = inp.question || inp['Вопрос'] || '';\nconst MAP = [\n    {match: \"Можно ли перенести занят\", kb_id: \"kb2\", kb_text: \"kb2 · Перенос занятия: Перенести конкретное занятие можно не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Позже 24 часов занятие считается использованным.\", kb_keyword: \"24 час\", kb_numbers: [\"24\"]},\n    {match: \"Когда мне вернут деньги \", kb_id: \"kb4\", kb_text: \"kb4 · Возврат денег: Возврат оформляется в течение 10 рабочих дней на карту, с которой была оплата. Для сумм выше 3000 рублей решение проходит через руководителя, это дольше стандартного срока.\", kb_keyword: \"10 рабочих дней\", kb_numbers: [\"10\", \"3000\"]},\n    {match: \"Как мне попасть на перес\", kb_id: \"kb5\", kb_text: \"kb5 · Пересдача пропущенного занятия: Пересдачи идут каждую вторую субботу месяца, расписание публикуется в объявлениях личного кабинета за неделю.\", kb_keyword: \"вторую субботу\", kb_numbers: []},\n    {match: \"Когда появится сертифика\", kb_id: \"kb7\", kb_text: \"kb7 · Сертификат: Электронный сертификат формируется автоматически и появляется в личном кабинете в течение 5 рабочих дней после последнего занятия курса.\", kb_keyword: \"5 рабочих дней\", kb_numbers: [\"5\"]},\n    {match: \"Хочу перейти на другой к\", kb_id: \"kb8\", kb_text: \"kb8 · Перевод на другой курс: Перевод возможен при наличии мест на новом курсе; разница в стоимости пересчитывается администратором индивидуально.\", kb_keyword: \"перевод\", kb_numbers: []},\n    {match: \"Как связаться с преподав\", kb_id: \"kb10\", kb_text: \"kb10 · Связь с преподавателем: Написать конкретному преподавателю можно через раздел «Сообщения» личного кабинета, ответ приходит в течение одного рабочего дня.\", kb_keyword: \"Сообщения\", kb_numbers: []}\n];\nlet picked = null;\nfor (const m of MAP) { if (question.includes(m.match)) { picked = m; break; } }\nif (!picked) picked = MAP[0];\nreturn { json: {\n  question,\n  kb_id: picked.kb_id, kb_text: picked.kb_text, kb_keyword: picked.kb_keyword,\n  kb_numbers: picked.kb_numbers,\n  attempt: inp.attempt || 1,\n  prev_answer: inp.prev_answer || '', reason: inp.reason || '',\n} };\n"
+      }
+    },
+    {
+      "id": "m_once",
+      "name": "Model (once)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        200,
+        180
+      ],
+      "parameters": {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "Generate answer",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты — ассистент поддержки учебного центра. Вот точный пункт базы знаний, на который должен опираться ответ:\n\n{{ $json.kb_text }}\n\nВопрос клиента: {{ $json.question }}\n\nНапиши короткий ответ клиенту. СТРОГИЕ требования:\n1. Не длиннее 280 символов.\n2. Явно включи деталь: «{{ $json.kb_keyword }}».\n3. Укажи, куда обращаться дальше — администратор, личный кабинет, преподаватель, сотрудник или руководитель.\n4. Не используй никаких чисел, кроме тех, что есть в приведённом пункте базы.\n5. Пиши полностью на русском языке — никакой латиницы и иероглифов.\n\n{{ $json.prev_answer ? ('Предыдущая попытка не прошла проверку: «' + $json.prev_answer + '». Причина: ' + $json.reason + '. Исправь именно эту проблему, остальные требования сохрани.') : '' }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "code_check",
+      "name": "Code check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "javaScript",
+        "jsCode": "const kb = $('Pick KB item').item.json;\nconst answer = $('Generate answer').item.json.text || '';\nconst reasons = [];\nif (answer.length > 280) reasons.push('длиннее 280 символов');\nif (!answer.toLowerCase().includes(kb.kb_keyword.toLowerCase()))\n  reasons.push('нет детали «' + kb.kb_keyword + '»');\nconst contacts = [\"администратор\", \"личный кабинет\", \"преподавател\", \"сотрудник\", \"руководител\"];\nif (!contacts.some(c => answer.toLowerCase().includes(c)))\n  reasons.push('не указано, куда обращаться дальше');\nconst nums = answer.match(/\\d+/g) || [];\nconst allowed = new Set(kb.kb_numbers);\nconst badNums = nums.filter(n => !allowed.has(n));\nif (badNums.length) reasons.push('числа не из базы: ' + badNums.join(','));\nif (/[A-Za-z]/.test(answer)) reasons.push('есть латиница');\nif (/[\\u4e00-\\u9fff]/.test(answer)) reasons.push('есть иероглифы');\nconst ok = reasons.length === 0;\nreturn { json: { output: { ok, reason: reasons.join('; ') } } };\n"
+      }
+    },
+    {
+      "id": "write_once",
+      "name": "Write row",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        640,
+        0
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "rAWgycAUH1A0SnKC",
+          "mode": "list",
+          "cachedResultName": "s9_case3_measurements"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "variant": "once",
+            "question": "={{ $('Pick KB item').item.json.question }}",
+            "attempt": "={{ $('Pick KB item').item.json.attempt }}",
+            "answer": "={{ $('Generate answer').item.json.text }}",
+            "check_ok": "={{ $json.output.ok }}",
+            "reason": "={{ $json.output.reason }}",
+            "converged": ""
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "result_once",
+      "name": "Result screen",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        860,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Ответ (без цикла)",
+        "completionMessage": "=Вопрос: {{ $('Pick KB item').item.json.question }}<br><br>Ответ: {{ $('Generate answer').item.json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Client question": {
+      "main": [
+        [
+          {
+            "node": "Pick KB item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick KB item": {
+      "main": [
+        [
+          {
+            "node": "Generate answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate answer": {
+      "main": [
+        [
+          {
+            "node": "Code check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code check": {
+      "main": [
+        [
+          {
+            "node": "Write row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row": {
+      "main": [
+        [
+          {
+            "node": "Result screen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (once)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate answer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

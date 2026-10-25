@@ -1,0 +1,438 @@
+{
+  "name": "С9 · замер K3 · цикл с судьёй-моделью",
+  "nodes": [
+    {
+      "id": "q_form",
+      "name": "Client question",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -260,
+        0
+      ],
+      "webhookId": "s9-m3-judge",
+      "parameters": {
+        "path": "s9-m3-judge",
+        "formTitle": "Замер K3 — вопрос",
+        "formDescription": "Измерительный стенд Семинара 9, не форма студента",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Вопрос",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "pick_kb",
+      "name": "Pick KB item",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -20,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "javaScript",
+        "jsCode": "const inp = $input.item.json;\nconst question = inp.question || inp['Вопрос'] || '';\nconst MAP = [\n    {match: \"Можно ли перенести занят\", kb_id: \"kb2\", kb_text: \"kb2 · Перенос занятия: Перенести конкретное занятие можно не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Позже 24 часов занятие считается использованным.\", kb_keyword: \"24 час\", kb_numbers: [\"24\"]},\n    {match: \"Когда мне вернут деньги \", kb_id: \"kb4\", kb_text: \"kb4 · Возврат денег: Возврат оформляется в течение 10 рабочих дней на карту, с которой была оплата. Для сумм выше 3000 рублей решение проходит через руководителя, это дольше стандартного срока.\", kb_keyword: \"10 рабочих дней\", kb_numbers: [\"10\", \"3000\"]},\n    {match: \"Как мне попасть на перес\", kb_id: \"kb5\", kb_text: \"kb5 · Пересдача пропущенного занятия: Пересдачи идут каждую вторую субботу месяца, расписание публикуется в объявлениях личного кабинета за неделю.\", kb_keyword: \"вторую субботу\", kb_numbers: []},\n    {match: \"Когда появится сертифика\", kb_id: \"kb7\", kb_text: \"kb7 · Сертификат: Электронный сертификат формируется автоматически и появляется в личном кабинете в течение 5 рабочих дней после последнего занятия курса.\", kb_keyword: \"5 рабочих дней\", kb_numbers: [\"5\"]},\n    {match: \"Хочу перейти на другой к\", kb_id: \"kb8\", kb_text: \"kb8 · Перевод на другой курс: Перевод возможен при наличии мест на новом курсе; разница в стоимости пересчитывается администратором индивидуально.\", kb_keyword: \"перевод\", kb_numbers: []},\n    {match: \"Как связаться с преподав\", kb_id: \"kb10\", kb_text: \"kb10 · Связь с преподавателем: Написать конкретному преподавателю можно через раздел «Сообщения» личного кабинета, ответ приходит в течение одного рабочего дня.\", kb_keyword: \"Сообщения\", kb_numbers: []}\n];\nlet picked = null;\nfor (const m of MAP) { if (question.includes(m.match)) { picked = m; break; } }\nif (!picked) picked = MAP[0];\nreturn { json: {\n  question,\n  kb_id: picked.kb_id, kb_text: picked.kb_text, kb_keyword: picked.kb_keyword,\n  kb_numbers: picked.kb_numbers,\n  attempt: inp.attempt || 1,\n  prev_answer: inp.prev_answer || '', reason: inp.reason || '',\n} };\n"
+      }
+    },
+    {
+      "id": "m_gen",
+      "name": "Model (generate)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        200,
+        180
+      ],
+      "parameters": {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "generate",
+      "name": "Generate answer",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты — ассистент поддержки учебного центра. Вот точный пункт базы знаний, на который должен опираться ответ:\n\n{{ $json.kb_text }}\n\nВопрос клиента: {{ $json.question }}\n\nНапиши короткий ответ клиенту. СТРОГИЕ требования:\n1. Не длиннее 280 символов.\n2. Явно включи деталь: «{{ $json.kb_keyword }}».\n3. Укажи, куда обращаться дальше — администратор, личный кабинет, преподаватель, сотрудник или руководитель.\n4. Не используй никаких чисел, кроме тех, что есть в приведённом пункте базы.\n5. Пиши полностью на русском языке — никакой латиницы и иероглифов.\n\n{{ $json.prev_answer ? ('Предыдущая попытка не прошла проверку: «' + $json.prev_answer + '». Причина: ' + $json.reason + '. Исправь именно эту проблему, остальные требования сохрани.') : '' }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "m_judge",
+      "name": "Model (judge)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        420,
+        180
+      ],
+      "parameters": {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "judge",
+      "name": "Judge verdict",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        420,
+        0
+      ],
+      "parameters": {
+        "text": "=Пункт базы знаний:\n{{ $('Pick KB item').item.json.kb_text }}\n\nВопрос клиента: {{ $('Pick KB item').item.json.question }}\n\nОтвет, который нужно проверить: {{ $('Generate answer').item.json.text }}\n\nПроверь ответ по правилам:\n1. Не длиннее 280 символов.\n2. Явно упоминает деталь «{{ $('Pick KB item').item.json.kb_keyword }}».\n3. Указывает, куда обращаться дальше (администратор / личный кабинет / преподаватель / сотрудник / руководитель).\n4. Не содержит чисел, которых нет в приведённом пункте базы.\n5. Полностью на русском языке — без латиницы и без иероглифов.\n\nЕсли нарушено хоть одно правило — ok=false и назови правило.",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"ok\": {\n      \"type\": \"boolean\",\n      \"description\": \"true, если ответ проходит все 5 правил\"\n    },\n    \"reason\": {\n      \"type\": \"string\",\n      \"description\": \"если ok=false — какое правило нарушено и почему\"\n    }\n  },\n  \"required\": [\n    \"ok\",\n    \"reason\"\n  ]\n}",
+        "options": {}
+      }
+    },
+    {
+      "id": "retry_if",
+      "name": "Retry or finish?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.output.ok === true || $('Pick KB item').item.json.attempt >= 3 }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "prepare_retry",
+      "name": "Prepare retry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "javaScript",
+        "jsCode": "return { json: {\n  question: $('Pick KB item').item.json.question,\n  attempt: $('Pick KB item').item.json.attempt + 1,\n  prev_answer: $('Generate answer').item.json.text,\n  reason: $json.output.reason,\n} };\n"
+      }
+    },
+    {
+      "id": "converged_if",
+      "name": "Converged?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        860,
+        -80
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.output.ok === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "write_ok",
+      "name": "Write row (ok)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        -160
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "rAWgycAUH1A0SnKC",
+          "mode": "list",
+          "cachedResultName": "s9_case3_measurements"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "variant": "judge",
+            "question": "={{ $('Pick KB item').item.json.question }}",
+            "attempt": "={{ $('Pick KB item').item.json.attempt }}",
+            "answer": "={{ $('Generate answer').item.json.text }}",
+            "check_ok": "true",
+            "reason": "''",
+            "converged": "true"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "result_ok",
+      "name": "Result screen (ok)",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -160
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Ответ (цикл с судьёй-моделью)",
+        "completionMessage": "=Вопрос: {{ $('Pick KB item').item.json.question }}<br><br>Ответ: {{ $('Generate answer').item.json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "write_notconv",
+      "name": "Write row (not converged)",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        0
+      ],
+      "parameters": {
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "rAWgycAUH1A0SnKC",
+          "mode": "list",
+          "cachedResultName": "s9_case3_measurements"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "variant": "judge",
+            "question": "={{ $('Pick KB item').item.json.question }}",
+            "attempt": "={{ $('Pick KB item').item.json.attempt }}",
+            "answer": "={{ $('Generate answer').item.json.text }}",
+            "check_ok": "false",
+            "reason": "={{ $json.output.reason }}",
+            "converged": "false"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "result_notconv",
+      "name": "Result screen (не сошлось)",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Не сошлось за 3 попытки",
+        "completionMessage": "=Не удалось за 3 попытки получить ответ, прошедший проверку судьи-модели — вопрос передан сотруднику.",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Client question": {
+      "main": [
+        [
+          {
+            "node": "Pick KB item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick KB item": {
+      "main": [
+        [
+          {
+            "node": "Generate answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate answer": {
+      "main": [
+        [
+          {
+            "node": "Judge verdict",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Judge verdict": {
+      "main": [
+        [
+          {
+            "node": "Retry or finish?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry or finish?": {
+      "main": [
+        [
+          {
+            "node": "Converged?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare retry": {
+      "main": [
+        [
+          {
+            "node": "Pick KB item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Converged?": {
+      "main": [
+        [
+          {
+            "node": "Write row (ok)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Write row (not converged)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row (ok)": {
+      "main": [
+        [
+          {
+            "node": "Result screen (ok)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write row (not converged)": {
+      "main": [
+        [
+          {
+            "node": "Result screen (не сошлось)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (generate)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate answer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (judge)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Judge verdict",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

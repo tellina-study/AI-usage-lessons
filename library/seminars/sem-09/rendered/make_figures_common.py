@@ -213,7 +213,11 @@ def plashka(d, x, y, w, h, number, label, *, tone="base", nsz=54, lsz=25,
     Содержимое центруется по высоте ВМЕСТЕ: подпись в одну строку и подпись в
     две строки прежде давали плашки с разным пустым дном, и ряд из двух
     плашек читался съехавшим."""
+    # Три вида плашки, и третий заведён не для красоты: внутри панели,
+    # у которой СВОЯ цветная рамка, золотая рамка плашки спорит с ней за
+    # смысл цвета. `chislo` оставляет золото числу и отдаёт рамку панели.
     gold = tone == "glavnoe"
+    chislo = tone == "chislo"
     card(d, x, y, w, h, fill=W if gold else SURF,
          stroke=GOLD if gold else LIGHT, sw=5 if gold else 3)
     fo_l = f(lsz)
@@ -221,18 +225,19 @@ def plashka(d, x, y, w, h, number, label, *, tone="base", nsz=54, lsz=25,
     lh = lsz + 7
     block = nsz + 12 + len(lines) * lh - (lh - lsz)
     y0 = y + (h - block) / 2
-    ctxt(d, x + w / 2, y0, number, nsz, GOLD if gold else MID, b=True,
+    ctxt(d, x + w / 2, y0, number, nsz, GOLD if gold or chislo else MID, b=True,
          limit=w - 34, where=f"{where} · число")
-    lines_at(d, 0, y0 + nsz + 12, lines, fo_l, DEEP if gold else LIGHT, lh,
-             center=x + w / 2)
+    lines_at(d, 0, y0 + nsz + 12, lines, fo_l, DEEP if gold or chislo else LIGHT,
+             lh, center=x + w / 2)
 
 
 def plashka_para(d, x, y, w, h, left, right, caption, *, nsz=48, lsz=25,
-                 csz=25, gold_idx=1, where="?"):
+                 csz=25, gold_idx=1, ramka=GOLD, where="?"):
     """Пара «было → стало» — ОДНА плашка, не два числа на разных местах
     (форма §5.14). Числа разводятся своими подписями, чтобы два похожих
     числа не стояли в одной фразе."""
-    card(d, x, y, w, h, fill=W, stroke=GOLD, sw=5)
+    card(d, x, y, w, h, fill=W if ramka is GOLD else SURF, stroke=ramka,
+         sw=5 if ramka is GOLD else 3)
     half = w / 2
     cap_h = 44 if caption else 0
     for i, (num, lab) in enumerate((left, right)):

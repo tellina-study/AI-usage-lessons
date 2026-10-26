@@ -299,9 +299,20 @@ headless-браузера работает (`tools/presentation-build/setup_page
     python3 tools/seminar-build/audit_grammar.py --seminar 09
     python3 tools/seminar-build/audit_sluzhebnoe.py --seminar 09
     python3 tools/seminar-build/audit_sopostavleniya.py --seminar 09 --spisok
-    python3 tools/seminar-build/check_text_overlap_pdf.py <pdf>
-    python3 tools/seminar-build/check_tracks_pdf.py <pptx> <pdf>
     python3 tools/presentation-build/deep_latin_scan.py <файлы>
+
+Сторожа по PDF требуют рендера, и он здесь **есть** (проверено 2026-10-26; прежнее
+утверждение `tools/seminar-build/README.md` о том, что рендера в этом окружении нет,
+устарело и исправлено). Подключается одной строкой **в той же команде**, потому что
+оболочка состояние между вызовами не держит:
+
+    source tools/presentation-build/render-env.sh && \
+      soffice --headless --convert-to pdf rendered/sem-09.pptx --outdir rendered && \
+      python3 tools/seminar-build/check_text_overlap_pdf.py rendered/sem-09.pdf && \
+      python3 tools/seminar-build/check_tracks_pdf.py rendered/sem-09.pptx rendered/sem-09.pdf
+
+Оттуда же `pdftoppm` — кадры в PNG для просмотра **глазами**. Это не роскошь: протечки
+развязки и наложения текста живут в пикселях, и ни один греп их не видит.
 
 **`deck.yaml` и `SVODKA-SLAIDOV.md` пересобираются, а не правятся руками** (§8.5).
 

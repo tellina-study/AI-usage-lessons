@@ -46,6 +46,13 @@ BRAND_ALLOWLIST = {
     "v1", "v2", "v3", "vN", "sNN", "LO", "lec",
     # Common version / refs
     "ISBN", "DOI", "arXiv", "TED",
+    # Имена работ и авторов, которые курс ТРЕБУЕТ ставить на сам слайд
+    # (`trebovaniya-k-soderzhaniyu-forma.md`: «Ссылки на работы и авторов — на самом
+    # слайде, названиями»). Добавлено для Семинара 9, issue #299: сторож честно
+    # поднял их как латиницу вне списка, но снимать их со слайда нельзя — правило
+    # цитирования сильнее правила русификации именно для имён работ и авторов.
+    "RefusalBench", "Kamath", "Obermeyer", "Optum", "GaRAGe", "OLMo", "Qwen",
+    "OpenRouter", "Playwright", "LibreOffice",
     # File-format / mathematical
     "log", "min", "max", "avg", "sum", "id", "ID",
 }

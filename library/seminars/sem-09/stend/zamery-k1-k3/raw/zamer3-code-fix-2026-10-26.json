@@ -1,0 +1,130 @@
+{
+  "fix": "kb5 keyword_pattern regex in code_check_node(), 2026-10-26",
+  "workflow_id": "4WwTEwcwbzPdC5k0",
+  "webhook": "s9-m3-code",
+  "calls_total": 11,
+  "note": "execution 829 was an initial probe call (kept honestly in the count, same webhook, full real execution)",
+  "results": [
+    {
+      "execution_id": 829,
+      "kb_id": "kb5",
+      "question": "Как мне попасть на пересдачу занятия, которое я пропустил?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Для пересдачи пропущенного занятия обратитесь ко вторую субботу месяца. Список занятий опубликован в объявлении вашего личного кабинета. Если вопросы, обращайтесь к администратору.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 830,
+      "kb_id": "kb5",
+      "question": "Как мне попасть на пересдачу занятия, которое я пропустил?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Для пересдачи пропущенного занятия обратитесь к администратору или в личный кабинет за расписанием на вторую субботу месяца.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 831,
+      "kb_id": "kb5",
+      "question": "Как мне попасть на пересдачу занятия, которое я пропустил?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Чтобы попасть на пересдачу, обращайтесь в личный кабинет за неделей до второй субботы месяца. Там вы найдете расписание.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 832,
+      "kb_id": "kb5",
+      "question": "Как мне попасть на пересдачу занятия, которое я пропустил?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Для пересдачи пропущенного занятия обратитесь к администратору в личный кабинет за неделю до второй субботы месяца, где будет опубликовано расписание.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 833,
+      "kb_id": "kb5",
+      "question": "Как мне попасть на пересдачу занятия, которое я пропустил?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Чтобы попасть на пересдачу, обратитесь в личный кабинет за неделю до второй субботы месяца.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 834,
+      "kb_id": "kb5",
+      "question": "Как мне попасть на пересдачу занятия, которое я пропустил?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Для пересдачи пропущенного занятия обратитесь ко вторую субботу месяца. Список занятий публикуется в объявлении вашего личного кабинета. Если вопросы, обращайтесь к администратору.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 835,
+      "kb_id": "kb2",
+      "question": "Можно ли перенести занятие, если я заболел?",
+      "attempts": 3,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Занятие можно перенести не позднее чем за 24 часа до начала — через личный кабинет или сообщением администратору. Обращайтесь к нему для дальнейшей помощи.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 836,
+      "kb_id": "kb4",
+      "question": "Когда мне вернут деньги за отменённый курс?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Возврат денег будет произведен в течение 10 рабочих дней на карту, с которой была оплата. Если сумма больше 3000 рублей, решение будет рассмотрено руководителем. Для ускорения процесса обратитесь к администратору или в личный кабинет.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 837,
+      "kb_id": "kb7",
+      "question": "Когда появится сертификат после курса?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Сертификат появится в личном кабинете через 5 рабочих дней после окончания курса. Если возникнут вопросы, обращайтесь в личный кабинет.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 838,
+      "kb_id": "kb8",
+      "question": "Хочу перейти на другой курс, как это сделать?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Перевод на другой курс возможен при наличии мест и разнице в стоимости пересчитает администратор индивидуально. Обращайтесь в личный кабинет или к администратору для дальнейших действий.",
+      "converged": true,
+      "not_converged": false
+    },
+    {
+      "execution_id": 839,
+      "kb_id": "kb10",
+      "question": "Как связаться с преподавателем по курсу?",
+      "attempts": 1,
+      "final_check_ok": true,
+      "final_check_reason": "",
+      "final_answer": "Чтобы связаться с преподавателем, используй раздел «Сообщения» в личном кабинете. Ответ от преподавателя придет в течение рабочего дня. Если вопросы останутся, обращайтесь к администратору.",
+      "converged": true,
+      "not_converged": false
+    }
+  ]
+}

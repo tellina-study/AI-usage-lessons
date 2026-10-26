@@ -68,8 +68,16 @@ TEST_QUESTIONS = [
      "keyword": "24 час"},
     {"question": "Когда мне вернут деньги за отменённый курс?", "kb_id": "kb4",
      "keyword": "10 рабочих дней"},
+    # kb5: находка 2026-10-26 (README § «Починка») — точное совпадение подстроки «вторую
+    # субботу» (винительный падеж) не распознаёт склонение; модель трижды ответила верно по
+    # смыслу другим падежом («второй субботы», «вторая суббота») и проверка их отклонила.
+    # `keyword_pattern` — regex-альтернатива для code_check_node(), толерантная к падежу
+    # (nom «вторая», gen/dat/instr/prep «второй», acc «вторую» + «суббот(а|ы|е|у|ой)»).
+    # Остальные 5 вопросов НЕ получают `keyword_pattern` — их падежный риск не измерен и не
+    # подтверждён, трогать по аналогии не входит в эту починку.
     {"question": "Как мне попасть на пересдачу занятия, которое я пропустил?", "kb_id": "kb5",
-     "keyword": "вторую субботу"},
+     "keyword": "вторую субботу",
+     "keyword_pattern": r"втор(?:ая|ой|ую)\s+суббот(?:а|ы|е|у|ой)"},
     {"question": "Когда появится сертификат после курса?", "kb_id": "kb7",
      "keyword": "5 рабочих дней"},
     {"question": "Хочу перейти на другой курс, как это сделать?", "kb_id": "kb8",
@@ -89,11 +97,15 @@ for q in TEST_QUESTIONS:
     q["numbers"] = kb_numbers(q["kb_id"])
 
 QMAP_JS = ",\n".join(
-    "    {match: %s, kb_id: %s, kb_text: %s, kb_keyword: %s, kb_numbers: %s}" % (
+    "    {match: %s, kb_id: %s, kb_text: %s, kb_keyword: %s, kb_keyword_pattern: %s, "
+    "kb_numbers: %s}" % (
         json.dumps(q["question"][:24], ensure_ascii=False),  # устойчивый обрывок для includes()
         json.dumps(q["kb_id"], ensure_ascii=False),
         json.dumps(q["kb_text"], ensure_ascii=False),
         json.dumps(q["keyword"], ensure_ascii=False),
+        # null для всех вопросов без keyword_pattern — code_check_node() падает обратно на
+        # includes() ровно как раньше для них; regex-ветка срабатывает только там, где задан.
+        json.dumps(q.get("keyword_pattern")) if q.get("keyword_pattern") else "null",
         json.dumps(q["numbers"], ensure_ascii=False),
     ) for q in TEST_QUESTIONS
 )
@@ -147,6 +159,7 @@ def pick_kb_item_node(pos):
         "return { json: {\n"
         "  question,\n"
         "  kb_id: picked.kb_id, kb_text: picked.kb_text, kb_keyword: picked.kb_keyword,\n"
+        "  kb_keyword_pattern: picked.kb_keyword_pattern,\n"
         "  kb_numbers: picked.kb_numbers,\n"
         "  attempt: inp.attempt || 1,\n"
         "  prev_answer: inp.prev_answer || '', reason: inp.reason || '',\n"
@@ -226,8 +239,17 @@ def code_check_node(pos):
         "const answer = $('Generate answer').item.json.text || '';\n"
         "const reasons = [];\n"
         "if (answer.length > 280) reasons.push('длиннее 280 символов');\n"
-        "if (!answer.toLowerCase().includes(kb.kb_keyword.toLowerCase()))\n"
-        "  reasons.push('нет детали «' + kb.kb_keyword + '»');\n"
+        "// Починка 2026-10-26 (kb5, см. README): точное includes() не распознаёт склонение.\n"
+        "// Если для этого вопроса задан kb_keyword_pattern — проверяем regex'ом (толерантно\n"
+        "// к падежу), иначе — как раньше, точной подстрокой. Остальные 5 вопросов\n"
+        "// kb_keyword_pattern не имеют и продолжают идти через includes() без изменений.\n"
+        "let hasKeyword;\n"
+        "if (kb.kb_keyword_pattern) {\n"
+        "  hasKeyword = new RegExp(kb.kb_keyword_pattern, 'i').test(answer);\n"
+        "} else {\n"
+        "  hasKeyword = answer.toLowerCase().includes(kb.kb_keyword.toLowerCase());\n"
+        "}\n"
+        "if (!hasKeyword) reasons.push('нет детали «' + kb.kb_keyword + '»');\n"
         "const contacts = " + CONTACTS_JS + ";\n"
         "if (!contacts.some(c => answer.toLowerCase().includes(c)))\n"
         "  reasons.push('не указано, куда обращаться дальше');\n"

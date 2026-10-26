@@ -53,11 +53,9 @@ visual:
 
 ## Visual
 
-> **Модель и учётные данные.** `Credential`: `OpenRouter account`. `Model`: `qwen/qwen-2.5-7b-instruct` — тот самый узел, что отвечает в Кейсе 1 и проверяет ответы в Кейсе 3. Граф процесса для этого кейса не меняется.
+> **Модель.** `Credential`: `OpenRouter account`, `Model`: `qwen/qwen-2.5-7b-instruct` — тот же узел, что в Кейсах 1 и 3.
 
-> **Температура уже в нуле.** `Sampling Temperature`: `0.0`. Это не умолчание узла — дефолт самого инструмента `0,7`; значение `0` выставлено отдельно, то есть первая карточка вопроса уже сделана.
-
-> **Список доступных полей — восемь пунктов, раскрыт целиком.** `Frequency Penalty` · `Maximum Number of Tokens` · `Response Format` · `Presence Penalty` · `Timeout` · `Max Retries` · `Top P` · `Provider Routing`.
+> **Температура в нуле, список раскрыт целиком.** `Sampling Temperature`: `0.0` — не умолчание (дефолт `0,7`). Восемь доступных полей: `Frequency Penalty` · `Maximum Number of Tokens` · `Response Format` · `Presence Penalty` · `Timeout` · `Max Retries` · `Top P` · `Provider Routing`.
 
 > **Что это значит для двух карточек.** `Provider Routing` в списке есть — закрепить провайдера физически можно, кнопка перед глазами. Параметра `seed` в списке нет ни под каким именем — третья карточка опирается на рычаг, которого у этого узла попросту не существует.
 

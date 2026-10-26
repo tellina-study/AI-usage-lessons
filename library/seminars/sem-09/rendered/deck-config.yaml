@@ -1,0 +1,151 @@
+# Что у Семинара 9 своё. Код сборщика — общий, в `tools/seminar-build/`.
+#
+# Правило, которое этот файл обслуживает (канон `tools/presentation-build/
+# seminar-deck-kit.md`): дека собирается из ИМЕНОВАННОЙ БИБЛИОТЕКИ ПРИЁМОВ, и
+# приём выбирается по полю `visual.pattern` слайда — ниже, в `genres`.
+#
+# Взято за образец у `library/seminars/sem-08/rendered/deck-config.yaml` и
+# переписано под сетку С9 (`BRIEF-PROIZVODSTVO.md` §4): 78 слайдов, ШЕСТЬ
+# кейсов (у С8 было четыре плюс разбавитель вне дорожки), все шесть — внутри
+# дорожки кейсов, разбавителя нет.
+
+seminar: "09"
+issue: 299
+
+langs:
+  ru:
+    slides: slides
+    deck: deck.yaml
+    out: sem-09.pptx
+    blocks: [Введение, Ось, Кейсы, Закрытие]
+  en:
+    # Bilingual Production Rule (CLAUDE.md, issue #172). EN-трек производится
+    # ПОСЛЕ приёмки RU — отдельной фазой, см. `BRIEF-PROIZVODSTVO.md` §7.
+    slides: slides-en
+    deck: deck.en.yaml
+    out: sem-09-en.pptx
+    head: head.en.yaml
+    blocks: [Introduction, Axis, Cases, Closing]
+
+# Границы блоков: [от, до, индекс блока, индекс ступени или null].
+# Введение n01-n03, ось n04, кейсы n05-n75, закрытие n76-n78.
+razmetka:
+  n:
+    rows:
+      - [1, 3, 0, null]
+      - [4, 4, 1, null]
+      - [5, 75, 2, 0]
+      - [76, 78, 3, null]
+    stages: [2]
+
+# Дорожка кейсов на лёгком дивайдере: названия по ФУНКЦИИ (канон §1), не по
+# тезису. Все шесть входят в дорожку — у С9 нет разбавителя вне её.
+case_track:
+  - Отвечать или промолчать
+  - База знаний в промте
+  - Проверка ответа
+  - Текст клиента как инструкция
+  - Повторяемость ответа
+  - Чтение фотографии
+
+# ВАЖНО, куплено дефектом С8 (см. его deck-config.yaml, комментарий к n27):
+# ключи ниже — ТОЧНЫЕ id дивайдеров кейсов. При любой вставке или
+# перенумеровке слайдов этот блок правится В ТОМ ЖЕ КРУГЕ: `D.case_idx().get(sid)`
+# ищет совпадение по точному id, и от стале́го ключа полоса-дорожка на
+# дивайдере молча не рисуется вовсе — без ошибки и без предупреждения.
+# Сверка: `grep -l 'pattern: case_divider_quote' ../slides/*.md`.
+case_idx:
+  n05: 0
+  n18: 1
+  n29: 2
+  n43: 3
+  n55: 4
+  n64: 5
+
+# `visual.pattern` → жанр из библиотеки приёмов (`tools/seminar-build/genres.py`).
+# Имя, которого здесь нет, рисуется жанром `content` — нормальный, самый
+# частый случай.
+genres:
+  hero_cover: cover_centered
+  section_divider_macro: divider
+  case_divider_quote: case_divider
+  question_with_option_cards: question
+  guess_the_number: question
+  recap_table: axis_table
+  keystone_axis: axis_table
+  criteria_checklist_and_boundary: criteria
+  base_and_edge: base_edge
+  outcome_artifact: closing
+  bridge_forward: closing
+
+# Роль блока-цитаты ПО УМОЛЧАНИЮ для этого приёма. Запись нужна только там,
+# где умолчание (`formula`) неверно.
+pattern_role:
+  question_with_option_cards: question
+  guess_the_number: question
+  answer_breakdown_table: formula
+  answer_breakdown_schema: formula
+  criteria_checklist_and_boundary: formula
+  base_and_edge: fact
+  recap_table: fact
+  keystone_axis: fact
+  measured_outcome_table: fact
+
+# Приёмы, где зал ГОЛОСУЕТ карточками: блок `cards` рисуется рядом «ВЫБЕРИ»,
+# и к ним применяется аудит «ответ рядом с вопросом» (А6, протечки).
+vote_patterns:
+  - question_with_option_cards
+  - guess_the_number
+
+# Дивайдеры кейса: `audit_takty_keysa` читает этот список, чтобы проверить
+# порядок «дивайдер → сцена → вопрос» (А5a). У С9 ровно один приём дивайдера
+# кейса, разбавителя вне дорожки нет — поэтому список из одного имени.
+divider_patterns: [case_divider_quote]
+
+# Слайды, где фигура — подтверждающий бэкап ПОСЛЕ основных врезок (рисуется
+# последней, не первой). Заполняется по ходу производства, когда такой слайд
+# реально появится; пустой список — не пробел, а отсутствие такого случая.
+fig_after: []
+
+table_style: {}
+gold_quote_sids: {}
+quote_role_force: {}
+
+deck_yaml:
+  central_question_patterns: [question_with_option_cards, guess_the_number]
+  axis_pattern: keystone_axis
+  head_defaults:
+    seminar_number: 9
+    audience: "3 курс, 09.03.01 — практикующие инженеры, все пользуются ИИ-ассистентами"
+    format: >-
+      слайды фасилитатора + открытые вопросы с карточками (вопрос ДО разбора) +
+      настоящие скрины живого стенда n8n.lessons.tellian.io + пять измеренных
+      замеров на этом стенде (222 вызова, протоколы в `stend/`); на занятии
+      ведущий ничего не редактирует в узлах вживую — только прогоняет уже
+      готовые процессы (решение владельца, ARCHITECTURE.md §4)
+    language: ru
+    slot_min: 90
+
+# ── Сторожа и генераторы ────────────────────────────────────────────────────
+
+notes:
+  # Коридор семинара по канону §5 — 250-450 слов на содержательный слайд
+  # (не 500-800: это норма лекций).
+  bands:
+    разделитель: [250, 450]
+    голосование: [250, 450]
+    содержательный: [250, 450]
+    опорный: [250, 450]
+    обложка: null
+  anchor: {}
+
+svodka:
+  case_divider_patterns: [section_divider_macro, case_divider_quote]
+  nachalo_default: "сцена Ольги, одностраничник"
+  zal:
+    question_with_option_cards: голосования карточками
+    guess_the_number: устная оценка числа
+
+sluzhebnoe:
+  timing_patterns: [hero_cover, section_divider_macro, case_divider_quote, keystone_axis]
+  razdely: ["МОСТИК", "ШОВ С8→С9", "ОСЬ", "ЛЕСТНИЦА"]

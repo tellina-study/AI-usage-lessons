@@ -53,7 +53,7 @@ visual:
 
 ## Visual
 
-> **Модель.** `Credential`: `OpenRouter account`, `Model`: `qwen/qwen-2.5-7b-instruct` — тот же узел, что в Кейсах 1 и 3.
+> **Модель.** Узел `Model (T = 0)`: `Credential`: `OpenRouter account`, `Model`: `qwen/qwen-2.5-7b-instruct` — тот же узел, что в Кейсах 1 и 3.
 
 > **Температура в нуле, список раскрыт целиком.** `Sampling Temperature`: `0.0` — не умолчание (дефолт `0,7`). Восемь доступных полей: `Frequency Penalty` · `Maximum Number of Tokens` · `Response Format` · `Presence Penalty` · `Timeout` · `Max Retries` · `Top P` · `Provider Routing`.
 

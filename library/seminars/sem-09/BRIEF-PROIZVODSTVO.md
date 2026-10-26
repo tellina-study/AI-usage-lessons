@@ -255,6 +255,7 @@ headless-браузера работает (`tools/presentation-build/setup_page
 
 **Программные схемы слоя 1** (`rendered/make_figures_*.py`, палитра Ocean, кегль **не ниже 7,5 pt**):
 `lestnitsa-dugi.png` · **`k1-shema-samootchet-i-geyt.png`** · `k2-shema-promt-i-kesh.png` ·
+**`k2-shema-kesh-lovushka.png`** ·
 `k3-shema-tsikl.png` · `k4-shema-upravlenie-dannye.png` · `k5-shema-tri-ishoda.png` ·
 `k6-shema-chtenie-i-sverka.png` · `k6-shema-vysota-simvola.png`
 
@@ -282,6 +283,8 @@ headless-браузера работает (`tools/presentation-build/setup_page
 | `k5-shema-tri-ishoda.png` | **`n60`** — несущий кадр «три исхода». На `n58` (разбор) её ставить нельзя |
 | `k1-shema-samootchet-i-geyt.png` | `n09` — **только три верхних ряда**, без ряда «чего это стоило» |
 | `k3-shema-tsikl.png` | `n33` — устройство цикла, без измеренных «1 случай из 6» |
+| `k2-shema-promt-i-kesh.png` | `n22` — **строение** промта и правило порядка. Устройство, без исходов |
+| **`k2-shema-kesh-lovushka.png`** (новая) | `n26` — ловушка кэша: два столбца, различие в одной дописанной строке |
 | `k6-shema-vysota-simvola.png` | **`n72`** — такт механизма. Числа `26 из 26` и `6,1 px` там УЖЕ вскрыты тактами `n70`/`n71`, поэтому на этой фигуре они уместны и **возвращаются**. А `11 из 11` — payload такта `n73`, и его на фигуре быть не должно |
 | **`k6-shema-chtenie-i-sverka.png`** (новая) | `n68` — такт «слой 1»: фото → распознавание → текст → **сверка с суммой из заявки**. Устройство, без единого измеренного числа |
 

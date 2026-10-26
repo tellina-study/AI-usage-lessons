@@ -52,6 +52,7 @@ BRAND_ALLOWLIST = {
     # поднял их как латиницу вне списка, но снимать их со слайда нельзя — правило
     # цитирования сильнее правила русификации именно для имён работ и авторов.
     "RefusalBench", "Kamath", "Obermeyer", "Optum", "GaRAGe", "OLMo", "Qwen",
+    "CaMeL", "Debenedetti", "Huang", "Zheng", "Liu", "Salvatore", "ProjectDiscovery",
     "OpenRouter", "Playwright", "LibreOffice",
     # File-format / mathematical
     "log", "min", "max", "avg", "sum", "id", "ID",

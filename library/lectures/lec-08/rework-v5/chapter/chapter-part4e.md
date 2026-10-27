@@ -218,16 +218,20 @@ C2PA образует две половины одной задачи: подп�
 - Dell'Acqua F. et al. Navigating the Jagged Technological Frontier. SSRN 4573321, 18 сентября
   2023 — https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321
 - Noy S., Zhang W. Experimental Evidence on the Productivity Effects of Generative Artificial
-  Intelligence. MIT, рабочая версия 2 марта 2023; *Science*, 2023 —
-  https://economics.mit.edu/sites/default/files/inline-files/Noy_Zhang_1.pdf
+  Intelligence. MIT, рабочая версия 2 марта 2023 —
+  https://economics.mit.edu/sites/default/files/inline-files/Noy_Zhang_1.pdf · журнальная
+  версия: *Science* 381(6654):187–192, 14 июля 2023, doi:10.1126/science.adh2586
 - METR. Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.
-  10 июля 2025 — https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/
+  10 июля 2025 — https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/ ·
+  полный текст: arXiv:2507.09089 — https://arxiv.org/abs/2507.09089
 - Peng S. et al. The Impact of AI on Developer Productivity: Evidence from GitHub Copilot.
   arXiv:2302.06590, 13 февраля 2023 — https://arxiv.org/abs/2302.06590
 - Brynjolfsson E., Li D., Raymond L. Generative AI at Work. arXiv:2304.11771, 23 апреля 2023;
   *QJE* 2025 — https://arxiv.org/abs/2304.11771
 - Rajpal S. From Producing to Validating: How AI Is Deskilling Freelancers. arXiv:2608.26089,
   26 августа 2026 — https://arxiv.org/abs/2608.26089
+- Ju H., Aral S. Collaborating with AI Agents: Field Experiments on Teamwork, Productivity, and
+  Performance. arXiv:2503.18238, 23 марта 2025 (MIT IDE) — https://arxiv.org/abs/2503.18238
 
 ## Раздел 6: устройство моделей и границы метода
 
@@ -289,6 +293,14 @@ C2PA образует две половины одной задачи: подп�
 - ILO Working Paper 140. Generative AI and Jobs: A Refined Global Index of Occupational Exposure.
   20 мая 2025 —
   https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure
+- Wang Z., Baxi A., Bakhshi H., Siepel J. Demand for Creativity and AI Skills in the
+  Post-ChatGPT Labour Market: Evidence from UK Job Vacancies. Creative Industries Policy and
+  Evidence Centre, 2026 —
+  https://pec.ac.uk/discussion_paper_/demand-creativity-ai-skills-post-chatgpt/ · журнальная
+  версия: *Regional Studies*, doi:10.1080/00343404.2026.2688960
+- AI-Generated “Workslop” Is Destroying Productivity. *Harvard Business Review*, 22 сентября
+  2025 (опрос 1 150 работников, Stanford Social Media Lab совместно с BetterUp Labs) —
+  https://hbr.org/2025/09/ai-generated-workslop-is-destroying-productivity
 - CNews, hh.ru о премии за ИИ-навыки, 21 августа 2026 —
   https://www.cnews.ru/news/line/2026-08-21_kak_zarabotat_na_nejrosetyah
 - Sostav, HINT по данным hh.ru о рекламных профессиях, 23 октября 2026 —

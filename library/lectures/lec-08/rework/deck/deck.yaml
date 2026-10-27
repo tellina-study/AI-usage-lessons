@@ -3,7 +3,7 @@
 # Служебный манифест деки Лекции 8 «Узнавание стоило доверия бесплатно -- сколько оно
 # стоит теперь». Issue #289 · ветка issue-289-lec-08-rework.
 #
-# ЧТО ЭТО. Опись 76 кадров деки со служебными полями на каждый: идентификатор,
+# ЧТО ЭТО. Опись 71 кадров деки со служебными полями на каждый: идентификатор,
 # тип кадра, заголовок, адрес в главе (`chapter_ref`) и `timing_min`. Тайминг и
 # методические поля живут ЗДЕСЬ и во фронтматтере файла кадра -- на видимом слое кадра
 # они запрещены (CLAUDE.md § «No Timing / No Methodology in Slides»), переносить их
@@ -24,7 +24,7 @@
 # назначен чтением текста главы, а не автоматическим переносом значения маркера --
 # метод не меняется оттого, что его результат теперь совпадает с текстом маркера.
 #
-# СОСТАВ, посчитанный с диска: 76 кадров, сквозная нумерация s01-s76, без
+# СОСТАВ, посчитанный с диска: 71 кадров, сквозная нумерация s01-s71, без
 # вставленных кадров с буквенным хвостом (в отличие от Лекции 7, здесь порядок показа
 # и нумерация кадров совпадают один в один).
 #
@@ -32,8 +32,8 @@
 # (partial -> false) · `vfy` -- на кадре есть число под пересверку в день лекции ·
 # `status` -- состояние файла кадра · `media_status` -- `wired` (поле `media`
 # заполнено, кадр реально встаёт в сборку), `needs_media` (`media_needed` просит
-# снимок/схему, но `media` ещё пусто -- на момент сборки этого манифеста таких 21
-# из 76), `no_decision` (оба поля пусты).
+# снимок/схему, но `media` ещё пусто -- на момент сборки этого манифеста таких 28
+# из 71), `no_decision` (оба поля пусты).
 #
 # ЧАСТИ: deck.yaml (мета + Разделы 0-3, вход через релиз/приём аудиторией) ·
 #        deck-part2.yaml (Разделы 4-7, права/кадровый рынок/сборка/закрытие + totals).
@@ -44,16 +44,16 @@ deck:
   title: "Лекция 8. Узнавание стоило доверия бесплатно — сколько оно стоит теперь"
   language: ru
   status: draft
-  version: v2
-  total_slides: 76
-  sum_timing_min: 85.70           # сложено по timing_min файлов кадров, плановый хронометраж курсом пока не зафиксирован -- см. totals ниже
+  version: v4
+  total_slides: 71
+  sum_timing_min: 80.70           # сложено по timing_min файлов кадров, плановый хронометраж курсом пока не зафиксирован -- см. totals ниже
   axis: "Узнавание — лицо на видеозвонке, голос в трубке, подпись автора под статьёй — было бесплатным и достаточным сигналом доверия в творческом производстве; генеративная модель обнулила цену его подделки"
   central_question: "Лицо, голос и подпись автора стоили доверия бесплатно. Сколько это стоит теперь — и кто платит?"
   curriculum_level: "отраслевая лекция L8; strict-in ≥30% обязателен, waiver недоступен"
   deck_parts: [deck.yaml, deck-part2.yaml]
   builder: rendered/build_lec08.py   # относительно library/lectures/lec-08/; читает slides/*.md, НЕ этот файл
   sources:
-    chapter_parts: 9              # chapter.md + chapter-part{2,3,3b,3c,4,4a,5,5b}.md, сочтено с диска (5 логических частей)
+    chapter_parts: 11             # chapter.md + chapter-part{1b,1c,2,3,3b,3c,4,4a,5,5b}.md, сочтено с диска
     architecture: rework/architecture.md
     decisions: [rework/decisions-owner.md, rework/decisions-orkestratora.md]
   generator: rework/deck/make_deck_yaml.py   # выгружает ЭТОТ файл из slides/*.md; перезапускать после правок фронтматтера
@@ -70,9 +70,9 @@ palette:                         # Ocean Gradient, зафиксирована к
 slide_types:                     # значения поля type, с числом кадров
   case:        { count:  27, meaning: "разбор или картина работы" }
   norm:        { count:  19, meaning: "норматив, устройство, правило" }
-  summary:     { count:  11, meaning: "вывод раздела или свод" }
   comparison:  { count:   9, meaning: "два столбца «что получается / что не получается»" }
-  divider:     { count:   6, meaning: "дивайдер раздела" }
+  summary:     { count:   7, meaning: "вывод раздела или свод" }
+  divider:     { count:   5, meaning: "дивайдер раздела" }
   map:         { count:   2, meaning: "карта стадии или сетка курса" }
   cover:       { count:   1, meaning: "обложка" }
   question:    { count:   1, meaning: "вопрос залу или вопросы в конце" }
@@ -81,19 +81,15 @@ sections:                        # разделы показа: кадров и 
   - { name: "0. Вход",
       slides: 9, timing_min: 7.85, range: [s01, s09] }
   - { name: "1. Продакшн / исполнение",
-      slides: 20, timing_min: 21.45, range: [s10, s29] }
+      slides: 25, timing_min: 27.45, range: [s10, s34] }
   - { name: "2. Редакционный контроль",
-      slides: 7, timing_min: 7.30, range: [s30, s36] }
+      slides: 8, timing_min: 8.30, range: [s35, s42] }
   - { name: "3. Релиз и приём аудиторией",
-      slides: 8, timing_min: 8.50, range: [s37, s44] }
-  - { name: "4. Права и лицензирование",
-      slides: 11, timing_min: 14.40, range: [s45, s55] }
-  - { name: "5. Кадровый рынок отрасли",
-      slides: 9, timing_min: 11.00, range: [s56, s64] }
-  - { name: "6. Сборка",
-      slides: 8, timing_min: 11.20, range: [s65, s72] }
-  - { name: "7. Закрытие",
-      slides: 4, timing_min: 4.00, range: [s73, s76] }
+      slides: 9, timing_min: 9.50, range: [s43, s51] }
+  - { name: "4. Счёт: права, рынок и критерии отказа",
+      slides: 16, timing_min: 23.60, range: [s52, s67] }
+  - { name: "5. Закрытие",
+      slides: 4, timing_min: 4.00, range: [s68, s71] }
 
 slides:
 
@@ -118,7 +114,7 @@ slides:
     local_id: "s03"
     file: slides/s03-keystone-dva-ryada.md
     type: case
-    title: "Узнавание было бесплатным: два ряда, один механизм"
+    title: "Узнавание было бесплатным: медиа и найм ломает один механизм"
     chapter_ref: "chapter.md §0.2 (keystone целиком -- оба ряда одной строкой)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
@@ -150,7 +146,7 @@ slides:
     local_id: "s07"
     file: slides/s07-razgranicheniya-lektsiya-14-i-3.md
     type: comparison
-    title: "Тот же механизм, два разных адреса в цикле"
+    title: "Синтез лица и голоса: здесь — найм, в Лекции 14 — атака на компанию"
     chapter_ref: "chapter.md §0.3"
     timing_min: 0.7
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
@@ -166,12 +162,12 @@ slides:
     local_id: "s09"
     file: slides/s09-vopros-lektsii.md
     type: summary
-    title: "Вопрос лекции"
+    title: "Вопрос лекции: чем подтверждать доверие, если узнавание больше не доказательство"
     chapter_ref: "chapter.md §0.7 (закрывающая boxed-цитата вопроса лекции, конец раздела, ДО заголовка «Раздел 1»)"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
 
-  # ─── 1. Продакшн / исполнение · 20 кадров · 21.45 мин ───
+  # ─── 1. Продакшн / исполнение · 25 кадров · 27.45 мин ───
   - id: s10
     local_id: "s10"
     file: slides/s10-divider-prodakshn-ispolnenie.md
@@ -238,221 +234,277 @@ slides:
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
   - id: s18
     local_id: "s18"
-    file: slides/s18-latentnoe-prostranstvo-vopros.md
-    type: norm
-    title: "Латентное пространство — вопрос залу"
-    chapter_ref: "chapter-part1b.md §1.6 Шаг Б, второй подраздел (вопрос-предсказание, без ответа -- латентное пространство, VAE)"
-    timing_min: 0.4
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s19
-    local_id: "s19"
-    file: slides/s19-latentnoe-prostranstvo-vskrytie.md
+    file: slides/s18-latentnoe-prostranstvo-rabochee-pole.md
     type: norm
     title: "Латентное пространство — рабочее поле генерации"
-    chapter_ref: "chapter-part1b.md §1.6 Шаг Б, второй подраздел (вскрытие с арифметикой -- латентное пространство, VAE)"
-    timing_min: 1.3
+    chapter_ref: "chapter-part1b.md §1.6 Шаг Б, второй подраздел (латентное пространство, VAE -- v4: вопрос-предсказание и вскрытие слиты в один кадр, механика голосования снята)"
+    timing_min: 1.4
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s20
-    local_id: "s20"
-    file: slides/s20-zamykanie-keystone-70-minut.md
+  - id: s19
+    local_id: "s19"
+    file: slides/s19-zamykanie-keystone-70-minut.md
     type: case
     title: "Замыкание keystone: почему 70 минут и бытовой GPU"
     chapter_ref: "chapter-part1b.md §1.6 Шаг Б, третий подраздел (замыкание keystone)"
     timing_min: 0.8
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s21
-    local_id: "s21"
-    file: slides/s21-pary-kartinka-podpis.md
+  - id: s20
+    local_id: "s20"
+    file: slides/s20-pary-kartinka-podpis.md
     type: norm
     title: "Пары «картинка—подпись»: откуда модель знает слова"
     chapter_ref: "chapter-part1b.md §1.6 Шаг В, первый подраздел (пары картинка-подпись, CLIP/LAION-5B)"
     timing_min: 1.2
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s22
-    local_id: "s22"
-    file: slides/s22-vektor-promta-kak-rul-generatsii.md
+  - id: s21
+    local_id: "s21"
+    file: slides/s21-vektor-promta-kak-rul-generatsii.md
     type: norm
     title: "Вектор промпта как руль генерации: кросс-модальное внимание"
     chapter_ref: "chapter-part1b.md §1.6 Шаг В, второй подраздел (вектор промпта, cross-attention)"
     timing_min: 1.0
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s23
-    local_id: "s23"
-    file: slides/s23-lovushka-promt-ne-tz.md
+  - id: s22
+    local_id: "s22"
+    file: slides/s22-lovushka-promt-ne-tz.md
     type: case
     title: "Ловушка: промпт — не техническое задание"
     chapter_ref: "chapter-part1b.md §1.6 Шаг В, третий подраздел (ловушка CFG/негативный промпт)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s24
-    local_id: "s24"
-    file: slides/s24-uchimsya-ubirat-shum.md
+  - id: s23
+    local_id: "s23"
+    file: slides/s23-uchimsya-ubirat-shum.md
     type: norm
     title: "Учимся убирать шум: обучение наоборот + пошаговая лента"
     chapter_ref: "chapter-part1b.md §1.6 Шаг Г, первый подраздел (диффузия — обучение и генерация)"
     timing_min: 1.7
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s25
-    local_id: "s25"
-    file: slides/s25-diffuziya-protiv-avtoregressii.md
+  - id: s24
+    local_id: "s24"
+    file: slides/s24-diffuziya-protiv-avtoregressii.md
     type: comparison
     title: "Диффузия против авторегрессии"
     chapter_ref: "chapter-part1b.md §1.6 Шаг Г, второй подраздел (диффузия против авторегрессии)"
     timing_min: 1.2
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s26
-    local_id: "s26"
-    file: slides/s26-arifmetika-poryadkov.md
+  - id: s25
+    local_id: "s25"
+    file: slides/s25-arifmetika-poryadkov.md
     type: case
-    title: "Арифметика трёх-четырёх порядков"
+    title: "Почему картинка стоит три цента: шаги × GPU-секунды"
     chapter_ref: "chapter-part1b.md §1.6 Шаг Г, третий подраздел (арифметика трёх-четырёх порядков)"
     timing_min: 1.1
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s27
-    local_id: "s27"
-    file: slides/s27-tri-zabluzhdeniya.md
+  - id: s26
+    local_id: "s26"
+    file: slides/s26-tri-zabluzhdeniya.md
     type: case
     title: "Три заблуждения о генерации"
     chapter_ref: "chapter-part1b.md §1.6 Шаг Г, четвёртый подраздел (три заблуждения)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s28
-    local_id: "s28"
-    file: slides/s28-sora-khayp-tsikl.md
+  - id: s27
+    local_id: "s27"
+    file: slides/s27-sora-khayp-tsikl.md
     type: case
     title: "Sora: хайп-цикл длиной в год"
-    chapter_ref: "chapter.md §1.6"
+    chapter_ref: "chapter.md §1.6 (Sora)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s28
+    local_id: "s28"
+    file: slides/s28-r0-kak-ustroeno-raspoznavanie.md
+    type: divider
+    title: "Как устроено распознавание: та же сеть, задача наоборот"
+    chapter_ref: "chapter-part1c.md §1.7б, вступление + Шаг А (новый R-блок v4, мост-дивайдер)"
+    timing_min: 0.4
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
   - id: s29
     local_id: "s29"
-    file: slides/s29-vyvod-razdela-chto-pereekhalo.md
+    file: slides/s29-r1-zadacha-naoborot.md
+    type: norm
+    title: "Задача наоборот: на выходе — метка, не контент"
+    chapter_ref: "chapter-part1c.md §1.7б Шаг А (R1 -- задача наоборот: метка, не контент)"
+    timing_min: 1.1
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+  - id: s30
+    local_id: "s30"
+    file: slides/s30-r2-na-chem-uchat-raspoznavatel.md
+    type: norm
+    title: "На чём учат распознаватель: размеченные данные и кросс-энтропия"
+    chapter_ref: "chapter-part1c.md §1.7б Шаг Б (R2 -- на чём учат: ImageNet-1k, кросс-энтропия)"
+    timing_min: 1.2
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s31
+    local_id: "s31"
+    file: slides/s31-r3-te-zhe-bloki-vnimaniya.md
+    type: norm
+    title: "Те же блоки внимания, другая голова"
+    chapter_ref: "chapter-part1c.md §1.7б Шаг В (R3 -- ViT/BERT/GPT/CLIP, те же блоки внимания)"
+    timing_min: 1.2
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s32
+    local_id: "s32"
+    file: slides/s32-r4-raspoznavatel-vnutri-konveyera.md
+    type: case
+    title: "Распознаватель уже стоит внутри конвейера генерации"
+    chapter_ref: "chapter-part1c.md §1.7б Шаг Г (R4 -- распознаватель внутри конвейера генерации)"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+  - id: s33
+    local_id: "s33"
+    file: slides/s33-r5-detektor-dipfeykov.md
+    type: case
+    title: "Детектор дипфейков: отличник на своих данных, провал на чужих"
+    chapter_ref: "chapter-part1c.md §1.7б Шаг Д (R5 -- детектор дипфейков, провал обобщения)"
+    timing_min: 1.3
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+  - id: s34
+    local_id: "s34"
+    file: slides/s34-vyvod-razdela-chto-pereekhalo.md
     type: summary
-    title: "Вывод раздела: что переехало — и чего раздел не утверждает"
-    chapter_ref: "chapter.md §1.7, §1.8"
+    title: "Вывод: ремесло переехало в запрос и отбор — а узнавание стало подделываемым"
+    chapter_ref: "chapter.md §1.7, §1.8 + chapter-part1c.md §1.8 (симметричная строка про распознавание)"
     timing_min: 1.05
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
 
-  # ─── 2. Редакционный контроль · 7 кадров · 7.30 мин ───
-  - id: s30
-    local_id: "s30"
-    file: slides/s30-divider-redakcionnyy-kontrol.md
+  # ─── 2. Редакционный контроль · 8 кадров · 8.30 мин ───
+  - id: s35
+    local_id: "s35"
+    file: slides/s35-divider-redakcionnyy-kontrol.md
     type: divider
     title: "2. Редакционный контроль"
     chapter_ref: "chapter-part2.md § Раздел 2 (дивайдер)"
     timing_min: 0.5
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
-  - id: s31
-    local_id: "s31"
-    file: slides/s31-chto-proveryayut-i-kto-otvechaet.md
+  - id: s36
+    local_id: "s36"
+    file: slides/s36-chto-proveryayut-i-kto-otvechaet.md
     type: norm
     title: "Редакционный контроль: что проверяют и кто отвечает"
     chapter_ref: "chapter-part2.md § Раздел 2 (вводка: «что это за стадия» + «какие данные получают») + §2.1 (заземление -- рабочий день редактора) + (слито сюда бывший s23) chapter-part2.md § Раздел 2 (вводка, абзац «Зачем это инженеру, в одном посчитанном примере: каталог интернет-магазина»)"
     timing_min: 1.1
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s32
-    local_id: "s32"
-    file: slides/s32-bez-modeli-chetyre-sposoba-proverki.md
+  - id: s37
+    local_id: "s37"
+    file: slides/s37-bez-modeli-chetyre-sposoba-proverki.md
     type: norm
     title: "Без модели: четыре способа проверки, разная цена"
     chapter_ref: "chapter-part2.md § Раздел 2 (вводка: «какими способами» -- 4 метода -- и «без модели» -- 3 классических режима)"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s33
-    local_id: "s33"
-    file: slides/s33-cnet-tsena-oshibki.md
+  - id: s38
+    local_id: "s38"
+    file: slides/s38-r6-tekstovyy-detektor.md
+    type: case
+    title: "Текстовый детектор: ноль надёжных — даже у автора модели"
+    chapter_ref: "chapter-part1c.md §1.7б Шаг Е (R6 -- текстовый детектор OpenAI, закрыт 20.07.2023; payoff в Раздел 2)"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+  - id: s39
+    local_id: "s39"
+    file: slides/s39-cnet-tsena-oshibki.md
     type: case
     title: "Пример: CNET — цена ошибки, 53% AI-статей потребовали исправления"
     chapter_ref: "chapter-part2.md §2.3 (CNET -- цена ошибки + классический режим в той же цене)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
-  - id: s34
-    local_id: "s34"
-    file: slides/s34-cnet-model-protiv-rezhima.md
+  - id: s40
+    local_id: "s40"
+    file: slides/s40-cnet-model-protiv-rezhima.md
     type: case
-    title: "CNET, разбор: модель против режима, не против нуля"
+    title: "CNET: ошибок не больше, чем у людей, — скандалом стало сокрытие авторства"
     chapter_ref: "chapter-part2.md §2.3 (CNET -- модель против режима, не против нуля + устройство)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
-  - id: s35
-    local_id: "s35"
-    file: slides/s35-cnet-chto-pereekhalo.md
+  - id: s41
+    local_id: "s41"
+    file: slides/s41-cnet-chto-pereekhalo.md
     type: case
     title: "CNET, что переехало: увольнения и подорванное доверие"
     chapter_ref: "chapter-part2.md §2.3 (CNET -- что переехало: увольнения и подорванное доверие)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
-  - id: s36
-    local_id: "s36"
-    file: slides/s36-vyvod-redakcionnyy-kontrol.md
+  - id: s42
+    local_id: "s42"
+    file: slides/s42-vyvod-redakcionnyy-kontrol.md
     type: comparison
     title: "Вывод раздела: нагрузка переехала на внешнее расследование"
     chapter_ref: "chapter-part2.md §2.5 (что переехало по разделу целиком) + (слито сюда бывший s27) chapter-part2.md §2.4 (Sports Illustrated -- упоминание, совпадение по времени, не доказанная причина)"
     timing_min: 1.6
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
 
-  # ─── 3. Релиз и приём аудиторией · 8 кадров · 8.50 мин ───
-  - id: s37
-    local_id: "s37"
-    file: slides/s37-divider-reliz-i-priyom-auditoriey.md
+  # ─── 3. Релиз и приём аудиторией · 9 кадров · 9.50 мин ───
+  - id: s43
+    local_id: "s43"
+    file: slides/s43-divider-reliz-i-priyom-auditoriey.md
     type: divider
     title: "3. Релиз и приём аудиторией"
     chapter_ref: "chapter-part2.md § Раздел 3 (дивайдер)"
     timing_min: 0.5
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
-  - id: s38
-    local_id: "s38"
-    file: slides/s38-chto-proveryayut-do-i-posle-vykhoda.md
+  - id: s44
+    local_id: "s44"
+    file: slides/s44-chto-proveryayut-do-i-posle-vykhoda.md
     type: norm
     title: "Релиз и приём аудиторией: что проверяют до и после выхода — классика без модели"
     chapter_ref: "chapter-part2.md § Раздел 3 (вводка: «что это за стадия» + «какое решение принимает») + §3.1 (заземление) + (слито сюда бывший s31) chapter-part2.md § Раздел 3 (вводка: «какими способами» -- фокус-группы и A/B -- и классические режимы)"
     timing_min: 1.7
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
-  - id: s39
-    local_id: "s39"
-    file: slides/s39-chto-umeet-i-ne-umeet-model-na-relize.md
+  - id: s45
+    local_id: "s45"
+    file: slides/s45-chto-umeet-i-ne-umeet-model-na-relize.md
     type: norm
     title: "Что умеет и не умеет модель на этапе релиза"
     chapter_ref: "chapter-part2.md §3.2"
     timing_min: 0.9
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
-  - id: s40
-    local_id: "s40"
-    file: slides/s40-coca-cola-toys-r-us-tonalnost.md
+  - id: s46
+    local_id: "s46"
+    file: slides/s46-coca-cola-toys-r-us-tonalnost.md
     type: case
     title: "Пример: Coca-Cola / Toys «R» Us — тональность упала после раскрытия"
     chapter_ref: "chapter-part2.md §3.3 (Coca-Cola/Toys «R» Us -- цена риска, устройство)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
-  - id: s41
-    local_id: "s41"
-    file: slides/s41-tp1-pochemu-70000-klipov.md
+  - id: s47
+    local_id: "s47"
+    file: slides/s47-tp1-pochemu-70000-klipov.md
     type: case
     title: "Почему 70 000 клипов на один ролик"
     chapter_ref: "chapter-part2.md §3.3 (абзац «Почему именно 70 000 клипов — не произвольное, а механически вынужденное число»)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s42
-    local_id: "s42"
-    file: slides/s42-system1-protiv-carma.md
+  - id: s48
+    local_id: "s48"
+    file: slides/s48-system1-protiv-carma.md
     type: comparison
     title: "Coca-Cola, разбор: панель System1 против открытой аудитории CARMA"
     chapter_ref: "chapter-part2.md §3.3 (System1 против CARMA -- классический режим и модель против режима)"
     timing_min: 1.1
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
-  - id: s43
-    local_id: "s43"
-    file: slides/s43-coca-cola-chto-pereekhalo.md
+  - id: s49
+    local_id: "s49"
+    file: slides/s49-coca-cola-chto-pereekhalo.md
     type: case
     title: "Coca-Cola, что переехало: компания не отступила"
     chapter_ref: "chapter-part2.md §3.3 (что переехало -- компания не отступила)"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
-  - id: s44
-    local_id: "s44"
-    file: slides/s44-vyvod-reliz-i-priyom-auditoriey.md
+  - id: s50
+    local_id: "s50"
+    file: slides/s50-vyvod-reliz-i-priyom-auditoriey.md
     type: comparison
     title: "Вывод раздела: нагрузка переехала на зрителя"
-    chapter_ref: "chapter-part2.md §3.5 + (слито сюда бывший s36) chapter-part2.md §3.4"
+    chapter_ref: "chapter-part2.md §3.5 + (слито сюда бывший s36) chapter-part2.md §3.4 (вопрос-чат снят, оставлен риторический)"
     timing_min: 1.3
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+  - id: s51
+    local_id: "s51"
+    file: slides/s51-r7-alternativa-proiskhozhdenie.md
+    type: case
+    title: "Альтернатива распознаванию — происхождение, не экспертиза"
+    chapter_ref: "chapter-part1c.md §1.7б Шаг Ж (R7 -- альтернатива: C2PA/Content Credentials; payoff в Раздел 3)"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }

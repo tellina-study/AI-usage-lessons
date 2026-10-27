@@ -1,7 +1,7 @@
 ---
 doc: R5 часть 3 — Правовой статус сгенерированного контента в РФ
 lecture: lec-08
-part: 3 of 4
+part: 3 of 7
 date: 2026-10-27
 ---
 
@@ -429,4 +429,4 @@ cp1251, через `curl` — через средство извлечения �
 
 ---
 
-Продолжение — [`R5-part4-rynok-i-dostup.md`](R5-part4-rynok-i-dostup.md).
+Продолжение — [`R5-part4-rynok-truda.md`](R5-part4-rynok-truda.md).

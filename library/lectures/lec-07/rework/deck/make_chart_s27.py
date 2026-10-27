@@ -105,7 +105,7 @@ def main():
                    # drobnaya=False, а не True: целочисленный переводчик
                    # печатает «54,8», дробный — «54,80» и засоряет ось
                    # «0,00 10,00 20,00». Проверено прогоном, не памятью.
-                   gorizontal=True, kegl=11, kegl_zagolovka=13,
+                   gorizontal=True, kegl_zagolovka=14,
                    drobnaya=False, zoloto=0),
         ASSETS / "s27-dolya-potoka-cherez-model.png",
         shirina_pt=640, vysota_pt=150)

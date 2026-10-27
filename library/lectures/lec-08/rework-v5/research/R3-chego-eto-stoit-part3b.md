@@ -36,6 +36,14 @@ nachalo: R3-chego-eto-stoit-part3.md
 участвующими авторами. Это не «20 % каждому» — это 20 % общего фонда, делимые на всех.
 Падение Q1 2026 на 47 % означает ровно то же падение фонда авторов.
 
+**Флаг оркестратора (2026-10-27): перед выносом на кадр перепроверить две строки таблицы.**
+Q1 $21,0 млн и Q2 $56,1 млн — скачок почти втрое между соседними кварталами при падении
+год к году в обоих. Это правдоподобно для сегмента, где одна крупная сделка признаётся
+разово, но выглядит как пара чисел, которые разошлись, — а по правилу курса такую пару
+сверяют с базой, а не пересказывают. `investor.shutterstock.com` отдаёт 403 при прямом
+чтении; сверить по форме 10-Q в EDGAR. Сам вывод раздела (фонд авторов падает вместе с
+выручкой сегмента) от точности этих двух чисел не зависит.
+
 Источники: [Shutterstock, Q2 2026 results](https://investor.shutterstock.com/news-releases/news-release-details/shutterstock-reports-second-quarter-2026-financial-results) ·
 [Shutterstock, Q1 2026 results (PR Newswire)](https://www.prnewswire.com/news-releases/shutterstock-reports-first-quarter-2026-financial-results-302754948.html) ·
 [fiund, профиль вендора данных](https://fiund.com/vendors/shutterstock)

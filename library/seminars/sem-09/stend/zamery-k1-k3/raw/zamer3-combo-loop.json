@@ -1,0 +1,20 @@
+[
+  {
+    "question": "Можно ли перенести занятие, если я заболел?",
+    "exec_id": "943",
+    "attempts": 6,
+    "outcome": "forced_stop"
+  },
+  {
+    "question": "Когда мне вернут деньги за отменённый курс?",
+    "exec_id": "944",
+    "attempts": 1,
+    "outcome": "ok"
+  },
+  {
+    "question": "Как связаться с преподавателем по курсу?",
+    "exec_id": "945",
+    "attempts": 1,
+    "outcome": "ok"
+  }
+]

@@ -3,6 +3,13 @@
 
 slides:
 
+  - id: s63
+    file: slides/s63-mezhdu-kadrami-net-obekta.md
+    type: schema_architecture
+    title: "Между кадрами нет объекта, который «тот же»"
+    source: "технический отчёт Sora; CogVideoX"
+    timing_min: 0.80
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
   - id: s63a
     file: slides/s63a-gde-postoyanstvo-lomaetsya.md
     type: analitika
@@ -272,7 +279,7 @@ slides:
     title: "Разбор: российские медиа — 18% статей со следами генерации"
     source: "Кирилл Пшинник, сооснователь Zerocoder, публикация 16 октября 2026"
     timing_min: 0.80
-    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
   - id: s87a
     file: slides/s87a-karta-vechera-kolonka-raspoznavanie-karta.md
     type: analitika
@@ -287,7 +294,7 @@ slides:
     type: section_divider
     title: "Раздел 6. Сборка"
     timing_min: 0.00
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
   - id: s89
     file: slides/s89-tri-adresa-platezha.md
     type: assertion_visual
@@ -356,7 +363,7 @@ slides:
     type: analitika
     title: "Счёт сквозной линии: тринадцать разборов и три неравные части"
     timing_min: 0.80
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
   - id: s96
     file: slides/s96-podeshevela-oshibka.md
     type: assertion_visual
@@ -371,16 +378,16 @@ slides:
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
 
 totals:
-  slides: 125
+  slides: 126
   timing_min: 88.00
   timing_missing: 0
   strict_in_min: 28.60            # кадры с `in_bucket: true`, сложено по минутам
   strict_in_share: "32.5%"       # порог курса 30%; partial → out
   vfy_slides: 11
   by_status:
-    "собран": 125
+    "собран": 126
   media:
-    wired: 22
-    needs_media: 58
-    no_decision: 45
+    wired: 40
+    needs_media: 52
+    no_decision: 34
   karta_vechera_predyavleniy: 6

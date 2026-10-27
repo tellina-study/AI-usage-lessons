@@ -9,13 +9,16 @@ source: "Spleeter; Demucs; BS-RoFormer; WingNut Films, 2021"
 chapter_ref: "chapter-part2b.md §2.6, §2.7"
 media: ""
 media_needed: "визуальное содержание — шкала качества разделения с отмеченной на ней верхней границей маскирующих методов; подлинной фотографии предмета нет, а портрет музыканта привязал бы кадр к случаю вместо различения, ради которого кадр стоит"
-blocks_per_row: 5
-blocks:
-  - {label: "Идеальная маска, вычисленная при знании истинных дорожек", value: "8,22 дБ", note: "верхняя граница всех методов, работающих маскированием спектрограммы", key: true}
-  - {label: "Spleeter", value: "5,91 дБ", note: "массовый инструмент предыдущего поколения"}
-  - {label: "Hybrid Demucs", value: "8,34 дБ", note: "первое превышение границы маскирующих методов"}
-  - {label: "Sparse HT Demucs, дообученный", value: "9,20 дБ", note: "выше идеальной маски на 0,98 дБ"}
-  - {label: "BS-RoFormer и Mel-Band RoFormer, 2023", value: "до 11,99 дБ", note: "текущий передний край"}
+scheme:
+  kind: shkala
+  unit: "дБ, сигнал к искажению на вокале"
+  base: "идеальная маска — потолок маскирования; Hybrid Demucs перешагнул его первым, 8,34 дБ"
+  caption: "Оракул вычислен при знании истинных дорожек"
+  marks:
+    - {value: "5,91", label: "Spleeter"}
+    - {value: "8,22", label: "Идеальная маска", key: true}
+    - {value: "9,20", label: "Sparse HT Demucs"}
+    - {value: "11,99", label: "BS-RoFormer, 2023"}
 columns:
   left:
     head: "Разделение источников"

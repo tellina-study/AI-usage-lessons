@@ -15,7 +15,7 @@
 # видимом слое кадра они запрещены (CLAUDE.md § «No Timing / No
 # Methodology in Slides»).
 #
-# СОСТАВ, посчитанный с диска: 125 кадров.
+# СОСТАВ, посчитанный с диска: 126 кадров.
 
 deck:
   lecture_number: 8
@@ -23,7 +23,7 @@ deck:
   version: v5
   language: ru
   status: draft
-  total_slides: 125
+  total_slides: 126
   sum_timing_min: 88.00           # сложено по `timing_min` файлов кадров
   builder: deck/build_lec08_v5.py        # относительно library/lectures/lec-08/rework-v5/
   generator: deck/make_deck_yaml_v5.py
@@ -42,7 +42,7 @@ slide_types:                     # значения поля `type`, с числ
   analitika:             { count:  57, meaning: "разбор с числами: плашки, столбцы, счёт" }
   assertion_visual:      { count:  30, meaning: "утверждение, предъявленное формой" }
   comparison:            { count:  10, meaning: "два столбца «что получается / что не получается»" }
-  schema_architecture:   { count:   6, meaning: "устройство: части и связи" }
+  schema_architecture:   { count:   7, meaning: "устройство: части и связи" }
   section_divider:       { count:   6, meaning: "дивайдер раздела" }
   schema_timeline:       { count:   4, meaning: "хронология" }
   schema_layered:        { count:   3, meaning: "слои, вложенные друг в друга" }
@@ -56,7 +56,7 @@ sections:                        # разделы показа, сложено �
   - { name: "0. Вход",
       slides: 7, timing_min: 8.00, range: [s01, s07] }
   - { name: "1. Неподвижное изображение",
-      slides: 32, timing_min: 21.00, range: [s08, s32a] }
+      slides: 33, timing_min: 21.00, range: [s08, s32a] }
   - { name: "2. Звук: синтез речи, голос исполнителя и музыка",
       slides: 17, timing_min: 15.00, range: [s33, s49] }
   - { name: "3. Движущееся изображение",
@@ -99,7 +99,7 @@ slides:
     title: "Одна механика в трёх масштабах"
     source: "ai.google.dev/gemini-api/docs/pricing (прочитано 27.10.2026) · elevenlabs.io/pricing/api (27.10.2026) · Caixin Global, «How AI took over China's micro-drama industry», 01.06.2026"
     timing_min: 2.00
-    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s05
     file: slides/s05-vopros-lektsii.md
     type: assertion_visual
@@ -119,13 +119,13 @@ slides:
     title: "Чего в этой лекции нет"
     timing_min: 0.50
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
-  # ─── 1. Неподвижное изображение · 32 кадров · 21.00 мин ───
+  # ─── 1. Неподвижное изображение · 33 кадров · 21.00 мин ───
   - id: s08
     file: slides/s08-divayder-nepodvizhnoe-izobrazhenie.md
     type: section_divider
     title: "Раздел 1. Неподвижное изображение: концепт, иллюстрация, ключевой кадр"
     timing_min: 0.00
-    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s09
     file: slides/s09-chto-eto-za-rabota.md
     type: assertion_visual
@@ -159,7 +159,7 @@ slides:
     title: "Разбор: обвал цены единицы изображения"
     source: "ai.google.dev/gemini-api/docs/pricing (прочитано 27.10.2026) · профи.ру, 3 848 анкет иллюстраторов Москвы · прейскуранты стоковых агентств · Toys «R» Us Studios × Native Foreign, июнь 2024"
     timing_min: 1.50
-    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s13
     file: slides/s13-razbor-tzh-domashnyaya-videokarta.md
     type: analitika
@@ -179,14 +179,14 @@ slides:
     type: comparison
     title: "Условие отбора: уберите обученную модель и посмотрите, что останется"
     timing_min: 0.50
-    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+    marks: { in_bucket: true, status: "собран", media_status: wired }
   - id: s15
     file: slides/s15-chetyre-nablyudeniya.md
     type: assertion_visual
     title: "Четыре наблюдения, каждое с числом"
     source: "программный интерфейс Hugging Face, загрузки за 30 дней, запрос 27.10.2026 · пользовательские соглашения Kandinsky и Шедеврум · foundation-models.api.cloud.ru и тарифный документ Cloud.ru, редакция 23.10.2026 · условия возмещения убытков Adobe"
     timing_min: 1.40
-    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s16
     file: slides/s16-dva-semeystva-generatsii.md
     type: schema_matrix
@@ -194,13 +194,20 @@ slides:
     source: "Ho, Jain, Abbeel, «Denoising Diffusion Probabilistic Models», 2020 · Sohl-Dickstein и соавт., 2015"
     timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s16a
+    file: slides/s16a-generator-tselikom.md
+    type: schema_architecture
+    title: "Генератор изображения целиком: три части, обученные порознь"
+    source: "Rombach и соавт., 2021 · техническая статья SD3, 2024 · Imagen, 2022"
+    timing_min: 0.60
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s17
     file: slides/s17-pryamoy-i-obratnyy-protsess.md
     type: schema_pipeline
     title: "Прямой процесс портит, обратный восстанавливает"
     source: "Ho, Jain, Abbeel, «Denoising Diffusion Probabilistic Models», 2020 · Sohl-Dickstein и соавт., 2015 · Salimans и Ho, 2022"
-    timing_min: 0.60
-    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+    timing_min: 0.50
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s18
     file: slides/s18-lestnitsa-chisla-shagov.md
     type: analitika
@@ -213,14 +220,14 @@ slides:
     type: analitika
     title: "Картинка 1024×1024 — это 4096 токенов"
     source: "Rombach и соавт., 2021 — работа, из которой выросла Stable Diffusion · техническая статья SD3, 2024 (таблица качества восстановления)"
-    timing_min: 0.80
+    timing_min: 0.70
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   - id: s20
     file: slides/s20-promt-postoyannoe-uslovie.md
     type: schema_architecture
     title: "Описание — постоянное условие на всех шагах, истории нет"
     source: "перекрёстное внимание в поколении U-Net · совместное внимание MMDiT, техническая статья SD3, 2024 · Imagen, 2022 — о роли текстового кодировщика"
-    timing_min: 0.50
+    timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   - id: s21
     file: slides/s21-cfg-eto-ne-temperatura.md
@@ -234,7 +241,7 @@ slides:
     type: schema_timeline
     title: "U-Net → DiT → MMDiT → спрямлённый поток"
     source: "Ronneberger и соавт., 2015 (U-Net) · Peebles, Xie, 2022 (DiT) · техническая статья SD3, 2024 (MMDiT) · Liu, Gong, Liu и Lipman с соавт., 2022 (спрямлённый поток)"
-    timing_min: 0.50
+    timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   - id: s23
     file: slides/s23-adaptery.md
@@ -247,7 +254,7 @@ slides:
     file: slides/s24-yazykovaya-protiv-media-modeli.md
     type: analitika
     title: "Языковая модель против медиа-модели: шесть строк расхождения в устройстве"
-    timing_min: 0.60
+    timing_min: 0.50
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   - id: s24a
     file: slides/s24a-yazykovaya-protiv-media-modeli-chast2.md
@@ -260,7 +267,7 @@ slides:
     type: analitika
     title: "Обучить дешевле в 200–400 раз, запустить дороже в 40–60"
     source: "техническая статья SD3, 2024 (число операций) · карточка модели Stable Diffusion v1 · независимые счётчики вычислений передовых моделей"
-    timing_min: 0.50
+    timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   - id: s26
     file: slides/s26-chego-metod-ne-umeet.md
@@ -268,14 +275,14 @@ slides:
     title: "Чего метод не умеет: текст внутри изображения, анатомия, счёт объектов"
     source: "техническая статья SD3, 2024 (таблица качества восстановления) · наборы задач оценки композиции GenEval и T2I-CompBench++"
     timing_min: 0.60
-    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
   - id: s26a
     file: slides/s26a-odno-svoystvo-dve-storony.md
     type: comparison
     title: "Одно и то же свойство, прочитанное с двух сторон"
     source: "техническая статья SD3, 2024 (таблица качества восстановления) · наборы задач оценки композиции GenEval и T2I-CompBench++"
     timing_min: 0.40
-    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+    marks: { in_bucket: true, status: "собран", media_status: wired }
   - id: s27
     file: slides/s27-tochnyh-razmerov-net.md
     type: assertion_visual
@@ -294,7 +301,7 @@ slides:
     title: "Что стало с продавцом изображений"
     source: "отчётность и корпоративные сообщения Getty Images, 2026 · прейскуранты стоковых агентств"
     timing_min: 0.40
-    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+    marks: { in_bucket: true, status: "собран", media_status: wired }
   - id: s29a
     file: slides/s29a-manyovr-s-raznitsey-v-dvadtsat-let.md
     type: comparison
@@ -315,14 +322,14 @@ slides:
     title: "Getty против Stability: экономика рядом с решением"
     source: "Высокий суд Англии и Уэльса, решение 4 ноября 2025 года · прейскуранты стоковых агентств · условия лицензионных соглашений лейблов, 29.10.2025 и 25.11.2025"
     timing_min: 0.60
-    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+    marks: { in_bucket: true, status: "собран", media_status: wired }
   - id: s31
     file: slides/s31-chem-obucheno-1-84-bayta.md
     type: analitika
     title: "Чем обучено: 1,84 байта на обучающее изображение"
     source: "карточка модели Stable Diffusion 1.5 · Carlini и соавт., «Extracting Training Data from Diffusion Models», 2023 · отчёт инструмента скачивания корпуса LAION"
     timing_min: 0.70
-    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
   - id: s32
     file: slides/s32-vosem-strok-pravovogo-kontura.md
     type: assertion_visual
@@ -369,7 +376,7 @@ slides:
     title: "Разбор: голос человеку, у которого его отнимала болезнь"
     source: "ElevenLabs Impact Program; Bridging Voice; Scott-Morgan Foundation"
     timing_min: 1.20
-    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s38
     file: slides/s38-dublyazh-i-lokalizatsiya.md
     type: analitika
@@ -383,7 +390,7 @@ slides:
     title: "Разбор: возвращённый голос Вэла Килмера"
     source: "Sonantic (куплена Spotify в 2022); «Топ Ган: Мэверик», 2022"
     timing_min: 0.90
-    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s40
     file: slides/s40-shest-nablyudeniy-zvuk.md
     type: assertion_visual
@@ -445,7 +452,7 @@ slides:
     title: "Дело Андроновой: 600 страниц начитки 2019 → голос в чужой рекламе 2022 → иск 6 млн ₽"
     source: "дело № 2-3580/2024, Савёловский районный суд Москвы, 12.08.2024; Афиша Daily"
     timing_min: 1.10
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+    marks: { in_bucket: true, status: "собран", media_status: wired }
   - id: s49
     file: slides/s49-popravka-k-schetu-trek-40-tsentov.md
     type: analitika
@@ -486,21 +493,21 @@ slides:
     title: "Разбор: китайские микродрамы"
     source: "Caixin, 01.06.2026"
     timing_min: 1.50
-    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s54
     file: slides/s54-kalshi-final-nba.md
     type: analitika
     title: "Разбор: Kalshi, финал НБА, июнь 2025"
     source: "NPR, 23.06.2025; автор работы — Пи-Джей Аккетуро"
     timing_min: 1.30
-    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s55
     file: slides/s55-coca-cola-holidays-are-coming.md
     type: analitika
     title: "Разбор: Coca-Cola «Holidays Are Coming»"
     source: "закадровый ролик Coca-Cola о производстве; интервью директора по маркетингу"
     timing_min: 1.50
-    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s56
     file: slides/s56-otvet-lyudey-stolko-zhe.md
     type: assertion_visual
@@ -556,10 +563,3 @@ slides:
     source: "Open-Sora 2.0"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
-  - id: s63
-    file: slides/s63-mezhdu-kadrami-net-obekta.md
-    type: schema_architecture
-    title: "Между кадрами нет объекта, который «тот же»"
-    source: "технический отчёт Sora; CogVideoX"
-    timing_min: 0.80
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }

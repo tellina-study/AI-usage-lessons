@@ -131,6 +131,14 @@ def main():
                         a = max(0, m.start() - 45)
                         b = min(len(text), m.end() + 45)
                         ctx = text[a:b].replace("\n", " ")
+                        # Ряд замеров — не тайминг занятия. «41 минута · 134
+                        # кадра/с · 734 МБ» это измерение предмета, и ловить
+                        # его значит кричать на материал: соседние единицы в
+                        # том же окне выдают ряд измерений.
+                        if gname == "ТАЙМИНГ" and re.search(
+                                r"кадр\w*\s*/?\s*с\b|кадра в секунду|\bМБ\b|\bГБ\b|"
+                                r"\bкВт|петафлопс|\bдБ\b|качество\s+[0-9]", ctx):
+                            continue
                         hits.append((num, where, label, ctx))
         mark = "БЛОКИРУЕТ" if blocking else "литературное"
         print(f"── {gname} ({mark}): {len(hits)}")

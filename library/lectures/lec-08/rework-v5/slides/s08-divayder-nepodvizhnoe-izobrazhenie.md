@@ -12,7 +12,8 @@ razbory:
   - "Бионическая перегородка Airbus — выигрыш не от обученной модели"
 razbory_match: "заголовки совпадают дословно с s12 / s13 / s14"
 blocks: []
-media: ""
+media: "assets/screenshots/s08-planshet-eskizy.jpg"
+media_note: "документальный снимок работы, о которой раздел: карандашные эскизы на графическом планшете. Дэвид Ревуа, CC BY 4.0, Викисклад (ступень 2). Провенанс — assets/screenshots/s08-planshet-eskizy.url"
 timing_min: 0.0
 timing_note: "дивайдеру минут не начислено: переход входит в бюджет следующего кадра"
 in_bucket: false

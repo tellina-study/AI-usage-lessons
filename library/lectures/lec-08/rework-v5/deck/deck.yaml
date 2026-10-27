@@ -477,7 +477,7 @@ slides:
   - id: s51a
     file: slides/s51a-stadii-proizvodstva.md
     type: comparison
-    title: "Восемь способов получить изображение: семь прежних и один новый"
+    title: "Одиннадцать стадий производства и девять способов получить изображение"
     timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s52
@@ -486,7 +486,7 @@ slides:
     title: "Как это делали без модели"
     source: "отраслевые прайс-обзоры по российскому рынку; «Ирландец», 2019; Avid Media Composer, 1989; «История игрушек», 1995; StageCraft, 2019"
     timing_min: 1.00
-    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+    marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s53
     file: slides/s53-kitayskie-mikrodramy.md
     type: analitika

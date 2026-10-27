@@ -387,7 +387,7 @@ totals:
   by_status:
     "собран": 126
   media:
-    wired: 40
-    needs_media: 52
+    wired: 41
+    needs_media: 51
     no_decision: 34
   karta_vechera_predyavleniy: 6

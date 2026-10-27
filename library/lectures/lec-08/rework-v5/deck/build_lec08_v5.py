@@ -1,0 +1,1243 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Дека Лекции 8 (переделка, issue #289) на общем ядре `deckkit`.
+
+Написан по образцу `library/lectures/lec-07/rework/deck/build_lec07.py`
+(issue #229, этап 2) — тот сборщик держит геометрию, три раскладки
+(обложка · дивайдер · содержательный кадр) и самопроверку деки на ядре
+`tools/presentation-build/deckkit/`, а здесь ровно то же самое, настроенное
+под 76 кадров Лекции 8.
+
+ЧЕМ ЭТА ДЕКА ПРОЩЕ Лекции 7: в ней нет кадра-свидетельства (§5.9 hero) ни
+на одном кадре — поле `media` пустое на всех 76 файлах (`status: собран`
+значит «текст собран», не «иллюстрации найдены»; `media_needed` на каждом
+кадре описывает, какую картинку предстоит найти волной добычи). Код,
+который кладёт боковую/hero-иллюстрацию, в сборщике всё равно оставлен
+(через `deckkit.media`) — он просто ни разу не срабатывает на сегодняшнем
+входе, и это проверено регрессией: кадр без `media` собирается тем же
+путём, что и кадр с `media`, которого нет на диске (`[кадр]` в отчёте, не
+отказ сборки). Когда волна добычи появится, сборщик её подхватит без
+правки.
+
+ЧЕМ ЭТА ДЕКА ОТЛИЧАЕТСЯ ОТ Лекции 7 по форме: один кадр, `s10` («Вопрос
+лекции»), несёт фронтматтер `vizforma: "ось"` — опорную формулу лекции
+крупной цитатой (строка `> **…**` в видимом теле) между вступительным и
+замыкающим абзацем. Ни `deckkit.slidefile.body_blocks` (раскладка-абзац,
+которой собрана вся остальная дека), ни ядро вообще про blockquote ничего
+не знают: `>`-строка у «абзацной» раскладки падает в `para` с префиксом
+`> ` внутри текста, то есть вышла бы на экран буквально. Это ЕДИНСТВЕННЫЙ
+кадр со своей раскладкой (`os_kadr`, ниже) — тем же ходом, каким у
+Лекции 7 был свой тип `analitika`: раскладка — дело деки, а не ядра
+(`deckkit/README.md`, «Что остаётся за декой — НАРОЧНО»). Второе такое
+поле, `vizforma: "ряды"` на `s08` (карта пути), отдельного кода не требует
+— у этого кадра уже стоит `scheme:` с одним рядом из четырёх шагов, и
+стандартная раскладка содержательного кадра рисует его тем же путём, что
+и любую другую схему; поле здесь чисто информационное (говорит дизайнеру,
+какую форму имел в виду автор кадра).
+
+ЧТО СОЗНАТЕЛЬНО НЕ ПЕРЕНЕСЕНО из `build_lec07.py`: проверка «кадр `case`
+без поля `scheme` — это находка» (там она стоит в `build()`, тегом
+`[схема]`, и тег этот БЛОКИРУЮЩИЙ). У Лекции 7 она была верна для ЕЁ
+канона: `scheme-конвейер` был главным носителем инженерного содержания
+разбора. У Лекции 8 из 27 кадров `case` у 20 `scheme` не объявлена, и это
+не недосмотр — это другой канон формы (`CLAUDE.md` § «Форма подачи
+слайда», `tools/presentation-build/trebovaniya-k-soderzhaniyu-forma.md`
+§5.13): подробный разбор здесь обычно несёт полосу плашек «цена ошибки →
+классика → модель → что переехало», а не схему-конвейер, и схема у Лекции
+8 — один из нескольких законных носителей формы, не единственный. Перенос
+этой проверки дал бы 20 ложных блокирующих предупреждений на кадрах,
+которые собраны по канону, просто другому. Если канон когда-нибудь
+потребует её для Лекции 8 — это отдельное решение владельца, не перевод
+инструмента.
+
+ЧТО ОСТАВЛЕНО КАК ЕСТЬ, хотя даёт шум: `deckkit.plotnost` (счётчик слов
+видимого слоя, предел 140 на кадр · цель 90 медианой по `case`). Этот
+предел писан по канону Лекции 7 (`trebovaniya-k-soderzhaniyu-forma.md`,
+старая редакция §5.12) — а `CLAUDE.md` этой лекции («Форма подачи слайда»,
+правка 2026-10-08/2026-10-10) ЕГО СНЯЛ ЯВНО: «Жёсткое ограничение «3–5
+строк видимого текста» СНЯТО. Слайды могут быть тяжёлыми там, где этого
+требует разбор. Остаётся единственный физический предел: текст не должен
+наезжать сам на себя при рендере». Модуль оставлен работать (задача этого
+круга — сохранить самопроверки ядра, не редактировать их), но его вывод —
+ОЖИДАЕМЫЙ ШУМ, а не находка: на входе 34 кадра из 76 тяжелее 140 слов, и
+медиана `case` — 136 при цели 90. Подробности — в `iteration-log.md`.
+
+Запуск:
+  python3 build_lec08.py                 — только PPTX (по умолчанию)
+  python3 build_lec08.py --selftest      — проверки ядра на сломанном входе
+  python3 build_lec08.py --render        — ещё PDF и PNG, с таймаутом
+  python3 build_lec08.py --only s01,s11  — собрать только эти кадры (в свой
+                                            файл, выпуск не трогается)
+"""
+import argparse
+import re
+import sys
+from pathlib import Path
+
+from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
+
+from deckkit import (columns, figure, floor, flow, markup, media,  # noqa: E402
+                     metrics, plates, plotnost, prims, render as rnd, report,
+                     scheme, slidefile, tables, titles, twocol, wrap)
+from deckkit.theme import (DEEP, GOLD, GOLD_TINT, LIGHT, MID,  # noqa: E402
+                           OUTLINE, SLIDE_H, SLIDE_W, SURFACE, TEAL,
+                           WHITE)
+
+# ЗАГОЛОВОК РАЗДЕЛА ЗАМЕТОК у v5 написан двумя способами: «## Заметки» на
+# 66 кадрах и «## Заметки лектора» на 31. Ядро знает только второй
+# (`slidefile._SEC_NOTES`), и на шестидесяти шести кадрах заметки молча не
+# попали бы в speaker notes вовсе — то есть две трети деки уехали бы в
+# показ немыми. Правим ЧИТАТЕЛЯ, а не файлы кадров: содержание кадров не
+# трогаем, а какой заголовок считать разделом заметок — это свойство
+# набора файлов, не содержания.
+slidefile._SEC_NOTES = (r"##[ \t]*Заметки(?:[ \t]+лектора)?[ \t]*\r?\n"
+                        r"(.*?)(?=\n##\s|\Z)")
+
+SLIDES_DIR = HERE.parent / "slides"        # library/lectures/lec-08/rework-v5/slides
+LEC_ROOT = HERE.parent                     # library/lectures/lec-08/rework-v5
+OUT = LEC_ROOT / "rendered" / "lec-08-v5.pptx"
+SNAPS = LEC_ROOT / "rendered" / "snapshots"
+
+# ════════════════════════════════════════════════════════════════════
+# геометрия ЭТОЙ деки — взята от Лекции 7 (та же форма материала: текст,
+# плашки, схемы, таблицы, столбцы; ни одного hero-кадра на сегодняшнем
+# входе). Если волна добычи иллюстраций когда-нибудь положит `media` на
+# десятки кадров, эти числа стоит сверить замером заново — сегодня сверять
+# нечем, снимков нет ни одного.
+# ════════════════════════════════════════════════════════════════════
+MX = 0.55
+FULL_W = SLIDE_W - 2 * MX              # 12,23"
+TITLE_Y, TITLE_H = 0.40, 0.92
+BODY_TOP = 1.46
+FOOT_BOT = 7.44
+FOOT_H = 0.50
+FOOT_Y = FOOT_BOT - FOOT_H
+BODY_BOT = FOOT_Y - 0.12
+FOOT_LS = 1.12
+FOOT_GAP = 0.12
+FOOT_MAX_H = 0.75
+# Боковая иллюстрация содержательного кадра — правка 2026-10-21 (владелец:
+# «почему так мелко, кадр должен до трети площади занимать»). Старые 4,30×
+# 3,40" слота (пол сжатия 2,60") на деке с реальными снимками (волна
+# добычи того же дня) держали площадь кадра в среднем 7,9% слайда (медиана
+# 9,0%, максимум 15,4% — измерено по уже собранной `rendered/lec-08.pptx`
+# функцией `deckkit.media.page_image_share`), то есть на порядок меньше
+# трети. Слот — НЕ сама коробка: `media.media_box_size` вписывает снимок
+# по его собственным пропорциям внутрь слота, поэтому итоговая площадь
+# зависит ещё и от того, альбомная картинка или портретная (в деке 43 из
+# 59 альбомные, 14 портретных, 2 квадратные).
+#
+# ПОТОЛОК (`MEDIA_W`) подобран замером, не предположением. Свип по 76
+# кадрам (`report.blocking()` на пробной сборке каждого кадра при данной
+# ширине — тот же механизм, что ниже у `fit_media`) показал, что потолок
+# ширины НЕ монотонно улучшает картину: на 4,30" (прежнее число) кадру
+# уже есть куда расти без правки — 38 из 51 содержательных кадров с
+# `media` держат потолок без единой находки; на 5,80" таких 26 из 51 (и
+# дальше рост потолка до 6,60" ТЕРЯЕТ ещё 7 кадров — 19 из 51 — без
+# выигрыша на оставшихся: предел держат те же самые кадры что и на 5,80").
+# 5,80" — верхняя граница этого плато: самый большой потолок, на котором
+# число кадров, собирающихся БЕЗ сжатия, ещё не падает дальше. У
+# альбомной фотографии (большинство снимков волны) это даёт 24–28%
+# площади слайда, у портретной — 11–22%: ровно та «треть» по площади,
+# которую можно предъявить БЕЗ новой правки текста (см. `iteration-
+# log.md`, раздел 2026-10-21/3, таблица по всем 57 кадрам).
+#
+# ПОЛ (`MEDIA_W_FLOOR`) поднят с прежних 2,60" до 4,00" — заметно выше
+# старого потолка, а не обратно к нему. `fit_media` ниже — та же
+# адаптивная ширина, что у Лекции 7, — пробует кадр на КАЖДОЙ ширине от
+# потолка до пола и останавливается на первой, которая собирается чисто;
+# 40 из 51 кадра находят такую ширину в диапазоне [4,00; 5,80] (большинство
+# — у самого потолка). Содержательно твёрдых 11 (`s02 s04 s05 s06 s15 s23
+# s42 s70 s73 s74 s75` — в основном схема-конвейер или уже плотное по
+# словам тело, см. `iteration-log.md`) не находят НИЧЕГО даже на самом
+# полу: `fit_media` в этом случае молча откатывается к полному `MEDIA_W`
+# (`chosen or MEDIA_W` — см. код ниже), то есть к кадру, который НЕ
+# проходит проверку, а не к меньшей картинке. Для всех 11 тело правлено —
+# срезана ровно одна фраза на кадр (прямое указание наряда: «trim a
+# clause… don't shrink the image back down»), и после этой правки все 11
+# тоже находят рабочую ширину в диапазоне пола-потолка без исключений.
+MEDIA_W = 5.80
+MEDIA_W_FLOOR = 4.00
+MEDIA_H = 4.80
+COL_GAP = 0.34
+GAP = 0.20
+TICK_W, TICK_H = 1.05, 0.055
+SUB_H = 0.52
+SUB_GAP = 0.05
+BODY_COL_GAP = 0.40
+
+# Словарь типов у v5 ДРУГОЙ, чем был у v1: там кадры назывались по роли в
+# разборе (`case` · `norm` · `summary`), здесь — по форме подачи
+# (`analitika` · `assertion_visual` · `schema_*`). Переименование сделано
+# автором кадров, и сборщик обязан читать новый словарь: `is_content`
+# гасит плашки, схему, столбцы и число, и со старым набором 95 кадров из
+# 97 остались бы без них молча.
+CONTENT_TYPES = {"analitika", "assertion_visual", "comparison", "live_demo",
+                 "schema_matrix", "schema_timeline", "schema_pipeline",
+                 "schema_architecture", "schema_layered", "hero_closing"}
+
+# Кадры, у которых иллюстрация обязана быть hero (≥40% площади) по
+# `CLAUDE.md` § Pre-USER-GATE п.9: первый и последний кадр показа. Автор
+# кадров объявил это словами (`media_fill` на `s01`, `media_rol` на `s97`),
+# а не полем `media_hero`, которое читает ядро, — поэтому связь типа и
+# роли названа здесь, в раскладке деки, а не правкой файлов кадров.
+HERO_TYPES = {"hero_cover", "hero_closing"}
+
+HERO_W = 7.80
+HERO_TOP = 0.10
+HERO_GAP = 0.06
+WRAP_GAP = 0.10
+WRAP_NEEDS_BOX_OVER_MEDIA = True
+BODY_PT = 15.0
+FOOT_PT = 12.0
+# Ширина hero обложки подобрана АРИФМЕТИКОЙ, а не на глаз. Порог §5.9 —
+# 40% площади кадра (13,333 × 7,5 = 100,0 кв. дюйма). Снимок `s01` —
+# 1280×720, то есть 16:9: при ширине 7,79" он даёт высоту 4,38" и площадь
+# 34,1% — ИМЕННО это число и назвал сторож на первой сборке v5. Нужная
+# ширина решается из w × w/1,778 = 42 → w = 8,64"; высота 4,86" в свои
+# 6,72" умещается, текстовой колонке остаётся 3,80". Взято 42, а не ровно
+# 40: на пороге любой другой снимок с иной пропорцией снова окажется под
+# ним.
+COVER_HERO_W = 8.64
+COVER_HERO_TEXT_Y = 1.10
+COVER_HERO_GOLD_Y = 0.68
+
+# Плашки: тот же выключатель трёх предупреждений Лекции 6 (счёт строк
+# подписи/значения/оговорки), по той же причине что у Лекции 7 — полоса
+# «было · стало · к чему привело» считает высоту по НАСТОЯЩЕМУ числу строк,
+# и чужой порог там просто не о том. Ключевое значение плашки — `1C7293`,
+# не золото: та же находка прожарки 2026-10-14, золото на белом даёт
+# 1,99:1 при пороге WCAG AA 3,0, и этим цветом на этой деке набрано
+# значение плашки минимум на 44 кадрах (55 кадров с `blocks`, `key`
+# проставлен не всюду явно — умолчание уводит золото на последнюю плашку с
+# цифрой).
+from dataclasses import replace  # noqa: E402
+PLATES = replace(plates.LEC07, value_key_color=LIGHT)
+
+# Схема: те же числа, что у Лекции 7 — дека использует тот же словарь форм
+# (`tools/presentation-build/trebovaniya-k-soderzhaniyu-forma.md`), и 15
+# кадров Лекции 8 несут `scheme:` той же конвейерной формы (до 4 шагов в
+# ряду, до 3 рядов). `ai_by_word=False`: шаг модели объявляется явно, не
+# угадывается по словам — та же находка Лекции 7 (четыре ложных золота из
+# пяти на угадывании), и в файлах Лекции 8 слово «модель» встречается в
+# шагах конвейера так же часто мимо смысла («распечатка вывода модели»,
+# «план изменений модели»), как и там.
+tables.CELL_RUNS = True
+
+SCHEME = scheme.SchemeStyle(ai_by_word=False,
+                            step_hi=13.5, step_lo=12.0, step_rows=5,
+                            lab_w=1.55, lab_gap=0.0, lab_pt=12.0,
+                            step_pad=0.09, step_ls=1.12,
+                            box_min_h=0.50, box_extra=0.26,
+                            arrow_w=0.20, arrow_h=0.15, gap=0.05,
+                            nogap=0.16, row_gap=0.16,
+                            cap_pt=12.0, cap_ls=1.12, cap_gap=0.04)
+
+
+# ════════════════════════════════════════════════════════════════════
+# общие части кадра
+# ════════════════════════════════════════════════════════════════════
+
+
+def is_hero(sl):
+    """Иллюстрация кадра — hero (во всю колонку, ≥40% площади)? Либо кадр
+    сказал это сам полем `media_hero`, либо он первый/последний кадр показа
+    и его тип это объявляет (`HERO_TYPES`)."""
+    return (bool(sl.meta.get("media_hero"))
+            or str(sl.meta.get("type") or "").strip() in HERO_TYPES)
+
+
+def gold_tick(s, x, y, sid):
+    prims.rect(s, x, y, TICK_W, TICK_H, GOLD)
+    report.GOLD_SEEN.add(sid)
+
+
+def heading(s, sl, color=DEEP, width=None):
+    """Заголовок кадра — лестницей (`deckkit.titles`), плюс необязательное
+    ЧИСЛО вместо фразы (`headline_number`, один кадр этой деки — `s50`)."""
+    if not sl.title:
+        report.warn(f"[заголовок] {sl.sid}: поле `title` пусто")
+        return BODY_TOP
+    w = FULL_W if width is None else width
+    tag = f"{sl.sid}/заголовок"
+    num = titles.headline_of(sl)
+    if num:
+        nf, _nl, sf, _sl = titles.fit_headline(num, sl.title, w, TITLE_H,
+                                               SUB_H, tag=tag)
+        nh = metrics.est_h(num, nf, w, 1.06, True)
+        prims.text_box(s, MX, TITLE_Y, w, nh, num, size=nf, bold=True,
+                       color=color, ls=1.06, tag=f"{tag}-число")
+        sh = metrics.est_h(sl.title, sf, w, 1.14)
+        prims.text_box(s, MX, TITLE_Y + nh + SUB_GAP, w, sh, sl.title,
+                       size=sf, color=MID, ls=1.14, tag=f"{tag}-подзаголовок")
+        bottom = TITLE_Y + nh + SUB_GAP + sh
+    else:
+        sz, _lines = titles.fit_title(sl.title, w, TITLE_H, tag=tag)
+        prims.text_box(s, MX, TITLE_Y, w, TITLE_H, sl.title, size=sz,
+                       bold=True, color=color, ls=1.08, tag=tag)
+        bottom = TITLE_Y + metrics.est_h(sl.title, sz, w, 1.08, True)
+    sl.tick_y = bottom + 0.07
+    return max(BODY_TOP, sl.tick_y + TICK_H + 0.12)
+
+
+def source_runs(sl):
+    src = str(sl.meta.get("source") or "").strip()
+    cap = str(sl.meta.get("media_caption") or "").strip()
+    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
+        src = f"{src} · {cap}" if src and src != "—" else cap
+    if not src or src == "—":
+        return []
+    return [{"text": vis, "size": FOOT_PT, "italic": True,
+             "color": MID if url else LIGHT, "url": url}
+            for vis, url in markup.source_parts(src)]
+
+
+def foot_geom(sl):
+    key = "foot"
+    if key not in sl._cache:
+        runs = source_runs(sl)
+        flat = "".join(r["text"] for r in runs)
+        h = max(FOOT_H, metrics.est_h(flat, FOOT_PT, FULL_W, FOOT_LS,
+                                      italic=True)) if flat else FOOT_H
+        if h > FOOT_MAX_H:
+            report.warn(
+                f"[высота] {sl.sid}/подвал: источник занял {h:.2f}\" — "
+                f"больше предела {FOOT_MAX_H:.2f}\" ({len(flat)} знаков). "
+                "Подвал вырастет и заберёт эту высоту у тела")
+        y = FOOT_BOT - h
+        sl._cache[key] = (y, h, y - FOOT_GAP)
+    return sl._cache[key]
+
+
+def body_bot(sl):
+    return foot_geom(sl)[2]
+
+
+def footer(s, sl):
+    src = str(sl.meta.get("source") or "").strip()
+    cap = str(sl.meta.get("media_caption") or "").strip()
+    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
+        src = f"{src} · {cap}" if src and src != "—" else cap
+    if not src or src == "—":
+        return
+    runs = source_runs(sl)
+    if not runs:
+        return
+    _y, h, _bot = foot_geom(sl)
+    prims.text_runs(s, MX, FOOT_BOT - h, FULL_W, h, runs, ls=FOOT_LS,
+                    tag=f"{sl.sid}/подвал", quiet=True)
+
+
+def plates_style(sl):
+    """`PLATES`, либо — если кадр объявил `blocks_per_row` — та же геометрия
+    со СВОИМ `max_per_row` (`dataclasses.replace`, не правка общей константы).
+
+    Единственный известный кадр, которому это нужно, — `s03` (keystone):
+    4 плашки несут два смысловых ряда (ряд 1 — измеренная пара этой лекции,
+    ряд 2 — перенос на другой домен), а умолчание `max_per_row=4` у
+    `PlateStyle` кладёт все четыре в один ряд, стирая эту границу. Поле
+    трогает ТОЛЬКО тот кадр, который его объявил — каждый другой кадр деки
+    получает прежний `PLATES` без изменений."""
+    raw = sl.meta.get("blocks_per_row")
+    if raw in (None, "", 0, "0"):
+        return PLATES
+    try:
+        n = int(raw)
+    except (TypeError, ValueError):
+        report.warn(f"[плашки] {sl.sid}: поле `blocks_per_row` — не целое "
+                    f"число ({raw!r}), строка идёт умолчанием `max_per_row="
+                    f"{PLATES.max_per_row}`")
+        return PLATES
+    if n < 1:
+        report.warn(f"[плашки] {sl.sid}: поле `blocks_per_row` должно быть "
+                    f"≥1 ({raw!r}), строка идёт умолчанием `max_per_row="
+                    f"{PLATES.max_per_row}`")
+        return PLATES
+    return replace(PLATES, max_per_row=n)
+
+
+def check_prims(sl, kind):
+    for f, name in (("blocks", "плашки"), ("scheme", "схема"),
+                    ("columns", "столбцы"), ("figure", "число")):
+        if sl.meta.get(f):
+            report.warn(
+                f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
+                f"«{kind}» — оно рисуется только на содержательных кадрах")
+
+
+# ════════════════════════════════════════════════════════════════════
+# раскладка «ось»: s10, единственный кадр с опорной формулой-цитатой
+# ════════════════════════════════════════════════════════════════════
+
+
+def os_kadr(s, sl, x, y, w, bbot):
+    """`vizforma: "ось"` — опорная формула лекции крупной цитатой между
+    вступительным и замыкающим абзацем. Видимое тело этого кадра несёт
+    строку `> **…**` (markdown-blockquote); `slidefile.body_blocks`
+    (раскладка-абзац, которой собрана вся дека) blockquote не знает и
+    отдал бы его абзацем с буквальным `> ` перед текстом — поэтому
+    строка-цитата выделяется здесь, до того как остальное тело уйдёт в
+    обычный прогон.
+
+    Цитата набрана GOLD по DEEP (контраст 6,85:1 — тот же приём, что
+    `deckkit.figure` для перевёрнутого кадра одного числа, см. его
+    docstring): это кадр, у которого ровно один содержательный элемент
+    обязан быть самым заметным на экране, а инверсия тона читается
+    по-особому, подчёркивая, что это опорная точка, а не рядовой абзац."""
+    blocks = slidefile.body_blocks(sl)
+    pre, quote, post = [], None, []
+    for kind, t in blocks:
+        if quote is None and kind == "para" and t.startswith("> "):
+            quote = markup.plain(t[2:].strip())
+            continue
+        (post if quote is not None else pre).append((kind, t))
+
+    cy = y
+    if pre:
+        runs = []
+        for kind, t in pre:
+            sz = {"head": 20.0, "cap": 12.0, "bullet": 15.0}.get(kind, 17.0)
+            for r in markup.inline_runs(t, sz, DEEP):
+                r.setdefault("bold", kind == "head")
+                runs.append(r)
+        h = metrics.runs_h(runs, w - 0.08, 1.26)
+        prims.text_runs(s, x + 0.04, cy, w - 0.08, h, runs, ls=1.26,
+                        tag=f"{sl.sid}/ось-вступление")
+        floor.check_runs(runs, f"{sl.sid}/ось-вступление")
+        cy += h + GAP
+
+    if quote:
+        qf = metrics.fit_size(quote, w - 0.60, 1.70, hi=30.0, lo=19.0,
+                              floor=16.0, bold=True, ls=1.18,
+                              tag=f"{sl.sid}/ось-формула")
+        qh = metrics.est_h(quote, qf, w - 0.60, 1.18, True)
+        box_h = qh + 0.52
+        prims.ocean_box(s, x, cy, w, box_h, fill=DEEP, stroke=GOLD,
+                        stroke_pt=2.0)
+        prims.text_box(s, x + 0.30, cy + (box_h - qh) / 2, w - 0.60, qh,
+                       quote, size=qf, bold=True, color=GOLD,
+                       align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                       ls=1.18, tag=f"{sl.sid}/ось-формула")
+        report.GOLD_SEEN.add(sl.sid)
+        cy += box_h + GAP
+
+    if post:
+        runs = []
+        for kind, t in post:
+            sz = {"head": 18.0, "cap": 12.0, "bullet": 15.0}.get(kind, 15.0)
+            for r in markup.inline_runs(t, sz, MID if kind != "cap" else LIGHT):
+                r.setdefault("italic", kind == "cap")
+                runs.append(r)
+        avail = max(0.30, bbot - cy)
+        h = min(avail, metrics.runs_h(runs, w - 0.08, 1.24))
+        prims.text_runs(s, x + 0.04, cy, w - 0.08, avail, runs, ls=1.24,
+                        tag=f"{sl.sid}/ось-вывод")
+        floor.check_runs(runs, f"{sl.sid}/ось-вывод")
+        cy += h
+    if cy > bbot + 0.04:
+        report.warn(f"[высота] {sl.sid}/ось: текст дошёл до подвала — "
+                    f"{cy:.2f}\" при пределе {bbot:.2f}\"")
+    return cy
+
+
+# ════════════════════════════════════════════════════════════════════
+# три раскладки
+# ════════════════════════════════════════════════════════════════════
+
+
+def cover(p, sl, root):
+    s = prims.blank(p)
+    bbot = body_bot(sl)
+    prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
+    check_prims(sl, "cover")
+    img = media.media_path(sl.meta, root, sl.sid)
+    hero = img is not None and is_hero(sl)
+    ty, gy = 1.70, 1.28
+    if hero:
+        # Hero обложки ставится ПО ВЕРТИКАЛЬНОЙ СЕРЕДИНЕ тела, а не от
+        # верхней кромки. Первый рендер v5 показал почему: снимок 16:9
+        # шириной 8,64" имеет высоту 4,86", тело кадра — 6,72", и при
+        # привязке к верху под картинкой оставалась белая полоса почти в
+        # два дюйма во всю ширину слайда. Кадр читался недовёрстанным.
+        # Содержание не трогаем — двигаем коробку.
+        ar = media.img_ar(img, sl.sid) or (16 / 9)
+        box_h = COVER_HERO_W / ar + 2 * media.HERO_PAD
+        y_hero = max(HERO_TOP, HERO_TOP + (bbot - HERO_TOP - box_h) / 2)
+        x_box, _ = media.place_hero(s, sl.sid, sl.meta, img, SLIDE_W - MX,
+                                    y_hero, bbot, COVER_HERO_W)
+        tw = x_box - COL_GAP - MX
+        ty, gy = COVER_HERO_TEXT_Y, COVER_HERO_GOLD_Y
+        # текст обложки — тоже по середине, против той же белой полосы
+        ty = max(COVER_HERO_TEXT_Y, y_hero + 0.30)
+        gy = max(0.40, ty - 0.42)
+    elif img:
+        tw = 7.10
+        media.draw_media(s, sl.sid, img, MX + tw + 0.40, 0.60,
+                         SLIDE_W - MX * 2 - tw - 0.40, SLIDE_H - 1.60)
+    else:
+        tw = FULL_W
+    runs = []
+    for i, (kind, t) in enumerate(slidefile.body_blocks(sl)):
+        sz = {"head": 34.0, "cap": 12.5}.get(kind, 17.0)
+        for j, r in enumerate(markup.inline_runs(
+                t, sz, DEEP if kind != "cap" else LIGHT)):
+            r.setdefault("italic", kind == "cap")
+            r["newpara"] = bool(i and j == 0)
+            if r["newpara"]:
+                r["space_before"] = 12
+            runs.append(r)
+    if runs:
+        box_h = bbot - ty if hero else 4.20
+        # Масштаб кеглей прогона целиком (заголовок · «Лекция N» · абзац),
+        # а не фиксированные 34/17 пт как раньше — тот же `metrics.fit_runs`,
+        # которым уже укладывается тело содержательного кадра. До этой
+        # правки кадр с `media_hero: true` ни разу не собирался НА ЭТОМ
+        # ВХОДЕ (у Лекции 8 `media` стояла пустой везде, пока волна добычи
+        # не положила реальные снимки) — узкий текстовый столбец рядом с
+        # hero (`tw` ýже, чем без hero) впервые и показал, что фиксированный
+        # кегль сюда не ложится: оценка 6,75" при доступных 5,72". Пол 0,70
+        # держит тело обложки не ниже ≈12 пт (17 × 0,70 ≈ 11,9), тот же пол
+        # видимого слоя, что и везде по деке.
+        if hero:
+            metrics.fit_runs(runs, tw, box_h, hi=1.0, lo=0.70, floor=0.70,
+                             ls=1.22, tag=f"{sl.sid}/обложка")
+            floor.check_runs(runs, f"{sl.sid}/обложка")
+        prims.text_runs(s, MX, ty, tw, box_h, runs,
+                        ls=1.22, anchor=MSO_ANCHOR.TOP,
+                        tag=f"{sl.sid}/обложка")
+    prims.rect(s, MX, gy, 1.60, 0.07, GOLD)
+    report.GOLD_SEEN.add(sl.sid)
+    footer(s, sl)
+    return s
+
+
+def divider(p, sl, root):
+    s = prims.blank(p)
+    foot_y = foot_geom(sl)[0]
+    prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
+    prims.rect(s, 0, 0, 0.17, SLIDE_H, MID)
+    check_prims(sl, "divider")
+    img = media.media_path(sl.meta, root, sl.sid)
+    # Та же правка 2026-10-21, что и у `content()` (см. докстроку
+    # `MEDIA_W` выше): текстовая колонка дивайдера была 7,30" при слоте
+    # картинки всего 4,53×5,10" (до ~23% площади на самой выгодной
+    # пропорции). Текст дивайдера — заголовок раздела плюс обычно один
+    # короткий абзац, поэтому колонку можно сузить сильнее, чем у
+    # `content()` — КРОМЕ `s11`, единственного дивайдера, который несёт
+    # ещё и список «По порядку: …», перечисляющий заголовки шагов раздела
+    # (второй абзац; у `s11 s20 s29 s38` он есть, у `s51 s62` — нет).
+    # `metrics.est_h` (плоский замер, которым считается высота БОКСА) и
+    # настоящая высота, посчитанная `prims.text_runs` по прогону с
+    # полужирными вставками (`markup.inline_runs` — заголовки шагов через
+    # « · » набраны полужирным), расходятся на ЭТОМ абзаце заметно
+    # сильнее, чем на обычном тексте, и расхождение НЕ монотонно по
+    # ширине: перебор 5,60″→7,50″ шагом 0,10″ по всем четырём кадрам сразу
+    # нашёл чистые полосы на 5,70–6,10″ и на 6,50–6,90″, а находки —
+    # то на `s11` (5,60″, 6,20–6,30″, 7,00″), то на `s20` (6,40″, 7,40″),
+    # то на обоих (7,50″) — перенос строк у разных наборов полужирных
+    # кусков через точку-разделитель переставляется у каждого кадра на
+    # своей ширине. Первая «чистая» полоса (5,70–6,10″) оказалась ложной:
+    # отдельная проверка `divider()` «текст дошёл до подвала» (не
+    # по-блочный замер `prims.text_runs`, а итоговый `y` после ВСЕХ
+    # блоков) всё равно называла `s11` почти на всей этой полосе — нашлась
+    # только в точке 6,10″, в один шаг перебора шириной, нечего там
+    # закрепляться. 6,50" — середина ВТОРОЙ чистой полосы (6,35–6,60″ по
+    # этому, более строгому, замеру — проверено обоими способом разом),
+    # и это ЕДИНАЯ ширина для всех шести дивайдеров — своя колонка под
+    # один кадр усложнила бы `divider()` ради одного абзаца, а не ради
+    # формы.
+    tw = 6.50 if img else FULL_W
+    if img:
+        mw, mh = media.media_box_size(media.img_ar(img, sl.sid),
+                                      SLIDE_W - MX * 2 - tw - 0.40,
+                                      SLIDE_H - 2.10)
+        media.draw_media(s, sl.sid, img, SLIDE_W - MX - mw, 1.00, mw, mh)
+    y = 1.05
+    # ДИВАЙДЕР БЕЗ ЗАГОЛОВКА `#`. У `s08` имя раздела набрано `# Раздел 1`,
+    # у `s33` и `s50` — полужирным абзацем «**Раздел 2. …**». Ядро видит
+    # во втором случае обычный абзац, и эти два дивайдера выходили без
+    # крупного имени раздела и без золотой линейки под ним — то есть
+    # выглядели не как дивайдеры. Первый блок тела дивайдера — это и есть
+    # имя раздела, других кандидатов там не бывает; поэтому, когда
+    # заголовка нет ни у одного блока, первый повышается до заголовка.
+    # Файл кадра не правится, текст тот же.
+    bloki = list(slidefile.body_blocks(sl))
+    if bloki and not any(k == "head" for k, _ in bloki):
+        # Разметку `**…**` с повышенного абзаца СНЯТЬ. Ветка `head` рисует
+        # текст однородной надписью (`prims.text_box`), а не прогоном: у
+        # настоящего `# Заголовок` звёздочек не бывает, и она их не
+        # разбирает. Первый рендер показал это буквально — на `s33`
+        # заголовком встало «**Раздел 2. Синтез речи…**» вместе со
+        # звёздочками.
+        bloki[0] = ("head", re.sub(r"\*\*", "", bloki[0][1]).strip())
+    for kind, t in bloki:
+        if kind == "head":
+            sz = metrics.fit_size(t, tw, 1.05, hi=30.0, lo=20.0, floor=16.0,
+                                  bold=True, ls=1.10,
+                                  tag=f"{sl.sid}/дивайдер-имя")
+            h = metrics.est_h(t, sz, tw, 1.10, True)
+            prims.text_box(s, MX + 0.22, y, tw, h, t, size=sz, bold=True,
+                           color=DEEP, ls=1.10, tag=f"{sl.sid}/дивайдер-имя")
+            y += h + 0.10
+            prims.rect(s, MX + 0.22, y, 1.30, 0.065, GOLD)
+            report.GOLD_SEEN.add(sl.sid)
+            y += 0.30
+        elif kind == "cap":
+            h = metrics.est_h(t, 12.0, tw, 1.14)
+            prims.text_box(s, MX + 0.22, y, tw, h, t, size=12.0, italic=True,
+                           color=LIGHT, ls=1.14,
+                           tag=f"{sl.sid}/дивайдер-подпись")
+            y += h + 0.14
+        else:
+            h = metrics.est_h(t, 15.5, tw - 0.22, 1.24)
+            prims.text_runs(s, MX + 0.22, y, tw - 0.22, h + 0.04,
+                            markup.inline_runs(t, 15.5, DEEP), ls=1.24,
+                            tag=f"{sl.sid}/дивайдер-тело")
+            y += h + 0.18
+        if y > foot_y - 0.2:
+            report.warn(f"[высота] {sl.sid}/дивайдер: текст дошёл до подвала "
+                        f"— {y:.2f}\" при пределе {foot_y:.2f}\"")
+            break
+    # Золото обязано быть на каждом кадре (правило палитры). Линейку
+    # дивайдера рисует ветка `head`, а у `s33` и `s50` имя раздела
+    # набрано полужирным абзацем, а не заголовком `#`, — и эти два кадра
+    # уходили в показ единственными без золота во всей деке. Содержание
+    # кадров не трогаем: линейку ставим здесь, под уже нарисованным
+    # текстом, тем же размером и в том же месте по левому краю.
+    if sl.sid not in report.GOLD_SEEN:
+        prims.rect(s, MX + 0.22, min(y + 0.04, foot_y - 0.30), 1.30, 0.065,
+                   GOLD)
+        report.GOLD_SEEN.add(sl.sid)
+    footer(s, sl)
+    return s
+
+
+# ════════════════════════════════════════════════════════════════════
+# раскладка «накопительная карта вечера» — шесть предъявлений
+# ════════════════════════════════════════════════════════════════════
+#
+# ЧТО ЭТО. Одна и та же сетка показывается шесть раз за вечер (`s06` ·
+# `s32` · `s49` · `s66` · `s77` · `s87`), и каждый раз в ней на одну
+# колонку больше: на `s06` колонок ноль, на `s87` все пять. Строк всегда
+# шесть, и они заданы сразу.
+#
+# ПОЧЕМУ СВОЙ РИСОВАЛЬЩИК, А НЕ РАЗМЕТОЧНАЯ ТАБЛИЦА ИЗ ТЕЛА. Тело кадра
+# несёт эту сетку разметочной таблицей, и ядро её нарисовать умеет
+# (`tables.draw_table`). Но таблица из тела НЕ несёт трёх вещей, которые
+# несёт фронтматтер и которых требует форма:
+#   1. глоссу строки («получить варианты облика, пока решение ещё не
+#      принято») — в теле её нет вовсе, а без неё шесть строк читаются
+#      ярлыками;
+#   2. БУДУЩИЕ колонки (`columns_to_come`) — таблица тела показывает
+#      только заполненные, и на `s32` сетка выглядит таблицей из одной
+#      колонки, а не картой, у которой четыре колонки ещё впереди.
+#      «Место, а не отсутствие» достигается тем, что ширина сетки на всех
+#      шести предъявлениях ОДНА: пять слотов стоят всегда, и будущие
+#      названы по имени светлым;
+#   3. полосу адреса платежа ПОД сеткой — в теле это обычный абзац, то
+#      есть визуально строка таблицы, а она не строка таблицы: у неё
+#      другая ось (раздел, а не тип задачи).
+#
+# Содержание при этом НЕ меняется: рисуется ровно то, что стоит во
+# фронтматтере, слово в слово, плюс глосса, которой в теле не было.
+# Разметочная таблица и два её абзаца-спутника из потока тела убираются —
+# иначе одно и то же нарисуется дважды (`snyat_dubli_karty`).
+
+KARTA_SLOTS = 5                 # колонок у карты всегда пять
+KARTA_LABEL_W = 3.05            # столбец типов задачи, дюймы
+KARTA_PAD = 0.07
+KARTA_LS = 1.13
+KARTA_GAP = 0.12
+KARTA_BAND_GAP = 0.09
+KARTA_LADDER = [11.0, 10.5, 10.0, 9.5, 9.0, 8.5, 8.0, 7.5, 7.0]
+KARTA_HEAD = "Тип задачи"
+
+
+def karta_vechera(sl):
+    """`matrix` этого кадра — накопительная карта вечера? Иначе None.
+
+    Отличается от любой другой матрицы тем, что знает про ВРЕМЯ: у неё
+    есть состояние (`state`), будущие колонки (`columns_to_come`) и полоса
+    под сеткой (`footer_band`). У `s16` поле `matrix` тоже есть — это
+    обычная сравнительная таблица двух семейств генерации, её рисует тело
+    кадра разметочной таблицей, и сюда она не попадает."""
+    m = sl.meta.get("matrix")
+    if not isinstance(m, dict):
+        return None
+    if not any(m.get(k) for k in ("state", "footer_band", "columns_to_come")):
+        return None
+    rows = m.get("rows") or []
+    if not rows:
+        report.warn(f"[карта] {sl.sid}: карта вечера объявлена, а строк в "
+                    "ней нет — рисовать нечего")
+        return None
+    return m
+
+
+def _karta_band_text(m):
+    """Полоса под сеткой: подпись и значения одной строкой."""
+    fb = m.get("footer_band")
+    if not isinstance(fb, dict):
+        return None
+    label = str(fb.get("label") or "адрес платежа").strip()
+    vals = fb.get("values")
+    if vals:
+        return label.upper() + "   " + " · ".join(str(v) for v in vals)
+    vals = fb.get("values_to_come") or []
+    if not vals:
+        return None
+    return (label.upper() + "   накапливается по разделам: "
+            + " · ".join(str(v) for v in vals))
+
+
+def _karta_plan(m, w, z):
+    """Высоты карты при кегле клетки `z`: шапка, шесть строк, полоса."""
+    lw = min(KARTA_LABEL_W, w * 0.33)
+    cw = (w - lw) / KARTA_SLOTS
+    tw, tc = lw - 2 * KARTA_PAD, cw - 2 * KARTA_PAD
+    z_lab, z_gl = z + 1.0, max(6.5, z - 1.5)
+    names = list(m.get("columns") or []) + list(m.get("columns_to_come") or [])
+    head = max([metrics.est_h(KARTA_HEAD, z, tw, KARTA_LS, True)]
+               + [metrics.est_h(str(n), z, tc, KARTA_LS, True)
+                  for n in names] or [0.2]) + 2 * KARTA_PAD
+    rows = []
+    for r in m.get("rows") or []:
+        lab = metrics.est_h(str(r.get("label") or ""), z_lab, tw,
+                            KARTA_LS, True)
+        gl = str(r.get("gloss") or "")
+        if gl:
+            lab += metrics.est_h(gl, z_gl, tw, KARTA_LS, False, True) + 0.03
+        cells = [metrics.est_h(str(c), z, tc, KARTA_LS)
+                 for c in (r.get("cells") or []) if str(c).strip()]
+        rows.append(max([lab] + cells) + 2 * KARTA_PAD)
+    band = _karta_band_text(m)
+    bh = (metrics.est_h(band, z, w - 0.44, KARTA_LS) + 2 * KARTA_PAD
+          + KARTA_BAND_GAP) if band else 0.0
+    return lw, cw, head, rows, bh, z_lab, z_gl
+
+
+def karta_h(m, w, h_avail):
+    """Кегль и высоты карты, крупнейшие из умещающихся. Если не умещается
+    даже дно лестницы — отдаётся дно, и решает вызывающий."""
+    last = None
+    for z in KARTA_LADDER:
+        lw, cw, head, rows, bh, z_lab, z_gl = _karta_plan(m, w, z)
+        total = head + sum(rows) + bh
+        last = (z, lw, cw, head, rows, bh, z_lab, z_gl, total)
+        if total <= h_avail:
+            return last
+    return last
+
+
+def draw_karta(s, sid, m, x, y, w, h_avail):
+    """Карта вечера: шапка · шесть строк · полоса адреса платежа ПОД
+    сеткой. Возвращает занятую высоту."""
+    z, lw, cw, head, rows, bh, z_lab, z_gl, total = karta_h(m, w, h_avail)
+    if total > h_avail + 1e-6:
+        report.warn(
+            f"[высота] {sid}/карта: шесть строк карты не умещаются — нужно "
+            f"{total:.2f}\" при доступных {h_avail:.2f}\" даже на дне "
+            f"лестницы ({z:.1f} пт). Строки карты резать нельзя (их шесть "
+            f"на всех шести предъявлениях); резать надо то, что стоит на "
+            f"кадре ВЫШЕ карты — решение владельца, не сборки")
+    cols = [str(c) for c in (m.get("columns") or [])]
+    tocome = [str(c) for c in (m.get("columns_to_come") or [])]
+    names = cols + tocome
+    n_fill = len(cols)
+    tw, tc = lw - 2 * KARTA_PAD, cw - 2 * KARTA_PAD
+
+    # ── шапка ──────────────────────────────────────────────────────
+    prims.rect(s, x, y, lw, head, DEEP, count="карта-шапка")
+    prims.text_box(s, x + KARTA_PAD, y + KARTA_PAD, tw, head - 2 * KARTA_PAD,
+                   KARTA_HEAD, size=z, bold=True, color=WHITE, ls=KARTA_LS,
+                   tag=f"{sid}/карта-шапка")
+    for i in range(KARTA_SLOTS):
+        cx = x + lw + i * cw
+        zapolnena = i < n_fill
+        prims.rect(s, cx, y, cw, head,
+                   MID if zapolnena else SURFACE,
+                   stroke=None if zapolnena else OUTLINE, stroke_pt=1.0,
+                   count="карта-шапка")
+        if i < len(names):
+            prims.text_box(s, cx + KARTA_PAD, y + KARTA_PAD, tc,
+                           head - 2 * KARTA_PAD, names[i], size=z,
+                           bold=zapolnena, italic=not zapolnena,
+                           color=WHITE if zapolnena else LIGHT,
+                           ls=KARTA_LS, tag=f"{sid}/карта-колонка{i + 1}")
+    # золото на колонке, дописанной В ЭТОМ разделе: она и есть новость кадра
+    if n_fill:
+        prims.rect(s, x + lw + (n_fill - 1) * cw, y + head - 0.055, cw,
+                   0.055, GOLD, count="карта-новая")
+        report.GOLD_SEEN.add(sid)
+
+    # ── шесть строк ────────────────────────────────────────────────
+    ry = y + head
+    for ri, (r, rh) in enumerate(zip(m.get("rows") or [], rows)):
+        zebra = SURFACE if ri % 2 else WHITE
+        prims.rect(s, x, ry, lw, rh, zebra, stroke=OUTLINE, stroke_pt=0.75,
+                   count="карта-строка")
+        runs = [{"text": str(r.get("label") or ""), "size": z_lab,
+                 "bold": True, "color": DEEP}]
+        gl = str(r.get("gloss") or "")
+        if gl:
+            runs.append({"text": gl, "size": z_gl, "italic": True,
+                         "color": LIGHT, "newpara": True, "space_before": 2})
+        prims.text_runs(s, x + KARTA_PAD, ry + KARTA_PAD, tw,
+                        rh - 2 * KARTA_PAD, runs, ls=KARTA_LS,
+                        tag=f"{sid}/карта-строка{ri + 1}")
+        cells = [str(c) for c in (r.get("cells") or [])]
+        for i in range(KARTA_SLOTS):
+            cx = x + lw + i * cw
+            zapolnena = i < n_fill and i < len(cells) and cells[i].strip()
+            prims.rect(s, cx, ry, cw, rh,
+                       zebra if zapolnena else SURFACE,
+                       stroke=OUTLINE, stroke_pt=0.75, count="карта-клетка")
+            if zapolnena:
+                prims.text_box(s, cx + KARTA_PAD, ry + KARTA_PAD, tc,
+                               rh - 2 * KARTA_PAD, cells[i], size=z,
+                               color=DEEP, ls=KARTA_LS,
+                               tag=f"{sid}/карта-{ri + 1}-{i + 1}")
+        ry += rh
+
+    # ── полоса адреса платежа: ПОД сеткой, не строка таблицы ───────
+    band = _karta_band_text(m)
+    if band:
+        by = ry + KARTA_BAND_GAP
+        prims.rect(s, x, by, w, bh - KARTA_BAND_GAP, GOLD_TINT,
+                   radius=True, count="карта-полоса")
+        prims.rect(s, x, by, 0.075, bh - KARTA_BAND_GAP, GOLD,
+                   count="карта-полоса")
+        report.GOLD_SEEN.add(sid)
+        prims.text_box(s, x + 0.20, by + KARTA_PAD, w - 0.44,
+                       bh - KARTA_BAND_GAP - 2 * KARTA_PAD, band, size=z,
+                       color=DEEP, ls=KARTA_LS, tag=f"{sid}/карта-полоса")
+    floor.check_runs([{"text": "клетка карты", "size": z}], f"{sid}/карта")
+    return total
+
+
+_KARTA_DUBLI = ("карта вечера", "адрес платежа", "колонки по ходу вечера",
+                "под сеткой накапливается адрес платежа")
+
+
+def snyat_dubli_karty(sl, m):
+    """Убрать из ТЕЛА кадра то, что теперь рисует `draw_karta`.
+
+    Без этого карта нарисуется дважды: разметочной таблицей в потоке тела
+    и сеткой. Убирается ровно три вида абзацев, и каждый — дословный
+    дубль фронтматтера, а не самостоятельное содержание:
+      · разметочная таблица (строки, начинающиеся с `|`);
+      · подпись «Карта вечера, колонка …» и абзац «Адрес платежа …»;
+      · у `s06`, где таблицы ещё нет, — перечень строк «**label** — gloss»,
+        строка «Колонки по ходу вечера: …» и подпись про полосу.
+    Возвращает список снятого — он уходит в отчёт, чтобы снятое было
+    названо, а не исчезло молча."""
+    rows = m.get("rows") or []
+    pary = {f"{r.get('label')} — {r.get('gloss')}".strip().lower()
+            for r in rows if r.get("gloss")}
+    imena = {str(r.get("label") or "").strip().lower() for r in rows}
+    ostalos, snyato = [], []
+    for blk in re.split(r"\n\s*\n", sl.body):
+        if not blk.strip():
+            continue
+        goly = re.sub(r"[*_`#>|]", "", blk).strip().lower()
+        goly = re.sub(r"\s+", " ", goly)
+        if all(l.strip().startswith("|") for l in blk.strip().split("\n")):
+            snyato.append("разметочная таблица")
+            continue
+        if goly in pary or goly in imena:
+            snyato.append("строка карты")
+            continue
+        if any(goly.startswith(d) for d in _KARTA_DUBLI):
+            snyato.append(goly[:34])
+            continue
+        ostalos.append(blk.strip())
+    sl.body = "\n\n".join(ostalos)
+    sl._cache.clear()
+    return snyato
+
+
+def content(p, sl, root):
+    """Содержательный кадр: заголовок · плашки · схема · столбцы · тело ·
+    подвал. Тело идёт одним прогоном с иерархией кеглей внутри — КРОМЕ
+    единственного кадра `vizforma: "ось"` (`s10`), который уходит в
+    `os_kadr` сразу после заголовка."""
+    s = prims.blank(p)
+    bbot = body_bot(sl)
+    is_content = str(sl.meta.get("type") or "analitika") in CONTENT_TYPES
+    pst = plates_style(sl)
+    pl = plates.plates_of(sl, pst) if is_content else []
+    sch = scheme.scheme_of(sl, SCHEME)
+    cols = columns.columns_of(sl)
+    # ── сколько отдать накопительной карте ─────────────────────────
+    # ПЕРВАЯ ПОПЫТКА БЫЛА НЕВЕРНА, и неверна она была видимо: карта
+    # получала наибольшую высоту, какая умещалась в ПУСТОЕ тело, то есть
+    # почти всё тело, — и на `s32` с `s49` собственное содержание кадра
+    # (восемь строк правового контура · счёт в два действия) исчезло с
+    # экрана целиком, оставив одну сетку. Снимок первого рендера это
+    # показал сразу.
+    #
+    # Карта — повторяющийся справочный элемент, а не предмет кадра.
+    # Поэтому она берёт ОСТАТОК: сперва считается, сколько просит то, что
+    # стоит выше (полоса плашек, схема, столбцы по своему минимуму и тело
+    # по дну лестницы), и уже остаток уходит карте. Шесть строк при этом
+    # никуда не деваются — лестница кеглей карты опускает их до дна, а
+    # если и дна не хватает, `draw_karta` называет это числом.
+    mk = karta_vechera(sl)
+    karta_y = karta_hgt = None
+    if mk:
+        prochee = 0.0
+        if pl:
+            prochee += plates.plates_h(pl, FULL_W, pst) + GAP
+        if sch:
+            prochee += scheme.scheme_h(sch, FULL_W, SCHEME) + GAP
+        if cols:
+            prochee += columns.MIN_H + GAP
+        blocks0 = slidefile.body_blocks(sl)
+        if blocks0:
+            # дно лестницы тела: тот же масштаб 0.58, которым `fit_runs`
+            # перестаёт ужимать, то есть 15 × 0.58 ≈ 8.7 пт
+            prochee += sum(
+                metrics.est_h(bt, 8.7, FULL_W - 0.08, 1.26, bk == "head")
+                for bk, bt in blocks0) + 0.08 * len(blocks0)
+        dano = max(0.0, bbot - BODY_TOP - prochee)
+        karta_hgt = karta_h(mk, FULL_W, dano)[8]
+        karta_y = bbot - karta_hgt
+        bbot = karta_y - KARTA_GAP
+    prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE)
+    img = media.media_path(sl.meta, root, sl.sid)
+    hero = img is not None and is_hero(sl)
+    col_bot = bbot
+    media_bot = 0.0
+    draw_img = None
+    if hero:
+        x_box, col_bot = media.place_hero(s, sl.sid, sl.meta, img,
+                                          SLIDE_W - MX, HERO_TOP, bbot,
+                                          HERO_W)
+        body_w = x_box - COL_GAP - MX
+        y = heading(s, sl, width=body_w)
+    else:
+        y = heading(s, sl)
+        body_w = FULL_W
+        if img:
+            mw, mh = media.media_box_size(media.img_ar(img, sl.sid),
+                                          sl.media_w or MEDIA_W,
+                                          min(MEDIA_H, bbot - y))
+            body_w = FULL_W - mw - COL_GAP
+            draw_img = (MX + body_w + COL_GAP, y, mw, mh)
+            media_bot = y + mh
+
+    if (not hero and not img
+            and str(sl.meta.get("vizforma") or "") == "ось"):
+        os_kadr(s, sl, MX, y, body_w, bbot)
+        if mk:
+            draw_karta(s, sl.sid, mk, MX, karta_y, FULL_W, karta_hgt)
+        gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
+        footer(s, sl)
+        return s
+
+    if pl:
+        y += plates.draw_plates(s, sl.sid, pl, MX, y, body_w, pst) + GAP
+
+    if sch:
+        scheme.check_scheme(sl.sid, sch, body_w, SCHEME)
+        y += scheme.draw_scheme(s, sl.sid, sch, MX, y, body_w, SCHEME) + GAP
+
+    fig = figure.figure_of(sl) if is_content else None
+    if fig:
+        figure.check_figure(sl.sid, fig, body_w)
+        y += figure.draw_figure(s, sl.sid, fig, MX, y, body_w) + GAP
+
+    avail = col_bot - y
+    if cols:
+        need = 0.0
+        if not hero:
+            # `need` оценивает высоту ХВОСТОВОГО абзаца ПОСЛЕ столбцов —
+            # но реально этот абзац рисуется шириной `text_w`, которая
+            # становится `FULL_W` (а не узким `body_w` рядом с картинкой),
+            # как только `y` после столбцов уходит ниже `media_bot` (см.
+            # ветку `if not hero and img and y >= media_bot` ниже). До
+            # правки 2026-10-21 (увеличение боковой иллюстрации) узкий
+            # `body_w` был близок к `FULL_W`, и расхождение не стоило
+            # внимания; на новом, заметно более узком `body_w` оценка по
+            # нему эту высоту СИЛЬНО завышала (абзац, который в
+            # действительности ляжет на всю ширину слайда, мерился так,
+            # будто ему всю высоту нужно в одну узкую колонку) — и
+            # завышенная `need` отъедала у самих столбцов место, которого
+            # им хватало на самом деле (`s74`: столбцы ужимались до
+            # 0,68–1,22" вместо нужных ~1,6", хотя абзац ниже прекрасно
+            # укладывался на полной ширине). Столбцы всегда идут ПОСЛЕ
+            # плашек/схемы — к этому моменту `y` почти всегда уже ниже
+            # `media_bot`, так что `FULL_W` здесь — не оптимистичное
+            # приближение, а то реальное значение, которым текст и
+            # нарисуется.
+            need_w = FULL_W if img else body_w
+            for kind, t in slidefile.body_blocks(sl):
+                need += metrics.est_h(
+                    t, {"head": 15.0, "cap": 11.0}.get(kind, 13.0),
+                    need_w - 0.08, 1.26, kind == "head") + 0.08
+        ch = max(columns.MIN_H,
+                 min(avail - (need + GAP if need else 0.0), columns.MAX_H))
+        columns.draw_columns(s, sl.sid, cols, MX, y, body_w, ch)
+        y += ch + GAP
+        avail = col_bot - y
+
+    text_w, box_h = body_w, 0.0
+    if not hero and img and y >= media_bot:
+        text_w = FULL_W
+    if hero:
+        y = max(col_bot, y - GAP) + HERO_GAP
+        text_w = FULL_W
+        avail = bbot - y
+        box_h = bbot - y + 0.10
+
+    heading_ord, ordered = slidefile.body_ordered(sl)
+    tables.apply_matrix_empty(sl.sid, sl.meta, ordered)
+    if any(k == "table" for k, _ in ordered) and avail > 0.35:
+        size = flow.fit_blocks(ordered, text_w - 0.08, avail,
+                               tag=f"{sl.sid}/тело")
+        used = flow.blocks_h(ordered, size, text_w - 0.08)
+        prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                        box_h if hero else min(used + 0.30,
+                                               bbot - y + 0.10))
+        flow.flow(s, ordered, MX + 0.04, y, text_w - 0.08, size,
+                  f"{sl.sid}/тело", accent=DEEP)
+        if draw_img:
+            media.draw_media(s, sl.sid, img, *draw_img)
+        if mk:
+            draw_karta(s, sl.sid, mk, MX, karta_y, FULL_W, karta_hgt)
+        gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
+        footer(s, sl)
+        return s
+
+    blocks = slidefile.body_blocks(sl)
+    if blocks and avail > 0.35:
+        runs, first = [], True
+        for kind, t in blocks:
+            sz = {"head": 20.0, "cap": 12.0, "bullet": 15.0}.get(kind, 15.0)
+            if not first:
+                runs.append({"text": "", "size": sz, "newpara": True,
+                             "space_before": 7})
+            first = False
+            for r in markup.inline_runs(t, sz, LIGHT if kind == "cap"
+                                        else DEEP):
+                if kind == "cap":
+                    r["italic"] = True
+                if kind == "head":
+                    r["bold"] = True
+                runs.append(r)
+        wrapped, y_bot = None, media_bot + WRAP_GAP
+        box_holds_media = (not WRAP_NEEDS_BOX_OVER_MEDIA
+                           or (draw_img is not None
+                               and draw_img[1] >= y - 0.10))
+        if not hero and img and y < media_bot and box_holds_media:
+            wrapped = wrap.fit_runs_wrap(
+                runs, body_w - 0.08, media_bot - y, FULL_W - 0.08,
+                col_bot - y_bot, text_w - 0.08, avail, ls=1.26,
+                tag=f"{sl.sid}/тело")
+        pushed = None
+        if not wrapped and not hero and img and y < media_bot:
+            pushed = wrap.fit_pushed(
+                runs, FULL_W - 0.08, col_bot - y_bot, text_w - 0.08, avail,
+                ls=1.26, tag=f"{sl.sid}/тело")
+        if wrapped or pushed:
+            top = wrapped[2] if wrapped else []
+            bot = wrapped[3] if wrapped else runs
+            box_y = y if wrapped else y_bot
+            prims.ocean_box(s, MX - 0.14, box_y - 0.10, FULL_W + 0.28,
+                            bbot - box_y + 0.10)
+            if top:
+                prims.text_runs(s, MX + 0.04, y, body_w - 0.08,
+                                media_bot - y, top, ls=1.26,
+                                tag=f"{sl.sid}/тело-рядом")
+            prims.text_runs(s, MX + 0.04, y_bot, FULL_W - 0.08,
+                            col_bot - y_bot, bot, ls=1.26,
+                            tag=f"{sl.sid}/тело-под")
+        else:
+            two = None
+            cw = (text_w - 0.08 - BODY_COL_GAP) / 2
+            if not hero and not img and not cols and len(blocks) >= 3:
+                two = twocol.fit_two(runs, cw, avail, text_w - 0.08, avail,
+                                     ls=1.26, tag=f"{sl.sid}/тело")
+            if two:
+                _k, _i, left, right = two
+                used = twocol.used_h(left, right, cw)
+                prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                                box_h if hero else min(used + 0.30,
+                                                       bbot - y + 0.10))
+                prims.text_runs(s, MX + 0.04, y, cw, avail, left, ls=1.26,
+                                tag=f"{sl.sid}/тело-лев")
+                prims.text_runs(s, MX + 0.04 + cw + BODY_COL_GAP, y, cw,
+                                avail, right, ls=1.26,
+                                tag=f"{sl.sid}/тело-прав")
+                prims.rect(s, MX + 0.04 + cw + BODY_COL_GAP / 2 - 0.005, y,
+                           0.01, min(used, avail), OUTLINE, count="линейка")
+            else:
+                # `body_fit_wpad` — необязательный фронтматтер-довесок к
+                # ШИРИНЕ, по которой подбирается кегль тела ЭТОГО
+                # КОНКРЕТНОГО кадра, а не общая правка ядра. Найдено на
+                # `s04`/`s15` после включения реальных `media`: сторож
+                # `[запас]` метрики предупреждал «влезает, но тоньше, чем
+                # мера разрешает — строка занята 99,8-100% рамки ПО
+                # ШИРИНЕ», и на глаз это был не «тесно», а НАЕЗД — нижняя
+                # строка тела рисовалась ПОВЕРХ обводки собственной рамки
+                # (LibreOffice перенёс эту строку на знак шире, чем успел
+                # насчитать питоновский замер, и получившаяся лишняя
+                # строка вышла за уже нарисованную рамку).
+                #
+                # Первая попытка — довесок К ВЫСОТЕ (`avail - pad`) — не
+                # помогла совсем (тот же наезд пиксель-в-пиксель что без
+                # довеска): сторож `[запас]` мерит риск переноса СТРОКИ ПО
+                # ШИРИНЕ независимо от высоты, которую осталось занять, и
+                # сузить высоту — не значит дать более узкую, более
+                # безопасную строку. Здесь — другая ось: узится САМА
+                # ширина, по которой `fit_runs` подбирает кегль (рисуется
+                # кадр всё равно в полную `text_w`), так что подобранный
+                # кегль держит честный запас ПО ШИРИНЕ и настоящая строка в
+                # LibreOffice безопасно короче отведённой ей рамки.
+                wpad = 0.0
+                raw_wpad = sl.meta.get("body_fit_wpad")
+                if raw_wpad not in (None, "", 0, "0"):
+                    try:
+                        wpad = max(0.0, float(raw_wpad))
+                    except (TypeError, ValueError):
+                        report.warn(f"[запас] {sl.sid}: поле "
+                                    f"`body_fit_wpad` — не число "
+                                    f"({raw_wpad!r}), игнорируется")
+                metrics.fit_runs(runs, text_w - 0.08 - wpad, avail,
+                                 ls=1.26, tag=f"{sl.sid}/тело")
+                used = metrics.runs_h(runs, text_w - 0.08, 1.26)
+                prims.ocean_box(s, MX - 0.14, y - 0.10, text_w + 0.28,
+                                box_h if hero else min(used + 0.30,
+                                                       bbot - y + 0.10))
+                prims.text_runs(s, MX + 0.04, y, text_w - 0.08, avail, runs,
+                                ls=1.26, tag=f"{sl.sid}/тело")
+        floor.check_runs(runs, f"{sl.sid}/тело")
+    elif blocks:
+        report.warn(f"[высота] {sl.sid}/тело: места под тело не осталось "
+                    f"({avail:.2f}\") — примитивы съели кадр")
+    if draw_img:
+        media.draw_media(s, sl.sid, img, *draw_img)
+    if mk:
+        if y > karta_y + 1e-6:
+            report.warn(
+                f"[высота] {sl.sid}: то, что стоит выше карты, дошло до "
+                f"{y:.2f}\", а карта начинается на {karta_y:.2f}\" — "
+                f"наезд {y - karta_y:.2f}\". Карте нужно "
+                f"{karta_hgt:.2f}\" на шесть строк")
+        draw_karta(s, sl.sid, mk, MX, karta_y, FULL_W, karta_hgt)
+    gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
+    footer(s, sl)
+    return s
+
+
+BUILDERS = {"hero_cover": cover, "section_divider": divider}
+
+
+# ════════════════════════════════════════════════════════════════════
+# сборка
+# ════════════════════════════════════════════════════════════════════
+
+
+def fit_media(sl, root, w0=MEDIA_W):
+    """Самая широкая боковая колонка, при которой кадр ещё собирается чисто
+    (см. `build_lec07.fit_media` — тот же механизм). На сегодняшнем входе
+    `media` пуста везде, значит `media.media_path` вернёт None на первой же
+    строке и функция выйдет немедленно — держится ради кадров, которые
+    получат иллюстрацию позже."""
+    if str(sl.meta.get("type")) not in CONTENT_TYPES:
+        return
+    if not media.media_path(sl.meta, root, sl.sid) or sl.meta.get("media_hero"):
+        return
+    keep = report.snapshot()
+    chosen, w = None, w0
+    while w >= MEDIA_W_FLOOR - 1e-9:
+        sl.media_w = w
+        report.WARNINGS[:] = []
+        report.PRIM.clear()
+        report.GOLD_SEEN.clear()
+        try:
+            content(prims.new_deck(), sl, root)
+        except Exception:                            # noqa: BLE001
+            break
+        if not report.blocking():
+            chosen = w
+            break
+        w = round(w - 0.10, 2)
+    report.restore(keep)
+    sl.media_w = chosen or MEDIA_W
+    if chosen is None:
+        report.warn(
+            f"[кадр] {sl.sid}: боковая иллюстрация не умещается ни при какой "
+            f"ширине до {MEDIA_W_FLOOR:.2f}\" — кадру нечего ей отдать")
+
+
+def build(only=None, out=OUT, slides_dir=None, root=None):
+    sd = slides_dir or SLIDES_DIR
+    root = root or LEC_ROOT
+    p = prims.new_deck()
+    n = 0
+    plotno = []
+    for f in slidefile.slide_files(sd, only):
+        sl = slidefile.read_slide(f)
+        if sl is None:
+            continue
+        # `scheme.ref` — ССЫЛКА НА СПЕЦИФИКАЦИЮ СХЕМЫ в `research/`, то
+        # есть наказ будущей волне иллюстраций, а не указание рисовать.
+        # Задача круга называет это поле среди метаданных, которые
+        # «на кадр не выводятся». Ядро его не знает и честно ругается
+        # «ключ `ref` ядро не читает» — поэтому поле снимается здесь, до
+        # разбора схемы, и переносится в `scheme_ref`, откуда его возьмёт
+        # отчёт. Файл кадра при этом не правится.
+        sch_raw = sl.meta.get("scheme")
+        if isinstance(sch_raw, dict) and "ref" in sch_raw:
+            sl.meta["scheme_ref"] = sch_raw.pop("ref")
+        mk = karta_vechera(sl)
+        if mk:
+            snyato = snyat_dubli_karty(sl, mk)
+            if snyato:
+                report.warn(
+                    f"[карта] {sl.sid}: из тела снято дублей карты "
+                    f"{len(snyato)} — их рисует сетка: "
+                    + "; ".join(snyato))
+        fit_media(sl, root)
+        kind = str(sl.meta.get("type") or "analitika").strip()
+        slov, _ = plotnost.proverit_kadr(sl)
+        plotno.append((sl.sid, slov, kind))
+        s = BUILDERS.get(kind, content)(p, sl, root)
+        markup.notes_with_links(s, sl.notes)
+        if sl.sid not in report.GOLD_SEEN:
+            report.warn(f"[золото] {sl.sid}: золотого акцента на кадре нет")
+        n += 1
+    plotnost.proverit_mediany(plotno)
+    metrics.font_gaps()
+    p.save(str(out))
+    return n
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--render", action="store_true")
+    ap.add_argument("--only")
+    a = ap.parse_args()
+    if a.selftest:
+        from deckkit import selftest as core_selftest
+        return core_selftest.selftest()
+    vykhod = OUT if not a.only else HERE / "chastichnaya-sborka.pptx"
+    n = build(only=a.only, out=vykhod)
+    if a.only:
+        print(f"[частичная сборка] {len(a.only.split(','))} кадров → "
+              f"{vykhod.name}; выпуск {OUT.name} НЕ ТРОНУТ")
+    rnd.verify_built(vykhod, partial=bool(a.only))
+    report.report(n, vykhod.name)
+    rnd.verify_links(vykhod)
+    if a.render:
+        rnd.render(vykhod, SNAPS)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

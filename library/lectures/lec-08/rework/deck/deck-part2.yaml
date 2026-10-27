@@ -1,0 +1,187 @@
+# library/lectures/lec-08/rework/deck/deck-part2.yaml  --  часть 2 из 2
+#
+# Служебный манифест деки Лекции 8 «Узнавание стоило доверия бесплатно -- сколько оно
+# стоит теперь». Issue #289 · ветка issue-289-lec-08-rework.
+#
+# Продолжение `deck.yaml`. Устройство и правило чтения полей -- в части 1;
+# здесь записи кадров плюс сводка `totals`.
+
+slides:
+
+  # ─── 4. Счёт: права, рынок и критерии отказа · 16 кадров · 23.60 мин ───
+  - id: s52
+    local_id: "s52"
+    file: slides/s52-schet-kto-platit-divider.md
+    type: divider
+    title: "4. Счёт: кто платит за подделываемое узнавание"
+    chapter_ref: "chapter-part3.md §4.1 (дивайдер слитого раздела -- framing-проза трёх старых дивайдеров 4/5/6 перераспределена в заметки)"
+    timing_min: 0.5
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s53
+    local_id: "s53"
+    file: slides/s53-klassika-tri-sposoba-i-iskluchenie-golosa.md
+    type: norm
+    title: "Классика: три способа купить право — и исключение голоса"
+    chapter_ref: "chapter-part3.md §4.1 (перечень трёх способов купить право + клиринг прав/E&O) + §4.2 (голос и внешность -- исключение)"
+    timing_min: 1.9
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+  - id: s54
+    local_id: "s54"
+    file: slides/s54-getty-stability-storony-i-schyot.md
+    type: case
+    title: "Getty против Stability AI: заплатить за лицензию заранее — или рискнуть судом"
+    chapter_ref: "chapter-part3b.md §4.4 Шаг 1 + Шаг 2 (Getty против Stability AI, Великобритания -- стороны и счёт) + chapter-part3.md §4.3 целиком + разбор Adobe Firefly (вопрос-чат снят)"
+    timing_min: 1.9
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s55
+    local_id: "s55"
+    file: slides/s55-chto-reshil-sud.md
+    type: case
+    title: "Что решил суд — и почему это не «разрешил красть»"
+    chapter_ref: "chapter-part3b.md §4.4 Шаг 3, элементы 1-2 (что решил суд) + оговорка memorization/Carlini 2023 + отсутствие fair use в праве Великобритании + Шаг 3, элемент 3 (ни победа, ни поражение не полные) + параллельная ветвь в США"
+    timing_min: 1.7
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s56
+    local_id: "s56"
+    file: slides/s56-ustroystvo-laion-5b.md
+    type: case
+    title: "Как это устроено: LAION-5B на входе, Stable Diffusion на выходе"
+    chapter_ref: "chapter-part3b.md §4.4 Шаг 4 (устройство: LAION-5B на входе, Stable Diffusion на выходе)"
+    timing_min: 1.0
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s57
+    local_id: "s57"
+    file: slides/s57-skolko-vesit-model.md
+    type: case
+    title: "Сколько весит модель: гигабайты, а не петабайты"
+    chapter_ref: "chapter-part3b.md §4.4 (вес модели -- v4: вопрос-предсказание и вскрытие слиты в один кадр, байт/изображение по трём базам)"
+    timing_min: 1.4
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s58
+    local_id: "s58"
+    file: slides/s58-chto-pereekhalo-proverka-proiskhozhdeniya.md
+    type: comparison
+    title: "Что переехало: проверка происхождения — с договора на суд"
+    chapter_ref: "chapter-part3b.md §4.4 Шаг 5 (что переехало -- риск с рынка в суд) + chapter-part3c.md §4.6 (второй разрыв «3-4 порядка», на стороне оплаты прав)"
+    timing_min: 1.2
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s59
+    local_id: "s59"
+    file: slides/s59-nyt-i-riaa-reshenia-net.md
+    type: comparison
+    title: "NYT против OpenAI и иски лейблов: решений нет, ставки уже есть"
+    chapter_ref: "chapter-part3c.md §4.5 (NYT против OpenAI, сжато -- self-study: EU TDM, спор о 20 млн логов, пошаговая хронология исков, полная матрица RIAA)"
+    timing_min: 1.3
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
+  - id: s60
+    local_id: "s60"
+    file: slides/s60-lada-chizhova-obval-i-god-spustya.md
+    type: case
+    title: "Лада Чижова: обвал дохода — и год спустя доход без ремесла"
+    chapter_ref: "chapter-part4.md §5.1 (self-study: карьерная механика до модели одной строкой) + Чижова, обвал дохода + Чижова, год спустя"
+    timing_min: 1.8
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s61
+    local_id: "s61"
+    file: slides/s61-frilans-birzhi-rost-i-probel.md
+    type: norm
+    title: "Фриланс-биржи: рост ИИ-навыков измерен, падение — честный пробел"
+    chapter_ref: "chapter-part4.md §5.2 (Upwork/Fiverr -- измеренный рост ИИ-навыков + честно неизмеренный упадок, BLS -2% за десятилетие)"
+    timing_min: 1.3
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
+  - id: s62
+    local_id: "s62"
+    file: slides/s62-getty-stavka-na-sliyanie-i-bankrotstvo.md
+    type: case
+    title: "Getty Images: ставка на слияние — и банкротство"
+    chapter_ref: "chapter-part4.md §5.3 (Getty Images/Shutterstock -- цена защитной ставки, что случилось на самом деле, причины банкротства; self-study: M&A-процесс подробно) + §5.4 (три масштаба одной нагрузки, строкой)"
+    timing_min: 1.9
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s63
+    local_id: "s63"
+    file: slides/s63-chetyre-kriterii-otkaza.md
+    type: norm
+    title: "Четыре критерия отказа от генеративной модели"
+    chapter_ref: "chapter-part4a.md §6.1 (критерии отказа 1-4)"
+    timing_min: 2.0
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
+  - id: s64
+    local_id: "s64"
+    file: slides/s64-cheklist-lady-chizhovoy.md
+    type: comparison
+    title: "Чек-лист на Ладе Чижовой: формально пройден, а заказ потерян"
+    chapter_ref: "chapter-part4a.md §6.1 (чек-лист на Ладе Чижовой -- последовательность стоп-сигналов + работает в обе стороны)"
+    timing_min: 1.7
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+  - id: s65
+    local_id: "s65"
+    file: slides/s65-tri-formy-i-poddelyvaemoe-uznavanie.md
+    type: summary
+    title: "Три формы переезда нагрузки — и одна новая: подделываемое узнавание"
+    chapter_ref: "chapter-part4a.md §6.2 (self-study: развёрнутый словарь форм -- на слайде три формы по строке) + форма третья, подделываемое узнавание, масштаб явления"
+    timing_min: 1.5
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s66
+    local_id: "s66"
+    file: slides/s66-kto-platit-poimenno.md
+    type: summary
+    title: "Кто платит — поимённо"
+    chapter_ref: "chapter-part4a.md §6.3 (ответ на вопрос лекции поимённо -- кто платит)"
+    timing_min: 1.3
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s67
+    local_id: "s67"
+    file: slides/s67-schet-skvoznoy-linii.md
+    type: summary
+    title: "Разрыв в тысячи раз: где подтвердился, где нет"
+    chapter_ref: "chapter-part4a.md §6.4 (счёт сквозной линии -- измерения 1-4, три-четыре порядка + вывод раздела и мост к закрытию)"
+    timing_min: 1.2
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+
+  # ─── 5. Закрытие · 4 кадров · 4.00 мин ───
+  - id: s68
+    file: slides/s68-put-zakryt.md
+    type: summary
+    title: "Четыре точки пути — и что в каждой сломалось"
+    chapter_ref: "chapter-part5.md §7.1"
+    timing_min: 1.2
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s69
+    file: slides/s69-dolg-vpered-lekciya-14.md
+    type: comparison
+    title: "Один и тот же синтез — разный адрес в Лекции 14"
+    chapter_ref: "chapter-part5.md §7.2"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
+  - id: s70
+    file: slides/s70-zarabotannoe-utverzhdenie.md
+    type: summary
+    title: "Что это утверждение не говорит — и что остаётся инженеру"
+    chapter_ref: "chapter-part5.md §7.3"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s71
+    file: slides/s71-voprosy.md
+    type: question
+    title: "Три проверки — и вопрос в зал"
+    chapter_ref: "chapter-part5.md §7.3 (продолжение -- вопросы в зал; собственного нового содержания главы не несёт, см. также \"Вопросы и ответы для самопроверки\" в chapter-part5.md)"
+    timing_min: 0.8
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
+
+totals:
+  slides: 71
+  timing_min: 80.70               # сложено по файлам кадров; курс пока не зафиксировал плановый слот-бюджет для Лекции 8 (нет аналога CUT-ORDER.md Лекции 7) -- счёт честный по арифметике, без подгонки под ожидаемое число
+  timing_missing: 0
+  plus_qa_min: 90.70               # + 10 минут вопросов, условно (как в других отраслевых лекциях курса)
+  strict_in_min: 43.20
+  strict_in_share: "53.5%"      # порог курса 30%; счёт по минутам, partial → out
+  vfy_slides: 46                 # кадров с числом под пересверку в день лекции
+  by_status:
+    "собран": 71
+  media:
+    wired: 36
+    needs_media: 28
+    no_decision: 7
+  chapter_ref_coverage:
+    mapped: 71
+    unmapped: 0

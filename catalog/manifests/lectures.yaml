@@ -96,7 +96,9 @@ lectures:
     learning_outcomes: [LO1, LO2, LO4, LO5]
     repo_dir: lec-08
     status: produced
-    updated_at: "2026-05-21"
+    issue: 289
+    updated_at: "2026-10-26"
+    repo_title_note: "v4 перестройка (issue #289): 71 слайд (было 76) — добавлен R-блок про устройство распознавания, слит латент-кадр, слиты разделы 4-6 в единый «Счёт: права, рынок и критерии отказа»; финализация путей 2026-10-26, см. library/lectures/lec-08/rework/deck/iteration-log-part2.md"
 
   - number: 9
     title: "AI в авиакосмической отрасли и оборонном комплексе"

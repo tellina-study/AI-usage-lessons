@@ -173,6 +173,43 @@ def main():
             break
     print()
 
+    # ── 8. Ссылки обязаны быть ссылками ──────────────────────────────────────
+    # Правило формы подачи: источник на кадре и каждый URL в заметках — живая
+    # гиперссылка (run.hyperlink.address). Проверяется по r:id в XML, потому
+    # что покрашенный синим текст выглядит на снимке точно так же.
+    print("── ГИПЕРССЫЛКИ")
+    import zipfile
+    with zipfile.ZipFile(path) as z:
+        slide_xml = [n for n in z.namelist()
+                     if re.match(r"ppt/slides/slide\d+\.xml$", n)]
+        with_link = 0
+        for n in slide_xml:
+            if b"r:id" in z.read(n) and b"hlinkClick" in z.read(n):
+                with_link += 1
+    # Сравнивать надо с числом кадров, ГДЕ АДРЕС ВООБЩЕ ЕСТЬ: источник,
+    # названный именем издания без адреса, правилом разрешён, и считать его
+    # нарушением значило бы требовать выдумать 88 ссылок.
+    src_dir = Path(sys.argv[2]) if len(sys.argv) > 2 else None
+    declared = None
+    if src_dir and src_dir.is_dir():
+        declared = sum(1 for f in src_dir.glob("s*.md")
+                       if re.search(r"^source:.*https?://", f.read_text(), re.M))
+    if declared is None:
+        print(f"   кадров с живой гиперссылкой: {with_link} из {len(slide_xml)}")
+        print("   (передай вторым доводом каталог slides/, чтобы сверить с объявленными)")
+    else:
+        mark = "сходится" if with_link == declared else "← РАСХОЖДЕНИЕ"
+        print(f"   адрес объявлен на {declared} кадрах, живая ссылка на {with_link} — {mark}")
+    # текст, похожий на адрес, но без ссылки рядом — ловим глазами по выдаче
+    plain = []
+    for num, visible, notes in frames:
+        for m in re.finditer(r"https?://\S+|\b[a-z0-9-]+\.(ru|com|org|net|io)\b", visible):
+            plain.append((num, m.group(0)))
+    print(f"   адресов в видимом теле кадра (должны быть в подвале): {len(plain)}")
+    for num, a in plain[:20]:
+        print(f"   s{num:02d}: {a}")
+    print()
+
     print(f"ИТОГО блокирующих совпадений: {blocking_total}")
     return 1 if blocking_total else 0
 

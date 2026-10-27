@@ -35,8 +35,12 @@ def read_norms():
 def load():
     out = {}
     for f in sorted(SLIDES.glob("s*.md")):
-        m = re.match(r"s(\d{2})-", f.name)
+        # Кадр может быть разделён на два: s14 → s14 + s14a. Буквенный хвост
+        # обязан попадать в сверку, иначе она покажет ложную чистоту ровно на
+        # тех кадрах, которые правились последними.
+        m = re.match(r"s(\d{2})([a-z]?)-", f.name)
         if not m:
+            print(f"ПРОПУЩЕН не по шаблону: {f.name}")
             continue
         text = f.read_text()
         fm = text.split("---", 2)
@@ -48,7 +52,7 @@ def load():
         except Exception as e:
             print(f"ОШИБКА {f.name}: frontmatter не разбирается — {e}")
             continue
-        out[int(m.group(1))] = (f.name, data, text)
+        out[(int(m.group(1)), m.group(2))] = (f.name, data, text)
     return out
 
 
@@ -56,10 +60,11 @@ def main():
     SECTIONS = read_norms()
     frames = load()
     nums = sorted(frames)
-    print(f"Файлов кадров: {len(frames)}")
+    print(f"Файлов кадров: {len(frames)} (из них разделённых: {sum(1 for _, suf in nums if suf)})")
 
-    missing = [n for n in range(1, 98) if n not in frames]
-    extra = [n for n in nums if n > 97]
+    base = {n for n, suf in nums}
+    missing = [n for n in range(1, 98) if n not in base]
+    extra = [n for n, suf in nums if n > 97]
     if missing:
         print(f"ПРОПУЩЕНЫ номера: {missing}")
     if extra:
@@ -114,16 +119,18 @@ def main():
             if missing_rows:
                 row_defects.append((n, missing_rows))
     refren = sum(1 for n in nums if "токенизатор" in frames[n][2].lower())
-    print(f"\nКарта вечера предъявлена: {len(karta_frames)} раз (норма 6) — кадры {karta_frames}")
+    pretty = [f"s{n:02d}{suf}" for n, suf in karta_frames]
+    print(f"\nКарта вечера предъявлена: {len(karta_frames)} раз (норма 6) — {pretty}")
     for n, miss in row_defects:
-        print(f"   s{n:02d}: подписи строк неполны, нет — {miss}")
+        print(f"   s{n[0]:02d}{n[1]}: подписи строк неполны, нет — {miss}")
     print(f"Рефрен про токенизатор: {refren} кадров (норма ≥4)")
 
     # внутренние имена файлов в source — дефект 1
     leak = [n for n in nums if re.search(
         r"chapter[-\w]*\.md|PLAN-[0-9]|REESTR|DECK-KARTA|BRIEF-DEKA|research/R[0-9]",
         str(frames[n][1].get("source", "")))]
-    print(f"\nsource с внутренним именем файла: {len(leak)} кадров {leak if leak else ''}")
+    pl = [f"s{n:02d}{suf}" for n, suf in leak]
+    print(f"\nsource с внутренним именем файла: {len(leak)} кадров {pl if pl else ''}")
 
     return 0 if ok and not missing and not leak \
         and len(karta_frames) == 6 and not row_defects else 1

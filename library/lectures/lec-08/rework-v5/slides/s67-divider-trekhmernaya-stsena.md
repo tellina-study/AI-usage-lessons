@@ -10,8 +10,9 @@ section: "4. Трёхмерная сцена и реальное время"
 type: section_divider
 title: "Раздел 4. Трёхмерная сцена и реальное время"
 assertion: "Четвёртая модальность вечера — самая дорогая по единице выхода: плоский кадр обязан быть убедителен с одной точки зрения, кадр видео — с одной точки и на протяжении нескольких секунд, а трёхмерный объект верен со всех сторон сразу и во всех позах, включая те, в которые его поставят через полгода другие люди для другой сцены; требование полноты со всех сторон и переводит цену единицы на порядок вверх"
-source: "chapter-part3.md §§ 4.1–4.7; chapter-part3b.md §§ 4.8–4.14"
-media: "rework-v5/assets/screenshots/s67-sphere-vegas.jpg"
+source: ""
+chapter_ref: "chapter-part3.md §§ 4.1–4.7; chapter-part3b.md §§ 4.8–4.14"
+media: "assets/screenshots/s67-sphere-vegas.jpg"
 media_needed: ""
 media_note: "Wikimedia Commons, File:The Las Vegas Sphere, Nevada (53349695459).jpg, CC BY-SA 2.0, автор Harold Litwiler, съёмка 2023. Ступень 2 (Викисклад, прямая загрузка через upload.wikimedia.org с заголовками User-Agent и Referer). Нижние 48 пикселей срезаны: на них стоял видимый знак авторства. Подписи источника на кадре нет — провенанс здесь и в images-log.md"
 blocks:

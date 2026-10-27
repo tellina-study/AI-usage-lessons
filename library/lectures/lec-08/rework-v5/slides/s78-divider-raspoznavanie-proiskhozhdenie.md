@@ -7,8 +7,9 @@ section: "5. Распознавание и происхождение"
 type: section_divider
 title: "Раздел 5. Распознавание и происхождение"
 assertion: "Четыре предыдущих раздела разбирали модель, которая порождает; этот разбирает модель, которая читает — архитектура у них общая, зачастую буквально те же веса, а задача обратная, и из этой обратности следует всё остальное: другая экономика, другая проверяемость, другие границы"
-source: "chapter-part3d.md §§ 5.1–5.6; chapter-part3e.md §§ 5.9–5.20"
-media: "rework-v5/assets/screenshots/s78-herculaneum-papyrus-1521.jpg"
+source: ""
+chapter_ref: "chapter-part3d.md §§ 5.1–5.6; chapter-part3e.md §§ 5.9–5.20"
+media: "assets/screenshots/s78-herculaneum-papyrus-1521.jpg"
 media_needed: ""
 media_note: "Wikimedia Commons, File:Heruclaneum Papyrus 1521 f002r, British Library.jpg, общественное достояние. Ступень 2 (Викисклад). Фрагмент геркуланумского папируса из собрания Британской библиотеки — тот самый класс предмета, с которого начнётся первый разбор раздела. Подписи источника на слайде нет"
 blocks:

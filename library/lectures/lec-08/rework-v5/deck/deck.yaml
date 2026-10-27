@@ -15,7 +15,7 @@
 # видимом слое кадра они запрещены (CLAUDE.md § «No Timing / No
 # Methodology in Slides»).
 #
-# СОСТАВ, посчитанный с диска: 97 кадров.
+# СОСТАВ, посчитанный с диска: 125 кадров.
 
 deck:
   lecture_number: 8
@@ -23,7 +23,7 @@ deck:
   version: v5
   language: ru
   status: draft
-  total_slides: 97
+  total_slides: 125
   sum_timing_min: 88.00           # сложено по `timing_min` файлов кадров
   builder: deck/build_lec08_v5.py        # относительно library/lectures/lec-08/rework-v5/
   generator: deck/make_deck_yaml_v5.py
@@ -39,15 +39,15 @@ palette:                         # Ocean Gradient, зафиксирована к
   background: "#FFFFFF"
 
 slide_types:                     # значения поля `type`, с числом кадров
-  analitika:             { count:  42, meaning: "разбор с числами: плашки, столбцы, счёт" }
-  assertion_visual:      { count:  26, meaning: "утверждение, предъявленное формой" }
+  analitika:             { count:  57, meaning: "разбор с числами: плашки, столбцы, счёт" }
+  assertion_visual:      { count:  30, meaning: "утверждение, предъявленное формой" }
+  comparison:            { count:  10, meaning: "два столбца «что получается / что не получается»" }
+  schema_architecture:   { count:   6, meaning: "устройство: части и связи" }
   section_divider:       { count:   6, meaning: "дивайдер раздела" }
-  comparison:            { count:   5, meaning: "два столбца «что получается / что не получается»" }
-  schema_architecture:   { count:   5, meaning: "устройство: части и связи" }
   schema_timeline:       { count:   4, meaning: "хронология" }
-  schema_layered:        { count:   2, meaning: "слои, вложенные друг в друга" }
-  schema_matrix:         { count:   2, meaning: "сетка: строки против колонок" }
-  schema_pipeline:       { count:   2, meaning: "порядок работы" }
+  schema_layered:        { count:   3, meaning: "слои, вложенные друг в друга" }
+  schema_matrix:         { count:   3, meaning: "сетка: строки против колонок" }
+  schema_pipeline:       { count:   3, meaning: "порядок работы" }
   hero_closing:          { count:   1, meaning: "закрывающий кадр с обязательной иллюстрацией" }
   hero_cover:            { count:   1, meaning: "обложка с обязательной иллюстрацией" }
   live_demo:             { count:   1, meaning: "живой показ" }
@@ -56,17 +56,17 @@ sections:                        # разделы показа, сложено �
   - { name: "0. Вход",
       slides: 7, timing_min: 8.00, range: [s01, s07] }
   - { name: "1. Неподвижное изображение",
-      slides: 25, timing_min: 21.00, range: [s08, s32] }
+      slides: 32, timing_min: 21.00, range: [s08, s32a] }
   - { name: "2. Звук: синтез речи, голос исполнителя и музыка",
       slides: 17, timing_min: 15.00, range: [s33, s49] }
   - { name: "3. Движущееся изображение",
-      slides: 17, timing_min: 18.00, range: [s50, s66] }
+      slides: 21, timing_min: 18.00, range: [s50, s66a] }
   - { name: "4. Трёхмерная сцена и реальное время",
-      slides: 11, timing_min: 10.00, range: [s67, s77] }
+      slides: 19, timing_min: 10.00, range: [s67, s77a] }
   - { name: "5. Распознавание и происхождение",
-      slides: 10, timing_min: 8.00, range: [s78, s87] }
+      slides: 16, timing_min: 8.00, range: [s78, s87a] }
   - { name: "6. Сборка",
-      slides: 7, timing_min: 6.00, range: [s88, s94] }
+      slides: 10, timing_min: 6.00, range: [s88, s94a] }
   - { name: "7. Закрытие",
       slides: 3, timing_min: 2.00, range: [s95, s97] }
 
@@ -119,7 +119,7 @@ slides:
     title: "Чего в этой лекции нет"
     timing_min: 0.50
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
-  # ─── 1. Неподвижное изображение · 25 кадров · 21.00 мин ───
+  # ─── 1. Неподвижное изображение · 32 кадров · 21.00 мин ───
   - id: s08
     file: slides/s08-divayder-nepodvizhnoe-izobrazhenie.md
     type: section_divider
@@ -130,7 +130,6 @@ slides:
     file: slides/s09-chto-eto-za-rabota.md
     type: assertion_visual
     title: "Что это за работа и какое решение она принимает"
-    source: "термины производства: концепт-арт, иллюстрация под задачу, ключевой кадр (key visual)"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s10
@@ -138,8 +137,15 @@ slides:
     type: comparison
     title: "Как это делали без модели: три класса классики"
     source: "Профи.ру, страница цен по выборке 3 848 анкет иллюстраторов Москвы · анализ тысячи профилей Upwork · прейскуранты стоковых агентств · iStock 2000, Shutterstock 2003"
-    timing_min: 1.00
+    timing_min: 0.60
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s10a
+    file: slides/s10a-stok-dve-tseny.md
+    type: comparison
+    title: "Один и тот же сток, две цены за одно изображение"
+    source: "прейскуранты стоковых агентств: розничная лицензия и подписка"
+    timing_min: 0.40
+    marks: { in_bucket: true, status: "собран", media_status: no_decision }
   - id: s11
     file: slides/s11-klassicheskaya-tsepochka.md
     type: schema_timeline
@@ -166,8 +172,14 @@ slides:
     type: analitika
     title: "Разбор: бионическая перегородка Airbus — выигрыш не от обученной модели"
     source: "Autodesk News, «Autodesk and Airbus: generative design in the aerospace factory», 2016 — https://adsknews.autodesk.com/en/news/autodesk-airbus-generative-design-aerospace-factory/"
-    timing_min: 1.30
+    timing_min: 0.80
     marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s14a
+    file: slides/s14a-uslovie-otbora.md
+    type: comparison
+    title: "Условие отбора: уберите обученную модель и посмотрите, что останется"
+    timing_min: 0.50
+    marks: { in_bucket: true, status: "собран", media_status: no_decision }
   - id: s15
     file: slides/s15-chetyre-nablyudeniya.md
     type: assertion_visual
@@ -228,15 +240,20 @@ slides:
     file: slides/s23-adaptery.md
     type: schema_layered
     title: "Адаптеры: три уровня управления поверх одной модели"
-    source: "LoRA · текстовая инверсия (авторам хватило 3–5 изображений концепта) · DreamBooth · ControlNet · IP-Adapter (заявлено качество полного дообучения при 22 млн параметров)"
+    source: "LoRA · текстовая инверсия · DreamBooth · ControlNet · IP-Adapter"
     timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   - id: s24
     file: slides/s24-yazykovaya-protiv-media-modeli.md
     type: analitika
-    title: "Языковая модель против медиа-модели: одиннадцать строк расхождения"
-    source: "сводный кадр технического блока; состав строк — PLAN-02 §5"
-    timing_min: 1.10
+    title: "Языковая модель против медиа-модели: шесть строк расхождения в устройстве"
+    timing_min: 0.60
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s24a
+    file: slides/s24a-yazykovaya-protiv-media-modeli-chast2.md
+    type: analitika
+    title: "Языковая модель против медиа-модели: ещё пять строк — управление, ошибка, провенанс"
+    timing_min: 0.50
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   - id: s25
     file: slides/s25-obuchit-deshevle-zapustit-dorozhe.md
@@ -250,36 +267,55 @@ slides:
     type: assertion_visual
     title: "Чего метод не умеет: текст внутри изображения, анатомия, счёт объектов"
     source: "техническая статья SD3, 2024 (таблица качества восстановления) · наборы задач оценки композиции GenEval и T2I-CompBench++"
-    timing_min: 1.00
+    timing_min: 0.60
+    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+  - id: s26a
+    file: slides/s26a-odno-svoystvo-dve-storony.md
+    type: comparison
+    title: "Одно и то же свойство, прочитанное с двух сторон"
+    source: "техническая статья SD3, 2024 (таблица качества восстановления) · наборы задач оценки композиции GenEval и T2I-CompBench++"
+    timing_min: 0.40
     marks: { in_bucket: true, status: "собран", media_status: no_decision }
   - id: s27
     file: slides/s27-tochnyh-razmerov-net.md
     type: assertion_visual
     title: "Точных размеров нет: генератор не заменяет САПР"
-    source: "следствие устройства, разобранного техническим блоком; связка с разбором бионической перегородки этого же раздела"
     timing_min: 1.00
     marks: { in_bucket: true, status: "собран", media_status: no_decision }
   - id: s28
     file: slides/s28-rag-dlya-kartinok.md
     type: assertion_visual
     title: "«RAG для картинок» — категориальная ошибка"
-    source: "следствие устройства обусловливания, разобранного техническим блоком"
     timing_min: 1.00
     marks: { in_bucket: true, status: "собран", media_status: no_decision }
   - id: s29
     file: slides/s29-chto-stalo-s-prodavtsom-izobrazheniy.md
     type: analitika
     title: "Что стало с продавцом изображений"
-    source: "прейскуранты и страницы цен, перечисленные в начале раздела · отчётность и корпоративные сообщения Getty Images, 2026"
-    timing_min: 0.70
+    source: "отчётность и корпоративные сообщения Getty Images, 2026 · прейскуранты стоковых агентств"
+    timing_min: 0.40
+    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+  - id: s29a
+    file: slides/s29a-manyovr-s-raznitsey-v-dvadtsat-let.md
+    type: comparison
+    title: "Один и тот же манёвр с разницей в двадцать лет"
+    source: "корпоративные сообщения Getty Images, 2006 и 2026"
+    timing_min: 0.30
     marks: { in_bucket: true, status: "собран", media_status: no_decision }
   - id: s30
     file: slides/s30-getty-protiv-stability.md
     type: analitika
     title: "Правовой разбор: Getty против Stability — что суд решил и чего не решил"
     source: "Высокий суд Англии и Уэльса, судья Джоанна Смит, решение 4 ноября 2025 года · разрешение на апелляцию получено в январе 2026; решения апелляционного суда на 27 октября 2026 нет"
-    timing_min: 1.40
+    timing_min: 0.80
     marks: { in_bucket: true, status: "собран", media_status: wired }
+  - id: s30a
+    file: slides/s30a-getty-ekonomika.md
+    type: analitika
+    title: "Getty против Stability: экономика рядом с решением"
+    source: "Высокий суд Англии и Уэльса, решение 4 ноября 2025 года · прейскуранты стоковых агентств · условия лицензионных соглашений лейблов, 29.10.2025 и 25.11.2025"
+    timing_min: 0.60
+    marks: { in_bucket: true, status: "собран", media_status: no_decision }
   - id: s31
     file: slides/s31-chem-obucheno-1-84-bayta.md
     type: analitika
@@ -291,60 +327,63 @@ slides:
     file: slides/s32-vosem-strok-pravovogo-kontura.md
     type: assertion_visual
     title: "Восемь строк правового контура, каждая со статусом"
-    source: "состав и статусы — PLAN-02 §6 и REESTR-RAZBOROV §4.3 (П-1…П-8); формулировки — chapter-part1d.md §1.18"
-    timing_min: 0.70
+    source: "отказ в пересмотре, США, 2 марта 2026 · решение Высокого суда Англии и Уэльса, 4 ноября 2025 · Регламент ЕС об ИИ, применяется со 2 августа 2026 · ФЗ № 243-ФЗ, действует с 01.09.2026"
+    timing_min: 0.40
     marks: { in_bucket: true, status: "собран", media_status: no_decision }
+  - id: s32a
+    file: slides/s32a-karta-izobrazhenie.md
+    type: schema_matrix
+    title: "Карта вечера: заполнена колонка «Изображение»"
+    timing_min: 0.30
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
     karta_vechera: { columns: 1, to_come: 4 }
   # ─── 2. Звук: синтез речи, голос исполнителя и музыка · 17 кадров · 15.00 мин ───
   - id: s33
     file: slides/s33-divider-zvuk.md
     type: section_divider
     title: "Раздел 2. Синтез речи, голос исполнителя и музыка"
-    source: "chapter-part2.md §2.0"
     timing_min: 0.00
     marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s34
     file: slides/s34-odin-golos-dve-zapisi.md
     type: live_demo
     title: "Один голос, две записи. Какая из них настоящая?"
-    source: "chapter-part2.md §2.0, §2.2"
     timing_min: 0.70
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s35
     file: slides/s35-chto-za-rabota-zvuk.md
     type: assertion_visual
     title: "Что это за работа и какое решение она принимает"
-    source: "chapter-part2.md §2.1"
     timing_min: 0.90
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s36
     file: slides/s36-kak-delali-bez-modeli-zvuk.md
     type: comparison
     title: "Как это делали без модели"
-    source: "GVAA Rate Guide, редакция 2026; соглашение SAG-AFTRA о цифровых репликах; chapter-part2.md §2.1(д)"
+    source: "GVAA Rate Guide, редакция 2026; соглашение SAG-AFTRA о цифровых репликах"
     timing_min: 0.80
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s37
     file: slides/s37-golos-pri-bolezni-dvigatelnogo-neyrona.md
     type: analitika
     title: "Разбор: голос человеку, у которого его отнимала болезнь"
-    source: "ElevenLabs Impact Program; Bridging Voice; Scott-Morgan Foundation; chapter-part2.md §2.3"
+    source: "ElevenLabs Impact Program; Bridging Voice; Scott-Morgan Foundation"
     timing_min: 1.20
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s38
     file: slides/s38-dublyazh-i-lokalizatsiya.md
     type: analitika
     title: "Разбор: дубляж и локализация"
-    source: "GVAA Rate Guide 2026; прейскуранты ElevenLabs и Gemini, прочитаны 27.10.2026; chapter-part2.md §2.4"
+    source: "GVAA Rate Guide 2026; прейскуранты ElevenLabs и Gemini, прочитаны 27.10.2026"
     timing_min: 1.00
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s39
     file: slides/s39-vozvrashchennyy-golos-vala-kilmera.md
     type: analitika
     title: "Разбор: возвращённый голос Вэла Килмера"
-    source: "Sonantic (куплена Spotify в 2022); «Топ Ган: Мэверик», 2022; chapter-part2.md §2.5"
+    source: "Sonantic (куплена Spotify в 2022); «Топ Ган: Мэверик», 2022"
     timing_min: 0.90
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s40
     file: slides/s40-shest-nablyudeniy-zvuk.md
     type: assertion_visual
@@ -356,42 +395,41 @@ slides:
     file: slides/s41-neyronnyy-audiokodek.md
     type: schema_architecture
     title: "Нейронный аудиокодек и остаточное квантование"
-    source: "SoundStream; EnCodec; MusicGen; chapter-part2b.md §2.7"
+    source: "SoundStream; EnCodec; MusicGen"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s42
     file: slides/s42-chastota-kadrov-kodeka.md
     type: analitika
     title: "Частота кадров кодека — главный рычаг длины"
-    source: "VibeVoice; Qwen3-TTS; DiffRhythm 2; Stable Audio 2; chapter-part2b.md §2.7"
+    source: "VibeVoice; Qwen3-TTS; DiffRhythm 2; Stable Audio 2"
     timing_min: 1.10
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s43
     file: slides/s43-avtoregressiya-protiv-diffuzii-zvuk.md
     type: analitika
     title: "Авторегрессия против диффузии: измеренный кадр"
-    source: "сравнительный замер Stable Audio 2 и MusicGen-large-stereo; chapter-part2b.md §2.7"
+    source: "сравнительный замер Stable Audio 2 и MusicGen-large-stereo"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s44
     file: slides/s44-klonirovanie-i-razdelenie-istochnikov.md
     type: assertion_visual
     title: "Клонирование голоса и разделение источников — разные инструменты"
-    source: "Spleeter; Demucs; BS-RoFormer; WingNut Films, 2021; chapter-part2b.md §2.6, §2.7"
+    source: "Spleeter; Demucs; BS-RoFormer; WingNut Films, 2021"
     timing_min: 0.90
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s45
     file: slides/s45-net-ponyatiya-ispolnitelya.md
     type: assertion_visual
     title: "У модели нет понятия исполнителя"
-    source: "документация ElevenLabs; F5-TTS; Stable Audio 2; chapter-part2b.md §2.8"
+    source: "документация ElevenLabs; F5-TTS; Stable Audio 2"
     timing_min: 0.80
     marks: { in_bucket: true, status: "собран", media_status: needs_media }
   - id: s46
     file: slides/s46-dlina-vykhoda-zadana-do-zapuska.md
     type: assertion_visual
     title: "Длина выхода задана до запуска: остановиться раньше нельзя"
-    source: "chapter-part2b.md §2.8; §2.7"
     timing_min: 0.70
     marks: { in_bucket: true, status: "собран", media_status: needs_media }
   - id: s47
@@ -400,36 +438,40 @@ slides:
     title: "Право на голос: в Гражданском кодексе России охраны нет"
     source: "законопроект № 718834-8; ELVIS Act (Теннесси); AB 1836 (Калифорния); Союз дикторов России"
     timing_min: 1.10
-    marks: { in_bucket: true, status: "собран", media_status: wired }
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
   - id: s48
     file: slides/s48-delo-andronovoy.md
     type: analitika
     title: "Дело Андроновой: 600 страниц начитки 2019 → голос в чужой рекламе 2022 → иск 6 млн ₽"
-    source: "дело № 2-3580/2024, Савёловский районный суд Москвы, 12.08.2024; Афиша Daily; chapter-part2b.md §2.9"
+    source: "дело № 2-3580/2024, Савёловский районный суд Москвы, 12.08.2024; Афиша Daily"
     timing_min: 1.10
-    marks: { in_bucket: true, status: "собран", media_status: wired }
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
   - id: s49
     file: slides/s49-popravka-k-schetu-trek-40-tsentov.md
     type: analitika
     title: "Поправка к счёту: скачиваемый трек стоит 0,40 $, а не 0,016 $"
-    source: "прейскурант музыкального сервиса, прочитан 27.10.2026; chapter-part2b.md §2.9, §2.11"
+    source: "прейскурант музыкального сервиса, прочитан 27.10.2026"
     timing_min: 0.80
     marks: { in_bucket: true, status: "собран", media_status: needs_media }
     karta_vechera: { columns: 2, to_come: 3 }
-  # ─── 3. Движущееся изображение · 17 кадров · 18.00 мин ───
+  # ─── 3. Движущееся изображение · 21 кадров · 18.00 мин ───
   - id: s50
     file: slides/s50-divider-dvizhushcheesya-izobrazhenie.md
     type: section_divider
     title: "Раздел 3. Движущееся изображение"
-    source: "chapter-part2c.md §3.1"
     timing_min: 0.00
     marks: { in_bucket: false, status: "собран", media_status: wired }
   - id: s51
     file: slides/s51-chto-za-rabota-video.md
     type: assertion_visual
     title: "Что это за работа и какое решение она принимает"
-    source: "chapter-part2c.md §3.1"
-    timing_min: 1.00
+    timing_min: 0.60
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s51a
+    file: slides/s51a-stadii-proizvodstva.md
+    type: comparison
+    title: "Восемь способов получить изображение: семь прежних и один новый"
+    timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s52
     file: slides/s52-kak-delali-bez-modeli-video.md
@@ -437,125 +479,87 @@ slides:
     title: "Как это делали без модели"
     source: "отраслевые прайс-обзоры по российскому рынку; «Ирландец», 2019; Avid Media Composer, 1989; «История игрушек», 1995; StageCraft, 2019"
     timing_min: 1.00
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s53
     file: slides/s53-kitayskie-mikrodramy.md
     type: analitika
     title: "Разбор: китайские микродрамы"
-    source: "Caixin, 01.06.2026; chapter-part2c.md §3.3"
+    source: "Caixin, 01.06.2026"
     timing_min: 1.50
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s54
     file: slides/s54-kalshi-final-nba.md
     type: analitika
     title: "Разбор: Kalshi, финал НБА, июнь 2025"
-    source: "NPR, 23.06.2025; автор работы — Пи-Джей Аккетуро; chapter-part2c.md §3.4"
+    source: "NPR, 23.06.2025; автор работы — Пи-Джей Аккетуро"
     timing_min: 1.30
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s55
     file: slides/s55-coca-cola-holidays-are-coming.md
     type: analitika
     title: "Разбор: Coca-Cola «Holidays Are Coming»"
-    source: "закадровый ролик Coca-Cola о производстве; интервью директора по маркетингу; chapter-part2c.md §3.5"
+    source: "закадровый ролик Coca-Cola о производстве; интервью директора по маркетингу"
     timing_min: 1.50
-    marks: { in_bucket: false, status: "собран", media_status: wired }
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s56
     file: slides/s56-otvet-lyudey-stolko-zhe.md
     type: assertion_visual
     title: "Ответ: людей столько же"
-    source: "chapter-part2c.md §3.5; chapter-part2d.md §3.10"
     timing_min: 0.50
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s57
     file: slides/s57-dve-kontrolnye-tochki-dorogogo-proizvodstva.md
     type: analitika
     title: "Две контрольные точки дорогого производства"
-    source: "Variety, 2023; материалы о производстве «Ирландца»; chapter-part2c.md §3.1(д), chapter-part2d.md §3.6"
+    source: "Variety, 2023; материалы о производстве «Ирландца»"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s58
     file: slides/s58-chetyre-poroga-za-dva-goda.md
     type: schema_timeline
     title: "Четыре порога, пройденных за два года"
-    source: "Variety, 2024; TechCrunch, 18.07.2025; Flawless AI, 09.05.2025; Semafor, 04.02.2026; chapter-part2d.md §3.6"
+    source: "Variety, 2024; TechCrunch, 18.07.2025; Flawless AI, 09.05.2025; Semafor, 04.02.2026"
     timing_min: 0.70
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s59
     file: slides/s59-patchi-prostranstva-vremeni.md
     type: schema_architecture
     title: "Патчи пространства-времени и внимание по пространству-времени"
-    source: "технический отчёт Sora; CogVideoX; chapter-part2d.md §3.7"
-    timing_min: 0.80
+    source: "технический отчёт Sora; CogVideoX"
+    timing_min: 0.50
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s59a
+    file: slides/s59a-tsena-svyazi-mezhdu-kadrami.md
+    type: analitika
+    title: "Цена связи между кадрами: 62,1 млрд пар против 2,01 млрд"
+    source: "технический отчёт Sora; CogVideoX"
+    timing_min: 0.30
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s60
     file: slides/s60-prichinnyy-trekhmernyy-avtokodirovshchik.md
     type: schema_architecture
     title: "Причинный трёхмерный автокодировщик"
-    source: "CogVideoX; HunyuanVideo; Wan 2.1; Movie Gen; LTX-Video; chapter-part2d.md §3.7"
+    source: "CogVideoX; HunyuanVideo; Wan 2.1; Movie Gen; LTX-Video"
     timing_min: 0.70
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s61
     file: slides/s61-arifmetika-sorok-k-odnomu.md
     type: analitika
     title: "Квадратичность на удвоении стороны: арифметика «сорок к одному»"
-    source: "Open-Sora 2.0; прейскурант поставщика видеогенерации; chapter-part2d.md §3.7"
+    source: "Open-Sora 2.0; прейскурант поставщика видеогенерации"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s62
     file: slides/s62-szhatie-rychag-stoimosti.md
     type: analitika
     title: "Сжатие — самый сильный рычаг стоимости"
-    source: "Open-Sora 2.0; chapter-part2d.md §3.7"
+    source: "Open-Sora 2.0"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s63
     file: slides/s63-mezhdu-kadrami-net-obekta.md
-    type: assertion_visual
+    type: schema_architecture
     title: "Между кадрами нет объекта, который «тот же»"
-    source: "технический отчёт Sora; CogVideoX; работы по смещению экспозиции; chapter-part2d.md §3.8"
-    timing_min: 1.50
+    source: "технический отчёт Sora; CogVideoX"
+    timing_min: 0.80
     marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s64
-    file: slides/s64-fizika-vyuchena-kak-korrelyatsiya.md
-    type: analitika
-    title: "Физика выучена как корреляция, и это измерено"
-    source: "Physics-IQ; chapter-part2d.md §3.8"
-    timing_min: 1.50
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s65
-    file: slides/s65-instrument-ischezaet-ranshe.md
-    type: analitika
-    title: "Инструмент исчезает быстрее, чем окупается обучение команды"
-    source: "страница документации поставщика, прочитана 27.10.2026; сообщения о закрытии Sora; chapter-part2d.md §3.9"
-    timing_min: 1.50
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s66
-    file: slides/s66-skrytaya-tsena-otbora.md
-    type: analitika
-    title: "Скрытая цена отбора"
-    source: "«Air Head», апрель 2024; Toys \"R\" Us, июнь 2024; chapter-part2d.md §3.9"
-    timing_min: 1.50
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-    karta_vechera: { columns: 3, to_come: 2 }
-  # ─── 4. Трёхмерная сцена и реальное время · 11 кадров · 10.00 мин ───
-  - id: s67
-    file: slides/s67-divider-trekhmernaya-stsena.md
-    type: section_divider
-    title: "Раздел 4. Трёхмерная сцена и реальное время"
-    source: "chapter-part3.md §§ 4.1–4.7; chapter-part3b.md §§ 4.8–4.14"
-    timing_min: 0.00
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s68
-    file: slides/s68-chto-za-rabota-trekhmernaya.md
-    type: assertion_visual
-    title: "Что это за работа и как её делали без модели"
-    source: "chapter-part3.md §§ 4.1–4.6; Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
-    timing_min: 1.20
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s69
-    file: slides/s69-razbor-oz-v-sphere.md
-    type: analitika
-    title: "Разбор: «Волшебник страны Оз» в Sphere — свыше 90% кадра тронуто"
-    source: "chapter-part3b.md § 4.8; Sphere Entertainment и Warner Bros., заявления о проекте 2025; https://www.thesphere.com/"
-    timing_min: 1.30
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }

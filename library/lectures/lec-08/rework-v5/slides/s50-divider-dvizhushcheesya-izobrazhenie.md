@@ -5,7 +5,8 @@ section: "3. Движущееся изображение"
 type: section_divider
 title: "Раздел 3. Движущееся изображение"
 assertion: "Тот же механизм, что в неподвижном изображении, но на два порядка дороже, и поэтому промышленный масштаб здесь виден невооружённым глазом; три разбора по порядку — китайские микродрамы, Kalshi на финале НБА, Coca-Cola «Holidays Are Coming»"
-source: "chapter-part2c.md §3.1"
+source: ""
+chapter_ref: "chapter-part2c.md §3.1"
 media: "assets/screenshots/s50-film-crew-set.jpg"
 media_note: "съёмочная группа на площадке — классический режим, относительно которого считаются все три разбора раздела. Wikimedia Commons, CC0; провенанс — images-log.md"
 blocks:

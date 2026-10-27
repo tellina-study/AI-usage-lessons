@@ -104,7 +104,8 @@
         2074
       ],
       "amount_glyph_height_px": 49.0,
-      "file": "receipts/resolution/receipt-01-full.png"
+      "file": "receipts/resolution/receipt-01-full.png",
+      "date_glyph_height_px": 23.0
     },
     {
       "name": "half",
@@ -114,7 +115,8 @@
         1037
       ],
       "amount_glyph_height_px": 24.5,
-      "file": "receipts/resolution/receipt-01-half.png"
+      "file": "receipts/resolution/receipt-01-half.png",
+      "date_glyph_height_px": 11.5
     },
     {
       "name": "quarter",
@@ -124,7 +126,8 @@
         518
       ],
       "amount_glyph_height_px": 12.2,
-      "file": "receipts/resolution/receipt-01-quarter.png"
+      "file": "receipts/resolution/receipt-01-quarter.png",
+      "date_glyph_height_px": 5.8
     },
     {
       "name": "eighth",
@@ -134,7 +137,8 @@
         259
       ],
       "amount_glyph_height_px": 6.1,
-      "file": "receipts/resolution/receipt-01-eighth.png"
+      "file": "receipts/resolution/receipt-01-eighth.png",
+      "date_glyph_height_px": 2.9
     },
     {
       "name": "sixteenth",
@@ -144,7 +148,8 @@
         129
       ],
       "amount_glyph_height_px": 3.1,
-      "file": "receipts/resolution/receipt-01-sixteenth.png"
+      "file": "receipts/resolution/receipt-01-sixteenth.png",
+      "date_glyph_height_px": 1.4
     },
     {
       "name": "thirtysecond",
@@ -154,7 +159,8 @@
         64
       ],
       "amount_glyph_height_px": 1.5,
-      "file": "receipts/resolution/receipt-01-thirtysecond.png"
+      "file": "receipts/resolution/receipt-01-thirtysecond.png",
+      "date_glyph_height_px": 0.7
     }
   ]
 }

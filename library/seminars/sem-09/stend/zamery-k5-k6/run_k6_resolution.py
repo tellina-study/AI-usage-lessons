@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 """Замер 4.1 — Кейс 6: сжатие/разрешение против точности чтения. Одна и та же состаренная
-квитанция (`receipt-01`) в 4 разрешениях (`receipts/resolution/receipt-01-{full,half,
-quarter,eighth}.png`) — по 5 вызовов на разрешение через `С9 · замер K6 — чтение
-фотографии квитанции` (`s9-m6-read`). Мерит: на каком разрешении падает точность суммы,
-ломаются ли цифры раньше букв (сумма против даты), высота символа суммы на каждом
-разрешении (геометрия ресайза, см. `generate_receipts.py` / `receipts-manifest.json`).
+квитанция (`receipt-01`) в шести разрешениях (`receipts/resolution/receipt-01-{full,half,
+quarter,eighth,sixteenth,thirtysecond}.png`) — по 5 живых вызовов на разрешение через
+`С9 · замер K6 — чтение фотографии квитанции` (`s9-m6-read`). Мерит: на каком разрешении
+падает точность суммы, ломаются ли цифры раньше букв (сумма против даты), высота символа
+суммы на каждом разрешении (геометрия ресайза, см. `generate_receipts.py` /
+`receipts-manifest.json`).
 
-Первый вызов на `eighth` уже сделан при проверке монтажа воркфлоу (без фиксированного
-execution id — вебхук синхронный, ответ пришёл напрямую в теле HTTP-ответа) — он
-переиспользуется как повтор №1 той серии, не повторяется вхолостую.
+**Честное переизмерение 2026-10-27 (issue #299) — протечка промта.** Промт `k6_read()`
+в `sborka.py` до этой правки содержал РЕАЛЬНУЮ сумму `receipt-01` (`например 18990.00`)
+как «пример формата» — модели не нужно было читать фотографию, достаточно было
+скопировать число из собственной инструкции. Это полностью объясняло 100% точность
+суммы даже на разрешениях, где глазом не видно ни одной цифры. Промт исправлен (число-
+пример убрано), и ВСЕ 30 вызовов этого файла — свежие, ни один ответ не переиспользован
+из предыдущей (протекавшей) эпохи измерения. Старый результат архивирован как
+`results-k6-resolution-PROTECHKA-2026-10-27.json` — исторический артефакт протечки, не
+источник действующих чисел (см. README «Протечка промта обнаружена и исправлена»).
 
 Usage: N8N_API_URL=... N8N_API_KEY=... python3 run_k6_resolution.py
 """
@@ -32,18 +39,11 @@ RES_INFO = {r["name"]: r for r in manifest["resolution_variants"]}
 
 RESOLUTIONS = ["full", "half", "quarter", "eighth", "sixteenth", "thirtysecond"]
 N_PER_RES = {"full": 5, "half": 5, "quarter": 5, "eighth": 5,
-             "sixteenth": 3, "thirtysecond": 3}
-# sixteenth/thirtysecond добавлены ПОСЛЕ первого прогона (eighth не нашёл точку излома
-# суммы — все 5/5 верны даже на 6,1px) и прогнаны МЕНЬШИМ числом повторов (3, не 5), чтобы
-# не вылезти за потолок вызовов задания; см. README «Методическое отклонение от плана».
-
-# Уже реально отправленный вызов при проверке монтажа (см. README «Методическое
-# упрощение») — ответ модели для него записан буквально, не выдуман, читается из того же
-# прогона, но заново не отправляется.
-WIRING_CHECK_RESPONSE = {
-    "id": "gen-1792900488-ZNVtv873MvWdADVP9C3J",
-    "content": '{"sum_rub": 18990.00, "date": "12.04.2024", "raw_text_seen": "18 990,00 ₽"}',
-}
+             "sixteenth": 5, "thirtysecond": 5}
+# Единые 5 повторов на все шесть разрешений (честное переизмерение 2026-10-27, issue
+# #299) — прежняя асимметрия 5/5/5/5/3/3 была следствием бюджета ПРЕДЫДУЩЕЙ (протекавшей)
+# сессии измерения и закрывалась отдельным добором (`run_k6_resolution_topup.py`); раз всё
+# равно переизмеряем с нуля из-за протечки промта, нет смысла повторять это в два захода.
 
 
 def parse_model_json(content):
@@ -89,33 +89,21 @@ def evaluate(entry):
 def main():
     api_url, api_key = common.env_or_die()
     out_path = HERE / "results-k6-resolution.json"
+    # Честное переизмерение 2026-10-27 (issue #299, протечка промта исправлена) — ВСЕ
+    # шесть разрешений прогоняются заново живыми вызовами; старый (протекавший) файл
+    # результатов архивирован отдельно (`results-k6-resolution-PROTECHKA-2026-10-27.json`,
+    # см. README) и НЕ читается как кэш — сюда намеренно не возвращена логика
+    # «уже прогнано ранее, пропускаю»: любой кэш из протекавшей эпохи был бы недействителен.
     all_results = {}
-    if out_path.exists():
-        # Повторный запуск ПОСЛЕ расширения RESOLUTIONS (sixteenth/thirtysecond) — уже
-        # прогнанные разрешения (full/half/quarter/eighth) не повторяются вхолостую, их
-        # записи читаются из прошлого файла результатов.
-        prev = json.loads(out_path.read_text(encoding="utf-8"))
-        all_results = prev.get("by_resolution", {})
 
     for res_name in RESOLUTIONS:
-        if res_name in all_results:
-            print(f"\n=== {res_name} — уже прогнано ранее, пропускаю ===")
-            continue
         info = RES_INFO[res_name]
         n_for_this = N_PER_RES[res_name]
         print(f"\n=== {res_name} ({info['size'][0]}x{info['size'][1]}, "
               f"высота цифры суммы ~{info['amount_glyph_height_px']}px) ===")
         entries = []
         for i in range(1, n_for_this + 1):
-            if res_name == "eighth" and i == 1:
-                parsed, parse_err = parse_model_json(WIRING_CHECK_RESPONSE["content"])
-                entry = {"ok": True, "execution_id": "675",
-                          "raw_content": WIRING_CHECK_RESPONSE["content"],
-                          "parsed": parsed, "parse_error": parse_err, "usage": {},
-                          "reused_from_wiring_check": True}
-            else:
-                entry = call_once(res_name, api_url, api_key)
-                entry["reused_from_wiring_check"] = False
+            entry = call_once(res_name, api_url, api_key)
             if entry["ok"]:
                 entry = evaluate(entry)
                 print(f"  #{i} exec={entry.get('execution_id')} sum={entry['parsed'].get('sum_rub') if entry['parsed'] else None} "

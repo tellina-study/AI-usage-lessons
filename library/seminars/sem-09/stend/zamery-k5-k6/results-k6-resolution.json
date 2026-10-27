@@ -11,19 +11,19 @@
       "entries": [
         {
           "ok": true,
-          "execution_id": "738",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1075",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 3673,
-            "completion_tokens": 50,
-            "total_tokens": 3723,
-            "cost": 0.00095575,
+            "prompt_tokens": 3660,
+            "completion_tokens": 47,
+            "total_tokens": 3707,
+            "cost": 0.00095025,
             "is_byok": false,
             "prompt_tokens_details": {
               "cached_tokens": 0,
@@ -32,9 +32,9 @@
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00095575,
-              "upstream_inference_prompt_cost": 0.00091825,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00095025,
+              "upstream_inference_prompt_cost": 0.000915,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -42,36 +42,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "741",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1076",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 3673,
-            "completion_tokens": 50,
-            "total_tokens": 3723,
-            "cost": 0.00047943,
+            "prompt_tokens": 3660,
+            "completion_tokens": 47,
+            "total_tokens": 3707,
+            "cost": 0.00047601,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 3664,
+              "cached_tokens": 3648,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00047943,
-              "upstream_inference_prompt_cost": 0.00044193,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00047601,
+              "upstream_inference_prompt_cost": 0.00044076,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -79,36 +78,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "742",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1077",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 3673,
-            "completion_tokens": 50,
-            "total_tokens": 3723,
-            "cost": 0.00047943,
+            "prompt_tokens": 3660,
+            "completion_tokens": 47,
+            "total_tokens": 3707,
+            "cost": 0.00095025,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 3664,
+              "cached_tokens": 0,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00047943,
-              "upstream_inference_prompt_cost": 0.00044193,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00095025,
+              "upstream_inference_prompt_cost": 0.000915,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -116,36 +114,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "743",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1078",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 3673,
-            "completion_tokens": 50,
-            "total_tokens": 3723,
-            "cost": 0.00047943,
+            "prompt_tokens": 3660,
+            "completion_tokens": 47,
+            "total_tokens": 3707,
+            "cost": 0.00047601,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 3664,
+              "cached_tokens": 3648,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00047943,
-              "upstream_inference_prompt_cost": 0.00044193,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00047601,
+              "upstream_inference_prompt_cost": 0.00044076,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -153,36 +150,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "745",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1079",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 3673,
-            "completion_tokens": 50,
-            "total_tokens": 3723,
-            "cost": 0.00047943,
+            "prompt_tokens": 3660,
+            "completion_tokens": 47,
+            "total_tokens": 3707,
+            "cost": 0.00095025,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 3664,
+              "cached_tokens": 0,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00047943,
-              "upstream_inference_prompt_cost": 0.00044193,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00095025,
+              "upstream_inference_prompt_cost": 0.000915,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -190,7 +186,6 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         }
@@ -208,19 +203,55 @@
       "entries": [
         {
           "ok": true,
-          "execution_id": "746",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1080",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 1092,
-            "completion_tokens": 50,
-            "total_tokens": 1142,
-            "cost": 0.00028346,
+            "prompt_tokens": 1079,
+            "completion_tokens": 47,
+            "total_tokens": 1126,
+            "cost": 0.000305,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000305,
+              "upstream_inference_prompt_cost": 0.00026975,
+              "upstream_inference_completions_cost": 3.525e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "sum_correct": true,
+          "date_correct": true
+        },
+        {
+          "ok": true,
+          "execution_id": "1081",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 18990,
+            "date": "12.09.2026",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 1079,
+            "completion_tokens": 47,
+            "total_tokens": 1126,
+            "cost": 0.00027796,
             "is_byok": false,
             "prompt_tokens_details": {
               "cached_tokens": 208,
@@ -229,9 +260,9 @@
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00028346,
-              "upstream_inference_prompt_cost": 0.00024596,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00027796,
+              "upstream_inference_prompt_cost": 0.00024271,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -239,36 +270,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "748",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1082",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 1092,
-            "completion_tokens": 50,
-            "total_tokens": 1142,
-            "cost": 0.00016906,
+            "prompt_tokens": 1079,
+            "completion_tokens": 47,
+            "total_tokens": 1126,
+            "cost": 0.00016564,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 1088,
+              "cached_tokens": 1072,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00016906,
-              "upstream_inference_prompt_cost": 0.00013156,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00016564,
+              "upstream_inference_prompt_cost": 0.00013039,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -276,36 +306,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "749",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1083",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 1092,
-            "completion_tokens": 50,
-            "total_tokens": 1142,
-            "cost": 0.00016906,
+            "prompt_tokens": 1079,
+            "completion_tokens": 47,
+            "total_tokens": 1126,
+            "cost": 0.00027796,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 1088,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00016906,
-              "upstream_inference_prompt_cost": 0.00013156,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00027796,
+              "upstream_inference_prompt_cost": 0.00024271,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -313,36 +342,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "750",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1084",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 1092,
-            "completion_tokens": 50,
-            "total_tokens": 1142,
-            "cost": 0.00016906,
+            "prompt_tokens": 1079,
+            "completion_tokens": 47,
+            "total_tokens": 1126,
+            "cost": 0.00016564,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 1088,
+              "cached_tokens": 1072,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00016906,
-              "upstream_inference_prompt_cost": 0.00013156,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00016564,
+              "upstream_inference_prompt_cost": 0.00013039,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -350,44 +378,6 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "sum_correct": true,
-          "date_correct": true
-        },
-        {
-          "ok": true,
-          "execution_id": "751",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
-          "parsed": {
-            "sum_rub": 18990.0,
-            "date": "12.09.2026",
-            "raw_text_seen": "18 990,00 ₽"
-          },
-          "parse_error": null,
-          "usage": {
-            "prompt_tokens": 1092,
-            "completion_tokens": 50,
-            "total_tokens": 1142,
-            "cost": 0.00016906,
-            "is_byok": false,
-            "prompt_tokens_details": {
-              "cached_tokens": 1088,
-              "cache_write_tokens": 0,
-              "audio_tokens": 0,
-              "video_tokens": 0
-            },
-            "cost_details": {
-              "upstream_inference_cost": 0.00016906,
-              "upstream_inference_prompt_cost": 0.00013156,
-              "upstream_inference_completions_cost": 3.75e-05
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "image_tokens": 0,
-              "audio_tokens": 0
-            }
-          },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         }
@@ -405,19 +395,19 @@
       "entries": [
         {
           "ok": true,
-          "execution_id": "752",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1085",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 436,
-            "completion_tokens": 50,
-            "total_tokens": 486,
-            "cost": 0.00011946,
+            "prompt_tokens": 423,
+            "completion_tokens": 47,
+            "total_tokens": 470,
+            "cost": 0.00011396,
             "is_byok": false,
             "prompt_tokens_details": {
               "cached_tokens": 208,
@@ -426,9 +416,9 @@
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.00011946,
-              "upstream_inference_prompt_cost": 8.196e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00011396,
+              "upstream_inference_prompt_cost": 7.871e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -436,36 +426,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "753",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1086",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 436,
-            "completion_tokens": 50,
-            "total_tokens": 486,
-            "cost": 9.034e-05,
+            "prompt_tokens": 423,
+            "completion_tokens": 47,
+            "total_tokens": 470,
+            "cost": 0.00011396,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 432,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 9.034e-05,
-              "upstream_inference_prompt_cost": 5.284e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00011396,
+              "upstream_inference_prompt_cost": 7.871e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -473,36 +462,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "754",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1087",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 436,
-            "completion_tokens": 50,
-            "total_tokens": 486,
-            "cost": 9.034e-05,
+            "prompt_tokens": 423,
+            "completion_tokens": 47,
+            "total_tokens": 470,
+            "cost": 8.692e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 432,
+              "cached_tokens": 416,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 9.034e-05,
-              "upstream_inference_prompt_cost": 5.284e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 8.692e-05,
+              "upstream_inference_prompt_cost": 5.167e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -510,36 +498,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "755",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1088",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 436,
-            "completion_tokens": 50,
-            "total_tokens": 486,
-            "cost": 9.034e-05,
+            "prompt_tokens": 423,
+            "completion_tokens": 47,
+            "total_tokens": 470,
+            "cost": 0.00011396,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 432,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 9.034e-05,
-              "upstream_inference_prompt_cost": 5.284e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 0.00011396,
+              "upstream_inference_prompt_cost": 7.871e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -547,36 +534,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         },
         {
           "ok": true,
-          "execution_id": "756",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1089",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.09.2026\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.09.2026",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 436,
-            "completion_tokens": 50,
-            "total_tokens": 486,
-            "cost": 9.034e-05,
+            "prompt_tokens": 423,
+            "completion_tokens": 47,
+            "total_tokens": 470,
+            "cost": 8.692e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 432,
+              "cached_tokens": 416,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 9.034e-05,
-              "upstream_inference_prompt_cost": 5.284e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 8.692e-05,
+              "upstream_inference_prompt_cost": 5.167e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -584,7 +570,6 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": true
         }
@@ -602,34 +587,19 @@
       "entries": [
         {
           "ok": true,
-          "execution_id": "675",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1090",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "12.04.2024",
-            "raw_text_seen": "18 990,00 ₽"
-          },
-          "parse_error": null,
-          "usage": {},
-          "reused_from_wiring_check": true,
-          "sum_correct": true,
-          "date_correct": false
-        },
-        {
-          "ok": true,
-          "execution_id": "757",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
-          "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.04.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 8.546e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.996e-05,
             "is_byok": false,
             "prompt_tokens_details": {
               "cached_tokens": 208,
@@ -638,9 +608,9 @@
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 8.546e-05,
-              "upstream_inference_prompt_cost": 4.796e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.996e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -648,36 +618,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "758",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1091",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.04.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.996e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.996e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -685,36 +654,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "759",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1092",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.04.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.996e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.996e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -722,36 +690,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "760",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1093",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 18990,
             "date": "12.04.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.164e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 272,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.164e-05,
+              "upstream_inference_prompt_cost": 3.639e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -759,7 +726,42 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
+          "sum_correct": true,
+          "date_correct": false
+        },
+        {
+          "ok": true,
+          "execution_id": "1094",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"12.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 18990,
+            "date": "12.04.2024",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.164e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 272,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 7.164e-05,
+              "upstream_inference_prompt_cost": 3.639e-05,
+              "upstream_inference_completions_cost": 3.525e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
           "sum_correct": true,
           "date_correct": false
         }
@@ -777,30 +779,30 @@
       "entries": [
         {
           "ok": true,
-          "execution_id": "773",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"04.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1095",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"18.09.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "04.04.2024",
+            "sum_rub": 18990,
+            "date": "18.09.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 0.0001125,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.996e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 0,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.0001125,
-              "upstream_inference_prompt_cost": 7.5e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.996e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -808,36 +810,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "774",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1096",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"18.09.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "05.04.2024",
+            "sum_rub": 18990,
+            "date": "18.09.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.996e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.996e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -845,36 +846,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "775",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1097",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"18.09.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "05.04.2024",
+            "sum_rub": 18990,
+            "date": "18.09.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.996e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.996e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -882,36 +882,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
           "sum_correct": true,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "1027",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1098",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"18.09.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "05.04.2024",
+            "sum_rub": 18990,
+            "date": "18.09.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 0.0001125,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.164e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 0,
+              "cached_tokens": 272,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.0001125,
-              "upstream_inference_prompt_cost": 7.5e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.164e-05,
+              "upstream_inference_prompt_cost": 3.639e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -919,37 +918,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "topup_call": true,
           "sum_correct": true,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "1029",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"04.04.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1099",
+          "raw_content": "{\"sum_rub\": 18990, \"date\": \"18.09.2024\", \"raw_text_seen\": \"18 990,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "04.04.2024",
+            "sum_rub": 18990,
+            "date": "18.09.2024",
             "raw_text_seen": "18 990,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "cost": 7.164e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 272,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.164e-05,
+              "upstream_inference_prompt_cost": 3.639e-05,
+              "upstream_inference_completions_cost": 3.525e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -957,8 +954,6 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "topup_call": true,
           "sum_correct": true,
           "date_correct": false
         }
@@ -976,19 +971,19 @@
       "entries": [
         {
           "ok": true,
-          "execution_id": "776",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2025\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1100",
+          "raw_content": "{\"sum_rub\": 1600, \"date\": \"05.04.2024\", \"raw_text_seen\": \"1600,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "05.04.2025",
-            "raw_text_seen": "18 990,00 ₽"
+            "sum_rub": 1600,
+            "date": "05.04.2024",
+            "raw_text_seen": "1600,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 8.546e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 44,
+            "total_tokens": 331,
+            "cost": 7.771e-05,
             "is_byok": false,
             "prompt_tokens_details": {
               "cached_tokens": 208,
@@ -997,9 +992,9 @@
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 8.546e-05,
-              "upstream_inference_prompt_cost": 4.796e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.771e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.3e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -1007,36 +1002,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "sum_correct": true,
+          "sum_correct": false,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "778",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2025\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1101",
+          "raw_content": "{\"sum_rub\": 1600, \"date\": \"05.04.2024\", \"raw_text_seen\": \"1600,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "05.04.2025",
-            "raw_text_seen": "18 990,00 ₽"
+            "sum_rub": 1600,
+            "date": "05.04.2024",
+            "raw_text_seen": "1600,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 44,
+            "total_tokens": 331,
+            "cost": 7.771e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.771e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.3e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -1044,36 +1038,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "sum_correct": true,
+          "sum_correct": false,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "780",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2025\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1102",
+          "raw_content": "{\"sum_rub\": 1600, \"date\": \"05.04.2025\", \"raw_text_seen\": \"1600,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
+            "sum_rub": 1600,
             "date": "05.04.2025",
-            "raw_text_seen": "18 990,00 ₽"
+            "raw_text_seen": "1600,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 44,
+            "total_tokens": 331,
+            "cost": 7.771e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 208,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 7.771e-05,
+              "upstream_inference_prompt_cost": 4.471e-05,
+              "upstream_inference_completions_cost": 3.3e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -1081,36 +1074,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "sum_correct": true,
+          "sum_correct": false,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "1030",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2025\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1103",
+          "raw_content": "{\"sum_rub\": 1600, \"date\": \"05.04.2024\", \"raw_text_seen\": \"1600,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "05.04.2025",
-            "raw_text_seen": "18 990,00 ₽"
+            "sum_rub": 1600,
+            "date": "05.04.2024",
+            "raw_text_seen": "1600,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 0.0001125,
+            "prompt_tokens": 287,
+            "completion_tokens": 44,
+            "total_tokens": 331,
+            "cost": 6.939e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 0,
+              "cached_tokens": 272,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 0.0001125,
-              "upstream_inference_prompt_cost": 7.5e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 6.939e-05,
+              "upstream_inference_prompt_cost": 3.639e-05,
+              "upstream_inference_completions_cost": 3.3e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -1118,37 +1110,35 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "topup_call": true,
-          "sum_correct": true,
+          "sum_correct": false,
           "date_correct": false
         },
         {
           "ok": true,
-          "execution_id": "1032",
-          "raw_content": "{\"sum_rub\": 18990.00, \"date\": \"05.04.2025\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "execution_id": "1104",
+          "raw_content": "{\"sum_rub\": 1600, \"date\": \"05.04.2024\", \"raw_text_seen\": \"1600,00 ₽\"}",
           "parsed": {
-            "sum_rub": 18990.0,
-            "date": "05.04.2025",
-            "raw_text_seen": "18 990,00 ₽"
+            "sum_rub": 1600,
+            "date": "05.04.2024",
+            "raw_text_seen": "1600,00 ₽"
           },
           "parse_error": null,
           "usage": {
-            "prompt_tokens": 300,
-            "completion_tokens": 50,
-            "total_tokens": 350,
-            "cost": 7.506e-05,
+            "prompt_tokens": 287,
+            "completion_tokens": 44,
+            "total_tokens": 331,
+            "cost": 6.939e-05,
             "is_byok": false,
             "prompt_tokens_details": {
-              "cached_tokens": 288,
+              "cached_tokens": 272,
               "cache_write_tokens": 0,
               "audio_tokens": 0,
               "video_tokens": 0
             },
             "cost_details": {
-              "upstream_inference_cost": 7.506e-05,
-              "upstream_inference_prompt_cost": 3.756e-05,
-              "upstream_inference_completions_cost": 3.75e-05
+              "upstream_inference_cost": 6.939e-05,
+              "upstream_inference_prompt_cost": 3.639e-05,
+              "upstream_inference_completions_cost": 3.3e-05
             },
             "completion_tokens_details": {
               "reasoning_tokens": 0,
@@ -1156,13 +1146,11 @@
               "audio_tokens": 0
             }
           },
-          "reused_from_wiring_check": false,
-          "topup_call": true,
-          "sum_correct": true,
+          "sum_correct": false,
           "date_correct": false
         }
       ],
-      "n_sum_correct": 5,
+      "n_sum_correct": 0,
       "n_date_correct": 0,
       "n": 5
     }

@@ -233,7 +233,15 @@ COVER_HERO_GOLD_Y = 0.68
 # проставлен не всюду явно — умолчание уводит золото на последнюю плашку с
 # цифрой).
 from dataclasses import replace  # noqa: E402
-PLATES = replace(plates.LEC07, value_key_color=LIGHT)
+# `label_pt`/`note_pt`/`value_lo`/`value_floor` — четыре поля `PlateStyle`,
+# отмеченные в `plates.py` как «пол видимого слоя» (`label_pt`, `note_pt`,
+# `value_floor`) либо как нижняя граница диапазона подбора кегля значения
+# (`value_lo`), которая решает тот же вопрос. Решение владельца 29.10.2026:
+# пол поднят с 12 до 15 — здесь он поднят ровно там, где был прибит
+# константой этого стиля, а не правкой `plates.py`.
+PLATES = replace(plates.LEC07, value_key_color=LIGHT,
+                 label_pt=15.0, note_pt=15.0, value_lo=15.0,
+                 value_floor=15.0)
 
 # Схема: те же числа, что у Лекции 7 — дека использует тот же словарь форм
 # (`tools/presentation-build/trebovaniya-k-soderzhaniyu-forma.md`), и 15
@@ -245,14 +253,19 @@ PLATES = replace(plates.LEC07, value_key_color=LIGHT)
 # «план изменений модели»), как и там.
 tables.CELL_RUNS = True
 
+# `step_lo`/`lab_pt`/`cap_pt` отмечены в `scheme.py` «пол видимого слоя» —
+# подняты с 12 до 15 тем же решением владельца 29.10.2026. `step_hi` —
+# потолок диапазона подбора кегля шага (`lo`…`hi`), в котором `step_lo`
+# теперь и есть пол; потолок поднят с 13,5 до 16, иначе у подбора нет хода
+# вверх выше прежнего предела.
 SCHEME = scheme.SchemeStyle(ai_by_word=False,
-                            step_hi=13.5, step_lo=12.0, step_rows=5,
-                            lab_w=1.55, lab_gap=0.0, lab_pt=12.0,
+                            step_hi=16.0, step_lo=15.0, step_rows=5,
+                            lab_w=1.55, lab_gap=0.0, lab_pt=15.0,
                             step_pad=0.09, step_ls=1.12,
                             box_min_h=0.50, box_extra=0.26,
                             arrow_w=0.20, arrow_h=0.15, gap=0.05,
                             nogap=0.16, row_gap=0.16,
-                            cap_pt=12.0, cap_ls=1.12, cap_gap=0.04)
+                            cap_pt=15.0, cap_ls=1.12, cap_gap=0.04)
 
 # Выноски: модульный умолчательный потолок `max_img_h=6.10"` калиброван НЕ
 # под геометрию этой деки. У `vynoski` нет заголовка внутри формы — она
@@ -268,6 +281,30 @@ SCHEME = scheme.SchemeStyle(ai_by_word=False,
 # на этот случай в `content()` есть отдельный блокирующий `[высота]`,
 # считающий фактический остаток, а не ещё одна константа.
 VYNOSKI = vynoski.VynoskiStyle(max_img_h=5.00)
+
+# ── пол кегля видимого слоя, пять форм круга переноса (#301) ──────────
+# Те же 15/16, что у `PLATES`/`SCHEME` выше, тем же приёмом: своя именная
+# копия стиля модуля, а не правка `__dataclass_fields__` на лету (так было
+# сделано в разведочном опыте — и это правит общий модуль в памяти
+# процесса, ровно то, чего мы договорились не делать). Поля ниже —
+# ВСЕ поля этих пяти классов, которые модуль реально проверяет
+# `floor.pt(...)` при рисовании (а не только те, что он сам пометил в
+# комментарии «пол видимого слоя» — у `polosy.lab_pt`/`val_pt`, например,
+# комментария нет, а проверка есть, см. `polosy.py:554,564`). Поля-потолки
+# диапазона подбора (`*_hi`), которые раньше стояли ниже 16, подняты до 16
+# — иначе у подбора кегля нет хода вверх выше прежнего предела; потолки,
+# которые уже были ≥16 (например, `ArhStyle.head_hi=16.0`) или держат
+# крупную ЦИФРУ, а не подпись (`VoronkaStyle.end_pt_hi=30.0`), не трогаются
+# — им есть куда расти и без этой правки.
+ARH = arhitektura.ArhStyle(role_pt=15.0, head_lo=15.0, line_lo=15.0,
+                           line_hi=16.0, vyn_pt=15.0)
+VORONKA = voronka.VoronkaStyle(text_pt=15.0, end_txt_pt=15.0, cap_pt=15.0)
+EPOHI = epohi.EpohiStyle(label_pt=15.0, step_pt=15.0, vyvod_pt=15.0,
+                         step_lo=15.0)
+FAZY = fazy.FazyStyle(cell_lo=15.0, cell_hi=16.0, label_pt=15.0)
+POLOSY = polosy.PolosyStyle(lab_pt=15.0, val_pt=15.0, mn_pt=15.0,
+                            leg_pt=15.0, tick_pt=15.0, unit_pt=15.0,
+                            cap_pt=15.0)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -917,12 +954,12 @@ def content(p, sl, root):
     # `sch` (`is_content` гасит только плашки и число, см. docstring
     # `CONTENT_TYPES`).
     sch = scheme.scheme_of(sl, SCHEME)
-    arh = arhitektura.arhitektura_of(sl)
+    arh = arhitektura.arhitektura_of(sl, ARH)
     # ── фазы / встречные стрелки — вторая пара схемных форм круга переноса
     # (#301 второй очереди): фазы утверждают РАСПРЕДЕЛЕНИЕ (как `arhitektura`
     # утверждает УСТРОЙСТВО), стрелки утверждают НАПРАВЛЕНИЕ. Обе читаются
     # НЕ ТОЛЬКО на содержательных кадрах, тем же ходом, что `sch`/`arh`.
-    fz = fazy.fazy_of(sl)
+    fz = fazy.fazy_of(sl, FAZY)
     strl = strelki.strelki_of(sl)
     cols = columns.columns_of(sl)
     # ── форма, забирающая кадр целиком — разбор на изображении ──────
@@ -930,8 +967,8 @@ def content(p, sl, root):
     # ── количественные формы: порядок — полосы, воронка, пиктограммы,
     # таймлайн. Гасятся `is_content` тем же ходом, что `fig` ниже: это
     # формы разбора, а не универсальные примитивы.
-    pol = polosy.polosy_of(sl) if is_content else None
-    vor = voronka.voronka_of(sl) if is_content else None
+    pol = polosy.polosy_of(sl, POLOSY) if is_content else None
+    vor = voronka.voronka_of(sl, VORONKA) if is_content else None
     pik = piktogrammy.pikto_of(sl) if is_content else None
     tml = timeline.timeline_of(sl) if is_content else None
     # ── эпохи / развилка / выводы — формы разбора круга переноса второй
@@ -939,7 +976,7 @@ def content(p, sl, root):
     # примитивы, а разбор конкретного случая) — гасятся `is_content` тем же
     # ходом. `razvilka` читает необязательную `image` в ветках, поэтому ей,
     # как и `vynoski`, нужен `root` (путь выпуска, а не корень репозитория).
-    eph = epohi.epohi_of(sl) if is_content else None
+    eph = epohi.epohi_of(sl, EPOHI) if is_content else None
     rzv = razvilka.razvilka_of(sl, root=root) if is_content else None
     vyv = vyvody.vyvody_of(sl) if is_content else None
     # ── нижняя плашка-вывод: гасится `is_content` тем же ходом, что `pl`.
@@ -1004,23 +1041,23 @@ def content(p, sl, root):
         if sch:
             prochee += scheme.scheme_h(sch, FULL_W, SCHEME) + GAP
         if arh:
-            prochee += arhitektura.arhitektura_h(arh, FULL_W) + GAP
+            prochee += arhitektura.arhitektura_h(arh, FULL_W, ARH) + GAP
         if fz:
-            prochee += fazy.fazy_h(fz, FULL_W) + GAP
+            prochee += fazy.fazy_h(fz, FULL_W, FAZY) + GAP
         if strl:
             prochee += strelki.strelki_h(strl, FULL_W) + GAP
         if cols:
             prochee += columns.MIN_H + GAP
         if pol:
-            prochee += polosy.polosy_h(pol, FULL_W) + GAP
+            prochee += polosy.polosy_h(pol, FULL_W, POLOSY) + GAP
         if vor:
-            prochee += voronka.voronka_h(vor, FULL_W) + GAP
+            prochee += voronka.voronka_h(vor, FULL_W, VORONKA) + GAP
         if pik:
             prochee += piktogrammy.pikto_h(pik, FULL_W) + GAP
         if tml:
             prochee += timeline.timeline_h(tml, FULL_W) + GAP
         if eph:
-            prochee += epohi.epohi_h(eph, FULL_W) + GAP
+            prochee += epohi.epohi_h(eph, FULL_W, EPOHI) + GAP
         if rzv:
             prochee += razvilka.razvilka_h(rzv, FULL_W) + GAP
         if vyv:
@@ -1118,17 +1155,17 @@ def content(p, sl, root):
         y += scheme.draw_scheme(s, sl.sid, sch, MX, y, body_w, SCHEME) + GAP
 
     if arh:
-        arhitektura.check_arhitektura(sl.sid, arh, body_w)
+        arhitektura.check_arhitektura(sl.sid, arh, body_w, ARH)
         y += arhitektura.draw_arhitektura(s, sl.sid, arh, MX, y,
-                                          body_w) + GAP
+                                          body_w, ARH) + GAP
 
     # ── фазы / встречные стрелки — сразу после архитектуры: обе утверждают
     # устройство/распределение/направление, та же семья, что `scheme`/
     # `arhitektura`, и логично рисуются рядом с ними, ДО количественных
     # форм разбора ниже.
     if fz:
-        fazy.check_fazy(sl.sid, fz, body_w)
-        y += fazy.draw_fazy(s, sl.sid, fz, MX, y, body_w) + GAP
+        fazy.check_fazy(sl.sid, fz, body_w, FAZY)
+        y += fazy.draw_fazy(s, sl.sid, fz, MX, y, body_w, FAZY) + GAP
 
     if strl:
         strelki.check_strelki(sl.sid, strl, body_w)
@@ -1141,12 +1178,12 @@ def content(p, sl, root):
 
     # ── количественные формы: полосы · воронка · пиктограммы · таймлайн ──
     if pol:
-        polosy.check_polosy(sl.sid, pol, body_w)
-        y += polosy.draw_polosy(s, sl.sid, pol, MX, y, body_w) + GAP
+        polosy.check_polosy(sl.sid, pol, body_w, POLOSY)
+        y += polosy.draw_polosy(s, sl.sid, pol, MX, y, body_w, POLOSY) + GAP
 
     if vor:
-        voronka.check_voronka(sl.sid, vor, body_w)
-        y += voronka.draw_voronka(s, sl.sid, vor, MX, y, body_w) + GAP
+        voronka.check_voronka(sl.sid, vor, body_w, VORONKA)
+        y += voronka.draw_voronka(s, sl.sid, vor, MX, y, body_w, VORONKA) + GAP
 
     if pik:
         piktogrammy.check_pikto(sl.sid, pik, body_w)
@@ -1162,8 +1199,8 @@ def content(p, sl, root):
     # они — это ПОДРОБНЫЙ разбор, а не рамка кадра, и место ему там же,
     # где уже стоят остальные формы разбора.
     if eph:
-        epohi.check_epohi(sl.sid, eph, body_w)
-        y += epohi.draw_epohi(s, sl.sid, eph, MX, y, body_w) + GAP
+        epohi.check_epohi(sl.sid, eph, body_w, EPOHI)
+        y += epohi.draw_epohi(s, sl.sid, eph, MX, y, body_w, EPOHI) + GAP
 
     if rzv:
         razvilka.check_razvilka(sl.sid, rzv, body_w)

@@ -260,6 +260,43 @@ tables.CELL_RUNS = True
 columns.HEAD_PT = 15.0
 columns.ITEM_HI, columns.ITEM_LO, columns.ITEM_FLOOR = 16.0, 15.0, 15.0
 
+# Дорожки, шкала и шкала времени: распределитель `scheme.py` зовёт их
+# тонкими обёртками БЕЗ стиля — нарочно, и обоснование у него записано:
+# «подменять его декиным значило бы править чужую геометрию ключом,
+# который о ней не знает». Спорить с этим не нужно: мы не подменяем
+# геометрию, мы поднимаем ТОЛЬКО кегли, и ровно те поля, рядом с которыми
+# в самих модулях стоит комментарий «пол видимого слоя, см. floor.py» —
+# написанный, когда пол был 12. Решение владельца 29.10.2026 сдвинуло пол
+# до 15; эти числа за ним не поехали.
+#
+# Подменяем обёртки, а не файлы пакета: у Лекции 7 порог остаётся прежним,
+# её дека от этого не ломается. Поля перечислены поимённо — кто добавит
+# четвёртое, увидит его в отчёте сторожа, а не молча унаследует 12.
+from deckkit import axis as _axis, tracks as _tracks  # noqa: E402
+
+_TRACKS = replace(_tracks.DEFAULT, lab_pt=15.0, cap_pt=15.0)
+_AXIS = replace(_axis.DEFAULT, lab_pt=15.0, unit_pt=15.0,
+                cap_pt=15.0, end_pt=15.0)
+_TIME = replace(timeline.DEFAULT, unit_pt=15.0, cap_pt=15.0, stage_pt=15.0,
+                head_pt=15.0, txt_pt=15.0, lab_pt=15.0, val_pt=15.0,
+                srok_txt_pt=15.0, end_pt=15.0)
+
+
+def _obyortki(mod, st, h_fn, c_fn, d_fn):
+    """Тонкие обёртки модуля формы — с декиным стилем вместо его
+    умолчания. Три штуки на модуль, ровно те, что зовёт распределитель."""
+    mod.height = lambda d, w: h_fn(d, w, st)
+    mod.check = lambda sid, d, w: c_fn(sid, d, w, st)
+    mod.draw = lambda s, sid, d, x, y, w, tag=None: d_fn(
+        s, sid, d, x, y, w, st, tag=tag)
+
+
+_obyortki(_tracks, _TRACKS, _tracks.tracks_h, _tracks.check_tracks,
+          _tracks.draw_tracks)
+_obyortki(_axis, _AXIS, _axis.axis_h, _axis.check_axis, _axis.draw_axis)
+_obyortki(timeline, _TIME, timeline.timeline_h, timeline.check_timeline,
+          timeline.draw_timeline)
+
 # `step_lo`/`lab_pt`/`cap_pt` отмечены в `scheme.py` «пол видимого слоя» —
 # подняты с 12 до 15 тем же решением владельца 29.10.2026. `step_hi` —
 # потолок диапазона подбора кегля шага (`lo`…`hi`), в котором `step_lo`

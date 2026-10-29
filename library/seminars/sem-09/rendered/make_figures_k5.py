@@ -30,6 +30,63 @@
 """
 from make_figures_common import *
 
+# ── Схема сцены — `k5-shema-postanovka.png` (issue #303, С1) ───────────────
+# Холст Кейса 1 — заявка → классификация → модель отвечает по справочнику →
+# ответ — здесь НЕ меняется (сознательный сбой ритма этого кейса, канон
+# §4.2 П4: новый узел сцена не вводит). Пунктир — не узел, а фокус разбора:
+# дашбокс обводит сам узел модели, а не пристраивает рядом новый.
+POST_H = 560
+POST_R1_Y, POST_R1_H = 120, 170
+POST_R2_Y, POST_R2_H = 300, 220
+
+
+def postanovka():
+    im = Image.new("RGB", (CW, POST_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Тот же поток — сегодня разбираем настройки узла модели",
+        34, MID, b=True, limit=CW - 120, where="заголовок")
+    txt(d, 60, 62, "заявка, классификация и ответ устроены как раньше — "
+        "холст не меняется", 26, LIGHT, limit=CW - 120, where="подзаголовок")
+
+    gap = 50
+    n = 4
+    node_w = (CW - 120 - gap * (n - 1)) // n
+    xs = [60 + i * (node_w + gap) for i in range(n)]
+    nodes = (
+        ("Заявка", "вопрос клиента произвольным текстом"),
+        ("Классификация", "вопрос относится к пункту справочника"),
+        ("Модель отвечает", "по справочнику целиком, одним вызовом"),
+        ("Ответ", "уходит обратившемуся напрямую"),
+    )
+    cy1 = POST_R1_Y + POST_R1_H / 2
+    for i, (title, sub) in enumerate(nodes):
+        node(d, xs[i], POST_R1_Y, node_w, POST_R1_H, title, sub, tsz=29,
+             ssz=27, stroke=TEAL, where=f"шаг {i + 1}")
+        if i:
+            arrow(d, xs[i - 1] + node_w, cy1, xs[i], cy1, col=TEAL, wd=5)
+
+    model_x, model_w = xs[2], node_w
+    pad = 14
+    dashbox(d, model_x - pad, POST_R1_Y - pad, model_w + 2 * pad,
+            POST_R1_H + 2 * pad, GOLD, width=5, bg=W)
+
+    model_cx = model_x + model_w / 2
+    dash_w, dash_h = 900, POST_R2_H
+    dash_x = model_cx - dash_w / 2
+    card(d, dash_x, POST_R2_Y, dash_w, dash_h, fill=SURF, stroke=GOLD, sw=4)
+    ctxt(d, model_cx, POST_R2_Y + 30, "Разбираем сегодня: настройки узла и "
+         "промт", 30, DEEP, b=True, limit=dash_w - 60,
+         where="новое · название")
+    wrapped(d, dash_x + 30, POST_R2_Y + 94, "не новый узел — то, что внутри "
+            "уже существующего узла решает, получит клиент на один и тот "
+            "же вопрос один и тот же ответ или не получит", 27, LIGHT,
+            dash_w - 60, center=model_cx, where="новое · пояснение")
+    arrow(d, model_cx, POST_R2_Y, model_cx, POST_R1_Y + POST_R1_H + pad,
+          col=GOLD, wd=5, dash=True)
+
+    save(im, "k5-shema-postanovka.png")
+
+
 # Высота подобрана под порог приёма: 842 px при ширине 2400 — последняя
 # высота, при которой схема встаёт на слайд В ПОЛНУЮ ширину и не ужимается.
 # На первом прогоне холст был 880 px: схема ужималась, пол кегля падал, а
@@ -132,6 +189,7 @@ def tri_ishoda():
 
 
 if __name__ == "__main__":
+    postanovka()
     tri_ishoda()
     pt_report("схема Кейса 5")
     audit_sources()

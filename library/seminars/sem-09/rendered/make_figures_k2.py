@@ -41,6 +41,59 @@
 """
 from make_figures_common import *
 
+# ── Схема сцены — `k2-shema-postanovka.png` (issue #303, С1) ───────────────
+# Сплошное — процесс Кейса 1, уже работающий и в этом кейсе не меняющийся:
+# заявка → классификация → модель отвечает по справочнику → ответ. Пунктир —
+# не новый узел на холсте (холст не меняется), а действие, которое сегодня
+# разбираем: Ольга руками дополняет справочник, и дополненное уезжает к
+# модели тем же текстом, что и вопрос клиента.
+POST_H = 560
+POST_R1_Y, POST_R1_H = 120, 170
+POST_R2_Y, POST_R2_H = 300, 220
+
+
+def postanovka():
+    im = Image.new("RGB", (CW, POST_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Куда в вызове модели попадает дополненный справочник",
+        34, MID, b=True, limit=CW - 120, where="заголовок")
+    txt(d, 60, 62, "заявка, классификация и ответ не меняются — меняется "
+        "то, что внутри справочника", 26, LIGHT, limit=CW - 120,
+        where="подзаголовок")
+
+    gap = 50
+    n = 4
+    node_w = (CW - 120 - gap * (n - 1)) // n
+    xs = [60 + i * (node_w + gap) for i in range(n)]
+    nodes = (
+        ("Заявка", "вопрос клиента произвольным текстом"),
+        ("Классификация", "вопрос относится к пункту справочника"),
+        ("Модель отвечает", "по справочнику целиком, одним вызовом"),
+        ("Ответ", "уходит обратившемуся напрямую"),
+    )
+    cy1 = POST_R1_Y + POST_R1_H / 2
+    for i, (title, sub) in enumerate(nodes):
+        node(d, xs[i], POST_R1_Y, node_w, POST_R1_H, title, sub, tsz=29,
+             ssz=27, stroke=TEAL, where=f"шаг {i + 1}")
+        if i:
+            arrow(d, xs[i - 1] + node_w, cy1, xs[i], cy1, col=TEAL, wd=5)
+
+    model_cx = xs[2] + node_w / 2
+    dash_w, dash_h = 900, POST_R2_H
+    dash_x = model_cx - dash_w / 2
+    card(d, dash_x, POST_R2_Y, dash_w, dash_h, fill=SURF, stroke=GOLD, sw=4)
+    ctxt(d, model_cx, POST_R2_Y + 30, "Ольга дополняет справочник", 30, DEEP,
+         b=True, limit=dash_w - 60, where="новое · название")
+    wrapped(d, dash_x + 30, POST_R2_Y + 94, "дописывает новый пункт в конец "
+            "списка — дополненное уезжает к модели тем же текстом, что и "
+            "вопрос клиента", 27, LIGHT, dash_w - 60, center=model_cx,
+            where="новое · пояснение")
+    arrow(d, model_cx, POST_R2_Y, model_cx, POST_R1_Y + POST_R1_H, col=GOLD,
+          wd=5, dash=True)
+
+    save(im, "k2-shema-postanovka.png")
+
+
 H = 800
 
 # Высоты пересчитаны после первого прогона: одиннадцатая строка базы вылезала
@@ -237,8 +290,63 @@ def sloy1():
     save(im, "k2-shema-promt-i-kesh.png")
 
 
+# ── Схема разбора — `k2-shema-gde-v-promte.png` (issue #303, Часть Б) ──────
+# Место каждого из четырёх действий ВНУТРИ одного и того же промта — то,
+# чего таблица n21 не показывает одним взглядом (она несёт как/преимущество/
+# недостатки/исследование). Действие 4 (отдельное хранилище) рисуется ДРУГОЙ
+# структурой промта — у него список не внутри вызова вовсе.
+RZ_H = 500
+BAR_Y, BAR_H = 110, 130
+ROW_Y, ROW_H = 300, 170
+
+
+def razbor_gde_v_promte():
+    im = Image.new("RGB", (CW, RZ_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Где внутри промта действует каждое из четырёх действий",
+        32, MID, b=True, limit=CW - 120, where="заголовок")
+
+    seg_instr = (60, 420)
+    seg_list = (520, 1240)
+    seg_vopr = (1800, 540)
+    node(d, seg_instr[0], BAR_Y, seg_instr[1], BAR_H, "Инструкция", "",
+         tsz=24, stroke=LIGHT, where="промт · инструкция")
+    node(d, seg_list[0], BAR_Y, seg_list[1], BAR_H, "Список базы",
+         "N пунктов, порядок важен", tsz=26, ssz=21, stroke=TEAL, sw=4,
+         where="промт · список")
+    node(d, seg_vopr[0], BAR_Y, seg_vopr[1], BAR_H, "Вопрос клиента", "",
+         tsz=24, stroke=LIGHT, where="промт · вопрос")
+
+    # Три действия 1–3 происходят ВНУТРИ одного и того же промта — не
+    # точками на самой полосе (три метки впритык друг к другу читались
+    # нечитаемой кучей при первом прогоне), а тремя подписанными ячейками
+    # в ряд под ней, каждая своей шириной.
+    col_w = (CW - 120 - 2 * 40) // 3
+    cols = [60 + i * (col_w + 40) for i in range(3)]
+    cells = (
+        ("1 — 2", "Позиция в списке", "допиши в конец, либо переставь "
+         "частое к одному из краёв"),
+        ("3", "Вокруг списка", "повтори вопрос клиента до списка, после "
+         "или с обеих сторон"),
+        ("4", "Другая структура", "список не внутри промта вовсе — "
+         "находишь нужный пункт заранее"),
+    )
+    for x, (num, title, sub) in zip(cols, cells):
+        card(d, x, ROW_Y, col_w, ROW_H, fill=SURF, stroke=TEAL, sw=3)
+        ctxt(d, x + col_w / 2, ROW_Y + 14, num, 26, GOLD, b=True,
+             limit=col_w - 30, where=f"ячейка {num} · номер")
+        wrapped(d, x + 16, ROW_Y + 52, title, 23, DEEP, col_w - 32, b=True,
+                center=x + col_w / 2, where=f"ячейка {num} · название")
+        wrapped(d, x + 16, ROW_Y + 84, sub, 22, LIGHT, col_w - 32,
+                center=x + col_w / 2, where=f"ячейка {num} · пояснение")
+
+    save(im, "k2-shema-gde-v-promte.png")
+
+
 if __name__ == "__main__":
+    postanovka()
     sloy1()
     kesh()
+    razbor_gde_v_promte()
     pt_report("схема Кейса 2")
     audit_sources()

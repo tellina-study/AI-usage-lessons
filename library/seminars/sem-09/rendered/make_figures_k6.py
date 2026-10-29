@@ -89,6 +89,58 @@ json`, executions 1075–1104, после починки промта в `sborka
 """
 from make_figures_common import *
 
+# ── Схема сцены — `k6-shema-postanovka.png` (issue #303, С1) ───────────────
+# Сплошное — то, что происходит сегодня: заявка с фотографией и текстом,
+# Ольга читает фото глазами и сверяет его с текстом сама, решение. Пунктир —
+# то, что этот кейс строит и меряет: автоматическое чтение фотографии и
+# сравнение, вместо шага, который сегодня делает Ольга.
+POST_H = 560
+POST_R1_Y, POST_R1_H = 120, 170
+POST_R2_Y, POST_R2_H = 300, 220
+
+
+def postanovka():
+    im = Image.new("RGB", (CW, POST_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Где встанет автоматическое чтение фотографии", 34, MID,
+        b=True, limit=CW - 120, where="заголовок")
+    txt(d, 60, 62, "сегодня фотографию и текст сверяет только Ольга, "
+        "глазами", 26, LIGHT, limit=CW - 120, where="подзаголовок")
+
+    gap = 50
+    n = 4
+    node_w = (CW - 120 - gap * (n - 1)) // n
+    xs = [60 + i * (node_w + gap) for i in range(n)]
+    nodes = (
+        ("Заявка", "текст с суммой + фотография квитанции"),
+        ("Ольга читает фото", "глазами, увеличивает нужный участок"),
+        ("Сравнивает с текстом", "число с фото против числа из текста"),
+        ("Решение", "совпало — дальше; не совпало — уточнить у клиента"),
+    )
+    cy1 = POST_R1_Y + POST_R1_H / 2
+    for i, (title, sub) in enumerate(nodes):
+        node(d, xs[i], POST_R1_Y, node_w, POST_R1_H, title, sub, tsz=29,
+             ssz=27, stroke=TEAL, where=f"шаг {i + 1}")
+        if i:
+            arrow(d, xs[i - 1] + node_w, cy1, xs[i], cy1, col=TEAL, wd=5)
+
+    target_cx = xs[1] + node_w / 2
+    dash_w, dash_h = 900, POST_R2_H
+    dash_x = target_cx - dash_w / 2
+    card(d, dash_x, POST_R2_Y, dash_w, dash_h, fill=SURF, stroke=GOLD, sw=4)
+    ctxt(d, target_cx, POST_R2_Y + 30, "Строим: автоматическое чтение и "
+         "сверка", 30, DEEP, b=True, limit=dash_w - 60,
+         where="новое · название")
+    wrapped(d, dash_x + 30, POST_R2_Y + 94, "вместо того, что сегодня "
+            "делает Ольга глазами — читает фотографию и сверяет число с "
+            "тем, что написано текстом", 27, LIGHT, dash_w - 60,
+            center=target_cx, where="новое · пояснение")
+    arrow(d, target_cx, POST_R2_Y, target_cx, POST_R1_Y + POST_R1_H,
+          col=GOLD, wd=5, dash=True)
+
+    save(im, "k6-shema-postanovka.png")
+
+
 H = 842
 
 # ── Схема 1: чтение и сверка (такт n68) ────────────────────────────────────
@@ -305,8 +357,60 @@ def vysota_simvola():
     save(im, "k6-shema-vysota-simvola.png")
 
 
+# ── Схема разбора — `k6-shema-tri-potoka.png` (issue #303, Часть Б) ────────
+# Где в потоке происходит распознавание — то, чего таблица n67 (как делает/
+# преимущество/недостатки) не показывает одним взглядом: первые два способа
+# стоят в ОДНОЙ точке потока (различаются только сжатием фото), третий —
+# в ДРУГОЙ: распознавание стоит ДО модели отдельным узлом.
+RZ6_H = 500
+RZ6_R1_Y, RZ6_R1_H = 140, 130
+RZ6_R2_Y, RZ6_R2_H = 350, 130
+
+
+def razbor_tri_potoka():
+    im = Image.new("RGB", (CW, RZ6_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Где в потоке происходит распознавание", 32, MID, b=True,
+        limit=CW - 120, where="заголовок")
+
+    # Ряд 1 — единый вызов (несжатое/сжатое): фото и текст сходятся в ОДНОЙ
+    # точке, модель видит пиксели сама.
+    txt(d, 60, RZ6_R1_Y - 32, "1–2. Единый вызов", 24, GOLD, b=True,
+        limit=500, where="ряд 1 · подпись")
+    node(d, 60, RZ6_R1_Y, 520, RZ6_R1_H, "Фото + текст", "несжатое или "
+         "сжатое", tsz=25, ssz=22, stroke=TEAL, where="ряд1 · вход")
+    arrow(d, 580, RZ6_R1_Y + RZ6_R1_H / 2, 680, RZ6_R1_Y + RZ6_R1_H / 2,
+          col=TEAL, wd=5)
+    node(d, 680, RZ6_R1_Y, 760, RZ6_R1_H, "Модель qwen3-vl-8b-instruct",
+         "читает пиксели сама и сравнивает", tsz=22, ssz=21, stroke=GOLD,
+         sw=5, where="ряд1 · модель")
+
+    # Ряд 2 — классическое распознавание: отдельный узел ДО модели.
+    txt(d, 60, RZ6_R2_Y - 32, "3. Классическое распознавание", 24, LIGHT,
+        b=True, limit=700, where="ряд 2 · подпись")
+    node(d, 60, RZ6_R2_Y, 420, RZ6_R2_H, "Фото", "", tsz=25, stroke=TEAL,
+         where="ряд2 · фото")
+    arrow(d, 480, RZ6_R2_Y + RZ6_R2_H / 2, 580, RZ6_R2_Y + RZ6_R2_H / 2,
+          col=TEAL, wd=5)
+    node(d, 580, RZ6_R2_Y, 420, RZ6_R2_H, "Распознавание", "отдельный узел",
+         tsz=23, ssz=21, stroke=TEAL, where="ряд2 · OCR")
+    arrow(d, 1000, RZ6_R2_Y + RZ6_R2_H / 2, 1100, RZ6_R2_Y + RZ6_R2_H / 2,
+          col=TEAL, wd=5)
+    node(d, 1100, RZ6_R2_Y, 340, RZ6_R2_H, "Готовый текст", "", tsz=23,
+         stroke=LIGHT, where="ряд2 · текст")
+    arrow(d, 1440, RZ6_R2_Y + RZ6_R2_H / 2, 1540, RZ6_R2_Y + RZ6_R2_H / 2,
+          col=TEAL, wd=5)
+    node(d, 1540, RZ6_R2_Y, 420, RZ6_R2_H, "Модель qwen3-vl-8b-instruct",
+         "пикселей уже не видит", tsz=22, ssz=21, stroke=GOLD, sw=5,
+         where="ряд2 · модель")
+
+    save(im, "k6-shema-tri-potoka.png")
+
+
 if __name__ == "__main__":
+    postanovka()
     chtenie_i_sverka()
     vysota_simvola()
+    razbor_tri_potoka()
     pt_report("схемы Кейса 6")
     audit_sources()

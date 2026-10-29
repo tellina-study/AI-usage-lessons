@@ -43,6 +43,58 @@
 """
 from make_figures_common import *
 
+# ── Схема сцены — `k1-shema-postanovka.png` (issue #303, С1) ───────────────
+# Сплошное — процесс, который уже работает с прошлого занятия (форма, разбор
+# и запись заявки, уведомление Ольге, её собственный ответ по справочнику).
+# Пунктир — то, что строит этот кейс: решение «ответить самому или передать
+# человеку», вставленное ДО того, как заявка дойдёт до Ольги.
+POST_H = 560
+POST_R1_Y, POST_R1_H = 120, 170
+POST_R2_Y, POST_R2_H = 300, 220
+
+
+def postanovka():
+    im = Image.new("RGB", (CW, POST_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Где в потоке заявок встанет решение «отвечать самому»",
+        34, MID, b=True, limit=CW - 120, where="заголовок")
+    txt(d, 60, 62, "форма и уведомление Ольге уже работают — вопрос в том, "
+        "что встанет до того, как она ответит руками", 26, LIGHT,
+        limit=CW - 120, where="подзаголовок")
+
+    gap = 50
+    n = 4
+    node_w = (CW - 120 - gap * (n - 1)) // n
+    xs = [60 + i * (node_w + gap) for i in range(n)]
+    nodes = (
+        ("Заявка", "форма: текст вопроса клиента"),
+        ("Разбор и запись", "классификация + строка в таблице"),
+        ("Уведомление Ольге", "короткое сообщение о заявке"),
+        ("Ольга отвечает", "по справочнику — руками, сама"),
+    )
+    cy1 = POST_R1_Y + POST_R1_H / 2
+    for i, (title, sub) in enumerate(nodes):
+        node(d, xs[i], POST_R1_Y, node_w, POST_R1_H, title, sub, tsz=29,
+             ssz=27, stroke=TEAL, where=f"шаг {i + 1}")
+        if i:
+            arrow(d, xs[i - 1] + node_w, cy1, xs[i], cy1, col=TEAL, wd=5)
+
+    card(d, 60, POST_R2_Y, CW - 120, POST_R2_H, fill=SURF, stroke=GOLD, sw=4)
+    ctxt(d, CW / 2, POST_R2_Y + 30, "Строим сегодня: решение — ответить "
+         "самому или передать человеку", 30, DEEP, b=True, limit=CW - 200,
+         where="новое · название")
+    wrapped(d, 100, POST_R2_Y + 94, "Пять способов решить это за Ольгу — "
+            "до того, как заявка дойдёт до неё и она начнёт отвечать "
+            "руками.", 27, LIGHT, CW - 200, center=CW / 2,
+            where="новое · пояснение")
+
+    last_cx = xs[-1] + node_w / 2
+    arrow(d, last_cx, POST_R2_Y, last_cx, POST_R1_Y + POST_R1_H, col=GOLD,
+          wd=5, dash=True)
+
+    save(im, "k1-shema-postanovka.png")
+
+
 # Высоты строк подобраны под САМУЮ ВЫСОКУЮ из двух панелей, а не под среднюю:
 # на первом прогоне правая ячейка первой строки была на три строки текста и
 # вылезла заголовком ЗА верхнюю грань своей карточки — `node` центрует
@@ -133,7 +185,55 @@ def samootchet_i_geyt():
     save(im, "k1-shema-samootchet-i-geyt.png")
 
 
+# ── Схема разбора — `k1-shema-spektr-deystviy.png` (issue #303, Часть Б) ────
+# Место каждого из четырёх действий в спектре «решение внутри модели — без
+# модели вовсе», дословно по разбору n07/n08. Таблица n08 уже несёт как/
+# точность/преимущество/недостатки — ось «где решение» в ней не читается
+# одним взглядом, схема добавляет именно её. РАГ — пятое действие — стоит
+# ОТДЕЛЬНО от оси (другое измерение — объём базы, не то же деление работы).
+SPX_H = 420
+
+
+def razbor_spektr():
+    im = Image.new("RGB", (CW, SPX_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Где на оси «решение у модели — решение у кода» стоит "
+        "каждое действие", 32, MID, b=True, limit=CW - 120, where="заголовок")
+
+    axis_y = 230
+    d.line([150, axis_y, CW - 150, axis_y], fill=LIGHT, width=4)
+    txt(d, 150, axis_y + 16, "решение целиком у модели", 23, LIGHT, limit=500,
+        where="ось · левый конец")
+    rtx = "решение у кода, модель не вызывается"
+    rw = ImageDraw.Draw(im).textlength(rtx, font=f(23))
+    txt(d, CW - 150 - rw, axis_y + 16, rtx, 23, LIGHT, limit=560,
+        where="ось · правый конец")
+
+    points = (
+        (0.08, "Модель решает\nи отвечает свободно"),
+        (0.38, "Модель называет пункт,\nкод решает"),
+        (0.66, "Модель называет\nуверенность, код проверяет"),
+        (0.92, "Точное совпадение,\nбез модели"),
+    )
+    for frac, label in points:
+        cx = 150 + frac * (CW - 300)
+        d.ellipse([cx - 16, axis_y - 16, cx + 16, axis_y + 16], fill=TEAL)
+        lines = label.split("\n")
+        for i, ln in enumerate(lines):
+            ctxt(d, cx, axis_y - 78 + i * 32, ln, 25, DEEP, b=True, limit=420,
+                 where=f"точка · {lines[0][:16]}")
+
+    card(d, 720, 320, 960, 90, fill=SURF, stroke=GOLD, sw=4)
+    wrapped(d, 750, 338, "Пятое действие стоит отдельно от этой оси: поиск "
+            "во внешнем хранилище — своя ось, объём базы", 23, DEEP, 900,
+            b=True, center=CW / 2, where="пятое действие · отдельная ось")
+
+    save(im, "k1-shema-spektr-deystviy.png")
+
+
 if __name__ == "__main__":
+    postanovka()
     samootchet_i_geyt()
+    razbor_spektr()
     pt_report("схема Кейса 1")
     audit_sources()

@@ -155,18 +155,65 @@ def holst_pair():
           f"композита)")
 
 
+#   строки 1–8 массива `PRIEMY` (до закрывающей скобки семейства «прямая
+# инъекция») заканчиваются здесь; ниже начинается строка 9 «требование
+# игнорировать правило или проверку» — измерено на самом кропнутом кадре
+# (1286×1632): окно вокруг открывающей `[` девятой записи тёмное начиная с
+# y≈795, пустая (белая) полоса строго над ней идёт с y≈780. Разрез на 788
+# не рассекает ни одну строку кода глифом.
+MEHANIKA_SPLIT_Y = 788
+
+
 def mehanika_panel():
+    """Панель узла «Механическая проверка» — ДВЕ колонки рядом, не один
+    книжный кадр (issue #303, Часть В). Прежняя версия (одна колонка,
+    1286×1632) занимала на слайде только 28% ширины и 8% площади — потолок
+    приёма упирался в её же книжную пропорцию, а не в соседей (сборка:
+    «СХЕМА ЗАЖАТА [n46a]: ПОТОЛОК приёма»). Пиксели те же, что снял стенд —
+    список приёмов разрезан пополам по СТРОКАМ кода и положен бок о бок:
+    левая половина несёт начало массива `PRIEMY`, правая — его продолжение
+    (так же непрерывно, как если бы страница просто перетекала вправо).
+    Склейка, не пересъёмка — тот же принцип, что у `holst_pair()` выше."""
     src = RAW / "k4n-panel-mehanika-raw.png"
-    im = Image.open(src)
+    im = Image.open(src).convert("RGB")
     w, h = im.size
     # Нижняя подсказка интерфейса («Type $ for a list…») начинается в
     # последних ~150 px кадра — измерено по самому файлу, не на глаз
     # (профиль: оранжевая рамка подсказки видна с y≈1632 до низа).
     cropped = im.crop((0, 0, w, h - 150))
+    cw, ch = cropped.size
+
+    left = cropped.crop((0, 0, cw, MEHANIKA_SPLIT_Y))
+    right = cropped.crop((0, MEHANIKA_SPLIT_Y, cw, ch))
+
+    pad, gap, label_h = 40, 50, 74
+    col_h = max(left.height, right.height)
+    total_w = pad * 2 + cw * 2 + gap
+    total_h = pad + label_h + col_h + pad
+
+    canvas = Image.new("RGB", (total_w, total_h), W)
+    d = ImageDraw.Draw(canvas)
+    fo = ImageFont.truetype(F_BOLD, 40)
+
+    lx, rx = pad, pad + cw + gap
+    y_label, y_img = pad, pad + label_h
+    d.rectangle([lx, y_label, lx + cw, y_label + label_h - 12], fill=SURF,
+                outline=LIGHT, width=3)
+    d.text((lx + 20, y_label + 14), "Код проверки — начало списка",
+           font=fo, fill=DEEP)
+    d.rectangle([rx, y_label, rx + cw, y_label + label_h - 12], fill=SURF,
+                outline=LIGHT, width=3)
+    d.text((rx + 20, y_label + 14), "Код проверки — продолжение",
+           font=fo, fill=DEEP)
+    canvas.paste(left, (lx, y_img))
+    canvas.paste(right, (rx, y_img))
+
     out = FIGS / "k4-panel-mehanika.png"
-    cropped.save(out)
-    print(f"  {out.name}  {im.size} -> {cropped.size} — убрана подсказка "
-          f"интерфейса снизу, код не тронут")
+    canvas.save(out)
+    print(f"  {out.name}  сырой {im.size} -> кроп {cropped.size} -> две "
+          f"колонки {canvas.size} (была книжная {cropped.size}, 28% ширины "
+          f"слайда, 8% площади — потолок приёма); разрез по y={MEHANIKA_SPLIT_Y} "
+          f"между строкой 8 и строкой 9 массива PRIEMY, код не тронут")
 
 
 if __name__ == "__main__":

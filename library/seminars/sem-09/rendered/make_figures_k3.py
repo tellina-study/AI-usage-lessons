@@ -46,6 +46,59 @@ n35a, настоящий снимок панели (БРИФ §3: реальны
 """
 from make_figures_common import *
 
+# ── Схема сцены — `k3-shema-postanovka.png` (issue #303, С1) ───────────────
+# Сплошное — процесс, не меняющийся в этом кейсе: заявка → классификация →
+# модель пишет ответ → ответ уходит клиенту. Пунктир — то, что этот кейс
+# строит: проверка перед отправкой, встающая между тем, что написала
+# модель, и тем, что получает человек.
+POST_H = 560
+POST_R1_Y, POST_R1_H = 120, 170
+POST_R2_Y, POST_R2_H = 300, 220
+
+
+def postanovka():
+    im = Image.new("RGB", (CW, POST_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Куда в потоке встанет проверка перед отправкой", 34, MID,
+        b=True, limit=CW - 120, where="заголовок")
+    txt(d, 60, 62, "заявка, классификация и ответ модели не меняются — "
+        "между ответом и отправкой пока никого нет", 26, LIGHT,
+        limit=CW - 120, where="подзаголовок")
+
+    gap = 50
+    n = 4
+    node_w = (CW - 120 - gap * (n - 1)) // n
+    xs = [60 + i * (node_w + gap) for i in range(n)]
+    nodes = (
+        ("Заявка", "вопрос клиента произвольным текстом"),
+        ("Классификация", "вопрос относится к пункту справочника"),
+        ("Модель пишет ответ", "по найденному пункту, свободным текстом"),
+        ("Ответ уходит клиенту", "без второго чтения"),
+    )
+    cy1 = POST_R1_Y + POST_R1_H / 2
+    for i, (title, sub) in enumerate(nodes):
+        node(d, xs[i], POST_R1_Y, node_w, POST_R1_H, title, sub, tsz=29,
+             ssz=27, stroke=TEAL, where=f"шаг {i + 1}")
+        if i:
+            arrow(d, xs[i - 1] + node_w, cy1, xs[i], cy1, col=TEAL, wd=5)
+
+    gap_cx = (xs[2] + node_w + xs[3]) / 2
+    dash_w, dash_h = 900, POST_R2_H
+    dash_x = gap_cx - dash_w / 2
+    card(d, dash_x, POST_R2_Y, dash_w, dash_h, fill=SURF, stroke=GOLD, sw=4)
+    ctxt(d, gap_cx, POST_R2_Y + 30, "Строим: проверка перед отправкой", 30,
+         DEEP, b=True, limit=dash_w - 60, where="новое · название")
+    wrapped(d, dash_x + 30, POST_R2_Y + 94, "встаёт между тем, что написала "
+            "модель, и тем, что получает человек, проверяя ответ до "
+            "отправки", 27, LIGHT, dash_w - 60, center=gap_cx,
+            where="новое · пояснение")
+    target_cx = xs[3] + node_w / 2
+    arrow(d, gap_cx, POST_R2_Y, target_cx, POST_R1_Y + POST_R1_H, col=GOLD,
+          wd=5, dash=True)
+
+    save(im, "k3-shema-postanovka.png")
+
+
 H = 820
 R1_Y, R1_H = 120, 170          # ряд 1: вопрос → генератор → проверяющий → развилка 1
 R2_Y, R2_H = 360, 170          # ряд 2: переделка ← развилка 2 → Ольге
@@ -162,7 +215,43 @@ def tsikl():
     save(im, "k3-shema-tsikl.png")
 
 
+# ── Схема разбора — `k3-shema-kto-verdikt.png` (issue #303, Часть Б) ───────
+# Кто выносит вердикт о годности ответа, относительно того, кто его
+# сочинил, — то, чего таблица n32 (как делает/преимущество/недостатки/
+# числа) не показывает одним взглядом.
+RZ3_H = 400
+RZ3_ROW_Y, RZ3_ROW_H = 140, 220
+
+
+def razbor_kto_verdikt():
+    im = Image.new("RGB", (CW, RZ3_H), W)
+    d = ImageDraw.Draw(im)
+    txt(d, 60, 14, "Кто выносит вердикт о годности ответа", 32, MID, b=True,
+        limit=CW - 120, where="заголовок")
+
+    n = 4
+    gap = 40
+    col_w = (CW - 120 - gap * (n - 1)) // n
+    cols = [60 + i * (col_w + gap) for i in range(n)]
+    cells = (
+        ("Тот же исполнитель", "модель перечитывает собственный ответ"),
+        ("Другая модель", "судья получает пару ответов, выбирает"),
+        ("Код", "формальный критерий — правило или тест, без модели"),
+        ("Несколько исполнителей", "решатель выбирает лучший из трёх"),
+    )
+    for x, (title, sub) in zip(cols, cells):
+        card(d, x, RZ3_ROW_Y, col_w, RZ3_ROW_H, fill=SURF, stroke=TEAL, sw=3)
+        wrapped(d, x + 16, RZ3_ROW_Y + 24, title, 24, DEEP, col_w - 32,
+                b=True, center=x + col_w / 2, where=f"ячейка · {title}")
+        wrapped(d, x + 16, RZ3_ROW_Y + 100, sub, 22, LIGHT, col_w - 32,
+                center=x + col_w / 2, where=f"ячейка · {title} · пояснение")
+
+    save(im, "k3-shema-kto-verdikt.png")
+
+
 if __name__ == "__main__":
+    postanovka()
     tsikl()
+    razbor_kto_verdikt()
     pt_report("схема Кейса 3")
     audit_sources()

@@ -79,9 +79,10 @@ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
-from deckkit import (columns, figure, floor, flow, markup, media,  # noqa: E402
-                     metrics, plates, plotnost, prims, render as rnd, report,
-                     scheme, slidefile, tables, titles, twocol, wrap)
+from deckkit import (arhitektura, columns, figure, floor, flow, itog,  # noqa: E402
+                     markup, media, metrics, piktogrammy, plates, plotnost,
+                     polosy, prims, render as rnd, report, scheme, slidefile,
+                     tables, timeline, titles, twocol, voronka, vynoski, wrap)
 from deckkit.theme import (DEEP, GOLD, GOLD_TINT, LIGHT, MID,  # noqa: E402
                            OUTLINE, SLIDE_H, SLIDE_W, SURFACE, TEAL,
                            WHITE)
@@ -236,6 +237,21 @@ SCHEME = scheme.SchemeStyle(ai_by_word=False,
                             nogap=0.16, row_gap=0.16,
                             cap_pt=12.0, cap_ls=1.12, cap_gap=0.04)
 
+# Выноски: модульный умолчательный потолок `max_img_h=6.10"` калиброван НЕ
+# под геометрию этой деки. У `vynoski` нет заголовка внутри формы — она
+# рисуется от `y`, который отдаёт `heading()`, и в этой деке `y` не бывает
+# меньше `BODY_TOP=1.46"`, а тело кончается не ниже `body_bot()` — при пустом
+# подвале это 6.82", то есть доступно НЕ БОЛЬШЕ 5.36" даже под однострочным
+# заголовком. Модульный потолок 6.10" (плюс подпись под снимком) превышает
+# это так, что кадр ГАРАНТИРОВАННО наезжает на подвал первым же снимком
+# 16:9 — проверено пробным кадром (`deck/probe-tmp-forms`, s01): без этой
+# правки низ изображения вставал на 7,8" при пределе 6,82". 5,00" — то же,
+# на чём держится однострочный заголовок с запасом 0,36" под короткую
+# подпись; длинный заголовок или заметная подпись всё равно может вылезти —
+# на этот случай в `content()` есть отдельный блокирующий `[высота]`,
+# считающий фактический остаток, а не ещё одна константа.
+VYNOSKI = vynoski.VynoskiStyle(max_img_h=5.00)
+
 
 # ════════════════════════════════════════════════════════════════════
 # общие части кадра
@@ -361,7 +377,11 @@ def plates_style(sl):
 
 def check_prims(sl, kind):
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
-                    ("columns", "столбцы"), ("figure", "число")):
+                    ("columns", "столбцы"), ("figure", "число"),
+                    ("vynoski", "выноски"), ("polosy", "полосы"),
+                    ("voronka", "воронка"), ("timeline", "таймлайн"),
+                    ("itog", "итог"), ("piktogrammy", "пиктограммы"),
+                    ("arhitektura", "архитектура")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -860,17 +880,64 @@ def snyat_dubli_karty(sl, m):
 
 
 def content(p, sl, root):
-    """Содержательный кадр: заголовок · плашки · схема · столбцы · тело ·
-    подвал. Тело идёт одним прогоном с иерархией кеглей внутри — КРОМЕ
-    единственного кадра `vizforma: "ось"` (`s10`), который уходит в
-    `os_kadr` сразу после заголовка."""
+    """Содержательный кадр: заголовок · плашки · схема · архитектура ·
+    число · количественные формы (полосы · воронка · пиктограммы ·
+    таймлайн) · столбцы · тело · итог · подвал. Тело идёт одним прогоном с
+    иерархией кеглей внутри — КРОМЕ единственного кадра `vizforma: "ось"`
+    (`s10`), который уходит в `os_kadr` сразу после заголовка, и кадров
+    `vynoski:`, которые забирают кадр целиком (см. `vynoski`-ветку ниже,
+    тем же ходом)."""
     s = prims.blank(p)
     bbot = body_bot(sl)
     is_content = str(sl.meta.get("type") or "analitika") in CONTENT_TYPES
     pst = plates_style(sl)
     pl = plates.plates_of(sl, pst) if is_content else []
+    # ── схемные формы: порядок — схема, затем архитектура, затем (когда
+    # появится) скобки фаз `fazy` второй очереди. `sch`/`arh` читаются
+    # НЕ ТОЛЬКО на содержательных кадрах — тем же ходом, что и раньше у
+    # `sch` (`is_content` гасит только плашки и число, см. docstring
+    # `CONTENT_TYPES`).
     sch = scheme.scheme_of(sl, SCHEME)
+    arh = arhitektura.arhitektura_of(sl)
     cols = columns.columns_of(sl)
+    # ── форма, забирающая кадр целиком — разбор на изображении ──────
+    vyn = vynoski.vynoski_of(sl, VYNOSKI, root=root)
+    # ── количественные формы: порядок — полосы, воронка, пиктограммы,
+    # таймлайн. Гасятся `is_content` тем же ходом, что `fig` ниже: это
+    # формы разбора, а не универсальные примитивы.
+    pol = polosy.polosy_of(sl) if is_content else None
+    vor = voronka.voronka_of(sl) if is_content else None
+    pik = piktogrammy.pikto_of(sl) if is_content else None
+    tml = timeline.timeline_of(sl) if is_content else None
+    # ── нижняя плашка-вывод: гасится `is_content` тем же ходом, что `pl`.
+    itg = itog.itog_of(sl) if is_content else None
+
+    # ── взаимоисключения: три и больше тяжёлых формы подряд гарантированно
+    # вылезают за пол тела — называем это предупреждением на сборке, а не
+    # оставляем находить глазами на снимке.
+    _heavy = [name for val, name in (
+        (sch, "схема"), (arh, "архитектура"), (pol, "полосы"),
+        (vor, "воронка"), (pik, "пиктограммы"), (tml, "таймлайн")) if val]
+    if len(_heavy) >= 3:
+        report.warn(
+            f"[формы] {sl.sid}: на кадре объявлено подряд {len(_heavy)} "
+            "тяжёлые формы — " + " · ".join(_heavy) + ". Такой набор "
+            "гарантированно вылезает за пол тела: оставь одну-две формы на "
+            "кадре, остальные — на отдельный кадр")
+
+    # ── сколько отдать нижней плашке-выводу ─────────────────────────
+    # `itog` прижат к НИЗУ тела — то же поведение, что у накопительной
+    # карты ниже, и для него есть готовый `itog.itog_y`. Если на кадре
+    # есть И карта, И `itog` — обе забирают снизу, `itog` под картой: он
+    # резервируется первым (он ближе к подвалу), карта считает свой
+    # остаток уже от сокращённого `bbot`.
+    itog_y_val = itog_hgt = None
+    if itg:
+        itog.check_itog(sl.sid, itg, FULL_W)
+        itog_hgt = itog.itog_h(itg, FULL_W)
+        itog_y_val = itog.itog_y(bbot, itg, FULL_W)
+        bbot = itog_y_val - GAP
+
     # ── сколько отдать накопительной карте ─────────────────────────
     # ПЕРВАЯ ПОПЫТКА БЫЛА НЕВЕРНА, и неверна она была видимо: карта
     # получала наибольшую высоту, какая умещалась в ПУСТОЕ тело, то есть
@@ -881,10 +948,11 @@ def content(p, sl, root):
     #
     # Карта — повторяющийся справочный элемент, а не предмет кадра.
     # Поэтому она берёт ОСТАТОК: сперва считается, сколько просит то, что
-    # стоит выше (полоса плашек, схема, столбцы по своему минимуму и тело
-    # по дну лестницы), и уже остаток уходит карте. Шесть строк при этом
-    # никуда не деваются — лестница кеглей карты опускает их до дна, а
-    # если и дна не хватает, `draw_karta` называет это числом.
+    # стоит выше (полоса плашек, схема, архитектура, количественные формы,
+    # столбцы по своему минимуму и тело по дну лестницы), и уже остаток
+    # уходит карте. Шесть строк при этом никуда не деваются — лестница
+    # кеглей карты опускает их до дна, а если и дна не хватает, `draw_karta`
+    # называет это числом.
     mk = karta_vechera(sl)
     karta_y = karta_hgt = None
     if mk:
@@ -893,8 +961,18 @@ def content(p, sl, root):
             prochee += plates.plates_h(pl, FULL_W, pst) + GAP
         if sch:
             prochee += scheme.scheme_h(sch, FULL_W, SCHEME) + GAP
+        if arh:
+            prochee += arhitektura.arhitektura_h(arh, FULL_W) + GAP
         if cols:
             prochee += columns.MIN_H + GAP
+        if pol:
+            prochee += polosy.polosy_h(pol, FULL_W) + GAP
+        if vor:
+            prochee += voronka.voronka_h(vor, FULL_W) + GAP
+        if pik:
+            prochee += piktogrammy.pikto_h(pik, FULL_W) + GAP
+        if tml:
+            prochee += timeline.timeline_h(tml, FULL_W) + GAP
         blocks0 = slidefile.body_blocks(sl)
         if blocks0:
             # дно лестницы тела: тот же масштаб 0.58, которым `fit_runs`
@@ -929,11 +1007,51 @@ def content(p, sl, root):
             draw_img = (MX + body_w + COL_GAP, y, mw, mh)
             media_bot = y + mh
 
+    if not hero and not img and vyn:
+        # `vynoski` забирает кадр целиком — ранний возврат, тем же ходом,
+        # что `vizforma: "ось"` → `os_kadr` ниже. Кадр с `vynoski` не
+        # рисует ни плашки, ни схему, ни архитектуру, ни число, ни
+        # количественные формы, ни столбцы, ни прозу тела — а если
+        # что-то из этого объявлено рядом, это ошибка разметки, и её
+        # НАЗЫВАЕТ предупреждение, а не разруливает молча.
+        conflicts = [name for f, name in (
+            ("blocks", "плашки"), ("scheme", "схема"),
+            ("arhitektura", "архитектура"), ("figure", "число"),
+            ("polosy", "полосы"), ("voronka", "воронка"),
+            ("piktogrammy", "пиктограммы"), ("timeline", "таймлайн"),
+            ("columns", "столбцы")) if sl.meta.get(f)]
+        if slidefile.body_blocks(sl):
+            conflicts.append("проза тела")
+        if conflicts:
+            report.warn(
+                f"[выноски] {sl.sid}: кадр несёт `vynoski` и одновременно "
+                + " · ".join(conflicts) + " — форма забирает кадр целиком "
+                "и ничего из этого не рисует. Ошибка разметки: либо снять "
+                "`vynoski`, либо снять то, что осталось без изображения")
+        vynoski.check_vynoski(sl.sid, vyn, FULL_W, VYNOSKI)
+        vh = vynoski.vynoski_h(vyn, FULL_W, VYNOSKI)
+        if y + vh > bbot + 0.04:
+            report.warn(
+                f"[высота] {sl.sid}/выноски: форма просит {vh:.2f}\" от "
+                f"{y:.2f}\", а тело кончается на {bbot:.2f}\" — наезд "
+                f"{(y + vh) - bbot:.2f}\". Заголовок выше короче, либо "
+                "`crop: true` на более плоской пропорции — решение владельца")
+        vynoski.draw_vynoski(s, sl.sid, vyn, MX, y, FULL_W, vh, VYNOSKI)
+        if mk:
+            draw_karta(s, sl.sid, mk, MX, karta_y, FULL_W, karta_hgt)
+        if itg:
+            itog.draw_itog(s, sl.sid, itg, MX, itog_y_val, FULL_W)
+        gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
+        footer(s, sl)
+        return s
+
     if (not hero and not img
             and str(sl.meta.get("vizforma") or "") == "ось"):
         os_kadr(s, sl, MX, y, body_w, bbot)
         if mk:
             draw_karta(s, sl.sid, mk, MX, karta_y, FULL_W, karta_hgt)
+        if itg:
+            itog.draw_itog(s, sl.sid, itg, MX, itog_y_val, FULL_W)
         gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
         footer(s, sl)
         return s
@@ -945,10 +1063,32 @@ def content(p, sl, root):
         scheme.check_scheme(sl.sid, sch, body_w, SCHEME)
         y += scheme.draw_scheme(s, sl.sid, sch, MX, y, body_w, SCHEME) + GAP
 
+    if arh:
+        arhitektura.check_arhitektura(sl.sid, arh, body_w)
+        y += arhitektura.draw_arhitektura(s, sl.sid, arh, MX, y,
+                                          body_w) + GAP
+
     fig = figure.figure_of(sl) if is_content else None
     if fig:
         figure.check_figure(sl.sid, fig, body_w)
         y += figure.draw_figure(s, sl.sid, fig, MX, y, body_w) + GAP
+
+    # ── количественные формы: полосы · воронка · пиктограммы · таймлайн ──
+    if pol:
+        polosy.check_polosy(sl.sid, pol, body_w)
+        y += polosy.draw_polosy(s, sl.sid, pol, MX, y, body_w) + GAP
+
+    if vor:
+        voronka.check_voronka(sl.sid, vor, body_w)
+        y += voronka.draw_voronka(s, sl.sid, vor, MX, y, body_w) + GAP
+
+    if pik:
+        piktogrammy.check_pikto(sl.sid, pik, body_w)
+        y += piktogrammy.draw_pikto(s, sl.sid, pik, MX, y, body_w) + GAP
+
+    if tml:
+        timeline.check_timeline(sl.sid, tml, body_w)
+        y += timeline.draw_timeline(s, sl.sid, tml, MX, y, body_w) + GAP
 
     avail = col_bot - y
     if cols:
@@ -1008,6 +1148,8 @@ def content(p, sl, root):
             media.draw_media(s, sl.sid, img, *draw_img)
         if mk:
             draw_karta(s, sl.sid, mk, MX, karta_y, FULL_W, karta_hgt)
+        if itg:
+            itog.draw_itog(s, sl.sid, itg, MX, itog_y_val, FULL_W)
         gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
         footer(s, sl)
         return s
@@ -1128,6 +1270,8 @@ def content(p, sl, root):
                 f"наезд {y - karta_y:.2f}\". Карте нужно "
                 f"{karta_hgt:.2f}\" на шесть строк")
         draw_karta(s, sl.sid, mk, MX, karta_y, FULL_W, karta_hgt)
+    if itg:
+        itog.draw_itog(s, sl.sid, itg, MX, itog_y_val, FULL_W)
     gold_tick(s, MX, sl.tick_y or (TITLE_Y + 0.98), sl.sid)
     footer(s, sl)
     return s

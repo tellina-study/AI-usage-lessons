@@ -79,10 +79,11 @@ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[4] / "tools" / "presentation-build"))
 
-from deckkit import (arhitektura, columns, figure, floor, flow, itog,  # noqa: E402
-                     markup, media, metrics, piktogrammy, plates, plotnost,
-                     polosy, prims, render as rnd, report, scheme, slidefile,
-                     tables, timeline, titles, twocol, voronka, vynoski, wrap)
+from deckkit import (arhitektura, columns, epohi, fazy, figure, floor,  # noqa: E402
+                     flow, itog, markup, media, metrics, piktogrammy, plates,
+                     plotnost, polosy, prims, razvilka, render as rnd,
+                     report, scheme, slidefile, strelki, tables, timeline,
+                     titles, twocol, voronka, vynoski, vyvody, wrap)
 from deckkit.theme import (DEEP, GOLD, GOLD_TINT, LIGHT, MID,  # noqa: E402
                            OUTLINE, SLIDE_H, SLIDE_W, SURFACE, TEAL,
                            WHITE)
@@ -381,7 +382,9 @@ def check_prims(sl, kind):
                     ("vynoski", "выноски"), ("polosy", "полосы"),
                     ("voronka", "воронка"), ("timeline", "таймлайн"),
                     ("itog", "итог"), ("piktogrammy", "пиктограммы"),
-                    ("arhitektura", "архитектура")):
+                    ("arhitektura", "архитектура"), ("fazy", "фазы"),
+                    ("strelki", "стрелки"), ("epohi", "эпохи"),
+                    ("vyvody", "выводы"), ("razvilka", "развилка")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -899,6 +902,12 @@ def content(p, sl, root):
     # `CONTENT_TYPES`).
     sch = scheme.scheme_of(sl, SCHEME)
     arh = arhitektura.arhitektura_of(sl)
+    # ── фазы / встречные стрелки — вторая пара схемных форм круга переноса
+    # (#301 второй очереди): фазы утверждают РАСПРЕДЕЛЕНИЕ (как `arhitektura`
+    # утверждает УСТРОЙСТВО), стрелки утверждают НАПРАВЛЕНИЕ. Обе читаются
+    # НЕ ТОЛЬКО на содержательных кадрах, тем же ходом, что `sch`/`arh`.
+    fz = fazy.fazy_of(sl)
+    strl = strelki.strelki_of(sl)
     cols = columns.columns_of(sl)
     # ── форма, забирающая кадр целиком — разбор на изображении ──────
     vyn = vynoski.vynoski_of(sl, VYNOSKI, root=root)
@@ -909,15 +918,32 @@ def content(p, sl, root):
     vor = voronka.voronka_of(sl) if is_content else None
     pik = piktogrammy.pikto_of(sl) if is_content else None
     tml = timeline.timeline_of(sl) if is_content else None
+    # ── эпохи / развилка / выводы — формы разбора круга переноса второй
+    # очереди, той же природы, что `pol`/`vor`/`pik`/`tml` (не универсальные
+    # примитивы, а разбор конкретного случая) — гасятся `is_content` тем же
+    # ходом. `razvilka` читает необязательную `image` в ветках, поэтому ей,
+    # как и `vynoski`, нужен `root` (путь выпуска, а не корень репозитория).
+    eph = epohi.epohi_of(sl) if is_content else None
+    rzv = razvilka.razvilka_of(sl, root=root) if is_content else None
+    vyv = vyvody.vyvody_of(sl) if is_content else None
     # ── нижняя плашка-вывод: гасится `is_content` тем же ходом, что `pl`.
     itg = itog.itog_of(sl) if is_content else None
 
     # ── взаимоисключения: три и больше тяжёлых формы подряд гарантированно
     # вылезают за пол тела — называем это предупреждением на сборке, а не
-    # оставляем находить глазами на снимке.
+    # оставляем находить глазами на снимке. Все одиннадцать форм здесь
+    # одного разряда: занимают тело кадра сверху вниз (в отличие от
+    # `vynoski`, которая забирает кадр целиком, и `itog`, который резервирует
+    # низ отдельно) — замер на типовом вводе держит все пять новых форм в
+    # том же порядке величины, что уже внесённые (`fazy_h` 2.19" ·
+    # `strelki_h` 2.79" · `razvilka_h` 3.48" · `vyvody_h` 3.85" ·
+    # `epohi_h` 4.02", против `timeline_h` 2.47" … `piktogrammy_h` 3.82" у
+    # уже связанных форм), так что все пять входят в список без исключений.
     _heavy = [name for val, name in (
-        (sch, "схема"), (arh, "архитектура"), (pol, "полосы"),
-        (vor, "воронка"), (pik, "пиктограммы"), (tml, "таймлайн")) if val]
+        (sch, "схема"), (arh, "архитектура"), (fz, "фазы"),
+        (strl, "стрелки"), (pol, "полосы"), (vor, "воронка"),
+        (pik, "пиктограммы"), (tml, "таймлайн"), (eph, "эпохи"),
+        (rzv, "развилка"), (vyv, "выводы")) if val]
     if len(_heavy) >= 3:
         report.warn(
             f"[формы] {sl.sid}: на кадре объявлено подряд {len(_heavy)} "
@@ -963,6 +989,10 @@ def content(p, sl, root):
             prochee += scheme.scheme_h(sch, FULL_W, SCHEME) + GAP
         if arh:
             prochee += arhitektura.arhitektura_h(arh, FULL_W) + GAP
+        if fz:
+            prochee += fazy.fazy_h(fz, FULL_W) + GAP
+        if strl:
+            prochee += strelki.strelki_h(strl, FULL_W) + GAP
         if cols:
             prochee += columns.MIN_H + GAP
         if pol:
@@ -973,6 +1003,12 @@ def content(p, sl, root):
             prochee += piktogrammy.pikto_h(pik, FULL_W) + GAP
         if tml:
             prochee += timeline.timeline_h(tml, FULL_W) + GAP
+        if eph:
+            prochee += epohi.epohi_h(eph, FULL_W) + GAP
+        if rzv:
+            prochee += razvilka.razvilka_h(rzv, FULL_W) + GAP
+        if vyv:
+            prochee += vyvody.vyvody_h(vyv, FULL_W) + GAP
         blocks0 = slidefile.body_blocks(sl)
         if blocks0:
             # дно лестницы тела: тот же масштаб 0.58, которым `fit_runs`
@@ -1019,7 +1055,9 @@ def content(p, sl, root):
             ("arhitektura", "архитектура"), ("figure", "число"),
             ("polosy", "полосы"), ("voronka", "воронка"),
             ("piktogrammy", "пиктограммы"), ("timeline", "таймлайн"),
-            ("columns", "столбцы")) if sl.meta.get(f)]
+            ("columns", "столбцы"), ("fazy", "фазы"), ("strelki", "стрелки"),
+            ("epohi", "эпохи"), ("vyvody", "выводы"),
+            ("razvilka", "развилка")) if sl.meta.get(f)]
         if slidefile.body_blocks(sl):
             conflicts.append("проза тела")
         if conflicts:
@@ -1068,6 +1106,18 @@ def content(p, sl, root):
         y += arhitektura.draw_arhitektura(s, sl.sid, arh, MX, y,
                                           body_w) + GAP
 
+    # ── фазы / встречные стрелки — сразу после архитектуры: обе утверждают
+    # устройство/распределение/направление, та же семья, что `scheme`/
+    # `arhitektura`, и логично рисуются рядом с ними, ДО количественных
+    # форм разбора ниже.
+    if fz:
+        fazy.check_fazy(sl.sid, fz, body_w)
+        y += fazy.draw_fazy(s, sl.sid, fz, MX, y, body_w) + GAP
+
+    if strl:
+        strelki.check_strelki(sl.sid, strl, body_w)
+        y += strelki.draw_strelki(s, sl.sid, strl, MX, y, body_w) + GAP
+
     fig = figure.figure_of(sl) if is_content else None
     if fig:
         figure.check_figure(sl.sid, fig, body_w)
@@ -1089,6 +1139,27 @@ def content(p, sl, root):
     if tml:
         timeline.check_timeline(sl.sid, tml, body_w)
         y += timeline.draw_timeline(s, sl.sid, tml, MX, y, body_w) + GAP
+
+    # ── эпохи / развилка — те же две ветки сравнения, что и количественные
+    # формы выше, просто разбор не числом, а случаем: ставятся следом за
+    # таймлайном, в конце квантитативной группы, по той же причине, что и
+    # они — это ПОДРОБНЫЙ разбор, а не рамка кадра, и место ему там же,
+    # где уже стоят остальные формы разбора.
+    if eph:
+        epohi.check_epohi(sl.sid, eph, body_w)
+        y += epohi.draw_epohi(s, sl.sid, eph, MX, y, body_w) + GAP
+
+    if rzv:
+        razvilka.check_razvilka(sl.sid, rzv, body_w)
+        y += razvilka.draw_razvilka(s, sl.sid, rzv, MX, y, body_w) + GAP
+
+    # ── выводы — нумерованные карточки ЗАКРЫТИЯ (см. docstring `vyvody.py`):
+    # рисуются ПОСЛЕДНИМИ среди форм, ближе к низу тела, непосредственно
+    # перед столбцами/прозой — закрытие подводит итог тому, что показано
+    # выше на этом же кадре, и визуально должно лежать ниже этого.
+    if vyv:
+        vyvody.check_vyvody(sl.sid, vyv, body_w)
+        y += vyvody.draw_vyvody(s, sl.sid, vyv, MX, y, body_w) + GAP
 
     avail = col_bot - y
     if cols:

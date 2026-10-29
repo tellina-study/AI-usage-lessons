@@ -239,6 +239,17 @@
 - **Status:** active (поведение by design)
 - **First seen in:** #51 Phase 4B (2026-04-29). См. `notes/decisions.md` § «2026-04-29 — Phase 4B Doc#2 РПД (#51) — partial, lessons learned».
 
+### [#307] `workspace-mcp`/`document-loader`/`local-rag` вообще не зарегистрированы в этой рабочей сессии
+
+- **Server:** `workspace-mcp`, `document-loader`, `mcp-local-rag` — все три.
+- **Tool / feature:** все Drive/Docs/Sheets/Slides/PDF/RAG tools — не инструмент вернул ошибку, их просто нет в списке доступных.
+- **Symptom:** `claude mcp list` в рабочем каталоге `/home/harness/harness-projects/256/.worktrees/folder-288/session-0b2adb13-7ee7af40` (ветка `issue-307-vizualnyy-potolok`) показывает только 3 сервера: `claude.ai Claude Docs`, `cao-mcp-server`, `harness-control-mcp-server`. Поиск через `ToolSearch` по именам `mcp__workspace-mcp__*` — «No matching deferred tools found». `.mcp.json` отсутствует и в этом worktree, и в основном репо (`/home/harness/harness-projects/256/lessons-3bb49d40/.mcp.json` — нет файла).
+- **Root cause:** `.mcp.json` гитигнорится и, судя по всему, не был создан/скопирован для этой конкретной сессии/worktree — секреты OAuth для workspace-mcp просто не настроены в данном окружении. Это не authentication-проблема (#49) и не версия зависимости (#86) — сервер не запущен вообще, конфигурации нет.
+- **Severity:** P0 (блокирует любую задачу, завязанную на Google Drive/Docs/Sheets/Slides или RAG-индекс, пока не выполнена в этой сессии/worktree).
+- **Workaround:** нет обхода на уровне агента — создание `.mcp.json` с OAuth-секретами это задача владельца/окружения, не subagent'а. Задачу, требующую Drive, нужно остановить и вернуть с явным сообщением «нет доступа», а не выдумывать содержимое файлов.
+- **Status:** active
+- **First seen in:** #307 (2026-10-29), librarian subagent попытка скачать `Generative_Media_Economics.pptx` / `Generative_Image_Economics.pptx` из папки `1jnUiU3dp4Kr1-b5c7n3vAfy_uCU1n-Tk`.
+
 ### [#86] `uvx workspace-mcp` не стартует — регрессия транзитивной зависимости `aiofile` 3.10.0 (`KeyError: 'Author'`)
 
 - **Server:** `workspace-mcp` (uvx, без пина версии).

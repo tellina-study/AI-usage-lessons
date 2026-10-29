@@ -322,8 +322,72 @@ def figures():
         browser.close()
 
 
+# =====================================================================================
+# Кейс 4 переопределён целиком 2026-10-29 (issue #303) — новые сценарии на стенде,
+# новые кадры (issue #299, замер доли иллюстраций: Кейс 4 был на 7%, единственный кейс
+# занятия без кадра с устройством вовсе). Восемь отдельных сценариев, id —
+# `stend/zamery-k4-novyy/stend-ids.json`. Снимается ДВЕ пары:
+#   холсты `0` (без защит, 6 узлов) и `prc` (все три, 13 узлов) — честная
+#     противопоставляющая пара «без защиты / с защитой», узлов физически нет или есть;
+#   панель узла «Механическая проверка» в сценарии `r` — реальный список шаблонов,
+#     а не пересказ.
+# Запуск:  source tools/presentation-build/setup_page_shots.sh
+#          set -a && source /home/harness/.n8n-lab-credentials && set +a
+#          python3 library/seminars/sem-09/stend/n8n_shots.py --figures-k4n
+
+WF_K4N_0 = "IG5AUdk9tOJ5HAcd"     # С9 · замер K4н · 0 — без защиты
+WF_K4N_R = "QyNbhVo5BOwnh3Kj"     # С9 · замер K4н · r — механика
+WF_K4N_PRC = "fZBb5Akrns3F8fHl"   # С9 · замер K4н · prc — все три
+
+
+def save_raw_only(page, clip, raw_name, clip_name, what):
+    """Как `save`, но клип тоже уходит в сырую папку, не в `figures/`: эти три
+    кадра — вход для `compose_k4n_shots.py`, не самостоятельная фигура деки, и
+    им не место среди `k*.png`, которые читает `deck_kit` напрямую."""
+    page.screenshot(path=str(OUT / f"{raw_name}.png"))
+    page.screenshot(path=str(OUT / clip_name), clip=clip)
+    print(f"  {clip_name}  ({int(clip['width'])}×{int(clip['height'])} в точках "
+          f"страницы, ×2) — {what}")
+
+
+def figures_k4n():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(viewport={"width": 1600, "height": 1000}, device_scale_factor=2)
+        login(page)
+
+        # --- холст конфигурации «0»: шесть узлов в прямую линию ------------------------
+        open_canvas(page, WF_K4N_0)
+        save_raw_only(page, clip_canvas(page), "case4n-config0-canvas", "k4n-holst-0.png",
+             "холст конфигурации «0»: Заявка → Данные заявки → Сборка запроса → "
+             "Решение модели → Разбор решения → Итог, без единого защитного узла")
+
+        # --- холст конфигурации «prc»: тринадцать узлов, две развилки -----------------
+        open_canvas(page, WF_K4N_PRC)
+        save_raw_only(page, clip_canvas(page), "case4n-configprc-canvas", "k4n-holst-prc.png",
+             "холст конфигурации «prc»: механика и классификатор встают до решающей "
+             "модели отдельными узлами с развилкой «нашёл приём?»")
+
+        # --- панель механической проверки: реальный список шаблонов --------------------
+        # Окно выше обычной VIEW_PANEL — редактор кода показывает больше строк массива
+        # PRIEMY без прокрутки; список всё равно не влезает целиком (21 шаблон), поэтому
+        # кадр честно режется на том, что видно, без скролла внутри самого кода.
+        open_canvas(page, WF_K4N_R)
+        page.set_viewport_size({"width": 1600, "height": 1500}); time.sleep(0.6)
+        open_node_panel(page, "Механическая проверка")
+        widen_params(page)
+        save_raw_only(page, clip_panel(page), "case4n-mehanika-panel", "k4n-panel-mehanika-raw.png",
+             "панель узла «Механическая проверка»: первые шаблоны из массива PRIEMY, "
+             "видно на кадре 10 из 21 — редактор кода не вмещает весь список целиком")
+        close_node_panel(page)
+
+        browser.close()
+
+
 if __name__ == "__main__":
     if "--figures" in sys.argv:
         figures()
+    elif "--figures-k4n" in sys.argv:
+        figures_k4n()
     else:
         main()

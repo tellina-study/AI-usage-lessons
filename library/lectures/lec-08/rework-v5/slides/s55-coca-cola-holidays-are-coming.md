@@ -12,13 +12,13 @@ media: "assets/screenshots/s55-coca-cola-christmas-truck-portret.jpg"
 media_note: "рождественский грузовик Coca-Cola — предмет кампании «Holidays Are Coming» с 1995 года. Wikimedia Commons, CC BY-SA 4.0; провенанс — images-log.md. Подпись источника на кадре не ставится"
 blocks_per_row: 3
 voronka:
-  vhod: {value: "70 000", text: "клипов за 30 дней"}
+  vhod: {value: "70 000", text: "клипов за 30 дн."}
   vyhod: {value: "1", text: "готовый ролик"}
   yarusy:
-    - {head: "Генерация", text: "три студии, четыре модели"}
-    - {head: "Отбор — узкое место", text: "сколько вошло в монтаж, не раскрыто"}
+    - {head: "Генерация", text: "3 студии, 4 модели"}
+    - {head: "Отбор — узкое место", text: "в монтаж вошло — не раскрыто"}
 blocks:
-  - {label: "В кампании занято, как и в классике", value: "около 100 человек", note: "цикл схлопнулся с года до месяца — единственная величина, подтверждённая первым лицом компании", key: true}
+  - {label: "В кампании занято, как и в классике", value: "около 100 человек", note: "цикл схлопнулся с года до месяца — подтверждено первым лицом компании", key: true}
 timing_min: 1.5
 in_bucket: false
 status: собран

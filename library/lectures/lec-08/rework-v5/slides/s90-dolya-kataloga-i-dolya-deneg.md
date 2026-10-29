@@ -26,7 +26,7 @@ diagramma:
 scheme:
   kind: dorozhki
   rows:
-    - label: "Deezer, июнь 2026"
+    - label: "Deezer, 2026"
       steps:
         - "более 50 % суточной загрузки"
         - "1–3 % всех прослушиваний"

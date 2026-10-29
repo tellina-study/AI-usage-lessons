@@ -97,6 +97,65 @@ def is_bold(s):
     return st.startswith("**") and st.endswith("**") and len(st) > 4
 
 
+# ── Ссылки: markdown `[текст](адрес)` и голые `https://…`/`www.…` ───────────
+#
+# issue #299: правило курса («источник на слайде и каждый URL в заметках —
+# настоящая гиперссылка `a:hlinkClick`/`r:id`, самоотчёт не принимается»)
+# было выполнено в конвейере лекций и НЕ было выполнено здесь вовсе —
+# `write_notes` умела только `**жирный**`/`` `код` ``/`*курсив*`, markdown-
+# ссылка печаталась буквально со скобками (`notes/mcp-limitations.md`
+# [#299-4]).
+#
+# Разбор взят из конвейера лекций (`tools/presentation-build/deckkit/
+# markup.py::URL`, `MDLINK`, `abs_url`, `link_parts`) — МИНИМАЛЬНО
+# СКОПИРОВАН, а не переиспользован импортом пакета: `deckkit` — часть своей
+# подсистемы с относительными импортами (`from . import report`, `from
+# .theme import …`), и тянуть её сюда ради трёх регулярок значило бы
+# связать два конвейера, которые этот модуль и его README прямо держат
+# раздельными. Разойдётся — чинить правку в обоих местах сразу
+# (`notes/mcp-limitations.md` [#299-4]).
+_URL = __import__("re").compile(r"(?:https?://|www\.)[^\s<>\"«»'()\[\]]+",
+                                __import__("re").I)
+_MDLINK = __import__("re").compile(r"\[([^\]\n]+)\]\((https?://[^)\s]+)\)")
+_LINK_TAIL = ".,;:!?…»\"'"
+
+
+def _abs_url(u):
+    u = u.rstrip(_LINK_TAIL)
+    return u if u.lower().startswith(("http://", "https://")) else "https://" + u
+
+
+def _bare_link_parts(text):
+    out, pos = [], 0
+    for m in _URL.finditer(text):
+        raw = m.group(0).rstrip(_LINK_TAIL)
+        if m.start() > pos:
+            out.append((text[pos:m.start()], None))
+        out.append((raw, _abs_url(raw)))
+        pos = m.start() + len(raw)
+    if pos < len(text):
+        out.append((text[pos:], None))
+    return out
+
+
+def link_parts(text):
+    """Строка → [(видимое, адрес или None), …].
+
+    Markdown-ссылка `[текст](адрес)` отдаёт видимым якорем сам текст; голый
+    адрес `https://…`/`www.…` отдаёт видимым якорем себя же. И то, и то —
+    сигнал вызывающему поставить `r.hyperlink.address`, а не разметку,
+    оставленную на экране."""
+    out, pos = [], 0
+    for m in _MDLINK.finditer(text):
+        if m.start() > pos:
+            out += _bare_link_parts(text[pos:m.start()])
+        out.append((m.group(1), _abs_url(m.group(2))))
+        pos = m.end()
+    if pos < len(text):
+        out += _bare_link_parts(text[pos:])
+    return [p for p in out if p[0]]
+
+
 # ── Низкоуровневые примитивы ────────────────────────────────────────────────
 
 def set_bg(sl, color):
@@ -147,17 +206,34 @@ def text_box(sl, x, y, w, h, lines, *, size=13, bold=False, italic=False,
         # знак в знак. Подробно: notes/mcp-limitations.md [#211-1], [#211-2].
         p.line_spacing = Pt(size * spacing)
         p.space_after = Pt(space_after)
-        for seg, b, mo in (inline_runs(ln) if rich else [(ln, False, False)]):
-            r = p.add_run()
-            r.text = seg
-            r.font.name = MONO if (mono or mo) else FONT
-            r.font.size = Pt(size)
-            # В моноширинной коробке шрифт у всех кусков и так один, поэтому
-            # `` `кусок` `` выделяется единственным, что там осталось, —
-            # насыщенностью. На светлом слайде он выделяется сменой шрифта.
-            r.font.bold = bold or b or (mo and mono)
-            r.font.italic = italic
-            r.font.color.rgb = color
+        # Ссылка разбирается ТОЛЬКО при `rich=True`. `code_card` с
+        # `markup=False` (умолчание) нарочно зовёт `text_box` с `rich=False`
+        # для листинга: адрес внутри кодовой карточки — часть показываемого
+        # вывода команды, а не источник, и ссылкой становиться не должен
+        # (issue #299, п. 4 задания — «адрес внутри кодовой вставки»).
+        for span, url in (link_parts(ln) if rich else [(ln, None)]):
+            if url:
+                r = p.add_run()
+                r.text = span
+                r.font.name = MONO if mono else FONT
+                r.font.size = Pt(size)
+                r.font.italic = italic
+                r.font.underline = True
+                r.font.color.rgb = color
+                r.hyperlink.address = url
+                continue
+            for seg, b, mo in (inline_runs(span) if rich else [(span, False, False)]):
+                r = p.add_run()
+                r.text = seg
+                r.font.name = MONO if (mono or mo) else FONT
+                r.font.size = Pt(size)
+                # В моноширинной коробке шрифт у всех кусков и так один,
+                # поэтому `` `кусок` `` выделяется единственным, что там
+                # осталось, — насыщенностью. На светлом слайде он
+                # выделяется сменой шрифта.
+                r.font.bold = bold or b or (mo and mono)
+                r.font.italic = italic
+                r.font.color.rgb = color
     return tb
 
 
@@ -1145,8 +1221,8 @@ _NOTE_RUNS = __import__("re").compile(r"\*\*(.+?)\*\*|`(.+?)`|(?<![*\w])\*(?!\*)
 
 
 def write_notes(sl, text):
-    """Заметки докладчика С РАЗМЕТКОЙ: `**жирный**`, `` `моноширинный` `` и
-    `*курсив*`.
+    """Заметки докладчика С РАЗМЕТКОЙ: `**жирный**`, `` `моноширинный` ``,
+    `*курсив*` и ссылка — markdown `[текст](адрес)` или голый `https://…`.
 
     Прежде заметки клались сырой строкой (`notes_text_frame.text = notes`), и
     разметка доезжала до докладчика звёздочками. Здесь она становится
@@ -1158,26 +1234,40 @@ def write_notes(sl, text):
     сам PowerPoint, — поэтому здесь начертание стоит ровно столько, сколько
     стоит один прогон. Ремарка курсивом в конце заметки, которую просила
     прожарка, этим и закрывается.
-    """
+
+    Ссылка (`link_parts`, см. выше) разбирается ПЕРВОЙ, абзац за абзацем, и
+    только внутри НЕ-ссылочного куска ищутся `**`/`` ` ``/`*` — поэтому
+    адрес внутри ссылки не рискует попасть под `_NOTE_RUNS` второй раз.
+    Закрывает `notes/mcp-limitations.md` [#299-4]: до этой правки
+    `[Название](https://…)` печаталось буквально, со скобками, и `r:id` в
+    XML не возникал вовсе."""
     tf = sl.notes_slide.notes_text_frame
     tf.clear()
     for i, para in enumerate((text or "").split("\n")):
         p_ = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
-        pos = 0
-        for m in _NOTE_RUNS.finditer(para):
-            if m.start() > pos:
-                p_.add_run().text = para[pos:m.start()]
-            r = p_.add_run()
-            r.text = m.group(1) or m.group(2) or m.group(3)
-            if m.group(1):
-                r.font.bold = True
-            elif m.group(2):
-                r.font.name = MONO
-            else:
-                r.font.italic = True
-            pos = m.end()
-        if pos < len(para):
-            p_.add_run().text = para[pos:]
+        for span, url in (link_parts(para) or [(para, None)]):
+            if url:
+                r = p_.add_run()
+                r.text = span
+                r.hyperlink.address = url
+                r.font.underline = True
+                r.font.color.rgb = MID
+                continue
+            pos = 0
+            for m in _NOTE_RUNS.finditer(span):
+                if m.start() > pos:
+                    p_.add_run().text = span[pos:m.start()]
+                r = p_.add_run()
+                r.text = m.group(1) or m.group(2) or m.group(3)
+                if m.group(1):
+                    r.font.bold = True
+                elif m.group(2):
+                    r.font.name = MONO
+                else:
+                    r.font.italic = True
+                pos = m.end()
+            if pos < len(span):
+                p_.add_run().text = span[pos:]
     return tf
 
 

@@ -1,0 +1,32 @@
+{
+  "anthropic/claude-haiku-5.5": {
+    "prompt": "0.0000001",
+    "completion": "0.0000005",
+    "input_cache_read": "0.00000001",
+    "input_cache_write": "0.000000125"
+  },
+  "google/gemini-2.5-flash": {
+    "prompt": "0.0000003",
+    "completion": "0.0000025",
+    "input_cache_read": "0.00000003",
+    "input_cache_write": "0.0000000833333333333333"
+  },
+  "openai/gpt-4.1-mini": {
+    "prompt": "0.0000004",
+    "completion": "0.0000016",
+    "input_cache_read": "0.0000001",
+    "input_cache_write": null
+  },
+  "deepseek/deepseek-chat": {
+    "prompt": "0.0000002574",
+    "completion": "0.0000010287",
+    "input_cache_read": null,
+    "input_cache_write": null
+  },
+  "qwen/qwen-2.5-7b-instruct": {
+    "prompt": "0.0000001",
+    "completion": "0.0000002",
+    "input_cache_read": null,
+    "input_cache_write": null
+  }
+}

@@ -12,6 +12,7 @@
 | `sborka.py` → `vhod-s8.json` | С9 · вход (выход С8) | `s9-vhod-kurs` / `s9-vhod-vozvrat` | `TZUwcAM2o1hMlRid` |
 | `sborka.py` → `case1-v1.json` | С9 · Кейс 1, версия 1 — отвечает свободно (самоотчёт) | `s9-answer-free` | `nT26QhET2tQ8fEle` |
 | `sborka.py` → `case1-v2.json` | С9 · Кейс 1, версия 2 — проверка по пункту базы (детерминированно) | `s9-answer-gated` | `3bcRZrtG8i5f3O9Z` |
+| `zamery-k2-kesh/kesh_stend.py` → `kesh-stend.json` | С9 · замер K2 — кэш промта (сырой вызов OpenRouter) | `s9-k2-kesh` | `mDAgPCqMgdkqPfLP` |
 
 Ни один сценарий С7/С8 не переименован, не изменён и не удалён — проверено `git status` (в
 этой ветке правка ограничена `sem-09/stend/` и одной функцией `sem-08/stend/sborka.py`) и

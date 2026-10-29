@@ -120,6 +120,13 @@ slides:
     title: "Раздел 6. Сборка"
     timing_min: 0.00
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s88a
+    file: slides/s88a-put-ot-zaprosa-k-rezultatu-svod.md
+    type: analitika
+    title: "Путь от запроса к результату: та же фигура, пять разных стартов и узких мест"
+    source: "сведено по принятым кадрам устройства разделов 1–5: s16 · s41 · s59/s60 · s68a/s71 · s83"
+    timing_min: 0.20
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
   - id: s89
     file: slides/s89-tri-adresa-platezha.md
     type: assertion_visual
@@ -136,16 +143,9 @@ slides:
   - id: s91
     file: slides/s91-kuda-idyot-industriya.md
     type: analitika
-    title: "Куда идёт индустрия: устройство рынка вместо номеров версий"
-    source: "техническая статья SD3, 2024 · карточка модели Stable Diffusion v1 · Genie 3, Google DeepMind, август 2025 · выпуск Suno v6 от 09.09.2026 и ElevenMusic от 01.04.2026 · четыре отраслевых обзора рынка за 2026 год"
-    timing_min: 0.30
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
-  - id: s91a
-    file: slides/s91a-prava-mirovye-modeli-razmer-rynka.md
-    type: analitika
-    title: "Куда идёт индустрия: права, мировые модели и размер рынка"
+    title: "Куда идёт индустрия: рычаг, права и размер рынка"
     source: "техническая статья SD3, 2024 · карточка модели Stable Diffusion v1 · Genie 3, Google DeepMind, август 2025 · независимая проверка WRBench, 23 модели, июнь 2026 (arXiv:2606.20545) · выпуск Suno v6 от 09.09.2026 и ElevenMusic от 01.04.2026 · четыре отраслевых обзора рынка за 2026 год"
-    timing_min: 0.20
+    timing_min: 0.30
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
   - id: s92
     file: slides/s92-chetyre-kriteriya-otkaza.md
@@ -208,11 +208,11 @@ totals:
   timing_missing: 0
   strict_in_min: 29.00            # кадры с `in_bucket: true`, сложено по минутам
   strict_in_share: "33.0%"       # порог курса 30%; partial → out
-  vfy_slides: 11
+  vfy_slides: 10
   by_status:
     "собран": 100
   media:
     wired: 26
-    needs_media: 56
-    no_decision: 18
+    needs_media: 57
+    no_decision: 17
   karta_vechera_predyavleniy: 6

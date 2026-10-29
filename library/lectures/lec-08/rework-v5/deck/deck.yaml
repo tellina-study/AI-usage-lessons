@@ -39,14 +39,14 @@ palette:                         # Ocean Gradient, зафиксирована к
   background: "#FFFFFF"
 
 slide_types:                     # значения поля `type`, с числом кадров
-  analitika:             { count:  45, meaning: "разбор с числами: плашки, столбцы, счёт" }
-  assertion_visual:      { count:  25, meaning: "утверждение, предъявленное формой" }
-  comparison:            { count:   7, meaning: "два столбца «что получается / что не получается»" }
+  analitika:             { count:  46, meaning: "разбор с числами: плашки, столбцы, счёт" }
+  assertion_visual:      { count:  24, meaning: "утверждение, предъявленное формой" }
+  comparison:            { count:   6, meaning: "два столбца «что получается / что не получается»" }
   section_divider:       { count:   6, meaning: "дивайдер раздела" }
   schema_architecture:   { count:   5, meaning: "устройство: части и связи" }
   schema_matrix:         { count:   3, meaning: "сетка: строки против колонок" }
+  schema_pipeline:       { count:   3, meaning: "порядок работы" }
   schema_timeline:       { count:   3, meaning: "хронология" }
-  schema_pipeline:       { count:   2, meaning: "порядок работы" }
   hero_closing:          { count:   1, meaning: "закрывающий кадр с обязательной иллюстрацией" }
   hero_cover:            { count:   1, meaning: "обложка с обязательной иллюстрацией" }
   live_demo:             { count:   1, meaning: "живой показ" }
@@ -110,14 +110,14 @@ slides:
     file: slides/s06-karta-vechera.md
     type: schema_matrix
     title: "Карта вечера: шесть типов задачи, по колонке за раздел"
-    timing_min: 1.00
+    timing_min: 1.10
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
     karta_vechera: { columns: 0, to_come: 5 }
   - id: s07
-    file: slides/s07-chego-v-lektsii-net.md
+    file: slides/s07-put-ot-zaprosa-k-rezultatu-skelet.md
     type: assertion_visual
-    title: "Чего в этой лекции нет"
-    timing_min: 0.50
+    title: "Путь от запроса к результату: одна фигура на пять разделов вперёд"
+    timing_min: 0.40
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   # ─── 1. Неподвижное изображение · 18 кадров · 21.00 мин ───
   - id: s08
@@ -171,8 +171,8 @@ slides:
   - id: s17
     file: slides/s17-pryamoy-i-obratnyy-protsess.md
     type: schema_pipeline
-    title: "Прямой процесс портит, обратный восстанавливает — и число шагов между ними: 1000 → 4"
-    source: "Ho, Jain, Abbeel, «Denoising Diffusion Probabilistic Models», 2020 · Sohl-Dickstein и соавт., 2015 · Salimans и Ho, 2022 · Song, Meng, Ermon, 2020 · Karras и соавт., 2022 · Lu и соавт., 2022 · Zhao и соавт., 2023"
+    title: "Путь от запроса к результату: расшумление латента"
+    source: "Ho, Jain, Abbeel, «Denoising Diffusion Probabilistic Models», 2020 · Rombach и соавт., 2021 · Ho и Salimans, «Classifier-Free Diffusion Guidance», 2022 · Karras и соавт., 2022 · Sadat и соавт., 2024"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s19
@@ -261,15 +261,9 @@ slides:
   - id: s35
     file: slides/s35-chto-za-rabota-zvuk.md
     type: assertion_visual
-    title: "Что это за работа и какое решение она принимает"
-    timing_min: 0.90
-    marks: { in_bucket: false, status: "собран", media_status: needs_media }
-  - id: s36
-    file: slides/s36-kak-delali-bez-modeli-zvuk.md
-    type: comparison
-    title: "Как это делали без модели"
+    title: "Что это за работа и как это делали без модели"
     source: "GVAA Rate Guide, редакция 2026; соглашение SAG-AFTRA о цифровых репликах"
-    timing_min: 0.80
+    timing_min: 0.90
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s37
     file: slides/s37-golos-pri-bolezni-dvigatelnogo-neyrona.md
@@ -305,6 +299,13 @@ slides:
     title: "Нейронный аудиокодек и остаточное квантование"
     source: "SoundStream; EnCodec; MusicGen"
     timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s41a
+    file: slides/s41a-put-ot-zaprosa-k-rezultatu-zvuk.md
+    type: schema_pipeline
+    title: "Путь от запроса к результату: от текста к звуку"
+    source: "VALL-E (Wang и соавт., 2023) · SoundStream · EnCodec"
+    timing_min: 0.80
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s42
     file: slides/s42-chastota-kadrov-kodeka.md
@@ -460,8 +461,8 @@ slides:
   - id: s62
     file: slides/s62-szhatie-rychag-stoimosti.md
     type: analitika
-    title: "Сжатие — самый сильный рычаг стоимости"
-    source: "Open-Sora 2.0"
+    title: "Путь от запроса к результату: расшумление пространства-времени"
+    source: "технический отчёт Sora; CogVideoX; HunyuanVideo"
     timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: needs_media }
   - id: s63
@@ -522,15 +523,15 @@ slides:
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
   - id: s68a
     file: slides/s68a-klassicheskiy-konveyer-asseta-i-pyat.md
-    type: assertion_visual
-    title: "Классический конвейер ассета и пять способов получить данные"
-    source: "Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
+    type: analitika
+    title: "Путь от запроса к результату: трёхмерная сцена"
+    source: "Poole, Jain, Barron, Mildenhall, 2022, https://arxiv.org/abs/2209.14988; Kerbl, Kopanas, Leimkühler, Drettakis, SIGGRAPH 2023, https://arxiv.org/abs/2308.04079"
     timing_min: 0.30
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
   - id: s68b
     file: slides/s68b-pyat-sposobov-poluchit-dannye-o.md
     type: assertion_visual
-    title: "Пять способов получить данные о реальном объекте и что из них тронула модель"
+    title: "Классический конвейер ассета: что тронула модель"
     source: "Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
     timing_min: 0.30
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
